@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8114F34C45
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 03:13:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD823F589DF
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 03:22:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wG6z0-0000UX-FQ; Thu, 23 Apr 2026 23:13:34 -0400
+	id 1wG76A-0001oF-P8; Thu, 23 Apr 2026 23:20:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
- id 1wG6yy-0000UH-6w
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 23:13:32 -0400
-Received: from mailgw.kylinos.cn ([124.126.103.232])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhaoguohan@kylinos.cn>)
- id 1wG6yv-00082J-Gl
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 23:13:31 -0400
-X-UUID: 8d3b9d363f8b11f1aa26b74ffac11d73-20260424
-X-CID-O-RULE: Release_Ham
-X-CID-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.12, REQID:9af03cf7-b043-48d0-8c8f-ec42a42dcaad, IP:15,
- URL:0,TC:0,Content:0,EDM:0,RT:0,SF:-30,FILE:0,BULK:0,RULE:Release_Ham,ACTI
- ON:release,TS:-15
-X-CID-INFO: VERSION:1.3.12, REQID:9af03cf7-b043-48d0-8c8f-ec42a42dcaad, IP:15,
- UR
- L:0,TC:0,Content:0,EDM:0,RT:0,SF:-30,FILE:0,BULK:0,RULE:Release_Ham,ACTION
- :release,TS:-15
-X-CID-META: VersionHash:e7bac3a, CLOUDID:2eb732a23e195489e441dc72d5685c1e,
- BulkI
- D:260424111322VCYFYAIK,BulkQuantity:0,Recheck:0,SF:10|38|66|78|102|123|127
- |898,TC:nil,Content:0|15|50,EDM:-3,IP:-2,URL:0,File:nil,RT:nil,Bulk:nil,QS
- :nil,BEC:nil,COL:0,OSI:0,OSA:0,AV:0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,A
- RC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: 8d3b9d363f8b11f1aa26b74ffac11d73-20260424
-X-User: zhaoguohan@kylinos.cn
-Received: from zgh-vmware-virtual-platform.localdomain [(116.128.244.171)] by
- mailgw.kylinos.cn (envelope-from <zhaoguohan@kylinos.cn>)
- (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
- with ESMTP id 894771053; Fri, 24 Apr 2026 11:13:22 +0800
-From: zhaoguohan@kylinos.cn
-To: John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH] vfio-user: reject malformed migration capabilities
-Date: Fri, 24 Apr 2026 11:12:59 +0800
-Message-ID: <20260424031259.289211-1-zhaoguohan@kylinos.cn>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
+ id 1wG767-0001nf-8A; Thu, 23 Apr 2026 23:20:55 -0400
+Received: from smtp25.cstnet.cn ([159.226.251.25] helo=cstnet.cn)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_CBC_SHA1:256)
+ (Exim 4.90_1) (envelope-from <xiaoou@iscas.ac.cn>)
+ id 1wG75x-0002r1-SU; Thu, 23 Apr 2026 23:20:54 -0400
+Received: from [10.213.20.8] (unknown [36.110.52.2])
+ by APP-05 (Coremail) with SMTP id zQCowACnOg6G4eppSuZwDg--.14274S3;
+ Fri, 24 Apr 2026 11:20:38 +0800 (CST)
+Content-Type: multipart/alternative;
+ boundary="------------a7QoIjvZlb8FSJGJuzFgoxK2"
+Message-ID: <4842f44f-517e-44f3-883a-029b8c0ca900@iscas.ac.cn>
+Date: Fri, 24 Apr 2026 11:20:38 +0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=124.126.103.232;
- envelope-from=zhaoguohan@kylinos.cn; helo=mailgw.kylinos.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/14] target/riscv: rvp: add arithmetic
+ instructions,including saturating and non-saturating operations
+To: Chao Liu <chao.liu.zevorn@gmail.com>
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+References: <20260417104652.17857-1-xiaoou@iscas.ac.cn>
+ <20260417104652.17857-3-xiaoou@iscas.ac.cn>
+ <aejRC51hrTYRLDEY@ZEVORN-PC.localdomain>
+From: Molly Chen <xiaoou@iscas.ac.cn>
+In-Reply-To: <aejRC51hrTYRLDEY@ZEVORN-PC.localdomain>
+X-CM-TRANSID: zQCowACnOg6G4eppSuZwDg--.14274S3
+X-Coremail-Antispam: 1UD129KBjvAXoWDGryrZryDtFyfXryrCr43GFg_yoWrKFy8Xo
+ W7Gw4rAr1xJr13u3s3uw48XFyDZFW29a1kJr4F9r4Duas7Wr1xKr1UJwn5Za1rJr45KrWf
+ XFZaqFn8JF93C3srn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
+ AaLaJ3UjIYCTnIWjp_UUU5-7k0a2IF6w4kM7kC6x804xWl14x267AKxVW8JVW5JwAFc2x0
+ x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII0Yj4
+ 1l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26ryj6F1UM28EF7xvwVC0
+ I7IYx2IY6xkF7I0E14v26F4j6r4UJwA2z4x0Y4vEx4A2jsIE14v26rxl6s0DM28EF7xvwV
+ C2z280aVCY1x0267AKxVW0oVCq3wAS0I0E0xvYzxvE52x082IY62kv0487McIj6xIIjxv2
+ 0xvE14v26r106r15McIj6I8E87Iv67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1l74
+ 80Y4vEI4kI2Ix0rVAqx4xJMxkF7I0En4kS14v26r126r1DMxC20s026xCaFVCjc4AY6r1j
+ 6r4UMI8I3I0E5I8CrVAFwI0_JrI_JrWlx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7
+ AF67AKxVWUtVW8ZwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU5-2
+ -7UUUUU==
+X-Originating-IP: [36.110.52.2]
+X-CM-SenderInfo: 50ld003x6l2u1dvotugofq/
+Received-SPF: pass client-ip=159.226.251.25; envelope-from=xiaoou@iscas.ac.cn;
+ helo=cstnet.cn
+X-Spam_score_int: 1
+X-Spam_score: 0.1
+X-Spam_bar: /
+X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9, HK_RANDOM_ENVFROM=0.999,
+ HK_RANDOM_FROM=0.999, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,37 +79,3792 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+This is a multi-part message in MIME format.
+--------------a7QoIjvZlb8FSJGJuzFgoxK2
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-check_migr() sets an error when the migration capability is not an object,
-but still returns true.  This lets version negotiation continue with an
-Error set and reports the wrong capability name in the diagnostic.
 
-Return false for the malformed capability, and report the migration
-capability name.
+在 2026/4/22 22:10, Chao Liu 写道:
+> On Fri, Apr 17, 2026 at 06:46:39PM +0800, Molly Chen wrote:
+>> Signed-off-by: Molly Chen<xiaoou@iscas.ac.cn>
+>> ---
+>>   target/riscv/helper.h                   |   40 +
+>>   target/riscv/insn32.decode              |   65 ++
+>>   target/riscv/insn_trans/trans_rvp.c.inc |  564 ++++++++++++
+>>   target/riscv/meson.build                |    3 +-
+>>   target/riscv/psimd_helper.c             | 1069 +++++++++++++++++++++++
+>>   target/riscv/translate.c                |    1 +
+>>   6 files changed, 1741 insertions(+), 1 deletion(-)
+>>   create mode 100644 target/riscv/insn_trans/trans_rvp.c.inc
+>>   create mode 100644 target/riscv/psimd_helper.c
+>>
+>> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+>> index 54d2331966..76bc6583fb 100644
+>> --- a/target/riscv/helper.h
+>> +++ b/target/riscv/helper.h
+>> @@ -1351,3 +1351,43 @@ DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
+>>   #ifndef CONFIG_USER_ONLY
+>>   DEF_HELPER_1(ssamoswap_disabled, void, env)
+>>   #endif
+>> +
+>> +/* Packed SIMD */
+>> +DEF_HELPER_3(padd_b, tl, env, tl, tl)
+>> +DEF_HELPER_3(padd_h, tl, env, tl, tl)
+>> +DEF_HELPER_3(padd_w, i64, env, i64, i64)
+>> +DEF_HELPER_3(padd_bs, tl, env, tl, tl)
+>> +DEF_HELPER_3(padd_hs, tl, env, tl, tl)
+>> +DEF_HELPER_3(padd_ws, i64, env, i64, i64)
+>> +DEF_HELPER_3(psub_b, tl, env, tl, tl)
+>> +DEF_HELPER_3(psub_h, tl, env, tl, tl)
+>> +DEF_HELPER_3(psub_w, i64, env, i64, i64)
+>> +DEF_HELPER_3(psh1add_h, tl, env, tl, tl)
+>> +DEF_HELPER_3(psh1add_w, i64, env, i64, i64)
+>> +DEF_HELPER_3(pssh1sadd_h, tl, env, tl, tl)
+>> +DEF_HELPER_3(pssh1sadd_w, i64, env, i64, i64)
+>> +DEF_HELPER_3(ssh1sadd, i32, env, i32, i32)
+>> +DEF_HELPER_3(psadd_b, tl, env, tl, tl)
+>> +DEF_HELPER_3(psadd_h, tl, env, tl, tl)
+>> +DEF_HELPER_3(psadd_w, i64, env, i64, i64)
+>> +DEF_HELPER_3(psaddu_b, tl, env, tl, tl)
+>> +DEF_HELPER_3(psaddu_h, tl, env, tl, tl)
+>> +DEF_HELPER_3(psaddu_w, i64, env, i64, i64)
+>> +DEF_HELPER_3(sadd, i32, env, i32, i32)
+>> +DEF_HELPER_3(saddu, i32, env, i32, i32)
+>> +DEF_HELPER_3(pssub_b, tl, env, tl, tl)
+>> +DEF_HELPER_3(pssub_h, tl, env, tl, tl)
+>> +DEF_HELPER_3(pssub_w, i64, env, i64, i64)
+>> +DEF_HELPER_3(pssubu_b, tl, env, tl, tl)
+>> +DEF_HELPER_3(pssubu_h, tl, env, tl, tl)
+>> +DEF_HELPER_3(pssubu_w, i64, env, i64, i64)
+>> +DEF_HELPER_3(ssub, i32, env, i32, i32)
+>> +DEF_HELPER_3(ssubu, i32, env, i32, i32)
+>> +DEF_HELPER_3(psati_h, tl, env, tl, tl)
+>> +DEF_HELPER_3(pusati_h, tl, env, tl, tl)
+>> +DEF_HELPER_3(psati_w, i64, env, i64, i64)
+>> +DEF_HELPER_3(pusati_w, i64, env, i64, i64)
+>> +DEF_HELPER_3(sati_32, i32, env, i32, i32)
+>> +DEF_HELPER_3(usati_32, i32, env, i32, i32)
+>> +DEF_HELPER_3(sati_64, i64, env, i64, i64)
+>> +DEF_HELPER_3(usati_64, i64, env, i64, i64)
+>> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+>> index 6e35c4b1e6..6043eb39cf 100644
+>> --- a/target/riscv/insn32.decode
+>> +++ b/target/riscv/insn32.decode
+>> @@ -40,6 +40,9 @@
+>>   %imm_z6   26:1 15:5
+>>   %imm_mop5 30:1 26:2 20:2
+>>   %imm_mop3 30:1 26:2
+>> +%imm_p_ui16 20:4
+>> +%imm_p_ui32 20:5
+>> +%imm_p_ui64 20:6
+>>   
+>>   # Argument sets:
+>>   &empty
+>> @@ -105,6 +108,10 @@
+>>   @mop5 . . .. .. .... .. ..... ... ..... ....... &mop5 imm=%imm_mop5 %rd %rs1
+>>   @mop3 . . .. .. . ..... ..... ... ..... ....... &mop3 imm=%imm_mop3 %rd %rs1 %rs2
+>>   
+>> +@p_ui16 ..... .... ... ..... ... ..... ....... &i imm=%imm_p_ui16 %rs1 %rd
+>> +@p_ui32 ..... .... ... ..... ... ..... ....... &i imm=%imm_p_ui32 %rs1 %rd
+>> +@p_ui64 ..... .... ... ..... ... ..... ....... &i imm=%imm_p_ui64 %rs1 %rd
+>> +
+>>   # Formats 64:
+>>   @sh5     .......  ..... .....  ... ..... ....... &shift  shamt=%sh5      %rs1 %rd
+>>   
+>> @@ -1084,3 +1091,61 @@ sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
+>>   sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
+>>   sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
+>>   sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
+>> +
+>> +
+>> +# *** P Experimental Extension Version v018 ***
+>> +# Arithmetic Operations(Non-Saturating and Saturating)
+>> +padd_b     1000010 ..... ..... 000 ..... 0111011 @r
+>> +padd_h     1000000 ..... ..... 000 ..... 0111011 @r
+>> +padd_w     1000001 ..... ..... 000 ..... 0111011 @r
+>> +padd_bs    1001110 ..... ..... 010 ..... 0011011 @r
+>> +padd_hs    1001100 ..... ..... 010 ..... 0011011 @r
+>> +padd_ws    1001101 ..... ..... 010 ..... 0011011 @r
+>> +psub_b     1100010 ..... ..... 000 ..... 0111011 @r
+>> +psub_h     1100000 ..... ..... 000 ..... 0111011 @r
+>> +psub_w     1100001 ..... ..... 000 ..... 0111011 @r
+>> +psh1add_h  1010000 ..... ..... 010 ..... 0111011 @r
+>> +psh1add_w  1010001 ..... ..... 010 ..... 0111011 @r
+>> +pssh1sadd_h   1011000 ..... ..... 010 ..... 0111011 @r
+>> +{
+>> +  ssh1sadd    1011001 ..... ..... 010 ..... 0111011 @r
+>> +  pssh1sadd_w 1011001 ..... ..... 010 ..... 0111011 @r
+>> +}
+>> +psadd_b    1001010 ..... ..... 000 ..... 0111011 @r
+>> +psadd_h    1001000 ..... ..... 000 ..... 0111011 @r
+>> +{
+>> +  sadd     1001001 ..... ..... 000 ..... 0111011 @r
+>> +  psadd_w  1001001 ..... ..... 000 ..... 0111011 @r
+>> +}
+>> +psaddu_b   1011010 ..... ..... 000 ..... 0111011 @r
+>> +psaddu_h   1011000 ..... ..... 000 ..... 0111011 @r
+>> +{
+>> +  saddu    1011001 ..... ..... 000 ..... 0111011 @r
+>> +  psaddu_w 1011001 ..... ..... 000 ..... 0111011 @r
+>> +}
+>> +pssub_b    1101010 ..... ..... 000 ..... 0111011 @r
+>> +pssub_h    1101000 ..... ..... 000 ..... 0111011 @r
+>> +{
+>> +  ssub     1101001 ..... ..... 000 ..... 0111011 @r
+>> +  pssub_w  1101001 ..... ..... 000 ..... 0111011 @r
+>> +}
+>> +pssubu_b   1111010 ..... ..... 000 ..... 0111011 @r
+>> +pssubu_h   1111000 ..... ..... 000 ..... 0111011 @r
+>> +{
+>> +  ssubu      1111001 ..... ..... 000 ..... 0111011 @r
+>> +  pssubu_w   1111001 ..... ..... 000 ..... 0111011 @r
+>> +}
+>> +psati_h    11100 001.... ..... 100 ..... 0011011 @p_ui16
+>> +pusati_h   10100 001.... ..... 100 ..... 0011011 @p_ui16
+>> +{
+>> +  sati_32    11100 01..... ..... 100 ..... 0011011 @p_ui32
+>> +  psati_w      11100 01..... ..... 100 ..... 0011011 @p_ui32
+>> +}
+>> +{
+>> +  usati_32   10100 01..... ..... 100 ..... 0011011 @p_ui32
+>> +  pusati_w     10100 01..... ..... 100 ..... 0011011 @p_ui32
+>> +}
+>> +
+>> +sati_64    111001 ...... ..... 100 ..... 0011011 @p_ui64
+>> +usati_64   101001 ...... ..... 100 ..... 0011011 @p_ui64
+>> +
+>> diff --git a/target/riscv/insn_trans/trans_rvp.c.inc b/target/riscv/insn_trans/trans_rvp.c.inc
+>> new file mode 100644
+>> index 0000000000..6f7246b563
+>> --- /dev/null
+>> +++ b/target/riscv/insn_trans/trans_rvp.c.inc
+>> @@ -0,0 +1,564 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+>> +/* RISC-V translation routines for the P Standard Extensions. */
+>> +/* Copyright (c) 2026 ISRC ISCAS. */
+>> +
+>> +#define GEN_SIMD_TRANS(NAME)                                \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +   REQUIRE_EXT(ctx, RVP);                                   \
+>> +   TCGv src1 = get_gpr(ctx, a->rs1, EXT_NONE);              \
+>> +   TCGv src2 = get_gpr(ctx, a->rs2, EXT_NONE);              \
+>> +   TCGv dest = dest_gpr(ctx, a->rd);                        \
+>> +   gen_helper_##NAME(dest, tcg_env, src1, src2);            \
+>> +   return true;                                             \
+>> +}
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_32(NAME)                             \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a)  \
+>> +{                                                           \
+>> +    REQUIRE_32BIT(ctx);                                     \
+>> +    REQUIRE_EXT(ctx, RVP);                                  \
+>> +    TCGv src1 = get_gpr(ctx, a->rs1, EXT_NONE);             \
+>> +    TCGv src2 = get_gpr(ctx, a->rs2, EXT_NONE);             \
+>> +    TCGv dest = dest_gpr(ctx, a->rd);                       \
+>> +    gen_helper_##NAME(dest, tcg_env, src1, src2);           \
+>> +    return true;                                            \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_32(NAME)                             \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a)  \
+>> +{                                                           \
+>> +    REQUIRE_32BIT(ctx);                                     \
+>> +    return true;                                            \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_64(NAME)                             \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a)  \
+>> +{                                                           \
+>> +   REQUIRE_64BIT(ctx);                                      \
+>> +   return true;                                             \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_64(NAME)                             \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a)  \
+>> +{                                                           \
+>> +    REQUIRE_64BIT(ctx);                                     \
+>> +    REQUIRE_EXT(ctx, RVP);                                  \
+>> +    TCGv src1 = get_gpr(ctx, a->rs1, EXT_NONE);             \
+>> +    TCGv src2 = get_gpr(ctx, a->rs2, EXT_NONE);             \
+>> +    TCGv dest = dest_gpr(ctx, a->rd);                       \
+>> +    gen_helper_##NAME(dest, tcg_env, src1, src2);           \
+>> +    return true;                                            \
+>> +}
+>> +#endif
+>> +
+>> +#define GEN_SIMD_TRANS_ACC(NAME)                            \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_EXT(ctx, RVP);                                  \
+>> +    TCGv src1 = get_gpr(ctx, a->rs1, EXT_NONE);             \
+>> +    TCGv src2 = get_gpr(ctx, a->rs2, EXT_NONE);             \
+>> +    TCGv dest = dest_gpr(ctx, a->rd);                       \
+>> +    TCGv t = tcg_temp_new();                                \
+>> +    gen_helper_##NAME(t, tcg_env, src1, src2, dest);        \
+>> +    gen_set_gpr(ctx, a->rd, t);                             \
+>> +    return true;                                            \
+>> +}
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_ACC_32(NAME)                         \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_32BIT(ctx);                                     \
+>> +    REQUIRE_EXT(ctx, RVP);                                  \
+>> +    TCGv src1 = get_gpr(ctx, a->rs1, EXT_NONE);             \
+>> +    TCGv src2 = get_gpr(ctx, a->rs2, EXT_NONE);             \
+>> +    TCGv dest = dest_gpr(ctx, a->rd);                       \
+>> +    TCGv t = tcg_temp_new();                                \
+>> +    gen_helper_##NAME(t, tcg_env, src1, src2, dest);        \
+>> +    gen_set_gpr(ctx, a->rd, t);                             \
+>> +    return true;                                            \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_ACC_32(NAME)                         \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_32BIT(ctx);                                     \
+>> +    return true;                                            \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_ACC_64(NAME)                         \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_64BIT(ctx);                                     \
+>> +    return true;                                            \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_ACC_64(NAME)                         \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_64BIT(ctx);                                     \
+>> +    REQUIRE_EXT(ctx, RVP);                                  \
+>> +    TCGv src1 = get_gpr(ctx, a->rs1, EXT_NONE);             \
+>> +    TCGv src2 = get_gpr(ctx, a->rs2, EXT_NONE);             \
+>> +    TCGv dest = dest_gpr(ctx, a->rd);                       \
+>> +    TCGv t = tcg_temp_new();                                \
+>> +    gen_helper_##NAME(t, tcg_env, src1, src2, dest);        \
+>> +    gen_set_gpr(ctx, a->rd, t);                             \
+>> +    return true;                                            \
+>> +}
+>> +#endif
+>> +
+>> +#define GEN_SIMD_TRANS_R1(NAME)                             \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_EXT(ctx, RVP);                                  \
+>> +    TCGv src1 = get_gpr(ctx, a->rs1, EXT_NONE);             \
+>> +    TCGv dest = dest_gpr(ctx, a->rd);                       \
+>> +    gen_helper_##NAME(dest, tcg_env, src1);                 \
+>> +    gen_set_gpr(ctx, a->rd, dest);                          \
+>> +    return true;                                            \
+>> +}
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_R1_64(NAME)                          \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_64BIT(ctx);                                     \
+>> +    return true;                                            \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_R1_64(NAME)                          \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_64BIT(ctx);                                     \
+>> +    REQUIRE_EXT(ctx, RVP);                                  \
+>> +    TCGv src1 = get_gpr(ctx, a->rs1, EXT_NONE);             \
+>> +    TCGv dest = dest_gpr(ctx, a->rd);                       \
+>> +    gen_helper_##NAME(dest, tcg_env, src1);                 \
+>> +    return true;                                            \
+>> +}
+>> +#endif
+>> +
+>> +#define GEN_SIMD_TRANS_IMM(NAME)                            \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_EXT(ctx, RVP);                                  \
+>> +    TCGv src1 = get_gpr(ctx, a->rs1, EXT_NONE);             \
+>> +    TCGv imm = tcg_constant_tl(a->imm);                     \
+>> +    TCGv dest = dest_gpr(ctx, a->rd);                       \
+>> +    gen_helper_##NAME(dest, tcg_env, src1, imm);            \
+>> +    return true;                                            \
+>> +}
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_IMM_32(NAME)                         \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_32BIT(ctx);                                     \
+>> +    REQUIRE_EXT(ctx, RVP);                                   \
+>> +    TCGv src1 = get_gpr(ctx, a->rs1, EXT_NONE);             \
+>> +    TCGv imm = tcg_constant_tl(a->imm);                     \
+>> +    TCGv dest = dest_gpr(ctx, a->rd);                       \
+>> +    gen_helper_##NAME(dest, tcg_env, src1, imm);            \
+>> +    return true;                                            \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_IMM_32(NAME)                         \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_32BIT(ctx);                                     \
+>> +    return true;                                            \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_IMM_64(NAME)                         \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_64BIT(ctx);                                     \
+>> +    return true;                                            \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_IMM_64(NAME)                         \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_64BIT(ctx);                                     \
+>> +    REQUIRE_EXT(ctx, RVP);                                   \
+>> +    TCGv src1 = get_gpr(ctx, a->rs1, EXT_NONE);             \
+>> +    TCGv imm = tcg_constant_tl(a->imm);                     \
+>> +    TCGv dest = dest_gpr(ctx, a->rd);                       \
+>> +    gen_helper_##NAME(dest, tcg_env, src1, imm);            \
+>> +    return true;                                            \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_REG_PAIR_1(NAME)                     \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_32BIT(ctx);                                     \
+>> +    REQUIRE_EXT(ctx, RVP);                                  \
+>> +    TCGv_i32 src1 = get_gpr(ctx, a->rs1, EXT_NONE);         \
+>> +    TCGv_i32 src2 = get_gpr(ctx, a->rs2, EXT_NONE);         \
+>> +    TCGv_i64 t = tcg_temp_new_i64();                        \
+>> +    gen_helper_##NAME(t, tcg_env, src1, src2);              \
+>> +    set_pair_regs(ctx, (a->rd) * 2, t);                       \
+>> +    return true;                                            \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_REG_PAIR_1(NAME)                     \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_32BIT(ctx);                                     \
+>> +    return true;                                            \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_REG_PAIR_2(INSN, HELPER)                \
+>> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)    \
+>> +{                                                              \
+>> +    REQUIRE_32BIT(ctx);                                        \
+>> +    REQUIRE_EXT(ctx, RVP);                                     \
+>> +    TCGv src1_0 = get_gpr(ctx, (a->rs1) * 2, EXT_NONE);          \
+>> +    TCGv src2_0 = get_gpr(ctx, (a->rs2) * 2, EXT_NONE);          \
+>> +    TCGv dest_0 = dest_gpr(ctx, (a->rd) * 2);                    \
+>> +    TCGv src1_1 = get_gpr(ctx, (a->rs1) * 2 + 1, EXT_NONE);        \
+>> +    TCGv src2_1 = get_gpr(ctx, (a->rs2) * 2 + 1, EXT_NONE);        \
+>> +    TCGv dest_1 = dest_gpr(ctx, (a->rd) * 2 + 1);                  \
+>> +    gen_helper_##HELPER(dest_0, tcg_env, src1_0, src2_0);      \
+>> +    gen_helper_##HELPER(dest_1, tcg_env, src1_1, src2_1);      \
+>> +    return true;                                               \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_REG_PAIR_2(INSN, HELPER)                \
+>> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)    \
+>> +{                                                              \
+>> +    REQUIRE_32BIT(ctx);                                        \
+>> +    return true;                                               \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_REG_PAIR_3(INSN, HELPER)                \
+>> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)    \
+>> +{                                                              \
+>> +    REQUIRE_EXT(ctx, RVP);                                     \
+>> +    TCGv src1_0 = get_gpr(ctx, (a->rs1) * 2, EXT_NONE);          \
+>> +    TCGv dest_0 = dest_gpr(ctx, (a->rd) * 2);                    \
+>> +    TCGv src1_1 = get_gpr(ctx, (a->rs1) * 2 + 1, EXT_NONE);        \
+>> +    TCGv dest_1 = dest_gpr(ctx, (a->rd) * 2 + 1);                  \
+>> +    TCGv src2   = get_gpr(ctx, a->rs2, EXT_NONE);              \
+>> +    gen_helper_##HELPER(dest_0, tcg_env, src1_0, src2);        \
+>> +    gen_helper_##HELPER(dest_1, tcg_env, src1_1, src2);        \
+>> +    return true;                                               \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_REG_PAIR_3(INSN, HELPER)                \
+>> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)    \
+>> +{                                                              \
+>> +    REQUIRE_32BIT(ctx);                                        \
+>> +    return true;                                               \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_REG_PAIR_DW(INSN, HELPER)               \
+>> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)     \
+>> +{                                                              \
+>> +    REQUIRE_32BIT(ctx);                                        \
+>> +    REQUIRE_EXT(ctx, RVP);                                     \
+>> +    TCGv src1_0 = get_gpr(ctx, (a->rs1) * 2, EXT_NONE);          \
+>> +    TCGv src2_0 = get_gpr(ctx, (a->rs2) * 2, EXT_NONE);          \
+>> +    TCGv dest_0 = dest_gpr(ctx, (a->rd) * 2);                    \
+>> +    TCGv src1_1 = get_gpr(ctx, (a->rs1) * 2 + 1, EXT_NONE);        \
+>> +    TCGv src2_1 = get_gpr(ctx, (a->rs2) * 2 + 1, EXT_NONE);        \
+>> +    TCGv dest_1 = dest_gpr(ctx, (a->rd) * 2 + 1);                  \
+>> +    gen_helper_##HELPER(dest_0, tcg_env, src1_0, src2_0);      \
+>> +    gen_helper_##HELPER(dest_1, tcg_env, src1_1, src2_1);      \
+>> +    return true;                                               \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_REG_PAIR_DW(INSN, HELPER)               \
+>> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)     \
+>> +{                                                              \
+>> +    REQUIRE_32BIT(ctx);                                        \
+>> +    return true;                                               \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_REG_PAIR_DW_IMM(INSN, HELPER)           \
+>> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)     \
+>> +{                                                              \
+>> +    REQUIRE_32BIT(ctx);                                        \
+>> +    REQUIRE_EXT(ctx, RVP);                                     \
+>> +    TCGv src1_0 = get_gpr(ctx, (a->rs1) * 2, EXT_NONE);          \
+>> +    TCGv imm_0 = tcg_constant_tl(a->imm);                      \
+>> +    TCGv dest_0 = dest_gpr(ctx, (a->rd) * 2);                    \
+>> +    TCGv src1_1 = get_gpr(ctx, (a->rs1) * 2 + 1, EXT_NONE);        \
+>> +    TCGv imm_1 = tcg_constant_tl(a->imm);                      \
+>> +    TCGv dest_1 = dest_gpr(ctx, (a->rd) * 2 + 1);                  \
+>> +    gen_helper_##HELPER(dest_0, tcg_env, src1_0, imm_0);       \
+>> +    gen_helper_##HELPER(dest_1, tcg_env, src1_1, imm_1);       \
+>> +    return true;                                               \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_REG_PAIR_DW_IMM(INSN, HELPER)           \
+>> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)     \
+>> +{                                                              \
+>> +    REQUIRE_32BIT(ctx);                                        \
+>> +    return true;                                               \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_REG_PAIR_DW_IMM_2(INSN, HELPER)         \
+>> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)     \
+>> +{                                                              \
+>> +    REQUIRE_32BIT(ctx);                                        \
+>> +    REQUIRE_EXT(ctx, RVP);                                     \
+>> +    TCGv src1_0 = get_gpr(ctx, (a->rs1) * 2, EXT_NONE);          \
+>> +    TCGv imm_0 = tcg_constant_tl(a->imm);                      \
+>> +    TCGv dest_0 = dest_gpr(ctx, (a->rd) * 2);                    \
+>> +    TCGv src1_1 = get_gpr(ctx, (a->rs1) * 2 + 1, EXT_NONE);        \
+>> +    TCGv imm_1 = tcg_constant_tl(a->imm);                      \
+>> +    TCGv dest_1 = dest_gpr(ctx, (a->rd) * 2 + 1);                  \
+>> +    gen_helper_##HELPER##_32(dest_0, tcg_env, src1_0, imm_0);  \
+>> +    gen_helper_##HELPER##_32(dest_1, tcg_env, src1_1, imm_1);  \
+>> +    return true;                                               \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_REG_PAIR_DW_IMM_2(INSN, HELPER)         \
+>> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)     \
+>> +{                                                              \
+>> +    REQUIRE_32BIT(ctx);                                        \
+>> +    return true;                                               \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_REG_PAIR_5(INSN, HELPER)                \
+>> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)    \
+>> +{                                                              \
+>> +    REQUIRE_EXT(ctx, RVP);                                     \
+>> +    TCGv src1_0 = get_gpr(ctx, (a->rs1) * 2, EXT_NONE);          \
+>> +    TCGv dest_0 = dest_gpr(ctx, (a->rd) * 2);                    \
+>> +    TCGv src1_1 = get_gpr(ctx, (a->rs1) * 2 + 1, EXT_NONE);        \
+>> +    TCGv dest_1 = dest_gpr(ctx, (a->rd) * 2 + 1);                  \
+>> +    gen_helper_##HELPER(dest_0, tcg_env, src1_0);              \
+>> +    gen_helper_##HELPER(dest_1, tcg_env, src1_1);              \
+>> +    gen_set_gpr(ctx, (a->rd) * 2, dest_0);                       \
+>> +    gen_set_gpr(ctx, (a->rd) * 2 + 1, dest_1);                     \
+>> +    return true;                                               \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_REG_PAIR_5(INSN, HELPER)                \
+>> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)    \
+>> +{                                                              \
+>> +    REQUIRE_32BIT(ctx);                                        \
+>> +    return true;                                               \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_REG_PAIR_IMM(NAME)                   \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_32BIT(ctx);                                     \
+>> +    REQUIRE_EXT(ctx, RVP);                                  \
+>> +    TCGv src1 = get_gpr(ctx, a->rs1, EXT_NONE);             \
+>> +    TCGv_i32 imm = tcg_constant_i32(a->imm);                \
+>> +    TCGv_i64 t = tcg_temp_new_i64();                        \
+>> +    gen_helper_##NAME(t, tcg_env, src1, imm);               \
+>> +    set_pair_regs(ctx, (a->rd) * 2, t);                       \
+>> +    return true;                                            \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_REG_PAIR_IMM(NAME)                   \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_32BIT(ctx);                                     \
+>> +    return true;                                            \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_REG_PAIR_IMM_2(INSN, HELPER)          \
+>> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)  \
+>> +{                                                            \
+>> +    REQUIRE_32BIT(ctx);                                      \
+>> +    REQUIRE_EXT(ctx, RVP);                                   \
+>> +    TCGv src1_0 = get_gpr(ctx, (a->rs1) * 2, EXT_NONE);        \
+>> +    TCGv imm_0 = tcg_constant_tl(a->imm);                    \
+>> +    TCGv dest_0 = dest_gpr(ctx, (a->rd) * 2);                  \
+>> +    TCGv src1_1 = get_gpr(ctx, (a->rs1) * 2 + 1, EXT_NONE);      \
+>> +    TCGv imm_1 = tcg_constant_tl(a->imm);                    \
+>> +    TCGv dest_1 = dest_gpr(ctx, (a->rd) * 2 + 1);                \
+>> +    gen_helper_##HELPER(dest_0, tcg_env, src1_0, imm_0);     \
+>> +    gen_helper_##HELPER(dest_1, tcg_env, src1_1, imm_1);     \
+>> +    return true;                                             \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_REG_PAIR_IMM_2(INSN, HELPER)          \
+>> +static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)  \
+>> +{                                                            \
+>> +    REQUIRE_32BIT(ctx);                                      \
+>> +    return true;                                             \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_ACC_REG_PAIR_1(NAME)                 \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_32BIT(ctx);                                     \
+>> +    REQUIRE_EXT(ctx, RVP);                                  \
+>> +    TCGv src1 = get_gpr(ctx, a->rs1, EXT_NONE);             \
+>> +    TCGv src2 = get_gpr(ctx, a->rs2, EXT_NONE);             \
+>> +    TCGv_i64 t = tcg_temp_new_i64();                        \
+>> +    if (a->rd == 0) {                                         \
+>> +        tcg_gen_movi_i64(t, 0);                             \
+>> +    } else {                                                  \
+>> +        get_pair_regs(ctx, t, (a->rd) * 2);                   \
+>> +    }                                                       \
+>> +    gen_helper_##NAME(t, tcg_env, src1, src2, t);           \
+>> +    set_pair_regs(ctx, (a->rd) * 2, t);                       \
+>> +    return true;                                            \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_ACC_REG_PAIR_1(NAME)                 \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_32BIT(ctx);                                     \
+>> +    return true;                                            \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_REG_PAIR_PREDSUM(NAME)               \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_32BIT(ctx);                                     \
+>> +    REQUIRE_EXT(ctx, RVP);                                  \
+>> +    TCGv_i32 src1_l;                                        \
+>> +    TCGv_i32 src1_h;                                        \
+>> +    TCGv_i32 src2 = get_gpr(ctx, a->rs2, EXT_NONE);         \
+>> +    TCGv_i32 dest = dest_gpr(ctx, a->rd);                   \
+>> +    if (a->rs1 == 0) {                                        \
+>> +        src1_l = tcg_temp_new_i32();                        \
+>> +        src1_h = tcg_temp_new_i32();                        \
+>> +        tcg_gen_movi_i32(src1_l, 0);                        \
+>> +        tcg_gen_movi_i32(src1_h, 0);                        \
+>> +    } else {                                                  \
+>> +        src1_l = get_gpr(ctx, (a->rs1) * 2, EXT_NONE);        \
+>> +        src1_h = get_gpr(ctx, (a->rs1) * 2 + 1, EXT_NONE);      \
+>> +    }                                                       \
+>> +    gen_helper_##NAME(dest, tcg_env, src1_l, src1_h, src2); \
+>> +    return true;                                            \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_REG_PAIR_PREDSUM(NAME)               \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                           \
+>> +    REQUIRE_32BIT(ctx);                                     \
+>> +    return true;                                            \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_PN_OP_IMM(NAME)                     \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                          \
+>> +    REQUIRE_32BIT(ctx);                                    \
+>> +    REQUIRE_EXT(ctx, RVP);                                 \
+>> +    TCGv_i64 s1 = tcg_temp_new_i64();                      \
+>> +    if (a->rs1 == 0) {                                     \
+>> +        tcg_gen_mov_i64(s1, 0);                            \
+>> +    } else {                                               \
+>> +        get_pair_regs(ctx, s1, a->rs1 * 2);                \
+>> +    }                                                      \
+>> +    TCGv shamt = tcg_constant_tl(a->imm);                  \
+>> +    TCGv_i32 dest = dest_gpr(ctx, a->rd);                  \
+>> +    gen_helper_##NAME(dest, tcg_env, s1, shamt);           \
+>> +    return true;                                           \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_PN_OP_IMM(NAME)                     \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                          \
+>> +    REQUIRE_32BIT(ctx);                                    \
+>> +    return true;                                           \
+>> +}
+>> +#endif
+>> +
+>> +#if defined(TARGET_RISCV32)
+>> +#define GEN_SIMD_TRANS_PN_OP_REG(NAME)                     \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                          \
+>> +    REQUIRE_32BIT(ctx);                                    \
+>> +    REQUIRE_EXT(ctx, RVP);                                 \
+>> +    TCGv_i64 s1 = tcg_temp_new_i64();                      \
+>> +    if (a->rs1 == 0) {                                     \
+>> +        tcg_gen_mov_i64(s1, 0);                            \
+>> +    } else {                                               \
+>> +        get_pair_regs(ctx, s1, a->rs1 * 2);                \
+>> +    }                                                      \
+>> +    TCGv_i32 rs2 = get_gpr(ctx, a->rs2, EXT_NONE);         \
+>> +    TCGv_i32 dest = dest_gpr(ctx, a->rd);                  \
+>> +    gen_helper_##NAME(dest, tcg_env, s1, rs2);             \
+>> +    return true;                                           \
+>> +}
+>> +#else
+>> +#define GEN_SIMD_TRANS_PN_OP_REG(NAME)                     \
+>> +static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
+>> +{                                                          \
+>> +    REQUIRE_32BIT(ctx);                                    \
+>> +    return true;                                           \
+>> +}
+>> +#endif
+>> +
+>> +GEN_SIMD_TRANS(padd_b)
+>> +GEN_SIMD_TRANS(padd_h)
+>> +GEN_SIMD_TRANS_64(padd_w)
+>> +GEN_SIMD_TRANS(padd_bs)
+>> +GEN_SIMD_TRANS(padd_hs)
+>> +GEN_SIMD_TRANS_64(padd_ws)
+>> +GEN_SIMD_TRANS(psub_b)
+>> +GEN_SIMD_TRANS(psub_h)
+>> +GEN_SIMD_TRANS_64(psub_w)
+>> +GEN_SIMD_TRANS(psh1add_h)
+>> +GEN_SIMD_TRANS_64(psh1add_w)
+>> +GEN_SIMD_TRANS(pssh1sadd_h)
+>> +GEN_SIMD_TRANS_64(pssh1sadd_w)
+>> +GEN_SIMD_TRANS_32(ssh1sadd)
+>> +GEN_SIMD_TRANS(psadd_b)
+>> +GEN_SIMD_TRANS(psadd_h)
+>> +GEN_SIMD_TRANS_64(psadd_w)
+>> +GEN_SIMD_TRANS(psaddu_b)
+>> +GEN_SIMD_TRANS(psaddu_h)
+>> +GEN_SIMD_TRANS_64(psaddu_w)
+>> +GEN_SIMD_TRANS_32(sadd)
+>> +GEN_SIMD_TRANS_32(saddu)
+>> +GEN_SIMD_TRANS(pssub_b)
+>> +GEN_SIMD_TRANS(pssub_h)
+>> +GEN_SIMD_TRANS_64(pssub_w)
+>> +GEN_SIMD_TRANS(pssubu_b)
+>> +GEN_SIMD_TRANS(pssubu_h)
+>> +GEN_SIMD_TRANS_64(pssubu_w)
+>> +GEN_SIMD_TRANS_32(ssub)
+>> +GEN_SIMD_TRANS_32(ssubu)
+>> +GEN_SIMD_TRANS_IMM(psati_h)
+>> +GEN_SIMD_TRANS_IMM(pusati_h)
+>> +GEN_SIMD_TRANS_IMM_64(psati_w)
+>> +GEN_SIMD_TRANS_IMM_64(pusati_w)
+>> +GEN_SIMD_TRANS_IMM_32(sati_32)
+>> +GEN_SIMD_TRANS_IMM_32(usati_32)
+>> +GEN_SIMD_TRANS_IMM_64(sati_64)
+>> +GEN_SIMD_TRANS_IMM_64(usati_64)
+>> diff --git a/target/riscv/meson.build b/target/riscv/meson.build
+>> index 79f36abd63..45ed7f8d8a 100644
+>> --- a/target/riscv/meson.build
+>> +++ b/target/riscv/meson.build
+>> @@ -28,7 +28,8 @@ riscv_ss.add(files(
+>>     'm128_helper.c',
+>>     'crypto_helper.c',
+>>     'zce_helper.c',
+>> -  'vcrypto_helper.c'
+>> +  'vcrypto_helper.c',
+>> +  'psimd_helper.c'
+>>   ))
+>>   
+>>   riscv_system_ss = ss.source_set()
+>> diff --git a/target/riscv/psimd_helper.c b/target/riscv/psimd_helper.c
+>> new file mode 100644
+>> index 0000000000..a754ee3b5e
+>> --- /dev/null
+>> +++ b/target/riscv/psimd_helper.c
+>> @@ -0,0 +1,1069 @@
+>> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+>> +/* RISC-V Packed SIMD Extension Helpers for QEMU. */
+>> +/* Copyright (C) 2026 ISRC ISCAS. */
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "cpu.h"
+>> +#include "qemu/host-utils.h"
+>> +#include "exec/helper-proto.h"
+>> +#include "fpu/softfloat.h"
+>> +#include "internals.h"
+>> +
+>> +
+>> +/* Helper macros */
+>> +
+>> +/* Element count calculations */
+>> +#define ELEMS_B(target) (sizeof(target) * 8 / 8)    /* byte elements count */
+>> +#define ELEMS_H(target) (sizeof(target) * 8 / 16)
+>> +#define ELEMS_W(target) (sizeof(target) * 8 / 32)   /* word elements count */
+>> +
+>> +/* Element extraction macros - unsigned to avoid sign extension */
+>> +#define EXTRACT8(val, idx)  (((val) >> ((idx) * 8)) & 0xFF)
+>> +#define EXTRACT16(val, idx) (((val) >> ((idx) * 16)) & 0xFFFF)
+>> +#define EXTRACT32(val, idx) (((val) >> ((idx) * 32)) & 0xFFFFFFFF)
+>> +
+>> +/* Element insertion macros */
+>> +#define INSERT8(val, res, idx) \
+>> +    ((val) | ((target_ulong)(uint8_t)(res) << ((idx) * 8)))
+>> +#define INSERT16(val, res, idx) \
+>> +    ((val) | ((target_ulong)(uint16_t)(res) << ((idx) * 16)))
+>> +#define INSERT32(val, res, idx) \
+>> +    ((val) | ((target_ulong)(uint32_t)(res) << ((idx) * 32)))
+>> +
+>> +/* Saturation constants */
+>> +static const int8_t   SAT_MAX_B = 127;
+>> +static const int8_t   SAT_MIN_B = -128;
+>> +static const int16_t  SAT_MAX_H = 32767;
+>> +static const int16_t  SAT_MIN_H = -32768;
+>> +static const int32_t  SAT_MAX_W = 2147483647;
+>> +static const int32_t  SAT_MIN_W = -2147483648LL;
+>> +static const uint8_t  USAT_MAX_B = 255;
+>> +static const uint16_t USAT_MAX_H = 65535;
+>> +static const uint32_t USAT_MAX_W = 4294967295U;
+>> +
+>> +
+>> +/* Saturation helper functions */
+>> +
+>> +/**
+>> + * Signed saturation for 8-bit elements
+>> + * Returns saturated value and sets *sat if saturation occurred
+>> + */
+>> +static inline int8_t signed_saturate_b(int32_t val, int *sat)
+>> +{
+>> +    if (val > SAT_MAX_B) {
+>> +        *sat = 1;
+>> +        return SAT_MAX_B;
+>> +    }
+>> +    if (val < SAT_MIN_B) {
+>> +        *sat = 1;
+>> +        return SAT_MIN_B;
+>> +    }
+>> +    return (int8_t)val;
+>> +}
+>> +
+>> +/**
+>> + * Signed saturation for 16-bit elements
+>> + */
+>> +static inline int16_t signed_saturate_h(int32_t val, int *sat)
+>> +{
+>> +    if (val > SAT_MAX_H) {
+>> +        *sat = 1;
+>> +        return SAT_MAX_H;
+>> +    }
+>> +    if (val < SAT_MIN_H) {
+>> +        *sat = 1;
+>> +        return SAT_MIN_H;
+>> +    }
+>> +    return (int16_t)val;
+>> +}
+>> +
+>> +/**
+>> + * Signed saturation for 32-bit elements
+>> + */
+>> +static inline int32_t signed_saturate_w(int64_t val, int *sat)
+>> +{
+>> +    if (val > SAT_MAX_W) {
+>> +        *sat = 1;
+>> +        return SAT_MAX_W;
+>> +    }
+>> +    if (val < SAT_MIN_W) {
+>> +        *sat = 1;
+>> +        return SAT_MIN_W;
+>> +    }
+>> +    return (int32_t)val;
+>> +}
+>> +
+>> +/**
+>> + * Unsigned saturation for 8-bit elements
+>> + */
+>> +static inline uint8_t unsigned_saturate_b(uint32_t val, int *sat)
+>> +{
+>> +    if (val > USAT_MAX_B) {
+>> +        *sat = 1;
+>> +        return USAT_MAX_B;
+>> +    }
+>> +    return (uint8_t)val;
+>> +}
+>> +
+>> +/**
+>> + * Unsigned saturation for 16-bit elements
+>> + */
+>> +static inline uint16_t unsigned_saturate_h(uint32_t val, int *sat)
+>> +{
+>> +    if (val > USAT_MAX_H) {
+>> +        *sat = 1;
+>> +        return USAT_MAX_H;
+>> +    }
+>> +    return (uint16_t)val;
+>> +}
+>> +
+>> +/**
+>> + * Unsigned saturation for 32-bit elements
+>> + */
+>> +static inline uint32_t unsigned_saturate_w(uint64_t val, int *sat)
+>> +{
+>> +    if (val > USAT_MAX_W) {
+>> +        *sat = 1;
+>> +        return USAT_MAX_W;
+>> +    }
+>> +    return (uint32_t)val;
+>> +}
+>> +
+>> +/* Basic addition operations (non-saturating) */
+>> +
+>> +/**
+>> + * PADD.B - Packed 8-bit addition
+>> + * For each byte: rd[i] = rs1[i] + rs2[i] (modular)
+>> + */
+>> +target_ulong HELPER(padd_b)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_B(rd);
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint8_t e1 = EXTRACT8(rs1, i);
+>> +        uint8_t e2 = EXTRACT8(rs2, i);
+>> +        uint8_t res = e1 + e2;
+>> +        rd = INSERT8(rd, res, i);
+>> +    }
+>> +    return rd;
+>> +}
+> If we don't care about performance in the early patchset,
+> but considering maintainability, I'd suggest providing unified
+> helper macros for these operations.
+>
+> The current SIMD implementations all share a similar loop
+> structure, differing only in element types. We could follow the
+> approach used in vector_helper.c and define a few groups of
+> helper macros to reduce the boilerplate.
+>
+> e.g.
+>
+> ```
+>    #define DO_ADD(a, b) ((a) + (b))
+>    #define DO_SUB(a, b) ((a) - (b))
+>
+>    #define GEN_PSIMD_VV_B(NAME, OP)                              \
+>    target_ulong HELPER(NAME)(CPURISCVState *env,                 \
+>                              target_ulong rs1, target_ulong rs2) \
+>    {                                                             \
+>        target_ulong rd = 0;                                      \
+>        for (int i = 0; i < ELEMS_B(rd); i++) {                   \
+>            uint8_t e1 = EXTRACT8(rs1, i);                        \
+>            uint8_t e2 = EXTRACT8(rs2, i);                        \
+>            rd = INSERT8(rd, (uint8_t)OP(e1, e2), i);             \
+>        }                                                         \
+>        return rd;                                                \
+>    }
+>
+>    GEN_PSIMD_VV_B(padd_b, DO_ADD)
+>    GEN_PSIMD_VV_B(psub_b, DO_SUB)
+> ```
+>
+> The same applies to the helper functions for other instructions
+> as well.
+>
+> Thanks,
+> Chao
+Thank you for the detailed and constructive suggestion. I agree that 
+using unified helper macros is better for maintainability and 
+conciseness. I'll refactor the code following 
+the vector_helper.capproach, using helper macros for SIMD operations. 
+This will be addressed in v2.
 
-Fixes: 36227628d824 ("vfio-user: implement message send infrastructure")
-Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+Thanks again for the guidance!
+
+Best regards, Molly
+
+>> +
+>> +/**
+>> + * PADD.H - Packed 16-bit addition
+>> + * For each halfword: rd[i] = rs1[i] + rs2[i] (modular)
+>> + */
+>> +target_ulong HELPER(padd_h)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_H(rd);
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint16_t e1 = EXTRACT16(rs1, i);
+>> +        uint16_t e2 = EXTRACT16(rs2, i);
+>> +        uint16_t res = e1 + e2;
+>> +        rd = INSERT16(rd, res, i);
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PADD.W - Packed 32-bit addition (RV64 only)
+>> + * For each word: rd[i] = rs1[i] + rs2[i] (modular)
+>> + */
+>> +uint64_t HELPER(padd_w)(CPURISCVState *env,
+>> +                     uint64_t rs1, uint64_t rs2)
+>> +{
+>> +    uint64_t rd = 0;
+>> +    int elems = 2;  /* 2 words in 64-bit */
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint32_t e1 = EXTRACT32(rs1, i);
+>> +        uint32_t e2 = EXTRACT32(rs2, i);
+>> +        uint32_t res = e1 + e2;
+>> +        rd = INSERT32(rd, res, i);
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PADD.BS - Packed 8-bit addition with scalar second operand
+>> + * For each byte: rd[i] = rs1[i] + rs2[0] (modular)
+>> + */
+>> +target_ulong HELPER(padd_bs)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_B(rd);
+>> +    uint8_t e2 = EXTRACT8(rs2, 0);  /* Scalar, take least significant byte */
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint8_t e1 = EXTRACT8(rs1, i);
+>> +        uint8_t res = e1 + e2;
+>> +        rd = INSERT8(rd, res, i);
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PADD.HS - Packed 16-bit addition with scalar second operand
+>> + * For each halfword: rd[i] = rs1[i] + rs2[0] (modular)
+>> + */
+>> +target_ulong HELPER(padd_hs)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_H(rd);
+>> +    uint16_t e2 = EXTRACT16(rs2, 0);
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint16_t e1 = EXTRACT16(rs1, i);
+>> +        uint16_t res = e1 + e2;
+>> +        rd = INSERT16(rd, res, i);
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PADD.WS - Packed 32-bit addition with scalar second operand (RV64 only)
+>> + * For each word: rd[i] = rs1[i] + rs2[0] (modular)
+>> + */
+>> +uint64_t HELPER(padd_ws)(CPURISCVState *env,
+>> +                     uint64_t rs1, uint64_t rs2)
+>> +{
+>> +    uint64_t rd = 0;
+>> +    int elems = 2;
+>> +    uint32_t e2 = EXTRACT32(rs2, 0);
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint32_t e1 = EXTRACT32(rs1, i);
+>> +        uint32_t res = e1 + e2;
+>> +        rd = INSERT32(rd, res, i);
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +
+>> +/* Basic subtraction operations (non-saturating) */
+>> +
+>> +/**
+>> + * PSUB.B - Packed 8-bit subtraction
+>> + * For each byte: rd[i] = rs1[i] - rs2[i] (modular)
+>> + */
+>> +target_ulong HELPER(psub_b)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_B(rd);
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint8_t e1 = EXTRACT8(rs1, i);
+>> +        uint8_t e2 = EXTRACT8(rs2, i);
+>> +        uint8_t res = e1 - e2;
+>> +        rd = INSERT8(rd, res, i);
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSUB.H - Packed 16-bit subtraction
+>> + * For each halfword: rd[i] = rs1[i] - rs2[i] (modular)
+>> + */
+>> +target_ulong HELPER(psub_h)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_H(rd);
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint16_t e1 = EXTRACT16(rs1, i);
+>> +        uint16_t e2 = EXTRACT16(rs2, i);
+>> +        uint16_t res = e1 - e2;
+>> +        rd = INSERT16(rd, res, i);
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSUB.W - Packed 32-bit subtraction (RV64 only)
+>> + * For each word: rd[i] = rs1[i] - rs2[i] (modular)
+>> + */
+>> +uint64_t HELPER(psub_w)(CPURISCVState *env,
+>> +                     uint64_t rs1, uint64_t rs2)
+>> +{
+>> +    uint64_t rd = 0;
+>> +    int elems = 2;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint32_t e1 = EXTRACT32(rs1, i);
+>> +        uint32_t e2 = EXTRACT32(rs2, i);
+>> +        uint32_t res = e1 - e2;
+>> +        rd = INSERT32(rd, res, i);
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/* Shift-left-by-one and add operations */
+>> +
+>> +/**
+>> + * PSH1ADD.H - Shift left by 1 and add (16-bit)
+>> + * For each halfword: rd[i] = (rs1[i] << 1) + rs2[i]
+>> + */
+>> +target_ulong HELPER(psh1add_h)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_H(rd);
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint16_t e1 = EXTRACT16(rs1, i);
+>> +        uint16_t e2 = EXTRACT16(rs2, i);
+>> +        uint16_t res = (e1 << 1) + e2;
+>> +        rd = INSERT16(rd, res, i);
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSH1ADD.W - Shift left by 1 and add (32-bit, RV64 only)
+>> + * For each word: rd[i] = (rs1[i] << 1) + rs2[i]
+>> + */
+>> +uint64_t HELPER(psh1add_w)(CPURISCVState *env,
+>> +                     uint64_t rs1, uint64_t rs2)
+>> +{
+>> +    uint64_t rd = 0;
+>> +    int elems = 2;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint32_t e1 = EXTRACT32(rs1, i);
+>> +        uint32_t e2 = EXTRACT32(rs2, i);
+>> +        uint32_t res = (e1 << 1) + e2;
+>> +        rd = INSERT32(rd, res, i);
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSSH1SADD.H - Saturating shift left by 1 and saturating add (16-bit)
+>> + * For each halfword: rd[i] = sat16(sat16(rs1[i] << 1) + rs2[i])
+>> + */
+>> +target_ulong HELPER(pssh1sadd_h)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_H(rd);
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
+>> +        int16_t e2 = (int16_t)EXTRACT16(rs2, i);
+>> +        int32_t shifted;
+>> +
+>> +        /* Check if shift-left-1 would overflow */
+>> +        if (e1 > 0x3FFF || e1 < -0x4000) {
+>> +            shifted = (e1 < 0) ? 0xFFFF8000LL : 0x7FFF;
+>> +            sat = 1;
+>> +        } else {
+>> +            shifted = e1 << 1;
+>> +        }
+>> +
+>> +        int32_t sum = shifted + e2;
+>> +        int16_t res = signed_saturate_h(sum, &sat);
+>> +        rd = INSERT16(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSSH1SADD.W - Saturating shift left by 1 and add
+>> + * with saturation (32-bit, RV64 only)
+>> + * For each word: rd[i] = sat32(sat32(rs1[i] << 1) + rs2[i])
+>> + */
+>> +uint64_t HELPER(pssh1sadd_w)(CPURISCVState *env,
+>> +                     uint64_t rs1, uint64_t rs2)
+>> +{
+>> +    uint64_t rd = 0;
+>> +    int elems = 2;
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
+>> +        int32_t e2 = (int32_t)EXTRACT32(rs2, i);
+>> +        int64_t shifted;
+>> +
+>> +        /* Check if shift-left-1 would overflow */
+>> +        if (e1 > 0x3FFFFFFF || e1 < -0x40000000) {
+>> +            shifted = (e1 < 0) ? 0xFFFFFFFF80000000LL : 0x7FFFFFFF;
+>> +            sat = 1;
+>> +        } else {
+>> +            shifted = (int64_t)e1 << 1;
+>> +        }
+>> +
+>> +        int64_t sum = shifted + e2;
+>> +        int32_t res = signed_saturate_w(sum, &sat);
+>> +        rd = INSERT32(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * SSH1SADD - 32-bit scalar saturating shift left by 1 and saturating add
+>> + */
+>> +uint32_t HELPER(ssh1sadd)(CPURISCVState *env,
+>> +                     uint32_t rs1, uint32_t rs2)
+>> +{
+>> +    int32_t a = (int32_t)rs1;
+>> +    int32_t b = (int32_t)rs2;
+>> +    int64_t shifted;
+>> +    int sat = 0;
+>> +
+>> +    /* Check if shift-left-1 would overflow */
+>> +    if (a > 0x3FFFFFFF || a < -0x40000000) {
+>> +        shifted = (a < 0) ? 0xFFFFFFFF80000000LL : 0x7FFFFFFF;
+>> +        sat = 1;
+>> +    } else {
+>> +        shifted = (int64_t)a << 1;
+>> +    }
+>> +
+>> +    int64_t sum = shifted + b;
+>> +    int32_t res = signed_saturate_w(sum, &sat);
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return (uint32_t)res;
+>> +}
+>> +
+>> +/* Saturating addition operations */
+>> +
+>> +/**
+>> + * PSADD.B - Packed 8-bit signed saturating addition
+>> + * For each byte: rd[i] = sat8(rs1[i] + rs2[i])
+>> + */
+>> +target_ulong HELPER(psadd_b)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_B(rd);
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        int8_t e1 = (int8_t)EXTRACT8(rs1, i);
+>> +        int8_t e2 = (int8_t)EXTRACT8(rs2, i);
+>> +        int32_t sum = (int32_t)e1 + (int32_t)e2;
+>> +        int8_t res = signed_saturate_b(sum, &sat);
+>> +        rd = INSERT8(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSADD.H - Packed 16-bit signed saturating addition
+>> + * For each halfword: rd[i] = sat16(rs1[i] + rs2[i])
+>> + */
+>> +target_ulong HELPER(psadd_h)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_H(rd);
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
+>> +        int16_t e2 = (int16_t)EXTRACT16(rs2, i);
+>> +        int32_t sum = (int32_t)e1 + (int32_t)e2;
+>> +        int16_t res = signed_saturate_h(sum, &sat);
+>> +        rd = INSERT16(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSADD.W - Packed 32-bit signed saturating addition (RV64 only)
+>> + * For each word: rd[i] = sat32(rs1[i] + rs2[i])
+>> + */
+>> +uint64_t HELPER(psadd_w)(CPURISCVState *env,
+>> +                     uint64_t rs1, uint64_t rs2)
+>> +{
+>> +    uint64_t rd = 0;
+>> +    int elems = 2;
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
+>> +        int32_t e2 = (int32_t)EXTRACT32(rs2, i);
+>> +        int64_t sum = (int64_t)e1 + (int64_t)e2;
+>> +        int32_t res = signed_saturate_w(sum, &sat);
+>> +        rd = INSERT32(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSADDU.B - Packed 8-bit unsigned saturating addition
+>> + * For each byte: rd[i] = usat8(rs1[i] + rs2[i])
+>> + */
+>> +target_ulong HELPER(psaddu_b)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_B(rd);
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint8_t e1 = EXTRACT8(rs1, i);
+>> +        uint8_t e2 = EXTRACT8(rs2, i);
+>> +        uint32_t sum = (uint32_t)e1 + (uint32_t)e2;
+>> +        uint8_t res = unsigned_saturate_b(sum, &sat);
+>> +        rd = INSERT8(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSADDU.H - Packed 16-bit unsigned saturating addition
+>> + * For each halfword: rd[i] = usat16(rs1[i] + rs2[i])
+>> + */
+>> +target_ulong HELPER(psaddu_h)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_H(rd);
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint16_t e1 = EXTRACT16(rs1, i);
+>> +        uint16_t e2 = EXTRACT16(rs2, i);
+>> +        uint32_t sum = (uint32_t)e1 + (uint32_t)e2;
+>> +        uint16_t res = unsigned_saturate_h(sum, &sat);
+>> +        rd = INSERT16(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSADDU.W - Packed 32-bit unsigned saturating addition (RV64 only)
+>> + * For each word: rd[i] = usat32(rs1[i] + rs2[i])
+>> + */
+>> +uint64_t HELPER(psaddu_w)(CPURISCVState *env,
+>> +                     uint64_t rs1, uint64_t rs2)
+>> +{
+>> +    uint64_t rd = 0;
+>> +    int elems = 2;
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint32_t e1 = EXTRACT32(rs1, i);
+>> +        uint32_t e2 = EXTRACT32(rs2, i);
+>> +        uint64_t sum = (uint64_t)e1 + (uint64_t)e2;
+>> +        uint32_t res = unsigned_saturate_w(sum, &sat);
+>> +        rd = INSERT32(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * SADD - 32-bit signed saturating addition
+>> + */
+>> +uint32_t HELPER(sadd)(CPURISCVState *env,
+>> +                     uint32_t rs1, uint32_t rs2)
+>> +{
+>> +    int32_t a = (int32_t)rs1;
+>> +    int32_t b = (int32_t)rs2;
+>> +    int64_t sum = (int64_t)a + (int64_t)b;
+>> +    int sat = 0;
+>> +    int32_t res = signed_saturate_w(sum, &sat);
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return (uint32_t)res;
+>> +}
+>> +
+>> +/**
+>> + * SADDU - 32-bit unsigned saturating addition
+>> + */
+>> +uint32_t HELPER(saddu)(CPURISCVState *env,
+>> +                     uint32_t rs1, uint32_t rs2)
+>> +{
+>> +    uint32_t a = rs1;
+>> +    uint32_t b = rs2;
+>> +    uint64_t sum = (uint64_t)a + (uint64_t)b;
+>> +    int sat = 0;
+>> +    uint32_t res = unsigned_saturate_w(sum, &sat);
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return res;
+>> +}
+>> +
+>> +/* Saturating subtraction operations */
+>> +
+>> +/**
+>> + * PSSUB.B - Packed 8-bit signed saturating subtraction
+>> + * For each byte: rd[i] = sat8(rs1[i] - rs2[i])
+>> + */
+>> +target_ulong HELPER(pssub_b)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_B(rd);
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        int8_t e1 = (int8_t)EXTRACT8(rs1, i);
+>> +        int8_t e2 = (int8_t)EXTRACT8(rs2, i);
+>> +        int32_t diff = (int32_t)e1 - (int32_t)e2;
+>> +        int8_t res = signed_saturate_b(diff, &sat);
+>> +        rd = INSERT8(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSSUB.H - Packed 16-bit signed saturating subtraction
+>> + * For each halfword: rd[i] = sat16(rs1[i] - rs2[i])
+>> + */
+>> +target_ulong HELPER(pssub_h)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_H(rd);
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
+>> +        int16_t e2 = (int16_t)EXTRACT16(rs2, i);
+>> +        int32_t diff = (int32_t)e1 - (int32_t)e2;
+>> +        int16_t res = signed_saturate_h(diff, &sat);
+>> +        rd = INSERT16(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSSUB.W - Packed 32-bit signed saturating subtraction (RV64 only)
+>> + * For each word: rd[i] = sat32(rs1[i] - rs2[i])
+>> + */
+>> +uint64_t HELPER(pssub_w)(CPURISCVState *env,
+>> +                     uint64_t rs1, uint64_t rs2)
+>> +{
+>> +    uint64_t rd = 0;
+>> +    int elems = 2;
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
+>> +        int32_t e2 = (int32_t)EXTRACT32(rs2, i);
+>> +        int64_t diff = (int64_t)e1 - (int64_t)e2;
+>> +        int32_t res = signed_saturate_w(diff, &sat);
+>> +        rd = INSERT32(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSSUBU.B - Packed 8-bit unsigned saturating subtraction
+>> + * For each byte: rd[i] = usat8(rs1[i] - rs2[i])
+>> + */
+>> +target_ulong HELPER(pssubu_b)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_B(rd);
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint8_t e1 = EXTRACT8(rs1, i);
+>> +        uint8_t e2 = EXTRACT8(rs2, i);
+>> +        uint32_t diff = e1 - e2;  /* Unsigned subtraction may underflow */
+>> +        uint8_t res = unsigned_saturate_b(diff, &sat);
+>> +        rd = INSERT8(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSSUBU.H - Packed 16-bit unsigned saturating subtraction
+>> + * For each halfword: rd[i] = usat16(rs1[i] - rs2[i])
+>> + */
+>> +target_ulong HELPER(pssubu_h)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong rs2)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_H(rd);
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint16_t e1 = EXTRACT16(rs1, i);
+>> +        uint16_t e2 = EXTRACT16(rs2, i);
+>> +        uint32_t diff = e1 - e2;
+>> +        uint16_t res = unsigned_saturate_h(diff, &sat);
+>> +        rd = INSERT16(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSSUBU.W - Packed 32-bit unsigned saturating subtraction (RV64 only)
+>> + * For each word: rd[i] = usat32(rs1[i] - rs2[i])
+>> + */
+>> +uint64_t HELPER(pssubu_w)(CPURISCVState *env,
+>> +                     uint64_t rs1, uint64_t rs2)
+>> +{
+>> +    uint64_t rd = 0;
+>> +    int elems = 2;
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        uint32_t e1 = EXTRACT32(rs1, i);
+>> +        uint32_t e2 = EXTRACT32(rs2, i);
+>> +        uint32_t res = (e1 >= e2) ? (e1 - e2) : 0;
+>> +        if (e1 < e2) {
+>> +            sat = 1;
+>> +        }
+>> +        rd = INSERT32(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * SSUB - 32-bit signed saturating subtraction
+>> + */
+>> +uint32_t HELPER(ssub)(CPURISCVState *env,
+>> +                     uint32_t rs1, uint32_t rs2)
+>> +{
+>> +    int32_t a = (int32_t)rs1;
+>> +    int32_t b = (int32_t)rs2;
+>> +    int64_t diff = (int64_t)a - (int64_t)b;
+>> +    int sat = 0;
+>> +    int32_t res = signed_saturate_w(diff, &sat);
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return (uint32_t)res;
+>> +}
+>> +
+>> +/**
+>> + * SSUBU - 32-bit unsigned saturating subtraction
+>> + */
+>> +uint32_t HELPER(ssubu)(CPURISCVState *env,
+>> +                     uint32_t rs1, uint32_t rs2)
+>> +{
+>> +    uint32_t a = rs1;
+>> +    uint32_t b = rs2;
+>> +    uint64_t diff = (uint64_t)a - (uint64_t)b;
+>> +    int sat = 0;
+>> +    uint32_t res = unsigned_saturate_w(diff, &sat);
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return res;
+>> +}
+>> +
+>> +/* Saturation instructions (SAT, USAT) */
+>> +
+>> +/**
+>> + * PSATI.H - Packed 16-bit signed saturate to immediate bit-width
+>> + * For each halfword: rd[i] = sat(rs1[i], imm+1 bits)
+>> + */
+>> +target_ulong HELPER(psati_h)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong imm)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_H(rd);
+>> +    int range = (imm & 0x0F) + 1;  /* imm specifies bits-1 */
+>> +    int64_t max = (1LL << (range - 1)) - 1;
+>> +    int64_t min = -(1LL << (range - 1));
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
+>> +        int16_t res;
+>> +
+>> +        if (e1 > max) {
+>> +            res = max;
+>> +            sat = 1;
+>> +        } else if (e1 < min) {
+>> +            res = min;
+>> +            sat = 1;
+>> +        } else {
+>> +            res = e1;
+>> +        }
+>> +
+>> +        rd = INSERT16(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PUSATI.H - Packed 16-bit unsigned saturate to immediate bit-width
+>> + * For each halfword: rd[i] = usat(rs1[i], imm bits)
+>> + */
+>> +target_ulong HELPER(pusati_h)(CPURISCVState *env,
+>> +                          target_ulong rs1, target_ulong imm)
+>> +{
+>> +    target_ulong rd = 0;
+>> +    int elems = ELEMS_H(rd);
+>> +    uint32_t max = (1U << imm) - 1;
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
+>> +        int16_t res;
+>> +
+>> +        if (e1 < 0) {
+>> +            res = 0;
+>> +            sat = 1;
+>> +        } else if ((uint16_t)e1 > max) {
+>> +            res = max;
+>> +            sat = 1;
+>> +        } else {
+>> +            res = e1;
+>> +        }
+>> +
+>> +        rd = INSERT16(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PSATI.W - Packed 32-bit signed saturate to immediate bit-width (RV64 only)
+>> + * For each word: rd[i] = sat(rs1[i], imm+1 bits)
+>> + */
+>> +uint64_t HELPER(psati_w)(CPURISCVState *env,
+>> +                     uint64_t rs1, uint64_t imm)
+>> +{
+>> +    uint64_t rd = 0;
+>> +    int elems = 2;
+>> +    int range = (imm & 0x1F) + 1;
+>> +    int64_t max = (1LL << (range - 1)) - 1;
+>> +    int64_t min = -(1LL << (range - 1));
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
+>> +        int32_t res;
+>> +
+>> +        if (e1 > max) {
+>> +            res = max;
+>> +            sat = 1;
+>> +        } else if (e1 < min) {
+>> +            res = min;
+>> +            sat = 1;
+>> +        } else {
+>> +            res = e1;
+>> +        }
+>> +
+>> +        rd = INSERT32(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * PUSATI.W - Packed 32-bit unsigned saturate to immediate bit-width (RV64 only)
+>> + * For each word: rd[i] = usat(rs1[i], imm bits)
+>> + */
+>> +uint64_t HELPER(pusati_w)(CPURISCVState *env,
+>> +                     uint64_t rs1, uint64_t imm)
+>> +{
+>> +    uint64_t rd = 0;
+>> +    int elems = 2;
+>> +    uint64_t max = (1ULL << imm) - 1;
+>> +    int sat = 0;
+>> +
+>> +    for (int i = 0; i < elems; i++) {
+>> +        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
+>> +        int32_t res;
+>> +
+>> +        if (e1 < 0) {
+>> +            res = 0;
+>> +            sat = 1;
+>> +        } else if ((uint32_t)e1 > max) {
+>> +            res = max;
+>> +            sat = 1;
+>> +        } else {
+>> +            res = e1;
+>> +        }
+>> +
+>> +        rd = INSERT32(rd, res, i);
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return rd;
+>> +}
+>> +
+>> +/**
+>> + * SATI_32 - 32-bit scalar signed saturation with immediate range
+>> + */
+>> +uint32_t HELPER(sati_32)(CPURISCVState *env,
+>> +                         uint32_t rs1, uint32_t imm)
+>> +{
+>> +    int32_t a = (int32_t)rs1;
+>> +    int range = (imm & 0x1F) + 1;  /* imm specifies bits-1 */
+>> +    int64_t max = (1LL << (range - 1)) - 1;
+>> +    int64_t min = -(1LL << (range - 1));
+>> +    int sat = 0;
+>> +
+>> +    if (a > max) {
+>> +        a = max;
+>> +        sat = 1;
+>> +    } else if (a < min) {
+>> +        a = min;
+>> +        sat = 1;
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return (uint32_t)a;
+>> +}
+>> +
+>> +/**
+>> + * USATI_32 - 32-bit scalar unsigned saturation with immediate range
+>> + */
+>> +uint32_t HELPER(usati_32)(CPURISCVState *env,
+>> +                          uint32_t rs1, uint32_t imm)
+>> +{
+>> +    int32_t a = (int32_t)rs1;
+>> +    uint32_t max = (1U << imm) - 1;
+>> +    int sat = 0;
+>> +
+>> +    if (a < 0) {
+>> +        a = 0;
+>> +        sat = 1;
+>> +    } else if ((uint32_t)a > max) {
+>> +        a = max;
+>> +        sat = 1;
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return (uint32_t)a;
+>> +}
+>> +
+>> +/**
+>> + * SATI_64 - 64-bit scalar signed saturation with immediate range
+>> + */
+>> +uint64_t HELPER(sati_64)(CPURISCVState *env,
+>> +                     uint64_t rs1, uint64_t imm)
+>> +{
+>> +    int64_t a = (int64_t)rs1;
+>> +    int range = (imm & 0x3F) + 1;
+>> +    int64_t max = (1LL << (range - 1)) - 1;
+>> +    int64_t min = -(1LL << (range - 1));
+>> +    int sat = 0;
+>> +
+>> +    if (a > max) {
+>> +        a = max;
+>> +        sat = 1;
+>> +    } else if (a < min) {
+>> +        a = min;
+>> +        sat = 1;
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return (uint64_t)a;
+>> +}
+>> +
+>> +/**
+>> + * USATI_64 - 64-bit scalar unsigned saturation with immediate range
+>> + */
+>> +uint64_t HELPER(usati_64)(CPURISCVState *env,
+>> +                     uint64_t rs1, uint64_t imm)
+>> +{
+>> +    int64_t a = (int64_t)rs1;
+>> +    uint64_t max = (1ULL << imm) - 1;
+>> +    int sat = 0;
+>> +
+>> +    if (a < 0) {
+>> +        a = 0;
+>> +        sat = 1;
+>> +    } else if ((uint64_t)a > max) {
+>> +        a = max;
+>> +        sat = 1;
+>> +    }
+>> +
+>> +    if (sat) {
+>> +        env->vxsat = 1;
+>> +    }
+>> +    return (uint64_t)a;
+>> +}
+>> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+>> index 81087e0a5d..de3ec7a7ec 100644
+>> --- a/target/riscv/translate.c
+>> +++ b/target/riscv/translate.c
+>> @@ -1206,6 +1206,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+>>   #include "insn_trans/trans_rvh.c.inc"
+>>   #include "insn_trans/trans_rvv.c.inc"
+>>   #include "insn_trans/trans_rvb.c.inc"
+>> +#include "insn_trans/trans_rvp.c.inc"
+>>   #include "insn_trans/trans_rvzicond.c.inc"
+>>   #include "insn_trans/trans_rvzacas.c.inc"
+>>   #include "insn_trans/trans_rvzabha.c.inc"
+>> -- 
+>> 2.34.1
+>>
+--------------a7QoIjvZlb8FSJGJuzFgoxK2
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">在 2026/4/22 22:10, Chao Liu 写道:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:aejRC51hrTYRLDEY@ZEVORN-PC.localdomain">
+      <pre wrap="" class="moz-quote-pre">On Fri, Apr 17, 2026 at 06:46:39PM +0800, Molly Chen wrote:
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">Signed-off-by: Molly Chen <a class="moz-txt-link-rfc2396E" href="mailto:xiaoou@iscas.ac.cn">&lt;xiaoou@iscas.ac.cn&gt;</a>
 ---
- hw/vfio-user/proxy.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/riscv/helper.h                   |   40 +
+ target/riscv/insn32.decode              |   65 ++
+ target/riscv/insn_trans/trans_rvp.c.inc |  564 ++++++++++++
+ target/riscv/meson.build                |    3 +-
+ target/riscv/psimd_helper.c             | 1069 +++++++++++++++++++++++
+ target/riscv/translate.c                |    1 +
+ 6 files changed, 1741 insertions(+), 1 deletion(-)
+ create mode 100644 target/riscv/insn_trans/trans_rvp.c.inc
+ create mode 100644 target/riscv/psimd_helper.c
 
-diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
-index 314dfd23d8af..8b7cc36231ab 100644
---- a/hw/vfio-user/proxy.c
-+++ b/hw/vfio-user/proxy.c
-@@ -1190,8 +1190,8 @@ static bool check_migr(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-     QDict *qdict = qobject_to(QDict, qobj);
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 54d2331966..76bc6583fb 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -1351,3 +1351,43 @@ DEF_HELPER_4(vsm4r_vs, void, ptr, ptr, env, i32)
+ #ifndef CONFIG_USER_ONLY
+ DEF_HELPER_1(ssamoswap_disabled, void, env)
+ #endif
++
++/* Packed SIMD */
++DEF_HELPER_3(padd_b, tl, env, tl, tl)
++DEF_HELPER_3(padd_h, tl, env, tl, tl)
++DEF_HELPER_3(padd_w, i64, env, i64, i64)
++DEF_HELPER_3(padd_bs, tl, env, tl, tl)
++DEF_HELPER_3(padd_hs, tl, env, tl, tl)
++DEF_HELPER_3(padd_ws, i64, env, i64, i64)
++DEF_HELPER_3(psub_b, tl, env, tl, tl)
++DEF_HELPER_3(psub_h, tl, env, tl, tl)
++DEF_HELPER_3(psub_w, i64, env, i64, i64)
++DEF_HELPER_3(psh1add_h, tl, env, tl, tl)
++DEF_HELPER_3(psh1add_w, i64, env, i64, i64)
++DEF_HELPER_3(pssh1sadd_h, tl, env, tl, tl)
++DEF_HELPER_3(pssh1sadd_w, i64, env, i64, i64)
++DEF_HELPER_3(ssh1sadd, i32, env, i32, i32)
++DEF_HELPER_3(psadd_b, tl, env, tl, tl)
++DEF_HELPER_3(psadd_h, tl, env, tl, tl)
++DEF_HELPER_3(psadd_w, i64, env, i64, i64)
++DEF_HELPER_3(psaddu_b, tl, env, tl, tl)
++DEF_HELPER_3(psaddu_h, tl, env, tl, tl)
++DEF_HELPER_3(psaddu_w, i64, env, i64, i64)
++DEF_HELPER_3(sadd, i32, env, i32, i32)
++DEF_HELPER_3(saddu, i32, env, i32, i32)
++DEF_HELPER_3(pssub_b, tl, env, tl, tl)
++DEF_HELPER_3(pssub_h, tl, env, tl, tl)
++DEF_HELPER_3(pssub_w, i64, env, i64, i64)
++DEF_HELPER_3(pssubu_b, tl, env, tl, tl)
++DEF_HELPER_3(pssubu_h, tl, env, tl, tl)
++DEF_HELPER_3(pssubu_w, i64, env, i64, i64)
++DEF_HELPER_3(ssub, i32, env, i32, i32)
++DEF_HELPER_3(ssubu, i32, env, i32, i32)
++DEF_HELPER_3(psati_h, tl, env, tl, tl)
++DEF_HELPER_3(pusati_h, tl, env, tl, tl)
++DEF_HELPER_3(psati_w, i64, env, i64, i64)
++DEF_HELPER_3(pusati_w, i64, env, i64, i64)
++DEF_HELPER_3(sati_32, i32, env, i32, i32)
++DEF_HELPER_3(usati_32, i32, env, i32, i32)
++DEF_HELPER_3(sati_64, i64, env, i64, i64)
++DEF_HELPER_3(usati_64, i64, env, i64, i64)
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index 6e35c4b1e6..6043eb39cf 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -40,6 +40,9 @@
+ %imm_z6   26:1 15:5
+ %imm_mop5 30:1 26:2 20:2
+ %imm_mop3 30:1 26:2
++%imm_p_ui16 20:4
++%imm_p_ui32 20:5
++%imm_p_ui64 20:6
  
-     if (qdict == NULL) {
--        error_setg(errp, "malformed %s", VFIO_USER_CAP_MAX_FDS);
--        return true;
-+        error_setg(errp, "malformed %s", VFIO_USER_CAP_MIGR);
-+        return false;
-     }
-     return caps_parse(proxy, qdict, caps_migr, errp);
- }
+ # Argument sets:
+ &amp;empty
+@@ -105,6 +108,10 @@
+ @mop5 . . .. .. .... .. ..... ... ..... ....... &amp;mop5 imm=%imm_mop5 %rd %rs1
+ @mop3 . . .. .. . ..... ..... ... ..... ....... &amp;mop3 imm=%imm_mop3 %rd %rs1 %rs2
+ 
++@p_ui16 ..... .... ... ..... ... ..... ....... &amp;i imm=%imm_p_ui16 %rs1 %rd
++@p_ui32 ..... .... ... ..... ... ..... ....... &amp;i imm=%imm_p_ui32 %rs1 %rd
++@p_ui64 ..... .... ... ..... ... ..... ....... &amp;i imm=%imm_p_ui64 %rs1 %rd
++
+ # Formats 64:
+ @sh5     .......  ..... .....  ... ..... ....... &amp;shift  shamt=%sh5      %rs1 %rd
+ 
+@@ -1084,3 +1091,61 @@ sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
+ sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
+ sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
+ sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
++
++
++# *** P Experimental Extension Version v018 ***
++# Arithmetic Operations(Non-Saturating and Saturating)
++padd_b     1000010 ..... ..... 000 ..... 0111011 @r
++padd_h     1000000 ..... ..... 000 ..... 0111011 @r
++padd_w     1000001 ..... ..... 000 ..... 0111011 @r
++padd_bs    1001110 ..... ..... 010 ..... 0011011 @r
++padd_hs    1001100 ..... ..... 010 ..... 0011011 @r
++padd_ws    1001101 ..... ..... 010 ..... 0011011 @r
++psub_b     1100010 ..... ..... 000 ..... 0111011 @r
++psub_h     1100000 ..... ..... 000 ..... 0111011 @r
++psub_w     1100001 ..... ..... 000 ..... 0111011 @r
++psh1add_h  1010000 ..... ..... 010 ..... 0111011 @r
++psh1add_w  1010001 ..... ..... 010 ..... 0111011 @r
++pssh1sadd_h   1011000 ..... ..... 010 ..... 0111011 @r
++{
++  ssh1sadd    1011001 ..... ..... 010 ..... 0111011 @r
++  pssh1sadd_w 1011001 ..... ..... 010 ..... 0111011 @r
++}
++psadd_b    1001010 ..... ..... 000 ..... 0111011 @r
++psadd_h    1001000 ..... ..... 000 ..... 0111011 @r
++{
++  sadd     1001001 ..... ..... 000 ..... 0111011 @r
++  psadd_w  1001001 ..... ..... 000 ..... 0111011 @r
++}
++psaddu_b   1011010 ..... ..... 000 ..... 0111011 @r
++psaddu_h   1011000 ..... ..... 000 ..... 0111011 @r
++{
++  saddu    1011001 ..... ..... 000 ..... 0111011 @r
++  psaddu_w 1011001 ..... ..... 000 ..... 0111011 @r
++}
++pssub_b    1101010 ..... ..... 000 ..... 0111011 @r
++pssub_h    1101000 ..... ..... 000 ..... 0111011 @r
++{
++  ssub     1101001 ..... ..... 000 ..... 0111011 @r
++  pssub_w  1101001 ..... ..... 000 ..... 0111011 @r
++}
++pssubu_b   1111010 ..... ..... 000 ..... 0111011 @r
++pssubu_h   1111000 ..... ..... 000 ..... 0111011 @r
++{
++  ssubu      1111001 ..... ..... 000 ..... 0111011 @r
++  pssubu_w   1111001 ..... ..... 000 ..... 0111011 @r
++}
++psati_h    11100 001.... ..... 100 ..... 0011011 @p_ui16
++pusati_h   10100 001.... ..... 100 ..... 0011011 @p_ui16
++{
++  sati_32    11100 01..... ..... 100 ..... 0011011 @p_ui32
++  psati_w      11100 01..... ..... 100 ..... 0011011 @p_ui32
++}
++{
++  usati_32   10100 01..... ..... 100 ..... 0011011 @p_ui32
++  pusati_w     10100 01..... ..... 100 ..... 0011011 @p_ui32
++}
++
++sati_64    111001 ...... ..... 100 ..... 0011011 @p_ui64
++usati_64   101001 ...... ..... 100 ..... 0011011 @p_ui64
++
+diff --git a/target/riscv/insn_trans/trans_rvp.c.inc b/target/riscv/insn_trans/trans_rvp.c.inc
+new file mode 100644
+index 0000000000..6f7246b563
+--- /dev/null
++++ b/target/riscv/insn_trans/trans_rvp.c.inc
+@@ -0,0 +1,564 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* RISC-V translation routines for the P Standard Extensions. */
++/* Copyright (c) 2026 ISRC ISCAS. */
++
++#define GEN_SIMD_TRANS(NAME)                                \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++   REQUIRE_EXT(ctx, RVP);                                   \
++   TCGv src1 = get_gpr(ctx, a-&gt;rs1, EXT_NONE);              \
++   TCGv src2 = get_gpr(ctx, a-&gt;rs2, EXT_NONE);              \
++   TCGv dest = dest_gpr(ctx, a-&gt;rd);                        \
++   gen_helper_##NAME(dest, tcg_env, src1, src2);            \
++   return true;                                             \
++}
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_32(NAME)                             \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a)  \
++{                                                           \
++    REQUIRE_32BIT(ctx);                                     \
++    REQUIRE_EXT(ctx, RVP);                                  \
++    TCGv src1 = get_gpr(ctx, a-&gt;rs1, EXT_NONE);             \
++    TCGv src2 = get_gpr(ctx, a-&gt;rs2, EXT_NONE);             \
++    TCGv dest = dest_gpr(ctx, a-&gt;rd);                       \
++    gen_helper_##NAME(dest, tcg_env, src1, src2);           \
++    return true;                                            \
++}
++#else
++#define GEN_SIMD_TRANS_32(NAME)                             \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a)  \
++{                                                           \
++    REQUIRE_32BIT(ctx);                                     \
++    return true;                                            \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_64(NAME)                             \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a)  \
++{                                                           \
++   REQUIRE_64BIT(ctx);                                      \
++   return true;                                             \
++}
++#else
++#define GEN_SIMD_TRANS_64(NAME)                             \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a)  \
++{                                                           \
++    REQUIRE_64BIT(ctx);                                     \
++    REQUIRE_EXT(ctx, RVP);                                  \
++    TCGv src1 = get_gpr(ctx, a-&gt;rs1, EXT_NONE);             \
++    TCGv src2 = get_gpr(ctx, a-&gt;rs2, EXT_NONE);             \
++    TCGv dest = dest_gpr(ctx, a-&gt;rd);                       \
++    gen_helper_##NAME(dest, tcg_env, src1, src2);           \
++    return true;                                            \
++}
++#endif
++
++#define GEN_SIMD_TRANS_ACC(NAME)                            \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_EXT(ctx, RVP);                                  \
++    TCGv src1 = get_gpr(ctx, a-&gt;rs1, EXT_NONE);             \
++    TCGv src2 = get_gpr(ctx, a-&gt;rs2, EXT_NONE);             \
++    TCGv dest = dest_gpr(ctx, a-&gt;rd);                       \
++    TCGv t = tcg_temp_new();                                \
++    gen_helper_##NAME(t, tcg_env, src1, src2, dest);        \
++    gen_set_gpr(ctx, a-&gt;rd, t);                             \
++    return true;                                            \
++}
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_ACC_32(NAME)                         \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_32BIT(ctx);                                     \
++    REQUIRE_EXT(ctx, RVP);                                  \
++    TCGv src1 = get_gpr(ctx, a-&gt;rs1, EXT_NONE);             \
++    TCGv src2 = get_gpr(ctx, a-&gt;rs2, EXT_NONE);             \
++    TCGv dest = dest_gpr(ctx, a-&gt;rd);                       \
++    TCGv t = tcg_temp_new();                                \
++    gen_helper_##NAME(t, tcg_env, src1, src2, dest);        \
++    gen_set_gpr(ctx, a-&gt;rd, t);                             \
++    return true;                                            \
++}
++#else
++#define GEN_SIMD_TRANS_ACC_32(NAME)                         \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_32BIT(ctx);                                     \
++    return true;                                            \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_ACC_64(NAME)                         \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_64BIT(ctx);                                     \
++    return true;                                            \
++}
++#else
++#define GEN_SIMD_TRANS_ACC_64(NAME)                         \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_64BIT(ctx);                                     \
++    REQUIRE_EXT(ctx, RVP);                                  \
++    TCGv src1 = get_gpr(ctx, a-&gt;rs1, EXT_NONE);             \
++    TCGv src2 = get_gpr(ctx, a-&gt;rs2, EXT_NONE);             \
++    TCGv dest = dest_gpr(ctx, a-&gt;rd);                       \
++    TCGv t = tcg_temp_new();                                \
++    gen_helper_##NAME(t, tcg_env, src1, src2, dest);        \
++    gen_set_gpr(ctx, a-&gt;rd, t);                             \
++    return true;                                            \
++}
++#endif
++
++#define GEN_SIMD_TRANS_R1(NAME)                             \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_EXT(ctx, RVP);                                  \
++    TCGv src1 = get_gpr(ctx, a-&gt;rs1, EXT_NONE);             \
++    TCGv dest = dest_gpr(ctx, a-&gt;rd);                       \
++    gen_helper_##NAME(dest, tcg_env, src1);                 \
++    gen_set_gpr(ctx, a-&gt;rd, dest);                          \
++    return true;                                            \
++}
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_R1_64(NAME)                          \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_64BIT(ctx);                                     \
++    return true;                                            \
++}
++#else
++#define GEN_SIMD_TRANS_R1_64(NAME)                          \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_64BIT(ctx);                                     \
++    REQUIRE_EXT(ctx, RVP);                                  \
++    TCGv src1 = get_gpr(ctx, a-&gt;rs1, EXT_NONE);             \
++    TCGv dest = dest_gpr(ctx, a-&gt;rd);                       \
++    gen_helper_##NAME(dest, tcg_env, src1);                 \
++    return true;                                            \
++}
++#endif
++
++#define GEN_SIMD_TRANS_IMM(NAME)                            \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_EXT(ctx, RVP);                                  \
++    TCGv src1 = get_gpr(ctx, a-&gt;rs1, EXT_NONE);             \
++    TCGv imm = tcg_constant_tl(a-&gt;imm);                     \
++    TCGv dest = dest_gpr(ctx, a-&gt;rd);                       \
++    gen_helper_##NAME(dest, tcg_env, src1, imm);            \
++    return true;                                            \
++}
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_IMM_32(NAME)                         \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_32BIT(ctx);                                     \
++    REQUIRE_EXT(ctx, RVP);                                   \
++    TCGv src1 = get_gpr(ctx, a-&gt;rs1, EXT_NONE);             \
++    TCGv imm = tcg_constant_tl(a-&gt;imm);                     \
++    TCGv dest = dest_gpr(ctx, a-&gt;rd);                       \
++    gen_helper_##NAME(dest, tcg_env, src1, imm);            \
++    return true;                                            \
++}
++#else
++#define GEN_SIMD_TRANS_IMM_32(NAME)                         \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_32BIT(ctx);                                     \
++    return true;                                            \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_IMM_64(NAME)                         \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_64BIT(ctx);                                     \
++    return true;                                            \
++}
++#else
++#define GEN_SIMD_TRANS_IMM_64(NAME)                         \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_64BIT(ctx);                                     \
++    REQUIRE_EXT(ctx, RVP);                                   \
++    TCGv src1 = get_gpr(ctx, a-&gt;rs1, EXT_NONE);             \
++    TCGv imm = tcg_constant_tl(a-&gt;imm);                     \
++    TCGv dest = dest_gpr(ctx, a-&gt;rd);                       \
++    gen_helper_##NAME(dest, tcg_env, src1, imm);            \
++    return true;                                            \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_REG_PAIR_1(NAME)                     \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_32BIT(ctx);                                     \
++    REQUIRE_EXT(ctx, RVP);                                  \
++    TCGv_i32 src1 = get_gpr(ctx, a-&gt;rs1, EXT_NONE);         \
++    TCGv_i32 src2 = get_gpr(ctx, a-&gt;rs2, EXT_NONE);         \
++    TCGv_i64 t = tcg_temp_new_i64();                        \
++    gen_helper_##NAME(t, tcg_env, src1, src2);              \
++    set_pair_regs(ctx, (a-&gt;rd) * 2, t);                       \
++    return true;                                            \
++}
++#else
++#define GEN_SIMD_TRANS_REG_PAIR_1(NAME)                     \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_32BIT(ctx);                                     \
++    return true;                                            \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_REG_PAIR_2(INSN, HELPER)                \
++static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)    \
++{                                                              \
++    REQUIRE_32BIT(ctx);                                        \
++    REQUIRE_EXT(ctx, RVP);                                     \
++    TCGv src1_0 = get_gpr(ctx, (a-&gt;rs1) * 2, EXT_NONE);          \
++    TCGv src2_0 = get_gpr(ctx, (a-&gt;rs2) * 2, EXT_NONE);          \
++    TCGv dest_0 = dest_gpr(ctx, (a-&gt;rd) * 2);                    \
++    TCGv src1_1 = get_gpr(ctx, (a-&gt;rs1) * 2 + 1, EXT_NONE);        \
++    TCGv src2_1 = get_gpr(ctx, (a-&gt;rs2) * 2 + 1, EXT_NONE);        \
++    TCGv dest_1 = dest_gpr(ctx, (a-&gt;rd) * 2 + 1);                  \
++    gen_helper_##HELPER(dest_0, tcg_env, src1_0, src2_0);      \
++    gen_helper_##HELPER(dest_1, tcg_env, src1_1, src2_1);      \
++    return true;                                               \
++}
++#else
++#define GEN_SIMD_TRANS_REG_PAIR_2(INSN, HELPER)                \
++static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)    \
++{                                                              \
++    REQUIRE_32BIT(ctx);                                        \
++    return true;                                               \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_REG_PAIR_3(INSN, HELPER)                \
++static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)    \
++{                                                              \
++    REQUIRE_EXT(ctx, RVP);                                     \
++    TCGv src1_0 = get_gpr(ctx, (a-&gt;rs1) * 2, EXT_NONE);          \
++    TCGv dest_0 = dest_gpr(ctx, (a-&gt;rd) * 2);                    \
++    TCGv src1_1 = get_gpr(ctx, (a-&gt;rs1) * 2 + 1, EXT_NONE);        \
++    TCGv dest_1 = dest_gpr(ctx, (a-&gt;rd) * 2 + 1);                  \
++    TCGv src2   = get_gpr(ctx, a-&gt;rs2, EXT_NONE);              \
++    gen_helper_##HELPER(dest_0, tcg_env, src1_0, src2);        \
++    gen_helper_##HELPER(dest_1, tcg_env, src1_1, src2);        \
++    return true;                                               \
++}
++#else
++#define GEN_SIMD_TRANS_REG_PAIR_3(INSN, HELPER)                \
++static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)    \
++{                                                              \
++    REQUIRE_32BIT(ctx);                                        \
++    return true;                                               \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_REG_PAIR_DW(INSN, HELPER)               \
++static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)     \
++{                                                              \
++    REQUIRE_32BIT(ctx);                                        \
++    REQUIRE_EXT(ctx, RVP);                                     \
++    TCGv src1_0 = get_gpr(ctx, (a-&gt;rs1) * 2, EXT_NONE);          \
++    TCGv src2_0 = get_gpr(ctx, (a-&gt;rs2) * 2, EXT_NONE);          \
++    TCGv dest_0 = dest_gpr(ctx, (a-&gt;rd) * 2);                    \
++    TCGv src1_1 = get_gpr(ctx, (a-&gt;rs1) * 2 + 1, EXT_NONE);        \
++    TCGv src2_1 = get_gpr(ctx, (a-&gt;rs2) * 2 + 1, EXT_NONE);        \
++    TCGv dest_1 = dest_gpr(ctx, (a-&gt;rd) * 2 + 1);                  \
++    gen_helper_##HELPER(dest_0, tcg_env, src1_0, src2_0);      \
++    gen_helper_##HELPER(dest_1, tcg_env, src1_1, src2_1);      \
++    return true;                                               \
++}
++#else
++#define GEN_SIMD_TRANS_REG_PAIR_DW(INSN, HELPER)               \
++static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)     \
++{                                                              \
++    REQUIRE_32BIT(ctx);                                        \
++    return true;                                               \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_REG_PAIR_DW_IMM(INSN, HELPER)           \
++static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)     \
++{                                                              \
++    REQUIRE_32BIT(ctx);                                        \
++    REQUIRE_EXT(ctx, RVP);                                     \
++    TCGv src1_0 = get_gpr(ctx, (a-&gt;rs1) * 2, EXT_NONE);          \
++    TCGv imm_0 = tcg_constant_tl(a-&gt;imm);                      \
++    TCGv dest_0 = dest_gpr(ctx, (a-&gt;rd) * 2);                    \
++    TCGv src1_1 = get_gpr(ctx, (a-&gt;rs1) * 2 + 1, EXT_NONE);        \
++    TCGv imm_1 = tcg_constant_tl(a-&gt;imm);                      \
++    TCGv dest_1 = dest_gpr(ctx, (a-&gt;rd) * 2 + 1);                  \
++    gen_helper_##HELPER(dest_0, tcg_env, src1_0, imm_0);       \
++    gen_helper_##HELPER(dest_1, tcg_env, src1_1, imm_1);       \
++    return true;                                               \
++}
++#else
++#define GEN_SIMD_TRANS_REG_PAIR_DW_IMM(INSN, HELPER)           \
++static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)     \
++{                                                              \
++    REQUIRE_32BIT(ctx);                                        \
++    return true;                                               \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_REG_PAIR_DW_IMM_2(INSN, HELPER)         \
++static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)     \
++{                                                              \
++    REQUIRE_32BIT(ctx);                                        \
++    REQUIRE_EXT(ctx, RVP);                                     \
++    TCGv src1_0 = get_gpr(ctx, (a-&gt;rs1) * 2, EXT_NONE);          \
++    TCGv imm_0 = tcg_constant_tl(a-&gt;imm);                      \
++    TCGv dest_0 = dest_gpr(ctx, (a-&gt;rd) * 2);                    \
++    TCGv src1_1 = get_gpr(ctx, (a-&gt;rs1) * 2 + 1, EXT_NONE);        \
++    TCGv imm_1 = tcg_constant_tl(a-&gt;imm);                      \
++    TCGv dest_1 = dest_gpr(ctx, (a-&gt;rd) * 2 + 1);                  \
++    gen_helper_##HELPER##_32(dest_0, tcg_env, src1_0, imm_0);  \
++    gen_helper_##HELPER##_32(dest_1, tcg_env, src1_1, imm_1);  \
++    return true;                                               \
++}
++#else
++#define GEN_SIMD_TRANS_REG_PAIR_DW_IMM_2(INSN, HELPER)         \
++static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)     \
++{                                                              \
++    REQUIRE_32BIT(ctx);                                        \
++    return true;                                               \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_REG_PAIR_5(INSN, HELPER)                \
++static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)    \
++{                                                              \
++    REQUIRE_EXT(ctx, RVP);                                     \
++    TCGv src1_0 = get_gpr(ctx, (a-&gt;rs1) * 2, EXT_NONE);          \
++    TCGv dest_0 = dest_gpr(ctx, (a-&gt;rd) * 2);                    \
++    TCGv src1_1 = get_gpr(ctx, (a-&gt;rs1) * 2 + 1, EXT_NONE);        \
++    TCGv dest_1 = dest_gpr(ctx, (a-&gt;rd) * 2 + 1);                  \
++    gen_helper_##HELPER(dest_0, tcg_env, src1_0);              \
++    gen_helper_##HELPER(dest_1, tcg_env, src1_1);              \
++    gen_set_gpr(ctx, (a-&gt;rd) * 2, dest_0);                       \
++    gen_set_gpr(ctx, (a-&gt;rd) * 2 + 1, dest_1);                     \
++    return true;                                               \
++}
++#else
++#define GEN_SIMD_TRANS_REG_PAIR_5(INSN, HELPER)                \
++static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)    \
++{                                                              \
++    REQUIRE_32BIT(ctx);                                        \
++    return true;                                               \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_REG_PAIR_IMM(NAME)                   \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_32BIT(ctx);                                     \
++    REQUIRE_EXT(ctx, RVP);                                  \
++    TCGv src1 = get_gpr(ctx, a-&gt;rs1, EXT_NONE);             \
++    TCGv_i32 imm = tcg_constant_i32(a-&gt;imm);                \
++    TCGv_i64 t = tcg_temp_new_i64();                        \
++    gen_helper_##NAME(t, tcg_env, src1, imm);               \
++    set_pair_regs(ctx, (a-&gt;rd) * 2, t);                       \
++    return true;                                            \
++}
++#else
++#define GEN_SIMD_TRANS_REG_PAIR_IMM(NAME)                   \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_32BIT(ctx);                                     \
++    return true;                                            \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_REG_PAIR_IMM_2(INSN, HELPER)          \
++static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)  \
++{                                                            \
++    REQUIRE_32BIT(ctx);                                      \
++    REQUIRE_EXT(ctx, RVP);                                   \
++    TCGv src1_0 = get_gpr(ctx, (a-&gt;rs1) * 2, EXT_NONE);        \
++    TCGv imm_0 = tcg_constant_tl(a-&gt;imm);                    \
++    TCGv dest_0 = dest_gpr(ctx, (a-&gt;rd) * 2);                  \
++    TCGv src1_1 = get_gpr(ctx, (a-&gt;rs1) * 2 + 1, EXT_NONE);      \
++    TCGv imm_1 = tcg_constant_tl(a-&gt;imm);                    \
++    TCGv dest_1 = dest_gpr(ctx, (a-&gt;rd) * 2 + 1);                \
++    gen_helper_##HELPER(dest_0, tcg_env, src1_0, imm_0);     \
++    gen_helper_##HELPER(dest_1, tcg_env, src1_1, imm_1);     \
++    return true;                                             \
++}
++#else
++#define GEN_SIMD_TRANS_REG_PAIR_IMM_2(INSN, HELPER)          \
++static bool trans_##INSN(DisasContext *ctx, arg_##INSN * a)  \
++{                                                            \
++    REQUIRE_32BIT(ctx);                                      \
++    return true;                                             \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_ACC_REG_PAIR_1(NAME)                 \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_32BIT(ctx);                                     \
++    REQUIRE_EXT(ctx, RVP);                                  \
++    TCGv src1 = get_gpr(ctx, a-&gt;rs1, EXT_NONE);             \
++    TCGv src2 = get_gpr(ctx, a-&gt;rs2, EXT_NONE);             \
++    TCGv_i64 t = tcg_temp_new_i64();                        \
++    if (a-&gt;rd == 0) {                                         \
++        tcg_gen_movi_i64(t, 0);                             \
++    } else {                                                  \
++        get_pair_regs(ctx, t, (a-&gt;rd) * 2);                   \
++    }                                                       \
++    gen_helper_##NAME(t, tcg_env, src1, src2, t);           \
++    set_pair_regs(ctx, (a-&gt;rd) * 2, t);                       \
++    return true;                                            \
++}
++#else
++#define GEN_SIMD_TRANS_ACC_REG_PAIR_1(NAME)                 \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_32BIT(ctx);                                     \
++    return true;                                            \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_REG_PAIR_PREDSUM(NAME)               \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_32BIT(ctx);                                     \
++    REQUIRE_EXT(ctx, RVP);                                  \
++    TCGv_i32 src1_l;                                        \
++    TCGv_i32 src1_h;                                        \
++    TCGv_i32 src2 = get_gpr(ctx, a-&gt;rs2, EXT_NONE);         \
++    TCGv_i32 dest = dest_gpr(ctx, a-&gt;rd);                   \
++    if (a-&gt;rs1 == 0) {                                        \
++        src1_l = tcg_temp_new_i32();                        \
++        src1_h = tcg_temp_new_i32();                        \
++        tcg_gen_movi_i32(src1_l, 0);                        \
++        tcg_gen_movi_i32(src1_h, 0);                        \
++    } else {                                                  \
++        src1_l = get_gpr(ctx, (a-&gt;rs1) * 2, EXT_NONE);        \
++        src1_h = get_gpr(ctx, (a-&gt;rs1) * 2 + 1, EXT_NONE);      \
++    }                                                       \
++    gen_helper_##NAME(dest, tcg_env, src1_l, src1_h, src2); \
++    return true;                                            \
++}
++#else
++#define GEN_SIMD_TRANS_REG_PAIR_PREDSUM(NAME)               \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                           \
++    REQUIRE_32BIT(ctx);                                     \
++    return true;                                            \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_PN_OP_IMM(NAME)                     \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                          \
++    REQUIRE_32BIT(ctx);                                    \
++    REQUIRE_EXT(ctx, RVP);                                 \
++    TCGv_i64 s1 = tcg_temp_new_i64();                      \
++    if (a-&gt;rs1 == 0) {                                     \
++        tcg_gen_mov_i64(s1, 0);                            \
++    } else {                                               \
++        get_pair_regs(ctx, s1, a-&gt;rs1 * 2);                \
++    }                                                      \
++    TCGv shamt = tcg_constant_tl(a-&gt;imm);                  \
++    TCGv_i32 dest = dest_gpr(ctx, a-&gt;rd);                  \
++    gen_helper_##NAME(dest, tcg_env, s1, shamt);           \
++    return true;                                           \
++}
++#else
++#define GEN_SIMD_TRANS_PN_OP_IMM(NAME)                     \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                          \
++    REQUIRE_32BIT(ctx);                                    \
++    return true;                                           \
++}
++#endif
++
++#if defined(TARGET_RISCV32)
++#define GEN_SIMD_TRANS_PN_OP_REG(NAME)                     \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                          \
++    REQUIRE_32BIT(ctx);                                    \
++    REQUIRE_EXT(ctx, RVP);                                 \
++    TCGv_i64 s1 = tcg_temp_new_i64();                      \
++    if (a-&gt;rs1 == 0) {                                     \
++        tcg_gen_mov_i64(s1, 0);                            \
++    } else {                                               \
++        get_pair_regs(ctx, s1, a-&gt;rs1 * 2);                \
++    }                                                      \
++    TCGv_i32 rs2 = get_gpr(ctx, a-&gt;rs2, EXT_NONE);         \
++    TCGv_i32 dest = dest_gpr(ctx, a-&gt;rd);                  \
++    gen_helper_##NAME(dest, tcg_env, s1, rs2);             \
++    return true;                                           \
++}
++#else
++#define GEN_SIMD_TRANS_PN_OP_REG(NAME)                     \
++static bool trans_##NAME(DisasContext *ctx, arg_##NAME * a) \
++{                                                          \
++    REQUIRE_32BIT(ctx);                                    \
++    return true;                                           \
++}
++#endif
++
++GEN_SIMD_TRANS(padd_b)
++GEN_SIMD_TRANS(padd_h)
++GEN_SIMD_TRANS_64(padd_w)
++GEN_SIMD_TRANS(padd_bs)
++GEN_SIMD_TRANS(padd_hs)
++GEN_SIMD_TRANS_64(padd_ws)
++GEN_SIMD_TRANS(psub_b)
++GEN_SIMD_TRANS(psub_h)
++GEN_SIMD_TRANS_64(psub_w)
++GEN_SIMD_TRANS(psh1add_h)
++GEN_SIMD_TRANS_64(psh1add_w)
++GEN_SIMD_TRANS(pssh1sadd_h)
++GEN_SIMD_TRANS_64(pssh1sadd_w)
++GEN_SIMD_TRANS_32(ssh1sadd)
++GEN_SIMD_TRANS(psadd_b)
++GEN_SIMD_TRANS(psadd_h)
++GEN_SIMD_TRANS_64(psadd_w)
++GEN_SIMD_TRANS(psaddu_b)
++GEN_SIMD_TRANS(psaddu_h)
++GEN_SIMD_TRANS_64(psaddu_w)
++GEN_SIMD_TRANS_32(sadd)
++GEN_SIMD_TRANS_32(saddu)
++GEN_SIMD_TRANS(pssub_b)
++GEN_SIMD_TRANS(pssub_h)
++GEN_SIMD_TRANS_64(pssub_w)
++GEN_SIMD_TRANS(pssubu_b)
++GEN_SIMD_TRANS(pssubu_h)
++GEN_SIMD_TRANS_64(pssubu_w)
++GEN_SIMD_TRANS_32(ssub)
++GEN_SIMD_TRANS_32(ssubu)
++GEN_SIMD_TRANS_IMM(psati_h)
++GEN_SIMD_TRANS_IMM(pusati_h)
++GEN_SIMD_TRANS_IMM_64(psati_w)
++GEN_SIMD_TRANS_IMM_64(pusati_w)
++GEN_SIMD_TRANS_IMM_32(sati_32)
++GEN_SIMD_TRANS_IMM_32(usati_32)
++GEN_SIMD_TRANS_IMM_64(sati_64)
++GEN_SIMD_TRANS_IMM_64(usati_64)
+diff --git a/target/riscv/meson.build b/target/riscv/meson.build
+index 79f36abd63..45ed7f8d8a 100644
+--- a/target/riscv/meson.build
++++ b/target/riscv/meson.build
+@@ -28,7 +28,8 @@ riscv_ss.add(files(
+   'm128_helper.c',
+   'crypto_helper.c',
+   'zce_helper.c',
+-  'vcrypto_helper.c'
++  'vcrypto_helper.c',
++  'psimd_helper.c'
+ ))
+ 
+ riscv_system_ss = ss.source_set()
+diff --git a/target/riscv/psimd_helper.c b/target/riscv/psimd_helper.c
+new file mode 100644
+index 0000000000..a754ee3b5e
+--- /dev/null
++++ b/target/riscv/psimd_helper.c
+@@ -0,0 +1,1069 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/* RISC-V Packed SIMD Extension Helpers for QEMU. */
++/* Copyright (C) 2026 ISRC ISCAS. */
++
++#include "qemu/osdep.h"
++#include "cpu.h"
++#include "qemu/host-utils.h"
++#include "exec/helper-proto.h"
++#include "fpu/softfloat.h"
++#include "internals.h"
++
++
++/* Helper macros */
++
++/* Element count calculations */
++#define ELEMS_B(target) (sizeof(target) * 8 / 8)    /* byte elements count */
++#define ELEMS_H(target) (sizeof(target) * 8 / 16)
++#define ELEMS_W(target) (sizeof(target) * 8 / 32)   /* word elements count */
++
++/* Element extraction macros - unsigned to avoid sign extension */
++#define EXTRACT8(val, idx)  (((val) &gt;&gt; ((idx) * 8)) &amp; 0xFF)
++#define EXTRACT16(val, idx) (((val) &gt;&gt; ((idx) * 16)) &amp; 0xFFFF)
++#define EXTRACT32(val, idx) (((val) &gt;&gt; ((idx) * 32)) &amp; 0xFFFFFFFF)
++
++/* Element insertion macros */
++#define INSERT8(val, res, idx) \
++    ((val) | ((target_ulong)(uint8_t)(res) &lt;&lt; ((idx) * 8)))
++#define INSERT16(val, res, idx) \
++    ((val) | ((target_ulong)(uint16_t)(res) &lt;&lt; ((idx) * 16)))
++#define INSERT32(val, res, idx) \
++    ((val) | ((target_ulong)(uint32_t)(res) &lt;&lt; ((idx) * 32)))
++
++/* Saturation constants */
++static const int8_t   SAT_MAX_B = 127;
++static const int8_t   SAT_MIN_B = -128;
++static const int16_t  SAT_MAX_H = 32767;
++static const int16_t  SAT_MIN_H = -32768;
++static const int32_t  SAT_MAX_W = 2147483647;
++static const int32_t  SAT_MIN_W = -2147483648LL;
++static const uint8_t  USAT_MAX_B = 255;
++static const uint16_t USAT_MAX_H = 65535;
++static const uint32_t USAT_MAX_W = 4294967295U;
++
++
++/* Saturation helper functions */
++
++/**
++ * Signed saturation for 8-bit elements
++ * Returns saturated value and sets *sat if saturation occurred
++ */
++static inline int8_t signed_saturate_b(int32_t val, int *sat)
++{
++    if (val &gt; SAT_MAX_B) {
++        *sat = 1;
++        return SAT_MAX_B;
++    }
++    if (val &lt; SAT_MIN_B) {
++        *sat = 1;
++        return SAT_MIN_B;
++    }
++    return (int8_t)val;
++}
++
++/**
++ * Signed saturation for 16-bit elements
++ */
++static inline int16_t signed_saturate_h(int32_t val, int *sat)
++{
++    if (val &gt; SAT_MAX_H) {
++        *sat = 1;
++        return SAT_MAX_H;
++    }
++    if (val &lt; SAT_MIN_H) {
++        *sat = 1;
++        return SAT_MIN_H;
++    }
++    return (int16_t)val;
++}
++
++/**
++ * Signed saturation for 32-bit elements
++ */
++static inline int32_t signed_saturate_w(int64_t val, int *sat)
++{
++    if (val &gt; SAT_MAX_W) {
++        *sat = 1;
++        return SAT_MAX_W;
++    }
++    if (val &lt; SAT_MIN_W) {
++        *sat = 1;
++        return SAT_MIN_W;
++    }
++    return (int32_t)val;
++}
++
++/**
++ * Unsigned saturation for 8-bit elements
++ */
++static inline uint8_t unsigned_saturate_b(uint32_t val, int *sat)
++{
++    if (val &gt; USAT_MAX_B) {
++        *sat = 1;
++        return USAT_MAX_B;
++    }
++    return (uint8_t)val;
++}
++
++/**
++ * Unsigned saturation for 16-bit elements
++ */
++static inline uint16_t unsigned_saturate_h(uint32_t val, int *sat)
++{
++    if (val &gt; USAT_MAX_H) {
++        *sat = 1;
++        return USAT_MAX_H;
++    }
++    return (uint16_t)val;
++}
++
++/**
++ * Unsigned saturation for 32-bit elements
++ */
++static inline uint32_t unsigned_saturate_w(uint64_t val, int *sat)
++{
++    if (val &gt; USAT_MAX_W) {
++        *sat = 1;
++        return USAT_MAX_W;
++    }
++    return (uint32_t)val;
++}
++
++/* Basic addition operations (non-saturating) */
++
++/**
++ * PADD.B - Packed 8-bit addition
++ * For each byte: rd[i] = rs1[i] + rs2[i] (modular)
++ */
++target_ulong HELPER(padd_b)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_B(rd);
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint8_t e1 = EXTRACT8(rs1, i);
++        uint8_t e2 = EXTRACT8(rs2, i);
++        uint8_t res = e1 + e2;
++        rd = INSERT8(rd, res, i);
++    }
++    return rd;
++}
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">If we don't care about performance in the early patchset,
+but considering maintainability, I'd suggest providing unified
+helper macros for these operations.
+
+The current SIMD implementations all share a similar loop
+structure, differing only in element types. We could follow the
+approach used in vector_helper.c and define a few groups of
+helper macros to reduce the boilerplate.
+
+e.g.
+
+```
+  #define DO_ADD(a, b) ((a) + (b))
+  #define DO_SUB(a, b) ((a) - (b))
+
+  #define GEN_PSIMD_VV_B(NAME, OP)                              \
+  target_ulong HELPER(NAME)(CPURISCVState *env,                 \
+                            target_ulong rs1, target_ulong rs2) \
+  {                                                             \
+      target_ulong rd = 0;                                      \
+      for (int i = 0; i &lt; ELEMS_B(rd); i++) {                   \
+          uint8_t e1 = EXTRACT8(rs1, i);                        \
+          uint8_t e2 = EXTRACT8(rs2, i);                        \
+          rd = INSERT8(rd, (uint8_t)OP(e1, e2), i);             \
+      }                                                         \
+      return rd;                                                \
+  }
+
+  GEN_PSIMD_VV_B(padd_b, DO_ADD)
+  GEN_PSIMD_VV_B(psub_b, DO_SUB)
+```
+
+The same applies to the helper functions for other instructions
+as well.
+
+Thanks,
+Chao</pre>
+    </blockquote>
+    <span
+style="color: rgb(15, 17, 21); font-family: quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Thank
+      you for the detailed and constructive suggestion. </span><span
+style="color: rgb(15, 17, 21); font-family: quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">I
+      agree that using unified helper macros is better for
+      maintainability and conciseness</span><span
+style="color: rgb(15, 17, 21); font-family: quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">. </span><span
+style="color: rgb(15, 17, 21); font-family: quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">I'll
+      refactor the code following the<span> vector_helper.c</span></span><span
+style="color: rgb(15, 17, 21); font-family: quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;"><span> </span>approach,
+      using helper macros for SIMD operations. This will be addressed in
+      v2.<br>
+      <br>
+    </span>
+    <p><span
+style="color: rgb(15, 17, 21); font-family: quote-cjk-patch, Inter, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, Oxygen, Ubuntu, Cantarell, &quot;Open Sans&quot;, &quot;Helvetica Neue&quot;, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;">Thanks
+        again for the guidance!</span></p>
+    <p><span style="white-space: pre-wrap;">Best regards,
+Molly</span></p>
+    <blockquote type="cite"
+      cite="mid:aejRC51hrTYRLDEY@ZEVORN-PC.localdomain">
+      <pre wrap="" class="moz-quote-pre">
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">+
++/**
++ * PADD.H - Packed 16-bit addition
++ * For each halfword: rd[i] = rs1[i] + rs2[i] (modular)
++ */
++target_ulong HELPER(padd_h)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_H(rd);
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint16_t e1 = EXTRACT16(rs1, i);
++        uint16_t e2 = EXTRACT16(rs2, i);
++        uint16_t res = e1 + e2;
++        rd = INSERT16(rd, res, i);
++    }
++    return rd;
++}
++
++/**
++ * PADD.W - Packed 32-bit addition (RV64 only)
++ * For each word: rd[i] = rs1[i] + rs2[i] (modular)
++ */
++uint64_t HELPER(padd_w)(CPURISCVState *env,
++                     uint64_t rs1, uint64_t rs2)
++{
++    uint64_t rd = 0;
++    int elems = 2;  /* 2 words in 64-bit */
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint32_t e1 = EXTRACT32(rs1, i);
++        uint32_t e2 = EXTRACT32(rs2, i);
++        uint32_t res = e1 + e2;
++        rd = INSERT32(rd, res, i);
++    }
++    return rd;
++}
++
++/**
++ * PADD.BS - Packed 8-bit addition with scalar second operand
++ * For each byte: rd[i] = rs1[i] + rs2[0] (modular)
++ */
++target_ulong HELPER(padd_bs)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_B(rd);
++    uint8_t e2 = EXTRACT8(rs2, 0);  /* Scalar, take least significant byte */
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint8_t e1 = EXTRACT8(rs1, i);
++        uint8_t res = e1 + e2;
++        rd = INSERT8(rd, res, i);
++    }
++    return rd;
++}
++
++/**
++ * PADD.HS - Packed 16-bit addition with scalar second operand
++ * For each halfword: rd[i] = rs1[i] + rs2[0] (modular)
++ */
++target_ulong HELPER(padd_hs)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_H(rd);
++    uint16_t e2 = EXTRACT16(rs2, 0);
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint16_t e1 = EXTRACT16(rs1, i);
++        uint16_t res = e1 + e2;
++        rd = INSERT16(rd, res, i);
++    }
++    return rd;
++}
++
++/**
++ * PADD.WS - Packed 32-bit addition with scalar second operand (RV64 only)
++ * For each word: rd[i] = rs1[i] + rs2[0] (modular)
++ */
++uint64_t HELPER(padd_ws)(CPURISCVState *env,
++                     uint64_t rs1, uint64_t rs2)
++{
++    uint64_t rd = 0;
++    int elems = 2;
++    uint32_t e2 = EXTRACT32(rs2, 0);
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint32_t e1 = EXTRACT32(rs1, i);
++        uint32_t res = e1 + e2;
++        rd = INSERT32(rd, res, i);
++    }
++    return rd;
++}
++
++
++/* Basic subtraction operations (non-saturating) */
++
++/**
++ * PSUB.B - Packed 8-bit subtraction
++ * For each byte: rd[i] = rs1[i] - rs2[i] (modular)
++ */
++target_ulong HELPER(psub_b)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_B(rd);
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint8_t e1 = EXTRACT8(rs1, i);
++        uint8_t e2 = EXTRACT8(rs2, i);
++        uint8_t res = e1 - e2;
++        rd = INSERT8(rd, res, i);
++    }
++    return rd;
++}
++
++/**
++ * PSUB.H - Packed 16-bit subtraction
++ * For each halfword: rd[i] = rs1[i] - rs2[i] (modular)
++ */
++target_ulong HELPER(psub_h)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_H(rd);
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint16_t e1 = EXTRACT16(rs1, i);
++        uint16_t e2 = EXTRACT16(rs2, i);
++        uint16_t res = e1 - e2;
++        rd = INSERT16(rd, res, i);
++    }
++    return rd;
++}
++
++/**
++ * PSUB.W - Packed 32-bit subtraction (RV64 only)
++ * For each word: rd[i] = rs1[i] - rs2[i] (modular)
++ */
++uint64_t HELPER(psub_w)(CPURISCVState *env,
++                     uint64_t rs1, uint64_t rs2)
++{
++    uint64_t rd = 0;
++    int elems = 2;
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint32_t e1 = EXTRACT32(rs1, i);
++        uint32_t e2 = EXTRACT32(rs2, i);
++        uint32_t res = e1 - e2;
++        rd = INSERT32(rd, res, i);
++    }
++    return rd;
++}
++
++/* Shift-left-by-one and add operations */
++
++/**
++ * PSH1ADD.H - Shift left by 1 and add (16-bit)
++ * For each halfword: rd[i] = (rs1[i] &lt;&lt; 1) + rs2[i]
++ */
++target_ulong HELPER(psh1add_h)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_H(rd);
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint16_t e1 = EXTRACT16(rs1, i);
++        uint16_t e2 = EXTRACT16(rs2, i);
++        uint16_t res = (e1 &lt;&lt; 1) + e2;
++        rd = INSERT16(rd, res, i);
++    }
++    return rd;
++}
++
++/**
++ * PSH1ADD.W - Shift left by 1 and add (32-bit, RV64 only)
++ * For each word: rd[i] = (rs1[i] &lt;&lt; 1) + rs2[i]
++ */
++uint64_t HELPER(psh1add_w)(CPURISCVState *env,
++                     uint64_t rs1, uint64_t rs2)
++{
++    uint64_t rd = 0;
++    int elems = 2;
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint32_t e1 = EXTRACT32(rs1, i);
++        uint32_t e2 = EXTRACT32(rs2, i);
++        uint32_t res = (e1 &lt;&lt; 1) + e2;
++        rd = INSERT32(rd, res, i);
++    }
++    return rd;
++}
++
++/**
++ * PSSH1SADD.H - Saturating shift left by 1 and saturating add (16-bit)
++ * For each halfword: rd[i] = sat16(sat16(rs1[i] &lt;&lt; 1) + rs2[i])
++ */
++target_ulong HELPER(pssh1sadd_h)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_H(rd);
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
++        int16_t e2 = (int16_t)EXTRACT16(rs2, i);
++        int32_t shifted;
++
++        /* Check if shift-left-1 would overflow */
++        if (e1 &gt; 0x3FFF || e1 &lt; -0x4000) {
++            shifted = (e1 &lt; 0) ? 0xFFFF8000LL : 0x7FFF;
++            sat = 1;
++        } else {
++            shifted = e1 &lt;&lt; 1;
++        }
++
++        int32_t sum = shifted + e2;
++        int16_t res = signed_saturate_h(sum, &amp;sat);
++        rd = INSERT16(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * PSSH1SADD.W - Saturating shift left by 1 and add
++ * with saturation (32-bit, RV64 only)
++ * For each word: rd[i] = sat32(sat32(rs1[i] &lt;&lt; 1) + rs2[i])
++ */
++uint64_t HELPER(pssh1sadd_w)(CPURISCVState *env,
++                     uint64_t rs1, uint64_t rs2)
++{
++    uint64_t rd = 0;
++    int elems = 2;
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
++        int32_t e2 = (int32_t)EXTRACT32(rs2, i);
++        int64_t shifted;
++
++        /* Check if shift-left-1 would overflow */
++        if (e1 &gt; 0x3FFFFFFF || e1 &lt; -0x40000000) {
++            shifted = (e1 &lt; 0) ? 0xFFFFFFFF80000000LL : 0x7FFFFFFF;
++            sat = 1;
++        } else {
++            shifted = (int64_t)e1 &lt;&lt; 1;
++        }
++
++        int64_t sum = shifted + e2;
++        int32_t res = signed_saturate_w(sum, &amp;sat);
++        rd = INSERT32(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * SSH1SADD - 32-bit scalar saturating shift left by 1 and saturating add
++ */
++uint32_t HELPER(ssh1sadd)(CPURISCVState *env,
++                     uint32_t rs1, uint32_t rs2)
++{
++    int32_t a = (int32_t)rs1;
++    int32_t b = (int32_t)rs2;
++    int64_t shifted;
++    int sat = 0;
++
++    /* Check if shift-left-1 would overflow */
++    if (a &gt; 0x3FFFFFFF || a &lt; -0x40000000) {
++        shifted = (a &lt; 0) ? 0xFFFFFFFF80000000LL : 0x7FFFFFFF;
++        sat = 1;
++    } else {
++        shifted = (int64_t)a &lt;&lt; 1;
++    }
++
++    int64_t sum = shifted + b;
++    int32_t res = signed_saturate_w(sum, &amp;sat);
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return (uint32_t)res;
++}
++
++/* Saturating addition operations */
++
++/**
++ * PSADD.B - Packed 8-bit signed saturating addition
++ * For each byte: rd[i] = sat8(rs1[i] + rs2[i])
++ */
++target_ulong HELPER(psadd_b)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_B(rd);
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        int8_t e1 = (int8_t)EXTRACT8(rs1, i);
++        int8_t e2 = (int8_t)EXTRACT8(rs2, i);
++        int32_t sum = (int32_t)e1 + (int32_t)e2;
++        int8_t res = signed_saturate_b(sum, &amp;sat);
++        rd = INSERT8(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * PSADD.H - Packed 16-bit signed saturating addition
++ * For each halfword: rd[i] = sat16(rs1[i] + rs2[i])
++ */
++target_ulong HELPER(psadd_h)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_H(rd);
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
++        int16_t e2 = (int16_t)EXTRACT16(rs2, i);
++        int32_t sum = (int32_t)e1 + (int32_t)e2;
++        int16_t res = signed_saturate_h(sum, &amp;sat);
++        rd = INSERT16(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * PSADD.W - Packed 32-bit signed saturating addition (RV64 only)
++ * For each word: rd[i] = sat32(rs1[i] + rs2[i])
++ */
++uint64_t HELPER(psadd_w)(CPURISCVState *env,
++                     uint64_t rs1, uint64_t rs2)
++{
++    uint64_t rd = 0;
++    int elems = 2;
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
++        int32_t e2 = (int32_t)EXTRACT32(rs2, i);
++        int64_t sum = (int64_t)e1 + (int64_t)e2;
++        int32_t res = signed_saturate_w(sum, &amp;sat);
++        rd = INSERT32(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * PSADDU.B - Packed 8-bit unsigned saturating addition
++ * For each byte: rd[i] = usat8(rs1[i] + rs2[i])
++ */
++target_ulong HELPER(psaddu_b)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_B(rd);
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint8_t e1 = EXTRACT8(rs1, i);
++        uint8_t e2 = EXTRACT8(rs2, i);
++        uint32_t sum = (uint32_t)e1 + (uint32_t)e2;
++        uint8_t res = unsigned_saturate_b(sum, &amp;sat);
++        rd = INSERT8(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * PSADDU.H - Packed 16-bit unsigned saturating addition
++ * For each halfword: rd[i] = usat16(rs1[i] + rs2[i])
++ */
++target_ulong HELPER(psaddu_h)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_H(rd);
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint16_t e1 = EXTRACT16(rs1, i);
++        uint16_t e2 = EXTRACT16(rs2, i);
++        uint32_t sum = (uint32_t)e1 + (uint32_t)e2;
++        uint16_t res = unsigned_saturate_h(sum, &amp;sat);
++        rd = INSERT16(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * PSADDU.W - Packed 32-bit unsigned saturating addition (RV64 only)
++ * For each word: rd[i] = usat32(rs1[i] + rs2[i])
++ */
++uint64_t HELPER(psaddu_w)(CPURISCVState *env,
++                     uint64_t rs1, uint64_t rs2)
++{
++    uint64_t rd = 0;
++    int elems = 2;
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint32_t e1 = EXTRACT32(rs1, i);
++        uint32_t e2 = EXTRACT32(rs2, i);
++        uint64_t sum = (uint64_t)e1 + (uint64_t)e2;
++        uint32_t res = unsigned_saturate_w(sum, &amp;sat);
++        rd = INSERT32(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * SADD - 32-bit signed saturating addition
++ */
++uint32_t HELPER(sadd)(CPURISCVState *env,
++                     uint32_t rs1, uint32_t rs2)
++{
++    int32_t a = (int32_t)rs1;
++    int32_t b = (int32_t)rs2;
++    int64_t sum = (int64_t)a + (int64_t)b;
++    int sat = 0;
++    int32_t res = signed_saturate_w(sum, &amp;sat);
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return (uint32_t)res;
++}
++
++/**
++ * SADDU - 32-bit unsigned saturating addition
++ */
++uint32_t HELPER(saddu)(CPURISCVState *env,
++                     uint32_t rs1, uint32_t rs2)
++{
++    uint32_t a = rs1;
++    uint32_t b = rs2;
++    uint64_t sum = (uint64_t)a + (uint64_t)b;
++    int sat = 0;
++    uint32_t res = unsigned_saturate_w(sum, &amp;sat);
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return res;
++}
++
++/* Saturating subtraction operations */
++
++/**
++ * PSSUB.B - Packed 8-bit signed saturating subtraction
++ * For each byte: rd[i] = sat8(rs1[i] - rs2[i])
++ */
++target_ulong HELPER(pssub_b)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_B(rd);
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        int8_t e1 = (int8_t)EXTRACT8(rs1, i);
++        int8_t e2 = (int8_t)EXTRACT8(rs2, i);
++        int32_t diff = (int32_t)e1 - (int32_t)e2;
++        int8_t res = signed_saturate_b(diff, &amp;sat);
++        rd = INSERT8(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * PSSUB.H - Packed 16-bit signed saturating subtraction
++ * For each halfword: rd[i] = sat16(rs1[i] - rs2[i])
++ */
++target_ulong HELPER(pssub_h)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_H(rd);
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
++        int16_t e2 = (int16_t)EXTRACT16(rs2, i);
++        int32_t diff = (int32_t)e1 - (int32_t)e2;
++        int16_t res = signed_saturate_h(diff, &amp;sat);
++        rd = INSERT16(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * PSSUB.W - Packed 32-bit signed saturating subtraction (RV64 only)
++ * For each word: rd[i] = sat32(rs1[i] - rs2[i])
++ */
++uint64_t HELPER(pssub_w)(CPURISCVState *env,
++                     uint64_t rs1, uint64_t rs2)
++{
++    uint64_t rd = 0;
++    int elems = 2;
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
++        int32_t e2 = (int32_t)EXTRACT32(rs2, i);
++        int64_t diff = (int64_t)e1 - (int64_t)e2;
++        int32_t res = signed_saturate_w(diff, &amp;sat);
++        rd = INSERT32(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * PSSUBU.B - Packed 8-bit unsigned saturating subtraction
++ * For each byte: rd[i] = usat8(rs1[i] - rs2[i])
++ */
++target_ulong HELPER(pssubu_b)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_B(rd);
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint8_t e1 = EXTRACT8(rs1, i);
++        uint8_t e2 = EXTRACT8(rs2, i);
++        uint32_t diff = e1 - e2;  /* Unsigned subtraction may underflow */
++        uint8_t res = unsigned_saturate_b(diff, &amp;sat);
++        rd = INSERT8(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * PSSUBU.H - Packed 16-bit unsigned saturating subtraction
++ * For each halfword: rd[i] = usat16(rs1[i] - rs2[i])
++ */
++target_ulong HELPER(pssubu_h)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong rs2)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_H(rd);
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint16_t e1 = EXTRACT16(rs1, i);
++        uint16_t e2 = EXTRACT16(rs2, i);
++        uint32_t diff = e1 - e2;
++        uint16_t res = unsigned_saturate_h(diff, &amp;sat);
++        rd = INSERT16(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * PSSUBU.W - Packed 32-bit unsigned saturating subtraction (RV64 only)
++ * For each word: rd[i] = usat32(rs1[i] - rs2[i])
++ */
++uint64_t HELPER(pssubu_w)(CPURISCVState *env,
++                     uint64_t rs1, uint64_t rs2)
++{
++    uint64_t rd = 0;
++    int elems = 2;
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        uint32_t e1 = EXTRACT32(rs1, i);
++        uint32_t e2 = EXTRACT32(rs2, i);
++        uint32_t res = (e1 &gt;= e2) ? (e1 - e2) : 0;
++        if (e1 &lt; e2) {
++            sat = 1;
++        }
++        rd = INSERT32(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * SSUB - 32-bit signed saturating subtraction
++ */
++uint32_t HELPER(ssub)(CPURISCVState *env,
++                     uint32_t rs1, uint32_t rs2)
++{
++    int32_t a = (int32_t)rs1;
++    int32_t b = (int32_t)rs2;
++    int64_t diff = (int64_t)a - (int64_t)b;
++    int sat = 0;
++    int32_t res = signed_saturate_w(diff, &amp;sat);
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return (uint32_t)res;
++}
++
++/**
++ * SSUBU - 32-bit unsigned saturating subtraction
++ */
++uint32_t HELPER(ssubu)(CPURISCVState *env,
++                     uint32_t rs1, uint32_t rs2)
++{
++    uint32_t a = rs1;
++    uint32_t b = rs2;
++    uint64_t diff = (uint64_t)a - (uint64_t)b;
++    int sat = 0;
++    uint32_t res = unsigned_saturate_w(diff, &amp;sat);
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return res;
++}
++
++/* Saturation instructions (SAT, USAT) */
++
++/**
++ * PSATI.H - Packed 16-bit signed saturate to immediate bit-width
++ * For each halfword: rd[i] = sat(rs1[i], imm+1 bits)
++ */
++target_ulong HELPER(psati_h)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong imm)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_H(rd);
++    int range = (imm &amp; 0x0F) + 1;  /* imm specifies bits-1 */
++    int64_t max = (1LL &lt;&lt; (range - 1)) - 1;
++    int64_t min = -(1LL &lt;&lt; (range - 1));
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
++        int16_t res;
++
++        if (e1 &gt; max) {
++            res = max;
++            sat = 1;
++        } else if (e1 &lt; min) {
++            res = min;
++            sat = 1;
++        } else {
++            res = e1;
++        }
++
++        rd = INSERT16(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * PUSATI.H - Packed 16-bit unsigned saturate to immediate bit-width
++ * For each halfword: rd[i] = usat(rs1[i], imm bits)
++ */
++target_ulong HELPER(pusati_h)(CPURISCVState *env,
++                          target_ulong rs1, target_ulong imm)
++{
++    target_ulong rd = 0;
++    int elems = ELEMS_H(rd);
++    uint32_t max = (1U &lt;&lt; imm) - 1;
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        int16_t e1 = (int16_t)EXTRACT16(rs1, i);
++        int16_t res;
++
++        if (e1 &lt; 0) {
++            res = 0;
++            sat = 1;
++        } else if ((uint16_t)e1 &gt; max) {
++            res = max;
++            sat = 1;
++        } else {
++            res = e1;
++        }
++
++        rd = INSERT16(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * PSATI.W - Packed 32-bit signed saturate to immediate bit-width (RV64 only)
++ * For each word: rd[i] = sat(rs1[i], imm+1 bits)
++ */
++uint64_t HELPER(psati_w)(CPURISCVState *env,
++                     uint64_t rs1, uint64_t imm)
++{
++    uint64_t rd = 0;
++    int elems = 2;
++    int range = (imm &amp; 0x1F) + 1;
++    int64_t max = (1LL &lt;&lt; (range - 1)) - 1;
++    int64_t min = -(1LL &lt;&lt; (range - 1));
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
++        int32_t res;
++
++        if (e1 &gt; max) {
++            res = max;
++            sat = 1;
++        } else if (e1 &lt; min) {
++            res = min;
++            sat = 1;
++        } else {
++            res = e1;
++        }
++
++        rd = INSERT32(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * PUSATI.W - Packed 32-bit unsigned saturate to immediate bit-width (RV64 only)
++ * For each word: rd[i] = usat(rs1[i], imm bits)
++ */
++uint64_t HELPER(pusati_w)(CPURISCVState *env,
++                     uint64_t rs1, uint64_t imm)
++{
++    uint64_t rd = 0;
++    int elems = 2;
++    uint64_t max = (1ULL &lt;&lt; imm) - 1;
++    int sat = 0;
++
++    for (int i = 0; i &lt; elems; i++) {
++        int32_t e1 = (int32_t)EXTRACT32(rs1, i);
++        int32_t res;
++
++        if (e1 &lt; 0) {
++            res = 0;
++            sat = 1;
++        } else if ((uint32_t)e1 &gt; max) {
++            res = max;
++            sat = 1;
++        } else {
++            res = e1;
++        }
++
++        rd = INSERT32(rd, res, i);
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return rd;
++}
++
++/**
++ * SATI_32 - 32-bit scalar signed saturation with immediate range
++ */
++uint32_t HELPER(sati_32)(CPURISCVState *env,
++                         uint32_t rs1, uint32_t imm)
++{
++    int32_t a = (int32_t)rs1;
++    int range = (imm &amp; 0x1F) + 1;  /* imm specifies bits-1 */
++    int64_t max = (1LL &lt;&lt; (range - 1)) - 1;
++    int64_t min = -(1LL &lt;&lt; (range - 1));
++    int sat = 0;
++
++    if (a &gt; max) {
++        a = max;
++        sat = 1;
++    } else if (a &lt; min) {
++        a = min;
++        sat = 1;
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return (uint32_t)a;
++}
++
++/**
++ * USATI_32 - 32-bit scalar unsigned saturation with immediate range
++ */
++uint32_t HELPER(usati_32)(CPURISCVState *env,
++                          uint32_t rs1, uint32_t imm)
++{
++    int32_t a = (int32_t)rs1;
++    uint32_t max = (1U &lt;&lt; imm) - 1;
++    int sat = 0;
++
++    if (a &lt; 0) {
++        a = 0;
++        sat = 1;
++    } else if ((uint32_t)a &gt; max) {
++        a = max;
++        sat = 1;
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return (uint32_t)a;
++}
++
++/**
++ * SATI_64 - 64-bit scalar signed saturation with immediate range
++ */
++uint64_t HELPER(sati_64)(CPURISCVState *env,
++                     uint64_t rs1, uint64_t imm)
++{
++    int64_t a = (int64_t)rs1;
++    int range = (imm &amp; 0x3F) + 1;
++    int64_t max = (1LL &lt;&lt; (range - 1)) - 1;
++    int64_t min = -(1LL &lt;&lt; (range - 1));
++    int sat = 0;
++
++    if (a &gt; max) {
++        a = max;
++        sat = 1;
++    } else if (a &lt; min) {
++        a = min;
++        sat = 1;
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return (uint64_t)a;
++}
++
++/**
++ * USATI_64 - 64-bit scalar unsigned saturation with immediate range
++ */
++uint64_t HELPER(usati_64)(CPURISCVState *env,
++                     uint64_t rs1, uint64_t imm)
++{
++    int64_t a = (int64_t)rs1;
++    uint64_t max = (1ULL &lt;&lt; imm) - 1;
++    int sat = 0;
++
++    if (a &lt; 0) {
++        a = 0;
++        sat = 1;
++    } else if ((uint64_t)a &gt; max) {
++        a = max;
++        sat = 1;
++    }
++
++    if (sat) {
++        env-&gt;vxsat = 1;
++    }
++    return (uint64_t)a;
++}
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index 81087e0a5d..de3ec7a7ec 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1206,6 +1206,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+ #include "insn_trans/trans_rvh.c.inc"
+ #include "insn_trans/trans_rvv.c.inc"
+ #include "insn_trans/trans_rvb.c.inc"
++#include "insn_trans/trans_rvp.c.inc"
+ #include "insn_trans/trans_rvzicond.c.inc"
+ #include "insn_trans/trans_rvzacas.c.inc"
+ #include "insn_trans/trans_rvzabha.c.inc"
 -- 
-2.43.0
+2.34.1
+
+</pre>
+      </blockquote>
+    </blockquote>
+  </body>
+</html>
+
+--------------a7QoIjvZlb8FSJGJuzFgoxK2--
 
 
