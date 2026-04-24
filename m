@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6AAAFE5204
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 10:39:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1FBAFE5204
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 10:40:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGDwW-0002eS-W1; Fri, 24 Apr 2026 06:39:29 -0400
+	id 1wGDwU-0002b6-9p; Fri, 24 Apr 2026 06:39:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <den@openvz.org>)
- id 1wGDwU-0002bB-AP; Fri, 24 Apr 2026 06:39:26 -0400
+ id 1wGDwT-0002aZ-0o; Fri, 24 Apr 2026 06:39:25 -0400
 Received: from relay.virtuozzo.com ([130.117.225.111])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <den@openvz.org>)
- id 1wGDwR-000201-AZ; Fri, 24 Apr 2026 06:39:26 -0400
+ id 1wGDwR-000200-7h; Fri, 24 Apr 2026 06:39:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
- Content-Type; bh=uNSdOJEhtNrcgxDuLoQOyJZjT8cwzLWmaavcB1WJkGU=; b=SR4mYlt8Juoe
- IYaRkuOOH2WVVDHdqA/tOgLy0KGLut6PTzMqkxI8jwE6MWpUujtiFMromHzfCWU6aJeqi8OHUK0wp
- e9gs1eRL/R5DiQ4W2MLSsVR0jzqecxLrhAaedURl9mXg06UyPjQBVx5wEiaSV0sUU4HEQLUhqeD2V
- qIWGzQSmAnOUC1FxbCxc1KH/gHtJGARY6ZOdttROTCqcxo/aqAczbcF3Gx+bFfDA+9aQ9SqrK5bG0
- 0nerrFqoTBc36H17sGlU5eUrNZSJ9tXRqpSlXJDrdmxyccoPC4sOB8g13XeZOQ1jzUQlj2oqp3mvK
- CazAkI0JQX57IOTQuBDqmw==;
+ d=virtuozzo.com; s=relay; h=Content-Type:MIME-Version:Message-ID:Date:Subject
+ :From; bh=EcnsQFbnncWE7Prrulk8hdwft53Btw+MTadW5OXdZ6Q=; b=wbwwoxqLyd8iuh9vy7o
+ jOxUsAJMjWigQXUHNgzLzjAvRSrVXUeaaVjUw2HMvw2wQLHaiRVuNWoyNCLLh+1KG7yIIefqDQEK5
+ s2sCAIQHeKJlsoerIbQ5TrAYQVtKJubLEqZQFHd0Y68q0S9JaH2GQg3jiYCDN/EvncOhHxXlIIm5Z
+ EPwdt7VAwnbBBqRrV2epDGnc+zUVz/Zk1uUYUT+Y6s89XefhfWirADzGE1YLOKlobiGl/qBz8fqQL
+ goO8R/hC9JS/Gy4t2c4QCoeFqrptoLCuaf9IfP2+ExpBdrJf5d7XZrslaSNqnNqt1Lc+49iQBoMiM
+ pcfS8gZ6OrFeqSw==;
 Received: from ch-demo-asa.virtuozzo.com ([130.117.225.8] helo=iris.sw.ru)
  by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <den@openvz.org>) id 1wGDtf-00F3Ps-2L;
- Fri, 24 Apr 2026 12:39:15 +0200
+ (envelope-from <den@openvz.org>) id 1wGDtf-00F3Ps-05;
+ Fri, 24 Apr 2026 12:39:14 +0200
 To: qemu-devel@nongnu.org
 Cc: qemu-block@nongnu.org, qemu-stable@nongnu.org,
- "Denis V. Lunev" <den@openvz.org>, Hanna Czenczek <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>
-Subject: [PATCH 2/2] block/qcow2: fix hangup in cache_clean_timer cancellation
-Date: Fri, 24 Apr 2026 12:39:17 +0200
-Message-ID: <20260424103917.248668-3-den@openvz.org>
+ "Denis V. Lunev" <den@openvz.org>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Fiona Ebner <f.ebner@proxmox.com>
+Subject: [PATCH 0/2] block: fix two missed-wakeup hangs on shutdown path
+Date: Fri, 24 Apr 2026 12:39:15 +0200
+Message-ID: <20260424103917.248668-1-den@openvz.org>
 X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260424103917.248668-1-den@openvz.org>
-References: <20260424103917.248668-1-den@openvz.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: softfail client-ip=130.117.225.111; envelope-from=den@openvz.org;
  helo=relay.virtuozzo.com
@@ -67,112 +67,87 @@ From:  "Denis V. Lunev" via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cache_clean_timer_del_and_wait() cancels the cache-cleaner coroutine
-by setting s->cache_clean_interval = 0 and calling qemu_co_sleep_wake()
-to cut short its qemu_co_sleep_ns_wakeable(). qemu_co_sleep_wake() is
-fire-and-forget: it reads w->to_wake and silently returns when it is
-NULL. A sleeper that is between two iterations -- has just released
-s->lock but has not yet set w->to_wake inside qemu_co_sleep() -- loses
-the wake:
+Problem
+-------
 
-  iothread0 timer coroutine           main thread (qcow2 close)
-  -------------------------           -------------------------
-  while-body (holding s->lock):
-    read interval = 600
-    wait_ns = 600 * NS
-    release s->lock
-                                      take s->lock
-                                      interval = 0
-                                      qemu_co_sleep_wake(w):
-                                        w->to_wake == NULL -> skip
-                                        return
-                                      qemu_co_queue_wait(exit, s->lock):
-                                        release s->lock
-                                        yield
-  qemu_co_sleep_ns_wakeable:
-    aio_timer_init(+600 s)
-    qemu_co_sleep:
-      cas scheduled NULL -> "qsns"
-      w->to_wake = co
-      yield  [sleeps 600 s]
+The qemu shutdown / blockdev-close path can deadlock permanently on
+upstream master.  The main thread enters ppoll(timeout=-1) holding
+BQL, no other thread has a wake source that points back at it, and
+qemu has to be SIGKILLed.  The hang has no timeout -- it is a hard
+deadlock, not a slow operation; behind BQL, RCU, VCPUs and every
+iothread path that needs BQL stall with it.
 
-cache_clean_timer_del_and_wait() is now stuck waiting for
-cache_clean_timer_exit; the timer will not signal it until its
-original 600 s expiry fires. qcow2_close() is on the main thread
-holding BQL, so RCU, VCPUs and every iothread path that needs BQL
-stall behind it.
+Two independent missed-wakeup races in the block layer contribute.
+Both share the same shape: a waiter arms on one side, the waker
+reads stale state on its fast path and silently skips the kick, and
+nothing else on the AioContext will fire to recover.  They are
+different bugs in different subsystems and each patch stands on its
+own; they are posted together because they surface through the same
+test and the same symptom and are easiest to diagnose side by side.
 
-qemu_co_sleep_wake() has always been a hint: it has no way to
-rendezvous with a sleeper still arming. Rather than mutate it (which
-would change semantics for every other user -- mirror, stream,
-backup), fix the caller.
+Depending on which race fires, the main thread backtrace at the
+moment of hang is one of:
 
-Split the sleep in cache_clean_timer() into steps of at most one
-second and move the s->cache_clean_interval check to the top of the
-loop so it is re-evaluated under s->lock between steps. The
-loop/wait structure itself is unchanged. The stop decision is now
-made under the same lock that the teardown caller holds to set
-cache_clean_interval = 0, so it cannot be missed.
-qemu_co_sleep_wake() is still called opportunistically to cut short
-the current step; if it misses, the next 1 s tick catches the change.
-Worst-case cancellation latency is bounded at 1 s, independent of
-cache_clean_interval.
+  ppoll -> aio_poll -> bdrv_graph_wrlock -> blk_remove_bs
+      (patch 1 -- block/graph-lock)
 
-Fixes: f86dde9a15 ("qcow2: Fix cache_clean_timer")
+  ppoll -> aio_poll -> cache_clean_timer_del_and_wait -> qcow2_close
+      (patch 2 -- block/qcow2 cache_clean_timer)
+
+Race diagrams and the exact stale-state read are in each patch's
+commit message.
+
+Reproducer
+----------
+
+Environment used for the numbers below: 4-vCPU VM guest,
+kernel 6.12.x, upstream master at bb230769b4.  On modern bare-metal
+the window is narrow enough that the hangs rarely reproduce without
+a VM -- a VM guest under full CPU saturation is what makes the
+timing reliable.  Downstream trees that still use plain
+bdrv_graph_wrlock() in blk_remove_bs() hit the graph-lock race on
+the first iteration without any stress at all.
+
+    # reproducer
+    stress-ng --cpu "$(nproc)" --timeout 0 &
+    for r in $(seq 20); do
+        timeout 120 ./build/tests/qemu-iotests/check -qcow2 iothreads-create
+    done
+    kill %1
+
+With `stress-ng --cpu $(nproc)` both races surface.  With
+`stress-ng --cpu $(($(nproc) - 1))` or without a stressor neither
+reproduces reliably across 20 iterations.
+
+When a race fires, the Python QMP client times out on vm.run_job()
+after 5 s, the qemu process keeps running but never makes forward
+progress, and the outer `timeout 120` eventually kills it.  attach
+gdb before the timeout kills qemu to capture the stack and
+distinguish which of the two races fired.
+
+Results
+-------
+
+Same guest, 20 iterations of the loop above:
+
+  upstream master:            10/20 FAIL (first fail at iter #2)
+  master + both patches:      20/20 PASS
+
 Signed-off-by: Denis V. Lunev <den@openvz.org>
-Cc: Hanna Czenczek <hreitz@redhat.com>
 Cc: Kevin Wolf <kwolf@redhat.com>
----
- block/qcow2.c | 28 +++++++++++++++++-----------
- 1 file changed, 17 insertions(+), 11 deletions(-)
+Cc: Hanna Reitz <hreitz@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Fiona Ebner <f.ebner@proxmox.com>
+Cc: Hanna Czenczek <hreitz@redhat.com>
 
-diff --git a/block/qcow2.c b/block/qcow2.c
-index f6461743d2..3e249970d6 100644
---- a/block/qcow2.c
-+++ b/block/qcow2.c
-@@ -838,24 +838,30 @@ static const char *overlap_bool_option_names[QCOW2_OL_MAX_BITNR] = {
- static void coroutine_fn cache_clean_timer(void *opaque)
- {
-     BDRVQcow2State *s = opaque;
--    uint64_t wait_ns;
-+    uint64_t remaining_ns = 0;
- 
--    WITH_QEMU_LOCK_GUARD(&s->lock) {
--        wait_ns = s->cache_clean_interval * NANOSECONDS_PER_SECOND;
--    }
--
--    while (wait_ns > 0) {
--        qemu_co_sleep_ns_wakeable(&s->cache_clean_timer_wake,
--                                  QEMU_CLOCK_REALTIME, wait_ns);
-+    for (;;) {
-+        bool stop = false;
-+        uint64_t step;
- 
-         WITH_QEMU_LOCK_GUARD(&s->lock) {
--            if (s->cache_clean_interval > 0) {
-+            if (s->cache_clean_interval == 0) {
-+                stop = true;
-+            } else if (remaining_ns == 0) {
-                 qcow2_cache_clean_unused(s->l2_table_cache);
-                 qcow2_cache_clean_unused(s->refcount_block_cache);
-+                remaining_ns = s->cache_clean_interval
-+                               * (uint64_t)NANOSECONDS_PER_SECOND;
-             }
--
--            wait_ns = s->cache_clean_interval * NANOSECONDS_PER_SECOND;
-         }
-+        if (stop) {
-+            break;
-+        }
-+
-+        step = MIN(remaining_ns, (uint64_t)NANOSECONDS_PER_SECOND);
-+        qemu_co_sleep_ns_wakeable(&s->cache_clean_timer_wake,
-+                                  QEMU_CLOCK_REALTIME, step);
-+        remaining_ns -= step;
-     }
- 
-     WITH_QEMU_LOCK_GUARD(&s->lock) {
--- 
+Denis V. Lunev (2):
+  block/graph-lock: fix missed wakeup in bdrv_graph_co_rdunlock()
+  block/qcow2: fix hangup in cache_clean_timer cancellation
+
+ block/graph-lock.c | 12 +++++-------
+ block/qcow2.c      | 28 +++++++++++++++++-----------
+ 2 files changed, 22 insertions(+), 18 deletions(-)
+
+--
 2.51.0
-
 
