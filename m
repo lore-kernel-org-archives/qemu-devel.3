@@ -4,143 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF6CFED3FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 19:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1977FED3F2
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 19:26:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGM5X-0002WD-Hi; Fri, 24 Apr 2026 15:21:19 -0400
+	id 1wGM9x-0003CT-62; Fri, 24 Apr 2026 15:25:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wGM5V-0002Vo-OR
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 15:21:17 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wGM5T-0007zo-W1
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 15:21:17 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63OGuaeN1243958
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 19:21:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- H5mnuiuYH5u/5JNOik2RpJhHXCyCum299t/X29xMziI=; b=g1lEgiK+Zq5Dz6KW
- OztpvX85MFyln/oOCn+V8r3/2tRzm3YxvnGoBGS8oM8HAPsHEt5cd7WwT3Mz9wlc
- XNFiNV3Zcb0/AIXwizjyllGsSYyVYaUEF+hDnf5gMr5gHYWkuUYZnNvs0TblL2mi
- lMg2Enj1fM/lt3LJ1cB2oyEs/HOozHcimnrrh/yvp+44/IOY9IIDNDzljhwzNkKJ
- T/4wLS7khgI+lHrarAb7//uIku/AY/JMLZaee5fKFjd9+IAuN35vAx66ew37BoAl
- gY91JOIxOn03PJQIHEOOk2hZ/YK7W3ywBioP7d/T8Bb4aHo+MgvNCvfOY2sot3kR
- xDQW9w==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dr48n2uwt-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 19:21:13 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id
- a92af1059eb24-12db218e265so10130501c88.0
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 12:21:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGM9v-0003C6-Bm
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 15:25:51 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGM9s-0001Hz-9T
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 15:25:50 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488b0046078so74431825e9.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 12:25:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1777058473; x=1777663273; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=H5mnuiuYH5u/5JNOik2RpJhHXCyCum299t/X29xMziI=;
- b=OE9E1+LYG4BU2dgvmN9e63UCF+zPs1SQQPZ/B1/VGlIn2WhykoPD056jyAx6cmvKB/
- vwne32+MktwymgE1GCPw+18ZkBbZyumP3Ww8f/ctHTi2KIa2THnLH44IQd66EuhaZQJe
- zouCS9HR8pKxub2TmT6ZBkxGAF2rjFzdfdVhTJveTLZoQCgOQpM94huiKqQeBhBVe4Sp
- H32ncaxTtZdO6hQf9/q9ScpJtb9mGxkCeFRG4te/zn/LMt7pbj74FrIlDn1k8xdj5aem
- anVd39WYnD//yRUwvGOasoXELLogs5n/E5SkF7HPHnr+IMPGpipP14BMY92gYFmiOqKf
- cTsw==
+ d=linaro.org; s=google; t=1777058746; x=1777663546; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Yg9NGrFw4w9i67ta248F9C5oPYjEgGTbMKQDwpdrGME=;
+ b=cpTQTmDNktyfz4TOxjlTuqfmLJIq+jCkgkKR7LPTMbatYNKokm9pJ6emja+/1vQEkd
+ i+A9VygRm1ig6ZADw9PKJ54swcrrvBCCZNC58OizdvYdup4Of2ZsCB2ba51dtz5fu7H7
+ XalaTFhLPDHBDXGpLZmb6NhMVl7WkZlx3QRL8dDjcvNEoFSau1GyY72O+kpaOMzuMOeF
+ 9ziC77ogDCM7pDky11xukVPpgwWI83dF2hkptpeah8edxk0cBWBZx43yoMU8fkqHiDdV
+ irF80FYhkWMZXRCOY66yqVU0yeIKv/QvjhFj2hsZkorIOWa2PmMAhg9ifHT4EgcWKckh
+ vVjg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777058473; x=1777663273;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=H5mnuiuYH5u/5JNOik2RpJhHXCyCum299t/X29xMziI=;
- b=iZnzkiLLSIhqzdA2ydS+zF9mNI9k8+a1+7pBYNmEvaG8zJ5S7xTf3G6Q5vM/IKSMNv
- X6+XDr3vUjX2l85UVylNNEo07IllAlgZf6JI9iaqtVKmnVx+P3dNKWEMFWXloiDK502h
- xtA3EAJ+pUMQ6vdhRMgABtYMmlN3Or6OzQSvBhFgukPGtnsjwtCXhVyQZV7c1uAPk2yG
- I3OUvjAaetjWGzUjV5fEt6PESBBIKzkMNJO7INmN+6HdaXfZBU97j2L1h1Rn4m7HmDlU
- xa6RCcKxDt50jxPP52c8lRff3drREW+uYu8jCTeCNwTK4zkvW96qw2EuDUr6Es/IovVi
- qbcQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+XM+vdm6vdwA0BXz2M4PnA5YmFVPGZA8Z2GlikDSuUgwklUrflbHQecsG7c5Aj+i/1ll15x9iP11Bq@nongnu.org
-X-Gm-Message-State: AOJu0YwHik9QaUf4fa5F2GjBaOeHulbfy0MaAdnrixfy8N3jmK5d0hvM
- Oi7HffMw6LkU1ApD5YV/+PG4stzg+djzQi7Wfh+Q4kg1bQj6r7foiKw9kGUbVhm53/4X9AEzEgE
- K92VS2ii/uncAyZc3bd9UsbLgXjKLWmELVePS3W4yTt4PkTARrPj9q7i8Qw==
-X-Gm-Gg: AeBDietdiqzXr0ozyPklUECEh9vechLZ51HDsWKF7sRcAEaT7Agsh+xrMyZD2Gs2spX
- 6WZIyG8DraoGDZiHwhpOLcrDtuMbtMX/ocsbvm+lNFONWqWLRbgpGZqkLLraSH3j/wJccxR18jk
- g8yz10fcJCdsTeY3aldqxNI6FVGqytbDBVsCTdi5kt+RV62wWUgXCd8YyY0DovXNGudbDL/+3YE
- TN4jEh8zSV2xleN0Xz4Foima4wUTXHlqpG88+ZPAd8wZglDz+opuDEBl8UmrGgjVFC+bRJXD/Ad
- EVmullMB/7AVu4hCvX2NwWGYSOTUjZ2jVr15FS2TzywtLW8V4qSjzQWR/Gh5UBVDj5SIKe20X9S
- He/MY2Takynhdq/cdhhZPTpngbsQOpVEMCtO+xcIsZL+Zjouwi+Y0EVhjciW0N5cZVoQeCh/c55
- K1cgIIaeOzvjKDpD9YC+XCLZkz
-X-Received: by 2002:a05:7022:fa0:b0:12a:72af:83d1 with SMTP id
- a92af1059eb24-12c73f6f6famr19453821c88.11.1777058472662; 
- Fri, 24 Apr 2026 12:21:12 -0700 (PDT)
-X-Received: by 2002:a05:7022:fa0:b0:12a:72af:83d1 with SMTP id
- a92af1059eb24-12c73f6f6famr19453792c88.11.1777058472033; 
- Fri, 24 Apr 2026 12:21:12 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12c74a20eb5sm42404724c88.14.2026.04.24.12.21.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Apr 2026 12:21:11 -0700 (PDT)
-Message-ID: <8ded2755-3d4c-4451-9d48-642943298618@oss.qualcomm.com>
-Date: Fri, 24 Apr 2026 12:21:10 -0700
+ d=1e100.net; s=20251104; t=1777058746; x=1777663546;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Yg9NGrFw4w9i67ta248F9C5oPYjEgGTbMKQDwpdrGME=;
+ b=moxz29PRLN3lbctwWxCdreaF7M9LDLPNaSmSfZpZ1cEbidv8VA3hgbOezKWHpgVV4P
+ t9X5y+GGtzXErB31ArtRN/qc+ChpO5YrjCMTDs1jvMOrRpqoe+53lE5mIaOwzLUq3KoF
+ MK9u8vdLf8dS5khcoWmYWeFPDQ2VppExOIqUAc3aRkC4gDftueuS/zTJkmzLBBa8A0k/
+ yRv2M70tIlyPiD2PW/J8ABjInMBd0idKxd9MgrvD8wuOh/sb+NV4qMfviE8w1VCqPSg9
+ BJE8ll/XqsBirLvVPQpEj7gJinQvme4kkJ6YqA0nH0e1UP7m7KkOfD/XRZ8QJ6/DfDwq
+ ahlA==
+X-Gm-Message-State: AOJu0YyoDDyKNjLwyyg0JiKbbM/nCmfJxP7K0Cm0qyEAIdILAZ1rlHPS
+ dm4WX+f4YwlKb32ifXzVOH3BNlDQdp40yGW86xLDc2RA08ZlIkmhInURpujJwQT/LgV2yeZb0so
+ 77d9tFd8=
+X-Gm-Gg: AeBDiesrr1ZUOAih5fHmgy2UW8DUGHBiSkBk1A/leY9JIh+59TS6S7rLmPIHIOovsPc
+ guR5kxwVWrM56CWlGslRAVLa4qMRydayd703Qbu1kiNIuCPAsavnxDdtfOjeMXnOkmE8TV+O7Bp
+ J1Sx64B1DKXNrsYYgcMwTaJYXky2N1qbP0DbFiVZ8A2enRLtWJNzczMl4KCgKvSaDGCnhjATlWL
+ T4OYSb7iRhumzEzrnb1vWAYZcp0VKjT4UoTyVAwNxLhzsoMszB2RHc6CnSkLL3iF/Kpz+YPjXGJ
+ KaWd2tIqbIj1TxPiaqRuelRTVogWeceWS8mRSdqUmG2BZInCcmkAr6YX4rSlokyQYTnJOUL/x3R
+ DgN368o/StpAi5aWHmOoOxledDNwJlKDUoc8ZkFOE9IXBNAZ5gI4S4W/lJKhOuwJyxA9Q3DR4gz
+ lCtBsPHCfTa+EjDaaDsHsESGGuPgPlTHeTaS2/R8qNYjgZDgCRTdpLITsSJmuF+4aaoo0Vw7/pF
+ JjEdrr700I=
+X-Received: by 2002:a05:600c:8586:b0:489:e49:f766 with SMTP id
+ 5b1f17b1804b1-4890e49f7d8mr255925925e9.17.1777058745680; 
+ Fri, 24 Apr 2026 12:25:45 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488fc1c773fsm691047775e9.12.2026.04.24.12.25.44
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 24 Apr 2026 12:25:44 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL v4 00/62] Misc HW patches for 2026-04-22
+Date: Fri, 24 Apr 2026 21:25:32 +0200
+Message-ID: <20260424192543.22614-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] contrib/plugins/uftrace_symbols.py: fix symbols
- reading
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn_=C3=A9_e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
- Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-References: <20260423213838.780814-1-pierrick.bouvier@oss.qualcomm.com>
- <20260423213838.780814-2-pierrick.bouvier@oss.qualcomm.com>
- <tdzmry.259an10v60tlz@linaro.org>
- <2bcd35a4-0963-43df-8d5f-e19d1af16452@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <2bcd35a4-0963-43df-8d5f-e19d1af16452@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: PRLrUIBIE_41GNWIR1tBizYaTXJSQVco
-X-Authority-Analysis: v=2.4 cv=VOjtWdPX c=1 sm=1 tr=0 ts=69ebc2a9 cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=EUspDBNiAAAA:8 a=EMHajkgkn9fH6kUee50A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=vBUdepa8ALXHeOFLBtFW:22
-X-Proofpoint-ORIG-GUID: PRLrUIBIE_41GNWIR1tBizYaTXJSQVco
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI0MDE4NyBTYWx0ZWRfX717DdHiJk2Ap
- ZFE2Y19puP9noHLtN9YR0aViGQrTGl6wqzNFa4XJuVYiSMX2KOzC+HOoPg2226MxhOf4df+ncrR
- Y/qtT1bJxxJQx/AFIsW7mhXGAuEHZedgw0e7ZZ/EyX00zupMBflr01mOWCuR41uwMCVwwzM4JVy
- rMzD2QcsC8yYICaTsfNUZWPSzs/Npi1laHLZPyQFoPRRpbqvxBb5IfFWPCv7ard2sOfEscZyAog
- dkAVoqYKWk6iGg1B33z0WuJNg7HX6IaGULINMR8Y1v9QAuFhoKJMMg8e3hZeW1l05Zkq39XVSl9
- uQHca7oUXzxpVZnbKIuVEa3h1/ce6lJ830Nr0p0ZQddjSA3WiYhjgNG4oqGvuUyKjAUAN1ToxQw
- bI7igZmXgEdwVLNa0M8mwoBllafw3VAQtHfsvWmV1mfRnVcx9ygyHJ2hyRNJAuCgcwzlCmU4Fto
- xDkvZ9it1iwUjaBJERg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-24_02,2026-04-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
- priorityscore=1501 bulkscore=0 suspectscore=0 malwarescore=0 clxscore=1015
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2604240187
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,51 +97,317 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/2026 12:18 PM, Pierrick Bouvier wrote:
-> On 4/24/2026 12:41 AM, Manos Pitsidianakis wrote:
->> On Fri, 24 Apr 2026 00:38, Pierrick Bouvier 
->> <pierrick.bouvier@oss.qualcomm.com> wrote:
->>> When running this on hexagon binary, we observe some undefined symbols
->>> without any address or size.
->>>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->>> ---
->>> contrib/plugins/uftrace_symbols.py | 4 ++--
->>> 1 file changed, 2 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/ 
->>> uftrace_symbols.py
->>> index 02d1221228c..895fa1a6b7a 100755
->>> --- a/contrib/plugins/uftrace_symbols.py
->>> +++ b/contrib/plugins/uftrace_symbols.py
->>> @@ -36,8 +36,8 @@ def get_symbols(elf_file):
->>>     out = out.strip().split('\n')
->>>     for line in out:
->>>         info = line.split(' ')
->>> -        if len(info) == 3:
->>> -            # missing size information
->>> +        if len(info) < 4:
->>> +            # missing size/address information
->>
->> On a second thought, shouldn't this be != 4? Otherwise the unpacking 
->> will fail with ValueError: too many values to unpack (expected 4)
->>
-> 
-> I don't expect nm to add new columns, but you're right, it's probably 
-> safer! I'll change that.
+v4:
+  fixed QOM 'compat' properties on linux-user
+v3:
+  now than target-arm.next is merged, 3 more MAINTAINERS patches
 
-It seems like python has unpack operator (*_) to deal with that also, 
-but I like the idea to force format to be the one we expect strictly.
+The following changes since commit 4bde339ecb41b16e90810233ba5ee2fa87bd443f:
 
->   >>             continue
->>>         addr, size, type, name = info
->>>         # add only symbols from .text section
->>> -- 
->>> 2.47.3
->>>
->>>
-> 
-> Regards,
-> Pierrick
+  Merge tag 'pull-11.1-virtio-gpu-hotfixes-230426-1' of https://gitlab.com/stsquad/qemu into staging (2026-04-23 20:51:57 -0400)
+
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/hw-misc-20260422
+
+for you to fetch changes up to 7754d268a0558b10c3bfdaaff0ccb1727a94918a:
+
+  MAINTAINERS: Transfer CI maintenance to Pierrick (2026-04-24 21:20:45 +0200)
+
+----------------------------------------------------------------
+Misc HW patches
+
+- Build hw/avr/ as common unit files
+- Header cleanups around 'cpu.h', 'qemu/audio.h' or duplicated lines
+- Remove obsolete TPMIfClass::ppi_enabled field
+- Cleanups around load/store API
+- Restrict 'compat' properties API to system emulation
+- Correct TPM PPCI ACPI for Windows guests on ARM Virt machine
+- Simplify physical_memory_range_includes_clean()
+- Avoid including CONFIG_DEVICES in hw/arm/smmuv3
+- Initialize bus frequency in PPC e500 device tree blob
+- More ATI VGA fixes
+- Fix fuzzing issues on AVR power controller and SH4 MCU
+- MAINTAINERS updates
+- Machine compat array for v11.0.0 release
+- USB EHCI cleanups
+----------------------------------------------------------------
+
+Bin Guo (1):
+  physmem: Simplify dirty memory type checks with loop
+
+Cornelia Huck (1):
+  hw: add compat machines for 11.1
+
+Jamin Lin (6):
+  hw/usb/hcd-ehci: Remove unused EHCIfstn structure and dead code
+  hw/usb/hcd-ehci.h: Fix coding style issues reported by checkpatch
+  hw/usb/hcd-ehci.c: Fix coding style issues reported by checkpatch
+  hw/usb/hcd-ehci.c: Replace fprintf(stderr, ...) with
+    qemu_log_mask(LOG_GUEST_ERROR)
+  hw/usb/hcd-ehci: Replace DPRINTF debug logs with trace events
+  hw/usb/hcd-ehci: Introduce common properties macro for sysbus and pci
+
+Junjie Cao (2):
+  ati-vga: fix unsigned integer overflow in cursor bounds checks
+  ati-vga: mask out lock bit from CUR_OFFSET in cursor offset
+    calculation
+
+Mohammadfaiz Bawa (3):
+  docs/specs/tpm: document PPI support on ARM64 virt
+  hw/acpi/tpm: parameterize PPI base address in tpm_build_ppi_acpi
+  hw/tpm: add PPI support to tpm-tis-device for ARM64 virt
+
+Osama Abdelkader (3):
+  hw/virtio/virtio-iommu: remove duplicate include
+  hw/hyperv: remove duplicate include
+  hw/ppc/amigaone: remove duplicate include
+
+Peter Maydell (1):
+  hw/arm, hw/ppc: Remove unnecessary audio.h includes from board code
+
+Philippe Mathieu-Daudé (42):
+  hw/avr: Build as common unit files
+  hw/core/cpu: Expose CPUState::start_powered_off docstring
+  hw/misc/cpc: Include missing 'hw/core/cpu.h' header
+  hw/alpha: Include full path to target 'cpu.h' header
+  hw/arm: Include full path to target 'cpu.h' header
+  hw/avr: Include full path to target 'cpu.h' header
+  hw/hppa: Include full path to target 'cpu.h' header
+  hw/i386: Include full path to target 'cpu.h' header
+  hw/m68k: Include full path to target 'cpu.h' header
+  hw/microblaze: Include full path to target 'cpu.h' header
+  hw/mips: Include full path to target 'cpu.h' header
+  hw/or1k: Include full path to target 'cpu.h' header
+  hw/ppc: Include full path to target 'cpu.h' header
+  hw/riscv: Include full path to target 'cpu.h' header
+  hw/s390x: Include full path to target 'cpu.h' header
+  hw/sh4: Include full path to target 'cpu.h' header
+  hw/sparc: Include full path to target 'cpu.h' header
+  hw/tricore: Include full path to target 'cpu.h' header
+  hw/xtensa: Include full path to target 'cpu.h' header
+  hw/tpm: Factor tpm_ppi_enabled() out
+  hw/tpm: Add TPMIfClass::ppi_enabled field
+  hw/tpm: Remove CRBState::ppi_enabled field
+  hw/tpm: Propagate @ppi_enabled to tpm_tis_reset() and remove in
+    TPMState
+  hw/tpm: Simplify tpm_ppi_enabled()
+  hw/ppc/spapr: Un-inline rtas_load/store() helpers
+  hw/hyperv: Replace legacy ld_phys() -> address_space_ld()
+  system/memory: Constify various AddressSpace arguments (flatview)
+  hw/core: Move compat_props_add() to 'hw/core/boards.h'
+  qom: Declare GlobalProperty structure in 'qom/compat-properties.h'
+  qom: Declare compat properties API in 'qom/compat-properties.h'
+  qom: Restrict compat properties API to system emulation
+  hw/arm/smmuv3: Have smmuv3_accel_init() take an Error* parameter
+  hw/arm/smmuv3: Avoid including CONFIG_DEVICES in hw/ header
+  hw/cxl: Define cxl_fmws_get_all_sorted() stub
+  hw/arm/virt: Do not select Kconfig symbol PCI_EXPRESS
+  MAINTAINERS: Merge PCIe DOE section within SPDM
+  MAINTAINERS: Cover hexloader tests under the Generic Loader section
+  MAINTAINERS: Remove my unused git tree locations
+  MAINTAINERS: Remove my disfunctional emails
+  MAINTAINERS: Remove PhilMD from NVMe Block Driver
+  MAINTAINERS: Maintain MIPS Boston
+  MAINTAINERS: Transfer CI maintenance to Pierrick
+
+Thomas Huth (2):
+  hw/misc: Fix the valid access size to the avr-power device
+  hw/sh4/sh7750: Remove forgotten abort() in the MM_ITLB_DATA handler
+
+Vivien LEGER (1):
+  hw/ppc/e500: fix bus-frequency property hardcoded to zero in CPU FDT
+    node
+
+ MAINTAINERS                                 |  28 +--
+ docs/specs/tpm.rst                          |  24 +++
+ hw/arm/smmuv3-accel.h                       |  41 +---
+ hw/avr/boot.h                               |   2 +-
+ hw/ppc/e500.h                               |   1 +
+ hw/s390x/ipl.h                              |   2 +-
+ hw/s390x/s390-hypercall.h                   |   2 +-
+ hw/sd/sdmmc-internal.h                      |   2 +-
+ hw/tpm/tpm_tis.h                            |   3 +-
+ hw/usb/hcd-ehci.h                           |  37 ++--
+ hw/xtensa/xtensa_memory.h                   |   2 +-
+ include/crypto/tls-cipher-suites.h          |   2 +-
+ include/hw/acpi/tpm.h                       |   3 +-
+ include/hw/arm/digic.h                      |   2 +-
+ include/hw/arm/fsl-imx6.h                   |   2 +-
+ include/hw/arm/fsl-imx6ul.h                 |   2 +-
+ include/hw/arm/fsl-imx7.h                   |   2 +-
+ include/hw/arm/fsl-imx8mp.h                 |   2 +-
+ include/hw/core/boards.h                    |  14 ++
+ include/hw/core/cpu.h                       |   2 +-
+ include/hw/core/qdev-properties.h           |   1 +
+ include/hw/core/qdev.h                      |  27 ---
+ include/hw/i2c/arm_sbcon_i2c.h              |   2 +-
+ include/hw/i386/apic_internal.h             |   2 +-
+ include/hw/i386/pc.h                        |   3 +
+ include/hw/intc/mips_gic.h                  |   2 +-
+ include/hw/misc/bcm2835_thermal.h           |   2 +-
+ include/hw/misc/led.h                       |   2 +-
+ include/hw/ppc/pnv.h                        |   2 +-
+ include/hw/ppc/spapr.h                      |  18 +-
+ include/hw/ppc/spapr_fadump.h               |   2 +-
+ include/hw/timer/bcm2835_systmr.h           |   2 +-
+ include/qemu/units.h                        |   2 +-
+ include/qom/compat-properties.h             |  40 ++++
+ include/qom/object.h                        |   8 -
+ include/system/memory.h                     |   2 +-
+ include/system/tpm.h                        |   9 +
+ system/memory-internal.h                    |   5 +-
+ accel/accel-system.c                        |   1 +
+ backends/hostmem.c                          |   1 +
+ crypto/tls-cipher-suites.c                  |   2 +-
+ hw/acpi/tpm.c                               |  10 +-
+ hw/alpha/dp264.c                            |   2 +-
+ hw/alpha/typhoon.c                          |   2 +-
+ hw/arm/boot.c                               |   2 +-
+ hw/arm/exynos4210.c                         |   2 +-
+ hw/arm/integratorcp.c                       |   1 -
+ hw/arm/mps3r.c                              |   2 +-
+ hw/arm/musicpal.c                           |   1 -
+ hw/arm/omap1.c                              |   2 +-
+ hw/arm/realview.c                           |   3 +-
+ hw/arm/smmuv3-accel-stubs.c                 |  52 +++++
+ hw/arm/smmuv3-accel.c                       |   3 +-
+ hw/arm/smmuv3.c                             |  13 +-
+ hw/arm/versatilepb.c                        |   1 -
+ hw/arm/vexpress.c                           |   1 -
+ hw/arm/virt-acpi-build.c                    |   9 +-
+ hw/arm/virt.c                               |  11 +-
+ hw/arm/xlnx-zcu102.c                        |   1 -
+ hw/core/machine.c                           |   4 +
+ hw/core/qdev-properties.c                   |   1 +
+ hw/core/qdev.c                              |   1 +
+ hw/cxl/cxl-host-stubs.c                     |   5 +
+ hw/display/ati.c                            |  12 +-
+ hw/hppa/machine.c                           |   2 +-
+ hw/hyperv/hyperv.c                          |   6 +-
+ hw/hyperv/vmbus.c                           |   1 -
+ hw/i386/acpi-build.c                        |   4 +-
+ hw/i386/fw_cfg.c                            |   2 +-
+ hw/i386/multiboot.c                         |   2 +-
+ hw/i386/pc.c                                |   3 +
+ hw/i386/pc_piix.c                           |  13 +-
+ hw/i386/pc_q35.c                            |  14 +-
+ hw/i386/pc_sysfw_ovmf-stubs.c               |   2 +-
+ hw/i386/pc_sysfw_ovmf.c                     |   2 +-
+ hw/i386/vmmouse.c                           |   2 +-
+ hw/intc/arm_gicv3_cpuif.c                   |   2 +-
+ hw/intc/arm_gicv3_cpuif_common.c            |   2 +-
+ hw/intc/m68k_irqc.c                         |   2 +-
+ hw/intc/sh_intc.c                           |   2 +-
+ hw/isa/lpc_ich9.c                           |   2 +-
+ hw/m68k/an5206.c                            |   2 +-
+ hw/m68k/mcf5206.c                           |   2 +-
+ hw/m68k/mcf5208.c                           |   2 +-
+ hw/m68k/mcf_intc.c                          |   2 +-
+ hw/m68k/q800-glue.c                         |   2 +-
+ hw/m68k/q800.c                              |   2 +-
+ hw/m68k/virt.c                              |  13 +-
+ hw/microblaze/boot.c                        |   2 +-
+ hw/microblaze/petalogix_ml605_mmu.c         |   2 +-
+ hw/microblaze/petalogix_s3adsp1800_mmu.c    |   2 +-
+ hw/microblaze/xlnx-zynqmp-pmu.c             |   2 +-
+ hw/mips/bootloader.c                        |   2 +-
+ hw/mips/fuloong2e.c                         |   2 +-
+ hw/mips/jazz.c                              |   2 +-
+ hw/mips/malta.c                             |   2 +-
+ hw/misc/avr_power.c                         |   3 +
+ hw/misc/bcm2835_thermal.c                   |   2 +-
+ hw/misc/led.c                               |   2 +-
+ hw/misc/mips_cpc.c                          |   3 +-
+ hw/misc/riscv_cmgcr.c                       |   2 +-
+ hw/misc/riscv_cpc.c                         |   3 +-
+ hw/or1k/boot.c                              |   2 +-
+ hw/or1k/cputimer.c                          |   2 +-
+ hw/or1k/or1k-sim.c                          |   2 +-
+ hw/or1k/virt.c                              |   2 +-
+ hw/ppc/amigaone.c                           |   1 -
+ hw/ppc/e500.c                               |   2 +-
+ hw/ppc/e500plat.c                           |   1 +
+ hw/ppc/fw_cfg.c                             |   2 +-
+ hw/ppc/mpc8544_guts.c                       |   2 +-
+ hw/ppc/mpc8544ds.c                          |   3 +-
+ hw/ppc/ppc440_uc.c                          |   2 +-
+ hw/ppc/ppc4xx_devs.c                        |   2 +-
+ hw/ppc/ppc_booke.c                          |   2 +-
+ hw/ppc/prep.c                               |   1 -
+ hw/ppc/prep_systemio.c                      |   2 +-
+ hw/ppc/spapr.c                              |  17 +-
+ hw/ppc/spapr_rtas.c                         |  15 ++
+ hw/ppc/spapr_vhyp_mmu.c                     |   2 +-
+ hw/ppc/virtex_ml507.c                       |   2 +-
+ hw/riscv/microblaze-v-generic.c             |   2 +-
+ hw/s390x/ap-bridge.c                        |   2 +-
+ hw/s390x/s390-hypercall.c                   |   2 +-
+ hw/s390x/s390-stattrib.c                    |   2 +-
+ hw/s390x/s390-virtio-ccw.c                  |  14 +-
+ hw/s390x/tod-tcg.c                          |   2 +-
+ hw/sd/sd.c                                  |   2 +-
+ hw/sh4/r2d.c                                |   2 +-
+ hw/sh4/sh7750.c                             |   1 -
+ hw/sparc/leon3.c                            |   2 +-
+ hw/sparc/sun4m.c                            |   2 +-
+ hw/sparc64/niagara.c                        |   2 +-
+ hw/sparc64/sparc64.c                        |   2 +-
+ hw/sparc64/sun4u.c                          |   2 +-
+ hw/timer/bcm2835_systmr.c                   |   2 +-
+ hw/tpm/tpm_crb.c                            |  13 +-
+ hw/tpm/tpm_tis_common.c                     |   4 +-
+ hw/tpm/tpm_tis_i2c.c                        |   2 +-
+ hw/tpm/tpm_tis_isa.c                        |  12 +-
+ hw/tpm/tpm_tis_sysbus.c                     |  13 +-
+ hw/tricore/tricore_testboard.c              |   2 +-
+ hw/usb/bus-stub.c                           |   2 +-
+ hw/usb/hcd-ehci-pci.c                       |   2 +-
+ hw/usb/hcd-ehci-sysbus.c                    |   2 +-
+ hw/usb/hcd-ehci.c                           | 228 ++++++++++----------
+ hw/virtio/virtio-iommu.c                    |   1 -
+ hw/xtensa/pic_cpu.c                         |   2 +-
+ hw/xtensa/xtfpga.c                          |   2 +-
+ qom/compat-properties.c                     |  76 +++++++
+ qom/object.c                                |  62 +-----
+ stubs/fw_cfg.c                              |   2 +-
+ stubs/hotplug-stubs.c                       |   2 +-
+ stubs/qdev.c                                |   2 +-
+ stubs/qom-compat-properties.c               |  14 ++
+ system/memory.c                             |   2 +-
+ system/physmem.c                            |  16 +-
+ system/rtc.c                                |   1 +
+ system/vl.c                                 |   1 +
+ target/i386/sev.c                           |   1 +
+ tests/qtest/fuzz-sb16-test.c                |   2 +-
+ tests/qtest/fuzz-sdcard-test.c              |   2 +-
+ tests/qtest/sdhci-test.c                    |   2 +-
+ ui/vdagent.c                                |   1 +
+ hw/arm/Kconfig                              |   1 -
+ hw/arm/meson.build                          |   5 +-
+ hw/misc/meson.build                         |   2 +-
+ hw/timer/meson.build                        |   2 +-
+ hw/usb/trace-events                         |   9 +
+ qom/meson.build                             |   3 +
+ rust/bindings/qom-sys/lib.rs                |   2 +-
+ stubs/meson.build                           |   1 +
+ tests/functional/aarch64/test_raspi3.py     |   2 +-
+ tests/functional/arm/test_bflt.py           |   2 +-
+ tests/functional/arm/test_raspi2.py         |   2 +-
+ tests/functional/m68k/test_nextcube.py      |   2 +-
+ tests/functional/mips/test_malta.py         |   2 +-
+ tests/functional/mips64el/test_fuloong2e.py |   2 +-
+ tests/functional/mips64el/test_malta.py     |   2 +-
+ tests/functional/mipsel/test_malta.py       |   2 +-
+ tests/functional/ppc/test_40p.py            |   2 +-
+ tests/functional/qemu_test/tesseract.py     |   2 +-
+ 182 files changed, 687 insertions(+), 504 deletions(-)
+ create mode 100644 include/qom/compat-properties.h
+ create mode 100644 hw/arm/smmuv3-accel-stubs.c
+ create mode 100644 qom/compat-properties.c
+ create mode 100644 stubs/qom-compat-properties.c
+
+-- 
+2.53.0
 
 
