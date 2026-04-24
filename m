@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A513BFB44D6
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 08:40:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FEA5F589DF
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 08:41:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGC4M-0004jl-O7; Fri, 24 Apr 2026 04:39:26 -0400
+	id 1wGC4A-0004er-AY; Fri, 24 Apr 2026 04:39:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wGC4L-0004jI-8c; Fri, 24 Apr 2026 04:39:25 -0400
+ id 1wGC48-0004dm-FG; Fri, 24 Apr 2026 04:39:12 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wGC4J-0005P4-5C; Fri, 24 Apr 2026 04:39:24 -0400
+ id 1wGC46-0005In-LJ; Fri, 24 Apr 2026 04:39:12 -0400
 Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63NIbqLS3658063; Fri, 24 Apr 2026 08:39:22 GMT
+ 63NIZBhL3657914; Fri, 24 Apr 2026 08:39:09 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Bq+v8/nQIJ0Vet1k9
- 3IvPZlJZuOoNDtPlLHwurn5b/I=; b=O6JOYQzHXJTHU/aQMJ+IVONIeVJujVjPx
- +v4gUYOYqrLGSU9gjCDwSjoJO8rX/4R1DUtnPYtY79EQScgXJjLjFlvugJKQ7E+9
- gEysdU7INN3t2W5LD2UPoOHJOXMSehEZDk4PQTJl6f7hFV5kVLLZ1P9ODwDxum+Z
- XaqrfyApu38POseoXksjcxj7dlU4AADTlM9hX/h3RK2/yX69IcgO6mG6y4uICfID
- oSa1RkbmILL9M+KluD0HONRP04BUbHPOYexO7sWyt5/6B2xs7JuDD7MjXhfoGdvP
- PgJV59I38yT/LdTaMKqlIXKOv82OsxexysQ5+92ZCJO9zb++KJG+A==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dpeu7v3ng-1
+ :mime-version:references:subject:to; s=pp1; bh=h6e0Ld9GyXjt/9CgK
+ FlSYjhYhBYMTPq6Wjq4dgR2vkU=; b=HpGEp3ZjBD7m+gER88jFgO1erQuq6JCUy
+ 5lGONbyzDa3CKn8yEWA8L9kz8GKdam+NpNXYhoyDWXnm3f6PatCpp0UgxLX2uYqa
+ Vt+RnLh/0jfWvhcLpL9UfLa8q4gr0r8R56CtoFtYFgq7puo611bMtyLXbCveV+Za
+ qwC0Lj1BdFKTMe3mpiJylYB7V8ltL0dqZ80p8I89bcwRkqzGVxp8gpWUdZIkJP4x
+ J8XNSVTlZtpcvJqZxqZM7y/lbyxeXwwci0kFTPacOoAYeP4NYqYIaMFhq47lj1io
+ aDSiPkZfrmA1jWJIJOPeeGfWjVruotXAHRq6612hNz4LbaXtYMSzw==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dpeu7v3mw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Apr 2026 08:39:21 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63O85K9O008868;
- Fri, 24 Apr 2026 08:39:20 GMT
+ Fri, 24 Apr 2026 08:39:08 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63O8ZV2c002414;
+ Fri, 24 Apr 2026 08:39:08 GMT
 Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dpjkyt2bg-1
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dpjkya2cc-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 24 Apr 2026 08:39:20 +0000 (GMT)
+ Fri, 24 Apr 2026 08:39:07 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
  by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63O8dH5Z52167114
+ 63O8d3g141615652
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 24 Apr 2026 08:39:17 GMT
+ Fri, 24 Apr 2026 08:39:03 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0860D2004E;
- Fri, 24 Apr 2026 08:39:17 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id A26822004E;
+ Fri, 24 Apr 2026 08:39:03 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id CDB9520040;
- Fri, 24 Apr 2026 08:39:12 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id ECD022004F;
+ Fri, 24 Apr 2026 08:38:59 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
  [9.39.31.230]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 24 Apr 2026 08:39:12 +0000 (GMT)
+ Fri, 24 Apr 2026 08:38:59 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: <qemu-devel@nongnu.org>
 Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
@@ -65,9 +65,9 @@ Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>,
  Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
  Shivang Upadhyay <shivangu@linux.ibm.com>
-Subject: [PATCH v6 05/10] pnv/mpipl: Preserve CPU registers after crash
-Date: Fri, 24 Apr 2026 14:08:32 +0530
-Message-ID: <20260424083837.214947-6-adityag@linux.ibm.com>
+Subject: [PATCH v6 02/10] ppc/mpipl: Implement S0 SBE interrupt
+Date: Fri, 24 Apr 2026 14:08:29 +0530
+Message-ID: <20260424083837.214947-3-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424083837.214947-1-adityag@linux.ibm.com>
 References: <20260424083837.214947-1-adityag@linux.ibm.com>
@@ -75,20 +75,20 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: -7BWJtYoZe-IXKLcI2Ut0AAKsAaBtG20
-X-Authority-Analysis: v=2.4 cv=Ksp9H2WN c=1 sm=1 tr=0 ts=69eb2c39 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-ORIG-GUID: AOsbdYGPYn7gWzUY9JjN92aaT0GcRcTV
+X-Authority-Analysis: v=2.4 cv=Ksp9H2WN c=1 sm=1 tr=0 ts=69eb2c2c cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=758Tq7CB64zFO0BBSKcA:9
-X-Proofpoint-GUID: 3c3B8N9_aGbxBJ5T5e7mcurr8dsTRJnf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI0MDA3NiBTYWx0ZWRfX/ItXUk5JNff1
- AznnjJlgZcavAsJZNKi+2R8fNta5HJwZy1O835j9GdjxrBpTXuQCjbT6k0xj9TG8TMv7mQr3HTl
- yNcXvvZJ3yycyA1JrkQClMAXBkJZ6LdmuQQhINm8zpTjfPf1N1IXgjErdpYxXhNqI0bGwF0qhXM
- 8/d12J8ORb8dMcNjB83xQJDFFfQ+Afh43zVLYCtGtrp35HGVLAzRFyQAIV/YNx+cWIJimyvSEIY
- 5zAXdyEGRp6F7kFb5NZhQCNZVK1uDCOiwIOa7Ap3TYOqM1WGsaFYkCTaquVmpQEgHeaUAb/LN52
- 3aG1j5cQqRAIPiTIyvAxy0DPMeYKKDEfod0JtYmRdvT5jCxQUDHQVsTDr5GVf91eudYboe1zXPI
- JthL+Ju2IQY9oVetGXKCyBaF4uhiEDcbAoAxBoNPdyP4+cGS+oGv9RtjHjW9qrZWygTRnxMlFZ+
- HC97F5BKegDXDoshGFQ==
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=atcXKtye3xvqEmVJAE4A:9
+X-Proofpoint-GUID: PySs8pHEaPGGVTztPrTdv00pOr9KTVGA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI0MDA3NiBTYWx0ZWRfXzbuV46nNFqnj
+ z5NIR9Sta3OOSyv4G/E3HIyKRrS2H/ywh8TO6kqEng9LFgaXT164xAAF/vM/GUNIpUhajhFxHxj
+ 90ycGtLdzLODMIfTDyefs2SuCpokDlyis6gGaVo3eeZ4V2tPhnS6sRZG+qXrQwV3b2p1Qwo+ldZ
+ JyZc7WRjBWr8WBW6PxtE2VRzIZCGGuw4wkD1Ves8I9eSpRuLsYUY6xxBuGIZOpZm3JCVvQmW+Qp
+ AlFj+Z3ia3ApMiUVRkMU4YcniZXDTzCrVSO9PTg46dp9pufOZjyBnyUh7UiZ9NFEYGsz6BD7/2U
+ zh2BOiuBV6BNNzSLBP6e3AYWqt5lMQKjXifCP6h00g2lvFxcTaAozTHbhSJUmqcDIv6KnSAIRfP
+ ADTtB6sng6AxRIMbrFvMQxG4UMQmrNV0EFw9UGmR2urcEQ7KmKogxe5bWPJAgbbKbhbyFJE+7vc
+ y5Y2LqAsdG+EO7PnkBQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-23_03,2026-04-21_02,2025-10-01_01
@@ -121,294 +121,186 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Kernel expects the platform to provide CPU registers after pausing
-execution of the CPUs.
+During MPIPL (aka fadump), after a kernel crash, the kernel does
+opal_cec_reboot2 opal call, signifying an abnormal termination.
+When OPAL receives this opal call, it further triggers SBE S0 interrupt,
+to trigger a MPIPL boot.
 
-Currently only exporting the registers, used by Linux, for generating
-the /proc/vmcore
+Currently S0 interrupt is unimplemented in QEMU.
+
+Implement S0 interrupt as 'pause_vcpus' + 'guest_reset' in QEMU, as the
+SBE's implementation of S0 seems to be basically "stop all clocks" and
+then "host reset".
+
+pause_vcpus is done in a later patch when register preserving support is
+added
+
+See 'stopClocksS0' in SBE source code for more information.
+
+Also log both S0 and S1 interrupts.
 
 Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
 Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- hw/ppc/pnv_mpipl.c         | 154 +++++++++++++++++++++++++++++++++++++
- include/hw/ppc/pnv_mpipl.h |  60 +++++++++++++++
- 2 files changed, 214 insertions(+)
+ hw/ppc/meson.build         |  1 +
+ hw/ppc/pnv_mpipl.c         | 26 ++++++++++++++++++++++++++
+ hw/ppc/pnv_sbe.c           | 29 +++++++++++++++++++++++++++++
+ include/hw/ppc/pnv.h       |  5 +++++
+ include/hw/ppc/pnv_mpipl.h | 19 +++++++++++++++++++
+ 5 files changed, 80 insertions(+)
+ create mode 100644 hw/ppc/pnv_mpipl.c
+ create mode 100644 include/hw/ppc/pnv_mpipl.h
 
+diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+index f7dac87a2a48..c61fba4ec8f2 100644
+--- a/hw/ppc/meson.build
++++ b/hw/ppc/meson.build
+@@ -56,6 +56,7 @@ ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
+   'pnv_pnor.c',
+   'pnv_nest_pervasive.c',
+   'pnv_n1_chiplet.c',
++  'pnv_mpipl.c',
+ ))
+ # PowerPC 4xx boards
+ ppc_ss.add(when: 'CONFIG_PPC405', if_true: files(
 diff --git a/hw/ppc/pnv_mpipl.c b/hw/ppc/pnv_mpipl.c
-index cef1fe2c4056..308948b829cd 100644
---- a/hw/ppc/pnv_mpipl.c
+new file mode 100644
+index 000000000000..d8c9b7a428b7
+--- /dev/null
 +++ b/hw/ppc/pnv_mpipl.c
-@@ -8,6 +8,9 @@
- #include "qemu/log.h"
- #include "qemu/units.h"
- #include "system/address-spaces.h"
-+#include "system/cpus.h"
-+#include "system/hw_accel.h"
-+#include "system/memory.h"
- #include "system/runstate.h"
- #include "hw/ppc/pnv.h"
- #include "hw/ppc/pnv_mpipl.h"
-@@ -17,6 +20,8 @@
-     (pnv->mpipl_state.skiboot_base + MDST_TABLE_OFF)
- #define MDDT_TABLE_RELOCATED                            \
-     (pnv->mpipl_state.skiboot_base + MDDT_TABLE_OFF)
-+#define PROC_DUMP_RELOCATED                             \
-+    (pnv->mpipl_state.skiboot_base + PROC_DUMP_AREA_OFF)
- 
- /*
-  * Preserve the memory regions as pointed by MDST table
-@@ -169,9 +174,158 @@ static bool pnv_mpipl_preserve_mem(PnvMachineState *pnv)
-     return true;
- }
- 
-+static void do_store_cpu_regs(CPUState *cpu, MpiplPreservedCPUState *state)
-+{
-+    CPUPPCState *env = cpu_env(cpu);
-+    MpiplRegDataHdr *regs_hdr = &state->hdr;
-+    MpiplRegEntry *reg_entries = state->reg_entries;
-+    MpiplRegEntry *curr_reg_entry;
-+    uint32_t num_saved_regs = 0;
-+
-+    cpu_synchronize_state(cpu);
-+
-+    regs_hdr->pir = cpu_to_be32(env->spr[SPR_PIR]);
-+
-+    /* QEMU CPUs are not in Power Saving Mode */
-+    regs_hdr->core_state = 0xff;
-+
-+    regs_hdr->off_regentries = 0;
-+    regs_hdr->num_regentries = cpu_to_be32(NUM_REGS_PER_CPU);
-+
-+    regs_hdr->alloc_size = cpu_to_be32(sizeof(MpiplRegEntry));
-+    regs_hdr->act_size   = cpu_to_be32(sizeof(MpiplRegEntry));
-+
-+#define REG_TYPE_GPR  0x1
-+#define REG_TYPE_SPR  0x2
-+#define REG_TYPE_TIMA 0x3
-+
+@@ -0,0 +1,26 @@
 +/*
-+ * ID numbers used by f/w while populating certain registers
++ * Emulation of MPIPL (Memory Preserving Initial Program Load), aka fadump
 + *
-+ * Copied these defines from the linux kernel
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+#define REG_ID_NIP          0x7D0
-+#define REG_ID_MSR          0x7D1
-+#define REG_ID_CCR          0x7D2
 +
-+    curr_reg_entry = reg_entries;
++#include "qemu/osdep.h"
++#include "system/runstate.h"
++#include "hw/ppc/pnv.h"
++#include "hw/ppc/pnv_mpipl.h"
 +
-+#define REG_ENTRY(type, num, val)                          \
-+    do {                                               \
-+        curr_reg_entry->reg_type = cpu_to_be32(type);  \
-+        curr_reg_entry->reg_num  = cpu_to_be32(num);   \
-+        curr_reg_entry->reg_val  = cpu_to_be64(val);   \
-+        ++curr_reg_entry;                              \
-+        ++num_saved_regs;                            \
-+    } while (0)
-+
-+    /* Save the GPRs */
-+    for (int gpr_id = 0; gpr_id < 32; ++gpr_id) {
-+        REG_ENTRY(REG_TYPE_GPR, gpr_id, env->gpr[gpr_id]);
-+    }
-+
-+    REG_ENTRY(REG_TYPE_SPR, SPR_ACOP, env->spr[SPR_ACOP]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_AMR, env->spr[SPR_AMR]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_BESCR, env->spr[SPR_BESCR]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_CFAR, env->spr[SPR_CFAR]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_CIABR, env->spr[SPR_CIABR]);
-+
-+    REG_ENTRY(REG_TYPE_SPR, SPR_CTR, env->spr[SPR_CTR]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_CTRL, env->spr[SPR_CTRL]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_DABR, env->spr[SPR_DABR]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_DABRX, env->spr[SPR_DABRX]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_DAR, env->spr[SPR_DAR]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_DAWR0, env->spr[SPR_DAWR0]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_DAWR1, env->spr[SPR_DAWR1]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_DAWRX0, env->spr[SPR_DAWRX0]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_DAWRX1, env->spr[SPR_DAWRX1]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_DPDES, env->spr[SPR_DPDES]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_DSCR, env->spr[SPR_DSCR]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_DSISR, env->spr[SPR_DSISR]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_EBBHR, env->spr[SPR_EBBHR]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_EBBRR, env->spr[SPR_EBBRR]);
-+
-+    REG_ENTRY(REG_TYPE_SPR, SPR_FSCR, env->spr[SPR_FSCR]);
-+
-+    REG_ENTRY(REG_TYPE_SPR, SPR_CTR, env->ctr);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_DAR, env->spr[SPR_DAR]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_DSISR, env->spr[SPR_DSISR]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_LR, env->lr);
-+    REG_ENTRY(REG_TYPE_SPR, REG_ID_MSR, env->msr);
-+    REG_ENTRY(REG_TYPE_SPR, REG_ID_NIP, env->nip);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_XER, env->xer);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_SRR0, env->spr[SPR_SRR0]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_SRR1, env->spr[SPR_SRR1]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_HSRR0, env->spr[SPR_HSRR0]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_HSRR1, env->spr[SPR_HSRR1]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_CFAR, env->spr[SPR_CFAR]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_HMER, env->spr[SPR_HMER]);
-+    REG_ENTRY(REG_TYPE_SPR, SPR_HMEER, env->spr[SPR_HMEER]);
++void do_mpipl_preserve(PnvMachineState *pnv)
++{
++    /* Mark next boot as Memory-preserving boot */
++    pnv->mpipl_state.is_next_boot_mpipl = true;
 +
 +    /*
-+     * Ensure the number of registers saved match the number of
-+     * registers per cpu
++     * Do a guest reset.
++     * Next reset will see 'is_next_boot_mpipl' as true, and trigger MPIPL
 +     *
-+     * This will help catch an error if in future a new register entry
-+     * is added/removed while not modifying NUM_PER_CPU_REGS
++     * Requirement:
++     * GUEST_RESET is expected to NOT clear the memory, as is the case when
++     * this is merged
 +     */
-+    assert(num_saved_regs == NUM_REGS_PER_CPU);
++    qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
 +}
-+
-+static bool pnv_mpipl_preserve_cpu_state(PnvMachineState *pnv)
-+{
-+    MachineState *machine = MACHINE(pnv);
-+    uint32_t num_cpus = machine->smp.cpus;
-+    MpiplPreservedCPUState *state;
-+    CPUState *cpu;
-+    AddressSpace *default_as = &address_space_memory;
-+    MemTxResult io_result;
-+    MemTxAttrs attrs;
-+
-+    /* Mark the memory transactions as privileged memory access */
-+    attrs.user = 0;
-+    attrs.memory = 1;
-+
-+    if (pnv->mpipl_state.cpu_states) {
-+        /*
-+         * CPU States might have been allocated from some past crash, free the
-+         * memory to preven memory leak
-+         */
-+        g_free(pnv->mpipl_state.cpu_states);
-+        pnv->mpipl_state.num_cpu_states = 0;
-+    }
-+
-+    pnv->mpipl_state.cpu_states = g_malloc_n(num_cpus,
-+            sizeof(MpiplPreservedCPUState));
-+    pnv->mpipl_state.num_cpu_states = num_cpus;
-+
-+    state = pnv->mpipl_state.cpu_states;
-+
-+    /* Preserve the Processor Dump Area */
-+    io_result = address_space_read(default_as, PROC_DUMP_RELOCATED, attrs,
-+            &pnv->mpipl_state.proc_area, sizeof(MpiplProcDumpArea));
-+    if (io_result != MEMTX_OK) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+            "MPIPL: Failed to read Proc Dump Area at: 0x" TARGET_FMT_lx "\n",
-+            PROC_DUMP_RELOCATED);
-+
-+        return false;
-+    }
-+
-+    CPU_FOREACH(cpu) {
-+        do_store_cpu_regs(cpu, state);
-+        ++state;
-+    }
-+
-+    return true;
-+}
-+
- void do_mpipl_preserve(PnvMachineState *pnv)
+diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
+index 247617338a0d..5a2b3342d199 100644
+--- a/hw/ppc/pnv_sbe.c
++++ b/hw/ppc/pnv_sbe.c
+@@ -26,6 +26,9 @@
+ #include "hw/ppc/pnv.h"
+ #include "hw/ppc/pnv_xscom.h"
+ #include "hw/ppc/pnv_sbe.h"
++#include "hw/ppc/pnv_mpipl.h"
++#include "system/cpus.h"
++#include "system/runstate.h"
+ #include "trace.h"
+ 
+ /*
+@@ -113,11 +116,37 @@ static uint64_t pnv_sbe_power9_xscom_ctrl_read(void *opaque, hwaddr addr,
+ static void pnv_sbe_power9_xscom_ctrl_write(void *opaque, hwaddr addr,
+                                        uint64_t val, unsigned size)
  {
-+    pause_all_vcpus();
-+
-     pnv_mpipl_preserve_mem(pnv);
-+    pnv_mpipl_preserve_cpu_state(pnv);
++    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
++    PnvSBE *sbe = opaque;
+     uint32_t offset = addr >> 3;
  
-     /* Mark next boot as Memory-preserving boot */
-     pnv->mpipl_state.is_next_boot_mpipl = true;
-diff --git a/include/hw/ppc/pnv_mpipl.h b/include/hw/ppc/pnv_mpipl.h
-index b3d980dfefb1..aa2936caa75c 100644
---- a/include/hw/ppc/pnv_mpipl.h
-+++ b/include/hw/ppc/pnv_mpipl.h
-@@ -17,6 +17,10 @@
- typedef struct MdstTableEntry MdstTableEntry;
- typedef struct MdrtTableEntry MdrtTableEntry;
- typedef struct MpiplPreservedState MpiplPreservedState;
-+typedef struct MpiplRegDataHdr MpiplRegDataHdr;
-+typedef struct MpiplRegEntry MpiplRegEntry;
-+typedef struct MpiplProcDumpArea MpiplProcDumpArea;
-+typedef struct MpiplPreservedCPUState MpiplPreservedCPUState;
+     trace_pnv_sbe_xscom_ctrl_write(addr, val);
  
- /*
-  * Following offsets are copied from skiboot source code.
-@@ -49,6 +53,8 @@ typedef struct MpiplPreservedState MpiplPreservedState;
- /* HRMOR_BIT copied from skiboot */
- #define HRMOR_BIT (1ull << 63)
+     switch (offset) {
++    case SBE_CONTROL_REG_RW:
++        switch (val) {
++        case SBE_CONTROL_REG_S0:
++            qemu_log_mask(LOG_UNIMP, "SBE: S0 Interrupt triggered\n");
++
++            pnv_sbe_set_host_doorbell(sbe, sbe->host_doorbell | SBE_HOST_RESPONSE_MASK);
++
++            /* Preserve memory regions and CPU state, if MPIPL is registered */
++            do_mpipl_preserve(pnv);
++
++            /*
++             * Control may not come back here as 'do_mpipl_preserve' triggers
++             * a guest reboot
++             */
++            break;
++        case SBE_CONTROL_REG_S1:
++            qemu_log_mask(LOG_UNIMP, "SBE: S1 Interrupt triggered\n");
++            break;
++        default:
++            qemu_log_mask(LOG_UNIMP,
++                "SBE: CONTROL_REG_RW: Unknown value: Ox%."
++                  HWADDR_PRIx "\n", val);
++        }
++        break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "SBE Unimplemented register: Ox%"
+                       HWADDR_PRIx "\n", addr >> 3);
+diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+index 90028f974dab..79de6b856923 100644
+--- a/include/hw/ppc/pnv.h
++++ b/include/hw/ppc/pnv.h
+@@ -25,6 +25,7 @@
+ #include "hw/core/sysbus.h"
+ #include "hw/ipmi/ipmi.h"
+ #include "hw/ppc/pnv_pnor.h"
++#include "hw/ppc/pnv_mpipl.h"
  
-+#define NUM_REGS_PER_CPU 66 /*(32 GPRs, 34 SPRs)*/
-+
- /*
-  * Memory Dump Source Table (MDST)
-  *
-@@ -95,6 +101,55 @@ static_assert(MDST_MAX_ENTRIES == MDDT_MAX_ENTRIES,
- static_assert(MDRT_MAX_ENTRIES >= MDST_MAX_ENTRIES,
-         "MDRT should support atleast having number of entries as in MDST");
+ #define TYPE_PNV_CHIP "pnv-chip"
  
-+/*
-+ * Processor Dump Area
-+ *
-+ * This contains the information needed for having processor
-+ * state captured during a platform dump.
-+ *
-+ * As mentioned in HDAT, following the P9 specific format
-+ */
-+struct MpiplProcDumpArea {
-+    uint32_t  thread_size;    /* Size of each thread register entry */
-+#define PROC_DUMP_AREA_VERSION_P9    0x1    /* P9 format */
-+    uint8_t version;
-+    uint8_t reserved[11];
-+    uint64_t  alloc_addr;    /* Destination memory to place register data */
-+    uint32_t  reserved2;
-+    uint32_t  alloc_size;    /* Allocated size */
-+    uint64_t  dest_addr;     /* Destination address */
-+    uint32_t  reserved3;
-+    uint32_t  act_size;      /* Actual data size */
-+} QEMU_PACKED;
-+
-+/*
-+ * "Architected Register Data" in the HDAT spec
-+ *
-+ * Acts as a header to the register entries for a particular thread
-+ */
-+struct MpiplRegDataHdr {
-+    uint32_t pir;         /* PIR of thread */
-+    uint8_t  core_state;  /* Stop state of the overall core */
-+    uint8_t  reserved[3];
-+    uint32_t off_regentries;  /* Offset to Register Entries Array */
-+    uint32_t num_regentries;  /* Number of Register Entries in Array */
-+    uint32_t alloc_size;  /* Allocated size for each Register Entry */
-+    uint32_t act_size;    /* Actual size for each Register Entry */
-+} QEMU_PACKED;
-+
-+struct MpiplRegEntry {
-+    uint32_t reg_type;
-+    uint32_t reg_num;
-+    uint64_t reg_val;
-+} QEMU_PACKED;
-+
-+struct MpiplPreservedCPUState {
-+    MpiplRegDataHdr hdr;
-+
-+    /* Length of 'reg_entries' is hdr.num_regentries */
-+    MpiplRegEntry  reg_entries[NUM_REGS_PER_CPU];
-+};
-+
- /* Preserved state to be saved in PnvMachineState */
- struct MpiplPreservedState {
-     /* skiboot_base will be valid only after OPAL sends relocated base to SBE */
-@@ -103,6 +158,11 @@ struct MpiplPreservedState {
+@@ -113,6 +114,7 @@ struct PnvMachineState {
+     bool         lpar_per_core;
  
-     MdrtTableEntry *mdrt_table;
-     uint32_t num_mdrt_entries;
-+
-+    MpiplProcDumpArea proc_area;
-+
-+    MpiplPreservedCPUState *cpu_states;
-+    uint32_t num_cpu_states;
+     Notifier     machine_init_done;
++    MpiplPreservedState mpipl_state;
  };
  
- #endif
+ PnvChip *pnv_get_chip(PnvMachineState *pnv, uint32_t chip_id);
+@@ -292,4 +294,7 @@ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor);
+ 
+ #define PNV11_OCC_SENSOR_BASE(chip) PNV10_OCC_SENSOR_BASE(chip)
+ 
++/* MPIPL helpers */
++void do_mpipl_preserve(PnvMachineState *pnv);
++
+ #endif /* PPC_PNV_H */
+diff --git a/include/hw/ppc/pnv_mpipl.h b/include/hw/ppc/pnv_mpipl.h
+new file mode 100644
+index 000000000000..61ef7ef8fe60
+--- /dev/null
++++ b/include/hw/ppc/pnv_mpipl.h
+@@ -0,0 +1,19 @@
++/*
++ * Emulation of MPIPL (Memory Preserving Initial Program Load), aka fadump
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef PNV_MPIPL_H
++#define PNV_MPIPL_H
++
++#include <stdbool.h>
++
++typedef struct MpiplPreservedState MpiplPreservedState;
++
++/* Preserved state to be saved in PnvMachineState */
++struct MpiplPreservedState {
++    bool       is_next_boot_mpipl;
++};
++
++#endif
 -- 
 2.53.0
 
