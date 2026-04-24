@@ -4,95 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E172FE5202
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 10:29:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E4CDFE5204
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 10:32:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGDll-0005PU-Am; Fri, 24 Apr 2026 06:28:21 -0400
+	id 1wGDq2-00085G-Tj; Fri, 24 Apr 2026 06:32:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1wGDlj-0005Od-3b
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 06:28:19 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1wGDlh-0006Qq-L7
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 06:28:18 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c70ea5e9e9dso3371375a12.1
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 03:28:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1wGDq1-00084z-4h
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 06:32:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
+ id 1wGDpy-0008Fi-R3
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 06:32:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777026761;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FweiYUionAf0G+sWG6apDYixDLEKkon1MR2bzb5I5Wk=;
+ b=Q68Pdg+6sneyoqkwA7Y8iAL+qOTGIgo2RqlhC3yj5AR6u3Lz25fy4jM+RTRPwQXOvItk8M
+ 6t/Kci/r+P+FYYbZQwjODj7sKw1sHEhbqdAdMcOHLwbLHLH3R+///M9ieS3uN+hgTINs5l
+ L3TNuW/IdJO2Lg0f11W0AJjRJtdCHwQ=
+Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
+ [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-554-YDIUuBUKOEG_S-BudGQXWw-1; Fri, 24 Apr 2026 06:32:40 -0400
+X-MC-Unique: YDIUuBUKOEG_S-BudGQXWw-1
+X-Mimecast-MFC-AGG-ID: YDIUuBUKOEG_S-BudGQXWw_1777026759
+Received: by mail-pl1-f198.google.com with SMTP id
+ d9443c01a7336-2adef9d486bso70765635ad.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 03:32:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1777026496; x=1777631296; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=hfYiP5dksUUHNGg1Q2tKEehZ8qQGjLLlEBFXz7KBkHU=;
- b=DLVUqbnh5F9Erwf2PMASx6cWT9Io+22Toy6I8i01fKPdb1YzkOey7NzJA6x9AB8WQ/
- YQqTTckxhGXEzq68rCXPp3DARD3MWcuV20oM/S/35pwEC6IcAEFjgroXD3iXf9cQliJr
- ypiwjOvXxY66CJzJ1emeO5UXwIjmd0KmdU2LF5cAArkwZkeC56WDUDIRfRoOhsng8Veu
- iFN6CMa7MlDF23VsrYXWbDB19HjgjM9TMxEa0XUHCsEEk7OxNhvQ4SMecEYZn7ySDl05
- kpSp2h7pG3jkfNwpQLXYYIbAccYE6yv4SeRMkP+m1bPj54Nds5qF5uwkT50dEQtgnMll
- UJeQ==
+ d=redhat.com; s=google; t=1777026759; x=1777631559; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=FweiYUionAf0G+sWG6apDYixDLEKkon1MR2bzb5I5Wk=;
+ b=GmU0qtdtE71xoeM3pBll6CCbTTrU5bd4tiznqmXCvD7mfaFNGTDWknjrRO28pFxuqD
+ nSFwKZUbDrxisitw2VGq06UwRxIirtL1AoQNgoV7vQIR8RQuyu7eqPQK4X+l7ANOFGoM
+ 2zZwTzKoLYG9iQ1iLBHzte7L3AAM9eBAR878FahtQaUTIY1wCmvx7E9MMAbkofyiLjnQ
+ qaB76DmlWhEsXy9OBkn0s6ZKVv9Sqf88CNHrCCbEboO/1gz0SCR4KS1sOMfhDoQxLlOV
+ 2DLT7RPmILNvbJE+iWdeihR0VmlUElbCumJOvWSeHV8KJ3ZoTdGLEaQWNvC6noDi9sjD
+ ptEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777026496; x=1777631296;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=hfYiP5dksUUHNGg1Q2tKEehZ8qQGjLLlEBFXz7KBkHU=;
- b=K9c1wgb3wFpeJBwS/fBSa3PCTuLkLtFJnuFm58fGmz9+Dzon+zGsIDeMMkmHmp2tsb
- 3MK0bmPwvEa8Bw65WEwTl+Les+bX4y+k8iUz9GYX+r7kQeJEYR86o6ZKf3Do6a7nemFA
- /vF+i9G+L9hJ63atojc5Pq2W44yzAGRqgYIwmB5x/+r70hVWv44wBu38vvniI+TdvsRx
- kjnCr48RIkRsIJpxOJem7sqYPJxdxVZkA73D0b8yhKBQdDoaykS0+jDSQjDQoqfJHKI0
- Yr7JeLYGuL1RCjMrM2XCvAiNQueW6UUXG7pF8zdFLSpZtQZ+9pEiCGsF3um6B5mNxpkj
- ro/A==
-X-Gm-Message-State: AOJu0YyZQOG+Jt0Nu6db/4GK75OEG5tIHWvcfAieYt9zJG+Jfv3K1yue
- yX/VCwozrp2dLKiD6TtWenQcWDxtaPh9l5K9NMlT40qDdBWXtdmoeWhVg9kJhz7AMIRN+c16+OR
- eXL7OKqNU9WL0yyFxqjxAG56yl/Zk1Fxm8c1IXRDbUvm8kd6fv74cdDGmDeFiAS2IocS7i5H/2C
- fxjparPfJm4Ksz54+Il+HyO4TAvMDbrxFOx/J8+xn02ZQ6YQk2
-X-Gm-Gg: AeBDietaoO+645XPwj0q2wE5MS5F8qrhPvKnFNIcmvasbcfpt9hlhH5fmS2aLPHP5tO
- dQk6kYsOD9nMDi1mlYfH1WikRzEqB4MUFl7tFaKPvHsKqx3keL7DxlOPRAutUni5i1XYEiAQ/2O
- HXhp6nh8E0+mK2ZHqHhZV4DL66BQbOhpjPEUZrbwfbYyhW0kuSS8MC0EpKKdTTmNUBatLigAGBB
- d7Bb5UNFvYslvzdRbKGYojDas3InTrRpr4XBujBIl6vRxFFuA363M2TrROAgp51ZN7HXcCaxgOu
- 3SGkCEtiCQuOJJhQHmUla7avRev8R7QFaromKi+mn3Q+sTyKF7P4spZM4odDd8WK8ci5ru7CEaA
- VDBk28Itd8ySsWS4h+5UwUN+i6fmJ8YyPURpqxAe5Jhu7pvhpfWTzuPT9rrvhPziyAsoqSIw2ZM
- C5IS/HxeZiCBKRq9awEYGWdqiGrhlwVKsKC0OVJsjX4IyGDoHMZrMCMskbZ4y2
-X-Received: by 2002:a17:903:2acb:b0:2ae:450c:951e with SMTP id
- d9443c01a7336-2b5f9f08968mr332418265ad.17.1777026495758; 
- Fri, 24 Apr 2026 03:28:15 -0700 (PDT)
-Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5fab0c17esm218889585ad.41.2026.04.24.03.28.13
+ d=1e100.net; s=20251104; t=1777026759; x=1777631559;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=FweiYUionAf0G+sWG6apDYixDLEKkon1MR2bzb5I5Wk=;
+ b=a6tFHKFKuDRW4Xw0x5ABH+jBYi2TDjCFDLkETbMWjpOedrWrJgAtz+MalWYP+d5N0g
+ VS6qi01wCsHSkOIiokqgDz0sYuDOQ+5ryzdPDA1IrWfvtmlIX8silIVuQE8sryayXlqM
+ /j7KJGcqC8e8xAUO98NZXOxFMcm2rcZqPNQn3+2QF2LF8afcvnNr4IQjQLRK6Q8f9LPI
+ MY6q5bwHI6e5nZqj2AMNMWCvfauuVVtLSfJJ20bLuO6k8QpRMk46cngNQAxYc2LSbX7y
+ IriG77oR2Sabpxx/Obf1irF0DtWu1HxRh3esB1rPxzkxP+vxS9QygfA8eAwHsqVcZnz5
+ S1IQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8yVWaV1UktvSBD25K0YgjQYcbsOuuc9ZY/mdtIE42hLTdM309ibakiIgFFoQ8JqG5T9W32S5AtyXCY@nongnu.org
+X-Gm-Message-State: AOJu0YzL3eZ5ASTeHtaDe86ZQ0fQuT6xJyO3kt4aNAQzL/vE3469R0Lm
+ eay3X5Pa/3IssM2JJNlWBspdbMn2uk/RpQEnLH58yM0E3yFv8SRaSM9unnwNxQ+CLFxXHrHPGSx
+ 9IjE+hsH3lh6IN0F2GE2YgPdJr5IkIYNorhxlCEQDAiTxwTOOA5IEwIDA
+X-Gm-Gg: AeBDiesVg+gTFHTnObeKZo8Hhqzh/TYVfIbq0VDaKm1Dm8ZeYjYsAZB2cednUTl4TNf
+ ymHHffYbwcVXtjgry1AsmN/efXVSKSIjq7mtQ8iMLMMgJC4KHwzhnRlBNXoxwrUdRIPBVw44Ihy
+ Mfi771KoJyzjPYd+xZk51HKEZvBfBHaS0jc0rYtlMrmVr0ZHH9v+I42Ht5FahumXUCVCEI0d3Na
+ SmqSfIlluvGHthe5YMhLnTBhPmyaiElkw8gPc/0cYZPM/4MfcgZHu0PuuMuZUbzBksZniAZxidN
+ 7xdQ8hU8d9bK4V88rz8F5CQQjh47RpMfKhTg0IWrs+GoxMHR4DieXZAFdusIX0mhLdfLQAqz+IC
+ YLzHRQSto3S2V
+X-Received: by 2002:a17:903:17c5:b0:2b7:a08d:9e42 with SMTP id
+ d9443c01a7336-2b7a08d9f73mr81016865ad.32.1777026758960; 
+ Fri, 24 Apr 2026 03:32:38 -0700 (PDT)
+X-Received: by 2002:a17:903:17c5:b0:2b7:a08d:9e42 with SMTP id
+ d9443c01a7336-2b7a08d9f73mr81016545ad.32.1777026758530; 
+ Fri, 24 Apr 2026 03:32:38 -0700 (PDT)
+Received: from fedora ([213.175.37.14]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b5fab4bf7bsm221195045ad.81.2026.04.24.03.32.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Apr 2026 03:28:15 -0700 (PDT)
-From: frank.chang@sifive.com
-To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
- Frank Chang <frank.chang@sifive.com>, Max Chou <max.chou@sifive.com>
-Subject: [PATCH 4/4] target/riscv: Expose Zicclsm extension as a CPU property
-Date: Fri, 24 Apr 2026 18:28:00 +0800
-Message-ID: <20260424102800.24022-5-frank.chang@sifive.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260424102800.24022-1-frank.chang@sifive.com>
-References: <20260424102800.24022-1-frank.chang@sifive.com>
+ Fri, 24 Apr 2026 03:32:37 -0700 (PDT)
+Date: Fri, 24 Apr 2026 12:32:29 +0200
+From: Juraj Marcin <jmarcin@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: Pranav Tyagi <prtyagi@redhat.com>, qemu-devel@nongnu.org, 
+ Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>
+Subject: Re: [PATCH v2] migration: Fix blocking in POSTCOPY_DEVICE during
+ package load
+Message-ID: <aetGUBIswlBVwZVq@fedora>
+References: <20260423094438.43556-1-prtyagi@redhat.com>
+ <aepvNu6ko5KfFY3a@x1.local>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=frank.chang@sifive.com; helo=mail-pg1-x530.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aepvNu6ko5KfFY3a@x1.local>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,34 +120,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+Hi Peter,
 
-Expose Zicclsm extension as a CPU property to allow user to turn on/off
-Zicclsm extension.
+On 2026-04-23 15:12, Peter Xu wrote:
+> On Thu, Apr 23, 2026 at 03:14:38PM +0530, Pranav Tyagi wrote:
+> > The package_loaded event is not set in case MIG_RP_MSG_PONG does not
+> > arrive on the source from the destination in the return path thread. The
+> > migration thread would then be blocked waiting for package_loaded event
+> > indefinitely in POSTCOPY_DEVICE state. Where as, in such a condition the
+> > source VM can safely resume as the destination has not yet started. The
+> > pong message can get lost in case of a network failure or destination
+> > crash before sending the pong.
+> > 
+> > This patch removes the package_loaded event and uses rp_sem, instead of
+> > kicking multiple events. The error is detected in case of network
+> > failure or destination crash and rp_sem is set in the out path of the
+> > return path thread. This will kick the migration thread out from a
+> > condition of indefinitely waiting for rp_sem. The migration thread then
+> > fails early and breaks from the migration loop to resume the vm on the
+> > source side.
+> > 
+> > Fixes: 7b842fe354c6 ("migration: Introduce POSTCOPY_DEVICE state")
+> > Signed-off-by: Pranav Tyagi <prtyagi@redhat.com>
+> 
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+> 
+> I assume Juraj has looked at this already internally, in that case you can
+> always attach his R-b directly when post / repost.
 
-Zicclsm is set to true by default to be backward compatible with the old
-RISC-V QEMU design.
+I did indeed check it, you can include by R-b!
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Max Chou <max.chou@sifive.com>
----
- target/riscv/cpu.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index df56b64a736..7f5e06ef83d 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1327,6 +1327,8 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
-     MULTI_EXT_CFG_BOOL("zicbop", ext_zicbop, true),
-     MULTI_EXT_CFG_BOOL("zicboz", ext_zicboz, true),
- 
-+    MULTI_EXT_CFG_BOOL("zicclsm", ext_zicclsm, true),
-+
-     MULTI_EXT_CFG_BOOL("zmmul", ext_zmmul, false),
- 
-     MULTI_EXT_CFG_BOOL("zca", ext_zca, false),
--- 
-2.43.0
+> 
+> If not, then it becomes a sincere request.. :-D
+> 
+> Thanks!
+> 
+> -- 
+> Peter Xu
+> 
 
 
