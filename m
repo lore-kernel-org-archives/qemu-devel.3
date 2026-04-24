@@ -4,98 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8048FED3FA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 19:53:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4886AFED3FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 20:03:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGMZh-0003Mj-OA; Fri, 24 Apr 2026 15:52:29 -0400
+	id 1wGMjc-0005vc-OB; Fri, 24 Apr 2026 16:02:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wGMZe-0003Ln-3s
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 15:52:26 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wGMja-0005u2-7s
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 16:02:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wGMZc-0001Rq-LL
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 15:52:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=gKRT1qiVdtBdALb4qSJJlolxZxBFt77ePs7lJnp/HAU=; b=eMI6C08j5vP4rYHGXFK05KFELx
- YcbTV11eUgpeUUkg1xTSNv7uW/hziWGk7qyCS9C6z7Angq0DajmnTuDJweeUR7q43arjThW3Bbb65
- Q9etBuV9iKLR2DvzcL6bfUPLb7peIEzwaIEL/Dp8O98bV/GstTWT2pm9Wa4DgQ1sZhK/Kuc/VpqfC
- CQIJC7clrhOYxvc/CepdA1zZ19onnVMxLi6opTc4/sK/rT9WtareEfaijVViUZqk/95CqKOZebU5t
- XsG6nYEGq0MzDHAYSLXoK00hhR6r8+AqrBjGOL0y8ym8kUrQ2m4v3WBEHiP5QLxIn1wjxeIOwAsnI
- DxCJYc8rXOMZV0wO4CQ4Wr2+DBriQ04vQeSZ/6IIsG+MRzLATzCJB8glkW5HI/2tCg31XEvD+JMcW
- JRTexffM4kpRjVnexOhSRvr+PQopDyDfBHlvgkZWL8J5zWzSjI+k/J38bOvgF2Hr7Cl8ViHP9XFY6
- OuTcsT3exx0M38axckpdYY2BZqbdFIFsY9olO+WqzTKOtg+1QNTdOfH0h38mqy1l61rlg/oufOf1V
- ug0L0yjfRV+xQPhELF6l57C1/bBYUMg99mhRLQmbBPlsaH+vh4xF/6l7p4mljsQ9/kPyciBHwtTny
- BRs1mCLW3/d8eXAqsNCdl64xx2ilGvAerOQKb6Lc4=;
-Received: from [2a02:8012:2f01:0:2328:2cf6:f0ff:43f1]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1wGMWR-0008zZ-Tb; Fri, 24 Apr 2026 20:49:08 +0100
-Message-ID: <a4fd79f8-43fa-4894-80d3-ed31ffec1ff6@ilande.co.uk>
-Date: Fri, 24 Apr 2026 20:52:16 +0100
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wGMjY-0005fO-OI
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 16:02:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777060959;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=a2zR6YYxbx26ruwwyPFncFSQbtpKRWyRpDI5EBDDrDQ=;
+ b=ObmTctPyPlEmV0+BZz+hvv33YmlPb0j2fXKMT5Ngo4tB++USlaSRZFIOcYvpYjUMSTEViP
+ wzFBupGup39oILQhh00n38Q2veFCzvunDSCWLBItmpbChGfwd3ZG8R/57Glxd2eCb3oYEc
+ 97LEsWkUr0aQILeLIEWv48H5wCvKVtU=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-454-KXa9A7vEOYePY6M-5Ictng-1; Fri, 24 Apr 2026 16:02:38 -0400
+X-MC-Unique: KXa9A7vEOYePY6M-5Ictng-1
+X-Mimecast-MFC-AGG-ID: KXa9A7vEOYePY6M-5Ictng_1777060957
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-43ff0eb2b2aso5327019f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 13:02:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777060957; cv=none;
+ d=google.com; s=arc-20240605;
+ b=kL9lZ8qQrKaBAEv3Jt7QacqD1RI//2zOs/IgOR4uc8JCd/nmXSuHNzLUJ617jRGrtR
+ NScEEHzlTKBrMOixEkskDRtEAYjReZIg2LYHphyu/jYw8q/Wr0EZdT9xg31+Po9OkGy+
+ 9R+/PAgeUjThFqv5Wuv7qs3yVQapJA1PQF4mMt1ZL7Ka1FHTZP62Ai+eWjTcaNTzIlJ/
+ ZZPgKrQjrBiKB/xERXuNkFHLXDSaZF+atL8rbz4+oj7zAcnbow6vO0v++Ik1zudEk4gT
+ Jt2f/WdOo4Sj1ZfctD7uv7/DNiYUp+++iw1uUgauSQCpqXr0vleJf+dQkv9+QdjeMCsI
+ StCA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=a2zR6YYxbx26ruwwyPFncFSQbtpKRWyRpDI5EBDDrDQ=;
+ fh=k/ERWuvEcUiMq/m5FKiZGPdmE3b9qOyxtPmn65Bdf0A=;
+ b=WLeRAcT18tsIqX1VQqjxX6v+hiwcTjFwu4qVLM96K8roBZ67bByDKQB9IXssb3c9CC
+ ToCH7hc1W/HO7qUvkJCmHekFb6Iy7+6ubepclc9yXBvOmu9Mu7IKF5m9oP6S/XQBsfLo
+ GrZQRvLHV5XECz+kbM9Zh54nSuBkcBHP2cnTPnozpQAac+4neWkaVJ4aKks2wRpD8GvO
+ bpa+qF9QS1a2D++QksTwQaTpTEds2CSQgUBvrw2bWmjBrdH7RrIioxoD+HMmMt2DL+Ii
+ f8WKtrJij67jdQNnYNRdVbPLW4P4Qh/C0XJ86SRPAK2WBJ5hPps4ShLKtr8cBbf4RDhn
+ 6hNA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1777060957; x=1777665757; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=a2zR6YYxbx26ruwwyPFncFSQbtpKRWyRpDI5EBDDrDQ=;
+ b=ThKsgNq5w6BJyPWzlvtariReFXEyYipj/Vvr9a+pFp5YLWUVgG4VLwzRbbWF9Z+nEG
+ lZVQW0rw8esAqWVyPiTbjfyzkcedcEugBksBvQQ0wsHgM3WY1qylrqa+3+S7GTQLiY3k
+ WrF1gZMzFNJWK0CXRcRE7xbIJuIlokIK6OVxuKcYfguiX3ffJWPUMG9lrQbl5IxdIt3o
+ qu8kgS2HxegE+4YxYNynM6Sx6x9AMZ9zDrcDNKMvPCf2v1QZWOiukHxgF9YgTXQf/zZ4
+ HNmX1VgFh/L2x6YXamsCs/8rWw5++EBngAHSBDf3PJNXFlHbdRt13zb7vecnUxkrA+Ja
+ 0Uqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777060957; x=1777665757;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=a2zR6YYxbx26ruwwyPFncFSQbtpKRWyRpDI5EBDDrDQ=;
+ b=c1C+iyQbwo3bcMISD70rmDub1EEhIMe/HI05phVA1q8CcdpDWQEiFzAbFeZsBwV1OA
+ YkDVeu6xVGIoGw3dk5UHJlZZr7/rUQqmM27fOwNvgDTRofnYxTy5oi4OUCCCbvtaoUv0
+ ZYHKQe4ZR+RpVwELJ5yh3MqMkh2c0DxPTUel3/6ouqvhMrfWuJ4ozTq8j0ntlLtsPrOk
+ PoM2TlWr9/SZ5LsLej5V21LUJhyTm4gvfOXG6+/ugGgexJjrFNMndmt1BlvrU9jzpjL5
+ pu5PX/vK7pTSSMnUiUxOZpDWGL5TBxVZlwa0Mjs4gM/ouu8mz1ENEeMzsi4v0ALRFONR
+ ZOOQ==
+X-Gm-Message-State: AOJu0YxfcxYqQMmTTio+kq7pGwXqj85e/hb95eg+S35V9PdKeq3mcYv8
+ b5v342BCiwPRvtBO606LWzCvhAaS7ywHRBJnS11jgp2pL0qc8tW+zqGVp7pyJ/MK5WrP0CPpFkZ
+ +S2orJ9egfcI3oqKlfkAYube9UhWrai+2GIcEcuqxvDTOqM8ld2kg0ItGFR9CJ1SehvnxbBD1ho
+ 630OcWh5Cb/nbY0ZjzbAzl9ZQ69pwYNzA=
+X-Gm-Gg: AeBDietMtMIjkziHXZGTrHcfpXdPnfefJWwb/IXAzjrU/iAyagq8NJN6+xlXLbhx6eW
+ +jGSVnZ8cmJB0tDofMS322zYEA2NzX/4lwvnYJyfMwvbpmy4OB6D7FLkr1A+L70Z63BKWHkz+sL
+ cCpusU3EPUW44f1K3AdyB4TiQU+6TEXnibsNKI///1BzA+l0hbUfao2CJtNPtrZF3IDZd39xqMR
+ uLrL6kU1SjIR09yEE2sab60yiGjBOM2ynX6bDK7kfEtT+x7NAIIx/B/Op2tZM+4eGyIpgpzrYYm
+ edXMde9DjmrLhLg=
+X-Received: by 2002:a05:6000:22ca:b0:43d:50c:6f33 with SMTP id
+ ffacd0b85a97d-43fe3e0bde7mr51830830f8f.26.1777060956610; 
+ Fri, 24 Apr 2026 13:02:36 -0700 (PDT)
+X-Received: by 2002:a05:6000:22ca:b0:43d:50c:6f33 with SMTP id
+ ffacd0b85a97d-43fe3e0bde7mr51830798f8f.26.1777060956145; Fri, 24 Apr 2026
+ 13:02:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Peter Maydell <peter.maydell@linaro.org>,
- Elisey Konstantinov <elisey.konstantinov@gmail.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, pbonzini@redhat.com, marcandre.lureau@redhat.com,
- philmd@linaro.org
-References: <616E96C0-F0A5-4A9E-A63B-3BC1B5F18094@gmail.com>
- <aeswZxFn0zMj-3jb@redhat.com>
- <06C2CFB8-BA33-46D6-9F84-B1F81A2A319E@gmail.com>
- <aes4kEdQ_x8eI-m6@redhat.com>
- <4FFF1823-815E-4956-9C80-9C62A98033B0@gmail.com>
- <CAFEAcA_gX4N6YrhQBTi-YDvkafJXWEkkDU8Y9vz5nYce9OrHwQ@mail.gmail.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <CAFEAcA_gX4N6YrhQBTi-YDvkafJXWEkkDU8Y9vz5nYce9OrHwQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:2328:2cf6:f0ff:43f1
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+References: <69eb98cd.050a0220.35705d.4552@mx.google.com>
+In-Reply-To: <69eb98cd.050a0220.35705d.4552@mx.google.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 24 Apr 2026 22:02:24 +0200
+X-Gm-Features: AQROBzA1Yg8zyChHC2NaQlew8oqFMVCQHUNzNrJa1hD4yZ-FoAVT6hIa3rG-fGY
+Message-ID: <CABgObfaXUPQfz72m8FCxxfdKo-Mx=WG-ETgGwrvTcN_fBzC9Eg@mail.gmail.com>
 Subject: Re: [PATCH] build: prefer sigaltstack over ucontext on Linux
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+To: "elisey.konstantinov" <elisey.konstantinov@gmail.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, philmd@linaro.org, 
+ berrange@redhat.com, marcandre.lureau@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,33 +136,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/04/2026 12:51, Peter Maydell wrote:
+On Fri, Apr 24, 2026 at 6:22=E2=80=AFPM elisey.konstantinov
+<elisey.konstantinov@gmail.com> wrote:
+>
+> A special thanks for the patch; I=E2=80=99ll definitely give it a go, tho=
+ugh I=E2=80=99m not sure about x86, as the bug doesn=E2=80=99t occur on x86
+> This patch should work on PPC as well, shouldn=E2=80=99t it?
 
-> The "New World" and "Old World" machines are listed in our
-> MAINTAINERS file as "Odd Fixes", which means:
-> 
-> "It has a maintainer but they don't have time to do
->   much other than throw the odd patch in."
-> 
-> In other words, there is no active development work ongoing,
-> and nobody with time and interest to investigate complex bugs.
-> If it happens to work for people, that's great. If it doesn't
-> work and somebody proposes a patch then we can review the patch
-> (as we have done for this one). If it doesn't work and nobody
-> proposes a satisfactory patch then it will likely remain broken.
+The patch is for x86 hosts, and any guest including PPC.
 
-I'm around to do various small bits and pieces, but at least for the short term it's 
-fairly hard to find the extended time that bugs like these require.
-
-Note that MacOS X before 10.2 (including MacOS 9) appear to be timing sensitive to 
-the CUDA interrupts, so that might be another explanation. You could try 
-experimenting with increasing the delay at 
-https://gitlab.com/qemu-project/qemu/-/blob/master/hw/misc/macio/cuda.c?ref_type=heads#L537 
-to see if that helps?
-
-
-ATB,
-
-Mark.
+Paolo
 
 
