@@ -4,123 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CD4EFED3F2
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 19:20:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBF6CFED3FA
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 19:21:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGM4P-0001ns-9M; Fri, 24 Apr 2026 15:20:09 -0400
+	id 1wGM5X-0002WD-Hi; Fri, 24 Apr 2026 15:21:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGM4N-0001mH-Q1
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 15:20:07 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGM4M-0007YC-5E
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 15:20:07 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-43cfd832155so6021677f8f.1
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 12:20:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wGM5V-0002Vo-OR
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 15:21:17 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wGM5T-0007zo-W1
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 15:21:17 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63OGuaeN1243958
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 19:21:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ H5mnuiuYH5u/5JNOik2RpJhHXCyCum299t/X29xMziI=; b=g1lEgiK+Zq5Dz6KW
+ OztpvX85MFyln/oOCn+V8r3/2tRzm3YxvnGoBGS8oM8HAPsHEt5cd7WwT3Mz9wlc
+ XNFiNV3Zcb0/AIXwizjyllGsSYyVYaUEF+hDnf5gMr5gHYWkuUYZnNvs0TblL2mi
+ lMg2Enj1fM/lt3LJ1cB2oyEs/HOozHcimnrrh/yvp+44/IOY9IIDNDzljhwzNkKJ
+ T/4wLS7khgI+lHrarAb7//uIku/AY/JMLZaee5fKFjd9+IAuN35vAx66ew37BoAl
+ gY91JOIxOn03PJQIHEOOk2hZ/YK7W3ywBioP7d/T8Bb4aHo+MgvNCvfOY2sot3kR
+ xDQW9w==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dr48n2uwt-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 19:21:13 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-12db218e265so10130501c88.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 12:21:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777058404; x=1777663204; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PMYV/WLNG1IPm/JmsJtJ4aYuQn61uW6+qWXaYkbHZ1c=;
- b=ZDPU170PSaiF46VZmI9G7cuzPX5mNAMTSHbEGQ/ZZYgVDWYa1i1lAIF8Ojx2PJJVlX
- d6RIaMo2fQZU52buKkohVlIxbs5RnVUaWauLXUfzgBtTHcsl6eqsPpCT5N1Iy10BBP7H
- PZGmnuSHKV6pozqnC6wMuVN9hbl1iyBYxlDkgcRHQjQu3iFRVw3r3WY+d5HQekTKV8M+
- HVBiQFJxXd+v3XGwUtz4KxhxWnj8ud60QQGsCoVfHM7gtnEmU/ZP1kJRWDWgTFlHzgtV
- bmE55vDbN7CCmVwxn212KA5ZIKcY7Fy0nP+zsyHUWLF/S5kx34QOKuOawfulpn3l7dxA
- twtQ==
+ d=oss.qualcomm.com; s=google; t=1777058473; x=1777663273; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=H5mnuiuYH5u/5JNOik2RpJhHXCyCum299t/X29xMziI=;
+ b=OE9E1+LYG4BU2dgvmN9e63UCF+zPs1SQQPZ/B1/VGlIn2WhykoPD056jyAx6cmvKB/
+ vwne32+MktwymgE1GCPw+18ZkBbZyumP3Ww8f/ctHTi2KIa2THnLH44IQd66EuhaZQJe
+ zouCS9HR8pKxub2TmT6ZBkxGAF2rjFzdfdVhTJveTLZoQCgOQpM94huiKqQeBhBVe4Sp
+ H32ncaxTtZdO6hQf9/q9ScpJtb9mGxkCeFRG4te/zn/LMt7pbj74FrIlDn1k8xdj5aem
+ anVd39WYnD//yRUwvGOasoXELLogs5n/E5SkF7HPHnr+IMPGpipP14BMY92gYFmiOqKf
+ cTsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777058404; x=1777663204;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PMYV/WLNG1IPm/JmsJtJ4aYuQn61uW6+qWXaYkbHZ1c=;
- b=WfBouQOzhKGRjeJNuujAKi4CbWAuEjjIKRuN8u/VSIi/M35PWwx58PhPF8fE0kAwM3
- zYlAiZkSPhWN8wzBI9nhfuRz5fPOFT7SME9ZDL8d7XJpRoHzYVxkUqmGUV6fuThYJFBx
- VoCEGew1BVDahN9Ur/V4RuTlSl+RXVa2yX+UCCRCdfpl5NuPaK/SpPQdVedBm8nZldFG
- D0In59FnR2zNXtOBBap8NJ3N8hrembBIW5ZOte6LSjS+1f2f5FrpWthjoK5jkzbU+sEC
- unjYj63bi4grviMo1yamrc3+8AV4dNDk5Od1cVAvDsSEel0NB30lZY+3+7N1+kWtQ5x4
- vv+A==
+ d=1e100.net; s=20251104; t=1777058473; x=1777663273;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=H5mnuiuYH5u/5JNOik2RpJhHXCyCum299t/X29xMziI=;
+ b=iZnzkiLLSIhqzdA2ydS+zF9mNI9k8+a1+7pBYNmEvaG8zJ5S7xTf3G6Q5vM/IKSMNv
+ X6+XDr3vUjX2l85UVylNNEo07IllAlgZf6JI9iaqtVKmnVx+P3dNKWEMFWXloiDK502h
+ xtA3EAJ+pUMQ6vdhRMgABtYMmlN3Or6OzQSvBhFgukPGtnsjwtCXhVyQZV7c1uAPk2yG
+ I3OUvjAaetjWGzUjV5fEt6PESBBIKzkMNJO7INmN+6HdaXfZBU97j2L1h1Rn4m7HmDlU
+ xa6RCcKxDt50jxPP52c8lRff3drREW+uYu8jCTeCNwTK4zkvW96qw2EuDUr6Es/IovVi
+ qbcQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/xwIEqXWN21c2kmiaLYbHzooixBYRH+liTT46g+ajnFpCpof89vrlTnHe6+uZLC4CAUVBXXo8nOADN@nongnu.org
-X-Gm-Message-State: AOJu0YwzEJC7z+sPZ0OSCTzdfJiqAftHonaAequLhY4+hCpgjwPqOLh0
- iapjUxepLPaMmlDlt6DkKcBi4hag0lGBVlXISq1lfxDyyvtj5ZsajEKIjNdfVQZYyeY=
-X-Gm-Gg: AeBDievri5sLAh2fVLOgi1sKU8xNMiY9FQdQ1PuSyhS9YeRMjDScpYjY8zxqVh5ShWW
- xHSlxIjfTAf7wmv6fu9SYQ9LOQELHnMIl9ayh8GuBcrS0wVG03UuBIHMEgtSzON20LVbEvGLAMA
- ghDb1CMi/2bGOxbZnHqu6k1aoYw3rB1heOjSa1JUzlChO2ilt06Wms+nsNxTchqyk7Q3nAjafK7
- 35cQbLprPyLzOBxWT8Kem+Q6yLp0hjSHmWJePrNpDjZLJEOjXwxicFMnc6HcTuAQL1sN0ui41ym
- 2i1lPqBrgSD4ecTtXNbCjsVmtrl1jS7zuH8XaSjjhmHFm446qp9JBqtHY2SB8UC+wS3K/uXgEhk
- lWOJEuFMjQ49GSUzOSbOYdUKxh2i3G40jbXPXCjgoiaHORMWNZGnS/bReJA89Jwxbi6cjEBAcgT
- UEbyCcBqk1tNYhP/SSPQzliw7puaO73cHVSj/EgpDb4K4YGhELv7EUkLDtA+u7M54KiOHuaaSLl
- bTr
-X-Received: by 2002:a5d:5d84:0:b0:43f:e7cc:706a with SMTP id
- ffacd0b85a97d-43fe7cc70aemr49718145f8f.22.1777058404364; 
- Fri, 24 Apr 2026 12:20:04 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4d5b1sm65626575f8f.30.2026.04.24.12.20.01
+ AFNElJ+XM+vdm6vdwA0BXz2M4PnA5YmFVPGZA8Z2GlikDSuUgwklUrflbHQecsG7c5Aj+i/1ll15x9iP11Bq@nongnu.org
+X-Gm-Message-State: AOJu0YwHik9QaUf4fa5F2GjBaOeHulbfy0MaAdnrixfy8N3jmK5d0hvM
+ Oi7HffMw6LkU1ApD5YV/+PG4stzg+djzQi7Wfh+Q4kg1bQj6r7foiKw9kGUbVhm53/4X9AEzEgE
+ K92VS2ii/uncAyZc3bd9UsbLgXjKLWmELVePS3W4yTt4PkTARrPj9q7i8Qw==
+X-Gm-Gg: AeBDietdiqzXr0ozyPklUECEh9vechLZ51HDsWKF7sRcAEaT7Agsh+xrMyZD2Gs2spX
+ 6WZIyG8DraoGDZiHwhpOLcrDtuMbtMX/ocsbvm+lNFONWqWLRbgpGZqkLLraSH3j/wJccxR18jk
+ g8yz10fcJCdsTeY3aldqxNI6FVGqytbDBVsCTdi5kt+RV62wWUgXCd8YyY0DovXNGudbDL/+3YE
+ TN4jEh8zSV2xleN0Xz4Foima4wUTXHlqpG88+ZPAd8wZglDz+opuDEBl8UmrGgjVFC+bRJXD/Ad
+ EVmullMB/7AVu4hCvX2NwWGYSOTUjZ2jVr15FS2TzywtLW8V4qSjzQWR/Gh5UBVDj5SIKe20X9S
+ He/MY2Takynhdq/cdhhZPTpngbsQOpVEMCtO+xcIsZL+Zjouwi+Y0EVhjciW0N5cZVoQeCh/c55
+ K1cgIIaeOzvjKDpD9YC+XCLZkz
+X-Received: by 2002:a05:7022:fa0:b0:12a:72af:83d1 with SMTP id
+ a92af1059eb24-12c73f6f6famr19453821c88.11.1777058472662; 
+ Fri, 24 Apr 2026 12:21:12 -0700 (PDT)
+X-Received: by 2002:a05:7022:fa0:b0:12a:72af:83d1 with SMTP id
+ a92af1059eb24-12c73f6f6famr19453792c88.11.1777058472033; 
+ Fri, 24 Apr 2026 12:21:12 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-12c74a20eb5sm42404724c88.14.2026.04.24.12.21.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Apr 2026 12:20:03 -0700 (PDT)
-Message-ID: <e832b016-0b55-4f27-9bab-51fd0d983b9d@linaro.org>
-Date: Fri, 24 Apr 2026 21:20:01 +0200
+ Fri, 24 Apr 2026 12:21:11 -0700 (PDT)
+Message-ID: <8ded2755-3d4c-4451-9d48-642943298618@oss.qualcomm.com>
+Date: Fri, 24 Apr 2026 12:21:10 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: KVM/QEMU community call 28/4/2026 agenda items?
+Subject: Re: [PATCH 1/2] contrib/plugins/uftrace_symbols.py: fix symbols
+ reading
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn_=C3=A9_e?= <alex.bennee@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud_=C3=A9?= <philmd@linaro.org>,
+ Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+References: <20260423213838.780814-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260423213838.780814-2-pierrick.bouvier@oss.qualcomm.com>
+ <tdzmry.259an10v60tlz@linaro.org>
+ <2bcd35a4-0963-43df-8d5f-e19d1af16452@oss.qualcomm.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
- Alessandro Di Federico <ale@rev.ng>,
- Alistair Francis <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>,
- Markus Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, cw@f00f.org,
- Stefan Hajnoczi <stefanha@gmail.com>,
- Demi Marie Obenour <demiobenour@gmail.com>, dhedde@kalrayinc.com,
- Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Auger Eric <eric.auger@redhat.com>, felipe@nutanix.com,
- Alyssa Ross <hi@alyssa.is>, iggy@theiggy.com, Warner Losh <imp@bsdimp.com>,
- jacob.oursland@gmail.com, Jan Kiszka <jan.kiszka@web.de>,
- Jason Gunthorpe <jgg@nvidia.com>, jidong.xiao@gmail.com,
- Jim Shu <jim.shu@sifive.com>, Joao Martins <joao.m.martins@oracle.com>,
- Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
- matthieu@minio.io, Max Chou <max.chou@sifive.com>,
- Mark Burton <mburton@qti.qualcomm.com>, mdean@redhat.com,
- "Ho, Nelson" <nelson.ho@windriver.com>,
- Paul Walmsley <paul.walmsley@sifive.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- QEMU Developers <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- Bernhard Beschow <shentey@gmail.com>, Thomas Huth <thuth@redhat.com>,
- Wei Wang <wei.w.wang@intel.com>, z.huo@139.com,
- LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
-References: <874il05rwo.fsf@draig.linaro.org>
- <ce906d97-7022-4671-8590-2f8f58b098bf@linaro.org>
-In-Reply-To: <ce906d97-7022-4671-8590-2f8f58b098bf@linaro.org>
+In-Reply-To: <2bcd35a4-0963-43df-8d5f-e19d1af16452@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-GUID: PRLrUIBIE_41GNWIR1tBizYaTXJSQVco
+X-Authority-Analysis: v=2.4 cv=VOjtWdPX c=1 sm=1 tr=0 ts=69ebc2a9 cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=EMHajkgkn9fH6kUee50A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=vBUdepa8ALXHeOFLBtFW:22
+X-Proofpoint-ORIG-GUID: PRLrUIBIE_41GNWIR1tBizYaTXJSQVco
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI0MDE4NyBTYWx0ZWRfX717DdHiJk2Ap
+ ZFE2Y19puP9noHLtN9YR0aViGQrTGl6wqzNFa4XJuVYiSMX2KOzC+HOoPg2226MxhOf4df+ncrR
+ Y/qtT1bJxxJQx/AFIsW7mhXGAuEHZedgw0e7ZZ/EyX00zupMBflr01mOWCuR41uwMCVwwzM4JVy
+ rMzD2QcsC8yYICaTsfNUZWPSzs/Npi1laHLZPyQFoPRRpbqvxBb5IfFWPCv7ard2sOfEscZyAog
+ dkAVoqYKWk6iGg1B33z0WuJNg7HX6IaGULINMR8Y1v9QAuFhoKJMMg8e3hZeW1l05Zkq39XVSl9
+ uQHca7oUXzxpVZnbKIuVEa3h1/ce6lJ830Nr0p0ZQddjSA3WiYhjgNG4oqGvuUyKjAUAN1ToxQw
+ bI7igZmXgEdwVLNa0M8mwoBllafw3VAQtHfsvWmV1mfRnVcx9ygyHJ2hyRNJAuCgcwzlCmU4Fto
+ xDkvZ9it1iwUjaBJERg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-24_02,2026-04-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 impostorscore=0 spamscore=0
+ priorityscore=1501 bulkscore=0 suspectscore=0 malwarescore=0 clxscore=1015
+ adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2604240187
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -137,29 +157,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Using Pierrick new address this time ;) (Thanks Manos!)
+On 4/24/2026 12:18 PM, Pierrick Bouvier wrote:
+> On 4/24/2026 12:41 AM, Manos Pitsidianakis wrote:
+>> On Fri, 24 Apr 2026 00:38, Pierrick Bouvier 
+>> <pierrick.bouvier@oss.qualcomm.com> wrote:
+>>> When running this on hexagon binary, we observe some undefined symbols
+>>> without any address or size.
+>>>
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>>> ---
+>>> contrib/plugins/uftrace_symbols.py | 4 ++--
+>>> 1 file changed, 2 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/ 
+>>> uftrace_symbols.py
+>>> index 02d1221228c..895fa1a6b7a 100755
+>>> --- a/contrib/plugins/uftrace_symbols.py
+>>> +++ b/contrib/plugins/uftrace_symbols.py
+>>> @@ -36,8 +36,8 @@ def get_symbols(elf_file):
+>>>     out = out.strip().split('\n')
+>>>     for line in out:
+>>>         info = line.split(' ')
+>>> -        if len(info) == 3:
+>>> -            # missing size information
+>>> +        if len(info) < 4:
+>>> +            # missing size/address information
+>>
+>> On a second thought, shouldn't this be != 4? Otherwise the unpacking 
+>> will fail with ValueError: too many values to unpack (expected 4)
+>>
+> 
+> I don't expect nm to add new columns, but you're right, it's probably 
+> safer! I'll change that.
 
-On 24/4/26 17:40, Philippe Mathieu-Daudé wrote:
-> Hi,
-> 
-> On 24/4/26 16:55, Alex Bennée wrote:
-> 
->> The KVM/QEMU community call is at:
->>
->> https://meet.jit.si/kvmcallmeeting
->> @
->> 28/04/2026 14:00 UTC
->>
->> Are there any agenda items for the sync-up?
-> 
-> I'd like to have a discussion with Stefan and Pierrick about the
-> possible improvements that can be done on our CI system, and
-> review our git-forge use in general.
-> 
-> Pierrick: Stefan is available this Tuesday, are you?
+It seems like python has unpack operator (*_) to deal with that also, 
+but I like the idea to force format to be the one we expect strictly.
+
+>   >>             continue
+>>>         addr, size, type, name = info
+>>>         # add only symbols from .text section
+>>> -- 
+>>> 2.47.3
+>>>
+>>>
 > 
 > Regards,
-> 
-> Phil.
+> Pierrick
 
 
