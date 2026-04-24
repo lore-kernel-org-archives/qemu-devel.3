@@ -4,106 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8DFAFE51EF
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 09:10:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5420BFE51EE
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 09:10:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGCXs-0000xa-Vl; Fri, 24 Apr 2026 05:09:57 -0400
+	id 1wGCY1-0000za-5f; Fri, 24 Apr 2026 05:10:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wGCXo-0000u8-Ax
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:09:52 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wGCXm-0000i4-Iu
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:09:52 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-65492d097acso1321416d50.3
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 02:09:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777021789; cv=none;
- d=google.com; s=arc-20240605;
- b=lIEgIAcmS1nPZ0wabRKnEhl3zIbpSORh3Mou4XZO7yKqmvolp6FsiKXLionU3GZEY+
- B4937llLYV/I8NyOPZKiA1b8s0zlwW+/ch67D+EMHpzUeyvQOMV4NdkOA9E2FoX78+JB
- GRXHx3kXtFuBgB5MONF9HGyi/IrCzSqevdY5q/DVL1ydKWepoI4KFze9awkMNsYtIzlA
- 3on2Pf1Hu3ftuQRV2MpQUJIOa3WxFZq2UPtUboQc3x41igkijAQ1bdcAMdp5+7O3RcmH
- zpEsBvJXmXzTTK0rzg7wkjeeiur2cFKX/H23yz6JQiNdjB+Y2j4OHXrSPW3XXc9pim0r
- UGEw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=XCgfnlC1WnGQzLp2YVyX5mN90uiWteZaU/EC4uUkfeE=;
- fh=VANerWD8jJ6SYI5omwl+za+tXawbA9VxdY0KZS8GujI=;
- b=g9QK4qADDjnAX3qiwvTuq8PK36M/Zip+02nyqHCddGeDuE4l0JhzPLtRvI9iOW8/KG
- 6necO6KEEq/bHVl0x/H8v+mz2SgLTWrAu1pOYcAbw7ET3s7uDDXAB/wDJA6nYZFiq15i
- V/gjh6EJ8CXnzphp6dYbP/94u+JCEIwM7E1RvkHAuriFAMNqjjehX3U1vYDCPIrhP0GJ
- PkAtXAYn6cRREXD09p3QI6yCgHCCf8vu06SjFcCjaHVVrI/JMU4fKBQJHvcYimi6Exhx
- eN5Lu5LAKA70eNjw0JApGKHgw4csmLaE26/JPfbfdaa00TyQLz5vVMcqDFk3Kwo5hsnc
- LiOg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777021789; x=1777626589; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XCgfnlC1WnGQzLp2YVyX5mN90uiWteZaU/EC4uUkfeE=;
- b=d9KUT5BTSr+QfseDnBhYoTi4wN1V6ZQNDaBx+lKZvEnxskxcaTQ7VX10g3ac+vxrVe
- R7ysXYekMEaJl3Gfcj7a/EUvum4Rn4ak7b4IHOMSVKk4rFlLsypWY6szo1ybi8OSVb5R
- TKLUB5/a+tDThAnHzTwrm60XaLqy6lDVogYcnBw0yuIr5jI+IqnBo98CxwD9HKiwASZO
- 1tvosYjqlEVctbzV6XpFLDhrvdBhN5SJWmX1euGsugZaEdV0CeXfGBoDe8RXhQcbj4sX
- gEoWmwlhdnb8ZJ3tCenUioBBeAv/8nuCJ3supNJCzMU3E74aMURHO9WKTOC1NL+Tj+/y
- clWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777021789; x=1777626589;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XCgfnlC1WnGQzLp2YVyX5mN90uiWteZaU/EC4uUkfeE=;
- b=EeSFtOPaCqr9+h58b2TG0unMx6bgMqvcUDvygPP3Y8Mtfws3m605g6Dc5N6vHV3Of5
- h4JAsYR1lAskf0BvAyxxLId9DHcJKcSZRvAIX8+NT859KTWJ7/jsyAKON8SRpzTgYh/s
- IAXLjEPvlpztGD52BcIn6iUazrc7F9DrbGsfHKV8pb0GQ0a3mZkw2VE59DPO/clUk1eY
- e/1Z8F1NRbKE5nsDIFOfN1HSJ+928lP6ZYGn53IQAeOrQkK8dYGp/Yb5fqHQ2IIJF5q+
- tYNo2Gj7iclWBz6yXeb4HaRpDhbc8e/EfdEAexeE2XF8uFCnqrbQtws9oT80iLuBJD2S
- 0wYA==
-X-Gm-Message-State: AOJu0Yz0pInsHuFd8L13ExO2mXVKFcaYBW0af/JxSeSvVWP/6lEy4+s+
- rYhylD7CihwJuaPZ8F2L9eVVZCc35rw3pzyaaFgR/9ODlsRtZQnnU0TQnyb8fK9WVmLlocGq/fB
- RKPTls9jJj7ltb4RMPZiNIMWReyIMeFsFx/c8Ov+8rg==
-X-Gm-Gg: AeBDieuz1EfufPdXqwFLFp0bziYNVFttkjYaUp/szfbFQ15Ur9RPY9MzjUBVrs3ini6
- 2x5kNQ+3qIy5vwijwzNy/BMODrijWJX9yuU7exl2rsXQyCOpZfrUNm4Uo8BDqzcWvFWAQVhUvNx
- tAn8acb13TXazEyuKFNzPCvTZMEWI6vlqzBA87SLXLflEv6iXRbzSYpA4v947/vBHrE5Oeu8Dac
- OeSPTHKMcf3UsNLb/zy6F4CIrEt80/L3NP+BkcTDcjI9OodDjH1VMOei/eVVYc0U1c5oeUsJrMV
- zzSS6Z62fy88REU+WXO1c52pnB4pZDAwtf0X8cuJzfxlUE8ZHKLx0kDX1XNmAoMKPj/oui/n88f
- YfQ==
-X-Received: by 2002:a05:690e:124a:b0:64e:f106:60e5 with SMTP id
- 956f58d0204a3-65310ac1e0amr29405509d50.52.1777021789106; Fri, 24 Apr 2026
- 02:09:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1wGCXf-0000ss-6r; Fri, 24 Apr 2026 05:09:43 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1wGCXd-0000bJ-9F; Fri, 24 Apr 2026 05:09:42 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63NIbdGN3107946; Fri, 24 Apr 2026 09:09:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=3rrvkI
+ SdaSx3TO/72ORMYjGwk/rcZKkNfMQHTudy4Mk=; b=sr/if0bfY5//YMbTcCbauu
+ 9Acdq6icorrJo6zjlq/2OWMG93o8ZNZYCStajwgC0RemA39ppyF3/soCf6sL6ZOI
+ /hhoE9elmPrwKCZVXULND6CxPEv3vjuCwoXkYhTjiZHhXCCZiiqc3yWxv0DlPETZ
+ lBQheeLH3xaJLsZhVOS5xqioVae1wQ8kaKbKhlFn/EVgPY6+VpBOBDwQlwaM1BGS
+ s8gJ4T9BdshXO9lo1995oMBDAkZa7kxekNoUEl4AvhRhfoWSXqvJvbNZTCRumFLx
+ xHv00djanVDd/HNC76RuoCyzM42WtUwWCuPO3wzrqN/4c1uH6rcziExdNNVrQg3g
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dpeu6m86v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Apr 2026 09:09:37 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63O95NpT026930;
+ Fri, 24 Apr 2026 09:09:37 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dpjkyj653-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Apr 2026 09:09:37 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63O99ZFR39191076
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 24 Apr 2026 09:09:35 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C8F1858053;
+ Fri, 24 Apr 2026 09:09:35 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5245958043;
+ Fri, 24 Apr 2026 09:09:32 +0000 (GMT)
+Received: from [9.124.218.196] (unknown [9.124.218.196])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 24 Apr 2026 09:09:31 +0000 (GMT)
+Message-ID: <9ae1a152-891e-436d-85b1-51d38bf1f44d@linux.ibm.com>
+Date: Fri, 24 Apr 2026 14:39:30 +0530
 MIME-Version: 1.0
-References: <20250822092410.25833-1-cjchen@igel.co.jp>
- <20250822092410.25833-4-cjchen@igel.co.jp>
- <3a80c5e5-9889-4830-9a00-5d4d92141a3a@linaro.org> <aLdA4uH5CGbfz9Gd@x1.local>
-In-Reply-To: <aLdA4uH5CGbfz9Gd@x1.local>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 24 Apr 2026 10:09:36 +0100
-X-Gm-Features: AQROBzD6el2Q_jeFnutszZEuATN6In9ozQrDj5bnCKv9XhmLCzKYGpzTAE_4SZ4
-Message-ID: <CAFEAcA_TjVAzntgxdLF7rn4fwMk+YH6eiPdTVEQopRWceHGfrQ@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 3/9] hw: npcm7xx_fiu and mx_pic change
- .impl.unaligned = true
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Max Filippov <jcmvbkbc@gmail.com>, 
- Tomoyuki Hirose <hrstmyk811m@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] ppc/pnv_phb3: Error out on invalid config access
+Content-Language: en-GB
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Zexiang Zhang <chan9yan9@gmail.com>,
+ Nicholas Piggin <npiggin@gmail.com>, Thomas Huth <thuth@redhat.com>,
+ Miles Glenn <milesg@linux.ibm.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20260326190438.734239-1-adityag@linux.ibm.com>
+ <20260326190438.734239-2-adityag@linux.ibm.com>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20260326190438.734239-2-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI0MDA4MSBTYWx0ZWRfX2KvqaoWvbg5u
+ izHPRLZze34AFF+ZXQeBC1U5onNwxUz8w1jZVuhtqeIkKMf0wKisHq4Pi+mYyQncwgMXO4vmk0q
+ FR/xYNc04nL/QpkR3EVIh9aJ66NDycQJNJ5XNmRBq6IyUlftvRpLMCyu/XERekpkh9CPmJfeR4M
+ rOcVwZrQjt10/IAXJr+jYXBtcsBqQ1AknVwSp0c13tJBllofnBkpk6Kmc5xrDmxtXv6hRIpsd2e
+ L/cyrnlDUrUFgQ8KAuXlqeO+8Y3hIW8soN/xhIR+6Uixc477j9SEo9cDUi8p/WqimqZJ1s9PksW
+ obMakUP2utZ/Gx65EodpX5DK4xBRx3De8eXtTrU6V5VslmeSwT3Dq7G6nAX8DFSbTOeHxhva8le
+ FD3oOEPfZZyryxnVEb484LqsQJnELzSoKDQ2U2KsTtfEZSE24CQYRvl8l80pibeaRqj8v8lEMsG
+ PDLWzq+tT9AoW79kEDw==
+X-Proofpoint-ORIG-GUID: 6X8d5Kqt1v6syQjTyZ_P8mwu3rukAbQp
+X-Proofpoint-GUID: 1ezJWk1HjQLFJFcF9m50tQ2ICUQuMzfr
+X-Authority-Analysis: v=2.4 cv=BYfoFLt2 c=1 sm=1 tr=0 ts=69eb3352 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=f7IdgyKtn90A:10 a=sWKEhP36mHoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22
+ a=p0WdMEafAAAA:8 a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8 a=sTfHyYWmAmTSg6sTLhcA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-23_03,2026-04-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 impostorscore=0 malwarescore=0 suspectscore=0
+ lowpriorityscore=0 adultscore=0 spamscore=0 clxscore=1015 bulkscore=0
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2604240081
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,114 +126,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2 Sept 2025 at 20:09, Peter Xu <peterx@redhat.com> wrote:
->
-> On Mon, Aug 25, 2025 at 01:00:21PM +0200, Philippe Mathieu-Daud=C3=A9 wro=
-te:
-> > Hi,
-> >
-> > On 22/8/25 11:24, CJ Chen wrote:
-> > > By setting .impl.unaligned =3D true, we allow QEMU to pass along
-> > > unaligned requests directly as-is, rather than splitting them into
-> > > multiple aligned sub-requests that might cause repeated device
-> > > callbacks or unintended side effects.
-> > >
-> > > Signed-off-by: CJ Chen <cjchen@igel.co.jp>
-> > > Tested-by: CJ Chen <cjchen@igel.co.jp>
-> > > Acked-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
-> > > Reported-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
-> > > ---
-> > >   hw/ssi/npcm7xx_fiu.c | 3 +++
-> > >   hw/xtensa/mx_pic.c   | 3 +++
-> > >   2 files changed, 6 insertions(+)
-> >
-> >
-> > > diff --git a/hw/xtensa/mx_pic.c b/hw/xtensa/mx_pic.c
-> > > index 8211c993eb..6bf524a918 100644
-> > > --- a/hw/xtensa/mx_pic.c
-> > > +++ b/hw/xtensa/mx_pic.c
-> > > @@ -270,6 +270,9 @@ static const MemoryRegionOps xtensa_mx_pic_ops =
-=3D {
-> > >       .valid =3D {
-> > >           .unaligned =3D true,
-> > >       },
-> > > +    .impl =3D {
-> > > +        .unaligned =3D true,
-> > > +    },
-> > >   };
-> >
-> > Surely a distinct patch.
->
-> Besides that, I also don't understand how it used to work even before thi=
-s
-> change..
->
-> E.g., both of the xtensa mx_pic read/write ignores size, that doesn't loo=
-k
-> right already when there's totally no limitation of impl.*_access_size.
->
-> Meanwhile, taking xtensa_mx_pic_ext_reg_read() as example, it'll return a
-> u32 by offset smaller than MX_MAX_IRQ (where MIROUT=3D=3D0):
->
->     if (offset < MIROUT + MX_MAX_IRQ) {
->         return mx->mirout[offset - MIROUT];
->     }
->
-> But it returns different u32 for different offsets.. so reading 0x0 retur=
-ns
-> the 1st u32, then 0x1 returns the 2nd (rather than reading 0x4 returns
-> that).
->
-> Even if there might be a driver that works with it, it still doesn't look
-> like the traditional way of doing MMIOs.. irrelevant of setting unaligned
-> or not in its .impl.
-
-I had a look at this. Unfortunately there doesn't seem to be any
-publicly available hardware documentation for this, but it looks
-from the kernel driver like the hardware really does work in this
-weird way. arch/xtensa/include/asm/mxregs.h has:
-
-/*
- * RER/WER at, as       Read/write external register
- *      at: value
- *      as: address
- *
- * Address      Value
- * 00nn         0...0p..p       Interrupt Routing, route IRQ n to processor=
- p
- * 01pp         0...0d..d       16 bits (d) 'ored' as single IPI to process=
-or p
- * 0180         0...0m..m       Clear enable specified by mask (m)
- * 0184         0...0m..m       Set enable specified by mask (m)
- * 0190         0...0x..x       8-bit IPI partition register
- *                              VVVVVVVVPPPPUUUUUUUUUUUUUUUUU
- *                              V (10-bit) Release/Version
- *                              P ( 4-bit) Number of cores - 1
- *                              U (18-bit) ID
- * 01a0         i.......i       32-bit ConfigID
- * 0200         0...0m..m       RunStall core 'n'
- * 0220         c               Cache coherency enabled
- */
-
-#define MIROUT(irq)     (0x000 + (irq))
-#define MIPICAUSE(cpu)  (0x100 + (cpu))
-#define MIPISET(cause)  (0x140 + (cause))
-#define MIENG           0x180
-#define MIENGSET        0x184
-(etc)
-
-so the MIROUT and MIPICAUSE parts are more than byte wide but
-the address decode puts them a byte apart. (This is kind of similar
-to x86 PC in/out IO ports -- you can have a 32-bit IO port that
-is immediately followed by another IO port, you don't have to
-space the port numbers 4 apart.)
-
-So I think this device definitely does need to have both
-.valid and .impl set unaligned =3D true.
-
--- PMM
 
 
-thanks
--- PMM
+On 27/03/26 12:34 am, Aditya Gupta wrote:
+> PHB in Power8 supports 8 byte registers, and hence the ops structure
+> allows accessing of 8 bytes in 'pnv_phb3_reg_ops'
+> 
+> Both 'pnv_phb3_reg_read' & 'pnv_phb3_reg_write' pass the arguments as is
+> to 'pnv_phb3_config_{read,write}', if offset is PHB_CONFIG_DATA.
+> 
+> This when called with size as 8, causes following assert failure in
+> 'pci_host_config_read_common' & 'pci_host_config_write_common':
+> 
+>      assert(len <= 4);
+> 
+> Validate that size is <=4, before jumping to pci_host_config_{read,write}_common
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3334
+> Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
+> Fixes: 9ae1329ee2fe ("ppc/pnv: Add models for POWER8 PHB3 PCIe Host bridge")
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+>   hw/pci-host/pnv_phb3.c | 10 ++++++++++
+>   1 file changed, 10 insertions(+)
+> 
+> diff --git a/hw/pci-host/pnv_phb3.c b/hw/pci-host/pnv_phb3.c
+> index d6ab5153374f..4ffdb4ce31ae 100644
+> --- a/hw/pci-host/pnv_phb3.c
+> +++ b/hw/pci-host/pnv_phb3.c
+> @@ -475,6 +475,11 @@ void pnv_phb3_reg_write(void *opaque, hwaddr off, uint64_t val, unsigned size)
+>   
+>       /* Special case configuration data */
+>       if ((off & 0xfffc) == PHB_CONFIG_DATA) {
+> +        if (size > 4) {
+
+Shouldn't we be doing write/read in chunks of 4 bytes when requested 
+size is 8 instead of returning from here?
+
+regards,
+Harsh
+
+> +            phb3_error(phb, "Invalid config access, offset: 0x%"PRIx64" size: %d",
+> +                      off, size);
+> +            return;
+> +        }
+>           pnv_phb3_config_write(phb, off & 0x3, size, val);
+>           return;
+>       }
+> @@ -597,6 +602,11 @@ uint64_t pnv_phb3_reg_read(void *opaque, hwaddr off, unsigned size)
+>       uint64_t val;
+>   
+>       if ((off & 0xfffc) == PHB_CONFIG_DATA) {
+> +        if (size > 4) {
+> +            phb3_error(phb, "Invalid config access, offset: 0x%"PRIx64" size: %d",
+> +                      off, size);
+> +            return ~0ull;
+> +        }
+>           return pnv_phb3_config_read(phb, off & 0x3, size);
+>       }
+>   
+
 
