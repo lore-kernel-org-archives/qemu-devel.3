@@ -4,87 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B93FFE51F3
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 09:27:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43FE1FE51F2
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 09:28:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGCny-0006ua-Tb; Fri, 24 Apr 2026 05:26:34 -0400
+	id 1wGCpV-0007ts-BK; Fri, 24 Apr 2026 05:28:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
- id 1wGCnx-0006uQ-Rz
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:26:33 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
- id 1wGCnw-0007Cz-2X
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:26:33 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-488a8f97f6bso13773815e9.2
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 02:26:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777022789; x=1777627589; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=X/fNlE9Gq8hOLhLNzmtET6bZPUEb/hYflGWPOgGcCjo=;
- b=XreX/QNssekhg7j3n+l8N8Rvh4GWHGohaDA8jrx5ekeg7dkDEOeL6b2Ojkfo+bzZzQ
- JNzu9ViBDKCTtC7Jf3cRKcJBLSGeadSKEKqFX5J8Fvhxxso0ydhRZYzZriByPMpu/SeM
- V8iCfd7D5ykg4HmWdbOOVbA9AUpDEcyORQvWURUkha6W6c0YT+OmIQfzLTAkhjTyBv9G
- 8998PPi56zDVF0Deqn1FAG3TdAgsvJgDn30BLeC7bUTIW7t2X8/VBtUBNPM4gK/ysPBc
- MciQWq6YsJrtipsteRDaxAYWIbzQGcIDBvJeaEyzOgsOlbE0byy5dnwsvDZ3t5mehoKk
- 7fQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777022789; x=1777627589;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=X/fNlE9Gq8hOLhLNzmtET6bZPUEb/hYflGWPOgGcCjo=;
- b=DgXT56uoJ3w/AwJMi0Lx3Igo5lvGb3+jKnDDpIh/UGYmLYXGPa03GOXruQSgFf9WFZ
- 2BVnoRF1tBRhL4E1usht1301DiERxXNY5sMRh0jiKm2CvgPvRc2oncjhugPTzlUlFI8v
- cZgnXivyIgI2Mli+Ee68eHGqd7Yu9ld51F0i6GQImvAcDslwisIxlv8j4hbKxiaM2IrO
- stJ4laGyEan228vl/jj1ND8oaQJFLwZ2EqRwcaUnPT9JO5w2CaVuPoHsCemOuVsmFQYz
- k12tM015HyjTb8w5ljRrNI94zzQxrf+y7g9E2CrFg8rPatglU3bDpEkaFV9mE43okPN8
- 9klA==
-X-Gm-Message-State: AOJu0Yxm40M1Ve0wtGPF4TNPoXtF2+pIK5T0elb/CJbmZqwR4Pe3WRGw
- V21W0ve9F/wamy0PE0XqfFs8FZ/S9VrutPwwkQQcw8CE4V//Zn6tdL4D
-X-Gm-Gg: AeBDies9+l3Vunt8SIMeuRDlGiSZWTIXzxpTb8MKyZtCAKtIxeJ+zCTqN/pXTVOVLhC
- uCG9KWOAOWV4q6YGjj0+b2PcoJELE40q9vvMCOy3xfEfOlA4SroyTvdCkJ6rUofLcRy/ykOOXZM
- 4wWaar5gx676H7kJkmZ94YWQuRI9ostVIRmFFa9BSxwBGPrnsy7ul6/rvpDifhMwxiY2uXpdL2I
- 2C63g46NoKSRYRw5PBgrbfbwbk8zu7pO+HXd95T6f1NXpKLFHNgjoXjX7E7FBe6wQ9cdXYy0Fr+
- Fh7yIrAcVY5V//5FpD0BtsRrkg/Kac9sDHGTgI2eRtPILXTER4RL4XgpsxsCaVQq48DcJb1aoOP
- cpVmcPDD0I8KOw4Hk2zkgOMHwckcUSjs27rZbHI4OWXfi9w5tgWUdSW+zV9xYn3EX7glWwrKE2s
- 14/p3S2kroNUlAEdjym0Pmv6P6HtqOEBrrxIZoug==
-X-Received: by 2002:a05:600c:6289:b0:486:fb8a:fed with SMTP id
- 5b1f17b1804b1-488fb7897camr233112795e9.8.1777022788899; 
- Fri, 24 Apr 2026 02:26:28 -0700 (PDT)
-Received: from LAP-0337.. ([182.176.170.188]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc0f82bbsm989823515e9.3.2026.04.24.02.26.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Apr 2026 02:26:28 -0700 (PDT)
-From: Ali Raza <elirazamumtaz@gmail.com>
-To: deller@gmx.de
-Cc: qemu-devel@nongnu.org, laurent@vivier.eu, pierrick.bouvier@linaro.org,
- alex.bennee@linaro.org, morgan@kernel.org
-Subject: Re: [PATCH 1/3] linux-user: Filter /proc/*/task/ to hide
- QEMU-internal threads
-Date: Fri, 24 Apr 2026 14:26:23 +0500
-Message-ID: <20260424092623.94809-1-elirazamumtaz@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <5b9fe9d3-6afb-4cbd-9b41-46b82cb5b974@gmx.de>
-References: <5b9fe9d3-6afb-4cbd-9b41-46b82cb5b974@gmx.de>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wGCp3-0007Mt-Ck
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:27:41 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wGCoz-0007aC-Nd
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:27:41 -0400
+Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.205]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 63O9RHIe004358
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 24 Apr 2026 18:27:26 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=rXcv6yelvtBYoc9z4CKug8RC1XR4ObzkiQj9RjCrBck=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1777022846; v=1;
+ b=B77EdOnMQ1HS2uu106kSWucys2Esk9gh7mOrX4lQd6NT0nlqzTzOppyRWqk3zHf9
+ OBXNYG/KoSips4ezNX/icSgIySNMeWMbbGNS4G2FJ9J9vPYcKNOD9iPCMuNTy8l1
+ r0BcTLzD2ZoRO+eLIUbKZwEb2dm0CtlRsc1e4Y9jYBD7YvnfMqdta1CugDpWDbR/
+ ya1x4uuvry2pQC1kRFdo6IppDtF4Gdrj3P18pdbgs4HmOfn7IJO1v/Uoh1MwxQO2
+ 3yrTwkqO4lq6YuiQel8NScjkYnJhzGK9g93Q6tpWVcbtUAfORwg7OyI8nTb6d83A
+ oVXY/hraHNxueb/9w07MPg==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 24 Apr 2026 18:27:07 +0900
+Subject: [PATCH v4 2/6] qemu-thread: Add qemu_event_timedwait()
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=elirazamumtaz@gmail.com; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260424-force_rcu-v4-2-feccfaca0568@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260424-force_rcu-v4-0-feccfaca0568@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260424-force_rcu-v4-0-feccfaca0568@rsg.ci.i.u-tokyo.ac.jp>
+To: qemu-devel@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.16-dev-16047
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,28 +73,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/15/26, Helge Deller wrote:=0D
->> +            char *endp;=0D
->> +            long tid =3D strtol(hde->d_name, &endp, 10);=0D
->=0D
-> I think we should use type pid_t here:=0D
-> pid_t tid =3D strtol(...)=0D
-=0D
-Thanks for the review, Helge.=0D
-=0D
-Agreed, pid_t is the correct type for a thread id. Fixed in v2 for both=0D
-do_getdents() and do_getdents64(). I also switched the parsing to=0D
-qemu_strtoi() so the whole entry name must be numeric (no trailing junk),=0D
-which avoids relying on errno/endp checks.=0D
-=0D
-v2 also addresses a few other issues that came up on a closer review=0D
-(TOCTOU on the readlink-based dir check, a false EOF when an entire=0D
-host batch is filtered out, and tightening the tkill/tgkill validation=0D
-to host-process-local checks). Full changelog is in the v2 cover letter:=0D
-=0D
-  https://lore.kernel.org/qemu-devel/20260424-master-v2-0-8b50b5c063ed@gmai=
-l.com/=0D
-=0D
-Thanks,=0D
-Ali Raza=0D
+qemu_event_timedwait() is equivalent to qemu_event_wait(), except it has
+a relative timeout.
+
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+---
+ include/qemu/thread-posix.h | 11 +++++++++++
+ include/qemu/thread.h       |  9 ++++++++-
+ util/event.c                | 31 ++++++++++++++++++++++++++-----
+ util/qemu-thread-posix.c    | 11 +----------
+ 4 files changed, 46 insertions(+), 16 deletions(-)
+
+diff --git a/include/qemu/thread-posix.h b/include/qemu/thread-posix.h
+index 758808b705e4..11193b1580f8 100644
+--- a/include/qemu/thread-posix.h
++++ b/include/qemu/thread-posix.h
+@@ -36,4 +36,15 @@ struct QemuThread {
+     pthread_t thread;
+ };
+ 
++static inline clockid_t qemu_timedwait_clockid(void)
++{
++#ifdef CONFIG_PTHREAD_CONDATTR_SETCLOCK
++    return CLOCK_MONOTONIC;
++#else
++    return CLOCK_REALTIME;
++#endif
++}
++
++void compute_abs_deadline(struct timespec *ts, int ms);
++
+ #endif
+diff --git a/include/qemu/thread.h b/include/qemu/thread.h
+index 98cc5c41ac58..8536859bcb3a 100644
+--- a/include/qemu/thread.h
++++ b/include/qemu/thread.h
+@@ -201,7 +201,14 @@ void qemu_sem_destroy(QemuSemaphore *sem);
+ void qemu_event_init(QemuEvent *ev, bool init);
+ void qemu_event_set(QemuEvent *ev);
+ void qemu_event_reset(QemuEvent *ev);
+-void qemu_event_wait(QemuEvent *ev);
++bool qemu_event_timedwait(QemuEvent *ev, int ms);
++
++static inline void qemu_event_wait(QemuEvent *ev)
++{
++    while (!qemu_event_timedwait(ev, INT_MAX)) {
++    }
++}
++
+ void qemu_event_destroy(QemuEvent *ev);
+ 
+ void qemu_thread_create(QemuThread *thread, const char *name,
+diff --git a/util/event.c b/util/event.c
+index 5a8141cd0e46..a7a5ee0aa5f5 100644
+--- a/util/event.c
++++ b/util/event.c
+@@ -33,7 +33,15 @@ void qemu_event_init(QemuEvent *ev, bool init)
+ {
+ #ifndef HAVE_FUTEX
+     pthread_mutex_init(&ev->lock, NULL);
++#ifdef CONFIG_PTHREAD_CONDATTR_SETCLOCK
++    pthread_condattr_t attr;
++    pthread_condattr_init(&attr);
++    pthread_condattr_setclock(&attr, qemu_timedwait_clockid());
++    pthread_cond_init(&ev->cond, &attr);
++    pthread_condattr_destroy(&attr);
++#else
+     pthread_cond_init(&ev->cond, NULL);
++#endif
+ #endif
+ 
+     ev->value = (init ? EV_SET : EV_FREE);
+@@ -121,15 +129,17 @@ void qemu_event_reset(QemuEvent *ev)
+ #endif
+ }
+ 
+-void qemu_event_wait(QemuEvent *ev)
++bool qemu_event_timedwait(QemuEvent *ev, int ms)
+ {
+     assert(ev->initialized);
+ 
+ #ifdef HAVE_FUTEX
++    int64_t deadline = get_clock() + (int64_t)ms * SCALE_MS;
++
+     while (true) {
+         /*
+-         * qemu_event_wait must synchronize with qemu_event_set even if it does
+-         * not go down the slow path, so this load-acquire is needed that
++         * qemu_event_timedwait must synchronize with qemu_event_set even if it
++         * does not go down the slow path, so this load-acquire is needed that
+          * synchronizes with the first memory barrier in qemu_event_set().
+          */
+         unsigned value = qatomic_load_acquire(&ev->value);
+@@ -159,13 +169,24 @@ void qemu_event_wait(QemuEvent *ev)
+          * a smp_mb() pairing with the second barrier of qemu_event_set().
+          * The barrier is inside the FUTEX_WAIT system call.
+          */
+-        qemu_futex_wait(ev, EV_BUSY);
++        if (!qemu_futex_timedwait(ev, EV_BUSY, deadline)) {
++            return false;
++        }
+     }
+ #else
++    struct timespec ts;
++
++    compute_abs_deadline(&ts, ms);
++
+     pthread_mutex_lock(&ev->lock);
+     while (qatomic_read(&ev->value) != EV_SET) {
+-        pthread_cond_wait(&ev->cond, &ev->lock);
++        if (pthread_cond_timedwait(&ev->cond, &ev->lock, &ts)) {
++            pthread_mutex_unlock(&ev->lock);
++            return false;
++        }
+     }
+     pthread_mutex_unlock(&ev->lock);
+ #endif
++
++    return true;
+ }
+diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+index bd1c2ad2a596..dc1125006ceb 100644
+--- a/util/qemu-thread-posix.c
++++ b/util/qemu-thread-posix.c
+@@ -59,16 +59,7 @@ static void error_exit(int err, const char *msg)
+     abort();
+ }
+ 
+-static inline clockid_t qemu_timedwait_clockid(void)
+-{
+-#ifdef CONFIG_PTHREAD_CONDATTR_SETCLOCK
+-    return CLOCK_MONOTONIC;
+-#else
+-    return CLOCK_REALTIME;
+-#endif
+-}
+-
+-static void compute_abs_deadline(struct timespec *ts, int ms)
++void compute_abs_deadline(struct timespec *ts, int ms)
+ {
+     clock_gettime(qemu_timedwait_clockid(), ts);
+     ts->tv_nsec += (ms % 1000) * 1000000;
+
+-- 
+2.53.0
+
 
