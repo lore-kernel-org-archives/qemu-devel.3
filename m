@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFB91FDEE28
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 01:38:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E06CFDEE58
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 01:39:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wG5Um-00081P-7s; Thu, 23 Apr 2026 21:38:16 -0400
+	id 1wG5V5-0008BJ-FQ; Thu, 23 Apr 2026 21:38:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wG5Uj-00081H-SN
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 21:38:13 -0400
-Received: from mail-qv1-xf33.google.com ([2607:f8b0:4864:20::f33])
+ id 1wG5V2-00088r-Lg
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 21:38:32 -0400
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wG5Uh-00044Q-NQ
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 21:38:13 -0400
-Received: by mail-qv1-xf33.google.com with SMTP id
- 6a1803df08f44-8a016799d2cso81003256d6.1
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 18:38:09 -0700 (PDT)
+ id 1wG5V1-00047q-8Z
+ for qemu-devel@nongnu.org; Thu, 23 Apr 2026 21:38:32 -0400
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-50fb1932b62so32335741cf.2
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 18:38:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1776994688; x=1777599488; darn=nongnu.org;
+ d=linaro.org; s=google; t=1776994710; x=1777599510; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Js9eMwKF2A8UNeyLePPydO44TG0mXyfsBSMVBdTdFME=;
- b=bX7Vzu7WBYb4kf41r527IpQVfgYYzS3YzhX1+9NVPZsv+qkBua15/1s3vjWIKmT+ap
- HiyUj1Y5NNSytHUVKOv5itlOdflyRLvE0QDFmLppTCI5AcSMups6TuvliwWp9vO8uSaX
- m03Cr/cHJNoGuLHwi/k62Q3qE1HcND7G5RvV5cVapdiKNB9UICaLys/CwRmm03B1S4U0
- xJza92Tkw46bviSkBgslkWrOo1yEppqII5Kp8gFY4TPwFAufcxrMCd8015fFq/t2NDr8
- q5ElP24giiHDbLG2SCJ7Kgn8/mKxemz1qQveyk86E6vywfLrM4D47jrms4pqzFqyK+YT
- rR4Q==
+ bh=lT/PBlX5fWx68/6Qf0lB19gMmlNpV6+uYAqW9h0JJh8=;
+ b=JHOQYUAHX08c+zRPUXOG86ELm/wQLsUvi1oLYYnn47vWHepFiphQGIwGUq80NmkExi
+ 6hSJPL/X80kQpo0LDHopucH6l1mcXsUr8++N56jAgHSZitcu7a3diBZWcD0Cb2ZossKc
+ 8YwE3Gz30s1dKDQiQrUKBgetftAFCAAODhP5LAvoyhgiyyUycmNl2fxipdYnoLZZM0NF
+ 4VjQ/ojTb620VKKAHZ6Yrw0cp5FLyoknv5MifPqj9unKHRrWeTIJsHBDWHomc2jMV0Pq
+ E5yoZ08vktmzzzxoJXyARugrZOCVxOnuUihLcWej33MmFuf9qp3c8Au3G1QaHTcgI6/j
+ JsHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1776994688; x=1777599488;
+ d=1e100.net; s=20251104; t=1776994710; x=1777599510;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Js9eMwKF2A8UNeyLePPydO44TG0mXyfsBSMVBdTdFME=;
- b=KvUiy4d2pBgHubYARoLhKmB7xAXoERWZDwwkXekwgvste/ssK4jB3gJ+yBFn7fAujh
- wOahtryHGOKGXsrlcX3WCIrQ3iB//fAjGJHxJgxCGXihqbCYsXASSKFA9FGRRLjvktQW
- bllhgPSKxE2SuTUQaovzvyHVl2Pf2M2YJ4hwP9U2VLJ0oiyy+S0UpVZrw5D5MBqk59OS
- 7szgPUMtxhJag5r90ery1m9DwNxVq0iCNuWxVoRebyKJgDW8T4OX0UCc12AkR6MeITYy
- hvg2kPQhlABONAsQQOKFXb10o5NX4O1bi3k8VoQ1yKbfNYZLCiAHVJW5DZac5DRNoxTB
- X6fw==
-X-Gm-Message-State: AOJu0Yy36+CfA013rNOTOpDcghdwfUdaMtBGe5lM0FlakdOgMC88hcl1
- tMPaLVszdGTDUcQuZKt+XbwmyUFd/ZEazFBl0jAxEwGcCsfLV4bD7ucYN6+azEKaC4+BnVtd1qk
- c4tWrnys=
-X-Gm-Gg: AeBDieu4U7/DIbygLkGa2dTe3c7EgA0ZzqBnw88nwCIZuCpyYmoFIbOZstx7vyYYFQR
- kVXdFn8HZoeQhU05qr0OzhePEP/xq+vhyGa7gSEN6MxiqFoTHT2xnBfXWHLJNr5wHwV+S1TYTcj
- REVjgVDC9PgaYjaFTN4E5BdM2yfZMBKRBXHs5pbjD/EiSLrBuahY3k51LusZXWl0rF13MZK6Ywq
- BK3R8Wl8W6wpBDjsXOE9kpGO0fQ3cSHN4VmM7YwgDB6LUlm+FMmMBYQzfCJ2Lr8F6PXtWj+EU9D
- xMf4uue1adJrESHUF0eQWxsveuZ3Ea18z7/3I13a4BZfPqYsZEr0oHFjPzA1U0sj85FebZD7zn3
- woqo7kpfGXPuZtrERZYwRhFp5cvX1O6jsyUDYYX/y8VpUxWv/QJGcqGhy2/g1g9K30bEb+Na68b
- l+JZ8Pqxc+l4qxcE3y9us0s04q3Iqh8dacV/RAnklKwCPwhgN/azivApUgZWr53lpd+cfg048=
-X-Received: by 2002:a05:6214:5016:b0:8b2:cc1:8981 with SMTP id
- 6a1803df08f44-8b20cc18ce0mr78848236d6.37.1776994688425; 
- Thu, 23 Apr 2026 18:38:08 -0700 (PDT)
+ bh=lT/PBlX5fWx68/6Qf0lB19gMmlNpV6+uYAqW9h0JJh8=;
+ b=jjM7x3aP4Opa9BSerCIlea6dFh8sto54MsM3pNOX7bL5IznmxnEs6rhuCFID1U3E8l
+ y9IIkEOK+rithMOaetFTInsNbGalpVbItC8ob03M4G8PSTcfnwOhS8gWDaGj8lPa9PTq
+ Ytk2bTWkAH3H6Zy/mKamWMzg+bKhnGGDsaHnJpMfKIqILSe80iFWIArrC/AekZUZo8p0
+ Kd0YMI4x+aUhg4iyFMUzH/s4XIcVjhZnvJqIHdARt6ER8yzcAWzPDdJSxtTZ90Y0zFI9
+ IakiMoqDDsrkUZHkdSFxBtnd4oyJ4GxXWNMuMm4s/ujptNIu9PMxl16tIS1ufQ7woDMM
+ U+ng==
+X-Gm-Message-State: AOJu0YxDQlsfaH8NvGlszPxyFnfo756j1MHWe/XRMa1ePMdZSPd1aywP
+ PvQU4Vu3cR6ZT/Xou7pEokcIq/0xzNvMw6EEnhBKEWQpMt7mjHrB66uR0aOL4FW6LsPZACRDcRI
+ +J2dIYjY=
+X-Gm-Gg: AeBDieuRvUosauyKEL1zQY/zXFHQP8xGaZW8WRR6fBHBRhiYbN1MOE5mQs7uKtPhzyw
+ 1hO0w/RDtW48IRyOH7U/4AZUfdSYIh0T56Zitmv8Bp1c+psSC2SKUsokl+BxuFyFMLRvkvWO/Oj
+ o/ITlqGb6gfEgR67MDwzKjwI/xv1tqzwNytZozmQEaaWifSm26aRrer+ttnXf2aXTzVsjDQrjAP
+ NyceK8zar0zc/YndJspCSXLz6N56AJt5w9kZQGrph/vHE7ny2SR3IdjrwqEnFkGoOFSr+WMefwb
+ XIVHI48mXnMe9ky19BYWk4Kn+q7XmjsEm4VH9f0K3yNO3Vt7dDRTmlwkxHXEc0MdxBEFlWOrxGc
+ 5t0TdHaQSgwhCVyrFOWSWzvpihwLlptRoug7CY87UhXVHhjDgawCZ1SQJ8u3dlc3MyCu2lLmMhB
+ b4EDBpGU7AOpBKI25E3dmfjm0Btg8fctgnTX9yg87Pb9Cokwm4EGvygddIpBxFggtZodVOUlAun
+ rlK++llRQ==
+X-Received: by 2002:ac8:7c56:0:b0:50d:9b07:9c2b with SMTP id
+ d75a77b69052e-50e36c8da62mr448068851cf.56.1776994709733; 
+ Thu, 23 Apr 2026 18:38:29 -0700 (PDT)
 Received: from [10.72.56.227] ([172.59.190.12])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b02ae97347sm170065166d6.41.2026.04.23.18.38.06
+ d75a77b69052e-50fc83bff6asm45724191cf.20.2026.04.23.18.38.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 23 Apr 2026 18:38:08 -0700 (PDT)
-Message-ID: <bc481b23-6a74-460a-bf50-36a3497da1c1@linaro.org>
-Date: Fri, 24 Apr 2026 11:38:02 +1000
+ Thu, 23 Apr 2026 18:38:29 -0700 (PDT)
+Message-ID: <073464ba-0be2-44a9-8ec5-40a45820401d@linaro.org>
+Date: Fri, 24 Apr 2026 11:38:23 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/7] tests/tcg: introduce a lib dir for aarch64 system
- tests
+Subject: Re: [PATCH 2/7] tests/tcg: convert aarch64 feat-xs test to use helpers
 To: qemu-devel@nongnu.org
 References: <20260417164328.1009132-1-alex.bennee@linaro.org>
- <20260417164328.1009132-2-alex.bennee@linaro.org>
+ <20260417164328.1009132-3-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260417164328.1009132-2-alex.bennee@linaro.org>
+In-Reply-To: <20260417164328.1009132-3-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f33;
- envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,19 +106,30 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/18/26 02:43, Alex Bennée wrote:
-> We are about to add some more helpers but lets start by adding a
-> simple wrapper for reading and writing system registers.
-> 
-> Do note the subtle switch of ordering for write_sysreg() which matches
-> the change the kernel made sometime in 2021 (see 272a067df in linux.git).
-> 
-> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   tests/tcg/aarch64/system/lib/sysregs.h    | 22 ++++++++++++++++++++++
->   tests/tcg/aarch64/system/vtimer.c         | 23 ++++-------------------
->   tests/tcg/aarch64/Makefile.softmmu-target |  3 ++-
->   3 files changed, 28 insertions(+), 20 deletions(-)
->   create mode 100644 tests/tcg/aarch64/system/lib/sysregs.h
+>   tests/tcg/aarch64/system/feat-xs.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/tests/tcg/aarch64/system/feat-xs.c b/tests/tcg/aarch64/system/feat-xs.c
+> index f310fc837e0..e2324cef1af 100644
+> --- a/tests/tcg/aarch64/system/feat-xs.c
+> +++ b/tests/tcg/aarch64/system/feat-xs.c
+> @@ -8,12 +8,12 @@
+>   
+>   #include <minilib.h>
+>   #include <stdint.h>
+> +#include "sysregs.h"
+>   
+>   int main(void)
+>   {
+> -    uint64_t isar1;
+> +    uint64_t isar1 = read_sysreg(id_aa64isar1_el1);
+>   
+> -    asm volatile ("mrs %0, id_aa64isar1_el1" : "=r"(isar1));
+>       if (((isar1 >> 56) & 0xf) < 1) {
+>           ml_printf("FEAT_XS not supported by CPU");
+>           return 1;
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
