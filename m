@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FBE5FB44A4
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 04:32:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9197AFB44A5
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 04:32:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wG8By-0006W6-OJ; Fri, 24 Apr 2026 00:31:02 -0400
+	id 1wG8Ca-0007Gi-SS; Fri, 24 Apr 2026 00:31:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wG8Bv-0006Kf-Uo
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 00:31:00 -0400
-Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
+ id 1wG8CB-0006yY-IW
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 00:31:21 -0400
+Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wG8Bu-0002iT-6Z
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 00:30:59 -0400
-Received: by mail-oa1-x31.google.com with SMTP id
- 586e51a60fabf-42fdab683a9so1373327fac.1
- for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 21:30:57 -0700 (PDT)
+ id 1wG8C9-0002nZ-7h
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 00:31:14 -0400
+Received: by mail-oa1-x35.google.com with SMTP id
+ 586e51a60fabf-415b23dd6e5so2761766fac.3
+ for <qemu-devel@nongnu.org>; Thu, 23 Apr 2026 21:31:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777005057; x=1777609857; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777005071; x=1777609871; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bQOANj7Y0pZJUmBoHVkVj+8tE/9rp7PAWdZqpVIG7Nk=;
- b=fP2cmbR9aFBmzfRUJFZB4Z2i484f1ZZFagAx8Zw4eWbsUwyP3/OpG+5ZkksWryjinY
- 0kNsRn4qcdCGmzR1I1nHq+axnLz+AIeQ++bIGEibN6ZiOhyaZD7VeUckDYsLKEZRoXQ9
- eOugwsuSMizsau1G5PZWptD88KmrKreyctnvt3XvMwvPrR8OeSgO+cvj0t7VHGMW9U24
- zUweFp5pHukFSD6lMqsf1r0l7KXLYko+O6a6jkKnQpfLMH2bo/t6NfdE7dL7tLd/6oek
- crlyjSU9XUAwiZC7MJJKFDEyF8t/Vc4nNustZIrqHSznA5cbTfm5w+m9i1RKDHvowNIP
- Jztw==
+ bh=Kor/kiazYWS2SmrFhEuLicDn7WflikUuqZMwHNLbJMA=;
+ b=DwJr6clay0WTmoKxJvtWscQAuRr1UTqufWkFZrNeHeVO1KhR/DwBI8iC7dBpCV5diP
+ hKCnQxhXlC/aw+UDz12RY7hiwuPh4i6qmjnslMVXLzlwIsbftWN9aC45rjBn/VB/4ztP
+ JwYRgKj3JbHNWJyAwNd73WbNobNxMPiZ0CZZvj80aRV3h2tSi6pl5HP53+Hp38aEdDy8
+ Utm5PSB7ftLNQafDgagOolI0uXqwcZkpcSc1652lgYXNcoyhm+GgcFln8TuMbkORsK+3
+ taDHrzcaYE5+WiLCEmaXLNKmRqur/drrLP4CkdrX8PeaXtVTklh/jt2K92vDC5Lnw/CM
+ mMCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777005057; x=1777609857;
+ d=1e100.net; s=20251104; t=1777005071; x=1777609871;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bQOANj7Y0pZJUmBoHVkVj+8tE/9rp7PAWdZqpVIG7Nk=;
- b=DZ2Hc/nia38SozRoLePiEi0ooeQWDGR3qsDfRezueBCHJ/lLpPSlcAu2IBl4wL7X94
- /zIUD6u+T9l1r2OxGjCJYsvga32x0O+9i9q84Yo2G2lxFvSzt6ddNLOISfvDt8AtBHjC
- xu7HkcGNI/LiKxZ2EUe0tjJdOnQpwA06e0m7yRyZ3Df9ZPc5xVCKgM0AUJYy3TKMpWAB
- fZ0OZ+dY1Sybd10vb2ZFPDEgtnGakum0ur7yxWg3rvoZzBsB/7Dv+oXMPYVBfebQXcEZ
- QXmAUXvGylk9sa1VXNajvcmjmDM9CGSj+3UxFnoMcxnMLzuKkgWBpPFJHRign4y8i2lo
- KspA==
-X-Gm-Message-State: AOJu0YyaM2B/fPR3Ffg2w1XpfpcUmkKBbhawUEuCVZA3RkAjg9bBRazG
- vSvmiNeHGPI7lQiKS1MhpTCvhqICktIp+nHkAZ+kBAVgXfvhDR+prua1X66Rx5f/Ov7NMOP7AH+
- vY9CkzjA=
-X-Gm-Gg: AeBDietW9+Z9ycKpula6BHDpUh8HHmE8NBk4lKIC0k6UXgO+pyx6MBg4atIlEshjt6q
- 6E/XaAmx8eKeT69UdYTIS4lV6TROw3WvftKMniZjls21F4QVMwKUOyt0y6NHetgO29WrcEMxyzl
- G5a5z8Rui1/sq91fFTLoy3wgjuTTCam27SuyZjHuQ1FW/J8HvfgmtqytJ+5NzBcXu3SQ3RimVB/
- GEGcF0Ly+P+UgIhwtRErUvuRO/jfzhN7H4UrdIVdC6RssPM91wu6iDD/O2GtK+eECbzC7k1wL/9
- tGL/3u7eeFmI81A5dyrilfoU0Eh94tLDv4nDrZXVcIjvnUNHOfeMu5jfVwHl8SCVewanliJEmca
- s9MavxezjAt6e0TN4JSlsRF+BWWlp7I8FsSWoqpFqu88e8Kfj2X5Ea1D5+M63i8eeoABniij+eZ
- EvXhDP46hnh8UoPCpbColOCoqkKd9nUjTGZhJMMaHK3+vSn94EYqxNReWXJLgNUw==
-X-Received: by 2002:a05:6870:e091:b0:41c:a7b:a8d2 with SMTP id
- 586e51a60fabf-42abf217259mr18723147fac.5.1777005056849; 
- Thu, 23 Apr 2026 21:30:56 -0700 (PDT)
+ bh=Kor/kiazYWS2SmrFhEuLicDn7WflikUuqZMwHNLbJMA=;
+ b=jNnvaJ6cOooU8PWoty8R7foFNKn2E+FxD6st8M49rtb7Qgzu3GY7JpE8UEjmmUmcaP
+ w1tDcTciAeOZDEPiLtVES7gVU3SFIvdGA3dM8z4FUfg1c3BDi5OCbo/ZUjgwBXpPqPiD
+ Du7kVBi9jKhVfSxdIWO0GDUPd26P+RLKZ7j0sZ3HT9sfA/oUuZd5uiGuYU3KHrT9rabl
+ N5MQtCPDAuSDvtOlKIeHbaioE4tHc7Jx0w8vK686J3sO8J8YowiohsX+/KCXfGPAQeuQ
+ Ib5zuCrNRGsjBxDCDS6jLFJffVaPNOOdhYcMd75dlWn7MZ4pe44r0kkmMpsleUT+Jwe3
+ Xf7Q==
+X-Gm-Message-State: AOJu0YxZabZUDW5XvonFtjRiPj+lIbmOgNWDXZtfNmYT4RSmju+CPcya
+ uuOdz+Cbwpc2uOcle7GAB0EelvxkTq08wuksAgccQ0Sy7yg+s1a0zhw09JKDhm+dNY4TN7apZyG
+ WMlOlUY0=
+X-Gm-Gg: AeBDieuMaksctTmVIfG8q6LqjZo4NAVpme5WTW2i4MEkduvPYKAwbZ0uNX95fmhkcX7
+ sOQRtyT8d5OA3wngdxkjwpfnv2Cq/e0zK7Sa43Uii/6PUQzMmfYvVc6kW1VQ9paw9LJcWPKaBgo
+ lo10QHobz1fbA/K8/9wgmPSsO5Cm0GImj4AffJQRwXjTHbCb83cx7fshpQdXyQguIhIukpjIh82
+ J577jMTspv1VrR4iZf950tirN38l6BRiWV2Y2eXaSyM3vJ2XCRb8rw//NGDrpt2bHOddJ9TgvNm
+ Xjc0JjRb6GCqLStUkggIPpvfrIisJvL0AbvPl+qSWDhnGdQWz3Ji6hGJcz7U0U8aCR4DrE4BncL
+ iupWKRMt5oVzXik5iSuRpJwj+k6i4iINavBr4JHT5HQUIL+jxDN0kWP1nIOpFDwru8wHa5SUxFz
+ dxvovqJvjEu4FXjmTe2GqrdWm+B4FOkkLy8ais8qtHwwlccJA9bMMcPW7/cQbngQ==
+X-Received: by 2002:a05:6870:2010:b0:42c:1b45:e8ba with SMTP id
+ 586e51a60fabf-42c1b468af7mr10447591fac.33.1777005070878; 
+ Thu, 23 Apr 2026 21:31:10 -0700 (PDT)
 Received: from stoup.. ([172.58.183.19]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-42b9ac54ec5sm18880864fac.13.2026.04.23.21.30.53
+ 586e51a60fabf-42b9ac54ec5sm18880864fac.13.2026.04.23.21.31.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 23 Apr 2026 21:30:56 -0700 (PDT)
+ Thu, 23 Apr 2026 21:31:10 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org
-Subject: [PATCH v2 08/40] target/arm: Introduce FPMR
-Date: Fri, 24 Apr 2026 14:29:42 +1000
-Message-ID: <20260424043014.46305-9-richard.henderson@linaro.org>
+Subject: [PATCH v2 11/40] target/arm: Clear FPMR on ResetSVEState
+Date: Fri, 24 Apr 2026 14:29:45 +1000
+Message-ID: <20260424043014.46305-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260424043014.46305-1-richard.henderson@linaro.org>
 References: <20260424043014.46305-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::31;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x31.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::35;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,154 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce the special register FPMR and its fields.
-Migrate it when present.
+FPMR is cleared when entering or exiting Streaming Mode.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpregs.h       |  5 +++++
- target/arm/cpu-features.h |  5 +++++
- target/arm/cpu.h          |  1 +
- target/arm/internals.h    |  9 +++++++++
- target/arm/helper.c       | 12 +++++++++++-
- target/arm/machine.c      | 20 ++++++++++++++++++++
- 6 files changed, 51 insertions(+), 1 deletion(-)
+ target/arm/helper.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index f5ec7484c1..391c0e322b 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -149,6 +149,11 @@ enum {
-      * should not trap to EL2 when HCR_EL2.NV is set.
-      */
-     ARM_CP_NV_NO_TRAP            = 1 << 22,
-+    /*
-+     * Flag: Access check for this sysreg is constrained by the
-+     * ARM pseudocode function CheckFPMREnabled().
-+     */
-+    ARM_CP_FPMR                  = 1 << 23,
- };
- 
- /*
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 03631018d7..ddef6fbeb0 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -1173,6 +1173,11 @@ static inline bool isar_feature_aa64_gcs(const ARMISARegisters *id)
-     return FIELD_EX64_IDREG(id, ID_AA64PFR1, GCS) != 0;
- }
- 
-+static inline bool isar_feature_aa64_fpmr(const ARMISARegisters *id)
-+{
-+    return FIELD_EX64_IDREG(id, ID_AA64PFR2, FPMR) != 0;
-+}
-+
- static inline bool isar_feature_aa64_tgran4_lpa2(const ARMISARegisters *id)
- {
-     return FIELD_SEX64_IDREG(id, ID_AA64MMFR0, TGRAN4) >= 1;
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 6ec3845edf..38deea01bc 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -692,6 +692,7 @@ typedef struct CPUArchState {
-          */
-         uint64_t fpsr;
-         uint64_t fpcr;
-+        uint64_t fpmr;
- 
-         uint32_t xregs[16];
- 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index b0f6bfa62c..944adc14e7 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -286,6 +286,15 @@ FIELD(CNTHCTL, EVNTIS, 17, 1)
- FIELD(CNTHCTL, CNTVMASK, 18, 1)
- FIELD(CNTHCTL, CNTPMASK, 19, 1)
- 
-+FIELD(FPMR, F8S1, 0, 3)
-+FIELD(FPMR, F8S2, 3, 3)
-+FIELD(FPMR, F8D, 6, 3)
-+FIELD(FPMR, OSM, 14, 1)
-+FIELD(FPMR, OSC, 15, 1)
-+FIELD(FPMR, LSCALE, 16, 7)
-+FIELD(FPMR, NSCALE, 24, 8)
-+FIELD(FPMR, LSCALE2, 32, 6)
-+
- /* We use a few fake FSR values for internal purposes in M profile.
-  * M profile cores don't have A/R format FSRs, but currently our
-  * get_phys_addr() code assumes A/R profile and reports failures via
 diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 08285b69a7..1a0673a343 100644
+index 06b5fbbe55..6ebd121050 100644
 --- a/target/arm/helper.c
 +++ b/target/arm/helper.c
-@@ -6286,6 +6286,14 @@ static const ARMCPRegInfo aie_reginfo[] = {
-       .type = ARM_CP_CONST, .resetvalue = 0 },
- };
+@@ -4913,6 +4913,7 @@ static void arm_reset_sve_state(CPUARMState *env)
+     /* Recall that FFR is stored as pregs[16]. */
+     memset(env->vfp.pregs, 0, sizeof(env->vfp.pregs));
+     vfp_set_fpsr(env, 0x0800009f);
++    env->vfp.fpmr = 0;
+ }
  
-+static const ARMCPRegInfo fpmr_reginfo[] = {
-+    { .name = "FPMR", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 3, .opc1 = 3, .crn = 4, .crm = 4, .opc2 = 2,
-+      .access = PL0_RW, .type = ARM_CP_FPU | ARM_CP_FPMR,
-+      .fieldoffset = offsetof(CPUARMState, vfp.fpmr),
-+    }
-+};
-+
- void register_cp_regs_for_features(ARMCPU *cpu)
- {
-     /* Register all the coprocessor registers based on feature bits */
-@@ -7535,10 +7543,12 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-             define_arm_cp_regs(cpu, mec_mte_reginfo);
-         }
-     }
--
-     if (cpu_isar_feature(aa64_aie, cpu)) {
-         define_arm_cp_regs(cpu, aie_reginfo);
-     }
-+    if (cpu_isar_feature(aa64_fpmr, cpu)) {
-+        define_arm_cp_regs(cpu, fpmr_reginfo);
-+    }
- 
-     if (cpu_isar_feature(any_predinv, cpu)) {
-         define_arm_cp_regs(cpu, predinv_reginfo);
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index b0e499515c..11e973e504 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -960,6 +960,25 @@ static const VMStateDescription vmstate_syndrome64 = {
-     },
- };
- 
-+static bool fpmr_needed(void *opaque)
-+{
-+    ARMCPU *cpu = opaque;
-+
-+    return arm_feature(&cpu->env, ARM_FEATURE_AARCH64)
-+           && cpu_isar_feature(aa64_fpmr, cpu);
-+}
-+
-+static const VMStateDescription vmstate_fpmr = {
-+    .name = "cpu/fpmr",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = fpmr_needed,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT64(env.vfp.fpmr, ARMCPU),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
- static int cpu_pre_save(void *opaque)
- {
-     ARMCPU *cpu = opaque;
-@@ -1310,6 +1329,7 @@ const VMStateDescription vmstate_arm_cpu = {
-         &vmstate_syndrome64,
-         &vmstate_pstate64,
-         &vmstate_event,
-+        &vmstate_fpmr,
-         NULL
-     }
- };
+ void aarch64_set_svcr(CPUARMState *env, uint64_t new, uint64_t mask)
 -- 
 2.43.0
 
