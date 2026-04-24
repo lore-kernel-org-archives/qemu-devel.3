@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB2A5FE51F1
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 09:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B93FFE51F3
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 09:27:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGCh9-0005bE-65; Fri, 24 Apr 2026 05:19:31 -0400
+	id 1wGCny-0006ua-Tb; Fri, 24 Apr 2026 05:26:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <elisey.konstantinov@gmail.com>)
- id 1wGCh6-0005al-Jb
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:19:28 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
+ id 1wGCnx-0006uQ-Rz
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:26:33 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <elisey.konstantinov@gmail.com>)
- id 1wGCh5-0004TI-1d
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:19:28 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4890098abbaso57075465e9.0
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 02:19:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
+ id 1wGCnw-0007Cz-2X
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:26:33 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-488a8f97f6bso13773815e9.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 02:26:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777022365; x=1777627165; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1777022789; x=1777627589; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8XwcBXcJkhhXdDyD+XO1ZeuuHgJnTle9Xw2pCx44y2s=;
- b=IS6h0o/Yv0ifiU5uFlVnmsA9s4mdFi3w4PHW2fDULxLKTqzDO5rZjTpB4PPC4Vk4VS
- 7u3VQ0p7OvGQhVjBg7EybGxdQb/jQXzh1/QNw1sqjG2BDUbyJsTxiHKbbxlF9njOl9IK
- pjiSrUs4A0DL7B/DRANL56RXgGFcF1Kx8OSHOrII00aHS5aOZ88rJ0Myge7W2uI/p+hz
- u//MMFjLyVY8vqvic5HtTe74TzmVNY66pT6J4Zj3hgTwnllFEXPUtUMAxpgA2mdS96Jy
- ls0mAiltk4Ou/+93CnX4BMtxq1+uDGS1KKZJrpwq0+fofa2l4nPltvyubUESxb6mKa43
- d3rw==
+ bh=X/fNlE9Gq8hOLhLNzmtET6bZPUEb/hYflGWPOgGcCjo=;
+ b=XreX/QNssekhg7j3n+l8N8Rvh4GWHGohaDA8jrx5ekeg7dkDEOeL6b2Ojkfo+bzZzQ
+ JNzu9ViBDKCTtC7Jf3cRKcJBLSGeadSKEKqFX5J8Fvhxxso0ydhRZYzZriByPMpu/SeM
+ V8iCfd7D5ykg4HmWdbOOVbA9AUpDEcyORQvWURUkha6W6c0YT+OmIQfzLTAkhjTyBv9G
+ 8998PPi56zDVF0Deqn1FAG3TdAgsvJgDn30BLeC7bUTIW7t2X8/VBtUBNPM4gK/ysPBc
+ MciQWq6YsJrtipsteRDaxAYWIbzQGcIDBvJeaEyzOgsOlbE0byy5dnwsvDZ3t5mehoKk
+ 7fQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777022365; x=1777627165;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8XwcBXcJkhhXdDyD+XO1ZeuuHgJnTle9Xw2pCx44y2s=;
- b=myfXd0HaKVTH8SraNsz2FNwBkAXHiPOLT11FPTpHEE9Y42i0q7VRzoh+l7+LAgiFQH
- ZK8HhtAY6WQD/Ew5PiuKn7aaen7Sat+8622FQ9ZfvlhZAL9qSaFIggF0Jhg1YSCTyzTj
- xXEyyJRGPYdyCc8ubaXgVs0WNR/CteFfbNS8eAMTcjGknPcDF72G7uRkE7CkX5zS9xwQ
- mUvxZ7S1lpI3BmFFoG/uvbu8+LCTnAHmNnQxn8/fbvYqs0SEumNlBuqkPpPzcLKm9eXQ
- 5dVnpfIqNvH76kSPkXkINA5zDzp0eswXOn3HN97DhDIseW5i2t3/YENTh6xekKq6ZBFk
- RW/g==
-X-Gm-Message-State: AOJu0YwQP6TnfIQY1lwFEf3FoIHcaTBUyp6wWJYGH5eGm2sWKaPuwQzh
- fjsYWR35LmGsr+WouEf1o4dJLCL9e6k4o7/Hma+IYtwLtyY/Y3AM2k1M
-X-Gm-Gg: AeBDievqNLcLyx3ORSNbI6X0Ku6AyGyIXT5gaeVupj/fmrZxyrQuyt6hMkSxIRXPPja
- DHojP9j7F5Zvgdphc91ukZEScu0rSc+riBBA5cwIpbz/ibVVEri/PJWPJQis+8RFnTu+uKVeLaR
- HijnqJ2b+TWJVfixTBF+iN0gDXRfNK5/fPheJzJ3adHy0RvKMR8yVVq+grRA2j5Nfamy4ORKaAB
- hYxRXA/AMHsZlHVYuAE9D3hIa6UJZhl3cWQ0S/fpXMekfm1tnZZu2FK1YwIQ6HD/QkDp+X4Fy4V
- MrOsMyZ3zqmXwu16ZyZdMrY9OYQrhTzYJjxOi5hAQQBnGls7wUS/N27Pzc+qk9jX/awjpY3YaD2
- /kPGIaP1p0LaEfCp4o5U6xp3RF4P29x0Qdo0oGq932R/v1FJbFqaY2fszO2q8xqvoeegb9woOEh
- mmoX3mOyXvvKhiHOSksPaGleDtZrrZESvRJA5CoCj4naAgWB4YAZPvRs6ildoXoDpgxsP7wkC0+
- 6Q=
-X-Received: by 2002:a05:600c:1e28:b0:483:7903:c3b1 with SMTP id
- 5b1f17b1804b1-488fb77fbf3mr441150775e9.20.1777022365072; 
- Fri, 24 Apr 2026 02:19:25 -0700 (PDT)
-Received: from smtpclient.apple ([5.32.173.67])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a5aa3ae83sm343497725e9.12.2026.04.24.02.19.24
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 24 Apr 2026 02:19:24 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH] build: prefer sigaltstack over ucontext on Linux
-From: Elisey Konstantinov <elisey.konstantinov@gmail.com>
-In-Reply-To: <aeswZxFn0zMj-3jb@redhat.com>
-Date: Fri, 24 Apr 2026 12:19:19 +0300
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, marcandre.lureau@redhat.com,
- philmd@linaro.org
+ d=1e100.net; s=20251104; t=1777022789; x=1777627589;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=X/fNlE9Gq8hOLhLNzmtET6bZPUEb/hYflGWPOgGcCjo=;
+ b=DgXT56uoJ3w/AwJMi0Lx3Igo5lvGb3+jKnDDpIh/UGYmLYXGPa03GOXruQSgFf9WFZ
+ 2BVnoRF1tBRhL4E1usht1301DiERxXNY5sMRh0jiKm2CvgPvRc2oncjhugPTzlUlFI8v
+ cZgnXivyIgI2Mli+Ee68eHGqd7Yu9ld51F0i6GQImvAcDslwisIxlv8j4hbKxiaM2IrO
+ stJ4laGyEan228vl/jj1ND8oaQJFLwZ2EqRwcaUnPT9JO5w2CaVuPoHsCemOuVsmFQYz
+ k12tM015HyjTb8w5ljRrNI94zzQxrf+y7g9E2CrFg8rPatglU3bDpEkaFV9mE43okPN8
+ 9klA==
+X-Gm-Message-State: AOJu0Yxm40M1Ve0wtGPF4TNPoXtF2+pIK5T0elb/CJbmZqwR4Pe3WRGw
+ V21W0ve9F/wamy0PE0XqfFs8FZ/S9VrutPwwkQQcw8CE4V//Zn6tdL4D
+X-Gm-Gg: AeBDies9+l3Vunt8SIMeuRDlGiSZWTIXzxpTb8MKyZtCAKtIxeJ+zCTqN/pXTVOVLhC
+ uCG9KWOAOWV4q6YGjj0+b2PcoJELE40q9vvMCOy3xfEfOlA4SroyTvdCkJ6rUofLcRy/ykOOXZM
+ 4wWaar5gx676H7kJkmZ94YWQuRI9ostVIRmFFa9BSxwBGPrnsy7ul6/rvpDifhMwxiY2uXpdL2I
+ 2C63g46NoKSRYRw5PBgrbfbwbk8zu7pO+HXd95T6f1NXpKLFHNgjoXjX7E7FBe6wQ9cdXYy0Fr+
+ Fh7yIrAcVY5V//5FpD0BtsRrkg/Kac9sDHGTgI2eRtPILXTER4RL4XgpsxsCaVQq48DcJb1aoOP
+ cpVmcPDD0I8KOw4Hk2zkgOMHwckcUSjs27rZbHI4OWXfi9w5tgWUdSW+zV9xYn3EX7glWwrKE2s
+ 14/p3S2kroNUlAEdjym0Pmv6P6HtqOEBrrxIZoug==
+X-Received: by 2002:a05:600c:6289:b0:486:fb8a:fed with SMTP id
+ 5b1f17b1804b1-488fb7897camr233112795e9.8.1777022788899; 
+ Fri, 24 Apr 2026 02:26:28 -0700 (PDT)
+Received: from LAP-0337.. ([182.176.170.188]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488fc0f82bbsm989823515e9.3.2026.04.24.02.26.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Apr 2026 02:26:28 -0700 (PDT)
+From: Ali Raza <elirazamumtaz@gmail.com>
+To: deller@gmx.de
+Cc: qemu-devel@nongnu.org, laurent@vivier.eu, pierrick.bouvier@linaro.org,
+ alex.bennee@linaro.org, morgan@kernel.org
+Subject: Re: [PATCH 1/3] linux-user: Filter /proc/*/task/ to hide
+ QEMU-internal threads
+Date: Fri, 24 Apr 2026 14:26:23 +0500
+Message-ID: <20260424092623.94809-1-elirazamumtaz@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <5b9fe9d3-6afb-4cbd-9b41-46b82cb5b974@gmx.de>
+References: <5b9fe9d3-6afb-4cbd-9b41-46b82cb5b974@gmx.de>
+MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <06C2CFB8-BA33-46D6-9F84-B1F81A2A319E@gmail.com>
-References: <616E96C0-F0A5-4A9E-A63B-3BC1B5F18094@gmail.com>
- <aeswZxFn0zMj-3jb@redhat.com>
-To: =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=elisey.konstantinov@gmail.com; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=elirazamumtaz@gmail.com; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,26 +100,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I completely agree, but in my opinion, investigating UContext will take =
-a considerable amount of time, which is why I took the liberty of =
-proposing this patch; in the commit message, I actually mention that =
-this is merely a =E2=80=9Ctemporary  workaround=E2=80=9D
-
-So, I suggest:
-- Merging the patch into the mainstream for the convenience of users =
-(as, from what I=E2=80=99ve observed, SigAltStack is coping quite well =
-with the task, at least for now...)
-- Whilst leaving #3276 open for the time being and continuing the =
-UContext diagnostics there
-- And accordingly, as soon as UContext is fully functional, we can =
-switch QEMU back from SigAltStack
-
-Also the another arrangement is to use UContext ONLY if PPC is in the =
-build targets, but I am unable to do this, as my knowledge of Meson is =
-insufficient for such a task; nevertheless, I would be grateful for any =
-assistance :)
-
-P. S. Anticipating such a reaction, I DELIBERATELY did not include =
-=E2=80=9CResolves=E2=80=9D in the patch notes, so I am fully aware of =
-all the proposed precautions=
+On 4/15/26, Helge Deller wrote:=0D
+>> +            char *endp;=0D
+>> +            long tid =3D strtol(hde->d_name, &endp, 10);=0D
+>=0D
+> I think we should use type pid_t here:=0D
+> pid_t tid =3D strtol(...)=0D
+=0D
+Thanks for the review, Helge.=0D
+=0D
+Agreed, pid_t is the correct type for a thread id. Fixed in v2 for both=0D
+do_getdents() and do_getdents64(). I also switched the parsing to=0D
+qemu_strtoi() so the whole entry name must be numeric (no trailing junk),=0D
+which avoids relying on errno/endp checks.=0D
+=0D
+v2 also addresses a few other issues that came up on a closer review=0D
+(TOCTOU on the readlink-based dir check, a false EOF when an entire=0D
+host batch is filtered out, and tightening the tkill/tgkill validation=0D
+to host-process-local checks). Full changelog is in the v2 cover letter:=0D
+=0D
+  https://lore.kernel.org/qemu-devel/20260424-master-v2-0-8b50b5c063ed@gmai=
+l.com/=0D
+=0D
+Thanks,=0D
+Ali Raza=0D
 
