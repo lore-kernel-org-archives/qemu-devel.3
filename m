@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AF84FED3F2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAC8FFED3FC
 	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 19:27:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGMAa-0003ZA-BQ; Fri, 24 Apr 2026 15:26:32 -0400
+	id 1wGMAH-0003Eq-2W; Fri, 24 Apr 2026 15:26:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGMAY-0003SQ-RD
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 15:26:30 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGMAF-0003Ea-6W
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 15:26:11 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGMAX-0001YB-89
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 15:26:30 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4891c0620bcso53005165e9.1
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 12:26:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGMAC-0001OU-OI
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 15:26:10 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-43fea39e066so6803055f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 12:26:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777058787; x=1777663587; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777058767; x=1777663567; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=a3W4eM2x/CLE97cGb/OjgAFNHt4NwclYuyxbReGj0M0=;
- b=cgRtGdV/ciEwWuxK9236giDFhg3pmo3ZEYEGhRO/E6ki3mVU42/dfFvQAFjCTRRsJl
- PPpARJCE525BqPn8fQctSJhvgZ7kSnP2VCedJGRjTu+ISC9dlA21u7+0SfYREs2fUGHg
- XUTemWzPc92vnLTEtrCA4ZkLPJWYlwQf+G91/CCd6huQJYFHS1x674OfdBMgy7AD/zni
- cF+Y3kkws++bV6IEjDCzAHgzxUJSoT1tLeOOlxbBko3X5I1y4v+f+kY2aIJT29kWcMOw
- ECP9KP8u0ND6jStpAe+ehBPuZyGbd2JCS/wiz+ixD2NsHazAwQwQ9Co+6ZZG9pXrvoYL
- zG0g==
+ :reply-to; bh=ZJq2F34MQNBz6Mo/u+tAh3sHWBJqifVXBw7FR2rQkMU=;
+ b=mhcCqhxn3nF9Ck0K3WyxucPCwfuVLZFxRBc8aeY3d9ZceTIwbBvsSOmNN38eSrgVEs
+ BfEUQJ4dZv6fW9d12n9jcCVK8i9SaQoMprKa3WedYOjScLam5g9lXsyUQHN7Y1VkaJv1
+ YF0KYcq45PZX5msLH3G+3nRmLqfUK6Mz7MIW0eDQiurdY63Kbv66S3EEkgCo+tWGI30L
+ lbx+x8l8oMDqLHY9bu9CUHXUU2jOtwxneGrFgSlGJ6+G+SRhDUWtOvBEZWnAW5cTkZFU
+ Y2UpNyhAQ6V30u3+MhAA81uEhEM6VDBXuH+75F3fmBYGNXmmPeZllF7hrilOGCxskaq/
+ WtFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777058787; x=1777663587;
+ d=1e100.net; s=20251104; t=1777058767; x=1777663567;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=a3W4eM2x/CLE97cGb/OjgAFNHt4NwclYuyxbReGj0M0=;
- b=tZ8ObJzmZTESZnU5BrzU3hOMoit5yyzuPNUAXlUCdDCOXKfB5ccflGGPyDI3SXxvPd
- PO5CYe3zMO8ktetCCUjArcoJRwPO2KvUc4m1Uyl27L2G2e9QZ8330o/xw0sqxkOG6t/4
- EBHdKz2ObGORLpbDRdVW3uo1jKMoQARmKYbRTyb0S2dpQ9F+lsxvGf/1ZP2mODxKdeNQ
- UuV4liHjlDz9zP+LH2XLjzMPZPtx4Eg1TaAv502nI1xRFVkU47bPfVseHKpv8AoZBMbp
- WqYl5FvWZ4frtCjr4bZ6YhwWV3QyzF3GJkaLlnHLUpN9Ti0dGSDnEhqK2kpGNA2VQ/Rm
- FyDg==
-X-Gm-Message-State: AOJu0Yxo9bFvRuLAqYtMM41cj2F56CgsAxNCDaX9Okl9ZB73mNDCHtZq
- 3a/eCdYA3rHYkfocLLNvNou0N2vZCvhMS1PGrlWA1ayYhwxTvxVniPr6cNgIGEUDI3rF1/LIV15
- f6jz6Xd4=
-X-Gm-Gg: AeBDiesEcZ2v8jUIQx542JYeRH5nrW+7Yov5kNj90CGfXYpUJvpky5HreDqH50lGGHH
- AQOE9xgVzE1PQlMqt75OiNutTQxbqMfOAXFLWR7mqMmEppz3BEurEqaGA5n7XHLc87uydEraOU7
- O8p3ZkEHY/iDgo16MJmM6cpRTIji1q3/3pP0ZYkiZ7/F1lbPwfhxOm54eknTT92QSR+/DNGWi2z
- ARlBYtDkectcgSHPakf9QdiAJInsONVLn0sV8TQtWb37TWj8z9trl3YVLZBCG9VtE78NXDGkG6r
- HWIy1ABfqe4HYjZyDTIRhYVZ/c+OlidL9ubltpiNFuImJUBSAwyMlQ0bwFK4ExubksHpfPe1Ngn
- HgiB/3YIqzHrZgBm/PmO5V779z7IUrvtt51ve31jh2gG/ieP26OwKi+r5DwPZabsJa3c4Nzi7Uq
- U+kp/007M8e7Spw/QK65gN3iA1B26HM/DtazQxCvixgkEyLKbBR4EFiQV4wyLsi3rYVUm6UWFIg
- hZ2K9UGapM=
-X-Received: by 2002:a05:600c:19d3:b0:489:1ae1:4eb9 with SMTP id
- 5b1f17b1804b1-4891ae14f23mr323790995e9.28.1777058787194; 
- Fri, 24 Apr 2026 12:26:27 -0700 (PDT)
+ bh=ZJq2F34MQNBz6Mo/u+tAh3sHWBJqifVXBw7FR2rQkMU=;
+ b=RvDDd5pyPN4VGlpo0g/NUstzkELokJzCOgMhDSgHf+N49l6tnGgxbMo28NAkS7Xm0n
+ HsE0KkU6A3XoOigyTSRktBF2JHZkNCW+tlAWc+t6qSv9xbV39YaLtYtAuxHX0Db59j4E
+ cQM2uWC1DbYXLFMsxYUe1MPgTcZCCPcjw41/aRVMLBk2z19CTRd1Mw4BBlQjDOKdpH20
+ v5xMAuXs29BanFfXCAn/RWnZ6nqlFEJ0DCug2QV99XYZkb8wZkBfUEdrMAEuYgjI7zSA
+ p4/1rciV8aNDKHXrASOtBEA6eyeOD+CAebxc/nrAQMDMbw69jSNjJlOYRZjmIsg5reGY
+ aIzg==
+X-Gm-Message-State: AOJu0Yxyc2hW6Bku4KqD3rjaepz9wmagdYid8ssrdaMh8uW/LjHLAUyw
+ si0QYJ2umcqbblYfy9E+ulo0x/OARCOFG6K/i4YBpmR9uN0fctH9+3WaETFcZOqR5MK2H+wTqqC
+ itnQPsIM=
+X-Gm-Gg: AeBDieuA8m24rfE++CnMCylbs/XLt5zGtnL/KovqEU5wnLHIMJaOzt2KcJma7Kyozx1
+ mKUs2vjiRpkP4ubI+R4iLBICaf4nklTuz9kl1zvcfkLFV0W40ynjnO3MflG6gYBKwZHCmGlq8S1
+ EvtxPakl65rXYU3BxqS+0Irebtb+g6vWF/gc5hQJFB7PDJyGq6yD6aHB9pX5qXvx01h3u7uktbt
+ w9Iy+DvZHsrdWHoWXAahFOjiRAtHGBN6RA8gPI4mwdCOF3ttKWamziEQd3Ur6OxUv6KelqyYyMV
+ ecN6jyiiAjwfcVw867tfRES8oaMeMMUc8y7bwCBhXEkqpAer988yTVrgO8hkqrnWSHhYE7D1B3n
+ yvJHDtoHtews/IleTdCmBfaQITnJleFrht9OLh5NcZcgnUhC0BG5Vakuyq+AwQkAUy8c14n+8nM
+ ETeHn9ffe/T39tir7/tlFbLOSyycPdUtBgIbjHfiOvs4MC9Mor/MDe+4IbCk6mRxtT5prHEIUU+
+ hsa9VgBoU8=
+X-Received: by 2002:a05:6000:601:b0:43d:613:33de with SMTP id
+ ffacd0b85a97d-43fe3dd3ed3mr52441782f8f.20.1777058766490; 
+ Fri, 24 Apr 2026 12:26:06 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4891df9e50asm329548175e9.0.2026.04.24.12.26.25
+ ffacd0b85a97d-43fe4c221cdsm63339543f8f.0.2026.04.24.12.26.05
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 24 Apr 2026 12:26:26 -0700 (PDT)
+ Fri, 24 Apr 2026 12:26:05 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL v4 50/62] hw/usb/hcd-ehci: Remove unused EHCIfstn structure and
- dead code
-Date: Fri, 24 Apr 2026 21:25:38 +0200
-Message-ID: <20260424192543.22614-7-philmd@linaro.org>
+Subject: [PULL v4 32/62] qom: Restrict compat properties API to system
+ emulation
+Date: Fri, 24 Apr 2026 21:25:35 +0200
+Message-ID: <20260424192543.22614-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424192543.22614-1-philmd@linaro.org>
 References: <20260424192543.22614-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,66 +100,235 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+Move compat properties API definitions to their own file
+unit, compile it only when system emulation is configured.
+Add a pair of stubs for user emulation.
 
-The EHCIfstn structure, defined according to EHCI spec section 3.7,
-is currently unused in the EHCI implementation. Remove it to reduce
-unused code and improve maintainability.
-
-Additionally, drop a block of disabled (#if 0) code in
-ehci_state_advqueue() that was never implemented. This code path
-is incomplete and has no functional impact.
-
-No functional change.
-
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Message-ID: <20260424080508.53992-3-jamin_lin@aspeedtech.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Message-Id: <20260325151728.45378-6-philmd@linaro.org>
 ---
- hw/usb/hcd-ehci.h | 7 -------
- hw/usb/hcd-ehci.c | 6 ------
- 2 files changed, 13 deletions(-)
+ MAINTAINERS                   |  1 +
+ qom/compat-properties.c       | 76 +++++++++++++++++++++++++++++++++++
+ qom/object.c                  | 60 ---------------------------
+ stubs/qom-compat-properties.c | 14 +++++++
+ qom/meson.build               |  3 ++
+ stubs/meson.build             |  1 +
+ 6 files changed, 95 insertions(+), 60 deletions(-)
+ create mode 100644 qom/compat-properties.c
+ create mode 100644 stubs/qom-compat-properties.c
 
-diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h
-index 0ae8c06331a..3aec0e047c9 100644
---- a/hw/usb/hcd-ehci.h
-+++ b/hw/usb/hcd-ehci.h
-@@ -202,13 +202,6 @@ typedef struct EHCIqh {
- #define BUFPTR_SBYTES_SH              5
- } EHCIqh;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index facc4b499a9..45d258f64fc 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3533,6 +3533,7 @@ F: qapi/qom.json
+ F: scripts/coccinelle/qom-parent-type.cocci
+ F: scripts/qom-cast-macro-clean-cocci-gen.py
+ F: qom/
++F: stubs/qom-compat-properties.c
+ F: tests/unit/check-qom-interface.c
+ F: tests/unit/check-qom-proplist.c
+ F: tests/qtest/qom-test.c
+diff --git a/qom/compat-properties.c b/qom/compat-properties.c
+new file mode 100644
+index 00000000000..2110754155a
+--- /dev/null
++++ b/qom/compat-properties.c
+@@ -0,0 +1,76 @@
++/*
++ * QEMU Object Model
++ *
++ * Copyright IBM, Corp. 2011
++ *
++ * Authors:
++ *  Anthony Liguori   <aliguori@us.ibm.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qom/compat-properties.h"
++#include "qom/qom-qobject.h"
++#include "hw/core/qdev.h"
++
++/*
++ * Global property defaults
++ * Slot 0: accelerator's global property defaults
++ * Slot 1: machine's global property defaults
++ * Slot 2: global properties from legacy command line option
++ * Each is a GPtrArray of GlobalProperty.
++ * Applied in order, later entries override earlier ones.
++ */
++static GPtrArray *object_compat_props[3];
++
++/*
++ * Retrieve @GPtrArray for global property defined with options
++ * other than "-global".  These are generally used for syntactic
++ * sugar and legacy command line options.
++ */
++void object_register_sugar_prop(const char *driver, const char *prop,
++                                const char *value, bool optional)
++{
++    GlobalProperty *g;
++    if (!object_compat_props[2]) {
++        object_compat_props[2] = g_ptr_array_new();
++    }
++    g = g_new0(GlobalProperty, 1);
++    g->driver = g_strdup(driver);
++    g->property = g_strdup(prop);
++    g->value = g_strdup(value);
++    g->optional = optional;
++    g_ptr_array_add(object_compat_props[2], g);
++}
++
++/*
++ * Set machine's global property defaults to @compat_props.
++ * May be called at most once.
++ */
++void object_set_machine_compat_props(GPtrArray *compat_props)
++{
++    assert(!object_compat_props[1]);
++    object_compat_props[1] = compat_props;
++}
++
++/*
++ * Set accelerator's global property defaults to @compat_props.
++ * May be called at most once.
++ */
++void object_set_accelerator_compat_props(GPtrArray *compat_props)
++{
++    assert(!object_compat_props[0]);
++    object_compat_props[0] = compat_props;
++}
++
++void object_apply_compat_props(Object *obj)
++{
++    int i;
++
++    for (i = 0; i < ARRAY_SIZE(object_compat_props); i++) {
++        object_apply_global_props(obj, object_compat_props[i],
++                                  i == 2 ? &error_fatal : &error_abort);
++    }
++}
+diff --git a/qom/object.c b/qom/object.c
+index d6500bcbbf4..f981e270440 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -480,66 +480,6 @@ bool object_apply_global_props(Object *obj, const GPtrArray *props,
+     return true;
+ }
  
--/*  EHCI spec version 1.0 Section 3.7
+-/*
+- * Global property defaults
+- * Slot 0: accelerator's global property defaults
+- * Slot 1: machine's global property defaults
+- * Slot 2: global properties from legacy command line option
+- * Each is a GPtrArray of GlobalProperty.
+- * Applied in order, later entries override earlier ones.
 - */
--typedef struct EHCIfstn {
--    uint32_t next;                    /* Standard next link pointer */
--    uint32_t backptr;                 /* Standard next link pointer */
--} EHCIfstn;
+-static GPtrArray *object_compat_props[3];
 -
- enum async_state {
-     EHCI_ASYNC_NONE = 0,
-     EHCI_ASYNC_INITIALIZED,
-diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
-index 57f930b0998..23167bf96f3 100644
---- a/hw/usb/hcd-ehci.c
-+++ b/hw/usb/hcd-ehci.c
-@@ -1756,16 +1756,10 @@ static int ehci_state_fetchsitd(EHCIState *ehci, int async)
- /* Section 4.10.2 - paragraph 3 */
- static int ehci_state_advqueue(EHCIQueue *q)
- {
--#if 0
-     /* TO-DO: 4.10.2 - paragraph 2
-      * if I-bit is set to 1 and QH is not active
-      * go to horizontal QH
-      */
--    if (I-bit set) {
--        ehci_set_state(ehci, async, EST_HORIZONTALQH);
--        goto out;
+-/*
+- * Retrieve @GPtrArray for global property defined with options
+- * other than "-global".  These are generally used for syntactic
+- * sugar and legacy command line options.
+- */
+-void object_register_sugar_prop(const char *driver, const char *prop,
+-                                const char *value, bool optional)
+-{
+-    GlobalProperty *g;
+-    if (!object_compat_props[2]) {
+-        object_compat_props[2] = g_ptr_array_new();
 -    }
--#endif
+-    g = g_new0(GlobalProperty, 1);
+-    g->driver = g_strdup(driver);
+-    g->property = g_strdup(prop);
+-    g->value = g_strdup(value);
+-    g->optional = optional;
+-    g_ptr_array_add(object_compat_props[2], g);
+-}
+-
+-/*
+- * Set machine's global property defaults to @compat_props.
+- * May be called at most once.
+- */
+-void object_set_machine_compat_props(GPtrArray *compat_props)
+-{
+-    assert(!object_compat_props[1]);
+-    object_compat_props[1] = compat_props;
+-}
+-
+-/*
+- * Set accelerator's global property defaults to @compat_props.
+- * May be called at most once.
+- */
+-void object_set_accelerator_compat_props(GPtrArray *compat_props)
+-{
+-    assert(!object_compat_props[0]);
+-    object_compat_props[0] = compat_props;
+-}
+-
+-void object_apply_compat_props(Object *obj)
+-{
+-    int i;
+-
+-    for (i = 0; i < ARRAY_SIZE(object_compat_props); i++) {
+-        object_apply_global_props(obj, object_compat_props[i],
+-                                  i == 2 ? &error_fatal : &error_abort);
+-    }
+-}
+-
+ static void object_class_property_init_all(Object *obj)
+ {
+     ObjectPropertyIterator iter;
+diff --git a/stubs/qom-compat-properties.c b/stubs/qom-compat-properties.c
+new file mode 100644
+index 00000000000..2c955677bed
+--- /dev/null
++++ b/stubs/qom-compat-properties.c
+@@ -0,0 +1,14 @@
++/*
++ * QEMU Object Model (compat properties stubs for user emulation)
++ *
++ * Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qom/compat-properties.h"
++
++void object_apply_compat_props(Object *obj)
++{
++}
+diff --git a/qom/meson.build b/qom/meson.build
+index 81922434309..bd6f4aadd78 100644
+--- a/qom/meson.build
++++ b/qom/meson.build
+@@ -5,6 +5,9 @@ qom_ss.add(files(
+   'object_interfaces.c',
+   'qom-qobject.c',
+ ))
++if have_system
++  qom_ss.add(files('compat-properties.c'))
++endif
  
-     /*
-      * want data and alt-next qTD is valid
+ qmp_ss.add(files('qom-qmp-cmds.c'))
+ system_ss.add(files('qom-hmp-cmds.c'))
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 7189ff63ed5..f33b1d2a089 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -54,6 +54,7 @@ if have_user
+   # Symbols that are used by hw/core.
+   stub_ss.add(files('cpu-synchronize-state.c'))
+   stub_ss.add(files('cpu-destroy-address-spaces.c'))
++  stub_ss.add(files('qom-compat-properties.c'))
+ 
+   # Stubs for QAPI events.  Those can always be included in the build, but
+   # they are not built at all for --disable-system builds.
 -- 
 2.53.0
 
