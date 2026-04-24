@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A34D5FE5204
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 10:29:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48AEBFE5204
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 10:29:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGDlj-0005P7-Tg; Fri, 24 Apr 2026 06:28:19 -0400
+	id 1wGDlh-0005NW-JW; Fri, 24 Apr 2026 06:28:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1wGDlh-0005NR-87
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 06:28:17 -0400
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1wGDlb-0005M4-R2
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 06:28:12 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1wGDlf-0006QX-Gv
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 06:28:16 -0400
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-c7973f67f4dso2348540a12.1
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 03:28:15 -0700 (PDT)
+ id 1wGDla-0006PB-C2
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 06:28:11 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2aaf59c4f7cso36388805ad.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 03:28:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1777026493; x=1777631293; darn=nongnu.org;
+ d=sifive.com; s=google; t=1777026488; x=1777631288; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bcVpuiJ5LFLZKYUjyh6wh8FSJ9K2QaQPRuEkCV8Ke78=;
- b=mh6thZfyyTR7zqnaGjQLbjP4GtIlcnHEs9RQZPyDit5UL7RspGzVzHjB1snFLVZDJN
- eAesP14aZVzlImCSbWHS4gJnzrgN0G4N/NeoIn0Hrhs7bbyYJe/v4UcZtYuLrnwEk7xj
- pB5QOWAYpPLkAXQWSBp8UjjISZVPbzEW7PuBfKZVwq62Zqsz8OC7rSpmUVSeB45E4pB3
- /uU6r7dssTw8Ia8T7t9igktLKME6zfPrGX8llCTEDTc2SCFSQKtYDo/jIqeb1bhBl8ar
- sPztLRK/zg267G8qWLyfJ0RLIfFQDrc6z+IBoiYgUNdZCxWfcUQfKTq+CkUxEBw7zrLY
- 5TDg==
+ bh=vkwl7uSGd1NMwPEHDV0MGjN+nL/p/8ylq5hEMFu9pLU=;
+ b=N4Fzg27loDjJTG1ZG5GBUfvjh1sv6OEUB6OPYwsyg6iSd0uAdYqS2zcd7KY9tnGvdF
+ ujVgpPvV/7aXhCiflYAwL0Z3uk+wPSfYqoHduzh3SdTgtugeiVvRtD9lwSr40hlESZjl
+ V0+VHV4zIc6H4K3n28KN5at45THCIfK+NCw6wo7GTy4pY25dX3cnP/MLeJxlJDDUQAwc
+ wyLPg9Och7pHO3xAn9LjqlMHlJBMo1QbsDZp+6VCtDJqgLEJ95x6872Dtc9EK2KNdt2c
+ t/c5380dijIxneAof7JhYfIq1J1vPTrQfbg6Xxrg5k0BcsmIPVJd+P0Q7L1sc2UZkt19
+ L81A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777026493; x=1777631293;
+ d=1e100.net; s=20251104; t=1777026488; x=1777631288;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bcVpuiJ5LFLZKYUjyh6wh8FSJ9K2QaQPRuEkCV8Ke78=;
- b=UCuNn7nVqDhgE1drk6r2DvJwwKjWt6mH7ZnvxfBpJZnmKhD2JVXunbKJSgHqxVCwNc
- cLEPTkrcMrJwRhECPLBgKiYtLZWn8kC6ep00ShF0FvjSb9RKRNdpgzqqJMQ1KVDHZyVn
- 9K3iNnDnhIN7tNiOMoFb2l6jda8Lq7cXsqiSamEZgaJPKF2J3GuEsn3CuaRprcEB3pra
- QgXlOz4VpIwX+G1LwPCXQSMBxfMWgInwykHA8dQlsl2qmt/lnjcM4OlJxJn4s/Op5DLN
- tzTzk4NtgiWKljzCL7nGzXdQurCXPCamz8ZKPO7SPgdivhU5iolSGGVKHphqNWqLmv0w
- 7VkQ==
-X-Gm-Message-State: AOJu0YxRMQMuBtJuLcplqJRUvp2CY8SUiFZKE2td2yTEdY96GjmWcb6H
- KUQYzLA+TBjalm3yU1HV0dJgktIc16egHdrZmNN5Fuf9Yv5wWFxRVHuV3DrQI2Fqbb0dkZe1pXp
- gA2agoyZcmrogqt1emBZ5ZUWBtC24cv7Mjeb+u+4oD1TX/JLbpLv0sdXGFdJG3mTyOaIZY0DF+u
- 8icpmDEq700YgNrSF5300dwEXK27GRhwKCGh9EPcBDhfvrKcWv
-X-Gm-Gg: AeBDietroxZzmTeQk9goNiv1o3vsUZwV6nXOAZtAbRCyEwSBVcREVRKAYoyLHauly0d
- asYa5HqWUldJApjGc+gj/WaOzPmKbRNNbxE7Ep3gkZ6oOw4AVC+Xxyo9wJfYFM2b5PaEca8g9O9
- y7CGTw5p1bu0L/OO8vLrSQgtoc49OE0j0FsQ14i2YlesIZAmqUaLgRGYBqtVnDpE/i0VI9ECFIZ
- GQcwNrBRfIdER16wjMOxBFHbgzDIb986e3r7IlRvizUSNjlDX+R/KFbNs9Ps5FZIVvEY/IRFIIq
- Yw3yiljMVwi6Y7yBiAgmvyLRz6w91F3JlShnEX9IghgCNsxl+Ye5g8yYupUSMmzXcAZtdJuW+eQ
- QWovLMShpZz1HchdYLB4LdGFFuPtUZ9wFccwjkDqO/4fpOWBCL9dJrAAZRziqAZCxcGqNVp1KA1
- jmTjsUMAt749T2kQymxvCc8F05Qge/oEMLa4P/4986Ne1OHyORLYs8Vu+HnBQ4
-X-Received: by 2002:a17:902:e748:b0:2b4:5d0c:7a85 with SMTP id
- d9443c01a7336-2b5f9dbcd42mr291227995ad.3.1777026493268; 
- Fri, 24 Apr 2026 03:28:13 -0700 (PDT)
+ bh=vkwl7uSGd1NMwPEHDV0MGjN+nL/p/8ylq5hEMFu9pLU=;
+ b=j+hdDrlBfXH98kxt+5rrUIakWoBjTQ+dKGmxfgyThTBAik4oEGlfLPJPPhIj45GGR1
+ 7iFmmN4BQW8XzyHgTgDKUtN/D9jqOVn2aBMiybWn4tHXaovCefS8lzVzNJirqqqVmW8B
+ ez7IVfEpLSAi2EHy9nS0jHIvPbgzINKHjhEg++fhQddKjay/kUUw1wghX6dUD6MrhIoH
+ nZhxZgwnE60G9oiqjKthf829ocZYGrziQp1eGDBHI2MXw2yepKJkXVZ+9ZplT4GQMm+J
+ fvhLwh4weP5WGOyhj3xVtxY8yCtdZunDhzrKa0/JixG9p8MurIh27kV5oAAYZ0d1yENX
+ uKJA==
+X-Gm-Message-State: AOJu0Yygk3Na1s4y+m7BMyxbJLUsaVfbJ4voF6DlHvYasVnadN/WA+D4
+ ma51nz1W44PAl/f6jlQMS4xG6raU8cXcdKPadH1HgGrQq1DMtxMyLe4ge7596a2g0/ttFDB9eWB
+ g7VGRKJl6EGfD1U5cS4Vz8pzDAXuRZyoLgwIn2rFx1FtYHNH+Vlz9MIidfiXTCsh5E0kogLwMkX
+ If83IDlwfB6/5376VBnO0inx1jk5a31dX+mMmWPB6y98v6eGTN
+X-Gm-Gg: AeBDievKjGIOzxIZZCWGuFtjYwF1sewSzA8F/+R+0CK8OgUQhCWUowN92yUAD8Gkj7e
+ XoldJ8PP+9D/Tt8FqHDnzRGNzFREqKHc8UNq+GSUdKBIGZvkCpGZ+UqmPYkAPAK1BqPBv2/0ML/
+ hLVsgjUx17/KO6Ai4VcZlRVzeBPzDd78FDjUTR/6B9458lLS3wr5ljMr7nrb845vc5hyhd0x76j
+ OqJQd+D8ePpS3+CKHWNk7Zjj8GIJN268ytRCNtniqbJj/wcSd1kzqqK4i5eUxE/8cfqUlpKWBHI
+ 83aPJcnMNGatTtEzJu4cRrOfMt/FBEL7M43j9vV7Suo+p/mKlXxPb6QMVsIHs56rUJcxrHfz9W7
+ fIKWdWYxQ2EXCTMyHZV2uS6Cd/asMQJrGYMwG+3TCfe2Pb8TJQBlDUSTLkWbvEmFjByfke7aNjK
+ dI4rZFy9gXKF4RJNTWG30hGHP46buj5SwkyCVqMFnKP8hffR3VMAzrtW8eiW8l
+X-Received: by 2002:a17:902:6bc2:b0:2b0:9101:1b77 with SMTP id
+ d9443c01a7336-2b5f9eaf6a6mr228203835ad.17.1777026488237; 
+ Fri, 24 Apr 2026 03:28:08 -0700 (PDT)
 Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5fab0c17esm218889585ad.41.2026.04.24.03.28.10
+ d9443c01a7336-2b5fab0c17esm218889585ad.41.2026.04.24.03.28.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Apr 2026 03:28:12 -0700 (PDT)
+ Fri, 24 Apr 2026 03:28:07 -0700 (PDT)
 From: frank.chang@sifive.com
 To: qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -76,17 +76,16 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>,
  qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
  Frank Chang <frank.chang@sifive.com>, Max Chou <max.chou@sifive.com>
-Subject: [PATCH 3/4] target/riscv: Support raising misaligned exceptions for
- vector loads/stores
-Date: Fri, 24 Apr 2026 18:27:59 +0800
-Message-ID: <20260424102800.24022-4-frank.chang@sifive.com>
+Subject: [PATCH 1/4] target/riscv: Add Zicclsm CPU option
+Date: Fri, 24 Apr 2026 18:27:57 +0800
+Message-ID: <20260424102800.24022-2-frank.chang@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260424102800.24022-1-frank.chang@sifive.com>
 References: <20260424102800.24022-1-frank.chang@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=frank.chang@sifive.com; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=frank.chang@sifive.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,168 +110,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Frank Chang <frank.chang@sifive.com>
 
-When the Zicclsm extension is not enabled, raise misaligned load/store
-exceptions for misaligned accesses from vector load/store instructions.
-
-We will skip the host fast-path and fall back to the slow TLB-path to
-raise misaligned load/store exceptions for the misaligned accesses when
-Zicclsm extension is disabled.
+Add Zicclsm CPU option so that user can turn on/off misaligned loads
+and stores support.
 
 Signed-off-by: Frank Chang <frank.chang@sifive.com>
 Reviewed-by: Max Chou <max.chou@sifive.com>
 ---
- target/riscv/insn_trans/trans_rvv.c.inc |  3 +-
- target/riscv/vector_helper.c            | 82 ++++++++++++++++++++-----
- 2 files changed, 69 insertions(+), 16 deletions(-)
+ target/riscv/cpu.c                | 2 +-
+ target/riscv/cpu_cfg_fields.h.inc | 2 ++
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 5b72926b3c1..c8f106c0bab 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -1190,9 +1190,10 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
-      * Update vstart with the number of processed elements.
-      * Use the helper function if either:
-      * - vstart is not 0.
-+     * - Zicclsm is disabled, so misaligned accesses could trap.
-      */
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index ce15a17c37d..df56b64a736 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -127,7 +127,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zicboz, PRIV_VERSION_1_12_0, ext_zicboz),
+     ISA_EXT_DATA_ENTRY(ziccamoa, PRIV_VERSION_1_11_0, has_priv_1_11),
+     ISA_EXT_DATA_ENTRY(ziccif, PRIV_VERSION_1_11_0, has_priv_1_11),
+-    ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, has_priv_1_11),
++    ISA_EXT_DATA_ENTRY(zicclsm, PRIV_VERSION_1_11_0, ext_zicclsm),
+     ISA_EXT_DATA_ENTRY(ziccrse, PRIV_VERSION_1_11_0, ext_ziccrse),
+     ISA_EXT_DATA_ENTRY(zicfilp, PRIV_VERSION_1_12_0, ext_zicfilp),
+     ISA_EXT_DATA_ENTRY(zicfiss, PRIV_VERSION_1_13_0, ext_zicfiss),
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index 734fa079f28..fc55dc6d892 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -139,6 +139,8 @@ BOOL_FIELD(has_priv_1_11)
+ /* Always enabled for TCG if has_priv_1_11 */
+ BOOL_FIELD(ext_ziccrse)
  
--    bool use_helper_fn = !s->vstart_eq_zero;
-+    bool use_helper_fn = !s->vstart_eq_zero || !s->cfg_ptr->ext_zicclsm;
- 
-     if (!use_helper_fn) {
-         uint32_t size = s->cfg_ptr->vlenb * nf;
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 538168efc9b..f74f73f046d 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -200,20 +200,51 @@ static inline void vext_set_elem_mask(void *v0, int index,
-     ((uint64_t *)v0)[idx] = deposit64(old, pos, 1, value);
- }
- 
-+static MemOpIdx vext_make_memop_idx(CPURISCVState *env, size_t size)
-+{
-+    int mmu_idx = riscv_env_mmu_index(env, false);
-+    MemOp memop;
++BOOL_FIELD(ext_zicclsm)
 +
-+    switch (size) {
-+    case 1:
-+        memop = MO_UB;
-+        break;
-+    case 2:
-+        memop = MO_LEUW;
-+        break;
-+    case 4:
-+        memop = MO_LEUL;
-+        break;
-+    case 8:
-+        memop = MO_LEUQ;
-+        break;
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    if (!riscv_cpu_cfg(env)->ext_zicclsm) {
-+        memop |= MO_ALIGN;
-+    }
-+
-+    return make_memop_idx(memop, mmu_idx);
-+}
-+
- /* elements operations for load and store */
- typedef void vext_ldst_elem_fn_tlb(CPURISCVState *env, abi_ptr addr,
-                                    uint32_t idx, void *vd, uintptr_t retaddr);
- typedef void vext_ldst_elem_fn_host(void *vd, uint32_t idx, void *host);
- 
--#define GEN_VEXT_LD_ELEM(NAME, ETYPE, H, LDSUF)             \
-+#define GEN_VEXT_TLB_LD_ELEM(NAME, ETYPE, H, LDSUF)         \
- static inline QEMU_ALWAYS_INLINE                            \
- void NAME##_tlb(CPURISCVState *env, abi_ptr addr,           \
-                 uint32_t idx, void *vd, uintptr_t retaddr)  \
- {                                                           \
-     ETYPE *cur = ((ETYPE *)vd + H(idx));                    \
--    *cur = cpu_##LDSUF##_data_ra(env, addr, retaddr);       \
-+    MemOpIdx oi = vext_make_memop_idx(env, sizeof(ETYPE));  \
-+    *cur = cpu_##LDSUF##_mmu(env, addr, oi, retaddr);       \
- }                                                           \
--                                                            \
-+
-+#define GEN_VEXT_HOST_LD_ELEM(NAME, ETYPE, H, LDSUF)        \
- static inline QEMU_ALWAYS_INLINE                            \
- void NAME##_host(void *vd, uint32_t idx, void *host)        \
- {                                                           \
-@@ -221,20 +252,27 @@ void NAME##_host(void *vd, uint32_t idx, void *host)        \
-     *cur = (ETYPE)LDSUF##_p(host);                          \
- }
- 
--GEN_VEXT_LD_ELEM(lde_b, uint8_t,  H1, ldub)
--GEN_VEXT_LD_ELEM(lde_h, uint16_t, H2, lduw_le)
--GEN_VEXT_LD_ELEM(lde_w, uint32_t, H4, ldl_le)
--GEN_VEXT_LD_ELEM(lde_d, uint64_t, H8, ldq_le)
-+GEN_VEXT_TLB_LD_ELEM(lde_b, uint8_t,  H1, ldb)
-+GEN_VEXT_TLB_LD_ELEM(lde_h, uint16_t, H2, ldw)
-+GEN_VEXT_TLB_LD_ELEM(lde_w, uint32_t, H4, ldl)
-+GEN_VEXT_TLB_LD_ELEM(lde_d, uint64_t, H8, ldq)
-+
-+GEN_VEXT_HOST_LD_ELEM(lde_b, uint8_t,  H1, ldub)
-+GEN_VEXT_HOST_LD_ELEM(lde_h, uint16_t, H2, lduw_le)
-+GEN_VEXT_HOST_LD_ELEM(lde_w, uint32_t, H4, ldl_le)
-+GEN_VEXT_HOST_LD_ELEM(lde_d, uint64_t, H8, ldq_le)
- 
--#define GEN_VEXT_ST_ELEM(NAME, ETYPE, H, STSUF)             \
-+#define GEN_VEXT_TLB_ST_ELEM(NAME, ETYPE, H, STSUF)         \
- static inline QEMU_ALWAYS_INLINE                            \
- void NAME##_tlb(CPURISCVState *env, abi_ptr addr,           \
-                 uint32_t idx, void *vd, uintptr_t retaddr)  \
- {                                                           \
-     ETYPE data = *((ETYPE *)vd + H(idx));                   \
--    cpu_##STSUF##_data_ra(env, addr, data, retaddr);        \
-+    MemOpIdx oi = vext_make_memop_idx(env, sizeof(ETYPE));  \
-+    cpu_##STSUF##_mmu(env, addr, data, oi, retaddr);        \
- }                                                           \
--                                                            \
-+
-+#define GEN_VEXT_HOST_ST_ELEM(NAME, ETYPE, H, STSUF)        \
- static inline QEMU_ALWAYS_INLINE                            \
- void NAME##_host(void *vd, uint32_t idx, void *host)        \
- {                                                           \
-@@ -242,10 +280,15 @@ void NAME##_host(void *vd, uint32_t idx, void *host)        \
-     STSUF##_p(host, data);                                  \
- }
- 
--GEN_VEXT_ST_ELEM(ste_b, uint8_t,  H1, stb)
--GEN_VEXT_ST_ELEM(ste_h, uint16_t, H2, stw_le)
--GEN_VEXT_ST_ELEM(ste_w, uint32_t, H4, stl_le)
--GEN_VEXT_ST_ELEM(ste_d, uint64_t, H8, stq_le)
-+GEN_VEXT_TLB_ST_ELEM(ste_b, uint8_t,  H1, stb)
-+GEN_VEXT_TLB_ST_ELEM(ste_h, uint16_t, H2, stw)
-+GEN_VEXT_TLB_ST_ELEM(ste_w, uint32_t, H4, stl)
-+GEN_VEXT_TLB_ST_ELEM(ste_d, uint64_t, H8, stq)
-+
-+GEN_VEXT_HOST_ST_ELEM(ste_b, uint8_t,  H1, stb)
-+GEN_VEXT_HOST_ST_ELEM(ste_h, uint16_t, H2, stw_le)
-+GEN_VEXT_HOST_ST_ELEM(ste_w, uint32_t, H4, stl_le)
-+GEN_VEXT_HOST_ST_ELEM(ste_d, uint64_t, H8, stq_le)
- 
- static inline QEMU_ALWAYS_INLINE void
- vext_continuous_ldst_tlb(CPURISCVState *env, vext_ldst_elem_fn_tlb *ldst_tlb,
-@@ -393,7 +436,16 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
-     probe_pages(env, addr, size, ra, access_type, mmu_index, &host, &flags,
-                 true);
- 
--    if (flags == 0) {
-+    bool misaligned = addr & (esz - 1);
-+
-+    /*
-+     * Allow the host fast-pash when:
-+     *   1. Page permission/pmp/watchpoint are checked and we have a contigous
-+     *      host mapping.
-+     *   2. Zicclsm is enabled or load/store is not a misaligned access.
-+     * Otherwise, we will fall back to the slow TLB-path.
-+     */
-+    if (flags == 0 && (riscv_cpu_cfg(env)->ext_zicclsm || !misaligned)) {
-         if (nf == 1) {
-             vext_continuous_ldst_host(env, ldst_host, vd, evl, env->vstart,
-                                       host, esz, is_load);
+ /* Vendor-specific custom extensions */
+ BOOL_FIELD(ext_xtheadba)
+ BOOL_FIELD(ext_xtheadbb)
 -- 
 2.43.0
 
