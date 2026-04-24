@@ -4,102 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A764EFF885A
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 21:38:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25981FF885A
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 21:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGODq-0001BH-3u; Fri, 24 Apr 2026 17:38:02 -0400
+	id 1wGODj-0001AV-Kh; Fri, 24 Apr 2026 17:37:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wGODl-0001Ax-Fv; Fri, 24 Apr 2026 17:37:57 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wGODi-0001dO-P5; Fri, 24 Apr 2026 17:37:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777066592; bh=O0Vy1KHg3Zrz4WR3PKLVHZi7keRNgpYeDaz6D8O4hfk=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=g+KbW8580nY+l2TnF6QtXeGANoMVXuYA2SLdMwo3JOTb7yb6nbSSGmmp2XYW+Q9Z6
- xiLNxb2giEQmk6gijgmdlx3MDDlut8fe4BbhHmKczykRL9lytrBl9hpEREcduU1PZu
- Gaq54lnGzCxXQko/GWPoxh7KHMEQij19VkvIYRizhSY9KEtzXAlZjwFaYyZMhx03nq
- 4+Vowf7LRJ/df6yEV39MZxiA5dHNAhpgPo1N2aCQUGN/IMy8dqqB3c6HXovtZfB+IQ
- bQjoPXD9jGaS+c6z5R4MClzMUTAI9Q8du6eWwcF8xn74I7bfc5gRmcHoL6ycpD7lmc
- xEXaXhxSNVSoA==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id F3E261A2FAE;
- Sat, 25 Apr 2026 00:36:31 +0300 (MSK)
-Message-ID: <9204d75c-e412-4857-933c-3ad3aee6736d@tls.msk.ru>
-Date: Sat, 25 Apr 2026 00:37:50 +0300
+ (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
+ id 1wGODg-0001AE-Pi
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 17:37:52 -0400
+Received: from mail-dl1-x1236.google.com ([2607:f8b0:4864:20::1236])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
+ id 1wGODb-0001cB-22
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 17:37:51 -0400
+Received: by mail-dl1-x1236.google.com with SMTP id
+ a92af1059eb24-12c7212836bso4440501c88.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 14:37:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1777066665; x=1777671465; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=269qtn7cPdtGhV6FdZFqbMCD2iQK4aW+opNK6I11K+E=;
+ b=pEHcIBC98Y6N91JMzke+BAivjBPwsnfNhI+cXWyYQNBTmcfXzFwv/P1uFhTM8mJNb4
+ HNbxSnNhMJIF2I7vBihSEK6A9fmzwVkg4YI6IPK36d1pnnhtE7D6WArSOw1abbPYNHrl
+ kkhir3vR7EBT55wsEfbu8NCH4m3O6tV+O+w+DqsMR147K1ixeh16QswCeSJbPZNwEG/h
+ dquSC5/QbU2VBxyDIsnQZ/UfB8VhvNoRQhsKc+nZhaGNSd5iT8JW4M3CW9/VO6w7hSHm
+ 6k7lJzTKE6EXGAdRqF0WxOr70sAVvUTlAS3YOcrI1sVyvzd9SwWRnS2haiv/DKJEw9Lz
+ SVUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777066665; x=1777671465;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=269qtn7cPdtGhV6FdZFqbMCD2iQK4aW+opNK6I11K+E=;
+ b=aeKWfoE09WrKOan7FpQuY2gmd7d/ZT0LrymtYyoqKDvtBEdGnJBZxKHNSm9DvUziaK
+ 8m7QTEx/krwkZlmBrpZQrzlEWR5S36rrb9aWIVbi6HibXsnuRw1mot59CSwsMajI4rC5
+ YpVFL4dqnmV6CiODt2Tpe5S7+wcjmD8yMyogktb41E516pFwvgFrYuzuL7ApSY1H9oHH
+ 0vSsqLh0O291kI8yPeRCpztH/wRViCoLarFWw/2WmxvKc97Nvi9ijMAtygYD/drIC0Sz
+ HvX8rQg2S6T+bb99P+d94Ips2ljhzuyS88Vir+vLcP9oiJjlSWL168azxotMlqk6Z2jx
+ dT+g==
+X-Gm-Message-State: AOJu0Ywr2xLOknDdgdh+6StFMPEm46EInen/p1Gy2oSbGv0KSWuIfLb8
+ P+5ZsDvLTy+iD2cx/0zhV6yCLVZ7fPSOy0XNq2Oy1k66/130pTRIRDRK
+X-Gm-Gg: AeBDiev67kRAYxDHYudTgFqYQRu8RCRs7fdW0s7qsbpWR00h1QBh10etkqv8WPY9xVG
+ 5Kza0l/4XQKq/OPUERZaTcNY0jGX2XsYT7pB+9eTXE+pB0Zc1HWveTQXVJPcS2tPkrEZdpsU9Gl
+ 8Kp+MCVuZRbJxkgz0vWIhSiYgt/RzPcb5zdH9VEPRVWTrZ/v1uluIHR+LWGubPKMdk7NGquNpHx
+ AvSefbVyAqoMyRxtH6fyDn3b6vjGeIXNGo1TYWni9WIo4AxL2C7b/QUP9PWacCxh5UBryOOHM6q
+ lKMPeJMl9JNGK6jwg8bWo1TSzBj+A+7VuA4DDsxJnCnDlDmYSQ8zYybJVKSFTTYruKu7uJnzk+X
+ MgIzUrZo1efOXuylbMmADwCIwUpixTEh972V+TIHOYlpPxbmeVrwgSnMNTBaS3zlIRWPn7nCh9J
+ eT+4CrXM8R0BwG8UMhWVDZPecZXtZ1SKY94IFWKMI9MTB01IfXhFZtPXigDPwHd5mMhCPR5AeHk
+ w==
+X-Received: by 2002:a05:7022:23a0:b0:11e:163:be60 with SMTP id
+ a92af1059eb24-12c73fadd10mr18223648c88.31.1777066664943; 
+ Fri, 24 Apr 2026 14:37:44 -0700 (PDT)
+Received: from localhost.localdomain ([2804:7f4:c030:44a8:6c9a:9faa:5f6e:c92f])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-12dca2c1c16sm2390350c88.5.2026.04.24.14.37.41
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 24 Apr 2026 14:37:44 -0700 (PDT)
+From: Lucas Amaral <lucaaamaral@gmail.com>
+To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>
+Subject: Re: [PATCH v4 1/3] virtio-gpu: validate host page alignment for
+ MAP_FIXED blobs
+Date: Fri, 24 Apr 2026 18:37:38 -0300
+Message-ID: <20260424213738.45385-1-lucaaamaral@gmail.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <875x5gwtxx.fsf@draig.linaro.org>
+References: <20260317175744.32469-1-lucaaamaral@gmail.com>
+ <20260317175744.32469-2-lucaaamaral@gmail.com>
+ <87mrytwo8h.fsf@draig.linaro.org>
+ <20260423234415.7753-1-lucaaamaral@gmail.com>
+ <875x5gwtxx.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] meson: add missing semicolon in
- pthread_condattr_setclock test
-To: Stepan Popov <Stepan.Popov@kaspersky.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260330162250.97380-1-Stepan.Popov@kaspersky.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260330162250.97380-1-Stepan.Popov@kaspersky.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1236;
+ envelope-from=lucaaamaral@gmail.com; helo=mail-dl1-x1236.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,20 +110,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.03.2026 19:22, Stepan Popov wrote:
-> The test code was missing a semicolon after the pthread_condattr_t
-> variable declaration.
-> 
-> Fixes: 657ac98b58 ("thread-posix: use monotonic clock for QemuCond and
-> QemuSemaphore")
-> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-> Signed-off-by: Stepan Popov <Stepan.Popov@kaspersky.com>
+On 2026-04-24, Alex Bennée wrote:
+> Well we at least images for the Linux side which we can use. See
+> tests/functional/aarch64/test_virt_gpu.py
 
-I'm picking this up for qemu stable series.
-Please let me know if I shouldn't do that.
+Good pointer — that infrastructure should work. My local reproduction
+is even simpler: a plain Ubuntu 24.04 ARM64 image, unmodified, with
+stock Mesa. The failure surfaces immediately on:
+
+  sudo vulkaninfo --summary
+  sudo run_wayland timeout 120 vkmark
+
+Without patch 1/3, virgl_renderer_resource_map_fixed() returns EINVAL
+on the first 4KB-aligned blob and the guest renderer falls over.
+
+> I wonder if TCG guests will also fail?
+
+Yes — the MAP_FIXED requirement is a host kernel mmap() constraint,
+not an accelerator one. The patch 1/3 guard sits in the
+accelerator-agnostic path and protects all configurations, including
+TCG.
+
+> A lot of moving parts, do you have a rolled up branch I can test
+> against?
+> Any rolled up branch for this set as well?
+
+Easier than a rolled-up branch — the three QEMU series apply cleanly
+on current master in any order:
+
+  Stack A (ISV=0 emulation):
+    https://patchew.org/QEMU/20260409220614.65558-1-lucaaamaral@gmail.com/
+  Stack B (this series):
+    https://patchew.org/QEMU/20260424000544.9617-1-lucaaamaral@gmail.com/
+  Stack C (Venus without OpenGL):
+    https://patchew.org/QEMU/20260317182049.33848-1-lucaaamaral@gmail.com/
+
+Renderer side just needs current virglrenderer main — the last macOS
+Metal/Vulkan MR landed yesterday.
+
+> This is a bit of a challenge - we will be loosing CirrusCI soon
+> which has our only real MacOS build test. Either we get someone
+> willing to host a custom runner or we need to find another CI
+> runner that we can plug MacOS tests into.
+
+Acknowledged — separate infrastructure problem, but I'm happy to
+share my macOS test scripts/workflow if useful, and can ack-test
+macOS-specific patches locally on Apple Silicon when asked.
 
 Thanks,
-
-/mjt
+Lucas
 
