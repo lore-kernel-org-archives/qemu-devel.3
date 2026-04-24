@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A4CEFED3E6
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 15:43:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9130BFED3EA
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 15:43:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGIgN-00030B-BO; Fri, 24 Apr 2026 11:43:11 -0400
+	id 1wGIgI-0002wx-FB; Fri, 24 Apr 2026 11:43:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wGIfl-0002nR-V7
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 11:42:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wGIfq-0002oH-42
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 11:42:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wGIfe-0007KW-Px
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 11:42:28 -0400
+ id 1wGIfk-0007M7-A1
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 11:42:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777045342;
+ s=mimecast20190719; t=1777045347;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cynLqKpAjxPpOG06xZhFg1JWuv1to8KA7++lWN26KsY=;
- b=UpBw3UnW0zMibsP/w9csXT9m+t7536mi3iy+n2aI0na76+OOv0QDuJt5rekK6OFtgUYGkt
- yZHx4jUoMd8sshby4f7lApzrE9l3/Ibxf90L6pq3fAJEPz1i2IvB/cBNVBrMl4+EkZBnms
- o+VSBL5mUjBeLTetKcbf5L+aAYZIkDw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=iBpdYNbW/Xk/UNHoV+Doxxi9hHsYlnHzAUV0ayVujkw=;
+ b=R3TwUGrWBSYdU/wmVjiipl/tAGDytQZJOEdH0eY9UP8Shqj9wFkHKz6vhIOZDVL3fj+ZGs
+ ylk82f/JZmbXCq1JR1xuS5s51l5KfRGeiboMu7yslQmHMZWDXy8v7dbkL8i8x8amUqtBzB
+ Iv2+oIyZZgAb3tQE71Gc/+fkRB9tSBg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-299-kmR1lo3WOjCcPgHn-e3A_Q-1; Fri,
- 24 Apr 2026 11:42:19 -0400
-X-MC-Unique: kmR1lo3WOjCcPgHn-e3A_Q-1
-X-Mimecast-MFC-AGG-ID: kmR1lo3WOjCcPgHn-e3A_Q_1777045338
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-518-_UyJM4MoPVuOGRcUaoH1Jw-1; Fri,
+ 24 Apr 2026 11:42:23 -0400
+X-MC-Unique: _UyJM4MoPVuOGRcUaoH1Jw-1
+X-Mimecast-MFC-AGG-ID: _UyJM4MoPVuOGRcUaoH1Jw_1777045342
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 534D119560A3; Fri, 24 Apr 2026 15:42:18 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6BEE0180034D; Fri, 24 Apr 2026 15:42:22 +0000 (UTC)
 Received: from thinkbook.redhat.com (unknown [10.44.32.213])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 103081800348; Fri, 24 Apr 2026 15:42:14 +0000 (UTC)
+ id DB0E0180047F; Fri, 24 Apr 2026 15:42:18 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>,
@@ -56,27 +56,26 @@ Cc: Hanna Reitz <hreitz@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 02/16] gitlab: ensure all meson jobs capture build/meson-logs
- by default
-Date: Fri, 24 Apr 2026 16:41:50 +0100
-Message-ID: <20260424154205.364268-3-berrange@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH 03/16] tests: print reason when I/O test is skipped in TAP mode
+Date: Fri, 24 Apr 2026 16:41:51 +0100
+Message-ID: <20260424154205.364268-4-berrange@redhat.com>
 In-Reply-To: <20260424154205.364268-1-berrange@redhat.com>
 References: <20260424154205.364268-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,78 +91,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The build-without-defaults and build-tci jobs do not capture any
-artifacts, despite running 'make check'. This has proved a repeated
-bug with CI jobs, so introduce a new '.meson_job_template' rule
-which always captures 'build/meson-logs'. Jobs can still provide
-their own 'artifacts:' config which will override this default
-behaviour.
+The TAP output on a skipped test:
 
+  ok raw 181 # SKIP
+
+is not informative.
+
+The test program included a reason, and that should be displayed
+in TAP mode (it is already shown in non-TAP mode):
+
+  ok raw 181 # SKIP Postcopy is not supported
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- .gitlab-ci.d/buildtest-template.yml | 30 ++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ tests/qemu-iotests/testrunner.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
-index d866cb12bb..005058625e 100644
---- a/.gitlab-ci.d/buildtest-template.yml
-+++ b/.gitlab-ci.d/buildtest-template.yml
-@@ -1,5 +1,20 @@
--.native_build_job_template:
-+
-+# Any job running meson should capture meson logs
-+# by default. Some jobs might override the artifacts
-+# to capture further files
-+.meson_job_template:
-   extends: .base_job_template
-+  artifacts:
-+    name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
-+    when: always
-+    expire_in: 7 days
-+    paths:
-+      - build/meson-logs
-+    reports:
-+      junit: build/meson-logs/*.junit.xml
-+
-+.native_build_job_template:
-+  extends: .meson_job_template
-   stage: build
-   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
-   cache:
-@@ -60,7 +75,7 @@
-       - build/**/*.c.o.d
+diff --git a/tests/qemu-iotests/testrunner.py b/tests/qemu-iotests/testrunner.py
+index e2a3658994..dbe2dddc32 100644
+--- a/tests/qemu-iotests/testrunner.py
++++ b/tests/qemu-iotests/testrunner.py
+@@ -174,7 +174,7 @@ def test_print_one_line(self, test: str,
+             elif status == 'fail':
+                 print(f'not ok {self.env.imgfmt} {test}')
+             elif status == 'not run':
+-                print(f'ok {self.env.imgfmt} {test} # SKIP')
++                print(f'ok {self.env.imgfmt} {test} # SKIP {description}')
+             return
  
- .common_test_job_template:
--  extends: .base_job_template
-+  extends: .meson_job_template
-   stage: test
-   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
-   script:
-@@ -87,14 +102,7 @@
-     # Prevent logs from the build job that run earlier
-     # from being duplicated in the test job artifacts
-     - rm -f build/meson-logs/*
--  artifacts:
--    name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
--    when: always
--    expire_in: 7 days
--    paths:
--      - build/meson-logs
--    reports:
--      junit: build/meson-logs/*.junit.xml
-+
- 
- .functional_test_job_template:
-   extends: .common_test_job_template
-@@ -125,7 +133,7 @@
-     QEMU_JOB_FUNCTIONAL: 1
- 
- .wasm_build_job_template:
--  extends: .base_job_template
-+  extends: .meson_job_template
-   stage: build
-   image: $CI_REGISTRY_IMAGE/qemu/$IMAGE:$QEMU_CI_CONTAINER_TAG
-   before_script:
+         if lasttime:
 -- 
 2.53.0
 
