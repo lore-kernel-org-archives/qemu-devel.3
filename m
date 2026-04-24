@@ -4,73 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F72AFE5219
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 12:17:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DE39FB44B2
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 12:36:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGFSc-0002eb-Sz; Fri, 24 Apr 2026 08:16:43 -0400
+	id 1wGFkk-0007Su-MD; Fri, 24 Apr 2026 08:35:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wGFS6-0002Wv-Nb
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 08:16:14 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
+ (Exim 4.90_1) (envelope-from <bea1e@proton.me>) id 1wGEaS-0006YT-IB
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 07:20:45 -0400
+Received: from mail-07.mail-europe.com ([188.165.51.139])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wGFS4-0002Dv-Jt
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 08:16:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1777032968; x=1808568968;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=wItBfHW6v9wsyjtAKVgJYEePhRBXmoutUyn+sJKbZ/w=;
- b=azATtsdKuYiJZWivOECgvE7F4zRfkijCyTa2q+BThLfNQmAiSTr9AKe4
- BhKcretq0IWMoBuh32ET8a+XlAD0ENHfUHPlpk+JwxAFDdgRCkj+nIt/S
- 1gJAQ/Z5GknQcT3rt1lliZ+bGio46QDc5VyY0zFefcGdEaH49P1dg2zwk
- ZQROnbVugheAwBlX+/iMyHe2OyTe/AaOMPnVHkhLgGs4SlPdWncFTj308
- AKF7exLyULTXrQNYhk4/uECvABF6VkBTGEEL9KbvSOFTsLjLpGpruelcc
- j0P2ezVRz8E/pJIJvSnlGrjHY2Pg5if8T0DA8h1n19jX2tSAczQLC1oKI A==;
-X-CSE-ConnectionGUID: Ah9P1AqlQEGSPWesXHzfoA==
-X-CSE-MsgGUID: fvY4diYrRXyj7jgWum4xvQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11765"; a="78029988"
-X-IronPort-AV: E=Sophos;i="6.23,196,1770624000"; d="scan'208";a="78029988"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Apr 2026 05:16:06 -0700
-X-CSE-ConnectionGUID: Vm0cL1mES/yLh9mK6j55gA==
-X-CSE-MsgGUID: UBNpuumnSU+kBVEf/8Wc1Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,196,1770624000"; d="scan'208";a="237935796"
-Received: from junjie-optiplex-micro-plus-7010.bj.intel.com ([10.238.152.98])
- by fmviesa005-auth.fm.intel.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Apr 2026 05:16:04 -0700
-From: Junjie Cao <junjie.cao@intel.com>
-To: qemu-devel@nongnu.org
-Cc: junjie.cao@intel.com, mst@redhat.com, jasowang@redhat.com,
- yi.l.liu@intel.com, clement.mathieu--drif@bull.com, philmd@linaro.org,
- zhenzhong.duan@intel.com
-Subject: [PATCH v2 2/2] tests/qtest: add 8-byte MMIO access sweep for
- intel-iommu
-Date: Sat, 25 Apr 2026 04:18:42 +0800
-Message-ID: <20260424201842.176953-3-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260424201842.176953-1-junjie.cao@intel.com>
-References: <20260424201842.176953-1-junjie.cao@intel.com>
+ (Exim 4.90_1) (envelope-from <bea1e@proton.me>) id 1wGEaQ-0001YS-4p
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 07:20:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
+ s=protonmail; t=1777029636; x=1777288836;
+ bh=SIpA694rwzz6Yz/M+wlJIvaNne2KH1iqD83jCKgDYY0=;
+ h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
+ Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=BUG56Ye+osrYRZnOTixIUIhqaGhSfcCHjmNxE5VfJSnANgYCjTA8+Us0UlgS1Rf0d
+ cMJbYBveCrJbCtDHZsJ5kqPI+hZMF5cAhnvWF855X1WP7flE044kWp8a9lUuAF7uFx
+ LKzRfQ5glSgF87IraQ6m6l7QfR9+HhcdA4DTArAELtyaHv0zzB/vn9B87r4CKYmWtb
+ N1WSlhTAp5r5ObW7sRGvUyNukC/WbBOygJQ7DDc7x3ST8uY916c9osDOJjFjuKMI4d
+ Q0Fx1AxTc9jKGObDGzOSmj4DrAiUkXD2QOpzgSq9sGx04hpCg/q4cwB4Kseg3zEz5r
+ +NjTQtfazhSdA==
+Date: Fri, 24 Apr 2026 11:20:31 +0000
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+From: Feifan Qian <bea1e@proton.me>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH] hw/usb/xhci: clamp interval exponent to avoid UB shift in
+ xhci_init_epctx()
+Message-ID: <sXJQOREScD4G6fYInirO2wbLtvZf6EK1yuTrP6U3GQBM5dIq7dhRnCm9uxSSiRRK0b4m7OEZRqEgjzHCTFoS0DruFvYUXh-UUXhkY0x786A=@proton.me>
+Feedback-ID: 93226294:user:proton
+X-Pm-Message-ID: b66a7b5a7e470fa34e7bf06b40d546c5348374bc
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=junjie.cao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: multipart/alternative;
+ boundary="b1=_sITyaj82KjrwlasRJ1P974jPUXjdLdpiu4uQTTW4fo"
+Received-SPF: pass client-ip=188.165.51.139; envelope-from=bea1e@proton.me;
+ helo=mail-07.mail-europe.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_FUTURE_06_12=1.947,
- DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 24 Apr 2026 08:34:46 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,70 +66,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sweep every 4-byte-aligned offset in the VT-d MMIO register space
-with 8-byte reads and writes to verify that no register handler
-aborts on an oversized access.
+--b1=_sITyaj82KjrwlasRJ1P974jPUXjdLdpiu4uQTTW4fo
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: base64
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
----
- tests/qtest/intel-iommu-test.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+VGhlIHhIQ0kgZW5kcG9pbnQgY29udGV4dCBkd29yZCAwIGJpdHMgMjM6MTYgKCJJbnRlcnZhbCIp
+IGFyZSB3cml0dGVuCmJ5IHRoZSBndWVzdCBhbmQgcGFzc2VkIGRpcmVjdGx5IGFzIHRoZSBzaGlm
+dCBhbW91bnQgaW46CgplcGN0eC0+aW50ZXJ2YWwgPSAxIDw8ICgoY3R4WzBdID4+IDE2KSAmIDB4
+ZmYpOwoKVGhlIHNoaWZ0IGFtb3VudCBjYW4gYmUgMC0yNTUuIFNoaWZ0aW5nIGEgMzItYml0IGBp
+bnRgIGxlZnQgYnkgPj0gMzIKaXMgdW5kZWZpbmVkIGJlaGF2aW91ciB1bmRlciBDMTEgwqc2LjUu
+N3A0LiBXaXRoIFVCU2FuCihoYWx0X29uX2Vycm9yPTEpIHRoaXMgY2F1c2VzIFFFTVUgdG8gYWJv
+cnQ7IHdpdGggYWdncmVzc2l2ZSBjb21waWxlcgpvcHRpbWlzYXRpb25zIHRoYXQgYXNzdW1lIFVC
+IGlzIHVucmVhY2hhYmxlIHRoZSByZXN1bHQgaXMKdW5wcmVkaWN0YWJsZS4KCkNsYW1wIHRoZSBl
+eHBvbmVudCB0byBbMCwgMzFdIHdpdGggTUlOKCkgYmVmb3JlIHRoZSBzaGlmdCwgYW5kIHVzZQpg
+MXVgICh1bnNpZ25lZCkgdG8gYXZvaWQgc2hpZnRpbmcgYSBzaWduZWQgaW50ZWdlci4gVGhlIHhI
+Q0kKc3BlY2lmaWNhdGlvbiBkZWZpbmVzIGEgbWF4aW11bSBtZWFuaW5nZnVsIEludGVydmFsIHZh
+bHVlIG9mIDE1IGZvcgptb3N0IGVuZHBvaW50IHR5cGVzOyBjbGFtcGluZyB0byAzMSBpcyB0aGUg
+bWluaW1hbCBzYWZlIGZpeCB0aGF0CnByZXNlcnZlcyB0aGUgZnVsbCB1bnNpZ25lZCAzMi1iaXQg
+cmFuZ2UgZm9yIGFueSBjb21wbGlhbnQgdmFsdWUuCgpSZXBvcnRlZC1ieTogRmVpZmFuIFFpYW4g
+PGJlYTFlQHByb3Rvbi5tZT4KU2lnbmVkLW9mZi1ieTogRmVpZmFuIFFpYW4gPGJlYTFlQHByb3Rv
+bi5tZT4KLS0tCmh3L3VzYi9oY2QteGhjaS5jIHwgMiArLQoxIGZpbGUgY2hhbmdlZCwgMSBpbnNl
+cnRpb24oKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9ody91c2IvaGNkLXhoY2kuYyBi
+L2h3L3VzYi9oY2QteGhjaS5jCmluZGV4IDAwMDAwMDAwMDAuLjAwMDAwMDAwMDEgMTAwNjQ0Ci0t
+LSBhL2h3L3VzYi9oY2QteGhjaS5jCisrKyBiL2h3L3VzYi9oY2QteGhjaS5jCkBAIC0xMTE5LDgg
+KzExMTksOCBAQCBzdGF0aWMgdm9pZCB4aGNpX2luaXRfZXBjdHgoWEhDSUVQQ29udGV4dCAqZXBj
+dHgsCnhoY2lfcmluZ19pbml0KGVwY3R4LT54aGNpLCAmZXBjdHgtPnJpbmcsIGRlcXVldWUpOwpl
+cGN0eC0+cmluZy5jY3MgPSBjdHhbMl0gJiAxOwp9CgotIGVwY3R4LT5pbnRlcnZhbCA9IDEgPDwg
+KChjdHhbMF0gPj4gMTYpICYgMHhmZik7CisgZXBjdHgtPmludGVydmFsID0gMXUgPDwgTUlOKChj
+dHhbMF0gPj4gMTYpICYgMHhmZnUsIDMxdSk7Cn0KCnN0YXRpYyBUUkJDQ29kZSB4aGNpX2VuYWJs
+ZV9lcChYSENJU3RhdGUgKnhoY2ksIHVuc2lnbmVkIGludCBzbG90aWQsCi0tCjIuNDMuMA==
 
-diff --git a/tests/qtest/intel-iommu-test.c b/tests/qtest/intel-iommu-test.c
-index e5cc6acaf0..b1763ed294 100644
---- a/tests/qtest/intel-iommu-test.c
-+++ b/tests/qtest/intel-iommu-test.c
-@@ -17,11 +17,39 @@
- #define ECAP_STAGE_1_FIXED1   (VTD_ECAP_QI |  VTD_ECAP_IR | VTD_ECAP_IRO | \
-                               VTD_ECAP_MHMV | VTD_ECAP_SMTS | VTD_ECAP_FSTS)
- 
-+static inline uint32_t vtd_reg_readl(QTestState *s, uint64_t offset)
-+{
-+    return qtest_readl(s, Q35_HOST_BRIDGE_IOMMU_ADDR + offset);
-+}
-+
- static inline uint64_t vtd_reg_readq(QTestState *s, uint64_t offset)
- {
-     return qtest_readq(s, Q35_HOST_BRIDGE_IOMMU_ADDR + offset);
- }
- 
-+static inline void vtd_reg_writeq(QTestState *s, uint64_t offset,
-+                                  uint64_t value)
-+{
-+    qtest_writeq(s, Q35_HOST_BRIDGE_IOMMU_ADDR + offset, value);
-+}
-+
-+static void test_intel_iommu_8byte_access(void)
-+{
-+    QTestState *s;
-+    uint64_t off;
-+
-+    s = qtest_init("-M q35 -device intel-iommu");
-+
-+    for (off = 0; off < DMAR_REG_SIZE; off += 4) {
-+        vtd_reg_readq(s, off);
-+        vtd_reg_writeq(s, off, 0);
-+    }
-+
-+    g_assert_cmpuint(vtd_reg_readl(s, DMAR_VER_REG), !=, 0);
-+
-+    qtest_quit(s);
-+}
-+
- static void test_intel_iommu_stage_1(void)
- {
-     uint8_t init_csr[DMAR_REG_SIZE];     /* register values */
-@@ -58,6 +86,8 @@ static void test_intel_iommu_stage_1(void)
- int main(int argc, char **argv)
- {
-     g_test_init(&argc, &argv, NULL);
-+    qtest_add_func("/q35/intel-iommu/8byte-access",
-+                   test_intel_iommu_8byte_access);
-     qtest_add_func("/q35/intel-iommu/stage-1", test_intel_iommu_stage_1);
- 
-     return g_test_run();
--- 
-2.43.0
+--b1=_sITyaj82KjrwlasRJ1P974jPUXjdLdpiu4uQTTW4fo
+Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: base64
+
+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDE0
+cHg7Ij48L2Rpdj48c3Bhbj48L3NwYW4+PHNwYW4+VGhlIHhIQ0kgZW5kcG9pbnQgY29udGV4dCBk
+d29yZCAwIGJpdHMgMjM6MTYgKCJJbnRlcnZhbCIpIGFyZSB3cml0dGVuPC9zcGFuPjxkaXY+PHNw
+YW4+YnkgdGhlIGd1ZXN0IGFuZCBwYXNzZWQgZGlyZWN0bHkgYXMgdGhlIHNoaWZ0IGFtb3VudCBp
+bjo8L3NwYW4+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDsgJm5ic3A7IGVw
+Y3R4LSZndDtpbnRlcnZhbCA9IDEgJmx0OyZsdDsgKChjdHhbMF0gJmd0OyZndDsgMTYpICZhbXA7
+IDB4ZmYpOzwvc3Bhbj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PjxzcGFuPlRoZSBzaGlmdCBh
+bW91bnQgY2FuIGJlIDAtMjU1LiAmbmJzcDtTaGlmdGluZyBhIDMyLWJpdCBgaW50YCBsZWZ0IGJ5
+ICZndDs9IDMyPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+aXMgdW5kZWZpbmVkIGJlaGF2aW91ciB1
+bmRlciBDMTEgwqc2LjUuN3A0LiAmbmJzcDtXaXRoIFVCU2FuPC9zcGFuPjwvZGl2PjxkaXY+PHNw
+YW4+KGhhbHRfb25fZXJyb3I9MSkgdGhpcyBjYXVzZXMgUUVNVSB0byBhYm9ydDsgd2l0aCBhZ2dy
+ZXNzaXZlIGNvbXBpbGVyPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+b3B0aW1pc2F0aW9ucyB0aGF0
+IGFzc3VtZSBVQiBpcyB1bnJlYWNoYWJsZSB0aGUgcmVzdWx0IGlzPC9zcGFuPjwvZGl2PjxkaXY+
+PHNwYW4+dW5wcmVkaWN0YWJsZS48L3NwYW4+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48c3Bh
+bj5DbGFtcCB0aGUgZXhwb25lbnQgdG8gWzAsIDMxXSB3aXRoIE1JTigpIGJlZm9yZSB0aGUgc2hp
+ZnQsIGFuZCB1c2U8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj5gMXVgICh1bnNpZ25lZCkgdG8gYXZv
+aWQgc2hpZnRpbmcgYSBzaWduZWQgaW50ZWdlci4gJm5ic3A7VGhlIHhIQ0k8L3NwYW4+PC9kaXY+
+PGRpdj48c3Bhbj5zcGVjaWZpY2F0aW9uIGRlZmluZXMgYSBtYXhpbXVtIG1lYW5pbmdmdWwgSW50
+ZXJ2YWwgdmFsdWUgb2YgMTUgZm9yPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+bW9zdCBlbmRwb2lu
+dCB0eXBlczsgY2xhbXBpbmcgdG8gMzEgaXMgdGhlIG1pbmltYWwgc2FmZSBmaXggdGhhdDwvc3Bh
+bj48L2Rpdj48ZGl2PjxzcGFuPnByZXNlcnZlcyB0aGUgZnVsbCB1bnNpZ25lZCAzMi1iaXQgcmFu
+Z2UgZm9yIGFueSBjb21wbGlhbnQgdmFsdWUuPC9zcGFuPjwvZGl2PjxkaXY+PGJyPjwvZGl2Pjxk
+aXY+PHNwYW4+UmVwb3J0ZWQtYnk6IEZlaWZhbiBRaWFuICZsdDs8YSB0YXJnZXQ9Il9ibGFuayIg
+cmVsPSJub3JlZmVycmVyIG5vZm9sbG93IG5vb3BlbmVyIiBocmVmPSJtYWlsdG86YmVhMWVAcHJv
+dG9uLm1lIj5iZWExZUBwcm90b24ubWU8L2E+Jmd0Ozwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPlNp
+Z25lZC1vZmYtYnk6IEZlaWZhbiBRaWFuICZsdDs8YSB0YXJnZXQ9Il9ibGFuayIgcmVsPSJub3Jl
+ZmVycmVyIG5vZm9sbG93IG5vb3BlbmVyIiBocmVmPSJtYWlsdG86YmVhMWVAcHJvdG9uLm1lIj5i
+ZWExZUBwcm90b24ubWU8L2E+Jmd0Ozwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPi0tLTwvc3Bhbj48
+L2Rpdj48ZGl2PjxzcGFuPmh3L3VzYi9oY2QteGhjaS5jIHwgMiArLTwvc3Bhbj48L2Rpdj48ZGl2
+PjxzcGFuPjEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlvbigtKTwvc3Bh
+bj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PjxzcGFuPmRpZmYgLS1naXQgYS9ody91c2IvaGNk
+LXhoY2kuYyBiL2h3L3VzYi9oY2QteGhjaS5jPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+aW5kZXgg
+MDAwMDAwMDAwMC4uMDAwMDAwMDAwMSAxMDA2NDQ8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4tLS0g
+YS9ody91c2IvaGNkLXhoY2kuYzwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPisrKyBiL2h3L3VzYi9o
+Y2QteGhjaS5jPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+QEAgLTExMTksOCArMTExOSw4IEBAIHN0
+YXRpYyB2b2lkIHhoY2lfaW5pdF9lcGN0eChYSENJRVBDb250ZXh0ICplcGN0eCw8L3NwYW4+PC9k
+aXY+PGRpdj48c3Bhbj4mbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgeGhjaV9yaW5nX2luaXQo
+ZXBjdHgtJmd0O3hoY2ksICZhbXA7ZXBjdHgtJmd0O3JpbmcsIGRlcXVldWUpOzwvc3Bhbj48L2Rp
+dj48ZGl2PjxzcGFuPiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyBlcGN0eC0mZ3Q7cmluZy5j
+Y3MgPSBjdHhbMl0gJmFtcDsgMTs8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDsgJm5ic3A7
+IH08L3NwYW4+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48c3Bhbj4tICZuYnNwOyAmbmJzcDtl
+cGN0eC0mZ3Q7aW50ZXJ2YWwgPSAxICZsdDsmbHQ7ICgoY3R4WzBdICZndDsmZ3Q7IDE2KSAmYW1w
+OyAweGZmKTs8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4rICZuYnNwOyAmbmJzcDtlcGN0eC0mZ3Q7
+aW50ZXJ2YWwgPSAxdSAmbHQ7Jmx0OyBNSU4oKGN0eFswXSAmZ3Q7Jmd0OyAxNikgJmFtcDsgMHhm
+ZnUsIDMxdSk7PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+fTwvc3Bhbj48L2Rpdj48ZGl2Pjxicj48
+L2Rpdj48ZGl2PjxzcGFuPnN0YXRpYyBUUkJDQ29kZSB4aGNpX2VuYWJsZV9lcChYSENJU3RhdGUg
+KnhoY2ksIHVuc2lnbmVkIGludCBzbG90aWQsPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+LS08L3Nw
+YW4+PC9kaXY+PGRpdj48c3Bhbj4yLjQzLjA8L3NwYW4+PC9kaXY+PHNwYW4+PC9zcGFuPjxkaXYg
+c3R5bGU9ImZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxNHB4OyI+
+PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9u
+dC1zaXplOiAxNHB4OyIgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrIj4NCjwvZGl2
+Pg0K
+
+
+--b1=_sITyaj82KjrwlasRJ1P974jPUXjdLdpiu4uQTTW4fo--
 
 
