@@ -4,55 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 681D3FE51F0
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 09:11:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB2A5FE51F1
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 09:20:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGCZ9-0001y6-PS; Fri, 24 Apr 2026 05:11:16 -0400
+	id 1wGCh9-0005bE-65; Fri, 24 Apr 2026 05:19:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGCYZ-0001eB-NY
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:10:41 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGCYW-0001HJ-Uh
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:10:38 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 11581600CB;
- Fri, 24 Apr 2026 09:10:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5F51C2BCB4;
- Fri, 24 Apr 2026 09:10:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777021835;
- bh=KG2fwHQvDISByslvVy41WuAySIFV/sri4ZntnBzQCgY=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=tyReEN4/9ySbmpiDMrHWpAZO+ieFyaqIrAYd6RVwyOPjkJF1FWfpDIWbm1P9SKtCR
- 9vejfHtSUeearcmXURD3xAyyAnwh/Q/ChSTYApr5X8I21DQLpN/b7PZ3G7K8g1tkgv
- X66j79pYCDRUEZD96PaHMGB9QwYOEOSoj57shB11p4Xow7HHMAlgmYL5t2c+VJnidl
- IxytNXHYitOw39hJOWAUg7blPZXJMPhUUWbyh2NM+6bwYEU0v/neLssXpoA34zHulS
- T9rIHsJyYhHDz2YjgTruMYiUzJHBx8o1/Asp6TSLRZ203ONcC4AQ7xIyZ+lQCJEj65
- m4vWgwcZ1sA7A==
-From: Helge Deller <deller@kernel.org>
-To: laurent@vivier.eu,
-	qemu-devel@nongnu.org
-Cc: deller@gmx.de
-Subject: [PATCH 2/4] linux-user: Define SO_TIMESTAMP*_NEW and SO_RCVTIMEIO_NEW
-Date: Fri, 24 Apr 2026 11:08:48 +0200
-Message-ID: <20260424091024.23495-3-deller@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260424091024.23495-1-deller@kernel.org>
-References: <20260424091024.23495-1-deller@kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+ (Exim 4.90_1) (envelope-from <elisey.konstantinov@gmail.com>)
+ id 1wGCh6-0005al-Jb
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:19:28 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <elisey.konstantinov@gmail.com>)
+ id 1wGCh5-0004TI-1d
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:19:28 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4890098abbaso57075465e9.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 02:19:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1777022365; x=1777627165; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8XwcBXcJkhhXdDyD+XO1ZeuuHgJnTle9Xw2pCx44y2s=;
+ b=IS6h0o/Yv0ifiU5uFlVnmsA9s4mdFi3w4PHW2fDULxLKTqzDO5rZjTpB4PPC4Vk4VS
+ 7u3VQ0p7OvGQhVjBg7EybGxdQb/jQXzh1/QNw1sqjG2BDUbyJsTxiHKbbxlF9njOl9IK
+ pjiSrUs4A0DL7B/DRANL56RXgGFcF1Kx8OSHOrII00aHS5aOZ88rJ0Myge7W2uI/p+hz
+ u//MMFjLyVY8vqvic5HtTe74TzmVNY66pT6J4Zj3hgTwnllFEXPUtUMAxpgA2mdS96Jy
+ ls0mAiltk4Ou/+93CnX4BMtxq1+uDGS1KKZJrpwq0+fofa2l4nPltvyubUESxb6mKa43
+ d3rw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777022365; x=1777627165;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=8XwcBXcJkhhXdDyD+XO1ZeuuHgJnTle9Xw2pCx44y2s=;
+ b=myfXd0HaKVTH8SraNsz2FNwBkAXHiPOLT11FPTpHEE9Y42i0q7VRzoh+l7+LAgiFQH
+ ZK8HhtAY6WQD/Ew5PiuKn7aaen7Sat+8622FQ9ZfvlhZAL9qSaFIggF0Jhg1YSCTyzTj
+ xXEyyJRGPYdyCc8ubaXgVs0WNR/CteFfbNS8eAMTcjGknPcDF72G7uRkE7CkX5zS9xwQ
+ mUvxZ7S1lpI3BmFFoG/uvbu8+LCTnAHmNnQxn8/fbvYqs0SEumNlBuqkPpPzcLKm9eXQ
+ 5dVnpfIqNvH76kSPkXkINA5zDzp0eswXOn3HN97DhDIseW5i2t3/YENTh6xekKq6ZBFk
+ RW/g==
+X-Gm-Message-State: AOJu0YwQP6TnfIQY1lwFEf3FoIHcaTBUyp6wWJYGH5eGm2sWKaPuwQzh
+ fjsYWR35LmGsr+WouEf1o4dJLCL9e6k4o7/Hma+IYtwLtyY/Y3AM2k1M
+X-Gm-Gg: AeBDievqNLcLyx3ORSNbI6X0Ku6AyGyIXT5gaeVupj/fmrZxyrQuyt6hMkSxIRXPPja
+ DHojP9j7F5Zvgdphc91ukZEScu0rSc+riBBA5cwIpbz/ibVVEri/PJWPJQis+8RFnTu+uKVeLaR
+ HijnqJ2b+TWJVfixTBF+iN0gDXRfNK5/fPheJzJ3adHy0RvKMR8yVVq+grRA2j5Nfamy4ORKaAB
+ hYxRXA/AMHsZlHVYuAE9D3hIa6UJZhl3cWQ0S/fpXMekfm1tnZZu2FK1YwIQ6HD/QkDp+X4Fy4V
+ MrOsMyZ3zqmXwu16ZyZdMrY9OYQrhTzYJjxOi5hAQQBnGls7wUS/N27Pzc+qk9jX/awjpY3YaD2
+ /kPGIaP1p0LaEfCp4o5U6xp3RF4P29x0Qdo0oGq932R/v1FJbFqaY2fszO2q8xqvoeegb9woOEh
+ mmoX3mOyXvvKhiHOSksPaGleDtZrrZESvRJA5CoCj4naAgWB4YAZPvRs6ildoXoDpgxsP7wkC0+
+ 6Q=
+X-Received: by 2002:a05:600c:1e28:b0:483:7903:c3b1 with SMTP id
+ 5b1f17b1804b1-488fb77fbf3mr441150775e9.20.1777022365072; 
+ Fri, 24 Apr 2026 02:19:25 -0700 (PDT)
+Received: from smtpclient.apple ([5.32.173.67])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a5aa3ae83sm343497725e9.12.2026.04.24.02.19.24
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 24 Apr 2026 02:19:24 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH] build: prefer sigaltstack over ucontext on Linux
+From: Elisey Konstantinov <elisey.konstantinov@gmail.com>
+In-Reply-To: <aeswZxFn0zMj-3jb@redhat.com>
+Date: Fri, 24 Apr 2026 12:19:19 +0300
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, marcandre.lureau@redhat.com,
+ philmd@linaro.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <06C2CFB8-BA33-46D6-9F84-B1F81A2A319E@gmail.com>
+References: <616E96C0-F0A5-4A9E-A63B-3BC1B5F18094@gmail.com>
+ <aeswZxFn0zMj-3jb@redhat.com>
+To: =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=elisey.konstantinov@gmail.com; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,109 +104,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+I completely agree, but in my opinion, investigating UContext will take =
+a considerable amount of time, which is why I took the liberty of =
+proposing this patch; in the commit message, I actually mention that =
+this is merely a =E2=80=9Ctemporary  workaround=E2=80=9D
 
-Define the entries which always use the 64-bit timestamps.
+So, I suggest:
+- Merging the patch into the mainstream for the convenience of users =
+(as, from what I=E2=80=99ve observed, SigAltStack is coping quite well =
+with the task, at least for now...)
+- Whilst leaving #3276 open for the time being and continuing the =
+UContext diagnostics there
+- And accordingly, as soon as UContext is fully functional, we can =
+switch QEMU back from SigAltStack
 
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/alpha/sockbits.h   | 7 +++++++
- linux-user/generic/sockbits.h | 8 ++++++++
- linux-user/hppa/sockbits.h    | 7 +++++++
- linux-user/mips/sockbits.h    | 7 +++++++
- linux-user/sparc/sockbits.h   | 7 +++++++
- 5 files changed, 36 insertions(+)
+Also the another arrangement is to use UContext ONLY if PPC is in the =
+build targets, but I am unable to do this, as my knowledge of Meson is =
+insufficient for such a task; nevertheless, I would be grateful for any =
+assistance :)
 
-diff --git a/linux-user/alpha/sockbits.h b/linux-user/alpha/sockbits.h
-index d54dc98c09..0201ab9374 100644
---- a/linux-user/alpha/sockbits.h
-+++ b/linux-user/alpha/sockbits.h
-@@ -75,6 +75,13 @@
- /* Instruct lower device to use last 4-bytes of skb data as FCS */
- #define TARGET_SO_NOFCS     43
- 
-+#define TARGET_SO_TIMESTAMP_NEW        63
-+#define TARGET_SO_TIMESTAMPNS_NEW      64
-+#define TARGET_SO_TIMESTAMPING_NEW     65
-+
-+#define TARGET_SO_RCVTIMEO_NEW         66
-+#define TARGET_SO_SNDTIMEO_NEW         67
-+
- /* TARGET_O_NONBLOCK clashes with the bits used for socket types.  Therefore we
-  * have to define SOCK_NONBLOCK to a different value here.
-  */
-diff --git a/linux-user/generic/sockbits.h b/linux-user/generic/sockbits.h
-index b3b4a8e44c..33e6c3a572 100644
---- a/linux-user/generic/sockbits.h
-+++ b/linux-user/generic/sockbits.h
-@@ -58,4 +58,12 @@
- 
- #define TARGET_SO_PROTOCOL             38
- #define TARGET_SO_DOMAIN               39
-+
-+#define TARGET_SO_TIMESTAMP_NEW        63
-+#define TARGET_SO_TIMESTAMPNS_NEW      64
-+#define TARGET_SO_TIMESTAMPING_NEW     65
-+
-+#define TARGET_SO_RCVTIMEO_NEW         66
-+#define TARGET_SO_SNDTIMEO_NEW         67
-+
- #endif
-diff --git a/linux-user/hppa/sockbits.h b/linux-user/hppa/sockbits.h
-index 23f69a3293..2304dbbf79 100644
---- a/linux-user/hppa/sockbits.h
-+++ b/linux-user/hppa/sockbits.h
-@@ -67,6 +67,13 @@
- 
- #define TARGET_SO_CNX_ADVICE           0x402E
- 
-+#define TARGET_SO_TIMESTAMP_NEW        0x4038
-+#define TARGET_SO_TIMESTAMPNS_NEW      0x4039
-+#define TARGET_SO_TIMESTAMPING_NEW     0x403A
-+
-+#define TARGET_SO_RCVTIMEO_NEW         0x4040
-+#define TARGET_SO_SNDTIMEO_NEW         0x4041
-+
- /* TARGET_O_NONBLOCK clashes with the bits used for socket types.  Therefore we
-  * have to define SOCK_NONBLOCK to a different value here.
-  */
-diff --git a/linux-user/mips/sockbits.h b/linux-user/mips/sockbits.h
-index 562cad88e2..1f479d54aa 100644
---- a/linux-user/mips/sockbits.h
-+++ b/linux-user/mips/sockbits.h
-@@ -71,6 +71,13 @@
- #define TARGET_SO_RCVBUFFORCE          33
- #define TARGET_SO_PASSSEC              34
- 
-+#define TARGET_SO_TIMESTAMP_NEW        63
-+#define TARGET_SO_TIMESTAMPNS_NEW      64
-+#define TARGET_SO_TIMESTAMPING_NEW     65
-+
-+#define TARGET_SO_RCVTIMEO_NEW         66
-+#define TARGET_SO_SNDTIMEO_NEW         67
-+
- /** sock_type - Socket types
-  *
-  * Please notice that for binary compat reasons MIPS has to
-diff --git a/linux-user/sparc/sockbits.h b/linux-user/sparc/sockbits.h
-index 0a822e3e1f..42ecfdc8f9 100644
---- a/linux-user/sparc/sockbits.h
-+++ b/linux-user/sparc/sockbits.h
-@@ -61,6 +61,13 @@
- #define TARGET_SO_TIMESTAMPING         0x0023
- #define TARGET_SCM_TIMESTAMPING        TARGET_SO_TIMESTAMPING
- 
-+#define TARGET_SO_TIMESTAMP_NEW        0x0046
-+#define TARGET_SO_TIMESTAMPNS_NEW      0x0042
-+#define TARGET_SO_TIMESTAMPING_NEW     0x0043
-+
-+#define TARGET_SO_RCVTIMEO_NEW         0x0044
-+#define TARGET_SO_SNDTIMEO_NEW         0x0045
-+
- #define TARGET_SO_RXQ_OVFL             0x0024
- 
- #define TARGET_SO_WIFI_STATUS          0x0025
--- 
-2.53.0
-
+P. S. Anticipating such a reaction, I DELIBERATELY did not include =
+=E2=80=9CResolves=E2=80=9D in the patch notes, so I am fully aware of =
+all the proposed precautions=
 
