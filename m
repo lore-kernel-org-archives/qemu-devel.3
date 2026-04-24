@@ -4,50 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA916FE5202
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 11:01:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28D0AFE520C
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 11:17:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGEGL-0000Q8-Ej; Fri, 24 Apr 2026 06:59:57 -0400
+	id 1wGEXN-0004ni-BH; Fri, 24 Apr 2026 07:17:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>)
- id 1wGEGI-0000PL-V6; Fri, 24 Apr 2026 06:59:55 -0400
-Received: from relay.virtuozzo.com ([130.117.225.111])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wGEXJ-0004n2-RY
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 07:17:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <den@openvz.org>)
- id 1wGEGG-0000zf-N3; Fri, 24 Apr 2026 06:59:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=virtuozzo.com; s=relay; h=MIME-Version:Message-ID:Date:Subject:From:
- Content-Type; bh=MY3Ui24DiO+ty5K/7ChL4aiQuI6zKz+dZPOdvsiLArA=; b=scklV46o8rdl
- qhNrIRrCyzdpJALI1YCQ9uZ+4RU9N1kN+bOEfUulPBjlhj22rEHCSAde2XKAHssFj5hY3+Z5jsa2z
- 7dicATKnB+xFkcqnYSrAORSgJgWoXr8uBGFwVluLkRyXvePOiMmorii75YkpwUuLqUL7O0WYzOl60
- LfcRAywnjftUOO/2rIOx9xaaB6rreU9VLkSLZrohfV8/OCPE7Szweft0pr3iiiG5PQ1xg9MYzicjt
- AAqfpiQNZnSD2QeXN+RcTrcPXBpK4okNd2D0ojBb3cxf/x3Ejm/rCC3TagWWIG2PKcNPgbX8os+WT
- Fu2OVDXNtTbHE/PglRV+Pw==;
-Received: from ch-demo-asa.virtuozzo.com ([130.117.225.8] helo=iris.sw.ru)
- by relay.virtuozzo.com with esmtp (Exim 4.96)
- (envelope-from <den@openvz.org>) id 1wGEDW-00FcSF-24;
- Fri, 24 Apr 2026 12:59:46 +0200
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, "Denis V. Lunev" <den@openvz.org>,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>
-Subject: [PATCH v3 1/1] qemu-img: add sub-command --remove-all to 'qemu-img
- bitmap'
-Date: Fri, 24 Apr 2026 12:59:49 +0200
-Message-ID: <20260424105949.254757-1-den@openvz.org>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wGEXG-0000J8-8e
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 07:17:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777029444;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4O+Z+1OoIfzrmshOC2XgaPulXVo5Kfqc8ocvpEOe1DQ=;
+ b=jB6GiZVXN4lAQ319EzZ9R6As34YSuWE+5NCMrObwNMLk022VSJWcj6nxc3LZd3HxeiqV2R
+ naBPQEoNruuXg4RfUfRt7qXJexsMR+VBWVMmYnpCShqGejDqmvF71VftJgxxDylxir89CJ
+ 9TqyXN9k0eQI25LhPif3Iq4HFT3TpWQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-WT64rUxYM6SJQqrt_vpg6w-1; Fri,
+ 24 Apr 2026 07:17:19 -0400
+X-MC-Unique: WT64rUxYM6SJQqrt_vpg6w-1
+X-Mimecast-MFC-AGG-ID: WT64rUxYM6SJQqrt_vpg6w_1777029438
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F13D91956059; Fri, 24 Apr 2026 11:17:17 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.30])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44C503007572; Fri, 24 Apr 2026 11:17:17 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id C5F4321E6A28; Fri, 24 Apr 2026 13:17:14 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,  "Dr. David Alan
+ Gilbert" <dave@treblig.org>,  Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v3 00/27] monitor: Remove need of per-target handlers
+In-Reply-To: <fd5734e1-b4fd-4020-808e-90773d8d9403@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 24 Apr 2026 12:22:14
+ +0200")
+References: <20260414003001.97571-1-philmd@linaro.org>
+ <87v7dgsn5x.fsf@pond.sub.org>
+ <fd5734e1-b4fd-4020-808e-90773d8d9403@linaro.org>
+Date: Fri, 24 Apr 2026 13:17:14 +0200
+Message-ID: <877bpwsj45.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: softfail client-ip=130.117.225.111; envelope-from=den@openvz.org;
- helo=relay.virtuozzo.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_SOFTFAIL=0.665 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,223 +88,21 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  "Denis V. Lunev" <den@openvz.org>
-From:  "Denis V. Lunev" via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From time to time it is needed to remove all bitmaps from the image.
-Before this patch the process is not very convenient. One should
-perform
-    qemu-img info
-and parse the output to obtain all names. After that one should
-sequentially call
-    qemu-img bitmap --remove
-for each present bitmap.
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-The patch adds --remove-all sub-command to 'qemu-img bitmap'.
+> On 24/4/26 11:49, Markus Armbruster wrote:
+>> Doesn't apply to current master for me, and patchew couldn't apply it,
+>> either.  Got something I could pull?
+>
+> My single-binary tree is having various dependencies on this series,
+> do you mind if I merged it myself?
 
-Signed-off-by: Denis V. Lunev <den@openvz.org>
-CC: Kevin Wolf <kwolf@redhat.com>
-CC: Hanna Reitz <hreitz@redhat.com>
----
-Changes from v2:
-* rebased to the lastest head
+Do I mind if you take work off me?  Hell, no!  ;)
 
-Changes from v1:
-* rebased to latest head
-* adopted bitmap help to the new layout
-
- docs/tools/qemu-img.rst | 10 +++++---
- qemu-img.c              | 53 ++++++++++++++++++++++++++++++++++-------
- 2 files changed, 52 insertions(+), 11 deletions(-)
-
-diff --git a/docs/tools/qemu-img.rst b/docs/tools/qemu-img.rst
-index 558b0eb84d..b0c798b77a 100644
---- a/docs/tools/qemu-img.rst
-+++ b/docs/tools/qemu-img.rst
-@@ -301,15 +301,19 @@ Command description:
-   For write tests, by default a buffer filled with zeros is written. This can be
-   overridden with a pattern byte specified by *PATTERN*.
- 
--.. option:: bitmap (--merge SOURCE | --add | --remove | --clear | --enable | --disable)... [-b SOURCE_FILE [-F SOURCE_FMT]] [-g GRANULARITY] [--object OBJECTDEF] [--image-opts | -f FMT] FILENAME BITMAP
-+.. option:: bitmap (--merge SOURCE | --add | --remove | --remove-all | --clear | --enable | --disable)... [-b SOURCE_FILE [-F SOURCE_FMT]] [-g GRANULARITY] [--object OBJECTDEF] [--image-opts | -f FMT] FILENAME [BITMAP]
- 
--  Perform one or more modifications of the persistent bitmap *BITMAP*
--  in the disk image *FILENAME*.  The various modifications are:
-+  Perform one or more modifications of persistent bitmaps in the disk
-+  image *FILENAME*.  Most operations require *BITMAP* to be specified;
-+  ``--remove-all`` operates on all bitmaps and does not take *BITMAP*.
-+  The various modifications are:
- 
-   ``--add`` to create *BITMAP*, enabled to record future edits.
- 
-   ``--remove`` to remove *BITMAP*.
- 
-+  ``--remove-all`` to remove all bitmaps.
-+
-   ``--clear`` to clear *BITMAP*.
- 
-   ``--enable`` to change *BITMAP* to start recording future edits.
-diff --git a/qemu-img.c b/qemu-img.c
-index c42dd4e995..22ddc7a627 100644
---- a/qemu-img.c
-+++ b/qemu-img.c
-@@ -87,6 +87,7 @@ enum {
-     OPTION_FORCE = 276,
-     OPTION_SKIP_BROKEN = 277,
-     OPTION_LIMITS = 278,
-+    OPTION_REMOVE_ALL = 279,
- };
- 
- typedef enum OutputFormat {
-@@ -5018,6 +5019,7 @@ enum ImgBitmapAct {
-     BITMAP_ENABLE,
-     BITMAP_DISABLE,
-     BITMAP_MERGE,
-+    BITMAP_REMOVE_ALL,
- };
- typedef struct ImgBitmapAction {
-     enum ImgBitmapAct act;
-@@ -5036,7 +5038,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-     BlockDriverState *bs = NULL, *src_bs = NULL;
-     bool image_opts = false;
-     int64_t granularity = 0;
--    bool add = false, merge = false;
-+    bool add = false, merge = false, remove_all = false, any = false;
-     QSIMPLEQ_HEAD(, ImgBitmapAction) actions;
-     ImgBitmapAction *act, *act_next;
-     const char *op;
-@@ -5052,6 +5054,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-             {"add", no_argument, 0, OPTION_ADD},
-             {"granularity", required_argument, 0, 'g'},
-             {"remove", no_argument, 0, OPTION_REMOVE},
-+            {"remove-all", no_argument, 0, OPTION_REMOVE_ALL},
-             {"clear", no_argument, 0, OPTION_CLEAR},
-             {"enable", no_argument, 0, OPTION_ENABLE},
-             {"disable", no_argument, 0, OPTION_DISABLE},
-@@ -5070,8 +5073,8 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-         switch (c) {
-         case 'h':
-             cmd_help(ccmd, "[-f FMT | --image-opts]\n"
--"        ( --add [-g SIZE] | --remove | --clear | --enable | --disable |\n"
--"          --merge SOURCE [-b SRC_FILE [-F SRC_FMT]] )..\n"
-+"        ( --add [-g SIZE] | --remove | --remove-all | --clear | --enable |\n"
-+"          --disable | --merge SOURCE [-b SRC_FILE [-F SRC_FMT]] )..\n"
- "        [--object OBJDEF] FILE BITMAP\n"
- ,
- "  -f, --format FMT\n"
-@@ -5086,6 +5089,8 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
- "     with optional multiplier suffix (in powers of 1024)\n"
- "  --remove\n"
- "     removes BITMAP from FILE\n"
-+"  --remove-all\n"
-+"     removes all bitmaps from FILE\n"
- "  --clear\n"
- "     clears BITMAP in FILE\n"
- "  --enable, --disable\n"
-@@ -5115,7 +5120,7 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-             act = g_new0(ImgBitmapAction, 1);
-             act->act = BITMAP_ADD;
-             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
--            add = true;
-+            add = any = true;
-             break;
-         case 'g':
-             granularity = cvtnum("granularity", optarg, true);
-@@ -5127,28 +5132,38 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-             act = g_new0(ImgBitmapAction, 1);
-             act->act = BITMAP_REMOVE;
-             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-+            any = true;
-+            break;
-+        case OPTION_REMOVE_ALL:
-+            act = g_new0(ImgBitmapAction, 1);
-+            act->act = BITMAP_REMOVE_ALL;
-+            QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-+            remove_all = true;
-             break;
-         case OPTION_CLEAR:
-             act = g_new0(ImgBitmapAction, 1);
-             act->act = BITMAP_CLEAR;
-             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-+            any = true;
-             break;
-         case OPTION_ENABLE:
-             act = g_new0(ImgBitmapAction, 1);
-             act->act = BITMAP_ENABLE;
-             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-+            any = true;
-             break;
-         case OPTION_DISABLE:
-             act = g_new0(ImgBitmapAction, 1);
-             act->act = BITMAP_DISABLE;
-             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
-+            any = true;
-             break;
-         case OPTION_MERGE:
-             act = g_new0(ImgBitmapAction, 1);
-             act->act = BITMAP_MERGE;
-             act->src = optarg;
-             QSIMPLEQ_INSERT_TAIL(&actions, act, next);
--            merge = true;
-+            any = merge = true;
-             break;
-         case 'b':
-             src_filename = optarg;
-@@ -5165,8 +5180,8 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-     }
- 
-     if (QSIMPLEQ_EMPTY(&actions)) {
--        error_report("Need at least one of --add, --remove, --clear, "
--                     "--enable, --disable, or --merge");
-+        error_report("Need at least one of --add, --remove, --remove-all, "
-+                     "--clear, --enable, --disable, or --merge");
-         goto out;
-     }
- 
-@@ -5184,10 +5199,14 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-         goto out;
-     }
- 
--    if (optind != argc - 2) {
-+    if (any && optind != argc - 2) {
-         error_report("Expecting filename and bitmap name");
-         goto out;
-     }
-+    if (!any && remove_all && optind != argc - 1) {
-+        error_report("Expecting filename");
-+        goto out;
-+    }
- 
-     filename = argv[optind];
-     bitmap = argv[optind + 1];
-@@ -5225,6 +5244,24 @@ static int img_bitmap(const img_cmd_t *ccmd, int argc, char **argv)
-             qmp_block_dirty_bitmap_remove(bs->node_name, bitmap, &err);
-             op = "remove";
-             break;
-+        case BITMAP_REMOVE_ALL: {
-+            while (1) {
-+                const char *name;
-+                BdrvDirtyBitmap *bm = bdrv_dirty_bitmap_first(bs);
-+                if (bm == NULL) {
-+                    break;
-+                }
-+                name = bdrv_dirty_bitmap_name(bm);
-+                qmp_block_dirty_bitmap_remove(bs->node_name, name, &err);
-+                if (err) {
-+                    /* Save name for proper error reporting */
-+                    bitmap = name;
-+                    break;
-+                }
-+            }
-+            op = "remove-all";
-+            break;
-+        }
-         case BITMAP_CLEAR:
-             qmp_block_dirty_bitmap_clear(bs->node_name, bitmap, &err);
-             op = "clear";
--- 
-2.51.0
+I asked because I'd like to give the series a quick eye-over, and I need
+to compile locally for that.
 
 
