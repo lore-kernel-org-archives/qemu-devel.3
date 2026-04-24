@@ -4,86 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D2DFB44CA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 08:20:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE631FAD41C
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 08:39:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGBlW-0000MD-Tm; Fri, 24 Apr 2026 04:19:58 -0400
+	id 1wGC47-0004bZ-8R; Fri, 24 Apr 2026 04:39:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <elisey.konstantinov@gmail.com>)
- id 1wGBlV-0000M2-9y
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 04:19:57 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <elisey.konstantinov@gmail.com>)
- id 1wGBlT-0006OU-Mt
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 04:19:57 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-43fe8bda8e9so4100005f8f.1
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 01:19:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777018792; x=1777623592; darn=nongnu.org;
- h=to:cc:date:message-id:subject:mime-version
- :content-transfer-encoding:from:from:to:cc:subject:date:message-id
- :reply-to; bh=d77vENISFV3A65XabyMzbFCvFzAjCcNL7BdC1hwSU8k=;
- b=FG/Bj/3SQjsBWVE0n6c9RUZXKgVwPLDTwQF2/kcAV0H3k+C085ccR7LaknUJS9QeeZ
- rcKSTEdJSN841r0IAHBuvwmAcehCnm+ZEMdsGtmafYgEQ6GBARMdtZcnWdXLsT+pyk9l
- wOLl6gmWje90Nad9RCcRs9HfTafuhmEHFhOG/ILlrluTwB0yAPSYpMvuEgTlsT819DcZ
- ins/DqDb7uvAcn2JvmOAUaGI1Hhntaav4Nto3TUxqaHKqaIKH0EXTe84l5b9nA2CcY0b
- kLg1BRPvKLSYnvVYEtt2zM5JMyDFvK9rkHWDOspmaxlhpSaVDb/nw3DTrwAOB5ZMKpKX
- sLyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777018792; x=1777623592;
- h=to:cc:date:message-id:subject:mime-version
- :content-transfer-encoding:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=d77vENISFV3A65XabyMzbFCvFzAjCcNL7BdC1hwSU8k=;
- b=E7SHcDl65n+R5YBGtxKfTNgt7nytpMUzFge7f3bT7f2vjDe2rs+QNSWrGeAL+8C7EQ
- HCqKGGhu0YFnXeL8JWBCBT+HfDYTZhOOUFgrjwbiF2euGJKDEPQf5EMSVSpjrWGhLG3R
- 1TlLa3GJsSci7kt6m518VMkETSqagdAkjku0TCj3Y8ZqPK/k+2cIcZPYOvrDVXEcXmND
- twfdAbJrN6h7owks9hiRX0Bx9Mo/Ht7mcgDhGxUtVeGTRy/yooKorrkmtMq4d/4BFRZD
- e4u7ah70GgQ+RSBuSU4mFArdVvI2HUJZ0lMJE/494rrueVXTx+uZ27wxN4dqegLsF64c
- HjHQ==
-X-Gm-Message-State: AOJu0YxAZ5poBA6GrR0ovCDSU8jBQaYhdK0bZZl9OYpCZQry+Er55eZX
- GdeCQjWjI9GvA4sgLGTZMQ7ojdf9aRzzi0Hzn7Hg86is1vYRp7Jz/1KniD62/67A
-X-Gm-Gg: AeBDieuZitkoRkLbstbr11bmiwZ6EVmsHevD4pAbdZkI85xEO0+JI+2grCOcRZyFerY
- egCee3g0anhvPE6w3UkkHgxqv42s5foidEsZ0AvJiPMv7IvaK7KmhhFZPkL8PWBFKCIOUMemch8
- ZO1NKCT8AS1Nzt8K+/X+ON/rU0KcSWTftnQKlib31qj2zR+A90k1yy+BwhRtsr2Jgn9peaC7m+A
- qX1KvtTwQ/CCfO2nQNND9Ua6eIIpSuPgTf7Olm4THMFUQNxVB/nxNx2/24OzY35UZtnKDkRila4
- FLUreo13cnjprREv1I6mPaADpGLP2h971ix+IZ+kb62fbcfPzcWFNvOFVtKR6Xg1EJQdAI5P/8L
- LkG0RXOkhtU9THAETb+YZfVuq7W5mHTiJgtOvhanhBBtaUPh+Wguvy24uvTxTjD7SPmp1WXupIB
- bF/oOc1aeOi1bUyqCY90qxbhFB7KEpAxaPOSi+nnXVl4CbFSgTpOVcWAMg1IT8R+u1vsaiZtYC4
- Kg=
-X-Received: by 2002:a05:6000:2289:b0:43c:f793:f1c5 with SMTP id
- ffacd0b85a97d-43fe3e0c63cmr47731903f8f.34.1777018791601; 
- Fri, 24 Apr 2026 01:19:51 -0700 (PDT)
-Received: from smtpclient.apple ([5.32.173.67])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e4d6casm54940068f8f.32.2026.04.24.01.19.50
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 24 Apr 2026 01:19:51 -0700 (PDT)
-From: Elisey Konstantinov <elisey.konstantinov@gmail.com>
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: [PATCH] build: prefer sigaltstack over ucontext on Linux
-Message-Id: <616E96C0-F0A5-4A9E-A63B-3BC1B5F18094@gmail.com>
-Date: Fri, 24 Apr 2026 11:19:39 +0300
-Cc: pbonzini@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
- philmd@linaro.org
-To: qemu-devel@nongnu.org
-X-Mailer: Apple Mail (2.3864.500.181)
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=elisey.konstantinov@gmail.com; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wGC45-0004b2-Of; Fri, 24 Apr 2026 04:39:10 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1wGC43-0005IJ-Us; Fri, 24 Apr 2026 04:39:09 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63O48OKU4175600; Fri, 24 Apr 2026 08:39:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=TNaY7HfJGb/yvulA3
+ TviyaKl4h5mz6iUXN2L9tU19Tc=; b=WXBXL8aFsDfVbJ/KTRwjR5oaAPuXIna8W
+ G3/xuYVkmGIdfSY1oiIT2+rEnQoL1AjX1AxJdNuIm9iuR3Em1TPL+Y4LzLIYJJ19
+ dTO6isaxNO+/GZmTltwm4xsBC3ml4YiFIzOgFm8fVNgEhatd6VccyTiMGeSBwcPc
+ 3Fq0bu70foh+JGurrpqSG6cySMMrtpPid+Ic7ZtZ9q4lw/WwKZzSakMQmkMfu8Bm
+ TGUButhJNKdExdeSiEMkm4bynTqhhA9HCuL5fhU/HErWoPnRFEwXd2WeaUG/6r4t
+ jfYbDBsg119zY9xOeopUSIidi8PIj8jFnYWaSOk6Pc9ua49aFaMRA==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dphfrm9x8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Apr 2026 08:39:05 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63O8ZV2b002414;
+ Fri, 24 Apr 2026 08:39:04 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dpjkya2c7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Apr 2026 08:39:03 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63O8cxkM56427004
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 24 Apr 2026 08:38:59 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 56AB32004F;
+ Fri, 24 Apr 2026 08:38:59 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 128232004E;
+ Fri, 24 Apr 2026 08:38:56 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.39.31.230]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 24 Apr 2026 08:38:55 +0000 (GMT)
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: <qemu-devel@nongnu.org>
+Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>
+Subject: [PATCH v6 01/10] ppc/pnv: Move SBE host doorbell function to top of
+ file
+Date: Fri, 24 Apr 2026 14:08:28 +0530
+Message-ID: <20260424083837.214947-2-adityag@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260424083837.214947-1-adityag@linux.ibm.com>
+References: <20260424083837.214947-1-adityag@linux.ibm.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: PfM-jKoopBW3BCRdcM9QKYJV1PmZ1hFS
+X-Proofpoint-ORIG-GUID: X0svmqQRzOm0lF-QgIQwcQWG6pJsgpgt
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI0MDA3NiBTYWx0ZWRfX0MaRBUmirzNN
+ Zdzz+QJJVPCmq0vdVt8cPRRIEBd/wwOOK/gkHSN7Mg1epfBhHWJDPQHAPVhI+lsIEgfCZffR1tJ
+ xOuoikbgn0qaCsIP9IZd9+8kd0l2o3PsbM6lC0AeF/zM7Ch/HTikUuDWGVNJEnr4mf3iPm79onS
+ oUIidacYwHJttK+iCRj14V8hquBIh561ylfCqC/re36ezdScVIHrGKULhHJIRNQhScOTGTHl0AI
+ dRBuXeL5G9xmprLPVVxQZ3Otjq9IATEDv9SEDagk23M8aqYlRMHux2xRu+Wd6yqHshMuuEZOD7+
+ ppDIp9rQu2E58PLHUN3kTdLtMhVgxzDYpNbXxtPSaVSmt1+fWMBcNMnNwNiVbH7aY5MjjUbqVjN
+ Y/e38fvln8pL80DkMbdFGk+hydnwltTUxKArow7b51TYek6yqf8+1u10MycUtjva0Ld866Gn1rR
+ hC5b4tP4QwgtBPrMFJg==
+X-Authority-Analysis: v=2.4 cv=SJxykuvH c=1 sm=1 tr=0 ts=69eb2c29 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=cAoldatroyQ9OnmYqHEA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-23_03,2026-04-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 suspectscore=0 malwarescore=0 impostorscore=0 bulkscore=0
+ lowpriorityscore=0 phishscore=0 clxscore=1015 adultscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604240076
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,42 +122,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-=46rom 517099e65de1e2ad3d0f33d3c4a7a71f8728279c Mon Sep 17 00:00:00 2001
-From: Elisey <elisey.konstantinov@gmail.com>
-Date: Mon, 23 Mar 2026 16:02:45 +0100
-Subject: [PATCH] build: prefer sigaltstack over ucontext on Linux
+Moved 'pnv_sbe_set_host_doorbell' as-it-is to above
+'pnv_sbe_power9_xscom_ctrl_write'.
 
-sigaltstack coroutine backend is more stable on some Linux
-configurations, while ucontext causes boot failures for certain
-PPC Mac OS X guests (issue #3276).
+This is done since in a future patch, S0 interrupt implementation uses
+'pnv_sbe_set_host_doorbell', hence the host doorbell function needs to
+be declared/defined before 'pnv_sbe_power9_xscom_ctrl_write' where we
+implement the S0 interrupt.
 
-Select sigaltstack first when available, keeping ucontext as fallback
-until the underlying issue is resolved.
+No functional change.
 
-Signed-off-by: Elisey Konstantinov <elisey.konstantinov@gmail.com>
+Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
+Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- meson.build | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hw/ppc/pnv_sbe.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index ab3e97eb9f..742655e007 100644
---- a/meson.build
-+++ b/meson.build
-@@ -505,10 +505,12 @@ if host_os =3D=3D 'windows'
- elif host_os =3D=3D 'emscripten'
-   supported_backends +=3D ['wasm']
- else
-+  # FIXME: This is a temporary workaround!
-+  # SigAltStack is in higher priority to fix #3276
-+  supported_backends +=3D ['sigaltstack']
-   if host_os !=3D 'darwin' and cc.links(ucontext_probe)
-     supported_backends +=3D ['ucontext']
-   endif
--  supported_backends +=3D ['sigaltstack']
- endif
-=20
- if coroutine_backend =3D=3D 'auto'
---=20
-2.50.1 (Apple Git-155)
+diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
+index 27383ce6837e..247617338a0d 100644
+--- a/hw/ppc/pnv_sbe.c
++++ b/hw/ppc/pnv_sbe.c
+@@ -80,6 +80,15 @@
+ #define SBE_CONTROL_REG_S0              PPC_BIT(14)
+ #define SBE_CONTROL_REG_S1              PPC_BIT(15)
+ 
++static void pnv_sbe_set_host_doorbell(PnvSBE *sbe, uint64_t val)
++{
++    val &= SBE_HOST_RESPONSE_MASK; /* Is this right? What does HW do? */
++    sbe->host_doorbell = val;
++
++    trace_pnv_sbe_reg_set_host_doorbell(val);
++    qemu_set_irq(sbe->psi_irq, !!val);
++}
++
+ struct sbe_msg {
+     uint64_t reg[4];
+ };
+@@ -125,15 +134,6 @@ static const MemoryRegionOps pnv_sbe_power9_xscom_ctrl_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
+ };
+ 
+-static void pnv_sbe_set_host_doorbell(PnvSBE *sbe, uint64_t val)
+-{
+-    val &= SBE_HOST_RESPONSE_MASK; /* Is this right? What does HW do? */
+-    sbe->host_doorbell = val;
+-
+-    trace_pnv_sbe_reg_set_host_doorbell(val);
+-    qemu_set_irq(sbe->psi_irq, !!val);
+-}
+-
+ /* SBE Target Type */
+ #define SBE_TARGET_TYPE_PROC            0x00
+ #define SBE_TARGET_TYPE_EX              0x01
+-- 
+2.53.0
 
 
