@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D14EFE51EE
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 09:11:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CE49FE51EE
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 09:11:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGCZ5-0001s7-Nh; Fri, 24 Apr 2026 05:11:13 -0400
+	id 1wGCZA-00022q-J8; Fri, 24 Apr 2026 05:11:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGCYb-0001eR-1W
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGCYc-0001gE-3e
  for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:10:43 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGCYZ-0001I9-Fq
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:10:40 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGCYa-0001IF-3n
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 05:10:41 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 314D242B6F;
+ by sea.source.kernel.org (Postfix) with ESMTP id 7FB5B43608;
+ Fri, 24 Apr 2026 09:10:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D28C19425;
  Fri, 24 Apr 2026 09:10:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E4AC2BCB4;
- Fri, 24 Apr 2026 09:10:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777021837;
- bh=JU1AMRxW1eiOJq992p/F16ioLlLN+qktUdFJFEi5Yrw=;
+ s=k20201202; t=1777021838;
+ bh=cQzNia5iIs98QU3S98d56+5fy6iOaBKc7DxBiJL8XuM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=gTnVQGD7b0ouwTeZSzziADKDkf6VfugEy2MaVxbIDwysiwGRa7cK0aNQKVFofnwVS
- Cb+5pHKzUUcFOiUXGx3IiJpqvaQehenhCrKvoiIVrH/mfgymqQdM+T8KALXvFCmgSt
- aNoW1e1CCS44pSPo62ZlpMx8Oiu7ZqxlHz4AfUmmiNt08XFHr1YJ1se094ZatOa79I
- d2WjBEIqh25wArQPBh66oBbxWGkoD2DkN5eHlNGzR5/aRj9iVUpGbPs7uwv+3DhUGl
- KjIBc/PH/diW6GfOp2DUye5Ul1mjzuL77q4cjNA2zbdkAP/MEHD2euEuDHLOgVvr/8
- 1qGpHoDIW2icA==
+ b=kJg77udjhvb0yl/JDivr19wUKaZ75I4DDYVUVi4muZL1DFGHU64u1ykfHdpft9EB9
+ R1SaBgPHrX/zoRIwoR8RurahBIFyGUc4toQQEfGk6HWxai+GI4Y6h8B2qKwfCMErH3
+ bQLJuQNji5SFihsrZSE27ZbCQy4Mzo5xDSicz6P8lxITnS/MxZnOJx6TFjKuh3T8MT
+ aDkZQOQ5DekrJxH7rMYQmACFASoowKmVxUfdviyjS/dQdXcV6I/c29oB0BE3qyp14Y
+ iLomwyRhFouA77oEW4x2523IVn3FW8xgEOHEvY1PLaqVh0wm5Un9EBikHJcn7K6njv
+ U2fwTE1qFBzYw==
 From: Helge Deller <deller@kernel.org>
 To: laurent@vivier.eu,
 	qemu-devel@nongnu.org
 Cc: deller@gmx.de
-Subject: [PATCH 3/4] linux-user: Add setsockopt() for SO_RCVTIMEO_NEW and
+Subject: [PATCH 4/4] linux-user: Add getsockopt() for SO_RCVTIMEO_NEW and
  SO_SNDTIMEO_NEW
-Date: Fri, 24 Apr 2026 11:08:49 +0200
-Message-ID: <20260424091024.23495-4-deller@kernel.org>
+Date: Fri, 24 Apr 2026 11:08:50 +0200
+Message-ID: <20260424091024.23495-5-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260424091024.23495-1-deller@kernel.org>
 References: <20260424091024.23495-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -76,55 +76,54 @@ Add handlers for both sockopts which use 64-bit time_t from userspace.
 Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/885
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/syscall.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ linux-user/syscall.c | 20 ++++++++++++++------
+ 1 file changed, 14 insertions(+), 6 deletions(-)
 
 diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 077ecb7554..7bd5ad548b 100644
+index 7bd5ad548b..a75dbceb5c 100644
 --- a/linux-user/syscall.c
 +++ b/linux-user/syscall.c
-@@ -1143,7 +1143,6 @@ static inline abi_long copy_to_user_timeval(abi_ulong target_tv_addr,
-     return 0;
- }
+@@ -2621,7 +2621,8 @@ static abi_long do_getsockopt(int sockfd, int level, int optname,
+         /* These don't just return a single integer */
+         case TARGET_SO_PEERNAME:
+             goto unimplemented;
+-        case TARGET_SO_RCVTIMEO: {
++        case TARGET_SO_RCVTIMEO:
++        case TARGET_SO_RCVTIMEO_NEW: {
+             struct timeval tv;
+             socklen_t tvlen;
  
--#if defined(TARGET_NR_clock_adjtime64) && defined(CONFIG_CLOCK_ADJTIME)
- static inline abi_long copy_from_user_timeval64(struct timeval *tv,
-                                                 abi_ulong target_tv_addr)
- {
-@@ -1160,7 +1159,6 @@ static inline abi_long copy_from_user_timeval64(struct timeval *tv,
- 
-     return 0;
- }
--#endif
- 
- static inline abi_long copy_to_user_timeval64(abi_ulong target_tv_addr,
-                                               const struct timeval *tv)
-@@ -2391,6 +2389,25 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
-                                 &tv, sizeof(tv)));
+@@ -2641,11 +2642,17 @@ get_timeout:
+             if (ret < 0) {
                  return ret;
-         }
-+        case TARGET_SO_RCVTIMEO_NEW:
-+        case TARGET_SO_SNDTIMEO_NEW:
-+        {
-+                struct timeval tv;
-+
-+                if (optlen != sizeof(struct target__kernel_sock_timeval)) {
-+                    return -TARGET_EINVAL;
-+                }
-+
-+                if (copy_from_user_timeval64(&tv, optval_addr)) {
+             }
+-            if (len > sizeof(struct target_timeval)) {
+-                len = sizeof(struct target_timeval);
+-            }
+-            if (copy_to_user_timeval(optval_addr, &tv)) {
+-                return -TARGET_EFAULT;
++            if (len == sizeof(struct target__kernel_sock_timeval)) {
++                if (copy_to_user_timeval64(optval_addr, &tv)) {
 +                    return -TARGET_EFAULT;
 +                }
-+
-+                ret = get_errno(setsockopt(sockfd, SOL_SOCKET,
-+                                optname == TARGET_SO_RCVTIMEO_NEW ?
-+                                    SO_RCVTIMEO : SO_SNDTIMEO,
-+                                &tv, sizeof(tv)));
-+                return ret;
-+        }
-         case TARGET_SO_ATTACH_FILTER:
-         {
-                 struct target_sock_fprog *tfprog;
++            } else {
++                if (len >= sizeof(struct target_timeval)) {
++                    len = sizeof(struct target_timeval);
++                    if (copy_to_user_timeval(optval_addr, &tv)) {
++                        return -TARGET_EFAULT;
++                    }
++                }
+             }
+             if (put_user_u32(len, optlen)) {
+                 return -TARGET_EFAULT;
+@@ -2653,6 +2660,7 @@ get_timeout:
+             break;
+         }
+         case TARGET_SO_SNDTIMEO:
++        case TARGET_SO_SNDTIMEO_NEW:
+             optname = SO_SNDTIMEO;
+             goto get_timeout;
+         case TARGET_SO_PEERCRED: {
 -- 
 2.53.0
 
