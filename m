@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96105FED3CB
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 13:18:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A02CFFED3CB
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 13:21:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGGPk-0002hw-DL; Fri, 24 Apr 2026 09:17:48 -0400
+	id 1wGGSk-0003U7-5x; Fri, 24 Apr 2026 09:20:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wGGPj-0002hn-K1
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:17:47 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1wGGSi-0003Tz-9Z
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:20:52 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wGGPh-0006Rl-6K
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:17:47 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-35d99bae2ebso7028969a91.3
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 06:17:44 -0700 (PDT)
+ id 1wGGSg-0007qj-QR
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:20:52 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2a7a9b8ed69so65144725ad.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 06:20:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777036663; x=1777641463; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777036849; x=1777641649; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=04RJJLzAs0m+0ZWMVWTdVcIpX4oXGvTaQxcIMiXfMN8=;
- b=X0uu4gkTtsx/JC+g1SJggPOt5+kNSLobgq2wS01bOTTQ6SMFgUk8V/+NH8dOJERDMs
- eiKYFwRqQ/p+ASaVseEno3AFpugvdlcy0afFdBWPG0/PTHwgnl7irVrK4b2T3MNu4/Ba
- DKu2yKL+HsW3BFQpq6BMODYxZqaxzuv1ctJfPd9reS3WP0t1P55VlsoCfIUK1kxpvbNG
- N05zWz0YcTzVP2Jr+oPX4VfakHW1YR/qPXcFSkeY4rGRs/suCTvCbe3YBxS5tNd1jJNr
- TGyshd0ot/A3Y/uA5WzAH8OM1z3KDXndSaED89KaUU66868XsgmrCGBvFisPcTrY2PIa
- 4lbw==
+ bh=glF7i4xS5rWtEfSzAoku/qak/u11lzjux/NIqvGHG+c=;
+ b=FccYf2GrOdGwYeBSL89r3V5tnuj10sd6Y3h5Nvu9TvaOiYLorcOX1jj9zu/I/sEau6
+ nE3vNwDKkwZeDJQtLiPmL2406u69jzA3nTM3casOcAARHMl5TwK9/caEwcNcH8adSR69
+ ruCZvu/Y9kF6cWG+nhkM4py8lxGMVUL5Hzzf/eGGOXSEYtMFltx0ueYotInsu8IfFP/A
+ BRttg/zuMSwjEb79RcoORbyXvEAReRpoGiJHIisXEcrtr82InMuJYGRHxLJTj6V7IJNy
+ bUsdL/G0vlvWP31G6HNYM9NJe2bgSJu9KUYi2sI6sLhsBEobG1tNne34IJof/ml5iVTA
+ OGOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777036663; x=1777641463;
+ d=1e100.net; s=20251104; t=1777036849; x=1777641649;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=04RJJLzAs0m+0ZWMVWTdVcIpX4oXGvTaQxcIMiXfMN8=;
- b=RUfl7uAf8Oocs1w8t0njNJ4rXQYGp1yT9WZQ3LppJgKsFVZMzgf/ON7CY9KMI+wxoh
- Puz5rqxGGFo+0ZwqtNKrVqWw2e1GJ7XjA2DICzfC5rKqIg63cfFlUknn1l7iA4UyYjNV
- x/k0dXBtT9EaRcPVNF8OUfhKTeV7bTZ7SXWlJbHcosvo0twmo5X19O6dpHaBfZLEDQq7
- vqBiP8lDhSIUOef34rASYu0m2WVSm1BoSs2OxWaoT7kwHpzZPruqmQGSCIG/3UV7+1b5
- /UHutKzHv5iEB3u0tMSo7m/uArW2hcaxHRqmGHA1Fv6oc2NxkpgxJ7o4Ik4coJ1vrskq
- Ufaw==
-X-Gm-Message-State: AOJu0YxDPFfwpgym0tZzLQPrwNrb8P1MIZeiaFs4xJvsh3HYeFbtNLDS
- YaxQiunZiwerTLwsxu46pSa2a8X0FWYISyej8eJqEfurAedfZIM0fQ+RcfICyX3EEHjVhT1xmVz
- zoeN6KeM=
-X-Gm-Gg: AeBDietHtQztBBKCaDa26vc7t2FUs3VkaqqzuHSB4GSY3f9tX+1YO9bSJvGoQyl9F0A
- qTkntyo9jewa4fFvDFsMrPdvUH4I5/imHIGfh712GTmpNPHN0RCfHQAIPZZTpY1IL4RGUgEguCV
- xCC4u5+53FBFmLsejLFO+37S5EPx1YMrd6Ir8zKU/ZvEoV99L1PQ31DRgE2aOAnUFn9eOTZJiik
- jjfKl5VfGR8zjUSoz9M30ekeWeCf7cqanmubSTjsmSvJSuxog1exFzNi847ulad/xSBcFyN0ETd
- 9s//5kite4C0UPRoe24BZIRh1T8oktW4T2CLMteBfyhm9bB1Scd1Ceos8DgemFHHz+MeYykRzvX
- Gl7uYX5IFihXB2f/7tfFBLprb5kHjFwrp1Sbe5cMw/8urA1A6a9EG8nbJGEg1IYngmmniQQ60gr
- yCoxBdYBF9B+pNfCVEccmsMjGZBQI8KJrH569tF/j9OqH+b3SdASeBD+L8YndlHsU=
-X-Received: by 2002:a17:90b:2888:b0:35e:58d3:329f with SMTP id
- 98e67ed59e1d1-36140468b1emr35331027a91.13.1777036662957; 
- Fri, 24 Apr 2026 06:17:42 -0700 (PDT)
+ bh=glF7i4xS5rWtEfSzAoku/qak/u11lzjux/NIqvGHG+c=;
+ b=dZekqko6gjWDcrXG6QyzBbhEPqBGjTa1nJkUof3czsaYCVpdcTSUZM3S/TWC8atZIt
+ q9UcbQEVGYCMQo9+0Z3QttC2oJE1cKCHWKazVMQDWEm1n3IJbSvoyhtLo5QFegM7XJFB
+ w0vOyWWgitwSRTDhYWRb6jV7TEJFGCeb/AjorIBpo0IH+8XdLXyHG0dXhV/T8aVJOSer
+ Zzd7VO8cibtoRsTegvcJ5Flce20qoUqN2N/RoIC4IkPUI348sjzQKTf9g7jJNV748+U6
+ le8b5a0y4RfL6h4Ten6QZcEBPN9XygBJefDJ0dRZnpxY4V6WgxCP9WpO6h1B1tz71m13
+ IB/g==
+X-Gm-Message-State: AOJu0YxZ8JWXGtt+5tEvMqw+gzJfhH1NdgFQc52uKIRZjS6dQCIbfnnL
+ hR6F8Gj88Pb7aZydz7Rv0DsVwb9e2MLPP17f46+RmPJfXAZR1A0AQfZc8Dj5KycqmsvdOWIqAoz
+ B1vSvK0g=
+X-Gm-Gg: AeBDievkKAUnHc9Da7mGzDHW0M8GBK+HOy60zitkjCQ4y7KlshtQmWQ7bLvxaMKxaMx
+ 1rgBVUUc5ylNK3PY5Rh8PAbU8JgGcr1ULm+uRfDbCvVEKgJ16SftUjMw9YyC3XL/ZTimNobWbG9
+ l9dJi9wfMxaZTbaQuVAAusM4HmPI5W/05pNIazcsn8E8p36RMebXh5W0TT5QAEXbq1pvHnTj4AP
+ WPeb9GQwztsC1hzT/5TFwOE2Smub38EKA5BMLkPnLgxlfiIEBy5ULDu87+plIe3a0RpDT+LutYe
+ ofGR6ayyMpDBApDTyTmDkAUPMq6ecPtRQ8enBpE16fie33NbpF4FYfi11eci2z5Pa8TPbPiexsF
+ RAzytGUGbM3xSEZGtIWsV4BFvs8fHl5y7pea/seQCG7n71jt4jW4n418v/6jXLCXU0EMd4CVNkZ
+ Pjh3S6TTcOPoQZWC7wa54pryaCpCPy5YTw1phdVO5fw+x2yPrezx1A
+X-Received: by 2002:a17:902:8b87:b0:2b0:a980:367c with SMTP id
+ d9443c01a7336-2b5f9eb0513mr246979095ad.2.1777036848850; 
+ Fri, 24 Apr 2026 06:20:48 -0700 (PDT)
 Received: from [192.168.10.140] ([180.233.125.15])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3614189343esm23215604a91.6.2026.04.24.06.17.41
+ d9443c01a7336-2b5fab20e80sm237309875ad.57.2026.04.24.06.20.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Apr 2026 06:17:42 -0700 (PDT)
-Message-ID: <5794be46-6755-4216-a57b-9a94172ec2b3@linaro.org>
-Date: Fri, 24 Apr 2026 23:17:38 +1000
+ Fri, 24 Apr 2026 06:20:48 -0700 (PDT)
+Message-ID: <058f177b-b8ab-4fb1-9998-ba21b559a30e@linaro.org>
+Date: Fri, 24 Apr 2026 23:20:44 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 3/4] target/riscv: Support raising misaligned exceptions
@@ -81,8 +81,8 @@ Content-Language: en-US
 In-Reply-To: <20260424102800.24022-4-frank.chang@sifive.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,27 +106,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/24/26 20:27, frank.chang@sifive.com wrote:
-> --- a/target/riscv/insn_trans/trans_rvv.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
-> @@ -1190,9 +1190,10 @@ static bool ldst_whole_trans(uint32_t vd, uint32_t rs1, uint32_t nf,
->        * Update vstart with the number of processed elements.
->        * Use the helper function if either:
->        * - vstart is not 0.
-> +     * - Zicclsm is disabled, so misaligned accesses could trap.
->        */
->   
-> -    bool use_helper_fn = !s->vstart_eq_zero;
-> +    bool use_helper_fn = !s->vstart_eq_zero || !s->cfg_ptr->ext_zicclsm;
->   
->       if (!use_helper_fn) {
->           uint32_t size = s->cfg_ptr->vlenb * nf;
-
-There is a whole set of MO_ALIGN_* values you can use to select the alignment of the 
-vector element:
-
-   log2_esz << MO_ASHIFT
-
-for log2_esz <= 6 (aka MO_ALIGN_64).
+> +static MemOpIdx vext_make_memop_idx(CPURISCVState *env, size_t size)
+> +{
+> +    int mmu_idx = riscv_env_mmu_index(env, false);
+> +    MemOp memop;
+> +
+> +    switch (size) {
+> +    case 1:
+> +        memop = MO_UB;
+> +        break;
+> +    case 2:
+> +        memop = MO_LEUW;
+> +        break;
+> +    case 4:
+> +        memop = MO_LEUL;
+> +        break;
+> +    case 8:
+> +        memop = MO_LEUQ;
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+   memop = size_memop(size) | mo_endian_env(env);
 
 
 r~
