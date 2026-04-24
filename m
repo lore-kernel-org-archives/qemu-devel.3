@@ -4,86 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8A89FDEE39
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 00:44:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42239FDEE39
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 00:44:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wG4cv-0004Tw-Vg; Thu, 23 Apr 2026 20:42:38 -0400
+	id 1wG4ew-0007fM-VT; Thu, 23 Apr 2026 20:44:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neotheuser@ymail.com>)
- id 1wG1sL-0004Oe-O7
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:46:21 -0400
-Received: from sonic302-3.consmr.mail.bf2.yahoo.com ([74.6.135.42])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neotheuser@ymail.com>)
- id 1wG1sI-0005fk-Bn
- for qemu-devel@nongnu.org; Thu, 23 Apr 2026 17:46:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ymail.com; s=s2048;
- t=1776980773; bh=p7LbBei25EyTgYguVkdRiAaODdHuFPggdNi2ulFPuxg=;
- h=Date:From:To:Subject:References:From:Subject:Reply-To;
- b=O0qiagcAMc80K3iVLaf4vRWf6QS6NSQS0qywRcD+38kgNaMjDnwoHYvAYp0UkaAdvVefuegnp8s67dYgw0ydMZuxmJ3NET7H2ko66lwMVqTS6pRreXuQpbov5eEcBZbohW9v5rNkCAdRXfTm81Sd7oG3fcsNQuiTqmIlrWeBdyMip5l+U8Qf++4jSTHKiyOhMC4uy1bF7+JnBHlZGBDDGQslXHu+hzc+gfXmwFj54l2UuKN9HrMw4hroOkcjCGkVrOv2Ca1UfVy+v0anqL0Pnlk+rGCMHNdz2Kl9GOmQbBR6Pfo4Cs+vwDyAxh/qC7gYBG1FUdOhjJc4u0gtJdXtOg==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048;
- t=1776980773; bh=wTo30pfIvHMPAeW+jzUjmtNs+GztZWCYhfdMzZ99IfJ=;
- h=X-Sonic-MF:Date:From:To:Subject:From:Subject;
- b=TEHe9o6GoSbdhqYhX4hWZxdWAJFzL6rpudE4wejUmBk4LVkn31Z8RFX0VMrGOfZGj+EehMr7JBMLZKW6yeO4Fkaa0ZkhSdgJAN/3jIEtp5qclqnPIesBf++6uCn6Tc9VKVmY7/a51R1KIDexexKl7Q071t9xTkln2sTq1+CdcJ7zLGmp5wVvASIuK24QNlKGOEV9Oety0UBIabWrJcPecNfIrpD0+41p4bqGoPTRasF7PmalfUAeP9vx3KN+h4PjyjcQFbxEL9e0wHwdODUsdsIvvL+NLmIZZxF+zZMORXy2s2senovbxnjxR9wAyDWGmAlxJZ4eihLX+qh5qcVfJw==
-X-YMail-OSG: TQTvqiIVM1lubi86qVmXp0WFpEHzppuRnzhG7mQ6uDbMYfxXIZKLcIWyr41eJ7l
- k483SYhuCU_Dv.t_kT8OhKq3cJxugH0PbyxJNBGDTrvjaxLQpeb1t4l_OuyOgKMDhj5bJxFns6_7
- 9YDJUx5ZS1RcRz1.yyDpkgBZHDNIFalGETmPWmwX5D9fHVnOseJdkk.xhOul_.xUaXbAKv0l982O
- pYRKtsrxiccztQmaLX0gRlRGOcKwU2RhGDXvq.B1zqOqMcc_VXx2sId7c_H5_DKcogudbqFW0uqo
- XX9cddaQsgXJIeCwUbg6eFtiUwrDvrG6OjGzQrVQtK_M.buk6QqFH9gjXhX_BoO.UMe131kaLSYq
- YG4QkJOkyfrPafvDiWMKp47fcyz0a7IYX6tRFR2eHuOWpEVLo0Q97Q1qWPJZZAn6nDAs72Dlt5eI
- Y5WWfi6Uw24F4y0iMI4OyhKCaZqKRuCCYKYoKeOpwAcejgPsic6m0vB8O_YzeDE_V3l7yu4EzR1I
- 4PwSh94x9WxhAPR.mFYe2El.bl.HcwwvE5nEGbDbC7YAok8axzRNc1W6ZuKv7cXAbJrqD69xlpoH
- 5CZzDOsC21fptEvMHhjeTHRKmdk.uXzSJtUmHZ_CD5UikFVhEbdoySMS5yVYHnnbQgt_.4ikfG3X
- DlSZ0J4XopYQFRr6OA42eKrujh2GTNf6djM9P1CSG0lAUhSrnqOrQjYEPtX_No7KPdrCIo4GJq0B
- FmlFEO.eJfmsgKFs_.Ypp3zmjOVq4zznDCQzoCOm3bh3cogmjUW0sNK_QfP74xwHoi0KZyLWpBnL
- EjvGrmbgGrpMmYf2.2oJQsTtWQxQxdS_V0kFjAmp4AG2YpRo9yIErHAjdCQvE.NWA0B7JvUzmEKc
- Wq11mkaIaGnlRM0OtebYAODG4X.DT8AxAFUHriJsORkemYv_7YPSAFhlLQ108SU4_ozQEEsXO85S
- oBpOREeVz2Tnx3HucLqHw9TSNK_XA6o0T54PIIXqUK1W.FQej8TMpsGlqCElu57xqciiBeCA4a48
- zPJPiwD8dcKf7ro0bRPJ_epuc0kEd2TpTlq0Tm1.paepF99HciFpyU_gUlN7H9gtr2wuqTergFhr
- EK.KruGpCDO.ZVpS8WFlvgnwTu.sPlqjlz7pmW18k0DlK7jK2k6SWVmWFuZ6KoUNLtnmh.o..VNI
- 1yTVWnju6ylG7HYQC6wIuPSHKISlPEDaUEQDryeoIyHi8SqoF5MCHnd2E6hG7GlfCU6Dinz1hvSz
- b4czZa7CypW8p5GFMxvlZBM5.j1Oa7uNGyCjwyptpbp0pMTo3tKr0KDUjwOQ0bIPF6lGC_cVuHDR
- 6ZAlDcNVRucYILuWtmYl45UZJ.zCKmg1.VUaVBWp.Yy7rmngsHyMM6XfC.vrDmYmmEGW4b7OX2D0
- Yw7umQd8DBIJnu1PyqGt4Iltu68LjQ9AWPMVp2PItihup07hkzPW_jzqcSVO9e7uSnGzidDvZKPo
- U8.O6nF82bMCXuRUKQ3paPbMPUiCLbALPTqcLzsRIqAI580uBrTST3h.XkJ8ff53ffz1Jsqfrl9C
- n2EEffDCKOcaWgjNSmJOt2XVTTKiSGtl.rRljqa3RCYOgt1gKaXkmSbaf8gKQklsiapqDw1DaB2R
- d7BjRZCrqHDybnJ7gqeiSDtqbjDIypHhbZLrKLkp0a2mQpVItgPcoDt2OlWBVK8fdCD8SX1z7.XK
- AFkSkoDdZYlE9TTBxNEQMEFiEkti5A4LLBmIXkmRQx0t7Zw7PZUQSi8piE7QkvVARNWplkmsgUc9
- TR811H5yTTkNB1ojzD7iysvu8rSkWPxwMrA4dIOOWbPP._w8kGZ76p1D0t4ehNOXk0xFXk.erBYG
- UDrKsD7T9iCaQuRd6CiZ5XBfsdJ07RcE8xL5jPEzF8o55zBQXwJG9Lw1Tlj9Vz8onsSbxLOylkPf
- bsRA5BcV0p_KZUkQIBA_E70LCGywBl7pWVJCE_erghmv8YqZWPs8DmDV1WXdcOlIwiKEWzODWCP8
- egFOygTUhjibsOd4WJu.Mer7nsukIeAyUKNqJXmEWsbz7_oY6nXBBnRR9816AbPsmGpBfiqjCLDx
- tpCQTwlEWXMsgmMeikGqN7Pnu4Prdyyjoq2_i7kQ5j15ofHh9BAJ7YxQqcmSw6WbCk6Cr7h75gZN
- nDQ28fMwj6CJS0oZJ8DCE_eigv9T0Kh.aadaaWtjcC3DIDirmeD1izTAQ9vtrSdBbI_ghtiLNJYB
- 653GSEhm5vgc2Vtk1j1OYGxvVAlTU6Z8B
-X-Sonic-MF: <neotheuser@ymail.com>
-X-Sonic-ID: 9194a338-5b23-4e87-950f-ca31bdc63f1a
-Received: from sonic.gate.mail.ne1.yahoo.com by
- sonic302.consmr.mail.bf2.yahoo.com with HTTP; Thu, 23 Apr 2026 21:46:13 +0000
-Date: Thu, 23 Apr 2026 21:45:33 +0000 (UTC)
-From: Alec Ari <neotheuser@ymail.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Message-ID: <1107055211.1670477.1776980733834@mail.yahoo.com>
-Subject: [PATCH] raspi4b: Disable L2 cache
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wG4eq-0007Oc-TX; Thu, 23 Apr 2026 20:44:38 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1wG4eo-0005xs-DR; Thu, 23 Apr 2026 20:44:36 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63NHre4w982124; Fri, 24 Apr 2026 00:44:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=TLdlfV
+ NFZDvxtqSD3pYF6NqyWGU/cRCDoXlYU+VoKYc=; b=IjrWFpDJlzpHK10558iclk
+ qqAzptIUtTgaao5q/OP6kh8JkqWBNMpyo6dMs1pr0+sbpaS7DYTgjyV1oUEXzWtN
+ cxe4WxZ6LG4d3g25MpShoEPWZHc5OdtQoOJMHfwseo29Rr5KyZ6lnoztsMtkibYM
+ hY153VYPABhz51Txg2pCBwHDDikFr2HlrhkYOkB0DZb1QsfOY6iKFMSVIEoLDzVH
+ k7CW2MifYIo4ED0wuIpSkzmEPKpcLl94uUbJ3ku5Et5y97NQ2MLiJw4osAliaPg9
+ M8goI5tYOrLDFzu/WNE31JcsgR74Fp/LTd0LiFYO7eNOOBkYZn9LyWq732JtbsZg
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dpeu7tpwa-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Apr 2026 00:44:30 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63O0ZMPC010897;
+ Fri, 24 Apr 2026 00:44:30 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dpjky8thv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 24 Apr 2026 00:44:30 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63O0iTj23539770
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 24 Apr 2026 00:44:29 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C276458059;
+ Fri, 24 Apr 2026 00:44:29 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 380D65804B;
+ Fri, 24 Apr 2026 00:44:29 +0000 (GMT)
+Received: from [9.61.79.186] (unknown [9.61.79.186])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 24 Apr 2026 00:44:29 +0000 (GMT)
+Message-ID: <9ff8cb74-8abc-4c9a-8f25-044cd4b9d921@linux.ibm.com>
+Date: Thu, 23 Apr 2026 20:44:28 -0400
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/11] 11.1 compat machines and s390x updates
+To: Stefan Hajnoczi <stefanha@gmail.com>, Cornelia Huck <cohuck@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+References: <20260423094856.270215-1-cohuck@redhat.com>
+ <CAJSP0QWFK9noq+CRRG4E1DM4HSyaHxHqmZytqzUHnu-_VsRjUA@mail.gmail.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <CAJSP0QWFK9noq+CRRG4E1DM4HSyaHxHqmZytqzUHnu-_VsRjUA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-References: <1107055211.1670477.1776980733834.ref@mail.yahoo.com>
-X-Mailer: WebService/1.1.25559 YMailNovation
-Received-SPF: pass client-ip=74.6.135.42; envelope-from=neotheuser@ymail.com;
- helo=sonic302-3.consmr.mail.bf2.yahoo.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: kHukQ-36l6lIRDDTVM6q_ojPijaM-OSV
+X-Authority-Analysis: v=2.4 cv=Ksp9H2WN c=1 sm=1 tr=0 ts=69eabcef cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=p0WdMEafAAAA:8
+ a=20KFwNOVAAAA:8 a=G84QbbO70JEjHbqarpgA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: Ib4zD8ysY3yzZ1N6fn2OqBo4kVLKyVDQ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI0MDAwMSBTYWx0ZWRfXxL0aibm3aELv
+ daw4E3goCE9CE3ssYXS+vAvNGq8JeokCAzm9FJ5+vYMzZ+TrYxUJelgfgjabBS+Up3O3qC74cvc
+ oKDPaG2qK66xhgryYFHE3kRlDHXdxcsZ7stM+YOV/IvDyxlKDM+UsHTtsWa9a+ZDx6ntcNtxdnm
+ oL9BNAMAtLLTHOP/xUhxQVhP9Ux6pQtM23dr8KQ3TSiImJMe+0f77xyin+9TLwkN4ZoO3EiTQ6T
+ WF8VcT3/Id7UJLW7f+DLPoWYxb3CB+AnL19xjYmtvz1ulJvJTLjia5RuxuPnwhifYRgtieuOzvj
+ q61LVdE+ga/G6y1spVLIOJlI9PjPJKOLkbtgZeH68b/xiOIU2tO5EZptQhhm1eOe8j7HsUBS8p6
+ u/LI8zcLl0FcNTAXZcilRUPOqmGIVDMPP5KkQ7N9zDjKNJG5MHsMxRIhyIrVAIvYUawkwM8vp2F
+ L5WtPriPBUfj3i0CDVQ==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-23_03,2026-04-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 impostorscore=0 malwarescore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 adultscore=0 suspectscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604240001
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 23 Apr 2026 20:42:33 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,31 +121,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From 8d72a46d3653a46422360e2f6c19b6747ca05abb Mon Sep 17 00:00:00 2001
-From: Alec Ari <neotheuser@ymail.com>
-Date: Thu, 23 Apr 2026 16:42:06 -0500
-Subject: raspi4b: Disable L2 cache
+On 4/23/26 7:20 PM, Stefan Hajnoczi wrote:
+> On Thu, Apr 23, 2026 at 5:50 AM Cornelia Huck <cohuck@redhat.com> wrote:
+> 
+>> The following changes since commit
+>> 98b060da3a4f92b2a994ead5b16a87e783baf77c:
+>>
+>>   Update version for v11.0.0 release (2026-04-21 16:28:47 +0100)
+>>
+>> are available in the Git repository at:
+>>
+>>   https://gitlab.com/cohuck/qemu tags/s390x-20260423
+>>
+>> for you to fetch changes up to 83f5164d25634f9104b5fb4a6772766ae646ad59:
+>>
+>>   hw/s390x/ccw: Disable legacy virtio-pci by default (v11.1+) (2026-04-22
+>> 11:28:03 +0200)
+>>
+>> ----------------------------------------------------------------
+>> First batch of updates for 11.1:
+>> - compat machines for 11.1
+>> - s390x: simplifications, cleanups, and a new test
+>>
+> 
+> Hi Cornelia,
+> There is an s390x timeout regression in this pull request that reproduces
+> both in the CI and locally:
+> 
+> $ make check-functional-s390x
+> 13/13 qemu:func-thorough+func-s390x-thorough+thorough /
+> func-s390x-ccw_virtio         TIMEOUT        420.07s   killed by signal 15
+> SIGTERM
 
 
-Signed-off-by: Alec Ari <neotheuser@ymail.com>
----
-hw/arm/raspi4b.c | 1 +
-1 file changed, 1 insertion(+)
+Hi Connie, it looks to me like the failure is due to disabling legacy
+virtio-pci by default for s390x starting with 11.1.
 
+I was able to get the test to pass again with the diff below.  But
+wasn't sure, do we only care about the default/latest machine version
+for functional tests? 
 
-diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
-index 3eeb8f4..9580711 100644
---- a/hw/arm/raspi4b.c
-+++ b/hw/arm/raspi4b.c
-@@ -68,6 +68,7 @@ static void raspi4_modify_dtb(const struct arm_boot_info *info, void *fdt)
-"brcm,bcm2711-rng200",
-"brcm,bcm2711-thermal",
-"brcm,bcm2711-genet-v5",
-+ "brcm,bcm2711-l2-intc",
-};
+diff --git a/tests/functional/s390x/test_ccw_virtio.py b/tests/functional/s390x/test_ccw_virtio.py
+index 0455337856..1d4958bbe2 100755
+--- a/tests/functional/s390x/test_ccw_virtio.py
++++ b/tests/functional/s390x/test_ccw_virtio.py
+@@ -136,7 +136,7 @@ def test_s390x_devices(self):
+                     r'0x1af4')
+         exec_command_and_wait_for_pattern(self,
+                     r'cat /sys/bus/pci/devices/0005\:00\:00.0/subsystem_device',
+-                    r'0x0001')
++                    r'0x1100')
+         # check fid propagation
+         exec_command_and_wait_for_pattern(self,
+                     r'cat /sys/bus/pci/devices/000a\:00\:00.0/function_id',
+@@ -203,7 +203,7 @@ def test_s390x_fedora(self):
+                         'while ! (dmesg | grep enP7p0s0) ; do sleep 1 ; done',
+                         'virtio_net virtio0 enP7p0s0: renamed')
+         exec_command_and_wait_for_pattern(self, 'lspci',
+-                             '0007:00:00.0 Class 0200: Device 1af4:1000')
++                             '0007:00:00.0 Class 0200: Device 1af4:1041')
+         exec_command_and_wait_for_pattern(self,
+                              'cat /sys/class/net/enP7p0s0/address',
+                              '02:ca:fe:fa:ce:12')
 
-for (int i = 0; i < ARRAY_SIZE(nodes_to_remove); i++) {
--- 
-2.53.0
 
 
