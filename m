@@ -4,97 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D3FFB44C5
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 07:16:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0048DFB44BB
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 07:17:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGAlY-0002Mf-G5; Fri, 24 Apr 2026 03:15:56 -0400
+	id 1wGAnK-0002yk-7o; Fri, 24 Apr 2026 03:17:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wGAlQ-0002La-MQ
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 03:15:51 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wGAlJ-0000Kh-JZ
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 03:15:46 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-488ba840146so67129225e9.1
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 00:15:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777014940; x=1777619740; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=aO+pVKRE5JjEtTa4KGnF+otF0zYfiNqJ2NW6e07bi7s=;
- b=Cbh3i52pqpgEEWJXF/M9vlXJkZ7p7XEu48RMTjLb7TbsqdlFq8HKev3FymoTTLYy73
- OCe8yQAG6+WDRgs9UYHyFP7H4W5rcnaPryoGz9jxV0pnIWblbNEYGT6K02QuFnEj8Zmb
- 3Ohdr/bwwGwhIfIEhtYdSQd0TLN/DahGDu2SQbK3acZH/Ppdg1h8dhjtR3yffoZHVq4B
- tRIcTaOkvprTPnx6Xe3XYxb5tPOu4AP35Z8J5AwgqhyiMct08kanIqOusNREa9vIgOnw
- iIpfkYApQ6P3f0vWykrcSFfk2IdcWeyDLhw5SVHQLJcTVIbBtgYyrXUuZgR3I/wbK4Pa
- C4Ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777014940; x=1777619740;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=aO+pVKRE5JjEtTa4KGnF+otF0zYfiNqJ2NW6e07bi7s=;
- b=GG8r0BGfegIXNPuJz6gHEXzvUdCaIYJZLURiIPr2OxZl2tOYgDR+awkJgjF/wNAH7z
- 8lMocscOhXrjghsj0cMBrlGDayfXz4I+MQwCOs2dWMRm2/grvA2V1vT49x1d2z33mcPe
- qxvrjLQUToky+dR4x3hsL2PRShBj09RgPiAn9gp+ifbsg6N+bqf1bYGjC8syMTGsPZua
- 7grLZA6ojkR7Nsyi6PsE6KT5BVioFpOOaBInk613gAKAlDymXH5BlG5Qf8SzUq3LLgn9
- dyc5rgUoBoVMkFJuvO180HHH+ZfWqvAXC4enRsvUNTrMnQ7jfwdaZOq1JALJS0aeGcOK
- /XVA==
-X-Gm-Message-State: AOJu0Yx8pebNbPFqrNgrwQ8Pm7GznuqKPynNxHRZyVLE31SjwquDOAat
- OU7WlNXOLHrPv+vY9BLPzO2LV3Ho/IUdx5sKuWKgFqcqAs4DFql49Ng+mIWCDWH0T3hjQmrKTOO
- 1t0hClvc=
-X-Gm-Gg: AeBDiet6H5hp6lCRh/6C33ATFZ7m2oiqcClsKYWAYqOTNYFUn5mVkgeVt/HFEtMuptn
- TKQc2kGTIJcnkhoQHEWBiGY4ic3rvCIEg5j4D8P82zTT1QW0gJgj8PjUqEa8KetKQZ7MiGklSqz
- 3IMKLNecOLcXROcAKxxwqesiEzHovQlOFhTzVWG4x0qNHJ51VDSVKKuOogfnUrCOyFv6kP6c48P
- O3IAt3xeARbFdJdkyGUtuvqbBIVCR4I/nhbN2vwMBwfF2wS4UWncRitbkYQQt75AuFGWqMCz5ux
- I/1tZmsUKfR9bhylnTNTOq6SpPRXGMaQuVPws9WbXjIXiezDW3GHbIlk3Fjo97HjT7rIcauCDAl
- flDbbu7JPtL3a/f9WD3urWkDYeVfNpA1Ahn8u2hzAcuttF889VUV7ZrKKqniFELpznrJuOwiPU4
- I19lG9vkmXAxLf6P3zELQGNKQJVxrHV9/S2RLcOAi2OBuTzoqFiecMrB0pGql8S4KI33Zywfked
- MxM84rFjMc+WcJL84XhPMqhs4ZZwq9jdcq+lSr22VnUnpdzGtVWJWY31Ve+hOMRTr/25nYR
-X-Received: by 2002:a05:600c:890c:b0:485:3ff1:d5ed with SMTP id
- 5b1f17b1804b1-488fb739cd9mr361725705e9.1.1777014940030; 
- Fri, 24 Apr 2026 00:15:40 -0700 (PDT)
-Received: from meli-email.org (athedsl-338307.home.otenet.gr. [85.72.177.33])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc1cfbf2sm590660555e9.15.2026.04.24.00.15.39
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 24 Apr 2026 00:15:39 -0700 (PDT)
-Date: Fri, 24 Apr 2026 10:15:26 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>,
- Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: Re: [PATCH v20 07/15] hvf: gate ARM_FEATURE_PMU register emulation
- when using the Apple vGIC
-User-Agent: meli/0.8.13
-References: <20260316130642.13246-1-mohamed@unpredictable.fr>
- <20260316130642.13246-8-mohamed@unpredictable.fr>
-In-Reply-To: <20260316130642.13246-8-mohamed@unpredictable.fr>
-Message-ID: <tdzli2.3nqzzsd8i5ktn@linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wGAnC-0002xx-By
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 03:17:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wGAn5-0001ae-TZ
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 03:17:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777015050;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qCTkGnd04YXH8gabOITUlYlk7Hbx1uJn9LyaZJfV9DQ=;
+ b=KW8ArctuN1xzmmb5fsDiUld4Col7wCicujzKIKpVbaMUBSW9ExnSZSsnPzH6Z5nEAG5xss
+ nKNbdddQ7+fO2QFxM7MvgbYO43SCbb7q2eyHUgSRagJh0gKNjgDu1Ur3PGqWYLjBKmjVAM
+ NyCwUqq0PfmNt4ej53BJxKehlO5+HQ0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-390-Eyj02VqFMsWFRWmxvHa1rg-1; Fri,
+ 24 Apr 2026 03:17:27 -0400
+X-MC-Unique: Eyj02VqFMsWFRWmxvHa1rg-1
+X-Mimecast-MFC-AGG-ID: Eyj02VqFMsWFRWmxvHa1rg_1777015045
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DF4301800473; Fri, 24 Apr 2026 07:17:24 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.30])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1D4473007572; Fri, 24 Apr 2026 07:17:23 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 6C53621E6A28; Fri, 24 Apr 2026 09:17:21 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org,  Joao Martins <joao.m.martins@oracle.com>,
+ Markus Armbruster <armbru@redhat.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>,  Avihai Horon <avihaih@nvidia.com>,  Daniel P .
+ =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Prasad Pandit
+ <ppandit@redhat.com>,  Alex Williamson <alex@shazbot.org>,  Kirti Wankhede
+ <kwankhede@nvidia.com>,  Zhiyi Guo <zhguo@redhat.com>,  "Maciej S .
+ Szmigiero" <mail@maciej.szmigiero.name>,  Juraj Marcin
+ <jmarcin@redhat.com>,  "Dr. David Alan Gilbert" <dave@treblig.org>
+Subject: Re: [PATCH v2 14/16] migration/qapi: Introduce system-wise
+ "remaining" reports
+In-Reply-To: <20260421202110.306051-15-peterx@redhat.com> (Peter Xu's message
+ of "Tue, 21 Apr 2026 16:21:08 -0400")
+References: <20260421202110.306051-1-peterx@redhat.com>
+ <20260421202110.306051-15-peterx@redhat.com>
+Date: Fri, 24 Apr 2026 09:17:21 +0200
+Message-ID: <87cxzovncu.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x32b.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,55 +93,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 16 Mar 2026 15:06, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
->From Apple documentation:
->
->> When EL2 is disabled, PMU register accesses trigger "Trapped MSR, MRS, or
->> System Instruction" exceptions. When this happens, hv_vcpu_run() returns, and the
->>  hv_vcpu_exit_t object contains the information about this exception.
->
->> When EL2 is enabled, the handling of PMU register accesses is determined by the PMUVer
->> field of ID_AA64DFR0_EL1 register.
->> If the PMUVer field value is zero or is invalid, PMU register accesses generate "Undefined"
->> exceptions, which are sent to the guest.
->> If the PMUVer field value is non-zero and valid, PMU register accesses are emulated by the framework.
->> The ID_AA64DFR0_EL1 register can be modified via hv_vcpu_set_sys_reg API.
->
->However, despite what that documentation says this is actually gated on using the Apple vGIC
->instead of nested virtualisation per se. Apple introduced both at the same time.
->
->Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->---
+Peter Xu <peterx@redhat.com> writes:
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> Currently, mgmt can only query for remaining RAM,
 
-> target/arm/hvf/hvf.c | 4 ++--
-> 1 file changed, 2 insertions(+), 2 deletions(-)
+Remind me: how?
+
+>                                                   not system-wise remaining
+> data.  It was not a problem before, because for a very long time RAM was
+> the only part that matters.
 >
->diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
->index 04c4106a3e..c971aa8cce 100644
->--- a/target/arm/hvf/hvf.c
->+++ b/target/arm/hvf/hvf.c
->@@ -1601,7 +1601,7 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
->     ARMCPU *arm_cpu = ARM_CPU(cpu);
->     CPUARMState *env = &arm_cpu->env;
-> 
->-    if (arm_feature(env, ARM_FEATURE_PMU)) {
->+    if (!hvf_irqchip_in_kernel() && arm_feature(env, ARM_FEATURE_PMU)) {
->         switch (reg) {
->         case SYSREG_PMCR_EL0:
->             *val = env->cp15.c9_pmcr;
->@@ -1862,7 +1862,7 @@ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
->                            SYSREG_OP2(reg),
->                            val);
-> 
->-    if (arm_feature(env, ARM_FEATURE_PMU)) {
->+    if (!hvf_irqchip_in_kernel() && arm_feature(env, ARM_FEATURE_PMU)) {
->         switch (reg) {
->         case SYSREG_PMCCNTR_EL0:
->             pmu_op_start(env);
->-- 
->2.50.1 (Apple Git-155)
+> After VFIO migrations landed upstream, it may not be true anymore
+> especially considering that there can be GPU devices that contain GBs of
+> device states.
 >
+> Add a new "remaining" field in query-migrate results, reflecting
+> system-wise remaining data, which will include everything (e.g. VFIO).
+
+"system-wise"?  Do you mean "system-wide"?  Maybe "total"?
 >
+> This information will be useful for mgmt to implement generic way of stall
+> detection that covers all system resources.  Say, when system remaining
+> data does not decrease anymore for a relatively long period of time, then
+> it may mean that there is a challenge of converging, so mgmt can act based
+> on how this value changes over time (especially if sampled after each
+> migration iteration).
+>
+> Before this patch, "expected_downtime" almost played this role. For
+> example, by monitoring "expected_downtime" at the beginning of each
+> iteration can in most cases also reflect the progress of migration
+> system-wise.  Said that, "expected_downtime" was always calculated based on
+> a bandwidth value that can fluctuate a lot if avail-switchover-bandwidth is
+> not used. This new "remaining" field will remove that part of uncertainty
+> for mgmt.
+>
+> With the new field, HMP "info migrate" now reports this:
+>
+> (qemu) info migrate
+> Status:                 active
+> Time (ms):              total=12080, setup=14, exp_down=300
+> Remaining:              1.36 GiB        <------------------- newline
+
+"Newline" is ASCI character '\n'.  I guess you mean "this is the new
+line".
+
+> RAM info:
+>   Throughput (Mbps):    840.50
+>   Sizes:                pagesize=4 KiB, total=4.02 GiB
+>   Transfers:            transferred=1.18 GiB, remain=1.36 GiB
+>     Channels:           precopy=1.18 GiB, multifd=0 B, postcopy=0 B
+>     Page Types:         normal=307923, zero=388148
+>   Page Rates (pps):     transfer=25660
+>   Others:               dirty_syncs=1
+>
+> It should be the same value as RAM's remaining report when VFIO is not
+> involved, and it should report more than that when VFIO is involved.
+
+"RAM's remaining report" is the "remain=1.36 GiB" part, isn't it?
+
+> Cc: Markus Armbruster <armbru@redhat.com>
+> Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+> Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  qapi/migration.json            | 4 ++++
+>  migration/migration-hmp-cmds.c | 5 +++++
+>  migration/migration.c          | 7 +++++++
+>  3 files changed, 16 insertions(+)
+>
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index e3ad3f0604..a6e24b5685 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -300,6 +300,9 @@
+>  #     average memory load of the virtual CPU indirectly.  Note that
+>  #     zero means guest doesn't dirty memory.  (Since 8.1)
+>  #
+> +# @remaining: amount of bytes remaining to be migrated system-wise,
+> +#     includes both RAM and all devices (like VFIO).  (Since 11.1)
+> +#
+>  # Features:
+>  #
+>  # @unstable: Members @postcopy-latency, @postcopy-vcpu-latency,
+> @@ -310,6 +313,7 @@
+>  ##
+>  { 'struct': 'MigrationInfo',
+>    'data': {'*status': 'MigrationStatus', '*ram': 'MigrationRAMStats',
+> +           '*remaining': 'uint64',
+
+It's a byte count, so let's make it 'size'.
+
+>             '*vfio': 'VfioStats',
+>             '*xbzrle-cache': 'XBZRLECacheStats',
+>             '*total-time': 'int',
+
+[...]
+
 
