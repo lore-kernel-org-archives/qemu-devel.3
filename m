@@ -4,44 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3996AFE5200
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 10:26:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 728E0FE5202
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 10:28:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGDjU-0004HF-E0; Fri, 24 Apr 2026 06:26:00 -0400
+	id 1wGDle-0005MS-4R; Fri, 24 Apr 2026 06:28:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wGDjR-00047h-6e; Fri, 24 Apr 2026 06:25:57 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1wGDjP-0005mW-7A; Fri, 24 Apr 2026 06:25:56 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id E34B34A50C;
- Fri, 24 Apr 2026 12:25:42 +0200 (CEST)
-Message-ID: <017dc767-90e3-4983-8417-e541b3fb04f6@proxmox.com>
-Date: Fri, 24 Apr 2026 12:25:41 +0200
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1wGDlZ-0005Lm-5U
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 06:28:09 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1wGDlX-0006Om-LB
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 06:28:08 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2aaf43014d0so48262875ad.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 03:28:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1777026486; x=1777631286; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=D8FA3Q/H/Wx57j06mptn+XAoLZytcH6CenJXHrZ1k6Q=;
+ b=cnHnRhFbPdFVSzANdOiNRijAt5OOnJe/Bpdb6ga6IC/8ivZfci9wCBk9K8birzjJy2
+ E77CFevnLuRrJDgSeWUcoL3/wr/y1jDIhu5PLb4N0QtuLlk3CByd71zEOwdugxmxgi0p
+ PCVDkMOHLqDLuDw5ny03iNIxLQ0m5+X6wNDjZbB2rWwUI2d/FZtlAfxj8sauIh+IC9ZS
+ pkMK9r1ORbr80InLVRE54xiSbKlBYpdoLPwrYZYkylI5Ozt6RMMYShz5Ee+CoX20pxSs
+ HSnhauBdGaObkpA8dE4WQdY+EgpO8Uws+Hgg06hJpZ6MUCiBSIpZxu9NUO/6NQEuThkq
+ xAQw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777026486; x=1777631286;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=D8FA3Q/H/Wx57j06mptn+XAoLZytcH6CenJXHrZ1k6Q=;
+ b=Z+vAOyO7dt3b5u0qTQPiOEqxzMtOYZeaO6m8qub4DdLzV6s/EyhzMfAqtu22PqHyuq
+ AVsfSCD5ddoTxrIntwRiHeo6RzYqov5WP1GQw1awwxUQJ6Px091Ox7LCyeYYgFI0T67k
+ EQdBENekjNxU7xL1CO+OpP0AEAY+AxkdmyJJr/oFtMOYnEVpQRdh38IZII7pIh6BPvBk
+ CpHKP7v8w21R+iHXIq/iq5SAzg16qqOfrqQGBj4ANYSjceGdywz2hZzQMGLP+NKqQV3Q
+ +SKV45J0SG891j4slEr1lgBPOjKS4buuR2LzZ0Y74bBRa49HOJ1D733OtGXieQjc+j2a
+ TVKg==
+X-Gm-Message-State: AOJu0YxuhurAKthQS9S8i1QTYERMGovnMg4UbF13FMuRbdA9Bra8n9f9
+ 1GAIA1UEY66UDbL4EBxYMBD5jWm0V8j/iZQ95I1SrLkTB/X/IRWRqTot0rw4qQ0JUYTBZj6hk5o
+ 63es5iYa7KWZNtMMWygxF1ThTzsl0ajx7WuOicJtJAGT7cQmEyZqI7+GkVL6bhstujbvRR3MBgE
+ zWTLGb2pAFaRjlVgZRMcWizi6tyt+ktYCB7J2Stm7mkLPzhS0J
+X-Gm-Gg: AeBDievvDBYywmW5xdWZO23ZtlslUI/DXECobFNW7I39DNgS/mh2dXLLmayDidAahHv
+ a7jagwuNq4fJP54SYw8qDQ/tKMFz8I3Uwj8kzwbEROMqr+M693TrfZU4fbDJnLKswnauqwLVmC5
+ iR2o86O0NFWxd2zvNf3cPfcyp4YRYFS4p5m7kyWL6LwpMZPKQoYi2yER5s6oKemOmeGVe9Sh7Vr
+ 0Y+pfCPi6fvzIZ8jqjw5tztK8DfswC6sfq+TFfLlVRqBmTccpFcqCDOYlu5mMrUkMI7AV83ECdH
+ 7HjojBeNYLtDQT29/on5xG/8ItUN9LjCvnGYWm1iN0u23VXtwlsAS5U0NFg7TSNX0YJcJZWNuYQ
+ CUV+FJw8wp8mNaxPNU5SnzVtZdQsbMGPjeGhZWTP2StBy+QWLeEZ957gNi7b64Kg2E5MLfBWyhE
+ TvqtNcNzjSqPG+QjR0p0dvyZ+TAcer3KqZkVysDA1Z5QXHfDfuUd7Lbp3BfbR2eqzGPJmXsNA=
+X-Received: by 2002:a17:902:7249:b0:2ae:b9cd:d2ce with SMTP id
+ d9443c01a7336-2b5f9f63300mr251253995ad.27.1777026485712; 
+ Fri, 24 Apr 2026 03:28:05 -0700 (PDT)
+Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b5fab0c17esm218889585ad.41.2026.04.24.03.28.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Apr 2026 03:28:05 -0700 (PDT)
+From: frank.chang@sifive.com
+To: qemu-devel@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
+ Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH 0/4] Support the true Zicclsm extension
+Date: Fri, 24 Apr 2026 18:27:56 +0800
+Message-ID: <20260424102800.24022-1-frank.chang@sifive.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-Subject: Excessive IO PSI for iothread when using io_uring since QEMU 10.2
-To: "open list:Network Block Dev..." <qemu-block@nongnu.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Fam Zheng <fam@euphon.net>,
- Hanna Czenczek <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1777026251746
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=frank.chang@sifive.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -58,41 +105,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dear maintainers,
+From: Frank Chang <frank.chang@sifive.com>
 
-since QEMU 10.2, if io_uring is enabled, it will be used for the event
-loop of iothreads and this causes an IO pressure stall value of nearly
-100 when idle.
+Support the true Zicclsm extension so that we can trap misaligned accesses
+when the extension is disabled.
 
-The issue was also reported on the kernel mailing list [0]. The
-suggestion from Jens Axboe was to just turn off the iowait accounting
-completely. But since (for block/file-posix.c), there is actual IO
-submitted via the same ring, I wasn't sure if that is the right approach.
+Zicclsm is set to true by default to be backwards compatible with the old
+RISC-V QEMU design.
 
-So the idea was to keep track of whether the event loop is otherwise
-idle and only use the IORING_ENTER_NO_IOWAIT flag in that case [1].
+To disable Zicclsm, simply set zicclsm=false, e.g.:
+  -cpu rv64,zicclsm=false
 
-However, doing so would only help for block/file-posix.c, which submits
-IO via luring_co_submit() -> fdmon_io_uring_add_sqe(). For example, for
-block/rbd.c, only a poll SQE for the AioHandler node's fd is used. When
-submitting that poll SQE in the iothread, we would need to be able to
-know if IO for RBD is currently in-flight or not to be able to decide
-whether to use the IORING_ENTER_NO_IOWAIT flag or not. Is there a good
-way to do this (in a general way)?
+QEMU will raise a misaligned load/store exception when executing misaligned
+load/store instructions.
 
-Or should the flag really always be used (if supported by the kernel)?
-Is there a way to tell io_uring/kernel that we are an event loop and our
-waiting should only be accounted for when there is actual IO in-flight?
+Frank Chang (4):
+  target/riscv: Add Zicclsm CPU option
+  target/riscv: Support raising misaligned exceptions for scalar
+    loads/stores
+  target/riscv: Support raising misaligned exceptions for vector
+    loads/stores
+  target/riscv: Expose Zicclsm extension as a CPU property
 
-Happy to hear your opinions and suggestions!
+ target/riscv/cpu.c                      |  4 +-
+ target/riscv/cpu_cfg_fields.h.inc       |  2 +
+ target/riscv/insn_trans/trans_rvi.c.inc |  6 ++
+ target/riscv/insn_trans/trans_rvv.c.inc |  3 +-
+ target/riscv/vector_helper.c            | 82 ++++++++++++++++++++-----
+ 5 files changed, 80 insertions(+), 17 deletions(-)
 
-[0]:
-https://lore.kernel.org/io-uring/14bc6266-5bc9-4454-9518-d1016bfe417b@proxmox.com/T/
-
-[1]:
-https://lore.proxmox.com/pve-devel/525c4dad-6d04-41f0-8a21-9302b0c6baa4@proxmox.com/T/
-
-Best Regards,
-Fiona
+--
+2.43.0
 
 
