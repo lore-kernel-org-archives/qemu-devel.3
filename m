@@ -4,54 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DE39FB44B2
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 12:36:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D62E3FED3C3
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 12:51:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGFkk-0007Su-MD; Fri, 24 Apr 2026 08:35:29 -0400
+	id 1wGFzX-0004it-W8; Fri, 24 Apr 2026 08:50:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bea1e@proton.me>) id 1wGEaS-0006YT-IB
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 07:20:45 -0400
-Received: from mail-07.mail-europe.com ([188.165.51.139])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wGFzV-0004ij-RH
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 08:50:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <bea1e@proton.me>) id 1wGEaQ-0001YS-4p
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 07:20:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
- s=protonmail; t=1777029636; x=1777288836;
- bh=SIpA694rwzz6Yz/M+wlJIvaNne2KH1iqD83jCKgDYY0=;
- h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
- Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=BUG56Ye+osrYRZnOTixIUIhqaGhSfcCHjmNxE5VfJSnANgYCjTA8+Us0UlgS1Rf0d
- cMJbYBveCrJbCtDHZsJ5kqPI+hZMF5cAhnvWF855X1WP7flE044kWp8a9lUuAF7uFx
- LKzRfQ5glSgF87IraQ6m6l7QfR9+HhcdA4DTArAELtyaHv0zzB/vn9B87r4CKYmWtb
- N1WSlhTAp5r5ObW7sRGvUyNukC/WbBOygJQ7DDc7x3ST8uY916c9osDOJjFjuKMI4d
- Q0Fx1AxTc9jKGObDGzOSmj4DrAiUkXD2QOpzgSq9sGx04hpCg/q4cwB4Kseg3zEz5r
- +NjTQtfazhSdA==
-Date: Fri, 24 Apr 2026 11:20:31 +0000
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-From: Feifan Qian <bea1e@proton.me>
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PATCH] hw/usb/xhci: clamp interval exponent to avoid UB shift in
- xhci_init_epctx()
-Message-ID: <sXJQOREScD4G6fYInirO2wbLtvZf6EK1yuTrP6U3GQBM5dIq7dhRnCm9uxSSiRRK0b4m7OEZRqEgjzHCTFoS0DruFvYUXh-UUXhkY0x786A=@proton.me>
-Feedback-ID: 93226294:user:proton
-X-Pm-Message-ID: b66a7b5a7e470fa34e7bf06b40d546c5348374bc
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wGFzU-0005ie-2l
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 08:50:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777035037;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1mq4sHshCqBAlZJwGMlczxv6eprNBC2Y5bjdVsccY+w=;
+ b=BBb+cOznFli2H9ynXGwRhppwybZpsM5LMCT5eC++SgEyarsc6AnelBawp+GT5Bj3PG00IS
+ 05qbix9Xc61f/101KMjkclbn7asEzYrPtBviDBQFu7xsnXEpG8m7gZkVpX/3mqRUjkRcwW
+ 5kPjY0rVxSm1pBKUZPsB+oAjeiVdIcg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-541-fZSPBJFkPPCY5m6kZxFJdg-1; Fri,
+ 24 Apr 2026 08:50:28 -0400
+X-MC-Unique: fZSPBJFkPPCY5m6kZxFJdg-1
+X-Mimecast-MFC-AGG-ID: fZSPBJFkPPCY5m6kZxFJdg_1777035026
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0497319560B4; Fri, 24 Apr 2026 12:50:26 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.30])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4664F180047F; Fri, 24 Apr 2026 12:50:25 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D132321E6A28; Fri, 24 Apr 2026 14:50:22 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Igor Mammedov <imammedo@redhat.com>,  Mauro
+ Carvalho Chehab <mchehab+huawei@kernel.org>,  "Michael S. Tsirkin"
+ <mst@redhat.com>,  Michael Roth <michael.roth@amd.com>,  Ani Sinha
+ <anisinha@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Eric Blake
+ <eblake@redhat.com>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?= <philmd@linaro.org>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 00/12] qapi: add formal "intro" section
+In-Reply-To: <20260423220022.2180059-1-jsnow@redhat.com> (John Snow's message
+ of "Thu, 23 Apr 2026 18:00:09 -0400")
+References: <20260423220022.2180059-1-jsnow@redhat.com>
+Date: Fri, 24 Apr 2026 14:50:22 +0200
+Message-ID: <87mrysr08h.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="b1=_sITyaj82KjrwlasRJ1P974jPUXjdLdpiu4uQTTW4fo"
-Received-SPF: pass client-ip=188.165.51.139; envelope-from=bea1e@proton.me;
- helo=mail-07.mail-europe.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Fri, 24 Apr 2026 08:34:46 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,94 +93,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---b1=_sITyaj82KjrwlasRJ1P974jPUXjdLdpiu4uQTTW4fo
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
+John Snow <jsnow@redhat.com> writes:
 
-VGhlIHhIQ0kgZW5kcG9pbnQgY29udGV4dCBkd29yZCAwIGJpdHMgMjM6MTYgKCJJbnRlcnZhbCIp
-IGFyZSB3cml0dGVuCmJ5IHRoZSBndWVzdCBhbmQgcGFzc2VkIGRpcmVjdGx5IGFzIHRoZSBzaGlm
-dCBhbW91bnQgaW46CgplcGN0eC0+aW50ZXJ2YWwgPSAxIDw8ICgoY3R4WzBdID4+IDE2KSAmIDB4
-ZmYpOwoKVGhlIHNoaWZ0IGFtb3VudCBjYW4gYmUgMC0yNTUuIFNoaWZ0aW5nIGEgMzItYml0IGBp
-bnRgIGxlZnQgYnkgPj0gMzIKaXMgdW5kZWZpbmVkIGJlaGF2aW91ciB1bmRlciBDMTEgwqc2LjUu
-N3A0LiBXaXRoIFVCU2FuCihoYWx0X29uX2Vycm9yPTEpIHRoaXMgY2F1c2VzIFFFTVUgdG8gYWJv
-cnQ7IHdpdGggYWdncmVzc2l2ZSBjb21waWxlcgpvcHRpbWlzYXRpb25zIHRoYXQgYXNzdW1lIFVC
-IGlzIHVucmVhY2hhYmxlIHRoZSByZXN1bHQgaXMKdW5wcmVkaWN0YWJsZS4KCkNsYW1wIHRoZSBl
-eHBvbmVudCB0byBbMCwgMzFdIHdpdGggTUlOKCkgYmVmb3JlIHRoZSBzaGlmdCwgYW5kIHVzZQpg
-MXVgICh1bnNpZ25lZCkgdG8gYXZvaWQgc2hpZnRpbmcgYSBzaWduZWQgaW50ZWdlci4gVGhlIHhI
-Q0kKc3BlY2lmaWNhdGlvbiBkZWZpbmVzIGEgbWF4aW11bSBtZWFuaW5nZnVsIEludGVydmFsIHZh
-bHVlIG9mIDE1IGZvcgptb3N0IGVuZHBvaW50IHR5cGVzOyBjbGFtcGluZyB0byAzMSBpcyB0aGUg
-bWluaW1hbCBzYWZlIGZpeCB0aGF0CnByZXNlcnZlcyB0aGUgZnVsbCB1bnNpZ25lZCAzMi1iaXQg
-cmFuZ2UgZm9yIGFueSBjb21wbGlhbnQgdmFsdWUuCgpSZXBvcnRlZC1ieTogRmVpZmFuIFFpYW4g
-PGJlYTFlQHByb3Rvbi5tZT4KU2lnbmVkLW9mZi1ieTogRmVpZmFuIFFpYW4gPGJlYTFlQHByb3Rv
-bi5tZT4KLS0tCmh3L3VzYi9oY2QteGhjaS5jIHwgMiArLQoxIGZpbGUgY2hhbmdlZCwgMSBpbnNl
-cnRpb24oKyksIDEgZGVsZXRpb24oLSkKCmRpZmYgLS1naXQgYS9ody91c2IvaGNkLXhoY2kuYyBi
-L2h3L3VzYi9oY2QteGhjaS5jCmluZGV4IDAwMDAwMDAwMDAuLjAwMDAwMDAwMDEgMTAwNjQ0Ci0t
-LSBhL2h3L3VzYi9oY2QteGhjaS5jCisrKyBiL2h3L3VzYi9oY2QteGhjaS5jCkBAIC0xMTE5LDgg
-KzExMTksOCBAQCBzdGF0aWMgdm9pZCB4aGNpX2luaXRfZXBjdHgoWEhDSUVQQ29udGV4dCAqZXBj
-dHgsCnhoY2lfcmluZ19pbml0KGVwY3R4LT54aGNpLCAmZXBjdHgtPnJpbmcsIGRlcXVldWUpOwpl
-cGN0eC0+cmluZy5jY3MgPSBjdHhbMl0gJiAxOwp9CgotIGVwY3R4LT5pbnRlcnZhbCA9IDEgPDwg
-KChjdHhbMF0gPj4gMTYpICYgMHhmZik7CisgZXBjdHgtPmludGVydmFsID0gMXUgPDwgTUlOKChj
-dHhbMF0gPj4gMTYpICYgMHhmZnUsIDMxdSk7Cn0KCnN0YXRpYyBUUkJDQ29kZSB4aGNpX2VuYWJs
-ZV9lcChYSENJU3RhdGUgKnhoY2ksIHVuc2lnbmVkIGludCBzbG90aWQsCi0tCjIuNDMuMA==
+> Hiya, this is a series that explores a potential syntax for a
+> designated "Intro" section. Markus knows why I want this, but for
+> everyone else: a designated "Introduction" section is useful for the
+> desired "inliner" feature for the new QAPI doc system. Commits explain
+> a bit more. This is prep work and doesn't really change anything
+> tangibly except source code syntax for the QAPI docs.
 
---b1=_sITyaj82KjrwlasRJ1P974jPUXjdLdpiu4uQTTW4fo
-Content-Type: text/html; charset=utf-8
-Content-Transfer-Encoding: base64
+Let me elaborate a bit.
 
-PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDE0
-cHg7Ij48L2Rpdj48c3Bhbj48L3NwYW4+PHNwYW4+VGhlIHhIQ0kgZW5kcG9pbnQgY29udGV4dCBk
-d29yZCAwIGJpdHMgMjM6MTYgKCJJbnRlcnZhbCIpIGFyZSB3cml0dGVuPC9zcGFuPjxkaXY+PHNw
-YW4+YnkgdGhlIGd1ZXN0IGFuZCBwYXNzZWQgZGlyZWN0bHkgYXMgdGhlIHNoaWZ0IGFtb3VudCBp
-bjo8L3NwYW4+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDsgJm5ic3A7IGVw
-Y3R4LSZndDtpbnRlcnZhbCA9IDEgJmx0OyZsdDsgKChjdHhbMF0gJmd0OyZndDsgMTYpICZhbXA7
-IDB4ZmYpOzwvc3Bhbj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PjxzcGFuPlRoZSBzaGlmdCBh
-bW91bnQgY2FuIGJlIDAtMjU1LiAmbmJzcDtTaGlmdGluZyBhIDMyLWJpdCBgaW50YCBsZWZ0IGJ5
-ICZndDs9IDMyPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+aXMgdW5kZWZpbmVkIGJlaGF2aW91ciB1
-bmRlciBDMTEgwqc2LjUuN3A0LiAmbmJzcDtXaXRoIFVCU2FuPC9zcGFuPjwvZGl2PjxkaXY+PHNw
-YW4+KGhhbHRfb25fZXJyb3I9MSkgdGhpcyBjYXVzZXMgUUVNVSB0byBhYm9ydDsgd2l0aCBhZ2dy
-ZXNzaXZlIGNvbXBpbGVyPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+b3B0aW1pc2F0aW9ucyB0aGF0
-IGFzc3VtZSBVQiBpcyB1bnJlYWNoYWJsZSB0aGUgcmVzdWx0IGlzPC9zcGFuPjwvZGl2PjxkaXY+
-PHNwYW4+dW5wcmVkaWN0YWJsZS48L3NwYW4+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48c3Bh
-bj5DbGFtcCB0aGUgZXhwb25lbnQgdG8gWzAsIDMxXSB3aXRoIE1JTigpIGJlZm9yZSB0aGUgc2hp
-ZnQsIGFuZCB1c2U8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj5gMXVgICh1bnNpZ25lZCkgdG8gYXZv
-aWQgc2hpZnRpbmcgYSBzaWduZWQgaW50ZWdlci4gJm5ic3A7VGhlIHhIQ0k8L3NwYW4+PC9kaXY+
-PGRpdj48c3Bhbj5zcGVjaWZpY2F0aW9uIGRlZmluZXMgYSBtYXhpbXVtIG1lYW5pbmdmdWwgSW50
-ZXJ2YWwgdmFsdWUgb2YgMTUgZm9yPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+bW9zdCBlbmRwb2lu
-dCB0eXBlczsgY2xhbXBpbmcgdG8gMzEgaXMgdGhlIG1pbmltYWwgc2FmZSBmaXggdGhhdDwvc3Bh
-bj48L2Rpdj48ZGl2PjxzcGFuPnByZXNlcnZlcyB0aGUgZnVsbCB1bnNpZ25lZCAzMi1iaXQgcmFu
-Z2UgZm9yIGFueSBjb21wbGlhbnQgdmFsdWUuPC9zcGFuPjwvZGl2PjxkaXY+PGJyPjwvZGl2Pjxk
-aXY+PHNwYW4+UmVwb3J0ZWQtYnk6IEZlaWZhbiBRaWFuICZsdDs8YSB0YXJnZXQ9Il9ibGFuayIg
-cmVsPSJub3JlZmVycmVyIG5vZm9sbG93IG5vb3BlbmVyIiBocmVmPSJtYWlsdG86YmVhMWVAcHJv
-dG9uLm1lIj5iZWExZUBwcm90b24ubWU8L2E+Jmd0Ozwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPlNp
-Z25lZC1vZmYtYnk6IEZlaWZhbiBRaWFuICZsdDs8YSB0YXJnZXQ9Il9ibGFuayIgcmVsPSJub3Jl
-ZmVycmVyIG5vZm9sbG93IG5vb3BlbmVyIiBocmVmPSJtYWlsdG86YmVhMWVAcHJvdG9uLm1lIj5i
-ZWExZUBwcm90b24ubWU8L2E+Jmd0Ozwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPi0tLTwvc3Bhbj48
-L2Rpdj48ZGl2PjxzcGFuPmh3L3VzYi9oY2QteGhjaS5jIHwgMiArLTwvc3Bhbj48L2Rpdj48ZGl2
-PjxzcGFuPjEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlvbigrKSwgMSBkZWxldGlvbigtKTwvc3Bh
-bj48L2Rpdj48ZGl2Pjxicj48L2Rpdj48ZGl2PjxzcGFuPmRpZmYgLS1naXQgYS9ody91c2IvaGNk
-LXhoY2kuYyBiL2h3L3VzYi9oY2QteGhjaS5jPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+aW5kZXgg
-MDAwMDAwMDAwMC4uMDAwMDAwMDAwMSAxMDA2NDQ8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4tLS0g
-YS9ody91c2IvaGNkLXhoY2kuYzwvc3Bhbj48L2Rpdj48ZGl2PjxzcGFuPisrKyBiL2h3L3VzYi9o
-Y2QteGhjaS5jPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+QEAgLTExMTksOCArMTExOSw4IEBAIHN0
-YXRpYyB2b2lkIHhoY2lfaW5pdF9lcGN0eChYSENJRVBDb250ZXh0ICplcGN0eCw8L3NwYW4+PC9k
-aXY+PGRpdj48c3Bhbj4mbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgeGhjaV9yaW5nX2luaXQo
-ZXBjdHgtJmd0O3hoY2ksICZhbXA7ZXBjdHgtJmd0O3JpbmcsIGRlcXVldWUpOzwvc3Bhbj48L2Rp
-dj48ZGl2PjxzcGFuPiZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyBlcGN0eC0mZ3Q7cmluZy5j
-Y3MgPSBjdHhbMl0gJmFtcDsgMTs8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4mbmJzcDsgJm5ic3A7
-IH08L3NwYW4+PC9kaXY+PGRpdj48YnI+PC9kaXY+PGRpdj48c3Bhbj4tICZuYnNwOyAmbmJzcDtl
-cGN0eC0mZ3Q7aW50ZXJ2YWwgPSAxICZsdDsmbHQ7ICgoY3R4WzBdICZndDsmZ3Q7IDE2KSAmYW1w
-OyAweGZmKTs8L3NwYW4+PC9kaXY+PGRpdj48c3Bhbj4rICZuYnNwOyAmbmJzcDtlcGN0eC0mZ3Q7
-aW50ZXJ2YWwgPSAxdSAmbHQ7Jmx0OyBNSU4oKGN0eFswXSAmZ3Q7Jmd0OyAxNikgJmFtcDsgMHhm
-ZnUsIDMxdSk7PC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+fTwvc3Bhbj48L2Rpdj48ZGl2Pjxicj48
-L2Rpdj48ZGl2PjxzcGFuPnN0YXRpYyBUUkJDQ29kZSB4aGNpX2VuYWJsZV9lcChYSENJU3RhdGUg
-KnhoY2ksIHVuc2lnbmVkIGludCBzbG90aWQsPC9zcGFuPjwvZGl2PjxkaXY+PHNwYW4+LS08L3Nw
-YW4+PC9kaXY+PGRpdj48c3Bhbj4yLjQzLjA8L3NwYW4+PC9kaXY+PHNwYW4+PC9zcGFuPjxkaXYg
-c3R5bGU9ImZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxNHB4OyI+
-PGJyPjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OiBBcmlhbCwgc2Fucy1zZXJpZjsgZm9u
-dC1zaXplOiAxNHB4OyIgY2xhc3M9InByb3Rvbm1haWxfc2lnbmF0dXJlX2Jsb2NrIj4NCjwvZGl2
-Pg0K
+1. Why "intro"?
 
+Generated documentation often refers to types like this:
 
---b1=_sITyaj82KjrwlasRJ1P974jPUXjdLdpiu4uQTTW4fo--
+    Command announce-self (Since: 4.0)
+
+       Trigger generation of broadcast RARP frames to update network
+       switches.  This can be useful when network bonds fail-over the
+       active slave.
+
+       Arguments:
+          * The members of "AnnounceParameters".
+
+       Example::
+
+          -> { "execute": "announce-self",
+               "arguments": {
+                   "initial": 50, "max": 550, "rounds": 10, "step": 50,
+                   "interfaces": ["vn2", "vn3"], "id": "bob" } }
+          <- { "return": {} }
+
+The arguments are hidden behind link "AnnounceParameters".  Following
+leads to:
+
+    Object AnnounceParameters (Since: 4.0)
+
+       Parameters for self-announce timers
+
+       Members:
+          * initial ("int") -- Initial delay (in ms) before sending
+            the first GARP/RARP announcement
+
+          * max ("int") -- Maximum delay (in ms) between GARP/RARP
+            announcement packets
+
+          * rounds ("int") -- Number of self-announcement attempts
+
+          * step ("int") -- Delay increase (in ms) after each self-
+            announcement attempt
+
+          * interfaces ("[string]", *optional*) -- An optional list of
+            interface names, which restricts the announcement to the
+            listed interfaces.  (Since 4.1)
+
+          * id ("string", *optional*) -- A name to be used to identify
+            an instance of announce-timers and to allow it to modified
+            later.  Not for use as part of the migration parameters.
+            (Since 4.1)
+
+This is bad UX.  Especially when you have to chase multiple links.
+
+John's doc inliner inlines AnnounceParameters documentation into
+announce-self documentation.
+
+However, we don't want to inline "Parameters for self-announce timers".
+
+Definitions typically start with a short description of the thing being
+defined.  John calls this "intro".  We don't want to inline these.
+
+Syntactically, a doc comment begins with optional plain paragraphs.
+These end when something else begins: argument or member description,
+tagged section such as "Returns:", ...
+
+Most of the time, these initial paragraphs are exactly the "intro".  But
+not always.
+
+Even without the inliner, we often need to know where "intro" ends.  In
+the example above, "Arguments:" is auto-generated right after the
+"intro", and for that, the generator needs to know where "intro" ends.
+
+In his "qapi: enforce section ordering" series, John proposed syntax to
+explicitly end "intro": a line "Details:".  He had to add it to roughly
+one in 25 definition docs.
+
+I fear adding "Details:" when needed is easily forgotten when it's so
+rarely needed.  And I don't even trust myself to catch it patch review.
+So we looked for clearer syntax.
+
+This series implements one: instead of letting intro end when something
+else starts, use indentation like we do for descriptions and tagged
+sections.
+
+Let's have a look at the current doc source for announce-self:
+
+    ##
+    # @announce-self:
+    #
+    # Trigger generation of broadcast RARP frames to update network
+    # switches.  This can be useful when network bonds fail-over the
+    # active slave.
+    #
+    # TODO: This line is a hack to separate the example from the body
+    #
+    # .. qmp-example::
+    #
+    #     -> { "execute": "announce-self",
+    #          "arguments": {
+    #              "initial": 50, "max": 550, "rounds": 10, "step": 50,
+    #              "interfaces": ["vn2", "vn3"], "id": "bob" } }
+    #     <- { "return": {} }
+    #
+    # Since: 4.0
+    ##
+
+"Intro" ends when something else starts, namely the TODO: section.  We
+need this hack so the doc generator inserts the "Arguments:" part where
+we want it.
+
+John's "qapi: enforce section ordering" series replaces the TODO hack
+with a "Details:" line.
+
+In new syntax, this instead becomes:
+
+    ##
+    # @announce-self: Trigger generation of broadcast RARP frames to
+    #     update network switches.  This can be useful when network bonds
+    #     fail-over the active slave.
+    #
+    # .. qmp-example::
+    #
+    #     -> { "execute": "announce-self",
+    #          "arguments": {
+    #              "initial": 50, "max": 550, "rounds": 10, "step": 50,
+    #              "interfaces": ["vn2", "vn3"], "id": "bob" } }
+    #     <- { "return": {} }
+    #
+    # Since: 4.0
+    ##
+
+Now "intro" is indented, and its end is obvious.  Mistakes seem
+unlikely.
+
+We could instead do:
+
+    ##
+    # @announce-self:
+    #     Trigger generation of broadcast RARP frames to update network
+    #     switches.  This can be useful when network bonds fail-over the
+    #     active slave.
+    #
+    # .. qmp-example::
+    #
+    #     -> { "execute": "announce-self",
+    #          "arguments": {
+    #              "initial": 50, "max": 550, "rounds": 10, "step": 50,
+    #              "interfaces": ["vn2", "vn3"], "id": "bob" } }
+    #     <- { "return": {} }
+    #
+    # Since: 4.0
+    ##
+
+I think I like this a bit better.
+
+> It is designed so that this conversion can happen incrementally with
+> no actual difference to the rendered manuals, so each QAPI module can
+> be converted one at a time for easier review and merging in an
+> arbitrary order.
+
+Why not wholesale conversion?  As long as generated output stays the
+same.  It does in this series, except for harmless line breaks.
+
+> This series demonstrates conversion of just four modules; if I'm given
+> a thumbs up, I will convert the rest of QAPI, one module (or
+> maintainer stanza) per patch like how I handled adding
+> cross-references.
 
 
