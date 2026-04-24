@@ -4,95 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 538F7FB44CA
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 08:14:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FFACFB44CA
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 08:17:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGBgI-0006oO-5g; Fri, 24 Apr 2026 04:14:34 -0400
+	id 1wGBib-0007Rx-Ms; Fri, 24 Apr 2026 04:16:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wGBgG-0006o9-R6
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 04:14:32 -0400
-Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ id 1wGBiX-0007Qr-L9
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 04:16:53 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wGBgF-0004WP-3K
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 04:14:32 -0400
-Received: by mail-yw1-x112c.google.com with SMTP id
- 00721157ae682-79a46260385so80519757b3.3
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 01:14:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777018470; cv=none;
+ id 1wGBiV-0005Mg-NN
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 04:16:53 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-652f220595fso7886335d50.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 01:16:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777018610; cv=none;
  d=google.com; s=arc-20240605;
- b=PdLf8yZti8XlKLC/yB4DSRUiKiHEfxakO9G/1FqWOBAoce15WjSX7g/2GH51oqmExm
- dhOrun800uO6FXkxDUiRSaCArqSaydTMgb2LhfbhPU03tfwgRQZxpDMROVzWdsRC0OaM
- 3NDbmnZXkHjp1jgkWRiRPn/pncU8D93TH8c649sxGZoMHgjUHRYOx5kme47uY0jc7DFJ
- Kk84sv/+NhLKKTuWe/HDh5y8ZDdi+wzVYE7VChtpK5lfGnUxXh9cxGeRRLCfr6WDWSAU
- Ap+xHasJRYmK2yWUPMXkKUG5LnHxlz9SftzKI0gum2bdaB5Yv9b3+QTfnlJEYt5ls+tC
- eUXg==
+ b=IJPLDgSdkjjGkekdFk5wcR1AX54wsS0HSP4KEFyWcluwNnFmbL24vWXgla9T7peZCD
+ BCEYJzylcntf7WxufDpTonuQGEl37GObag68w1xzyyg7hsHRYuRsgk0cJQ8UsJQ7BXZH
+ XntYamnhIVUoknDlOv4DCSZT4g5sS3XWwTeRxHeX4sFSxETHrcgjld6kqcSH+eK4RNhh
+ OfE82GKjUdSGMSnJ0I8T0P7QvujryjYw/vVC/8ikOfyojfYO9VHB/Yrs7JCuQDeKxcjy
+ hoI5VBHkzxuX1hjNfA4adHKqpX4Ue+KnkHbMlNx7F3zs6idcmJETrp89cdq6jKZmoAYg
+ PdyQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=D1lOfS+NOYNb3uPXxn+cBG87ElzyennEyByg+awGcak=;
- fh=qg2LoZOT+JJEFbndu52VSpAVN26Lr/U0h/dF88E73Zg=;
- b=cwgVE60augwdp9BUs7iDrTxeHVkAz7U3yt2IJLJSTFCTte/YtiSWwFfv3X44uYJADh
- nl6Lmrb8g9TbUR/CmJb76yIoacIGSLOPtV8epA2/YWVm7aERtywb/QyfpQYBfY9FRJfy
- SstdHNmt/KEjx4S47bZa/8P085nUWVxvdc2vZKRmEIxWadJOFhIIZa7HHGIfheMOkPCH
- hIWEzV/b7HRiEI07n/tBOiQeTqaBSrxlIUuSW2hg2mWJ+uViuH2Ozd6/aGGXhRS333Xx
- zy5rKA4rt1+bnbaIXM6VOUFf3h8r2XC3gyGoaRXfmyealnHw86nzfYiuLKAmgJ5SryxZ
- kgrg==; darn=nongnu.org
+ bh=BZDj/uNwXjz9ciY7gP9yfKn6ZQSybqJFnCXISl5FlHs=;
+ fh=6JkhZD/WRwXWsOKk60JUW3qYTMLjdT6SQGLJoYd5I+k=;
+ b=lCxX53WdjBOEhAUPkwjxW4lEpjKjBUi+sBndQ9aXJrxbniZhflZMyusOyxfn8dzhR/
+ aDu95B3GCdD04ptgD78o8/BWeAJzTn++uJh4QZh4AZ0geRvTRMn1Hj+5mxV1r3pOqCVO
+ v8JELJ8/vcD1yFn7yiiM+wTcDd/QnA0t8uQ7SS5EXJKyRbb3ctHyb/NCag+KKhiugIar
+ hmIyFhrCUrmzs4VN8+e8L9wN8Fr7wd9RoVQQ533Pytxyj+aL4bislgSuwanLzQkIZkzQ
+ nR4t7xjZqgHW4UPqO0XG/vV41eJJOg35/s8uf6udM+2kibh4I+GRuYXOon9yzzW2DmDw
+ +rMQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777018470; x=1777623270; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777018610; x=1777623410; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=D1lOfS+NOYNb3uPXxn+cBG87ElzyennEyByg+awGcak=;
- b=MzfIASAjDKmDLVZEb5aIKLs2Ewl14L6W9DuSjoaSCnhzqADLck+7FQ1yD5FMMfDcgU
- hkwqesSugw5JOArQyd4Tq+hZDeV4CFSwofPj8CLunuxkWcJlJnDlfIqjba5QWM/UfuAI
- /ez8NnHqcRgnWkDAzP8YxrGa1bIxbRjAYnmww/pj3dn+k9jVHUkffZOi/OlyHsdEeQr8
- 3OBhcyGQoORnJ1vUs9JJ+O//1RejP/Oo4POPCgVkvViz6Q5BrqHSiWiFU/+9RxuFZeb3
- prDdJvb1eib5x1YTpXcZ5XEYwIYyzPoeCyMKWlLsk5oSgeERkdLYGYZLG3ptitt6y2Zp
- vjdA==
+ bh=BZDj/uNwXjz9ciY7gP9yfKn6ZQSybqJFnCXISl5FlHs=;
+ b=pjFuc1hfy6FTOoJUQIWFU54z4fWqN6XxIPfL7H/0gONiw9z5PWLTxnL+GiBwXOxIAl
+ ziRxAC32POUM1bjigwIcBBD/t3SE2B+FpAS5YZR/Z3r+h9+E8vMDjt1DJXNILjxUCyQW
+ 4m8qHNtZ3Iq+5m6MOgBR7hFxdAqgpyRLzwEIo0KXkh33vUgybBkd9nYhAg0qwkAqO71u
+ m1VEWLy4dNrLWYxn50c6vnmC6R9MB4lKyv8JtpMivmU+8kytktCisOb+qLU2CyRoNsDf
+ 9jGEugQYy7nXu8iTrdb4ul8FTr2+0bxPltqh0liPVc0BgEY/O0yf+0H6VA80kycD+uLG
+ rrKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777018470; x=1777623270;
+ d=1e100.net; s=20251104; t=1777018610; x=1777623410;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=D1lOfS+NOYNb3uPXxn+cBG87ElzyennEyByg+awGcak=;
- b=niGZSwJrPBrunHVtSgRYpyxtSvMRlJvtbhUi7IiBUqoLNtNjIJi8HoXT85KFlnj6uK
- jkctxFt+RjIRdrXriYAhW7/o9mmsc/qbn701ksq7GJ9XPSbWZQ6PUXQxlGuznw5SnVzm
- FLU5vUZUkpqkLAQFwY9ihjlM2CdY95Hu9HJ1W3avAWUgGiiNvZkZ9ppkdfap6pm9MnGY
- UzS/FrGnMCw6ThJ6hHktl0Nd57S+YDrbWi2qiN1ArV+Zd83m2wtKHDfIckZAUb/QOc9t
- z7qLSSeKYkQv9GeQX+oeyAH+bgCq3Ux2fpOQTrfbcTDz1gKW3rhFT8IBp82GZJJ4dueQ
- 6lRQ==
-X-Gm-Message-State: AOJu0YwIX0AlOh3cMsADvSIRnmtjPQzERl0lNYFZmMOhOCZ8/nA9iss+
- knhEnhVXs3lw9kx/4dBaa5MeAr/wMvDjtDQtBFJJJ+AXZmoqHnyAh9/83+5eEaU8acAirC+/hNx
- Iv2/v7ZquBujjyocJuccmykdiowThVhpkrxwEb8/vleSP15NzF4Lz
-X-Gm-Gg: AeBDietrwMdDdko9QAbaid3ga3Xz9k95SWxj4pFy/H1USz/jysEXIdm8VXdnpIOoQEg
- blkHDpZKuM8nXmhjimxc6pcUKZgZhKHT7LwO1uTPDtTduzs1rksJBDjQUqE9zPnEkGmfGcBzZ/T
- sH+IXqyl4L/gVygkZBgXHk8EwiUgkNYul5fWoxW941iYSGGcEphuCkvfLmbaMEIn7f0Pbhwqlxr
- ZHEFErW6RZWrVQVCVbjIpwkQj1lWlVaRsQZz6B1+4Hdu7T4KpPgETj4rF+UfJWC3czJ/5lQkkWP
- 6XfQbW/g56gWp/OxB6BZvLM1bZuWZLAG46bLMQnM0PZZ/BYViLTolowwiuOowY/7haHiYX2aYE0
- 12Q==
-X-Received: by 2002:a05:690e:134f:b0:654:1261:8b4a with SMTP id
- 956f58d0204a3-654126194afmr23429630d50.3.1777018469698; Fri, 24 Apr 2026
- 01:14:29 -0700 (PDT)
+ bh=BZDj/uNwXjz9ciY7gP9yfKn6ZQSybqJFnCXISl5FlHs=;
+ b=A8+svaoUEjL3o5QEQTT+CaGqoaGKhnbV/K7yckalye6iRFtCMsrMxG0j0ZQvmb/yLk
+ t6+3yN7hoDBM+d4rzBqnlFH+a+HOkIoiOhPngF5ZtXz9Z8wIMDlaLS6SEdR0ZVk/NbNG
+ uXTHMQK2Mo6zgpwLjy0ZoNOFr9+T27RWjaN9EhPoZidTKc79qSPAuw+JV6EpR7dOUahK
+ 9L5T051SuWbQ9ERFpe2oHvE3NqPVgh3viuhemlXiyCm1p19qjgLF+6UmcFD/2fpdZDAO
+ oKAb6LOeQX1MmzS581s8MtnKuvofj0xsg7F0kX62JTO8k9dhdHle9BgF7N6JjFCoAb7+
+ 8wWQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/cphYzKPLSdG9Z5j7ouEjf/NNhOfdDThMobqQu5pNL0f961VgoAXFWte9XpZdp/JxbGGxn5WW4WMfb@nongnu.org
+X-Gm-Message-State: AOJu0YzZ6fcTiGWtXieNbJsNIp4bmHDsbvAUeQROPB0ukRbO/ZnLhn5d
+ SHISJ0j+u/IHSBqSjy8oUrTexlP+95yM6sHTdwfmLYJC/WkI3M+qbYc6f0ndgc0SxAp3LYOM39X
+ PTfgjdc+mFh0B5Zsx9spXKVxDD/LUBG1rYuKFsLe4Sg==
+X-Gm-Gg: AeBDievauEAPkSKqUSsVJeyD62Ya3xdzH1QUdoWh/MTar/uGz2xYo8vJZg8jIe93wJd
+ n/O8Sdd6df4rVVDzByRdjMUpWCaQdxbIpHzqKdvWg32Aj8hz1XF2YhzonUig1zG1DtZ1utdktyg
+ GK9aLP1KVrFrgzs+NX5ST3gAvi5dchmdJfuDpbLVfWvt+GNVNq0TwN+oyy1/Ats92e/uenh0gBF
+ KqwvlgfwHVvIfRr88pSm8PzzU7ptnL3Q/vJLkuCxYn8klpi4HQlvoGswUXb/h6AGfgTK9qUnmWA
+ bScG4vThLME4UaAsHz3A87eMTaqcCrmnbY5O9PufM/POAFauvNNNwNzF9gs8Z85ePcsVkf3vDR+
+ EuA==
+X-Received: by 2002:a05:690e:124a:b0:651:ccc1:b4f1 with SMTP id
+ 956f58d0204a3-653107b883emr28442133d50.2.1777018610100; Fri, 24 Apr 2026
+ 01:16:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <1107055211.1670477.1776980733834.ref@mail.yahoo.com>
- <1107055211.1670477.1776980733834@mail.yahoo.com>
-In-Reply-To: <1107055211.1670477.1776980733834@mail.yahoo.com>
+References: <20260212104432.4168886-1-kchiu@axiado.com>
+ <CAFEAcA_u5B2RdVEaGycCQ6gCx1pQuT8rvGVGZpoKLTK+2s72+w@mail.gmail.com>
+ <69691e3b-1605-4a5a-8ad5-0eec56ce3eed@axiado.com>
+ <CAJy5ezpcvp0Qy-P9gE46oDtsxZxNO=xMV1k-GC3WF4yY3gARGw@mail.gmail.com>
+ <CAFEAcA8mC4TkicLy9bcS8NYMDNcSUjsataGGmkMpViw4wBvmCA@mail.gmail.com>
+ <CAJy5ezqTAMr=A3uAfmuWLepK66AdLRu4Q8AmFMh4+4q2HtDrkA@mail.gmail.com>
+ <CAJy5ezogVjNxHLFVBp9wd332kwyR8peBHMEjoALg6pYfVk1q8g@mail.gmail.com>
+ <cba7059c-9472-45f1-8fb2-06b26036f958@axiado.com>
+In-Reply-To: <cba7059c-9472-45f1-8fb2-06b26036f958@axiado.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 24 Apr 2026 09:14:18 +0100
-X-Gm-Features: AQROBzAGOSFuRLNE91MWWBd_-pDTSfkjCONlpQKZh8DAPNJ7g0Rf6BZZ2QIsQsY
-Message-ID: <CAFEAcA9ykiYDdwWPoT15eTA_hHAxM_Bn3q2xHmYnd+uZ5W9B4A@mail.gmail.com>
-Subject: Re: [PATCH] raspi4b: Disable L2 cache
-To: Alec Ari <neotheuser@ymail.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Date: Fri, 24 Apr 2026 09:16:38 +0100
+X-Gm-Features: AQROBzBnnWSysx7Yz3VKl75g8CsUNz-TtcznwmdN73oG75bQJunedOsTrWy4fzo
+Message-ID: <CAFEAcA_jAyW5a2uyF7r=FBsw1dx3CCoVkU3hkxqQzAgxThYJEQ@mail.gmail.com>
+Subject: Re: [PATCH v1] hw/char/cadence_uart: Add BXRS register
+To: Kuan-Jui Chiu <kchiu@axiado.com>
+Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, 
+ pbonzini@redhat.com, marcandre.lureau@redhat.com, alistair@alistair23.me
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,41 +125,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Apr 2026 at 01:44, Alec Ari <neotheuser@ymail.com> wrote:
+On Fri, 24 Apr 2026 at 04:08, Kuan-Jui Chiu <kchiu@axiado.com> wrote:
 >
-> From 8d72a46d3653a46422360e2f6c19b6747ca05abb Mon Sep 17 00:00:00 2001
-> From: Alec Ari <neotheuser@ymail.com>
-> Date: Thu, 23 Apr 2026 16:42:06 -0500
-> Subject: raspi4b: Disable L2 cache
+> Hi
 >
->
-> Signed-off-by: Alec Ari <neotheuser@ymail.com>
+> Do I need to take further action on this patch?
 
-Hi; thanks for this patch. Could you provide a commit
-message for it, please? The commit message ought to
-explain why the change is made, what user-visible problem
-or bug it's fixing, and that kind of thing.
+It sounds from what Edgar says that there are multiple
+versions of this hardware device, which suggests that
+we ought to have the device have a "version" property
+or something similar so we can select the right
+behaviour for zynq and zynqmp.
 
-
-> ---
-> hw/arm/raspi4b.c | 1 +
-> 1 file changed, 1 insertion(+)
->
->
-> diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
-> index 3eeb8f4..9580711 100644
-> --- a/hw/arm/raspi4b.c
-> +++ b/hw/arm/raspi4b.c
-> @@ -68,6 +68,7 @@ static void raspi4_modify_dtb(const struct arm_boot_info *info, void *fdt)
-> "brcm,bcm2711-rng200",
-> "brcm,bcm2711-thermal",
-> "brcm,bcm2711-genet-v5",
-> + "brcm,bcm2711-l2-intc",
-> };
->
-> for (int i = 0; i < ARRAY_SIZE(nodes_to_remove); i++) {
-> --
-> 2.53.0
+Checking whether there's anything else missing in the
+new version of the device might also be a good idea.
 
 -- PMM
 
