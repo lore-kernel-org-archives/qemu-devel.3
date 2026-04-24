@@ -4,106 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F937FED3CD
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 13:54:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A2F7FED3C9
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 13:54:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGGyK-0003qL-2a; Fri, 24 Apr 2026 09:53:32 -0400
+	id 1wGGzU-0004Cb-7m; Fri, 24 Apr 2026 09:54:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wGGyH-0003pt-Vr
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:53:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wGGyE-0002JM-SL
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:53:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777038805;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=g/wKAagH1dcjZAA5T2bgUBg3cF+5bAJO+s7AkWjtQZM=;
- b=aIg2D4l6ziCy1OHgdpE2ykLC68jZdRz3MrNt3UrMiZsYMmsm3eweXY7hh/ydCJUwtRIsbK
- 2KvQH3o1oAYHrMOEvN+KSOkqluTJ+N79H85uY2RQRi9Ff2ZZMjk0Q8KefbAMQfXAhDw4jP
- D6tHfFJiXI41pMAvBYHo23GaJu4zq7U=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-640-U67iLC_HOiijnf1Z3Fyaug-1; Fri, 24 Apr 2026 09:53:20 -0400
-X-MC-Unique: U67iLC_HOiijnf1Z3Fyaug-1
-X-Mimecast-MFC-AGG-ID: U67iLC_HOiijnf1Z3Fyaug_1777038800
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-50fbc70cfbdso94742451cf.2
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 06:53:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGGzP-00049p-0s
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:54:40 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGGzM-0002rv-De
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:54:38 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4852b81c73aso65177635e9.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 06:54:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777038800; x=1777643600; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=g/wKAagH1dcjZAA5T2bgUBg3cF+5bAJO+s7AkWjtQZM=;
- b=cLW/hFgwdMfq/Q6oSR2s0divU+6RKwiWWL1v7ajREV7EazJKaCQkCbM9V7M5lJbvQE
- Q6a3/+Q9BkS64UcCjGDYte//fBeLopPIPqCe4+ewZ1FUOt++kNuO6t2I8SJ0TcGfe9f7
- ek38izVbyBT7ThwGWFWeMcIj2TdrT2xmbrHmbPs3thZR/cfmxjj2EJ6H89hYE5V/q4Rf
- evllm/G2WjqEpGPisNGdzOjyKW5kRbdAb4cCvYSbe0RnsnU60hMyAV7LMOT02RCmDcy7
- U02Z514+Zc8IdCPeB8RTcBnlObTqDbldBc4qtRmP67BM7xa4Q+sIlorwwY2dAImsDszw
- uLiQ==
+ d=linaro.org; s=google; t=1777038873; x=1777643673; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Ty9h+ZYk6jAUeMMG5fjohOSnEAHIpxjQWLk+t2TduXA=;
+ b=Uu23wpniZUIJe1Siwg8pBCvKg54Uq8/LRn7l3stS8wefwP8cIx6TUkAJkIAnQt4VFm
+ C6ro5TVu3y2+kL04I34o3iWj2VxVzvBj4rEul6Yl0Cjh/G13jFqX/ZFoNUw/ODcDS8dl
+ 6QIgObFJCeRqucnV5ElAPBvCgoF7Y4W/OnXvywIOv2PSizllTesnfV5VT1+ZTyjgR8e/
+ 5KYU21/QnZTDf2c5nNGTuz+sSLlx/t7sCpj6Ers0JeeeZmaPnC9JzI7KJsBFirgStRLR
+ UXp+5qeywfeMQIAfpiZmhhpiKbE5Uc58OfseXtsDWgJUjaboZDLOn05123G1ZK2yZaz3
+ kR2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777038800; x=1777643600;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=g/wKAagH1dcjZAA5T2bgUBg3cF+5bAJO+s7AkWjtQZM=;
- b=dCO0UxkekomOsrV1a5/DhQ6xXvi8X5cLNJB+nOVME3uwSe4xQHmUx8UgTTUOY2Y/XS
- GHVJCJ64Oq9c08H4LWO5E7LUX9mqSCd+nmgcyPzQcn11jxCCvno/jALfctK0v6jxT3hx
- y2VaftvfcDM9Mly8MKuIfiocNJf1Api9LZIgYXYOoWmaDXVDzn9FAfD4HK7oiMPWPjEL
- oQOBvGfqgGm5KOhN9StHK8wFjXkhrGhhcNX3jR95PNPuSTvVf2FWaB+KWQUF5U9VCTGv
- xEa5ebR9qJ3sYPxazF8NhucJBRqGu18MdHSm8xbYcvbz/jzO5Sx02My3EXsZHFB9I8S7
- EPig==
+ d=1e100.net; s=20251104; t=1777038873; x=1777643673;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Ty9h+ZYk6jAUeMMG5fjohOSnEAHIpxjQWLk+t2TduXA=;
+ b=P9h87i0CxVBd/TGVxQk8tl7EsvWGRJ/9nzSKK7lIgg3XsL0uIY1iBnZcissMU+4gEK
+ AvPYNAGYw1nuKjUdQJEk7+VwT4ecd80s+O+l2ymLZqVc/CXuO9or9r3g6HWWPfgIOO6B
+ 9qCme3cv0/vUYF8wQEe3Ao5xerw20+ssZAPeNwdJ4SQn7SXDZUBWVQX8fwbwT6rpC0Ds
+ r2XEbe2hebuifh7EpLpiX8WOL9owNqH/RASWfWmE+tHNg7y1oGw8W3lLPatIxw3HWZc2
+ J1cezKpXqgjwVB7lnk5+QforLQVCVctPVlQRqWL9KGNhqlAGdUDWW6nI36rm7iS6bQ6j
+ Ri1A==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+k4qeP+73cs4aEc2ulDkz7u7Xlh4klsbKwQ6nI4fV/t4ON75zm1SOu3sd1L6xVzbqDdXn5kdav8z2/@nongnu.org
-X-Gm-Message-State: AOJu0YyyjiOeb0tcz31+ESCptdieMY0Hw8jRyMCbtg/aUZC9j6enXD5C
- DWIzVVjLU4ey4Iy2fxc8cwdV8pkq1aqn3VShxqmZZtKq5RuIyZ4kFGfNVKgwL/3H+9XodBB61HI
- yTnZpj8/OwVgf1ZscpvjmXJYuUY30ecuzTeWB0mX1cHxHuL39bh9P+/lo
-X-Gm-Gg: AeBDievZfa0x8MrPcVBWV4NBvkioMtURKpGbiBq0rzqXxNGQvsS/IYCvaZ9Od6kMYa4
- vsJQnMHJtur2EoKL68LmjsgntrJUCj4HUr15KyM4oOnfoI6ffJTjA7sRksl7WjfUjvo5ucQWS4X
- mUjuzEJGbcVIUNw+vJ6baVBpb02mPFfQmsasCTNcW0zWk8ZeJ0xTQN4RNboIeiOIxo97vPNomSf
- qIXY2u2M8raaxlGvlQsW/vRgl0UMvYlHPPAOQS9i4TuDdo3QPBKs5eyRaMmrJuRmEItuI5VXnCV
- LQMNQ1QuvaYvJaEgVa4GLYQz9enbAjuOApN08kTqo+niFAr2rbMmuAw1nFyhx0zV7R1bDZakmzx
- AnBNOiv9R/RY4qdqDBIy5OST/ys8CAYkZxktpz3ijDdqYxocW6JR14gbtuQ==
-X-Received: by 2002:ac8:5a90:0:b0:50f:b2e4:ebb with SMTP id
- d75a77b69052e-50fb2e41217mr243960621cf.10.1777038799771; 
- Fri, 24 Apr 2026 06:53:19 -0700 (PDT)
-X-Received: by 2002:ac8:5a90:0:b0:50f:b2e4:ebb with SMTP id
- d75a77b69052e-50fb2e41217mr243960141cf.10.1777038799220; 
- Fri, 24 Apr 2026 06:53:19 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50e394c1fddsm195883181cf.30.2026.04.24.06.53.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Apr 2026 06:53:18 -0700 (PDT)
-Date: Fri, 24 Apr 2026 09:53:16 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/1] migration/multifd: fix channel count TOCTOU race on
- cancel and retry
-Message-ID: <aet1zMrfXzShXeuS@x1.local>
-References: <20260422161202.34150-1-viking4@gmail.com>
- <20260422161202.34150-2-viking4@gmail.com> <87o6jaeig8.fsf@suse.de>
- <aepFf11lBgdXK6CB@x1.local> <87ik9hee95.fsf@suse.de>
- <aepokJ2N1w7fA2Ye@x1.local> <87fr4lea6k.fsf@suse.de>
+ AFNElJ/my0Ajy3Zt19ajzCBgxMH/F2zdJ04E6Uijgi59KsIybwhKV3msJJzP+Xxvbf8cJ75VRCms9kHDnEje@nongnu.org
+X-Gm-Message-State: AOJu0YzXjdd/qSJM608k3wXo90Ep1sVhPmMstwvVEWcuvIAsSCp3yn+b
+ 0M4kVH8NQHNKXuInl6CF8KR3E3HffoDds9RJK7T9HJiKGaSS/9IXfyBYPrCXB1bivGY=
+X-Gm-Gg: AeBDieuM0OCISKuqZIzHLTADiVuDy1FbfQSngOYb8cqXHQd+pN+ZTt3Z1paN9tSCnM6
+ PYAj0+2Zoqgd4AHnc+V7JktqJrlkwUER1qdDHOXBNMmFXaKikYoS5uT6/zJb9ySgPGncllJ5fWE
+ 8ygM/ky07x1FQq7RnnZCgmNh7/EWYLDKqhYy041qu0EXtyr8TX6VOXF1CfU8EXab4ihOPlJ4bbL
+ wjgH54logJJhNsW272x4MXxCwCN+3Sr2iZKnMA7vjCrmxJukmaBhLThx8jI7Ceje1cLrPOkepYL
+ TJMZnfEVbRWffUJXYeYDwMfcDx8Bx+GkcanZL02sogHGmVdym6rqn70umRBWwur/UQv/Kk7skm6
+ 2E0fP208SJ7pjltOQKk9JohSUR+eOphpSQTOoPwF6CHH9GGoBRKjrHUHdcF3rACj4E1lZLEHxi7
+ +3WjjWpGONfXs/4eIS0IjQTVrcdN2rylOY2tCRpN1XCJCo/SKaoxRbHqiooLMQny5ntNWVdqmNx
+ Skk
+X-Received: by 2002:a05:600c:890b:b0:488:a977:8d6 with SMTP id
+ 5b1f17b1804b1-488fb775a35mr336928405e9.19.1777038872614; 
+ Fri, 24 Apr 2026 06:54:32 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488fc177dafsm719952305e9.4.2026.04.24.06.54.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Apr 2026 06:54:31 -0700 (PDT)
+Message-ID: <2bf9724b-4b29-49b7-ac97-f7130056583f@linaro.org>
+Date: Fri, 24 Apr 2026 15:54:30 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87fr4lea6k.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 04/16] tests/functional/test_aarch64_kvm: Stop dumping
+ kernel ringbuf
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Roman Bolshakov <rbolshakov@ddn.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>, Mads Ynddal
+ <mads@ynddal.dk>, qemu-arm@nongnu.org,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexander Graf <agraf@csgraf.de>
+References: <20260423170229.64655-1-philmd@linaro.org>
+ <20260423170229.64655-5-philmd@linaro.org>
+ <4072248e-a815-4868-80bb-a241496ffc78@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <4072248e-a815-4868-80bb-a241496ffc78@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,88 +112,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 23, 2026 at 04:41:39PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
+On 24/4/26 09:39, Thomas Huth wrote:
+> On 23/04/2026 19.02, Philippe Mathieu-Daudé wrote:
+>> Avoid the following kernel message to interfere our stdout parsing:
+>>
+>>    platform gpio-keys: deferred probe pending: gpio-keys: failed to 
+>> get gpio
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   tests/functional/aarch64/test_kvm.py | 1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> diff --git a/tests/functional/aarch64/test_kvm.py b/tests/functional/ 
+>> aarch64/test_kvm.py
+>> index 7545f5ed554..a03a6134626 100755
+>> --- a/tests/functional/aarch64/test_kvm.py
+>> +++ b/tests/functional/aarch64/test_kvm.py
+>> @@ -48,6 +48,7 @@ def _launch_guest(self, kvm_mode="nvhe"):
+>>           self.wait_for_console_pattern('buildroot login:')
+>>           ec_and_wait(self, 'root', '#')
+>> +        ec_and_wait(self, 'dmesg -n 1', '#')
+>>           ec_and_wait(self, f"export PS1='{self.PS1}'", self.OK_CMD)
 > 
-> > On Thu, Apr 23, 2026 at 03:13:42PM -0300, Fabiano Rosas wrote:
-> >> Looking again at this argument I put (too many variables), I notice we
-> >> also have multifd_send_state->channels_ready and
-> >
-> > channels_ready seems to be special?  In busy systems I think it should
-> > normally always be less than the number of threads on sender side, because
-> > some of them will be busy.
-> >
-> 
-> Argh, sorry, I meant channels_created!
+> In other tests, we are adding "quiet" to the kernel_command_line to 
+> avoid this problem - that way the kernel messages also cannot interfere 
+> with the login prompt. Could you check whether that works here, too? If 
+> so, I think I'd rather prefer that solution instead.
 
-Yeah, this one looks like a slight duplicate over channels_ready.  However
-it's still slightly different in that it's also used in failure path of
-channel establishments.
+I tried:
 
-IOW, multifd_send_channel_created() can be invoked in failure paths where
-multifd_channel_connect() won't.
+-- >8 --
+          kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+-                               f"console=ttyAMA0 kvm-arm.mode={kvm_mode}")
++                               f" quiet console=ttyAMA0 
+kvm-arm.mode={kvm_mode}")
 
-We could still consider reusing channels_ready, but it will introduce a few
-complexities, namely:
+---
 
-- The name becomes slightly ambiguous: we may need to listen to
-  channels_ready even if the channel creation failed..  if to be fair,
-  channels_created also implies a success.. s I assume not a major concern.
-
-- Multifd sender side relies on channels_ready to be posted by default when
-  migration just starts (says, "all channels are free to use").  It means
-  if we consume that sem here waiting for channels, then we need to kick
-  all threads once more just to give it back, hence one more roundtrip of
-  sem notifies.  We also need a small touchup in send thread to allow that
-  to happen; patch attached at the end to show what I mean (not tested at
-  all, please treat it as pesudo code.. so it's definitely not a complete
-  patch).
-
-I think we can still leave it there to make the establishment path simple.
-
-What's your take?
-
-===8<===
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 035cb70f7b..570ff8c017 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -736,16 +736,9 @@ static void *multifd_send_thread(void *opaque)
-              * multifd_send().
-              */
-             qatomic_store_release(&p->pending_job, false);
--        } else {
-+        } else if (qatomic_read(&p->pending_sync)) {
-             MultiFDSyncReq req = qatomic_read(&p->pending_sync);
- 
--            /*
--             * If not a normal job, must be a sync request.  Note that
--             * pending_sync is a standalone flag (unlike pending_job), so
--             * it doesn't require explicit memory barriers.
--             */
--            assert(req != MULTIFD_SYNC_NONE);
--
-             /* Only push the SYNC message if it involves a remote sync */
-             if (req == MULTIFD_SYNC_ALL) {
-                 p->flags = MULTIFD_FLAG_SYNC;
-@@ -964,7 +957,14 @@ bool multifd_send_setup(void)
-      * past this point.
-      */
-     for (i = 0; i < thread_count; i++) {
--        qemu_sem_wait(&multifd_send_state->channels_created);
-+        MultiFDSendParams *p = &multifd_send_state->params[i];
-+
-+        qemu_sem_wait(&multifd_send_state->channels_ready);
-+        /*
-+         * Re-kick the thread to recover the channels_ready event we
-+         * consumed for detecting channel establish event.
-+         */
-+        qemu_sem_post(&p->sem);
-     }
- 
-     if (ret) {
-
--- 
-Peter Xu
-
+but it didn't help. Anyway no worries, I'll figure that later. Dropping
+this patch for now.
 
