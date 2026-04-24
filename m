@@ -4,102 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12DDDFED3C9
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 13:39:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F937FED3CD
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 13:54:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGGku-0008SX-7W; Fri, 24 Apr 2026 09:39:40 -0400
+	id 1wGGyK-0003qL-2a; Fri, 24 Apr 2026 09:53:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wGGks-0008SP-Io
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:39:38 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wGGkq-0005EB-Tz
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:39:38 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-7991db3dc98so87393437b3.0
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 06:39:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777037975; cv=none;
- d=google.com; s=arc-20240605;
- b=Dum2ZZqOIkcIVI4xHFRO0B+k3mjOZvilShkZ/rl+RVPwHinWK4+Q8ywcvuanXUVVDq
- g3gvEpoWaZxktS8OiS3X7/mg2GS/cmypofRV3HAvVhj1GzuXeaTuij7vkdHkTkBtNI0l
- 9bJ0Zf4lwLLxX5UOWscRUnz+D7jzqdYWaoNLwSbS35bidZ6oDSckcHNZ6YIrfekFaugN
- oJeIpm/yCpyKytMVq8OXGPK2GcTztOEhbGWP3fudJ7GoBJPfpDFk+SC7lwBluw0rxbOl
- yu4ymskqe1BpHd0PCWh/YC5E7ldTJk0pH2bxc+bob5t08ZBPod3sBDaZ86o62UXcv17e
- XBwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ekbPNVgaMNbPOpJ4VxNU8p+zLsXRMHuJ7BqGzI6plbM=;
- fh=twdMwO8HtYA0tKWE7ZrcLTTV93JyaLUwFo/XJNgsMPI=;
- b=Q3jfDR37J62qvHUmrBeUFuvIvZWyYkWnxVtisf2IMvEZNx4loGvcvEliYSlKz+KQUU
- RkmyWobbTxJebyv3wjFjaQ6PRRLGfFR/I+txsjvCIlC8nzwkoMl5yF6Nl8DbsXqHZucI
- ZQqOMDfkquFht+4v48fAdKilx+3YtflBtPAkO5HGvOn6x9gI0w2OinlD3EkijylT0dJN
- sc8xYrUJ2DySSTC2DCU+d4mq0snNYoBnKLyHPj00jgugIRCiBxVD52xhUp2LscSxPaHf
- tMqEWD5sqHEJvXgRx0wvJe5tguOpOo5Pe66rh+zYLd0zw1wmaWANB04qGhdV6NcK1i4U
- ieVA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wGGyH-0003pt-Vr
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:53:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wGGyE-0002JM-SL
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 09:53:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777038805;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=g/wKAagH1dcjZAA5T2bgUBg3cF+5bAJO+s7AkWjtQZM=;
+ b=aIg2D4l6ziCy1OHgdpE2ykLC68jZdRz3MrNt3UrMiZsYMmsm3eweXY7hh/ydCJUwtRIsbK
+ 2KvQH3o1oAYHrMOEvN+KSOkqluTJ+N79H85uY2RQRi9Ff2ZZMjk0Q8KefbAMQfXAhDw4jP
+ D6tHfFJiXI41pMAvBYHo23GaJu4zq7U=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-640-U67iLC_HOiijnf1Z3Fyaug-1; Fri, 24 Apr 2026 09:53:20 -0400
+X-MC-Unique: U67iLC_HOiijnf1Z3Fyaug-1
+X-Mimecast-MFC-AGG-ID: U67iLC_HOiijnf1Z3Fyaug_1777038800
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-50fbc70cfbdso94742451cf.2
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 06:53:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777037975; x=1777642775; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ekbPNVgaMNbPOpJ4VxNU8p+zLsXRMHuJ7BqGzI6plbM=;
- b=ZB0KZQjEPbMm4uKMYogyik05Q8BnM89esqOAsxtCUH81QX2XdwsaQwiqb0+oP1oECY
- R82A157iORfIhYplJRhjGqAfG45CfQbow6MQfolba4dK4Y4RfZQ9Xc+UbA9QtyaLb7gO
- PsToQGxQ0sG3WLbKzo0NilncdBnQtuwGpHeC6noXZziNiB3jbU7AJYfLwNr1x3/6UV/4
- 1VvmCiI1zdiO7BexXT6WGZQAbVDBpUOjVzGMuxTfKJ3NVgZ9SqqMG7fKdE4wpcsz2Dix
- 1ZETj+KRNumDQqUWAnwKsGtST/R1KyvAJ8g38Hcuks5lh3u8tVrXBt80hozUaEK3/2zj
- 6lsg==
+ d=redhat.com; s=google; t=1777038800; x=1777643600; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=g/wKAagH1dcjZAA5T2bgUBg3cF+5bAJO+s7AkWjtQZM=;
+ b=cLW/hFgwdMfq/Q6oSR2s0divU+6RKwiWWL1v7ajREV7EazJKaCQkCbM9V7M5lJbvQE
+ Q6a3/+Q9BkS64UcCjGDYte//fBeLopPIPqCe4+ewZ1FUOt++kNuO6t2I8SJ0TcGfe9f7
+ ek38izVbyBT7ThwGWFWeMcIj2TdrT2xmbrHmbPs3thZR/cfmxjj2EJ6H89hYE5V/q4Rf
+ evllm/G2WjqEpGPisNGdzOjyKW5kRbdAb4cCvYSbe0RnsnU60hMyAV7LMOT02RCmDcy7
+ U02Z514+Zc8IdCPeB8RTcBnlObTqDbldBc4qtRmP67BM7xa4Q+sIlorwwY2dAImsDszw
+ uLiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777037975; x=1777642775;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ekbPNVgaMNbPOpJ4VxNU8p+zLsXRMHuJ7BqGzI6plbM=;
- b=elutGlJWidswu0cwqPTJmlWOUsz6VJ6Ip2q4MMpgSaVkwLDJquK8azO5UxnXtzbJgc
- 91cyIbmCeDBuZobgGRD0U+MLEfxLGh3FI3MahpC+VIyJvbDmEZX6QdhlwQpm35UxkE4f
- zCltsfMp+q1hBpQhJgTYjq/uXmW7oqJzabNO+4Zmtl+QjAP2ur2XwdZjnXXrCvekY9BJ
- zI3kOHDgwJdPhc19Oud0a9qetQQK2V7RBxeLkF45ZDJasoae9yOfO09jGktVsxF7j7vt
- 1T4EHC9T4TTOCELcWu0k8IaG9GExUlKLB4JfkXq0dC/yNYLosI/isJc0No0ElOTw6y4c
- /ICg==
-X-Gm-Message-State: AOJu0YzEqXETG1x5N+JOXUSsfnlUTtMcQS1wHxJq84IzqKIEqm6Y1ARP
- P4JFTDpoeAlXehLG0esuxP9Fn3xPIocE9Dhi/WJtjd/Fia6Ajj1mjvuOhUA1J94yQqRp0EGCdnc
- LQObSO8VUse6DRbFYAdH2aBsX8qhtBi/bTAElqGE3gw==
-X-Gm-Gg: AeBDietatiCVqB7Q5l0hbCTfrKPWZPT/lDXKs3HLuhzJLtCih0bMtls8bE3IEGyr5kH
- fKVAlUzI4Q5m8fHVUIM8PB7nzq4muophpnzDR7yT8LEtsGzF42mPONDYqX4RJ1HxRURrHWWxeMw
- ldwZCre97z97PI/XFxfzmHvWxGEqngwiDF46xNHsWSixzoSP1M8gYNqpHvir6Ggxv4BCn29wRL0
- zJKlTq5c/2hmG6bUbHF25aeAuSJubon4b1muIaRvNqpPnYCO3Q21WmaQ0DH99JHEx/Q/orM2c+x
- NNLlVdn8E3fTGENRHJMiMukujy6V6NzvP8v0lz5VUa/c5rcuuM1SIYzImVVryXPa3XYC9rNt0rA
- yjw==
-X-Received: by 2002:a05:690e:15c8:b0:64e:e380:c841 with SMTP id
- 956f58d0204a3-65310a5f662mr21087934d50.50.1777037974833; Fri, 24 Apr 2026
- 06:39:34 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777038800; x=1777643600;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=g/wKAagH1dcjZAA5T2bgUBg3cF+5bAJO+s7AkWjtQZM=;
+ b=dCO0UxkekomOsrV1a5/DhQ6xXvi8X5cLNJB+nOVME3uwSe4xQHmUx8UgTTUOY2Y/XS
+ GHVJCJ64Oq9c08H4LWO5E7LUX9mqSCd+nmgcyPzQcn11jxCCvno/jALfctK0v6jxT3hx
+ y2VaftvfcDM9Mly8MKuIfiocNJf1Api9LZIgYXYOoWmaDXVDzn9FAfD4HK7oiMPWPjEL
+ oQOBvGfqgGm5KOhN9StHK8wFjXkhrGhhcNX3jR95PNPuSTvVf2FWaB+KWQUF5U9VCTGv
+ xEa5ebR9qJ3sYPxazF8NhucJBRqGu18MdHSm8xbYcvbz/jzO5Sx02My3EXsZHFB9I8S7
+ EPig==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+k4qeP+73cs4aEc2ulDkz7u7Xlh4klsbKwQ6nI4fV/t4ON75zm1SOu3sd1L6xVzbqDdXn5kdav8z2/@nongnu.org
+X-Gm-Message-State: AOJu0YyyjiOeb0tcz31+ESCptdieMY0Hw8jRyMCbtg/aUZC9j6enXD5C
+ DWIzVVjLU4ey4Iy2fxc8cwdV8pkq1aqn3VShxqmZZtKq5RuIyZ4kFGfNVKgwL/3H+9XodBB61HI
+ yTnZpj8/OwVgf1ZscpvjmXJYuUY30ecuzTeWB0mX1cHxHuL39bh9P+/lo
+X-Gm-Gg: AeBDievZfa0x8MrPcVBWV4NBvkioMtURKpGbiBq0rzqXxNGQvsS/IYCvaZ9Od6kMYa4
+ vsJQnMHJtur2EoKL68LmjsgntrJUCj4HUr15KyM4oOnfoI6ffJTjA7sRksl7WjfUjvo5ucQWS4X
+ mUjuzEJGbcVIUNw+vJ6baVBpb02mPFfQmsasCTNcW0zWk8ZeJ0xTQN4RNboIeiOIxo97vPNomSf
+ qIXY2u2M8raaxlGvlQsW/vRgl0UMvYlHPPAOQS9i4TuDdo3QPBKs5eyRaMmrJuRmEItuI5VXnCV
+ LQMNQ1QuvaYvJaEgVa4GLYQz9enbAjuOApN08kTqo+niFAr2rbMmuAw1nFyhx0zV7R1bDZakmzx
+ AnBNOiv9R/RY4qdqDBIy5OST/ys8CAYkZxktpz3ijDdqYxocW6JR14gbtuQ==
+X-Received: by 2002:ac8:5a90:0:b0:50f:b2e4:ebb with SMTP id
+ d75a77b69052e-50fb2e41217mr243960621cf.10.1777038799771; 
+ Fri, 24 Apr 2026 06:53:19 -0700 (PDT)
+X-Received: by 2002:ac8:5a90:0:b0:50f:b2e4:ebb with SMTP id
+ d75a77b69052e-50fb2e41217mr243960141cf.10.1777038799220; 
+ Fri, 24 Apr 2026 06:53:19 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50e394c1fddsm195883181cf.30.2026.04.24.06.53.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Apr 2026 06:53:18 -0700 (PDT)
+Date: Fri, 24 Apr 2026 09:53:16 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 1/1] migration/multifd: fix channel count TOCTOU race on
+ cancel and retry
+Message-ID: <aet1zMrfXzShXeuS@x1.local>
+References: <20260422161202.34150-1-viking4@gmail.com>
+ <20260422161202.34150-2-viking4@gmail.com> <87o6jaeig8.fsf@suse.de>
+ <aepFf11lBgdXK6CB@x1.local> <87ik9hee95.fsf@suse.de>
+ <aepokJ2N1w7fA2Ye@x1.local> <87fr4lea6k.fsf@suse.de>
 MIME-Version: 1.0
-References: <20260424132824.27733-1-deller@kernel.org>
-In-Reply-To: <20260424132824.27733-1-deller@kernel.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 24 Apr 2026 14:39:22 +0100
-X-Gm-Features: AQROBzANEpHJyXAZ4stC0FAQiCxmf5jeMYEPReJBUkZMOHaYYZMSF8YznxLfn2k
-Message-ID: <CAFEAcA-CwZZrSVHE5qPSGw0gCM_0Nh6e5X5-W_EDSSkv62LAyQ@mail.gmail.com>
-Subject: Re: [PATCH] linux-user: Fix CLONE_PARENT_SETTID when using fork-like
- clone
-To: Helge Deller <deller@kernel.org>
-Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87fr4lea6k.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,49 +119,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Apr 2026 at 14:28, Helge Deller <deller@kernel.org> wrote:
->
-> From: Helge Deller <deller@gmx.de>
->
-> The CLONE_PARENT_SETTID option requires the implementation to store the
-> child thread ID at the location pointed to by parent_tid in the parent's
-> memory.
->
-> Fix our implementation and move the code from the client side (where
-> fork returned 0), to the parent side and store the return value from the
-> fork call (which is the client TID) in the parent_tid pointer.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3340
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> ---
->  linux-user/syscall.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> index d0390e04b4..910a4da0a6 100644
-> --- a/linux-user/syscall.c
-> +++ b/linux-user/syscall.c
-> @@ -7050,8 +7050,6 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
->                 the child process gets its own copy of the lock.  */
->              if (flags & CLONE_CHILD_SETTID)
->                  put_user_u32(sys_gettid(), child_tidptr);
-> -            if (flags & CLONE_PARENT_SETTID)
-> -                put_user_u32(sys_gettid(), parent_tidptr);
->              ts = get_task_state(cpu);
->              if (flags & CLONE_SETTLS)
->                  cpu_set_tls (env, newtls);
-> @@ -7059,6 +7057,8 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
->                  ts->child_tidptr = child_tidptr;
->          } else {
->              cpu_clone_regs_parent(env, flags);
-> +            if (flags & CLONE_PARENT_SETTID)
-> +                put_user_u32(ret, parent_tidptr);
->              if (flags & CLONE_PIDFD) {
->                  int pid_fd = 0;
+On Thu, Apr 23, 2026 at 04:41:39PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Thu, Apr 23, 2026 at 03:13:42PM -0300, Fabiano Rosas wrote:
+> >> Looking again at this argument I put (too many variables), I notice we
+> >> also have multifd_send_state->channels_ready and
+> >
+> > channels_ready seems to be special?  In busy systems I think it should
+> > normally always be less than the number of threads on sender side, because
+> > some of them will be busy.
+> >
+> 
+> Argh, sorry, I meant channels_created!
 
-The clone(2) manpage says that CLONE_PARENT_SETTID stores the
-*child* thread ID -- shouldn't we be storing child_tidptr here ?
+Yeah, this one looks like a slight duplicate over channels_ready.  However
+it's still slightly different in that it's also used in failure path of
+channel establishments.
 
-thanks
--- PMM
+IOW, multifd_send_channel_created() can be invoked in failure paths where
+multifd_channel_connect() won't.
+
+We could still consider reusing channels_ready, but it will introduce a few
+complexities, namely:
+
+- The name becomes slightly ambiguous: we may need to listen to
+  channels_ready even if the channel creation failed..  if to be fair,
+  channels_created also implies a success.. s I assume not a major concern.
+
+- Multifd sender side relies on channels_ready to be posted by default when
+  migration just starts (says, "all channels are free to use").  It means
+  if we consume that sem here waiting for channels, then we need to kick
+  all threads once more just to give it back, hence one more roundtrip of
+  sem notifies.  We also need a small touchup in send thread to allow that
+  to happen; patch attached at the end to show what I mean (not tested at
+  all, please treat it as pesudo code.. so it's definitely not a complete
+  patch).
+
+I think we can still leave it there to make the establishment path simple.
+
+What's your take?
+
+===8<===
+diff --git a/migration/multifd.c b/migration/multifd.c
+index 035cb70f7b..570ff8c017 100644
+--- a/migration/multifd.c
++++ b/migration/multifd.c
+@@ -736,16 +736,9 @@ static void *multifd_send_thread(void *opaque)
+              * multifd_send().
+              */
+             qatomic_store_release(&p->pending_job, false);
+-        } else {
++        } else if (qatomic_read(&p->pending_sync)) {
+             MultiFDSyncReq req = qatomic_read(&p->pending_sync);
+ 
+-            /*
+-             * If not a normal job, must be a sync request.  Note that
+-             * pending_sync is a standalone flag (unlike pending_job), so
+-             * it doesn't require explicit memory barriers.
+-             */
+-            assert(req != MULTIFD_SYNC_NONE);
+-
+             /* Only push the SYNC message if it involves a remote sync */
+             if (req == MULTIFD_SYNC_ALL) {
+                 p->flags = MULTIFD_FLAG_SYNC;
+@@ -964,7 +957,14 @@ bool multifd_send_setup(void)
+      * past this point.
+      */
+     for (i = 0; i < thread_count; i++) {
+-        qemu_sem_wait(&multifd_send_state->channels_created);
++        MultiFDSendParams *p = &multifd_send_state->params[i];
++
++        qemu_sem_wait(&multifd_send_state->channels_ready);
++        /*
++         * Re-kick the thread to recover the channels_ready event we
++         * consumed for detecting channel establish event.
++         */
++        qemu_sem_post(&p->sem);
+     }
+ 
+     if (ret) {
+
+-- 
+Peter Xu
+
 
