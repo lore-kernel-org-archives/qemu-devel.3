@@ -4,94 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BE9EFB44C6
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 07:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C016AFB44C8
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 07:48:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGBCw-0002ic-PW; Fri, 24 Apr 2026 03:44:14 -0400
+	id 1wGBG6-0004gu-Fk; Fri, 24 Apr 2026 03:47:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wGBCs-0002iN-7q
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 03:44:10 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wGBCq-0005MH-LE
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 03:44:09 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4890098abbaso56221475e9.0
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 00:44:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777016647; x=1777621447; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=3EnesgIeeNTPrEUM822wrdXyIeBqadCh7YpZ7ZJRa50=;
- b=HMseTqvEcNSwpcUbDdzPfmIoc3XwOQ3yM0Z4XByGfkFLbrG2f14yFXR0pA+RrME8Py
- sLx5SCpdl5eBA7DKo6WNAnV/Rd4xur2LIDLNlCAjC05ZrduwerGL+6UxxT2Kkn0mpkU5
- mhtCmTnF1Obm1+oGAsB0Ao8yN6x95mT9Honhi5DL5Gq44/zcHuJljQeBSgjJEPXBD6Ke
- 1xp14w+9AsFog22G/trcRq2PYLNoBTY0uEi/5vqiPqRyZF0WKSvK0ml1RnJLl3814csq
- PaYv/NwkcsXcMxovSnW/yiSmHqpoARgp/eBFGS1qHCS1AaTW4eIkrdaWR5Zbb7/OHfrb
- J7dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777016647; x=1777621447;
- h=content-transfer-encoding:mime-version:message-id:in-reply-to
- :references:user-agent:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3EnesgIeeNTPrEUM822wrdXyIeBqadCh7YpZ7ZJRa50=;
- b=qftPosyC1nh1oGWdGdb+Rk6hV3OX9zzjzHxV2kSPr/Zj6FLijaPpnIPEglqJz0FmmC
- ZZenUs9TafuFxUyGPwbdQHnAShhZ61ANnkmhppQVjzWSc4Or0lrfhs3lSSLy4VD06YOe
- VN80G5BJh0FSjTE1qUKROmgqBFI/+pAEtWg7e1HwCGAOex2h8FaQPtft4qbBK8Fk2kl+
- TAhwhr+tTKU7/BtRnfwIfyf0YFDsFfd72WtAKsoTIPP6Bi9ef0Ij5JS/Scr9zpFmrGyB
- LZ5Ymsie/xOm2z9TEbHlz69pjhFLi2QicVXPMUBs/YvQnW1bLB2jNvkxlhX7Je8Qr3NB
- d2oQ==
-X-Gm-Message-State: AOJu0YxG8uAB8gVPp10Ceg/ehCXyvv5V6PB4pCDs6AcVuLWy9+ad4ZMN
- a6LIHkVaUTnf1aZQlkJX9dCgFaHX361tEQJwkEsWbUhGYR0L5Ur4Q37XcRY3eqL8/oI+mPKRO0x
- /cICgDuA=
-X-Gm-Gg: AeBDieuCAz+4os0L6Dwbug9qdFLLr/ljRSMuP8OcPJ1BnXLtCfxDsROYf1JiqpFikLb
- 9WYvJbmPjvziQnsYbkQGql93+RRooWTMauOXeVE5eEFUQzkOBr1wLzf0rSI5w0IvxSVoZ3na2uS
- 6n69/11qHrpBkCfz78bSAX+Y3MGZHaH4KZDE0WAeQLsV7s4FWYEaEH258JxhOpSHUaZsVXmlVZ5
- +N/kbXq2sWT1G0JD58qScWY3KQNVGI16cu2OB6ZTEx5z6JlQPWEhUL6CJ4ZXRvRNqOhISTYqAWy
- MOrrCXRbhrEzZQj2Ll5dX4P/VLDRTazqWIv6+xSV9ob+NRjSQTVEay9/puLJJsH9aYufezPElDB
- Unh75dJyP4skGv2Y/9Tl5nxA4fSaUXXxv4AQOCxl3S7RGTdfVPDnYevAtiJ79g75slcTthxbWXR
- N28po3M1vdpBFxWsfKWCXpIG5QWVVdrUQUlgoJJF4ueMojYQRDGcJe201L13smN0hv1XThjD+I1
- R8Rw/hjaENajElzwenZ18e0cIeYPG+r6RAOljsDZ7jhxxae7KipQT2i/otSRLDO/rS/1EgR
-X-Received: by 2002:a05:600c:a105:b0:485:3a03:ceca with SMTP id
- 5b1f17b1804b1-488fb7826femr306684265e9.23.1777016646890; 
- Fri, 24 Apr 2026 00:44:06 -0700 (PDT)
-Received: from meli-email.org (athedsl-338307.home.otenet.gr. [85.72.177.33])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cc375dsm52481053f8f.14.2026.04.24.00.44.06
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 24 Apr 2026 00:44:06 -0700 (PDT)
-Date: Fri, 24 Apr 2026 10:43:52 +0300
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-To: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Alex Benn=?UTF-8?B?w6k=?=e <alex.bennee@linaro.org>,
- Philippe Mathieu-Daud=?UTF-8?B?w6kg?=<philmd@linaro.org>,
- Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
-Subject: Re: [PATCH 2/2] contrib/plugins/uftrace_symbols.py: handle missing
- source line from addr2line
-User-Agent: meli/0.8.13
-References: <20260423213838.780814-1-pierrick.bouvier@oss.qualcomm.com>
- <20260423213838.780814-3-pierrick.bouvier@oss.qualcomm.com>
-In-Reply-To: <20260423213838.780814-3-pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <tdzmth.1gh4d7ywp7riw@linaro.org>
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wGBG3-0004eE-HY
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 03:47:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wGBFz-0007Tk-7G
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 03:47:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777016840;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SOwLaWDCVs+3j+gIDuUzrmI6kxLJLvKN/XYmc8SlN44=;
+ b=RYz/EyPYY4K/J2FOwVTV+rrkposLMG91Sy6qZvI0wJ/l9l93GnPpjhHbUkE/kFMukp0NZV
+ ubk2tgOBkouNZK1AnU1gpQRlwpTnf+1sS3lhfALyU1RtH612NvQak4NVmMN64OnChNOrJs
+ J1OMGjcFGNjwfzPx39ooMlsUPMqe+v8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-29-oClGuDUNNhCNF4Aj8vRDgg-1; Fri,
+ 24 Apr 2026 03:47:12 -0400
+X-MC-Unique: oClGuDUNNhCNF4Aj8vRDgg-1
+X-Mimecast-MFC-AGG-ID: oClGuDUNNhCNF4Aj8vRDgg_1777016831
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 29671180036E; Fri, 24 Apr 2026 07:47:11 +0000 (UTC)
+Received: from localhost (unknown [10.44.33.91])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2995F3007572; Fri, 24 Apr 2026 07:47:09 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Matthew Rosato <mjrosato@linux.ibm.com>, Stefan Hajnoczi
+ <stefanha@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Subject: Re: [PULL 00/11] 11.1 compat machines and s390x updates
+In-Reply-To: <9ff8cb74-8abc-4c9a-8f25-044cd4b9d921@linux.ibm.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Avril Crosse O'Flaherty"
+References: <20260423094856.270215-1-cohuck@redhat.com>
+ <CAJSP0QWFK9noq+CRRG4E1DM4HSyaHxHqmZytqzUHnu-_VsRjUA@mail.gmail.com>
+ <9ff8cb74-8abc-4c9a-8f25-044cd4b9d921@linux.ibm.com>
+User-Agent: Notmuch/0.39 (https://notmuchmail.org)
+Date: Fri, 24 Apr 2026 09:47:07 +0200
+Message-ID: <87se8kssuc.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8; format=flowed
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wm1-x331.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,37 +90,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Apr 2026 00:38, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
->Some symbols have only a file information, and no line information. In
->this case, addr2line reports '?'. Replace with 0 to guarantee consistent
->data for consumers.
->
->Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
->---
+On Thu, Apr 23 2026, Matthew Rosato <mjrosato@linux.ibm.com> wrote:
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> On 4/23/26 7:20 PM, Stefan Hajnoczi wrote:
+>> On Thu, Apr 23, 2026 at 5:50=E2=80=AFAM Cornelia Huck <cohuck@redhat.com=
+> wrote:
+>>=20
+>>> The following changes since commit
+>>> 98b060da3a4f92b2a994ead5b16a87e783baf77c:
+>>>
+>>>   Update version for v11.0.0 release (2026-04-21 16:28:47 +0100)
+>>>
+>>> are available in the Git repository at:
+>>>
+>>>   https://gitlab.com/cohuck/qemu tags/s390x-20260423
+>>>
+>>> for you to fetch changes up to 83f5164d25634f9104b5fb4a6772766ae646ad59:
+>>>
+>>>   hw/s390x/ccw: Disable legacy virtio-pci by default (v11.1+) (2026-04-=
+22
+>>> 11:28:03 +0200)
+>>>
+>>> ----------------------------------------------------------------
+>>> First batch of updates for 11.1:
+>>> - compat machines for 11.1
+>>> - s390x: simplifications, cleanups, and a new test
+>>>
+>>=20
+>> Hi Cornelia,
+>> There is an s390x timeout regression in this pull request that reproduces
+>> both in the CI and locally:
+>>=20
+>> $ make check-functional-s390x
+>> 13/13 qemu:func-thorough+func-s390x-thorough+thorough /
+>> func-s390x-ccw_virtio         TIMEOUT        420.07s   killed by signal =
+15
+>> SIGTERM
+>
+>
+> Hi Connie, it looks to me like the failure is due to disabling legacy
+> virtio-pci by default for s390x starting with 11.1.
 
-> contrib/plugins/uftrace_symbols.py | 5 ++++-
-> 1 file changed, 4 insertions(+), 1 deletion(-)
+Duh, I thought I did run all tests, but apparently not.
+
 >
->diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
->index 895fa1a6b7a..a71865805c5 100755
->--- a/contrib/plugins/uftrace_symbols.py
->+++ b/contrib/plugins/uftrace_symbols.py
->@@ -70,7 +70,10 @@ def find_symbols_locations(elf_file, symbols):
->         file, line = out[i].split(':')
->         # addr2line may return 'line (discriminator [0-9]+)' sometimes,
->         # remove this to keep only line number.
->-        line = line.split(' ')[0]
->+        if line == '?':
->+            line = 0
->+        else:
->+            line = int(line.split(' ')[0])
->         s.set_loc(file, line)
-> 
-> class BinaryFile:
->-- 
->2.47.3
+> I was able to get the test to pass again with the diff below.  But
+> wasn't sure, do we only care about the default/latest machine version
+> for functional tests?=20
 >
->
+> diff --git a/tests/functional/s390x/test_ccw_virtio.py b/tests/functional=
+/s390x/test_ccw_virtio.py
+> index 0455337856..1d4958bbe2 100755
+> --- a/tests/functional/s390x/test_ccw_virtio.py
+> +++ b/tests/functional/s390x/test_ccw_virtio.py
+> @@ -136,7 +136,7 @@ def test_s390x_devices(self):
+>                      r'0x1af4')
+>          exec_command_and_wait_for_pattern(self,
+>                      r'cat /sys/bus/pci/devices/0005\:00\:00.0/subsystem_=
+device',
+> -                    r'0x0001')
+> +                    r'0x1100')
+>          # check fid propagation
+>          exec_command_and_wait_for_pattern(self,
+>                      r'cat /sys/bus/pci/devices/000a\:00\:00.0/function_i=
+d',
+> @@ -203,7 +203,7 @@ def test_s390x_fedora(self):
+>                          'while ! (dmesg | grep enP7p0s0) ; do sleep 1 ; =
+done',
+>                          'virtio_net virtio0 enP7p0s0: renamed')
+>          exec_command_and_wait_for_pattern(self, 'lspci',
+> -                             '0007:00:00.0 Class 0200: Device 1af4:1000')
+> +                             '0007:00:00.0 Class 0200: Device 1af4:1041')
+>          exec_command_and_wait_for_pattern(self,
+>                               'cat /sys/class/net/enP7p0s0/address',
+>                               '02:ca:fe:fa:ce:12')
+
+AFAICS we always run with the default (latest) machine, so adapting to
+any changed output there is probably the way to go -- unless we want to
+test various permutations of older machines, but I think that would get
+out of hand pretty quickly.
+
+Can you send this with proper tags, I'll just go ahead and merge it.
+
 
