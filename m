@@ -4,119 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 379C5FED3D7
-	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 15:58:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 005BFFED3D7
+	for <qemu-devel@archiver.kernel.org>; Fri, 24 Apr 2026 15:58:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGIuC-0003oG-F0; Fri, 24 Apr 2026 11:57:25 -0400
+	id 1wGIv5-0004AJ-Pn; Fri, 24 Apr 2026 11:58:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1wGIuA-0003nd-Jo; Fri, 24 Apr 2026 11:57:22 -0400
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
- id 1wGIu7-0003Mq-Lj; Fri, 24 Apr 2026 11:57:22 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kQ9TVten3udibLg3U3YPydTp27cfob6Pw9R+xT+bOFbCB0oWhB1lK6IJ9F5FlpxwznSliJfGRvjO4LX05Q5+gOSdXpGSglqFbYyDGox8E1rFZxBvy0E2sOWmgwVan4x/Je/x+J6iPZqfs9kzh4WeZ5+aLUeL8vFFIKkii16ZJx0kF7K2D5AiqELakBmHhOOw/vs/6PcqPO2CRQYX6ecFwaqOdBm3rcXyc3dH/StJDY7PZQ7uGHPgOm0VY4qOXAoupsH3a3tmwpBCMlrlrTXzigzwPEmZ5/QJUKkQT9M+V+ScDQVNjEUwAHvf7piOcsKI3ES7CXbmwo99E9GIHjgiOA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lLyg4SUcbhPf/UgAsp0MRyeOKbr8wXR3qR32euURJAw=;
- b=pG/64umbZOtP1lM2EM2GDJCrm8FG+bxeThBX7gzEJj/bZ7aMvrKK958OC+PksA+AMuEXN3vz5S3o8aa40vIP1TGKXGnqo98e3PGw1AyrajOdTPIGjCiCVTT+in9kCOksJ0S04yRR5d+nrtJ04y0cLD2/d2yf9vavclLxHCYK4UcAt2Dpf8axcD4EOQv6O/EFuWyoABlyzUiqQPnyS7qNAyfIjzZCZE38YwUtoIj2ygZOOUklLyEC9EbD3BJrcUjCiYyrwtHL4FthnFAzXeE7JmVs6VWQcYVFeF4ZVcGDl7dS9RZ//4mtZ/Coq/3u6Mqo0/kxLQUP2T6MV33QIxyikA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lLyg4SUcbhPf/UgAsp0MRyeOKbr8wXR3qR32euURJAw=;
- b=xgY6bbv5eheKlJ1fTMU11r64vFwlf5D0EaOsg5sgKtiAoMTUO2mi1rWFyAb7VOmcPX4is0NPCdkurMV97Tije46ywlcxP5w2+/ZaXDcvLW35iTJU2D9ahX9QiHfqtPkaZKmE8W4t2UNOdGbFmIZGb/JpRo/WYnrSr2W/BYNl+Wc=
-Received: from BL1P221CA0043.NAMP221.PROD.OUTLOOK.COM (2603:10b6:208:5b5::13)
- by DS2PR12MB9752.namprd12.prod.outlook.com (2603:10b6:8:270::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.20; Fri, 24 Apr
- 2026 15:57:12 +0000
-Received: from BL02EPF0001A103.namprd05.prod.outlook.com
- (2603:10b6:208:5b5:cafe::c7) by BL1P221CA0043.outlook.office365.com
- (2603:10b6:208:5b5::13) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9846.22 via Frontend Transport; Fri,
- 24 Apr 2026 15:57:12 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- BL02EPF0001A103.mail.protection.outlook.com (10.167.241.133) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9846.18 via Frontend Transport; Fri, 24 Apr 2026 15:57:11 +0000
-Received: from SATLEXMB04.amd.com (10.181.40.145) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.17; Fri, 24 Apr
- 2026 10:57:10 -0500
-Received: from satlexmb08.amd.com (10.181.42.217) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Fri, 24 Apr
- 2026 10:57:10 -0500
-Received: from XFR-LUMICHEL-L2.xilinx.com (10.180.168.240) by
- satlexmb08.amd.com (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17
- via Frontend Transport; Fri, 24 Apr 2026 10:57:09 -0500
-From: Luc Michel <luc.michel@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: Luc Michel <luc.michel@amd.com>, Thomas Huth <thuth@redhat.com>, "Peter
- Maydell" <peter.maydell@linaro.org>, Francisco Iglesias
- <francisco.iglesias@amd.com>, Frederic Konrad <frederic.konrad@amd.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Alistair
- Francis" <alistair@alistair23.me>, <qemu-arm@nongnu.org>
-Subject: [PATCH] hw/core/register: add register_array_get_owner
-Date: Fri, 24 Apr 2026 17:56:44 +0200
-Message-ID: <20260424155646.533334-1-luc.michel@amd.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wGIuz-000485-5B
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 11:58:14 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wGIux-0003s2-5H
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 11:58:12 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-651c366f7efso8416665d50.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 08:58:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777046290; cv=none;
+ d=google.com; s=arc-20240605;
+ b=iCD2EezLDCi0bC3t521OiyXixxGDl+SzJXMWJLXNCCsXQcYdvJwSH0cY6vNLBWjh5f
+ WSWB8ocShPhjcGPeMYNuuuz47dCUhyxtdnL4xhrxQZGmxy1xBIAU2PR94weOnp91sGlC
+ ePH2o6uhs0KDSUH3PeRLbSDuZATp/jGq45HNHt3jG1o1ddGTb9dhqstV4H/iGHPaNJKf
+ c4n1Czm+N7qZSf3Bm21Fp9a2wP83WBR1ZuRA6XV6bpQAuRZMWl56wT37zalkr+F+TCYm
+ r8aIangCI0gkGdy3ShhMftuxovNlBWM2za0cKclkBmFcVQIFEvMOA5zTlNHUoEtxIGGi
+ wLvg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=3fHju/rywQ2hs+X8YMVNSxO/PxQfzdwsy2MTviTNEoU=;
+ fh=2MUhVyPoVVGVao366UdC72zH6OhfSgCBy1rS/0kzkqo=;
+ b=j4AgciTKnlF13w3r64BtVtV1S6p0jHNepDWyuGv882TBDn7K6ERRpQdnr3hWu8Wf7M
+ G1c6rIGP846ZZGTrsMXMI5bEjz9Zui8psBJ8kCjapxnhNGetyYszfE53oPIGNsXpE2qB
+ HPNq8kybLrS8qSvZX96dlF3YmABzfELYCiptAezZveKhhJw9aWp1x4jtp/QeJN6Lrgrp
+ hT5/9GQhi1MmSsUrZB83Hkx79MDQF58iRfmYjECRk+OYnwB2JnLgVeSYm1KN9si5yNRx
+ hnOy5MAXm1g9/KKzBoDpJs875C9ip0U3HDziKftnU9IhDt8ZZxJJAr4Zqfd6WBlZPj2n
+ DcLQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777046290; x=1777651090; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=3fHju/rywQ2hs+X8YMVNSxO/PxQfzdwsy2MTviTNEoU=;
+ b=PPTv2b9FJQVmM14jkae6k1099h/cCI9EZjK5A1p+qnX9+Z3V0Y5Bzj2F6gP/M8Agdp
+ wI5v4i8wDj/el29BVvf03v0W47Jr7a9rK9/RXGtS7ESx0UCaGqxFrxYLGr80et1UuEJV
+ rTECV8aMHqXrxw8lx4+7eRTvucDaWuNw26P1Bj/qyUh77t858crGVex6nQ47smUrDEEL
+ mm/016yqAoLJRr0UY9/STUqARpDlMBL2eobcYRjrrSB+xuDC9ytd5V+8XohyIFV08/Hv
+ 842tRte1mh+Yy1CLDujUd3Q01A299nUorNvb3vvnXGCHd+r30zjnRDI3Np5QGL+iHS60
+ x6DA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777046290; x=1777651090;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3fHju/rywQ2hs+X8YMVNSxO/PxQfzdwsy2MTviTNEoU=;
+ b=owhSdFoxTSH60CE9vUtYhK/QSogC+K/HBVm7waf9F7N3gvDJE9DiKYMS4EwpCOzc5K
+ Zho5WN2phC37WgFf6Y7AOHORRqD0vhbnHqju9p9AGQgfREhd4zNLJ6vLvS0JwdMoVXM9
+ u1QKFcXtk9xGWVHGBcTjEpZ6EBgO/bR2q/YBQYMFpqBsh9kalWGSXEI1PcqKW3gOBrN/
+ oop4rTmq6fDjkqLattqodR5vK+w/CU5r5Es6JxEGvm+JYkMt3BvRcGoDFC1gr+bu9L/s
+ wTelQZ4UZJqVBRgprsZmsMkAbtpeFp5msk791p5nZrt+qVZdddXy+yhsbd2iV15VULyB
+ LapQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+YyNoXvb8Q8MVXzoVBoqoUSPEMfX110zAP0aPCQBVM94iHczgaQ//UX/1Hjlt6ZBct9D0euuI/GKnk@nongnu.org
+X-Gm-Message-State: AOJu0YzSlwHUu7FDngZ5YiqUsDw/XnFL1EUia0cfTDaGBhThQPu97rL8
+ K0FZG+DU+wF5xzPILRPsAxfEq8yD4SuXN7/0WQhqGcq0Ps+cT29PCKktZJHK0QlcCTuHjuYZSHa
+ rWEseBHkhkP9dA0iQu3OypGvmxmItwBZB3tRSqka7XQ==
+X-Gm-Gg: AeBDiethIFi/BVxsnNf91zymtTPiiko1Od8pmB0FmiPrnJVa3JBPDjsE/fK3Epgxbl5
+ QKRZ3WJj8GofVMozw6xuwP2gQc0A02Croy4hsN3CVljn5VOITd74qtP9intpw2iDSo3OVTNoIL4
+ nVryCu4KSfGvhvQmVf7NzJt+1vVoiY0JHT6Zy7ftbPZaD5XlSxA5O3Fw92hbEoTzbH1cyn3NgIC
+ SoksmbpCMTj4hfXRPzdkVnrhFF57cT+IUUxMqIyuEt2eoDOE/nloSpSbSG6wNN8Ty4iLV0CgRbu
+ RMCXQ3HtUZ3YGfQ9gkXvDtXi2skikN6LwODC8RJ/ThGg5/XTvOH73zXkY7o9BgpTRUmNq731uX3
+ K/A==
+X-Received: by 2002:a05:690e:147:b0:64e:a969:fd10 with SMTP id
+ 956f58d0204a3-65310a1267cmr22256650d50.32.1777046289835; Fri, 24 Apr 2026
+ 08:58:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-Received-SPF: None (SATLEXMB04.amd.com: luc.michel@amd.com does not designate
- permitted sender hosts)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0001A103:EE_|DS2PR12MB9752:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3dee10cd-84b4-4486-2b1e-08dea21a259b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|376014|36860700016|13003099007|56012099003|18002099003;
-X-Microsoft-Antispam-Message-Info: hFwi0VOatTt17NNsWvm6V6iiwlIGKqlO0dDwqQ4vdRY43uAVAFIQ6SOkArkcWvtkxpN0Bfw5MiOorCqCIePNQY9bzy/JSL/k/mZUzm3Va1QwjR014mue/zaVuQafeR3ahTPFi6iuN9h74vF8L+AfrhgcpLPV1VGdP21UXdCjc9rAl2WRp3EtDZxV6c0uFOG6nSwx/gfA5C8Nq6dW6rEeIWOrPNpnWBLAmcbTRAbZvJQdA2J4UQv0x10Wji6mMK0LhJAGo5cYVXQTzi8CK7kWxl1FlGf8AHDt2cZ2580TyiQW8uMvno0WThXLELZmkbZRH1rLbMvYr5ckggkQStnB7DDI82+16RwQkRIZidLIXTUjvt3V2+TUGeRUnwkc5y0oSX+hXTeIW8rYLNqBcf7Wm3Qwik3NDTgMJW+S8pSwJ/AkzhrarMDScPfNPQEyHoEON528RLJI73BAXQnxPYkgd8jdxcMoUgKwDJqxR9T7bGi7J+Ok3Vs2z/9JrpZQHpTo4rDVhtxbLcKQqm5VGNGbS4TxHpcwYJDV1NNX6mPEMOimEZxSEjSnoJAgYYCYa56He+xD6OG3tL80SW85Yp0d0uo0CiBHKbXy9UiHZ/3l2CSGPEBRuFVcflAUopJg6WaNFiIEDxQAkSvQPS50C0pv9NG/PAT+fCYmhlLURZrKqT2U9L2Ex0AYwIkTqD5kc+PEtUSoB5kSn94VygY6QLsOQg93cFUgaCV5HUCXLdAYRFs=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(376014)(36860700016)(13003099007)(56012099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: yPTbFYFPlRZuEcMM9aF8fKlmCDklQ3b5jYBxc8+xw7RYN9rQnfsRTWe0EV1V6CS54kgo8yk+aGK9jyc1cq7Hwvt4ZoWD5Y+z54om0MgLNzhXiejb17oqAKOHVpdOUCVczOTSF0FpI8Up3cLRV6/cpZma3WSD69HLdOZvAnbesLbxcoeA/HOxIkJf6dokhITqeo76yKzKOq3H9mlXbwuSZ+sPz47pgvh3HzFUT1+gPyXEUT2WKo12AD1VkrXOZuNbYtQnnNU6zwqUnvGji+NFOLH6LATfcgaj/QduOhXXyKoGIl1IcBu0IGcwi/k7kvgukq2ucqpwNPAalWKQv7JG8PFlTYa7oT7xytgQC7xptXi6Q4ClJ2GxaD+NmbeHQpMa/gESgI6vJKZs5yWfJzaKxtKu875yw5YJEijI8vZdJ71mFV4WKCg72SMHlyo2Qa9d
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Apr 2026 15:57:11.6595 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3dee10cd-84b4-4486-2b1e-08dea21a259b
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A103.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS2PR12MB9752
-Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
- envelope-from=Luc.Michel@amd.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
+References: <20250929165230.797471-1-clg@redhat.com>
+ <20250929165230.797471-3-clg@redhat.com>
+ <CAFEAcA8Dja4yqnaHsXc9pg6EzEAVZFR3=E0sGa9Bz4bvuf+_bA@mail.gmail.com>
+In-Reply-To: <CAFEAcA8Dja4yqnaHsXc9pg6EzEAVZFR3=E0sGa9Bz4bvuf+_bA@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 24 Apr 2026 16:57:58 +0100
+X-Gm-Features: AQROBzASYHS4sX9SZcWEReuIrVmVYyHkHdzbas_s41zzQbTB_SNmUaovveuP4H8
+Message-ID: <CAFEAcA8nyngyeWi4Vb=ZWJfxNsyFfSqFJMnWnYG2ce95xaCfPA@mail.gmail.com>
+Subject: Re: [PULL 02/32] hw/misc/aspeed_sbc: Connect ASPEED OTP memory device
+ to SBC
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, 
+ Kane-Chen-AS <kane_chen@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,145 +120,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the register_array_get_owner function to the register API. This
-function can be used to retrieve the device owning the given
-RegisterInfoArray.
+On Fri, 24 Apr 2026 at 16:46, Peter Maydell <peter.maydell@linaro.org> wrote:
+> But here in the prog path, we use the address from the guest
+> directly in the call to address_space_write. This means that the
+> address the MemoryRegion in the OTP device sees is not necessarily
+> 4 aligned, and that it can have values that exceed the valid
+> size of the OTP.
+>
+> The OTP device on the other end seems to try to account for
+> this difference: its read function uses the offset it is
+> passed as-is, whereas its write function uses
+> "otp_offset = otp_addr << 2" to convert the offset into a
+> byte offset before using it as an array index etc. But the
+> write function doesn't check whether it's got an overlarge
+> value, so I think it can write off the end of the storage.
 
-This was previously done inline by some devices.
-5c6367bc1c8850f74812eeaaf87cff9911be58de modified the way register
-blocks are created and parented to the device. Since this is an
-implementation detail of the register API, it makes sense to have a
-function for this.
+I found a repro which triggers a clang asan failure, so
+I filed a bug:
 
-Use it in the Versal OSPI and Versal/ZynqMP eFuse models instead of
-tinkering with the API internals.
+https://gitlab.com/qemu-project/qemu/-/work_items/3436
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3421
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3422
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3423
-Signed-off-by: Luc Michel <luc.michel@amd.com>
----
- include/hw/core/register.h        | 11 +++++++++++
- hw/core/register.c                |  5 +++++
- hw/nvram/xlnx-versal-efuse-ctrl.c |  4 ++--
- hw/nvram/xlnx-zynqmp-efuse.c      |  4 ++--
- hw/ssi/xlnx-versal-ospi.c         | 10 +++-------
- 5 files changed, 23 insertions(+), 11 deletions(-)
+Would you mind having a look at it?
 
-diff --git a/include/hw/core/register.h b/include/hw/core/register.h
-index 1f265f4ed71..c6f648fe95e 100644
---- a/include/hw/core/register.h
-+++ b/include/hw/core/register.h
-@@ -207,6 +207,17 @@ RegisterInfoArray *register_init_block64(DeviceState *owner,
-                                          uint64_t *data,
-                                          const MemoryRegionOps *ops,
-                                          bool debug_enabled,
-                                          uint64_t memory_size);
- 
-+/**
-+ * register_array_get_owner
-+ *
-+ * Retrieve the device owning the register info array @reg_array.
-+ *
-+ * @reg_array The register info array to retrieve the owner from
-+ *
-+ * Returns: the device owning @reg_array
-+ */
-+DeviceState *register_array_get_owner(const RegisterInfoArray *reg_array);
-+
- #endif
-diff --git a/hw/core/register.c b/hw/core/register.c
-index c3f3c936e70..99ca5e17758 100644
---- a/hw/core/register.c
-+++ b/hw/core/register.c
-@@ -320,10 +320,15 @@ static void register_array_finalize(Object *obj)
-     RegisterInfoArray *r_array = REGISTER_ARRAY(obj);
- 
-     g_free(r_array->r);
- }
- 
-+DeviceState *register_array_get_owner(const RegisterInfoArray *reg_array)
-+{
-+    return DEVICE(OBJECT(reg_array)->parent);
-+}
-+
- static const TypeInfo register_array_info = {
-     .name  = TYPE_REGISTER_ARRAY,
-     .parent = TYPE_OBJECT,
-     .instance_size = sizeof(RegisterInfoArray),
-     .instance_finalize = register_array_finalize,
-diff --git a/hw/nvram/xlnx-versal-efuse-ctrl.c b/hw/nvram/xlnx-versal-efuse-ctrl.c
-index 69acdfa3047..f5d5587cb65 100644
---- a/hw/nvram/xlnx-versal-efuse-ctrl.c
-+++ b/hw/nvram/xlnx-versal-efuse-ctrl.c
-@@ -617,15 +617,15 @@ static const RegisterAccessInfo efuse_ctrl_regs_info[] = {
- static void efuse_ctrl_reg_write(void *opaque, hwaddr addr,
-                                  uint64_t data, unsigned size)
- {
-     RegisterInfoArray *reg_array = opaque;
-     XlnxVersalEFuseCtrl *s;
--    Object *dev;
-+    DeviceState *dev;
- 
-     assert(reg_array != NULL);
- 
--    dev = reg_array->mem.owner;
-+    dev = register_array_get_owner(reg_array);
-     assert(dev);
- 
-     s = XLNX_VERSAL_EFUSE_CTRL(dev);
- 
-     if (addr != A_WR_LOCK && s->regs[R_WR_LOCK]) {
-diff --git a/hw/nvram/xlnx-zynqmp-efuse.c b/hw/nvram/xlnx-zynqmp-efuse.c
-index e6bc54fc6bd..028120f824d 100644
---- a/hw/nvram/xlnx-zynqmp-efuse.c
-+++ b/hw/nvram/xlnx-zynqmp-efuse.c
-@@ -722,15 +722,15 @@ static RegisterAccessInfo zynqmp_efuse_regs_info[] = {
- static void zynqmp_efuse_reg_write(void *opaque, hwaddr addr,
-                                    uint64_t data, unsigned size)
- {
-     RegisterInfoArray *reg_array = opaque;
-     XlnxZynqMPEFuse *s;
--    Object *dev;
-+    DeviceState *dev;
- 
-     assert(reg_array != NULL);
- 
--    dev = reg_array->mem.owner;
-+    dev = register_array_get_owner(reg_array);
-     assert(dev);
- 
-     s = XLNX_ZYNQMP_EFUSE(dev);
- 
-     if (addr != A_WR_LOCK && s->regs[R_WR_LOCK]) {
-diff --git a/hw/ssi/xlnx-versal-ospi.c b/hw/ssi/xlnx-versal-ospi.c
-index 467f0ce7033..e25e4c26c2e 100644
---- a/hw/ssi/xlnx-versal-ospi.c
-+++ b/hw/ssi/xlnx-versal-ospi.c
-@@ -1567,19 +1567,15 @@ static RegisterAccessInfo ospi_regs_info[] = {
-         .ro = 0xffffffff,
-     }
- };
- 
- /* Return dev-obj from reg-region created by register_init_block32 */
--static XlnxVersalOspi *xilinx_ospi_of_mr(void *mr_accessor)
-+static XlnxVersalOspi *xilinx_ospi_of_mr(void *opaque)
- {
--    RegisterInfoArray *reg_array = mr_accessor;
--    Object *dev;
-+    RegisterInfoArray *reg_array = REGISTER_ARRAY(opaque);
- 
--    dev = reg_array->mem.owner;
--    assert(dev);
--
--    return XILINX_VERSAL_OSPI(dev);
-+    return XILINX_VERSAL_OSPI(register_array_get_owner(reg_array));
- }
- 
- static void ospi_write(void *opaque, hwaddr addr, uint64_t value,
-         unsigned int size)
- {
--- 
-2.53.0
-
+thanks
+-- PMM
 
