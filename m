@@ -4,55 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F08BFF885C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 08:11:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A69EFF885D
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 09:39:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGY5t-0000GK-PS; Sat, 25 Apr 2026 04:10:31 -0400
+	id 1wGZTF-00058i-Kr; Sat, 25 Apr 2026 05:38:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wGY5p-0000F9-9n; Sat, 25 Apr 2026 04:10:25 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wGY5n-0003tp-Ld; Sat, 25 Apr 2026 04:10:25 -0400
-Received: from example.com (p57a1bc69.dip0.t-ipconnect.de [87.161.188.105])
- by linux.microsoft.com (Postfix) with ESMTPSA id 9D6F320B7165;
- Sat, 25 Apr 2026 01:10:18 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9D6F320B7165
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1777104620;
- bh=3GxSJ6kytQKpqnWpr5MCdCt6Ddf9VC6mjcFel6DBbqE=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=oLLTVq7ZHBU9Zf53+Rk4Couv3FfSMbjZWsYkA4XtwVexEpYC74YP8UTELMMJnVc90
- EsFM3/cDqUMAN+o/c2U10QyT4h2AZMRyKN70BDgvcXs3cPcbKm9tz6kgJEujJvUg9g
- 7CU7oF+HI4uiTgdjPh6hRiFLn80WP+kLnONS3mKI=
-Date: Sat, 25 Apr 2026 10:10:14 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@microsoft.com>,
- Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Wei Liu <wei.liu@kernel.org>, Wei Liu <liuwe@microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-Subject: Re: [PATCH] target/i386/mshv: Fix segment regression in MMIO emu
-Message-ID: <aex25q67R3TxXTzN@example.com>
-References: <20260410142652.367541-1-magnuskulke@linux.microsoft.com>
- <24a2d178-b674-4355-870e-415c259658e3@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
+ id 1wGZTB-00058L-Bm
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 05:38:39 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
+ id 1wGZT9-0005y8-QB
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 05:38:37 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43cfbd17589so6960495f8f.0
+ for <qemu-devel@nongnu.org>; Sat, 25 Apr 2026 02:38:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1777109913; x=1777714713; darn=nongnu.org;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/SOftPWfgTVcpYSKddW04EAimM0BgrwjcI4dSfJiO9w=;
+ b=VRYsrPuLHfLV6dW09laGu6koa0Ft3ohGm7HKmrZaNL2EeKzcT70nCUvofm21Npso9w
+ btH4odgHUvNPob1c8EhRh+ERSKayeu6/G22WWOnGs+GvgYFo5uqY4Iq6GRWxb2maOKUN
+ Kp52BRvLyb2jNh+PpzWEAvMKET6evNNd0AkC1uYfYRTH8E/bXL9CtQ8XW8LrgtAvjuz4
+ Rja6mMkQUH552spvTYgxKh3wnUdqWXFn015ZNpfYnrnYax6AHW5ZoGDue+RaGXF9sMQY
+ 0onU7sXqmuH16zzaEh34kZjC/3eYochi42FBEgeCmJEBVQ9/589IZnfX7LB8T4hKBx7S
+ wgLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777109913; x=1777714713;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/SOftPWfgTVcpYSKddW04EAimM0BgrwjcI4dSfJiO9w=;
+ b=kUfUuHscWCLn5ZniQJx6o2W1eVCsE6i7ME0lPV8f4+2hnOOrD/KuvC9Lc/aJ07A0rz
+ EPkVV9utm2SD1/VyDEkjEjheJbCjAkxouzPI13A/x+4/Vs/gELyfe3eeW+z0T7LsyxcA
+ bGULm6TagoBpDk2MqCSoYk+UQwaHFWWicgbCYbooRAkg8oU1Z7uYpTdsSEv1O9OGGoel
+ 54md8B78+gWfa1X1OM8KSVLRZl6EvXSoOwZxEzhvjY0855P+KDM4JPxmERnhri52uIF2
+ crE6TbWTVZmgNxetXMvJ8PmzF9Wsf7nPA+f05OAqgXBrL7CFVQU5/7F3kC/MBoWeotii
+ VN+Q==
+X-Gm-Message-State: AOJu0YzvXDLDyNoNc9st1pA6WbZPIiLb37ZNlXtrEA8UMNTzkcsEKEvT
+ GxFXip0Of3TNRzCjVDK6SGLlYDjqZ0mbQbRtAAIafc9qNPVOYoUxbXhgKnS9eJO7evk=
+X-Gm-Gg: AeBDiesxMdBV+Ma/mFoZn7JZyxpIoBbI8ddYXLGbiBJL/gt1tCebCr0LjmyuMc2A0Ou
+ zKuHgaF14DxA9pMOb4yen+rgUWocDxae42BoStMub6GK3vP/dTYaO427YgDvrZtiMXtFD2/pOaH
+ oK7WO5TkQMzVM2qXAEgqqcVErXpNj7W+d+C84zucHb6eH4hoCn3jLwvQ/afTIe4Joypw81wH8/N
+ C3Ew/rFV1apMWq0x96Tb9zGbVQxKdBn+cfgqMBy2jpLXFsCJGI7Yk7EYEoyHPXMS7uRn7ya4te6
+ ukRvmuEvwf+LQC7D+BpGZjht67H5miS1irjZM01u/tBjgNbJDDa9pFTJgbcEDUBhhqdy9ODaxGy
+ N3+sXBcewCfq06l+0yMnXy+US3xBNSD7fjSy57tuVz3D3wzshpFTyRTHTUcuGm+wpwCcTl4bsPP
+ 8jDf5oKmEo4WCk1DCS2XwixVOASdy0a1NxG2KlPPrtDopaeap/+g==
+X-Received: by 2002:a05:6000:24ca:b0:43d:c2bc:21b0 with SMTP id
+ ffacd0b85a97d-43fe3e0c647mr52296583f8f.46.1777109913228; 
+ Sat, 25 Apr 2026 02:38:33 -0700 (PDT)
+Received: from [192.168.0.10] ([2a03:ab00:1000:1b60:331a:b316:78f6:effc])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43fe4e3a18csm74965992f8f.20.2026.04.25.02.38.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 25 Apr 2026 02:38:31 -0700 (PDT)
+From: =?utf-8?q?Jind=C5=99ich_Makovi=C4=8Dka?= <makovick@gmail.com>
+Subject: [PATCH 0/2] Fix and re-enable GTK clipboard
+Date: Sat, 25 Apr 2026 11:38:30 +0200
+Message-Id: <20260425-gtk-clipboard-v1-0-6bd99e708e14@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <24a2d178-b674-4355-870e-415c259658e3@tls.msk.ru>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAJaL7GkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDEyNT3fSSbN3knMyCpPzEohTdtJQ0S8uUJEPjxGQDJaCegqLUtMwKsHn
+ RsbW1ADznxtBfAAAA
+X-Change-ID: 20260425-gtk-clipboard-fdf99db13ac0
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Jindrich Makovicka <makovick@gmail.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=makovick@gmail.com; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,37 +105,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Apr 25, 2026 at 12:35:27AM +0300, Michael Tokarev wrote:
-> On 10.04.2026 17:26, Magnus Kulke wrote:
-> > When the segmentation code has been reworked, there is now an
-> > unconditional call to emul_ops->read_segment_descriptor(). The MSHV impl
-> > was delegating this to x86_read_segement_descriptor(), which read from
-> > the GDT in guest memory. This fails for selector.idx == 0 and when no
-> > GDT is set up (which is the case in real mode).
-> > 
-> > In the fix we change the MSHV impl to fill segment descriptor from
-> > SegmentCache, that was populated from the hypervisor by mshv_load_regs()
-> > before instruction emulation.
-> > 
-> > Fixes: 09442d98ab (target/i386: emulate: segmentation rework)
-> > 
-> > Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> > ---
-> >   target/i386/mshv/mshv-cpu.c | 39 ++++++++++++++++++++++++++++++-------
-> >   1 file changed, 32 insertions(+), 7 deletions(-)
-> 
-> This looks like a qemu-stable material (11.0.x).
-> 
-> Please let me know if it isn't.
-> 
-> Thanks,
-> 
-> /mjt
+The following patches change blocking clipboard retrieval function
+calls in gtk-clipboard.c to non-blocking variants using callbacks to
+avoid UI lockup. It is a follow-up to the patch proposed in the GitLab
+issue
 
-I think so, yes. real mode mmio-emu will not work, which affects pretty
-much all (x86) workloads for mshv.
+https://gitlab.com/qemu-project/qemu/-/work_items/1150
 
-best,
+This version adds a similar change to gd_clipboard_request that also
+uses the blocking clipboard API.
 
-magnus
+The second patch removes the gtk-clipboard flag, keeping the GTK
+clipboard always enabled.
+
+Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
+---
+Jindřich Makovička (2):
+      ui/gtk: Use non-blocking clipboard retrieval
+      ui/gtk: Keep GTK clipboard enabled
+
+ meson.build        |  4 ----
+ meson_options.txt  |  2 --
+ ui/gtk-clipboard.c | 47 ++++++++++++++++++++++++++++++++++-------------
+ ui/gtk.c           |  2 --
+ ui/meson.build     |  4 +---
+ 5 files changed, 35 insertions(+), 24 deletions(-)
+---
+base-commit: 4bde339ecb41b16e90810233ba5ee2fa87bd443f
+change-id: 20260425-gtk-clipboard-fdf99db13ac0
+
+Best regards,
+-- 
+Jindrich Makovicka
+
 
