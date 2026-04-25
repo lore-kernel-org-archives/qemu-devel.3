@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DE21FF8860
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 15:52:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25184FF885C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 15:52:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGfIk-00085A-8w; Sat, 25 Apr 2026 11:52:15 -0400
+	id 1wGfIt-0008N0-0H; Sat, 25 Apr 2026 11:52:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIV-00080e-Gy
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:00 -0400
-Received: from sea.source.kernel.org ([172.234.252.31])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIb-00081P-Ej
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:08 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIS-00012E-De
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:51:59 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIa-000172-0E
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:05 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id DBEBA41870;
- Sat, 25 Apr 2026 15:51:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55078C2BCB0;
- Sat, 25 Apr 2026 15:51:48 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 1717C600AE;
+ Sat, 25 Apr 2026 15:52:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDC3C2BCB0;
+ Sat, 25 Apr 2026 15:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777132309;
- bh=qF/E4NTHGEzqRslmvhkeGAs4imRoAsHDEXNz7p4ViJw=;
+ s=k20201202; t=1777132322;
+ bh=vV5gAp6A1fV7/G4QQ1bgHmKV5IUIINSjN34lG8oX+zU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=H4NIPMSBbUr009kNoUD+po6B9WSBkj6XtlRPF77vlB+o4upnfeHJilSnycAVHGxwm
- kPZr1bFr+qs7yC+aaIKJVdY2cCbF6gv5qWMGbiGQpGBWGlnEp76u86hFCF776PK507
- LMkPfJK/nSlHTg4vNSZxhkT8HuEshQjG9+zIGO8jAai3XSMw1K7Mx1PpGufW/pd6ER
- Lhz8GL1J5NsIhOThqrNal3iUs6b1K/Y7bpza0eIlSrsn5VB13Ycxsa+1vT1vbW4Ilj
- bI6oCRiUsII7e+drYJTOmaAwEva6jCyIrpG4KVGx7BsHTQXR+QX63cf1hbsBb9BdTY
- C+d/LhRhfECRA==
+ b=ZDmHNiZxF2b2V/Iu+W/EmrnnRzgYHf9LXQqdTpD5FjH25/yHkP5+xyUNolE9VxRe4
+ HhdGxj8pvBVp699a0PRSz996tq1PT0FcvatIN/N73TBp+8wsP1udJl8iPbw3BugRwL
+ gmn1L2nIR9NHakFIZyQEymzGDhbD6ESuMNAXHVKxWecVP6E7GH67xyK9jN3WUTCtTj
+ bAMQZptSt3ainM2q/IrB0rTz1Z+IPeyDqF6eKn/FQN3vs5Wg/IuqPH6trq5z103oPE
+ xk6l/8twNjaA7aqPVt8LUbVx6m2ofblAhbA/FJUQVBqVWEAU7OzrSfyA77wJ9F1aUC
+ mh6YoIopL0CLg==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 03/14] linux-user: fix off-by-one in
- host_to_target_for_each_rtattr()
-Date: Sat, 25 Apr 2026 17:51:29 +0200
-Message-ID: <20260425155140.50186-4-deller@kernel.org>
+Subject: [PULL 10/14] linux-user: Add setsockopt() for SO_RCVTIMEO_NEW and
+ SO_SNDTIMEO_NEW
+Date: Sat, 25 Apr 2026 17:51:36 +0200
+Message-ID: <20260425155140.50186-11-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260425155140.50186-1-deller@kernel.org>
 References: <20260425155140.50186-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
- helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -72,41 +71,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yixin Wei <easonwei1998@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-host_to_target_for_each_rtattr() uses "len > sizeof(struct rtattr)"
-as its loop condition. When the last rtattr in a netlink message has
-exactly sizeof(struct rtattr) (4) bytes remaining, the loop exits
-without byte-swapping its rta_len and rta_type. A big-endian guest
-then reads rta_len in the wrong byte order and fails validation.
+Add handlers for both sockopts which use 64-bit time_t from userspace.
 
-The companion function target_to_host_for_each_rtattr() correctly
-uses ">=" (added in commit fa2229dbf8). The kernel's RTA_OK macro
-also uses ">=". Fix the host_to_target direction to match.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2485
-Signed-off-by: Yixin Wei <yixinwei@meta.com>
-Fixes: 6c5b5645ae0 ("linux-user: add rtnetlink(7) support")
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/885
 Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: qemu-stable@nongnu.org
 ---
- linux-user/fd-trans.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ linux-user/syscall.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
-index 64dd0745d2..7f55a0690b 100644
---- a/linux-user/fd-trans.c
-+++ b/linux-user/fd-trans.c
-@@ -480,7 +480,7 @@ static abi_long host_to_target_for_each_rtattr(struct rtattr *rtattr,
-     unsigned short aligned_rta_len;
-     abi_long ret;
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 8e96cc26db..751e6eabe5 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -1143,7 +1143,6 @@ static inline abi_long copy_to_user_timeval(abi_ulong target_tv_addr,
+     return 0;
+ }
  
--    while (len > sizeof(struct rtattr)) {
-+    while (len >= sizeof(struct rtattr)) {
-         rta_len = rtattr->rta_len;
-         if (rta_len < sizeof(struct rtattr) ||
-             rta_len > len) {
+-#if defined(TARGET_NR_clock_adjtime64) && defined(CONFIG_CLOCK_ADJTIME)
+ static inline abi_long copy_from_user_timeval64(struct timeval *tv,
+                                                 abi_ulong target_tv_addr)
+ {
+@@ -1160,7 +1159,6 @@ static inline abi_long copy_from_user_timeval64(struct timeval *tv,
+ 
+     return 0;
+ }
+-#endif
+ 
+ static inline abi_long copy_to_user_timeval64(abi_ulong target_tv_addr,
+                                               const struct timeval *tv)
+@@ -2391,6 +2389,25 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
+                                 &tv, sizeof(tv)));
+                 return ret;
+         }
++        case TARGET_SO_RCVTIMEO_NEW:
++        case TARGET_SO_SNDTIMEO_NEW:
++        {
++                struct timeval tv;
++
++                if (optlen != sizeof(struct target__kernel_sock_timeval)) {
++                    return -TARGET_EINVAL;
++                }
++
++                if (copy_from_user_timeval64(&tv, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++
++                ret = get_errno(setsockopt(sockfd, SOL_SOCKET,
++                                optname == TARGET_SO_RCVTIMEO_NEW ?
++                                    SO_RCVTIMEO : SO_SNDTIMEO,
++                                &tv, sizeof(tv)));
++                return ret;
++        }
+         case TARGET_SO_ATTACH_FILTER:
+         {
+                 struct target_sock_fprog *tfprog;
 -- 
 2.53.0
 
