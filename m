@@ -4,135 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBFD6FF885A
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 00:32:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EDBFFF885C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 05:48:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGQwA-0000Ht-F9; Fri, 24 Apr 2026 20:31:58 -0400
+	id 1wGVr0-0008Bi-N6; Sat, 25 Apr 2026 01:46:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wGQw6-0000HM-Ty
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 20:31:54 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wGVqz-0008BZ-HC
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 01:46:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wGQw4-0001Az-To
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 20:31:54 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63OLq23k293351
- for <qemu-devel@nongnu.org>; Sat, 25 Apr 2026 00:31:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=qcppdkim1; bh=/ZeS47akej6
- PhIgeXyFdTcl7RFnm1tOvpj4pxBsfD0c=; b=Mriz9o/To2PkGRd12ihPIm9raCg
- QcYN4BlpFZoXHc6yWy3X3GaF9p0up/QfaTRc1+WhJDd+8/zTTY2fKuNqo5kDwrNn
- fz3xFXCYt3pMG0YSgxizdQVb/pcm8sE6MHQG7mGKYt+MaFHuYev3R1lkIdWUTXLu
- HOFUgzGoL8qpDCvW9+pEeedcl1GEuxkM6akOaCVeMudO9rZSEiHBrvaJ+UpUeHtu
- z0P9tgLGmpm9ulB2CBwUHZHGdPbN9gB7+MEcQyLwfYJY338gsldP0/7sakmh9e7M
- gXtH252WEc7NLwPzJSy9RKTHWUFlxskfKRqIRhIfO7g93gsTR7tGFjTSGwA==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dr6rkasp4-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Sat, 25 Apr 2026 00:31:51 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2ba8013a9e3so9548689eec.0
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 17:31:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1777077110; x=1777681910; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/ZeS47akej6PhIgeXyFdTcl7RFnm1tOvpj4pxBsfD0c=;
- b=CqwEIU9Q9EcwTqEV30KBcNwNA/mKuWsos/Z6+ww0WVd5ahJwwIBWTdI32g5kuCsxYb
- el5wa5bsiY+yVfwXUHdRkXj5PCTyX2+JOefnC2ZFk1T4M4pMcViRfyOo3dIgSShpyAll
- eMGf5lmU7dzyoJbVEbrl7/e2xGGX7fjrkLaFUXdTYLk0DaGPL8xmqpZJHstxkcjJBJqL
- ebJkSjPsQYLVjTQBuxwPxC/6YHN8WkwKQrfUTN0Kl8JUNK1JG/7TbmLuluqncXTB9h7e
- pEmlTM5gRdrTv49aM9iSTM9mH0leciQlvvfpuMZwDKReUbii9MgkhFmWDckAcm8fh0ka
- F6Hg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777077110; x=1777681910;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/ZeS47akej6PhIgeXyFdTcl7RFnm1tOvpj4pxBsfD0c=;
- b=McaR/8wXE/uz8i1uLbAOQen8p6JbnO4/ToOMyAxZXPIbV2yNcBXBKfVaeDD5zcZVlx
- Fa0+Ktuux789wGgUkVGvkFE5JnzAjF5uxyUSj9M20ybjzJA1VA3MMcYRbXisXAC/urOJ
- cAY3HnLjcUJT3ufLnz9rlbWZg68xwzJgK9HoxQDV21mdX4ll+7xyzqW9d1M5im1fQ3rX
- fCGyQrgAS8HmRZokEDv/qc9rD0s0Y7gV6TiPYy8ZMK6M42PJrZorMGLYsO3Et0nOfQjx
- xUoFLAjrglNOWcWLzSCSeEZkvx3Yxd/fcmCpv8jdVc2PpWM5qZV+vvEDrQURhnzu2ow/
- A+Zw==
-X-Gm-Message-State: AOJu0Yw9W5ukuCIEDpJBqB496vGHgfOSanPBcjplQwPVGnm7mah0IayT
- n3hmQ26Uh4yMK06PqG+Paeu28U5E+h2E2cnxw1N/gsKDYuk8NssWsWH2YxUvzaJ8+gkgWOkVkkB
- tQ1mCg5JXfkNwHdtBy9fqTUHrW/WI0uDa/j7p74YqyKwwt8Ey05uSq0d3T5QB+3Si5RUK
-X-Gm-Gg: AeBDievCjlpsZgUvdEItPxdFTCiHSyiShF8jU9TdclDwrZE9mBf37ho1iq7KpwosOVv
- XgrJ3DfUOQ93STXn0+o6rk/fHVisrCXWHRJ03GAQGhQMf8fAzvFu+FF8O/kU8f0iCiLSm+ecw52
- HHPY1NQCcdaw0EjV92my8KHO6CB/qiWOKr7it+RolPqU1udMcbAkI7QjTRAOyq3newzaSWxfggQ
- Z67xU8MQX0FlCxBzER29wcViCs0W6oml8d9xZqlf295gU0EJrluTxldtSBU3Te5HmlzoHri0XWr
- brGTPNLzJBBVtwdpHg6NPuhi2ygtp8s1qQRpqeU87zW9fNGxHXd0iat+qAceT0h+OchTwWAxJ3T
- w5EVPbsfPgMMguHfIblE1FbouuyiqmfYEtNwzsedxt0E4annBXweqTuS8V1UWyGjCujfxuKrYrp
- MuKx72GuH+Wkwqo1vk
-X-Received: by 2002:a05:7301:6793:b0:2ca:7eb4:3e0f with SMTP id
- 5a478bee46e88-2e464dafc32mr17747409eec.5.1777077109817; 
- Fri, 24 Apr 2026 17:31:49 -0700 (PDT)
-X-Received: by 2002:a05:7301:6793:b0:2ca:7eb4:3e0f with SMTP id
- 5a478bee46e88-2e464dafc32mr17747392eec.5.1777077109238; 
- Fri, 24 Apr 2026 17:31:49 -0700 (PDT)
-Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2e539fa3ce1sm32510323eec.4.2026.04.24.17.31.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 24 Apr 2026 17:31:48 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-Cc: pierrick.bouvier@oss.qualcomm.com
-Subject: [PULL 2/2] contrib/plugins/uftrace_symbols.py: handle missing source
- line from addr2line
-Date: Fri, 24 Apr 2026 17:31:40 -0700
-Message-ID: <20260425003140.1688666-3-pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260425003140.1688666-1-pierrick.bouvier@oss.qualcomm.com>
-References: <20260425003140.1688666-1-pierrick.bouvier@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wGVqx-0004ER-Gd
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 01:46:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777096013;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8OEMHJEnh7ykjTSp2XI5JG6YmW1fT0QxZhvhH0/aBwE=;
+ b=H9dG1RDlnYLySL4Abi/WCYlF2a0vlmNvavcjBJpYAnlCjh42iN25QR0imLX7y+O5aWg7Fe
+ AG0vcLQteawu9T3SV89PXsAbVANfi/jZujSd6A7/l368yXX41JlOQryUs4RjO/8on6zmvP
+ /kQcmLFubGhX+PURj+jOVylSulkvPzY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-0WWexd5lMuCQ0Krn0QT1Mw-1; Sat,
+ 25 Apr 2026 01:46:51 -0400
+X-MC-Unique: 0WWexd5lMuCQ0Krn0QT1Mw-1
+X-Mimecast-MFC-AGG-ID: 0WWexd5lMuCQ0Krn0QT1Mw_1777096010
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 42D9E18003FC; Sat, 25 Apr 2026 05:46:49 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.30])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2A011180057E; Sat, 25 Apr 2026 05:46:48 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9B3C921E6A28; Sat, 25 Apr 2026 07:46:45 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org,  Joao Martins <joao.m.martins@oracle.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,  Avihai Horon
+ <avihaih@nvidia.com>,
+ Daniel P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Fabiano Rosas
+ <farosas@suse.de>,  Prasad Pandit <ppandit@redhat.com>,  Alex Williamson
+ <alex@shazbot.org>,  Kirti Wankhede <kwankhede@nvidia.com>,  Zhiyi Guo
+ <zhguo@redhat.com>,  "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Juraj Marcin <jmarcin@redhat.com>,  "Dr. David Alan Gilbert"
+ <dave@treblig.org>
+Subject: Re: [PATCH v2 14/16] migration/qapi: Introduce system-wise
+ "remaining" reports
+In-Reply-To: <aeuJCI0OCW-ohJih@x1.local> (Peter Xu's message of "Fri, 24 Apr
+ 2026 11:15:20 -0400")
+References: <20260421202110.306051-1-peterx@redhat.com>
+ <20260421202110.306051-15-peterx@redhat.com>
+ <87cxzovncu.fsf@pond.sub.org> <aeuJCI0OCW-ohJih@x1.local>
+Date: Sat, 25 Apr 2026 07:46:45 +0200
+Message-ID: <87jytvoam2.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Analysis: v=2.4 cv=AfWB2XXG c=1 sm=1 tr=0 ts=69ec0b77 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22 a=VwQbUJbxAAAA:8
- a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=piHZDCMnzvVDxLRhvVgA:9
- a=PxkB5W3o20Ba91AHUih5:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: Lb_irirFyHrh06wQeEU2vdVW9Ht21sLF
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI1MDAwNCBTYWx0ZWRfX5XxdBvVyocQo
- OsRkKHlNuA1bFMz9lwBUZSZhbIcnLXvOXvbyiGTbSPgVyl/0yd6NtqHvKjxRy/isoL8j4dSSiC3
- AFKHxirs1l/qR3Q5ueZehirojcqI+jZEMgZCzF8NC1Cucs5Lzn3g/Use4jvOGdt49UOf1UipLCZ
- Fx8zpdbUu/snPMvfZGu7+HnE3ktXBkn6yot2WThpJmBPTpA3DQgszI8WWmDZvlDgrlmP4PM4Sq9
- DVtgq0k2zRohtf2svBt6+5pP/Ae1e88gpCT5w5ZghUQQdOE+Je14ayHYHVs5QTSH/5r1wF4WGbI
- WNDN178wmi9Is/vOI00dVD8QrDgcRuuY7kB7Dyl8OHLb8v3incv9AXdVDmNvA0DEaqmDSTl00Ey
- +q4JmR7DrV8Fmx1bENZdpAT1H1Ug1QbsjmLWff8AK2aW8OIjROw3saO4f1RKIWFG72zrELEnf5K
- yimEOta2Z9OA3hmCSog==
-X-Proofpoint-GUID: Lb_irirFyHrh06wQeEU2vdVW9Ht21sLF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-24_04,2026-04-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 priorityscore=1501 clxscore=1015 spamscore=0 adultscore=0
- suspectscore=0 impostorscore=0 malwarescore=0 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604250004
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,34 +94,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some symbols have only a file information, and no line information. In
-this case, addr2line reports '?'. Replace with 0 to guarantee consistent
-data for consumers.
+Peter Xu <peterx@redhat.com> writes:
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260424194451.1439316-3-pierrick.bouvier@oss.qualcomm.com
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
----
- contrib/plugins/uftrace_symbols.py | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+> On Fri, Apr 24, 2026 at 09:17:21AM +0200, Markus Armbruster wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > Currently, mgmt can only query for remaining RAM,
+>> 
+>> Remind me: how?
+>
+> It is the same command, as mentioned in [1] below.  I'll enrich the commit
+> message here to explain.
+>
+>> 
+>> >                                                   not system-wise remaining
+>> > data.  It was not a problem before, because for a very long time RAM was
+>> > the only part that matters.
+>> >
+>> > After VFIO migrations landed upstream, it may not be true anymore
+>> > especially considering that there can be GPU devices that contain GBs of
+>> > device states.
+>> >
+>> > Add a new "remaining" field in query-migrate results, reflecting
+>> > system-wise remaining data, which will include everything (e.g. VFIO).
+>> 
+>> "system-wise"?  Do you mean "system-wide"?  Maybe "total"?
+>
+> Since "total" has been used elsewhere, I'll use "system-wide", hoping
+> that's easier to digest.
 
-diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
-index 6eb999bca5f..9f0095e73b9 100755
---- a/contrib/plugins/uftrace_symbols.py
-+++ b/contrib/plugins/uftrace_symbols.py
-@@ -70,7 +70,10 @@ def find_symbols_locations(elf_file, symbols):
-         file, line = out[i].split(':')
-         # addr2line may return 'line (discriminator [0-9]+)' sometimes,
-         # remove this to keep only line number.
--        line = line.split(' ')[0]
-+        if line == '?':
-+            line = 0
-+        else:
-+            line = int(line.split(' ')[0])
-         s.set_loc(file, line)
- 
- class BinaryFile:
--- 
-2.43.0
+Which "total" do you mean?  Perhaps MigrationStats member
+
+    # @total: total amount of bytes involved in the migration process
+
+What does this @total count?  RAM only?  If yes, the description is
+misleading and needs fixing.  Separate patch, followup fine.
+
+>> > This information will be useful for mgmt to implement generic way of stall
+>> > detection that covers all system resources.  Say, when system remaining
+>> > data does not decrease anymore for a relatively long period of time, then
+>> > it may mean that there is a challenge of converging, so mgmt can act based
+>> > on how this value changes over time (especially if sampled after each
+>> > migration iteration).
+>> >
+>> > Before this patch, "expected_downtime" almost played this role. For
+>> > example, by monitoring "expected_downtime" at the beginning of each
+>> > iteration can in most cases also reflect the progress of migration
+>> > system-wise.  Said that, "expected_downtime" was always calculated based on
+>> > a bandwidth value that can fluctuate a lot if avail-switchover-bandwidth is
+>> > not used. This new "remaining" field will remove that part of uncertainty
+>> > for mgmt.
+>> >
+>> > With the new field, HMP "info migrate" now reports this:
+>> >
+>> > (qemu) info migrate
+>> > Status:                 active
+>> > Time (ms):              total=12080, setup=14, exp_down=300
+
+"exp_down" isn't nice for humans.  I *guess* it's for "expected
+downtime".  Could use "expected_downtime=300" instead.  Not this patch's
+problem, of course.
+
+>> > Remaining:              1.36 GiB        <------------------- newline
+>> 
+>> "Newline" is ASCI character '\n'.  I guess you mean "this is the new
+>> line".
+>
+> Yes.  I'll remove this "<----..." if it causes any confusion.
+
+Annotating output like you did feels just fine, only the word you chose
+makes it mildly confusing.  Perhaps
+
+     Remaining:              1.36 GiB        <--- this is the new line
+
+would be clearer.
+
+>> > RAM info:
+>> >   Throughput (Mbps):    840.50
+>> >   Sizes:                pagesize=4 KiB, total=4.02 GiB
+>> >   Transfers:            transferred=1.18 GiB, remain=1.36 GiB
+>> >     Channels:           precopy=1.18 GiB, multifd=0 B, postcopy=0 B
+>> >     Page Types:         normal=307923, zero=388148
+>> >   Page Rates (pps):     transfer=25660
+>> >   Others:               dirty_syncs=1
+>> >
+>> > It should be the same value as RAM's remaining report when VFIO is not
+>> > involved, and it should report more than that when VFIO is involved.
+>> 
+>> "RAM's remaining report" is the "remain=1.36 GiB" part, isn't it?
+>
+> [1]
+>
+> Correct.
+
+Thanks.  Could be a bit more explicit.  Up to you.
+
+>> > Cc: Markus Armbruster <armbru@redhat.com>
+>> > Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+>> > Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+>> > Signed-off-by: Peter Xu <peterx@redhat.com>
+>> > ---
+>> >  qapi/migration.json            | 4 ++++
+>> >  migration/migration-hmp-cmds.c | 5 +++++
+>> >  migration/migration.c          | 7 +++++++
+>> >  3 files changed, 16 insertions(+)
+>> >
+>> > diff --git a/qapi/migration.json b/qapi/migration.json
+>> > index e3ad3f0604..a6e24b5685 100644
+>> > --- a/qapi/migration.json
+>> > +++ b/qapi/migration.json
+>> > @@ -300,6 +300,9 @@
+>> >  #     average memory load of the virtual CPU indirectly.  Note that
+>> >  #     zero means guest doesn't dirty memory.  (Since 8.1)
+>> >  #
+>> > +# @remaining: amount of bytes remaining to be migrated system-wise,
+>> > +#     includes both RAM and all devices (like VFIO).  (Since 11.1)
+>> > +#
+>> >  # Features:
+>> >  #
+>> >  # @unstable: Members @postcopy-latency, @postcopy-vcpu-latency,
+>> > @@ -310,6 +313,7 @@
+>> >  ##
+>> >  { 'struct': 'MigrationInfo',
+>> >    'data': {'*status': 'MigrationStatus', '*ram': 'MigrationRAMStats',
+>> > +           '*remaining': 'uint64',
+>> 
+>> It's a byte count, so let's make it 'size'.
+>
+> Will do.
+>
+> Since this will be the last functional change so far on the whole series,
+> and the update seems to be pretty under control (say, qapi schema.py
+> generates same c code for both "size" and "uint64"),
+
+Yes, 'size' is almost exactly the same as 'uint64'.  If I remember
+correctly, the one difference is the use of visit_type_size() instead of
+visit_type_uint64().  visit_type_size() recognizes additional syntax
+with "human" visitors: qobject keyval, string input, and opts visitor.
+
+>                                                      could I request an ACK
+> on this one with a short diff below, instead of reposting the whole series?
+>
+> The diff attached here (I'll also fix the commit messages on
+> e.g. system-wide wordings if I'll not repost):
+>
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index b7518b29c6..c701ef1cf5 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -300,7 +300,7 @@
+>  #     average memory load of the virtual CPU indirectly.  Note that
+>  #     zero means guest doesn't dirty memory.  (Since 8.1)
+>  #
+> -# @remaining: amount of bytes remaining to be migrated system-wise,
+> +# @remaining: amount of bytes remaining to be migrated system-wide,
+>  #     includes both RAM and all devices (like VFIO).  (Since 11.1)
+>  #
+>  # Features:
+> @@ -313,7 +313,7 @@
+>  ##
+>  { 'struct': 'MigrationInfo',
+>    'data': {'*status': 'MigrationStatus', '*ram': 'MigrationRAMStats',
+> -           '*remaining': 'uint64',
+> +           '*remaining': 'size',
+>             '*vfio': 'VfioStats',
+>             '*xbzrle-cache': 'XBZRLECacheStats',
+>             '*total-time': 'int',
+>
+> ===8<====
+>
+> The complete new version of patch is here (I updated quite a few places on
+> the commit message):
+>
+> https://gitlab.com/peterx/qemu/-/commit/86d973360890cecc564a4a5bcf9a01b9efde368a
+>
+> Thanks,
+
+I read the commit message.  No surprises except
+
+    It should be the same value as RAM's remaining report when VFIO is not
+    involved, and it should report more than that when VFIO is involved.
+
+    One note is that this field will be an estimate and may not be sampled the
+    exact same time versus the RAM remaining section.  So it may report
+    slightly different values even if only RAM is involved.  The difference
+    shouldn't matter though to mgmt to make correct decisions.
+
+The second paragraph is new.  The first paragraph says they "should be
+the same", the second that they "may [be] slightly different".
+Suboptimal.
+
+Here's my try:
+
+    It should be approximately the same value ...
+
+    Only approximately, because this field will be ...
+
+It's just a commit message, though.  Up to you.
+
+QAPI schema
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
