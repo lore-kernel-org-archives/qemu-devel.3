@@ -4,59 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C84EDFF8860
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 15:53:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2C72FF885A
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 20:00:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGfIm-00085q-BF; Sat, 25 Apr 2026 11:52:16 -0400
+	id 1wGjA9-0004Ut-SZ; Sat, 25 Apr 2026 15:59:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIV-00080c-8A
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:00 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wGjA8-0004Ui-Tf
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 15:59:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIS-00012i-EA
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:51:58 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 9DCBE600AE;
- Sat, 25 Apr 2026 15:51:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5973C2BCB0;
- Sat, 25 Apr 2026 15:51:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777132315;
- bh=WKjvKh3WS9aFV3WDMKRIHdU/l7XY2HCHrBoFujAWcmo=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=IuK9+2/Kzv45kxn55JGrCq2cK4wb6wfaKmO2Zt3ZifjomNPOXTKPSltJ7/5zeEA6c
- NYgV1Dc7mnTo6TGRrc9730Nhd6GYYITELtdgFEGQ6nDnHchwr6ZHqqKZfbYH4XeLkX
- kYS2ofre6hPRXDuahN+rRSRojBdrVh5Grcastj5HrchKMsbZtzkhYUm2GMGXPqeyBV
- rM6Rz7n4aFevTHG5GxRq1dCMVqLm/Tp4CNwFlCWsZwLEAUAf1bNuk3WLZMgAINf1LO
- PYTb2N6e9wWQLC4om8b5mYhloRx8OBPJrVFN1FA0359MtjJ06HaLJwdpNg3n5Jb3Fe
- NFwZkhkM6qkmg==
-From: Helge Deller <deller@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 06/14] linux-user/arm/nwfpe: Use thread-local storage for
- qemufpa
-Date: Sat, 25 Apr 2026 17:51:32 +0200
-Message-ID: <20260425155140.50186-7-deller@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260425155140.50186-1-deller@kernel.org>
-References: <20260425155140.50186-1-deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wGjA7-0002bs-GA
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 15:59:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777147174;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=W3ZMgLC95n/lJAHY19nY0RcjFu8FcAI8DEeil+8Epv8=;
+ b=FYPLS7lwS27a+NENpmTFveEcTRBnAba4soa1hOCsuBia/idfEN30LGkEz/lnazm5yxCnFm
+ Df89ljxGXkqAvD0TCos/xIEZhFDLQY7lM9pLHi54Ex2sZq5jZEvkf50AVijBxGsQrO0V59
+ IBKFiACB7gvmB+bLQZym72dJgvFya5o=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-227-8Iq0CrOJN7yYbMXAVZKUbA-1; Sat,
+ 25 Apr 2026 15:59:32 -0400
+X-MC-Unique: 8Iq0CrOJN7yYbMXAVZKUbA-1
+X-Mimecast-MFC-AGG-ID: 8Iq0CrOJN7yYbMXAVZKUbA_1777147172
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EE29F1800473; Sat, 25 Apr 2026 19:59:31 +0000 (UTC)
+Received: from localhost (unknown [10.44.32.15])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id F23461944CED; Sat, 25 Apr 2026 19:59:30 +0000 (UTC)
+Date: Sat, 25 Apr 2026 12:58:55 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
+Subject: Re: [PULL 00/43] Migration patches for 2026-04-23
+Message-ID: <20260425165855.GA144105@fedora>
+References: <20260423191958.1440-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="sXWuCANwbzZ0P1se"
+Content-Disposition: inline
+In-Reply-To: <20260423191958.1440-1-farosas@suse.de>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -4
+X-Spam_score: -0.5
+X-Spam_bar: /
+X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
+ DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,54 +84,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
 
-Fix the thread safety of the emulation by not storing a
-pointer in global storage.
+--sXWuCANwbzZ0P1se
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/arm/nwfpe/fpa11.c | 3 +--
- linux-user/arm/nwfpe/fpa11.h | 2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
+Applied, thanks.
 
-diff --git a/linux-user/arm/nwfpe/fpa11.c b/linux-user/arm/nwfpe/fpa11.c
-index 44783934b2..15888463f7 100644
---- a/linux-user/arm/nwfpe/fpa11.c
-+++ b/linux-user/arm/nwfpe/fpa11.c
-@@ -29,7 +29,7 @@
- //#include <asm/system.h>
- 
- 
--FPA11* qemufpa = NULL;
-+__thread FPA11* qemufpa = NULL;
- 
- /* Reset the FPA11 chip.  Called to initialize and reset the emulator. */
- void resetFPA11(void)
-@@ -154,7 +154,6 @@ void SetRoundingPrecision(const unsigned int opcode)
- }
- 
- /* Emulate the instruction in the opcode. */
--/* ??? This is not thread safe.  */
- unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa)
- {
-   unsigned int nRc = 0;
-diff --git a/linux-user/arm/nwfpe/fpa11.h b/linux-user/arm/nwfpe/fpa11.h
-index 20f9d2eb81..659d38ae3a 100644
---- a/linux-user/arm/nwfpe/fpa11.h
-+++ b/linux-user/arm/nwfpe/fpa11.h
-@@ -74,7 +74,7 @@ typedef struct tagFPA11 {
-     float_status fp_status;      /* QEMU float emulator status */
- } FPA11;
- 
--extern FPA11* qemufpa;
-+extern __thread FPA11* qemufpa;
- 
- void resetFPA11(void);
- void SetRoundingMode(const unsigned int);
--- 
-2.53.0
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
+
+--sXWuCANwbzZ0P1se
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmns8s4ACgkQnKSrs4Gr
+c8h9Ogf/Xf/kiFLnxRkL2YN5lPyKzCiokcCLxMeZenFU4RrjCea+QXJvtRGoIAYV
+fsXwY/7dP/88XsFRPBxiTazgMENngpVvXs41sN8Z+TfrBfub8o7l7Ae+SlnupRxx
+goiPwyyddku7FA1KGHDxTyhy1ppxuABAr5H6oeABbKxHDVIt0lcnlZAB81Yj2HtC
+YnnBvafA6ucLYiXWBYrqlZP6PRx0drqq3tOK/I1qDiQgBYFYpATvRQ44x+n4sm1m
+FeZVSdhdsoIHvFcB+CrHj+eCDtc2SHni8nDj9rtzQcaA440RAjuztaQwOdm2/59g
+JAoCnU3j6ejPpgZo+hpj64Tzr6Byxw==
+=x1z4
+-----END PGP SIGNATURE-----
+
+--sXWuCANwbzZ0P1se--
 
 
