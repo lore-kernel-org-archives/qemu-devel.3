@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E82CFF885C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 15:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF26FF8860
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 15:53:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGfIs-0008LI-9i; Sat, 25 Apr 2026 11:52:22 -0400
+	id 1wGfIp-00087u-27; Sat, 25 Apr 2026 11:52:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfId-00081S-5h
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:08 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIV-00080f-HF
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:00 -0400
 Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIb-00017D-Ki
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:06 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIS-00011v-Dk
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:51:59 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id C0FA443D22;
- Sat, 25 Apr 2026 15:52:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DFA4C2BCB0;
- Sat, 25 Apr 2026 15:52:03 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 2C0CC44546;
+ Sat, 25 Apr 2026 15:51:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 994FCC2BCB4;
+ Sat, 25 Apr 2026 15:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777132324;
- bh=9XG9CSjH8eRrdK70JCXl+tYP+K497/Yv9bzjW1OONfA=;
+ s=k20201202; t=1777132306;
+ bh=+2xH9pwJPCdtwpTyFDhcK3JSDm0xqxczPOzOhfXaGgM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=pFMs8c9IhZuZNcUxy9mJf7CvYCrnJGI1/Dp9TCzeTDeuJ9gRAw7vfyKN80libJCXK
- kcH/9Z/R4+YVi6pLHbT+B7znM3uhoUX9ix2CbXkSnDRM1lVXK3sE0YnfJhg32HaYbj
- S5TN9pEPVPkSP5ByD201vC2NoVdy+ZPASS1uB3AFWa6WSjiTZ7tlrBbGcK4YGEsZeE
- Yi4Mp2U1FR1zjZeozIjpuE81LHUhVxwrdoWUDR5vczWu+jvPiDruBulI9w7wa7cxdZ
- fnIaX13Lyw7cfCCOvIL0hRblYMn9Sbvjgxm8eUbJwF1SXULQgGbkLiF7JCBCysSKk7
- xn06BhJYd5ymg==
+ b=SRoodeA+XUYyfovZ6hASkvryNQs4/Xt04eNVLStGRhp+Jw17EmaWPLkHz5fzBMnEE
+ +/YWe975s9whIWQOZ9SXlhglsFNrc+xPJyt4uwu68e1kEFKldw54Ttm3huMsH8Ha0r
+ P1y0LzORHIQsrky+Rixn6BE/Gqb3YGDQ9ZTKYEna9vy7CEv8PEyvhUb6iVCkpHQiGv
+ 2xF8aIaImQcv1Q+87N+RIgk0LHtmFYYmMDY5CwrTkiPS4HgAD0sURZLL3kwQExNKOq
+ Fomn4Na5EnM8DJLfChu0BsNxTl7M5wqkRn4NZjmwZUqzdHo+PZ+Kyad+6JkfzxK4cO
+ 6fKcSBa03xM1Q==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 11/14] linux-user: Add getsockopt() for SO_RCVTIMEO_NEW and
- SO_SNDTIMEO_NEW
-Date: Sat, 25 Apr 2026 17:51:37 +0200
-Message-ID: <20260425155140.50186-12-deller@kernel.org>
+Subject: [PULL 01/14] MAINTAINERS: Add myself as maintainer for linux-user
+Date: Sat, 25 Apr 2026 17:51:27 +0200
+Message-ID: <20260425155140.50186-2-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260425155140.50186-1-deller@kernel.org>
 References: <20260425155140.50186-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
  helo=sea.source.kernel.org
@@ -73,59 +73,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Add handlers for both sockopts which use 64-bit time_t from userspace.
+I'd like to step up as maintainer for linux-user. I'm actively using
+linux-user to emulate a HP-PARISC (hppa) linux environment on my debian
+buildd servers, so I'm very much interested that linux-user is running
+good and stable.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/885
 Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- linux-user/syscall.c | 20 ++++++++++++++------
- 1 file changed, 14 insertions(+), 6 deletions(-)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 751e6eabe5..d0390e04b4 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -2621,7 +2621,8 @@ static abi_long do_getsockopt(int sockfd, int level, int optname,
-         /* These don't just return a single integer */
-         case TARGET_SO_PEERNAME:
-             goto unimplemented;
--        case TARGET_SO_RCVTIMEO: {
-+        case TARGET_SO_RCVTIMEO:
-+        case TARGET_SO_RCVTIMEO_NEW: {
-             struct timeval tv;
-             socklen_t tvlen;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ad215eced8..e0f707a1ec 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4075,6 +4075,7 @@ T: git https://github.com/qemu-bsd-user/qemu-bsd-user bsd-user-rebase-3.1
  
-@@ -2641,11 +2642,17 @@ get_timeout:
-             if (ret < 0) {
-                 return ret;
-             }
--            if (len > sizeof(struct target_timeval)) {
--                len = sizeof(struct target_timeval);
--            }
--            if (copy_to_user_timeval(optval_addr, &tv)) {
--                return -TARGET_EFAULT;
-+            if (len == sizeof(struct target__kernel_sock_timeval)) {
-+                if (copy_to_user_timeval64(optval_addr, &tv)) {
-+                    return -TARGET_EFAULT;
-+                }
-+            } else {
-+                if (len >= sizeof(struct target_timeval)) {
-+                    len = sizeof(struct target_timeval);
-+                    if (copy_to_user_timeval(optval_addr, &tv)) {
-+                        return -TARGET_EFAULT;
-+                    }
-+                }
-             }
-             if (put_user_u32(len, optlen)) {
-                 return -TARGET_EFAULT;
-@@ -2653,6 +2660,7 @@ get_timeout:
-             break;
-         }
-         case TARGET_SO_SNDTIMEO:
-+        case TARGET_SO_SNDTIMEO_NEW:
-             optname = SO_SNDTIMEO;
-             goto get_timeout;
-         case TARGET_SO_PEERCRED: {
+ Linux user
+ M: Laurent Vivier <laurent@vivier.eu>
++M: Helge Deller <deller@gmx.de>
+ R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ S: Odd Fixes
+ F: linux-user/
 -- 
 2.53.0
 
