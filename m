@@ -4,53 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42600FF8860
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 15:53:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 207FFFF8860
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 15:53:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGfIn-00086g-DN; Sat, 25 Apr 2026 11:52:17 -0400
+	id 1wGfIo-00087F-Gq; Sat, 25 Apr 2026 11:52:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIV-00080g-Id
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:00 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIf-00083q-8B
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:12 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIS-00012S-Eh
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:51:59 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfId-00017Q-P7
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:09 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id BF9F36011F;
- Sat, 25 Apr 2026 15:51:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12733C2BCB0;
- Sat, 25 Apr 2026 15:51:51 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id C861B600AE;
+ Sat, 25 Apr 2026 15:52:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8C1C2BCB0;
+ Sat, 25 Apr 2026 15:52:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777132313;
- bh=QIFtf3dqQlSgmjSkVvwlhh3G2J8OJkshPhuv1bYI+XA=;
+ s=k20201202; t=1777132326;
+ bh=z9prjR+BocYciwsUKoSOvL3HoAICSfSydNGV4GRnsv0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=W/wXxi6GPNWlBF2vwGQ2mInU1zcNbHELKUz6F3mGR1p0e+ahF3jPQQAL3oKx1YxdW
- aCvwjSckA4E00F52MBoKAwA1yaEORWNZ5WrC2i8CgS3RWiv9GcoE7FEqMDKGQx8cKF
- mJQW3iuEAC7JV4xqTDsVvNE+1ZpnZOVzPTX0AC8goFTLf+qohYN993xKhortbQAqMm
- LrLbyafmspdR4834ChsCYXFFTpxHW1GDFED7JbnCpA3bk88c01W0kRenhGAEfwMTlQ
- AZ54t0MaOvsgubvg8d7JW4e+lWjtlB9+kuVI69g19WtGFD0OcyWIpRymiGuxf807Hc
- ttMGGAgMXHFpA==
+ b=KqWvbJHl80trkUc/MsAqtszv5fo7gAGlaSVduhY/iPvFSfQ8nJo5UOYCdE0mYdh7H
+ eZEQ6mJ+jVUFsw+TskVH6Id+g+Edz2mmqv/K8cEHe6OBJvOZX+c1a/MjT87pAZnx8e
+ JuDzsiliLJnS7nsfv58tNJXGB1ejf1ij001nwqnZUM7D9/MKAs8Sc0oE6aMyWPHogN
+ nxRPnh8SFpqf7afqQHeHLAz4Sh+8ecRCrIUGJi4pCnm8+01CaNiZmGN9BOrK5e5b6u
+ 28Ybpvi1D4YkotnvNfRRviGtR29tsDHzt96mLG9zae3xXjHiu0nO3cUFVDWC2hp1OB
+ SrqP+Cs/vtP+g==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 05/14] linux-user/arm/nwfpe: Replace user_registers with
- current_cpu
-Date: Sat, 25 Apr 2026 17:51:31 +0200
-Message-ID: <20260425155140.50186-6-deller@kernel.org>
+Subject: [PULL 12/14] linux-user: Fix CLONE_PARENT_SETTID when using fork-like
+ clone
+Date: Sat, 25 Apr 2026 17:51:38 +0200
+Message-ID: <20260425155140.50186-13-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260425155140.50186-1-deller@kernel.org>
 References: <20260425155140.50186-1-deller@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -72,121 +71,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Helge Deller <deller@gmx.de>
 
-Use the thread-local variable current_cpu instead of
-a global variable to access the general registers.
-This also means we don't need to pass env to EmulateAll.
+The CLONE_PARENT_SETTID option requires the implementation to store the
+child thread ID at the location pointed to by parent_tid in the parent's
+memory.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fix our implementation and move the code from the client side (where
+fork returned 0), to the parent side and store the return value from the
+fork call (which is the client TID) in the parent_tid pointer.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3340
 Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- linux-user/arm/cpu_loop.c    |  2 +-
- linux-user/arm/nwfpe/fpa11.c |  9 +--------
- linux-user/arm/nwfpe/fpa11.h | 23 +++++++----------------
- 3 files changed, 9 insertions(+), 25 deletions(-)
+ linux-user/syscall.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
-index 19874f4c72..262ab5cc41 100644
---- a/linux-user/arm/cpu_loop.c
-+++ b/linux-user/arm/cpu_loop.c
-@@ -215,7 +215,7 @@ static bool insn_is_linux_bkpt(uint32_t opcode, bool is_thumb)
- static bool emulate_arm_fpa11(CPUARMState *env, uint32_t opcode)
- {
-     TaskState *ts = get_task_state(env_cpu(env));
--    int rc = EmulateAll(opcode, &ts->fpa, env);
-+    int rc = EmulateAll(opcode, &ts->fpa);
-     int raise, enabled;
- 
-     if (rc == 0) {
-diff --git a/linux-user/arm/nwfpe/fpa11.c b/linux-user/arm/nwfpe/fpa11.c
-index 0f1afbd91d..44783934b2 100644
---- a/linux-user/arm/nwfpe/fpa11.c
-+++ b/linux-user/arm/nwfpe/fpa11.c
-@@ -30,7 +30,6 @@
- 
- 
- FPA11* qemufpa = NULL;
--CPUARMState* user_registers;
- 
- /* Reset the FPA11 chip.  Called to initialize and reset the emulator. */
- void resetFPA11(void)
-@@ -156,7 +155,7 @@ void SetRoundingPrecision(const unsigned int opcode)
- 
- /* Emulate the instruction in the opcode. */
- /* ??? This is not thread safe.  */
--unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa, CPUARMState* qregs)
-+unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa)
- {
-   unsigned int nRc = 0;
- //  unsigned long flags;
-@@ -173,12 +172,6 @@ unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa, CPUARMState* qregs)
-   }
- 
-   qemufpa=qfpa;
--  user_registers=qregs;
--
--#if 0
--  fprintf(stderr,"emulating FP insn 0x%08x, PC=0x%08x\n",
--          opcode, qregs[ARM_REG_PC]);
--#endif
-   fpa11 = GET_FPA11();
- 
-   if (fpa11->initflag == 0)		/* good place for __builtin_expect */
-diff --git a/linux-user/arm/nwfpe/fpa11.h b/linux-user/arm/nwfpe/fpa11.h
-index d459c5da02..20f9d2eb81 100644
---- a/linux-user/arm/nwfpe/fpa11.h
-+++ b/linux-user/arm/nwfpe/fpa11.h
-@@ -25,15 +25,6 @@
- 
- #define GET_FPA11() (qemufpa)
- 
--/*
-- * The processes registers are always at the very top of the 8K
-- * stack+task struct.  Use the same method as 'current' uses to
-- * reach them.
-- */
--extern CPUARMState *user_registers;
--
--#define GET_USERREG() (user_registers)
--
- /* Need task_struct */
- //#include <linux/sched.h>
- 
-@@ -91,25 +82,25 @@ void SetRoundingPrecision(const unsigned int);
- 
- static inline unsigned int readRegister(unsigned int reg)
- {
--    return (user_registers->regs[(reg)]);
-+    CPUARMState *env = cpu_env(current_cpu);
-+    return env->regs[reg];
- }
- 
- static inline void writeRegister(unsigned int x, unsigned int y)
- {
--#if 0
--	printf("writing %d to r%d\n",y,x);
--#endif
--        user_registers->regs[(x)]=(y);
-+    CPUARMState *env = cpu_env(current_cpu);
-+    env->regs[x] = y;
- }
- 
- static inline void writeConditionCodes(unsigned int x)
- {
--    cpsr_write(user_registers, x, CPSR_NZCV, CPSRWriteByInstr);
-+    CPUARMState *env = cpu_env(current_cpu);
-+    cpsr_write(env, x, CPSR_NZCV, CPSRWriteByInstr);
- }
- 
- #define ARM_REG_PC 15
- 
--unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa, CPUARMState* qregs);
-+unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa);
- 
- unsigned int EmulateCPDO(const unsigned int);
- unsigned int EmulateCPDT(const unsigned int);
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index d0390e04b4..910a4da0a6 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -7050,8 +7050,6 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+                the child process gets its own copy of the lock.  */
+             if (flags & CLONE_CHILD_SETTID)
+                 put_user_u32(sys_gettid(), child_tidptr);
+-            if (flags & CLONE_PARENT_SETTID)
+-                put_user_u32(sys_gettid(), parent_tidptr);
+             ts = get_task_state(cpu);
+             if (flags & CLONE_SETTLS)
+                 cpu_set_tls (env, newtls);
+@@ -7059,6 +7057,8 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+                 ts->child_tidptr = child_tidptr;
+         } else {
+             cpu_clone_regs_parent(env, flags);
++            if (flags & CLONE_PARENT_SETTID)
++                put_user_u32(ret, parent_tidptr);
+             if (flags & CLONE_PIDFD) {
+                 int pid_fd = 0;
+ #if defined(__NR_pidfd_open) && defined(TARGET_NR_pidfd_open)
 -- 
 2.53.0
 
