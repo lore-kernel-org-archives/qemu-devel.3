@@ -4,60 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BDFEFF8861
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 12:52:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C528EFF8861
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 13:18:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGcU1-0006ag-4B; Sat, 25 Apr 2026 08:51:41 -0400
+	id 1wGctj-00070z-1s; Sat, 25 Apr 2026 09:18:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alanosong@163.com>) id 1wGcTx-0006aI-2O
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 08:51:38 -0400
-Received: from m16.mail.163.com ([220.197.31.3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alanosong@163.com>) id 1wGcTs-0001Ad-3N
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 08:51:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=qA
- 35ELgLfV3WQ47A+J7U+2Qbpuj2MRAZs59pEpnwF6A=; b=C8dPDT1y5wCh54Zf12
- J7Sqis90W25vS6HPCDUMesDLZfz4ikAlK0/w43zORrcNf7en5ZDLkNnOVIeWKNv8
- S2AqibydVLp/X3+8LJhZNBQOcrEBSs2FSZDLLkvJZ2gIPiwHt4XOsSm99jsmAgGi
- eP06Pc31Mx3qb+8g46v2lF/n0=
-Received: from alano.. (unknown [])
- by gzga-smtp-mtada-g1-3 (Coremail) with SMTP id
- _____wDXP0XEuOxp+Fm4Bg--.64504S3; 
- Sat, 25 Apr 2026 20:51:21 +0800 (CST)
-From: AlanoSong@163.com
-To: qemu-devel@nongnu.org
-Cc: dave@treblig.org,
-	pbonzini@redhat.com,
-	Alano Song <AlanoSong@163.com>
-Subject: [PATCH v2 1/1] monitor: Add `clear` command
-Date: Sat, 25 Apr 2026 20:51:13 +0800
-Message-ID: <20260425125113.37341-2-AlanoSong@163.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260425125113.37341-1-AlanoSong@163.com>
-References: <20260425125113.37341-1-AlanoSong@163.com>
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wGcte-00070G-UD
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 09:18:11 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
+ id 1wGctd-0008K6-Cv
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 09:18:10 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-82735a41920so3560117b3a.2
+ for <qemu-devel@nongnu.org>; Sat, 25 Apr 2026 06:18:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1777123088; x=1777727888; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=SvuG1jTaGZrGaRxOJASSzc8k9CIquBkG8wiP7fGUjWo=;
+ b=HNjll7B6QbHuctDcQ8sB2T4xqYWEBMpzQ5Vw+n2jYuncWa9lXrxrVST1xzR+R7Ca88
+ 8tTP+WN70jFZmzENT0uAdgAHd6m8KVoW+hAiFeP5EOceV1saF6+CThKixUZqf8pJsl1x
+ IL7E1XovV8KcLhIsbVHYXfBtaGDplua4aIXFM8joyzt9Z3AJ3UbmxQAYHuRbNHegerTD
+ MkN4PsaYOCp+otBZGz5wSLfg5OkAwsO/DV4TK+9Lk9v/lXB2n93BrIq1egvYhnRu/l3R
+ 6mZXTkjkVgJNFdmj3r4BvB4SnWjzSYgiI16W8LFdJ5tiqT8xOXscc8nXxt+eTbXxXQQs
+ IcZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777123088; x=1777727888;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:sender:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=SvuG1jTaGZrGaRxOJASSzc8k9CIquBkG8wiP7fGUjWo=;
+ b=M1Xlarf5JhLwVWjKK7ynyEAwvljilmhYUAW2F4kWW4Lb3AF5ZbQ7Yb8N7LKf6mxGd+
+ eziwdS4eVNAmnRHs3PYKgEMXKr2WLDAaxXFe9PLFcIu2KmfLBlZ4GoZJS5ewpPtlrbNB
+ WiEcUBE43osEYUYMlMD8V/BYW3i4gbPQzQIR8Ithcf+Ze1qr+K4/Vw0hKPb0pQnsM3sD
+ FH0qROxLs71YP5dgXWZiqKS3KPLMD3uyu3uU8n307ySKsyDTt7yrCMqhwHR/je2BSjAB
+ qtV9A0CqgaLg/7Gnr81hDAXBpGxpFAS9LY5/2MW/XK/gxKtImE+3gRvLcU17MSCe8kVw
+ cwjA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8/YDJI2YeNeedoh6rZSi1iRc6mESb97ZNr4oaCmv/Q+nUTSZHNTHYSIihA7iBuZzMNBXI6YtKjypFO@nongnu.org
+X-Gm-Message-State: AOJu0YxFFj4qi+JCM5HzfYPnDDU35nLnuUmg2+9JZvE4os3xCnWi9E4O
+ Dn6DR0rBDTvnr3SDAKzBZqY3PwNiox0mnL1Z/B7dD+tfcg+fc3VP+B6r
+X-Gm-Gg: AeBDievWXWiPdGitTtmnB4pNWAashC3h2082VXNGp4SgQynqm3jNN8RqdvKnEcooXjC
+ 2I4vm5syJ3kuk+VLY/X1n1KfsCzijOfP55oo9ulXmwD5/aEzufCQLtBBbfcDDcwGdKIaJBVy8VI
+ M64c2dyqlAdZv5ZPE8F2Sd1Nk5dYNFQey71G/Fi/XAfDRRAqnwCuVwwiC1r+nuXIwoEvCNqEjA7
+ ToIyJ/MW8m7xN009kn4YC12kpZ8Y/V9x7VVrGFTQ35K2fhaFS6t4OD5liftHbm27o6kpfpgh4G5
+ A6G7cylAcrl2Yv8RVqNwSFH0bQpmpZvf+1/EJHNVb6fm7M/Jkq5cf44ykcEWr1xJ3kdTBT2dvHw
+ CrD7VvalKZp3j72Pz0bfovOuT3Qk8+7arpUXtWwtw5W0tdiDzLEJsREPaP7JXBBd/GqJgk3IFq+
+ 6bwHjJOamlW18RC8LbWOlRUVBmsQnE8Rh8Q8jjdHetBtBBHtbuiBmQxgRLZzFYLEyb42Evvukuc
+ TGl3p5nvmfwxCHCEWAbVJ9q+yaYryeQ
+X-Received: by 2002:a05:6a00:ad86:b0:82c:daa4:ce29 with SMTP id
+ d2e1a72fcca58-82f8c91b723mr37352440b3a.47.1777123088033; 
+ Sat, 25 Apr 2026 06:18:08 -0700 (PDT)
+Received: from donnager-debian.. ([45.124.203.19])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82f8e9f7735sm26898866b3a.21.2026.04.25.06.18.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 25 Apr 2026 06:18:06 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH v4 02/13] hw/riscv/boot: Describe discontiguous memory in
+ boot_info
+Date: Sat, 25 Apr 2026 23:17:08 +1000
+Message-ID: <20260425131721.932250-3-joel@jms.id.au>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260425131721.932250-1-joel@jms.id.au>
+References: <20260425131721.932250-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wDXP0XEuOxp+Fm4Bg--.64504S3
-X-Coremail-Antispam: 1Uf129KBjvJXoW7CFy8KFyfKrWUuw4rWr4xtFb_yoW8tF43pr
- Z5trWrK3y8J3Wxur1xAr9xWF15KrZ7uFZFkF9xAF98AF98Jw1Iva1kKr1qk3ZxXrWxKFyS
- vFy2qrWDGasFqr7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x0pRxbbNUUUUU=
-X-Originating-IP: [240e:36f:15cf:8780:308a:f2b4:e0e:95c7]
-X-CM-SenderInfo: xdod00pvrqwqqrwthudrp/xtbC9gn1CmnsuMmmhwAA3V
-Received-SPF: pass client-ip=220.197.31.3; envelope-from=alanosong@163.com;
- helo=m16.mail.163.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=joel.stan@gmail.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,80 +109,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The monitor screen can be cluttered after executing commands
-like `info qtree`. It is useful to have a command to clear
-current screen, just like linux `clear` command do.
+From: Nicholas Piggin <npiggin@gmail.com>
 
-This patch has been tested under monitors using stdio, vc,
-tcp socket, unix socket and serial interfaces.
+Machines that have discontiguous memory may need to adjust where
+firmware and images are loaded at boot. Provide an interface for
+machines to describe a discontiguous low/high RAM scheme for this
+purpose.
 
-Signed-off-by: Alano Song <AlanoSong@163.com>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- hmp-commands.hx       | 14 ++++++++++++++
- include/monitor/hmp.h |  1 +
- monitor/hmp-cmds.c    | 11 +++++++++++
- 3 files changed, 26 insertions(+)
+ include/hw/riscv/boot.h |  7 +++++++
+ hw/riscv/boot.c         | 11 +++++++++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index 5cc4788f12..95f9166732 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -20,6 +20,20 @@ SRST
-   Show the help for all commands or just for command *cmd*.
- ERST
+diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+index f00b3ca12245..115e3222174f 100644
+--- a/include/hw/riscv/boot.h
++++ b/include/hw/riscv/boot.h
+@@ -28,6 +28,10 @@
+ #define RISCV64_BIOS_BIN    "opensbi-riscv64-generic-fw_dynamic.bin"
  
-+    {
-+        .name       = "clear",
-+        .args_type  = "",
-+        .params     = "",
-+        .help       = "clear the monitor screen",
-+        .cmd        = hmp_clear,
-+        .flags      = "p",
-+    },
+ typedef struct RISCVBootInfo {
++    /* First contiguous RAM region. If size is zero then assume entire RAM */
++    hwaddr ram_low_start;
++    hwaddr ram_low_size;
 +
-+SRST
-+``clear``
-+  Clear the monitor screen.
-+ERST
-+
-     {
-         .name       = "commit",
-         .args_type  = "device:B",
-diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index e222bea60c..9b66458d21 100644
---- a/include/monitor/hmp.h
-+++ b/include/monitor/hmp.h
-@@ -165,6 +165,7 @@ void hmp_trace_event(Monitor *mon, const QDict *qdict);
- void hmp_trace_file(Monitor *mon, const QDict *qdict);
- void hmp_info_trace_events(Monitor *mon, const QDict *qdict);
- void hmp_help(Monitor *mon, const QDict *qdict);
-+void hmp_clear(Monitor *mon, const QDict *qdict);
- void hmp_info_help(Monitor *mon, const QDict *qdict);
- void hmp_info_sync_profile(Monitor *mon, const QDict *qdict);
- void hmp_info_history(Monitor *mon, const QDict *qdict);
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index bc26b39d70..608a208c6e 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -218,6 +218,17 @@ void hmp_help(Monitor *mon, const QDict *qdict)
-     hmp_help_cmd(mon, qdict_get_try_str(qdict, "name"));
+     ssize_t kernel_size;
+     hwaddr image_low_addr;
+     hwaddr image_high_addr;
+@@ -43,6 +47,9 @@ bool riscv_is_32bit(RISCVHartArrayState *harts);
+ char *riscv_plic_hart_config_string(int hart_count);
+ 
+ void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts);
++void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
++                                        RISCVHartArrayState *harts,
++                                        hwaddr start, hwaddr size);
+ vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
+                                    hwaddr firmware_end_addr);
+ hwaddr riscv_find_and_load_firmware(MachineState *machine,
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index 9086793b7a7b..5c9547429a36 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -69,11 +69,22 @@ char *riscv_plic_hart_config_string(int hart_count)
+ 
+ void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts)
+ {
++    info->ram_low_start = 0;
++    info->ram_low_size = 0;
+     info->kernel_size = 0;
+     info->initrd_size = 0;
+     info->is_32bit = riscv_is_32bit(harts);
  }
  
-+void hmp_clear(Monitor *mon, const QDict *qdict)
++void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
++                                        RISCVHartArrayState *harts,
++                                        hwaddr start, hwaddr size)
 +{
-+    /*
-+     * Send an ANSI escape sequence:
-+     * "\x1b[H" - move cursor to top-left
-+     * "\x1b[2J" - clear visible screen
-+     * "\x1b[3J" - clear scrollback
-+     */
-+    monitor_printf(mon, "\x1b[H\x1b[2J\x1b[3J");
++    riscv_boot_info_init(info, harts);
++    info->ram_low_start = start;
++    info->ram_low_size = size;
 +}
 +
- void hmp_info_help(Monitor *mon, const QDict *qdict)
- {
-     hmp_help_cmd(mon, "info");
+ vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
+                                    hwaddr firmware_end_addr) {
+     if (info->is_32bit) {
 -- 
-2.43.0
+2.47.3
 
 
