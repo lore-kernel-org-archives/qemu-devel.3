@@ -4,108 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37686FF8850
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 00:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BEB3FF885E
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 00:32:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGQej-0006GH-Kf; Fri, 24 Apr 2026 20:13:57 -0400
+	id 1wGQw7-0000HN-8g; Fri, 24 Apr 2026 20:31:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wGQei-0006Fs-0l
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 20:13:56 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wGQeg-0003cD-4q
- for qemu-devel@nongnu.org; Fri, 24 Apr 2026 20:13:55 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-b9c01854477so370161766b.0
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 17:13:53 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777076032; cv=none;
- d=google.com; s=arc-20240605;
- b=ARhkwXFHhgN79oGKsz4pqS72rtODbOE3zmBGGbwoyoLwus3yuhbKKJdaOOpg4JoiK8
- MotZ7PKGBqCG4fEpMeeIELKymGQIhqndNnvNyBroj0/WF6XJd77YrAgST1H/T4s2stAG
- O0pN7TNADkqaRtElJjzzFbOD45pxO7GtsweCiWfU7ewK340eFGQm5iKZ2JMhJ5VFlOIu
- ChsafkYVJn/dsqc9a2csMtQbQa4m5iI3RP2T1LJ3waABYoJcccKNplPR6pLcVCFS2iKl
- IEPpitichkByzZILEe/dLUXSITu+Spb3pnqb8rcG1jBFCWRq1MpBdxP9Q6nL3JU1GhyF
- LG6g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=m3wMEMa5c5ReChl1GLvrs3VS+RI2A4zI4ZRvGS0z4UY=;
- fh=ZOeTZOxeYk4TO1Nn5fwBbLfAz9daWBz/xhPajQ3q3HM=;
- b=hu70j+1GVv7TPsMJTBp13/GwK9XEdCP7RJKfyyuQD7INrdAEe+SKMDyOrs5b1C8wKc
- 1/M2RAQjJEyuNVOy6Lxhs1Xg+u5Z9vT9x3ujrYFgGY3KZvFxSde74Ow5t5et869adsAM
- X+YN6GntQl2z+juEJR2SQXYvzXOPie4ZuTeY5/FENSYBX+y8E5LwX17595dBgivt8X2Y
- NmCdjVcyVsf0A+hMlVRtMP4mFbl56DNNysnEQgTMQOhQG8M/4fTD37EdnJaEs1y7MxVF
- y+ARCcSIpTkKbrR4TmmNG5sRa+jbKcTdJNAT2EVirh5tOqsdRzlozi4+Bbe7EjtTvdf4
- PiZg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wGQw5-0000H0-Mq
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 20:31:53 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wGQw3-0001AX-R8
+ for qemu-devel@nongnu.org; Fri, 24 Apr 2026 20:31:53 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63OLpNhK4113120
+ for <qemu-devel@nongnu.org>; Sat, 25 Apr 2026 00:31:49 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=qcppdkim1; bh=tl/p2kFnZhA
+ cE9CX6ZEC2lFso5rIi8YfUwbB+a7ctDY=; b=V6bnpGAJselSnbGYOvBUiiW+deJ
+ zy3FKf4QMDgg2chOePN3rpF1vitybudk40RN+ySWu6D6taEWanu2S7t1ow2kc82y
+ 1yebvr7G6XEYplIfeWLO4b/xQy7NHam9CHhwo01s49dVVo9p3j66xa+hJO8mkOYW
+ ONuJcNtx0+jhHOr8197fxBf6V0OKKYUWimCydP1GkV8oWBs6WwtIqnqkjDVxnm40
+ eOCyqb5mU/y2JpeKdGye9zuyohIZQwidivCPzdvYvDIhdgY5h+uksXes6zB1un2V
+ i5e05MCK0DvbJ2sTERHoxClADcXu3rHGbkoiDxj/VkqfiuLEeUSdT6WOUug==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dr2nrm3fm-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sat, 25 Apr 2026 00:31:49 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-2ba9a744f7dso11027567eec.0
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 17:31:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777076032; x=1777680832; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=oss.qualcomm.com; s=google; t=1777077109; x=1777681909; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=m3wMEMa5c5ReChl1GLvrs3VS+RI2A4zI4ZRvGS0z4UY=;
- b=WiBP7/0DfQAhDpjd86lRA3dI/jvhQoHjqSSgSngtY3GQ/44/wDhuF1uvQHNvful9u4
- 1BQq4Oi3GZs5tES8rH4TTzRgd7wbkcZilkzSXcDwEtQV9pK0+42yT6qYafUhDfHvEZnW
- 2KZLloDuslu3ybzxWqMUH70AdO5KRo2GqHBa2SruexlNmCfbtGG3o+tcd2hwbnCKAniq
- F710Ku3HU2yrhivgjNpwbAgwM8ISkqGtoAV3xB0kGxAwAWipbvXTIsQK7GrDi4eneGP6
- 8NtytwAj6p5x9ILIOOmjMnBkdFI5EgPkE00l4aRicxZYcm0KF+9/l+frGoqybAI9Yp+f
- GbVQ==
+ bh=tl/p2kFnZhAcE9CX6ZEC2lFso5rIi8YfUwbB+a7ctDY=;
+ b=KG/UnmYlXM4TQCBKh4V/35vV5fD8JFo723M5CFhROYjnKTiwFVlZbdyjcVcIcWASzv
+ X+4PMsWtuWCKkWM3fFoUuPZ7jryex8h0KfGs5Lf0bGt+09OIs0C+iPGrnxccr/CWfOd8
+ rpiWuPvYqxkWsh3ua647aHnRiaUCcgLSsfzYmZJD0dpCsY5qM+o/1iD6h39OlKMSOadG
+ AqSlaj7MaWYLe9b44iA+0aK+12M6KyEHviIq03Kc+YtofjJ5sEEpiXfaTA5ZlTMiIgUe
+ HXIb91+wOk1bfyEN+DPhsL7tWsdFxym0gPF1rk4kCxLgCJP6R3JYYJEvOQZC4/UMQEkV
+ 15lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777076032; x=1777680832;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1777077109; x=1777681909;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=m3wMEMa5c5ReChl1GLvrs3VS+RI2A4zI4ZRvGS0z4UY=;
- b=GPrdpUTGCfRgnMeARbpPrQ/j+z6aqiGg/YruOJcL8cGWYBhhGghHqSCDLpC7D+FLgH
- PlfaJSQFEJ/+LJOKPFL5jTsJHF8b7SL3eRYgf6UPS1yEVix8Jg+wzrR5SHVBH1ZZIDxM
- vMFvOmkSjfUled9H22CLZc9ZmLuu61anDevztCiq0qU1IBwl7MAwwwdvgZCiFlAl+wkX
- ePZmwdTS1K/w0MjAGZPgs82W1FZKTigiZ791iCiIe17naz9zoHTZKRhDs9HH62Y8aZoW
- HRp9/Nc9F8+GTSyn0OQsAznCOnLU1c395uIsuu35NUVY06qNhIT8xsnGOA5VtsgqzaBQ
- Sd9g==
-X-Gm-Message-State: AOJu0Yw0ZAurzLga1OQ65eQpEJTa925ZBgA3MXGX/y7xITcB4ZVpFmkn
- D1+/lTdYJO8Xs9YyUUHZ9kejC2FAUfxd0khmODp6xGC11RY/FcfgbcNaqfVG/WoydxKdsZD6EKU
- upuGQ/gsNn6yTBFzAitSDA0Uc1jVaTrU=
-X-Gm-Gg: AeBDievIAt9lqXZFVGq4fAF2C2WN/NxCLecG5RWC7bGYXkKsyPHSfG8m0PDa2LhmBO5
- sYlMfX//dO1KZWVOSx526OWHr2AfCjiK/TdnWn9u9RvkI0ETlEAsaA03Dgj2NkCSMkSLHdeiV8C
- Nu53xcKB6EkwdjtcFcvDjWDDMuXXJJnvOltNOZh4nnFqaGgAoOA6SUS3bhh0z5Pfo5Hq7g134jI
- 3Y+r6Qm8/z8Tm51hdjX/qvXN9PR7krLvfqre8+00HrRG6GQ8txQ0YAU+LvNxn4t6u1PTelLE3Lf
- xY0zElilpCDXplnUk8k=
-X-Received: by 2002:a17:906:794a:b0:bae:642a:8712 with SMTP id
- a640c23a62f3a-bae642a8acamr191160166b.26.1777076031668; Fri, 24 Apr 2026
- 17:13:51 -0700 (PDT)
+ bh=tl/p2kFnZhAcE9CX6ZEC2lFso5rIi8YfUwbB+a7ctDY=;
+ b=l2KeiiTpz9jbc6L6LwvdS+SSwEKqc5GxzC0zEp8y88tlaDN1s82J75IuL2XDdRiJVd
+ zwAXeXXaBPJ+HjPsqPHRoR6Fs7BocRmP8NDM6ej5d7XufUPmoyhLXGD2Emstbx7FAGUF
+ EHCwyg/Fil/g5s315yUKYviy1S3A4IfbWeMEqfUyDNIyMnR/UTYpesr5Bwa4OxsgDOCj
+ FtyXucLClhRZcJpakJ4mxuLTc9U83mo2W+Yr1Gm+PLujy2oKKpFy0kgpFvA4gCjpwNJr
+ lk1LHOKryiX0QhnxYqYbFmO8gXhBUx9KWcbuLgrKnIKIa7JNYmEC65NBLJHKrM9OflZa
+ 6C9A==
+X-Gm-Message-State: AOJu0YwKw4pzZvABoM7KQZnPlzSE2FfnZ4LAAh7fMRv4JHAU/vrUGoAF
+ R4WqM92hbmjyeJZ6FPrwNnj/mnz9Vg4Kfl97ohy1TG/QVPovPCz2iQaGKGn/8sDuDT2Y8uVJJOa
+ ofcYhiwWU88F+ZhhvxFZ49Y5JyLzLcFonPtXKryic/E0lbIFKYqG4J1WiDdFVa2LFwvmd
+X-Gm-Gg: AeBDievSaFH7I1vVkPuGCKgfQkg5dw6MbXZYq1ZCteCeLFhP/flwjdjMfVrH/w6c/Ee
+ iokcKKc1rQxN2AN2WjLky5i0XY+bo3Yx2VBBGSKgZ9xiUeqvbbM2yn/o3DH/k7+vgeU0Ci/3lUq
+ nkYOk0XCaW5GOK7Gvp7Oh+Wa0i+J/rb22dXNRIF+pPX8byMJV2OjBFLq0M49M/8bd8jbGr/nLhl
+ 1ZQVgqcgFYNhLlMVoUf1TFPj4kD/ApSucCeUt+ilFm0uy95qJGPLARtj+4GFL6b9XAL/4nL/O/6
+ YQBd8QdBT9FxgRgvBIpCrcaxHlRQCRpBSJCySQvCW4B5GPpggrG+o/ISCJq3uzjO8o2AePk4hiK
+ fjDQLxpJlK9K4HhhQZWFs6yVmID4XOv59aLBBDn+ZRnd9gyofnKZTQq3X6O3HZXwXpM7Erv6ttX
+ v9BqctmOzBzjp15jvB
+X-Received: by 2002:a05:7022:6ba1:b0:12b:ee92:a60e with SMTP id
+ a92af1059eb24-12c73f6c422mr15596220c88.8.1777077108776; 
+ Fri, 24 Apr 2026 17:31:48 -0700 (PDT)
+X-Received: by 2002:a05:7022:6ba1:b0:12b:ee92:a60e with SMTP id
+ a92af1059eb24-12c73f6c422mr15596192c88.8.1777077108170; 
+ Fri, 24 Apr 2026 17:31:48 -0700 (PDT)
+Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2e539fa3ce1sm32510323eec.4.2026.04.24.17.31.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 24 Apr 2026 17:31:47 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@oss.qualcomm.com
+Subject: [PULL 1/2] contrib/plugins/uftrace_symbols.py: fix symbols reading
+Date: Fri, 24 Apr 2026 17:31:39 -0700
+Message-ID: <20260425003140.1688666-2-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260425003140.1688666-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260425003140.1688666-1-pierrick.bouvier@oss.qualcomm.com>
 MIME-Version: 1.0
-References: <20260424155646.533334-1-luc.michel@amd.com>
-In-Reply-To: <20260424155646.533334-1-luc.michel@amd.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Sat, 25 Apr 2026 10:13:23 +1000
-X-Gm-Features: AQROBzAFJiI4nyra7qV9fRvrp2aQ5CV4VgAc0Nn9rNmV2XrktoEuooJ8d28RF1A
-Message-ID: <CAKmqyKMCrzq0nsW1Sp79Cg6NbzKWuU5k++T5Z--Oc0SHqV9CbA@mail.gmail.com>
-Subject: Re: [PATCH] hw/core/register: add register_array_get_owner
-To: Luc Michel <luc.michel@amd.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>,
- Francisco Iglesias <francisco.iglesias@amd.com>, 
- Frederic Konrad <frederic.konrad@amd.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Alistair Francis <alistair@alistair23.me>, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI1MDAwNCBTYWx0ZWRfXzJ74RyGIGNag
+ iaBKtxzj+LOjmQzlDsQ8/oQnRMAE6SLLETvX7CLlhJ4tDVcQi8IG9TpY12FYIQJ5gmjAOl2+sd8
+ dBHL4F/mTq5BDalNG5ocGdioAvqT3D0Q1AyUmDZpwgxUC1CEdvXUTJ4AenOhrrBweqPo8xLxIkc
+ S2XJmVJFrovXGKF0yzSqAuWt+0UXVegD6shsx5e4hgiQtEGMLHBU7mD1UF0VznFMJ6dB21fNuvC
+ WqU9moE1peSgilOwRKnkmphsHwRFxJCbiu2jiB8h5YYMEQAZg4j4BplsFGcej8zS+WgBhrSyaXV
+ yvWeWuQ5djQH2X4GXjknAhNsf5Od1oyP6bCvpRIflkSFlLtZNPy0GJzw3lBm66gwdHX85ZXgeiL
+ uZvgM3aabZ7ejADXN3LZjDg01+ZMtzvdgkw2nEuR8op7+47JsUZWzTyFHI5hi0X1U0QafcjGpUJ
+ 3ZB4149Lyvz3I8wQCGw==
+X-Authority-Analysis: v=2.4 cv=UqpT8ewB c=1 sm=1 tr=0 ts=69ec0b75 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=VwQbUJbxAAAA:8
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=t33ULwWO7eDJZn57WcoA:9
+ a=bBxd6f-gb0O0v-kibOvt:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: zH1sDSAwuOB-5AM6I9GReZWNBQGNYtSZ
+X-Proofpoint-GUID: zH1sDSAwuOB-5AM6I9GReZWNBQGNYtSZ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-24_04,2026-04-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 priorityscore=1501 clxscore=1015 bulkscore=0
+ lowpriorityscore=0 impostorscore=0 phishscore=0 adultscore=0 spamscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2604250004
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,160 +148,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Apr 25, 2026 at 1:59=E2=80=AFAM Luc Michel <luc.michel@amd.com> wro=
-te:
->
-> Add the register_array_get_owner function to the register API. This
-> function can be used to retrieve the device owning the given
-> RegisterInfoArray.
->
-> This was previously done inline by some devices.
-> 5c6367bc1c8850f74812eeaaf87cff9911be58de modified the way register
-> blocks are created and parented to the device. Since this is an
-> implementation detail of the register API, it makes sense to have a
-> function for this.
->
-> Use it in the Versal OSPI and Versal/ZynqMP eFuse models instead of
-> tinkering with the API internals.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3421
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3422
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3423
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
+When running this on hexagon binary, we observe some undefined symbols
+without any address or size.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260424194451.1439316-2-pierrick.bouvier@oss.qualcomm.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ contrib/plugins/uftrace_symbols.py | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Alistair
+diff --git a/contrib/plugins/uftrace_symbols.py b/contrib/plugins/uftrace_symbols.py
+index 02d1221228c..6eb999bca5f 100755
+--- a/contrib/plugins/uftrace_symbols.py
++++ b/contrib/plugins/uftrace_symbols.py
+@@ -36,8 +36,8 @@ def get_symbols(elf_file):
+     out = out.strip().split('\n')
+     for line in out:
+         info = line.split(' ')
+-        if len(info) == 3:
+-            # missing size information
++        if len(info) != 4:
++            # missing size/address information
+             continue
+         addr, size, type, name = info
+         # add only symbols from .text section
+-- 
+2.43.0
 
-> ---
->  include/hw/core/register.h        | 11 +++++++++++
->  hw/core/register.c                |  5 +++++
->  hw/nvram/xlnx-versal-efuse-ctrl.c |  4 ++--
->  hw/nvram/xlnx-zynqmp-efuse.c      |  4 ++--
->  hw/ssi/xlnx-versal-ospi.c         | 10 +++-------
->  5 files changed, 23 insertions(+), 11 deletions(-)
->
-> diff --git a/include/hw/core/register.h b/include/hw/core/register.h
-> index 1f265f4ed71..c6f648fe95e 100644
-> --- a/include/hw/core/register.h
-> +++ b/include/hw/core/register.h
-> @@ -207,6 +207,17 @@ RegisterInfoArray *register_init_block64(DeviceState=
- *owner,
->                                           uint64_t *data,
->                                           const MemoryRegionOps *ops,
->                                           bool debug_enabled,
->                                           uint64_t memory_size);
->
-> +/**
-> + * register_array_get_owner
-> + *
-> + * Retrieve the device owning the register info array @reg_array.
-> + *
-> + * @reg_array The register info array to retrieve the owner from
-> + *
-> + * Returns: the device owning @reg_array
-> + */
-> +DeviceState *register_array_get_owner(const RegisterInfoArray *reg_array=
-);
-> +
->  #endif
-> diff --git a/hw/core/register.c b/hw/core/register.c
-> index c3f3c936e70..99ca5e17758 100644
-> --- a/hw/core/register.c
-> +++ b/hw/core/register.c
-> @@ -320,10 +320,15 @@ static void register_array_finalize(Object *obj)
->      RegisterInfoArray *r_array =3D REGISTER_ARRAY(obj);
->
->      g_free(r_array->r);
->  }
->
-> +DeviceState *register_array_get_owner(const RegisterInfoArray *reg_array=
-)
-> +{
-> +    return DEVICE(OBJECT(reg_array)->parent);
-> +}
-> +
->  static const TypeInfo register_array_info =3D {
->      .name  =3D TYPE_REGISTER_ARRAY,
->      .parent =3D TYPE_OBJECT,
->      .instance_size =3D sizeof(RegisterInfoArray),
->      .instance_finalize =3D register_array_finalize,
-> diff --git a/hw/nvram/xlnx-versal-efuse-ctrl.c b/hw/nvram/xlnx-versal-efu=
-se-ctrl.c
-> index 69acdfa3047..f5d5587cb65 100644
-> --- a/hw/nvram/xlnx-versal-efuse-ctrl.c
-> +++ b/hw/nvram/xlnx-versal-efuse-ctrl.c
-> @@ -617,15 +617,15 @@ static const RegisterAccessInfo efuse_ctrl_regs_inf=
-o[] =3D {
->  static void efuse_ctrl_reg_write(void *opaque, hwaddr addr,
->                                   uint64_t data, unsigned size)
->  {
->      RegisterInfoArray *reg_array =3D opaque;
->      XlnxVersalEFuseCtrl *s;
-> -    Object *dev;
-> +    DeviceState *dev;
->
->      assert(reg_array !=3D NULL);
->
-> -    dev =3D reg_array->mem.owner;
-> +    dev =3D register_array_get_owner(reg_array);
->      assert(dev);
->
->      s =3D XLNX_VERSAL_EFUSE_CTRL(dev);
->
->      if (addr !=3D A_WR_LOCK && s->regs[R_WR_LOCK]) {
-> diff --git a/hw/nvram/xlnx-zynqmp-efuse.c b/hw/nvram/xlnx-zynqmp-efuse.c
-> index e6bc54fc6bd..028120f824d 100644
-> --- a/hw/nvram/xlnx-zynqmp-efuse.c
-> +++ b/hw/nvram/xlnx-zynqmp-efuse.c
-> @@ -722,15 +722,15 @@ static RegisterAccessInfo zynqmp_efuse_regs_info[] =
-=3D {
->  static void zynqmp_efuse_reg_write(void *opaque, hwaddr addr,
->                                     uint64_t data, unsigned size)
->  {
->      RegisterInfoArray *reg_array =3D opaque;
->      XlnxZynqMPEFuse *s;
-> -    Object *dev;
-> +    DeviceState *dev;
->
->      assert(reg_array !=3D NULL);
->
-> -    dev =3D reg_array->mem.owner;
-> +    dev =3D register_array_get_owner(reg_array);
->      assert(dev);
->
->      s =3D XLNX_ZYNQMP_EFUSE(dev);
->
->      if (addr !=3D A_WR_LOCK && s->regs[R_WR_LOCK]) {
-> diff --git a/hw/ssi/xlnx-versal-ospi.c b/hw/ssi/xlnx-versal-ospi.c
-> index 467f0ce7033..e25e4c26c2e 100644
-> --- a/hw/ssi/xlnx-versal-ospi.c
-> +++ b/hw/ssi/xlnx-versal-ospi.c
-> @@ -1567,19 +1567,15 @@ static RegisterAccessInfo ospi_regs_info[] =3D {
->          .ro =3D 0xffffffff,
->      }
->  };
->
->  /* Return dev-obj from reg-region created by register_init_block32 */
-> -static XlnxVersalOspi *xilinx_ospi_of_mr(void *mr_accessor)
-> +static XlnxVersalOspi *xilinx_ospi_of_mr(void *opaque)
->  {
-> -    RegisterInfoArray *reg_array =3D mr_accessor;
-> -    Object *dev;
-> +    RegisterInfoArray *reg_array =3D REGISTER_ARRAY(opaque);
->
-> -    dev =3D reg_array->mem.owner;
-> -    assert(dev);
-> -
-> -    return XILINX_VERSAL_OSPI(dev);
-> +    return XILINX_VERSAL_OSPI(register_array_get_owner(reg_array));
->  }
->
->  static void ospi_write(void *opaque, hwaddr addr, uint64_t value,
->          unsigned int size)
->  {
-> --
-> 2.53.0
->
->
 
