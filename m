@@ -4,73 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EDBFFF885C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 05:48:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38980FF885C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 06:42:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGVr0-0008Bi-N6; Sat, 25 Apr 2026 01:46:58 -0400
+	id 1wGWiH-0004TG-OP; Sat, 25 Apr 2026 02:42:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wGVqz-0008BZ-HC
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 01:46:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wGWiF-0004Sx-0t
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 02:42:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wGVqx-0004ER-Gd
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 01:46:57 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wGWiC-00039K-JK
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 02:41:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777096013;
+ s=mimecast20190719; t=1777099315;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=8OEMHJEnh7ykjTSp2XI5JG6YmW1fT0QxZhvhH0/aBwE=;
- b=H9dG1RDlnYLySL4Abi/WCYlF2a0vlmNvavcjBJpYAnlCjh42iN25QR0imLX7y+O5aWg7Fe
- AG0vcLQteawu9T3SV89PXsAbVANfi/jZujSd6A7/l368yXX41JlOQryUs4RjO/8on6zmvP
- /kQcmLFubGhX+PURj+jOVylSulkvPzY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-141-0WWexd5lMuCQ0Krn0QT1Mw-1; Sat,
- 25 Apr 2026 01:46:51 -0400
-X-MC-Unique: 0WWexd5lMuCQ0Krn0QT1Mw-1
-X-Mimecast-MFC-AGG-ID: 0WWexd5lMuCQ0Krn0QT1Mw_1777096010
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 42D9E18003FC; Sat, 25 Apr 2026 05:46:49 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.30])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2A011180057E; Sat, 25 Apr 2026 05:46:48 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9B3C921E6A28; Sat, 25 Apr 2026 07:46:45 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org,  Joao Martins <joao.m.martins@oracle.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,  Avihai Horon
- <avihaih@nvidia.com>,
- Daniel P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,  Prasad Pandit <ppandit@redhat.com>,  Alex Williamson
- <alex@shazbot.org>,  Kirti Wankhede <kwankhede@nvidia.com>,  Zhiyi Guo
- <zhguo@redhat.com>,  "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Juraj Marcin <jmarcin@redhat.com>,  "Dr. David Alan Gilbert"
- <dave@treblig.org>
-Subject: Re: [PATCH v2 14/16] migration/qapi: Introduce system-wise
- "remaining" reports
-In-Reply-To: <aeuJCI0OCW-ohJih@x1.local> (Peter Xu's message of "Fri, 24 Apr
- 2026 11:15:20 -0400")
-References: <20260421202110.306051-1-peterx@redhat.com>
- <20260421202110.306051-15-peterx@redhat.com>
- <87cxzovncu.fsf@pond.sub.org> <aeuJCI0OCW-ohJih@x1.local>
-Date: Sat, 25 Apr 2026 07:46:45 +0200
-Message-ID: <87jytvoam2.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=q+e64NFmAD68oggXK6Te0WPNk6cwZLiisHVj9/F8tDw=;
+ b=be6loxnTQs8VSLcEKeVczaVKi/MgCU88RchlZHf/1bei3FbhWUXXBex8U9CbHV+9OTcYCf
+ DWcKfGS8HWa/LAirAVnzTVb5W+ahmjkhxrCRfH3gCcpJ50IXuhhpQ8ABYsUQJbJtE1Nniv
+ Mt4Ui7+asrlJVWclsP5O7j0/SRZ8QpM=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-223-2xVJLHbbM7Wz_ZwlT-P0Kg-1; Sat, 25 Apr 2026 02:41:53 -0400
+X-MC-Unique: 2xVJLHbbM7Wz_ZwlT-P0Kg-1
+X-Mimecast-MFC-AGG-ID: 2xVJLHbbM7Wz_ZwlT-P0Kg_1777099312
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-43d7d03e1e7so6741560f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 23:41:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1777099312; x=1777704112; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=q+e64NFmAD68oggXK6Te0WPNk6cwZLiisHVj9/F8tDw=;
+ b=KHwuRUFovVne5y7YTzqt5QFyuMrPzLyexx3c18Mh9XXpdvolrWZPmRDqYP/XfFi9IS
+ zJeLtdSx40/cVINXyava67+r2JroaowzTd6/wjW2RKaxmz2oebcAThuInwQpbme7e4JZ
+ mjLiURmV9mD8DlZFYjyUv5rvpJVSHMD9+I/nfXmTnX32A/K4DWVnfewgJNJysoJsTRMn
+ g2YeQhI7Rb9DxFzcNLcm4yW+cY+lecI5z9NYyvUvf2kfNJXDsEKpN7CtJ2eEz39HeOUi
+ PCgbB5s05cgFuc+vicEY1DEsERMfh+6NcSgokZSinKaGnY8bQTKWPZAnMrzKhcjXABd6
+ FoTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777099312; x=1777704112;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=q+e64NFmAD68oggXK6Te0WPNk6cwZLiisHVj9/F8tDw=;
+ b=SHxT0JucFY18F+Fmd+LsELIgl579s/f/GAV6UbilBNnE+8gb0h5uktYMArpgPZhYOS
+ nbHwgkacMZiZUJSSEaQGHQlO94PbsEpmvAq00ydM2NvAsYnhg4j5RT22Bj/U3iGC2VO5
+ ypp0MnfuhQ/6dWJsCOBRpD0BvZ4bBV4770srxyl/E2WJjFUiAU0QV4Xf/Zubx25fZPxm
+ Vhdp8yaSKPEwg0jR2BHy/yOzPGhJZOWnSMo3B+J7xQmjIjryWFiSbpkUwZ9wpW0sqCGA
+ yWcn2xKcNwSBQ3Hmy5Z1Zw0rAljYN+BU5C5ieIzHHPq2PwIv1eD2ACyGd84baobAapNY
+ XTvQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8h7teeUGsaz5dMoG7pfF5Og5k0x75OPLcUHMggsX+4/p027Z+H8tpxjquR0f+1dmULYOqZF2gLyabs@nongnu.org
+X-Gm-Message-State: AOJu0YwA79Kgt7gmdMOo8zuHy3x55L5rlrcqrYsl8qlmGaqaBoH8Otaa
+ 71vWdLvD8jv4tFESLZcH99rgoNaCtmLhvC5hC4r6w4659yVouYsda4HOrGo3c/aOJaTHmjvqcdO
+ cQ4XtZsF/HY0ejdtPjvt7nE97/RKnIhMvGGvmwKoNg357IPBeqxmgQif9
+X-Gm-Gg: AeBDietdy69tKlDaJ4A2457HSb7/4YgNkOOdVlb+68EymkoZQv5ey2FawLiF9Z/s1Ht
+ EgP6/1nyMmqPQRXNoR6l/AR6aZXMSc8O2luHyHzliEc4phojUYoXWX4m2FXlhkoi43fiwXU1xFv
+ HCq3i1RJ+9/MagPwX+4ulN+0QSRgauAN3Brz41MWmmSEQt8p/Nofv+68r2mKpBY7lzv8MPNtnmU
+ EmNM9ivE6ScDX9MWiJmN/ptEdmJuF4eJnT2C2ZOQFj6VuntqK31h5++5sYfT/SE899A+30eyt6Z
+ Cs9c2Na0KAh7uer1yeSZ4Gmjc8/7m8YdzWPVRIvdPkhiRllLyPGDl5+A8PxBM9f9RgThfcjV75F
+ HKQa9cmT3r+biyAsIt96s3FfjUslHRQ==
+X-Received: by 2002:a05:600c:26d5:b0:489:1c1f:35df with SMTP id
+ 5b1f17b1804b1-4891c1f3715mr227971825e9.10.1777099311898; 
+ Fri, 24 Apr 2026 23:41:51 -0700 (PDT)
+X-Received: by 2002:a05:600c:26d5:b0:489:1c1f:35df with SMTP id
+ 5b1f17b1804b1-4891c1f3715mr227971605e9.10.1777099311442; 
+ Fri, 24 Apr 2026 23:41:51 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.114.147])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488fc10777csm723077695e9.8.2026.04.24.23.41.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 24 Apr 2026 23:41:50 -0700 (PDT)
+Message-ID: <b39b576f-e0d6-43e2-aa72-18ca53d0cb1d@redhat.com>
+Date: Sat, 25 Apr 2026 08:41:49 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/core/register: add register_array_get_owner
+To: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Frederic Konrad <frederic.konrad@amd.com>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>, qemu-arm@nongnu.org
+References: <20260424155646.533334-1-luc.michel@amd.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260424155646.533334-1-luc.michel@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -78,7 +152,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,205 +168,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On 24/04/2026 17.56, Luc Michel wrote:
+> Add the register_array_get_owner function to the register API. This
+> function can be used to retrieve the device owning the given
+> RegisterInfoArray.
+> 
+> This was previously done inline by some devices.
+> 5c6367bc1c8850f74812eeaaf87cff9911be58de modified the way register
+> blocks are created and parented to the device. Since this is an
+> implementation detail of the register API, it makes sense to have a
+> function for this.
+> 
+> Use it in the Versal OSPI and Versal/ZynqMP eFuse models instead of
+> tinkering with the API internals.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3421
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3422
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3423
+> Signed-off-by: Luc Michel <luc.michel@amd.com>
+> ---
+>   include/hw/core/register.h        | 11 +++++++++++
+>   hw/core/register.c                |  5 +++++
+>   hw/nvram/xlnx-versal-efuse-ctrl.c |  4 ++--
+>   hw/nvram/xlnx-zynqmp-efuse.c      |  4 ++--
+>   hw/ssi/xlnx-versal-ospi.c         | 10 +++-------
+>   5 files changed, 23 insertions(+), 11 deletions(-)
 
-> On Fri, Apr 24, 2026 at 09:17:21AM +0200, Markus Armbruster wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > Currently, mgmt can only query for remaining RAM,
->> 
->> Remind me: how?
->
-> It is the same command, as mentioned in [1] below.  I'll enrich the commit
-> message here to explain.
->
->> 
->> >                                                   not system-wise remaining
->> > data.  It was not a problem before, because for a very long time RAM was
->> > the only part that matters.
->> >
->> > After VFIO migrations landed upstream, it may not be true anymore
->> > especially considering that there can be GPU devices that contain GBs of
->> > device states.
->> >
->> > Add a new "remaining" field in query-migrate results, reflecting
->> > system-wise remaining data, which will include everything (e.g. VFIO).
->> 
->> "system-wise"?  Do you mean "system-wide"?  Maybe "total"?
->
-> Since "total" has been used elsewhere, I'll use "system-wide", hoping
-> that's easier to digest.
+Thanks for the fix!
 
-Which "total" do you mean?  Perhaps MigrationStats member
-
-    # @total: total amount of bytes involved in the migration process
-
-What does this @total count?  RAM only?  If yes, the description is
-misleading and needs fixing.  Separate patch, followup fine.
-
->> > This information will be useful for mgmt to implement generic way of stall
->> > detection that covers all system resources.  Say, when system remaining
->> > data does not decrease anymore for a relatively long period of time, then
->> > it may mean that there is a challenge of converging, so mgmt can act based
->> > on how this value changes over time (especially if sampled after each
->> > migration iteration).
->> >
->> > Before this patch, "expected_downtime" almost played this role. For
->> > example, by monitoring "expected_downtime" at the beginning of each
->> > iteration can in most cases also reflect the progress of migration
->> > system-wise.  Said that, "expected_downtime" was always calculated based on
->> > a bandwidth value that can fluctuate a lot if avail-switchover-bandwidth is
->> > not used. This new "remaining" field will remove that part of uncertainty
->> > for mgmt.
->> >
->> > With the new field, HMP "info migrate" now reports this:
->> >
->> > (qemu) info migrate
->> > Status:                 active
->> > Time (ms):              total=12080, setup=14, exp_down=300
-
-"exp_down" isn't nice for humans.  I *guess* it's for "expected
-downtime".  Could use "expected_downtime=300" instead.  Not this patch's
-problem, of course.
-
->> > Remaining:              1.36 GiB        <------------------- newline
->> 
->> "Newline" is ASCI character '\n'.  I guess you mean "this is the new
->> line".
->
-> Yes.  I'll remove this "<----..." if it causes any confusion.
-
-Annotating output like you did feels just fine, only the word you chose
-makes it mildly confusing.  Perhaps
-
-     Remaining:              1.36 GiB        <--- this is the new line
-
-would be clearer.
-
->> > RAM info:
->> >   Throughput (Mbps):    840.50
->> >   Sizes:                pagesize=4 KiB, total=4.02 GiB
->> >   Transfers:            transferred=1.18 GiB, remain=1.36 GiB
->> >     Channels:           precopy=1.18 GiB, multifd=0 B, postcopy=0 B
->> >     Page Types:         normal=307923, zero=388148
->> >   Page Rates (pps):     transfer=25660
->> >   Others:               dirty_syncs=1
->> >
->> > It should be the same value as RAM's remaining report when VFIO is not
->> > involved, and it should report more than that when VFIO is involved.
->> 
->> "RAM's remaining report" is the "remain=1.36 GiB" part, isn't it?
->
-> [1]
->
-> Correct.
-
-Thanks.  Could be a bit more explicit.  Up to you.
-
->> > Cc: Markus Armbruster <armbru@redhat.com>
->> > Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
->> > Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
->> > Signed-off-by: Peter Xu <peterx@redhat.com>
->> > ---
->> >  qapi/migration.json            | 4 ++++
->> >  migration/migration-hmp-cmds.c | 5 +++++
->> >  migration/migration.c          | 7 +++++++
->> >  3 files changed, 16 insertions(+)
->> >
->> > diff --git a/qapi/migration.json b/qapi/migration.json
->> > index e3ad3f0604..a6e24b5685 100644
->> > --- a/qapi/migration.json
->> > +++ b/qapi/migration.json
->> > @@ -300,6 +300,9 @@
->> >  #     average memory load of the virtual CPU indirectly.  Note that
->> >  #     zero means guest doesn't dirty memory.  (Since 8.1)
->> >  #
->> > +# @remaining: amount of bytes remaining to be migrated system-wise,
->> > +#     includes both RAM and all devices (like VFIO).  (Since 11.1)
->> > +#
->> >  # Features:
->> >  #
->> >  # @unstable: Members @postcopy-latency, @postcopy-vcpu-latency,
->> > @@ -310,6 +313,7 @@
->> >  ##
->> >  { 'struct': 'MigrationInfo',
->> >    'data': {'*status': 'MigrationStatus', '*ram': 'MigrationRAMStats',
->> > +           '*remaining': 'uint64',
->> 
->> It's a byte count, so let's make it 'size'.
->
-> Will do.
->
-> Since this will be the last functional change so far on the whole series,
-> and the update seems to be pretty under control (say, qapi schema.py
-> generates same c code for both "size" and "uint64"),
-
-Yes, 'size' is almost exactly the same as 'uint64'.  If I remember
-correctly, the one difference is the use of visit_type_size() instead of
-visit_type_uint64().  visit_type_size() recognizes additional syntax
-with "human" visitors: qobject keyval, string input, and opts visitor.
-
->                                                      could I request an ACK
-> on this one with a short diff below, instead of reposting the whole series?
->
-> The diff attached here (I'll also fix the commit messages on
-> e.g. system-wide wordings if I'll not repost):
->
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index b7518b29c6..c701ef1cf5 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -300,7 +300,7 @@
->  #     average memory load of the virtual CPU indirectly.  Note that
->  #     zero means guest doesn't dirty memory.  (Since 8.1)
->  #
-> -# @remaining: amount of bytes remaining to be migrated system-wise,
-> +# @remaining: amount of bytes remaining to be migrated system-wide,
->  #     includes both RAM and all devices (like VFIO).  (Since 11.1)
->  #
->  # Features:
-> @@ -313,7 +313,7 @@
->  ##
->  { 'struct': 'MigrationInfo',
->    'data': {'*status': 'MigrationStatus', '*ram': 'MigrationRAMStats',
-> -           '*remaining': 'uint64',
-> +           '*remaining': 'size',
->             '*vfio': 'VfioStats',
->             '*xbzrle-cache': 'XBZRLECacheStats',
->             '*total-time': 'int',
->
-> ===8<====
->
-> The complete new version of patch is here (I updated quite a few places on
-> the commit message):
->
-> https://gitlab.com/peterx/qemu/-/commit/86d973360890cecc564a4a5bcf9a01b9efde368a
->
-> Thanks,
-
-I read the commit message.  No surprises except
-
-    It should be the same value as RAM's remaining report when VFIO is not
-    involved, and it should report more than that when VFIO is involved.
-
-    One note is that this field will be an estimate and may not be sampled the
-    exact same time versus the RAM remaining section.  So it may report
-    slightly different values even if only RAM is involved.  The difference
-    shouldn't matter though to mgmt to make correct decisions.
-
-The second paragraph is new.  The first paragraph says they "should be
-the same", the second that they "may [be] slightly different".
-Suboptimal.
-
-Here's my try:
-
-    It should be approximately the same value ...
-
-    Only approximately, because this field will be ...
-
-It's just a commit message, though.  Up to you.
-
-QAPI schema
-Acked-by: Markus Armbruster <armbru@redhat.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
 
 
