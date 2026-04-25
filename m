@@ -4,96 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4ADA1FF885C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 13:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F089CFF885C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 13:30:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGcuQ-0007OY-1r; Sat, 25 Apr 2026 09:18:58 -0400
+	id 1wGd4s-0006JP-H8; Sat, 25 Apr 2026 09:29:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wGcuC-00079p-QL
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 09:18:45 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1wGcuB-0000EL-BP
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 09:18:44 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-82f8892d4d6so3835835b3a.0
- for <qemu-devel@nongnu.org>; Sat, 25 Apr 2026 06:18:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777123120; x=1777727920; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3ojdWe8DEiJvFMFhtT9VbXuuzewxCBF2+DB34sWnmVg=;
- b=cRuOi+NS3nAzEd0zFrCYoRkvgb8med0693MCPR0E9UEv2r406axRZv/pD28mt4D2Ci
- ECsKBQGoNLyHbhSK+yVNBmf2+aifBp9l+ZUaUxdWm/rZNmppYYhYS2Zk+KjioMaeIFde
- xWeG28YWdIKEK7SJAw9ABrzFxGLwZ8pUu3ffmJdP110L1YxUg/8ZviX/n6JpuO2iLFLQ
- DDs0mqS9WVh4OFxVvHBoZQwqLDDg6FyTOFTo7W8jkbVME2jaselv8gHazHPSdnOL2ikz
- Zy6eYyyxieJ5VyxLLp3QoBxesd6jDoIUeyzurTp3cCC9utePfmBeJ2bwtJXS2u+Scp5/
- M9Dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777123120; x=1777727920;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3ojdWe8DEiJvFMFhtT9VbXuuzewxCBF2+DB34sWnmVg=;
- b=SqZH7YUpgFx1/6lcIERWeBezrJJ0GgcTalg5i71IHabrUZ/eICrFd4nQPGd1f7eI5Q
- WiA/Jm6zoahZC4Q6dS3PChHur8cILdvPAswSnv7p/FcaS9T75UaheaVU5V6M979JI0rB
- Z6ooM7bL6Hq419v0bWRKVbdwkg2Bfx85Oh82cenAbxgs1LUXSWuNI06v5YGtftJD/Mgr
- awduC9a/us300rmXala8h4PBo7O/aQd1q6Hp3HxCO9w4vLKevW3O9B3M/414p5ewEiZJ
- aKyUVLL3Gcj4MOAzb9DxrM2DLcWhWKiuVNCsmY7wylgLZvWTnUzVijWU79kvIiE2acdx
- uOYw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/2/cmKNFSOzLNMkEMuqQabtuOiOZu80C4tNIKdGh7Ynitc01Za2Xmr0dMbkHH7n86heuK+h2taYd7G@nongnu.org
-X-Gm-Message-State: AOJu0Yy2oeu4U2gOO0+KPEck1EkLBVKEOKuE3GlNQgJo5bPNvdgLBNze
- wJHPl+5aUwazlcIjxZZmzDJHDW1bY4DBfUZfT3oO22VH0ouxkktUEZJA
-X-Gm-Gg: AeBDieuTKOb4BcUiO8K0qkJ88VfTEgaNDLFeD8Cytvk1yR2W+ed5cW79zHr+tVgMEvZ
- 6f6m69VZr3UwKaAopf/sUHotRc45U40fOs5KPA0os3TrUsGuBftWFcK/kxixSZ8vU6z2UkJd5ev
- yvwr2cCvLXS+OmnyhOjyMvi6b55npwy/dC+Sprt5WixPElnYddKbNGGCOzIfNW5w3ZppNaJB8/g
- gqcJ/YE6weEMFBukhKxhij6zY/7/D+BGQxQdTzeXMAP85eMyEUJ7nDzreNgajHHEwpUGMlSRhPo
- AHwv43Tew1b4SYRJxRMeUcSVP5VOlJHH1aBDeHSiqnHLD8eopYOA6BTByr5XtotZIMmnlsPf0AI
- LnsbmJvV6xiqEHw//gY3tqHz+Jnkgedv5nxv3JqyaUVMFVTb37Vws3hOqrqhjaWhnDYwvTJkG19
- iUlWa0YT0FZmZ/5m+YpA1QLFOKTBMjeXSui5fDE5dCfdCQnK2QnDWU5pubSjE79NtZLg7pL2n7/
- 2I02vlUpW2oOM+PSvwPQhLluydNhvyv
-X-Received: by 2002:a05:6a00:bb84:b0:82f:1d38:f693 with SMTP id
- d2e1a72fcca58-82f8c8e0f98mr36573368b3a.35.1777123120371; 
- Sat, 25 Apr 2026 06:18:40 -0700 (PDT)
-Received: from donnager-debian.. ([45.124.203.19])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82f8e9f7735sm26898866b3a.21.2026.04.25.06.18.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 25 Apr 2026 06:18:39 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Chao Liu <chao.liu.zevorn@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v4 08/13] target/riscv: tt-ascalon: Enable Svadu by removing
- Svade
-Date: Sat, 25 Apr 2026 23:17:14 +1000
-Message-ID: <20260425131721.932250-9-joel@jms.id.au>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260425131721.932250-1-joel@jms.id.au>
-References: <20260425131721.932250-1-joel@jms.id.au>
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wGd4j-0006J9-LK
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 09:29:39 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1wGd4h-0003lT-QA
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 09:29:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=pbB/29eORXBUy7oT1d4HmyVaXCPX+4ZkEIWYyYq8G8Q=; b=hL9lyOd8w1jSpAhE
+ ypzW2yqM7+mNhL8gd2W9fy8aPQmbVySS6ITFoJNTut2bScbIdFRR9yaGjrcWgduwUcePRoQvPfv/c
+ NaVtbIwHLtIFfXuR/lB8D2k4rwnHJdnhYd2klFjhG5tgXx4ohMw+dPYVqqgrUHekojEbrxRDgPAYG
+ c8smsUbutOoiaFaRhr5PiePhL8iS7hW4saMEJPrxlXxn9MBd2sYeGXxlM7YxM9BY+sdfXroaekIs/
+ xh6ySeNUM/M8W9hhBORYB8iY5swd/dd5IEPy2Gn8Eo6bK998cXMlXt66Bops+6WfNoZVl4sdpZaX0
+ 6DgT9LjSeNlqmpppBg==;
+Received: from dg by mx.treblig.org with local (Exim 4.98.2)
+ (envelope-from <dg@treblig.org>) id 1wGd4b-0000000AiUt-3ziF;
+ Sat, 25 Apr 2026 13:29:29 +0000
+Date: Sat, 25 Apr 2026 13:29:29 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: AlanoSong@163.com
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
+Subject: Re: [PATCH v2 1/1] monitor: Add `clear` command
+Message-ID: <aezBuTRxnq90ClOg@gallifrey>
+References: <20260425125113.37341-1-AlanoSong@163.com>
+ <20260425125113.37341-2-AlanoSong@163.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=joel.stan@gmail.com; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <20260425125113.37341-2-AlanoSong@163.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.12.74+deb13+1-amd64 (x86_64)
+X-Uptime: 13:29:19 up 43 days, 14:42,  2 users,  load average: 0.02, 0.02, 0.00
+User-Agent: Mutt/2.2.13 (2024-03-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,32 +69,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+* AlanoSong@163.com (AlanoSong@163.com) wrote:
+> The monitor screen can be cluttered after executing commands
+> like `info qtree`. It is useful to have a command to clear
+> current screen, just like linux `clear` command do.
+> 
+> This patch has been tested under monitors using stdio, vc,
+> tcp socket, unix socket and serial interfaces.
+> 
+> Signed-off-by: Alano Song <AlanoSong@163.com>
 
-Ascalon supports Svadu (hardware A/D bit updates).
+Thanks for fixing that.
 
-QEMU makes Svadu and Svade mutually exclusive, remove Svade so
-Ascalon comes up with Svadu working.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- target/riscv/cpu.c | 1 -
- 1 file changed, 1 deletion(-)
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 69649462dd89..97e35672649e 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -3204,7 +3204,6 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.ext_ssaia = true,
-         .cfg.ext_sscofpmf = true,
-         .cfg.ext_sstc = true,
--        .cfg.ext_svade = true,
-         .cfg.ext_svinval = true,
-         .cfg.ext_svnapot = true,
-         .cfg.ext_svpbmt = true,
+> ---
+>  hmp-commands.hx       | 14 ++++++++++++++
+>  include/monitor/hmp.h |  1 +
+>  monitor/hmp-cmds.c    | 11 +++++++++++
+>  3 files changed, 26 insertions(+)
+> 
+> diff --git a/hmp-commands.hx b/hmp-commands.hx
+> index 5cc4788f12..95f9166732 100644
+> --- a/hmp-commands.hx
+> +++ b/hmp-commands.hx
+> @@ -20,6 +20,20 @@ SRST
+>    Show the help for all commands or just for command *cmd*.
+>  ERST
+>  
+> +    {
+> +        .name       = "clear",
+> +        .args_type  = "",
+> +        .params     = "",
+> +        .help       = "clear the monitor screen",
+> +        .cmd        = hmp_clear,
+> +        .flags      = "p",
+> +    },
+> +
+> +SRST
+> +``clear``
+> +  Clear the monitor screen.
+> +ERST
+> +
+>      {
+>          .name       = "commit",
+>          .args_type  = "device:B",
+> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+> index e222bea60c..9b66458d21 100644
+> --- a/include/monitor/hmp.h
+> +++ b/include/monitor/hmp.h
+> @@ -165,6 +165,7 @@ void hmp_trace_event(Monitor *mon, const QDict *qdict);
+>  void hmp_trace_file(Monitor *mon, const QDict *qdict);
+>  void hmp_info_trace_events(Monitor *mon, const QDict *qdict);
+>  void hmp_help(Monitor *mon, const QDict *qdict);
+> +void hmp_clear(Monitor *mon, const QDict *qdict);
+>  void hmp_info_help(Monitor *mon, const QDict *qdict);
+>  void hmp_info_sync_profile(Monitor *mon, const QDict *qdict);
+>  void hmp_info_history(Monitor *mon, const QDict *qdict);
+> diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
+> index bc26b39d70..608a208c6e 100644
+> --- a/monitor/hmp-cmds.c
+> +++ b/monitor/hmp-cmds.c
+> @@ -218,6 +218,17 @@ void hmp_help(Monitor *mon, const QDict *qdict)
+>      hmp_help_cmd(mon, qdict_get_try_str(qdict, "name"));
+>  }
+>  
+> +void hmp_clear(Monitor *mon, const QDict *qdict)
+> +{
+> +    /*
+> +     * Send an ANSI escape sequence:
+> +     * "\x1b[H" - move cursor to top-left
+> +     * "\x1b[2J" - clear visible screen
+> +     * "\x1b[3J" - clear scrollback
+> +     */
+> +    monitor_printf(mon, "\x1b[H\x1b[2J\x1b[3J");
+> +}
+> +
+>  void hmp_info_help(Monitor *mon, const QDict *qdict)
+>  {
+>      hmp_help_cmd(mon, "info");
+> -- 
+> 2.43.0
+> 
 -- 
-2.47.3
-
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
