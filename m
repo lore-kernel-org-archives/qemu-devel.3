@@ -4,71 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5086EFF885A
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 20:01:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E26E9FF885A
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 21:00:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGjAI-0004WQ-97; Sat, 25 Apr 2026 15:59:46 -0400
+	id 1wGk6I-00075F-DU; Sat, 25 Apr 2026 16:59:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wGjAG-0004VX-9Y
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 15:59:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGk6G-00074i-C2
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 16:59:40 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wGjAE-0002cj-V9
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 15:59:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777147182;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3J5E0YwHOY3wnrKn/YdTD3hwdUSB/RcCwBdbi4No7qI=;
- b=EH755rRrd3Cq1zjZTojOo3tFlJgZnSossDKkkZEI9iUQtFqM9qivSmQNJ1Tg1Jgexb4xCa
- jmTHAHMJEW0E1FXyCCTn97mih6DZBl/GCBNBFmSpPnPEmlBgJ0/LXfSyVaauQ6Ja61WPKk
- pCMSa6crHpfeHmrabEYNHGwGkPV2WXk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-328-Xy0pPmluOrW_ckV3pGcwjQ-1; Sat,
- 25 Apr 2026 15:59:40 -0400
-X-MC-Unique: Xy0pPmluOrW_ckV3pGcwjQ-1
-X-Mimecast-MFC-AGG-ID: Xy0pPmluOrW_ckV3pGcwjQ_1777147179
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CD6F0195608B; Sat, 25 Apr 2026 19:59:38 +0000 (UTC)
-Received: from localhost (unknown [10.44.32.15])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 05B851800351; Sat, 25 Apr 2026 19:59:37 +0000 (UTC)
-Date: Sat, 25 Apr 2026 12:59:07 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL v4 00/62] Misc HW patches for 2026-04-22
-Message-ID: <20260425165907.GA144177@fedora>
-References: <20260424192543.22614-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGk6E-0006SV-S3
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 16:59:40 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by tor.source.kernel.org (Postfix) with ESMTP id 0BDC660055;
+ Sat, 25 Apr 2026 20:59:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0212C2BCB0;
+ Sat, 25 Apr 2026 20:59:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1777150776;
+ bh=Q/iXGdIHYdJNB8woaida8AHWG6igtbbz4i/W4/TIG+0=;
+ h=From:To:Cc:Subject:Date:From;
+ b=etqrZiRR2iRDOTlzTXfdQWu1A6PPFkj0XJe49zkVIGf3LD4O5lxgzanKI7/BXz7tx
+ 1CEk+XntnCZvdnPUrxT3qB35gFcTAQ4N+O81wRPdqtxBNrfPM6X1PFMtDYo4qNRdd0
+ Ll5wYZ9Vaz1rtPg4f+eNJ+kh87Fpdu+D81TRfgI3TcqWVG0fe45OHY7G/RVkvtQenz
+ PiEIbbnMxVpO9JPdDfkq1d0EbbHjK8tHq6vrzDv6bxqmmAtQVixaxKd8dd7xdIKmjd
+ wJl9uxUfz3AIw7uQVkjXktewybcSVmjdAA9VO2Sxd9EOo27fW2ej/v+2Y7Fd0TI7Oh
+ IsU5+DU/UGTTg==
+From: Helge Deller <deller@kernel.org>
+To: qemu-devel@nongnu.org
+Cc: deller@gmx.de
+Subject: [PATCH] linux-user: Add missing CDROM ioctls
+Date: Sat, 25 Apr 2026 22:59:32 +0200
+Message-ID: <20260425205932.176330-1-deller@kernel.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="bI90uyPQ/ye1UTUl"
-Content-Disposition: inline
-In-Reply-To: <20260424192543.22614-1-philmd@linaro.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -4
-X-Spam_score: -0.5
-X-Spam_bar: /
-X-Spam_report: (-0.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
- DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_75_100=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,30 +66,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Helge Deller <deller@gmx.de>
 
---bI90uyPQ/ye1UTUl
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Add the missing CDROM ioctls and bring them in same order as
+documentation.
 
-Applied, thanks.
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ linux-user/ioctls.h | 29 +++++++++++++++++------------
+ 1 file changed, 17 insertions(+), 12 deletions(-)
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
-
---bI90uyPQ/ye1UTUl
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmns8toACgkQnKSrs4Gr
-c8hq3ggAxJjVnY765x7sA0iQbLetioQ5WrSJoafy1osPnuSPqKPPpMvjjligtZdu
-ItJrz7vyJj9uwHZNYN+kuA3rK3/yZRO98WAIYa1c2GT5eacf+93JhTbTiooq/aPo
-kLZa2tYL48z3Dr7vyB2fLkHGbtoOOAi9gzw6s/pRExzQF2jSvbRpwV8059IB2pCc
-jRsbtJ6ez4l3s4OVoy1aYG7wKm7ZhjM9TzwAIX8OWimwm16TYq5pk0/Qrh7otKjp
-Zwka6I5ny9b0l9dZtqzp+6UxmZXHtAcLg4nEG7fsaDijKYYiO6JwX88N0/QbL1c5
-UUWUGP48d28+Uf7pJz1J8elX/SQvtQ==
-=MerT
------END PGP SIGNATURE-----
-
---bI90uyPQ/ye1UTUl--
+diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
+index 5b7d00e92f..aa485ee6e5 100644
+--- a/linux-user/ioctls.h
++++ b/linux-user/ioctls.h
+@@ -416,19 +416,18 @@
+ #endif
+ 
+   IOCTL(CDROMPAUSE, 0, TYPE_NULL)
+-  IOCTL(CDROMSTART, 0, TYPE_NULL)
+-  IOCTL(CDROMSTOP, 0, TYPE_NULL)
+   IOCTL(CDROMRESUME, 0, TYPE_NULL)
+-  IOCTL(CDROMEJECT, 0, TYPE_NULL)
+-  IOCTL(CDROMEJECT_SW, 0, TYPE_INT)
+-  IOCTL(CDROMCLOSETRAY, 0, TYPE_NULL)
+-  IOCTL(CDROMRESET, 0, TYPE_NULL)
+   IOCTL(CDROMPLAYMSF, IOC_W, MK_PTR(TYPE_INT))
+   IOCTL(CDROMPLAYTRKIND, IOC_W, MK_PTR(TYPE_INT))
+   IOCTL(CDROMREADTOCHDR, IOC_R, MK_PTR(TYPE_INT))
+   IOCTL(CDROMREADTOCENTRY, IOC_RW, MK_PTR(TYPE_INT))
++  IOCTL(CDROMSTOP, 0, TYPE_NULL)
++  IOCTL(CDROMSTART, 0, TYPE_NULL)
++  IOCTL(CDROMEJECT, 0, TYPE_NULL)
+   IOCTL(CDROMVOLCTRL, IOC_W, MK_PTR(TYPE_INT))
+   IOCTL(CDROMSUBCHNL, IOC_RW, MK_PTR(TYPE_INT))
++  IOCTL(CDROMEJECT_SW, IOC_W, TYPE_INT)
++  IOCTL(CDROMRESET, 0, TYPE_NULL)
+   /* XXX: incorrect (need specific handling) */
+   IOCTL(CDROMREADAUDIO, IOC_W, MK_PTR(MK_STRUCT(STRUCT_cdrom_read_audio)))
+   IOCTL(CDROMREADCOOKED, IOC_RW, MK_PTR(TYPE_INT))
+@@ -438,16 +437,22 @@
+   IOCTL(CDROMREADALL, IOC_RW, MK_PTR(TYPE_INT))
+   IOCTL(CDROMMULTISESSION, IOC_RW, MK_PTR(TYPE_INT))
+   IOCTL(CDROM_GET_UPC, IOC_R, MK_PTR(TYPE_INT))
++  IOCTL(CDROM_LAST_WRITTEN, IOC_R, MK_PTR(TYPE_LONG))
+   IOCTL(CDROMVOLREAD, IOC_R, MK_PTR(TYPE_INT))
+   IOCTL(CDROMSEEK, IOC_W, MK_PTR(TYPE_INT))
+   IOCTL(CDROMPLAYBLK, IOC_W, MK_PTR(TYPE_INT))
+-  IOCTL(CDROM_MEDIA_CHANGED, 0, TYPE_NULL)
+-  IOCTL(CDROM_SET_OPTIONS, 0, TYPE_INT)
+-  IOCTL(CDROM_CLEAR_OPTIONS, 0, TYPE_INT)
+-  IOCTL(CDROM_SELECT_SPEED, 0, TYPE_INT)
+-  IOCTL(CDROM_SELECT_DISC, 0, TYPE_INT)
+-  IOCTL(CDROM_DRIVE_STATUS, 0, TYPE_NULL)
++  IOCTL(CDROMCLOSETRAY, 0, TYPE_NULL)
++  IOCTL(CDROM_SET_OPTIONS, IOC_W, TYPE_INT)
++  IOCTL(CDROM_CLEAR_OPTIONS, IOC_W, TYPE_INT)
++  IOCTL(CDROM_SELECT_SPEED, IOC_W, TYPE_INT)
++  IOCTL(CDROM_SELECT_DISC, IOC_W, TYPE_INT)
++  IOCTL(CDROM_MEDIA_CHANGED, IOC_W, TYPE_INT)
++  IOCTL(CDROM_DRIVE_STATUS, IOC_W, TYPE_INT)
+   IOCTL(CDROM_DISC_STATUS, 0, TYPE_NULL)
++  IOCTL(CDROM_CHANGER_NSLOTS, 0, TYPE_NULL)
++  IOCTL(CDROM_LOCKDOOR, IOC_W, TYPE_INT)
++  IOCTL(CDROM_DEBUG, IOC_W, TYPE_INT)
++  IOCTL(CDROM_GET_CAPABILITY, 0, TYPE_NULL)
+   IOCTL(CDROMAUDIOBUFSIZ, 0, TYPE_INT)
+ 
+ #if 0
+-- 
+2.53.0
 
 
