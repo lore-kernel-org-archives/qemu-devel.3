@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B4CEFF885C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 15:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42600FF8860
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 15:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGfIs-0008Lk-Ex; Sat, 25 Apr 2026 11:52:22 -0400
+	id 1wGfIn-00086g-DN; Sat, 25 Apr 2026 11:52:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIX-00081E-To
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:04 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIV-00080g-Id
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:00 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIW-00014i-8s
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:01 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIS-00012S-Eh
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:51:59 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 5A3F5600AE;
- Sat, 25 Apr 2026 15:51:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3326C2BCB0;
- Sat, 25 Apr 2026 15:51:57 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id BF9F36011F;
+ Sat, 25 Apr 2026 15:51:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12733C2BCB0;
+ Sat, 25 Apr 2026 15:51:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777132319;
- bh=ZCgbefl3znT//LnX5C+F02YXGLn7Vtw2haVvLrZdTz0=;
+ s=k20201202; t=1777132313;
+ bh=QIFtf3dqQlSgmjSkVvwlhh3G2J8OJkshPhuv1bYI+XA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=mRw2oF8uSH0zjRPXG4XK9EQXZHrPQSjX7RTnD1M3w5fwPKAMhEOpzIip/KZwOLgX4
- 4+8vV/sFJruvkp8JTUTBIgtmWY6q6E/QgSHkPBzJDYuH9w2kvMHiYK5bA9knmyTp+w
- LTdxO3FYmb4rDPiyUZSp8qx9B12GgohGXr0RKwAHAPug64Zt54DjQ7/R/atvpBsjO8
- Y096AHkKWlnSVscZPI+TlkBfyqrNyQXIBq+xIqW3e0JeciufYOEn3CGU3MQAnUO8zO
- KS4gX64pDiB3zfBdGCG07Bm5oybkfQlpLqx8nUJZgs54Ow5axUpaW5X6MgcKP4s1Se
- LigpZSBxZp33A==
+ b=W/wXxi6GPNWlBF2vwGQ2mInU1zcNbHELKUz6F3mGR1p0e+ahF3jPQQAL3oKx1YxdW
+ aCvwjSckA4E00F52MBoKAwA1yaEORWNZ5WrC2i8CgS3RWiv9GcoE7FEqMDKGQx8cKF
+ mJQW3iuEAC7JV4xqTDsVvNE+1ZpnZOVzPTX0AC8goFTLf+qohYN993xKhortbQAqMm
+ LrLbyafmspdR4834ChsCYXFFTpxHW1GDFED7JbnCpA3bk88c01W0kRenhGAEfwMTlQ
+ AZ54t0MaOvsgubvg8d7JW4e+lWjtlB9+kuVI69g19WtGFD0OcyWIpRymiGuxf807Hc
+ ttMGGAgMXHFpA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 08/14] linux-user/mips: sync k0 TLS for EF_MIPS_MACH_OCTEON
- userlands
-Date: Sat, 25 Apr 2026 17:51:34 +0200
-Message-ID: <20260425155140.50186-9-deller@kernel.org>
+Subject: [PULL 05/14] linux-user/arm/nwfpe: Replace user_registers with
+ current_cpu
+Date: Sat, 25 Apr 2026 17:51:31 +0200
+Message-ID: <20260425155140.50186-6-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260425155140.50186-1-deller@kernel.org>
 References: <20260425155140.50186-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,88 +72,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Cavium Octeon userspace is not following a generic MIPS Linux TLS
-ABI rule here. Older Octeon glibc uses the k0 register as the fast
-thread pointer, while newer Octeon2 and Octeon3 glibc variants use
-the normal rdhwr $29 path.
+Use the thread-local variable current_cpu instead of
+a global variable to access the general registers.
+This also means we don't need to pass env to EmulateAll.
 
-linux-user already updates CP0_UserLocal for cpu_set_tls() and
-TARGET_NR_set_thread_area, but it does not keep gpr[26]
-synchronized. That leaves EF_MIPS_MACH_OCTEON userlands able to
-complete set_thread_area() and still reach pthread startup or
-pthread_self() with a stale k0 value.
-
-Use the existing MIPS ELF machine flags from linux-user/elfload.c and
-mirror CP0_UserLocal into gpr[26] only for EF_MIPS_MACH_OCTEON.
-
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/elfload.c         | 3 +++
- linux-user/mips/target_cpu.h | 5 +++++
- linux-user/qemu.h            | 1 +
- linux-user/syscall.c         | 2 +-
- 4 files changed, 10 insertions(+), 1 deletion(-)
+ linux-user/arm/cpu_loop.c    |  2 +-
+ linux-user/arm/nwfpe/fpa11.c |  9 +--------
+ linux-user/arm/nwfpe/fpa11.h | 23 +++++++----------------
+ 3 files changed, 9 insertions(+), 25 deletions(-)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 59b543f740..0e757787d2 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -1476,6 +1476,9 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-     /* Usual start for brk is after all sections of the main executable. */
-     info->brk = TARGET_PAGE_ALIGN(hiaddr + load_bias);
-     info->elf_flags = ehdr->e_flags;
-+#ifdef TARGET_MIPS
-+    info->use_k0_tls = (ehdr->e_flags & EF_MIPS_MACH) == EF_MIPS_MACH_OCTEON;
-+#endif
- 
-     prot_exec = PROT_EXEC;
- #ifdef TARGET_AARCH64
-diff --git a/linux-user/mips/target_cpu.h b/linux-user/mips/target_cpu.h
-index c375616c55..2bbd0a81c5 100644
---- a/linux-user/mips/target_cpu.h
-+++ b/linux-user/mips/target_cpu.h
-@@ -35,7 +35,12 @@ static inline void cpu_clone_regs_parent(CPUMIPSState *env, unsigned flags)
- 
- static inline void cpu_set_tls(CPUMIPSState *env, target_ulong newtls)
+diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
+index 19874f4c72..262ab5cc41 100644
+--- a/linux-user/arm/cpu_loop.c
++++ b/linux-user/arm/cpu_loop.c
+@@ -215,7 +215,7 @@ static bool insn_is_linux_bkpt(uint32_t opcode, bool is_thumb)
+ static bool emulate_arm_fpa11(CPUARMState *env, uint32_t opcode)
  {
-+    TaskState *ts = get_task_state(env_cpu(env));
-+
-     env->active_tc.CP0_UserLocal = newtls;
-+    if (ts->info->use_k0_tls) {
-+        env->active_tc.gpr[26] = newtls;
-+    }
+     TaskState *ts = get_task_state(env_cpu(env));
+-    int rc = EmulateAll(opcode, &ts->fpa, env);
++    int rc = EmulateAll(opcode, &ts->fpa);
+     int raise, enabled;
+ 
+     if (rc == 0) {
+diff --git a/linux-user/arm/nwfpe/fpa11.c b/linux-user/arm/nwfpe/fpa11.c
+index 0f1afbd91d..44783934b2 100644
+--- a/linux-user/arm/nwfpe/fpa11.c
++++ b/linux-user/arm/nwfpe/fpa11.c
+@@ -30,7 +30,6 @@
+ 
+ 
+ FPA11* qemufpa = NULL;
+-CPUARMState* user_registers;
+ 
+ /* Reset the FPA11 chip.  Called to initialize and reset the emulator. */
+ void resetFPA11(void)
+@@ -156,7 +155,7 @@ void SetRoundingPrecision(const unsigned int opcode)
+ 
+ /* Emulate the instruction in the opcode. */
+ /* ??? This is not thread safe.  */
+-unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa, CPUARMState* qregs)
++unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa)
+ {
+   unsigned int nRc = 0;
+ //  unsigned long flags;
+@@ -173,12 +172,6 @@ unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa, CPUARMState* qregs)
+   }
+ 
+   qemufpa=qfpa;
+-  user_registers=qregs;
+-
+-#if 0
+-  fprintf(stderr,"emulating FP insn 0x%08x, PC=0x%08x\n",
+-          opcode, qregs[ARM_REG_PC]);
+-#endif
+   fpa11 = GET_FPA11();
+ 
+   if (fpa11->initflag == 0)		/* good place for __builtin_expect */
+diff --git a/linux-user/arm/nwfpe/fpa11.h b/linux-user/arm/nwfpe/fpa11.h
+index d459c5da02..20f9d2eb81 100644
+--- a/linux-user/arm/nwfpe/fpa11.h
++++ b/linux-user/arm/nwfpe/fpa11.h
+@@ -25,15 +25,6 @@
+ 
+ #define GET_FPA11() (qemufpa)
+ 
+-/*
+- * The processes registers are always at the very top of the 8K
+- * stack+task struct.  Use the same method as 'current' uses to
+- * reach them.
+- */
+-extern CPUARMState *user_registers;
+-
+-#define GET_USERREG() (user_registers)
+-
+ /* Need task_struct */
+ //#include <linux/sched.h>
+ 
+@@ -91,25 +82,25 @@ void SetRoundingPrecision(const unsigned int);
+ 
+ static inline unsigned int readRegister(unsigned int reg)
+ {
+-    return (user_registers->regs[(reg)]);
++    CPUARMState *env = cpu_env(current_cpu);
++    return env->regs[reg];
  }
  
- static inline abi_ulong get_sp_from_cpustate(CPUMIPSState *state)
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index cfe5f45fc4..7f98fb2607 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -65,6 +65,7 @@ struct image_info {
-         uint32_t        note_flags;
+ static inline void writeRegister(unsigned int x, unsigned int y)
+ {
+-#if 0
+-	printf("writing %d to r%d\n",y,x);
+-#endif
+-        user_registers->regs[(x)]=(y);
++    CPUARMState *env = cpu_env(current_cpu);
++    env->regs[x] = y;
+ }
  
- #ifdef TARGET_MIPS
-+        bool            use_k0_tls;
-         int             fp_abi;
-         int             interp_fp_abi;
- #endif
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index f4b74ad350..8e96cc26db 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -13216,7 +13216,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
- #ifdef TARGET_NR_set_thread_area
-     case TARGET_NR_set_thread_area:
- #if defined(TARGET_MIPS)
--      cpu_env->active_tc.CP0_UserLocal = arg1;
-+      cpu_set_tls(cpu_env, arg1);
-       return 0;
- #elif defined(TARGET_I386) && defined(TARGET_ABI32)
-       return do_set_thread_area(cpu_env, arg1);
+ static inline void writeConditionCodes(unsigned int x)
+ {
+-    cpsr_write(user_registers, x, CPSR_NZCV, CPSRWriteByInstr);
++    CPUARMState *env = cpu_env(current_cpu);
++    cpsr_write(env, x, CPSR_NZCV, CPSRWriteByInstr);
+ }
+ 
+ #define ARM_REG_PC 15
+ 
+-unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa, CPUARMState* qregs);
++unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa);
+ 
+ unsigned int EmulateCPDO(const unsigned int);
+ unsigned int EmulateCPDT(const unsigned int);
 -- 
 2.53.0
 
