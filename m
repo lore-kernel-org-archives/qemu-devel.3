@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3F81FF885D
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 09:54:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA39EFF885D
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 10:08:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGZi0-0002wW-BB; Sat, 25 Apr 2026 05:53:56 -0400
+	id 1wGZvW-0001T7-0B; Sat, 25 Apr 2026 06:07:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
- id 1wGZhy-0002vm-BD
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 05:53:54 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGZvM-0001Se-J6
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 06:07:46 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
- id 1wGZhv-0002B9-R4
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 05:53:53 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-43d734223e4so5901072f8f.0
- for <qemu-devel@nongnu.org>; Sat, 25 Apr 2026 02:53:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wGZvH-0006KW-4T
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 06:07:42 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-488a8ca4aadso118790355e9.3
+ for <qemu-devel@nongnu.org>; Sat, 25 Apr 2026 03:07:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777110830; x=1777715630; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=/dB9Jl1UuY5f333X9zTcSj/D8VVe4daYWJBNZAwS8QI=;
- b=XH251KxSkJt5l4cS9OuzkjaCGXG4P4EVJVvXIBKdgWoPdIgP8uVfJZHJ33Fe2NbGnH
- EdPnQCekERzS8bYSl5b6A4XoVD+Z+Xuv78cZ8vertP5FNJqN9aVpn670CJ7EFhIRClmO
- KwMPJLKJgnVNSZYsu/W8jmk4u3j/HMFw6OnIW/Y4K5kIN1IoskWWd2pWubL0ufwo/3uA
- cYoHNJ+Uq2rpHS4C43frve5xLXKj6WCx/ehaZwQWukwM+xUEyuqenoUyc1vZAgmgQIcI
- RNH+nsa3r0aTiBFO9I+VkHaDwjBWUeO8zCALbIID6Ajz+Qco7wE/CSG8x+ZoRhHATDYb
- f+hw==
+ d=linaro.org; s=google; t=1777111657; x=1777716457; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ftWR5yxI/cTgKcnDYnZASKJgqwKT+6x8D5x68NmmD4s=;
+ b=fEY/vxCOKReT/ICgFuIMsXuC8ruCWjV1LZB354Y5NeAFrHjnOSgfL+1oZYkS/5VKqA
+ q5spHCJ0ktgkj+TqG1jyWED15oNKojvyLkfqEPJvuG+WGIEIeXUYi0bb+w8UJs6sDaX2
+ Fv6quuKyLUnhsZFQf5lkLsot/SjSSt1v7nz4dUoT9P+s6ZMH1/VnMWBHav+UxXU1A+qu
+ a9SNg1W3Zfa22YXkJ18oZu4JzjvpjBtJX5EV/R4zWfFSY0hiPags5LAAuR/KJjbRJBrA
+ 3HUoLju6uh9hB9c+ZQ7mnxvw/2t1IvZcvluENBBBfzJgHwoS6Nhdd2kaEX4PS+fj701I
+ G3UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777110830; x=1777715630;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=/dB9Jl1UuY5f333X9zTcSj/D8VVe4daYWJBNZAwS8QI=;
- b=a6VnKjGOLR4eId2LinwHbjzKpF3F2Pe0ZfRFB6sMwOqGSZEGDvCtrDJLPD8V17/UfE
- brYL1R9XV7J3ID/gX6L9dIohTDnt41dIHAvbsprfSbopStO+Fggd8/actN4bU15TJ6XJ
- xyHvnT8MWMZfNLbWFLgjKFZb4pxn8nDuTNwKq/nsNfsaYf2e2EbDDUgiY0THzHRUu7GS
- 2RJhCCWMuzqKJfGeYQSCa1x7DiPGYEyUrvzWIBjZA1rSTC88cvWnS0iy+pk/CAlA/fDe
- MrPymnyCQApd/GuUJOzU+hNKSEahT1JqOzmBcMLVGS3B0VD08jaKn+OU+LIW0A73Xv7D
- Vmig==
-X-Gm-Message-State: AOJu0YyaWr7Gyr8ylABMEdw45dyGDI2YHsTcw2x/sIzruseZWXvgvGVt
- u6bNUvavGz4koaCccWAFvOuAPt7OeeQkGtHooL+f9XKPKTZ4G9KdOU1TFNdkQnFfCIo=
-X-Gm-Gg: AeBDiev8qiAS4uFAx4aElIkdJdDSR13jnAHLcBIfxahf4yUtZw8FmnX4sAyaINvzwsV
- 5v/0vpqVWW45FtTbMwrBLH44LjPwO+aUjvF2alOuUEqdXCxu+QSS/FSxVo9sJD8MqJkQckuDV6q
- QiHpPCi2OhNKtrOgVWK7QSPq6c/UwcsZzDZqj7qszC/c7B4BpZjxDtngTLcbwosISpn3rq+Wzch
- OCA5yCJwCYlooKh/rQZxxb5Unu4zOHsNWhh/4OruZpXpyzHXX3j/nAzVKxIvVk5PqhwTlP49PrZ
- ImXZdYH5EUkTXjHkDeoy7ApbRtlqoo0WVZzZgMFQ2oAluRIXE+5RcWGDOD14XD+GtrAqrzDprZz
- MDgnHw0pEKAVCJHaS49ZfJ7JOfznd4uLuDPk6vd+k1g0hC+2bj2ulOPBrwAFO0QddmZo9VDCa9k
- Aq9HcB30jVtQlTIKr3237nb56MLdf9GDlWX4fCAUw=
-X-Received: by 2002:a05:6000:4550:b0:441:37b5:d788 with SMTP id
- ffacd0b85a97d-44137b5d7c1mr2669049f8f.8.1777110830202; 
- Sat, 25 Apr 2026 02:53:50 -0700 (PDT)
-Received: from [192.168.0.10] ([2a03:ab00:1000:1b60:331a:b316:78f6:effc])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cc0d51sm67574574f8f.10.2026.04.25.02.53.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 25 Apr 2026 02:53:48 -0700 (PDT)
-From: =?utf-8?q?Jind=C5=99ich_Makovi=C4=8Dka?= <makovick@gmail.com>
-Date: Sat, 25 Apr 2026 11:53:41 +0200
-Subject: [PATCH v2 2/2] ui/gtk: Keep GTK clipboard enabled
+ d=1e100.net; s=20251104; t=1777111657; x=1777716457;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ftWR5yxI/cTgKcnDYnZASKJgqwKT+6x8D5x68NmmD4s=;
+ b=AGjrBgUxcNz3/TtqNhyI7hRDqeZWV+BdZ0Mc9OB3JnSmqhzmsF4xTBL0AAEyc61kTf
+ KkwaZ77Bnu3vn4l+dhB8WjMFOy/y6wU4o6AuUSxY3VpIBJF94qfRt1PZOdMtHs0ZcKIf
+ /fVREhFPp2FrW/s0mm1BYORbjYwgsvZygw9BMpCNHoXMARyQz72WmhCicHpDqf4rNEI7
+ wubCoFgLCz9EQvx91DpP12vBpLkaHqMANrPTKha60kSOHqnmh7n9bGwuJiRTQpYhD1ad
+ 4XdxEVP6Exx3oTJnJoNrynp46sl8oL1g8FBaMo/TO/7kgpLZIoG0aN55Q/NqA+BP3d9p
+ M7Gg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8i6kn4IJOs906Zmia67jeNqkdR41EaJ+oQ7mvfaQrZsG8X9qzqxu5rbSsm7Tww9Uq5DQ9vC0kUt5TS@nongnu.org
+X-Gm-Message-State: AOJu0Yy9cV7mLVa2n1T/TUM8hsCYPwy/22tkBZUg/49USZGmtEu4lCZK
+ hWaYOY2TsWiXWwotBpp2ZfuU/iTLCVoBFGdWmBeYZPSvfxn4p688fAKFQbTBaxxmbUk=
+X-Gm-Gg: AeBDietoz9X0ydrkLFpIzAj+wwIUHc+ZrGFU2DDccKYIHtQe2NQw5zoeTEW6A7SGJMG
+ dRstP4Gkn6pHDScknS7O66z7QYPR6viI4CTgUpbXvUnbjEc1nRf3zPfts2S0Z+zJ2XRZrnMf3Da
+ jdOxy7ncIqZpAPfQwXFqvEDUtwveQBen4G+uNovV0FWc88SKVYAKSHAkOOH5yEzqKoBzYAWHUY5
+ rMbiFVKyPVK4fQUJt+l9h+HPBD/5eAj/oDMYR37e6frXi11APxToti4V+b+ivTt58cvIMrwN+bW
+ GNeoq7nIEMQP0DSBup/rGHeT1m84NzRVwcHAcACMO/Dl4p4nrZlBOPtl/ZLVxpmGbR2NLda9hTa
+ 6aiOoZOgaf9+wY9WqKveAbhukVmQOGGA9zf2IuiELCg1u2o3Lfyt2QjcKeydlm8bUAFHXhR2sjW
+ 9Jfu9QjcDI+t8iOefuOFC7OkMMih2IPUQpO+yYDLx6KfbdlIOASLa6nrK/H6NVOfCCTvG4yB8vF
+ 89/
+X-Received: by 2002:a05:600c:1da1:b0:488:f453:b976 with SMTP id
+ 5b1f17b1804b1-488fb7844c5mr548630315e9.27.1777111656640; 
+ Sat, 25 Apr 2026 03:07:36 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a6124d7e7sm250327615e9.5.2026.04.25.03.07.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 25 Apr 2026 03:07:35 -0700 (PDT)
+Message-ID: <81605e59-a916-44f7-ae68-40b64b811bd3@linaro.org>
+Date: Sat, 25 Apr 2026 12:07:34 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260425-gtk-clipboard-v2-2-b098f3cf69cc@gmail.com>
-References: <20260425-gtk-clipboard-v2-0-b098f3cf69cc@gmail.com>
-In-Reply-To: <20260425-gtk-clipboard-v2-0-b098f3cf69cc@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Jindrich Makovicka <makovick@gmail.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=makovick@gmail.com; helo=mail-wr1-x431.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] single-binary: add stubs for target/
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20260424230103.1579600-1-pierrick.bouvier@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260424230103.1579600-1-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,92 +107,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
----
- meson.build       | 4 ----
- meson_options.txt | 7 -------
- ui/gtk.c          | 2 --
- ui/meson.build    | 4 +---
- 4 files changed, 1 insertion(+), 16 deletions(-)
+On 25/4/26 01:01, Pierrick Bouvier wrote:
 
-diff --git a/meson.build b/meson.build
-index 096303f021..761c0436a3 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1932,7 +1932,6 @@ endif
- gtk = not_found
- gtkx11 = not_found
- vte = not_found
--have_gtk_clipboard = get_option('gtk_clipboard').enabled()
- 
- if get_option('gtk') \
-              .disable_auto_if(not have_system) \
-@@ -1954,8 +1953,6 @@ if get_option('gtk') \
-                        method: 'pkg-config',
-                        required: get_option('vte'))
-     endif
--  elif have_gtk_clipboard
--    error('GTK clipboard requested, but GTK not found')
-   endif
- endif
- 
-@@ -2475,7 +2472,6 @@ if glusterfs.found()
- endif
- config_host_data.set('CONFIG_GTK', gtk.found())
- config_host_data.set('CONFIG_VTE', vte.found())
--config_host_data.set('CONFIG_GTK_CLIPBOARD', have_gtk_clipboard)
- config_host_data.set('CONFIG_HEXAGON_IDEF_PARSER', get_option('hexagon_idef_parser'))
- config_host_data.set('CONFIG_LIBATTR', have_old_libattr)
- config_host_data.set('CONFIG_LIBCAP_NG', libcap_ng.found())
-diff --git a/meson_options.txt b/meson_options.txt
-index 31d5916cfc..286461129b 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -262,13 +262,6 @@ option('vnc_sasl', type : 'feature', value : 'auto',
-        description: 'SASL authentication for VNC server')
- option('vte', type : 'feature', value : 'auto',
-        description: 'vte support for the gtk UI')
--
--# GTK Clipboard implementation is disabled by default, since it may cause hangs
--# of the guest VCPUs. See gitlab issue 1150:
--# https://gitlab.com/qemu-project/qemu/-/issues/1150
--
--option('gtk_clipboard', type: 'feature', value : 'disabled',
--       description: 'clipboard support for the gtk UI (EXPERIMENTAL, MAY HANG)')
- option('xkbcommon', type : 'feature', value : 'auto',
-        description: 'xkbcommon support')
- option('zstd', type : 'feature', value : 'auto',
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 9ebe7e8df0..5e63c502ed 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -2601,9 +2601,7 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
-         opts->u.gtk.show_tabs) {
-         gtk_menu_item_activate(GTK_MENU_ITEM(s->show_tabs_item));
-     }
--#ifdef CONFIG_GTK_CLIPBOARD
-     gd_clipboard_init(s);
--#endif /* CONFIG_GTK_CLIPBOARD */
- 
-     /* GTK's event polling must happen on the main thread. */
-     qemu_main = NULL;
-diff --git a/ui/meson.build b/ui/meson.build
-index 4e533d3046..6405e21d5d 100644
---- a/ui/meson.build
-+++ b/ui/meson.build
-@@ -111,9 +111,7 @@ if gtk.found()
- 
-   gtk_ss = ss.source_set()
-   gtk_ss.add(gtk, vte, pixman, files('gtk.c'))
--  if have_gtk_clipboard
--    gtk_ss.add(files('gtk-clipboard.c'))
--  endif
-+  gtk_ss.add(files('gtk-clipboard.c'))
-   gtk_ss.add(when: x11, if_true: files('x_keymap.c'))
-   gtk_ss.add(when: opengl, if_true: files('gtk-gl-area.c'))
-   gtk_ss.add(when: [x11, opengl], if_true: files('gtk-egl.c'))
+> Pierrick Bouvier (2):
+>    meson.build: define stubs library per target base architecture
+>    target/arm: define stub library
 
--- 
-2.53.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+You already had these tags ;)
 
