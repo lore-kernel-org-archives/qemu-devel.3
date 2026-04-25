@@ -4,99 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38980FF885C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 06:42:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C14E6FF885C
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 06:54:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGWiH-0004TG-OP; Sat, 25 Apr 2026 02:42:01 -0400
+	id 1wGWtM-0005sa-Rv; Sat, 25 Apr 2026 02:53:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wGWiF-0004Sx-0t
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 02:42:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wGWtD-0005rh-SH
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 02:53:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wGWiC-00039K-JK
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 02:41:58 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wGWtC-0005w5-39
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 02:53:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777099315;
+ s=mimecast20190719; t=1777099996;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=q+e64NFmAD68oggXK6Te0WPNk6cwZLiisHVj9/F8tDw=;
- b=be6loxnTQs8VSLcEKeVczaVKi/MgCU88RchlZHf/1bei3FbhWUXXBex8U9CbHV+9OTcYCf
- DWcKfGS8HWa/LAirAVnzTVb5W+ahmjkhxrCRfH3gCcpJ50IXuhhpQ8ABYsUQJbJtE1Nniv
- Mt4Ui7+asrlJVWclsP5O7j0/SRZ8QpM=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TXhkLMwpAzzjoRQ5wAmL6QhukTn8uYR1etajkAh+1G8=;
+ b=jPdUkUlRyREUWq5CuUnuXoO8YN2yHrBQHtAhLLr/yn3AI8upQDlAizx/HGlF8gfeW/SwRb
+ n7MTHy/pSWLjTZ9hPu0+pMIFhZtM0Y4OiD+RqrXTgh1UflJTvc8gvVjoWMMTWCtopQwd0J
+ CHeuem6jA7HxriA6TnXarCtNe8GV75U=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-223-2xVJLHbbM7Wz_ZwlT-P0Kg-1; Sat, 25 Apr 2026 02:41:53 -0400
-X-MC-Unique: 2xVJLHbbM7Wz_ZwlT-P0Kg-1
-X-Mimecast-MFC-AGG-ID: 2xVJLHbbM7Wz_ZwlT-P0Kg_1777099312
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-43d7d03e1e7so6741560f8f.3
- for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 23:41:53 -0700 (PDT)
+ us-mta-562-rvROsG1KN62pZq1B3C2Nag-1; Sat, 25 Apr 2026 02:53:15 -0400
+X-MC-Unique: rvROsG1KN62pZq1B3C2Nag-1
+X-Mimecast-MFC-AGG-ID: rvROsG1KN62pZq1B3C2Nag_1777099994
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-488bd1ee9e7so75742405e9.1
+ for <qemu-devel@nongnu.org>; Fri, 24 Apr 2026 23:53:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777099312; x=1777704112; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777099994; x=1777704794; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=q+e64NFmAD68oggXK6Te0WPNk6cwZLiisHVj9/F8tDw=;
- b=KHwuRUFovVne5y7YTzqt5QFyuMrPzLyexx3c18Mh9XXpdvolrWZPmRDqYP/XfFi9IS
- zJeLtdSx40/cVINXyava67+r2JroaowzTd6/wjW2RKaxmz2oebcAThuInwQpbme7e4JZ
- mjLiURmV9mD8DlZFYjyUv5rvpJVSHMD9+I/nfXmTnX32A/K4DWVnfewgJNJysoJsTRMn
- g2YeQhI7Rb9DxFzcNLcm4yW+cY+lecI5z9NYyvUvf2kfNJXDsEKpN7CtJ2eEz39HeOUi
- PCgbB5s05cgFuc+vicEY1DEsERMfh+6NcSgokZSinKaGnY8bQTKWPZAnMrzKhcjXABd6
- FoTw==
+ bh=TXhkLMwpAzzjoRQ5wAmL6QhukTn8uYR1etajkAh+1G8=;
+ b=XstcL8ztazdXVKyDTQ7cGYcSXuok2YU4Zkoyzz1c73BqYaIhHqmTT4gK/cKruB1wtz
+ 0YLfV/cGpA542w2KakStv2WpIPQG1ZM30gmw0WugPB9LTKYPYmziitUcu6dqs+ULREsH
+ /4YvRL/bgyBTwlgX8mmir0GFh8baOw1ZKTjBeYH2NJb2oQgoi8+fCJbuokMGq0nweWgd
+ bg5y2c2USGBQFNISAsWNG5Qt53h0WgK0pp5JNsJit/SOEf0eiJk+rKUMfoeR4ag3I2Gn
+ LOJL63ycDP7aVis1+Vy2GDuR25ezGnyitYEOCjBGVLY77cZ+iNRkwK7kGn/tuYNkhvXk
+ owow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777099312; x=1777704112;
+ d=1e100.net; s=20251104; t=1777099994; x=1777704794;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q+e64NFmAD68oggXK6Te0WPNk6cwZLiisHVj9/F8tDw=;
- b=SHxT0JucFY18F+Fmd+LsELIgl579s/f/GAV6UbilBNnE+8gb0h5uktYMArpgPZhYOS
- nbHwgkacMZiZUJSSEaQGHQlO94PbsEpmvAq00ydM2NvAsYnhg4j5RT22Bj/U3iGC2VO5
- ypp0MnfuhQ/6dWJsCOBRpD0BvZ4bBV4770srxyl/E2WJjFUiAU0QV4Xf/Zubx25fZPxm
- Vhdp8yaSKPEwg0jR2BHy/yOzPGhJZOWnSMo3B+J7xQmjIjryWFiSbpkUwZ9wpW0sqCGA
- yWcn2xKcNwSBQ3Hmy5Z1Zw0rAljYN+BU5C5ieIzHHPq2PwIv1eD2ACyGd84baobAapNY
- XTvQ==
+ bh=TXhkLMwpAzzjoRQ5wAmL6QhukTn8uYR1etajkAh+1G8=;
+ b=kfiw63skeGIZ+cq15SJsUr2zLMG+i7/bk5S956ivzPD6WpYq0N6qCdU2EZbw4PqHqF
+ uD6OnT3n4FwIHj+gaOkH1Gjf14qeSefe6TTIN4N8UIvW4rAcukIcrSWmwIFLlC4f+3ua
+ Quhb5Vfxr1dGZK/8JIzeTbWzJzI/F93Bs5I27NC8xJC0+AI/e9CXzG9zaJAtD44sR6wk
+ hlqaLC+qfiWRrosutRLByj/xR1OYFlFxCrvkMsPHEImyGIFgUmY2yAxo0Zr4aAZ/PTCU
+ Uvb0G8jvd++EKS2c2jl4poN1rlXm2BiCgqbBPS16314TOYNsTqyeHbl372id38eKm/hY
+ yaqw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8h7teeUGsaz5dMoG7pfF5Og5k0x75OPLcUHMggsX+4/p027Z+H8tpxjquR0f+1dmULYOqZF2gLyabs@nongnu.org
-X-Gm-Message-State: AOJu0YwA79Kgt7gmdMOo8zuHy3x55L5rlrcqrYsl8qlmGaqaBoH8Otaa
- 71vWdLvD8jv4tFESLZcH99rgoNaCtmLhvC5hC4r6w4659yVouYsda4HOrGo3c/aOJaTHmjvqcdO
- cQ4XtZsF/HY0ejdtPjvt7nE97/RKnIhMvGGvmwKoNg357IPBeqxmgQif9
-X-Gm-Gg: AeBDietdy69tKlDaJ4A2457HSb7/4YgNkOOdVlb+68EymkoZQv5ey2FawLiF9Z/s1Ht
- EgP6/1nyMmqPQRXNoR6l/AR6aZXMSc8O2luHyHzliEc4phojUYoXWX4m2FXlhkoi43fiwXU1xFv
- HCq3i1RJ+9/MagPwX+4ulN+0QSRgauAN3Brz41MWmmSEQt8p/Nofv+68r2mKpBY7lzv8MPNtnmU
- EmNM9ivE6ScDX9MWiJmN/ptEdmJuF4eJnT2C2ZOQFj6VuntqK31h5++5sYfT/SE899A+30eyt6Z
- Cs9c2Na0KAh7uer1yeSZ4Gmjc8/7m8YdzWPVRIvdPkhiRllLyPGDl5+A8PxBM9f9RgThfcjV75F
- HKQa9cmT3r+biyAsIt96s3FfjUslHRQ==
-X-Received: by 2002:a05:600c:26d5:b0:489:1c1f:35df with SMTP id
- 5b1f17b1804b1-4891c1f3715mr227971825e9.10.1777099311898; 
- Fri, 24 Apr 2026 23:41:51 -0700 (PDT)
-X-Received: by 2002:a05:600c:26d5:b0:489:1c1f:35df with SMTP id
- 5b1f17b1804b1-4891c1f3715mr227971605e9.10.1777099311442; 
- Fri, 24 Apr 2026 23:41:51 -0700 (PDT)
+ AFNElJ8eOUd+lWbHATIL5OUt54mqa7n1sz4IaEHIStC+LsiOwnKrJw8NOfR5EFkarMPopyQtAwYF0Mq/Lzyr@nongnu.org
+X-Gm-Message-State: AOJu0YyAsLJud2feVDfLITnqU8Dvckp3obc980m3PG4R3CkTKSkoIY4S
+ zaibjEdztIn5btYfcw83e1fVnb0F+aRGoLAuJOeKQvElP/DEa11GWPYf6u9MhqilH0MUaB1og6X
+ kWjw0+sk2jX5x27AXFmJWEU+aMTHasZIDjFMtTB7lurMB6Mf7smAm3jWA
+X-Gm-Gg: AeBDiesXJJboyn81liHP0aSEeRqVygiSNrxSAcBFkanbwvbB/IUILvFUnjqgNB6rF6o
+ 8sddazBzIvPENgKqVKEkQzfVJOf3phM/n/1JdFdFGT/tfrt+yQs5RIuw1s/qXIRghQ7i2jJh/s6
+ 65Bn5y5r6zpyk5aCEjjOrTF/vKo7KzmslaFOiabsG4Sb7Rh4E4omOZ/qlyVQTHlJBovrbUzxA50
+ XjPEwdt6o6+rTcLu1+Mr0svLj32xaKrMGh5iafJ80s7gT6HClcq4C/7L1so88O684MdhUY8Go/d
+ XelMXs7yBct8pOseSNX9+Y7ag/xa9zi/bgFHyKLdSYzbxwhniVBre5/y8j8/TEPV/B186Q3c2A3
+ 7iX1KHXPlCO+K1C+vH8taFxG/Fd5LhQ==
+X-Received: by 2002:a05:600c:8483:b0:488:7ff6:1f75 with SMTP id
+ 5b1f17b1804b1-488fb782d91mr527731605e9.21.1777099993909; 
+ Fri, 24 Apr 2026 23:53:13 -0700 (PDT)
+X-Received: by 2002:a05:600c:8483:b0:488:7ff6:1f75 with SMTP id
+ 5b1f17b1804b1-488fb782d91mr527731335e9.21.1777099993479; 
+ Fri, 24 Apr 2026 23:53:13 -0700 (PDT)
 Received: from [192.168.0.9] ([47.64.114.147])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc10777csm723077695e9.8.2026.04.24.23.41.50
+ 5b1f17b1804b1-4891978ef6bsm200659275e9.4.2026.04.24.23.53.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 24 Apr 2026 23:41:50 -0700 (PDT)
-Message-ID: <b39b576f-e0d6-43e2-aa72-18ca53d0cb1d@redhat.com>
-Date: Sat, 25 Apr 2026 08:41:49 +0200
+ Fri, 24 Apr 2026 23:53:12 -0700 (PDT)
+Message-ID: <5cad3b14-e2c7-4644-981f-88f44e1d71aa@redhat.com>
+Date: Sat, 25 Apr 2026 08:53:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/core/register: add register_array_get_owner
-To: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Frederic Konrad <frederic.konrad@amd.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair@alistair23.me>, qemu-arm@nongnu.org
-References: <20260424155646.533334-1-luc.michel@amd.com>
+Subject: Re: [PATCH 16/16] gitlab: remove I/O tests from build-tcg-disabled job
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-block@nongnu.org, Cleber Rosa <crosa@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, John Snow <jsnow@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260424154205.364268-1-berrange@redhat.com>
+ <20260424154205.364268-17-berrange@redhat.com>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -141,17 +144,17 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260424155646.533334-1-luc.michel@amd.com>
+In-Reply-To: <20260424154205.364268-17-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -168,34 +171,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/04/2026 17.56, Luc Michel wrote:
-> Add the register_array_get_owner function to the register API. This
-> function can be used to retrieve the device owning the given
-> RegisterInfoArray.
+On 24/04/2026 17.42, Daniel P. Berrangé wrote:
+> Now that we have dedicated CI jobs for running I/O tests on each
+> supported format/protocol, we no longer need to special case a
+> run of a hand picked set of tests in the build-tcg-disabled job.
 > 
-> This was previously done inline by some devices.
-> 5c6367bc1c8850f74812eeaaf87cff9911be58de modified the way register
-> blocks are created and parented to the device. Since this is an
-> implementation detail of the register API, it makes sense to have a
-> function for this.
-> 
-> Use it in the Versal OSPI and Versal/ZynqMP eFuse models instead of
-> tinkering with the API internals.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3421
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3422
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3423
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   include/hw/core/register.h        | 11 +++++++++++
->   hw/core/register.c                |  5 +++++
->   hw/nvram/xlnx-versal-efuse-ctrl.c |  4 ++--
->   hw/nvram/xlnx-zynqmp-efuse.c      |  4 ++--
->   hw/ssi/xlnx-versal-ospi.c         | 10 +++-------
->   5 files changed, 23 insertions(+), 11 deletions(-)
+>   .gitlab-ci.d/buildtest.yml | 9 ---------
+>   1 file changed, 9 deletions(-)
+> 
+> diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+> index d4591d30e9..710dfbcc77 100644
+> --- a/.gitlab-ci.d/buildtest.yml
+> +++ b/.gitlab-ci.d/buildtest.yml
+> @@ -446,15 +446,6 @@ build-tcg-disabled:
+>       - make -j"$JOBS"
+>       - make check-unit
+>       - make check-qapi-schema
+> -    - ./run tests/qemu-iotests/check -raw 001 002 003 004 005 008 009
+> -            010 011 012 021 025 032 033 048 052 063 077 086 101 104 106
+> -            113 148 150 151 152 157 159 160 163 170 171 184 192 194 208
+> -            221 226 227 236 253 277 image-fleecing
+> -    - ./run tests/qemu-iotests/check -qcow2 028 051 056 057 058 065 068
+> -            082 085 091 095 096 102 122 124 132 139 142 144 145 151 152
+> -            155 157 165 194 196 200 202 208 209 216 218 227 234 246 247
+> -            248 250 254 255 257 258 260 261 262 263 264 270 272 273 277
+> -            279 image-fleecing
+>       - make distclean
+>   
+>   build-user:
 
-Thanks for the fix!
-
-Tested-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
