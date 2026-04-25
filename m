@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25184FF885C
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 15:52:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 188E4FF8860
+	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 15:52:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGfIt-0008N0-0H; Sat, 25 Apr 2026 11:52:23 -0400
+	id 1wGfIp-0008BU-Oz; Sat, 25 Apr 2026 11:52:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIb-00081P-Ej
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:08 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIj-000859-8w
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:14 -0400
 Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIa-000172-0E
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:05 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGfIh-00017q-SA
+ for qemu-devel@nongnu.org; Sat, 25 Apr 2026 11:52:13 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 1717C600AE;
- Sat, 25 Apr 2026 15:52:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EDC3C2BCB0;
- Sat, 25 Apr 2026 15:52:01 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 86198600AE;
+ Sat, 25 Apr 2026 15:52:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD6E8C2BCB4;
+ Sat, 25 Apr 2026 15:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777132322;
- bh=vV5gAp6A1fV7/G4QQ1bgHmKV5IUIINSjN34lG8oX+zU=;
+ s=k20201202; t=1777132330;
+ bh=Y2jfW2n5SXWlVYI4a1aoFFMe9VI36vJwyPaPM10gar0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ZDmHNiZxF2b2V/Iu+W/EmrnnRzgYHf9LXQqdTpD5FjH25/yHkP5+xyUNolE9VxRe4
- HhdGxj8pvBVp699a0PRSz996tq1PT0FcvatIN/N73TBp+8wsP1udJl8iPbw3BugRwL
- gmn1L2nIR9NHakFIZyQEymzGDhbD6ESuMNAXHVKxWecVP6E7GH67xyK9jN3WUTCtTj
- bAMQZptSt3ainM2q/IrB0rTz1Z+IPeyDqF6eKn/FQN3vs5Wg/IuqPH6trq5z103oPE
- xk6l/8twNjaA7aqPVt8LUbVx6m2ofblAhbA/FJUQVBqVWEAU7OzrSfyA77wJ9F1aUC
- mh6YoIopL0CLg==
+ b=qnxSsUqIuyFwofMX9yI4tfuVxCbT5qSbnIIoHms5dAdDdr1YGquNqVSz7HmPhnNjh
+ AQFIlIywA7ATqHLup4F4F9UyHCctMEgl5F5fMIZhqMbAqE1trbyg/TGnv9ca74SIoe
+ 2bAAMkCoUV+30/HICDOiX6TZHlJYBGeArYaLpgfUcikJkXCee+9HWSfrgThJGCZbPD
+ OPc6J35y+tWqYs8Zu3P/1HX0i2BIltmIrsBMRilEYbYRL6G6HJP0q4NY0UNv1cb6Rl
+ F/M0EBanaE1bI1sdivYeJCNFnnJBs73ntGOhc/gVdrqXhoyIkcwYe+Czm/t/54aQag
+ QrCev55gAVnzw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 10/14] linux-user: Add setsockopt() for SO_RCVTIMEO_NEW and
- SO_SNDTIMEO_NEW
-Date: Sat, 25 Apr 2026 17:51:36 +0200
-Message-ID: <20260425155140.50186-11-deller@kernel.org>
+Subject: [PULL 14/14] linux-user: Flush errors by using exit() instead of
+ _exit() in error path
+Date: Sat, 25 Apr 2026 17:51:40 +0200
+Message-ID: <20260425155140.50186-15-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260425155140.50186-1-deller@kernel.org>
 References: <20260425155140.50186-1-deller@kernel.org>
@@ -73,60 +73,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Add handlers for both sockopts which use 64-bit time_t from userspace.
+Qemu user mode does not properly flushes error messages related to bad
+arguments when exiting (at least when the output is piped to a file
+instead of running on a terminal).
+Ensure that we always flush by using exit() instead of _exit().
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/885
+Reported by: Tobias Bergkvist
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2544
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/syscall.c | 21 +++++++++++++++++++--
- 1 file changed, 19 insertions(+), 2 deletions(-)
+ linux-user/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 8e96cc26db..751e6eabe5 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -1143,7 +1143,6 @@ static inline abi_long copy_to_user_timeval(abi_ulong target_tv_addr,
-     return 0;
- }
- 
--#if defined(TARGET_NR_clock_adjtime64) && defined(CONFIG_CLOCK_ADJTIME)
- static inline abi_long copy_from_user_timeval64(struct timeval *tv,
-                                                 abi_ulong target_tv_addr)
- {
-@@ -1160,7 +1159,6 @@ static inline abi_long copy_from_user_timeval64(struct timeval *tv,
- 
-     return 0;
- }
--#endif
- 
- static inline abi_long copy_to_user_timeval64(abi_ulong target_tv_addr,
-                                               const struct timeval *tv)
-@@ -2391,6 +2389,25 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
-                                 &tv, sizeof(tv)));
-                 return ret;
+diff --git a/linux-user/main.c b/linux-user/main.c
+index c49d1e91d2..84e110dfe9 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -767,7 +767,7 @@ int main(int argc, char **argv, char **envp)
+         execfd = open(exec_path, O_RDONLY);
+         if (execfd < 0) {
+             printf("Error while loading %s: %s\n", exec_path, strerror(errno));
+-            _exit(EXIT_FAILURE);
++            exit(EXIT_FAILURE);
          }
-+        case TARGET_SO_RCVTIMEO_NEW:
-+        case TARGET_SO_SNDTIMEO_NEW:
-+        {
-+                struct timeval tv;
-+
-+                if (optlen != sizeof(struct target__kernel_sock_timeval)) {
-+                    return -TARGET_EINVAL;
-+                }
-+
-+                if (copy_from_user_timeval64(&tv, optval_addr)) {
-+                    return -TARGET_EFAULT;
-+                }
-+
-+                ret = get_errno(setsockopt(sockfd, SOL_SOCKET,
-+                                optname == TARGET_SO_RCVTIMEO_NEW ?
-+                                    SO_RCVTIMEO : SO_SNDTIMEO,
-+                                &tv, sizeof(tv)));
-+                return ret;
-+        }
-         case TARGET_SO_ATTACH_FILTER:
-         {
-                 struct target_sock_fprog *tfprog;
+     }
+ 
 -- 
 2.53.0
 
