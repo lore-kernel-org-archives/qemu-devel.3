@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2258FF885D
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 13:57:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 516D0FF885D
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 13:57:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGzpW-0007r7-RQ; Sun, 26 Apr 2026 09:47:26 -0400
+	id 1wGzpf-0000P0-NV; Sun, 26 Apr 2026 09:47:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wGzo9-0005uY-Go
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:46:07 -0400
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
+ id 1wGzot-0006bv-V7
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:46:48 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wGznv-0001SB-F8
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:45:50 -0400
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-c70f91776fcso3578808a12.0
- for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 06:45:46 -0700 (PDT)
+ id 1wGzop-0001sA-T5
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:46:46 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2b4650d5f5cso35019985ad.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 06:46:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777211146; x=1777815946; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777211202; x=1777816002; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FnOhdCDKdTLE0gzKOWv8m2ElmA3lCf51L6yu2wpzeJk=;
- b=qTOazqVWZ+ea7obniPuOA/1jYGkwM47Zn3Vhjexk1z1qbgQrdmHRcRgJWtq+RzlQzZ
- B2rxJYaB/VGCJ3sepiUEvuarEdpsxYi5xEIW2QwqgIaFVL2+tak9nydDsqGX1Hs0DY6l
- g0kFCLrDAQmnJ6MnlTOF9saSJsuBXO4GBpxslY1+r8Hxl/d4irvoLZTU3UycO5ztVioy
- KR6iEcl1Du54UDFm6JwB9pujLdW99GvxdqNba4pm9t5ElnT/jCW6gYSl78EFA4riUiyK
- VlVvwXPXRL9oM8oo7pwMWIHX0VzLhi0awujVbl1+VV1S8sgCrDYMZ3Jsjnq0wU2IwRpv
- H6Aw==
+ bh=VMfXr5S8cPMC+8Vry/EpCZiImkLfaNYbWDc+T09/bCA=;
+ b=pI195jRpmUUasChWb3m7R/FBD9ddkE4CCll8Wtqt6b557kHvvT4W6Hna3bdg2bpdaL
+ 8h9Dj92GfFhtY876DGxRY/x80gd5ZpWkeAR4VC0tmyvtA8BUP9ZTCgXLk9fCz9i4QPVH
+ /7ybrBL2HAcUpsgWFk7aczC/7j2ory9hZ3MFKLCsvqxjC3DhW/PoBHCK+WitUzCX1LYp
+ 5+hWiTzi6NGHx/fdo+XGnYSEQM4w8uFYM+JyayUixPbDs8XzQZBFKMWqE5qPSkiKngdJ
+ 7n40mIZHIFYKMtfWBrvI8eLzSTfdP8FCFqWqWpa265cMNz50jCxAARTOlnyiJ3wplrNn
+ +xiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777211146; x=1777815946;
+ d=1e100.net; s=20251104; t=1777211202; x=1777816002;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=FnOhdCDKdTLE0gzKOWv8m2ElmA3lCf51L6yu2wpzeJk=;
- b=avantu9Xwsw8yTIG7RO5N9KGFh2xfSOUnsrmr5Q5VKCrv788RShHGerUL8jAbrKxTa
- bPsaXQvf5wmDEkNLjC/0qCk7Ine/JkaRt7ZPe4UymtTTgJqfLMXDRz7bv3qfMq9SZBeL
- +Dx7b06WSi7gZeJZ7bOMgj2fnuzPevl4TlA2b6/iSkwKAHUlL1gPExfhVRsIOoKYSU6X
- niNorANsEPPzdO7IDt5x8+fZGP8+eWkEL17s3LG1pQEfaB3Dwff1PnAHApuvzcQ4Zlxy
- DqH9i4YbnIabOHR0BbdUXV0vfpVnrH6TkEeZxtIjaPUlInJQ7can8/ZRmIHzjMsiYT8v
- ZU7w==
-X-Gm-Message-State: AOJu0YxqAqa6/TeGI+IBrIrf6Dw71d4DUzXtPWoqnWN111qivWfpdIIg
- 7p4sNvIj1J2IY4hEiOrND3h+MTR5fxIqLcMc/UJlXLBfXFfDoPGvotlIUHgC3gUhdR+APtkKczX
- oFRMubXA=
-X-Gm-Gg: AeBDietZz9Dy8+/CsVlcbh4vlzc7pR11GlFNQR+DGPZkwOUyiwjEEhUNyyI5jQA69z2
- PW+GEjd9bCL+Gi42s5ZtjurXYHLUDpS0V3dhVLVDex1yY/L1W7ukY8ADTDpyWd3Bej172jktaqb
- Q+FXUa3OPpDtIGD072XygdA+GDesk+XMdnIC2pbb2Qfrd+OVx7jt3lisMq82CKbKdlSgyIvjKer
- 9VP2dqNt8VCc/mXgMoXHRl3jxqYeby/sqPN+5jFetV90RwBdEWh9buixv4VSDpdRQ4Lu9nvjm3/
- D2pznQT7e+09iqJD3hXsVav5+666xVZeluorJfFOJjFyBLg9etbh4Eoo3QGGS1I4DBjnhCJNG39
- jls4FydG9Zi1SdXp+n49U0r1siUJ5HWT0x01cE+pbxNAXKkNQ1iOp4marTlJ3Wmmt5XE/32StUE
- QK4PFwB9Y5TYQJSBM1y74EgZk90cRBfVM5lVpym4Co
-X-Received: by 2002:a17:903:487:b0:2b2:49a7:a5bc with SMTP id
- d9443c01a7336-2b5f9f534e4mr297029925ad.39.1777211145647; 
- Sun, 26 Apr 2026 06:45:45 -0700 (PDT)
+ bh=VMfXr5S8cPMC+8Vry/EpCZiImkLfaNYbWDc+T09/bCA=;
+ b=P5wRPFrCEqQn5F+OdpOQkTAfrz/A4Su2wgJpvGM5qNjwmtSNrZmZ+i0JscKIhfjEqI
+ 246/k3sU+xkfLe+BQIMlaR0Z1brghkHRMYFL9y7EOev7uynSuAURyS4pd30pQ7Ebjd9D
+ 82gujd4bq/Lhf4PTzHX8xxO5/FXOrUVUf0CusSFv2Gwm6Y4TwmKfcJc/yuZUva87o6X6
+ PO086LcWHcs9R+KjrFHOQ5fYp44w0NAVFGp2qmo954zUJ3ZnsDkFl3dtGymB9AZfz3pf
+ RBbXjwngwePtmUCnlYILwme3lnz1Wobon7TqbGVhIJDaA+pxukKqWSLhVLmZmNnbZk/m
+ xycQ==
+X-Gm-Message-State: AOJu0YxA0FJcHSslvAmnsdWtZPWpq+Y9aIY24rQ0Piiy227ELY2lYuiT
+ VZsD+BWNZmbzwU3as72GCyAtGP9RPrjCPPFq7Ee7OMQ/kdleLFHwXZJtrA/2G0oRQxdIHtV3E3c
+ AOT3xhtw=
+X-Gm-Gg: AeBDieulIhYtl6/Svx8FIF+cADcNyDbofXwvfNigs2rYHtt25/N945BTYiHLGr1EXG4
+ rdjJrmM1DcW2PVTfC96zyrvSyMYIc5iHfFafbTWMWmqvJSp3PcCKZh9IPaJaPqC52k3OOctPuHM
+ 08qUQ8D+Bprou9+5emEVnBgaUC31zt0fVkpeqXqSfdptL3mrkfLJMVtGfjKDzkI+TuQ13Zeoc3l
+ FBJLxUpcPwZ0offDSQLnWvu7PzmFzpVCR5o6QiWfLxS26E4x2Et7GCo817FAIH7XK5wXUOWhvfu
+ SuF3x5u517Dwf3tfhJoCemHGSP2iDQ7U9+Rh5V5vghQMynFxReuKW9qtFoOlcYn8rNHeioaPMk2
+ o3pZ2HF7KR8+kR8Dwa0pqbbi31jwl3brcsv0V5EnEgkHPhHO8flLqUlrIjhwWGeH0CG1gS1NxWR
+ Q0dlJWl0HIFbmMHjjm9tiJbgketoBGWEciNqsv5sUP
+X-Received: by 2002:a17:903:3c24:b0:2b0:445a:8c7b with SMTP id
+ d9443c01a7336-2b5f9edf973mr419506295ad.15.1777211202462; 
+ Sun, 26 Apr 2026 06:46:42 -0700 (PDT)
 Received: from stoup.. ([180.233.125.15]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5faa34ea7sm280544085ad.34.2026.04.26.06.45.43
+ d9443c01a7336-2b5faa34ea7sm280544085ad.34.2026.04.26.06.46.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Apr 2026 06:45:45 -0700 (PDT)
+ Sun, 26 Apr 2026 06:46:42 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	qemu-s390x@nongnu.org
-Subject: [PATCH 57/84] fpu: Split FloatParts{64,128} to softfloat-parts.h
-Date: Sun, 26 Apr 2026 23:39:34 +1000
-Message-ID: <20260426134002.865628-58-richard.henderson@linaro.org>
+Subject: [PATCH 78/84] fpu: Hoist nan check in partsN_addsub
+Date: Sun, 26 Apr 2026 23:39:55 +1000
+Message-ID: <20260426134002.865628-79-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260426134002.865628-1-richard.henderson@linaro.org>
 References: <20260426134002.865628-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,204 +100,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Begin exposing the intermediate representation of softfloat.
-Start with just the representation structures.
+The nan test had been down below because it was unlikely.
+But if we have to have one anyway because of denormals,
+we might as well take care of them right away.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/fpu/softfloat-parts.h | 88 +++++++++++++++++++++++++++++++++++
- fpu/softfloat.c               | 69 +--------------------------
- 2 files changed, 90 insertions(+), 67 deletions(-)
- create mode 100644 include/fpu/softfloat-parts.h
+ fpu/softfloat-parts.c.inc | 21 ++++++---------------
+ 1 file changed, 6 insertions(+), 15 deletions(-)
 
-diff --git a/include/fpu/softfloat-parts.h b/include/fpu/softfloat-parts.h
-new file mode 100644
-index 0000000000..13c1f3d2d6
---- /dev/null
-+++ b/include/fpu/softfloat-parts.h
-@@ -0,0 +1,88 @@
-+/*
-+ * Floating point intermediate representation
-+ *
-+ * The code in this source file is derived from release 2a of the SoftFloat
-+ * IEC/IEEE Floating-point Arithmetic Package. Those parts of the code (and
-+ * some later contributions) are provided under that license, as detailed below.
-+ * It has subsequently been modified by contributors to the QEMU Project,
-+ * so some portions are provided under:
-+ *  the SoftFloat-2a license
-+ *  the BSD license
-+ *  GPL-v2-or-later
-+ *
-+ * Any future contributions to this file after December 1st 2014 will be
-+ * taken to be licensed under the Softfloat-2a license unless specifically
-+ * indicated otherwise.
-+ */
-+
-+#ifndef SOFTFLOAT_PARTS_H
-+#define SOFTFLOAT_PARTS_H
-+
-+/*
-+ * Classify a floating point number. Everything above float_class_qnan
-+ * is a NaN so cls >= float_class_qnan is any NaN.
-+ *
-+ * Note that we canonicalize denormals, so most code should treat
-+ * class_normal and class_denormal identically.
-+ */
-+
-+typedef enum __attribute__ ((__packed__)) {
-+    float_class_unclassified,
-+    float_class_zero,
-+    float_class_normal,
-+    float_class_denormal, /* input was a non-squashed denormal */
-+    float_class_inf,
-+    float_class_qnan,  /* all NaNs from here */
-+    float_class_snan,
-+} FloatClass;
-+
-+#define float_cmask(bit)  (1u << (bit))
-+
-+enum {
-+    float_cmask_zero    = float_cmask(float_class_zero),
-+    float_cmask_normal  = float_cmask(float_class_normal),
-+    float_cmask_denormal = float_cmask(float_class_denormal),
-+    float_cmask_inf     = float_cmask(float_class_inf),
-+    float_cmask_qnan    = float_cmask(float_class_qnan),
-+    float_cmask_snan    = float_cmask(float_class_snan),
-+
-+    float_cmask_infzero = float_cmask_zero | float_cmask_inf,
-+    float_cmask_anynan  = float_cmask_qnan | float_cmask_snan,
-+    float_cmask_anynorm = float_cmask_normal | float_cmask_denormal,
-+};
-+
-+/*
-+ * Structure holding all of the decomposed parts of a float.
-+ * The exponent is unbiased and the fraction is normalized.
-+ *
-+ * The fraction words are stored in big-endian word ordering,
-+ * so that truncation from a larger format to a smaller format
-+ * can be done simply by ignoring subsequent elements.
-+ */
-+
-+typedef struct {
-+    FloatClass cls;
-+    bool sign;
-+    int32_t exp;
-+    union {
-+        /* Routines that know the structure may reference the singular name. */
-+        uint64_t frac;
-+        /*
-+         * Routines expanded with multiple structures reference "hi" and "lo"
-+         * depending on the operation.  In FloatParts64, "hi" and "lo" are
-+         * both the same word and aliased here.
-+         */
-+        uint64_t frac_hi;
-+        uint64_t frac_lo;
-+    };
-+} FloatParts64;
-+
-+typedef struct {
-+    FloatClass cls;
-+    bool sign;
-+    int32_t exp;
-+    uint64_t frac_hi;
-+    uint64_t frac_lo;
-+} FloatParts128;
-+
-+#endif
-diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 8c4263bfe6..cd75df3160 100644
---- a/fpu/softfloat.c
-+++ b/fpu/softfloat.c
-@@ -83,6 +83,7 @@ this code that are retained.
- #include <math.h>
- #include "qemu/bitops.h"
- #include "fpu/softfloat.h"
-+#include "fpu/softfloat-parts.h"
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index dca751fb94..244fdd90d2 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -530,13 +530,16 @@ static FloatPartsN *partsN(addsub)(FloatPartsN *a, FloatPartsN *b,
+     bool b_sign = b->sign ^ subtract;
+     int ab_mask = float_cmask(a->cls) | float_cmask(b->cls);
  
- /* We only need stdlib for abort() */
++    if (unlikely(ab_mask & float_cmask_anynan)) {
++        *a = partsN(pick_nan)(a, b, s);
++        return a;
++    }
++
+     /*
+      * For addition and subtraction, we will consume an
+      * input denormal unless the other input is a NaN.
+      */
+-    if (!(ab_mask & float_cmask_anynan)) {
+-        record_denormals_used(ab_mask, s);
+-    }
++    record_denormals_used(ab_mask, s);
  
-@@ -396,39 +397,6 @@ float64_gen2(float64 xa, float64 xb, float_status *s,
-     return soft(ua.s, ub.s, s);
+     if (a->sign != b_sign) {
+         /* Subtraction */
+@@ -553,10 +556,6 @@ static FloatPartsN *partsN(addsub)(FloatPartsN *a, FloatPartsN *b,
+             return a;
+         }
+ 
+-        if (unlikely(ab_mask & float_cmask_anynan)) {
+-            goto p_nan;
+-        }
+-
+         if (ab_mask & float_cmask_inf) {
+             if (a->cls != float_class_inf) {
+                 /* N - Inf */
+@@ -582,10 +581,6 @@ static FloatPartsN *partsN(addsub)(FloatPartsN *a, FloatPartsN *b,
+             return a;
+         }
+ 
+-        if (unlikely(ab_mask & float_cmask_anynan)) {
+-            goto p_nan;
+-        }
+-
+         if (ab_mask & float_cmask_inf) {
+             a->cls = float_class_inf;
+             return a;
+@@ -602,10 +597,6 @@ static FloatPartsN *partsN(addsub)(FloatPartsN *a, FloatPartsN *b,
+  return_b:
+     b->sign = b_sign;
+     return b;
+-
+- p_nan:
+-    *a = partsN(pick_nan)(a, b, s);
+-    return a;
  }
  
--/*
-- * Classify a floating point number. Everything above float_class_qnan
-- * is a NaN so cls >= float_class_qnan is any NaN.
-- *
-- * Note that we canonicalize denormals, so most code should treat
-- * class_normal and class_denormal identically.
-- */
--
--typedef enum __attribute__ ((__packed__)) {
--    float_class_unclassified,
--    float_class_zero,
--    float_class_normal,
--    float_class_denormal, /* input was a non-squashed denormal */
--    float_class_inf,
--    float_class_qnan,  /* all NaNs from here */
--    float_class_snan,
--} FloatClass;
--
--#define float_cmask(bit)  (1u << (bit))
--
--enum {
--    float_cmask_zero    = float_cmask(float_class_zero),
--    float_cmask_normal  = float_cmask(float_class_normal),
--    float_cmask_denormal = float_cmask(float_class_denormal),
--    float_cmask_inf     = float_cmask(float_class_inf),
--    float_cmask_qnan    = float_cmask(float_class_qnan),
--    float_cmask_snan    = float_cmask(float_class_snan),
--
--    float_cmask_infzero = float_cmask_zero | float_cmask_inf,
--    float_cmask_anynan  = float_cmask_qnan | float_cmask_snan,
--    float_cmask_anynorm = float_cmask_normal | float_cmask_denormal,
--};
--
- /* Flags for parts_minmax. */
- enum {
-     /* Set for minimum; clear for maximum. */
-@@ -474,40 +442,7 @@ static inline bool is_anynorm(FloatClass c)
-     return float_cmask(c) & float_cmask_anynorm;
- }
- 
--/*
-- * Structure holding all of the decomposed parts of a float.
-- * The exponent is unbiased and the fraction is normalized.
-- *
-- * The fraction words are stored in big-endian word ordering,
-- * so that truncation from a larger format to a smaller format
-- * can be done simply by ignoring subsequent elements.
-- */
--
--typedef struct {
--    FloatClass cls;
--    bool sign;
--    int32_t exp;
--    union {
--        /* Routines that know the structure may reference the singular name. */
--        uint64_t frac;
--        /*
--         * Routines expanded with multiple structures reference "hi" and "lo"
--         * depending on the operation.  In FloatParts64, "hi" and "lo" are
--         * both the same word and aliased here.
--         */
--        uint64_t frac_hi;
--        uint64_t frac_lo;
--    };
--} FloatParts64;
--
--typedef struct {
--    FloatClass cls;
--    bool sign;
--    int32_t exp;
--    uint64_t frac_hi;
--    uint64_t frac_lo;
--} FloatParts128;
--
-+/* FloatParts256 is entirely internal, for parts128_mul* */
- typedef struct {
-     FloatClass cls;
-     bool sign;
+ /*
 -- 
 2.43.0
 
