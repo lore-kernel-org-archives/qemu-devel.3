@@ -4,102 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AD9EFF885D
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 13:07:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F509FF885C
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 13:41:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGzC0-0000do-Bc; Sun, 26 Apr 2026 09:06:36 -0400
+	id 1wGzj9-00075H-To; Sun, 26 Apr 2026 09:40:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wGzBy-0000dF-7i
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:06:34 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wGzit-0006xw-GZ
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:40:35 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wGzBw-0000bx-Rn
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:06:33 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-79ea87af213so144287147b3.0
- for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 06:06:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777208792; cv=none;
- d=google.com; s=arc-20240605;
- b=CMBdE7uxelXDBsGNQxJ4q+BHpub8n0ug6/32Rs1I5nr34cCUnHmdoRo0v2L2yHoz3g
- 4PJid0YuR0Zas796+5aaBIcNH03X+JWWKKf3j9qf9M3WRmSVG9RQoVedDIuGOotzNf0+
- NcUFACJnz8qY4ggyyDKdigjvIjW6sqT+tsFeV0cUj6Q/PC4AdZHDUWUyW86ikVzyo1FA
- WN4Cl20Asmkp0GzlAm/CTYplwUl8FBzwP3KdG2ozCXBI76BzvBdBoVR33rthvAJOPiGi
- JvOYoQeSHnl3WXzJCwQwr3PKsE3f5+yj2pyCSMG72FqZyTWy7kOuLNw4gJEfPYm5HwIc
- /4Ww==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=VGCKUxLRvSSYVrr9yEqhR0e7GV6fSSp0ahgBUsJ+SvA=;
- fh=k+JQU2w1b4ymBVJgrCNZLxW9T1CiH07slgA3uwiw0DE=;
- b=CvMxr9SPOQ+ANisr8gEOSQnYgzTxuO6rgvePPq2xCjV+wrv2ZjY5Ud/TnqJDn1zzpY
- QwAf801mMO5tikHH9p+hjfPDgOm5K9rFzKpd5sjOIheHFxl2mKK6pbPGXhe7f+tcd5la
- 8q8XG5Amj+7VM6Ps+lgcGVuEi1P/OYa3Atj7IUqagnE+g9C1nSFLd9GQZrgUCHkkvOQy
- bz5BVW0BiBrm4O4Bnzv9qIHNm/JM4J4xMmSMtI4mLI9BRUv6pD4qLqicIfcua+0d3sqv
- kSGiPL4DZlcMqpME/clfqZcmvjBxi2eE8OqbdLmTS3c2JMM0vAmaFWNA2VP/11FzDQVL
- QKXQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wGzis-0008M8-1A
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:40:35 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2b7adb38d65so31846105ad.2
+ for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 06:40:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777208792; x=1777813592; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=VGCKUxLRvSSYVrr9yEqhR0e7GV6fSSp0ahgBUsJ+SvA=;
- b=XbQqWT3fBk03PJWoV5N50Rhsq77sdf0sSSiOpcuGOEprZsvH/Vcw5+ec/zuZxz0kri
- TyqJThnfYyXwzVRV2UVB5n7wukrGK9XOQtHC6Ias9l2s6Lxzk5Qdy6Ibe/eomughPwoV
- HD+23QZxoYHX7zoo/J5J18OEs9fJg2U8rwwrbfdA2Ti0BpZQ9QwEj6mdVZa3X449Ih51
- Q9oud18Gtlr+33O/s1Jt9weOZhpjDNoQHfIet+0a9TqU20UaJanDn6+wobYSXWHBVRHF
- OhxzkcM+Oz+CXWmrPdyCp+eEoFRiChLAuWLbFTMWU5lhaCq9Y1Bnj0ixKtSakshjhIYl
- 9rMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777208792; x=1777813592;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1777210832; x=1777815632; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VGCKUxLRvSSYVrr9yEqhR0e7GV6fSSp0ahgBUsJ+SvA=;
- b=HszQBmLdcrGidkeyz5RqwN5LAXSpQQDE3Srj6eYOk/RNYL1uQhvfGtMQXir2+pb7CZ
- D9b6Q/wMJ/hQ4qcxEDNYHy2jgP2c1Xme5wzJ3Kp/hToUC008My1SMZd11aNjxLUHI5k6
- R6il1RNtq9qBrna5YlDF5V2yn7i368byrMmHR5UXjah+VtgZmuRwwn88zUHOLqduS6jc
- lOBY3LU8IBbvEkj17y5qj0GtGtbhe87YDyfnrFGIe5Jq6poPCRSKSFPkf+UfJELmAPob
- D8rcvi3pLaalawaSfln7miPB8sj1GFsN/WnNv+VHXYSLzVeYRe8qOKqVqbzI9Y8WpUnw
- Z98g==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+D84t1Zcx0kVXfehr3uJMMMrXB13FUYInBP8HGUBrsLlAG6dAzrwyNeLvH+4IA/ZLcini3O+R/aVzk@nongnu.org
-X-Gm-Message-State: AOJu0YwFPQb6h1SEo7kSWBqEkYPdMtsMiltpokQ1eFhY26Bfx4NR4Mh3
- F5JZc/2jaigAVSoKGYfJQDmWIGtawQA1io+DjLL6nqKw4jAmKVTPN9A0+dbRcsn3Baf708U0e7K
- xd/CTUQWI4jkI5z1g5a1fpXqde0fXetCmCZfK6sWt4A==
-X-Gm-Gg: AeBDietEicwUICr9LtfsS+Y3VjPcl5wAkeS1ifeSMGBHkGNkU4bsUNLtq7SN5XBKZy4
- 7U1h7Q61gdOywFCbVDgpayZrnobVrCnVh7t/1oPuHjJl3di1rTT+tb8b6OKhJi/Rzpo8QS+Bmm2
- ihQJFsZFBiZOJnQuOBu6Psf4+Bqtier1oxaOoiWcuG+EKUiEqZaKDgnUKzaipR69XoiO0/KQ+xe
- DVEPYH17fcoCe9RrKvmsXWIwbcXcr8AgluAM+AVPfnVCoVslYg7hpdlP0qtQJfp3dIjA4IDDkFu
- E9gzbpGZxGmlfHm82xkCIkAORX8bCXwKzSQydj/AVKj6NWQ9Z4zHeaXqOguj0UM8FSs5IUT1AQ6
- j2w==
-X-Received: by 2002:a05:690e:4009:b0:657:33b:9df0 with SMTP id
- 956f58d0204a3-657033ba8bamr6181342d50.8.1777208791658; Sun, 26 Apr 2026
- 06:06:31 -0700 (PDT)
+ bh=i7r9gKcYxP/AKKHrV6vUOMBch48/rRs6VOLxoecOoEA=;
+ b=huQgvnYhZ4Zr/EQ9osNEdkbE3yVHsR9ljtDeTO8TkiIX85gm/qn8zhs6K1PQ2jwFdJ
+ rCaK2Lp9Nvi+d8p5Quf0dQEUq+Flcd8QBUbpNNtBvOluQMk5bYBxMqUWOXlI5H/SGNoX
+ C2PgVHdT/D67jXGuxQGml8pzVNrhNuJLHr6zPWCP61gg/4BgR/jPCyHHG5i4fbRfdpAz
+ sWfXQ/C8TVHMWDFgsGBcOwXV/4mzdZyQJfjISD+EZSlNxDIcAuLnlFQEJwLXiELY2Hk0
+ WgWXrOQtWOluvL+RcmqmWhu6l7UdHRx+aHMxJV5BF+0vwH9VmhrvhIIkaCAtBwN75ey9
+ MbDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777210832; x=1777815632;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=i7r9gKcYxP/AKKHrV6vUOMBch48/rRs6VOLxoecOoEA=;
+ b=atGgjMz4p6x1NvXCnbL65SffRQSZXe3MIvjipNPhtVS6WJFN/Q8YBAlknQ8888BVbV
+ 1/nypYM1g5hCinBizRTjL9BdvDpxPNmcoAymt93Q+cfwXxwAsvln/MUx7N3G2rRuhMxp
+ jkV6vyJI2Qa5EjQ16MKmiQJfBi/R3GHmU5zTFqBvrgcz05QmVhFXGi/z4qMrqfRfaPXj
+ /sFHkONfMb4EzySPaL9+B5xb6rVLAaOQ+iOLzp5qXRY684OEWB0Da7HkbBKQxhs5P8oC
+ TnnxhDFDKLAnkXLnLoHGnQUHKrKQkkVr9BydG3VKkG7aVAuxA5WYLMzNnBBeUWrovKaf
+ vCWA==
+X-Gm-Message-State: AOJu0YyWH6mSZogzQwltzlHwCPcuj0ImP+Et3xegQgWgPTm9XoAT/uRI
+ sJj2mut22PV/k9i1wtexfeIUfRAvYsBmUNRI/8vrFXU/rrOyqDl85kUwWsuJf9OC0fmjT5zGE4A
+ DXUK/44U=
+X-Gm-Gg: AeBDietj5jpL5+xZY6IAaZPvenRyA+gGJJPafFimRSj79V/PCZjNX2KXK0U0sulcJY2
+ w9Ujxvm7eXyJ/0R9tL1JOnWeNKd90AXVrhix7sGd4BWCRvQorEp1pGv3lBrmOV+1hR/TmffMG1g
+ PU2tCqaTeCAxD9s9lB9uQa5Rnk11IQoGoyYJVp+cssNXHOy7cvJsY9MyRVq8gMV8kcDz2o3s6Im
+ Im4yXhBHky5rZrME9SG8ZzyFQI3fVkk6I5tnFCr/pLvcHNL5XmqloVOF86+XCqy18IB7oHW5A7n
+ cb+sfWRRF3KFgs9s6JFHhaj0r3F2eJseEMRIi1QN8bt9wpRP26v001BLdNVRrg1Zos+hy4evDDx
+ EGbW5qVT2tBiM+MBXynX/d6Xf1MV5cHp80nLdCeva3S3VqQ0SHQu4Olmx701j7yqwW5yfwN19Ku
+ zwuT87AfqDvJIKohc8EykrxUXlJ8xW2ddhJnQxHeD2
+X-Received: by 2002:a17:903:3c67:b0:2ae:8272:deb0 with SMTP id
+ d9443c01a7336-2b5f9ebd04amr411907525ad.15.1777210832478; 
+ Sun, 26 Apr 2026 06:40:32 -0700 (PDT)
+Received: from stoup.. ([180.233.125.15]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b5fab30f29sm277940375ad.68.2026.04.26.06.40.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 26 Apr 2026 06:40:31 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+	qemu-s390x@nongnu.org
+Subject: [PATCH 09/84] fpu: Reverse the order of softfloat-parts* inclusions
+Date: Sun, 26 Apr 2026 23:38:46 +1000
+Message-ID: <20260426134002.865628-10-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260426134002.865628-1-richard.henderson@linaro.org>
+References: <20260426134002.865628-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20260425144852.46590-1-deller@kernel.org>
- <CANCZdfoOPvn0JJiF5Nar_UNEWMzmQCvEiTKV1vbuVFy2qiMpfQ@mail.gmail.com>
- <d54586b6-8213-48e7-9e7e-2c966948872d@gmx.de>
- <CANCZdfqa2XU9OHt3kJATkaU2D+g2=afRdjNvYE0o6Hx8YvFy0g@mail.gmail.com>
-In-Reply-To: <CANCZdfqa2XU9OHt3kJATkaU2D+g2=afRdjNvYE0o6Hx8YvFy0g@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 26 Apr 2026 14:06:19 +0100
-X-Gm-Features: AVHnY4J3-BFOxCuZUe7hxUUKaJnHtN_CbI3Xk2Cumve9jbkCTf4fZ3HcKVxB8TE
-Message-ID: <CAFEAcA-9A+sFfaJEF=AcCPkpDB-i+fbdG_uvn==utNFHjCtwkg@mail.gmail.com>
-Subject: Re: [PATCH] linux-user: Flush errors by using exit() instead of
- _exit() in error path
-To: Warner Losh <imp@bsdimp.com>
-Cc: Helge Deller <deller@gmx.de>, Helge Deller <deller@kernel.org>,
- qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,37 +100,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 25 Apr 2026 at 16:51, Warner Losh <imp@bsdimp.com> wrote:
-> I don't think this will break anything. The printf can't possibly work, either
-> we must change it to a write or do the exit. exit is done everywhere else.
-> This has been wrong since:
->
-> commit 03cfd8faa7ffb7201e2949b99c2f35b1fef7078b
-> Author: Laurent Vivier <laurent@vivier.eu>
-> Date:   Fri Aug 30 01:46:44 2013 +0200
->
->     linux-user: add support of binfmt_misc 'O' flag
-> ...
-> +    if (execfd < 0) {
-> +        printf("Error while loading %s: %s\n", filename, strerror(-execfd));
-> +        _exit(1);
-> +    }
-> ...
-> but the full commit log doesn't say why.
+Define the widest addition primitives first, so that
+they're already defined before being used by the
+narrower muladd primitive.
 
-My guess is that the "print an error and exit" if() block was
-simply copied from the bit further down that does:
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ fpu/softfloat.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-    if (ret != 0) {
-        printf("Error while loading %s: %s\n", exec_path, strerror(-ret));
-        _exit(EXIT_FAILURE);
-    }
+diff --git a/fpu/softfloat.c b/fpu/softfloat.c
+index e5d8b9573a..aa96ac530d 100644
+--- a/fpu/softfloat.c
++++ b/fpu/softfloat.c
+@@ -1638,14 +1638,11 @@ static const uint16_t rsqrt_tab[128] = {
+ #define FloatPartsN    glue(FloatParts,N)
+ #define FloatPartsW    glue(FloatParts,W)
+ 
+-#define N 64
+-#define W 128
++#define N 256
+ 
+ #include "softfloat-parts-addsub.c.inc"
+-#include "softfloat-parts.c.inc"
+ 
+ #undef  N
+-#undef  W
+ #define N 128
+ #define W 256
+ 
+@@ -1654,9 +1651,11 @@ static const uint16_t rsqrt_tab[128] = {
+ 
+ #undef  N
+ #undef  W
+-#define N            256
++#define N 64
++#define W 128
+ 
+ #include "softfloat-parts-addsub.c.inc"
++#include "softfloat-parts.c.inc"
+ 
+ #undef  N
+ #undef  W
+-- 
+2.43.0
 
-for the loader_exec failure case. That one dates back to
-commit 74cd30b811cc2f in 2003, which changes some exit() calls
-to _exit(). I have no idea why, and the commit message is cryptic
-and useless. But it seems unlikely that the reason is still
-relevant today.
-
--- PMM
 
