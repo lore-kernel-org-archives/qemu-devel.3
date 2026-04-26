@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DDDFFF885C
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 13:48:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27A32FF885C
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 13:48:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGznO-0005Rc-TG; Sun, 26 Apr 2026 09:45:16 -0400
+	id 1wGzox-0006dT-Vd; Sun, 26 Apr 2026 09:47:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wGznL-0005HF-1G
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:45:11 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ id 1wGznr-0005ms-CI
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:45:43 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wGznH-0001FB-2g
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:45:09 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-362e50b4641so1620316a91.0
- for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 06:45:06 -0700 (PDT)
+ id 1wGznm-0001Q2-NE
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:45:42 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2adbfab4501so44255705ad.2
+ for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 06:45:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777211106; x=1777815906; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777211137; x=1777815937; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i0Sl15CbZuOenLUjRBqqIJLCi1jF+twJX10P6o1IkLU=;
- b=wOwxHjl9cghebyaUsvxIPjrRUgglyGsauRVYxoYHO1gq/0HrDU1eHpH12hh4QJ05WA
- pzvz6G4QzDBJGXOGbhMWfCASik9lUgAVph4OCWZVlS3tCQ5yMIY0bCqGiKr8nWI4znRC
- ihQ6XD4OuU+SIAPuyylEb8QNKZKBhyTZoWriRwC/J/rVDyLcSOfuc5rT0tqLT0dfdgKI
- WJCfJmti9wX1v2DWaVsTyBAfeXRMvYvJ4zIjMcvCukCrOVB/1eSUO9uk1pPSsWoPFJld
- xkjcVc1IREHHrrzSh1GS1oFLq7MsCgjyks2wEEt5FXvgOyG0fo4wfviPNMTOX8jq3Hgk
- afxw==
+ bh=L/ftQiotywHoX9E8XzX0XwrkoezWs1gu+rPw1xNgooc=;
+ b=zp/geZ44w0T0bPk8QitWMKyLuRH9rE6gOLXL6hECF/TlLapTBcHAkdjjvCp2jMZY6H
+ 3eRiRC45k1duzDufustSewh+smvRj9c7JCDY34fu8qquyYXPnm3zAP09K95N6M90A/F0
+ JGxk8vBqs+umyQRIDxTUgoDpxgG5bAauAKV9WSm7TNIwryvqG7dZGG+O3l1LuXZqlUI6
+ /gTM3zw82mucJEsDtT2BbWuhsch7i8mT+hyfcG67+kTZM078xg3PMAz2ZLxBDfX5s9lw
+ eH8RouU2isd+4v7PNlsae2SRHfwXOYu/LBfg32N43zBzK/y8TLwGv/BXjEeFXsTq5BOi
+ iKYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777211106; x=1777815906;
+ d=1e100.net; s=20251104; t=1777211137; x=1777815937;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=i0Sl15CbZuOenLUjRBqqIJLCi1jF+twJX10P6o1IkLU=;
- b=drSMDso/uRN+XbPDc1/xj9jv5I+oeQDuCQqDu1Cd3xW/s0989RQHRXQJq5j+00nuHO
- JdYgQnNYgT+QRnpcS93nRzZ6W47VCsoXLi0/5xzobi35e4bJR9x850s6rD8hLE71AFmK
- jiO9JnG1F+RbykD1WpBgMKkdCFQP8vCxbQ5hjPcg6aRAGgpETnrG2yux/h8H5QQmC7Fy
- LNWn0lBs4CC5jJQI9ABzO0OsSkTaZT2raGwjsHxupWMuiNTED3xipnIYUphzY4/ygzHC
- l0vJlAhcjYP8dOo+VbUS2d1mXQu1YJ51/uZxNEgPGpXPE4aOuGf38BUQiLJaFoslfiyJ
- 3MoQ==
-X-Gm-Message-State: AOJu0YzzJNXiod+LC+O2/7TWBONeUhmYVP9xzSOrmDoyM9TLx2xXbNuR
- Ka6YWypgXs/zlHmoeqDdP1X9Nv5sk7MUoaSXjU3v6Prgp+VKaC8xdklu+dJadE1Oj9tI9EWLEbp
- g/EsPkvE=
-X-Gm-Gg: AeBDietnQn+O2b+FC/C+E9v5MTWAfbwxYomaYCfE5EUjlhlaMvzP/aqIK/Y9+mnQP+w
- Xp47USBagfPbeloslJBA/4bDd+V4aDdV91HSW00YEW+PdjDpIE/GOSQF72/+gmv/AiUlZqvezKu
- dk/b0wtX9Njysd9MrXFsF66sIKKkaWrsmMHe6oNdyGTWNS5qFd7LMGVxqY0rTEyVgmE0SXF+5GT
- JoRSi2xu+oHT9MbGTnDlVWwbGQA41zBmKqfUFX84nvwn8oBnZmxuI4q5O1iR3eftEFJ45M8NjfC
- d1/YUcHCRHM6W4UPpp219A+QZWJ1XZVWWXlI69QzbaYxxB8uz7z32aySOv5gs6ZMTm7eDxvksDG
- LPejckrzCx1WhvP8Kn6V6ur4kRL+R0sUlBhef/NRVbiaAcQ6BNRGhGtZzbk48atNf3CH3tvUY45
- z3nIMWAmXSUeTnMgjgTi4LPbnfhMYKG2JiP2jd+cwK
-X-Received: by 2002:a17:903:907:b0:2ae:54b2:27c7 with SMTP id
- d9443c01a7336-2b5f9fecc37mr394644285ad.39.1777211105496; 
- Sun, 26 Apr 2026 06:45:05 -0700 (PDT)
+ bh=L/ftQiotywHoX9E8XzX0XwrkoezWs1gu+rPw1xNgooc=;
+ b=sQmzZsrg2i27Y2CaBlRKUW0jyWDrMWU2ASf+L3xGHITdkU8SIB045mUa+Hdcb/acUl
+ ReIwluwSclAWdnEiXvxzMdpIz9gpVXWQ5ON9Ol33hnr8okMtkRRx2cmGZOS2Zw3o+wLG
+ iYGKuW3+Cvz7VI1aINDdSU0x6zLQX1+eSxTejZ2jf59rhorADZjzlUaMh/vg3oVfTX4D
+ qk3C8d7FaVZPqwcb6BMVItAqtGpd/O2ixTbwyT9iECRHVeXrYPX79d7TyJKDqheVr/rX
+ HNh++EKbiHxJczX0Eg7dl+e+RLkt0gzO5PsQg3fQDAKaco3Ozk+VkEqeRT4/1ZL5MDXo
+ stfA==
+X-Gm-Message-State: AOJu0YxIQ04H8qeZrnT2FZdomHfsiSmDpSLTvHzR3GWX94qfR1wbF07/
+ 7aeKY/Zv/Izv79Xbg6+mneSZVN/7sEwvRb6s19q4dLo0M9ZobmJumAAo8G/Ugkfd4rrmmkF9WKE
+ 8qSbOLEc=
+X-Gm-Gg: AeBDievUAK6Pgvwf+dQMJlt38wo9jWt2v05Cp3VdWIwZN0LjBBAVv5VU+pwVr3jAxUo
+ iqKChMnFhewT1hvFlFxyvy9GXn6/fz7RPKdwckO71Y6wigEib9EQilY8vbbRztulOK5IhUrSMFZ
+ 7UbcJVZ+XuagNE9k8qB4ICjzUY/tg6ltctTrErREG2g1cEWnbnkWn7xb0470vXmfLc2H7kz8cIk
+ aXZSBM7QEXkFwhDs0EbNlw+BRAb6e+MvH8FzkriUeITzVhN+tn4fF31/0A5UX4CpKdQ1TnXbGHP
+ GVMeEBkyW2sqU8LPK2zEFGcY2XsOTg6u1hzzcCLAoy1WgcIt/vmLNlUduE7e5ohVPY7Coow7wYD
+ 3o6WEqfKt/HMyg58UL7fBm8OKY9ftdLXitdkRYQjt+XgPRmx84Zs1lhv7bxN6NudRQStaZm0XYm
+ LGJ+OiWqBcUAUdrBiMWzW919ohZbCu9/3AHsJatMx0
+X-Received: by 2002:a17:902:74c2:b0:2b0:6d33:e7c0 with SMTP id
+ d9443c01a7336-2b5f9ecaea6mr315321275ad.1.1777211137204; 
+ Sun, 26 Apr 2026 06:45:37 -0700 (PDT)
 Received: from stoup.. ([180.233.125.15]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5faa34ea7sm280544085ad.34.2026.04.26.06.45.03
+ d9443c01a7336-2b5faa34ea7sm280544085ad.34.2026.04.26.06.45.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Apr 2026 06:45:05 -0700 (PDT)
+ Sun, 26 Apr 2026 06:45:36 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	qemu-s390x@nongnu.org
-Subject: [PATCH 43/84] fpu: Return struct from float{32,64}_unpack_canonical
-Date: Sun, 26 Apr 2026 23:39:20 +1000
-Message-ID: <20260426134002.865628-44-richard.henderson@linaro.org>
+Subject: [PATCH 54/84] fpu: Inline float64_pack_raw into callers
+Date: Sun, 26 Apr 2026 23:39:31 +1000
+Message-ID: <20260426134002.865628-55-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260426134002.865628-1-richard.henderson@linaro.org>
 References: <20260426134002.865628-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,738 +100,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We must change float32 and float64 at once because
-of the DEFINE_S390_DIVIDE_TO_INTEGER macro.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- fpu/softfloat.c | 300 +++++++++++++++++-------------------------------
- 1 file changed, 107 insertions(+), 193 deletions(-)
+ fpu/softfloat.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
 
 diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index e1b92b38b6..b3208c1891 100644
+index d1acf383e9..302612fe42 100644
 --- a/fpu/softfloat.c
 +++ b/fpu/softfloat.c
-@@ -1516,11 +1516,11 @@ static bfloat16 bfloat16_round_pack_canonical(FloatParts64 *p,
-     return bfloat16_pack_raw(p);
+@@ -673,11 +673,6 @@ static uint64_t pack_raw64(const FloatParts64 *p, const FloatFmt *fmt)
+     return ret;
  }
  
--static void float32_unpack_canonical(FloatParts64 *p, float32 f,
--                                     float_status *s)
-+static FloatParts64 float32_unpack_canonical(float32 f, float_status *s)
- {
--    *p = unpack_raw64(&float32_params, f);
--    parts64_canonicalize(p, s, &float32_params);
-+    FloatParts64 p = unpack_raw64(&float32_params, f);
-+    parts64_canonicalize(&p, s, &float32_params);
-+    return p;
- }
- 
- static float32 float32_round_pack_canonical(FloatParts64 *p,
-@@ -1530,11 +1530,11 @@ static float32 float32_round_pack_canonical(FloatParts64 *p,
-     return float32_pack_raw(p);
- }
- 
--static void float64_unpack_canonical(FloatParts64 *p, float64 f,
--                                     float_status *s)
-+static FloatParts64 float64_unpack_canonical(float64 f, float_status *s)
- {
--    *p = unpack_raw64(&float64_params, f);
--    parts64_canonicalize(p, s, &float64_params);
-+    FloatParts64 p = unpack_raw64(&float64_params, f);
-+    parts64_canonicalize(&p, s, &float64_params);
-+    return p;
- }
- 
- static float64 float64_round_pack_canonical(FloatParts64 *p,
-@@ -1722,11 +1722,9 @@ float16 float16_sub(float16 a, float16 b, float_status *status)
- static float32 QEMU_SOFTFLOAT_ATTR
- soft_f32_addsub(float32 a, float32 b, float_status *status, bool subtract)
- {
--    FloatParts64 pa, pb, *pr;
+-static float64 QEMU_FLATTEN float64_pack_raw(const FloatParts64 *p)
+-{
+-    return make_float64(pack_raw64(p, &float64_params));
+-}
 -
--    float32_unpack_canonical(&pa, a, status);
--    float32_unpack_canonical(&pb, b, status);
--    pr = parts64_addsub(&pa, &pb, status, subtract);
-+    FloatParts64 pa = float32_unpack_canonical(a, status);
-+    FloatParts64 pb = float32_unpack_canonical(b, status);
-+    FloatParts64 *pr = parts64_addsub(&pa, &pb, status, subtract);
- 
-     return float32_round_pack_canonical(pr, status);
- }
-@@ -1744,11 +1742,9 @@ static float32 soft_f32_sub(float32 a, float32 b, float_status *status)
- static float64 QEMU_SOFTFLOAT_ATTR
- soft_f64_addsub(float64 a, float64 b, float_status *status, bool subtract)
+ static float128 QEMU_FLATTEN float128_pack_raw(const FloatParts128 *p)
  {
--    FloatParts64 pa, pb, *pr;
--
--    float64_unpack_canonical(&pa, a, status);
--    float64_unpack_canonical(&pb, b, status);
--    pr = parts64_addsub(&pa, &pb, status, subtract);
-+    FloatParts64 pa = float64_unpack_canonical(a, status);
-+    FloatParts64 pb = float64_unpack_canonical(b, status);
-+    FloatParts64 *pr = parts64_addsub(&pa, &pb, status, subtract);
- 
-     return float64_round_pack_canonical(pr, status);
- }
-@@ -1841,11 +1837,9 @@ float64_sub(float64 a, float64 b, float_status *s)
- static float64 float64r32_addsub(float64 a, float64 b, float_status *status,
-                                  bool subtract)
+     const int f_size = float128_params.frac_size - 64;
+@@ -1506,7 +1501,7 @@ static float64 float64_round_pack_canonical(FloatParts64 *p,
+                                             float_status *s)
  {
--    FloatParts64 pa, pb, *pr;
--
--    float64_unpack_canonical(&pa, a, status);
--    float64_unpack_canonical(&pb, b, status);
--    pr = parts64_addsub(&pa, &pb, status, subtract);
-+    FloatParts64 pa = float64_unpack_canonical(a, status);
-+    FloatParts64 pb = float64_unpack_canonical(b, status);
-+    FloatParts64 *pr = parts64_addsub(&pa, &pb, status, subtract);
- 
-     return float64r32_round_pack_canonical(pr, status);
- }
-@@ -1942,11 +1936,9 @@ float16 QEMU_FLATTEN float16_mul(float16 a, float16 b, float_status *status)
- static float32 QEMU_SOFTFLOAT_ATTR
- soft_f32_mul(float32 a, float32 b, float_status *status)
- {
--    FloatParts64 pa, pb, *pr;
--
--    float32_unpack_canonical(&pa, a, status);
--    float32_unpack_canonical(&pb, b, status);
--    pr = parts64_mul(&pa, &pb, status);
-+    FloatParts64 pa = float32_unpack_canonical(a, status);
-+    FloatParts64 pb = float32_unpack_canonical(b, status);
-+    FloatParts64 *pr = parts64_mul(&pa, &pb, status);
- 
-     return float32_round_pack_canonical(pr, status);
- }
-@@ -1954,11 +1946,9 @@ soft_f32_mul(float32 a, float32 b, float_status *status)
- static float64 QEMU_SOFTFLOAT_ATTR
- soft_f64_mul(float64 a, float64 b, float_status *status)
- {
--    FloatParts64 pa, pb, *pr;
--
--    float64_unpack_canonical(&pa, a, status);
--    float64_unpack_canonical(&pb, b, status);
--    pr = parts64_mul(&pa, &pb, status);
-+    FloatParts64 pa = float64_unpack_canonical(a, status);
-+    FloatParts64 pb = float64_unpack_canonical(b, status);
-+    FloatParts64 *pr = parts64_mul(&pa, &pb, status);
- 
-     return float64_round_pack_canonical(pr, status);
- }
-@@ -1989,11 +1979,9 @@ float64_mul(float64 a, float64 b, float_status *s)
- 
- float64 float64r32_mul(float64 a, float64 b, float_status *status)
- {
--    FloatParts64 pa, pb, *pr;
--
--    float64_unpack_canonical(&pa, a, status);
--    float64_unpack_canonical(&pb, b, status);
--    pr = parts64_mul(&pa, &pb, status);
-+    FloatParts64 pa = float64_unpack_canonical(a, status);
-+    FloatParts64 pb = float64_unpack_canonical(b, status);
-+    FloatParts64 *pr = parts64_mul(&pa, &pb, status);
- 
-     return float64r32_round_pack_canonical(pr, status);
- }
-@@ -2066,12 +2054,10 @@ float32 QEMU_SOFTFLOAT_ATTR
- float32_muladd_scalbn(float32 a, float32 b, float32 c,
-                       int scale, int flags, float_status *status)
- {
--    FloatParts64 pa, pb, pc, *pr;
--
--    float32_unpack_canonical(&pa, a, status);
--    float32_unpack_canonical(&pb, b, status);
--    float32_unpack_canonical(&pc, c, status);
--    pr = parts64_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
-+    FloatParts64 pa = float32_unpack_canonical(a, status);
-+    FloatParts64 pb = float32_unpack_canonical(b, status);
-+    FloatParts64 pc = float32_unpack_canonical(c, status);
-+    FloatParts64 *pr = parts64_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
- 
-     /* Round before applying negate result. */
-     parts64_uncanon(pr, status, &float32_params, false);
-@@ -2085,12 +2071,10 @@ float64 QEMU_SOFTFLOAT_ATTR
- float64_muladd_scalbn(float64 a, float64 b, float64 c,
-                       int scale, int flags, float_status *status)
- {
--    FloatParts64 pa, pb, pc, *pr;
--
--    float64_unpack_canonical(&pa, a, status);
--    float64_unpack_canonical(&pb, b, status);
--    float64_unpack_canonical(&pc, c, status);
--    pr = parts64_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
-+    FloatParts64 pa = float64_unpack_canonical(a, status);
-+    FloatParts64 pb = float64_unpack_canonical(b, status);
-+    FloatParts64 pc = float64_unpack_canonical(c, status);
-+    FloatParts64 *pr = parts64_muladd_scalbn(&pa, &pb, &pc, scale, flags, status);
- 
-     /* Round before applying negate result. */
-     parts64_uncanon(pr, status, &float64_params, false);
-@@ -2244,12 +2228,10 @@ float64_muladd(float64 xa, float64 xb, float64 xc, int flags, float_status *s)
- float64 float64r32_muladd(float64 a, float64 b, float64 c,
-                           int flags, float_status *status)
- {
--    FloatParts64 pa, pb, pc, *pr;
--
--    float64_unpack_canonical(&pa, a, status);
--    float64_unpack_canonical(&pb, b, status);
--    float64_unpack_canonical(&pc, c, status);
--    pr = parts64_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
-+    FloatParts64 pa = float64_unpack_canonical(a, status);
-+    FloatParts64 pb = float64_unpack_canonical(b, status);
-+    FloatParts64 pc = float64_unpack_canonical(c, status);
-+    FloatParts64 *pr = parts64_muladd_scalbn(&pa, &pb, &pc, 0, flags, status);
- 
-     /* Round before applying negate result. */
-     parts64_uncanon(pr, status, &float32_params, false);
-@@ -2309,11 +2291,9 @@ float16 float16_div(float16 a, float16 b, float_status *status)
- static float32 QEMU_SOFTFLOAT_ATTR
- soft_f32_div(float32 a, float32 b, float_status *status)
- {
--    FloatParts64 pa, pb, *pr;
--
--    float32_unpack_canonical(&pa, a, status);
--    float32_unpack_canonical(&pb, b, status);
--    pr = parts64_div(&pa, &pb, status);
-+    FloatParts64 pa = float32_unpack_canonical(a, status);
-+    FloatParts64 pb = float32_unpack_canonical(b, status);
-+    FloatParts64 *pr = parts64_div(&pa, &pb, status);
- 
-     return float32_round_pack_canonical(pr, status);
- }
-@@ -2321,11 +2301,9 @@ soft_f32_div(float32 a, float32 b, float_status *status)
- static float64 QEMU_SOFTFLOAT_ATTR
- soft_f64_div(float64 a, float64 b, float_status *status)
- {
--    FloatParts64 pa, pb, *pr;
--
--    float64_unpack_canonical(&pa, a, status);
--    float64_unpack_canonical(&pb, b, status);
--    pr = parts64_div(&pa, &pb, status);
-+    FloatParts64 pa = float64_unpack_canonical(a, status);
-+    FloatParts64 pb = float64_unpack_canonical(b, status);
-+    FloatParts64 *pr = parts64_div(&pa, &pb, status);
- 
-     return float64_round_pack_canonical(pr, status);
- }
-@@ -2390,11 +2368,9 @@ float64_div(float64 a, float64 b, float_status *s)
- 
- float64 float64r32_div(float64 a, float64 b, float_status *status)
- {
--    FloatParts64 pa, pb, *pr;
--
--    float64_unpack_canonical(&pa, a, status);
--    float64_unpack_canonical(&pb, b, status);
--    pr = parts64_div(&pa, &pb, status);
-+    FloatParts64 pa = float64_unpack_canonical(a, status);
-+    FloatParts64 pb = float64_unpack_canonical(b, status);
-+    FloatParts64 *pr = parts64_div(&pa, &pb, status);
- 
-     return float64r32_round_pack_canonical(pr, status);
- }
-@@ -2440,22 +2416,18 @@ floatx80 floatx80_div(floatx80 a, floatx80 b, float_status *status)
- 
- float32 float32_rem(float32 a, float32 b, float_status *status)
- {
--    FloatParts64 pa, pb, *pr;
--
--    float32_unpack_canonical(&pa, a, status);
--    float32_unpack_canonical(&pb, b, status);
--    pr = parts64_modrem(&pa, &pb, NULL, status);
-+    FloatParts64 pa = float32_unpack_canonical(a, status);
-+    FloatParts64 pb = float32_unpack_canonical(b, status);
-+    FloatParts64 *pr = parts64_modrem(&pa, &pb, NULL, status);
- 
-     return float32_round_pack_canonical(pr, status);
+     parts64_uncanon(p, s, &float64_params, false);
+-    return float64_pack_raw(p);
++    return pack_raw64(p, &float64_params);
  }
  
- float64 float64_rem(float64 a, float64 b, float_status *status)
- {
--    FloatParts64 pa, pb, *pr;
--
--    float64_unpack_canonical(&pa, a, status);
--    float64_unpack_canonical(&pb, b, status);
--    pr = parts64_modrem(&pa, &pb, NULL, status);
-+    FloatParts64 pa = float64_unpack_canonical(a, status);
-+    FloatParts64 pb = float64_unpack_canonical(b, status);
-+    FloatParts64 *pr = parts64_modrem(&pa, &pb, NULL, status);
- 
-     return float64_round_pack_canonical(pr, status);
- }
-@@ -2688,28 +2660,25 @@ float64 float16_to_float64(float16 a, bool ieee, float_status *s)
- 
- float8_e4m3 float32_to_float8_e4m3(float32 a, bool saturate, float_status *s)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float32_unpack_canonical(a, s);
- 
--    float32_unpack_canonical(&p, a, s);
-     parts64_float_to_float(&p, s);
-     return float8_e4m3_round_pack_canonical(&p, s, saturate);
- }
- 
- float8_e5m2 float32_to_float8_e5m2(float32 a, bool saturate, float_status *s)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float32_unpack_canonical(a, s);
- 
--    float32_unpack_canonical(&p, a, s);
-     parts_float_to_e5m2(&p, s, saturate);
-     return float8_e5m2_round_pack_canonical(&p, s, saturate);
- }
- 
- float16 float32_to_float16(float32 a, bool ieee, float_status *s)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float32_unpack_canonical(a, s);
-     const FloatFmt *fmt;
- 
--    float32_unpack_canonical(&p, a, s);
-     if (ieee) {
-         parts64_float_to_float(&p, s);
-         fmt = &float16_params;
-@@ -2723,9 +2692,8 @@ float16 float32_to_float16(float32 a, bool ieee, float_status *s)
- static float64 QEMU_SOFTFLOAT_ATTR
- soft_float32_to_float64(float32 a, float_status *s)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float32_unpack_canonical(a, s);
- 
--    float32_unpack_canonical(&p, a, s);
-     parts64_float_to_float(&p, s);
-     return float64_round_pack_canonical(&p, s);
- }
-@@ -2748,10 +2716,9 @@ float64 float32_to_float64(float32 a, float_status *s)
- 
- float16 float64_to_float16(float64 a, bool ieee, float_status *s)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float64_unpack_canonical(a, s);
-     const FloatFmt *fmt;
- 
--    float64_unpack_canonical(&p, a, s);
-     if (ieee) {
-         parts64_float_to_float(&p, s);
-         fmt = &float16_params;
-@@ -2764,9 +2731,8 @@ float16 float64_to_float16(float64 a, bool ieee, float_status *s)
- 
- float32 float64_to_float32(float64 a, float_status *s)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float64_unpack_canonical(a, s);
- 
--    float64_unpack_canonical(&p, a, s);
-     parts64_float_to_float(&p, s);
-     return float32_round_pack_canonical(&p, s);
- }
-@@ -2805,18 +2771,16 @@ float64 bfloat16_to_float64(bfloat16 a, float_status *s)
- 
- bfloat16 float32_to_bfloat16(float32 a, float_status *s)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float32_unpack_canonical(a, s);
- 
--    float32_unpack_canonical(&p, a, s);
-     parts64_float_to_float(&p, s);
-     return bfloat16_round_pack_canonical(&p, s);
- }
- 
- bfloat16 float64_to_bfloat16(float64 a, float_status *s)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float64_unpack_canonical(a, s);
- 
--    float64_unpack_canonical(&p, a, s);
-     parts64_float_to_float(&p, s);
-     return bfloat16_round_pack_canonical(&p, s);
- }
-@@ -2843,20 +2807,18 @@ float64 float128_to_float64(float128 a, float_status *s)
- 
- float128 float32_to_float128(float32 a, float_status *s)
- {
--    FloatParts64 p64;
-+    FloatParts64 p64 = float32_unpack_canonical(a, s);
-     FloatParts128 p128;
- 
--    float32_unpack_canonical(&p64, a, s);
-     parts_float_to_float_widen(&p128, &p64, s);
-     return float128_round_pack_canonical(&p128, s);
- }
- 
- float128 float64_to_float128(float64 a, float_status *s)
- {
--    FloatParts64 p64;
-+    FloatParts64 p64 = float64_unpack_canonical(a, s);
-     FloatParts128 p128;
- 
--    float64_unpack_canonical(&p64, a, s);
-     parts_float_to_float_widen(&p128, &p64, s);
-     return float128_round_pack_canonical(&p128, s);
- }
-@@ -2901,20 +2863,18 @@ float128 floatx80_to_float128(floatx80 a, float_status *s)
- 
- floatx80 float32_to_floatx80(float32 a, float_status *s)
- {
--    FloatParts64 p64;
-+    FloatParts64 p64 = float32_unpack_canonical(a, s);
-     FloatParts128 p128;
- 
--    float32_unpack_canonical(&p64, a, s);
-     parts_float_to_float_widen(&p128, &p64, s);
-     return floatx80_round_pack_canonical(&p128, s);
- }
- 
- floatx80 float64_to_floatx80(float64 a, float_status *s)
- {
--    FloatParts64 p64;
-+    FloatParts64 p64 = float64_unpack_canonical(a, s);
-     FloatParts128 p128;
- 
--    float64_unpack_canonical(&p64, a, s);
-     parts_float_to_float_widen(&p128, &p64, s);
-     return floatx80_round_pack_canonical(&p128, s);
- }
-@@ -2942,18 +2902,16 @@ float16 float16_round_to_int(float16 a, float_status *s)
- 
- float32 float32_round_to_int(float32 a, float_status *s)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float32_unpack_canonical(a, s);
- 
--    float32_unpack_canonical(&p, a, s);
-     parts64_round_to_int(&p, s->float_rounding_mode, 0, s, &float32_params);
-     return float32_round_pack_canonical(&p, s);
- }
- 
- float64 float64_round_to_int(float64 a, float_status *s)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float64_unpack_canonical(a, s);
- 
--    float64_unpack_canonical(&p, a, s);
-     parts64_round_to_int(&p, s->float_rounding_mode, 0, s, &float64_params);
-     return float64_round_pack_canonical(&p, s);
- }
-@@ -3023,54 +2981,42 @@ int64_t float16_to_int64_scalbn(float16 a, FloatRoundMode rmode, int scale,
- int16_t float32_to_int16_scalbn(float32 a, FloatRoundMode rmode, int scale,
-                                 float_status *s)
- {
--    FloatParts64 p;
--
--    float32_unpack_canonical(&p, a, s);
-+    FloatParts64 p = float32_unpack_canonical(a, s);
-     return parts64_float_to_sint(&p, rmode, scale, INT16_MIN, INT16_MAX, s);
- }
- 
- int32_t float32_to_int32_scalbn(float32 a, FloatRoundMode rmode, int scale,
-                                 float_status *s)
- {
--    FloatParts64 p;
--
--    float32_unpack_canonical(&p, a, s);
-+    FloatParts64 p = float32_unpack_canonical(a, s);
-     return parts64_float_to_sint(&p, rmode, scale, INT32_MIN, INT32_MAX, s);
- }
- 
- int64_t float32_to_int64_scalbn(float32 a, FloatRoundMode rmode, int scale,
-                                 float_status *s)
- {
--    FloatParts64 p;
--
--    float32_unpack_canonical(&p, a, s);
-+    FloatParts64 p = float32_unpack_canonical(a, s);
-     return parts64_float_to_sint(&p, rmode, scale, INT64_MIN, INT64_MAX, s);
- }
- 
- int16_t float64_to_int16_scalbn(float64 a, FloatRoundMode rmode, int scale,
-                                 float_status *s)
- {
--    FloatParts64 p;
--
--    float64_unpack_canonical(&p, a, s);
-+    FloatParts64 p = float64_unpack_canonical(a, s);
-     return parts64_float_to_sint(&p, rmode, scale, INT16_MIN, INT16_MAX, s);
- }
- 
- int32_t float64_to_int32_scalbn(float64 a, FloatRoundMode rmode, int scale,
-                                 float_status *s)
- {
--    FloatParts64 p;
--
--    float64_unpack_canonical(&p, a, s);
-+    FloatParts64 p = float64_unpack_canonical(a, s);
-     return parts64_float_to_sint(&p, rmode, scale, INT32_MIN, INT32_MAX, s);
- }
- 
- int64_t float64_to_int64_scalbn(float64 a, FloatRoundMode rmode, int scale,
-                                 float_status *s)
- {
--    FloatParts64 p;
--
--    float64_unpack_canonical(&p, a, s);
-+    FloatParts64 p = float64_unpack_canonical(a, s);
-     return parts64_float_to_sint(&p, rmode, scale, INT64_MIN, INT64_MAX, s);
- }
- 
-@@ -3455,18 +3401,14 @@ static int64_t parts64_float_to_sint_modulo(FloatParts64 *p,
- int32_t float64_to_int32_modulo(float64 a, FloatRoundMode rmode,
-                                 float_status *s)
- {
--    FloatParts64 p;
--
--    float64_unpack_canonical(&p, a, s);
-+    FloatParts64 p = float64_unpack_canonical(a, s);
-     return parts64_float_to_sint_modulo(&p, rmode, 31, s);
- }
- 
- int64_t float64_to_int64_modulo(float64 a, FloatRoundMode rmode,
-                                 float_status *s)
- {
--    FloatParts64 p;
--
--    float64_unpack_canonical(&p, a, s);
-+    FloatParts64 p = float64_unpack_canonical(a, s);
-     return parts64_float_to_sint_modulo(&p, rmode, 63, s);
- }
- 
-@@ -3505,54 +3447,42 @@ uint64_t float16_to_uint64_scalbn(float16 a, FloatRoundMode rmode, int scale,
- uint16_t float32_to_uint16_scalbn(float32 a, FloatRoundMode rmode, int scale,
-                                   float_status *s)
- {
--    FloatParts64 p;
--
--    float32_unpack_canonical(&p, a, s);
-+    FloatParts64 p = float32_unpack_canonical(a, s);
-     return parts64_float_to_uint(&p, rmode, scale, UINT16_MAX, s);
- }
- 
- uint32_t float32_to_uint32_scalbn(float32 a, FloatRoundMode rmode, int scale,
-                                   float_status *s)
- {
--    FloatParts64 p;
--
--    float32_unpack_canonical(&p, a, s);
-+    FloatParts64 p = float32_unpack_canonical(a, s);
-     return parts64_float_to_uint(&p, rmode, scale, UINT32_MAX, s);
- }
- 
- uint64_t float32_to_uint64_scalbn(float32 a, FloatRoundMode rmode, int scale,
-                                   float_status *s)
- {
--    FloatParts64 p;
--
--    float32_unpack_canonical(&p, a, s);
-+    FloatParts64 p = float32_unpack_canonical(a, s);
-     return parts64_float_to_uint(&p, rmode, scale, UINT64_MAX, s);
- }
- 
- uint16_t float64_to_uint16_scalbn(float64 a, FloatRoundMode rmode, int scale,
-                                   float_status *s)
- {
--    FloatParts64 p;
--
--    float64_unpack_canonical(&p, a, s);
-+    FloatParts64 p = float64_unpack_canonical(a, s);
-     return parts64_float_to_uint(&p, rmode, scale, UINT16_MAX, s);
- }
- 
- uint32_t float64_to_uint32_scalbn(float64 a, FloatRoundMode rmode, int scale,
-                                   float_status *s)
- {
--    FloatParts64 p;
--
--    float64_unpack_canonical(&p, a, s);
-+    FloatParts64 p = float64_unpack_canonical(a, s);
-     return parts64_float_to_uint(&p, rmode, scale, UINT32_MAX, s);
- }
- 
- uint64_t float64_to_uint64_scalbn(float64 a, FloatRoundMode rmode, int scale,
-                                   float_status *s)
- {
--    FloatParts64 p;
--
--    float64_unpack_canonical(&p, a, s);
-+    FloatParts64 p = float64_unpack_canonical(a, s);
-     return parts64_float_to_uint(&p, rmode, scale, UINT64_MAX, s);
- }
- 
-@@ -4266,22 +4196,18 @@ static bfloat16 bfloat16_minmax(bfloat16 a, bfloat16 b,
- 
- static float32 float32_minmax(float32 a, float32 b, float_status *s, int flags)
- {
--    FloatParts64 pa, pb, *pr;
--
--    float32_unpack_canonical(&pa, a, s);
--    float32_unpack_canonical(&pb, b, s);
--    pr = parts64_minmax(&pa, &pb, s, flags);
-+    FloatParts64 pa = float32_unpack_canonical(a, s);
-+    FloatParts64 pb = float32_unpack_canonical(b, s);
-+    FloatParts64 *pr = parts64_minmax(&pa, &pb, s, flags);
- 
-     return float32_round_pack_canonical(pr, s);
- }
- 
- static float64 float64_minmax(float64 a, float64 b, float_status *s, int flags)
- {
--    FloatParts64 pa, pb, *pr;
--
--    float64_unpack_canonical(&pa, a, s);
--    float64_unpack_canonical(&pb, b, s);
--    pr = parts64_minmax(&pa, &pb, s, flags);
-+    FloatParts64 pa = float64_unpack_canonical(a, s);
-+    FloatParts64 pb = float64_unpack_canonical(b, s);
-+    FloatParts64 *pr = parts64_minmax(&pa, &pb, s, flags);
- 
-     return float64_round_pack_canonical(pr, s);
- }
-@@ -4347,10 +4273,9 @@ FloatRelation float16_compare_quiet(float16 a, float16 b, float_status *s)
- static FloatRelation QEMU_SOFTFLOAT_ATTR
- float32_do_compare(float32 a, float32 b, float_status *s, bool is_quiet)
- {
--    FloatParts64 pa, pb;
-+    FloatParts64 pa = float32_unpack_canonical(a, s);
-+    FloatParts64 pb = float32_unpack_canonical(b, s);
- 
--    float32_unpack_canonical(&pa, a, s);
--    float32_unpack_canonical(&pb, b, s);
-     return parts64_compare(&pa, &pb, s, is_quiet);
- }
- 
-@@ -4401,10 +4326,9 @@ FloatRelation float32_compare_quiet(float32 a, float32 b, float_status *s)
- static FloatRelation QEMU_SOFTFLOAT_ATTR
- float64_do_compare(float64 a, float64 b, float_status *s, bool is_quiet)
- {
--    FloatParts64 pa, pb;
-+    FloatParts64 pa = float64_unpack_canonical(a, s);
-+    FloatParts64 pb = float64_unpack_canonical(b, s);
- 
--    float64_unpack_canonical(&pa, a, s);
--    float64_unpack_canonical(&pb, b, s);
-     return parts64_compare(&pa, &pb, s, is_quiet);
- }
- 
-@@ -4527,18 +4451,16 @@ float16 float16_scalbn(float16 a, int n, float_status *status)
- 
- float32 float32_scalbn(float32 a, int n, float_status *status)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float32_unpack_canonical(a, status);
- 
--    float32_unpack_canonical(&p, a, status);
-     parts64_scalbn(&p, n, status);
-     return float32_round_pack_canonical(&p, status);
- }
- 
- float64 float64_scalbn(float64 a, int n, float_status *status)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float64_unpack_canonical(a, status);
- 
--    float64_unpack_canonical(&p, a, status);
-     parts64_scalbn(&p, n, status);
-     return float64_round_pack_canonical(&p, status);
- }
-@@ -4586,9 +4508,8 @@ float16 QEMU_FLATTEN float16_sqrt(float16 a, float_status *status)
- static float32 QEMU_SOFTFLOAT_ATTR
- soft_f32_sqrt(float32 a, float_status *status)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float32_unpack_canonical(a, status);
- 
--    float32_unpack_canonical(&p, a, status);
-     parts64_sqrt(&p, status, &float32_params);
-     return float32_round_pack_canonical(&p, status);
- }
-@@ -4596,9 +4517,8 @@ soft_f32_sqrt(float32 a, float_status *status)
- static float64 QEMU_SOFTFLOAT_ATTR
- soft_f64_sqrt(float64 a, float_status *status)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float64_unpack_canonical(a, status);
- 
--    float64_unpack_canonical(&p, a, status);
-     parts64_sqrt(&p, status, &float64_params);
-     return float64_round_pack_canonical(&p, status);
- }
-@@ -4659,9 +4579,8 @@ float64 QEMU_FLATTEN float64_sqrt(float64 xa, float_status *s)
- 
- float64 float64r32_sqrt(float64 a, float_status *status)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float64_unpack_canonical(a, status);
- 
--    float64_unpack_canonical(&p, a, status);
-     parts64_sqrt(&p, status, &float64_params);
-     return float64r32_round_pack_canonical(&p, status);
- }
-@@ -4822,18 +4741,16 @@ static void parts64_log2(FloatParts64 *a, float_status *s, const FloatFmt *fmt)
- 
- float32 float32_log2(float32 a, float_status *status)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float32_unpack_canonical(a, status);
- 
--    float32_unpack_canonical(&p, a, status);
-     parts64_log2(&p, status, &float32_params);
-     return float32_round_pack_canonical(&p, status);
- }
- 
- float64 float64_log2(float64 a, float_status *status)
- {
--    FloatParts64 p;
-+    FloatParts64 p = float64_unpack_canonical(a, status);
- 
--    float64_unpack_canonical(&p, a, status);
-     parts64_log2(&p, status, &float64_params);
-     return float64_round_pack_canonical(&p, status);
- }
-@@ -5321,10 +5238,9 @@ static const float64 float32_exp2_coefficients[15] =
- 
- float32 float32_exp2(float32 a, float_status *status)
- {
--    FloatParts64 xp, xnp, tp, rp;
--    int i;
-+    FloatParts64 xnp, tp, rp;
-+    FloatParts64 xp = float32_unpack_canonical(a, status);
- 
--    float32_unpack_canonical(&xp, a, status);
-     if (unlikely(xp.cls != float_class_normal)) {
-         switch (xp.cls) {
-         case float_class_denormal:
-@@ -5344,14 +5260,13 @@ float32 float32_exp2(float32 a, float_status *status)
- 
-     float_raise(float_flag_inexact, status);
- 
--    float64_unpack_canonical(&tp, float64_ln2, status);
-+    tp = float64_unpack_canonical(float64_ln2, status);
-     xp = *parts64_mul(&xp, &tp, status);
-     xnp = xp;
- 
--    float64_unpack_canonical(&rp, float64_one, status);
--    for (i = 0 ; i < 15 ; i++) {
--
--        float64_unpack_canonical(&tp, float32_exp2_coefficients[i], status);
-+    rp = float64_unpack_canonical(float64_one, status);
-+    for (int i = 0; i < 15; i++) {
-+        tp = float64_unpack_canonical(float32_exp2_coefficients[i], status);
-         rp = *parts64_muladd_scalbn(&tp, &xnp, &rp, 0, 0, status);
-         xnp = *parts64_mul(&xnp, &xp, status);
+ static float64 float64r32_pack_raw(FloatParts64 *p)
+@@ -1548,7 +1543,7 @@ static float64 float64r32_pack_raw(FloatParts64 *p)
+         g_assert_not_reached();
      }
-@@ -5504,10 +5419,9 @@ void floatN ## _s390_divide_to_integer(floatN a, floatN b,                     \
-                                        uint32_t *cc, int *dxc,                 \
-                                        float_status *status)                   \
- {                                                                              \
--    FloatParts64 pa, pb, pr, pn;                                               \
--                                                                               \
--    floatN ## _unpack_canonical(&pa, a, status);                               \
--    floatN ## _unpack_canonical(&pb, b, status);                               \
-+    FloatParts64 pa = floatN ## _unpack_canonical(a, status);                  \
-+    FloatParts64 pb = floatN ## _unpack_canonical(b, status);                  \
-+    FloatParts64 pr, pn;                                                       \
-     parts_s390_divide_to_integer(&pa, &pb, final_quotient_rounding_mode,       \
-                                  mask_underflow, mask_inexact,                 \
-                                  &floatN ## _params,                           \
+ 
+-    return float64_pack_raw(p);
++    return pack_raw64(p, &float64_params);
+ }
+ 
+ static float64 float64r32_round_pack_canonical(FloatParts64 *p,
+@@ -2047,7 +2042,7 @@ float64_muladd_scalbn(float64 a, float64 b, float64 c,
+     if ((flags & float_muladd_negate_result) && !is_nan(pr->cls)) {
+         pr->sign ^= 1;
+     }
+-    return float64_pack_raw(pr);
++    return pack_raw64(pr, &float64_params);
+ }
+ 
+ static bool force_soft_fma;
+@@ -4725,7 +4720,7 @@ float64 float64_default_nan(float_status *status)
+ 
+     parts64_default_nan(&p, status);
+     p.frac >>= float64_params.frac_shift;
+-    return float64_pack_raw(&p);
++    return pack_raw64(&p, &float64_params);
+ }
+ 
+ float128 float128_default_nan(float_status *status)
+@@ -4777,7 +4772,7 @@ float64 float64_silence_nan(float64 a, float_status *status)
+     p.frac <<= float64_params.frac_shift;
+     parts64_silence_nan(&p, status);
+     p.frac >>= float64_params.frac_shift;
+-    return float64_pack_raw(&p);
++    return pack_raw64(&p, &float64_params);
+ }
+ 
+ bfloat16 bfloat16_silence_nan(bfloat16 a, float_status *status)
 -- 
 2.43.0
 
