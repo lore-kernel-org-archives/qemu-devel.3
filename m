@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77705FF8863
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 13:54:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF4D2FF885D
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 13:55:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGzpY-00084C-2h; Sun, 26 Apr 2026 09:47:28 -0400
+	id 1wGzod-0006B6-DO; Sun, 26 Apr 2026 09:46:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wGzoS-000641-Am
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:46:21 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1wGznd-0005df-Jf
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:45:38 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wGzoH-0001ad-IM
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:46:13 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2ad9a9be502so58240245ad.0
- for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 06:46:09 -0700 (PDT)
+ id 1wGznc-0001Me-40
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:45:29 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2b23fcf90b2so89127375ad.3
+ for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 06:45:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777211168; x=1777815968; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777211126; x=1777815926; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=msDM/QRI7QIDCfItuOZ2/Z+lYJlpqN4Ugy4Q7HtDfI4=;
- b=G7u43X9jf5p7UQJKPHriAaoiYXSgh0RwCVpUtKMjs0+tw6iakAD4nsHlEw22c/NEcI
- Khli1da7XrzmTVrlO7dPbd/r4tcjfAZ699NiyD98ULJXD1zXEdVWKMY4jG8BWb/kUVN+
- Xa5Hb8h3u+M0A+wWQDBseNhP3uWWruVAqJb4sj3HcvSzx3qjyse1e5pOQfjrp3rXiHxG
- R7UszPvuxV9ssKAxvmtFOJ4qmwIpdj+BjihjBqQSoAxbkxkYCz6niALYfd64H1o5yl7D
- iSiPY3l5QcJUM83fKUvLKSdLpYhi6TwNR3d2L4YCa9k7/cLFpR7U1bOMloYxODDRjCyd
- 7CRA==
+ bh=aGWxvB5DOoCsVkn5ow4oJonJhUS77zZ22UYKKqluXkw=;
+ b=lvaTl+rLp3jlNARzx/cMl2dUovAXsyYxMx0M0zBLxHTH4hdUKzP34Z72Vu0AzwTt1q
+ nJ+pAyrA3YtDZ4Pl3otL1E/yuXnDO2elzgG3OjTLAXbnr7jxNPHA7NrYjph8XsWtrEoc
+ DD3rLwFxqcWtAPunolVD6pIHBUnzDSxJQ3aLe3ED1yLDt5xNGOjP5y640fllWFn8PIhe
+ /59BH0QZzQiJb24BI/uAjWE9fT4sxl1P1boAWzjj/BIIWmyInSV1xHn7LCyv8WJjXxx8
+ mYHMgcV/BiVd4x3cG2MBZdJ/PIVeeoHyQhwsHUsJsYxgPxym6l3svZbLM6kdB7uevk5h
+ vJmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777211168; x=1777815968;
+ d=1e100.net; s=20251104; t=1777211126; x=1777815926;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=msDM/QRI7QIDCfItuOZ2/Z+lYJlpqN4Ugy4Q7HtDfI4=;
- b=ISaUk2zfow9Ipz7LZM3wpRK4tISR6jmR8g7Wdxjs9/6Ow//ypcqGnX2I8iVQF+jsOh
- 3rf7dd6SkUpJhvFHPJO8ACk2TCZho9HTqWovmFTBzsHTzCGn0V3QD+TbVV+X2SbTl3WS
- KMz+UYfMIFTF/2Xn2lQY5/DVbCLJa0HaFJDC0YVwaprXlNggmKAU62cswC90Ue3A3H6J
- tIkzIMMiFaMdPX1e3Ue0W0JEVu1lzxSAclg2tocSpObUgpG6y0jIzDPSTfMZGxFgEK2B
- m01mDOqizmWrZEMLmI0W2U2b640pmxbXMB8gDRiQIZBTkkXeFZrUuuZa5GCizkgdASl1
- WEvw==
-X-Gm-Message-State: AOJu0YwYNedd/7KSXtRSjDXxOFuTUM9ty68gWob/aD/qSIlQi9c06fnq
- AXPYaXePUllEf31KkEqgoDGU25NatTjVdrwxVy4nW1+fUPm11AQ8vpM1WpkeGfV9aGANqPcl+tq
- Diuwifkc=
-X-Gm-Gg: AeBDievERDYT4g485ozBPCdr6qVKrMSOzt1i/te1DJB2mANvaGOx2BxAN08RCp+SofP
- rFecP1e1WPS6pFV7XR4ShA9Wiia7TJIUT0oMU3GQx9CvMP57Wfr+lHzKgzedZzmbrfgAwvhMgQg
- +a/EDX2qb0KSTEG6PfNz57yvl5GV2GkK35QsrMtlsFbt97vVGO4sDTxeRP0tGn4MHedNSh+SUMW
- g362wIjaMcJHrRgmsMD70WHHZls22+7Wl+AgWJqyWlOMnVPGfdeppr6LfOp+suDxvIJvG/bGzrZ
- f5N0uG1KXY5vmyR3NvjjHeoYkqpzZxFbjans2DEozB1ONYbAB3ezOTVb7fUeCtWylj+U8P1RmTl
- Bx6jRdrcAjTVlaBbBzu9QftHcjBWYDnz4lpdZqEZ+UjnNxKwNf6+jgi7spEFwYrKpMHClzgr7Tv
- z27ug5JwUc38Wa1QUvDoaxWmZACp5TMl5HsGfs++IN7lIEcpgBf38=
-X-Received: by 2002:a17:903:37c4:b0:2b7:abc0:3bd7 with SMTP id
- d9443c01a7336-2b7abc0448fmr151910765ad.9.1777211168046; 
- Sun, 26 Apr 2026 06:46:08 -0700 (PDT)
+ bh=aGWxvB5DOoCsVkn5ow4oJonJhUS77zZ22UYKKqluXkw=;
+ b=S8VQ+A4HltChh1Ws2HrUOJgEe9wOQPCSd6N0PYbGImc++mj7bBwwBZ9s76prpzKj2w
+ KEOlIY878YLUHz+sPSm4HuosLU+m7tPljQcYVYwzP0HPHB1e+0ddO748rgs1VXzGAcRh
+ HgGAZ9jbYMxeadZwPWlDKAsq5jBD9tyR74dtPuvFY71UT7XmFU808hsXWD/QqtWET0sP
+ Aen/V0F31txWpDqDC6NRDP3jiMUDdYB6mK2KsDSiAeImEEhYt5r1xkjzkXZJvZMQR5Q1
+ kts8yjZIaQD9heUThpkVRnEpYMX88XlWrrUBhxDbz7+hDwse5AOcZwJWqvfCVlB2POg0
+ 2aLA==
+X-Gm-Message-State: AOJu0YzzuNF+nNIvZTrwiyEAVnopjRF++JxgtF/Kdb7biUrI9SXwRL95
+ 3PBzHK4pnD1v9ETP5yhUH0tskrLssbi7gxvmLXhPLZDAIOFahdRnINAcNqQVmHI5XshF1iXQz63
+ B6gKipPI=
+X-Gm-Gg: AeBDiesFJ2evf+d1tJlw3NllNwh1YVZWqszUjH5fxD60hlMBoZ2teEOr6mR073mq36E
+ qLp0ckMqKZaj29e5E3jWHTr9O5aFh/vadWKHrCxHjbTSHnZJ8v0kKxzDEkeOGg5Yak0YeVSeFJB
+ XsaHhIrBflVWC+nqbeIm7JIQEb1R+pr6uhOGhXbNn9jzIVvYcnIq3fOg1G057kYMLJdRIZgGsDa
+ V0KK2+Y5o6GJH/GyAAjlILUQDf40uFif03LWnkoAMp0pZv9SEAAAZ7rbxuOF638AbTu4kzqepJr
+ gwyzggQ+ElIovPbEJvb57+T2VvI4pqhK3A+RlMNqlpBMxVJwKO9MISDX6vv1goiSfxbcnzoFMuH
+ HZN7Eb9NdK5SgcY32e8TtbPsfu6wxill4U0xQmtQmaNdsIY0ryJTzmCAFWuMUrYPw4xJL5neP2X
+ ZCtFZft4kW5EQnmMFcWjWly+Jcvz8/HiQ8l+9nZgMI
+X-Received: by 2002:a17:902:f08d:b0:2b2:4ded:954e with SMTP id
+ d9443c01a7336-2b5f9f2f6ebmr270942755ad.24.1777211126497; 
+ Sun, 26 Apr 2026 06:45:26 -0700 (PDT)
 Received: from stoup.. ([180.233.125.15]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5faa34ea7sm280544085ad.34.2026.04.26.06.46.06
+ d9443c01a7336-2b5faa34ea7sm280544085ad.34.2026.04.26.06.45.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Apr 2026 06:46:07 -0700 (PDT)
+ Sun, 26 Apr 2026 06:45:25 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	qemu-s390x@nongnu.org
-Subject: [PATCH 66/84] fpu: Return struct from parts{64,128}_round_to_int
-Date: Sun, 26 Apr 2026 23:39:43 +1000
-Message-ID: <20260426134002.865628-67-richard.henderson@linaro.org>
+Subject: [PATCH 50/84] fpu: Inline float8_e5m2_pack_raw into single caller
+Date: Sun, 26 Apr 2026 23:39:27 +1000
+Message-ID: <20260426134002.865628-51-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260426134002.865628-1-richard.henderson@linaro.org>
 References: <20260426134002.865628-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,116 +102,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- fpu/softfloat.c           | 19 ++++++++++++-------
- fpu/softfloat-parts.c.inc | 21 ++++++++++++---------
- 2 files changed, 24 insertions(+), 16 deletions(-)
+ fpu/softfloat.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
 diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 6d69b61c7f..b71bd49483 100644
+index 18f2ca900f..5269e5f977 100644
 --- a/fpu/softfloat.c
 +++ b/fpu/softfloat.c
-@@ -2738,7 +2738,8 @@ float16 float16_round_to_int(float16 a, float_status *s)
+@@ -673,11 +673,6 @@ static uint64_t pack_raw64(const FloatParts64 *p, const FloatFmt *fmt)
+     return ret;
+ }
+ 
+-static float8_e5m2 QEMU_FLATTEN float8_e5m2_pack_raw(const FloatParts64 *p)
+-{
+-    return pack_raw64(p, &float8_e5m2_params);
+-}
+-
+ static float16 QEMU_FLATTEN float16_pack_raw(const FloatParts64 *p)
  {
-     FloatParts64 p = float16_unpack_canonical(a, s);
- 
--    parts64_round_to_int(&p, s->float_rounding_mode, 0, s, &float16_params);
-+    p = parts64_round_to_int(&p, s->float_rounding_mode, 0, s,
-+                             &float16_params);
-     return float16_round_pack_canonical(&p, s);
- }
- 
-@@ -2746,7 +2747,8 @@ float32 float32_round_to_int(float32 a, float_status *s)
+     return make_float16(pack_raw64(p, &float16_params));
+@@ -1477,7 +1472,7 @@ static float8_e5m2 float8_e5m2_round_pack_canonical(FloatParts64 *p,
+                                                     bool saturate)
  {
-     FloatParts64 p = float32_unpack_canonical(a, s);
- 
--    parts64_round_to_int(&p, s->float_rounding_mode, 0, s, &float32_params);
-+    p = parts64_round_to_int(&p, s->float_rounding_mode, 0, s,
-+                             &float32_params);
-     return float32_round_pack_canonical(&p, s);
+     parts64_uncanon(p, s, &float8_e5m2_params, saturate);
+-    return float8_e5m2_pack_raw(p);
++    return pack_raw64(p, &float8_e5m2_params);
  }
  
-@@ -2754,7 +2756,8 @@ float64 float64_round_to_int(float64 a, float_status *s)
- {
-     FloatParts64 p = float64_unpack_canonical(a, s);
- 
--    parts64_round_to_int(&p, s->float_rounding_mode, 0, s, &float64_params);
-+    p = parts64_round_to_int(&p, s->float_rounding_mode, 0, s,
-+                             &float64_params);
-     return float64_round_pack_canonical(&p, s);
- }
- 
-@@ -2762,7 +2765,8 @@ bfloat16 bfloat16_round_to_int(bfloat16 a, float_status *s)
- {
-     FloatParts64 p = bfloat16_unpack_canonical(a, s);
- 
--    parts64_round_to_int(&p, s->float_rounding_mode, 0, s, &bfloat16_params);
-+    p = parts64_round_to_int(&p, s->float_rounding_mode, 0, s,
-+                             &bfloat16_params);
-     return bfloat16_round_pack_canonical(&p, s);
- }
- 
-@@ -2770,7 +2774,8 @@ float128 float128_round_to_int(float128 a, float_status *s)
- {
-     FloatParts128 p = float128_unpack_canonical(a, s);
- 
--    parts128_round_to_int(&p, s->float_rounding_mode, 0, s, &float128_params);
-+    p = parts128_round_to_int(&p, s->float_rounding_mode, 0, s,
-+                              &float128_params);
-     return float128_round_pack_canonical(&p, s);
- }
- 
-@@ -2782,8 +2787,8 @@ floatx80 floatx80_round_to_int(floatx80 a, float_status *status)
-         return floatx80_default_nan(status);
-     }
- 
--    parts128_round_to_int(&p, status->float_rounding_mode, 0, status,
--                       &floatx80_params[status->floatx80_rounding_precision]);
-+    p = parts128_round_to_int(&p, status->float_rounding_mode, 0, status,
-+                              &floatx80_params[status->floatx80_rounding_precision]);
-     return floatx80_round_pack_canonical(&p, status);
- }
- 
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index ad53286efc..642ad5dfb9 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -1255,24 +1255,27 @@ static bool partsN(round_to_int_normal)(FloatPartsN *a, FloatRoundMode rmode,
-     return true;
- }
- 
--static void partsN(round_to_int)(FloatPartsN *a, FloatRoundMode rmode,
--                                 int scale, float_status *s,
--                                 const FloatFmt *fmt)
-+static FloatPartsN partsN(round_to_int)(const FloatPartsN *a,
-+                                        FloatRoundMode rmode,
-+                                        int scale, float_status *s,
-+                                        const FloatFmt *fmt)
- {
-     switch (a->cls) {
-     case float_class_qnan:
-     case float_class_snan:
--        *a = partsN(return_nan)(a, s);
--        break;
-+        return partsN(return_nan)(a, s);
-     case float_class_zero:
-     case float_class_inf:
--        break;
-+        return *a;
-     case float_class_normal:
-     case float_class_denormal:
--        if (partsN(round_to_int_normal)(a, rmode, scale, fmt->frac_size)) {
--            float_raise(float_flag_inexact, s);
-+        {
-+            FloatPartsN r = *a;
-+            if (partsN(round_to_int_normal)(&r, rmode, scale, fmt->frac_size)) {
-+                float_raise(float_flag_inexact, s);
-+            }
-+            return r;
-         }
--        break;
-     default:
-         g_assert_not_reached();
-     }
+ static float16 float16a_round_pack_canonical(FloatParts64 *p,
 -- 
 2.43.0
 
