@@ -4,53 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E26E9FF885A
-	for <qemu-devel@archiver.kernel.org>; Sat, 25 Apr 2026 21:00:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D11DDFF8850
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 07:53:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGk6I-00075F-DU; Sat, 25 Apr 2026 16:59:42 -0400
+	id 1wGuII-0000cz-KO; Sun, 26 Apr 2026 03:52:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGk6G-00074i-C2
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 16:59:40 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wGk6E-0006SV-S3
- for qemu-devel@nongnu.org; Sat, 25 Apr 2026 16:59:40 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 0BDC660055;
- Sat, 25 Apr 2026 20:59:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0212C2BCB0;
- Sat, 25 Apr 2026 20:59:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777150776;
- bh=Q/iXGdIHYdJNB8woaida8AHWG6igtbbz4i/W4/TIG+0=;
- h=From:To:Cc:Subject:Date:From;
- b=etqrZiRR2iRDOTlzTXfdQWu1A6PPFkj0XJe49zkVIGf3LD4O5lxgzanKI7/BXz7tx
- 1CEk+XntnCZvdnPUrxT3qB35gFcTAQ4N+O81wRPdqtxBNrfPM6X1PFMtDYo4qNRdd0
- Ll5wYZ9Vaz1rtPg4f+eNJ+kh87Fpdu+D81TRfgI3TcqWVG0fe45OHY7G/RVkvtQenz
- PiEIbbnMxVpO9JPdDfkq1d0EbbHjK8tHq6vrzDv6bxqmmAtQVixaxKd8dd7xdIKmjd
- wJl9uxUfz3AIw7uQVkjXktewybcSVmjdAA9VO2Sxd9EOo27fW2ej/v+2Y7Fd0TI7Oh
- IsU5+DU/UGTTg==
-From: Helge Deller <deller@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: deller@gmx.de
-Subject: [PATCH] linux-user: Add missing CDROM ioctls
-Date: Sat, 25 Apr 2026 22:59:32 +0200
-Message-ID: <20260425205932.176330-1-deller@kernel.org>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
+ id 1wGuIC-0000bk-T9
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 03:52:41 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
+ id 1wGuIA-0006N9-PP
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 03:52:40 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-488a88aeec9so114657015e9.2
+ for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 00:52:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1777189957; x=1777794757; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=tMkUi0r7yzmpH9iWXuskk1HxFeNLDP8o5ANaBDDxtg0=;
+ b=qhSWPHoaT3HFtCjuALP1zI/fsMKkAI0rK/V14QTYaYqEhOgz09sbrvhE+WzAKLE6he
+ 2jTi17Cg+z8stzINwTDj3sOAAp6b/TyTla+pxWtFzeBshpMVh6XFubjEpMq1IVZqAekD
+ ptdCQpYXUtvta1ytfPCGDfvv9SUxhDRNCskyeE+v450Jwo9OuPoDzgqdph317mgjcoZw
+ 1mRlKVwSkdfGjsxFx/yCk65HxN0i8BQQ+9LERhwjT17P5PElHi+OY8ujh3aLkknK+7aP
+ mit/xDz8gpUNz4KEq5AE1DOLREPDNqANVq/2Hdt9+6b9SC+sE4N764wJZM3mUAo7TyZC
+ X3Gw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777189957; x=1777794757;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=tMkUi0r7yzmpH9iWXuskk1HxFeNLDP8o5ANaBDDxtg0=;
+ b=qHZjUKgJFuLw1PX95D3bUzcVbwKLpDAsq3dTa00LA9gcUu3BislNujiW5isjCzlLH6
+ aDPG9HujJICZxJIi7wVreo2X+XRL2u4FVvq8mfZ12Nu6LRPSff0GVL/y7ni80OT4Dpja
+ nbPSFy2yMCKCb6uVYxLDRXd/Okru5jNxCaiBkb4iTOCaH5za3bwBQW2msqrh6gjt5QWZ
+ Qw7PLHNccJrFifiBl/sbTaQ4En4h4yfApHh39NZ5kRJK/0/UuL7LqezHGvpjyzPRiwXj
+ J7DOLG+X3thXoMCs3Jxic8EmFKLLiFPD6J9IUK3UHI7U4wToaoMAzPh96bPRsnVEhCSE
+ umvQ==
+X-Gm-Message-State: AOJu0YwpeVtmX4n83LyBAD89VG2kqQn1S7w63Yqtfntsh+SJKntYOnWc
+ jTF81sNyPXLs+kY0LfWhVZwiCG1VLdUp/4YKBCa/Z1OMxNp6F2ESTtSNLwhDfNY1
+X-Gm-Gg: AeBDiev1U9km5wwVQKYlpOKiCR41DXJ6mPHH/JaLYCGPw018i3OZVCwptQnXJIgz7RS
+ isfUSYnYDhpFVfehpsUSBwryuXmloVu8Ak5GncUWrGQgAYf+y9WiCtI95xmklDiCn/M+ufSE/8W
+ T5v64/kPBEgd4HpGXviwrmFmFOOyMWpSqJpvXL89yvGnoUthZelbO1C5KfzgQ/s1gbR5XLaKHNt
+ xmCCVVBzZehZHXkDxDBRy78gtxLKOkWWdmoWhe5hFugnKqsDwgOiC3PAPgx4H++F0g5C08cyXmQ
+ S/eZySt+hvVU3GRegl3ClKGLHHC6XcT1fEjW/OxILC3lyHX7TNQWluRqmOsmCqiXBEcTEH93UIM
+ aw1vCB/Hw0JX+gCQHQ0ADOZnEPIOIEzph9/OEDoDuTiQuOZ00x9BmQAWoNEXLxthVlfM921Ao9t
+ 9H52RXez7JKOyqphDi00M4RcajNAVy6QcWmaaBB8EEmquwrpso6Q==
+X-Received: by 2002:a05:600c:c10a:b0:483:2c98:4368 with SMTP id
+ 5b1f17b1804b1-488fb771613mr417462105e9.18.1777189956679; 
+ Sun, 26 Apr 2026 00:52:36 -0700 (PDT)
+Received: from [192.168.0.10] ([2a03:ab00:1000:1b60:331a:b316:78f6:effc])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488fb74c68asm224080045e9.3.2026.04.26.00.52.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 26 Apr 2026 00:52:35 -0700 (PDT)
+From: =?utf-8?q?Jind=C5=99ich_Makovi=C4=8Dka?= <makovick@gmail.com>
+Date: Sun, 26 Apr 2026 09:52:33 +0200
+Subject: [PATCH v3 1/2] ui/gtk: Use non-blocking clipboard retrieval
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260426-gtk-clipboard-v3-1-09555aaeda34@gmail.com>
+References: <20260426-gtk-clipboard-v3-0-09555aaeda34@gmail.com>
+In-Reply-To: <20260426-gtk-clipboard-v3-0-09555aaeda34@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Jindrich Makovicka <makovick@gmail.com>
+X-Mailer: b4 0.14.3
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=makovick@gmail.com; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_75_100=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,74 +104,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
-
-Add the missing CDROM ioctls and bring them in same order as
-documentation.
-
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
 ---
- linux-user/ioctls.h | 29 +++++++++++++++++------------
- 1 file changed, 17 insertions(+), 12 deletions(-)
+ ui/gtk-clipboard.c | 52 +++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 39 insertions(+), 13 deletions(-)
 
-diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
-index 5b7d00e92f..aa485ee6e5 100644
---- a/linux-user/ioctls.h
-+++ b/linux-user/ioctls.h
-@@ -416,19 +416,18 @@
- #endif
+diff --git a/ui/gtk-clipboard.c b/ui/gtk-clipboard.c
+index 65d89ec601..691784697d 100644
+--- a/ui/gtk-clipboard.c
++++ b/ui/gtk-clipboard.c
+@@ -136,26 +136,54 @@ static void gd_clipboard_notify(Notifier *notifier, void *data)
+     }
+ }
  
-   IOCTL(CDROMPAUSE, 0, TYPE_NULL)
--  IOCTL(CDROMSTART, 0, TYPE_NULL)
--  IOCTL(CDROMSTOP, 0, TYPE_NULL)
-   IOCTL(CDROMRESUME, 0, TYPE_NULL)
--  IOCTL(CDROMEJECT, 0, TYPE_NULL)
--  IOCTL(CDROMEJECT_SW, 0, TYPE_INT)
--  IOCTL(CDROMCLOSETRAY, 0, TYPE_NULL)
--  IOCTL(CDROMRESET, 0, TYPE_NULL)
-   IOCTL(CDROMPLAYMSF, IOC_W, MK_PTR(TYPE_INT))
-   IOCTL(CDROMPLAYTRKIND, IOC_W, MK_PTR(TYPE_INT))
-   IOCTL(CDROMREADTOCHDR, IOC_R, MK_PTR(TYPE_INT))
-   IOCTL(CDROMREADTOCENTRY, IOC_RW, MK_PTR(TYPE_INT))
-+  IOCTL(CDROMSTOP, 0, TYPE_NULL)
-+  IOCTL(CDROMSTART, 0, TYPE_NULL)
-+  IOCTL(CDROMEJECT, 0, TYPE_NULL)
-   IOCTL(CDROMVOLCTRL, IOC_W, MK_PTR(TYPE_INT))
-   IOCTL(CDROMSUBCHNL, IOC_RW, MK_PTR(TYPE_INT))
-+  IOCTL(CDROMEJECT_SW, IOC_W, TYPE_INT)
-+  IOCTL(CDROMRESET, 0, TYPE_NULL)
-   /* XXX: incorrect (need specific handling) */
-   IOCTL(CDROMREADAUDIO, IOC_W, MK_PTR(MK_STRUCT(STRUCT_cdrom_read_audio)))
-   IOCTL(CDROMREADCOOKED, IOC_RW, MK_PTR(TYPE_INT))
-@@ -438,16 +437,22 @@
-   IOCTL(CDROMREADALL, IOC_RW, MK_PTR(TYPE_INT))
-   IOCTL(CDROMMULTISESSION, IOC_RW, MK_PTR(TYPE_INT))
-   IOCTL(CDROM_GET_UPC, IOC_R, MK_PTR(TYPE_INT))
-+  IOCTL(CDROM_LAST_WRITTEN, IOC_R, MK_PTR(TYPE_LONG))
-   IOCTL(CDROMVOLREAD, IOC_R, MK_PTR(TYPE_INT))
-   IOCTL(CDROMSEEK, IOC_W, MK_PTR(TYPE_INT))
-   IOCTL(CDROMPLAYBLK, IOC_W, MK_PTR(TYPE_INT))
--  IOCTL(CDROM_MEDIA_CHANGED, 0, TYPE_NULL)
--  IOCTL(CDROM_SET_OPTIONS, 0, TYPE_INT)
--  IOCTL(CDROM_CLEAR_OPTIONS, 0, TYPE_INT)
--  IOCTL(CDROM_SELECT_SPEED, 0, TYPE_INT)
--  IOCTL(CDROM_SELECT_DISC, 0, TYPE_INT)
--  IOCTL(CDROM_DRIVE_STATUS, 0, TYPE_NULL)
-+  IOCTL(CDROMCLOSETRAY, 0, TYPE_NULL)
-+  IOCTL(CDROM_SET_OPTIONS, IOC_W, TYPE_INT)
-+  IOCTL(CDROM_CLEAR_OPTIONS, IOC_W, TYPE_INT)
-+  IOCTL(CDROM_SELECT_SPEED, IOC_W, TYPE_INT)
-+  IOCTL(CDROM_SELECT_DISC, IOC_W, TYPE_INT)
-+  IOCTL(CDROM_MEDIA_CHANGED, IOC_W, TYPE_INT)
-+  IOCTL(CDROM_DRIVE_STATUS, IOC_W, TYPE_INT)
-   IOCTL(CDROM_DISC_STATUS, 0, TYPE_NULL)
-+  IOCTL(CDROM_CHANGER_NSLOTS, 0, TYPE_NULL)
-+  IOCTL(CDROM_LOCKDOOR, IOC_W, TYPE_INT)
-+  IOCTL(CDROM_DEBUG, IOC_W, TYPE_INT)
-+  IOCTL(CDROM_GET_CAPABILITY, 0, TYPE_NULL)
-   IOCTL(CDROMAUDIOBUFSIZ, 0, TYPE_INT)
++static void
++gd_clipboard_request_text_received_callback(GtkClipboard *clipboard,
++                                            const gchar *text,
++                                            gpointer data)
++{
++    QemuClipboardInfo *info = (QemuClipboardInfo *)data;
++
++    if (text) {
++        qemu_clipboard_set_data(info->owner, info, QEMU_CLIPBOARD_TYPE_TEXT,
++                                strlen(text), text, true);
++    }
++    qemu_clipboard_info_unref(info);
++}
++
+ static void gd_clipboard_request(QemuClipboardInfo *info,
+                                  QemuClipboardType type)
+ {
+     GtkDisplayState *gd = container_of(info->owner, GtkDisplayState, cbpeer);
+-    char *text;
  
- #if 0
+     switch (type) {
+     case QEMU_CLIPBOARD_TYPE_TEXT:
+-        text = gtk_clipboard_wait_for_text(gd->gtkcb[info->selection]);
+-        if (text) {
+-            qemu_clipboard_set_data(&gd->cbpeer, info, type,
+-                                    strlen(text), text, true);
+-            g_free(text);
+-        }
++        qemu_clipboard_info_ref(info);
++        gtk_clipboard_request_text(gd->gtkcb[info->selection],
++                                   gd_clipboard_request_text_received_callback,
++                                   info);
+         break;
+     default:
+         break;
+     }
+ }
+ 
++static void gd_clipboard_owner_change_contents_received_callback(
++    GtkClipboard *clipboard,
++    GtkSelectionData *selection_data,
++    gpointer data)
++{
++    QemuClipboardInfo *info = (QemuClipboardInfo *)data;
++
++    if (selection_data) {
++        if (gtk_selection_data_targets_include_text(selection_data)) {
++            info->types[QEMU_CLIPBOARD_TYPE_TEXT].available = true;
++        }
++    }
++
++    qemu_clipboard_update(info);
++    qemu_clipboard_info_unref(info);
++}
++
+ static void gd_owner_change(GtkClipboard *clipboard,
+                             GdkEvent *event,
+                             gpointer data)
+@@ -173,12 +201,10 @@ static void gd_owner_change(GtkClipboard *clipboard,
+     switch (event->owner_change.reason) {
+     case GDK_OWNER_CHANGE_NEW_OWNER:
+         info = qemu_clipboard_info_new(&gd->cbpeer, s);
+-        if (gtk_clipboard_wait_is_text_available(clipboard)) {
+-            info->types[QEMU_CLIPBOARD_TYPE_TEXT].available = true;
+-        }
+-
+-        qemu_clipboard_update(info);
+-        qemu_clipboard_info_unref(info);
++        gtk_clipboard_request_contents(
++            clipboard, gdk_atom_intern_static_string("TARGETS"),
++            gd_clipboard_owner_change_contents_received_callback,
++            info);
+         break;
+     default:
+         qemu_clipboard_peer_release(&gd->cbpeer, s);
+
 -- 
 2.53.0
 
