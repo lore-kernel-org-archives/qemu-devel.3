@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68AA9FF885D
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 13:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC2E7FF885D
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 13:51:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGzis-0006wX-C7; Sun, 26 Apr 2026 09:40:34 -0400
+	id 1wGzpV-0007el-P8; Sun, 26 Apr 2026 09:47:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wGziY-0006kW-UK
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:40:16 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1wGzoF-0005wK-Rd
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:46:11 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wGziX-0008F5-0I
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:40:14 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-c76cce85bd9so3529160a12.1
- for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 06:40:12 -0700 (PDT)
+ id 1wGzoC-0001Ut-JG
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:46:06 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2ad9a9be502so58239345ad.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 06:45:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777210811; x=1777815611; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777211148; x=1777815948; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PKtv+p36Hy41OyLkt25kLH4CmBx913v33ogitpjaG94=;
- b=iluiijfz9KXD3wweyOpHYNQw9bD/u8u3WyvW87JCfLjMvNUGGp8z3JpLE8w7l+a7/U
- 4PtJOSP7wnWxWv2u065xUHI4jRkcKRfdZg2L5e00QlzckxHk9Pu8b00oE4uZNiYoCahK
- Lz2eso94fKcqHG4PRuTax39MXohnJh3weox9Zh2qZ863JSee+No+131G5wzSZgvvuXNA
- /UxQPgk9pyo/glc3+dpz4ior16U8KHs8CJTokgNGLAd61yViBjUllzqDPLGNT4NaqJuM
- +BkNLeDZnWgA+7ce5O0oWftpFFt7M3+AtLjULG7gKUASGBXNCwrGVsZ3A+e1m34wTUY8
- YS5Q==
+ bh=s95gOsMYgi/f4zhiYit5ShyHyWR6YE2CuPY1Rv/+Q0w=;
+ b=Ay4kyAePka02/goQCElt3a4a58enaFMmJz35ZAUr0dj/F+Ej0IeIR2U9BkQLMaiyM7
+ XS75rtaiocElAQEsa9qUc8qUkKh4w3BMdiNaXSQPyFJO1MJU5lKUTImqtV3Ik7fD8mit
+ HAcgNds+OKdsVZt/5N+VTZCDtRYgI54znIynONJlfbEVPiUPJ9hJWUVbxgfIoqrebR/p
+ PEYFydr0iSRUJiT38ErhOBQuENOl3+vIGh+f3Jt302htq2m3xWA6TqL7knVl6tHWrWDA
+ Z2ieLjmTQpXv6mMINes7h083n26aZ3agz9BC4RhoSvUC26W6p7RR2woxCotv73i48htM
+ J9+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777210811; x=1777815611;
+ d=1e100.net; s=20251104; t=1777211148; x=1777815948;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=PKtv+p36Hy41OyLkt25kLH4CmBx913v33ogitpjaG94=;
- b=LqEjt2BxmNl3T9GZt9xOsBpkgXbYJRMPo5JhQscvquHeeqU5RZnB7tAgGTiJCkJS+C
- j7N4ALLwzBIS4ayQ8AHgGvm4i58WADHDzkjLmTDqrRvc9qt4pNkRhGjUbOsT9WY36mY8
- 3cZGytCqYXd+j7lp+7rGVq+pAPtWqoR0bqfHWQ4RVO/waNSSC4z3XL3ztLfDgK2YDTHK
- cNM+viUR50vFU//x39lttMNPbFhX4ZDJkXVb9AAg/dRx7NoiCHZxGcwbw61F9Ai7fw4O
- d8Ym5rea6W97/emcMQ3Ty+sbTpfVEK1LwY80ZzORJOkqaeJxRv0znYKZ5SnOWdFE+pQm
- XHiA==
-X-Gm-Message-State: AOJu0YzsGQbPYKmAQzmpIGXEL8eOBe6ASVwsLWMGjmFComMnwDZbI33V
- IHTYcqo/gTQK/B1jLJzsiZQlW8xtLYgUKoKQGWMGGN/sBC8WI1zHkv9soi14KoXgeDocxrE7E7c
- p7m2L55U=
-X-Gm-Gg: AeBDies2+0are1PB49oZ9wRWbMK61sYQDJmkacuqHprjl+PUEVdFaWeaoysbaJV0AdC
- cN/mHGpfzFOx4+UqCzsf08aGW6q145+nlt7eizckZCITxwpKaq6FBTd6VnvhuI/woLvfKKIIgUZ
- evyakadx7vkPwa/DrER8/Z3QBwvnRpCSaCIr8jYvqtHWoSXKb7VJXIUEYJTAKGJ3t6iXc85l4W5
- JBeZ6yGES+cXfhYb987iuL4gH0qq52ya0UNllkNCcFimjSrlGF9ggiAVYoPVGhmjAc7VTg0Xmwh
- 0XrS8ESwfuPx9DADDLmyIwo2abNXQgRT35vxtMWeDIZhkPgUP4wRFLOObOkSYt7orKDXEz9xJnv
- gewPVLCuu/8ZgJFNF+ulJC/C3XXxgqqyPifRUid1lczJMqWqQbeWZOh4TPS4QD6VxGrUiRywMiW
- 2eGgObr/gtrBR3mpXn442lsVLWtL45TPy+JjNdT4HQ
-X-Received: by 2002:a17:903:1a4e:b0:2b0:4aeb:dedc with SMTP id
- d9443c01a7336-2b5f9f1c60cmr397206465ad.26.1777210811416; 
- Sun, 26 Apr 2026 06:40:11 -0700 (PDT)
+ bh=s95gOsMYgi/f4zhiYit5ShyHyWR6YE2CuPY1Rv/+Q0w=;
+ b=HAG3+BS8ITTZoWE6Cq4zcs2SgvjwQjeYN6riusZX0JbTsG3xloi8lATy/fPOymHnXK
+ op2XqNSe5IsGtWFVaugyUAN6CxfQUY/MDR0IxP9dUcs2QZGqUJMxebMWvUVQQJNyVdmy
+ i5F9FduARWCjpBsIPx0PjNZMRQCC1mQfPKl+pV5BZ7Q3uwIQN5JC2LEjQkV9J0JQaN7G
+ NDgeK11+Jwa2YSDtu0N/ZhQaT0GG3q2u4N4CmUwHJR60XwOGxwkxUgFW59Uhs5EE+wjj
+ 0zIHkZlxusRNa1XEyUoh1FZFh0OEudihCYgr8CnqAjKaZQ4YF1V2Ua4gg4xUJUp+45jO
+ RedQ==
+X-Gm-Message-State: AOJu0YzPW+OEziVRvLdQxHJdB7g8o2XyC0KgB4Z2RcNtpqHDdcJ5XwBr
+ CLpjFu94c1MXV39JK7vxpP3kEBwJBvoPk0YSeFZUASBZMEOBjF+ipTC+f49gX3is0dSsJGyRT+j
+ VBEWVAMY=
+X-Gm-Gg: AeBDietlZdgPFWLKdW0FJMBudVw6/jYHTUZ3E2DykXOZW9poiu/wDjXIKN3wE3DdAMU
+ cvVI6nv+PjlSJkdnN2O7ZGhnFJ6txNweYx2nYyqD+TU1GSUcz/fKcVSLfAwND1l+WtBVGh63WJ+
+ fNDfCnRniUSg863Q1LKD3RXoohUDAStm7GQ8ZyNBW3t+UDi6vUfIa+RRN91hpKSeD9xgXhagvZQ
+ MI2Ut0P7LgwtZvhnMTjBp9iiKB9+skWvoQVYJECpLZW2whpxV/2RZa1ThzbtbJftKlqkwTN+uUI
+ md1eIymgKM2Ob7Dp7aDxSatp3XzJjO52BxmVNdvsoZJmD4BbcR2brfQaTvmF7L43d4lN6/E+xf8
+ bp5tCQ/T76VYosq7U9YqucdDHSfeSJqM0SpzHDTs3E+BZJPPwcq7Fvpg0aXAX3BoBX8YwHSNFIx
+ d4iSRfzO5xqxGe3dGBSyxJTNdtpjAzOcqMIAZBal6b
+X-Received: by 2002:a17:903:2acb:b0:2b4:6398:6aa2 with SMTP id
+ d9443c01a7336-2b5f9f3a802mr451335435ad.27.1777211148231; 
+ Sun, 26 Apr 2026 06:45:48 -0700 (PDT)
 Received: from stoup.. ([180.233.125.15]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5fab30f29sm277940375ad.68.2026.04.26.06.40.08
+ d9443c01a7336-2b5faa34ea7sm280544085ad.34.2026.04.26.06.45.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Apr 2026 06:40:10 -0700 (PDT)
+ Sun, 26 Apr 2026 06:45:47 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	qemu-s390x@nongnu.org
-Subject: [PATCH 01/84] fpu: Drop parts_canonicalize
-Date: Sun, 26 Apr 2026 23:38:38 +1000
-Message-ID: <20260426134002.865628-2-richard.henderson@linaro.org>
+Subject: [PATCH 58/84] fpu: Export FloatFmt structures
+Date: Sun, 26 Apr 2026 23:39:35 +1000
+Message-ID: <20260426134002.865628-59-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260426134002.865628-1-richard.henderson@linaro.org>
 References: <20260426134002.865628-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,120 +100,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the specific parts{64,12}_canonicalize at each site.
-Drop the forward declarations.
+Export most of the FloatFmt structures.
+Skip float16_params_ahp and the floatx80 precisions.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- fpu/softfloat.c | 28 ++++++++++------------------
- 1 file changed, 10 insertions(+), 18 deletions(-)
+ include/fpu/softfloat-parts.h | 48 ++++++++++++++++++++++++++++++
+ fpu/softfloat.c               | 55 +++++------------------------------
+ 2 files changed, 56 insertions(+), 47 deletions(-)
 
+diff --git a/include/fpu/softfloat-parts.h b/include/fpu/softfloat-parts.h
+index 13c1f3d2d6..a3ae12bb45 100644
+--- a/include/fpu/softfloat-parts.h
++++ b/include/fpu/softfloat-parts.h
+@@ -18,6 +18,54 @@
+ #ifndef SOFTFLOAT_PARTS_H
+ #define SOFTFLOAT_PARTS_H
+ 
++/* Format-specific handling of exp == exp_max */
++typedef enum __attribute__((__packed__)) {
++    /* exp==max, frac==0 ? infinity : nan; this is ieee standard. */
++    float_expmax_ieee,
++    /* exp==max is a normal number; no infinity or nan representation. */
++    float_expmax_normal,
++    /* exp==max, frac==max ? nan : normal; no infinity representation. */
++    float_expmax_e4m3,
++} FloatFmtExpMaxKind;
++
++/*
++ * Structure holding all of the relevant parameters for a format.
++ *   exp_size: the size of the exponent field
++ *   exp_bias: the offset applied to the exponent field
++ *   exp_max: the maximum normalised exponent
++ *   frac_size: the size of the fraction field
++ *   frac_shift: shift to normalise the fraction with DECOMPOSED_BINARY_POINT
++ * The following are computed based the size of fraction
++ *   round_mask: bits below lsb which must be rounded
++ * The following optional modifiers are available:
++ *   exp_max_kind: affects how exp == exp_max is interpreted
++ *   has_explicit_bit: has an explicit integer bit; this affects whether
++ *       the float_status floatx80_behaviour handling applies
++ *   overflow_raises_invalid: for float_expmax_normal, raise invalid
++ *       instead of overflow.
++ */
++typedef struct {
++    int exp_size;
++    int exp_bias;
++    int exp_re_bias;
++    int exp_max;
++    int frac_size;
++    int frac_shift;
++    FloatFmtExpMaxKind exp_max_kind;
++    bool has_explicit_bit;
++    bool overflow_raises_invalid;
++    uint64_t round_mask;
++} FloatFmt;
++
++extern const FloatFmt float4_e2m1_params;
++extern const FloatFmt float8_e4m3_params;
++extern const FloatFmt float8_e5m2_params;
++extern const FloatFmt float16_params;
++extern const FloatFmt bfloat16_params;
++extern const FloatFmt float32_params;
++extern const FloatFmt float64_params;
++extern const FloatFmt float128_params;
++
+ /*
+  * Classify a floating point number. Everything above float_class_qnan
+  * is a NaN so cls >= float_class_qnan is any NaN.
 diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 91c34307c8..f9997f5236 100644
+index cd75df3160..d3277e3f60 100644
 --- a/fpu/softfloat.c
 +++ b/fpu/softfloat.c
-@@ -806,14 +806,6 @@ static FloatParts128 *parts128_pick_nan_muladd(FloatParts128 *a,
- #define parts_pick_nan_muladd(A, B, C, S, ABM, ABCM) \
-     PARTS_GENERIC_64_128(pick_nan_muladd, A)(A, B, C, S, ABM, ABCM)
+@@ -457,45 +457,6 @@ typedef struct {
+ #define DECOMPOSED_BINARY_POINT    63
+ #define DECOMPOSED_IMPLICIT_BIT    (1ull << DECOMPOSED_BINARY_POINT)
  
--static void parts64_canonicalize(FloatParts64 *p, float_status *status,
--                                 const FloatFmt *fmt);
--static void parts128_canonicalize(FloatParts128 *p, float_status *status,
--                                  const FloatFmt *fmt);
+-/* Format-specific handling of exp == exp_max */
+-typedef enum __attribute__((__packed__)) {
+-    /* exp==max, frac==0 ? infinity : nan; this is ieee standard. */
+-    float_expmax_ieee,
+-    /* exp==max is a normal number; no infinity or nan representation. */
+-    float_expmax_normal,
+-    /* exp==max, frac==max ? nan : normal; no infinity representation. */
+-    float_expmax_e4m3,
+-} FloatFmtExpMaxKind;
 -
--#define parts_canonicalize(A, S, F) \
--    PARTS_GENERIC_64_128(canonicalize, A)(A, S, F)
+-/*
+- * Structure holding all of the relevant parameters for a format.
+- *   exp_size: the size of the exponent field
+- *   exp_bias: the offset applied to the exponent field
+- *   exp_max: the maximum normalised exponent
+- *   frac_size: the size of the fraction field
+- *   frac_shift: shift to normalise the fraction with DECOMPOSED_BINARY_POINT
+- * The following are computed based the size of fraction
+- *   round_mask: bits below lsb which must be rounded
+- * The following optional modifiers are available:
+- *   exp_max_kind: affects how exp == exp_max is interpreted
+- *   has_explicit_bit: has an explicit integer bit; this affects whether
+- *       the float_status floatx80_behaviour handling applies
+- *   overflow_raises_invalid: for float_expmax_normal, raise invalid
+- *       instead of overflow.
+- */
+-typedef struct {
+-    int exp_size;
+-    int exp_bias;
+-    int exp_re_bias;
+-    int exp_max;
+-    int frac_size;
+-    int frac_shift;
+-    FloatFmtExpMaxKind exp_max_kind;
+-    bool has_explicit_bit;
+-    bool overflow_raises_invalid;
+-    uint64_t round_mask;
+-} FloatFmt;
 -
- static void parts64_uncanon_normal(FloatParts64 *p, float_status *status,
-                                    const FloatFmt *fmt, bool saturate);
- static void parts128_uncanon_normal(FloatParts128 *p, float_status *status,
-@@ -1723,28 +1715,28 @@ static void float4_e2m1_unpack_canonical(FloatParts64 *p, float4_e2m1 f,
-                                          float_status *s)
- {
-     float4_e2m1_unpack_raw(p, f);
--    parts_canonicalize(p, s, &float4_e2m1_params);
-+    parts64_canonicalize(p, s, &float4_e2m1_params);
- }
+ /* Expand fields based on the size of exponent and fraction */
+ #define FLOAT_PARAMS_(E)                                \
+     .exp_size       = E,                                \
+@@ -509,12 +470,12 @@ typedef struct {
+     .frac_shift     = (-F - 1) & 63,                    \
+     .round_mask     = (1ull << ((-F - 1) & 63)) - 1
  
- static void float8_e4m3_unpack_canonical(FloatParts64 *p, float8_e4m3 f,
-                                          float_status *s)
- {
-     float8_e4m3_unpack_raw(p, f);
--    parts_canonicalize(p, s, &float8_e4m3_params);
-+    parts64_canonicalize(p, s, &float8_e4m3_params);
- }
+-static const FloatFmt float4_e2m1_params = {
++const FloatFmt float4_e2m1_params = {
+     FLOAT_PARAMS(2, 1),
+     .exp_max_kind = float_expmax_normal,
+ };
  
- static void float8_e5m2_unpack_canonical(FloatParts64 *p, float8_e5m2 f,
-                                          float_status *s)
- {
-     float8_e5m2_unpack_raw(p, f);
--    parts_canonicalize(p, s, &float8_e5m2_params);
-+    parts64_canonicalize(p, s, &float8_e5m2_params);
- }
+-static const FloatFmt float8_e4m3_params = {
++const FloatFmt float8_e4m3_params = {
+     FLOAT_PARAMS(4, 3),
+     .exp_max_kind = float_expmax_e4m3
+ };
+@@ -522,11 +483,11 @@ static const FloatFmt float8_e4m3_params = {
+ /* 110 << frac_shift, with the implicit bit set */
+ #define E4M3_NORMAL_FRAC_MAX  0xe000000000000000ull
  
- static void float16a_unpack_canonical(FloatParts64 *p, float16 f,
-                                       float_status *s, const FloatFmt *params)
- {
-     float16_unpack_raw(p, f);
--    parts_canonicalize(p, s, params);
-+    parts64_canonicalize(p, s, params);
- }
+-static const FloatFmt float8_e5m2_params = {
++const FloatFmt float8_e5m2_params = {
+     FLOAT_PARAMS(5, 2)
+ };
  
- static void float16_unpack_canonical(FloatParts64 *p, float16 f,
-@@ -1757,7 +1749,7 @@ static void bfloat16_unpack_canonical(FloatParts64 *p, bfloat16 f,
-                                       float_status *s)
- {
-     bfloat16_unpack_raw(p, f);
--    parts_canonicalize(p, s, &bfloat16_params);
-+    parts64_canonicalize(p, s, &bfloat16_params);
- }
+-static const FloatFmt float16_params = {
++const FloatFmt float16_params = {
+     FLOAT_PARAMS(5, 10)
+ };
  
- static float8_e4m3 float8_e4m3_round_pack_canonical(FloatParts64 *p,
-@@ -1801,7 +1793,7 @@ static void float32_unpack_canonical(FloatParts64 *p, float32 f,
-                                      float_status *s)
- {
-     float32_unpack_raw(p, f);
--    parts_canonicalize(p, s, &float32_params);
-+    parts64_canonicalize(p, s, &float32_params);
- }
+@@ -536,19 +497,19 @@ static const FloatFmt float16_params_ahp = {
+     .overflow_raises_invalid = true,
+ };
  
- static float32 float32_round_pack_canonical(FloatParts64 *p,
-@@ -1815,7 +1807,7 @@ static void float64_unpack_canonical(FloatParts64 *p, float64 f,
-                                      float_status *s)
- {
-     float64_unpack_raw(p, f);
--    parts_canonicalize(p, s, &float64_params);
-+    parts64_canonicalize(p, s, &float64_params);
- }
+-static const FloatFmt bfloat16_params = {
++const FloatFmt bfloat16_params = {
+     FLOAT_PARAMS(8, 7)
+ };
  
- static float64 float64_round_pack_canonical(FloatParts64 *p,
-@@ -1878,7 +1870,7 @@ static void float128_unpack_canonical(FloatParts128 *p, float128 f,
-                                       float_status *s)
- {
-     float128_unpack_raw(p, f);
--    parts_canonicalize(p, s, &float128_params);
-+    parts128_canonicalize(p, s, &float128_params);
- }
+-static const FloatFmt float32_params = {
++const FloatFmt float32_params = {
+     FLOAT_PARAMS(8, 23)
+ };
  
- static float128 float128_round_pack_canonical(FloatParts128 *p,
-@@ -1910,7 +1902,7 @@ static bool floatx80_unpack_canonical(FloatParts128 *p, floatx80 f,
-     floatx80_unpack_raw(p, f);
+-static const FloatFmt float64_params = {
++const FloatFmt float64_params = {
+     FLOAT_PARAMS(11, 52)
+ };
  
-     if (likely(p->exp != floatx80_params[floatx80_precision_x].exp_max)) {
--        parts_canonicalize(p, s, &floatx80_params[floatx80_precision_x]);
-+        parts128_canonicalize(p, s, &floatx80_params[floatx80_precision_x]);
-     } else {
-         /* The explicit integer bit is ignored, after invalid checks. */
-         p->frac_hi &= MAKE_64BIT_MASK(0, 63);
-@@ -5611,7 +5603,7 @@ static void parts_s390_divide_to_integer(FloatParts64 *a, FloatParts64 *b,
-         parts_uncanon(r, status, fmt, false);
-         r_flags = status->float_exception_flags;
-         r->frac &= (1ULL << fmt->frac_size) - 1;
--        parts_canonicalize(r, status, fmt);
-+        parts64_canonicalize(r, status, fmt);
+-static const FloatFmt float128_params = {
++const FloatFmt float128_params = {
+     FLOAT_PARAMS(15, 112)
+ };
  
-         /* POp table "Results: DIVIDE TO INTEGER (Part 2 of 2)" */
-         if (is_q_smallish) {
 -- 
 2.43.0
 
