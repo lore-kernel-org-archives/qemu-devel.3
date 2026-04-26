@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F94DFF885C
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 08:16:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57BCCFF885C
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 08:21:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGueb-0006kC-23; Sun, 26 Apr 2026 04:15:49 -0400
+	id 1wGujy-00083E-Vr; Sun, 26 Apr 2026 04:21:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wGueU-0006fn-2Y; Sun, 26 Apr 2026 04:15:44 -0400
+ id 1wGuju-00082v-EU; Sun, 26 Apr 2026 04:21:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wGueR-0003ux-CJ; Sun, 26 Apr 2026 04:15:41 -0400
+ id 1wGujs-0005PB-Po; Sun, 26 Apr 2026 04:21:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777191251; bh=CqZdl3XFwFR/a99VzSYl8xawyyEnehIj3bs5fe5sOHc=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=nm6ltiI+K4c00TQcmpVQdf/EvQnJ/cT7B07X73TrDfiqL+7iq4b1y/lWYSuN+mkla
- 6V4e6iSqriCBdGjcKX6FJA3a0iPqBY/6OX1g7QS7t7nT86K5xs1HhftdGgdgJFeRr7
- Xbr5jJybEh2flP9EYqQYkH52qi1kHoWBb0y5py5qE5BqghNE2KDFV4apRgaxXFrsqm
- /koSX627sMiJ4PFplIEyg9iFpy42qF3X6NRZHvEmaew40IB61HVnLoHXFe/xJje0bi
- IGiDQoX2eM8Wr+BiZDjeSJVWYLdJHIFm+iWZE+p3ulyoQhJo528d31JYaxpCSgPGoT
- 0dJFWVUaKJcLA==
+ t=1777191592; bh=gu5UbE155XN5z57qEMU39ez3hc7L+W7W2A3K+qvMEA8=;
+ h=Date:Subject:From:To:Cc:References:In-Reply-To;
+ b=YFQItVtZqAVJgYsXPDoqjGB3ieHnvmgYHR4P3rpMSR18G+u8f4nfBln6FfDA5bVKp
+ 0rWGjmRAprHInPSsKGCI7nfP85tKxTMX4zTcyRifybYptWrkKso3WjPSf9RCb07av8
+ YH3erXW6gF74rIDiHbYUaqAasNEXX/LDGcfkwUYwy9t9UMA5FvygUdlam4VYQQ+DfY
+ uSljqYburcS5uyk4jrnkOQYSPuVchxZSEcIbsDGt3QiHCWAStADhGqRLvonoNu0pkn
+ vZJVTRIOAtz2EP92Kt1Cb9oClxDdMoIx86oVo9bacSCNSWcUGAw0N/8X6/E7/vJHMk
+ 76u65ZWIpv+OA==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 2676A1A336A;
- Sun, 26 Apr 2026 11:14:11 +0300 (MSK)
-Message-ID: <c164cb5f-27e5-412d-ad28-70a6fc050722@tls.msk.ru>
-Date: Sun, 26 Apr 2026 11:15:32 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id B04C21A336D;
+ Sun, 26 Apr 2026 11:19:51 +0300 (MSK)
+Message-ID: <e893c0f8-1826-4f30-b4ed-ee2932bf5dfd@tls.msk.ru>
+Date: Sun, 26 Apr 2026 11:21:13 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 0/4] io/channel: complete pread/pwrite_all API and fix
  multifd_file_recv_data
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org
 Cc: berrange@redhat.com, peterx@redhat.com, farosas@suse.de,
  qemu-stable <qemu-stable@nongnu.org>
 References: <20260413214549.926435-1-junjie.cao@intel.com>
+ <c164cb5f-27e5-412d-ad28-70a6fc050722@tls.msk.ru>
 Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -85,9 +86,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260413214549.926435-1-junjie.cao@intel.com>
+In-Reply-To: <c164cb5f-27e5-412d-ad28-70a6fc050722@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -111,36 +112,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14.04.2026 00:45, Junjie Cao wrote:
-> This series fixes two bugs in multifd_file_recv_data() and completes
-> the positioned read/write "all" API set for QIO channels.
+On 26.04.2026 11:15, Michael Tokarev wrote:
+> On 14.04.2026 00:45, Junjie Cao wrote:
+>> This series fixes two bugs in multifd_file_recv_data() and completes
+>> the positioned read/write "all" API set for QIO channels.
+>>
+>> Bug summary:
+>>    - size_t variable storing ssize_t return: -1 wraps to SIZE_MAX
+>>    - error_prepend() called without ERRP_GUARD(): NULL deref on short 
+>> read
+>> Junjie Cao (4):
+>>    io/channel: introduce qio_channel_pread{v,}_all{,_eof}()
+>>    io/channel: introduce qio_channel_pwrite{v,}_all()
+>>    migration/file: fix type mismatch and NULL deref in
+>>      multifd_file_recv_data
+>>    tests/unit: add pread/pwrite _all tests for io channel file
+>>
+>>   include/io/channel.h              | 133 +++++++++++++++++++
+>>   io/channel.c                      | 139 ++++++++++++++++++++
+>>   migration/file.c                  |  13 +-
+>>   tests/unit/test-io-channel-file.c | 207 ++++++++++++++++++++++++++++++
+>>   4 files changed, 486 insertions(+), 6 deletions(-)
 > 
-> Bug summary:
->    - size_t variable storing ssize_t return: -1 wraps to SIZE_MAX
->    - error_prepend() called without ERRP_GUARD(): NULL deref on short read
-> Junjie Cao (4):
->    io/channel: introduce qio_channel_pread{v,}_all{,_eof}()
->    io/channel: introduce qio_channel_pwrite{v,}_all()
->    migration/file: fix type mismatch and NULL deref in
->      multifd_file_recv_data
->    tests/unit: add pread/pwrite _all tests for io channel file
+> Hi!
 > 
->   include/io/channel.h              | 133 +++++++++++++++++++
->   io/channel.c                      | 139 ++++++++++++++++++++
->   migration/file.c                  |  13 +-
->   tests/unit/test-io-channel-file.c | 207 ++++++++++++++++++++++++++++++
->   4 files changed, 486 insertions(+), 6 deletions(-)
+> Is this a qemu-stable material?  The amount of new code this series
+> introduces is somewhat large, but it fixes real bugs in the end.  On
+> the other hand, these bugs doesn't seem to be very serious, so.. I'm
+> not sure :)
+> 
+> How do you think, should we pick this up for the current stable releases?
+> It applies cleanly to 10.0.x (the earliest stable series currently
+> supported).
 
-Hi!
+For 10.0.x, it also needs two more changes to work:
 
-Is this a qemu-stable material?  The amount of new code this series
-introduces is somewhat large, but it fixes real bugs in the end.  On
-the other hand, these bugs doesn't seem to be very serious, so.. I'm
-not sure :)
-
-How do you think, should we pick this up for the current stable releases?
-It applies cleanly to 10.0.x (the earliest stable series currently
-supported).
+a5bc1ccca95 migration: simplify error reporting after channel read
+1edf0df2840 io: Add qio_channel_wait_cond() helper
 
 Thanks,
 
