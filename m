@@ -4,45 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57BCCFF885C
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 08:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 744A3FF885E
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 08:27:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGujy-00083E-Vr; Sun, 26 Apr 2026 04:21:23 -0400
+	id 1wGupe-0000ut-5n; Sun, 26 Apr 2026 04:27:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wGuju-00082v-EU; Sun, 26 Apr 2026 04:21:18 -0400
+ id 1wGupc-0000uZ-Us; Sun, 26 Apr 2026 04:27:12 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wGujs-0005PB-Po; Sun, 26 Apr 2026 04:21:18 -0400
+ id 1wGupb-0006bj-7S; Sun, 26 Apr 2026 04:27:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777191592; bh=gu5UbE155XN5z57qEMU39ez3hc7L+W7W2A3K+qvMEA8=;
- h=Date:Subject:From:To:Cc:References:In-Reply-To;
- b=YFQItVtZqAVJgYsXPDoqjGB3ieHnvmgYHR4P3rpMSR18G+u8f4nfBln6FfDA5bVKp
- 0rWGjmRAprHInPSsKGCI7nfP85tKxTMX4zTcyRifybYptWrkKso3WjPSf9RCb07av8
- YH3erXW6gF74rIDiHbYUaqAasNEXX/LDGcfkwUYwy9t9UMA5FvygUdlam4VYQQ+DfY
- uSljqYburcS5uyk4jrnkOQYSPuVchxZSEcIbsDGt3QiHCWAStADhGqRLvonoNu0pkn
- vZJVTRIOAtz2EP92Kt1Cb9oClxDdMoIx86oVo9bacSCNSWcUGAw0N/8X6/E7/vJHMk
- 76u65ZWIpv+OA==
+ t=1777191947; bh=k07nGqRY5eUz8kzWF1279mNAzNFQSMccGT+KuAXiq5w=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=kDtIBTZpSZKj/Nv21cpjdNIkhlyZmncKSpb0P1jhIgHgSWNwSBHrf9n/pC+Vc9h1z
+ sbWGRgGqPZkXorR6LgFTm7F3Jmpe4ntw7gNse77CoZbfHXpuNaVVOL/YpvKMbAdk8S
+ yrEzlYWDztQji4ttRdCPlkSMZ+NhkjTfOHUT32EmWoC5s31U1DvgcxrJpymuojmeVW
+ 97JUrMXFDF5RlPgO7OT0R5d7N8BFoVvJxHilEkhXbhI1dom9MoZFRTcUDIMPwWqOCq
+ F73SLdHQsIJCa4wBtEVqAfZ4supwgcPxRCTOUVYBBs6xly/rrzRgG8BuslORGJr1cG
+ CCxiVjw9p8T+w==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id B04C21A336D;
- Sun, 26 Apr 2026 11:19:51 +0300 (MSK)
-Message-ID: <e893c0f8-1826-4f30-b4ed-ee2932bf5dfd@tls.msk.ru>
-Date: Sun, 26 Apr 2026 11:21:13 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 840321A3372;
+ Sun, 26 Apr 2026 11:25:46 +0300 (MSK)
+Message-ID: <0954cec2-4c0d-4a97-96e6-b821c37e8a99@tls.msk.ru>
+Date: Sun, 26 Apr 2026 11:27:08 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/4] io/channel: complete pread/pwrite_all API and fix
- multifd_file_recv_data
-From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: Re: [PATCH 0/3] migration: switch remaining positioned I/O to _all
+ helpers
 To: Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org
-Cc: berrange@redhat.com, peterx@redhat.com, farosas@suse.de,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260413214549.926435-1-junjie.cao@intel.com>
- <c164cb5f-27e5-412d-ad28-70a6fc050722@tls.msk.ru>
+Cc: peterx@redhat.com, farosas@suse.de, qemu-stable <qemu-stable@nongnu.org>
+References: <20260420201317.30199-1-junjie.cao@intel.com>
 Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -86,9 +84,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <c164cb5f-27e5-412d-ad28-70a6fc050722@tls.msk.ru>
+In-Reply-To: <20260420201317.30199-1-junjie.cao@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -112,45 +110,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26.04.2026 11:15, Michael Tokarev wrote:
-> On 14.04.2026 00:45, Junjie Cao wrote:
->> This series fixes two bugs in multifd_file_recv_data() and completes
->> the positioned read/write "all" API set for QIO channels.
->>
->> Bug summary:
->>    - size_t variable storing ssize_t return: -1 wraps to SIZE_MAX
->>    - error_prepend() called without ERRP_GUARD(): NULL deref on short 
->> read
->> Junjie Cao (4):
->>    io/channel: introduce qio_channel_pread{v,}_all{,_eof}()
->>    io/channel: introduce qio_channel_pwrite{v,}_all()
->>    migration/file: fix type mismatch and NULL deref in
->>      multifd_file_recv_data
->>    tests/unit: add pread/pwrite _all tests for io channel file
->>
->>   include/io/channel.h              | 133 +++++++++++++++++++
->>   io/channel.c                      | 139 ++++++++++++++++++++
->>   migration/file.c                  |  13 +-
->>   tests/unit/test-io-channel-file.c | 207 ++++++++++++++++++++++++++++++
->>   4 files changed, 486 insertions(+), 6 deletions(-)
+On 20.04.2026 23:13, Junjie Cao wrote:
+> Follow-up to the pread/pwrite_all API series [1].
 > 
-> Hi!
+> qemu_put_buffer_at(), qemu_get_buffer_at(), and file_write_ramblock_iov()
+> all use single-shot positioned I/O without retry.  They share the same
+> pattern as the bug fixed in multifd_file_recv_data() where a short
+> transfer would be mishandled.
 > 
-> Is this a qemu-stable material?  The amount of new code this series
-> introduces is somewhat large, but it fixes real bugs in the end.  On
-> the other hand, these bugs doesn't seem to be very serious, so.. I'm
-> not sure :)
+> Convert them to the _all helpers and clean up a pre-existing
+> const-correctness issue in qemu_get_buffer_at() along the way.
 > 
-> How do you think, should we pick this up for the current stable releases?
-> It applies cleanly to 10.0.x (the earliest stable series currently
-> supported).
+> After this series no positioned I/O call site in migration/ uses raw
+> single-shot channel operations.
+> 
+> Depends-on: <20260413214549.926435-1-junjie.cao@intel.com>
+> ("io/channel: complete pread/pwrite_all API and fix
+> multifd_file_recv_data")
+> 
+> [1] https://lore.kernel.org/qemu-devel/20260413214549.926435-1-junjie.cao@intel.com/
+> 
+> Junjie Cao (3):
+>    migration/qemu-file: switch buffer_at functions to positioned I/O _all
+>      helpers
+>    migration/file: switch file_write_ramblock_iov to pwritev_all
+>    migration/qemu-file: drop incorrect const from qemu_get_buffer_at buf
+> 
+>   migration/file.c      |  8 ++++----
+>   migration/qemu-file.c | 37 ++++---------------------------------
+>   migration/qemu-file.h |  2 +-
+>   3 files changed, 9 insertions(+), 38 deletions(-)
 
-For 10.0.x, it also needs two more changes to work:
+And just like the previous changes in this area, - should I pick these 3
+to the current qemu-stable series, or is it not needed?
 
-a5bc1ccca95 migration: simplify error reporting after channel read
-1edf0df2840 io: Add qio_channel_wait_cond() helper
+Applies to 10.0.x series and passes tests, but I haven't done any more
+testing here.
 
 Thanks,
 
 /mjt
+
+
 
