@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CFB4FF885C
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 13:48:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AE81FF885D
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 13:48:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGznx-0005rZ-Ga; Sun, 26 Apr 2026 09:45:53 -0400
+	id 1wGzpR-0007NF-Jn; Sun, 26 Apr 2026 09:47:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wGznZ-0005dW-Dd
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:45:36 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1wGznv-0005s3-Mt
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:45:49 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wGznW-0001Ky-2S
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:45:23 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-35da01fc0baso5874565a91.2
- for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 06:45:21 -0700 (PDT)
+ id 1wGznp-0001Qy-JI
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:45:44 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2b24fdac394so90576135ad.3
+ for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 06:45:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777211121; x=1777815921; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777211140; x=1777815940; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=91KpAxRphFoJ92UJqSPx0ipa0G5SKbiIfR6fXaE6u/Y=;
- b=GIgoqIAFC5RQvJVZGTSojn3Mxf8pRlEp/HIbyyRIVyep86SCPC4MTzv+jcInzeLVNN
- imGBsoOR4RLk34vEIl+g85smnIHYlfDBji9vEZpVc18ePr5j3FrqG8nzaRcbvhOxfVrD
- hhDP2xDyTADr+F7J9lh7s0kFowgVZJvTE3i7j8HNp6ix9edN5ULe9ibvOYkvBcSJCMF2
- v1xLIFyKpYMGxs8u3GSde+KvwdCYKZmoqVpl5egNOZ2AJIAuQzEQz9LXkQk9pMxNHXgp
- ndDt1P+0+3m7zRautQKZAjF1fYX3BxoboxP8G0N5oH1NBMCuvx2hCT/cjQ2+pm0Tk6pK
- L30g==
+ bh=ITXVWTswHK0ITcm+gabq4ujW8XFmcTy1jBekq3ZfSNY=;
+ b=vHZTGL+digeFM3tEYqXhI9LY/6eqyVwsM59CKQRQoONwMQ7AP0VUQqdZxTXgEPDPY1
+ ME9bDy63Xxx94FKss2hTcxasiZV0scYRE9I5FDKdoMiCbJBzHO6rDDFrcbz3zCM++V9M
+ wpWVMjUMnBEbZjFrv8IqXQ9hO+zobQIIJ1vWRCagpkOsuwIhrWOCZd3bIRifWux0+6Jq
+ xE9fPYjJxuJ50gtCVkDLmcdfGqIgOSfLco7ex1nuDSrmFtduoeRVjzIwxJqVjUqD9rAZ
+ h4NBVObU1LuYDoUpiWboCNew1AvH5ytaKJalXaqe2XOqUObPeNIEDVpVp3W4GWKveH9Z
+ D1CQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777211121; x=1777815921;
+ d=1e100.net; s=20251104; t=1777211140; x=1777815940;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=91KpAxRphFoJ92UJqSPx0ipa0G5SKbiIfR6fXaE6u/Y=;
- b=eXZ+PmOSkSbOqtjgmeGvvNXE5dG76+ecqD6ra15aYu2UsjSxz+ETaoZky/rEFNXj6O
- Vww9vbpybPQrZ68qpjQ+kTg/fwm+LKe0ajLUciGK3opnEEdDIWblxJcY02DVlxxNXUYv
- lXRDRM21yOXoCkFldvVCqUE63XMLd8S/n9v+jMXnwj9CotRjAQfyP5ZXNYFx7bnPk6rm
- K29aCBWgP11j2ETF3ZAfOuMEikKDfdg3Uw6OIAguV0BE6ags91Kf0m4Q8sb8/U/B9Zmb
- LUn6cCtIing7+NQCYYJitQB2OZEZlCdhIDyaJgziykiGkFL/0hmUagMlDCqWWCr3s3pY
- aqGw==
-X-Gm-Message-State: AOJu0YwHkaJMZtpS7xtlPx0nacDMaOZm+Un/NG6q4acTX/IgJkaeUUkK
- bBDKFHdVKLKJW42FrFnFnGSvBY4Xn8doTUDAc8/tVwcWgv88zAlXyBTY7w/s6O4PXI1oDcH5Ml+
- FtmEvRUM=
-X-Gm-Gg: AeBDiesoi/LAolBA5pqzhuefk8yy/RY6hYIT33+TrYBL+CcX1x2lmLhiTN+qk5RLNJr
- 6VtZlFgalW++qJ4iy6Xw0mahwbC6i1S4hLaRLvs1RmK43MpI79ySnaLod0K5NdYrL0csZpSDS9u
- whn6JSIumf/Isv6Ieyf4R7XM/7mQsOVu2jzE8LqqQAUH57exlzWAbQJarpigFfYJGsoiYSf1Xwl
- ToH9eN4mK5xLxM+vUZtjpSd/jyTex9QB8lnWg+tyy+7/XsUMMVYwM3zKM/eA0fx5h8HsGSR5v7W
- DyHd5SeGH+CDJtgw623v00lsX4wdrV8ZVahbS/9A0E4kFds8THNOoomUtlJSxAcDMY5pHLwUCp/
- /PnU8SQTvnMB7vgciqWcgkDh0sSNkOoldhU3pyYj0LoVnGKz3D23zxa/eS82Cza/asRu1bhX5EX
- Qb3WjfduAD6krX7DYWFvL9Xv3u+xM5fvQpaF5YVz7d
-X-Received: by 2002:a17:90b:3e8b:b0:364:6558:99bd with SMTP id
- 98e67ed59e1d1-36465589ae7mr3859850a91.23.1777211120546; 
- Sun, 26 Apr 2026 06:45:20 -0700 (PDT)
+ bh=ITXVWTswHK0ITcm+gabq4ujW8XFmcTy1jBekq3ZfSNY=;
+ b=R7pi1rfu6buAYIxHceNVi8XPV+nswE6Fh9EppUAx4NCcUHJHDnRzYC4bt/0ujQ9n2B
+ 3zBDyNz8EeyKyx0qKofRwcSWaMwvps8+7m+zYoGC4o9cZ9whZ3zjSTMB0JAJ25+7dlZX
+ W+DGDhGBf1QhwQpui45LM3r9MBT0Wbrqyqt+pD52vlq/xksbXQL8fbPI9vYhorZ9QflW
+ jljXeFE7PzDelyHnfQJ7LCtYPfMYG626KgVm2JIMPDd7UNLgFsFHR0sPEfDx1AjfgqoN
+ etLSJIauhsLFZ7R7mqvwLePkZ5KoQo1NPc0AP5LoHSRsrjvELIskctSLMbQ18f+Heg30
+ J0VA==
+X-Gm-Message-State: AOJu0YwnydBN+Gz0DlruBMJEIHH9WCmqaJJLTgT51ycfSU/LgoiTVBIY
+ E1ujAIOSImsj5RwzWHSzVXEAMcdqb8gNeL8EIQMEsTWERgmOPUS9GUBLwjzS84I/H2e4m9E//Rd
+ qr9KImes=
+X-Gm-Gg: AeBDieumPwg19MeBY+HZqa6j0zjD3dQWXtHfWK0vDa0qp5mROeMeuNhvtyQh9+wkV8S
+ HMLXGxLsCDdGDOCveKcC27MS5b2tlybwrlxiCXc8qaRl+JXScCgjEZfzdZ9jUdgkBEXSSwZDUvn
+ xypzE2biJfERa2SmHPzyrxziAjMiCI1sp18eQYAGvJR2gxzik+ecRmgxXoZMzD9sOmLeRPpCv//
+ mGv8JgT2SkJSPAfnE/dED9u1uFKXhNNwP8sAVAsGR1MD8XgUOU80xhWhmP4oMYK/QyUFTo1VB9f
+ 4gs1LpaTvHq4hvd6UVmKvt4IdSbl11shfAULGofZaEw8bmqt5u/W7hoznbFD0NMesXZfOu0oBKR
+ 3VCFYS3VPmfh85FaRqPugQiqRQW7i07C+6fVPTV6Me6WDLSsljAQpo96vtWSG2Q5txwphD40HwJ
+ N0JyeSb/MWb5qA+4ltU5GIBkyTndwCTf8WT9tiX2TQ
+X-Received: by 2002:a17:903:3c24:b0:2b7:a3bf:b2a0 with SMTP id
+ d9443c01a7336-2b7a3bfb415mr161832115ad.5.1777211140195; 
+ Sun, 26 Apr 2026 06:45:40 -0700 (PDT)
 Received: from stoup.. ([180.233.125.15]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b5faa34ea7sm280544085ad.34.2026.04.26.06.45.17
+ d9443c01a7336-2b5faa34ea7sm280544085ad.34.2026.04.26.06.45.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Apr 2026 06:45:19 -0700 (PDT)
+ Sun, 26 Apr 2026 06:45:39 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	qemu-s390x@nongnu.org
-Subject: [PATCH 48/84] fpu: Change parts_float_to_float_widen to
- parts64_to_parts128
-Date: Sun, 26 Apr 2026 23:39:25 +1000
-Message-ID: <20260426134002.865628-49-richard.henderson@linaro.org>
+Subject: [PATCH 55/84] fpu: Mark unpack_raw64 QEMU_ALWAYS_INLINE
+Date: Sun, 26 Apr 2026 23:39:32 +1000
+Message-ID: <20260426134002.865628-56-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260426134002.865628-1-richard.henderson@linaro.org>
 References: <20260426134002.865628-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,98 +100,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename and return FloatParts128 structure.
-Use switch instead of 2 ifs.
+This is almost always used with a constant FloatFmt,
+so inlining pulls the constants into the shifts.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- fpu/softfloat.c | 39 +++++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 18 deletions(-)
+ fpu/softfloat.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 99f0036d0d..5d58caf5ea 100644
+index 302612fe42..63697ab3db 100644
 --- a/fpu/softfloat.c
 +++ b/fpu/softfloat.c
-@@ -2590,20 +2590,27 @@ static FloatParts64 parts128_to_parts64(FloatParts128 *b, float_status *s)
-     return r;
- }
+@@ -633,7 +633,8 @@ static const FloatFmt floatx80_params[3] = {
+ };
  
--static void parts_float_to_float_widen(FloatParts128 *a, FloatParts64 *b,
--                                       float_status *s)
-+static FloatParts128 parts64_to_parts128(FloatParts64 *b, float_status *s)
+ /* Unpack a float to parts, but do not canonicalize.  */
+-static FloatParts64 unpack_raw64(const FloatFmt *fmt, uint64_t raw)
++static inline QEMU_ALWAYS_INLINE
++FloatParts64 unpack_raw64(const FloatFmt *fmt, uint64_t raw)
  {
--    a->cls = b->cls;
--    a->sign = b->sign;
--    a->exp = b->exp;
--    frac64_widen(a, b);
-+    FloatParts128 r = {
-+        .cls = b->cls,
-+        .sign = b->sign,
-+        .exp = b->exp,
-+        .frac_hi = b->frac,
-+    };
- 
--    if (is_nan(a->cls)) {
--        parts128_return_nan(a, s);
--    }
--    if (a->cls == float_class_denormal) {
-+    switch (r.cls) {
-+    case float_class_qnan:
-+    case float_class_snan:
-+        parts128_return_nan(&r, s);
-+        break;
-+    case float_class_denormal:
-         float_raise(float_flag_input_denormal_used, s);
-+        break;
-+    default:
-+        break;
-     }
-+    return r;
- }
- 
- float8_e4m3 float4_e2m1_to_float8_e4m3(float4_e2m1 a, float_status *s)
-@@ -2791,18 +2798,16 @@ float64 float128_to_float64(float128 a, float_status *s)
- float128 float32_to_float128(float32 a, float_status *s)
- {
-     FloatParts64 p64 = float32_unpack_canonical(a, s);
--    FloatParts128 p128;
-+    FloatParts128 p128 = parts64_to_parts128(&p64, s);
- 
--    parts_float_to_float_widen(&p128, &p64, s);
-     return float128_round_pack_canonical(&p128, s);
- }
- 
- float128 float64_to_float128(float64 a, float_status *s)
- {
-     FloatParts64 p64 = float64_unpack_canonical(a, s);
--    FloatParts128 p128;
-+    FloatParts128 p128 = parts64_to_parts128(&p64, s);
- 
--    parts_float_to_float_widen(&p128, &p64, s);
-     return float128_round_pack_canonical(&p128, s);
- }
- 
-@@ -2847,18 +2852,16 @@ float128 floatx80_to_float128(floatx80 a, float_status *s)
- floatx80 float32_to_floatx80(float32 a, float_status *s)
- {
-     FloatParts64 p64 = float32_unpack_canonical(a, s);
--    FloatParts128 p128;
-+    FloatParts128 p128 = parts64_to_parts128(&p64, s);
- 
--    parts_float_to_float_widen(&p128, &p64, s);
-     return floatx80_round_pack_canonical(&p128, s);
- }
- 
- floatx80 float64_to_floatx80(float64 a, float_status *s)
- {
-     FloatParts64 p64 = float64_unpack_canonical(a, s);
--    FloatParts128 p128;
-+    FloatParts128 p128 = parts64_to_parts128(&p64, s);
- 
--    parts_float_to_float_widen(&p128, &p64, s);
-     return floatx80_round_pack_canonical(&p128, s);
- }
- 
+     const int f_size = fmt->frac_size;
+     const int e_size = fmt->exp_size;
 -- 
 2.43.0
 
