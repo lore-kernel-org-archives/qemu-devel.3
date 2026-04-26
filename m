@@ -4,41 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72AEEFF885D
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 11:51:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 320CAFF885C
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 11:53:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGy0q-0007HL-01; Sun, 26 Apr 2026 07:51:00 -0400
+	id 1wGy2R-0007yd-GO; Sun, 26 Apr 2026 07:52:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wGy0h-0007Cp-3R; Sun, 26 Apr 2026 07:50:51 -0400
+ id 1wGy2Q-0007yK-3o; Sun, 26 Apr 2026 07:52:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wGy0b-00079Z-Sh; Sun, 26 Apr 2026 07:50:49 -0400
+ id 1wGy2O-0007VP-9X; Sun, 26 Apr 2026 07:52:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777204154; bh=PlBVWJx1qMWzjx/ObjfhnjZ3kev2YNPAmzazZ9lDaR4=;
+ t=1777204271; bh=Pj9iNQ4uz87+HN6L0c+SurvxTHdUzCSYrDih7fxvBJI=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=o1XAiI3Bmr+egHzmsnoXKwswNzQ7TLmVaLTCKUqPjcQB7vv7CGo2wJbu8Vd07FAEJ
- Ywcx8aJ0YumWTqVEP5gdZHPxLAIf5tgJnlWxpwmmhQIJN7gVtyt1bMmv/X1fReM+gp
- k1B/wLhUpm6/ofAB4oJrTMC4DhjcF/7R/FqwBvmxgSlFBS3EIFNJuflVqWMLWdko2O
- szv33fBI1Q4YbsrknvLFXWwj/4uX8fK+B0DPyzLc8oiT9nPR6KiqQFl0INCyM5bcR7
- b9Kvc0TK7ygnP/4Iwk3L2fndrteW9+7397yZ+u2wHdJr1fbKhYsXlVZFvEayFt+Bn+
- KhnvdcWmPBlrQ==
+ b=YBCaPAa2sHpE2214LJ8CvPY9UEe3OJRO0RWiWUEA8uTDQrWV/m9p9YalmXKsdk+W6
+ DccigmBokaoz5xGepQ/PfIjm+MdvPSbCD+p5xnx748fHK5yYmNAQDcnYHS1FLhwWh5
+ +TgLj+kh7UKdn8nIqLNOBwLXGd+YtJMZfUpQAFzMYhouAmIVTxK+Q4rEf2X8TB/HC0
+ rCKxUijEPEZlsrQ4VTunGwfaPahaVjVziMW3ROT2HVUHMi0glMulT5UcaDi0s81BWY
+ 4Wzv12wl6S+RSl1+K2WY8rKeXUZB4VTCgI0ovH3CH2kTEqPZk5EEqB2kuvzdmsSOMO
+ 9G9t5B/1jfrfA==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 122051A33ED;
- Sun, 26 Apr 2026 14:49:13 +0300 (MSK)
-Message-ID: <c04615d4-2842-49ae-b8e4-8d1475832ab0@tls.msk.ru>
-Date: Sun, 26 Apr 2026 14:50:35 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id ECCA61A33F0;
+ Sun, 26 Apr 2026 14:51:10 +0300 (MSK)
+Message-ID: <5cbd9bae-6c28-4a90-84ab-a22848650546@tls.msk.ru>
+Date: Sun, 26 Apr 2026 14:52:32 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/misc: Fix the valid access size to the avr-power device
+Subject: Re: [PATCH] hw/sh4/sh7750: Remove forgotten abort() in the
+ MM_ITLB_DATA handler
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Michael Rolnik <mrolnik@gmail.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-trivial@nongnu.org
-References: <20260421082935.85995-1-thuth@redhat.com>
+ Yoshinori Sato <yoshinori.sato@nifty.com>
+Cc: qemu-trivial@nongnu.org, Aurelien Jarno <aurelien@aurel32.net>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260422075429.341409-1-thuth@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -84,7 +86,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260421082935.85995-1-thuth@redhat.com>
+In-Reply-To: <20260422075429.341409-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -110,27 +112,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 21.04.2026 11:29, Thomas Huth wrote:
+On 22.04.2026 10:54, Thomas Huth wrote:
 > From: Thomas Huth <thuth@redhat.com>
 > 
-> Accessing the device with in non-single byte mode currently causes
-> QEMU to abort:
+> QEMU currently aborts when the guest writes to the MM_ITLB_DATA register:
 > 
->   $ echo "writew 0x800064 0x4142" | \
->     ./qemu-system-avr -M mega2560 -display none -qtest stdio -accel qtest
+>   echo "writel 0xf3000000 0x11223344" | \
+>    ./qemu-system-sh4 -M r2d -display none -accel qtest -qtest stdio
 >   [I 0.000000] OPENED
->   [R +0.001784] writew 0x800064 0x4142
->   qemu-system-avr: ../../devel/qemu/hw/misc/avr_power.c:58: avr_mask_write:
->    Assertion `offset == 0' failed.
+>   [R +0.004476] writel 0xf3000000 0x11223344
 >   Aborted                    (core dumped)
 > 
-> Set the valid max access size to 1 to fix the problem.
+> Looking at the history of the code, the abort() here has likely just
+> been forgotten when the register handler had been implemented (it used
+> to be a reminder about unimplemented functionality initially):
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3393
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>   https://gitlab.com/qemu-project/qemu/-/commit/9f97309a70f12df5f9104f1f
+> 
+> Thus simply remove the abort() now to get rid of the problem.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3420
 
-This looks like a minor issue, yet it feels like this change is a good
-candidate for the current stable releases.  Please let me know if it isn't.
+This too, seems to be a good candidate for the stable series, -
+despite the issue is very old.  Picked it up now.
 
 Thanks,
 
