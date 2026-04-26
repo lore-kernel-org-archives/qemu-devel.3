@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B5D3FF885C
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 12:59:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CD6CFF885C
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 13:02:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGz4C-0007Ce-Cp; Sun, 26 Apr 2026 08:58:32 -0400
+	id 1wGz7P-0008FW-Uu; Sun, 26 Apr 2026 09:01:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wGz47-0007CG-1b
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 08:58:28 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ id 1wGz7J-0008Et-4M
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:01:45 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wGz44-0006kj-U8
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 08:58:26 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-64d5a7926cfso9137705d50.2
- for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 05:58:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777208303; cv=none;
+ id 1wGz7H-0007W4-L0
+ for qemu-devel@nongnu.org; Sun, 26 Apr 2026 09:01:44 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-65005a8840dso7819630d50.0
+ for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 06:01:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777208502; cv=none;
  d=google.com; s=arc-20240605;
- b=h+/q4M0vZ3cmPir2VK2JbMzIlIXhEyRgc4py6pydXe0MyfHa6W+y9o1wUelpcKzXyO
- ByBYFNOH79Xc9kW9LYvaIFa0GkEooN8vDpg1dBTIbBJe0cdMy3r4V40rS9l5/rDV14Qx
- GmGkqpEZBPYbVQKWU+v8Z7mQAROqtn6uRcbitmngHi2xGBRNSwDNErffb6vxR9e0tg40
- t/inagia46IYAezFhwdah4wEgttSBmyyp9SzhstaMLu8EKmAQjESVXDL3EifV6qIoi6J
- Lsk/Z69non0Iv6kjUaJZgayVETAQ7dBuaTMR38wn0I3XQHf47nO+63dqJ7DIXMsh2T6U
- wxwg==
+ b=azb1lmKzo6UG1CiixXJHzSWaeMvxBWu3eLXXbgocKE7xo8mCbTpN8QqLi7hZ2F5BW3
+ iH4daeLJPHLstVoZCfaAhK8sMbLmdgcAkvpN8pQO6oVKFavTlYu0G0v6vuLR9BoB8oy8
+ ZNzXX7udfnvtGtvBTe343C1lZPbY3X1HPF3/jFQQFEaep1vfpwPqZ37ghHyUWrwRoeOJ
+ spo835Wf0njQNevCOQvj8GOhp7GV/6UZ8fZ8+wZ6t4pDSoaE4AXeqSA9p1uHZHv57TXJ
+ cst4BdeJusUtK8A56AY8TglI8GhiuN/7Qjyvp86nwsv7Xjm7DsBMioCr6MzcshTnXahv
+ 3d/w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=0UHWkSpJ/NIGgjibfTym2Ka0RKxid94udmKYvdVB17M=;
- fh=/J+bR136NyudAqreHqcNVMSk5lDml1Rpd70ZXEhiLQU=;
- b=dPjLlbLeaZRiglgZHKfLEHg2O1JI7fQAX7rdUxbN+lafL0u0gi02s5NzPC4QTvn++/
- IQplqNpkF0lVtDLOSQBwdxuR+KIYy+IRxdWw6e4PZAfGHKFOSaaesepK0WacJQlPWcsn
- SXJpG/zMK9FI+pWgwnhTrR56c3q4QcvvZ0EHgO7MN8fcTOrOIlDP6axBvDNWpip/nliQ
- Nq0EEPzOOj149Wfz3i5Eiyd9ORUrOA08sjvcgJqpxzkAErBdYAo2indY4/ZG53//qo+g
- esvE/4BLKQKa5tmQSSNJktIkIyNDkh06h8Tue6wSNTKvNQjoulOHpSAP1e0+5nyWLf2s
- NkEg==; darn=nongnu.org
+ bh=zB4T+EbXJqkH4ADcFs+27cc6y6dRBgoS/fPm5xgAExk=;
+ fh=bVAjZsnX9UB/+Cqpm8NkuB9varEVtoOfOkjiYudRcMA=;
+ b=AR2lXa3gxgqOee5COHucsDHPSWPgRdnwFhd4rNpGS96Mpyen5zOcOF30uR0kZ9rufl
+ UQnI3t3QM++5NCwosNsuna47p4fY2Dlj2pwOMOrs8VM3pG4OD4BhnN2t2gyjb16J/6GD
+ rB9so+0vVYWJR6bHr8kphgbx5QGPXlvcBa7QCo1yH5AtBwhuJxY8lCFM+iJMTltvgG5G
+ FgTG4NBMYRvEFuFlewhS7ihhURvF89LxhZveKjGI/WeF9ckrQhquIfQ374G5i77Ju8dq
+ mdl+hKlT5ER/Kb9wBfLoBrzWtcHE0uWYL4kOnWgpJLe8SF8em1UIRyp69+bJz9AL3RbR
+ KdeA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777208303; x=1777813103; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777208502; x=1777813302; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0UHWkSpJ/NIGgjibfTym2Ka0RKxid94udmKYvdVB17M=;
- b=hiiC2uD6nEIhRKFrBuLkIkV2OOdIjr6Q49UOys1pILSaOjz9wTUZKm+nRnXXe72C+b
- DPZ4gzTJA2DIO2kewryxDuCIlJLbty+aJO13bl7o95GhDMe6HfAK08pU+scN5bi/cx3d
- lUJKkyR7DEZjJsN/bsPggkQuF6BznCw4pAB5SG6vfjotcX8sTWwukZLeXEMNLV/5fbbe
- +rvNhNW2LIDa0PAxirysb4ucPHTF4uYln6aG0wpdQBE71oYedYX5uc+H/XP6Gn15tARi
- bZ7EdZhop1IrOnjTmlYNtzjfMQgisSAcrh24ZXXtqsw3yajfNRw4BN1tYtoIZ+IvQYgH
- 8bHg==
+ bh=zB4T+EbXJqkH4ADcFs+27cc6y6dRBgoS/fPm5xgAExk=;
+ b=G05WdCplyaBwAYTHcVzaHXlnk+G/7EMd6+CgMkC1p85Ph5PgqslvVbf5ZZHK8H4+Wu
+ nOzIXeCwkZOG556WT6868/HZ3Wklwj9shN/WVvhNd5Q/VvTdK573/xqEgpf4T6E59DUr
+ xRNe3OhfMsElxjdutflQT7oywPsj08TBywrWLYa3n70j+7OfQGob8addg0WPMBR74DF3
+ 8WmtEOxUH5onhCJCny9TkFtJMATuP87mWF4drK+tTrnAsOWOuZgzzGeKoQZrOQoDPRQV
+ Mu2+ypuwQETIsR02/dOAq/8vwwEnfV+LkL1pGQ4LkicgwLegvfMXIXhrXDAKJOpfFDzx
+ HzFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777208303; x=1777813103;
+ d=1e100.net; s=20251104; t=1777208502; x=1777813302;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0UHWkSpJ/NIGgjibfTym2Ka0RKxid94udmKYvdVB17M=;
- b=c+JndpRL6mlnnExaellV9XA1A24kzBT4HGvXtzaL1Vz1G2QXERYFasDu9E2vqgd6Gv
- T4dzASUP37u0Xn3asiR8EsqYGShjLDrTGEe0LSWYOgTWo3hU4wtsdWoaYqt+A7ZShkx0
- anB8dmfiUDMr6vbl+sA2fguQkhFVjl5hOVIfbBTjI9yKH3rpSoIInvwHDafa/qI66Ow5
- 7v4L+6TwDl2ok/OHsKiT83SNyL3L0V80Gm08ZwJAdtsAvQEt2S6un2RzOoJdEhJHWP5r
- M+fxzkRVvjJoe8KDyltNOUe/ERAYblgPZKcTn/qgsu/74c4cM5ZR0HY/eUYlbKg4LB1M
- jJXg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ87ixz+3lYLEteVbwzWKMfA1W30vScZpONAGdscR7FMjJGejWmmM1iZYWsvp71rwdqlp3fHIfXf18w0@nongnu.org
-X-Gm-Message-State: AOJu0YzmwTN2B0XLXq8Iu0kLI2bfsOQWjTfioiHtOcOQ+R/hpS41nln1
- Q9Fh7urLvD2Xbbbgt2vCrZ/3MbwnELOBclArycBWs5W4t50ewtmj7vBkJbzj1ILNjFJkL6tp52c
- gU9hpxAoDjoh+VHPLUPqoQfiFfxz0Do1733RgAKFclw==
-X-Gm-Gg: AeBDietfDDfjRTFekGW9n+sGRSId/UfAm/Q94f98YGgCUNMUgHlX0SvTdgToASXjsyW
- ryEqJOCkF0u7YtWePsE2wvnPiRGJKe58ufiPRoXC8JB2fbEY0iiJ9X/mhbPLglRZB3f8oOZLTXa
- nwdCoDq1QLcnK8Wfy3rZY68/y3IV3XkBapmpviHydM+W2v8NKTfzKTM7/szpq5HTxT9YB392c+1
- 6xL35d7vBi9AE9xuClqOpCTf6xU9D4d1/wD8y4KElaxXTWEmMeLd8SJGK73wigohi8RIDm9oLQ7
- 8G51Q4tnZoxgJXI+9dyFQf6SfYQKr787KRVbl0LRDbypQT9p9hXLSSVYZxD8LaoKrKtUZG7XCQk
- BrQ==
-X-Received: by 2002:a05:690e:418e:b0:651:c268:479 with SMTP id
- 956f58d0204a3-65310acca30mr28600423d50.57.1777208303303; Sun, 26 Apr 2026
- 05:58:23 -0700 (PDT)
+ bh=zB4T+EbXJqkH4ADcFs+27cc6y6dRBgoS/fPm5xgAExk=;
+ b=F/S5Bhkcj21eVD56LMCN1DCKEG8pE9E1yluKJW42fU6/zOfeos7KXwlFQ5MG+qhwb2
+ cUKDg9sD9Xw+U2bHB4GWZ6Jh17jelT4/bKChdrvizfhHG7BdjcZYW4KKdgL3t7Vdv6lD
+ +CuAgBibawZAqsOSat1CAxxTFs7gFoh2/hCZsePXywikL1VlEWQk4goHEsmsh8ETlTS1
+ yQqYOLWKUeos9KrrABs0iIgE+FlXyfSMBhVWL07gZLnvai6EsMeularY5zjJjNrfOL++
+ 3RZ2RqNqKaTMC145wsKTV2PNkdTCzeiUMeE+lUdLotbTA6zkbSQMTvSkw5PPJFjEZlbD
+ HlJw==
+X-Gm-Message-State: AOJu0YyQII4eyXkTT16PNha2SCCZ2xK1EbuCtTgP5nkkW1sX4LRV40Il
+ LypjJxNgxcpxIq4M9DH1C+xcn2xF5An/YkvT44bFPvDvwA/lq+FQYVLxfmD0U4ZqPerNSwIFdXn
+ VyheC1fzvr58mjPzz/5rQw0gWTtjjYWQP+ijSE2H0Ng==
+X-Gm-Gg: AeBDieusieu9Lq1wt+dwyC3jO4GrJnx4eX1VFrlu+2AqsCRDZfqKrHCJL+CZmQNeTtg
+ 95k58S8g1PYG5SBhrnYvRUsZCUMYR3t9rYzZY+edajvtJ2Cfz4YRCDxA0gB4WR8/20X1Facs1PF
+ nH9JnWd5MnUQlXe9YbAc9ILN/EqOPWvYuQ5tVDoUG3fM3n2ITDsD+upMpJMZmPcl/5DrO8O1B4e
+ osdiWHRtmZSs/78tAU8ZVbydfpqSTw3uKOMBoOfTwzRbG7NMDACeKT/C0lAIMBnghX14GIfEiyR
+ FH2mIQYZSIgsDIPzALy9nTdbTGLT4GuRqsnSzAlhWZuhSlTWo8P0ELl3FAo/cgS7jX0shNUItXC
+ TbQ==
+X-Received: by 2002:a53:b3cc:0:b0:649:ed08:1a01 with SMTP id
+ 956f58d0204a3-65310a1360bmr26792633d50.35.1777208502173; Sun, 26 Apr 2026
+ 06:01:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260421082935.85995-1-thuth@redhat.com>
- <c04615d4-2842-49ae-b8e4-8d1475832ab0@tls.msk.ru>
-In-Reply-To: <c04615d4-2842-49ae-b8e4-8d1475832ab0@tls.msk.ru>
+References: <20260425144852.46590-1-deller@kernel.org>
+In-Reply-To: <20260425144852.46590-1-deller@kernel.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 26 Apr 2026 13:58:10 +0100
-X-Gm-Features: AQROBzBP730PUuXnXiHi5NzGXmLACGtDko0tduD0dOf3hEA5HNbFtkrNDfwIy6E
-Message-ID: <CAFEAcA8-TEcFd1bf+AmJL_zcmHmuE6=UxW5mndZK3kZ4orVJpg@mail.gmail.com>
-Subject: Re: [PATCH] hw/misc: Fix the valid access size to the avr-power device
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, 
- Michael Rolnik <mrolnik@gmail.com>, qemu-trivial@nongnu.org
+Date: Sun, 26 Apr 2026 14:01:30 +0100
+X-Gm-Features: AQROBzD-tEHBFqwnZjrAAvsAcxT_clzvc2WRagMGJ6HpHy5a-iJ7NpxgN8tJRMk
+Message-ID: <CAFEAcA_hODcBVXw0TsHMXFipgh5+mwSrGEuHhCUOdtt186QP6g@mail.gmail.com>
+Subject: Re: [PATCH] linux-user: Flush errors by using exit() instead of
+ _exit() in error path
+To: Helge Deller <deller@kernel.org>
+Cc: qemu-devel@nongnu.org, deller@gmx.de
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,31 +115,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 26 Apr 2026 at 12:50, Michael Tokarev <mjt@tls.msk.ru> wrote:
+On Sat, 25 Apr 2026 at 15:49, Helge Deller <deller@kernel.org> wrote:
 >
-> On 21.04.2026 11:29, Thomas Huth wrote:
-> > From: Thomas Huth <thuth@redhat.com>
-> >
-> > Accessing the device with in non-single byte mode currently causes
-> > QEMU to abort:
-> >
-> >   $ echo "writew 0x800064 0x4142" | \
-> >     ./qemu-system-avr -M mega2560 -display none -qtest stdio -accel qtest
-> >   [I 0.000000] OPENED
-> >   [R +0.001784] writew 0x800064 0x4142
-> >   qemu-system-avr: ../../devel/qemu/hw/misc/avr_power.c:58: avr_mask_write:
-> >    Assertion `offset == 0' failed.
-> >   Aborted                    (core dumped)
-> >
-> > Set the valid max access size to 1 to fix the problem.
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3393
-> > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> From: Helge Deller <deller@gmx.de>
 >
-> This looks like a minor issue, yet it feels like this change is a good
-> candidate for the current stable releases.  Please let me know if it isn't.
+> Qemu user mode does not properly flushes error messages related to bad
+> arguments when exiting (at least when the output is piped to a file
+> instead of running on a terminal).
+> Ensure that we always flush by using exit() instead of _exit().
+>
+> Reported by: Tobias Bergkvist
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2544
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> ---
+>  linux-user/main.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/linux-user/main.c b/linux-user/main.c
+> index c49d1e91d2..84e110dfe9 100644
+> --- a/linux-user/main.c
+> +++ b/linux-user/main.c
+> @@ -767,7 +767,7 @@ int main(int argc, char **argv, char **envp)
+>          execfd = open(exec_path, O_RDONLY);
+>          if (execfd < 0) {
+>              printf("Error while loading %s: %s\n", exec_path, strerror(errno));
+> -            _exit(EXIT_FAILURE);
+> +            exit(EXIT_FAILURE);
+>          }
+>      }
 
-Yes, this is fine for stable.
+How about the other _exit() further down in the function
+for the case where loader_exec() fails ? That seems like
+it would have the same problem.
 
 -- PMM
 
