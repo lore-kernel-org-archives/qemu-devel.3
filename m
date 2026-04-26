@@ -4,93 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49261FF8864
-	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 07:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50815FF885C
+	for <qemu-devel@archiver.kernel.org>; Sun, 26 Apr 2026 08:06:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wGuIG-0000cC-JT; Sun, 26 Apr 2026 03:52:45 -0400
+	id 1wGuUq-0004ww-Lj; Sun, 26 Apr 2026 04:05:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
- id 1wGuIB-0000bb-8k
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 03:52:40 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
- id 1wGuI9-0006My-J4
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 03:52:39 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4891f625344so79844185e9.0
- for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 00:52:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777189955; x=1777794755; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=k/XWABLefJ/zOywTqvBRGITa8xb5xBgFrteNQQ066Ds=;
- b=YHv88G4uyRIxS3hbMV0Lnyt4sABnKWC0qEaGDME5Nk6evMyzgfD2JEaImpUixw3VOA
- ClHdVsUOWrcJVavCfElUnkx1TGuV9iiQybVufLHmqSgQO3vOYTTLhZrtcthUJwrnlrF6
- NGzJukUm+HqC7mS9xCPete/8bcs/knYMOGAS4TaihRa6+rVCAO8jlfkj591hEYXA8lJd
- Qt1hNDQST81sHm1HfFaz2iaEP6RSZTnbZ8R0XjJW9SVAMT6utFSKUpaQT0FUzk+HahC4
- 2qsfhKH0o3AenlRxyEAfYyJnJ91fIGrdKVMGo9guvUcnkarUEqSyx59NMjsYkahWuHSD
- UoWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777189955; x=1777794755;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=k/XWABLefJ/zOywTqvBRGITa8xb5xBgFrteNQQ066Ds=;
- b=KKRjHFxQrIGn/ut5XOcsAdFIfizpUyMD3CtskKkkiuAEKSRz/F5ja1LpgHq4pZQnLQ
- hBWLQgIFlhPMX+LFAlDoLZmwBYisJe4PJ8CXEpifiIT5/lQzPyeQ88Z3VDaWe9Nh8c/b
- bfLgAg5Xdv8LA1/xCBe6gCadechK03PDuJdDzej7USUMglhoOlFXlxiTewiBkNXbZIK1
- UYwdJavnPy5uoJQHidkJiP6vLB9ld9JEszkQq75/j2M/A8e1kLMNVrnnLrnLK+w3A5Ff
- VfgaBXmKIOOC3n3iq6Ry6g7Bbmgc8qiDR0/OvagZV7AuqtiUoo2KbedH1wCOoDjEC4Yg
- 8omQ==
-X-Gm-Message-State: AOJu0YyNLPp8fO9NUzaR2cPKXXz8+11wJvTps5fqAtoXBB4ElXYZ3oKf
- eD88SfxGuzj6282XtGw+k6GH8NqMT0OrEJEDgMZt9AN5rxsUgxTkwlLtV9w6muxF
-X-Gm-Gg: AeBDietgO1j2XIfvSnVhz2Te7nkR9Zufp29k2H3iv9bV5OgzwkjZhSp/rafbNVSNiX1
- czkPi8ikuZgpzRor9GPvG8dvilG6IJdgeEU+ZdSfyO8ac4xU8SEo55ZOsO6WUKzsO4tbNM3tnI0
- YvcQ5n6zcL+4KIe4t5rMv0IRanFkIISt1MRoIJJ8LyqJpLXtISWJXTp8ZZvzOXVpJl29upI8ri9
- ggNSmUO/MXNQ0tJ0ZC8OZMVJErsXv4B2rLcSPpoT7V7UdH1rdFYK7kLNnwGfcK28sxaPh/NRME6
- FGGG9YWmUWVriBulA8bfrR2x2XdmBJjMYz+1O3td/ZYIp8MOnC2AcKrS1iBFE55qd3QREssDtAy
- mz/M+vvzQymleNqg66Ceal0T18ganHXw3SezzloVSIoYBT74KaePfwDARxaluKeN0toTN8n4yzO
- sFlVg+gfIchaNuzr2ecTsEFvBOvnK0T/BAeNC1IZM=
-X-Received: by 2002:a05:600c:4e0c:b0:489:1d7a:4537 with SMTP id
- 5b1f17b1804b1-4891d7a463emr395572105e9.3.1777189955347; 
- Sun, 26 Apr 2026 00:52:35 -0700 (PDT)
-Received: from [192.168.0.10] ([2a03:ab00:1000:1b60:331a:b316:78f6:effc])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb74c68asm224080045e9.3.2026.04.26.00.52.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Apr 2026 00:52:34 -0700 (PDT)
-From: =?utf-8?q?Jind=C5=99ich_Makovi=C4=8Dka?= <makovick@gmail.com>
-Subject: [PATCH v3 0/2] Fix and re-enable GTK clipboard
-Date: Sun, 26 Apr 2026 09:52:32 +0200
-Message-Id: <20260426-gtk-clipboard-v3-0-09555aaeda34@gmail.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wGuUm-0004wa-8s; Sun, 26 Apr 2026 04:05:40 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1wGuUj-00019f-Kn; Sun, 26 Apr 2026 04:05:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1777190638; bh=eS7AjQsFD5CTVZb1Vj8QpfWGS9MM9FCwlHSSHxXW6UI=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=XcAzu0mPZHEcG8S9JRSblOmHzlbinPtHqyopv74nULKDvHyhHqLdMZXr61dq6bUJD
+ +glsquHgoJ28TDHiO3RPu43P0xa3yy6Yg4gyjhBq2rwZejObNlM99SGZVdgQ8qlyMv
+ SIgpOeu051nechHhyGfvU77QtTQJIN6zkWDH+KNjeCfesgTqHH9H1+EbGL5lpvph7D
+ /gpCcbOqK0EAfw+Pi7oAgGzRkkD3/G0dPpzev4KVv58SmQK5X3CsTdGNUqcVF37AT0
+ LOsqpPniBm80rFddH8IdMIDmlRk9krrFokasXc8sX7/dElPB+ifphLLosjo/2/Lqtp
+ U0G1fOns3kjBA==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id E16371A3368;
+ Sun, 26 Apr 2026 11:03:57 +0300 (MSK)
+Message-ID: <529c523a-6263-4553-9436-4d9d81d80633@tls.msk.ru>
+Date: Sun, 26 Apr 2026 11:05:19 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAEDE7WkC/32MsQ6DIBQAf8UwlwbQWnHqfzQd4AH6UhUDhrQx/
- nvRqUs73iV3K4k2oI2kLVYSbMKIfspQngoCvZo6S9FkJoKJmlXiQrvlSWHAWXsVDHXGSWk0LxU
- wkps5WIev43d/ZO4xLj68j33iu/11SpwyWmsjpb2yxvLq1o0KhzP4keynJP7WIteaycaV4GoJ8
- F1v2/YBZXYpB+gAAAA=
-X-Change-ID: 20260425-gtk-clipboard-fdf99db13ac0
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Jindrich Makovicka <makovick@gmail.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=makovick@gmail.com; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 01/18] migration: vmstate_save_state_v: fix double
+ error_setg
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, peterx@redhat.com
+Cc: farosas@suse.de, qemu-devel@nongnu.org,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
+ <20260304212303.667141-2-vsementsov@yandex-team.ru>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260304212303.667141-2-vsementsov@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,47 +112,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches change blocking clipboard retrieval function
-calls in gtk-clipboard.c to non-blocking variants using callbacks to
-avoid UI lockup. It is a follow-up to the patch proposed in the GitLab
-issue
+On 05.03.2026 00:22, Vladimir Sementsov-Ogievskiy wrote:
+> We may call error_setg twice on same errp if inner
+> vmstate_save_state_v() or vmstate_save_state() call fails. Next we will
+> crash on assertion in error_setv().
+> 
+> Fixes: 848a0503422d043 "migration: Update error description outside migration.c"
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
 
-https://gitlab.com/qemu-project/qemu/-/work_items/1150
+This feels like a qemu-stable material.
 
-This version adds a similar change to gd_clipboard_request that also
-uses the blocking clipboard API.
+I'm picking it up for the current active stable series.
+Please let me know if I shouldn't.
 
-The second patch removes the gtk-clipboard flag, keeping the GTK
-clipboard always enabled.
+Thanks,
 
-Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
----
-Changes in v3:
-- Use gtk_clipboard_request_contents to avoid text conversion
-  when we only need to check if the text is available.
-- Link to v2: https://lore.kernel.org/qemu-devel/20260425-gtk-clipboard-v2-0-b098f3cf69cc@gmail.com
-
-Changes in v2:
-- Removed forgotten gtk-clipboard comment in meson_options.txt
-- Link to v1: https://lore.kernel.org/qemu-devel/20260425-gtk-clipboard-v1-0-6bd99e708e14@gmail.com
-
----
-Jindřich Makovička (2):
-      ui/gtk: Use non-blocking clipboard retrieval
-      ui/gtk: Keep GTK clipboard enabled
-
- meson.build        |  4 ----
- meson_options.txt  |  7 -------
- ui/gtk-clipboard.c | 52 +++++++++++++++++++++++++++++++++++++++-------------
- ui/gtk.c           |  2 --
- ui/meson.build     |  4 +---
- 5 files changed, 40 insertions(+), 29 deletions(-)
----
-base-commit: aa15257174da180c6a8a9d58f87319cfe61c5520
-change-id: 20260425-gtk-clipboard-fdf99db13ac0
-
-Best regards,
--- 
-Jindrich Makovicka
-
+/mjt
 
