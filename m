@@ -4,92 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0333FFF8862
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:16:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0438AFF8861
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:18:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHH8V-0006y6-Uy; Mon, 27 Apr 2026 04:16:12 -0400
+	id 1wHHAM-0007c8-6T; Mon, 27 Apr 2026 04:18:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH8M-0006wM-BJ
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:16:02 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wHHAK-0007bj-6D
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:18:04 -0400
+Received: from mail-dy1-x1330.google.com ([2607:f8b0:4864:20::1330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH8K-0005YM-O4
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:16:01 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-43fe8bda8e9so5472092f8f.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:15:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wHHAI-0006SH-Nt
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:18:03 -0400
+Received: by mail-dy1-x1330.google.com with SMTP id
+ 5a478bee46e88-2dee127b3c5so15190030eec.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:18:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777277881; cv=none;
+ d=google.com; s=arc-20240605;
+ b=j4Kj6DeeE9zDrXwPKUiV00wiNOSCiDvpSsVkAy67T6/CT5sHB5aoDuW8hzAHQkRXPe
+ zFxe+Rxyy9QSwkpba+wUl/4w0JsPWDTfdYyvpP5zvRNsyTbgvyhRlUWFVXUozoaYgsr4
+ a6RvDbN/ABWMcUhKDR4uF8aH2L7Z6B+CzKiv8lE5JZm4Ld0XWLe2VA/5UMHbaAqSvHO0
+ 7g5mhQWf4T7s0R1CvZQCsTLWMDczbxnxbHfGzvxBOWvhm6oWZH/D7m70ROMPdxUSqKaW
+ IpY2f8O3otxlifMv9k1JFUHbbzrscKpY5vFFU3+D8CbIcMkz13i7e5ZCOHvYuOy2vwoU
+ M9FA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=tRP5909te7OtzU/OJaXtbDnc8GJ1x6uIQ+eCRE5A2kg=;
+ fh=8aBEJY+feA7d7ThUvpzyIH9FOGeOtT6IdrliqPJEqPM=;
+ b=HfKZvlt7eSzIJLj34nsKGEO615Kum9D/OSnaq0ZzvRacednGVveH9ttDef7Pi0Jruc
+ FRZu1MuJPGcmWeKmTv+R/Jf/rgh/rSKEOIduON1Zs55mOBgDF+gpPKZow8/L9YQwMGbm
+ F6LMlX29HlonHOpUXm+lpcc+00myBwHpbeP2ZEeU5f4ALyNoodPAgCn/xIJMUFKoUkZc
+ ZuM1sBOTsEVtglLWrjXJMfd90E+G38q0P1uICSXStRovjGIIldHOZF9E8EeV1KMMNsCa
+ lEbBtJDaZyRPTtH7FgX3nSraKvI8GEIe9AbDPbqxx7hVZy6wuxHylEhYgSUEJ2DW3cvO
+ SMVg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777277758; x=1777882558; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7Z06+pVcx7dTOdJgKxJOhuDZYpBUcP95HGstRK2Dhu8=;
- b=jKNNs9vyPM543X2iFDhoL8syImEElaHrc4Si33hWXvyWgFlu6tHZ1pKABn3/oi5xlT
- bupDjxId9TAvV6YYR/q8p1KbUDi8C692GVsSlcVrukfveA1OJczO/T1NiizvcoLQbmeb
- tf5XJqFezBPZ/NZ50dCcPRBb2WXEnU3lkWZwQLxJaXAz8cSdKAS3pUZOtUBuXi01f4O9
- nOt5nZAmH5ySeSEyk55N44AdjvpP1HsfbwdwiGGjqqY/Hm8sqEr70fGUVUoayKY08omD
- FGGqiiVTckRfj2kFexkDe3SiOCvnAMIypbMw5iloUwq37llbx4Yd+Z2LBl52WbanHuJm
- 0nFA==
+ d=redhat.com; s=google; t=1777277881; x=1777882681; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tRP5909te7OtzU/OJaXtbDnc8GJ1x6uIQ+eCRE5A2kg=;
+ b=BJn/S+v53xWaZC5fi0Cquzo2dQ3mPSXL7GJUbDd7xXAk1jPCZDVR//8B3/a+fU6USf
+ m4WPe4v3yBlrM+NQ59Us6kV9w/tXRAe3G1urtooGHXXwIfhzkFRJa9n3KIkZozAvrPlG
+ VoRNnXS58aey8upCU0Z7HZviceo3a6CAv3JFqNfwxXtiJrebQn0LoeCYHN6P0aanXsZy
+ 5/i5ZCsneTE873WpsA8mNafa1dXpEmfz30SBCCnWs8nSKrQGmYAQuMzOYTwGjIIDaWLS
+ F3koWUvb6f73ZA/xsIDCOIR/LzE0e9NHmtyAA7kyRpu+u9SjmV4ZudYmZctvk3yEHjf+
+ OgGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777277758; x=1777882558;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7Z06+pVcx7dTOdJgKxJOhuDZYpBUcP95HGstRK2Dhu8=;
- b=ZzOpTLyXSWAH6ZkOBG/r8aYW2Qms60/wck+QRT/yR8KgYXn53cYMyOxEjopnUF65sx
- woeagC6pdN8Z6B0FqbjJ2+D/R4nPKeE1Ux/xr29B+OWsl8KOGOKWBVn0UzNKmipOAZhG
- rACZjTn/sEYQJScu79bvdVhAfJ7038GMAImKeCmhcm/hGQoINIbyA0m2fngChAzIM/QU
- M40vEKaTiuEOiiJGzgrGMCBMG1nmO6ESoh1pB/kRcwFtYHom+AmbqUVN4FgQJCPiLl+l
- qDD6cxCbJRxZecB5JQLc3vYOefwup42tZk+/hBaH2x/lW1AZ/aIHDJH3sRu++HfmPhTb
- 3/sA==
-X-Gm-Message-State: AOJu0Yxa47HJr72a0PoYIyhgMwB3cmPpyqpxePaWipDCR0NFZuijZA+Q
- T9sZnnXK6WqBiwxNbpovQYiYKiF18jzXydca7HgvcYZ95rZMmULv8p3HtRa+p+mTWJIyODqPIW9
- OOU/Cnus=
-X-Gm-Gg: AeBDietNHuZ7EPf4cLhRzExGAnssyNfR0vlKOgrskcvx7Le10rKqaLxhlVOOLsVOeEj
- z1cAhDFQlQFYQKtMg3HwJd7mQJ6RcO8BwsQPsU6qz8fOo4jK3Wqd2gu7NnX+W/o5lK8SDJXSEbl
- qAFAluOwcgsshLZN3Pa358ZShb79mpIOFRor+BoOH/T7GQydPBtDS1MNT6kTg5lHnXhkJ/aUZyN
- xhQPah49bj9JoPGHKILfL+IOHiCVdcroyVl8Hd6NILkruuMgr7avRKDj9K0rNaibe7TeyQwpAIA
- DJvuT7WU2xrJxyFJjftddFqEU6JFp+a4b/7JDMQtdcUJCRjtTpLubmVTRpfdFa+rdXP5QBrbhXC
- V0l0Uhkf00Xm16NEVvj+FYZkBmbfbUYwKbt2GQZ0lWpva88uDdrpEMuihsA7ByoyNY/Ye9Td7un
- qqHl8rbr2HpIuM2zM7RtJU1tiL+cEmw7j1VffubHQqkmQkfc8sMFRCgf/Og4O8IwaWwCInN/GdW
- fI8QtjDDYelnh4=
-X-Received: by 2002:a05:6000:2386:b0:43d:7261:8759 with SMTP id
- ffacd0b85a97d-43fe3dfd63emr66485312f8f.28.1777277758046; 
- Mon, 27 Apr 2026 01:15:58 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cb1365sm83761111f8f.7.2026.04.27.01.15.56
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Apr 2026 01:15:57 -0700 (PDT)
-Message-ID: <54fa03d8-f1cb-4510-bc57-e18b6a048cb3@linaro.org>
-Date: Mon, 27 Apr 2026 10:15:56 +0200
+ d=1e100.net; s=20251104; t=1777277881; x=1777882681;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tRP5909te7OtzU/OJaXtbDnc8GJ1x6uIQ+eCRE5A2kg=;
+ b=mXVQHqmvsl6E1KfCZsqUIDr2/z4qks4ZfcHxANinaqZCpB3t5DtsODbMdR8Yzpxz5V
+ QRPgUmcKxgo3VxfafDajsXjuXycJa5QZYZwwBiz9kghv1gRK5zFJIQzKuF50Nv/3QIxV
+ yaBo4rKTsnX2x2WhCCsw0jl1RfEtH2QZ0HLVGt5IxyrjunJQioEamStMO6hn0dIvhmrH
+ +RuSXfzQmIHRPSiNrEbOkFOE0ZRKLUWxQUmwW6+bm7xSKaUjETg6RaLKFOjC7YhrMgNT
+ e6KCntXab/pbaczQ/Ilkf8giXFojC2JahlZA5+hJcWLXngsMiBKoua87CiImWk3oKUB9
+ fTWg==
+X-Gm-Message-State: AOJu0Yy/bEvpOyJ5EAy48OEomlGulR8kJhj3/c0KR+y2wzkWt3vIuMuS
+ 2SkG0m6/BC9pjM97D5UopymRNRtEBPCSD/23hcS/A9Jlva2XX06FXYoCO6ajA5u1fMbrwrnQcTv
+ d1Wh+mQyqAAat1NLcBiwNV3NvZlXviQU=
+X-Gm-Gg: AeBDievQR6SWlM3gtND01/GWivN3llQj1CpMwBKNQtptHjjEQbC8M54pQrKxDLL0LFi
+ 8+ijdc6bLr17QPctSw5egKblmolzUi5RzLdr73M0IqzVuJqum/z+P9fEFPIw1B9sGTH6/Uyabcr
+ u8zZoDRZSMG8bPnvh1MRPbpW1wPJGZ6DqYfw5BBMFuE9D++zsu1fAeDU17F3Vi8not/IuU0XJZ+
+ vQFiejiDXbAXSGp/aFi2l+GJKIoRnOIHPRIBEEpGJx4STXeWj4F2nCmxbqgeBx5YXmD+KUXaarf
+ RLjSDCmM6yWt5MMlEinvTS2t+11wO5lblBHNEPGLU15wraLNyv0=
+X-Received: by 2002:a05:7300:371e:b0:2d9:6373:ad22 with SMTP id
+ 5a478bee46e88-2eada6d66damr7916352eec.12.1777277880816; Mon, 27 Apr 2026
+ 01:18:00 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/9] target/arm: Remove MO_TE to compile MVE/M helpers
- once
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260414005348.4767-1-philmd@linaro.org>
- <4a4ab25c-aad9-4383-bf39-00a22cd5d287@linaro.org>
-In-Reply-To: <4a4ab25c-aad9-4383-bf39-00a22cd5d287@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+References: <20260422202646.272081-1-marcandre.lureau@redhat.com>
+ <87eck4x35p.fsf@pond.sub.org>
+In-Reply-To: <87eck4x35p.fsf@pond.sub.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 27 Apr 2026 12:17:48 +0400
+X-Gm-Features: AVHnY4LoLc4IalYcT2Mag9AzWpeOQeb8_emFVcsI1WGoeRtlMinsDPm5rfcEcd4
+Message-ID: <CAJ+F1CLjuWApGFeivgTywJwzORfwtbf0kjxJdmw8_vpuraJZig@mail.gmail.com>
+Subject: Re: [PATCH] ui/console: remove console from global list on
+ finalization
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1330;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1330.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,21 +118,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/4/26 05:58, Philippe Mathieu-Daudé wrote:
-> On 14/4/26 02:53, Philippe Mathieu-Daudé wrote:
-> 
->> Philippe Mathieu-Daudé (9):
->>    target/arm: Ignore endianness when setting MTE tags
->>    target/arm: Explode MO_TExx -> MO_TE | MO_xx
->>    target/arm: Hoist MO_TE into mve_advance_vpt()
->>    target/arm: Hoist MO_TE into MVE DO_VSTR() macro
->>    target/arm: Introduce mo_endian() helper
->>    target/arm: Replace MO_TE -> mo_endian() for MVE helpers
->>    target/arm: Compile mve_helper.c once
->>    target/arm: Replace MO_TE -> mo_endian() for Cortex-M helpers
->>    target/arm: Compile m_helper.c once
-> 
-> Series fully reviewed.
+Hi
 
-Checking as of master=aa15257174d, this series still applies cleanly.
+On Fri, Apr 24, 2026 at 10:52=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
+om> wrote:
+>
+> marcandre.lureau@redhat.com writes:
+>
+> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >
+> > This commit removes the QemuConsole from the global "consoles" list whe=
+n
+> > it is finalized.
+> >
+> > Previously, there was a TODO comment indicating this path needed
+> > checking. The assertions added ensure that `dcls`, `gl_block`, and the
+> > `dump_queue` are empty before removal, confirming the console is in a
+> > clean state.
+> >
+> > Fix potential use-after-free crashes when a display console is removed.
+>
+> Suggest to mention reproducers: QMP command qom-list-properties with
+> typename "qemu-text-console", "qemu-fixed-text-console" or
+> "qemu-graphic-console".
+>
+> > Reported-by: Markus Armbruster <armbru@redhat.com>
+>
+> Please add
+>
+>   Cc: qemu-stable@nongnu.org
+>
+> and Fixes: if it's not too much trouble.
+>
+
+Given that the hot-unplug path is not tested and has probably not been
+working correctly since forever, I don't think we should backport it
+or look for Fixes commits.
 
