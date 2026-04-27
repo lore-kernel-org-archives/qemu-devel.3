@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55ACBFF8861
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:10:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5DF3FF8861
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:10:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHH2K-0002t1-0f; Mon, 27 Apr 2026 04:09:48 -0400
+	id 1wHH2n-0007IR-0e; Mon, 27 Apr 2026 04:10:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH2D-0002SH-C8
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:09:43 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH2m-0007Bw-0M
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:10:16 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH2B-00025R-Mz
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:09:41 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso103276075e9.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:09:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH2j-0002TP-7d
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:10:15 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-48896199cbaso98654235e9.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:10:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777277378; x=1777882178; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777277411; x=1777882211; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JshNpgqW4cCYul7Q+y/QdsSlweDRsNaeeQFwo1ONxPo=;
- b=i5f9AJbNGReyeQIM2GEWxADBdMZ2QavQlXBQP1nsOL9y4n45YbaV7wV489zlN3TXGc
- 3mjnyJ4iVhvMKP3tZsXBi3qyqtWXZNX69RnGElBSEVcpwmV4m/EX7PUiieQ/tPz8u5mm
- olxTdnoTN17XiOmDB3XZQVkyy7y5GB+C9hu+de5EknSWRHI4GNppLDsxBQXsPanRupfG
- gKR1dtKgny4rG9iYaNudyiKnF9G6oI406su4yB4tljfvazo3F6vnn/1xtn4z/MSiHFAg
- ehqOMiesxw6YblKbd8/hOzgnakn3GZjbXA56hg2r+RPw3ZMSSEfpJZYyMgrWhBDefNvR
- s9sA==
+ :reply-to; bh=HQd4kWlVL3tTuUUEKzzbm5wkvsPG410wtgsY2aydV/I=;
+ b=HpnP6B4lSgWNfY/dMvsTmCiZxr8ZESgCwH2xTd8rTEechp0y32jyC0xelF9PYep//S
+ WJvwDmzTVccb7hVC6/YmeMjhjaxBvjLuDax0ZKe4Vc9juZnhVzoC5JfM79LFc2fhsQ1L
+ yjipzvkzFXYotCyhqpEB4fZqUNBgo3zwYKR4Md6Xr8JKnbNaNW+ZYs9Nd1M2/RMFX38C
+ NDdrN9uBGbwOM6/EHj0frEDae/5sx4SIT/YcuOZkKCY+traeOuHFavAmEgPtYfrSxaew
+ Q+hRpjNTLpCIUxntMosf+UUdO5t/0DN2xPxHF6hB8BMsyn50lwzQ1aK7JK8nbhkUJNgT
+ GLVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777277378; x=1777882178;
+ d=1e100.net; s=20251104; t=1777277411; x=1777882211;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=JshNpgqW4cCYul7Q+y/QdsSlweDRsNaeeQFwo1ONxPo=;
- b=GGYccJRpNUj5W/aHyBcQLQ575m8OGpRQbmtS73cHKs9za6DBfXDaFON/p6RJFJlxAW
- VV9Zjy8xoFUPnZ4bxSlktb3cyVz9a7q9/B5WXcjKgmlblCgxAGdG0yF0nCHlwKG6wfDh
- tN53No1I2inPLDXj4V4aR+B95J0R89d3LvliXTvH6ud415InMHUyFxZd/Zzjlm+cIaHG
- A6x1UCf6HJi1pa5JVeDs6RXY237Yo7q2h28fYoOJhdmOtXuR0OjXn+Z9vlQI4AedUY7C
- Sye23tabjE7RF7wXQj6x+Yd3Wk3f4LB3UKLbZN37dSaUwe+wYyX7aJxgeZDqTkBl0JU5
- FyMg==
+ bh=HQd4kWlVL3tTuUUEKzzbm5wkvsPG410wtgsY2aydV/I=;
+ b=WTcFNRxryazDiFVAJBp1LpmQn83WBBPYGwg4PEYWDwXd+iPJ0tnfBzZm4jcaQDIGdp
+ S/+uNqZl3qKNiqcPDiXagg3EZmes6iUIJBjTWnmsbrBN0RgUY0bBtU1Oo9UYqOYEbiDV
+ ztb1Rc/3or1nVs9ivzW6Y9Q5mSyRnykXv6USMTQDLIgIcRkxf4wuJP1uLISoKxQFOHrV
+ 8L3+xYZ48Y83s17rLaDScffIoKR3HyH7Qj/TlCiOoUmAzYoUTf/xPAVIxBjsATvTrRa+
+ WvOnf5YVIqRWJF81HQI+PpUupwUNPDCfEgH9E7Kc33nyAd63XmuMzPpF74yWrjwXer2s
+ BBgg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/q3gj4dnjSrAPtXNzQ623QmXhVZjCKCv+9Bk9GwcnMs3Q6Y9p+z0bsasuurkazyMdKmy9WPg+wdqUc@nongnu.org
-X-Gm-Message-State: AOJu0YzMy5aAQlUr9zvqhw2e7V64Rq3CGEmQTA1BpJKyh2U0oi6stBFI
- Sun658azwtnOCaPoELnnuXYzVXdZfeMVaESM2RZnUmSbEQySQ53oMTTxn6qus5hUZA53bF+/XB+
- 0ec6DNYA=
-X-Gm-Gg: AeBDiethfjIddgFL2UpEpjLc9siBThFndLl8oatiAWsFp6lE55xU8MfKVX+GfLBaUv5
- Z7OfvCft68LGb7/eZylvLGDBzkeTuzMYPwEJDXLAhRWEEBl5eaA7BGoSp2zwsfDNVD9qaTPhZI2
- NPH/7kRLyBLHO1RtUgtbEa/DYCbTlJiSnjj+oCST/si2NDaOryUdkdKI+BCvBR5/JkIPMze54lp
- pKLJXJoImNgoHFanEyeiFTGzoiQaxG0DQdvXcl55jqpnjATjEfvOON2hKkCnRlg2oahfc9EiVP+
- 9c/K+zK7p06BgX+rpuEWuDzdm9oAhqja4V98TKBlh0SaevduO69WJeOetjryGmQQ0QDYaBt1bSu
- utSWIX6iriObfzGjAD/qHshfsxR2a+TYFfuHzp/PQm1fqP1C5rmj9qD1kpVw047BLldYTeejA9d
- JpbEOj59qGCRgN/39aHGdap1NnxFCoVQqJSM9jmA7NkX2hD+itS5zRoH7jSVg3YtHWM4FeovdY4
- PLQB+zypZWBq6PGqhsODA==
-X-Received: by 2002:a05:600c:3f10:b0:485:35d3:ce59 with SMTP id
- 5b1f17b1804b1-488fb753c9amr565831465e9.10.1777277377790; 
- Mon, 27 Apr 2026 01:09:37 -0700 (PDT)
+ AFNElJ8RhqgvANpkydVmgNYjyIywCwC59CVKlVN8NRIQquambyNdh+C6J/dDVj4RpSuQNC/+SJtPueEUBUX6@nongnu.org
+X-Gm-Message-State: AOJu0YzrYtm3MjvyPF2+anqqrHungOPrrl3A0WHFPou7CJXXR4yeWaev
+ sy8uhWyF/xQ3BP4hM7paqcZKkxLNNEVoaMDNYOSfJPlkjBNcfwldd1ivyyTNEh0qVaTc0u6cPq/
+ 1hhxgeCo=
+X-Gm-Gg: AeBDievj/jl4zpg3c+ynn1LmsnXkWT3qJj4OiUHPCtvX9DxboTzk7SxaAZhPOTGjEpA
+ ZbNR/C4PR8guhJhFTZ2MOeko7u8glPbtDNlP+koGsTvht6yMY3ZXQKf7MRW8Sm73bxYi0QKcaTz
+ E08/giCuhsIBTriRpDUynz/p8qqleXXH1ygYLUQ/PoEJBb7roWWAA/P0KvgJ7NYqctKHzZP7rc0
+ TtT46JcN6UIv2W4Ac4yu+qtmz9DWD3br/n4XKiXKohcs0fnzuZ9Omd/lMrMDYcuuDvhaKkIRWss
+ OoMj+OoZciBJE6YvbCLhWDFQEdxOmdQoQZRRObQZTpUY3slfp6e4ygnIqci4nUnjWDHbyfX1egP
+ apybUea1QDcXLiva2eC/csyNtUFQHdUXmL3tpsJON1rOJMZsISrM+8UsDsJUzp6A/jJjoErnovg
+ 2C6lBCUJ/8b6Cjghi7VVTFP1Bt6LqiEO7dn1IHOX3uyEfD25L957gjFJDzbsJBylAqUAmxrrWiK
+ G7sUzTtjaI=
+X-Received: by 2002:a05:600c:5246:b0:488:a639:b787 with SMTP id
+ 5b1f17b1804b1-488fb74fc0dmr600756645e9.11.1777277411297; 
+ Mon, 27 Apr 2026 01:10:11 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a5aa3ae83sm778866945e9.12.2026.04.27.01.09.37
+ 5b1f17b1804b1-48a4b329542sm856930445e9.3.2026.04.27.01.10.10
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Apr 2026 01:09:37 -0700 (PDT)
+ Mon, 27 Apr 2026 01:10:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Markus Armbruster <armbru@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v4 17/32] monitor: Do not check TARGET_I386/RISCV to build
- 'info mem' command
-Date: Mon, 27 Apr 2026 10:07:23 +0200
-Message-ID: <20260427080738.77138-18-philmd@linaro.org>
+Subject: [PATCH v4 22/32] monitor: Have MonitorDef::get_value() always return
+ int64_t type
+Date: Mon, 27 Apr 2026 10:07:28 +0200
+Message-ID: <20260427080738.77138-23-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260427080738.77138-1-philmd@linaro.org>
 References: <20260427080738.77138-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,74 +102,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This command is filtered at build-time for i386/x86_64 and
-riscv32/riscv64 binaries. By using the recently introduced
-HMPCommand::arch_bitmask flag we can filter it at runtime,
-making it possible to compile hmp-commands-info.hx once.
+Simplify MonitorDef::get_value() handler by having it always
+return a int64_t type.
 
-Since the method depends on a pair of distinct targets,
-define it in its own stub file.
+Let the single caller (x86 targets) sign-extend the returned
+value, directly handling 64-bit CPUs in 32-bit or 16-bit mode.
 
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- stubs/hmp-cmd-info_mem.c | 12 ++++++++++++
- hmp-commands-info.hx     |  3 +--
- stubs/meson.build        |  1 +
- 3 files changed, 14 insertions(+), 2 deletions(-)
- create mode 100644 stubs/hmp-cmd-info_mem.c
+ include/monitor/hmp-target.h |  6 +-----
+ target/i386/monitor.c        | 11 ++++++++---
+ 2 files changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/stubs/hmp-cmd-info_mem.c b/stubs/hmp-cmd-info_mem.c
-new file mode 100644
-index 00000000000..8a53e367a9f
---- /dev/null
-+++ b/stubs/hmp-cmd-info_mem.c
-@@ -0,0 +1,12 @@
-+/*
-+ * Human Monitor 'info mem' stub
-+ *
-+ * Copyright (c) Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "monitor/hmp.h"
-+
-+HMP_STUB(info_mem)
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index 336ab870a2c..2d0a8f7d48f 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -209,15 +209,14 @@ SRST
-     Show virtual to physical memory mappings.
- ERST
+diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
+index 008c1a6570c..ae34ca65ded 100644
+--- a/include/monitor/hmp-target.h
++++ b/include/monitor/hmp-target.h
+@@ -27,15 +27,11 @@
  
--#if defined(TARGET_I386) || defined(TARGET_RISCV)
-     {
-         .name       = "mem",
-         .args_type  = "",
-         .params     = "",
-         .help       = "show the active virtual memory mappings",
-         .cmd        = hmp_info_mem,
-+        .arch_bitmask = QEMU_ARCH_I386 | QEMU_ARCH_RISCV,
-     },
+ typedef struct MonitorDef MonitorDef;
+ 
+-#ifdef COMPILING_PER_TARGET
+-#include "exec/target_long.h"
+ struct MonitorDef {
+     const char *name;
+     int offset;
+-    target_long (*get_value)(Monitor *mon, const struct MonitorDef *md,
+-                             int val);
++    int64_t (*get_value)(Monitor *mon, const MonitorDef *md, int offset);
+ };
 -#endif
  
- SRST
-   ``info mem``
-diff --git a/stubs/meson.build b/stubs/meson.build
-index f086521cde4..33053d932c8 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -87,6 +87,7 @@ if have_system
-   stub_ss.add(files('qmp-cpu.c'))
-   stub_ss.add(files('qmp-cpu-s390x.c'))
-   stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
-+  stub_ss.add(files('hmp-cmd-info_mem.c'))
-   stub_ss.add(files('hmp-cmd-info_sev.c'))
-   stub_ss.add(files('hmp-cmds-hw-s390x.c'))
-   stub_ss.add(files('hmp-cmds-target-i386.c'))
+ const MonitorDef *target_monitor_defs(void);
+ 
+diff --git a/target/i386/monitor.c b/target/i386/monitor.c
+index 977f65fe16c..98df5c7fd12 100644
+--- a/target/i386/monitor.c
++++ b/target/i386/monitor.c
+@@ -593,11 +593,16 @@ void hmp_mce(Monitor *mon, const QDict *qdict)
+     }
+ }
+ 
+-static target_long monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
+-                                  int val)
++static int64_t monitor_get_pc(Monitor *mon, const struct MonitorDef *md,
++                              int offset)
+ {
+     CPUArchState *env = mon_get_cpu_env(mon);
+-    return env->eip + env->segs[R_CS].base;
++    int64_t ret = env->eip + env->segs[R_CS].base;
++
++    if (!(env->hflags & HF_CS64_MASK)) {
++        ret = (int32_t)ret;
++    }
++    return ret;
+ }
+ 
+ const MonitorDef monitor_defs[] = {
 -- 
 2.53.0
 
