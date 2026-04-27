@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8514FF8868
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 17:06:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85394FF8868
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 17:06:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHPPA-0007gX-8o; Mon, 27 Apr 2026 13:05:56 -0400
+	id 1wHPP4-0007Zm-Fp; Mon, 27 Apr 2026 13:05:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wHPP8-0007cP-1x
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 13:05:54 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wHPP3-0007Yh-3m
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 13:05:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wHPP6-0006UG-6K
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 13:05:53 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wHPP1-0006Rm-Mc
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 13:05:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777309551;
+ s=mimecast20190719; t=1777309547;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5mxm+H4XFJxx9sZcIhYP6Y+Z1xUv6tjNOfVcPbR28dE=;
- b=Koo6UR3+Q8J/5ZW6kch0iYA6ZkBQ84jgaAmQKCe1D14EoKEZpsMA4JnzMNxQxj8H2NjGaZ
- XUvDFrPzwfIA9DnUv1pm/42/F+3ATyjdjAPWPyarsDwAqC9BumuXgVWfvYgxeRTo7w/qkg
- DJ9NG8zVMeeq3ZlefUEYu9LnPxSG2yE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=RNf7Qtsfx36oLLaeD/N/V5PatsHP0UT/LP0p18adqyc=;
+ b=dyUA6vP5yOuy1t9xK/acm8c79iojvmzZQJeoKSuzR3r8x3t1B1l9Ws9wIFjUdtXzaE3LI1
+ CXmMVQ6aEYtyXSEi0aa+BF2bv+XboYLW8ByyBVOLuTMi9Hph9b712qVfW63L41zn0kJKgl
+ TYkEEqL3EI2xqUTjTlOSYKHvMdMrJUo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-575-0cdDGZf3NhCmrnpO8Hgv1w-1; Mon,
- 27 Apr 2026 13:05:48 -0400
-X-MC-Unique: 0cdDGZf3NhCmrnpO8Hgv1w-1
-X-Mimecast-MFC-AGG-ID: 0cdDGZf3NhCmrnpO8Hgv1w_1777309547
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-xeNFhFwbOXqFn5IM-6mYQQ-1; Mon,
+ 27 Apr 2026 13:05:43 -0400
+X-MC-Unique: xeNFhFwbOXqFn5IM-6mYQQ-1
+X-Mimecast-MFC-AGG-ID: xeNFhFwbOXqFn5IM-6mYQQ_1777309542
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DB3491956059; Mon, 27 Apr 2026 17:05:46 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CF1251800609; Mon, 27 Apr 2026 17:05:41 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.44.49.22])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CF451180047F; Mon, 27 Apr 2026 17:05:44 +0000 (UTC)
+ id 951A5180047F; Mon, 27 Apr 2026 17:05:39 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, den@openvz.org, stefanha@redhat.com,
  qemu-stable@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH 3/4] qcow2: Fix corruption on discard during write with COW
-Date: Mon, 27 Apr 2026 19:05:19 +0200
-Message-ID: <20260427170520.101242-4-kwolf@redhat.com>
+Subject: [PATCH 1/4] commit: Drain nodes across all of bdrv_commit()
+Date: Mon, 27 Apr 2026 19:05:17 +0200
+Message-ID: <20260427170520.101242-2-kwolf@redhat.com>
 In-Reply-To: <20260427170520.101242-1-kwolf@redhat.com>
 References: <20260427170520.101242-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -65,7 +65,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,144 +81,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Most code in qcow2 that accesses (and potentially modifies) L2 tables
-does so while holding s->lock.
+The whole implementation of bdrv_commit() is only correct if no new
+writes come in while it's running: It has only a single loop checking
+the allocation status for each block and finally calls bdrv_make_empty()
+without checking if that throws away any new changes.
 
-There is one exception, which is allocating writes. They hold the lock
-initially while allocating clusters, but drop it for writing the guest
-payload before taking the lock again for updating the L2 tables. This
-allows concurrent requests that touch other parts of the image file to
-continue in parallel and is an important performance optimisation.
+We already have to drain while taking the graph write lock. Just extend
+the drained section to all of bdrv_commit() to make sure that we don't
+get any inconsistencies.
 
-However, this means that other requests that run while the lock is
-dropped for writing guest data must synchronise with the list of
-allocating requests in s->cluster_allocs and wait if they would overlap.
-For writes, this is done in handle_dependencies(), but discard and write
-zeros operations neglect to synchronise with s->cluster_allocs.
-
-This means that discard can free a cluster whose L2 entry will already
-be modified in qcow2_alloc_cluster_link_l2() by a previously started
-write. In the case of a pre-allocated zero cluster that is in the
-process of being overwritten, this means that discard can lead to a
-situation where the cluster is still mapped (because the write will
-restore the L2 entry just without the zero flag), but its refcount has
-been decreased, resulting in a corrupted image.
-
-Add the missing synchronisation to qcow2_cluster_discard() and
-qcow2_subcluster_zeroize() to fix the problem.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: Denis V. Lunev <den@openvz.org>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/qcow2-cluster.c | 52 ++++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 49 insertions(+), 3 deletions(-)
+ block/commit.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/block/qcow2-cluster.c b/block/qcow2-cluster.c
-index c655bf6df42..8b1e80bd0b3 100644
---- a/block/qcow2-cluster.c
-+++ b/block/qcow2-cluster.c
-@@ -1392,6 +1392,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
-  * the same cluster. In this case we need to wait until the previous
-  * request has completed and updated the L2 table accordingly.
-  *
-+ * If allow_shortening == true, instead of waiting for a dependency, *cur_bytes
-+ * can be shortened so that the cluster allocations don't overlap.
-+ *
-  * Returns:
-  *   0       if there was no dependency. *cur_bytes indicates the number of
-  *           bytes from guest_offset that can be read before the next
-@@ -1403,7 +1406,9 @@ count_single_write_clusters(BlockDriverState *bs, int nb_clusters,
-  */
- static int coroutine_fn handle_dependencies(BlockDriverState *bs,
-                                             uint64_t guest_offset,
--                                            uint64_t *cur_bytes, QCowL2Meta **m)
-+                                            uint64_t *cur_bytes,
-+                                            bool allow_shortening,
-+                                            QCowL2Meta **m)
- {
-     BDRVQcow2State *s = bs->opaque;
-     QCowL2Meta *old_alloc;
-@@ -1434,7 +1439,7 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
+diff --git a/block/commit.c b/block/commit.c
+index 0d9e1a16d7a..c5e3ef03a21 100644
+--- a/block/commit.c
++++ b/block/commit.c
+@@ -518,6 +518,7 @@ int bdrv_commit(BlockDriverState *bs)
+     if (!drv)
+         return -ENOMEDIUM;
  
-         /* Conflict */
++    bdrv_drain_all_begin();
+     bdrv_graph_rdlock_main_loop();
  
--        if (start < old_start) {
-+        if (start < old_start && allow_shortening) {
-             /* Stop at the start of a running allocation */
-             bytes = old_start - start;
-         } else {
-@@ -1469,6 +1474,29 @@ static int coroutine_fn handle_dependencies(BlockDriverState *bs,
-     return 0;
+     backing_file_bs = bdrv_cow_bs(bs);
+@@ -549,6 +550,10 @@ int bdrv_commit(BlockDriverState *bs)
+                   BLK_PERM_ALL);
+     backing = blk_new(ctx, BLK_PERM_WRITE | BLK_PERM_RESIZE, BLK_PERM_ALL);
+ 
++    /* We drained all nodes, but still make requests through BlockBackends */
++    blk_set_disable_request_queuing(src, true);
++    blk_set_disable_request_queuing(backing, true);
++
+     ret = blk_insert_bs(src, bs, &local_err);
+     if (ret < 0) {
+         error_report_err(local_err);
+@@ -565,7 +570,7 @@ int bdrv_commit(BlockDriverState *bs)
+ 
+     bdrv_graph_rdunlock_main_loop();
+ 
+-    bdrv_graph_wrlock_drained();
++    bdrv_graph_wrlock();
+     bdrv_set_backing_hd(commit_top_bs, backing_file_bs, &error_abort);
+     bdrv_set_backing_hd(bs, commit_top_bs, &error_abort);
+     bdrv_graph_wrunlock();
+@@ -647,7 +652,7 @@ ro_cleanup:
+     blk_unref(backing);
+ 
+     bdrv_graph_rdunlock_main_loop();
+-    bdrv_graph_wrlock_drained();
++    bdrv_graph_wrlock();
+     if (bdrv_cow_bs(bs) != backing_file_bs) {
+         bdrv_set_backing_hd(bs, backing_file_bs, &error_abort);
+     }
+@@ -663,6 +668,7 @@ ro_cleanup:
+ 
+ out:
+     bdrv_graph_rdunlock_main_loop();
++    bdrv_drain_all_end();
+ 
+     return ret;
  }
- 
-+static void coroutine_mixed_fn wait_for_dependencies(BlockDriverState *bs,
-+                                                     uint64_t guest_offset,
-+                                                     uint64_t bytes)
-+{
-+    BDRVQcow2State *s = bs->opaque;
-+    QCowL2Meta *m = NULL;
-+    int ret;
-+
-+    /*
-+     * Discard has some non-coroutine callers (creating internal snapshots and
-+     * make empty). They are calling from qemu-img or in a drained section, so
-+     * we know that no writes can be in progress.
-+     */
-+    if (!qemu_in_coroutine()) {
-+        assert(QLIST_EMPTY(&s->cluster_allocs));
-+        return;
-+    }
-+
-+    do {
-+        ret = handle_dependencies(bs, guest_offset, &bytes, false, &m);
-+    } while (ret == -EAGAIN);
-+}
-+
- /*
-  * Checks how many already allocated clusters that don't require a new
-  * allocation there are at the given guest_offset (up to *bytes).
-@@ -1840,7 +1868,7 @@ again:
-          *         the right synchronisation between the in-flight request and
-          *         the new one.
-          */
--        ret = handle_dependencies(bs, start, &cur_bytes, m);
-+        ret = handle_dependencies(bs, start, &cur_bytes, true, m);
-         if (ret == -EAGAIN) {
-             /* Currently handle_dependencies() doesn't yield if we already had
-              * an allocation. If it did, we would have to clean up the L2Meta
-@@ -2000,6 +2028,15 @@ int qcow2_cluster_discard(BlockDriverState *bs, uint64_t offset,
-     int64_t cleared;
-     int ret;
- 
-+    /*
-+     * If we're touching a cluster for which allocating writes are in flight,
-+     * wait for them to complete to avoid conflicting metadata updates.
-+     *
-+     * We don't need to allocate a QCowL2Meta for the discard operation because
-+     * s->lock is held for the duration of the whole operation.
-+     */
-+    wait_for_dependencies(bs, offset, bytes);
-+
-     /* Caller must pass aligned values, except at image end */
-     assert(QEMU_IS_ALIGNED(offset, s->cluster_size));
-     assert(QEMU_IS_ALIGNED(end_offset, s->cluster_size) ||
-@@ -2160,6 +2197,15 @@ int coroutine_fn qcow2_subcluster_zeroize(BlockDriverState *bs, uint64_t offset,
-     int64_t cleared;
-     int ret;
- 
-+    /*
-+     * If we're touching a cluster for which allocating writes are in flight,
-+     * wait for them to complete to avoid conflicting metadata updates.
-+     *
-+     * We don't need to allocate a QCowL2Meta for the zeroize operation because
-+     * s->lock is held for the duration of the whole operation.
-+     */
-+    wait_for_dependencies(bs, offset, bytes);
-+
-     /* If we have to stay in sync with an external data file, zero out
-      * s->data_file first. */
-     if (data_file_is_raw(bs)) {
 -- 
 2.53.0
 
