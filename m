@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B117EFF8864
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 21:02:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36B31FF8867
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 21:02:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHT5a-0000Qp-Nv; Mon, 27 Apr 2026 17:01:58 -0400
+	id 1wHT64-0000jG-0D; Mon, 27 Apr 2026 17:02:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5T-0000GD-HR
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:52 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5k-0000Yk-1h
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:02:09 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5P-0003UG-4D
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:50 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5h-0003Zw-QV
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:02:07 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 5E4EC4099D;
- Mon, 27 Apr 2026 21:01:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF0F4C2BCB5;
- Mon, 27 Apr 2026 21:01:42 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 32BC760139;
+ Mon, 27 Apr 2026 21:02:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F02C2BCB5;
+ Mon, 27 Apr 2026 21:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777323704;
- bh=SNBeEj5KSiWYkyqRyYX2gQdrt+ivR89RyfGpq4YmrsY=;
+ s=k20201202; t=1777323724;
+ bh=Q/iXGdIHYdJNB8woaida8AHWG6igtbbz4i/W4/TIG+0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=QPz2s4XgJKOdLKh0y4lui14zYkrMp2F6Cs9GuPvry66VvD9DLXRFUOvU6t9sG3aHR
- HrluWiCTSoNV66JdadnK1xDKm8WtzFrTHzlCf/jcX+9luTkDwR70Syy42k+GVcLjUY
- LtNvTWwn2Gq86KksCpuW71GmD+iTb34INSB3Z292//EwoFyE8BiTrKLX10Q5jDKyv0
- 7C9ooG1qXOxzVQBt1ZV4UghfRPkPd5nNGjyrJchZbJl/Hp2Gsx7mdWpkfY+Z9V2eG0
- BbWUY7bVst4QEmDH2rAloFq4Ayznjm2aExXrtLXofAxBkdZveWbDQvhPPGRGSwkGYO
- SjjNH/jKaGIuQ==
+ b=VPPeiz5vQShGCy47FvY0yGjg61aN7GX78rlPmkT9RMEtGDLa+Yg1Y/nqGfA5aYE1f
+ ICFlgNFWBlHXAQ11IS7Kq6RpY3xxLaoPyIdrrimXoIGC2rmVKmd1m4eX2xAiGVC4yN
+ pusv3KkoSx/89/Ilb1G2EKSQVE51px+GYrMI5NRYQ182YDYry2F26hf9BqktStwXxH
+ VJ4h1CrEFDWIq/vAt923RdArKzmxkWmjVT2ltKsSGQEfXGiXv0bc45FT4NzXlZnCTB
+ fuDGgXgQ/AMl+5iI7iEXdLygyCWrPzLlBsNby2RZkAlLLlqaG1F8CD2CRZhHT+K4CU
+ 7rXLUFTFdhjMQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL v2 04/15] linux-user: Don't define target_stat64 struct for
- loongarch64
-Date: Mon, 27 Apr 2026 23:01:22 +0200
-Message-ID: <20260427210133.6016-5-deller@kernel.org>
+Subject: [PULL v2 15/15] linux-user: Add missing CDROM ioctls
+Date: Mon, 27 Apr 2026 23:01:33 +0200
+Message-ID: <20260427210133.6016-16-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260427210133.6016-1-deller@kernel.org>
 References: <20260427210133.6016-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UPPERCASE_75_100=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,60 +71,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-The kernel defines 'struct stat64' only if
-__BITS_PER_LONG != 64 || defined(__ARCH_WANT_STAT64).
-loongarch64 doesn't set __ARCH_WANT_STAT64, and it isn't 32-bit,
-so it won't get this struct.
+Add the missing CDROM ioctls and bring them in same order as
+documentation.
 
-QEMU incorrectly does define a target_stat64 struct. However this
-isn't causing any guest-visible problems, because defining the
-target_stat64 struct and TARGET_HAS_STRUCT_STAT64 affects these
-syscalls:
- TARGET_NR_stat64
- TARGET_NR_lstat64
- TARGET_NR_fstat64
- TARGET_NR_fstatat64
- TARGET_NR_newfstatat
-
-For loongarch64 the only one of those we provide is newfstatat,
-and that is actually a separate QEMU bug, because the kernel does
-not provide that syscall for this architecture. No real guest
-code will be using a syscall that doesn't exist in the ABI.
-
-(Some of these syscalls are present in the loongarch64 "ABI1.0",
-but that ABI was never accepted in the upstream kernel, and
-QEMU does not model that ABI, only the "ABI2.0".)
-
-Stop defining TARGET_HAS_STRUCT_STAT64 anyway, for consistency
-with the kernel and to avoid confusion.
-
-Note:
-Commit message suggested by Peter Maydell <peter.maydell@linaro.org>
-
-Signed-off-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
-Tested-by: Gyorgy Tamasi <gyorgy.tamasi@gmail.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/syscall_defs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ linux-user/ioctls.h | 29 +++++++++++++++++------------
+ 1 file changed, 17 insertions(+), 12 deletions(-)
 
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 679af640c0..6967306be4 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -2005,7 +2005,7 @@ struct target_stat {
-     abi_uint __unused5;
- };
+diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
+index 5b7d00e92f..aa485ee6e5 100644
+--- a/linux-user/ioctls.h
++++ b/linux-user/ioctls.h
+@@ -416,19 +416,18 @@
+ #endif
  
--#if !defined(TARGET_RISCV64)
-+#if !defined(TARGET_RISCV64) && !defined(TARGET_LOONGARCH64)
- #define TARGET_HAS_STRUCT_STAT64
- struct target_stat64 {
-     abi_ullong st_dev;
+   IOCTL(CDROMPAUSE, 0, TYPE_NULL)
+-  IOCTL(CDROMSTART, 0, TYPE_NULL)
+-  IOCTL(CDROMSTOP, 0, TYPE_NULL)
+   IOCTL(CDROMRESUME, 0, TYPE_NULL)
+-  IOCTL(CDROMEJECT, 0, TYPE_NULL)
+-  IOCTL(CDROMEJECT_SW, 0, TYPE_INT)
+-  IOCTL(CDROMCLOSETRAY, 0, TYPE_NULL)
+-  IOCTL(CDROMRESET, 0, TYPE_NULL)
+   IOCTL(CDROMPLAYMSF, IOC_W, MK_PTR(TYPE_INT))
+   IOCTL(CDROMPLAYTRKIND, IOC_W, MK_PTR(TYPE_INT))
+   IOCTL(CDROMREADTOCHDR, IOC_R, MK_PTR(TYPE_INT))
+   IOCTL(CDROMREADTOCENTRY, IOC_RW, MK_PTR(TYPE_INT))
++  IOCTL(CDROMSTOP, 0, TYPE_NULL)
++  IOCTL(CDROMSTART, 0, TYPE_NULL)
++  IOCTL(CDROMEJECT, 0, TYPE_NULL)
+   IOCTL(CDROMVOLCTRL, IOC_W, MK_PTR(TYPE_INT))
+   IOCTL(CDROMSUBCHNL, IOC_RW, MK_PTR(TYPE_INT))
++  IOCTL(CDROMEJECT_SW, IOC_W, TYPE_INT)
++  IOCTL(CDROMRESET, 0, TYPE_NULL)
+   /* XXX: incorrect (need specific handling) */
+   IOCTL(CDROMREADAUDIO, IOC_W, MK_PTR(MK_STRUCT(STRUCT_cdrom_read_audio)))
+   IOCTL(CDROMREADCOOKED, IOC_RW, MK_PTR(TYPE_INT))
+@@ -438,16 +437,22 @@
+   IOCTL(CDROMREADALL, IOC_RW, MK_PTR(TYPE_INT))
+   IOCTL(CDROMMULTISESSION, IOC_RW, MK_PTR(TYPE_INT))
+   IOCTL(CDROM_GET_UPC, IOC_R, MK_PTR(TYPE_INT))
++  IOCTL(CDROM_LAST_WRITTEN, IOC_R, MK_PTR(TYPE_LONG))
+   IOCTL(CDROMVOLREAD, IOC_R, MK_PTR(TYPE_INT))
+   IOCTL(CDROMSEEK, IOC_W, MK_PTR(TYPE_INT))
+   IOCTL(CDROMPLAYBLK, IOC_W, MK_PTR(TYPE_INT))
+-  IOCTL(CDROM_MEDIA_CHANGED, 0, TYPE_NULL)
+-  IOCTL(CDROM_SET_OPTIONS, 0, TYPE_INT)
+-  IOCTL(CDROM_CLEAR_OPTIONS, 0, TYPE_INT)
+-  IOCTL(CDROM_SELECT_SPEED, 0, TYPE_INT)
+-  IOCTL(CDROM_SELECT_DISC, 0, TYPE_INT)
+-  IOCTL(CDROM_DRIVE_STATUS, 0, TYPE_NULL)
++  IOCTL(CDROMCLOSETRAY, 0, TYPE_NULL)
++  IOCTL(CDROM_SET_OPTIONS, IOC_W, TYPE_INT)
++  IOCTL(CDROM_CLEAR_OPTIONS, IOC_W, TYPE_INT)
++  IOCTL(CDROM_SELECT_SPEED, IOC_W, TYPE_INT)
++  IOCTL(CDROM_SELECT_DISC, IOC_W, TYPE_INT)
++  IOCTL(CDROM_MEDIA_CHANGED, IOC_W, TYPE_INT)
++  IOCTL(CDROM_DRIVE_STATUS, IOC_W, TYPE_INT)
+   IOCTL(CDROM_DISC_STATUS, 0, TYPE_NULL)
++  IOCTL(CDROM_CHANGER_NSLOTS, 0, TYPE_NULL)
++  IOCTL(CDROM_LOCKDOOR, IOC_W, TYPE_INT)
++  IOCTL(CDROM_DEBUG, IOC_W, TYPE_INT)
++  IOCTL(CDROM_GET_CAPABILITY, 0, TYPE_NULL)
+   IOCTL(CDROMAUDIOBUFSIZ, 0, TYPE_INT)
+ 
+ #if 0
 -- 
 2.53.0
 
