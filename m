@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFD9BFF8867
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:45:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96C9AFF8868
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:45:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHRsc-0002tm-MM; Mon, 27 Apr 2026 15:44:30 -0400
+	id 1wHRtB-0005AH-PT; Mon, 27 Apr 2026 15:45:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRsN-00025Q-F6
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:44:18 -0400
+ id 1wHRsw-0004gB-A6
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:44:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRsL-0007xy-U2
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:44:15 -0400
+ id 1wHRsu-00082I-TU
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:44:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777319052;
+ s=mimecast20190719; t=1777319088;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=v2nUewpRlfcuzS7BbkUxVYKnJ4w1wM50RV/7mph3xcA=;
- b=fkx/Zy5WfWK4mZqFUvistrD5+81JpLHxiV/ZjY1qGERcGF2RtYVlN4VlbScYee1PUibSwo
- XhnUIkNgj0UQjzmmHfld809oX96aFTtyI1QtFQNbueYVPA6p9uHADj4vaFQzi2wiV8OBAW
- 3IuUTwehxDdOIZI96PvPre4E76duQe4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=N5iQUKbZP8zujOPvMI08chGq/OJpRT5TuzZ9VyP7o4g=;
+ b=R75bSFiX9eNcuNKvuUmR1OHVRMUWCM9IFKId7QwRsxZPWjVDE/ilFsUyLGx0RNmwIeLci6
+ 7xs96wyWLVmpLEppu4Lz+d/igN0zUYrggh1sPLBegLiex8WSiaLbFUODq0qutmieUwzwHJ
+ J/Q0Nzd1UUSxgcaxHcxG+PwvQ/afUgU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-e-SwKzz6PNeMLCmtQLU5RQ-1; Mon,
- 27 Apr 2026 15:44:09 -0400
-X-MC-Unique: e-SwKzz6PNeMLCmtQLU5RQ-1
-X-Mimecast-MFC-AGG-ID: e-SwKzz6PNeMLCmtQLU5RQ_1777319048
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-7Goht9LqO8ybHpsB2T8qdA-1; Mon,
+ 27 Apr 2026 15:44:46 -0400
+X-MC-Unique: 7Goht9LqO8ybHpsB2T8qdA-1
+X-Mimecast-MFC-AGG-ID: 7Goht9LqO8ybHpsB2T8qdA_1777319078
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8C8D718005AA; Mon, 27 Apr 2026 19:44:08 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 051EB19560B8; Mon, 27 Apr 2026 19:44:38 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 425C319560AB; Mon, 27 Apr 2026 19:44:06 +0000 (UTC)
+ id 6B76719560AB; Mon, 27 Apr 2026 19:44:35 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Apr 2026 23:42:16 +0400
-Subject: [PATCH 17/41] hw/core/resetcontainer: free children array on
- finalization
+Date: Mon, 27 Apr 2026 23:42:21 +0400
+Subject: [PATCH 22/41] hw/i386/nitro_enclave: add instance finalize
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260427-qom-tests-v1-17-c413f3605311@redhat.com>
+Message-Id: <20260427-qom-tests-v1-22-c413f3605311@redhat.com>
 References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
 In-Reply-To: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=860;
+ Alexander Graf <graf@amazon.com>, Dorjoy Chowdhury <dorjoychy111@gmail.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1427;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=fxwKGK8u2FdwGWFYQyu8CRzaHlO9/OVt+VeAwfQGL24=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wVfJXC1LbJJWXnRmWRMGAyvK8GB4FK7DzjC
- tSzk0nQIJ+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FQAKCRDa6OEJdZac
- 5a5PEAChPy4deRq3TzLpjQ+SVu6xW03+o2sv9DrCGqsRyGVDaxaToqQK1j3o/RtIVwjdmuXTlO+
- Ixu0Osf3e1n/S1zElORKGIQ/hQZDH0kyjwBaWrGcbJOHKEmWzaUMnT8vCQfbMG4HCqsSfad3y8j
- kT1HHkE5I3S9Z7lwZwdW/JJS4QK+p+Pj/QRAOXp+Zpmte4zvztAlIrF3SVReXSrx3A4pxYxNtIG
- F3TQ1INFpvAr2qVStClHuv/iH4hIP9tR0y+BAI97bG7IuUojdBj/5+ydKIWYz1IN5ZWkQjVOgc2
- nzrtNIZmEMHO2H2TGVZ/Ppsi4s/WoMu9MjCLvZUnKzrLFGOrg/Z7r1Vz4ODaNYO/yQVNSrASREm
- SupO9EAIzNNxe42/IsNcSgLfU7WVAhhuRvZC8vdlhZJXKX+gBtM06kkzHM4m/aBjyZlzyVgxl9l
- S+OYg1imbUxB3HgdJRAVASXkxuoq1240m+uzZhyEeWCBiTFw+GqkliJGkFh9yYarBMLv1e72X9m
- ABMcwY2c3t+AEpLfvP12nm6SCahWwtl7ZOE/bY0mvjSZZnlnOyjunvbGo/WoEO2wq7DfhnuYZAb
- vQsDyOgDx2w7Ef9YDsyktaNqf69kYT333M+RTVRP0N407Y3wWWABTGvd328zT4I5Dg8DPfFtomP
- 7vNpfUpJrPlOrKg==
+ bh=ky2BNto0UCWYm+5t0f6AgVp5RVCDBWwnYNiNyNbKi5s=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wVJtiinN1Nw+U1eSXwgM7UXadi6GnL7vyCA
+ QCzbvybpieJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FQAKCRDa6OEJdZac
+ 5WraEACm+lrN9ji+8C+X8qXlo4uk2Ipv9iD7FwKo6j3IA2pKwbk4TiXNjW9SEPu++g+P1VaadQK
+ 3bleSRmh091TM5S3SxIgUaezpgC7rxHXYNiPj6Eg/GYiMHJOrG8Dg31PzyhS9BMzX24fURuuQFB
+ IPbYcvVijojvWNkRCI27Tu37rHQf8+AKEeUV6qKSLZLPTn5NNUO11P5e1EMp6wgeIt4W2Qq/9YY
+ cRVA4lwkj1C+s8LxhlBtP3Hno70NcLxtglo79ZDTuLyh0/12HtagEdDltSmIYts0IG5lKXs8Jq7
+ 55PtwKybV/6tDqQ6Vkxjq+68SgyTfZIDv8j/UTLVkwL5Aps6o4xCTWTxgImS4szB55N7stG/iF0
+ mXZE6zLVeXtROJv3QDQ+ulugf83DMLyVKYJGTSe4IQ4EcpyRpX9siK0fzrYUVw1D+un9dSWo+X9
+ n2AsPMPwpgl475ltsqlK/6VFbq/osU8DFb5EQq4BfNwYD9/ykOSWAAqwvVcW3dJja3iVUKs+PPP
+ /uLxI8Lu9f44rBaAByzuTdIscJ2t+BwCm6BIEwhDpTl/Fwg2TqYIxYmhuFQP4Wmf2v5Jgs993Y1
+ LSkJx3OwIxdaBanhFeURpcwR7sea54O5CuLRC2koIQkwTyVUygCtNKSYgYQto0SNZJygy5Xw0o/
+ EwJx1tJzlK6DGpw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
@@ -104,29 +106,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-resettable_container_init allocates a GPtrArray for children, but
-resettable_container_finalize was empty and never freed it.
+Property setter strings (vsock, id, parent_role, parent_id) were
+never freed because nitro_enclave_machine_info had no
+instance_finalize.
 
-Fixes: 4c046ce37af0 ("hw/core: Add ResetContainer which holds objects implementing Resettable")
+Fixes: f1826463d2e8 ("machine/nitro-enclave: New machine type for AWS Nitro Enclaves")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/core/resetcontainer.c | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/i386/nitro_enclave.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/hw/core/resetcontainer.c b/hw/core/resetcontainer.c
-index ef84aa2374a..a4a6476a036 100644
---- a/hw/core/resetcontainer.c
-+++ b/hw/core/resetcontainer.c
-@@ -66,6 +66,9 @@ static void resettable_container_init(Object *obj)
- 
- static void resettable_container_finalize(Object *obj)
- {
-+    ResettableContainer *rc = RESETTABLE_CONTAINER(obj);
-+
-+    g_ptr_array_unref(rc->children);
+diff --git a/hw/i386/nitro_enclave.c b/hw/i386/nitro_enclave.c
+index a29f0044d0e..1ce9ee3358a 100644
+--- a/hw/i386/nitro_enclave.c
++++ b/hw/i386/nitro_enclave.c
+@@ -337,11 +337,22 @@ static void nitro_enclave_class_init(ObjectClass *oc, const void *data)
+                                           "Set parent instance identifier");
  }
  
- static void resettable_container_class_init(ObjectClass *klass,
++static void nitro_enclave_machine_finalize(Object *obj)
++{
++    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
++
++    g_free(nems->vsock);
++    g_free(nems->id);
++    g_free(nems->parent_role);
++    g_free(nems->parent_id);
++}
++
+ static const TypeInfo nitro_enclave_machine_info = {
+     .name          = TYPE_NITRO_ENCLAVE_MACHINE,
+     .parent        = TYPE_MICROVM_MACHINE,
+     .instance_size = sizeof(NitroEnclaveMachineState),
+     .instance_init = nitro_enclave_machine_initfn,
++    .instance_finalize = nitro_enclave_machine_finalize,
+     .class_size    = sizeof(NitroEnclaveMachineClass),
+     .class_init    = nitro_enclave_class_init,
+ };
 
 -- 
 2.53.0
