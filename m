@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE1E5FF8869
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:51:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85ECCFF885E
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLQD-0002Bz-Hm; Mon, 27 Apr 2026 08:50:45 -0400
+	id 1wHLQC-00021f-01; Mon, 27 Apr 2026 08:50:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLO7-0008D8-PY
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:36 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1wHLNz-00087h-1C
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:31 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLO4-0005ku-HT
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:35 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-488b0e1b870so172754555e9.2
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:27 -0700 (PDT)
+ id 1wHLNr-0005hu-Ng
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:25 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4891c00e7aeso75998435e9.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294106; x=1777898906; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294097; x=1777898897; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=mOoSY+iuv6Itz71wlhRRL9GhUQ6RnDF/CADilvxqJcA=;
- b=UYM41hMfyECrdCNTxrCW6acnelMBz/nN5RSI5aSja8kfPp3a9jI6tBCoM9mcoEJkEG
- P8X6MS+ARHh1BClSI2ZO6IWJJlkPdZNQz9leXUKkrb1/3Ece1twfGaXHAtFgd+KJK3gK
- 5rzoq0705+FuIVnOQkst4luIBq1WCddyt4Xaq67EZ8p0crGK4gjfAlOL6Tf5iIIktNYC
- mzSSuvRcac5+7bZuMBujrMNNxcbp7VgskeVRhOcnU5xzwqn4lAmKxQwWu0EpD7JUjtW4
- CF//h9lrNC2kfY5thEb4CAdePIp/F6pQBtW2T4PdT8zbCO7ysG75H0/cYQi7dbtOjvqb
- aJiQ==
+ :reply-to; bh=4MgWbP/9wmOy0VZTKjCnGxeHPzbsxi09y3T5/RRhIzE=;
+ b=Yxu27URy5vlLhiZo3pHH8BeEGnyrw4lDlH/D+Vsk50cUqu1CZYy6IrMWONsPOrkIAr
+ hlNwjbwMbHHZyrJGEiO5u3UivrkngLnXopPX1DV9+vr6XLKj/XpVkbf78N8ibLlcHoyo
+ 9HApCNAKDpDRSAKFdqks9SQj7loY1s6vtxOVdXTX3HGVLVPQ8B5RmuazLF9aHejnteE9
+ Jm+63lGU4kxDYf47013aj0lRBX9wp9fx43Vvx3STRfnLG0DsWgnfa368JHun5y8KFPwQ
+ plgLbr5d3VZMV3o5OLp4trbgVTC5QVmjQNa54ESE1jFI02BfpCDSFKDq8issMdGMcm//
+ KPew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294106; x=1777898906;
+ d=1e100.net; s=20251104; t=1777294097; x=1777898897;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=mOoSY+iuv6Itz71wlhRRL9GhUQ6RnDF/CADilvxqJcA=;
- b=e5Z6Mi67Jj8s4oKC5S56soOr/s9XFgs7o2pmV12I8MHU2rFdEYhutT4D/H5RUzwKj/
- R1Ls1DAQh++y33UR7D1pYH0zrbjldFdm6YkUP+5Hol5ipNCa1Uha0pMNM12+IOgRxNzZ
- TiEi38V50GVb1tn/BWYWzjHmjXgXpdJ0diTGQNKzGDYN0YrOPgG8o4AdJvG0H6jgA6wc
- 9bDln37cZTihdGpkygEVqB804nc9Si3PpHVy79sgRyUaFT7fe7ElEJ4FJ6eBfYrO8QVR
- jkHdqUBHLAX511hOidK6KzhsXOgdqsLTZbUkAtmYBD5VSSnGJyq7Xtrk/0elfA9zbvIq
- q/fQ==
-X-Gm-Message-State: AOJu0Yy9Fmse3f4vDJ/wn2nLQmZj5Yxb+66MLkmHrT0YixereDpwRtni
- Pi4gwAKos+DTHzVm3fd/kCz6ybty5oz6lX3QlFuwBeJ9Xd9gLEjsaFaofM80wrpwAKDfpNSXd2G
- wwxtf
-X-Gm-Gg: AeBDietOnwk3RVqEc50f2Q655Rxq0zUGe5XdO425zc6mDSVIuTpCmdG/1s1Ids/nfaz
- Tea1BNqEmOaC6jDEfMLpJ8dTXBH91eY/Q+L/NA86G+krFnBQHyiL0053ONN5Olp/JH1LPpWj9LB
- 4pA4DU6Me3dkg8mjEsphXqAa+0r5jjy1b4nhhHguwIMRnx6SI6mU81WEyqislZAgOGDVhe9JwY0
- 7/7R6L8q4wNoCj3en99MOQm/QVvIlV8Onqma1OaMBkGk/TtrAvZXQmycECnOHqwhB3Y96jGLtzv
- R60gKmgMkEGF3qqGIIdMT9Gjn1Oaeu0cZIO2SYrLV8DoX5dQ6NlwWVot5vT3kVLQtdBYPhO9Sev
- hyi2j3O4TPralpy0jrJHOuRbdoidWQxj6/wTcW4OzhduuysgFulHNjQjGKKB8RYkZuANIoEhsz9
- +GGbs4FPzKDvsR3BOFEjsq8Qj03p0lTCBMwpFYyiXxp/i6pcBoEKTyXHBC6sSsP2GhsXzVIti8A
- 6aX4yEqlaewfPCLepe7eodlCk5gnkoFU3KZjl4Afg==
-X-Received: by 2002:a05:600c:33aa:b0:488:ae6c:42c0 with SMTP id
- 5b1f17b1804b1-488fb742e7fmr358988765e9.7.1777294106260; 
- Mon, 27 Apr 2026 05:48:26 -0700 (PDT)
+ bh=4MgWbP/9wmOy0VZTKjCnGxeHPzbsxi09y3T5/RRhIzE=;
+ b=nUpDSy5KWz5Erpp2tF37eceOJsxRPfbcFVGNuVFskb+SD76QUeBhKoOtSItxZcravs
+ o4ratrAWsKM6CsYnEYpa9ZUtZJIn8N6KvUHSmtzAGqmM/EdwrOyj4cxD6yxPjeIh/7yb
+ VJZTKKHxFqc60hvkiZ2NjXYZgSxYDAOLNowm2Sh6HXRABMGAKD63r1Ak3WIw8H7D3uGl
+ N9Enl4F/ICg1Q8A8nGy7NAoT2VjQ/CvU2xPEmlwRhARpO39R2egr7sTXcuKxiy5gL3vH
+ IU4dPR53E+IpaJd+Uui1L/hEcGWUdOv7tpe+KUosBpi/uuOojQJSrutfNjjNa89euhpK
+ boLA==
+X-Gm-Message-State: AOJu0Yw5ihKxXYsjJA6VsWH8ReaZiyHFj0vOyP55L7TGxjgg38o614zJ
+ UV36Wx69WCsWEFDRYp6ORxeyrLCVHC9smlJmtHgChpoAE6KrkQsDUcW0UhtaFA4J2EDob7x4kNf
+ iZMX2
+X-Gm-Gg: AeBDiesBM/VQuNGaCIN4vKOLaAitZoY5mkpvccCtY3PmafzIeg1AmDMPWG1ioir3tqQ
+ pvlIoGw7dp+Hkdcsv2juW8CYJSlDJla6Rw0uIGslwlCPxdNhSrXg10BrESrkN8pUxg3+i7pufo/
+ 0UpeP6bBfMivLKLPXS/F5iEPezt5wRwnpNdpyE7ChInlFXtsmfhnnXvK9Ndl+Spofl5TnmEq1RU
+ 57i4dhokRRSoes6GALRwbp5xv0sRPYQ2mcy4fZOPPPp6f7klzUoBDwbzw6JXkRmklU7QX9Gbfpk
+ 7N9thNfkLaaYshZWBgrk5vmbqWtepqpSUD3PXlYUlqsMCen1hCfuKN5jIjkTC0RcxRnHJQZLMgb
+ Xn1wVohUeh+Pn7cm5QLWh7vO2aR3SzZUHqrHHLINJ9Tz0HuDO6uUs6usT7AgiEfEdAA8ZjYWaM+
+ gZrRayGUgmno5TUdQAPhl3jOx+YGw1uMeDm2C5lYfqpVBI4NopirarYiAxjdHF179RMq3LCaL8k
+ 9b3jQoqqJTYieS+1MORMeaVnkEO8RyO6yv0cJv9nnPXgVo8LEYf
+X-Received: by 2002:a05:600c:1907:b0:489:201c:dc46 with SMTP id
+ 5b1f17b1804b1-489201cdf13mr418319805e9.12.1777294096712; 
+ Mon, 27 Apr 2026 05:48:16 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.25
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.15
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:48:25 -0700 (PDT)
+ Mon, 27 Apr 2026 05:48:16 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 51/63] target/arm: migrate debug syndromes to registerfields
-Date: Mon, 27 Apr 2026 13:47:25 +0100
-Message-ID: <20260427124738.966578-52-peter.maydell@linaro.org>
+Subject: [PULL 40/63] hw/arm/fsl-imx6ul: Wire in the LCDIF device model
+Date: Mon, 27 Apr 2026 13:47:14 +0100
+Message-ID: <20260427124738.966578-41-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,94 +100,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Yucai Liu <1486344514@qq.com>
 
-Migrate syn_swstep, syn_watchpoint and syn_breakpoint to the
-registerfields API.
+Instantiate LCDIF as a child object of the i.MX6UL SoC in init and
+realize it in the SoC realize path before MMIO/IRQ hookup.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20260422125250.1303100-12-alex.bennee@linaro.org
+Also make FSL_IMX6UL select CONFIG_IMX6UL_LCDIF and map the LCDIF
+region with a 16 KiB size to match the SoC memory map.
+
+Signed-off-by: Yucai Liu <1486344514@qq.com>
+Message-id: 20260412110240.93116-3-yangyanglan718@gmail.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/syndrome.h | 54 ++++++++++++++++++++++++++++++++++++++-----
- 1 file changed, 48 insertions(+), 6 deletions(-)
+ hw/arm/Kconfig              |  1 +
+ hw/arm/fsl-imx6ul.c         | 12 ++++++++++--
+ include/hw/arm/fsl-imx6ul.h |  4 +++-
+ 3 files changed, 14 insertions(+), 3 deletions(-)
 
-diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
-index 2031b3704f..2ad6b97aea 100644
---- a/target/arm/syndrome.h
-+++ b/target/arm/syndrome.h
-@@ -595,22 +595,64 @@ static inline uint32_t syn_data_abort_vncr(int ea, int wnr, int fsc)
-     return res;
- }
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index b940af9345..c31752e83a 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -656,6 +656,7 @@ config FSL_IMX6UL
+     imply I2C_DEVICES
+     select A15MPCORE
+     select IMX
++    select IMX6UL_LCDIF
+     select IMX_FEC
+     select IMX_I2C
+     select IMX_USBPHY
+diff --git a/hw/arm/fsl-imx6ul.c b/hw/arm/fsl-imx6ul.c
+index 225e179126..1863558a0d 100644
+--- a/hw/arm/fsl-imx6ul.c
++++ b/hw/arm/fsl-imx6ul.c
+@@ -19,6 +19,7 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "hw/arm/fsl-imx6ul.h"
++#include "hw/display/imx6ul_lcdif.h"
+ #include "hw/misc/unimp.h"
+ #include "hw/usb/imx-usb-phy.h"
+ #include "hw/core/boards.h"
+@@ -136,6 +137,11 @@ static void fsl_imx6ul_init(Object *obj)
+         object_initialize_child(obj, name, &s->usb[i], TYPE_CHIPIDEA);
+     }
  
-+/*
-+ * ISS encoding for an exception from a Software Step exception.
-+ */
-+FIELD(SOFTSTEP_ISS, IFSC, 0, 6)
-+FIELD(SOFTSTEP_ISS, EX, 6, 1)
-+FIELD(SOFTSTEP_ISS, ISV, 24, 1)
++    /*
++     * LCDIF
++     */
++    object_initialize_child(obj, "lcdif", &s->lcdif, TYPE_IMX6UL_LCDIF);
 +
- static inline uint32_t syn_swstep(int same_el, int isv, int ex)
- {
--    return (EC_SOFTWARESTEP << ARM_EL_EC_SHIFT) | (same_el << ARM_EL_EC_SHIFT)
--        | ARM_EL_IL | (isv << 24) | (ex << 6) | 0x22;
-+    uint32_t res = syn_set_ec(0, EC_SOFTWARESTEP + same_el);
-+    res = FIELD_DP32(res, SYNDROME, IL, 1);
-+
-+    res = FIELD_DP32(res, SOFTSTEP_ISS, ISV, isv);
-+    res = FIELD_DP32(res, SOFTSTEP_ISS, EX, ex);
-+    res = FIELD_DP32(res, SOFTSTEP_ISS, IFSC, 0x22);
-+
-+    return res;
- }
+     /*
+      * SDHCIs
+      */
+@@ -656,8 +662,10 @@ static void fsl_imx6ul_realize(DeviceState *dev, Error **errp)
+     /*
+      * LCD
+      */
+-    create_unimplemented_device("lcdif", FSL_IMX6UL_LCDIF_ADDR,
+-                                FSL_IMX6UL_LCDIF_SIZE);
++    sysbus_realize(SYS_BUS_DEVICE(&s->lcdif), &error_abort);
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->lcdif), 0, FSL_IMX6UL_LCDIF_ADDR);
++    sysbus_connect_irq(SYS_BUS_DEVICE(&s->lcdif), 0,
++                       qdev_get_gpio_in(gic, FSL_IMX6UL_LCDIF_IRQ));
  
-+/*
-+ * ISS encoding for an exception from a Watchpoint exception
-+ */
-+FIELD(WATCHPOINT_ISS, DFSC, 0, 6)
-+FIELD(WATCHPOINT_ISS, WNR, 6, 1)
-+FIELD(WATCHPOINT_ISS, CM, 8, 1)
-+FIELD(WATCHPOINT_ISS, FnV, 10, 1)
-+FIELD(WATCHPOINT_ISS, VNCR, 13, 1) /* FEAT_NV2 */
-+FIELD(WATCHPOINT_ISS, FnP, 15, 1)
-+FIELD(WATCHPOINT_ISS, WPF, 16, 1)
-+/* bellow mandatory from FEAT_Debugv8p9 */
-+FIELD(WATCHPOINT_ISS, WPTV, 17, 1) /* FEAT_Debugv8p2 - WPT valid */
-+FIELD(WATCHPOINT_ISS, WPT, 18, 6) /* FEAT_Debugv8p2 - missing WP number */
-+
- static inline uint32_t syn_watchpoint(int same_el, int cm, int wnr)
- {
--    return (EC_WATCHPOINT << ARM_EL_EC_SHIFT) | (same_el << ARM_EL_EC_SHIFT)
--        | ARM_EL_IL | (cm << 8) | (wnr << 6) | 0x22;
-+    uint32_t res = syn_set_ec(0, EC_WATCHPOINT + same_el);
-+    res = FIELD_DP32(res, SYNDROME, IL, 1);
-+
-+    res = FIELD_DP32(res, WATCHPOINT_ISS, CM, cm);
-+    res = FIELD_DP32(res, WATCHPOINT_ISS, WNR, wnr);
-+    res = FIELD_DP32(res, WATCHPOINT_ISS, DFSC, 0x22);
-+
-+    return res;
- }
+     /*
+      * CSU
+diff --git a/include/hw/arm/fsl-imx6ul.h b/include/hw/arm/fsl-imx6ul.h
+index f8f9c249a2..6205fe6b77 100644
+--- a/include/hw/arm/fsl-imx6ul.h
++++ b/include/hw/arm/fsl-imx6ul.h
+@@ -33,6 +33,7 @@
+ #include "hw/net/imx_fec.h"
+ #include "hw/usb/chipidea.h"
+ #include "hw/usb/imx-usb-phy.h"
++#include "hw/display/imx6ul_lcdif.h"
+ #include "system/memory.h"
+ #include "target/arm/cpu.h"
+ #include "qom/object.h"
+@@ -84,6 +85,7 @@ struct FslIMX6ULState {
+     IMX2WdtState       wdt[FSL_IMX6UL_NUM_WDTS];
+     IMXUSBPHYState     usbphy[FSL_IMX6UL_NUM_USB_PHYS];
+     ChipideaState      usb[FSL_IMX6UL_NUM_USBS];
++    IMX6ULLCDIFState   lcdif;
+     MemoryRegion       rom;
+     MemoryRegion       caam;
+     MemoryRegion       ocram;
+@@ -143,7 +145,7 @@ enum FslIMX6ULMemoryMap {
+     FSL_IMX6UL_PXP_SIZE             = (16 * KiB),
  
-+/*
-+ * ISS encoding for an exception from a Breakpoint or a Vector Catch
-+ * debug exception.
-+ */
-+FIELD(BREAKPOINT_ISS, IFSC, 0, 6)
-+
- static inline uint32_t syn_breakpoint(int same_el)
- {
--    return (EC_BREAKPOINT << ARM_EL_EC_SHIFT) | (same_el << ARM_EL_EC_SHIFT)
--        | ARM_EL_IL | 0x22;
-+    uint32_t res = syn_set_ec(0, EC_BREAKPOINT + same_el);
-+    res = FIELD_DP32(res, SYNDROME, IL, 1);
-+    res = FIELD_DP32(res, BREAKPOINT_ISS, IFSC, 0x22);
-+
-+    return res;
- }
+     FSL_IMX6UL_LCDIF_ADDR           = 0x021C8000,
+-    FSL_IMX6UL_LCDIF_SIZE           = 0x100,
++    FSL_IMX6UL_LCDIF_SIZE           = (16 * KiB),
  
- static inline uint32_t syn_wfx(int cv, int cond, int ti, bool is_16bit)
+     FSL_IMX6UL_CSI_ADDR             = 0x021C4000,
+     FSL_IMX6UL_CSI_SIZE             = 0x100,
 -- 
 2.43.0
 
