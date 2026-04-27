@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E8F2FF8870
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62486FF8867
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 21:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHT5X-0000JK-Pp; Mon, 27 Apr 2026 17:01:55 -0400
+	id 1wHT5c-0000VL-HN; Mon, 27 Apr 2026 17:02:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5R-0000CU-4w
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:50 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5Z-0000OO-2S
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:57 -0400
 Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5K-0003TU-P4
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:44 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5X-0003X1-A9
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:56 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 9B744408CB;
- Mon, 27 Apr 2026 21:01:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16A97C2BCB5;
- Mon, 27 Apr 2026 21:01:38 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id BB7A040979;
+ Mon, 27 Apr 2026 21:01:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37916C2BCB5;
+ Mon, 27 Apr 2026 21:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777323700;
- bh=N0SltF6kWrhKYQvGQd+k67AMBYWPlgGMkWYMzuPa5JM=;
+ s=k20201202; t=1777323713;
+ bh=KG2fwHQvDISByslvVy41WuAySIFV/sri4ZntnBzQCgY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=YJIV4Ohqm4oYfmdBPKEC9tENPUxqCv2ktdv0Ru3Z1LePrpdUimOIXfVItCi8fhDyF
- PCc5F1S+9jb36b8CWNZa/e2SRJdw14H896dBL3XVosdaKqd67TsyEQ7t208cG0iGVr
- 4V9zhff2iutsQvW4PNh6+aFc9YSkU4/SQZGThZNQuSowD/RsS1e6gxtFWuitOwzEwu
- +MK6ruPn4S1FjWb02GhARRaKTGfNX+d4pViXAtNlcgdZZHwu3pOnvbMNBWffoQAIKX
- jZ7md7ijioVz73RdX/6tLcjeFB+B5TRoLXvS+bOSV6vllARPGZsXo7/09kafu9MXiT
- y8bUpElIFZhHA==
+ b=QrfCq7fg5Gt8lgBWYHXyxT9bxIlTKU6EXx4r+JIfiDYKBcYAUzZ4EGLwpUXOI10hy
+ ZWScrmuR0jKxKt1MXAleT1RjQDc7QGoULmGQpN+11y06Jvn5WVXmTIiOS6fd2GhmHH
+ 875cW+xQjT8IQyC5DTJybpUr5f3yuZ8QkzxeLOJfyZ8V/rYsJZEzwguDqV+vh/ZbgC
+ TzH9DD7BoTfJ/WjVw3VTiZSzOLhdHvcyRV4At+8UGx0ccohCopBUqL8PWAvDHyvWwi
+ 7P4DzzY4PkTT7aEKPkA1Rv2MfrybaYi8rcNm4oauh90IS1lNVYAodbwl8vu40tH6h5
+ al9013YmhO8nA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL v2 02/15] linux-user/ppc: Fix ppc64 rt_sigframe stack offset
-Date: Mon, 27 Apr 2026 23:01:20 +0200
-Message-ID: <20260427210133.6016-3-deller@kernel.org>
+Subject: [PULL v2 09/15] linux-user: Define SO_TIMESTAMP*_NEW and
+ SO_RCVTIMEIO_NEW
+Date: Mon, 27 Apr 2026 23:01:27 +0200
+Message-ID: <20260427210133.6016-10-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260427210133.6016-1-deller@kernel.org>
 References: <20260427210133.6016-1-deller@kernel.org>
@@ -70,88 +71,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Matt Turner <mattst88@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-The kernel's 64-bit signal delivery (signal_64.c) uses:
+Define the entries which always use the 64-bit timestamps.
 
-    newsp = frame - __SIGNAL_FRAMESIZE
-
-while the 32-bit path (signal_32.c) uses:
-
-    newsp = frame - (__SIGNAL_FRAMESIZE + 16)
-
-The extra 16 bytes in the 32-bit case is to place siginfo and ucontext
-at the same offsets as older kernels (see the comment in signal_32.c).
-The 64-bit rt_sigframe starts with ucontext directly and does not need
-this adjustment.
-
-QEMU's setup_rt_frame() unconditionally used (SIGNAL_FRAMESIZE + 16)
-for both 32-bit and 64-bit, placing the handler's SP 16 bytes too low
-on ppc64. Signal delivery and return still worked because do_rt_sigreturn
-had the matching wrong offset, but the vDSO DWARF unwind info encodes
-the correct kernel offset. This caused any DWARF unwinder (libunwind,
-libgcc, etc.) to compute a CFA that is 16 bytes off, reading garbage
-register values from the signal frame.
-
-Define RT_SIGFRAME_ADJUST (0 on ppc64, 16 on ppc32) and use it in both
-setup_rt_frame and do_rt_sigreturn to match the kernel.
-
-This was verified by A/B testing with libunwind's test suite:
-
-  ppc64le: Gtest-bt, Ltest-bt, Gtest-concurrent, Ltest-concurrent,
-           and Ltest-sig-context all change from FAIL to PASS.
-  ppc64be: Gtest-bt, Ltest-bt, and Ltest-sig-context all change
-           from FAIL to PASS.
-
-Signed-off-by: Matt Turner <mattst88@gmail.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: qemu-stable@nongnu.org
 ---
- linux-user/ppc/signal.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ linux-user/alpha/sockbits.h   | 7 +++++++
+ linux-user/generic/sockbits.h | 8 ++++++++
+ linux-user/hppa/sockbits.h    | 7 +++++++
+ linux-user/mips/sockbits.h    | 7 +++++++
+ linux-user/sparc/sockbits.h   | 7 +++++++
+ 5 files changed, 36 insertions(+)
 
-diff --git a/linux-user/ppc/signal.c b/linux-user/ppc/signal.c
-index 24e5a02a78..a9c10e0987 100644
---- a/linux-user/ppc/signal.c
-+++ b/linux-user/ppc/signal.c
-@@ -210,6 +210,18 @@ QEMU_BUILD_BUG_ON(offsetof(struct target_rt_sigframe, uc.tuc_mcontext)
+diff --git a/linux-user/alpha/sockbits.h b/linux-user/alpha/sockbits.h
+index d54dc98c09..0201ab9374 100644
+--- a/linux-user/alpha/sockbits.h
++++ b/linux-user/alpha/sockbits.h
+@@ -75,6 +75,13 @@
+ /* Instruct lower device to use last 4-bytes of skb data as FCS */
+ #define TARGET_SO_NOFCS     43
  
- #endif
- 
-+#ifdef TARGET_PPC64
-+#define RT_SIGFRAME_ADJUST 0
-+#else
-+/*
-+ * For 32-bit rt sigframes we have an extra 16 bytes of gap
-+ * on top of __SIGNAL_FRAMESIZE; this is to get the siginfo
-+ * and ucontext in the same positions as in older kernels.
-+ * See Linux's arch/powerpc/kernel/signal_32.c.
-+ */
-+#define RT_SIGFRAME_ADJUST 16
-+#endif
++#define TARGET_SO_TIMESTAMP_NEW        63
++#define TARGET_SO_TIMESTAMPNS_NEW      64
++#define TARGET_SO_TIMESTAMPING_NEW     65
 +
- #if defined(TARGET_PPC64)
++#define TARGET_SO_RCVTIMEO_NEW         66
++#define TARGET_SO_SNDTIMEO_NEW         67
++
+ /* TARGET_O_NONBLOCK clashes with the bits used for socket types.  Therefore we
+  * have to define SOCK_NONBLOCK to a different value here.
+  */
+diff --git a/linux-user/generic/sockbits.h b/linux-user/generic/sockbits.h
+index b3b4a8e44c..33e6c3a572 100644
+--- a/linux-user/generic/sockbits.h
++++ b/linux-user/generic/sockbits.h
+@@ -58,4 +58,12 @@
  
- struct target_func_ptr {
-@@ -525,7 +537,7 @@ void setup_rt_frame(int sig, struct target_sigaction *ka,
-     env->fpscr = 0;
+ #define TARGET_SO_PROTOCOL             38
+ #define TARGET_SO_DOMAIN               39
++
++#define TARGET_SO_TIMESTAMP_NEW        63
++#define TARGET_SO_TIMESTAMPNS_NEW      64
++#define TARGET_SO_TIMESTAMPING_NEW     65
++
++#define TARGET_SO_RCVTIMEO_NEW         66
++#define TARGET_SO_SNDTIMEO_NEW         67
++
+ #endif
+diff --git a/linux-user/hppa/sockbits.h b/linux-user/hppa/sockbits.h
+index 23f69a3293..2304dbbf79 100644
+--- a/linux-user/hppa/sockbits.h
++++ b/linux-user/hppa/sockbits.h
+@@ -67,6 +67,13 @@
  
-     /* Create a stack frame for the caller of the handler.  */
--    newsp = rt_sf_addr - (SIGNAL_FRAMESIZE + 16);
-+    newsp = rt_sf_addr - (SIGNAL_FRAMESIZE + RT_SIGFRAME_ADJUST);
-     err |= put_user(env->gpr[1], newsp, target_ulong);
+ #define TARGET_SO_CNX_ADVICE           0x402E
  
-     if (err)
-@@ -641,7 +653,7 @@ long do_rt_sigreturn(CPUPPCState *env)
-     struct target_rt_sigframe *rt_sf = NULL;
-     target_ulong rt_sf_addr;
++#define TARGET_SO_TIMESTAMP_NEW        0x4038
++#define TARGET_SO_TIMESTAMPNS_NEW      0x4039
++#define TARGET_SO_TIMESTAMPING_NEW     0x403A
++
++#define TARGET_SO_RCVTIMEO_NEW         0x4040
++#define TARGET_SO_SNDTIMEO_NEW         0x4041
++
+ /* TARGET_O_NONBLOCK clashes with the bits used for socket types.  Therefore we
+  * have to define SOCK_NONBLOCK to a different value here.
+  */
+diff --git a/linux-user/mips/sockbits.h b/linux-user/mips/sockbits.h
+index 562cad88e2..1f479d54aa 100644
+--- a/linux-user/mips/sockbits.h
++++ b/linux-user/mips/sockbits.h
+@@ -71,6 +71,13 @@
+ #define TARGET_SO_RCVBUFFORCE          33
+ #define TARGET_SO_PASSSEC              34
  
--    rt_sf_addr = env->gpr[1] + SIGNAL_FRAMESIZE + 16;
-+    rt_sf_addr = env->gpr[1] + SIGNAL_FRAMESIZE + RT_SIGFRAME_ADJUST;
-     if (!lock_user_struct(VERIFY_READ, rt_sf, rt_sf_addr, 1))
-         goto sigsegv;
++#define TARGET_SO_TIMESTAMP_NEW        63
++#define TARGET_SO_TIMESTAMPNS_NEW      64
++#define TARGET_SO_TIMESTAMPING_NEW     65
++
++#define TARGET_SO_RCVTIMEO_NEW         66
++#define TARGET_SO_SNDTIMEO_NEW         67
++
+ /** sock_type - Socket types
+  *
+  * Please notice that for binary compat reasons MIPS has to
+diff --git a/linux-user/sparc/sockbits.h b/linux-user/sparc/sockbits.h
+index 0a822e3e1f..42ecfdc8f9 100644
+--- a/linux-user/sparc/sockbits.h
++++ b/linux-user/sparc/sockbits.h
+@@ -61,6 +61,13 @@
+ #define TARGET_SO_TIMESTAMPING         0x0023
+ #define TARGET_SCM_TIMESTAMPING        TARGET_SO_TIMESTAMPING
  
++#define TARGET_SO_TIMESTAMP_NEW        0x0046
++#define TARGET_SO_TIMESTAMPNS_NEW      0x0042
++#define TARGET_SO_TIMESTAMPING_NEW     0x0043
++
++#define TARGET_SO_RCVTIMEO_NEW         0x0044
++#define TARGET_SO_SNDTIMEO_NEW         0x0045
++
+ #define TARGET_SO_RXQ_OVFL             0x0024
+ 
+ #define TARGET_SO_WIFI_STATUS          0x0025
 -- 
 2.53.0
 
