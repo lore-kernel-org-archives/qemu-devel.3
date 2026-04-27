@@ -4,118 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 346EBFF885E
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 09:31:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEF3EFF885E
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 09:34:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHIIA-0003he-JY; Mon, 27 Apr 2026 05:30:14 -0400
+	id 1wHILn-0004cS-F5; Mon, 27 Apr 2026 05:33:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
- id 1wHII7-0003fy-BG
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:30:11 -0400
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHILl-0004ZA-1c
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:33:57 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
- id 1wHII4-0007f1-4y
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:30:10 -0400
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-7de7dc85b74so753934a34.2
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 02:30:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777282206; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHILj-0000Tj-2n
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:33:56 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-64e87a81639so8834629d50.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 02:33:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777282434; cv=none;
  d=google.com; s=arc-20240605;
- b=GGlH0jJNZBnc0fe1+SA/n10QX4mVM6w6mq5gfVZfBpw5FTK9NgQGUOExNvvA1yqCVw
- xVDfhVHRFC3i1dNtwwG3D+/1OK5nUfNpcsqSSQ+Vq2+Liglkkrd22uIA680OIXVYQ7Hu
- A1IErYhFv29k/i8bWTImVW+Y4r43VDioRD7RCKHKwr35Dskk7VYwSNj4/9hMbEy5Fw4A
- Wt3MXOB42xERQ2d9y19khc/dvSX/YrG/DVJk7zL1tqKBSWqaGKPsMiOWHrbhH8SBo15r
- GkCMWEmIXAd3KSSLWfelo3AR/9g9YMiuIf/O7Cq+PX0bF9jAfcct3lTvMX7IP6U7kuun
- iYHQ==
+ b=A3wYExQ+i5M7+MGJpNqC/a/Vmcl8HaUk8PHqx7tFK/afzg2x/bZJHPDG5Fmysp6ufO
+ phZTkb40s/zz097wW3mEdDDBR38QekC3lsVoaY3oXHMotghofqJ1u3xZLjShWsecALJh
+ TI+KAXWWHPwoGcJYi2FITLNKNRltdNB5GDYw8M+mP2YOxzUn6A2j1ht1o7ZfoC56bXxI
+ MS5++E9ZdtghgDh80d0H5Rq7/bRGLJMLJwtr6NBufKdjuj+DHMLdF/UOMNVXvfR7YSd2
+ wDDI95ZTE6v4Lcip4W1ANEFnwMAwr490G6mepn4v5BzD8hmx5SQ5AQWbjVO4722EnE2a
+ asRw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=sOLOqhXzMZOcqwioz4oNOOigWxocU0J8gqXyK7oPzBk=;
- fh=pvXPmE7lJGhM7Fy9xFTtHT4WT8l0mLf3K85Bz3/XsNw=;
- b=EARTv/5QutT7x+TKEn8MvHyZiZinjR9RhNpNBWsQ+cekcb9oYNT6GMGurQalrQthwn
- ucJW7nuiuON4qXbrUfi417I3Wz1TadTLKJE7SnEY663IuLwNvMatpEu7TEar7rbq83Ct
- A2oEOL++jrsV/6K6I7UyDOxRAPtxtGM5B/qhO0UkcCxP4+ouwKn8U0LW8v5GEzOyvHhf
- V8w+lNodbcSdJtK8gVjikdzoLtcAt9TB/AP/++MYN11vVVNGk6hrtYCvMkN+wuzuYotj
- +ExwFz6RgA87FYXhg/yS9+/yJIbcV7CXj2056Eq4Ned2uyG0M4skIYcJthTN5OiUmImt
- aHKg==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=WDMhoO4qmVr4TqrVTgUXX9ejcEjnyPw1rATst4OZikw=;
+ fh=4IzuF9C3pNdo34KC4Txgez6wdqphsTMBlsFX6wjEZLg=;
+ b=H2XpkuN3ofKHESwce5c3SQa3x4eFPg+sibj6VrCZzKbc6xnG5shg+1R2b7ejsZLc5r
+ hs8uzXKbIDv2B9moF9ODLD1rDAuxWnZVsDl/WVRTVItEFmE4lodqMm/sPxWAn8F3gAJk
+ mz+3WKzFucdreJYH6Gyc3X9Y7jvnxGD4RBschrOO26jkz0zmCPgXsVXfCRW1a0mVrFVY
+ Zg9wqwqtGxJ3GlBKnFfYDMBl4wamZcmK5kk8pS7nvB5YKwOIgwNGXe/Ceu0nTk+Jt/Nc
+ lvDiO3GGa1BKFfLGglsXZmyMvILxDryMmMTpQP71q5uGi2IWNQnI2G1hTsvHtLU2GoKC
+ 8pHw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777282206; x=1777887006; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sOLOqhXzMZOcqwioz4oNOOigWxocU0J8gqXyK7oPzBk=;
- b=xBOkpJwPWTQsHXcX0HDf4ADy/6XdH432x2cjTXuk3bLhYUUtpy1js3mTv1tu48kT/u
- m+B4/HSJwkCL4VdrBknaVCauBaW8My9rV/qvmxk6ez8BEDHeQH1En4qVQf2H82iMXC8S
- oVjunfqmlVfiCMS2RSNo1f4d+M62/xyQMPVwSeTbf/LhVgpuC9YpI4PqcmkHwfu9qTv1
- +sI8wvQs8rbOglU+IAA4SyA4MyFugHXB4tntYaBSrXIYnCJitUl2FBRMYLDa8PlGbcfv
- vVamGhW0U6WMGh6vXgsbUOqr+y+9j8MagUO/YJp1y+2lj32jAhHB2/FDOWqi3CXJr1Hr
- mGHQ==
+ d=linaro.org; s=google; t=1777282434; x=1777887234; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=WDMhoO4qmVr4TqrVTgUXX9ejcEjnyPw1rATst4OZikw=;
+ b=URccwXWmqKqp6C1BVopoRAlzzADdmC63VL/SPbXeLQ8iFP43hdanaySML2qg5zhENb
+ DOSuS1REFIhYu7VNKtyc18OA2zweFw66ETWYiA26HVqPagoH7MbhpZZmv7yU3MpGUCRx
+ CdJEwrEkEmOLO9NcP3rfKVZ41FVhJLygKQPT06dJFn7KIGgd2EnAewcyyyqe+imQt05B
+ gOoYHpaAV/3VOv2qLnsRyGhJIZBLpQ/zMRcVBKsPD93NvjMPngyAEqUBybM3zgoXp1Pq
+ fWIDlwdSmLMCQ5C3UMC9gVz0KDvHhsk7RiF6GnQyde1sOzrw8FUwQe7KBmsaGwwD5tFl
+ /dOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777282206; x=1777887006;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=sOLOqhXzMZOcqwioz4oNOOigWxocU0J8gqXyK7oPzBk=;
- b=OA9mXc7p+dMCUVGXoFdRfB+Fn8uZxpew2k6hVcyWnUIfUpZVHQqe4HSIJSx4qu+aB5
- pDn+m7LZ4xctpgiXzHfCtM+pK7KqNx6lcDSfo8745cfd/hhANzS0mGqXgiyJsPqGi/bs
- GnE3FS7aoq3Nw70+Smy4UYvNOab0Z96DBATFBrsCDWRR4BKjT/Qb4Ufx7qYthR8eYXAL
- DqiNQPSgAUYrO75JD1IOsSHetadFxCRuMQEYndUHIqkqxmTpw2miph3uTgBnp+Tppg3j
- XxS1NsSjDxgE/GpMj6CRTHFuF3GnTbfXMkkELudTbwILy87NHXK7T7CRUsvqQJi+Y9bB
- Cpxg==
+ d=1e100.net; s=20251104; t=1777282434; x=1777887234;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WDMhoO4qmVr4TqrVTgUXX9ejcEjnyPw1rATst4OZikw=;
+ b=p5mhVxqHKQIWsTLz0RZBe/4YounYxWyXSFdjnhZUbaz4s9eFqLJbBnOta3rt8cuhJz
+ nJagrFu3C7zKHS5VVyjM5r8KWTo4LlwpGAO/M20vagw2gWPSYPJbig0Xxj3WTd1iY9b8
+ TcvfRkDiiGNHs1j+Jou5532ksrWK+35n3E45sTHX0DdJ5uC0c2x52ybFfd/69rsvEcA7
+ wqNYIQXWBq/mrMM16e0Iw+RRf/Ba+engOJ+VBDNv+tx9GdcGBeEdNKc1osYnw5b8Z6n3
+ LlMSqTSkfGRr/F5ML4R+bePpUrFZX3mbTfpVPBvAzunVsjz9VwB2LG6x39alEduRCxRd
+ V+Pg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/H3RKAveESrsatjFghAQZR/xJDya0BwsUj6zRZKVRERAJe+OaXtie96K9FbeB/jafH8E3XuWSL1Ksa@nongnu.org
-X-Gm-Message-State: AOJu0Yw0j2qsTeV0qutrnyVZ4DL/gUbOxPJcymr1mMU4D+4bEPngCp2R
- 2N+paV1TJSWL98aiyCEymdk2XkPWRseMJkDkm3Tu/j8/Cg8gHKH/VzXfo0Gy3fmsYatZTNHV+1V
- yUPmGbuiersSjhTgZy6G0MR8mIxcsBN2gJrY/BIInog==
-X-Gm-Gg: AeBDiesWuni5lxBxsKCfhY+DtUTwCPJXpYArCJ1qcrloSskD+zN2AKux9bVIKRMwtR6
- hNAcjxXmp+AzYIYi/7JzzH8frhhH0p/W0QO8pZaMbHWnF06pQZYeoeNLikqYyD64NsogLY6BnkY
- i9zwbgm5AanrlcwzrZ739+vR/Cj2kXXPiikX8DtAeJceJDrsz3mkaXrSCVJdB2nZNSH4BdoJTDA
- XsyVP8CNmKPk0Q8dVXpQp323KEJFe15MTh0dfvmxRc6vXreJ+aoc+5sYyye9iY0DMf7F6RTZQhs
- 9hMaU+Z0LeB9QXtytg==
-X-Received: by 2002:a05:6820:4ccb:b0:67e:366b:a2b0 with SMTP id
- 006d021491bc7-69462deeaa1mr23822428eaf.7.1777282206354; Mon, 27 Apr 2026
- 02:30:06 -0700 (PDT)
+ AFNElJ80heTdJ0SFTXYBf7FoOmECdUX/mmRcuUxQLB0z1qVCgO65InqNdRnCB7YNsmitMaidMeREijM1KZwS@nongnu.org
+X-Gm-Message-State: AOJu0Ywj21vLmxgWDOEQthTA2YzdTjLz2mhkPf//fPFtMROLF0Cvy1iv
+ 638VnELfCHb0eYvPDvzC2DeBp9vZ756N8j0QgAKSCXMMUvJR2d3EjoZjOuKD1H2u77ANDWvfwi2
+ Kjh+DAUSHxC2/qefj1KSlKVBDYGEGME/N2a+0GcIGUA==
+X-Gm-Gg: AeBDievCGBaUJ+WiUw5tMbsvqDzAZK0RgRw/xTgQ4wTFIPbyfa00uWGsDIU74MmwAt5
+ MEMEoK7ARa53OtYQtJw+w8/BC4z9kACFnkl7JpHU2imVasEmNgy7CZhjoCTljndsRWMSfa41mTG
+ FyQv9WUuFvrUMRQrWfutvg+V0qtgA8IOKkN4PCXa/i9Dr6x/1+FgBfMtq1yzNEYkQM12CSFHc8/
+ geBubHp+wzKfV5pshPnswCybGgeQWcNeXvCbHg06E4a+eqQkwjUWgi1ULiZlvmOTbCqwELXFm07
+ G7G8s1DVFBjeEJtYdoVGiNPsoEoSzs5RLCTauUlJF5gOrOrV6jhidXW3XBnGXSAqCtsHaI8JAc+
+ JOw==
+X-Received: by 2002:a05:690e:4191:b0:651:cf43:b28f with SMTP id
+ 956f58d0204a3-65310b0b5b6mr34988861d50.60.1777282433964; Mon, 27 Apr 2026
+ 02:33:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260331140347.653404-1-cohuck@redhat.com>
- <85948999-6dcb-4f36-8450-ab74ebb35e3d@linaro.org>
- <87h5owsw0k.fsf@redhat.com>
-In-Reply-To: <87h5owsw0k.fsf@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Date: Mon, 27 Apr 2026 11:29:55 +0200
-X-Gm-Features: AVHnY4KkwaIc5zAV5txSmiqZzLuEpxvetoq6gECyFpbDABWnGu9SWheu2B0YV3E
-Message-ID: <CAPMQPE+_93tMXbvVyjmVR71C6xVtx=PR6uFYtYGT7jefurgLXg@mail.gmail.com>
-Subject: Re: [PATCH for-11.1] hw: add compat machines for 11.1
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
- qemu-s390x@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, 
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Laurent Vivier <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, 
- Matthew Rosato <mjrosato@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>, 
- David Hildenbrand <david@kernel.org>
+References: <20260420140552.104369-1-eric.auger@redhat.com>
+ <20260420140552.104369-2-eric.auger@redhat.com>
+In-Reply-To: <20260420140552.104369-2-eric.auger@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 27 Apr 2026 10:33:41 +0100
+X-Gm-Features: AQROBzCEfYlKMO6BLPiKHOze75SAjM8txBCN60gETZmHcEIrSyNBM-3rvsVv1u0
+Message-ID: <CAFEAcA9kVBCFUwAmEQG7gK0F69PXFyALUsouG5w7zJQYzsx=Zw@mail.gmail.com>
+Subject: Re: [PATCH v10 1/7] target/arm/cpu: Introduce the infrastructure for
+ cpreg migration tolerances
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ cohuck@redhat.com, sebott@redhat.com, peterx@redhat.com, philmd@linaro.org, 
+ alex.bennee@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=philippe.mathieu-daude@linaro.org; helo=mail-ot1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,34 +120,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 27 Apr 2026 at 09:27, Cornelia Huck <cohuck@redhat.com> wrote:
+On Mon, 20 Apr 2026 at 15:06, Eric Auger <eric.auger@redhat.com> wrote:
 >
-> On Fri, Apr 24 2026, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrot=
-e:
+> We introduce a datatype for a tolerance with respect to a given
+> cpreg migration issue. The tolerance applies to a given cpreg kvm index,
+> and can be of different types:
+> a) mismatch in cpreg indexes
+> - ToleranceNotOnBothEnds (cpreg index is allowed to be only present
+>   on one end)
+> - ToleranceOnlySrcTestValue (cpreg index is allowed to be only
+>   present in source if its value @mask field matches @value)
+> b) mismatch in cpreg values
+> - ToleranceDiffInMask (value differences are allowed only within a mask)
+> - ToleranceFieldLT (incoming field value must be less than a given value)
+> - ToleranceFieldGT (incoming field value must be greater than a given value)
 >
-> > Hi Connie,
-> >
-> > On 31/3/26 16:03, Cornelia Huck wrote:
-> >> Add 11.1 machine types for arm/i440fx/m68k/q35/s390x/spapr.
-> >>
-> >> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> >> ---
-> >>   hw/arm/virt.c              |  9 ++++++++-
-> >>   hw/core/machine.c          |  3 +++
-> >>   hw/i386/pc.c               |  3 +++
-> >>   hw/i386/pc_piix.c          | 13 +++++++++++--
-> >>   hw/i386/pc_q35.c           | 13 +++++++++++--
-> >>   hw/m68k/virt.c             |  9 ++++++++-
-> >>   hw/ppc/spapr.c             | 15 +++++++++++++--
-> >>   hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
-> >>   include/hw/core/boards.h   |  3 +++
-> >>   include/hw/i386/pc.h       |  3 +++
-> >>   10 files changed, 76 insertions(+), 9 deletions(-)
-> >
-> > I'll take this patch in my next PR to avoid another conflict
-> > with your tree.
+> A QLIST of such tolerances can be populated using a new helper:
+> arm_register_cpreg_mig_tolerance() and arm_cpu_match_cpreg_mig_tolerance()
+> allows to check whether a tolerance exists for a given kvm index and its
+> criterion is matched.
 >
-> Yes, whichever one goes first.
+> callers for those helpers will be introduced in subsequent patches.
+>
+> Only registration of migration tolerances related to cpreg index
+> mismatch is currently allowed.
+>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
-Merged as commit 1bfa19a3fd5!
+The way that ToleranceOnlySrcTestValue allows the bits outside
+the field to be anything whereas the LT and GT types insist
+on the bits outside the field being an exact match feels a
+bit non-orthogonal, but I see why we do it (otherwise the EQ
+check would effectively be a "check all bits match" check
+regardless of the field mask; as it happens the only thing
+we use it for passes an all-bits-set mask anyway).
+
+I guess we'll see how many of these we accumulate and whether
+we want to adjust the kinds of check we do in future.
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+-- PMM
 
