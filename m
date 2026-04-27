@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45426FF885E
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:50:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29DC5FF8869
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:50:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLQ3-0001RP-3r; Mon, 27 Apr 2026 08:50:38 -0400
+	id 1wHLOM-0008RI-AO; Mon, 27 Apr 2026 08:48:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNj-00083h-0g
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:16 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1wHLNq-00086D-NN
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:26 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNZ-0005e5-Tk
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:05 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-488af96f6b2so134254175e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:47:58 -0700 (PDT)
+ id 1wHLNk-0005g9-Gv
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:15 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-483487335c2so99993805e9.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294078; x=1777898878; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294090; x=1777898890; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0V9tqvJQMF5c3moywi8PIdJIdKM/gu4gtuRVdkg4evc=;
- b=EpPciJ+QjywMtEuZZpkK66OB1rXe4MHC2YNXQlqH9wKyMf8pOJ7PPZu3eAt+pIPU+2
- gNtQqaxxMwGG7yogqT5Os9Oj/484Nsvd1D7rxEb12KVIVtSzhlKPtFaBl/80tGtb1Gxl
- 9yS7MUdYlG5N0iW/H62Q9INBBX8D24SAnKoELdghnR+kPgGcvr0CAy2+SLq2n2a3B/CV
- 3+sKSbFu+cegAAabqW3kvpIy6UV/Q663Jb02+y8gAmT3/8xKSdf187ABgwhCIz0XtR2g
- rj6fh8Bpcl8zrLxUpNhuBjf2cg2LHx/lrQaA2xo/d231OT9Akbvlz6gbFNrK8tURnXu0
- 3kHg==
+ :reply-to; bh=3Ad8L4DaKuABGGpSrYonhMaeLrwN0x/B0x2CwuHI6n8=;
+ b=ZKGycC0+UiKiT5WGZ5nOcnZ2kxt0h0zV6eppkYmi5VFRCKy/iOxoLMKkLM64vxY8mW
+ cC6ryXRs+rca3CJEUUkALSzLFM8jQC/ac64G8yvxfTaD8Bwxsosj5S+55Hyc+r1WNxVH
+ qQODasctDGPEDv0owWIjarGtj70iVmGMczH/qQsSaxhTbyx8bNRWntG5sGMbG70WjUec
+ 50d2Ks5j6QQV3jHniu+tHkuw4HEW8yur4bvB3rjXReybizPweTOGgPTDON4vOYuPaDra
+ T3N+PIs7gOUdK9Z6fBWoo9F6UpFE5gzpEBaY0IGcUnN2NnOuAJ95MODUivDALb0Ji2iM
+ Tfyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294078; x=1777898878;
+ d=1e100.net; s=20251104; t=1777294090; x=1777898890;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=0V9tqvJQMF5c3moywi8PIdJIdKM/gu4gtuRVdkg4evc=;
- b=ZfjpnEzVCs/G1lb4Qszqg1e1SdKKYXc/S25jr9Zr1lMYjmbglan0B9pOqTfZDz9xYX
- 3hSIobYt7eGtcIyVwkwgqEIYK9uQhil7N25popTMsigGbLzxMC4pdBs3uaozgDNvEHU7
- xTvi23FbhtdElKPUUB8NXl43Q1Fwjs2VaseJVrjJbQYK8ZWL4wANs5exNVhnudsbW9+2
- mrtLB9MzqcRD2GZxtVR8MVNdLEw4VnrnAPiUORYcLqyrCvhHbZ6xSV2KiPW4g9B4Gciv
- M033VKhLpicGRZz55GMShbZdQwbT/5ypeTcNcJwVABu9h6eSDcxbq/ez07IpkGI14G31
- v6qA==
-X-Gm-Message-State: AOJu0Yzr8nlPMVJwI+7ZX77MmRfZIiWLxhwLvDUF07xo72EoqkomPcf5
- TCxTeYJELW7mocg/E27RBJY1BiCfw4z6GOJgJP58B6hehw9RM0Nh+K9enacxCMz6gzaX+iz/pCP
- s70Sc
-X-Gm-Gg: AeBDievZWZxt8lgWElHO7lJE2IZxyA7m4rckQJUl5m5vu/eJllNAOfSgz3jFIQHiRlh
- rkbhd+fqyIUhQBaJay5WyvD8ikLmh5GjmOlDNThzTVUmC9KxY+3vRm+eFgGO1jQNzUNV9tPisng
- HBHmbNrwa6C5SbkHmygtHWevhWIUXTICj6CFnjr4HzrLhLn+zTMNmOYXi+gK6QI05r/3tinU0ER
- Nypzvc430dzAPb/SydwcZ3CU4vuHq5TSgdKGf9QTxKulsQxFgPiJG8+yFBrlqX2z5vrXvuAaSoU
- dQi25KRHdlDaFfwZMNiu3q/Gw9bAaAFhcswX7+3hqcuj7VWFHJxVXMIK8u8drwZJyb1XGfyMLlP
- MScXzRmIloTv40v3uKQrLehxk3MaKp1qbcVkyzt2h0hWK8o//KkT5GJTOaGmQiqgSzwKC8nnLqV
- 5izDHidEgQrxc0jPpF8Hsm5fWy9obwpFMo5GPJ6PQ0Tmkv7qhImHSoIUyEZ4dzMwf1BOUgJnPTM
- /ZUk+A1v8W3RStWDby88vC49q9/wrKVmvB2Wf6G+Q==
-X-Received: by 2002:a05:600c:a086:b0:48a:568f:ae82 with SMTP id
- 5b1f17b1804b1-48a568fb009mr376914665e9.10.1777294077767; 
- Mon, 27 Apr 2026 05:47:57 -0700 (PDT)
+ bh=3Ad8L4DaKuABGGpSrYonhMaeLrwN0x/B0x2CwuHI6n8=;
+ b=ceaZhvBJQi/oDJeCs7rHGyT6d0NKxpgymCXn5Wo+47RUUIzgP00BK6S60JEs5QQ4oz
+ PAgobc7yc5R/JiemjfgH0+c1RZ6eVCr31EP31rMmK3F46Do9eNRSinBldL4e0arFtq2/
+ AOHJMWWa3xtVXkIv2wi3K4uwqBx0u0pB2Zj0Yabj5UMKJHOzQvUJJO/p4miVvLBXmgb5
+ LTnXmWPC9DnXcCtgBGKTor7cg31+a79uftE7qBmt5hdoBuvMrcecdE82X7lhnQVQ9U+U
+ P9tQXQGYWuoLGA2PMQ17GGI4vmLqd7T49+c3RQeuxdO2dtO+9BgU5WiGwlyztfKmU0i/
+ FmaQ==
+X-Gm-Message-State: AOJu0YxOUf/PqYWsN0f2OnuK8Hk6vIUCkhrv5QqSmx1EB9L/Vue2cYc3
+ 7BRoSiBIZQ5Of1FXBSFhzSxOri0DasW+KbKUtw9MUT7itgRbB9o0nv/6Q1I0ABFSG/zG/kUs3LK
+ lrgmy
+X-Gm-Gg: AeBDietTs39YykfPSyeJke4Ug0MGkdRDEjWBo4n+zs+EJfKKkv+6AckPWaS1vGNFLWI
+ MjpWKWYlYDSG3fRkQksRecpSOfvzAa0lfB7bUVoP8bD9Ax+PYFnyvrfPWmxusanUpAukSJzvUNB
+ LVRUTvq5kem7sDCkfWeCZ/Pmo9ZgejMUCdc881sCQFvIC8EB8V3wvhOnmI/7wnvwgx2CsCR1bUi
+ ux4AXGCzGG9lnyJP/WLCgVdZWV3gI9FTr6VJrpLSKT/NDK4ftxpG2nVFKHveVh6mexG38WKtUcD
+ QK43usLbn+vd0jDjMXM6dfK9Rqv8mi1qlwhnpGtSYps/bMZGCW8OYjIBpmKT5KbbkARsz6pNs2T
+ E5FrPB07bQCwpDTvPmf3RYFFmqm1qqMkLb30In1oVaYJxWktxARMsPQOMdaPTpvboGXPlgQkWx3
+ eRk9reMdH00cfrUeJ1F2zoXuz+ykKOWAA40CIU+SLw9FNUncizEuXTcSVjV2mXeZtAChjGVO/8m
+ PUTlTPg5uG/RzSq7EoBrpDii0oWaPWfMmu25kyh4Q==
+X-Received: by 2002:a05:600c:2e56:b0:488:d243:8da9 with SMTP id
+ 5b1f17b1804b1-488fb73b2d3mr370322475e9.1.1777294090074; 
+ Mon, 27 Apr 2026 05:48:10 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.47.57
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.09
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:47:57 -0700 (PDT)
+ Mon, 27 Apr 2026 05:48:09 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/63] target/arm: Introduce mo_endian() helper
-Date: Mon, 27 Apr 2026 13:46:55 +0100
-Message-ID: <20260427124738.966578-22-peter.maydell@linaro.org>
+Subject: [PULL 33/63] target/arm/machine: Handle ToleranceOnlySrcTestValue
+ migration tolerance
+Date: Mon, 27 Apr 2026 13:47:07 +0100
+Message-ID: <20260427124738.966578-34-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,56 +101,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260414005348.4767-6-philmd@linaro.org
+Pass the value of the incoming register to
+handle_cpreg_only_in_incoming_stream and check whether there is
+a matching ToleranceOnlySrcTestValue tolerance.
+
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Message-id: 20260420140552.104369-4-eric.auger@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/internals.h      | 6 ++++++
- target/arm/tcg/mve_helper.c | 3 ++-
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ target/arm/machine.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index af5e9a1acf..06655409e5 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -28,6 +28,7 @@
- #include "exec/hwaddr.h"
- #include "exec/vaddr.h"
- #include "exec/breakpoint.h"
-+#include "exec/memop.h"
- #include "accel/tcg/tb-cpu-state.h"
- #include "hw/core/registerfields.h"
- #include "tcg/tcg-gvec-desc.h"
-@@ -46,6 +47,11 @@
- #define BANK_HYP    6
- #define BANK_MON    7
- 
-+static inline MemOp mo_endian(CPUARMState *env)
-+{
-+    return EX_TBFLAG_ANY(env->hflags, BE_DATA) ? MO_BE : MO_LE;
-+}
-+
- static inline int arm_env_mmu_index(CPUARMState *env)
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index b2bf129334..8dc766d322 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -1079,12 +1079,15 @@ static void handle_cpreg_missing_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx
+  * no cpreg mig tolerance is matched for this @kvmidx
+  * Return true if the migration should eventually fail
+  */
+-static bool handle_cpreg_only_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx)
++static bool
++handle_cpreg_only_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx, uint64_t value)
  {
-     return EX_TBFLAG_ANY(env->hflags, MMUIDX);
-diff --git a/target/arm/tcg/mve_helper.c b/target/arm/tcg/mve_helper.c
-index 4bea0991de..a5a23c9705 100644
---- a/target/arm/tcg/mve_helper.c
-+++ b/target/arm/tcg/mve_helper.c
-@@ -299,7 +299,8 @@ DO_VSTR(vstrh_w, MO_UW, 2, stw, 4, int32_t)
-         unsigned e;                                                     \
-         uint32_t addr;                                                  \
-         int mmu_idx = arm_to_core_mmu_idx(arm_mmu_idx(env));            \
--        MemOpIdx oi = make_memop_idx(MO_TE | MO_UL | MO_ALIGN, mmu_idx);\
-+        MemOpIdx oi = make_memop_idx(mo_endian(env) | MO_UL | MO_ALIGN, \
-+                                     mmu_idx);                          \
-         for (e = 0; e < 16 / 4; e++, mask >>= 4, eci_mask >>= 4) {      \
-             if (!(eci_mask & 1)) {                                      \
-                 continue;                                               \
+     g_autofree gchar *name = print_register_name(kvmidx);
+ 
+     if (arm_cpu_match_cpreg_mig_tolerance(cpu, kvmidx,
+-                                          0, 0, ToleranceNotOnBothEnds)) {
++                                          0, 0, ToleranceNotOnBothEnds) ||
++        arm_cpu_match_cpreg_mig_tolerance(cpu, kvmidx,
++                                          value, 0, ToleranceOnlySrcTestValue)) {
+         trace_tolerate_cpreg_only_in_incoming_stream(name);
+         return false;
+     }
+@@ -1137,7 +1140,9 @@ static int cpu_post_load(void *opaque, int version_id)
+         }
+         if (cpu->cpreg_vmstate_indexes[v] < cpu->cpreg_indexes[i]) {
+             fail = handle_cpreg_only_in_incoming_stream(cpu,
+-                                                        cpu->cpreg_vmstate_indexes[v++]);
++                                                        cpu->cpreg_vmstate_indexes[v],
++                                                        cpu->cpreg_vmstate_values[v]);
++            v++;
+             continue;
+         }
+         /* matching register, copy the value over */
+@@ -1160,7 +1165,8 @@ static int cpu_post_load(void *opaque, int version_id)
+      */
+     for ( ; v < cpu->cpreg_vmstate_array_len; v++) {
+         fail = handle_cpreg_only_in_incoming_stream(cpu,
+-                                                    cpu->cpreg_vmstate_indexes[v]);
++                                                    cpu->cpreg_vmstate_indexes[v],
++                                                    cpu->cpreg_vmstate_values[v]);
+     }
+     if (fail) {
+         return -1;
 -- 
 2.43.0
 
