@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7204FF885E
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:57:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BECF2FF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:57:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLUd-00008q-GB; Mon, 27 Apr 2026 08:55:19 -0400
+	id 1wHLUP-0007IM-P0; Mon, 27 Apr 2026 08:55:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLO7-0008D4-Ow
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:36 -0400
+ id 1wHLNw-00087F-QZ
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:31 -0400
 Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLO4-0005lb-RW
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:35 -0400
+ id 1wHLNq-0005hZ-NP
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:21 -0400
 Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-488b0e1b870so172756035e9.2
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:31 -0700 (PDT)
+ 5b1f17b1804b1-48334ee0aeaso107050295e9.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294111; x=1777898911; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294095; x=1777898895; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0a1Ls59o9nhOOy82JK/fcbf0nGoU5bJBXvtu1cJOEwE=;
- b=cWmG8HUsVas1HJDA69LjDVCR7E/J1MKYqOJtgAjlpdOMfCPordwojFlu3ky1JAb2Nr
- rF6Oba9G1QjmBBTGccvmT+KgSq5F5jVEFPWSY+C8pxOZLMDNOl7V6HP2A26qmQnSTOwP
- htINKCu0RBXr2rTkesmuIzLEPrr8Zs3JJLe5twx/x/WGBe2m4C9N2hfoN5ItFsGEkTSh
- 4EsVJM/8TO+5VDjzazeZGldLDNrx+wEqA61J6erEHHTJCyReUcgKZVXf74aZ9fyuHWzy
- VJtV33xqGdxnA7d8xHGbFRsLUexaTdrdXgHoGBaW8VmO8eddWCpzmZmTAHIKGBrMlAR+
- On3Q==
+ :reply-to; bh=A6daU2nmrlZ4Sa/74iSVs+RucwjBTPr7uTOaBH+QKpw=;
+ b=iCdMYgObo3xF0lZpDBP//5SL40cNVWkV6tDq9ljLTIL5NxL0WucDYUpkfsVovrUltx
+ dU14fk8Oak9G3KgrhOb+nX3gI3gslL6PItu6bB6QkCkFCYLGYKaDESNbw9ntWKrjDeOC
+ kyefeNm1az1f6XHmqJI0LSj97wxPbXuw6Yrdpg8XeWkvq6s65mgY7VdkQgTxY61XK5PW
+ AO7oLqbpqTfPF4hACyAKmW9YCkNyvJvEPtnJtT8mgu/fm3pBYSAx6TMDrL3O2160wkMD
+ 1eTyaSo2wEHn/QqE64rZqnR8kmV0tCjUt+WYqSfjfigdMQU3oQfzYbVFW8jwqRAJ4YR6
+ VcHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294111; x=1777898911;
+ d=1e100.net; s=20251104; t=1777294095; x=1777898895;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=0a1Ls59o9nhOOy82JK/fcbf0nGoU5bJBXvtu1cJOEwE=;
- b=PeT6Cx0zM172xFtPrF7eMnai6tGlYb/iKmLxXFmQPEoJgqlDsmi7BZ5jA06tCBjSn6
- iVO2ejw2Q5XIh96S4u800R0KhSmDgRPzG/Hdf3AyvuxKtJ9sDmCDKB6x5byDGn98idDs
- 3x/vQwCY5xL2lDkeMqaj6tOY89ze8j1zbo8gU9y9bU2mswHqnQIwb3ySPi5ERHAuF4cP
- hPtaZ0HZKagO8AlN1ogJqThqWbecGJrpR55aXrQcI77rapbpCgA85daMrm3EKXfzeNSJ
- eT6M5txIYO59UoT/3H3mdPvVjWgUoDWRda8U1+6Eva3fqE5t4fdEvlwWVd1PWh5kBNZl
- MHFA==
-X-Gm-Message-State: AOJu0Ywaq5KVUC8WbZ+Zm9Uf8gCo/ktAnDPNZTjJVhOQe/l3g+yTgm/Q
- 75Puc2BI99h83q2u3WBQVnUa/7ZRswbm4jDBUoOcvs/j8gmAf2pLZtC+Lv8q/xx3jHVtKLjq5oy
- V6Alx
-X-Gm-Gg: AeBDieuKabjcFgiesGb75ujWzUgLssgHItYJg5n3HN/CuDwAhxvfTiKz3NvLt4x9DmM
- qE8j207e7KGplfdvR+xbMnajzuysRtLVR4q7ptyoBoLXdeNG3nGXp7wSL+nsOmDhiIjsyJvN1R8
- v3fT0R6npioj2HYUwLsQlVgHKHqc0KbeA4+OYGNlQXK3NTS8OtzB25At9qVgbcAvskfgdvNGjHF
- OyYaHz85PNk/wp+1sdimhujaB8l3G8Y+F7I6AjX3/DHGuqAjaSxsF36D7OAwIARHcxVEPg2QI/O
- AYjSB6Ins/lfRMSAddOZM3I+1nQkTrvKT0u7+IlkgPcPDykRfL79/kTYCqSVBx344lGDdezSnFw
- yX8MmbtWINfEbpfxEeADq0E0LHcTAHUJOu6lDvXXalZkK/wsCGIZCn41Kl+6TFTrcjHK7ri/EgX
- RzNMYcT1PiH9w0UjPI3drKS3EfC/025ObXndtnJewAUhZQEI7AFbK4a8uomkJ9C/7mcXb6EcRBz
- 7Th886vNZVq/TZP0WZmTS0gKdPZP08uzFZTxmwrUg==
-X-Received: by 2002:a05:600c:3110:b0:487:2439:b7be with SMTP id
- 5b1f17b1804b1-488fb7389dfmr639782675e9.6.1777294110575; 
- Mon, 27 Apr 2026 05:48:30 -0700 (PDT)
+ bh=A6daU2nmrlZ4Sa/74iSVs+RucwjBTPr7uTOaBH+QKpw=;
+ b=H5e5GmNgf8SyWfIuv5qHHz7F3B8CVWdRQ7U1vMKwiaGMupWYDM4VJ8QIvacEr+ngfB
+ NxAj7oBVnUfwMm9FyPsJ/KwuBY7Edet+gAE1TgekQoK70Je09v4Kjv85RUq4d3rJtM7G
+ m18HfEO8gxF71fILQS3fhv84awdyNppBSGF2S7Bm07lE0e8P6gNpbtJbzZN7GlJDbBzb
+ +dQU3N0nM0nsl9flD+hmlgF5VRvEBJPUlntgJuKyf/PZF9c0eSfcb4ks5fyBfvugR+bg
+ vMZPpzZZzTsEYgPhhwSJWe2Iu5SwUZwy8mVEXu0kHxlOyZCh8qTc8LRHigAtkyasCOHQ
+ MnhA==
+X-Gm-Message-State: AOJu0YxQ9/bse8MsJdKHZhk1rDOMQLW1jN2fcVd01ZCKOgkQ7f6yVwn9
+ iTr5z7RFVH8NQCiFKpk4UYy3PPnM9+ajXK+9nD9mNhGbey77jDd9aXtHzMYylVkEBx40cuE1rf+
+ 6kK8I
+X-Gm-Gg: AeBDieucu0MxJAhxDeRj8DqhYR7Ce1SnRQ/B9WpbCf+PE/9/U/KjiDI6n5swx/efH9f
+ LBJBRCVHlm6napB4LNtFxowshV0B42BhcT4X0MF28rI604EFJIZJdtCyh3F5bTrFH/xDLgkURro
+ bSgnngwSATXGInwlIKRr8ULGM+Eudbrfbklv+wuZ7ZnfwGMfUT6Ry1Y2xyzRP7mltgtZem2TH6i
+ gbQs2KC+/mtcYkj2iiwoIoPS87c9r8g00zni1KUMrqyYz39MFwSJnDirYwmuDAYrvkcg+MYXEYC
+ 3uOla8AWnJWZaSAzOk6k4KxUo4Q9GVU6mchNUgJzpfRWr1EQnl9kk+W2HFJGKfY1aQOgSHpNvEZ
+ 6VBedWJNpAsd8mhxS0HZbJ72+Q/S8wps6njU48+ts6RbIkoNYULkmCnQsXwGzII2ENXorswCsEP
+ C8N7MGTnqWersIYKaejuCn1Qdo+fdmKwyGOPBHf2Z5d1nZlpahQ5FmtTrwGq1KnzXHs92Pj+Sep
+ f/f1Jvc9QhtHRdIiPrU7BDnW/L8P4mWg8DM2mZQoA==
+X-Received: by 2002:a05:600c:4e4f:b0:488:ab37:b442 with SMTP id
+ 5b1f17b1804b1-488fb793c6bmr620329115e9.28.1777294095029; 
+ Mon, 27 Apr 2026 05:48:15 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.29
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:48:29 -0700 (PDT)
+ Mon, 27 Apr 2026 05:48:14 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 56/63] target/arm: use syndrome helpers in
- arm_cpu_do_interrupt_aarch32_hyp
-Date: Mon, 27 Apr 2026 13:47:30 +0100
-Message-ID: <20260427124738.966578-57-peter.maydell@linaro.org>
+Subject: [PULL 38/63] hw/arm/raspi4b: NOP all DTB nodes when removing
+ unimplemented devices
+Date: Mon, 27 Apr 2026 13:47:12 +0100
+Message-ID: <20260427124738.966578-39-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
  envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
@@ -102,34 +101,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
 
-One more step towards dropping the old #defines.
+fdt_node_offset_by_compatible(fdt, -1, compat) only finds the first match.
+If the blob has more than one node with the same compatible string, extra
+nodes will remain active. Remove all the matching nodes, using the same
+loop as imx8mp-evk.c does for this purpose.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20260422125250.1303100-17-alex.bennee@linaro.org
+Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+Message-id: 20260420162114.308519-1-osama.abdelkader@gmail.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/helper.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/arm/raspi4b.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index ccd6353190..7e7677a584 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -8844,9 +8844,9 @@ static void arm_cpu_do_interrupt_aarch32_hyp(CPUState *cs)
-              */
-             if (cs->exception_index == EXCP_PREFETCH_ABORT ||
-                 (cs->exception_index == EXCP_DATA_ABORT &&
--                 !(env->exception.syndrome & ARM_EL_ISV)) ||
-+                 !FIELD_EX32(env->exception.syndrome, SYNDROME, IL)) ||
-                 syn_get_ec(env->exception.syndrome) == EC_UNCATEGORIZED) {
--                env->exception.syndrome &= ~ARM_EL_IL;
-+                env->exception.syndrome = FIELD_DP32(env->exception.syndrome, SYNDROME, IL, 0);
+diff --git a/hw/arm/raspi4b.c b/hw/arm/raspi4b.c
+index 3eeb8f447e..06aeb8db01 100644
+--- a/hw/arm/raspi4b.c
++++ b/hw/arm/raspi4b.c
+@@ -72,12 +72,14 @@ static void raspi4_modify_dtb(const struct arm_boot_info *info, void *fdt)
+ 
+     for (int i = 0; i < ARRAY_SIZE(nodes_to_remove); i++) {
+         const char *dev_str = nodes_to_remove[i];
++        int offset;
+ 
+-        int offset = fdt_node_offset_by_compatible(fdt, -1, dev_str);
+-        if (offset >= 0) {
+-            if (!fdt_nop_node(fdt, offset)) {
+-                warn_report("bcm2711 dtc: %s has been disabled!", dev_str);
++        offset = fdt_node_offset_by_compatible(fdt, -1, dev_str);
++        while (offset >= 0) {
++            if (fdt_nop_node(fdt, offset) == 0) {
++                warn_report("bcm2711 dtb: %s has been disabled!", dev_str);
              }
++            offset = fdt_node_offset_by_compatible(fdt, offset, dev_str);
          }
-         env->cp15.esr_el[2] = env->exception.syndrome;
+     }
+ 
 -- 
 2.43.0
 
