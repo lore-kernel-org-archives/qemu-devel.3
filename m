@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AEFEFF8864
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 21:02:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F39DFF8867
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 21:02:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHT5g-0000Xs-Qn; Mon, 27 Apr 2026 17:02:04 -0400
+	id 1wHT5f-0000X7-3a; Mon, 27 Apr 2026 17:02:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5f-0000XB-86
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:02:03 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5a-0000Rk-Sb
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:58 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5c-0003Y6-59
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:02:03 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5Y-0003XX-Ec
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:58 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 8D2D460138;
- Mon, 27 Apr 2026 21:01:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1B4CC19425;
- Mon, 27 Apr 2026 21:01:57 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id CA53960138;
+ Mon, 27 Apr 2026 21:01:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19298C2BCB6;
+ Mon, 27 Apr 2026 21:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777323719;
- bh=z9prjR+BocYciwsUKoSOvL3HoAICSfSydNGV4GRnsv0=;
+ s=k20201202; t=1777323715;
+ bh=vV5gAp6A1fV7/G4QQ1bgHmKV5IUIINSjN34lG8oX+zU=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=WnOPnhM4B1ko9fyD8ARKNB5EjOOqmBTo637Opraic/e0moYWa2UX+G3yfg0Gp+Njy
- nOxzK0TLrO+siC0vSdSpzmzEhXGtmpSswl2SOYlHIPH+5KwJaQR3JmnbXGR9mObSmD
- b1mC0isdThXjAQCT/Yo2eQZFFz2TNUA/f/UBAaL1a8X/+6TFJQOWDBzUuW6wHVLx2z
- OfCAvS5zCG8bJKdlYr3bYKqIradgsKMfUgHGzYPGrWsrqVpx/+WJ9Qt1BOoRXaIJho
- HxH0+B6SU8vqJhQWvenfPXRJz6ECNJdUktexQ674qx+VMU2Gb5ca/btTrKulvf302A
- PehUlL/GKHchw==
+ b=Yeo0ZjaMJb2GEWJP4V57ou8vfN083sjcZWbN+sPoPAEyWIi6PP//d9l/kqriOIoUr
+ mKrY5bwshXFAtQaN3ajiJfLoWgCsDWgHnJep/iGkHRZ8Ss4fyQBzsp+atu4iGA5oKl
+ WQB1D/3Lnjgyp/MBlkmr+j3Ddbmuehslip1Upc7Qd+RYWCoj3/B8vvV7IumdaOUpKy
+ pjbhDWsT2k2AD83nf2thyXrWMH0mEkZ9m6odNaTyiNRS9eOEcV2z7VjFtqB7u2ZGN4
+ SzbdSxUzrq2ZZroBlEstwVld/WJNSUATSg+Ab8f31IhTNSoctlu08KXjXEZx9F+YZr
+ vaX282PRs9TwQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL v2 12/15] linux-user: Fix CLONE_PARENT_SETTID when using
- fork-like clone
-Date: Mon, 27 Apr 2026 23:01:30 +0200
-Message-ID: <20260427210133.6016-13-deller@kernel.org>
+Subject: [PULL v2 10/15] linux-user: Add setsockopt() for SO_RCVTIMEO_NEW and
+ SO_SNDTIMEO_NEW
+Date: Mon, 27 Apr 2026 23:01:28 +0200
+Message-ID: <20260427210133.6016-11-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260427210133.6016-1-deller@kernel.org>
 References: <20260427210133.6016-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -73,43 +73,60 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-The CLONE_PARENT_SETTID option requires the implementation to store the
-child thread ID at the location pointed to by parent_tid in the parent's
-memory.
+Add handlers for both sockopts which use 64-bit time_t from userspace.
 
-Fix our implementation and move the code from the client side (where
-fork returned 0), to the parent side and store the return value from the
-fork call (which is the client TID) in the parent_tid pointer.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3340
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/885
 Signed-off-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- linux-user/syscall.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ linux-user/syscall.c | 21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
 diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index d0390e04b4..910a4da0a6 100644
+index 8e96cc26db..751e6eabe5 100644
 --- a/linux-user/syscall.c
 +++ b/linux-user/syscall.c
-@@ -7050,8 +7050,6 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
-                the child process gets its own copy of the lock.  */
-             if (flags & CLONE_CHILD_SETTID)
-                 put_user_u32(sys_gettid(), child_tidptr);
--            if (flags & CLONE_PARENT_SETTID)
--                put_user_u32(sys_gettid(), parent_tidptr);
-             ts = get_task_state(cpu);
-             if (flags & CLONE_SETTLS)
-                 cpu_set_tls (env, newtls);
-@@ -7059,6 +7057,8 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
-                 ts->child_tidptr = child_tidptr;
-         } else {
-             cpu_clone_regs_parent(env, flags);
-+            if (flags & CLONE_PARENT_SETTID)
-+                put_user_u32(ret, parent_tidptr);
-             if (flags & CLONE_PIDFD) {
-                 int pid_fd = 0;
- #if defined(__NR_pidfd_open) && defined(TARGET_NR_pidfd_open)
+@@ -1143,7 +1143,6 @@ static inline abi_long copy_to_user_timeval(abi_ulong target_tv_addr,
+     return 0;
+ }
+ 
+-#if defined(TARGET_NR_clock_adjtime64) && defined(CONFIG_CLOCK_ADJTIME)
+ static inline abi_long copy_from_user_timeval64(struct timeval *tv,
+                                                 abi_ulong target_tv_addr)
+ {
+@@ -1160,7 +1159,6 @@ static inline abi_long copy_from_user_timeval64(struct timeval *tv,
+ 
+     return 0;
+ }
+-#endif
+ 
+ static inline abi_long copy_to_user_timeval64(abi_ulong target_tv_addr,
+                                               const struct timeval *tv)
+@@ -2391,6 +2389,25 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
+                                 &tv, sizeof(tv)));
+                 return ret;
+         }
++        case TARGET_SO_RCVTIMEO_NEW:
++        case TARGET_SO_SNDTIMEO_NEW:
++        {
++                struct timeval tv;
++
++                if (optlen != sizeof(struct target__kernel_sock_timeval)) {
++                    return -TARGET_EINVAL;
++                }
++
++                if (copy_from_user_timeval64(&tv, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++
++                ret = get_errno(setsockopt(sockfd, SOL_SOCKET,
++                                optname == TARGET_SO_RCVTIMEO_NEW ?
++                                    SO_RCVTIMEO : SO_SNDTIMEO,
++                                &tv, sizeof(tv)));
++                return ret;
++        }
+         case TARGET_SO_ATTACH_FILTER:
+         {
+                 struct target_sock_fprog *tfprog;
 -- 
 2.53.0
 
