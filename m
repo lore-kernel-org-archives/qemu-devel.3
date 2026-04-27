@@ -4,108 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9EDDFF885E
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 10:05:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7232EFF8861
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 10:11:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHIpf-000505-S2; Mon, 27 Apr 2026 06:04:51 -0400
+	id 1wHIvV-0006KD-6t; Mon, 27 Apr 2026 06:10:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wHIpI-0004uR-7o
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 06:04:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wHIpG-0001aH-6p
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 06:04:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777284265;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=X2dgm4HF15FHe8gkwxTet9JS4hgj0+qdvbuXVdEmCCw=;
- b=GGXEtygjJVehj3svVpgwNwqDd4hwLvKVsE58CQYKGMjirc+C8okJeebYu95V3+NGcUMFEx
- zuQ/L9T9er5ke4AVrFUiMebyHzSRgqb94LJwuAZepUVgxHVLQCY0Bt7aXWtjSUT05VQ9eB
- uXq2ocniLcpTbzaAgV8ud5CKy3Hhewc=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-468-aHG1XxINMH2Oh8ooLqJuxQ-1; Mon, 27 Apr 2026 06:04:23 -0400
-X-MC-Unique: aHG1XxINMH2Oh8ooLqJuxQ-1
-X-Mimecast-MFC-AGG-ID: aHG1XxINMH2Oh8ooLqJuxQ_1777284262
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-48a5adc12ffso36712485e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 03:04:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHIvN-0006Jf-Cv
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 06:10:46 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHIvK-0004Ac-PI
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 06:10:45 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-6501725d888so8003161d50.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 03:10:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777284641; cv=none;
+ d=google.com; s=arc-20240605;
+ b=SO1i2479xIOlZYu36UGz4x6ZX6uD/fHMz1OZZkm/NSL9dhgYZnPmeFKwPPyMzEJiV/
+ 3+rGZjC+Qm7D0LO8JUCXvnf31gWB6SH/g6aIBAGKNsVTnTySE9GCjL3dHI8tzj4joprm
+ TAicfkxXdHK1ISk/T079hhdphwY/UeB9xUAvNLuT2ikK1p0X4BqFCvLOZGMzXNHEsvyO
+ ihoOHfyGBFNzvonH5mxF0Du2mweLLHOsVaAhhWE1Zlffg4igOnWQUMlhqB91+0VjHNRI
+ GtlDvhcmKIIQxNsh50HuCBZG1gFQogpvq+LlQdh7ZuhjAjHrDLQT4b00GqtgddmUzU4T
+ gm3A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=h+aMrKzg5iRPFOP39nzcxuRJir3KbM+Vvk75eAq8OzI=;
+ fh=ukEXsNcMmgvP7vIRWVpwV/bHje32cgqtZkJrBhNlMEg=;
+ b=eTAhg1uioMvXXcQCBUFMs+U5x+tkYX4adLfmobtypaVYhLAIpITbP4AmfW/JliQpRy
+ GRapIUSyItLoebaN+dvz/fNh5jDN0JR9/vTAL8s+jIm7Bwti9mWkhkOzMXZxD/cSzD3Z
+ jUS8ZUTDqVijOXKOT9NF35k3Spuh2K0EtpVeckPEdkOKeZNVrtElMcbQCfkHL2vOyMI0
+ fHmLnRe6Hj1jR/jYCjCwDS6V7Na0w7MhCnfoJ+l0Wp5LaIHkAwKh+9dzPCbkq1AaeUcN
+ bhYnDOOfr1dlZ3942R4nK2e9HYKtIQ5T4a0PxCywr/mBtm4GjrIVWQMvDgFM2rAgDzFw
+ A9fw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777284262; x=1777889062; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=X2dgm4HF15FHe8gkwxTet9JS4hgj0+qdvbuXVdEmCCw=;
- b=V8f+8mRir956c30qPHou1E9HJdynO3G1rIQiNh02ja9EtFrZYLSigeTw5m1U8uEi+4
- Yncj3Hh9Fa2kOQXplbnlLdpfYbvdaqPTsyQxKggGMPnK7B7r2cpCzLgnmhyXtDmHUQXg
- avrZey8YUC7k4qqI9UjEVSlqXNigQK/q9DSYQG3HfskIK/gaIFvTzEXn8GJpAXHsLHke
- vkPM1MJLIculB5YORIwmEQb0uGnYun2xucwBKz79RujdVl/dvWtNio0vNMglLBs9N/rj
- vd9EVBy8BnTemc2FlxgyXL3dZTowfIh2qrsTw0EQjEtFhJtKcPK0kd69MtEtgKfysC02
- WOJA==
+ d=linaro.org; s=google; t=1777284641; x=1777889441; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=h+aMrKzg5iRPFOP39nzcxuRJir3KbM+Vvk75eAq8OzI=;
+ b=rfGPhx7ksbK68BwXy7ydrRvl997asoQmog5NUwy5RDK3F2fd4KWagjqqI0vcXjNYyQ
+ FTbPiT3Umtnf+sbb7BNEeaNQzecK7YaOJmJGDI1CoPgiXqkmBnBHWby2HdY38kyfjc7O
+ tJEHSh0XGRnUbHykGl6l4zqBBU1t3DZOf/4I/tj2h8uB6UouJcN0IrOQhk3jLZFo6UTm
+ +pRjTfQEtzJzu8aY982njaxCca27TVT6t6RhjWr+cb4IEwk3c46Wka8/x/sDw8j0ymJ0
+ 7rC55qyNAAqs5mZ7TpP/zBowEkf8hKutxsb/q4iRGa4OMDUoFy8I2VD/W8iM3Rzbjt7F
+ gmGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777284262; x=1777889062;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=X2dgm4HF15FHe8gkwxTet9JS4hgj0+qdvbuXVdEmCCw=;
- b=r+u1k4wCQLoxgWJGAFyPWNZiGyf7XhiWX5J/UxqSKBGrYsR664dpkDJIM/DyVQ8SyH
- apkhXBq8FM38AZxOWOkQjdx6D8RzFWJVCuBxALMyKM7e5wIBLxnyfQJZgZK+vTEyStNg
- ZtCvMh1VBNcu01J6FJ9LrKi9PFL7FF1eprD8Yk4+zXWP2DlCH6x/lt1WW4fDgL3HPu/g
- rQHGpU5AEAaS0VzJbz0ZxhZRCIH2pm4oawBK5mmwXYORCZ7Z/9HRH1Ml6H3bs6HA5pPi
- 0reswBayJpq+c1bX1pNP9k1CvalYboSjU8oOiCG31IXvAkTTht6snWBd3sQFh6JxYDlL
- +pDQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/LSu+mSo3icjZWKrcNIkrg7X5SmTp6ezJz/Z0RPeAuQhvMo0HX3UYQVkNns94IToVm2yURI0gKBCE0@nongnu.org
-X-Gm-Message-State: AOJu0YwpFuF0C1oLi1lMSnK69p9DUab1rRFqWK/zkPXWXD9m8K0VS2qj
- NlEpHjRvW6A913wjjxGT1ZGRspwhXBmzNOa4B+e+apKzBqZ1UG0uoTxMUZWmL5Xxr++1fC8oHKf
- Y7Qww5xHerDVMgusS3IBwh2f7ZFITzYKeHI8pI2vdyQ/iFeKQtbOa1b3G
-X-Gm-Gg: AeBDieu1Ypiyj6dsSTHXFg9gboY9Ip9F3vUIEM4P6AabubCuCBJTKwamA6wc14zX+be
- EBz1jCBRGtAZS+9wIOgDXHnxAiRaGE5gl738OyAYb09jynb3QJd8NSex/2yWxbk9+x+rYLjo2KY
- XOnT5Sfj6xSJ63OViRCrcyAKZc7Ajvjfk+NTkE7jqtg3hQOyXR2XwTVKavKLaiL/clGhWNXR6Mv
- s06nVWd3+TnoD3U4UVUJAIcxDiYxbg+Ie101Gv4oWVM1B5vtD1q0E6ktBgKsoBifgLThciBJwCB
- DH7EjcXHCAnhjBceOHv7JOpYcUjAcBUq6ovuDw6so5KzaH1EwZDlkPReKTC/innpa/EmTedearv
- 5f23jhjS4j4k/I/hYZ1vJrewfVyL0QWPkJqhHg0H1sy3HhJ28Iqwna50Z
-X-Received: by 2002:a05:600c:c0d3:b0:488:a916:14a8 with SMTP id
- 5b1f17b1804b1-488fb74fe74mr482700795e9.10.1777284261939; 
- Mon, 27 Apr 2026 03:04:21 -0700 (PDT)
-X-Received: by 2002:a05:600c:c0d3:b0:488:a916:14a8 with SMTP id
- 5b1f17b1804b1-488fb74fe74mr482700485e9.10.1777284261412; 
- Mon, 27 Apr 2026 03:04:21 -0700 (PDT)
-Received: from redhat.com (IGLD-80-230-47-179.inter.net.il. [80.230.47.179])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a5c24d82asm181779665e9.7.2026.04.27.03.04.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 03:04:20 -0700 (PDT)
-Date: Mon, 27 Apr 2026 06:04:18 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Sourish Dutta Sharma <sourishduttasharma770@gmail.com>,
- qemu-devel@nongnu.org, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net,
- marcel.apfelbaum@gmail.com
-Subject: Re: [PATCH] hw/i386/fw_cfg: Use g_new() and g_new0() instead of
- g_malloc()
-Message-ID: <20260427060403-mutt-send-email-mst@kernel.org>
-References: <20260224160020.137036-1-sourishduttasharma770@gmail.com>
- <883bd7fd-a9e2-49e3-9198-8333825f8aa1@redhat.com>
+ d=1e100.net; s=20251104; t=1777284641; x=1777889441;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=h+aMrKzg5iRPFOP39nzcxuRJir3KbM+Vvk75eAq8OzI=;
+ b=FiEZ9+ELGsXzMNlwg6qcf+04ErkmQ1/aPC70xc24DXU4rvoMHpetKL+NX9eTDGP/zG
+ NXuXwKfrT9uwcuzX70DU3p2Vbnx4rq89fykIQ8cr/s7hssrzqTcF+iCKV+R4dfRMMw2g
+ 1QxgAMzpE8b/QGlmOo4yFMXwfG8xn662qeX6svHrpYfT/OkX7qAwQ4b3kUKZEIjyohsC
+ jWo6JpfLslepapHnYjEX4SrHUq4PcSHjwKzu3zj9v1BwHX2wZ3QD6f94jo8lMz6nEzJE
+ Ajng/yJId2IVafEtv0hRPlXmlPmR2x8JUVa1oTvT50jHpkwxQMLM99TG9WATUo54rHo4
+ fn4A==
+X-Gm-Message-State: AOJu0Yxq+VUOeDRxGYB3rc8OXwD9XZqGx/XqWYvmI9lTlRcjj2QdFMnZ
+ AojnEU0QCRvbRmA+NzVVZlr+GeI6JD7fYboUbtlaCrNvnFfTIU12FgRG3hlec1BirM0flKZB7+E
+ IFi6myrG2eTV1Y7zJ2Qj+dMAenl7rpUy7crZg7ZtCQg==
+X-Gm-Gg: AeBDievn1abaSPpijr3Lq8dPbiYPN05J/2m/DujKVTLNDU6ShvHzsfzzkyE5P7Gv9iN
+ aFYkMU1OcuI6BODdbp/OvLe5h7dd/AA+sZsQ009U+avc4FkpSmvWQHTjIp0SdFTLq21NDqIJSYO
+ 84H6EbSf6XYdRKs75gfy3ELCqGOSwsquSo/UiM3g/6AT99C3PT5b66N16W02IEaoKvSr7iM/jb2
+ J55bWUYnP4slMhl2emfa5fbhEVXZCSCfOARZsmnGyBITzVpWZLLRTn3iOCSBV1ilRnkYLBV2G0W
+ CP1mJn5Q7g9wzG918QEKuH/o8RNU4otSgxCzwTltMF8Hq2TPY9iIhAWNh+/wOn2eCwdVowk/B3E
+ vLQ==
+X-Received: by 2002:a05:690e:124a:b0:650:3064:4cf2 with SMTP id
+ 956f58d0204a3-653107edd2fmr38869649d50.5.1777284640958; Mon, 27 Apr 2026
+ 03:10:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <883bd7fd-a9e2-49e3-9198-8333825f8aa1@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
-X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260409220614.65558-1-lucaaamaral@gmail.com>
+In-Reply-To: <20260409220614.65558-1-lucaaamaral@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 27 Apr 2026 11:10:29 +0100
+X-Gm-Features: AQROBzAWX_aSS4_al0qqAOlI6OkPMuzx8z2mWLn_PkvrE7S1lPeleeKvQ713hc4
+Message-ID: <CAFEAcA-8BeBte6CxH_5Zsk3wvs0zJJW6+=8cNaroRTBegK-M5A@mail.gmail.com>
+Subject: Re: [PATCH v6 0/6] target/arm: ISV=0 data abort emulation library
+To: Lucas Amaral <lucaaamaral@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, agraf@csgraf.de, 
+ mohamed@unpredictable.fr, alex.bennee@linaro.org, 
+ richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,32 +116,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 27, 2026 at 12:02:57PM +0200, Thomas Huth wrote:
-> On 24/02/2026 17.00, Sourish Dutta Sharma wrote:
-> > Replace g_malloc() and g_malloc0() calls that calculate the allocation
-> > size using sizeof() with the type-safe g_new() and g_new0() macros.
-> > 
-> > This aligns the code with QEMU's coding style guidelines, improving
-> > readability and protecting against potential integer overflow
-> > vulnerabilities when allocating arrays.
-> > 
-> > Signed-off-by: Sourish Duttta Sharma  <sourishduttasharma770@gmail.com>
-> > ---
-> >   hw/i386/fw_cfg.c | 4 ++--
-> >   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
->  Hi!
-> 
-> Thanks for your patch! FWIW, fw_cfg is not really my turf, but since I was
-> looking into malloc() related patches today, I noticed your patch which
-> seems to have fallen through the cracks (sorry for this!), so I picked it up
-> and added it to my latest pull request.
-> 
->  Regards,
->   Thomas
+On Thu, 9 Apr 2026 at 23:06, Lucas Amaral <lucaaamaral@gmail.com> wrote:
+>
+> Add a shared emulation library for AArch64 load/store instructions that
+> cause ISV=0 data aborts under hardware virtualization, and wire it into
+> HVF (macOS) and WHPX (Windows).
+>
+> When the Instruction Syndrome Valid bit is clear, the hypervisor cannot
+> determine the faulting instruction's target register or access size from
+> the syndrome alone.  This previously hit an assert(isv) and killed the
+> VM.  The library fetches and decodes the faulting instruction using a
+> decodetree-generated decoder, then emulates it directly against the vCPU
+> register file and memory.
 
-Thanks for doing this. FWIW
+>  target/arm/emulate/a64-ldst.decode | 293 +++++++++++
+>  target/arm/emulate/arm_emulate.c   | 805 +++++++++++++++++++++++++++++
 
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Hi; looking at this I share Mohamed's question about how much
+of the atomics/etc we really need. This is a thousand lines of
+code handling instructions that in a lot of cases the guest really
+ought not to be using on MMIO regions in the first place.
 
+If we have real examples of this being needed, that's one thing,
+but I'm not very enthusiastic about implementing "doesn't actually
+have the atomic properties" instructions otherwise. Presumably
+the guest was using an atomic insn for a reason, so it's either
+buggy or else it actually needs the atomic handling and we won't
+be providing it.
+
+thanks
+-- PMM
 
