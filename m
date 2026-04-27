@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E707FF8862
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 13:01:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94F13FF885E
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 13:01:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLW5-0003M7-M0; Mon, 27 Apr 2026 08:56:50 -0400
+	id 1wHLW0-00038t-8r; Mon, 27 Apr 2026 08:56:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLVB-0002TS-TO
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:55:57 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ id 1wHLO7-0008D5-P8
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:36 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLV9-0000GX-Ss
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:55:53 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-671d60ef9c6so13990343a12.2
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:55:51 -0700 (PDT)
+ id 1wHLO4-0005lD-IQ
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:35 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488b8bc6bc9so73666275e9.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294550; x=1777899350; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294108; x=1777898908; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=iKeG7yWNptnTHptfbzF+P6p/GjNxY6FOc39UsNXWGeQ=;
- b=eLSsXnH0GPffxS4WTzlXYQ8bntYdT7vUIXygP+gjrTDf07tYy5GGu3AuQnATtTt5UY
- aXsH0yuxd09bxc0L+OMwKYawJgS1pEEp4YI8yQ3RZPvrjXwAev3sOQ30R6rhfl7yjLY5
- PX6YA3YgRK5o7hv1t8YcUf/1RqBgdC7iJd09jUcUIDEmfSJLI3stHB8+koD/6BUiBJzo
- Xs+VSYf8K3+lmcyf7ISNFRKwM9KU+A1zmEsRzKqBrXIL+MP6gJu0gPLRGYUk26ivaNdq
- AnYiodlyW+ZB4BG8cRJUgX79G3M31oyUIY8z/mJuudGkYrLqAcrjYBm9h35IIQN9T8RQ
- T78A==
+ :reply-to; bh=Iut+4BJW06xHtE0SB3YNoS1Ssi4OQgnXbFlPQro7fSE=;
+ b=p0BhjCFX3kUJcX62nWw1P9gSSM9pO2Ulh3LCYGabcPwe9KPv9cCKMU4+WJB0IR3yRf
+ 9h/P7KUEktTCDP0NECcoiM9XPmJNXfplVXitVSE6R3wdA7t6NARL2HKHo347eM0Tme+/
+ QzEZqB4G/Y+tCyCe46JH38/ih37B0YmZB7L6KS3ofQbu3szuQaPGleVxh2U7oKMzeFnB
+ SBmARPA0wnq7oXm7uYNhDTSbJ4rXHTMaTOuIGvXPMxCZaKEsyIORkyHqy0dBRnXF0gMM
+ 08gwYd324ppcz8O/ZG8PZ9w1yPup1TwqRRTXIvOnHH7J9WPFTHYipuusnE/gsB9C4Tr9
+ FQQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294550; x=1777899350;
+ d=1e100.net; s=20251104; t=1777294108; x=1777898908;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=iKeG7yWNptnTHptfbzF+P6p/GjNxY6FOc39UsNXWGeQ=;
- b=o8CesFzcYtxJV36yaT+WAQwakrShoatiH02fDB0qtNBBBO48kYfO1+m8H8iT4a+LYY
- k31cshcNeLyC7GgB9dy9MK4c4daLvPmFWbGXP7e7WwYi7R4cjNCG3jejLIT021z4XPcw
- vEQ2LaIppoB809BjoyURYz0zl+w8aG3aiF3E9P95Q2KSU/9dTwxU+2nLmy1TBNJlByjf
- o0Z2l0oPTDN8PcepmHNRqRvJ+IEuIHes3LPFiU71V+IVUqE1IUzO8i24CMaTrw9xAVRM
- XG09KZ/Z7I+sXEJRcfCo22JoM2lv0P6tEXN6Yk3DjAGnQLPJbmikoiKOAqVIsnNHUmiV
- M6Jg==
-X-Gm-Message-State: AOJu0YxsgYAKPiSWWJtl/ZFAkTzbUgyFjc4mna5AvVaye1loKhTezETw
- YpGtVjTYBdOgQ2MwPmzseXah5k5WUz/qXuigFnAd5W31iXJBY7MWS6faPlTedFLn9xkVmmZ6O00
- aaFJS
-X-Gm-Gg: AeBDiethB+EylHpU5H4a9maQnQ8Gxps4+HopzJNXNwJpzgxELxvyzdjSVPyGyI8+2ei
- qTiypZZl8EsCQFStx3joCo1LJoLfvJ8gBXgHpqv4KpfeUGKl3OIp6Tt1d+sGI2lUhPh/XsZmL98
- BWvo1sF+5sI39c/5EMU0LSM5FAfahI0Bi/87xU0YkRgr5Px+mPsc+UcP4a3h1DZJcg6V1JDFfOl
- QDmmK5plW0SJSpsnQNo3wVrNjDn6OxHmkBiOhxJUn1oDeg3/j2Mmyabxz9OAS+GcRTxbQI2Wc+s
- 0iUW3YfrzOairfNLSrVc/+d4haJx2bxqYsqCUl0B2BuFdXVWYdZFzri6l4mNdbvLXiVR/34RdQT
- bhxZc5Lqi9RT3WKTFkuCi67r8KagtSkl97D3IjbbBrrKWcoGWhCItowNrONvMNhsZACHmHdU7o3
- yWS5/YKgy1XVDdSGkX77Z+paazyYM8MwFBDsAihyrPb799c40dj3VA57fTLyqMso5PP5JlSmHf4
- dmHRUqQTfSgBjliQfmoUqxTIT1bkrq+1VW8Ne9uSA==
-X-Received: by 2002:a05:600c:41d6:b0:487:2439:b7c8 with SMTP id
- 5b1f17b1804b1-488fb745294mr370527985e9.1.1777294074280; 
- Mon, 27 Apr 2026 05:47:54 -0700 (PDT)
+ bh=Iut+4BJW06xHtE0SB3YNoS1Ssi4OQgnXbFlPQro7fSE=;
+ b=WPI9+3epEWe9mDGt73Nqd/MrFJ0InHzEb1sdl5x8+Gy1fLq5pcCZEtsbSbhFJ12h5B
+ 3XB4s8dggKZUplNzT5SSrel+9UYJbcmw1EbT95UpzevkbYU63tW4hvusMLYZO4t5WDyV
+ Lr0c7qIYPsLpfYT5FOnxovIRKesg0JknTZf2yYWyXw1k5YhLI1MwEzi5LK61IOavilpQ
+ rEsrjo02qLYGWxkQa2esez+gJwT9+/Lpaoe61d2er1yX38+UT0/UkEt2rLOqEE6obfT9
+ kuC5gqChiiAbh9N/b5mFJRVtqO57WGeo9KWb1AiMVSUIYY8UtPkB2reaiKRRsc7jio7x
+ bNiw==
+X-Gm-Message-State: AOJu0YwT6/LtlR7h9R10ylQc/cGZEWucDKh9aTBizalTEfkGaUvBlBTI
+ NACBTO4uc0RkZga5Haj2d8HB1gpo0RAdfM8xh2W9Mucw+zQ8JhhfeFKzLjaShbtazK1SEhxOr9Z
+ 7dvue
+X-Gm-Gg: AeBDieuvg0yRxL65eRWtB0yova44Op91bU/ywCjUjimIdeOoXAI6jB04umvUX/idgxl
+ 9x7qRjacb/Q2luG1Hwn780wbL8XDY5B6b9tJUoxXh9MDnY8jVDG38BcTiDPCt9ItJ6d+HS2ZphK
+ vSVBNdIPQSyt5S+Ee/Bvxy8SYdSr4FyNAGOjh7hvZZaQ0ldjJ3fZwfZlxcoNO+cEOPQqno+TX47
+ oz8gEjX2v4zXoztSGhpHO51VoZ0hNNHHH4cyMqofqO/TDqybTWUtWzsbLKZSQHGTfdcnfrbyrcS
+ 3255K+t+wOMeVUUfHK0lxu2g2QbiXjENshIznWN1/A1FK/w0U9nY03x4VSnaYUoIfJw4iZdCHdR
+ ajf/JK4wKvDNhDhKtQtYHXQSfMb9XmaQgyxKArDDgFe/b3BZ4jp5gtsiR83PXXA5uBdmLnMTNJJ
+ 5w1Ripe0u5Y1ycHYSWLHf216ACfatyQyDR+WjxriFOH1zmcknGXGzpgcaTD9chQTcG7kV5Vbad7
+ 8SwLU+AD2Xj6/F/w8naKWltJ+8JcQ56dSyPDWJexw==
+X-Received: by 2002:a05:600c:3b14:b0:48a:52d9:54ab with SMTP id
+ 5b1f17b1804b1-48a52d95604mr449758515e9.30.1777294107883; 
+ Mon, 27 Apr 2026 05:48:27 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.47.53
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:47:53 -0700 (PDT)
+ Mon, 27 Apr 2026 05:48:27 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/63] target/arm: Ignore endianness when setting MTE tags
-Date: Mon, 27 Apr 2026 13:46:51 +0100
-Message-ID: <20260427124738.966578-18-peter.maydell@linaro.org>
+Subject: [PULL 53/63] target/arm: migrate gcs syndromes to registerfields
+Date: Mon, 27 Apr 2026 13:47:27 +0100
+Message-ID: <20260427124738.966578-54-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,38 +101,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-As mentioned by Richard in [*]:
-
-  We don't actually need any specific endianness here, because
-  every byte has the same value.  So we could simply drop MO_TE.
-  That would produce a store in host-endianness, which will be
-  fractionally more efficient on some hosts.
-
-[*] https://lore.kernel.org/qemu-devel/d64d3576-9188-4e74-afdc-3492c9feb8e0@linaro.org/
+Tweak arg names to make it clear raddr is the data address register
+number.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260414005348.4767-2-philmd@linaro.org
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20260422125250.1303100-14-alex.bennee@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/helper-a64.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/syndrome.h | 39 +++++++++++++++++++++++++++++++++------
+ 1 file changed, 33 insertions(+), 6 deletions(-)
 
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index a7372aa6bb..dd1f9c6dc6 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -1019,7 +1019,7 @@ static uint64_t set_step_tags(CPUARMState *env, uint64_t toaddr,
-          * the page dirty and will use the fast path.
-          */
-         uint64_t repldata = data * 0x0101010101010101ULL;
--        MemOpIdx oi16 = make_memop_idx(MO_TE | MO_128, memidx);
-+        MemOpIdx oi16 = make_memop_idx(MO_128, memidx);
-         cpu_st16_mmu(env, toaddr, int128_make128(repldata, repldata), oi16, ra);
-         mte_mops_set_tags(env, toaddr, 16, *mtedesc);
-         return 16;
+diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+index 65d0de63a8..7ff8c30e2b 100644
+--- a/target/arm/syndrome.h
++++ b/target/arm/syndrome.h
+@@ -690,21 +690,48 @@ static inline uint32_t syn_pcalignment(void)
+     return res;
+ }
+ 
++/*
++ * ISS encoding for a GCS exception
++ *
++ * Field validity depends on EXTYPE
++ */
++FIELD(GCS_ISS, IT, 0, 5)
++FIELD(GCS_ISS, RN, 5, 5) /* only for non EXLOCK exceptions */
++FIELD(GCS_ISS, RADDR, 10, 5) /* only for GCSSTR/GCSSTTR traps */
++FIELD(GCS_ISS, EXTYPE, 20, 4)
++
+ static inline uint32_t syn_gcs_data_check(GCSInstructionType it, int rn)
+ {
+-    return ((EC_GCS << ARM_EL_EC_SHIFT) | ARM_EL_IL |
+-            (GCS_ET_DataCheck << 20) | (rn << 5) | it);
++    uint32_t res = syn_set_ec(0, EC_GCS);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++
++    res = FIELD_DP32(res, GCS_ISS, EXTYPE, GCS_ET_DataCheck);
++    res = FIELD_DP32(res, GCS_ISS, RN, rn);
++    res = FIELD_DP32(res, GCS_ISS, IT, it);
++
++    return res;
+ }
+ 
+ static inline uint32_t syn_gcs_exlock(void)
+ {
+-    return (EC_GCS << ARM_EL_EC_SHIFT) | ARM_EL_IL | (GCS_ET_EXLOCK << 20);
++    uint32_t res = syn_set_ec(0, EC_GCS);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++
++    res = FIELD_DP32(res, GCS_ISS, EXTYPE, GCS_ET_EXLOCK);
++
++    return res;
+ }
+ 
+-static inline uint32_t syn_gcs_gcsstr(int ra, int rn)
++static inline uint32_t syn_gcs_gcsstr(int raddr, int rn)
+ {
+-    return ((EC_GCS << ARM_EL_EC_SHIFT) | ARM_EL_IL |
+-            (GCS_ET_GCSSTR_GCSSTTR << 20) | (ra << 10) | (rn << 5));
++    uint32_t res = syn_set_ec(0, EC_GCS);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++
++    res = FIELD_DP32(res, GCS_ISS, EXTYPE, GCS_ET_GCSSTR_GCSSTTR);
++    res = FIELD_DP32(res, GCS_ISS, RADDR, raddr);
++    res = FIELD_DP32(res, GCS_ISS, RN, rn);
++
++    return res;
+ }
+ 
+ static inline uint32_t syn_serror(uint32_t extra)
 -- 
 2.43.0
 
