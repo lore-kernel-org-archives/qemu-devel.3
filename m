@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E17C1FF8860
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 15:48:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA092FF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 15:48:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHOC6-0005Xo-VF; Mon, 27 Apr 2026 11:48:23 -0400
+	id 1wHOBx-0005Wz-09; Mon, 27 Apr 2026 11:48:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3OoXvaQQKClkIB9I7FF7C5.3FDH5DL-45M5CEFE7EL.FI7@flex--rkir.bounces.google.com>)
- id 1wHOBz-0005XG-It
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 11:48:16 -0400
-Received: from mail-pf1-x44a.google.com ([2607:f8b0:4864:20::44a])
+ <3N4XvaQQKClYF86F4CC492.0CAE2AI-12J29BCB4BI.CF4@flex--rkir.bounces.google.com>)
+ id 1wHOBv-0005Wm-LW
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 11:48:11 -0400
+Received: from mail-pj1-x1049.google.com ([2607:f8b0:4864:20::1049])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3OoXvaQQKClkIB9I7FF7C5.3FDH5DL-45M5CEFE7EL.FI7@flex--rkir.bounces.google.com>)
- id 1wHOBx-0003wA-7g
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 11:48:14 -0400
-Received: by mail-pf1-x44a.google.com with SMTP id
- d2e1a72fcca58-82f0e12d375so6005900b3a.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 08:48:12 -0700 (PDT)
+ <3N4XvaQQKClYF86F4CC492.0CAE2AI-12J29BCB4BI.CF4@flex--rkir.bounces.google.com>)
+ id 1wHOBu-0003vn-4P
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 11:48:11 -0400
+Received: by mail-pj1-x1049.google.com with SMTP id
+ 98e67ed59e1d1-354bc535546so10618410a91.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 08:48:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1777304891; x=1777909691; darn=nongnu.org;
+ d=google.com; s=20251104; t=1777304888; x=1777909688; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=lsRufq+zOvxiSTMD2bdcsGu3QRTVJFWUCnfJIMUaVas=;
- b=Rut0n27pVKOablkh16z+6Z/ztvWfJUzlxI5SaX8xPsGxqgM1yUsug3uBqNzs0ty+kJ
- haDx5/XQqffr2g4gzymus/tlLXFsa1kt8ryy2Pq4u6NHCKkhJ5qGUyGZ671cf+Qupc7c
- ZfHnQW+M2c+wT1qAp3h+jFWAlW50gXki0RpbjQCIGrtydEJzpOrVCbMLgG0aZgxERYHk
- u9BzOoI2iv6bh3pdfqksajQJgxHx09/ns2eLonxxXoZh54wFmOFIySlru3GVXpzuf9Fr
- d1wotrWG9Ft9DUQhk7xAONk1Lgb0qYAq44PIPQaju806zAj7IyHwV605QfpEOrO0J0YE
- URNQ==
+ bh=m+euPCGzXKAX2DOBO4RfOMZ5ORa12ZSpckTUq80KcUY=;
+ b=lp0lpi7/IQMB+UnxFTEWoVHwL8C+iF4JAVnfI42Ipp91zuFNJkAOf0jBPWY6TZh7/P
+ 2gSIR0WiYmTvoDglRb97qIWmAdwrBLYoi3pCdqhk9vozP0FFjVslm6JDwQRBkNhcb++a
+ xKWparZ+/SzPltNUUqkiED1s8ftsPnZiJzef9ZF9y9I1oUy4QAidJF+HgplPj6iue80A
+ CkQJuQzsftjIChiaybreZpRXSFbfe8JvVEsiydXJ935Ni/h0npD9QjM2+sQYhtW89iy1
+ 66qpcutA2c0B1f0IHCVhmQH6DIchbzhjCWCBG1aNIIa5XKtm9W6Q5eQ8wqVNBBbcxmI3
+ zThA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777304891; x=1777909691;
+ d=1e100.net; s=20251104; t=1777304888; x=1777909688;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lsRufq+zOvxiSTMD2bdcsGu3QRTVJFWUCnfJIMUaVas=;
- b=KeuiKbNWjg/h+h1TFS2oCIywpmhjYw4MEhyEZSsDtI41H/ygHwXU6F6pRFQrMt5nlN
- dRwZNOr3xJA1MTVvvK0MsX924V8BMeqlw2SqyTKrylZoeNUv8EyZicwE1Hjb8IJqgGlZ
- NZSzsTAdL8zOHNlnMOanFDipxqV2raDMI2/wTBGqujAxUDrrxE4E2fVCUU9qstHmjXzZ
- lCdwKllRj9alwNxBvRGdSw0xQ2vw2n4qP7JxuwvFYjHjAXStrHO6ufKvGNcGeb26aanE
- Fp0KwPABOw4v3s2GuLBXFoedeSXudw1ZeipYIqN+XS3FE+F6vuO1L+9R3NdK8Xo2PIIA
- g8sQ==
-X-Gm-Message-State: AOJu0Yxv81hbPj7GQHzN+NFQeJaRs0XXiKdJShDBitp/7nE9fDv9twIp
- arGhbiHKpbcQcea/7/jEDz8w370WJEvBl+KEPekdvirjeMXkGY+zA5n47NI5bUS8t/QoGPmSMQ=
+ bh=m+euPCGzXKAX2DOBO4RfOMZ5ORa12ZSpckTUq80KcUY=;
+ b=VeeVcRGY2x7DtN72YKl/0P6CA1MTQY2eHbqT1R66a2auNBq0HrLfCRwJSxL6pJpVC1
+ Mzjw+C8AH7Ccte0uhIL/GR7AxLaHGvfVJVCLucg6OgkUEbSCFNlUXhgF5eLCxmPnn+9d
+ ZdzF+ivbTvYmJv7T7stNLREzygavSuxG2E78Xbhr81QZ3BGvxhgSkxx6dojkZ/b7IfAJ
+ yxD9FJobzrJ+HFIj/ju6F5i4UhNkhNGkRCVdf3nROxgliraYYeveahZmcNXX0iX0JX1d
+ jt34pFu16vqodN/vvaJLUd1DEvlU5zk69xzlKN99bppwO4GTQYpiOrVSr6F0nrdb1BcJ
+ kGYw==
+X-Gm-Message-State: AOJu0YyEuERJlUq4ln27xzXTI+BdE5FkXQyfaEN9SQN8b+uwPW0gg+eF
+ N8lNJ+nIuUu00SeH50wu9Y0lmUhh3g36GjQ3oPVtxTYn471Pz5q1qc0a+5IoteeRdkyKqsV3Ag=
  =
-X-Received: from pfbdw7.prod.google.com ([2002:a05:6a00:3687:b0:82f:4afa:eef2])
+X-Received: from pjbmr10.prod.google.com ([2002:a17:90b:238a:b0:35f:b524:f8b2])
  (user=rkir job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a00:2288:b0:82c:e1aa:21e3
- with SMTP id d2e1a72fcca58-82f8c84da16mr45072169b3a.10.1777304890832; Mon, 27
- Apr 2026 08:48:10 -0700 (PDT)
-Date: Mon, 27 Apr 2026 15:44:41 +0000
+ 2002:a17:90b:5845:b0:35e:58d3:3286
+ with SMTP id 98e67ed59e1d1-36140498567mr46498994a91.24.1777304887710; Mon, 27
+ Apr 2026 08:48:07 -0700 (PDT)
+Date: Mon, 27 Apr 2026 15:44:40 +0000
 In-Reply-To: <20260427154441.1918536-1-rkir@google.com>
 Mime-Version: 1.0
 References: <20260427154441.1918536-1-rkir@google.com>
 X-Mailer: git-send-email 2.54.0.rc2.544.gc7ae2d5bb8-goog
-Message-ID: <20260427154441.1918536-3-rkir@google.com>
-Subject: [PATCH 2/2] display: rutabaga: unparent MemoryRegions in unmap
+Message-ID: <20260427154441.1918536-2-rkir@google.com>
+Subject: [PATCH 1/2] qom: improve use-after-free debugging
 From: Roman Kiryanov <rkir@google.com>
 To: pbonzini@redhat.com, alex.bennee@linaro.org
 Cc: qemu-devel@nongnu.org, Roman Kiryanov <rkir@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::44a;
- envelope-from=3OoXvaQQKClkIB9I7FF7C5.3FDH5DL-45M5CEFE7EL.FI7@flex--rkir.bounces.google.com;
- helo=mail-pf1-x44a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1049;
+ envelope-from=3N4XvaQQKClYF86F4CC492.0CAE2AI-12J29BCB4BI.CF4@flex--rkir.bounces.google.com;
+ helo=mail-pj1-x1049.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -91,33 +91,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The virtio-gpu-rutabaga-device instance holds a
-hash table of child objects (`Object::properties`)
-and a memory region is added there every time
-`memory_region_init_ram_ptr` is called.
+This patch invalidates dead objects so their usage will
+lead to more predictable results (crashes or asserts).
 
-The `unmap_blob` call invalidates a `MemoryRegion`
-but does not remove it from the device, which makes
-pointers to the region dangling and eventually causes
-a crash when those pointers are dereferenced.
-
+Change-Id: I1dc36dbc1030c2e41c937f08baa97b2e81d44c82
 Signed-off-by: Roman Kiryanov <rkir@google.com>
 ---
- hw/display/virtio-gpu-rutabaga.c | 1 +
- 1 file changed, 1 insertion(+)
+ qom/object.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index ebb6c783fb..5cd9b19336 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -737,6 +737,7 @@ rutabaga_cmd_resource_unmap_blob(VirtIOGPU *g,
+diff --git a/qom/object.c b/qom/object.c
+index f981e27044..240e36c39e 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -613,6 +613,7 @@ static void object_property_del_all(Object *obj)
+     } while (released);
  
-         MemoryRegion *mr = &(vr->memory_regions[slot].mr);
-         memory_region_del_subregion(&vb->hostmem, mr);
-+        object_unparent(OBJECT(mr));
+     g_hash_table_unref(obj->properties);
++    obj->properties = NULL;
+ }
  
-         vr->memory_regions[slot].resource_id = 0;
-         vr->memory_regions[slot].used = 0;
+ static void object_property_del_child(Object *obj, Object *child)
+@@ -670,6 +671,8 @@ static void object_finalize(void *data)
+ 
+     g_assert(obj->ref == 0);
+     g_assert(obj->parent == NULL);
++    g_assert(obj->properties == NULL);
++    obj->class = NULL;
+     if (obj->free) {
+         obj->free(obj);
+     }
 -- 
 2.54.0.rc2.544.gc7ae2d5bb8-goog
 
