@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09F09FF8862
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:10:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 260F0FF8861
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:10:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHH1X-00019Z-BM; Mon, 27 Apr 2026 04:08:59 -0400
+	id 1wHH2I-0002Xx-4V; Mon, 27 Apr 2026 04:09:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH1F-0000pC-Ei
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:08:42 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH27-00029B-Mf
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:09:35 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH1C-0001dh-7j
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:08:39 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-441209fb77eso4253526f8f.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:08:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH25-00023n-Sa
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:09:35 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-43d74086e5bso9505328f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:09:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777277317; x=1777882117; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777277371; x=1777882171; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=dBz5nfiIUSdPkWdXYRedfkJmFQeJEAnz3d+04j8ybgc=;
- b=NfpmGvst4vdHG45MmsmpCiWdJLXfXxdDtrPWVq90gMWXfqkt7hakltDs21aRjH7nL+
- PTk0Bo5OtJjy+BTpZ6DPHSmWZ9khkJFfhFVMgclSXOvtKp6+wor3xbGoVUS19trumlVU
- fL/0p6etZa5oOEwN57fmWD6yaV0nudarDSqr4eAxQ518Gda3QxlUTCbVpaBfQLUZLEuW
- pxpn71QXLnz4qfYFm6+PsJh1JCtULwWXDhcaEKg3ettFMk8F7tn0F27Pcd75lwZBtjsc
- DvenwiuIm3C5WBKcFLJ2guPdeZjh7rrojb6zxFX/4mFhLiqAe/HP8gvj2sqjTP/E0ZDg
- YrZA==
+ :reply-to; bh=UyizkhPwA66T9NIfFzFir+Q1fq4kdPQuZBgZLFR1jbQ=;
+ b=g0ynTMmVXv59PgU77K8PcD9pN8TMnxWdzPMTdtC2RftZpXjp2jD79CY3V0MqCgHMS8
+ PErOL4aFy84lusbaPiwal8sL0EDWZxxe50Uqto0+R/m49i8o2H+4OWvmCqWOYvW2AlDt
+ QzW2GjAk5oJ4HrKTAcapW0+OSTS6O4avYXJQppFI0E829CGVM8BPrWOTKTqX/42Qmv/n
+ CwqO6gxn30bcsEZezrSEFCsFqMLaf8Ssy0P7ePVmvwVhKAFzzoRUF0QRznKwFpbHM5UZ
+ jA9Jn6Q0fOi/z8vEVq+TSn9Zh6OfVEef13O/JCb7IcWDWCxPdMnYz+pXXc5Y4NABL/5n
+ Kvzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777277317; x=1777882117;
+ d=1e100.net; s=20251104; t=1777277371; x=1777882171;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=dBz5nfiIUSdPkWdXYRedfkJmFQeJEAnz3d+04j8ybgc=;
- b=M4nD1RfeQ6HAi3/fNTM+0Xe9nrVCmgl/SLqNd/oV0Pi/fmUUYqnjmVqY8v5ofNMyh4
- vTwee+ph3rl0H+TcwPUGG+Ljfx9dkAebUHhqLGjWaQJuCH9jiEwE/MSDNQUMx00P56MJ
- IL3my/rSzkjhiDfK3SrM8b9+aYb/dT061vCt4SrnpTQUMJXhczECwOJ4EtxsTal1v0Dq
- nAvNw22sWEjgVgx/B/tPS11DI95v4E1xK/TaqwCosqjDQOFBXKObPeBZlJ0x75dODkg/
- 2m94aB1yJq3JLdMTWj5MsH4BuJ7M/pMDtutv7UYEfVhdUVO1jaxni5tWmv8KdY9L+5MU
- 08GQ==
+ bh=UyizkhPwA66T9NIfFzFir+Q1fq4kdPQuZBgZLFR1jbQ=;
+ b=Ogd5zrz5wX1dwsTviqR+P3G+THwALQMY2w/tlPVFPPw88zYIBQqB6PbPXwzrIpvy6I
+ 5qbUE3WdKmZKQbA8J6xxAXgSD6NNrHpElyb04apgmOCGzu0Pe30vPkq9Hr0mrqedV/ei
+ WGjaM5AtxUfSx+UlxXo+Pg4Xtgf4sFm4Fl0mNLIG8FtF2R38gSMNrkhpR8rKKgkWtQ8w
+ jTvI5H1TenItQAwE8Rkwz/vgs+IZy9ElWEujZ79O/O25E0xKGbL1aOhsh1DGCg6/9/p6
+ KvOazNMoQzQV8lWM1M1GEk5IGizOkcGYUk5+gGeQNZRr4NvKiiKsgAfxBOFKW0Y6npt9
+ 6ctA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+OMfDw7M23xeXCAgPdi7HWpiASi0+hQ7y2CGOAn7pI9Bs5UwgFBt+cLr/hUPBESxm3pOA3Bpb1bBfy@nongnu.org
-X-Gm-Message-State: AOJu0Yz4AFo4QTGI/fIOAcunG09HzolZ2rLtKNjrit4Ef5PBqpHlbeCl
- enxsH/+0o3D4IlFeaVv+/wTjVIiRGnmPmy1aat12FCejLU7ol9YqbxSQfjSexykoz1HLOM8S23d
- rtYzpoEU=
-X-Gm-Gg: AeBDieuHIU6fRxshATt5dxIo66zbstJFOuHxfWHzvZVCqNCOHu3KMta9wq0nmG6kvrl
- pf8XJizqJwvCbfy3bhFrRAxNXqnqJBfK5qKHZebMBgUhs7VIBuaKxJPyIiBQ/RCmxW5fIrFufwm
- VUzvtYTgdg09vyuxEk4soLiZmBWM/tUq16yL3OYu5QYz71kRDuAmRFZN/gBpaY2/TlRp50cMbRj
- j+3YsYA+D0yuT+GUJ6slNQ3tgxMg4UuhPhaouEGMAtx15waUrwIgIQkeYJ+9HALGs0x4hx0xmmV
- S9En1yoOic4+nOipIbl0k2+cJ/IPnHH4IjACEu3jSfUyLOe0zGwxT4TxLzcPjkoOdyOXRI8j2mX
- l/Ff/kwslbxbnmlhWAZpxbQ7sUDqlRq+SyXNvmkug1vwQb9tzoNq311I7ZjoWc1bls3UQgyfxFH
- RKBmNt7PqybCRonzuSwZojuJ4/bT9JFs1Cj1GWAvIXTWWiK1uFsshPFKkGf+GdLUw+lKzOCl0Tb
- Rj3X1i6kvY=
-X-Received: by 2002:a05:6000:41e5:b0:43f:dd8e:869a with SMTP id
- ffacd0b85a97d-43fe4032b3cmr56617295f8f.3.1777277316410; 
- Mon, 27 Apr 2026 01:08:36 -0700 (PDT)
+ AFNElJ+L9fDkYOoHwz8rMsoci0EoLpM22Ly1lXTESoTLzpFI2wQzbDNMxQ916pr+w1+G71jAgh19kaivg2Vm@nongnu.org
+X-Gm-Message-State: AOJu0YwZT214K1YZ/ltl7gCp8M5Jk9Y1JBAwFJk4HV06x4drV9Fzy+jV
+ ltdIcsWwJ++TIBUMcatkF5vKd8n0PgJDsu0oJV9RVSKFUek3XYSnsFLYH8zo7cHXa3NszL0Pjcj
+ QMoHcu30=
+X-Gm-Gg: AeBDietmkFbqII0EcmNzVPZPrJSn+ZtfosuhK+k75i7WSG2lkPXaRzruLTNThU5IcNz
+ /3K3nMC3hXT1No3PlDBNMpd9y0AwOtflbS4yrm1yR8RcJuKe3k/+SNS9HOvo+Xc1xAmwsbBgG9q
+ 7Qtt0Uc41K8WnElpMeTxmF8VW63Y6wE6R8YYm9PUQ5qA0GwIPgRt2t79hJBtRFSw1hn2Qe1CJfg
+ PZje2L/AVVV8Cy7aBd8w0IESU7DgzK0KifT0NIzdd92BP+32wF2QBaPkO7ilMv9GEyS+HNAZ6LA
+ gtHAzWLjm/ZF1L1llhUsXgJQINRSw46zuARh7LqWuB7fSeAjsaO6BQMH+TO/wf84bOprWyG2NmF
+ 0koYQh3xu15J1r2Yk/ZtROasJbV5CHYCcBCUEF9QfIiW1aafZw9KnKF3g77tF9f4He/leWkGPeN
+ fPyB4PsvCj/sTRRX0H6xSYH8NV44TzvCul6Qc9XACEwKnC7XRSl7lSjF5lcHmbrOoj+xFJpEXZa
+ crK7HV8oqc=
+X-Received: by 2002:a05:6000:2dc3:b0:43d:d037:d59c with SMTP id
+ ffacd0b85a97d-43fe3dd5069mr64972242f8f.16.1777277371176; 
+ Mon, 27 Apr 2026 01:09:31 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cb1365sm83719523f8f.7.2026.04.27.01.08.35
+ ffacd0b85a97d-444eebec868sm3920561f8f.31.2026.04.27.01.09.30
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Apr 2026 01:08:35 -0700 (PDT)
+ Mon, 27 Apr 2026 01:09:30 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Markus Armbruster <armbru@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v4 08/32] monitor: Make 'info via' a generic command
-Date: Mon, 27 Apr 2026 10:07:14 +0200
-Message-ID: <20260427080738.77138-9-philmd@linaro.org>
+Subject: [PATCH v4 16/32] monitor: Do not check TARGET_I386 to build 'info
+ sev' command
+Date: Mon, 27 Apr 2026 10:07:22 +0200
+Message-ID: <20260427080738.77138-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260427080738.77138-1-philmd@linaro.org>
 References: <20260427080738.77138-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,42 +102,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to build hmp-commands-info.hx once we need to stop
-using device target-specific check. Use the generic pattern
-to make the command available on all targets, providing a
-stub with kind error message when the device is not available.
+This command is filtered at build-time for i386/x86_64 binaries.
+By using the recently introduced HMPCommand::arch_bitmask flag
+we can filter it at runtime, making it possible to compile
+hmp-commands-info.hx once.
+
+Since the method depends on the CONFIG_SEV definition, define it
+in its own stub file.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- MAINTAINERS            |  2 +-
- hw/misc/mos6522-stub.c | 16 ++++++++++++++++
- hmp-commands-info.hx   |  2 --
- hw/misc/meson.build    |  1 +
- 4 files changed, 18 insertions(+), 3 deletions(-)
- create mode 100644 hw/misc/mos6522-stub.c
+ MAINTAINERS                   |  1 +
+ stubs/hmp-cmd-info_sev.c      | 16 ++++++++++++++++
+ target/i386/sev-system-stub.c |  5 -----
+ hmp-commands-info.hx          |  3 +--
+ stubs/meson.build             |  1 +
+ 5 files changed, 19 insertions(+), 7 deletions(-)
+ create mode 100644 stubs/hmp-cmd-info_sev.c
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 02628ca20cb..8ed6648d094 100644
+index 8f587756cbd..eeb7115edcd 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -1554,7 +1554,7 @@ F: hw/ppc/mac_newworld.c
- F: hw/pci-host/uninorth.c
- F: hw/pci-bridge/dec.[hc]
- F: hw/misc/macio/
--F: hw/misc/mos6522.c
-+F: hw/misc/mos6522*.c
- F: hw/nvram/mac_nvram.c
- F: hw/ppc/fw_cfg.c
- F: hw/input/adb*
-diff --git a/hw/misc/mos6522-stub.c b/hw/misc/mos6522-stub.c
+@@ -515,6 +515,7 @@ S: Supported
+ F: docs/system/i386/amd-memory-encryption.rst
+ F: docs/system/i386/sgx.rst
+ F: hw/i386/sgx*
++F: stubs/hmp-cmd-info_sev.c
+ F: stubs/qmp-i386-sev.c
+ F: stubs/qmp-i386-sgx.c
+ F: target/i386/kvm/
+diff --git a/stubs/hmp-cmd-info_sev.c b/stubs/hmp-cmd-info_sev.c
 new file mode 100644
-index 00000000000..85eb0ee36ee
+index 00000000000..f3624423a33
 --- /dev/null
-+++ b/hw/misc/mos6522-stub.c
++++ b/stubs/hmp-cmd-info_sev.c
 @@ -0,0 +1,16 @@
 +/*
-+ * QEMU MOS6522 VIA stubs
++ * Human Monitor 'info sev' stub (CONFIG_SEV)
 + *
 + * Copyright (c) Linaro
 + *
@@ -144,45 +148,62 @@ index 00000000000..85eb0ee36ee
 + */
 +
 +#include "qemu/osdep.h"
-+#include "monitor/monitor.h"
 +#include "monitor/hmp.h"
++#include "monitor/monitor.h"
 +
-+void hmp_info_via(Monitor *mon, const QDict *qdict)
++void hmp_info_sev(Monitor *mon, const QDict *qdict)
 +{
-+    monitor_printf(mon, "MOS6522 VIA is not available in this QEMU\n");
++    monitor_printf(mon, "SEV is not available in this QEMU\n");
 +}
+diff --git a/target/i386/sev-system-stub.c b/target/i386/sev-system-stub.c
+index fb84aee94d2..2ea85597cf9 100644
+--- a/target/i386/sev-system-stub.c
++++ b/target/i386/sev-system-stub.c
+@@ -32,11 +32,6 @@ int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
+     g_assert_not_reached();
+ }
+ 
+-void hmp_info_sev(Monitor *mon, const QDict *qdict)
+-{
+-    monitor_printf(mon, "SEV is not available in this QEMU\n");
+-}
+-
+ void pc_system_parse_sev_metadata(uint8_t *flash_ptr, size_t flash_size)
+ {
+ }
 diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index 74c741f80e2..463038c302a 100644
+index da9fdc0ab7b..336ab870a2c 100644
 --- a/hmp-commands-info.hx
 +++ b/hmp-commands-info.hx
-@@ -885,7 +885,6 @@ SRST
-     Show intel SGX information.
+@@ -812,15 +812,14 @@ SRST
+     enabled) memory in bytes.
  ERST
  
--#if defined(CONFIG_MOS6522)
+-#if defined(TARGET_I386)
      {
-         .name         = "via",
-         .args_type    = "",
-@@ -893,7 +892,6 @@ ERST
-         .help         = "show guest mos6522 VIA devices",
-         .cmd          = hmp_info_via,
+         .name       = "sev",
+         .args_type  = "",
+         .params     = "",
+         .help       = "show SEV information",
+         .cmd        = hmp_info_sev,
++        .arch_bitmask = QEMU_ARCH_I386,
      },
 -#endif
  
  SRST
-   ``info via``
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index 245ab9b98cc..d7e97a4a32f 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -20,6 +20,7 @@ system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_ras.c'))
- 
- # Mac devices
- system_ss.add(when: 'CONFIG_MOS6522', if_true: files('mos6522.c'))
-+stub_ss.add(files('mos6522-stub.c'))
- system_ss.add(when: 'CONFIG_DJMEMC', if_true: files('djmemc.c'))
- system_ss.add(when: 'CONFIG_IOSB', if_true: files('iosb.c'))
- 
+   ``info sev``
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 6142e0f4d9d..f086521cde4 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -87,6 +87,7 @@ if have_system
+   stub_ss.add(files('qmp-cpu.c'))
+   stub_ss.add(files('qmp-cpu-s390x.c'))
+   stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
++  stub_ss.add(files('hmp-cmd-info_sev.c'))
+   stub_ss.add(files('hmp-cmds-hw-s390x.c'))
+   stub_ss.add(files('hmp-cmds-target-i386.c'))
+ endif
 -- 
 2.53.0
 
