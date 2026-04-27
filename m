@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD942FF8869
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:55:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EC13FF8862
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:55:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLR1-00033B-T7; Mon, 27 Apr 2026 08:51:36 -0400
+	id 1wHLOv-0000jS-MV; Mon, 27 Apr 2026 08:49:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNc-00080k-MX
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:16 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1wHLNa-0007tW-Mb
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:12 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNZ-0005du-CF
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:04 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-48a563e4ef7so68789305e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:47:58 -0700 (PDT)
+ id 1wHLNR-0005VG-VV
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:00 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48a3e9862f0so54014845e9.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:47:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294077; x=1777898877; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294072; x=1777898872; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=8Toi/9/c5wNDgSRs68/PtWCD8eM5DEaE1TS1Rt+S134=;
- b=FOmaapyBiHDeY+OPZ8Kh2igOftCWAgqQqjsKU7rgjFjNkmbYxOSoeldTv5jF+cO5Ss
- pfOICtoT/5sLd7+CxS6+uzAh9KcwShWcLpyEjKqYIKfk79H2mzbBUfdV5K1qaUbjYli4
- Amm4dAwikHJipoANELF6FB7SD0dep9fTEmJ95Qg2uwOgPbs5Qozi1b4n7PVZU4g1ka0p
- 0/grH7Ypf4EL57vXigI2jZfWL6SzAHXR5BwMG1perkjmxwh+IwoMSiwGYn/0JqyNXVuj
- vB+jhohGFzXgipIsV5X9TCjzy9ZNXYG78nZlp2V/+xnj9eFFjCvWfJZSu//aCF9wCShl
- CrUw==
+ :reply-to; bh=9V9ypQhZMA6beD24MyNKWxp8/BYxr4ugvwVwFV1KVGM=;
+ b=Gfbni2pnj91UleX8weTK6IgZNpB2fbnt1nNNfdlthigKuP6Xb5sKukMcywZF7c9Mu5
+ myrsFy4EeOhVpj0q0U86vEmsqHxzTYVD2duCYaARWA1NL7S0QWdPPVhfVECC7Hxi/QUE
+ vr8txEfeOC56zkBes2lyTct8tO0Sz+PxfcdnvZWItdIyp3XYTYo+PTd4E+YxPDXnV0dF
+ 1pzciNGlzj6qPwfr9P4lNFUtF9ufC4fIJQC1/VMUGMyANb42ugfd6tgfdnWRGU3aa5P5
+ cQ21h3YnVWoyUqxnu5cJyGeBjG6tcNwOn51pYTTq1ehRK/Drgb+aEU51FFNh57MFPwd1
+ 061w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294077; x=1777898877;
+ d=1e100.net; s=20251104; t=1777294072; x=1777898872;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=8Toi/9/c5wNDgSRs68/PtWCD8eM5DEaE1TS1Rt+S134=;
- b=ScyoyeinnKoXPkGR/iwcFhLWEeZxFssnsfcd8owdGb2VCWrtjSo5WvE49Ywf0TGU94
- O5vPyR7E2jtst2dxRJHQrzJsze1m8e8l/GNsOYfij5blBmPHQlcMWjc+gxX90mO2sSi3
- 3GN8b13MvskwyzD4P0zduWnOietXDS65JfXyvIqlY8/SyCMN3718zjFv5S8yHbEenpJ0
- uthrzUehTyjLbepPjsDqqB1hDuEM6CXGHUa9LPMfMTQRf+6HnSuhNQZD/dUXiTZPKzGu
- hi6r9/9CIWRlYaYpTqGIN74zpg+Znxu0B/YZDybkbSPFejCyd18G2lWWQit75wtnsnMt
- HIZA==
-X-Gm-Message-State: AOJu0Yzon4avKlwfd6Q/4HoyCzG6iII2TiFB6G5xhCzMYGFRlO5AUgIQ
- vjus2O1mQdoUC91V+4WfwZXh6PdHfql/u9Ax/ydUtqz0YbL+hocOHMUuxRYriJfuRUdjc77nmZ+
- cdyGn
-X-Gm-Gg: AeBDievcENKdoicP81ncxVfXidIpvs0VfOVaw+kMvGmM6/7aLmqsDuXQhXYIX3HgG0z
- L0oDIwezJ6buWuUgf9+1khBY2afvCrnH4irZyxlL6AMng6gBlA77Tgfv0ToShJYBAaBiq79+jX+
- bcx8QM+QCFF7GjADqV7sC3t5dNQpFybepGHBNR/6S3iunl+rSEFbEDZ67FPO9aNCJLNJphul8oU
- 61HVWKhaDPrSk8T9EvqdJvlGlC0F8D7IRYcrdMBRh1bdMgWHcf5//MEZpILWyVYTHceZZbuXtXs
- 727pdpgS88S3+0OPJ8SdUhcRZYpcDlcfyJI13dDaMK6ejrto+KtE6WxwrYru6pav5n5BuropxBH
- aLX7tJu+cVfW4BE7cLwaBnZU/zoKHKO+AbOVxlY8cZyBgWQyYw4Ym+Y9BjRpH2ENLapTHhK1jQC
- guAfO2M/7XnzfJCZPXo+JvA8qHzKhQZcqDpmUdUz69yuIAXCPwm+3ie5/cE2kovCoA915U9JKPE
- qWgmzUCJKaWhcASU13Wx/jzNQV2d85G2lXERjC8Ug==
-X-Received: by 2002:a05:600c:8207:b0:485:3193:6ddb with SMTP id
- 5b1f17b1804b1-488fb73cf74mr684926585e9.3.1777294076970; 
- Mon, 27 Apr 2026 05:47:56 -0700 (PDT)
+ bh=9V9ypQhZMA6beD24MyNKWxp8/BYxr4ugvwVwFV1KVGM=;
+ b=Rru4pbe4GJa5oVzy+k6VRnCw27DiM3y4u7axlRazhRVgXxsKB4ZYJbdJYihyTPHdzv
+ A39TU5hVTMpOokOjtpQFe+RaNTCW5a3s962kc+Os0MYNgYfXsAoR1EaRkMtDAiqlirTh
+ aje+g6z9e8Cgem24iduSHpYXs0USb1pRYbUIe98giZGkDGvt0e1ichvl94IPYfrAMQn2
+ IXht5OThpslwfuWUzrOUVlbNzmPBJ07cb7jN7sTkZqr513UGfRUl1SJCQmdkMDZ9+oIp
+ Lj1tFXIwmMrbcVTDLDG9JqUjrl6E2POzELptqKtcdU71xzHseFYPxiTioQMB/pHq+BRD
+ JBCg==
+X-Gm-Message-State: AOJu0YzsRHFbwTi84ZYny7T/3MG1qcLwrlEar6ZX5F6JLKJRsV4AhlhK
+ kyr1RajKL0Ll/oPmaCwbPux2CP9WjG2IcTwCUjPo3cdn8GlaO5A+QL8DLOGQWJXs0xPwoklzVFo
+ lcTea
+X-Gm-Gg: AeBDievqIPH5oqcKYrwlff7MNod/WnXPzklA3LgrBSrjETgtS85KJJrhcUJQbuWwQlw
+ mBSgR+mGTrgWpAwDPmar22S2Xhz9nPZipZALQbmw/PZX7awwNpHt6jD4U715ut0olLsT4eHEjLJ
+ uPQYBB07PPu9lVYyYPoVPp2cQ76jXi5/WjzO1PlvmDfB6Xza3H2s+DFWR0lTwM0ixy2It1XDE2y
+ qFx9BZSMvMCsSKgydx9iboou5AVyBYJwm2TICHDio8ypwRkYK2v8xDq7H+NvQbCPdVXyp4p36kG
+ hfl44nX5fT36uI5aAW1tt+Jd9Ilnsn/ToyhJMVWRffWRfb78LKArTuvFWnh2YefBrXrcnZDBH0u
+ p0ujq7yjGDz2D4iLTNRcIltRjDgTIN6+85IKJNFTkVR01rlPEZjGXkOn5RZuCmItXx4Z2DdCOcb
+ G7PFojjQcXWppK7OYXyudxzHeVw/x4UC6qv4VEgpZB9ok9JYGXt52za54AWPMPUK6e76hQu8h05
+ Skzr/11HJ9hQOBPjqBZ6TnpxkE9nbr+pBm/xRPzB6Bp/ZcQI3Ol
+X-Received: by 2002:a05:600d:8447:b0:486:f893:56c6 with SMTP id
+ 5b1f17b1804b1-488fb8b18d1mr423170665e9.10.1777294072114; 
+ Mon, 27 Apr 2026 05:47:52 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.47.56
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.47.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:47:56 -0700 (PDT)
+ Mon, 27 Apr 2026 05:47:51 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 20/63] target/arm: Hoist MO_TE into MVE DO_VSTR() macro
-Date: Mon, 27 Apr 2026 13:46:54 +0100
-Message-ID: <20260427124738.966578-21-peter.maydell@linaro.org>
+Subject: [PULL 15/63] hw/arm/fsl-imx8mm: Adding support for USB controller
+Date: Mon, 27 Apr 2026 13:46:49 +0100
+Message-ID: <20260427124738.966578-16-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,104 +100,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260414005348.4767-5-philmd@linaro.org
+It enables emulation of USB on iMX8MM
+Enables testing and debugging of USB drivers
+
+Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/mve_helper.c | 43 +++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 23 deletions(-)
+ hw/arm/Kconfig              |  1 +
+ hw/arm/fsl-imx8mm.c         | 27 +++++++++++++++++++++++++++
+ include/hw/arm/fsl-imx8mm.h |  6 ++++++
+ 3 files changed, 34 insertions(+)
 
-diff --git a/target/arm/tcg/mve_helper.c b/target/arm/tcg/mve_helper.c
-index fbb64889bf..4bea0991de 100644
---- a/target/arm/tcg/mve_helper.c
-+++ b/target/arm/tcg/mve_helper.c
-@@ -235,7 +235,8 @@ DO_VSTR(vstrh_w, MO_UW, 2, stw, 4, int32_t)
-         unsigned e;                                                     \
-         uint32_t addr;                                                  \
-         int mmu_idx = arm_to_core_mmu_idx(arm_mmu_idx(env));            \
--        MemOpIdx oi = make_memop_idx(MFLAG | MO_ALIGN, mmu_idx);        \
-+        MemOpIdx oi = make_memop_idx(MO_TE | MFLAG | MO_ALIGN,          \
-+                                     mmu_idx);                          \
-         for (e = 0; e < 16 / ESIZE; e++, mask >>= ESIZE, eci_mask >>= ESIZE) { \
-             if (!(eci_mask & 1)) {                                      \
-                 continue;                                               \
-@@ -262,7 +263,8 @@ DO_VSTR(vstrh_w, MO_UW, 2, stw, 4, int32_t)
-         unsigned e;                                                     \
-         uint32_t addr;                                                  \
-         int mmu_idx = arm_to_core_mmu_idx(arm_mmu_idx(env));            \
--        MemOpIdx oi = make_memop_idx(MFLAG | MO_ALIGN, mmu_idx);        \
-+        MemOpIdx oi = make_memop_idx(MO_TE | MFLAG | MO_ALIGN,          \
-+                                     mmu_idx);                          \
-         for (e = 0; e < 16 / ESIZE; e++, mask >>= ESIZE, eci_mask >>= ESIZE) { \
-             if (!(eci_mask & 1)) {                                      \
-                 continue;                                               \
-@@ -347,47 +349,42 @@ DO_VSTR(vstrh_w, MO_UW, 2, stw, 4, int32_t)
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 104954d90d..b940af9345 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -631,6 +631,7 @@ config FSL_IMX8MM
+     select SDHCI
+     select PCI_EXPRESS_DESIGNWARE
+     select PCI_EXPRESS_FSL_IMX8M_PHY
++    select USB_DWC3
+     select WDT_IMX2
  
- DO_VLDR_SG(vldrb_sg_sh, MO_SB, int8_t, ldb, 2, int16_t, uint16_t, ADDR_ADD, false)
- DO_VLDR_SG(vldrb_sg_sw, MO_SB, int8_t, ldb, 4, int32_t, uint32_t, ADDR_ADD, false)
--DO_VLDR_SG(vldrh_sg_sw, MO_TE | MO_SW, int16_t, ldw, 4,
--           int32_t, uint32_t, ADDR_ADD, false)
-+DO_VLDR_SG(vldrh_sg_sw, MO_SW, int16_t, ldw, 4, int32_t, uint32_t, ADDR_ADD, false)
+ config FSL_IMX8MM_EVK
+diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
+index f1c173dbec..97c3f8542c 100644
+--- a/hw/arm/fsl-imx8mm.c
++++ b/hw/arm/fsl-imx8mm.c
+@@ -202,6 +202,11 @@ static void fsl_imx8mm_init(Object *obj)
+         object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
+     }
  
- DO_VLDR_SG(vldrb_sg_ub, MO_UB, uint8_t, ldb, 1, uint8_t, uint8_t, ADDR_ADD, false)
- DO_VLDR_SG(vldrb_sg_uh, MO_UB, uint8_t, ldb, 2, uint16_t, uint16_t, ADDR_ADD, false)
- DO_VLDR_SG(vldrb_sg_uw, MO_UB, uint8_t, ldb, 4, uint32_t, uint32_t, ADDR_ADD, false)
--DO_VLDR_SG(vldrh_sg_uh, MO_TE | MO_UW, uint16_t, ldw, 2,
--           uint16_t, uint16_t, ADDR_ADD, false)
--DO_VLDR_SG(vldrh_sg_uw, MO_TE | MO_UW, uint16_t, ldw, 4,
--           uint32_t, uint32_t, ADDR_ADD, false)
--DO_VLDR_SG(vldrw_sg_uw, MO_TE | MO_UL, uint32_t, ldl, 4,
--           uint32_t, uint32_t, ADDR_ADD, false)
-+DO_VLDR_SG(vldrh_sg_uh, MO_UW, uint16_t, ldw, 2, uint16_t, uint16_t, ADDR_ADD, false)
-+DO_VLDR_SG(vldrh_sg_uw, MO_UW, uint16_t, ldw, 4, uint32_t, uint32_t, ADDR_ADD, false)
-+DO_VLDR_SG(vldrw_sg_uw, MO_UL, uint32_t, ldl, 4, uint32_t, uint32_t, ADDR_ADD, false)
- DO_VLDR64_SG(vldrd_sg_ud, ADDR_ADD, false)
++    for (i = 0; i < FSL_IMX8MM_NUM_USBS; i++) {
++        g_autofree char *name = g_strdup_printf("usb%d", i);
++        object_initialize_child(obj, name, &s->usb[i], TYPE_USB_DWC3);
++    }
++
+     for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
+         g_autofree char *name = g_strdup_printf("spi%d", i + 1);
+         object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
+@@ -529,6 +534,27 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(gicdev, usdhc_table[i].irq));
+     }
  
--DO_VLDR_SG(vldrh_sg_os_sw, MO_TE | MO_SW, int16_t, ldw, 4,
-+DO_VLDR_SG(vldrh_sg_os_sw, MO_SW, int16_t, ldw, 4,
-            int32_t, uint32_t, ADDR_ADD_OSH, false)
--DO_VLDR_SG(vldrh_sg_os_uh, MO_TE | MO_UW, uint16_t, ldw, 2,
-+DO_VLDR_SG(vldrh_sg_os_uh, MO_UW, uint16_t, ldw, 2,
-            uint16_t, uint16_t, ADDR_ADD_OSH, false)
--DO_VLDR_SG(vldrh_sg_os_uw, MO_TE | MO_UW, uint16_t, ldw, 4,
-+DO_VLDR_SG(vldrh_sg_os_uw, MO_UW, uint16_t, ldw, 4,
-            uint32_t, uint32_t, ADDR_ADD_OSH, false)
--DO_VLDR_SG(vldrw_sg_os_uw, MO_TE | MO_UL, uint32_t, ldl, 4,
-+DO_VLDR_SG(vldrw_sg_os_uw, MO_UL, uint32_t, ldl, 4,
-            uint32_t, uint32_t, ADDR_ADD_OSW, false)
- DO_VLDR64_SG(vldrd_sg_os_ud, ADDR_ADD_OSD, false)
++    /* USBs */
++    for (i = 0; i < FSL_IMX8MM_NUM_USBS; i++) {
++        static const struct {
++            hwaddr addr;
++            unsigned int irq;
++        } usb_table[FSL_IMX8MM_NUM_USBS] = {
++            { fsl_imx8mm_memmap[FSL_IMX8MM_USB1].addr, FSL_IMX8MM_USB1_IRQ },
++            { fsl_imx8mm_memmap[FSL_IMX8MM_USB2].addr, FSL_IMX8MM_USB2_IRQ },
++        };
++
++        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "p2", 1);
++        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "p3", 1);
++        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "slots", 2);
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->usb[i]), errp)) {
++            return;
++        }
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->usb[i]), 0, usb_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->usb[i].sysbus_xhci), 0,
++                           qdev_get_gpio_in(gicdev, usb_table[i].irq));
++    }
++
+     /* ECSPIs */
+     for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
+         static const struct {
+@@ -635,6 +661,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MM_OCRAM:
+         case FSL_IMX8MM_SNVS_HP:
+         case FSL_IMX8MM_UART1 ... FSL_IMX8MM_UART4:
++        case FSL_IMX8MM_USB1 ... FSL_IMX8MM_USB2:
+         case FSL_IMX8MM_USDHC1 ... FSL_IMX8MM_USDHC3:
+         case FSL_IMX8MM_WDOG1 ... FSL_IMX8MM_WDOG3:
+             /* device implemented and treated above */
+diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
+index bc5a0922ad..60d79a6e3c 100644
+--- a/include/hw/arm/fsl-imx8mm.h
++++ b/include/hw/arm/fsl-imx8mm.h
+@@ -25,6 +25,7 @@
+ #include "hw/sd/sdhci.h"
+ #include "hw/ssi/imx_spi.h"
+ #include "hw/timer/imx_gpt.h"
++#include "hw/usb/hcd-dwc3.h"
+ #include "hw/watchdog/wdt_imx2.h"
+ #include "qom/object.h"
+ #include "qemu/units.h"
+@@ -43,6 +44,7 @@ enum FslImx8mmConfiguration {
+     FSL_IMX8MM_NUM_I2CS         = 4,
+     FSL_IMX8MM_NUM_IRQS         = 128,
+     FSL_IMX8MM_NUM_UARTS        = 4,
++    FSL_IMX8MM_NUM_USBS         = 2,
+     FSL_IMX8MM_NUM_USDHCS       = 3,
+     FSL_IMX8MM_NUM_WDTS         = 3,
+ };
+@@ -64,6 +66,7 @@ struct FslImx8mmState {
+     IMXFECState        enet;
+     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
+     IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
++    USBDWC3            usb[FSL_IMX8MM_NUM_USBS];
+     DesignwarePCIEHost pcie;
+     FslImx8mPciePhyState   pcie_phy;
+     OrIRQState         gpt5_gpt6_irq;
+@@ -202,6 +205,9 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_I2C3_IRQ     = 37,
+     FSL_IMX8MM_I2C4_IRQ     = 38,
  
- DO_VSTR_SG(vstrb_sg_ub, MO_UB, stb, 1, uint8_t, ADDR_ADD, false)
- DO_VSTR_SG(vstrb_sg_uh, MO_UB, stb, 2, uint16_t, ADDR_ADD, false)
- DO_VSTR_SG(vstrb_sg_uw, MO_UB, stb, 4, uint32_t, ADDR_ADD, false)
--DO_VSTR_SG(vstrh_sg_uh, MO_TE | MO_UW, stw, 2, uint16_t, ADDR_ADD, false)
--DO_VSTR_SG(vstrh_sg_uw, MO_TE | MO_UW, stw, 4, uint32_t, ADDR_ADD, false)
--DO_VSTR_SG(vstrw_sg_uw, MO_TE | MO_UL, stl, 4, uint32_t, ADDR_ADD, false)
-+DO_VSTR_SG(vstrh_sg_uh, MO_UW, stw, 2, uint16_t, ADDR_ADD, false)
-+DO_VSTR_SG(vstrh_sg_uw, MO_UW, stw, 4, uint32_t, ADDR_ADD, false)
-+DO_VSTR_SG(vstrw_sg_uw, MO_UL, stl, 4, uint32_t, ADDR_ADD, false)
- DO_VSTR64_SG(vstrd_sg_ud, ADDR_ADD, false)
- 
--DO_VSTR_SG(vstrh_sg_os_uh, MO_TE | MO_UW, stw, 2, uint16_t, ADDR_ADD_OSH, false)
--DO_VSTR_SG(vstrh_sg_os_uw, MO_TE | MO_UW, stw, 4, uint32_t, ADDR_ADD_OSH, false)
--DO_VSTR_SG(vstrw_sg_os_uw, MO_TE | MO_UL, stl, 4, uint32_t, ADDR_ADD_OSW, false)
-+DO_VSTR_SG(vstrh_sg_os_uh, MO_UW, stw, 2, uint16_t, ADDR_ADD_OSH, false)
-+DO_VSTR_SG(vstrh_sg_os_uw, MO_UW, stw, 4, uint32_t, ADDR_ADD_OSH, false)
-+DO_VSTR_SG(vstrw_sg_os_uw, MO_UL, stl, 4, uint32_t, ADDR_ADD_OSW, false)
- DO_VSTR64_SG(vstrd_sg_os_ud, ADDR_ADD_OSD, false)
- 
--DO_VLDR_SG(vldrw_sg_wb_uw, MO_TE | MO_UL, uint32_t, ldl, 4,
--           uint32_t, uint32_t, ADDR_ADD, true)
-+DO_VLDR_SG(vldrw_sg_wb_uw, MO_UL, uint32_t, ldl, 4, uint32_t, uint32_t, ADDR_ADD, true)
- DO_VLDR64_SG(vldrd_sg_wb_ud, ADDR_ADD, true)
--DO_VSTR_SG(vstrw_sg_wb_uw, MO_TE | MO_UL, stl, 4, uint32_t, ADDR_ADD, true)
-+DO_VSTR_SG(vstrw_sg_wb_uw, MO_UL, stl, 4, uint32_t, ADDR_ADD, true)
- DO_VSTR64_SG(vstrd_sg_wb_ud, ADDR_ADD, true)
- 
- /*
++    FSL_IMX8MM_USB1_IRQ     = 40,
++    FSL_IMX8MM_USB2_IRQ     = 41,
++
+     FSL_IMX8MM_GPT1_IRQ      = 55,
+     FSL_IMX8MM_GPT2_IRQ      = 54,
+     FSL_IMX8MM_GPT3_IRQ      = 53,
 -- 
 2.43.0
 
