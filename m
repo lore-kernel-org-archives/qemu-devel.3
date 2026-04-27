@@ -4,107 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEF3EFF885E
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 09:34:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 334A7FF885E
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 09:35:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHILn-0004cS-F5; Mon, 27 Apr 2026 05:33:59 -0400
+	id 1wHIMS-00050B-54; Mon, 27 Apr 2026 05:34:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHILl-0004ZA-1c
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:33:57 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ id 1wHIMQ-0004zW-DB
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:34:38 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHILj-0000Tj-2n
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:33:56 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-64e87a81639so8834629d50.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 02:33:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777282434; cv=none;
+ id 1wHIMN-0000ie-Vh
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:34:38 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-6501c9903edso9987236d50.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 02:34:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777282474; cv=none;
  d=google.com; s=arc-20240605;
- b=A3wYExQ+i5M7+MGJpNqC/a/Vmcl8HaUk8PHqx7tFK/afzg2x/bZJHPDG5Fmysp6ufO
- phZTkb40s/zz097wW3mEdDDBR38QekC3lsVoaY3oXHMotghofqJ1u3xZLjShWsecALJh
- TI+KAXWWHPwoGcJYi2FITLNKNRltdNB5GDYw8M+mP2YOxzUn6A2j1ht1o7ZfoC56bXxI
- MS5++E9ZdtghgDh80d0H5Rq7/bRGLJMLJwtr6NBufKdjuj+DHMLdF/UOMNVXvfR7YSd2
- wDDI95ZTE6v4Lcip4W1ANEFnwMAwr490G6mepn4v5BzD8hmx5SQ5AQWbjVO4722EnE2a
- asRw==
+ b=Xx2lnH8CHyRmuUo/jeVbmFWDTATfGEADawrEDijr0hrF17RFC3A/8kpg/H+ismztN1
+ pGwb4HP/Y9wXrguXFBUDYkaJJZaCtoMeS6SkXVzCVeQKjqNAiOtNA+pp7EaiPMiKhtYK
+ /sDqzp0AZ4zaWr1wZjIOBYHaPl0HKGJdPKw7UGHIwVBru5y1X94EdHKdnVaxRBeH69V1
+ U69JuMmPx5JqXqg5EkAUUbTesxH+uBYhRDorDIGIZAEk+y5kZQ0TWuqwFf1VRycGQ5ad
+ ushLJfgVE4xGwAyO55z8/k6NfIUVJu2kEjdxaUDQ09RYRVYP00pz2N6GAhwM3C2KBnZU
+ oQTA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=WDMhoO4qmVr4TqrVTgUXX9ejcEjnyPw1rATst4OZikw=;
- fh=4IzuF9C3pNdo34KC4Txgez6wdqphsTMBlsFX6wjEZLg=;
- b=H2XpkuN3ofKHESwce5c3SQa3x4eFPg+sibj6VrCZzKbc6xnG5shg+1R2b7ejsZLc5r
- hs8uzXKbIDv2B9moF9ODLD1rDAuxWnZVsDl/WVRTVItEFmE4lodqMm/sPxWAn8F3gAJk
- mz+3WKzFucdreJYH6Gyc3X9Y7jvnxGD4RBschrOO26jkz0zmCPgXsVXfCRW1a0mVrFVY
- Zg9wqwqtGxJ3GlBKnFfYDMBl4wamZcmK5kk8pS7nvB5YKwOIgwNGXe/Ceu0nTk+Jt/Nc
- lvDiO3GGa1BKFfLGglsXZmyMvILxDryMmMTpQP71q5uGi2IWNQnI2G1hTsvHtLU2GoKC
- 8pHw==; darn=nongnu.org
+ bh=j8eCnf4hQDjmLnHyqRUzu1wlRsZ31O/dfDDbavavQnk=;
+ fh=gCCCR648ajMw/3KPZIdA3gdk0qoSYJtx7euoE1AaGXU=;
+ b=S8ZFI0bY2CIBKlcqNOS9zL9r2K/irYgBBdnwO/6m8qkIqGealEaZAM/kTg/+kQGNT/
+ 8aLNKs85hOi8hR0ZDYuRnyu9Oo4oRAlN9PeO4KZyj/xT23p7FkrxzX6quU2mV9ZKB3Hp
+ 4s99k/Z6n+jS1VhFzxPTIsmctieLqqarMvgLEJc4GG+sl9hmqJquA2+GrT5j5fT0zr94
+ EA9CVCP1tx16j8x3AvS7WjvxzrqgSchhlhab54eHCTlMqc5Or2cv69bGc1XVOBXi7sE+
+ yn3+sbqL9Haal3B5Bc0/QGxl0Afv14ytvIMLXhIqTs4h+OmKlVOYlXzWO1EZ39YJ/kXG
+ 6FrA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777282434; x=1777887234; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777282474; x=1777887274; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=WDMhoO4qmVr4TqrVTgUXX9ejcEjnyPw1rATst4OZikw=;
- b=URccwXWmqKqp6C1BVopoRAlzzADdmC63VL/SPbXeLQ8iFP43hdanaySML2qg5zhENb
- DOSuS1REFIhYu7VNKtyc18OA2zweFw66ETWYiA26HVqPagoH7MbhpZZmv7yU3MpGUCRx
- CdJEwrEkEmOLO9NcP3rfKVZ41FVhJLygKQPT06dJFn7KIGgd2EnAewcyyyqe+imQt05B
- gOoYHpaAV/3VOv2qLnsRyGhJIZBLpQ/zMRcVBKsPD93NvjMPngyAEqUBybM3zgoXp1Pq
- fWIDlwdSmLMCQ5C3UMC9gVz0KDvHhsk7RiF6GnQyde1sOzrw8FUwQe7KBmsaGwwD5tFl
- /dOg==
+ bh=j8eCnf4hQDjmLnHyqRUzu1wlRsZ31O/dfDDbavavQnk=;
+ b=n7FIXrCpHmTvFRAv0lbGFVvfvw4xuTf9ewEPLC95grGepa6EsWt3eb67ar3/CaTotw
+ 9gkwatNWVNS3FhCbqSy4jkFCeBsE5fh+Wz39ytY4G6NdJso82oQz5eL1UnmY9Oend8WJ
+ XDkOkU1sWR4mQ3AefT1ASKIjVrLs2u/NQGq2kTa++HeTHTP7tS58cIduwtAM1ebXJzQS
+ uFYHuCUEwFuqEPm3Sr3GEKx1Ih0kewpI4F1FHCPD8OlSqxqhHWMEeNHoIDBG/e1ico9y
+ Dw8ryR/8uMEH0aj9KUgQp8j6PlpJgH3QcxnQjXG67NZf5xMa8BA/1EXFNilDuSsVw1q2
+ Itzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777282434; x=1777887234;
+ d=1e100.net; s=20251104; t=1777282474; x=1777887274;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WDMhoO4qmVr4TqrVTgUXX9ejcEjnyPw1rATst4OZikw=;
- b=p5mhVxqHKQIWsTLz0RZBe/4YounYxWyXSFdjnhZUbaz4s9eFqLJbBnOta3rt8cuhJz
- nJagrFu3C7zKHS5VVyjM5r8KWTo4LlwpGAO/M20vagw2gWPSYPJbig0Xxj3WTd1iY9b8
- TcvfRkDiiGNHs1j+Jou5532ksrWK+35n3E45sTHX0DdJ5uC0c2x52ybFfd/69rsvEcA7
- wqNYIQXWBq/mrMM16e0Iw+RRf/Ba+engOJ+VBDNv+tx9GdcGBeEdNKc1osYnw5b8Z6n3
- LlMSqTSkfGRr/F5ML4R+bePpUrFZX3mbTfpVPBvAzunVsjz9VwB2LG6x39alEduRCxRd
- V+Pg==
+ bh=j8eCnf4hQDjmLnHyqRUzu1wlRsZ31O/dfDDbavavQnk=;
+ b=Z4HmXMEz0TTHPmZMbP0yvUH7Dz1bbiVCZ1QbtOa6f6B9D3cF1FLRhXKo7Dnesb72N5
+ RdzDRrujTopGysompCXPczFPP1RuA1a0DlucB3zp01tKsByIdp4GwIGW0NMA8t/Kurzw
+ GUGh66CH3WMzl31Gq6XmEBVsaPYG55DOiOahTlqRO6HI0S22AeOzLxEzdOj51yxgnqSd
+ +HQVQMNEVoK29MX37Ncb22xNWE52PVfipLrA6mXvHiALYjprt+ls2KeRP2myp1+rqqoq
+ UTMLqC5/sa1oZAqJxSGmh1cjPupa2NvL6jHlRvY2JnlBxk6g0G00kkecudt8oQ7uH9fg
+ 58QQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ80heTdJ0SFTXYBf7FoOmECdUX/mmRcuUxQLB0z1qVCgO65InqNdRnCB7YNsmitMaidMeREijM1KZwS@nongnu.org
-X-Gm-Message-State: AOJu0Ywj21vLmxgWDOEQthTA2YzdTjLz2mhkPf//fPFtMROLF0Cvy1iv
- 638VnELfCHb0eYvPDvzC2DeBp9vZ756N8j0QgAKSCXMMUvJR2d3EjoZjOuKD1H2u77ANDWvfwi2
- Kjh+DAUSHxC2/qefj1KSlKVBDYGEGME/N2a+0GcIGUA==
-X-Gm-Gg: AeBDievCGBaUJ+WiUw5tMbsvqDzAZK0RgRw/xTgQ4wTFIPbyfa00uWGsDIU74MmwAt5
- MEMEoK7ARa53OtYQtJw+w8/BC4z9kACFnkl7JpHU2imVasEmNgy7CZhjoCTljndsRWMSfa41mTG
- FyQv9WUuFvrUMRQrWfutvg+V0qtgA8IOKkN4PCXa/i9Dr6x/1+FgBfMtq1yzNEYkQM12CSFHc8/
- geBubHp+wzKfV5pshPnswCybGgeQWcNeXvCbHg06E4a+eqQkwjUWgi1ULiZlvmOTbCqwELXFm07
- G7G8s1DVFBjeEJtYdoVGiNPsoEoSzs5RLCTauUlJF5gOrOrV6jhidXW3XBnGXSAqCtsHaI8JAc+
- JOw==
-X-Received: by 2002:a05:690e:4191:b0:651:cf43:b28f with SMTP id
- 956f58d0204a3-65310b0b5b6mr34988861d50.60.1777282433964; Mon, 27 Apr 2026
- 02:33:53 -0700 (PDT)
+ AFNElJ+/kgh8eOqSm10cStIZEtG9FMKvvpApGYbPXX3vbkHZJcCww8xfV14ynhj5D6/JCHbGnwzVlZiQUh27@nongnu.org
+X-Gm-Message-State: AOJu0YzZzy0uMYj/g8ypknRgDN9K3iilB1Lh9p5PQRWB7c0WMi8SpdX0
+ f0y1d3fvPghdVpExi9/7UL9pNHGamQ7X0F0/fDO0c/gNYLRXryPLZitf/uENS/6+rkdR+yWujVV
+ FFc2c+LInS8dv+Il2IzrHJe506l821NFZvo1tuStmbA==
+X-Gm-Gg: AeBDievE3nxyFA7GsHfA1WMhR51tsc0qYG6MARGcHECOIGCnWDTxKU6ZclNSKz/dU5W
+ x3L6kVOwpNb7FDVmbjjfHIFFnEQ4NH5U4IBJGZznrbdCFXqI5m57/ibhfJXAph5MOzpVI6EVSt+
+ Ws/czKYDzFo18ciPJwO6Yo++ZezstxGfaNJ/rRvZGbGEPq81zzpcfb4hD+gsoyE6clRGMdpXV2/
+ /brDyXVEUDtZALWY6wMelpIIiebM51LzKhvSOrfyrbaYIiPJFwGrEa2gAaM6Vn84J2VceulI0Ky
+ FI1W0wC88kG5yZxbsbGM8tIkMI4fYL8eKCMJ3Zhl1js6bwWtde2SXz+hT5ZdVTNnOLZwwnOvKBY
+ SZKYjL6uxzw6n
+X-Received: by 2002:a05:690e:2505:10b0:650:37e7:e590 with SMTP id
+ 956f58d0204a3-653108302fdmr30094151d50.15.1777282474314; Mon, 27 Apr 2026
+ 02:34:34 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260420140552.104369-1-eric.auger@redhat.com>
- <20260420140552.104369-2-eric.auger@redhat.com>
-In-Reply-To: <20260420140552.104369-2-eric.auger@redhat.com>
+ <20260420140552.104369-4-eric.auger@redhat.com>
+In-Reply-To: <20260420140552.104369-4-eric.auger@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Apr 2026 10:33:41 +0100
-X-Gm-Features: AQROBzCEfYlKMO6BLPiKHOze75SAjM8txBCN60gETZmHcEIrSyNBM-3rvsVv1u0
-Message-ID: <CAFEAcA9kVBCFUwAmEQG7gK0F69PXFyALUsouG5w7zJQYzsx=Zw@mail.gmail.com>
-Subject: Re: [PATCH v10 1/7] target/arm/cpu: Introduce the infrastructure for
- cpreg migration tolerances
+Date: Mon, 27 Apr 2026 10:34:22 +0100
+X-Gm-Features: AQROBzCyIpeUT0xpTLJFjZkFZrop_TbmUsK87Ixbfl9wzVon3mCXRRlLtkkCcTo
+Message-ID: <CAFEAcA9sOn9hB+n+4QUtZqMUVY0axNs0MCFUM_S+b6P7q-LNqA@mail.gmail.com>
+Subject: Re: [PATCH v10 3/7] target/arm/machine: Handle
+ ToleranceOnlySrcTestValue migration tolerance
 To: Eric Auger <eric.auger@redhat.com>
 Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
  cohuck@redhat.com, sebott@redhat.com, peterx@redhat.com, philmd@linaro.org, 
  alex.bennee@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,43 +122,17 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Mon, 20 Apr 2026 at 15:06, Eric Auger <eric.auger@redhat.com> wrote:
 >
-> We introduce a datatype for a tolerance with respect to a given
-> cpreg migration issue. The tolerance applies to a given cpreg kvm index,
-> and can be of different types:
-> a) mismatch in cpreg indexes
-> - ToleranceNotOnBothEnds (cpreg index is allowed to be only present
->   on one end)
-> - ToleranceOnlySrcTestValue (cpreg index is allowed to be only
->   present in source if its value @mask field matches @value)
-> b) mismatch in cpreg values
-> - ToleranceDiffInMask (value differences are allowed only within a mask)
-> - ToleranceFieldLT (incoming field value must be less than a given value)
-> - ToleranceFieldGT (incoming field value must be greater than a given value)
->
-> A QLIST of such tolerances can be populated using a new helper:
-> arm_register_cpreg_mig_tolerance() and arm_cpu_match_cpreg_mig_tolerance()
-> allows to check whether a tolerance exists for a given kvm index and its
-> criterion is matched.
->
-> callers for those helpers will be introduced in subsequent patches.
->
-> Only registration of migration tolerances related to cpreg index
-> mismatch is currently allowed.
+> Pass the value of the incoming register to
+> handle_cpreg_only_in_incoming_stream and check whether there is
+> a matching ToleranceOnlySrcTestValue tolerance.
 >
 > Signed-off-by: Eric Auger <eric.auger@redhat.com>
-
-The way that ToleranceOnlySrcTestValue allows the bits outside
-the field to be anything whereas the LT and GT types insist
-on the bits outside the field being an exact match feels a
-bit non-orthogonal, but I see why we do it (otherwise the EQ
-check would effectively be a "check all bits match" check
-regardless of the field mask; as it happens the only thing
-we use it for passes an all-bits-set mask anyway).
-
-I guess we'll see how many of these we accumulate and whether
-we want to adjust the kinds of check we do in future.
+> ---
+>  target/arm/machine.c | 14 ++++++++++----
+>  1 file changed, 10 insertions(+), 4 deletions(-)
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
+thanks
 -- PMM
 
