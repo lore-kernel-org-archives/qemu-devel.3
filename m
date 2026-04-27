@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D56B0FF8850
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 06:17:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15068FF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 06:25:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHFHT-0004rk-Ge; Mon, 27 Apr 2026 02:17:19 -0400
+	id 1wHFPB-0006kY-Cq; Mon, 27 Apr 2026 02:25:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHFHR-0004rD-V8
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:17:18 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHFOl-0006bS-Um
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:24:53 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHFHQ-0002ge-76
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:17:17 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-43cfde3c3f3so9970310f8f.3
- for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 23:17:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHFOk-0004Gd-1W
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:24:51 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-488b0046078so89334025e9.1
+ for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 23:24:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777270634; x=1777875434; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777271087; x=1777875887; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nRTA1Of/sTNluNpVHaDxntK1zm9V+9M+JYMifJrzq7M=;
- b=TgSQmQOKWIurMQBsqrgA1kkrk22wH4Nq4zNlrgzL3JTQUfuo66QlundyNzKFghcAON
- x/erfwkJ41QkHgBjQU55N1CY1pfDqjksv1CuNkgkwHXDfM5pEbJLLbagt1Db89kJeMVh
- JUuOzOClDe2nlrmdLjnlWqm4bXgTzlw4hbtdUGUTq0QPlCYcA7nXs784pnsRaJ1YzPPm
- WooGU+iSAyJyUWO+rxbEfEdtvrNsQFw95QdmN8hOK2kRVe8I7KmJAjZ35N5xt+KJ1mCE
- V5OZB4W8eHhNEo3yTRE6wJTj2ShMZ1cYU3BjWz6QrwmSel7fvg6jnXW7Bod01TcYItTQ
- +WLw==
+ bh=lH9Nhx0CK+2POU6YoVvymiP8YWbHqsgW0nwulKYOUcw=;
+ b=omViBUN/F80IowsGH/z5hzRoadwm1PmqcjMg8R9GeGWX2E1/+2SvNcf9OJhp4rH8uB
+ ZYYkd2laIhvxfi+/fpSUCnUVrWch66YmSQJruJNLIHIADpQlj6UnJbwNvruc3k6qZ/Be
+ o3j1t9hkaxJV5TFDL/2039t01eFLWz4judBPAaTqdchs9cmOOs+z+K8BTQq4cFk94srA
+ syey/cMDu/2Kc/iIQp+WyHUsNtP0LDrfOU/doeSU9D1xx4vesf8BmILZ0yyyf891KTzh
+ s9/hCenWLtyfof4Daag5LE5be5yD1IsYvHyN/FSoxaqEycvm00nmJTa/SZScTCqDdfVP
+ btxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777270634; x=1777875434;
+ d=1e100.net; s=20251104; t=1777271087; x=1777875887;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nRTA1Of/sTNluNpVHaDxntK1zm9V+9M+JYMifJrzq7M=;
- b=XXUN98vYSkV/3CydNQqbRG8tbNxNbcJg1/Q6HmNyUdK5NKJkLXE6WasMznCU+e9A4m
- t5EVIDgF7uIIatm0q57Hl4hsG9k38yYuXXnIelEzJUpz1xMP/cyJLZIaaSgkwzgLy2Bc
- qecK3LLAI2jB+wjtKLE1Sjji2Dck1cxJbDKMt01EsnxzFuazLl7YVk6Qm7vDg1Lraa0m
- lBfUGl3jcS5gR455eGFu4BEVIsbipSGX8aWzaoXW2V/Q/P0Z911WLS1h6igEuXVffwOc
- w9D7CH0WnhYJ/ea1aqcFroUUgkJaXWpHowzw55BHdm+oyYpSACb1uN7IhD1ZqPv4sx88
- l4AQ==
+ bh=lH9Nhx0CK+2POU6YoVvymiP8YWbHqsgW0nwulKYOUcw=;
+ b=YPY3+k/YtAplMbOLa0N0aLe/PZAlh8tDqC9KK3gv80SDtguvpbfuoHMpAzokiOn9Yd
+ rpqxTNi3P5iAArpq32MCc+tjqVbh573dPK2vre4Gr7Q5/8ZbSJ3ImAZT6DhA+dECtDLs
+ jJ9oqrp04c2Pc8sTUGKRQ8heTRnAzJ7CUrscaFG3XFEcenOsRS0moh2YxQ7V23/loCPo
+ ib9eA0DXaMIfp4wggpljTJIPi10Jom+Bc5EeZi7oFkRY01CalMWDWcKsXx3zueDcQftr
+ ekwssKzbMnYK7zY0Xouq+PMSspb1UFU10E8NNXoeYSp9EHY7lR+lUxOgWoA6mBDGqkdv
+ vIsQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8qItCIpbbFkR9iSrvlDxyGzLy+fhCB3+6xGva04+YbQMIzxiE3jLiJuKNMHqjcvgKO9sKf5mFBVqD9@nongnu.org
-X-Gm-Message-State: AOJu0Yyuy89cck7b94puxve95oouMQ4GNKW36xHdpBTm3+3gj+rwBfgS
- fvEvr4YuV7r9yTq1NMiNEZkmZyaUJW01vgqlctFXmawovosEUx2spoCtJuEE83//GMc=
-X-Gm-Gg: AeBDieuIZxd6XIsxY6GHPf4cCmufwxvijoPqlkukv4BHYs3KntK8HSxZmRsfzOvkc9c
- HXHQwm7IS0zTEtfN3PqArRg685OruHhYWcvJDLlJiB80RcoW3dnTD1JS+tpImWTsdey2VBMc5xg
- bGMZ3vlHVDXqWVnfqjWQ1x0zUXi4F43/Qk/51M5aBdeGkoDk6Sb7jhsW1fehv3e2o4ZXUXYmxIr
- 39MYZmPK0iLfs3QJa5ZZ1aWqSDcSxWU1bLtYXNsVNsE/tolIsQlsPE4MMvss50wXQYWKlCZoKHf
- gTfvsY38XO6U7OXPle2UP0QpEwNoVqD7rOgkpw7hfn440CN79DMQm5M+i3dJgIEjJe7lp6CN/Wk
- lnpN+P/C9dxQZFN4uIkxTE7WTQYE0Ssapqf22LjrMYu6iRvv3tktZ7a0Rq/Rf44IYSJLoeJcoHq
- EfDeiWezWFh2lkGaW5T2bQTArcoVA/PuKdAIDhgA+8ddpOWQ7Z9/cQ5iOtI0tQRBK6XdW0uIoNY
- VchTBoW3p8xUIQ=
-X-Received: by 2002:a5d:5850:0:b0:43e:a69b:d803 with SMTP id
- ffacd0b85a97d-43fe3e23f23mr65130622f8f.47.1777270634341; 
- Sun, 26 Apr 2026 23:17:14 -0700 (PDT)
+ AFNElJ8MSXYzPUockYGn7bygk5pjyv0a4n39cSSHJ4TeFUDFz9Cl8m7TfEMxhh4vaQVpx5tvwyIXPZLNd05C@nongnu.org
+X-Gm-Message-State: AOJu0Yx0ifYNjgfCiAlmwxuUfny7rP18wuaJ3IpFkm7Ua3WKiAsqqI81
+ +r1meoiZL0FZXGnEBft0Dpi45P+BamF1WJjIxeYdNCd26YseVijLyYpeHIkcv9seZvw=
+X-Gm-Gg: AeBDieuR6Kr0+1IfRJC0/SEZlKcGoQqdqwxtgLSMplGhIy9FbujQQEP+r2fiEnZrUCu
+ h5D60zydvd6WSOTO4XTtGnahywSJF99sGXx1C7+DKcrGms5MkFWQUnqcABrCmtX8ErVFCq59YW+
+ uw4qiYg41Aqn0UByxPUPDhe0RwY4aDt0e8k5+q30z8IptHmm220Md9d9VM2NsQ1T6HZCDdSXOp+
+ g/D58ukox0p4E9dRI9TnuOBOoNGCB4nobB78BucI/phYKGyPyVeYxv2nx8B4KoUcaOeh60SEWhi
+ V+1mLN1RZWthvCEDRAZzylf5Iw4CBUBEVP1TZYHsA6lfDqARP9Xc2q4s62tH1G3unoSB8cAI/j0
+ 7wbLS7uZE5Gm3YI9aJ5A21OLfn2J9TVabm/kfeWlWZLIc88DptVPDhotDdlDh5uYXHxd6Bxo3fs
+ jhrJdIL2evXRWBM2un06ltcOr8CHOskYWXS+Sd4UdXkpuDz97iYC6ALU9OeADZeI3qE7WlUPUTh
+ DLS
+X-Received: by 2002:a05:600c:621a:b0:48a:6268:18a9 with SMTP id
+ 5b1f17b1804b1-48a626818cdmr203902495e9.13.1777271087286; 
+ Sun, 26 Apr 2026 23:24:47 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cc375dsm69327550f8f.14.2026.04.26.23.17.13
+ 5b1f17b1804b1-488fc1393f5sm714718215e9.9.2026.04.26.23.24.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Apr 2026 23:17:13 -0700 (PDT)
-Message-ID: <7ff93d90-bbcb-480f-9e46-adf996d149a1@linaro.org>
-Date: Mon, 27 Apr 2026 08:17:12 +0200
+ Sun, 26 Apr 2026 23:24:46 -0700 (PDT)
+Message-ID: <b45e60d9-b190-4378-84c4-3978b6ee6195@linaro.org>
+Date: Mon, 27 Apr 2026 08:24:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] virtio-gpu: Run reset cleanup in the same BH
+Subject: Re: [PATCH 0/2] hw/display/cirrus_vga: Fix packed-24 color-expansion
+ ops
 Content-Language: en-US
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20260424-gpu-v2-0-9fd2fc0dd1bd@rsg.ci.i.u-tokyo.ac.jp>
- <20260424-gpu-v2-1-9fd2fc0dd1bd@rsg.ci.i.u-tokyo.ac.jp>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, Junjie Cao <junjie.cao@intel.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Chad Jablonski <chad@jablonski.xyz>
+References: <20260410183249.4046456-1-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260424-gpu-v2-1-9fd2fc0dd1bd@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260410183249.4046456-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,50 +105,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/4/26 16:06, Akihiko Odaki wrote:
-> Commit a41e2d97f92b ("virtio-gpu: reset gfx resources in main thread")
-> made resource destruction run in the main thread, but left command and
-> fence queue cleanup in virtio_gpu_reset(). When reset is initiated from
-> a vCPU thread, virtio_gpu_reset() schedules reset_bh and then waits with
-> qemu_cond_wait_bql(), which releases the BQL while the BH is running.
-> 
-> That split leaves a window after reset_bh has destroyed resources and
-> before virtio_gpu_reset() drains cmdq/fenceq. Other virtio-gpu BHs can
-> run in that window, so commands may be observed on the wrong side of the
-> reset boundary:
-> 
-> 1.  vCPU thread A: Enter virtio_gpu_reset()
-> 2.  vCPU thread A: Schedule reset_bh
-> 3.  vCPU thread A: Wait in qemu_cond_wait_bql(&g->reset_cond)
-> 4.  vCPU thread A: Drop the BQL while waiting
-> 5.  vCPU thread B: Take the BQL
-> 6.  vCPU thread B: Queue a command
-> 7.  vCPU thread B: Drop the BQL
-> 8.  Main thread:   Take the BQL
-> 9.  Main thread:   Run virtio_gpu_reset_bh()
-> 10. Main thread:   Destroy resources
-> 11. Main thread:   Signal g->reset_cond
-> 12. Main thread:   Process the queued command
-> 13. Main thread:   Drop the BQL
-> 14. vCPU thread B: Take the BQL
-> 15. vCPU thread B: Queue another command
-> 16. vCPU thread B: Drop the BQL
-> 17. vCPU thread A: Take the BQL
-> 18. vCPU thread A: Leave qemu_cond_wait_bql(&g->reset_cond)
-> 19. vCPU thread A: Delete the second command from cmdq
-> 
-> The first command is processed as if it happened after reset, while the
-> second command is discarded as if it happened before reset.
-> 
-> Move cmdq/fenceq cleanup and virtio_gpu_base_reset() into reset_bh so
-> all virtio-gpu reset state is updated in the same main-thread callback.
-> This keeps command processing from interleaving with a partially
-> completed reset.
-> 
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
->   hw/display/virtio-gpu.c | 32 ++++++++++++++++----------------
->   1 file changed, 16 insertions(+), 16 deletions(-)
+Cc'ing Zoltan, Junjie and Chad.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 10/4/26 20:32, Peter Maydell wrote:
+> The Cirrus Logic VGA card raster ops allow the left side of the input
+> source to be clipped (or skipped) based on a "destination write mask"
+> field in the GR2F bitblt register. For 8, 16 and 32bpp, this field has
+> a simple 3-bit format indicating the number of pixels to skip on the
+> left edge of each scanline. For 24bpp, the field is 5-bit, and is a
+> byte count of how many destination bytes to skip.
+> 
+> The card also supports a "color expansion" mode for raster ops where
+> the input is a monochrome bitmap or bitmap pattern, where each bit is
+> expanded into a full-color pixel which is either the background or
+> foreground color (or not drawn at all, for transparency).
+> 
+> We have a bug in our implementation of the interaction of these two
+> features: for color-expansion to 8/16/32bpp the 3-bit destination
+> write mask field doesn't allow skipping a full byte of the input
+> monochrome bitmap, but in 24bpp the 5-bit field means we might need to
+> skip a byte and a bit of the source. We weren't accounting for this
+> need to skip a full byte. The result for the "pattern fill" raster op
+> type (where the input is a repeating 8x8 monochrome tile) is that we
+> attempt to shift by a negative value, which is caught by the
+> undefined-behaviour sanitizer. For the other color-expansion ops, we
+> merely write the wrong data to the display.
+> 
+> This patchset fixes both bugs. The UB one was reported as
+> https://gitlab.com/qemu-project/qemu/-/work_items/3377
+> 
+> The technical reference manual says that 24-bpp color expansion
+> "*must* use transparency" and doesn't say what happens if you try to
+> do it anyway, which is presumably why the other raster op functions in
+> cirrus_vga_rop2.h don't try to handle the 24bpp write-mask format. I
+> have left this as it is, since we don't have any reports of UB there.
+> 
+> Big disclaimer on this: I have no guest images that try to use the
+> Cirrus bitblt handling at all, so I have only developed these against
+> the reference manual and confirmed that it fixes the UB repro case
+> from the bug. If anybody does have test images for these that would be
+> good to test...
+> 
+> This bug has been in QEMU for decades, so I think we're OK letting
+> it slide to QEMU 11.1.
+> 
+> thanks
+> -- PMM
+> 
+> Peter Maydell (2):
+>    hw/display/cirrus_vga: Fix packed-24 color-expansion transparent
+>      pattern fills
+>    hw/display/cirrus_vga: Fix packed-24 color-expansion transparent
+>      copies
+> 
+>   hw/display/cirrus_vga_rop2.h | 52 ++++++++++++++++++++++++++++++++----
+>   1 file changed, 47 insertions(+), 5 deletions(-)
+> 
+
 
