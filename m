@@ -4,194 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3C8FFF8868
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2EE3FF8867
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 20:00:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHS6W-0004Al-NC; Mon, 27 Apr 2026 15:58:52 -0400
+	id 1wHS5Q-00036N-Fk; Mon, 27 Apr 2026 15:57:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jag.raman@oracle.com>)
- id 1wHS6T-0003wx-Q4
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:58:50 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
+ id 1wHQTC-000315-9a; Mon, 27 Apr 2026 14:14:10 -0400
+Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jag.raman@oracle.com>)
- id 1wHS6R-00038J-Us
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:58:49 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63REMvXO1326882; Mon, 27 Apr 2026 19:58:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=K2Iq0dtSb6jIVKNFIiVXu/OXzTgoXR+YP7NA84yWD0I=; b=
- juoNDiaJcYEpE8OcgC3IYF/MvMaWPnTndVDUVYEy1ib2B8vrj24EHcigM16f+fw1
- cJvXRB26W2gyWAcRxxJu+NYoYJjCzSHSyJdNsCede70eVdRsQu6H6ADTvgmwF64Q
- jqNe0UTbte29spP3tJm+PidYbAoPmDx2X+fB9ZOo9J/m0AMH+19hUR7F/tlRV3rY
- 3/J4uf9H5JQkS4V2/8B3u1X7JSS8Mknc1HzCfcGiwzo8C5R1UmR+WXxjCU7OSynr
- qvIMjJRfYujjiCcP4sthqXZWZfmDR4pfFqyaMT8EURxSQ3s7VCi2BdDpOAdqhWXq
- wDt3VtH2bzKrwZT7/EErYQ==
-Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4drmha45uq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Apr 2026 19:58:46 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.7/8.18.1.7)
- with ESMTP id 63RJuKgw006490; Mon, 27 Apr 2026 19:58:45 GMT
-Received: from co1pr03cu002.outbound.protection.outlook.com
- (mail-westus2azon11010007.outbound.protection.outlook.com [52.101.46.7])
- by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4drm2hqcsc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 27 Apr 2026 19:58:45 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <mhonap@nvidia.com>)
+ id 1wHQTA-0008PG-6v; Mon, 27 Apr 2026 14:14:10 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pjKDssh6sj011YcwqZ59DcsreuGtQ6xN6Tmbqe6/2vg5Dyng2zmPqTi7x80XeIaaR8a4MqE9GrJSmNDD6Z2zgvjD4AyyFGbcP2NOVIaxoce8EVOKrEXc0oWPvcn1deD79UKqwWDAUsFwAwVz1bXIrAUZvT/rKQvmF66WrDyMyGTo6eBc4Ul20rM+lGunQwwwzVghbiT9T+GBN1TyQ6a19HWF14vc4edAXQdzkkuO3aocQquFksTJTA5RqTLIZV0bvGJKRrBwcU+G3lefYD59RsPq7MMDmCpuDKq9DgUBqUsoIZJR1oEGCmjd9zOIn4y6w43DzXtR7rPGhpKMo/9r0w==
+ b=jIssOOCU9HzRnhpZuSJyTg7FSdSLmjruduAVCE9YGqjyecyAXqxO1sHCupeJxYoqunp98c+ikIGKIQdehllg9K47qjJphoYdCVtxZ5J9rks6w4EQpHVpy43G3OQFtWDxefbuq4nogFblHk/tPvw09C+1gFPiZDY4F+5m+C8C4R57ThUkOpj09LG4Ld9oxya24f5D8Duj7/NN2cH2SjNSXkTr9nXnVbdJGkYUsFgMqRQ+V5JS1kK3jLQUrkbbgZhHPw+Z8cImItHKQCDeymrzwayQMa/802Oo3gU2wm4/z0k7jHD3ctptUIop/EKRKx/hAdVj2xecZiTe5lSq20+YUQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=K2Iq0dtSb6jIVKNFIiVXu/OXzTgoXR+YP7NA84yWD0I=;
- b=hXeqo2ccWBbGYboiLY7Ly/e+V36D4sRTFiOKsGn36sHSnWhFghr9WKD+7RVlTc1sGUybHl5y+kGCssD67hwmZsgZBN4qHkw3zVy9U3Vngn3nJVL9j6VrsYSsYmlhVHM7r308NN58Vg9WKQE8SY3oz2jT77NKue8/xOyhdFipT3xU/i0GNnpQpzNKTR+MaPF1YpohNKkyrGilnzX8Acsb5k7ccn4cGaGCEL/2sjlaJI/TUyVYEUvvLke02RwTFKkp4EZjCEByLKC41+2P8WcmzNnjb/3YwQFcmpEgcSrS1+p0PrdafYXYGDEZoefqmk1+fc4sn6qP13v4stV6Mirkhw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ bh=Bidn193Oht8bhQ0vdKcMskvY3KUFqDkTfYzkndt+Xng=;
+ b=nRUaGxI7jLv65wquJcQvZcT3bMSaY7gCjUqdke1EX9vUNXt2lEPESEb2COw45cLjSsnUiEWW4I+WzeBMCau5fD5LCAt9ytG11d3yIqlVeeTnJrascDVqx6DmsnVwhEyR1HLEByaGOppzuCQcVejwLRMrwxHP2dU3UUt2MHlYReTpMq5y6OLdfzzWbl/TyzBznOpin0oX8ntbbDaONEU7lXNpMs8adasZSp2ehuTc72LGPViVvkjTU8nzD17mw+jDoSFjbNNcRuIXeIt25DPceOB2arWlTF0oNeEyyx+RWy13Tp+y4S+/F5aFfNEHWivEZMa2VY9RGP6k66Q3DgSiUw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=K2Iq0dtSb6jIVKNFIiVXu/OXzTgoXR+YP7NA84yWD0I=;
- b=qOQNsGt8JpNMvC77BAEf7m7sQsH4L9Dfxh9OasMNwXLykR/svQb7zdRLRFjH/UnLctRXt8kB3Nk5e8u+9sLfB/ARi9cgiLFcn6b5s7EjURi9xvwugL97m9BZR4aak2sXbYKf+fhMcsTVYfGnpkLQmftP2GC5+qz47ZNYHsGqDc8=
-Received: from IA4PR10MB8301.namprd10.prod.outlook.com (2603:10b6:208:55e::6)
- by PH0PR10MB4599.namprd10.prod.outlook.com (2603:10b6:510:39::14)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.25; Mon, 27 Apr
- 2026 19:58:41 +0000
-Received: from IA4PR10MB8301.namprd10.prod.outlook.com
- ([fe80::de06:e5db:6e3c:f8e0]) by IA4PR10MB8301.namprd10.prod.outlook.com
- ([fe80::de06:e5db:6e3c:f8e0%3]) with mapi id 15.20.9846.025; Mon, 27 Apr 2026
- 19:58:41 +0000
-Message-ID: <ce69a79e-5013-4a01-a333-cf979be17b3f@oracle.com>
-Date: Mon, 27 Apr 2026 15:58:39 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 09/41] RFC hw/remote: guard listener unregister in finalize
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-devel@nongnu.org
-Cc: armbru@redhat.com, Elena Ufimtseva <elena.ufimtseva@oracle.com>
-References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
- <20260427-qom-tests-v1-9-c413f3605311@redhat.com>
-Content-Language: en-US
-From: Jagannathan Raman <jag.raman@oracle.com>
-In-Reply-To: <20260427-qom-tests-v1-9-c413f3605311@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: CH0P221CA0024.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:610:11c::20) To IA4PR10MB8301.namprd10.prod.outlook.com
- (2603:10b6:208:55e::6)
+ bh=Bidn193Oht8bhQ0vdKcMskvY3KUFqDkTfYzkndt+Xng=;
+ b=hTprHfwTeYSO2CB9i9iCGjSo92ku8xKEgdeZgqajae9IBM26TkqaePvioMV5fbH1FjmDmAxMkWBqrX5yMsnJbRvLPx6oRWxgZB4jSqeIwqoU52Iq/qIuqJ2BuANO/JDpAHRDbougFOUgzN4ZnSN1Zd52WbiJdDhMAuUKH5O1sti2o8Y3EsGLol9l83fA1WcjBsczUA7ub/JEkbkJZNIWrL+CbFXGzco/Ll57q448nsrs1BzOvGlRSoIJu5AE7XQdLjTzZlC2PpCqDx7XZpEcjznMaQMEt8qZZ08dIbAaMvakcoC7cEZanH+J6NEaRopvxrzCd9ugZzIx9lV5d0rscA==
+Received: from BN9PR03CA0553.namprd03.prod.outlook.com (2603:10b6:408:138::18)
+ by DM4PR12MB6229.namprd12.prod.outlook.com (2603:10b6:8:a8::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.13; Mon, 27 Apr
+ 2026 18:13:50 +0000
+Received: from BL02EPF0001A0FA.namprd03.prod.outlook.com
+ (2603:10b6:408:138:cafe::f0) by BN9PR03CA0553.outlook.office365.com
+ (2603:10b6:408:138::18) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9846.26 via Frontend Transport; Mon,
+ 27 Apr 2026 18:13:50 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ BL02EPF0001A0FA.mail.protection.outlook.com (10.167.242.101) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9846.18 via Frontend Transport; Mon, 27 Apr 2026 18:13:49 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 27 Apr
+ 2026 11:13:27 -0700
+Received: from nvidia-4028GR-scsim.nvidia.com (10.126.230.37) by
+ rnnvmail201.nvidia.com (10.129.68.8) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Mon, 27 Apr 2026 11:13:19 -0700
+From: <mhonap@nvidia.com>
+To: <alwilliamson@nvidia.com>, <skolothumtho@nvidia.com>, <ankita@nvidia.com>, 
+ <mst@redhat.com>, <imammedo@redhat.com>, <anisinha@redhat.com>,
+ <eric.auger@redhat.com>, <peter.maydell@linaro.org>,
+ <shannon.zhaosl@gmail.com>, <jonathan.cameron@huawei.com>,
+ <fan.ni@samsung.com>, <pbonzini@redhat.com>, <richard.henderson@linaro.org>,
+ <marcel.apfelbaum@gmail.com>, <clg@redhat.com>, <cohuck@redhat.com>,
+ <dan.j.williams@intel.com>, <dave.jiang@intel.com>,
+ <alejandro.lucero-palau@amd.com>
+CC: <vsethi@nvidia.com>, <cjia@nvidia.com>, <targupta@nvidia.com>,
+ <zhiw@nvidia.com>, <kjaju@nvidia.com>, <linux-cxl@vger.kernel.org>,
+ <kvm@vger.kernel.org>, <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>,
+ "Manish Honap" <mhonap@nvidia.com>
+Subject: [RFC 1/9] hw/arm/virt: Add CXL FMWS PA window for device memory
+Date: Mon, 27 Apr 2026 23:42:27 +0530
+Message-ID: <20260427181235.3003865-2-mhonap@nvidia.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20260427181235.3003865-1-mhonap@nvidia.com>
+References: <20260427181235.3003865-1-mhonap@nvidia.com>
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.126.230.37]
+X-ClientProxiedBy: rnnvmail202.nvidia.com (10.129.68.7) To
+ rnnvmail201.nvidia.com (10.129.68.8)
+X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA4PR10MB8301:EE_|PH0PR10MB4599:EE_
-X-MS-Office365-Filtering-Correlation-Id: a224607b-7b02-4745-9803-08dea4976158
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A0FA:EE_|DM4PR12MB6229:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5f1ee2ec-6984-44ca-19ba-08dea488bb7a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|1800799024|56012099003|22082099003|18002099003; 
-X-Microsoft-Antispam-Message-Info: RxZOYa+1ZPvCywEdkluzBl9rksrPKq9AxAKY5iCqGX6Tg9ITMHMIiW/watzdxHZBEYxJGJzDcPuUiEQcNZ8aUZOYnbmlQGiCn6/X9p+co4h/UzD2oQfIHGFwj88OsKyd/hXWmjwuaXVYT9Au8aCUEv4/qQojejQVYGEGSWzU/3TZ0ytXlHA9n4ZP9jfisXSblgON7fSIdmKeTp14Frm2RMWwywYlRzyn9VAHYr+BRs9Cc5GiQk6eySvD8q7HPDvM+2L8jQiDmiNu0rTpAo8S9u5/kbG+eCUld4rbu0GMWGUAPRdixHFDqd49KzC5Vtser5pHwesMpuwxkyz0yosby+oUXAW+c/sHCkJ/9W37LL712oXjK9uwWor7nCWNHSuX9VI/ETEjtokOMaph83lsdE/Q5kdOM1C+3VJV2+5ppyvDp63uuWRk9ok4HCW5ZYI9r1/VTecw5vb217aZmTGcH5meu0FX/2DhDPa5N4q3h4FvEC52WrCH1/e59nbFQSl1h8mY30GRtdfz4i2hOCI97UXzDvWp6ibZILLgq1mnXDF0HJeY6uAHdqPGYGFBUueoLJpc7u4JkON/5czd+cp0etsX/De2RnbnOeazXfXGSrYPHDyvgmti1Ms4ksXJs4aLClFZlt8QszHzbOxjX68WJTgJJKYi5LEPqhWsMSo54qOiXQyR/od69qV2D6GKeeif
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA4PR10MB8301.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(56012099003)(22082099003)(18002099003);
+ ARA:13230040|82310400026|36860700016|376014|7416014|1800799024|56012099003|22082099003|18002099003|921020;
+X-Microsoft-Antispam-Message-Info: SVknWT/3uAAlsmkynRoGUNwMyxgs55b9FT7lezcfEAQG8cIeUsoSoB8rC1ZlrgXghqUvl8lS3FDxa1ArXx2iS01oaaHJ15v9oNfadqb22D20MeAYbDSZTlwxKGO2/IS+0/hw/mjho/IFI1lQtGlY3q9GuVtikXCxkWqMlgMEYBOjWX2d5Ws/2Eqq7EemR0vA40qQD/3z6zlV1EyK6k+XrHiuYNWyceOx3E2yMY89cBP8Ig3bZ65sYzv9LpolZfPPw9tZQrIrFi5fXqAsU5LbTMP9uThqC5dD1ZNYtUJI4EnTVxM8hBE+yg6ToHfANoYP3sOkR1VERgY2lhe2uws/c5jFCmpKV5zLhkxMQt/Jh2OTdDpzM3vlBO+AOoUoUI1t1mFHW5EAPSl6KNuP+iPGW2V0xI7i0q3cySsRnY8em31IDIE+kX+6rYzzTG3GR8ezQa8g0s9lbNJaZnEcWS9XQKMf+FjNbt7cPaopH6ctiItwmT+Ynz5JJWDua/IATh7Sl1oNNqqNLRk/sy+gAk6NYL9wwyrEOA5HxEXdjJnCzHa5Xoy++Gah861ifFBrsg/yzjIpNjChWZSxLPglkwXl2+fGfmQZOkJXJRuy4a2fBOBNmed3uCNeurOcQXAnXS/e7XXPOY3xVj9J+o0NXbBIaCWlUYrSlhB2hzDvBe/fc2KPUWA8f+s1FPta4ATO8YbF//YuyC4QA2mvCbbtLNAU6qVz5LxI3qqOogVDm0z+HwRPJEtmD9/ChU0X1XyivOsX2NBpnsz7PPLuWhhjy4TpWEAXttM3O0o0qxI+62CUv3zGnJUVG27L8Z/JckfZc7oq
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(36860700016)(376014)(7416014)(1800799024)(56012099003)(22082099003)(18002099003)(921020);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QUVDM2syZkNDZVZwRHFiYmZEOU1Ia253Y1NXTXZLQWkyOENnQ2hoRmN2b3lq?=
- =?utf-8?B?cGErU3kwcHVKMTVPSG02VUJzSUFuTGRtZ1BGM3U1eUJvMHZRSlB6M2h2NFhl?=
- =?utf-8?B?R0o3dm5vcVV6b0dkaCs3and6ZHJxVURCTnpvcC9YTGxwVW41NThGTUM1aEFv?=
- =?utf-8?B?OHdYTnZqbVh3N0ZBZm10Q2JGV1pEczFrRTlHWnJNMjA5bFFURkZrd0NnWmtK?=
- =?utf-8?B?ZGRya1BlcUNmeU10RnNSQjArd090WXNuUjlpcnhBTEw0end4NVdOSEE4dTB2?=
- =?utf-8?B?RFNZZ1IyZXc2WmNLdlhyQldXM240eEkwbkxMZXF5S0Vlc0dHKzJKL3pMMTRa?=
- =?utf-8?B?M2RHQjdqZDJ1QWZDQVdvVXRGUkM0Uks5ZTc1UmdEalhZdVpxRFk1NTJrQnBS?=
- =?utf-8?B?dzdxRGRJSmVXTGJveGlrYjdZcW81U3pnN1Z1VDVKTytEQnF3RXU2UHZNYXNl?=
- =?utf-8?B?eCt4alhZbXErR0tCQWVYWkJkVno0eFZGOVVNaGpNRDBSUzRKMDA1bUl4UjR4?=
- =?utf-8?B?MWg0UEU0dlRQS1podmhUUWJ5YW5zYTEyUEZPMEJZbUQvK1ZuWC9pSmVXSGo2?=
- =?utf-8?B?RnlxbGQ5QVpNYmRvRDJzeVAwak14S2ZrRXVZSGNwbS9wWm9KbVBkSXErTU91?=
- =?utf-8?B?eG5DMUlibnB6MDlZcjFoelYxMXpPWVpnL0IxZTlwcjd3VHBwWXBaL2NvN1FH?=
- =?utf-8?B?bHBvU3BTd3JWY2E0RHpiNlRmV0Fia2VWYm9zZnpSVXlGMjdvU2F2WTdpT3pq?=
- =?utf-8?B?OVRCenI3Z3pYL2RubFN2TmszLzc3ekt0TStTdnd4djNKWEpPUW5xdDJJVGZh?=
- =?utf-8?B?WVNKbU10bTJWRzFZRXQ1WEZQNmFCbGhtWEdQTEFKT1lqVEU4ekM3UDhXeFIw?=
- =?utf-8?B?RE9HNk1mdUt4cmo1a3IyNHdUdC9jUkZ0RkJlYXBaR2RtUGxlVVp6RHhmWXpa?=
- =?utf-8?B?TVZ3TTRVNnFJQkV1WUdsc3NJTVQzaWMwVDBKejVoQVlSb21rNndBYXViNzZn?=
- =?utf-8?B?RFQzczhRYU5ucEs3dk1KYkFGSWQxQnF6dHdrcDNaM1hJU2hSYkJFSU1WNHFJ?=
- =?utf-8?B?U1psbGZTYU1DdlZTOExZTGtIY0liZEJOS2V4Q0NvS0sxaXprZDN3b2RlOUha?=
- =?utf-8?B?VmpUQUhNTmpiWUYvV29TcGV2K1hZajFrS1dveEUvbzlXdGxsRTE5NFc2bGo1?=
- =?utf-8?B?bDltKzR5K0lnd2JQczRIaWs0TkRrYkp6S3FjY0ZTMng1WElDakVueXBkRS90?=
- =?utf-8?B?eVFUdlp2NXQxUTVMajdqbVV3RnVtSmRUUUNLRmE5MmZDR2QwVGRHMVluNHdt?=
- =?utf-8?B?RmMxOVhZMHN0eXBvUlJzQjhvQ3hwTjZWbWxZbmtYMmp2YjhKVHpWN0FNUitZ?=
- =?utf-8?B?cm1UTXZoZDlIVmNNMnFIMVB6WkRYNEk1TFAyRkUweG5TQU9RbUgzaTZLRmJr?=
- =?utf-8?B?S0sweXh5TXNkLzJmRWs3RDlpSlJ4dTNaejZUdWlia2JXVm9mWWN5aXlraUly?=
- =?utf-8?B?MWxwQ1RsNzEyVzVWVnEzRnBPYTQ0NklNbng4S2V6bjEwQUUyMUJHVXhKaGpG?=
- =?utf-8?B?NisxdCtCVGhiYUg0Z3Z1ZkZUVWYzL2s1QnJOcENNcHF6ZHlZN0pxT0I2VzRK?=
- =?utf-8?B?OXJZeUo2VmJlWkh2czhudXJJNjRjdHJEUlNDYlQ3ak1SUThoWkRYQmliVVZB?=
- =?utf-8?B?bHU1YjYvOXdGazVkSnV3cC94TGFMbGZGTy9Md0NaTGJLbHBRTDFBOFowNXVP?=
- =?utf-8?B?YWVnb0JXOWJpVWNUVXZBaTU1UjdxSXJvclhhOUNoRVJMR1hCUnNvTEVUSm9L?=
- =?utf-8?B?Mm4zSU8vZmI1bXpnMHptSG4vTzA4N0pnSHBieXBLK0N1bld0QmtkbjRIQzJC?=
- =?utf-8?B?S0xyUC94d2kxUWZhdU9TZnh6eWJTcXJGdzJabGRNaVVPbFl3aXZZdVJmditM?=
- =?utf-8?B?ZEdtK3pWY3lnR3dVOGVITVM3Tk1WZVU0aUVSTlN1YnJ4M1lURkZ5cGpUMlIr?=
- =?utf-8?B?WDB4ajZDSXRIeHhEZFJWbDlaQU4vZG5jZFNuaUJoUi9RMjJnRU1uYmkrMDFv?=
- =?utf-8?B?N29VRThLMzV2ZzBFL3dVWEhCYTFaVnBoUk94MGt1TERyaG1xanl4MENMRXZm?=
- =?utf-8?B?NkFrR2lDWElzbVZVcThvMGRQdE1XWWF2K0VkNXlTaEI0RkMrd2hHNkdqZG1t?=
- =?utf-8?B?a2poSDQwTXAxV0RHNnNLc1MwWXgwcjlaZE1VNHNxU0NtZWpESFBSTFlnd0M5?=
- =?utf-8?B?S21wRFRnMlEyNW54Yk5mR3JLNWtDdDRTLzgzdUs5UTNUWjJqeDU4RnJuMHF3?=
- =?utf-8?B?US9JR2NZbEZGS0hEOXliWGVLZVh2em4rZW1Ccnd2YVBHZDY4RVZhUT09?=
-X-Exchange-RoutingPolicyChecked: NQ84wZKNdd4ywE9W13LUuFCyHWBiPR40Z8uypB3EUhpd73hEUgpsEo/ZcGBcmZMojjI5s59JB1jLnKoe+BC5e41l0NiIyjgsPNKqVhmXiqJPZR9h4FaruVkP/JELpJn5gr/Tzcq7XhHjTd0Ke3nqtQ+nRszCvpQBpG38zguPGrRZYc1I9y7N2yoZB/MqIaWrqCdkIFF4Hs5FKtci0EnvsNmyqnWZt2njZQsqE1BmLbfyOQU3Psaup9OZSbw6ou/M1YzFHbXEcdMkOBU4c/x4kYRSTWgWDCAg4q+GmergTmS0ZXOVNPV0VQjvKRzB70oRe1mJmi6WuysqObHblonKKA==
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: yBbVi+SDoIXyGWmutQUqFo3xLlGdFzc8SUgRWNxI368FEhk6xS5jDFMwYDKN4nemJwlFS9Qg11SpbJNqTFOAyUUh37ckIEphEoTtYZ06eiYK5dnHeuWowzlbfoBPUAh23dRHHXjz/n5S5STEYh/QmA3UBL6BcFmAO9l7O1aEeHvS9Kcp4vLQd70vBvFhKeluSk48s1TIHbZ8DYKoQzaTIxyFKb/PScrzW2NklbqlVRMqUPyWOVhMNef5Vff5ypv+wlB6Qks4gmla3Oq3TxYm+Y4tAUBKGzW6GZLWiunAfyktG5k0a3isHmB8D7sBRNNo68xVAFzh+wLamUodI7eOF7ZdkQTh8ZYySWytSc9Gf6Amcaz2D5ptPUsF6rtURYq+UyhK530iv1fZU2ZJAduj2S+aWKFP8JlmhBJ5TJ3ig8VxREh63ucyShg6yHysiaymFQGWqcuRWo4skPVHqFVQtpAXbDC5crjeyN9LWdHLVEXnQbXX1G3cmsfLUzkxzd2GcHWIwhsHXFHWlqKsaF2vlsbWIbJ95tF6QQR3RxuIbUtMQRN/LNpXaZKCnczU5XjIhltREnBMPBhGvIjQJtV5YjqntKM2cBAqfzuXQub/FnA=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a224607b-7b02-4745-9803-08dea4976158
-X-MS-Exchange-CrossTenant-AuthSource: IA4PR10MB8301.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Apr 2026 19:58:41.4552 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: nHo1kX2eE85ESxbSeoB2RsSHH3dgZrKVwIvYtBWCpzmgvwDsJnlaQI6sPjh43FdNuuqYkRc0uUTC+ZRnMCEpKw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR10MB4599
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-27_04,2026-04-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- mlxscore=0 mlxlogscore=999 bulkscore=0 phishscore=0
- lowpriorityscore=0
- malwarescore=0 adultscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.19.0-2604200000 definitions=main-2604270212
-X-Proofpoint-GUID: sr9GN1PNweKaFzGuRRC3X1RjdMn6IrkV
-X-Proofpoint-ORIG-GUID: sr9GN1PNweKaFzGuRRC3X1RjdMn6IrkV
-X-Authority-Analysis: v=2.4 cv=CrOPtH4D c=1 sm=1 tr=0 ts=69efbff6 b=1 cx=c_pps
- a=zPCbziy225d3KhSqZt3L1A==:117
- a=zPCbziy225d3KhSqZt3L1A==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=A5OVakUREuEA:10 a=GoEa3M9JfhUA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=jiCTI4zE5U7BLdzWsZGv:22 a=x0eKOSpe3m1H3M0S9YoZ:22 a=GaQpPoNlAAAA:8
- a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8 a=4skM9U2y3GkL2T6Yt7MA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=xF5q_uoM5gZT5J3czcBi:22 cc=ntf awl=host:12309
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI3MDIxMiBTYWx0ZWRfXxmaIHuVTSG9K
- WNh178HP1H+C3ybt71xwid3iZRduufynwUivElj9Z4o68RVplHb+hN6PGpVQIpp6FQdSyGsWJ53
- DSNfLIJDO9kHV92wfIZLtfl/InheNzRFs1FEgOZ1dbMRdfDas17tus+ypKyOkhq+gBtEOcxeRNH
- +PyfHvwarZSQqemYUt98qzrWD5XTDqFVhiYNld1A+uo/T6xUfkr6/gDUWNBKuSCfk6tL8bvaXMg
- nPkEf5Sdjsm1bfugUlkxMLLQ+4xz0QTvAouCG2fEmxGjSuvDVTapYW2eOKUge/wQfyEwgM5n9OW
- zByh41W/PGXUm4KJ1x61M3mPlq1qol25eV3OOmHjnhVwgAPx9I2CuUkVTh7ARAWkd9QMKZi2PMT
- t5EPqNAx6vMJ+E734o0l+E9C6BxttoQjaZ0Jq/dbnSQPgCs/ogZ5gUs1IBhOiWVsUqIvOcQyecu
- 2/RpL8olYz2ltz6iDCtEQ7PR1Nlfb+Puq+Sd82C8=
-Received-SPF: pass client-ip=205.220.165.32; envelope-from=jag.raman@oracle.com;
- helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Exchange-AntiSpam-MessageData-0: dGOv429AZwZ4tkxxxKTsZynBZqmVSO5CdSKp4pYEnu9JLm8GwMrLifTbAEXsgRVPWLe2/1jxIGKFQ+banTfa4OhVpeMCOOZ+UvahXa/8hxTmlm/foxK11IZLQ4EjO9OCpDzlySQER4luMYPqzGcMWr3fPbdFNSJ2qwH2kWKYAfyShBu42XepeKKB0bvT1Zosqg+VLLYiWSG1kO0ySCieZt56LFzsvRsui0dub2RXKJl+R9cMj6cTHP9UMVPxBH7qHeNpYqqkZcToimrVdWN1GN7xr37Cs/eDj46lwk3xJu1gE1/1Fv42m3RXcQ+wYcVwi3d2TyORV51ijrfHMsE0e23f/7mm3QPyQCshNIQPD/w4Elcf3EnVH2B0MqdopcIRCwqFtbLi1/rElAojoNGZSl9bdqOo9f9O4GddDZiTja1HP11Y+GNCofW9GuwTG1Hi
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Apr 2026 18:13:49.9247 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5f1ee2ec-6984-44ca-19ba-08dea488bb7a
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A0FA.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6229
+Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
+ envelope-from=mhonap@nvidia.com;
+ helo=CH4PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 27 Apr 2026 15:57:41 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -206,47 +140,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Manish Honap <mhonap@nvidia.com>
 
-On 4/27/26 3:42 PM, Marc-André Lureau wrote:
-> Guard the unregister by checking whether the listener callback was
-> set, which only happens right before registration.
->
-> This is probably better addressed by "[PATCH] qdev: test if DeviceListener
-> is in use". Just adding this patch for completeness.
->
-> Cc: jag.raman@oracle.com
-> Fixes: c7d80c7c1d9 ("multi-process: Associate fd of a PCIDevice with its object")
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   hw/remote/remote-obj.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/remote/remote-obj.c b/hw/remote/remote-obj.c
-> index 86192dc8dad..4e74ae76158 100644
-> --- a/hw/remote/remote-obj.c
-> +++ b/hw/remote/remote-obj.c
-> @@ -154,7 +154,9 @@ static void remote_object_finalize(Object *obj)
->       RemoteObjectClass *k = REMOTE_OBJECT_GET_CLASS(obj);
->       RemoteObject *o = REMOTE_OBJECT(obj);
->   
-> -    device_listener_unregister(&o->listener);
-> +    if (o->listener.unrealize) {
-> +        device_listener_unregister(&o->listener);
-> +    }
->   
->       if (o->ioc) {
->           qio_channel_shutdown(o->ioc, QIO_CHANNEL_SHUTDOWN_BOTH, NULL);
->
-Hi Marc-Andre,
+CXL VFIO passthrough needs a stable guest physical address range for
+device memory (DPA) that falls inside a CFMWS entry the guest discovers
+from ACPI CEDT. Without a dedicated range in the address map, the HDM
+decoder has nowhere to point.
 
-I submitted a patch a short while back concerning this: 
-https://patchew.org/QEMU/20260427162700.89750-1-jag.raman@oracle.com/
+Add VIRT_HIGH_CXL_MMIO immediately after the second PCIe MMIO window.
+It gets its own highmem_cxl_mmio flag in VirtMachineState rather than
+sharing highmem_cxl, so the two slots are independently controllable
+even though both are currently tied to CXL bridge presence.
 
-Do you want to stick to your patch, or want me to proceed with mine 
-(while addressing feedback from Peter Maydell)? I'm OK with either approach.
+The base and size flow through GPEXConfig.cxl_mmio to
+acpi_dsdt_add_gpex(), which carves out a QWord memory descriptor in the
+first CXL root bridge's _CRS. The CFMWS window is system-wide, so only
+the first CXL bridge gets the descriptor - subsequent ones would
+produce duplicate resource claims for the same range.
 
-Best regards,
+build_crs() already emits the bridge's own 64-bit ranges into crs.
+The CFMWS window is a separate system-wide range, so only that window
+is appended as a new QWord descriptor; the bridge ranges are not
+re-emitted. A warn_report() fires if the CFMWS window overlaps any
+existing bridge 64-bit range, since that would indicate an address
+layout conflict.
 
-Jag
+Signed-off-by: Zhi Wang <zhiw@nvidia.com>
+Signed-off-by: Manish Honap <mhonap@nvidia.com>
+---
+ hw/arm/virt-acpi-build.c   |  5 +++++
+ hw/arm/virt.c              |  9 +++++++++
+ hw/pci-host/gpex-acpi.c    | 40 ++++++++++++++++++++++++++++++++++++++
+ include/hw/arm/virt.h      |  2 ++
+ include/hw/pci-host/gpex.h |  1 +
+ 5 files changed, 57 insertions(+)
+
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index 591cfc993c..863e0680fb 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -176,6 +176,11 @@ static void acpi_dsdt_add_pci(Aml *scope, const MemMapEntry *memmap,
+         cfg.mmio64 = memmap[VIRT_HIGH_PCIE_MMIO];
+     }
+ 
++    if (vms->highmem_cxl) {
++        cfg.cxl_mmio.base = memmap[VIRT_HIGH_CXL_MMIO].base;
++        cfg.cxl_mmio.size = memmap[VIRT_HIGH_CXL_MMIO].size;
++    }
++
+     acpi_dsdt_add_gpex(scope, &cfg);
+     QLIST_FOREACH(bus, &vms->bus->child, sibling) {
+         if (pci_bus_is_cxl(bus)) {
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index ec0d8475ca..fa07819401 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -211,6 +211,8 @@ static const MemMapEntry base_memmap[] = {
+ #define DEFAULT_HIGH_PCIE_MMIO_SIZE_GB 512
+ #define DEFAULT_HIGH_PCIE_MMIO_SIZE (DEFAULT_HIGH_PCIE_MMIO_SIZE_GB * GiB)
+ 
++#define DEFAULT_HIGH_CXL_MMIO_SIZE  DEFAULT_HIGH_PCIE_MMIO_SIZE
++
+ /*
+  * Highmem IO Regions: This memory map is floating, located after the RAM.
+  * Each MemMapEntry base (GPA) will be dynamically computed, depending on the
+@@ -237,6 +239,11 @@ static MemMapEntry extended_memmap[] = {
+     [VIRT_HIGH_PCIE_ECAM] =     { 0x0, 256 * MiB },
+     /* Second PCIe window */
+     [VIRT_HIGH_PCIE_MMIO] =     { 0x0, DEFAULT_HIGH_PCIE_MMIO_SIZE },
++    /*
++     * CXL FMWS guest PA window - separate from PCIe MMIO so the two are
++     * independently sizeable. Same default size for now.
++     */
++    [VIRT_HIGH_CXL_MMIO] =      { 0x0, DEFAULT_HIGH_CXL_MMIO_SIZE },
+     /* Any CXL Fixed memory windows come here */
+ };
+ 
+@@ -1724,6 +1731,7 @@ static void create_cxl_host_reg_region(VirtMachineState *vms)
+                        vms->memmap[VIRT_CXL_HOST].size);
+     memory_region_add_subregion(sysmem, vms->memmap[VIRT_CXL_HOST].base, mr);
+     vms->highmem_cxl = true;
++    vms->highmem_cxl_mmio = true;
+ }
+ 
+ static void create_platform_bus(VirtMachineState *vms)
+@@ -1897,6 +1905,7 @@ static inline bool *virt_get_high_memmap_enabled(VirtMachineState *vms,
+         &vms->highmem_cxl,
+         &vms->highmem_ecam,
+         &vms->highmem_mmio,
++        &vms->highmem_cxl_mmio,
+     };
+ 
+     assert(ARRAY_SIZE(extended_memmap) - VIRT_LOWMEMMAP_LAST ==
+diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
+index d9820f9b41..7de57bbc46 100644
+--- a/hw/pci-host/gpex-acpi.c
++++ b/hw/pci-host/gpex-acpi.c
+@@ -7,6 +7,7 @@
+ #include "hw/pci/pci_bridge.h"
+ #include "hw/pci/pcie_host.h"
+ #include "hw/acpi/cxl.h"
++#include "qemu/error-report.h"
+ 
+ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq,
+                                           Aml *scope, uint8_t bus_num)
+@@ -108,6 +109,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+     CrsRangeSet crs_range_set;
+     CrsRangeEntry *entry;
+     int i;
++    bool first_cxl = true;
+ 
+     /* start to construct the tables for pxb */
+     crs_range_set_init(&crs_range_set);
+@@ -161,6 +163,44 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+              */
+             crs = build_crs(PCI_HOST_BRIDGE(BUS(bus)->parent), &crs_range_set,
+                             cfg->pio.base, 0, 0, 0);
++            if (is_cxl && first_cxl && cfg->cxl_mmio.size) {
++                uint64_t cfmws_end = cfg->cxl_mmio.base +
++                                     cfg->cxl_mmio.size - 1;
++
++                /*
++                 * The CXL Fixed Memory Window (CFMWS) is a system-wide GPA
++                 * range.  Only the first CXL root bridge emits the QWord
++                 * descriptor; adding it to every bridge would give the OS
++                 * duplicate resource claims for the same range.
++                 *
++                 * build_crs() has already appended the bridge's own 64-bit
++                 * ranges into crs.  Do not copy them again here; only append
++                 * the CFMWS window itself as a new QWord descriptor.
++                 *
++                 * Warn if the CFMWS window overlaps any range already claimed
++                 * by the bridge; in the current address layout they should be
++                 * disjoint, but catch it early if the layout ever changes.
++                 */
++                for (i = 0; i < crs_range_set.mem_64bit_ranges->len; i++) {
++                    entry = g_ptr_array_index(crs_range_set.mem_64bit_ranges,
++                                              i);
++                    if (entry->base <= cfmws_end &&
++                        entry->limit >= cfg->cxl_mmio.base) {
++                        warn_report("CXL CFMWS [0x%"PRIx64"-0x%"PRIx64"] "
++                                    "overlaps CXL root bridge 64-bit range "
++                                    "[0x%"PRIx64"-0x%"PRIx64"]",
++                                    cfg->cxl_mmio.base, cfmws_end,
++                                    entry->base, entry->limit);
++                    }
++                }
++                aml_append(crs,
++                    aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED,
++                        AML_MAX_FIXED, AML_NON_CACHEABLE, AML_READ_WRITE,
++                        0x0000, cfg->cxl_mmio.base, cfmws_end, 0x0000,
++                        cfg->cxl_mmio.size));
++                first_cxl = false;
++            }
++
+             aml_append(dev, aml_name_decl("_CRS", crs));
+ 
+             if (is_cxl) {
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 5fcbd1c76f..88bb3c0bdf 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -91,6 +91,7 @@ enum {
+     VIRT_CXL_HOST,
+     VIRT_HIGH_PCIE_ECAM,
+     VIRT_HIGH_PCIE_MMIO,
++    VIRT_HIGH_CXL_MMIO,
+ };
+ 
+ typedef enum VirtIOMMUType {
+@@ -147,6 +148,7 @@ struct VirtMachineState {
+     bool highmem;
+     bool highmem_compact;
+     bool highmem_cxl;
++    bool highmem_cxl_mmio;  /* VIRT_HIGH_CXL_MMIO window; follows highmem_cxl */
+     bool highmem_ecam;
+     bool highmem_mmio;
+     bool highmem_redists;
+diff --git a/include/hw/pci-host/gpex.h b/include/hw/pci-host/gpex.h
+index 1da9c85bce..a7c2e2edf3 100644
+--- a/include/hw/pci-host/gpex.h
++++ b/include/hw/pci-host/gpex.h
+@@ -43,6 +43,7 @@ struct GPEXConfig {
+     MemMapEntry mmio32;
+     MemMapEntry mmio64;
+     MemMapEntry pio;
++    MemMapEntry cxl_mmio;
+     int         irq;
+     PCIBus      *bus;
+     bool        pci_native_hotplug;
+-- 
+2.25.1
 
 
