@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFF78FF8868
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:43:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3634FF8868
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:43:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHRr8-0000up-6m; Mon, 27 Apr 2026 15:42:58 -0400
+	id 1wHRre-0001Dh-BO; Mon, 27 Apr 2026 15:43:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRr5-0000uO-RJ
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:42:55 -0400
+ id 1wHRrM-0000yi-6U
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:43:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRr2-0007jz-3J
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:42:54 -0400
+ id 1wHRrE-0007lk-So
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:43:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777318971;
+ s=mimecast20190719; t=1777318983;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=A6/s7+wbN+K4kjVcPjREQTdrbnwvUrhPZpIX3sPM1qs=;
- b=E5u1o/nBGYoLx+Wz/KQMbmec15V5HXq8AhBa+lPOSqq7Vdna58BDel6km4yh0y/9AAAcvB
- RG7Z9zzOeDcBHzCcWp3kX8XkcysF3o5+wCDvaqbAbEipmssGWVjJU+ybr+WG9o3JpCggBj
- 0iUnQ+SUMT2nPH4V/x0IYAoyV7PQBVo=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=1pEn/2hVVxeAUWb0BmkZAfz7mfTs19c+tKrVGD3uLaA=;
+ b=HndBesjua9M3q88FNIMiSz7Mf4qOcF6MJjigZaMJaaEXa6vAXQFGkpT4aKrxTi9agaJ01d
+ xhgIuVnL4P7nu39nIILORr5Scih/haLfUCJB7BlMRZwHofNwxj6jppkimCXj94cFUXoAlS
+ RuLehzr8zlwAGTcPGfCB9BPsmrjpsqo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-QLneicrQOvehu5TPtD6kpw-1; Mon,
- 27 Apr 2026 15:42:49 -0400
-X-MC-Unique: QLneicrQOvehu5TPtD6kpw-1
-X-Mimecast-MFC-AGG-ID: QLneicrQOvehu5TPtD6kpw_1777318968
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-331-uY5k2CaGNz6QCrNEUz8r8g-1; Mon,
+ 27 Apr 2026 15:43:02 -0400
+X-MC-Unique: uY5k2CaGNz6QCrNEUz8r8g-1
+X-Mimecast-MFC-AGG-ID: uY5k2CaGNz6QCrNEUz8r8g_1777318981
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3B1D918004AD
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 19:42:48 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2410A195608B; Mon, 27 Apr 2026 19:43:01 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D754619560B7; Mon, 27 Apr 2026 19:42:46 +0000 (UTC)
+ id 8017A19560B1; Mon, 27 Apr 2026 19:42:58 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Apr 2026 23:42:03 +0400
-Subject: [PATCH 04/41] hw/pci-host/i440fx: handle NULL bus in pci-hole64
- getters
+Date: Mon, 27 Apr 2026 23:42:05 +0400
+Subject: [PATCH 06/41] hw/remote: check visit return in vfu_object_set_socket
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260427-qom-tests-v1-4-c413f3605311@redhat.com>
+Message-Id: <20260427-qom-tests-v1-6-c413f3605311@redhat.com>
 References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
 In-Reply-To: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1913;
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>, 
+ Jagannathan Raman <jag.raman@oracle.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1017;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=RxT0UeQOktv5seL6iNPTJqxIzApIk7GMQLzeeYc8LL0=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wUev64TFRUjOwIkRbb907noV5mDEkWj0PCw
- vosv/MzszeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FAAKCRDa6OEJdZac
- 5bYpD/91JphflRw5SJCK2kJxxj2l0f5q2z9fW1/QsjCE6QiUuwZgT2msMkDFKAkY6kxYp4VxsnW
- 1NwBcTM87zTo98anvr8Id4eHEnWDRNUXah7CWEWrbshZh9o5LWfNtsDPQRiKgjcUJ5fwTaEGXja
- HONgHMv3cUrefKCrfyUcewZBE3pr/eC1qpc6QfNUQmvyqVfxJ8AKzKzYu+tK4dH6CUBTIXP2Ac+
- BR91a5sQb/JCMVwiPadpyCyg8tTA+snwqgAHTXLKC1kb7wJUgXiFXqMHJ+xBpE4sHoBW//tEmt+
- 9zY0/Uh0fuku6ffCJ76m95O/D6Ysw0GNmh7VR6gVc/C9JK9xEm/1Lm38IBzQ5tjvuVoGTvlWCF/
- LwRe1gcd7dIo1ptU9lMegZCJwcWyXM1UCtAcf9PyPf/lklHaML9MksUrTZ5qg7As0TwvFb3iL0a
- 0vvdYz+LnEzy2AJBoURLVztDOtP1IGuYv2A0+cmfwxDQJFdeYbrwtoax3jm5i2st4HkSBBNYRoS
- 3tiaw7fSNhVmV4BQw/Q5MO3h8tMWPHk+/+uAfig2aX+acT4lVgWUUoR+maJr60Gow1dVZAxdt2o
- VXlb7SkvGJZG6tgmPXIy+l8sD1JpOdUKBTnSW9bG1JH5uGcS+wl991klxzUkCK/y5SLAcWAODaC
- MyAYDnuU3dIXkug==
+ bh=OO0tb8zQyK1Y9je3PseFy7KqoAQ349m+oesD3AFJRzk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wU86khG3YZJuikiYHMH9sfKpSwXyEdq8g2x
+ RpYPJHmxPCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FAAKCRDa6OEJdZac
+ 5QUdD/0fBGHHHdAkPVR5h0zXL0jd5tdmTxVYBKZh7iydIvp/mgBymlidKHBeDa3RMIO7hagKzRv
+ fjh5G6kZOLl0X7Q9WwliRbTmqorCBTIGUqYWCA+d3sQeVZ4/i0OaI8K7nsX0iuY3iLIO78n1Lc5
+ 8BEgVlVD9vGYYBARzRio9isOKPip48S8BtyJbzn77yaVYggfEgOVhh8bSjNBHwg4DvZy0ugvHAK
+ qqr3tz5mtASoCPRRLRPeVvKlEBu64107gxHudvVLJp6uauqLK7phR48/8QlU4masWcymIzkqEol
+ MP7TqiDA18jE1kCQKs3G/G+G2MPS9qi9Z9c0Xn9V01O8qimncpLcaC82a/xZv3TGB5qQ1ctIdIz
+ ZbhO52ddIevbqpnlMwJUajpjqukuhlRf0fIkUGgBUzUeWDhr1lXW+NMT8PA5BdfO/O5Jqbgpy9a
+ gXdg5YUGcddQHQkvSHBtoieZTAwPZA/8DG4GoHkjvITi6+CFn3zVVpP8rdOiZAoO2V2HICz0Yeh
+ /2t47gEL68Zm/W6tV5AloRnyhi+QHEr6v2bowce8RBAgNj/2AVt8NSE79lIBYdwnn2HyhrtqHcN
+ YpMxgpFSRPAOb7wFKYx0PV4UIkSHr2KeJT8R/MkqPZD57N9+/hwXD921bVeQvqnAFzVcVG8IWZl
+ bLZxinbNIQpMl8Q==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
@@ -105,53 +104,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When called on an unrealized i440FX host bridge (e.g. from
-qmp_qom_list_properties), h->bus is NULL since the root bus is only
-created during realize. Guard against this in both
-pci_hole64_start and pci_hole64_end getters, reporting an error.
+vfu_object_set_socket() dereferences o->socket without checking if
+visit_type_SocketAddress() succeeded. On failure, o->socket remains
+NULL, leading to a NULL dereference. Check the return value.
 
+Fixes: 8f9a9259d32c ("vfio-user: define vfio-user-server object")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/pci-host/i440fx.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ hw/remote/vfio-user-obj.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/hw/pci-host/i440fx.c b/hw/pci-host/i440fx.c
-index e7d638b296c..6952094510d 100644
---- a/hw/pci-host/i440fx.c
-+++ b/hw/pci-host/i440fx.c
-@@ -189,8 +189,14 @@ static void i440fx_pcihost_get_pci_hole64_start(Object *obj, Visitor *v,
-                                                 const char *name,
-                                                 void *opaque, Error **errp)
- {
--    uint64_t hole64_start = i440fx_pcihost_get_pci_hole64_start_value(obj);
-+    PCIHostState *h = PCI_HOST_BRIDGE(obj);
-+    uint64_t hole64_start;
+diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+index 12ecdab6dea..49bf5ecae0c 100644
+--- a/hw/remote/vfio-user-obj.c
++++ b/hw/remote/vfio-user-obj.c
+@@ -161,7 +161,9 @@ static void vfu_object_set_socket(Object *obj, Visitor *v, const char *name,
  
-+    if (!h->bus) {
-+        error_setg(errp, "bus not realized");
+     o->socket = NULL;
+ 
+-    visit_type_SocketAddress(v, name, &o->socket, errp);
++    if (!visit_type_SocketAddress(v, name, &o->socket, errp)) {
 +        return;
 +    }
-+    hole64_start = i440fx_pcihost_get_pci_hole64_start_value(obj);
-     visit_type_uint64(v, name, &hole64_start, errp);
- }
  
-@@ -206,10 +212,15 @@ static void i440fx_pcihost_get_pci_hole64_end(Object *obj, Visitor *v,
- {
-     PCIHostState *h = PCI_HOST_BRIDGE(obj);
-     I440FXState *s = I440FX_PCI_HOST_BRIDGE(obj);
--    uint64_t hole64_start = i440fx_pcihost_get_pci_hole64_start_value(obj);
-+    uint64_t hole64_start;
-     Range w64;
-     uint64_t value, hole64_end;
- 
-+    if (!h->bus) {
-+        error_setg(errp, "bus not realized");
-+        return;
-+    }
-+    hole64_start = i440fx_pcihost_get_pci_hole64_start_value(obj);
-     pci_bus_get_w64_range(h->bus, &w64);
-     value = range_is_empty(&w64) ? 0 : range_upb(&w64) + 1;
-     hole64_end = ROUND_UP(hole64_start + s->pci_hole64_size, 1ULL << 30);
+     if (o->socket->type != SOCKET_ADDRESS_TYPE_UNIX) {
+         error_setg(errp, "vfu: Unsupported socket type - %s",
 
 -- 
 2.53.0
