@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0FF1FF8860
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:55:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0FB9FF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:56:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLQz-0002sh-OP; Mon, 27 Apr 2026 08:51:34 -0400
+	id 1wHLR1-000321-QJ; Mon, 27 Apr 2026 08:51:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNy-00087g-WC
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:31 -0400
+ id 1wHLO4-0008BI-Os
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:35 -0400
 Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNr-0005hI-Up
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:25 -0400
+ id 1wHLNw-0005jU-Iu
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:27 -0400
 Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-488af96f6b2so134257745e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:15 -0700 (PDT)
+ 5b1f17b1804b1-488b0e1b870so172752535e9.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294094; x=1777898894; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294102; x=1777898902; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=EoqVhLGhx4yCMUlMBNquuLKcWQ2+z8TbZ+uuLLh8Iag=;
- b=XhAaqXETDXRjknmsL3MLmjQIjjxvkxuRQBNdylLUXbZ02VhMsLl39zDbmn3OQNNf1N
- Q0wHSO0zYrmq7+eskWLNekeEmYtF8n0LLa3vQIJEM2DNcVeRjSmT3h6y+sTLQrAO2vTz
- zh7DB277WTjV5lKdOGatJ7hc729P1Kps7GCWKloeeFw5rZDtOu2NGy6CCE17ESBwSBFQ
- hB+4csreLLgLe3mNiXx3vIDqiUaAeTH8bxz92LNq28SvJOr0UAVBNFxmjvGnGOZj1hov
- YTbN6Ok2FpQwMNByms7EK7Im7OHhiWmA8m5UttrMv1W0sjRvMBzZrJ0+khRjfefs3zPh
- h+rw==
+ :reply-to; bh=rTgagNZc5+/mV+3XbzfZwoEUH7aZwakCX4wYssDEI18=;
+ b=Kj5y3IkmBd25Vh/MIBjZEDW0TO3/ogcQFqL1Wprm3LWYqgZW5b4Z9nnDiGW9CmyGTf
+ bTpjhDlxIIj/AjrMJ07g2FytNjtQiFidZ1uOm1yKE9HdTVLc6j/10KLgGpE3QIcwfH3f
+ JJXFdC3vUzGW1qPC4Rbcez1zpoyE4NiU05B5yBmPd8qypo1Rovs2HIyJMTmsHyBF2hli
+ s9NWltFWHZbdr/NXIzmC03PjuAnPS88KloIDf4bTJl7Gvhon3S/Yf6CqCdi0dbXceSMY
+ hvV18S5EQCCCrBXCIZr8T6y8auQN6fh3MGsyXaJaPYGjDzFZCX2ZWIgkR4sbKtTnyKgx
+ 7IZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294094; x=1777898894;
+ d=1e100.net; s=20251104; t=1777294102; x=1777898902;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=EoqVhLGhx4yCMUlMBNquuLKcWQ2+z8TbZ+uuLLh8Iag=;
- b=Xyu70JGigjEK2W+QCMR3kSpXA8hjpvthoEhz7z6JRjXlA4HTiNUk9T/Ze1E3cb4+Mn
- t/Xw7rdO2eEv6/g4mNzwwesfK59saVIZ5l6MUAqQokMjGxKsXY8YT0xYVRRw/e2Ggm0/
- 9vxE8x2cIbURnQd8bbzdbrx4IZiG4xdvc4l/mnN8e+rKHqiWXkp9W50i7gF0GnB89Gl9
- JaVX/rC8pjhwoujXiZpD6i0ucyZqry+6cNhyy94/FG5+j8E6RHuyJPghS0vjCWr886cq
- p9h7o5zxOtQiru7mOpxG9S9V+NQ7TfZXejA6vU2vlY3B4PpmsyRVS6CUaxqNyp1Dj0eM
- p1+Q==
-X-Gm-Message-State: AOJu0Yw2aC6omu0LY6IzNlt1UVFwMSzZ20E0cqOOvJJYO2u29LkPE8qE
- 8uD1DyA8tXOmngyJ0WwwI+wcxcs5EEb4Hj/YHXTXI5+0DkMgVF645NR0idV9J2lKPO5ArMyIEVe
- hvXTS
-X-Gm-Gg: AeBDiesWswc7kTXI8DnrYgTsZgyIoLQG/M2DZhwB4TBc/obQk22BekFcficAiPOevT+
- 2Zl5/QEr9yhhy1xqFjYXSbuos48GtuH2zhGejubFWF3N9eQ4OYSqJ4R6+AkiS8eZOLi+npToVq/
- WINEzrjzY2/UQC4BYhBLjdeF3et6UHys3TwpHMYKBn5TrtDwoUu8q/voxZN6Ld7g9CIPJAmZR9H
- 5Q60aOOlvMU8+3orJA6P9dhbbnJaTDkmtMgyd/OJO8B0IAM3qdKDDckoylS5IHwLeoFQsbUF4ei
- T2eCS9aOcAZIqZUlOx1tJUVhaz3b3toFkeIhr69++bT/WQc2QeGtGXYv8WLeiPotFhu4pCEVbx8
- BV8FGdseWk171ZeTtTykTswxiuftoqTxgnMSDpmx7mIW4pbqAund49IlrPAbKXRVwcOiCNTCnOg
- PaALWwr5Wz09gC6aB02K8pUvKGhJzZ/bGs9sU6xK8aaZRq5Sg/8f+ha0rXXjyxnDevn25ECJ+ur
- 0kA6gFqTqaYHVZmJmgDwMy3CCpPgIzZdlEETDpKMw==
-X-Received: by 2002:a05:600c:190f:b0:48a:6315:da26 with SMTP id
- 5b1f17b1804b1-48a6315da72mr207675615e9.26.1777294094151; 
- Mon, 27 Apr 2026 05:48:14 -0700 (PDT)
+ bh=rTgagNZc5+/mV+3XbzfZwoEUH7aZwakCX4wYssDEI18=;
+ b=PCOcVt2kUtzqFhNiV9wRh4NuuPjKJ8YpXceGj16DpPULTURGx6rAKFIuWbL1ihdmxW
+ X3w9jO/HVsmKXIVXurLPhTyv2pFc4J1RSUG1ileGAga86GSGVromfyA+IfTiU+g7aC6o
+ kiB2Ri5I0UbAyqiJKLXz7pmSP79wgBtpUZDv26gu88voutWUDmSHlV/vxBplMgKE+Cc7
+ xDO49Y8V1BohQ/3tTupiSYio7TVYiFvaSzueAK4zJACtp9VlJQiKDh+83wYoA8wYTEU1
+ 60IrM0P6KDWPqqNLtg5QiYPVWtMB4t8nEdoJe18vZxtv9Xk0W5HJUQHCzfMRmfA52afJ
+ BhJw==
+X-Gm-Message-State: AOJu0YyEgCufEHpWEorCQC/E8aYwMZvAfXvJlLdMgQijMFLWOVLXKVf9
+ jjpmL+fjaADxvm5C5SP9NqWa6wM+ABoC0aPFLsJ4dk3+oAbmAvksioVoh1eY7R1sdOZ9UjpasEm
+ 1eqNl
+X-Gm-Gg: AeBDiesxCortpk3BLYkVfgJzd/G/ohp78j6/4ztjolJE0xn8dsr5bybZP7m+hNA6ciG
+ v3TBscyT3k2bhFGyOztDO/o3L0CLPjE/gq0HPHjo1xpcpNxW4eQvyNJhh+pIi2MGI4YrLXkT+Ix
+ u0Uqn3law/EOVkrdtM31TRdDroUB28K1PSoYBJdd0VLKi7SKOCtopQcNb3nwrMNj+UUoGg3Vtx7
+ eSeOQl/+uM10ciFJVLDc5fNFalQpuuXzrRdWI89UaWtCLJ5TNYEhcKnlRRBvWoxvfdfWKZy6uCv
+ 2AQUpi1rp8J86CWubcVdT/XT/+Hl0zuvJPzjU4le5WUPHUChJVpQbParGHlaVrCXnpiHy3i4lAW
+ uMpCG3G0B3MFrRFxiRw4njTwjc3MghgngB6kVCUkJtHE+zRi++ySPwdLh5WoozYjjVzc2KOX31R
+ z6NSjaux7IdRJWqk1wbGttSP5W70TWiJBzPEViBHnhGkfRWZshFYbaHS4QxMLBeiGEOYP8L0cjA
+ 9SuVfDHltLOBmNYJ1W0yvaRaZ7ul4PEAYRM2Uec+9gnllTsiZk1
+X-Received: by 2002:a05:600c:26d5:b0:489:1c1f:35df with SMTP id
+ 5b1f17b1804b1-4891c1f3715mr294847215e9.10.1777294102058; 
+ Mon, 27 Apr 2026 05:48:22 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.13
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:48:13 -0700 (PDT)
+ Mon, 27 Apr 2026 05:48:21 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 37/63] Revert "target/arm: Reinstate bogus AArch32 DBGDTRTX
- register for migration compat"
-Date: Mon, 27 Apr 2026 13:47:11 +0100
-Message-ID: <20260427124738.966578-38-peter.maydell@linaro.org>
+Subject: [PULL 46/63] target/arm: migrate PAC trap syndromes to registerfields
+Date: Mon, 27 Apr 2026 13:47:20 +0100
+Message-ID: <20260427124738.966578-47-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::330;
  envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
@@ -101,69 +101,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-This reverts commit 4f2b82f60431 ("target/arm: Reinstate bogus AArch32
-DBGDTRTX register for migration compat). We don't need that commit
-anymore as the AArch32 DBGDTRTX register is declared to
-be safe to ignore in the incoming migration stream.
+syn_pactrap is fairly simple as the ISS is all RES0.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260420140552.104369-8-eric.auger@redhat.com
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20260422125250.1303100-7-alex.bennee@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/debug_helper.c | 29 -----------------------------
- 1 file changed, 29 deletions(-)
+ target/arm/syndrome.h | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
-index 352c8e5c8e..8477ca5def 100644
---- a/target/arm/debug_helper.c
-+++ b/target/arm/debug_helper.c
-@@ -171,13 +171,6 @@ static void dbgclaimclr_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     env->cp15.dbgclaim &= ~(value & 0xFF);
+diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+index 6105347598..fd8639d4f0 100644
+--- a/target/arm/syndrome.h
++++ b/target/arm/syndrome.h
+@@ -398,15 +398,32 @@ static inline uint32_t syn_smetrap(SMEExceptionType etype, bool is_16bit)
+     return res;
  }
  
--static CPAccessResult access_bogus(CPUARMState *env, const ARMCPRegInfo *ri,
--                                   bool isread)
--{
--    /* Always UNDEF, as if this cpreg didn't exist */
--    return CP_ACCESS_UNDEFINED;
--}
--
- static const ARMCPRegInfo debug_cp_reginfo[] = {
-     /*
-      * DBGDRAR, DBGDSAR: always RAZ since we don't implement memory mapped
-@@ -240,28 +233,6 @@ static const ARMCPRegInfo debug_cp_reginfo[] = {
-       .opc0 = 2, .opc1 = 3, .crn = 0, .crm = 4, .opc2 = 0,
-       .access = PL0_RW, .accessfn = access_tdcc,
-       .type = ARM_CP_CONST, .resetvalue = 0 },
--    /*
--     * This is not a real AArch32 register. We used to incorrectly expose
--     * this due to a QEMU bug; to avoid breaking migration compatibility we
--     * need to continue to provide it so that we don't fail the inbound
--     * migration when it tells us about a sysreg that we don't have.
--     * We set an always-fails .accessfn, which means that the guest doesn't
--     * actually see this register (it will always UNDEF, identically to if
--     * there were no cpreg definition for it other than that we won't print
--     * a LOG_UNIMP message about it), and we set the ARM_CP_NO_GDB flag so the
--     * gdbstub won't see it either.
--     * (We can't just set .access = 0, because add_cpreg_to_hashtable()
--     * helpfully ignores cpregs which aren't accessible to the highest
--     * implemented EL.)
--     *
--     * TODO: implement a system for being able to describe "this register
--     * can be ignored if it appears in the inbound stream"; then we can
--     * remove this temporary hack.
--     */
--    { .name = "BOGUS_DBGDTR_EL0", .state = ARM_CP_STATE_AA32,
--      .cp = 14, .opc1 = 3, .crn = 0, .crm = 5, .opc2 = 0,
--      .access = PL0_RW, .accessfn = access_bogus,
--      .type = ARM_CP_CONST | ARM_CP_NO_GDB, .resetvalue = 0 },
-     /*
-      * OSECCR_EL1 provides a mechanism for an operating system
-      * to access the contents of EDECCR. EDECCR is not implemented though,
++/*
++ * ISS encoding for a PAC Fail exceptions
++ */
++FIELD(PACFAIL_ISS, BnA, 0, 1) /* B key or A key */
++FIELD(PACFAIL_ISS, DnI, 1, 1) /* Data or Instruction */
++
+ static inline uint32_t syn_pacfail(bool data, int keynumber)
+ {
+-    int error_code = (data << 1) | keynumber;
+-    return (EC_PACFAIL << ARM_EL_EC_SHIFT) | ARM_EL_IL | error_code;
++    uint32_t res = syn_set_ec(0, EC_PACFAIL);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++
++    res = FIELD_DP32(res, PACFAIL_ISS, DnI, data);
++    res = FIELD_DP32(res, PACFAIL_ISS, BnA, keynumber);
++
++    return res;
+ }
+ 
++/*
++ * ISS encoding for an exception from a trapped Pointer
++ * Authentication instruction is RES0
++ */
+ static inline uint32_t syn_pactrap(void)
+ {
+-    return (EC_PACTRAP << ARM_EL_EC_SHIFT) | ARM_EL_IL;
++    uint32_t res = syn_set_ec(0, EC_PACTRAP);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    return res;
+ }
+ 
+ static inline uint32_t syn_btitrap(int btype)
 -- 
 2.43.0
 
