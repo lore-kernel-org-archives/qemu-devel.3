@@ -4,105 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0438AFF8861
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 208BAFF8861
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:19:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHHAM-0007c8-6T; Mon, 27 Apr 2026 04:18:06 -0400
+	id 1wHHBi-0007wO-6N; Mon, 27 Apr 2026 04:19:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wHHAK-0007bj-6D
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:18:04 -0400
-Received: from mail-dy1-x1330.google.com ([2607:f8b0:4864:20::1330])
+ (Exim 4.90_1) (envelope-from <elisey.konstantinov@gmail.com>)
+ id 1wHHBR-0007sX-UD
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:19:18 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wHHAI-0006SH-Nt
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:18:03 -0400
-Received: by mail-dy1-x1330.google.com with SMTP id
- 5a478bee46e88-2dee127b3c5so15190030eec.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:18:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777277881; cv=none;
- d=google.com; s=arc-20240605;
- b=j4Kj6DeeE9zDrXwPKUiV00wiNOSCiDvpSsVkAy67T6/CT5sHB5aoDuW8hzAHQkRXPe
- zFxe+Rxyy9QSwkpba+wUl/4w0JsPWDTfdYyvpP5zvRNsyTbgvyhRlUWFVXUozoaYgsr4
- a6RvDbN/ABWMcUhKDR4uF8aH2L7Z6B+CzKiv8lE5JZm4Ld0XWLe2VA/5UMHbaAqSvHO0
- 7g5mhQWf4T7s0R1CvZQCsTLWMDczbxnxbHfGzvxBOWvhm6oWZH/D7m70ROMPdxUSqKaW
- IpY2f8O3otxlifMv9k1JFUHbbzrscKpY5vFFU3+D8CbIcMkz13i7e5ZCOHvYuOy2vwoU
- M9FA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=tRP5909te7OtzU/OJaXtbDnc8GJ1x6uIQ+eCRE5A2kg=;
- fh=8aBEJY+feA7d7ThUvpzyIH9FOGeOtT6IdrliqPJEqPM=;
- b=HfKZvlt7eSzIJLj34nsKGEO615Kum9D/OSnaq0ZzvRacednGVveH9ttDef7Pi0Jruc
- FRZu1MuJPGcmWeKmTv+R/Jf/rgh/rSKEOIduON1Zs55mOBgDF+gpPKZow8/L9YQwMGbm
- F6LMlX29HlonHOpUXm+lpcc+00myBwHpbeP2ZEeU5f4ALyNoodPAgCn/xIJMUFKoUkZc
- ZuM1sBOTsEVtglLWrjXJMfd90E+G38q0P1uICSXStRovjGIIldHOZF9E8EeV1KMMNsCa
- lEbBtJDaZyRPTtH7FgX3nSraKvI8GEIe9AbDPbqxx7hVZy6wuxHylEhYgSUEJ2DW3cvO
- SMVg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <elisey.konstantinov@gmail.com>)
+ id 1wHHBP-00073u-Bx
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:19:12 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso103401665e9.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:19:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777277881; x=1777882681; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1777277949; x=1777882749; darn=nongnu.org;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tRP5909te7OtzU/OJaXtbDnc8GJ1x6uIQ+eCRE5A2kg=;
- b=BJn/S+v53xWaZC5fi0Cquzo2dQ3mPSXL7GJUbDd7xXAk1jPCZDVR//8B3/a+fU6USf
- m4WPe4v3yBlrM+NQ59Us6kV9w/tXRAe3G1urtooGHXXwIfhzkFRJa9n3KIkZozAvrPlG
- VoRNnXS58aey8upCU0Z7HZviceo3a6CAv3JFqNfwxXtiJrebQn0LoeCYHN6P0aanXsZy
- 5/i5ZCsneTE873WpsA8mNafa1dXpEmfz30SBCCnWs8nSKrQGmYAQuMzOYTwGjIIDaWLS
- F3koWUvb6f73ZA/xsIDCOIR/LzE0e9NHmtyAA7kyRpu+u9SjmV4ZudYmZctvk3yEHjf+
- OgGg==
+ bh=bz5o5GjKyVM+0WXB8yNy+1xTOMdyEPr4cgc2VhCqTI4=;
+ b=YnrJOOF1jE5hdTgm8BZxXzz8PlEhf1SVnJHsyEig91bXoH67lCSKARE7YrvQ80gz7N
+ qrXUgC2BQCKin015dQQzsmOIpNxBOD30qXW0GvaftjtlJ1i5GSXO0nUGLgONYaCc38Ft
+ VGQdxPM1BKC9XpMqmZ3g/GYP4Cw1b2EvFSfg9FwiFTcEkvIxDkI8mUzB4BU6N4RdR3+D
+ AA983RiCUry5e/u6brVlfH9II7GSGrFMib4s0y42BPai9UTDzUFHyV0dXZ6+xF+lmPNV
+ qKQJ2q2W+WwFQAn40cN8iKmR4J8XmCvtgA3n6U+YZZxH3dktYLBC174nBJR1vzLb6j6R
+ jiOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777277881; x=1777882681;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tRP5909te7OtzU/OJaXtbDnc8GJ1x6uIQ+eCRE5A2kg=;
- b=mXVQHqmvsl6E1KfCZsqUIDr2/z4qks4ZfcHxANinaqZCpB3t5DtsODbMdR8Yzpxz5V
- QRPgUmcKxgo3VxfafDajsXjuXycJa5QZYZwwBiz9kghv1gRK5zFJIQzKuF50Nv/3QIxV
- yaBo4rKTsnX2x2WhCCsw0jl1RfEtH2QZ0HLVGt5IxyrjunJQioEamStMO6hn0dIvhmrH
- +RuSXfzQmIHRPSiNrEbOkFOE0ZRKLUWxQUmwW6+bm7xSKaUjETg6RaLKFOjC7YhrMgNT
- e6KCntXab/pbaczQ/Ilkf8giXFojC2JahlZA5+hJcWLXngsMiBKoua87CiImWk3oKUB9
- fTWg==
-X-Gm-Message-State: AOJu0Yy/bEvpOyJ5EAy48OEomlGulR8kJhj3/c0KR+y2wzkWt3vIuMuS
- 2SkG0m6/BC9pjM97D5UopymRNRtEBPCSD/23hcS/A9Jlva2XX06FXYoCO6ajA5u1fMbrwrnQcTv
- d1Wh+mQyqAAat1NLcBiwNV3NvZlXviQU=
-X-Gm-Gg: AeBDievQR6SWlM3gtND01/GWivN3llQj1CpMwBKNQtptHjjEQbC8M54pQrKxDLL0LFi
- 8+ijdc6bLr17QPctSw5egKblmolzUi5RzLdr73M0IqzVuJqum/z+P9fEFPIw1B9sGTH6/Uyabcr
- u8zZoDRZSMG8bPnvh1MRPbpW1wPJGZ6DqYfw5BBMFuE9D++zsu1fAeDU17F3Vi8not/IuU0XJZ+
- vQFiejiDXbAXSGp/aFi2l+GJKIoRnOIHPRIBEEpGJx4STXeWj4F2nCmxbqgeBx5YXmD+KUXaarf
- RLjSDCmM6yWt5MMlEinvTS2t+11wO5lblBHNEPGLU15wraLNyv0=
-X-Received: by 2002:a05:7300:371e:b0:2d9:6373:ad22 with SMTP id
- 5a478bee46e88-2eada6d66damr7916352eec.12.1777277880816; Mon, 27 Apr 2026
- 01:18:00 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260422202646.272081-1-marcandre.lureau@redhat.com>
- <87eck4x35p.fsf@pond.sub.org>
-In-Reply-To: <87eck4x35p.fsf@pond.sub.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Apr 2026 12:17:48 +0400
-X-Gm-Features: AVHnY4LoLc4IalYcT2Mag9AzWpeOQeb8_emFVcsI1WGoeRtlMinsDPm5rfcEcd4
-Message-ID: <CAJ+F1CLjuWApGFeivgTywJwzORfwtbf0kjxJdmw8_vpuraJZig@mail.gmail.com>
-Subject: Re: [PATCH] ui/console: remove console from global list on
- finalization
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+ d=1e100.net; s=20251104; t=1777277949; x=1777882749;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bz5o5GjKyVM+0WXB8yNy+1xTOMdyEPr4cgc2VhCqTI4=;
+ b=Ief5pjVgeBdwPpIhsE5TMiwGHMm9hgqYrjOdwpmJyAWPvVQBruMmtkcK5165FxUGvr
+ RFncHj3dK3yGjmfgIEXf6XK6QVtfEhFXEhhd5XJq5GK2sWsWjtoJv7tw0TulQ9uGHruZ
+ jMi8MNzpvwwaPOIweu3pE56oV3F0bky6CJ7jdv3eSzSnKpMsM+m5dNp5p5dKi8xdvYLY
+ FvCOhPmk31lxEuqAOAeksqN5tS0/qezqdvHzlsS5QYa/xAh+Qf/IOmp1Zo3wnjs3yQqf
+ 0ufZJjw37KOZ3EH8kG+UHzO4wczE1ie2NkSKmtvxfGGOneBo2naC3Il/Ae9tVQD8WZKT
+ KwAQ==
+X-Gm-Message-State: AOJu0YyU/6ZPv/ZOi4//Zksbmt8FB/7cb8ieUlHGqNZXjzcxfTuLjyhZ
+ n5eEVEM3Mu02C/wt2I8SVo2lEGWRULQG/jc6IOvt37/m6BdopGetLE1+GNyaBByg
+X-Gm-Gg: AeBDieuj5K3egtkjHfIOZGTv+v+beQd39O3yNAIJt1g7bCfOQrMD4eG+cdhM0mtz6We
+ HIIqOfIGpAtRS6iXQMJ8GP6cLyuO4zPYkO9VYlt12v+eFG5bFuVlNeE2eT4N+jqLQ/jViaXWjzz
+ Rmu3mXzkof4xXGMmrSVyzGjPyNxE6mxZfPPD7rVKZ4j8s+0SMVVTGvAizYvMWZ/VD9bRbYpM2sN
+ TVtirRLC51TKk4zOM0S5a4ewmyAtmlTr4UQzW1qtDPqpYBdUVvoY204rlkMAwziv+AqXgezUqNV
+ ZAnCHT5dWUP8nxHAUZvxtkosZojnvkC5uqGBYrBZ9rvVbw3RRupDU1ducWeictLTurRkMNjS8Xy
+ hfhiYE18XT7pAxdzeyfRTquGdk/W8qZWWTfH0pY5VeZR3wrIt5KOk7f4h2ztUmpg2oxRMPJq2Yj
+ iJ9b1Yy6hXHgEfWegMA35Ampg3VSh5WCLeB8kQd40tYgZqdxl5QZO9F7KMWIIJK0nSWg==
+X-Received: by 2002:a05:600c:3f10:b0:485:35d3:ce59 with SMTP id
+ 5b1f17b1804b1-488fb753c9amr566314045e9.10.1777277948716; 
+ Mon, 27 Apr 2026 01:19:08 -0700 (PDT)
+Received: from smtpclient.apple ([5.32.173.67])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488ffad20f2sm392179705e9.0.2026.04.27.01.19.07
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 27 Apr 2026 01:19:08 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH] build: prefer sigaltstack over ucontext on Linux
+From: Elisey Konstantinov <elisey.konstantinov@gmail.com>
+In-Reply-To: <73E79A4E-C0AA-499C-84ED-81FC5C1A8972@gmail.com>
+Date: Mon, 27 Apr 2026 11:18:57 +0300
+Cc: mark.cave-ayland@ilande.co.uk, berrange@redhat.com, pbonzini@redhat.com,
+ marcandre.lureau@redhat.com, peter.maydell@linaro.org, philmd@linaro.org
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1330;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1330.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
+Message-Id: <FC5DE7C2-924E-4690-B12E-4E33BB118BE5@gmail.com>
+References: <73E79A4E-C0AA-499C-84ED-81FC5C1A8972@gmail.com>
+To: qemu-devel@nongnu.org
+X-Mailer: Apple Mail (2.3864.500.181)
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=elisey.konstantinov@gmail.com; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,40 +102,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Fri, Apr 24, 2026 at 10:52=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
-om> wrote:
->
-> marcandre.lureau@redhat.com writes:
->
-> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> >
-> > This commit removes the QemuConsole from the global "consoles" list whe=
-n
-> > it is finalized.
-> >
-> > Previously, there was a TODO comment indicating this path needed
-> > checking. The assertions added ensure that `dcls`, `gl_block`, and the
-> > `dump_queue` are empty before removal, confirming the console is in a
-> > clean state.
-> >
-> > Fix potential use-after-free crashes when a display console is removed.
->
-> Suggest to mention reproducers: QMP command qom-list-properties with
-> typename "qemu-text-console", "qemu-fixed-text-console" or
-> "qemu-graphic-console".
->
-> > Reported-by: Markus Armbruster <armbru@redhat.com>
->
-> Please add
->
->   Cc: qemu-stable@nongnu.org
->
-> and Fixes: if it's not too much trouble.
->
-
-Given that the hot-unplug path is not tested and has probably not been
-working correctly since forever, I don't think we should backport it
-or look for Fixes commits.
+Update:
+Maybe it=E2=80=99s system libraries like GLibC?
+But then why does the build from source work, whereas the APT build =
+doesn=E2=80=99t, on the very same machine?
+Mind you, I=E2=80=99m not very good at compiling, so.. but it seems to =
+me that perhaps the source version of QEMU is somehow linked against =
+more up-to-date libraries than the Debian Auto-Build version=
 
