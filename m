@@ -4,145 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B363FF885E
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 10:04:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9EDDFF885E
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 10:05:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHIoN-0004fm-7f; Mon, 27 Apr 2026 06:03:33 -0400
+	id 1wHIpf-000505-S2; Mon, 27 Apr 2026 06:04:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wHIo0-0004es-8K
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 06:03:09 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wHIpI-0004uR-7o
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 06:04:33 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wHInx-0001GJ-UZ
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 06:03:07 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1wHIpG-0001aH-6p
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 06:04:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777284183;
+ s=mimecast20190719; t=1777284265;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UPP0emTi32YmHA+FIh2cIPMv+2JnoEhqfyD+roGN62I=;
- b=OqOKxz0HjCl74twUcw+Dy51pqLDuB967VKJuXckFKZ8h/IO1RDq6hTMg6X5bLwDHhgmCXi
- tD5/AnYgBFykGi9JjXFvatXacAp1dm62IwBoHNHSRpQ8d600dh6lhlTwpjqvuN5LjLxPhx
- /JZ+nbSlcw4RK/Ov6cdy8vAI4MB+0q8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=X2dgm4HF15FHe8gkwxTet9JS4hgj0+qdvbuXVdEmCCw=;
+ b=GGXEtygjJVehj3svVpgwNwqDd4hwLvKVsE58CQYKGMjirc+C8okJeebYu95V3+NGcUMFEx
+ zuQ/L9T9er5ke4AVrFUiMebyHzSRgqb94LJwuAZepUVgxHVLQCY0Bt7aXWtjSUT05VQ9eB
+ uXq2ocniLcpTbzaAgV8ud5CKy3Hhewc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-52-fWD8UzTFOAu02eOxB_eSAg-1; Mon, 27 Apr 2026 06:03:02 -0400
-X-MC-Unique: fWD8UzTFOAu02eOxB_eSAg-1
-X-Mimecast-MFC-AGG-ID: fWD8UzTFOAu02eOxB_eSAg_1777284181
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4837bfcfe0dso109622615e9.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 03:03:01 -0700 (PDT)
+ us-mta-468-aHG1XxINMH2Oh8ooLqJuxQ-1; Mon, 27 Apr 2026 06:04:23 -0400
+X-MC-Unique: aHG1XxINMH2Oh8ooLqJuxQ-1
+X-Mimecast-MFC-AGG-ID: aHG1XxINMH2Oh8ooLqJuxQ_1777284262
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-48a5adc12ffso36712485e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 03:04:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777284181; x=1777888981; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=UPP0emTi32YmHA+FIh2cIPMv+2JnoEhqfyD+roGN62I=;
- b=XD20Mg30cUxqQwFzailMzQYfBcgWZUeLrJN0uJM2EynCjioVaKs/BAfoVkkVltUEPD
- PFdut3rJtLWnDHgRqCwXnI/tElJDKUgZjK0c3i8U+fBcSXT3BobPCYStoDnCF7oEEGHn
- JXkeOy4mbqaf1r4+Kh2SJepyDeS6b0E7jdge8xbW4msWcLorE2xbauGuo1P9/Trgo5nP
- WGrrtUkQrAGfBI+DBAZ2dg3+yE60CVVCLW4ja2PWBzkis5UBqDSyek4LO/phRX9iTu+t
- qpknvzBlEB4Xm+idNiMv6+l3DwCz3eWNneIzERvxgsYiHOXFmVy7H8lSWl+CKAYthVlh
- l5CA==
+ d=redhat.com; s=google; t=1777284262; x=1777889062; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=X2dgm4HF15FHe8gkwxTet9JS4hgj0+qdvbuXVdEmCCw=;
+ b=V8f+8mRir956c30qPHou1E9HJdynO3G1rIQiNh02ja9EtFrZYLSigeTw5m1U8uEi+4
+ Yncj3Hh9Fa2kOQXplbnlLdpfYbvdaqPTsyQxKggGMPnK7B7r2cpCzLgnmhyXtDmHUQXg
+ avrZey8YUC7k4qqI9UjEVSlqXNigQK/q9DSYQG3HfskIK/gaIFvTzEXn8GJpAXHsLHke
+ vkPM1MJLIculB5YORIwmEQb0uGnYun2xucwBKz79RujdVl/dvWtNio0vNMglLBs9N/rj
+ vd9EVBy8BnTemc2FlxgyXL3dZTowfIh2qrsTw0EQjEtFhJtKcPK0kd69MtEtgKfysC02
+ WOJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777284181; x=1777888981;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UPP0emTi32YmHA+FIh2cIPMv+2JnoEhqfyD+roGN62I=;
- b=iWBw3zrxltcmJV6auNwlDtrl8yjKRRHrX5w+QFY87MqUolQ76ROLlCDi7g1IGAnnZW
- ih4vfE/MfS18Ks7gm6apVAJX5wqBwnHYRIPVeNQKIFSKNrefQp4KV3o2S+b7PUpCtil7
- cCt51F1yJVhODOuLrrpeAekH3fjxU2dB5sGrd2IkbaXJO3MIjCcos+e4GaskpxKHCbsL
- BC7mXEfz1Klvj4iN2Vcmzk2/dXAr9VaE0xcl9PON3DvMfQkS3bYvbuJWIDM0blPQ7zPE
- tsvhOOvrR8BzkBalJT4LTo3oL32EJnvYSDxFQen1tFJJfM71NJr+5i2xhjyXJAVqnTpV
- vrGg==
+ d=1e100.net; s=20251104; t=1777284262; x=1777889062;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=X2dgm4HF15FHe8gkwxTet9JS4hgj0+qdvbuXVdEmCCw=;
+ b=r+u1k4wCQLoxgWJGAFyPWNZiGyf7XhiWX5J/UxqSKBGrYsR664dpkDJIM/DyVQ8SyH
+ apkhXBq8FM38AZxOWOkQjdx6D8RzFWJVCuBxALMyKM7e5wIBLxnyfQJZgZK+vTEyStNg
+ ZtCvMh1VBNcu01J6FJ9LrKi9PFL7FF1eprD8Yk4+zXWP2DlCH6x/lt1WW4fDgL3HPu/g
+ rQHGpU5AEAaS0VzJbz0ZxhZRCIH2pm4oawBK5mmwXYORCZ7Z/9HRH1Ml6H3bs6HA5pPi
+ 0reswBayJpq+c1bX1pNP9k1CvalYboSjU8oOiCG31IXvAkTTht6snWBd3sQFh6JxYDlL
+ +pDQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8p0pws+o9gb67/vl6dz0uZ3B9CtzqCh4ZJO3qCXyvXnysqjKr8u57eUzNFywkrbJvohvtKLuY8/1Sq@nongnu.org
-X-Gm-Message-State: AOJu0Yw7Ie4owTdCoK20MB9WJybuCgs7tsQRE08Qa16ypNrd9L4JWzOz
- 8mPGteQlKeNBLDeMeHhbTL/0T5Sh9mj9ElttXmWA9LsFByU20LJGocxhvOPLMMObsYoZuipdwdS
- 9uyd8F044UohP+HPXlabx6JGmeccoSPxXOm7UZZKqYiDh9C/EHANkARXo
-X-Gm-Gg: AeBDieuU7S8ycFOMf8Lnmernoiq19cb28SjRsUOLKfg7mFckBZm2pf+YDOjpnUjjUjJ
- BHgR+ffDgHTamseE+IBKpz4IpClzwPE8JY1kLX7ARDOVNfysKVjrbamTx5Zr9/XM6zTQBI02D7R
- ADpUBRHTIdDOQbYt4TbupDoWq0Iol0lxakcAugHN8jrTD+0cUOChZhe/h72zG7sC08UHiMAvNW/
- kcaL8ZWE1O50DUjN3C7f7imNJubSE3lFwCk+PNNWF7lW4riRP3RpSxm3xQfjMfWK1pf/udXpOmP
- daItUvKjDcXHeSAWhCakJNhlV7Viv74RPmo2y+06K5F5gZNSU8hIemavZy2V811NNSlLybT4v4H
- FNzv5TQt3/gNJUp4jc7pKaIaiRWq72w==
-X-Received: by 2002:a05:600c:859a:b0:48a:53ea:13df with SMTP id
- 5b1f17b1804b1-48a53ea1500mr314684205e9.2.1777284180476; 
- Mon, 27 Apr 2026 03:03:00 -0700 (PDT)
-X-Received: by 2002:a05:600c:859a:b0:48a:53ea:13df with SMTP id
- 5b1f17b1804b1-48a53ea1500mr314683745e9.2.1777284179793; 
- Mon, 27 Apr 2026 03:02:59 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.114.147])
+ AFNElJ/LSu+mSo3icjZWKrcNIkrg7X5SmTp6ezJz/Z0RPeAuQhvMo0HX3UYQVkNns94IToVm2yURI0gKBCE0@nongnu.org
+X-Gm-Message-State: AOJu0YwpFuF0C1oLi1lMSnK69p9DUab1rRFqWK/zkPXWXD9m8K0VS2qj
+ NlEpHjRvW6A913wjjxGT1ZGRspwhXBmzNOa4B+e+apKzBqZ1UG0uoTxMUZWmL5Xxr++1fC8oHKf
+ Y7Qww5xHerDVMgusS3IBwh2f7ZFITzYKeHI8pI2vdyQ/iFeKQtbOa1b3G
+X-Gm-Gg: AeBDieu1Ypiyj6dsSTHXFg9gboY9Ip9F3vUIEM4P6AabubCuCBJTKwamA6wc14zX+be
+ EBz1jCBRGtAZS+9wIOgDXHnxAiRaGE5gl738OyAYb09jynb3QJd8NSex/2yWxbk9+x+rYLjo2KY
+ XOnT5Sfj6xSJ63OViRCrcyAKZc7Ajvjfk+NTkE7jqtg3hQOyXR2XwTVKavKLaiL/clGhWNXR6Mv
+ s06nVWd3+TnoD3U4UVUJAIcxDiYxbg+Ie101Gv4oWVM1B5vtD1q0E6ktBgKsoBifgLThciBJwCB
+ DH7EjcXHCAnhjBceOHv7JOpYcUjAcBUq6ovuDw6so5KzaH1EwZDlkPReKTC/innpa/EmTedearv
+ 5f23jhjS4j4k/I/hYZ1vJrewfVyL0QWPkJqhHg0H1sy3HhJ28Iqwna50Z
+X-Received: by 2002:a05:600c:c0d3:b0:488:a916:14a8 with SMTP id
+ 5b1f17b1804b1-488fb74fe74mr482700795e9.10.1777284261939; 
+ Mon, 27 Apr 2026 03:04:21 -0700 (PDT)
+X-Received: by 2002:a05:600c:c0d3:b0:488:a916:14a8 with SMTP id
+ 5b1f17b1804b1-488fb74fe74mr482700485e9.10.1777284261412; 
+ Mon, 27 Apr 2026 03:04:21 -0700 (PDT)
+Received: from redhat.com (IGLD-80-230-47-179.inter.net.il. [80.230.47.179])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a5aa3ae83sm791591055e9.12.2026.04.27.03.02.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Apr 2026 03:02:59 -0700 (PDT)
-Message-ID: <883bd7fd-a9e2-49e3-9198-8333825f8aa1@redhat.com>
-Date: Mon, 27 Apr 2026 12:02:57 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+ 5b1f17b1804b1-48a5c24d82asm181779665e9.7.2026.04.27.03.04.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Apr 2026 03:04:20 -0700 (PDT)
+Date: Mon, 27 Apr 2026 06:04:18 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Sourish Dutta Sharma <sourishduttasharma770@gmail.com>,
+ qemu-devel@nongnu.org, pbonzini@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com
 Subject: Re: [PATCH] hw/i386/fw_cfg: Use g_new() and g_new0() instead of
  g_malloc()
-To: Sourish Dutta Sharma <sourishduttasharma770@gmail.com>,
- qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
- mst@redhat.com, marcel.apfelbaum@gmail.com
+Message-ID: <20260427060403-mutt-send-email-mst@kernel.org>
 References: <20260224160020.137036-1-sourishduttasharma770@gmail.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260224160020.137036-1-sourishduttasharma770@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ <883bd7fd-a9e2-49e3-9198-8333825f8aa1@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <883bd7fd-a9e2-49e3-9198-8333825f8aa1@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -30
 X-Spam_score: -3.1
@@ -166,27 +121,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24/02/2026 17.00, Sourish Dutta Sharma wrote:
-> Replace g_malloc() and g_malloc0() calls that calculate the allocation
-> size using sizeof() with the type-safe g_new() and g_new0() macros.
+On Mon, Apr 27, 2026 at 12:02:57PM +0200, Thomas Huth wrote:
+> On 24/02/2026 17.00, Sourish Dutta Sharma wrote:
+> > Replace g_malloc() and g_malloc0() calls that calculate the allocation
+> > size using sizeof() with the type-safe g_new() and g_new0() macros.
+> > 
+> > This aligns the code with QEMU's coding style guidelines, improving
+> > readability and protecting against potential integer overflow
+> > vulnerabilities when allocating arrays.
+> > 
+> > Signed-off-by: Sourish Duttta Sharma  <sourishduttasharma770@gmail.com>
+> > ---
+> >   hw/i386/fw_cfg.c | 4 ++--
+> >   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> This aligns the code with QEMU's coding style guidelines, improving
-> readability and protecting against potential integer overflow
-> vulnerabilities when allocating arrays.
+>  Hi!
 > 
-> Signed-off-by: Sourish Duttta Sharma  <sourishduttasharma770@gmail.com>
-> ---
->   hw/i386/fw_cfg.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+> Thanks for your patch! FWIW, fw_cfg is not really my turf, but since I was
+> looking into malloc() related patches today, I noticed your patch which
+> seems to have fallen through the cracks (sorry for this!), so I picked it up
+> and added it to my latest pull request.
+> 
+>  Regards,
+>   Thomas
 
-  Hi!
+Thanks for doing this. FWIW
 
-Thanks for your patch! FWIW, fw_cfg is not really my turf, but since I was 
-looking into malloc() related patches today, I noticed your patch which 
-seems to have fallen through the cracks (sorry for this!), so I picked it up 
-and added it to my latest pull request.
-
-  Regards,
-   Thomas
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 
 
