@@ -4,52 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2396BFF8867
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 21:03:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 470B7FF8864
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 21:03:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHT5b-0000Sw-IX; Mon, 27 Apr 2026 17:01:59 -0400
+	id 1wHT5b-0000TV-Q8; Mon, 27 Apr 2026 17:01:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5X-0000J1-IG
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5X-0000Iz-I3
  for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:55 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5U-0003Wk-UF
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5U-0003WD-4y
  for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:54 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 1163260138;
- Mon, 27 Apr 2026 21:01:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55866C2BCB5;
+ by sea.source.kernel.org (Postfix) with ESMTP id 0339B408CB;
  Mon, 27 Apr 2026 21:01:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7473BC19425;
+ Mon, 27 Apr 2026 21:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777323711;
- bh=ZCgbefl3znT//LnX5C+F02YXGLn7Vtw2haVvLrZdTz0=;
+ s=k20201202; t=1777323709;
+ bh=wru9oPkln2hoGe2ulS/uGq6EqHcd0/+fKmWJSpYsnvo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=JIDwp7HzuIdSMdH+ZOsnuOmBgJ0H3sIhTFXdexpOSDOqmTQR6Z91Y0Su/36pPFMm3
- hlW81d+N3U7Jnnn+ePZ7wyYY3I0KfXsx1equgMMcd+37IsPE/acgq4m4SZVvGC6gwk
- 4ZyRLvvWZ8w98but5/aIcgsZ8yN8ZPq9jKQ/hA8BkOfPcbbMbcd3WDJoDKURksiIWJ
- tilNs21L3IY+Qf338O9JbxR/9VODfEIqdp7MCEE1ObdWAzQDdSjkHRcD0iO3et4PJX
- N2I97j0ULUMpLHkbDze3nq3a8OHtM1ZSw2eSd869fluJz51BznZnwZ6jMmYU/DZX0V
- EQoyXnl6REM+A==
+ b=EPKto8VZATcgZ61gkvS4qHCc4MS1W35efLQlYTLi74TNeJR79+/ML+EUwTOZ23lGg
+ 5dMOplWwUut7qfw5RYZrTZsxyR+HbdVNxURB4XZSfH5aEl283NtZvPMfQAbjvjsc+o
+ C2r1OjwEjYeqxswavHIjbLqCEsEsk2RWyHwhYbDnzuQZL7O3tjmf2UEy4e324Zh9nI
+ 4HgJ8HjUwz1af35OgscWvcEexkb2IgfLPrNs/wxdUbBh87RS9nFCH1+u5KfJ2UPTxU
+ 2U8AnJNtFdWdFHSruOD2RXeR76EsnJoggyf9U5Btgc74uXmGDDXXezxYQ/HrD1H8Af
+ 5c+L+C+mPehLw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL v2 08/15] linux-user/mips: sync k0 TLS for EF_MIPS_MACH_OCTEON
- userlands
-Date: Mon, 27 Apr 2026 23:01:26 +0200
-Message-ID: <20260427210133.6016-9-deller@kernel.org>
+Subject: [PULL v2 07/15] linux-user/strace: Use pointer type for read and
+ write values
+Date: Mon, 27 Apr 2026 23:01:25 +0200
+Message-ID: <20260427210133.6016-8-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260427210133.6016-1-deller@kernel.org>
 References: <20260427210133.6016-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,88 +71,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-Cavium Octeon userspace is not following a generic MIPS Linux TLS
-ABI rule here. Older Octeon glibc uses the k0 register as the fast
-thread pointer, while newer Octeon2 and Octeon3 glibc variants use
-the normal rdhwr $29 path.
+The stack pointer is being truncated as 32-bits for qemu-riscv64, so
+let's use %p to print the syscall pointer argument.
 
-linux-user already updates CP0_UserLocal for cpu_set_tls() and
-TARGET_NR_set_thread_area, but it does not keep gpr[26]
-synchronized. That leaves EF_MIPS_MACH_OCTEON userlands able to
-complete set_thread_area() and still reach pthread startup or
-pthread_self() with a stale k0 value.
-
-Use the existing MIPS ELF machine flags from linux-user/elfload.c and
-mirror CP0_UserLocal into gpr[26] only for EF_MIPS_MACH_OCTEON.
-
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3238
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/elfload.c         | 3 +++
- linux-user/mips/target_cpu.h | 5 +++++
- linux-user/qemu.h            | 1 +
- linux-user/syscall.c         | 2 +-
- 4 files changed, 10 insertions(+), 1 deletion(-)
+ linux-user/strace.list | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 59b543f740..0e757787d2 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -1476,6 +1476,9 @@ static void load_elf_image(const char *image_name, const ImageSource *src,
-     /* Usual start for brk is after all sections of the main executable. */
-     info->brk = TARGET_PAGE_ALIGN(hiaddr + load_bias);
-     info->elf_flags = ehdr->e_flags;
-+#ifdef TARGET_MIPS
-+    info->use_k0_tls = (ehdr->e_flags & EF_MIPS_MACH) == EF_MIPS_MACH_OCTEON;
-+#endif
- 
-     prot_exec = PROT_EXEC;
- #ifdef TARGET_AARCH64
-diff --git a/linux-user/mips/target_cpu.h b/linux-user/mips/target_cpu.h
-index c375616c55..2bbd0a81c5 100644
---- a/linux-user/mips/target_cpu.h
-+++ b/linux-user/mips/target_cpu.h
-@@ -35,7 +35,12 @@ static inline void cpu_clone_regs_parent(CPUMIPSState *env, unsigned flags)
- 
- static inline void cpu_set_tls(CPUMIPSState *env, target_ulong newtls)
- {
-+    TaskState *ts = get_task_state(env_cpu(env));
-+
-     env->active_tc.CP0_UserLocal = newtls;
-+    if (ts->info->use_k0_tls) {
-+        env->active_tc.gpr[26] = newtls;
-+    }
- }
- 
- static inline abi_ulong get_sp_from_cpustate(CPUMIPSState *state)
-diff --git a/linux-user/qemu.h b/linux-user/qemu.h
-index cfe5f45fc4..7f98fb2607 100644
---- a/linux-user/qemu.h
-+++ b/linux-user/qemu.h
-@@ -65,6 +65,7 @@ struct image_info {
-         uint32_t        note_flags;
- 
- #ifdef TARGET_MIPS
-+        bool            use_k0_tls;
-         int             fp_abi;
-         int             interp_fp_abi;
+diff --git a/linux-user/strace.list b/linux-user/strace.list
+index 35f001fecd..6162a407f9 100644
+--- a/linux-user/strace.list
++++ b/linux-user/strace.list
+@@ -1114,7 +1114,7 @@
+ { TARGET_NR_quotactl, "quotactl" , NULL, NULL, NULL },
  #endif
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index f4b74ad350..8e96cc26db 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -13216,7 +13216,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
- #ifdef TARGET_NR_set_thread_area
-     case TARGET_NR_set_thread_area:
- #if defined(TARGET_MIPS)
--      cpu_env->active_tc.CP0_UserLocal = arg1;
-+      cpu_set_tls(cpu_env, arg1);
-       return 0;
- #elif defined(TARGET_I386) && defined(TARGET_ABI32)
-       return do_set_thread_area(cpu_env, arg1);
+ #ifdef TARGET_NR_read
+-{ TARGET_NR_read, "read" , "%s(%d,%#x,%d)", NULL, NULL },
++{ TARGET_NR_read, "read" , "%s(%d,%p,%d)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_readahead
+ { TARGET_NR_readahead, "readahead" , NULL, NULL, NULL },
+@@ -1674,7 +1674,7 @@
+                      print_syscall_ret_waitpid },
+ #endif
+ #ifdef TARGET_NR_write
+-{ TARGET_NR_write, "write" , "%s(%d,%#x,%d)", NULL, NULL },
++{ TARGET_NR_write, "write" , "%s(%d,%p,%d)", NULL, NULL },
+ #endif
+ #ifdef TARGET_NR_writev
+ { TARGET_NR_writev, "writev" , "%s(%d,%p,%#x)", NULL, NULL },
 -- 
 2.53.0
 
