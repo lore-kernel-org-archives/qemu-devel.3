@@ -4,78 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA092FF8860
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 15:48:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69F18FF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 15:54:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHOBx-0005Wz-09; Mon, 27 Apr 2026 11:48:13 -0400
+	id 1wHOHb-00070X-HL; Mon, 27 Apr 2026 11:54:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3N4XvaQQKClYF86F4CC492.0CAE2AI-12J29BCB4BI.CF4@flex--rkir.bounces.google.com>)
- id 1wHOBv-0005Wm-LW
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 11:48:11 -0400
-Received: from mail-pj1-x1049.google.com ([2607:f8b0:4864:20::1049])
+ (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
+ id 1wHOHY-00070D-3n
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 11:54:00 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3N4XvaQQKClYF86F4CC492.0CAE2AI-12J29BCB4BI.CF4@flex--rkir.bounces.google.com>)
- id 1wHOBu-0003vn-4P
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 11:48:11 -0400
-Received: by mail-pj1-x1049.google.com with SMTP id
- 98e67ed59e1d1-354bc535546so10618410a91.3
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 08:48:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <visitorckw@gmail.com>)
+ id 1wHOHW-0005Dm-I8
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 11:53:59 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-35d94f4ee36so6253490a91.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 08:53:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1777304888; x=1777909688; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=m+euPCGzXKAX2DOBO4RfOMZ5ORa12ZSpckTUq80KcUY=;
- b=lp0lpi7/IQMB+UnxFTEWoVHwL8C+iF4JAVnfI42Ipp91zuFNJkAOf0jBPWY6TZh7/P
- 2gSIR0WiYmTvoDglRb97qIWmAdwrBLYoi3pCdqhk9vozP0FFjVslm6JDwQRBkNhcb++a
- xKWparZ+/SzPltNUUqkiED1s8ftsPnZiJzef9ZF9y9I1oUy4QAidJF+HgplPj6iue80A
- CkQJuQzsftjIChiaybreZpRXSFbfe8JvVEsiydXJ935Ni/h0npD9QjM2+sQYhtW89iy1
- 66qpcutA2c0B1f0IHCVhmQH6DIchbzhjCWCBG1aNIIa5XKtm9W6Q5eQ8wqVNBBbcxmI3
- zThA==
+ d=gmail.com; s=20251104; t=1777305236; x=1777910036; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=Bs/WIiKT9fGWokLiv82djlu3t8U5ROmRCWW144DG5Pw=;
+ b=SEAIjSoi4pnrhgwXHr0eQJlrZudvnAxrhCq1tNfJErWijG4AmPv8W00CQHV4C4v7DL
+ zE/TSqkSZJ3rXPc5jSj6Toe/GUmh4vNWdff8iHAYZtCm+W/bRJfD6eIgwEMOBUFMsBHR
+ zKZ10goLDvo6apvB4dx5sJM4wLDccza6XxNG/qnZp/TehlTBUHiMI2zwudvCSHwpaFp1
+ udBtr7EwxHZnv+1kua3g2aaCZXEC+zgkhSENK8cLtCyQa46Y3hMawJg1+x/aNl9G5FYC
+ BlJea62sKo+Jrs9d68ftlNV5rjbw+QYtOaJJ5cJdIT1BTc46g65Jjza2bDxej/u7PH5t
+ /BvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777304888; x=1777909688;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=m+euPCGzXKAX2DOBO4RfOMZ5ORa12ZSpckTUq80KcUY=;
- b=VeeVcRGY2x7DtN72YKl/0P6CA1MTQY2eHbqT1R66a2auNBq0HrLfCRwJSxL6pJpVC1
- Mzjw+C8AH7Ccte0uhIL/GR7AxLaHGvfVJVCLucg6OgkUEbSCFNlUXhgF5eLCxmPnn+9d
- ZdzF+ivbTvYmJv7T7stNLREzygavSuxG2E78Xbhr81QZ3BGvxhgSkxx6dojkZ/b7IfAJ
- yxD9FJobzrJ+HFIj/ju6F5i4UhNkhNGkRCVdf3nROxgliraYYeveahZmcNXX0iX0JX1d
- jt34pFu16vqodN/vvaJLUd1DEvlU5zk69xzlKN99bppwO4GTQYpiOrVSr6F0nrdb1BcJ
- kGYw==
-X-Gm-Message-State: AOJu0YyEuERJlUq4ln27xzXTI+BdE5FkXQyfaEN9SQN8b+uwPW0gg+eF
- N8lNJ+nIuUu00SeH50wu9Y0lmUhh3g36GjQ3oPVtxTYn471Pz5q1qc0a+5IoteeRdkyKqsV3Ag=
- =
-X-Received: from pjbmr10.prod.google.com ([2002:a17:90b:238a:b0:35f:b524:f8b2])
- (user=rkir job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:5845:b0:35e:58d3:3286
- with SMTP id 98e67ed59e1d1-36140498567mr46498994a91.24.1777304887710; Mon, 27
- Apr 2026 08:48:07 -0700 (PDT)
-Date: Mon, 27 Apr 2026 15:44:40 +0000
-In-Reply-To: <20260427154441.1918536-1-rkir@google.com>
-Mime-Version: 1.0
-References: <20260427154441.1918536-1-rkir@google.com>
-X-Mailer: git-send-email 2.54.0.rc2.544.gc7ae2d5bb8-goog
-Message-ID: <20260427154441.1918536-2-rkir@google.com>
-Subject: [PATCH 1/2] qom: improve use-after-free debugging
-From: Roman Kiryanov <rkir@google.com>
-To: pbonzini@redhat.com, alex.bennee@linaro.org
-Cc: qemu-devel@nongnu.org, Roman Kiryanov <rkir@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1049;
- envelope-from=3N4XvaQQKClYF86F4CC492.0CAE2AI-12J29BCB4BI.CF4@flex--rkir.bounces.google.com;
- helo=mail-pj1-x1049.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ d=1e100.net; s=20251104; t=1777305237; x=1777910037;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Bs/WIiKT9fGWokLiv82djlu3t8U5ROmRCWW144DG5Pw=;
+ b=NHdqs/SCdMLN92KbE/HOckN/y7BJwo69zVZZxnBHoVxg+z2G+LWJDrlSt5gve0aYv9
+ 60CU4C4JWE8PFox7rzO6lQW1gerxfUWNYk4rOJVOw8OoLNj0gf9RYdynzEGqmHHVScvH
+ kdObw4Y6rTsFbQ8DBpxoY4yz7HK02iT/u8GrUEAf+ElGHUw3k3A7uQpP0rrm+X/7jGm9
+ skEF+ocCBTYtS0vrYHUZ6t8N9rq+tWqUwEngihwDIFXV5GWODqWtdZ2pUxNEsbAgMgHG
+ idcCdNZiBp1QZ6//LIb/6BZ5OJNyqb/8pP9g5VCNU0KbkDHFwUDNvK8pKt3/W9nl1fWk
+ wlRQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9e8a5N5EDWO4rINJo/IpRiChr7NSVQvuWEik0FqDigjonuBcPvu87pf1phwFEvrJOZ1BNn7vE+Q7Jc@nongnu.org
+X-Gm-Message-State: AOJu0Yy3v9qFU2U/KBNXHe8rc5yC++eJ6NKQSnRXM+oZlW/9QJ/pwcUs
+ ZOo3GAAnqf4SeYW3tBBsRo7mYodyHDHwxXIZrYMQvPtA6Fm+dDYKxRKd
+X-Gm-Gg: AeBDieuDXMJelRuduY9+CMFnSy2+xM3NrDVeJSRnQGkG/jWZwUUbU0F15J6eeS6dyNp
+ IK8TsJKVm7CJwvpdiuoz3HlbptROdRfgwm+gDKAhyV8vGlVx8dso0mkDEztfnH78KJpyRXu8PSG
+ Ixgnx7V0FKza/GafOU2Ad5WIr/WHv/r1pS/jfqV+cfN0dNlikfemReTAo17DneLmxzKMWoHKCE/
+ RfRbbd9bMTBgDByutKaqrZyNvDKLVFvFXBjh/r+D5Xt2U1eG8FGry/AVw//jui3enTu/oKeYTsK
+ 1uynagV3xDl3BjBux6GIk77mScmsBGJsTz7bL3PXjlizazJJ27mgFOL+z8F+xX2+6WLHEljvx3F
+ 4NLBDq6vEQJu3s+6d60jjpUzzbXNp3tc1wiyZhZRA95i/yS8HkwqQSwLSNjSLS5JIdkIlb0T964
+ eS4hJtUhAK4OXPh+CwhB+UppOYpvUevbDxkmizqMHRFdfH
+X-Received: by 2002:a17:90b:164a:b0:35f:b572:ece3 with SMTP id
+ 98e67ed59e1d1-361403bd001mr44721973a91.6.1777305236485; 
+ Mon, 27 Apr 2026 08:53:56 -0700 (PDT)
+Received: from google.com ([118.150.148.19]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-36141990bb6sm33638182a91.17.2026.04.27.08.53.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Apr 2026 08:53:55 -0700 (PDT)
+Date: Mon, 27 Apr 2026 23:53:52 +0800
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
+To: pbonzini@redhat.com, mst@redhat.com, cohuck@redhat.com
+Cc: eleanor15x@gmail.com, jserv@ccns.ncku.edu.tw, qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/2] virtio-rtc: Add basic device support
+Message-ID: <ae-GkNZiVNzX1W91@google.com>
+References: <20260228182246.700714-1-visitorckw@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260228182246.700714-1-visitorckw@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=visitorckw@gmail.com; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,37 +99,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch invalidates dead objects so their usage will
-lead to more predictable results (crashes or asserts).
+Hi,
 
-Change-Id: I1dc36dbc1030c2e41c937f08baa97b2e81d44c82
-Signed-off-by: Roman Kiryanov <rkir@google.com>
----
- qom/object.c | 3 +++
- 1 file changed, 3 insertions(+)
+On Sat, Feb 28, 2026 at 06:22:44PM +0000, Kuan-Wei Chiu wrote:
+> This patch series introduces initial support for the virtio-rtc device
+> (VIRTIO_ID_CLOCK), based on the OASIS virtio-rtc specification.
+> 
+> This implementation provides a single read-only clock that returns
+> the host's QEMU_CLOCK_HOST time in nanoseconds. It handles the
+> basic control and read requests necessary for the device to be
+> successfully probed and utilized by the upstream Linux virtio_rtc
+> driver.
+> 
+> I have verified this implementation using the virtio_rtc driver from
+> the Linux mainline. The device probes successfully, and the host time
+> can be correctly read from the guest using the following commands:
+> 
+>   $ cat /sys/class/rtc/rtc0/time
+>   $ cat /sys/class/rtc/rtc0/date
+>   $ hwclock -r -f /dev/rtc0
 
-diff --git a/qom/object.c b/qom/object.c
-index f981e27044..240e36c39e 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -613,6 +613,7 @@ static void object_property_del_all(Object *obj)
-     } while (released);
- 
-     g_hash_table_unref(obj->properties);
-+    obj->properties = NULL;
- }
- 
- static void object_property_del_child(Object *obj, Object *child)
-@@ -670,6 +671,8 @@ static void object_finalize(void *data)
- 
-     g_assert(obj->ref == 0);
-     g_assert(obj->parent == NULL);
-+    g_assert(obj->properties == NULL);
-+    obj->class = NULL;
-     if (obj->free) {
-         obj->free(obj);
-     }
--- 
-2.54.0.rc2.544.gc7ae2d5bb8-goog
+Are there any comments or feedback on this?
 
+Regards,
+Kuan-Wei
+
+> 
+> Kuan-Wei Chiu (2):
+>   standard-headers: Add virtio_rtc.h from Linux 7.0-rc1
+>   virtio-rtc: Add basic virtio-rtc support
+> 
+>  MAINTAINERS                                 |   7 +
+>  hw/virtio/Kconfig                           |   5 +
+>  hw/virtio/meson.build                       |   2 +
+>  hw/virtio/virtio-rtc-pci.c                  |  65 ++++++
+>  hw/virtio/virtio-rtc.c                      | 190 ++++++++++++++++
+>  include/hw/virtio/virtio-rtc.h              |  22 ++
+>  include/standard-headers/linux/virtio_rtc.h | 237 ++++++++++++++++++++
+>  7 files changed, 528 insertions(+)
+>  create mode 100644 hw/virtio/virtio-rtc-pci.c
+>  create mode 100644 hw/virtio/virtio-rtc.c
+>  create mode 100644 include/hw/virtio/virtio-rtc.h
+>  create mode 100644 include/standard-headers/linux/virtio_rtc.h
+> 
+> -- 
+> 2.53.0.473.g4a7958ca14-goog
+> 
 
