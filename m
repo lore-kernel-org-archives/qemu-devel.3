@@ -4,143 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06E56FF8860
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 18:16:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32D1AFF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 18:30:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHQUP-0003LB-Po; Mon, 27 Apr 2026 14:15:29 -0400
+	id 1wHQiA-0008F9-0m; Mon, 27 Apr 2026 14:29:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wHQTm-00035p-7O
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 14:14:46 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wHQi8-0008EE-9D
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 14:29:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wHQTk-0000Gl-DA
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 14:14:45 -0400
-Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63RCYRJT429032
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 18:14:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 6bjPWz7DNRn+g9rvzEysQdLFoOcNGafm3fwSCPkxSh4=; b=CTGbLyPZ4ogxENtn
- Q4yF8g0OMDBmsi0Bdnw3v9ipr7YwssHhuTQsgluYCviqzW0h5Muv5/Bo3Z9hLkBg
- 5Yy/c+j7pTPTODswViHgigI5rZcO0ZSx/yDdKXVuiWI/Tmd0bHhVr7JrRhOipGMu
- o5u5s47TVKoHQlUI8YIP008/VjVTDpWLqVOgvd6fatLVtPEqKTnOzSgTlefDJ5w+
- ojmw6GmAWcBGmmSt91sqdc1bE1Y0HCr5IC2Wg+wm3//KhJjwWLANNHuiAHQy58+4
- q4eNBAix6LAQdoLJdnnGcIWe4TQsP2zfUKkUQgW5lQbwjpmNlgNruCjtFnJYe/1S
- o4UmvQ==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dt7x31akj-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 18:14:42 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-2c0f6593ef5so13760162eec.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 11:14:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1777313681; x=1777918481; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6bjPWz7DNRn+g9rvzEysQdLFoOcNGafm3fwSCPkxSh4=;
- b=KM1zjoECGYsCS3NHEhh0fdHhIXrrnlSy4vy/Kdo1Pb0rJGiLY9bmVoi13VC5ZduqAs
- CcNxiGO8nYAcIVX1yT8kFdyTRSKwu8QmKuksqpe1Uw8k5GjRVfDIYdqozMh0iXagzmie
- 0yKEW8pIfd3GEKvm4B8zxJ0hmNnK+5e1K3BQtIr9zhiAzkQUiaIo43RHnhWhjRWSEyxT
- RaTD8jCyVWdmX678Rp/cRWIJwG3PZcp7MxJV/kf9mIemTjjnP1cLYp0bw/8X2uUUdt6x
- 7a9YN8AAdXwxMJnJUQy826PsD86uNXAthG8IUEIpFreeuRrhMUi0Ug2iOR+0czFYqa+G
- qnnw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777313681; x=1777918481;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6bjPWz7DNRn+g9rvzEysQdLFoOcNGafm3fwSCPkxSh4=;
- b=Eg6o9oEmo4+qu5CJUSOOr7QAeuXPy7Sm8ML1dAM0FGBaOWc8Yxv1McjEbD1kmplkK5
- dB1xZT02WegCmSVi6K/e43mAOp3wpxS70bfG36n5szTtK2Prb1RekGdGUALDxPdcvWlK
- bvIf2rGFiVYJKSg1IJ+zt6JhNS7aK/VrL/dRDD/txrmleEsv+4LQ6ocngZAUaYDo7i8O
- pcAI7KUjxyOX/ZSsEkgtxlFcGt1MpYTLBcI/7rBDuQ4p38/wscze8ZfCIwNLEdTMamSv
- jWrxxuGcp2se5hQ+pFpgnKi2R6cyQb92vTy0D7Ek8Uk3U6KUjs2Li0iYLNibZyatxSoX
- gSAA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+3uKsyy+HZKm2weNKLmR5FzTu2pPsDELPCyfqVkNY4WiVxllfJNgpXRHJRhcK6qrCPVqgRzaMCTZpF@nongnu.org
-X-Gm-Message-State: AOJu0Yy1cOdPM/UlcXm3gVpDKXctK3XZ0HjM77ScO8REsgPrEXatpl6e
- s5s54dK7emJtpJ1ePEibRLwQFTDfpgGrqgsrKv/VlKxoURURcabAGr7N5nhRCvU1UoPgyO3r+r7
- 1V1mQ3BrrzDzjZOyWpMznomSoiwCcG6f7xBcL1gnGfqDcus10Fit6IBBLPA==
-X-Gm-Gg: AeBDieskvnMi7qoZgT0JTe2hs8HQ3zne9ANKga5hBuHMpoVjLTK03Rrf25+y3CXwPen
- Aj4gb4v4vF5oNYhmQE7QAV20mVI0Io/phjEM5+qjYN6DMVSUPW7SqCW7ksGQHIfHvOnhSVXzlVi
- q5Kr+aV84XTPZauTrw+Ppk6wZpD9CmGiey33rhojLCwcaKMVDwMJghNFaDX/wD7Qf+7ZD1P8QPP
- eDXNyfFmct/tq6w2fpTC8WWD1hw57LrrnWd1vokRylB6fo+WN7QIzENf3hqiJQ620/DKMNmFTqF
- TMoTqhwi4XpoC4gvKiFJFXWv4sw/CKLN3K1136HcqpHntOhxdodVeYtTdATa4MJRnB1uVxHgUap
- k+BGiJ7xButRBMIVsPUtWapLRGJKpDiQXH/ALIxxKCv4eeg6Bn6o5GkXliTGT+9PdlgAG8Fb1e/
- rEdiqv5HKYJ4Jl34aG3xAKiTJC
-X-Received: by 2002:a05:7300:642a:b0:2ea:e93a:ff9b with SMTP id
- 5a478bee46e88-2ed09c154bcmr36292eec.13.1777313681232; 
- Mon, 27 Apr 2026 11:14:41 -0700 (PDT)
-X-Received: by 2002:a05:7300:642a:b0:2ea:e93a:ff9b with SMTP id
- 5a478bee46e88-2ed09c154bcmr36271eec.13.1777313680554; 
- Mon, 27 Apr 2026 11:14:40 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2e53ccce460sm44706858eec.19.2026.04.27.11.14.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Apr 2026 11:14:40 -0700 (PDT)
-Message-ID: <b8da7f91-6512-4f24-a120-8df5d22d3bb5@oss.qualcomm.com>
-Date: Mon, 27 Apr 2026 11:14:39 -0700
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wHQi5-0004R8-Nd
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 14:29:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777314571;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+ bh=wbrGrpYwAoexGyBI/YIu1zfMm+EWJWNiqlXkgHATKjg=;
+ b=fZTqPVCaW50Jp9A7f2N660rreqUOoweiUfVlNLnOcYthSCoK6NfQtu748yChmoNOXZThTv
+ a7F2cW+Hfq51D+hI+yEy6FFoQL2QL1t92yHrjA+fv/CPPlL6i3Z/awuAPaNH7uZN8WkefG
+ QfqaYinjHaU2JhL/s2ok4BvFUTHR4+w=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-421-qh093ZeUMjaQ7F5v2J1n6Q-1; Mon,
+ 27 Apr 2026 14:29:29 -0400
+X-MC-Unique: qh093ZeUMjaQ7F5v2J1n6Q-1
+X-Mimecast-MFC-AGG-ID: qh093ZeUMjaQ7F5v2J1n6Q_1777314568
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BEDA519560B5; Mon, 27 Apr 2026 18:29:27 +0000 (UTC)
+Received: from localhost (unknown [10.44.34.59])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9BF191800446; Mon, 27 Apr 2026 18:29:26 +0000 (UTC)
+Date: Mon, 27 Apr 2026 14:29:23 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+Subject: npcm7xx_timer-test failing sporadically in CI
+Message-ID: <20260427182923.GA235067@fedora>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] tests/tcg: Add test for /proc/self/task/ filtering
- and tkill validation
-To: Ali Raza <elirazamumtaz@gmail.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, deller@gmx.de
-References: <20260424-master-v2-0-8b50b5c063ed@gmail.com>
- <20260424-master-v2-3-8b50b5c063ed@gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260424-master-v2-3-8b50b5c063ed@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI3MDE5NCBTYWx0ZWRfX8OT79UazlV73
- jr01QMxI3aJRRPKyEioq1Jf4P8IVyN+Ah0UJ78tYCdz7kkVFI06CAvdLCegKpaPzA0fAlN6sd6f
- qBxp+jmmrQuypg4qdUS10NvVSYp+BSufrZXFnvy62H3OPYR4DtvUm+NUl8W9mu7FXLNTUl80Yxa
- j7NOzgLu9aPsy/frupG45XoSLT6M0TNiqHzT/dgUZcmusmtviiFKY18m/Av3pShbFhK5BXXJu3o
- WTNaXwvx/vbNjPJfIEM1/U/oN4ZwqxXT53qziSsHz+vNlz+51eA/fZbhIiJq6a/mUjlqI1hWpz7
- vzygWCimtfGOJdUDTfDiUEpIb8L5qJ69ObCZ+oTUXBFrX5tkpReGQT0JAWnrxuy+RIsAD483yHW
- 9KMjd8oS7q0AOHCIeIp2v2InaUb8m0EKNY89C4BY9psdrSQCv04az6oU6T+7nlPBsvMBNDUwWVf
- NhM4I1OqKNzWxoVJtXA==
-X-Proofpoint-ORIG-GUID: RCAapRA7zjf6hXWjVXlJyQgK6irdzJao
-X-Authority-Analysis: v=2.4 cv=AJEsYPsu c=1 sm=1 tr=0 ts=69efa792 cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
- a=EUspDBNiAAAA:8 a=kG0x-5ay5tX3yjYrpVEA:9 a=QEXdDO2ut3YA:10
- a=scEy_gLbYbu1JhEsrz4S:22
-X-Proofpoint-GUID: RCAapRA7zjf6hXWjVXlJyQgK6irdzJao
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-27_04,2026-04-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 impostorscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
- malwarescore=0 adultscore=0 lowpriorityscore=0 clxscore=1015 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604270194
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="DRXTIOb8GETp2UAR"
+Content-Disposition: inline
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,33 +81,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/23/2026 2:36 PM, Ali Raza wrote:
-> Add a multiarch linux-user test that verifies:
-> 
-> 1. /proc/self/task/ only lists guest threads -- spawns NUM_THREADS
->    pthreads, reads the task directory, and asserts every entry maps
->    to a known guest TID and the total count matches.
-> 
-> 2. tkill(guest_tid, 0) succeeds for all guest threads.
-> 
-> 3. tkill to a non-guest TID returns ESRCH.
-> 
-> On native Linux this test trivially passes since there are no
-> QEMU-internal threads.  Under QEMU user-mode, it exercises the
-> getdents64 filtering and tkill validation added in the previous
-> two commits.
-> 
-> Signed-off-by: Ali Raza (@locus-x64)
-> 
-> ---
-> Changes in v2:
-> - Hard-assert ESRCH on tkill to a non-guest tid (was a printf).
-> - Add tgkill coverage: success on guest tids; ESRCH on a wrong tgid.
-> ---
->  tests/tcg/multiarch/Makefile.target         |   2 +
->  tests/tcg/multiarch/linux/linux-proc-task.c | 193 ++++++++++++++++++++++++++++
->  2 files changed, 195 insertions(+)
-> 
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+--DRXTIOb8GETp2UAR
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi,
+The npcm7xx_timer test fails sometimes in QEMU's CI. Is it possible that
+"clock_step" is stepping to some other deadline and not the
+npcm7xx_timer device's deadline?
+
+In tests/qtest/npcm7xx_timer-test.c:
+
+  /* Verifies that a periodict timer fires an interrupt every time it expir=
+es. */
+  static void test_periodic_interrupt(gconstpointer test_data)
+  {
+      const TestData *td =3D test_data;
+      unsigned int count =3D 65535;
+      unsigned int ps =3D 2;
+      int i;
+ =20
+      tim_reset(td);
+ =20
+      tim_write_ticr(td, count);
+      tim_write_tcsr(td, CEN | IE | MODE_PERIODIC | PRESCALE(ps));
+ =20
+      for (i =3D 0; i < 4; i++) {
+          clock_step_next();
+          ^^^^^^^^^^^^^^^^^
+ =20
+          g_assert_cmphex(tim_read(td, TISR), =3D=3D, tim_timer_bit(td));
+          g_assert_true(qtest_get_irq(global_qtest, tim_timer_irq(td)));
+
+Here is the output from a test failure:
+
+ 56/113 qemu:qtest+qtest-arm / qtest-arm/npcm7xx_timer-test           ERROR=
+            0.82s   exit status 1
+>>> MSAN_OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1:p=
+rint_stacktrace=3D1 QTEST_QEMU_IMG=3D./qemu-img MESON_TEST_ITERATION=3D1 QT=
+EST_QEMU_STORAGE_DAEMON_BINARY=3D./storage-daemon/qemu-storage-daemon ASAN_=
+OPTIONS=3Dhalt_on_error=3D1:abort_on_error=3D1:print_summary=3D1 QTEST_QEMU=
+_BINARY=3D./qemu-system-arm G_TEST_DBUS_DAEMON=3D/builds/qemu-project/qemu/=
+tests/dbus-daemon.sh RUST_BACKTRACE=3D1 PYTHON=3D/builds/qemu-project/qemu/=
+build/pyvenv/bin/python3 MALLOC_PERTURB_=3D187 UBSAN_OPTIONS=3Dhalt_on_erro=
+r=3D1:abort_on_error=3D1:print_summary=3D1:print_stacktrace=3D1 /builds/qem=
+u-project/qemu/build/tests/qtest/npcm7xx_timer-test --tap -k
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80  =E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95
+stderr:
+**
+ERROR:../tests/qtest/npcm7xx_timer-test.c:475:test_periodic_interrupt: asse=
+rtion failed (tim_read(td, TISR) =3D=3D tim_timer_bit(td)): (0x00000000 =3D=
+=3D 0x00000010)
+**
+ERROR:../tests/qtest/npcm7xx_timer-test.c:475:test_periodic_interrupt: code=
+ should not be reached
+**
+ERROR:../tests/qtest/npcm7xx_timer-test.c:476:test_periodic_interrupt: 'qte=
+st_get_irq(global_qtest, tim_timer_irq(td))' should be TRUE
+(test program exited with status code 1)
+
+https://gitlab.com/qemu-project/qemu/-/jobs/14108292900#L5637
+
+Stefan
+
+--DRXTIOb8GETp2UAR
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnvqwMACgkQnKSrs4Gr
+c8jCPwgAseySeZ3Mot57FbwXpyjTte2WZ82eDEJIJUloX03jJeoEK20UNQ7CMFMG
+QQQjPoB0ZvsGFH3qt5xsxN2Xk7ssuvucRnnhaISNuM90A8DDO0JhzE0tVT2H0gYE
+oRAMzW9Z+9z0lAW6XFyez2dPTjNzXkyidItubdxpuPMHTv3Fi8UrQ5jdTDAxeIiq
+Qg0vRo0XuiYc7jDbkeW/dZY/k9O2Bx4yCyBe1xX7NWlYaIWq4wOXwza05qEYSbtD
+cPQ91V3LUDybcbiXI5+EmqrxFqcw4gpY7jLOEVurWGDFdAAZ8abqk6MbpoKjnoFI
+KxYKgpY8r/QZ9VZTpV4Feu8syqehRA==
+=NHKO
+-----END PGP SIGNATURE-----
+
+--DRXTIOb8GETp2UAR--
+
 
