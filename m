@@ -4,99 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDECFFF8861
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 09:44:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBFB0FF8861
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 09:54:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHIW0-0002mG-3g; Mon, 27 Apr 2026 05:44:32 -0400
+	id 1wHIf5-0005qR-Hq; Mon, 27 Apr 2026 05:53:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHIVw-0002lL-EY
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:44:29 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ id 1wHIer-0005pe-Uh
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:53:45 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHIVu-0003i2-LH
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:44:28 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-6530287803cso9527468d50.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 02:44:26 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777283065; cv=none;
+ id 1wHIeo-0006iY-Vz
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:53:40 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-6587cee8b57so1405274d50.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 02:53:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777283617; cv=none;
  d=google.com; s=arc-20240605;
- b=ddUs99bWKPbvHvpwwsHaTIA5KytldkxDEDvo2aXa9vd6KIQ7u71nDWNxZmPxXVEv32
- jSJdOT7Kf9q6ftivV9eCFVeEkOdam1RMQrscOTF6VGHRrinrS31VBtAXf8iWARa52sKv
- QiHIV2rOcnTkoYpffCtrM/mqNOCZpZXdwplYo1uA8GGas15cMvzl3Vhjmzt/CZaC3EPq
- F/hYPbtJPML/0VnhOmsSpZqA6LFeUz4nTEdFfVjgcQwE+17iiNw3RWoJL76OiqZdFIJt
- vJRU75D/y8c5EJsJgqbhJFq1pHV3hYlwYqdEnGdxSH6WCsgxF2JKRpDZR7RowOnpw4HE
- tXEg==
+ b=bhqh5aBeCiRva1auX4fply1m5rM7MH5EX1MNvfirbYm6b/YUBho+BGeJVokK6RqhB3
+ mMmRE1QGGPFVqF5Ey+eScEJF/4ij+PwuBu1dtQPGTmdyVoA3vikg232xunZ8KDySetgc
+ Ie/EItxxTdP2J3LZynlxlghLlllUrqUky/v0DJTYlWK5geMxcoJzMP4L4pt+BRJVasjx
+ N+Wq5gI1J8YRPKklnIWsUC0wmXoXltnUBVGK38dLpo5BdsQvI92lst75aVCGs63NNUzb
+ VjrFUgxFf2CTdTZtYD5T+WJqTM/TXjU526UP5hYMcLYth9aIiQqt0axGkpmAZy6pnVB+
+ Lhrw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=LbSEVQmL+Gy+XI6Lng+xGxFyxMrWeFFBBTACeEpD4cQ=;
- fh=sH8tFGrGYtu9PiY4IRsB8c/6tlMskTvLeVYzTqFRvBk=;
- b=dUJYQddgXrL1l6KEvXqMzJUVWdoOWtKtKGIE5Yinu15fh5JIC+yK/x/oByxtOvQvxS
- fAd3TXRye83cIxHtjWTdjyGJLDBZf4jUs3ESYjbvr8yhI8DrQu02j+v5mGILlfu8Ivje
- DBdVglw5H878auhxbGt49rT+lPAOXUphp8O0TnDtDWZmfNiKVPzU18fzLFX1QhYUyrLZ
- 0JnqY8269m18gg0uW5hR9ikHyicbtJRvhcSErIx0BHAyR9/VbPAWSdM+povUdv2Gi7V2
- edSkrZmz2yLVMKElZy7r8Rh1/YltSLPg2L8oE1cbRnSF4TS6CdMti9BCCrKF/NLyTRYy
- BexA==; darn=nongnu.org
+ bh=d/nDOXfyKijUgvu8fbHWG7JnOWshdqHeOY15VvLOjsM=;
+ fh=FOwmEc3pLszWtzlliwjtjCkmQtWE88cuUJLl1VZWrKY=;
+ b=VtMj5RBZMriEwNTr+hMIjFNHYoq6iZ5pA6PR6UkPnSh7oVFig29rY5Eo5nv8fPYWja
+ d2KpE2yvHYHWS+0nigLhqPh7ejSR+AK6N3WnhlxXZUx6yUk1weYUvHkcWhydTv3j1Yzd
+ YT4mZx1Y94xQE/z6R4M758O+zoKL/tCd6J9n89VVuHflAPYeIe7ZQ6qI3ufE/fd59aJd
+ vVjy2mspIzPCCWAFu3cg7X+CI9Zsxxg24TcoOhtm8EEKbHFGvIuFuTuIvQgg2+6l0NVa
+ AyDGsZ6wjjMnl49/knarm9qJB48qsJB3skpjSAYZKLrz4ejf+AW+U2CbVuwVgvAOBKzK
+ KM6g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777283065; x=1777887865; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777283617; x=1777888417; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=LbSEVQmL+Gy+XI6Lng+xGxFyxMrWeFFBBTACeEpD4cQ=;
- b=WkwipVgwyda4IVSRMVqzwlDZkvtPISheQOJOwXJlDEP4L2adhjJIKtRFTjRCD8YHsI
- tH6YYJERxVulz2i9+o5CBmeug/wKqyRwvhvGId+AzDJvPTA3vUuwETZAdFccb89pkDwr
- UUk61/a5EiTAitydwhqjqnGoqPfIB21+rm18Adgc8sbx2WAxze0ovYkOuUaSY0srFauH
- VAebt6NrsuAVXgRFnsAU3m0ueMGC7gHVeYivpZZqSpW/3z7saTnq9cBNq3rhWN+rhvh0
- F7XvoTzYpn3q0XclV9UvTpETAP+MiDeoNaBqRE5GBbIOtku6Nev21arrpPTuy3QTN1vC
- cPWg==
+ bh=d/nDOXfyKijUgvu8fbHWG7JnOWshdqHeOY15VvLOjsM=;
+ b=nd8klbQDHN8bBdBnempqUZt7681Rz03TqDaAkd4XOfyf+nafbWqABNhheRl7U3t02i
+ MURwMOUEJ0tEoT7pRlpnwfUXa/ygKYNronyLrskTx2i78ofifNoyTMEoA3B5TIo3HLN1
+ +9EYaF78r8wxetKh1so/Z+L0t4e0CbCZY0yrFlprk76d+R0nnAmMgsj+5O751Azkp6ep
+ bOf9TdsCCDPcX5T3/3gzI/Wmd2V513849sFLjmK0CKv49NhC5wn/E8lTVZhKXA+UVWya
+ WbsFnPPaUTIO7SovS+tTsTm4HQLWneFZ8H0cI5lNoqBFPJqVnJ0uOXnhyrddG8b5UzlF
+ HTmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777283065; x=1777887865;
+ d=1e100.net; s=20251104; t=1777283617; x=1777888417;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LbSEVQmL+Gy+XI6Lng+xGxFyxMrWeFFBBTACeEpD4cQ=;
- b=WeS9SE59295sIko9fTadOvXWLpzp6wDgeYTc0DV3Ys78QsjMp3qTa0aQoRQGhG/Ce7
- /clvYHLuLgd5gIIG+P8N9Eq6VdSEwtUn3+Zu13V/MjaBPKXjVk6/oLSxi944oeUtwzwI
- w1d2Ei6RWPw+Pmq2OeSAkT/q5GWAC+ryLu6wPuW0A1q6PG6BsyIVC4HQYMTFygsC+vGI
- aVP9N5IOX+4nD+Ma0kwzQuu1knKwn9yxd4yuaVQMNJbvj2sEplZCoHjTwzXD/p+7wSKD
- 6+MY0M07Lkgt4jr1c5AMPW5vwbwX9KlQOTZBHJ+FeD2YC2Ke6lp31c9V8Be4Y4/8lu+N
- m3GQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9jc+yMlv+dPX0oNYqZepfz+1vw+t+H4hcFOkqIsaPAIejnQuz9C0j0KUYZybiGOQ/7y6rsX9QubdfK@nongnu.org
-X-Gm-Message-State: AOJu0Yybk6rphWOPT/YOo/KE+SBxdTHQNVQYhVT11cKEBp1qlZcXkhou
- R5pncu4KlVVugm0MCwXhHxLxDW/cHW8I1MJ1FlgDg5T8sfPBrI8eDVLoMIwQFqUnQIOk/E6CX9y
- VEg2Utu59+WzTXR0Tgr1clkIEdwHmIVFoWv7o8uYiQQ==
-X-Gm-Gg: AeBDieuvNxO9mAcO4RKFWa4QG9wtSSJqo5rE2vHUknBw9BBWqWAt0oWkFinqdf4MlCp
- /PgVbvKh8dbEph7+QKDixE1ZKBoKZ40utHcUmRM8B+tEXtbhkqchOXnyOitmNfep1rOIAsZU7qf
- Jg596WLvLTFl4iJwxB2Q52BxRsslVaHbQSCA8WUZikc/UjEPJfeY35/sUkYQaGiOOxaCHyDL+EO
- t25Ryvf7d9ruocLavLdmSFoamWixNq5IOK2TXIxEkN9+4wQBh/1imm2kUcFrgFnONMlWyJvlPeW
- VIfB2p4W0I1T5q7GGP+KMl6ISQatGxyki1aOisQotN5cvlZtOfAVV2KNbAyoqKM3YBm92s7dyiE
- X0g==
-X-Received: by 2002:a05:690e:b4e:b0:654:1dfe:ca8e with SMTP id
- 956f58d0204a3-6541e0e2555mr32048946d50.65.1777283065245; Mon, 27 Apr 2026
- 02:44:25 -0700 (PDT)
+ bh=d/nDOXfyKijUgvu8fbHWG7JnOWshdqHeOY15VvLOjsM=;
+ b=h0mWGzwS2CURiaY+oVxz+QvtVR0MUDFzPLZLIfIy2mix4L/rcGoXQ9SS2//3QxlnVv
+ ptsXIL4aT/+O9WgtxMvNQmMCrxJMLvWh2ugVMWElOxJ1kPdoRTLkYCImswn+7AxnMUpa
+ DzPK2bW+lTZubiLs9n2NpKj+7BA9ByTy6AGtatHQmFTy6ZKSKT63HMb5p4ZZaF5xvKC0
+ ky3heDQVf2V0pC0O0Nd4acFCYGmoSR9Bpwa3W4T2BPSPJxe7pmi9TKRRXzo+zlxxQ5XC
+ 8Lc/1SpBY2xXuNNR4sOYPCGAgq0eS73eF/LTRI+9PlUO7GjyYJe+xaOsGiJ4ZTU2sDeu
+ q4HA==
+X-Gm-Message-State: AOJu0YwrMLswde0k4NOQ4GC9KaEeX9j2ZkrU+a68grHfUJ8SR7VDiNYa
+ frJQimXOcdl1ezRabQidlXb1qA9t3SmInrx5iffd53HSgSj6DnAfI6tn07TCAf9gkmimlQndpiT
+ O9w2PnfVP8lPoqNXJ3v4J7L4L5XmW/pBoajDBAHtg9Q==
+X-Gm-Gg: AeBDievO5jooEeSBNdEXOi3xG38ZKGMM9Sz4JSJ7MuHyvUBLr6nps5Qw6D8aL6LjXI+
+ dCovqQlemUrzYGve5D0JmnSXq+4l9iHyjH7gANzn9dPP40y7OGqw1b6s53p3A6TdxGS1OCQssFO
+ nh6tctG13MBzmOLHSkMrqSalZGHwyT7I3ZtG+TKkSAmARAxJ2IR47cl+tJ7FMjL4+ljFjHs0nei
+ rYR4oWeIjdNtupl/s+VGuBi+NBFSO9Gs1ilqIP4TC72LdXYupAKsHG2f8Fj+5RmmLtLbqo0eqeJ
+ x2YqJ8V6YcJDl8pg3KnwRa3F4hDqSLn+gS6e8L5AWxVRgfL0FiZK9+YjPnK1UlBMGz1lLKEUYUa
+ Kyg==
+X-Received: by 2002:a05:690e:1282:b0:651:c29e:f0b0 with SMTP id
+ 956f58d0204a3-653107f0ad9mr39115805d50.4.1777283617620; Mon, 27 Apr 2026
+ 02:53:37 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260420140552.104369-1-eric.auger@redhat.com>
-In-Reply-To: <20260420140552.104369-1-eric.auger@redhat.com>
+References: <20260420162114.308519-1-osama.abdelkader@gmail.com>
+In-Reply-To: <20260420162114.308519-1-osama.abdelkader@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Apr 2026 10:44:14 +0100
-X-Gm-Features: AQROBzBAUWwqNcOx-xJGaI6CwdG5Oz5BpCKABJY_zB_5mL_6g9cVohmqvFNmY9E
-Message-ID: <CAFEAcA_uLzLjqdr5LyLQ3EK2zy-ZoS8FfeDq9VcaobOozO3e2Q@mail.gmail.com>
-Subject: Re: [PATCH v10 0/7] Mitigation of "failed to load
- cpu:cpreg_vmstate_array_len" migration failures
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- cohuck@redhat.com, sebott@redhat.com, peterx@redhat.com, philmd@linaro.org, 
- alex.bennee@linaro.org
+Date: Mon, 27 Apr 2026 10:53:26 +0100
+X-Gm-Features: AQROBzAE4t_ZXEa8YFvZzm_2OWnRIwhP16mvAAH2-G0BLGlQMvupEBJjc8PBIBQ
+Message-ID: <CAFEAcA_29onASJ7bOs6jFbM9Mmj_X-SrJ85hSWxCOa-4WbFA8g@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm/raspi4b: NOP all DTB nodes when removing
+ unimplemented devices
+To: Osama Abdelkader <osama.abdelkader@gmail.com>
+Cc: qemu-devel@nongnu.org, "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,28 +115,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 20 Apr 2026 at 15:06, Eric Auger <eric.auger@redhat.com> wrote:
+On Mon, 20 Apr 2026 at 17:21, Osama Abdelkader
+<osama.abdelkader@gmail.com> wrote:
 >
-> This series introduces an infrastructure to explicitly tolerate
-> some mismatches between cpu cpreg indexes/values on migration.
+> fdt_node_offset_by_compatible(fdt, -1, compat) only finds the first match.
+> If the blob has more than one node with the same compatible string, extra
+> nodes will remain active. using the same loop as imx8mp-evk.c
 >
-> We especially handle failures due to an attempt to migrate
-> more registers than exposed on the destination.
->
-> Once the infrastructure is in place we can handle the following
-> known issues:
-> KVM:
-> - removal of unconditionnal exposure of TCR2_EL1, PIRE0_EL1, PIR_EL1
->   from v6.13 onwards. Causes forward migration failure.
-> - unconditionnal exposure of KVM_REG_ARM_VENDOR_HYP_BMAP_2 FW pseudo
->   register from v6.16 onwards. Causes backward migration failure.
-> TCG:
-> - We can eventually remove AArch32 DBGDTRTX register which was
->   erroneously defined.
->
+> Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+> ---
 
-Applied to target-arm.next, thanks (with an edit to the
-comment in patch 6).
+I wondered about whether it would be worth abstracting this
+out into a helper function, but it looks like at the moment
+only this raspi code and the imx8mp-evk do this. If we get
+more places we want this we might do that, but not worth
+it for two.
+
+Applied to target-arm.next, thanks.
 
 -- PMM
 
