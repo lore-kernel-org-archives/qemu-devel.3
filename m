@@ -4,117 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4CD2FF8868
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:44:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FAF5FF886D
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:44:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHRr3-0000tA-HY; Mon, 27 Apr 2026 15:42:55 -0400
+	id 1wHRs1-0001VL-Vo; Mon, 27 Apr 2026 15:43:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRqq-0000pN-O8
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:42:41 -0400
+ id 1wHRrU-00017l-4Q
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:43:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRqo-0007hQ-4X
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:42:39 -0400
+ id 1wHRrL-0007mG-0D
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:43:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777318957;
+ s=mimecast20190719; t=1777318989;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=zdK+EUUHjdOp8sYOM/4o8Xc8d42cwjolKP4mkoiOi+w=;
- b=AtxjmfnkwQKLCucqXig8t2fP6MK6Xwi675lrw1/G6FnysRklJLVPJzliow2C8fXezE18Kb
- ARdRnVmP9ELLE1C6hVIoEt9GtB/nSRUYXnIgIDmmsP5sb9qcwrpg38QPXKvjLUM5mfPvMJ
- l/us1C+u3ykGiXEjgk+VsnxisLiKihY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=dkX4SaBJSWzoDN/sOyJvVpRC/vSgOt3wi3wuQ84cUVk=;
+ b=QepGUPc7ydkDS0Kqkk+XA0k1WNAakvGbDH6VQgAA3C0GznQj7B7BIV5SQkKFR+HiBHd3YA
+ VDvASYvQeE2JpTiyU1Qc5b8IPNhl0kg5pfol558I1nBbJkDqKEAEyVVMUwGN00q9MhHobh
+ puZpwNSzla2OxNO4iyXTdCPxDMMxrSI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-39-pXqu-zsyOkOZ0slRxBWEMw-1; Mon,
- 27 Apr 2026 15:42:32 -0400
-X-MC-Unique: pXqu-zsyOkOZ0slRxBWEMw-1
-X-Mimecast-MFC-AGG-ID: pXqu-zsyOkOZ0slRxBWEMw_1777318947
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-511-owOWmJtIOk6rRrLYNehKWA-1; Mon,
+ 27 Apr 2026 15:43:08 -0400
+X-MC-Unique: owOWmJtIOk6rRrLYNehKWA-1
+X-Mimecast-MFC-AGG-ID: owOWmJtIOk6rRrLYNehKWA_1777318987
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0467E19560AA; Mon, 27 Apr 2026 19:42:24 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 423B41956094
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 19:43:07 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DCD42195608E; Mon, 27 Apr 2026 19:42:17 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E0ED33000C22; Mon, 27 Apr 2026 19:43:05 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH 00/41] Fix various QOM object life-cycle issues
-Date: Mon, 27 Apr 2026 23:41:59 +0400
-Message-Id: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+Date: Mon, 27 Apr 2026 23:42:06 +0400
+Subject: [PATCH 07/41] qom: skip link property check callback when clearing
+ link
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXM3wpAMBSA8VfRubayEc2ryIXNwVH+7YyUvLvh8
- ldf3wWMjpChjC5weBDTMgfIOAI7NHOPgtpgUInKk0wVYlsm4ZE9C93aLjU615mUEPrVYUfn96r
- q37ybEa1/B3DfD977/DltAAAA
-X-Change-ID: 20260427-qom-tests-9dcf3b969411
+Message-Id: <20260427-qom-tests-v1-7-c413f3605311@redhat.com>
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+In-Reply-To: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- jag.raman@oracle.com, Elena Ufimtseva <elena.ufimtseva@oracle.com>, 
- peterx@redhat.com, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Zhang Chen <zhangckid@gmail.com>, Li Zhijian <lizhijian@fujitsu.com>, 
- Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>, 
- "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
- zhenwei pi <zhenwei.pi@linux.dev>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Peter Maydell <peter.maydell@linaro.org>, 
- Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org, 
- Alexander Graf <graf@amazon.com>, Dorjoy Chowdhury <dorjoychy111@gmail.com>, 
- Pavel Pisa <pisa@cmp.felk.cvut.cz>, 
- Francisco Iglesias <francisco.iglesias@amd.com>, 
- Vikram Garhwal <vikram.garhwal@bytedance.com>, 
- Gerd Hoffmann <kraxel@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, Fam Zheng <fam@euphon.net>, 
- qemu-block@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Ninad Palsule <ninad@linux.ibm.com>, 
- =?utf-8?q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- qemu-arm@nongnu.org, Glenn Miles <milesg@linux.ibm.com>, 
- qemu-ppc@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>, 
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>, 
- Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Aditya Gupta <adityag@linux.ibm.com>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org, 
- Titus Rwantare <titusr@google.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5793;
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1162;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=dJeoIAYC0cILfwsTzSiUsZ2WIJGKmi2Cbxeyu6ial4s=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wUV8Svhx4wJY8eV5FxLPjbbpOCdELnlPu6q
- M+OCl1EXviJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FAAKCRDa6OEJdZac
- 5ZJID/46S/D9kDQit+CYg+Q9+kkdNgbW+Vak0z9KkhG9HjyyH9MBWRGvdgLuSwjazXEPn5d2Bf1
- YBtH1ASYUrH77iYpV+p9LQTP3kGwGIA/Z+LX43RkfIuY4aNZ2CNUpAWgLZoEigIRd+AJIwxhXej
- 5QrNRlKTPSsXJP1oStq1Cc/9sY8DIgN9OZ7l37wye8nYzSXj6jlFslnBEJ70LUA6ntYSAmrSLdp
- Xlg1Puaa2VRFgn0/NDUbm/j4txR9wWowDyVNSgoj0IDc/Aw5kXmnZqXCcMhFbFh/3PVo18aV1wL
- bMOY3erCq9AK2ttsPjsoO689lvj8KNbXx+UKZq1G6S4Y2zLeYnDaPQTpx6teT9A8ze5DIQZ/DAi
- 5U+n/ZenL43ybKoVUGzh4QrDu7tHoFpcziK2+VEZX91bUJmFiY1FAi3fZPaO3qvQLcA7Wk2fr+N
- iXUErlU07ERqCugTNp3ViYjZkG7WBUJ47Iynfkl+cgZ3/mcF5DVfARfItVybrDObRG0lqCnk1QR
- 5yXxDmItCNx4SYpUJf3k29yBPw0/M1aF5OGWz3wuOdcSO7DE16FaC/gvrUbsBkSWTfu9E74MGtZ
- jwrkR+nOPcJZDE+a65ylovdTR7IBTRhaUgLBqxxln2YBms7CG4Ai3XMPB9y7VzmkVx35b5IXHSA
- E58vN+e67z4iNXQ==
+ bh=vC5EqRuLT1EHVRF50SbrOTYnlQJlgmg5h0I92toPkN4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wUuEHAbsYlatMksb7LilqMPlMdLwvSSQuJl
+ 9b1KUoGSH6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FAAKCRDa6OEJdZac
+ 5RYuD/sFkxlPXbMwzaV6K6bhiZH2HINk243XPDTtBVV9408K/K28p5QpmJFcCxnJPqyCF8EACkQ
+ Cpn1L1irJP4EqS9YVShUOVlBDA5duSI0a+sGT396B5AM6mIScBXnNY/TpqSORTRR6WuqS4KafzY
+ XcydlKxzP5HocaxiE4Jts5J1ODhVFRrEg+OCbZ7OFHP4r/gitaXslJDatrH9NidHdW2gixaR63p
+ FLvWnG3ZB3k5q/6ajWR93MYE5Ahpj+34GPAu9a1Ex+d6FCTU/7E8PMyok9uPL1jZy88+1CH2pfA
+ CBu8DK3e5yO1j93ykVKYTvCkfuIdVfujJyhnEfouSAVnglCNUCk0V3rAJRvePy2cpsaZjYAnQbZ
+ f/T041/yRT7VoPEFtPXnoz2Cofi8TgTeEV+NXyeeuI2sikiPPUixyvcj7ecz308sCVwLtpyatuE
+ fItz+BikPN3kFoN81TG/cK4tjtWIOPBYluaP7nA+7UI2nLU5e1MFgRnkn1y5mXrpIAAJ7k8CfGX
+ jRiIED/i2Grt5S3dW30zWsC+Pba/RN7tUDiXGsXqmz/KHgf793A+sesrz9pyZwtb/H3/mwCSn5p
+ 9nrDqTD96OWKtabsAU0sOp6TIeNL025tSeBQev04e7dp+noKD8p27tK5PDbi7RBANxSFe9VGodC
+ XtRPbqT5PmDKbug==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -140,117 +106,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+When setting a link property to an empty string (clearing the link),
+new_target is NULL. The check callback is still invoked with this NULL
+value, but callbacks like isa_ipmi_bmc_check() cast it with
+type-checking macros (IPMI_BMC(val)) which crash on NULL.
 
-After Markus's "Several QOM objects crash on introspection" report, I
-started writing some unit test.
-
-This series adds a new "qom-tests" qtest command that exercises basic QOM
-object life-cycle: it instantiates all non-abstract object types, gets/sets
-their properties, and unrefs them. This quickly surfaces leaks and crashes
-that could otherwise be triggered at runtime via QMP qom commands.
-
-The bulk of the series fixes the issues found by this test and ASan
-help. Some of the patches are redundant with patches sent earlier on the
-ML and marked as RFC, they should naturally be dropped during rebases,
-but are added for completeness and to make sure CI pass after this
-series in the meantime.
+There is nothing to validate when the link is being cleared, so skip
+the check callback entirely when new_target is NULL.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
-Marc-André Lureau (41):
-      hw/pci: handle missing bus in prop_pci_busnr_get
-      chardev/char-socket: handle NULL addr in char_socket_get_addr
-      hw/pci-bridge: handle missing parent in prop_pxb_uid_get
-      hw/pci-host/i440fx: handle NULL bus in pci-hole64 getters
-      hw/pci-host/q35: handle NULL bus in pci-hole64 getters
-      hw/remote: check visit return in vfu_object_set_socket
-      qom: skip link property check callback when clearing link
-      hw/intc/apic: guard against NULL cpu in set_id
-      RFC hw/remote: guard listener unregister in finalize
-      backends/cryptodev-lkcf: skip cleanup when not initialized
-      RFC io/net-listener: move mutex init to instance_init
-      RFC net/colo-compare: guard finalize against uninitialized state
-      RFC system/ioport: move embedded memory region cleanup to portio_list_destroy
-      ui/console: remove console from global list on finalization
-      hw/i386/x86: free oem_id and oem_table_id on finalization
-      hw/core/machine: free shim_filename on finalization
-      hw/core/resetcontainer: free children array on finalization
-      net/filter: free old values in property setters
-      ui/console-vc: destroy fifo on text console finalization
-      target/i386/sev: add finalize functions and fix leaking setters
-      target/i386/kvm/tdx: free strings in tdx_guest_finalize
-      hw/i386/nitro_enclave: add instance finalize
-      net/can: free ifname on socketcan finalization
-      backends/igvm-cfg: free filename on finalization
-      scsi/pr-manager-helper: free path on finalization
-      accel/kvm: free device path on finalization
-      system/qtest: free log path on finalization
-      hw/i386/pc: free pcspk on finalization
-      hw/fsi: move OPBus address space init to realize
-      hw/gpio/pca9552: fix state_str leak in pca955x_set_led
-      hw/arm/aspeed: free fmc_model and spi_model on finalization
-      hw/tpm: free PPI buffer on finalization
-      hw/arm/sbsa-ref: free unrealized flash devices on finalization
-      hw/arm/virt: free flash devices and OEM strings on finalization
-      hw/loongarch/virt: free flash devices and OEM strings on finalization
-      hw/ppc/spapr: free host_model and host_serial on finalization
-      hw/ppc/pnv: drop extra ref on PHB after adding as child
-      target/riscv: fix general_user_opts hash table leak
-      hw/riscv/virt: free flash devices and OEM strings on finalization
-      hw/i2c/pmbus: fix undefined behavior in pmbus_direct_mode2data
-      qtest: add "qom-tests" command
+ qom/object.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
- tests/qtest/libqtest.h              |  8 ++++++
- accel/kvm/kvm-all.c                 |  8 ++++++
- backends/cryptodev-lkcf.c           |  4 +++
- backends/igvm-cfg.c                 |  1 +
- chardev/char-socket.c               |  4 +++
- hw/arm/aspeed.c                     |  9 +++++++
- hw/arm/sbsa-ref.c                   | 12 +++++++++
- hw/arm/virt.c                       | 14 ++++++++++
- hw/core/machine.c                   |  1 +
- hw/core/resetcontainer.c            |  3 +++
- hw/fsi/aspeed_apb2opb.c             | 31 +++++++++++++++------
- hw/gpio/pca9552.c                   |  2 +-
- hw/i2c/pmbus_device.c               |  4 +--
- hw/i386/nitro_enclave.c             | 11 ++++++++
- hw/i386/pc.c                        | 10 +++++++
- hw/i386/x86.c                       |  9 +++++++
- hw/intc/apic_common.c               |  2 +-
- hw/loongarch/virt.c                 | 14 ++++++++++
- hw/pci-bridge/pci_expander_bridge.c |  8 +++++-
- hw/pci-host/i440fx.c                | 15 +++++++++--
- hw/pci-host/q35.c                   | 15 +++++++++--
- hw/pci/pci.c                        | 11 ++++++--
- hw/ppc/pnv.c                        |  1 +
- hw/ppc/spapr.c                      |  2 ++
- hw/remote/remote-obj.c              |  4 ++-
- hw/remote/vfio-user-obj.c           |  4 ++-
- hw/riscv/virt.c                     | 14 ++++++++++
- hw/tpm/tpm_tis_sysbus.c             |  9 +++++++
- io/net-listener.c                   |  9 ++++++-
- net/can/can_socketcan.c             |  8 ++++++
- net/colo-compare.c                  | 31 +++++++++++----------
- net/filter.c                        |  2 ++
- qom/object.c                        | 10 ++++---
- scsi/pr-manager-helper.c            |  1 +
- system/ioport.c                     |  4 ++-
- system/qtest.c                      | 54 +++++++++++++++++++++++++++++++++++++
- target/i386/kvm/tdx.c               |  5 ++++
- target/i386/sev.c                   | 37 +++++++++++++++++++++++++
- target/riscv/cpu.c                  |  7 +++++
- tests/qtest/libqtest.c              |  6 +++++
- tests/qtest/qom-test.c              | 12 +++++++++
- ui/console-vc.c                     |  1 +
- ui/console.c                        |  6 ++++-
- 43 files changed, 379 insertions(+), 44 deletions(-)
----
-base-commit: aa15257174da180c6a8a9d58f87319cfe61c5520
-change-id: 20260427-qom-tests-9dcf3b969411
+diff --git a/qom/object.c b/qom/object.c
+index f981e270440..c50334b3023 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -1903,10 +1903,12 @@ static void object_set_link_property(Object *obj, Visitor *v,
+ 
+     g_free(path);
+ 
+-    prop->check(obj, name, new_target, &local_err);
+-    if (local_err) {
+-        error_propagate(errp, local_err);
+-        return;
++    if (new_target) {
++        prop->check(obj, name, new_target, &local_err);
++        if (local_err) {
++            error_propagate(errp, local_err);
++            return;
++        }
+     }
+ 
+     *targetp = new_target;
 
-Best regards,
---  
-Marc-André Lureau <marcandre.lureau@redhat.com>
+-- 
+2.53.0
 
 
