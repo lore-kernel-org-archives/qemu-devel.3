@@ -4,119 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEEA3FF885E
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EC6DFF885E
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:56:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHHi3-0008Mu-Ox; Mon, 27 Apr 2026 04:52:56 -0400
+	id 1wHHld-0001Bu-22; Mon, 27 Apr 2026 04:56:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wHHhw-0008Ly-42
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:52:50 -0400
-Received: from mail-westusazon11010051.outbound.protection.outlook.com
- ([52.101.85.51] helo=BYAPR05CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wHHlV-0001BS-Mm
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:56:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
- id 1wHHhr-00035b-Md
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:52:46 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=d1F8sMealRF3SWBVQKqEhRuFA8tGWHWkmQ4S08ot5GSd6dCSQKwDQSRCpksWG8lasrpvLdpGF4OXP8PjqX1+eaLw+zuvdxDArBN4aHMqsS+8wbwiG792ah9tjJmyZt4dom58XD2sV//oBuYIEce125GlQ0pafeWeOmcRObzdurIoPwRw6Hkfo+7F0dpSD5m0vYx1BOG1aRKY9UjfUY8qzhlzkx1YVZgSLVrx1jnDM4usTU7dcZkqBwl5QK9maUwg4NIM6fQ9EVgU9P2GtGeK2ZJ2HSITxGMNDwNfU8YtYiayxU/O+huZ+ZWfuLAVcn1m21AyW1X6nzlkilazYn4tFg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pE1t1d6FzyXOe7keeHbd9/i68z31Gs7AB/NnMHjm6KY=;
- b=vWiDyEJ2e3zzBFEBSOlsiO8V/t73/y4hcDqh/RdxUBL4Q1UXauJgSTVC8qv2fVUzjqPBhBMcaw+PSwfyCI9n+yGIiz99oATkOnUfL1FzfYZ/XHX2pvBdDnrPdjvdocWqJHg4KwXhQgvI2R4DRWaE5EgPezZkursx/ggVXWSNKnHLsgYf9T+v6lH4YxYqQFHqHxmOVhKib90uRcAD58H3bH7X7Hb1/0QHXTF5H0lCjc49d3kzp816cTOmGx1V4eeD+QVif61NmFlQTzw1Ki5hlKkYOKUi6dnKS+41qpTGOVyo8mY0jRydtfwET0HsQQNb3SsbDOfOdo6kCncAmLOjHg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=huawei.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pE1t1d6FzyXOe7keeHbd9/i68z31Gs7AB/NnMHjm6KY=;
- b=yY6KJBRTwgBkmwuw0tR8AkO5mxFSs5/h8wc1PFylwddHMjeMtQP6N+7iK3283A+hZzoU3U1LJPKp7BOhqACM+T0V9km2nKcpydls2kJynXO6NyTWMeAdDnK+Cta+kUK3Toum4fbO6sa3MbzJHWs34N3bcrr02HH/6+qVi4eKlTI=
-Received: from IA4P220CA0004.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:558::8)
- by BL3PR12MB6572.namprd12.prod.outlook.com (2603:10b6:208:38f::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.16; Mon, 27 Apr
- 2026 08:47:35 +0000
-Received: from BN2PEPF000055DE.namprd21.prod.outlook.com
- (2603:10b6:208:558:cafe::92) by IA4P220CA0004.outlook.office365.com
- (2603:10b6:208:558::8) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9846.26 via Frontend Transport; Mon,
- 27 Apr 2026 08:47:35 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
-Received: from satlexmb08.amd.com (165.204.84.17) by
- BN2PEPF000055DE.mail.protection.outlook.com (10.167.245.8) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9891.0 via Frontend Transport; Mon, 27 Apr 2026 08:47:34 +0000
-Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Mon, 27 Apr
- 2026 03:47:33 -0500
-Received: from [10.65.96.84] (10.180.168.240) by satlexmb08.amd.com
- (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
- Transport; Mon, 27 Apr 2026 03:47:31 -0500
-Message-ID: <c3b8cd60-73c6-4498-9e9e-facd9c3cfef9@amd.com>
-Date: Mon, 27 Apr 2026 16:47:31 +0800
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wHHlU-00048a-7C
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:56:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777280186;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vb8BkJSh5QdGKAi866gfNw8V0GOij9dwYQOtmdSzxyM=;
+ b=DqVixsuL1yVL05FyEfiPSVutXYqcq01fyb5VFJLvd185S+AD6zgsgaRDA0PVSUdxwwwPdG
+ LpsqnsXqevpwl/qinS90Ala0U+egI1bwX2X89mFSsXanVJsnvrKOntpTtnM/or6uU9Sqkp
+ XjGjoofgmHzEGmpCFEmlHBWhvlpQkDo=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-528-Oa-T-wdHPr-sHSv1BDY9kw-1; Mon, 27 Apr 2026 04:56:25 -0400
+X-MC-Unique: Oa-T-wdHPr-sHSv1BDY9kw-1
+X-Mimecast-MFC-AGG-ID: Oa-T-wdHPr-sHSv1BDY9kw_1777280184
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-441243ba35fso5087788f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:56:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1777280184; x=1777884984; darn=nongnu.org;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:mime-version:references:reply-to:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=vb8BkJSh5QdGKAi866gfNw8V0GOij9dwYQOtmdSzxyM=;
+ b=IQsF6ecIp0xJ2PCqws8SOT60Jib+qpgr9rOycX7ZRQLSjjKaWVRUdvFiaoBGA48IRU
+ QMJ+qvOGc2CNkqxOwF8xxIqkGPdCAllupAms63EcRNfQ4d5GnEyuXzRXOGxBmeOKdTef
+ DrbMj7iyrC0eREco83vPg9qAM+W1bZpxVbDlR1E2JmGna7S3bgQLnhahSaUEsWwisNb1
+ nlwklipS85Lye7fICU4HqBOcAsmClJd9U0rBkFr7xNFI45q8DWTwXcACYuQ3whONUJc/
+ J79A2nW76oZzrEajG5ZbGrxfHut2SB2l5Clfoa8eQR094jgn3E3TqK4bAUxzJjzUNY3A
+ yMkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777280184; x=1777884984;
+ h=user-agent:in-reply-to:content-transfer-encoding
+ :content-disposition:mime-version:references:reply-to:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vb8BkJSh5QdGKAi866gfNw8V0GOij9dwYQOtmdSzxyM=;
+ b=AD497IDo23va/wG1+IdEJJJs77azBh349vNfMo5a/Z9MrcjghbXxnZxplea+4tkoTE
+ rAQ765o60BnIJA0iPsWPZ1ohArbOsUifRfDALBiEhsJcAgEEPe6KNLE6/dFRsED/W5po
+ UkiyQ+CMiiod6avQmaIMGTmUU+MPmx/NxFJfpXVhra1tW1yijNJR7ODe8m+WxYBvWEjD
+ EE+LzcnZ/Z+M89luOCzE1I+CDGVWErnbqO06c4dGDeYlj2TnE/lnD4aQpep7MxPImKwt
+ z9RLUYyEWPn1ej27Sx9vPoCL/6HG++bX2taEPSB15RYfJzAHzvZqQ/MiYUQ5GiApxVrm
+ WQYQ==
+X-Gm-Message-State: AOJu0Yzjrm7VTIIKPVwG037lsv5Qw++kG+o5dcsT5ja4ooAhGSY4Qf6D
+ VilbXrfDgTxBxy9/ztxltNSAJAQkksQzEv3EKb/c83uf2vbLTqscQFD7va2ZjkiOICYnBW9WhDY
+ R/NJtLuECgCNv5j+JZ0YXbv21gBU8eoEr1rXycnwbdMU/Ih+rsyp+dQoU
+X-Gm-Gg: AeBDieuNV0Mq1GJq+v5OLS7KOB2mXTaBdPHOy4l7UylzZdwjnfK8u0+e5jpbZepJ0iu
+ g9Tz4FhNp3Hcg5Ry/8nm5DC0IVHyj5fdHuh7Ru4S1w3D580jrrOjIRIufyzJwfyi3JI0LSl68YT
+ Ag+dy4BQg4ubpIlbhiULcx29YMjR32s3pnVM9VnNsXLnDh/d2yzfm4aJzJ8qXtuD+Hb18Esn9N4
+ 3WbTVQ+QixRVlfmVssU0XW/e4gtR0JwMgd82npJBOTJQVV1Z9nWLu2xRJDwlxccYIa3V8WbqUEY
+ BoaiU93z8PlGLoQaim7vodd/SmB2Yh+Np5n+hENSq021HIpD3iMgrB1vPOwNe66HqpQcbU29Ow5
+ zCVew+m7BOVIOm+FHFG66p0ezc69jNBo=
+X-Received: by 2002:a05:600c:4e8f:b0:489:1fa5:997f with SMTP id
+ 5b1f17b1804b1-4891fa59adfmr444087435e9.9.1777280183604; 
+ Mon, 27 Apr 2026 01:56:23 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e8f:b0:489:1fa5:997f with SMTP id
+ 5b1f17b1804b1-4891fa59adfmr444086995e9.9.1777280183056; 
+ Mon, 27 Apr 2026 01:56:23 -0700 (PDT)
+Received: from redhat.com ([2a02:8012:f011:0:f1ce:ac56:d2cd:7c2e])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-488fc10777csm880143655e9.8.2026.04.27.01.56.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Apr 2026 01:56:22 -0700 (PDT)
+Date: Mon, 27 Apr 2026 09:56:20 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: =?utf-8?Q?Jind=C5=99ich_Makovi=C4=8Dka?= <makovick@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v3 0/2] Fix and re-enable GTK clipboard
+Message-ID: <ae8ktG9zNOKXHgSu@redhat.com>
+References: <20260426-gtk-clipboard-v3-0-09555aaeda34@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 0/1] numa: add 'memmap-type' option for memory type
- configuration
-From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
-To: Jonathan Cameron <jonathan.cameron@huawei.com>, Gregory Price
- <gourry@gourry.net>, Igor Mammedov <imammedo@redhat.com>
-CC: <qemu-devel@nongnu.org>, <apopple@nvidia.com>, <dan.j.williams@intel.com>, 
- <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>, <david@redhat.com>
-References: <20260306082735.1106690-1-FangSheng.Huang@amd.com>
- <4609b0dc-4510-48c7-8190-e8fd5c53b658@amd.com>
- <abQquiWHPoVgw-jt@gourry-fedora-PF4VCD3F>
- <20260313161429.00003ace@huawei.com>
- <f43d8a68-62e3-472e-80e4-f018a91d7eaa@amd.com>
-In-Reply-To: <f43d8a68-62e3-472e-80e4-f018a91d7eaa@amd.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF000055DE:EE_|BL3PR12MB6572:EE_
-X-MS-Office365-Filtering-Correlation-Id: 402dd7c4-040e-4a6f-8e20-08dea439a047
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|376014|36860700016|13003099007|22082099003|18002099003|56012099003;
-X-Microsoft-Antispam-Message-Info: TcjJ3NNDXBRChoROvZ/HKbvoNASQwLOf+wid5f3Y7kQvYHEA7E7ZR1gfpN3Z91+vXCYtNMGKJWdl8BG5ca8I0qIIxzZAGNyLkIZeEFKgNSCk2ZUaKU+Cbypcxl2oeRBNHZDt7Hh7QJpgi+f4Eees6AD3ix3711N19eeuPErwVqWir3RafG5oszixvyAodjv6X35EliJ2YctOkKZrvHHAsYddjGrCoAxhPDmYki85Hoi+UwKKNS/m5iBwq/4xAJSS3WGhVtrD8GfFSxXCA4ITKa02Q8QDmhy4rrLj5Xfn7GMe5nU6t+rG+uV++cGXumT23xEouI7Ya96ZgLLO0lMuA2KWLyVHAwJRbjZO6/mUbNY+CtRmVBDc4kWKC9ijZ6pS05W4t9bOMyhiXlLFOLgTEpwPrGXcFvkqn9BgkvQ+1t0oOBS/Ge1Xmj1CtiONsLUDsMx8f9YZxsQK218rK5WxGO4xd0aZGxIVhX13wWN/ROAWTvN781cvD7AjwyJEOp3EBECLmhAo66vxseFq77O5YBg2vf3braXcRYTAqFKE9Qt3pdrVqXqnYSpLw+UjgKuoQuOeOL+LRfLqk4jWc0YhLr+XUb18M3NXlri6aIWckImh9JLy7OtAVzYQsP8P6LbhG0xljN53LnepdOLM2fA0sfEobvsH9/z/eEM6BdTeup0w2IyYlwjJrzQMk9SOfzxSimoMZN2U7TF+IY1/nPTVibhyH1UTGDhfhAvc5lCE6uM=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(376014)(36860700016)(13003099007)(22082099003)(18002099003)(56012099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: MQTi2HwP7ztnZmaqlzCIiae/FF78/u/3l3IKKTSiunmlD6gtKLHw0vVEgnZnxgdkSc2fqtsOFyIUVpACD4kjovy64hMAh/Ku0o2EhvpM/rpbTezRkRDghUVDhbJEX2JRjs1XfmvFeA2RAvYZqgi3lwLPNlWh6ts8QjfBISoqxQ4i9GyY+yjgT7Pr2WSdGpPFX0U63DNz/VFi9TiNw+xei64thNnvMcLFIH6fhwFRd3u1Sltz16zj/QIoYYKdmSn/OnDjKHdDUzPPZ95QNXbOfRJQe1rezMUKU7bpoRlWR6gQ9uYtxFCFgoZXnBGyyb6XjIoh97NKDxBr2OQX4syDCW8edpUy6YSYVeoQXTT87gEbZY6yV+xCEBkWC9gMBXh32+RtNgAstOyANErQgEFR/hRDZ67xkiOGSAMo/GWTOMygNQLExZdTRZEqkiO+77qK
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Apr 2026 08:47:34.1897 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 402dd7c4-040e-4a6f-8e20-08dea439a047
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb08.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000055DE.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6572
-Received-SPF: permerror client-ip=52.101.85.51;
- envelope-from=FangSheng.Huang@amd.com;
- helo=BYAPR05CU005.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <20260426-gtk-clipboard-v3-0-09555aaeda34@gmail.com>
+User-Agent: Mutt/2.3.1 (2026-03-20)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,79 +123,32 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Igor,
-
-Gentle ping on this v7 patch. The QEMU 11.1 development window opened on
-April 24, so I wanted to follow up as discussed in the previous round
-(Jonathan suggested I reach out once 11.1 was open).
-
-The patch carries the following review tags from v7:
-
-   Acked-by: David Hildenbrand <david@redhat.com>
-   Reviewed-by: Gregory Price <gourry@gourry.net>
-
-Patch link:
-  
-https://lore.kernel.org/qemu-devel/20260306082735.1106690-2-FangSheng.Huang@amd.com/
-
-Could you take a look and consider queuing it for 11.1?
-
-Best regards,
-Jerry Huang
-
-On 3/16/2026 3:17 PM, Huang, FangSheng (Jerry) wrote:
+On Sun, Apr 26, 2026 at 09:52:32AM +0200, Jindřich Makovička wrote:
+> The following patches change blocking clipboard retrieval function
+> calls in gtk-clipboard.c to non-blocking variants using callbacks to
+> avoid UI lockup. It is a follow-up to the patch proposed in the GitLab
+> issue
 > 
-> On 3/14/2026 12:14 AM, Jonathan Cameron wrote:
->> On Fri, 13 Mar 2026 11:18:18 -0400
->> Gregory Price <gourry@gourry.net> wrote:
->>
->>> On Fri, Mar 13, 2026 at 04:30:20PM +0800, Huang, FangSheng (Jerry) 
->>> wrote:
->>>> Hi Gregory,
->>>>
->>>> Thanks again for the thorough review on v6 and for catching the 
->>>> hardcoded
->>>> address issue — v7 has that fixed, now using x86ms- 
->>>> >above_4g_mem_start as
->>>> you suggested.
->>>>
->>>> Just wanted to follow up and check if your Reviewed-by still applies 
->>>> to v7,
->>>> since it's a minimal change from v6 (only the one-line fix you 
->>>> identified).
->>>
->>> Yes sorry, we're good to go
->>>
->>> Reviewed-by: Gregory Price <gourry@gourry.net>
->>>
->>> Thank you for this, this will be very helpful for testing
->>>
->>> Jonathan would be able to answer more questions re: upstream
->>
->> Can provide general details, but specifics of this patch is probably
->> something for Igor as it's not CXL specific.
->>
->> Soft freeze for 11.0 has passed, so this will be a 11.1 feature.
->> https://wiki.qemu.org/Planning/11.0
->> Is the 11.0 timeline. (11.1 will go up around time of 11.0 release).
->>
->> Jonathan
+> https://gitlab.com/qemu-project/qemu/-/work_items/1150
 > 
-> Hi Gregory, Jonathan,
+> This version adds a similar change to gd_clipboard_request that also
+> uses the blocking clipboard API.
 > 
-> Thank you both!
-> 
-> Gregory — much appreciated for the Reviewed-by and your continued
-> support throughout the review process.
-> 
-> Jonathan — thanks for clarifying the timeline. Understood that this
-> would target the 11.1 cycle. Will follow up with Igor when the 11.1 
-> window opens up.
-> 
-> Best regards,
-> Jerry Huang
+> The second patch removes the gtk-clipboard flag, keeping the GTK
+> clipboard always enabled.
+
+I notice that the current code in git does not provide any command line
+option to turn on/off the GTK clipboard sync.  Considering that VMs are
+often used for untrusted workloads, or workloads that are less trusted
+then the host OS, I would consider this GTK impl to be a security flaw
+in QEMU if re-enabled as-is.
+
+IMHO, before we remove the ifdefs in the code, the "DisplayGTK"  struct
+needs to gain settings to control the clipboard synchronization, and it
+should default to disabled.
 
 
