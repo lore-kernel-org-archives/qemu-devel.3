@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E050FF886D
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:44:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6996DFF8868
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:45:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHRs8-0001lc-O8; Mon, 27 Apr 2026 15:44:01 -0400
+	id 1wHRrA-0000vF-6F; Mon, 27 Apr 2026 15:43:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRrk-0001JV-HH
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:43:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wHRqy-0000rk-PX
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:42:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRri-0007qk-GB
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:43:35 -0400
+ id 1wHRqv-0007jM-Lz
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:42:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777319013;
+ s=mimecast20190719; t=1777318965;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bCdTxip8FNtJt22m42Ll7TRz6Zd06sy9UeGEc0+Czr8=;
- b=f3A9fCvJpf5xWSfH6nlhZfK/k994QHoXyWsAaZ9pzlTy++FIwsdpBiQftbAj2FYUGMqp3/
- HPZdF8Tcn7AMvJxSCVQQKKNbTcictPR7Ry2bxWNB90LCI6f02iNy1bUfuvL3U6ar2cDxQm
- gNnKF5W/vZ6jAOelfRHYoQ6YG9GMXHk=
+ bh=sAuYAhy1cX7XBXjOLthJfEq8jJm8Z2hVUkA1DREfIfI=;
+ b=evjlNtY9ITisemuonp510myOUJA1IqPlB1+WDoVmHEjQWnUM+5qZjffwftUdeCzG0gSnMr
+ i44727thjwc82nmjCBIMbZEf6jArxXi92Gy15xfaEIZ2dlmPiu4VKyyhR75GdL448UeTYP
+ KkxX9jJpPptZM6p6+FPq4F9iPIQWUCc=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-633-155wX3K5NM25kz0SWDP0TA-1; Mon,
- 27 Apr 2026 15:43:31 -0400
-X-MC-Unique: 155wX3K5NM25kz0SWDP0TA-1
-X-Mimecast-MFC-AGG-ID: 155wX3K5NM25kz0SWDP0TA_1777319010
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-1jwxN4HQNgCg54yE6XrU0g-1; Mon,
+ 27 Apr 2026 15:42:43 -0400
+X-MC-Unique: 1jwxN4HQNgCg54yE6XrU0g-1
+X-Mimecast-MFC-AGG-ID: 1jwxN4HQNgCg54yE6XrU0g_1777318962
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C400519560B6
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 19:43:30 +0000 (UTC)
+ id 9580B195609D
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 19:42:42 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6C806180045E; Mon, 27 Apr 2026 19:43:28 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D2BE4195608E; Mon, 27 Apr 2026 19:42:40 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Apr 2026 23:42:10 +0400
-Subject: [PATCH 11/41] RFC io/net-listener: move mutex init to
- instance_init
+Date: Mon, 27 Apr 2026 23:42:02 +0400
+Subject: [PATCH 03/41] hw/pci-bridge: handle missing parent in prop_pxb_uid_get
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260427-qom-tests-v1-11-c413f3605311@redhat.com>
+Message-Id: <20260427-qom-tests-v1-3-c413f3605311@redhat.com>
 References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
 In-Reply-To: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- peterx@redhat.com, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1998;
+ "Michael S. Tsirkin" <mst@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1195;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=AI5iHywR+QJtls1SfbIwtt7tGFLKNLtYM1nZ2EPFdE8=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wUTPj7CJgSq8YwiimLt+PkyyUp1rMGmtyHC
- fUZCH1hgIqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FAAKCRDa6OEJdZac
- 5biiD/oCqLacfxTJFTvmKcd+iTxjz1hp0q4/2fXdcMOyWC5NtM7bFf4vvyuObSTCDUrePO7S3Lb
- bK4VliKw3SWZVBqy0/XmXv6ipdScP6ww7bCog11BdzpsSFb1yHWB81SawlPJ80cS29Cm7wRC1Sz
- wEEBMqAsTcqM0+WnknyAoQmo0ase6qshynQLT74CKNkRtL41ucPLeU8D+W3kEz9/1tk0Xl69oy8
- zsI53Ae9f/atKlLFrwswDGfaRB9lgB689yY03EjyimHefgR5P8dl4gBgo/1x0AThBIP6zjEHZ2o
- CagxczwoCazE44ytloYJkU8z08r/jGRYMuLfnUKXUCaee6FVTbcsXHmtcIcze2dkjha7U/TfmKD
- rRRiLUF4DBWnLH8JO4ejwopNKQK9y2zwsEp2iIUpO9itNCrurd6/0pAw1DyXlXAqpCjy+nXt1wJ
- jIqtNE9RTwFbk8CPwVQIcA6SEZIdb2M/rmegtSX4ZngyOCgwJQKRKY0GXdZoNIyAL/DdXCs4DSw
- 1o8HQEMQJhnSiaBAvDjAtc5MQJ/+QQhCvTbbPW1+QRMQD2exEh32BLYcy/s1hRDgg8srPqRtqXc
- 3AM9uFG7tiKUP6qMyDqu5UJ4YCBYw4lqSrcO/8obt0YmA59H8zhvxuCFhNnERCtQDYCSYCWP4C8
- omTw+LsJqwH9lvA==
+ bh=7IzFtyW5t8Gf12v8GCg2dNaN6ZsDHP4zF5gwn8PfMpc=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wUxXrEGyOfqXJtmyjiR7kGhiC9PY3OuVy9q
+ xBEprUUWW2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FAAKCRDa6OEJdZac
+ 5Tq9EACUumLvmV3Yhiw+Fjqg5+mbboRkvntsilf5BiEJAydH/nFWLvm+WWq06JBcVEGbesvP5r3
+ xxxyjMAPelAS+ywlVUSnslPuMfjEn2Mkc2iyuGJEe5KGbw1z1JTlzAvbUPV5e0wXkCxiVY4F05r
+ kKPp7/qNw4vjxfw2ona30Fnn3PaN0KvYit75DSGoqXM5FqHboQUICtwJ53d+R8UwOL/6LyIfK+M
+ 3Ls8WX7BRRU/6AcUINYABz8LxQ5vxwbX8ErDbQMlPTRZlIySD9F1MWvFfm4C56bD7uVQ+TVZw+i
+ aCK+F79m2/v7Cuj4o44QZOVFK4YJUgOMmJ6esmCJD/WglFFVvMH24+KdGbkMXF5RwevG2wJcEse
+ 9VFclGaCyGuReOfB2McBj2GUpBVY4yja2jl35cK/ofH5Y6BEU840iLZ+fWrzr2LrkHcvlpueTCf
+ LNfGiXC6Fy2N9vCubHrUU/bNDMerlyQ1P1U0Pz7P8XxVM1H86sSkhDAa0qvx8EkHZZw+wyt3wVf
+ imBPp9WE4lLloeAH9A5oHQzHgerEnNjINGk0tWs+yk7PGXJoQt6MMqzMJWMc/Pitptdqpqk3g/t
+ yJqflIUP9lnnd434ynI5+OungsjcDmZbnaUaAIu0XSBjVkJzYo9yWYH0Ea4U0iQYC5jPOuGzfpM
+ V1tipA2S7Sk2PMA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -89,7 +87,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,60 +104,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QIONetListener mutex is initialized in the convenience
-constructor qio_net_listener_new() rather than in an instance_init.
-This means a bare object_new(TYPE_QIO_NET_LISTENER) produces an
-object with an uninitialized mutex, but instance_finalize
-unconditionally calls qemu_mutex_destroy() on it, which aborts.
+When called on an unrealized pxb bus (e.g. from
+qmp_qom_list_properties), bus->parent_dev is NULL. The pxb_bus_num()
+callback dereferences it unconditionally. Check for this to avoid a
+NULL dereference.
 
-Move the mutex initialization to a proper instance_init so that init
-and finalize are always paired regardless of how the object is
-created.
-
-This patch is just added for completeness, but "qio: Fix
-qom-list-properties crash on net listener object" from Peter Xu is
-basically the same.
-
-Fixes: 9d86181874a ("qio: Protect NetListener callback with mutex")
-Cc: peterx@redhat.com
+Fixes: 97b9cb066e5f ("hw/pci-bridge: Add acpi_uid property to TYPE_PXB_BUS")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- io/net-listener.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ hw/pci-bridge/pci_expander_bridge.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/io/net-listener.c b/io/net-listener.c
-index 9410d72da9c..1fd0f6cb5ab 100644
---- a/io/net-listener.c
-+++ b/io/net-listener.c
-@@ -38,7 +38,6 @@ QIONetListener *qio_net_listener_new(void)
-     QIONetListener *listener;
- 
-     listener = QIO_NET_LISTENER(object_new(TYPE_QIO_NET_LISTENER));
--    qemu_mutex_init(&listener->lock);
-     return listener;
- }
- 
-@@ -440,6 +439,13 @@ qio_net_listener_get_local_address(QIONetListener *listener, size_t n,
-     return qio_channel_socket_get_local_address(sioc, errp);
- }
- 
-+static void qio_net_listener_instance_init(Object *obj)
-+{
-+    QIONetListener *listener = QIO_NET_LISTENER(obj);
-+
-+    qemu_mutex_init(&listener->lock);
-+}
-+
- static void qio_net_listener_finalize(Object *obj)
+diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+index 11623a5666f..40ffbc4e082 100644
+--- a/hw/pci-bridge/pci_expander_bridge.c
++++ b/hw/pci-bridge/pci_expander_bridge.c
+@@ -85,8 +85,14 @@ static uint16_t pxb_bus_numa_node(PCIBus *bus)
+ static void prop_pxb_uid_get(Object *obj, Visitor *v, const char *name,
+                              void *opaque, Error **errp)
  {
-     QIONetListener *listener = QIO_NET_LISTENER(obj);
-@@ -463,6 +469,7 @@ static const TypeInfo qio_net_listener_info = {
-     .parent = TYPE_OBJECT,
-     .name = TYPE_QIO_NET_LISTENER,
-     .instance_size = sizeof(QIONetListener),
-+    .instance_init = qio_net_listener_instance_init,
-     .instance_finalize = qio_net_listener_finalize,
- };
+-    uint32_t uid = pci_bus_num(PCI_BUS(obj));
++    PCIBus *bus = PCI_BUS(obj);
++    uint32_t uid;
+ 
++    if (!bus->parent_dev) {
++        error_setg(errp, "bus not attached to a device");
++        return;
++    }
++    uid = pci_bus_num(bus);
+     visit_type_uint32(v, name, &uid, errp);
+ }
  
 
 -- 
