@@ -4,107 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 695FDFF8861
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:53:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEEA3FF885E
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:53:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHHhp-0008LG-LC; Mon, 27 Apr 2026 04:52:41 -0400
+	id 1wHHi3-0008Mu-Ox; Mon, 27 Apr 2026 04:52:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wHHhl-0008Ku-9V
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:52:37 -0400
-Received: from mail-dy1-x132f.google.com ([2607:f8b0:4864:20::132f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wHHhj-00034m-6Q
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:52:36 -0400
-Received: by mail-dy1-x132f.google.com with SMTP id
- 5a478bee46e88-2d96243c91fso16108557eec.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:52:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777279953; cv=none;
- d=google.com; s=arc-20240605;
- b=MCN7+7kJRrs+AtED3qN4onyyf/bbzG/fgyjMUCUXQOdAotMGrMIfMsOm1x5GXaeepR
- xQwErcgnr3awMmA1k5bBz8O6Tgj7fXmL155utUXv0h262F6D+Q+lMzD+5RDEEK+K99Jy
- g+TyQiqeG5AEV3kqP/NEFWexQzTXvTEmZgRuv9+pcZT///17SyQ6aDrQ3McftEeL5yv4
- Bfw+1O0ZeV+Ur/gQy/qBTiIfnPs8n/vS7o1jU9fLa4zDUeWva5NK40SRfsgPd2Uup1A6
- GeYxLyh9smx1PiOW4mStGAhTUolW5tz4maMh+xuoa7Rl7r3QFE7ecajkO6LmkTE9CDDN
- MjwQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=9cFhZbLX8ef0LjfaC1F9+S9zUbn2kz0oE0tHz84oue8=;
- fh=J7xodIOyOPHWq8GF8g25obbnHQSf61KAqKmG2qSosJc=;
- b=ZCVTKRtt3S5eu56ooy/Rc/VJzNhAWweIeRRi5T2qXY4Dn6OmtagDA+H+coT4JEmPC1
- JhAeSnjEE588vFvK7YZWANUAUmND1ngek+CmYnkOuB7+ytVCZcdMxoQbeLXXFFu9ycUo
- TVoQ5+vUED5YQYMCLTAhBuOwtGwNBGn+qNmNtJaL9Yj+GblDgdLUia70otxn1lP+7W8B
- r3Nh1GTIlanTa/EJHgksh9TbzOF/2sPoVZmlJjuvGTL/aaZqSEleAj8lxhMew2kSK3fc
- a4dWak41By39EaCdCu+0SYVW5tGugD83il6Yo6Kmc3Qxqgl6ecdZs7i6emGUfuoV2yPL
- R1jQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777279953; x=1777884753; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9cFhZbLX8ef0LjfaC1F9+S9zUbn2kz0oE0tHz84oue8=;
- b=MdJW58BklK1xo422Z35jcFSNCwktD00gJBzy+j43uTT+D9HlDIxNqDEnSGn6rAqLrE
- fGeJcY9kVAogTKU734LqerVIwofPFRcjSX0R1DCOD8tfvQAzl07fVimUOmYMy45tbKuq
- VcZSUf47V7zexuuHiQG6RQyGBIEdiFikdDfFGbbqcBANHkewmghV62gIdvDeX5GqPjeJ
- Z4vTpxGpGFhqvzUReE3CQ2N0m2y+D9mVQ9WHMEKD7EGSzU09neJz6w7f80OOzzXxEoir
- n/AxZ2nam0RxdJosaOrIclTlEopMJ7YWMYjkHOsjz3mVh/Pi9xnFlPJZJAIP5/maeHUe
- Ynqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777279953; x=1777884753;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9cFhZbLX8ef0LjfaC1F9+S9zUbn2kz0oE0tHz84oue8=;
- b=CXBPPpb3u/ACaoHCpkQBH5dVH4fnYRggVKhZeki7CSnT+idGcaZnD3AynPBVAMs3W+
- dD9/xfKPcR3cojcBFRN/wOEt7aClZutX9m4QjZdlL4iJ8YjP4OML//io5lcnHZ1e907Y
- dFpA2Yx9YaDVGnYdjx3F2BsdSq0FVRgulOhB47qispJ7/Y8NUdnrJhMmKYHPIiDG85wV
- v1iRTt54Y2ZmU+oLzSo3vlgG5/bbappQjVOtn7ieJXusE3UyvXmgYBD5iLL+nm9pgE/E
- /NsusdHHot3lpXSt4jD4xBvLG9Co+6qZCICq1sLJmRWVOUgqiOh8oTew/5qXrJb/G3Je
- cuww==
-X-Gm-Message-State: AOJu0YwSXLupdXWqce/YfhE7QqVAEhB7PuHW5TkJg16R8qQaaQ3kNs8j
- Kw13tO3DxOwzQgJjhczV+x1rrEe0ByzscvI0463mgbLjTP94m+kRCXrqJ/B+IohRkuTRA8xWoY1
- C2DNrqPD72uMtdinnxQwwSHDSt+zfb+E=
-X-Gm-Gg: AeBDiesByTYkjTZxWw2++DPsYLPA8uAmRsOy7zZXcWT7zHFvYYtItTdvwpfUmYXOr9Y
- WHAERSn+5bh7DRNcf9H4svKSY0RfTaK0DtYuvFUuRLuOtYCLDJDO9EYR/PyqFdCv7UkCvvotcDn
- 4mxvWxY91ppp8r5RUvlCnjZ5CK0LNi36R5N7xfXJ9w/uWSN4TZ2LWKhhHQfW5HVnuV6deMPWkjT
- TA50jkt8xjT3i+qzFSgUlsVCh3G3NBfr6fizLw42+BNSfPJyhsp9C25avMCo87sdH2j3Z44+WKA
- Y76HF+MBL5B721cj/hGsyUyihK03G7OqN0G+onhmi331pwjHh1I=
-X-Received: by 2002:a05:7300:6c05:b0:2d4:2cc8:67e with SMTP id
- 5a478bee46e88-2e47a106ccfmr24187499eec.23.1777279953188; Mon, 27 Apr 2026
- 01:52:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wHHhw-0008Ly-42
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:52:50 -0400
+Received: from mail-westusazon11010051.outbound.protection.outlook.com
+ ([52.101.85.51] helo=BYAPR05CU005.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1wHHhr-00035b-Md
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:52:46 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=d1F8sMealRF3SWBVQKqEhRuFA8tGWHWkmQ4S08ot5GSd6dCSQKwDQSRCpksWG8lasrpvLdpGF4OXP8PjqX1+eaLw+zuvdxDArBN4aHMqsS+8wbwiG792ah9tjJmyZt4dom58XD2sV//oBuYIEce125GlQ0pafeWeOmcRObzdurIoPwRw6Hkfo+7F0dpSD5m0vYx1BOG1aRKY9UjfUY8qzhlzkx1YVZgSLVrx1jnDM4usTU7dcZkqBwl5QK9maUwg4NIM6fQ9EVgU9P2GtGeK2ZJ2HSITxGMNDwNfU8YtYiayxU/O+huZ+ZWfuLAVcn1m21AyW1X6nzlkilazYn4tFg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pE1t1d6FzyXOe7keeHbd9/i68z31Gs7AB/NnMHjm6KY=;
+ b=vWiDyEJ2e3zzBFEBSOlsiO8V/t73/y4hcDqh/RdxUBL4Q1UXauJgSTVC8qv2fVUzjqPBhBMcaw+PSwfyCI9n+yGIiz99oATkOnUfL1FzfYZ/XHX2pvBdDnrPdjvdocWqJHg4KwXhQgvI2R4DRWaE5EgPezZkursx/ggVXWSNKnHLsgYf9T+v6lH4YxYqQFHqHxmOVhKib90uRcAD58H3bH7X7Hb1/0QHXTF5H0lCjc49d3kzp816cTOmGx1V4eeD+QVif61NmFlQTzw1Ki5hlKkYOKUi6dnKS+41qpTGOVyo8mY0jRydtfwET0HsQQNb3SsbDOfOdo6kCncAmLOjHg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=huawei.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pE1t1d6FzyXOe7keeHbd9/i68z31Gs7AB/NnMHjm6KY=;
+ b=yY6KJBRTwgBkmwuw0tR8AkO5mxFSs5/h8wc1PFylwddHMjeMtQP6N+7iK3283A+hZzoU3U1LJPKp7BOhqACM+T0V9km2nKcpydls2kJynXO6NyTWMeAdDnK+Cta+kUK3Toum4fbO6sa3MbzJHWs34N3bcrr02HH/6+qVi4eKlTI=
+Received: from IA4P220CA0004.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:558::8)
+ by BL3PR12MB6572.namprd12.prod.outlook.com (2603:10b6:208:38f::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.16; Mon, 27 Apr
+ 2026 08:47:35 +0000
+Received: from BN2PEPF000055DE.namprd21.prod.outlook.com
+ (2603:10b6:208:558:cafe::92) by IA4P220CA0004.outlook.office365.com
+ (2603:10b6:208:558::8) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9846.26 via Frontend Transport; Mon,
+ 27 Apr 2026 08:47:35 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ BN2PEPF000055DE.mail.protection.outlook.com (10.167.245.8) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9891.0 via Frontend Transport; Mon, 27 Apr 2026 08:47:34 +0000
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Mon, 27 Apr
+ 2026 03:47:33 -0500
+Received: from [10.65.96.84] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Mon, 27 Apr 2026 03:47:31 -0500
+Message-ID: <c3b8cd60-73c6-4498-9e9e-facd9c3cfef9@amd.com>
+Date: Mon, 27 Apr 2026 16:47:31 +0800
 MIME-Version: 1.0
-References: <20260426-gtk-clipboard-v3-0-09555aaeda34@gmail.com>
- <20260426-gtk-clipboard-v3-1-09555aaeda34@gmail.com>
-In-Reply-To: <20260426-gtk-clipboard-v3-1-09555aaeda34@gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Apr 2026 12:52:21 +0400
-X-Gm-Features: AVHnY4IwHFeZN28CPsM1Ii2EWRrSWJKBsLJVk8kU5vwaj3Bd8-Ndw7kEpvTLr7Y
-Message-ID: <CAJ+F1CLwkT9EJLFNDoW1Z6B7adrL=hr_3xUHE9m4K9K1AG=WJw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] ui/gtk: Use non-blocking clipboard retrieval
-To: =?UTF-8?B?SmluZMWZaWNoIE1ha292acSNa2E=?= <makovick@gmail.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132f;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132f.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 0/1] numa: add 'memmap-type' option for memory type
+ configuration
+From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
+To: Jonathan Cameron <jonathan.cameron@huawei.com>, Gregory Price
+ <gourry@gourry.net>, Igor Mammedov <imammedo@redhat.com>
+CC: <qemu-devel@nongnu.org>, <apopple@nvidia.com>, <dan.j.williams@intel.com>, 
+ <Zhigang.Luo@amd.com>, <Lianjie.Shi@amd.com>, <david@redhat.com>
+References: <20260306082735.1106690-1-FangSheng.Huang@amd.com>
+ <4609b0dc-4510-48c7-8190-e8fd5c53b658@amd.com>
+ <abQquiWHPoVgw-jt@gourry-fedora-PF4VCD3F>
+ <20260313161429.00003ace@huawei.com>
+ <f43d8a68-62e3-472e-80e4-f018a91d7eaa@amd.com>
+In-Reply-To: <f43d8a68-62e3-472e-80e4-f018a91d7eaa@amd.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN2PEPF000055DE:EE_|BL3PR12MB6572:EE_
+X-MS-Office365-Filtering-Correlation-Id: 402dd7c4-040e-4a6f-8e20-08dea439a047
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|82310400026|376014|36860700016|13003099007|22082099003|18002099003|56012099003;
+X-Microsoft-Antispam-Message-Info: TcjJ3NNDXBRChoROvZ/HKbvoNASQwLOf+wid5f3Y7kQvYHEA7E7ZR1gfpN3Z91+vXCYtNMGKJWdl8BG5ca8I0qIIxzZAGNyLkIZeEFKgNSCk2ZUaKU+Cbypcxl2oeRBNHZDt7Hh7QJpgi+f4Eees6AD3ix3711N19eeuPErwVqWir3RafG5oszixvyAodjv6X35EliJ2YctOkKZrvHHAsYddjGrCoAxhPDmYki85Hoi+UwKKNS/m5iBwq/4xAJSS3WGhVtrD8GfFSxXCA4ITKa02Q8QDmhy4rrLj5Xfn7GMe5nU6t+rG+uV++cGXumT23xEouI7Ya96ZgLLO0lMuA2KWLyVHAwJRbjZO6/mUbNY+CtRmVBDc4kWKC9ijZ6pS05W4t9bOMyhiXlLFOLgTEpwPrGXcFvkqn9BgkvQ+1t0oOBS/Ge1Xmj1CtiONsLUDsMx8f9YZxsQK218rK5WxGO4xd0aZGxIVhX13wWN/ROAWTvN781cvD7AjwyJEOp3EBECLmhAo66vxseFq77O5YBg2vf3braXcRYTAqFKE9Qt3pdrVqXqnYSpLw+UjgKuoQuOeOL+LRfLqk4jWc0YhLr+XUb18M3NXlri6aIWckImh9JLy7OtAVzYQsP8P6LbhG0xljN53LnepdOLM2fA0sfEobvsH9/z/eEM6BdTeup0w2IyYlwjJrzQMk9SOfzxSimoMZN2U7TF+IY1/nPTVibhyH1UTGDhfhAvc5lCE6uM=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(82310400026)(376014)(36860700016)(13003099007)(22082099003)(18002099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: MQTi2HwP7ztnZmaqlzCIiae/FF78/u/3l3IKKTSiunmlD6gtKLHw0vVEgnZnxgdkSc2fqtsOFyIUVpACD4kjovy64hMAh/Ku0o2EhvpM/rpbTezRkRDghUVDhbJEX2JRjs1XfmvFeA2RAvYZqgi3lwLPNlWh6ts8QjfBISoqxQ4i9GyY+yjgT7Pr2WSdGpPFX0U63DNz/VFi9TiNw+xei64thNnvMcLFIH6fhwFRd3u1Sltz16zj/QIoYYKdmSn/OnDjKHdDUzPPZ95QNXbOfRJQe1rezMUKU7bpoRlWR6gQ9uYtxFCFgoZXnBGyyb6XjIoh97NKDxBr2OQX4syDCW8edpUy6YSYVeoQXTT87gEbZY6yV+xCEBkWC9gMBXh32+RtNgAstOyANErQgEFR/hRDZ67xkiOGSAMo/GWTOMygNQLExZdTRZEqkiO+77qK
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Apr 2026 08:47:34.1897 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 402dd7c4-040e-4a6f-8e20-08dea439a047
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000055DE.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR12MB6572
+Received-SPF: permerror client-ip=52.101.85.51;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=BYAPR05CU005.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,117 +132,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jind=C5=99ich
+Hi Igor,
 
-On Sun, Apr 26, 2026 at 11:53=E2=80=AFAM Jind=C5=99ich Makovi=C4=8Dka <mako=
-vick@gmail.com> wrote:
->
+Gentle ping on this v7 patch. The QEMU 11.1 development window opened on
+April 24, so I wanted to follow up as discussed in the previous round
+(Jonathan suggested I reach out once 11.1 was open).
 
-Could you review & compare with the previous lost patch ("[PATCH v4]
-ui/gtk-clipboard: async owner_change clipboard_request")
+The patch carries the following review tags from v7:
 
-https://patchew.org/QEMU/20231206142243.510068-1-edmund.raile@proton.me/
+   Acked-by: David Hildenbrand <david@redhat.com>
+   Reviewed-by: Gregory Price <gourry@gourry.net>
 
-thanks
+Patch link:
+  
+https://lore.kernel.org/qemu-devel/20260306082735.1106690-2-FangSheng.Huang@amd.com/
 
-> Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
-> ---
->  ui/gtk-clipboard.c | 52 +++++++++++++++++++++++++++++++++++++++---------=
-----
->  1 file changed, 39 insertions(+), 13 deletions(-)
->
-> diff --git a/ui/gtk-clipboard.c b/ui/gtk-clipboard.c
-> index 65d89ec601..691784697d 100644
-> --- a/ui/gtk-clipboard.c
-> +++ b/ui/gtk-clipboard.c
-> @@ -136,26 +136,54 @@ static void gd_clipboard_notify(Notifier *notifier,=
- void *data)
->      }
->  }
->
-> +static void
-> +gd_clipboard_request_text_received_callback(GtkClipboard *clipboard,
-> +                                            const gchar *text,
-> +                                            gpointer data)
-> +{
-> +    QemuClipboardInfo *info =3D (QemuClipboardInfo *)data;
-> +
-> +    if (text) {
-> +        qemu_clipboard_set_data(info->owner, info, QEMU_CLIPBOARD_TYPE_T=
-EXT,
-> +                                strlen(text), text, true);
-> +    }
-> +    qemu_clipboard_info_unref(info);
-> +}
-> +
->  static void gd_clipboard_request(QemuClipboardInfo *info,
->                                   QemuClipboardType type)
->  {
->      GtkDisplayState *gd =3D container_of(info->owner, GtkDisplayState, c=
-bpeer);
-> -    char *text;
->
->      switch (type) {
->      case QEMU_CLIPBOARD_TYPE_TEXT:
-> -        text =3D gtk_clipboard_wait_for_text(gd->gtkcb[info->selection])=
-;
-> -        if (text) {
-> -            qemu_clipboard_set_data(&gd->cbpeer, info, type,
-> -                                    strlen(text), text, true);
-> -            g_free(text);
-> -        }
-> +        qemu_clipboard_info_ref(info);
-> +        gtk_clipboard_request_text(gd->gtkcb[info->selection],
-> +                                   gd_clipboard_request_text_received_ca=
-llback,
-> +                                   info);
->          break;
->      default:
->          break;
->      }
->  }
->
-> +static void gd_clipboard_owner_change_contents_received_callback(
-> +    GtkClipboard *clipboard,
-> +    GtkSelectionData *selection_data,
-> +    gpointer data)
-> +{
-> +    QemuClipboardInfo *info =3D (QemuClipboardInfo *)data;
-> +
-> +    if (selection_data) {
-> +        if (gtk_selection_data_targets_include_text(selection_data)) {
-> +            info->types[QEMU_CLIPBOARD_TYPE_TEXT].available =3D true;
-> +        }
-> +    }
-> +
-> +    qemu_clipboard_update(info);
-> +    qemu_clipboard_info_unref(info);
-> +}
-> +
->  static void gd_owner_change(GtkClipboard *clipboard,
->                              GdkEvent *event,
->                              gpointer data)
-> @@ -173,12 +201,10 @@ static void gd_owner_change(GtkClipboard *clipboard=
-,
->      switch (event->owner_change.reason) {
->      case GDK_OWNER_CHANGE_NEW_OWNER:
->          info =3D qemu_clipboard_info_new(&gd->cbpeer, s);
-> -        if (gtk_clipboard_wait_is_text_available(clipboard)) {
-> -            info->types[QEMU_CLIPBOARD_TYPE_TEXT].available =3D true;
-> -        }
-> -
-> -        qemu_clipboard_update(info);
-> -        qemu_clipboard_info_unref(info);
-> +        gtk_clipboard_request_contents(
-> +            clipboard, gdk_atom_intern_static_string("TARGETS"),
-> +            gd_clipboard_owner_change_contents_received_callback,
-> +            info);
->          break;
->      default:
->          qemu_clipboard_peer_release(&gd->cbpeer, s);
->
-> --
-> 2.53.0
->
->
+Could you take a look and consider queuing it for 11.1?
+
+Best regards,
+Jerry Huang
+
+On 3/16/2026 3:17 PM, Huang, FangSheng (Jerry) wrote:
+> 
+> On 3/14/2026 12:14 AM, Jonathan Cameron wrote:
+>> On Fri, 13 Mar 2026 11:18:18 -0400
+>> Gregory Price <gourry@gourry.net> wrote:
+>>
+>>> On Fri, Mar 13, 2026 at 04:30:20PM +0800, Huang, FangSheng (Jerry) 
+>>> wrote:
+>>>> Hi Gregory,
+>>>>
+>>>> Thanks again for the thorough review on v6 and for catching the 
+>>>> hardcoded
+>>>> address issue — v7 has that fixed, now using x86ms- 
+>>>> >above_4g_mem_start as
+>>>> you suggested.
+>>>>
+>>>> Just wanted to follow up and check if your Reviewed-by still applies 
+>>>> to v7,
+>>>> since it's a minimal change from v6 (only the one-line fix you 
+>>>> identified).
+>>>
+>>> Yes sorry, we're good to go
+>>>
+>>> Reviewed-by: Gregory Price <gourry@gourry.net>
+>>>
+>>> Thank you for this, this will be very helpful for testing
+>>>
+>>> Jonathan would be able to answer more questions re: upstream
+>>
+>> Can provide general details, but specifics of this patch is probably
+>> something for Igor as it's not CXL specific.
+>>
+>> Soft freeze for 11.0 has passed, so this will be a 11.1 feature.
+>> https://wiki.qemu.org/Planning/11.0
+>> Is the 11.0 timeline. (11.1 will go up around time of 11.0 release).
+>>
+>> Jonathan
+> 
+> Hi Gregory, Jonathan,
+> 
+> Thank you both!
+> 
+> Gregory — much appreciated for the Reviewed-by and your continued
+> support throughout the review process.
+> 
+> Jonathan — thanks for clarifying the timeline. Understood that this
+> would target the 11.1 cycle. Will follow up with Igor when the 11.1 
+> window opens up.
+> 
+> Best regards,
+> Jerry Huang
+
 
