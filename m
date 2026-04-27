@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09AE3FF8860
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:57:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 349BFFF885E
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:57:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLQy-0002hg-Sr; Mon, 27 Apr 2026 08:51:33 -0400
+	id 1wHLTy-00059r-VQ; Mon, 27 Apr 2026 08:54:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNq-00084j-9w
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:25 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1wHLNq-00086F-P1
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:26 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNi-0005fy-Q3
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:13 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-488e1a8ac40so126645365e9.2
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:09 -0700 (PDT)
+ id 1wHLNi-0005fs-Qz
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:14 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4891e86fabeso111450295e9.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294088; x=1777898888; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294087; x=1777898887; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+Royy9UKz2653bp7UiRhq7eGlbKNi2zJHhkuwnIFZio=;
- b=AQFuz+SmNbEWEFw45qaXp6YPmleUO+5sdYskAeU0peOSr7qOEonEW5TPGqCYXLqtGe
- sxyLz9WsOJB7eLM6WcjpI60D8q7Jyo2qqn/7DfKK8MYaNaLASUJVV4OnMzknmC9TLBh5
- Mryz3XQI1Ot1kqjkbE/oZ/Wp3/qjiPT21ZyxaXt2cHghbKGQIX5uHnMW6B0MU2aYpvEa
- /0ZbOnyzXi6XVabY28VwfgjKVaa0ibThkP5F5rUKtgSkEKrNNmhAWHJbUQz1UhLphQLC
- Umunxmes0r9i6ewr85QAoxjWsd3tCYURAGKOJ2BzRhCqcFperIgrHfFR4DFAd3bFmAoP
- GE0A==
+ :reply-to; bh=gdC+YZDzna/r0rWQv2DL4f+RV4Dhxm4LmelNu8GSqFE=;
+ b=Yp4y4uwlFVJ1M0AjA6TPYBBgDXBaD3z3sB+Hli4UdkK8BG7DktxPDSKINp0CUFmu6a
+ Q3AoydWErh1jrbHs5H8q8A2Oe0KZQ1viX1XTZyk/1WZjGo6Jl/YvBRuHkYWJmzeN5O7n
+ lReeQLc4XLFejDk4uhGZxuQbc1X67NyfU98V3DhywYDIcPrZ1CmWepVqeM1QZ/tCm7bM
+ +0WhGCEvM6HWI7NGMJsXaKR3nnLFao2YSbcHTPYfV5XNke1z2mxP4mclk+Ymk06C44C3
+ Ghw1/8MTL+NI/YeCRMjA0fQcXQllq/mVi6leXWXeqXi2h4jBUevjYLK7V1J8CNZ0krno
+ Z3jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294088; x=1777898888;
+ d=1e100.net; s=20251104; t=1777294087; x=1777898887;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=+Royy9UKz2653bp7UiRhq7eGlbKNi2zJHhkuwnIFZio=;
- b=GVnARqA6z1WHtTFG0bBk3JKo5zvZjyu2G/9PtdoBTxoY5EDlkuUO0cvVRAYmleVhQO
- 3wVCh6WgK+5SSW10Q3vMI/oiWwTiB9KcqbQzxB9xovlMDPWx/awAMvv00LRODFycDQv4
- YCYxmv3b1cKxmUPOgrwsmvKrmvm8PyetHBT4WYvkqMIjy31ZQy1cmavokQgQkEWrH0CP
- mnpZPpS9ty+smiBfnsXZtzj19kJu3QAjQ/DFfKqvN/jmpaUmgeun3zt3aZaER/burgoq
- 6EPKVE1FbVyc0gOQrOboSB68IHhcUw/QLhkFWYDmqITYd55f2XFh3a4toc4ZBL7TwkVo
- 7+7A==
-X-Gm-Message-State: AOJu0Yx734w8H+67bYYkYEaUtyNVqwvdshV6Gdwwdv4W3EbKCfCBYO7H
- pUQNhElJDj/uAIzYRM5DF+M4wUkzgnmHSNItK7TGWsRAL/l0MJeWF+GMsr0e2eUQvKfyuZlfosD
- ObE8G
-X-Gm-Gg: AeBDiesIeOfDn6dNyttBGTKvvHcs8gurMS8viljiZm9rgoQC4L+16PqIpETkj3Mt9LJ
- OX4XC48QD14s7v/5sVd9wwww1WtYzBWOZmG2EC7yYJE5X/e+EDENsUtoe20PEZEIrC7JoPxd5F4
- A077LdG7FQCD6nMCFSaZjzil8xCh9LLW7RyTUL86ArLa2Mx5AlexQ4MT0clWWwQx1iNVsPtmgGa
- Z4TjiyU1/+Qo68LoJtUmekMjc0dSDZOsfU1sVrIaDKr96DC9UyFD72/xhUYoJPY7zeTgnkSVWeo
- J9V+DX7TJGB+p1DTe+cfTxp6uxel+IONsxRUUsazwXj3lwwCMC8EhKbSE5sxh+hQ/ltqONyuhkz
- LRZcAEX7niwqZgMxgiTBVMr6eJDUyz6Fb2r0mHE9NkLwlJCQx7NasElhj0Jy2a5rj4200Uuz1W4
- vjCVXRzxqwmt3atnZPaNSVvLwc2Y6Lezz5FFU1F4j/rSikJbNO4yJbjS55DtRBnR7CxZPLyN3ZZ
- GLnS6NeNwSIZ0X/Y82N8Q5e4RHo95G+Znvc82uK+8DAiHEffoTz
-X-Received: by 2002:a05:600c:899:b0:489:1a63:509c with SMTP id
- 5b1f17b1804b1-4891a635125mr302497985e9.0.1777294088318; 
- Mon, 27 Apr 2026 05:48:08 -0700 (PDT)
+ bh=gdC+YZDzna/r0rWQv2DL4f+RV4Dhxm4LmelNu8GSqFE=;
+ b=mvT2oZ2RzT05PyY+2e1ucUBAanShhnF6+BClr41uQxFktulB2EX+2GUWQkUP4B3S93
+ 4uhG6xdDgRd67WQ7IPyNIBbJdW4xgL4SqVmgt92jSosZDjJSXJHnsvrs++dlww0srAw4
+ VZcezQUQlU0DjER5ROIoSm5UGmdSEBXBRED7zql9vi57CnHv3GsykfEHUcQN6I7xMh4N
+ KwQQmNOMYi39aQ28x/9kixoUhLdsicrF3YaoKGPkY6wDNPcMzr0Z4DQvt69J8mtMCzd8
+ eY4eHv/n0FmYOSOId7pdfRBL1MNmQ3V/sT21oRImhXQPjxTduW6/O2XEtgNoKNtsKshx
+ JGsg==
+X-Gm-Message-State: AOJu0Yz3Yn1CvljyAzXphdMAu/dGptwRUrR6Eh49mY1MebVIS47pddjD
+ d357c+Jtc3HvyfGcCIwJTLDAMA/BoglzCF2QpDUGwOGwCmLs6kMVc7c4sbEznKw9IiXGn+Ym/nq
+ HM0vr
+X-Gm-Gg: AeBDiesgLreV6NHMRSwe9thQzpjB0TKJn7Dnl72IRc3IWsat3Ft+56K0yFrxbPfWFo8
+ HMtaI/ZeYaRaF4axqd7npxftDTzdSIahFmzShYdjCdZ6Lz69HiKBp4AKYtmVeX3NVmc6MoO94fC
+ rDWWYZP3kyEQOoIlz+vyjaDrLW+7YdnakbqZEcEevbThf58syE2yrH4t96cT1kW7oVS82mu9qmx
+ OsPMq7fMalSDezphO8VAyRAYnKwQa6G4XIKX9DrOZvhQVka1lehpu2rga8mNmVofBIiQxDdP4fd
+ nTebpg87ba3EVMeHWxSiZmnkK8KctaNO3qXhO8NVWg0aQBk/h2V7lVTRLypzWLGQtl8ON2GEIQJ
+ qPKFYIKWHb0f6KQzmlZgzPhgLXD8VkxlFfyBsFdcL8mTpPu7n7PmaCs9Z1HeF0hJPL1/9z+0Hxm
+ 7wA35OKVsMUb4R+yem8LCxhwywds5tOjhJ5QAGN2UsUlS5jdQyiMW1Aj3Ce6XSk/0js7190e6/H
+ uJ4cx5yYFtokRwqv4jFCU73uzQkkv0NULCWjIMKEEIspwullfJd
+X-Received: by 2002:a05:600c:3412:b0:489:284:44ab with SMTP id
+ 5b1f17b1804b1-489028446fbmr302648205e9.12.1777294087183; 
+ Mon, 27 Apr 2026 05:48:07 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.07
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:48:07 -0700 (PDT)
+ Mon, 27 Apr 2026 05:48:06 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 31/63] target/arm/cpu: Introduce the infrastructure for cpreg
- migration tolerances
-Date: Mon, 27 Apr 2026 13:47:05 +0100
-Message-ID: <20260427124738.966578-32-peter.maydell@linaro.org>
+Subject: [PULL 30/63] tests/functional/aarch64: Add basic test of TCG
+ aarch64=off
+Date: Mon, 27 Apr 2026 13:47:04 +0100
+Message-ID: <20260427124738.966578-31-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,230 +102,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+Add a basic test of the TCG 'aarch64=off' functionality; this is the
+same as our existing arm/test_virt test, but it runs the AArch32
+guest kernel on qemu-system-aarch64 with -cpu max,aarch64=off.
 
-We introduce a datatype for a tolerance with respect to a given
-cpreg migration issue. The tolerance applies to a given cpreg kvm index,
-and can be of different types:
-a) mismatch in cpreg indexes
-- ToleranceNotOnBothEnds (cpreg index is allowed to be only present
-  on one end)
-- ToleranceOnlySrcTestValue (cpreg index is allowed to be only
-  present in source if its value @mask field matches @value)
-b) mismatch in cpreg values
-- ToleranceDiffInMask (value differences are allowed only within a mask)
-- ToleranceFieldLT (incoming field value must be less than a given value)
-- ToleranceFieldGT (incoming field value must be greater than a given value)
-
-A QLIST of such tolerances can be populated using a new helper:
-arm_register_cpreg_mig_tolerance() and arm_cpu_match_cpreg_mig_tolerance()
-allows to check whether a tolerance exists for a given kvm index and its
-criterion is matched.
-
-callers for those helpers will be introduced in subsequent patches.
-
-Only registration of migration tolerances related to cpreg index
-mismatch is currently allowed.
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Message-id: 20260420140552.104369-2-eric.auger@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260416165353.589569-4-peter.maydell@linaro.org
 ---
- target/arm/cpu.c       | 82 ++++++++++++++++++++++++++++++++++++++++++
- target/arm/cpu.h       |  1 +
- target/arm/internals.h | 54 ++++++++++++++++++++++++++++
- 3 files changed, 137 insertions(+)
+ tests/functional/aarch64/meson.build          |  1 +
+ .../aarch64/test_virt_aarch64_off.py          | 37 +++++++++++++++++++
+ 2 files changed, 38 insertions(+)
+ create mode 100755 tests/functional/aarch64/test_virt_aarch64_off.py
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 9b80dda140..10feb639c4 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -181,6 +181,82 @@ void arm_register_el_change_hook(ARMCPU *cpu, ARMELChangeHookFn *hook,
-     QLIST_INSERT_HEAD(&cpu->el_change_hooks, entry, node);
- }
- 
-+static ARMCPRegMigTolerance *find_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx)
-+{
-+    ARMCPRegMigTolerance *t;
-+    QLIST_FOREACH(t, &cpu->cpreg_mig_tolerances, node) {
-+        if (t->kvmidx == kvmidx)  {
-+            return t;
-+        }
-+    }
-+    return NULL;
-+}
+diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
+index 1067f181f2..9803f66299 100644
+--- a/tests/functional/aarch64/meson.build
++++ b/tests/functional/aarch64/meson.build
+@@ -47,6 +47,7 @@ tests_aarch64_system_thorough = [
+   'tcg_plugins',
+   'tuxrun',
+   'virt',
++  'virt_aarch64_off',
+   'virt_gpu',
+   'virt_vbsa',
+   'xen',
+diff --git a/tests/functional/aarch64/test_virt_aarch64_off.py b/tests/functional/aarch64/test_virt_aarch64_off.py
+new file mode 100755
+index 0000000000..13d8b73b0d
+--- /dev/null
++++ b/tests/functional/aarch64/test_virt_aarch64_off.py
+@@ -0,0 +1,37 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots an AArch32 Linux kernel and checks the console
++# on a TCG aarch64 CPU with aarch64=off. This is the same image etc
++# as we use in tests/functional/arm/test_virt.py.
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+void arm_register_cpreg_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
-+                                      uint64_t mask, uint64_t value,
-+                                      ARMCPRegMigToleranceType type)
-+{
-+    ARMCPRegMigTolerance *entry;
++from qemu_test import LinuxKernelTest, Asset
 +
-+    /* make sure the kvmidx has not tolerance already registered */
-+    assert(!find_mig_tolerance(cpu, kvmidx));
++class ArmVirtMachine(LinuxKernelTest):
 +
-+    assert(type == ToleranceNotOnBothEnds ||
-+           type == ToleranceOnlySrcTestValue);
++    ASSET_KERNEL = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
++         'releases/29/Everything/armhfp/os/images/pxeboot/vmlinuz'),
++        '18dd5f1a9a28bd539f9d047f7c0677211bae528e8712b40ca5a229a4ad8e2591')
 +
-+    entry = g_new0(ARMCPRegMigTolerance, 1);
++    def test_arm_virt(self):
++        self.set_machine('virt')
++        # KVM aarch64=off requires a host CPU that supports it, so
++        # restrict the test to TCG only
++        self.require_accelerator('tcg')
++        self.vm.add_args('-cpu', 'max,aarch64=off')
 +
-+    entry->kvmidx = kvmidx;
-+    entry->mask = mask;
-+    entry->value = value;
-+    entry->type = type;
++        kernel_path = self.ASSET_KERNEL.fetch()
 +
-+    QLIST_INSERT_HEAD(&cpu->cpreg_mig_tolerances, entry, node);
-+}
++        self.vm.set_console()
++        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
++                               'console=ttyAMA0')
++        self.vm.add_args('-kernel', kernel_path,
++                         '-append', kernel_command_line)
++        self.vm.launch()
++        console_pattern = 'Kernel command line: %s' % kernel_command_line
++        self.wait_for_console_pattern(console_pattern)
 +
-+bool arm_cpu_match_cpreg_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
-+                                       uint64_t vmstate_value, uint64_t local_value,
-+                                       ARMCPRegMigToleranceType type)
-+{
-+    ARMCPRegMigTolerance *t = find_mig_tolerance(cpu, kvmidx);
-+    uint64_t diff, diff_outside_mask, field;
-+
-+    if (!t || t->type != type) {
-+        return false;
-+    }
-+
-+    if (type == ToleranceNotOnBothEnds) {
-+        return true;
-+    }
-+
-+    if (type == ToleranceOnlySrcTestValue &&
-+        ((vmstate_value & t->mask) == t->value)) {
-+        return true;
-+    }
-+
-+    /* Need to check the mask */
-+    diff = vmstate_value ^ local_value;
-+    diff_outside_mask = diff & ~t->mask;
-+
-+    if (diff_outside_mask) {
-+        /* there are differences outside of the mask */
-+        return false;
-+    }
-+    if (type == ToleranceDiffInMask) {
-+        /* differences only in the field, tolerance matched */
-+        return true;
-+    }
-+    /* need to compare field value against authorized ones */
-+    field = vmstate_value & t->mask;
-+    if (type == ToleranceFieldLT && (field < t->value)) {
-+        return true;
-+    }
-+    if (type == ToleranceFieldGT && (field > t->value)) {
-+        return true;
-+    }
-+    return false;
-+}
-+
- static void cp_reg_reset(gpointer key, gpointer value, gpointer opaque)
- {
-     /* Reset a single ARMCPRegInfo register */
-@@ -1102,6 +1178,7 @@ static void arm_cpu_initfn(Object *obj)
- 
-     QLIST_INIT(&cpu->pre_el_change_hooks);
-     QLIST_INIT(&cpu->el_change_hooks);
-+    QLIST_INIT(&cpu->cpreg_mig_tolerances);
- 
- #ifdef CONFIG_USER_ONLY
- # ifdef TARGET_AARCH64
-@@ -1574,6 +1651,7 @@ static void arm_cpu_finalizefn(Object *obj)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
-     ARMELChangeHook *hook, *next;
-+    ARMCPRegMigTolerance *t, *n;
- 
-     g_hash_table_destroy(cpu->cp_regs);
- 
-@@ -1585,6 +1663,10 @@ static void arm_cpu_finalizefn(Object *obj)
-         QLIST_REMOVE(hook, node);
-         g_free(hook);
-     }
-+    QLIST_FOREACH_SAFE(t, &cpu->cpreg_mig_tolerances, node, n) {
-+        QLIST_REMOVE(t, node);
-+        g_free(t);
-+    }
- #ifndef CONFIG_USER_ONLY
-     if (cpu->pmu_timer) {
-         timer_free(cpu->pmu_timer);
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index ab6bacf4aa..be14a47c35 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1140,6 +1140,7 @@ struct ArchCPU {
- 
-     QLIST_HEAD(, ARMELChangeHook) pre_el_change_hooks;
-     QLIST_HEAD(, ARMELChangeHook) el_change_hooks;
-+    QLIST_HEAD(, ARMCPRegMigTolerance) cpreg_mig_tolerances;
- 
-     int32_t node_id; /* NUMA node this CPU belongs to */
- 
-diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 06655409e5..a632584a4e 100644
---- a/target/arm/internals.h
-+++ b/target/arm/internals.h
-@@ -1943,4 +1943,58 @@ int compare_u64(const void *a, const void *b);
- /* Used in FEAT_MEC to set the MECIDWidthm1 field in the MECIDR_EL2 register. */
- #define MECID_WIDTH 16
- 
-+typedef enum {
-+    ToleranceNotOnBothEnds,
-+    ToleranceOnlySrcTestValue,
-+    ToleranceDiffInMask,
-+    ToleranceFieldLT,
-+    ToleranceFieldGT,
-+} ARMCPRegMigToleranceType;
-+
-+typedef struct ARMCPRegMigTolerance {
-+    uint64_t kvmidx;
-+    uint64_t mask;
-+    uint64_t value;
-+    ARMCPRegMigToleranceType type;
-+    QLIST_ENTRY(ARMCPRegMigTolerance) node;
-+} ARMCPRegMigTolerance;
-+
-+/**
-+ * arm_register_cpreg_mig_tolerance:
-+ * Register a migration tolerance wrt one given cpreg identified by its
-+ * @kvmidx. Calling this function twice for the same @kvmidx is a
-+ * programming error and will cause an assertion failure.
-+ *
-+ * @cpu: vcpu to apply the migration tolerance on
-+ * @kvmidx: kvm index of the cpreg the tolerance applies to
-+ * @mask: bitmask where a difference is tolerated
-+ *        (relevant with ToleranceDiffInMask)
-+ * @value: value the bitmask field is compared with
-+ *        (relevant with ToleranceFieldLT and ToleranceFieldGT)
-+ * @type: type of the migration tolerance:
-+ * - ToleranceNotOnBothEnds (cpreg index is allowed to be only present
-+ *   on one end)
-+ * - ToleranceOnlySrcTestValue (cpreg index is allowed to be only
-+ *   present in source if its value @mask field matches @value)
-+ * - ToleranceDiffInMask (mismatch in cpreg values are only tolerated
-+ *   if differences are within @mask)
-+ * - ToleranceFieldLT (mismatch in cpreg values are only tolerated
-+ *   if incoming @bitmask field value is less than @value)
-+ * - ToleranceFieldGT (mismatch in cpreg values are only tolerated
-+ *   if incoming @bitmask field value is greater than @value)
-+ */
-+void arm_register_cpreg_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
-+                                      uint64_t mask, uint64_t value,
-+                                      ARMCPRegMigToleranceType type);
-+
-+/**
-+ * arm_cpu_match_cpreg_mig_tolerance:
-+ * Check whether a tolerance of type @type exists for a given @kvmidx
-+ * and the tolerance criterion is satisfied
-+ */
-+bool arm_cpu_match_cpreg_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
-+                                       uint64_t vmstate_value, uint64_t local_value,
-+                                       ARMCPRegMigToleranceType type);
-+
-+
- #endif
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
 2.43.0
 
