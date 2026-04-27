@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 349BFFF885E
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EBC0FF885E
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:57:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLTy-00059r-VQ; Mon, 27 Apr 2026 08:54:39 -0400
+	id 1wHLR2-0003CC-QO; Mon, 27 Apr 2026 08:51:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNq-00086F-P1
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:26 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wHLO4-0008BH-On
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:35 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNi-0005fs-Qz
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:14 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4891e86fabeso111450295e9.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:08 -0700 (PDT)
+ id 1wHLNw-0005jE-IV
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:26 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-48a563e4ef7so68793535e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294087; x=1777898887; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294101; x=1777898901; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=gdC+YZDzna/r0rWQv2DL4f+RV4Dhxm4LmelNu8GSqFE=;
- b=Yp4y4uwlFVJ1M0AjA6TPYBBgDXBaD3z3sB+Hli4UdkK8BG7DktxPDSKINp0CUFmu6a
- Q3AoydWErh1jrbHs5H8q8A2Oe0KZQ1viX1XTZyk/1WZjGo6Jl/YvBRuHkYWJmzeN5O7n
- lReeQLc4XLFejDk4uhGZxuQbc1X67NyfU98V3DhywYDIcPrZ1CmWepVqeM1QZ/tCm7bM
- +0WhGCEvM6HWI7NGMJsXaKR3nnLFao2YSbcHTPYfV5XNke1z2mxP4mclk+Ymk06C44C3
- Ghw1/8MTL+NI/YeCRMjA0fQcXQllq/mVi6leXWXeqXi2h4jBUevjYLK7V1J8CNZ0krno
- Z3jw==
+ :reply-to; bh=VsXVphtTzSqGkb8cuK6ICBOoamz39qRjTqSYcGiqm6A=;
+ b=SYG5U5k4pY9wGpZmn6x6ZXvJzx8coEVFEt5yGogMPUv7LVXzL1jO89usvNj1nyRA3P
+ fYaE/VgtkjQqbeU6c0v2Ns3HaVlKZgMa0po/gS24KE//GYXNilwrKMiqaLnRVPWfwm/f
+ zSNe1g7zGX5/ZFV4kPzpZh/TNYntbIjw0ZCHJl+yTyk04/HetmOBkPV35B31vkHuGco/
+ ezRBQwkr9AdeFEobDVACPFki1dpMUg1/yU2xU0ZWEnQQEDceAF10wFDQPfDVrYgoyf1f
+ TEZvCD52S39ZIr7RzAyNrpHYVaD4yUQDpo/V8ddku1JNa9zbl21SK48VoBMQfH5BrcS7
+ wScQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294087; x=1777898887;
+ d=1e100.net; s=20251104; t=1777294101; x=1777898901;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=gdC+YZDzna/r0rWQv2DL4f+RV4Dhxm4LmelNu8GSqFE=;
- b=mvT2oZ2RzT05PyY+2e1ucUBAanShhnF6+BClr41uQxFktulB2EX+2GUWQkUP4B3S93
- 4uhG6xdDgRd67WQ7IPyNIBbJdW4xgL4SqVmgt92jSosZDjJSXJHnsvrs++dlww0srAw4
- VZcezQUQlU0DjER5ROIoSm5UGmdSEBXBRED7zql9vi57CnHv3GsykfEHUcQN6I7xMh4N
- KwQQmNOMYi39aQ28x/9kixoUhLdsicrF3YaoKGPkY6wDNPcMzr0Z4DQvt69J8mtMCzd8
- eY4eHv/n0FmYOSOId7pdfRBL1MNmQ3V/sT21oRImhXQPjxTduW6/O2XEtgNoKNtsKshx
- JGsg==
-X-Gm-Message-State: AOJu0Yz3Yn1CvljyAzXphdMAu/dGptwRUrR6Eh49mY1MebVIS47pddjD
- d357c+Jtc3HvyfGcCIwJTLDAMA/BoglzCF2QpDUGwOGwCmLs6kMVc7c4sbEznKw9IiXGn+Ym/nq
- HM0vr
-X-Gm-Gg: AeBDiesgLreV6NHMRSwe9thQzpjB0TKJn7Dnl72IRc3IWsat3Ft+56K0yFrxbPfWFo8
- HMtaI/ZeYaRaF4axqd7npxftDTzdSIahFmzShYdjCdZ6Lz69HiKBp4AKYtmVeX3NVmc6MoO94fC
- rDWWYZP3kyEQOoIlz+vyjaDrLW+7YdnakbqZEcEevbThf58syE2yrH4t96cT1kW7oVS82mu9qmx
- OsPMq7fMalSDezphO8VAyRAYnKwQa6G4XIKX9DrOZvhQVka1lehpu2rga8mNmVofBIiQxDdP4fd
- nTebpg87ba3EVMeHWxSiZmnkK8KctaNO3qXhO8NVWg0aQBk/h2V7lVTRLypzWLGQtl8ON2GEIQJ
- qPKFYIKWHb0f6KQzmlZgzPhgLXD8VkxlFfyBsFdcL8mTpPu7n7PmaCs9Z1HeF0hJPL1/9z+0Hxm
- 7wA35OKVsMUb4R+yem8LCxhwywds5tOjhJ5QAGN2UsUlS5jdQyiMW1Aj3Ce6XSk/0js7190e6/H
- uJ4cx5yYFtokRwqv4jFCU73uzQkkv0NULCWjIMKEEIspwullfJd
-X-Received: by 2002:a05:600c:3412:b0:489:284:44ab with SMTP id
- 5b1f17b1804b1-489028446fbmr302648205e9.12.1777294087183; 
- Mon, 27 Apr 2026 05:48:07 -0700 (PDT)
+ bh=VsXVphtTzSqGkb8cuK6ICBOoamz39qRjTqSYcGiqm6A=;
+ b=e0woX6HSMwm8fAl4l1T9+zpBmLTDjEv83j9ogECeyPnr+5S4evHAL2vAlyfXKEYj6y
+ OHCD5lx0AP9bB2fM86VoWhOa2kRMBJfqVtLD0EC8V6qVL+1vkEYAZDPKeA4W9+1FsZBx
+ whm8gg7FIYWUFNE6B9VReLbg++qGYcOJyH2WCTPpvYzKv97NFmIY4x5BTeLjdJOeGNmZ
+ iDO5dEK7JVRjDI/wyRPqQNBq6lP/KtBjtrgg65NB8+8j8Su0OdF7QKFEMgm5iLDL7eST
+ a0rk7G7l/QBNSuA0m/8wHYE2B9sb/kQOr0tfDUUP01cVwLHKdbmjWsZ608oLpjhhiI07
+ XDWg==
+X-Gm-Message-State: AOJu0YwMqdRZmfP7tXe/T14eV56lvEf+2z+cIDXanOCUvrbVBED+Ecv7
+ 2qdytX29PrrcrjwPJGpNw2gv71Kd8uPqDtjwHdyinR4YFqMLg6Sy/iVPMdYBQ/rpsLic2v1ntLZ
+ G9m2c
+X-Gm-Gg: AeBDietKVlVFnfuYf1zaNDe3aEF07/xKpzucI1x19dd674SARqQrDgljRZl9GH/aYtM
+ 9S58dq4YixgAvc8pL4IzL6+gHywUlbCb40sfF4XZl3FHg4JV1Qu2z1I35uqL81KsfMa2/l69oa6
+ jk2FwRlYHn443qN6xc85xadXf2ui8Ie9xMMHtgPUQ3W10rBvAJh9wYvuiHEEFF52pzVhMxn3H7V
+ +zLOONm7kDGMapI3JMSxB71kdjqOhJSLXa3vjB9dZ2VsLSb8WaehAFGCasbxskL/WOfCJ0pHlHr
+ YOdxmycekG7hT4l0zUHw4m4GTF+7qdPhxqDirM8zcTyf9c0IQDmw4EPWDVjyHB3lp8uz3Qjf2t1
+ bSD6618cvjkuHys2ftk81rZxy6B1j4MjQj5GZv2k94i/pR9sCwqROHJr5I8SKDZYb/yVsGcadXA
+ Nbngt1FcigdSAp5T9UlZSZDhjHJEsDVYUI6FhqMB+uQKYouWuQGY2ui4t0nNThlBgMBnislJbCf
+ ec7CCVNkRnve1JhdgD8xVGBhxPlNVg/Pcr5emfl2A==
+X-Received: by 2002:a05:600c:8b84:b0:480:1c69:9d36 with SMTP id
+ 5b1f17b1804b1-488fb76e4aamr663834355e9.17.1777294101056; 
+ Mon, 27 Apr 2026 05:48:21 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.06
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.20
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:48:06 -0700 (PDT)
+ Mon, 27 Apr 2026 05:48:20 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 30/63] tests/functional/aarch64: Add basic test of TCG
- aarch64=off
-Date: Mon, 27 Apr 2026 13:47:04 +0100
-Message-ID: <20260427124738.966578-31-peter.maydell@linaro.org>
+Subject: [PULL 45/63] target/arm: migrate SME trap syndromes to registerfields
+Date: Mon, 27 Apr 2026 13:47:19 +0100
+Message-ID: <20260427124738.966578-46-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,76 +101,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a basic test of the TCG 'aarch64=off' functionality; this is the
-same as our existing arm/test_virt test, but it runs the AArch32
-guest kernel on qemu-system-aarch64 with -cpu max,aarch64=off.
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260416165353.589569-4-peter.maydell@linaro.org
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20260422125250.1303100-6-alex.bennee@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- tests/functional/aarch64/meson.build          |  1 +
- .../aarch64/test_virt_aarch64_off.py          | 37 +++++++++++++++++++
- 2 files changed, 38 insertions(+)
- create mode 100755 tests/functional/aarch64/test_virt_aarch64_off.py
+ target/arm/syndrome.h | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/tests/functional/aarch64/meson.build b/tests/functional/aarch64/meson.build
-index 1067f181f2..9803f66299 100644
---- a/tests/functional/aarch64/meson.build
-+++ b/tests/functional/aarch64/meson.build
-@@ -47,6 +47,7 @@ tests_aarch64_system_thorough = [
-   'tcg_plugins',
-   'tuxrun',
-   'virt',
-+  'virt_aarch64_off',
-   'virt_gpu',
-   'virt_vbsa',
-   'xen',
-diff --git a/tests/functional/aarch64/test_virt_aarch64_off.py b/tests/functional/aarch64/test_virt_aarch64_off.py
-new file mode 100755
-index 0000000000..13d8b73b0d
---- /dev/null
-+++ b/tests/functional/aarch64/test_virt_aarch64_off.py
-@@ -0,0 +1,37 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots an AArch32 Linux kernel and checks the console
-+# on a TCG aarch64 CPU with aarch64=off. This is the same image etc
-+# as we use in tests/functional/arm/test_virt.py.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+index 63c8e66ea9..6105347598 100644
+--- a/target/arm/syndrome.h
++++ b/target/arm/syndrome.h
+@@ -384,10 +384,18 @@ static inline uint32_t syn_erettrap(int eret_op)
+     return res;
+ }
+ 
++/*
++ * ISS encoding for an exception due to SME functionality
++ */
++FIELD(SME_ISS, SMTC, 0, 2)
 +
-+from qemu_test import LinuxKernelTest, Asset
+ static inline uint32_t syn_smetrap(SMEExceptionType etype, bool is_16bit)
+ {
+-    return (EC_SMETRAP << ARM_EL_EC_SHIFT)
+-        | (is_16bit ? 0 : ARM_EL_IL) | etype;
++    uint32_t res = syn_set_ec(0, EC_SMETRAP);
++    res = FIELD_DP32(res, SYNDROME, IL, !is_16bit);
++    res = FIELD_DP32(res, SME_ISS, SMTC, etype);
 +
-+class ArmVirtMachine(LinuxKernelTest):
-+
-+    ASSET_KERNEL = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-+         'releases/29/Everything/armhfp/os/images/pxeboot/vmlinuz'),
-+        '18dd5f1a9a28bd539f9d047f7c0677211bae528e8712b40ca5a229a4ad8e2591')
-+
-+    def test_arm_virt(self):
-+        self.set_machine('virt')
-+        # KVM aarch64=off requires a host CPU that supports it, so
-+        # restrict the test to TCG only
-+        self.require_accelerator('tcg')
-+        self.vm.add_args('-cpu', 'max,aarch64=off')
-+
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+
-+        self.vm.set_console()
-+        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-+                               'console=ttyAMA0')
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-append', kernel_command_line)
-+        self.vm.launch()
-+        console_pattern = 'Kernel command line: %s' % kernel_command_line
-+        self.wait_for_console_pattern(console_pattern)
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
++    return res;
+ }
+ 
+ static inline uint32_t syn_pacfail(bool data, int keynumber)
 -- 
 2.43.0
 
