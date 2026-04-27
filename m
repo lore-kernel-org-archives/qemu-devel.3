@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B7ACFF8860
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:58:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3EB3FF885E
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:59:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLU7-0006Ho-SH; Mon, 27 Apr 2026 08:54:47 -0400
+	id 1wHLU1-0005TB-3l; Mon, 27 Apr 2026 08:54:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNm-00084I-EE
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:22 -0400
+ id 1wHLNR-0007nc-D9
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:47:54 -0400
 Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNg-0005f8-9I
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:11 -0400
+ id 1wHLNP-0005UX-M7
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:47:53 -0400
 Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-48896199cbaso101472315e9.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:04 -0700 (PDT)
+ 5b1f17b1804b1-488b0e1b870so172740695e9.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:47:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294084; x=1777898884; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294069; x=1777898869; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=WDavdCu+Xke+C7HS6Rur5ErMcRioXqigfD2Cj7+MUEs=;
- b=b9m6uQNwlK9iMEXk/NLxJW5LKyjwJAZr64+J6/L3gIUZSa2xj5/EwSgw9c9oQjs1iG
- 7knzdxr085b0NMBnRODLaOP1RFF52awkeh+n3y2zgOvcmQxdu5VC6sfTeUSrAcmHE3xa
- /bUI8EEHLhF/BiLskxFmEMv9CtzA//WbnRDsACQMqY1B25ToFUX7fuvmeyy6f7BQ8w4d
- iFAE8EIfD765bN4/B7fJIBRYnMniJdbbPiX+ZiIqMFQEyn6LMcPf4zRCa+7xiKnO0iZQ
- 8GSVbeMaZmS/iVfiW+D0S46ucWn1ZOIqSdG1bHOsVlj4ZRcDI0NFdrt02qGDuDZr5nbm
- 5kzA==
+ :reply-to; bh=+f5ZGmX9oTLSaVcb3xFFj2b2ao74Al5SyMxc3YROTz0=;
+ b=NNK6HczuEl//raLKZTdcG0N0TiMpqoyQRpeYRSj/bcSN2oxqfDCLQ3dfshxQ2OLW78
+ Srs30XVXP9tdV2Baga/zTHVjjFb/a3YRz7/6qi0MTra/Ket1vit6wFHCkSIb1177fiXw
+ QG0hZKBQYt3SO7I3zLu+2ZIIr8nuwBbrW4SK/vKZKygncQSdKYpc50uOkHyjq9S/b++V
+ AqW1zaaxyStj3SXMrTVBHW/agVCbLPcYaFeYdSXzydAaPTE5QT0l40riZJI2Dcw/92P5
+ ctxVezrN64Siogun730L4SEXKrQkwMCm/vYZInzah9Hiq3dsDiklg5H6i5geA1ND2nJu
+ BxPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294084; x=1777898884;
+ d=1e100.net; s=20251104; t=1777294069; x=1777898869;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=WDavdCu+Xke+C7HS6Rur5ErMcRioXqigfD2Cj7+MUEs=;
- b=MuErwJojgtm6GiLURIbyznFXCI5ngY1qg2TEVpAuY4qjO3IRg8g/8gBqLQIire9lX5
- oaHE+0wDxeVvzNDVmqXwStdunsXAeF5Mk/idfq9K7zGXRiSl3+Y/uur2zV7WgB1CRKxx
- ut9UZYFe31KIbkoqDJPsfu4urP7rl/4aYk1qSkasyt1F5wIveEzsXIySY5FDJt52XOr2
- /tXxNbsYoFmxA5bSSZpxglCucFhNjOgkNuDYB+LTIE7EE0vjEQ3ibk3Z1ZMH8BDGWwqM
- dWrtveADIscgic/lAeQkeTy2SaMCOr6soqGF2vd1yJR5HkZZO3qLqI4ELOtyWsc1nJ+g
- 5yww==
-X-Gm-Message-State: AOJu0YwYrJnGo2wfJICHISbJRTKVyCJ7N/8Y3GIyaFHwbBQBAB87DOnW
- Ee0D1r5NcmfKFmzwv5b4O3p8YwHI5S2k0zuOvUJZwk2OKE1hDsv0SUP04dBRhkfBxtEvYpEHv3m
- hREwG
-X-Gm-Gg: AeBDiesHHnyAB+aFeh+JUQV9lncT+3iMAocpjddvlRsHYHPsq+ZexBFo6vq4fz25r/I
- 2/jsvkZt24OEOXPduLnHgc0/Uq8wowqjY0p0aJuBcebPNE7hsHUWvS/Xsx8yMqeBvqkSWXD7s+I
- ozDlcm7wpo+eRQJ0j95YDF48srb9MmvyuIp21NvkcKaKn1Xki9OALe37kq9AsCsRNud+3Zx+bqp
- atuNthDMwMwJELFjGS4GNurtFbCYlgZldvLzUYQXWz8ueRHo73I44ff3UbaqaA9yxxsvjZ1ExUG
- Gq7Xcapm2Oz+sgeR5IVxUmg+aRbj12ELQ84uZYJXgY8guJGM6HjNfwKvN9cExyfpYf3iXgO/XfK
- DAtnQvwgPTQqQaxgE4PHRwlixQNgQ+MvafIclw/3+d2NgFzgyrJs3n9DCw4cKBBkCvZkbisXLsX
- hd/+fMbLRRSpAiimSTI+hJS4brjDd4XBXMUAeI4UuzLQYi0varLXeAt8XHdUrv2jj/BaVZP/fO+
- Xk77Y+15z5O/Sks7N7Duxgzjaq4hcGS8Sn+nziEXA==
-X-Received: by 2002:a05:600c:c4ab:b0:487:1fb4:7e1 with SMTP id
- 5b1f17b1804b1-488fb7864c3mr616732525e9.22.1777294083600; 
- Mon, 27 Apr 2026 05:48:03 -0700 (PDT)
+ bh=+f5ZGmX9oTLSaVcb3xFFj2b2ao74Al5SyMxc3YROTz0=;
+ b=iHHLlWWDkstuuYidmqTrBTPzwYwmagSvA1eXHXp2LHw4O/9PWAGgZsEhvaifriY+v+
+ Tjr8EmgjRk1CN4FcqkHKyoRqjtPtLalB6Oq5bN3vDsKPU4XO0DXEHpbhfWiUQBrHlmRt
+ AGMkI2wdieSnyCzvfI5zLIGAp9+vvrX4dbSzChIu14XMpYtPrnUhhMf3JES4tCjn5ktD
+ rCvTs+f5pAlMZA/y6/f7w77+/b0dtp3xA/vTQvGnyhVPb+cGy0YPBfLTPjrvjcydF5Qt
+ FWwCbIIfdJNaZOmZcSMA9EgLK/gqEjwCrwgLXeJGoMirInbcd5UoGznRMjrLvDbmgQI2
+ DbpQ==
+X-Gm-Message-State: AOJu0YzNQd6AAuRYMQtsWiMpUUvuBhuIns64vYJsJ+JVTc04nmti8Pma
+ eDyJh185MViT4+qh3vTv69QzQVHg+Ao+aW96nIdK61JhTbqHy6oVIZnQPRlfo8MuWkscPhFStH+
+ mGzlu
+X-Gm-Gg: AeBDievLVeYUHaN7C2+emq3g8HmGJsPl7JQA793aJkZU8ZDYWGEWuLs1RfBZtxYNuiV
+ 2RmWFP0npX2Lry1ol8rQqorynv140x3hdmtUUk0YGMUB5mhYQjTSBDwmhvzU4p+nmIHzjEu8JHL
+ 25mlOS7WeZuy0fV50kGmvEChM/T/bMtk65KPKfoSWSWSthgcbROhWkDOHXYF/g38HQIBObsA5yN
+ WmNtx7K7PhBXa5g/Po3QnBAZghpWkKI9JkjBShHciMltX+fjRgkz/QsHSmO/cdIo2ixKyuW/trP
+ wTuxTt5yiC9vBgflmf3I51BahXrHuBt8HUxtvnVreJzdsEg844uyNidrdhncqijGVMyQJp7l/8y
+ qG92F2etr4kQg3KJFQvN0f/0mP3RpE5jrlwKQV0OLFDsMRF/zBc8YGWyc5hm7Gcyo6hu9KuXHDu
+ ZYRQALx8LYlC2AWdHPUEBJxQO60A1ujf4Yb0u4orkUuXXwUA70gFnbWR26rGPNT2MQueOP+GR8C
+ HU8KnyqNRM0NtLkUXQP1uYi389EFosWwAB+y/jeDA==
+X-Received: by 2002:a05:600c:33aa:b0:488:ae6c:42c0 with SMTP id
+ 5b1f17b1804b1-488fb742e7fmr358972785e9.7.1777294068924; 
+ Mon, 27 Apr 2026 05:47:48 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.02
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.47.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:48:02 -0700 (PDT)
+ Mon, 27 Apr 2026 05:47:48 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 26/63] hw/arm: Remove hw_error() for the unimplemented
- CM_LMBUSCNT register
-Date: Mon, 27 Apr 2026 13:47:00 +0100
-Message-ID: <20260427124738.966578-27-peter.maydell@linaro.org>
+Subject: [PULL 11/63] hw/arm/fsl-imx8mm: Adding support for SPI controller
+Date: Mon, 27 Apr 2026 13:46:45 +0100
+Message-ID: <20260427124738.966578-12-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::330;
  envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
@@ -102,54 +100,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 
-When writing to this register, QEMU currently aborts:
+It enables emulation of ECSPI in iMX8MM
+Added SPI IRQ lines
 
- $ echo "readl 0x10000018" | ./qemu-system-arm -audiodev none,id=snd0 \
-    -M integratorcp,accel=qtest,audiodev=snd0 -display none -qtest stdio
- [I 0.000000] OPENED
- [R +0.001907] readl 0x10000018
- qemu: hardware error: integratorcm_read: CM_LMBUSCNT
- [...]
- Aborted                    (core dumped)
-
-This is bad, a guest should ideally never be able to kill QEMU like this.
-
-Now, according to the "Intergrator/CP User Guide" from:
-
- https://developer.arm.com/documentation/dui0159/b/porting-integrator-ap-and-im-pd1/registers
-
- "The Integrator/AP CM_LMBUSCNT has been removed."
-
-That means this register does not seem to be implemented on real CP boards
-at all, only for older AP boards. Thus it should be fine if we simply
-ignore this register in QEMU and handle it like all other unimplemented
-registers in the "default" handler of the case statement.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3407
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260420064933.64765-1-thuth@redhat.com
+Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/integratorcp.c | 3 ---
- 1 file changed, 3 deletions(-)
+ hw/arm/fsl-imx8mm.c         | 26 ++++++++++++++++++++++++++
+ include/hw/arm/fsl-imx8mm.h |  7 +++++++
+ 2 files changed, 33 insertions(+)
 
-diff --git a/hw/arm/integratorcp.c b/hw/arm/integratorcp.c
-index 03633f3d4f..164af03f7b 100644
---- a/hw/arm/integratorcp.c
-+++ b/hw/arm/integratorcp.c
-@@ -106,9 +106,6 @@ static uint64_t integratorcm_read(void *opaque, hwaddr offset,
-         } else {
-             return s->cm_lock;
-         }
--    case 6: /* CM_LMBUSCNT */
--        /* ??? High frequency timer.  */
--        hw_error("integratorcm_read: CM_LMBUSCNT");
-     case 7: /* CM_AUXOSC */
-         return s->cm_auxosc;
-     case 8: /* CM_SDRAM */
+diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
+index 3632d85197..f433beeaf2 100644
+--- a/hw/arm/fsl-imx8mm.c
++++ b/hw/arm/fsl-imx8mm.c
+@@ -195,6 +195,11 @@ static void fsl_imx8mm_init(Object *obj)
+         object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
+     }
+ 
++    for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
++        g_autofree char *name = g_strdup_printf("spi%d", i + 1);
++        object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
++    }
++
+     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
+     object_initialize_child(obj, "pcie_phy", &s->pcie_phy,
+                             TYPE_FSL_IMX8M_PCIE_PHY);
+@@ -464,6 +469,26 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+                            qdev_get_gpio_in(gicdev, usdhc_table[i].irq));
+     }
+ 
++    /* ECSPIs */
++    for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
++        static const struct {
++            hwaddr addr;
++            unsigned int irq;
++        } spi_table[FSL_IMX8MM_NUM_ECSPIS] = {
++            { fsl_imx8mm_memmap[FSL_IMX8MM_ECSPI1].addr, FSL_IMX8MM_ECSPI1_IRQ },
++            { fsl_imx8mm_memmap[FSL_IMX8MM_ECSPI2].addr, FSL_IMX8MM_ECSPI2_IRQ },
++            { fsl_imx8mm_memmap[FSL_IMX8MM_ECSPI3].addr, FSL_IMX8MM_ECSPI3_IRQ },
++        };
++
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->spi[i]), errp)) {
++            return;
++        }
++
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->spi[i]), 0, spi_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->spi[i]), 0,
++                           qdev_get_gpio_in(gicdev, spi_table[i].irq));
++    }
++
+     /* SNVS */
+     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
+         return;
+@@ -503,6 +528,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MM_GIC_DIST:
+         case FSL_IMX8MM_GIC_REDIST:
+         case FSL_IMX8MM_GPIO1 ... FSL_IMX8MM_GPIO5:
++        case FSL_IMX8MM_ECSPI1 ... FSL_IMX8MM_ECSPI3:
+         case FSL_IMX8MM_I2C1 ... FSL_IMX8MM_I2C4:
+         case FSL_IMX8MM_PCIE1:
+         case FSL_IMX8MM_PCIE_PHY1:
+diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
+index d6df16e9d4..13c044412a 100644
+--- a/include/hw/arm/fsl-imx8mm.h
++++ b/include/hw/arm/fsl-imx8mm.h
+@@ -21,6 +21,7 @@
+ #include "hw/pci-host/designware.h"
+ #include "hw/pci-host/fsl_imx8m_phy.h"
+ #include "hw/sd/sdhci.h"
++#include "hw/ssi/imx_spi.h"
+ #include "qom/object.h"
+ #include "qemu/units.h"
+ 
+@@ -32,6 +33,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mmState, FSL_IMX8MM)
+ 
+ enum FslImx8mmConfiguration {
+     FSL_IMX8MM_NUM_CPUS         = 4,
++    FSL_IMX8MM_NUM_ECSPIS       = 3,
+     FSL_IMX8MM_NUM_GPIOS        = 5,
+     FSL_IMX8MM_NUM_I2CS         = 4,
+     FSL_IMX8MM_NUM_IRQS         = 128,
+@@ -48,6 +50,7 @@ struct FslImx8mmState {
+     IMX8MPCCMState     ccm;
+     IMX8MPAnalogState  analog;
+     IMX7SNVSState      snvs;
++    IMXSPIState        spi[FSL_IMX8MM_NUM_ECSPIS];
+     IMXI2CState        i2c[FSL_IMX8MM_NUM_I2CS];
+     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
+     MemoryRegion ocram;
+@@ -177,6 +180,10 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_UART3_IRQ    = 28,
+     FSL_IMX8MM_UART4_IRQ    = 29,
+ 
++    FSL_IMX8MM_ECSPI1_IRQ   = 31,
++    FSL_IMX8MM_ECSPI2_IRQ   = 32,
++    FSL_IMX8MM_ECSPI3_IRQ   = 33,
++
+     FSL_IMX8MM_I2C1_IRQ     = 35,
+     FSL_IMX8MM_I2C2_IRQ     = 36,
+     FSL_IMX8MM_I2C3_IRQ     = 37,
 -- 
 2.43.0
 
