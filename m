@@ -4,104 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 139E2FF885E
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 09:06:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36E17FF8861
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 09:09:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHHts-0003qD-LY; Mon, 27 Apr 2026 05:05:08 -0400
+	id 1wHHy8-0004jl-Uq; Mon, 27 Apr 2026 05:09:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHHti-0003p7-9Q
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:05:02 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ (Exim 4.90_1) (envelope-from <aadhyar.cs24@rvce.edu.in>)
+ id 1wHHy7-0004jV-Du
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:09:31 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHHtf-0007PT-1r
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:04:57 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-79a46260385so111547437b3.3
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 02:04:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777280691; cv=none;
+ (Exim 4.90_1) (envelope-from <aadhyar.cs24@rvce.edu.in>)
+ id 1wHHy4-0000My-O7
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:09:31 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-444826c16ffso717337f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 02:09:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777280966; cv=none;
  d=google.com; s=arc-20240605;
- b=VSvhO7VHNo5HXwggrHwISw0DKyajUsXU/MVsjHKM2D+pQ2Smk+3nY+ZGVtPWvViVd3
- U+dz4Sz76HWTDU6M0pXDV5e4ero1JOCHQOXOaahAf7xHqDTTX1WdDGOg99y9c687KWWc
- 5M1czR4HnkaZ/EaG01hbpFkEueN9i6q+rI4WlnDtYHK92XwzhiqshN7WC2Oe9otT7h34
- f5htsy+vlNxIpuzcCd0N18gQl6SD0WnNuAo74lLsArBkYNtDlm2f5GIb3qsjhhr5Y9VT
- sjd7cHfdk5pMjZswMd5lnWC8NFwe6NIM3QRJbJMr7I68BKtZYN68SE8u7wEL+GIEg6yn
- rMRg==
+ b=SymAxNYCQnUGfm7QVxDSgHezMoJ+C+scUhRmzmcBxz82zORk265kS8C8GNaXkpvP2C
+ 4yYoZJnzIuXS9n6J4OYpsne++PHTMLUfRNbNaUc0pr9Q8TEU9fXFTdVh2hbjDuoNNQIN
+ i8lUzOeCcKgCuSX03JAQOQK1xy7+qT7U5GQknjCR8tYAUyZ+GfBCH9utn6xHZ3TPfHfR
+ Uw6Jf+9JfKCrohBRbhKag1094e37NKPSQPvXJhveuJzKx3s+vogecGB862NFntnX3/PS
+ ObRwMk81mgv9H+rrbwvq/e5UuQnfKoy22G5/NgKkGDjQg+a9iHXF+fQMvZhDv9k/uoPF
+ gLPQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=LpYw5xfAKYbUjRA2dLrJ+YsP9hBfmAiCQXc93R3jdiY=;
- fh=GsqRHuRXCQaQ0M0mZZP9bl+1hFWXqZAloEQeMpLtTjc=;
- b=HVVpTMuVW6B/dTxIcth8NGvilgfaCj2OYgX2xopTGVj6Fm2C4uHR8XsIMpjs4L7QUM
- B14k2duvN/SOg6aRipUOcSEdB/9I45rpurxlPbJXvSbxcjJobuTygp/SVUffX+nwaGeT
- PrYQbjs1iPEj+Gl9TeqHhzlnPY0IRZVMJycr3ECZp7rH8uZVPe5nXnA+l0mm6/bzIEGt
- 3fc3xdzkRcy6t90h2XqRRPRruELIQrldZw3T8srdzuyEdEjNPCdZCYZcapy/Dt3k2PK0
- aci1PvGnfmogDwhPZRp1UcVwhOFKnFlnuk0ij8fjjrq5u9weu0oe9DPx5jMG+K8J0lAS
- 454g==; darn=nongnu.org
+ bh=gdFdAwGwuIwcz4kdCkPStN3vxPR6Y+5b+BbfLPB0Xyo=;
+ fh=AN66mnzcK1FzYLfUmTrgfbB/VA1aqrL9p4wXLzc1brU=;
+ b=jhaPuoUrnqj3R78F+uP7vc/yC8N0JbMDgvOd3fVWdfgnB7r/+HOROSfNcTAkfp+PRr
+ 76cbMICD+pgongOyzvKhallrfYLV4T+9wNR+8PpUluBJp5LMZp+7QLiQblf9e20yFmqX
+ 0TlSytIcZO3h+lRcA4RWN7DeJPtwfV9X0oFYe20+JAePcz3vlI5vtBHrr+NEF2ntmoOQ
+ t35veIH763A0dd7Vr86gwipiKIKZACR89Co5+lJYNU1szsI8nOEMRFMpH1/H/LmMqPLj
+ ZCtN7vki6GpT6+HFCF2/Z+9YuGSXvdWP5B3hIn7DuE7Em7XySUBlBQAQcfRrLwdTvsFq
+ dEKg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777280691; x=1777885491; darn=nongnu.org;
+ d=rvce-edu-in.20251104.gappssmtp.com; s=20251104; t=1777280966; x=1777885766;
+ darn=nongnu.org; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=LpYw5xfAKYbUjRA2dLrJ+YsP9hBfmAiCQXc93R3jdiY=;
- b=GKm1PBxQGfp0sJR9ISwJ5GeFBGDneDIK48DUBmMniNkVa+zRqSi4LJ7DkHeO2vG+EK
- +RAodchHR9fFjs3fzo6STaeTEYx9ZMaYdktIOBoPQuLeOyuc7PHJnI3a0bcqDYc4BIdq
- Z9XWm2ZXhw7Db+W23NW1ETU9yKCzh92UEaKNKWZYRIddOC2VrjjbCj05grmV35erEOkY
- YUIW+LWxfyj1H/PGXByCsK8apv1Vqewey9Mtw+xkt/0kp11iZwukuKjz17ZQ/UlrvAXf
- Ql1EYd4kSxkaBz5qiBfv9IwxEBZ8M+l4kP+SHYfxEa5BYjMIxdj9qo0UK1LJLyAXrgxx
- EAKw==
+ bh=gdFdAwGwuIwcz4kdCkPStN3vxPR6Y+5b+BbfLPB0Xyo=;
+ b=ed38zqfui6stF0WZx18mcXkLIGvlORUME+ySeRBq6xZjTnblp5bfeKnilivqNNNzwv
+ g81RByOJOon1QTq3BJuu/ktDrz+ftPZ6WMBh1ui6FVl9SNzv0Cii7me/wiCzvmcIwgWK
+ KzJagODaVMpkG3qIVpKUoYnh55pnJY/zm5rMJyQhfb9+b158ivT2YrdND3a28elyvghf
+ uPHF5AYVFPe0hnHKS0x7A8x0zfTIVwUnmzeLeLPvlP5MBvQC3dZ1tjgSNbHaawWjM6Uv
+ cm/+ScPQ0dNv5PQJjJ4zJrkdIFxiGbN4UKcCuJZor9Zjd1qVAKNp4zFHiPW1e9W35kNJ
+ mZCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777280691; x=1777885491;
+ d=1e100.net; s=20251104; t=1777280966; x=1777885766;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LpYw5xfAKYbUjRA2dLrJ+YsP9hBfmAiCQXc93R3jdiY=;
- b=aQgWp45AVFg06eZNzHpHU638EZeMUfkH1TLhXMCc49hbJiX7dAjNPmySXczQf5VRzr
- 1DZJqkZuwfGTrjs1CpMOwVqcNm1fsG1+sp+bbwWEqnSAP8T/I7CAQ7ntLit01m86hfvL
- A9BY5VydhXtTcabE0bXESuvITnRnAZf3fpc9OpCrUONL47AgtCd6MuCjSyb5ubG78aBC
- BcB/ghbjqH9TpNqUbefNIp06st8GKZkIu+uLk7bsSnb2IigK+wVDgIyO3NxYP0FM1BWS
- V6Jp45lcIjnEms48xXlXY1hfkMRM01QqRxJG/napHwhyio/EjKgdC5+oz6sxmXIMI/z2
- o0ow==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/Gt2oQCI1il6DgcTAwlDp3/JYu9aOwrEuKAEkCihDB+G0K8SGV62yzb3GHbhzNCG5yRIaSf9ZJFaaM@nongnu.org
-X-Gm-Message-State: AOJu0YwkWzOwhp0qf24YmhY2dq+VHkK83uW2l8BHvPjO+hfhP3njdaL4
- PpcAzm2AC8UlR0IRUf37OTlsxlIc6XvP0KJOHDVWgqkBZGzhEb0i1TQq4JePW7l9rT0u/DnOj5S
- CrcDaSXtqdED/KEfLuwr72neIoCiijbS27dXBd5r8Vw==
-X-Gm-Gg: AeBDiesF63JuIjY5CQbKffSDs4XmhP59tgL2YVVMjPA+E+vKPvJ8OqTn+7SeEVdANxi
- dqE3ooKO5MhaKfRxD3fZKKKalWFYDDrN2USuINKyLkCXE7lYalS2ENOCrVRhQqhCYANLdIAGGVe
- 7fJR6zqbWowe3oun3WOy6pps2KwCjiBnGhe13DioCK8Avy11OORR/yUzKv9mNRSUKWWxPfNNnF0
- VUI9EiXt7Y7SEBkGE83A0AiK0LrWfXZ5SCa+/MOdpbJZHtJGKk5qdOaRZE0wOFt6V6X9DLk0K0F
- m1fpRhl4YmrEEjxmihSwShAYw1i+U6QXliPpSEtiN7/hwG/nCTeHnSXjAeB6fS8kDf3E4yn2jul
- ih5l5evKXNqCC
-X-Received: by 2002:a53:d017:0:b0:656:7c25:8927 with SMTP id
- 956f58d0204a3-6567c258f1emr8733456d50.11.1777280691143; Mon, 27 Apr 2026
- 02:04:51 -0700 (PDT)
+ bh=gdFdAwGwuIwcz4kdCkPStN3vxPR6Y+5b+BbfLPB0Xyo=;
+ b=VVS8fjfxnrWMdYlBNaioZl9TAg659u/se98WmU5CniFF2O60H/3hD0XAsvEdZrqltX
+ D5UM95Lga1yNQjnvHsgrd+iGG0jK66U4l2WdD2i//YDE6/zfoL+jmVzaG/6lH6PDXd9u
+ a+J8daIWRRT9/5XWdaj6G9u+seH5xhHi5zj7rXPHLRJiNfokFn5Jy+jYYKWpe97ykZww
+ lZ1cMuZAUFvYjLtOmMZN8sfsmYZjBKRrr5s5i5ZBcxY4UKZv8xr7L00F4tJuQwMlshsr
+ eyzNOro6VnopaFDr+mdTGD1wFPomUdM9v7hE6VJ02sSjA3r5sdIxIczuDPH1HW+UEkAU
+ z6rA==
+X-Gm-Message-State: AOJu0Yxp++lmyprXgkjKh7AGEnEUa6PfuqoDvdEiJ7PJUyeqDBl/BHEf
+ 1I2dMqTg5+QwwwO2joUG2T7nrq13XIpZ6p1LfwiPVuLD0XM2/XQUwQXRFzhyP91yVzGVCHG/KLA
+ 3ITd/OQzBvUUIr3Fg8iA7i+UzVBOQh0PRUqs1rTNB6Q==
+X-Gm-Gg: AeBDietzYxyzQ4b2b2XGtTtuCpAFzHklqtYWBVdV1ZurbXGlY/XiRr/iR9YUEPgvNgm
+ sWHoLRGmYfqyyw8nGIlToOms1zwyuYVXbNC7dgY1zP24VG7giSQdGXYOGcp22xTJfxdYcWmqMOP
+ yfkfvly8C9u/28vyR2/OCllo3eJVw3Hbdp4FtmAJ1Km03wUNE+xsQS3p124Pf7Wr5ZKar/rZDpT
+ TkAoM2JIYPZaG5k1/d1m7kqWZP3zxhDh3AuvPWDYAOoFH+3atQvsyv8rdVNGSNPZgFiI6Uz9Njq
+ MhmVPG3J8p+HajkcWlrItmS9WJ3k2DQoigbAnnykVjyS1HeXvWWF6P4lZA87LyzLtwUIMMs2w2N
+ wN5rhsXSe7JKYxnS3wINj7PKUN314oB4LRT0=
+X-Received: by 2002:a05:6000:22ca:b0:43d:50c:6f33 with SMTP id
+ ffacd0b85a97d-43fe3e0bde7mr65038454f8f.26.1777280964495; Mon, 27 Apr 2026
+ 02:09:24 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260420064933.64765-1-thuth@redhat.com>
-In-Reply-To: <20260420064933.64765-1-thuth@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Apr 2026 10:04:39 +0100
-X-Gm-Features: AQROBzAzJ-_Tfus8JWz8Rfv-y3VIBYCwlAqJFBCYhS0rJbK6xCvWyUywjPwL14A
-Message-ID: <CAFEAcA9nuHHRKjvv+o7k6Zyi2AUUea3=trrgLY-9Lwp2kjuagw@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm: Remove hw_error() for the unimplemented
- CM_LMBUSCNT register
+References: <CAHMzB=iZB24QqPwcMjJrfp4GjCkKKpa_0aG0Qx=YOFGUxab8Lg@mail.gmail.com>
+ <a7e8ab0f-dddf-407a-ab1c-8f465734d238@redhat.com>
+In-Reply-To: <a7e8ab0f-dddf-407a-ab1c-8f465734d238@redhat.com>
+From: AADHYA R <aadhyar.cs24@rvce.edu.in>
+Date: Mon, 27 Apr 2026 14:39:13 +0530
+X-Gm-Features: AVHnY4I3b6oqhOaBdWw14SNexZkVwGztDPdnGgBqzAHKNE1KIdosoxnvwqdBWCA
+Message-ID: <CABHAK8Mca9e2RExFmyNa+1W+sJvuGDiLEytjxANVcuiSHbvR+Q@mail.gmail.com>
+Subject: Re: First-time contributor looking to work on malloc/calloc cleanups
 To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Cc: qemu-devel@nongnu.org, jsnow@redhat.com, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Lucas Cardoso <luc.fast2004@gmail.com>
+Content-Type: multipart/alternative; boundary="0000000000008e222806506d780d"
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=aadhyar.cs24@rvce.edu.in; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,40 +117,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 20 Apr 2026 at 07:49, Thomas Huth <thuth@redhat.com> wrote:
->
-> From: Thomas Huth <thuth@redhat.com>
->
-> When writing to this register, QEMU currently aborts:
->
->  $ echo "readl 0x10000018" | ./qemu-system-arm -audiodev none,id=snd0 \
->     -M integratorcp,accel=qtest,audiodev=snd0 -display none -qtest stdio
->  [I 0.000000] OPENED
->  [R +0.001907] readl 0x10000018
->  qemu: hardware error: integratorcm_read: CM_LMBUSCNT
->  [...]
->  Aborted                    (core dumped)
->
-> This is bad, a guest should ideally never be able to kill QEMU like this.
->
-> Now, according to the "Intergrator/CP User Guide" from:
->
->  https://developer.arm.com/documentation/dui0159/b/porting-integrator-ap-and-im-pd1/registers
->
->  "The Integrator/AP CM_LMBUSCNT has been removed."
->
-> That means this register does not seem to be implemented on real CP boards
-> at all, only for older AP boards. Thus it should be fine if we simply
-> ignore this register in QEMU and handle it like all other unimplemented
-> registers in the "default" handler of the case statement.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3407
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
+--0000000000008e222806506d780d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi Thomas and Lucas,
+Thank you for CC'ing me!
+Lucas, welcome to the QEMU community! I am currently busy with some project
+commitments, so I will not be finishing the fmopl.c patch.
+Please feel free to take it over. It is a great file to get comfortable
+with the codebase. If you have any questions about the initial conversion
+work I started there, I=E2=80=99d be happy to help.
+Best of luck with your first contribution!
+Best regards,
+Aadhya R
 
+On Mon, 27 Apr 2026, 12:47=E2=80=AFpm Thomas Huth, <thuth@redhat.com> wrote=
+:
 
-Applied to target-arm.next, thanks.
+> On 16/04/2026 15.26, Lucas Cardoso wrote:
+> > Hi everyone,
+> >
+> > I am looking to make my first contribution to QEMU and would like to
+> start
+> > by tackling the remaining cleanups for the GitLab issue: "conversions o=
+f
+> > malloc/calloc/free to g_malloc/g_new/g_free etc" (
+> https://gitlab.com/qemu-
+> > project/qemu/-/work_items/1798 <https://gitlab.com/qemu-project/qemu/-/
+> > work_items/1798>).
+> >
+> > I've checked the codebase and saw that some files mentioned in the
+> original
+> > issue still have remaining malloc calls that need converting:
+> > - hw/audio/fmopl.c
+> > - target/xtensa/translate.c
+> > - disas/m68k.c
+> > - disas/sparc.c
+> > Also, this file still has a calloc call that needs converting:
+> > - hw/xtensa/mx_pic.c
+> >
+> > I checked the mailing list archive, and saw that someone else tried to
+> > tackle this issue a month ago. They made some progress on
+> hw/audio/fmopl.c,
+> > but it seems as if they've stopped working on it.
+> > I would like to start working on these one file at a time, starting wit=
+h
+> hw/
+> > audio/fmopl.c for malloc conversions and hw/xtensa/mx_pic.c for calloc.
+> >
+> > Following the 'Contribute/BiteSizedTasks' wiki page, I decided to send
+> this
+> > email. Could you let me know if anyone is currently working on these
+> > specific files, or if it's safe for me to proceed? If so, I'd appreciat=
+e
+> it
+> > if someone could assign the corresponding GitLab issue to me.
+> >
+> > Thanks,
+> > Lucas Cardoso
+> > @lucasac00 on Gitlab
+>
+>   Hi Lucas,
+>
+> it might make sense to CC: the reporter of the issue (Peter) and the
+> author
+> of the previous fmopl patch to synchronize. Otherwise, mails like this
+> easily get lost in the high volume of traffic on the qemu-devel mailing
+> list. I've added them now so they can join the conversation.
+>
+> I'd suggest that you start with a patch that tackles the other files, in
+> case Aadhya still want to finish the previous patch to fmopl.c.
+> Seems like there is also already a patch available for sparc.c:
+>
+>
+> https://lore.kernel.org/qemu-devel/69b6addd.170a0220.2bbc48.65e4@mx.googl=
+e.com/
+>
+> And for xtensa:
+>
+>
+> https://lore.kernel.org/qemu-devel/20250730062142.1665980-1-frolov@swemel=
+.ru/
+>
+> ... so maybe best if you start with a patch to m68k.c ?
+>
+>   HTH,
+>    Thomas
+>
+>
 
--- PMM
+--0000000000008e222806506d780d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto">Hi Thomas and Lucas,<div dir=3D"auto">Thank you for CC&#3=
+9;ing me!</div><div dir=3D"auto">Lucas, welcome to the QEMU community! I am=
+ currently busy with some project commitments, so I will not be finishing t=
+he fmopl.c patch.</div><div dir=3D"auto">Please feel free to take it over. =
+It is a great file to get comfortable with the codebase. If you have any qu=
+estions about the initial conversion work I started there, I=E2=80=99d be h=
+appy to help.</div><div dir=3D"auto">Best of luck with your first contribut=
+ion!</div><div dir=3D"auto">Best regards,</div><div dir=3D"auto">Aadhya R=
+=C2=A0</div></div><br><div class=3D"gmail_quote gmail_quote_container"><div=
+ dir=3D"ltr" class=3D"gmail_attr">On Mon, 27 Apr 2026, 12:47=E2=80=AFpm Tho=
+mas Huth, &lt;<a href=3D"mailto:thuth@redhat.com">thuth@redhat.com</a>&gt; =
+wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8e=
+x;border-left:1px #ccc solid;padding-left:1ex">On 16/04/2026 15.26, Lucas C=
+ardoso wrote:<br>
+&gt; Hi everyone,<br>
+&gt; <br>
+&gt; I am looking to make my first contribution to QEMU and would like to s=
+tart <br>
+&gt; by tackling the remaining cleanups for the GitLab issue: &quot;convers=
+ions of <br>
+&gt; malloc/calloc/free to g_malloc/g_new/g_free etc&quot; (<a href=3D"http=
+s://gitlab.com/qemu-" rel=3D"noreferrer noreferrer" target=3D"_blank">https=
+://gitlab.com/qemu-</a> <br>
+&gt; project/qemu/-/work_items/1798 &lt;<a href=3D"https://gitlab.com/qemu-=
+project/qemu/-/" rel=3D"noreferrer noreferrer" target=3D"_blank">https://gi=
+tlab.com/qemu-project/qemu/-/</a> <br>
+&gt; work_items/1798&gt;).<br>
+&gt; <br>
+&gt; I&#39;ve checked the codebase and saw that some files mentioned in the=
+ original <br>
+&gt; issue still have remaining malloc calls that need converting:<br>
+&gt; - hw/audio/fmopl.c<br>
+&gt; - target/xtensa/translate.c<br>
+&gt; - disas/m68k.c<br>
+&gt; - disas/sparc.c<br>
+&gt; Also, this file still has a calloc call that needs converting:<br>
+&gt; - hw/xtensa/mx_pic.c<br>
+&gt; <br>
+&gt; I checked the mailing list archive, and saw that someone else tried to=
+ <br>
+&gt; tackle this issue a month ago. They made some progress on hw/audio/fmo=
+pl.c, <br>
+&gt; but it seems as if they&#39;ve stopped working on it.<br>
+&gt; I would like to start working on these one file at a time, starting wi=
+th hw/ <br>
+&gt; audio/fmopl.c for malloc conversions and hw/xtensa/mx_pic.c for calloc=
+.<br>
+&gt; <br>
+&gt; Following the &#39;Contribute/BiteSizedTasks&#39; wiki page, I decided=
+ to send this <br>
+&gt; email. Could you let me know if anyone is currently working on these <=
+br>
+&gt; specific files, or if it&#39;s safe for me to proceed? If so, I&#39;d =
+appreciate it <br>
+&gt; if someone could assign the corresponding GitLab issue to me.<br>
+&gt; <br>
+&gt; Thanks,<br>
+&gt; Lucas Cardoso<br>
+&gt; @lucasac00 on Gitlab<br>
+<br>
+=C2=A0 Hi Lucas,<br>
+<br>
+it might make sense to CC: the reporter of the issue (Peter) and the author=
+ <br>
+of the previous fmopl patch to synchronize. Otherwise, mails like this <br>
+easily get lost in the high volume of traffic on the qemu-devel mailing <br=
+>
+list. I&#39;ve added them now so they can join the conversation.<br>
+<br>
+I&#39;d suggest that you start with a patch that tackles the other files, i=
+n <br>
+case Aadhya still want to finish the previous patch to fmopl.c.<br>
+Seems like there is also already a patch available for sparc.c:<br>
+<br>
+<a href=3D"https://lore.kernel.org/qemu-devel/69b6addd.170a0220.2bbc48.65e4=
+@mx.google.com/" rel=3D"noreferrer noreferrer" target=3D"_blank">https://lo=
+re.kernel.org/qemu-devel/69b6addd.170a0220.2bbc48.65e4@mx.google.com/</a><b=
+r>
+<br>
+And for xtensa:<br>
+<br>
+<a href=3D"https://lore.kernel.org/qemu-devel/20250730062142.1665980-1-frol=
+ov@swemel.ru/" rel=3D"noreferrer noreferrer" target=3D"_blank">https://lore=
+.kernel.org/qemu-devel/20250730062142.1665980-1-frolov@swemel.ru/</a><br>
+<br>
+... so maybe best if you start with a patch to m68k.c ?<br>
+<br>
+=C2=A0 HTH,<br>
+=C2=A0 =C2=A0Thomas<br>
+<br>
+</blockquote></div>
+
+--0000000000008e222806506d780d--
 
