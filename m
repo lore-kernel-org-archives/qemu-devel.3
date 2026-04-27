@@ -4,101 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA0C3FF8861
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:35:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FCADFF8861
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:47:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHHR9-0003ht-RC; Mon, 27 Apr 2026 04:35:27 -0400
+	id 1wHHbZ-0005oD-T2; Mon, 27 Apr 2026 04:46:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHHR5-0003gI-9g
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:35:23 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHHR3-0005zt-Ck
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:35:23 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-651b4d09141so13075595d50.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:35:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777278920; cv=none;
- d=google.com; s=arc-20240605;
- b=gV5MhJ/efgGcpka+vB35XebNGOyJziTol/ZDB6qVtCTNRIvNVC/JUU+mOGMcaSfR3Q
- M2M7714fAG4PKfZ+1HHz9Wwk77jcKP8UJ039ZxHqK93nbLNRQO+PrOO7ic3Z0qJQlu8o
- YTDSsODSlz3gUPnNaU6TnPzSGVzQPRbj7dz4KZAPsl8+yaOmy8JGyhf8BVLhC3Qi+gPu
- 7OHrffRO8JcDEa3wYBnKHYH0cWnkuZ30jq95YNPJasx9t7Iz674mOhOzUhDfrNkPVvhl
- y0nid7SP8aD9fcrQ9Gie31QtsOBP8YgWDcX6y4dfqO9pboLoKmt2W64iqlnwWrNDLDFJ
- WAMA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=h9QWKCTN4QOURPXWq3r3LDrWnHmZaiApTMG+jDk3gHM=;
- fh=Majlw+xdldRqm88GFl5XnMKn2ZXbD6SUIlMio57MfDQ=;
- b=GCjBlBm0YqpFixHo0z2Ei2/hKeANFru/dC0SaGYhmx/CvNV1c0PereuCrAGRtcUR+P
- 4ca0vjzvavoy6Ll8vOC2JYntzJXXXlXFT+UaCL7sULpPbUg5D3/L/BGMGX9CMuUS1T8w
- hWv60OX8lSikyCfV8pjoQ/TSNfR8sgmWtOu60hkbtqqKJKn4/+BaYiAWLIZhEAj+5Fgo
- Jb5iZK5hZ9TsgHemzXeLjNjqFOPtnl5056aIYyYx/dsiHbBnAJvhShl6OwUOtKVztrrQ
- OiINlIULjV1JKIblZxmwHEbQfq8jfRVrVDaMpYk6SHp1xCK3FzQzkHkT26PpYiQ+lkZi
- B0OQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777278920; x=1777883720; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=h9QWKCTN4QOURPXWq3r3LDrWnHmZaiApTMG+jDk3gHM=;
- b=bhwA25jqTemznEDi150gQn/jTkoSYLd3jdx5A7xV1kvwp2vL+KIY5joSIhQ1u1H4lW
- rniNZbqeQuDxrDXqxYOgrijTGcmP5Z0fWqoMGlLu3zRsaWhLq8hjKrvj/Tt8Th21PRyQ
- +ZpqYopf1EmCQWN+bSEdRf+enfgUv9OuVa5zzG5cQB3bsCyObwoAwKkhXsJAigm6K1+1
- oyJdXHBX1Zg9zaj/y1LpPRC5bWt90cZMC9FOscn6hcHHaUAutQUnfevQDIn+YV+R8c96
- aj4KnomQQlr7rHF0jAl/jooqPiTvjLYZG6o3lsWk4CQZVlA6XPHF8il7zGa4gc7NrZVz
- ABoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777278920; x=1777883720;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=h9QWKCTN4QOURPXWq3r3LDrWnHmZaiApTMG+jDk3gHM=;
- b=OQO1MJRXLySBxtt0THCDkRglDqYdE+xcMTWE0WpAY+EDdM04fGaXiuyf9yrz+oXj6E
- JRytsiPm0airgut5q4goWNKJUTfMn0eBPteFm8xzn5OzsxGUlzre9bMDz8G9a34ZDDzk
- S7Jh1xjjAsadZAs7dY43C5wZ1HwQmzqvhHZnaGp0h4tYzkMWJtvBqxOq+rRtc4tHIILA
- EMLdqruIRSdijkbBD99m70fJ2Z0pwxqRTYXaAor4V9SaSfbhr8dyvcNf5nXicgKf8R27
- Jg0LKQRYp0FYSo+D8EdErzasMO9wGW5lnZ8WYGULVrVeEtbisf22zVJN2Vs9YNzYUczq
- 6LIQ==
-X-Gm-Message-State: AOJu0YzYuBMfp1ps01rFT6kZlf1Is9CEyv67IEwZjm4XgrnLjUYCisRT
- iyN0PRBM+/hL9if3630xr7ZyO7Xiw7aWCA+flQsIQbEVrPtqZvE0E5xa4cd22DFF22HeIcvgiyv
- rPR/ToKVb0GAVNaA5uf7s9ShQMLQgN0V4SIm/FrAnug==
-X-Gm-Gg: AeBDieuCwoYLrudP2HoSp7Jl5RMTsmO8blNBO1nolk15hEL+utwiTnVsqEA3YViGbr1
- 7BpdZRLwzlaWK2beROrwEjE5yKIKsyoHDPM5lEW5Jb/P6Yyk8MJ662Of/+A8rUcho5oPh5wN3hK
- /GsHBiKVxJTD1o8IztVdPxI//IcARqVJZ2I6aS+GcA5pdvR2EUwK6vS6gQQGE2Iq8BqatXVjpIz
- i3uEF8Os76iBXK6bhO7k069+PxtZRrJ2t8NrahvZt7lpCLPjPJAnKNsNQd7z5FmCjXaYN6mdkk/
- t4Mx6Uu5dAyDsQhyju0FAL83CZrXHeFv3da1cWTPSqf6zckBqNfG7Xv7zi2+yoZ8tASGbr05BAW
- BTw==
-X-Received: by 2002:a05:690e:4183:b0:650:1cbb:50a8 with SMTP id
- 956f58d0204a3-65311b2fdd8mr22002182d50.26.1777278919850; Mon, 27 Apr 2026
- 01:35:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1wHHbX-0005ns-J9; Mon, 27 Apr 2026 04:46:11 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72]
+ helo=twmbx01.aspeedtech.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1wHHbV-0001C8-6z; Mon, 27 Apr 2026 04:46:11 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Mon, 27 Apr
+ 2026 16:40:55 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Mon, 27 Apr 2026 16:40:55 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, "Andrew
+ Jeffery" <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, "open list:All patches CC
+ here" <qemu-devel@nongnu.org>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, <longzl2@lenovo.com>,
+ <yunlin.tang@aspeedtech.com>, <steven_lee@aspeedtech.com>
+Subject: [RFC PATCH v1 0/1] hw/arm: aspeed: PoC integration for Caliptra Root
+ of Trust
+Date: Mon, 27 Apr 2026 16:40:53 +0800
+Message-ID: <20260427084055.2246089-1-steven_lee@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
-In-Reply-To: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Apr 2026 09:35:07 +0100
-X-Gm-Features: AQROBzBv_52C9AAUorthejaPGXDFdZwzVH9VipnI-wxZlZifyuWLhXVo_hfcLdQ
-Message-ID: <CAFEAcA84EkMEUj2fL5q3_eSNnce_voLbqyA3NU_avEsKHzqOWw@mail.gmail.com>
-Subject: Re: [PATCHv7 00/15] Adding comprehensive support for i.MX8MM EVK board
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, 
- Bernhard Beschow <shentey@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=steven_lee@aspeedtech.com; helo=twmbx01.aspeedtech.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,42 +61,91 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Steven Lee <steven_lee@aspeedtech.com>
+From:  Steven Lee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 21 Apr 2026 at 07:52, Gaurav Sharma <gaurav.sharma_7@nxp.com> wrote:
-> This patch series adds support for the NXP i.MX8MM EVK (Evaluation Kit)
-> board to QEMU, enabling emulation of this ARM Cortex-A53 based development
-> platform.
+Hi all,
 
-Thanks, I have applied this to target-arm.next.
+The ASPEED AST2700fc SoC integrates the Caliptra Root of Trust
+(Caliptra 1.2 core). Moving forward, we expect more SoCs to adopt
+Caliptra cores (e.g., Caliptra 2.x). Currently, QEMU does not have
+a native Caliptra emulator.
 
-> Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-> Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+This RFC explores possible approaches for supporting Caliptra in QEMU.
+The included patch provides a Proof of Concept (PoC) integration using
+the external `caliptra-sw` C-binding emulator to enable booting the
+AST2700fc machine.
 
-For the future, please don't put tags in the cover letter.
-When the tools pick up a patchseries from the mailing list
-they will apply any tags in the cover letter or followups to
-the cover letter to every patch in the series. The idea is
-that it lets a reviewer reply to the cover letter with a
-blanket reviewed-by tag. But when you're sending a series
-then you should put the tags in the patches they apply to,
-so that people reading the emails on the mailing list can
-see which patches are reviewed and which are not.
+This RFC does not propose merging the current PoC design as-is.
+Instead, it is intended to gather early feedback on architecture and
+integration strategy.
 
-I think the underlying problem here is that for v4 Bernhard
-gave his reviewed-by tag for the whole series, but instead
-of marking up all the patches with that tag you put it in
-the cover letter in v5 and up.
+In this PoC, the `caliptra-sw` emulator is used as a reference model
+to enable early bring-up and validation of the AST2700fc secure boot
+flow, rather than as a final implementation choice. The integration is
+based on the `caliptra-1.2` branch of the official repository:
+https://github.com/chipsalliance/caliptra-sw/tree/caliptra-1.2
 
-Bernhard: based on my understanding above I'm going to add
-your R-by tag to all the patches in this series. If that's
-not what you intended please let me know and I'll edit.
+To avoid making normal ASPEED/AArch64 builds depend on a local external
+checkout, the c-binding backend is compiled only when this PoC detects
+the generated `caliptra-sw` c-binding header and static library in an
+expected sibling source tree.  A mergeable version would need an
+explicit configure option and a proper dependency integration.
 
-I've made the minor whitespace tweaks Thomas Huth suggested
-for the final patch, and also wrapped some long lines in
-the docs in patch 1, and fixed a minor rebase conflict.
+Since QEMU currently lacks a `bootmcu` model and the associated mailbox
+interactions with Caliptra, the PoC simplifies the boot flow by using
+a background thread and the `caliptra_model_boot_default` C-binding to
+simulate early boot stages.
 
-thanks
--- PMM
+To approximate the hardware behavior where the Cortex-A35 CPUs remain
+in reset until secure boot is completed, the PoC uses
+`vm_stop_force_state()` as a temporary approximation.
+
+This approach is intentionally simplified and not intended to reflect
+the final QEMU design. In particular, the use of a background thread
+and global VM control APIs may not align with QEMU device model
+expectations.
+
+Support for the `bootmcu` model and a more accurate secure boot flow
+is planned for future work.
+
+Discussion points:
+
+1. Emulator strategy:
+   For early enablement, is it acceptable to rely on an external
+   reference model such as `caliptra-sw`, or would the community
+   prefer focusing directly on a native QEMU QOM device model?
+
+2. Build system integration:
+   If using the external `caliptra-sw` library is acceptable, what is
+   the preferred integration method (e.g., git submodule, meson
+   subproject, or system-installed library via pkg-config)?
+
+3. Boot synchronization:
+   In real hardware, CPUs are held in reset until the secure boot
+   flow completes. What is the recommended way in QEMU to model such
+   dependencies between devices and CPU startup?
+
+Feedback and suggestions are highly appreciated.
+
+Thanks,
+Steven
+
+Steven Lee (1):
+  hw/arm: aspeed: Add PoC integration for Caliptra Root of Trust
+
+ MAINTAINERS                          |   2 +
+ docs/system/arm/aspeed.rst           |  20 +++
+ include/hw/arm/aspeed_caliptra_emu.h |  17 ++
+ hw/arm/aspeed_ast27x0-fc.c           |  60 +++++++
+ hw/arm/aspeed_caliptra_emu.c         | 259 +++++++++++++++++++++++++++
+ hw/arm/meson.build                   |  31 +++-
+ 6 files changed, 388 insertions(+), 1 deletion(-)
+ create mode 100644 include/hw/arm/aspeed_caliptra_emu.h
+ create mode 100644 hw/arm/aspeed_caliptra_emu.c
+
+-- 
+2.43.0
 
