@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29DC5FF8869
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9204FF885E
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLOM-0008RI-AO; Mon, 27 Apr 2026 08:48:50 -0400
+	id 1wHLOQ-00005S-Gj; Mon, 27 Apr 2026 08:48:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNq-00086D-NN
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:26 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1wHLNL-0007lE-80
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:47:51 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNk-0005g9-Gv
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:15 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-483487335c2so99993805e9.2
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:11 -0700 (PDT)
+ id 1wHLNI-0005Q2-7V
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:47:45 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4838c15e3cbso94444795e9.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:47:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294090; x=1777898890; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294062; x=1777898862; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=3Ad8L4DaKuABGGpSrYonhMaeLrwN0x/B0x2CwuHI6n8=;
- b=ZKGycC0+UiKiT5WGZ5nOcnZ2kxt0h0zV6eppkYmi5VFRCKy/iOxoLMKkLM64vxY8mW
- cC6ryXRs+rca3CJEUUkALSzLFM8jQC/ac64G8yvxfTaD8Bwxsosj5S+55Hyc+r1WNxVH
- qQODasctDGPEDv0owWIjarGtj70iVmGMczH/qQsSaxhTbyx8bNRWntG5sGMbG70WjUec
- 50d2Ks5j6QQV3jHniu+tHkuw4HEW8yur4bvB3rjXReybizPweTOGgPTDON4vOYuPaDra
- T3N+PIs7gOUdK9Z6fBWoo9F6UpFE5gzpEBaY0IGcUnN2NnOuAJ95MODUivDALb0Ji2iM
- Tfyg==
+ :reply-to; bh=inQc7p7BRhy2EMrunHSD0peg/ahwU+n5t+qLitof4+E=;
+ b=E559pA4cIaUjMIDcq/hr+Braf6Kt+XRkFvaOAeGDI2UOWRQ/yr45zC5S2IdIgHWKhk
+ 66TZicQLZJUW3cPn7/CXtZjROZc5J99mYJEY/A625cKQ3xN7oH2pSadchertUa5tZZQn
+ z4xIxeXJbPbWkWGDT/fTo2ho0z0kMdS+epjZC7rqz9FgJq+m6Yy/vTn9aeQUCJnJvDDH
+ 96VItj/NUZ5avJaASyY2D4TP4pepm0mJ4IiSW5vcny0DeDbmgw0LdDc1Hdr7RWwofYgM
+ eofSDgh2IMp1PD/EDGPZaVPcWJKN7i5NSIdrpo0EVAsa+X2D7Gogh7r12Rr4PP3mS0ac
+ xmnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294090; x=1777898890;
+ d=1e100.net; s=20251104; t=1777294062; x=1777898862;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=3Ad8L4DaKuABGGpSrYonhMaeLrwN0x/B0x2CwuHI6n8=;
- b=ceaZhvBJQi/oDJeCs7rHGyT6d0NKxpgymCXn5Wo+47RUUIzgP00BK6S60JEs5QQ4oz
- PAgobc7yc5R/JiemjfgH0+c1RZ6eVCr31EP31rMmK3F46Do9eNRSinBldL4e0arFtq2/
- AOHJMWWa3xtVXkIv2wi3K4uwqBx0u0pB2Zj0Yabj5UMKJHOzQvUJJO/p4miVvLBXmgb5
- LTnXmWPC9DnXcCtgBGKTor7cg31+a79uftE7qBmt5hdoBuvMrcecdE82X7lhnQVQ9U+U
- P9tQXQGYWuoLGA2PMQ17GGI4vmLqd7T49+c3RQeuxdO2dtO+9BgU5WiGwlyztfKmU0i/
- FmaQ==
-X-Gm-Message-State: AOJu0YxOUf/PqYWsN0f2OnuK8Hk6vIUCkhrv5QqSmx1EB9L/Vue2cYc3
- 7BRoSiBIZQ5Of1FXBSFhzSxOri0DasW+KbKUtw9MUT7itgRbB9o0nv/6Q1I0ABFSG/zG/kUs3LK
- lrgmy
-X-Gm-Gg: AeBDietTs39YykfPSyeJke4Ug0MGkdRDEjWBo4n+zs+EJfKKkv+6AckPWaS1vGNFLWI
- MjpWKWYlYDSG3fRkQksRecpSOfvzAa0lfB7bUVoP8bD9Ax+PYFnyvrfPWmxusanUpAukSJzvUNB
- LVRUTvq5kem7sDCkfWeCZ/Pmo9ZgejMUCdc881sCQFvIC8EB8V3wvhOnmI/7wnvwgx2CsCR1bUi
- ux4AXGCzGG9lnyJP/WLCgVdZWV3gI9FTr6VJrpLSKT/NDK4ftxpG2nVFKHveVh6mexG38WKtUcD
- QK43usLbn+vd0jDjMXM6dfK9Rqv8mi1qlwhnpGtSYps/bMZGCW8OYjIBpmKT5KbbkARsz6pNs2T
- E5FrPB07bQCwpDTvPmf3RYFFmqm1qqMkLb30In1oVaYJxWktxARMsPQOMdaPTpvboGXPlgQkWx3
- eRk9reMdH00cfrUeJ1F2zoXuz+ykKOWAA40CIU+SLw9FNUncizEuXTcSVjV2mXeZtAChjGVO/8m
- PUTlTPg5uG/RzSq7EoBrpDii0oWaPWfMmu25kyh4Q==
-X-Received: by 2002:a05:600c:2e56:b0:488:d243:8da9 with SMTP id
- 5b1f17b1804b1-488fb73b2d3mr370322475e9.1.1777294090074; 
- Mon, 27 Apr 2026 05:48:10 -0700 (PDT)
+ bh=inQc7p7BRhy2EMrunHSD0peg/ahwU+n5t+qLitof4+E=;
+ b=UdkbRMvcizDx5MpJ9yseGxVfY6i/y9dON1F/2tQoorB00lvelO+vT4j80M/r9MalKZ
+ dJuDP1m1VuYeBUnoCHlGp3HUcZ4qtTrxvZWJn8nDMwzxdX9rB+E4VsdB4jrfSzqCREMK
+ Fn39NB6h7SrU0JSWMKi93Hpg0ZkF/V2jZOT1kNl8hmEtSts7jIAQxR6gse9wnHDiQ6Vi
+ RUwvzYyOwdOf9zN27szEMyKkI92whq5ROaYLf87Pd5vY7hD4BvhGFFQ4XXj6XTNNolXr
+ OdeibVvz1iWPIePW1r1OCpt7Oqf+d6UolQVGkOv4EgCCtU2ZbZIQr2JhA0Vu6ym+NiB7
+ WRTg==
+X-Gm-Message-State: AOJu0Yw5rIZ5hyipzEDkJRxYwo0GflzEJbS7OiY8bRCZ+C3Q4vt5//ao
+ S9plCOiDXHAKkRQquGgTdGGXIUUbqC9shcul/z7O11SsobF6+DloV3f59dprbqxUxy+s6LoVBuF
+ ZcEG0
+X-Gm-Gg: AeBDieuAxBccExZ7fplN9omSJ6/oJh0cB8K3qI+k/LNnesYoj9QyNkBdTTXXdnjmGAT
+ Actq31z76VrH5hTVJG8De8p0Wzm/bZvIQkXyOfCH9HQrw456G2a3aswBTIogC9vhOk+ccxXmVwq
+ BfE9XFuk5FlaHB0A34UT8LR9OmBbbYSFkksPOfk6PqZmvHg35AFcrpZndtbVaDawyTPiuZ0pwqs
+ dJTJ+kY5dclCu0KsvLuORsylSvLnrRfN4yrUJWWqQhTzAESJ7u2aVkGf8n/lB0UCmFBKOBZgffM
+ V6kQPPCJfSTx3JzJWbwSP+AZoV7TCbhM3E/EU+clMuS9Aask3mREtrAYbNvJuGWFZtIUM4zyQnO
+ Pv0zUMJCSWHM6SSg6VWsIy0M9JGjwCmp/fdLShCSWUwiUFNumviqGlA6wwcRxTIaG4zahYC/d85
+ 5nDNNi/B2SRTZljF9vM+5UJVtBZ+ZpNTiQ+oUjqXX1B5L6LGPMnkh4NqwajUPcXJISmFOemcriF
+ L9HOUvZvmdUTIWG0+P3PM1k8/NQHa1Kb23qBNUUyg==
+X-Received: by 2002:a05:600c:498a:b0:489:ad:7b5b with SMTP id
+ 5b1f17b1804b1-48900ad7b76mr305185965e9.24.1777294062055; 
+ Mon, 27 Apr 2026 05:47:42 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.09
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.47.41
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:48:09 -0700 (PDT)
+ Mon, 27 Apr 2026 05:47:41 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 33/63] target/arm/machine: Handle ToleranceOnlySrcTestValue
- migration tolerance
-Date: Mon, 27 Apr 2026 13:47:07 +0100
-Message-ID: <20260427124738.966578-34-peter.maydell@linaro.org>
+Subject: [PULL 03/63] hw/misc/imx8mp_analog: Add property to analog device
+Date: Mon, 27 Apr 2026 13:46:37 +0100
+Message-ID: <20260427124738.966578-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,63 +100,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 
-Pass the value of the incoming register to
-handle_cpreg_only_in_incoming_stream and check whether there is
-a matching ToleranceOnlySrcTestValue tolerance.
+Add configurable properties for register reset values that differ
+between i.MX 8M variants (Plus, Mini, etc.). This allows the same
+device implementation to be shared across multiple SoCs.
 
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Message-id: 20260420140552.104369-4-eric.auger@redhat.com
+Properties added:
+- arm-pll-fdiv-ctl0-reset: ARM PLL divider control reset value
+
+Default value is set to match i.MX 8MP reset value (0x000FA031).
+This can be overridden in the variant like iMX8MM with its own
+reset value.
+
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/machine.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ hw/misc/imx8mp_analog.c         | 12 +++++++++++-
+ include/hw/misc/imx8mp_analog.h |  3 +++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/machine.c b/target/arm/machine.c
-index b2bf129334..8dc766d322 100644
---- a/target/arm/machine.c
-+++ b/target/arm/machine.c
-@@ -1079,12 +1079,15 @@ static void handle_cpreg_missing_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx
-  * no cpreg mig tolerance is matched for this @kvmidx
-  * Return true if the migration should eventually fail
-  */
--static bool handle_cpreg_only_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx)
-+static bool
-+handle_cpreg_only_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx, uint64_t value)
- {
-     g_autofree gchar *name = print_register_name(kvmidx);
+diff --git a/hw/misc/imx8mp_analog.c b/hw/misc/imx8mp_analog.c
+index 23ffae84f8..592512071c 100644
+--- a/hw/misc/imx8mp_analog.c
++++ b/hw/misc/imx8mp_analog.c
+@@ -12,6 +12,7 @@
+ #include "qemu/log.h"
  
-     if (arm_cpu_match_cpreg_mig_tolerance(cpu, kvmidx,
--                                          0, 0, ToleranceNotOnBothEnds)) {
-+                                          0, 0, ToleranceNotOnBothEnds) ||
-+        arm_cpu_match_cpreg_mig_tolerance(cpu, kvmidx,
-+                                          value, 0, ToleranceOnlySrcTestValue)) {
-         trace_tolerate_cpreg_only_in_incoming_stream(name);
-         return false;
-     }
-@@ -1137,7 +1140,9 @@ static int cpu_post_load(void *opaque, int version_id)
-         }
-         if (cpu->cpreg_vmstate_indexes[v] < cpu->cpreg_indexes[i]) {
-             fail = handle_cpreg_only_in_incoming_stream(cpu,
--                                                        cpu->cpreg_vmstate_indexes[v++]);
-+                                                        cpu->cpreg_vmstate_indexes[v],
-+                                                        cpu->cpreg_vmstate_values[v]);
-+            v++;
-             continue;
-         }
-         /* matching register, copy the value over */
-@@ -1160,7 +1165,8 @@ static int cpu_post_load(void *opaque, int version_id)
-      */
-     for ( ; v < cpu->cpreg_vmstate_array_len; v++) {
-         fail = handle_cpreg_only_in_incoming_stream(cpu,
--                                                    cpu->cpreg_vmstate_indexes[v]);
-+                                                    cpu->cpreg_vmstate_indexes[v],
-+                                                    cpu->cpreg_vmstate_values[v]);
-     }
-     if (fail) {
-         return -1;
+ #include "hw/misc/imx8mp_analog.h"
++#include "hw/core/qdev-properties.h"
+ #include "migration/vmstate.h"
+ 
+ #define ANALOG_PLL_LOCK BIT(31)
+@@ -51,7 +52,10 @@ static void imx8mp_analog_reset(DeviceState *dev)
+     s->analog[ANALOG_VPU_PLL_LOCKD_CTRL] = 0x0010003f;
+     s->analog[ANALOG_VPU_PLL_MNIT_CTRL] = 0x00280081;
+     s->analog[ANALOG_ARM_PLL_GEN_CTRL] = 0x00000810;
+-    s->analog[ANALOG_ARM_PLL_FDIV_CTL0] = 0x000fa031;
++
++    /* Use property value instead of hardcoded */
++    s->analog[ANALOG_ARM_PLL_FDIV_CTL0] = s->arm_pll_fdiv_ctl0_reset;
++
+     s->analog[ANALOG_ARM_PLL_LOCKD_CTRL] = 0x0010003f;
+     s->analog[ANALOG_ARM_PLL_MNIT_CTRL] = 0x00280081;
+     s->analog[ANALOG_SYS_PLL1_GEN_CTRL] = 0x0aaaa810;
+@@ -138,11 +142,17 @@ static const VMStateDescription imx8mp_analog_vmstate = {
+     },
+ };
+ 
++static const Property imx8mp_analog_properties[] = {
++    DEFINE_PROP_UINT32("arm-pll-fdiv-ctl0-reset", IMX8MPAnalogState,
++                       arm_pll_fdiv_ctl0_reset, 0x000fa031), /* imx8mp default */
++};
++
+ static void imx8mp_analog_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     device_class_set_legacy_reset(dc, imx8mp_analog_reset);
++    device_class_set_props(dc, imx8mp_analog_properties);
+     dc->vmsd  = &imx8mp_analog_vmstate;
+     dc->desc  = "i.MX 8M Plus Analog Module";
+ }
+diff --git a/include/hw/misc/imx8mp_analog.h b/include/hw/misc/imx8mp_analog.h
+index 6996e53771..0765e607b9 100644
+--- a/include/hw/misc/imx8mp_analog.h
++++ b/include/hw/misc/imx8mp_analog.h
+@@ -76,6 +76,9 @@ struct IMX8MPAnalogState {
+     } mmio;
+ 
+     uint32_t analog[ANALOG_MAX];
++
++    /* Property for variant-specific reset values */
++    uint32_t arm_pll_fdiv_ctl0_reset;
+ };
+ 
+ #endif /* IMX8MP_ANALOG_H */
 -- 
 2.43.0
 
