@@ -4,56 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76F78FF8867
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 21:06:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34676FF8867
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 21:07:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHT5V-0000GU-3S; Mon, 27 Apr 2026 17:01:53 -0400
+	id 1wHTB5-0007lZ-Fq; Mon, 27 Apr 2026 17:07:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5M-0000Bl-Bs
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:44 -0400
-Received: from tor.source.kernel.org ([172.105.4.254])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5H-0003Sw-Ff
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:44 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 03D6D6015B;
- Mon, 27 Apr 2026 21:01:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C7CC2BCB7;
- Mon, 27 Apr 2026 21:01:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777323696;
- bh=8Tbj21BYQilKIwGyG2RC7pJHdcPWAtSC0Gjb0oPCAf4=;
- h=From:To:Cc:Subject:Date:From;
- b=AeKJxPf1Szn4KoPnArpJS9Rnitbb7Q5Ns1FFU6AWcolCl/xCZ4Q9jMZI1MwYS7hrE
- RzX0OUsFtL22yyqHsBPxTxcDy9g4/wLeqVb7ENcwA7M3709uj3S0eCYl7/D53PPTd4
- UYnLDNEK8SLlQrwz3eM6hwqEFVbbxmk+kmr8lqS2Zri8dxKVowHBOc4I1vDTSL7CLT
- 8NqYzWXbeVwGyHHC4zaBYIgy8OwaPFeirL6qKf9bp41nW0yYBtuqk4IfXnCi3Dtdwm
- tEcYKyGqc14xwjxJUAevVsRoc2ZrrqgJ19d49ALzkF4XJCpszbdD8Yi7FjasgaCki1
- +bWkiU9//QgmA==
-From: Helge Deller <deller@kernel.org>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL v2 00/15] Linux user next patches
-Date: Mon, 27 Apr 2026 23:01:18 +0200
-Message-ID: <20260427210133.6016-1-deller@kernel.org>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wHTAy-0007gF-5A
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:07:34 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wHTAw-0006mS-AF
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:07:31 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-82cf636dac8so4531345b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 14:07:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777324048; x=1777928848; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=nUurxvl4QCwgYKGJoP7JkiD1h1qDJowcmLphJ5AJgLQ=;
+ b=LQYFPKgp3qrMU7UoblqhsmP6b0FwZIYA1tHNXpNXKlkNFzuM7a4m67SOGpjaAyROgR
+ 785nbRoIH9L1V5LcYOZk/oEGDlJrMNNNCDQHALLliD73121O9+KqSvnEcYKkvafaY67Q
+ fayFQiXaSuQaUBubm8ecZbgpBNZ96JvjtEGRbukoq/HNFRu73FzCIUxBUBtfYC9gCc4I
+ YlSB2+tF10kqOB6igeX9gwCoRLOgSlaeWaH7Erj+KAs5kHK1+EVBO8epBHWQnJJU5QZd
+ EhYj07MNdUCo66N6Mf2w9yC6hf6O3nf1MYn5GFBIAgnDPQ0fAhUqRcRz1oevAWcmMU0w
+ XwHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777324048; x=1777928848;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nUurxvl4QCwgYKGJoP7JkiD1h1qDJowcmLphJ5AJgLQ=;
+ b=GpYziSVUtePEBZIHW6Nw5eVJ9ztwRjk1rKVrdR5iZpfFCBSs7bUjYdHO3xIHhOTmof
+ JVp2OgxbxhzP2LB7VMeyElcvkU4wSlWButXGLxgEhH0cezuwh5zAo1GL/dRE1cderKtj
+ 7XrGMG6yKddEpbkLqWjFXLR2lqk1SqOly8p9QoW+GIpaefqTsbCLnBE2+gLXykuoZ2np
+ oh/HEbwL9UCR1y39+qUvlc4WQKYpXQU6chQhplCOXXz2Dcb8QM0nB75nLB+6H+abyaSK
+ eV983PIZko7IciqoPz4oHbfG8EivnwGMl4dvFqk6IQxUeajsG/HEKqimsyHCOmTdcpst
+ DBvw==
+X-Gm-Message-State: AOJu0Yz0ky63RmRgSt3hkABsTFK+WCg4N6SpTV9dah0LY4yBBQUxYxTs
+ Ys50j3GRLOte9Oif6SombvKxqToG9nn55eQLEAmpe85tT8rSs9ZIKVfkbBdHihbKgVn0s+P9/Vw
+ Ccb8vdic=
+X-Gm-Gg: AeBDieuWZv9seA/iQrlquOW2XZLttsk2DOPlID55FLb3eAyvjIZsx8Gtj6G3aDWft9A
+ I+hIJbGpw8FoQ4GShD0ciNlaZQfB6GDorfQn0E7RwR7VA+C6Z2i1dnVlq6egP0DI+oKx9Lg3aeo
+ nAh1ez0q43FmX7eVvQhurhR2o9MV26rfjaN9bc5MvVBa4zN45BeDk7yBudgF2OzYry6snRXRcsV
+ V10TCwDFDUZmM+NoCkXN+NkLq4bwYUWG9dMyhtoIdqvVxF/TwsJAPBptSb22hvrRmApWUoHQmW2
+ lWR9QJUcDDvpfS8lAy+R2tuTEnpqFrO9cy1VsvUHtaAeJ8o35AuDKXQeEYs1yLtIsY8RPZzjAmC
+ VrHBvVCuH4nUixA1eZuGxthIIcgyX9XyT6/P8G9IrDt+48efu6CbUoIfMo/uZWmsb6Oste8ESnq
+ FnxLKhIeAVnbDFXMAcHZbXQAuIGEo6iCps6jSFhkr1dSWjAziifcib
+X-Received: by 2002:a05:6a00:1911:b0:82a:6b97:34ae with SMTP id
+ d2e1a72fcca58-834ddbefef5mr130611b3a.32.1777324048144; 
+ Mon, 27 Apr 2026 14:07:28 -0700 (PDT)
+Received: from [192.168.10.140] ([180.233.125.15])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-834daf31f04sm367708b3a.39.2026.04.27.14.07.26
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Apr 2026 14:07:27 -0700 (PDT)
+Message-ID: <8250b31d-f4e4-451a-8c8b-45aa000d52d5@linaro.org>
+Date: Tue, 28 Apr 2026 07:07:23 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 32/32] monitor: Remove hmp_info_pic() left-over
+ declaration
+To: qemu-devel@nongnu.org
+References: <20260427080738.77138-1-philmd@linaro.org>
+ <20260427080738.77138-33-philmd@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260427080738.77138-33-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
- helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,87 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+On 4/27/26 18:07, Philippe Mathieu-Daudé wrote:
+> When converting 'info pic' to QMP in commit 795eaa62fa6 ("hw/intc:
+> Introduce x-query-interrupt-controllers QMP command"), we forgot
+> to remove the hmp_info_pic() declaration. Do it now.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/monitor/hmp.h | 1 -
+>   1 file changed, 1 deletion(-)
+> 
+> diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+> index c8ce8579424..f9b4c4e2982 100644
+> --- a/include/monitor/hmp.h
+> +++ b/include/monitor/hmp.h
+> @@ -52,7 +52,6 @@ void hmp_info_cpus(Monitor *mon, const QDict *qdict);
+>   void hmp_info_vnc(Monitor *mon, const QDict *qdict);
+>   void hmp_info_spice(Monitor *mon, const QDict *qdict);
+>   void hmp_info_balloon(Monitor *mon, const QDict *qdict);
+> -void hmp_info_pic(Monitor *mon, const QDict *qdict);
+>   void hmp_info_pci(Monitor *mon, const QDict *qdict);
+>   void hmp_info_tpm(Monitor *mon, const QDict *qdict);
+>   void hmp_info_iothreads(Monitor *mon, const QDict *qdict);
 
-The following changes since commit 98b060da3a4f92b2a994ead5b16a87e783baf77c:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-  Update version for v11.0.0 release (2026-04-21 16:28:47 +0100)
-
-are available in the Git repository at:
-
-  https://github.com/hdeller/qemu-hppa.git tags/linux-user-next-pull-request
-
-for you to fetch changes up to 0272032af5d7ad6e19305abcd494a5f4f8dd7d58:
-
-  linux-user: Add missing CDROM ioctls (2026-04-27 22:56:07 +0200)
-
-----------------------------------------------------------------
-linux-user: Pull various patches
-
-This patch series adds myself as linux-user maintainer, and includes some
-patches which have piled up for linux-user during the last few weeks.
-
-v2:
-- added various Revied-by tags
-- fixed Reported-by tags
-- added second exit() call to "Flush errors by using exit() instead of _exit()
-  in error path" patch
-- added missing CDROM ioctls patch
-
-----------------------------------------------------------------
-
-Alistair Francis (1):
-  linux-user/strace: Use pointer type for read and write values
-
-Gyorgy Tamasi (1):
-  linux-user: Don't define target_stat64 struct for loongarch64
-
-Helge Deller (8):
-  MAINTAINERS: Add myself as maintainer for linux-user
-  linux-user: Define SO_TIMESTAMP*_NEW and SO_RCVTIMEIO_NEW
-  linux-user: Add setsockopt() for SO_RCVTIMEO_NEW and SO_SNDTIMEO_NEW
-  linux-user: Add getsockopt() for SO_RCVTIMEO_NEW and SO_SNDTIMEO_NEW
-  linux-user: Fix CLONE_PARENT_SETTID when using fork-like clone
-  linux-user: Use abi_int for imr_ifindex in ip_mreqn struct
-  linux-user: Flush errors by using exit() instead of _exit() in error
-    path
-  linux-user: Add missing CDROM ioctls
-
-James Hilliard (1):
-  linux-user/mips: sync k0 TLS for EF_MIPS_MACH_OCTEON userlands
-
-Matt Turner (1):
-  linux-user/ppc: Fix ppc64 rt_sigframe stack offset
-
-Richard Henderson (2):
-  linux-user/arm/nwfpe: Replace user_registers with current_cpu
-  linux-user/arm/nwfpe: Use thread-local storage for qemufpa
-
-Yixin Wei (1):
-  linux-user: fix off-by-one in host_to_target_for_each_rtattr()
-
- MAINTAINERS                   |  1 +
- linux-user/alpha/sockbits.h   |  7 +++++
- linux-user/arm/cpu_loop.c     |  2 +-
- linux-user/arm/nwfpe/fpa11.c  | 12 ++-------
- linux-user/arm/nwfpe/fpa11.h  | 25 ++++++------------
- linux-user/elfload.c          |  3 +++
- linux-user/fd-trans.c         |  2 +-
- linux-user/generic/sockbits.h |  8 ++++++
- linux-user/hppa/sockbits.h    |  7 +++++
- linux-user/ioctls.h           | 29 ++++++++++++---------
- linux-user/main.c             |  4 +--
- linux-user/mips/sockbits.h    |  7 +++++
- linux-user/mips/target_cpu.h  |  5 ++++
- linux-user/ppc/signal.c       | 16 ++++++++++--
- linux-user/qemu.h             |  1 +
- linux-user/sparc/sockbits.h   |  7 +++++
- linux-user/strace.list        |  4 +--
- linux-user/syscall.c          | 49 +++++++++++++++++++++++++++--------
- linux-user/syscall_defs.h     |  4 +--
- 19 files changed, 133 insertions(+), 60 deletions(-)
-
--- 
-2.53.0
-
+r~
 
