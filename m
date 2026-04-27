@@ -4,87 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91E2FFF8862
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:12:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5C6AFF8861
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:13:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHH4n-0005Jw-MA; Mon, 27 Apr 2026 04:12:22 -0400
+	id 1wHH5n-0006BX-GD; Mon, 27 Apr 2026 04:13:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <elisey.konstantinov@gmail.com>)
- id 1wHH4m-0005FQ-4x
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:12:20 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wHH5l-0006BE-QY
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:13:21 -0400
+Received: from mail-dy1-x132e.google.com ([2607:f8b0:4864:20::132e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <elisey.konstantinov@gmail.com>)
- id 1wHH4k-0003TG-Gh
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:12:19 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-43d7645adbdso5396203f8f.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:12:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wHH5j-0003zX-Ag
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:13:21 -0400
+Received: by mail-dy1-x132e.google.com with SMTP id
+ 5a478bee46e88-2c156c4a9efso13363641eec.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:13:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777277597; cv=none;
+ d=google.com; s=arc-20240605;
+ b=c8qQdNIko/L636aOhpcnmnDKVHvnTVKSBObz1WGE6L7xNortjlAVguJcwdWAzgxPF6
+ AjOQ6ib//xM80lc26C/LbnESvzi5MyskqwJFEM08pcVcZX6sMXKL1+2i4nzMyiBoNnjU
+ eTwU0T7w2LdQEbPhfE19FndSAYLVL0/GEmWrgUjkIsQHThZi2Xgag901V2sxXAYVj7fp
+ 05WnCqyCwdVftXGkYQI+yLt1GxbX7/yAzyGTYbV85KvehVydRd5I22IVdyvZzguWaPI+
+ 3RIEiTDjf76HCgAlsYfuX8L94h8PrlDPbcE8sD3iUB2JeZlugj1PvuZWGPGwHsu3GaEc
+ HrQg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=aaVO7J9u9pu7A9MvL+UM6uqGcKIh9RcTwxfrMiOy3SM=;
+ fh=8aBEJY+feA7d7ThUvpzyIH9FOGeOtT6IdrliqPJEqPM=;
+ b=ef+lXbTb/7xeWCmltrUDOXZ6vN0lKYLgR16Woyu7+3z5qqztcwYAp72WXUJRprf3Sl
+ NDY+la0YPoNLmwps2kGKXyj1mJN9mVGhjY6OsuO1sRCHmVxT79Owybon+fgaAOrruoZ7
+ ff0X1lcjzAltFlLPjWS1a7QvYoiWAKw6Cb6AHQ7lqVyzSLvcK7CGzCjmNuPV2Ltnkpk3
+ X9eHxw9v//Sp2U/BqjK3Y0bDdj/GuhjjSLyeMhsuzFSuSQnm6+pGYKORQ1dEgJekbmWq
+ dNlcm5VDRipRkl5sDgM8qoodRERoZ0OceSMHoZt78pdLKAUobj3BBp3UcvbCnWpZnZDS
+ zAAA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777277535; x=1777882335; darn=nongnu.org;
- h=to:cc:date:message-id:subject:mime-version
- :content-transfer-encoding:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2q5LpL17iNf3C+6crpYy7BsXt017YD6GKFZfJklSkh4=;
- b=W5cvGhbt41NDi+rZ9IeMCfBf8wk8jyQJMqV5Ezeff2n+h2aG2pJ59DbHJDnIeFHKKt
- fgn1PESMSJ8XiJAu8ourgPv6HyKOPPw29a99BtD2WlGP0yuR+NQN29TEOTXwwvuXtTpw
- RULJhrrNhLnoKSK/mvYufCUlyhPaAjnZ8+WMCdifxhEOC99+NOjO056ccN5T8IzJNTSV
- oz0Kjq556Qb3OafTpXsI7GjTCJaprAGNUXKi3ruyWNrb2jAiyDxNF3V51ftJP9eVDiUT
- ULq495xqzu+HJuoUj3uRP04UuFl7a2NJAS2vGh0fX/8Oim2kfNO2dt5OhQ12uWLGXyuN
- aWOw==
+ d=redhat.com; s=google; t=1777277597; x=1777882397; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aaVO7J9u9pu7A9MvL+UM6uqGcKIh9RcTwxfrMiOy3SM=;
+ b=Frw9xgj3RiGbwkkdRNj+LpKBnWJAuPnU5GTSDghkwHg0ngy/TzvSi2YH4SKCCtrP68
+ /bp52t92s68Oo4wF+57wAF65S4BhpQweKDGAfjDNP4rBjEKwRBMf/XKtS+ZnsccsfnAl
+ SyXSAb1U9JMC/CVI9JLqAtgJ+57asGceBBvaF0W6ZVHh7pd+AtyUVt/CGCpahoku26SL
+ pEJAr7W6thMPtJyAW/6WCooGTSmDucVxTpMHGMlp/7+vu/KdGatWPr89RQG+frjwvsVw
+ HUz/QVqn5dho1ZNxj9l0MUUOQxwC15yftbqbyvo6id/LwUi4CBi2Y41fizmNbPq0XEkm
+ sBYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777277535; x=1777882335;
- h=to:cc:date:message-id:subject:mime-version
- :content-transfer-encoding:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=2q5LpL17iNf3C+6crpYy7BsXt017YD6GKFZfJklSkh4=;
- b=WMexfmbD9NnjOn0Z+PpV8YjygWUrzkIxma7UrddJc0QGrhan1CX2KToMCdTN40fa00
- OkYPL21zsFwPspcvDQP5IkZwNqE04uRq23IcQF9Dx//OtM4BNcwdbLU5dZCTCqIk/c8c
- tMY0Me3mi9VRV+vUExnj1HCNlzSOBEvQbeYHp7wCshhS7TBy8LSHClVKAL4Ba6whBnkt
- UvwBEcEEq9T4ubBJ890GWtKkYYyr0zHzT6b1IumACktJ+v6A/EfG3rfbDZHs6xTKec9v
- 3J7pXL4VLyv0UL04gfyoHDkXIv3xvtuOdr/yMaAVlV3A65zz2bYpghUYWxjZ4OOa5wHv
- Aufg==
-X-Gm-Message-State: AOJu0YxlML1x5hbclc7opAO1KR/uRbpNoQ1Abk87zRTMA4ViLJo4VLR+
- k6U43rtCyQuGIijb8kZasG8T1f/qTPAJmdFFdQEwwXXWr6MsDPE0aojswEnmcW77
-X-Gm-Gg: AeBDiev/Y/BAnzyw8r1n5h8GxY3r0Qu3dBpIduWS5zE9/ySfG9sFFuUf8bf6MWHLYSo
- jClBT4qeKiw8BDA4RKtaHH5zkrHLlRhNByxZY9te9rYAG3fpBSfSWRpTc2l6XKi1dT9Nvv0xzTC
- 9uq2nBUsZNxQNbtJjlSEhBzt4VgZO0t8aSTrzgOOdZQKcpsQIF9aMnUJQ45MgqhZ74kvBmmLY8Q
- PTjmUwP7UNaFnPy68PQDi99uFAXISIXK2l8yBRFVfvYSYwlLOXk7uQMiHzIjgddriAAFzm1eSUV
- KXpIbNz//KNDmFc8rQQJHkYDhCd1+MYxnYMseHscH2FcCmMtKiXKi1BKNOG7+Y27B5NxpEHumv/
- P7RsTyIG2LpYRdhkazndp8ehZkwST3FlWArC6lW1lDUXoEweXaj1hp71v8s4JV43lI7TN4PYzzN
- oGfhaEJZPI9/I+2zE8el410PupNe8ymZ9B5JpVjlPc2Q5jSmZ/5KDw2pOvJafG1TiDnw==
-X-Received: by 2002:a05:6000:240e:b0:43c:fe59:40da with SMTP id
- ffacd0b85a97d-43fe3e0bb95mr62389309f8f.47.1777277534840; 
- Mon, 27 Apr 2026 01:12:14 -0700 (PDT)
-Received: from smtpclient.apple ([5.32.173.67])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cb1405sm80088985f8f.4.2026.04.27.01.12.13
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 27 Apr 2026 01:12:14 -0700 (PDT)
-From: Elisey Konstantinov <elisey.konstantinov@gmail.com>
-Content-Type: text/plain;
-	charset=utf-8
+ d=1e100.net; s=20251104; t=1777277597; x=1777882397;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aaVO7J9u9pu7A9MvL+UM6uqGcKIh9RcTwxfrMiOy3SM=;
+ b=cHWm8w0QryxItoN2QuojZD8Ulb4KUBIKLIxqyT37xAiyLu7f2a2kgpxQu6AEC3zhhI
+ fEnIoCviOmq7bA+Xj7hwi0SvEaIhRCfS1pwhEr5x8eGuWkErk0VCcexLzFfm29XEhu02
+ BEX/YrwsPlJCZjMalDbFzldxVvn18RdExABFi/GBxjb81lP3jB3gxb3G3GX35iDIrPHW
+ pKtPXGdVs05Iz3YTScDULynAO3/HFvhOpHIkaOHDEHgNjH8iK34y1gvSxb482cufYpaF
+ UjFpN5vahW24eDksVAfhG0DLzT07WZE2VLATgI5KAZ0Ai+qptpQxFNlNlV4jKENvlg0W
+ oLaQ==
+X-Gm-Message-State: AOJu0YyO3yhbUeiqdP0BGN1SOr1SDOj2a2X+HpSJ0v50g/IUkxR73Fhk
+ 4Nrd10sY1/heEHxcmJPH0icWNY+Jk6HazDoGTs6aIhp8S63u5f9eJYmpSz3QSzLQePirMSE7b+s
+ anlqIDyvhpeXz28TlbRfA0CgjjJeQh9pfDLEC
+X-Gm-Gg: AeBDietVvNxctpmUQGuuzc7HqQt/dd13r/vSIUm87n1VTU837XqZjNdNuzetIW12pQW
+ 3bF1LOlRIIWxRtYs7f63cRhDzFlq1Y5YWHi8EYuozJn+WZhWTCv+Ly5109nG/RGOoBWVjDTQvIN
+ woxxPfTDJQXeEawRpJtIM4x6FNce0HlNWNwJOl+OB2Z4T/QAo8so+VQaBLMW4fekn+X957zqTLv
+ PLPF3d2ZF5NQmlAClujoDYwG3n6Sa1jAxL5GVuJYIva9nCVv1vbI7IRxFlZgpfsd7SF5DLLci/S
+ JDH1N/PLwHEoOCoPxVPHuAt/VpNSlxCD6jvu+hRCb+1L5LdKGXE=
+X-Received: by 2002:a05:7301:4591:b0:2d9:6373:ad24 with SMTP id
+ 5a478bee46e88-2e479214a0emr21787066eec.26.1777277597388; Mon, 27 Apr 2026
+ 01:13:17 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260422202646.272081-1-marcandre.lureau@redhat.com>
+ <87v7dis20c.fsf@pond.sub.org>
+ <CAMxuvaxCkJ7PeMxOXqDXPvWRdTst93ufwEOA8hqd40XKVCWGJA@mail.gmail.com>
+ <87y0ieqhzz.fsf@pond.sub.org>
+ <CAMxuvaxryBmJ4+VL5qNv2pP3t9KoKS-jH45nY1hzvoxz-rCHXg@mail.gmail.com>
+ <87zf2undu6.fsf@pond.sub.org>
+In-Reply-To: <87zf2undu6.fsf@pond.sub.org>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Mon, 27 Apr 2026 12:13:04 +0400
+X-Gm-Features: AVHnY4KMfoCpy9HysjfhXRBM9rgrg6MgAvA2jFsIaNqNMqwwsIQKwZMbbRD4w_s
+Message-ID: <CAJ+F1C+TPQ+LoPAXMaaru8jqGV=Awvu8ifdQC_9gmSaT3UEwJg@mail.gmail.com>
+Subject: Re: [PATCH] ui/console: remove console from global list on
+ finalization
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH] build: prefer sigaltstack over ucontext on Linux
-Message-Id: <73E79A4E-C0AA-499C-84ED-81FC5C1A8972@gmail.com>
-Date: Mon, 27 Apr 2026 11:12:02 +0300
-Cc: mark.cave-ayland@ilande.co.uk, qemu-devel@nongnu.org, berrange@redhat.com,
- pbonzini@redhat.com, marcandre.lureau@redhat.com, peter.maydell@linaro.org,
- philmd@linaro.org
-To: qemu-devel@nongnu.org
-X-Mailer: Apple Mail (2.3864.500.181)
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=elisey.konstantinov@gmail.com; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132e;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132e.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.249,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,13 +122,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Oh-uh.
+Hi
 
-I=E2=80=99m baffled
-At the time of writing this issue, it wouldn=E2=80=99t load on either =
-the source code version or the Debian Mac OS X version. However, now =E2=80=
-=94 without any changes to the code whatsoever =E2=80=94 it works on the =
-source code version, but still does NOT work on the Debian version
-I even tried checking out version 10.0.1, on which the bug was =
-reproducible, but it no longer reproduces! Has someone done a rebase?=
+On Thu, Apr 23, 2026 at 2:59=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+>
+> > Hi
+> >
+> > On Thu, Apr 23, 2026 at 10:59=E2=80=AFAM Markus Armbruster <armbru@redh=
+at.com> wrote:
+> >>
+> >> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
+> >>
+> >> > Hi
+> >> >
+> >> > On Thu, Apr 23, 2026 at 9:02=E2=80=AFAM Markus Armbruster <armbru@re=
+dhat.com> wrote:
+> >> >>
+> >> >> marcandre.lureau@redhat.com writes:
+> >> >>
+> >> >> > From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> >> >> >
+> >> >> > This commit removes the QemuConsole from the global "consoles" li=
+st when
+> >> >> > it is finalized.
+> >> >> >
+> >> >> > Previously, there was a TODO comment indicating this path needed
+> >> >> > checking. The assertions added ensure that `dcls`, `gl_block`, an=
+d the
+> >> >> > `dump_queue` are empty before removal, confirming the console is =
+in a
+> >> >> > clean state.
+> >> >> >
+> >> >> > Fix potential use-after-free crashes when a display console is re=
+moved.
+> >> >> >
+> >> >> > Reported-by: Markus Armbruster <armbru@redhat.com>
+> >> >> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.co=
+m>
+> >> >> > ---
+> >> >> >  ui/console.c | 5 ++++-
+> >> >> >  1 file changed, 4 insertions(+), 1 deletion(-)
+> >> >> >
+> >> >> > diff --git a/ui/console.c b/ui/console.c
+> >> >> > index f445db11389..b64e2122f34 100644
+> >> >> > --- a/ui/console.c
+> >> >> > +++ b/ui/console.c
+> >> >> > @@ -394,10 +394,13 @@ qemu_console_finalize(Object *obj)
+> >> >> >  {
+> >> >> >      QemuConsole *c =3D QEMU_CONSOLE(obj);
+> >> >> >
+> >> >> > -    /* TODO: check this code path, and unregister from consoles =
+*/
+> >> >> > +    assert(c->dcls =3D=3D 0);
+> >> >> > +    assert(c->gl_block =3D=3D 0);
+> >> >> > +    assert(qemu_co_queue_empty(&c->dump_queue));
+> >> >>
+> >> >> Help me out: what ensures this?
+> >> >
+> >> > - No display change listener left
+> >> > - No GL lock left
+> >> > - No pending screendump
+> >>
+> >> Yes, but what ensures none of these are left / pending by the time we
+> >> finalize?
+> >
+> > Unfortunately, we don't have much support for unplugging display
+> > consoles. So those asserts are mostly there to remind us of further
+> > issues.. I should probably leave the TODO.
+> >
+> > In general graphics devices do not support hot-plugging. It looks like
+> > we are missing a couple of hotpluggable =3D false in hw/display.
+>
+> I trust you'll take care of them.
+>
+> >                                                                So, it
+> > should not be reachable today but by using low-level QMP/QOM like in
+> > this test.
+>
+> Due to QOM's design, introspection must create and destroy a temporary
+> object.  This must not have observable side effects.
+>
+> Devices have a life cycle supporting this:
+>
+>     instance_init -+-> realize ---> unrealize -+-> instance_finalize.
+>                    |                           |
+>                    +---------------------------+
+>
+> We can keep instance_init and instance_finalize free of side effects by
+> doing them in realize and unrealize instead.
+>
+> Non-device objects lack realize / unrealize.  I believe the wheel has
+> been reinvented a few times there.
+>
+> Back to qemu_console_finalize().  I guess the correctness argument goes
+> roughly like this:
+>
+> 1. After initialization, these assertions hold.
+>
+> 2. Therefore, immediate finalize works.  QOM introspection works.
+>
+> 3. Non-immediate finalization cannot happen.
+>
+> Is this about right?
+
+I am confident it can happen on hot-unplug, but it's not working proprely.
+
+>
+> > Text console/VC is also poorly supported and leaks, so it will never
+> > reach qemu_console_finalize() either.
+> >
+> > I can try to improve the situation by sending a more complete series,
+> > so those assert() are unlikely to be reachable in the future.
+>
+> I'm just trying to understand why this works :)
+>
+> More complete patches are always nice, but I'm not demanding you do that
+> now.  Comments perhaps?
+
+I think we should leave a TODO & asserts for the hot-unplug cases
 
