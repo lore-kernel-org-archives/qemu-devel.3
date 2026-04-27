@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 711F8FF8864
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 21:04:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA5B3FF8864
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 21:04:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHT5X-0000JJ-QS; Mon, 27 Apr 2026 17:01:55 -0400
+	id 1wHT5b-0000Ru-3i; Mon, 27 Apr 2026 17:01:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5T-0000GF-Ii
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5T-0000GC-DU
  for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:52 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5R-0003V0-2l
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5Q-0003US-0J
  for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:50 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 22E6640979;
- Mon, 27 Apr 2026 21:01:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92773C19425;
+ by tor.source.kernel.org (Postfix) with ESMTP id 6CAFD60139;
  Mon, 27 Apr 2026 21:01:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0928C2BCB6;
+ Mon, 27 Apr 2026 21:01:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777323708;
- bh=WKjvKh3WS9aFV3WDMKRIHdU/l7XY2HCHrBoFujAWcmo=;
+ s=k20201202; t=1777323706;
+ bh=QIFtf3dqQlSgmjSkVvwlhh3G2J8OJkshPhuv1bYI+XA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Nbqgvr/CVerZdmWVgwmLUzhS3e/nR+tOX8qqkPVj2F5SxsoPWfskiNl4Hs6vcVq5L
- WQvjxC/Uiu2bFpnpxEE4EDNdHUGgk7sopWfZhg94QuzSDjMa7RV+0GgcyymbgfYPyZ
- DnoFy97myfRqp968H7F+8NGZ9iWVSYfsU+8zxaGlVTmtS0mKYkuYEbxUcpkn9aviMV
- OSUN70zC8L0To9ST8NlSzjqNXIWng1c6vcqOAFXK3RfxHw+qJESs0boLMmEHrqc0eS
- 9PCPsYMJuN2itvIzajXF4W1McpBRau0AOaEUzlGys0rkIsEz/rn+jwqFTqtwxp7LSB
- rhK7c+ee93LfQ==
+ b=BwGpa9rKG0c/BwdWPvOypSZsNdaD6tBR8ALcRoshODu1Es/RR4C9B31SpTqjnVDSn
+ iv9kAFJpmiZV7QJmlxTrZoXuxMBMdfJ0JRaggO5Lao2FgYZ1Un0ExwvSTnFxJb0KLg
+ MsjNyuqQfdQVDZ0CAIRhvC6ex0FrTiu/Su9lp57fgrlkFoz1GErpPOOwlfF02ylDza
+ 1ABkl9ovhG5nmjGi82G0DojfyXL4F/IBrpwXrXZVFamRqAe7xdevotMMlu5IiGRi3x
+ sdcPAVpQ0QzFLe9tAlxs0BKVSbK6PnMuK8YYEg7jrqWmfC3d/roYmeFssOjU6gzWof
+ 8SmaJKMz/MAQw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL v2 06/15] linux-user/arm/nwfpe: Use thread-local storage for
- qemufpa
-Date: Mon, 27 Apr 2026 23:01:24 +0200
-Message-ID: <20260427210133.6016-7-deller@kernel.org>
+Subject: [PULL v2 05/15] linux-user/arm/nwfpe: Replace user_registers with
+ current_cpu
+Date: Mon, 27 Apr 2026 23:01:23 +0200
+Message-ID: <20260427210133.6016-6-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260427210133.6016-1-deller@kernel.org>
 References: <20260427210133.6016-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -74,51 +74,119 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Fix the thread safety of the emulation by not storing a
-pointer in global storage.
+Use the thread-local variable current_cpu instead of
+a global variable to access the general registers.
+This also means we don't need to pass env to EmulateAll.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/arm/nwfpe/fpa11.c | 3 +--
- linux-user/arm/nwfpe/fpa11.h | 2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ linux-user/arm/cpu_loop.c    |  2 +-
+ linux-user/arm/nwfpe/fpa11.c |  9 +--------
+ linux-user/arm/nwfpe/fpa11.h | 23 +++++++----------------
+ 3 files changed, 9 insertions(+), 25 deletions(-)
 
+diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
+index 19874f4c72..262ab5cc41 100644
+--- a/linux-user/arm/cpu_loop.c
++++ b/linux-user/arm/cpu_loop.c
+@@ -215,7 +215,7 @@ static bool insn_is_linux_bkpt(uint32_t opcode, bool is_thumb)
+ static bool emulate_arm_fpa11(CPUARMState *env, uint32_t opcode)
+ {
+     TaskState *ts = get_task_state(env_cpu(env));
+-    int rc = EmulateAll(opcode, &ts->fpa, env);
++    int rc = EmulateAll(opcode, &ts->fpa);
+     int raise, enabled;
+ 
+     if (rc == 0) {
 diff --git a/linux-user/arm/nwfpe/fpa11.c b/linux-user/arm/nwfpe/fpa11.c
-index 44783934b2..15888463f7 100644
+index 0f1afbd91d..44783934b2 100644
 --- a/linux-user/arm/nwfpe/fpa11.c
 +++ b/linux-user/arm/nwfpe/fpa11.c
-@@ -29,7 +29,7 @@
- //#include <asm/system.h>
+@@ -30,7 +30,6 @@
  
  
--FPA11* qemufpa = NULL;
-+__thread FPA11* qemufpa = NULL;
+ FPA11* qemufpa = NULL;
+-CPUARMState* user_registers;
  
  /* Reset the FPA11 chip.  Called to initialize and reset the emulator. */
  void resetFPA11(void)
-@@ -154,7 +154,6 @@ void SetRoundingPrecision(const unsigned int opcode)
- }
+@@ -156,7 +155,7 @@ void SetRoundingPrecision(const unsigned int opcode)
  
  /* Emulate the instruction in the opcode. */
--/* ??? This is not thread safe.  */
- unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa)
+ /* ??? This is not thread safe.  */
+-unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa, CPUARMState* qregs)
++unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa)
  {
    unsigned int nRc = 0;
+ //  unsigned long flags;
+@@ -173,12 +172,6 @@ unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa, CPUARMState* qregs)
+   }
+ 
+   qemufpa=qfpa;
+-  user_registers=qregs;
+-
+-#if 0
+-  fprintf(stderr,"emulating FP insn 0x%08x, PC=0x%08x\n",
+-          opcode, qregs[ARM_REG_PC]);
+-#endif
+   fpa11 = GET_FPA11();
+ 
+   if (fpa11->initflag == 0)		/* good place for __builtin_expect */
 diff --git a/linux-user/arm/nwfpe/fpa11.h b/linux-user/arm/nwfpe/fpa11.h
-index 20f9d2eb81..659d38ae3a 100644
+index d459c5da02..20f9d2eb81 100644
 --- a/linux-user/arm/nwfpe/fpa11.h
 +++ b/linux-user/arm/nwfpe/fpa11.h
-@@ -74,7 +74,7 @@ typedef struct tagFPA11 {
-     float_status fp_status;      /* QEMU float emulator status */
- } FPA11;
+@@ -25,15 +25,6 @@
  
--extern FPA11* qemufpa;
-+extern __thread FPA11* qemufpa;
+ #define GET_FPA11() (qemufpa)
  
- void resetFPA11(void);
- void SetRoundingMode(const unsigned int);
+-/*
+- * The processes registers are always at the very top of the 8K
+- * stack+task struct.  Use the same method as 'current' uses to
+- * reach them.
+- */
+-extern CPUARMState *user_registers;
+-
+-#define GET_USERREG() (user_registers)
+-
+ /* Need task_struct */
+ //#include <linux/sched.h>
+ 
+@@ -91,25 +82,25 @@ void SetRoundingPrecision(const unsigned int);
+ 
+ static inline unsigned int readRegister(unsigned int reg)
+ {
+-    return (user_registers->regs[(reg)]);
++    CPUARMState *env = cpu_env(current_cpu);
++    return env->regs[reg];
+ }
+ 
+ static inline void writeRegister(unsigned int x, unsigned int y)
+ {
+-#if 0
+-	printf("writing %d to r%d\n",y,x);
+-#endif
+-        user_registers->regs[(x)]=(y);
++    CPUARMState *env = cpu_env(current_cpu);
++    env->regs[x] = y;
+ }
+ 
+ static inline void writeConditionCodes(unsigned int x)
+ {
+-    cpsr_write(user_registers, x, CPSR_NZCV, CPSRWriteByInstr);
++    CPUARMState *env = cpu_env(current_cpu);
++    cpsr_write(env, x, CPSR_NZCV, CPSRWriteByInstr);
+ }
+ 
+ #define ARM_REG_PC 15
+ 
+-unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa, CPUARMState* qregs);
++unsigned int EmulateAll(unsigned int opcode, FPA11* qfpa);
+ 
+ unsigned int EmulateCPDO(const unsigned int);
+ unsigned int EmulateCPDT(const unsigned int);
 -- 
 2.53.0
 
