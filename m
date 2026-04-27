@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82A21FF8868
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8856FF886F
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:44:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHRrX-00015j-M2; Mon, 27 Apr 2026 15:43:27 -0400
+	id 1wHRsC-0001nC-69; Mon, 27 Apr 2026 15:44:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRrD-0000vT-08
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:43:04 -0400
+ id 1wHRrr-0001Od-9M
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:43:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRr9-0007lJ-Mu
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:43:01 -0400
+ id 1wHRro-0007tu-7J
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:43:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777318978;
+ s=mimecast20190719; t=1777319019;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8SNI1+7ODP9d4wGo3twIW0HT5Ncz2Zi9RbkwAn71yk4=;
- b=U3luQWN0dldfJXlciHpgZYlubIEbOu5uFkpdDg2xC7jYkJ2qBmSMfMXCKViIx0uH07KcWr
- xx9DI30F29LHLM3Uqlc8OdUIEpz6a9bZK8VnYMqGm/gYS6bN4O8G9boaM6f3BA/OANBNsd
- tejjomjVbsCjt+cusuMTN/3nBMdfVkQ=
+ bh=1VqF0c2mTa8FvKXeY4elAFuahUQbbqA9YzOgLwlQqoY=;
+ b=isqVzbNtiZ3DuP3CCjWi3HkPo9B48bHWjwQuiS7cPqaGJZP1qjsm9Xd9Umd0iocMXrUrLU
+ wOwHZXHEp/OXMqQmf3flCo+m79JvxBAKGMarptWvP2wauTNlTD6P1Ioi5jwA0gb/ox2Bf5
+ Dflm03FwvP1IdId2AxMbZev0KYmZaGc=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-600-iRs8dY4ANxiqQ6iN1C1KvQ-1; Mon,
- 27 Apr 2026 15:42:55 -0400
-X-MC-Unique: iRs8dY4ANxiqQ6iN1C1KvQ-1
-X-Mimecast-MFC-AGG-ID: iRs8dY4ANxiqQ6iN1C1KvQ_1777318974
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-124-i_E1BIMSOvawB08oIqZ-Lg-1; Mon,
+ 27 Apr 2026 15:43:38 -0400
+X-MC-Unique: i_E1BIMSOvawB08oIqZ-Lg-1
+X-Mimecast-MFC-AGG-ID: i_E1BIMSOvawB08oIqZ-Lg_1777319017
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AB4F6195609F
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 19:42:54 +0000 (UTC)
+ id 35DA0195608F; Mon, 27 Apr 2026 19:43:37 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5C44619560B1; Mon, 27 Apr 2026 19:42:52 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 384F3180045E; Mon, 27 Apr 2026 19:43:35 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Apr 2026 23:42:04 +0400
-Subject: [PATCH 05/41] hw/pci-host/q35: handle NULL bus in pci-hole64 getters
+Date: Mon, 27 Apr 2026 23:42:11 +0400
+Subject: [PATCH 12/41] RFC net/colo-compare: guard finalize against
+ uninitialized state
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260427-qom-tests-v1-5-c413f3605311@redhat.com>
+Message-Id: <20260427-qom-tests-v1-12-c413f3605311@redhat.com>
 References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
 In-Reply-To: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1827;
+ peterx@redhat.com, Zhang Chen <zhangckid@gmail.com>, 
+ Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2979;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=8e76537D5foz+/YCdH5/+xzv4nxJP353Lst5euJM2Tk=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wUpdJX9/qeaPQuc7r/VS2SBxeRwFhSvpzXn
- v9AnGks56GJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FAAKCRDa6OEJdZac
- 5cfzD/4twr3PbCkYodwlk2w7Z0fmNWOyK7bC9ESXDQVCUhzTka1DAMyqfj1CLK87TxyVE5tV0Eh
- cWf+5PXzmahDXqvxoV6J5F92nZSt5/uA01CSznlKszwBdJDliiWEBy0J3OjRoijoXFsfnMniOjA
- ovExHDbNQdMyv8fC13ImVQqlye/YFcGUvMOCz9p3hM9Lpy4FOQaslu3sF3QHn/JaEfGueD1VaEf
- UdGTmycNRgpupOwRzmUFCnVp4GJ/oK2ffAHdKNuDC8v21kjdkw8EzkgigJqK2kTkBpe7kNbcoWP
- IwOUKk8dJtjDlnIQBQBcFXOSsJv1PkaSvQWSYBvXrxlKNvbRSysqveRhxwFyc4o3s1j5/gNO4Uk
- uk3AngOVu7bY78APJIbH/nVKpZSKJN8SBlsVbU56NH+X4spOTb52f20aA0TqJ4MD9Cj2L3aCd/p
- ZDDdrWMUdn3LRhLOu8t9qD7p9MTXqi3ejlFwMb3TzD0Hu2R/TUY50vDFE+tV33vGKvE+fNBCJto
- CDxYAP8xOBCAhrPoo3UCKU+4+ERGQytbNkjcy5KaSVeQ++R4kc8IoZHYlWmGo3xlZWMBpZQrbR/
- JgHCk7LrCXIfrTt2qrjEaZFCFayPelzVdSKg9ii+5kmerRtSgXsu9yzCgt/lN/WzWqgWcbGXe/t
- IEWi1pW/TH9jaoA==
+ bh=kxmSjH+HqdSVTIPt3wYQYv2C7Vi1QsvEwdqKLo4jzD4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wUjI9iWiFZPPEqnmLGNs8xkazFOZ8KyIhMQ
+ wZxmU0YFzyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FAAKCRDa6OEJdZac
+ 5QA4EACzV/hk+sozwkWT0flUZLm5udNENR8k0XbsMTDlqYn4O8VhAOAw54vV6tdQChhyl3W9Vtc
+ IGGNKH/+yNk1eTKq0pM54avHNHCbnaxCjTCsbr3sfMtNnLZGMRMCS0VeqJtHE+0IS7RpvoxmrbW
+ aJheLRu9vTAVzn4gZeehJ/65R9E3onxFQB70La3ekrc6+l6j/jO0DglxgimGcl9ozZsXPPNYPAN
+ BZ1r/uxMsmNkyH45Tgb/KGGyxyJPU4bQqgT86ATxr7AOKBsUChBvRsdSKawjDsBNYB5Nd3Olj+K
+ eaymbeFnuFiHFps2PBLvQzuY++zJhqmW1w6bdAXZS8USZdbkmJdVYRGq+6Tj/8q8k5OAOlLUn0i
+ vuzckHxc8SzDMErJcwR00YXDaHMpfXKtbGVPh/xXYza+cIadhZHmtBUxWitaDwR4BXi5qJP0uM+
+ wb3JStnTY5m1i/NwX0CZPoVjagjsViG5nhlLcM/tIEAIFC8aBc4pv8PmHMWOWAo7uTXa3S0t0Cq
+ ZL4YZm+3RKTEMk7HMZdSix1a3/eqfSwW6Op1jt1YPOPAx887wM/kb0DCKymmVlT6DqnjrJCIv0E
+ u0TO8DLTLJFS3FlhnKqF4mxcZ8OMmUnI8JVUPtGO14RfzXmEIRrzyYPBb8e/J5J1pSmmXNsS+tu
+ bv7EkBC4Ml96FsA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,53 +105,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When called on an unrealized Q35 host bridge (e.g. from
-qmp_qom_list_properties), h->bus is NULL since the root bus is only
-created during realize. Guard against this in both the
-pci_hole64_start and pci_hole64_end getters.
+colo_compare_finalize() assumes the object was fully set up by
+colo_compare_complete(), but a bare object_new() followed by
+object_unref() skips the complete callback entirely.
 
+This causes two crashes:
+- qemu_mutex_destroy on the static event_mtx which was never
+  initialized (colo_compare_active is false)
+- qemu_bh_delete(NULL) and iothread dereference when s->iothread
+  is NULL
+
+Guard the event_mtx teardown with colo_compare_active, and the
+iothread-dependent cleanup with an s->iothread NULL check.
+
+This is an alternative to patch "colo-compare: Fix QMP
+qom-list-properties crashing", sent earlier, hence the RFC.
+
+Fixes: 45942b79b9f8 ("net/colo-compare.c: Check that colo-compare is active")
+Cc: peterx@redhat.com
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/pci-host/q35.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ net/colo-compare.c | 31 +++++++++++++++----------------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
 
-diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-index e85e4227b37..149c32b4b0e 100644
---- a/hw/pci-host/q35.c
-+++ b/hw/pci-host/q35.c
-@@ -132,8 +132,14 @@ static void q35_host_get_pci_hole64_start(Object *obj, Visitor *v,
-                                           const char *name, void *opaque,
-                                           Error **errp)
- {
--    uint64_t hole64_start = q35_host_get_pci_hole64_start_value(obj);
-+    PCIHostState *h = PCI_HOST_BRIDGE(obj);
-+    uint64_t hole64_start;
+diff --git a/net/colo-compare.c b/net/colo-compare.c
+index c356419d6a8..be819db06c9 100644
+--- a/net/colo-compare.c
++++ b/net/colo-compare.c
+@@ -1416,7 +1416,7 @@ static void colo_compare_finalize(Object *obj)
+             break;
+         }
+     }
+-    if (QTAILQ_EMPTY(&net_compares)) {
++    if (colo_compare_active && QTAILQ_EMPTY(&net_compares)) {
+         colo_compare_active = false;
+         qemu_mutex_destroy(&event_mtx);
+         qemu_cond_destroy(&event_complete_cond);
+@@ -1431,30 +1431,29 @@ static void colo_compare_finalize(Object *obj)
+     }
  
-+    if (!h->bus) {
-+        error_setg(errp, "bus not realized");
-+        return;
+     colo_compare_timer_del(s);
++    g_clear_pointer(&s->event_bh, qemu_bh_delete);
+ 
+-    qemu_bh_delete(s->event_bh);
++    if (s->iothread) {
++        AioContext *ctx = iothread_get_aio_context(s->iothread);
+ 
+-    AioContext *ctx = iothread_get_aio_context(s->iothread);
+-    AIO_WAIT_WHILE(ctx, !s->out_sendco.done);
+-    if (s->notify_dev) {
+-        AIO_WAIT_WHILE(ctx, !s->notify_sendco.done);
+-    }
++        AIO_WAIT_WHILE(ctx, !s->out_sendco.done);
++        if (s->notify_dev) {
++            AIO_WAIT_WHILE(ctx, !s->notify_sendco.done);
++        }
++
++        /* Release all unhandled packets after compare thread exited */
++        g_queue_foreach(&s->conn_list, colo_flush_packets, s);
++        AIO_WAIT_WHILE(NULL, !s->out_sendco.done);
+ 
+-    /* Release all unhandled packets after compare thead exited */
+-    g_queue_foreach(&s->conn_list, colo_flush_packets, s);
+-    AIO_WAIT_WHILE(NULL, !s->out_sendco.done);
++        object_unref(OBJECT(s->iothread));
 +    }
-+    hole64_start = q35_host_get_pci_hole64_start_value(obj);
-     visit_type_uint64(v, name, &hole64_start, errp);
- }
  
-@@ -149,10 +155,15 @@ static void q35_host_get_pci_hole64_end(Object *obj, Visitor *v,
- {
-     PCIHostState *h = PCI_HOST_BRIDGE(obj);
-     Q35PCIHost *s = Q35_HOST_DEVICE(obj);
--    uint64_t hole64_start = q35_host_get_pci_hole64_start_value(obj);
-+    uint64_t hole64_start;
-     Range w64;
-     uint64_t value, hole64_end;
+     g_queue_clear(&s->conn_list);
+     g_queue_clear(&s->out_sendco.send_list);
+     if (s->notify_dev) {
+         g_queue_clear(&s->notify_sendco.send_list);
+     }
+-
+-    if (s->connection_track_table) {
+-        g_hash_table_destroy(s->connection_track_table);
+-    }
+-
+-    object_unref(OBJECT(s->iothread));
++    g_clear_pointer(&s->connection_track_table, g_hash_table_destroy);
  
-+    if (!h->bus) {
-+        error_setg(errp, "bus not realized");
-+        return;
-+    }
-+    hole64_start = q35_host_get_pci_hole64_start_value(obj);
-     pci_bus_get_w64_range(h->bus, &w64);
-     value = range_is_empty(&w64) ? 0 : range_upb(&w64) + 1;
-     hole64_end = ROUND_UP(hole64_start + s->mch.pci_hole64_size, 1ULL << 30);
+     g_free(s->pri_indev);
+     g_free(s->sec_indev);
 
 -- 
 2.53.0
