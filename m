@@ -4,84 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CF3AFF8861
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 09:44:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDECFFF8861
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 09:44:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHIVO-0002DA-46; Mon, 27 Apr 2026 05:43:54 -0400
+	id 1wHIW0-0002mG-3g; Mon, 27 Apr 2026 05:44:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHIVK-0002AY-BI
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:43:50 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHIVw-0002lL-EY
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:44:29 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHIVI-0003Zf-Hq
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:43:49 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-488af96f6b2so131566945e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 02:43:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHIVu-0003i2-LH
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:44:28 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-6530287803cso9527468d50.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 02:44:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777283065; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ddUs99bWKPbvHvpwwsHaTIA5KytldkxDEDvo2aXa9vd6KIQ7u71nDWNxZmPxXVEv32
+ jSJdOT7Kf9q6ftivV9eCFVeEkOdam1RMQrscOTF6VGHRrinrS31VBtAXf8iWARa52sKv
+ QiHIV2rOcnTkoYpffCtrM/mqNOCZpZXdwplYo1uA8GGas15cMvzl3Vhjmzt/CZaC3EPq
+ F/hYPbtJPML/0VnhOmsSpZqA6LFeUz4nTEdFfVjgcQwE+17iiNw3RWoJL76OiqZdFIJt
+ vJRU75D/y8c5EJsJgqbhJFq1pHV3hYlwYqdEnGdxSH6WCsgxF2JKRpDZR7RowOnpw4HE
+ tXEg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=LbSEVQmL+Gy+XI6Lng+xGxFyxMrWeFFBBTACeEpD4cQ=;
+ fh=sH8tFGrGYtu9PiY4IRsB8c/6tlMskTvLeVYzTqFRvBk=;
+ b=dUJYQddgXrL1l6KEvXqMzJUVWdoOWtKtKGIE5Yinu15fh5JIC+yK/x/oByxtOvQvxS
+ fAd3TXRye83cIxHtjWTdjyGJLDBZf4jUs3ESYjbvr8yhI8DrQu02j+v5mGILlfu8Ivje
+ DBdVglw5H878auhxbGt49rT+lPAOXUphp8O0TnDtDWZmfNiKVPzU18fzLFX1QhYUyrLZ
+ 0JnqY8269m18gg0uW5hR9ikHyicbtJRvhcSErIx0BHAyR9/VbPAWSdM+povUdv2Gi7V2
+ edSkrZmz2yLVMKElZy7r8Rh1/YltSLPg2L8oE1cbRnSF4TS6CdMti9BCCrKF/NLyTRYy
+ BexA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777283027; x=1777887827; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=aGXkQsc3XrvQBkO2d3qp0jClP04MwsWtO7R/3nWQYNs=;
- b=tgqGpgYjbHbxoQ+8V+BaFWZYjo1deWTPmAmSPq1l4An05hbA7KK6B61ZNB+OJdsFO/
- IoN7ZWIbxNino+6CAREBKAMmqvgbXx/mrDmaF+AcYV3JODEsE8/1u3mzKWeoNTHYcZoB
- 6RvrEhwnxAeNLT/w6STEFOSKBRaNWaL4nFK4V3ZZ2q0pJzuf/eh0N9VsMwMBvmlvxTdY
- 30IHVahW/8Z792PBHtc1LaPN58Ksws8mvjXKPoXAaocMijsrW/WjcllVA5PHplSPVnIg
- 7Trwvxju7Xvyw5HuXpsfGeAmcDRLuIDEVWfJNwX19lqYz8CZmmLgmHMs5lLfA7j/UPXv
- jGrw==
+ d=linaro.org; s=google; t=1777283065; x=1777887865; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=LbSEVQmL+Gy+XI6Lng+xGxFyxMrWeFFBBTACeEpD4cQ=;
+ b=WkwipVgwyda4IVSRMVqzwlDZkvtPISheQOJOwXJlDEP4L2adhjJIKtRFTjRCD8YHsI
+ tH6YYJERxVulz2i9+o5CBmeug/wKqyRwvhvGId+AzDJvPTA3vUuwETZAdFccb89pkDwr
+ UUk61/a5EiTAitydwhqjqnGoqPfIB21+rm18Adgc8sbx2WAxze0ovYkOuUaSY0srFauH
+ VAebt6NrsuAVXgRFnsAU3m0ueMGC7gHVeYivpZZqSpW/3z7saTnq9cBNq3rhWN+rhvh0
+ F7XvoTzYpn3q0XclV9UvTpETAP+MiDeoNaBqRE5GBbIOtku6Nev21arrpPTuy3QTN1vC
+ cPWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777283027; x=1777887827;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aGXkQsc3XrvQBkO2d3qp0jClP04MwsWtO7R/3nWQYNs=;
- b=B8SLwcqvP8zeMkEQVFEdEZ87v5jbuW7kd9HPdeSQVkG1AEXjMZhOyau89oVfC2spML
- uI4UeeaOiD6UJ8vMDHrgj2nP6e/jLr+Er/hfffP5ujeI+FqxJ9BebAeYRUHSeMaARSN5
- PQjqNlY+bZu7HVVTh4SvxlBegdSYjMqJYEA5jBF3GyIb6/oJaJp+e75JnVPrb09TDlGy
- ozE/NerAqOxQxv+gndKCLVFIEgLmjWU21vOTJ7Psvhng16oMU6gGqWGirv6W5Ikemtwk
- nNBCplOO+9uJ1rGWBnKaTytYXkJ40vEfVfRPRJXDP7fB+wfTlIurej2StyJ4WO9stFRG
- fZsQ==
+ d=1e100.net; s=20251104; t=1777283065; x=1777887865;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LbSEVQmL+Gy+XI6Lng+xGxFyxMrWeFFBBTACeEpD4cQ=;
+ b=WeS9SE59295sIko9fTadOvXWLpzp6wDgeYTc0DV3Ys78QsjMp3qTa0aQoRQGhG/Ce7
+ /clvYHLuLgd5gIIG+P8N9Eq6VdSEwtUn3+Zu13V/MjaBPKXjVk6/oLSxi944oeUtwzwI
+ w1d2Ei6RWPw+Pmq2OeSAkT/q5GWAC+ryLu6wPuW0A1q6PG6BsyIVC4HQYMTFygsC+vGI
+ aVP9N5IOX+4nD+Ma0kwzQuu1knKwn9yxd4yuaVQMNJbvj2sEplZCoHjTwzXD/p+7wSKD
+ 6+MY0M07Lkgt4jr1c5AMPW5vwbwX9KlQOTZBHJ+FeD2YC2Ke6lp31c9V8Be4Y4/8lu+N
+ m3GQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+GgD83fX00mEgpI1I8C/Gon5SDFUbVUPAYGE081YXR0g1oUQsjKdnNI23YgNfWuZ0pf0oPoop0Ja0p@nongnu.org
-X-Gm-Message-State: AOJu0YyLlA/65iuugoYjHvzouKZZlyUjTTkbH3iF0tn4IUbXQLSyIk/e
- IOR26E04lLxJDu3BUNb7yfvBVy8Op6gL4TyNoCyI8A61ymDBOoHFcg8lwvfTPQbm1C4=
-X-Gm-Gg: AeBDiesPJuhpRaTKT3Iwar5piL1S1BiLBAkcaQtoZcsDuRkBMhC/GYMfQv/huHLTRUn
- 7mP35HtRq40gFFl+AY2MS3LTZr+1mgw2e02/MSKo6g0FpoGKxmxR6IwMBIxdnq2j59p4hEbg3Tx
- OeWNZPzb27sni+DnHvSGqmMk6SC4JiPdwczHKOltQq+v60/Jz9Fvg/Z1ulAVW0yVFtK05Yp3wjX
- rypBvNU6zott9jdgCfmByddy9iGrZ6xhrRa3hSM+min3Y+1i17qJ/N0SkVP1rVfYgjicEMWEtuS
- mGyP7EEtTe/NqzPiql6UTQCmce20X0FY1prcmoOmSlMgwENoKjx66YmE/vLvQ7j3cG097A79liI
- 2NWbzHkeSB0C+ElzoQop8P45lFOZU5fiKNiGYQfVjPfLGd31oR+D39KpH1wRkAVR4FdFHhfvTvu
- qDRXoRGlQ1DPudQeh9XbBJHuw2coMQx0dLyPUs3ngVEI7UhCr30Ks9eKw+mC8WNtzzkBpPOb9lM
- Enh
-X-Received: by 2002:a05:600c:3b83:b0:48a:568f:ae6d with SMTP id
- 5b1f17b1804b1-48a707e1ae8mr74887505e9.8.1777283026984; 
- Mon, 27 Apr 2026 02:43:46 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4891c318636sm583611365e9.7.2026.04.27.02.43.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Apr 2026 02:43:46 -0700 (PDT)
-Message-ID: <9b7a140d-493a-49dd-8982-a8e49d165077@linaro.org>
-Date: Mon, 27 Apr 2026 11:43:45 +0200
+ AFNElJ9jc+yMlv+dPX0oNYqZepfz+1vw+t+H4hcFOkqIsaPAIejnQuz9C0j0KUYZybiGOQ/7y6rsX9QubdfK@nongnu.org
+X-Gm-Message-State: AOJu0Yybk6rphWOPT/YOo/KE+SBxdTHQNVQYhVT11cKEBp1qlZcXkhou
+ R5pncu4KlVVugm0MCwXhHxLxDW/cHW8I1MJ1FlgDg5T8sfPBrI8eDVLoMIwQFqUnQIOk/E6CX9y
+ VEg2Utu59+WzTXR0Tgr1clkIEdwHmIVFoWv7o8uYiQQ==
+X-Gm-Gg: AeBDieuvNxO9mAcO4RKFWa4QG9wtSSJqo5rE2vHUknBw9BBWqWAt0oWkFinqdf4MlCp
+ /PgVbvKh8dbEph7+QKDixE1ZKBoKZ40utHcUmRM8B+tEXtbhkqchOXnyOitmNfep1rOIAsZU7qf
+ Jg596WLvLTFl4iJwxB2Q52BxRsslVaHbQSCA8WUZikc/UjEPJfeY35/sUkYQaGiOOxaCHyDL+EO
+ t25Ryvf7d9ruocLavLdmSFoamWixNq5IOK2TXIxEkN9+4wQBh/1imm2kUcFrgFnONMlWyJvlPeW
+ VIfB2p4W0I1T5q7GGP+KMl6ISQatGxyki1aOisQotN5cvlZtOfAVV2KNbAyoqKM3YBm92s7dyiE
+ X0g==
+X-Received: by 2002:a05:690e:b4e:b0:654:1dfe:ca8e with SMTP id
+ 956f58d0204a3-6541e0e2555mr32048946d50.65.1777283065245; Mon, 27 Apr 2026
+ 02:44:25 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 31/84] fpu: Constify frac{64,128,256}_* inputs
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org
-References: <20260426134002.865628-1-richard.henderson@linaro.org>
- <20260426134002.865628-32-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260426134002.865628-32-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+References: <20260420140552.104369-1-eric.auger@redhat.com>
+In-Reply-To: <20260420140552.104369-1-eric.auger@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 27 Apr 2026 10:44:14 +0100
+X-Gm-Features: AQROBzBAUWwqNcOx-xJGaI6CwdG5Oz5BpCKABJY_zB_5mL_6g9cVohmqvFNmY9E
+Message-ID: <CAFEAcA_uLzLjqdr5LyLQ3EK2zy-ZoS8FfeDq9VcaobOozO3e2Q@mail.gmail.com>
+Subject: Re: [PATCH v10 0/7] Mitigation of "failed to load
+ cpu:cpreg_vmstate_array_len" migration failures
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ cohuck@redhat.com, sebott@redhat.com, peterx@redhat.com, philmd@linaro.org, 
+ alex.bennee@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,11 +119,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/4/26 15:39, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   fpu/softfloat.c | 53 +++++++++++++++++++++++++++++--------------------
->   1 file changed, 31 insertions(+), 22 deletions(-)
+On Mon, 20 Apr 2026 at 15:06, Eric Auger <eric.auger@redhat.com> wrote:
+>
+> This series introduces an infrastructure to explicitly tolerate
+> some mismatches between cpu cpreg indexes/values on migration.
+>
+> We especially handle failures due to an attempt to migrate
+> more registers than exposed on the destination.
+>
+> Once the infrastructure is in place we can handle the following
+> known issues:
+> KVM:
+> - removal of unconditionnal exposure of TCR2_EL1, PIRE0_EL1, PIR_EL1
+>   from v6.13 onwards. Causes forward migration failure.
+> - unconditionnal exposure of KVM_REG_ARM_VENDOR_HYP_BMAP_2 FW pseudo
+>   register from v6.16 onwards. Causes backward migration failure.
+> TCG:
+> - We can eventually remove AArch32 DBGDTRTX register which was
+>   erroneously defined.
+>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Applied to target-arm.next, thanks (with an edit to the
+comment in patch 6).
+
+-- PMM
 
