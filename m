@@ -4,101 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B41FF8868
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 20:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3209FF8867
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 20:05:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHSAn-0002Fz-8K; Mon, 27 Apr 2026 16:03:17 -0400
+	id 1wHSCV-0003Mx-Dh; Mon, 27 Apr 2026 16:05:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wHS9V-00085k-58
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:01:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wHS9Q-00044U-6f
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:01:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777320108;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=X7FwrTnmcrnLZ1g6A6+lc8za4SrCyBFRmudCXBW+310=;
- b=hA1J1vfpoIniHCworqrAV5Q8YAaZYNsLNVsAHlSATzrqQf4hsyaD0bNskTWukuF3520lGj
- f1DKC/PnbS24eZct/UXDkT9uc3KUbS5JPjONOdvQJtHnpOYAEpUzzbCE5JgQtKdgPE+Wf4
- ihCsxrvPQ3ZsZSnZXXJltqTLQiCTja8=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-314-c5_tPNCAMLqTjYSETGRjFA-1; Mon, 27 Apr 2026 16:01:46 -0400
-X-MC-Unique: c5_tPNCAMLqTjYSETGRjFA-1
-X-Mimecast-MFC-AGG-ID: c5_tPNCAMLqTjYSETGRjFA_1777320106
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2b24a00d12cso107844965ad.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 13:01:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHSAD-00026s-7p
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:02:44 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHSA7-0004Bh-Sn
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:02:40 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-651cfaa21e6so9255933d50.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 13:02:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777320154; cv=none;
+ d=google.com; s=arc-20240605;
+ b=L9gXxMnUg+E1wxJj5tM4fD4PwGtvLNhDQ2Bx6WM7vvdv95PcJnW8RbbIfNN0C4Y9jN
+ FENZSwQSjIZwiwvqKQRFr0vIU3NFyJQjZhbS1cm3+Wo9zR+DX2x5CF4B9jbFcgJw4J2j
+ FIt9jx5a65t6r6+ciOTJ/lodCDSVhYdZzBbDAPua4ju8Sy7JL5o0cJxxxOBDDuSAmMY8
+ v7ixoIwX1b/s9HY3X+NwIPxfV7ngPyvJmx/JOPwJfGjCmvexUgbbbNjMscBH5wiseBTI
+ sO+Moxs1lJ+G+L3uwsGIwgf/hCEjDFDuRwgB8t7ZnauRH65AgNv1k7blMFb/3X3RGW1S
+ MguA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=EKBtQ/dLFO51DyLLP19cb4OzrdwBTNELtwyyHCrLOnk=;
+ fh=TmUHNVdypPJaBqqUu0dYMoHNX5nzLtkGFOPaQ0zDQ9g=;
+ b=FuSDufYBYjCJIi7aqiJp/SFf5y01p/sWMA2RmvFO1DESiP+KzmEVuXVZeVQFzIdPgP
+ uQFDZkdstddxm+4WAid3vMso3K3REHFyrC4W23zX8suc0RYYWhfkLefWXqxig3MgZuk1
+ dlrSI0/PEQdy/kgJiov3DhE6wNzgr6TelrJsP9HsUCO1oYl6DF4M+7iJ2h5+1RjdIWIM
+ UvU8W1qyNKzJV/AMaqiyH2X5ArtW2y80WFJ1LukAxm8sUP3vw6F6ANa8AzB/R/L9P61u
+ ISc/bhAB01vsF9JL/QLwMR1M3xDx4QEUNT2Sk8y2aRGHObTvnPnQG1QzfS7cDPcqOZjX
+ Y2Fw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777320105; x=1777924905; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=X7FwrTnmcrnLZ1g6A6+lc8za4SrCyBFRmudCXBW+310=;
- b=nTayf0VG0mG0+jbndKhUguRe37FPrl7LWWClquo80tunLAQrRKk7y6gJGq9/H0dboL
- Nq37R1PuzmmUVmXey2xab/yAxswl7GIvOUNPxOOcJFl44BoQCfr6LULPYCXNFB0eIwvK
- DwUyGFZ23C/VH3NmhX+ebH6s6puOeVgZwfC8bdv8h1MzOSIocunKrimO+UDBZ6dhIzTz
- m2cm/mB7o2OLkekibXbCVm6Q5QgtQteaW8h5Rs9VMa9hGhrUvgpwAMZ47WZwh1WzS9aK
- SeWSTdcGQeGRteUFdBjEKfCESp3TsUSuFfke//DKjHoRbkuQmmiNHoAbos+rC7b5Ibkf
- pJuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777320105; x=1777924905;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1777320154; x=1777924954; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=X7FwrTnmcrnLZ1g6A6+lc8za4SrCyBFRmudCXBW+310=;
- b=ZtjxOEznWNiOXJTDrQywmWTP45+AUgQ9DsNBpCDHbyn7HXeN+HJ+QBg3OFEnNen39r
- pErBER9cg44ZSI9oH2JW2M1ltZ6JIx9Z95gPWqqVafR7CDenNdasJrB3lHr3KN41sWVb
- OfexkSPDWssiKakngOe/zAXrgxOmMf3agz03udZnmbOVnYDSsJbFf+3j3fCP3fAbPP2l
- n77TBY02RavtZfwHARAsiaUwusCfWjb1d6lKFyMyuod9nSXAepBChSm8Npe3852fy2sg
- xQh3HtiE3WV6FMysg17bB0U4NQ5/zjOujn3JouT47X+dkAeP+XUqkcQkqg9cXoLmsL3s
- OL/g==
-X-Gm-Message-State: AOJu0YxhIggV6Tv5NssaVyS6vwN9LUC4K/zbPb6tsJwyQRiAr0qVbcsK
- hH4XTan2bgau66Jk8+RdueD2SeA9KbxelZ5CBeNQrUEuGsMuCwC+OddNGdjt4EKzu43JI5P5LeR
- Ied0djF8HZhGpBVuYIK84L2rOSmIzQ0wesxQ9+7pCwa4KfdoWq6WvFXRC97kHm6R+6JA2pZ+kCG
- /Qg/TbpCuBHpTbkWx2NDyQtmJx+m/XnWikyFn1rsk=
-X-Gm-Gg: AeBDievtVyw+7v4ICmoq7NqEyHINStTIOUVoW+2+Fhy1kRaB1m4oEmrTKMG3cmFqVXQ
- Ns6l5/ndLdcBPq4H/wAIMEUKDVTdqaL4Ab9MifkML4EQI1Zx1U6qU5Cleuc/40KKpnu8sDuvS6f
- Ewe8yKWMLpaDiKWTgZ0I52lhhQxrU0ZaN9u2ZOBXpZMxxhQJ8zEhgVxgSxU87KNBBCSEGwF58b6
- zizjczMMG5QHkJmgxEacnuAz4lQw7u/xQFGfJJ46kh7avMXFBI+NZb1goMHULWRIj7PjUdJ/qzY
- ALR3bmVUdpP9bDuKz3+4BU9JGtEkoBFluBx2/N+rdRHI9FfvT90Ug1WsRLuYQ0nqYFPk/0Lwhya
- OCDajnd5/Q19h3ycjvEYcE3pjVkI2CzC4SAI86HtawR0snLiDXExyUeAooPGJgU8i0vFfJB0=
-X-Received: by 2002:a17:902:d2c7:b0:2b7:af0e:5942 with SMTP id
- d9443c01a7336-2b97c4b232amr197815ad.26.1777320105049; 
- Mon, 27 Apr 2026 13:01:45 -0700 (PDT)
-X-Received: by 2002:a17:902:d2c7:b0:2b7:af0e:5942 with SMTP id
- d9443c01a7336-2b97c4b232amr197315ad.26.1777320104282; 
- Mon, 27 Apr 2026 13:01:44 -0700 (PDT)
-Received: from fedora.armenon-thinkpadp16vgen1.bengluru.csb ([49.36.110.6])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b97ac8ca3dsm2700175ad.58.2026.04.27.13.01.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 13:01:44 -0700 (PDT)
-From: Arun Menon <armenon@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>, Arun Menon <armenon@redhat.com>
-Subject: [PATCH] tpm: Dynamically allocate tpm-tis buffer
-Date: Tue, 28 Apr 2026 01:31:34 +0530
-Message-ID: <20260427200134.453022-1-armenon@redhat.com>
-X-Mailer: git-send-email 2.53.0
+ bh=EKBtQ/dLFO51DyLLP19cb4OzrdwBTNELtwyyHCrLOnk=;
+ b=nGz7edE/F6jwnsRl32elAm7jx9qftqkpSDi2512neiwEHttCE5EM6k0ZQVlFKwH7XE
+ 8ZJ+pPh6x44pzbS7ekaXYdrcVl3JQ/1k7tQCby33bS6hzVB95IjadREinLKj3fe7lR0e
+ AiIqcbs1+k+io3fPlf2yXr7BcN0g30GBV0vSYHdCjm47RyW97j9L06hz1baRzjvA1HcF
+ 6OX5CoDFqhOretlfX6H8bVNgz+XVD3FkH/VP/ON6J+G9YWdcVOxsBuSDHDMVe6IGqnNB
+ B3rFc6mH/sIv/Gtf+xKp/mJMcfUKYCDGSNLE0yi/L7/Agy93EUayXvfH+HdQToCDovlB
+ TBFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777320154; x=1777924954;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=EKBtQ/dLFO51DyLLP19cb4OzrdwBTNELtwyyHCrLOnk=;
+ b=Ni2WrHhGnIf9fibEBJtn7n1s06Np3IzVA25+NkB762UOGMr6oM3G0fhMULVfY5NaWB
+ 2asNKL/oMVd1SFM2X91v8mmtwK81W9WHLSMHvwqdJdB/pcNRsa6xcJo5EbBJsNjNbm+v
+ zOEgyxukMHDK9XF4qZIFCEmwl+gQj5fvpkb9bHpA5n1HBJ3nCPbzL+Gx5iMSYg+6opqg
+ cZLpHT/7vDVSRXIsctAdTob8eGSHtgTNStT++pSXT7a0RDqXMZk0/RiSlLLwoA854/yB
+ nS9UpDqOgzf3JJmzXHZUOJu1i8+/4V/h1i2J0Akxn+/Y0aLFLU52Hd2TW4D5Qb5OqyiZ
+ CSPw==
+X-Gm-Message-State: AOJu0YxjHd+P1uJZcPixzeJcktGeAALIpilSouIfhno9NGgim8butVHN
+ AtPuXg9YYNvpfrn6EQaW9uxpdSiyLVS9TS0rSYvU3HXOOT0mx/UXIySka67VdbchAI8vtgbprxL
+ SzOkAfOlaEjwYrMTaXmmlP6E2x9uhI+2R7YwCMrxbdg==
+X-Gm-Gg: AeBDiesKkd5lTKGOP4lV1oe5hKzXHJ10RtgxjMr2FFklWEI6Xz1YT3jBDN6o3PyhEP6
+ xfsLgEJkwBrQjGSnGZAtalIeBTYoYHgfX5vzFfJm2KYFLRnjE1npMnJs4ew1Z6Q2GtqsMFsv5JU
+ xScgjN4C3j5a0zduZ3u9W94mdt+fS3Ut39fpR15MOhmnC3X+86Saj1MVk1LqHyGzy8E8zvuyIBA
+ u68S8T+/1wOk9Mu7te5YzGA3eE8DAUR2p1p1FvH+qrxglp6XL5X7fQtO0qz9pFRdf5nfbL7Gv6R
+ Xk05orG3LZgs5Ue8khqHtIvzOiP3Q2PqPseg+9u1FSN9/05G56hu6b4UcBuVrxTtrF+/RRrp/2S
+ 8GiaFTv/RSzzl
+X-Received: by 2002:a05:690e:e8c:b0:64a:ce57:cac4 with SMTP id
+ 956f58d0204a3-65bee7f6ab0mr73313d50.24.1777320154125; Mon, 27 Apr 2026
+ 13:02:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260409220614.65558-1-lucaaamaral@gmail.com>
+ <CAFEAcA-8BeBte6CxH._5F5Zsk3wvs0zJJW6+=8cNaroRTBegK-M5A@mail.gmail.com>
+ <20260427184540.80415-1-lucaaamaral@gmail.com>
+In-Reply-To: <20260427184540.80415-1-lucaaamaral@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 27 Apr 2026 21:02:22 +0100
+X-Gm-Features: AVHnY4Lb9mx6eC27k-lXV5h2U4iLlRGZ5z2s3Pq4pzUK3m14JNWgx1p8A7DzJUU
+Message-ID: <CAFEAcA9yGmWq--JsyZpPnOQ74i=j7JeeO0Xf6be7wWxJGbXLdg@mail.gmail.com>
+Subject: Re: [PATCH v6 0/6] target/arm: ISV=0 data abort emulation library
+To: Lucas Amaral <lucaaamaral@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,416 +122,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Arun Menon <armenon@redhat.com>
+On Mon, 27 Apr 2026 at 19:45, Lucas Amaral <lucaaamaral@gmail.com> wrote:
+>
+> On 2026-04-27, Peter Maydell wrote:
+> > looking at this I share Mohamed's question about how much of the
+> > atomics/etc we really need. This is a thousand lines of code
+> > handling instructions that in a lot of cases the guest really
+> > ought not to be using on MMIO regions in the first place.
+> >
+> > If we have real examples of this being needed, that's one thing,
+> > but I'm not very enthusiastic about implementing 'doesn't actually
+> > have the atomic properties' instructions otherwise.
+>
+> Some empirical data first.  This series was motivated by an
+> observed workload: the original Venus development capture (Ubuntu
+> 24.04 ARM64 + vulkaninfo + vkmark) showed ~1.8M SIMD/FP load-pair
+> (vLDP) ISV=3D0 faults plus a few thousand other ISV=3D0 hits on
+> LDR/LDP/STP/STR variants =E2=80=94 guest-side accesses into virtio-gpu
+> blob memory that the renderer had been forced to map via the
+> subregion fallback (MAP_FIXED rejected as unaligned), trapping as
+> MMIO with a syndrome that can't encode pair semantics.  Without
+> this series, those 1.8M hits land on the assert(0) in HVF and the
+> guest is dead.
 
-The TPM TIS buffer is currently a fixed-size static array. Change this
-to a dynamically allocated heap block. The buffer size is now determined
-at runtime by querying the TPM backend.
+Isn't the problem here that we're ending up in the MMIO
+path at all? That seems to me to be what you need to fix:
+taking 1.8M faults is a problem even if we can emulate them.
 
-To support VM migration,
-1. Replace the static VMSTATE_BUFFER macro with pointer-based variant
-   VMSTATE_BUFFER_POINTER_UNSAFE, explicitly mentioning the size.
-2. Introduce ext_buffer and ext_size in the migration subsection to
-   track allocation exceeding TPM_TIS_BUFFER_MAX. Allocate ext_buffer
-   using VMSTATE_VBUFFER_ALLOC_UINT32 only to be freed later after it is
-   appended to the main buffer.
+> Patches 4/6 and 5/6 (exclusives, atomics, CAS, PAC) were included
+> for correctness against the ARM spec rather than to satisfy any
+> observed traffic =E2=80=94 same capture had zero hits on LDXR/STXR/STXP/
+> LDXP/LDADD/LDCLR/LDEOR/LDSET/LDSMAX/LDSMIN/LDUMAX/LDUMIN/SWP/CAS/
+> CASP.  The intent was to cover every load/store class the spec
+> permits with ISV=3D0, so that paths I haven't observed (different
+> device, different driver, different guest OS) don't fall through
+> to assert(0) either.
+>
+> I instrumented every trans_*() and the HVF data-abort dispatch,
+> then re-ran the same workload on top of the MAP_FIXED alignment
+> fix currently in flight:
+>
+>   https://patchew.org/QEMU/20260424000544.9617-1-lucaaamaral@gmail.com/
+>
+> Result: zero ISV=3D0 faults across the run (2.68M ISV=3D1 dispatches).
+> The alignment fix resolves at source: blob now lands in mapped RAM,
+> no MMIO trap, the ISV=3D0 path goes silent on this workload.
 
-This allows us to migrate to a destination host without breaking
-backward compatibility. Old QEMU does not include a size field along
-with the buffer in the migration stream, and therefore the
-new QEMU is also forced to keep expecting exactly 4096 bytes.
+...so yes, that seems like the fix we want.
 
-Implement a post_load hook that will validate the incoming data size
-from the migration stream, failing the migration if it exceeds the
-destination backend capacity. Add unrealize functions for the TIS interface
-types ISA, SysBus and I2C to ensure that the buffer is safely freed on
-device destruction.
+> So the question is what role this series plays going forward.  My
+> intent was a defensive path covering the load/store classes that
+> can legitimately fault with ISV=3D0 per the ARM spec, so QEMU degrades
+> gracefully =E2=80=94 emulate when meaningful, inject a clean data abort w=
+hen
+> not =E2=80=94 instead of the current assert(0) the moment a guest happens=
+ to
+> touch MMIO with an instruction the syndrome can't describe.  The
+> same wiring covers WHPX, which has the same syndrome limitation.
 
-Signed-off-by: Arun Menon <armenon@redhat.com>
----
-Dependencies:
-This patch depends on the following patch currently in the mailing list:
-https://lore.kernel.org/qemu-devel/20260422103018.123608-10-armenon@redhat.com/
+We also fail in this use case for KVM, and have done for years. It
+doesn't generally seem to have been a problem particularly -- guests
+don't do this sort of "needs hypervisor to emulate" access
+typically, because it doesn't work under common hypervisors.
 
-Depends-on: <20260422103018.123608-10-armenon@redhat.com>
+(Though for KVM we don't assert, we feed the guest an
+external-abort: kvm-arm_handle_dabt_nisv().)
 
- hw/tpm/tpm_tis.h        |  6 ++++-
- hw/tpm/tpm_tis_common.c | 56 +++++++++++++++++++++++++++++++++++------
- hw/tpm/tpm_tis_i2c.c    | 28 +++++++++++++++++++--
- hw/tpm/tpm_tis_isa.c    | 31 +++++++++++++++++++++--
- hw/tpm/tpm_tis_sysbus.c | 32 +++++++++++++++++++++--
- 5 files changed, 138 insertions(+), 15 deletions(-)
+> I want to make sure I'm addressing the right concern before
+> respinning.  Two readings of your and Mohamed's comments:
+>
+> (a) Scope: trim instruction classes with no observed use case.
+>     Smaller series, less spec coverage at decode level.
 
-diff --git a/hw/tpm/tpm_tis.h b/hw/tpm/tpm_tis.h
-index b2d9c0116c..c736ecedc1 100644
---- a/hw/tpm/tpm_tis.h
-+++ b/hw/tpm/tpm_tis.h
-@@ -56,7 +56,9 @@ typedef struct TPMLocality {
- typedef struct TPMState {
-     MemoryRegion mmio;
- 
--    unsigned char buffer[TPM_TIS_BUFFER_MAX];
-+    uint8_t *buffer;
-+    uint8_t *ext_buffer;
-+    uint32_t ext_size;
-     uint16_t rw_offset;
- 
-     uint8_t active_locty;
-@@ -82,6 +84,8 @@ extern const VMStateDescription vmstate_locty;
- extern const MemoryRegionOps tpm_tis_memory_ops;
- 
- int tpm_tis_pre_save(TPMState *s);
-+int tpm_tis_post_load(TPMState *s);
-+int tpm_tis_ext_buffer_post_load(TPMState *s);
- void tpm_tis_reset(TPMState *s, bool ppi_enabled);
- enum TPMVersion tpm_tis_get_tpm_version(TPMState *s);
- void tpm_tis_request_completed(TPMState *s, int ret);
-diff --git a/hw/tpm/tpm_tis_common.c b/hw/tpm/tpm_tis_common.c
-index 43e68410f8..c9c4dd1190 100644
---- a/hw/tpm/tpm_tis_common.c
-+++ b/hw/tpm/tpm_tis_common.c
-@@ -270,7 +270,7 @@ static uint32_t tpm_tis_data_read(TPMState *s, uint8_t locty)
-     uint16_t len;
- 
-     if ((s->loc[locty].sts & TPM_TIS_STS_DATA_AVAILABLE)) {
--        len = MIN(tpm_cmd_get_size(&s->buffer),
-+        len = MIN(tpm_cmd_get_size(s->buffer),
-                   s->be_buffer_size);
- 
-         ret = s->buffer[s->rw_offset++];
-@@ -317,7 +317,7 @@ static void tpm_tis_dump_state(TPMState *s, hwaddr addr)
-            "tpm_tis: result buffer : ",
-            s->rw_offset);
-     for (idx = 0;
--         idx < MIN(tpm_cmd_get_size(&s->buffer), s->be_buffer_size);
-+         idx < MIN(tpm_cmd_get_size(s->buffer), s->be_buffer_size);
-          idx++) {
-         printf("%c%02x%s",
-                s->rw_offset == idx ? '>' : ' ',
-@@ -383,7 +383,7 @@ static uint64_t tpm_tis_mmio_read(void *opaque, hwaddr addr,
-         if (s->active_locty == locty) {
-             if ((s->loc[locty].sts & TPM_TIS_STS_DATA_AVAILABLE)) {
-                 val = TPM_TIS_BURST_COUNT(
--                       MIN(tpm_cmd_get_size(&s->buffer),
-+                       MIN(tpm_cmd_get_size(s->buffer),
-                            s->be_buffer_size)
-                        - s->rw_offset) | s->loc[locty].sts;
-             } else {
-@@ -754,7 +754,7 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
-                 /* we have a packet length - see if we have all of it */
-                 bool need_irq = !(s->loc[locty].sts & TPM_TIS_STS_VALID);
- 
--                len = tpm_cmd_get_size(&s->buffer);
-+                len = tpm_cmd_get_size(s->buffer);
-                 if (len > s->rw_offset) {
-                     tpm_tis_sts_set(&s->loc[locty],
-                                     TPM_TIS_STS_EXPECT | TPM_TIS_STS_VALID);
-@@ -818,9 +818,10 @@ void tpm_tis_reset(TPMState *s, bool ppi_enabled)
-     int c;
- 
-     s->be_tpm_version = tpm_backend_get_tpm_version(s->be_driver);
--    s->be_buffer_size = MIN(tpm_backend_get_buffer_size(s->be_driver),
--                            TPM_TIS_BUFFER_MAX);
- 
-+    s->be_buffer_size = tpm_backend_get_buffer_size(s->be_driver);
-+    s->buffer = g_realloc(s->buffer, MAX(s->be_buffer_size,
-+                          TPM_TIS_BUFFER_MAX));
-     if (ppi_enabled) {
-         tpm_ppi_reset(&s->ppi);
-     }
-@@ -873,6 +874,45 @@ int tpm_tis_pre_save(TPMState *s)
-      */
-     tpm_backend_finish_sync(s->be_driver);
- 
-+    if (s->be_buffer_size > TPM_TIS_BUFFER_MAX) {
-+        s->ext_size = s->be_buffer_size - TPM_TIS_BUFFER_MAX;
-+        s->ext_buffer = s->buffer + TPM_TIS_BUFFER_MAX;
-+    } else {
-+        s->ext_size = 0;
-+        s->ext_buffer = NULL;
-+    }
-+    return 0;
-+}
-+
-+int tpm_tis_post_load(TPMState *s)
-+{
-+    if (s->rw_offset > s->be_buffer_size) {
-+        return -EINVAL;
-+    }
-+    return 0;
-+}
-+
-+int tpm_tis_ext_buffer_post_load(TPMState *s)
-+{
-+    /*
-+     * Calculate the maximum extension buffer size allowed, by comparing
-+     * the destination VM's backend capacity with TPM_TIS_BUFFER_MAX.
-+     */
-+    uint32_t max_ext = s->be_buffer_size > TPM_TIS_BUFFER_MAX ?
-+                       s->be_buffer_size - TPM_TIS_BUFFER_MAX : 0;
-+
-+    if (s->ext_size > max_ext) {
-+        /*
-+         * Source buffer size is greater than what the destination backend
-+         * allows
-+         */
-+        g_clear_pointer(&s->ext_buffer, g_free);
-+        return -EINVAL;
-+    }
-+    if (s->ext_size > 0) {
-+        memcpy(s->buffer + TPM_TIS_BUFFER_MAX, s->ext_buffer, s->ext_size);
-+        g_clear_pointer(&s->ext_buffer, g_free);
-+    }
-     return 0;
- }
- 
-@@ -901,7 +941,7 @@ bool tpm_tis_ext_buffer_migration_needed(struct TPMState *s)
-     case TPM_TIS_STATE_READY:
-         return false;
-     case TPM_TIS_STATE_RECEPTION:
--        return s->rw_offset >= 4096;
-+        return s->rw_offset >= TPM_TIS_BUFFER_MAX;
-     case TPM_TIS_STATE_EXECUTION:
-         /*
-          * TPM is executing: we cannot know the size of TPM response.
-@@ -909,7 +949,7 @@ bool tpm_tis_ext_buffer_migration_needed(struct TPMState *s)
-          */
-         return false;
-     case TPM_TIS_STATE_COMPLETION:
--        return (tpm_cmd_get_size(&s->buffer) >= 4096);
-+        return (tpm_cmd_get_size(s->buffer) >= TPM_TIS_BUFFER_MAX);
-     }
-     return false;
- }
-diff --git a/hw/tpm/tpm_tis_i2c.c b/hw/tpm/tpm_tis_i2c.c
-index f48938e3a1..41a5486497 100644
---- a/hw/tpm/tpm_tis_i2c.c
-+++ b/hw/tpm/tpm_tis_i2c.c
-@@ -103,6 +103,10 @@ static int tpm_tis_i2c_post_load(void *opaque, int version_id)
- {
-     TPMStateI2C *i2cst = opaque;
- 
-+    if (tpm_tis_post_load(&i2cst->state) < 0) {
-+        return -1;
-+    }
-+
-     if (i2cst->offset >= 1) {
-         tpm_tis_i2c_to_tis_reg(i2cst, i2cst->data[0]);
-     }
-@@ -117,13 +121,23 @@ static bool tpm_tis_ext_buffer_migration_needed_i2c(void *opaque)
-     return tpm_tis_ext_buffer_migration_needed(&i2cst->state);
- }
- 
-+static int tpm_tis_ext_buffer_post_load_i2c(void *opaque, int version_id)
-+{
-+    TPMStateI2C *i2cst = opaque;
-+
-+    return tpm_tis_ext_buffer_post_load(&i2cst->state);
-+}
-+
- static const VMStateDescription vmstate_tpm_tis_ext_buffer_i2c = {
-     .name = "tpm-tis/ext_buffer",
-     .version_id = 0,
-     .needed = tpm_tis_ext_buffer_migration_needed_i2c,
-     .pre_save = tpm_tis_i2c_pre_save,
-+    .post_load = tpm_tis_ext_buffer_post_load_i2c,
-     .fields = (const VMStateField[]) {
--        VMSTATE_BUFFER_START_MIDDLE(state.buffer, TPMStateI2C, 4096),
-+        VMSTATE_UINT32(state.ext_size, TPMStateI2C),
-+        VMSTATE_VBUFFER_ALLOC_UINT32(state.ext_buffer, TPMStateI2C, 0, NULL,
-+                                     state.ext_size),
-         VMSTATE_END_OF_LIST()
-     }
- };
-@@ -134,7 +148,8 @@ static const VMStateDescription vmstate_tpm_tis_i2c = {
-     .pre_save  = tpm_tis_i2c_pre_save,
-     .post_load  = tpm_tis_i2c_post_load,
-     .fields = (const VMStateField[]) {
--        VMSTATE_PARTIAL_BUFFER(state.buffer, TPMStateI2C, 4096),
-+        VMSTATE_BUFFER_POINTER_UNSAFE(state.buffer, TPMStateI2C, 0,
-+                                      TPM_TIS_BUFFER_MAX),
-         VMSTATE_UINT16(state.rw_offset, TPMStateI2C),
-         VMSTATE_UINT8(state.active_locty, TPMStateI2C),
-         VMSTATE_UINT8(state.aborting_locty, TPMStateI2C),
-@@ -535,6 +550,14 @@ static void tpm_tis_i2c_realizefn(DeviceState *dev, Error **errp)
-     }
- }
- 
-+static void tpm_tis_i2c_unrealizefn(DeviceState *dev)
-+{
-+    TPMStateI2C *i2cst = TPM_TIS_I2C(dev);
-+    TPMState *state = &i2cst->state;
-+
-+    g_clear_pointer(&state->buffer, g_free);
-+}
-+
- static void tpm_tis_i2c_reset(DeviceState *dev)
- {
-     TPMStateI2C *i2cst = TPM_TIS_I2C(dev);
-@@ -555,6 +578,7 @@ static void tpm_tis_i2c_class_init(ObjectClass *klass, const void *data)
-     TPMIfClass *tc = TPM_IF_CLASS(klass);
- 
-     dc->realize = tpm_tis_i2c_realizefn;
-+    dc->unrealize = tpm_tis_i2c_unrealizefn;
-     device_class_set_legacy_reset(dc, tpm_tis_i2c_reset);
-     dc->vmsd = &vmstate_tpm_tis_i2c;
-     device_class_set_props(dc, tpm_tis_i2c_properties);
-diff --git a/hw/tpm/tpm_tis_isa.c b/hw/tpm/tpm_tis_isa.c
-index 4999de1c61..7fbdfb96e6 100644
---- a/hw/tpm/tpm_tis_isa.c
-+++ b/hw/tpm/tpm_tis_isa.c
-@@ -49,6 +49,12 @@ static int tpm_tis_pre_save_isa(void *opaque)
-     return tpm_tis_pre_save(&isadev->state);
- }
- 
-+static int tpm_tis_post_load_isa(void *opaque, int version_id)
-+{
-+    TPMStateISA *isadev = opaque;
-+    return tpm_tis_post_load(&isadev->state);
-+}
-+
- static bool tpm_tis_ext_buffer_migration_needed_isa(void *opaque)
- {
-     TPMStateISA *isadev = opaque;
-@@ -56,13 +62,23 @@ static bool tpm_tis_ext_buffer_migration_needed_isa(void *opaque)
-     return tpm_tis_ext_buffer_migration_needed(&isadev->state);
- }
- 
-+static int tpm_tis_ext_buffer_post_load_isa(void *opaque, int version_id)
-+{
-+    TPMStateISA *isadev = opaque;
-+
-+    return tpm_tis_ext_buffer_post_load(&isadev->state);
-+}
-+
- static const VMStateDescription vmstate_tpm_tis_ext_buffer_isa = {
-     .name = "tpm-tis/ext_buffer",
-     .version_id = 0,
-     .needed = tpm_tis_ext_buffer_migration_needed_isa,
-     .pre_save = tpm_tis_pre_save_isa,
-+    .post_load = tpm_tis_ext_buffer_post_load_isa,
-     .fields = (const VMStateField[]) {
--        VMSTATE_BUFFER_START_MIDDLE(state.buffer, TPMStateISA, 4096),
-+        VMSTATE_UINT32(state.ext_size, TPMStateISA),
-+        VMSTATE_VBUFFER_ALLOC_UINT32(state.ext_buffer, TPMStateISA, 0, NULL,
-+                                     state.ext_size),
-         VMSTATE_END_OF_LIST()
-     }
- };
-@@ -71,8 +87,10 @@ static const VMStateDescription vmstate_tpm_tis_isa = {
-     .name = "tpm-tis",
-     .version_id = 0,
-     .pre_save  = tpm_tis_pre_save_isa,
-+    .post_load = tpm_tis_post_load_isa,
-     .fields = (const VMStateField[]) {
--        VMSTATE_PARTIAL_BUFFER(state.buffer, TPMStateISA, 4096),
-+        VMSTATE_BUFFER_POINTER_UNSAFE(state.buffer, TPMStateISA, 0,
-+                                      TPM_TIS_BUFFER_MAX),
-         VMSTATE_UINT16(state.rw_offset, TPMStateISA),
-         VMSTATE_UINT8(state.active_locty, TPMStateISA),
-         VMSTATE_UINT8(state.aborting_locty, TPMStateISA),
-@@ -157,6 +175,14 @@ static void tpm_tis_isa_realizefn(DeviceState *dev, Error **errp)
-                  TPM_PPI_ADDR_BASE, OBJECT(dev));
- }
- 
-+static void tpm_tis_isa_unrealizefn(DeviceState *dev)
-+{
-+    TPMStateISA *isadev = TPM_TIS_ISA(dev);
-+    TPMState *state = &isadev->state;
-+
-+    g_clear_pointer(&state->buffer, g_free);
-+}
-+
- static void build_tpm_tis_isa_aml(AcpiDevAmlIf *adev, Aml *scope)
- {
-     Aml *dev, *crs;
-@@ -196,6 +222,7 @@ static void tpm_tis_isa_class_init(ObjectClass *klass, const void *data)
-     tc->model = TPM_MODEL_TPM_TIS;
-     tc->ppi_enabled = true;
-     dc->realize = tpm_tis_isa_realizefn;
-+    dc->unrealize = tpm_tis_isa_unrealizefn;
-     device_class_set_legacy_reset(dc, tpm_tis_isa_reset);
-     tc->request_completed = tpm_tis_isa_request_completed;
-     tc->get_version = tpm_tis_isa_get_tpm_version;
-diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
-index c29f43bdce..ad8cfa85b1 100644
---- a/hw/tpm/tpm_tis_sysbus.c
-+++ b/hw/tpm/tpm_tis_sysbus.c
-@@ -49,6 +49,13 @@ static int tpm_tis_pre_save_sysbus(void *opaque)
-     return tpm_tis_pre_save(&sbdev->state);
- }
- 
-+static int tpm_tis_post_load_sysbus(void *opaque, int version_id)
-+{
-+    TPMStateSysBus *sbdev = opaque;
-+
-+    return tpm_tis_post_load(&sbdev->state);
-+}
-+
- static bool tpm_tis_ext_buffer_migration_needed_sysbus(void *opaque)
- {
-     TPMStateSysBus *sbdev = opaque;
-@@ -56,13 +63,23 @@ static bool tpm_tis_ext_buffer_migration_needed_sysbus(void *opaque)
-     return tpm_tis_ext_buffer_migration_needed(&sbdev->state);
- }
- 
-+static int tpm_tis_ext_buffer_post_load_sysbus(void *opaque, int version_id)
-+{
-+    TPMStateSysBus *sbdev = opaque;
-+
-+    return tpm_tis_ext_buffer_post_load(&sbdev->state);
-+}
-+
- static const VMStateDescription vmstate_tpm_tis_ext_buffer_sysbus = {
-     .name = "tpm-tis/ext_buffer",
-     .version_id = 0,
-     .needed = tpm_tis_ext_buffer_migration_needed_sysbus,
-     .pre_save  = tpm_tis_pre_save_sysbus,
-+    .post_load = tpm_tis_ext_buffer_post_load_sysbus,
-     .fields = (const VMStateField[]) {
--        VMSTATE_BUFFER_START_MIDDLE(state.buffer, TPMStateSysBus, 4096),
-+        VMSTATE_UINT32(state.ext_size, TPMStateSysBus),
-+        VMSTATE_VBUFFER_ALLOC_UINT32(state.ext_buffer, TPMStateSysBus, 0,
-+                                     NULL, state.ext_size),
-         VMSTATE_END_OF_LIST()
-     }
- };
-@@ -71,8 +88,10 @@ static const VMStateDescription vmstate_tpm_tis_sysbus = {
-     .name = "tpm-tis",
-     .version_id = 0,
-     .pre_save  = tpm_tis_pre_save_sysbus,
-+    .post_load = tpm_tis_post_load_sysbus,
-     .fields = (const VMStateField[]) {
--        VMSTATE_PARTIAL_BUFFER(state.buffer, TPMStateSysBus, 4096),
-+        VMSTATE_BUFFER_POINTER_UNSAFE(state.buffer, TPMStateSysBus, 0,
-+                                      TPM_TIS_BUFFER_MAX),
-         VMSTATE_UINT16(state.rw_offset, TPMStateSysBus),
-         VMSTATE_UINT8(state.active_locty, TPMStateSysBus),
-         VMSTATE_UINT8(state.aborting_locty, TPMStateSysBus),
-@@ -156,6 +175,14 @@ static void tpm_tis_sysbus_realizefn(DeviceState *dev, Error **errp)
-     vmstate_register_ram(&s->ppi.ram, dev);
- }
- 
-+static void tpm_tis_sysbus_unrealizefn(DeviceState *dev)
-+{
-+    TPMStateSysBus *sbdev = TPM_TIS_SYSBUS(dev);
-+    TPMState *state = &sbdev->state;
-+
-+    g_clear_pointer(&state->buffer, g_free);
-+}
-+
- static void tpm_tis_sysbus_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -166,6 +193,7 @@ static void tpm_tis_sysbus_class_init(ObjectClass *klass, const void *data)
-     tc->model = TPM_MODEL_TPM_TIS;
-     tc->ppi_enabled = true;
-     dc->realize = tpm_tis_sysbus_realizefn;
-+    dc->unrealize = tpm_tis_sysbus_unrealizefn;
-     device_class_set_legacy_reset(dc, tpm_tis_sysbus_reset);
-     tc->request_completed = tpm_tis_sysbus_request_completed;
-     tc->get_version = tpm_tis_sysbus_get_tpm_version;
--- 
-2.53.0
+This is mostly what I mean. If we don't need the emulation
+functionality, don't implement it. We're not going to get
+every load and store emulated anyway (for instance this patchset
+doesn't cover SVE or SME loads and stores, which are a whole
+huge class of memory accessing instructions).
 
+I would like any memory access emulation to come with an
+attached description of what the guest workload is that
+is triggering the requirement for it, so we can check that
+it makes sense to do so. (Mohamed mentions the Windows TPM
+device, though I am still not sure what exactly is going on
+there and whether emulating the access is the right approach
+to it.)
+
+thanks
+-- PMM
 
