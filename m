@@ -4,95 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D9D7FF8860
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 06:09:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53050FF8850
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 06:10:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHFAB-0005KT-4M; Mon, 27 Apr 2026 02:09:47 -0400
+	id 1wHF9a-00052W-4b; Mon, 27 Apr 2026 02:09:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wHFA8-0005Fl-9B
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:09:44 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ (Exim 4.90_1) (envelope-from <314abh@gmail.com>) id 1wHF9Y-000528-Mh
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:09:08 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1wHFA6-0000mM-Md
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:09:44 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-35fbca04006so4855517a91.1
- for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 23:09:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <314abh@gmail.com>) id 1wHF9U-0000hu-Ko
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:09:08 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-c79467f124dso3532217a12.2
+ for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 23:09:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1777270181; x=1777874981; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777270143; x=1777874943; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2QzmSXQzvIocyTUqrSl/Yo2kZKcCTxCeTL1AZ3pifw8=;
- b=N++eiavMUnoPacwWTcnAelfL+UsztEoi8uCf+Alo6gjcMbQiiD/g5/Cup+FpZt2T0j
- bI4jXaXvzER0PDK2IWn3SRDeHUtbWj/gG1i5d3FqE8iEExRqd46mbE626Q/wCL4fSuPi
- cyMfCSiOOAWzM12OWB7OENNRKy7prWPXpQWSrvBuuyqsJLuQx8idKGs0CtjwztmJZaCL
- I75WsDeJMiD4lQZC1lgiZjZmREfxv4/9Q88yk3QabvTvt//bNovUimtLApLZs7BEL8A+
- J1FfqamDjDJD2jp4rAoy1A15JDZQtSL6WL7pxc+QKL7KzqwTj2mjUAstGtlcFqEYM1qO
- XU5A==
+ bh=u8YyWokDLuZFFmq5MmNvniHRIm4ZMOwR/uYJo4EgchQ=;
+ b=Qw0PQvuJ6o7zgSOXX/pfdLdBY8oIo6r3vUZ3agKk3iWNQAEIdmdudWMxmPt46BvByM
+ rQxlLPM5ZWSCraSqrElbO02GnVxjUdUGeF3LM5KjBkUl7IRkbe31kGDijiCxV9NpX//D
+ cW4vF6oxLxfyJezgk8ezi7aBakSIGLv1ZF9+A2UiXHppjxlduWI1AIfvUgFsQd6Kq5f4
+ 6q88LwMx/nhnOmpNmNEhpACJt7lgVT1yBx3DQvbWqKbPmwDnMPwFN/oPDdRiMdiMVw1r
+ xjgqb2hJlqdjZKk9NzsyVZVYmGpEg9kWbcLg2z/t3DBCudD/ohMdN+P2jSsHDdlRdyrn
+ zrzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777270181; x=1777874981;
+ d=1e100.net; s=20251104; t=1777270143; x=1777874943;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2QzmSXQzvIocyTUqrSl/Yo2kZKcCTxCeTL1AZ3pifw8=;
- b=bP35leApJo7UkcX6QZ4uW9iVsc8wCqcirYLZRVnqzo8lL3Ke4lx0IAZPZqElkEx/8Q
- 30h7za69utrvZ+ZSqlV8+5NtOiCheKG5ysBUydbK2jdawoFfsqN8c3LO5wqmvBLq0kp8
- dAQze+bn5hbn/DhJ2DVpy69Yht/c9Q8v59bYS5vh3LnvCEtu6bSI0Y0bbi9V3q/UpLRE
- SpoOE6R5aWJyxYY9TEOEpJIKzQOxUIEb4pb+SMq8rsnmmFADAVRnyyUwVyQjPIS4c2DV
- 0T9B8Gh0vJaTQQA/V8jX8AtSvCQ0vIeQ40+QQ4YEJlCRcyU3dSXPIhETri2UDP5d39tW
- 2iag==
-X-Gm-Message-State: AOJu0YxHIGAKH5Gvaw/oYLRxmqVsIa+9FdGrhk4e6fOfsLNP/AS6rW5a
- fxiypGVRncUIboxvspgJAWYmItvDO/z4XyxJv35JnSf+g14qyQKHWdcNkQMULHgE4TuObtvKajd
- acaJ4Je0woVXoQEQAyOIEioU+RazEoBXvkI42xLJ5pZj7BTOeMEWYnN3Cl4e/d+Cm0VbR2E1Yk7
- 7YoNFCVImRNhXNlnBDDxjKDDQf6Ox1aPS7aru/IVE=
-X-Gm-Gg: AeBDieuwBpPq0VT+9d6y4XG12UQnKmm7YDRQhsUzUCPtKxgWIieBXJq8ZLKeWyrznxB
- x+I9eyF1GhskTCt4VoYMPAUvaXXPkTBdL0SOzVPSRV21akQF0VbvU1c6YaZEPX0GKwGwufXcrMr
- mjGczevhtaLKhm2Yf+01PyA9WcJCuefDBDMV8BbHZtOKQ198QptvQBCXpFrbQqAe+HRjdggNkX7
- M9LSb3V762DHWf2sWRdUqrbfuv4cN6FU0+Q29mBpFVxplpmjsmodsBvU9KqXA3CdWHKFg9JXAPi
- YZyvDSnXFkP4xZ8NKbb4Vf/2kApcH1XEI+cCfZYE7HI8mB7JF2V+eHwieUq3BiMjJMMkg1PIob2
- SSF5DEw4WpZPof1udV44/UGiXpzQRi0NzvidJ4y9j1P4mktJSico8fBX0tYn3VBmYb8r6sM/2OR
- TIEhzBm+L7MVeTeyBg+zSQWShqTiKaPYq/Z32rcodYvQdF5KrD7y/eGMvscYGTfpN8cBpGcDLDt
- vUuO+1XP9e7SEuZqltalpe6XnHuoJaueYkiyw==
-X-Received: by 2002:a17:90b:3f47:b0:35b:a7be:ae47 with SMTP id
- 98e67ed59e1d1-3614048ee93mr46474407a91.21.1777270181116; 
- Sun, 26 Apr 2026 23:09:41 -0700 (PDT)
-Received: from duncan.localdomain (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-361410bac6dsm30290710a91.14.2026.04.26.23.09.38
+ bh=u8YyWokDLuZFFmq5MmNvniHRIm4ZMOwR/uYJo4EgchQ=;
+ b=a3GcprjER27NiYjy9HqB1Uxo3rhmO3tKW5OAj1ButSVJ+d8uxauslBcihVTk+KqyRC
+ qKa1huysBtd5ESmTUYZbwZbi8vQq2u248ppmB4iK/IBIqXEZaI1kmb4h14Miz25ZZ+R0
+ Ke1vStTpoQFIlA8S2L6v/brAggtfqIWVRHZ4TMBiSm+dIU5hJdIGjMJwdJJM16BxpuJw
+ 3TQY8201uVxHymzozpTAH8cHw8Gua1noyOayzIX5Hf+uKC77isFvkMe1bA817uh4dI/0
+ 9+viJPqARn4K2dP04oBhz+rNBYP3hYIPIWDdarVQIv6q96dTovlnskL6iO7scjvUn7PV
+ uihQ==
+X-Gm-Message-State: AOJu0YxQOT72m/ry0XWhlAPLX1cmXDLVTMJkEgvGyCoQb0+PlQ7G3Cpj
+ ATz5ZGx34lgSiwROM/+mx45rJpTe/lwtG7YWfIz4nzEzZHZqGpYDQ4T07jwLHDKbChY=
+X-Gm-Gg: AeBDieu6GvzxLr6FAUfhGqwh0h27srWpwzmEb0GmgluJWlqzMy8/T0dKxyPCNnskhhG
+ nSqRmO+rq+pcP9rXy0nK0Br3SGPh+9sLYWvb6gILghAb1iyWELpooiHs99lT99EMAVi3p25Dyig
+ osJQ83OcteMWvswV0CaOmqNs0RRWUS3uNrP/1BtAsK6Cn754y1rWJtiTbYYjyn0GuPdeKNH38Ur
+ JwUXgfFbHlocZESrs43ZSkcbHXJEvZomayOxcjopX0ymnCLkrqwAFflbJsY6XEVs/XO6/ZeNvhJ
+ p2Ak9thajrxj5bqfmr1TKYgEYqU5doiMStzWncXakWgFx+xGJ+qPgjTULsdm/RePHnhieOSBvwo
+ 7Ga714t/qRp0fQoTJR/E8ehMujeaWhN8sf723mTnGYght5RVcO3s8PB4VmtP35PG+YYvRmkydid
+ qJZcSluZ2a6HhETlUcx50=
+X-Received: by 2002:a05:6a20:3d09:b0:3a2:d68d:9e78 with SMTP id
+ adf61e73a8af0-3a2d68dd17bmr33436956637.4.1777270143305; 
+ Sun, 26 Apr 2026 23:09:03 -0700 (PDT)
+Received: from arch ([112.133.246.7]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82f8ebe41cfsm33847033b3a.43.2026.04.26.23.08.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 26 Apr 2026 23:09:40 -0700 (PDT)
-From: Max Chou <max.chou@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Max Chou <max.chou@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH v5 1/9] target/riscv: rvv: Fix NOP_UU_B vs2 width
-Date: Mon, 27 Apr 2026 14:09:20 +0800
-Message-ID: <20260427060928.2322570-2-max.chou@sifive.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260427060928.2322570-1-max.chou@sifive.com>
-References: <20260427060928.2322570-1-max.chou@sifive.com>
+ Sun, 26 Apr 2026 23:09:02 -0700 (PDT)
+From: Abhigyan Kumar <314abh@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com, qemu-riscv@nongnu.org,
+ Abhigyan Kumar <314abh@gmail.com>
+Subject: [PATCH 1/1] target/riscv: Fix medeleg[11] read-only zero bit for
+ M-mode ECALL
+Date: Mon, 27 Apr 2026 11:38:49 +0530
+Message-ID: <20260427060849.749179-2-314abh@gmail.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260427060849.749179-1-314abh@gmail.com>
+References: <20260427060849.749179-1-314abh@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=max.chou@sifive.com; helo=mail-pj1-x1036.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=314abh@gmail.com; helo=mail-pg1-x532.google.com
+X-Spam_score_int: -13
+X-Spam_score: -1.4
+X-Spam_bar: -
+X-Spam_report: (-1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FROM_STARTS_WITH_NUMS=0.738, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,27 +100,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
----
- target/riscv/vector_helper.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+RISC-V Privileged Specification 3.1.8 (Machine Trap Delegation Registers
+(medeleg and mideleg)) mentions:
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 538168efc9..60e2d42301 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -4973,7 +4973,7 @@ GEN_VEXT_V_ENV(vfwcvtbf16_f_f_v, 4)
- 
- /* Narrowing Floating-Point/Integer Type-Convert Instructions */
- /* (TD, T2, TX2) */
--#define NOP_UU_B uint8_t,  uint16_t, uint32_t
-+#define NOP_UU_B uint8_t,  uint16_t, uint16_t
- #define NOP_UU_H uint16_t, uint32_t, uint32_t
- #define NOP_UU_W uint32_t, uint64_t, uint64_t
- /* vfncvt.xu.f.v vd, vs2, vm # Convert float to unsigned integer. */
+"For exceptions that cannot occur in less privileged modes, the
+corresponding medeleg bits should be read-only zero. In particular,
+medeleg[11] is read-only zero."
+
+QEMU incorrectly included RISCV_EXCP_M_ECALL in DELEGABLE_EXCPS. It
+allowed the 11th bit to be written and read as set. Fixed by removing it
+from the DELEGABLE_EXCPS mask, adhering to the specification.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3438
+Signed-off-by: Abhigyan Kumar <314abh@gmail.com>
+---
+ target/riscv/csr.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index a75281539..c9bf73dd7 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1775,6 +1775,10 @@ static const uint64_t vs_delegable_ints =
+     (VS_MODE_INTERRUPTS | LOCAL_INTERRUPTS) & ~MIP_LCOFIP;
+ static const uint64_t all_ints = M_MODE_INTERRUPTS | S_MODE_INTERRUPTS |
+                                      HS_MODE_INTERRUPTS | LOCAL_INTERRUPTS;
++/* 
++ * As per RSIC-V Privileged Spec Section 3.1.8, M-mode ecall should be a
++ * read-only zero. Therefore, medeleg[11] is set to zero below. 
++ */
+ #define DELEGABLE_EXCPS ((1ULL << (RISCV_EXCP_INST_ADDR_MIS)) | \
+                          (1ULL << (RISCV_EXCP_INST_ACCESS_FAULT)) | \
+                          (1ULL << (RISCV_EXCP_ILLEGAL_INST)) | \
+@@ -1786,7 +1790,6 @@ static const uint64_t all_ints = M_MODE_INTERRUPTS | S_MODE_INTERRUPTS |
+                          (1ULL << (RISCV_EXCP_U_ECALL)) | \
+                          (1ULL << (RISCV_EXCP_S_ECALL)) | \
+                          (1ULL << (RISCV_EXCP_VS_ECALL)) | \
+-                         (1ULL << (RISCV_EXCP_M_ECALL)) | \
+                          (1ULL << (RISCV_EXCP_INST_PAGE_FAULT)) | \
+                          (1ULL << (RISCV_EXCP_LOAD_PAGE_FAULT)) | \
+                          (1ULL << (RISCV_EXCP_STORE_PAGE_FAULT)) | \
 -- 
-2.52.0
+2.54.0
 
 
