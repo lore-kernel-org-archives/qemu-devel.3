@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D149FF8867
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 20:07:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B78BFF8868
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 20:07:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHSEV-0005VH-0L; Mon, 27 Apr 2026 16:07:07 -0400
+	id 1wHSEa-0005VP-KY; Mon, 27 Apr 2026 16:07:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
- id 1wHSEK-0005U4-Rb
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:06:57 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1wHSEL-0005U5-IC
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:06:58 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
- id 1wHSEI-00058J-5b
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:06:55 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-488e1a8ac40so131936665e9.2
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 13:06:53 -0700 (PDT)
+ id 1wHSEI-00058M-K7
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:06:57 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488b0e1b870so181006365e9.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 13:06:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=gmail.com; s=20251104; t=1777320413; x=1777925213; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=o1m5TZjfPpKFGxNcdvdtQL+COsgMLl98v9ZR1ImYqYM=;
- b=s/9jfZyU3Cev6LSaN7/dNpFtyTlbnLVPjWZMUr2NUCtSYZDRBgjv1/wpR6LXjvfVBX
- Osxb4YfUcR0428zNh2HQnJI0rKIQXitW3R15NvWHT/302MkIvdm+g5aTBYqcAldXPSvf
- xTvOeD9N3aPbrmsKCff39mb9pzxI2/Et2RNdjYiIwXTbGzCB35OqeyJP84wqER8qZSt1
- ewqG1fZok1epMb0V6EAxHqp/50AaczS7VhTuB/cDqBlB+8tN18OKJocRysNFb/JH/jJ6
- oxHxiYrwZWWiLneglbPjExtaLmpJJ58pNZEq69BcWpy0VeetlO+cAinPWJOFxQOGwglM
- /e8A==
+ :reply-to; bh=/jY2+kwe2S2V0RgrKuq3DboBzyZETsHe+RrPp0TFj/g=;
+ b=OzPy7KCk5IhOaiKMqvFv6ZmHPivm+pa2TX+GXnNcahAROWIaeKuWJtPqT9rhQ73ECM
+ rVY7PupJwK6pc9+zGnwbKmPlJEI7zbEW2+pasbz9l9OTOn3Ys/UjNGRm1khzKmZCQ/jF
+ 5Qny7DvT9y2V09hdmSglH6JXeS+Y2JBCoWUblWrkyW/PVmf0ohQ82kZNjN/nvgROXTkS
+ hepnncpud5yYqpL/9xRHexrRKG+Kv9Xssn5zKnvsWpAZ+RUSvQZ4P7E08Z5wCdqP+Vg4
+ 7wH0bZ6YyZ1m0xODpefw0IuFkYOb/kxe/LOxI2kxMnHiZC5nYEQkl5xVe2YY9ageH/O8
+ qI2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20251104; t=1777320413; x=1777925213;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=o1m5TZjfPpKFGxNcdvdtQL+COsgMLl98v9ZR1ImYqYM=;
- b=OJGuUnrS3B53TxtBTlIAovv1MV157KauwBBqY1dF7mVt7F1KL4SPBzXIpUyteC3089
- CJu2plfIRrSdP5tisygdMDbhlRN3OVmeSyhdvDMVfWgrFQwRkaLZqHe+bglk4KByp20D
- vg3uHfxzo48QlldRQwOpnJUl62ar9MXbDXZskdMOHM9N75cx2g4GWw//tsEQXBAkotB4
- rQxDNPIDyS971T+xyB6aXSdiniYEonm44E9SNp+MLKCJDCVSA/T/yZ27EN39683gv+ln
- A4tNuaOnjA3F6Hwk3U34PMbHfz1WsO8INXbdctPDCqrYHoSeaZuKN5XbLZOSXT6HTs8y
- IG3g==
-X-Gm-Message-State: AOJu0YwyIYPSJqck0I9BO/t5nlrym83PDhSndtHbujs0xEDHfZ9EIEiW
- IyK9IMLb19w6OhMJEsqKtZSwJqunUZZOXEGKtBK4kBl9eNl95CNmBCCI
-X-Gm-Gg: AeBDieuRZlLEOdp2NGuxxW4pAPwqkvCaPOKzb4i0EH4vlUuNqnl2ZZoxi6vwprdNm4y
- ckAmtZbJ2WvrLZZD/fGR24ouI7Rj857VIVkJOCFCrb2/gCWGKurrSYbZzvV4OTokE0gAwzwgxLv
- hEWFAJreETKOouPLSq2RxIHA3v4c0jb+exw08nUMkyG0TMncXWjx5PPz4q41gyotOW0QQW8zydM
- kY4Uco+aYKWGgJGT4sDXKdl7WtxcHAInYD2gDmE7ZqeCPESn0GpOpEYfL+P3Lnd/3fQhLCeAINI
- hDqCcRDBcVafd1xBHmh5Xu0kr3p2usKkCvb7x4Pwi47QzG7kPWW9YI9auFyPV1Er2zbNjy0grAB
- OjUNUTBb2GluRN/GMoacKSInJnZx2fanUiB/PLYMAl19Db+YE9JJMclYgzBqVhQanloBxbzu53q
- Q0BXBRw4WbUOlSF3DISyTTQeUu9nJiqO1/ZaFU3+g=
-X-Received: by 2002:a05:600c:a11:b0:489:1a3a:9e45 with SMTP id
- 5b1f17b1804b1-48a77b1b405mr1781355e9.26.1777320412330; 
+ bh=/jY2+kwe2S2V0RgrKuq3DboBzyZETsHe+RrPp0TFj/g=;
+ b=SW3FUlh2fL94GT9Dw5VA7fy0Cza+E89LaOFTDOlbzW2qzs8IdQ2pvZy2tWKOZUb2GF
+ itHUPZ5Z32Bn8ClgVa7grpeXbAkj9YepTQKml/z+J55vTDiCexeQsaXrXWMOAlHpsVdq
+ Tazrc6d021l0uxm7xZ3eDuFI3f2Q5oRmL22kFg1aT1jcn7ErejtXk1VHe44Ke+NVBmDg
+ 6MbUuFCGNRFGOpgDjN4DPKorr89G8dX5VfQAUQQk5sQwus7bluGD2BSlZekKNWkjindo
+ 2eZ2ZpAdKKBLVqdDf8SkDL+Tsn275fm8TcFEKJnYu7zRZg1njfwpIhPEF89UWJrGsPMQ
+ ELAA==
+X-Gm-Message-State: AOJu0YxDOyRLAayZatlHtSLgLVdDSpnshkkb4WMkTvHOLgdIzcEMR3YG
+ Q7t2tS2PzzToL5DrGXxJ93PyfEEd4zmMPVen0zASqTLf8a2LUn9ey0JKIZiJ5vNRxJo=
+X-Gm-Gg: AeBDieu3lL8dWA3aIi09HOezPw21JyGa6uLvoFB8WEt05Tg67foml6NUJGmu8LuvOfY
+ 9JZxaaqmdaiC5ibmoBV5GXhLB0hKnUzGOOr4Lg9UY+ZGwkXhuZ3dOXuAsPkeA9tVZ/vjmlPCiUV
+ SbjTYZkDnaJVMVrhzQjMk+dWLJiN/0WjVqaTJ4Oe/jKOSIuRyRSLvWvg6MjsGexCGVIrSJKOlw6
+ kNm6AHRWycNZDUy3QBbcIcQMDz24jgYrA+ziOn4jMggbn/bsgkn2Ve8oVp8oEik6V1Dw0oJjmyK
+ AK3m2b4j0KJ5tbwJaf+8vfDve3+mrb56OPKtuFGObXJCrojJ6QjRrH6VtUUUjupdowdTNFGpkbs
+ iHUudO4SLr619RO5dsmDZGVjNH331VYjXC9StA5qZVKhyDUzgDSXlJSZhbFdSwJiATVB0ZB9pjG
+ DrzB3XNAeq8ir2v4DhfW1a/EHxowu4N6Jp5bFYHb8=
+X-Received: by 2002:a05:600c:4f8a:b0:489:d1c:d468 with SMTP id
+ 5b1f17b1804b1-48a77b24d5bmr1787845e9.31.1777320412954; 
  Mon, 27 Apr 2026 13:06:52 -0700 (PDT)
 Received: from [192.168.0.10] ([2a03:ab00:1000:1b60:331a:b316:78f6:effc])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a773efe38sm12767755e9.13.2026.04.27.13.06.51
+ 5b1f17b1804b1-48a773efe38sm12767755e9.13.2026.04.27.13.06.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 13:06:51 -0700 (PDT)
+ Mon, 27 Apr 2026 13:06:52 -0700 (PDT)
 From: =?utf-8?q?Jind=C5=99ich_Makovi=C4=8Dka?= <makovick@gmail.com>
-Date: Mon, 27 Apr 2026 22:06:43 +0200
-Subject: [PATCH v5 1/2] ui/gtk: Use non-blocking clipboard retrieval
+Date: Mon, 27 Apr 2026 22:06:44 +0200
+Subject: [PATCH v5 2/2] ui/gtk: Turn clipboard flag into runtime option
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260427-gtk-clipboard-v5-1-6968feb31a5d@gmail.com>
+Message-Id: <20260427-gtk-clipboard-v5-2-6968feb31a5d@gmail.com>
 References: <20260427-gtk-clipboard-v5-0-6968feb31a5d@gmail.com>
 In-Reply-To: <20260427-gtk-clipboard-v5-0-6968feb31a5d@gmail.com>
 To: qemu-devel@nongnu.org
@@ -81,8 +81,8 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
  Jindrich Makovicka <makovick@gmail.com>
 X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=makovick@gmail.com; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=makovick@gmail.com; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,95 +105,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+- Compile the GTK clipboard support unconditionally
+
+- Introduce GTK clipboard option, defaulting to off
+
 Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
 ---
- ui/gtk-clipboard.c | 53 ++++++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 40 insertions(+), 13 deletions(-)
+ meson.build       | 4 ----
+ meson_options.txt | 7 -------
+ qapi/ui.json      | 6 +++++-
+ qemu-options.hx   | 9 ++++++---
+ ui/gtk.c          | 8 +++++---
+ ui/meson.build    | 4 +---
+ 6 files changed, 17 insertions(+), 21 deletions(-)
 
-diff --git a/ui/gtk-clipboard.c b/ui/gtk-clipboard.c
-index 65d89ec601..463ed4e905 100644
---- a/ui/gtk-clipboard.c
-+++ b/ui/gtk-clipboard.c
-@@ -136,26 +136,55 @@ static void gd_clipboard_notify(Notifier *notifier, void *data)
-     }
- }
+diff --git a/meson.build b/meson.build
+index 096303f021..761c0436a3 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1932,7 +1932,6 @@ endif
+ gtk = not_found
+ gtkx11 = not_found
+ vte = not_found
+-have_gtk_clipboard = get_option('gtk_clipboard').enabled()
  
-+static void
-+gd_clipboard_request_text_received_callback(GtkClipboard *clipboard,
-+                                            const gchar *text,
-+                                            gpointer data)
-+{
-+    QemuClipboardInfo *info = (QemuClipboardInfo *)data;
-+
-+    if (text) {
-+        qemu_clipboard_set_data(info->owner, info, QEMU_CLIPBOARD_TYPE_TEXT,
-+                                strlen(text), text, true);
-+    }
-+    qemu_clipboard_info_unref(info);
-+}
-+
- static void gd_clipboard_request(QemuClipboardInfo *info,
-                                  QemuClipboardType type)
- {
-     GtkDisplayState *gd = container_of(info->owner, GtkDisplayState, cbpeer);
--    char *text;
+ if get_option('gtk') \
+              .disable_auto_if(not have_system) \
+@@ -1954,8 +1953,6 @@ if get_option('gtk') \
+                        method: 'pkg-config',
+                        required: get_option('vte'))
+     endif
+-  elif have_gtk_clipboard
+-    error('GTK clipboard requested, but GTK not found')
+   endif
+ endif
  
-     switch (type) {
-     case QEMU_CLIPBOARD_TYPE_TEXT:
--        text = gtk_clipboard_wait_for_text(gd->gtkcb[info->selection]);
--        if (text) {
--            qemu_clipboard_set_data(&gd->cbpeer, info, type,
--                                    strlen(text), text, true);
--            g_free(text);
--        }
-+        qemu_clipboard_info_ref(info);
-+        gtk_clipboard_request_text(gd->gtkcb[info->selection],
-+                                   gd_clipboard_request_text_received_callback,
-+                                   info);
-         break;
-     default:
-         break;
-     }
- }
- 
-+static void gd_clipboard_owner_change_targets_received_callback(
-+    GtkClipboard *clipboard,
-+    GdkAtom *targets,
-+    gint n_targets,
-+    gpointer data)
-+{
-+    QemuClipboardInfo *info = (QemuClipboardInfo *)data;
-+
-+    if (n_targets) {
-+        if (gtk_targets_include_text(targets, n_targets)) {
-+            info->types[QEMU_CLIPBOARD_TYPE_TEXT].available = true;
-+        }
-+    }
-+
-+    qemu_clipboard_update(info);
-+    qemu_clipboard_info_unref(info);
-+}
-+
- static void gd_owner_change(GtkClipboard *clipboard,
-                             GdkEvent *event,
-                             gpointer data)
-@@ -173,12 +202,10 @@ static void gd_owner_change(GtkClipboard *clipboard,
-     switch (event->owner_change.reason) {
-     case GDK_OWNER_CHANGE_NEW_OWNER:
-         info = qemu_clipboard_info_new(&gd->cbpeer, s);
--        if (gtk_clipboard_wait_is_text_available(clipboard)) {
--            info->types[QEMU_CLIPBOARD_TYPE_TEXT].available = true;
--        }
+@@ -2475,7 +2472,6 @@ if glusterfs.found()
+ endif
+ config_host_data.set('CONFIG_GTK', gtk.found())
+ config_host_data.set('CONFIG_VTE', vte.found())
+-config_host_data.set('CONFIG_GTK_CLIPBOARD', have_gtk_clipboard)
+ config_host_data.set('CONFIG_HEXAGON_IDEF_PARSER', get_option('hexagon_idef_parser'))
+ config_host_data.set('CONFIG_LIBATTR', have_old_libattr)
+ config_host_data.set('CONFIG_LIBCAP_NG', libcap_ng.found())
+diff --git a/meson_options.txt b/meson_options.txt
+index 31d5916cfc..286461129b 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -262,13 +262,6 @@ option('vnc_sasl', type : 'feature', value : 'auto',
+        description: 'SASL authentication for VNC server')
+ option('vte', type : 'feature', value : 'auto',
+        description: 'vte support for the gtk UI')
 -
--        qemu_clipboard_update(info);
--        qemu_clipboard_info_unref(info);
-+        gtk_clipboard_request_targets(
-+            clipboard,
-+            gd_clipboard_owner_change_targets_received_callback,
-+            info);
-         break;
-     default:
-         qemu_clipboard_peer_release(&gd->cbpeer, s);
+-# GTK Clipboard implementation is disabled by default, since it may cause hangs
+-# of the guest VCPUs. See gitlab issue 1150:
+-# https://gitlab.com/qemu-project/qemu/-/issues/1150
+-
+-option('gtk_clipboard', type: 'feature', value : 'disabled',
+-       description: 'clipboard support for the gtk UI (EXPERIMENTAL, MAY HANG)')
+ option('xkbcommon', type : 'feature', value : 'auto',
+        description: 'xkbcommon support')
+ option('zstd', type : 'feature', value : 'auto',
+diff --git a/qapi/ui.json b/qapi/ui.json
+index e3da77632a..b2c42a7f57 100644
+--- a/qapi/ui.json
++++ b/qapi/ui.json
+@@ -1319,6 +1319,9 @@
+ #
+ # GTK display options.
+ #
++# @clipboard: Enable host-guest clipboard sharing.  Defaults to "off".
++#     (Since 11.1)
++#
+ # @grab-on-hover: Grab keyboard input on mouse hover.
+ #
+ # @zoom-to-fit: Zoom guest display to fit into the host window.  When
+@@ -1344,7 +1347,8 @@
+ # Since: 2.12
+ ##
+ { 'struct'  : 'DisplayGTK',
+-  'data'    : { '*grab-on-hover'     : 'bool',
++  'data'    : { '*clipboard'         : 'bool',
++                '*grab-on-hover'     : 'bool',
+                 '*zoom-to-fit'       : 'bool',
+                 '*show-tabs'         : 'bool',
+                 '*show-menubar'      : 'bool',
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 21972f8326..e780bc2ac0 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -2209,9 +2209,9 @@ DEF("display", HAS_ARG, QEMU_OPTION_display,
+     "            [,window-close=on|off]\n"
+ #endif
+ #if defined(CONFIG_GTK)
+-    "-display gtk[,full-screen=on|off][,gl=on|off][,grab-on-hover=on|off]\n"
+-    "            [,show-tabs=on|off][,show-cursor=on|off][,window-close=on|off]\n"
+-    "            [,show-menubar=on|off][,zoom-to-fit=on|off]\n"
++    "-display gtk[,clipboard=on|off][,full-screen=on|off][,gl=on|off]\n"
++    "            [,grab-on-hover=on|off][,show-tabs=on|off][,show-cursor=on|off]\n"
++    "            [,window-close=on|off][,show-menubar=on|off][,zoom-to-fit=on|off]\n"
+ #endif
+ #if defined(CONFIG_VNC)
+     "-display vnc=<display>[,<optargs>]\n"
+@@ -2295,6 +2295,9 @@ SRST
+         drop-down menus and other UI elements to configure and control
+         the VM during runtime. Valid parameters are:
+ 
++        ``clipboard=on|off`` : Enable host-guest clipboard sharing,
++                               defaults to "off"
++
+         ``full-screen=on|off`` : Start in fullscreen mode
+ 
+         ``gl=on|off`` : Use OpenGL for displaying
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 9ebe7e8df0..ab5f1ef7aa 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -2601,9 +2601,11 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
+         opts->u.gtk.show_tabs) {
+         gtk_menu_item_activate(GTK_MENU_ITEM(s->show_tabs_item));
+     }
+-#ifdef CONFIG_GTK_CLIPBOARD
+-    gd_clipboard_init(s);
+-#endif /* CONFIG_GTK_CLIPBOARD */
++
++    if (opts->u.gtk.has_clipboard &&
++        opts->u.gtk.clipboard) {
++        gd_clipboard_init(s);
++    }
+ 
+     /* GTK's event polling must happen on the main thread. */
+     qemu_main = NULL;
+diff --git a/ui/meson.build b/ui/meson.build
+index 4e533d3046..6405e21d5d 100644
+--- a/ui/meson.build
++++ b/ui/meson.build
+@@ -111,9 +111,7 @@ if gtk.found()
+ 
+   gtk_ss = ss.source_set()
+   gtk_ss.add(gtk, vte, pixman, files('gtk.c'))
+-  if have_gtk_clipboard
+-    gtk_ss.add(files('gtk-clipboard.c'))
+-  endif
++  gtk_ss.add(files('gtk-clipboard.c'))
+   gtk_ss.add(when: x11, if_true: files('x_keymap.c'))
+   gtk_ss.add(when: opengl, if_true: files('gtk-gl-area.c'))
+   gtk_ss.add(when: [x11, opengl], if_true: files('gtk-egl.c'))
 
 -- 
 2.53.0
