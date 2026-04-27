@@ -4,41 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1C17FF8861
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 07:27:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B402FF8865
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 07:27:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHGMh-0006AE-KR; Mon, 27 Apr 2026 03:26:47 -0400
+	id 1wHGMg-00069r-4k; Mon, 27 Apr 2026 03:26:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wHGMd-00069B-7P
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 03:26:43 -0400
+ id 1wHGMb-00068p-MH
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 03:26:41 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wHGMb-00028L-3o
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 03:26:42 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1wHGMW-00027g-S3
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 03:26:41 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxReirD+9pTUQEAA--.8578S3;
- Mon, 27 Apr 2026 15:26:35 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxVeilD+9pREQEAA--.8768S3;
+ Mon, 27 Apr 2026 15:26:29 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJAxHMKbD+9pqJN1AA--.25769S6;
- Mon, 27 Apr 2026 15:26:34 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJAxHMKbD+9pqJN1AA--.25769S3;
+ Mon, 27 Apr 2026 15:26:28 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org,
-	lixianglai@loongson.cn,
-	chenhuacai@loongson.cn
-Subject: [PATCH  4/4] Add dintc kvm_irqchip_in_kernel support
-Date: Mon, 27 Apr 2026 15:00:29 +0800
-Message-Id: <20260427070029.1059386-5-gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, lixianglai@loongson.cn, chenhuacai@loongson.cn,
+ clg@redhat.com, pbonzini@redhat.com, cohuck@redhat.com, thuth@redhat.com,
+ mst@redhat.com, peter.maydell@linaro.org, richard.henderson@linaro.org,
+ philmd@linaro.org
+Subject: [PATCH 1/4] update-linux-headers.sh: add typelimits.h to portable
+ header list
+Date: Mon, 27 Apr 2026 15:00:26 +0800
+Message-Id: <20260427070029.1059386-2-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20260427070029.1059386-1-gaosong@loongson.cn>
 References: <20260427070029.1059386-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJAxHMKbD+9pqJN1AA--.25769S6
+X-CM-TRANSID: qMiowJAxHMKbD+9pqJN1AA--.25769S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,149 +67,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Function kvm_dintc_realize() is added if kvm_irqchip_in_kernel is
-set. It is to create and initialize DINTC device in kernel mode.
-and use kvm_irqchip_send_msi() to send  msi to kernel.
+Linux kernel introduced a new UAPI header file typelimits.h in the 7.1
+development cycle (commit merged in Jan 2026). This file is required by
+ethtool.h and other headers that include it.
 
+Since QEMU's update script only copies headers explicitly listed in the
+for loop, typelimits.h was missing after updating to newer kernel
+versions, causing compilation errors like:
+
+  fatal error: standard-headers/linux/typelimits.h: No such file or directory
+
+Add typelimits.h to the list of headers processed by cp_portable() to
+ensure it is properly copied and sanitized into the QEMU source tree
+
+Cc: clg@redhat.com
+Cc: pbonzini@redhat.com
+Cc: cohuck@redhat.com
+Cc: thuth@redhat.com
+Cc: mst@redhat.com
+Cc: peter.maydell@linaro.org
+Cc: richard.henderson@linaro.org
+Cc: philmd@linaro.org
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/intc/loongarch_dintc.c         | 13 +++++++++
- hw/intc/loongarch_dintc_kvm.c     | 48 +++++++++++++++++++++++++++++++
- hw/intc/meson.build               |  2 ++
- include/hw/intc/loongarch_dintc.h | 10 +++++++
- 4 files changed, 73 insertions(+)
- create mode 100644 hw/intc/loongarch_dintc_kvm.c
+ scripts/update-linux-headers.sh | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/intc/loongarch_dintc.c b/hw/intc/loongarch_dintc.c
-index c42a919df4..b8bd7ae015 100644
---- a/hw/intc/loongarch_dintc.c
-+++ b/hw/intc/loongarch_dintc.c
-@@ -53,6 +53,15 @@ static void loongarch_dintc_mem_write(void *opaque, hwaddr addr,
-     cs = cpu_by_arch_id(cpu_num);
-     irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
- 
-+    if (kvm_irqchip_in_kernel()) {
-+        MSIMessage msg;
-+
-+        msg.address = msg_addr;
-+        msg.data = val;
-+        kvm_irqchip_send_msi(kvm_state, msg);
-+        return;
-+    }
-+
-     async_run_on_cpu(cs, do_set_vcpu_dintc_irq,
-                          RUN_ON_CPU_HOST_INT(irq_num));
-     qemu_set_irq(s->cpu[cpu_num].parent_irq, 1);
-@@ -95,6 +104,10 @@ static void loongarch_dintc_realize(DeviceState *dev, Error **errp)
-         qdev_init_gpio_out(dev, &s->cpu[i].parent_irq, 1);
-     }
- 
-+    if (kvm_irqchip_in_kernel()) {
-+        kvm_dintc_realize(dev, errp);
-+    }
-+
-     return;
- }
- 
-diff --git a/hw/intc/loongarch_dintc_kvm.c b/hw/intc/loongarch_dintc_kvm.c
-new file mode 100644
-index 0000000000..1137bcd9a6
---- /dev/null
-+++ b/hw/intc/loongarch_dintc_kvm.c
-@@ -0,0 +1,48 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * LoongArch DINTC interrupt kvm support
-+ *
-+ * Copyright (C) 2025 Loongson Technology Corporation Limited
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/intc/loongarch_dintc.h"
-+#include "linux/kvm.h"
-+#include "qapi/error.h"
-+#include "system/kvm.h"
-+
-+void kvm_dintc_realize(DeviceState *dev, Error **errp)
-+{
-+    LoongArchDINTCState *lds = LOONGARCH_DINTC(dev);
-+    int ret;
-+
-+    ret = kvm_create_device(kvm_state, KVM_DEV_TYPE_LOONGARCH_DMSINTC, false);
-+    if (ret < 0) {
-+        fprintf(stderr, "create KVM_DEV_TYPE_LOONGARCH_AVEC failed: %s\n",
-+               strerror(-ret));
-+        abort();
-+    }
-+    lds->dev_fd = ret;
-+
-+    /* init dintc config */
-+    lds->msg_addr_base = VIRT_DINTC_BASE;
-+    lds->msg_addr_size = VIRT_DINTC_SIZE;
-+
-+    ret = kvm_device_access(lds->dev_fd, KVM_DEV_LOONGARCH_DMSINTC_GRP_CTRL,
-+                            KVM_DEV_LOONGARCH_DMSINTC_MSG_ADDR_BASE,
-+                            &lds->msg_addr_base, true, NULL);
-+    if (ret < 0) {
-+        fprintf(stderr, "KVM_DEV_LOONGARCH_DINTC_MSG_ADDR_BASE failed: %s\n",
-+                strerror(ret));
-+        abort();
-+    }
-+
-+    ret = kvm_device_access(lds->dev_fd, KVM_DEV_LOONGARCH_DMSINTC_GRP_CTRL,
-+                            KVM_DEV_LOONGARCH_DMSINTC_MSG_ADDR_SIZE,
-+                            &lds->msg_addr_size, true, NULL);
-+    if (ret < 0) {
-+        fprintf(stderr, "KVM_DEV_LOONGARCH_DINTC_MSG_ADDR_SIZE failed: %s\n",
-+                strerror(ret));
-+        abort();
-+    }
-+}
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index 96742df090..015c1e67e4 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -82,3 +82,5 @@ specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extio
- specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_LOONGARCH_EXTIOI'],
-                if_true: files('loongarch_extioi_kvm.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_DINTC', if_true: files('loongarch_dintc.c'))
-+specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_LOONGARCH_DINTC'],
-+               if_true: files('loongarch_dintc_kvm.c'))
-diff --git a/include/hw/intc/loongarch_dintc.h b/include/hw/intc/loongarch_dintc.h
-index 1f4f65705a..95a7879e26 100644
---- a/include/hw/intc/loongarch_dintc.h
-+++ b/include/hw/intc/loongarch_dintc.h
-@@ -9,8 +9,13 @@
- #include "hw/core/sysbus.h"
- #include "hw/loongarch/virt.h"
- #include "system/memory.h"
-+#include "hw/pci-host/ls7a.h"
- 
- #define NR_VECTORS     256
-+#define IRQ_BIT_BASE    5
-+#define IRQ_BIT_LEN     8
-+#define CPU_BIT_BASE   13
-+#define CPU_BIT_LEN     8
- 
- #define TYPE_LOONGARCH_DINTC "loongarch_dintc"
- OBJECT_DECLARE_TYPE(LoongArchDINTCState, LoongArchDINTCClass, LOONGARCH_DINTC)
-@@ -25,7 +30,10 @@ struct LoongArchDINTCState {
-     SysBusDevice parent_obj;
-     MemoryRegion dintc_mmio;
-     DINTCCore *cpu;
-+    int dev_fd;
-     uint32_t num_cpu;
-+    uint64_t msg_addr_base;
-+    uint64_t msg_addr_size;
- };
- 
- struct LoongArchDINTCClass {
-@@ -34,3 +42,5 @@ struct LoongArchDINTCClass {
-     DeviceRealize parent_realize;
-     DeviceUnrealize parent_unrealize;
- };
-+
-+void kvm_dintc_realize(DeviceState *dev, Error **errp);
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index 386d7a38e7..471f9cc71e 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -255,6 +255,7 @@ for i in "$hdrdir"/include/linux/*virtio*.h \
+          "$hdrdir/include/linux/vhost_types.h" \
+          "$hdrdir/include/linux/vmclock-abi.h" \
+          "$hdrdir/include/linux/nitro_enclaves.h" \
++         "$hdrdir/include/linux/typelimits.h" \
+          "$hdrdir/include/linux/sysinfo.h"; do
+     cp_portable "$i" "$output/include/standard-headers/linux"
+ done
 -- 
 2.47.3
 
