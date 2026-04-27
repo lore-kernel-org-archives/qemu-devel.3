@@ -4,102 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECFBFFF8868
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 16:13:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17341FF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 16:18:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHOaV-0004pR-0z; Mon, 27 Apr 2026 12:13:35 -0400
+	id 1wHOet-00063V-KS; Mon, 27 Apr 2026 12:18:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHOaT-0004oz-AL
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 12:13:33 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHOaR-0001wL-OV
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 12:13:33 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-65890a6ca20so1387717d50.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 09:13:31 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777306410; cv=none;
- d=google.com; s=arc-20240605;
- b=JEPcJVBI4dweq2fcsoazPTZG2u07zm54o1NRoexKdoaS3o2g4TB+2eZwXz0r3ma5H9
- C9nIviZTvEq8Cj02vedt38vf0/rkmy+n1bFv1FZEMKYG1bb6nWBa3YWm9lTonEpOUNH2
- y6OPuYzFb79WXX3fL8yTzPryPbEUkBbovSffBrNncSzuDGT9nLKPy+B5uVz4x/FRosBL
- ix5PaL5c2HWFVeunC6GF+nVngVCT2uqP8SKo0M9ia7AEWM5FBMzWVxAxb3M9yTTVp2nm
- ZactniQOMOyEtS0F834nHAmWznXdaPbehcVm4/sPs6UMXyKgQOhwKC0IEsSaWxufEOJR
- qo7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Rb39dPcxjq51fckrmVKeWSywprXIuORnPBeDwhuSSb4=;
- fh=TnDbL9mYH20MplIPRJjnJR4NKrcSt7fGISPEXk7FgyM=;
- b=WFbnI2ngmlCTaiPmEYCEB32QKnXk+N24r3bz6W4FTi3lhSnlyFxA3z3bFsq8zGPzCo
- w/ATKtgM6ABN3O8pK6FOwg7975laspw6gZPjsMcWlKoFS15hxWS/lfpqLg+spz4sK1L6
- oSZ94lvT1uP7mirztU5vlDSdJWkvcNopEwhXof08NLYA0EdVLaO8SXBNj9IlQoGcc9qh
- BNCEHHmw/RFEVQssuDpFEfbEYylemJR46i+L/Rx/ofH4CEOIAv3ANNcQIciNP7oritR8
- pkzqXbSJ2Vit1RkW9a2Qs48b/Sh1CdPVHLTAeg+cLthCKAn+lWs/h2FnfMS8cs/1XKpM
- HB2w==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wHOem-00061o-7m
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 12:18:01 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wHOej-0003AP-UP
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 12:17:59 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63RDkDuO665665
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 16:17:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ a9PcAVtS6aiAY+5oBEIuwWBp3d9cmqxfThizqaUHFWI=; b=Gjv5WnjZpEvvVK9k
+ sFOfdT06pk/mwguk9KxDuDXHny8PeusQxWcpCDMJ6Ufl4IMDTgil4XhKaZDQ8Eh+
+ GzdFXj5xxY9+B0X4AJ+AeZcx/rGrjhFs4GVVGqJUah7tOepru5GLOpPXQdy46VfP
+ PPcuJymns29p+5IlnP/bSb/Q2f3owHZrMhc6wZzw16zeLD8xUMg8gY8Z0fVQmqYr
+ f3tFIymyTIWAGWOv8RWuX9AB+mSX+TFG7CG5I1ul37OENvPFYfmpXHWullDptFyG
+ TLxZjXge2nUmWr2ZcoefZmswsK0n7Z9JHn9KPZQf/5wpkRGizWvdmo1bOqqwsGTR
+ DgIGGg==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dt30n284e-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 16:17:54 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-2d9da2559aeso29018450eec.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 09:17:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777306410; x=1777911210; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Rb39dPcxjq51fckrmVKeWSywprXIuORnPBeDwhuSSb4=;
- b=mX9+A9tFH773sYmYRSZO46ey2xvJc7T+ETheV4QIp44ThXatAIY/aY8Mr6LMWdD9aF
- 0wKH05DMQMwoWeNHWL6YS0BemyQTC9RdovuQewkG1y+80bvwlj4OCk/gNoz3cpUMUcvC
- sCtGomEXRbhIIjptZl4kdwlGs4zdEtJ3JLCV/r2Lo/CYQTb/gweS/3KG3ZtDdVOMYjzr
- g3N6dWcj2XrTvRU8zaceEBMzKAUTchpkTY57y0nEDMObTR0/HI6bg3yGKBltBbmP69uh
- LznKD5gFpsKmpZaIP1QlAJ5nepjC63nQP5ZvB/JUFqG9KDGZbpmnOjKMgjALrdDuodra
- fgdw==
+ d=oss.qualcomm.com; s=google; t=1777306674; x=1777911474; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=a9PcAVtS6aiAY+5oBEIuwWBp3d9cmqxfThizqaUHFWI=;
+ b=VnV+6RaA1E2sk5ylTt2L4z4d3IGggrotuz5dHgQSRa0ALfb2SXTG0wB5kgihOpQwCe
+ nrj2hhJcP6qNQ1hJnjeUgLJmAdhFENYw/JMr0PHQsD+PpN4IRPBunl2YT6Yt0nyx0YDn
+ m6zziF5m1DE3NID3rkW00rCmw/50kc4ii0/ypbzmQKRw6lFRpdfMV6yjsGtY1xg+I/Wk
+ RJPoo8jwGdPkQQaoEyvZrlxG4QLzLi078Thix3DJ4WHP0Qp9M9yOyCHzLmlqM/tDoGs0
+ af/YW3f1YDsRnYKwsWo/zyw+F8BseVJxdYQYgGlgNe6Kr91yAJBcfGvlDnsbAb8UfQQB
+ 5/Eg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777306410; x=1777911210;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Rb39dPcxjq51fckrmVKeWSywprXIuORnPBeDwhuSSb4=;
- b=VjoE0/pOIx+luSC+Fc+kn6UlxbfdhPGiwq+etUAyw3/X4OCTPdJDXm6aXbuHUbGdA6
- du3NG0kIl4BXVUhNjYBKNWXEt4JiMJDN/1bOknRLq4/998UyZgXhocFMdKyY1WOb8g0R
- oDiJBcwhOM78g0nEd2F7lRGDI2c2i749bHBqvgSfusFpS/3zRczZky702u48VRGDgRpl
- 2An2BnIfoYArTq0dZ1WWr+H9HwIqzVNfp0gscta96hv9oOrhSYT28qMKXppBSiH1Mnf7
- ocY27sf6+XS08vR9L8ZNO7QmUgFpiZY9nSXVWKO4gqFaU2ffX9mE+l1XWhA3Bnxxy1Cn
- LMCw==
-X-Gm-Message-State: AOJu0YwwTOuMB59yIU3+N3pPwyIVdYzt4gh/j/GnhcfHCVh7xOInVlrg
- fAtzyJsrBVCU7usfx+Nr1p5O1qXNMWToAvjuPdmQUin4Zmb/SyG4YBIhErI9EkSmF3PN+mF3pNS
- DM7LHycojTvRyQdqmT35s311RMwbLD1P9XP75lcj9xQ==
-X-Gm-Gg: AeBDiesxW2RiDpC3n5KRNQBqWkiLvfaItd1ozKR7g9N8eEJNtKZ/GoDfSh7lFexQFBr
- GBU/Wh/YMdpFmp6pWLUke6CBfdfALY2RCEy075nCcQ24cexL+Z33OoiONHeTQtR7IdvXZUtLEwV
- zK1NbYJSWnnIUoVmdLzDKxq3IQoVE5F71GitmxXWuUi7X8XgWSxfkw+zJg4OPiJeqHmKUoFZH6Z
- Wyym1Xci94zGTNRS75ZqHlNE8zs55eaXMOwvAcmsvGy6N+Jnm8l80XcoPveOpXTWf4b5vf1zs/1
- XR0hJnh6jWj/JpXKsJTm66G52TkXN6iIGaIldcrE7FfdKbc33wHlswZroHCq4EIg3CYceaWMA8o
- CZV+bc3B/WcFw
-X-Received: by 2002:a05:690e:446:b0:650:3431:24c7 with SMTP id
- 956f58d0204a3-65be0c81e2dmr13722d50.34.1777306410170; Mon, 27 Apr 2026
- 09:13:30 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777306674; x=1777911474;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=a9PcAVtS6aiAY+5oBEIuwWBp3d9cmqxfThizqaUHFWI=;
+ b=kelG/Tw86wZXp3W4Dvn+dFU5ryM0hhb/55TdRs4g4yWycfIEldifjpRpaOg+ZKwk+u
+ yEITkpIJJEK2wdkt2wcAKwBkRcgfiPF6oK9aleI52p8B4YxSxe0GaAnUhi13tSH9iUHZ
+ BTulm17G2gzkRZaB/VMbCzVnYLLi8zKqCUe7YXviOyF2dDlrcvxJA2kQrI50HDj11meX
+ IsjS0oGSI57bNx2ebjJ/JZlZyXGtc8LvrvxfPjGztQpSGLqGHk6WotTqqHIdD0TRXByh
+ aj1e9g/U1lhyS5CXtWTVrqXYP69IS9XwBoX5VSVqRDTZtuWF4ARm/iDbU3Je0c2FH39t
+ dMmA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9q1e7dvblr4V4OY2Y/Fy0W6RAlGlDkALRXePR19Yej7lijS2zZNMaGZYxl7ggkAlkxpYLPcK+fUYy6@nongnu.org
+X-Gm-Message-State: AOJu0YxJ4B6i+Yzjwpc89bKWT/39bttmJRHl5QU6GiwirNMMzTXg1BDP
+ vebuLCSw3wIEjw897OzGMVS8P/4RVA7yDlq4MMIqb2zxhSGfUuAyVWZNHVrfkwYfpq3IK9pa849
+ f4tVIGICdBRA6tWj2qrPVdc75kbnqXxlVyR05pmji9GHBYxdTGPAZxeWs4w==
+X-Gm-Gg: AeBDietkuuvGZ4j/hdGs2eo1MLiUiQmAdUzDDg1eVUEvtDQ9/xC2MimcyYzz8iiR7no
+ DhusovGh8OKGtCnBfGpAoPSXoskzg2+zeslRiYJz19sGWN0/3jYsismN181bZ9n8YbUAKj94ecY
+ nFOfRo2RlxlT51LmRAjsgvIwAcZ1QzaNrSGohJ+AOsnjY0l5tVakPvdfLzyiHz810ogShOs2q8G
+ DkMdhwOxFK59lRCyU7/FKsHkdOLmtFzTEqLxAShqgwog6Fl7qKYLl7NL5vgHQ0BudsLUdzfLNdd
+ AjNDCkOB5xjtJ5nWlEUJO8q0h7RT2h6ouVS+llvAEY+96QLLTatvnHe4WC4KLafS7XQ1WyU3Pss
+ V8SiUUOytnlqsG8pi1d4f4ClCYLtuBRIMgwnzNJ40TivoEWKlmB1G7D5SNKkoJ+JQpFTfmJ6Rni
+ /vrTROYhxsVn4C4VAAbUWg+Kj6
+X-Received: by 2002:a05:7300:f193:b0:2da:1874:f39c with SMTP id
+ 5a478bee46e88-2e4657728eamr23400704eec.12.1777306674085; 
+ Mon, 27 Apr 2026 09:17:54 -0700 (PDT)
+X-Received: by 2002:a05:7300:f193:b0:2da:1874:f39c with SMTP id
+ 5a478bee46e88-2e4657728eamr23400675eec.12.1777306673505; 
+ Mon, 27 Apr 2026 09:17:53 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2e53ccd2564sm44901550eec.18.2026.04.27.09.17.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Apr 2026 09:17:52 -0700 (PDT)
+Message-ID: <6f68014b-e3b5-41e7-9474-b2964661d19e@oss.qualcomm.com>
+Date: Mon, 27 Apr 2026 09:17:51 -0700
 MIME-Version: 1.0
-References: <20260427150007.1185559-1-peter.maydell@linaro.org>
- <87h5owif7q.fsf@suse.de>
-In-Reply-To: <87h5owif7q.fsf@suse.de>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Apr 2026 17:13:16 +0100
-X-Gm-Features: AVHnY4LnMuPaZ2cQo4-Cla25bzhKWXe21xdvaeuwhoAEVfbcT95iyd3r9zicUVE
-Message-ID: <CAFEAcA9PeZpe7KbFpxKStR01Nk4TMZ-JWm37xtB4EeQPqKdMvQ@mail.gmail.com>
-Subject: Re: [PATCH] tests/qtest: Make qtest_get_arch() cleverer
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] docs: Document TIMEOUT_MULTIPLIER for raising test
+ timeouts
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260427161132.1463385-1-peter.maydell@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260427161132.1463385-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI3MDE3MyBTYWx0ZWRfXziEncVrlMCs/
+ Izfr6wBxCYaSYBKJHRTwCVYDVmXkowIyeaK87Y+GQ9w+25ObU3e89lRjifY2RXnd3OdBpQnlDue
+ jk2IO4SFz34why6s1KKaZ2rN7Z/yuXCgpG7f/1l39WdGG3wko/lr9N5MTORKO+TeE7LJwKZkJet
+ 7vm8JsIK6diVPW+UwlbMyEsTN/sY0Y4tIzl0ZWvZKCk+nBZMbqMZVmBKoZFyG1+PbgUtxGiD1+X
+ FhzLBEQQExCbXxWIfjWmceO8733oL6TP5m8zrgAKk604T7YzJBuNFK3AuQ9h8aF+45KE3toMGL5
+ BIdLXW9G5D1ck4e2i6acs8fxuiait17FSabnDBPcZmSDNWd2NSVI+q8t9MSK5fFUoBSlll2MTQg
+ bq2jTJWwkGSUP6BTPHv/x1HRm1BzyVBEDoG2x0g0HZfjea/YX6mhxgMjqOzIkD0RICVLSshxqtp
+ PsBOpeqqONAFM6WUeqw==
+X-Proofpoint-GUID: Yw2I9nE0wp-kI9SrntsdseAQdqJ-nHDo
+X-Authority-Analysis: v=2.4 cv=efANubEH c=1 sm=1 tr=0 ts=69ef8c32 cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=vZyKO-s3KdCvBMF30bkA:9 a=QEXdDO2ut3YA:10
+ a=6Ab_bkdmUrQuMsNx7PHu:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: Yw2I9nE0wp-kI9SrntsdseAQdqJ-nHDo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-27_04,2026-04-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 malwarescore=0 adultscore=0 bulkscore=0 clxscore=1015
+ priorityscore=1501 lowpriorityscore=0 spamscore=0 phishscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2604270173
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,61 +154,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 27 Apr 2026 at 16:40, Fabiano Rosas <farosas@suse.de> wrote:
->
-> Peter Maydell <peter.maydell@linaro.org> writes:
->
-> > The qtest_get_arch() function tries to determine the architecture
-> > under test by extracting it from the binary name as provided in
-> > QTEST_QEMU_BINARY.  The current logic finds the last '-' in the
-> > string and assumes everything beyond it is the architecture name.
-> > Although we also look for the substring "-system-", the only effect
-> > this check has is that we will exit with an error if it is not
-> > present.
-> >
-> > Because the logic at the moment is very simplistic, although
-> > it is possible to provide more complex commands than a bare
-> > QEMU binary path, such as:
-> >   QTEST_QEMU_BINARY='rr record ./qemu-system-x86_64'
-> > it is not possible to provide extra arguments to QEMU, such as:
-> >   QTEST_QEMU_BINARY='./qemu-system-x86_64 -d trace:foo'
-> >
-> > Because the "-system-" check and the "find the architecture" check
-> > are not the same, the latter example will pass the "we found
-> > -system-" check and not notice that the "architecture name" it has
-> > found starts further on in the string; so rather than printing an
-> > error it will return "d trace:foo" to the test.
-> >
-> > Improve the "find the architecture name" logic to look for the
-> > rightmost occurrence of the substring "-system-" in
-> > QTEST_QEMU_BINARY, and take the architecture name as starting there
-> > and continuing until the first whitespace character or the end of the
-> > string.
-> >
-> > Because we now need to potentially modify the environment variable
-> > string to terminate the architecture name if it is not the last part
-> > of the string, we make a copy of it which we cache in a static
-> > variable.  This lets us avoid having to modify all the callers to get
-> > them to take ownership of the returned string.
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> > I wanted to be able to pass trace arguments to a QEMU to help
-> > debug a failing test; in the past I've done this by writing
-> > a little wrapper shell script with the right shaped name, but
-> > we can do better than that.
-> >
->
-> There's QTEST_TRACE which can inject any command line option if you give
-> it a tracepoint name as first string:
->
-> QTEST_TRACE="cpu_reset -d guest_errors"
->
-> Maybe we should just rename it to QTEST_QEMU_ARGS.
+On 4/27/2026 9:11 AM, Peter Maydell wrote:
+> Our test infrastructure allows you to set the TIMEOUT_MULTIPLIER
+> environment variable to raise the test timeouts if you're building
+> for a slow environment.  (scripts/mtest2make.py reads it and sets the
+> meson test -t argument accordingly.)
+> 
+> Document this so it's not a secret feature only known to a select
+> few.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>  docs/devel/testing/main.rst | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
+> 
 
-That might also be useful. It would also be good to document
-all these environment variables that you can use to help
-in debugging qtests...
-
--- PMM
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
