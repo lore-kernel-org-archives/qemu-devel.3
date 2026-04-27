@@ -4,111 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFA21FF8860
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 03:22:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8892DFF8850
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 04:24:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHCXa-0003Tq-Dw; Sun, 26 Apr 2026 23:21:46 -0400
+	id 1wHDV8-0001El-V3; Mon, 27 Apr 2026 00:23:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <GuoQing.Zhang@amd.com>)
- id 1wHCXZ-0003Tf-0b
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 23:21:45 -0400
-Received: from mail-southcentralusazon11013017.outbound.protection.outlook.com
- ([40.93.196.17] helo=SA9PR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1wHDV1-0001EV-DQ
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 00:23:11 -0400
+Received: from mail-francesouthazon11011015.outbound.protection.outlook.com
+ ([40.107.130.15] helo=MRWPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <GuoQing.Zhang@amd.com>)
- id 1wHCXW-0003S4-3h
- for qemu-devel@nongnu.org; Sun, 26 Apr 2026 23:21:44 -0400
+ (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
+ id 1wHDUx-0004zr-7b
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 00:23:10 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Qh+vJeg82OTUUjq/TEELZ9/VxF6QdD9O8tJSwVTV3MjHBnnFGrrExw2f0YYsLkIOusBmRgsbkHuPYNf/chqAy9lHJ6TE/ra9/A4uvQestGy7dPoQWh4Or4Cq0z7nNjTXTRs/pRa9Rf0vUa+QEu3NnYyoRwYrEFXFv5MYmjD5y+VHhG6uBzuATJubGr5mDvt+AAxFHU4KfqE+LII5O8KHEUfYBIzVstBNz5NWupMS2lAYfzd3tMDHvc/AK3b97MzJiVRu8HAsXQyLEBm1RFUwu70sCL7049LzZc9YNbz9jHXDzV4QUUKV3JkykxkYXmLhkwX9IM/mgeyziZpp6AyLyg==
+ b=ZviuG3PAtP9mxb+IJdZgbxZ0cCKQqmZog23elEUhDlXX7mIQD5DmaSICzLO9DaUiZZxUrfNr9Gur0Gg2cyC033PN/Cp2CYlacWsbnWnTcEICKSGiZjkJYeC8eq2tSLyDp4EGAQlyHYqhBFf2dYSsCLaaYyjyUKJINtQBHdFWpUv0K1o/99bnz+dbD3awgGI82n7mmA57mNxUga8yYUfiyGMY0eWGOHpExTTUbggf3IGnP+DAa93vVGTYFmszh8Y3chWJDVopgMKaeE7jISMyS3c/gn8lCsZJ6d37aManU20t6u0+i60kLiL5ggpUeTgIz49dINUJ1X40ujCC89g50Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xK4/U1wonv8NwcCk2ZxERMYzXMogYau6I52CiDvpNvo=;
- b=VUS1WfAq4WGjYWloqz1Dqyjt46107pSBh24Zz5oyg5KiRuP5AIc1KBZYeOHKH3ibzDdFaQFyashxc7UZSrh62M9J/kSZn/6GSE+DsDpJglp5VJTXudDIs5tq+ptOOyixhiYZJ7niEoZqvyko1hF/63YcLv179Lho9mimER1/aZDcUHjUP+X9cUQDgEXfGTmGjhYPvEc+MSfuPv3KMVeSbCULlHz5eNVAiOce2mW60BOmnh4iQ4+D4ewacz3XFeXlJl7MBqwQX1a6yJnhnpzv4G6kXP23lvdkJiRLEfUkIngWg/IIl/9FK0mqolIVn00GtolJPolI9mMqtDizTYTENg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ bh=bBgJkxOnLMN6MCXzUbZa7BkkTMFebTKax5+h/JJp8OM=;
+ b=tgCMo57ms1bSy2CdvsH668PlFoPnqlf7geifvDsyBDIIZjzzXFqjeTHnJQwu+XxEv5AOLokk5q0Izbp/kW9cld8NuFi50PjNnKrFVgRtJPVTOjBR1iZGH1598X/NTHAxn5VNnfkK4I+2qwlDKJy1tg94HeczgPtRZB9CnnTXeZmDM4Wrw+xbnYIwxOeB5u5b+0l9qrx5aZQtI05pg84NEDhxunTUmvES2ho5XQh4zWf+sLUJslqLYv47Co4FQRsZHFEsAfe9aYUIiSjba1DCiZBvtppQmX6t6G3Q38s+4oZArPAxwvyDpHABvK+nNwiPI0D5hO2M9sUep6r5xJTtiA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xK4/U1wonv8NwcCk2ZxERMYzXMogYau6I52CiDvpNvo=;
- b=PHCXvLAl+JtGu4hJiJadAGmZD8tUeG2vLQkkepwc0xtVknkt9tzbcAAIWG2IKsblhPMvVkUe6F3npev5ICIS7WtXOSs4F+J40WxZr9W/ufmHF9ztCT8I6DAM4r9rJTh456GSwDXf5mlqvtZ90f7rGcKWo6pX0/LBBwVSyhshHWY=
-Received: from DM6PR07CA0128.namprd07.prod.outlook.com (2603:10b6:5:330::20)
- by PH7PR12MB6953.namprd12.prod.outlook.com (2603:10b6:510:1ac::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.15; Mon, 27 Apr
- 2026 03:16:29 +0000
-Received: from DS3PEPF000099E2.namprd04.prod.outlook.com
- (2603:10b6:5:330:cafe::54) by DM6PR07CA0128.outlook.office365.com
- (2603:10b6:5:330::20) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9846.26 via Frontend Transport; Mon,
- 27 Apr 2026 03:16:29 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- DS3PEPF000099E2.mail.protection.outlook.com (10.167.17.201) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9846.18 via Frontend Transport; Mon, 27 Apr 2026 03:16:29 +0000
-Received: from hjbog-srdc-36.amd.com (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Sun, 26 Apr
- 2026 22:16:25 -0500
-From: Samuel Zhang <guoqing.zhang@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <peterx@redhat.com>, <farosas@suse.de>, <lizhijian@fujitsu.com>,
- <eblake@redhat.com>, <armbru@redhat.com>, <Emily.Deng@amd.com>,
- <Victor.Zhao@amd.com>, <PengJu.Zhou@amd.com>, <Qing.Ma@amd.com>, Samuel Zhang
- <guoqing.zhang@amd.com>
-Subject: [PATCH v6] migration/rdma: add x-rdma-chunk-size parameter
-Date: Mon, 27 Apr 2026 11:14:01 +0800
-Message-ID: <20260427031401.3895523-1-guoqing.zhang@amd.com>
-X-Mailer: git-send-email 2.43.7
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb08.amd.com (10.181.42.217) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS3PEPF000099E2:EE_|PH7PR12MB6953:EE_
-X-MS-Office365-Filtering-Correlation-Id: a407d563-f11b-4608-a316-08dea40b5fc2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700016|82310400026|376014|1800799024|56012099003|18002099003|13003099007;
-X-Microsoft-Antispam-Message-Info: yJHlwgzbXWBDL3er4/GQo2sw/iiTWO0nsBzyDvVKGVLHpf8QmYambMxwV85wyUEmSVwMhk5J9VMdCB37IsTEWAOB6URGjjgj2JjwONXPs3LHmdxk02F4ldbMddadoD7KyzYWUCHq/rg54osd4fOsdKc2GeKPCOtJh9FTODHo/J0pViyTRkFMGPMhkUQ5v8jIQ/iAapZEIdW8erUmSLRgrMmAgg2DSZCUyTRXcJ4GG/7DakbUdqeAuOA/wjflYNCBc6yUB5cPzzJ538lSdIfRkCrZi10ATE0N07uJ/0cg3hexUZRD716kjBAxQVE5ENe1YyR10Ixzij19J8fpff2toQVrmm3NE08Ff4yUpSTHaEXTPfpIWPTRkz0RQ4oR9XByH0JcaGkOE/rGmFx5OE87L263kwc7/ed5u+tyO0gt9JL/LCrY6FW6YnZ+OmzNhTzRTtLQwKe+Rw0JmOYWVv9fa86Wnu+vI1Jx758/tuKxFH0dLHW2pSGT2rGljtTeFjw3vRmMcDoC33c5eQh8tacUhh7FvQ2yXcYdbUfmYzN/OX/JUUa//Jme+wTc6SOZhlXf0nUA6qPjHft74LCmo+NCZ7PR3J3D/iMgdnRmMnm+ekBWCL6edxVLNwF0FZi1apa5f9s+0U9ynd0PXcZKP02kW4CRC8JuW5NmUpZA61sLSV79RcNC68c/8C/T0Q9etTAnaDFE1zU210NxEKev9yQybJg1M9deisH29a0FeCDdVXrgbBcvfKUobMQmDjgrJP+Sy5oJr2qs93br32j82KiZFA==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700016)(82310400026)(376014)(1800799024)(56012099003)(18002099003)(13003099007);
+ bh=bBgJkxOnLMN6MCXzUbZa7BkkTMFebTKax5+h/JJp8OM=;
+ b=dx6DpqBrb1Yx3ySFYlYFUgpS064U162CV06jEBms9pTAwfik5zocU26G6PQraA0fabThmJMeRnLwHJ3EX6gbjvSWdk4z8AdpgpR+KNaw+i/wYJgQah79NBmaAF+yP4fYX33UvTVBYPBxWh6sc17xm+Mh14Q5sigGpRhfIFwKSYjHCoDVtGuDY3WBqsplaKM/Q4LWjPmZ7sx7VkaHlxt+Go3htC0Ri5vYv4Hy2DGV4lfurWO56YZ5jgStn5Odwb1tPyEZKE0sUbyM0su+0Sd8nPtDKJX4gmPlFXz4oMeXrCFVMf1GpozB6dOGV/RypUHkxmBL8Oj/1Rt7mIb/WCg0lQ==
+Received: from AM0PR04MB4370.eurprd04.prod.outlook.com (2603:10a6:208:6e::32)
+ by AS8PR04MB8360.eurprd04.prod.outlook.com (2603:10a6:20b:3f4::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.15; Mon, 27 Apr
+ 2026 04:17:58 +0000
+Received: from AM0PR04MB4370.eurprd04.prod.outlook.com
+ ([fe80::fe3b:fb2c:9dfc:9b]) by AM0PR04MB4370.eurprd04.prod.outlook.com
+ ([fe80::fe3b:fb2c:9dfc:9b%6]) with mapi id 15.20.9745.035; Mon, 27 Apr 2026
+ 04:17:57 +0000
+From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+To: Gaurav Sharma <gaurav.sharma_7@nxp.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, Bernhard Beschow <shentey@gmail.com>
+CC: "pbonzini@redhat.com" <pbonzini@redhat.com>
+Subject: RE: [PATCHv7 00/15] Adding comprehensive support for i.MX8MM EVK board
+Thread-Topic: [PATCHv7 00/15] Adding comprehensive support for i.MX8MM EVK
+ board
+Thread-Index: AQHc0VtupKxiji9OA0+gLy63hk7YgLXyVqXg
+Date: Mon, 27 Apr 2026 04:17:57 +0000
+Message-ID: <AM0PR04MB43707B320EA73EEB1BFDA54787362@AM0PR04MB4370.eurprd04.prod.outlook.com>
+References: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
+In-Reply-To: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-Mentions: peter.maydell@linaro.org,shentey@gmail.com
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: AM0PR04MB4370:EE_|AS8PR04MB8360:EE_
+x-ms-office365-filtering-correlation-id: a11fd9fd-0ab6-4ba8-6661-08dea413f66f
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|19092799006|376014|1800799024|366016|38070700021|56012099003|22082099003|18002099003;
+x-microsoft-antispam-message-info: 4n3T4XJrlWV281CTYRuYRIygcYGq1Q5WCqPsgwXcj7SOPFUAxa9olk9+KaFMvo083R7oKUQiTTWS/GZKk2A+VxsgcwkwqppeafIoyuetC+XKk7hpXQXoNU+PKh4QThKCWMJXOrkhTrsDCHgdiZ/juIU4IujL+NkqqoVGCkpA7BlmaFfd/xa4v7OAKlS1cEeO044XlVqCy0iIUD3eE2NTJflhPE5bcQMh5WVImjbmidB2hukWQH0HFm2+O+9HMpZyYfXqeAUww+QoHckwnihoMGiGRGTadDIA9aB/Hl0v1HAR6/QQJoKp4eul/2GytCK7ydpS3o9GkhwGC8rL295YTacxqY671nCEnAkBrx3AmlMXFBc7zYsQLSw5d8qqFfsIZxACsRoKgn+xZwem3apbgjcIOgSlxRWcUg9mbYanE6e4LQVPYSsxtWwk9KyN7NLw+ktXXarDKv6KBkMs+mIpjwDoIHiSgmJdZd2uuQSApJHd7S/+MPxXRyMGuut6ZCuQhxUcTfrbh7B92A6YQh75GMtgEDYcPQ+SCqSZ9gyKyuuK/OTxx9yG3ol+h55SNGs6Yd7Skt683stEVt/5XvWh0ehrXVAzXYyug3DjG8Z6d3ojwlqFnWtE0Pl2bYmg/G+MjlcZXyS1Vk+cELHpX8cmf27KqABBVoaT6RemMr06aJgMnQ7RbjNjT/h5RvtgvqVFQxXOcJ7HSbzTBwPKJx60zEEZyTdykEchbdvmt4SpkCJKHMeIIQ8TAjM53ijuunxXWBuN9nqdQx2lzRiXM/wOwk3bU+zMuSqM3aWGsFomH+Y=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM0PR04MB4370.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(19092799006)(376014)(1800799024)(366016)(38070700021)(56012099003)(22082099003)(18002099003);
  DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: Yx7Jsyp0a4DnfVC0VUS1pSVXyICJJCAlF3ZVlCvLObr3u9wtQZNygn66FRErqBuJFpacrce9SLKxCC/1qLDQIJja/2ZUQ4Cve1Q8xIjt8WfdbjVTRqZ3/kdFZ8mFhkvt1MMlSz4yc3F6NgEW+XsUjXErfL9wQXQPoqEw1FN/q+3cNGbxDHS/1wP60UO7N77B6SCS71PCv5uO6UUkfz1WTAFTSAb0f3yle8b5ZHQkOzFS7sWZATjNM3FL3bu40Oo2ykJ+PZsV2qSUF9Na5lnqL34K0E++8B6KfPVVQgavtJF27UxeqR3wAVhrv7Yx49ta+rZWWiScow/saObn7jwWgWklrCmM2Y181dLG6JYVRF6rI7A+mfuxOr0DyuAGIlFppkno/hHn0s21hTmEedFQOctv9sjz7sTOvUUd1lZ5Lsnhd8fq4EHeFW82gTOglddf
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Apr 2026 03:16:29.0823 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a407d563-f11b-4608-a316-08dea40b5fc2
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF000099E2.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB6953
-Received-SPF: permerror client-ip=40.93.196.17;
- envelope-from=GuoQing.Zhang@amd.com;
- helo=SA9PR02CU001.outbound.protection.outlook.com
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?jZNdbYanyXPErt49JQwev38LQ2XoKgF7L3jshno0h1+xu/XUow9OkVOM8wty?=
+ =?us-ascii?Q?LkHrOlk8ZgohVMNCvtkm5a0BdGmn/1ceqImfzZuPu06iFF7LKUUIWqmbH8ac?=
+ =?us-ascii?Q?12WLUfCzLViIVeThBkzcmvEXVvEln7ZV2EIwcbrv5uMkKhWTZKoBhh/opQam?=
+ =?us-ascii?Q?RJrsVbk3g4ZwjndIqwYPzOPo9zy68yxNQ58KUkK6J9HiXZVDgTi/5zS/qmPF?=
+ =?us-ascii?Q?1xUABWmgRXvKPcwRRumrInFkdukMScpwaBV0oydY+F5FAHtNWGtY6220XpWY?=
+ =?us-ascii?Q?b3Ca+uK5HO1bzPjwPkAqejgd2Kl4wncZKB13JfyCY3UYpYG6+DJqTkqCYvvN?=
+ =?us-ascii?Q?ZyNPRbnBNpDzsFtYNU/Up+hn+wz67/vps9fxM/Kg0nq1SWr05nWlDc/Y8z8J?=
+ =?us-ascii?Q?db+w3CsS4dw38UbEj5ZSjzHxlXLDHCwImfwhXCTSNH6vnhwNX+jgJhLL8EoQ?=
+ =?us-ascii?Q?KbsthrhwNmKhu4kZVA9GxTrGtnt2GqKGOCj1I2kCVcPtfN1V27j/R97d6wH0?=
+ =?us-ascii?Q?4Q8DCBfpm4qtTXLjtwo6KC8mCghj+ReV508onyoupBqLM8Ze1sRccN9XV/G5?=
+ =?us-ascii?Q?4ZgpqXb8A+47DZ8dyD0H49tYGnTUV0LxQoToWpyNij5OJOKEGqWs8J8q6ml1?=
+ =?us-ascii?Q?3KdEEbce2gjIQDzKAkixuFCQLAR/JKyPGy/nX33FWsyotB4sqdbz1CbBU/YG?=
+ =?us-ascii?Q?6VqSX8uOPtUCTVxws5fALBtCL349vLRPf3j+QNBo9MaKTgNfS1A1t2sYcskQ?=
+ =?us-ascii?Q?llkph2XShiJRzcR9FCRZQ3uENtAFO9K5F3+AoD/w2InYKmyIk41A2c4edM5o?=
+ =?us-ascii?Q?dzUy87W7c2X3m2u2Cj+W6AspkpM7Rmu+G2nbDTIyRbaVePFwWpQTEa0rNAva?=
+ =?us-ascii?Q?AXNSKpNgC0S4HxDRbieIe1KEDpzHrraU51r4X4Ub6L0CVLTLFF29UKY2y4vb?=
+ =?us-ascii?Q?AXqtvQn/M9bY6QnXXqc3CpSa5tJuWAwPieRsKgm3wWfxy75nIlgsF+lUhgMN?=
+ =?us-ascii?Q?bTg32rYjbBMSva4W2f5w0v/dfjgm5fcU5XjeAKF+/nIsZxgf5Srv5JLDGu2P?=
+ =?us-ascii?Q?3wTkEyv+9bTk1ISpfmrXJhuuTcQLAgCxFMbuVi6wczIYGTiPqza9v5Ypnc0Y?=
+ =?us-ascii?Q?Z69CLy/6cza339tcUDWwWWhN1Z2GUoIGWcvKOVHp40Jijmx6wjmJgMSLAVd6?=
+ =?us-ascii?Q?iTdo/54TncFKJEnyUC5cR3/HvbpH+NqsbhhPOBefkzN6AX/cl1EVb/t+yyfM?=
+ =?us-ascii?Q?kpkg5iBh2WVimVQA78paz2XDwpjO9iduu/DnKRXJLCLweTcPmiALCQ882max?=
+ =?us-ascii?Q?rIYCzsdHU263QkAWAgnipp2U+LSdSMW5lQr1UpPyEALMOVlgrp4N6k5vWwE+?=
+ =?us-ascii?Q?MKSjRoFSEPmBMX8y2186xk6Gbdgk7kSHlLJBbmz1lD+x65r3QZO0rGOAs8Ic?=
+ =?us-ascii?Q?UMIQl5plZBEQ1+ap5LE1x+/rPwDrKxTrVjS1OTgu+GSTFCkSTk0o1/NsxCdn?=
+ =?us-ascii?Q?7TbjiRfQOwfeV6MTTXBL/qejuWmcCpkB9UJOHhE2J8Tp38UoQXMPoqDo5hML?=
+ =?us-ascii?Q?E3T/X4BWkKd5aMrLA4iBiNImJwTWyFLtCxfTQ05u1SeHF+IK9inCwScJESMl?=
+ =?us-ascii?Q?SARelv74JvFi4YN0F3nbQEGh5NheJxgxqzBZWCHpc3seplgUPQy7zbmVHcfi?=
+ =?us-ascii?Q?csNsFxfuhOrpp66tuVRjukNMFjLLJq30yfMQaa/z4boN5DNKYKieI3Jma8Gr?=
+ =?us-ascii?Q?K9GiMWEROg=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB4370.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a11fd9fd-0ab6-4ba8-6661-08dea413f66f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Apr 2026 04:17:57.8664 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: RbPLjuESKBslQIsIWJRWBdW6wRTeKu0ZoMXbh9J1w0FwzExCfiVCdXf00ybJ9CmW7p4Fjz/mcKsQ9tnJCnRT9Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8360
+Received-SPF: pass client-ip=40.107.130.15;
+ envelope-from=gaurav.sharma_7@nxp.com;
+ helo=MRWPR03CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -126,338 +145,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The default 1MB RDMA chunk size causes slow live migration because
-each chunk triggers a write_flush (ibv_post_send). For 8GB RAM,
-1MB chunk size produces ~15000 flushes vs ~3700 with 1024MB chunk size.
+Hi @peter.maydell@linaro.org, @Bernhard Beschow Is this patch series good t=
+o mainline ?
 
-Add x-rdma-chunk-size parameter to configure the RDMA chunk size for
-faster migration.
-Usage: `migrate_set_parameter x-rdma-chunk-size 1024M`
-
-Performance with RDMA live migration of 8GB RAM VM:
-
-| x-rdma-chunk-size (B) | time (s) | throughput (MB/s) |
-|-----------------------|----------|-------------------|
-| 1M (default)          | 37.915   |  1,007            |
-| 32M                   | 17.880   |  2,260            |
-| 1024M                 |  4.368   | 17,529            |
-
-Signed-off-by: Samuel Zhang <guoqing.zhang@amd.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
-Acked-by: Li Zhijian <lizhijian@fujitsu.com>
-Tested-by: Li Zhijian <lizhijian@fujitsu.com>
-Acked-by: Fabiano Rosas <farosas@suse.de>
-Acked-by: Peter Xu <peterx@redhat.com>
----
-v2:
-- Renamed x-rdma-chunk-shift to x-rdma-chunk-size (byte count)
-- Added validation in migrate_params_check()
-- Added hmp_migrate_set_parameter() support
-- Added hmp_info_migrate_parameters() support
-- Added migrate_mark_all_params_present()
-- Use qemu_strtosz() for size suffix support
-v3: [Markus]
-- Use visit_type_size() in HMP set parameter
-- Use MiB/GiB constants
-v4: [Markus]
-- Remove superfluous comment on DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE
-- Use "Only applies when migrating via RDMA" in QAPI doc
-v5:
-- Document that x-rdma-chunk-size must be set to the same value on both
-  source and destination before migration starts
-- Add Acked-by and Tested-by from Li Zhijian
-v6:
-- Add Acked-by from Peter Xu and Fabiano Rosas
-- Rebase to https://gitlab.com/peterx/qemu/-/tree/next
-
- migration/migration-hmp-cmds.c | 11 +++++++++++
- migration/options.c            | 33 ++++++++++++++++++++++++++++++++-
- migration/options.h            |  1 +
- migration/rdma.c               | 30 ++++++++++++++++--------------
- qapi/migration.json            | 13 +++++++++++--
- 5 files changed, 71 insertions(+), 17 deletions(-)
-
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 0a193b8f54..4f6c1dbf89 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -451,6 +451,13 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
-                            params->direct_io ? "on" : "off");
-         }
- 
-+        if (params->has_x_rdma_chunk_size) {
-+            monitor_printf(mon, "%s: %" PRIu64 " bytes\n",
-+                           MigrationParameter_str(
-+                               MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE),
-+                           params->x_rdma_chunk_size);
-+        }
-+
-         assert(params->has_cpr_exec_command);
-         monitor_print_cpr_exec_command(mon, params->cpr_exec_command);
-     }
-@@ -734,6 +741,10 @@ void hmp_migrate_set_parameter(Monitor *mon, const QDict *qdict)
-         p->has_direct_io = true;
-         visit_type_bool(v, param, &p->direct_io, &err);
-         break;
-+    case MIGRATION_PARAMETER_X_RDMA_CHUNK_SIZE:
-+        p->has_x_rdma_chunk_size = true;
-+        visit_type_size(v, param, &p->x_rdma_chunk_size, &err);
-+        break;
-     case MIGRATION_PARAMETER_CPR_EXEC_COMMAND: {
-         /*
-          * NOTE: g_autofree will only auto g_free() the strv array when
-diff --git a/migration/options.c b/migration/options.c
-index 68441f0276..5cbfd29099 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -13,6 +13,7 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
-+#include "qemu/units.h"
- #include "exec/target_page.h"
- #include "qapi/clone-visitor.h"
- #include "qapi/error.h"
-@@ -90,6 +91,7 @@ const PropertyInfo qdev_prop_StrOrNull;
- 
- #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT_PERIOD     1000    /* milliseconds */
- #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT            1       /* MB/s */
-+#define DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE           MiB
- 
- const Property migration_properties[] = {
-     DEFINE_PROP_BOOL("store-global-state", MigrationState,
-@@ -183,6 +185,9 @@ const Property migration_properties[] = {
-     DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationState,
-                        parameters.zero_page_detection,
-                        ZERO_PAGE_DETECTION_MULTIFD),
-+    DEFINE_PROP_UINT64("x-rdma-chunk-size", MigrationState,
-+                      parameters.x_rdma_chunk_size,
-+                      DEFAULT_MIGRATE_X_RDMA_CHUNK_SIZE),
- 
-     /* Migration capabilities */
-     DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
-@@ -1000,6 +1005,15 @@ ZeroPageDetection migrate_zero_page_detection(void)
-     return s->parameters.zero_page_detection;
- }
- 
-+uint64_t migrate_rdma_chunk_size(void)
-+{
-+    MigrationState *s = migrate_get_current();
-+    uint64_t size = s->parameters.x_rdma_chunk_size;
-+
-+    assert(MiB <= size && size <= GiB && is_power_of_2(size));
-+    return size;
-+}
-+
- /* parameters helpers */
- 
- AnnounceParameters *migrate_announce_params(void)
-@@ -1062,7 +1076,7 @@ static void migrate_mark_all_params_present(MigrationParameters *p)
-         &p->has_announce_step, &p->has_block_bitmap_mapping,
-         &p->has_x_vcpu_dirty_limit_period, &p->has_vcpu_dirty_limit,
-         &p->has_mode, &p->has_zero_page_detection, &p->has_direct_io,
--        &p->has_cpr_exec_command,
-+        &p->has_x_rdma_chunk_size, &p->has_cpr_exec_command,
-     };
- 
-     len = ARRAY_SIZE(has_fields);
-@@ -1273,6 +1287,15 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
-         return false;
-     }
- 
-+    if (params->has_x_rdma_chunk_size &&
-+        (params->x_rdma_chunk_size < MiB ||
-+         params->x_rdma_chunk_size > GiB ||
-+         !is_power_of_2(params->x_rdma_chunk_size))) {
-+        error_setg(errp, "Option x_rdma_chunk_size expects "
-+                   "a power of 2 in the range 1MiB to 1024MiB");
-+        return false;
-+    }
-+
-     return true;
- }
- 
-@@ -1393,6 +1416,10 @@ static void migrate_params_test_apply(MigrationParameters *params,
-         dest->direct_io = params->direct_io;
-     }
- 
-+    if (params->has_x_rdma_chunk_size) {
-+        dest->x_rdma_chunk_size = params->x_rdma_chunk_size;
-+    }
-+
-     if (params->has_cpr_exec_command) {
-         qapi_free_strList(dest->cpr_exec_command);
-         dest->cpr_exec_command = QAPI_CLONE(strList, params->cpr_exec_command);
-@@ -1520,6 +1547,10 @@ static void migrate_params_apply(MigrationParameters *params)
-         s->parameters.direct_io = params->direct_io;
-     }
- 
-+    if (params->has_x_rdma_chunk_size) {
-+        s->parameters.x_rdma_chunk_size = params->x_rdma_chunk_size;
-+    }
-+
-     if (params->has_cpr_exec_command) {
-         qapi_free_strList(s->parameters.cpr_exec_command);
-         s->parameters.cpr_exec_command =
-diff --git a/migration/options.h b/migration/options.h
-index b502871097..b46221998a 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -87,6 +87,7 @@ const char *migrate_tls_creds(void);
- const char *migrate_tls_hostname(void);
- uint64_t migrate_xbzrle_cache_size(void);
- ZeroPageDetection migrate_zero_page_detection(void);
-+uint64_t migrate_rdma_chunk_size(void);
- 
- /* parameters helpers */
- 
-diff --git a/migration/rdma.c b/migration/rdma.c
-index 55ab85650a..3e37a1d440 100644
---- a/migration/rdma.c
-+++ b/migration/rdma.c
-@@ -45,10 +45,12 @@
- #define RDMA_RESOLVE_TIMEOUT_MS 10000
- 
- /* Do not merge data if larger than this. */
--#define RDMA_MERGE_MAX (2 * 1024 * 1024)
--#define RDMA_SIGNALED_SEND_MAX (RDMA_MERGE_MAX / 4096)
-+static inline uint64_t rdma_merge_max(void)
-+{
-+    return migrate_rdma_chunk_size() * 2;
-+}
- 
--#define RDMA_REG_CHUNK_SHIFT 20 /* 1 MB */
-+#define RDMA_SIGNALED_SEND_MAX 512
- 
- /*
-  * This is only for non-live state being migrated.
-@@ -527,21 +529,21 @@ static int qemu_rdma_exchange_send(RDMAContext *rdma, RDMAControlHeader *head,
- static inline uint64_t ram_chunk_index(const uint8_t *start,
-                                        const uint8_t *host)
- {
--    return ((uintptr_t) host - (uintptr_t) start) >> RDMA_REG_CHUNK_SHIFT;
-+    return ((uintptr_t) host - (uintptr_t) start) / migrate_rdma_chunk_size();
- }
- 
- static inline uint8_t *ram_chunk_start(const RDMALocalBlock *rdma_ram_block,
-                                        uint64_t i)
- {
-     return (uint8_t *)(uintptr_t)(rdma_ram_block->local_host_addr +
--                                  (i << RDMA_REG_CHUNK_SHIFT));
-+                                  (i * migrate_rdma_chunk_size()));
- }
- 
- static inline uint8_t *ram_chunk_end(const RDMALocalBlock *rdma_ram_block,
-                                      uint64_t i)
- {
-     uint8_t *result = ram_chunk_start(rdma_ram_block, i) +
--                                         (1UL << RDMA_REG_CHUNK_SHIFT);
-+                                         migrate_rdma_chunk_size();
- 
-     if (result > (rdma_ram_block->local_host_addr + rdma_ram_block->length)) {
-         result = rdma_ram_block->local_host_addr + rdma_ram_block->length;
-@@ -1841,6 +1843,7 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
-     struct ibv_send_wr *bad_wr;
-     int reg_result_idx, ret, count = 0;
-     uint64_t chunk, chunks;
-+    uint64_t chunk_size = migrate_rdma_chunk_size();
-     uint8_t *chunk_start, *chunk_end;
-     RDMALocalBlock *block = &(rdma->local_ram_blocks.block[current_index]);
-     RDMARegister reg;
-@@ -1861,22 +1864,21 @@ retry:
-     chunk_start = ram_chunk_start(block, chunk);
- 
-     if (block->is_ram_block) {
--        chunks = length / (1UL << RDMA_REG_CHUNK_SHIFT);
-+        chunks = length / chunk_size;
- 
--        if (chunks && ((length % (1UL << RDMA_REG_CHUNK_SHIFT)) == 0)) {
-+        if (chunks && ((length % chunk_size) == 0)) {
-             chunks--;
-         }
-     } else {
--        chunks = block->length / (1UL << RDMA_REG_CHUNK_SHIFT);
-+        chunks = block->length / chunk_size;
- 
--        if (chunks && ((block->length % (1UL << RDMA_REG_CHUNK_SHIFT)) == 0)) {
-+        if (chunks && ((block->length % chunk_size) == 0)) {
-             chunks--;
-         }
-     }
- 
-     trace_qemu_rdma_write_one_top(chunks + 1,
--                                  (chunks + 1) *
--                                  (1UL << RDMA_REG_CHUNK_SHIFT) / 1024 / 1024);
-+                                  (chunks + 1) * chunk_size / 1024 / 1024);
- 
-     chunk_end = ram_chunk_end(block, chunk + chunks);
- 
-@@ -2176,7 +2178,7 @@ static int qemu_rdma_write(RDMAContext *rdma,
-     rdma->current_length += len;
- 
-     /* flush it if buffer is too large */
--    if (rdma->current_length >= RDMA_MERGE_MAX) {
-+    if (rdma->current_length >= rdma_merge_max()) {
-         return qemu_rdma_write_flush(rdma, errp);
-     }
- 
-@@ -3522,7 +3524,7 @@ int rdma_registration_handle(QEMUFile *f)
-                 } else {
-                     chunk = reg->key.chunk;
-                     host_addr = block->local_host_addr +
--                        (reg->key.chunk * (1UL << RDMA_REG_CHUNK_SHIFT));
-+                        (reg->key.chunk * migrate_rdma_chunk_size());
-                     /* Check for particularly bad chunk value */
-                     if (host_addr < (void *)block->local_host_addr) {
-                         error_report("rdma: bad chunk for block %s"
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 7134d4ce47..0db115ec5e 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -806,7 +806,7 @@
- #
- # Features:
- #
--# @unstable: Members @x-checkpoint-delay and
-+# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
- #     @x-vcpu-dirty-limit-period are experimental.
- #
- # Since: 2.4
-@@ -831,6 +831,7 @@
-            'mode',
-            'zero-page-detection',
-            'direct-io',
-+           { 'name': 'x-rdma-chunk-size', 'features': [ 'unstable' ] },
-            'cpr-exec-command'] }
- 
- ##
-@@ -1007,9 +1008,15 @@
- #     is @cpr-exec.  The first list element is the program's filename,
- #     the remainder its arguments.  (Since 10.2)
- #
-+# @x-rdma-chunk-size: RDMA memory registration chunk size in bytes.
-+#     Default is 1MiB.  Must be a power of 2 in the range
-+#     [1MiB, 1024MiB].  Only applies when migrating via RDMA.
-+#     Must be set to the same value on both source and destination
-+#     before migration starts.  (Since 11.1)
-+#
- # Features:
- #
--# @unstable: Members @x-checkpoint-delay and
-+# @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-size, and
- #     @x-vcpu-dirty-limit-period are experimental.
- #
- # Since: 2.4
-@@ -1046,6 +1053,8 @@
-             '*mode': 'MigMode',
-             '*zero-page-detection': 'ZeroPageDetection',
-             '*direct-io': 'bool',
-+            '*x-rdma-chunk-size': { 'type': 'uint64',
-+                                    'features': [ 'unstable' ] },
-             '*cpr-exec-command': [ 'str' ]} }
- 
- ##
--- 
-2.43.7
+> -----Original Message-----
+> From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> Sent: 21 April 2026 12:22
+> To: qemu-devel@nongnu.org
+> Cc: pbonzini@redhat.com; peter.maydell@linaro.org; Gaurav Sharma
+> <gaurav.sharma_7@nxp.com>; Bernhard Beschow <shentey@gmail.com>
+> Subject: [PATCHv7 00/15] Adding comprehensive support for i.MX8MM EVK
+> board
+>=20
+> Changes in v7:
+> - Fixed an incorrect indentation in patch 0012
+>=20
+> Changes in v6:
+> - Fixed checkpatch errors
+> - Moved maintainer entry of test_imx8mm_evk.py to the patch 0015
+> - Renamed imx8mp-evk.rst document name to imx8m.rst
+> - Fixed warnings that are generated while building documentation
+>=20
+> Changes in v5:
+> - Fixed SoC object reference counting by using object_new_with_props()
+>   instead of object_new() + object_property_add_child()
+> - Merged imx8mm-evk.rst documentation into imx8mp-evk.rst to avoid
+>   duplication and updated the title accordingly
+> - Added on-chip RAM (OCRAM) support to match iMX8MP dev
+>=20
+> Changes in v4:
+> - Update Maintainers file
+> - Re-used iMX8MP CCM and Analog IP for iMX8MM by introducing a variant
+>   specific property
+> - Split up the patch that enabled CCM and Analog in the previous
+>   revision. Now we have 3 patches to enable CCM and Analog in iMX8MM
+> - Updated copyrights
+> - Removed '|| KVM' from hw/arm/Kconfig to prevent 'make check' failures
+>=20
+> Changes in v3:
+> - Minor documentation change - Added KVM Acceleration section in
+> docs/system/arm/imx8mm-evk.rst
+>=20
+> Changes in v2:
+> - Fixed the DTB offset in functional testing script test_imx8mm_evk.py
+>   and preserved alphabetical order of machine names in
+> tests/functional/aarch64/meson.build
+> - Fixed a typo and updated the documentation
+> - Modified structures type to static const in fsl-imx8mm.c wherever
+>   applicable.
+> - Added CSI and DSI nodes to the nodes_to_remove list in imx8mm-evk.c.
+> This
+>   is needed because the default DTB in the iMX LF BSP images have CSI
+>   and DSI enabled. Developers/Hobbyists using these BSP images will
+>   observe CSI and DSI crash logs on the console since these are
+> unimplemented.
+>   With this change, both debian and iMX LF images will boot up without an=
+y
+> issues.
+>=20
+> Changes in v1:
+>=20
+> This patch series adds support for the NXP i.MX8MM EVK (Evaluation Kit)
+> board to QEMU, enabling emulation of this ARM Cortex-A53 based
+> development platform.
+>=20
+> The series includes:
+>=20
+> 1. Core peripheral support (CCM clock controller, Analog module) 2.
+> GPT(General Purpose Timer) and WDT(Watchdog Timer) Emulation support
+> 3. GPIO,I2C,SPI,USDHC and USB Emulation support 4. PCIe and ENET
+> Controller Emulation support 5. Documentation and functional test include=
+d
+>=20
+> Key features ported:
+> - Basic boot support with Linux
+> - UART console for serial communication
+> - Interrupt handling
+> - Clock and power management infrastructure
+>=20
+> Testing:
+> - Linux kernel boots to console
+>=20
+> Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+> Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+>=20
+> Gaurav Sharma (15):
+>   hw/arm: Add the i.MX 8MM EVK(Evaluation Kit) board
+>   hw/misc/imx8mp_analog: Add property to analog device
+>   hw/arm/fsl-imx8mm: Add Analog device IP to iMX8MM SOC
+>   hw/arm/fsl-imx8mm: Add Clock Control Module IP to iMX8MM
+>   hw/arm/fsl-imx8mm: Implemented support for SNVS
+>   hw/arm/fsl-imx8mm: Adding support for USDHC storage controllers
+>   hw/arm/fsl-imx8mm: Add PCIe support
+>   hw/arm/fsl-imx8mm: Add GPIO controllers
+>   hw/arm/fsl-imx8mm: Adding support for I2C emulation
+>   hw/arm/fsl-imx8mm: Adding support for SPI controller
+>   hw/arm/fsl-imx8mm: Adding support for Watchdog Timers
+>   hw/arm/fsl-imx8mm: Adding support for General Purpose Timers
+>   hw/arm/fsl-imx8mm: Adding support for ENET ethernet controller
+>   hw/arm/fsl-imx8mm: Adding support for USB controller
+>   hw/arm/fsl-imx8mm: Adding functional testing of iMX8MM emulation
+>=20
+>  MAINTAINERS                                   |  12 +-
+>  docs/system/arm/{imx8mp-evk.rst =3D> imx8m.rst} |  35 +-
+>  docs/system/target-arm.rst                    |   2 +-
+>  hw/arm/Kconfig                                |  24 +
+>  hw/arm/fsl-imx8mm.c                           | 704 ++++++++++++++++++
+>  hw/arm/imx8mm-evk.c                           | 130 ++++
+>  hw/arm/meson.build                            |   2 +
+>  hw/misc/imx8mp_analog.c                       |  12 +-
+>  hw/timer/imx_gpt.c                            |  26 +
+>  include/hw/arm/fsl-imx8mm.h                   | 242 ++++++
+>  include/hw/misc/imx8mp_analog.h               |   3 +
+>  include/hw/timer/imx_gpt.h                    |   2 +
+>  tests/functional/aarch64/meson.build          |   2 +
+>  tests/functional/aarch64/test_imx8mm_evk.py   |  67 ++
+>  14 files changed, 1253 insertions(+), 10 deletions(-)  rename
+> docs/system/arm/{imx8mp-evk.rst =3D> imx8m.rst} (68%)  create mode 100644
+> hw/arm/fsl-imx8mm.c  create mode 100644 hw/arm/imx8mm-evk.c  create
+> mode 100644 include/hw/arm/fsl-imx8mm.h  create mode 100755
+> tests/functional/aarch64/test_imx8mm_evk.py
+>=20
+> --
+> 2.34.1
 
 
