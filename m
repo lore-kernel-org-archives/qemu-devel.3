@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0FB9FF8860
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:56:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 424FBFF885E
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:56:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLR1-000321-QJ; Mon, 27 Apr 2026 08:51:35 -0400
+	id 1wHLPv-00019e-Uw; Mon, 27 Apr 2026 08:50:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLO4-0008BI-Os
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:35 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1wHLNw-00087E-QS
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:31 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNw-0005jU-Iu
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:27 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-488b0e1b870so172752535e9.2
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:23 -0700 (PDT)
+ id 1wHLNp-0005ga-24
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:19 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-488a9033b2cso109080595e9.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294102; x=1777898902; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294091; x=1777898891; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=rTgagNZc5+/mV+3XbzfZwoEUH7aZwakCX4wYssDEI18=;
- b=Kj5y3IkmBd25Vh/MIBjZEDW0TO3/ogcQFqL1Wprm3LWYqgZW5b4Z9nnDiGW9CmyGTf
- bTpjhDlxIIj/AjrMJ07g2FytNjtQiFidZ1uOm1yKE9HdTVLc6j/10KLgGpE3QIcwfH3f
- JJXFdC3vUzGW1qPC4Rbcez1zpoyE4NiU05B5yBmPd8qypo1Rovs2HIyJMTmsHyBF2hli
- s9NWltFWHZbdr/NXIzmC03PjuAnPS88KloIDf4bTJl7Gvhon3S/Yf6CqCdi0dbXceSMY
- hvV18S5EQCCCrBXCIZr8T6y8auQN6fh3MGsyXaJaPYGjDzFZCX2ZWIgkR4sbKtTnyKgx
- 7IZQ==
+ :reply-to; bh=0v/Sp1N38U1xnn6NTkNVlcM8HldzbtGaI2x8xgpzJPE=;
+ b=q58AQbzBUCJff8HgLzSujIxRSMNwLrnxauYuYbeY1R9Uj/dKz1wgnvj3Bjd9cuDO8X
+ OtG8Gtfmdd1IvyvG9DvOd/Bp+INziMtcZJZuR4dgZvzgg8/wuhggDz6wayq65qcRSmis
+ lnV8O76/F1UG5KxYTzKj8gMgz0GJsuqOTAP4tTxC+2jM8ndt1kNMznmE79HOcow98fLz
+ KkOkmMJb25RIv2RDcK+9cK+4fPU2Yw5fDomeeLe5MmLz3V+NR/64OPre0SlHNrJfYcUZ
+ 8oboE/GqQgo7Sb0GRKVx0PgtOQ0kZbTyOE5ctsQy/+8CIE6jHbZFtdsspsMLKcUYOD4Z
+ 168g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294102; x=1777898902;
+ d=1e100.net; s=20251104; t=1777294091; x=1777898891;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=rTgagNZc5+/mV+3XbzfZwoEUH7aZwakCX4wYssDEI18=;
- b=PCOcVt2kUtzqFhNiV9wRh4NuuPjKJ8YpXceGj16DpPULTURGx6rAKFIuWbL1ihdmxW
- X3w9jO/HVsmKXIVXurLPhTyv2pFc4J1RSUG1ileGAga86GSGVromfyA+IfTiU+g7aC6o
- kiB2Ri5I0UbAyqiJKLXz7pmSP79wgBtpUZDv26gu88voutWUDmSHlV/vxBplMgKE+Cc7
- xDO49Y8V1BohQ/3tTupiSYio7TVYiFvaSzueAK4zJACtp9VlJQiKDh+83wYoA8wYTEU1
- 60IrM0P6KDWPqqNLtg5QiYPVWtMB4t8nEdoJe18vZxtv9Xk0W5HJUQHCzfMRmfA52afJ
- BhJw==
-X-Gm-Message-State: AOJu0YyEgCufEHpWEorCQC/E8aYwMZvAfXvJlLdMgQijMFLWOVLXKVf9
- jjpmL+fjaADxvm5C5SP9NqWa6wM+ABoC0aPFLsJ4dk3+oAbmAvksioVoh1eY7R1sdOZ9UjpasEm
- 1eqNl
-X-Gm-Gg: AeBDiesxCortpk3BLYkVfgJzd/G/ohp78j6/4ztjolJE0xn8dsr5bybZP7m+hNA6ciG
- v3TBscyT3k2bhFGyOztDO/o3L0CLPjE/gq0HPHjo1xpcpNxW4eQvyNJhh+pIi2MGI4YrLXkT+Ix
- u0Uqn3law/EOVkrdtM31TRdDroUB28K1PSoYBJdd0VLKi7SKOCtopQcNb3nwrMNj+UUoGg3Vtx7
- eSeOQl/+uM10ciFJVLDc5fNFalQpuuXzrRdWI89UaWtCLJ5TNYEhcKnlRRBvWoxvfdfWKZy6uCv
- 2AQUpi1rp8J86CWubcVdT/XT/+Hl0zuvJPzjU4le5WUPHUChJVpQbParGHlaVrCXnpiHy3i4lAW
- uMpCG3G0B3MFrRFxiRw4njTwjc3MghgngB6kVCUkJtHE+zRi++ySPwdLh5WoozYjjVzc2KOX31R
- z6NSjaux7IdRJWqk1wbGttSP5W70TWiJBzPEViBHnhGkfRWZshFYbaHS4QxMLBeiGEOYP8L0cjA
- 9SuVfDHltLOBmNYJ1W0yvaRaZ7ul4PEAYRM2Uec+9gnllTsiZk1
-X-Received: by 2002:a05:600c:26d5:b0:489:1c1f:35df with SMTP id
- 5b1f17b1804b1-4891c1f3715mr294847215e9.10.1777294102058; 
- Mon, 27 Apr 2026 05:48:22 -0700 (PDT)
+ bh=0v/Sp1N38U1xnn6NTkNVlcM8HldzbtGaI2x8xgpzJPE=;
+ b=nOTHl9RIkPQVFQRk2x1mtVeDRgXUM7G+zSnKtbE5X+ToNteZx+I/10fGS0NNcGfHu2
+ fMbzJF29MHn9wkRAsToBZOnTREE0LtUzGFDNQi2g5ME4UHPZ7+RMZ7Vm9qFPm1o7jmI6
+ ECGA2OgJ3BMncBCrXrrihl7id0qRQbCaNo45iB6X5GW52YM8Ec/XrjA6gK9eGGA5ijck
+ G7iJbQfwlnDkUIK8UZ4WnjSAsNnaD1VrHlLeCtAmZXln1mXH7nrTq1cWLPPkqPn5cOdh
+ 7Nd6BgRCMftpgPPIrAtpKOlhR+JZO7TgAkIDzBAxgewHEueDBac/RdawkMn0Z0ifLsFk
+ DY/Q==
+X-Gm-Message-State: AOJu0YzwtUJFInI6Md0poZEZ9Nk3UB2kdF3uzGEtOy0zzijTlK5crT1t
+ h6FqSz0+syEIgV9duRE6lydNDUHa6rkTnnt1fpY9kHjL0fmOMsiQCW2BLrhOn7KrcNQrQLhhszz
+ OqZ4N
+X-Gm-Gg: AeBDieufoDs+Gcikl9jQBMR3a5yoNzTHxOAx4vf1hx/J/+jUQufGOADEdV9MJSMt8bC
+ R8lL781NGPJ2Kwvl0it64tm3reI9fCG9e0sWbOXy4/Gz+ErhjoNXKszDNggl0aidlyQrh8uRtVI
+ WQ6L4trrPvAj7pQYjeoIxLKXL3fOSVDD6ThGVCjQhus0a+GDVqdezjclBub+GQSBM+EaWYedyAz
+ fAlUiTRkkI4URxqeoiqSFES5OAXDIlPoYgxTrpPe7o51dtABcJLefU2LIpthGJJvRgl45nqRsnP
+ KuvnHmqrwemgHzGFr8X+quDxwRpoSe53TFEZ/iSlENPSfUdQMni10qWttg3cEORkNH3aiwwIl24
+ stxN5du/+AzZzbW4bG6Gp2LBbF5zrSuJZn2sw0HAe/ZzFZjvBGnZC8GnIn3wotr2KT5MrD+RFVB
+ eAZkIaXVPBivT+uxFBY+QKK9LpUr/GznKItUJGZJesDBJEsv1iDMKC4w5Oo4IPv1E9x/u7Jrqk/
+ lci7cyKpXqmWWnpRO7yt5TJzzT6xTpvyhplQz6wKg==
+X-Received: by 2002:a05:600c:4f49:b0:489:1ff1:74df with SMTP id
+ 5b1f17b1804b1-4891ff176bamr504250925e9.1.1777294091145; 
+ Mon, 27 Apr 2026 05:48:11 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.21
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:48:21 -0700 (PDT)
+ Mon, 27 Apr 2026 05:48:10 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 46/63] target/arm: migrate PAC trap syndromes to registerfields
-Date: Mon, 27 Apr 2026 13:47:20 +0100
-Message-ID: <20260427124738.966578-47-peter.maydell@linaro.org>
+Subject: [PULL 34/63] target/arm/cpu64: Mitigate migration failures due to
+ spurious TCR_EL1, PIRE0_EL1 and PIR_EL1
+Date: Mon, 27 Apr 2026 13:47:08 +0100
+Message-ID: <20260427124738.966578-35-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,58 +102,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
 
-syn_pactrap is fairly simple as the ISS is all RES0.
+Before linux v6.13 those registers were erroneously unconditionally
+exposed and this was fixed by commits:
+- 0fcb4eea5345 ("KVM: arm64: Hide TCR2_EL1 from userspace when
+                 disabled for guests")
+- a68cddbe47ef ("KVM: arm64: Hide S1PIE registers from userspace
+                 when disabled for guests")
+in v6.13.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20260422125250.1303100-7-alex.bennee@linaro.org
+This means if we migrate from an old kernel host to a >= 6.13 kernel
+host, migration currently fails.
+
+Declare cpreg migration tolerance for those registers.
+
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260420140552.104369-5-eric.auger@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/syndrome.h | 23 ++++++++++++++++++++---
- 1 file changed, 20 insertions(+), 3 deletions(-)
+ target/arm/cpu64.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
-index 6105347598..fd8639d4f0 100644
---- a/target/arm/syndrome.h
-+++ b/target/arm/syndrome.h
-@@ -398,15 +398,32 @@ static inline uint32_t syn_smetrap(SMEExceptionType etype, bool is_16bit)
-     return res;
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index d6feba220e..e7014022df 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -810,6 +810,33 @@ static void aarch64_a53_initfn(Object *obj)
+     define_cortex_a72_a57_a53_cp_reginfo(cpu);
  }
  
-+/*
-+ * ISS encoding for a PAC Fail exceptions
-+ */
-+FIELD(PACFAIL_ISS, BnA, 0, 1) /* B key or A key */
-+FIELD(PACFAIL_ISS, DnI, 1, 1) /* Data or Instruction */
++#if defined(CONFIG_KVM)
++static void kvm_arm_set_cpreg_mig_tolerances(ARMCPU *cpu)
++{
++    /*
++     * Registers that may be in the incoming stream and not exposed
++     * on the destination
++     */
 +
- static inline uint32_t syn_pacfail(bool data, int keynumber)
++    /*
++     * TCR_EL1 was erroneously unconditionnally exposed before linux v6.13.
++     * See commit 0fcb4eea5345 ("KVM: arm64: Hide TCR2_EL1 from userspace
++     * when disabled for guests")
++     */
++    arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 2, 0, 3),
++                                     0, 0, ToleranceNotOnBothEnds);
++    /*
++     * PIRE0_EL1 and PIR_EL1 were erroneously unconditionnally exposed
++     * before linux v6.13. See commit a68cddbe47ef ("KVM: arm64: Hide
++     * S1PIE registers from userspace when disabled for guests")
++     */
++    arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 10, 2, 2),
++                                     0, 0, ToleranceNotOnBothEnds);
++    arm_register_cpreg_mig_tolerance(cpu, ARM64_SYS_REG(3, 0, 10, 2, 3),
++                                     0, 0, ToleranceNotOnBothEnds);
++}
++#endif
++
+ static void aarch64_host_initfn(Object *obj)
  {
--    int error_code = (data << 1) | keynumber;
--    return (EC_PACFAIL << ARM_EL_EC_SHIFT) | ARM_EL_IL | error_code;
-+    uint32_t res = syn_set_ec(0, EC_PACFAIL);
-+    res = FIELD_DP32(res, SYNDROME, IL, 1);
-+
-+    res = FIELD_DP32(res, PACFAIL_ISS, DnI, data);
-+    res = FIELD_DP32(res, PACFAIL_ISS, BnA, keynumber);
-+
-+    return res;
- }
+     ARMCPU *cpu = ARM_CPU(obj);
+@@ -822,6 +849,7 @@ static void aarch64_host_initfn(Object *obj)
+ #endif
  
-+/*
-+ * ISS encoding for an exception from a trapped Pointer
-+ * Authentication instruction is RES0
-+ */
- static inline uint32_t syn_pactrap(void)
- {
--    return (EC_PACTRAP << ARM_EL_EC_SHIFT) | ARM_EL_IL;
-+    uint32_t res = syn_set_ec(0, EC_PACTRAP);
-+    res = FIELD_DP32(res, SYNDROME, IL, 1);
-+    return res;
- }
- 
- static inline uint32_t syn_btitrap(int btype)
+ #if defined(CONFIG_KVM)
++    kvm_arm_set_cpreg_mig_tolerances(cpu);
+     kvm_arm_set_cpu_features_from_host(cpu);
+     aarch64_add_sve_properties(obj);
+ #elif defined(CONFIG_HVF)
 -- 
 2.43.0
 
