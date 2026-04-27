@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3EB3FF885E
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B0BFFF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:59:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLU1-0005TB-3l; Mon, 27 Apr 2026 08:54:41 -0400
+	id 1wHLUf-0000TP-Tu; Mon, 27 Apr 2026 08:55:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNR-0007nc-D9
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:47:54 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1wHLO4-0008BG-OW
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:35 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNP-0005UX-M7
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:47:53 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-488b0e1b870so172740695e9.2
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:47:51 -0700 (PDT)
+ id 1wHLNr-0005iF-OH
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:27 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-488b3f8fa2bso103395805e9.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294069; x=1777898869; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294098; x=1777898898; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+f5ZGmX9oTLSaVcb3xFFj2b2ao74Al5SyMxc3YROTz0=;
- b=NNK6HczuEl//raLKZTdcG0N0TiMpqoyQRpeYRSj/bcSN2oxqfDCLQ3dfshxQ2OLW78
- Srs30XVXP9tdV2Baga/zTHVjjFb/a3YRz7/6qi0MTra/Ket1vit6wFHCkSIb1177fiXw
- QG0hZKBQYt3SO7I3zLu+2ZIIr8nuwBbrW4SK/vKZKygncQSdKYpc50uOkHyjq9S/b++V
- AqW1zaaxyStj3SXMrTVBHW/agVCbLPcYaFeYdSXzydAaPTE5QT0l40riZJI2Dcw/92P5
- ctxVezrN64Siogun730L4SEXKrQkwMCm/vYZInzah9Hiq3dsDiklg5H6i5geA1ND2nJu
- BxPQ==
+ :reply-to; bh=YcYVYYNIRSP1snD5TdIYSPjOwpX5L7NMhYaBvEW9/ZM=;
+ b=nRmmEamjySujWYaZNUHRrIEyHD5H0pmhkgx4W5S3I01EVUtaCfPxsWDWsYL0i9ZU5v
+ 6AkJHUtlrI3eYpvMgOV/9xObp9eg2xVAfpLbdHCN8dhVTjrDxUT899y7ntt1Es1Fs1zI
+ /hHuzEHHgBkSR05Gc5/xNx88/6ylKmiA3XdEW1vayWfZERpLVGKxwsByjKUz13E1MJ0H
+ Vt0zE0E4p8V+2YmfKqWgcTkqM3ufK7OtkKn6V088BI/9Rnb/LX54B+0Ia3x4UYOq9Wwu
+ ui0Qvuz5XZZuYww4d/Rbgwydhn/bdyRlbjatyOSlrlb/15wIpAgQehSmh2dmr2UYwIvR
+ 26qA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294069; x=1777898869;
+ d=1e100.net; s=20251104; t=1777294098; x=1777898898;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=+f5ZGmX9oTLSaVcb3xFFj2b2ao74Al5SyMxc3YROTz0=;
- b=iHHLlWWDkstuuYidmqTrBTPzwYwmagSvA1eXHXp2LHw4O/9PWAGgZsEhvaifriY+v+
- Tjr8EmgjRk1CN4FcqkHKyoRqjtPtLalB6Oq5bN3vDsKPU4XO0DXEHpbhfWiUQBrHlmRt
- AGMkI2wdieSnyCzvfI5zLIGAp9+vvrX4dbSzChIu14XMpYtPrnUhhMf3JES4tCjn5ktD
- rCvTs+f5pAlMZA/y6/f7w77+/b0dtp3xA/vTQvGnyhVPb+cGy0YPBfLTPjrvjcydF5Qt
- FWwCbIIfdJNaZOmZcSMA9EgLK/gqEjwCrwgLXeJGoMirInbcd5UoGznRMjrLvDbmgQI2
- DbpQ==
-X-Gm-Message-State: AOJu0YzNQd6AAuRYMQtsWiMpUUvuBhuIns64vYJsJ+JVTc04nmti8Pma
- eDyJh185MViT4+qh3vTv69QzQVHg+Ao+aW96nIdK61JhTbqHy6oVIZnQPRlfo8MuWkscPhFStH+
- mGzlu
-X-Gm-Gg: AeBDievLVeYUHaN7C2+emq3g8HmGJsPl7JQA793aJkZU8ZDYWGEWuLs1RfBZtxYNuiV
- 2RmWFP0npX2Lry1ol8rQqorynv140x3hdmtUUk0YGMUB5mhYQjTSBDwmhvzU4p+nmIHzjEu8JHL
- 25mlOS7WeZuy0fV50kGmvEChM/T/bMtk65KPKfoSWSWSthgcbROhWkDOHXYF/g38HQIBObsA5yN
- WmNtx7K7PhBXa5g/Po3QnBAZghpWkKI9JkjBShHciMltX+fjRgkz/QsHSmO/cdIo2ixKyuW/trP
- wTuxTt5yiC9vBgflmf3I51BahXrHuBt8HUxtvnVreJzdsEg844uyNidrdhncqijGVMyQJp7l/8y
- qG92F2etr4kQg3KJFQvN0f/0mP3RpE5jrlwKQV0OLFDsMRF/zBc8YGWyc5hm7Gcyo6hu9KuXHDu
- ZYRQALx8LYlC2AWdHPUEBJxQO60A1ujf4Yb0u4orkUuXXwUA70gFnbWR26rGPNT2MQueOP+GR8C
- HU8KnyqNRM0NtLkUXQP1uYi389EFosWwAB+y/jeDA==
-X-Received: by 2002:a05:600c:33aa:b0:488:ae6c:42c0 with SMTP id
- 5b1f17b1804b1-488fb742e7fmr358972785e9.7.1777294068924; 
- Mon, 27 Apr 2026 05:47:48 -0700 (PDT)
+ bh=YcYVYYNIRSP1snD5TdIYSPjOwpX5L7NMhYaBvEW9/ZM=;
+ b=TYxupQW4IrnGitr3uc7/K96mvTy/u7MCCKXz7gx9gY+Q82Fd53YiM4mMz9MC2/2zoV
+ 44xNlezRJZYYws2azfRSPpt3gN4+2dqdowYgN5dZvCsRVGCYeMDQKTcGcSpdsxpDiSo+
+ bIemaNnorAN7AjGS2fHdso3/5cEHygYi3O3eYb9E77sCidULR1OHcZulbWMWZD9yREKo
+ Ph39PxHTfSGyqjCPO1O79/rXzaSx7e4IF8RxHrX8C9Fi1n+YujdPJ/lyRweYAcrxmbIM
+ oh0OH6JqAmUC5NCUpzbYzWQrahaQoamq5t3D8b4osW3ipSUOP12d5VVQ66x9fI6lKnnS
+ TjtQ==
+X-Gm-Message-State: AOJu0Yxlxh4eVg7iXd6aBytwX1yf3jR7SjHkCZu8yeUDYpmX/4hOmU34
+ KNWIfHQAQ5Mar0VSVviPiZH+rvwIXM3o+GHKjwJWKDHknpzHCT53GeL5TBX+LVdzep4jDItyukh
+ hamsP
+X-Gm-Gg: AeBDieuVNPecX3tVFCmweYsGPa7FB0Z8/XY0uBw24J9b2vhIh7EvJIP7viNJxnWb10O
+ wR5Mv13LZ8BX1A31EAphCdhZtF/NZXkDNRDMNIj7pCz76uqxDiHxxNtxj46XeVeQkC2euI1B8wS
+ 5xSPGVVbwvLHWIXDlhIqj+6WtqmCzXNcCQzA6WAA8NYDKWc2xG5d7R0oImK2Q4wYCEcDuG18No4
+ YRECZRU8poLY7of3dolhfv1ooWGPYMX6gAoRzChEaH3G173cqkkqb6aadsR/G1ba7K0WMrZlKoR
+ TPwzKK1DTr9j4W4PN022O1z06RtJUGUWCG5tmUtvqE39yS9JrW0Pt7JKKkv6bX+/EO52oMuEcAS
+ rSk+DJNl8OGepZEQ5FZ3d2pnAHre1Dxoj/u6Fqfj+9Q7vWQdzj9+cLAk6NHEy50WmvkDQ0ruQHE
+ yHCJyboM8MKquiIY+mc4Rk/xY1fB3fsQc7gEUUYVQBt/bCpe9O/lNDV7iZ2wvR0R009noYpILeM
+ 5DI9J9/U8vGlaAY2Lvo1kyMyUcQn/IA20uTu437cA==
+X-Received: by 2002:a05:600c:1d05:b0:489:1baf:8c03 with SMTP id
+ 5b1f17b1804b1-4891baf8d2cmr441990475e9.11.1777294097635; 
+ Mon, 27 Apr 2026 05:48:17 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.47.48
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.16
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:47:48 -0700 (PDT)
+ Mon, 27 Apr 2026 05:48:16 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 11/63] hw/arm/fsl-imx8mm: Adding support for SPI controller
-Date: Mon, 27 Apr 2026 13:46:45 +0100
-Message-ID: <20260427124738.966578-12-peter.maydell@linaro.org>
+Subject: [PULL 41/63] target/arm: migrate basic syndrome helpers to
+ registerfields
+Date: Mon, 27 Apr 2026 13:47:15 +0100
+Message-ID: <20260427124738.966578-42-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,111 +102,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-It enables emulation of ECSPI in iMX8MM
-Added SPI IRQ lines
+We have a registerfields interface which we can use for defining
+fields alongside helpers to access them. Define the basic syndrome
+layout and convert the helpers that take the imm16 data directly.
 
-Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20260422125250.1303100-2-alex.bennee@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/fsl-imx8mm.c         | 26 ++++++++++++++++++++++++++
- include/hw/arm/fsl-imx8mm.h |  7 +++++++
- 2 files changed, 33 insertions(+)
+ target/arm/syndrome.h | 75 ++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 57 insertions(+), 18 deletions(-)
 
-diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index 3632d85197..f433beeaf2 100644
---- a/hw/arm/fsl-imx8mm.c
-+++ b/hw/arm/fsl-imx8mm.c
-@@ -195,6 +195,11 @@ static void fsl_imx8mm_init(Object *obj)
-         object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
-     }
+diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+index bff61f052c..517fb2368b 100644
+--- a/target/arm/syndrome.h
++++ b/target/arm/syndrome.h
+@@ -25,7 +25,7 @@
+ #ifndef TARGET_ARM_SYNDROME_H
+ #define TARGET_ARM_SYNDROME_H
  
-+    for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
-+        g_autofree char *name = g_strdup_printf("spi%d", i + 1);
-+        object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
-+    }
-+
-     object_initialize_child(obj, "pcie", &s->pcie, TYPE_DESIGNWARE_PCIE_HOST);
-     object_initialize_child(obj, "pcie_phy", &s->pcie_phy,
-                             TYPE_FSL_IMX8M_PCIE_PHY);
-@@ -464,6 +469,26 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-                            qdev_get_gpio_in(gicdev, usdhc_table[i].irq));
-     }
+-#include "qemu/bitops.h"
++#include "hw/core/registerfields.h"
  
-+    /* ECSPIs */
-+    for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
-+        static const struct {
-+            hwaddr addr;
-+            unsigned int irq;
-+        } spi_table[FSL_IMX8MM_NUM_ECSPIS] = {
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_ECSPI1].addr, FSL_IMX8MM_ECSPI1_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_ECSPI2].addr, FSL_IMX8MM_ECSPI2_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_ECSPI3].addr, FSL_IMX8MM_ECSPI3_IRQ },
-+        };
-+
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->spi[i]), errp)) {
-+            return;
-+        }
-+
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->spi[i]), 0, spi_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->spi[i]), 0,
-+                           qdev_get_gpio_in(gicdev, spi_table[i].irq));
-+    }
-+
-     /* SNVS */
-     if (!sysbus_realize(SYS_BUS_DEVICE(&s->snvs), errp)) {
-         return;
-@@ -503,6 +528,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MM_GIC_DIST:
-         case FSL_IMX8MM_GIC_REDIST:
-         case FSL_IMX8MM_GPIO1 ... FSL_IMX8MM_GPIO5:
-+        case FSL_IMX8MM_ECSPI1 ... FSL_IMX8MM_ECSPI3:
-         case FSL_IMX8MM_I2C1 ... FSL_IMX8MM_I2C4:
-         case FSL_IMX8MM_PCIE1:
-         case FSL_IMX8MM_PCIE_PHY1:
-diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index d6df16e9d4..13c044412a 100644
---- a/include/hw/arm/fsl-imx8mm.h
-+++ b/include/hw/arm/fsl-imx8mm.h
-@@ -21,6 +21,7 @@
- #include "hw/pci-host/designware.h"
- #include "hw/pci-host/fsl_imx8m_phy.h"
- #include "hw/sd/sdhci.h"
-+#include "hw/ssi/imx_spi.h"
- #include "qom/object.h"
- #include "qemu/units.h"
+ /* Valid Syndrome Register EC field values */
+ enum arm_exception_class {
+@@ -76,6 +76,11 @@ enum arm_exception_class {
+     EC_AA64_BKPT              = 0x3c,
+ };
  
-@@ -32,6 +33,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mmState, FSL_IMX8MM)
- 
- enum FslImx8mmConfiguration {
-     FSL_IMX8MM_NUM_CPUS         = 4,
-+    FSL_IMX8MM_NUM_ECSPIS       = 3,
-     FSL_IMX8MM_NUM_GPIOS        = 5,
-     FSL_IMX8MM_NUM_I2CS         = 4,
-     FSL_IMX8MM_NUM_IRQS         = 128,
-@@ -48,6 +50,7 @@ struct FslImx8mmState {
-     IMX8MPCCMState     ccm;
-     IMX8MPAnalogState  analog;
-     IMX7SNVSState      snvs;
-+    IMXSPIState        spi[FSL_IMX8MM_NUM_ECSPIS];
-     IMXI2CState        i2c[FSL_IMX8MM_NUM_I2CS];
-     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
-     MemoryRegion ocram;
-@@ -177,6 +180,10 @@ enum FslImx8mmIrqs {
-     FSL_IMX8MM_UART3_IRQ    = 28,
-     FSL_IMX8MM_UART4_IRQ    = 29,
- 
-+    FSL_IMX8MM_ECSPI1_IRQ   = 31,
-+    FSL_IMX8MM_ECSPI2_IRQ   = 32,
-+    FSL_IMX8MM_ECSPI3_IRQ   = 33,
++/* Generic syndrome encoding layout for HSR and lower 32 bits of ESR_EL2 */
++FIELD(SYNDROME, EC, 26, 6)
++FIELD(SYNDROME, IL, 25, 1)
++FIELD(SYNDROME, ISS, 0, 25)
 +
-     FSL_IMX8MM_I2C1_IRQ     = 35,
-     FSL_IMX8MM_I2C2_IRQ     = 36,
-     FSL_IMX8MM_I2C3_IRQ     = 37,
+ typedef enum {
+     SME_ET_AccessTrap,
+     SME_ET_Streaming,
+@@ -113,12 +118,12 @@ typedef enum {
+ 
+ static inline uint32_t syn_get_ec(uint32_t syn)
+ {
+-    return syn >> ARM_EL_EC_SHIFT;
++    return FIELD_EX32(syn, SYNDROME, EC);
+ }
+ 
+ static inline uint32_t syn_set_ec(uint32_t syn, uint32_t ec)
+ {
+-    return deposit32(syn, ARM_EL_EC_SHIFT, ARM_EL_EC_LENGTH, ec);
++    return FIELD_DP32(syn, SYNDROME, EC, ec);
+ }
+ 
+ /*
+@@ -133,49 +138,74 @@ static inline uint32_t syn_set_ec(uint32_t syn, uint32_t ec)
+  */
+ static inline uint32_t syn_uncategorized(void)
+ {
+-    return (EC_UNCATEGORIZED << ARM_EL_EC_SHIFT) | ARM_EL_IL;
++    uint32_t res = syn_set_ec(0, EC_UNCATEGORIZED);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    return res;
+ }
+ 
++FIELD(ISS_IMM16, IMM16, 0, 16)
++
+ static inline uint32_t syn_aa64_svc(uint32_t imm16)
+ {
+-    return (EC_AA64_SVC << ARM_EL_EC_SHIFT) | ARM_EL_IL | (imm16 & 0xffff);
++    uint32_t res = syn_set_ec(0, EC_AA64_SVC);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    res = FIELD_DP32(res, ISS_IMM16, IMM16, imm16);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa64_hvc(uint32_t imm16)
+ {
+-    return (EC_AA64_HVC << ARM_EL_EC_SHIFT) | ARM_EL_IL | (imm16 & 0xffff);
++    uint32_t res = syn_set_ec(0, EC_AA64_HVC);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    res = FIELD_DP32(res, ISS_IMM16, IMM16, imm16);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa64_smc(uint32_t imm16)
+ {
+-    return (EC_AA64_SMC << ARM_EL_EC_SHIFT) | ARM_EL_IL | (imm16 & 0xffff);
++    uint32_t res = syn_set_ec(0, EC_AA64_SMC);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    res = FIELD_DP32(res, ISS_IMM16, IMM16, imm16);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa32_svc(uint32_t imm16, bool is_16bit)
+ {
+-    return (EC_AA32_SVC << ARM_EL_EC_SHIFT) | (imm16 & 0xffff)
+-        | (is_16bit ? 0 : ARM_EL_IL);
++    uint32_t res = syn_set_ec(0, EC_AA32_SVC);
++    res = FIELD_DP32(res, SYNDROME, IL, is_16bit ? 0 : 1);
++    res = FIELD_DP32(res, ISS_IMM16, IMM16, imm16);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa32_hvc(uint32_t imm16)
+ {
+-    return (EC_AA32_HVC << ARM_EL_EC_SHIFT) | ARM_EL_IL | (imm16 & 0xffff);
++    uint32_t res = syn_set_ec(0, EC_AA32_HVC);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    res = FIELD_DP32(res, ISS_IMM16, IMM16, imm16);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa32_smc(void)
+ {
+-    return (EC_AA32_SMC << ARM_EL_EC_SHIFT) | ARM_EL_IL;
++    uint32_t res = syn_set_ec(0, EC_AA32_SMC);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa64_bkpt(uint32_t imm16)
+ {
+-    return (EC_AA64_BKPT << ARM_EL_EC_SHIFT) | ARM_EL_IL | (imm16 & 0xffff);
++    uint32_t res = syn_set_ec(0, EC_AA64_BKPT);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    res = FIELD_DP32(res, ISS_IMM16, IMM16, imm16);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa32_bkpt(uint32_t imm16, bool is_16bit)
+ {
+-    return (EC_AA32_BKPT << ARM_EL_EC_SHIFT) | (imm16 & 0xffff)
+-        | (is_16bit ? 0 : ARM_EL_IL);
++    uint32_t res = syn_set_ec(0, EC_AA32_BKPT);
++    res = FIELD_DP32(res, SYNDROME, IL, is_16bit ? 0 : 1);
++    res = FIELD_DP32(res, ISS_IMM16, IMM16, imm16);
++    return res;
+ }
+ 
+ static inline uint32_t syn_aa64_sysregtrap(int op0, int op1, int op2,
+@@ -246,7 +276,9 @@ static inline uint32_t syn_simd_access_trap(int cv, int cond, bool is_16bit)
+ 
+ static inline uint32_t syn_sve_access_trap(void)
+ {
+-    return (EC_SVEACCESSTRAP << ARM_EL_EC_SHIFT) | ARM_EL_IL;
++    uint32_t res = syn_set_ec(0, EC_SVEACCESSTRAP);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    return res;
+ }
+ 
+ /*
+@@ -361,12 +393,16 @@ static inline uint32_t syn_wfx(int cv, int cond, int ti, bool is_16bit)
+ 
+ static inline uint32_t syn_illegalstate(void)
+ {
+-    return (EC_ILLEGALSTATE << ARM_EL_EC_SHIFT) | ARM_EL_IL;
++    uint32_t res = syn_set_ec(0, EC_ILLEGALSTATE);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    return res;
+ }
+ 
+ static inline uint32_t syn_pcalignment(void)
+ {
+-    return (EC_PCALIGNMENT << ARM_EL_EC_SHIFT) | ARM_EL_IL;
++    uint32_t res = syn_set_ec(0, EC_PCALIGNMENT);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    return res;
+ }
+ 
+ static inline uint32_t syn_gcs_data_check(GCSInstructionType it, int rn)
+@@ -388,7 +424,10 @@ static inline uint32_t syn_gcs_gcsstr(int ra, int rn)
+ 
+ static inline uint32_t syn_serror(uint32_t extra)
+ {
+-    return (EC_SERROR << ARM_EL_EC_SHIFT) | ARM_EL_IL | extra;
++    uint32_t res = syn_set_ec(0, EC_SERROR);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++    res = FIELD_DP32(res, SYNDROME, ISS, extra);
++    return res;
+ }
+ 
+ static inline uint32_t syn_mop(bool is_set, bool is_setg, int options,
 -- 
 2.43.0
 
