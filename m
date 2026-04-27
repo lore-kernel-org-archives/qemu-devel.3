@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6996DFF8868
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:45:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFD9BFF8867
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHRrA-0000vF-6F; Mon, 27 Apr 2026 15:43:02 -0400
+	id 1wHRsc-0002tm-MM; Mon, 27 Apr 2026 15:44:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRqy-0000rk-PX
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:42:49 -0400
+ id 1wHRsN-00025Q-F6
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:44:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRqv-0007jM-Lz
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:42:46 -0400
+ id 1wHRsL-0007xy-U2
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:44:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777318965;
+ s=mimecast20190719; t=1777319052;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sAuYAhy1cX7XBXjOLthJfEq8jJm8Z2hVUkA1DREfIfI=;
- b=evjlNtY9ITisemuonp510myOUJA1IqPlB1+WDoVmHEjQWnUM+5qZjffwftUdeCzG0gSnMr
- i44727thjwc82nmjCBIMbZEf6jArxXi92Gy15xfaEIZ2dlmPiu4VKyyhR75GdL448UeTYP
- KkxX9jJpPptZM6p6+FPq4F9iPIQWUCc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=v2nUewpRlfcuzS7BbkUxVYKnJ4w1wM50RV/7mph3xcA=;
+ b=fkx/Zy5WfWK4mZqFUvistrD5+81JpLHxiV/ZjY1qGERcGF2RtYVlN4VlbScYee1PUibSwo
+ XhnUIkNgj0UQjzmmHfld809oX96aFTtyI1QtFQNbueYVPA6p9uHADj4vaFQzi2wiV8OBAW
+ 3IuUTwehxDdOIZI96PvPre4E76duQe4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-1jwxN4HQNgCg54yE6XrU0g-1; Mon,
- 27 Apr 2026 15:42:43 -0400
-X-MC-Unique: 1jwxN4HQNgCg54yE6XrU0g-1
-X-Mimecast-MFC-AGG-ID: 1jwxN4HQNgCg54yE6XrU0g_1777318962
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-e-SwKzz6PNeMLCmtQLU5RQ-1; Mon,
+ 27 Apr 2026 15:44:09 -0400
+X-MC-Unique: e-SwKzz6PNeMLCmtQLU5RQ-1
+X-Mimecast-MFC-AGG-ID: e-SwKzz6PNeMLCmtQLU5RQ_1777319048
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9580B195609D
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 19:42:42 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8C8D718005AA; Mon, 27 Apr 2026 19:44:08 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D2BE4195608E; Mon, 27 Apr 2026 19:42:40 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 425C319560AB; Mon, 27 Apr 2026 19:44:06 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Apr 2026 23:42:02 +0400
-Subject: [PATCH 03/41] hw/pci-bridge: handle missing parent in prop_pxb_uid_get
+Date: Mon, 27 Apr 2026 23:42:16 +0400
+Subject: [PATCH 17/41] hw/core/resetcontainer: free children array on
+ finalization
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260427-qom-tests-v1-3-c413f3605311@redhat.com>
+Message-Id: <20260427-qom-tests-v1-17-c413f3605311@redhat.com>
 References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
 In-Reply-To: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1195;
+ Peter Maydell <peter.maydell@linaro.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=860;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=7IzFtyW5t8Gf12v8GCg2dNaN6ZsDHP4zF5gwn8PfMpc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wUxXrEGyOfqXJtmyjiR7kGhiC9PY3OuVy9q
- xBEprUUWW2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FAAKCRDa6OEJdZac
- 5Tq9EACUumLvmV3Yhiw+Fjqg5+mbboRkvntsilf5BiEJAydH/nFWLvm+WWq06JBcVEGbesvP5r3
- xxxyjMAPelAS+ywlVUSnslPuMfjEn2Mkc2iyuGJEe5KGbw1z1JTlzAvbUPV5e0wXkCxiVY4F05r
- kKPp7/qNw4vjxfw2ona30Fnn3PaN0KvYit75DSGoqXM5FqHboQUICtwJ53d+R8UwOL/6LyIfK+M
- 3Ls8WX7BRRU/6AcUINYABz8LxQ5vxwbX8ErDbQMlPTRZlIySD9F1MWvFfm4C56bD7uVQ+TVZw+i
- aCK+F79m2/v7Cuj4o44QZOVFK4YJUgOMmJ6esmCJD/WglFFVvMH24+KdGbkMXF5RwevG2wJcEse
- 9VFclGaCyGuReOfB2McBj2GUpBVY4yja2jl35cK/ofH5Y6BEU840iLZ+fWrzr2LrkHcvlpueTCf
- LNfGiXC6Fy2N9vCubHrUU/bNDMerlyQ1P1U0Pz7P8XxVM1H86sSkhDAa0qvx8EkHZZw+wyt3wVf
- imBPp9WE4lLloeAH9A5oHQzHgerEnNjINGk0tWs+yk7PGXJoQt6MMqzMJWMc/Pitptdqpqk3g/t
- yJqflIUP9lnnd434ynI5+OungsjcDmZbnaUaAIu0XSBjVkJzYo9yWYH0Ea4U0iQYC5jPOuGzfpM
- V1tipA2S7Sk2PMA==
+ bh=fxwKGK8u2FdwGWFYQyu8CRzaHlO9/OVt+VeAwfQGL24=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wVfJXC1LbJJWXnRmWRMGAyvK8GB4FK7DzjC
+ tSzk0nQIJ+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FQAKCRDa6OEJdZac
+ 5a5PEAChPy4deRq3TzLpjQ+SVu6xW03+o2sv9DrCGqsRyGVDaxaToqQK1j3o/RtIVwjdmuXTlO+
+ Ixu0Osf3e1n/S1zElORKGIQ/hQZDH0kyjwBaWrGcbJOHKEmWzaUMnT8vCQfbMG4HCqsSfad3y8j
+ kT1HHkE5I3S9Z7lwZwdW/JJS4QK+p+Pj/QRAOXp+Zpmte4zvztAlIrF3SVReXSrx3A4pxYxNtIG
+ F3TQ1INFpvAr2qVStClHuv/iH4hIP9tR0y+BAI97bG7IuUojdBj/5+ydKIWYz1IN5ZWkQjVOgc2
+ nzrtNIZmEMHO2H2TGVZ/Ppsi4s/WoMu9MjCLvZUnKzrLFGOrg/Z7r1Vz4ODaNYO/yQVNSrASREm
+ SupO9EAIzNNxe42/IsNcSgLfU7WVAhhuRvZC8vdlhZJXKX+gBtM06kkzHM4m/aBjyZlzyVgxl9l
+ S+OYg1imbUxB3HgdJRAVASXkxuoq1240m+uzZhyEeWCBiTFw+GqkliJGkFh9yYarBMLv1e72X9m
+ ABMcwY2c3t+AEpLfvP12nm6SCahWwtl7ZOE/bY0mvjSZZnlnOyjunvbGo/WoEO2wq7DfhnuYZAb
+ vQsDyOgDx2w7Ef9YDsyktaNqf69kYT333M+RTVRP0N407Y3wWWABTGvd328zT4I5Dg8DPfFtomP
+ 7vNpfUpJrPlOrKg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,37 +104,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When called on an unrealized pxb bus (e.g. from
-qmp_qom_list_properties), bus->parent_dev is NULL. The pxb_bus_num()
-callback dereferences it unconditionally. Check for this to avoid a
-NULL dereference.
+resettable_container_init allocates a GPtrArray for children, but
+resettable_container_finalize was empty and never freed it.
 
-Fixes: 97b9cb066e5f ("hw/pci-bridge: Add acpi_uid property to TYPE_PXB_BUS")
+Fixes: 4c046ce37af0 ("hw/core: Add ResetContainer which holds objects implementing Resettable")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/pci-bridge/pci_expander_bridge.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ hw/core/resetcontainer.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
-index 11623a5666f..40ffbc4e082 100644
---- a/hw/pci-bridge/pci_expander_bridge.c
-+++ b/hw/pci-bridge/pci_expander_bridge.c
-@@ -85,8 +85,14 @@ static uint16_t pxb_bus_numa_node(PCIBus *bus)
- static void prop_pxb_uid_get(Object *obj, Visitor *v, const char *name,
-                              void *opaque, Error **errp)
- {
--    uint32_t uid = pci_bus_num(PCI_BUS(obj));
-+    PCIBus *bus = PCI_BUS(obj);
-+    uint32_t uid;
+diff --git a/hw/core/resetcontainer.c b/hw/core/resetcontainer.c
+index ef84aa2374a..a4a6476a036 100644
+--- a/hw/core/resetcontainer.c
++++ b/hw/core/resetcontainer.c
+@@ -66,6 +66,9 @@ static void resettable_container_init(Object *obj)
  
-+    if (!bus->parent_dev) {
-+        error_setg(errp, "bus not attached to a device");
-+        return;
-+    }
-+    uid = pci_bus_num(bus);
-     visit_type_uint32(v, name, &uid, errp);
+ static void resettable_container_finalize(Object *obj)
+ {
++    ResettableContainer *rc = RESETTABLE_CONTAINER(obj);
++
++    g_ptr_array_unref(rc->children);
  }
  
+ static void resettable_container_class_init(ObjectClass *klass,
 
 -- 
 2.53.0
