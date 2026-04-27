@@ -4,93 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E48DFF8871
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 20:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B99CBFF8868
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 20:07:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHSEz-0005ZW-La; Mon, 27 Apr 2026 16:07:44 -0400
+	id 1wHSF8-0005hp-UC; Mon, 27 Apr 2026 16:07:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
- id 1wHSEK-0005U3-Qj
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:06:57 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHSEZ-0005Vr-Ff
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:07:13 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
- id 1wHSEI-00058G-34
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:06:56 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-488b0e1b870so181005175e9.2
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 13:06:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHSEX-00059R-DC
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:07:11 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-651cfaa21e6so9259800d50.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 13:07:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777320428; cv=none;
+ d=google.com; s=arc-20240605;
+ b=YyEvOGUMEuTbzoRLFtom1TrV9v3btrJMDzlDvW4ZpRwM0AdJJ6OlZxzNx3ep2Y/0hg
+ iBHOwi/FAgXeQden1fdP0RShvd6m5TyxmXEAzAytS7e7h7nH/F8KEnPXrjRLnzlPa1eA
+ QXbTPdJW9S3LkEfdB3EgX3IBaIlMSjwJBLB1TOBFB28FUTasf6cU5H4T3UkCy6Vk6CG6
+ BzuMiyy+bD4oUIZObWAoLFpa+SxF89sS46IjGzoyzJeTOFiWYhwQVF9RfdSoyyFF0qdj
+ Zcqv/pYt5PebJOvjD5GJPnt3HSjms0UI0vxdAx+nJbOet0kmhnS+HPR/bps5p7XsZqoq
+ v8zA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=xn/TBp/Nx6/YQ4VrEjz2EiO9GEMY9btDVQDgIILDIIs=;
+ fh=1Xd7Wzgni5O6OiQrUAllr3/n2A2vZ24jpGmDtX3IXEk=;
+ b=GptLggTWRHtMaJM3lR1ANkWVNmrQhJ082hY9aHwqlMRCqTg98z6AdbFRGvnSicWgjb
+ nDJtDds/3BtUkY9eskBW2ROwaU4ZqTn9cZN/6WtdhvXDe6bP898Za3gbPwW/vGX/bVRe
+ TXPPid2KtpAtp2/KnvEGTracalhM/26Q/VWR2nRG0Z0HRlwX8OqkjSZ+YKH3ph6kUuOU
+ p25S3C8K52thaCiMRgqCd1EheL7dTVvv3sp2kQH0lEbim5WC8GNY16qRd+aIAj9Fd7md
+ WH9OuIBMTnU0xoL2zSMpYyXVC4+TW4jiz8Ab8ZO2oM+u24CsTVVFw4ITxD559WoHU5Xj
+ X4FQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777320412; x=1777925212; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=bF8gr4QyMcKuzR0D27aXlhf/i+eyndlpKkTT6jnhiHY=;
- b=szbDgQCB53SW/wKtb5PA/LAc/MV3xsJ6KWD3ERvN52xB5fsw1aLHG+QSib89jX4fBm
- te3XlP9eveOXsvV+hLelhohOxUQLe15UYEINiWq2nw570Xf9PS1pq5J8+vylWGO+FvoA
- 5KzS9R3DChlVxfkTrDW6D2q1+M++OHqMNAhMWyz+lqNHAZoxekQCPaufi9GhDuA86Mo3
- YPsnnI0ttcUP8BXURlHK1FqWrnjAPnBh+pyMTWYlGk3wXEMWdbS2dH+vCPcBzFg3iV0l
- FkDo+DbM4AsQVY392+yxoI11ggoC7rl2V1JVfmsw4wFzNIm2qF4fW/bQGkHRpy0iqDg4
- nRiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777320412; x=1777925212;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1777320428; x=1777925228; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bF8gr4QyMcKuzR0D27aXlhf/i+eyndlpKkTT6jnhiHY=;
- b=Dj0pJLBIvK3FaKGpUecp+BsQT51CI5nMpTshX11Miel/K0aX10bGrwkj2cmNGH1s0+
- 3WmylVejUaEiI3XVrgwZmw2kQebAyXajFRUIQ6Kxc4+iPQQV8oSYVvubN86fes8K5Iv5
- MGhNo6eU51uBQo1ncz4g9ykhgRc9PGU5oW9jij8C0xPHYmzTShCHnCaPSrU3NSO5auIk
- UWEyU1SbM2nBBlcq4A2Jqh7aPMLNM0mo9oUBhKrhcXaN3F+/CucJxBnYgC9cnO5PUnIm
- hQfpVa/Cwxf1SNAlg5a4ez3YoqIn8T5MsXyx2PxeYp9tPxhd+UHPXV8XulB0TIrPF2fn
- n2Sg==
-X-Gm-Message-State: AOJu0YxBYJAb6CEvAFdkVzsBW95KAmt7fxTw02ji2JWA8drW2kk3yV8j
- X6LT664BC7w7unRZSIz8K7JavotsI9eSeBZYzhXoYY0yxHRgDe0iyl09
-X-Gm-Gg: AeBDiespBdqlWpAGGDZAoxF6J9B/ZBuTEZSlaClCUhye6aPnGTQRjYb6kBp+gNlPcdz
- Ck6kpq1hDOw3aU0sr7SdTg+DlbrLDA2h7V3g52SK03O0T9WqCnWBLlvNWKRiv2jT76oP3Pto+t2
- nUH57lSlFmh1vMWbaL+NtpRnLLK8k6G4t48EceKSoms9gqWsIUHHQosNsM0tR2JaJFJhbZWmr8Q
- AUcZ32Up/aIVbTR2bWg8/xTdy3m4slpzrPrb16dtVNa4G7XaF/7xdjYn5Fid8HK9yAgrZhP4XUU
- ToS0TUasWQq2RnJnEHOujtyZi3aPby5LhPGLbIGDK/jedgQVtbiEv8LlZTHONQ1t/cBNsBGiwxX
- vADJvWsNuwZhVw7KZWxtL22QyqPCuWiL8dt/i6cxUh/ynErEGO1QBSSFiV+/hkTmvhIqbx9Xxon
- f9aOrlH4mxbdWOrcxT2izy04LLqB1PZ3N+OWt7oGQ=
-X-Received: by 2002:a05:600c:c491:b0:48a:65a5:750f with SMTP id
- 5b1f17b1804b1-48a77b19ecemr1643455e9.21.1777320411528; 
- Mon, 27 Apr 2026 13:06:51 -0700 (PDT)
-Received: from [192.168.0.10] ([2a03:ab00:1000:1b60:331a:b316:78f6:effc])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a773efe38sm12767755e9.13.2026.04.27.13.06.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 13:06:51 -0700 (PDT)
-From: =?utf-8?q?Jind=C5=99ich_Makovi=C4=8Dka?= <makovick@gmail.com>
-Subject: [PATCH v5 0/2] Fix and re-enable GTK clipboard
-Date: Mon, 27 Apr 2026 22:06:42 +0200
-Message-Id: <20260427-gtk-clipboard-v5-0-6968feb31a5d@gmail.com>
+ bh=xn/TBp/Nx6/YQ4VrEjz2EiO9GEMY9btDVQDgIILDIIs=;
+ b=qPbUaJgzWMn6queBydNKAKhrlzcZsMaT9Y/Z6bXAyNxvy6UiaQXyedDVnt0cw5yTu6
+ 0taD0BrfVOLBxPSGvltbrLtQWfJnGibKzNVVjSZOPrbb1epV/L/XiAbJcyC64lP94MQ6
+ xsu8+7Q390/iI7ubZi0nALw200JUvNCNlj0idatNCnSRar0wRps44klxP2MsMkKjghRI
+ 9EZJNjh3jBG2BCw86X9Thp/uNv3mNdgVeRRNZHCtfIaC86jHDxSk0MLMiXT8HrhP1c7Y
+ 0RslL6ngc0Xed/xAjP6JMb/GJjYcW4umjXEvuFxX4dLtm3PDS/6p/I1aXKjJkoGdsZWN
+ 8Tag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777320428; x=1777925228;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xn/TBp/Nx6/YQ4VrEjz2EiO9GEMY9btDVQDgIILDIIs=;
+ b=cQUwimklbG7s+6bJEZDqElqZ+r8GiVSwsWwjzmuhguiyBJtDEa+2HhfUMk/v6Pdm4V
+ EyQO++8Bu8Evpick3M4LIRITwSXtUyYZt/VaLOPW1GabBUoknzmCx334XNbfQ7OpazA9
+ LLL7CF52dXrteUAwk5wS2brdEDDaNvMsC2szmQHicmiC6cD0R7Q/tKnR6Zii+eNL3PJC
+ Hmlu1sHlGGh8QQ9KatGc/+uqUj2wNd82yEwvx33tqzqS1rgtJ2w3fYFUEo0C75nJTaOr
+ Je/zzrpFvBlGYJUMeScxG3tn6HDRSDkHNLo5+VNnnfMEn6WtJfRTQG6721BLjXZLV+Wg
+ zREg==
+X-Gm-Message-State: AOJu0YysAJNNQeyzMzuASz41+J+GDSUUivOlWose4O7RhvQq9uoBdUB5
+ epN7h+v+OJljXnXW/ePb6a6Th8x0U+0kzW8np0097AcBG1/PVq8rOcYbNJFth6UjKVfJyEzKQiM
+ WkD41eRVH6wajQmsaggffwRytiiKEsnw5p2iJiuPpNhH1z/1PauPa
+X-Gm-Gg: AeBDievScEuhgRpRQEOv1dCAu18cYHqgDQGHRiuvcFpZjhdIqQNwAuq4kC3EZgIp9cV
+ q0yE3MgVN5PU3praiZqMgyyZ465GI63+t9aNUXAFKzLPCJ9n7s4YUZ+qA4UBwzxb1/Z86tg4wRB
+ iNcdFAcUduK3VeXXGSwYks6nYN5yCoq69Fcu3dX49ejx8flGgFcljuY6NjV8Ws3feqqC825p/wB
+ dChFjapFRJV3xe4nktdn9ILA7oHYK1X32H6Q0tFvqt6EVaDyPAHBiec2hJjuFS48KV2do6Sku+K
+ ZP2qZ0Kfr0z32yWW2Sjit/wKNB00hwYsE0aUHP4X92UHSjRzmUS3aYI+OeGFMo8HUwhIxlKjauC
+ TqqaG7bUeEbTy
+X-Received: by 2002:a05:690e:4149:b0:654:fd9:2e88 with SMTP id
+ 956f58d0204a3-65bee827fdemr105862d50.31.1777320428223; Mon, 27 Apr 2026
+ 13:07:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIANLB72kC/33OSw6CMBSF4a2Yjq3pgxauI/dhHJQ+oBEoKYRoC
- Hu3MCIYHZ4m3387o8FGbwd0Pc0o2skPPnRpiPMJ6Vp1lcXepI0YYZJkTOBqfGLd+L4MKhrsjAM
- wJeVKE5RMH63zr613f6Rd+2EM8b3lJ7q+/ipNFBMsSwNgc1JYmt2qVvnmokOL1tLE/mqWdEmgc
- Fw7CVofNd9redQ8aQJCCKWsUfzrdrbX+VFnSdNcqvR3CsDpXi/L8gFx8zJUZAEAAA==
-X-Change-ID: 20260425-gtk-clipboard-fdf99db13ac0
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- Jindrich Makovicka <makovick@gmail.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=makovick@gmail.com; helo=mail-wm1-x32c.google.com
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-41-c413f3605311@redhat.com>
+In-Reply-To: <20260427-qom-tests-v1-41-c413f3605311@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 27 Apr 2026 21:06:55 +0100
+X-Gm-Features: AVHnY4LCWLL58TeycfO7g1mW80IJnQkVTMeSNMy2Mx9VI966I-9ViZbIV21LtOg
+Message-ID: <CAFEAcA_7LT-gpArvYpabe9UiFPDGDMEsGOTMeivw90SVDjabeg@mail.gmail.com>
+Subject: Re: [PATCH 41/41] qtest: add "qom-tests" command
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,59 +119,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches change blocking clipboard retrieval function
-calls in gtk-clipboard.c to non-blocking variants using callbacks to
-avoid UI lockup. It is a follow-up to the patch proposed in the GitLab
-issue
+On Mon, 27 Apr 2026 at 20:50, Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+>
+> Add a new "qom-tests" to exercise basic object lifecycle. Instantiate
+> all non-abstract objects, get and set properties and unref.
+>
+> This should quickly find leaks and other related issues that are
+> eventually triggerable at run-time with QMP qom commands.
 
-https://gitlab.com/qemu-project/qemu/-/work_items/1150
+Can we have a comment please that says what you think the
+basic object lifecycle is?
 
-This version adds a similar change to gd_clipboard_request that also
-uses the blocking clipboard API.
+Also, the qom-test already has coverage of "init the object,
+introspect its properties, unref it" -- how does this differ?
+Does it duplicate parts of it? (qom-test is already a very
+slow test so we don't want to duplicate work if we can avoid it.)
 
-The second patch removes the gtk-clipboard compile flag, keeping the
-GTK clipboard always compiled in. By default, clipboard is off,
-can be enabled by -display gtk,clipboard=on .
-
-Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
----
-Changes in v5:
-- Runtime option added, clipboard still off by default
-- Link to v4: https://lore.kernel.org/qemu-devel/20260427-gtk-clipboard-v4-0-176ad9919931@gmail.com
-
-Changes in v4:
-- Replace gtk_clipboard_request_contents with
-  gtk_clipboard_request_targets which can utilize GTK's target cache
-- Link to v3: https://lore.kernel.org/qemu-devel/20260426-gtk-clipboard-v3-0-09555aaeda34@gmail.com
-
-Changes in v3:
-- Use gtk_clipboard_request_contents to avoid text conversion
-  when we only need to check if the text is available.
-- Link to v2: https://lore.kernel.org/qemu-devel/20260425-gtk-clipboard-v2-0-b098f3cf69cc@gmail.com
-
-Changes in v2:
-- Removed forgotten gtk-clipboard comment in meson_options.txt
-- Link to v1: https://lore.kernel.org/qemu-devel/20260425-gtk-clipboard-v1-0-6bd99e708e14@gmail.com
-
----
-Jindřich Makovička (2):
-      ui/gtk: Use non-blocking clipboard retrieval
-      ui/gtk: Turn clipboard flag into runtime option
-
- meson.build        |  4 ----
- meson_options.txt  |  7 -------
- qapi/ui.json       |  6 +++++-
- qemu-options.hx    |  9 ++++++---
- ui/gtk-clipboard.c | 53 ++++++++++++++++++++++++++++++++++++++++-------------
- ui/gtk.c           |  8 +++++---
- ui/meson.build     |  4 +---
- 7 files changed, 57 insertions(+), 34 deletions(-)
----
-base-commit: aa15257174da180c6a8a9d58f87319cfe61c5520
-change-id: 20260425-gtk-clipboard-fdf99db13ac0
-
-Best regards,
--- 
-Jindrich Makovicka
-
+-- PMM
 
