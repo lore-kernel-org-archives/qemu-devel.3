@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8AC5FF8861
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:10:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F96CFF8861
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHH2L-0003C1-KR; Mon, 27 Apr 2026 04:09:49 -0400
+	id 1wHH2Z-0005Nt-Sz; Mon, 27 Apr 2026 04:10:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH2J-0002sh-Of
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:09:47 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH2X-00052m-Mm
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:10:01 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH2I-00029A-2r
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:09:47 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48896199cbaso98648275e9.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:09:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH2V-0002D2-TH
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:10:01 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-43cfbd17589so7844595f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:09:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777277385; x=1777882185; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777277398; x=1777882198; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=pik3BU464hnFHYYfndKD9+oHzuH7HfW/xw+RI/N+w7I=;
- b=bSjpvvv7UM2GLcRF4dHVXuZ2kYxSqZ0BT7i0xGGYLMfq17tFZtYoXQCKoFIlYklmw2
- /gZtTnySIefvoPNAUdR4wMZmcllGSmC+2NY6nW+7jmXGn1j4tlleqTx27efroWvX3BFQ
- MZPcIT/Lfpq5D2XIb89+cI1NCRsD5irrUd1nbTpZKnHWQMSrj2HuPtSyIaYWqXTb4oQ2
- Bl6W3xoCdgFORB5anwTAHQA0Mn9HUTQVmY16xxcu8T1BajD/SS7L51wSMDT3/lMqO/Hf
- ELD2vkxTLDnUyi2E/6cilF3hwSuGj0t8lQLubL3Q71RAXN9gFFHaqpIj9MYlTyu7Pelp
- Iing==
+ :reply-to; bh=+UtYw+wvw45FuO+6veL5kPFJkNDEH8lZGFLqErw/iU4=;
+ b=u9HXGMxfjYeQLBSZhiYTpo0rCr65rzP+g3zpp/G3v1W96FDHi7+h7MEajcO5/fA2m+
+ AYPJq4r/l/DsAXdMmc6R37HMx6BApM5aEgv5IykYSmVPBAcJtu9uw6gMZeZAzTeASiBg
+ je+TkYzVLPp7IFoG1FqZLjwZELs34aBC4Xs4LVfJPNKMJ/i5sH1EmKEo/B+RvpItIC/G
+ ce57K8mVXzrMXSs6lE1HduRHjqCggfgPXw+7teqyvTNiV4dQ8PO13+CrUpxRbeGRjRza
+ x1ZlTGdHILhEoqVckTeserzmsIJXQg4jmm6OLzraj/rdQfaEn/piWkfMHPwBBO9kpYpQ
+ rBtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777277385; x=1777882185;
+ d=1e100.net; s=20251104; t=1777277398; x=1777882198;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=pik3BU464hnFHYYfndKD9+oHzuH7HfW/xw+RI/N+w7I=;
- b=o+3IpP7Hp3QxbASraIPFadtaCNUp4fgp7R58kTN9IlzuD3646K1NgS5FVaTqnFCeuT
- 2b5DNaTlPawCHyDTfF9V3rJ507zvSXi2E21V4LzlbEC+EfsKcBotRSdkMkHa9Fz72XZ+
- 5zh2Yjch/9hfkfnOPSpgnfJq7Qz4li1d46oUyyJioBXHN5PWgN9eESliL4n0QA1uPwD/
- 01suneU4LVzTnvjh99nHU6IqmV+cyDlTbQfgGterXE9TVp3Jxopw47Gd3t55K/D5CoM8
- SS+wFABiBogG274gaL9HQi/IejTNStT6ZlfNxFMik/d3n13GXyokCVhXozZKYellPuY7
- 3Sxg==
+ bh=+UtYw+wvw45FuO+6veL5kPFJkNDEH8lZGFLqErw/iU4=;
+ b=eefGmMkscCqQhjoH5CQnyvfn0qgiyTnrtzbAClLDQzI0BVtMqrpoQ/XhphPXez6Rah
+ QJXBLRNPD8LETXt3mhrE/tts6a0Uod1We9ATz5Q/Zrw3osqssmtuQjDTo7NWDV53buL0
+ ZqpPJ5gdxAPL4z/RnG1w2/aChpDSXIoBGdhvFfuwVDC2hDZNuhVtYGgnrvHO4UtSYV/j
+ PnseroiSedqgj6WoC+B1Vhxm7KP6IG1Yp8u9S/p2/q2SxhWnRPf+/YNCihdjfZoucOOC
+ fzbmFnGowGpgEnBMwoFSdhcnb8uUheZ5UNLqBPQa91yL/CxdkZ4kRzYV0s5xURvif8YT
+ SixQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8VkcAPuRJMszwKyNKDDiFoVK5YwwV3VvcBGF5ubXaLIZJeBG32IS5KkaO1sAulzBItVqOoAmJF1Jmi@nongnu.org
-X-Gm-Message-State: AOJu0Yxw34d+cuMKyERZbKWyzLLk1K05iKmq1LQGnvoSEcFoqJeACter
- I/3aSNjuIYWm2Ks0jTTu3p21zFN+UANytZuauZfVvaWKldO+DKeV81JCNb3kC990IK4=
-X-Gm-Gg: AeBDiesSONercqFo4gCC0y0o6yI6ArlAwVU18UFsdNpt38uX/Xc2u4ae6eCVLDV/wKO
- 2JgdEbqmdeMBLSXaC0Q3v0xFEWOUnyZmH6lbjmuDuwmX9eaciwYOCrnGa5TzD3f9pVfXJQ0A8wN
- 3nVjkV2GRQ90aGAL3f9XmOFdnI/1iUxTqVPhfg9BlqM0ztnF5eyFwueblCLqw/YtLJbCmpZ80TL
- a+MOPNTpTQi5Z+s9LNh07sgYqiHkyT33qHPnAH/dpCvAW/IW2FZOzXWWkN9MtE/9KSEz1hIk/wM
- 3Y3kyWq9eR/YFC66i4rLiQI5b0rpBS8sriI4GEKFjVaWpoBj4bZgEweLdFZMXfamIyDzZ38JByi
- thQBwxUOvtfV7wKIZoaoTr8bM0+ASB92JGUXviY8o9zt87lBWIcdVVZTeatGpBh2HrsJ9mn6Fmj
- U65cDgmt+tQW5lzT8BkdkslhdVH0/beHw8G/26W1TqewKKyi+UpWR3yf06YVNDYwMFbGoli57A7
- i9yjHM61WM=
-X-Received: by 2002:a05:600c:a416:b0:488:e7e4:8425 with SMTP id
- 5b1f17b1804b1-488fb787674mr473342705e9.23.1777277384463; 
- Mon, 27 Apr 2026 01:09:44 -0700 (PDT)
+ AFNElJ9X9MPkYYGEFfbIqj7lALzIUTTHF/5hmpVCsaDGZCtiamrDVbLHZc7blCDnEtfeFevqjyWYZlhrfiA0@nongnu.org
+X-Gm-Message-State: AOJu0YxXpVgfbe6Of0yxCc+CVbPZ0bB0kIqptRPC4lVKbK34lhsa2RTO
+ DJze+CYxuukpQlMwPaACE7SK6Tgvhj3LD3IFjKV1ym0p8ldabwl917PJ2VXE+0VcNlF++JSoyyu
+ NpReNx2E=
+X-Gm-Gg: AeBDieuZuEL6E+HIrdWZrNzpoEhXoB3QsYhxVHpiFXFTKgrBwJ3YEsm3ebecIb20KYz
+ p32w5ju7elgsg8fz5ZSRleCTufp81RVa3zALxaLrAqDY4RZLGJQDGUMoN9zxEvozCtE1jde0goi
+ 4VRrfs6NiIICi2hg5F9GkmJorbCvSZ/XsEhXNEUQyZCVhGCbbAzM4NadTGc0KV5xIltChieMtBX
+ U4mm80rJrKlKI3sinW9OunGQc0eZ1hx0RNCERDx5liXWbdmOVKa5iSozgtup9d/2nBUK0bgjyem
+ kT56WOR7ImBuiVeFUVDg0OIdG59h6Fihdj/j227YyU/E8xIc25NrhanreKZCV+60ZQZuKy0Fbkj
+ 8AmlTeOuOCywuPRgIGgZp8A2AE0oLDdMyRaEz6qpT43WiJC9DPks65f0wfCtmL3NlEu7UZcGHMd
+ Vg9BZqdcThPqYHbCcln6zWisTliDzsiuTIeA8ZxRf2GZ79UwlULCBG1SbSYfrrj8MlnamlWMFl5
+ 6tkfTdEJts=
+X-Received: by 2002:a05:6000:230b:b0:43d:7cb5:43b2 with SMTP id
+ ffacd0b85a97d-43fe3db3150mr64172192f8f.15.1777277397980; 
+ Mon, 27 Apr 2026 01:09:57 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cb1249sm75288495f8f.5.2026.04.27.01.09.43
+ ffacd0b85a97d-43fe4e4d5b1sm81979585f8f.30.2026.04.27.01.09.57
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Apr 2026 01:09:44 -0700 (PDT)
+ Mon, 27 Apr 2026 01:09:57 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Markus Armbruster <armbru@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v4 18/32] monitor: Do not check multiple TARGET_* to build
- 'info tlb' command
-Date: Mon, 27 Apr 2026 10:07:24 +0200
-Message-ID: <20260427080738.77138-19-philmd@linaro.org>
+Subject: [PATCH v4 20/32] target/riscv: Register target_get_monitor_def in
+ SysemuCPUOps
+Date: Mon, 27 Apr 2026 10:07:26 +0200
+Message-ID: <20260427080738.77138-21-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260427080738.77138-1-philmd@linaro.org>
 References: <20260427080738.77138-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,76 +102,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This command is filtered at build-time for a selection of binaries.
-By using the recently introduced HMPCommand::arch_bitmask flag we
-can filter them at runtime, making it possible to compile
-hmp-commands-info.hx once.
-
-Since the method depends on a pair of distinct targets,
-define it in its own stub file.
+Rename target_get_monitor_def() as riscv_monitor_get_register_legacy()
+and register it as SysemuCPUOps::monitor_get_register() handler.
+Take care to sign-extend values for 32-bit HARTs.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- stubs/hmp-cmd-info_tlb.c | 12 ++++++++++++
- hmp-commands-info.hx     |  5 ++---
- stubs/meson.build        |  1 +
- 3 files changed, 15 insertions(+), 3 deletions(-)
- create mode 100644 stubs/hmp-cmd-info_tlb.c
+ target/riscv/internals.h |  3 +++
+ target/riscv/cpu.c       |  1 +
+ target/riscv/monitor.c   | 11 +++++++----
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/stubs/hmp-cmd-info_tlb.c b/stubs/hmp-cmd-info_tlb.c
-new file mode 100644
-index 00000000000..a144e68c1c7
---- /dev/null
-+++ b/stubs/hmp-cmd-info_tlb.c
-@@ -0,0 +1,12 @@
-+/*
-+ * Human Monitor 'info tlb' stub
-+ *
-+ * Copyright (c) Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "monitor/hmp.h"
-+
-+HMP_STUB(info_tlb)
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index 2d0a8f7d48f..0898221a486 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -193,16 +193,15 @@ SRST
-     Show PCI information.
- ERST
+diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+index 35b923c4bf5..47becca37f2 100644
+--- a/target/riscv/internals.h
++++ b/target/riscv/internals.h
+@@ -233,4 +233,7 @@ static inline int insn_len(uint16_t first_word)
+     return (first_word & 3) == 3 ? 4 : 2;
+ }
  
--#if defined(TARGET_I386) || defined(TARGET_SH4) || defined(TARGET_SPARC) || \
--    defined(TARGET_PPC) || defined(TARGET_XTENSA) || defined(TARGET_M68K)
-     {
-         .name       = "tlb",
-         .args_type  = "",
-         .params     = "",
-         .help       = "show virtual to physical memory mappings",
-         .cmd        = hmp_info_tlb,
-+        .arch_bitmask = QEMU_ARCH_I386 | QEMU_ARCH_SH4 | QEMU_ARCH_SPARC \
-+                        | QEMU_ARCH_PPC | QEMU_ARCH_XTENSA | QEMU_ARCH_M68K,
-     },
--#endif
++int riscv_monitor_get_register_legacy(CPUState *cs, const char *name,
++                                      int64_t *pval);
++
+ #endif
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 8ac935ac06e..dbd88fa6655 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2720,6 +2720,7 @@ static const struct SysemuCPUOps riscv_sysemu_ops = {
+     .get_phys_page_debug = riscv_cpu_get_phys_page_debug,
+     .write_elf64_note = riscv_cpu_write_elf64_note,
+     .write_elf32_note = riscv_cpu_write_elf32_note,
++    .monitor_get_register = riscv_monitor_get_register_legacy,
+     .legacy_vmsd = &vmstate_riscv_cpu,
+ };
+ #endif
+diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
+index bca04a7580c..3898595a3cb 100644
+--- a/target/riscv/monitor.c
++++ b/target/riscv/monitor.c
+@@ -27,6 +27,7 @@
+ #include "monitor/hmp.h"
+ #include "monitor/hmp-target.h"
+ #include "system/memory.h"
++#include "internals.h"
  
- SRST
-   ``info tlb``
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 33053d932c8..2f4e1ab4300 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -89,6 +89,7 @@ if have_system
-   stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
-   stub_ss.add(files('hmp-cmd-info_mem.c'))
-   stub_ss.add(files('hmp-cmd-info_sev.c'))
-+  stub_ss.add(files('hmp-cmd-info_tlb.c'))
-   stub_ss.add(files('hmp-cmds-hw-s390x.c'))
-   stub_ss.add(files('hmp-cmds-target-i386.c'))
- endif
+ #ifdef TARGET_RISCV64
+ #define PTE_HEADER_FIELDS       "vaddr            paddr            "\
+@@ -311,16 +312,18 @@ static bool reg_is_vreg(const char *name)
+     return false;
+ }
+ 
+-int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval)
++int riscv_monitor_get_register_legacy(CPUState *cs, const char *name,
++                                      int64_t *pval)
+ {
+-    CPURISCVState *env = &RISCV_CPU(cs)->env;
++    RISCVCPU *hart = RISCV_CPU(cs);
++    CPURISCVState *env = cpu_env(cs);
+     target_ulong val = 0;
+     uint64_t val64 = 0;
+     int i;
+ 
+     if (reg_is_ulong_integer(env, name, &val, false) ||
+         reg_is_ulong_integer(env, name, &val, true)) {
+-        *pval = val;
++        *pval = riscv_cpu_is_32bit(hart) ? (int32_t)val : val;
+         return 0;
+     }
+ 
+@@ -369,7 +372,7 @@ int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval)
+          * to do the filtering of the registers that are present.
+          */
+         if (res == RISCV_EXCP_NONE) {
+-            *pval = val;
++            *pval = riscv_cpu_is_32bit(hart) ? (int32_t)val : val;
+             return 0;
+         }
+     }
 -- 
 2.53.0
 
