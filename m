@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEE40FF8864
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:11:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 824CBFF8862
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:11:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHH3F-0008LC-Lb; Mon, 27 Apr 2026 04:10:45 -0400
+	id 1wHH3s-0002yv-2Y; Mon, 27 Apr 2026 04:11:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH38-0007yR-58
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:10:39 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH3p-0002lk-TN
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:11:21 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH35-0002b6-D0
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:10:36 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-48909558b3aso98958715e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:10:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH3o-000345-DZ
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:11:21 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-488a14c31eeso80757325e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:11:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777277432; x=1777882232; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777277479; x=1777882279; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=/VyMpbZZBycD9uof5+Mpu9kfOlAUg4ZoswdMUmEvtEU=;
- b=vIpp4t7VkMzVW+R+oE4YRUXLC2z7owgFIl6fqZTccFUV0ljJux1pJYZhkWeJdeYLWw
- LzHxxD38E9TGEz7cm1Z4xQD8GmsOdH3djdTkaZ1KbmDUEquUVCCghocLhyISAZMf3RXD
- mjrbNxJcF2yvCiIr1vgkWav6sVC2sE8lnWP3wZ0BpM+jb/nC8NlaZIVWWcOu6AkKirLb
- ZaPs3+ADJF3vv0MbxyyAZWbqhn0mUyXgemxH/1oCrTQaFcttNqMKvHvrDRj/PmmpcVKM
- 28rZGIGoEOL6c9j2+zQntEyT3usbFAN00CdQjNem/ryVoMTv/C0mRJjZaGjI4kuvTsq/
- 9YkA==
+ :reply-to; bh=s+q06IceCN1KLToOU+ythjt+hQZ4+sEQyBGiYFrPOm8=;
+ b=GVFHTrfZCuf/zQciTR16JU7udSZ+92Tt4U1krGlYVV0HXXZgdUsqBXNYMQYTEBgWZW
+ HLOMLu4gqMIuyQT5wxyd9eyS1GXq2HJhda8arTmj/X748OARBEVkm3U9rJVCYy2pmL88
+ 1caLINaW85xOigi8BpWFTqoIXQVYpZp21NeAXokKnqdjJ4FlGqpf0Pp9i5cSDcrV4Wf/
+ F4M2+5hWUXnKO9MEuawBiUV0fuZ/0nbuNaYesXsTRiFbxhavKZpiMPHIaDcI5iTVf7A6
+ Kfxo7TbWahFGaqdtkHOHC4QQeR3tczyqXK1WNXS+60nGPYCTOL1bZLGDCPDfi9QDQPCP
+ Pqug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777277432; x=1777882232;
+ d=1e100.net; s=20251104; t=1777277479; x=1777882279;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=/VyMpbZZBycD9uof5+Mpu9kfOlAUg4ZoswdMUmEvtEU=;
- b=q8F+ybM3+gUqHw6MjvqM7Fvvyle2qCY5YWFl65B/VIGP1D2WntVCi0j0Usw2RN+y7t
- jFPdKbmZl1SZfP1DgyY+kAlnI1he4xxGwOJ9CTSnc5/8s3yfICsipZCe567DodqgFBr+
- l7HGa4fJt06+O05nW8hMZZgwbaRJznIdMK7gC3cugOiX6OXs1RF0v6x/htfIUHtI3umO
- s+a+KTG/J5uyEKoKaIlxIC6FGaCvIUY20nsEQi3ETIf0rk0oiTvDOWYEswlkVfzeAez8
- KxCCvqFdGrQHAbMm38DnxpPkVrYYnzQHaVTdBFO7bDafLvcCM6EuVlbfQvj5SGCrCuuz
- nZPw==
+ bh=s+q06IceCN1KLToOU+ythjt+hQZ4+sEQyBGiYFrPOm8=;
+ b=cBGQS8fB5VEdRPNiKwMVzSr3HCas3ex5Si3auWjQuBmKfkMgOGdPw3jKvQl7mftqny
+ /XE1N7YKsNBgp22sKJn9dJor1qLXFcJwnIhwXegQrV3OHLSnCEZTL7v+2/8yeHpZI+IL
+ 0oxd5gHSKhE+InM2omGOkYyheD4IwPMpj0s1IV+/ia/BYHhk+MCNTkci2PjZ4Iwn0zCw
+ u6jMNnvOsGRbZG9CyaG0vbKhQ2ns82O8R5EGJticCT+6pPFt866JKMV2GHFLSj1M+k7b
+ bBeThqVAr+rltqD7d6hWG0PWohCPu+zbJiyRdntpHyQOXwBY8MVXm/8r8hk6SpohcG/J
+ uGxA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8Jgb0tbXPOQJy57LqMj36Wq8tQNrDqH9+NU652+o13fO9sKB1JtrkS+StQY1fbU7IpT2hH6FQl6L62@nongnu.org
-X-Gm-Message-State: AOJu0Yxnag+owCtjG7/beDkr8ONhzPlPsRfctS38YILThW9Ju6po+XZT
- SFGagPjNgfT9QvIQXWoamkso5Q6KlNgKUHZKyPbFyU8qUrVlI6hC0SRHyIIFYNK/++g=
-X-Gm-Gg: AeBDiev/qbvI7bIQMfVm0FNbYN/cgJRIeB1YfIkkE4gT+IJdW+uwjAdLaZQ81VzzrnH
- NNjzvKdofAUvem/uNRmNBLI9dUz2ptL8dBkJf1TMQQVGZ5aFSSs1w3QsXXkC0pbdC+fM+eH4NMX
- 2m9pYb1w9w6GR2NkZdAx7gyUq5417k1WKMMTrWajcp3uqEnsF/y7KpPUDbFt8LkgKSwpa9uBIwu
- LHnWhdQ+/tiFeDpjK4Q49dpXaB/iA6LH35QlfsdPpXGOecY4BqfK6ggdtzLZ6CRlIOPuaxHidG/
- M40cYhK+a/T0F6tqGH+VEFiMolvBlkpG9yImQFBYRXjp76Tf3MPh7srYi6YQqXHK0DtCnIZ/zTI
- sDe+Fqe7C/uMVnAvwDZqIqq3mTRGVTsNDF38f0V/c+rk4B2gSLA68maAA10ZESRX/wf6MDbstOy
- nXKPjAuLgwZJQJnJLDKjBZW+oDxY2lCxkYaLy4g2F8U5biiPZyLH77fsH3ZHjyWDT2G5IUK8JnD
- UTg9xmFitE=
-X-Received: by 2002:a05:600c:37c4:b0:48a:5501:7995 with SMTP id
- 5b1f17b1804b1-48a55017b71mr410419755e9.18.1777277431729; 
- Mon, 27 Apr 2026 01:10:31 -0700 (PDT)
+ AFNElJ9bVLui7zxU6AQSRhf8xkqQKQpmvxwWQrucbXX8g2tbCUGN/Ms2mRmik8qO2OPRHTCV/PdG45wny2BQ@nongnu.org
+X-Gm-Message-State: AOJu0YxFKp0RdS4fSuD2Wiums/zENR3LOk/4sXhajmwi+kz990UhPF0F
+ +hz64y93o5woJpl71hZEG7mxE8imEmP3HWVR/mA9x4BZBkXjyNurxCoOYQ1dkSAbEAc=
+X-Gm-Gg: AeBDiet9vpNpbXrVaJaf9687IFGMLGbDQnjyaVZs2GYao8Nvavtyc+YfdlvJ/e4dODH
+ wJC7YSCuKtr3MkMMTwxfIWuMvJ7FYEhXMW0S1pAHcjgfQfcDEB/rVFXVNOVFMfD4vv0DcJkCS+B
+ 80Ggp8IjqeiUnOapkkntDYEw3LYtgPGX0Zv5nBna+PxHqR1+syWdBuemcc4RVs6olAu5iPMIIEj
+ Epv+8zLM5kLv99td5oZm9+DHYdDx+D0QR40LVfuE4CPM22ivMQStNltOm9icGvxWUrz0TsleuI+
+ wrS//RB4rFwXQ4uDo+Yg45n8YJWQ7YN/IweeMi2qxir9nY0UWhmgKIGvylg8PXsP2z1u9VBwske
+ hVUsmLm2MfOOuaY8G92yVTqdPfLsF5P4sz/9dZ7OG0W9ioTFPBmqVUdmKUO4amc/TUnM/jfZplj
+ UlO34TwLwFQNus6nEPtwcec5Ddk/PDT4lqWthv7FXJub3SsDbvQxqmIG9YDlJKTbgfw6dYeeNsJ
+ i1WKYJB65A=
+X-Received: by 2002:a05:600c:a31a:b0:488:b239:77ec with SMTP id
+ 5b1f17b1804b1-488fb778db4mr467279995e9.17.1777277478770; 
+ Mon, 27 Apr 2026 01:11:18 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fb7bf7besm280894725e9.34.2026.04.27.01.10.30
+ 5b1f17b1804b1-4891df9e50asm470997225e9.0.2026.04.27.01.11.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Apr 2026 01:10:31 -0700 (PDT)
+ Mon, 27 Apr 2026 01:11:18 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Markus Armbruster <armbru@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v4 25/32] monitor: Forward-declare the MonitorDef type
-Date: Mon, 27 Apr 2026 10:07:31 +0200
-Message-ID: <20260427080738.77138-26-philmd@linaro.org>
+Subject: [PATCH v4 32/32] monitor: Remove hmp_info_pic() left-over declaration
+Date: Mon, 27 Apr 2026 10:07:38 +0200
+Message-ID: <20260427080738.77138-33-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260427080738.77138-1-philmd@linaro.org>
 References: <20260427080738.77138-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,48 +100,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than having core header forced to include "monitor/hmp.h"
-to get the MonitorDef type declaration, forward-declare it in
-"qemu/typedefs.h".
+When converting 'info pic' to QMP in commit 795eaa62fa6 ("hw/intc:
+Introduce x-query-interrupt-controllers QMP command"), we forgot
+to remove the hmp_info_pic() declaration. Do it now.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/monitor/hmp.h   | 6 +++---
- include/qemu/typedefs.h | 1 +
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ include/monitor/hmp.h | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index 8abe3168924..22784bd4c79 100644
+index c8ce8579424..f9b4c4e2982 100644
 --- a/include/monitor/hmp.h
 +++ b/include/monitor/hmp.h
-@@ -24,11 +24,11 @@
-         g_assert_not_reached(); \
-     }
- 
--typedef struct MonitorDef {
-+struct MonitorDef {
-     const char *name;
-     int offset;
--    int64_t (*get_value)(Monitor *mon, const struct MonitorDef *md, int offset);
--} MonitorDef;
-+    int64_t (*get_value)(Monitor *mon, const MonitorDef *md, int offset);
-+};
- 
- const MonitorDef *target_monitor_defs(void);
- 
-diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
-index 416a8c9acea..07f2ae7c9f1 100644
---- a/include/qemu/typedefs.h
-+++ b/include/qemu/typedefs.h
-@@ -72,6 +72,7 @@ typedef struct MemoryRegionSection MemoryRegionSection;
- typedef struct MigrationIncomingState MigrationIncomingState;
- typedef struct MigrationState MigrationState;
- typedef struct Monitor Monitor;
-+typedef struct MonitorDef MonitorDef;
- typedef struct MSIMessage MSIMessage;
- typedef struct NetClientState NetClientState;
- typedef struct NetFilterState NetFilterState;
+@@ -52,7 +52,6 @@ void hmp_info_cpus(Monitor *mon, const QDict *qdict);
+ void hmp_info_vnc(Monitor *mon, const QDict *qdict);
+ void hmp_info_spice(Monitor *mon, const QDict *qdict);
+ void hmp_info_balloon(Monitor *mon, const QDict *qdict);
+-void hmp_info_pic(Monitor *mon, const QDict *qdict);
+ void hmp_info_pci(Monitor *mon, const QDict *qdict);
+ void hmp_info_tpm(Monitor *mon, const QDict *qdict);
+ void hmp_info_iothreads(Monitor *mon, const QDict *qdict);
 -- 
 2.53.0
 
