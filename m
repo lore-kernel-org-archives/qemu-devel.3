@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62486FF8867
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 21:04:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 870DAFF8864
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 21:04:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHT5c-0000VL-HN; Mon, 27 Apr 2026 17:02:00 -0400
+	id 1wHT5a-0000PG-50; Mon, 27 Apr 2026 17:01:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5Z-0000OO-2S
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:57 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5R-0000CV-7c
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:50 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5X-0003X1-A9
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:56 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5L-0003Tn-UR
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:45 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id BB7A040979;
- Mon, 27 Apr 2026 21:01:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37916C2BCB5;
- Mon, 27 Apr 2026 21:01:52 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id A997360138;
+ Mon, 27 Apr 2026 21:01:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE350C19425;
+ Mon, 27 Apr 2026 21:01:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777323713;
- bh=KG2fwHQvDISByslvVy41WuAySIFV/sri4ZntnBzQCgY=;
+ s=k20201202; t=1777323702;
+ bh=qF/E4NTHGEzqRslmvhkeGAs4imRoAsHDEXNz7p4ViJw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=QrfCq7fg5Gt8lgBWYHXyxT9bxIlTKU6EXx4r+JIfiDYKBcYAUzZ4EGLwpUXOI10hy
- ZWScrmuR0jKxKt1MXAleT1RjQDc7QGoULmGQpN+11y06Jvn5WVXmTIiOS6fd2GhmHH
- 875cW+xQjT8IQyC5DTJybpUr5f3yuZ8QkzxeLOJfyZ8V/rYsJZEzwguDqV+vh/ZbgC
- TzH9DD7BoTfJ/WjVw3VTiZSzOLhdHvcyRV4At+8UGx0ccohCopBUqL8PWAvDHyvWwi
- 7P4DzzY4PkTT7aEKPkA1Rv2MfrybaYi8rcNm4oauh90IS1lNVYAodbwl8vu40tH6h5
- al9013YmhO8nA==
+ b=dolpgwhFKQTL1J8SAS2gLOQ+ffjAi00MC5jjjJsUSgIdbJtS3upO1e7Nz1THbqmTu
+ fEAsM8D3PyNRWCzXJoWlJtOfUJgoTfu5r6D+WFYTf05YpC8jc/ObdAb4Dkg7PJ4lH0
+ 4hV4w3RiTKmEOfr/Ybw8Q2/+wx0OBlXqpcDd4NxkE3my8GxHMj2+bESMhGn0lQ+tOD
+ oKJPCSj6J95ZBFIDWo3WRn8bCm1PyFtoUnFizvoI3NBrNVvwMmY8Ke9JwVyUmiGNVc
+ lJpS+WM1ikcXqUtxVdU54Q7/bFflFveQUmMZU2WMRd9TCaCY6hXjDfw1nRmGGSZaFt
+ c77TzS2rVMhkg==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL v2 09/15] linux-user: Define SO_TIMESTAMP*_NEW and
- SO_RCVTIMEIO_NEW
-Date: Mon, 27 Apr 2026 23:01:27 +0200
-Message-ID: <20260427210133.6016-10-deller@kernel.org>
+Subject: [PULL v2 03/15] linux-user: fix off-by-one in
+ host_to_target_for_each_rtattr()
+Date: Mon, 27 Apr 2026 23:01:21 +0200
+Message-ID: <20260427210133.6016-4-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260427210133.6016-1-deller@kernel.org>
 References: <20260427210133.6016-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,108 +72,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Yixin Wei <easonwei1998@gmail.com>
 
-Define the entries which always use the 64-bit timestamps.
+host_to_target_for_each_rtattr() uses "len > sizeof(struct rtattr)"
+as its loop condition. When the last rtattr in a netlink message has
+exactly sizeof(struct rtattr) (4) bytes remaining, the loop exits
+without byte-swapping its rta_len and rta_type. A big-endian guest
+then reads rta_len in the wrong byte order and fails validation.
 
+The companion function target_to_host_for_each_rtattr() correctly
+uses ">=" (added in commit fa2229dbf8). The kernel's RTA_OK macro
+also uses ">=". Fix the host_to_target direction to match.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2485
+Signed-off-by: Yixin Wei <yixinwei@meta.com>
+Fixes: 6c5b5645ae0 ("linux-user: add rtnetlink(7) support")
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: qemu-stable@nongnu.org
 ---
- linux-user/alpha/sockbits.h   | 7 +++++++
- linux-user/generic/sockbits.h | 8 ++++++++
- linux-user/hppa/sockbits.h    | 7 +++++++
- linux-user/mips/sockbits.h    | 7 +++++++
- linux-user/sparc/sockbits.h   | 7 +++++++
- 5 files changed, 36 insertions(+)
+ linux-user/fd-trans.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/linux-user/alpha/sockbits.h b/linux-user/alpha/sockbits.h
-index d54dc98c09..0201ab9374 100644
---- a/linux-user/alpha/sockbits.h
-+++ b/linux-user/alpha/sockbits.h
-@@ -75,6 +75,13 @@
- /* Instruct lower device to use last 4-bytes of skb data as FCS */
- #define TARGET_SO_NOFCS     43
+diff --git a/linux-user/fd-trans.c b/linux-user/fd-trans.c
+index 64dd0745d2..7f55a0690b 100644
+--- a/linux-user/fd-trans.c
++++ b/linux-user/fd-trans.c
+@@ -480,7 +480,7 @@ static abi_long host_to_target_for_each_rtattr(struct rtattr *rtattr,
+     unsigned short aligned_rta_len;
+     abi_long ret;
  
-+#define TARGET_SO_TIMESTAMP_NEW        63
-+#define TARGET_SO_TIMESTAMPNS_NEW      64
-+#define TARGET_SO_TIMESTAMPING_NEW     65
-+
-+#define TARGET_SO_RCVTIMEO_NEW         66
-+#define TARGET_SO_SNDTIMEO_NEW         67
-+
- /* TARGET_O_NONBLOCK clashes with the bits used for socket types.  Therefore we
-  * have to define SOCK_NONBLOCK to a different value here.
-  */
-diff --git a/linux-user/generic/sockbits.h b/linux-user/generic/sockbits.h
-index b3b4a8e44c..33e6c3a572 100644
---- a/linux-user/generic/sockbits.h
-+++ b/linux-user/generic/sockbits.h
-@@ -58,4 +58,12 @@
- 
- #define TARGET_SO_PROTOCOL             38
- #define TARGET_SO_DOMAIN               39
-+
-+#define TARGET_SO_TIMESTAMP_NEW        63
-+#define TARGET_SO_TIMESTAMPNS_NEW      64
-+#define TARGET_SO_TIMESTAMPING_NEW     65
-+
-+#define TARGET_SO_RCVTIMEO_NEW         66
-+#define TARGET_SO_SNDTIMEO_NEW         67
-+
- #endif
-diff --git a/linux-user/hppa/sockbits.h b/linux-user/hppa/sockbits.h
-index 23f69a3293..2304dbbf79 100644
---- a/linux-user/hppa/sockbits.h
-+++ b/linux-user/hppa/sockbits.h
-@@ -67,6 +67,13 @@
- 
- #define TARGET_SO_CNX_ADVICE           0x402E
- 
-+#define TARGET_SO_TIMESTAMP_NEW        0x4038
-+#define TARGET_SO_TIMESTAMPNS_NEW      0x4039
-+#define TARGET_SO_TIMESTAMPING_NEW     0x403A
-+
-+#define TARGET_SO_RCVTIMEO_NEW         0x4040
-+#define TARGET_SO_SNDTIMEO_NEW         0x4041
-+
- /* TARGET_O_NONBLOCK clashes with the bits used for socket types.  Therefore we
-  * have to define SOCK_NONBLOCK to a different value here.
-  */
-diff --git a/linux-user/mips/sockbits.h b/linux-user/mips/sockbits.h
-index 562cad88e2..1f479d54aa 100644
---- a/linux-user/mips/sockbits.h
-+++ b/linux-user/mips/sockbits.h
-@@ -71,6 +71,13 @@
- #define TARGET_SO_RCVBUFFORCE          33
- #define TARGET_SO_PASSSEC              34
- 
-+#define TARGET_SO_TIMESTAMP_NEW        63
-+#define TARGET_SO_TIMESTAMPNS_NEW      64
-+#define TARGET_SO_TIMESTAMPING_NEW     65
-+
-+#define TARGET_SO_RCVTIMEO_NEW         66
-+#define TARGET_SO_SNDTIMEO_NEW         67
-+
- /** sock_type - Socket types
-  *
-  * Please notice that for binary compat reasons MIPS has to
-diff --git a/linux-user/sparc/sockbits.h b/linux-user/sparc/sockbits.h
-index 0a822e3e1f..42ecfdc8f9 100644
---- a/linux-user/sparc/sockbits.h
-+++ b/linux-user/sparc/sockbits.h
-@@ -61,6 +61,13 @@
- #define TARGET_SO_TIMESTAMPING         0x0023
- #define TARGET_SCM_TIMESTAMPING        TARGET_SO_TIMESTAMPING
- 
-+#define TARGET_SO_TIMESTAMP_NEW        0x0046
-+#define TARGET_SO_TIMESTAMPNS_NEW      0x0042
-+#define TARGET_SO_TIMESTAMPING_NEW     0x0043
-+
-+#define TARGET_SO_RCVTIMEO_NEW         0x0044
-+#define TARGET_SO_SNDTIMEO_NEW         0x0045
-+
- #define TARGET_SO_RXQ_OVFL             0x0024
- 
- #define TARGET_SO_WIFI_STATUS          0x0025
+-    while (len > sizeof(struct rtattr)) {
++    while (len >= sizeof(struct rtattr)) {
+         rta_len = rtattr->rta_len;
+         if (rta_len < sizeof(struct rtattr) ||
+             rta_len > len) {
 -- 
 2.53.0
 
