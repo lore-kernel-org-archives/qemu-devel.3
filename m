@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A9E3FF8867
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 20:50:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F92DFF8867
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 20:51:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHSuE-0005Kt-T6; Mon, 27 Apr 2026 16:50:14 -0400
+	id 1wHSv7-0005pn-Gj; Mon, 27 Apr 2026 16:51:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHSu2-0005Gj-Gd
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:50:04 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHSul-0005nv-C8
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:50:48 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHSty-0008JC-UP
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:50:01 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-488a8ca4aadso148609635e9.3
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 13:49:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHSuj-0000FK-2C
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 16:50:47 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-483487335c2so105066835e9.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 13:50:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777322997; x=1777927797; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777323043; x=1777927843; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=K9LQMhbq3UafJT/gSRJmDPNRrwYwFOmC8pKvQuYGvac=;
- b=ljWI9TEbZr9FZwmBlGq4XmlzlsJ502CLphZI0jNiAl1M8cgz4W344QGxF5x33LdJpL
- gtYfUFvZX+10DuudIVv2FB9pDFyXFmXYiL0xPAL2ENW48tG5IN3YfkMPgNrPegzNzP7T
- 0J2Bpwqi6/Qb62HdXXsZVoVbhBWGmIj/7vFHFE5GZxpSoqc0SBMgSA3R/XOxDWLQBdDn
- VKkpOwYNbyc6ewDvjp48gU6R8CyZdcAjOwf9IUJYzGFE0Ocg6hMiTeTo63E+J28g16Qa
- k0imIqqia0UVRKUs5zLSP+abkVCAlN6PgfGSQuHeo5wzfQeuNMWkK2RbxQpg4LsKk3t6
- c9dw==
+ bh=nLBjKeevaWO4Kc5sT5HN7jwz2+BINbfgfm07ZBE+LZ4=;
+ b=bA+XaqUdueLZkps1z3qDay1ITJ6c+FFnvSnau9NyyBeCJx/RBh7TJlfbWCVyEKMXt3
+ IDu2qUm8WLK2uLlXOszLM9AHlj6sjhAO8P1o0+yZy8YAGepQelNfyXhvl47nLKNurUe/
+ 9taqPQoZ0xltTE4S7SerCHs4XjAYgk8cq5Ena9yW/FgeKpWSSZyDlZbNYjBuJgAROe5E
+ FQd9R3IC6zUJZo9j46xCEowzpY3Bsr/pMWvNIuACzjW2mbhiKcFM0947k24dQwVqOG0x
+ 8oZl82tgmyvo482GrCNNw2YzVV4nTSJf0FvVBKeNkseATlAskJAH09qiJawGJuORiEc0
+ Pibg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777322997; x=1777927797;
+ d=1e100.net; s=20251104; t=1777323043; x=1777927843;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=K9LQMhbq3UafJT/gSRJmDPNRrwYwFOmC8pKvQuYGvac=;
- b=lwi0bUhEG9cMJJDGdQ2jOFpib/q8ce35tsFeGqDmBBvFPVmorKjZXRpg84F7Iw7fHh
- H5NP6thZmkrWk0kxqqvE9L5KXgy9pcxcq29H3uTd5Ng2JDCxmK13sx73Y38Jd5X1mmWs
- DZq55OG57/9m2TOBPOoFY4iBb1KKmKxE6Nd9h8wM6EpiQuX/olQn0lohqRVSLVK0NrFx
- A/VKXe907wGNX3xeXWArM4cv4C4J2rsY4U1QTAyE9wKGFcDUFQT+mLAzg+iVsrx4nkjK
- vIKl1xCM5ogzsKqXcYYTDD8U9wLofQaBryoyP38LCFx5pP0DkHvQFQhVBbIgWBui8csH
- /y3Q==
+ bh=nLBjKeevaWO4Kc5sT5HN7jwz2+BINbfgfm07ZBE+LZ4=;
+ b=U2uWZA31oxT+gLsbYh43Mtqn3JokWkUg16QD4AhEjbUmI3slj+rl4B3HwGgl6vGxCc
+ hPhZoAsF+SYgZTy2tAad9HLYLNrpQIHIwISctSAuyLHr4TgF0HRhG4lVONtG+fDVeNEt
+ bu2ylYCjf3oviMXhM29HvHKQ/+zArteooFgDMdYJ9ElktCmAeZrwGxbRfJbuIZrUCWrV
+ 5CYC+q6XEdjryBsJcFk/w7jCEnnJhEkSiCm7M/V+I91hWmcH+3+xrcUK6xPj4/IXHkIl
+ kRNsM+hvsbe5yms9bD4cSfckZkfRhaL4LrGp5BnFckfaJsqE1EDhUiBiQq+osizckhBU
+ lVjQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ94du/rj1wvpYYBHSS1eXPruggNw8AbORkwdxYbwJJmIHG7PmsdmxgbjRoAvrVye2pLRhdtLabErsN4@nongnu.org
-X-Gm-Message-State: AOJu0YxQEW937DrzEEnWoFdMJxexsSW2lszDG4GdKNIov+TriHMLfbgp
- IXR8cSiPY01Nay3vwLdaYCEI/TX0duS5uwd3sT7WpLkCj//KHMUiSe5Nt6t6tx+JoL8=
-X-Gm-Gg: AeBDieuH63PXWl/P1U/WDjKbneT6rHIJmVtR74JglL1P8X+btBT9mdY79gk2HdhccEW
- ZXKvenodslj+2laNk8moA3jetEPeFSnKtchk5SiLV3siNDDTta3xi4QrWf19L78HI1h+FHe+7PZ
- OB7H31vX9vdZDE/udAhPpUEy0AdyhKZS3yhVnDdpFvXVCIvaCKMNZifqKudVQ8paGLRKZqDwS6Z
- co9HOfrQXFdeO2PFd2Rvrax3ogI6TnihjTpGQxXTA9BIQ5pr43NSUKJ/xWAxXW4NIDArKl9Xg6I
- j4/yw9i6XUPMLYiyeqA03sQUpNFa6/OFQ4sU+E3aXSXb7eGp41gZcVm8U6RYw7/IBek3MlKtX7n
- +S2sXa71vzwVGKVfGCp9SPZ9gBE64JZQtcuC7XuJA3QV5oSLgd/aFhXcTLrMw+dSP47TMlK8rF7
- 7jTGZervfdWC+ClTG92pndYN4V0qF7phZjTNnb0rYBopp4/lpSiM/FtPCChr3eDUTqn+9ovE3AF
- bD7
-X-Received: by 2002:a05:600c:8b52:b0:488:a882:c7 with SMTP id
- 5b1f17b1804b1-48a77b1a4aemr3298595e9.25.1777322997325; 
- Mon, 27 Apr 2026 13:49:57 -0700 (PDT)
+ AFNElJ+qkhUXAptOyCboI9af1uH1uVozuA9QKIbooQH/r/7nCOg7b1D7mRezvb7bgjXysS4MHGxZ1/EE1Ky5@nongnu.org
+X-Gm-Message-State: AOJu0YxAN/KSdXRtrqJuN8cTDFOdfFITxVgWoJvfq9/93naMDCkkGbjg
+ bjnaYOn8UWwh+wNfsTjUOY6FJM0Ten9qt8iusARAhj8ukHWKtFMjVy1mlFo1UtUQhxo=
+X-Gm-Gg: AeBDiesL9J8DiK5x8eG+fNU+s+voQ1yvI1n6J1uenrYl78nEuSFtv5jkk6d2A0B3Kfm
+ CmPYcPbNqY7bOKpXDbIf+Ij/FR6nZhw/lGOKmObMa8Ledx8tNJ09JX5H5LBobbYxRLms+9O1yQT
+ UpJDYFQvcIe1AgEFccWK8s2NgJZWZA+XqN9ySEmGXHuQADV8J2dvT68UpNbiTLrMNjbpXyneV7g
+ 4RFk2IDzL+RUnpjnYCfVD60miCUCxQIXH3broA2IlJa0MX00i8RsyUiYKUl87NL5nN7RZ5zpzts
+ xvFbLikh0Xz6JpqsmHIM+xqu9hnP80Zj4a8AQbAmS4WC6b3m2a5cTH7xC3nPFF4Fj115C6m0OXG
+ SnIb368AZaN73G3Kid4PR9B6/kwg1cgT6u6sdtRgxrcUgSLoq/Q1qpj/CuizJdyOCCJzAODIU9p
+ YvAV+uTd489nBcN5hP7uzojwamT97JhJtWbAggjUekXH4C4ea5+z61cZdO/PCGTSgoAU3dojdH2
+ sLW
+X-Received: by 2002:a05:600c:4444:b0:488:aa33:dcbd with SMTP id
+ 5b1f17b1804b1-48a77b22e4dmr3777915e9.26.1777323043529; 
+ Mon, 27 Apr 2026 13:50:43 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a77449ce5sm6328845e9.0.2026.04.27.13.49.56
+ 5b1f17b1804b1-48a77aeb223sm4464845e9.3.2026.04.27.13.50.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Apr 2026 13:49:56 -0700 (PDT)
-Message-ID: <2143ed51-4076-45f5-aea1-9e43fbb0ae77@linaro.org>
-Date: Mon, 27 Apr 2026 22:49:56 +0200
+ Mon, 27 Apr 2026 13:50:43 -0700 (PDT)
+Message-ID: <ef21c07f-1a59-4b31-8ded-aaa997a6661d@linaro.org>
+Date: Mon, 27 Apr 2026 22:50:42 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 33/41] hw/arm/sbsa-ref: free unrealized flash devices on
+Subject: Re: [PATCH 34/41] hw/arm/virt: free flash devices and OEM strings on
  finalization
 Content-Language: en-US
 To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
 Cc: armbru@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>, qemu-arm@nongnu.org
+ qemu-arm@nongnu.org
 References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
- <20260427-qom-tests-v1-33-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-34-c413f3605311@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260427-qom-tests-v1-33-c413f3605311@redhat.com>
+In-Reply-To: <20260427-qom-tests-v1-34-c413f3605311@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,19 +108,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 27/4/26 21:42, Marc-André Lureau wrote:
-> Flash devices are created with qdev_new() in instance_init and added as
-> children, but the initial reference from qdev_new() is only dropped by
-> sysbus_realize_and_unref() during machine init. When the machine object
-> is destroyed before realization (e.g. during qtest device introspection),
-> the flash devices leak.
-
-Hmm PFlashCFI01 is opaque, OK.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> Fixes: e9fdf453240e ("hw/arm: Add arm SBSA reference machine, devices part")
+> Flash devices created in instance_init via qdev_new() hold an extra
+> reference that is only dropped on sysbus_realize_and_unref(). When the
+> machine is destroyed before realization, the flash objects leak. Also,
+> the oem_id and oem_table_id strings from g_strndup() are never freed.
+> 
+> Fixes: 602b458201ff ("acpi: Permit OEM ID and OEM table ID fields to be changed")
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->   hw/arm/sbsa-ref.c | 12 ++++++++++++
->   1 file changed, 12 insertions(+)
+>   hw/arm/virt.c | 14 ++++++++++++++
+>   1 file changed, 14 insertions(+)
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
