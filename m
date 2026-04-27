@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3F1BFF8860
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:49:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8065AFF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:49:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLOG-0008Mm-BN; Mon, 27 Apr 2026 08:48:44 -0400
+	id 1wHLOZ-0000GB-Rw; Mon, 27 Apr 2026 08:49:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNL-0007lF-8C
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:47:51 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1wHLNQ-0007nV-0a
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:47:53 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNI-0005RA-KM
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:47:46 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4896c22fcbaso74975685e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:47:44 -0700 (PDT)
+ id 1wHLNN-0005U3-Ip
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:47:51 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-488b150559bso81056025e9.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:47:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294063; x=1777898863; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294068; x=1777898868; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ghI8DYvTSL+/rSM2e8e78x9QvBfh+Z450FrfGt1c51A=;
- b=WRVZjrrSXHuMQuAuA8vi58MReJUCZbOA5MUnnD/9CBbd6Pi+QTKsbVZaGaxqiOWLi0
- HdSMKAXHjt1DYElZAFmpQdVv/RHQMBfqBZy8+rKuJ47XFGrDsoPdmkuCRoDQBiDzW3+0
- p4c+/eCJtpTPqIe5DiuH3jOkLtpTNBVoZRnKnvG2f1ooYTItW/kRpoGdum8i0JcGPcYA
- 4F/Mr1RtfeKgQ2TQhfxGAENP4hvFre0sdopFsS1wMeDzwHvpQKrWUwFku/QJhkDpB3KZ
- 6D5ct5bC4WOND4sSWpB21WzjhPxkf9GHm/IqurkrhX+n1EuroPlBik3aQov76dIIsI6w
- 3eCw==
+ :reply-to; bh=dWl2agwSOZcRjYpLQ3Cbs8b4kpJoVPljgBk5DCsC6g4=;
+ b=Lsa3H0steqKDbBusivLgOa6aP07Q5uWefcRr2SCLBhcLvI7smYsIK6X9ghmfSbNG93
+ GZHspMNmJq9M5EEGvU/9FzO4GDUt89Pxt3LFbd5jbsEzOkHYNqMG5v5PxP8sxBWBmzYY
+ HOYTZQDrCfpoqrqeq8b3dCjIma5VF2p58FT+ekGtCx3bDgH5ITLNRd+wVS46tmVwe2/0
+ h058eigl9Gx3qm605FSzvoBMZFdd3qjtgP07okHdCPdyshoOt2VwljZkLzpDj26XI45t
+ h/ffx7Ob2ozYrS4xEOwXuhUJESJW6jWdDDvoKN00VqYyuaxd+12XYQzc1w6qkk5tNF7V
+ XntQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294063; x=1777898863;
+ d=1e100.net; s=20251104; t=1777294068; x=1777898868;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ghI8DYvTSL+/rSM2e8e78x9QvBfh+Z450FrfGt1c51A=;
- b=Lc/eSftTBT9KTRNGIkE7tEdgsPqRAcxrQ4bgdkQpmCVavdB3GhDqbyMKJ/qbQRZoed
- G1DetAGRduDzI9dsGHT0U2rqN9HxpStJHHDzkYnrJJY6fScdfjKexiuxHZpWItV9yFPM
- Wcw4qkq1nqhOQsbaU/LuP1jvnplPoA266pq0HzWvy25bEHJStAgHUuIZFAxKR5Y+cTNp
- BGQ2ZfyT9fKXX44/ONAwA0r/e/XB/rXfVI85lH3sC1wVOAReq1Dz7ZBHBJWpS5jvQ3Oj
- nP/C72KsiFi4uF5fQ6L+99IwpGLJuW5Fm4A9CybU6m2VCpfowojL0EBBSY4LJa9T5uU7
- gleQ==
-X-Gm-Message-State: AOJu0YzlpIrjetTaQOOMqisCA1+h87M1uA6j15H+FEVRaoLrXgSZ03/1
- PZfvJEycwYs3wWeckaIvc3Z6fgQoI1/y0VUG//NyvNXDQzWAXrdSq3vRjy3cBN4rd+UER/wbFt6
- KOxi8
-X-Gm-Gg: AeBDies+FWuH8jRN8MVJ/ILki03Ft56V675N0cgI/HvL4BU3SdyhYK31Gi9NKqP0jig
- 82jYQNMXEV/Rzmctzpwo5J3JKQspn47eKpcgI32FT+QhWotRATWSfbIGxiGLeY6jMKtsTBnE8ZO
- 8/wsIffDOhk0ONxcyAw7f/sRMP3LAbsg8xO8GtcJDkt/ir8MC1MnPb3pokHYcpwctu3OSMMhxmq
- VWuhA5t3QVwWaEHe0vpM2JE1PP/Me896aLzs3ys5jUdkb/SyPS5lfjw17wDCpGIFWROmekIPUrS
- n7FJQjVjSQ8d9QSzdf4n1yYR1ioziZB2Z/G3N+fFSVoUIybw3sgpztfjG957+6HvpUkMLBdACj/
- 4ZXK5+geG7LFd9p3MSXTi4c1MLypgTm4hoP+Sa3eqN+z+VrByKuo0F4l4Y+6ZgVrQ7P7fJ1YfuU
- 0ZwThRBn0GOmbPvYExQuY9qZFFmHN/bq3fVVC5kw3XecmtlcEASbfuU/lWAYWsJF3RklkoQ6xfa
- T/0sgx0ipJ7Wu32wRqperq0uuJnQ4YhgnwWoJ6HOZtDhGb4JHew
-X-Received: by 2002:a05:600c:4e4c:b0:48a:58ae:9938 with SMTP id
- 5b1f17b1804b1-48a58ae9f69mr414383445e9.19.1777294062868; 
- Mon, 27 Apr 2026 05:47:42 -0700 (PDT)
+ bh=dWl2agwSOZcRjYpLQ3Cbs8b4kpJoVPljgBk5DCsC6g4=;
+ b=W2lDeQdKAXqTTHgZm1LBj1G1QdQ+ch6Y/XXv/LeQNCDWplPzPGqX0XYBI1PdTkxBNB
+ OMLVPIWvKVV+vXaArvcpwuVhVvOJiV2k5aUvrwXLHIfBMgalHtyU1cUOcen/9Zxv//Id
+ /IlhK6CoY0TEwJzetQGV6KgmqDwLR/FKpOObuk1FKubjyEL61TgHofakiSz8Iv0QzNtZ
+ zsRpQzWGWqJhPe9Wg0oFP2CNFzJYL/+Z59nMOgtxhKRGF5xKfu0NydL4LRaysZd2fpel
+ QDI4JzQ1MpjovINpQsrUJ7Hvvse1iaoG7NwHyT9mqK2DaCedgmJjOyTay+tYAZZPwBOA
+ 6Z6Q==
+X-Gm-Message-State: AOJu0YxI9QtAeIUjhdUoleHc7Nsc8yt4E8up06bYOygwivxsHWu2qytV
+ h3fboJhqzNoIN4oniLBAl6l3YUEasqnziTn0+N9llE/V+H45zbP+J+yOj++ciEfmJ/jnWFKjGlU
+ Y7xLQ
+X-Gm-Gg: AeBDieunHIdfLeApNMXCY4+RzIPsjSvoUkrdmMXLTDbOu7Qgf/RusQU4nPCXEx1s7Yk
+ ZE/HLL/VNgytfA6T0/wtswRzzEMpuqy0o2J0NcHcTyWfxWQa7vdG6f4wcusZjJjx299XhJgINu/
+ uxTTX9hjFdP0qk2qR7W2UyO2KJEM77hyVGUAJamkJDF0lcoeG8kiIcIqxk7RS6FvRl6o7o1AGtZ
+ DfmSaRl91zEyZ7OJWXWbNPEMzTuESvNeQPe0B+HhMDpFwrA1bO38Rm1prHgB/Q/lqu+u3G5O5zS
+ CgtknInucvtKebxoOeu6RH67T0jDkmawpwutxB1bd76oKTm9C3lkrQM0Y7Iz+H21KehJe8wjPGd
+ S+W8FpM8In1i56EwEGk0XzRRhL4zGffko2eTM4nKt9zED1htGnrLIOf4GlF8hAlBJQWeIFPHLqJ
+ 0G5exZb2Q1BCB8curOTzopvRRHkdSjxdAkaMoa/wBT9qpeDcZ3RnMjIoi15h0tIw0VsaSwn3YHA
+ NN9278fvr0gd3p6svWQ8TYzbI9OiVKmNGqGgjsyUQ==
+X-Received: by 2002:a05:600c:8b28:b0:48a:5c23:cab with SMTP id
+ 5b1f17b1804b1-48a5c230e78mr327201915e9.19.1777294067989; 
+ Mon, 27 Apr 2026 05:47:47 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.47.42
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.47.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:47:42 -0700 (PDT)
+ Mon, 27 Apr 2026 05:47:47 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/63] hw/arm/fsl-imx8mm: Add Analog device IP to iMX8MM SOC
-Date: Mon, 27 Apr 2026 13:46:38 +0100
-Message-ID: <20260427124738.966578-5-peter.maydell@linaro.org>
+Subject: [PULL 10/63] hw/arm/fsl-imx8mm: Adding support for I2C emulation
+Date: Mon, 27 Apr 2026 13:46:44 +0100
+Message-ID: <20260427124738.966578-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,92 +102,129 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 
-Add the Analog IP to i.MX8MM SoC. iMX8MM and i.MX8MP uses
-the same Analog IP so the analog ip source will be shared.
+This can be used to test and debug I2C device drivers.
+Added I2C interrupts
 
-The ARM PLL divider control register (arm-pll-fdiv-ctl0) has
-a different reset value on i.MX8MM (0x000fa030) compared to
-i.MX8MP (0x000fa031). So iMX8MM will be overriding this property
-with its own reset-value.
-
+Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Bernhard Beschow <shentey@gmail.com>
 Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/Kconfig              |  1 +
- hw/arm/fsl-imx8mm.c         | 12 ++++++++++++
- include/hw/arm/fsl-imx8mm.h |  2 ++
- 3 files changed, 15 insertions(+)
+ hw/arm/Kconfig              |  2 ++
+ hw/arm/fsl-imx8mm.c         | 27 +++++++++++++++++++++++++++
+ include/hw/arm/fsl-imx8mm.h |  8 ++++++++
+ 3 files changed, 37 insertions(+)
 
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 86f4d9bc4d..b3db2d6848 100644
+index 59d5aba2db..e8296f9a28 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -620,6 +620,7 @@ config FSL_IMX8MP_EVK
+@@ -620,10 +620,12 @@ config FSL_IMX8MP_EVK
  config FSL_IMX8MM
      bool
+     imply PCI_DEVICES
++    imply I2C_DEVICES
      select ARM_GIC
-+    select FSL_IMX8MP_ANALOG
+     select FSL_IMX8MP_ANALOG
+     select FSL_IMX8MP_CCM
      select IMX
- 
- config FSL_IMX8MM_EVK
++    select IMX_I2C
+     select SDHCI
+     select PCI_EXPRESS_DESIGNWARE
+     select PCI_EXPRESS_FSL_IMX8M_PHY
 diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index 23a82613d7..8218448074 100644
+index 85bce5a788..3632d85197 100644
 --- a/hw/arm/fsl-imx8mm.c
 +++ b/hw/arm/fsl-imx8mm.c
-@@ -169,6 +169,8 @@ static void fsl_imx8mm_init(Object *obj)
- 
-     object_initialize_child(obj, "gic", &s->gic, gicv3_class_name());
- 
-+    object_initialize_child(obj, "analog", &s->analog, TYPE_IMX8MP_ANALOG);
-+
-     for (i = 0; i < FSL_IMX8MM_NUM_UARTS; i++) {
-         g_autofree char *name = g_strdup_printf("uart%d", i + 1);
+@@ -180,6 +180,11 @@ static void fsl_imx8mm_init(Object *obj)
          object_initialize_child(obj, name, &s->uart[i], TYPE_IMX_SERIAL);
-@@ -303,6 +305,15 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-         }
      }
  
-+    /* Analog */
-+    object_property_set_uint(OBJECT(&s->analog), "arm-pll-fdiv-ctl0-reset",
-+                            0x000fa030, &error_abort);
-+    if (!sysbus_realize(SYS_BUS_DEVICE(&s->analog), errp)) {
-+        return;
++    for (i = 0; i < FSL_IMX8MM_NUM_I2CS; i++) {
++        g_autofree char *name = g_strdup_printf("i2c%d", i + 1);
++        object_initialize_child(obj, name, &s->i2c[i], TYPE_IMX_I2C);
 +    }
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->analog), 0,
-+                    fsl_imx8mm_memmap[FSL_IMX8MM_ANA_PLL].addr);
 +
-     /* UARTs */
-     for (i = 0; i < FSL_IMX8MM_NUM_UARTS; i++) {
+     for (i = 0; i < FSL_IMX8MM_NUM_GPIOS; i++) {
+         g_autofree char *name = g_strdup_printf("gpio%d", i + 1);
+         object_initialize_child(obj, name, &s->gpio[i], TYPE_IMX_GPIO);
+@@ -370,6 +375,27 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+                                 fsl_imx8mm_memmap[FSL_IMX8MM_OCRAM].addr,
+                                 &s->ocram);
+ 
++    /* I2Cs */
++    for (i = 0; i < FSL_IMX8MM_NUM_I2CS; i++) {
++        static const struct {
++            hwaddr addr;
++            unsigned int irq;
++        } i2c_table[FSL_IMX8MM_NUM_I2CS] = {
++            { fsl_imx8mm_memmap[FSL_IMX8MM_I2C1].addr, FSL_IMX8MM_I2C1_IRQ },
++            { fsl_imx8mm_memmap[FSL_IMX8MM_I2C2].addr, FSL_IMX8MM_I2C2_IRQ },
++            { fsl_imx8mm_memmap[FSL_IMX8MM_I2C3].addr, FSL_IMX8MM_I2C3_IRQ },
++            { fsl_imx8mm_memmap[FSL_IMX8MM_I2C4].addr, FSL_IMX8MM_I2C4_IRQ },
++        };
++
++        if (!sysbus_realize(SYS_BUS_DEVICE(&s->i2c[i]), errp)) {
++            return;
++        }
++
++        sysbus_mmio_map(SYS_BUS_DEVICE(&s->i2c[i]), 0, i2c_table[i].addr);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->i2c[i]), 0,
++                           qdev_get_gpio_in(gicdev, i2c_table[i].irq));
++    }
++
+     /* GPIOs */
+     for (i = 0; i < FSL_IMX8MM_NUM_GPIOS; i++) {
          static const struct {
-@@ -338,6 +349,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-     /* Unimplemented devices */
-     for (i = 0; i < ARRAY_SIZE(fsl_imx8mm_memmap); i++) {
-         switch (i) {
-+        case FSL_IMX8MM_ANA_PLL:
+@@ -477,6 +503,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
          case FSL_IMX8MM_GIC_DIST:
          case FSL_IMX8MM_GIC_REDIST:
+         case FSL_IMX8MM_GPIO1 ... FSL_IMX8MM_GPIO5:
++        case FSL_IMX8MM_I2C1 ... FSL_IMX8MM_I2C4:
+         case FSL_IMX8MM_PCIE1:
+         case FSL_IMX8MM_PCIE_PHY1:
          case FSL_IMX8MM_RAM:
 diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index 2811e809b9..0a020c32a1 100644
+index 4fe27b9575..d6df16e9d4 100644
 --- a/include/hw/arm/fsl-imx8mm.h
 +++ b/include/hw/arm/fsl-imx8mm.h
 @@ -13,6 +13,7 @@
  #include "cpu.h"
  #include "hw/char/imx_serial.h"
+ #include "hw/gpio/imx_gpio.h"
++#include "hw/i2c/imx_i2c.h"
  #include "hw/intc/arm_gicv3_common.h"
-+#include "hw/misc/imx8mp_analog.h"
- #include "qom/object.h"
- #include "qemu/units.h"
- 
-@@ -33,6 +34,7 @@ struct FslImx8mmState {
- 
-     ARMCPU             cpu[FSL_IMX8MM_NUM_CPUS];
-     GICv3State         gic;
-+    IMX8MPAnalogState  analog;
+ #include "hw/misc/imx7_snvs.h"
+ #include "hw/misc/imx8mp_analog.h"
+@@ -32,6 +33,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(FslImx8mmState, FSL_IMX8MM)
+ enum FslImx8mmConfiguration {
+     FSL_IMX8MM_NUM_CPUS         = 4,
+     FSL_IMX8MM_NUM_GPIOS        = 5,
++    FSL_IMX8MM_NUM_I2CS         = 4,
+     FSL_IMX8MM_NUM_IRQS         = 128,
+     FSL_IMX8MM_NUM_UARTS        = 4,
+     FSL_IMX8MM_NUM_USDHCS       = 3,
+@@ -46,6 +48,7 @@ struct FslImx8mmState {
+     IMX8MPCCMState     ccm;
+     IMX8MPAnalogState  analog;
+     IMX7SNVSState      snvs;
++    IMXI2CState        i2c[FSL_IMX8MM_NUM_I2CS];
      IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
      MemoryRegion ocram;
- };
+     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
+@@ -174,6 +177,11 @@ enum FslImx8mmIrqs {
+     FSL_IMX8MM_UART3_IRQ    = 28,
+     FSL_IMX8MM_UART4_IRQ    = 29,
+ 
++    FSL_IMX8MM_I2C1_IRQ     = 35,
++    FSL_IMX8MM_I2C2_IRQ     = 36,
++    FSL_IMX8MM_I2C3_IRQ     = 37,
++    FSL_IMX8MM_I2C4_IRQ     = 38,
++
+     FSL_IMX8MM_GPIO1_LOW_IRQ  = 64,
+     FSL_IMX8MM_GPIO1_HIGH_IRQ = 65,
+     FSL_IMX8MM_GPIO2_LOW_IRQ  = 66,
 -- 
 2.43.0
 
