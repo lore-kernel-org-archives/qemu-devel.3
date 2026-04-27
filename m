@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15068FF8860
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 06:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17285FF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 06:28:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHFPB-0006kY-Cq; Mon, 27 Apr 2026 02:25:17 -0400
+	id 1wHFS7-0007sR-5b; Mon, 27 Apr 2026 02:28:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHFOl-0006bS-Um
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:24:53 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHFS1-0007sA-AW
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:28:14 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHFOk-0004Gd-1W
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:24:51 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-488b0046078so89334025e9.1
- for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 23:24:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHFRz-0005Cd-JT
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:28:13 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-445795cf6f1so57794f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 23:28:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777271087; x=1777875887; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777271290; x=1777876090; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=lH9Nhx0CK+2POU6YoVvymiP8YWbHqsgW0nwulKYOUcw=;
- b=omViBUN/F80IowsGH/z5hzRoadwm1PmqcjMg8R9GeGWX2E1/+2SvNcf9OJhp4rH8uB
- ZYYkd2laIhvxfi+/fpSUCnUVrWch66YmSQJruJNLIHIADpQlj6UnJbwNvruc3k6qZ/Be
- o3j1t9hkaxJV5TFDL/2039t01eFLWz4judBPAaTqdchs9cmOOs+z+K8BTQq4cFk94srA
- syey/cMDu/2Kc/iIQp+WyHUsNtP0LDrfOU/doeSU9D1xx4vesf8BmILZ0yyyf891KTzh
- s9/hCenWLtyfof4Daag5LE5be5yD1IsYvHyN/FSoxaqEycvm00nmJTa/SZScTCqDdfVP
- btxA==
+ bh=s4ejvdUYaq6DlsYnj34U2UvIjH4M78KlDPsl9ul19P0=;
+ b=qx1EbSQefVuGFm9JIp/N6Zh50HGtG4Q8oyEH6RTt/aK82Sg/WGXm7nx8tQp5EpyZxH
+ Gt7+gbLBeN6G+Y/cI9+l2uI/UPuXzKeQh2uJvnKM6FnDccuAYfKqi+uPU8IfwnJhOOTF
+ wAXOuNBRWE2sEwS2OOkSOo7QPobleyyJgiY+ICj3KTDUk8AjPvLGloawIEWJ0aK5bTgN
+ Yn+U9LFwBj6w/vTOnT0gVuEEtesHIT4QSa3yGie/Uy+Ulx3ac7EwNb26AyA0S8nb+Xtz
+ HpRjldgiv6hGi1BNFRzs/Sf2M/ZVTpmNwMihHt16Iz21bcpOzaYgeoyI08GhO/5/EW0n
+ aaxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777271087; x=1777875887;
+ d=1e100.net; s=20251104; t=1777271290; x=1777876090;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=lH9Nhx0CK+2POU6YoVvymiP8YWbHqsgW0nwulKYOUcw=;
- b=YPY3+k/YtAplMbOLa0N0aLe/PZAlh8tDqC9KK3gv80SDtguvpbfuoHMpAzokiOn9Yd
- rpqxTNi3P5iAArpq32MCc+tjqVbh573dPK2vre4Gr7Q5/8ZbSJ3ImAZT6DhA+dECtDLs
- jJ9oqrp04c2Pc8sTUGKRQ8heTRnAzJ7CUrscaFG3XFEcenOsRS0moh2YxQ7V23/loCPo
- ib9eA0DXaMIfp4wggpljTJIPi10Jom+Bc5EeZi7oFkRY01CalMWDWcKsXx3zueDcQftr
- ekwssKzbMnYK7zY0Xouq+PMSspb1UFU10E8NNXoeYSp9EHY7lR+lUxOgWoA6mBDGqkdv
- vIsQ==
+ bh=s4ejvdUYaq6DlsYnj34U2UvIjH4M78KlDPsl9ul19P0=;
+ b=cJGlrRaFvm4aff9DLEcVvBS1cNe6bqsd92YpJ0bSrmSsWJC9Ffzdqcv9Uu/AN4jDQU
+ JBZTQUYbFOlDuICQe2StkFgEabU8ZsGd3WczMBF5iGieEa0MTnesgunpEh1SYWHPKcVV
+ 1Ls0ffIb/1z4p5Y8xPFvDuRaZl3mZKJGKPQiENDBkDZxiZBJXO0hOBdinuS7oFTMHI2c
+ f/nQg2GnRNCdkGZ/eYpO7zMIg/IFiI8ql1sa70MJVOobcFSN0obcjRmfCH/RO4kENlO0
+ L6lrO6RyvHBf1H2BMMcqox74L5CqA2yggbPzXMJl2XESu8kmrXzeWRLOaH1OhSdlRdOW
+ YNtw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8MSXYzPUockYGn7bygk5pjyv0a4n39cSSHJ4TeFUDFz9Cl8m7TfEMxhh4vaQVpx5tvwyIXPZLNd05C@nongnu.org
-X-Gm-Message-State: AOJu0Yx0ifYNjgfCiAlmwxuUfny7rP18wuaJ3IpFkm7Ua3WKiAsqqI81
- +r1meoiZL0FZXGnEBft0Dpi45P+BamF1WJjIxeYdNCd26YseVijLyYpeHIkcv9seZvw=
-X-Gm-Gg: AeBDieuR6Kr0+1IfRJC0/SEZlKcGoQqdqwxtgLSMplGhIy9FbujQQEP+r2fiEnZrUCu
- h5D60zydvd6WSOTO4XTtGnahywSJF99sGXx1C7+DKcrGms5MkFWQUnqcABrCmtX8ErVFCq59YW+
- uw4qiYg41Aqn0UByxPUPDhe0RwY4aDt0e8k5+q30z8IptHmm220Md9d9VM2NsQ1T6HZCDdSXOp+
- g/D58ukox0p4E9dRI9TnuOBOoNGCB4nobB78BucI/phYKGyPyVeYxv2nx8B4KoUcaOeh60SEWhi
- V+1mLN1RZWthvCEDRAZzylf5Iw4CBUBEVP1TZYHsA6lfDqARP9Xc2q4s62tH1G3unoSB8cAI/j0
- 7wbLS7uZE5Gm3YI9aJ5A21OLfn2J9TVabm/kfeWlWZLIc88DptVPDhotDdlDh5uYXHxd6Bxo3fs
- jhrJdIL2evXRWBM2un06ltcOr8CHOskYWXS+Sd4UdXkpuDz97iYC6ALU9OeADZeI3qE7WlUPUTh
- DLS
-X-Received: by 2002:a05:600c:621a:b0:48a:6268:18a9 with SMTP id
- 5b1f17b1804b1-48a626818cdmr203902495e9.13.1777271087286; 
- Sun, 26 Apr 2026 23:24:47 -0700 (PDT)
+ AFNElJ/Ozf5dxZ1Lo6DKser9mNtWP0BZT50eRohF3e30Lf/RDX8MnXnpRUfvYvdJhznx7IFnje9lu2wgy5Xv@nongnu.org
+X-Gm-Message-State: AOJu0Yxnr9DJtvBJSh9iZDyeUcWKKFQXKWfI2Tkqrlxj5/GZifm94wfB
+ DagBO9usnA/+x5VhrvHRkIwxNicxqPXNxSbNPBtU2TDez3JnULmPp+VKWIQyqiLyicw=
+X-Gm-Gg: AeBDieu/aOEo8uylY4ar0oUiMSM+kHYtZYfr4dEvjP34fn4cKvYDbxAYrriwud5habT
+ J0K3L16OB+K2tSUAI8mQusuvq/taDqx5L+dw8F8cjAXPC5cA+5Ow5snI6jn8RTRC/EJMA7Nu0Ex
+ 2wSacaOPJg/ALDVhY/2Hx8eAL0u0TmQRgghxSaYEkpG2asj4AUquQYURRoldI5TuGX17sL86ocl
+ BWsqHtqTZdzZIuu8eZzZWMvNr/gbk0AD8uyIJ3rIIzpnxDT8LUeAnL3Y3uWyFIyumNc1lK8Jqpt
+ T/Ox/oS1w167uLlpQ4D6wnCiVD0vu8/aqwjuMhCJacGGGZ1RT4oEkUWTcZp4xRE8cS6HJEdx0p2
+ zxBE0TDWgBtIbIQmcpZW/N/ovB9tu/masazogo86HFqYqqoAxdGvvuodOFHy+M/scf8LzNi/hn0
+ TE90Dd01JNIb3+7QiKH6a0FhcolfdmoJqbU5Qyd/BZ9H4kfnNPFMQsLK0wzZ17I4odQ3VRzgdwZ
+ nTSy6u8GZnfb7o=
+X-Received: by 2002:a05:6000:40dc:b0:43d:7b7b:ab77 with SMTP id
+ ffacd0b85a97d-43fe3dcbbeamr60488007f8f.11.1777271289789; 
+ Sun, 26 Apr 2026 23:28:09 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488fc1393f5sm714718215e9.9.2026.04.26.23.24.46
+ ffacd0b85a97d-43fe4cc375dsm69374496f8f.14.2026.04.26.23.28.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Apr 2026 23:24:46 -0700 (PDT)
-Message-ID: <b45e60d9-b190-4378-84c4-3978b6ee6195@linaro.org>
-Date: Mon, 27 Apr 2026 08:24:45 +0200
+ Sun, 26 Apr 2026 23:28:08 -0700 (PDT)
+Message-ID: <f2ba01e8-9331-4526-882b-ffd39784f736@linaro.org>
+Date: Mon, 27 Apr 2026 08:28:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] hw/display/cirrus_vga: Fix packed-24 color-expansion
- ops
+Subject: Re: [PULL 14/14] linux-user: Flush errors by using exit() instead of
+ _exit() in error path
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, Junjie Cao <junjie.cao@intel.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Chad Jablonski <chad@jablonski.xyz>
-References: <20260410183249.4046456-1-peter.maydell@linaro.org>
+To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Tobias Bergkvist <tobias@bergkv.ist>
+References: <20260425155140.50186-1-deller@kernel.org>
+ <20260425155140.50186-15-deller@kernel.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260410183249.4046456-1-peter.maydell@linaro.org>
+In-Reply-To: <20260425155140.50186-15-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,61 +108,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing Zoltan, Junjie and Chad.
+On 25/4/26 17:51, Helge Deller wrote:
+> From: Helge Deller <deller@gmx.de>
+> 
+> Qemu user mode does not properly flushes error messages related to bad
+> arguments when exiting (at least when the output is piped to a file
+> instead of running on a terminal).
+> Ensure that we always flush by using exit() instead of _exit().
+> 
 
-On 10/4/26 20:32, Peter Maydell wrote:
-> The Cirrus Logic VGA card raster ops allow the left side of the input
-> source to be clipped (or skipped) based on a "destination write mask"
-> field in the GR2F bitblt register. For 8, 16 and 32bpp, this field has
-> a simple 3-bit format indicating the number of pixels to skip on the
-> left edge of each scanline. For 24bpp, the field is 5-bit, and is a
-> byte count of how many destination bytes to skip.
+Reported by: Tobias Bergkvist <tobias@bergkv.ist>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2544
+> Signed-off-by: Helge Deller <deller@gmx.de>
+> ---
+>   linux-user/main.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> The card also supports a "color expansion" mode for raster ops where
-> the input is a monochrome bitmap or bitmap pattern, where each bit is
-> expanded into a full-color pixel which is either the background or
-> foreground color (or not drawn at all, for transparency).
-> 
-> We have a bug in our implementation of the interaction of these two
-> features: for color-expansion to 8/16/32bpp the 3-bit destination
-> write mask field doesn't allow skipping a full byte of the input
-> monochrome bitmap, but in 24bpp the 5-bit field means we might need to
-> skip a byte and a bit of the source. We weren't accounting for this
-> need to skip a full byte. The result for the "pattern fill" raster op
-> type (where the input is a repeating 8x8 monochrome tile) is that we
-> attempt to shift by a negative value, which is caught by the
-> undefined-behaviour sanitizer. For the other color-expansion ops, we
-> merely write the wrong data to the display.
-> 
-> This patchset fixes both bugs. The UB one was reported as
-> https://gitlab.com/qemu-project/qemu/-/work_items/3377
-> 
-> The technical reference manual says that 24-bpp color expansion
-> "*must* use transparency" and doesn't say what happens if you try to
-> do it anyway, which is presumably why the other raster op functions in
-> cirrus_vga_rop2.h don't try to handle the 24bpp write-mask format. I
-> have left this as it is, since we don't have any reports of UB there.
-> 
-> Big disclaimer on this: I have no guest images that try to use the
-> Cirrus bitblt handling at all, so I have only developed these against
-> the reference manual and confirmed that it fixes the UB repro case
-> from the bug. If anybody does have test images for these that would be
-> good to test...
-> 
-> This bug has been in QEMU for decades, so I think we're OK letting
-> it slide to QEMU 11.1.
-> 
-> thanks
-> -- PMM
-> 
-> Peter Maydell (2):
->    hw/display/cirrus_vga: Fix packed-24 color-expansion transparent
->      pattern fills
->    hw/display/cirrus_vga: Fix packed-24 color-expansion transparent
->      copies
-> 
->   hw/display/cirrus_vga_rop2.h | 52 ++++++++++++++++++++++++++++++++----
->   1 file changed, 47 insertions(+), 5 deletions(-)
-> 
+> diff --git a/linux-user/main.c b/linux-user/main.c
+> index c49d1e91d2..84e110dfe9 100644
+> --- a/linux-user/main.c
+> +++ b/linux-user/main.c
+> @@ -767,7 +767,7 @@ int main(int argc, char **argv, char **envp)
+>           execfd = open(exec_path, O_RDONLY);
+>           if (execfd < 0) {
+>               printf("Error while loading %s: %s\n", exec_path, strerror(errno));
+> -            _exit(EXIT_FAILURE);
+> +            exit(EXIT_FAILURE);
+>           }
+>       }
+>   
 
 
