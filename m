@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57351FF8871
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:44:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BDDCFF8868
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:44:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHRr6-0000uZ-QJ; Mon, 27 Apr 2026 15:42:56 -0400
+	id 1wHRsj-0003ru-Pd; Mon, 27 Apr 2026 15:44:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRqt-0000qO-MW
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:42:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wHRsg-0003ZR-QE
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:44:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRqq-0007hy-KD
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:42:42 -0400
+ id 1wHRsf-000806-4F
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:44:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777318960;
+ s=mimecast20190719; t=1777319072;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MpZfxbMbvI+LoOauwmGQ7lN3E+YKy7RIysjR5B8VSug=;
- b=JV8GUm8pbR2c+KmSHsNGnN/Hui3wVLeuz75s+T+AdcvmV0wA5dnw91ocANRHg0jM9pDDCb
- 6a382HEfsQX74f6rNG3LKqQojU/Qp27j0QBe/ZLrqGxS8rS0dWx8mYDvif9v8WTammrCPq
- HU0WxfcDZp5bFZOghmEfuJ8dK2B8RVs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Z3mpIj7kKLWQd1wHYRB/isiRg9MwxmXnW9JJf/oFUXQ=;
+ b=A8fjODblbnw/+fItA3KyI/i+wnMYTXUT4MNyn7xuaCflpYNsm8Njs4py0LCUeOygvunVic
+ I6gQi//rbAHRiOFiMXIP162AtHUWMZO8DRupb9mGap59BDYhCMGsRsBBIbvNKDtr346AIb
+ gqbZy1aKu2Mx5LTsiTZEnZRLzEpvxtQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-82-A30x2vMEM1abmnukM2kG7g-1; Mon,
- 27 Apr 2026 15:42:36 -0400
-X-MC-Unique: A30x2vMEM1abmnukM2kG7g-1
-X-Mimecast-MFC-AGG-ID: A30x2vMEM1abmnukM2kG7g_1777318955
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-66sLjyeEMly5eSJMVCE_XQ-1; Mon,
+ 27 Apr 2026 15:44:27 -0400
+X-MC-Unique: 66sLjyeEMly5eSJMVCE_XQ-1
+X-Mimecast-MFC-AGG-ID: 66sLjyeEMly5eSJMVCE_XQ_1777319066
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D67D71800454
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 19:42:35 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 21D2A1800345; Mon, 27 Apr 2026 19:44:26 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8DDB0300070A; Mon, 27 Apr 2026 19:42:33 +0000 (UTC)
+ id CBEBE300070A; Mon, 27 Apr 2026 19:44:24 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Apr 2026 23:42:01 +0400
-Subject: [PATCH 02/41] chardev/char-socket: handle NULL addr in
- char_socket_get_addr
+Date: Mon, 27 Apr 2026 23:42:19 +0400
+Subject: [PATCH 20/41] target/i386/sev: add finalize functions and fix
+ leaking setters
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260427-qom-tests-v1-2-c413f3605311@redhat.com>
+Message-Id: <20260427-qom-tests-v1-20-c413f3605311@redhat.com>
 References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
 In-Reply-To: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=807;
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>, 
+ Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4011;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=OqoZXlzFf70MD8aVuu81IsB2OfurhLf51jzWd985d5c=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wUxNaEGAUSFoncgex/xqbAlH89hcs0waV6p
- dDsIi5LKZqJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FAAKCRDa6OEJdZac
- 5V9+D/42oppCsFcGimP/mQ10jT/G5+69yF/oXFUc59ryhiXA+GeMCbb67j/yqNnraHKmLG4dc9k
- 4tet53MeLMCWDNxh+TOG2/Ta0CClETSTD2Va+8traDjLyKkK8FcfIxfFoEqa2OJ+Urmpv8jP7XA
- kkbQU23JOIPjd+qzKzxKpUuNxn1s2Vgt2ZHHh/tMUYzpxiOGsMgGmnmpOlki8p/C9y9jUm5PVde
- o6+gGig4BvHr1vN9CY2e3mqQZE/Ou8EirTqgUE5Mt0HUmFIOxLHpNmqVxNgDOevXQMJ3goDH+vv
- nOFYYJuvQT8/Je4HtDxnYNQaQ6MKth5FNgs+DuH1Gfju/NjrqS2Uge03nbnTZH39X7UV2U1LaA5
- aNRZjMow9VCuvqTt4u7IsqPP//Mo1HewMGIuCWDRsZVnSruDv/n5A3Zt+sk7bAhPEfIb7mdaIfz
- SoByF5+7CIb01+Q4dnjAZ7cqDZFUNh9ahxieyYlEEjf5DgkAVD+bHCHlSKlauq6HiNhgHoiiB9O
- 7p19VPiczrGR0g4oJm/ArqM80LVltWR72lwwtioar3Mk+lQ5Ils82vLC509mf9AavJVurobHMpy
- KU1On7gjT83mMsqOZ8d4dTLcfAgSLUaR7sg08Pqe/HV0ZdiNB/uKBJspIV+gzSchnEmbs/Hy+xq
- 5iZM8w4cMgjm4iw==
+ bh=owTdgCW7z+9rJcjQ83R8ZEybDyEY8YNmwtxW2tfBqxA=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wVh3bge/hfu7M/mrWwNzqJk9dgdWrhJfDTA
+ kRvwWFs6TaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FQAKCRDa6OEJdZac
+ 5YS/D/44TGXRiKZhlIVanFn8435rX5HTctjAkmt5JVuGq93W2jX/6NB9o6p+UYPrvNcz9xeRued
+ +67951etfZW+rt4Eht7tX7nN0YOf/FTLnHAcrkFfdyMR8r/lP1Bne4qhDdLnTBkqwfR2IbgT+Uw
+ hGQMpc83p4WHRo+nQpHAO93xbH6bOW2XgbTemdwaO7DVK55JxBA/0713I6qlm7+QcF/WdRTSYEU
+ sKU+9Dm0DSqltJQ51JM3jRvLju6Q8PNeybeDNSlHVDjoD1aVJu0TN6KCcPALc9i1LCwmgcK6qyx
+ ALotZh3NJtOPxjSX57aKsaJZvFetSCXYrNE3ql9JR1GxYX4GzEsOQW7er/UZ9bLBaASoCdGjORe
+ P9sgw6t/PW9pYfqPl9cIaMKmia9jQo/ZRJZna7AhQ45RL05aFzfMNeLgumaNBVRE1czuRFJyCv1
+ Samt+ncT7GrJeym2Wez9sNueqBlRrs66CYhuxSHHDkivA1N2xS/d36PeLP5+2jutCNLBM+zm/R0
+ CWHbHUYoDSByF3H2u8jnMcnBU8EQhbF3JS4EgMgb5EgDucaoY+Rl+cfDDNJzjGIEZLkI/eWP3PQ
+ WD8uGBEZb2cFIMJLQP978qKhVyi5RV2oyjGehUIHCIGv/HeorfSWgIfBQdFTUS8224kAPRlquV7
+ Pt/qLRCMLtb+Xag==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -88,7 +88,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,31 +105,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When called on an unrealized chardev (e.g. from
-qmp_qom_list_properties), s->addr is NULL. Return an error instead of
-assert().
+None of the three SEV types (sev-common, sev-guest, sev-snp-guest)
+had instance_finalize functions, so all string fields allocated
+during init or by property setters were leaked on object destruction.
 
-Fixes: 123676e9894f ("char-socket: add 'addr' property")
+Add sev_common_finalize, sev_guest_finalize, and
+sev_snp_guest_finalize to free the allocated fields.
+
+Also fix sev_common_set_sev_device, sev_guest_set_dh_cert_file,
+and sev_guest_set_session_file to free the old value before
+replacing it.
+
+Fixes: a9b4942f485b ("target/i386: add Secure Encrypted Virtualization (SEV) object")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- chardev/char-socket.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ target/i386/sev.c | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/chardev/char-socket.c b/chardev/char-socket.c
-index e064b105c50..b629575fcf8 100644
---- a/chardev/char-socket.c
-+++ b/chardev/char-socket.c
-@@ -1529,6 +1529,10 @@ char_socket_get_addr(Object *obj, Visitor *v, const char *name,
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 261b6aaa37b..3c2734ad83b 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -2527,6 +2527,7 @@ sev_common_get_sev_device(Object *obj, Error **errp)
+ static void
+ sev_common_set_sev_device(Object *obj, const char *value, Error **errp)
  {
-     SocketChardev *s = SOCKET_CHARDEV(obj);
- 
-+    if (!s->addr) {
-+        error_setg(errp, "socket not connected");
-+        return;
-+    }
-     visit_type_SocketAddress(v, name, &s->addr, errp);
++    g_free(SEV_COMMON(obj)->sev_device);
+     SEV_COMMON(obj)->sev_device = g_strdup(value);
  }
  
+@@ -2831,12 +2832,21 @@ sev_common_instance_init(Object *obj)
+     QTAILQ_INIT(&sev_common->launch_vmsa);
+ }
+ 
++static void
++sev_common_finalize(Object *obj)
++{
++    SevCommonState *sev_common = SEV_COMMON(obj);
++
++    g_free(sev_common->sev_device);
++}
++
+ /* sev guest info common to sev/sev-es/sev-snp */
+ static const TypeInfo sev_common_info = {
+     .parent = TYPE_X86_CONFIDENTIAL_GUEST,
+     .name = TYPE_SEV_COMMON,
+     .instance_size = sizeof(SevCommonState),
+     .instance_init = sev_common_instance_init,
++    .instance_finalize = sev_common_finalize,
+     .class_size = sizeof(SevCommonStateClass),
+     .class_init = sev_common_class_init,
+     .abstract = true,
+@@ -2856,6 +2866,7 @@ sev_guest_get_dh_cert_file(Object *obj, Error **errp)
+ static void
+ sev_guest_set_dh_cert_file(Object *obj, const char *value, Error **errp)
+ {
++    g_free(SEV_GUEST(obj)->dh_cert_file);
+     SEV_GUEST(obj)->dh_cert_file = g_strdup(value);
+ }
+ 
+@@ -2870,6 +2881,7 @@ sev_guest_get_session_file(Object *obj, Error **errp)
+ static void
+ sev_guest_set_session_file(Object *obj, const char *value, Error **errp)
+ {
++    g_free(SEV_GUEST(obj)->session_file);
+     SEV_GUEST(obj)->session_file = g_strdup(value);
+ }
+ 
+@@ -2937,12 +2949,23 @@ sev_guest_instance_init(Object *obj)
+     sev_guest->legacy_vm_type = ON_OFF_AUTO_AUTO;
+ }
+ 
++static void
++sev_guest_finalize(Object *obj)
++{
++    SevGuestState *sev_guest = SEV_GUEST(obj);
++
++    g_free(sev_guest->dh_cert_file);
++    g_free(sev_guest->session_file);
++    g_free(sev_guest->measurement);
++}
++
+ /* guest info specific sev/sev-es */
+ static const TypeInfo sev_guest_info = {
+     .parent = TYPE_SEV_COMMON,
+     .name = TYPE_SEV_GUEST,
+     .instance_size = sizeof(SevGuestState),
+     .instance_init = sev_guest_instance_init,
++    .instance_finalize = sev_guest_finalize,
+     .class_init = sev_guest_class_init,
+ };
+ 
+@@ -3195,6 +3218,19 @@ sev_snp_guest_instance_init(Object *obj)
+     sev_snp_guest->kvm_start_conf.policy = DEFAULT_SEV_SNP_POLICY;
+ }
+ 
++static void
++sev_snp_guest_finalize(Object *obj)
++{
++    SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(obj);
++
++    g_free(sev_snp_guest->guest_visible_workarounds);
++    g_free(sev_snp_guest->id_block_base64);
++    g_free(sev_snp_guest->id_block);
++    g_free(sev_snp_guest->id_auth_base64);
++    g_free(sev_snp_guest->id_auth);
++    g_free(sev_snp_guest->host_data);
++}
++
+ /* guest info specific to sev-snp */
+ static const TypeInfo sev_snp_guest_info = {
+     .parent = TYPE_SEV_COMMON,
+@@ -3202,6 +3238,7 @@ static const TypeInfo sev_snp_guest_info = {
+     .instance_size = sizeof(SevSnpGuestState),
+     .class_init = sev_snp_guest_class_init,
+     .instance_init = sev_snp_guest_instance_init,
++    .instance_finalize = sev_snp_guest_finalize,
+ };
+ 
+ static void
 
 -- 
 2.53.0
