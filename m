@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D09AFF8869
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 13:00:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D156FF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 13:00:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLT7-0004Nq-Cq; Mon, 27 Apr 2026 08:53:50 -0400
+	id 1wHLUW-0007wv-E0; Mon, 27 Apr 2026 08:55:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNo-00084h-W5
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:25 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1wHLOC-0008KB-BI
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:41 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNi-0005fe-3C
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:12 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-488a8ca4aadso142334585e9.3
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:06 -0700 (PDT)
+ id 1wHLOA-0005p1-Fn
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:39 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4893940bb5eso53245405e9.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294085; x=1777898885; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294117; x=1777898917; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=blK/QB0ifCOHjFFZaugJe65T2S2vwxgGyAYmHanyIto=;
- b=a1wFQ2RlqLH1abMMQZGcJlsVqcNt3PzxQ3LZdIbuwkTq5NkNYfIkTduWPo2aOcpPFt
- l4AKP8G3SkwRKLEeFsN0DteX/sl59MUZUAGmzOt8H+lIogJwLaXJWV/5kNE49YpBal57
- KqD+kpaB5/HDVRYzxoAPJkLPRydmlojAdguA5ZMNOf2Gvlf8sJlaTGc9ieuo/J/pS6wH
- Pg+xgt3nqjdqJcpngUN5c89FxxYWyU26u96YbJ+/WpgvY4lBsuJ5y5J859aXsX9wAivH
- x73gfkQg7E0ZXblIUCUyh/mVOqZLoTJy8zTMFKCEpkjJ7LNCKCoU2MjkIxB0KoQNQl2B
- SSFQ==
+ :reply-to; bh=88UCjHkoy1vmDeZmG5DzL1f9FS5Tx4PV0gRNHIRsxWs=;
+ b=qRf2jCiE0yL8tRM5SQO7KUSHiqaRGrEwNxBKbEa/0BVFecD59BZ17407o3Uk2leGGG
+ rzBKJVUCJ3ICRsUkCh/j7foL0F5t8zrlFJj69syS/5Jps6QXTx2pUY0i+iDEsrfYTNGJ
+ jwgppGpuPm/Qxnx1RmLgDwN4iClRKjsEFCtvvPqVJr0Cgl9oU/wo/CcAbK0gbPRKG00y
+ EMOgO6tik2XpJqNwkCKmjZIeIb1psKyvVGulERqLqh3n5z4Nqj2rwRWWmwPHp8XJwXYz
+ yTbIywjx0LDrwCu5TuOTH/1V1RUFyLXzNHU/RUqN4htT/OwfnRV5RfVN1ML7Y7QHsXvS
+ YDHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294085; x=1777898885;
+ d=1e100.net; s=20251104; t=1777294117; x=1777898917;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=blK/QB0ifCOHjFFZaugJe65T2S2vwxgGyAYmHanyIto=;
- b=GMa4AwF+mkPEOMW7sxFa2CViCmQK2ORwcPi/ihjmRbmA0rQ7tFU0JruoKX2QVa9ngK
- 63cqOYtsujrB6n82Hb8cuLIyLJC7jT5Vc9uWo40dUU+RUTkmkRxNcL6gZOFNBm3+EXaF
- GZn5LX5sE7jGLZm8gMYble2NFOCamkc5NLJoN/5nXkEDkOlgS2PBLa5wX2YdapymQUEj
- fFYMBLIaghyz9BS2BrFsIOhdEERyp146hoC9eaCsaT7mTsW/5BaXSR1FUGlVERuLTcFL
- n5VTBETtMbHI0P5THbrwOryN2J+SpgrUfYlpMTzMQCEuMvQuODtEeTA9oXNJwswSF6Ri
- MPBA==
-X-Gm-Message-State: AOJu0YwZr0KA+MR5hPZg6bgl1slciQ5XH4ESp1yui3AUFFlBDwdkjcCr
- EMTfEHMw5nzG0p3f7Hzi6blIgD/iE+nRQsXbZuYasQxxoVZ3HBqDn8Xu5fq1qgHZI8hpAFO+xtU
- W/KBK
-X-Gm-Gg: AeBDies/CPNszLhUARSwpbgJovtXKyc2nArx0kZJjxlNgzAy2+ipBxYh+l2djFs7AOs
- WNfqwYAC5noUft95e798jviu50/mgavAHwxkvOqte6CAO9Y/Gqii1xpoMg6PmyV8dvHf5vOSZgv
- 3Qt7RD9yEx9L3f8xbHVVQ1v439/hxdwyz8cYF162iv2WARjIJXqh12gtyHEaCO0LPpWZhJbKg9c
- RILmNs7mE7dxay0BJS8PFNIC0BUUgIrUvg4Zh/TfaLljoNrPGeW2g0VXATE05lVf3qpU//6nThf
- jWzFLclw00xINY4esfEVigG0tjf8uPN71rqryb27fltqiGK7lCJ0hpy7FMX3w7Oq4RGrXS7lKNg
- zq46wqCDhJQTaQiwlsA480px8UqH/5hObmHUr8x6jmKLDow7CikzCxt6yKPyAqfEoTTbusIq38e
- bPccbVOvUB8LK8MsjJzbF8YBBFzpL2O5E8A4ig6CZJVNHm4zVp1I2vOJeqtyQv1G6zDxV3q81Q2
- 8NcIv+ZdazvVbnEyJ8BYY4OFsnaT8AZuTqrkw8fpw==
-X-Received: by 2002:a05:600c:1da1:b0:488:f453:b976 with SMTP id
- 5b1f17b1804b1-488fb7844c5mr655106685e9.27.1777294085364; 
- Mon, 27 Apr 2026 05:48:05 -0700 (PDT)
+ bh=88UCjHkoy1vmDeZmG5DzL1f9FS5Tx4PV0gRNHIRsxWs=;
+ b=gGu2IIXkzIpuNFaK/Hu+eeN8ERdbVtYjTEBYiyxaCdlMj3cxzUdphO6jO0n/ysovNj
+ /xqrHd6/mnPiXeJzJRen4zVJlTkFaW62RsSnVBQABuuVXFWQYBVS0XZ2GZVrpYeF0oO8
+ PaPAJ6VBGcKJdMPvd6i8wZypOe/NOOeVjDBbwgvftHqlnM4DiBHMHTxFP10reEmVRwlM
+ rlp0pDjFgFspYZ44w6MTjiTCqVBPVzwEgEcduU0XumnMNgg0lE5SHO3wDEQcDUZMQDWN
+ 2XfvOFcbev5MEcGbCD0R+OEehqR688O7YQO1b29U7hB6mtSq2X+SAroJPPA2ubEXUxGh
+ htcA==
+X-Gm-Message-State: AOJu0Yx2mMJrva754NzOSKQihq+KnTuuhMVr2/TA2HPmfJjAPj0cMDnK
+ gOM1a+oHeYlXLxWgReJCTpUYwa0a+V47flT2ZzrIVlxgazIJoxorqZ8ADUBiQr6yd86yNnw3qYD
+ D+kWI
+X-Gm-Gg: AeBDietIiAH3zaee734NGqsX3Z+jbV/UgKBPZLyRG47JfsxlnbJqKz6YrmGDSl0bSpK
+ fB2xOSjELCpaps4Ly+RWWFna26Lq+TcE4UOPzer1Pah2G++5LmT9qcjGexdBoiAbWiPeetIOOBG
+ hb9CfzDwk0kNizXDCMGmBHKYhaG4XEsyX3Jpgnit3lLEvlAV+Eo/52DNDpojJfl2ODStQNgmbUI
+ gNEguH6cIlT+tBfWEZNLcrOoWT+yFahcVEqTi7yxXzyJOrZHa78eewVst0R1nr724EbLRh1BGeq
+ UZdksdsTufN+PSwb3+/QjGo//sjM3lLjun8+SoKmxBI21V1Mo0y8FZ5Ho5qom767Xz/+CbqTFVF
+ 8sqFbaZKQFodHFhbhzcZVZ/3uT/7SoheEW1XkVGRbqf1/SwSylpyAIKlACxowiDs9WvBBHo5El/
+ +gtECHjhkB6SKIlyIAkR2pcRaAKRKT8ASq1zzlUQ9oERFFVROU8Z2xMSHmrM0IxPfuyzm1JmE7R
+ h2HSKloeXh1KPuMriK4llLJ22PPUXTfpi97cULrkA==
+X-Received: by 2002:a05:600c:8b8c:b0:489:1d74:56d with SMTP id
+ 5b1f17b1804b1-4891d7406famr512996805e9.29.1777294117004; 
+ Mon, 27 Apr 2026 05:48:37 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.04
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:48:04 -0700 (PDT)
+ Mon, 27 Apr 2026 05:48:36 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 28/63] target/arm: Clear AArch64 ID regs from ARMISARegisters
- if AArch64 disabled
-Date: Mon, 27 Apr 2026 13:47:02 +0100
-Message-ID: <20260427124738.966578-29-peter.maydell@linaro.org>
+Subject: [PULL 63/63] target/arm: report register in WFIT syndromes
+Date: Mon, 27 Apr 2026 13:47:37 +0100
+Message-ID: <20260427124738.966578-64-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,104 +101,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If we create a normally-AArch64 CPU and configure it with
-aarch64=off, this will by default leave all the AArch64 ID register
-values in its ARMISARegisters struct untouched.  That in turn means
-that tests of cpu_isar_feature(aa64_something, cpu) will return true.
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Until now we have had a design policy that you shouldn't check an
-aa64_ feature unless you know that the CPU has AArch64; but this is
-quite fragile as it's easy to forget and only causes a problem in the
-corner case where AArch64 was turned off.  In particular, when we
-extend the ability to disable AArch64 from only KVM to also TCG there
-are many more aa64 feature check points which we would otherwise have
-to audit for whether they needed to be guarded with a check on
-ARM_FEATURE_AARCH64.
+Pass the register number (rd) to the wfit helper and report it in the
+syndrome ISS.
 
-Instead, make the CPU realize function zero out all the 64-bit ID
-registers if a TCG CPU doesn't have AArch64; this will make aa64_
-feature tests generally return false.
-
-We only do this for TCG because only TCG really needs it, and for
-KVM it might be confusing to have QEMU's idea of the ID registers
-be different from KVM's.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260416165353.589569-2-peter.maydell@linaro.org
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20260422125250.1303100-24-alex.bennee@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu.c | 35 +++++++++++++++++++++++++++++++++++
- target/arm/cpu.h |  3 ++-
- 2 files changed, 37 insertions(+), 1 deletion(-)
+ target/arm/syndrome.h          | 11 ++++++++++-
+ target/arm/tcg/helper-defs.h   |  2 +-
+ target/arm/tcg/op_helper.c     |  7 ++++---
+ target/arm/tcg/translate-a64.c |  2 +-
+ 4 files changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index b62de8addf..6705ee9db7 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1606,6 +1606,27 @@ void arm_cpu_finalize_features(ARMCPU *cpu, Error **errp)
+diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+index 04a71eebcb..4d1f1c529e 100644
+--- a/target/arm/syndrome.h
++++ b/target/arm/syndrome.h
+@@ -670,7 +670,14 @@ FIELD(WFX_ISS, RN, 5, 5)
+ FIELD(WFX_ISS, COND, 20, 4)
+ FIELD(WFX_ISS, CV, 24, 1)
+ 
+-static inline uint32_t syn_wfx(int cv, int cond, int ti, bool is_16bit)
++typedef enum {
++    WFI = 0b00,
++    WFE = 0b01,
++    WFIT = 0b10,
++    WFET = 0xb11
++} wfx_ti;
++
++static inline uint32_t syn_wfx(int cv, int cond, int rn, bool rv, wfx_ti ti, bool is_16bit)
+ {
+     uint32_t res = syn_set_ec(0, EC_WFX_TRAP);
+     res = FIELD_DP32(res, SYNDROME, IL, !is_16bit);
+@@ -678,6 +685,8 @@ static inline uint32_t syn_wfx(int cv, int cond, int ti, bool is_16bit)
+     res = FIELD_DP32(res, WFX_ISS, CV, cv);
+     res = FIELD_DP32(res, WFX_ISS, COND, cond);
+     res = FIELD_DP32(res, WFX_ISS, TI, ti);
++    res = FIELD_DP32(res, WFX_ISS, RN, rn);
++    res = FIELD_DP32(res, WFX_ISS, RV, rv);
+ 
+     return res;
+ }
+diff --git a/target/arm/tcg/helper-defs.h b/target/arm/tcg/helper-defs.h
+index 5a10a9fba3..a05f2258f2 100644
+--- a/target/arm/tcg/helper-defs.h
++++ b/target/arm/tcg/helper-defs.h
+@@ -55,7 +55,7 @@ DEF_HELPER_2(exception_pc_alignment, noreturn, env, vaddr)
+ DEF_HELPER_1(setend, void, env)
+ DEF_HELPER_2(wfi, void, env, i32)
+ DEF_HELPER_1(wfe, void, env)
+-DEF_HELPER_2(wfit, void, env, i64)
++DEF_HELPER_2(wfit, void, env, i32)
+ DEF_HELPER_1(yield, void, env)
+ DEF_HELPER_1(pre_hvc, void, env)
+ DEF_HELPER_2(pre_smc, void, env, i32)
+diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+index 75ad53ec6c..e8f0996ed3 100644
+--- a/target/arm/tcg/op_helper.c
++++ b/target/arm/tcg/op_helper.c
+@@ -398,7 +398,7 @@ void HELPER(wfi)(CPUARMState *env, uint32_t insn_len)
+             env->regs[15] -= insn_len;
+         }
+ 
+-        raise_exception(env, excp, syn_wfx(1, 0xe, 0, insn_len == 2),
++        raise_exception(env, excp, syn_wfx(1, 0xe, 0, false, WFI, insn_len == 2),
+                         target_el);
      }
+ 
+@@ -408,7 +408,7 @@ void HELPER(wfi)(CPUARMState *env, uint32_t insn_len)
+ #endif
  }
  
-+static void arm_clear_aarch64_idregs(ARMCPU *cpu)
-+{
-+    /* Zero out all the AArch64 ID registers in ARMISARegisters */
-+    SET_IDREG(&cpu->isar, ID_AA64ISAR0, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64ISAR1, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64ISAR2, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64PFR0, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64PFR1, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64PFR2, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64MMFR0, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64MMFR1, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64MMFR2, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64MMFR3, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64DFR0, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64DFR1, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64AFR0, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64AFR1, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64ZFR0, 0);
-+    SET_IDREG(&cpu->isar, ID_AA64SMFR0, 0);
-+}
-+
- static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+-void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
++void HELPER(wfit)(CPUARMState *env, uint32_t rd)
  {
-     CPUState *cs = CPU(dev);
-@@ -1733,6 +1754,20 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-     }
- #endif
- 
-+    /*
-+     * A TCG aarch64=off CPU has no AArch64 at all, so we clear out the
-+     * ID registers to avoid cpu_isar_feature(aa64_something, cpu) tests
-+     * incorrectly returning true. We don't do this for other accelerators
-+     * (which in practice means "for KVM", since no others have AArch32
-+     * guest support) because from KVM's point of view the AArch64 ID
-+     * registers still exist and must have their correct values. So we
-+     * avoid clearing them out so that we don't have QEMU and KVM with
-+     * different ideas of the ID registers.
-+     */
-+    if (tcg_enabled() && !arm_feature(env, ARM_FEATURE_AARCH64)) {
-+        arm_clear_aarch64_idregs(cpu);
-+    }
-+
  #ifdef CONFIG_USER_ONLY
      /*
-      * User mode relies on IC IVAU instructions to catch modification of
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 657ff4ab20..ab6bacf4aa 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1080,7 +1080,8 @@ struct ArchCPU {
-      * Note that if you add an ID register to the ARMISARegisters struct
-      * you need to also update the 32-bit and 64-bit versions of the
-      * kvm_arm_get_host_cpu_features() function to correctly populate the
--     * field by reading the value from the KVM vCPU.
-+     * field by reading the value from the KVM vCPU. If it is an AArch64
-+     * ID register then you also must update arm_clear_aarch64_idregs().
-      */
-     struct ARMISARegisters {
-         uint32_t mvfr0;
+@@ -427,6 +427,7 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
+     int target_el = check_wfx_trap(env, false, &excp);
+     /* The WFIT should time out when CNTVCT_EL0 >= the specified value. */
+     uint64_t cntval = gt_get_countervalue(env);
++    uint64_t timeout = env->xregs[rd];
+     /*
+      * We want the value that we would get if we read CNTVCT_EL0 from
+      * the current exception level, so the direct_access offset, not
+@@ -447,7 +448,7 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
+ 
+     if (target_el) {
+         env->pc -= 4;
+-        raise_exception(env, excp, syn_wfx(1, 0xe, 2, false), target_el);
++        raise_exception(env, excp, syn_wfx(1, 0xe, rd, true, WFIT, false), target_el);
+     }
+ 
+     if (uadd64_overflow(timeout, offset, &nexttick)) {
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 48b5c57255..9a27c4c6ec 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -2065,7 +2065,7 @@ static bool trans_WFIT(DisasContext *s, arg_WFIT *a)
+     }
+ 
+     gen_a64_update_pc(s, 4);
+-    gen_helper_wfit(tcg_env, cpu_reg(s, a->rd));
++    gen_helper_wfit(tcg_env, tcg_constant_i32(a->rd));
+     /* Go back to the main loop to check for interrupts */
+     s->base.is_jmp = DISAS_EXIT;
+     return true;
 -- 
 2.43.0
 
