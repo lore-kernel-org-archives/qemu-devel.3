@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBBB5FF8867
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 23:24:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A583AFF8864
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 23:24:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHVIz-0000yR-Lr; Mon, 27 Apr 2026 19:23:57 -0400
+	id 1wHVJ0-0000zM-Q4; Mon, 27 Apr 2026 19:23:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <scottjgo@gmail.com>)
- id 1wHVIs-0000xK-S6
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 19:23:51 -0400
-Received: from mail-dl1-x1234.google.com ([2607:f8b0:4864:20::1234])
+ id 1wHVIu-0000xU-2V
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 19:23:52 -0400
+Received: from mail-dy1-x1336.google.com ([2607:f8b0:4864:20::1336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <scottjgo@gmail.com>)
- id 1wHVIq-0004rs-A9
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 19:23:50 -0400
-Received: by mail-dl1-x1234.google.com with SMTP id
- a92af1059eb24-12c1a170a50so13599046c88.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 16:23:47 -0700 (PDT)
+ id 1wHVIs-0004sx-1y
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 19:23:51 -0400
+Received: by mail-dy1-x1336.google.com with SMTP id
+ 5a478bee46e88-2d9916deb14so19059567eec.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 16:23:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777332225; x=1777937025; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777332228; x=1777937028; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=odA0IPTIBedM8iKPBA7J9zqBhAg6a99RkWB/Bh7jxvE=;
- b=Th9XeWhYxSSoV9oKO2GCX1OvUcS05ZEekmoaC0rk8KaKQBXu04nhvTZtd7kpipDvm0
- 7BHMTgDV6A0SCWb4wXBfty6eV8qi0BazZalkmFZh9dqOw0aYiH1KK4r6Vsvwkg5saGnc
- Bra4a+ktaPHWsFh4N0r6RFT/iKwi+UrKFPftVOZhs3XiQtOqdkTkC3yl56PPcfb9CFlS
- w4ntFTg83F3hpx2Q5hwX2R5dRdrv3pdZ+BhC1XZ5tbMqzCzbB2K1C/1Imn1zrVoKUdfb
- PEdtLeIN9u2w+xAl9wXmwYk+117uTVRtQ0XfXf5OVHLZGPTMhZEPQIe7u4uNE0tusvMn
- NLbQ==
+ bh=TGl0BbXkGtFoRsQ7y9Jn4eXyp2q/oJa3u0gZmZMsmiA=;
+ b=kT34BOMfChisBDkBfJ1F954yfrSEVXggkCz2IZqAEhaREbNsjJ0aqnoIFm59ijKp/G
+ TD1dCncLrl+6TUcZWyCUldgm2qIJ0FusfFrL86M7p2jme/PgKykh7c4/ubTEiakoOZ24
+ dkZYhZY56ngQ/yWu5EJ+ONzfx6+b/QxBy9psDuOBbBKUS/oPbP9pyhzl9p3PjJu7vnds
+ ifhpVwWA1Fdl1n2ij6eG9/14wr2E/wjusUBTM/s0b/1hiXZs0nFzvzuDlStutaTzD2KI
+ V8FoiWT3HHOxVpZ7CSCK2o2nrOOzYL9Ai7GRVI9BgqmSBzPgENqiZBjhapKBgSJgvR98
+ I1jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777332225; x=1777937025;
+ d=1e100.net; s=20251104; t=1777332228; x=1777937028;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=odA0IPTIBedM8iKPBA7J9zqBhAg6a99RkWB/Bh7jxvE=;
- b=QnlW0QMN4hS3nbyKDLbekQEbS2X6bEmbKZL/VWmTndTiTJkJ+pi9i0Fs5suzxablfY
- 5/RuWNXqdCiwkgZDVulfZBhFBkhNrvYzRBvcrkZ0GzzKncNi5tbgp8q4hIg6ZxZ3lZtm
- jmtHTgMcOJ/E1HHo/yfD4K+VMHPNQK/za+boHjCXIsNBSw20OQKzhzLC6D44mfJq0wZ1
- rolcuSQojNYt/c4oV2X2Kg9rDuxTD2jgkfnc3dp7uYH7NO/0qOXc0g0nVF28p98WJbwY
- rhANzi9NnLAslh1pPrYtt2Z/VgAXa8gywsBtcYtEVoSi2k/eLkdAVJWMNJTOvkC+VHG+
- zkuA==
-X-Gm-Message-State: AOJu0YxpGF7mlwYna6mUWNTA4Ua52wocGVl8QydrM//G2ixbDyPBCmXy
- Ay8+LDlyaOhqSeoxdFp+Pi7MhVsr4LXCmMg0oPTPh7qoSosw3Uuvtq/SN8dO7B7zaHw=
-X-Gm-Gg: AeBDietuTggAjcFGBOWMlM7jm9p9HgzAVU9L3kh2ZBTkVBfT9aEF8hoox0p88xlJtFa
- m5qFLeGv2L2AeiOHqNPW1WdAVVPQC4QtCJSwYI/fnhwjpFTkW5qXs6+eOyRHzkRK2hiA5IjJTsx
- 9C/ijlcnfN34mLoHqm8ZwJjV6RQcNr3LGVa5R/cA0xHOin4MknMxqS2cRKxFkeOpsupWUGwTSn8
- U5e8ulv0OImO9TDR2ZdT3n+tlRVsj0AXPX83B9f6FzbA9ITGcw/hDj/RW3DiFZScNK2y1xmNmBh
- U051lEDT7Y0sFiVjOy6kA5Ba6jeknbsQgoSQVjv025Yg0T/OnGOJ9zW1OYUP2mQdUn2dAgwxKXO
- CgqAA0yjB0H5UBBHbUd5kTIfm50ITTfYiqdoXjZvKNYRd3MVJkGtyK1abzhzVIAtrh89Y5X2Yan
- R14yDXfaUo3A3NzF679G2OpOK0MdSStd0wfLS8zc7KeedIQtloDTf21AyQ7BQ7BocvJtrbXCqFj
- LRtfo5+RAbns18eFf3tMCu1YWYAeJwrutG6QA==
-X-Received: by 2002:a05:7022:2385:b0:12c:8b9:71d9 with SMTP id
- a92af1059eb24-12ddd9b5758mr395647c88.27.1777332225460; 
- Mon, 27 Apr 2026 16:23:45 -0700 (PDT)
+ bh=TGl0BbXkGtFoRsQ7y9Jn4eXyp2q/oJa3u0gZmZMsmiA=;
+ b=pxQ1K1N2raZW8yuzrooofOxH5PELgFByy/pQmxQKJ2ukWA98dlCtqMiNSufaMm1Igm
+ HB4KEQfn6tELHVdiJonfl9M+5EIY7iYrBxiXsHPC4w7OAKVOiuQd4XLE1zfDsGFf8ahz
+ UlrvhiklQtotjsqk5NU7MTpA/5UizQzLtoa4t59NLH0D8+98v5MGHfY7uTb6VGUBPbyh
+ VqmdHrsP8UPqH4qp6uHyXZyvSVkjM+lM78UovwTvHXMf1VILadEkZlcL/7luKQ/7XJ7W
+ 0RkOItcTgOZt9U1TDSHaaRPfmKZsjZ2pOqqXU+jVZW4JfW4KTN/ttpNhO7G6tQF/ZJ/c
+ /dfg==
+X-Gm-Message-State: AOJu0YxCj+zDYt8ukiJE0ihnUG7RfW+tYDlJtY7iF0/B6vgBZvAf8Dsa
+ zW9LA1UZr/6pgI0uSQH35oWNhoHkAuRkKLa4OyBZP5V/flBVCoQ+ndYYinRgifGvgVY=
+X-Gm-Gg: AeBDievEsQY0aB75aF4Y09YZccrPmq0n+xg0LdKOLIyMHRYf2Vx8lFhFOTu2vc3VfXu
+ p2MDoywYIlHggCRwIMtA9dw4BUqvPZbzcS2dNqVxNorBbYamIL0LO+inWGx1caSQEzY8WHmCKwb
+ K8dpwOxfgg6td+zSFYhAx1yQT+DLUdvQ3a6sg1VqsveJri6iZ4U2c0z5OY872nvSYDdk7i56nsy
+ rbpgwoo+KHtkdnVF0UU5ZZinqcZlN3ngByTMacAceOd6AHdWD1C4QQfWMGRjW3WOgg0ullCtIRA
+ qAYuYSfRXfCcF47CFEixAfCiJBm9RROwf2JSKRbtPbYxeEzzmuH0iKfFxZTAhWwY78ayRaXrZA+
+ rhmrYu0h35H0dqLaT+Wgf61uKV2UJWTmviZiQNf5GPGAPsvmq+WBIS3SpR0RX8KaPG2tCvV0UHV
+ jYfW0SB8pJ624+y2VqAM7RW/gPnQYf1AllL0ZegiihHof7QL8ujYeuF+bdBVszuWeY497XQUcXY
+ kCXPOe151EpelKXmofJ1zE454XeIWOPyLLJEw==
+X-Received: by 2002:a05:7301:30b:b0:2ed:e17:d510 with SMTP id
+ 5a478bee46e88-2ed0e17d6fbmr18710eec.35.1777332227823; 
+ Mon, 27 Apr 2026 16:23:47 -0700 (PDT)
 Received: from localhost.localdomain ([2601:645:8200:47:f4a5:bd04:3ca7:5727])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2ed0a0ce710sm849973eec.19.2026.04.27.16.23.44
+ 5a478bee46e88-2ed0a0ce710sm849973eec.19.2026.04.27.16.23.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Apr 2026 16:23:44 -0700 (PDT)
+ Mon, 27 Apr 2026 16:23:47 -0700 (PDT)
 From: "Scott J. Goldman" <scottjgo@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
@@ -73,17 +73,16 @@ Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Eric Auger <eric.auger@redhat.com>, "Scott J. Goldman" <scottjgo@gmail.com>
-Subject: [PATCH 1/2] target/arm/hvf,
- target/i386/hvf: Pass MR-relative offset to memory_region_set_dirty()
-Date: Mon, 27 Apr 2026 16:21:15 -0700
-Message-ID: <20260427232116.50586-2-scottjgo@gmail.com>
+Subject: [PATCH 2/2] target/arm/hvf: Stop pre-allocating cpreg_vmstate arrays
+Date: Mon, 27 Apr 2026 16:21:16 -0700
+Message-ID: <20260427232116.50586-3-scottjgo@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260427232116.50586-1-scottjgo@gmail.com>
 References: <20260427232116.50586-1-scottjgo@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1234;
- envelope-from=scottjgo@gmail.com; helo=mail-dl1-x1234.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1336;
+ envelope-from=scottjgo@gmail.com; helo=mail-dy1-x1336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,63 +105,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both the arm and i386 hvf accelerators have the same bug in their
-dirty-page logging path: the address fed to memory_region_set_dirty()
-is computed as "<ipa,gpa>_page + xlat", but memory_region_set_dirty()
-expects an offset relative to the start of the resolved MemoryRegion.
-address_space_translate() already returns that offset in xlat, while
-ipa_page / gpa_page is the guest-physical (system address space)
-address.
+Commit ab2ddc7b66 ("target/arm/machine: Use VMSTATE_VARRAY_INT32_ALLOC
+for cpreg arrays") moved cpreg_vmstate_indexes / cpreg_vmstate_values
+to be allocated by VMSTATE_VARRAY_INT32_ALLOC and added an assertion
+in cpu_pre_load() that they are NULL on entry. The same commit dropped
+the redundant g_renew()/array_len assignments from the kvm, whpx and
+helper.c cpu init paths, but the hvf cpu init path still pre-allocates
+them.
 
-Adding the two together produces a bogus offset that for any non-
-trivial RAM size walks well past the end of the MemoryRegion's dirty
-bitmap. With dirty logging active (e.g. live migration on a guest
-with several GB of RAM), this triggers an out-of-bounds atomic write
-inside bitmap_set_atomic() and crashes the source QEMU as soon as the
-guest writes to RAM:
+The result is that loading a snapshot or migration stream into an HVF
+guest immediately aborts:
 
-    Thread .. 'CPU N/HVF', stop reason = EXC_BAD_ACCESS ...
-      bitmap_set_atomic at bitmap.c:213
-      physical_memory_set_dirty_range at physmem.c:1038
-      memory_region_set_dirty at memory.c:2191
-      hvf_handle_exception at hvf.c
+    ERROR:target/arm/machine.c:1043:cpu_pre_load:
+        assertion failed: (!cpu->cpreg_vmstate_indexes)
 
-Fix it by passing only the MR-relative offset xlat. ipa_page /
-gpa_page is still the right argument to hvf_unprotect_dirty_range(),
-which works on the guest-physical address space.
+Drop the leftover cpreg_vmstate_indexes / cpreg_vmstate_values
+allocations and the cpreg_vmstate_array_len assignment from
+hvf_arch_init_vcpu(), matching what was already done for the other
+arm accelerators.
 
 Signed-off-by: Scott J. Goldman <scottjgo@gmail.com>
 ---
- target/arm/hvf/hvf.c  | 2 +-
- target/i386/hvf/hvf.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ target/arm/hvf/hvf.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
 diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index a19d7a5e1f..a36c634423 100644
+index a36c634423..fe7dc9448d 100644
 --- a/target/arm/hvf/hvf.c
 +++ b/target/arm/hvf/hvf.c
-@@ -2243,7 +2243,7 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-                 assert(!mr->readonly);
+@@ -1284,12 +1284,6 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+                                      sregs_match_len);
+     arm_cpu->cpreg_values = g_renew(uint64_t, arm_cpu->cpreg_values,
+                                     sregs_match_len);
+-    arm_cpu->cpreg_vmstate_indexes = g_renew(uint64_t,
+-                                             arm_cpu->cpreg_vmstate_indexes,
+-                                             sregs_match_len);
+-    arm_cpu->cpreg_vmstate_values = g_renew(uint64_t,
+-                                            arm_cpu->cpreg_vmstate_values,
+-                                            sregs_match_len);
  
-                 if (memory_region_get_dirty_log_mask(mr)) {
--                    memory_region_set_dirty(mr, ipa_page + xlat, page_size);
-+                    memory_region_set_dirty(mr, xlat, page_size);
-                     hvf_unprotect_dirty_range(ipa_page, page_size);
-                 }
+     memset(arm_cpu->cpreg_values, 0, sregs_match_len * sizeof(uint64_t));
  
-diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
-index c0d028b147..cdc8bd1950 100644
---- a/target/i386/hvf/hvf.c
-+++ b/target/i386/hvf/hvf.c
-@@ -146,7 +146,7 @@ static bool ept_emulation_fault(CPUState *cs, uint64_t gpa, uint64_t ept_qual)
-     if (write && memory_region_get_dirty_log_mask(mr)) {
-         uintptr_t page_size = qemu_real_host_page_size();
- 
--        memory_region_set_dirty(mr, gpa_page + xlat, page_size);
-+        memory_region_set_dirty(mr, xlat, page_size);
-         hvf_unprotect_dirty_range(gpa_page, page_size);
+@@ -1326,7 +1320,6 @@ int hvf_arch_init_vcpu(CPUState *cpu)
+         }
      }
+     arm_cpu->cpreg_array_len = sregs_cnt;
+-    arm_cpu->cpreg_vmstate_array_len = sregs_cnt;
  
+     /* cpreg tuples must be in strictly ascending order */
+     qsort(arm_cpu->cpreg_indexes, sregs_cnt, sizeof(uint64_t), compare_u64);
 -- 
 2.50.1 (Apple Git-155)
 
