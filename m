@@ -4,130 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8892DFF8850
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 04:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D552BFF8850
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 05:14:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHDV8-0001El-V3; Mon, 27 Apr 2026 00:23:24 -0400
+	id 1wHEI5-0005qK-DW; Mon, 27 Apr 2026 01:13:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wHDV1-0001EV-DQ
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 00:23:11 -0400
-Received: from mail-francesouthazon11011015.outbound.protection.outlook.com
- ([40.107.130.15] helo=MRWPR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <Manali.Shukla@amd.com>)
+ id 1wHEI2-0005qC-Sb
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 01:13:50 -0400
+Received: from mail-northcentralusazon11010014.outbound.protection.outlook.com
+ ([52.101.193.14] helo=CH1PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaurav.sharma_7@nxp.com>)
- id 1wHDUx-0004zr-7b
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 00:23:10 -0400
+ (Exim 4.90_1) (envelope-from <Manali.Shukla@amd.com>)
+ id 1wHEI0-000364-BZ
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 01:13:50 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZviuG3PAtP9mxb+IJdZgbxZ0cCKQqmZog23elEUhDlXX7mIQD5DmaSICzLO9DaUiZZxUrfNr9Gur0Gg2cyC033PN/Cp2CYlacWsbnWnTcEICKSGiZjkJYeC8eq2tSLyDp4EGAQlyHYqhBFf2dYSsCLaaYyjyUKJINtQBHdFWpUv0K1o/99bnz+dbD3awgGI82n7mmA57mNxUga8yYUfiyGMY0eWGOHpExTTUbggf3IGnP+DAa93vVGTYFmszh8Y3chWJDVopgMKaeE7jISMyS3c/gn8lCsZJ6d37aManU20t6u0+i60kLiL5ggpUeTgIz49dINUJ1X40ujCC89g50Q==
+ b=KWH/ab3tADRjNd9m2vHl3VI9yGVUcUBBZ7HnYOqWG14QP7f6Tas5UIBTsAw/9te2gl02Gzg83z94PcmlCDVq4p94bQxpca9PBaG2WZbyOcinufWOiifPHjLlS/kAPPqJjArmecO66ccEjol20CF3JZaILpumhzoBUT7lV3y0JUTY4r7x9Gpn0XEkTUl1+NU4jwhMlk0wyBW9Nu7oex+RHC6RvqsS3GZitc1MbKogORc4HUewRjdo4wJls016M+96B92VercYCGRYdO1EQbUrBu2HwlL6TC0Tfsld/cdSABa1GxWzrmMvkDsI+1zJBvnXwvwb8S1JbejbAojjjNbBKA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bBgJkxOnLMN6MCXzUbZa7BkkTMFebTKax5+h/JJp8OM=;
- b=tgCMo57ms1bSy2CdvsH668PlFoPnqlf7geifvDsyBDIIZjzzXFqjeTHnJQwu+XxEv5AOLokk5q0Izbp/kW9cld8NuFi50PjNnKrFVgRtJPVTOjBR1iZGH1598X/NTHAxn5VNnfkK4I+2qwlDKJy1tg94HeczgPtRZB9CnnTXeZmDM4Wrw+xbnYIwxOeB5u5b+0l9qrx5aZQtI05pg84NEDhxunTUmvES2ho5XQh4zWf+sLUJslqLYv47Co4FQRsZHFEsAfe9aYUIiSjba1DCiZBvtppQmX6t6G3Q38s+4oZArPAxwvyDpHABvK+nNwiPI0D5hO2M9sUep6r5xJTtiA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
- header.d=nxp.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector1; 
+ bh=zuBcPCfWem0LfmSH4uDHrkgz5QiPh5qgbxL+uzB1p60=;
+ b=bhQuNMTNSxY7NUJchdszFhP9qD7vAAAnvJeaOSxWcSrtugcK10Wsz340Er0JHVE40afUfp2+njic8b8AhLQSn/KcxmfNJBBTZkxDYmVSRJRWjs8SmoFofunR/EFbxOr4JvF56bhwY6KAj4hMgBK9x9m2Vfjeq3kiNVkmh8qy8HzgiHYgfuJ15wd0hDZAruk75W02xHwy88ZyZ9qBXprHURIIeGJE3hV5CCTrLRGnduOSK0jIskz7S6fp7iknJY24wziyWS3MPzvTQFePq3CccH8HumRHJdeEbz2CRn9FUSeHJRxD9njr4VdRc5wiw9HVdsYDje1SxYuikaKijQ3fHQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=bBgJkxOnLMN6MCXzUbZa7BkkTMFebTKax5+h/JJp8OM=;
- b=dx6DpqBrb1Yx3ySFYlYFUgpS064U162CV06jEBms9pTAwfik5zocU26G6PQraA0fabThmJMeRnLwHJ3EX6gbjvSWdk4z8AdpgpR+KNaw+i/wYJgQah79NBmaAF+yP4fYX33UvTVBYPBxWh6sc17xm+Mh14Q5sigGpRhfIFwKSYjHCoDVtGuDY3WBqsplaKM/Q4LWjPmZ7sx7VkaHlxt+Go3htC0Ri5vYv4Hy2DGV4lfurWO56YZ5jgStn5Odwb1tPyEZKE0sUbyM0su+0Sd8nPtDKJX4gmPlFXz4oMeXrCFVMf1GpozB6dOGV/RypUHkxmBL8Oj/1Rt7mIb/WCg0lQ==
-Received: from AM0PR04MB4370.eurprd04.prod.outlook.com (2603:10a6:208:6e::32)
- by AS8PR04MB8360.eurprd04.prod.outlook.com (2603:10a6:20b:3f4::14)
+ bh=zuBcPCfWem0LfmSH4uDHrkgz5QiPh5qgbxL+uzB1p60=;
+ b=rSY4CPRCQgik8zyvyLWUL8ses1UQ9p57bS3NV211a/1qCNXnzsRn4Yn2v2OeP0byJd8+u77TpTJTezuH2gtY4CQEnTpF1KYCUo1LLCG6YjTANFKQ6wfv8zawX0po2E0hI20clNiojRrz918TyGqDR034GgrPaWPwUPh3GCEx7JY=
+Received: from SJ0PR05CA0152.namprd05.prod.outlook.com (2603:10b6:a03:339::7)
+ by PH0PR12MB7815.namprd12.prod.outlook.com (2603:10b6:510:28a::15)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.15; Mon, 27 Apr
- 2026 04:17:58 +0000
-Received: from AM0PR04MB4370.eurprd04.prod.outlook.com
- ([fe80::fe3b:fb2c:9dfc:9b]) by AM0PR04MB4370.eurprd04.prod.outlook.com
- ([fe80::fe3b:fb2c:9dfc:9b%6]) with mapi id 15.20.9745.035; Mon, 27 Apr 2026
- 04:17:57 +0000
-From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-To: Gaurav Sharma <gaurav.sharma_7@nxp.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, Bernhard Beschow <shentey@gmail.com>
-CC: "pbonzini@redhat.com" <pbonzini@redhat.com>
-Subject: RE: [PATCHv7 00/15] Adding comprehensive support for i.MX8MM EVK board
-Thread-Topic: [PATCHv7 00/15] Adding comprehensive support for i.MX8MM EVK
- board
-Thread-Index: AQHc0VtupKxiji9OA0+gLy63hk7YgLXyVqXg
-Date: Mon, 27 Apr 2026 04:17:57 +0000
-Message-ID: <AM0PR04MB43707B320EA73EEB1BFDA54787362@AM0PR04MB4370.eurprd04.prod.outlook.com>
-References: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
-In-Reply-To: <20260421065226.3907745-1-gaurav.sharma_7@nxp.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-Mentions: peter.maydell@linaro.org,shentey@gmail.com
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nxp.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM0PR04MB4370:EE_|AS8PR04MB8360:EE_
-x-ms-office365-filtering-correlation-id: a11fd9fd-0ab6-4ba8-6661-08dea413f66f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|19092799006|376014|1800799024|366016|38070700021|56012099003|22082099003|18002099003;
-x-microsoft-antispam-message-info: 4n3T4XJrlWV281CTYRuYRIygcYGq1Q5WCqPsgwXcj7SOPFUAxa9olk9+KaFMvo083R7oKUQiTTWS/GZKk2A+VxsgcwkwqppeafIoyuetC+XKk7hpXQXoNU+PKh4QThKCWMJXOrkhTrsDCHgdiZ/juIU4IujL+NkqqoVGCkpA7BlmaFfd/xa4v7OAKlS1cEeO044XlVqCy0iIUD3eE2NTJflhPE5bcQMh5WVImjbmidB2hukWQH0HFm2+O+9HMpZyYfXqeAUww+QoHckwnihoMGiGRGTadDIA9aB/Hl0v1HAR6/QQJoKp4eul/2GytCK7ydpS3o9GkhwGC8rL295YTacxqY671nCEnAkBrx3AmlMXFBc7zYsQLSw5d8qqFfsIZxACsRoKgn+xZwem3apbgjcIOgSlxRWcUg9mbYanE6e4LQVPYSsxtWwk9KyN7NLw+ktXXarDKv6KBkMs+mIpjwDoIHiSgmJdZd2uuQSApJHd7S/+MPxXRyMGuut6ZCuQhxUcTfrbh7B92A6YQh75GMtgEDYcPQ+SCqSZ9gyKyuuK/OTxx9yG3ol+h55SNGs6Yd7Skt683stEVt/5XvWh0ehrXVAzXYyug3DjG8Z6d3ojwlqFnWtE0Pl2bYmg/G+MjlcZXyS1Vk+cELHpX8cmf27KqABBVoaT6RemMr06aJgMnQ7RbjNjT/h5RvtgvqVFQxXOcJ7HSbzTBwPKJx60zEEZyTdykEchbdvmt4SpkCJKHMeIIQ8TAjM53ijuunxXWBuN9nqdQx2lzRiXM/wOwk3bU+zMuSqM3aWGsFomH+Y=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM0PR04MB4370.eurprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(19092799006)(376014)(1800799024)(366016)(38070700021)(56012099003)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?jZNdbYanyXPErt49JQwev38LQ2XoKgF7L3jshno0h1+xu/XUow9OkVOM8wty?=
- =?us-ascii?Q?LkHrOlk8ZgohVMNCvtkm5a0BdGmn/1ceqImfzZuPu06iFF7LKUUIWqmbH8ac?=
- =?us-ascii?Q?12WLUfCzLViIVeThBkzcmvEXVvEln7ZV2EIwcbrv5uMkKhWTZKoBhh/opQam?=
- =?us-ascii?Q?RJrsVbk3g4ZwjndIqwYPzOPo9zy68yxNQ58KUkK6J9HiXZVDgTi/5zS/qmPF?=
- =?us-ascii?Q?1xUABWmgRXvKPcwRRumrInFkdukMScpwaBV0oydY+F5FAHtNWGtY6220XpWY?=
- =?us-ascii?Q?b3Ca+uK5HO1bzPjwPkAqejgd2Kl4wncZKB13JfyCY3UYpYG6+DJqTkqCYvvN?=
- =?us-ascii?Q?ZyNPRbnBNpDzsFtYNU/Up+hn+wz67/vps9fxM/Kg0nq1SWr05nWlDc/Y8z8J?=
- =?us-ascii?Q?db+w3CsS4dw38UbEj5ZSjzHxlXLDHCwImfwhXCTSNH6vnhwNX+jgJhLL8EoQ?=
- =?us-ascii?Q?KbsthrhwNmKhu4kZVA9GxTrGtnt2GqKGOCj1I2kCVcPtfN1V27j/R97d6wH0?=
- =?us-ascii?Q?4Q8DCBfpm4qtTXLjtwo6KC8mCghj+ReV508onyoupBqLM8Ze1sRccN9XV/G5?=
- =?us-ascii?Q?4ZgpqXb8A+47DZ8dyD0H49tYGnTUV0LxQoToWpyNij5OJOKEGqWs8J8q6ml1?=
- =?us-ascii?Q?3KdEEbce2gjIQDzKAkixuFCQLAR/JKyPGy/nX33FWsyotB4sqdbz1CbBU/YG?=
- =?us-ascii?Q?6VqSX8uOPtUCTVxws5fALBtCL349vLRPf3j+QNBo9MaKTgNfS1A1t2sYcskQ?=
- =?us-ascii?Q?llkph2XShiJRzcR9FCRZQ3uENtAFO9K5F3+AoD/w2InYKmyIk41A2c4edM5o?=
- =?us-ascii?Q?dzUy87W7c2X3m2u2Cj+W6AspkpM7Rmu+G2nbDTIyRbaVePFwWpQTEa0rNAva?=
- =?us-ascii?Q?AXNSKpNgC0S4HxDRbieIe1KEDpzHrraU51r4X4Ub6L0CVLTLFF29UKY2y4vb?=
- =?us-ascii?Q?AXqtvQn/M9bY6QnXXqc3CpSa5tJuWAwPieRsKgm3wWfxy75nIlgsF+lUhgMN?=
- =?us-ascii?Q?bTg32rYjbBMSva4W2f5w0v/dfjgm5fcU5XjeAKF+/nIsZxgf5Srv5JLDGu2P?=
- =?us-ascii?Q?3wTkEyv+9bTk1ISpfmrXJhuuTcQLAgCxFMbuVi6wczIYGTiPqza9v5Ypnc0Y?=
- =?us-ascii?Q?Z69CLy/6cza339tcUDWwWWhN1Z2GUoIGWcvKOVHp40Jijmx6wjmJgMSLAVd6?=
- =?us-ascii?Q?iTdo/54TncFKJEnyUC5cR3/HvbpH+NqsbhhPOBefkzN6AX/cl1EVb/t+yyfM?=
- =?us-ascii?Q?kpkg5iBh2WVimVQA78paz2XDwpjO9iduu/DnKRXJLCLweTcPmiALCQ882max?=
- =?us-ascii?Q?rIYCzsdHU263QkAWAgnipp2U+LSdSMW5lQr1UpPyEALMOVlgrp4N6k5vWwE+?=
- =?us-ascii?Q?MKSjRoFSEPmBMX8y2186xk6Gbdgk7kSHlLJBbmz1lD+x65r3QZO0rGOAs8Ic?=
- =?us-ascii?Q?UMIQl5plZBEQ1+ap5LE1x+/rPwDrKxTrVjS1OTgu+GSTFCkSTk0o1/NsxCdn?=
- =?us-ascii?Q?7TbjiRfQOwfeV6MTTXBL/qejuWmcCpkB9UJOHhE2J8Tp38UoQXMPoqDo5hML?=
- =?us-ascii?Q?E3T/X4BWkKd5aMrLA4iBiNImJwTWyFLtCxfTQ05u1SeHF+IK9inCwScJESMl?=
- =?us-ascii?Q?SARelv74JvFi4YN0F3nbQEGh5NheJxgxqzBZWCHpc3seplgUPQy7zbmVHcfi?=
- =?us-ascii?Q?csNsFxfuhOrpp66tuVRjukNMFjLLJq30yfMQaa/z4boN5DNKYKieI3Jma8Gr?=
- =?us-ascii?Q?K9GiMWEROg=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.15; Mon, 27 Apr
+ 2026 05:08:41 +0000
+Received: from SJ5PEPF000001F5.namprd05.prod.outlook.com
+ (2603:10b6:a03:339:cafe::16) by SJ0PR05CA0152.outlook.office365.com
+ (2603:10b6:a03:339::7) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9846.26 via Frontend Transport; Mon,
+ 27 Apr 2026 05:08:41 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ SJ5PEPF000001F5.mail.protection.outlook.com (10.167.242.73) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9846.18 via Frontend Transport; Mon, 27 Apr 2026 05:08:40 +0000
+Received: from SATLEXMB03.amd.com (10.181.40.144) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.2.2562.17; Mon, 27 Apr
+ 2026 00:08:40 -0500
+Received: from satlexmb08.amd.com (10.181.42.217) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Mon, 27 Apr
+ 2026 00:08:39 -0500
+Received: from [10.252.198.192] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Mon, 27 Apr 2026 00:08:36 -0500
+Message-ID: <fc10c7fe-b55a-4d68-ac3b-6fb49a953794@amd.com>
+Date: Mon, 27 Apr 2026 10:38:30 +0530
 MIME-Version: 1.0
-X-OriginatorOrg: nxp.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM0PR04MB4370.eurprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a11fd9fd-0ab6-4ba8-6661-08dea413f66f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 Apr 2026 04:17:57.8664 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: RbPLjuESKBslQIsIWJRWBdW6wRTeKu0ZoMXbh9J1w0FwzExCfiVCdXf00ybJ9CmW7p4Fjz/mcKsQ9tnJCnRT9Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR04MB8360
-Received-SPF: pass client-ip=40.107.130.15;
- envelope-from=gaurav.sharma_7@nxp.com;
- helo=MRWPR03CU001.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 0/8] i386/kvm: Add support for extended APIC register
+ space
+To: <qemu-devel@nongnu.org>
+CC: Cornelia Huck <cohuck@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, 
+ <kvm@vger.kernel.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Marcelo
+ Tosatti <mtosatti@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, Paolo
+ Bonzini <pbonzini@redhat.com>, Sean Christopherson <seanjc@google.com>,
+ Richard Henderson <richard.henderson@linaro.org>, "Naveen N Rao"
+ <naveen@kernel.org>, Nikunj Dadhaniya <nikunj@amd.com>
+References: <20260219054207.471303-1-manali.shukla@amd.com>
+Content-Language: en-US
+From: Manali Shukla <manali.shukla@amd.com>
+In-Reply-To: <20260219054207.471303-1-manali.shukla@amd.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Received-SPF: None (SATLEXMB03.amd.com: manali.shukla@amd.com does not
+ designate permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ5PEPF000001F5:EE_|PH0PR12MB7815:EE_
+X-MS-Office365-Filtering-Correlation-Id: e5728e49-1136-446b-7cd1-08dea41b0c24
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|1800799024|82310400026|36860700016|13003099007|22082099003|18002099003|56012099003;
+X-Microsoft-Antispam-Message-Info: /ZB+f+wSfDTSR5ptJ+8LBqcMdEhp3JyufN+Qxfu324lX4Qi4B2t6rpXpVW69OfYdjUerUFgPDkXyTQvvCoVqIPPm2b3tN0H/DOT4v7Lc7SfrBQU/CXAyormNDWcQ89GOM6VW7KPbRhFfC/eG8mB9ZE0ysT5NVhHPLcyRhQIzkD4LCUem3+ESXTfa5redOQHyvK17ztk7mY4PjEYbKr5nS3OD6stEVVIEM1wxZRVnZ+nZxruA3IrFCzATcGyxmQes7GBScV2m5UcFTu8tVNXaB4TSf21md+1yAle2q8r1OJ8e+4uKRLPjWi5OE8Ix8SrDwkOGGf09v9jNm2ENsYwhyUQ7mE5eBToMgxzjVuC6PMJYQaYaHITRBMvdzK7GDG4teZAFaRhQQgKtxKVlz6YiA9u7KfxI5WIWdMHo7A72OQoOHaU8XowuHd1GClm+LippxnsIscBstDyYA/Bwy1ykHiXesst5jvfzvHdTJZyXxEwwr3IAOr3YSvrjr0xk9kR5gv035xbLZ9MuY8XP3nPRqE1RlqQtCKIrBC9pDK+XtRbjcPZvjLN8+Umi/UnGgve2FTwTFjCx8s0f3xyqCI+yrCtOFSsMGePN17XpiYf2PkN230d7SU0tLbooeYkybQOwB5ROtxhrAXiqqYvVQO/dSfjHVr2m6X5x2yXdyrR8y70O224OflKBLp3/F2peSEmmc3wTSKIp6QOmSnYuHRnLbQV3D93078/OmSw4MRqWyIgqPAJqPjMWwnbIGZrw5C6H7Qk1EwYZVIpvVYnDWApPOreM8F/3NsHKq3rg+/QGlbE=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(82310400026)(36860700016)(13003099007)(22082099003)(18002099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: jNMqe12Qr0FOZt+FkYkTddus0TeWRi+2iHcvIl2rCUFh0+p4ssFZQyFy6Dbl4qd144dsBdPVM9d0UdxTq9/CKbFazq6sNuTP2vZw+i+Oy5GuZP/AJhswRV5K4rZTs2jZrV7gEqKBgx4HuDjj8nJ/w4QamMWtAuCIxMx9bAb6OFGiE9k5wKEePRvUVqVTnDomZkfauilOOrHtltP57133Ex1zxAy+N7eY2tkEGOdfQ8sqh4Vst5ymQgCvd4zaX863+ao4/Nu5OotQZvvgmjoIXqIpgT/AAUa8ldd2ZoEkrTMczEML7DeQHDjkCyJXBFkFoNUWnUpdGtpisE7/dV+5dqMJsV4K0XKmNPlRdq/oKRW/LsudUStPZyrZk/ZPmSotoiu25oiAcHitx062kkfvZSH/KQ43jycyL/Bk7PiFq9CmFMK5z1/hX8+Leh7K5AHh
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Apr 2026 05:08:40.7115 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e5728e49-1136-446b-7cd1-08dea41b0c24
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ5PEPF000001F5.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7815
+Received-SPF: permerror client-ip=52.101.193.14;
+ envelope-from=Manali.Shukla@amd.com;
+ helo=CH1PR05CU001.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.01, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -145,128 +139,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi @peter.maydell@linaro.org, @Bernhard Beschow Is this patch series good t=
-o mainline ?
-
-> -----Original Message-----
-> From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-> Sent: 21 April 2026 12:22
-> To: qemu-devel@nongnu.org
-> Cc: pbonzini@redhat.com; peter.maydell@linaro.org; Gaurav Sharma
-> <gaurav.sharma_7@nxp.com>; Bernhard Beschow <shentey@gmail.com>
-> Subject: [PATCHv7 00/15] Adding comprehensive support for i.MX8MM EVK
-> board
->=20
-> Changes in v7:
-> - Fixed an incorrect indentation in patch 0012
->=20
-> Changes in v6:
-> - Fixed checkpatch errors
-> - Moved maintainer entry of test_imx8mm_evk.py to the patch 0015
-> - Renamed imx8mp-evk.rst document name to imx8m.rst
-> - Fixed warnings that are generated while building documentation
->=20
-> Changes in v5:
-> - Fixed SoC object reference counting by using object_new_with_props()
->   instead of object_new() + object_property_add_child()
-> - Merged imx8mm-evk.rst documentation into imx8mp-evk.rst to avoid
->   duplication and updated the title accordingly
-> - Added on-chip RAM (OCRAM) support to match iMX8MP dev
->=20
-> Changes in v4:
-> - Update Maintainers file
-> - Re-used iMX8MP CCM and Analog IP for iMX8MM by introducing a variant
->   specific property
-> - Split up the patch that enabled CCM and Analog in the previous
->   revision. Now we have 3 patches to enable CCM and Analog in iMX8MM
-> - Updated copyrights
-> - Removed '|| KVM' from hw/arm/Kconfig to prevent 'make check' failures
->=20
-> Changes in v3:
-> - Minor documentation change - Added KVM Acceleration section in
-> docs/system/arm/imx8mm-evk.rst
->=20
-> Changes in v2:
-> - Fixed the DTB offset in functional testing script test_imx8mm_evk.py
->   and preserved alphabetical order of machine names in
-> tests/functional/aarch64/meson.build
-> - Fixed a typo and updated the documentation
-> - Modified structures type to static const in fsl-imx8mm.c wherever
->   applicable.
-> - Added CSI and DSI nodes to the nodes_to_remove list in imx8mm-evk.c.
-> This
->   is needed because the default DTB in the iMX LF BSP images have CSI
->   and DSI enabled. Developers/Hobbyists using these BSP images will
->   observe CSI and DSI crash logs on the console since these are
-> unimplemented.
->   With this change, both debian and iMX LF images will boot up without an=
-y
-> issues.
->=20
-> Changes in v1:
->=20
-> This patch series adds support for the NXP i.MX8MM EVK (Evaluation Kit)
-> board to QEMU, enabling emulation of this ARM Cortex-A53 based
-> development platform.
->=20
-> The series includes:
->=20
-> 1. Core peripheral support (CCM clock controller, Analog module) 2.
-> GPT(General Purpose Timer) and WDT(Watchdog Timer) Emulation support
-> 3. GPIO,I2C,SPI,USDHC and USB Emulation support 4. PCIe and ENET
-> Controller Emulation support 5. Documentation and functional test include=
-d
->=20
-> Key features ported:
-> - Basic boot support with Linux
-> - UART console for serial communication
-> - Interrupt handling
-> - Clock and power management infrastructure
->=20
+On 2/19/2026 11:11 AM, Manali Shukla wrote:
+> Add support for KVM_CAP_LAPIC2, which enables the full 4KB APIC register
+> page instead of the legacy 1KB register space. The capability uses a bitmask
+> design to support different APIC extensions:
+> 
+>   - KVM_LAPIC2_DEFAULT: Basic 4KB APIC page support
+>   - KVM_LAPIC2_AMD_DEFAULT: AMD extended LVT registers within the 4KB page
+> 
+> The base capability (KVM_LAPIC2_DEFAULT) provides the foundation for
+> exposing the full APIC register space.
+> 
+> AMD processors with the ExtApicSpace feature (CPUID 8000_0001h.ECX[3])
+> further extend LAPIC space with additional LVT registers starting at offset
+> 0x400. These extended LVT registers provide additional interrupt vectors
+> for AMD-specific features like Instruction Based Sampling (IBS).
+> 
+> This series implements:
+> 
+> 1. Refactoring of existing APIC state functions to use generic pointers,
+>    allowing them to work with both 1KB and 4KB APIC register spaces.
+> 
+> 2. Infrastructure to detect extended APIC support via arch_has_extapic()
+>    and track negotiated capabilities.
+> 
+> 3. Extension of APICCommonState to store AMD extended APIC register state
+>    (efeat, ectrl, extlvt array) with dynamic allocation based on the
+>    number of extended LVT entries.
+> 
+> 4. Capability negotiation during vCPU pre-creation:
+>    - Always request KVM_LAPIC2_DEFAULT for 4KB APIC page
+>    - Additionally request KVM_LAPIC2_AMD_DEFAULT if CPU has ExtApicSpace
+>    - Enable the intersection of KVM and QEMU capabilities
+> 
+> 5. New KVM_GET/SET_LAPIC2 ioctls operating on struct kvm_lapic_state2
+>    (4KB) instead of struct kvm_lapic_state (1KB), with automatic
+>    fallback to legacy ioctls for compatibility.
+> 
+> 6. New subsection of the vmstate (vmstate_apic_extended) of apic_common
+>    module is added to make migration of extended APIC registers deterministic.
+> 
+> This series depends on the corresponding KVM patches:
+>   https://lore.kernel.org/kvm/20260204074452.55453-1-manali.shukla@amd.com/
+> 
+> Patch 8 contains temporary UAPI definitions for testing and should NOT
+> be merged. These definitions will be imported via update-linux-headers.sh
+> once the kernel patches are merged.
+> 
 > Testing:
-> - Linux kernel boots to console
->=20
-> Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-> Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
->=20
-> Gaurav Sharma (15):
->   hw/arm: Add the i.MX 8MM EVK(Evaluation Kit) board
->   hw/misc/imx8mp_analog: Add property to analog device
->   hw/arm/fsl-imx8mm: Add Analog device IP to iMX8MM SOC
->   hw/arm/fsl-imx8mm: Add Clock Control Module IP to iMX8MM
->   hw/arm/fsl-imx8mm: Implemented support for SNVS
->   hw/arm/fsl-imx8mm: Adding support for USDHC storage controllers
->   hw/arm/fsl-imx8mm: Add PCIe support
->   hw/arm/fsl-imx8mm: Add GPIO controllers
->   hw/arm/fsl-imx8mm: Adding support for I2C emulation
->   hw/arm/fsl-imx8mm: Adding support for SPI controller
->   hw/arm/fsl-imx8mm: Adding support for Watchdog Timers
->   hw/arm/fsl-imx8mm: Adding support for General Purpose Timers
->   hw/arm/fsl-imx8mm: Adding support for ENET ethernet controller
->   hw/arm/fsl-imx8mm: Adding support for USB controller
->   hw/arm/fsl-imx8mm: Adding functional testing of iMX8MM emulation
->=20
->  MAINTAINERS                                   |  12 +-
->  docs/system/arm/{imx8mp-evk.rst =3D> imx8m.rst} |  35 +-
->  docs/system/target-arm.rst                    |   2 +-
->  hw/arm/Kconfig                                |  24 +
->  hw/arm/fsl-imx8mm.c                           | 704 ++++++++++++++++++
->  hw/arm/imx8mm-evk.c                           | 130 ++++
->  hw/arm/meson.build                            |   2 +
->  hw/misc/imx8mp_analog.c                       |  12 +-
->  hw/timer/imx_gpt.c                            |  26 +
->  include/hw/arm/fsl-imx8mm.h                   | 242 ++++++
->  include/hw/misc/imx8mp_analog.h               |   3 +
->  include/hw/timer/imx_gpt.h                    |   2 +
->  tests/functional/aarch64/meson.build          |   2 +
->  tests/functional/aarch64/test_imx8mm_evk.py   |  67 ++
->  14 files changed, 1253 insertions(+), 10 deletions(-)  rename
-> docs/system/arm/{imx8mp-evk.rst =3D> imx8m.rst} (68%)  create mode 100644
-> hw/arm/fsl-imx8mm.c  create mode 100644 hw/arm/imx8mm-evk.c  create
-> mode 100644 include/hw/arm/fsl-imx8mm.h  create mode 100755
-> tests/functional/aarch64/test_imx8mm_evk.py
->=20
-> --
-> 2.34.1
+>   - Verified extended APIC state synchronization on AMD hardware with
+>     ExtApicSpace support
+>   - Confirmed fallback to legacy APIC ioctls on older KVM versions
+>   - Validated VM migration compatibility
+>   - Ran migration tests from Qemu to make sure there are no regressions due to
+>     the changes done.
+> 
+> Repo : https://github.com/qemu/qemu.git
+> branch : v10.1.0
+> base commit : f8b2f64e23
+> 
+> Manali Shukla (8):
+>   i386/kvm: Refactor APIC state functions to use generic register
+>     pointer
+>   i386/kvm: Pass APICCommonState directly to kvm_get_apic_state()
+>   i386/apic: Add extended APIC helper functions
+>   i386/kvm: Add extended APIC state to APICCommonState
+>   i386/kvm: Add extended LAPIC capability negotiation
+>   i386/kvm: Add KVM_GET/SET_LAPIC2 support for extended APIC state
+>   apic_common: migrate extended APIC fields
+>   DO NOT MERGE: Temporary EXTAPIC UAPI definitions
+> 
+>  hw/i386/kvm/apic.c              | 123 +++++++++++++++++++++++++-------
+>  hw/intc/apic_common.c           |  21 ++++++
+>  include/hw/i386/apic_internal.h |  11 +++
+>  linux-headers/asm-x86/kvm.h     |   7 ++
+>  linux-headers/linux/kvm.h       |   7 ++
+>  target/i386/kvm/kvm.c           |  88 ++++++++++++++++++++++-
+>  target/i386/kvm/kvm_i386.h      |   7 +-
+>  7 files changed, 233 insertions(+), 31 deletions(-)
+> 
 
+A Gentle reminder to review.
+
+-Manali
 
