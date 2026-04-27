@@ -4,103 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7232EFF8861
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 10:11:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B9BFFF8862
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 10:44:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHIvV-0006KD-6t; Mon, 27 Apr 2026 06:10:55 -0400
+	id 1wHJRM-0005H5-UC; Mon, 27 Apr 2026 06:43:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHIvN-0006Jf-Cv
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 06:10:46 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ id 1wHJQu-0005Fr-OY
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 06:43:22 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHIvK-0004Ac-PI
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 06:10:45 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-6501725d888so8003161d50.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 03:10:41 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777284641; cv=none;
+ id 1wHJQs-0001E7-GV
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 06:43:20 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-65492d097acso3226792d50.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 03:43:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777286597; cv=none;
  d=google.com; s=arc-20240605;
- b=SO1i2479xIOlZYu36UGz4x6ZX6uD/fHMz1OZZkm/NSL9dhgYZnPmeFKwPPyMzEJiV/
- 3+rGZjC+Qm7D0LO8JUCXvnf31gWB6SH/g6aIBAGKNsVTnTySE9GCjL3dHI8tzj4joprm
- TAicfkxXdHK1ISk/T079hhdphwY/UeB9xUAvNLuT2ikK1p0X4BqFCvLOZGMzXNHEsvyO
- ihoOHfyGBFNzvonH5mxF0Du2mweLLHOsVaAhhWE1Zlffg4igOnWQUMlhqB91+0VjHNRI
- GtlDvhcmKIIQxNsh50HuCBZG1gFQogpvq+LlQdh7ZuhjAjHrDLQT4b00GqtgddmUzU4T
- gm3A==
+ b=aRXp3gSy29AUq6ekwdSA755iHeBjmbk/+H8YxHiRj+I3P6CbazvQqPCi5SA7zo91O/
+ AFo4daw69nnTj+woocux3texclnQ4dpzBVY/loHTB+iY2D/ci6BP89JdTSpBu6zFtyzK
+ 4c1R5MHOVBmGtJCI3cH0D/fgDAC95ULE7ydJxN5FrjKYEHQsFziQ+zC0NDSJcamTpbCJ
+ mpW0AMi/J0/AmpKDewdTMoRzKDIXp2ToozJk6Kw6TmqJOfBNe0DhlkJR4DeMFGZ+cdeK
+ DaweB+DiCLSRCLrFnfOwsZny1+pY7Jzojhtx+DzozEQKfOBUIgG+fhkDSJ4/vrKHu0kB
+ wa3w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=h+aMrKzg5iRPFOP39nzcxuRJir3KbM+Vvk75eAq8OzI=;
- fh=ukEXsNcMmgvP7vIRWVpwV/bHje32cgqtZkJrBhNlMEg=;
- b=eTAhg1uioMvXXcQCBUFMs+U5x+tkYX4adLfmobtypaVYhLAIpITbP4AmfW/JliQpRy
- GRapIUSyItLoebaN+dvz/fNh5jDN0JR9/vTAL8s+jIm7Bwti9mWkhkOzMXZxD/cSzD3Z
- jUS8ZUTDqVijOXKOT9NF35k3Spuh2K0EtpVeckPEdkOKeZNVrtElMcbQCfkHL2vOyMI0
- fHmLnRe6Hj1jR/jYCjCwDS6V7Na0w7MhCnfoJ+l0Wp5LaIHkAwKh+9dzPCbkq1AaeUcN
- bhYnDOOfr1dlZ3942R4nK2e9HYKtIQ5T4a0PxCywr/mBtm4GjrIVWQMvDgFM2rAgDzFw
- A9fw==; darn=nongnu.org
+ bh=SA/p4WJP2E2300b7hYm1QwSr22CaEwN4z32UNz+3FuI=;
+ fh=OstSsYwxAu9sBNzLPYugHzyuNcGEA3i36exBIKVuL6A=;
+ b=aIk5qG5PQowSiwJr+k688kNWwL717QIbaskn7yxbs3/BBj+bkJYEP+JmKyLUchzHTb
+ svTjkdYVZtsNH1mxmb10gOQWNBXC+3rIEUm5PIugjb/z15+4VYk7X5itRXYafvl/MRwB
+ 3naD98jVpVcd4c5epZuilrChCOQZtB1wslRtSgQnWnodDYJAYwinGFl0u5bO44GPZf2l
+ kONFbl/rUrCVVNGaqnBIebnxE59AJc/zyeYrQG0Qag5D90F7xMcwbL4AjAlrvb75s2nu
+ C+FCjizMK//He8RUaKhvPR+OV/Gg27ZW7jTuCl7EvAT4KE7/RoFrwyid4dKTarJOIVUe
+ CVbA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777284641; x=1777889441; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777286597; x=1777891397; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=h+aMrKzg5iRPFOP39nzcxuRJir3KbM+Vvk75eAq8OzI=;
- b=rfGPhx7ksbK68BwXy7ydrRvl997asoQmog5NUwy5RDK3F2fd4KWagjqqI0vcXjNYyQ
- FTbPiT3Umtnf+sbb7BNEeaNQzecK7YaOJmJGDI1CoPgiXqkmBnBHWby2HdY38kyfjc7O
- tJEHSh0XGRnUbHykGl6l4zqBBU1t3DZOf/4I/tj2h8uB6UouJcN0IrOQhk3jLZFo6UTm
- +pRjTfQEtzJzu8aY982njaxCca27TVT6t6RhjWr+cb4IEwk3c46Wka8/x/sDw8j0ymJ0
- 7rC55qyNAAqs5mZ7TpP/zBowEkf8hKutxsb/q4iRGa4OMDUoFy8I2VD/W8iM3Rzbjt7F
- gmGQ==
+ bh=SA/p4WJP2E2300b7hYm1QwSr22CaEwN4z32UNz+3FuI=;
+ b=qyj01+xgyvj5GHd8g7jGKI8xh2D3I3zYhWQFjmq5s0ERXvbZvLUL6DnYPYhXAms9FY
+ z3BNmIPYuuhYtFE8qXBU2ZRjyw8vKRWZX3SFmhgkQLF70uL3o9TIMCub+fQW6HNt84NR
+ 4OBgbHLtfM0+1+wGVYR/3fYGv9E0Sn5xVGe4fYipdfGyfDSuBEu7CzIr6K532nrUJVFD
+ sxFdwmbEMgcCUzG70v8J9KWSmO/WdXUMmxr0Q7G2gnVrIQT1A060MVsEPlHuvumYwwUu
+ XiqVljIBL+N14+fTq/BItp1JnQgjlFhuVvV5ai5n2GsqM5EEoFlJ7yuhpqnicwi9L6r4
+ R+JA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777284641; x=1777889441;
+ d=1e100.net; s=20251104; t=1777286597; x=1777891397;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=h+aMrKzg5iRPFOP39nzcxuRJir3KbM+Vvk75eAq8OzI=;
- b=FiEZ9+ELGsXzMNlwg6qcf+04ErkmQ1/aPC70xc24DXU4rvoMHpetKL+NX9eTDGP/zG
- NXuXwKfrT9uwcuzX70DU3p2Vbnx4rq89fykIQ8cr/s7hssrzqTcF+iCKV+R4dfRMMw2g
- 1QxgAMzpE8b/QGlmOo4yFMXwfG8xn662qeX6svHrpYfT/OkX7qAwQ4b3kUKZEIjyohsC
- jWo6JpfLslepapHnYjEX4SrHUq4PcSHjwKzu3zj9v1BwHX2wZ3QD6f94jo8lMz6nEzJE
- Ajng/yJId2IVafEtv0hRPlXmlPmR2x8JUVa1oTvT50jHpkwxQMLM99TG9WATUo54rHo4
- fn4A==
-X-Gm-Message-State: AOJu0Yxq+VUOeDRxGYB3rc8OXwD9XZqGx/XqWYvmI9lTlRcjj2QdFMnZ
- AojnEU0QCRvbRmA+NzVVZlr+GeI6JD7fYboUbtlaCrNvnFfTIU12FgRG3hlec1BirM0flKZB7+E
- IFi6myrG2eTV1Y7zJ2Qj+dMAenl7rpUy7crZg7ZtCQg==
-X-Gm-Gg: AeBDievn1abaSPpijr3Lq8dPbiYPN05J/2m/DujKVTLNDU6ShvHzsfzzkyE5P7Gv9iN
- aFYkMU1OcuI6BODdbp/OvLe5h7dd/AA+sZsQ009U+avc4FkpSmvWQHTjIp0SdFTLq21NDqIJSYO
- 84H6EbSf6XYdRKs75gfy3ELCqGOSwsquSo/UiM3g/6AT99C3PT5b66N16W02IEaoKvSr7iM/jb2
- J55bWUYnP4slMhl2emfa5fbhEVXZCSCfOARZsmnGyBITzVpWZLLRTn3iOCSBV1ilRnkYLBV2G0W
- CP1mJn5Q7g9wzG918QEKuH/o8RNU4otSgxCzwTltMF8Hq2TPY9iIhAWNh+/wOn2eCwdVowk/B3E
- vLQ==
-X-Received: by 2002:a05:690e:124a:b0:650:3064:4cf2 with SMTP id
- 956f58d0204a3-653107edd2fmr38869649d50.5.1777284640958; Mon, 27 Apr 2026
- 03:10:40 -0700 (PDT)
+ bh=SA/p4WJP2E2300b7hYm1QwSr22CaEwN4z32UNz+3FuI=;
+ b=n17BhzIx9sDD+j83DI3EHjmp/GcFJ3aXQUNHPCmm+FcKPXn40bs8GZpDHs27LBL2kF
+ ALnAylykN1EuqQB7+3U3hlzZXl3zLLkJHkH8Ztr4qU7bi50SwzalCXj8LsGX2kBVAWGG
+ emdqLEk2iimKy4UA+6l8MBffPwwWvLAlb2cBNI3eHbYnlAjZBPN5D/fSRtnwpwJL0QE+
+ ATaf/HIrzKCHh/6G8bZrgNT5Jg4FdAHzigJtHpYbLWJH5txFRbrtkIVRrUjjmubGfRtF
+ ggIb8AqGhrOM/mz8PSAV+YLz6ZnJq/PTFzV3pcDCmhO/bz4dNqJnYPrc838/2JV+UVha
+ drgA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/JECL1+nhY5nKK/OlJ6uzDRB97MyFE7AaHV8okicXfwS1A1fSwz6k1yzSWQGH+gL5PifhSBNOr4PVj@nongnu.org
+X-Gm-Message-State: AOJu0YztsaA9uhL6L0wbNmh2ugI1Gsgf5AaHvcklCRxN3sd8jocqW2FV
+ wWkr6lpLfjn1I7sgCkg3jq8n7JomHE4K6OXAY6O5FjNMsMGt2bf9ayEL1j/ldlla+NJUMEBUZN+
+ pwR3+GcLDpVO1oyiZQcSp5Im7FDXFO3q6U42bMbUqJw==
+X-Gm-Gg: AeBDieuM+7quvIdOGqLxJF7YjMVvhTfbUeWvM7Bewu5l0uTNt2cDGwAwkbIaXDfM0Xd
+ daRpv3ZrHY2qxdg5ChX5nl6a1lGzbVszme0szY/5a+6CrMNfSvXvmDNXHWSiM3S1l7a89xTR1XC
+ /EAgmYlOwWzk48Q2ybq7PfWUxrul1lZ0ueimnXQD5LBEXRxebLpViCkUAcK8xIddKvb8VgIO/pE
+ si94VMVnCsSztjvNRapOntCs8hqtWUI0VtTiXWI1skO352t204boaNSjP9z5SnSwAQBxngD97Xp
+ Ji+qj4tyN+AtYBT9kpnXFCBHUgkVqRpj+YO0oEj45FDlZ/xPYzceWGIiRDfYar3Q9l2OhqHosG2
+ WIA==
+X-Received: by 2002:a05:690e:2501:20b0:650:849:db44 with SMTP id
+ 956f58d0204a3-65310a13c3emr28702564d50.38.1777286597272; Mon, 27 Apr 2026
+ 03:43:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260409220614.65558-1-lucaaamaral@gmail.com>
-In-Reply-To: <20260409220614.65558-1-lucaaamaral@gmail.com>
+References: <20260412110240.93116-1-yangyanglan718@gmail.com>
+In-Reply-To: <20260412110240.93116-1-yangyanglan718@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Apr 2026 11:10:29 +0100
-X-Gm-Features: AQROBzAWX_aSS4_al0qqAOlI6OkPMuzx8z2mWLn_PkvrE7S1lPeleeKvQ713hc4
-Message-ID: <CAFEAcA-8BeBte6CxH_5Zsk3wvs0zJJW6+=8cNaroRTBegK-M5A@mail.gmail.com>
-Subject: Re: [PATCH v6 0/6] target/arm: ISV=0 data abort emulation library
-To: Lucas Amaral <lucaaamaral@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, agraf@csgraf.de, 
- mohamed@unpredictable.fr, alex.bennee@linaro.org, 
- richard.henderson@linaro.org
+Date: Mon, 27 Apr 2026 11:43:03 +0100
+X-Gm-Features: AQROBzBLkDZMWh4beHsvpnVOqjj5HKT85qoUTmyXv7wJ7j_18ZlP1SkhXct8gFY
+Message-ID: <CAFEAcA-6+Qekb--xqCa49yNtkKAgkLnWLf=Q+Bf5WER9cOxmeQ@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] i.MX6UL LCDIF device model and SoC wiring
+To: Yucai Liu <yangyanglan718@gmail.com>
+Cc: pbonzini@redhat.com, jcd@tribudubois.net, qemu-devel@nongnu.org, 
+ qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,34 +117,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 9 Apr 2026 at 23:06, Lucas Amaral <lucaaamaral@gmail.com> wrote:
+On Sun, 12 Apr 2026 at 12:02, Yucai Liu <yangyanglan718@gmail.com> wrote:
 >
-> Add a shared emulation library for AArch64 load/store instructions that
-> cause ISV=0 data aborts under hardware virtualization, and wire it into
-> HVF (macOS) and WHPX (Windows).
+> From: Yucai Liu <1486344514@qq.com>
 >
-> When the Instruction Syndrome Valid bit is clear, the hypervisor cannot
-> determine the faulting instruction's target register or access size from
-> the syndrome alone.  This previously hit an assert(isv) and killed the
-> VM.  The library fetches and decodes the faulting instruction using a
-> decodetree-generated decoder, then emulates it directly against the vCPU
-> register file and memory.
+> This series adds a basic i.MX6UL LCDIF device model under hw/display
+> and wires it into the i.MX6UL SoC.
+>
+> Changes in v3:
+> - merge the previous "build symbol" patch into the device patch
+> - drop the unrelated hw/arm/meson.build line-wrap-only change
+> - fix commit message formatting (use real newlines)
+> - use 16 KiB for the LCDIF MMIO region size in both device and SoC map
+> - rework register indexing/storage to match 0x10-spaced register layout
+> - apply SET/CLR/TOG semantics only to registers that have those aliases
+> - set CTRL1 reset value to 0x000f0000
+> - remove redundant 32bpp host-surface check
+> - move realize-time cleanup to unrealize
+>
+> Yucai Liu (2):
+>   hw/display: Add i.MX6UL LCDIF device model
+>   hw/arm/fsl-imx6ul: Wire in the LCDIF device model
 
->  target/arm/emulate/a64-ldst.decode | 293 +++++++++++
->  target/arm/emulate/arm_emulate.c   | 805 +++++++++++++++++++++++++++++
 
-Hi; looking at this I share Mohamed's question about how much
-of the atomics/etc we really need. This is a thousand lines of
-code handling instructions that in a lot of cases the guest really
-ought not to be using on MMIO regions in the first place.
 
-If we have real examples of this being needed, that's one thing,
-but I'm not very enthusiastic about implementing "doesn't actually
-have the atomic properties" instructions otherwise. Presumably
-the guest was using an atomic insn for a reason, so it's either
-buggy or else it actually needs the atomic handling and we won't
-be providing it.
+Applied to target-arm.next, thanks.
 
-thanks
 -- PMM
 
