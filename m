@@ -4,110 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4414EFF8862
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 07:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2ABAFF8865
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 07:18:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHG0y-0006lk-Tm; Mon, 27 Apr 2026 03:04:22 -0400
+	id 1wHGE0-0003ex-Vp; Mon, 27 Apr 2026 03:17:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wHG0s-0006lB-15
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 03:04:14 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wHGDw-0003TE-Cz
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 03:17:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wHG0n-0000E3-Vx
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 03:04:11 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wHGDs-0007JH-5w
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 03:17:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777273447;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1777274257;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UMkgB/SzlqC3Xn2F+fuxHgKBv3obhjc1et7lXHOBh+g=;
- b=Ls66EjjWJCSc/b8w31Ia1WCG1WwkgEN7B/2h8RrrONvBlOp2pJqa+sranIFSLVuCCpjT05
- 30yRV1A+FFNK2HTWuqg7BxoeOlK8/HwaDT5RIG5QC9dv8UZy+NsuNRq/g7lE2CwboPL0t/
- l/2ZYN5a/N5W+5Wj8S1K/rAKPbewQ+A=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=uk8d9EMVQtWVf67efSvBgK3JNyuocaGTFDZy3XoaMBo=;
+ b=Jg1T6WuS6Op9mDoOWkb2GutXJOR2k3SxdFEW09D5ujvVPgNx83HPkZWzuPPPcGttdBGhLg
+ HzMB/xfERyaSKnPsRQi8uMVqRJFY4t9hmG95qMAuO6nPG/HcOJ5JYzsVEtaNmlBHDiFAac
+ mcH/wG56bvYy4EiTEiRCLgiHHahhJAQ=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-67-PtzZVlW7Mi6tri5DWQG09g-1; Mon, 27 Apr 2026 03:04:06 -0400
-X-MC-Unique: PtzZVlW7Mi6tri5DWQG09g-1
-X-Mimecast-MFC-AGG-ID: PtzZVlW7Mi6tri5DWQG09g_1777273445
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-440d12a472eso7006789f8f.3
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 00:04:06 -0700 (PDT)
+ us-mta-39-yaFk4orsOTGP5Qqpa0mTlg-1; Mon, 27 Apr 2026 03:17:35 -0400
+X-MC-Unique: yaFk4orsOTGP5Qqpa0mTlg-1
+X-Mimecast-MFC-AGG-ID: yaFk4orsOTGP5Qqpa0mTlg_1777274255
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8eaee67d1afso752601485a.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 00:17:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777273445; x=1777878245; darn=nongnu.org;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:reply-to:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=UMkgB/SzlqC3Xn2F+fuxHgKBv3obhjc1et7lXHOBh+g=;
- b=Fl/br3FAMD2Zrrle5iXxlQw2p8delyRA+h7QuCQXFsJvL/mzj2y1lq1sI6YCLtKcmH
- iyIaFdVw+qQvMFd4Cxxi4ebaP0sGHwWXSerTVaM+ug9UHc9vUqe8BJd1yaLc352bgLFk
- xQHMMYBsIAW7O3P2PXaB5W2/MYOZKI8JxoAGqcUJ4ldwohp/HRncwtfq+XfLlPRfFvOH
- loy1VO4HLs75KDjtMk2tiqXhjz/SiML32Z5YAbzhroC9B0NTvEa6THip2Tsy/VfNJdno
- 4StgrW/MWc8fhoV1r373pmpeHpiFONrHXBoKUv3uQdtPwjPs40IJd8KchvRS/SEgjuaZ
- R6VQ==
+ d=redhat.com; s=google; t=1777274255; x=1777879055; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=uk8d9EMVQtWVf67efSvBgK3JNyuocaGTFDZy3XoaMBo=;
+ b=e8UQDYLUmkRa9LbaZDnJbJ4XWzQFZnBLglha9G/s1sCh35bb+h4SNoQEyw3/48Q23Y
+ DuBmudUQnesR7fKeB75p4slCDNgGdL/+PuvXblEnPp0Ii8IUlMAJvhRQ+7N2eXroFv1v
+ ORn+SGv7/BQ7zxYGuRMzoCtY/l/VMlxHuFDI5ClP/aEQYlZL0r4NwZKY1hB2GD9w/PmI
+ W/Dp3e1iRZAkZtIZsXXiGiIlPWmpmNbDGbZbVxTiNAMOzr4K8xFvKdMg5Iks6ZlUfl40
+ MiMJONupMd4BVHhrozV/AeFhtSNhEMgvuH3v3vwcd2IIKb/g9gKrjqiOP5NG0TxV1rWA
+ gnxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777273445; x=1777878245;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:reply-to:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UMkgB/SzlqC3Xn2F+fuxHgKBv3obhjc1et7lXHOBh+g=;
- b=Ks2VktWgpu2PXox4Loxw7/C/t2IfQczvhHM9/uENBrA7eRj8Te7nfNrhdRVRcOYg5F
- UQAuTvxAGp/lCus9Ax0zOYMJ3MMZCWfEmRCv4WlIg04WYAL6fDGhDxYeK5KD9ximggHX
- Z9cQByOrv18xKELwx0GjGBzHuAbVolhLQEnyNPzR3STIF1Fbp74NgbbeKg8n6ZAGmeAo
- Qj/4lSkdSKsQRpGxpBnK0wSANy4TwG9NUClFn+k2Cnx/AOMYG/R8rrGv6wqqQBHw5wQc
- 5fY3F3hP/VRol37GCa7vMFo1dz25zH7I/xE0fxegREvA39Ylz3J/IDz+TPAdOetbrPaW
- O/qw==
-X-Gm-Message-State: AOJu0YwsGzcFRalTpKamWpzG9ouAxoxWzFYB5qbIDyPLx1U7Ur5XB/UB
- 8PmHyim2CVqVfvtB6HKZJYjYCEU3GApRY5ZTU4KWJdloAx9IzDsDBT+zaYaYITlH60rsC3r4Kji
- Q3JrsrenkKIFHPn9ZvOKDpQ393I1db7USt2eqbYqP4wSxb5LV/WFW7Kk3
-X-Gm-Gg: AeBDietROYktIBNqeptmp7FxvQB5SRskjDyYNB92Nb8Chi0HF/s8ghmB5wEN2697f1+
- tIk9nsMPT7xiUOutzoLcq6MsBdmF21XN4w+29lu1MdXtfwr3M9Dw0ZmlijIJlx/NW0UcPK7Ba0G
- BkNz9fifT/kU4ioA+LLw0ztnkQbh3M7/9tc0GGmqsBnNbLjJ3rdUE9QeM07jqpuO138hxbfLwYm
- SV93pbu55EnhwXx0X6BuBZLY7Oaa0pxPVVtfUKs+wkmVhXCi/ZU6sRJMlyF5urrR+izkShLEu9a
- Zd99eWPYn8qufWnLOkOD7YsAjoXy6rGVzWMeJzgqn/VOyCbqHgvWnNbnC9mH7qRR+AaVtphSYNS
- hnRgbADZJXBparG8/9k9cn+DJ5H9nAHM=
-X-Received: by 2002:a05:600c:4fd2:b0:488:e192:6fbd with SMTP id
- 5b1f17b1804b1-488fb790869mr579594085e9.30.1777273444951; 
- Mon, 27 Apr 2026 00:04:04 -0700 (PDT)
-X-Received: by 2002:a05:600c:4fd2:b0:488:e192:6fbd with SMTP id
- 5b1f17b1804b1-488fb790869mr579593505e9.30.1777273444351; 
- Mon, 27 Apr 2026 00:04:04 -0700 (PDT)
-Received: from redhat.com ([2a02:8012:f011:0:f1ce:ac56:d2cd:7c2e])
+ d=1e100.net; s=20251104; t=1777274255; x=1777879055;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uk8d9EMVQtWVf67efSvBgK3JNyuocaGTFDZy3XoaMBo=;
+ b=UA3QXfLwg/PThmWifdR0KaLhdv9yMgBSXZLUD+h56gMV+569DV4j5CwupYxy3cdvh7
+ ZQG+eOzvEVPGsxYeosWd6YjqNtoTx5GFQcEvwj1ysB21V0XsiSOnGzJP5jCPB0+pQRoh
+ PLROB54mNSUv1bBrkeAOl9/LYEJUAESH8/j5stI6/XjQPCtDKZq4k099pp4SuNvPIa70
+ 9T7Wri764OHHUyH2nHGS3Ff3mWow5r5wxkAqUKVgMpVAz/fUGUV16qaw9B/HbWxN7XEz
+ A4DZvtNjcSuReyp0b4gmBdmoVF2n1rWuhRW//M3vLrdVItww3oiFk85FoKpUJl0ftwSB
+ Fg+Q==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+khHM7gv074G0JU7De677RHad2Ca4e5fUbdBOIAfTkkoxi4Rt7VOJ7zgvmkqDz2eIkJbV7cJ/YCYzk@nongnu.org
+X-Gm-Message-State: AOJu0Yzwo7zhENMGwSI/iYjfr8WMJNOVyddtRdZK+DZVvf9K0cvdSEiq
+ ytBro3UwIbfCgmFsgUTnLgqIobFqoR/l8XeBuTM7esokvHlu1RvJTmCVQ3K6n7WJErP8sioSZmD
+ VYQ80ZeKijkXRda0GrkB5HesHsSwEPhr44F8zeXW0URtWF8x2IQoVLa2z
+X-Gm-Gg: AeBDiesDwrkNNCTkvET1FVBmCzrSGHTtktn67MrtYXUuuc3YOAc0g/tudTWvnPQFICX
+ iKh+X5/GZ8ENYWpNLMFijT8jifvr/oconFikq5Ryj/X566dBaSmFKC0VctyTVn4tzYqeLjxbkaz
+ BI0pQTwJsBbdYBUNh6tb6zkZe3J36blJe1b86fb+59f2QnyJ6oaeTZh/E81VABF9WKu+BpRq0Hu
+ nJDqMP9jKtgDvSX9au61GoKWLu8PUXT9au0XeEMfT60ZKfswIcNIrdUz5yei0lN0k3psr+Kyffa
+ rS2UTY0DlmOq5jTUyXW9/TK93N396xSurgwabAH05IslB8XTnISqTYVG8XhjUtucOPz42Udb3pe
+ uwkwhpseZr5Cevna1y+gAWOJIrR8SxA==
+X-Received: by 2002:a05:620a:2989:b0:8f6:4a8b:f75c with SMTP id
+ af79cd13be357-8f64a8bf780mr296207585a.55.1777274254602; 
+ Mon, 27 Apr 2026 00:17:34 -0700 (PDT)
+X-Received: by 2002:a05:620a:2989:b0:8f6:4a8b:f75c with SMTP id
+ af79cd13be357-8f64a8bf780mr296204885a.55.1777274254124; 
+ Mon, 27 Apr 2026 00:17:34 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.114.147])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4e44f69sm82388720f8f.25.2026.04.27.00.04.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 00:04:03 -0700 (PDT)
-Date: Mon, 27 Apr 2026 08:04:00 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Christian Brauner <brauner@kernel.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Peter Xu <peterx@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, "Dr. David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH RFC 00/17] monitor: turn QMP and HMP into QOM objects
-Message-ID: <ae8KYGqPRV_eZ8jL@redhat.com>
-References: <20260410160458.3778874-1-berrange@redhat.com>
- <87lde8lxky.fsf@pond.sub.org>
+ af79cd13be357-8e7d3204cc6sm2588740385a.0.2026.04.27.00.17.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Apr 2026 00:17:33 -0700 (PDT)
+Message-ID: <a7e8ab0f-dddf-407a-ab1c-8f465734d238@redhat.com>
+Date: Mon, 27 Apr 2026 09:17:29 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87lde8lxky.fsf@pond.sub.org>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: First-time contributor looking to work on malloc/calloc cleanups
+To: Lucas Cardoso <luc.fast2004@gmail.com>, qemu-devel@nongnu.org
+Cc: "jsnow@redhat.com" <jsnow@redhat.com>, Aadhya-R
+ <aadhyar.cs24@rvce.edu.in>, Peter Maydell <peter.maydell@linaro.org>
+References: <CAHMzB=iZB24QqPwcMjJrfp4GjCkKKpa_0aG0Qx=YOFGUxab8Lg@mail.gmail.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAHMzB=iZB24QqPwcMjJrfp4GjCkKKpa_0aG0Qx=YOFGUxab8Lg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -115,7 +148,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,41 +161,62 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 27, 2026 at 08:35:41AM +0200, Markus Armbruster wrote:
-> Daniel P. Berrangé <berrange@redhat.com> writes:
+On 16/04/2026 15.26, Lucas Cardoso wrote:
+> Hi everyone,
 > 
-> > Conceptually -object and object_add/object_del should be sufficient
-> > for essentially all QEMU configuration....if only we ported all our
-> > internal custom backends/devices/etc to QOM. That is of course a big
-> > job which is why it hasn't happened.
+> I am looking to make my first contribution to QEMU and would like to start 
+> by tackling the remaining cleanups for the GitLab issue: "conversions of 
+> malloc/calloc/free to g_malloc/g_new/g_free etc" (https://gitlab.com/qemu- 
+> project/qemu/-/work_items/1798 <https://gitlab.com/qemu-project/qemu/-/ 
+> work_items/1798>).
 > 
-> In addition, we'd need a more unified object life cycle.  See "Problem
-> 5: QOM lacks a clear life cycle" in
+> I've checked the codebase and saw that some files mentioned in the original 
+> issue still have remaining malloc calls that need converting:
+> - hw/audio/fmopl.c
+> - target/xtensa/translate.c
+> - disas/m68k.c
+> - disas/sparc.c
+> Also, this file still has a calloc call that needs converting:
+> - hw/xtensa/mx_pic.c
 > 
->     Subject: Dynamic & heterogeneous machines, initial configuration: problems
->     Date: Wed, 31 Jan 2024 21:14:21 +0100
->     Message-ID: <87o7d1i7ky.fsf@pond.sub.org>
->     https://lore.kernel.org/qemu-devel/87o7d1i7ky.fsf@pond.sub.org/
+> I checked the mailing list archive, and saw that someone else tried to 
+> tackle this issue a month ago. They made some progress on hw/audio/fmopl.c, 
+> but it seems as if they've stopped working on it.
+> I would like to start working on these one file at a time, starting with hw/ 
+> audio/fmopl.c for malloc conversions and hw/xtensa/mx_pic.c for calloc.
 > 
-> > This series started with the premise that the monitor is one of the
-> > easier areas to convert since we have no more than three classes,
-> > a common base, and QMP and HMP subclasses. So why not give it a go
-> > and thus unlock the ability to dynamically create/delete monitors
-> > in QMP/HMP.
+> Following the 'Contribute/BiteSizedTasks' wiki page, I decided to send this 
+> email. Could you let me know if anyone is currently working on these 
+> specific files, or if it's safe for me to proceed? If so, I'd appreciate it 
+> if someone could assign the corresponding GitLab issue to me.
 > 
-> Makes sense.
-> 
-> > This series does the conversion in as many small steps as I could
-> > achieve. At the end it is possible to create HMP and QMP monitors
-> > with -object and object_add.
-> 
-> I'll try to squeeze in review.
+> Thanks,
+> Lucas Cardoso
+> @lucasac00 on Gitlab
 
-Don't review this v1 yet. I've got a v2 I'm finishing off to send
-real soon.
+  Hi Lucas,
+
+it might make sense to CC: the reporter of the issue (Peter) and the author 
+of the previous fmopl patch to synchronize. Otherwise, mails like this 
+easily get lost in the high volume of traffic on the qemu-devel mailing 
+list. I've added them now so they can join the conversation.
+
+I'd suggest that you start with a patch that tackles the other files, in 
+case Aadhya still want to finish the previous patch to fmopl.c.
+Seems like there is also already a patch available for sparc.c:
+
+https://lore.kernel.org/qemu-devel/69b6addd.170a0220.2bbc48.65e4@mx.google.com/
+
+And for xtensa:
+
+https://lore.kernel.org/qemu-devel/20250730062142.1665980-1-frolov@swemel.ru/
+
+... so maybe best if you start with a patch to m68k.c ?
+
+  HTH,
+   Thomas
 
 
