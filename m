@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1469FF8860
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:51:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82A78FF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLQB-0001wY-HF; Mon, 27 Apr 2026 08:50:43 -0400
+	id 1wHLRQ-0003qa-8x; Mon, 27 Apr 2026 08:52:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNj-00083k-1U
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:22 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1wHLO7-0008D6-P2
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:36 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNa-0005eP-Kw
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:05 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-488e1a8ac40so126643325e9.2
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:01 -0700 (PDT)
+ id 1wHLO4-0005lJ-Ie
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:35 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4891f625344so91592505e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294080; x=1777898880; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294109; x=1777898909; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=pOHNk9yafmXiW9sEhbBQa9qsO6sZzBVD7jAny8l8sdY=;
- b=b6rvi5RaRSPyKKy17Eux2v8LUUZkPhYsuSH+CIsqku1NIyO1C+VJK9xxfnVTkgs2su
- eljZt/+sBg6I7x0w0SqqAOnKvJDGxqHypBPAF39gLCZ5OWJB8kc77e/mjH11GlnXAyVS
- UHJyNln1OJyZ/mO6TiAV3nxP2av2luxm5sEQXcnCpT7y3g5D6JdNZP289CF1yaPqnXS6
- HwiJpsX11LlvpQCGtYAT5iQH7Q8H/TQQkxxT62iij1OAy9dZSMpgMczE/HnBSNt+hWvR
- 0dv0dR9LdUYg3TUAU5T8TVV6dcQmnDd8Il43th3y8/1nF10vfG3Pgwg1IP/JAKYJQs/v
- kmSA==
+ :reply-to; bh=9y4m/iMelPf9i9IEtiQcavxusS+opbaUucMeNQfMLfc=;
+ b=lcBl/+E5bwzllot1A90vs2jfupCTb+wkChs7vmB/OEvZN0T5MPCbVNNwqMDwECUNO+
+ nSM5rHgS0S95f5fiGGjb3WeOgJL9Y7wzI920UUfsVoVgiiuQpXrGyLJ1yhCt9bq/1N09
+ b3VIn1K/QItH1wjuc/DS7RbJIdvTHIbenA4Fdaz5YLr/Yqkmp29+7OQIyiuy60zldhuX
+ +H9mAoUldqFCpsqu6n1B2eyKFeW01B9MxlvPs35FhTTlc63Ia0GBk2KmOr2+gXBBXjs8
+ gHtSSQ46iRQV3S9O9RT4/vqB8AotBCClG+H0LXH5zLbo51vSy5wWXPJlQkfc+R8e7acd
+ UrXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294080; x=1777898880;
+ d=1e100.net; s=20251104; t=1777294109; x=1777898909;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=pOHNk9yafmXiW9sEhbBQa9qsO6sZzBVD7jAny8l8sdY=;
- b=YU/iXRFg/b05aPWCKxqqb1xZDstNUgRtJYE7ZewEEsb1x/BDXOVIvaL0Zh5pBsY3ni
- cUsPI2EwPKc02B/oWmNjxa5zWvGnqFs04Ij4wu3eY1okmuODmoHZ/5hgtmNwMkbb1lfn
- ohULpsMrxLMiGnwaonemCUov+pvdLtnI9CyqH5YoCsuO2o073+Kej6l3fAw7mq3IHw88
- EaJm0U5z7/yMXvqaEmR/UOmCJro6D1FFD/tXaK93t2LPoIdzb7+FYe1kohWZLoSfdAnn
- c219SAHIDoNkhCQchV1wkaQF4G/IGVbRC3ohxLBFoXwpobA6FBGccT/L9WIdCTWV5QP4
- OJCQ==
-X-Gm-Message-State: AOJu0Yy2sitY2CzGEZpwCUL/ap9LXjEu64JP8s2s7nL/BRJxHGpBsLls
- cm6Xrz3BkvTcTOe1hncv6T11VHHWcJ/lJ57ClWS9qGXoe82cCXqmqIUnyP1YhRxAOCc2+vggc3D
- 0zNLI
-X-Gm-Gg: AeBDiesudeuVS6mgU1PijRCv2tXkYURVVGFfWyfpR0xjcU3DpOAeoabg90w1hW5z4Tz
- XlC89pV076VCundT+QpcUdE7Pa4QyWQ70o6yK0VAftX/nQ0rhVcu1JTkZED2jL+RFytoh0Gl5lv
- 4KsS4Cy/CnoOBIrpYScnESxbwUXm2k1d7MYDiDYhGQmg8IjEAa3fJJJzFd5UvjTQ9Fnoa8/fYAv
- jLk66zMwFvKMZ+TJsPU2n9gCIYDRoyGaHRgltXbT8v72ORn0OsbDgVPu4dSPLxBr5T9vwem9B8G
- vts72uxJ3mnFDm0FdGWqipZfGdy0ehmxKUmkcqzlt+TjEbgeHrtggAQprcc08tOi1a2JN0AXk8g
- 3YMagxIyndtidUEG+qKSyfv8Q3uNIUvXJhzrGZw/9ZRYjJXVktdyrKrY2SX7u1PqVCiryZdwd07
- DWBAYPEPFWMJXY66WcObFjUAr/krUkWYU36L9t/vCVm+5qmET6mtPzIEO9dTgY/F90++fV7xpJ4
- bWRohR5JrY77Vxy7NxHsZZJtMk+8hKXP/wCcE3lIg==
-X-Received: by 2002:a05:600c:5246:b0:488:a639:b787 with SMTP id
- 5b1f17b1804b1-488fb74fc0dmr614571115e9.11.1777294080314; 
- Mon, 27 Apr 2026 05:48:00 -0700 (PDT)
+ bh=9y4m/iMelPf9i9IEtiQcavxusS+opbaUucMeNQfMLfc=;
+ b=r+ytWjwE+6eqkZoIMILVoTty07GqnWq/pUd72PNMHcRBLSqlq8VenJoP2T4dwzV1sk
+ JfuMP7Mk7j+kuqQxwhRs6AuXBZYrCzOQ14jQcNWEU4xuyZX/Dn7fqQMK/a1eHcL7dx2N
+ reCMOGg7UmCnUhPrcLapbaaW8h6kbWRApJ/lrUNBAvXmUDae41XYJQXSfo2PgUYut2+5
+ Xk/xm7GetgJ7DYoIWiEBl/bbX/0QpAKTEMJ0ukRcf8EhPrR7rpA6NsSny37ZaWaZ8WDN
+ oj6lggUrOUwR3FZVdd3UkMn8MZKCdwaRwlRqFDONQkbKx+7ZLC3qUUyzshMLkiAvcqEu
+ qiUA==
+X-Gm-Message-State: AOJu0YwudxXco7xVeRr5GQKBqtMFXrGSTI6axELPhmFy5Saaa3rDzUxo
+ 6sxYHMHxC3KXjBbAdXcUzfYZfTjRsiKNhhBDeGuReMNPbZzbYIUOsrQzPO3ADvZDnvxBD3zMmyA
+ +QAGW
+X-Gm-Gg: AeBDiet22CUv+dv4F1DHB2pRIn/dK6vigZ6ww9cscxj7grtZ1xuny766vCcVw0op/bW
+ CyiHJTokaml4WPRbKbU5GXSnDIaNZqM3BcFx/gTlWiPXnhSlrnWScatX9o68Xqy2GY0x10hb8IO
+ H/Yk/9ELrbgC/AUnMXbnA9PU1fQ7hTrGIzI+REfaklFaRRjdarMiZx6ki/FgXqRdAnIAWb8x7dK
+ SU1k/a89mXhFLJkYcy8CCe1vVmMFTPShygf9I/xDzUi1oSssu4XBpzB5Ecam+I1xNdTIlUQdjz/
+ 7OXjBSh+Uz69FE7Uetp6Nmva6CPVDwUYraH4awMA2A82YseUpqbcHcnGJJISqP0qzKmEr1/hhoi
+ ID42QbVY/Gnjbbkylhv0r+rf3mOe3Z9BIlO3U65QgFY9XnmRLs+cJg3m9nQjpaqrhe0nijJC/uU
+ Lr9kOwkGhXaCLjtoW6Hwd4iFpErfR6LMd9cD8rp9Kuj1j6Jyf1cgvTd8o442DsCAbCXNthZYCtD
+ jg17EAa0pVRe1TDs3Tf4iRLhhUXt5EsjBLb5da9gA==
+X-Received: by 2002:a05:600c:4e0c:b0:489:1d7a:4537 with SMTP id
+ 5b1f17b1804b1-4891d7a463emr456828485e9.3.1777294108776; 
+ Mon, 27 Apr 2026 05:48:28 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.47.59
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:47:59 -0700 (PDT)
+ Mon, 27 Apr 2026 05:48:28 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 24/63] target/arm: Replace MO_TE -> mo_endian() for Cortex-M
- helpers
-Date: Mon, 27 Apr 2026 13:46:58 +0100
-Message-ID: <20260427124738.966578-25-peter.maydell@linaro.org>
+Subject: [PULL 54/63] target/arm: migrate memory op syndromes to registerfields
+Date: Mon, 27 Apr 2026 13:47:28 +0100
+Message-ID: <20260427124738.966578-55-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,47 +101,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Alex Bennée <alex.bennee@linaro.org>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260414005348.4767-9-philmd@linaro.org
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-id: 20260422125250.1303100-15-alex.bennee@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/m_helper.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ target/arm/syndrome.h | 33 +++++++++++++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/tcg/m_helper.c b/target/arm/tcg/m_helper.c
-index f5954ce9bf..1bec8e9aea 100644
---- a/target/arm/tcg/m_helper.c
-+++ b/target/arm/tcg/m_helper.c
-@@ -634,7 +634,7 @@ void HELPER(v7m_blxns)(CPUARMState *env, uint32_t dest)
+diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+index 7ff8c30e2b..841fd3292b 100644
+--- a/target/arm/syndrome.h
++++ b/target/arm/syndrome.h
+@@ -742,14 +742,39 @@ static inline uint32_t syn_serror(uint32_t extra)
+     return res;
+ }
  
-     /* Note that these stores can throw exceptions on MPU faults */
-     ARMMMUIdx mmu_idx = arm_mmu_idx(env);
--    MemOpIdx oi = make_memop_idx(MO_TE | MO_UL | MO_ALIGN,
-+    MemOpIdx oi = make_memop_idx(mo_endian(env) | MO_UL | MO_ALIGN,
-                                  arm_to_core_mmu_idx(mmu_idx));
-     cpu_stl_mmu(env, sp, nextinst, oi, GETPC());
-     cpu_stl_mmu(env, sp + 4, saved_psr, oi, GETPC());
-@@ -1055,7 +1055,7 @@ void HELPER(v7m_vlstm)(CPUARMState *env, uint32_t fptr)
-     bool lspact = env->v7m.fpccr[s] & R_V7M_FPCCR_LSPACT_MASK;
-     uintptr_t ra = GETPC();
-     ARMMMUIdx mmu_idx = arm_mmu_idx(env);
--    MemOpIdx oi = make_memop_idx(MO_TE | MO_UL | MO_ALIGN,
-+    MemOpIdx oi = make_memop_idx(mo_endian(env) | MO_UL | MO_ALIGN,
-                                  arm_to_core_mmu_idx(mmu_idx));
++/*
++ * ISS encoding for an exception from the Memory Copy and Memory Set
++ * instructions.
++ */
++FIELD(MOP_ISS, SIZEREG, 0, 5)
++FIELD(MOP_ISS, SRCREG, 5, 5)
++FIELD(MOP_ISS, DESTREG, 10, 5)
++FIELD(MOP_ISS, FORMATOPT, 16, 2)
++FIELD(MOP_ISS, OPT_A, 16, 1)
++FIELD(MOP_ISS, WRONG_OPT, 17, 1)
++FIELD(MOP_ISS, EPILOGUE, 18, 1)
++FIELD(MOP_ISS, OPTIONS, 19, 4)
++FIELD(MOP_ISS, IS_SETG, 23, 1)
++FIELD(MOP_ISS, MEMINST, 24, 1)
++
+ static inline uint32_t syn_mop(bool is_set, bool is_setg, int options,
+                                bool epilogue, bool wrong_option, bool option_a,
+                                int destreg, int srcreg, int sizereg)
+ {
+-    return (EC_MOP << ARM_EL_EC_SHIFT) | ARM_EL_IL |
+-        (is_set << 24) | (is_setg << 23) | (options << 19) |
+-        (epilogue << 18) | (wrong_option << 17) | (option_a << 16) |
+-        (destreg << 10) | (srcreg << 5) | sizereg;
++    uint32_t res = syn_set_ec(0, EC_MOP);
++    res = FIELD_DP32(res, SYNDROME, IL, 1);
++
++    res = FIELD_DP32(res, MOP_ISS, MEMINST, is_set);
++    res = FIELD_DP32(res, MOP_ISS, IS_SETG, is_setg);
++    res = FIELD_DP32(res, MOP_ISS, OPTIONS, options);
++    res = FIELD_DP32(res, MOP_ISS, EPILOGUE, epilogue);
++    res = FIELD_DP32(res, MOP_ISS, WRONG_OPT, wrong_option);
++    res = FIELD_DP32(res, MOP_ISS, OPT_A, option_a);
++    res = FIELD_DP32(res, MOP_ISS, DESTREG, destreg);
++    res = FIELD_DP32(res, MOP_ISS, SRCREG, srcreg);
++    res = FIELD_DP32(res, MOP_ISS, SIZEREG, sizereg);
++
++    return res;
+ }
  
-     assert(env->v7m.secure);
-@@ -1131,7 +1131,7 @@ void HELPER(v7m_vlldm)(CPUARMState *env, uint32_t fptr)
-     ARMCPU *cpu = env_archcpu(env);
-     uintptr_t ra = GETPC();
-     ARMMMUIdx mmu_idx = arm_mmu_idx(env);
--    MemOpIdx oi = make_memop_idx(MO_TE | MO_UL | MO_ALIGN,
-+    MemOpIdx oi = make_memop_idx(mo_endian(env) | MO_UL | MO_ALIGN,
-                                  arm_to_core_mmu_idx(mmu_idx));
  
-     /* fptr is the value of Rn, the frame pointer we load the FP regs from */
 -- 
 2.43.0
 
