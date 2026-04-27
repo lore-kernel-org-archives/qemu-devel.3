@@ -4,108 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92686FF8861
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C81C5FF885E
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 11:17:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHJwp-0006vv-Bd; Mon, 27 Apr 2026 07:16:27 -0400
+	id 1wHJxI-00079U-Rb; Mon, 27 Apr 2026 07:16:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHJwM-0006rX-A5
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 07:15:56 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHJwA-0005Dq-Ru
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 07:15:46 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-6589bfb4de2so275076d50.2
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 04:15:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777288537; cv=none;
- d=google.com; s=arc-20240605;
- b=T8IpseORG4T5V1pzBFV1T6GSv2UsiWw7WjpxQ++v3rAVFt6avT1nobgggIATSYWVcn
- 6yPsfWWFN3NP8JJqMLh3rUWQonJU0KZJ8oKVlHyO4OARfzsVbtsY6UpNI9KtGlYS/+X/
- ojkC6YY2/G40OBOuXmCuRLJMJ4NkCGizjdKSE9fJBfSpuEF26AufDy0CDGPIM9KhQIb/
- E4ZwM0TTt3oVPEspjPIoc6M2VXIhGxLpnqAdbSuXOzZbz/yPqHOjjIB8MxaDSjtekPuR
- +yCmtyjw0wrB8qZ0MCmrlBs8md0udQND6G2KNJuW2XuThAaA2Y5eAgUMxfrl0dCgBFhs
- Ac5w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=XvXQjPpVyTBT7utFRaiYJELt8AOVtar8+L24Hso4Stg=;
- fh=ObiMedthc2ViC8DVhcooYInybIT36/TlZLpCNEEs7Ko=;
- b=eq5wohsPwvv/7lhTYy0sDhzIwfEYBU8f8i9QeAr1uhIL8ZSfJnYmWM3w00QchXfvnT
- U7hoPCOxUz853mV/wn5wlYkZ9JXZnpsdXHJfEaQmO/WSl1pqQ1zP6nlYyByajJ+p0Uq5
- MTWYQYp2h+B/12uR0AJqlPKaQsSC3D3jXRld3ah5g6Y6L4BGUu6/9Lq9h/ZMcB8933Ha
- Tej2ap9zN+2L5ef2gw6i4KQq58LfHn/E/lVlDSufUJcRe44dG6EdZ/vIn2VyNcMTQ/RG
- S05R+VyjwakQC00pZohzeKoOvVt/8iptwWqBhwuWWMPlvJy7rPPU0O+0DfIlN5ImSXNy
- usBw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777288537; x=1777893337; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=XvXQjPpVyTBT7utFRaiYJELt8AOVtar8+L24Hso4Stg=;
- b=ZKuqFBlT+yFdK9pG99HcWv2wKXXod3sCjA71J0YD/yeeo5tkTzwsCJ8qp7IJF3unzl
- AkPp/bUiV2KgJLIo/2EQoUkk1lFZtiY1LT+YqdGmaQjC1FBOg4ykrXB56sWeBy614N24
- ykxIqcPA8j9t6WPl7F0IIPcC7ZRbz1uTgjexkHhF0uo+ExupaHa2D27idp/svRLYFxbX
- R/M5DXEO76Sb0I1SMj0I4WzvKsDlZFpSNFXs5GSlwybKPyIbzN2MCoyITGq6aCQxYmYS
- YVV7W3pOaRXD4m16PEskeJHvPVCV8fU3zaznFSHf8ULH0MHLl8WwhtBx9zZuwWmfk7Le
- N5oQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777288537; x=1777893337;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XvXQjPpVyTBT7utFRaiYJELt8AOVtar8+L24Hso4Stg=;
- b=qKlayx8rYxgrXERlMv7S08Z7iyaB6XJ4DjUxoxb9u6yIubXQLPJdJDxORB7ruyB/Gh
- bFGrvZdEPZ1RYq+kGNSglOCdM/JqmKxNF8bX8c0fhXZcImp37mUAl3NAT/AT+JiPiA8I
- eWW0QqiXa/QQdMEHb7KwnRmdSTAcNOAi/s8oGcy/bPcuLliM+uFyPo8shtVNsNgKSjW3
- Y+FK6XulMJlrbdY0OrZ22czWsDFzmIYxwWZqZpDiB+A8ZE2Y8QLrEm3cLkiJC+0CVoQf
- wSIYD7VXcMdc6P5t8VaLb55Doz6Cme3HfHwJFaKQ3rrIo6q7QV6GM3XRwoTXFHXZdhz3
- pDCA==
-X-Gm-Message-State: AOJu0Yyq+cEUXW/UwXCaa1dkVGagU5Mc7JYH7VEgrryUdNctpaXnb8nk
- DjkFrZOLwJYQbVYrTcQ1OqRhdL7eq+8yYEM+SnvAPvdEHJdB52krAW0HItiU+LfFmYwAghaZhgF
- 0R3SCO0Dn07blsZ3zqR4zA71Jd3+ePDF8v9QXVvy3Ow==
-X-Gm-Gg: AeBDieuAKUY55NjuhESO1aIU6RiAp7jgtVFYVYlUUFtUWwhNKWQp0IVTndDHro79j6s
- Vb5IFGzCQ8A/E4ncjv6Au/Q5SjscmCcNBslSb6iyLFwXwVVtsG8mX/0czAEsShANaTxmdeKPDkI
- dayPrFqLRXJpzgWw4gW2t9GfeEPJi6QrSMFrS59YD9erQs9bb/lxamoZZXQfS+aBoTrLXpyjt3d
- SWiDELQPXBcT70xKZMMCE0sI5mIfMsylviHxfuu4CVbF38xM5UC60NlkCGqnAHDj7Klbg0A02p6
- r6h6e9bT0nWpKHaf/U7Zk6oLnttXhrNqfPOcC79c41BSHGxU01gYDELwb2YIFnlEoAj8KephfCc
- 35w==
-X-Received: by 2002:a05:690e:d0a:b0:653:1945:8fab with SMTP id
- 956f58d0204a3-65319459b3cmr38342261d50.43.1777288537181; Mon, 27 Apr 2026
- 04:15:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1wHJwh-0006xp-HT; Mon, 27 Apr 2026 07:16:13 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1wHJwb-0005N7-Hp; Mon, 27 Apr 2026 07:16:09 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id C52B9C015B;
+ Mon, 27 Apr 2026 14:15:55 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:441::1:4] (unknown [2a02:6bf:8080:441::1:4])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id pFW2q81MxCg0-q6uM2wzJ; Mon, 27 Apr 2026 14:15:54 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1777288554;
+ bh=6GnJ1Uatmi5chV2CJFOwC/YaD3ApSd1e+yXIFXGOatw=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=MSwZKa7dgYLyTXlw2XNi0BkcGG3Udg3PaWxkLtAhnGKOWhIW8qYFoUyaCY1IT+jOS
+ xjXA5eM07eVLPFX2utfT0KXclfRCJ75/EOtCDjtmtMcKdwaDhL0TLkfGl5Y9T6ua4U
+ SXM+3y1YUmvmhji5wTr3iLvS4li3ZAfil4VGe5b0=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <9fb43ec4-7825-4382-991f-a2cc17142138@yandex-team.ru>
+Date: Mon, 27 Apr 2026 16:15:51 +0500
 MIME-Version: 1.0
-References: <20260410044726.61853-1-scottjgo@gmail.com>
- <20260410055045.63001-1-scottjgo@gmail.com>
-In-Reply-To: <20260410055045.63001-1-scottjgo@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 27 Apr 2026 12:15:25 +0100
-X-Gm-Features: AVHnY4IrVaAknF8pb63PJgE2xMZClVrFOdJbAzwV0P2JnXEfrSF0mwf6CtZuy34
-Message-ID: <CAFEAcA9RHQ+7++=kLn2goJwcgzDnaqdkQtQBtxQ2Rw1-uiKY=g@mail.gmail.com>
-Subject: Re: [PATCH v2] target/arm/hvf: Fix WFI halting to stop idle vCPU
- spinning
-To: "Scott J. Goldman" <scottjgo@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, rbolshakov@ddn.com, 
- phil@philjordan.eu, agraf@csgraf.de
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/5] vhost-user: add skip_drain param to GET_VRING_BASE
+To: Raphael Norwitz <rnorwitz@nvidia.com>, qemu-devel@nongnu.org
+Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Milan Zamazal <mzamazal@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, qemu-block@nongnu.org,
+ Fam Zheng <fam@euphon.net>, zhenwei pi <zhenwei.pi@linux.dev>,
+ Hanna Reitz <hreitz@redhat.com>, virtio-fs@lists.linux.dev,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+References: <20260330095226.158386-1-dtalexundeer@yandex-team.ru>
+ <20260330095226.158386-6-dtalexundeer@yandex-team.ru>
+ <613f140f-de27-4f83-8a02-5370833dd659@nvidia.com>
+ <965db8ae-b44a-4b29-b006-56e8474d52b5@yandex-team.ru>
+ <c9082536-6b4b-4e9a-a6ff-764dbbf649c9@nvidia.com>
+ <19b0aa2e-90dc-4467-acc8-adc0bec7c388@yandex-team.ru>
+ <1c6af04b-9efd-4d07-ab5c-e6d616818c2c@nvidia.com>
+Content-Language: en-US
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+In-Reply-To: <1c6af04b-9efd-4d07-ab5c-e6d616818c2c@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -117,122 +90,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 10 Apr 2026 at 06:50, Scott J. Goldman <scottjgo@gmail.com> wrote:
+
+On 4/24/26 17:52, Raphael Norwitz wrote:
 >
-> Commit b5f8f77271 ("accel/hvf: Implement WFI without using pselect()")
-> changed hvf_wfi() from blocking the vCPU thread with pselect() to
-> returning EXCP_HLT, intending QEMU's main event loop to handle the
-> idle wait. However, cpu->halted was never set, so cpu_thread_is_idle()
-> always returns false and the vCPU thread spins at 100% CPU per core
-> while the guest is idle.
 >
-> Fix this by:
+> On 4/24/26 4:57 AM, Alexandr Moshkov wrote:
+>> Thanks for reply!
+>>
+>> On 4/23/26 19:15, Raphael Norwitz wrote:
+>>>
+>>>
+>>> On 4/16/26 5:26 AM, Alexandr Moshkov wrote:
+>>>> Greetings! Thanks for reply!
+>>>>
+>>>>
+>>>> On 4/15/26 20:21, Raphael Norwitz wrote:
+>>>>> I’m not sure I like using the num field in vhost_vring_state to 
+>>>>> set magic values which affect protocol behavior for 
+>>>>> GET_VRING_BASE. It feels like a hack to me. I would think the 
+>>>>> proper solution if we want to support migration from new to old 
+>>>>> would be to have new use a different new message entirely. Can we 
+>>>>> do that?
+>>>>
+>>>> I think we can, but I thought at first that this will be almost a 
+>>>> complete copy of GET_VRING_BASE message, with the exception of 
+>>>> waiting for drain of requests, so I choose to expand existing message.
+>>>>
+>>>
+>>> I think a new message would be cleaner. Anyone else have thoughts?
+>>>
+>>>> If this is not an appropriate approach, is it better to make a new 
+>>>> message like GET_VRING_BASE or a separate message used together 
+>>>> with default GET_VRING_BASE message (for example, message for 
+>>>> setting some kind of status on the server)? What should I name this 
+>>>> new message?
+>>>>
+>>>
+>>> Maybe GET_VRING_BASE_SKIP_DRAIN? How would a separate message used 
+>>> together with default GET_VRING_BASE message work? 
+>>
+>> I was thinking about a message something like SET_VRING_ENABLE - for 
+>> example SET_SKIP_DRAIN_ENABLE, that would enable/disable some state 
+>> (skip_drain) in the backend.
 >
-> 1. Setting cpu->halted = 1 in hvf_wfi() so the vCPU thread sleeps on
->    halt_cond in qemu_process_cpu_events().
+> I'd need to see the flow in more detail but sounds promising.
+
+On migration vhost-user-blk firstly send SET_SKIP_DRAIN_ENABLE with num 
+= 1 message if `inflight-migration` device parameter 
+and VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT enabled. Then send 
+GET_VRING_BASE and continue work as usual.
+
+On SET_SKIP_DRAIN_ENABLE backend sets inner state (skip_drain) so when 
+GET_VRING_BASE is called and skip_drain is true the drain will skipped.
+
+What do you think?
+
 >
-> 2. Arming a host-side QEMU_CLOCK_HOST timer to fire when the guest's
->    virtual timer (CNTV_CVAL_EL0) would expire. This is necessary
->    because HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
->    hv_vcpu_run(), which is not called while the CPU is halted. The
->    timer callback mirrors the VTIMER_ACTIVATED handler: it raises the
->    vtimer IRQ through the GIC and marks vtimer_masked, causing the
->    interrupt delivery chain to wake the vCPU via qemu_cpu_kick().
-
-A host side timer here seems a bit odd -- it will still
-expire even if the user halts the whole VM. We only use
-QEMU_CLOCK_HOST timers for things that are part of QEMU proper,
-like handling timeouts in the migration networking code.
-
-> diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
-> index 2621164cb2..58fb865eba 100644
-> --- a/include/system/hvf_int.h
-> +++ b/include/system/hvf_int.h
-> @@ -48,6 +48,7 @@ struct AccelCPUState {
->      hv_vcpu_exit_t *exit;
->      bool vtimer_masked;
->      bool guest_debug_enabled;
-> +    struct QEMUTimer *wfi_timer;
->  #endif
->  };
-
-QEMUTimer objects need to be migrated. I think as it is now,
-if you do a migration while one vCPU is in WFI we won't
-migrate the timer state, and so on the destination it won't
-be woken up when it should.
-
-> +static void hvf_wfi_timer_cb(void *opaque)
-> +{
-> +    CPUState *cpu = opaque;
-> +    ARMCPU *arm_cpu = ARM_CPU(cpu);
-> +
-> +    /*
-> +     * vtimer expired while the CPU was halted for WFI.
-> +     * Mirror HV_EXIT_REASON_VTIMER_ACTIVATED: raise the vtimer
-> +     * interrupt and mark as masked so hvf_sync_vtimer() will
-> +     * check and unmask when the guest handles it.
-> +     *
-> +     * The interrupt delivery chain (GIC -> cpu_interrupt ->
-> +     * qemu_cpu_kick) wakes the vCPU thread from halt_cond.
-> +     */
-> +    qemu_set_irq(arm_cpu->gt_timer_outputs[GTIMER_VIRT], 1);
-> +    cpu->accel->vtimer_masked = true;
-
-If the VM happens to be stopped by the user when the timer
-fires, this will change the VM state, which I suspect is
-not correct. Avoiding use of a QEMU_CLOCK_HOST timer would
-fix this.
-
-> +}
-> +
->  static int hvf_wfi(CPUState *cpu)
->  {
-> +    ARMCPU *arm_cpu = ARM_CPU(cpu);
-> +    uint64_t ctl, cval;
-> +    hv_return_t r;
-> +
->      if (cpu_has_work(cpu)) {
->          /*
->           * Don't bother to go into our "low power state" if
-> @@ -2037,6 +2068,34 @@ static int hvf_wfi(CPUState *cpu)
->          return 0;
->      }
+>>
+>>>
+>>>> I also fix other comments, thanks!
+>>>>
+>>>>>
+>>>>> On 3/30/26 11:52 AM, Alexandr Moshkov wrote:
+>>>>>> In case of migration of QEMU from the new version (where the
+>>>>>> inllight-migration parameter is present), to the old one (where 
+>>>>>> it is
+>>>>>
+>>>>> nit: spelling inllight-migration
+>>>>>
+>>>>>> absent) there is no way to disable this feature on the backend 
+>>>>>> during
+>>>>>> runtime.
+>>>>>>
+>>>>>> This commit slightly changes the semantics of the protocol feature
+>>>>>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this feature
+>>>>>> adds a new parameter for GET_VRING_BASE, which allows to control the
+>>>>>> drain in-flight requests on the backend.
+>>>>>> Thus, QEMU will be able to turn this feature on GET_VRING_BASE 
+>>>>>> off and
+>>>>>> on anytime.
+>>>>>>
+>>>>>> In vhost-user-blk use inflight_migration param to enable 
+>>>>>> skip_drain to
+>>>>>> suspend in-flight I/O requests, and then migrate them throught 
+>>>>>> inflight
+>>>>>> subsection.
+>>>>>>
+>>>>>> Also now QEMU will always try to setup
+>>>>>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT protocol featrue with
+>>>>>> backend. This will allow to use skip_drain parameter on 
+>>>>>> GET_VRING_BASE
+>>>>>> message.
+>>>>>>
+>>>>>> Reviewed-by: Vladimir Sementsov-Ogievskiy 
+>>>>>> <vsementsov@yandex-team.ru>
+>>>>>> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+>>>>>> ---
+>>>>>>   docs/interop/vhost-user.rst    |  6 ++----
+>>>>>>   hw/block/vhost-user-blk.c      | 30 ++++++++++++++++++++++++------
+>>>>>>   hw/virtio/vhost-user.c         |  3 +--
+>>>>>>   hw/virtio/vhost.c              |  1 +
+>>>>>>   include/hw/virtio/vhost-user.h |  1 -
+>>>>>>   5 files changed, 28 insertions(+), 13 deletions(-)
+>>>>>>
+>>>>>> diff --git a/docs/interop/vhost-user.rst 
+>>>>>> b/docs/interop/vhost-user.rst
+>>>>>> index bfa75ff9a3..63efc87264 100644
+>>>>>> --- a/docs/interop/vhost-user.rst
+>>>>>> +++ b/docs/interop/vhost-user.rst
+>>>>>> @@ -1255,14 +1255,12 @@ Front-end message types
+>>>>>>     *suspended*, see :ref:`Suspended device state
+>>>>>>     <suspended_device_state>`.
+>>>>>>   -  The request payload's *num* field is currently reserved and 
+>>>>>> must be
+>>>>>> -  set to 0.
+>>>>>> -
+>>>>>>     By default, the back-end must complete all inflight I/O 
+>>>>>> requests for the
+>>>>>>     specified vring before stopping it.
+>>>>>>       If the ``VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT`` 
+>>>>>> protocol
+>>>>>> -  feature has been negotiated, the back-end may suspend 
+>>>>>> in-flight I/O
+>>>>>> +  feature has been negotiated, using request payload's *num* field,
+>>>>>> +  when *num* is set to 1, QEMU can tell the back-end to suspend 
+>>>>>> in- flight I/O
+>>>>>>     requests and record them as described in :ref:`Inflight I/O 
+>>>>>> tracking
+>>>>>>     <inflight_io_tracking>` instead of completing them before 
+>>>>>> stopping the vring.
+>>>>>>     How to suspend an in-flight request depends on the 
+>>>>>> implementation of the back-end
+>>>>>> diff --git a/hw/block/vhost-user-blk.c b/hw/block/vhost-user-blk.c
+>>>>>> index a3ecd83f54..522e9d34b5 100644
+>>>>>> --- a/hw/block/vhost-user-blk.c
+>>>>>> +++ b/hw/block/vhost-user-blk.c
+>>>>>> @@ -134,10 +134,7 @@ static bool 
+>>>>>> vhost_user_blk_inflight_needed(void *opaque)
+>>>>>>   {
+>>>>>>       struct VHostUserBlk *s = opaque;
+>>>>>>   -    bool inflight_migration = virtio_has_feature(s- 
+>>>>>> >dev.protocol_features,
+>>>>>> - VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+>>>>>> -
+>>>>>> -    return inflight_migration;
+>>>>>> +    return s->inflight_migration;
+>>>>>>   }
+>>>>>>     @@ -232,11 +229,14 @@ static int 
+>>>>>> vhost_user_blk_stop(VirtIODevice *vdev)
+>>>>>>           return 0;
+>>>>>>       }
+>>>>>>   +    bool skip_drain = vhost_user_blk_inflight_needed(s) &&
+>>>>>
+>>>>> nit: declarations on top
+>>>>>
+>>>>>> + runstate_check(RUN_STATE_FINISH_MIGRATE);
+>>>>>> +
+>>>>>>       force_stop = s->skip_get_vring_base_on_force_shutdown &&
+>>>>>>                    qemu_force_shutdown_requested();
+>>>>>>         ret = force_stop ? vhost_dev_force_stop(&s->dev, vdev, 
+>>>>>> true) :
+>>>>>> -                       vhost_dev_stop(&s->dev, vdev, true, false);
+>>>>>> +                       vhost_dev_stop(&s->dev, vdev, true, 
+>>>>>> skip_drain);
+>>>>>>         if (k->set_guest_notifiers(qbus->parent, s->dev.nvqs, 
+>>>>>> false) < 0) {
+>>>>>>           error_report("vhost guest notifier cleanup failed: %d", 
+>>>>>> ret);
+>>>>>> @@ -364,7 +364,6 @@ static int vhost_user_blk_connect(DeviceState 
+>>>>>> *dev, Error **errp)
+>>>>>>       vhost_dev_set_config_notifier(&s->dev, &blk_ops);
+>>>>>>         s->vhost_user.supports_config = true;
+>>>>>> -    s->vhost_user.supports_inflight_migration = s- 
+>>>>>> >inflight_migration;
+>>>>>>       ret = vhost_dev_init(&s->dev, &s->vhost_user, 
+>>>>>> VHOST_BACKEND_TYPE_USER, 0,
+>>>>>>                            errp);
+>>>>>>       if (ret < 0) {
+>>>>>> @@ -580,10 +579,29 @@ static struct vhost_dev 
+>>>>>> *vhost_user_blk_get_vhost(VirtIODevice *vdev)
+>>>>>>       return &s->dev;
+>>>>>>   }
+>>>>>>   +static bool vhost_user_blk_pre_save(void *opaque, Error **errp)
+>>>>>> +{
+>>>>>> +    VHostUserBlk *s = VHOST_USER_BLK(opaque);
+>>>>>> +
+>>>>>> +    bool inflight_migration_enabled = virtio_has_feature(
+>>>>>> +        s->dev.protocol_features,
+>>>>>> +        VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+>>>>>> +    if (vhost_user_blk_inflight_needed(s) && ! 
+>>>>>> inflight_migration_enabled) {
+>>>>>> +        error_setg(errp, "can't migrate vhost-user-blk device: "
+>>>>>> +                         "backend doesn't support "
+>>>>>> + "VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT "
+>>>>>> +                         "protocol feature");
+>>>>>> +        return false;
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    return true;
+>>>>>> +}
+>>>>>> +
+>>>>>>   static const VMStateDescription vmstate_vhost_user_blk_inflight 
+>>>>>> = {
+>>>>>>       .name = "vhost-user-blk/inflight",
+>>>>>>       .version_id = 1,
+>>>>>>       .needed = vhost_user_blk_inflight_needed,
+>>>>>> +    .pre_save_errp = vhost_user_blk_pre_save,
+>>>>>>       .fields = (const VMStateField[]) {
+>>>>>>           VMSTATE_VHOST_INFLIGHT_REGION(inflight, VHostUserBlk),
+>>>>>>           VMSTATE_END_OF_LIST()
+>>>>>> diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
+>>>>>> index bb8f8eab77..ed95ec7523 100644
+>>>>>> --- a/hw/virtio/vhost-user.c
+>>>>>> +++ b/hw/virtio/vhost-user.c
+>>>>>> @@ -2225,8 +2225,7 @@ static int vhost_user_backend_init(struct 
+>>>>>> vhost_dev *dev, void *opaque,
+>>>>>>               }
+>>>>>>           }
+>>>>>>   -        if (!u->user->supports_inflight_migration ||
+>>>>>> -            !virtio_has_feature(protocol_features,
+>>>>>> +        if (!virtio_has_feature(protocol_features,
+>>>>>> VHOST_USER_PROTOCOL_F_INFLIGHT_SHMFD)) {
+>>>>>>               protocol_features &= ~(1ULL <<
+>>>>>> VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT);
+>>>>>> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+>>>>>> index ac4d6fca73..54e4ce2660 100644
+>>>>>> --- a/hw/virtio/vhost.c
+>>>>>> +++ b/hw/virtio/vhost.c
+>>>>>> @@ -1398,6 +1398,7 @@ static int do_vhost_virtqueue_stop(struct 
+>>>>>> vhost_dev *dev,
+>>>>>>       int vhost_vq_index = 
+>>>>>> dev->vhost_ops->vhost_get_vq_index(dev, idx);
+>>>>>>       struct vhost_vring_state state = {
+>>>>>>           .index = vhost_vq_index,
+>>>>>> +        .num = skip_drain,
+>>>>>>       };
+>>>>>>       int r = 0;
+>>>>>>   diff --git a/include/hw/virtio/vhost-user.h 
+>>>>>> b/include/hw/virtio/ vhost-user.h
+>>>>>> index 53fe996686..c95bad5ddc 100644
+>>>>>> --- a/include/hw/virtio/vhost-user.h
+>>>>>> +++ b/include/hw/virtio/vhost-user.h
+>>>>>> @@ -69,7 +69,6 @@ typedef struct VhostUserState {
+>>>>>>       GPtrArray *notifiers;
+>>>>>>       int memory_slots;
+>>>>>>       bool supports_config;
+>>>>>> -    bool supports_inflight_migration;
+>>>>>>   } VhostUserState;
+>>>>>>     /**
+>>>>>
+>>>
 >
-> +    /*
-> +     * Set up a host-side timer to wake us when the vtimer expires.
-> +     * HVF only delivers HV_EXIT_REASON_VTIMER_ACTIVATED during
-> +     * hv_vcpu_run(), which we won't call while halted.
-> +     */
-> +    r = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_CNTV_CTL_EL0, &ctl);
-> +    assert_hvf_ok(r);
-> +
-> +    if ((ctl & TMR_CTL_ENABLE) && !(ctl & TMR_CTL_IMASK)) {
-> +        r = hv_vcpu_get_sys_reg(cpu->accel->fd,
-> +                                HV_SYS_REG_CNTV_CVAL_EL0, &cval);
-> +        assert_hvf_ok(r);
-> +
-> +        uint64_t now = hvf_vtimer_val_raw();
-> +        if (cval <= now) {
-> +            /* Timer already expired, don't halt */
-> +            return 0;
-> +        }
-> +
-> +        uint64_t delta_ticks = cval - now;
-> +        int64_t delta_ns = delta_ticks * NANOSECONDS_PER_SECOND
-> +                           / arm_cpu->gt_cntfrq_hz;
-
-As a general rule, tick-to-ns and vice-versa conversions should
-use muldiv64() to avoid potential overflow in the intermediate value.
-
-> +        int64_t deadline = qemu_clock_get_ns(QEMU_CLOCK_HOST) + delta_ns;
-> +
-> +        timer_mod(cpu->accel->wfi_timer, deadline);
-> +    }
-> +
-> +    cpu->halted = 1;
->      return EXCP_HLT;
->  }
-
-thanks
--- PMM
 
