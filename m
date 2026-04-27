@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40C9BFF8868
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:40:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18853FF886D
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:41:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHRnn-0007UC-UD; Mon, 27 Apr 2026 15:39:31 -0400
+	id 1wHRpD-0008Ms-IC; Mon, 27 Apr 2026 15:40:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
- id 1wHRna-0007T9-0D
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:39:19 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1wHRp8-0008Ka-TD
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:40:55 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
- id 1wHRnY-0006s2-B0
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:39:17 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-48374014a77so138188515e9.3
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 12:39:15 -0700 (PDT)
+ id 1wHRp5-0007I9-Ow
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:40:54 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4890d945eb4so53493835e9.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 12:40:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777318754; x=1777923554; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ehYuxSK3XJt2mwUWPI4Wu2zWpX5Z88Nk/i6gWmV53tQ=;
- b=FO/+pK+vhNr9BQNnEsyZghFiO5oPjGvzC/NBX0bpooEyNAM1f+Exkdm2XBgx6PQQIa
- vHwK1G+jTCw5Z39T8/LAqmz+6RHmQOC5IfD7bo9oQz7zNZEG+5uDuh4BmOe6RCLD/VA7
- XqoJcSbIdMpc5J+C5YDxzYXn42adN9fEVEaRIm9mOtoaaIzZSfZkzj8YtQNC9V3pmCO1
- Aoi4fXA4TtwgUBlJGkUT7FBX3SFUO9tuNWvhpdFCcQvLXrfyyCjhjz5wrDvKngdt2Fo+
- /UgIUf7SWBXhKjqbpHnIHV90lBXnkEE3WbvGWcmANrFLMXZ2UAm9jr4GtOI8RUyvfR9O
- Bsig==
+ d=gmail.com; s=20251104; t=1777318848; x=1777923648; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=8adT00sYmCE4icsm1qkp6lI8/aVb7DrH9njcSCEgl+E=;
+ b=KYCCs3w6WRqzX2RIyScxVRX0mIWLuTO+i2Wpe6If3V0egEokQJHTSIDG5g9onGD91G
+ 1x0DRW9dId5ozq6NE38/4xpyxMRIIx7dkxntBo2TARIWjTSMqVOAOhUhyO840EdkxkUv
+ 1zyGG24P/d7eFduyDfXvGD1rmZm533z0c65jadhUbMJ08opC1JZuvSPpHUJHRs86k9ox
+ R1ilv3S1Xwe/tIOMy+WjARjL5sewG7FPHDzAcCwLEF0oIgcOJZDsPFK6MkNgCkEm47sH
+ IgxdWO2jIgI3i/pwzHdMGTKzhIfdKxZP5q3JAazUtuzTOVxx3b+1wcvzszjbcAQCTzcW
+ pVpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777318754; x=1777923554;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ehYuxSK3XJt2mwUWPI4Wu2zWpX5Z88Nk/i6gWmV53tQ=;
- b=js4RmJ3bui5wT2+DAHdhO+DsGgv8Su9e1As+P8RNXBGRC81PP9mySI2xYG8znyiS0b
- Y4u9FF763sjVXpjTq0aWOarLnAxr0ClmGsmflkSQtT5wW3ldxt82brVwp70UG+0HF6Xn
- qCArS5BNasKpb1jWHgqc92iriRPNUDoqNUuxBKzLfJFY8RWRH5P93yjmt8iO7FB84QzW
- MiMo/EQ8LJOEWpxra+ELnccM0pn/whC7hUd9j6nNEOq/0qA52//CadddyS+0b3K9pOYD
- hDf2W0pvmAaLlYW6FO8GBOwwaYP2uebEEuXbmOLxY1tcPHTMzNtXleWGnXSfnjbsT+ez
- IjAA==
-X-Gm-Message-State: AOJu0YwpofuTOXJbrHHvDvjRkb7rL8mbfKRgmq8J8/w2I/OXBJ5W7ogD
- xJioz0j9fePp62Pargv+2LD2UkLSbdpp+DjE54YDk20yNm9ASNkxgHrB
-X-Gm-Gg: AeBDies/3/jdYYnafO4dDQOILuNydua14JWG+U8thINmBL4VuvZGljvY1umGyi9ma1O
- j4QCtieJRmLWqgfRZhF9VRk2fQVkUp3JDI+TAgY3pvf0j0ZUp735lMY/KqcW8DyRpkdp0QB4Ecr
- /KsZh+7NeUUcDyO6NsxG3G1GCjIFHbfaQGFiILw91Uf779gHI8xi592g5zZ8gFktir18/hrJV2b
- pG40Tp0664tclUvPUtpIlqDI0h+hI2M2cPkTgGIZg2jAdVjJPfmSwfY8n37MrzAJ30uugtuOHqG
- 0h56qQAtwVlikNTFhJwtT0+P2HNAqA3o76SyEcEb3ie9/1S33HIcvasi/WSm6/sfv8WA3LycBTp
- eRWH0sFqpweAYjgkdqH6DAPfIrYquAEsm2INoKw/yWXQSaH4v6rJbE3qAxBMrcJhEj6dxZ+VTnw
- nYPqbNFyYk+z7xJHeWqVXPLsvga+jh2axxCFlMCqY=
-X-Received: by 2002:a05:600c:3b8a:b0:48a:56de:d640 with SMTP id
- 5b1f17b1804b1-48a77b0a367mr1074745e9.16.1777318753965; 
- Mon, 27 Apr 2026 12:39:13 -0700 (PDT)
-Received: from [192.168.0.10] ([2a03:ab00:1000:1b60:331a:b316:78f6:effc])
+ d=1e100.net; s=20251104; t=1777318848; x=1777923648;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=8adT00sYmCE4icsm1qkp6lI8/aVb7DrH9njcSCEgl+E=;
+ b=FRt+ISmX+RDymOef/mCmXIsKOX7ij2ERZQr1zvQ3Dcni6pDrOWLRN5EH0porLf4Q0z
+ 3FSWlUSxo6uhwnP0+zhLjR+nb4oPYn5UkmhU1X3kkaIzglz32I1ZrYAsitF0jDlYCWP2
+ EBcQ8gauOeObuxOPd8hL2hSwCT6ZjRnnqNywn/I1YIzAbF5bJWfhTw88TiJbDN1dH8KP
+ /sMoByTV7ID9zFnWgIbEKllb2w5qEbxmLse/6+vY1NqabKt0W+hj1tP9aB1c+qrI54f0
+ 5tKpJm/eZjEWYo79+Mda9jUrWNjrRTnGWuU7U2I5/IdHnHJAAI/BRUCtUdx+lSKTCRNq
+ w/zg==
+X-Gm-Message-State: AOJu0Yzm4XV+Yhe9sweF48QQ8CCR0DoEDZOTE1OtA84K+fSVU/EIMYTK
+ 8+KkF5fBsmIBkz3dESyy5EaYEzsn+ReX47xxwDYB2hHn3Z59wYSAoYB4
+X-Gm-Gg: AeBDiesc/68ahUMZ5QmTcwGbTYqhGgi4iQ3WBPbbjUNexHD+Zf1XD2RGfCAW+RZXmjE
+ BFHURELsA9goIJiwdmAe2kqfc+/AGftkgLwTfiUArAm03rUpL+0oYyd6EcFiUp639lzrvUS9IYD
+ hvxBXvVMHWMrgOqC7mgRMv90kwNcgdFBnwxuC4gswUhvuFakMhx8mEbZis2nvXFotNS95ggZSCQ
+ ggy0zxvMcwmxfz1Wx3mzSL0jo5CPG1r4b22NBKsKehtxCBEGw2jbfhEBHCuIQcgxYKTaBHvdSNg
+ M9KCGo8eXFMS/RyKWtXjvYRnum2FGQoevD4F8SnE8x1Pff1L92NWKB6jVCkWUcwSRt+GZV/gJmM
+ ij9uqEyTWkM8dh3T9KPGh7Ouu0GIIzgRGFDsVDURw0shpqO0Xj9XOE05P8fhtBoNWf4knYx6dYZ
+ +2edI2vNsxCp5ccq3p/W+hJEjBxuhxcSQCJLrltQZ7dDtNdKM9e6M=
+X-Received: by 2002:a05:600c:19cd:b0:489:1baf:8c03 with SMTP id
+ 5b1f17b1804b1-48a77e50d27mr421825e9.11.1777318848212; 
+ Mon, 27 Apr 2026 12:40:48 -0700 (PDT)
+Received: from holly.home.arpa ([2a03:ab00:1000:1b60:331a:b316:78f6:effc])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a773e70c2sm8281035e9.10.2026.04.27.12.39.13
+ 5b1f17b1804b1-48a774d9bd1sm3599695e9.3.2026.04.27.12.40.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 12:39:13 -0700 (PDT)
-From: =?utf-8?q?Jind=C5=99ich_Makovi=C4=8Dka?= <makovick@gmail.com>
-Subject: [PATCH v4 0/2] Fix and re-enable GTK clipboard
-Date: Mon, 27 Apr 2026 21:39:09 +0200
-Message-Id: <20260427-gtk-clipboard-v4-0-176ad9919931@gmail.com>
+ Mon, 27 Apr 2026 12:40:47 -0700 (PDT)
+Message-ID: <f490c53fd4ff3005333a2e70193213677f365275.camel@gmail.com>
+Subject: Re: [PATCH v3 1/2] ui/gtk: Use non-blocking clipboard retrieval
+From: Jindrich Makovicka <makovick@gmail.com>
+To: =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, "Daniel P."
+ =?ISO-8859-1?Q?Berrang=E9?=
+ <berrange@redhat.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Date: Mon, 27 Apr 2026 21:40:47 +0200
+In-Reply-To: <CAMxuvawm5Rpq2E5VbtrugJ3MZsWT1kPahJZR4=SZy-y+wgk9dw@mail.gmail.com>
+References: <20260426-gtk-clipboard-v3-0-09555aaeda34@gmail.com>
+ <20260426-gtk-clipboard-v3-1-09555aaeda34@gmail.com>
+ <CAMxuvawm5Rpq2E5VbtrugJ3MZsWT1kPahJZR4=SZy-y+wgk9dw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
+User-Agent: Evolution 3.56.2-9 
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-B4-Tracking: v=1; b=H4sIAF2772kC/33NSw6CMBSF4a2Yjq3pg1bqyH0YB31CI1DSkkZD2
- LuFkZLo8Nzk++8Mko3eJnA5zCDa7JMPQxnV8QB0K4fGQm/KBgQRjirCYDM9oO78qIKMBjrjhDA
- KU6kRKGaM1vnn1rvdy259mkJ8bfmM1+uvUsYQQa6MEPaMaoura9NL35106MFayuSvJkUrJGpHt
- eNC672mn5rvNS0aCcaYlNZI+vV7WZY3FFknfiYBAAA=
-X-Change-ID: 20260425-gtk-clipboard-fdf99db13ac0
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Jindrich Makovicka <makovick@gmail.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=makovick@gmail.com; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=makovick@gmail.com; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,52 +105,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following patches change blocking clipboard retrieval function
-calls in gtk-clipboard.c to non-blocking variants using callbacks to
-avoid UI lockup. It is a follow-up to the patch proposed in the GitLab
-issue
-
-https://gitlab.com/qemu-project/qemu/-/work_items/1150
-
-This version adds a similar change to gd_clipboard_request that also
-uses the blocking clipboard API.
-
-The second patch removes the gtk-clipboard flag, keeping the GTK
-clipboard always enabled.
-
-Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
----
-Changes in v4:
-- Replace gtk_clipboard_request_contents with
-  gtk_clipboard_request_targets which can utilize GTK's target cache
-- Link to v3: https://lore.kernel.org/qemu-devel/20260426-gtk-clipboard-v3-0-09555aaeda34@gmail.com
-
-Changes in v3:
-- Use gtk_clipboard_request_contents to avoid text conversion
-  when we only need to check if the text is available.
-- Link to v2: https://lore.kernel.org/qemu-devel/20260425-gtk-clipboard-v2-0-b098f3cf69cc@gmail.com
-
-Changes in v2:
-- Removed forgotten gtk-clipboard comment in meson_options.txt
-- Link to v1: https://lore.kernel.org/qemu-devel/20260425-gtk-clipboard-v1-0-6bd99e708e14@gmail.com
-
----
-Jindřich Makovička (2):
-      ui/gtk: Use non-blocking clipboard retrieval
-      ui/gtk: Keep GTK clipboard enabled
-
- meson.build        |  4 ----
- meson_options.txt  |  7 -------
- ui/gtk-clipboard.c | 53 ++++++++++++++++++++++++++++++++++++++++-------------
- ui/gtk.c           |  2 --
- ui/meson.build     |  4 +---
- 5 files changed, 41 insertions(+), 29 deletions(-)
----
-base-commit: aa15257174da180c6a8a9d58f87319cfe61c5520
-change-id: 20260425-gtk-clipboard-fdf99db13ac0
-
-Best regards,
--- 
-Jindrich Makovicka
+SGksCgpPbiBNb24sIDIwMjYtMDQtMjcgYXQgMTI6NDcgKzA0MDAsIE1hcmMtQW5kcsOpIEx1cmVh
+dSB3cm90ZToKPiBIaQo+ID4gwqBzdGF0aWMgdm9pZCBnZF9vd25lcl9jaGFuZ2UoR3RrQ2xpcGJv
+YXJkICpjbGlwYm9hcmQsCj4gPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
+oMKgwqDCoMKgwqDCoMKgwqDCoCBHZGtFdmVudCAqZXZlbnQsCj4gPiDCoMKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBncG9pbnRlciBkYXRhKQo+
+ID4gQEAgLTE3MywxMiArMjAxLDEwIEBAIHN0YXRpYyB2b2lkIGdkX293bmVyX2NoYW5nZShHdGtD
+bGlwYm9hcmQKPiA+ICpjbGlwYm9hcmQsCj4gPiDCoMKgwqDCoCBzd2l0Y2ggKGV2ZW50LT5vd25l
+cl9jaGFuZ2UucmVhc29uKSB7Cj4gPiDCoMKgwqDCoCBjYXNlIEdES19PV05FUl9DSEFOR0VfTkVX
+X09XTkVSOgo+ID4gwqDCoMKgwqDCoMKgwqDCoCBpbmZvID0gcWVtdV9jbGlwYm9hcmRfaW5mb19u
+ZXcoJmdkLT5jYnBlZXIsIHMpOwo+ID4gLcKgwqDCoMKgwqDCoMKgIGlmIChndGtfY2xpcGJvYXJk
+X3dhaXRfaXNfdGV4dF9hdmFpbGFibGUoY2xpcGJvYXJkKSkgewo+ID4gLcKgwqDCoMKgwqDCoMKg
+wqDCoMKgwqAgaW5mby0+dHlwZXNbUUVNVV9DTElQQk9BUkRfVFlQRV9URVhUXS5hdmFpbGFibGUg
+PQo+ID4gdHJ1ZTsKPiA+IC3CoMKgwqDCoMKgwqDCoCB9Cj4gPiAtCj4gPiAtwqDCoMKgwqDCoMKg
+wqAgcWVtdV9jbGlwYm9hcmRfdXBkYXRlKGluZm8pOwo+ID4gLcKgwqDCoMKgwqDCoMKgIHFlbXVf
+Y2xpcGJvYXJkX2luZm9fdW5yZWYoaW5mbyk7Cj4gPiArwqDCoMKgwqDCoMKgwqAgZ3RrX2NsaXBi
+b2FyZF9yZXF1ZXN0X2NvbnRlbnRzKAo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY2xpcGJv
+YXJkLCBnZGtfYXRvbV9pbnRlcm5fc3RhdGljX3N0cmluZygiVEFSR0VUUyIpLAo+ID4gK8KgwqDC
+oMKgwqDCoMKgwqDCoMKgwqAgZ2RfY2xpcGJvYXJkX293bmVyX2NoYW5nZV9jb250ZW50c19yZWNl
+aXZlZF9jYWxsYmFjaywKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGluZm8pOwo+IAo+IGNv
+dWxkIHlvdSB1c2UgZ3RrX2NsaXBib2FyZF9yZXF1ZXN0X3RhcmdldHMgaW5zdGVhZD8KPiAKPiBs
+Z3RtIG90aGVyd2lzZQoKU2VudCBhcyB2NCAuCgpSZWdhcmRzLAotLSAKSmluZHJpY2ggTWFrb3Zp
+Y2thCg==
 
 
