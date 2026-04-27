@@ -4,95 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17285FF8860
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 06:28:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27951FF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 06:37:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHFS7-0007sR-5b; Mon, 27 Apr 2026 02:28:19 -0400
+	id 1wHFaM-0000xQ-Ve; Mon, 27 Apr 2026 02:36:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHFS1-0007sA-AW
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:28:14 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHFRz-0005Cd-JT
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:28:13 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-445795cf6f1so57794f8f.1
- for <qemu-devel@nongnu.org>; Sun, 26 Apr 2026 23:28:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777271290; x=1777876090; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=s4ejvdUYaq6DlsYnj34U2UvIjH4M78KlDPsl9ul19P0=;
- b=qx1EbSQefVuGFm9JIp/N6Zh50HGtG4Q8oyEH6RTt/aK82Sg/WGXm7nx8tQp5EpyZxH
- Gt7+gbLBeN6G+Y/cI9+l2uI/UPuXzKeQh2uJvnKM6FnDccuAYfKqi+uPU8IfwnJhOOTF
- wAXOuNBRWE2sEwS2OOkSOo7QPobleyyJgiY+ICj3KTDUk8AjPvLGloawIEWJ0aK5bTgN
- Yn+U9LFwBj6w/vTOnT0gVuEEtesHIT4QSa3yGie/Uy+Ulx3ac7EwNb26AyA0S8nb+Xtz
- HpRjldgiv6hGi1BNFRzs/Sf2M/ZVTpmNwMihHt16Iz21bcpOzaYgeoyI08GhO/5/EW0n
- aaxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777271290; x=1777876090;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=s4ejvdUYaq6DlsYnj34U2UvIjH4M78KlDPsl9ul19P0=;
- b=cJGlrRaFvm4aff9DLEcVvBS1cNe6bqsd92YpJ0bSrmSsWJC9Ffzdqcv9Uu/AN4jDQU
- JBZTQUYbFOlDuICQe2StkFgEabU8ZsGd3WczMBF5iGieEa0MTnesgunpEh1SYWHPKcVV
- 1Ls0ffIb/1z4p5Y8xPFvDuRaZl3mZKJGKPQiENDBkDZxiZBJXO0hOBdinuS7oFTMHI2c
- f/nQg2GnRNCdkGZ/eYpO7zMIg/IFiI8ql1sa70MJVOobcFSN0obcjRmfCH/RO4kENlO0
- L6lrO6RyvHBf1H2BMMcqox74L5CqA2yggbPzXMJl2XESu8kmrXzeWRLOaH1OhSdlRdOW
- YNtw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/Ozf5dxZ1Lo6DKser9mNtWP0BZT50eRohF3e30Lf/RDX8MnXnpRUfvYvdJhznx7IFnje9lu2wgy5Xv@nongnu.org
-X-Gm-Message-State: AOJu0Yxnr9DJtvBJSh9iZDyeUcWKKFQXKWfI2Tkqrlxj5/GZifm94wfB
- DagBO9usnA/+x5VhrvHRkIwxNicxqPXNxSbNPBtU2TDez3JnULmPp+VKWIQyqiLyicw=
-X-Gm-Gg: AeBDieu/aOEo8uylY4ar0oUiMSM+kHYtZYfr4dEvjP34fn4cKvYDbxAYrriwud5habT
- J0K3L16OB+K2tSUAI8mQusuvq/taDqx5L+dw8F8cjAXPC5cA+5Ow5snI6jn8RTRC/EJMA7Nu0Ex
- 2wSacaOPJg/ALDVhY/2Hx8eAL0u0TmQRgghxSaYEkpG2asj4AUquQYURRoldI5TuGX17sL86ocl
- BWsqHtqTZdzZIuu8eZzZWMvNr/gbk0AD8uyIJ3rIIzpnxDT8LUeAnL3Y3uWyFIyumNc1lK8Jqpt
- T/Ox/oS1w167uLlpQ4D6wnCiVD0vu8/aqwjuMhCJacGGGZ1RT4oEkUWTcZp4xRE8cS6HJEdx0p2
- zxBE0TDWgBtIbIQmcpZW/N/ovB9tu/masazogo86HFqYqqoAxdGvvuodOFHy+M/scf8LzNi/hn0
- TE90Dd01JNIb3+7QiKH6a0FhcolfdmoJqbU5Qyd/BZ9H4kfnNPFMQsLK0wzZ17I4odQ3VRzgdwZ
- nTSy6u8GZnfb7o=
-X-Received: by 2002:a05:6000:40dc:b0:43d:7b7b:ab77 with SMTP id
- ffacd0b85a97d-43fe3dcbbeamr60488007f8f.11.1777271289789; 
- Sun, 26 Apr 2026 23:28:09 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43fe4cc375dsm69374496f8f.14.2026.04.26.23.28.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 26 Apr 2026 23:28:08 -0700 (PDT)
-Message-ID: <f2ba01e8-9331-4526-882b-ffd39784f736@linaro.org>
-Date: Mon, 27 Apr 2026 08:28:07 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wHFZi-0000lh-S7
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:36:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wHFZe-0007x7-NY
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 02:36:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777271749;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=6bMRPfHzwN/ht0Zd2WRnAcAGiIxVoY9epHgVW1qGINQ=;
+ b=T/QhbhNa8+//fxB0JY9V+Eo4EU+dAhB/Mz/NnIgGIGcKjA3ypkmD8vEThLvR2MX3nRHazk
+ oybKkXgNI2wQONxrrmmb4YVklbmsHD4eANqgXnU637OfaqmwWWrmOPK/J7BJRDdM/krNSk
+ dqXO0jTjsOTJXZnRD3i80maIP1wquDo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-114-bwisKWI_Pry6fAdmZb4cag-1; Mon,
+ 27 Apr 2026 02:35:46 -0400
+X-MC-Unique: bwisKWI_Pry6fAdmZb4cag-1
+X-Mimecast-MFC-AGG-ID: bwisKWI_Pry6fAdmZb4cag_1777271745
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 010CD1956080; Mon, 27 Apr 2026 06:35:45 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.3])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4F575180047F; Mon, 27 Apr 2026 06:35:44 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D299D21E6A28; Mon, 27 Apr 2026 08:35:41 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Christian
+ Brauner <brauner@kernel.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Fabiano Rosas
+ <farosas@suse.de>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org,  "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH RFC 00/17] monitor: turn QMP and HMP into QOM objects
+In-Reply-To: <20260410160458.3778874-1-berrange@redhat.com> ("Daniel
+ P. =?utf-8?Q?Berrang=C3=A9=22's?= message of "Fri, 10 Apr 2026 17:04:41
+ +0100")
+References: <20260410160458.3778874-1-berrange@redhat.com>
+Date: Mon, 27 Apr 2026 08:35:41 +0200
+Message-ID: <87lde8lxky.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 14/14] linux-user: Flush errors by using exit() instead of
- _exit() in error path
-Content-Language: en-US
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Tobias Bergkvist <tobias@bergkv.ist>
-References: <20260425155140.50186-1-deller@kernel.org>
- <20260425155140.50186-15-deller@kernel.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260425155140.50186-15-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,36 +94,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/4/26 17:51, Helge Deller wrote:
-> From: Helge Deller <deller@gmx.de>
-> 
-> Qemu user mode does not properly flushes error messages related to bad
-> arguments when exiting (at least when the output is piped to a file
-> instead of running on a terminal).
-> Ensure that we always flush by using exit() instead of _exit().
-> 
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-Reported by: Tobias Bergkvist <tobias@bergkv.ist>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
+> Conceptually -object and object_add/object_del should be sufficient
+> for essentially all QEMU configuration....if only we ported all our
+> internal custom backends/devices/etc to QOM. That is of course a big
+> job which is why it hasn't happened.
 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2544
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> ---
->   linux-user/main.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/linux-user/main.c b/linux-user/main.c
-> index c49d1e91d2..84e110dfe9 100644
-> --- a/linux-user/main.c
-> +++ b/linux-user/main.c
-> @@ -767,7 +767,7 @@ int main(int argc, char **argv, char **envp)
->           execfd = open(exec_path, O_RDONLY);
->           if (execfd < 0) {
->               printf("Error while loading %s: %s\n", exec_path, strerror(errno));
-> -            _exit(EXIT_FAILURE);
-> +            exit(EXIT_FAILURE);
->           }
->       }
->   
+In addition, we'd need a more unified object life cycle.  See "Problem
+5: QOM lacks a clear life cycle" in
+
+    Subject: Dynamic & heterogeneous machines, initial configuration: probl=
+ems
+    Date: Wed, 31 Jan 2024 21:14:21 +0100
+    Message-ID: <87o7d1i7ky.fsf@pond.sub.org>
+    https://lore.kernel.org/qemu-devel/87o7d1i7ky.fsf@pond.sub.org/
+
+> This series started with the premise that the monitor is one of the
+> easier areas to convert since we have no more than three classes,
+> a common base, and QMP and HMP subclasses. So why not give it a go
+> and thus unlock the ability to dynamically create/delete monitors
+> in QMP/HMP.
+
+Makes sense.
+
+> This series does the conversion in as many small steps as I could
+> achieve. At the end it is possible to create HMP and QMP monitors
+> with -object and object_add.
+
+I'll try to squeeze in review.
+
+> In theory object_del is possible but is unsafe since there's no
+> synchronization wrt "in use" monitors. Christian Brauner sent
+> a proposal for monitor_add/monitor_del commands that address the
+> safety/synchronization issues, but I've not yet integrated the
+> relevent bits of that series with this proposal:
+>
+>   https://lists.nongnu.org/archive/html/qemu-devel/2026-04/msg01349.html
+>
+> My overall feeling is that we're better off turning monitors
+> into QOM classes, rather than inventing more type specific
+> QMP commands.
+
+I agree!
+
+> What's missing:
+>
+>  - Integration of code for safe deletion of monitors
+>  - The existing -mon/-qmp/-monitor args should be turned
+>    into syntax sugar around -object & -chardev
+
+Yes.  A step we sometimes neglect.
+
+>  - The new approach must be documented
+>  - Functional tests are needed for the hot add/remove of
+>    monitors and new -object syntax. (The pre-existing
+>    test suites cover the static config with the traditional
+>    args).
 
 
