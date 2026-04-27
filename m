@@ -4,74 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D77EDFF8868
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 856A2FF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHRJE-0000dE-1d; Mon, 27 Apr 2026 15:07:56 -0400
+	id 1wHRN9-0002Ie-6D; Mon, 27 Apr 2026 15:11:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wHRJC-0000bh-KB
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:07:54 -0400
-Received: from p-west3-cluster4-host10-snip4-6.eps.apple.com ([57.103.74.247]
- helo=outbound.ms.icloud.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wHRN7-0002IP-Bm
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:11:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wHRJA-0004NX-AH
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:07:54 -0400
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-3 (Postfix) with ESMTPS id
- 8DA5218001A3; Mon, 27 Apr 2026 19:07:46 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRPEwVSB11NVg1HD1geXBQXFUBDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTApIAygGKANJFEEFXANGBkYATB5UAFoAXQ85CisAW3NID04ELnceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1777316868; x=1779908868;
- bh=/uk+gMG8ozpJQd/ealeMqKcr+cyrib5yYM/9yLGNeBE=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=YqtLwNBT2bAWkOmQCjqGpTPwPlXhAD/7hD9Epn85PZqX32ZTqMt3yuDtSiAPzJ8aYtKNnhL2gM6GMSS5kLicJjycPnA2ZHVy8ILyXpG6V+LSOkNu4b6agPslUaJaO08LmvjXAt85ESrBQsP2YkJwtbbOezOTYqcHgpkgjVvOn2cn/hgZwhiQGBlQ6JQ1uTzshFVg1l04zQCF+Z9D9WQYuXMndT9jamxMLXrV8UOxI3w6htT5SrMakX5wtBcMfBlee1n0+HNaqdzWdR/cQIeZFDclhtlHFgAGNaATdfFTOkXW4oAvMDQ7KGUTkzxhIxMLVIrKARvuoprmBIUzQEVfjA==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-3 (Postfix) with ESMTPSA id
- 8B484180019D; Mon, 27 Apr 2026 19:07:44 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH v6 0/6] target/arm: ISV=0 data abort emulation library
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260427184540.80415-1-lucaaamaral@gmail.com>
-Date: Mon, 27 Apr 2026 21:07:31 +0200
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alexander Graf <agraf@csgraf.de>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <300E1C19-9614-4694-9712-6A9F70A8667C@unpredictable.fr>
-References: <20260409220614.65558-1-lucaaamaral@gmail.com>
- <CAFEAcA-8BeBte6CxH._5F5Zsk3wvs0zJJW6+=8cNaroRTBegK-M5A@mail.gmail.com>
- <20260427184540.80415-1-lucaaamaral@gmail.com>
-To: Lucas Amaral <lucaaamaral@gmail.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Proofpoint-ORIG-GUID: Y2Ls35Y_2Dw3ZJxCO0iALkN-9arUD9ZF
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI3MDIwNCBTYWx0ZWRfX0kgev/FO6Yy9
- 9NOjJ/eAf6lbdr8WR3i9hAzKp1Ced5i3DThXHznupLcV60lkt6IeoPXASr2EqXAwf/ObXuzXLMK
- CHXkQS8nxi0VHnZqOhlLn/mnMYou0Qkb9d1pr4XKe19j1WcCYBmBphr6eR1SgD0bbe8al3w6tep
- uCQzD7k7CVRk3mcZ29iwWy/4fNMJBUnTp/MoJXcsGg7pJj1xD07bvtwMRZaML1A9q+YCInDMjZh
- f/RA2k/Y41WH08t4SvGPiHN+3rLAjP4xDzFsufTRR+EH63GS3YuvNPZCbPV/DdGQON4zANNKU/E
- QgV9Mou/N+IxcRYodb0BMvy8mK+vm6yYW7BEB0j7GuLfnrqdaz0DHvn3w4FhOI=
-X-Proofpoint-GUID: Y2Ls35Y_2Dw3ZJxCO0iALkN-9arUD9ZF
-X-Authority-Info-Out: v=2.4 cv=LYMxKzfi c=1 sm=1 tr=0 ts=69efb402
- cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
- a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=GaQpPoNlAAAA:8 a=pGLkceISAAAA:8
- a=i29ttfuYZYl03s6muUIA:9 a=QEXdDO2ut3YA:10 a=xF5q_uoM5gZT5J3czcBi:22
-Received-SPF: pass client-ip=57.103.74.247;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wHRN5-0006US-9u
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:11:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777317113;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=tHBsSHJy8NeRvM+yo9iyO/9AxFcFHzkLksYY/Y7M1Uk=;
+ b=ah7Ml/k+WqHTjE6tQL1XsunK1T87dW/EKX8c28xTt/XW/UWR4BUzj2W1TSEwYcXwfnMuzP
+ myhZrLTFl9YPGf4c793gx/cLFu73fkA3NXDpxjotSY21ytsWlZ02fygdK+zS6j9Z04jKyk
+ 5Ulh1erCxz5aQHMMOIzIeZPiZEp5G8E=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-15-NktrwB3qPYOhlWhCGKS1Hg-1; Mon, 27 Apr 2026 15:11:50 -0400
+X-MC-Unique: NktrwB3qPYOhlWhCGKS1Hg-1
+X-Mimecast-MFC-AGG-ID: NktrwB3qPYOhlWhCGKS1Hg_1777317109
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-4411a2ff53aso4784319f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 12:11:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777317109; cv=none;
+ d=google.com; s=arc-20240605;
+ b=SksZ4GV23DGQot+ikt1LapA2+VUfa3IuschvU3j++0y3EnUfvu5xIzxvOetux2xB0f
+ LQFqlhVVOymspStG+wGyafFhQ9F1fyouF3mVdvrzNbvZs8JpvpC7vb7he4PzdYpjFLSF
+ dgEPIG15EmnYpUbrEery08qbJd4Qg0DfJ8NzEu9Pqx093NKxP5+9aMGXKZ2p0q5ZV7LU
+ VzGERqlXKDSKjVOIrcszketr6qU4FRxKo5OGtZ9N2c9WQEeJTafmMFKJERAowj5V9evI
+ kJH9+Osnfqs65zURgQyM7byKccTzstsxAQ72zXmh+pn4mLd0OcW/tTjXYJ4xH8Pc9GZR
+ gy7g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=tHBsSHJy8NeRvM+yo9iyO/9AxFcFHzkLksYY/Y7M1Uk=;
+ fh=HdHJjyw0rb7lZJ7Wd/3ROogxV//sLJpL/hPVNGmUoQ0=;
+ b=NpJ2kvBlOLKLn+2HF6kCCif6gMBxSn8XBXpae23FpbaxI8x9pwM2bki3ZxBWtd/BmX
+ Co+/WTIo4/sv1CC+IwHUQLllebIZvb9MslT/CBUtMSAsGOx/HG8NLcKYCeKw6eZYENW+
+ jztGuvElR9XcCR4eq++UdnTuaq8wzsy9p1dTQVMrCRKMA3iBu3ajDi3GiIZucXTHXFQg
+ kGB+5YUZd+HVuwdnJuCB9Z+9xPpXLSz3bfI5AZVUZvk2C/+EiO4nhdjA/18OptS9MClA
+ Pw+w28xnEy0TVsZjxZ5ISHhhSCqu4lq3StpS1J/k+9Gq6925QMwbLb4WvI9ozILINiT2
+ rvCQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1777317109; x=1777921909; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=tHBsSHJy8NeRvM+yo9iyO/9AxFcFHzkLksYY/Y7M1Uk=;
+ b=klQURjtZ5ucaws1oRku1dP7P87b+AeyBbbUZysk7Oku2hRZqXP7hxFAlfYzo5/M7mm
+ 0oze+O0LBEB+fx7OtGq+oNaRB7EzPoPnPFu7PLYoyXN+IzNkXuAElUtoK4hFFCNHOzKI
+ whivDOpHU6VT0O+5xzHcDLq9RbUfxy5LiLxuyVLzM9AG9yu1ygku8MmZyGttrEgLDFt8
+ ntCwIS5fYw5REd+C42rzxCkCeK8wo/LbBJVe+I2m5xxryjhpeEWLk2txlX0fQKhTsTHb
+ WcflmP5XohtIz9KKn8S2vJmdCFV+u1m4AhvDS725hJ2nPxMKfLzo/yoclQyuvNcWC7OE
+ TVzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777317109; x=1777921909;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tHBsSHJy8NeRvM+yo9iyO/9AxFcFHzkLksYY/Y7M1Uk=;
+ b=cimKh7G7WF7bIPLhQRYmP94XivSzObWIMBtXizD+gOM3Zlrn1mhFuklQxPmCdT2aVd
+ XsQCF/gmmqRGxRirq+suhIRAVdMH9+4TxoycVpCpqWqL94iuK/ghF2RDB/ukF983DtfU
+ jtKGyo/8YY3ciZsBSUNUMRE9imsffAeZbWfHOPCTmN+gYdtVADNYe+bWf7d6e6uoEEnD
+ FA2XfrY+bex/YAGKhF6OmZi88Y9Henk3Htow/FjWqWKVacE8vQ9vD4NfB6jJlHBlO8OO
+ p8gWr+pYXwE4EyqNZsDJrmbwepAB67z698TeCoQ60YhZ+w0k05jQy836Jn+O9McAbVfk
+ CpQA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+yB77fJo/OkjWxk+ZoU5GYrc0hvrRAcORr5AtpVsZclmPSeKNp/vmxAjHcg+uaH+bROrJ+48yVV6qN@nongnu.org
+X-Gm-Message-State: AOJu0YzOjRVMpo8nrtjWOcc9PI7LZDxxBR0tiuE3U5SHegbF6W2R36ME
+ TKgx/hA3ZcOfmOOAdoWKiFKfy3oC8nNNEYcIYPsXF0rpkgYsVmfaGLUqmKuwaUNPYnu7hon1Ihb
+ U1soAsi9geFcYUrrQszMgo/4zE1qQek6k3ev1k182cS1TXDcuBlMPdUKrAy5bg4/V6FG8YAENkp
+ oploHyj7UMXxDUux2jYCtsC9yI9z72aRI=
+X-Gm-Gg: AeBDieuTFGZnb5A1sVxuH1oHBM+z7QeRMHHx8I2al14AfknntbLpoSGTPFAv3ng0xzu
+ TdpSta66ObWU5L38L4fqN27nlu4NHg4Y8pLKPeKl1rkwVmrsOTchiPeOqs2nHjoEjlBD1Y5TTPB
+ Gu2Y8k+1l+/rbiVqncdwYrKvE7H5nli7NRmMUG3hpgWGc813OwW7KOt3ncI5Sm5Zp9HjU9egp3P
+ PtWM+i79EktIQvdcRE8NxDZAOpHjcZVZTe0YZ1JicCIrXdLQJLbG4l0BzfjIrQ6syPQQ7vtiPYf
+ msacjbPQ5N0HBVA=
+X-Received: by 2002:a05:6000:2502:b0:439:c1ca:82be with SMTP id
+ ffacd0b85a97d-446494ea24amr218558f8f.28.1777317109171; 
+ Mon, 27 Apr 2026 12:11:49 -0700 (PDT)
+X-Received: by 2002:a05:6000:2502:b0:439:c1ca:82be with SMTP id
+ ffacd0b85a97d-446494ea24amr218526f8f.28.1777317108771; Mon, 27 Apr 2026
+ 12:11:48 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
+ <20260304212303.667141-13-vsementsov@yandex-team.ru>
+ <d80e91c1-2cbb-4081-a923-7b0c1da3b7cc@redhat.com>
+ <f7525a89-7878-43e8-b791-69829589666f@yandex-team.ru>
+In-Reply-To: <f7525a89-7878-43e8-b791-69829589666f@yandex-team.ru>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 27 Apr 2026 21:11:37 +0200
+X-Gm-Features: AVHnY4L1cEt2bdxBVR01ADNdVspyXvTREp42867M8yviqklGzR-iFW3LHu5h4mM
+Message-ID: <CABgObfbz98A0P4_FAqeKVk_fS+o_3=79agYz=qwnMdmg-h2L-Q@mail.gmail.com>
+Subject: Re: [PATCH v3 12/18] migration: VMStateInfo: introduce new handlers
+ with errp
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000ec0ab9065075e23f"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,123 +140,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000ec0ab9065075e23f
+Content-Type: text/plain; charset="UTF-8"
 
+Il lun 27 apr 2026, 15:19 Vladimir Sementsov-Ogievskiy <
+vsementsov@yandex-team.ru> ha scritto:
 
-> On 27. Apr 2026, at 20:45, Lucas Amaral <lucaaamaral@gmail.com> wrote:
->=20
-> On 2026-04-27, Peter Maydell wrote:
->> looking at this I share Mohamed's question about how much of the
->> atomics/etc we really need. This is a thousand lines of code
->> handling instructions that in a lot of cases the guest really
->> ought not to be using on MMIO regions in the first place.
->>=20
->> If we have real examples of this being needed, that's one thing,
->> but I'm not very enthusiastic about implementing 'doesn't actually
->> have the atomic properties' instructions otherwise.
->=20
-> Some empirical data first.  This series was motivated by an
-> observed workload: the original Venus development capture (Ubuntu
-> 24.04 ARM64 + vulkaninfo + vkmark) showed ~1.8M SIMD/FP load-pair
-> (vLDP) ISV=3D0 faults plus a few thousand other ISV=3D0 hits on
-> LDR/LDP/STP/STR variants =E2=80=94 guest-side accesses into virtio-gpu
-> blob memory that the renderer had been forced to map via the
-> subregion fallback (MAP_FIXED rejected as unaligned), trapping as
-> MMIO with a syndrome that can't encode pair semantics.  Without
-> this series, those 1.8M hits land on the assert(0) in HVF and the
-> guest is dead.
->=20
-> Patches 4/6 and 5/6 (exclusives, atomics, CAS, PAC) were included
-> for correctness against the ARM spec rather than to satisfy any
-> observed traffic =E2=80=94 same capture had zero hits on =
-LDXR/STXR/STXP/
-> LDXP/LDADD/LDCLR/LDEOR/LDSET/LDSMAX/LDSMIN/LDUMAX/LDUMIN/SWP/CAS/
-> CASP.  The intent was to cover every load/store class the spec
-> permits with ISV=3D0, so that paths I haven't observed (different
-> device, different driver, different guest OS) don't fall through
-> to assert(0) either.
->=20
-> I instrumented every trans_*() and the HVF data-abort dispatch,
-> then re-ran the same workload on top of the MAP_FIXED alignment
-> fix currently in flight:
->=20
->  https://patchew.org/QEMU/20260424000544.9617-1-lucaaamaral@gmail.com/
->=20
-> Result: zero ISV=3D0 faults across the run (2.68M ISV=3D1 dispatches).
-> The alignment fix resolves at source: blob now lands in mapped RAM,
-> no MMIO trap, the ISV=3D0 path goes silent on this workload.
-Hello,
+> On 26.04.26 11:33, Paolo Bonzini wrote:
+> > On 3/4/26 21:22, Vladimir Sementsov-Ogievskiy wrote:
+> >> +    bool coroutine_mixed_fn (*load)(QEMUFile *f, void *pv, size_t size,
+> >> +                                    const VMStateField *field,
+> >> +                                    Error **errp);
+> >> +    bool coroutine_mixed_fn (*save)(QEMUFile *f, void *pv, size_t size,
+> >> +                                    const VMStateField *field,
+> >> +                                    JSONWriter *vmdesc,
+> >> +                                    Error **errp);
+> > Use void functions for callbacks, with a wrapper adding the bool type.
+> While bool/errp is preferred in general, for callbacks it provides N
+> opportunities to get it wrong instead of just one.
+> >
+>
+> Hmm, for now, the series is already merged.
+>
+> Next, I'm unsure, how callbacks are different from other functions around
+> errors?
+>
 
-That=E2=80=99s very nice! And addresses the issue at the root cause.
+As I wrote above, confusing the *error == NULL and bool return value is
+avoided without much extra effort for callbacks (or other kinds of virtual
+functions) l, because there is a single caller. So the balance between
+"avoiding the possibility of getting the return value wrong" and
+"convenience of having a return value" tilts more towards the former.
 
-You probably saw the performance boost from not trapping anywhere
-near as much too.
->=20
-> So the question is what role this series plays going forward.  My
-> intent was a defensive path covering the load/store classes that
-> can legitimately fault with ISV=3D0 per the ARM spec, so QEMU degrades
-> gracefully =E2=80=94 emulate when meaningful, inject a clean data =
-abort when
-> not =E2=80=94 instead of the current assert(0) the moment a guest =
-happens to
-> touch MMIO with an instruction the syndrome can't describe.  The
-> same wiring covers WHPX, which has the same syndrome limitation.
->=20
-> I want to make sure I'm addressing the right concern before
-> respinning.  Two readings of your and Mohamed's comments:
->=20
-> (a) Scope: trim instruction classes with no observed use case.
->    Smaller series, less spec coverage at decode level.
+I will post a follow up.
 
-I think (a), with adding emulation for problematic cases
-only as observed, as this is MMIO memory after all.
+Paolo
 
-Thinking like the TPM device on Windows and cases like that,=20
-but without trying to cover anything a guest might do.
+I'm not sure that making wrappers, which will have to use ERRP_GUARD and
+> check
+> *errp for the error is a good practice. If it is, it would be good to
+> start by
+> modifying the documentation in include/qapi/error.h to mention the
+> exclusion
+> for callbacks.
+>
+>
+> --
+> Best regards,
+> Vladimir
+>
+>
 
-Although (b) is intriguing it might encourage guests to rely _more_
-on isv !=3D 0 accesses which I think is preferable to avoid.
+--000000000000ec0ab9065075e23f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Any comments from anybody else? Because we=E2=80=99d have this wired to =
-KVM too
-I think, as it already showed up for the Windows TPM device.
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il lun 27 apr 2026, 15:19 Vladim=
+ir Sementsov-Ogievskiy &lt;<a href=3D"mailto:vsementsov@yandex-team.ru">vse=
+mentsov@yandex-team.ru</a>&gt; ha scritto:<br></div><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
+204,204);padding-left:1ex">On 26.04.26 11:33, Paolo Bonzini wrote:<br>
+&gt; On 3/4/26 21:22, Vladimir Sementsov-Ogievskiy wrote:<br>
+&gt;&gt; +=C2=A0=C2=A0=C2=A0 bool coroutine_mixed_fn (*load)(QEMUFile *f, v=
+oid *pv, size_t size,<br>
+&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 co=
+nst VMStateField *field,<br>
+&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Er=
+ror **errp);<br>
+&gt;&gt; +=C2=A0=C2=A0=C2=A0 bool coroutine_mixed_fn (*save)(QEMUFile *f, v=
+oid *pv, size_t size,<br>
+&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 co=
+nst VMStateField *field,<br>
+&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 JS=
+ONWriter *vmdesc,<br>
+&gt;&gt; +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Er=
+ror **errp);<br>
+&gt; Use void functions for callbacks, with a wrapper adding the bool type.=
+ While bool/errp is preferred in general, for callbacks it provides N oppor=
+tunities to get it wrong instead of just one.<br>
+&gt; <br>
+<br>
+Hmm, for now, the series is already merged.<br>
+<br>
+Next, I&#39;m unsure, how callbacks are different from other functions arou=
+nd errors?<br></blockquote></div></div><div dir=3D"auto"><br></div><div dir=
+=3D"auto">As I wrote above, confusing the *error =3D=3D NULL and bool retur=
+n value is avoided without much extra effort for callbacks (or other kinds =
+of virtual functions) l, because there is a single caller. So the balance b=
+etween &quot;avoiding the possibility of getting the return value wrong&quo=
+t; and &quot;convenience of having a return value&quot; tilts more towards =
+the former.</div><div dir=3D"auto"><br></div><div dir=3D"auto">I will post =
+a follow up.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div>=
+<div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gma=
+il_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
+px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">I&#39=
+;m not sure that making wrappers, which will have to use ERRP_GUARD and che=
+ck<br>
+*errp for the error is a good practice. If it is, it would be good to start=
+ by<br>
+modifying the documentation in include/qapi/error.h to mention the exclusio=
+n<br>
+for callbacks.<br>
+<br>
+<br>
+-- <br>
+Best regards,<br>
+Vladimir<br>
+<br>
+</blockquote></div></div></div>
 
->=20
-> (b) Correctness: keep full spec coverage at decode, but per-class
->    handlers do what's actually correct: emulate where we can
->    preserve semantics, inject a fault where we can't.  Atomics
->    (LDADD/SWP) and exclusives' store half (STXR/STXP) go to the
->    fault path =E2=80=94 we can't honor RMW atomicity, since the =
-read=E2=86=92write
->    window can be observed by other vCPUs if BQL doesn't cover it
->    continuously, and STXR claiming success without an exclusive
->    monitor lies to the guest.  Plain loads (LDXR by itself) could
->    legitimately emulate since they make no atomicity claim.
->=20
-> If it's (a), I'd respin trimming patches 4/6 and 5/6 entirely,
-> keeping framework + immediate + pair.
->=20
-> If it's (b), I'd respin replacing the atomic/exclusive/CAS/PAC
-> trans_*() bodies with `return false` (UNHANDLED =E2=86=92 inject data
-> abort).
->=20
-> Either way the existing wiring in hvf.c already error_report()s on
-> every UNHANDLED before injecting, so operator visibility is
-> covered.  Happy to downgrade that to warn_report_once() so a guest
-> spinning on an unsupported insn doesn't flood the host log =E2=80=94 =
-that
-> addresses Mohamed's earlier "warn somewhere" suggestion in a place
-> where it actually fires.
->=20
-> If it's both, the (b) shape covers both =E2=80=94 explicit fault on =
-the
-> classes you don't want emulated, framework still in place to handle
-> the legitimate cases without an assert.
->=20
-> Could you and Mohamed confirm which reading is correct?  Happy to
-> respin either direction once I know.
->=20
-> Thanks,
-> Lucas
->=20
+--000000000000ec0ab9065075e23f--
 
 
