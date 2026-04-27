@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85394FF8868
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 17:06:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EACFDFF8868
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 17:06:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHPP4-0007Zm-Fp; Mon, 27 Apr 2026 13:05:50 -0400
+	id 1wHPPF-0007qG-V8; Mon, 27 Apr 2026 13:06:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wHPP3-0007Yh-3m
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 13:05:49 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wHPPA-0007j4-KK
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 13:05:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wHPP1-0006Rm-Mc
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 13:05:48 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wHPP8-0006Ud-8g
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 13:05:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777309547;
+ s=mimecast20190719; t=1777309553;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RNf7Qtsfx36oLLaeD/N/V5PatsHP0UT/LP0p18adqyc=;
- b=dyUA6vP5yOuy1t9xK/acm8c79iojvmzZQJeoKSuzR3r8x3t1B1l9Ws9wIFjUdtXzaE3LI1
- CXmMVQ6aEYtyXSEi0aa+BF2bv+XboYLW8ByyBVOLuTMi9Hph9b712qVfW63L41zn0kJKgl
- TYkEEqL3EI2xqUTjTlOSYKHvMdMrJUo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=xt1Ev/wLan3HxX+yy3/W3SrxiXPBZBxO+DaqEQ//04c=;
+ b=FRO0mJvj0nXivpU+I9K5yx16vr/Wk6M7gYG79LbBwzK/vNTJmu/+ch7UM4N+lvKHw79nvD
+ mUFp5UR2wlmQvggDsnwF3os5cFXCKUm8T2XPnSVK9swGAY9NLtv3gNX61kdHr2Ekg1DSaI
+ BBPBO6wx6oXu9MSSL0GiX0/UsJ+lDrY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-339-xeNFhFwbOXqFn5IM-6mYQQ-1; Mon,
- 27 Apr 2026 13:05:43 -0400
-X-MC-Unique: xeNFhFwbOXqFn5IM-6mYQQ-1
-X-Mimecast-MFC-AGG-ID: xeNFhFwbOXqFn5IM-6mYQQ_1777309542
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-653-IC3RRJevMQyC33fVLEPCjw-1; Mon,
+ 27 Apr 2026 13:05:50 -0400
+X-MC-Unique: IC3RRJevMQyC33fVLEPCjw-1
+X-Mimecast-MFC-AGG-ID: IC3RRJevMQyC33fVLEPCjw_1777309549
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CF1251800609; Mon, 27 Apr 2026 17:05:41 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5C1C919560B4; Mon, 27 Apr 2026 17:05:49 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.44.49.22])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 951A5180047F; Mon, 27 Apr 2026 17:05:39 +0000 (UTC)
+ id 4FE121800446; Mon, 27 Apr 2026 17:05:47 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com, hreitz@redhat.com, den@openvz.org, stefanha@redhat.com,
  qemu-stable@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH 1/4] commit: Drain nodes across all of bdrv_commit()
-Date: Mon, 27 Apr 2026 19:05:17 +0200
-Message-ID: <20260427170520.101242-2-kwolf@redhat.com>
+Subject: [PATCH 4/4] iotests/046: Test that discard/write_zeroes wait for
+ dependencies
+Date: Mon, 27 Apr 2026 19:05:20 +0200
+Message-ID: <20260427170520.101242-5-kwolf@redhat.com>
 In-Reply-To: <20260427170520.101242-1-kwolf@redhat.com>
 References: <20260427170520.101242-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -65,7 +66,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,69 +82,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The whole implementation of bdrv_commit() is only correct if no new
-writes come in while it's running: It has only a single loop checking
-the allocation status for each block and finally calls bdrv_make_empty()
-without checking if that throws away any new changes.
-
-We already have to drain while taking the graph write lock. Just extend
-the drained section to all of bdrv_commit() to make sure that we don't
-get any inconsistencies.
+This is a regression test for the bug fixed in the previous commit where
+discard and write_zeroes operations wouldn't consider their dependencies
+in s->cluster_allocs. Without the fix, this results in a corrupted
+image.
 
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/commit.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ tests/qemu-iotests/046     | 46 ++++++++++++++++++++++++++++++++++++++
+ tests/qemu-iotests/046.out | 36 +++++++++++++++++++++++++++++
+ 2 files changed, 82 insertions(+)
 
-diff --git a/block/commit.c b/block/commit.c
-index 0d9e1a16d7a..c5e3ef03a21 100644
---- a/block/commit.c
-+++ b/block/commit.c
-@@ -518,6 +518,7 @@ int bdrv_commit(BlockDriverState *bs)
-     if (!drv)
-         return -ENOMEDIUM;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_rdlock_main_loop();
- 
-     backing_file_bs = bdrv_cow_bs(bs);
-@@ -549,6 +550,10 @@ int bdrv_commit(BlockDriverState *bs)
-                   BLK_PERM_ALL);
-     backing = blk_new(ctx, BLK_PERM_WRITE | BLK_PERM_RESIZE, BLK_PERM_ALL);
- 
-+    /* We drained all nodes, but still make requests through BlockBackends */
-+    blk_set_disable_request_queuing(src, true);
-+    blk_set_disable_request_queuing(backing, true);
+diff --git a/tests/qemu-iotests/046 b/tests/qemu-iotests/046
+index 4c9ed4d26e1..e03dd401479 100755
+--- a/tests/qemu-iotests/046
++++ b/tests/qemu-iotests/046
+@@ -184,6 +184,48 @@ aio_write -P 160 0x104000 0x18000
+ resume A
+ aio_flush
+ EOF
 +
-     ret = blk_insert_bs(src, bs, &local_err);
-     if (ret < 0) {
-         error_report_err(local_err);
-@@ -565,7 +570,7 @@ int bdrv_commit(BlockDriverState *bs)
- 
-     bdrv_graph_rdunlock_main_loop();
- 
--    bdrv_graph_wrlock_drained();
-+    bdrv_graph_wrlock();
-     bdrv_set_backing_hd(commit_top_bs, backing_file_bs, &error_abort);
-     bdrv_set_backing_hd(bs, commit_top_bs, &error_abort);
-     bdrv_graph_wrunlock();
-@@ -647,7 +652,7 @@ ro_cleanup:
-     blk_unref(backing);
- 
-     bdrv_graph_rdunlock_main_loop();
--    bdrv_graph_wrlock_drained();
-+    bdrv_graph_wrlock();
-     if (bdrv_cow_bs(bs) != backing_file_bs) {
-         bdrv_set_backing_hd(bs, backing_file_bs, &error_abort);
-     }
-@@ -663,6 +668,7 @@ ro_cleanup:
- 
- out:
-     bdrv_graph_rdunlock_main_loop();
-+    bdrv_drain_all_end();
- 
-     return ret;
++# Create a pre-allocated zero cluster, then start a write on it and discard it
++# before the L2 update is made
++cat  <<EOF
++write -P 181 0x120000 0x10000
++write -z 0x120000 0x10000
++
++break write_aio A
++aio_write -P 180 0x120000 0x10000
++wait_break A
++aio_discard 0x120000 0x10000
++resume A
++aio_flush
++EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and a
++# concurrent zero write with MAY_UNMAP before the L2 update is made
++cat  <<EOF
++write -P 181 0x130000 0x10000
++write -z 0x130000 0x10000
++
++break write_aio A
++aio_write -P 180 0x130000 0x10000
++wait_break A
++aio_write -z -u 0x130000 0x10000
++resume A
++aio_flush
++EOF
++
++# Create a pre-allocated zero cluster, then start a write on it and a
++# concurrent zero write without MAY_UNMAP before the L2 update is made
++cat  <<EOF
++write -P 181 0x140000 0x10000
++write -z 0x140000 0x10000
++
++break write_aio A
++aio_write -P 180 0x140000 0x10000
++wait_break A
++aio_write -z 0x140000 0x10000
++resume A
++aio_flush
++EOF
  }
+ 
+ overlay_io | $QEMU_IO blkdebug::"$TEST_IMG" | _filter_qemu_io |\
+@@ -264,6 +306,10 @@ verify_io()
+     # Undefined content for 0x10c000 0x8000
+     echo read -P 160 0x114000 0x8000
+     echo read -P 17  0x11c000 0x4000
++
++    echo read -P 0   0x120000 0x10000
++    echo read -P 0   0x130000 0x10000
++    echo read -P 0   0x140000 0x10000
+ }
+ 
+ verify_io | $QEMU_IO "$TEST_IMG" | _filter_qemu_io
+diff --git a/tests/qemu-iotests/046.out b/tests/qemu-iotests/046.out
+index b1a03f40414..6341df335c9 100644
+--- a/tests/qemu-iotests/046.out
++++ b/tests/qemu-iotests/046.out
+@@ -139,6 +139,36 @@ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ wrote XXX/XXX bytes at offset XXX
+ XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++discarded  XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++blkdebug: Suspended request 'A'
++blkdebug: Resuming request 'A'
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++wrote XXX/XXX bytes at offset XXX
++XXX KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ 
+ == Verify image content ==
+ read 65536/65536 bytes at offset 0
+@@ -239,5 +269,11 @@ read 32768/32768 bytes at offset 1130496
+ 32 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ read 16384/16384 bytes at offset 1163264
+ 16 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1179648
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1245184
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++read 65536/65536 bytes at offset 1310720
++64 KiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
+ No errors were found on the image.
+ *** done
 -- 
 2.53.0
 
