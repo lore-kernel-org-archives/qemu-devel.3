@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FAF5FF8864
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 21:05:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0DD0FF8867
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 21:05:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHT5h-0000Xv-Ai; Mon, 27 Apr 2026 17:02:05 -0400
+	id 1wHT5V-0000CW-0i; Mon, 27 Apr 2026 17:01:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5f-0000XW-QM
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:02:03 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5M-0000Bk-7x
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:44 -0400
 Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5e-0003YH-4i
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:02:03 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHT5H-0003T9-IU
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 17:01:43 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 711EB60139;
- Mon, 27 Apr 2026 21:02:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2B85C19425;
- Mon, 27 Apr 2026 21:01:59 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id E57F460139;
+ Mon, 27 Apr 2026 21:01:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD34C2BCC6;
+ Mon, 27 Apr 2026 21:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777323721;
- bh=srPndtwvrTUYJ7OM9qm9DxiqBEi9dXm+PHtlQXIamDI=;
+ s=k20201202; t=1777323698;
+ bh=yYjMRoFt4jzIE4IARqI1Ple+n8OFUuRP8/w/Pzm2guw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ePPn5YXJZ/w9UGEFV9qLj668RejUU+yjDjPWcCZLzkVCz50nW3cy2FnOFQOGI09IL
- /ZOtN+GFBP7fnhsJtJAmztmdtsL2DkEEdbpzBOVFmmjOGQAL7HmO3JNjf+5PlRbvGZ
- xWlVlnyKGKgKtCE0ueKcqnI7qHK1uD56o+bsoPh6wlr4SIN/33m0wFxl0ntwZLWn85
- 84KQ+yJ0aTMKw4N4jFxvkbw/KMu+PQ1xIXthZTiM20k+VgQKZNzUdfD8paL7KzyIUV
- zPzcPI0q3yGiQNkrG5U0NDr0G0faJ+uogsH3FjJ+10NXUm67o8V3BDpmIRlMddMBFc
- ieCVM4jVJSBGA==
+ b=Fd4R3fKA+0DucIxQqghe5A4DYcHyfqz+Lxk/xMBwiUskYpOhM4pkkWII6BkdUgt8Z
+ FenYdo3xaBa7WQz+BgkL9MM7dOGOiT+m5JGFlSJxWnr5OBPCFGULwu71ZzD0wBuqgF
+ 7LyuTdxx08Hei93vMK2GRr5nRWSlRPr3/xlwGFrQ7SOrVkJwOsR6mVokizzWRlbNSI
+ DNAi00Aahy5y5P8kq6+o/+sTv39fmKw8WU1aWU6BPBST8Ft9pJ7Q+9Jx6aHZrelndV
+ GovVxrQBV4YRPOsNV/tV1APQz+Tr7lgC96fdnMxoDE6AAM0z+AcPD8NaSvViMGef8E
+ T22YglktDg9pA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Helge Deller <deller@gmx.de>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL v2 13/15] linux-user: Use abi_int for imr_ifindex in ip_mreqn
- struct
-Date: Mon, 27 Apr 2026 23:01:31 +0200
-Message-ID: <20260427210133.6016-14-deller@kernel.org>
+Subject: [PULL v2 01/15] MAINTAINERS: Add myself as maintainer for linux-user
+Date: Mon, 27 Apr 2026 23:01:19 +0200
+Message-ID: <20260427210133.6016-2-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260427210133.6016-1-deller@kernel.org>
 References: <20260427210133.6016-1-deller@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
  helo=tor.source.kernel.org
@@ -73,50 +73,32 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Peter Hartley noticed, that in the qemu code the imr_ifindex member of
-struct target_ip_mreq needs to be of type "int" instead of "long", which
-is what the Linux kernel uses on all architectures.
+I'd like to step up as maintainer for linux-user. I'm actively using
+linux-user to emulate a HP-PARISC (hppa) linux environment on my debian
+buildd servers, so I'm very much interested that linux-user is running
+good and stable.
 
-Adjust the type accordingly, and add a QEMU_BUILD_BUG_ON() checker to
-prevent such issues in the future.
-
-This change should fix multicast issues when using hosts and guests with
-different endianess or bit size.
-
-Reported-by: Peter Hartley <peter@talesfromthearmchair.net>
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2553
 Signed-off-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
 ---
- linux-user/syscall.c      | 2 ++
- linux-user/syscall_defs.h | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 910a4da0a6..4594909242 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -2161,6 +2161,8 @@ static abi_long do_setsockopt(int sockfd, int level, int optname,
+diff --git a/MAINTAINERS b/MAINTAINERS
+index ad215eced8..e0f707a1ec 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4075,6 +4075,7 @@ T: git https://github.com/qemu-bsd-user/qemu-bsd-user bsd-user-rebase-3.1
  
-             QEMU_BUILD_BUG_ON(sizeof(struct ip_mreq) !=
-                               sizeof(struct target_ip_mreq));
-+            QEMU_BUILD_BUG_ON(sizeof(struct ip_mreqn) !=
-+                              sizeof(struct target_ip_mreqn));
- 
-             if (optname == IP_MULTICAST_IF) {
-                 min_size = sizeof(struct in_addr);
-diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
-index 6967306be4..5799769f83 100644
---- a/linux-user/syscall_defs.h
-+++ b/linux-user/syscall_defs.h
-@@ -210,7 +210,7 @@ struct target_ip_mreq {
- struct target_ip_mreqn {
-     struct target_in_addr imr_multiaddr;
-     struct target_in_addr imr_address;
--    abi_long imr_ifindex;
-+    abi_int imr_ifindex;
- };
- 
- struct target_ip_mreq_source {
+ Linux user
+ M: Laurent Vivier <laurent@vivier.eu>
++M: Helge Deller <deller@gmx.de>
+ R: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ S: Odd Fixes
+ F: linux-user/
 -- 
 2.53.0
 
