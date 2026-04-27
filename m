@@ -4,140 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17341FF8860
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 16:18:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7316FF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 16:27:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHOet-00063V-KS; Mon, 27 Apr 2026 12:18:07 -0400
+	id 1wHOnT-00084y-5g; Mon, 27 Apr 2026 12:26:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wHOem-00061o-7m
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 12:18:01 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wHOej-0003AP-UP
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 12:17:59 -0400
-Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63RDkDuO665665
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 16:17:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- a9PcAVtS6aiAY+5oBEIuwWBp3d9cmqxfThizqaUHFWI=; b=Gjv5WnjZpEvvVK9k
- sFOfdT06pk/mwguk9KxDuDXHny8PeusQxWcpCDMJ6Ufl4IMDTgil4XhKaZDQ8Eh+
- GzdFXj5xxY9+B0X4AJ+AeZcx/rGrjhFs4GVVGqJUah7tOepru5GLOpPXQdy46VfP
- PPcuJymns29p+5IlnP/bSb/Q2f3owHZrMhc6wZzw16zeLD8xUMg8gY8Z0fVQmqYr
- f3tFIymyTIWAGWOv8RWuX9AB+mSX+TFG7CG5I1ul37OENvPFYfmpXHWullDptFyG
- TLxZjXge2nUmWr2ZcoefZmswsK0n7Z9JHn9KPZQf/5wpkRGizWvdmo1bOqqwsGTR
- DgIGGg==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dt30n284e-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 16:17:54 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-2d9da2559aeso29018450eec.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 09:17:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHOnR-00084R-92
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 12:26:57 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHOnP-0005Ar-QM
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 12:26:57 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-445795cf6f1so531204f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 09:26:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1777306674; x=1777911474; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777307214; x=1777912014; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=a9PcAVtS6aiAY+5oBEIuwWBp3d9cmqxfThizqaUHFWI=;
- b=VnV+6RaA1E2sk5ylTt2L4z4d3IGggrotuz5dHgQSRa0ALfb2SXTG0wB5kgihOpQwCe
- nrj2hhJcP6qNQ1hJnjeUgLJmAdhFENYw/JMr0PHQsD+PpN4IRPBunl2YT6Yt0nyx0YDn
- m6zziF5m1DE3NID3rkW00rCmw/50kc4ii0/ypbzmQKRw6lFRpdfMV6yjsGtY1xg+I/Wk
- RJPoo8jwGdPkQQaoEyvZrlxG4QLzLi078Thix3DJ4WHP0Qp9M9yOyCHzLmlqM/tDoGs0
- af/YW3f1YDsRnYKwsWo/zyw+F8BseVJxdYQYgGlgNe6Kr91yAJBcfGvlDnsbAb8UfQQB
- 5/Eg==
+ bh=SrUC5pF46du65L633e0/mk/areAKrXU8mPp51KgUHtg=;
+ b=TNNR14hbWZHwDf2PGK8BBj84f14gNteq/doXyWM0r6vlfKKTAIldV6H02xhf9rdNId
+ bWzPC1wA/XD2yBrVRocAPKbDIHrPTZ6IUstO10X37CiBcKLSylZse0pgmbROKxuNrWxP
+ G6bK4UvVYCFNOnsry+GQpvvngmCzTtuvS4uM/Euegcq/ENNwlcZdRZVcHyIyXngYDRIh
+ n0G64mabIxson9Y3Khvrz96/+NWxEhbiaZ4MwPzCDZk+cGvWF6cPVWGBxRK6WapY5MKP
+ VN8ZkaUclArp/CkPTHYhmXpZ8JZ7ZLl4CFqn+VuberztCW0WvqMNDiuo7poSyi4D+e1s
+ rOVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777306674; x=1777911474;
+ d=1e100.net; s=20251104; t=1777307214; x=1777912014;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=a9PcAVtS6aiAY+5oBEIuwWBp3d9cmqxfThizqaUHFWI=;
- b=kelG/Tw86wZXp3W4Dvn+dFU5ryM0hhb/55TdRs4g4yWycfIEldifjpRpaOg+ZKwk+u
- yEITkpIJJEK2wdkt2wcAKwBkRcgfiPF6oK9aleI52p8B4YxSxe0GaAnUhi13tSH9iUHZ
- BTulm17G2gzkRZaB/VMbCzVnYLLi8zKqCUe7YXviOyF2dDlrcvxJA2kQrI50HDj11meX
- IsjS0oGSI57bNx2ebjJ/JZlZyXGtc8LvrvxfPjGztQpSGLqGHk6WotTqqHIdD0TRXByh
- aj1e9g/U1lhyS5CXtWTVrqXYP69IS9XwBoX5VSVqRDTZtuWF4ARm/iDbU3Je0c2FH39t
- dMmA==
+ bh=SrUC5pF46du65L633e0/mk/areAKrXU8mPp51KgUHtg=;
+ b=MJoNm8RlQsLE3BRVk7r/7jWnNmJzRY1BDhda3rdrKp5NV4Mhh8e7M/QkPOI4vDUJ+g
+ CeS1VNkUjAP3Y8hQKWDdMgmSWJLZ9WNgs3ztX4BHxU1RB9Sz0GADY1AblTUWELWq0TVI
+ 69zDYF4aRJYRv0LkETEBkTj/SI3BW7vNYLQr7iUjhVMdbOeSGyYbWzAdsi1nqnPfnUBu
+ tXZJh2JMgO+8SBYj7OZf/kBsF0SALGjGa8sYQk1k6gdLZFUbisyn+ZYJLaukVXKHc2K6
+ Em5BCVUtP1oH4qfbMWvt14n/Nt5H7FCyBvcvXVh/JsnR+7Jz+RLMfRoQAZwBaI1Toyrz
+ AAMA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9q1e7dvblr4V4OY2Y/Fy0W6RAlGlDkALRXePR19Yej7lijS2zZNMaGZYxl7ggkAlkxpYLPcK+fUYy6@nongnu.org
-X-Gm-Message-State: AOJu0YxJ4B6i+Yzjwpc89bKWT/39bttmJRHl5QU6GiwirNMMzTXg1BDP
- vebuLCSw3wIEjw897OzGMVS8P/4RVA7yDlq4MMIqb2zxhSGfUuAyVWZNHVrfkwYfpq3IK9pa849
- f4tVIGICdBRA6tWj2qrPVdc75kbnqXxlVyR05pmji9GHBYxdTGPAZxeWs4w==
-X-Gm-Gg: AeBDietkuuvGZ4j/hdGs2eo1MLiUiQmAdUzDDg1eVUEvtDQ9/xC2MimcyYzz8iiR7no
- DhusovGh8OKGtCnBfGpAoPSXoskzg2+zeslRiYJz19sGWN0/3jYsismN181bZ9n8YbUAKj94ecY
- nFOfRo2RlxlT51LmRAjsgvIwAcZ1QzaNrSGohJ+AOsnjY0l5tVakPvdfLzyiHz810ogShOs2q8G
- DkMdhwOxFK59lRCyU7/FKsHkdOLmtFzTEqLxAShqgwog6Fl7qKYLl7NL5vgHQ0BudsLUdzfLNdd
- AjNDCkOB5xjtJ5nWlEUJO8q0h7RT2h6ouVS+llvAEY+96QLLTatvnHe4WC4KLafS7XQ1WyU3Pss
- V8SiUUOytnlqsG8pi1d4f4ClCYLtuBRIMgwnzNJ40TivoEWKlmB1G7D5SNKkoJ+JQpFTfmJ6Rni
- /vrTROYhxsVn4C4VAAbUWg+Kj6
-X-Received: by 2002:a05:7300:f193:b0:2da:1874:f39c with SMTP id
- 5a478bee46e88-2e4657728eamr23400704eec.12.1777306674085; 
- Mon, 27 Apr 2026 09:17:54 -0700 (PDT)
-X-Received: by 2002:a05:7300:f193:b0:2da:1874:f39c with SMTP id
- 5a478bee46e88-2e4657728eamr23400675eec.12.1777306673505; 
- Mon, 27 Apr 2026 09:17:53 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2e53ccd2564sm44901550eec.18.2026.04.27.09.17.52
+ AFNElJ/wEJNk7+hkSYPWn5FRDq/FP0oznPgUUow6GPQ8g20dOQ+j+lZ3SR04Tq0hnhSfYR2CErDGX7GlG92Q@nongnu.org
+X-Gm-Message-State: AOJu0YwedRM4xV2Q2ogB48+s1UPTVr43YDr2ZbHPdKHFtVEnoITb0WHx
+ i3XoaG5hYwdWredHHOhECZljHr4/WD3S4Q5KmH3Ke2rUigaPBKJMWbNaFfHl+AoidGY=
+X-Gm-Gg: AeBDiet+NlEp3Pc/TE85dRuKp2JTn2DO1xgwXcBTOThek8AV4mLSxPvt5ffadustWwM
+ AZm2Mx2Y5EwjelghZXyxjgZM42DqriJxU3k2pi9qCh1F/Kqh///4XMk1h5j1Y8LXVssahuC3b5L
+ 9U1486KAnh3lpsZWyxVdp0kCRQLwEXWI8u6TZcG4loCwgzBvJJ4sVyudFT++jds/SW6UVf8U8Fn
+ fREZ1OrlAH3mKv6xCsAkvdEI0A+mH6TqYdJ7UJgsxRtKiliZgpP6oYR2ZW9mIMuwo/I0+f7HAeM
+ 72vapxNTTget0yT2YKCJ+sUBJi84hUDJYPdz9ncASPXZi6H9zPEZZb+OJ88MKK0NOqVGIkHcHFV
+ 1E+TYXEA7Bc/plEyeGqaFyhVWnMl5e5RCl2F4qFKXCG25/OJcUCe8ZdDH4KW6FvDb6c0ddfYZoi
+ 0otU43QqjWGTV8OfabUSJumEVkKTIvzhxE5/c/I9JyE+8gcgrdDOiJSA/DmdMWG8utiIkxp8oNq
+ 85j8OevlCBGk+k=
+X-Received: by 2002:a5d:5d88:0:b0:43d:7d6f:f535 with SMTP id
+ ffacd0b85a97d-43fe3e10c0dmr65402395f8f.35.1777307213731; 
+ Mon, 27 Apr 2026 09:26:53 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43fe4cb135asm87419375f8f.6.2026.04.27.09.26.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Apr 2026 09:17:52 -0700 (PDT)
-Message-ID: <6f68014b-e3b5-41e7-9474-b2964661d19e@oss.qualcomm.com>
-Date: Mon, 27 Apr 2026 09:17:51 -0700
+ Mon, 27 Apr 2026 09:26:52 -0700 (PDT)
+Message-ID: <8f199d13-f81a-4048-aee7-975090b441e6@linaro.org>
+Date: Mon, 27 Apr 2026 18:26:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs: Document TIMEOUT_MULTIPLIER for raising test
- timeouts
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260427161132.1463385-1-peter.maydell@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH 03/84] fpu: Drop parts_uncanon_normal
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org
+References: <20260426134002.865628-1-richard.henderson@linaro.org>
+ <20260426134002.865628-4-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260427161132.1463385-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI3MDE3MyBTYWx0ZWRfXziEncVrlMCs/
- Izfr6wBxCYaSYBKJHRTwCVYDVmXkowIyeaK87Y+GQ9w+25ObU3e89lRjifY2RXnd3OdBpQnlDue
- jk2IO4SFz34why6s1KKaZ2rN7Z/yuXCgpG7f/1l39WdGG3wko/lr9N5MTORKO+TeE7LJwKZkJet
- 7vm8JsIK6diVPW+UwlbMyEsTN/sY0Y4tIzl0ZWvZKCk+nBZMbqMZVmBKoZFyG1+PbgUtxGiD1+X
- FhzLBEQQExCbXxWIfjWmceO8733oL6TP5m8zrgAKk604T7YzJBuNFK3AuQ9h8aF+45KE3toMGL5
- BIdLXW9G5D1ck4e2i6acs8fxuiait17FSabnDBPcZmSDNWd2NSVI+q8t9MSK5fFUoBSlll2MTQg
- bq2jTJWwkGSUP6BTPHv/x1HRm1BzyVBEDoG2x0g0HZfjea/YX6mhxgMjqOzIkD0RICVLSshxqtp
- PsBOpeqqONAFM6WUeqw==
-X-Proofpoint-GUID: Yw2I9nE0wp-kI9SrntsdseAQdqJ-nHDo
-X-Authority-Analysis: v=2.4 cv=efANubEH c=1 sm=1 tr=0 ts=69ef8c32 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=vZyKO-s3KdCvBMF30bkA:9 a=QEXdDO2ut3YA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: Yw2I9nE0wp-kI9SrntsdseAQdqJ-nHDo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-27_04,2026-04-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 malwarescore=0 adultscore=0 bulkscore=0 clxscore=1015
- priorityscore=1501 lowpriorityscore=0 spamscore=0 phishscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2604270173
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <20260426134002.865628-4-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -154,20 +104,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/27/2026 9:11 AM, Peter Maydell wrote:
-> Our test infrastructure allows you to set the TIMEOUT_MULTIPLIER
-> environment variable to raise the test timeouts if you're building
-> for a slow environment.  (scripts/mtest2make.py reads it and sets the
-> meson test -t argument accordingly.)
-> 
-> Document this so it's not a secret feature only known to a select
-> few.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->  docs/devel/testing/main.rst | 18 ++++++++++++++++++
->  1 file changed, 18 insertions(+)
-> 
+On 26/4/26 15:38, Richard Henderson wrote:
+> Use partsN(uncanon_normal) and the single call site.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+s/and/at/ or /in/?
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   fpu/softfloat.c           | 8 --------
+>   fpu/softfloat-parts.c.inc | 2 +-
+>   2 files changed, 1 insertion(+), 9 deletions(-)
 
