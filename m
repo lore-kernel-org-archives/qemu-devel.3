@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EC13FF8862
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF189FF885E
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:55:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLOv-0000jS-MV; Mon, 27 Apr 2026 08:49:27 -0400
+	id 1wHLUH-0006nB-EF; Mon, 27 Apr 2026 08:54:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNa-0007tW-Mb
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:12 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1wHLNq-00086E-O0
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:26 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNR-0005VG-VV
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:00 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48a3e9862f0so54014845e9.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:47:53 -0700 (PDT)
+ id 1wHLNj-0005g4-43
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:14 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-488a9033b2cso109080205e9.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294072; x=1777898872; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294089; x=1777898889; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=9V9ypQhZMA6beD24MyNKWxp8/BYxr4ugvwVwFV1KVGM=;
- b=Gfbni2pnj91UleX8weTK6IgZNpB2fbnt1nNNfdlthigKuP6Xb5sKukMcywZF7c9Mu5
- myrsFy4EeOhVpj0q0U86vEmsqHxzTYVD2duCYaARWA1NL7S0QWdPPVhfVECC7Hxi/QUE
- vr8txEfeOC56zkBes2lyTct8tO0Sz+PxfcdnvZWItdIyp3XYTYo+PTd4E+YxPDXnV0dF
- 1pzciNGlzj6qPwfr9P4lNFUtF9ufC4fIJQC1/VMUGMyANb42ugfd6tgfdnWRGU3aa5P5
- cQ21h3YnVWoyUqxnu5cJyGeBjG6tcNwOn51pYTTq1ehRK/Drgb+aEU51FFNh57MFPwd1
- 061w==
+ :reply-to; bh=YY1tm1vPSzbBUTbdxWQFuXKrfsrK/NMFeG62EkzTKa8=;
+ b=evL/9kjqwa/E4E1a/+U/HMKpW9w7tbiIXmjvEHRMbQRYuoXtp1PtriTcJG3+vQH6jr
+ qM0Lycr1vdZSaISbPspR5ZucYbwtzId/5H/StETcMC3i0e5pqcm62hUuLVG22B8cEc8e
+ RxfxNT+zHL36xWsmrOLdBgHF80VLFjziivTuibqVJEj4hw64cragtm6m5JSos/GPczyS
+ ZyqIqvofDxOEc9Rwm5UOlceaClfFDcJOdBNw7TtNL9OEmjzOMDqkWbwPeQ8vmfjAObSJ
+ 9RMIVd7KQ4YYYjwbQ714ZUZZnP8R34ZN3cD+RgYZv/OOxYz++uTWk3dcZIxWT2YshZ6A
+ wptw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294072; x=1777898872;
+ d=1e100.net; s=20251104; t=1777294089; x=1777898889;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=9V9ypQhZMA6beD24MyNKWxp8/BYxr4ugvwVwFV1KVGM=;
- b=Rru4pbe4GJa5oVzy+k6VRnCw27DiM3y4u7axlRazhRVgXxsKB4ZYJbdJYihyTPHdzv
- A39TU5hVTMpOokOjtpQFe+RaNTCW5a3s962kc+Os0MYNgYfXsAoR1EaRkMtDAiqlirTh
- aje+g6z9e8Cgem24iduSHpYXs0USb1pRYbUIe98giZGkDGvt0e1ichvl94IPYfrAMQn2
- IXht5OThpslwfuWUzrOUVlbNzmPBJ07cb7jN7sTkZqr513UGfRUl1SJCQmdkMDZ9+oIp
- Lj1tFXIwmMrbcVTDLDG9JqUjrl6E2POzELptqKtcdU71xzHseFYPxiTioQMB/pHq+BRD
- JBCg==
-X-Gm-Message-State: AOJu0YzsRHFbwTi84ZYny7T/3MG1qcLwrlEar6ZX5F6JLKJRsV4AhlhK
- kyr1RajKL0Ll/oPmaCwbPux2CP9WjG2IcTwCUjPo3cdn8GlaO5A+QL8DLOGQWJXs0xPwoklzVFo
- lcTea
-X-Gm-Gg: AeBDievqIPH5oqcKYrwlff7MNod/WnXPzklA3LgrBSrjETgtS85KJJrhcUJQbuWwQlw
- mBSgR+mGTrgWpAwDPmar22S2Xhz9nPZipZALQbmw/PZX7awwNpHt6jD4U715ut0olLsT4eHEjLJ
- uPQYBB07PPu9lVYyYPoVPp2cQ76jXi5/WjzO1PlvmDfB6Xza3H2s+DFWR0lTwM0ixy2It1XDE2y
- qFx9BZSMvMCsSKgydx9iboou5AVyBYJwm2TICHDio8ypwRkYK2v8xDq7H+NvQbCPdVXyp4p36kG
- hfl44nX5fT36uI5aAW1tt+Jd9Ilnsn/ToyhJMVWRffWRfb78LKArTuvFWnh2YefBrXrcnZDBH0u
- p0ujq7yjGDz2D4iLTNRcIltRjDgTIN6+85IKJNFTkVR01rlPEZjGXkOn5RZuCmItXx4Z2DdCOcb
- G7PFojjQcXWppK7OYXyudxzHeVw/x4UC6qv4VEgpZB9ok9JYGXt52za54AWPMPUK6e76hQu8h05
- Skzr/11HJ9hQOBPjqBZ6TnpxkE9nbr+pBm/xRPzB6Bp/ZcQI3Ol
-X-Received: by 2002:a05:600d:8447:b0:486:f893:56c6 with SMTP id
- 5b1f17b1804b1-488fb8b18d1mr423170665e9.10.1777294072114; 
- Mon, 27 Apr 2026 05:47:52 -0700 (PDT)
+ bh=YY1tm1vPSzbBUTbdxWQFuXKrfsrK/NMFeG62EkzTKa8=;
+ b=clsC0eAUhBxJRGqPuUikUFucICPki/8i3r7F+dWjeaD3VCj1hUpPAR49fIscQEaouu
+ Ey+6mcYRqTJj0rwv0AyNOpaVdp0KhXvXoaXPPE/feib/0MXS3lObeQM5fHKsvUo6CGaY
+ VqwDY0Xl+fS7+UpIbNfwKwqzJ3UfR4IoXGYrJYs9UBEqOPvufeHLT71w3F8mE9YUwhbF
+ Y/tS84DzEVlAwrAiIcCtvZ6JyiFXi4NOAD2AGB1K2ylMHFOA4cp0rxTPDh9dSm3cBtId
+ 2hWXK0Fo4DJkRhx7Wdv1HDxKBS2YQV7dpxFNskGkKdpaJMmEC3UzEJ21RsLedTg46Pg7
+ DCOw==
+X-Gm-Message-State: AOJu0YzxqM1KKABZgt9dmvmaUAhfJC9f23506JQ/o53+1qRnHTT3htmT
+ DsP64DQg+hKehLtq9LEtfkl0Yrlscqyg7kjSJkpLnsoi0bDnf0OwZI3s9IjuZZw/tFq0cE4KNnL
+ 8vby/
+X-Gm-Gg: AeBDietcBH2zIQM+pe5TKZnA12QlVGE3RpfkX0WB2cHCiPuymOO1hVzHNT4NApOm36F
+ j++an1h0d7UkcDMBGejhUP2uIY5oOa64PcEiw7+lvW0dI1Ic4ef8uA/oHe9R9iRqDM8vlellli4
+ J8nOAgC4asTeCWBX1nQXuHgwu5Uvs6aNw8ug/Ncq1RZRuqWh45v7SAIKl83lln7JyCgCA6P3k4B
+ LOfC7/i10Wyjma9CGvTj9XJMgF2ejvtpPqNAJ8h64Qsl55ZT3sQTwf0TzK0LaKxchdv3eJ6zTYA
+ a/s13ds8Al8eCcJL4B/ELIXpZ06Bg+LlEliDuqkK1q01afI59CBM0FltBHo5hPoh+k/rjyrVuvS
+ PNbqfd8FAwE31mzVMeISJ+idOr3fRlnjsVi9m7xDwiZLD9VKb+jT22k78WOhVAxgmHc+UJI5Ki8
+ K76xopTgacmLWz5KCR8ZM8MjloAdVQou4tlEY+awa7vy3Q+tChf9kx7mHQbvjxHJcTimbQpFwmk
+ cil6c1AjHby5pmirrjKYGUlyB4OzBg5N6RjgA38zQ==
+X-Received: by 2002:a05:600c:19c8:b0:48a:554d:b9a2 with SMTP id
+ 5b1f17b1804b1-48a554dba51mr430812665e9.6.1777294089274; 
+ Mon, 27 Apr 2026 05:48:09 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.47.51
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.08
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:47:51 -0700 (PDT)
+ Mon, 27 Apr 2026 05:48:08 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/63] hw/arm/fsl-imx8mm: Adding support for USB controller
-Date: Mon, 27 Apr 2026 13:46:49 +0100
-Message-ID: <20260427124738.966578-16-peter.maydell@linaro.org>
+Subject: [PULL 32/63] target/arm/machine: Handle ToleranceNotOnBothEnds
+ migration tolerances
+Date: Mon, 27 Apr 2026 13:47:06 +0100
+Message-ID: <20260427124738.966578-33-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,124 +101,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+From: Eric Auger <eric.auger@redhat.com>
 
-It enables emulation of USB on iMX8MM
-Enables testing and debugging of USB drivers
+If there is a mismatch between the cpreg indexes found on both ends,
+check whether a tolerance was registered for the given kvmidx. If any,
+silence warning/errors.
 
-Reviewed-by: Philippe Mathieu-Daude <philmd@linaro.org>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+Message-id: 20260420140552.104369-3-eric.auger@redhat.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/Kconfig              |  1 +
- hw/arm/fsl-imx8mm.c         | 27 +++++++++++++++++++++++++++
- include/hw/arm/fsl-imx8mm.h |  6 ++++++
- 3 files changed, 34 insertions(+)
+ target/arm/machine.c    | 21 +++++++++++++++------
+ target/arm/trace-events |  2 ++
+ 2 files changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 104954d90d..b940af9345 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -631,6 +631,7 @@ config FSL_IMX8MM
-     select SDHCI
-     select PCI_EXPRESS_DESIGNWARE
-     select PCI_EXPRESS_FSL_IMX8M_PHY
-+    select USB_DWC3
-     select WDT_IMX2
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 50d80ffb68..b2bf129334 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -1063,25 +1063,34 @@ static void handle_cpreg_missing_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx
+ {
+     g_autofree gchar *name = print_register_name(kvmidx);
  
- config FSL_IMX8MM_EVK
-diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
-index f1c173dbec..97c3f8542c 100644
---- a/hw/arm/fsl-imx8mm.c
-+++ b/hw/arm/fsl-imx8mm.c
-@@ -202,6 +202,11 @@ static void fsl_imx8mm_init(Object *obj)
-         object_initialize_child(obj, name, &s->usdhc[i], TYPE_IMX_USDHC);
-     }
- 
-+    for (i = 0; i < FSL_IMX8MM_NUM_USBS; i++) {
-+        g_autofree char *name = g_strdup_printf("usb%d", i);
-+        object_initialize_child(obj, name, &s->usb[i], TYPE_USB_DWC3);
++    if (arm_cpu_match_cpreg_mig_tolerance(cpu, kvmidx,
++                                          0, 0, ToleranceNotOnBothEnds)) {
++        trace_tolerate_cpreg_missing_in_incoming_stream(name);
++        return;
 +    }
-+
-     for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
-         g_autofree char *name = g_strdup_printf("spi%d", i + 1);
-         object_initialize_child(obj, name, &s->spi[i], TYPE_IMX_SPI);
-@@ -529,6 +534,27 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-                            qdev_get_gpio_in(gicdev, usdhc_table[i].irq));
-     }
+     warn_report("%s: %s "
+                 "expected by the destination but not in the incoming stream: "
+                  "skip it", __func__, name);
+ }
  
-+    /* USBs */
-+    for (i = 0; i < FSL_IMX8MM_NUM_USBS; i++) {
-+        static const struct {
-+            hwaddr addr;
-+            unsigned int irq;
-+        } usb_table[FSL_IMX8MM_NUM_USBS] = {
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_USB1].addr, FSL_IMX8MM_USB1_IRQ },
-+            { fsl_imx8mm_memmap[FSL_IMX8MM_USB2].addr, FSL_IMX8MM_USB2_IRQ },
-+        };
-+
-+        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "p2", 1);
-+        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "p3", 1);
-+        qdev_prop_set_uint32(DEVICE(&s->usb[i].sysbus_xhci), "slots", 2);
-+        if (!sysbus_realize(SYS_BUS_DEVICE(&s->usb[i]), errp)) {
-+            return;
-+        }
-+        sysbus_mmio_map(SYS_BUS_DEVICE(&s->usb[i]), 0, usb_table[i].addr);
-+        sysbus_connect_irq(SYS_BUS_DEVICE(&s->usb[i].sysbus_xhci), 0,
-+                           qdev_get_gpio_in(gicdev, usb_table[i].irq));
+ /*
+- * Handle the situation where @kvmidx is in the incoming stream
+- * but not on destination. This currently fails the migration but
+- * we plan to accomodate some exceptions, hence the boolean returned value.
++ * Handle the situation where @kvmidx is in the incoming
++ * stream but not on destination. This fails the migration if
++ * no cpreg mig tolerance is matched for this @kvmidx
++ * Return true if the migration should eventually fail
+  */
+ static bool handle_cpreg_only_in_incoming_stream(ARMCPU *cpu, uint64_t kvmidx)
+ {
+     g_autofree gchar *name = print_register_name(kvmidx);
+-    bool fail = true;
+ 
++    if (arm_cpu_match_cpreg_mig_tolerance(cpu, kvmidx,
++                                          0, 0, ToleranceNotOnBothEnds)) {
++        trace_tolerate_cpreg_only_in_incoming_stream(name);
++        return false;
 +    }
-+
-     /* ECSPIs */
-     for (i = 0; i < FSL_IMX8MM_NUM_ECSPIS; i++) {
-         static const struct {
-@@ -635,6 +661,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
-         case FSL_IMX8MM_OCRAM:
-         case FSL_IMX8MM_SNVS_HP:
-         case FSL_IMX8MM_UART1 ... FSL_IMX8MM_UART4:
-+        case FSL_IMX8MM_USB1 ... FSL_IMX8MM_USB2:
-         case FSL_IMX8MM_USDHC1 ... FSL_IMX8MM_USDHC3:
-         case FSL_IMX8MM_WDOG1 ... FSL_IMX8MM_WDOG3:
-             /* device implemented and treated above */
-diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
-index bc5a0922ad..60d79a6e3c 100644
---- a/include/hw/arm/fsl-imx8mm.h
-+++ b/include/hw/arm/fsl-imx8mm.h
-@@ -25,6 +25,7 @@
- #include "hw/sd/sdhci.h"
- #include "hw/ssi/imx_spi.h"
- #include "hw/timer/imx_gpt.h"
-+#include "hw/usb/hcd-dwc3.h"
- #include "hw/watchdog/wdt_imx2.h"
- #include "qom/object.h"
- #include "qemu/units.h"
-@@ -43,6 +44,7 @@ enum FslImx8mmConfiguration {
-     FSL_IMX8MM_NUM_I2CS         = 4,
-     FSL_IMX8MM_NUM_IRQS         = 128,
-     FSL_IMX8MM_NUM_UARTS        = 4,
-+    FSL_IMX8MM_NUM_USBS         = 2,
-     FSL_IMX8MM_NUM_USDHCS       = 3,
-     FSL_IMX8MM_NUM_WDTS         = 3,
- };
-@@ -64,6 +66,7 @@ struct FslImx8mmState {
-     IMXFECState        enet;
-     SDHCIState         usdhc[FSL_IMX8MM_NUM_USDHCS];
-     IMX2WdtState       wdt[FSL_IMX8MM_NUM_WDTS];
-+    USBDWC3            usb[FSL_IMX8MM_NUM_USBS];
-     DesignwarePCIEHost pcie;
-     FslImx8mPciePhyState   pcie_phy;
-     OrIRQState         gpt5_gpt6_irq;
-@@ -202,6 +205,9 @@ enum FslImx8mmIrqs {
-     FSL_IMX8MM_I2C3_IRQ     = 37,
-     FSL_IMX8MM_I2C4_IRQ     = 38,
+     error_report("%s: %s in the incoming stream but unknown on the "
+                  "destination: fail migration", __func__, name);
+-
+-    return fail;
++    return true;
+ }
  
-+    FSL_IMX8MM_USB1_IRQ     = 40,
-+    FSL_IMX8MM_USB2_IRQ     = 41,
-+
-     FSL_IMX8MM_GPT1_IRQ      = 55,
-     FSL_IMX8MM_GPT2_IRQ      = 54,
-     FSL_IMX8MM_GPT3_IRQ      = 53,
+ static int cpu_post_load(void *opaque, int version_id)
+diff --git a/target/arm/trace-events b/target/arm/trace-events
+index 2de0406f78..8502fb3265 100644
+--- a/target/arm/trace-events
++++ b/target/arm/trace-events
+@@ -29,3 +29,5 @@ arm_psci_call(uint64_t x0, uint64_t x1, uint64_t x2, uint64_t x3, uint32_t cpuid
+ 
+ # machine.c
+ cpu_post_load(uint32_t cpreg_vmstate_array_len, uint32_t cpreg_array_len) "cpreg_vmstate_array_len=%d cpreg_array_len=%d"
++tolerate_cpreg_missing_in_incoming_stream(char *name) "%s is missing in incoming stream but this is explicitly tolerated"
++tolerate_cpreg_only_in_incoming_stream(char *name) "%s is in incoming stream but not on destination but this is explicitly tolerated"
 -- 
 2.43.0
 
