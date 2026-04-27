@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18853FF886D
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:41:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFF78FF8868
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:43:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHRpD-0008Ms-IC; Mon, 27 Apr 2026 15:40:59 -0400
+	id 1wHRr8-0000up-6m; Mon, 27 Apr 2026 15:42:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
- id 1wHRp8-0008Ka-TD
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:40:55 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
- id 1wHRp5-0007I9-Ow
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:40:54 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4890d945eb4so53493835e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 12:40:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777318848; x=1777923648; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
- :date:message-id:reply-to;
- bh=8adT00sYmCE4icsm1qkp6lI8/aVb7DrH9njcSCEgl+E=;
- b=KYCCs3w6WRqzX2RIyScxVRX0mIWLuTO+i2Wpe6If3V0egEokQJHTSIDG5g9onGD91G
- 1x0DRW9dId5ozq6NE38/4xpyxMRIIx7dkxntBo2TARIWjTSMqVOAOhUhyO840EdkxkUv
- 1zyGG24P/d7eFduyDfXvGD1rmZm533z0c65jadhUbMJ08opC1JZuvSPpHUJHRs86k9ox
- R1ilv3S1Xwe/tIOMy+WjARjL5sewG7FPHDzAcCwLEF0oIgcOJZDsPFK6MkNgCkEm47sH
- IgxdWO2jIgI3i/pwzHdMGTKzhIfdKxZP5q3JAazUtuzTOVxx3b+1wcvzszjbcAQCTzcW
- pVpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777318848; x=1777923648;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8adT00sYmCE4icsm1qkp6lI8/aVb7DrH9njcSCEgl+E=;
- b=FRt+ISmX+RDymOef/mCmXIsKOX7ij2ERZQr1zvQ3Dcni6pDrOWLRN5EH0porLf4Q0z
- 3FSWlUSxo6uhwnP0+zhLjR+nb4oPYn5UkmhU1X3kkaIzglz32I1ZrYAsitF0jDlYCWP2
- EBcQ8gauOeObuxOPd8hL2hSwCT6ZjRnnqNywn/I1YIzAbF5bJWfhTw88TiJbDN1dH8KP
- /sMoByTV7ID9zFnWgIbEKllb2w5qEbxmLse/6+vY1NqabKt0W+hj1tP9aB1c+qrI54f0
- 5tKpJm/eZjEWYo79+Mda9jUrWNjrRTnGWuU7U2I5/IdHnHJAAI/BRUCtUdx+lSKTCRNq
- w/zg==
-X-Gm-Message-State: AOJu0Yzm4XV+Yhe9sweF48QQ8CCR0DoEDZOTE1OtA84K+fSVU/EIMYTK
- 8+KkF5fBsmIBkz3dESyy5EaYEzsn+ReX47xxwDYB2hHn3Z59wYSAoYB4
-X-Gm-Gg: AeBDiesc/68ahUMZ5QmTcwGbTYqhGgi4iQ3WBPbbjUNexHD+Zf1XD2RGfCAW+RZXmjE
- BFHURELsA9goIJiwdmAe2kqfc+/AGftkgLwTfiUArAm03rUpL+0oYyd6EcFiUp639lzrvUS9IYD
- hvxBXvVMHWMrgOqC7mgRMv90kwNcgdFBnwxuC4gswUhvuFakMhx8mEbZis2nvXFotNS95ggZSCQ
- ggy0zxvMcwmxfz1Wx3mzSL0jo5CPG1r4b22NBKsKehtxCBEGw2jbfhEBHCuIQcgxYKTaBHvdSNg
- M9KCGo8eXFMS/RyKWtXjvYRnum2FGQoevD4F8SnE8x1Pff1L92NWKB6jVCkWUcwSRt+GZV/gJmM
- ij9uqEyTWkM8dh3T9KPGh7Ouu0GIIzgRGFDsVDURw0shpqO0Xj9XOE05P8fhtBoNWf4knYx6dYZ
- +2edI2vNsxCp5ccq3p/W+hJEjBxuhxcSQCJLrltQZ7dDtNdKM9e6M=
-X-Received: by 2002:a05:600c:19cd:b0:489:1baf:8c03 with SMTP id
- 5b1f17b1804b1-48a77e50d27mr421825e9.11.1777318848212; 
- Mon, 27 Apr 2026 12:40:48 -0700 (PDT)
-Received: from holly.home.arpa ([2a03:ab00:1000:1b60:331a:b316:78f6:effc])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a774d9bd1sm3599695e9.3.2026.04.27.12.40.47
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 12:40:47 -0700 (PDT)
-Message-ID: <f490c53fd4ff3005333a2e70193213677f365275.camel@gmail.com>
-Subject: Re: [PATCH v3 1/2] ui/gtk: Use non-blocking clipboard retrieval
-From: Jindrich Makovicka <makovick@gmail.com>
-To: =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, "Daniel P."
- =?ISO-8859-1?Q?Berrang=E9?=
- <berrange@redhat.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Date: Mon, 27 Apr 2026 21:40:47 +0200
-In-Reply-To: <CAMxuvawm5Rpq2E5VbtrugJ3MZsWT1kPahJZR4=SZy-y+wgk9dw@mail.gmail.com>
-References: <20260426-gtk-clipboard-v3-0-09555aaeda34@gmail.com>
- <20260426-gtk-clipboard-v3-1-09555aaeda34@gmail.com>
- <CAMxuvawm5Rpq2E5VbtrugJ3MZsWT1kPahJZR4=SZy-y+wgk9dw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.56.2-9 
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wHRr5-0000uO-RJ
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:42:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wHRr2-0007jz-3J
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:42:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777318971;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=A6/s7+wbN+K4kjVcPjREQTdrbnwvUrhPZpIX3sPM1qs=;
+ b=E5u1o/nBGYoLx+Wz/KQMbmec15V5HXq8AhBa+lPOSqq7Vdna58BDel6km4yh0y/9AAAcvB
+ RG7Z9zzOeDcBHzCcWp3kX8XkcysF3o5+wCDvaqbAbEipmssGWVjJU+ybr+WG9o3JpCggBj
+ 0iUnQ+SUMT2nPH4V/x0IYAoyV7PQBVo=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-561-QLneicrQOvehu5TPtD6kpw-1; Mon,
+ 27 Apr 2026 15:42:49 -0400
+X-MC-Unique: QLneicrQOvehu5TPtD6kpw-1
+X-Mimecast-MFC-AGG-ID: QLneicrQOvehu5TPtD6kpw_1777318968
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B1D918004AD
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 19:42:48 +0000 (UTC)
+Received: from localhost (unknown [10.44.24.6])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D754619560B7; Mon, 27 Apr 2026 19:42:46 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Mon, 27 Apr 2026 23:42:03 +0400
+Subject: [PATCH 04/41] hw/pci-host/i440fx: handle NULL bus in pci-hole64
+ getters
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=makovick@gmail.com; helo=mail-wm1-x32a.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260427-qom-tests-v1-4-c413f3605311@redhat.com>
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+In-Reply-To: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: armbru@redhat.com, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1913;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=RxT0UeQOktv5seL6iNPTJqxIzApIk7GMQLzeeYc8LL0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wUev64TFRUjOwIkRbb907noV5mDEkWj0PCw
+ vosv/MzszeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FAAKCRDa6OEJdZac
+ 5bYpD/91JphflRw5SJCK2kJxxj2l0f5q2z9fW1/QsjCE6QiUuwZgT2msMkDFKAkY6kxYp4VxsnW
+ 1NwBcTM87zTo98anvr8Id4eHEnWDRNUXah7CWEWrbshZh9o5LWfNtsDPQRiKgjcUJ5fwTaEGXja
+ HONgHMv3cUrefKCrfyUcewZBE3pr/eC1qpc6QfNUQmvyqVfxJ8AKzKzYu+tK4dH6CUBTIXP2Ac+
+ BR91a5sQb/JCMVwiPadpyCyg8tTA+snwqgAHTXLKC1kb7wJUgXiFXqMHJ+xBpE4sHoBW//tEmt+
+ 9zY0/Uh0fuku6ffCJ76m95O/D6Ysw0GNmh7VR6gVc/C9JK9xEm/1Lm38IBzQ5tjvuVoGTvlWCF/
+ LwRe1gcd7dIo1ptU9lMegZCJwcWyXM1UCtAcf9PyPf/lklHaML9MksUrTZ5qg7As0TwvFb3iL0a
+ 0vvdYz+LnEzy2AJBoURLVztDOtP1IGuYv2A0+cmfwxDQJFdeYbrwtoax3jm5i2st4HkSBBNYRoS
+ 3tiaw7fSNhVmV4BQw/Q5MO3h8tMWPHk+/+uAfig2aX+acT4lVgWUUoR+maJr60Gow1dVZAxdt2o
+ VXlb7SkvGJZG6tgmPXIy+l8sD1JpOdUKBTnSW9bG1JH5uGcS+wl991klxzUkCK/y5SLAcWAODaC
+ MyAYDnuU3dIXkug==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,27 +105,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGksCgpPbiBNb24sIDIwMjYtMDQtMjcgYXQgMTI6NDcgKzA0MDAsIE1hcmMtQW5kcsOpIEx1cmVh
-dSB3cm90ZToKPiBIaQo+ID4gwqBzdGF0aWMgdm9pZCBnZF9vd25lcl9jaGFuZ2UoR3RrQ2xpcGJv
-YXJkICpjbGlwYm9hcmQsCj4gPiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoCBHZGtFdmVudCAqZXZlbnQsCj4gPiDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBncG9pbnRlciBkYXRhKQo+
-ID4gQEAgLTE3MywxMiArMjAxLDEwIEBAIHN0YXRpYyB2b2lkIGdkX293bmVyX2NoYW5nZShHdGtD
-bGlwYm9hcmQKPiA+ICpjbGlwYm9hcmQsCj4gPiDCoMKgwqDCoCBzd2l0Y2ggKGV2ZW50LT5vd25l
-cl9jaGFuZ2UucmVhc29uKSB7Cj4gPiDCoMKgwqDCoCBjYXNlIEdES19PV05FUl9DSEFOR0VfTkVX
-X09XTkVSOgo+ID4gwqDCoMKgwqDCoMKgwqDCoCBpbmZvID0gcWVtdV9jbGlwYm9hcmRfaW5mb19u
-ZXcoJmdkLT5jYnBlZXIsIHMpOwo+ID4gLcKgwqDCoMKgwqDCoMKgIGlmIChndGtfY2xpcGJvYXJk
-X3dhaXRfaXNfdGV4dF9hdmFpbGFibGUoY2xpcGJvYXJkKSkgewo+ID4gLcKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqAgaW5mby0+dHlwZXNbUUVNVV9DTElQQk9BUkRfVFlQRV9URVhUXS5hdmFpbGFibGUg
-PQo+ID4gdHJ1ZTsKPiA+IC3CoMKgwqDCoMKgwqDCoCB9Cj4gPiAtCj4gPiAtwqDCoMKgwqDCoMKg
-wqAgcWVtdV9jbGlwYm9hcmRfdXBkYXRlKGluZm8pOwo+ID4gLcKgwqDCoMKgwqDCoMKgIHFlbXVf
-Y2xpcGJvYXJkX2luZm9fdW5yZWYoaW5mbyk7Cj4gPiArwqDCoMKgwqDCoMKgwqAgZ3RrX2NsaXBi
-b2FyZF9yZXF1ZXN0X2NvbnRlbnRzKAo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgY2xpcGJv
-YXJkLCBnZGtfYXRvbV9pbnRlcm5fc3RhdGljX3N0cmluZygiVEFSR0VUUyIpLAo+ID4gK8KgwqDC
-oMKgwqDCoMKgwqDCoMKgwqAgZ2RfY2xpcGJvYXJkX293bmVyX2NoYW5nZV9jb250ZW50c19yZWNl
-aXZlZF9jYWxsYmFjaywKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGluZm8pOwo+IAo+IGNv
-dWxkIHlvdSB1c2UgZ3RrX2NsaXBib2FyZF9yZXF1ZXN0X3RhcmdldHMgaW5zdGVhZD8KPiAKPiBs
-Z3RtIG90aGVyd2lzZQoKU2VudCBhcyB2NCAuCgpSZWdhcmRzLAotLSAKSmluZHJpY2ggTWFrb3Zp
-Y2thCg==
+When called on an unrealized i440FX host bridge (e.g. from
+qmp_qom_list_properties), h->bus is NULL since the root bus is only
+created during realize. Guard against this in both
+pci_hole64_start and pci_hole64_end getters, reporting an error.
+
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ hw/pci-host/i440fx.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
+
+diff --git a/hw/pci-host/i440fx.c b/hw/pci-host/i440fx.c
+index e7d638b296c..6952094510d 100644
+--- a/hw/pci-host/i440fx.c
++++ b/hw/pci-host/i440fx.c
+@@ -189,8 +189,14 @@ static void i440fx_pcihost_get_pci_hole64_start(Object *obj, Visitor *v,
+                                                 const char *name,
+                                                 void *opaque, Error **errp)
+ {
+-    uint64_t hole64_start = i440fx_pcihost_get_pci_hole64_start_value(obj);
++    PCIHostState *h = PCI_HOST_BRIDGE(obj);
++    uint64_t hole64_start;
+ 
++    if (!h->bus) {
++        error_setg(errp, "bus not realized");
++        return;
++    }
++    hole64_start = i440fx_pcihost_get_pci_hole64_start_value(obj);
+     visit_type_uint64(v, name, &hole64_start, errp);
+ }
+ 
+@@ -206,10 +212,15 @@ static void i440fx_pcihost_get_pci_hole64_end(Object *obj, Visitor *v,
+ {
+     PCIHostState *h = PCI_HOST_BRIDGE(obj);
+     I440FXState *s = I440FX_PCI_HOST_BRIDGE(obj);
+-    uint64_t hole64_start = i440fx_pcihost_get_pci_hole64_start_value(obj);
++    uint64_t hole64_start;
+     Range w64;
+     uint64_t value, hole64_end;
+ 
++    if (!h->bus) {
++        error_setg(errp, "bus not realized");
++        return;
++    }
++    hole64_start = i440fx_pcihost_get_pci_hole64_start_value(obj);
+     pci_bus_get_w64_range(h->bus, &w64);
+     value = range_is_empty(&w64) ? 0 : range_upb(&w64) + 1;
+     hole64_end = ROUND_UP(hole64_start + s->pci_hole64_size, 1ULL << 30);
+
+-- 
+2.53.0
 
 
