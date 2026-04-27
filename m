@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E59DFF8869
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E2E2FF885E
 	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 09:59:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHIjV-0007zq-CZ; Mon, 27 Apr 2026 05:58:29 -0400
+	id 1wHIjW-00083D-Lb; Mon, 27 Apr 2026 05:58:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wHIjJ-0007l4-9u
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:58:22 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wHIjT-0007tN-0d
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:58:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wHIjG-000873-HL
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:58:17 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wHIjR-00088v-7t
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 05:58:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777283893;
+ s=mimecast20190719; t=1777283904;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zNbVD6raZBOlj/4NNQ4I4wPe1E1uFOyftINCiLZjXj4=;
- b=PFygMa1Ne48S38cH2M1dgnxvdmgMBID6Sb8s/k1rdBeIbNgeTr64S7+audyaIqfoaZLrDg
- a29hTSsaEZZo0ItbYmFhLK76onXIv/utoHenlQNewy4bNH/XJxt+4pgdkaKQNKTfiEOa6o
- 0tZxWRZ2UkgUlRl49O8uDufYPDwrpSg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=eFljm/P3eCUbucxFKDa5ngURwEtaHUriqo3+3248PFA=;
+ b=HQgYZyNHGbU+ZdiHwIqPe4ZYGSTvq5yCor/MguKEl2g9wMHA0QYwE3PhMDC9bvSj3xTEn+
+ xxHE4ZjzzZq4Wse68TYdRqO+hr+Uezjtv5jop+Krn+lsME/lZqqnIbCexRjd2h/iiiqkvR
+ T7jTH5GbBvWbae7qiCqyxF6450ay/Ek=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-65-5zV8gRxpMEGWDpmkx0uoqA-1; Mon,
- 27 Apr 2026 05:58:12 -0400
-X-MC-Unique: 5zV8gRxpMEGWDpmkx0uoqA-1
-X-Mimecast-MFC-AGG-ID: 5zV8gRxpMEGWDpmkx0uoqA_1777283891
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-379-qbTtMEC1NXiyxGYl5HWiqA-1; Mon,
+ 27 Apr 2026 05:58:20 -0400
+X-MC-Unique: qbTtMEC1NXiyxGYl5HWiqA-1
+X-Mimecast-MFC-AGG-ID: qbTtMEC1NXiyxGYl5HWiqA_1777283899
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 06CF31800378; Mon, 27 Apr 2026 09:58:11 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B141819560BB; Mon, 27 Apr 2026 09:58:19 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.48.146])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8ECEA3000707; Mon, 27 Apr 2026 09:58:08 +0000 (UTC)
+ id DC6CC3000707; Mon, 27 Apr 2026 09:58:17 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Stefan Hajnoczi <stefanha@redhat.com>
 Cc: qemu-devel@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 05/10] util: fix use of pthread_get_name_np on OpenBSD
-Date: Mon, 27 Apr 2026 11:57:42 +0200
-Message-ID: <20260427095747.1070244-6-thuth@redhat.com>
+ Sourish Duttta Sharma <sourishduttasharma770@gmail.com>
+Subject: [PULL 08/10] hw/i386/fw_cfg: Use g_new() and g_new0() instead of
+ g_malloc()
+Date: Mon, 27 Apr 2026 11:57:45 +0200
+Message-ID: <20260427095747.1070244-9-thuth@redhat.com>
 In-Reply-To: <20260427095747.1070244-1-thuth@redhat.com>
 References: <20260427095747.1070244-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -83,38 +82,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Sourish Dutta Sharma <sourishduttasharma770@gmail.com>
 
-The pthread_get_name_np function is present on FreeBSD and OpenBSD
-and has 'void' return not 'int'. We didn't notice this build problem
-on FreeBSD since it also has pthread_getname_np which does return
-int like Linux and we use the latter preferentially.
+Replace g_malloc() and g_malloc0() calls that calculate the allocation
+size using sizeof() with the type-safe g_new() and g_new0() macros.
 
-Fixes: 215235d365e49c72a85ea2940751e45419676031
-Closes: https://gitlab.com/qemu-project/qemu/-/work_items/3399
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260417120531.2215549-1-berrange@redhat.com>
+This aligns the code with QEMU's coding style guidelines, improving
+readability and protecting against potential integer overflow
+vulnerabilities when allocating arrays.
+
+Signed-off-by: Sourish Duttta Sharma <sourishduttasharma770@gmail.com>
+Message-ID: <20260224160020.137036-1-sourishduttasharma770@gmail.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- util/qemu-thread-posix.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ hw/i386/fw_cfg.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index bd1c2ad2a59..089606c93fb 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -568,7 +568,8 @@ const char *qemu_thread_get_name(void)
- # if defined(CONFIG_PTHREAD_GETNAME_NP)
-     rv = pthread_getname_np(pthread_self(), namebuf, sizeof(namebuf));
- # elif defined(CONFIG_PTHREAD_GET_NAME_NP)
--    rv = pthread_get_name_np(pthread_self(), namebuf, sizeof(namebuf));
-+    pthread_get_name_np(pthread_self(), namebuf, sizeof(namebuf));
-+    rv = 0;
- # else
-     rv = -1;
- # endif
+diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+index 858e6ca9c53..2876490f069 100644
+--- a/hw/i386/fw_cfg.c
++++ b/hw/i386/fw_cfg.c
+@@ -91,7 +91,7 @@ void fw_cfg_build_smbios(PCMachineState *pcms, FWCfgState *fw_cfg,
+ 
+     /* build the array of physical mem area from e820 table */
+     nr_e820 = e820_get_table(NULL);
+-    mem_array = g_malloc0(sizeof(*mem_array) * nr_e820);
++    mem_array = g_new0(struct smbios_phys_mem_area, nr_e820);
+     for (i = 0, array_count = 0; i < nr_e820; i++) {
+         uint64_t addr, len;
+ 
+@@ -207,7 +207,7 @@ void fw_cfg_build_feature_control(MachineState *ms, FWCfgState *fw_cfg)
+         return;
+     }
+ 
+-    val = g_malloc(sizeof(*val));
++    val = g_new(uint64_t, 1);
+     *val = cpu_to_le64(feature_control_bits | FEATURE_CONTROL_LOCKED);
+     fw_cfg_add_file(fw_cfg, "etc/msr_feature_control", val, sizeof(*val));
+ }
 -- 
 2.53.0
 
