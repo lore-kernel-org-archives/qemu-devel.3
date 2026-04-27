@@ -4,105 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06900FF8861
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 11:29:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE9F8FF885E
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:11:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHK8l-0002z3-88; Mon, 27 Apr 2026 07:28:39 -0400
+	id 1wHKn7-0003En-2q; Mon, 27 Apr 2026 08:10:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wHK8g-0002y7-NS
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 07:28:35 -0400
-Received: from mail-dy1-x132d.google.com ([2607:f8b0:4864:20::132d])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wHKmQ-000312-38
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:09:43 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wHK8e-0001p4-Tw
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 07:28:34 -0400
-Received: by mail-dy1-x132d.google.com with SMTP id
- 5a478bee46e88-2ba895adfeaso10610814eec.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 04:28:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777289311; cv=none;
- d=google.com; s=arc-20240605;
- b=P48qOtDvkoNCNjXyqLQrGVIfA+nsGtLGWBjj1r9NTp15ZcWC/sBcNCHRszEnJme6Ct
- y1Kc3qVs7Hl5CaI0GYLG/T1m8cVJaNyJiSjeXwW4wEjAFHI/0yq7ZgrQ42OwxZFnc5OM
- OH7DFRzwIAbP9lmhL4uUbjadwc5hu8G3ltHVL2MEmIM7k1avQeIuhLpY5pqRnVLa85yN
- C7kLQqktlt5BibvTGJT9MTYM2042E7hHNhOO0TUnmU1XYV5RFcRxiWZ2Ej3TLxMaCqMH
- IZmQQ3yZOu6J+0qxZb/yo90soQbg2OB5j5ePmzVliUVCjAAXKI87YxxNsHUn1WsI7snC
- v81g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=vQLvnw4QxKU5cN0CgGQAV7edA2AV7YwLlhj+dYIfuQU=;
- fh=h2lKAM/Y0SRwRZDK+PZXbiU5EMSVJW1NvKTr6JQuA2U=;
- b=eMj6KbXvrwHyjnNLo3R6stzrU7xjkBQirQSf4Y9Z4Z3SJBelTRgHotMHI+tL0Yddbs
- IyOtlS/Y/FzXaEE+UqDMsqpcGNHv9tDUqmuahGFfEL+OuuU3cR8fi2pYhAy2Hwi0un90
- ue2EKxhzcmrgqVra5CT5+UWEDh8NSWIia1bNuf3uH2wE/OQ92anKtdO70G8fdhxzRf9i
- IqyHM0Fs2H0B4SRC3rzD0JfHZZ/69MY8zv4VL9y9dciRf44c71SrwOFYSl6Rf9+piuLv
- 3/MnDxXLZem6kL58uRk00rLKQ9Itj7UoGucxT/SEHHnO/XXftRL+im0KWcEWrxtFDyyB
- NXNQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wHKmJ-0007Nw-UU
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:09:36 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-488b150559bso80642735e9.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:09:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777289311; x=1777894111; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1777291768; x=1777896568; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vQLvnw4QxKU5cN0CgGQAV7edA2AV7YwLlhj+dYIfuQU=;
- b=aT5VfVs/RWJi4ojpw0G/nAOOT2U5FBN3NBLpS9w6YK8+HiEqw1tAVQ5zp7RPvNZzVX
- 4IjlLUOMhKdILKe51lCOBnvgCKJ4PD8iAbr9uqckB4AIYI9/Ta8JXqOO/w3nZbUPIHQX
- ojt2PynxRHa+TmXGfMgzFNbLYHmE1G8eMb3Hagwe3wQo5SGN7mWOeR/bqQpjfEOAYHC5
- t4/wZZtHg7R1kc3HH1nhQBvSfHT9LljgLtCIHJwurayS3ZsjNbCvW9fV7ltCHLgCqnq3
- GA9QylTDvVCji5jwnBUsDaZWJ3yTpYVOnrKaJbYkhnj7/TattryyXDb45xHKe4qJSBAn
- V+vA==
+ bh=3WjVYn3dSJU8L9dHY3FzAmuZ8M9V1GR6U9VRPV23JNU=;
+ b=LFteNeks0+p4JHZMqWtjfEVAjCNY+6LQdWs3Cjnglajj75kZfL4OEO2Hn2ENMRuBFM
+ H821ZMuEts3joEXVi6+87x476j14DiVphSPTm5NaM56LuBhpeXBCZ/NsgMYfgJEYvjgP
+ y4MEVDHe6KwSp4N9VJfx6tg9y2KjQjU4oL0xCthQ7+rZdGeIVdkatSrXOPVdl0StaH0h
+ FKdS4NQXRVLZtqY0hIQQ/CHNf+rfJPYhtLSaZDWDqgkKPkv5odSkxyg7bBv86cABToBG
+ RS4bthPBWCjWFATGNhN0t+cNkFgyX1JmIN8ut0N0ORNiedJ3a/Bhbe2FS69FZ7eC3VI1
+ n/jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777289311; x=1777894111;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1777291768; x=1777896568;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vQLvnw4QxKU5cN0CgGQAV7edA2AV7YwLlhj+dYIfuQU=;
- b=YmTlHVfg8q0VF2BBFZm+PHl5Kx9GEiDPL/QjmSq9RO4yNpvzFZzZgUPNWubP7UPJS/
- Xv/Z5pyTIf3nL+RBGhz1/LLwULbRc/ZljooA6XS63Kr4S5wQTwS/33dSTc3XDDV2i7o4
- HDIhSXAWuUe03VXP4/L0DOfjf6aqPJpxF866T6vjZY/IB7r0oFRnbzfO9Q24dAfG55sX
- CKJy92LoP6W/RcQjSEuNo/QqeF5jGv4xqSR6mj23yFGlQNn4RB92N8mhOhgvzh16tDc7
- ap5hzNrXGZAUUgnqyTAIY5Frt3xoeWRy76lft3iQmHrZaP62sP3rFZPajGsT2dOo1Isa
- 8ETA==
-X-Gm-Message-State: AOJu0YyHYtkrzRVfOwxQQEK7JUOEzmIa1byQNmAf0IcgakBig+B+bTXo
- 355e8o+iUhr3YACVrEp90NLLMFGSMlWE9TyZDFZ0qrfdHPt5v0TQABqGA/eRR+K/E4ie20/mVyb
- 54uTRu9eu0F4yqH/x2eyGTTJTVfmFOW8=
-X-Gm-Gg: AeBDiev1KUv3upGsc44cwFbl5+f+elC57akqr7RdWZjaoVNKRn7YAEbQCcdpN+3n8Ap
- 4Zu8nQPtrGjrqpLWQa9s+05M9Qhk8k+F/Ph/1tNOBsuE1P6OYUcSD75fLfdr6Lan8OcSRE8HRUc
- Mai3ZoMu/RMBozgxtJONn+MMXcjAcEWfqMNVNYApV5yFjhS5T3OWL8c3EMnutWpCQgvLHsJAdwV
- rhgrMe3XvFAsd0idS4hItPBGsJj1/yqu02NBtL/qSMX1GhqkqPvBQ8VApZM+W+Ei+mzQsHTeXMN
- XEy5faHBlYL6ozZSFOn8LgHQlCx0uWpUsRhZM6A+Q2nppruD0Tc=
-X-Received: by 2002:a05:7301:4186:b0:2d9:a799:3c4f with SMTP id
- 5a478bee46e88-2e478e0c6a5mr23831250eec.24.1777289311133; Mon, 27 Apr 2026
- 04:28:31 -0700 (PDT)
+ bh=3WjVYn3dSJU8L9dHY3FzAmuZ8M9V1GR6U9VRPV23JNU=;
+ b=IjTqD3wPdU+rjf4Bm6WP7Il3B90cVpgNR1b4ZM9B4q+93zrnp2Zu2qsFvcnPAxNyDC
+ +bf9XCEAtDxhtMo7JLCmWXiiXZq2jAGnnYfV4A3Q8af6fu3qurqOo1XkfQ7b3bTpJ1I4
+ bnZcrDzBblzvNDQf+17YQvsS5ZQEACwMhLo/sLJ+tiFcH5M7tvWi//VvkU9eeqyyyAIR
+ GJHwudeeB2ssXgsPJmyD4vMCMU6hBA0qHC1Q65Z+G6QR+TtOW2wBGkccFnQYVNL8qZay
+ 30YRoekREW0sBpgcONdCgcrh5zarhHYSZ6Fhp1fMiFQ+eD+F832j4X4vDEuS+fyBbCdi
+ Rnmg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+0AtxT2Tb61HbXM2oQsYNDvRK+EBsGqnE5zdqHnMBAni8qXmQhsuLWwg6FzJoyYCSBBIwvCIw92DpC@nongnu.org
+X-Gm-Message-State: AOJu0YxXVR68UM+5YjJoi+B3pnTNRWkz6wZf5XOsWJhuWaBQ+pUwnnPc
+ 93urjy3RJPazzt+l7iKEb+HNHvl5s3IJsmKKpQkp6EXLFw2JjCKo33uG
+X-Gm-Gg: AeBDievYrq63aZImXwHVHb5BSc3hbK5yLiUi1lx+Rkep3zOJH7QLcSDjiNF0A7WSQLG
+ +dvNTjGTKjqwwGnISeKH1KQcY1pXG4uyFmBWIAUMCAxvr6jvcZ54dVeTHFPZ99zH4HB31vpkmKv
+ ovnung82fRNw3ZYqNjRWt2ubl1V+S/bWO0G0zlyWPBUTmf8mwT0moRPUU82QU9FSwqYbKbT5RKW
+ MqtY666m4JE9Vec9P7HHmmuI9KyY14uXn4NjsFifaTs+Yv7PgJhPoU+c10tncLCtn2TlFTh8PRO
+ LhCWE/t68P2Ff6mL0atuDZuAZov1PKfn2GLu3mXu7Lb9/bi/1qe+evtzVHstIsuGUKmnJi5B2wA
+ JjCX2BFE1EowV4bqgHBRzZI9LCPKtUOzpO3EKU2JqdTYgIEhD82SSwkfUCYf790P/YzIadOrW5W
+ 9SJ5k0NG09hgW5hkmHzdjeRK0gPOuzC7M82S8BHl6X
+X-Received: by 2002:a05:600c:c10a:b0:483:2c98:4368 with SMTP id
+ 5b1f17b1804b1-488fb771613mr462446925e9.18.1777291768323; 
+ Mon, 27 Apr 2026 05:09:28 -0700 (PDT)
+Received: from ehlo.thunderbird.net ([90.187.110.129])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4891978ef6bsm265211835e9.4.2026.04.27.05.09.27
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 27 Apr 2026 05:09:27 -0700 (PDT)
+Date: Mon, 27 Apr 2026 10:30:09 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+CC: Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-trivial@nongnu.org,
+ qemu-arm@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 5/5] Revert "sysbus: add irq_routing_notifier"
+In-Reply-To: <af77b92d-9303-4ed0-942d-6188e00ccdde@redhat.com>
+References: <20260308203516.160103-1-shentey@gmail.com>
+ <20260308203516.160103-6-shentey@gmail.com>
+ <af77b92d-9303-4ed0-942d-6188e00ccdde@redhat.com>
+Message-ID: <DF79ACA2-21B7-47B9-B9C1-0C08E9E50F16@gmail.com>
 MIME-Version: 1.0
-References: <20260427105531.75701-1-benno.fuenfstueck@neodyme.io>
-In-Reply-To: <20260427105531.75701-1-benno.fuenfstueck@neodyme.io>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Mon, 27 Apr 2026 15:28:18 +0400
-X-Gm-Features: AVHnY4LImAiqjTuHya80gWYMhUEQ9x1UlSp5Z52MIXnnQZAyzZjn4Vh8zXPGtMU
-Message-ID: <CAJ+F1CLjdAvjvCe9m5uQ9-gcL7iq-eJ0hamp5A3tm2D-kG_wzA@mail.gmail.com>
-Subject: Re: [PATCH v2] virtio-gpu: fix inverted mouse cursor
-To: =?UTF-8?B?QmVubm8gRsO8bnN0w7xjaw==?= <benno.fuenfstueck@neodyme.io>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain;
+ charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132d;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132d.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- MXG_EMAIL_FRAG=0.099, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,145 +106,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Mon, Apr 27, 2026 at 2:57=E2=80=AFPM Benno F=C3=BCnst=C3=BCck
-<benno.fuenfstueck@neodyme.io> wrote:
->
-> From: Benno F=C3=BCnfst=C3=BCck <benno.fuenfstueck@neodyme.io>
->
-> This is a fix for a bug in virglrenderer, where if the guest uses hardwar=
-e mouse cursor acceleration then the mouse cursor can end up being a resour=
-ce with the flag Y_0_TOP set.
-> But virglrenderer does not honor this flag when reading the cursor data.
-> This has been fixed in current virglrenderer master.
-> For older virglrenderer, we need to make sure to flip the cursor data suc=
-h that display clients render it correctly.
->
-> For example, this fixes mouse cursor rendering for wlroots-based window m=
-anagers (like Sway) in Linux guests.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2315
-> Signed-off-by: Benno F=C3=BCnfst=C3=BCck <benno.fuenfstueck@neodyme.io>
-
-In v1, Akihiko raised a valid concern that this might be backported
-and fixed in earlier version of virgl:
-https://patchew.org/QEMU/20260409144639.3610-1-benno.fuenfstueck@neodyme.io=
-/#40fb4df5-20a7-49ce-a087-d9c048255d05@rsg.ci.i.u-tokyo.ac.jp
 
 
-> ---
-> Now with a version check, since the fix for this is in virlglrenderer mas=
-ter so I think it is any version newer than the current one (which is 1.3.0=
-).
-> I copied the code from virtio-gpu-virgl.c for the version check for simpl=
-icty, if I should instead move that code for some DRY feel free to say so.
+Am 9=2E M=C3=A4rz 2026 09:19:10 UTC schrieb "C=C3=A9dric Le Goater" <clg@r=
+edhat=2Ecom>:
+>On 3/8/26 21:35, Bernhard Beschow wrote:
+>> The callback has been introduced in commit 715ca691daca ("sysbus: add
+>> irq_routing_notifier") for use in VFIO platform=2E Meanwhile, VFIO
+>> platform has been removed via commit 762c85543948 ("vfio: Remove 'vfio-
+>> platform'") which was its only user=2E Remove this unused code=2E
+>>=20
+>> This reverts commit 715ca691daca081108b33306faa6fa102f0df8d8=2E
+>>=20
+>> cc: C=C3=A9dric Le Goater <clg@redhat=2Ecom>
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>> ---
+>>   include/hw/core/sysbus=2Eh | 1 -
+>>   hw/core/sysbus=2Ec         | 6 ------
+>>   2 files changed, 7 deletions(-)
+>>=20
+>> diff --git a/include/hw/core/sysbus=2Eh b/include/hw/core/sysbus=2Eh
+>> index c0d18d9e00=2E=2Ef3c4259d29 100644
+>> --- a/include/hw/core/sysbus=2Eh
+>> +++ b/include/hw/core/sysbus=2Eh
+>> @@ -50,7 +50,6 @@ struct SysBusDeviceClass {
+>>        * omitted then=2E (This is not considered a fatal error=2E)
+>>        */
+>>       char *(*explicit_ofw_unit_address)(const SysBusDevice *dev);
+>> -    void (*connect_irq_notifier)(SysBusDevice *dev, qemu_irq irq);
+>>   };
+>>     struct SysBusDevice {
+>> diff --git a/hw/core/sysbus=2Ec b/hw/core/sysbus=2Ec
+>> index 3adf2f2faf=2E=2E3e1160ee92 100644
+>> --- a/hw/core/sysbus=2Ec
+>> +++ b/hw/core/sysbus=2Ec
+>> @@ -104,13 +104,7 @@ qemu_irq sysbus_get_connected_irq(const SysBusDevi=
+ce *dev, int n)
+>>     void sysbus_connect_irq(SysBusDevice *dev, int n, qemu_irq irq)
+>>   {
+>> -    SysBusDeviceClass *sbd =3D SYS_BUS_DEVICE_GET_CLASS(dev);
+>> -
+>>       qdev_connect_gpio_out_named(DEVICE(dev), SYSBUS_DEVICE_GPIO_IRQ, =
+n, irq);
+>> -
+>> -    if (sbd->connect_irq_notifier) {
+>> -        sbd->connect_irq_notifier(dev, irq);
+>> -    }
+>>   }
+>>     /* Check whether an MMIO region exists */
 >
->  hw/display/virtio-gpu-gl.c | 45 ++++++++++++++++++++++++++++++++++++++
->  1 file changed, 45 insertions(+)
+>Reviewed-by: C=C3=A9dric Le Goater <clg@redhat=2Ecom>
 >
-> diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
-> index 2b7a41c466..6505a84f5e 100644
-> --- a/hw/display/virtio-gpu-gl.c
-> +++ b/hw/display/virtio-gpu-gl.c
-> @@ -26,6 +26,25 @@
+>Thanks,
 >
->  #include <virglrenderer.h>
->
-> +/*
-> + * VIRGL_CHECK_VERSION available since libvirglrenderer 1.0.1 and was fi=
-xed
-> + * in 1.1.0. Undefine bugged version of the macro and provide our own.
-> + */
-> +#if defined(VIRGL_CHECK_VERSION) && \
-> +    VIRGL_VERSION_MAJOR =3D=3D 1 && VIRGL_VERSION_MINOR < 1
-> +#undef VIRGL_CHECK_VERSION
-> +#endif
-> +
-> +#ifndef VIRGL_CHECK_VERSION
-> +#define VIRGL_CHECK_VERSION(major, minor, micro) \
-> +    (VIRGL_VERSION_MAJOR > (major) || \
-> +     VIRGL_VERSION_MAJOR =3D=3D (major) && VIRGL_VERSION_MINOR > (minor)=
- || \
-> +     VIRGL_VERSION_MAJOR =3D=3D (major) && VIRGL_VERSION_MINOR =3D=3D (m=
-inor) && \
-> +     VIRGL_VERSION_MICRO >=3D (micro))
-> +#endif
-> +
-> +#define VIRGL_NEEDS_CURSOR_DATA_FLIP_FIX (!VIRGL_CHECK_VERSION(1, 3, 1))
-> +
->  static void virtio_gpu_gl_update_cursor_data(VirtIOGPU *g,
->                                               struct virtio_gpu_scanout *=
-s,
->                                               uint32_t resource_id)
-> @@ -33,6 +52,11 @@ static void virtio_gpu_gl_update_cursor_data(VirtIOGPU=
- *g,
->      VirtIOGPUGL *gl =3D VIRTIO_GPU_GL(g);
->      uint32_t width, height;
->      uint32_t pixels, *data;
-> +#if VIRGL_NEEDS_CURSOR_DATA_FLIP_FIX
-> +    bool y_0_top =3D true;
-> +    int ret;
-> +    struct virgl_renderer_resource_info info;
-> +#endif
->
->      if (gl->renderer_state !=3D RS_INITED) {
->          return;
-> @@ -49,8 +73,29 @@ static void virtio_gpu_gl_update_cursor_data(VirtIOGPU=
- *g,
->          return;
->      }
->
-> +#if VIRGL_NEEDS_CURSOR_DATA_FLIP_FIX
-> +    memset(&info, 0, sizeof(info));
-> +    ret =3D virgl_renderer_resource_get_info(resource_id, &info);
-> +    if (ret =3D=3D 0) {
-> +        y_0_top =3D info.flags & VIRTIO_GPU_RESOURCE_FLAG_Y_0_TOP;
-> +    }
-> +#endif
-> +
->      pixels =3D s->current_cursor->width * s->current_cursor->height;
-> +#if VIRGL_NEEDS_CURSOR_DATA_FLIP_FIX
-> +    if (y_0_top) {
-> +        memcpy(s->current_cursor->data, data, pixels * sizeof(uint32_t))=
-;
-> +    } else {
-> +        uint32_t *dst =3D s->current_cursor->data;
-> +        for (uint32_t y =3D 0; y < height; y++) {
-> +            memcpy(dst + y * width,
-> +                   data + (height - 1 - y) * width,
-> +                   width * sizeof(uint32_t));
-> +        }
-> +    }
-> +#else
->      memcpy(s->current_cursor->data, data, pixels * sizeof(uint32_t));
-> +#endif
->      free(data);
->  }
->
-> --
-> 2.51.2
->
->
-> --
-> Neodyme AG
-> Sitz der Gesellschaft / Address: Dirnismaning 55 | Halle 13 |
-> 85748 Garching b.M=C3=BCnchen
-> Postanschrift: Rosenthaler Stra=C3=9Fe 72a | 10119
-> Berlin
->
-> Registergericht / Registry court: M=C3=BCnchen, HRB 269168
-> Vorstand /
-> Management Board: Thomas Lambertz | Tobias Madl
-> Aufsichtsratsvorsitzender /
-> Chairman of the Supervisory Board: Hendrik Hofstadt
->
->
->
->
->
+>C=2E
 
+Who will pick up this patch?
 
---=20
-Marc-Andr=C3=A9 Lureau
+Best regards,
+Bernhard
 
