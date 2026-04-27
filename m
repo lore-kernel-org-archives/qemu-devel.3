@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 260F0FF8861
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:10:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E919FF8862
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 08:10:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHH2I-0002Xx-4V; Mon, 27 Apr 2026 04:09:46 -0400
+	id 1wHH0v-0000d6-2b; Mon, 27 Apr 2026 04:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH27-00029B-Mf
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:09:35 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH0s-0000cD-R8
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:08:18 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH25-00023n-Sa
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:09:35 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-43d74086e5bso9505328f8f.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:09:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHH0m-0001Tw-I7
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 04:08:18 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-43cfde3c3f3so10075425f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 01:08:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777277371; x=1777882171; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777277289; x=1777882089; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=UyizkhPwA66T9NIfFzFir+Q1fq4kdPQuZBgZLFR1jbQ=;
- b=g0ynTMmVXv59PgU77K8PcD9pN8TMnxWdzPMTdtC2RftZpXjp2jD79CY3V0MqCgHMS8
- PErOL4aFy84lusbaPiwal8sL0EDWZxxe50Uqto0+R/m49i8o2H+4OWvmCqWOYvW2AlDt
- QzW2GjAk5oJ4HrKTAcapW0+OSTS6O4avYXJQppFI0E829CGVM8BPrWOTKTqX/42Qmv/n
- CwqO6gxn30bcsEZezrSEFCsFqMLaf8Ssy0P7ePVmvwVhKAFzzoRUF0QRznKwFpbHM5UZ
- jA9Jn6Q0fOi/z8vEVq+TSn9Zh6OfVEef13O/JCb7IcWDWCxPdMnYz+pXXc5Y4NABL/5n
- Kvzg==
+ :reply-to; bh=TmErLYkkyC0UQ3cHtYrsC9C+y1iumERnceYY02O3hcE=;
+ b=xPbbklx0SYfMg1/FSHscTSWVkaylF6ZZkBzOpcdVeVR19UHHUMTGX2gBXPTapk4M39
+ 24RiufFM7ZzajxWxALAf+nTSQCVn+4xBvZZyIu0jdiU95bgIq8h4AQj55JVdTs50e1ZE
+ wiHiABicMijUBxPzqzPPepc8af/soovipmRyJH539loFJSS/fg7z48I6Y56tlqfP/NnA
+ 19XwPHTUCOU3HV/1c7GBZ/qUOVGjGvpdDIvOyf6Cy2A5fq0KH5ALZu9CHD5tyol355PV
+ Jt0G3hyXHD1JaiwK8WeVK6ykT2XJOdjj+HwJ+/ohaUOjNe6oDDRD38p6Bji5UIpFLtpv
+ 88zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777277371; x=1777882171;
+ d=1e100.net; s=20251104; t=1777277289; x=1777882089;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=UyizkhPwA66T9NIfFzFir+Q1fq4kdPQuZBgZLFR1jbQ=;
- b=Ogd5zrz5wX1dwsTviqR+P3G+THwALQMY2w/tlPVFPPw88zYIBQqB6PbPXwzrIpvy6I
- 5qbUE3WdKmZKQbA8J6xxAXgSD6NNrHpElyb04apgmOCGzu0Pe30vPkq9Hr0mrqedV/ei
- WGjaM5AtxUfSx+UlxXo+Pg4Xtgf4sFm4Fl0mNLIG8FtF2R38gSMNrkhpR8rKKgkWtQ8w
- jTvI5H1TenItQAwE8Rkwz/vgs+IZy9ElWEujZ79O/O25E0xKGbL1aOhsh1DGCg6/9/p6
- KvOazNMoQzQV8lWM1M1GEk5IGizOkcGYUk5+gGeQNZRr4NvKiiKsgAfxBOFKW0Y6npt9
- 6ctA==
+ bh=TmErLYkkyC0UQ3cHtYrsC9C+y1iumERnceYY02O3hcE=;
+ b=HDgx9L9YV7WMo6s+RJ/1YIdCqiKk5laIGq6rd6b0EFUjePogguCCQv7I6sOZJbgzQW
+ bYsSs9cC6YfcspzCwMmkI0Fx5aqNXbtXZ5uMCxWZXIVGnn1nhjFwXDJ4dQq8zjeuBV8I
+ 88zdQlEAVgNY42KMT2UU8U9OcNYpqWw3io50b19Lsh5TjrXmOwehKQA5oUQxzfpcp3ro
+ dOlZ18+mKK0+xs7MzSJbxbi06QLumxViBgfj+u9gOKkZpM037oesf4Z7w7Yh1K3Z2CFa
+ wRo+434SaJRb8jqMbPiYF9i9ZGHI3MICxjLC5HFMW05LZb7ktiRYk2VHXR3ocUw9vaiB
+ ITQQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+L9fDkYOoHwz8rMsoci0EoLpM22Ly1lXTESoTLzpFI2wQzbDNMxQ916pr+w1+G71jAgh19kaivg2Vm@nongnu.org
-X-Gm-Message-State: AOJu0YwZT214K1YZ/ltl7gCp8M5Jk9Y1JBAwFJk4HV06x4drV9Fzy+jV
- ltdIcsWwJ++TIBUMcatkF5vKd8n0PgJDsu0oJV9RVSKFUek3XYSnsFLYH8zo7cHXa3NszL0Pjcj
- QMoHcu30=
-X-Gm-Gg: AeBDietmkFbqII0EcmNzVPZPrJSn+ZtfosuhK+k75i7WSG2lkPXaRzruLTNThU5IcNz
- /3K3nMC3hXT1No3PlDBNMpd9y0AwOtflbS4yrm1yR8RcJuKe3k/+SNS9HOvo+Xc1xAmwsbBgG9q
- 7Qtt0Uc41K8WnElpMeTxmF8VW63Y6wE6R8YYm9PUQ5qA0GwIPgRt2t79hJBtRFSw1hn2Qe1CJfg
- PZje2L/AVVV8Cy7aBd8w0IESU7DgzK0KifT0NIzdd92BP+32wF2QBaPkO7ilMv9GEyS+HNAZ6LA
- gtHAzWLjm/ZF1L1llhUsXgJQINRSw46zuARh7LqWuB7fSeAjsaO6BQMH+TO/wf84bOprWyG2NmF
- 0koYQh3xu15J1r2Yk/ZtROasJbV5CHYCcBCUEF9QfIiW1aafZw9KnKF3g77tF9f4He/leWkGPeN
- fPyB4PsvCj/sTRRX0H6xSYH8NV44TzvCul6Qc9XACEwKnC7XRSl7lSjF5lcHmbrOoj+xFJpEXZa
- crK7HV8oqc=
-X-Received: by 2002:a05:6000:2dc3:b0:43d:d037:d59c with SMTP id
- ffacd0b85a97d-43fe3dd5069mr64972242f8f.16.1777277371176; 
- Mon, 27 Apr 2026 01:09:31 -0700 (PDT)
+ AFNElJ86JhtWS++1go10AsHYa7uvK1YQGyP3L+tZTfBOiJbn0JGfGo0IRiKd3d0+zu8Lgu1P5YjY0owWfpu1@nongnu.org
+X-Gm-Message-State: AOJu0YwzHf+KYoJDOBbYwrP4rxLVQIWlFywVsV2KCuDD1CKT+q9KLgHJ
+ WX6NnpGPRiathWmTafXurpsiQAlxInNTJzMBKDr7/qLyhzAgPAeCcP80BMhVqM7zl5wxi0uDbOW
+ 6ipv2rvA=
+X-Gm-Gg: AeBDiesezDmd0RKb19NjVSjtFYMJ1JvTqelYNWrM+kOIXYqsYfAGnBgBPxOUXPh+xqp
+ BGs5N7t+aqUGiXDqgCpaVAsYBltIF3STfX1VS7v8e23N7fNfSt6uk4SH/0f4+a8wfEB3u5W31KJ
+ t2DDYm0AsgtJxXjnaoYjrV8ekZxT/Lk6gZa28TpSbwtoCIFN6d8DefXVB78uKYJzeiTJHmIp9dQ
+ bDSqWE1E9GQVPxZJ/MJzFJF+O77/J6KP3fcKIo4o42W4xPZtfGufnPQ16Db0M0x/KlvdlYviwf4
+ cYnTQyG4gwoG2f6sv0wvqX2wUklekf3Mbw05TCT+3W3M8PfKBPj6R+TAGXjpHC0BdreelOskWXJ
+ 2ZDxouTU6HNXt/+u5oysu2jKo7WZa5emxxGKG1WIMxpB5q4YHVMZPEqDElbHjmm9v43zssToa6G
+ zqtAN9lQqnlFQlTQrKjhfKLDtxhmHyEjw11AxKHE5OA65aT2g1jRsfLXDROunBHn9QW0irHqApb
+ DTbKnCH5l7dM3iQWpB7Yg==
+X-Received: by 2002:a05:6000:200c:b0:43d:77f4:7145 with SMTP id
+ ffacd0b85a97d-43fe3dd407dmr66647608f8f.19.1777277289285; 
+ Mon, 27 Apr 2026 01:08:09 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-444eebec868sm3920561f8f.31.2026.04.27.01.09.30
+ ffacd0b85a97d-43fe4e3a7b4sm73442112f8f.22.2026.04.27.01.08.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Apr 2026 01:09:30 -0700 (PDT)
+ Mon, 27 Apr 2026 01:08:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: Markus Armbruster <armbru@redhat.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH v4 16/32] monitor: Do not check TARGET_I386 to build 'info
- sev' command
-Date: Mon, 27 Apr 2026 10:07:22 +0200
-Message-ID: <20260427080738.77138-17-philmd@linaro.org>
+Subject: [PATCH v4 04/32] monitor: Extract completion declarations to
+ 'monitor/hmp-completion.h'
+Date: Mon, 27 Apr 2026 10:07:10 +0200
+Message-ID: <20260427080738.77138-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260427080738.77138-1-philmd@linaro.org>
 References: <20260427080738.77138-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,108 +102,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This command is filtered at build-time for i386/x86_64 binaries.
-By using the recently introduced HMPCommand::arch_bitmask flag
-we can filter it at runtime, making it possible to compile
-hmp-commands-info.hx once.
-
-Since the method depends on the CONFIG_SEV definition, define it
-in its own stub file.
+Many files include "monitor/hmp.h", but few of them really need
+the completion declarations: move them to a distinct header.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- MAINTAINERS                   |  1 +
- stubs/hmp-cmd-info_sev.c      | 16 ++++++++++++++++
- target/i386/sev-system-stub.c |  5 -----
- hmp-commands-info.hx          |  3 +--
- stubs/meson.build             |  1 +
- 5 files changed, 19 insertions(+), 7 deletions(-)
- create mode 100644 stubs/hmp-cmd-info_sev.c
+ MAINTAINERS                      |  2 ++
+ include/monitor/hmp-completion.h | 40 ++++++++++++++++++++++++++++++++
+ include/monitor/hmp.h            | 21 -----------------
+ chardev/char-hmp-cmds.c          |  1 +
+ migration/migration-hmp-cmds.c   |  1 +
+ monitor/hmp-target.c             |  1 +
+ net/net-hmp-cmds.c               |  1 +
+ qom/qom-hmp-cmds.c               |  1 +
+ system/qdev-monitor.c            |  1 +
+ system/runstate-hmp-cmds.c       |  1 +
+ trace/trace-hmp-cmds.c           |  1 +
+ ui/ui-hmp-cmds.c                 |  1 +
+ 12 files changed, 51 insertions(+), 21 deletions(-)
+ create mode 100644 include/monitor/hmp-completion.h
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 8f587756cbd..eeb7115edcd 100644
+index 35529266a26..fda43a7605b 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -515,6 +515,7 @@ S: Supported
- F: docs/system/i386/amd-memory-encryption.rst
- F: docs/system/i386/sgx.rst
- F: hw/i386/sgx*
-+F: stubs/hmp-cmd-info_sev.c
- F: stubs/qmp-i386-sev.c
- F: stubs/qmp-i386-sgx.c
- F: target/i386/kvm/
-diff --git a/stubs/hmp-cmd-info_sev.c b/stubs/hmp-cmd-info_sev.c
+@@ -3383,6 +3383,8 @@ F: monitor/monitor.c
+ F: monitor/hmp*
+ F: hmp.h
+ F: hmp-commands*.hx
++F: include/monitor/hmp.h
++F: include/monitor/hmp-completion.h
+ F: include/monitor/hmp-target.h
+ F: tests/qtest/test-hmp.c
+ F: include/qemu/qemu-print.h
+diff --git a/include/monitor/hmp-completion.h b/include/monitor/hmp-completion.h
 new file mode 100644
-index 00000000000..f3624423a33
+index 00000000000..dab21867dc9
 --- /dev/null
-+++ b/stubs/hmp-cmd-info_sev.c
-@@ -0,0 +1,16 @@
++++ b/include/monitor/hmp-completion.h
+@@ -0,0 +1,40 @@
 +/*
-+ * Human Monitor 'info sev' stub (CONFIG_SEV)
++ * Human Monitor Completion handlers
 + *
-+ * Copyright (c) Linaro
++ * Copyright IBM, Corp. 2011
++ *
++ * Authors:
++ *  Anthony Liguori   <aliguori@us.ibm.com>
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
-+#include "qemu/osdep.h"
-+#include "monitor/hmp.h"
-+#include "monitor/monitor.h"
++#ifndef HMP_COMPLETION_H
++#define HMP_COMPLETION_H
 +
-+void hmp_info_sev(Monitor *mon, const QDict *qdict)
-+{
-+    monitor_printf(mon, "SEV is not available in this QEMU\n");
-+}
-diff --git a/target/i386/sev-system-stub.c b/target/i386/sev-system-stub.c
-index fb84aee94d2..2ea85597cf9 100644
---- a/target/i386/sev-system-stub.c
-+++ b/target/i386/sev-system-stub.c
-@@ -32,11 +32,6 @@ int sev_es_save_reset_vector(void *flash_ptr, uint64_t flash_size)
-     g_assert_not_reached();
- }
++#include "qemu/readline.h"
++
++void object_add_completion(ReadLineState *rs, int nb_args, const char *str);
++void object_del_completion(ReadLineState *rs, int nb_args, const char *str);
++void device_add_completion(ReadLineState *rs, int nb_args, const char *str);
++void device_del_completion(ReadLineState *rs, int nb_args, const char *str);
++void sendkey_completion(ReadLineState *rs, int nb_args, const char *str);
++void chardev_remove_completion(ReadLineState *rs, int nb_args, const char *str);
++void chardev_add_completion(ReadLineState *rs, int nb_args, const char *str);
++void set_link_completion(ReadLineState *rs, int nb_args, const char *str);
++void netdev_add_completion(ReadLineState *rs, int nb_args, const char *str);
++void netdev_del_completion(ReadLineState *rs, int nb_args, const char *str);
++void ringbuf_write_completion(ReadLineState *rs, int nb_args, const char *str);
++void info_trace_events_completion(ReadLineState *rs, int nb_args,
++                                  const char *str);
++void trace_event_completion(ReadLineState *rs, int nb_args, const char *str);
++void watchdog_action_completion(ReadLineState *rs, int nb_args,
++                                const char *str);
++void migrate_set_capability_completion(ReadLineState *rs, int nb_args,
++                                       const char *str);
++void migrate_set_parameter_completion(ReadLineState *rs, int nb_args,
++                                      const char *str);
++void delvm_completion(ReadLineState *rs, int nb_args, const char *str);
++void loadvm_completion(ReadLineState *rs, int nb_args, const char *str);
++
++#endif
+diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+index e222bea60cd..9c2330205fc 100644
+--- a/include/monitor/hmp.h
++++ b/include/monitor/hmp.h
+@@ -114,27 +114,6 @@ void hmp_vhost_queue_status(Monitor *mon, const QDict *qdict);
+ void hmp_virtio_queue_element(Monitor *mon, const QDict *qdict);
+ void hmp_xen_event_inject(Monitor *mon, const QDict *qdict);
+ void hmp_xen_event_list(Monitor *mon, const QDict *qdict);
+-void object_add_completion(ReadLineState *rs, int nb_args, const char *str);
+-void object_del_completion(ReadLineState *rs, int nb_args, const char *str);
+-void device_add_completion(ReadLineState *rs, int nb_args, const char *str);
+-void device_del_completion(ReadLineState *rs, int nb_args, const char *str);
+-void sendkey_completion(ReadLineState *rs, int nb_args, const char *str);
+-void chardev_remove_completion(ReadLineState *rs, int nb_args, const char *str);
+-void chardev_add_completion(ReadLineState *rs, int nb_args, const char *str);
+-void set_link_completion(ReadLineState *rs, int nb_args, const char *str);
+-void netdev_add_completion(ReadLineState *rs, int nb_args, const char *str);
+-void netdev_del_completion(ReadLineState *rs, int nb_args, const char *str);
+-void ringbuf_write_completion(ReadLineState *rs, int nb_args, const char *str);
+-void info_trace_events_completion(ReadLineState *rs, int nb_args, const char *str);
+-void trace_event_completion(ReadLineState *rs, int nb_args, const char *str);
+-void watchdog_action_completion(ReadLineState *rs, int nb_args,
+-                                const char *str);
+-void migrate_set_capability_completion(ReadLineState *rs, int nb_args,
+-                                       const char *str);
+-void migrate_set_parameter_completion(ReadLineState *rs, int nb_args,
+-                                      const char *str);
+-void delvm_completion(ReadLineState *rs, int nb_args, const char *str);
+-void loadvm_completion(ReadLineState *rs, int nb_args, const char *str);
+ void hmp_rocker(Monitor *mon, const QDict *qdict);
+ void hmp_rocker_ports(Monitor *mon, const QDict *qdict);
+ void hmp_rocker_of_dpa_flows(Monitor *mon, const QDict *qdict);
+diff --git a/chardev/char-hmp-cmds.c b/chardev/char-hmp-cmds.c
+index 8e9e1c1c021..f377e00b699 100644
+--- a/chardev/char-hmp-cmds.c
++++ b/chardev/char-hmp-cmds.c
+@@ -16,6 +16,7 @@
+ #include "qemu/osdep.h"
+ #include "chardev/char.h"
+ #include "monitor/hmp.h"
++#include "monitor/hmp-completion.h"
+ #include "monitor/monitor.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-char.h"
+diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+index 0a193b8f54a..d5712d11b8c 100644
+--- a/migration/migration-hmp-cmds.c
++++ b/migration/migration-hmp-cmds.c
+@@ -17,6 +17,7 @@
+ #include "block/qapi.h"
+ #include "migration/snapshot.h"
+ #include "monitor/hmp.h"
++#include "monitor/hmp-completion.h"
+ #include "monitor/monitor.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-migration.h"
+diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
+index 3f019ae2a28..da7dd7f31f2 100644
+--- a/monitor/hmp-target.c
++++ b/monitor/hmp-target.c
+@@ -29,6 +29,7 @@
+ #include "system/device_tree.h"
+ #include "monitor/hmp-target.h"
+ #include "monitor/hmp.h"
++#include "monitor/hmp-completion.h"
+ #include "block/block-hmp-cmds.h"
+ #include "qapi/qapi-commands-control.h"
+ #include "qapi/qapi-commands-misc.h"
+diff --git a/net/net-hmp-cmds.c b/net/net-hmp-cmds.c
+index e7c55d27876..2b24c9e6049 100644
+--- a/net/net-hmp-cmds.c
++++ b/net/net-hmp-cmds.c
+@@ -16,6 +16,7 @@
+ #include "qemu/osdep.h"
+ #include "migration/misc.h"
+ #include "monitor/hmp.h"
++#include "monitor/hmp-completion.h"
+ #include "monitor/monitor.h"
+ #include "net/net.h"
+ #include "net/hub.h"
+diff --git a/qom/qom-hmp-cmds.c b/qom/qom-hmp-cmds.c
+index 32e40630c96..47110ca58c0 100644
+--- a/qom/qom-hmp-cmds.c
++++ b/qom/qom-hmp-cmds.c
+@@ -8,6 +8,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/core/qdev.h"
+ #include "monitor/hmp.h"
++#include "monitor/hmp-completion.h"
+ #include "monitor/monitor.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-qom.h"
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index 1ac6d9a8575..2ed95e83602 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -20,6 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/core/sysbus.h"
+ #include "monitor/hmp.h"
++#include "monitor/hmp-completion.h"
+ #include "monitor/monitor.h"
+ #include "monitor/qdev.h"
+ #include "system/arch_init.h"
+diff --git a/system/runstate-hmp-cmds.c b/system/runstate-hmp-cmds.c
+index be1d6769926..02d1d42bf39 100644
+--- a/system/runstate-hmp-cmds.c
++++ b/system/runstate-hmp-cmds.c
+@@ -16,6 +16,7 @@
+ #include "qemu/osdep.h"
+ #include "exec/cpu-common.h"
+ #include "monitor/hmp.h"
++#include "monitor/hmp-completion.h"
+ #include "monitor/monitor.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-run-state.h"
+diff --git a/trace/trace-hmp-cmds.c b/trace/trace-hmp-cmds.c
+index 45f4335ff5d..390173095cf 100644
+--- a/trace/trace-hmp-cmds.c
++++ b/trace/trace-hmp-cmds.c
+@@ -24,6 +24,7 @@
  
--void hmp_info_sev(Monitor *mon, const QDict *qdict)
--{
--    monitor_printf(mon, "SEV is not available in this QEMU\n");
--}
--
- void pc_system_parse_sev_metadata(uint8_t *flash_ptr, size_t flash_size)
- {
- }
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index da9fdc0ab7b..336ab870a2c 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -812,15 +812,14 @@ SRST
-     enabled) memory in bytes.
- ERST
- 
--#if defined(TARGET_I386)
-     {
-         .name       = "sev",
-         .args_type  = "",
-         .params     = "",
-         .help       = "show SEV information",
-         .cmd        = hmp_info_sev,
-+        .arch_bitmask = QEMU_ARCH_I386,
-     },
--#endif
- 
- SRST
-   ``info sev``
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 6142e0f4d9d..f086521cde4 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -87,6 +87,7 @@ if have_system
-   stub_ss.add(files('qmp-cpu.c'))
-   stub_ss.add(files('qmp-cpu-s390x.c'))
-   stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
-+  stub_ss.add(files('hmp-cmd-info_sev.c'))
-   stub_ss.add(files('hmp-cmds-hw-s390x.c'))
-   stub_ss.add(files('hmp-cmds-target-i386.c'))
- endif
+ #include "qemu/osdep.h"
+ #include "monitor/hmp.h"
++#include "monitor/hmp-completion.h"
+ #include "monitor/monitor.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-trace.h"
+diff --git a/ui/ui-hmp-cmds.c b/ui/ui-hmp-cmds.c
+index 6c93d452c9c..1e9bc77bd80 100644
+--- a/ui/ui-hmp-cmds.c
++++ b/ui/ui-hmp-cmds.c
+@@ -18,6 +18,7 @@
+ #include <spice/enums.h>
+ #endif
+ #include "monitor/hmp.h"
++#include "monitor/hmp-completion.h"
+ #include "monitor/monitor-internal.h"
+ #include "qapi/error.h"
+ #include "qapi/qapi-commands-ui.h"
 -- 
 2.53.0
 
