@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85ECCFF885E
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:51:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7EF4FF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 12:51:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLQC-00021f-01; Mon, 27 Apr 2026 08:50:44 -0400
+	id 1wHLOp-0000Uo-43; Mon, 27 Apr 2026 08:49:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNz-00087h-1C
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:31 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1wHLNN-0007lR-4k
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:47:51 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLNr-0005hu-Ng
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:25 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4891c00e7aeso75998435e9.2
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:17 -0700 (PDT)
+ id 1wHLNK-0005Sg-Nh
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:47:48 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-488e1a8ac40so126639755e9.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:47:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294097; x=1777898897; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294064; x=1777898864; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4MgWbP/9wmOy0VZTKjCnGxeHPzbsxi09y3T5/RRhIzE=;
- b=Yxu27URy5vlLhiZo3pHH8BeEGnyrw4lDlH/D+Vsk50cUqu1CZYy6IrMWONsPOrkIAr
- hlNwjbwMbHHZyrJGEiO5u3UivrkngLnXopPX1DV9+vr6XLKj/XpVkbf78N8ibLlcHoyo
- 9HApCNAKDpDRSAKFdqks9SQj7loY1s6vtxOVdXTX3HGVLVPQ8B5RmuazLF9aHejnteE9
- Jm+63lGU4kxDYf47013aj0lRBX9wp9fx43Vvx3STRfnLG0DsWgnfa368JHun5y8KFPwQ
- plgLbr5d3VZMV3o5OLp4trbgVTC5QVmjQNa54ESE1jFI02BfpCDSFKDq8issMdGMcm//
- KPew==
+ :reply-to; bh=AQb5G+E5ajG0E+LBF57eBp4L/RpYLZ+IMh399SSPq7U=;
+ b=FrtjvHHet2yK1VlIrHw5TcB3TlMBqokaHwov1V81bWtqARvH2NCixoxZlsjvO9YH3q
+ UOqKU7ua/6wMXYgZ3BRIb62XNIk06s3OJB1JJ+szjWJVa9ZpsisYbk/Lmo4l6IlxMZZ2
+ oYBP557bPibXYbSjFAwOzYFO26czCVEQUotZh6hz5PfCZwliTV3UPmQkiBH5B7I7wuat
+ XiPy53gIbJrMRiU4zU5ER+vtX0V7fzVHmBnhzQET7oAOW+8r/zhjtOP0WKPl/Y9Do5z7
+ skNAD92d0/YxElsAgcq538K7FehwRPHgvDNgkhXK5ES6vsS5aI8eeuzDcJTovi+PVwqn
+ Y1VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294097; x=1777898897;
+ d=1e100.net; s=20251104; t=1777294064; x=1777898864;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=4MgWbP/9wmOy0VZTKjCnGxeHPzbsxi09y3T5/RRhIzE=;
- b=nUpDSy5KWz5Erpp2tF37eceOJsxRPfbcFVGNuVFskb+SD76QUeBhKoOtSItxZcravs
- o4ratrAWsKM6CsYnEYpa9ZUtZJIn8N6KvUHSmtzAGqmM/EdwrOyj4cxD6yxPjeIh/7yb
- VJZTKKHxFqc60hvkiZ2NjXYZgSxYDAOLNowm2Sh6HXRABMGAKD63r1Ak3WIw8H7D3uGl
- N9Enl4F/ICg1Q8A8nGy7NAoT2VjQ/CvU2xPEmlwRhARpO39R2egr7sTXcuKxiy5gL3vH
- IU4dPR53E+IpaJd+Uui1L/hEcGWUdOv7tpe+KUosBpi/uuOojQJSrutfNjjNa89euhpK
- boLA==
-X-Gm-Message-State: AOJu0Yw5ihKxXYsjJA6VsWH8ReaZiyHFj0vOyP55L7TGxjgg38o614zJ
- UV36Wx69WCsWEFDRYp6ORxeyrLCVHC9smlJmtHgChpoAE6KrkQsDUcW0UhtaFA4J2EDob7x4kNf
- iZMX2
-X-Gm-Gg: AeBDiesBM/VQuNGaCIN4vKOLaAitZoY5mkpvccCtY3PmafzIeg1AmDMPWG1ioir3tqQ
- pvlIoGw7dp+Hkdcsv2juW8CYJSlDJla6Rw0uIGslwlCPxdNhSrXg10BrESrkN8pUxg3+i7pufo/
- 0UpeP6bBfMivLKLPXS/F5iEPezt5wRwnpNdpyE7ChInlFXtsmfhnnXvK9Ndl+Spofl5TnmEq1RU
- 57i4dhokRRSoes6GALRwbp5xv0sRPYQ2mcy4fZOPPPp6f7klzUoBDwbzw6JXkRmklU7QX9Gbfpk
- 7N9thNfkLaaYshZWBgrk5vmbqWtepqpSUD3PXlYUlqsMCen1hCfuKN5jIjkTC0RcxRnHJQZLMgb
- Xn1wVohUeh+Pn7cm5QLWh7vO2aR3SzZUHqrHHLINJ9Tz0HuDO6uUs6usT7AgiEfEdAA8ZjYWaM+
- gZrRayGUgmno5TUdQAPhl3jOx+YGw1uMeDm2C5lYfqpVBI4NopirarYiAxjdHF179RMq3LCaL8k
- 9b3jQoqqJTYieS+1MORMeaVnkEO8RyO6yv0cJv9nnPXgVo8LEYf
-X-Received: by 2002:a05:600c:1907:b0:489:201c:dc46 with SMTP id
- 5b1f17b1804b1-489201cdf13mr418319805e9.12.1777294096712; 
- Mon, 27 Apr 2026 05:48:16 -0700 (PDT)
+ bh=AQb5G+E5ajG0E+LBF57eBp4L/RpYLZ+IMh399SSPq7U=;
+ b=Z+WLtbOP7Yyu4xTCBPikIe/+lMFVO5dVfYdZ+esyEG+HpKIXVv1g0GM7rLASgzOSCp
+ GNG6p2zHOE5B8V4cwzceBD4eBaVMElnkWuobe7n2gMEi1H7yFK1l92zXMMrGEv6vw/OJ
+ NnwLodI5jtEfAZqA0QxYNGb69Y3kKKc9/bmAXv0a7NV10gV0EXWvQeXbxds81J5hkjSw
+ TkitpAnZp85A5vOfR4uKrWqZa1pJcRYyePosAUg/0yMC9TKy8LxlTMuZIJTOdcKdh3U1
+ DjUEUnJh/1K3eXxQUueHMDU6vlE5hy5DoqCKCRk+TEucErJ5q1zveKmZVYekc/mQaEcM
+ +5Mw==
+X-Gm-Message-State: AOJu0Yy0o8Ex5gKD6SyYuC5og5Pr19cqi7ZimaEmU5WUb/aHxefqipR7
+ XxGzRQ5PdcKlixZCz38umKiz2FszNs03crZQLBzOTyw6jthCOR8Bq/z+kcFjZ56OpicGuQGvBc8
+ WopWB
+X-Gm-Gg: AeBDieuAkMJoYwZTVZWv7/Ib/GNvnO7hXaXXacTW3mCEPzEQ1reGljnAoywXTtwroye
+ 5MAFvuOvNjZsbhgFFJjI+nxaUwLU4T79RIelVdeE5nY1C/d1W/N/bNueVO4NFxnk3aKrmC4V/06
+ /2P4iVf2Vr3QTxspn2/ppU0RoisnygsxBO1mnCYIIHesANvy3Ll3KaYNpww7WRyigOvVnfGXHOD
+ 1fCK1+qI7u/bNEjaUPZrEg93yPPuug5qUP/u0vlX/5Wjg+MTsdhLHFxutYhY0jAwSuogoOZeM1j
+ ZpNwkBxyk3wzMvHtdmCcFYiD6fcJBXoad6RETQ4Wy3S2X8RC484gEmpi71Cqa27S2jHNZFQW33d
+ IcKehdCUIu9T7QBHzyJAM/JcI+IUa617lpYOlAbzgja4PcpLeM2Aafvn6vGkzmlNuEdwqAo4gkV
+ o2hlowukRk73ebhjfWCtdWMM+pheeBPWLN5hshZqSV3ccT9ddnCkr/VWto0o76uRC0O/Cpr3Oef
+ xq7rnnnUdjs3imoFaQxu6wn8oteBpA994dDwasLkQ==
+X-Received: by 2002:a05:600d:b:b0:48a:563c:c8e2 with SMTP id
+ 5b1f17b1804b1-48a563cd137mr310097505e9.3.1777294063765; 
+ Mon, 27 Apr 2026 05:47:43 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.15
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.47.42
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:48:16 -0700 (PDT)
+ Mon, 27 Apr 2026 05:47:43 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 40/63] hw/arm/fsl-imx6ul: Wire in the LCDIF device model
-Date: Mon, 27 Apr 2026 13:47:14 +0100
-Message-ID: <20260427124738.966578-41-peter.maydell@linaro.org>
+Subject: [PULL 05/63] hw/arm/fsl-imx8mm: Add Clock Control Module IP to iMX8MM
+Date: Mon, 27 Apr 2026 13:46:39 +0100
+Message-ID: <20260427124738.966578-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,102 +100,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yucai Liu <1486344514@qq.com>
+From: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 
-Instantiate LCDIF as a child object of the i.MX6UL SoC in init and
-realize it in the SoC realize path before MMIO/IRQ hookup.
+Add the Clock Control Module (CCM) device to i.MX8MM SoC.
+The CCM implementation is shared with i.MX8MP as the register
+layout is identical between the two variants.Hence iMX8MM will
+be using the source of iMX8MP CCM.
 
-Also make FSL_IMX6UL select CONFIG_IMX6UL_LCDIF and map the LCDIF
-region with a 16 KiB size to match the SoC memory map.
-
-Signed-off-by: Yucai Liu <1486344514@qq.com>
-Message-id: 20260412110240.93116-3-yangyanglan718@gmail.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Signed-off-by: Gaurav Sharma <gaurav.sharma_7@nxp.com>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
  hw/arm/Kconfig              |  1 +
- hw/arm/fsl-imx6ul.c         | 12 ++++++++++--
- include/hw/arm/fsl-imx6ul.h |  4 +++-
- 3 files changed, 14 insertions(+), 3 deletions(-)
+ hw/arm/fsl-imx8mm.c         | 10 ++++++++++
+ include/hw/arm/fsl-imx8mm.h |  2 ++
+ 3 files changed, 13 insertions(+)
 
 diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index b940af9345..c31752e83a 100644
+index b3db2d6848..26dc3e6ed1 100644
 --- a/hw/arm/Kconfig
 +++ b/hw/arm/Kconfig
-@@ -656,6 +656,7 @@ config FSL_IMX6UL
-     imply I2C_DEVICES
-     select A15MPCORE
+@@ -621,6 +621,7 @@ config FSL_IMX8MM
+     bool
+     select ARM_GIC
+     select FSL_IMX8MP_ANALOG
++    select FSL_IMX8MP_CCM
      select IMX
-+    select IMX6UL_LCDIF
-     select IMX_FEC
-     select IMX_I2C
-     select IMX_USBPHY
-diff --git a/hw/arm/fsl-imx6ul.c b/hw/arm/fsl-imx6ul.c
-index 225e179126..1863558a0d 100644
---- a/hw/arm/fsl-imx6ul.c
-+++ b/hw/arm/fsl-imx6ul.c
-@@ -19,6 +19,7 @@
- #include "qemu/osdep.h"
- #include "qapi/error.h"
- #include "hw/arm/fsl-imx6ul.h"
-+#include "hw/display/imx6ul_lcdif.h"
- #include "hw/misc/unimp.h"
- #include "hw/usb/imx-usb-phy.h"
- #include "hw/core/boards.h"
-@@ -136,6 +137,11 @@ static void fsl_imx6ul_init(Object *obj)
-         object_initialize_child(obj, name, &s->usb[i], TYPE_CHIPIDEA);
+ 
+ config FSL_IMX8MM_EVK
+diff --git a/hw/arm/fsl-imx8mm.c b/hw/arm/fsl-imx8mm.c
+index 8218448074..053434412c 100644
+--- a/hw/arm/fsl-imx8mm.c
++++ b/hw/arm/fsl-imx8mm.c
+@@ -169,6 +169,8 @@ static void fsl_imx8mm_init(Object *obj)
+ 
+     object_initialize_child(obj, "gic", &s->gic, gicv3_class_name());
+ 
++    object_initialize_child(obj, "ccm", &s->ccm, TYPE_IMX8MP_CCM);
++
+     object_initialize_child(obj, "analog", &s->analog, TYPE_IMX8MP_ANALOG);
+ 
+     for (i = 0; i < FSL_IMX8MM_NUM_UARTS; i++) {
+@@ -305,6 +307,13 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+         }
      }
  
-+    /*
-+     * LCDIF
-+     */
-+    object_initialize_child(obj, "lcdif", &s->lcdif, TYPE_IMX6UL_LCDIF);
++    /* CCM */
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->ccm), errp)) {
++        return;
++    }
++    sysbus_mmio_map(SYS_BUS_DEVICE(&s->ccm), 0,
++                    fsl_imx8mm_memmap[FSL_IMX8MM_CCM].addr);
 +
-     /*
-      * SDHCIs
-      */
-@@ -656,8 +662,10 @@ static void fsl_imx6ul_realize(DeviceState *dev, Error **errp)
-     /*
-      * LCD
-      */
--    create_unimplemented_device("lcdif", FSL_IMX6UL_LCDIF_ADDR,
--                                FSL_IMX6UL_LCDIF_SIZE);
-+    sysbus_realize(SYS_BUS_DEVICE(&s->lcdif), &error_abort);
-+    sysbus_mmio_map(SYS_BUS_DEVICE(&s->lcdif), 0, FSL_IMX6UL_LCDIF_ADDR);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(&s->lcdif), 0,
-+                       qdev_get_gpio_in(gic, FSL_IMX6UL_LCDIF_IRQ));
- 
-     /*
-      * CSU
-diff --git a/include/hw/arm/fsl-imx6ul.h b/include/hw/arm/fsl-imx6ul.h
-index f8f9c249a2..6205fe6b77 100644
---- a/include/hw/arm/fsl-imx6ul.h
-+++ b/include/hw/arm/fsl-imx6ul.h
-@@ -33,6 +33,7 @@
- #include "hw/net/imx_fec.h"
- #include "hw/usb/chipidea.h"
- #include "hw/usb/imx-usb-phy.h"
-+#include "hw/display/imx6ul_lcdif.h"
- #include "system/memory.h"
- #include "target/arm/cpu.h"
+     /* Analog */
+     object_property_set_uint(OBJECT(&s->analog), "arm-pll-fdiv-ctl0-reset",
+                             0x000fa030, &error_abort);
+@@ -350,6 +359,7 @@ static void fsl_imx8mm_realize(DeviceState *dev, Error **errp)
+     for (i = 0; i < ARRAY_SIZE(fsl_imx8mm_memmap); i++) {
+         switch (i) {
+         case FSL_IMX8MM_ANA_PLL:
++        case FSL_IMX8MM_CCM:
+         case FSL_IMX8MM_GIC_DIST:
+         case FSL_IMX8MM_GIC_REDIST:
+         case FSL_IMX8MM_RAM:
+diff --git a/include/hw/arm/fsl-imx8mm.h b/include/hw/arm/fsl-imx8mm.h
+index 0a020c32a1..df35f0f5ac 100644
+--- a/include/hw/arm/fsl-imx8mm.h
++++ b/include/hw/arm/fsl-imx8mm.h
+@@ -14,6 +14,7 @@
+ #include "hw/char/imx_serial.h"
+ #include "hw/intc/arm_gicv3_common.h"
+ #include "hw/misc/imx8mp_analog.h"
++#include "hw/misc/imx8mp_ccm.h"
  #include "qom/object.h"
-@@ -84,6 +85,7 @@ struct FslIMX6ULState {
-     IMX2WdtState       wdt[FSL_IMX6UL_NUM_WDTS];
-     IMXUSBPHYState     usbphy[FSL_IMX6UL_NUM_USB_PHYS];
-     ChipideaState      usb[FSL_IMX6UL_NUM_USBS];
-+    IMX6ULLCDIFState   lcdif;
-     MemoryRegion       rom;
-     MemoryRegion       caam;
-     MemoryRegion       ocram;
-@@ -143,7 +145,7 @@ enum FslIMX6ULMemoryMap {
-     FSL_IMX6UL_PXP_SIZE             = (16 * KiB),
+ #include "qemu/units.h"
  
-     FSL_IMX6UL_LCDIF_ADDR           = 0x021C8000,
--    FSL_IMX6UL_LCDIF_SIZE           = 0x100,
-+    FSL_IMX6UL_LCDIF_SIZE           = (16 * KiB),
+@@ -34,6 +35,7 @@ struct FslImx8mmState {
  
-     FSL_IMX6UL_CSI_ADDR             = 0x021C4000,
-     FSL_IMX6UL_CSI_SIZE             = 0x100,
+     ARMCPU             cpu[FSL_IMX8MM_NUM_CPUS];
+     GICv3State         gic;
++    IMX8MPCCMState     ccm;
+     IMX8MPAnalogState  analog;
+     IMXSerialState     uart[FSL_IMX8MM_NUM_UARTS];
+     MemoryRegion ocram;
 -- 
 2.43.0
 
