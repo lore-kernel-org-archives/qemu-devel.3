@@ -4,92 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC06BFF8868
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 18:46:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5496FF8860
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 18:59:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHQxs-0003YM-Fd; Mon, 27 Apr 2026 14:45:52 -0400
+	id 1wHRAU-00073w-Jr; Mon, 27 Apr 2026 14:58:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1wHQxq-0003Y2-UX
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 14:45:51 -0400
-Received: from mail-dy1-x132d.google.com ([2607:f8b0:4864:20::132d])
+ (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
+ id 1wHRAI-00071k-EF
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 14:58:42 -0400
+Received: from mail-dl1-x1233.google.com ([2607:f8b0:4864:20::1233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1wHQxp-0002zw-04
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 14:45:50 -0400
-Received: by mail-dy1-x132d.google.com with SMTP id
- 5a478bee46e88-2d8fa0fadfeso5762846eec.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 11:45:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <elirazamumtaz@gmail.com>)
+ id 1wHRAF-0007qk-CY
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 14:58:42 -0400
+Received: by mail-dl1-x1233.google.com with SMTP id
+ a92af1059eb24-12714f01940so776620c88.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 11:58:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777316316; cv=none;
+ d=google.com; s=arc-20240605;
+ b=D/0Wi0IJG4G69EsZPPuSIdEO3g5VifE/Yeb/08q6d07BTUr7IloVgkqCQSrAjurIVF
+ 0M2R7TEUzOYVPGbyoK6Qz8jAXsw6/7qEhIFxeYGxf5bpMOYXncfXn7VevXqmcegFnwk8
+ OatcR9fiolG+G4gv6OpTiLVafbLTlGUrYPQxnzczq0HMCjKtQodSKTIiNmFDiOQfv7FA
+ N8NXpslSRbM5BIO+uOYN2fNDK7KzfvxUjJ1h589ZT1c4CHeNY8WD/huPN5hJ7glE8lpj
+ P57GVW6TnraBFSz1QtwF4NEWEUabBhCuUpkfiZzrmJzwU2l+JbbC3bKx8UhaJBK1rAn4
+ FUpw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=8luF2a7tqALbx1AixS1HhgpnsyXxC0cJiB+dhyTDtS4=;
+ fh=f7vFWFR4iwqDzyn15gDjVKUg8qDcsw7ufdiBVQHbagw=;
+ b=Fsyn/+GumavKu5K2pKXT0Lh5PmqdRCXjF0s+HRJLePF7Yyc2uGe3gSK6Bp6yU3gf54
+ R2cjwaIx+GKR8oaoT+EqQJzK/phomDoU3ga1txO6P4p5AteAa4rIc9KpKEch7j3adHuP
+ jsoUeAn8PumzSBjj6uzvtXfhMJlrMeRN1ZJJFdCTvLmeDhOuLiSU71t+0JrJKDge0lOl
+ R4lgiaWcOc4fmlGobrACuJhDsJhBDnxgAMHV/rRxtKR7OweNfEPahhgSxeKUKm9YV42N
+ XNoarxp1riugioGws0Pw3UljwMNPBj8pxUQ3111/+s4pXQdJx5Z2B+QHXkBSojR8pBKt
+ bp/A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777315547; x=1777920347; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IrP8N0Kqzi52kg9uWLeb5pWndyrGgYxvvDEjOX0XXgM=;
- b=US9YODJyidPiFpAqf93pvbfMQ2QDPwXpbJ0ZGqch/WZ94XBCbfllzwT462O4uAFW2c
- DHAYAsQH/a7OqChtDXJ9LY8O8G1TkRjHfxiwjJ8Ivp2KIWFZDUxt/sQgiaJw6Yq6e8Bu
- 3LsJpvjfaimAdORZH+IX0B8HsiriOLV1S/QkG9pWhjaxvaOdmAZm7k7F8zpz6drNx3dq
- U0IxrWrcpcZKHPZPFjNmkfy9M0xk1XNVcEZACmP/WJo5O+kD544SII7sXtAsHDyFM0zL
- ExP8KHNfY6XlIoRBKw2HMApeFcDR6h7fHnnejXvu0CpVOPiTKsM3HtEKGVOPAKcfEHqs
- 9gvg==
+ d=gmail.com; s=20251104; t=1777316316; x=1777921116; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=8luF2a7tqALbx1AixS1HhgpnsyXxC0cJiB+dhyTDtS4=;
+ b=SHmSbjGBSszls0yWI2HTDgulc5rI4QqDvhWW15ha/ZWpxB/XkSIdJagHAFMcL+hImM
+ hbWZU+1UZ9uG4gdpZWIeSAttidyr6Y+c+6kxRh2Dit+APeUgH9uuPlTfuxEUJTj3r4/J
+ zgxKNbcRi3NTkIjCqGnxH443lKmM9dkS/C6Kx13YjR5tHBmU9VQYPf9nwsgdGpryK7Ru
+ oLPePkS5YFdTPav/q2OwcrYfnc/vkkehmSLsGYCE9gWGW4coGrDsPwyTS0FD0TUKCh9W
+ SEYqbqd/0AFfCG1MYl11eyILGBcjpbue+RCPFW4iVjr8M5rDGjWwWBgDpJfkJfw2KM+W
+ FuJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777315547; x=1777920347;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=IrP8N0Kqzi52kg9uWLeb5pWndyrGgYxvvDEjOX0XXgM=;
- b=oYvIO+KIP+qRFainhduLFLgF/N9o++i+VvNEgwq28MTdkCiNG3cTalWlMdzh6reIbI
- gdWhUsDaMjASK6FGRzpudgO81qto6rbtJ92jP18KYxZRGtPiIG8A6pWBpvDvKR6tH/As
- saeWKFSpBz8cS+wnvVF+nMvf+41i5QawGQ3LGHKDHTS8DMmtivQ1CEozFBDE3jy/bA2/
- IEyIYHPX0aEwtZeLvpILRxuWNawQdniTBcfYwAlPktySFRH7D4ShIJfybgSqUrRscI59
- 4Y9H7cWQJid+cEwxhYU+7oC04CPt/L0r/htn70sD1dHy3gRyjUH1xHPcXz18gYfdFwQ7
- rgzA==
-X-Gm-Message-State: AOJu0Yx+unI2KzERHOs3HACVBFrI09aS7rtYRC/IB16vdRxKdv0Kr2aD
- +BNwtSZT5YwkS30fcx7SVCzk5J0AXe+5DsOH0jqgUGBZ2Hfdaxa8wpKe
-X-Gm-Gg: AeBDietSKgwUfz37jsjvVgC02wv3FixRoUzbAEvwfMJpDXeJ/krY86dWTaMpfYR15N/
- DLnKKLsSuSvfRhECyOaaTVoTR0lkNbQzC1gkkEakPFsTJoYDndwJ6OQME6f6CBFKufphPcXHfR8
- mR2hFBVZokfW3510P5h9dkceM6V42IYf0De7VnHxNFIZK5xzRCnM63Kl01KMHgY2LK4hmhkgEnO
- 1dA65R3IZRDKZ+91pajdJwg8LKkGRi1WcxXcXeuTMTT2wyDq6z0ptH5WSpmdNjicwIoaWN2cMF5
- JteVOI3Pd1ymctj++etfxWQhjxDvAISFczHTLvPwuTUKj/IN2lHPg/zNxqj/4aB1o3k4qkhE9hG
- XygWr1YPr1xdlm/eX32A0z+5uC7EzIDpXQflJppDC5dQhUsdOXpTeq87snmqKo9lZGMUyeTEZUQ
- bzstk91F+GjYSIhvjYAfOREtCs+OMHAyPBmCg4Y9Um0L9BmYWL/+RfNZ4ulCvHUwIUnqi+5UkDL
- w==
-X-Received: by 2002:a05:7300:d70d:b0:2be:9c19:b34b with SMTP id
- 5a478bee46e88-2ed097b91f1mr103317eec.4.1777315546820; 
- Mon, 27 Apr 2026 11:45:46 -0700 (PDT)
-Received: from localhost.localdomain ([2804:7f4:c030:44a8:bc8a:495b:f1cd:ad63])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2ed09fd6e19sm76230eec.13.2026.04.27.11.45.43
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 27 Apr 2026 11:45:46 -0700 (PDT)
-From: Lucas Amaral <lucaaamaral@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Alexander Graf <agraf@csgraf.de>
-Subject: Re: [PATCH v6 0/6] target/arm: ISV=0 data abort emulation library
-Date: Mon, 27 Apr 2026 15:45:40 -0300
-Message-ID: <20260427184540.80415-1-lucaaamaral@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <CAFEAcA-8BeBte6CxH._5F5Zsk3wvs0zJJW6+=8cNaroRTBegK-M5A@mail.gmail.com>
-References: <20260409220614.65558-1-lucaaamaral@gmail.com>
- <CAFEAcA-8BeBte6CxH._5F5Zsk3wvs0zJJW6+=8cNaroRTBegK-M5A@mail.gmail.com>
+ d=1e100.net; s=20251104; t=1777316316; x=1777921116;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8luF2a7tqALbx1AixS1HhgpnsyXxC0cJiB+dhyTDtS4=;
+ b=CboPfMmD5d4ntIpP4WV7RJYpwEberOD/wB+qvBGLCX2O73ksZLM+fUKqhiMak16Ufo
+ xMGzHofxBsg1dZNrJV2g1E8GhAG5nT5CEDcDlmYPCfO600EQJlCS8h9tzM68xrVpqdmZ
+ ExIzGhbvLDM3xMvtqv4YtPNEN1PyzWwe0ymE2/XnzrzFpKSmx3Jug20XIi1PX5MnHydQ
+ A+fdr5TM4CTgm/wh638zIE8utk4CBuj9+qYsXJUZllwYAaaGw2D1UR88lYJ0cylB8o3k
+ Z+Krb2ORykGtFceBl8GR2HYZLtX7gSVPT8ppf4RvBrmeQy27nWRkhJmA3CimC+KAj9Wl
+ 4csA==
+X-Gm-Message-State: AOJu0YzDWgOHkVl6Dtb8nsKQFJot9otehv5MxWfcYOAlhA/K5Vv9kGT6
+ 0tcF4vJJLvddhqlRvVhCcb8uTWv0RI2UAiESgovrmPyByBEoIpdtPrtCkO8SWLoHTBdkd0IgsmG
+ qytxKZTlZkiQ4mqknEZA6pErYT9m8d/A=
+X-Gm-Gg: AeBDiesjUpMAc0QcAs4LlTBVpy+p87hb9N0z72sY2iOpZr4eKTm4tp5HTgUD74jEBcy
+ aRg57mT9NX/0pRFe//PUijUu3SzqFM0SGmWhqFhigEAQwmknULw2+mJjPPHFFLzIX0K9NMnBfBG
+ BYW9kf+H3BAGAwZUE34mag7huj50QyDEolQV6l++l36flXOBSbBUB4A4w8d2bukQJ9R59vcYlFk
+ muHkghyESV5HflvpRsW2a3vdD5ZC99QQ2pVjW5tvsvzGO7PsX3KeA9RNrueugme7ZSdBZ4MxJLl
+ Whu29CmBwH2bDgnZEw==
+X-Received: by 2002:a05:7300:214f:b0:2da:b05a:5a7d with SMTP id
+ 5a478bee46e88-2ed09838d98mr60213eec.0.1777316316193; Mon, 27 Apr 2026
+ 11:58:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132d;
- envelope-from=lucaaamaral@gmail.com; helo=mail-dy1-x132d.google.com
+References: <20260424-master-v2-0-8b50b5c063ed@gmail.com>
+ <20260424-master-v2-1-8b50b5c063ed@gmail.com>
+ <c4c6e1cd-1236-4bcb-9fab-a65b20304922@oss.qualcomm.com>
+In-Reply-To: <c4c6e1cd-1236-4bcb-9fab-a65b20304922@oss.qualcomm.com>
+From: Ali Raza <elirazamumtaz@gmail.com>
+Date: Mon, 27 Apr 2026 23:58:24 +0500
+X-Gm-Features: AVHnY4IQcVB-_aFFMn5rKDD8SrR0rd9lvLiDY9PuTc5qTGpTjrE2QwNGv8dhhlM
+Message-ID: <CALrERebJhL8LPgphbDBPy_PHUt-Z8CSC+ogSOMeWfa+3TeBh1Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] linux-user: Filter /proc/*/task/ to hide
+ QEMU-internal threads
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, deller@gmx.de
+Content-Type: multipart/alternative; boundary="000000000000ae2928065075b32f"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1233;
+ envelope-from=elirazamumtaz@gmail.com; helo=mail-dl1-x1233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,91 +118,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-04-27, Peter Maydell wrote:
-> looking at this I share Mohamed's question about how much of the
-> atomics/etc we really need. This is a thousand lines of code
-> handling instructions that in a lot of cases the guest really
-> ought not to be using on MMIO regions in the first place.
+--000000000000ae2928065075b32f
+Content-Type: text/plain; charset="UTF-8"
+
+On 4/27/26, Pierrick Bouvier wrote:
+> It seems like this patch does two different things:
+> - fix issue when all entries are filtered
+> - add mechanic to filter non-guest threads
 >
-> If we have real examples of this being needed, that's one thing,
-> but I'm not very enthusiastic about implementing 'doesn't actually
-> have the atomic properties' instructions otherwise.
+> It would be more reviewable to implement this in two different patches.
 
-Some empirical data first.  This series was motivated by an
-observed workload: the original Venus development capture (Ubuntu
-24.04 ARM64 + vulkaninfo + vkmark) showed ~1.8M SIMD/FP load-pair
-(vLDP) ISV=0 faults plus a few thousand other ISV=0 hits on
-LDR/LDP/STP/STR variants — guest-side accesses into virtio-gpu
-blob memory that the renderer had been forced to map via the
-subregion fallback (MAP_FIXED rejected as unaligned), trapping as
-MMIO with a syndrome that can't encode pair semantics.  Without
-this series, those 1.8M hits land on the assert(0) in HVF and the
-guest is dead.
+Good point. I will split this in v3:
 
-Patches 4/6 and 5/6 (exclusives, atomics, CAS, PAC) were included
-for correctness against the ARM spec rather than to satisfy any
-observed traffic — same capture had zero hits on LDXR/STXR/STXP/
-LDXP/LDADD/LDCLR/LDEOR/LDSET/LDSMAX/LDSMIN/LDUMAX/LDUMIN/SWP/CAS/
-CASP.  The intent was to cover every load/store class the spec
-permits with ISV=0, so that paths I haven't observed (different
-device, different driver, different guest OS) don't fall through
-to assert(0) either.
+  patch 1: refactor do_getdents()/do_getdents64() to wrap the body in
+          an outer retry loop. Pure refactor with no functional change
+          (without a filter installed, the inner loop always produces
+          an entry per non-EOF host batch, so the outer loop exits on
+          the first iteration and behavior is identical).
 
-I instrumented every trans_*() and the HVF data-abort dispatch,
-then re-ran the same workload on top of the MAP_FIXED alignment
-fix currently in flight:
+  patch 2: add the fd_trans tag for /proc/<pid>/task and the
+          actual entry filter.
 
-  https://patchew.org/QEMU/20260424000544.9617-1-lucaaamaral@gmail.com/
+> I guess it does not protect from opening directly a specific thread
+> file, but there is no reason someone knows the id without performing a
+> getdents first.
 
-Result: zero ISV=0 faults across the run (2.68M ISV=1 dispatches).
-The alignment fix resolves at source: blob now lands in mapped RAM,
-no MMIO trap, the ISV=0 path goes silent on this workload.
+Correct, and this is intentional. The libcap PSX deadlock we are
+fixing only happens via /proc/self/task/ enumeration, so closing the
+direct-open path is not required to fix the bug. It would also be
+hard to do soundly: a guest can already obtain a non-guest TID via
+/proc/self/status (Tgid/PPid), gettid() in a host signal handler,
+etc., and blanket-filtering those would break legitimate uses. Happy
+to revisit if you can point me at a concrete attack/correctness path
+that direct open would expose.
 
-So the question is what role this series plays going forward.  My
-intent was a defensive path covering the load/store classes that
-can legitimately fault with ISV=0 per the ARM spec, so QEMU degrades
-gracefully — emulate when meaningful, inject a clean data abort when
-not — instead of the current assert(0) the moment a guest happens to
-touch MMIO with an instruction the syndrome can't describe.  The
-same wiring covers WHPX, which has the same syndrome limitation.
+Thanks for the review,
+Ali
 
-I want to make sure I'm addressing the right concern before
-respinning.  Two readings of your and Mohamed's comments:
+--000000000000ae2928065075b32f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-(a) Scope: trim instruction classes with no observed use case.
-    Smaller series, less spec coverage at decode level.
+<div dir=3D"ltr">On 4/27/26, Pierrick Bouvier wrote:<br>&gt; It seems like =
+this patch does two different things:<br>&gt; - fix issue when all entries =
+are filtered<br>&gt; - add mechanic to filter non-guest threads<br>&gt;<br>=
+&gt; It would be more reviewable to implement this in two different patches=
+.<br><br>Good point. I will split this in v3:<br><br>=C2=A0 patch 1: refact=
+or do_getdents()/do_getdents64() to wrap the body in<br>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 an outer retry loop. Pure refactor with no functional cha=
+nge<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (without a filter installed, the =
+inner loop always produces<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 an entry p=
+er non-EOF host batch, so the outer loop exits on<br>=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 the first iteration and behavior is identical).<br><br>=C2=A0=
+ patch 2: add the fd_trans tag for /proc/&lt;pid&gt;/task and the<br>=C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 actual entry filter.<br><br>&gt; I guess it do=
+es not protect from opening directly a specific thread<br>&gt; file, but th=
+ere is no reason someone knows the id without performing a<br>&gt; getdents=
+ first.<br><br>Correct, and this is intentional. The libcap PSX deadlock we=
+ are<br>fixing only happens via /proc/self/task/ enumeration, so closing th=
+e<br>direct-open path is not required to fix the bug. It would also be<br>h=
+ard to do soundly: a guest can already obtain a non-guest TID via<br>/proc/=
+self/status (Tgid/PPid), gettid() in a host signal handler,<br>etc., and bl=
+anket-filtering those would break legitimate uses. Happy<br>to revisit if y=
+ou can point me at a concrete attack/correctness path<br>that direct open w=
+ould expose.<br><br>Thanks for the review,<br>Ali</div>
 
-(b) Correctness: keep full spec coverage at decode, but per-class
-    handlers do what's actually correct: emulate where we can
-    preserve semantics, inject a fault where we can't.  Atomics
-    (LDADD/SWP) and exclusives' store half (STXR/STXP) go to the
-    fault path — we can't honor RMW atomicity, since the read→write
-    window can be observed by other vCPUs if BQL doesn't cover it
-    continuously, and STXR claiming success without an exclusive
-    monitor lies to the guest.  Plain loads (LDXR by itself) could
-    legitimately emulate since they make no atomicity claim.
-
-If it's (a), I'd respin trimming patches 4/6 and 5/6 entirely,
-keeping framework + immediate + pair.
-
-If it's (b), I'd respin replacing the atomic/exclusive/CAS/PAC
-trans_*() bodies with `return false` (UNHANDLED → inject data
-abort).
-
-Either way the existing wiring in hvf.c already error_report()s on
-every UNHANDLED before injecting, so operator visibility is
-covered.  Happy to downgrade that to warn_report_once() so a guest
-spinning on an unsupported insn doesn't flood the host log — that
-addresses Mohamed's earlier "warn somewhere" suggestion in a place
-where it actually fires.
-
-If it's both, the (b) shape covers both — explicit fault on the
-classes you don't want emulated, framework still in place to handle
-the legitimate cases without an assert.
-
-Could you and Mohamed confirm which reading is correct?  Happy to
-respin either direction once I know.
-
-Thanks,
-Lucas
+--000000000000ae2928065075b32f--
 
