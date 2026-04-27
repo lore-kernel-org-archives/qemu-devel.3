@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B01A1FF8860
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 13:01:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D97FF886B
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 13:01:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHLUh-0000W4-DL; Mon, 27 Apr 2026 08:55:23 -0400
+	id 1wHLUj-0000zU-Bh; Mon, 27 Apr 2026 08:55:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLO9-0008FM-6Z
+ id 1wHLO9-0008Ez-1m
  for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:37 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHLO6-0005li-BD
+ id 1wHLO6-0005mo-BQ
  for qemu-devel@nongnu.org; Mon, 27 Apr 2026 08:48:36 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4891e86fabeso111458725e9.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:32 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-488a88aeec9so127026025e9.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 05:48:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777294112; x=1777898912; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777294113; x=1777898913; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=YDoQbWYjuWr+STze5DrZodJz/uNdiizqomxJ3dlpfIo=;
- b=EnmXoz+n0+qiKrAgQimh2QtejQkE2ROOSINF7uxEX8jYcT43CPh0u3zngtfCMc/Raj
- qSFvAn2Z0tWX76/9zQn0EXLsu7nB5ZoY9dMbfCo5O3T3XBKAxSZYRHhyFpNb3m5NDkz7
- qHcxYfKFkjM591tB9atbBEjW81QaHRocO+sUrX9wSpUsAH8Fgq+bB6yzAcAmaSYiJ9kF
- tvHlHhBPLOn3AYBORuQOWMg+49Q1c6mxkHdlpcpizyOJT67sAc1867HxGKE48gTa3ghY
- grBHHWVPHEPZvzlvyOEgjSFTdl6GbUG2dLWklJWYDJDo4/f1oHug6710Q4ilqRqAaHkl
- 51Ug==
+ :reply-to; bh=SNjguSagUUFWrnR8Tu095/iRj+cQaq/6CTCp6Ze1XcY=;
+ b=NhbZ2r8ZvC42TEMQz4nvYR+HFoEnFV6KDjQ8MXq+BObgG0WH3IesN6D3T2E9VClVQV
+ oqFGOowH3IGoQVemddW1OZCDthqyQR2TN1qRhsXZPwxiplYA+ekL1MMld2t+mjJkTe1i
+ wL7arYMlC6kKewL/iqz1t5PmbhTZ2ogtvIy+urWWpYVHwWaJfpCs6Ftp1TOdN9yTDOF1
+ 3TRr8tkob9JC6qy3COm019IDIxz11jj6bZVsCrKvYklxPpa07jmx/J75mppA9iu92FbN
+ PT5YA5j+/H5esZWtYYOjvC28KDKSmMCRfCmK0WeIpq07Fs0t/Bj5RRZvvUTS67e3K5Oo
+ MXEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777294112; x=1777898912;
+ d=1e100.net; s=20251104; t=1777294113; x=1777898913;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=YDoQbWYjuWr+STze5DrZodJz/uNdiizqomxJ3dlpfIo=;
- b=JXrILhLbTud8pqcVVx+uuLE+pOi4HyVX0pIlAOFSeC/bva9MObHpXvlJRN24XbAUfw
- NFc8E7Pvx/KPJp0fUJFHrhDJq//6r7ECv34/4Xl92mVaKwk8+6jBf9djCr2z8q1fRvxJ
- GpkF8h/deFPSNhNXVDXZGMCCvHw+9a6LUQjQhx92Sa85w/ipA3KCKDJuJlNLqFabTWKt
- CSWf1IZ3UVl6er2y0ILk8f6DiqXVyDocDqV146M6NsV3lHd4QpFFW+XtS5AfUXIp6z3O
- 9efJb3drmnyr5QnZ0fG8QwDJjyihAzlAuZIxM5iJpynrBnt6P2IGwdsQJX7SVYtZhPqI
- rs2Q==
-X-Gm-Message-State: AOJu0YzGuuiNRxQzFyYVI3pP+UEOAAez44PfsZWpkKELfKtUW3/7Tx4M
- ArGD88gy03yJepFttRy0urtcc3weft163WWYfxKywjO8uILJ/sYSZogi3KVDlfGCS9hCksledzE
- gjhTZ
-X-Gm-Gg: AeBDiesqYGp4uq4YCMXD1qnazb2nGkSvgSCAaI1vxlEBroPQdUuwGPNBNOTVFErtnzv
- AsM+AD6NTpRqoeeIFAspdNLpF8/rU/0AolYv5SltrvzDdAlwo00x+kY08MHTfP9WnvYSSu7ooWn
- r+yXY4Zter3/bTkyAWMUo0JW8+LqvBohygC/a6kpI2QSVu7TftAuLsOtUMQv7eqqBPjTrwCqY3w
- lJyU45GaoYlBqxxxo/Rx/7KOddOYuOdrAVf8JojUFdDh//HWG+9WhNI+vXWPj3ZdjSAV+Eum70o
- a1laLfjw7GucS+H/EM/ZVC1KLFWa3SPTJJPqDLZpfbu0JgdvouJMp6aJde95JUveMsleKt+w3QF
- GH3Tml7LewJm9bK4PCFNs/xjN7a+2Ktrm3AcdYq6OFv5UuNmLZCZfkOj3mUyBVOKRBOTwQrq4xM
- 8smvaYVTkQwXjGWKWZOxcWatmrDXakqls+rZMLGqlUp7sjFORVXRdg2cW/MUkwv3cjcvdwMUaEu
- v4tLNFK8qvTXnsqelzfmic7OUJaW2fBjJB87prKcg==
-X-Received: by 2002:a05:600c:1f83:b0:488:8840:e5ae with SMTP id
- 5b1f17b1804b1-488fb787afemr598550145e9.24.1777294111697; 
- Mon, 27 Apr 2026 05:48:31 -0700 (PDT)
+ bh=SNjguSagUUFWrnR8Tu095/iRj+cQaq/6CTCp6Ze1XcY=;
+ b=dbQjkcgKGT9I24Mv3y2q1QpTeJGlN/hdDzHw0+XliY2WaVHVNYpkAidnV3CpvqGDvo
+ rBX8oNu1Vz7LRVCnQCkNhb8+XMe7sCg1/YCPKPqVMOvQydjByZz3lyOqTYHV9eADh9LW
+ nF7zLGwyfRG86KXAIE9cneN2LcwUzCNj1V/kJD13K66VeAHUAb4Fra4bM/7a/8UXOfOK
+ 49jykDLdoFQ23ucJLEuVH59tug/SIsJuMFjGkey/qTEDHPa/7/O8hoYfy7t4pJEZtC0u
+ QkbziYGuA/pmkSMj7ezxt15v+pK3dCMAJF9vyEwHj3S67BV6B2LlOXYSdsDAQ7bDY3YS
+ pOfg==
+X-Gm-Message-State: AOJu0Yy1T412esj7No5O2p/yK/dbVtVX3qSaQZwGBJnlrhurf7EHxUF0
+ eudGhGpAugbBZ/f8W+qQ6dgRndN/K7fbngqnTHUejSkBpDRdwsENNEnlPyjMeezO5mkzYbtiTEQ
+ DSB0q
+X-Gm-Gg: AeBDiesJAnUoUwOwTthKH8Q6DntdS0pQ6GR9b93PZcA7fIeB5h86XzFB0g98X02lYuo
+ NFv7EKl30LYA+87v/zRo30NtL/16pGG5mFZVDpuYzjo7eEdi8ED3lt+CCIqegqvTYXQBEwJViYc
+ jse+5KU/OUeGfyczdPzusCuwNTcQHrd+YzXhUvlodLJt71ztwdVAHg0VSqoqpK43Q2q2oD4JfCy
+ Cmhb8o7JuOkuB4VRloPJeUse6VRzojqN7HYanqJ3sX1ULmJ8Aq4cVdcU2v2LvIzqUqq9D6DrNMI
+ Nvof7c8YQJJUkJsOy7egwEmC9ckZ/u5Ao0dWqPQkpdcP4EDeHu9/rz0SjpHKmPlpQ2MqlZT0IMz
+ OSdBzSMevaUjfgwUKzZbBsNJBWTeCcBcx96Se/8PVOsApE52qMyBlQ/6Aq3uXIMWAfaQqzDKqlx
+ 53cR7O2ZWTNOTX2sDGYrUzScMWkT0vW5hcoCv1fS0PwT0LO3Ks46p0O2ez79nM+t+EL7/PHtMyh
+ hEkh+6/HOQ0Oh1UZklp2TbTo8nwxGhNerVjYrCpaA==
+X-Received: by 2002:a05:600c:468c:b0:48a:56d5:16f2 with SMTP id
+ 5b1f17b1804b1-48a56d5179amr386817155e9.7.1777294112716; 
+ Mon, 27 Apr 2026 05:48:32 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.30
+ 5b1f17b1804b1-488ffc5e3f4sm448974115e9.2.2026.04.27.05.48.31
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 27 Apr 2026 05:48:30 -0700 (PDT)
+ Mon, 27 Apr 2026 05:48:32 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 57/63] target/arm: use syndrome helpers to set SAME_EL EC bit
-Date: Mon, 27 Apr 2026 13:47:31 +0100
-Message-ID: <20260427124738.966578-58-peter.maydell@linaro.org>
+Subject: [PULL 58/63] target/arm: make whpx use syndrome helpers for decode
+Date: Mon, 27 Apr 2026 13:47:32 +0100
+Message-ID: <20260427124738.966578-59-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
 References: <20260427124738.966578-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,41 +103,44 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alex Bennée <alex.bennee@linaro.org>
 
-This removes the last use of ARM_EL_EC_SHIFT.
+Rather than open coding a bunch of shifts and masks we can use the
+syndrome definitions. While we are at it assert it really is a
+EC_DATAABORT.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20260422125250.1303100-18-alex.bennee@linaro.org
+Message-id: 20260422125250.1303100-19-alex.bennee@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/syndrome.h  | 1 -
- target/arm/tcg/debug.c | 2 +-
- 2 files changed, 1 insertion(+), 2 deletions(-)
+ target/arm/whpx/whpx-all.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
-index 53137394e2..d4dfab8cd1 100644
---- a/target/arm/syndrome.h
-+++ b/target/arm/syndrome.h
-@@ -107,7 +107,6 @@ typedef enum {
- } GCSInstructionType;
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index bbf0f6be96..4cfc7f9969 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -356,15 +356,16 @@ static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
+ {
+     uint64_t syndrome = ctx->Syndrome;
  
- #define ARM_EL_EC_LENGTH 6
--#define ARM_EL_EC_SHIFT 26
- #define ARM_EL_IL_SHIFT 25
- #define ARM_EL_ISV_SHIFT 24
- #define ARM_EL_IL (1 << ARM_EL_IL_SHIFT)
-diff --git a/target/arm/tcg/debug.c b/target/arm/tcg/debug.c
-index 5214e3c08a..07a52643e7 100644
---- a/target/arm/tcg/debug.c
-+++ b/target/arm/tcg/debug.c
-@@ -56,7 +56,7 @@ raise_exception_debug(CPUARMState *env, uint32_t excp, uint32_t syndrome)
-      * Similarly for watchpoint and breakpoint matches.
-      */
-     assert(debug_el >= cur_el);
--    syndrome |= (debug_el == cur_el) << ARM_EL_EC_SHIFT;
-+    syndrome |= (debug_el == cur_el) << R_SYNDROME_EC_SHIFT;
-     raise_exception(env, excp, syndrome, debug_el);
- }
+-    bool isv = syndrome & ARM_EL_ISV;
+-    bool iswrite = (syndrome >> 6) & 1;
+-    bool sse = (syndrome >> 21) & 1;
+-    uint32_t sas = (syndrome >> 22) & 3;
++    bool isv = FIELD_EX32(syndrome, DABORT_ISS, ISV);
++    bool iswrite = FIELD_EX32(syndrome, DABORT_ISS, WNR);
++    bool sse = FIELD_EX32(syndrome, DABORT_ISS, SSE);
++    uint32_t sas = FIELD_EX32(syndrome, DABORT_ISS, SAS);
+     uint32_t len = 1 << sas;
+-    uint32_t srt = (syndrome >> 16) & 0x1f;
+-    uint32_t cm = (syndrome >> 8) & 0x1;
++    uint32_t srt = FIELD_EX32(syndrome, DABORT_ISS, SRT);
++    uint32_t cm = FIELD_EX32(syndrome, DABORT_ISS, CM);
+     uint64_t val = 0;
+ 
++    assert(syn_get_ec(syndrome) == EC_DATAABORT);
+     assert(!cm);
+     assert(isv);
  
 -- 
 2.43.0
