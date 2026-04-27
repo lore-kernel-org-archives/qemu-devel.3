@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96C9AFF8868
-	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:45:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D7CBFF8867
+	for <qemu-devel@archiver.kernel.org>; Mon, 27 Apr 2026 19:45:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHRtB-0005AH-PT; Mon, 27 Apr 2026 15:45:07 -0400
+	id 1wHRtB-00056y-0s; Mon, 27 Apr 2026 15:45:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRsw-0004gB-A6
+ id 1wHRsy-0004hg-9f
  for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:44:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHRsu-00082I-TU
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:44:50 -0400
+ id 1wHRsw-00082U-Or
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 15:44:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777319088;
+ s=mimecast20190719; t=1777319090;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=N5iQUKbZP8zujOPvMI08chGq/OJpRT5TuzZ9VyP7o4g=;
- b=R75bSFiX9eNcuNKvuUmR1OHVRMUWCM9IFKId7QwRsxZPWjVDE/ilFsUyLGx0RNmwIeLci6
- 7xs96wyWLVmpLEppu4Lz+d/igN0zUYrggh1sPLBegLiex8WSiaLbFUODq0qutmieUwzwHJ
- J/Q0Nzd1UUSxgcaxHcxG+PwvQ/afUgU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=hQRjqUoc7vncI0l+hyaSVFOjsbZOyeIpqu/UWPsxqd8=;
+ b=jKi/P6MUcDd1GFKwkS14DjExy5xHoLD03NSdpSJRalRMVVBEurgrBUTiSykilT8GXxaDBo
+ rIa7ZspPLHWLB8WzytZdohd+FMO81u5/5cYVhLPe9wq/DqJvcS9Pmxeu7UsQh1a37FIu6A
+ Ac6nEzaBUkZIsr61pRza4Zj+h4Vzuyw=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-7Goht9LqO8ybHpsB2T8qdA-1; Mon,
- 27 Apr 2026 15:44:46 -0400
-X-MC-Unique: 7Goht9LqO8ybHpsB2T8qdA-1
-X-Mimecast-MFC-AGG-ID: 7Goht9LqO8ybHpsB2T8qdA_1777319078
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-82-scGLjG0uPeGo4vpIL5PzDg-1; Mon,
+ 27 Apr 2026 15:44:45 -0400
+X-MC-Unique: scGLjG0uPeGo4vpIL5PzDg-1
+X-Mimecast-MFC-AGG-ID: scGLjG0uPeGo4vpIL5PzDg_1777319084
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 051EB19560B8; Mon, 27 Apr 2026 19:44:38 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DBE501800282; Mon, 27 Apr 2026 19:44:43 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6B76719560AB; Mon, 27 Apr 2026 19:44:35 +0000 (UTC)
+ id 508DC19560AB; Mon, 27 Apr 2026 19:44:41 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 27 Apr 2026 23:42:21 +0400
-Subject: [PATCH 22/41] hw/i386/nitro_enclave: add instance finalize
+Date: Mon, 27 Apr 2026 23:42:22 +0400
+Subject: [PATCH 23/41] net/can: free ifname on socketcan finalization
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260427-qom-tests-v1-22-c413f3605311@redhat.com>
+Message-Id: <20260427-qom-tests-v1-23-c413f3605311@redhat.com>
 References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
 In-Reply-To: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Alexander Graf <graf@amazon.com>, Dorjoy Chowdhury <dorjoychy111@gmail.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- "Michael S. Tsirkin" <mst@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1427;
+ Pavel Pisa <pisa@cmp.felk.cvut.cz>, 
+ Francisco Iglesias <francisco.iglesias@amd.com>, 
+ Vikram Garhwal <vikram.garhwal@bytedance.com>, 
+ Jason Wang <jasowang@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1160;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=ky2BNto0UCWYm+5t0f6AgVp5RVCDBWwnYNiNyNbKi5s=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wVJtiinN1Nw+U1eSXwgM7UXadi6GnL7vyCA
- QCzbvybpieJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FQAKCRDa6OEJdZac
- 5WraEACm+lrN9ji+8C+X8qXlo4uk2Ipv9iD7FwKo6j3IA2pKwbk4TiXNjW9SEPu++g+P1VaadQK
- 3bleSRmh091TM5S3SxIgUaezpgC7rxHXYNiPj6Eg/GYiMHJOrG8Dg31PzyhS9BMzX24fURuuQFB
- IPbYcvVijojvWNkRCI27Tu37rHQf8+AKEeUV6qKSLZLPTn5NNUO11P5e1EMp6wgeIt4W2Qq/9YY
- cRVA4lwkj1C+s8LxhlBtP3Hno70NcLxtglo79ZDTuLyh0/12HtagEdDltSmIYts0IG5lKXs8Jq7
- 55PtwKybV/6tDqQ6Vkxjq+68SgyTfZIDv8j/UTLVkwL5Aps6o4xCTWTxgImS4szB55N7stG/iF0
- mXZE6zLVeXtROJv3QDQ+ulugf83DMLyVKYJGTSe4IQ4EcpyRpX9siK0fzrYUVw1D+un9dSWo+X9
- n2AsPMPwpgl475ltsqlK/6VFbq/osU8DFb5EQq4BfNwYD9/ykOSWAAqwvVcW3dJja3iVUKs+PPP
- /uLxI8Lu9f44rBaAByzuTdIscJ2t+BwCm6BIEwhDpTl/Fwg2TqYIxYmhuFQP4Wmf2v5Jgs993Y1
- LSkJx3OwIxdaBanhFeURpcwR7sea54O5CuLRC2koIQkwTyVUygCtNKSYgYQto0SNZJygy5Xw0o/
- EwJx1tJzlK6DGpw==
+ bh=T+85e7xuXg9EayFeuwtfh/5N5bXTovQE7UAq/AO7gww=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp77wVrFjRixhuNCY+Q+nnAmVzh1gFmLm0rQZAa
+ okmszpZ5kaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCae+8FQAKCRDa6OEJdZac
+ 5YJ+D/wJYhK5np4MRUDtWxcOCulAj+2vUx4Llktz765wYx+7LQEVGHj2/ejeM+MwLGE2WE9jjRy
+ 8f5CVktT+9nodqQlnzRXqI0h8aolM2tnoUtZQGtQ6oqPEgDwzbY//8fLZUUQ3cZ0nJ8kxXSKg17
+ 6v6KutTP6MQUNYqCoT3fLOLJyNuJDHGQCuT7VmkKBCAjWT0aSsqi889FnkMIuhEy16V50jXXU0e
+ UtdE7L2XJnANmuCVIUZq3M23vFm/UVg+SAgnM4ZhtHFHuqC4FkFK7egu81+MTrLCMW2NmWKLnDZ
+ Szpyp9HpyxzRnviqrSsiHFUfTFBfAGrJjF2UkjnZLqW5Gmp5mypYC20+Ocdwmn77w5X0yh2BASF
+ uq0VhGMciP1DugO65bOcth1gA/v6RihqTJpOjBFa1mgDLcT86J7a2tQ2BgxSFIK2i5auBi/wqwe
+ GG5lwp2D9KbSRabiN7mQT5od4hVg5Pm48ZDyAJsp7wwFFgx8OQ9CrHLXtv9PyhVF0CcciShgYD2
+ 1ODKQEPsLupfKaOD+JreJQUTJn1JeefRQBwlW8wBdJ1cYTJx+YZhenuALrzVA0J5HXZrxEum/J+
+ 3R1MvR6YRFRlirx/G7/KEcyGCocsOhGPBUaIW7l0SHgZ2R4CmoRV9cfHxBv/5m5mrJBUAHm2Rd6
+ yJo+lpNFz3wDvbw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
@@ -106,43 +106,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Property setter strings (vsock, id, parent_role, parent_id) were
-never freed because nitro_enclave_machine_info had no
-instance_finalize.
+can_host_socketcan_set_if allocates ifname via g_strdup, but no
+instance_finalize existed to free it.
 
-Fixes: f1826463d2e8 ("machine/nitro-enclave: New machine type for AWS Nitro Enclaves")
+Fixes: ea15ea8a7c67 ("net/can: support for connecting to Linux host SocketCAN interface.")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/i386/nitro_enclave.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/can/can_socketcan.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/hw/i386/nitro_enclave.c b/hw/i386/nitro_enclave.c
-index a29f0044d0e..1ce9ee3358a 100644
---- a/hw/i386/nitro_enclave.c
-+++ b/hw/i386/nitro_enclave.c
-@@ -337,11 +337,22 @@ static void nitro_enclave_class_init(ObjectClass *oc, const void *data)
-                                           "Set parent instance identifier");
+diff --git a/net/can/can_socketcan.c b/net/can/can_socketcan.c
+index 8a57ae07178..be67ed7f5a9 100644
+--- a/net/can/can_socketcan.c
++++ b/net/can/can_socketcan.c
+@@ -319,11 +319,19 @@ static void can_host_socketcan_class_init(ObjectClass *klass,
+     chc->disconnect = can_host_socketcan_disconnect;
  }
  
-+static void nitro_enclave_machine_finalize(Object *obj)
++static void can_host_socketcan_finalize(Object *obj)
 +{
-+    NitroEnclaveMachineState *nems = NITRO_ENCLAVE_MACHINE(obj);
++    CanHostSocketCAN *c = CAN_HOST_SOCKETCAN(obj);
 +
-+    g_free(nems->vsock);
-+    g_free(nems->id);
-+    g_free(nems->parent_role);
-+    g_free(nems->parent_id);
++    g_free(c->ifname);
 +}
 +
- static const TypeInfo nitro_enclave_machine_info = {
-     .name          = TYPE_NITRO_ENCLAVE_MACHINE,
-     .parent        = TYPE_MICROVM_MACHINE,
-     .instance_size = sizeof(NitroEnclaveMachineState),
-     .instance_init = nitro_enclave_machine_initfn,
-+    .instance_finalize = nitro_enclave_machine_finalize,
-     .class_size    = sizeof(NitroEnclaveMachineClass),
-     .class_init    = nitro_enclave_class_init,
+ static const TypeInfo can_host_socketcan_info = {
+     .parent = TYPE_CAN_HOST,
+     .name = TYPE_CAN_HOST_SOCKETCAN,
+     .instance_size = sizeof(CanHostSocketCAN),
+     .instance_init = can_host_socketcan_instance_init,
++    .instance_finalize = can_host_socketcan_finalize,
+     .class_init = can_host_socketcan_class_init,
  };
+ 
 
 -- 
 2.53.0
