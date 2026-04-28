@@ -4,106 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0EFFFF885D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 13:09:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E800FF885D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 13:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHiAM-0006Yo-0i; Tue, 28 Apr 2026 09:07:54 -0400
+	id 1wHiVa-00039b-1a; Tue, 28 Apr 2026 09:29:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wHiA6-0006TC-0A
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:07:38 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wHiA3-0001KK-3Q
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:07:37 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63RLOqRv1456647; Tue, 28 Apr 2026 13:07:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=SWRNRb01m0v6U5QU+
- YiQjy4XqmU4JddHXVnkxZ0iXGs=; b=rACPE0SITAuUdA+ejQwXY4cYGNFvJ0QOx
- Pz624e4ZnFfFokJRylW3IFhms5IDysaIv79T4X6TS4YJqqqtT/x5V3FeABSvH0LH
- otC/jfDdKWxGwYpZwVIN0407AjeIbR7YJ1aJjzu30SuDOpSg2ySIb9W7dBGPwZ0t
- ahBPeE8G5yzfG4zneMWBd7pBusf1VT8ErSo/og0i6yMOzvCjaXuLjorDGkn70wgn
- CRBLmYgW8Qp+HY4bV4SG4IOOPKYuVMKz8rUyW/bQXuwGpUKK2+gsimAatPsF4oOk
- eZdDW97J5Jw2JoYl/aNlI3rwWZeslCS90ITGHVlHcvSaY06W4ZscQ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drn8vccdb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Apr 2026 13:07:31 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63SCw6kq032355;
- Tue, 28 Apr 2026 13:07:30 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dsamy9hw0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Apr 2026 13:07:30 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63SD7TR230147302
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 Apr 2026 13:07:29 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6347658062;
- Tue, 28 Apr 2026 13:07:29 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1EE5A58052;
- Tue, 28 Apr 2026 13:07:29 +0000 (GMT)
-Received: from mycroft-2.pok.ibm.com (unknown [9.47.158.222])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 28 Apr 2026 13:07:29 +0000 (GMT)
-From: Stefan Berger <stefanb@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, armenon@redhat.com,
- Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH 5/6] tests: Implement aspeed_i2c_restart to reenable selection
- of master
-Date: Tue, 28 Apr 2026 13:07:17 +0000
-Message-ID: <20260428130718.1325177-6-stefanb@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260428130718.1325177-1-stefanb@linux.ibm.com>
-References: <20260428130718.1325177-1-stefanb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wHiVU-000393-UH
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:29:45 -0400
+Received: from mail-dl1-x1231.google.com ([2607:f8b0:4864:20::1231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wHiVS-0007N9-HP
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:29:43 -0400
+Received: by mail-dl1-x1231.google.com with SMTP id
+ a92af1059eb24-12c8ccc7755so11961329c88.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 06:29:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777382981; cv=none;
+ d=google.com; s=arc-20240605;
+ b=BHTJeu+/z9VQcEscB/5l481frBWvmdeS67eEBiEpQzqmwJFOA874m/YZVReHaNJeYw
+ ZjAPneH+Syy+ywlt6eZn2mzeCucPHN+tAM9tUCJBZPNr+ZhUcNRnF7LE0g+E3hZf7zAJ
+ 5YvB4vzLEYuUNg0iNCj4ir9aV7UqwvkVxsKKnCE+FKX3Ze1Q7dqFnIUwYVpyWZwYBJdx
+ gAx6PJliRbQTtmkTygo+qUhEjpBsoCfB5FogMU8pybqPNiZ6dQP0kWQOvA/UDdRrQnkj
+ N1rQWEVAMeG0mI2oypk6lH5jukVW7GdGykw1DGWkm1/Z9XzcJO0SHajQvYN78sljEpgv
+ kMjw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=1eupjgZMeQMHaFykA3gVnUcb5xXSgJwRwf8f6iVcpDE=;
+ fh=D/CcNrtvbeWGY8nbdaeIwoQ6I3/FtQLwRmnEQ1zZwds=;
+ b=FOfBR9GwzcoXYrcqOkqX8jlnNNccHhvkxkIrM/qn2Pq+mSuXh295laqJoAS08QC04D
+ UL7JjycexA7h2kelGpjbeiQIJ2k/n0aYdaivdtS8Ap5HI7ZYoyE5DYhG2/FV89cqUgcv
+ ZoX2x/zf3Jihetiw5HJsMRvikQejE3EN0YTN1vtPwNNp2dl8JCQA5uq/nUntQ+nsAvR4
+ 9WdFLiGj+w1tZvFxXOVR5bziS7xM8csar3vYFbEsSYrXw0G7SHkPlJiUhsZy63gkpyiF
+ qCWQWW/sQRzNw4wrNe/qxia9bE4gSPX7L2l+W+DK3C116KSudz+jS2QkWBosDpdpAbYo
+ S9Aw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1777382981; x=1777987781; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1eupjgZMeQMHaFykA3gVnUcb5xXSgJwRwf8f6iVcpDE=;
+ b=n4QD81epjRWWitEZ4ylz4w5teIegHTv/u5QI59If7u3lTtEfPaUe6ynICRetx3FU0+
+ IECt+SBZD065dCSOOcSOk3d9nFe5qz5thaINLzBKKvm9iwnVDLo9fagx/K+ozsRtbAaL
+ JNY9hV5FOy3da8o2c2L4aon2UR900L0+tIXqKZquH3ZsqKt0lNBLbHwd9mz5sa31MOV5
+ EIevVYpPju2asw/kWDV5I7onuidqaAsJxEPWZnJEBz4lGEzDz9Ukr208RgyI8l0rjXA0
+ InGYSqGCNOhu0ghEkcgoFBuvg5w6oeZwWfeRQt93benkzo+wL23jHWVlwir7xwHxFLpQ
+ 8GIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777382981; x=1777987781;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=1eupjgZMeQMHaFykA3gVnUcb5xXSgJwRwf8f6iVcpDE=;
+ b=tDmNi0RNvjBPg76tiF7hRpstmdUXFs3D3RIfK2DALEerZgYtu1e8OjiRXAc7Pvq2/A
+ uW2z03cm2qlmfOlohOtY8g5wA8QL+/xNymB5+x/qvG7bqt7gxW4Ddc/PPrys6I4b9H29
+ 1LObwkYabybWGSHm2KOpLEpMunKZ/HsRisCytE5vJux+YFKmJS6Jcax5zQyMtHP88EOK
+ RG23e0Mqxwc/hXFcVzYPAiap5KoiLadDkudVyNyBx47POifjX+HIynuf+pX352GAK4xs
+ tQGG80hh638LVtW6ujU5RjofyTdSGKCYjCNXA9DPvXzfGWJxwrKdhvjpjI2OUcRKAOgU
+ +Ckw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8EMj82NLo2/8tZNbPGOxf37ejcD92MFOmXStXt7Gp4cH0469w0xPB9ouTD+n+4Krql227rjMaksBTt@nongnu.org
+X-Gm-Message-State: AOJu0YxwaIJwLMQDtD0B3vL3X/dEUEIg7TnqbMvIKvzrD8j4iekebMQx
+ H2kBeuleXwDKrGR4wyNBu8lyyCz0oyofSn0VfkiFzYSQVn5jkvmu5JgtmJypOu3fudmxEnIKIaQ
+ T8WH3sBlgdvZCE5Bs2ik1CIsc4DXzDtA=
+X-Gm-Gg: AeBDieuzYJ1MWV0rapr9SWJy9xsew7liQvQj+j5P2ny/r75pKwkS3zt7WILle8lhnY2
+ 6GR94T73jTuxLZNm1z50Qmu9CTC0G9H6ydZ7A7RJKouYpg+3ErVq6SCrQLOdSiWTHbswn9N5z4a
+ XqZSZI3yJgT71RNuhkjaH457v3RHaRw0yPNLtRCXdSxZX2PLfmalR3F+nMB4MwJqLv14hjVfGzT
+ GTGrtPFdxjZAPdHURUjfnU7tJ0JQsNjKU92awgxdP7ztnZjj7L0+rEwUN3iuchOcMLRCCH1Zadr
+ E0X7QxsdsgEUlTF3FU1+UUxMGZ1m8M9VpMnrPVju0MWR/6HkNrs=
+X-Received: by 2002:a05:7022:ec18:b0:12a:6a64:81ee with SMTP id
+ a92af1059eb24-12ddd9438damr1426908c88.3.1777382980552; Tue, 28 Apr 2026
+ 06:29:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=CIIamxrD c=1 sm=1 tr=0 ts=69f0b113 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=h_94E6iZm1Z49o2US0QA:9
-X-Proofpoint-ORIG-GUID: AHIMFklNcJ6lXKa3MNwjtiaLsLR8QPYY
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDExOCBTYWx0ZWRfX+C0X+G3bKv/B
- yCDjifqarmUtwRebZfjy6q6K6mjYh7MVosuTSwlSCXD/v+abCfdmNYISme/M7bYk9IFu0TRORy/
- iGQTYbpERO5SnZhKREx+1B1RKHnkwPpF97Jkn2qFjfWoMwJLJCmfaOG4Xk3gPQ4gJz3wtOkJyXL
- /buUvyF/tVJP3RWOeQ0iCS1IQYBDjVUqOLBsQB1zGHUTUGJC7bJY7CEwygD217rxLRbNObi4Ias
- Bk/Ml3HfrMhWImcpuMRrbVARsadfft9iCkiHfioCBW3+ZfHdawL47kbg2NnH4NCHrN7kpgebC/S
- 6sZyGzmbM0moquLYseCg/Dxny5h5pxltmYxk3h5AmM3yA0GvD4+JFR9nWoRwrFtLkNVBa6E39xo
- YodTk2ha2XT3z3uP3VKy36BClscbi2rp3PjFyAIhc5FXPvBpWoyna/Vq/IFywOCzNyGc8PxaQBE
- A1WoS6+JNUwb1YdlRYA==
-X-Proofpoint-GUID: AHIMFklNcJ6lXKa3MNwjtiaLsLR8QPYY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-28_04,2026-04-28_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 malwarescore=0 suspectscore=0 adultscore=0
- impostorscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2604280118
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260427154441.1918536-1-rkir@google.com>
+ <20260427154441.1918536-2-rkir@google.com>
+In-Reply-To: <20260427154441.1918536-2-rkir@google.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 28 Apr 2026 17:29:28 +0400
+X-Gm-Features: AVHnY4Ku_OSO9hPHyBj08MfQfOQyRmCpZnF_KX-Gbewxxo3v-3TqdUu1R3Lgg3M
+Message-ID: <CAJ+F1CJqa26nXaUUYU0co8DZmnFJCr4Mq2RysDXjuLhiUh9Epg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] qom: improve use-after-free debugging
+To: Roman Kiryanov <rkir@google.com>
+Cc: pbonzini@redhat.com, alex.bennee@linaro.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1231;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dl1-x1231.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,52 +118,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For some TPM  I2C tests it is important to be able to reenable the
-selection of the master. Implement aspeed_i2c_restart to enable this.
+Hi
 
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
----
- tests/qtest/qtest_aspeed.c | 8 +++++++-
- tests/qtest/qtest_aspeed.h | 2 ++
- 2 files changed, 9 insertions(+), 1 deletion(-)
+On Mon, Apr 27, 2026 at 7:49=E2=80=AFPM Roman Kiryanov <rkir@google.com> wr=
+ote:
+>
+> This patch invalidates dead objects so their usage will
+> lead to more predictable results (crashes or asserts).
+>
+> Change-Id: I1dc36dbc1030c2e41c937f08baa97b2e81d44c82
+> Signed-off-by: Roman Kiryanov <rkir@google.com>
+> ---
+>  qom/object.c | 3 +++
+>  1 file changed, 3 insertions(+)
+>
+> diff --git a/qom/object.c b/qom/object.c
+> index f981e27044..240e36c39e 100644
+> --- a/qom/object.c
+> +++ b/qom/object.c
+> @@ -613,6 +613,7 @@ static void object_property_del_all(Object *obj)
+>      } while (released);
+>
+>      g_hash_table_unref(obj->properties);
+> +    obj->properties =3D NULL;
 
-diff --git a/tests/qtest/qtest_aspeed.c b/tests/qtest/qtest_aspeed.c
-index f6da9adea9..13934cc660 100644
---- a/tests/qtest/qtest_aspeed.c
-+++ b/tests/qtest/qtest_aspeed.c
-@@ -15,11 +15,17 @@
- #include "qtest_aspeed.h"
- #include "hw/i2c/aspeed_i2c.h"
- 
-+static int once;
-+
-+void aspeed_i2c_restart(void)
-+{
-+    once = false;
-+}
-+
- static void aspeed_i2c_startup(QTestState *s, uint32_t baseaddr,
-                                uint8_t slave_addr, uint8_t reg)
- {
-     uint32_t v;
--    static int once;
- 
-     if (!once) {
-         /* one time: enable master */
-diff --git a/tests/qtest/qtest_aspeed.h b/tests/qtest/qtest_aspeed.h
-index d35b0c7cba..c0a095bb46 100644
---- a/tests/qtest/qtest_aspeed.h
-+++ b/tests/qtest/qtest_aspeed.h
-@@ -23,6 +23,8 @@ static inline uint32_t ast2600_i2c_calc_bus_addr(uint8_t bus_num)
-     return AST2600_ASPEED_I2C_BASE_ADDR + 0x80 + bus_num * 0x80;
- }
- 
-+void aspeed_i2c_restart(void);
-+
- uint8_t aspeed_i2c_readb(QTestState *s,
-                          uint32_t baseaddr, uint8_t slave_addr, uint8_t reg);
- uint16_t aspeed_i2c_readw(QTestState *s,
--- 
-2.43.0
+That makes sense (I'd g_clear_pointer for a safer one-liner instead)
 
+>  }
+>
+>  static void object_property_del_child(Object *obj, Object *child)
+> @@ -670,6 +671,8 @@ static void object_finalize(void *data)
+>
+>      g_assert(obj->ref =3D=3D 0);
+>      g_assert(obj->parent =3D=3D NULL);
+> +    g_assert(obj->properties =3D=3D NULL);
+> +    obj->class =3D NULL;
+
+This one I am not sure is placed right. If the goal is to revert the
+object_initialize_with_type() effect, perhaps it should do more, in
+object_deinit() ?
+
+>      if (obj->free) {
+>          obj->free(obj);
+>      }
+> --
+> 2.54.0.rc2.544.gc7ae2d5bb8-goog
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
