@@ -4,81 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC72FF885D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 08:43:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACE87FF885D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 09:08:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHe1m-0006FG-2s; Tue, 28 Apr 2026 04:42:46 -0400
+	id 1wHeQG-0004qy-9Q; Tue, 28 Apr 2026 05:08:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ewanhai-oc@zhaoxin.com>)
- id 1wHe1W-0006Dg-JJ
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:42:31 -0400
-Received: from mx2.zhaoxin.com ([61.152.208.219])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ewanhai-oc@zhaoxin.com>)
- id 1wHe1S-0007ir-6q
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:42:28 -0400
-X-ASG-Debug-ID: 1777365730-1eb14e680f2b810001-jgbH7p
-Received: from zhaoxin.com (zxmail.zhaoxin.com [10.28.208.166]) by
- mx2.zhaoxin.com with ESMTP id lFKtIK0Ory4J5Lyu;
- Tue, 28 Apr 2026 16:42:10 +0800 (CST)
-X-Barracuda-Envelope-From: ewanhai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.208.166
-X-ASG-Whitelist: Client
-X-Append-Disclaimer: 1
-Received: from [127.0.0.1] ([127.0.0.1] [10.28.24.2])
- by zhaoxin.com (8.30) with ESMTP7effe6796d32c21aaca640dcc2b7505b
- Tue, 28 Apr 2026 16:42:08 +0800
-X-Eyou-Smtpauth: EwanHai-oc@zhaoxin.com
-X-Eyou-EnvelopeSender: ewanhai-oc@zhaoxin.com
-Message-ID: <7a515afc-7cfd-4756-a8b0-bf7a8c0e7490@zhaoxin.com>
-Date: Tue, 28 Apr 2026 16:42:07 +0800
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHeQC-0004q9-Rc
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:08:02 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHeQA-00064T-LP
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:08:00 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-65492d097acso4265459d50.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 02:07:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777367277; cv=none;
+ d=google.com; s=arc-20240605;
+ b=TAQbIGZ4vaZ9nsP0Yclb5K+phYe01+hgDW7mIwcqB+rup+IHvluaFQawgAJzFpQiQD
+ b6aqWhvxGrOgFDRulsyd3rbPjsBNvRQMX+3TXwqNpVSry+y92TxnK5BAodaFr+zShbNu
+ +e2Ne7qpXJh5S25DXfQiYHEf8PPDthPtoLIB+kzU8/ZPDzTL6AuscAgBbofxIY49U1vu
+ IOAhicTWT59lThAXyysCYXdp7pVroC1zOJQLdcOQECYwOJ7k+peaFhfHAeMgy/6dRD0k
+ DRW3+D7XNe13Qk+GbUPn9Jb+9ZdJ2U9VpyWGTX225hgwtNvHniP4h0WL4OJopoH/gDad
+ gKKA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=DThF0XUL4dy9R6fRsfQztI3lmJ5+02kga/scEtudiAs=;
+ fh=3Nd3mw0zDQF5Tv/7iMILd31jXeg5H2sRXNpFJQZKP5Q=;
+ b=jNJP09NxiJgiawIYS3f66WJJvKUiobsG4P43ET8zCMHwUWuTMSg9xYDj50NamtrHSe
+ cF5I+uYKbZvGrEslgMZmRl6hHzhgTULZxYS7zOAyvFZvadrPJWSpmhy9+KZzwRnmaOz1
+ bFSdRFB4lnn1U63X+3Qzaawd3iA6G495HauxRGWYILNQZBCfL7jxRHfcsL61RB7g0DMV
+ X/5t69i7ZQ7IiDoH/llv0meWEdC3awnFFw1mkbnssVxXzNLQbe6C0boLRG9dbmizdJTy
+ pD5bgok2LR0x8Di7+hpl8hiUNv5kmWWMa/LJO+Q4Vpv8HoVApG57Ms91Qhuv5pJQD2wH
+ X+Ug==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777367277; x=1777972077; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=DThF0XUL4dy9R6fRsfQztI3lmJ5+02kga/scEtudiAs=;
+ b=Ba7XyxvtssUcifAhCHTNjymztDGxM+isa02pVd1I7I1K+Rc0CtJcTPzG3Y7Z00vcKH
+ PZIVZZ9dSPdo7XDv9f/uVJE3N48RJPCASv668cSEreko/K+vkmLN7r1UBkF1zQZy/zVb
+ 51y9/KpKcdn44SzH1PhqZOM6Onniq/oXstPaWhrNpyhIn1HHiQKPwUxSWJQu+XZBaZIS
+ a3nyM0asmGQGGWVge/3T2/A2XRkfQbdnNZo0Pmbg0OrMDunGoHaRwIJHfLwqRWRGxHUm
+ 8ke36JIWJP6QDN0QjHWDvgo6LA6bCpd/tFZw4Yo7+G78md6kKOWooDP3IQ76UG6mVu9i
+ r98A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777367277; x=1777972077;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DThF0XUL4dy9R6fRsfQztI3lmJ5+02kga/scEtudiAs=;
+ b=RrvnzHvYepfC/eDg6Ueqe8fsi7+vR2enswFfj3l3hTGi+DgW4ulzANsSchRs5HDUNK
+ VimASDvrVBuj6lB1LvwJCqsiojrY72z2q7UNENFc9xsKfP5+X+FTu/HjndnOu/GwRoZ4
+ hkoQ3hfZV7E2/Ew3grM7CPmX4cJWc2YlBYOmKlBeCsz7Dh3b+rgpj3xj5gnNI3ZABfkx
+ MErWaV3t4maq2AOKKNj1anr0FKHB5BzhnsVBgZrEVL4SJWqXzcxZG/2XZMA1NKTBvJ4T
+ 0PcPM5bCfiSENiFKbPOZgZHvZ/vwdjrJ6xTzUDMbAqsA5bxwUFCnMXcmOEhKldpCKTDC
+ wq/A==
+X-Gm-Message-State: AOJu0Yw7SYZD9chtLyDO4dnyGfFm2fk4KHMMTicbYoF4Z3MhAPMKV9YQ
+ EBPPwY5gk58XrdITkC8DCkrbQoEfLvc0TMjMczMDsIW17nGkLXAs79orvJCHg5FBDCgFIicOcIF
+ d54sWJvAYcXu6dIltiqNnDp+mLfOUZ0uRVMQQzvq0WBNgfBzvk/9y
+X-Gm-Gg: AeBDievxhcVjjRXZgp1F33yurJ6626KTlk4JVD/cHreFHeQnoyH1hXDeMcc8SX44XE1
+ BP9qco8OGwNu/88oh9HMjiqCYx9B7tm6jkeTgtBIgSxelMd27rYeFHl7JCTRjc1ZnYioCTycUH4
+ VteSxnT+n5SjrD/ewo574I3x0bWfxYWMomfTzzDHa8kZXIcoURCI+QLwjiWRIbljGE0/IyPW3uS
+ AEqoh/gIqSmiimjvWKMG/n/HIiJ5ZYOtbirbbe6WhNLECC9BzEKWzEHE1F8E930lleySv0PLxp6
+ CPUx3F558R46G9+vBkoMJILJOtFPLYqSCNTtYdnQkm6o0VlnGOiUHfVMIDFoZLaRvOHt7wuxviN
+ Qcw==
+X-Received: by 2002:a05:690e:4808:b0:653:f72:f482 with SMTP id
+ 956f58d0204a3-65beed7c943mr1462369d50.22.1777367276912; Tue, 28 Apr 2026
+ 02:07:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/9] hw/core: Make CPU topology enumeration
- arch-agnostic
-To: Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>,
- Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>
-X-ASG-Orig-Subj: Re: [PATCH v5 2/9] hw/core: Make CPU topology enumeration
- arch-agnostic
-Cc: Yongwei Ma <yongwei.ma@intel.com>
-References: <20241101083331.340178-1-zhao1.liu@intel.com>
- <20241101083331.340178-3-zhao1.liu@intel.com>
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-Content-Language: en-US
-In-Reply-To: <20241101083331.340178-3-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-X-Eyou-Sender: <ewanhai-oc@zhaoxin.com>
-X-Barracuda-Connect: zxmail.zhaoxin.com[10.28.208.166]
-X-Barracuda-Start-Time: 1777365730
-X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 4941
-X-Barracuda-BRTS-Status: 1
-Received-SPF: pass client-ip=61.152.208.219;
- envelope-from=ewanhai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20250822092410.25833-1-cjchen@igel.co.jp>
+ <CAAMq-Y86UY7LNe-p2P_d8mw7FgTqLm=HQdqbMvV8xxTdsZmx1A@mail.gmail.com>
+ <CAFEAcA_EZxgnSHOEwdF5QayAxsncYnGGe4RDPP-vwYTqwU+dNA@mail.gmail.com>
+ <CAFEAcA_-XVMWr2ksaypuCiAZwU3GUKnvK26e35W-Tne8+BMNCg@mail.gmail.com>
+In-Reply-To: <CAFEAcA_-XVMWr2ksaypuCiAZwU3GUKnvK26e35W-Tne8+BMNCg@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 Apr 2026 10:07:45 +0100
+X-Gm-Features: AVHnY4KstMNquk6IryevfBCOQQnOKaiZM9BtwUkrtbTy2PKKRoLE1R2F2g-uOUU
+Message-ID: <CAFEAcA_0Gw5oOV5_AVXSzCWOsqSJDWvDj=aP3aiwBdHJagA0pw@mail.gmail.com>
+Subject: Re: [Withdrawn] [RFC PATCH v2 0/9] support unaligned access to xHCI
+ Capability
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Klaus Jensen <its@irrelevant.dk>, 
+ Jesper Devantier <foss@defmacro.it>, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Max Filippov <jcmvbkbc@gmail.com>, Peter Xu <peterx@redhat.com>, 
+ David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Tomoyuki Hirose <hrstmyk811m@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,102 +127,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-WmhhbyBMaXUgd3JvdGUgb24gMTEvMS8yNCA0OjMzIFBNOj4gQ2FjaGUgdG9wb2xvZ3kg
-bmVlZHMgdG8gYmUgZGVmaW5lZCBiYXNlZCBvbiBDUFUgdG9wb2xvZ3kgbGV2ZWxzLiBU
-aHVzLD4gZGVmaW5lIENQVSB0b3BvbG9neSBlbnVtZXJhdGlvbiBpbiBxYXBpL21hY2hp
-bmUuanNvbiB0byBtYWtlIGl0IGdlbmVyaWM+IGZvciBhbGwgYXJjaGl0ZWN0dXJlcy4+
-ID4gVG8gbWF0Y2ggdGhlIGdlbmVyYWwgdG9wb2xvZ3kgbmFtaW5nIHN0eWxlLCByZW5h
-bWUgQ1BVX1RPUE9fTEVWRUxfKiB0bz4gQ1BVX1RPUE9MT0dZX0xFVkVMXyosIGFuZCBy
-ZW5hbWUgU01UIGFuZCBwYWNrYWdlIGxldmVscyB0byB0aHJlYWQgYW5kPiBzb2NrZXQu
-PiA+IEFsc28sIGVudW1lcmF0ZSBhZGRpdGlvbmFsIHRvcG9sb2d5IGxldmVscyBmb3Ig
-bm9uLWkzODYgYXJjaGVzLCBhbmQgYWRkPiBhIENQVV9UT1BPTE9HWV9MRVZFTF9ERUZB
-VUxUIHRvIGhlbHAgZnV0dXJlIHNtcC1jYWNoZSBvYmplY3QgdG8gd29yaz4gd2l0aCBj
-b21wYXRpYmlsaXR5IHJlcXVpcmVtZW50IG9mIGFyY2gtc3BlY2lmaWMgY2FjaGUgdG9w
-b2xvZ3kgbW9kZWxzLj4gPiBTaWduZWQtb2ZmLWJ5OiBaaGFvIExpdSA8emhhbzEubGl1
-QGludGVsLmNvbT4+IFRlc3RlZC1ieTogWW9uZ3dlaSBNYSA8eW9uZ3dlaS5tYUBpbnRl
-bC5jb20+PiBSZXZpZXdlZC1ieTogSm9uYXRoYW4gQ2FtZXJvbiA8Sm9uYXRoYW4uQ2Ft
-ZXJvbkBodWF3ZWkuY29tPj4gQWNrZWQtYnk6IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOp
-IDxwaGlsbWRAbGluYXJvLm9yZz4+IC0tLS4uLj4gQEAgLTM3MywxNyArMzczLDE3IEBA
-IHN0YXRpYyB2b2lkIGVuY29kZV90b3BvX2NwdWlkMWYoQ1BVWDg2U3RhdGUgKmVudiwg
-dWludDMyX3QgY291bnQsPiAgICAgIHVuc2lnbmVkIGxvbmcgbGV2ZWwsIGJhc2VfbGV2
-ZWwsIG5leHRfbGV2ZWw7PiAgICAgIHVpbnQzMl90IG51bV90aHJlYWRzX25leHRfbGV2
-ZWwsIG9mZnNldF9uZXh0X2xldmVsOz4gID4gLSAgICBhc3NlcnQoY291bnQgPD0gQ1BV
-X1RPUE9fTEVWRUxfUEFDS0FHRSk7PiArICAgIGFzc2VydChjb3VudCA8PSBDUFVfVE9Q
-T0xPR1lfTEVWRUxfU09DS0VUKTs+ICBIaSBaaGFvLFdoaWxlIGJvb3RpbmcgTGludXgg
-dW5kZXIgVENHIFFFTVUgKC1rZXJuZWwgKyByb290ZnMpIHdpdGggYSBDUFUgbW9kZWwg
-dGhhdGVuYWJsZXMgY3B1aWRfMHgxZiAoZS5nLiBTaGlqaWRhZGFvLXYyKSwgSSBoaXQg
-dGhpcyBhc3NlcnQ6IHdoZW4gdGhlIGd1ZXN0cXVlcmllcyBDUFVJRC4xRiB3aXRoIGEg
-dG9wb2xvZ3kgbGV2ZWwgZ3JlYXRlciB0aGFuIENQVV9UT1BPTE9HWV9MRVZFTF9TT0NL
-RVQsUUVNVSBhYm9ydHMuIFVuZGVyIEtWTSB0aGUgcGF0aCBpc24ndCByZWFjaGVkIChD
-UFVJRCBpcyBzZXJ2ZWQgZnJvbUtWTV9TRVRfQ1BVSUQyKSwgc28gdGhpcyBpcyBUQ0ct
-b25seSwgd2hpY2ggaXMgcHJvYmFibHkgd2h5IGl0IGhhZG4ndCBiZWVuY2F1Z2h0IGVh
-cmxpZXIuSSdtIG5vdCBzdXJlIHRoZSBhc3NlcnQgaXMgbmVjZXNzYXJ5OiB0aGUgY29k
-ZSB0aGF0IGZvbGxvd3MgYWxyZWFkeSBoYW5kbGVzdGhlICJpbnB1dCBsZXZlbCBvdXQg
-b2YgcmFuZ2UiIGNhc2UgY29ycmVjdGx5LiBmaW5kX25leHRfYml0KCkgcmV0dXJucyBT
-T0NLRVRvbmNlIHRoZSBiaXRtYXAgaXMgZXhoYXVzdGVkLCB0aGUgbG9vcCBicmVha3Mg
-d2l0aCBsZXZlbCA9IElOVkFMSUQsIGFuZCB0aGVlbmNvZGluZyBwYXRoIGJlbG93IHBy
-b2R1Y2VzIHRoZSBTRE0tZGVmaW5lZCBpbnZhbGlkLWRvbWFpbiByZXNwb25zZSAoRUFY
-PTAsRUJYPTAsIEVDWCA9IGNvdW50IHwgSU5WQUxJRF90eXBlLCBFRFggPSBhcGljX2lk
-KS5QZXIgSW50ZWwgU0RNLCBDUFVJRCBMZWFmIDFGSCBkb2VzIG5vdCBjb25zdHJhaW4g
-dGhlIGlucHV0IEVDWCB2YWx1ZSwgc28gZ3Vlc3Rzb2Z0d2FyZSBpcyBmcmVlIHRvIHF1
-ZXJ5IGFueSBzdWItbGVhZiBpbmRleC4gRGlkIHRoZSBhc3NlcnQgaW50ZW50aW9uYWxs
-eXByb3RlY3QgYW4gaW52YXJpYW50IEknbSBtaXNzaW5nLCBvciBpcyBpdCBhIGxlZnRv
-dmVyIGRlZmVuc2l2ZSBjaGVjaz9Gb3IgcmVmZXJlbmNlLCB0aGUgS1ZNIGtlcm5lbCBz
-aWRlIChhcmNoL3g4Ni9rdm0vY3B1aWQuYyBrdm1fY3B1aWQoKSkgaGFzZXhwbGljaXRs
-eSBoYW5kbGVkIG91dC1vZi1yYW5nZSAweDFGIHN1YmxlYXZlcyB0aGlzIHdheSBzaW5j
-ZSAyMDE5OiAgICB9IGVsc2UgeyAgICAgICAgKmVheCA9ICplYnggPSAqZWN4ID0gKmVk
-eCA9IDA7ICAgICAgICAvKiAgICAgICAgICogV2hlbiBsZWFmIDBCSCBvciAxRkggaXMg
-ZGVmaW5lZCwgQ0wgaXMgcGFzcy10aHJvdWdoICAgICAgICAgKiBhbmQgRURYIGlzIGFs
-d2F5cyB0aGUgeDJBUElDIElELCBldmVuIGZvciB1bmRlZmluZWQgICAgICAgICAqIHN1
-YmxlYXZlcy4gLi4uICAgICAgICAgKi8gICAgICAgIGlmIChmdW5jdGlvbiA9PSAweGIg
-fHwgZnVuY3Rpb24gPT0gMHgxZikgeyAgICAgICAgICAgIGVudHJ5ID0ga3ZtX2ZpbmRf
-Y3B1aWRfZW50cnlfaW5kZXgodmNwdSwgZnVuY3Rpb24sIDEpOyAgICAgICAgICAgIGlm
-IChlbnRyeSkgeyAgICAgICAgICAgICAgICAqZWN4ID0gaW5kZXggJiAweGZmOyAgICAg
-ICAgICAgICAgICAqZWR4ID0gZW50cnktPmVkeDsgICAgICAgICAgICB9ICAgICAgICB9
-ICAgIH1pbnRyb2R1Y2VkIGluIGNvbW1pdCA0MzU2MTEyM2FiMzcgKCJrdm06IHg4Njog
-SW1wcm92ZSBlbXVsYXRpb24gb2YgQ1BVSUQgbGVhdmVzMEJIIGFuZCAxRkgiKS4gU28g
-S1ZNLWFjY2VsZXJhdGVkIGd1ZXN0cyBhbHJlYWR5IHNlZSB0aGUgU0RNLWNvbXBsaWFu
-dCByZXNwb25zZTtvbmx5IFRDRyBhYm9ydHMuVGhhbmtzLEV3YW4+ICAgICAgLyo+ICAg
-ICAgICogRmluZCB0aGUgTm8uKGNvdW50ICsgMSkgdG9wb2xvZ3kgbGV2ZWwgaW4gYXZh
-aWxfY3B1X3RvcG8gYml0bWFwLj4gLSAgICAgKiBUaGUgc2VhcmNoIHN0YXJ0cyBmcm9t
-IGJpdCAwIChDUFVfVE9QT19MRVZFTF9TTVQpLj4gKyAgICAgKiBUaGUgc2VhcmNoIHN0
-YXJ0cyBmcm9tIGJpdCAwIChDUFVfVE9QT0xPR1lfTEVWRUxfVEhSRUFEKS4+ICAgICAg
-ICovPiAtICAgIGxldmVsID0gQ1BVX1RPUE9fTEVWRUxfU01UOz4gKyAgICBsZXZlbCA9
-IENQVV9UT1BPTE9HWV9MRVZFTF9USFJFQUQ7PiAgICAgIGJhc2VfbGV2ZWwgPSBsZXZl
-bDs+ICAgICAgZm9yIChpbnQgaSA9IDA7IGkgPD0gY291bnQ7IGkrKykgez4gICAgICAg
-ICAgbGV2ZWwgPSBmaW5kX25leHRfYml0KGVudi0+YXZhaWxfY3B1X3RvcG8sPiAtICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgQ1BVX1RPUE9fTEVWRUxfUEFDS0FHRSw+
-ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDUFVfVE9QT0xPR1lfTEVWRUxf
-U09DS0VULD4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGJhc2VfbGV2ZWwp
-Oz4gID4gICAgICAgICAgLyo+IEBAIC0zOTEsMjAgKzM5MSwyMCBAQCBzdGF0aWMgdm9p
-ZCBlbmNvZGVfdG9wb19jcHVpZDFmKENQVVg4NlN0YXRlICplbnYsIHVpbnQzMl90IGNv
-dW50LD4gICAgICAgICAgICogYW5kIGl0IGp1c3QgZW5jb2RlcyB0aGUgaW52YWxpZCBs
-ZXZlbCAoYWxsIGZpZWxkcyBhcmUgMCk+ICAgICAgICAgICAqIGludG8gdGhlIGxhc3Qg
-c3VibGVhZiBvZiAweDFmLj4gICAgICAgICAgICovPiAtICAgICAgICBpZiAobGV2ZWwg
-PT0gQ1BVX1RPUE9fTEVWRUxfUEFDS0FHRSkgez4gLSAgICAgICAgICAgIGxldmVsID0g
-Q1BVX1RPUE9fTEVWRUxfSU5WQUxJRDs+ICsgICAgICAgIGlmIChsZXZlbCA9PSBDUFVf
-VE9QT0xPR1lfTEVWRUxfU09DS0VUKSB7PiArICAgICAgICAgICAgbGV2ZWwgPSBDUFVf
-VE9QT0xPR1lfTEVWRUxfSU5WQUxJRDs+ICAgICAgICAgICAgICBicmVhazs+ICAgICAg
-ICAgIH0+ICAgICAgICAgIC8qIFNlYXJjaCB0aGUgbmV4dCBsZXZlbC4gKi8+ICAgICAg
-ICAgIGJhc2VfbGV2ZWwgPSBsZXZlbCArIDE7PiAgICAgIH0+ICA+IC0gICAgaWYgKGxl
-dmVsID09IENQVV9UT1BPX0xFVkVMX0lOVkFMSUQpIHs+ICsgICAgaWYgKGxldmVsID09
-IENQVV9UT1BPTE9HWV9MRVZFTF9JTlZBTElEKSB7PiAgICAgICAgICBudW1fdGhyZWFk
-c19uZXh0X2xldmVsID0gMDs+ICAgICAgICAgIG9mZnNldF9uZXh0X2xldmVsID0gMDs+
-ICAgICAgfSBlbHNlIHs+ICAgICAgICAgIG5leHRfbGV2ZWwgPSBmaW5kX25leHRfYml0
-KGVudi0+YXZhaWxfY3B1X3RvcG8sPiAtICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICBDUFVfVE9QT19MRVZFTF9QQUNLQUdFLD4gKyAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgQ1BVX1RPUE9MT0dZX0xFVkVMX1NPQ0tFVCw+ICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGxldmVsICsgMSk7PiAgICAgICAg
-ICBudW1fdGhyZWFkc19uZXh0X2xldmVsID0gbnVtX3RocmVhZHNfYnlfdG9wb19sZXZl
-bCh0b3BvX2luZm8sPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICBuZXh0X2xldmVsKTsuLi4KCgoKCuS/neWvhuWj
-sOaYjgrmnKzpgq7ku7blkKvmnInkv53lr4bmiJbkuJPmnInkv6Hmga/vvIzku4Xkvpvm
-jIflrprmlLbku7bkurrkvb/nlKjjgILkuKXnpoHlr7nmnKzpgq7ku7bmiJblhbblhoXl
-rrnlgZrku7vkvZXmnKrnu4/mjojmnYPnmoTmn6XpmIXjgIHkvb/nlKjjgIHlpI3liLbm
-iJbovazlj5HjgIIKClRoaXMgZW1haWwgY29udGFpbnMgY29uZmlkZW50aWFsIG9yIGxl
-Z2FsbHkgcHJpdmlsZWdlZCBpbmZvcm1hdGlvbiBhbmQgaXMgZm9yIHRoZSBzb2xlIHVz
-ZSBvZiBpdHMgaW50ZW5kZWQgcmVjaXBpZW50LiBBbnkgdW5hdXRob3JpemVkIHJldmll
-dywgdXNlLCBjb3B5aW5nIG9yIGZvcndhcmRpbmcgb2YgdGhpcyBlbWFpbCBvciB0aGUg
-Y29udGVudCBvZiB0aGlzIGVtYWlsIGlzIHN0cmljdGx5IHByb2hpYml0ZWQu
+On Fri, 24 Apr 2026 at 19:01, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Wed, 3 Sept 2025 at 10:47, Peter Maydell <peter.maydell@linaro.org> wrote:
+> >
+> > On Wed, 3 Sept 2025 at 06:03, chen CJ <cjchen@igel.co.jp> wrote:
+> > >
+> > > I would like to withdraw this patch series.
+> > >
+> > > Sorry for the inconvenience, and thank you for your understanding.
+> >
+> > That's unfortunate; I think it's an issue we really do need to fix,
+> > but I entirely understand if you don't have the time to work
+> > on it further.
+> >
+> > I might pick it up if I have the time to do so.
+>
+> I eventually found some time/inclination to have another
+> look at this. I have something that I think is mostly good to
+> go, but I need to chase down the last few issues with it first.
+> Hope to send a patchset next week sometime.
 
+Hmm, this turns out to be a little more awkward than I thought. There's
+a fundamental question about what a MemoryRegion wants for a case like:
+
+{ .impl.min_access_size = 4, .impl.max_access_size = 4,
+  .valid.min_access_size = 1, .valid.max_access_size = 4 }
+i.e. "I only handle word accesses, synthesize byte and halfword for me".
+
+Option A:
+ * a byte write is zero-extended and sent as a word write
+(so "byte write 0x42 to offset 0x20" becomes "word write 0x00000042
+to offset 0x20")
+
+Option B:
+ * a byte write is handled by read-modify-write
+(so "byte write 0x42 to offset 0x20" becomes "word read from 0x20,
+deposit 0x42 to the low byte of what we read, word write to 0x20".
+
+This series implements Option B, but we have devices in the tree
+that want and assume the existing Option A behaviour. (The one
+I ran into was the PL011, which wants to allow byte writes to its
+registers, and those registers have read-sensitive behaviour:
+the UART data register reads a byte from the FIFO or writes one
+back to it, so a read-modify-write will drop incoming data.)
+
+So I think our choices here are:
+
+(1) say that we will never synthesize a write via read-modify-write;
+Option A is the only behaviour we provide. This is OK for all our
+existing devices. It also isn't a problem for the USB-xhci capability
+registers that the series is trying to enable, because those are
+read-only writes-ignored.
+
+(2) allow Option B, but only opt-in via some new MemoryRegionOps
+field that you have to set. (This is sort of like saying "my MR
+is ram-like, in that neither reads nor writes have side effects
+and it's really accessible at any size and perhaps any alignment,
+I just haven't implemented all of it that way".)
+
+(I don't think "find all the devices implicitly relying on Option A
+behaviour and change them" is a feasible or desirable choice.)
+
+For synthesizing unaligned writes where the MR doesn't implement
+them, since we don't do these at all at the moment we get a freer
+choice of behaviour: we can either do these as read-modify-write,
+or say that you get two writes with the non-provided data being
+zeroes.
+
+Any opinions?  I think I would find it an easier decision if
+we had a direct use case for the read-modify-write choice...
+
+thanks
+-- PMM
 
