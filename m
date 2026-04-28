@@ -4,79 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AD15FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 16:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46348FF886F
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 17:15:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHlkn-00080m-J7; Tue, 28 Apr 2026 12:57:45 -0400
+	id 1wHm1C-0002O3-4B; Tue, 28 Apr 2026 13:14:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3PeTwaQQKCiANGENCKKCHA.8KIMAIQ-9ARAHJKJCJQ.KNC@flex--rkir.bounces.google.com>)
- id 1wHlkm-0007up-Ds
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:57:44 -0400
-Received: from mail-qv1-xf49.google.com ([2607:f8b0:4864:20::f49])
+ (Exim 4.90_1) (envelope-from <osama.abdelkader@gmail.com>)
+ id 1wHm0x-0002NX-Tx
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:14:30 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3PeTwaQQKCiANGENCKKCHA.8KIMAIQ-9ARAHJKJCJQ.KNC@flex--rkir.bounces.google.com>)
- id 1wHlkl-0005w8-4y
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:57:44 -0400
-Received: by mail-qv1-xf49.google.com with SMTP id
- 6a1803df08f44-8a5f6110c1cso275651596d6.0
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 09:57:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <osama.abdelkader@gmail.com>)
+ id 1wHm0w-0001ID-HF
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:14:27 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4891e86fabeso129871565e9.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 10:14:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1777395462; x=1778000262; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=G0D205ZkxHd8IUf1AxmpRxb/OzMC8JTsQcR7hIJtRys=;
- b=bKjrlD4gDdT4ZrYuCy+HYNqbZSz7B36K/IWUhCsRlOT4ZwvvASM0a44JiczkDs+8O3
- ZtNW3pM2tJAc7B7Fb7XakGEa+iIs8W9tn/dom9ag83C8/C+CqiOcWcKG3ykdl7zeI12p
- LH4eNOqRHMlR6VTUHdx+5nZwVv6i0syYOLgWdSVYcZLf1bbm2g+96eeNZQMBjNT1Q8df
- 7DG02SSqlCSTcMBszitgEhQ2ohejXkYCsIYMudHY4Gt2eRJvPEy2yVLKMud/lYR8/RhC
- aKiKB90WvKS2sO5xGWAaBVTtlrKO7/IY8AgOnQEqURBkmQIERpBLSs/OYO8XJ5o+wvUX
- rQag==
+ d=gmail.com; s=20251104; t=1777396463; x=1778001263; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Fl0/h3nzidW/WKWzaLQox6loPwv8HC8F8fL+naMpu8w=;
+ b=ekAHlnA1FfTeOOSKR6A7O8ZByS5vIOeuswbrWJu+0MbxVjvHZPvVDWSGaAHhP+5mHz
+ 9wJn7ZXInDbn3L+qx3z1NY3uYvvygmAK45uy3YjdJ7M2wTHzL4/M6XJOtl/3Hiw76+WA
+ 9+M4glTXgQBtcD1TRjgtpr/6XkB3T2ZJYcjT3PgPhcwSiiNeyFsskNHZ595fSwov6HOX
+ qIMce4jCky5lYq+ZS629rBMDoh0CSXaojNbBtYcVf1rtWOys0GrUaV3w5e5kWKCf8IWA
+ ysR0eIFMSsg/0SxBShVNzl0iysLUPC90hD0Ca7+c+WkhHgFWaujLSC5D03FJVSbfcNGg
+ 7+TA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777395462; x=1778000262;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=G0D205ZkxHd8IUf1AxmpRxb/OzMC8JTsQcR7hIJtRys=;
- b=X18mEQYQhSqCdV/lsFM+WYYFYllaD0Ay+Dxlii5SIKonzkiKEqnTBVWigrKB1c1dQr
- 2MOa2disg0emgUhYn010qPGsbuk6poOzpoKxEQdmpuf+ZO9x5IBajQRfA4+daFXHalV6
- psbC1ERe8u7wqTwXL72uOUUq6psPt+TUnIKOMAx0CqepSQGHVQ9U4u3TfuYQLOh8WV3P
- PQxRszetO256BkrMqbFiqwtZB3YLH4m0uoXVxA6rBvCLx4d40AZ6WTkyvEeE5RsmYoFQ
- 1J5Rc559UWtNOBMEjibTxl/5lThQ046+4IhG/g/9eEqLNCXpQpaq9Ls9Y6n//3H2NtKj
- edUQ==
-X-Gm-Message-State: AOJu0YxIxqm2pR7PlAR6DmbR1ajrX9DsNsv+mN+jM1trYSNiNQd7sOEx
- /5+GEw7lOjTn6iBYRUgM+hUxi+imV6LnUnzYjuOdq3j1NBfDTxs5LQfCOyGJ/XCr4gFquCzHAQ=
- =
-X-Received: from pfnw7.prod.google.com ([2002:aa7:8587:0:b0:82f:5a4:a02c])
- (user=rkir job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a00:a804:b0:82f:761:2b49
- with SMTP id d2e1a72fcca58-834ea81252amr30731b3a.49.1777394749716; Tue, 28
- Apr 2026 09:45:49 -0700 (PDT)
-Date: Tue, 28 Apr 2026 16:45:43 +0000
-In-Reply-To: <20260427154441.1918536-1-rkir@google.com>
-Mime-Version: 1.0
-References: <20260427154441.1918536-1-rkir@google.com>
-X-Mailer: git-send-email 2.54.0.545.g6539524ca2-goog
-Message-ID: <20260428164545.2782523-1-rkir@google.com>
-Subject: [PATCH v2 0/2] improve qom debugging and fix a dangling MemoryRegion
- in rutabaga
-From: Roman Kiryanov <rkir@google.com>
-To: pbonzini@redhat.com, alex.bennee@linaro.org, marcandre.lureau@gmail.com
-Cc: qemu-devel@nongnu.org, Roman Kiryanov <rkir@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f49;
- envelope-from=3PeTwaQQKCiANGENCKKCHA.8KIMAIQ-9ARAHJKJCJQ.KNC@flex--rkir.bounces.google.com;
- helo=mail-qv1-xf49.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ d=1e100.net; s=20251104; t=1777396463; x=1778001263;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Fl0/h3nzidW/WKWzaLQox6loPwv8HC8F8fL+naMpu8w=;
+ b=SuVzTDBFZ0x2X1e4MeygZgM4hzA7CL1njnjYf0dIXS7tZHFgp8DHqvj/d03ekmlp8V
+ z8F+m8juIuI4MFeuimG4btEJIStmsJoE9EqzHZeikueo6DqsSg9vK+gKXiBWn9e1f4Pu
+ kmKrQ9pdSu1Aq7IbyA1drd2q9bGtOhfUw/25Dq7IRXgrnLGUo2td4HjYZ0gaL8eOzRCR
+ S1NqlOFiKrzJR533CRULO6OnPdcY/fMpTYMQw2mF4LbDeyib8uTn8Z0ISbyN2tXamBlC
+ ecQG4m5GkO7xUYgvbemkDwSQ5WX/AyKa9v+BH6GcVglLBsm3JTWkt9REeLq58GuWrQIx
+ ZiQg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9FKJ7vmMagJejchTmQ/oOclEF7WMzAOYEA3sZIe8vhw24MlHvGY5SefEYg11oTJBCyOA1BMWGDFJLb@nongnu.org
+X-Gm-Message-State: AOJu0Ywrqj6ttuVbHOvvLq+nP0JDP253RHQ9RVqBxJkU4WLMhvhRjRpd
+ uZPYJXtgvoySyLS7bR820tAdY+HcqQPmSxqR4ZZQBor5BnNHkQgSzRZx
+X-Gm-Gg: AeBDiev1o8E2y6TX1yVRCI/rHOeY0H2z9qa99sdsp/524bgqSFuxKs6BbYBshCDU5z+
+ 6SF3Pg/8VjGPcv4nVey0jf2cbbXnKJkCgOsHG04gxsWL3PqnCGGUlvUB/O7O+zIPSfk6W6fMOLa
+ r6uq9OM6je3wYRqbblMTuxi1LNALdO9rhYN/PBm/DO5Q0JyKyLM3KUTZ6wRGpkRXy5UpTT6/Ka7
+ pFDx+Kv2ej2+gHiwpuDCMg7D7kGugYikMhg6fB3elUWVe443wratI8JI139MiPfmMOmmrhVnb4V
+ cixRsdN8zxugFPT+XfnXuWqjh8NGTgtWF9FXX5BNVvWqyCzoLqV37qbZq42uFzU45zi2VkPUlpP
+ UcdgWhh41drV4TcO0YUv/2RM1nfH5hc/1+5x+AMV5mUHNg9sxsVU2zwC0jrO1byxwbnmyIcq6Ll
+ kMIBrzl0oS9vIaOkjRPugIWjhPkg3W7SR1/4MmoO9XpHM7hgj8q8On5JVSahdh6eLQ/LmY
+X-Received: by 2002:a5d:5886:0:b0:43e:b020:f8a2 with SMTP id
+ ffacd0b85a97d-4478f143dd5mr308702f8f.19.1777396463261; 
+ Tue, 28 Apr 2026 10:14:23 -0700 (PDT)
+Received: from osama ([2a02:908:1b6:8980:3c42:efa3:bde3:4d05])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4463d02f6a1sm8000371f8f.13.2026.04.28.10.14.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Apr 2026 10:14:22 -0700 (PDT)
+Date: Tue, 28 Apr 2026 19:14:20 +0200
+From: Osama Abdelkader <osama.abdelkader@gmail.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ "open list:ARM TCG CPUs" <qemu-arm@nongnu.org>
+Subject: Re: [PATCH] hw/arm/raspi4b: NOP all DTB nodes when removing
+ unimplemented devices
+Message-ID: <afDq7IehobyGYPtW@osama>
+References: <20260420162114.308519-1-osama.abdelkader@gmail.com>
+ <CAFEAcA_29onASJ7bOs6jFbM9Mmj_X-SrJ85hSWxCOa-4WbFA8g@mail.gmail.com>
+ <9a0a42c7-a36f-48d1-9eb1-008d2565c342@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <9a0a42c7-a36f-48d1-9eb1-008d2565c342@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=osama.abdelkader@gmail.com; helo=mail-wm1-x332.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,24 +106,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, this series of patches fixes a dangling MemoryRegion
-in rutabaga and also brings the debugging changes I used
-to locate it.
+On Mon, Apr 27, 2026 at 01:07:00PM +0200, Philippe Mathieu-Daudé wrote:
+> On 27/4/26 11:53, Peter Maydell wrote:
+> > On Mon, 20 Apr 2026 at 17:21, Osama Abdelkader
+> > <osama.abdelkader@gmail.com> wrote:
+> > > 
+> > > fdt_node_offset_by_compatible(fdt, -1, compat) only finds the first match.
+> > > If the blob has more than one node with the same compatible string, extra
+> > > nodes will remain active. using the same loop as imx8mp-evk.c
+> > > 
+> > > Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
+> > > ---
+> > 
+> > I wondered about whether it would be worth abstracting this
+> > out into a helper function, but it looks like at the moment
+> > only this raspi code and the imx8mp-evk do this. If we get
+> > more places we want this we might do that, but not worth
+> > it for two.
+> 
+> IIRC you were first against the approach of "use a real world
+> dtb and patch it", recommending to "generate a dtb with what
+> we emulate"; and we merged that as 'temporary kludge until we
+> properly emulate the missing device'.
 
-Changes in v2:
-- Updated clearing of obj->properties using g_clear_pointer.
-- Moved clearing of obj->class into object_deinit.
-- obj->class is checked to be NULL before obj->free(obj).
+Thanks Peter and Philippe for the clarification, I would be happy to participate
+in that solution too.
 
-Roman Kiryanov (2):
-  qom: improve use-after-free debugging
-  display: rutabaga: unparent MemoryRegions in unmap
-
- hw/display/virtio-gpu-rutabaga.c | 1 +
- qom/object.c                     | 6 +++++-
- 2 files changed, 6 insertions(+), 1 deletion(-)
-
--- 
-2.54.0.545.g6539524ca2-goog
-
+Best regards,
+Osama
 
