@@ -4,110 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28645FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 13:37:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDB53FF885D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 13:38:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHibX-0005YQ-Cm; Tue, 28 Apr 2026 09:35:59 -0400
+	id 1wHidn-0008MY-68; Tue, 28 Apr 2026 09:38:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ewandevelop@gmail.com>)
- id 1wHeyh-0000JJ-He
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:43:39 -0400
-Received: from mail-dl1-x122b.google.com ([2607:f8b0:4864:20::122b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ewandevelop@gmail.com>)
- id 1wHeye-0003Oj-GK
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:43:39 -0400
-Received: by mail-dl1-x122b.google.com with SMTP id
- a92af1059eb24-12c6df0b9bbso2687965c88.1
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 02:43:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777369414; x=1777974214; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=E+2aQrESKSPjXIMgAlPSq2BTaZgqO5ydTBn6YvPyGsg=;
- b=eZhHxGmi+60vkcJ0zBylLbBYEZQW+9Nt1vTzNHNUGvg81UTunlKMvk/o3gsfmyLPCo
- wzT85c1i42Jf9D2jcv2b/b9d4RdBzIJO2I82SM4xhRAn10GAJZ/NBZwQndf2tWPPA3zo
- gdFRRdOvSTBdsDHAP0Qnk04Pi68P8aKzjbPdB8csNdxEcxPYW6sNmVnV0WeBeHW9RJ4e
- X84X/l8qg+d0NGfaspnd/NCR9t3ucXFTP3pHHRHPV+jQXSBYHeh3X4PVxw6AaCau7rhg
- RT3CNWaboSltGXguYUUoGStobXSdy1VR2S2iWAm/MT2mP5wLD8as3xIUdrIjGKQXNnKP
- T9wQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777369414; x=1777974214;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=E+2aQrESKSPjXIMgAlPSq2BTaZgqO5ydTBn6YvPyGsg=;
- b=huAS3dLdC/tSSaoml6KRUVhijjte2WREmSdeDySNiAIzTWZh5ydiLM4FVR86XidyRQ
- JC4a+fuRAFOKgttNA/b/K2aJ/Z2u0XDwKnGBfpiyR/LdZKgiEedlaNudLU224b9l6UGt
- 7KxEnTijbr/5mXJDy6khsYjYpbnxfFXbx0glA5Co30rqA0AGE8kL6eCHBJF6eFWZ8VGT
- MjYhM9aYNA3G8w++RHl1xE5zqj7hfLoxx6wVyak/Hod7wzTci+dIxxRmMJ1UVQeEVTst
- CgQVmfpH2XKFyK8aNtUa19OfsioZ2C5/FnIXiE1dUy+dP7TmKKpoHMjRO4Dn+iBujr7r
- spEA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9k79Ymhu+zaNdf7Q7a/cQKNbHMDjj1xjVOeIQW6BvNEXq2Spx9xV984cY/3fu7twe91t/8Zp12+CXz@nongnu.org
-X-Gm-Message-State: AOJu0YwkOBYnTo0uy0HCW4OaqnAxtAfL2OX0FYPGIcOsr6bVG/AL7w7r
- XgEY67Koccg4lu1ppN37fr0L7cWtz02qBTJo3798MFZ0hydrrC3fMPnE
-X-Gm-Gg: AeBDietMEpVp+T0L0yOxAinxlZrgbdjC68ulBEtTYe83jON/vB1dfFcRg6OHUirB6a7
- VdyNBvMQuXI6WMO5F9LvMzz6z8dPNZ2oeaAWAM+mO7vN+33QqfMBV0pYRitsH4jopXbt9Yzoual
- 2hDPd64iT23+bdfZ2z/vMtKXU5IGcOd2ZL1nknHmeOM2r854D8odsbOXfI3ZDsk1LONX62wzEGW
- Gts8+LRDeMMGq1IzPXePwaIkvVTYDSuMbAqXrqE9QVCZ+g6GmFPpyLG79eOU9tAIMA7qExvHoLk
- k8ldfjdjHS/01cerv50Mwk6l842dlPGzVzjiLxTuGbHkXpN0Uixmfm6H2kDbnccZiZuRpMtPY3X
- 47CIfQTM0VS11jaIYISXo3smWUMIdKewjSn7XcIw+airbpqO/+Y9r6WSE61kKgsImaqYDM7OOEa
- XuKsG1+JrHlxd9z/nMFI3yiPXLOOSxPtLfSpjm
-X-Received: by 2002:a05:7022:621:b0:119:e56b:957b with SMTP id
- a92af1059eb24-12ddd90e40amr1289308c88.0.1777369413478; 
- Tue, 28 Apr 2026 02:43:33 -0700 (PDT)
-Received: from [198.18.0.1] ([154.26.185.247])
- by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-12ddd9be1f9sm1811919c88.15.2026.04.28.02.43.27
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Apr 2026 02:43:33 -0700 (PDT)
-Message-ID: <4b66c381-09c5-496e-b95e-100d1ba20dc5@gmail.com>
-Date: Tue, 28 Apr 2026 17:43:25 +0800
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wHidl-0008M2-Ma
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:38:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wHidj-0002Fe-QB
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:38:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777383495;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1k1paErhz63kczZGm24j9b8ZgQ+q0Trs7CP07dXeXho=;
+ b=LLaLD5talQL51gbn14Jn22RUKxhIysfFoS4SlksiQP6skjmFGDkee7dP8BWHYtbI2FUKug
+ zqapl6nMHPHoZAFB2apOpE+U9kLPZ+n/9Ve1rby3kHddEABuARbE5E5n2fhz4s/2JAEo/G
+ sElO9QueUZ0ibdXUx3rvxeZAbby4Iww=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-292-cGpOHC9ZNdKPZGksBs2QwQ-1; Tue,
+ 28 Apr 2026 09:38:12 -0400
+X-MC-Unique: cGpOHC9ZNdKPZGksBs2QwQ-1
+X-Mimecast-MFC-AGG-ID: cGpOHC9ZNdKPZGksBs2QwQ_1777383491
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8AFD9180065A
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 13:38:11 +0000 (UTC)
+Received: from localhost (unknown [10.44.33.158])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6F665180047F; Tue, 28 Apr 2026 13:38:10 +0000 (UTC)
+Date: Tue, 28 Apr 2026 08:02:19 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PULL 00/10] Misc patches (cleanups, functional tests, GCC bump, 
+ ...)
+Message-ID: <20260428120219.GA254496@fedora>
+References: <20260427095747.1070244-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/9] hw/core: Make CPU topology enumeration
- arch-agnostic
-To: Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
- Jonathan Cameron <Jonathan.Cameron@huawei.com>,
- Sia Jee Heng <jeeheng.sia@starfivetech.com>,
- Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
- Zhenyu Wang <zhenyu.z.wang@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: Yongwei Ma <yongwei.ma@intel.com>
-References: <20241101083331.340178-1-zhao1.liu@intel.com>
- <20241101083331.340178-3-zhao1.liu@intel.com>
-From: EwanHai <ewandevelop@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20241101083331.340178-3-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122b;
- envelope-from=ewandevelop@gmail.com; helo=mail-dl1-x122b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="y92LM09cQAxde8dX"
+Content-Disposition: inline
+In-Reply-To: <20260427095747.1070244-1-thuth@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.109,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 28 Apr 2026 09:35:58 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -122,123 +85,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Apologies for the noise, please ignore my previous reply, the corporate mailer
-collapsed all the newlines. Resending in plain text below.
 
-Zhao Liu wrote on 11/1/24 4:33 PM:
-> Cache topology needs to be defined based on CPU topology levels. Thus,
-> define CPU topology enumeration in qapi/machine.json to make it generic
-> for all architectures.
-> 
-> To match the general topology naming style, rename CPU_TOPO_LEVEL_* to
-> CPU_TOPOLOGY_LEVEL_*, and rename SMT and package levels to thread and
-> socket.
-> 
-> Also, enumerate additional topology levels for non-i386 arches, and add
-> a CPU_TOPOLOGY_LEVEL_DEFAULT to help future smp-cache object to work
-> with compatibility requirement of arch-specific cache topology models.
-> 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> Tested-by: Yongwei Ma <yongwei.ma@intel.com>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> Acked-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
+--y92LM09cQAxde8dX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-...
+Applied, thanks.
 
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
 
-> @@ -373,17 +373,17 @@ static void encode_topo_cpuid1f(CPUX86State *env, uint32_t count,
->      unsigned long level, base_level, next_level;
->      uint32_t num_threads_next_level, offset_next_level;
->  
-> -    assert(count <= CPU_TOPO_LEVEL_PACKAGE);
-> +    assert(count <= CPU_TOPOLOGY_LEVEL_SOCKET);
->  
+--y92LM09cQAxde8dX
+Content-Type: application/pgp-signature; name=signature.asc
 
-Hi Zhao,
+-----BEGIN PGP SIGNATURE-----
 
-While booting Linux under TCG QEMU (-kernel + rootfs) with a CPU model that
-enables cpuid_0x1f (e.g. Shijidadao-v2), I hit this assert: when the guest
-queries CPUID.1F with a topology level greater than CPU_TOPOLOGY_LEVEL_SOCKET,
-QEMU aborts. Under KVM the path isn't reached (CPUID is served from
-KVM_SET_CPUID2), so this is TCG-only, which is probably why it hadn't been
-caught earlier.
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnwocsACgkQnKSrs4Gr
+c8h/sgf/Z4yBEWUu0jJozTPvlcrD3ob1/pDtsTDYonxrRt79poCbMKIOEZiwMk7Y
+Dx3kpRssJVG/t6kGJ6aC7IO1LGjWZRQd5oM6sPOYvSpe5GXzkph2GgbIJMae1Qmg
+FFq80xYSEVQvzHjHs8kfcDl9z5L7Wn/qiKaxSUhtvwYYRzaSpS3zs53KNFSR/xcs
+aAJ9hYWu8Xv3q5nbujPwPdYU42WftmDSTL9OObuIH/q1AZjMiuYHBhFE0o9ye0pg
+w5xB5FA/cDLsmB4s9xTyZJQiKZF0phPtt31B0lncgrMdhZkwFlucqX/+b27xZ+LN
+V2tfi7/yzjjW2x5xxUUgNDTzV8v7yg==
+=Ijzw
+-----END PGP SIGNATURE-----
 
-I'm not sure the assert is necessary: the code that follows already handles
-the "input level out of range" case correctly. find_next_bit() returns SOCKET
-once the bitmap is exhausted, the loop breaks with level = INVALID, and the
-encoding path below produces the SDM-defined invalid-domain response (EAX=0,
-EBX=0, ECX = count | INVALID_type, EDX = apic_id).
-
-Per Intel SDM, CPUID Leaf 1FH does not constrain the input ECX value, so guest
-software is free to query any sub-leaf index. Did the assert intentionally
-protect an invariant I'm missing, or is it a leftover defensive check?
-
-For reference, the KVM kernel side (arch/x86/kvm/cpuid.c kvm_cpuid()) has
-explicitly handled out-of-range 0x1F subleaves this way since 2019:
-    } else {
-        *eax = *ebx = *ecx = *edx = 0;
-        /*
-         * When leaf 0BH or 1FH is defined, CL is pass-through
-         * and EDX is always the x2APIC ID, even for undefined
-         * subleaves. ...
-         */
-        if (function == 0xb || function == 0x1f) {
-            entry = kvm_find_cpuid_entry_index(vcpu, function, 1);
-            if (entry) {
-                *ecx = index & 0xff;
-                *edx = entry->edx;
-            }
-        }
-    }
-introduced in commit 43561123ab37 ("kvm: x86: Improve emulation of CPUID leaves
-0BH and 1FH"). So KVM-accelerated guests already see the SDM-compliant response;
-only TCG aborts.
-
-Thanks,
-Ewan
-
-
->      /*
->       * Find the No.(count + 1) topology level in avail_cpu_topo bitmap.
-> -     * The search starts from bit 0 (CPU_TOPO_LEVEL_SMT).
-> +     * The search starts from bit 0 (CPU_TOPOLOGY_LEVEL_THREAD).
->       */
-> -    level = CPU_TOPO_LEVEL_SMT;
-> +    level = CPU_TOPOLOGY_LEVEL_THREAD;
->      base_level = level;
->      for (int i = 0; i <= count; i++) {
->          level = find_next_bit(env->avail_cpu_topo,
-> -                              CPU_TOPO_LEVEL_PACKAGE,
-> +                              CPU_TOPOLOGY_LEVEL_SOCKET,
->                                base_level);
->  
->          /*
-> @@ -391,20 +391,20 @@ static void encode_topo_cpuid1f(CPUX86State *env, uint32_t count,
->           * and it just encodes the invalid level (all fields are 0)
->           * into the last subleaf of 0x1f.
->           */
-> -        if (level == CPU_TOPO_LEVEL_PACKAGE) {
-> -            level = CPU_TOPO_LEVEL_INVALID;
-> +        if (level == CPU_TOPOLOGY_LEVEL_SOCKET) {
-> +            level = CPU_TOPOLOGY_LEVEL_INVALID;
->              break;
->          }
->          /* Search the next level. */
->          base_level = level + 1;
->      }
->  
-> -    if (level == CPU_TOPO_LEVEL_INVALID) {
-> +    if (level == CPU_TOPOLOGY_LEVEL_INVALID) {
->          num_threads_next_level = 0;
->          offset_next_level = 0;
->      } else {
->          next_level = find_next_bit(env->avail_cpu_topo,
-> -                                   CPU_TOPO_LEVEL_PACKAGE,
-> +                                   CPU_TOPOLOGY_LEVEL_SOCKET,
->                                     level + 1);
->          num_threads_next_level = num_threads_by_topo_level(topo_info,
->                                                             next_level);
-...
+--y92LM09cQAxde8dX--
 
 
