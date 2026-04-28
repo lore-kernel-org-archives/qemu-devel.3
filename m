@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0913AFF886D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 18:05:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACA3AFF885A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 18:06:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHmnn-0003Nr-K5; Tue, 28 Apr 2026 14:04:55 -0400
+	id 1wHmom-0003lC-RV; Tue, 28 Apr 2026 14:05:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wHmnU-0003Md-BI
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 14:04:38 -0400
-Received: from p-west3-cluster5-host11-snip4-10.eps.apple.com ([57.103.72.113]
+ id 1wHmob-0003fh-6Y
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 14:05:47 -0400
+Received: from p-west3-cluster3-host5-snip4-3.eps.apple.com ([57.103.72.134]
  helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wHmnQ-00077j-8k
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 14:04:35 -0400
+ id 1wHmoX-0007ig-Fx
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 14:05:43 -0400
 Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-6 (Postfix) with ESMTPS id
- 3555118000E8; Tue, 28 Apr 2026 18:04:27 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwROEwVSB11NVg1HD1geXBQXFUBDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTAlAAytzLQVAFEEFLnZGBjYIPR5UAi0FXXs6cFoHKgNEez0KXHceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
+ by p00-icloudmta-asmtp-us-west-3a-60-percent-11 (Postfix) with ESMTPS id
+ E63F518003B5; Tue, 28 Apr 2026 18:05:36 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwROEwVSB11NVg1HD1geXBQXFUBDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTAxNcSkOXgM1FEkKKANGBkR7QB5VDipxXQA8AltyLXdAfE8FVXceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1777399470; x=1779991470;
- bh=q+AkgagEpEvE6yK+m9+tMpe+n2FML2MuyQJLGwNRiS4=;
+ s=sig1; t=1777399538; x=1779991538;
+ bh=y4RfdPIpWhCXiG3sbJK91ucXV5+qMlZfUWRk6IdgwwA=;
  h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=P+r9WkcevOvyim0VzUAmLN5JGeG3XiuPpY2Wo7vkmgpVr24oRl/1gRJ5ue/4qvfxtLqDstXyztoi/GvE4zM7lX78JchC1cmNVitZLj60XAnw/Vy556l53EPAowMel3m8YOQKcyWUvEZDQaDn5AiqmoiqC0/UtbmJbgHZbh86VXuipOffJLK6NpYxzCeyqogtFwceHrdslxQKdEyzH5T6idz6aEXS9M9skqGaSvflHuO5m1SQrtVkqvZIN5wHCDGOFCJRxIHuWdVDgu1MCr98TWC7xDWzyD1Gx7PWMYCxcjXfxMYm+ZbN4r3QUYEE4VR5XOvFf9NqQtix7nU2CVDxXA==
+ b=XbUG05CEI5I1xjyVcAAAo2ifq+QwVR0djXUD80NFeoJQG2X8GVwSdAGqeAuEj39ypZcWKYMnKQrtjXt/piSY0IpCdeWWKHyZyvz16mxc+/UsP8B75pHJzzK+AMvaaxvl3fDOeZ37iGh9KN3MBLsZ9Zs9ZHQ2ZfmLQjWGYvEx4nhtSMET5CWlimhearnfUEm+P95TtFUfUTb+JzXVl0YBjEK+KHV4vvdVWW2HY1Wrb1+U5dXC4POYr4neS2ODjjBYUzUKxtbLpZSxNRTN5OwBrTGiJga4UP1uwdYGJKnUnTfubkUv6GvLd1sPAV+kdE1p/ZWPKM7T5ko9U/caxjfQ9A==
 mail-alias-created-date: 1752046281608
 Received: from smtpclient.apple (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-6 (Postfix) with ESMTPSA id
- 12F3B1800C3F; Tue, 28 Apr 2026 18:04:25 +0000 (UTC)
+ by p00-icloudmta-asmtp-us-west-3a-60-percent-11 (Postfix) with ESMTPSA id
+ C12381800A53; Tue, 28 Apr 2026 18:05:34 +0000 (UTC)
 Content-Type: text/plain;
 	charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH 5/6] target/i386/mshv: use the register page to get
+Subject: Re: [PATCH 6/6] target/i386/mshv: use the register page to set
  registers
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260428135053.251200-6-dblanzeanu@linux.microsoft.com>
-Date: Tue, 28 Apr 2026 20:04:13 +0200
+In-Reply-To: <20260428135053.251200-7-dblanzeanu@linux.microsoft.com>
+Date: Tue, 28 Apr 2026 20:05:22 +0200
 Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <080FDF70-96CA-4F1E-95F7-BBC70A14BE91@unpredictable.fr>
+Message-Id: <55BD951E-19E4-44B8-89AC-9D16EFE0E768@unpredictable.fr>
 References: <20260428135053.251200-1-dblanzeanu@linux.microsoft.com>
- <20260428135053.251200-6-dblanzeanu@linux.microsoft.com>
+ <20260428135053.251200-7-dblanzeanu@linux.microsoft.com>
 To: =?utf-8?Q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 X-Mailer: Apple Mail (2.3864.500.181)
-X-Authority-Info-Out: v=2.4 cv=LvifC3dc c=1 sm=1 tr=0 ts=69f0f6ad
+X-Authority-Info-Out: v=2.4 cv=YZywJgRf c=1 sm=1 tr=0 ts=69f0f6f1
  cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
  a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=yMhMjlubAAAA:8
- a=gy0if3euEij6_eOLcIMA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: FT3LtnMlotzliQ8v-aUmQWtV3VwHeTnH
-X-Proofpoint-ORIG-GUID: FT3LtnMlotzliQ8v-aUmQWtV3VwHeTnH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDE3NSBTYWx0ZWRfX3+h4YchNlxsi
- VjMzd7RI6DOl8YAOJRwkZtm33y+nap5RozXgIMUvWnu7TpKdN8ceIAHdKI3jgXXlUkH9B8bzbd4
- 6QO9UXHWGfPJ3Q6Rzs1uJyvHpXF7qiEyvOCRt4lseC9zc4sqfHkFfA1bl/oYOX8UZqq01pYcMSz
- XIl83yz8juxHHvtGJtJOvVomDmcTf2eAd9OfeGDEyWlZiBpXIs9Jh4XUVATLY65SGWwxyE7xrA7
- ycRS/InQCdV20K3vBbX0yhToqMRDWj2cGbPHLKOFIZguuH6CADyWPx3a9cCf3Vcco8m3HuUGbwm
- 27+RNuwjohUN9JXTRcYUkBDRFLgTth+uGKX2P9Jwl2NwE+RBMpTupTowsTVWYk=
-Received-SPF: pass client-ip=57.103.72.113;
+ a=ADczPIEOeSqyNKhzclwA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDE3NSBTYWx0ZWRfX+CxczoUwyuPJ
+ BS3YHqQ+nzxhcqOnfFWq/SNV3PkhBl7IfbOcDaDkKl4yDirLV9pKz1+NL6kvfaoDjM19/Mv/tBb
+ CSzxoXg+n4wdpul/CpIp9zMAo9EDwOpd9eYO3Lb7v3JJw4j4jkKTxNQ+GeB2gxDiJJvW/S06nlw
+ +QRmYI9qXCP6u7VwaHyQ3US5sV3AhH2soFlZw315NoAomIXG6u0M2i8SNL3qkBcCmYUEEsQNxAD
+ aHOM11JI2fv5001P3XEbO5beDpSNP72SVkvyDXx+L84b4XPRnsid3CYNcZl1hqpZ+Vy2KpbyCAs
+ xe4WqqoRY3IRg3B3IZC6rxKthvbxiPxpoiaryE39ZVBktF/Cd+m04qR7S4W5u0=
+X-Proofpoint-ORIG-GUID: DdzlshC7AvrNnCkGL5jjfSQsMdhm3tf4
+X-Proofpoint-GUID: DdzlshC7AvrNnCkGL5jjfSQsMdhm3tf4
+Received-SPF: pass client-ip=57.103.72.134;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,227 +91,74 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > On 28. Apr 2026, at 15:50, Doru Bl=C3=A2nzeanu =
 <dblanzeanu@linux.microsoft.com> wrote:
 >=20
-> Change the mshv_load_regs to use the register page when it is mmapped
-> and is valid.
-> Otherwise use the existing logic that uses ioctls to fetch registers.
->=20
-> When retrieving the special registers, there are some registers that =
-are
-> not present in the register page: TR, LDTR, GDTR, IDTR, CR2, =
-APIC_BASE.
-> For this ones we still need to use ioctls to correctly fetch.
+> Update mshv_store_regs to use the register page when it is mmapped and
+> valid to set registers.
+> Otherwise use the ioctls to set the registers.
 >=20
 > Signed-off-by: Doru Bl=C3=A2nzeanu <dblanzeanu@linux.microsoft.com>
-
 Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-But with comments below...
-
 > ---
-> target/i386/mshv/mshv-cpu.c | 137 +++++++++++++++++++++++++++++++++---
-> 1 file changed, 128 insertions(+), 9 deletions(-)
+> target/i386/mshv/mshv-cpu.c | 45 +++++++++++++++++++++++++++++++++----
+> 1 file changed, 41 insertions(+), 4 deletions(-)
 >=20
 > diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-> index 42b6fb1912..7949493e97 100644
+> index 7949493e97..6bb3e6d4a9 100644
 > --- a/target/i386/mshv/mshv-cpu.c
 > +++ b/target/i386/mshv/mshv-cpu.c
-> @@ -107,6 +107,15 @@ static enum hv_register_name =
-FPU_REGISTER_NAMES[26] =3D {
->     HV_X64_REGISTER_XMM_CONTROL_STATUS,
-> };
->=20
-> +static enum hv_register_name NON_VP_PAGE_REGISTER_NAMES[6] =3D {
-> +    HV_X64_REGISTER_TR,
-> +    HV_X64_REGISTER_LDTR,
-> +    HV_X64_REGISTER_GDTR,
-
-Those two _not_ being in a shared register page does cause quite a bit =
-of
-pain for perf if not dealt with carefully which leads to=E2=80=A6
-
-> +    HV_X64_REGISTER_IDTR,
-> +    HV_X64_REGISTER_CR2,
-> +    HV_X64_REGISTER_APIC_BASE,
-> +};
-> +
-> static int translate_gva(const CPUState *cpu, uint64_t gva, uint64_t =
-*gpa,
->                          uint64_t flags)
-> {
-> @@ -401,6 +410,105 @@ static void populate_special_regs(const =
-hv_register_assoc *assocs,
->     cpu_set_apic_base(x86cpu->apic_state, assocs[16].value.reg64);
+> @@ -294,14 +294,51 @@ static int set_standard_regs(const CPUState =
+*cpu)
+>     return 0;
 > }
 >=20
-> +static void mshv_get_standard_regs_vp_page(CPUState *cpu)
+> +static void mshv_set_standard_regs_vp_page(CPUState *cpu)
 > +{
 > +    X86CPU *x86cpu =3D X86_CPU(cpu);
 > +    CPUX86State *env =3D &x86cpu->env;
 > +
-> +    /* General Purpose Registers  */
-> +    env->regs[R_EAX] =3D env->regs_page->rax;
-> +    env->regs[R_EBX] =3D env->regs_page->rbx;
-> +    env->regs[R_ECX] =3D env->regs_page->rcx;
-> +    env->regs[R_EDX] =3D env->regs_page->rdx;
-> +    env->regs[R_ESI] =3D env->regs_page->rsi;
-> +    env->regs[R_EDI] =3D env->regs_page->rdi;
-> +    env->regs[R_ESP] =3D env->regs_page->rsp;
-> +    env->regs[R_EBP] =3D env->regs_page->rbp;
-> +    env->regs[R_R8]  =3D env->regs_page->r8;
-> +    env->regs[R_R9]  =3D env->regs_page->r9;
-> +    env->regs[R_R10] =3D env->regs_page->r10;
-> +    env->regs[R_R11] =3D env->regs_page->r11;
-> +    env->regs[R_R12] =3D env->regs_page->r12;
-> +    env->regs[R_R13] =3D env->regs_page->r13;
-> +    env->regs[R_R14] =3D env->regs_page->r14;
-> +    env->regs[R_R15] =3D env->regs_page->r15;
+> +    env->regs_page->rax =3D env->regs[R_EAX];
+> +    env->regs_page->rbx =3D env->regs[R_EBX];
+> +    env->regs_page->rcx =3D env->regs[R_ECX];
+> +    env->regs_page->rdx =3D env->regs[R_EDX];
+> +    env->regs_page->rsi =3D env->regs[R_ESI];
+> +    env->regs_page->rdi =3D env->regs[R_EDI];
+> +    env->regs_page->rsp =3D env->regs[R_ESP];
+> +    env->regs_page->rbp =3D env->regs[R_EBP];
+> +    env->regs_page->r8  =3D env->regs[R_R8];
+> +    env->regs_page->r9  =3D env->regs[R_R9];
+> +    env->regs_page->r10 =3D env->regs[R_R10];
+> +    env->regs_page->r11 =3D env->regs[R_R11];
+> +    env->regs_page->r12 =3D env->regs[R_R12];
+> +    env->regs_page->r13 =3D env->regs[R_R13];
+> +    env->regs_page->r14 =3D env->regs[R_R14];
+> +    env->regs_page->r15 =3D env->regs[R_R15];
+> +    env->regs_page->rip =3D env->eip;
+> +    lflags_to_rflags(env);
+> +    env->regs_page->rflags =3D env->eflags;
 > +
-> +    env->eip =3D env->regs_page->rip;
-> +    env->eflags =3D env->regs_page->rflags;
-> +    rflags_to_lflags(env);
+> +    env->regs_page->dirty |=3D (1u << HV_X64_REGISTER_CLASS_GENERAL)
+> +                                | (1u << HV_X64_REGISTER_CLASS_IP)
+> +                                | (1u << =
+HV_X64_REGISTER_CLASS_FLAGS);
 > +}
 > +
-> +static int mshv_get_special_regs_vp_page(CPUState *cpu)
-> +{
+> int mshv_store_regs(CPUState *cpu)
+> {
 > +    X86CPU *x86cpu =3D X86_CPU(cpu);
 > +    CPUX86State *env =3D &x86cpu->env;
-> +    struct hv_register_assoc =
-assocs[ARRAY_SIZE(NON_VP_PAGE_REGISTER_NAMES)];
-> +    int ret;
-> +    size_t n_regs =3D ARRAY_SIZE(NON_VP_PAGE_REGISTER_NAMES);
-> +    hv_x64_segment_register seg;
-> +
-> +    /* Populate special registers that are in the VP register page */
-> +    env->cr[0] =3D env->regs_page->cr0;
-> +    env->cr[3] =3D env->regs_page->cr3;
-> +    env->cr[4] =3D env->regs_page->cr4;
-> +    env->efer =3D env->regs_page->efer;
-> +    cpu_set_apic_tpr(x86cpu->apic_state, env->regs_page->cr8);
-> +
-> +    /* Segment Registers - copy from packed struct to avoid unaligned =
-access */
-> +    memcpy(&seg, &env->regs_page->es, =
-sizeof(hv_x64_segment_register));
-> +    populate_segment_reg(&seg, &env->segs[R_ES]);
-> +    memcpy(&seg, &env->regs_page->cs, =
-sizeof(hv_x64_segment_register));
-> +    populate_segment_reg(&seg, &env->segs[R_CS]);
-> +    memcpy(&seg, &env->regs_page->ss, =
-sizeof(hv_x64_segment_register));
-> +    populate_segment_reg(&seg, &env->segs[R_SS]);
-> +    memcpy(&seg, &env->regs_page->ds, =
-sizeof(hv_x64_segment_register));
-> +    populate_segment_reg(&seg, &env->segs[R_DS]);
-> +    memcpy(&seg, &env->regs_page->fs, =
-sizeof(hv_x64_segment_register));
-> +    populate_segment_reg(&seg, &env->segs[R_FS]);
-> +    memcpy(&seg, &env->regs_page->gs, =
-sizeof(hv_x64_segment_register));
-> +    populate_segment_reg(&seg, &env->segs[R_GS]);
-
-It=E2=80=99s probably best to split this function.
-
-A =E2=80=9Cregular=E2=80=9D MMIO access is going to need segment info, =
-but not GDTR/LDTR.
-
-Otherwise you=E2=80=99d effectively defeat the point of the shared =
-register page. Ideally
-0 register fetch/writes outside of the shared register page would happen =
-on an MMIO
-access.
-
-> +
-> +    /* The rest of the special registers that are not in the VP =
-register page */
-> +    for (size_t i =3D 0; i < n_regs; i++) {
-> +        assocs[i].name =3D NON_VP_PAGE_REGISTER_NAMES[i];
-> +    }
-> +
-> +    ret =3D get_generic_regs(cpu, assocs, n_regs);
-> +    if (ret < 0) {
-> +        error_report("failed to get non-vp-page special registers");
-> +        return -1;
-> +    }
-> +
-> +    /* Non-VP page registers - TR, LDTR, GDTR, IDTR, CR2, APIC_BASE =
-*/
-> +    populate_segment_reg(&assocs[0].value.segment, &env->tr);
-> +    populate_segment_reg(&assocs[1].value.segment, &env->ldt);
-> +
-> +    populate_table_reg(&assocs[2].value.table, &env->gdt);
-> +    populate_table_reg(&assocs[3].value.table, &env->idt);
-> +    env->cr[2] =3D assocs[4].value.reg64;
-
-For CRs, there=E2=80=99s a read_cr x86 emulation callback now, although =
-it never
-needs to read CR2.
-
-> +
-> +    cpu_set_apic_base(x86cpu->apic_state, assocs[5].value.reg64);
-
-For APIC base, what I ended up doing on WHPX (upcoming 11.1 series) is=20=
-
-to just trap APIC base writes so that there=E2=80=99s never a need to =
-read it.
-
-> +
-> +    return ret;
-> +}
-> +
-> +static int mshv_get_registers_vp_page(CPUState *cpu)
-> +{
-> +    int ret;
-> +
-> +    /* General Purpose Registers  */
-> +    mshv_get_standard_regs_vp_page(cpu);
-> +
-> +    /* Special Registers - makes a hypercall */
-> +    ret =3D mshv_get_special_regs_vp_page(cpu);
-> +    if (ret < 0) {
-> +        error_report("failed to get special registers for vp page");
-> +        return -1;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
->=20
-> int mshv_get_special_regs(CPUState *cpu)
-> {
-> @@ -424,18 +532,29 @@ int mshv_get_special_regs(CPUState *cpu)
->=20
-> int mshv_load_regs(CPUState *cpu)
-> {
-> +    X86CPU *x86_cpu =3D X86_CPU(cpu);
-> +    CPUX86State *env =3D &x86_cpu->env;
 >     int ret;
 >=20
-> -    ret =3D mshv_get_standard_regs(cpu);
+> -    ret =3D set_standard_regs(cpu);
 > -    if (ret < 0) {
-> -        error_report("Failed to load standard registers");
+> -        error_report("Failed to store standard registers");
 > -        return -1;
-> -    }
 > +    /* Use register vp page to optimize registers access */
 > +    if (env->regs_page && env->regs_page->isvalid !=3D 0) {
-> +        ret =3D mshv_get_registers_vp_page(cpu);
-> +        if (ret < 0) {
-> +            error_report("Failed to load registers from vp page");
-> +            return -1;
-> +        }
+> +        mshv_set_standard_regs_vp_page(cpu);
 > +    } else {
-> +        ret =3D mshv_get_standard_regs(cpu);
+> +        ret =3D set_standard_regs(cpu);
 > +        if (ret < 0) {
-> +            error_report("Failed to load standard registers");
-> +            return -1;
-> +        }
->=20
-> -    ret =3D mshv_get_special_regs(cpu);
-> -    if (ret < 0) {
-> -        error_report("Failed to load special registers");
-> -        return -1;
-> +        ret =3D mshv_get_special_regs(cpu);
-> +        if (ret < 0) {
-> +            error_report("Failed to load special registers");
+> +            error_report("Failed to store standard registers");
 > +            return -1;
 > +        }
 >     }
