@@ -4,82 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C00EDFF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 19:03:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E86BBFF885A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 21:47:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHniB-0005kV-L8; Tue, 28 Apr 2026 15:03:11 -0400
+	id 1wHqGU-0001NP-Eo; Tue, 28 Apr 2026 17:46:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wHni9-0005kA-UQ
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 15:03:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHqGS-0001NC-Vn
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 17:46:45 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wHni4-00076F-Tn
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 15:03:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777402983;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YgUTlVKAShtA+D1Da87VVQkpTlhdqEvfQ5MMPGCLSSs=;
- b=UXZ0/g6KkEhNDmPYW/P+6P4zm9ujsQTCewr+EBkkzR4l+nO2thuFEGrsltcr02MU887FJz
- wGA+NWL84oFg0LoEk1bz0nS+zk0G+aO+KkegX0PgeFe+po2H3vz6+mcawkNXR9ObN1J+wI
- 98aoDUrRv8xHZkkM1JFGcHxLf5ZqQro=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-524-LUAbZjORMm2gskZzqNRvYA-1; Tue,
- 28 Apr 2026 15:03:00 -0400
-X-MC-Unique: LUAbZjORMm2gskZzqNRvYA-1
-X-Mimecast-MFC-AGG-ID: LUAbZjORMm2gskZzqNRvYA_1777402978
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 26F1718002C0; Tue, 28 Apr 2026 19:02:57 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.9])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0B8B719560AB; Tue, 28 Apr 2026 19:02:55 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5553721E6A28; Tue, 28 Apr 2026 21:02:52 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,  Joao
- Martins <joao.m.martins@oracle.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  Prasad Pandit
- <ppandit@redhat.com>,  Alex Williamson <alex@shazbot.org>,  Kirti Wankhede
- <kwankhede@nvidia.com>,  Zhiyi Guo <zhguo@redhat.com>,  "Maciej S .
- Szmigiero" <mail@maciej.szmigiero.name>,  Juraj Marcin
- <jmarcin@redhat.com>,  "Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: Re: [PATCH v2 14/16] migration/qapi: Introduce system-wise
- "remaining" reports
-In-Reply-To: <afDRlNtG7wlmXchB@x1.local> (Peter Xu's message of "Tue, 28 Apr
- 2026 11:26:12 -0400")
-References: <20260421202110.306051-1-peterx@redhat.com>
- <20260421202110.306051-15-peterx@redhat.com>
- <87cxzovncu.fsf@pond.sub.org> <aeuJCI0OCW-ohJih@x1.local>
- <87jytvoam2.fsf@pond.sub.org> <afDRlNtG7wlmXchB@x1.local>
-Date: Tue, 28 Apr 2026 21:02:52 +0200
-Message-ID: <87wlxqzz4z.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wHqGQ-0002RA-W0
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 17:46:44 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id D7F4143AFD;
+ Tue, 28 Apr 2026 21:46:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D414C2BCAF;
+ Tue, 28 Apr 2026 21:46:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1777412792;
+ bh=fUbUBNOS+gTd8SfUVwl+U29Q6KEI5N2CjiBhvCbj49U=;
+ h=From:To:Cc:Subject:Date:From;
+ b=MFV8gaR6hgWnDQI1ScvT+fZ74vt1iNqbp8scngknORj6GilZyl4R7oEGLKeKfHRQn
+ 8OiCsVRUBG51894hCqXeSmG8WECZF/KPjUKgrifvabdtJe4S10c2bX3c38qUzdb4n5
+ ZeM80sainkrmJAAIEk3egoUnsnSuEQqc/A8g1+A2gY3NW8JBomBgV97lCfVO88qTLn
+ 3V2FZZn1jhHT5b7WQDObu5MNJN6j9ZcLlcbcU2EbIQUwnfuDJ+u6dBxJyfCbNWnH85
+ lAyVC1MFRDE93C6PvSQIVT5M3LUsLb9XW1Xwa1YzcZ8OpaALor8HN6Xhu86fQ/ReiH
+ c9BkQGBorwmHA==
+From: Helge Deller <deller@kernel.org>
+To: qemu-devel@nongnu.org
+Cc: deller@gmx.de
+Subject: [PATCH] linux-user: Allow getsockopt() with NULL optval address
+Date: Tue, 28 Apr 2026 23:46:26 +0200
+Message-ID: <20260428214626.13329-1-deller@kernel.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.109,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,61 +65,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+From: Helge Deller <deller@gmx.de>
 
-> On Sat, Apr 25, 2026 at 07:46:45AM +0200, Markus Armbruster wrote:
->> Peter Xu <peterx@redhat.com> writes:
+Some programs test availability of socket options by asking for the
+value with an NULL optval address, which currenrly always trigger an
+EFAULT in qemu.  Fix it by allowing a NULL address, in the same manner
+as the Linux kernel on physical machines.
 
-[...]
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2390
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ linux-user/syscall.c | 50 +++++++++++++++++++++++++-------------------
+ 1 file changed, 28 insertions(+), 22 deletions(-)
 
->> > The complete new version of patch is here (I updated quite a few places on
->> > the commit message):
->> >
->> > https://gitlab.com/peterx/qemu/-/commit/86d973360890cecc564a4a5bcf9a01b9efde368a
->> >
->> > Thanks,
->> 
->> I read the commit message.  No surprises except
->> 
->>     It should be the same value as RAM's remaining report when VFIO is not
->>     involved, and it should report more than that when VFIO is involved.
->> 
->>     One note is that this field will be an estimate and may not be sampled the
->>     exact same time versus the RAM remaining section.  So it may report
->>     slightly different values even if only RAM is involved.  The difference
->>     shouldn't matter though to mgmt to make correct decisions.
->> 
->> The second paragraph is new.  The first paragraph says they "should be
->> the same", the second that they "may [be] slightly different".
->> Suboptimal.
->
-> Yes, it is misleading, I overlooked that. :(
->
->> 
->> Here's my try:
->> 
->>     It should be approximately the same value ...
->> 
->>     Only approximately, because this field will be ...
->> 
->> It's just a commit message, though.  Up to you.
->
-> New version:
->
->     When VFIO is not involved, the value reported in the new field should
->     be approximately the same as reported in the "remaining" field of the
->     RAM section.  It is only an approximate value because the system-wide
->     remaining data is a cached value, which gets frequently updated by
->     migration core.  OTOH, the RAM's remaining data is accurate.
->     
->     When VFIO is involved, the new value reported should normally be
->     larger, because it will include the size of VFIO remaining data too.
-
-Looks good to me, thanks!
-
->> QAPI schema
->> Acked-by: Markus Armbruster <armbru@redhat.com>
->
-> Thanks, I will at least wait for 1-2 days if it still needs update.
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 4594909242..d68edb7afd 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -2644,6 +2644,10 @@ get_timeout:
+             if (ret < 0) {
+                 return ret;
+             }
++            /* special case: destination address is NULL, return 0 */
++            if (optval_addr) {
++                len = 0;
++            }
+             if (len == sizeof(struct target__kernel_sock_timeval)) {
+                 if (copy_to_user_timeval64(optval_addr, &tv)) {
+                     return -TARGET_EFAULT;
+@@ -2844,7 +2848,10 @@ get_timeout:
+         }
+         if (len > lv)
+             len = lv;
+-        if (len == 4) {
++        if (!optval_addr) {
++            /* writing to NULL does not give error */
++            len = 0;
++        } else if (len == 4) {
+             if (put_user_u32(val, optval_addr))
+                 return -TARGET_EFAULT;
+         } else {
+@@ -2877,18 +2884,24 @@ get_timeout:
+                 return -TARGET_EINVAL;
+             lv = sizeof(lv);
+             ret = get_errno(getsockopt(sockfd, level, optname, &val, &lv));
++write_ret:
+             if (ret < 0)
+                 return ret;
+-            if (len < sizeof(int) && len > 0 && val >= 0 && val < 255) {
++            if (!optval_addr) {
++                len = 0;
++            } else if (len < sizeof(int) && len > 0 && val >= 0 && val < 255) {
+                 len = 1;
+-                if (put_user_u32(len, optlen)
+-                    || put_user_u8(val, optval_addr))
++                if (put_user_u8(val, optval_addr)) {
+                     return -TARGET_EFAULT;
++                }
+             } else {
+                 if (len > sizeof(int))
+                     len = sizeof(int);
+-                if (put_user_u32(len, optlen)
+-                    || put_user_u32(val, optval_addr))
++                if (put_user_u32(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            }
++            if (put_user_u32(len, optlen)) {
+                     return -TARGET_EFAULT;
+             }
+             break;
+@@ -2939,20 +2952,7 @@ get_timeout:
+                 return -TARGET_EINVAL;
+             lv = sizeof(lv);
+             ret = get_errno(getsockopt(sockfd, level, optname, &val, &lv));
+-            if (ret < 0)
+-                return ret;
+-            if (len < sizeof(int) && len > 0 && val >= 0 && val < 255) {
+-                len = 1;
+-                if (put_user_u32(len, optlen)
+-                    || put_user_u8(val, optval_addr))
+-                    return -TARGET_EFAULT;
+-            } else {
+-                if (len > sizeof(int))
+-                    len = sizeof(int);
+-                if (put_user_u32(len, optlen)
+-                    || put_user_u32(val, optval_addr))
+-                    return -TARGET_EFAULT;
+-            }
++            goto write_ret;
+             break;
+         default:
+             ret = -TARGET_ENOPROTOOPT;
+@@ -2986,8 +2986,14 @@ get_timeout:
+             if (ret < 0) {
+                 return ret;
+             }
+-            if (put_user_u32(lv, optlen)
+-                || put_user_u32(val, optval_addr)) {
++            if (optval_addr) {
++                if (put_user_u32(val, optval_addr)) {
++                    return -TARGET_EFAULT;
++                }
++            } else {
++                lv = 0;
++            }
++            if (put_user_u32(lv, optlen)) {
+                 return -TARGET_EFAULT;
+             }
+             break;
+-- 
+2.53.0
 
 
