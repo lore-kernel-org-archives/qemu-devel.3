@@ -4,100 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C7EEFF8867
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 03:24:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A89A6FF8867
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 03:28:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHZ3z-0008K7-64; Mon, 27 Apr 2026 23:24:43 -0400
+	id 1wHZ7O-0000fb-K6; Mon, 27 Apr 2026 23:28:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHZ3w-0008Jd-Mk
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 23:24:40 -0400
-Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ id 1wHZ7E-0000fJ-Sa
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 23:28:05 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHZ3u-00017X-Tl
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 23:24:40 -0400
-Received: by mail-ed1-x52d.google.com with SMTP id
- 4fb4d7f45d1cf-6634bb959a2so14721377a12.1
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 20:24:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777346676; cv=none;
+ id 1wHZ7C-0001lQ-Dg
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 23:28:04 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-bb662d56b5aso149466866b.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 20:28:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777346880; cv=none;
  d=google.com; s=arc-20240605;
- b=eZ2JlwCUlOEV5jO5aatMf3331UxHclNOOZjDfpB3o0KQXJkyAbgDwyTtU823iZYc+N
- ug1Wjb1xc/NlENuUM0csi1XUVCGiCWSuMWv63TfRABeSCteaIuSHdBP0o0etXdouH3Ux
- zqRtacNT6vxlZ5kwA3AqI4btQ2gQ98PifjxJC6AhXn0WVgZMHWiJwAtC5Lp77JQJFJO1
- W9DuiXBp56N2DWETGgPGPY0F6D3Y48POjDKjHNI9bXaQglUpKznP9oygmxASSUgHEl2N
- DjfjWMS9tJWZhViQpB4QezRqGGPyo0lzLEjzayX1249zyOfd82WZrX30m8JSfGlZ5nKX
- 3v7g==
+ b=DtgC34XHRbEgsIZ5KgeBfQZJnBuH0C5ETBjYkIbElQRxRgpuFT8Ff8O76DRi1kmpfJ
+ KDN94w+Db4M+ITisf60QhaH9hHq2z9vsNhhGhWAM6bIY/RPSvc4r4h0Xgjbb67f9QVvm
+ TFytlcPtouJVXWNRtiYM5e//t1k8F+6nqhJT567bAFBcufPKC9wnFXUMNM2neJGqo4jt
+ +zrbNx8/ppa0/rGzwqAbN/pEEiZC8FWHqo5/0AdpbC9Qa3bZUKRetbTHWfSAM+WW4f0z
+ m0npDMpXvcHKCNU4oQw/k/f3KHwusyEQbv4oDMhAULCr9CoqwUsXTtBWmiteviw5am8O
+ ggHA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=gZXjeZM8QkObS8dQg5unD4cq01c/8DKt4qjRD1C/jX8=;
- fh=fx/r/twi0lR0VsLAVqPkirIE7VN6h63K7UWTunhhuts=;
- b=M0uJzSXv2xwQgsMxR2JKF0AyWNXuSYQnU6+KtJHzYvTn3LRiywyJne/0vRAQIwIYYb
- Z16N0KyzX/5UEN3GZcmSfC6YTZWXh4VhsuIXp7FTKEhKJuLuaZS85XC0ABf/tCFHjyt6
- qTerqdAxlkYCRebUPhr+UcxRWHlMSekd8MXjtnRIUDET3wh0WJ2PSuAdDPbulJzE6GIl
- 9hTEhvRijjnFRGZJvCGgLztChsHqZN+PRLfT54aSxZ7KxX+OwQ3HnLepIEZlx6bgdyYy
- l3uRchwrP+rTHd0nNWq/H20Ywklwv5OGxwWLMLE90xLLKgyjK5z1bDF1vXzTQ31hjoar
- d3tg==; darn=nongnu.org
+ bh=x5t7HPHDtXEVJ6HgKzKwemhTfsVPaNXzCBtDCQkipfg=;
+ fh=CcR3C6UciAMzQsjP9eJH1hXnPzcf1tfpxRCDf0g8+j8=;
+ b=NVKPr/lJAa8yuHNEY9Nve6khuGNb26dxnPxNEYOvgMFFZUVoc7AMQV64LFhEvWXkuP
+ UCIgxg5bUytOUHDEeheT/kTXBrvBPd/g+eh057r7da9p5RrCWVfSeQ446dlvIjM/SA8H
+ tAq/wi4qcWce8Ld3yK3HZk94sUp+4QoDdfTKGAw3oJd794SHmqLhTdzO78vLE6jt4EIq
+ lOa0mCJ96TsJBRM2dz4YYzRaGjCYuPXjPSlKyiThhXFNERYB3eazOdso5Xo8rDw2wuqG
+ /4ZELe5Jq8z0HtbQqQMsXyvWMfLeV6tTGeI1o4/Bx4U9E8xdWpDGHJ+chI6/aCxS2vTW
+ Ih9w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777346676; x=1777951476; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777346880; x=1777951680; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gZXjeZM8QkObS8dQg5unD4cq01c/8DKt4qjRD1C/jX8=;
- b=fIpJNDKeSyGOaRtVGZ9Z5UmMzLVwASPYOzq6QY/agAOJDyQovFEHY1z6bLwSQ+92K9
- Q7eQZL8nGC2fYC7cmWaw72Ag3OTL+qYSrheGozDqYUkoNtFx4bebSizN+ghwpHeSgOmZ
- JXCM3o6jWBlWOpi9ojp0uoj7wG0V9Ayhtwh/XmG/8y4dwA1XpjDnYBcpcjMKQ2H9VPee
- Hi7Xzy6SBbRW+2/TrvzgCHnL8VKsnUUkrT+NT5R2OuuT+AmXoMrDYU+d2KHVc0DQOJIT
- SJg5kN3bunLeI69QscI9tNJwhpWp2IHl1KX+g64ke06DsI5sc63UgrLZ/qO13ApfIH8Z
- 0A1g==
+ bh=x5t7HPHDtXEVJ6HgKzKwemhTfsVPaNXzCBtDCQkipfg=;
+ b=Xw1nGl1lE98EFLxlhyAN4ZZ7um2c/LrRzL6gNIOChDr7o3ijMba8VShjkybcc3toEG
+ 5JQ60iJvmCjT5KY1aikDgXiumY0vis0EBIE8FRQ5kCfo+CvSvibMU9Rncdr220n8xQEY
+ i5FQUVpDlCDbjtBH07kinTnefNGyPRIzX5YvSsMnk7Njm/eiPxZoyrCYpwxWre0kM4qc
+ GS923bCmEYdHXP5I4Y8/xsrdSIsPEmrOGredXVlxOaScz38Htlox26lNed5oGiVwqONp
+ AIzkO9m/KVNj/T6U08TZDrkrLUbycKmej/gohhCKFFqWPXDuJujCEcjj+czWh4vYSVdb
+ 55/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777346676; x=1777951476;
+ d=1e100.net; s=20251104; t=1777346880; x=1777951680;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gZXjeZM8QkObS8dQg5unD4cq01c/8DKt4qjRD1C/jX8=;
- b=nlNoqT9UOLEl9sny82cGbHnKjm1Sd4nJd+JNiV7nDbXTmvzY9kmKQXzHR1ZUIw9YeG
- WIdKtLAySbK3fV7uxqhjZaRz2i18pKuJp+JkMq9CSrl68GC4lkIlBiMLvVeyxDkNsMOH
- Kwjq2dSn+pNTLHsJT3BCm0I1LD7Qmc3TWTNwDKFeYAmhh2si2h2t6cTZLBdPTBk//Hg+
- jkTTPjQ6Zx7vgfZbBr+jvjhxlWs3bNCQS+kV3k1eqrkQ7agUZcTnHlPD5nKuW5sOyIPG
- DcFiw0cYtPz2gIhdW3mj7J9teoBADapCkV3pi2L1SbTDVsqh1Q3Yj5NdHYmLcArHcHke
- MatQ==
-X-Gm-Message-State: AOJu0YwbbCbyXWBqL9WdYxmJRFzohDlSGBY6TV1CJEIbf/cm3Wzdh3cB
- rQy+at9h82h0zYfv/7A4CDgRgfWDrZsP0UWAIZtvOvrHoWCeGgArT+EsqV422K1r0wrshHxUKb8
- 99DItuwzDcw6MyhSJ6n7DiD000HXPx/g=
-X-Gm-Gg: AeBDiesfYOHd8Lia4XhHLy/jWQnd5kjy+xkFL1kq1RfXoW20BXcqfckeXjz0IYJIKiF
- M6PEmnvzFRF6n920sMStUMKDx/EoQM8jxFOekA1q7aX0izDmD/JQhWK4auri1INlRld7f1be4v/
- vWvLMrUWSMBNz6KErouCZIPbyqlLAv8BJZNWAfrPtmrhYMtna7UXi7lHrtjFWd98igXvx5QzikT
- sr2rZUjNs5FCGARm0ak8qwBmWaPBvhjkOPLBAKUkIj09JRAfY9PkJdyRhNeiEPWNOmf22jXUQ8O
- TIYJksbrEP2Xmp0+nbAHxNWbZXGHENTvLoODyKXDoxElHPZFGqjVZrA2c7M=
-X-Received: by 2002:a17:907:d1a:b0:baa:77ac:97a with SMTP id
- a640c23a62f3a-bb803e5c20dmr69487866b.36.1777346676028; Mon, 27 Apr 2026
- 20:24:36 -0700 (PDT)
+ bh=x5t7HPHDtXEVJ6HgKzKwemhTfsVPaNXzCBtDCQkipfg=;
+ b=ndU+7v154B5YqZ17cow992IeKgBMmsdLNY1NpRaZsnmPLVUeyBl9K5d21+DFkVEv9h
+ 4RCNf3GY1WiJEazh5t4jOmONO3lOWcE2iuFfLpHXxC75p3pWhDpgFI2Al9YlCHWor7JH
+ e4UiQgpCH1jDeXD5fOykux2RtvWcp3dcg6/8Sy0lf9CJB1PdG50mdgqxZyxSYLwGMKZF
+ b74l01nUGOsUCiyohouEsA9HVd2ATjVuKCmk7CTdaTg3Yief/d46V+vW+LMDar2n+yMG
+ dAl2JoJtuAhywdlvJWJo80hn7KNqYlPLfanbrsbRVJ7JlRFEi8S4el0ajk6SuGMyOzvk
+ VoPA==
+X-Gm-Message-State: AOJu0Yzwbk+hHzSO12Es1TgY7cz3uNaK0oRH/wLH8ELdIYNlQlS6ZgkA
+ rB+eCZpzAtPpKHf2zTOzia2GvcqT4tQKqXZ0092Ij60O+XeTmhdpIMT6P8XqulFZBr8sRuYQY6Q
+ 8Ky//3dhSm+YG2MSbi0Io6pZ9xUgkugg=
+X-Gm-Gg: AeBDieswjM3a4OuLA0W5xUoW8IZIHfSB6FYNWa+VryTXSNA0eNogIOu85PwMcMupm92
+ gOJyv6ShRz6WLv4gmjQffSZdR3pWo6H472fPoLbw1HqACfvuSdhtkKRTIN23yMo3hyCCUhOVl9U
+ 3GwyDZBE01sa4PiAMiveGWatmdxRlUoqca8tXUnGz8TwnX8ORw5heb81H0LZ9gZTReM/RhMYbnN
+ It4VH9Oui8vgko+z+EB3nEwMWSRel3IX8tSgawRc+YPgaH/oxtenTgyyqBCVa2xwv/jkoq7ea7D
+ 2Pry8Ym9HcnP0u8wgM6l9mTJbCn5Y1lleoYv+4xcWQwhxHVEtonhILXQ3Vo=
+X-Received: by 2002:a17:907:86a9:b0:ba9:3f4a:1521 with SMTP id
+ a640c23a62f3a-bb847f20815mr25909666b.19.1777346880229; Mon, 27 Apr 2026
+ 20:28:00 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260421093715.2995067-1-frank.chang@sifive.com>
-In-Reply-To: <20260421093715.2995067-1-frank.chang@sifive.com>
+References: <20260417120626.77415-1-antonb@tenstorrent.com>
+In-Reply-To: <20260417120626.77415-1-antonb@tenstorrent.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 28 Apr 2026 13:24:08 +1000
-X-Gm-Features: AVHnY4JM-7rcS1mqEgKim4DLlpejDdYg_Tlif2I7-4WDcdFPodPQuDW1wbxv3GQ
-Message-ID: <CAKmqyKMORwc_CRbC2pxGNeaw-4p=cdLBjW+HQsvcbAfxTCFMvg@mail.gmail.com>
-Subject: Re: [PATCH v4 0/6] Fix Zjpm implementation
-To: frank.chang@sifive.com
-Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
+Date: Tue, 28 Apr 2026 13:27:33 +1000
+X-Gm-Features: AVHnY4IJAOr7BfHXQGAEo7xbBxDjjjjBXm6ppa4U1zfoqigXoTQjibB1J9a_hTA
+Message-ID: <CAKmqyKN68wf-kTM1CtVidqY2s3iuS4VXnVDwn924cJB1mtcshA@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: rvv: Handle mask/source overlap of vector
+ reduction instructions
+To: Anton Blanchard <antonb@tenstorrent.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, palmer@dabbelt.com, 
+ alistair.francis@wdc.com, liwei1518@gmail.com, 
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com, 
+ liujingqi@lanxincomputing.com, max.chou@sifive.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x52d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -121,46 +120,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 21, 2026 at 7:38=E2=80=AFPM <frank.chang@sifive.com> wrote:
+On Fri, Apr 17, 2026 at 10:08=E2=80=AFPM Anton Blanchard <antonb@tenstorren=
+t.com> wrote:
 >
-> From: Frank Chang <frank.chang@sifive.com>
+> Masked vector reduction instructions must not use v0 as a source register=
+.
+> Check rs1 and rs2 against the mask register when vm=3D0.
 >
-> The current Zjpm implementation has the following issues:
->
-> 1. The address is shifted before obtaining the correct PMLEN value.
-> 2. riscv_pm_get_pmm() does not handle effective privilege mode correctly.
-> 3. mstatus.MPRV does not affect virtual-machine load/store instructions.
-> 4. Sign extension for virtual-machine load/store instructions (HLV.* and
->    HSV.*) must be performed when vsatp.MODE !=3D Bare.
->
-> This patchset fixes the above issues and also renames
-> riscv_pm_get_virt_pmm() to riscv_pm_get_vm_ldst_pmm(), as the helper
-> is only used when checking the PMM configuration for virtual-machine
-> load/store instructions, rather than for VS/VU modes.
->
-> Changelog:
->
-> v4:
->   * Rebase to the latest to-apply.next branch.
->
-> v3:
->   * Move riscv_cpu_eff_priv() to the header file and declare it as a
->     static inline function.
->   * Fix the MXR check bugs pointed out by Radim Kr=C4=8Dm=C3=A1=C5=99.
->
-> v2:
->   * Check effective privilege mode in riscv_pm_get_pmm().
->   * Fix pointer masking for virtual-machine load/store instructions
->     (HLV.* and HSV.*).
->   * Rename riscv_pm_get_virt_pmm() to riscv_pm_get_vm_ldst_pmm().
->
-> Frank Chang (5):
->   target/riscv: Add a helper to return the current effective priv mode
->   target/riscv: Fix pointer masking PMM field selection logic
->   target/riscv: Fix pointer masking for virtual-machine load/store insns
->   target/riscv: Rename riscv_pm_get_virt_pmm() to
->     riscv_pm_get_vm_ldst_pmm()
->   target/riscv: Fix pointer masking translation mode check bug
+> Signed-off-by: Anton Blanchard <antonb@tenstorrent.com>
 
 Thanks!
 
@@ -168,18 +135,27 @@ Applied to riscv-to-apply.next
 
 Alistair
 
+> ---
+>  target/riscv/insn_trans/trans_rvv.c.inc | 2 ++
+>  1 file changed, 2 insertions(+)
 >
-> Yong-Xuan Wang (1):
->   target/riscv: fix address masking
->
->  target/riscv/cpu.h         |  41 +++++++++++++-
->  target/riscv/cpu_helper.c  | 110 +++++++++++++++++++++++++++----------
->  target/riscv/internals.h   |   8 +--
->  target/riscv/tcg/tcg-cpu.c |   4 +-
->  4 files changed, 124 insertions(+), 39 deletions(-)
+> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_=
+trans/trans_rvv.c.inc
+> index d9a0027e0b..6e8d32636e 100644
+> --- a/target/riscv/insn_trans/trans_rvv.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
+> @@ -3046,6 +3046,8 @@ static bool reduction_check(DisasContext *s, arg_rm=
+rr *a)
+>  {
+>      return require_rvv(s) &&
+>             vext_check_isa_ill(s) &&
+> +           require_vm(a->vm, a->rs1) &&
+> +           require_vm(a->vm, a->rs2) &&
+>             vext_check_reduction(s, a->rs2);
+>  }
 >
 > --
-> 2.43.0
+> 2.34.1
 >
 >
 
