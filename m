@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7A29FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 16:03:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A36A9FF885A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 16:03:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHku0-0003wN-3G; Tue, 28 Apr 2026 12:03:12 -0400
+	id 1wHku2-0003zq-AC; Tue, 28 Apr 2026 12:03:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1wHksU-00039w-A7
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:01:41 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1wHksO-00036F-VI
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:01:39 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1wHksP-0003lH-57
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:01:37 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-8296dabef74so9658538b3a.1
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 09:01:32 -0700 (PDT)
+ id 1wHksK-0003iU-9O
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:01:32 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-c76b9efc299so4831078a12.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 09:01:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1777392091; x=1777996891; darn=nongnu.org;
+ d=sifive.com; s=google; t=1777392085; x=1777996885; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/Hx21rvPtv3e1ezzyiyMTIiO3uaK5NV82dpiR14Fe1A=;
- b=I6cf0xLZ2xEBIqzjR+6APzJjiFFPGJOUbR0J0z3b5UILgXFyZi174TgpejsvxMhsO6
- KAisXGrB5SRt5/Q1ZcwnU0ST1wLvUjixhUiuKdnxoE03CtB+xINYFzFy1Ugm6NGHkVKL
- npwpME9m6tQd13DqR5rkRUcXl4UjIv3Xx5LyiICBz4WCC16emxk2ki8EM/NB4r7kt5b8
- Het4+RGisVQOElvW9Ok6IC0z6DljyZFfm8BZdqMa5DCm0z73VIHVVa7RXUZjgSgORJE4
- yKE7XmMILbDOSyjyyO0ECYTVzgJcXMFuSFSnPy3zOx2WAhjVwOOQ7C3qqaOkBfXzLybi
- NHGQ==
+ bh=CgXtKy+iVz/buq8xrh+OuZeU7ZMd1UBY6bFU951VKdw=;
+ b=a6gfP3knLsX4FtRJhfd+HzAp5azDYWJ38TrYQ8VeAgo0IPzUGamnfmfuEo8C5gWEdt
+ K46RBFZHwzVHpNlbtlrbuB3vxAj3Gm1KSw4SsY7uoiJHsOyVDsFLxPTlXFuf5829pDWh
+ xH/I+hgnHRtCKY6/OBfGvHxN/nw4kvzk0H08qAQAq5onjJa1tKETUCosZij/vPdirDv2
+ MB34H2MuhbfPsxPaw/lATaKbHuqrvL+lXsk/A2ZcTmG8LG8FWH/MmmCE8Hbyx+IugzRl
+ D5EmHkOp7Q2DL18NsdQ9tG6MK5lPcWZxVfg1vYM5OJKxekl7MTvpL1sXbN62LNOru11b
+ DCGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777392091; x=1777996891;
+ d=1e100.net; s=20251104; t=1777392085; x=1777996885;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=/Hx21rvPtv3e1ezzyiyMTIiO3uaK5NV82dpiR14Fe1A=;
- b=JSwbmnoRtdZODMfq444dOWyTm/wiL/KiAMbIhXCwQsr2R21u7VOC0y09JK7KQN9Raj
- A+avl4oxMPHZkS3Xclp1XgMON32/4YWgcy2+2zXjps/eJ8MvfUFN6jsHIXVl4rbmrIRS
- PIfUzHiQEKobKs9JzQGEJxu83wLKmcPENRsWO5qqxrXYaNR564sKDDiiQaM5tx0AUgqt
- a/V4mGkLk1s25l2SThRLgxUQ6MU3JZuIUKiRlcF6naioXv7J0d8sE6zOC1/HePI/EoPq
- ws3TbuaMkncHYTLjInlR0yLaTQX0W337XBSjQ+8PD/TDYE9MShD5x1VNkpnTYQ+rtXTF
- sWkA==
-X-Gm-Message-State: AOJu0Yy5tVOdHTRIbX+66IpLV7COQAUf1PEwjzo2TIbFFHl8JcVulPJj
- 6wLWDFbv55zPWo/SSlG1YB6qbIB6lKKaP9DotQQ1pKVYFQxhpsl1xq3mo0BOpoZkVWklHsCU2tk
- PQUU1blfVS1+ZsvdrhBecnVvSVhNbogLUlxZVD4o586kcgxSs+5nFqxc+ADf2L1WLLdYJtzxeHj
- fgwKwjhEzSXF25dY/sEKb11KehAMphcRqX1SpJlE+l
-X-Gm-Gg: AeBDiev8dlfvT9G0LT5qN991WqxFTLp+xH9BpInl9p/KlKwPoEpARHaaU0xxBEZONy4
- cDD6EWnuxIH+OvunNFsY5aEpelPPuql4fiEvGdSfBIHl4FIyahkVZUgHzbAxXsuHyTCH9VRkxnW
- 1v2gW2FYsJl3iATT8QppIJh6ar4AfZDDCRncsJaoC9hWeMZ5FmmbKuHo9DYXqFayKGyC/80srmn
- SVOgbym7wRaJir0+HwEjvI08/Vxd99wLcOChjWTUlr1rwgOrx02gVR0e8cheZO1LaBXDuGpxiZF
- rP8KNmHRSPCAOFZScOigFwb52MUeKDTwjfOGZ4l6w8nMdxKAlvbVy3uL4xA+dt4DkBkALuZs6MN
- 4D+pJaho6GBsS5Ic9owXwTSsu1dzW92Lonl5RFSea4E4VMyUfvqA4uG0iMzZZpR4U8vnaG6nBhQ
- Z7Hcy6CRrSsOXitQvEM0zhi7UMLKkDGHRtMinpLgX+gGzUd3UMIgfI4P0=
-X-Received: by 2002:a05:6a00:3989:b0:82f:8a29:e3b4 with SMTP id
- d2e1a72fcca58-834ddc9558amr3530183b3a.50.1777392090710; 
- Tue, 28 Apr 2026 09:01:30 -0700 (PDT)
+ bh=CgXtKy+iVz/buq8xrh+OuZeU7ZMd1UBY6bFU951VKdw=;
+ b=lFDUIpKgUwXYrxJBPA9Ab9lqlUsfCvdA4zq83DcPunQVGVHm46wVkFqRlDDBgSl4X4
+ nP48KXTLG+jG0y6y97DZhOOL17hNPeY3JRT94puTIh4WLJq1taFcqzUFsY04Zm8f63yd
+ qccDDDlPwm03rJVvqVaVw/xsxxEGTJMMi1JlEAseZNq0TsE7UfrueRhWbEc9pQ2ixHyB
+ /6uBGxST4DkoFRxqyEBKMsnFHazbxWh8dXEEIXPpiZfg/EtUeOiezOJyzCQxiAtEKKjE
+ XXFSPurT9aOJGjDOWRd4HUTxgF6ndqIcu6pmbWsh4beTlN6TcxATx7r9+s3Pedpvw4Ch
+ PcSA==
+X-Gm-Message-State: AOJu0YxCay4MHKh8Z7fEHfptoej0i16Sg3klxDyO4/ko3NeisJmOyISp
+ BUMpGJgObODYJtPU6lDXd29SQYqq1fa11xxZekY8KTKWFtpi7mpT/ZYvw1MuTJt1En2CvWV7zkA
+ 8gdnU+90w9p/QvtDHNLIts2E3VPsD0mgm3KhTS2eDJpuadXZmARcFunDV+KVHYam3rPSDsPqIAV
+ bwQkJZQQG3MvyIgBOYTyzYF+atLHHcfUTG/5qC402j
+X-Gm-Gg: AeBDietRMLIF1zQRdaunuPa+L0mYVMVCeP0a2mF2CWx0cE/JIZcL3Mf0s44iwF9GY64
+ inkBWtcznjsWQ7ArXUrtwIXE0KzDM76LkQQWB6fjlz5ZaB2cqe4TV3CSIkwjgu6m3V+fC0e9MZg
+ aJ4aFNWCYJpTqBZMFUxIOQf0WmByJd3GOonFeSlpLaDoWo3+XTcVnUn/KANIZrVKYnkoBXr3sEe
+ 9nus8qB7vjCB6dgFbokE8a4EnoIkZXi6UwHG+SWsH9JqO1dRPLQlXVTo3ubotGohe6ixGv9S+DX
+ AEMMw3HK9MJ4fRoaZRiPx3eeCNPT//BUFMS8XZEazVgQVJ21HnxvBVXMrZVAiBnPgaamY/GmwQJ
+ TWAQiH3Vha7WBLeHKO9Ms4z9F8X0uxtfDR8iWvzxMus4woB30tkH2Q1OR2TVFt8pRpZJ2xDA1Ul
+ qNoIqi9NJozdrO27cy0UUqf4f7HjeVE/M/qmAlrt5uq6Fvr/gXN4QSMUQ=
+X-Received: by 2002:a05:6a21:3294:b0:3a2:d976:2210 with SMTP id
+ adf61e73a8af0-3a39c04e43dmr4507133637.8.1777392084925; 
+ Tue, 28 Apr 2026 09:01:24 -0700 (PDT)
 Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-834daf30fbfsm3002331b3a.33.2026.04.28.09.01.28
+ d2e1a72fcca58-834daf30fbfsm3002331b3a.33.2026.04.28.09.01.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Apr 2026 09:01:30 -0700 (PDT)
+ Tue, 28 Apr 2026 09:01:24 -0700 (PDT)
 From: Jim Shu <jim.shu@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -74,18 +74,18 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Weiwei Li <liwei1518@gmail.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH 4/4] hw/intc: riscv_aplic: add trace events of APLIC
- read/write function
-Date: Wed, 29 Apr 2026 00:01:03 +0800
-Message-ID: <20260428160103.3551125-5-jim.shu@sifive.com>
+ Chao Liu <chao.liu.zevorn@gmail.com>, Jim Shu <jim.shu@sifive.com>,
+ "Fea . Wang" <fea.wang@sifive.com>
+Subject: [PATCH 2/4] hw/intc: riscv_aplic: Add reset API to APLIC
+Date: Wed, 29 Apr 2026 00:01:01 +0800
+Message-ID: <20260428160103.3551125-3-jim.shu@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260428160103.3551125-1-jim.shu@sifive.com>
 References: <20260428160103.3551125-1-jim.shu@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=jim.shu@sifive.com; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=jim.shu@sifive.com; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,174 +108,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the trace events for APLIC read/write functions.
+Clearing APLIC registers and qemu_irq in the reset function
 
 Signed-off-by: Jim Shu <jim.shu@sifive.com>
+Signed-off-by: Fea.Wang <fea.wang@sifive.com>
 ---
- hw/intc/riscv_aplic.c | 63 ++++++++++++++++++++++++++-----------------
- hw/intc/trace-events  |  4 +++
- 2 files changed, 42 insertions(+), 25 deletions(-)
+ hw/intc/riscv_aplic.c | 45 ++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 40 insertions(+), 5 deletions(-)
 
 diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index a04e0e1a898..55515d1a085 100644
+index 791e0b01b96..a04e0e1a898 100644
 --- a/hw/intc/riscv_aplic.c
 +++ b/hw/intc/riscv_aplic.c
-@@ -35,6 +35,7 @@
- #include "system/tcg.h"
- #include "kvm/kvm_riscv.h"
- #include "migration/vmstate.h"
-+#include "trace.h"
+@@ -892,6 +892,44 @@ static const MemoryRegionOps riscv_aplic_ops = {
+     }
+ };
  
- #define APLIC_MAX_IDC                  (1UL << 14)
- #define APLIC_MAX_SOURCE               1024
-@@ -626,6 +627,7 @@ static void riscv_aplic_request(void *opaque, int irq, int level)
- static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
++static void riscv_aplic_reset_enter(Object *obj, ResetType type)
++{
++    RISCVAPLICState *aplic = RISCV_APLIC(obj);
++    int i;
++
++    aplic->domaincfg = 0;
++    memset(aplic->sourcecfg, 0, sizeof(uint32_t) * aplic->num_irqs);
++    memset(aplic->target, 0, sizeof(uint32_t) * aplic->num_irqs);
++    if (!aplic->msimode) {
++        for (i = 0; i < aplic->num_irqs; i++) {
++            aplic->target[i] = 1;
++        }
++    }
++
++    for (i = 0; i < aplic->num_irqs ; i++) {
++        riscv_aplic_set_enabled_raw(aplic, i, false);
++    }
++
++    /* Need to unlock [ms]msicfgaddrh.L */
++    aplic->mmsicfgaddr = 0;
++    aplic->mmsicfgaddrH = 0;
++    aplic->smsicfgaddr = 0;
++    aplic->smsicfgaddrH = 0;
++
++    if (!aplic->msimode) {
++        /* Reset IDC registers only in non-MSI mode */
++        for (i = 0; i < aplic->num_harts; i++) {
++            aplic->idelivery[i] = 0;
++            aplic->iforce[i] = 0;
++            aplic->ithreshold[i] = 0;
++        }
++
++        for (i = 0; i < aplic->num_harts; i++) {
++            qemu_irq_lower(aplic->external_irqs[i]);
++        }
++    }
++}
++
+ static void riscv_aplic_realize(DeviceState *dev, Error **errp)
  {
-     uint32_t irq, word, idc;
-+    uint64_t val;
-     RISCVAPLICState *aplic = opaque;
+     uint32_t i;
+@@ -925,11 +963,6 @@ static void riscv_aplic_realize(DeviceState *dev, Error **errp)
+         aplic->sourcecfg = g_new0(uint32_t, aplic->num_irqs);
+         aplic->state = g_new0(uint32_t, aplic->num_irqs);
+         aplic->target = g_new0(uint32_t, aplic->num_irqs);
+-        if (!aplic->msimode) {
+-            for (i = 0; i < aplic->num_irqs; i++) {
+-                aplic->target[i] = 1;
+-            }
+-        }
+         aplic->idelivery = g_new0(uint32_t, aplic->num_harts);
+         aplic->iforce = g_new0(uint32_t, aplic->num_harts);
+         aplic->ithreshold = g_new0(uint32_t, aplic->num_harts);
+@@ -1014,9 +1047,11 @@ static const VMStateDescription vmstate_riscv_aplic = {
+ static void riscv_aplic_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
++    ResettableClass *rc = RESETTABLE_CLASS(klass);
  
-     /* Reads must be 4 byte words */
-@@ -634,18 +636,18 @@ static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
-     }
+     device_class_set_props(dc, riscv_aplic_properties);
+     dc->realize = riscv_aplic_realize;
++    rc->phases.enter = riscv_aplic_reset_enter;
+     dc->vmsd = &vmstate_riscv_aplic;
+ }
  
-     if (addr == APLIC_DOMAINCFG) {
--        return APLIC_DOMAINCFG_RDONLY | aplic->domaincfg |
--               (aplic->msimode ? APLIC_DOMAINCFG_DM : 0);
-+        val = APLIC_DOMAINCFG_RDONLY | aplic->domaincfg |
-+              (aplic->msimode ? APLIC_DOMAINCFG_DM : 0);
-     } else if ((APLIC_SOURCECFG_BASE <= addr) &&
-             (addr < (APLIC_SOURCECFG_BASE + (aplic->num_irqs - 1) * 4))) {
-         irq  = ((addr - APLIC_SOURCECFG_BASE) >> 2) + 1;
--        return aplic->sourcecfg[irq];
-+        val = aplic->sourcecfg[irq];
-     } else if (aplic->mmode && aplic->msimode &&
-                (addr == APLIC_MMSICFGADDR)) {
--        return aplic->mmsicfgaddr;
-+        val = aplic->mmsicfgaddr;
-     } else if (aplic->mmode && aplic->msimode &&
-                (addr == APLIC_MMSICFGADDRH)) {
--        return aplic->mmsicfgaddrH;
-+        val = aplic->mmsicfgaddrH;
-     } else if (aplic->mmode && aplic->msimode &&
-                (addr == APLIC_SMSICFGADDR)) {
-         /*
-@@ -657,65 +659,74 @@ static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
-          *     only zero in at least one of the supervisor-level child
-          * domains).
-          */
--        return (aplic->num_children) ? aplic->smsicfgaddr : 0;
-+        val = (aplic->num_children) ? aplic->smsicfgaddr : 0;
-     } else if (aplic->mmode && aplic->msimode &&
-                (addr == APLIC_SMSICFGADDRH)) {
--        return (aplic->num_children) ? aplic->smsicfgaddrH : 0;
-+        val = (aplic->num_children) ? aplic->smsicfgaddrH : 0;
-     } else if ((APLIC_SETIP_BASE <= addr) &&
-             (addr < (APLIC_SETIP_BASE + aplic->bitfield_words * 4))) {
-         word = (addr - APLIC_SETIP_BASE) >> 2;
--        return riscv_aplic_read_pending_word(aplic, word);
-+        val = riscv_aplic_read_pending_word(aplic, word);
-     } else if (addr == APLIC_SETIPNUM) {
--        return 0;
-+        val = 0;
-     } else if ((APLIC_CLRIP_BASE <= addr) &&
-             (addr < (APLIC_CLRIP_BASE + aplic->bitfield_words * 4))) {
-         word = (addr - APLIC_CLRIP_BASE) >> 2;
--        return riscv_aplic_read_input_word(aplic, word);
-+        val = riscv_aplic_read_input_word(aplic, word);
-     } else if (addr == APLIC_CLRIPNUM) {
--        return 0;
-+        val = 0;
-     } else if ((APLIC_SETIE_BASE <= addr) &&
-             (addr < (APLIC_SETIE_BASE + aplic->bitfield_words * 4))) {
-         word = (addr - APLIC_SETIE_BASE) >> 2;
--        return riscv_aplic_read_enabled_word(aplic, word);
-+        val = riscv_aplic_read_enabled_word(aplic, word);
-     } else if (addr == APLIC_SETIENUM) {
--        return 0;
-+        val = 0;
-     } else if ((APLIC_CLRIE_BASE <= addr) &&
-             (addr < (APLIC_CLRIE_BASE + aplic->bitfield_words * 4))) {
--        return 0;
-+        val = 0;
-     } else if (addr == APLIC_CLRIENUM) {
--        return 0;
-+        val = 0;
-     } else if (addr == APLIC_SETIPNUM_LE) {
--        return 0;
-+        val = 0;
-     } else if (addr == APLIC_SETIPNUM_BE) {
--        return 0;
-+        val = 0;
-     } else if (addr == APLIC_GENMSI) {
--        return (aplic->msimode) ? aplic->genmsi : 0;
-+        val = (aplic->msimode) ? aplic->genmsi : 0;
-     } else if ((APLIC_TARGET_BASE <= addr) &&
-             (addr < (APLIC_TARGET_BASE + (aplic->num_irqs - 1) * 4))) {
-         irq = ((addr - APLIC_TARGET_BASE) >> 2) + 1;
-         if (!riscv_aplic_source_active(aplic, irq)) {
--            return 0;
-+            val = 0;
-+        } else {
-+            val = aplic->target[irq];
-         }
--        return aplic->target[irq];
-     } else if (!aplic->msimode && (APLIC_IDC_BASE <= addr) &&
-             (addr < (APLIC_IDC_BASE + aplic->num_harts * APLIC_IDC_SIZE))) {
-         idc = (addr - APLIC_IDC_BASE) / APLIC_IDC_SIZE;
-         switch (addr - (APLIC_IDC_BASE + idc * APLIC_IDC_SIZE)) {
-         case APLIC_IDC_IDELIVERY:
--            return aplic->idelivery[idc];
-+            val = aplic->idelivery[idc];
-+            break;
-         case APLIC_IDC_IFORCE:
--            return aplic->iforce[idc];
-+            val = aplic->iforce[idc];
-+            break;
-         case APLIC_IDC_ITHRESHOLD:
--            return aplic->ithreshold[idc];
-+            val = aplic->ithreshold[idc];
-+            break;
-         case APLIC_IDC_TOPI:
--            return riscv_aplic_idc_topi(aplic, idc);
-+            val = riscv_aplic_idc_topi(aplic, idc);
-+            break;
-         case APLIC_IDC_CLAIMI:
--            return riscv_aplic_idc_claimi(aplic, idc);
-+            val = riscv_aplic_idc_claimi(aplic, idc);
-+            break;
-         default:
-             goto err;
-         };
-     }
- 
-+    trace_riscv_aplic_read(addr, size, val);
-+    return val;
-+
- err:
-     qemu_log_mask(LOG_GUEST_ERROR,
-                   "%s: Invalid register read 0x%" HWADDR_PRIx "\n",
-@@ -734,6 +745,8 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
-         goto err;
-     }
- 
-+    trace_riscv_aplic_write(addr, size, value);
-+
-     if (addr == APLIC_DOMAINCFG) {
-         /* Only IE bit writable at the moment */
-         value &= APLIC_DOMAINCFG_IE;
-diff --git a/hw/intc/trace-events b/hw/intc/trace-events
-index 018c609ca5e..36ea75049ab 100644
---- a/hw/intc/trace-events
-+++ b/hw/intc/trace-events
-@@ -330,3 +330,7 @@ loongarch_msi_set_irq(int irq_num) "set msi irq %d"
- loongarch_extioi_setirq(int irq, int level) "set extirq irq %d level %d"
- loongarch_extioi_readw(uint64_t addr, uint64_t val) "addr: 0x%"PRIx64 "val: 0x%" PRIx64
- loongarch_extioi_writew(uint64_t addr, uint64_t val) "addr: 0x%"PRIx64 "val: 0x%" PRIx64
-+
-+# riscv_aplic.c
-+riscv_aplic_read(uint64_t offset, unsigned size, uint64_t value) "offset: 0x%" PRIx64 ", size: %u, value: 0x%" PRIx64
-+riscv_aplic_write(uint64_t offset, unsigned size, uint64_t value) "offset: 0x%" PRIx64 ", size: %u, value: 0x%" PRIx64
 -- 
 2.43.0
 
