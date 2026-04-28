@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 707FDFF8868
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 11:40:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6245FF885D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 11:46:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHgn0-0007Ej-4S; Tue, 28 Apr 2026 07:39:45 -0400
+	id 1wHgsj-0008RN-6Y; Tue, 28 Apr 2026 07:45:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wHgmp-0007Da-Qf
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 07:39:32 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wHgse-0008Nj-8H
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 07:45:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wHgmn-0001J1-13
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 07:39:30 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wHgsc-0003Ux-NR
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 07:45:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777376366;
+ s=mimecast20190719; t=1777376728;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3SazA5Xw4Hmq1HIjiUcMR8iiKWvF+yJktiDoLpOBKpE=;
- b=gh7xy15PXDZWcNfAzU7sP/gotRQIyVWEVODlMVTuxFIC24Oymt/fEl/g+IluLtRALe+fXN
- At8xWk1KlTxhc4XhROE1QYkKvcNGmCpeSlnSofBrSleVDd664m6bL4xoQQW+kosS9SjseH
- qsCF5Dh9j1O5I+hp+9h8DRKFr1an3qA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Gr1m0oFiB6DELBeVxVbWPmM/ASNIRdBFuwVRbO3e7s0=;
+ b=bnR8JhjUCD8ArGLcCl0wALmparN+EhwytSdUAtxtbleRZLMe0eiUZNx2XQbdtQRbp2dx8Z
+ sxx9hh5R3olLaVEqashqYfnu1+lflxPTLQ9LT0Gh+GpOMp395GGyGcSUMigx0rhr2UCG0m
+ 6DkV72SlGFL0dXZa7W6vZgxMaAsSVkA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-398-bbxFz4V3MSyG1XR4e4gIIA-1; Tue,
- 28 Apr 2026 07:39:22 -0400
-X-MC-Unique: bbxFz4V3MSyG1XR4e4gIIA-1
-X-Mimecast-MFC-AGG-ID: bbxFz4V3MSyG1XR4e4gIIA_1777376361
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-474-JwAXLQ0ANSy-QGq5kbgipQ-1; Tue,
+ 28 Apr 2026 07:45:24 -0400
+X-MC-Unique: JwAXLQ0ANSy-QGq5kbgipQ-1
+X-Mimecast-MFC-AGG-ID: JwAXLQ0ANSy-QGq5kbgipQ_1777376723
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8CF3F19560B7; Tue, 28 Apr 2026 11:39:20 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 096AA1956056; Tue, 28 Apr 2026 11:45:23 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.9])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8A4F8195608E; Tue, 28 Apr 2026 11:39:19 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B4371800446; Tue, 28 Apr 2026 11:45:22 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0926321E6A28; Tue, 28 Apr 2026 13:39:17 +0200 (CEST)
+ id 017DD21E6A28; Tue, 28 Apr 2026 13:45:19 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,  Peter Xu
- <peterx@redhat.com>,  Fabiano Rosas <farosas@suse.de>,  qemu-devel
- <qemu-devel@nongnu.org>
-Subject: Re: [PATCH v3 12/18] migration: VMStateInfo: introduce new handlers
- with errp
-In-Reply-To: <de48c866-6018-4a5f-9129-2c1d184f4495@redhat.com> (Paolo
- Bonzini's message of "Tue, 28 Apr 2026 10:39:43 +0200")
-References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
- <20260304212303.667141-13-vsementsov@yandex-team.ru>
- <d80e91c1-2cbb-4081-a923-7b0c1da3b7cc@redhat.com>
- <f7525a89-7878-43e8-b791-69829589666f@yandex-team.ru>
- <CABgObfbz98A0P4_FAqeKVk_fS+o_3=79agYz=qwnMdmg-h2L-Q@mail.gmail.com>
- <b47b83aa-c574-4a38-bad2-4f42d6a7c597@yandex-team.ru>
- <de48c866-6018-4a5f-9129-2c1d184f4495@redhat.com>
-Date: Tue, 28 Apr 2026 13:39:17 +0200
-Message-ID: <878qa72u1m.fsf@pond.sub.org>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  Igor Mammedov
+ <imammedo@redhat.com>,  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,  Michael Roth
+ <michael.roth@amd.com>,  Ani Sinha <anisinha@redhat.com>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  Eric Blake <eblake@redhat.com>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?= <philmd@linaro.org>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 00/12] qapi: add formal "intro" section
+In-Reply-To: <CAFn=p-YvfpOm17VgeTmR=e+H+aRjZ8H1C5cV4kx3BZdiZmfVwA@mail.gmail.com>
+ (John Snow's message of "Fri, 24 Apr 2026 15:19:38 -0400")
+References: <20260423220022.2180059-1-jsnow@redhat.com>
+ <CAFn=p-YvfpOm17VgeTmR=e+H+aRjZ8H1C5cV4kx3BZdiZmfVwA@mail.gmail.com>
+Date: Tue, 28 Apr 2026 13:45:19 +0200
+Message-ID: <87wlxr1f74.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: base64
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -94,78 +95,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT4gd3JpdGVzOg0KDQo+IE9uIDQvMjgv
-MjYgMTA6MTcsIFZsYWRpbWlyIFNlbWVudHNvdi1PZ2lldnNraXkgd3JvdGU6DQo+PiBbYWRkIE1h
-cmt1c10NCj4+IE9uIDI3LjA0LjI2IDIyOjExLCBQYW9sbyBCb256aW5pIHdyb3RlOg0KPj4+DQo+
-Pj4NCj4+PiBJbCBsdW4gMjcgYXByIDIwMjYsIDE1OjE5IFZsYWRpbWlyIFNlbWVudHNvdi1PZ2ll
-dnNraXkgPHZzZW1lbnRzb3ZAeWFuZGV4LXRlYW0ucnUgPG1haWx0bzp2c2VtZW50c292QHlhbmRl
-eC10ZWFtLnJ1Pj4gaGEgc2NyaXR0bzoNCj4+Pj4NCj4+Pj4gT24gMjYuMDQuMjYgMTE6MzMsIFBh
-b2xvIEJvbnppbmkgd3JvdGU6DQo+Pj4+PiBPbiAzLzQvMjYgMjE6MjIsIFZsYWRpbWlyIFNlbWVu
-dHNvdi1PZ2lldnNraXkgd3JvdGU6DQo+Pj4+Pj4gK8KgwqDCoCBib29sIGNvcm91dGluZV9taXhl
-ZF9mbiAoKmxvYWQpKFFFTVVGaWxlICpmLCB2b2lkICpwdiwgc2l6ZV90IHNpemUsDQo+Pj4+Pj4g
-K8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqAgY29uc3QgVk1TdGF0ZUZpZWxkICpmaWVsZCwNCj4+Pj4+PiArwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoCBFcnJvciAqKmVycnApOw0KPj4+Pj4+ICvCoMKgwqAgYm9vbCBjb3JvdXRpbmVfbWl4
-ZWRfZm4gKCpzYXZlKShRRU1VRmlsZSAqZiwgdm9pZCAqcHYsIHNpemVfdCBzaXplLA0KPj4+Pj4+
-ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgIGNvbnN0IFZNU3RhdGVGaWVsZCAqZmllbGQsDQo+Pj4+Pj4gK8KgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqAgSlNPTldyaXRlciAqdm1kZXNjLA0KPj4+Pj4+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIEVycm9y
-ICoqZXJycCk7DQo+Pj4+PiBVc2Ugdm9pZCBmdW5jdGlvbnMgZm9yIGNhbGxiYWNrcywgd2l0aCBh
-IHdyYXBwZXIgYWRkaW5nIHRoZSBib29sIHR5cGUuIFdoaWxlIGJvb2wvZXJycCBpcyBwcmVmZXJy
-ZWQgaW4gZ2VuZXJhbCwgZm9yIGNhbGxiYWNrcyBpdCBwcm92aWRlcyBOIG9wcG9ydHVuaXRpZXMg
-dG8gZ2V0IGl0IHdyb25nIGluc3RlYWQgb2YganVzdCBvbmUuDQo+Pj4+Pg0KPj4+Pg0KPj4+PiBI
-bW0sIGZvciBub3csIHRoZSBzZXJpZXMgaXMgYWxyZWFkeSBtZXJnZWQuDQo+Pj4+DQo+Pj4+IE5l
-eHQsIEknbSB1bnN1cmUsIGhvdyBjYWxsYmFja3MgYXJlIGRpZmZlcmVudCBmcm9tIG90aGVyIGZ1
-bmN0aW9ucyBhcm91bmQgZXJyb3JzPw0KPj4+DQo+Pj4gQXMgSSB3cm90ZSBhYm92ZSwgY29uZnVz
-aW5nIHRoZSAqZXJyb3IgPT0gTlVMTCBhbmQgYm9vbCByZXR1cm4gdmFsdWUgaXMgYXZvaWRlZCB3
-aXRob3V0IG11Y2ggZXh0cmEgZWZmb3J0IGZvciBjYWxsYmFja3MgKG9yIG90aGVyIGtpbmRzIG9m
-IHZpcnR1YWwgZnVuY3Rpb25zKSBsLCBiZWNhdXNlIHRoZXJlIGlzIGEgc2luZ2xlIGNhbGxlci4g
-U28gdGhlIGJhbGFuY2UgYmV0d2VlbiAiYXZvaWRpbmcgdGhlIHBvc3NpYmlsaXR5IG9mIGdldHRp
-bmcgdGhlIHJldHVybiB2YWx1ZSB3cm9uZyIgYW5kICJjb252ZW5pZW5jZSBvZiBoYXZpbmcgYSBy
-ZXR1cm4gdmFsdWUiIHRpbHRzIG1vcmUgdG93YXJkcyB0aGUgZm9ybWVyLg0KDQpCdWcgcGF0dGVy
-bnM6DQoNCjEuIFNldCBhbiBlcnJvciwgaW1tZWRpYXRlbHkgcmV0dXJuIHN1Y2Nlc3MuICBJIGNh
-bid0IHJlbWVtYmVyIHNlZWluZw0KdGhpcy4NCg0KMi4gU2V0IGFuIGVycm9yLCBmb3JnZXQgdG8g
-cmV0dXJuLCBzb21laG93IHN1cnZpdmUgYWxsIHRoZSB3YXkgdG8gdGhlDQpub3JtYWwgc3VjY2Vz
-cyByZXR1cm4uICBJJ3ZlIHNlZW4gYW5kIGZpeGVkIHRoaXMuICBSZXR1cm5pbmcgdm9pZCBkb2Vz
-DQpub3QgaGVscCBhdCBhbGwgaGVyZS4NCg0KMy4gU2V0IGFuIGVycm9yLCBnb3RvIGVycm9yIGV4
-aXQgd2l0aG91dCBmbGlwcGluZyB0aGUgcmV0dXJuIHZhbHVlDQp2YXJpYWJsZSBmcm9tIHN1Y2Nl
-c3MgdG8gZmFpbHVyZS4gIEkndmUgc2VlbiBhbmQgZml4ZWQgdGhpcywgdG9vLiAgQmVzdA0KdG8g
-aW5pdGlhbGl6ZSB0aGUgcmV0dXJuIHZhbHVlIHZhcmlhYmxlIHRvIGZhaWx1cmUsIGFuZCBmbGlw
-IGl0IHRvDQpzdWNjZXNzIG9ubHkgd2hlbiBzdWNjZXNzIGlzIGVuc3VyZWQuICBPZiBjb3Vyc2Us
-IHRoYXQgZmxpcCBjYW4gYmUNCmZvcmdvdHRlbiBhcyB3ZWxsIGlmIGl0J3MgbmVlZGVkIGluIG11
-bHRpcGxlIHBsYWNlcy4gIFRoYXQncyByYXJlLg0KQW55d2F5LCByZXR1cm5pbmcgZWxpbWluYXRl
-cyB0aGlzIGJ1ZyBwYXR0ZXJuLg0KDQpUaGUgbGFzdCBvbmUgZG9lcyBzb21lIHRpbHRpbmcuDQoN
-ClRpbHRpbmcgdGhlIG90aGVyIHdheToga2VlcGluZyB0aGUgcnVsZXMgc2ltcGxlIGFuZCBjb25z
-aXN0ZW50IHdpdGgNCkdFcnJvcidzLg0KDQo+PiBVbmRlcnN0YW5kLiBIbS4NCj4+DQo+PiBBbiBh
-bHRlcm5hdGl2ZSBmb3IgdGhpcyBzaW5nbGUtY2FsbGVyIGNhc2UsIGlzIGp1c3QgYWRkIGFuIGFz
-c2VydGlvbiBpbnRvIHRoaXMgY2FsbGVyOg0KPj4NCj4+IGJvb2wgd3JhcHBlciguLi4sIGVycnAp
-IHsNCj4+ICDCoMKgIEVSUlBfR1VBUkQoKTsNCj4+ICDCoMKgIGJvb2wgb2sgPSB4LT5mb28oLi4u
-LCBlcnJwKTsNCj4+ICDCoMKgIGFzc2VydChvayA9PSAhKCplcnJwKSk7DQo+PiAgwqDCoCByZXR1
-cm4gb2s7DQo+PiB9DQo+DQo+IEkgZG9uJ3QgdGhpbmsgdGhpcyBtYWtlcyBzZW5zZSwgdGhlIGFz
-c2VydGlvbiBtb3ZlcyBhIGNvbXBpbGUtdGltZSBndWFyYW50ZWUgdG8gYSBydW4tdGltZSBndWFy
-YW50ZWUgd2hpY2ggaXMgc3RyaWN0bHkgd29yc2UuDQo+DQo+IFRoZXJlIGFyZSBtYW55IG1vcmUg
-ZXhhbXBsZXMgb2Ygdm9pZCtlcnJwIGNhbGxiYWNrcyB0aGFuIGJvb2wrZXJycCwgdGhlIG1vc3Qg
-aW1wb3J0YW50IG9uZSBiZWluZyAucmVhbGl6ZSBmb3IgZGV2aWNlcy4gIEEgcXVpY2sgZ3JlcCwg
-d2hpY2ggaXMgY2VydGFpbmx5IG5vdCBmdWxseSBhY2N1cmF0ZSwgc2hvd3MgNjMgdnMuIDI3Og0K
-Pg0KPiAkIGdpdCBncmVwIC13ICd2b2lkLiooXCouKmVycnAnIHwgd2MgLWwNCj4gNjMNCj4gJCBn
-aXQgZ3JlcCAtdyAnYm9vbC4qKFwqLiplcnJwJyB8IHdjIC1sDQo+IDI3DQoNClllcy4gIEF0IHNv
-bWUgcG9pbnQsIEkgYnJpZWZseSBjb25zaWRlcmVkIHVwZGF0aW5nIHRoZW0gdG8gcmV0dXJuIGJv
-b2wNCmZvciBydWxlcyBjb25mb3JtYW5jZSwgYnV0IGRlY2lkZWQgaXQgd2Fzbid0IHdvcnRoIGl0
-Lg0KDQo+IEluIG1hbnkgY2FzZXMgdGhlcmUgYXJlIGp1c3QgdHdvIG9yIHRocmVlIGltcGxlbWVu
-dGF0aW9uIHNvIEkgd291bGRuJ3QgZ28gdG8gZ3JlYXQgbGVuZ3RocyB0byBjaGFuZ2UgaXQgZXZl
-biBpZiBJIGRpc2FncmVlLiAgQnV0IGZvciB2bXN0YXRlIChlLmcuIHByZV9sb2FkX2VycnAgYW5k
-IGZyaWVuZHMpIHRoaXMgaXMgbm90IGdvaW5nIHRvIGJlIHRoZSBjYXNlIGluIHRoZSBsb25nIHJ1
-biwgYW5kIGl0J3MgbW9yZSBzaW1pbGFyIHRvIHRoZSBkZXZpY2UgY2FzZS4NCg0KV2Ugc2hvdWxk
-IGFsd2F5cyBiZSB3aWxsaW5nIHRvIGFjY2VwdCByZWFzb25lZCBleGNlcHRpb25zIHRvIHJ1bGVz
-Lg0KSG93ZXZlci4uLg0KDQo+Pj4+IEknbSBub3Qgc3VyZSB0aGF0IG1ha2luZyB3cmFwcGVycywg
-d2hpY2ggd2lsbCBoYXZlIHRvIHVzZSBFUlJQX0dVQVJEIGFuZCBjaGVjaw0KPj4+PiAqZXJycCBm
-b3IgdGhlIGVycm9yIGlzIGEgZ29vZCBwcmFjdGljZS4gSWYgaXQgaXMsIGl0IHdvdWxkIGJlIGdv
-b2QgdG8gc3RhcnQgYnkNCj4+Pj4gbW9kaWZ5aW5nIHRoZSBkb2N1bWVudGF0aW9uIGluIGluY2x1
-ZGUvcWFwaS9lcnJvci5oIHRvIG1lbnRpb24gdGhlIGV4Y2x1c2lvbg0KPj4+PiBmb3IgY2FsbGJh
-Y2tzLg0KDQouLi4gZXhwbGFpbmluZyB0aGVtIGluIGRvY3VtZW50YXRpb24gaXMgZGVzaXJhYmxl
-Lg0K
+John Snow <jsnow@redhat.com> writes:
+
+> On Thu, Apr 23, 2026, 6:00=E2=80=AFPM John Snow <jsnow@redhat.com> wrote:
+>
+>> Hiya, this is a series that explores a potential syntax for a
+>> designated "Intro" section. Markus knows why I want this, but for
+>> everyone else: a designated "Introduction" section is useful for the
+>> desired "inliner" feature for the new QAPI doc system. Commits explain
+>> a bit more. This is prep work and doesn't really change anything
+>> tangibly except source code syntax for the QAPI docs.
+>>
+>> It is designed so that this conversion can happen incrementally with
+>> no actual difference to the rendered manuals, so each QAPI module can
+>> be converted one at a time for easier review and merging in an
+>> arbitrary order.
+>>
+>> This series demonstrates conversion of just four modules; if I'm given
+>> a thumbs up, I will convert the rest of QAPI, one module (or
+>> maintainer stanza) per patch like how I handled adding
+>> cross-references.
+>>
+>> John Snow (12):
+>>   tests/qapi: generate output in source order
+>>   qapi/docs: remove unused QAPIDoc subsection members
+>>   qapi/docs: make remaining subsection members "private"
+>>   qapi/docs: add "Intro" section
+>>   qapi/docs: adjust stub member insertion algorithm
+>>   qapi/docs: remove implicit Plain section
+>>   qapi/docs: add "Intro" section parsing
+>>   qapi/docs: Add rendering for INTRO sections
+>>   qapi: convert intro sections for accelerator.json
+>>   qapi: convert intro sections for acpi-hest.json
+>>   qapi: convert intro sections for acpi.json
+>>   qapi: convert intro sections for audio.json
+>>
+>>  docs/devel/qapi-code-gen.rst            |  17 +-
+>>  docs/sphinx/qapidoc.py                  |  52 +++---
+>>  qapi/accelerator.json                   |  24 +--
+>>  qapi/acpi-hest.json                     |   5 +-
+>>  qapi/acpi.json                          |  23 +--
+>>  qapi/audio.json                         | 112 ++++---------
+>>  .editorconfig                           |   1 +
+>>
+>
+> Whoops, that snuck in by accident. Ignore! I needed some help doing the
+> line wraps in qapi :)
+
+Would it make sense as a separate patch?
+
+>>  scripts/qapi/parser.py                  | 204 ++++++++++++++----------
+>>  tests/qapi-schema/doc-good.out          |  30 ++--
+>>  tests/qapi-schema/doc-missing-colon.err |   2 +-
+>>  tests/qapi-schema/test-qapi.py          |  15 +-
+>>  11 files changed, 239 insertions(+), 246 deletions(-)
+>>
+>> --
+>> 2.53.0
+>>
+>>
+>>
 
 
