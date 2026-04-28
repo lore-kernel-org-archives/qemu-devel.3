@@ -4,104 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E800FF885D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 13:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39B3BFF885D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 13:32:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHiVa-00039b-1a; Tue, 28 Apr 2026 09:29:51 -0400
+	id 1wHiXp-0003zp-TK; Tue, 28 Apr 2026 09:32:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wHiVU-000393-UH
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:29:45 -0400
-Received: from mail-dl1-x1231.google.com ([2607:f8b0:4864:20::1231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wHiVS-0007N9-HP
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:29:43 -0400
-Received: by mail-dl1-x1231.google.com with SMTP id
- a92af1059eb24-12c8ccc7755so11961329c88.0
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 06:29:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777382981; cv=none;
- d=google.com; s=arc-20240605;
- b=BHTJeu+/z9VQcEscB/5l481frBWvmdeS67eEBiEpQzqmwJFOA874m/YZVReHaNJeYw
- ZjAPneH+Syy+ywlt6eZn2mzeCucPHN+tAM9tUCJBZPNr+ZhUcNRnF7LE0g+E3hZf7zAJ
- 5YvB4vzLEYuUNg0iNCj4ir9aV7UqwvkVxsKKnCE+FKX3Ze1Q7dqFnIUwYVpyWZwYBJdx
- gAx6PJliRbQTtmkTygo+qUhEjpBsoCfB5FogMU8pybqPNiZ6dQP0kWQOvA/UDdRrQnkj
- N1rQWEVAMeG0mI2oypk6lH5jukVW7GdGykw1DGWkm1/Z9XzcJO0SHajQvYN78sljEpgv
- kMjw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=1eupjgZMeQMHaFykA3gVnUcb5xXSgJwRwf8f6iVcpDE=;
- fh=D/CcNrtvbeWGY8nbdaeIwoQ6I3/FtQLwRmnEQ1zZwds=;
- b=FOfBR9GwzcoXYrcqOkqX8jlnNNccHhvkxkIrM/qn2Pq+mSuXh295laqJoAS08QC04D
- UL7JjycexA7h2kelGpjbeiQIJ2k/n0aYdaivdtS8Ap5HI7ZYoyE5DYhG2/FV89cqUgcv
- ZoX2x/zf3Jihetiw5HJsMRvikQejE3EN0YTN1vtPwNNp2dl8JCQA5uq/nUntQ+nsAvR4
- 9WdFLiGj+w1tZvFxXOVR5bziS7xM8csar3vYFbEsSYrXw0G7SHkPlJiUhsZy63gkpyiF
- qCWQWW/sQRzNw4wrNe/qxia9bE4gSPX7L2l+W+DK3C116KSudz+jS2QkWBosDpdpAbYo
- S9Aw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777382981; x=1777987781; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1eupjgZMeQMHaFykA3gVnUcb5xXSgJwRwf8f6iVcpDE=;
- b=n4QD81epjRWWitEZ4ylz4w5teIegHTv/u5QI59If7u3lTtEfPaUe6ynICRetx3FU0+
- IECt+SBZD065dCSOOcSOk3d9nFe5qz5thaINLzBKKvm9iwnVDLo9fagx/K+ozsRtbAaL
- JNY9hV5FOy3da8o2c2L4aon2UR900L0+tIXqKZquH3ZsqKt0lNBLbHwd9mz5sa31MOV5
- EIevVYpPju2asw/kWDV5I7onuidqaAsJxEPWZnJEBz4lGEzDz9Ukr208RgyI8l0rjXA0
- InGYSqGCNOhu0ghEkcgoFBuvg5w6oeZwWfeRQt93benkzo+wL23jHWVlwir7xwHxFLpQ
- 8GIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777382981; x=1777987781;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1eupjgZMeQMHaFykA3gVnUcb5xXSgJwRwf8f6iVcpDE=;
- b=tDmNi0RNvjBPg76tiF7hRpstmdUXFs3D3RIfK2DALEerZgYtu1e8OjiRXAc7Pvq2/A
- uW2z03cm2qlmfOlohOtY8g5wA8QL+/xNymB5+x/qvG7bqt7gxW4Ddc/PPrys6I4b9H29
- 1LObwkYabybWGSHm2KOpLEpMunKZ/HsRisCytE5vJux+YFKmJS6Jcax5zQyMtHP88EOK
- RG23e0Mqxwc/hXFcVzYPAiap5KoiLadDkudVyNyBx47POifjX+HIynuf+pX352GAK4xs
- tQGG80hh638LVtW6ujU5RjofyTdSGKCYjCNXA9DPvXzfGWJxwrKdhvjpjI2OUcRKAOgU
- +Ckw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8EMj82NLo2/8tZNbPGOxf37ejcD92MFOmXStXt7Gp4cH0469w0xPB9ouTD+n+4Krql227rjMaksBTt@nongnu.org
-X-Gm-Message-State: AOJu0YxwaIJwLMQDtD0B3vL3X/dEUEIg7TnqbMvIKvzrD8j4iekebMQx
- H2kBeuleXwDKrGR4wyNBu8lyyCz0oyofSn0VfkiFzYSQVn5jkvmu5JgtmJypOu3fudmxEnIKIaQ
- T8WH3sBlgdvZCE5Bs2ik1CIsc4DXzDtA=
-X-Gm-Gg: AeBDieuzYJ1MWV0rapr9SWJy9xsew7liQvQj+j5P2ny/r75pKwkS3zt7WILle8lhnY2
- 6GR94T73jTuxLZNm1z50Qmu9CTC0G9H6ydZ7A7RJKouYpg+3ErVq6SCrQLOdSiWTHbswn9N5z4a
- XqZSZI3yJgT71RNuhkjaH457v3RHaRw0yPNLtRCXdSxZX2PLfmalR3F+nMB4MwJqLv14hjVfGzT
- GTGrtPFdxjZAPdHURUjfnU7tJ0JQsNjKU92awgxdP7ztnZjj7L0+rEwUN3iuchOcMLRCCH1Zadr
- E0X7QxsdsgEUlTF3FU1+UUxMGZ1m8M9VpMnrPVju0MWR/6HkNrs=
-X-Received: by 2002:a05:7022:ec18:b0:12a:6a64:81ee with SMTP id
- a92af1059eb24-12ddd9438damr1426908c88.3.1777382980552; Tue, 28 Apr 2026
- 06:29:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wHiXk-0003z5-1m; Tue, 28 Apr 2026 09:32:04 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wHiXh-00005g-KE; Tue, 28 Apr 2026 09:32:03 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 9FAA38747F;
+ Tue, 28 Apr 2026 15:31:58 +0200 (CEST)
+Message-ID: <b1d4f7a8-7da2-4c1e-938c-f5b9f20b0af3@proxmox.com>
+Date: Tue, 28 Apr 2026 15:31:57 +0200
 MIME-Version: 1.0
-References: <20260427154441.1918536-1-rkir@google.com>
- <20260427154441.1918536-2-rkir@google.com>
-In-Reply-To: <20260427154441.1918536-2-rkir@google.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 28 Apr 2026 17:29:28 +0400
-X-Gm-Features: AVHnY4Ku_OSO9hPHyBj08MfQfOQyRmCpZnF_KX-Gbewxxo3v-3TqdUu1R3Lgg3M
-Message-ID: <CAJ+F1CJqa26nXaUUYU0co8DZmnFJCr4Mq2RysDXjuLhiUh9Epg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] qom: improve use-after-free debugging
-To: Roman Kiryanov <rkir@google.com>
-Cc: pbonzini@redhat.com, alex.bennee@linaro.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1231;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dl1-x1231.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: Excessive IO PSI for iothread when using io_uring since QEMU 10.2
+From: Fiona Ebner <f.ebner@proxmox.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: "open list:Network Block Dev..." <qemu-block@nongnu.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, Fam Zheng <fam@euphon.net>,
+ Hanna Czenczek <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Thomas Lamprecht <t.lamprecht@proxmox.com>
+References: <017dc767-90e3-4983-8417-e541b3fb04f6@proxmox.com>
+ <20260427191343.GD218226@fedora>
+ <317ab384-f8c2-49af-89c4-407bb2f5617c@proxmox.com>
+Content-Language: en-US
+In-Reply-To: <317ab384-f8c2-49af-89c4-407bb2f5617c@proxmox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1777383021308
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,55 +63,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+Am 28.04.26 um 2:09 PM schrieb Fiona Ebner:
+> Hi Stefan,
+> 
+> Am 27.04.26 um 9:12 PM schrieb Stefan Hajnoczi:
+>> On Fri, Apr 24, 2026 at 12:25:41PM +0200, Fiona Ebner wrote:
+>>> Dear maintainers,
+>>>
+>>> since QEMU 10.2, if io_uring is enabled, it will be used for the event
+>>> loop of iothreads and this causes an IO pressure stall value of nearly
+>>> 100 when idle.
+>>>
+>>> The issue was also reported on the kernel mailing list [0]. The
+>>> suggestion from Jens Axboe was to just turn off the iowait accounting
+>>> completely. But since (for block/file-posix.c), there is actual IO
+>>> submitted via the same ring, I wasn't sure if that is the right approach.
+>>>
+>>> So the idea was to keep track of whether the event loop is otherwise
+>>> idle and only use the IORING_ENTER_NO_IOWAIT flag in that case [1].
+>>>
+>>> However, doing so would only help for block/file-posix.c, which submits
+>>> IO via luring_co_submit() -> fdmon_io_uring_add_sqe(). For example, for
+>>> block/rbd.c, only a poll SQE for the AioHandler node's fd is used. When
+>>> submitting that poll SQE in the iothread, we would need to be able to
+>>> know if IO for RBD is currently in-flight or not to be able to decide
+>>> whether to use the IORING_ENTER_NO_IOWAIT flag or not. Is there a good
+>>> way to do this (in a general way)?
+>>>
+>>> Or should the flag really always be used (if supported by the kernel)?
+>>> Is there a way to tell io_uring/kernel that we are an event loop and our
+>>> waiting should only be accounted for when there is actual IO in-flight?
+>>>
+>>> Happy to hear your opinions and suggestions!
+>>>
+>>> [0]:
+>>> https://lore.kernel.org/io-uring/14bc6266-5bc9-4454-9518-d1016bfe417b@proxmox.com/T/
+>>
+>> Hi Fiona,
+>> Jens replied yesterday confirmed your suspicion that the number of
+>> inflight requests is not being tracked correctly.
+>>
+>> Is there still a problem after fixing the kernel's inflight counting? If
+>> not, then no QEMU change is necessary and that seems like the cleanest
+>> solution anyway. The kernel should know whether there is I/O in flight
+>> and so it doesn't seem right that userspace needs to hint this.
+> 
+> 
+> unfortunately, yes. Even with the kernel fix [2], the real problem with
+> poll SQEs described above remains. I'm still seeing high IO pressure
+> stall values when using QEMU. In add_poll_add_sqe(), QEMU submits poll
+> SQEs for the AioHandler node fd, and that does count as pending IO. A
+> small reproducer modeling this [3].
+> 
+> So the question from above, how to deal with this for block drivers not
+> going through file-posix.c remains.
 
-On Mon, Apr 27, 2026 at 7:49=E2=80=AFPM Roman Kiryanov <rkir@google.com> wr=
-ote:
->
-> This patch invalidates dead objects so their usage will
-> lead to more predictable results (crashes or asserts).
->
-> Change-Id: I1dc36dbc1030c2e41c937f08baa97b2e81d44c82
-> Signed-off-by: Roman Kiryanov <rkir@google.com>
-> ---
->  qom/object.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/qom/object.c b/qom/object.c
-> index f981e27044..240e36c39e 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -613,6 +613,7 @@ static void object_property_del_all(Object *obj)
->      } while (released);
->
->      g_hash_table_unref(obj->properties);
-> +    obj->properties =3D NULL;
+Or maybe there is no actual issue with such drivers. We always use the
+IORING_ENTER_NO_IOWAIT flag when we only have poll or timeout SQEs. If
+there is actual IO via io_uring, i.e. submitted via luring_co_submit(),
+we don't set the IORING_ENTER_NO_IOWAIT flag.
 
-That makes sense (I'd g_clear_pointer for a safer one-liner instead)
+IO submitted outside of io_uring will still be accounted for by the
+kernel just like it was before QEMU did the switch to the iothread event
+loop. Or am I missing something there?
 
->  }
->
->  static void object_property_del_child(Object *obj, Object *child)
-> @@ -670,6 +671,8 @@ static void object_finalize(void *data)
->
->      g_assert(obj->ref =3D=3D 0);
->      g_assert(obj->parent =3D=3D NULL);
-> +    g_assert(obj->properties =3D=3D NULL);
-> +    obj->class =3D NULL;
+> 
+> Best Regards,
+> Fiona
+> 
+> [2]:
+> https://lore.kernel.org/io-uring/b4d2aa36-8301-4e58-be3e-1451267b8c43@proxmox.com/T/
+> 
+> [3]:
+> 
+> #include <assert.h>
+> #include <errno.h>
+> #include <stdio.h>
+> #include <unistd.h>
+> #include <liburing.h>
+> #include <sys/eventfd.h>
+> 
+> int main(void) {
+>     int fd;
+>     int ret;
+>     struct io_uring ring;
+>     struct io_uring_sqe *sqe;
+> 
+>     fd = eventfd(0, 0);
+>     assert(fd >= 0);
+> 
+>     ret = io_uring_queue_init(128, &ring, 0);
+>     assert(ret == 0);
+> 
+>     sqe = io_uring_get_sqe(&ring);
+>     assert(sqe);
+> 
+>     io_uring_prep_poll_add(sqe, fd, 1);
+> 
+>     ret = io_uring_submit_and_wait(&ring, 1);
+>     printf("got ret %d\n", ret);
+> 
+>     io_uring_queue_exit(&ring);
+> 
+>     return 0;
+> }
+> 
+> 
+> 
+> 
 
-This one I am not sure is placed right. If the goal is to revert the
-object_initialize_with_type() effect, perhaps it should do more, in
-object_deinit() ?
 
->      if (obj->free) {
->          obj->free(obj);
->      }
-> --
-> 2.54.0.rc2.544.gc7ae2d5bb8-goog
->
->
-
-
---=20
-Marc-Andr=C3=A9 Lureau
 
