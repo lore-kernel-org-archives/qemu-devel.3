@@ -4,69 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C5C3FF8864
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 02:09:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5979FF8867
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 02:21:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHXtN-0006e0-Cj; Mon, 27 Apr 2026 22:09:41 -0400
+	id 1wHY3r-0000C9-Mp; Mon, 27 Apr 2026 22:20:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wHXtG-0006cz-IT
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 22:09:38 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1wHXtE-0002l3-KR
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 22:09:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1777342172; x=1808878172;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=DGCbDbRJIgLaZaxZYwbCyzY6eyiaOO3GNIes1pkYAn4=;
- b=B5AkD9M3+R1UzxAiXwCntCnzHBe2nJPmzSF5+RSdp91I7lS2eAkBt1dq
- Uce+DgPbj1ibfshTUxxcIhjTiATYpCwuH9bvPszhFULKI9F7YD4yJFvuI
- +vKCxmMDhvZLFSwknL7+UQinWO3c8zyLJ4BNBWna8l7sRiHorYva/D4+4
- tJyRzbCI9S0ZYGW5/FllX4QLCJytVk3c1+PXjm8ucLWY7eh0431EqDT90
- uMJutlsHDYF18i4yuqD/D1P+pCZfscXZFaHTcNl3aa9K/eDm/XQ3o3OrV
- BCvcjMV3Fgqj+AaZZnEGL3vpwX+ojnwW9C0cpv3qLidIOsMJ3GTaxDpUw g==;
-X-CSE-ConnectionGUID: KsUOkmbYTjympVG1eAJbdg==
-X-CSE-MsgGUID: nKjXggoeREmjk/fv/yxNOw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11769"; a="80818939"
-X-IronPort-AV: E=Sophos;i="6.23,203,1770624000"; d="scan'208";a="80818939"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 27 Apr 2026 19:09:30 -0700
-X-CSE-ConnectionGUID: nIdSI/4hSXqSH3UQklEqOw==
-X-CSE-MsgGUID: vNajt+3iSV690nkqDhu4BA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,203,1770624000"; d="scan'208";a="232931815"
-Received: from junjie-optiplex-micro-plus-7010.bj.intel.com ([10.238.152.98])
- by orviesa010-auth.jf.intel.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Apr 2026 19:09:29 -0700
-From: Junjie Cao <junjie.cao@intel.com>
-To: peter.maydell@linaro.org
-Cc: qemu-devel@nongnu.org, kraxel@redhat.com, philmd@linaro.org,
- balaton@eik.bme.hu, chad@jablonski.xyz, junjie.cao@intel.com
-Subject: Re: [PATCH 0/2] hw/display/cirrus_vga: Fix packed-24 color-expansion
- ops
-Date: Tue, 28 Apr 2026 18:12:11 +0800
-Message-ID: <20260428101211.3469935-1-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260410183249.4046456-1-peter.maydell@linaro.org>
-References: <20260410183249.4046456-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wHY3p-0000Br-TO
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 22:20:29 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wHY3n-0006bn-Sx
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 22:20:29 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-b8f97c626aaso879616166b.2
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 19:20:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777342825; cv=none;
+ d=google.com; s=arc-20240605;
+ b=U42Fj1be3AHdGsz4XWINr5XntRALjaJC3wbOWwfaxxX8oZ8qCmH7jiqPc7ygf7iibE
+ aGdApYyaQm6S/po+U2NsscT7HNt2jxCG8m7DXIMncW9lZRi+rc5ZcM7B77aeMYLF/2kN
+ MX0XOJkK+zZfsEROnqr9QKCk+3WW/M8x67INDT8C86qkGeukhs+bc+BnP+tZFcJ5Hjor
+ GkpR2JbMn8I8umDUzliw4gRbtrmtjaUdVt5vuzN1tgvNHlihv29Dh6ff9oyqz8kqhKNi
+ B2cFyp+vrgKJh10gT5FiMLD75LvfCdx3J427U0G62UgPPQvQLFsl9g6wFpVSgCvW7JtZ
+ HRWA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=qOUkFDwsx2H385bDqa4mSjkalmJd8rNY8ENVpk8rETI=;
+ fh=YIM9f+9AkDlR8k7CEzJDyJruqgjM59fv6z4QlF2aJX8=;
+ b=cOejpRX84ijWU/IgJLLAdaeVd3XmrlKT7bHj0ily78BI44lwpFaeoblfPJgdfAGU4S
+ EwDxo/E4fNOY4vskD3vgKqE9z8sd5RNX+jz3TQMXwJBs3OxE6z4GW/yB5DE3/dFbYV4U
+ jc6XhlOEdLgYqZkqbQjSDrnI284/GojxKRWH0KVjqXlbwfCpRZmfvkzsqCpHZTN5AZ7V
+ a1tWnEdDjiI7/RVKB1ksbx/mEZIGUahhI5cARXQSDHUXpalB5pNIdpl4LhmWWDWxFm4X
+ Ijflm9ldKBeRcPNKO2Q6zFPuGI2Y8Qyp53/jAkQpE7GFpCcPAWMj4oAtAQqBshWFgDdY
+ q3VA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1777342825; x=1777947625; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qOUkFDwsx2H385bDqa4mSjkalmJd8rNY8ENVpk8rETI=;
+ b=crhFhyU/rjLEUWanueL0DNZRN/Dh5yD5nTTprOy+E5hQdHWtGDE43yslwOrGlEPB6e
+ sKZJMr3CfAnvj2NoHiRpclOhixBeYru8DqPcZAd8TUoffyvfoa9ZwY20wsvW9JmDzxPA
+ M20A4ENgJIaL3Uy1UT89sGLcmebcGeyUMz7+LogdbgSLwqDDCdxlsikOvzFoe32ZBY+b
+ FNQP1D8FzdsgxTfVQB1+PSNlgzOlRROastlOTxsPZ+lnSsCX6ResYpMYVmAkEup6uhpT
+ 2RoDzUuVHiJxCXI+OmgqT0VlQh9d/f+s5okv1AENTKTaoY/Uf54wj4oRsVZhUEK4eG3i
+ yjbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777342825; x=1777947625;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=qOUkFDwsx2H385bDqa4mSjkalmJd8rNY8ENVpk8rETI=;
+ b=iFX/0coZv3LWJTeKpPKUZl1MtiSbVtBbyq9AK729cBrMNbZrZOfbgWFGz+k9malJrb
+ JbIQvHTretG5lYt34MtdOvESCqfBBHhaG00pdJZLwS9NOiKN7kEYau6l9F3r5a2Pz3P9
+ JciYKN72xU7oL3nDDAoD+X8LMeTqjTrUNXFuKOp0+fkxMNkrF52bQL8oOlG/L7YIhBZ5
+ uOgRYDSSWMROTNLZyohedeh43KD7OO2RcQ5VB7kO5FBE7coG7NHc1MeVup9qbfai/9hY
+ Eo0NNnUcBv9dUlRZjUIPCPHRn3MMAlOqv5KrYogKhKXgtccu4PMz+RvYc0tWUZhaqeJI
+ bAFQ==
+X-Gm-Message-State: AOJu0Yy8ytlEDUnxsOXiLk7tAiRe4nyRo1tbVTJMbUmeu6oWi84UziXd
+ vZPdvP/VBYnRKuxCbwgkUvnSNC8R3ya/FcmHb2BFVkupNeGolL9ayYiQzZwLGwG84kVgrgIScLb
+ fZAW98NJTKpY3+yxg30YSJgknSJ8xH7c=
+X-Gm-Gg: AeBDievfSgX1+w3NbLZUYNd0yNpZQ7MyprfPveFf4cOZipN8tbiEgkt/XxoS246v59K
+ R14uVzkshco/7Ek0DMXMDqs2B5VKOi4M0c+rmvHPvwyDUVeUoxJpnv0uKmDa8CwVbRSBYTaqWj/
+ CjQXeY/eKB/zNbp1uonB/jwrIzXmd+CCm7l8qXITQj0ZoKf1JT5asAXbXe2YLucDS32A+7XurE3
+ OraVBBIkS1Ozb+7pWIBS9ToVZNmnICVlSfHXB84fwIDBtfe5VeG+P9psU7beWxga29jUigzM4h2
+ 5ABb1bH1j8BlVD+2munDtWAsRbkx6yl5zfViHwdgEjHH8PRD
+X-Received: by 2002:a17:907:d303:b0:baa:65b:fe43 with SMTP id
+ a640c23a62f3a-bb804c33104mr59213266b.38.1777342824714; Mon, 27 Apr 2026
+ 19:20:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=junjie.cao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DATE_IN_FUTURE_06_12=1.947,
- DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-39-c413f3605311@redhat.com>
+In-Reply-To: <20260427-qom-tests-v1-39-c413f3605311@redhat.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 28 Apr 2026 12:19:57 +1000
+X-Gm-Features: AVHnY4KHytxvJSxfL9Mi32sfzwGgNuwEo0mrkpe_Nkn0-gZikn3v5IQAATFO3q4
+Message-ID: <CAKmqyKO5bfV0gNgUCHAPO=32SgWGwO_sGRng6p-5jF3yogTkJA@mail.gmail.com>
+Subject: Re: [PATCH 39/41] hw/riscv/virt: free flash devices and OEM strings
+ on finalization
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,19 +124,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 10 Apr 2026 19:32:47 +0100, Peter Maydell wrote:
-> Big disclaimer on this: I have no guest images that try to use the
-> Cirrus bitblt handling at all, so I have only developed these against
-> the reference manual and confirmed that it fixes the UB repro case
-> from the bug. If anybody does have test images for these that would be
-> good to test...
+On Tue, Apr 28, 2026 at 5:49=E2=80=AFAM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+>
+> Add instance_finalize to free the two pflash devices (when unrealized)
+> and the OEM ID strings allocated during instance_init. Fixes leaks
+> found by ASan.
+>
+> Fixes: 71eb522c4063 ("riscv/virt: Add the PFlash CFI01 device")
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-Confirmed: the qtest reproducer from the linked issue fires on
-unpatched master and is clean with both patches applied.  I also
-fuzz-tested the patched cirrus-vga (generic-fuzz, ASan + UBSan,
-20 workers, ~47M executions / 8 hours) with no new issues.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-I have reviewed both patches and they look correct to me.
+Alistair
 
-Junjie
+> ---
+>  hw/riscv/virt.c | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+>
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index a1c323e66df..315049bc86c 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -1745,6 +1745,19 @@ static void virt_machine_init(MachineState *machin=
+e)
+>      qemu_add_machine_init_done_notifier(&s->machine_done);
+>  }
+>
+> +static void virt_machine_instance_finalize(Object *obj)
+> +{
+> +    RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
+> +
+> +    for (int i =3D 0; i < ARRAY_SIZE(s->flash); i++) {
+> +        if (s->flash[i] && !qdev_is_realized(DEVICE(s->flash[i]))) {
+> +            object_unref(OBJECT(s->flash[i]));
+> +        }
+> +    }
+> +    g_free(s->oem_id);
+> +    g_free(s->oem_table_id);
+> +}
+> +
+>  static void virt_machine_instance_init(Object *obj)
+>  {
+>      RISCVVirtState *s =3D RISCV_VIRT_MACHINE(obj);
+> @@ -1984,6 +1997,7 @@ static const TypeInfo virt_machine_typeinfo =3D {
+>      .parent     =3D TYPE_MACHINE,
+>      .class_init =3D virt_machine_class_init,
+>      .instance_init =3D virt_machine_instance_init,
+> +    .instance_finalize =3D virt_machine_instance_finalize,
+>      .instance_size =3D sizeof(RISCVVirtState),
+>      .interfaces =3D (const InterfaceInfo[]) {
+>           { TYPE_HOTPLUG_HANDLER },
+>
+> --
+> 2.53.0
+>
+>
 
