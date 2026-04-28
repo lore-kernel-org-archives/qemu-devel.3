@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AF43FF8868
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 09:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CECFFF886D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 09:35:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHepA-0003O2-Aw; Tue, 28 Apr 2026 05:33:48 -0400
+	id 1wHepD-0003RL-E9; Tue, 28 Apr 2026 05:33:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHep8-0003M9-Je
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:33:46 -0400
+ id 1wHepA-0003OF-KX
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:33:48 -0400
 Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHep6-0007Pw-02
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:33:46 -0400
+ id 1wHep8-0007RH-UJ
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:33:48 -0400
 Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4852a9c6309so102480255e9.0
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 02:33:43 -0700 (PDT)
+ 5b1f17b1804b1-4891cd41959so94716485e9.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 02:33:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777368821; x=1777973621; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=xekvDfh2dxmdIlEXP7S2Vcn3LeIat4hsKRy3BWYX78Y=;
- b=ZNYDD/TBdbg9ZFMv0YOWdwvc1VnuJeYJ8eVMBHbDMFtcQqz97fY+Uzn0g2dE7sOy+2
- 1tacZmXQefLp+9TGSFM90pSyflOLpuYIDxfj26MzgFVkfJ7IHeJaDb9Z3FNEN61ARwbk
- xbuUR3m2jVmXgKYQ6IqTaZxwJe2+bBylZUefhRk6BvcYiiawKZDZShPs3xq0i1+1uUV+
- YDl/+Gj/Q1FZLohdKglHkvNKxtwy5dM9ExSe8dFkbr8ZoJzXvXlaxg1OfVjIMtGgerCS
- JlNMnIsDhUdyp1s+AcIw4iwvpiDYYtvyAHZIfYJGLthU8rWedMBETsgRfYMnkf4AAGMr
- GlOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777368821; x=1777973621;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1777368825; x=1777973625; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xekvDfh2dxmdIlEXP7S2Vcn3LeIat4hsKRy3BWYX78Y=;
- b=DHP57GBMHUc6tsdUl/qPZhM7KHbZvv5dROcZUrttIVgkt3KOCJ/3na6G/TKkfZOsda
- mBfdNVXs7us5kPY5LpFTc1/Q9F9nHaYuhwQU/H+3h378qr8idjyZPa9yb/NcRxcn8w0o
- CGjkRBztNTloVQczwOnVrA4gR/vZObaWXQV/sExIUSapbPV1o47NkHOUevpinkl+lds8
- I/42Kw5qYgaqwICMSqoBb6qyHbpH0MMUhZ2PN3MRJy8KpjZ4XbTaDcvwlYmmHNy9daKd
- O5VpPvJ3iXUSn3TwBMo22XWiPnbrcxYnxoCHKb9KlDstOqQvpBSan1IHGWXoHNfaukdW
- mnXA==
-X-Gm-Message-State: AOJu0YzS2sco4B6bU3HlDh8LOsjg3wXblhJ7nA4vFarEVUiWTJQvPh4l
- yGlrwD4a5//cg7ty5fvGu4fpqquu/hSXC8HTPB7HXLRQvIZSuTfkc0q3/XCMA2UHAD4IugOEHN4
- t+oJI
-X-Gm-Gg: AeBDievbuSHwvcWLMAdqbryt1ZUhCH+SA/46vhbh8sOQ9pjcbdgcwl2sj7ffDnsy8ud
- dn4s2yCaFqRsrOxj4M6sa26ew8Tgix4Ec6cLqwADr9PH9TFiKYhwq1qyIdyB0o0MYJ9UQpo4ysJ
- rLUPLoYehFD6sXw8HM5SGRQZwD++PwsP4VZK+BRG6hCqGGu23BSiKGhjlakrxLfZEAkBzZDv9qf
- fsxslvaavcDncCHdbBPsAJ33/+6uwdSktuH323SHmOSD60H1MMDyKuSieND8xmznHWBbmJ/q3ps
- rcgIV+8mcwpKOiPZoppry2e4wkyxMJ+HNOZj86xyHDdkyqva5SLWu7KQ0OrfDPkU2eXWvgKtrTj
- 2GZI2KJSSz5eRBiAsI6uqHlb7OD2qKp8b1bleJW7dfwuX+q/nboJLwhkXwdxGcg3ek5CwDQ/lsj
- iGGSJI4hsFL4CjKAhwh+j4sxbdB0XQbG2jNp2tu5LoxXg3jKc7e05sJ5XdU0lhTfkC+3vNaSkSR
- M5tgcprx28/CIxUR4zZm75b5oEiw3UqkIqs1P5kxQ==
-X-Received: by 2002:a05:600c:3b13:b0:488:9e43:9690 with SMTP id
- 5b1f17b1804b1-48a77afd324mr38740385e9.10.1777368821504; 
- Tue, 28 Apr 2026 02:33:41 -0700 (PDT)
+ bh=pXWD/d404r16/lGHqQwmu63U44AcHTbqHQeSLN0NHAI=;
+ b=nT+It1a1NmzL5tgvnPl0Ws9vdE+3uU38SVqRmpVigU31XRS7NnI5dFI7T24F5QwSGv
+ yZQckBjx48vYaJGGWUmRJ6l4lwf0jjit4rcvMpoMWcW2VuiebF+qZEJDSRMtrXXYJg6Z
+ MmDthAdQ69OoQ9LL7wYkyNUlH/HVNqjoO/rKfelwSsXVhIhHNKKA5eryY3Dj0tL9C3gP
+ TuDJ9b63/x4RTlsFXyrePFXzF/JVOI4U7YUM872mBoF5u/65yTdMkNK+DToqHpYe4oDn
+ ywaScH1j3fxvP44GKcisinlBpERugJzSGOoPItcFldu55J69XiA7g0ASScwjfpqVxxTx
+ tdWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777368825; x=1777973625;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=pXWD/d404r16/lGHqQwmu63U44AcHTbqHQeSLN0NHAI=;
+ b=dawTawO7Zs8L86BGhf0lqRNgilA15rMcM6VbxZ+77Eox6AjkvUspR7OxXzOj+KBK5A
+ DL0kYJiiexrup+Zdb3lzsRW1GEzAwzImq2WXLjhN3phSjoP8m4PYuxTWC+iQaelczyCJ
+ n4fzx7UmNzmPzHtU30TmJvs5iP5lpN1JGgK34trPWwdDgxjpNlLFMGpb4vQoddIx0VGX
+ e/1U0UxgFsnE6MRY39PmHd8B+p3zfzyZGcCqQK5ZgSLOLa+qgUA11jHqV3kmAUurslKd
+ nPPiCZq3vYTPBsPHDnCvPKDgP3A2XylVjeMNcvifQrKzOHN+uoRFEUXoXDkqs8dqHlmd
+ IBEQ==
+X-Gm-Message-State: AOJu0Yy41gC1f1OTyilHxrcvjP9DWYG1rbRfM3qCyqlUZ6A7+pOKB3WH
+ quKHe5jWUctoNZRHa9WYWU/GSMA1bijXFgz2d+K1yaH5aMCRnOV+2UzidILbyKSh4nbOZKDz94C
+ dyh+W
+X-Gm-Gg: AeBDieuC668GDTznX2yFOMyHrjZJtcA/x4g4Pez6A+TDxFS1WIeKl96T2mWNZHMHdUM
+ 3vH3AP+29+FMie4YUqO8i0d5zCa2boydpBWfhx9nsjMUpxR30ywIzvYb6CzANZxTbyveyqFKrqg
+ oG+mRbk2pYyE4NUaANIpi/qKyvk7XMsTzoqBAHEc4l8LHb41ZUeHEWCAoZQMMSdkoii0s5IjHyt
+ vS9gRaakPm66po/e137VG6QZ2190UMpciq33216Cko2XpV5KShMxMvAzWuB7cIxud56hOEGrgBZ
+ DSexLf5DdQ4/KaCUk4gP+Xc+wG4AMosbi59uOfLMXh10FDU2ZCOCPlvmrQR8Cv72QgSbmkXapfk
+ aOIgaCCzehqbz8rSmQ6lzjpZNBO14DFvs3x4PZr6HN1gP14TsMGrAR9SU/5xsBttQXF5+0gNtwD
+ B4gDbcfNIRFW2nKx5m5YKaX+Z7vgfjoxCwdbsoCfLQIpzOcrAGfgfGffWeRz3hBfrhIogukiy5j
+ 3106o3u29aIa30E7vWdtacc3U511F7AtlU+8EFRlC4SSl2fvh9L
+X-Received: by 2002:a05:600c:a311:b0:488:b749:8482 with SMTP id
+ 5b1f17b1804b1-48a77ad59e2mr29036605e9.4.1777368825499; 
+ Tue, 28 Apr 2026 02:33:45 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a774d7a1fsm19665595e9.4.2026.04.28.02.33.40
+ 5b1f17b1804b1-48a774d7a1fsm19665595e9.4.2026.04.28.02.33.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Apr 2026 02:33:40 -0700 (PDT)
+ Tue, 28 Apr 2026 02:33:44 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -77,12 +78,13 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-riscv@nongnu.org, qemu-arm@nongnu.org
-Subject: [PATCH 0/4] MemoryRegionOps .impl cleanups
-Date: Tue, 28 Apr 2026 10:33:35 +0100
-Message-ID: <20260428093339.2087081-1-peter.maydell@linaro.org>
+Subject: [PATCH 3/4] hw/xtensa/mx_pic: Specify xtensa_mx_pic_ops .impl settings
+Date: Tue, 28 Apr 2026 10:33:38 +0100
+Message-ID: <20260428093339.2087081-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260428093339.2087081-1-peter.maydell@linaro.org>
+References: <20260428093339.2087081-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
  envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
@@ -92,7 +94,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,41 +110,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset is some fixes to MemoryRegionOps that were
-accidentally setting odd .impl values, plus an extra assert
-that we can now add that a MemoryRegionOps doesn't set
-.impl.unaligned true but .valid.unaligned false. They're
-originally from the CJ Chen / Tomoyuki Hirose patchset that
-aims to support proper synthesis of unaligned accesses in
-the memory system core. I still want to get that patchset
-upstream, but for the moment this is a set of simple
-cleanups:
+The xtensa mx-pic interrupt controller has a rather odd register
+setup, where some registers are 32 bits but are decoded at offsets
+only one apart from each other.  The QEMU implementation handles this
+correctly, but it did not set .impl.unaligned = true.  This has
+worked up til now because QEMU has entirely ignored .impl.unaligned,
+and just allowed through unaligned accesses when
+.valid.unaligned is set.
 
- * riscv_iommu_trap_ops set .impl.unaligned but not
-   .valid.unaligned
- * npcm7xx_fiu_flash_ops failed to set any .impl at all
- * xtensa_mx_pic_ops failed to set any .impl, and was
-   less strict than it could be about .valid
+To allow the possibility of properly implementing synthesis of
+unaligned accesses by the memory subsystem when they are valid but
+the device doesn't implement them, and for clarity of intention,
+state explicitly that this MR's read and write functions directly
+handle unaligned accesses, by setting .impl.unaligned = true.
 
-Patches 1 and 4 have been reviewed.
+While we are adjusting the MemoryRegionOps, we set also the minimum
+and maximum allowed access sizes.  Since the only way to get at this
+device is via the CPU's RER and WER instructions, which always
+operate at 32-bit sizes (see the HELPER(rer) and HELPER(wer)
+functions in target/xtensa/op_helper.c), we know we will always get
+32-bit accesses.  Specify explicitly that that is what is valid and
+implemented for the MR.
 
-thanks
--- PMM
+Add a comment to clarify that the hardware behaviour here is not
+"true memory-mapped registers", so the odd-looking implementation is
+correct.
 
-CJ Chen (2):
-  hw/riscv: iommu-trap: remove .impl.unaligned = true
-  system/memory: assert on invalid MemoryRegionOps .unaligned combo
+Based-on-a-patch-by: CJ Chen <cjchen@igel.co.jp>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/xtensa/mx_pic.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-Peter Maydell (2):
-  hw/npcm7xx_fiu: Specify .impl for npcm7xx_fiu_flash_ops
-  hw/xtensa/mx_pic: Specify xtensa_mx_pic_ops .impl settings
-
- hw/riscv/riscv-iommu.c |  1 -
- hw/ssi/npcm7xx_fiu.c   |  5 +++++
- hw/xtensa/mx_pic.c     | 27 +++++++++++++++++++++++++++
- system/memory.c        |  1 +
- 4 files changed, 33 insertions(+), 1 deletion(-)
-
+diff --git a/hw/xtensa/mx_pic.c b/hw/xtensa/mx_pic.c
+index 07c3731aef..098c1aaf85 100644
+--- a/hw/xtensa/mx_pic.c
++++ b/hw/xtensa/mx_pic.c
+@@ -69,6 +69,26 @@ struct XtensaMxPic {
+     } cpu[MX_MAX_CPU];
+ };
+ 
++/*
++ * Note that decode for these registers is rather strange by the usual
++ * MMIO standards -- the MIROUT and MIPICAUSE areas can be read and
++ * written at 32-bit length, returning different values for each byte
++ * offset, because the low bits of the address are treated as selecting
++ * an IRQ or a processor:
++ *
++ * 00nn         0...0p..p       Interrupt Routing, route IRQ n to processor p
++ * 01pp         0...0d..d       16 bits (d) 'ored' as single IPI to processor p
++ *
++ * This is because (like x86 IO port in/out accesses) the offset is
++ * not a memory-mapped address but is really a register number,
++ * accessed via the Xtensa RER/WER "external register" instructions.
++ *
++ * We set .valid and .impl to both allow unaligned = true to permit
++ * these byte-offsets. Because this device is not a true memory mapped
++ * device but is accessible only via the Xtensa RER/WER "external
++ * register" interface, all accesses are guaranteed 32 bits.
++ */
++
+ static uint64_t xtensa_mx_pic_ext_reg_read(void *opaque, hwaddr offset,
+                                            unsigned size)
+ {
+@@ -267,7 +287,14 @@ static const MemoryRegionOps xtensa_mx_pic_ops = {
+     .read = xtensa_mx_pic_ext_reg_read,
+     .write = xtensa_mx_pic_ext_reg_write,
+     .endianness = DEVICE_NATIVE_ENDIAN,
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++        .unaligned = true,
++    },
+     .valid = {
++        .min_access_size = 4,
++        .max_access_size = 4,
+         .unaligned = true,
+     },
+ };
 -- 
 2.43.0
 
