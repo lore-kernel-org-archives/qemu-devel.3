@@ -4,74 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13F01FF8868
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 16:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59792FF8868
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 16:20:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHl4S-00008R-SC; Tue, 28 Apr 2026 12:14:01 -0400
+	id 1wHlA8-0001BT-M2; Tue, 28 Apr 2026 12:19:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wHl4P-000082-Ln
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:13:57 -0400
+ id 1wHlA3-0001Ac-6o
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:19:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wHl4N-0005ry-5W
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:13:56 -0400
+ id 1wHl9u-0006bR-3Q
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:19:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777392833;
+ s=mimecast20190719; t=1777393177;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ZEp0RILUpdWq1YgQXOxJiAGQb9sHlcU4JxXGtqWzzSE=;
- b=YNeEiVwn96B/yrh/zMbvXCmOrdgHb2zExbWybV3N0AQB+eAjsSNwvTybVmPmUeNrN+f0Ij
- Zb6/G6/W6XSc9gLQKV3Bzi7ml0gncQqq/+vYwFGvE8NKRoTORKz92u3+rOIvI4SOsb6HQ6
- 9ctWJJ537XFIvW0H5Dg3ywpqU3WxT0o=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=IVSDw2zGTZWYIR2cd0nlpFEiVuzNcfJADVRIocbRDdA=;
+ b=QL/vveo9vKMVNgcgEAOcwXbfV5kAlMESN/oji8PmKXPN8zxuzjRn/07JVY4z+lfTHyAbZQ
+ aa60jCYtiXCp3RrmnlhIimKlcwVWb7BMg5y1jLpbPN3kuZY4Do9YAcox2F+595xc9If4g6
+ t3jr5G5dBhYDyNQUw6UXlp5NKYBw+Dc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-604-_9IZn6-uMYiG8X7TDGfJaQ-1; Tue,
- 28 Apr 2026 12:13:49 -0400
-X-MC-Unique: _9IZn6-uMYiG8X7TDGfJaQ-1
-X-Mimecast-MFC-AGG-ID: _9IZn6-uMYiG8X7TDGfJaQ_1777392822
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-362-3tmm5QfZP7iQmsMdWtcKRg-1; Tue,
+ 28 Apr 2026 12:19:33 -0400
+X-MC-Unique: 3tmm5QfZP7iQmsMdWtcKRg-1
+X-Mimecast-MFC-AGG-ID: 3tmm5QfZP7iQmsMdWtcKRg_1777393171
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 75E741805A01; Tue, 28 Apr 2026 16:13:40 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4CA511955F68; Tue, 28 Apr 2026 16:19:31 +0000 (UTC)
 Received: from localhost (unknown [10.44.33.158])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 90B891800349; Tue, 28 Apr 2026 16:13:37 +0000 (UTC)
-Date: Tue, 28 Apr 2026 12:13:34 -0400
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2135119560AB; Tue, 28 Apr 2026 16:19:29 +0000 (UTC)
+Date: Tue, 28 Apr 2026 12:19:27 -0400
 From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>,
- =?iso-8859-1?Q?St=E9phane?= Graber <stgraber@stgraber.org>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
- Jesper Devantier <foss@defmacro.it>,
- Klaus Jensen <its@irrelevant.dk>, Fabiano Rosas <farosas@suse.de>,
- Zhao Liu <zhao1.liu@intel.com>, Keith Busch <kbusch@kernel.org>,
- Peter Xu <peterx@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: Re: [PATCH v6 8/8] tests/qtest/nvme-test: add migration test with
- full CQ
-Message-ID: <20260428161334.GA278591@fedora>
-References: <20260419130139.15554-1-alexander@mihalicyn.com>
- <20260419130139.15554-9-alexander@mihalicyn.com>
- <20260427200004.GF218226@fedora>
- <CAJqdLro_fUh0-yEjum0z6c2FvNsLjr95MMaA7EX810dqm+=upg@mail.gmail.com>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: "open list:Network Block Dev..." <qemu-block@nongnu.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, Fam Zheng <fam@euphon.net>,
+ Hanna Czenczek <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Thomas Lamprecht <t.lamprecht@proxmox.com>
+Subject: Re: Excessive IO PSI for iothread when using io_uring since QEMU 10.2
+Message-ID: <20260428161927.GB278591@fedora>
+References: <017dc767-90e3-4983-8417-e541b3fb04f6@proxmox.com>
+ <20260427191343.GD218226@fedora>
+ <317ab384-f8c2-49af-89c4-407bb2f5617c@proxmox.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="erGKl80A3EXx33fp"
+ protocol="application/pgp-signature"; boundary="n4oZOOcMhEtnZQOq"
 Content-Disposition: inline
-In-Reply-To: <CAJqdLro_fUh0-yEjum0z6c2FvNsLjr95MMaA7EX810dqm+=upg@mail.gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+In-Reply-To: <317ab384-f8c2-49af-89c4-407bb2f5617c@proxmox.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -80,7 +72,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.109,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,70 +89,136 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---erGKl80A3EXx33fp
+--n4oZOOcMhEtnZQOq
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 28, 2026 at 05:55:12PM +0200, Alexander Mikhalitsyn wrote:
-> Am Mo., 27. Apr. 2026 um 22:00 Uhr schrieb Stefan Hajnoczi
-> > On Sun, Apr 19, 2026 at 03:01:39PM +0200, Alexander Mikhalitsyn wrote:
-> > > +
-> > > +        #define GUEST_MEM_READB(field) \
-> > > +                            qtest_readb(ctrl->pdev->bus->qts, (uint6=
-4_t)&(field))
-> > > +
-> > > +        g_assert_cmpint(GUEST_MEM_READB(reqs[i].phys_identify->ieee[=
-0]), =3D=3D, 0x0);
-> >
-> > I was trying to figure out why phys_identify has a pointer type although
-> > it is a guest memory address that cannot be dereferenced in C code. I
-> > guess the reason is so that the GUEST_MEM_READB() macro can use the
-> > address-of operator instead of explicitly calculating the offset of
-> > ieee[0], ieee[1], etc? I found this confusing and potentially dangerous
-> > (the compiler won't stop the pointer from being dereferenced if someone
-> > does it by mistake).
+On Tue, Apr 28, 2026 at 02:10:02PM +0200, Fiona Ebner wrote:
+> Hi Stefan,
 >=20
-> Exactly, that was my intention, to be able to use address-of operation
-> in conjunction
-> with structure-dereference operator. To prevent accidental mistakes, I
-> used "phys_"
-> prefix in structure member names (like "cq->phys_cqe" or
-> "reqs[i].phys_identify").
+> Am 27.04.26 um 9:12 PM schrieb Stefan Hajnoczi:
+> > On Fri, Apr 24, 2026 at 12:25:41PM +0200, Fiona Ebner wrote:
+> >> Dear maintainers,
+> >>
+> >> since QEMU 10.2, if io_uring is enabled, it will be used for the event
+> >> loop of iothreads and this causes an IO pressure stall value of nearly
+> >> 100 when idle.
+> >>
+> >> The issue was also reported on the kernel mailing list [0]. The
+> >> suggestion from Jens Axboe was to just turn off the iowait accounting
+> >> completely. But since (for block/file-posix.c), there is actual IO
+> >> submitted via the same ring, I wasn't sure if that is the right approa=
+ch.
+> >>
+> >> So the idea was to keep track of whether the event loop is otherwise
+> >> idle and only use the IORING_ENTER_NO_IOWAIT flag in that case [1].
+> >>
+> >> However, doing so would only help for block/file-posix.c, which submits
+> >> IO via luring_co_submit() -> fdmon_io_uring_add_sqe(). For example, for
+> >> block/rbd.c, only a poll SQE for the AioHandler node's fd is used. When
+> >> submitting that poll SQE in the iothread, we would need to be able to
+> >> know if IO for RBD is currently in-flight or not to be able to decide
+> >> whether to use the IORING_ENTER_NO_IOWAIT flag or not. Is there a good
+> >> way to do this (in a general way)?
+> >>
+> >> Or should the flag really always be used (if supported by the kernel)?
+> >> Is there a way to tell io_uring/kernel that we are an event loop and o=
+ur
+> >> waiting should only be accounted for when there is actual IO in-flight?
+> >>
+> >> Happy to hear your opinions and suggestions!
+> >>
+> >> [0]:
+> >> https://lore.kernel.org/io-uring/14bc6266-5bc9-4454-9518-d1016bfe417b@=
+proxmox.com/T/
+> >=20
+> > Hi Fiona,
+> > Jens replied yesterday confirmed your suspicion that the number of
+> > inflight requests is not being tracked correctly.
+> >=20
+> > Is there still a problem after fixing the kernel's inflight counting? If
+> > not, then no QEMU change is necessary and that seems like the cleanest
+> > solution anyway. The kernel should know whether there is I/O in flight
+> > and so it doesn't seem right that userspace needs to hint this.
 >=20
-> >
-> > It took more time to review the pointer trick than the straightforward
-> > approach would have taken. I'd avoid it, but it's a question of coding
-> > style and up to you.
 >=20
-> No problem, I think the fact that this code confused you means that my id=
-ea
-> wasn't that good as I thought ;-) I think I should then change a type for
-> phys_identify and phys_cqe to u64 and then add explicit address arithmetic
-> or continue to use "arrow" operator but in a special macro like
-> GUEST_MEM_READ_SOMETHING(...).
-> WDYT?
+> unfortunately, yes. Even with the kernel fix [2], the real problem with
+> poll SQEs described above remains. I'm still seeing high IO pressure
+> stall values when using QEMU. In add_poll_add_sqe(), QEMU submits poll
+> SQEs for the AioHandler node fd, and that does count as pending IO. A
+> small reproducer modeling this [3].
 
-Encapsulating the address-of operator trick inside a macro would be a
-nice solution. By localizing the pointer type just within the macro,
-it's more obvious what the intention is and the rest of the program uses
-the uint64_t type.
+Does the kernel account POLL_ADD SQEs as blocking I/O activity?
 
---erGKl80A3EXx33fp
+That behavior is inconsistent if select(2)/poll(2)/epoll_wait(2)
+syscalls do not count as blocking I/O activity. The kernel io_uring code
+should account them correctly and not rely on a userspace hint.
+
+Stefan
+
+>=20
+> So the question from above, how to deal with this for block drivers not
+> going through file-posix.c remains.
+>=20
+> Best Regards,
+> Fiona
+>=20
+> [2]:
+> https://lore.kernel.org/io-uring/b4d2aa36-8301-4e58-be3e-1451267b8c43@pro=
+xmox.com/T/
+>=20
+> [3]:
+>=20
+> #include <assert.h>
+> #include <errno.h>
+> #include <stdio.h>
+> #include <unistd.h>
+> #include <liburing.h>
+> #include <sys/eventfd.h>
+>=20
+> int main(void) {
+>     int fd;
+>     int ret;
+>     struct io_uring ring;
+>     struct io_uring_sqe *sqe;
+>=20
+>     fd =3D eventfd(0, 0);
+>     assert(fd >=3D 0);
+>=20
+>     ret =3D io_uring_queue_init(128, &ring, 0);
+>     assert(ret =3D=3D 0);
+>=20
+>     sqe =3D io_uring_get_sqe(&ring);
+>     assert(sqe);
+>=20
+>     io_uring_prep_poll_add(sqe, fd, 1);
+>=20
+>     ret =3D io_uring_submit_and_wait(&ring, 1);
+>     printf("got ret %d\n", ret);
+>=20
+>     io_uring_queue_exit(&ring);
+>=20
+>     return 0;
+> }
+>=20
+>=20
+
+--n4oZOOcMhEtnZQOq
 Content-Type: application/pgp-signature; name=signature.asc
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnw3K4ACgkQnKSrs4Gr
-c8hL8QgApKvXcyRWihDivJgSbLU7uBa7PuaFU0iryrmb8efYOoRJIb14+rKdxiQ6
-+EpzfsvwOTa5GyrYpvOTXlAlC9RNN+U3iGjhpfQxOEhOF8L2kLB/XyIUVr1nfYdb
-ndizM7JgQcgzrbaDT/1dxzrlHH3W3R/hSW4RjHAwNd3S9cZq8eQEyq3a90LQGsXn
-IPFwgUzoftA3fBl99hG3ZbWoGLWyrH17Qen9+1lP8esQB5lXKsD8MT2OetX/TAum
-01AkpT0YTVo/X4josWiAj3rf5WoIGre9YwrNN+COuqrEywHxLGaeyUL3D/r/Ijtz
-0StMpbWLJnLcSaxewxuFvxQkryCVjw==
-=8HZj
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnw3g8ACgkQnKSrs4Gr
+c8jJpwf+NdH4eWaCUZID5mf6PCr/eJGtWlavDaDJVYdbgHEbpU9vahTGMvz0+Y+7
+TdcF10u9T7f91a64AFIJdniW9dqBNh59oEJFUtrKol4wHXPgiMYQZIRTl141zdI5
+Ywdhy3wQBmVN/VucwoHg0Fbzg+L9HporDLtq2Ug3a8rmNk0zsnBRJmYUDCU7ciDu
+iwi9AJlNfEE4ruv3rsLht8XRv8TAJMgpeOTCfX+9U9efVRAEPTW1dEGcPUnzqqEy
+t6hy8Hl7JFfxfi6HnLrTqRodrBOwQTTI2RPY7oNPLJJLBWCkqFa0njSxv4rW9QYo
+YR1fHP3f8/qLykPUi/OWHrhc2zSrqw==
+=u3ZY
 -----END PGP SIGNATURE-----
 
---erGKl80A3EXx33fp--
+--n4oZOOcMhEtnZQOq--
 
 
