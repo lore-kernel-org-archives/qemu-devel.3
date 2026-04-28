@@ -4,119 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09368FF885D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 07:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF586FF885D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 07:49:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHdBr-0007ap-0B; Tue, 28 Apr 2026 03:49:07 -0400
+	id 1wHdBs-0007b7-5l; Tue, 28 Apr 2026 03:49:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wHdBp-0007aX-Jg
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 03:49:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wHdBn-00080m-5U
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHdBo-0007aL-Tv
  for qemu-devel@nongnu.org; Tue, 28 Apr 2026 03:49:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777362541;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KOgPM3wPTrp1s54E+EiUxRUBtD0eiw0KdLxGC4zPeco=;
- b=NXZajJrnB8Xy9TfgBvxsgN61FVp+tgFBl9nNlCTkIa+00nEVCebW/1ZONWGNfOyu72KYpf
- y9fPuCBtt9m0Rpp/Cjp7dqF5EE9g3KyOPFaFxR7n4GcEQ9KjqYZLRI8rsYtSLVYmlBnvwO
- ORdoKphaLZ+e+rfYb3z+zVyRxUAvX+8=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-36-6Zdvi7ohPPuuUWrsTKHbKQ-1; Tue, 28 Apr 2026 03:48:58 -0400
-X-MC-Unique: 6Zdvi7ohPPuuUWrsTKHbKQ-1
-X-Mimecast-MFC-AGG-ID: 6Zdvi7ohPPuuUWrsTKHbKQ_1777362538
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8e8950b3ee1so2940518785a.3
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 00:48:58 -0700 (PDT)
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHdBn-00080s-2S
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 03:49:04 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-6501725d888so8991614d50.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 00:49:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777362542; cv=none;
+ d=google.com; s=arc-20240605;
+ b=BbcR8zSM93Arm2RdxNXkWa+9NzONTGdboB/uIJ7b2CjhVS8JsHZpTxs9WXCDxXCEw7
+ Zx13Ej4k21Y9v+BnNTv9BrY1aZYzalPUUKJi7AGoysdTuCbOhurxOriNJ0gMjyFmpAc5
+ q/4GZk69wgOcMXNOBzlLmdwOF2SpCpuuOrFncflxCDUOCiEsH2ECWrDBQrw1tq349gfu
+ X+420QcVNPdOasMkjD4W5Ry62dA4v6boT27nYyetHcc4B8A36gT8wGqSJFa+WvAFVabP
+ K67Hz8MHg0srMd7eALvb1djSN8DmYZ5EwunlcyM2BZd1b0T0W5VcaIFAakm//SifGPwx
+ eTfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=sD+CQsBvunLSQ8PKk34tXwXQ0myL91q/9Qi4cA3HYMU=;
+ fh=1Xd7Wzgni5O6OiQrUAllr3/n2A2vZ24jpGmDtX3IXEk=;
+ b=AE22V+CQ6IX+sgvxsJP27VV8K69QTccxdBT/66VlJLRZOqPVMXNlzkdfMlMx6rbqTN
+ MpHUBu2fQbhQPtyLYE1DJ5kVw2UzDBY+6GdIAk1rH0iDpK+1xdy3yp9Qb4BW/9xuRQ5x
+ uFBRKNyg4SNY6wYEvug1Uw2DMMbe44Vf24G2d3o3DIfvhEHjRj+Y3l7a6Y4gxoa6GJ+O
+ rhQhobHz4QZPu+wWuJOn1ZVdNakMNaLE5YYATSv1yZ+8ajc7rXsH6PqVVs3jvCB+AbaL
+ JA9GJstW8HrOs/PDr1mLhCGT15JgvoIaU0I60f39nXtM9+0GXUXlFf3KTDNH6BlNo/oI
+ Z6uA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777362538; x=1777967338; darn=nongnu.org;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:reply-to:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=KOgPM3wPTrp1s54E+EiUxRUBtD0eiw0KdLxGC4zPeco=;
- b=C5YGgJcm13l8UjF0IXLyiMMwtwV/Ua7dsc3yj/nsmc3isO7Ma2rsyi7RWbujx9IU5d
- i4JrN9F3idNUNosTCWbK/v3mLTq7XH465vgwGJIFZJpZf3M50U7fM27nZ+StTtB3iagO
- Po5zjrZA/w77LGXgPiP6SKgeJ5mEcSbaN6jqgE5uLVv6J8kak26MbNG4tJSaNSLCAI74
- OGYN+9GPS3SDvwHRbC8thBR/6U1jbQZS2vprDfRJ/0kJkqUQwVaiTQ6CumvnJHzRu+aG
- BkBiUxFEaV1KI3XUKCGqwMpfC+xFNf17/5hbm7hDFpdhrhfGXjwyR4WzaUGXcQqm+wRW
- SUkQ==
+ d=linaro.org; s=google; t=1777362542; x=1777967342; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sD+CQsBvunLSQ8PKk34tXwXQ0myL91q/9Qi4cA3HYMU=;
+ b=ogPYf5aaBJU4BUHLlzFk9ghT9WFeWDwObk5+GHl2ewR7veUO2defVtCsJjpGmkKIDn
+ T55JEJRUo+lYl0vb+hmxqN6+sGBqCCRiMM03Op5c8kDWcvQc84FbkpTxnp46CENtwID1
+ oIg/PNLo1+YbGACvULHcDuzdMhTI2HpDcpWf9Btjz87OLr65wLAo18Fkqp1ausssagEh
+ nBC6rTY7rADhYy9qTpWZfGY/nzjmQx1Y1Msx6YkRLX28W0MWOVMRbqIBFbCOwYWjiF2a
+ lcuBCvoTlQ4rlALEl1MifLQ6uy8K/Mf0//TwF2pHMPkFSbk4XGyliz/XuEnAFnv7Cv9L
+ tzlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777362538; x=1777967338;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:reply-to:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KOgPM3wPTrp1s54E+EiUxRUBtD0eiw0KdLxGC4zPeco=;
- b=mxiIJQ4jivjZxZxf0srLrGsWMt8uOfx083JJgQMdN1PfRfyEwOJsCJ3REAPnp9Axis
- V/qGTkv0yBHTb7e6+Wnk2q2bPvbC5ztia5orRMHGYLT2oE73q9Ib1UOz3PHneMOqJ0SY
- CR/Y4Wh0I7JuhhAb/UcRnAQw1C+PJhtweV5gsEb3kyijKj0vw625hgo9DMkqOp5nJXr6
- 9zhGTUpLU1PtTGQ/TSwmqISTrdD/erNSu+7rPO9F2KpDl7Ggm2C9EJyVpCOo3FqwOW7o
- KqiDWUXXnTo35d7J3RyVYwxDJwMtatHxLSiSxXHcrk8HSgWBWdpB7gwUC/fJFURjL78P
- 3fqA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9uvebbBqwzHeohLDT0Lc3UHs6xn56QkoueTrP46NOxZvl6S5TMxp62GlJMP/XH0Rb0shwd1PQ7BkTV@nongnu.org
-X-Gm-Message-State: AOJu0YzqcSLU+8iWVtqPNXjt3E2a5H5cTekGu0MBsJw5TTfGNDWFtpZv
- CdsUCBK/Vp89cCcGXfYtOuaKF+Z/YV/YB3M/B/TlDZbTW2YHm+oHkwoW6FY4z91QLXSyQiT33G1
- UesBDQWreUReWFTLKfWtlAFRd5o6KJKHQBtCTN8IMQiNrwgewvZ/3FGJS
-X-Gm-Gg: AeBDietSI3bv5i/QUuBvLLnjt8CWOV87GRzc4jpN85a/uksCQ+oJZR8T2ig93N9fAjY
- RuM+VPXJCQhxmie7INq1u3TVQI59rSn1vDUyQ2smXoAYQhn8TTaksD9l5NGiJeWveMjs9Wck23o
- Nl23g2q9X1rd4NwPOJLrrYXHH1TZrEddJ20nVnF2Dayhq45m8j4MFfHWwNwrUSJO0yIPLPod2ZF
- Xide1gUXlY87NQqIAIxgNHKMbwVaatubEiIoEN27BlCcdhDqh3KNYBqO6iQDFNtmAh+1aTuqEIg
- XLWoPosZ5FayCcRKv3Y06r5Jw3HnC7GF5HqacCGhuR0vFJI5t3tQ0uM3E7rpUC1/dGi4eIUbqVH
- xfVLWFF9xRMpD52zM7ausLl5cUvCnPyo=
-X-Received: by 2002:a05:620a:404d:b0:8b6:1877:3689 with SMTP id
- af79cd13be357-8f7d8f0e7e3mr258414185a.35.1777362537552; 
- Tue, 28 Apr 2026 00:48:57 -0700 (PDT)
-X-Received: by 2002:a05:620a:404d:b0:8b6:1877:3689 with SMTP id
- af79cd13be357-8f7d8f0e7e3mr258412685a.35.1777362537100; 
- Tue, 28 Apr 2026 00:48:57 -0700 (PDT)
-Received: from redhat.com ([2a02:8012:f011:0:f1ce:ac56:d2cd:7c2e])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8f7c49c4953sm125560485a.3.2026.04.28.00.48.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Apr 2026 00:48:56 -0700 (PDT)
-Date: Tue, 28 Apr 2026 08:48:53 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: =?utf-8?Q?Jind=C5=99ich_Makovi=C4=8Dka?= <makovick@gmail.com>,
- qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Eric Blake <eblake@redhat.com>
-Subject: Re: [PATCH v5 2/2] ui/gtk: Turn clipboard flag into runtime option
-Message-ID: <afBmZcEGoC7C5md5@redhat.com>
-References: <20260427-gtk-clipboard-v5-0-6968feb31a5d@gmail.com>
- <20260427-gtk-clipboard-v5-2-6968feb31a5d@gmail.com>
- <87340f5yoy.fsf@pond.sub.org>
+ d=1e100.net; s=20251104; t=1777362542; x=1777967342;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=sD+CQsBvunLSQ8PKk34tXwXQ0myL91q/9Qi4cA3HYMU=;
+ b=cK7QQ1V4/kMn+tP6OfFG4nLAbqOd8j0wCvgsm0XU1iLAjOUqIxR0Dc2X19XPA3Ia9Y
+ nMMeXvhCyWdwk9tO6XkU7GXdpp3Oxw6X4w+MSpxgaNcWskxIqXjrfda8ZkKwyUryCguo
+ JAXxFv73fnXIB6C773j0nqMzHIoQsUp5r5ICEAnYO1mHl5jP/dy+nRVttEo6gEGhxqE7
+ boRhz5U15WJFVs/HAbcVOKXFolQjXd0ni+Gell4PPGlAyppfjJ9xYb+r2f9BpZA9tyAq
+ cr7EnFt+AqxGfSLMkiwvGCmRPP66ZAZNYcznXQndjmz/pWQhP4emGIqNwQrD+A3HwaFP
+ X7fw==
+X-Gm-Message-State: AOJu0Yx6hr/TArjlXCqXU9MyivA6d+KMMEhUjpJZ7XZwyKvjk+MZ7HEk
+ nqPkmnyC1qWsf4MFbl2uwiRoCt3eBRK5beQ2S+YPHqF/+qnEaUqlBPabvVPL4FCZt9Dauu7AYuH
+ wY2S0N6pBCuiD3G/vxcy5j3kVz4SvgJiqmBb4/F0e1w==
+X-Gm-Gg: AeBDieukFxCtstQJ4ex6mYEgQuL29gF3VghXaMHfl1O/+VeFM/Fo+CgqoRwsbd8HsTC
+ /KTfC8AK/8EbGkAppVoD7ahJlmOXDkrIbO1J5eVQGPHqtquy0TnKsgQA3Uq1TT6K72hQrWVKuwx
+ XFrF2gzmkZ4TAnKZUdZXZlPMBfyLdRLpS/Rn6h/Sct64e1ldk46GaARlOnl2jcXZxv0W/9uXupE
+ g4XELjMBtBEbmcJ9siIcZkQj4oAT6J4SzVaYlUvjJ4bmiA7kPWYRDCAHNau0LAomQ7PsYPG/+8x
+ vrryyXacMlkCgsKAQA/Djf9LQP1unMd1vkKdjmonW64k69kA6kn7uy3dlhNehSHkwdFg9Vr2XWs
+ PtQ==
+X-Received: by 2002:a05:690e:4388:b0:651:cc5e:b8d7 with SMTP id
+ 956f58d0204a3-65beed7c474mr1184929d50.22.1777362541744; Tue, 28 Apr 2026
+ 00:49:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <87340f5yoy.fsf@pond.sub.org>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-41-c413f3605311@redhat.com>
+ <CAFEAcA_7LT-gpArvYpabe9UiFPDGDMEsGOTMeivw90SVDjabeg@mail.gmail.com>
+ <CAJ+F1CJ1u16q+KBqsO3ofYTVERSvLC-w2MhA_oUF_tvd-mPZWQ@mail.gmail.com>
+In-Reply-To: <CAJ+F1CJ1u16q+KBqsO3ofYTVERSvLC-w2MhA_oUF_tvd-mPZWQ@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 Apr 2026 08:48:50 +0100
+X-Gm-Features: AVHnY4LvJiWccyq5d0OGsdVumABKk42v_LpOoFO2S8aI4CaZNnh6i5EoUE0oAKQ
+Message-ID: <CAFEAcA-mkx-pymWq7nUOsNEBPr__RJZAV-h2YXSe=+_aGUZy8Q@mail.gmail.com>
+Subject: Re: [PATCH 41/41] qtest: add "qom-tests" command
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,40 +118,51 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 28, 2026 at 09:30:37AM +0200, Markus Armbruster wrote:
-> Jindřich Makovička <makovick@gmail.com> writes:
-> 
-> > - Compile the GTK clipboard support unconditionally
+On Tue, 28 Apr 2026 at 07:37, Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+>
+> Hi Peter
+>
+> On Tue, Apr 28, 2026 at 12:08=E2=80=AFAM Peter Maydell <peter.maydell@lin=
+aro.org> wrote:
 > >
-> > - Introduce GTK clipboard option, defaulting to off
-> 
-> Should the patch be split?
-> 
-> > Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
-> 
-> [...]
-> 
-> > diff --git a/qapi/ui.json b/qapi/ui.json
-> > index e3da77632a..b2c42a7f57 100644
-> > --- a/qapi/ui.json
-> > +++ b/qapi/ui.json
-> > @@ -1319,6 +1319,9 @@
-> >  #
-> >  # GTK display options.
-> >  #
-> > +# @clipboard: Enable host-guest clipboard sharing.  Defaults to "off".
-> > +#     (Since 11.1)
-> > +#
-> 
-> Educate ignorant me: what does it mean to share the clipboard?
+> > On Mon, 27 Apr 2026 at 20:50, Marc-Andr=C3=A9 Lureau
+> > <marcandre.lureau@redhat.com> wrote:
+> > >
+> > > Add a new "qom-tests" to exercise basic object lifecycle. Instantiate
+> > > all non-abstract objects, get and set properties and unref.
+> > >
+> > > This should quickly find leaks and other related issues that are
+> > > eventually triggerable at run-time with QMP qom commands.
+> >
+> > Can we have a comment please that says what you think the
+> > basic object lifecycle is?
+>
+> Hmm, what is not clear about the comment above and its list?
 
-Conceptually the intent is to create a single logical clipboard
-spanning the host & guest. IOW, if the guest copies data into
-its clipboard that is made available to the host clipboard, and
-vica-verca.
+It's quite brief and it's not in the actual source file.
+More generally, there is a lifecycle for the basic QOM types,
+and a more complicated one for QOM types that happen to be
+qdev devices, some of which we are testing already. I think
+we are not very good with documentation of what we expect
+from QOM objects lifecycle-wise, so I think it's helpful to
+be more explicit and detailed rather than less.
 
+> > Also, the qom-test already has coverage of "init the object,
+> > introspect its properties, unref it" -- how does this differ?
+>
+> It does introspect on already living and reachable objects, over QMP.
+> It doesn't instantiate, set, or unref.
+
+Ah, sorry; I was getting this confused with device-introspect-test,
+which uses QMP and does a 'qom-list-types' to get all the
+QOM types QEMU knows about, and then does a 'device-list-properties',
+which implicitly will create the object with instance_init and then
+finalize it afterwards.
+
+thanks
+-- PMM
 
