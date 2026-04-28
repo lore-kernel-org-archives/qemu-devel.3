@@ -4,131 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AC04FF8868
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 14:35:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA46EFF885A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 14:57:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHjWf-0004QT-DJ; Tue, 28 Apr 2026 10:35:01 -0400
+	id 1wHjrr-0008Gb-QR; Tue, 28 Apr 2026 10:56:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wHjWb-0004NH-6h
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 10:34:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wHjWZ-0007eH-3n
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 10:34:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777386894;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/X9F3hqTAla0CwSU5HYsvFQXK93IfCi423LiAxlW4MQ=;
- b=KNtCj9nZVLTlSWvlWOkXEvJPnM2qeRYj94J86baasSUDBEmy3AJZKQ74cAslWi2OCT43yx
- BYaT5Ug35+1GYA8C4/Y5CYKB7Zl8CbwrteIKQCcWCQHJB/DphRQikhLfMc/JsmDVDyt7PT
- 5qAhFya6N/yLFEX5BWufhdn6N89gHFE=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-372-otuGXGbaNwKFYRdNJc4b5Q-1; Tue, 28 Apr 2026 10:34:50 -0400
-X-MC-Unique: otuGXGbaNwKFYRdNJc4b5Q-1
-X-Mimecast-MFC-AGG-ID: otuGXGbaNwKFYRdNJc4b5Q_1777386889
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-43efc93e4f6so9306763f8f.3
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 07:34:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777386889; cv=none;
- d=google.com; s=arc-20240605;
- b=R3WU8KQ1nuAqGs6xQkplSKWVpHbqKiZRs6Hfb5yNlsKlkL92uBVS64FivGMuEEK0lC
- RoKxUb+/XSmGjszGHl/fkCyP/wAJykpMRITVlofF7R1xE4a6hQ3negeDcx/8+yA4Bl7E
- f1G6awrzFJOuQp1sJNwXTN/Sk2Iy3uJI5MKrHpjXZFx/bQIDGYrQmQYXZ4rG1VeWWMYL
- cUP/sPnR9/KVrKnu/5xQJRiFS6sqcsk1dzW4y8h3qxphq9kwv/Z2ctIFrP2eZW/kOgpV
- IzXndW8hr2Io7eT2nqmh6Xn24vPMmUgD9Jbrf4gKxA0lakPGjfjQ5CN+OH/Vf+IxJDoQ
- fEhg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=/X9F3hqTAla0CwSU5HYsvFQXK93IfCi423LiAxlW4MQ=;
- fh=9Xx9cwOY4dhrEmyBhLmu/e46S7D1etRAmjbIzgyduAk=;
- b=lzsyKNEpG5AltcoVMoM7SgtZ8lBnGZqz/jPCtvOtfI6pTkl9jAZ8ROMNmWDXBXnRNs
- uLZeVAt0/Pwe3Uv13PLwmEC5sFk6jgY5z8Omg5yhqFVbzJZ2WP0cfnkPeeDoSj1+i9ni
- IteiF3cuEjR82m8bPvdFAVCxPwBJ9aU0uU1pJUZkCWkvKHrjWNzlERrenIZB1zbNNVRB
- EjikXDXsvYrbF8ONfuJC21iTzY7lwD2eWxsSrcRbtqIVRvtdlqCsYKiAMsyhVxtq29Bo
- 6gEAexn0vA7bFSxWEUw4Rt74OC9oMNTkio8royCkQ2sK4ZzwLplU1BK7dvkXbVGGPYUY
- BXCw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wHjre-0008Ez-NL
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 10:56:45 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wHjra-0004zW-LX
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 10:56:40 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4891d7164ddso58881185e9.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 07:56:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777386889; x=1777991689; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/X9F3hqTAla0CwSU5HYsvFQXK93IfCi423LiAxlW4MQ=;
- b=N//JgTjFGyqhzN1TgYVJ9ZS6EZ7+AhD0EbIVJ67CP7TsnZWqbXbM1Hj07dqHcocD8J
- cK4ZkEzURzBWWZEaRpwOqa9u/NgDwZWUFKkufHrxNULwuCcxOEt5Z9CdvOz3nGDzJRpD
- 9iz88FPhZBo1b4JDnopywAWJ6v9XNLk9u9RXMtF4Xjf9ubSeYmEkXkZVeH3bv1PnTMaD
- Wr4rIpvgUrw8qRjoK3hBTXmHNYfqJTUJS8x/pmCboXjc4GUvnZM0YSN5dpjhUQuz/i1O
- +ZV+5VYlWDyTmFtOI3Bkxeb+Abrd3izS8cI6MqC2NM1PRgu+ShnhMS26bsFIk82BmXj7
- MIsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777386889; x=1777991689;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1777388195; x=1777992995; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/X9F3hqTAla0CwSU5HYsvFQXK93IfCi423LiAxlW4MQ=;
- b=s6vLDXjp1YarrzoGK1LdoVaKeilc0QPP822w29Ly4sK62HWW0fmbYYeAvJsZCaN7TY
- XM923GjDJCoqzCI/psGawlUspibJVhdSceOlU17H432uBM9bQPyeWgKivsZHFjhmiJuO
- VE3HJxPISzp+VjFXqiPDJ/nbUVAzWvclgOtyVnYo0I0lOuR4F/kVn20aZ0crFAD61eHQ
- T5vww6hqxK5Rc5KcDfYpZxGboB4PF2izey75MkGfFwamPRlSNcwkpKHsZxNjWDPLVH6q
- 9PkxJpqp5pGaK6XNkcWqGUXnpfgD6o7SIqMSZgWJJ1OKqXPBel7vVn8U+PpJfDh8GxLt
- xwWQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+hSZNGKdmO9o3w3PFJWL0PKCWqmxWZu5rspCylkhK+bVFUangzSMYKxFMWR9+gcZiCvplPngQy8h71@nongnu.org
-X-Gm-Message-State: AOJu0Yx24sUDkMnnw2z3I6NBDv62BJiVgvm1vqONTO7dFYlJR7eOvVLF
- 1Eea4tSLSMEPNPMeQ3d6KVmqjftmSWHi4nRnq4UsRYZNYgMBisBv7pO8b/Qk+KPGPtRb7fTHQlq
- 3w6DrULrO3W96VKB5jvupESx55eRT/ahw7wvkKApihVmW1Oj03je8ojPLzyqFMgXoDd6YqcWUop
- zYo8ZMfah1BflwaIE0YtWQrVWXvQgH9ao=
-X-Gm-Gg: AeBDiesqxmrQESsTOeAfuWlWc3guZ/eR3Xip+HdYYbsmu703I/oUZ3qSxNKcOwxdRyD
- 1Xxslc58LyZlr/c2Ns+cBnKhOWZMft5e3rqDDmi1pJBLM/8Le3dQkvn7sV5sqEWvURUL7bcPX+b
- Wd+ai+njtyHBWab5DZ7mgLtsZbM8DgrpqUi7Q9FTOe/+nvakb4J7U0NYpG06aH3x6E9kAKzNWNl
- RC2PSmVehZ590I71BWDersq6aoHTIHth9oAuIpzWNW1ArOyIjvQDsdkmJJs3siBxWiCei8IPipc
- IBkUJUSdS9DgSU6V
-X-Received: by 2002:a05:6000:2212:b0:43f:e41d:8ba8 with SMTP id
- ffacd0b85a97d-44648681cfbmr5983410f8f.2.1777386889312; 
- Tue, 28 Apr 2026 07:34:49 -0700 (PDT)
-X-Received: by 2002:a05:6000:2212:b0:43f:e41d:8ba8 with SMTP id
- ffacd0b85a97d-44648681cfbmr5983364f8f.2.1777386888777; Tue, 28 Apr 2026
- 07:34:48 -0700 (PDT)
+ bh=FZI5euwIVJ9QjGGXPpUqegNn9IsxNW5sxSo5xHMvQY0=;
+ b=KviAAGiAo3AEztu57FBIs5/I1SMg7xjAeXVHHw5w3Z/1sP7RjygaZRnOugXjtZD5cg
+ 1yaQR9HNct4OiZ6VqGB9PukcR1dOdZUQd7p9E7mpOOluA78nUrlaAg2GXTJYyvGDx02b
+ FluaR5r4Kp6n2mvlZzAtEBxRHXmDLKkWbk1KVTdzzeoVfIFLigevy6gH97yebKqOHhgc
+ gvb1c2ddWNfki3yTwonpczJApKRkf7sbVB08UIGcdI1Q7ISfCsEJXr2S+ToNgpBruVPf
+ jIdWxwgWsFzkZg5kT9jgt6ggB96eW4S72SG4r62JU9qWUVHB32dL3gawf1YW94vLLNwE
+ SCWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777388195; x=1777992995;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=FZI5euwIVJ9QjGGXPpUqegNn9IsxNW5sxSo5xHMvQY0=;
+ b=imlDa/3tDsHGkFXyEZZl6KAuR0pzb+P3NxnGjUoeOTXP8fapE+RmiU8bRUSOdmjhpj
+ syPgQAt+heuY+cRzVesAVr0tx5rSvdDciOQyAvB+E6krV4yj5yIsnarlnTGtpsS039zs
+ 1SYP84nzDfLFkARmz3HZx+V3hhxpETrncb00OuQM57hmX4IU9gAxG4H789TL0Osq3Y7y
+ Q7cqT0ZsnJ1jfMVWHvVxg4tl5DbNfrwuaKzXZ0pgqagTXamb60WJM8F5XveYR5NS8N7S
+ lD4cFhnQa/y+Q5HCmc+t5SmKo6BaBWylpUuPINsGCgf+zAI40YjcXZpNjYliTfeiaaF8
+ PCmQ==
+X-Gm-Message-State: AOJu0YyYxNMMf4qQ0DwALbGrQSShIeVD1tSXJ8FBqoIF2t+TGoFLtucH
+ mXNxc16ZEP2K7q7MXirQjPGkUQhtcG0qY5VvGSnDvDNuegHRfIkQnBFWSMDyyNTwabA=
+X-Gm-Gg: AeBDievxTy9mnl8Rz/myjMUv7wvPuvshaTfZE70mMR8/pb0kP+CusxCo5g6MqE+j7cH
+ Lmz1z6X5C5HmYqMFbL4iGuwyfq+Lm5CvgmpROBNOhnk6/zA2+0rsgz/naHnDf/OyWTbOdzHUVOE
+ vwjV+RtsbbWPiVJLeB3XdZGwcbIKYuPsoXcDVhZcjG40EpjKu7qdV80En5/TQOJ2UnI6cYufi41
+ 2JC9WIWmvTvypWNgITg8GWzlNVuSmHh8ROHPNrTjeoC9LqVUxIarwwi3U/euSbkMoVknuG9Pxei
+ n91Qn0xOtOtXbwbG2eNTROIoKOjwRRrZ5EGXXtPTJyLeBrbfKrJsSkYvXmL8BtNVyI/2+2jBhN3
+ 7ITAY5h78EFQOPknCCy7KTbLSxI4CfrJZBBBzXI7ObXYsxVnZpMX6xsrc7y+JjCLNqwTyHjkWv9
+ aFVVSk5Drhm9hkj+sNBv1Y5Ld3pOzX12B6lg==
+X-Received: by 2002:a05:600c:3f14:b0:488:af7f:775f with SMTP id
+ 5b1f17b1804b1-48a7b535a0dmr61415e9.18.1777388195308; 
+ Tue, 28 Apr 2026 07:56:35 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a774c3ddfsm47637275e9.2.2026.04.28.07.56.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Apr 2026 07:56:34 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 8317F5F7BC;
+ Tue, 28 Apr 2026 15:56:33 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Joey Gouly <joey.gouly@arm.com>
+Cc: qemu-devel@nongnu.org,  Andrew Jones <andrew.jones@linux.dev>,
+ Alexandru Elisei <alexandru.elisei@arm.com>,  Eric Auger
+ <eric.auger@redhat.com>,  "open list:ARM" <kvmarm@lists.linux.dev>,  "open
+ list:Default mailing list" <kvm@vger.kernel.org>
+Subject: Re: [kvm-unit-tests PATCH] arm: add wfx test case
+In-Reply-To: <20260428132657.GA591628@e124191.cambridge.arm.com> (Joey Gouly's
+ message of "Tue, 28 Apr 2026 14:26:57 +0100")
+References: <20260427130045.3669851-1-alex.bennee@linaro.org>
+ <20260428132657.GA591628@e124191.cambridge.arm.com>
+User-Agent: mu4e 1.14.1-pre3; emacs 30.1
+Date: Tue, 28 Apr 2026 15:56:33 +0100
+Message-ID: <87h5ovdtge.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
- <20260304212303.667141-13-vsementsov@yandex-team.ru>
- <d80e91c1-2cbb-4081-a923-7b0c1da3b7cc@redhat.com>
- <f7525a89-7878-43e8-b791-69829589666f@yandex-team.ru>
- <CABgObfbz98A0P4_FAqeKVk_fS+o_3=79agYz=qwnMdmg-h2L-Q@mail.gmail.com>
- <b47b83aa-c574-4a38-bad2-4f42d6a7c597@yandex-team.ru>
- <de48c866-6018-4a5f-9129-2c1d184f4495@redhat.com>
- <878qa72u1m.fsf@pond.sub.org>
-In-Reply-To: <878qa72u1m.fsf@pond.sub.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 28 Apr 2026 16:34:34 +0200
-X-Gm-Features: AVHnY4LAgXKfO-9HkdCQ53gP3Vc0YEnYYHITbZOoBUhLgGbKXmP4cUmH8cBqSgU
-Message-ID: <CABgObfYzPc-=MzV=2VKfKxfN1o80bLyowvMREXom_C8H=mim3g@mail.gmail.com>
-Subject: Re: [PATCH v3 12/18] migration: VMStateInfo: introduce new handlers
- with errp
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Peter Xu <peterx@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="0000000000002273a90650862252"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.109,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -145,154 +107,276 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002273a90650862252
-Content-Type: text/plain; charset="UTF-8"
+Joey Gouly <joey.gouly@arm.com> writes:
 
-Il mar 28 apr 2026, 13:39 Markus Armbruster <armbru@redhat.com> ha scritto:
-
-> 3. Set an error, goto error exit without flipping the return value
-> variable from success to failure.  I've seen and fixed this, too.  Best
-> to initialize the return value variable to failure, and flip it to
-> success only when success is ensured.  Of course, that flip can be
-> forgotten as well if it's needed in multiple places.  That's rare.
-> Anyway, returning eliminates this bug pattern.
+> Hi,
 >
-
-This can also be fixed with autofree etc.
-
-Another one is returning directly the value from another function without
-flipping from 0/-errno to bool. I think this one is more common.
-
-Paolo
-
-The last one does some tilting.
+> Few small comments.
 >
-> Tilting the other way: keeping the rules simple and consistent with
-> GError's.
+> On Mon, Apr 27, 2026 at 02:00:45PM +0100, Alex Benn=C3=A9e wrote:
+>> This is based on a similar test case I wrote for QEMU's tcg tests althou=
+gh
+>> obviously able to take advantage of kvm-unit-tests additional plumbing f=
+or
+>> dealing with the GIC and IRQs.
+>>=20
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>>  arm/Makefile.arm64        |   1 +
+>>  lib/arm64/asm/processor.h |   7 ++
+>>  lib/arm64/asm/sysreg.h    |   3 +
+>>  arm/wfx.c                 | 137 ++++++++++++++++++++++++++++++++++++++
+>>  arm/unittests.cfg         |   5 ++
+>>  5 files changed, 153 insertions(+)
+>>  create mode 100644 arm/wfx.c
+>>=20
+>> diff --git a/arm/Makefile.arm64 b/arm/Makefile.arm64
+>> index a40c830d..52b3f35d 100644
+>> --- a/arm/Makefile.arm64
+>> +++ b/arm/Makefile.arm64
+>> @@ -64,6 +64,7 @@ tests +=3D $(TEST_DIR)/cache.$(exe)
+>>  tests +=3D $(TEST_DIR)/debug.$(exe)
+>>  tests +=3D $(TEST_DIR)/fpu.$(exe)
+>>  tests +=3D $(TEST_DIR)/mte.$(exe)
+>> +tests +=3D $(TEST_DIR)/wfx.$(exe)
+>>=20=20
+>>  include $(SRCDIR)/$(TEST_DIR)/Makefile.common
+>>=20=20
+>> diff --git a/lib/arm64/asm/processor.h b/lib/arm64/asm/processor.h
+>> index 32ddc1b3..2104036d 100644
+>> --- a/lib/arm64/asm/processor.h
+>> +++ b/lib/arm64/asm/processor.h
+>> @@ -173,5 +173,12 @@ static inline bool system_supports_rndr(void)
+>>  	return ((id_aa64isar0_el1 >> ID_AA64ISAR0_EL1_RNDR_SHIFT) & 0xf) !=3D =
+0;
+>>  }
+>>=20=20
+>> +static inline bool system_supports_wfxt(void)
+>> +{
+>> +	u64 id_aa64isar2_el1 =3D read_sysreg_s(ID_AA64ISAR2_EL1);
+>> +
+>> +	return ((id_aa64isar2_el1 >> ID_AA64ISAR2_EL1_WFxT_SHIFT) & 0xf) !=3D =
+0;
+>> +}
+>> +
+>>  #endif /* !__ASSEMBLER__ */
+>>  #endif /* _ASMARM64_PROCESSOR_H_ */
+>> diff --git a/lib/arm64/asm/sysreg.h b/lib/arm64/asm/sysreg.h
+>> index f2d05018..cb96a649 100644
+>> --- a/lib/arm64/asm/sysreg.h
+>> +++ b/lib/arm64/asm/sysreg.h
+>> @@ -77,6 +77,9 @@ asm(
+>>  #define ID_AA64ISAR0_EL1_RNDR_SHIFT	60
+>>  #define ID_AA64PFR1_EL1_MTE_SHIFT	8
+>>=20=20
+>> +#define ID_AA64ISAR2_EL1		sys_reg(3, 0, 0, 6, 2)
+>> +#define ID_AA64ISAR2_EL1_WFxT_SHIFT	0
+>> +
+>>  #define ID_AA64MMFR0_EL1_FGT_SHIFT	56
+>>  #define ID_AA64MMFR0_EL1_FGT_FGT2	0x2
+>>=20=20
+>> diff --git a/arm/wfx.c b/arm/wfx.c
+>> new file mode 100644
+>> index 00000000..912e50e6
+>> --- /dev/null
+>> +++ b/arm/wfx.c
+>> @@ -0,0 +1,137 @@
+>> +/*
+>> + * WFX Instructions Test (WFI, WFE, WFIT, WFET)
+>> + *
+>> + * Copyright (c) 2026 Linaro Ltd
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#include <libcflat.h>
+>> +#include <asm/processor.h>
+>> +#include <asm/gic.h>
+>> +#include <asm/timer.h>
+>> +#include <asm/io.h>
+>> +
+>> +#define TIMEOUT 200000
 >
-> >> Understand. Hm.
-> >>
-> >> An alternative for this single-caller case, is just add an assertion
-> into this caller:
-> >>
-> >> bool wrapper(..., errp) {
-> >>     ERRP_GUARD();
-> >>     bool ok = x->foo(..., errp);
-> >>     assert(ok == !(*errp));
-> >>     return ok;
-> >> }
-> >
-> > I don't think this makes sense, the assertion moves a compile-time
-> guarantee to a run-time guarantee which is strictly worse.
-> >
-> > There are many more examples of void+errp callbacks than bool+errp, the
-> most important one being .realize for devices.  A quick grep, which is
-> certainly not fully accurate, shows 63 vs. 27:
-> >
-> > $ git grep -w 'void.*(\*.*errp' | wc -l
-> > 63
-> > $ git grep -w 'bool.*(\*.*errp' | wc -l
-> > 27
+> Instead of a hardcoded TIMEOUT, what about something similar to arm/timer=
+.c:
 >
-> Yes.  At some point, I briefly considered updating them to return bool
-> for rules conformance, but decided it wasn't worth it.
->
-> > In many cases there are just two or three implementation so I wouldn't
-> go to great lengths to change it even if I disagree.  But for vmstate (e.g.
-> pre_load_errp and friends) this is not going to be the case in the long
-> run, and it's more similar to the device case.
->
-> We should always be willing to accept reasoned exceptions to rules.
-> However...
->
-> >>>> I'm not sure that making wrappers, which will have to use ERRP_GUARD
-> and check
-> >>>> *errp for the error is a good practice. If it is, it would be good to
-> start by
-> >>>> modifying the documentation in include/qapi/error.h to mention the
-> exclusion
-> >>>> for callbacks.
->
-> ... explaining them in documentation is desirable.
->
+> 	u64 time_10ms =3D read_sysreg(cntfrq_el0) / 100;
 
---0000000000002273a90650862252
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ok
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mar 28 apr 2026, 13:39 Markus=
- Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&=
-gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
-0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
-3. Set an error, goto error exit without flipping the return value<br>
-variable from success to failure.=C2=A0 I&#39;ve seen and fixed this, too.=
-=C2=A0 Best<br>
-to initialize the return value variable to failure, and flip it to<br>
-success only when success is ensured.=C2=A0 Of course, that flip can be<br>
-forgotten as well if it&#39;s needed in multiple places.=C2=A0 That&#39;s r=
-are.<br>
-Anyway, returning eliminates this bug pattern.<br></blockquote></div></div>=
-<div dir=3D"auto"><br></div><div dir=3D"auto">This can also be fixed with a=
-utofree etc.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Another one=
- is returning directly the value from another function without flipping fro=
-m 0/-errno to bool. I think this one is more common.</div><div dir=3D"auto"=
-><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><div di=
-r=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">
-The last one does some tilting.<br>
-<br>
-Tilting the other way: keeping the rules simple and consistent with<br>
-GError&#39;s.<br>
-<br>
-&gt;&gt; Understand. Hm.<br>
-&gt;&gt;<br>
-&gt;&gt; An alternative for this single-caller case, is just add an asserti=
-on into this caller:<br>
-&gt;&gt;<br>
-&gt;&gt; bool wrapper(..., errp) {<br>
-&gt;&gt;=C2=A0 =C2=A0=C2=A0 ERRP_GUARD();<br>
-&gt;&gt;=C2=A0 =C2=A0=C2=A0 bool ok =3D x-&gt;foo(..., errp);<br>
-&gt;&gt;=C2=A0 =C2=A0=C2=A0 assert(ok =3D=3D !(*errp));<br>
-&gt;&gt;=C2=A0 =C2=A0=C2=A0 return ok;<br>
-&gt;&gt; }<br>
-&gt;<br>
-&gt; I don&#39;t think this makes sense, the assertion moves a compile-time=
- guarantee to a run-time guarantee which is strictly worse.<br>
-&gt;<br>
-&gt; There are many more examples of void+errp callbacks than bool+errp, th=
-e most important one being .realize for devices.=C2=A0 A quick grep, which =
-is certainly not fully accurate, shows 63 vs. 27:<br>
-&gt;<br>
-&gt; $ git grep -w &#39;void.*(\*.*errp&#39; | wc -l<br>
-&gt; 63<br>
-&gt; $ git grep -w &#39;bool.*(\*.*errp&#39; | wc -l<br>
-&gt; 27<br>
-<br>
-Yes.=C2=A0 At some point, I briefly considered updating them to return bool=
-<br>
-for rules conformance, but decided it wasn&#39;t worth it.<br>
-<br>
-&gt; In many cases there are just two or three implementation so I wouldn&#=
-39;t go to great lengths to change it even if I disagree.=C2=A0 But for vms=
-tate (e.g. pre_load_errp and friends) this is not going to be the case in t=
-he long run, and it&#39;s more similar to the device case.<br>
-<br>
-We should always be willing to accept reasoned exceptions to rules.<br>
-However...<br>
-<br>
-&gt;&gt;&gt;&gt; I&#39;m not sure that making wrappers, which will have to =
-use ERRP_GUARD and check<br>
-&gt;&gt;&gt;&gt; *errp for the error is a good practice. If it is, it would=
- be good to start by<br>
-&gt;&gt;&gt;&gt; modifying the documentation in include/qapi/error.h to men=
-tion the exclusion<br>
-&gt;&gt;&gt;&gt; for callbacks.<br>
-<br>
-... explaining them in documentation is desirable.<br>
-</blockquote></div></div></div>
+>
+>> +
+>> +#define sev() asm volatile("sev" : : : "memory")
+>> +#define sevl() asm volatile("sevl" : : : "memory")
+>> +#define wfi() asm volatile("wfi" : : : "memory")
+>> +#define wfe() asm volatile("wfe" : : : "memory")
+>> +
+>> +#define wfit(reg) \
+>> +	asm volatile(".arch armv8.7-a\n\twfit %0" : : "r" (reg) : "memory")
+>> +#define wfet(reg) \
+>> +	asm volatile(".arch armv8.7-a\n\twfet %0" : : "r" (reg) : "memory")
+>> +
+>> +static void timer_handler(struct pt_regs *regs)
+>> +{
+>> +	/* Disable timer to stop IRQ from re-firing */
+>> +	write_sysreg(0, cntv_ctl_el0);
+>> +}
+>> +
+>> +static bool check_elapsed(uint64_t start, uint64_t threshold, const cha=
+r *test, bool more)
+>> +{
+>> +	uint64_t end =3D read_sysreg(cntvct_el0);
+>> +	uint64_t elapsed =3D end - start;
+>> +	bool pass =3D more ? elapsed >=3D threshold : elapsed <=3D threshold;
+>> +
+>> +	report(pass, "%s (%ld ticks)", test, elapsed);
+>> +
+>> +	if (!pass) {
+>> +		report_info("%s %s", test, more ? "woke too early" : "slept despite S=
+EV");
+>> +	}
+>> +	return pass;
+>> +}
+>> +
+>> +static void test_wfi(void)
+>> +{
+>> +	uint64_t start;
+>> +
+>> +	report_info("Testing WFI...");
+>> +
+>> +	start =3D read_sysreg(cntvct_el0);
+>> +	write_sysreg(TIMEOUT, cntv_tval_el0);
+>> +	write_sysreg(1, cntv_ctl_el0); /* Enable timer, no mask */
+>> +	isb();
+>> +
+>> +	local_irq_enable();
+>> +	wfi();
+>> +	local_irq_disable();
+>> +
+>> +	check_elapsed(start, TIMEOUT, "WFI", true);
+>> +}
+>> +
+>> +static void test_wfe(void)
+>> +{
+>> +	uint64_t start;
+>> +
+>
+> I think a comment here would be good, just to say it's testing that a wfe
+> doesn't sleep for a 'long' period with no pending events, or something li=
+ke
+> that?
 
---0000000000002273a90650862252--
+ok
 
+>
+>> +	report_info("Testing WFE/SEV...");
+>> +	sev();
+>> +	start =3D read_sysreg(cntvct_el0);
+>> +	wfe();
+>> +	check_elapsed(start, TIMEOUT, "WFE/SEV", false);
+>> +
+>> +	report_info("Testing WFE/SEVL...");
+>> +	sevl();
+>> +	start =3D read_sysreg(cntvct_el0);
+>> +	wfe();
+>> +	check_elapsed(start, TIMEOUT, "WFE/SEVL", false);
+>> +}
+>> +
+>> +static void test_wfit(void)
+>> +{
+>> +	uint64_t start, timeout;
+>> +
+>> +	report_info("Testing WFIT...");
+>> +	start =3D read_sysreg(cntvct_el0);
+>> +	timeout =3D start + TIMEOUT;
+>> +	wfit(timeout);
+>> +	check_elapsed(start, TIMEOUT, "WFIT", true);
+>> +}
+>> +
+>> +static void test_wfet(void)
+>> +{
+>> +	uint64_t start, timeout;
+>> +
+>> +	report_info("Testing WFET...");
+>> +	/* Ensure no pending events */
+>> +	sev();
+>
+> Could this just be sevl here? Not that it really matters.
+
+it could be - ideally I would extend the test case to work with -smp so
+we can properly exercise that code path as well.
+
+>
+>> +	wfe();
+>> +
+>> +	start =3D read_sysreg(cntvct_el0);
+>> +	timeout =3D start + TIMEOUT;
+>> +	wfet(timeout);
+>> +	check_elapsed(start, TIMEOUT, "WFET", true);
+>> +}
+>> +
+>> +int main(void)
+>> +{
+>> +
+>> +	if (gic_init() < 0) {
+>> +		report_abort("GIC init failed");
+>> +		return 1;
+>> +	}
+>> +
+>> +	/* Install timer handler for WFI wake-up */
+>> +	install_irq_handler(EL1H_IRQ, timer_handler);
+>> +	gic_enable_defaults();
+>> +
+>> +	/* Enable Virtual Timer PPI */
+>> +	gic_irq_set_clr_enable(27, true);
+>
+> Instead of hardcoding 27 here, you can use:
+>
+> 	u32 irq =3D current_level() =3D=3D CurrentEL_EL1 ? TIMER_VTIMER_IRQ : TI=
+MER_HVTIMER_IRQ;=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
+=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
+> 	gic_irq_set_clr_enable(irq, true);
+>
+> Which also allows the test to run at EL2.
+
+sounds good.
+
+>
+>> +
+>> +	report_prefix_push("WFx");
+>> +	test_wfi();
+>> +	test_wfe();
+>> +	report_prefix_pop();
+>> +
+>> +	if (system_supports_wfxt()) {
+>> +		report_prefix_push("WFxT");
+>> +		test_wfit();
+>> +		test_wfet();
+>> +	} else {
+>> +		report_skip("WFxT instructions not supported");
+>> +	}
+>> +
+>> +	return report_summary();
+>> +}
+>> diff --git a/arm/unittests.cfg b/arm/unittests.cfg
+>> index 12fc4468..7adf96f2 100644
+>> --- a/arm/unittests.cfg
+>> +++ b/arm/unittests.cfg
+>> @@ -339,3 +339,8 @@ groups =3D mte
+>>  test_args =3D asymm
+>>  qemu_params =3D -machine mte=3Don
+>>  arch =3D arm64
+>> +
+>> +[wfx]
+>> +file =3D wfx.flat
+>> +groups =3D wfx
+>> +arch =3D arm64
+>
+> Thanks,
+> Joey
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
