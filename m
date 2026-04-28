@@ -4,75 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59792FF8868
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 16:20:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01C37FF885A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 16:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHlA8-0001BT-M2; Tue, 28 Apr 2026 12:19:52 -0400
+	id 1wHlBR-0001vC-Rn; Tue, 28 Apr 2026 12:21:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wHlA3-0001Ac-6o
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:19:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wHl9u-0006bR-3Q
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:19:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777393177;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=IVSDw2zGTZWYIR2cd0nlpFEiVuzNcfJADVRIocbRDdA=;
- b=QL/vveo9vKMVNgcgEAOcwXbfV5kAlMESN/oji8PmKXPN8zxuzjRn/07JVY4z+lfTHyAbZQ
- aa60jCYtiXCp3RrmnlhIimKlcwVWb7BMg5y1jLpbPN3kuZY4Do9YAcox2F+595xc9If4g6
- t3jr5G5dBhYDyNQUw6UXlp5NKYBw+Dc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-362-3tmm5QfZP7iQmsMdWtcKRg-1; Tue,
- 28 Apr 2026 12:19:33 -0400
-X-MC-Unique: 3tmm5QfZP7iQmsMdWtcKRg-1
-X-Mimecast-MFC-AGG-ID: 3tmm5QfZP7iQmsMdWtcKRg_1777393171
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4CA511955F68; Tue, 28 Apr 2026 16:19:31 +0000 (UTC)
-Received: from localhost (unknown [10.44.33.158])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2135119560AB; Tue, 28 Apr 2026 16:19:29 +0000 (UTC)
-Date: Tue, 28 Apr 2026 12:19:27 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: "open list:Network Block Dev..." <qemu-block@nongnu.org>,
- QEMU Developers <qemu-devel@nongnu.org>, Fam Zheng <fam@euphon.net>,
- Hanna Czenczek <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Thomas Lamprecht <t.lamprecht@proxmox.com>
-Subject: Re: Excessive IO PSI for iothread when using io_uring since QEMU 10.2
-Message-ID: <20260428161927.GB278591@fedora>
-References: <017dc767-90e3-4983-8417-e541b3fb04f6@proxmox.com>
- <20260427191343.GD218226@fedora>
- <317ab384-f8c2-49af-89c4-407bb2f5617c@proxmox.com>
+ (Exim 4.90_1) (envelope-from <luc.fast2004@gmail.com>)
+ id 1wHlBQ-0001uZ-Cj
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:21:12 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <luc.fast2004@gmail.com>)
+ id 1wHlBO-0006yl-Ow
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:21:12 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-64e87a81639so10586490d50.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 09:21:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1777393269; x=1777998069; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CKPpYdl5J5ki2kTMbn/T2wAohH8knYa1gzHgRuUyn5U=;
+ b=dDl/hCH3lVZehl9+AgDCuBd5kR9NTcYRTqtMS0sc8hYrYwt7j+qLsts6miZ/OEwCSe
+ RRb6B/3aR7q9rkk6qx9HdX5Hze0TqLdWdzcX8kltCB3hnz+0HApml7LOCISsjc9ONZzA
+ jx2VKY59Yt+vHQ8vpxGR1uEjWbHUWMPdxIx6oo1KXF7KrZn8eljkHtZb4hDvc+Re506W
+ ljHgLk1id7k1TGsBF61dSzXx3j+prm96B59Ipp8ZU7B3oWXhzRvOsGHaGWJ8UEMMpGLn
+ GGYgLQfaK2FGoaCZYmfTBafUQ0k57nJiIgNi5jfKNg2B02dg7RSibo44TrnudPxNUFxl
+ fh/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777393269; x=1777998069;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CKPpYdl5J5ki2kTMbn/T2wAohH8knYa1gzHgRuUyn5U=;
+ b=rD/YwjkwDi7D4QzMNlFWpFVvrOHqFQtzZhKpxKS72QQyb4ytDi2n7LRorkrYr2xxoF
+ 7obn8upQdCe5y7X0jeum+8oX3edIywc1StaSR765AMR7jsSfD6K3ADGs1nSoWsvnFlqe
+ VvLIcNwOOhGz+HsB8FdGSwdfl8pljgjWtpQKqDabgzShvAYAjBqON4jAkYS7hljkDAiB
+ UL0pGxJyeEbGYT64Uu7R8Ijre94anbXcPEDcXJhgnUXrWvb3n6kpQ3rEJFhqgelCIbVv
+ H5JRHZOzgiqTpgPKb+Iqh7Y1WTkIbgGUPlofTa0gVlNVXsd0XlHnKrQvnSsrfa5mx2lJ
+ lqKw==
+X-Gm-Message-State: AOJu0Yw5ApqtLVW1deqhtH5kotDryiGjbYSDPmk9bVaDQAathElL9B5d
+ qEH59mZRrJsN/s//KXRuffGc5Z3sBRFeQ9XvF1RUkVwxA1EVkjBExpqMgMZwnPB5
+X-Gm-Gg: AeBDievu+LS+MRv7RUaHZEOAujZAW9ypXMaU+7TJNd8BcTrY1q2JeyxHT+oupz3cT+E
+ TYbpbb5cWJseIgC/SKtAefOtMAI/jwN5jK8kRN3S4R1NIvxsqwce5ebwbrCOat2tXZwfYziWFiD
+ h8hK8tXbVr2zwBfjdQ1F0HjI5Y86gYh7UuXPnFVfsFlApKWXX32bAFrCIiAVBqJ2WiiMogtTvOq
+ dYy3UE5K641IM0BvhvFl3jCvQ+2cFsfn7iiRt+cZV0ekGxkynTZeCGXyk7uc8tENtwTHRTUzJ5i
+ 9FZZ5lz03rpNb4LBn4ox/+cTr4CCfo0eCyvSWLm1z2SVbwHfqCfnvnkL7uhB0uz1FfklGOFUjzU
+ W1lt0h3RE9ly6sdEzdFkO/2hwg5iK3bVgfOaG8TckgB6AQ39wX+ei5PERSzEXSJhJX+mgQO//gy
+ CEFOg42jRmK4sLNLM3VVEIqUQoa/QbFcinHJlwwdtonGlP8TIjP82IVZZB
+X-Received: by 2002:a53:de0f:0:b0:652:ec6c:e2ea with SMTP id
+ 956f58d0204a3-65bfb7051f4mr306082d50.50.1777393269452; 
+ Tue, 28 Apr 2026 09:21:09 -0700 (PDT)
+Received: from lucas-Vivobook-S14.ufscar.br
+ ([2801:b0:20:59:e35a:fdf0:bf7c:590a])
+ by smtp.gmail.com with ESMTPSA id
+ 956f58d0204a3-65bee29f1b4sm2099215d50.5.2026.04.28.09.21.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Apr 2026 09:21:09 -0700 (PDT)
+From: Lucas Cardoso <luc.fast2004@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: kraxel@redhat.com, qemu-trivial@nongnu.org, marcandre.lureau@redhat.com,
+ Lucas Cardoso <luc.fast2004@gmail.com>
+Subject: [PATCH v2] hw/audio/fmopl.c: Convert malloc, free to g_malloc0,
+ g_new and g_free
+Date: Tue, 28 Apr 2026 13:20:48 -0300
+Message-ID: <20260428162048.2995097-1-luc.fast2004@gmail.com>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="n4oZOOcMhEtnZQOq"
-Content-Disposition: inline
-In-Reply-To: <317ab384-f8c2-49af-89c4-407bb2f5617c@proxmox.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.109,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=luc.fast2004@gmail.com; helo=mail-yx1-xb136.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,137 +101,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+In accordance with QEMU's coding style guidelines, replace raw memory
+allocation functions (malloc/free) with their GLib equivalents
+(g_new/g_malloc0/g_free/g_clear_pointer).
 
---n4oZOOcMhEtnZQOq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Also removes the old generic error-handling code from
+OPLOpenTable(), since the Glib functions abort the program automatically
+if memory is exhausted.
 
-On Tue, Apr 28, 2026 at 02:10:02PM +0200, Fiona Ebner wrote:
-> Hi Stefan,
->=20
-> Am 27.04.26 um 9:12 PM schrieb Stefan Hajnoczi:
-> > On Fri, Apr 24, 2026 at 12:25:41PM +0200, Fiona Ebner wrote:
-> >> Dear maintainers,
-> >>
-> >> since QEMU 10.2, if io_uring is enabled, it will be used for the event
-> >> loop of iothreads and this causes an IO pressure stall value of nearly
-> >> 100 when idle.
-> >>
-> >> The issue was also reported on the kernel mailing list [0]. The
-> >> suggestion from Jens Axboe was to just turn off the iowait accounting
-> >> completely. But since (for block/file-posix.c), there is actual IO
-> >> submitted via the same ring, I wasn't sure if that is the right approa=
-ch.
-> >>
-> >> So the idea was to keep track of whether the event loop is otherwise
-> >> idle and only use the IORING_ENTER_NO_IOWAIT flag in that case [1].
-> >>
-> >> However, doing so would only help for block/file-posix.c, which submits
-> >> IO via luring_co_submit() -> fdmon_io_uring_add_sqe(). For example, for
-> >> block/rbd.c, only a poll SQE for the AioHandler node's fd is used. When
-> >> submitting that poll SQE in the iothread, we would need to be able to
-> >> know if IO for RBD is currently in-flight or not to be able to decide
-> >> whether to use the IORING_ENTER_NO_IOWAIT flag or not. Is there a good
-> >> way to do this (in a general way)?
-> >>
-> >> Or should the flag really always be used (if supported by the kernel)?
-> >> Is there a way to tell io_uring/kernel that we are an event loop and o=
-ur
-> >> waiting should only be accounted for when there is actual IO in-flight?
-> >>
-> >> Happy to hear your opinions and suggestions!
-> >>
-> >> [0]:
-> >> https://lore.kernel.org/io-uring/14bc6266-5bc9-4454-9518-d1016bfe417b@=
-proxmox.com/T/
-> >=20
-> > Hi Fiona,
-> > Jens replied yesterday confirmed your suspicion that the number of
-> > inflight requests is not being tracked correctly.
-> >=20
-> > Is there still a problem after fixing the kernel's inflight counting? If
-> > not, then no QEMU change is necessary and that seems like the cleanest
-> > solution anyway. The kernel should know whether there is I/O in flight
-> > and so it doesn't seem right that userspace needs to hint this.
->=20
->=20
-> unfortunately, yes. Even with the kernel fix [2], the real problem with
-> poll SQEs described above remains. I'm still seeing high IO pressure
-> stall values when using QEMU. In add_poll_add_sqe(), QEMU submits poll
-> SQEs for the AioHandler node fd, and that does count as pending IO. A
-> small reproducer modeling this [3].
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1798
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Lucas Cardoso <luc.fast2004@gmail.com>
+---
+v2: 
+- After some studying, I decided to follow Marc-André's feedback to use g_clear_pointer() instead of g_free(), on the OPLCloseTable function.
+ hw/audio/fmopl.c | 43 ++++++++++++-------------------------------
+ 1 file changed, 12 insertions(+), 31 deletions(-)
 
-Does the kernel account POLL_ADD SQEs as blocking I/O activity?
-
-That behavior is inconsistent if select(2)/poll(2)/epoll_wait(2)
-syscalls do not count as blocking I/O activity. The kernel io_uring code
-should account them correctly and not rely on a userspace hint.
-
-Stefan
-
->=20
-> So the question from above, how to deal with this for block drivers not
-> going through file-posix.c remains.
->=20
-> Best Regards,
-> Fiona
->=20
-> [2]:
-> https://lore.kernel.org/io-uring/b4d2aa36-8301-4e58-be3e-1451267b8c43@pro=
-xmox.com/T/
->=20
-> [3]:
->=20
-> #include <assert.h>
-> #include <errno.h>
-> #include <stdio.h>
-> #include <unistd.h>
-> #include <liburing.h>
-> #include <sys/eventfd.h>
->=20
-> int main(void) {
->     int fd;
->     int ret;
->     struct io_uring ring;
->     struct io_uring_sqe *sqe;
->=20
->     fd =3D eventfd(0, 0);
->     assert(fd >=3D 0);
->=20
->     ret =3D io_uring_queue_init(128, &ring, 0);
->     assert(ret =3D=3D 0);
->=20
->     sqe =3D io_uring_get_sqe(&ring);
->     assert(sqe);
->=20
->     io_uring_prep_poll_add(sqe, fd, 1);
->=20
->     ret =3D io_uring_submit_and_wait(&ring, 1);
->     printf("got ret %d\n", ret);
->=20
->     io_uring_queue_exit(&ring);
->=20
->     return 0;
-> }
->=20
->=20
-
---n4oZOOcMhEtnZQOq
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnw3g8ACgkQnKSrs4Gr
-c8jJpwf+NdH4eWaCUZID5mf6PCr/eJGtWlavDaDJVYdbgHEbpU9vahTGMvz0+Y+7
-TdcF10u9T7f91a64AFIJdniW9dqBNh59oEJFUtrKol4wHXPgiMYQZIRTl141zdI5
-Ywdhy3wQBmVN/VucwoHg0Fbzg+L9HporDLtq2Ug3a8rmNk0zsnBRJmYUDCU7ciDu
-iwi9AJlNfEE4ruv3rsLht8XRv8TAJMgpeOTCfX+9U9efVRAEPTW1dEGcPUnzqqEy
-t6hy8Hl7JFfxfi6HnLrTqRodrBOwQTTI2RPY7oNPLJJLBWCkqFa0njSxv4rW9QYo
-YR1fHP3f8/qLykPUi/OWHrhc2zSrqw==
-=u3ZY
------END PGP SIGNATURE-----
-
---n4oZOOcMhEtnZQOq--
+diff --git a/hw/audio/fmopl.c b/hw/audio/fmopl.c
+index a63ad0f04d..91fe806fd6 100644
+--- a/hw/audio/fmopl.c
++++ b/hw/audio/fmopl.c
+@@ -607,26 +607,10 @@ static int OPLOpenTable( void )
+ 	double pom;
+ 
+ 	/* allocate dynamic tables */
+-	if( (TL_TABLE = malloc(TL_MAX*2*sizeof(int32_t))) == NULL)
+-		return 0;
+-	if( (SIN_TABLE = malloc(SIN_ENT*4 *sizeof(int32_t *))) == NULL)
+-	{
+-		free(TL_TABLE);
+-		return 0;
+-	}
+-	if( (AMS_TABLE = malloc(AMS_ENT*2 *sizeof(int32_t))) == NULL)
+-	{
+-		free(TL_TABLE);
+-		free(SIN_TABLE);
+-		return 0;
+-	}
+-	if( (VIB_TABLE = malloc(VIB_ENT*2 *sizeof(int32_t))) == NULL)
+-	{
+-		free(TL_TABLE);
+-		free(SIN_TABLE);
+-		free(AMS_TABLE);
+-		return 0;
+-	}
++    TL_TABLE = g_new(int32_t, TL_MAX * 2);
++    SIN_TABLE = g_new(int32_t *, SIN_ENT * 4);
++    AMS_TABLE = g_new(int32_t, AMS_ENT * 2);
++    VIB_TABLE = g_new(int32_t, VIB_ENT * 2);
+     ENV_CURVE = g_new(int32_t, 2 * EG_ENT + 1);
+ 	/* make total level table */
+ 	for (t = 0;t < EG_ENT-1 ;t++){
+@@ -695,11 +679,11 @@ static int OPLOpenTable( void )
+ 
+ static void OPLCloseTable( void )
+ {
+-    g_free(ENV_CURVE);
+-	free(TL_TABLE);
+-	free(SIN_TABLE);
+-	free(AMS_TABLE);
+-	free(VIB_TABLE);
++    g_clear_pointer(&ENV_CURVE, g_free);
++    g_clear_pointer(&TL_TABLE, g_free);
++    g_clear_pointer(&SIN_TABLE, g_free);
++    g_clear_pointer(&AMS_TABLE, g_free);
++    g_clear_pointer(&VIB_TABLE, g_free);
+ }
+ 
+ /* CSM Key Control */
+@@ -1081,11 +1065,8 @@ FM_OPL *OPLCreate(int clock, int rate)
+ 	/* allocate OPL state space */
+ 	state_size  = sizeof(FM_OPL);
+ 	state_size += sizeof(OPL_CH)*max_ch;
+-	/* allocate memory block */
+-	ptr = malloc(state_size);
+-	if(ptr==NULL) return NULL;
+-	/* clear */
+-	memset(ptr,0,state_size);
++    /* allocate memory block and zero-initialize */
++    ptr = g_malloc0(state_size);
+ 	OPL        = (FM_OPL *)ptr; ptr+=sizeof(FM_OPL);
+ 	OPL->P_CH  = (OPL_CH *)ptr; ptr+=sizeof(OPL_CH)*max_ch;
+ 	/* set channel state pointer */
+@@ -1128,7 +1109,7 @@ void OPLDestroy(FM_OPL *OPL)
+ 	}
+ #endif
+ 	OPL_UnLockTable();
+-	free(OPL);
++    g_free(OPL);
+ }
+ 
+ /* ----------  Option handlers ----------       */
+-- 
+2.51.0
 
 
