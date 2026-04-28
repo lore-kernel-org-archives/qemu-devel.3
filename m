@@ -4,103 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4939EFF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 16:03:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7A29FF885A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 16:03:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHktz-0003vB-CY; Tue, 28 Apr 2026 12:03:11 -0400
+	id 1wHku0-0003wN-3G; Tue, 28 Apr 2026 12:03:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wHksW-0003AK-MP
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:01:42 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1wHksU-00039w-A7
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:01:41 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wHksS-0003le-Uh
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:01:40 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 543A05BD3F;
- Tue, 28 Apr 2026 16:01:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1777392093; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=5QS08LdqDUIEpDxve/9nBXhEGDIUiWJTjDQzQQnp94I=;
- b=rP8B2Rrw0cBwBNdvw0CnGuBrqJGon6EScfFnKqOk9j++Hyifv4TlA5ryGgC2z414nUfYXo
- 7XZnHoMhtQ8JtZjOKVCvhmaGTx3a7O0cKIcGey2DH3tsJXj1Vk3w1jNIB+mP1GKMs9TGlj
- 9hfAquQGgDUpQP8zBpZ6GksUppiOa9U=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1777392093;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=5QS08LdqDUIEpDxve/9nBXhEGDIUiWJTjDQzQQnp94I=;
- b=/SFVwytbZF8OT+bxqqQnfRGvBk49eQqaufNFbJUXV+xvVQX5e9MwQS3rz4uU8m1uNlV/9r
- LuXmj5jP24GPSIAQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1777392088; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=5QS08LdqDUIEpDxve/9nBXhEGDIUiWJTjDQzQQnp94I=;
- b=pdVDzyw2A/qWj/MlGPCMH5noioGFViowyqzesj/gqZE/EYSQ70JpqLeiIFa92i6aGetXoY
- uLZzbnGy/4084IgDreljAJtGA4r2f/hsvl649hLQy38k/xn+dN/9LMOBQ2UGdsPmt6W3zT
- 5WLyJmmLaxqGVUGJCLFGCoz8YSAPibk=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1777392088;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=5QS08LdqDUIEpDxve/9nBXhEGDIUiWJTjDQzQQnp94I=;
- b=pDtaWcMFGW2kGrfV7NQBMTYWeXGAewvdwDnTq7NPM0lsBW3Viv8bnOyk005ejJTWyQ8ljq
- LuizQyZcnIEK7YDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8D434593B0;
- Tue, 28 Apr 2026 16:01:26 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id ducXF9bZ8Gm8CQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 28 Apr 2026 16:01:26 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Tyrone Ting <kfting@nuvoton.com>,
- Hao Wu <wuhaotsh@google.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v1] tests/qtest: Avoid timers from default devices
-Date: Tue, 28 Apr 2026 13:01:20 -0300
-Message-ID: <20260428160120.12130-1-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
+ id 1wHksP-0003lH-57
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 12:01:37 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-8296dabef74so9658538b3a.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 09:01:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1777392091; x=1777996891; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/Hx21rvPtv3e1ezzyiyMTIiO3uaK5NV82dpiR14Fe1A=;
+ b=I6cf0xLZ2xEBIqzjR+6APzJjiFFPGJOUbR0J0z3b5UILgXFyZi174TgpejsvxMhsO6
+ KAisXGrB5SRt5/Q1ZcwnU0ST1wLvUjixhUiuKdnxoE03CtB+xINYFzFy1Ugm6NGHkVKL
+ npwpME9m6tQd13DqR5rkRUcXl4UjIv3Xx5LyiICBz4WCC16emxk2ki8EM/NB4r7kt5b8
+ Het4+RGisVQOElvW9Ok6IC0z6DljyZFfm8BZdqMa5DCm0z73VIHVVa7RXUZjgSgORJE4
+ yKE7XmMILbDOSyjyyO0ECYTVzgJcXMFuSFSnPy3zOx2WAhjVwOOQ7C3qqaOkBfXzLybi
+ NHGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777392091; x=1777996891;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=/Hx21rvPtv3e1ezzyiyMTIiO3uaK5NV82dpiR14Fe1A=;
+ b=JSwbmnoRtdZODMfq444dOWyTm/wiL/KiAMbIhXCwQsr2R21u7VOC0y09JK7KQN9Raj
+ A+avl4oxMPHZkS3Xclp1XgMON32/4YWgcy2+2zXjps/eJ8MvfUFN6jsHIXVl4rbmrIRS
+ PIfUzHiQEKobKs9JzQGEJxu83wLKmcPENRsWO5qqxrXYaNR564sKDDiiQaM5tx0AUgqt
+ a/V4mGkLk1s25l2SThRLgxUQ6MU3JZuIUKiRlcF6naioXv7J0d8sE6zOC1/HePI/EoPq
+ ws3TbuaMkncHYTLjInlR0yLaTQX0W337XBSjQ+8PD/TDYE9MShD5x1VNkpnTYQ+rtXTF
+ sWkA==
+X-Gm-Message-State: AOJu0Yy5tVOdHTRIbX+66IpLV7COQAUf1PEwjzo2TIbFFHl8JcVulPJj
+ 6wLWDFbv55zPWo/SSlG1YB6qbIB6lKKaP9DotQQ1pKVYFQxhpsl1xq3mo0BOpoZkVWklHsCU2tk
+ PQUU1blfVS1+ZsvdrhBecnVvSVhNbogLUlxZVD4o586kcgxSs+5nFqxc+ADf2L1WLLdYJtzxeHj
+ fgwKwjhEzSXF25dY/sEKb11KehAMphcRqX1SpJlE+l
+X-Gm-Gg: AeBDiev8dlfvT9G0LT5qN991WqxFTLp+xH9BpInl9p/KlKwPoEpARHaaU0xxBEZONy4
+ cDD6EWnuxIH+OvunNFsY5aEpelPPuql4fiEvGdSfBIHl4FIyahkVZUgHzbAxXsuHyTCH9VRkxnW
+ 1v2gW2FYsJl3iATT8QppIJh6ar4AfZDDCRncsJaoC9hWeMZ5FmmbKuHo9DYXqFayKGyC/80srmn
+ SVOgbym7wRaJir0+HwEjvI08/Vxd99wLcOChjWTUlr1rwgOrx02gVR0e8cheZO1LaBXDuGpxiZF
+ rP8KNmHRSPCAOFZScOigFwb52MUeKDTwjfOGZ4l6w8nMdxKAlvbVy3uL4xA+dt4DkBkALuZs6MN
+ 4D+pJaho6GBsS5Ic9owXwTSsu1dzW92Lonl5RFSea4E4VMyUfvqA4uG0iMzZZpR4U8vnaG6nBhQ
+ Z7Hcy6CRrSsOXitQvEM0zhi7UMLKkDGHRtMinpLgX+gGzUd3UMIgfI4P0=
+X-Received: by 2002:a05:6a00:3989:b0:82f:8a29:e3b4 with SMTP id
+ d2e1a72fcca58-834ddc9558amr3530183b3a.50.1777392090710; 
+ Tue, 28 Apr 2026 09:01:30 -0700 (PDT)
+Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-834daf30fbfsm3002331b3a.33.2026.04.28.09.01.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Apr 2026 09:01:30 -0700 (PDT)
+From: Jim Shu <jim.shu@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Jim Shu <jim.shu@sifive.com>
+Subject: [PATCH 4/4] hw/intc: riscv_aplic: add trace events of APLIC
+ read/write function
+Date: Wed, 29 Apr 2026 00:01:03 +0800
+Message-ID: <20260428160103.3551125-5-jim.shu@sifive.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260428160103.3551125-1-jim.shu@sifive.com>
+References: <20260428160103.3551125-1-jim.shu@sifive.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[7];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
- suse.de:email, linaro.org:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=jim.shu@sifive.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,82 +108,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Having default devices enabled while testing timers leads to
-non-deterministic behavior on the usage of the QTest
-qtest_clock_step_next() command as the implicit devices can have
-timers of their own that may have a deadline more recent than the
-tested device.
+Add the trace events for APLIC read/write functions.
 
-In the particular case of npcm7xx-timer-test, having SLIRP enabled in
-the QEMU binary may cause the net_slirp_timer to shadow the clock
-advance that was expected to trigger the NPCM7xx timer:
-
-npcm7xx_timer-test.c:475:test_periodic_interrupt:
-  assertion failed (tim_read(td, TISR) == tim_timer_bit(td)): (0x00000000 == 0x00000010)
-npcm7xx_timer-test.c:476:test_periodic_interrupt:
-'qtest_get_irq(global_qtest, tim_timer_irq(td))' should be TRUE
-
-Add the -nodefaults command line option to all tests that invoke
-qtest_clock_step_next.
-
-CC: Alex Bennée <alex.bennee@linaro.org>
-Reported-by: Stefan Hajnoczi <stefanha@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
 ---
- tests/qtest/npcm7xx_timer-test.c | 2 +-
- tests/qtest/pflash-cfi02-test.c  | 4 ++--
- tests/qtest/rtc-test.c           | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ hw/intc/riscv_aplic.c | 63 ++++++++++++++++++++++++++-----------------
+ hw/intc/trace-events  |  4 +++
+ 2 files changed, 42 insertions(+), 25 deletions(-)
 
-diff --git a/tests/qtest/npcm7xx_timer-test.c b/tests/qtest/npcm7xx_timer-test.c
-index 43711049ca..0e2284669d 100644
---- a/tests/qtest/npcm7xx_timer-test.c
-+++ b/tests/qtest/npcm7xx_timer-test.c
-@@ -551,7 +551,7 @@ int main(int argc, char **argv)
-         }
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index a04e0e1a898..55515d1a085 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -35,6 +35,7 @@
+ #include "system/tcg.h"
+ #include "kvm/kvm_riscv.h"
+ #include "migration/vmstate.h"
++#include "trace.h"
+ 
+ #define APLIC_MAX_IDC                  (1UL << 14)
+ #define APLIC_MAX_SOURCE               1024
+@@ -626,6 +627,7 @@ static void riscv_aplic_request(void *opaque, int irq, int level)
+ static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
+ {
+     uint32_t irq, word, idc;
++    uint64_t val;
+     RISCVAPLICState *aplic = opaque;
+ 
+     /* Reads must be 4 byte words */
+@@ -634,18 +636,18 @@ static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
      }
  
--    qtest_start("-machine npcm750-evb");
-+    qtest_start("-machine npcm750-evb -nodefaults");
-     qtest_irq_intercept_in(global_qtest, "/machine/soc/a9mpcore/gic");
-     ret = g_test_run();
-     qtest_end();
-diff --git a/tests/qtest/pflash-cfi02-test.c b/tests/qtest/pflash-cfi02-test.c
-index 8c073efcb4..65b35811fa 100644
---- a/tests/qtest/pflash-cfi02-test.c
-+++ b/tests/qtest/pflash-cfi02-test.c
-@@ -260,7 +260,7 @@ static void test_geometry(const void *opaque)
- {
-     const FlashConfig *config = opaque;
-     QTestState *qtest;
--    qtest = qtest_initf("-M musicpal"
-+    qtest = qtest_initf("-M musicpal -nodefaults"
-                         " -drive if=pflash,file=%s,format=raw,copy-on-read=on"
-                         /* Device geometry properties. */
-                         " -global driver=cfi.pflash02,"
-@@ -580,7 +580,7 @@ static void test_cfi_in_autoselect(const void *opaque)
- {
-     const FlashConfig *config = opaque;
-     QTestState *qtest;
--    qtest = qtest_initf("-M musicpal"
-+    qtest = qtest_initf("-M musicpal -nodefaults"
-                         " -drive if=pflash,file=%s,format=raw,copy-on-read=on",
-                         image_path);
-     FlashConfig explicit_config = expand_config_defaults(config);
-diff --git a/tests/qtest/rtc-test.c b/tests/qtest/rtc-test.c
-index 02ed4e1238..09b6de9166 100644
---- a/tests/qtest/rtc-test.c
-+++ b/tests/qtest/rtc-test.c
-@@ -691,7 +691,7 @@ int main(int argc, char **argv)
+     if (addr == APLIC_DOMAINCFG) {
+-        return APLIC_DOMAINCFG_RDONLY | aplic->domaincfg |
+-               (aplic->msimode ? APLIC_DOMAINCFG_DM : 0);
++        val = APLIC_DOMAINCFG_RDONLY | aplic->domaincfg |
++              (aplic->msimode ? APLIC_DOMAINCFG_DM : 0);
+     } else if ((APLIC_SOURCECFG_BASE <= addr) &&
+             (addr < (APLIC_SOURCECFG_BASE + (aplic->num_irqs - 1) * 4))) {
+         irq  = ((addr - APLIC_SOURCECFG_BASE) >> 2) + 1;
+-        return aplic->sourcecfg[irq];
++        val = aplic->sourcecfg[irq];
+     } else if (aplic->mmode && aplic->msimode &&
+                (addr == APLIC_MMSICFGADDR)) {
+-        return aplic->mmsicfgaddr;
++        val = aplic->mmsicfgaddr;
+     } else if (aplic->mmode && aplic->msimode &&
+                (addr == APLIC_MMSICFGADDRH)) {
+-        return aplic->mmsicfgaddrH;
++        val = aplic->mmsicfgaddrH;
+     } else if (aplic->mmode && aplic->msimode &&
+                (addr == APLIC_SMSICFGADDR)) {
+         /*
+@@ -657,65 +659,74 @@ static uint64_t riscv_aplic_read(void *opaque, hwaddr addr, unsigned size)
+          *     only zero in at least one of the supervisor-level child
+          * domains).
+          */
+-        return (aplic->num_children) ? aplic->smsicfgaddr : 0;
++        val = (aplic->num_children) ? aplic->smsicfgaddr : 0;
+     } else if (aplic->mmode && aplic->msimode &&
+                (addr == APLIC_SMSICFGADDRH)) {
+-        return (aplic->num_children) ? aplic->smsicfgaddrH : 0;
++        val = (aplic->num_children) ? aplic->smsicfgaddrH : 0;
+     } else if ((APLIC_SETIP_BASE <= addr) &&
+             (addr < (APLIC_SETIP_BASE + aplic->bitfield_words * 4))) {
+         word = (addr - APLIC_SETIP_BASE) >> 2;
+-        return riscv_aplic_read_pending_word(aplic, word);
++        val = riscv_aplic_read_pending_word(aplic, word);
+     } else if (addr == APLIC_SETIPNUM) {
+-        return 0;
++        val = 0;
+     } else if ((APLIC_CLRIP_BASE <= addr) &&
+             (addr < (APLIC_CLRIP_BASE + aplic->bitfield_words * 4))) {
+         word = (addr - APLIC_CLRIP_BASE) >> 2;
+-        return riscv_aplic_read_input_word(aplic, word);
++        val = riscv_aplic_read_input_word(aplic, word);
+     } else if (addr == APLIC_CLRIPNUM) {
+-        return 0;
++        val = 0;
+     } else if ((APLIC_SETIE_BASE <= addr) &&
+             (addr < (APLIC_SETIE_BASE + aplic->bitfield_words * 4))) {
+         word = (addr - APLIC_SETIE_BASE) >> 2;
+-        return riscv_aplic_read_enabled_word(aplic, word);
++        val = riscv_aplic_read_enabled_word(aplic, word);
+     } else if (addr == APLIC_SETIENUM) {
+-        return 0;
++        val = 0;
+     } else if ((APLIC_CLRIE_BASE <= addr) &&
+             (addr < (APLIC_CLRIE_BASE + aplic->bitfield_words * 4))) {
+-        return 0;
++        val = 0;
+     } else if (addr == APLIC_CLRIENUM) {
+-        return 0;
++        val = 0;
+     } else if (addr == APLIC_SETIPNUM_LE) {
+-        return 0;
++        val = 0;
+     } else if (addr == APLIC_SETIPNUM_BE) {
+-        return 0;
++        val = 0;
+     } else if (addr == APLIC_GENMSI) {
+-        return (aplic->msimode) ? aplic->genmsi : 0;
++        val = (aplic->msimode) ? aplic->genmsi : 0;
+     } else if ((APLIC_TARGET_BASE <= addr) &&
+             (addr < (APLIC_TARGET_BASE + (aplic->num_irqs - 1) * 4))) {
+         irq = ((addr - APLIC_TARGET_BASE) >> 2) + 1;
+         if (!riscv_aplic_source_active(aplic, irq)) {
+-            return 0;
++            val = 0;
++        } else {
++            val = aplic->target[irq];
+         }
+-        return aplic->target[irq];
+     } else if (!aplic->msimode && (APLIC_IDC_BASE <= addr) &&
+             (addr < (APLIC_IDC_BASE + aplic->num_harts * APLIC_IDC_SIZE))) {
+         idc = (addr - APLIC_IDC_BASE) / APLIC_IDC_SIZE;
+         switch (addr - (APLIC_IDC_BASE + idc * APLIC_IDC_SIZE)) {
+         case APLIC_IDC_IDELIVERY:
+-            return aplic->idelivery[idc];
++            val = aplic->idelivery[idc];
++            break;
+         case APLIC_IDC_IFORCE:
+-            return aplic->iforce[idc];
++            val = aplic->iforce[idc];
++            break;
+         case APLIC_IDC_ITHRESHOLD:
+-            return aplic->ithreshold[idc];
++            val = aplic->ithreshold[idc];
++            break;
+         case APLIC_IDC_TOPI:
+-            return riscv_aplic_idc_topi(aplic, idc);
++            val = riscv_aplic_idc_topi(aplic, idc);
++            break;
+         case APLIC_IDC_CLAIMI:
+-            return riscv_aplic_idc_claimi(aplic, idc);
++            val = riscv_aplic_idc_claimi(aplic, idc);
++            break;
+         default:
+             goto err;
+         };
+     }
  
-     g_test_init(&argc, &argv, NULL);
++    trace_riscv_aplic_read(addr, size, val);
++    return val;
++
+ err:
+     qemu_log_mask(LOG_GUEST_ERROR,
+                   "%s: Invalid register read 0x%" HWADDR_PRIx "\n",
+@@ -734,6 +745,8 @@ static void riscv_aplic_write(void *opaque, hwaddr addr, uint64_t value,
+         goto err;
+     }
  
--    s = qtest_start("-rtc clock=vm");
-+    s = qtest_start("-rtc clock=vm -nodefaults");
-     qtest_irq_intercept_in(s, "ioapic");
- 
-     qtest_add_func("/rtc/check-time/bcd", bcd_check_time);
++    trace_riscv_aplic_write(addr, size, value);
++
+     if (addr == APLIC_DOMAINCFG) {
+         /* Only IE bit writable at the moment */
+         value &= APLIC_DOMAINCFG_IE;
+diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+index 018c609ca5e..36ea75049ab 100644
+--- a/hw/intc/trace-events
++++ b/hw/intc/trace-events
+@@ -330,3 +330,7 @@ loongarch_msi_set_irq(int irq_num) "set msi irq %d"
+ loongarch_extioi_setirq(int irq, int level) "set extirq irq %d level %d"
+ loongarch_extioi_readw(uint64_t addr, uint64_t val) "addr: 0x%"PRIx64 "val: 0x%" PRIx64
+ loongarch_extioi_writew(uint64_t addr, uint64_t val) "addr: 0x%"PRIx64 "val: 0x%" PRIx64
++
++# riscv_aplic.c
++riscv_aplic_read(uint64_t offset, unsigned size, uint64_t value) "offset: 0x%" PRIx64 ", size: %u, value: 0x%" PRIx64
++riscv_aplic_write(uint64_t offset, unsigned size, uint64_t value) "offset: 0x%" PRIx64 ", size: %u, value: 0x%" PRIx64
 -- 
-2.51.0
+2.43.0
 
 
