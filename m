@@ -4,120 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 995A0FF886D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 17:20:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C989FF886D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 17:20:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHm68-000381-CK; Tue, 28 Apr 2026 13:19:48 -0400
+	id 1wHm6d-0003LO-70; Tue, 28 Apr 2026 13:20:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jemoreira@google.com>)
- id 1wHm66-00037g-Mq
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:19:46 -0400
-Received: from mail-dl1-x122e.google.com ([2607:f8b0:4864:20::122e])
+ (Exim 4.90_1) (envelope-from <yanjiewtw@gmail.com>)
+ id 1wHkXw-0005Zz-PR
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:40:24 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jemoreira@google.com>)
- id 1wHm64-0002J2-JD
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:19:46 -0400
-Received: by mail-dl1-x122e.google.com with SMTP id
- a92af1059eb24-12c8d0945b3so3878c88.0
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 10:19:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777396783; cv=none;
- d=google.com; s=arc-20240605;
- b=CyBP1JlL4gf79M1fOxMjpkQk5ft9VjHlGc9YM4TscZE7dilwRrXRUz9ugexnD2eFPB
- RpanPAaV/OdyxgQTEHMG0nZT5rLi+dvSqgjBXMB5YRSy+QqCitVlD7AEwx2NS4X5BShZ
- z3xHJTcgA5N6TKQuhN/ZDGDjpsaCgVZVaExF+FUrJoVyIgD1wUeF8soJ1QwHgBX/V+zi
- UTmIjDlgLvyWgXEahFwsTUSuUBpmrAlyYjl2Nk35zfyQO9NN3rbH3bbtNBvAhtnRFKRd
- BK7oeKvNX5UhvBGj4S1jucAjUDWs3YUa1i5BSI+v6vqyrN/BjXNoBpQw4koYH20I3sNB
- g1Rw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=w3xtb7inktEpchZMqasoGx6BBiQFtAPspkUYaDfroIk=;
- fh=Mjbhbq3fHnmzitORK9hYofXg+/0dq4g3IrXfrnq4ZdE=;
- b=ks1dfy2+otfjHTOEe5AKpQzEs+/emky6NjVARj+mtiqOy70oTUSYexctU17RWGsFOm
- jwhPrKH5nI5zaYAIA9FcfQOOVbAIyjyAzJQlka/ClzC4nS4j7H7vFbtl3f+VoO93mlgG
- edJy+japZsYa+xTkJ0X/7N/j7ZaMVSnctZudDE51bDKyipQLSpDaqte0j7Nbe1RfmTv+
- +Ys9tdCZCRAUTEcfVB2xsnC4UPU/DkGiJeZYHMMJQE8p7dyVcATvG0iAW/Lb3e6/5Umw
- Y0q/YKr1fbrcidv67TApU8Bx91YDzl/retF1aF9L1fIEnW3vIwIdcUBXnJgHbgPf31nZ
- 53TQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <yanjiewtw@gmail.com>)
+ id 1wHkXs-0007no-RU
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:40:24 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-c70c112cb61so7575391a12.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 08:40:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1777396783; x=1778001583; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=w3xtb7inktEpchZMqasoGx6BBiQFtAPspkUYaDfroIk=;
- b=TIVqzaIQdfwj3v7U/12NdxRwxBfRTjsErCs8VQSE8gGHyB5tcyCuWDAXQ6UucRkYJ9
- PypQ35Iq+C0No4uHOs9x+fm3H2LDlgmAMXDP3yoHpd5MhnvEQtEuIKIbUHFOYHmkylFh
- 3tvXZfGfowB9PG7gSfAjt6Z/aDxS9tMEy9X5yJ674nOE0JI25AyZTCaqRhkgCGbBJxXa
- IEshzII/hTLKQWGrcBDsmKr+YaEZsqbU6WPdxnxyp0fnD47dpyOkW695aRcV43oe6YKd
- MrZjcqFgsxyOXhVfN/JP495xHjIblyC6SpB+ZvxldTZgvx4EwLkRC3THTQ661bDbzq9k
- twrg==
+ d=gmail.com; s=20251104; t=1777390816; x=1777995616; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=DhlNy2l7cJVTYuDoPsfamzM3U+g7x1THoUSGf0UMe5o=;
+ b=oUAz1uyALKWGEyJBYSs86RkFvyRFdwTpXBMWpLG1hCy4a942xZa2JbFZcI9F1LwCSI
+ SRxgkdn0tkARcd6uswu68cwvAszy9byj3cXykcwWgq7ovbxTq3f9pMCAwPrG5hfqXhFa
+ Pv0OHUrhZ4ucJ5EX4IcSosxuaS9JuDb36s3Xu+yLa6IjEos+dL4ZO1M5UAGSmTgpv5KZ
+ XyzGKk1G+ek0imp6X3kq/c0Q9P9zRgkbq0ALnfTXJ8QReAVb1ZZT5JyY0Xonaulcqh3j
+ r3SJ4ZIthADjw+YhdSrpBThDjLyaTkNyyLTXwfB8Dy/x3K4vqXgYd2OO+6/JsjELzOfH
+ KPFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777396783; x=1778001583;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=w3xtb7inktEpchZMqasoGx6BBiQFtAPspkUYaDfroIk=;
- b=Jixp9keaHbPZl+mPvhEjaKk1EfQ4g0Fnqxci/S/opppswh0NvDGo7EmXemFl7P/2VZ
- 0FrdUwFYUgPc5UkMLyxBjYoQqlVaRBRomH0FIyP9DPw9bjdQueNyKGcltJ/wHE2Bb2fV
- bopXngPa3LUVZPk3THKCVvK1OG8iAVw48gvzvt0ng/HURWFG/eJOTmEDeI00LW8i/cSq
- gfWUZpESv719zFtHlNLu/T03dlDCv4yaSM9l11KpYlXjos+XvTDistM/KFeoapLHW1v1
- HVWCS/yKohxBReu/234vskH9EkoFZl7T2QHe9MzmJarNagz+fCweT7i4y2VuATGOK73Z
- i+pQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8pHZovU+oP07D5Snf7IKREOeBsncx1QMrnHhnfzetxsML51YW2praFqsQp9S3JwT2aASAoAYtDkFs/@nongnu.org
-X-Gm-Message-State: AOJu0YxT90E11Kbg6dLI9i+mzWcF0rG21rkY1iKBIviYGSkIQ+4CTlhp
- t95iZHY7sChkRv/a52+0btwWlgbGj3UGFW0UcX2T2x4QoHAYNvm/PijwbKOcFzaWx5IR8ehv6aw
- 4JQFFi+qxkftaOGmxo90mtC6sK93uZEm3BEcW9qRo
-X-Gm-Gg: AeBDievXBCQRJR9mDYmHWhbfkXB6fIp0fvyAd4pZWy31myPQz7/r5k0sC7s+paw3mNl
- 1YjJXVFUcJvX+DecmBIQOnUYk67PFK1xL4c/oSDfrvdLZI1/mPOVt4IJ1M4cm9S9HyRv/WGzcV+
- ny3cHeoIIHapEqtUWTVMW8PLZNrtYk7kVpljfd+ynanzeAts8wgodM/0ar+AqkDJY9allVDUQj7
- EK/YtL/9evm7aVvzc4FWzTd0GXCFc8y25oe2jSlTGlSYWCHmCYhkfq3n6a5Is18qqZno2V5KUvr
- iXtO+dprS9EHG40MmKKTotuGzkUqjX/EStl3BJerDCYHlkaPOsAKkZSMqpZaSX5w4ntJmD4uPTX
- u5NCsvS8qNNNwUAdwjpgKEQfWSLyYtPpC/0hW
-X-Received: by 2002:a05:7022:1e03:b0:12a:b39a:31da with SMTP id
- a92af1059eb24-12de2b76eddmr6147c88.16.1777396782147; Tue, 28 Apr 2026
- 10:19:42 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777390816; x=1777995616;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DhlNy2l7cJVTYuDoPsfamzM3U+g7x1THoUSGf0UMe5o=;
+ b=YUZW1A7bYMPx2IXn17DOgzzWuJvBjIDEvK+m5I6P2T1JLbL8fBJr4YrlUhv/XYLEd8
+ HWuGc8it39upeYf3mAUG3RH9EDSNcUn/rGVBxMRypjQ4odxeNFMB7maAc6oMqIw5e1nL
+ 1W1eTuRPK8PEw7ChisacIdWuJ25syOe9a3LsD4jl2r9JI4/RzPSky9lVjmYAndtYPIcl
+ IqRbIPpLUCOrAsKTZKEEz+qyCq/0OxrCh1K4LATbLbF73UAKnhp523ivUbZb5bcgurcC
+ Qne5/LWRArlV2OXM8Ek/fhxBCZD2HeOFgO+GPKTx3cWYfH2yHclwtG2nx5JL/2m11n+E
+ 7tGQ==
+X-Gm-Message-State: AOJu0YwPUscYybpubNoA0H/y1zaDM65raoFFVBJu2xKTCzfbZh6jUuoH
+ R8t1mIWSJ8Wu7U8Tx4gDeLDQpC2C1jYWGeapiwmZNANCwp7gW7ZplOU2oKaC3PdQ6+8=
+X-Gm-Gg: AeBDieuQ1esVq3RkouWJ1j9UjthPkRm6iKww8mIflM4Jw0qieKBNxuS1V8t2xAMCtOk
+ cmBsAxP8hPx3pJMdqkxE1wZz1jvDk0/pR+v4RLfbbSvx72HWbcuyDY42GXxmCAa+6xlStNbvW6r
+ iyJi62gnMyT6x4Ck6eTvoN6yf65tYDdyB5G8VI0flQbm+wZNkSeYXo7Fwmu+nTAl8cgb8OOHMeD
+ us3uDy90gN7h485WdeEf3mnAtPa1B9Q11K3/E5pqq5Ry6S48EdYSjGHDDxK5KGj1yYYecfya90k
+ SIVs5Q8dIjaBeBxzKOPBDnR+7SlSEMjQPzg6FMA3mLlxZp+tkm9M7xSJZnnxIk40y5ZNhF04pnL
+ +KaqHPQIblcYGudVCbtHr22vvansFAgQ4xacYquc4/UfwZPTKuqgryXc570jUwE91u3ehZx/6rT
+ 1QuyW9SJ6+0owH6pLnJ9hCwJnvIjZk9xntkhI0utkpb5WB9xy8DDyXs54/JTszZOYBBc3Kv+r5p
+ 2Gzi4uvBVT+Mleglg4tNveEIsvYbFKYLqd95aKq3LKdRw==
+X-Received: by 2002:a05:6a00:1d8e:b0:82f:250b:9f1b with SMTP id
+ d2e1a72fcca58-834ddbbffdfmr3863710b3a.23.1777390815401; 
+ Tue, 28 Apr 2026 08:40:15 -0700 (PDT)
+Received: from YanJie-Laptop
+ (2001-b011-3817-7976-54ea-e6f1-3f33-d05a.dynamic-ip6.hinet.net.
+ [2001:b011:3817:7976:54ea:e6f1:3f33:d05a])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-834daf624d9sm3056952b3a.43.2026.04.28.08.40.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Apr 2026 08:40:14 -0700 (PDT)
+From: Yan-Jie Wang <yanjiewtw@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Yan-Jie Wang <yanjiewtw@gmail.com>
+Subject: [PATCH] hw/i386/vapic: revalidate TPR instruction before patching
+Date: Tue, 28 Apr 2026 23:39:46 +0800
+Message-ID: <20260428153946.1802-1-yanjiewtw@gmail.com>
+X-Mailer: git-send-email 2.54.0.windows.1
 MIME-Version: 1.0
-References: <20260411021205.3592118-1-jemoreira@google.com>
- <aeYvCK2qhZd1W9sA@sgarzare-redhat> <20260420181818.GC405461@fedora>
- <CAJi--PPzd_fqcsBU-aA11624apoKTtEW6GTKE3_OyZ4SJ90DzA@mail.gmail.com>
- <20260421211237.GC466778@fedora>
- <CAJi--PP6gsR5E7RtQ_RwV8fG9Xivk0fXTfNxWuZ6cX+uWBPV=A@mail.gmail.com>
- <CAGxU2F7UJhbikjFKMgMcFenFx35vmic-hj4pFm7vM0-gk-nCyg@mail.gmail.com>
- <CAJi--PNoJmei-076Y5geaft98w-nB3OFK2e093EWkN+ZTaQK1Q@mail.gmail.com>
- <20260427224545.GH218226@fedora>
- <CAJi--PPPVc3-z8G3E_qucWhE4bn7hdKYJK4iOcP0Db4tUAw8zQ@mail.gmail.com>
- <afDClLiylMgvPiUn@sgarzare-redhat>
-In-Reply-To: <afDClLiylMgvPiUn@sgarzare-redhat>
-From: Jorge Moreira <jemoreira@google.com>
-Date: Tue, 28 Apr 2026 10:19:30 -0700
-X-Gm-Features: AVHnY4LoyrJt8btmtiZDpTLutslW-GYuQY7FKLvr7JjbpWs0uYQ-PWPQ9qBspps
-Message-ID: <CAJi--PMNCY26wqJiRw1xnAZVvOQUajcz534ocVhQx_Ox4u8GHg@mail.gmail.com>
-Subject: Re: [PATCH] vhost-user.rst: Explicitly allow front-end to write to
- kick FDs
-To: Stefano Garzarella <sgarzare@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, hreitz@redhat.com,
- gmaglione@redhat.com, 
- "Michael S . Tsirkin" <mst@redhat.com>, Hanna Czenczek <xanclic@gmail.com>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122e;
- envelope-from=jemoreira@google.com; helo=mail-dl1-x122e.google.com
-X-Spam_score_int: -175
-X-Spam_score: -17.6
-X-Spam_bar: -----------------
-X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
- USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=yanjiewtw@gmail.com; helo=mail-pg1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 28 Apr 2026 13:20:17 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -132,144 +103,290 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 28, 2026 at 7:33=E2=80=AFAM Stefano Garzarella <sgarzare@redhat=
-.com> wrote:
->
-> On Mon, Apr 27, 2026 at 03:48:44PM -0700, Jorge Moreira wrote:
-> >On Mon, Apr 27, 2026 at 3:45=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat=
-.com> wrote:
-> >>
-> >> On Wed, Apr 22, 2026 at 12:20:52PM -0700, Jorge Moreira wrote:
-> >> > On Wed, Apr 22, 2026 at 1:32=E2=80=AFAM Stefano Garzarella <sgarzare=
-@redhat.com> wrote:
-> >> > >
-> >> > > On Wed, 22 Apr 2026 at 03:16, Jorge Moreira <jemoreira@google.com>=
- wrote:
-> >> > > >
-> >> > > > On Tue, Apr 21, 2026 at 2:12=E2=80=AFPM Stefan Hajnoczi <stefanh=
-a@redhat.com> wrote:
-> >> > > > >
-> >> > > > > On Mon, Apr 20, 2026 at 05:48:13PM -0700, Jorge Moreira wrote:
-> >> > > > > > While starting the vrings on SET_VRING_KICK could solve the =
-state
-> >> > > > > > machine issue, it still won't notify the back-end that buffe=
-rs are
-> >> > > > > > ready (the driver won't do this). Non-polling back-ends depe=
-nd on this
-> >> > > > > > kick, especially for queues where data flows only from the d=
-river to
-> >> > > > > > the back-end. Most implementations likely attempt to read fr=
-om the
-> >> > > > > > queue only after receiving the kick.
-> >> > > > >
-> >> > > > > This is an interesting question to clarify in the spec.
-> >> > >
-> >> > > Yep, which is in part related to what I wrote in the other reply:
-> >> > > "I think the main issue to clarify is what the device should do
-> >> > > when the vrings are configured, but the driver has already been
-> >> > > initialized (which is usually the case after migration)."
-> >> > >
-> >> > > > >
-> >> > > > > Stefan
-> >> > > >
-> >> > > > This is the question that interests me most, to be honest. I'd r=
-ather
-> >> > > > have the discussion about when to activate the vrings in a diffe=
-rent
-> >> > > > thread and keep this one focused on whether the front-end should=
- send
-> >> > > > the kick or if the back-end is expected to check if there are "n=
-ew"
-> >> > > > buffers in the vring after restore.
-> >> > > >
-> >> > >
-> >> > > IMO we don't need anything from the VMM. When the device receives
-> >> > > SET_VRING_KICK, it can check if the vring already contains buffers
-> >> > > (and this is the part we might need to clarify) and wake-up the ot=
-her
-> >> > > threads (or always wake-ups them, as crosvm does IIUC, and let the=
-m
-> >> > > perform this check).
-> >> > > After sending the SET_VRING_KICK message to the device, the VMM ha=
-s
-> >> > > the exact same knowledge of the vring state as the device, therefo=
-re,
-> >> > > it's still unclear to me why we need to inject that kick.
-> >> > >
-> >> > > Stefano
-> >> > >
-> >> >
-> >> > Is it possible to activate a vring after it has been deactivated wit=
-h
-> >> > VHOST_USER_GET_VRING_BASE? If yes, does the front-end need to send t=
-he
-> >> > kick file descriptor again with VHOST_USER_SET_VRING_KICK to
-> >> > reactivate it?
-> >>
-> >> Hi Jorge and Stefano,
-> >> Yes, VHOST_USER_GET_VRING_BASE -> VHOST_USER_SET_VRING_KICK occurs whe=
-n
-> >> a VM is paused and then resumed.
-> >>
-> >> You can stress test this by driving I/O using iperf (virtio-net) or fi=
-o
-> >> (virtio-blk) inside the guest and sending 'stop'/'cont' commands to
-> >> QEMU's monitor.
-> >>
-> >> Here is QEMU's code for starting (including re-starting) rings:
-> >> https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost.c?r=
-ef_type=3Dheads#L1341
-> >>
-> >> QEMU does not inject a kick. The back-end must check the rings itself.
-> >>
-> >> I'm not sure that all vhost-user back-ends actually check the rings. I
-> >> think back-ends should do it, but we should also update the spec with =
-an
-> >> front-end implementation note recommending injecting a kick after
-> >> VHOST_USER_SET_VRING_KICK completes in order to maximize compatibility
->
-> Okay, but since, as we've seen, no frontend currently implements this,
-> we need to make it clear that a backend shouldn't necessarily expect the
-> kick injected from every frontend, but should support it in some way
-> since some of them can inject it.
->
-> IMHO especially new backend implementations shouldn't rely on the kick
-> injection.
->
-> So, to summarize:
-> - the frontend should also send a kick to restart the queues
-> - the backend should restart the queues after VHOST_USER_SET_VRING_KICK,
->    but it might also receive a kick
->
-> >> with implementations that follow the current spec wording. And at the
-> >> same time I think the spec should also be changed to say that
-> >> VHOST_USER_SET_VRING_KICK starts the ring and back-ends SHOULD check t=
-he
-> >> vring upon processing the message.
->
-> Yep, I think we are aligned.
->
-> >>
-> >> That seems like it would clean up the issues without introducing
-> >> compatibility issues or making existing implementations non-compliant
-> >> with the updated spec.
-> >>
-> >> What do you think?
->
-> LGTM!
->
-> >
-> >Sounds good to me
-> >
->
-> @Jorge do you want to propose this change?
+The kvmvapic TPR optimization identifies a guest TPR access
+instruction and queues do_patch_instruction() via async_safe_run_on_cpu()
+to patch the instruction later.
 
-You have a much better idea of where and how this should be written,
-it will save us a few rounds of review if one of you makes that
-change.
+In a 32-bit Windows XP guest with multiple vCPUs, I observed that when the
+guest is about to reboot, several vCPUs may execute the same TPR access
+instruction at nearly the same time. This can queue multiple patch
+operations for the same guest IP before any queued patch operation has
+completed.
 
->
-> Thanks,
-> Stefano
->
+The first queued work item may successfully patch the instruction. Later
+queued work items then re-read the same guest IP and observe the already
+patched instruction bytes instead of the original TPR instruction. For
+example, opcode 0x8b may already have been replaced with 0x90. The old
+code treats this as an unexpected opcode and aborts QEMU.
+
+Record the matched instruction bytes before queuing the patch operation,
+and re-read and compare the instruction before patching it. If the
+instruction has already changed, leave it unchanged instead of aborting.
+
+Use warn_report_once() only for unexpected internal consistency failures,
+so the normal multi-vCPU already-patched case remains silent.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3296
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3451
+
+Signed-off-by: Yan-Jie Wang <yanjiewtw@gmail.com>
+---
+ hw/i386/vapic.c | 112 +++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 87 insertions(+), 25 deletions(-)
+
+diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
+index 1acb9f91b2..1e16780008 100644
+--- a/hw/i386/vapic.c
++++ b/hw/i386/vapic.c
+@@ -25,6 +25,7 @@
+ #include "exec/cpu-common.h"
+ #include "migration/vmstate.h"
+ #include "qom/object.h"
++#include "qemu/error-report.h"
+ 
+ #define VAPIC_IO_PORT           0x7e
+ 
+@@ -80,6 +81,7 @@ OBJECT_DECLARE_SIMPLE_TYPE(VAPICROMState, VAPIC)
+ 
+ #define TPR_INSTR_ABS_MODRM             0x1
+ #define TPR_INSTR_MATCH_MODRM_REG       0x2
++#define TPR_INSTR_MAX_LENGTH            10
+ 
+ typedef struct TPRInstruction {
+     uint8_t opcode;
+@@ -194,7 +196,7 @@ static bool is_abs_modrm(uint8_t modrm)
+     return (modrm & 0xc7) == 0x05;
+ }
+ 
+-static bool opcode_matches(uint8_t *opcode, const TPRInstruction *instr)
++static bool opcode_matches(const uint8_t *opcode, const TPRInstruction *instr)
+ {
+     return opcode[0] == instr->opcode &&
+         (!(instr->flags & TPR_INSTR_ABS_MODRM) || is_abs_modrm(opcode[1])) &&
+@@ -203,12 +205,13 @@ static bool opcode_matches(uint8_t *opcode, const TPRInstruction *instr)
+ }
+ 
+ static int evaluate_tpr_instruction(VAPICROMState *s, X86CPU *cpu,
+-                                    target_ulong *pip, TPRAccess access)
++                                    target_ulong *pip, uint8_t *instr_bytes,
++                                    size_t *pinstr_len, TPRAccess access)
+ {
+     CPUState *cs = CPU(cpu);
+     const TPRInstruction *instr;
+     target_ulong ip = *pip;
+-    uint8_t opcode[2];
++    size_t instr_len = 0;
+     uint32_t real_tpr_addr;
+     int i;
+ 
+@@ -239,26 +242,44 @@ static int evaluate_tpr_instruction(VAPICROMState *s, X86CPU *cpu,
+          */
+         for (i = 0; i < ARRAY_SIZE(tpr_instr); i++) {
+             instr = &tpr_instr[i];
++            instr_len = instr->length;
++            if (instr_len > TPR_INSTR_MAX_LENGTH) {
++                warn_report_once("kvmvapic: TPR instruction length %zu "
++                                 "exceeds maximum %d",
++                                 instr_len, TPR_INSTR_MAX_LENGTH);
++                return -1;
++            }
+             if (instr->access != access) {
+                 continue;
+             }
+-            if (cpu_memory_rw_debug(cs, ip - instr->length, opcode,
+-                                    sizeof(opcode), 0) < 0) {
++            if (cpu_memory_rw_debug(cs, ip - instr_len, instr_bytes,
++                                    instr_len, 0) < 0) {
+                 return -1;
+             }
+-            if (opcode_matches(opcode, instr)) {
++            if (opcode_matches(instr_bytes, instr)) {
+                 ip -= instr->length;
+                 goto instruction_ok;
+             }
+         }
+         return -1;
+     } else {
+-        if (cpu_memory_rw_debug(cs, ip, opcode, sizeof(opcode), 0) < 0) {
+-            return -1;
+-        }
+         for (i = 0; i < ARRAY_SIZE(tpr_instr); i++) {
+             instr = &tpr_instr[i];
+-            if (opcode_matches(opcode, instr)) {
++            if (instr->length > TPR_INSTR_MAX_LENGTH) {
++                warn_report_once("kvmvapic: TPR instruction length %zu "
++                                 "exceeds maximum %d",
++                                 instr->length, TPR_INSTR_MAX_LENGTH);
++                return -1;
++            }
++            /* tpr_instr must be sorted by length with shortest first */
++            if (instr->length > instr_len) {
++                instr_len = instr->length;
++                if (cpu_memory_rw_debug(cs, ip, instr_bytes,
++                                        instr_len, 0) < 0) {
++                    return -1;
++                }
++            }
++            if (opcode_matches(instr_bytes, instr)) {
+                 goto instruction_ok;
+             }
+         }
+@@ -270,11 +291,14 @@ instruction_ok:
+      * Grab the virtual TPR address from the instruction
+      * and update the cached values.
+      */
+-    if (cpu_memory_rw_debug(cs, ip + instr->addr_offset,
+-                            (void *)&real_tpr_addr,
+-                            sizeof(real_tpr_addr), 0) < 0) {
++    if (instr->addr_offset + sizeof(real_tpr_addr) > instr->length) {
++        warn_report_once(
++            "kvmvapic: TPR address offset %zu exceeds instruction length %zu",
++            (size_t)instr->addr_offset, instr->length);
+         return -1;
+     }
++    memcpy(&real_tpr_addr, instr_bytes + instr->addr_offset,
++           sizeof(real_tpr_addr));
+     real_tpr_addr = le32_to_cpu(real_tpr_addr);
+     if ((real_tpr_addr & 0xfff) != 0x80) {
+         return -1;
+@@ -283,6 +307,7 @@ instruction_ok:
+     update_guest_rom_state(s);
+ 
+     *pip = ip;
++    *pinstr_len = instr->length;
+     return 0;
+ }
+ 
+@@ -403,6 +428,8 @@ static void patch_call(X86CPU *cpu, target_ulong ip, uint32_t target)
+ typedef struct PatchInfo {
+     VAPICHandlers *handler;
+     target_ulong ip;
++    size_t instr_len;
++    uint8_t instr[TPR_INSTR_MAX_LENGTH];
+ } PatchInfo;
+ 
+ static void do_patch_instruction(CPUState *cs, run_on_cpu_data data)
+@@ -411,19 +438,33 @@ static void do_patch_instruction(CPUState *cs, run_on_cpu_data data)
+     PatchInfo *info = (PatchInfo *) data.host_ptr;
+     VAPICHandlers *handlers = info->handler;
+     target_ulong ip = info->ip;
+-    uint8_t opcode[2];
++    size_t instr_len = info->instr_len;
++    uint8_t instr[TPR_INSTR_MAX_LENGTH];
+     uint32_t imm32 = 0;
+ 
+-    cpu_memory_rw_debug(cs, ip, opcode, sizeof(opcode), 0);
++    /*
++     * The instruction may have changed before this queued work item runs.
++     * Leave it unchanged if it no longer matches the saved bytes.
++     */
++    if (instr_len == 0 || instr_len > TPR_INSTR_MAX_LENGTH) {
++        warn_report_once(
++            "kvmvapic: saved TPR instruction length %zu is invalid",
++            instr_len);
++        goto out;
++    }
++    if (cpu_memory_rw_debug(cs, ip, instr, instr_len, 0) < 0
++        || memcmp(instr, info->instr, instr_len) != 0) {
++        goto out;
++    }
+ 
+-    switch (opcode[0]) {
++    switch (instr[0]) {
+     case 0x89: /* mov r32 to r/m32 */
+-        patch_byte(x86_cpu, ip, 0x50 + modrm_reg(opcode[1]));  /* push reg */
++        patch_byte(x86_cpu, ip, 0x50 + modrm_reg(instr[1]));  /* push reg */
+         patch_call(x86_cpu, ip + 1, handlers->set_tpr);
+         break;
+     case 0x8b: /* mov r/m32 to r32 */
+         patch_byte(x86_cpu, ip, 0x90);
+-        patch_call(x86_cpu, ip + 1, handlers->get_tpr[modrm_reg(opcode[1])]);
++        patch_call(x86_cpu, ip + 1, handlers->get_tpr[modrm_reg(instr[1])]);
+         break;
+     case 0xa1: /* mov abs to eax */
+         patch_call(x86_cpu, ip, handlers->get_tpr[0]);
+@@ -432,8 +473,14 @@ static void do_patch_instruction(CPUState *cs, run_on_cpu_data data)
+         patch_call(x86_cpu, ip, handlers->set_tpr_eax);
+         break;
+     case 0xc7: /* mov imm32, r/m32 (c7/0) */
++        if (sizeof(imm32) + 6 > instr_len) {
++            warn_report_once(
++                "kvmvapic: TPR mov-imm instruction length %zu is too short",
++                instr_len);
++            goto out;
++        }
+         patch_byte(x86_cpu, ip, 0x68);  /* push imm32 */
+-        cpu_memory_rw_debug(cs, ip + 6, (void *)&imm32, sizeof(imm32), 0);
++        memcpy(&imm32, instr + 6, sizeof(imm32));
+         cpu_memory_rw_debug(cs, ip + 1, (void *)&imm32, sizeof(imm32), 1);
+         patch_call(x86_cpu, ip + 5, handlers->set_tpr);
+         break;
+@@ -442,13 +489,18 @@ static void do_patch_instruction(CPUState *cs, run_on_cpu_data data)
+         patch_call(x86_cpu, ip + 1, handlers->get_tpr_stack);
+         break;
+     default:
+-        abort();
++        warn_report_once("kvmvapic: unexpected TPR instruction opcode 0x%02x "
++                         "while patching; leaving instruction unchanged",
++                         instr[0]);
++        break;
+     }
+ 
++out:
+     g_free(info);
+ }
+ 
+-static void patch_instruction(VAPICROMState *s, X86CPU *cpu, target_ulong ip)
++static void patch_instruction(VAPICROMState *s, X86CPU *cpu, target_ulong ip,
++                              const uint8_t *instr_bytes, size_t instr_len)
+ {
+     MachineState *ms = MACHINE(qdev_get_machine());
+     CPUState *cs = CPU(cpu);
+@@ -461,10 +513,18 @@ static void patch_instruction(VAPICROMState *s, X86CPU *cpu, target_ulong ip)
+         handlers = &s->rom_state.mp;
+     }
+ 
+-    info  = g_new(PatchInfo, 1);
++    if (instr_len == 0 || instr_len > TPR_INSTR_MAX_LENGTH) {
++        warn_report_once(
++            "kvmvapic: not patching invalid TPR instruction length %zu",
++            instr_len);
++        return;
++    }
++
++    info = g_new(PatchInfo, 1);
+     info->handler = handlers;
+     info->ip = ip;
+-
++    info->instr_len = instr_len;
++    memcpy(info->instr, instr_bytes, instr_len);
+     async_safe_run_on_cpu(cs, do_patch_instruction, RUN_ON_CPU_HOST_PTR(info));
+ }
+ 
+@@ -474,10 +534,12 @@ void vapic_report_tpr_access(DeviceState *dev, CPUState *cs, target_ulong ip,
+     VAPICROMState *s = VAPIC(dev);
+     X86CPU *cpu = X86_CPU(cs);
+     CPUX86State *env = &cpu->env;
++    size_t instr_len;
++    uint8_t instr[TPR_INSTR_MAX_LENGTH];
+ 
+     cpu_synchronize_state(cs);
+ 
+-    if (evaluate_tpr_instruction(s, cpu, &ip, access) < 0) {
++    if (evaluate_tpr_instruction(s, cpu, &ip, instr, &instr_len, access) < 0) {
+         if (s->state == VAPIC_ACTIVE) {
+             vapic_enable(s, cpu);
+         }
+@@ -489,7 +551,7 @@ void vapic_report_tpr_access(DeviceState *dev, CPUState *cs, target_ulong ip,
+     if (vapic_enable(s, cpu) < 0) {
+         return;
+     }
+-    patch_instruction(s, cpu, ip);
++    patch_instruction(s, cpu, ip, instr, instr_len);
+ }
+ 
+ typedef struct VAPICEnableTPRReporting {
+-- 
+2.47.3
+
 
