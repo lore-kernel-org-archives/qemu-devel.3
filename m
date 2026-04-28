@@ -4,99 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86EE9FF8868
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 10:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A901FF885D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 10:58:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHfvC-0004dT-JT; Tue, 28 Apr 2026 06:44:06 -0400
+	id 1wHg83-0006WF-NV; Tue, 28 Apr 2026 06:57:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHfvB-0004ab-IL
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 06:44:05 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1wHg81-0006Vw-OI
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 06:57:21 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHfvA-0001Ty-5W
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 06:44:05 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-651c5d525f6so10220070d50.3
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 03:44:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777373043; cv=none;
+ id 1wHg80-0004Bt-1I
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 06:57:21 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-6501547d7edso10429819d50.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 03:57:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777373838; cv=none;
  d=google.com; s=arc-20240605;
- b=CPCQhhLClXliL7ToZdcNqx3A9/xP5JaoME0TWEu62udRbXftKEmtSFTBhx1wjUs5Qm
- QnbjDD45+zkjS+LG7vb/fiOQMYmf6h0bTbMnql1mhwn9Ran3YZrFKsNIVhHuP0zRF7CC
- RIStILp7kgdC5Pw8W1theDycCdrh6sJzU+S5bd8d+D+dL+fpU2LksPpjzZskVaqBftcW
- yOKCcV+ESMFyq6GBI4ELcq1dS2sqUeDA7FKccZ6MfbgWbS0/1+IK4/ijSso9tfOG+dLZ
- +P77wLtQl+PenFO15WLlT4Z6l8QOGxAW3HMHu46nrKjSbz71WTykr+F6TXhkO90rnxK3
- +21g==
+ b=KEfKKWkJLwPL9bYIMwmKwpMhugw7wXRaMwBhpCD1mzI/rXXIh7N5TWCE6F5bxAeLuE
+ OdRrzD+sAotTHBnYzzUv7Hnx7J1MMuAXWbZVN9ZEg2t8p0giaNDY1u7b6D/cR2lvUKLV
+ QxcDD1lDCmYcUAUNoD2hzXj1iDSxNvVSZeIKuQPOjajdTJgTv/ySvNHducMtOZ+onpNB
+ St/e/u2VxYAUT47qHw2vC857MFVglygqkndBk/kGrWtMWAuNHqJRtc9nbbVVoVplaPRr
+ KGpwa/1b2Ht0MiPgYsyNpL92eWFbhAOY4qYDS8xnS+tQpx6FUsLvven1t9vzhSkmUbXG
+ N9hw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=tGn/7ofAJkPeLznmcMGIZw4zwGjdtj37UuvN0GXBlAE=;
- fh=1PNb5bAuBY7pUYShNHxe+USp1zBkQ/9i6CgFUG9bMRs=;
- b=AFu4H9JQNU2BaQJDs/04hQa2KF2Cs/EMwNpCWng+ZrajEvH65xobpuptraPGU1YrWV
- BXTOr4w5qRSacPZ8tJkmkEfEfCdxWaPNfxO3ccjbMgdexqxGeNG01KEDSWN+cUKkv5qJ
- sRA6/421wxOiPauDpvqhg2FsNYd5xE00xo8tk22jsfVkC1DMeSJy7YQCMvHwLYAsQ/e/
- Sn7JuEe+ZI24/mF4f9nJnY+6LVVNOqHdzSlXV7tVQ8biD0AuQgYaFVH3bu31IQVy+KmX
- tEw4coCdCwE8473bdda6XteA5uBwasgeA8X/0nLBgu2oyI4wxo0lQXIJmd/0uQJQljJT
- kNog==; darn=nongnu.org
+ bh=OBAvmJZzvIkI3Xlg3xS7iYIU6kQ01BvEEeAFoUTxU+w=;
+ fh=5hpO1k+4pWDxQ9oa5Nh4x0RcpkpENqy649CApJlWSfY=;
+ b=juJN2qtM+6E6GMXV36fW7acPreFlWl37Ay5s1BXAz6bpbzOtpU7O3YTqCjXKfZHTxv
+ qSNpoMoqtfE4GEk2+oP/AjpviGu4Py8iOd9GtPeuVu+HnCa/7CJRaHEmitooPkmfbAFu
+ vH3tB9h+5lwQrwM7eghv6r1vB849S4QHj4JaA2X3/MwZr117NcpaeGetjM3X+Is2S+Gi
+ E4HBu+ehcCJTLH/EHELm+r50fpcZz/UB7GXBhg/vA1n8VGi4djcVN21ILMCjTtrN4ctR
+ 1jzIKKyQY5qtuXqoKmeqV0XRZbxdCWnmaRN5zwnK7dZtnU+446nKMkz+23MMGDuTCR23
+ 1qQg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777373043; x=1777977843; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777373838; x=1777978638; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=tGn/7ofAJkPeLznmcMGIZw4zwGjdtj37UuvN0GXBlAE=;
- b=hFxFTrt+oNZTAARCTybAJaonN0A0/JE0jIT26sgufrCfgV1G2tWzwWbELmw9G79Fod
- 9DaiT4BAZImZYCUE1NCdHo0FyGD1/TiY5uBbab35rAB9bWOXr0sM4Yq/oPnLmZGwqs9c
- wOwWntDdKZw/DvYT98Or7U1fQxvMNV5PXTw0tB+eMS8BmFypQ2P7MpoZxX0foS413adH
- rMatyR1+Xf3IV3YA1UCoOJ07wvXA/tyRe+6l9ikRCYE5Na6UngQbGBu+hhvdLHOb6CGT
- 3O99rmqcIhh3mkKSj8wNke8DcIendbtLC30eX4xAmx5ar+XCJATUOCtQY+jYBWiWcHEz
- 0G9A==
+ bh=OBAvmJZzvIkI3Xlg3xS7iYIU6kQ01BvEEeAFoUTxU+w=;
+ b=aLwCteCHggpCBl5y1sy+5ixw29ttjkM1n5uW9VM38nnrdPX1X0gg4Kyn7JHoiwjVND
+ r0kWPerFbGdcl/cHStdKtCSJNsiXw0+54NJLW9cG7nm2aWdTklL9LOtDl8/wD17YBwbE
+ lwzWeYV7wTJmjlMTifAgh8pKvoMKGdW85rLyhO/tEPbpTcZ85qc+LEcMX9XBraEXGHVu
+ xKit/WIVlUC8VERFc5hyBt+Ar6vZNnZdZ06TmYEOOl+UL1NSZENgIZH9iiYYi3gXsPSw
+ rV40vrcrJ3dobekXU4kr/VTmh3pe7qF4liNqI1o0zWbUl2BlYIuWZTa7/21Ouu0OXMyJ
+ bFAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777373043; x=1777977843;
+ d=1e100.net; s=20251104; t=1777373838; x=1777978638;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tGn/7ofAJkPeLznmcMGIZw4zwGjdtj37UuvN0GXBlAE=;
- b=h0AoLzALi6cLLJpMFa9nW4jByNaegXOq6dGA78doT7YM2AtKhwpCU7ZXXpYJOvLFUv
- Tqy/d/KzysL2zkha6q3OLlz2HkCD63e+Tui6kRt3zKevaoKXMqPhPni3NJADAnYpws7k
- k0dQ2cCmLNVZrvTx6FCgXbV0253kTUJ4vx1Z9jBsHyQDKj60GPZfX+hvKXYBvAbA8qM6
- irD29kunO7+dWYN+nV/ZYhUU1tOoC5v+nik2yWX6BRNBw4k1egxDUZwcBXiuIJJQAzG/
- tvycGnket4LvRqe6OrsCJgtqlLx7zjpfFqHK1gDG/Z0yuYa5Yxp7jqAlXm0hMYfnw1MB
- jvBA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9BCIY6B08KoEIM+xGCzgopcIhv1/4hPyC3QcmjNAmSxGjcY8Jb87WlLJ7cZlAauAqpMDdHwRyR7TrQ@nongnu.org
-X-Gm-Message-State: AOJu0YzSlCXz3sWjNaRd/W18OxoUK526quJinhFIK3HDhCKby3ZBc6tK
- lFy+t2fixmWYjO+nZdOtrD0eWPDFg+Kq/3gjmI9Bu889GSlSjNYC12pSW27PsKbINLDa5SUOhlv
- +3DtyOrWV0MlLOx80T1M/mqAKEWtYD4y6N4CMH26ja4bqRi4+3SJk
-X-Gm-Gg: AeBDies7DPSl6AVqoCUHaoAfBNL7Skj9JjodWt1UCtjt9TbonfD1KYng99mL3bADNTS
- e7GYp0e/OMYt0w0UGKaoOtkUPjx0TWw+qCvJDe62GDcw9EZmqx7bi6DzkNtkL73tCj9Af5fEKzg
- HFWS61iKLEy5b2gUN6BFEJxj8N2ozA7X9FvbbpWSnIkbjw/30uQnOrSMqxHkND7b927XZwV1fla
- D3Ci7xEezAY6oVS62wFdcSCRyPsSr9WzDcIeW+YyC5YiV6lOHqOEH553Yyy3aLNfKs+7mqAqEOA
- EuBLewXvrEXkdfwz0FLle3h7f/StH/2BnfLab4Ezigykyb1Ayip5TMtQamkpCyC1CzK5lEP/2C+
- y0A==
-X-Received: by 2002:a05:690e:1446:b0:649:b31e:8f54 with SMTP id
- 956f58d0204a3-65beedaa291mr1973392d50.24.1777373042916; Tue, 28 Apr 2026
- 03:44:02 -0700 (PDT)
+ bh=OBAvmJZzvIkI3Xlg3xS7iYIU6kQ01BvEEeAFoUTxU+w=;
+ b=dm8bQWxsKWKF6WdaH5zjoRO3MhxFpxj7oTtvxuSSBEv24KpsbAoCMUPhS0qachEir4
+ zIAf7Eb8grj1Ol5DGZ6e02BEZ1zqmmqNgUbJ1iAAxYWSraJV06jaohYyMcdgG2sqEpfK
+ yvF5cbXNNlkmpZpL52dWxbbywazxhAulLP4/UQ6ZDUhzApWwPvZAYBnIJrKG7QumE1JM
+ TakyALLN3/dOSnYXXj3WctYW/micRENJ3vsb5YjMytN+h4YYq6nLa9cugFjZ3o+KtBS3
+ S5rgKS6AKpnjFuwYtt7vN03fSbY3eXPvqnFhL29KrV5Y1MkRFSv7dMWnSWKtSQgDhPJr
+ uSnQ==
+X-Gm-Message-State: AOJu0YyZoaE8nf0wth2kl2Z1BTFbg/aXj57u3Eh1WsZgGVo3FoBAOimA
+ 6pjRyOT690L1M2S/+eKTGvW1xjBy6T5DGRfQFu5RTtIhD1Hux+O6lU/HGtguNdLnNBsrB1VOFLF
+ YTiljWpu2iKrLJ7xFZXV2wwRkHE/5WFAvP2n0L8Z79g==
+X-Gm-Gg: AeBDies5Cy4OS2AHqnj5Q5bdFFo+h9phr9ZpfrJBMuuo/aSzWq+aLxLg1/dGuktgpQA
+ Tqh34AqEsk0VoVlJPKtUWEUymYXFUvG9med9Z6CF6MsbbTfroRzT7tFbC//0fryfgWpHPwcX3go
+ 89PQtxkDRWqbnRzaBIG+7Tjr9zhmI50OVguSMKcE6xLaODQbix0DQVvbzBVm3CenC2xUvPQR02g
+ PIKDdljUCLhH0ppxMQ9twZCIUhY5W+73piwPoXY8CNO00A0DvYkCBBid2dWHHEd+S7biw48rrq1
+ ZqpprJDz8UVkFI26u4l10cH9V0nSc7/POu3I/VgDkq416t03HwVOpKRHBgMRkImVIF6yqYtOZw+
+ ah6JvVwjjWCcP
+X-Received: by 2002:a05:690e:1482:b0:649:e6de:8f4a with SMTP id
+ 956f58d0204a3-65beee55532mr2113624d50.42.1777373838377; Tue, 28 Apr 2026
+ 03:57:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260417173105.1648172-1-peter.maydell@linaro.org>
- <20260417173105.1648172-16-peter.maydell@linaro.org>
- <fdbef0ff-453f-4e3b-b7bd-a164cc38b341@linaro.org>
-In-Reply-To: <fdbef0ff-453f-4e3b-b7bd-a164cc38b341@linaro.org>
+References: <20260409035015.132370-1-richard.henderson@linaro.org>
+In-Reply-To: <20260409035015.132370-1-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Apr 2026 11:43:51 +0100
-X-Gm-Features: AVHnY4I6hwEL6bXLon5c6h0njHnXsyV6uR9XuiWD8HTaCYkJfs3dnGzw-4SDK-o
-Message-ID: <CAFEAcA9hD1tCrJCdKcy9zw5p8gwobQGuaKDQaBLyVm7kdx=Dxg@mail.gmail.com>
-Subject: Re: [PATCH 15/17] hw/core: Implement cpu_get_phys_addr_attrs_debug()
- with cpu_translate_for_debug()
+Date: Tue, 28 Apr 2026 11:57:07 +0100
+X-Gm-Features: AVHnY4IAs_L7jY7gvXtX6WYx0bSTSZKudbd0tYKZwesq7MzoA-dFzrprx2Zz-k4
+Message-ID: <CAFEAcA-fht7aCnsScrhAvuP0=pnPAnNOJMwCTo5wqhHaU-eeaQ@mail.gmail.com>
+Subject: Re: [PATCH v2 0/7] target/arm: Remove bswap_code
 To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, pierrick.bouvier@linaro.org, 
+ philmd@linaro.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,60 +115,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 23 Apr 2026 at 04:09, Richard Henderson
+On Thu, 9 Apr 2026 at 04:50, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> On 4/18/26 03:31, Peter Maydell wrote:
-> > Implement cpu_get_phys_addr_attrs_debug() with
-> > cpu_translate_for_debug(), so that CPUs can implement only the
-> > translate_for_debug method and have all of the wrapper functions
-> > cpu_translate_for_debug(), cpu_get_phys_addr_attrs_debug() and
-> > cpu_get_phys_addr_debug() work.
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >   hw/core/cpu-system.c | 17 ++++++-----------
-> >   1 file changed, 6 insertions(+), 11 deletions(-)
-> >
-> > diff --git a/hw/core/cpu-system.c b/hw/core/cpu-system.c
-> > index cab65d549a..be5cb48126 100644
-> > --- a/hw/core/cpu-system.c
-> > +++ b/hw/core/cpu-system.c
-> > @@ -90,19 +90,14 @@ bool cpu_translate_for_debug(CPUState *cpu, vaddr addr,
-> >   hwaddr cpu_get_phys_addr_attrs_debug(CPUState *cpu, vaddr addr,
-> >                                        MemTxAttrs *attrs)
-> >   {
-> > -    hwaddr paddr;
-> > +    TranslateForDebugResult result;
-> >
-> > -    if (cpu->cc->sysemu_ops->get_phys_addr_attrs_debug) {
-> > -        paddr = cpu->cc->sysemu_ops->get_phys_addr_attrs_debug(cpu, addr,
-> > -                                                               attrs);
-> > -    } else {
-> > -        /* Fallback for CPUs which don't implement the _attrs_ hook */
-> > -        *attrs = MEMTXATTRS_UNSPECIFIED;
-> > -        paddr = cpu->cc->sysemu_ops->get_phys_addr_debug(cpu, addr);
-> > +    if (!cpu_translate_for_debug(cpu, addr, &result)) {
-> > +        return -1;
-> >       }
-> > -    /* Indicate that this is a debug access. */
-> > -    attrs->debug = 1;
-> > -    return paddr;
-> > +
-> > +    *attrs = result.attrs;
-> > +    return result.physaddr;
-> >   }
-> >
-> >   hwaddr cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr)
+> Based-on: 20260407222208.271838-1-pierrick.bouvier@linaro.org
+> ("[PATCH v11 00/21] target/arm: single-binary")
 >
-> As far as it goes,
+> Version 2 here should probably be RFC.  This time around, all
+> instruction loading, and more decode, is done by translate.
+> A new CPUARMState field is added for passing data to EXCP_SWI
+> and EXCP_NWFPE.
 >
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 >
-> But I'll note there's exactly one user in system/physmem.c, so it'd be better to drop this
-> function entirely.
+> r~
+>
+>
+> Richard Henderson (7):
+>   linux-user/arm: Restrict regpairs_aligned
+>   target/arm: Only define aarch64_untagged_addr for aarch64
+>   target/arm: Segregate target-specific user-only fields
+>   target/arm: Store SVC immediate for user-only
+>   target/arm: Recognize linux faux BPKT
+>   target/arm: Introduce EXCP_NWFPE
+>   target/arm: Remove bswap_code
 
-Yes; I note this in the cover letter :-)
+I'm not sure about the SVC part, but I'm definitely
+not very enthusiastic about the BKPT and NWFPE pieces
+moving into target/arm. I prefer the existing split
+where (as far as reasonably feasible) target/arm is
+architectural stuff, and things that are matching behaviour
+of the Linux kernel for user-mode (nwfpe, odd bpkt insn,
+user-page helpers, etc) stay in linux-user.
 
+thanks
 -- PMM
 
