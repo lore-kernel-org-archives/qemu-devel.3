@@ -4,72 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94270FF886D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 18:37:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18AD6FF885A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 18:41:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHnIq-0000qq-Ll; Tue, 28 Apr 2026 14:37:00 -0400
+	id 1wHnN3-0001jq-Og; Tue, 28 Apr 2026 14:41:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wHnIn-0000qJ-Qc
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 14:36:58 -0400
-Received: from pv-2003l-snip4-7.eps.apple.com ([57.103.66.40]
- helo=outbound.pv.icloud.com)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wHnN1-0001iz-HR; Tue, 28 Apr 2026 14:41:19 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wHnIl-0007g8-Qu
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 14:36:57 -0400
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-20-percent-1 (Postfix) with ESMTPS id
- EE10718000AB; Tue, 28 Apr 2026 18:36:51 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwROEwVSB11NVg1HD1geXBQXCEVDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTAhJcStzX3YyFDwFXXRGBjZ/QB5VBlxzXQs9dSxzKXZHC0FxWXceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1777401413; x=1779993413;
- bh=LYM7TvQBAlTfmBdJ/lJvShbQcD4gsjvXXoL7IvZpCzQ=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=aIS1pGLeLUCPenznWrwBpbu9ViOeFUi8MkpHmX71+k6qdiAjEE5RSnwvP9e5QFrid94UKdVVkJrHK+jz1QtV9fl8hzzf2m7Hx/chIxcRXQHcx0YlnGE68a1lUlx2lch/sTgDKM7fYJAhbBIL8eWW2X9Ha08IZDZnzYPj+02hhOH+qoXR/Y5yJZEc0/zEVAMWyWAiQ3zdJGcFu42cJL/IiCoP/55YUY5NW5nZFLjPVqrIV/zCOhG++mZzpYORFVcJDKntDVMZOrz1ulRA2Nqf00utcH/Ut4kbotEqJaRW1n6GwSzyjZJ74o581KEv6rd1pgmrIAT7pFX8w8tJoGtGpQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.56.9.36])
- by p00-icloudmta-asmtp-us-west-1a-20-percent-1 (Postfix) with ESMTPSA id
- 4B1781800591; Tue, 28 Apr 2026 18:36:50 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH 0/6] target/i386/mshv: use hv_vp_register_page for fast
- register access
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260428135053.251200-1-dblanzeanu@linux.microsoft.com>
-Date: Tue, 28 Apr 2026 20:36:38 +0200
-Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <11BFD4DB-D60C-4FF8-817A-2EFADBD729B4@unpredictable.fr>
-References: <20260428135053.251200-1-dblanzeanu@linux.microsoft.com>
-To: =?utf-8?Q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Proofpoint-ORIG-GUID: DhotmTqGjk9Z9rzJuLU-hB38Yc4qMjQD
-X-Authority-Info-Out: v=2.4 cv=D9JK6/Rj c=1 sm=1 tr=0 ts=69f0fe44
- cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=GaQpPoNlAAAA:8 a=yMhMjlubAAAA:8
- a=J1EvKnRYTj4A5Ngll8oA:9 a=QEXdDO2ut3YA:10 a=xF5q_uoM5gZT5J3czcBi:22
-X-Proofpoint-GUID: DhotmTqGjk9Z9rzJuLU-hB38Yc4qMjQD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDE4MCBTYWx0ZWRfX3mWUvabnzIQe
- BeunH1FPNDDtEIjI+AEBdi/CpsxQ+T3WNe+io6q5Hh3J+yEkxKWijeqBVCmMjyPDqx4RSl36/0K
- 4Ni7MIoGKFPHkj2DA16YMqXZVSD+DcSC45kUdqOS8cBQfYmtXdkDkb8FPTiKZ11HSztXN6mhc65
- jshLTZ2DHZIXDcCYOeLM+6JOcg8Y/DObkMMPj83x1NcudNVFrdu3Df+L0reJxBsGneIa34dszT/
- 6FZaddNulucL9I4C2ezN6/wv+ffd3adlq67IDePSjFdDWQ8Pi0XamtoSQOBg3zF3A8hmSPsjzsm
- KantWnDIf7OLB4S/MLJpl5fE36aUu+zTmFGHOQZuUX9KQ0Wve9Ki573xvJLuE8=
-Received-SPF: pass client-ip=57.103.66.40;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wHnMz-0008TX-RG; Tue, 28 Apr 2026 14:41:19 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63SEYR2M2036575; Tue, 28 Apr 2026 18:41:12 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=sboEx6
+ sI8jx68+4ybidi8ktV4XZhiJG98WfhbeKEVpQ=; b=dXWtggqMOHaqspx5qtP3/x
+ MC1KlAZaa25ux3K8Wuaf36lZ7rt8sB43qEj3RdaqpVE1TgLz1rVw6tCYKBZBJDQf
+ OHZnvreeVS1amjPpcg1dh7SEQzWb3Y9FwywIsrjznsKx5Zrb5O/6uiOCnpqBPVJj
+ C7Gud6IXevRMFM3vtfPbQW3c5SFuWXS4jVEbEePhcBlfa4mMns06ve7qqjPgwcQ/
+ uw+6w3NwNAsJUaDhvAT8gfTMeo2nfyJ78jTksZGCQhVlXa+gaTFIonwdvGK880/n
+ VKh7AT4tGtZsnXPyZ/OxdpCpR2sTfp13qjfe+5iqwYexZKn7+G5Xxe6cqfMTKuZA
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drk1jp3cb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Apr 2026 18:41:11 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63SIckPE015778;
+ Tue, 28 Apr 2026 18:41:11 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dsamyau56-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Apr 2026 18:41:11 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63SIf95d26280626
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 28 Apr 2026 18:41:09 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 69DDF58056;
+ Tue, 28 Apr 2026 18:41:09 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 92CF15805E;
+ Tue, 28 Apr 2026 18:41:07 +0000 (GMT)
+Received: from [9.61.117.177] (unknown [9.61.117.177])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 28 Apr 2026 18:41:07 +0000 (GMT)
+Message-ID: <84f700a1-d41f-4b3a-8840-30956534ec2b@linux.ibm.com>
+Date: Tue, 28 Apr 2026 14:41:07 -0400
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 20/30] pc-bios/s390-ccw: Add signed component address
+ overlap checks
+To: Collin Walling <walling@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, pierrick.bouvier@linaro.org,
+ david@kernel.org, jjherne@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ jdaley@linux.ibm.com
+References: <20260402221453.1602899-1-zycai@linux.ibm.com>
+ <20260402221453.1602899-21-zycai@linux.ibm.com>
+ <13e51aea-32de-498d-83ce-d2f082064fb1@linux.ibm.com>
+Content-Language: en-US
+From: Zhuoying Cai <zycai@linux.ibm.com>
+In-Reply-To: <13e51aea-32de-498d-83ce-d2f082064fb1@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDE3NyBTYWx0ZWRfX7XPVJ9ycfRgk
+ 5H72R2qbDitOIOgtQimAPIRpxG9zXqRAhMovcNIAcnCFTPHCieZvCLQTrZllHZT5X65Y78hDgAq
+ pGw7uHei50/SjlS+hin5DMA6VxFvxGhNV+AmBkNPsaTpLevydUyuCP1zrVrrAKsCNZBEFhcNpIh
+ 2LlKIYcJ+F6ApdY3SR4uOAemA+Ru4NN2Axok8PHmmZ9h8jeW/kRYsInLGd+bPSdn0jjTBkbC7ax
+ EHt6D+rQI92cV4aDGxfh+7kKOnqYQByM8N5wniZl4xYfTG5J0b7FWJ9R3iIZlAeukqNdF+sZCJQ
+ gdeHKNbMeEFnB+z1l6OiLI7bt/XkTUZwmAl7al+74K5GKQStL4i44fHNwG4Wykvz+h8uOgCD38A
+ 7Tu4RLapilSuu+BQDu5WxMrdR3L5Hgz+5u1ZnaI16N2zD5ZtywKH5SCbh7JOmvvYWQ3mTGq90Op
+ 0jTEhz6Ku2OlfV5M1fQ==
+X-Proofpoint-GUID: yH0VWgnz5sIoO6-lrO0I-wqpjCRO2WXR
+X-Proofpoint-ORIG-GUID: yH0VWgnz5sIoO6-lrO0I-wqpjCRO2WXR
+X-Authority-Analysis: v=2.4 cv=MohiLWae c=1 sm=1 tr=0 ts=69f0ff47 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=RNgVx3aTONk1U17rOuMA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-28_05,2026-04-28_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0 suspectscore=0 bulkscore=0 spamscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 lowpriorityscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2604280177
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,104 +130,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 4/10/26 3:54 PM, Collin Walling wrote:
+> On 4/2/26 18:14, Zhuoying Cai wrote:
+>> Add address range tracking and overlap checks to ensure that no
+>> component overlaps with a signed component during secure IPL.
+>>
+>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+>> ---
+>>  pc-bios/s390-ccw/secure-ipl.c | 58 ++++++++++++++++++++++++++++++++---
+>>  pc-bios/s390-ccw/secure-ipl.h | 15 +++++++++
+>>  2 files changed, 69 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/pc-bios/s390-ccw/secure-ipl.c b/pc-bios/s390-ccw/secure-ipl.c
+>> index b66ca9ca7e..d2079e19bc 100644
+>> --- a/pc-bios/s390-ccw/secure-ipl.c
+>> +++ b/pc-bios/s390-ccw/secure-ipl.c
 
+[...]
 
-> On 28. Apr 2026, at 15:50, Doru Bl=C3=A2nzeanu =
-<dblanzeanu@linux.microsoft.com> wrote:
->=20
-> This series adds support for using the hypervisor's vp register page
-> in the mshv accelerator to optimize vcpu register access on mmio and =
-pio
-> exits.
->=20
-> Currently, all register reads and write go through hypercalls =
-(ioctls),
-> which adds overhead on every VM exit. The VP register page is a shared
-> memory page that the hypervisor populates with vcpu register state,
-> allowing Qemu to read and write registers directly without hypercalls.
->=20
-> The series is structured as follows:
-> 1. Remove the duplicate `fetch_guest_state` function, consolidating
->  register loading into `mshv_load_regs`.
-> 2. Move `mshv_arch_init_vcpu` after vcpu creation so the vcpu fd is
->  valid when we need it for mmap.
-> 3. Define the `hv_vp_register_page` structure in `hvgdk_mini.h`, =
-matching
->  the layout used by the Linux kernel's mshv driver.
-> 4. Set up the register page by mmapping the vcpu fd at init time. If =
-the
->  mmap fails, we fall back gracefully to the existing hypercall path.
-> 5. Use the register page to read registers on VM exit. General purpose
->  registers, RIP, RFLAGS, segment registers, and control registers
->  (CR0, CR4, CR4, CR8, EFER) are read directly from the page. Registers
->  not present on the page (TR, LDTR, GDTR, IDTR, CR2, APIC_BASE) are =
-still
->  fetched via hypercall.
-> 6. Use register page to write registers on vmentry. GP registers,
->  RIP, and RFLAGS are written to the page with the appropriate dirty
->  bits set, avoiding the hypercall for the standard register store.
->=20
-> The register page is only used when it has been successfully mmapped =
-and
-> the hypervisor has marked it as valid (`isvalid !=3D 0`). Otherwise, =
-the
-> existing hypercall-based path is used as a fallback.
+>>  static int zipl_load_signature(ComponentEntry *entry, uint64_t sig_sec)
+>>  {
+>>      if (zipl_load_segment(entry, sig_sec) < 0) {
+>> @@ -253,6 +296,7 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
+>>       * exists for the certificate).
+>>       */
+>>      int cert_list_table[MAX_CERTIFICATES] = { [0 ... MAX_CERTIFICATES - 1] = -1 };
+>> +    SecureIplCompAddrRangeList range_list = { 0 };
+>>      int signed_count = 0;
+>>  
+>>      if (!secure_ipl_supported()) {
+>> @@ -282,14 +326,20 @@ int zipl_run_secure(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
+>>                  goto out;
+>>              }
+>>  
+>> -            if (!sig_len) {
+>> -                break;
+>> -            }
+>> -
+>>              comp_entry_info = (SecureIplCompEntryInfo){ 0 };
+>>              comp_entry_info.addr = comp_addr;
+>>              comp_entry_info.len = (uint64_t)comp_len;
+>>  
+>> +            if (is_comp_overlap(&range_list, comp_entry_info)) {
+>> +                zipl_secure_handle("Component addresses overlap");
+>> +            }
+> 
+> Seems to be mixed styling here where `is_comp_overlap` is a bool and the
+> error is handled outside the function, and `comp_addr_range_add` is void
+> and the error is handled within.
+> 
+> For consistency, I think is_comp_overlap could be check_comp_overlap,
+> void, and handle the error within.
+> 
+>> +            comp_addr_range_add(&range_list, comp_entry_info, !!sig_len);
+>> +            range_list.index += 1;
+> 
+> Index should be incremented within the function.
+> 
+>> +
+>> +            if (!sig_len) {
+>> +                break;
+>> +            }
+>> +
+> 
+> What is the reason for this check moving here?  If it's intentional for
+> the check to be at this point in the function, I'd suggest putting in
+> here in the original patch the code was introduced so it doesn't look
+> anomalous.
+> 
 
-Hello,
+Thanks for the suggestion.
 
-Some overall comments after reading this series:
+This check was moved here because overlapping checks apply to all
+components, meaning every component, signed or unsigned, must ensure it
+does not overlap with signed components. The checks after this point
+apply only to signed components. I can put the check here in the
+original patch.
 
-- bifurcated state sync is inevitable with not syncing the full
-state for most MMIO/I/O port accesses.=20
-
-It=E2=80=99s wanted to skip some state. LDTR/GDTR are among the painful
-ones and you=E2=80=99ll very much want to avoid syncing those if you =
-can.
-
-In the typical WHP emulation case, there=E2=80=99s 0 state used outside
-of the shared register page and getting there made things so much
-smoother than otherwise.
-
-- but there=E2=80=99s an exception:
-
-A pattern that causes problems:
-
-    /* Advance RIP and update RAX */
-    rip =3D info->header.rip + insn_len;
-    rax =3D info->rax;
-
-    reg_names[0] =3D HV_X64_REGISTER_RIP;
-    reg_values[0] =3D rip;
-    reg_names[1] =3D HV_X64_REGISTER_RAX;
-    reg_values[1] =3D rax;
-
-    ret =3D set_x64_registers(cpu, reg_names, reg_values);
-    if (ret < 0) {
-        error_report("Failed to set x64 registers");
-        return -1;
-    }
-
-    cpu->accel->dirty =3D false;
-
-When put together with hw/i386/vmport.c, which calls =
-cpu_synchronize_state
-on an I/O port read (thankfully not very frequent), you=E2=80=99ll get =
-issues with
-this as vmport does both read and set register values on its own.
-
-In WHPX, was dealt with in: =
-https://patchew.org/QEMU/20260422214225.2242-1-mohamed@unpredictable.fr/20=
-260422214225.2242-12-mohamed@unpredictable.fr/=20
-and you=E2=80=99ll probably want to do something similar.
-
-I imagine that =E2=80=9Ccpu->accel->dirty =3D false;=E2=80=9D was =
-probably an attempt to
-get things to boot when faced with that.
-
-This adds a small constraint that if additional state will be fetched in
-the future, then writes have to happen either before that fetch, or on =
-the
-now synced state instead of the partial view.
-
+>>              verified = verify_signature(comp_entry_info,
+>>                                          sig_len, (uint64_t)sig,
+>>                                          &cert_len, &cert_table_idx);
+>> diff --git a/pc-bios/s390-ccw/secure-ipl.h b/pc-bios/s390-ccw/secure-ipl.h
+>> index 6d65cd5596..c625ac2e3a 100644
+>> --- a/pc-bios/s390-ccw/secure-ipl.h
+>> +++ b/pc-bios/s390-ccw/secure-ipl.h
+>> @@ -24,6 +24,21 @@ typedef struct SecureIplCompEntryInfo {
+>>      uint8_t  flags;
+>>  } SecureIplCompEntryInfo;
+>>  
+>> +typedef struct SecureIplCompAddrRange {
+>> +    bool is_signed;
+>> +    uint64_t start_addr;
+>> +    uint64_t end_addr;
+>> +} SecureIplCompAddrRange;
+>> +
+>> +/*
+>> + * Custom struct for managing a list of secure IPL component address ranges.
+>> + * Tracks up to MAX_CERTIFICATES address ranges with an index counter.
+>> + */
+>> +typedef struct SecureIplCompAddrRangeList {
+>> +    SecureIplCompAddrRange comp_addr_range[MAX_CERTIFICATES];
+>> +    int index;
+>> +} SecureIplCompAddrRangeList;
+>> +
+>>  static inline void zipl_secure_handle(const char *message)
+>>  {
+>>      switch (boot_mode) {
+> 
+> 
 
 
