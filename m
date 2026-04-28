@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62C0FFF8868
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 15:09:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C046FF885A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 15:09:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHk2q-00025r-Nt; Tue, 28 Apr 2026 11:08:16 -0400
+	id 1wHk3Q-0003dp-Jl; Tue, 28 Apr 2026 11:08:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHk2o-00025a-OF
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:14 -0400
+ id 1wHk3M-0003N4-Fa
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHk2n-0000f0-8n
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:14 -0400
+ id 1wHk3K-0000o3-VK
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777388892;
+ s=mimecast20190719; t=1777388926;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EE6I4Y7uJB/7Fj6higSfUyqejKTnpEcfeyTTOwYcfLA=;
- b=KhsMQvf7votzs1F/epnDcfZArZqp9daL4nK0W3uGUmwAQIvdGuezzuM80FPA+OMP1dYTxn
- QnuaVfFso+rrJ2XEAfwCnPtyytYJm/iVRLB3FeEXwUpCOVH7oqT/KEr5zuWS9yVx9iLA/3
- hqOuQp3ML/EaXn+5hZ3mWBntJolKkvU=
+ bh=/4dw0TKad5+u05fn1weSA41ZKAGASs/MiPnBMcB8wio=;
+ b=PtLgB6rzyFZyTanS1vRUfYyMRaZUPvsVNQYIjbJ1BCKY7Uo/BkApsRiAF8cxLBeuHB1qVr
+ Ne2jUkPaX007ba7rEVyscB/hoRW0H8rLPtk5iD6IPtjg6tsDRT5vcvDBY2BTriPSqsQ5fJ
+ ZkVR1pDK85h44K3bepgp5vTd/hExNc8=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-aXhtddxVNryXPPctK3o0mg-1; Tue,
- 28 Apr 2026 11:08:09 -0400
-X-MC-Unique: aXhtddxVNryXPPctK3o0mg-1
-X-Mimecast-MFC-AGG-ID: aXhtddxVNryXPPctK3o0mg_1777388888
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-121-ADwhjxkFMbGUAqQifHPa1g-1; Tue,
+ 28 Apr 2026 11:08:42 -0400
+X-MC-Unique: ADwhjxkFMbGUAqQifHPa1g-1
+X-Mimecast-MFC-AGG-ID: ADwhjxkFMbGUAqQifHPa1g_1777388921
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 496F41956056; Tue, 28 Apr 2026 15:08:08 +0000 (UTC)
+ id 81F701935305; Tue, 28 Apr 2026 15:08:41 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8C74B180047F; Tue, 28 Apr 2026 15:08:06 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B12D4195608E; Tue, 28 Apr 2026 15:08:39 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com,
+Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v2 06/15] ui: rename init_keyboard_layout->kbd_layout_new()
-Date: Tue, 28 Apr 2026 19:07:16 +0400
-Message-ID: <20260428150726.1659814-7-marcandre.lureau@redhat.com>
+Subject: [PULL v2 11/15] audio: Avoid unsigned sample wraparound
+Date: Tue, 28 Apr 2026 19:07:21 +0400
+Message-ID: <20260428150726.1659814-12-marcandre.lureau@redhat.com>
 In-Reply-To: <20260428150726.1659814-1-marcandre.lureau@redhat.com>
 References: <20260428150726.1659814-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -85,98 +86,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-Use a more convential name.
+When !defined(SIGNED), nv - HALF will wrap around if nv < HALF because
+nv and HALF are unsigned. Fix it by casting nv to mixeng_real, which is
+signed.
 
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-Id: <20260423-audio-v1-1-e1d6b65c76f9@rsg.ci.i.u-tokyo.ac.jp>
 ---
- ui/keymaps.h       | 4 ++--
- ui/curses.c        | 4 ++--
- ui/input-barrier.c | 4 ++--
- ui/keymaps.c       | 4 ++--
- ui/vnc.c           | 6 +++---
- 5 files changed, 11 insertions(+), 11 deletions(-)
+ audio/mixeng_template.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/ui/keymaps.h b/ui/keymaps.h
-index e8917e56404..89bfbb2704d 100644
---- a/ui/keymaps.h
-+++ b/ui/keymaps.h
-@@ -52,8 +52,8 @@ typedef struct {
- 
- typedef struct kbd_layout_t kbd_layout_t;
- 
--kbd_layout_t *init_keyboard_layout(const name2keysym_t *table,
--                                   const char *language, Error **errp);
-+kbd_layout_t *kbd_layout_new(const name2keysym_t *table,
-+                             const char *language, Error **errp);
- void kbd_layout_free(kbd_layout_t *k);
- int keysym2scancode(kbd_layout_t *k, int keysym,
-                     QKbdState *kbd, bool down);
-diff --git a/ui/curses.c b/ui/curses.c
-index 161f78c35c3..af4ccb4227d 100644
---- a/ui/curses.c
-+++ b/ui/curses.c
-@@ -770,8 +770,8 @@ static void curses_keyboard_setup(void)
-         keyboard_layout = "en-us";
+diff --git a/audio/mixeng_template.h b/audio/mixeng_template.h
+index bc8509e423f..881653c44bf 100644
+--- a/audio/mixeng_template.h
++++ b/audio/mixeng_template.h
+@@ -43,13 +43,13 @@ static inline mixeng_real glue (conv_, ET) (IN_T v)
+ #ifdef SIGNED
+     return nv * (2.f / ((mixeng_real)IN_MAX - IN_MIN));
+ #else
+-    return (nv - HALF) * (2.f / (mixeng_real)IN_MAX);
++    return ((mixeng_real)nv - HALF) * (2.f / (mixeng_real)IN_MAX);
  #endif
-     if(keyboard_layout) {
--        kbd_layout = init_keyboard_layout(name2keysym, keyboard_layout,
--                                          &error_fatal);
-+        kbd_layout = kbd_layout_new(name2keysym, keyboard_layout,
-+                                    &error_fatal);
-     }
+ #else  /* !RECIPROCAL */
+ #ifdef SIGNED
+     return nv / (((mixeng_real)IN_MAX - IN_MIN) / 2.f);
+ #else
+-    return (nv - HALF) / ((mixeng_real)IN_MAX / 2.f);
++    return ((mixeng_real)nv - HALF) / ((mixeng_real)IN_MAX / 2.f);
+ #endif
+ #endif
  }
- 
-diff --git a/ui/input-barrier.c b/ui/input-barrier.c
-index 0a2198ca500..74724be8f45 100644
---- a/ui/input-barrier.c
-+++ b/ui/input-barrier.c
-@@ -679,8 +679,8 @@ static void input_barrier_instance_init(Object *obj)
-     /* always use generic keymaps */
-     if (keyboard_layout && !kbd_layout) {
-         /* We use X11 key id, so use VNC name2keysym */
--        kbd_layout = init_keyboard_layout(name2keysym, keyboard_layout,
--                                          &error_fatal);
-+        kbd_layout = kbd_layout_new(name2keysym, keyboard_layout,
-+                                    &error_fatal);
-     }
- 
-     ib->saddr.type = SOCKET_ADDRESS_TYPE_INET;
-diff --git a/ui/keymaps.c b/ui/keymaps.c
-index d1b3f43dc8a..6822c097be7 100644
---- a/ui/keymaps.c
-+++ b/ui/keymaps.c
-@@ -187,8 +187,8 @@ void kbd_layout_free(kbd_layout_t *k)
-     g_free(k);
- }
- 
--kbd_layout_t *init_keyboard_layout(const name2keysym_t *table,
--                                   const char *language, Error **errp)
-+kbd_layout_t *kbd_layout_new(const name2keysym_t *table,
-+                             const char *language, Error **errp)
- {
-     kbd_layout_t *k;
- 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 16dbb0cd6c2..c87d1f61a0a 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -3443,10 +3443,10 @@ void vnc_display_init(const char *id, Error **errp)
- 
-     if (keyboard_layout) {
-         trace_vnc_key_map_init(keyboard_layout);
--        vd->kbd_layout = init_keyboard_layout(name2keysym,
--                                              keyboard_layout, errp);
-+        vd->kbd_layout = kbd_layout_new(name2keysym,
-+                                        keyboard_layout, errp);
-     } else {
--        vd->kbd_layout = init_keyboard_layout(name2keysym, "en-us", errp);
-+        vd->kbd_layout = kbd_layout_new(name2keysym, "en-us", errp);
-     }
- 
-     if (!vd->kbd_layout) {
 -- 
 2.54.0
 
