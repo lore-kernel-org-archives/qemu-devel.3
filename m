@@ -4,109 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33E0CFF8864
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 02:37:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 305E8FF8867
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 02:45:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHYJ2-0004h3-2b; Mon, 27 Apr 2026 22:36:12 -0400
+	id 1wHYRb-0005zs-7O; Mon, 27 Apr 2026 22:45:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHYJ0-0004gF-FE
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 22:36:10 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ id 1wHYRZ-0005yj-4O
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 22:45:01 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHYIy-0003xQ-RM
- for qemu-devel@nongnu.org; Mon, 27 Apr 2026 22:36:10 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-ba7a1cc0380so1801885766b.2
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 19:36:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777343767; cv=none;
+ id 1wHYRX-000643-KY
+ for qemu-devel@nongnu.org; Mon, 27 Apr 2026 22:45:00 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-676d8582a13so12353187a12.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 19:44:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777344298; cv=none;
  d=google.com; s=arc-20240605;
- b=i/ph0T4N8KC4K5xodKBYv7rrbuiEjOpkcNKnCRhf/UyqHaRoans0yMcpoyYoNw3M+U
- 0nyd7tiDbPQzjdXYdro4Gu4IVEHXRq11mu6+4TkNFlLdqfuhNbJYZ7tCxsSC+HzwGVHz
- TLGocwi227/9fkNihJQfUm5EA5PW36PMhavVGs9s318/l8xvcNCQqJuagellrXV8oURI
- +ig37cqhw2HgxfPQpQazw+6Ll/sBAxjwEpBGTwQPKgSfosrkDrFA9ZUfKsa5DKBGfBit
- 6EBX1z513dD6S9qjQGpR9w3gWfyHBoYZdBrYElki2vewVe8o1lEYtKJxd0JpveEPMP6x
- FPPw==
+ b=FoCkjJcNLATA0erA9gYl7+EboW7K4MvompkCRUZOL0z+0Vcu2zsEMvz6dFX+Isb8+P
+ XqaWEyuLWyoJVUaF8EtcMgeMX2syy3kLwSsnOSHJ5Pt42L6TSrplKeBBBpK4KdxzOYEM
+ WdcaPOdcS3nTRnr03R4xYuypx/bxvJg2buTJssK2zaX3yuLg9HSlhTKhwSl1ijspz9mR
+ HB/DiY1upHTVgEF23wjZG0cPpToYGaPbwm9b4NGgILCBcyNFABE1NjGKf0EbHTJXFJRq
+ xItSwgV6TpfLdS4ZQDvTBZ5hXQrWqV1dMmhyvJlB1ZztvykLyR+cubEDdFHOWPjwoujk
+ NsFg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=jG0Y4wFgl72gA/gCs/7dJrAzHseJfY33FNGt5ks1dTc=;
- fh=0dOTIuTyzEIiTjyFATP6u7C827gDBi300AxH2fVhHVY=;
- b=UbWu2bYMxOXF+Uk+wy3p0LHRp5mt7+Hjyz49kWw2vfFf/qoj727XPFPj5f2czHMRri
- oVGdv7hXJ3OAn68sJ/aze/aWtWW5hr3+WSBXT6uAbEoBPDR/XtDawcpDeK+aicrpfnp3
- a9nKNwXlBLutEX/lWp8Or+Gc1xix18fV0wYkOmLKctXmwhcHygPgT5O7zApe4/5FCaA5
- BVWO7lVYkKX1aXR4sQEdz6C+hHmnDNw7Qu6qTDmMpI6NkhnNEVsusCfkBQLjimGjD685
- Wvmgb8JwodFQhC5Nop8FRTiJT4+UO73MzLyc7duIlyvIJZZQzBCK12ioMRSdm07MnssW
- KkrA==; darn=nongnu.org
+ bh=ozSwEU3Jc/oEuesdC9JExzdfEwYAdOyJFvm9c0u/qpQ=;
+ fh=Awic0G2EMj0AD75JUNDifFbec8MmVHu7qb8WQ6Vww7g=;
+ b=ZNF2DCVs+5QAd5EtA7GARqqur4iZoocqwrV3BDYxbzdMqlVnMzfB0pixDtYpSr+0Dx
+ Vy7mE92oD9ptGq6WwhBcyf+Onjlw0QtxHgo3CDAO63GfOX/+PVh9oRR4r4pxu3ATHuE3
+ Yz3WPBKQSSZgMK4MxEK9cd2GM/v5HxtYBYp3HhpFwGLZAzHXxw8T7zmS0MQSRvpZVLxR
+ y/oTfKGH1+c9FZET3UK+RVIQZKIgZnAUd1yl9S4K4T5cUxNh+/RAwD+EtBuCDkuoE6RD
+ eH43ujzUfjUrjtiw1iUlQzWfQTxKy4AO9PLLXWCBPEcANgX19/vcr0pLqQ/sycz6oHmO
+ 41aw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777343767; x=1777948567; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777344298; x=1777949098; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jG0Y4wFgl72gA/gCs/7dJrAzHseJfY33FNGt5ks1dTc=;
- b=icCHEXLvBDaDZZKaUpcEJW9vp7bWjnzbkFYhfM777RChpNXRP7fQ9p77DluirIA0F/
- pvYyToxaF7itEVV5qDDwCftYzkspYOH3B6Isrc4o5KCwQGxaFr6cIAfE8f3TJyCgixLc
- nrJ66tKBMj9pXkrsmUTbjmADxKIdF9eEiWzdALQx5jayuhmobILqMcJ2hIo/EgQuvnzD
- u5YnEHG7KtO4pfieqHvMGzFiDWwL1hlyKuFKsHoNSC813lHTaqT/Ns24bN//CmhrbdZ6
- 2XES55zYSdW40BOF3PTUm7W4CCQ0DIAjGtBu6CGxPDAXM9d1CAX1Y9pSe//MlWjhzJZE
- PIaA==
+ bh=ozSwEU3Jc/oEuesdC9JExzdfEwYAdOyJFvm9c0u/qpQ=;
+ b=rmZUrxzk92+TgQnkyZ54ssnYQS4QXK+80g83fulXcpWXEr5y9SzZqBhmavQNZsjV/a
+ fG1ABDAY1u6Tv+ucXTaxyc8/idpO4W1JZv7wYF1dx/ua2eyOTgzoEaiVPXLef3Or8RRE
+ hvF2np9aOWZ+Ab9SIvat6m2pcIeGIjYsxo7gyc8WHR7XQHoDV9wQ6D/HAmhbnOnc8Ea+
+ vS4TO4FPVE4bNh7Lii1xalFbYByunWMOwRrOqySzvK2ZGfWL8I/KqBLprVx4njOzc1xo
+ nYVVojrvm7/IJ99M7SVFyDfjbuYgwYXgaD7W8vHAnb2gP1MuMf2W7eKcbMVFOiGh2Pbp
+ uV9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777343767; x=1777948567;
+ d=1e100.net; s=20251104; t=1777344298; x=1777949098;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=jG0Y4wFgl72gA/gCs/7dJrAzHseJfY33FNGt5ks1dTc=;
- b=qQnn92Pq0rocQiqo4mJMOFmSmkQlKrDTkjvufcMWta8JFqVVKW5h1eGVA5k4EHsYxh
- iP5SbxnKa560Zn4BvtWwkWpDPt9mnIesvt7+jErROq+T2QxLim2VBQVLWkoqEwKoFQwp
- wLrxCT5QH/Nclb8ybQewhZ6f0cVQfEA++g0fz1MmFPL+0zibWIKS5P97UmzG5xtkBfQ0
- NSB3TCuzYOs4BYIP7fRDJa6YmefiTcrq7khngWaFPTLkHkwJO8NBxkacGi5j75kwiEg5
- PlK14/2P2r5cMocumpLN0/phGJ6kXPJz03KiCNgHA7d9BR0TnPKrla8JofoTB/b4uWL1
- DRzg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/ZE6qRIQbUp0FHsWmcRMSQYFpK9WCdgZes0qLo9T05wBUhnDUqjv+h32EZ4lJe8wLTVhypjS4SzYey@nongnu.org
-X-Gm-Message-State: AOJu0YxtWxOLj2z94BGRNNURB5MP8Vz09NkulKUhgmmR+5A5cJO0thHb
- 5zHh+apLySFgmEOB4SuW1N54avsSIhLZfEeeCCGok0ScQkeK6XUBlIzFh0uhXL91dTwu09SrFXn
- DYOafkVO96vwVU7F3Yy3aBOAUiKSTZok=
-X-Gm-Gg: AeBDietzL0JwOlBX41LUpYuMVuHsY3nXixjllSHxou5+nJT5Ly3rJi3Vn0xupinyWub
- 2g1RalyvmOTCP3A1xbg2E4xIo1MdHfrYl8UoNMjarPTj+zgyTb3EMy57n7eEItiQpfPCXYXtnmp
- jlmsFTzzLtNuN4w4t96wz2BANk2HjBYKdv2c9/CxHiljOZb6OmVVuhxhzeB8cCHb7Juh4auHqgR
- vPdBWQY36gFKygdBx96uEU9+0NjHzGOtyx7IDGmEBH4rk57pGfWs+nWbToIRPcfnfF3mZrKo1kp
- 6mvd9o+wXHpsDZS7J+mvUagmWGVKdTsOhRShj43UYMuXA6+8
-X-Received: by 2002:a17:907:6d1b:b0:b9c:3d56:e4ec with SMTP id
- a640c23a62f3a-bb8037784famr63528466b.24.1777343766983; Mon, 27 Apr 2026
- 19:36:06 -0700 (PDT)
+ bh=ozSwEU3Jc/oEuesdC9JExzdfEwYAdOyJFvm9c0u/qpQ=;
+ b=FzXthRvq4gOWx7GvmjrwpyVefgWaufsNQLyMZuIL8GUNUwoF2WViKo0LZFbVgS8TJN
+ imJO0hurRO8/wzoA0eVecBPBctO2FupS4cTuJVqX7yWSd2brO/sc12IYLhgyFEh8WloB
+ OBVmQjLz6qSE0qgT1upkWH1NCsaBIQ7T7cwg/X3N9Om7CisryI5CgADXHNc2vHLGVu8d
+ 90k6HzsFcQ4uHyiFwyXNiJdcY8gIC26tR1kUlH60ilDyfN+5VGN46BiAKgHTOR9xXO1d
+ xLtTp5c+Z/KhMTbfNNc2ud2KoGgm8U1T1qyN7nt2WBzA3Sy6zGrR9EnEwjkFym/zIKgX
+ IYmA==
+X-Gm-Message-State: AOJu0YxIxUkRmx2q935VC3nz4YuJuyew4XHOPRmOq0oBSdfANVMaV4DG
+ rkA0D5Sg446pm0YT8vpfutTXaRVPtQYLafQn1A7/KvvG+RULtpNkZzamluhhOOZFrnCsz1fyfH/
+ FX9hiamMfHY1cQC/ficbgB5YEdICXMrY=
+X-Gm-Gg: AeBDiev6fV8/l+Dr+66mFeiplHTqxjTR0P/4WCwK+3bVt2/gtCAWc9jUQistxqitkbr
+ RDyu9Ji3ZA/cNIfY/Ehfz6u9CRW1Vnul9PjZCGUlWEcC48r9N4V7s64xgyDNwQmpwoOckaD7Poq
+ r/pYEDW2SQRf4wZ4+Csgqwj+Q3I/nTINZe+hwpOdbBq+oTMuTyzf3dMM1/cs2KhiTg4YurXSTQl
+ Pvq8uQoX/vt1sUI2XGZnvOgLhvd8bZkL6E3xmAp0ZElz4NVEEz9EUzgqyZUzwU89R32BBTbhyZi
+ rEAwHjDywChEPH5ys9QFMqgLVHmGRfJi+Po1k9BEUx/sb2Ms
+X-Received: by 2002:a17:907:7b85:b0:bab:b98e:76e2 with SMTP id
+ a640c23a62f3a-bb8022c2cd7mr64387366b.1.1777344297584; Mon, 27 Apr 2026
+ 19:44:57 -0700 (PDT)
 MIME-Version: 1.0
-References: <177618728515.4917.14466194789826252277-0@git.sr.ht>
- <177618728515.4917.14466194789826252277-10@git.sr.ht>
- <CAKmqyKOKNQwNtzX+wHepEX4OpVqAA2pkXfcP18k=8Wd+8ZM06Q@mail.gmail.com>
- <460c22c9-b9bb-4e68-a793-85ddd598a311@lowrisc.org>
-In-Reply-To: <460c22c9-b9bb-4e68-a793-85ddd598a311@lowrisc.org>
+References: <20260421093715.2995067-1-frank.chang@sifive.com>
+ <20260421093715.2995067-2-frank.chang@sifive.com>
+In-Reply-To: <20260421093715.2995067-2-frank.chang@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 28 Apr 2026 12:35:40 +1000
-X-Gm-Features: AVHnY4Kd8Phtwm5J_tqLyfN1o16kaW-xw8PC0dAFa3LYWGD-LScgYrRLstupINw
-Message-ID: <CAKmqyKPJf9fV=pX2BSmy+trdQRGZeW+A+V9BOovtCqP8TEj6hg@mail.gmail.com>
-Subject: Re: [PATCH qemu v3 10/10] ot_uart: switch from clock driven
- transmission to reg R/W driven transmission
-To: Lex Bailey <lex.bailey@lowrisc.org>
-Cc: qemu-riscv@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Palmer Dabbelt <palmer@dabbelt.com>, Weiwei Li <liwei1518@gmail.com>, 
+Date: Tue, 28 Apr 2026 12:44:30 +1000
+X-Gm-Features: AVHnY4J2y5FDSSUBv2R3bVvf9h0hLDI8-c_auf3sQ0ugSfzh7kfh7EQUfUnqu90
+Message-ID: <CAKmqyKPFyoRW=sw99rCsQSEY9Ycc75+yW=e51cVLu+Z_ps0nWw@mail.gmail.com>
+Subject: Re: [PATCH v4 1/6] target/riscv: fix address masking
+To: frank.chang@sifive.com
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, qemu-devel@nongnu.org, 
- Amit Kumar-Hermosillo <amitkh@google.com>,
- nabihestefan <nabihestefan@google.com>
+ Chao Liu <chao.liu.zevorn@gmail.com>, 
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>,
+ Yong-Xuan Wang <yongxuan.wang@sifive.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -114,7 +108,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,57 +124,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 23, 2026 at 1:39=E2=80=AFAM Lex Bailey <lex.bailey@lowrisc.org>=
- wrote:
+On Tue, Apr 21, 2026 at 7:38=E2=80=AFPM <frank.chang@sifive.com> wrote:
 >
+> From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 >
-> On 16/04/2026 03:21, Alistair Francis wrote:
+> The pmlen should get the corresponding value before shifting address.
 >
-> On Wed, Apr 15, 2026 at 3:22=E2=80=AFAM ~lexbaileylowrisc
-> <lexbaileylowrisc@git.sr.ht> wrote:
->
-> From: Lex Bailey <lex.bailey@lowrisc.org>
->
-> this commit removes the need for the timer by instead transmitting from t=
-he TX
-> fifo any time it has data in it and it is enabled. This case can only ari=
-se
-> from a write to one of the registers in the UART, so the device will stil=
-l work
-> fully without the timer.
->
-> From memory the timer was included to more accurately model real
-> hardware, which doesn't write instantly and instead has a delay.
->
-> I also remember that if we don't have the timer and delay the UART in
-> Tock wouldn't work, as Tock expected a delay between writing the
-> buffers and the interrupt occurring. Have you tested that Tock still
-> works after this change?
->
-> Alistair
->
-> I have fetched and built tock and run the earlgrey tests with qemu.
->
-> I tested three scenarios:
->
-> 1. Running on the same commit hash as runs in tock's CI.
->
-> 2. Running on the commit upon which I based these changes
->
-> 3. Running with all my proposed changes included.
->
-> All three of these produce the same output, which comes through the UART =
-on the opentitan, and I have checked to be sure it is using the new code in=
- the case of scenario 3.
->
-> I'm not sure what exactly those tests do, and so I don't know if they rel=
-y at all on any of the interrupts, Is that a sufficient test? Or is there s=
-omething else I would need to test for this?
+> Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-I think you would need to run applications on top of Tock with lots of
-UART output.
-
-Why not leave the timer in as it helps more accurately model the UART?
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
+
+> ---
+>  target/riscv/internals.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+> index b001cbc080a..43b77d30f27 100644
+> --- a/target/riscv/internals.h
+> +++ b/target/riscv/internals.h
+> @@ -216,8 +216,8 @@ static inline target_ulong adjust_addr_body(CPURISCVS=
+tate *env,
+>      if (!is_virt_addr) {
+>          signext =3D riscv_cpu_virt_mem_enabled(env);
+>      }
+> -    addr =3D addr << pmlen;
+>      pmlen =3D riscv_pm_get_pmlen(pmm);
+> +    addr =3D addr << pmlen;
+>
+>      /* sign/zero extend masked address by N-1 bit */
+>      if (signext) {
+> --
+> 2.43.0
+>
+>
 
