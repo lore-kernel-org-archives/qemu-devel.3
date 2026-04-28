@@ -4,91 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA9A8FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 06:15:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F183BFF886F
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 06:16:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHbif-0005sp-Or; Tue, 28 Apr 2026 02:14:53 -0400
+	id 1wHbk8-0006u4-43; Tue, 28 Apr 2026 02:16:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHbie-0005sM-GT
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 02:14:52 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wHbk1-0006sC-O4
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 02:16:18 -0400
+Received: from mail-dy1-x132c.google.com ([2607:f8b0:4864:20::132c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHbic-0000gv-F9
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 02:14:52 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-48909558b3aso109959295e9.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 23:14:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wHbjz-000136-VJ
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 02:16:17 -0400
+Received: by mail-dy1-x132c.google.com with SMTP id
+ 5a478bee46e88-2d8ffdc31d0so2793981eec.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 23:16:15 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777356974; cv=none;
+ d=google.com; s=arc-20240605;
+ b=fX+lymzwoErFm3aJdd2ygtomp49IRSLp5vSUiLp+FthPYSaZ/iizC4tMdDgme68sY0
+ oWW+WaVLOJ5P35GwbS6iOeK+J2PhKhTZhzw4pJNOhTPm4aAIsTsZhVWVi9qBDFortVjI
+ gzlXPUEsVGFoyzW/4moDwJ8zB19RAO2jk3Hd/nmGd55BMeHO9BNuDbjcmS26Dvs25UUU
+ Gz6NCP4ESENMM5WSabBngjJIvHIPSF9QynCXaQaRohcat8jp/526vhLDXKw7LxFWaQSz
+ TLnWDdMd1C7eNqBd3D8aBSr83KtYgM4//reok97PTjsjp6RvyVbRv6UjZ9U8+HlilJAn
+ OLow==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=2dOBHRaGvuQxnPccomI7bJCXmVZwYQ5QB2PSNIreMPs=;
+ fh=lOBSB/Hs2AAkL9G+pX/8nWevA4VW0M0kVZpTB7kbXLg=;
+ b=fsW9jLXIHPyXWK0+8p7PLSVXMBPp8tUGjsN4/Prm+CtgX3CejirCaTdBR25VJCV0b1
+ Xei8r0nu/nhEvvHfDWEUhA7NWpqZAyL+TmoUElcQznKJIbnuCTTq1bJFcURdHI973TZv
+ pCeBO6Qz1F4p9J6gm48q18H7KFG9ekSz7NiQqRqQMaVurOFZE3N8AzVgCM+B8aBkM8Oh
+ 7ZbkTliRa3Tl5ogB0WRgcXKgfpNorI5UhIQG1rXJUxljHce5zzekdIpDH8D5RIC6ugWC
+ ntoGfr6S6iZ0SeXZ8w33arqqwtDI2n0U2A6WJTRVnnHJpvX+BgJEY3xlUMXeqbV3krIS
+ N0Vw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777356889; x=1777961689; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1d8TNqz2NHJG5W/9arvrmncK1DAev/rLBR9mufXqyrQ=;
- b=my4+R2oFHamuuevOrPO3yyjwsFJ2wzcp6l2xvxoDLrDzVYKYN4jKQUFSXD8xXf7V4M
- OGf9HYq6nD92OGKdy/x36BiDYKXHP+4cCl7YI+gmXJLrn9MpGgr0kc6Rekmr4mHord+a
- papqKzvufdLEtm4s2NK4RRj2mnazPRpKZgSSbFcFQn2eh0kIkZ0jOBYZsGI5uMK0M/eS
- 9eyKyHEzCcbftsq9AVLkg3w2mqDYMYF/uirc4VXZ411/H5mrHQPY9aWFVuhTgVssgtdB
- 6qVbGq6fNuUF2q0PlmXmR6yOdFxG0hIuQkn/H8HkezlbdW2BwKsSCwD4nXqhX3tya3fR
- q4Dw==
+ d=gmail.com; s=20251104; t=1777356974; x=1777961774; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2dOBHRaGvuQxnPccomI7bJCXmVZwYQ5QB2PSNIreMPs=;
+ b=MSxu2RqyQfVOLcay9dwhSThDYk7ikWfkYn4TYWigVwxjYJ6YIZW0sO6oNObUWc9Mre
+ zVVieJHj2X7qt1b55PUlHJIMP+DI6FZGcjxsh+zbLVMxvHoHnnkHVZZuvp55Bhq1lrNH
+ US8rpC/5Osez+uDwNvwZMNxMjLlZnMYk8fxpYYQrB9Rr1HX6Sem4H37ifiPtrnzWFIKs
+ iRTw0OIlXEgZkdDt9NDR1rryXTviQHYnGEHDS+0dSNhNjuzrnurLVckaQPrR1F2yFasH
+ wgZOV6Lx5wvk/vtZEDgZfiBO1/LTcl4WlQO0FePfXJ/vzxra67Bnx2QE/8giQEeaExT0
+ 2Zbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777356889; x=1777961689;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1d8TNqz2NHJG5W/9arvrmncK1DAev/rLBR9mufXqyrQ=;
- b=fRigyfM7R9IPWeLK5na82OapwlJZwz+vyrLThUEnIK9tHa/mUF5vxryje+l3U0asbc
- ywWOhAfs6C93DFC4Cg5tEOFOXOXUeIV1zFgnjNHlaoweic+p7tc0gS7GnUjDfqZVBLBA
- lillDl0N8pCq8ZUh4RYToIDBcfXmRgCPSsinN7nGYNp3pC4abToIekLiNQgncVi759B1
- Suiv5GNiGaDCJ3gZdXFlwptfjLAFrJeM4HxvID3VEAaChzM4ufxcG0Jpcr0JdrNvdel9
- MSCpYDJgDQK7dGc5Q/Sw5Yf4m0zteHlO7fGvDDEC7CpjxufYtQmuBAlsB38DTQfBVwEU
- 1dvg==
-X-Gm-Message-State: AOJu0YwTI12Knwkae0vg0lfDMlcR4eW3qOci/cXFIYbLf1xeP/iGRYXU
- yikW5GBrOciiDKfN9E49dkHQR6owcB3W5paBvwD4mi9E89qpKqja0sSqBe5ZqT63sqY=
-X-Gm-Gg: AeBDiesRBaa5f+18u+d/rjh4+nqKwh7CC3BnhZ3XkQFdfcRP0Anj/kkN8mRpM1n4B7o
- i20FvytyDKr+jwa2hocI4U6ywU3qtgXtyY/wBzPPgjUFLfygdEWcZJcmyCjlys6oF6DDO8PKbrB
- PVQGsFOo/PZ6p3CqT2f8JHAbfoZ2OG3jkMpox83fxaqD4+Jr8h2/vhzphQukY8Bk2IgwUhftdDd
- BLwEOcYefj5/WLgCkCBYxjm+0i2VGqOHw9rf1MOuVQdHb679qeGNyGKaDm6pkATRWpOMxsycOkm
- g1tC6iJD4w7Q3ako+5g8C+OOsIFkrjdB7mmSEmYTR3/Cjdp9IoNqQYQsERwOUHdyJkh+Ip1UrCr
- KFX8e2HMeydj1QGZ54c9fccWUC4oMSMyKP+h73HFPJhOF8r9XMl8v4PAQ6LiWqd++/ERyTAocve
- chHs89Cp53EfyLwpIo+NC2IqbKM6mhJO6xTS5lvvkwbTVLREkRUsV8i2YtbVES78Vm7jDhfx9ic
- jQG
-X-Received: by 2002:a05:600c:3b15:b0:487:1108:48af with SMTP id
- 5b1f17b1804b1-48a77ae5412mr26976425e9.4.1777356888561; 
- Mon, 27 Apr 2026 23:14:48 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a77aab1b4sm27180145e9.0.2026.04.27.23.14.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Apr 2026 23:14:47 -0700 (PDT)
-Message-ID: <8e86fe74-4b31-40e5-baf7-88ec7fd399a9@linaro.org>
-Date: Tue, 28 Apr 2026 08:14:46 +0200
+ d=1e100.net; s=20251104; t=1777356974; x=1777961774;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2dOBHRaGvuQxnPccomI7bJCXmVZwYQ5QB2PSNIreMPs=;
+ b=rhoEuERYYDqLB1Ph+5x3AW+Scn8QHjmvCAEY/4YekbJWC9gyA2W/WGDwS6kT/ELcl8
+ QUWJiiY3YsxsBhSsXIk2/WkzJUnvhUIG5LPEc4PNTsTzbl2HG9viF2F5f0Tv9IQri9wU
+ bG0O/y+wqOfb84eHpMkwWg93PTXOsa91suzjO4FvIYWT8F/Y6pJPcXvAB+GysC8Md4U2
+ kCsyvOt5zTPdKtCCLkKk0dILke7Kr+4ntzuW0/+HljKLRsk58hVeRK8IEYAXmbdKzOcE
+ QvA0kaZntFgpWkBQlg8HkxwxfC5VlVW1mv7QhLt9KX5G9sI3u1MxzXXUc/gP+oFvPBxr
+ o1Gw==
+X-Gm-Message-State: AOJu0YzB8kc8+JI2gsiz+c0xzZpmEEzL8v8kiAN6vAX6o6D/IX/kWVZH
+ OfB+ygBreYMePVwg2l4nkjFtBy8Li0ormCoKKquu7pmA1obFPJVQn4j6btqqreQYobatYs+gh/V
+ eTnugLND1JkNYe6i6Ny6oLLLXIj6Aq0Q=
+X-Gm-Gg: AeBDievfzKsQwHyRqn3NTrvzj7rYAy1sjfXdDTg5yK1QNjttLZXeeP5o+43kiVSI7mR
+ zd4+M6vyDB4wau3iTGCEOnliSR76m9mmDizLeJ8r0iBD2saa/+2Jq/zfpzWcBZwhz8gxVlmL3g1
+ d5REudebS10Z1Cqsh7PGwgUWWLR+Eggy71bScUKU1WLVtQpte4HZI7ocqvytHS+L7mKwczhZOv1
+ 6T+VZizj+0rcj9gY0LhrnP1miT8irvJHTko9EP7Dik2XBVMxQCOUzeVWQXT2o0O1cpxz28Xssfp
+ Qu9H5pV3vfh74ziYT3Tv4Gg3BS1BcW5uMuwUryJbl455on/XLX8=
+X-Received: by 2002:a05:7300:73c7:b0:2e6:e504:5435 with SMTP id
+ 5a478bee46e88-2ed0a015a63mr879217eec.12.1777356974100; Mon, 27 Apr 2026
+ 23:16:14 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/41] hw/pci-host/i440fx: handle NULL bus in pci-hole64
- getters
-Content-Language: en-US
-To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com,
- "Michael S. Tsirkin" <mst@redhat.com>
-References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
- <20260427-qom-tests-v1-4-c413f3605311@redhat.com>
- <d48730e4-2034-4245-a671-9d2dbd72b1a3@linaro.org>
- <CAJ+F1C+ginfPqr3K4yYpnhC++SDt6Z0YBH92aTexiMHZpsX6dg@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAJ+F1C+ginfPqr3K4yYpnhC++SDt6Z0YBH92aTexiMHZpsX6dg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+References: <20260427223928.2742270-1-luc.fast2004@gmail.com>
+In-Reply-To: <20260427223928.2742270-1-luc.fast2004@gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 28 Apr 2026 10:16:01 +0400
+X-Gm-Features: AVHnY4JvwDhkzLh3hsw8skf9bQ9lbpQq6XEnVo-sr1AW0bKIGAMEek6IOmV5Nqs
+Message-ID: <CAJ+F1C+fKiDfVOC1JTNeZiX2rY22+1CdaHi_t84JJaf_=tU4vA@mail.gmail.com>
+Subject: Re: [PATCH] hw/audio/fmopl.c: Convert malloc, free to g_malloc0,
+ g_new and g_free
+To: Lucas Cardoso <luc.fast2004@gmail.com>
+Cc: qemu-devel@nongnu.org, kraxel@redhat.com, qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132c;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,52 +116,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/4/26 08:10, Marc-André Lureau wrote:
-> Hi
-> 
-> On Tue, Apr 28, 2026 at 1:01 AM Philippe Mathieu-Daudé
-> <philmd@linaro.org> wrote:
->>
->> On 27/4/26 21:42, Marc-André Lureau wrote:
->>> When called on an unrealized i440FX host bridge (e.g. from
->>> qmp_qom_list_properties), h->bus is NULL since the root bus is only
->>> created during realize. Guard against this in both
->>> pci_hole64_start and pci_hole64_end getters, reporting an error.
->>>
->>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
->>> ---
->>>    hw/pci-host/i440fx.c | 15 +++++++++++++--
->>>    1 file changed, 13 insertions(+), 2 deletions(-)
->>>
->>> diff --git a/hw/pci-host/i440fx.c b/hw/pci-host/i440fx.c
->>> index e7d638b296c..6952094510d 100644
->>> --- a/hw/pci-host/i440fx.c
->>> +++ b/hw/pci-host/i440fx.c
->>> @@ -189,8 +189,14 @@ static void i440fx_pcihost_get_pci_hole64_start(Object *obj, Visitor *v,
->>>                                                    const char *name,
->>>                                                    void *opaque, Error **errp)
->>>    {
->>> -    uint64_t hole64_start = i440fx_pcihost_get_pci_hole64_start_value(obj);
->>> +    PCIHostState *h = PCI_HOST_BRIDGE(obj);
->>> +    uint64_t hole64_start;
->>>
->>> +    if (!h->bus) {
->>> +        error_setg(errp, "bus not realized");
->>
->> "PCI host bridge not realized"?
-> 
-> Ok
-> 
->>
->> But calling a getter at this point is a programming error IMHO.
->>
-> 
-> We don't have a way to prevent calling getters when objects are just
-> instantiated but not yet in some "clean" state. Since this can be
-> triggered at run-time by QMP, we better return an error than doing
-> assert() or crash.
+On Tue, Apr 28, 2026 at 3:48=E2=80=AFAM Lucas Cardoso <luc.fast2004@gmail.c=
+om> wrote:
+>
+> In accordance with QEMU's coding style guidelines, replace raw memory
+> allocation functions (malloc/free) with their GLib equivalents
+> (g_new/g_malloc0/g_free).
+>
+> Also removes the old generic error-handling code from
+> OPLOpenTable(), since the Glib functions abort the program automatically
+> if memory is exhausted.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1798
+> Signed-off-by: Lucas Cardoso <luc.fast2004@gmail.com>
 
-Yeah I know, thus no objection, but still I'm wondering if this is
-a good design. Maybe running introspection tests should be restricted
-to a particular QEMU mode, like x-pre-config?
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+> ---
+>  hw/audio/fmopl.c | 41 +++++++++++------------------------------
+>  1 file changed, 11 insertions(+), 30 deletions(-)
+>
+> diff --git a/hw/audio/fmopl.c b/hw/audio/fmopl.c
+> index a63ad0f04d..aeefc4c9fe 100644
+> --- a/hw/audio/fmopl.c
+> +++ b/hw/audio/fmopl.c
+> @@ -607,26 +607,10 @@ static int OPLOpenTable( void )
+>         double pom;
+>
+>         /* allocate dynamic tables */
+> -       if( (TL_TABLE =3D malloc(TL_MAX*2*sizeof(int32_t))) =3D=3D NULL)
+> -               return 0;
+> -       if( (SIN_TABLE =3D malloc(SIN_ENT*4 *sizeof(int32_t *))) =3D=3D N=
+ULL)
+> -       {
+> -               free(TL_TABLE);
+> -               return 0;
+> -       }
+> -       if( (AMS_TABLE =3D malloc(AMS_ENT*2 *sizeof(int32_t))) =3D=3D NUL=
+L)
+> -       {
+> -               free(TL_TABLE);
+> -               free(SIN_TABLE);
+> -               return 0;
+> -       }
+> -       if( (VIB_TABLE =3D malloc(VIB_ENT*2 *sizeof(int32_t))) =3D=3D NUL=
+L)
+> -       {
+> -               free(TL_TABLE);
+> -               free(SIN_TABLE);
+> -               free(AMS_TABLE);
+> -               return 0;
+> -       }
+> +    TL_TABLE =3D g_new(int32_t, TL_MAX * 2);
+> +    SIN_TABLE =3D g_new(int32_t *, SIN_ENT * 4);
+> +    AMS_TABLE =3D g_new(int32_t, AMS_ENT * 2);
+> +    VIB_TABLE =3D g_new(int32_t, VIB_ENT * 2);
+>      ENV_CURVE =3D g_new(int32_t, 2 * EG_ENT + 1);
+>         /* make total level table */
+>         for (t =3D 0;t < EG_ENT-1 ;t++){
+> @@ -696,10 +680,10 @@ static int OPLOpenTable( void )
+>  static void OPLCloseTable( void )
+>  {
+>      g_free(ENV_CURVE);
+> -       free(TL_TABLE);
+> -       free(SIN_TABLE);
+> -       free(AMS_TABLE);
+> -       free(VIB_TABLE);
+> +    g_free(TL_TABLE);
+> +    g_free(SIN_TABLE);
+> +    g_free(AMS_TABLE);
+> +    g_free(VIB_TABLE);
+
+To make this function idempotent, I would rather use
+g_clear_pointer(), but that might not be necessary
+
+>  }
+>
+>  /* CSM Key Control */
+> @@ -1081,11 +1065,8 @@ FM_OPL *OPLCreate(int clock, int rate)
+>         /* allocate OPL state space */
+>         state_size  =3D sizeof(FM_OPL);
+>         state_size +=3D sizeof(OPL_CH)*max_ch;
+> -       /* allocate memory block */
+> -       ptr =3D malloc(state_size);
+> -       if(ptr=3D=3DNULL) return NULL;
+> -       /* clear */
+> -       memset(ptr,0,state_size);
+> +    /* allocate memory block and zero-initialize */
+> +    ptr =3D g_malloc0(state_size);
+>         OPL        =3D (FM_OPL *)ptr; ptr+=3Dsizeof(FM_OPL);
+>         OPL->P_CH  =3D (OPL_CH *)ptr; ptr+=3Dsizeof(OPL_CH)*max_ch;
+>         /* set channel state pointer */
+> @@ -1128,7 +1109,7 @@ void OPLDestroy(FM_OPL *OPL)
+>         }
+>  #endif
+>         OPL_UnLockTable();
+> -       free(OPL);
+> +    g_free(OPL);
+>  }
+>
+>  /* ----------  Option handlers ----------       */
+> --
+> 2.51.0
+>
+>
+
+
+--=20
+Marc-Andr=C3=A9 Lureau
 
