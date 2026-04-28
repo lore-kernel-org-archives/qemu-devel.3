@@ -4,127 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7155FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 14:29:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC253FF8868
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 14:34:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHjRG-0002fg-4y; Tue, 28 Apr 2026 10:29:26 -0400
+	id 1wHjVN-00041R-Da; Tue, 28 Apr 2026 10:33:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wHjRE-0002dJ-9j
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 10:29:24 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wHjRC-0005gC-6r
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 10:29:23 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-65c0891f4e9so18916157a12.1
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 07:29:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777386560; cv=none;
- d=google.com; s=arc-20240605;
- b=g2xuKrDuLTOC/AH4W46wpyzKBiRpcTwOMTYM2GuX3G3bUoVRg9TKPwAk9UCai+1V1k
- zvvPYyZ3jzhA2v755EWrthnlALmNWV9HW/yZ4+KJ5LxyjtQn49TT0HCV9KD9iCbuRqKj
- dA8+kcWCjfdPsjQhUn4FdJnz7QrImeq2QwrCujyYgvJfIT6dF2pB0EgoIeiPzTWRmeFz
- 1e4SK5RIcitmHFCYNlTwPx3jnLekHvGb5V5Y70BBVfSkZftOTHBMcpNZswvoaqdP4ptr
- Rp7Ow0QijyqVPj/DhOrA9ECIHGgq3hX97M1hCAMQbzNY/5iHxfoCMVTU870m+xjMsCxj
- fYZQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=YcyG/1F3nXUVyq31n88lbs9OsX49y2JqeErrMkFMYi8=;
- fh=inp2XsE/DZ7vK5DmmrRMrmm7e0WoAwpRuNF3uVrFuWk=;
- b=KtjK0phSDphc9uuqpPKS91rVqzV1bnjamxNxBITDA4mbSE4ZQoPgx1essC1g6UE2MT
- rnAKAghHjZVZif1LIl4u8j5QfnDVOibYvzj3iu2ngHtNvpbphJsU9jFNWczhl/XH89Gt
- NbGmkLgHDfIjyhO66DNwgZF0LvRGUTygqK6ZjpDzwFiab1KypLNV6T/H/YwQoOpJlVng
- syiwMKLLySIdA6Xt+FCuon56b/WVQrCnj1mLBbyp9uTMqUuudzZJcFSCE4FfgfEpZD53
- 1zJdd0LiRcrYWf6w2QhRC2R8ZA9mKmfW0oE/8fyLIlSECQ1ETVqoSiLNiEcqrHdbv5pG
- IwhQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wHjVL-00040n-3W
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 10:33:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wHjVJ-00070c-1p
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 10:33:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777386813;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nVhn3Bas0XxWNFNq81Q/o41h6X8ghQ3uHBVk2tXWazA=;
+ b=RIRr7DBazMnzvv7FVTwOiZoM8UWNEHauarz4xVEPYLt0puv0jlAHWZ1IgSvWhdyDjC8uFM
+ t+Xzef2daRXF3QBDBO9KyLEvQz9T+42htoEpozK9e5Ivj0XfBgjt166A4HvUbH5OfjPTh9
+ sTY71QMFniTfj+lQ92Dnp42Vne+IWZQ=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-417-4_zUEu2UM6CKE8yfqrVWQA-1; Tue, 28 Apr 2026 10:33:31 -0400
+X-MC-Unique: 4_zUEu2UM6CKE8yfqrVWQA-1
+X-Mimecast-MFC-AGG-ID: 4_zUEu2UM6CKE8yfqrVWQA_1777386810
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-4411a529bc0so7280099f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 07:33:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777386560; x=1777991360; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YcyG/1F3nXUVyq31n88lbs9OsX49y2JqeErrMkFMYi8=;
- b=NGrfE9IQEsf39ObF2S7YpX4yhuzOGdGpI64tFMdpxkAO5kqvU8RYYQp4r4zcIf54mJ
- YLzqW9r34QgnAE4CqkvEqHvb5u7NGbQvp31So9jV7LBanxkaTxxmX/+LAF5bWeMPdUfP
- OI7m/cE/9M44klC+j4JWXluSkcTGPwwqqEWIaq6H1tCLbrYHBzsORA3hzMdg3jV3vMUe
- GvRP26hkHvuHGQ5WuwnCvzd8mNbBQlpyQPDEIR8EhdG9sqzEhReqQqieCIHqDs+vH7Gf
- ire7b6pm2Vxba1O9n0QVlNWD6A4GMKP9bufYQI2rKdGRK4zKgTe1M7M0+qPNz0WlKDNQ
- hYTw==
+ d=redhat.com; s=google; t=1777386810; x=1777991610; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=nVhn3Bas0XxWNFNq81Q/o41h6X8ghQ3uHBVk2tXWazA=;
+ b=clWUhlkEsO/r8RtbgepgnhX/CIwXS+XQAWCZneb/uR99JshpY7rLg9RWoqOFh8TnaM
+ M9jQDHcEyXBO8d8JQhFUrVtIiH8uyiY8KDdfwoe2B3bg6FVcMMXr+6IVux7mQj864su0
+ zBLepPk2V6ICNBfSyVbk0KlOiTXz1xEPF5qPr7eviqgD3eXOvu/gnCUoQW5DkbevIfhQ
+ 4Oarnl7qjy5Hw8sUkjpyFhSaNIaBTuFcRNBOKCYLOXb+wOuKUXkUvx3f4Pea4fP4lC/b
+ BCTYjcTLQQLZhP2hNm+Xf1AlG3wVijD14Tr/tD3YhhUv0QB5x6N+4IDGzUkRQ6JUwbeF
+ 0fQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777386560; x=1777991360;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=YcyG/1F3nXUVyq31n88lbs9OsX49y2JqeErrMkFMYi8=;
- b=KlotfZoCxkQuh+49A0v7I295qNrbhNaNsNNnz6B2T3ORudtpeQtgZVNx0RDcX7nLSS
- RHnp+oJpOIxDrtF83bsz+9sTD1qGNaxeryVRFDglxwrtubvPH26u3aFvvVQCL4G6QMGx
- IZ/LCZba+BJKWqwHIITQuUOxCz1OUFZQODp7CzOBnXDlbk45XQFC7gVolKJBqrEtnzGr
- GYl3jBOUPmvjIzM1Y01Hsgnw9QBgb6Z9KQ61S80NI0XG5SIDR8JFtzHt2ZAd+nfleZkM
- IWPXNmuVnJnyzvQ8hVstbugf8RsIII2sRnsVyQvinKhphdwtuo+wFD+FgiTiWfb6XcNM
- 7V0Q==
-X-Gm-Message-State: AOJu0Yy2M6uTA538P1uda0+oV5bw4SHYezo2ncuVuzVmDrCN5qOj3Psj
- Re7OoutZ48Wvv8+6nv6UWiW6985pGaIep7hW1StHCltSH2kOVxXWKmNoxGdkbx0NavpRaChtVUz
- 8chDjFIXJosxf0ug0dUv+aEH39Od2pq8=
-X-Gm-Gg: AeBDievqdJaZUwP6w01Ax7KrJd0kQqQpqgE5njpZ/qxMJxWTJf9Ra4WItt+E2BxhcbC
- TuIHEOE/qMv5n27unmy+pB5zerixZRy1hMdIcVpzxJRU2ikBQFZLig/trvyUCZ/uINqJ5rpVI9/
- 6bQMhDa0ZLxgLcqZTX9rnKQ2nhJUSCZFUxupb8Byzs+CBn/nV5gnVtxg3Is18X9NHfg/SXByTZY
- B2zJirHXOiwaGgX05VD0JWQxHWxK7kRlyWCcW1HTgPY/m6XNi0Kqt2xDqabpejVa7A7+6b3pOHX
- N/sdFa7Nv45wm3OLgakgmMUrn30M4hzcc4Y6cJgckXIuTxGa2CgY2JT5rR4=
-X-Received: by 2002:a17:907:c783:b0:ba7:a94d:af83 with SMTP id
- a640c23a62f3a-bb803873d27mr206683366b.31.1777386560049; Tue, 28 Apr 2026
- 07:29:20 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777386810; x=1777991610;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nVhn3Bas0XxWNFNq81Q/o41h6X8ghQ3uHBVk2tXWazA=;
+ b=oJoOG1Foi01/FFJevzduUxI9hgAUnRWttQGAK5Unh9jXG6iiQMCy/mq5amAZRYwSUt
+ k1BBdQgyKPJmb/tIolgdif1NwOvqhuLp0UY2p8BxBRwvri8clefYbqL910OxxTQ+MF7K
+ 9CcnZDln4Pfg/CXIn4HMXlLuhAB6Bn5DVJFopmjuJfhoQ9KY9iYhB/o7cF8Pdu+leK48
+ 72dMHMt9qvQshcPDbb0AOMJLlDxs8SWNetfK4yzjKzVlUxhkAAZou4Qw3eSLF+EbNgfx
+ FhjfxH+sUXMciSdxs0oXhGB+b3UB8hS9l0cN19AvF1QjTdSgWuiaKckajz+vcEHJl+71
+ GVrA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+NfHfoSxy+vcoHQxOz7frRXtEFXSqVdOdwlsY3qNGSk7DtZyiINGOoqowEtOH+x8DeYLrp4gaNcajY@nongnu.org
+X-Gm-Message-State: AOJu0YxkF0pIxhkTBuq7HYkYrIDywzstYLT0RcZwyHM2fLYzxvFxK2CY
+ /CYA5lg/Lk3OENX/W6EegZqNrlCPk5DCnE9sCWiRtTLe8zRshqV7heQ/2eEbAlBF6iIZnN9cWZz
+ swN8c/FNPUdBkjTDPEXNnRhSL1YJsdbB8yRhqFvqnkq+S4tuHMC1VElzc
+X-Gm-Gg: AeBDietAHOHraYiVlW3VcVzEtWRjRhY/0TpYSShlH1Zty2tPhHPOKWzRiogjZFabTBv
+ zNfd9VAGEulJp2Xy6WhtDuyTTgSwu7vpu1X213U9XCfBX/SDif33imMumnJzBkUG+xZFNZ6DCSQ
+ T4anbJmyXtY3nIu0X2ofH4QopzQ+YjYPSPyOuetSMEntBDX6g3Z2yK1ycJmWyqfNCfUsKWPMYXk
+ FMPICy7yiMGFTeSpDjCGKHyy+rTi49v1lRCpdd3WuAr7FSHAI3paTUF6CbX98+pqa1ovPwd8Oac
+ JllUAxUa3Bn+WuaGYxWrzfZQSVV7NOzvJGvWsYDAI2ajhxxm2urCfjxqmzmEeJUZNl1x/vHHwZJ
+ oZyTXitxagoCfTryVR2WXEBFABwh4K+XSMN3so5v008b1v2Zqkly3GitmizUeuMTVhwaVTTwCAF
+ tgFb4eXw==
+X-Received: by 2002:a05:600c:1d0a:b0:488:f453:b976 with SMTP id
+ 5b1f17b1804b1-48a77b2051fmr57560535e9.27.1777386809547; 
+ Tue, 28 Apr 2026 07:33:29 -0700 (PDT)
+X-Received: by 2002:a05:600c:1d0a:b0:488:f453:b976 with SMTP id
+ 5b1f17b1804b1-48a77b2051fmr57559755e9.27.1777386808925; 
+ Tue, 28 Apr 2026 07:33:28 -0700 (PDT)
+Received: from sgarzare-redhat (host-87-16-204-83.retail.telecomitalia.it.
+ [87.16.204.83]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a77b289a0sm52021815e9.12.2026.04.28.07.33.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Apr 2026 07:33:28 -0700 (PDT)
+Date: Tue, 28 Apr 2026 16:33:23 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Jorge Moreira <jemoreira@google.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, hreitz@redhat.com, 
+ gmaglione@redhat.com, "Michael S . Tsirkin" <mst@redhat.com>, 
+ Hanna Czenczek <xanclic@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] vhost-user.rst: Explicitly allow front-end to write to
+ kick FDs
+Message-ID: <afDClLiylMgvPiUn@sgarzare-redhat>
+References: <20260411021205.3592118-1-jemoreira@google.com>
+ <aeYvCK2qhZd1W9sA@sgarzare-redhat> <20260420181818.GC405461@fedora>
+ <CAJi--PPzd_fqcsBU-aA11624apoKTtEW6GTKE3_OyZ4SJ90DzA@mail.gmail.com>
+ <20260421211237.GC466778@fedora>
+ <CAJi--PP6gsR5E7RtQ_RwV8fG9Xivk0fXTfNxWuZ6cX+uWBPV=A@mail.gmail.com>
+ <CAGxU2F7UJhbikjFKMgMcFenFx35vmic-hj4pFm7vM0-gk-nCyg@mail.gmail.com>
+ <CAJi--PNoJmei-076Y5geaft98w-nB3OFK2e093EWkN+ZTaQK1Q@mail.gmail.com>
+ <20260427224545.GH218226@fedora>
+ <CAJi--PPPVc3-z8G3E_qucWhE4bn7hdKYJK4iOcP0Db4tUAw8zQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20260428081303.990973-1-marcandre.lureau@redhat.com>
- <20260428081303.990973-9-marcandre.lureau@redhat.com>
- <CAJSP0QUjFupVz1uXuxgxbvTrmf_gqzV6tSg1tmuq_Lp7qGVyjw@mail.gmail.com>
-In-Reply-To: <CAJSP0QUjFupVz1uXuxgxbvTrmf_gqzV6tSg1tmuq_Lp7qGVyjw@mail.gmail.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 28 Apr 2026 10:29:06 -0400
-X-Gm-Features: AVHnY4JxfR5X49sh3f0xQOBGO5skCikVufW4qo03US3ycxLQlGj8SojUzT_-PqQ
-Message-ID: <CAJSP0QUvg38ga-JeXVxRHxYFTyPjo7QZV2bOBAd7iosrqFJKYQ@mail.gmail.com>
-Subject: Re: [PULL 08/15] ui/console: return completion status from gfx_update
- callback
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, 
- Jan Kiszka <jan.kiszka@web.de>, Phil Dennis-Jordan <phil@philjordan.eu>, 
- Richard Henderson <richard.henderson@linaro.org>, Helge Deller <deller@gmx.de>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
- Samuel Tardieu <sam@rfc1149.net>,
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
- Aleksandar Rikalo <arikalo@gmail.com>, Laurent Vivier <laurent@vivier.eu>, 
- Thomas Huth <th.huth+qemu@posteo.eu>, BALATON Zoltan <balaton@eik.bme.hu>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Stefano Stabellini <sstabellini@kernel.org>, 
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- Alistair Francis <alistair@alistair23.me>, Alex Williamson <alex@shazbot.org>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- "open list:Musicpal" <qemu-arm@nongnu.org>,
- "open list:sam460ex" <qemu-ppc@nongnu.org>, 
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJi--PPPVc3-z8G3E_qucWhE4bn7hdKYJK4iOcP0Db4tUAw8zQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.109,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,32 +134,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 28, 2026 at 10:28=E2=80=AFAM Stefan Hajnoczi <stefanha@gmail.co=
-m> wrote:
+On Mon, Apr 27, 2026 at 03:48:44PM -0700, Jorge Moreira wrote:
+>On Mon, Apr 27, 2026 at 3:45 PM Stefan Hajnoczi <stefanha@redhat.com> wrote:
+>>
+>> On Wed, Apr 22, 2026 at 12:20:52PM -0700, Jorge Moreira wrote:
+>> > On Wed, Apr 22, 2026 at 1:32 AM Stefano Garzarella <sgarzare@redhat.com> wrote:
+>> > >
+>> > > On Wed, 22 Apr 2026 at 03:16, Jorge Moreira <jemoreira@google.com> wrote:
+>> > > >
+>> > > > On Tue, Apr 21, 2026 at 2:12 PM Stefan Hajnoczi <stefanha@redhat.com> wrote:
+>> > > > >
+>> > > > > On Mon, Apr 20, 2026 at 05:48:13PM -0700, Jorge Moreira wrote:
+>> > > > > > While starting the vrings on SET_VRING_KICK could solve the state
+>> > > > > > machine issue, it still won't notify the back-end that buffers are
+>> > > > > > ready (the driver won't do this). Non-polling back-ends depend on this
+>> > > > > > kick, especially for queues where data flows only from the driver to
+>> > > > > > the back-end. Most implementations likely attempt to read from the
+>> > > > > > queue only after receiving the kick.
+>> > > > >
+>> > > > > This is an interesting question to clarify in the spec.
+>> > >
+>> > > Yep, which is in part related to what I wrote in the other reply:
+>> > > "I think the main issue to clarify is what the device should do
+>> > > when the vrings are configured, but the driver has already been
+>> > > initialized (which is usually the case after migration)."
+>> > >
+>> > > > >
+>> > > > > Stefan
+>> > > >
+>> > > > This is the question that interests me most, to be honest. I'd rather
+>> > > > have the discussion about when to activate the vrings in a different
+>> > > > thread and keep this one focused on whether the front-end should send
+>> > > > the kick or if the back-end is expected to check if there are "new"
+>> > > > buffers in the vring after restore.
+>> > > >
+>> > >
+>> > > IMO we don't need anything from the VMM. When the device receives
+>> > > SET_VRING_KICK, it can check if the vring already contains buffers
+>> > > (and this is the part we might need to clarify) and wake-up the other
+>> > > threads (or always wake-ups them, as crosvm does IIUC, and let them
+>> > > perform this check).
+>> > > After sending the SET_VRING_KICK message to the device, the VMM has
+>> > > the exact same knowledge of the vring state as the device, therefore,
+>> > > it's still unclear to me why we need to inject that kick.
+>> > >
+>> > > Stefano
+>> > >
+>> >
+>> > Is it possible to activate a vring after it has been deactivated with
+>> > VHOST_USER_GET_VRING_BASE? If yes, does the front-end need to send the
+>> > kick file descriptor again with VHOST_USER_SET_VRING_KICK to
+>> > reactivate it?
+>>
+>> Hi Jorge and Stefano,
+>> Yes, VHOST_USER_GET_VRING_BASE -> VHOST_USER_SET_VRING_KICK occurs when
+>> a VM is paused and then resumed.
+>>
+>> You can stress test this by driving I/O using iperf (virtio-net) or fio
+>> (virtio-blk) inside the guest and sending 'stop'/'cont' commands to
+>> QEMU's monitor.
+>>
+>> Here is QEMU's code for starting (including re-starting) rings:
+>> https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost.c?ref_type=heads#L1341
+>>
+>> QEMU does not inject a kick. The back-end must check the rings itself.
+>>
+>> I'm not sure that all vhost-user back-ends actually check the rings. I
+>> think back-ends should do it, but we should also update the spec with an
+>> front-end implementation note recommending injecting a kick after
+>> VHOST_USER_SET_VRING_KICK completes in order to maximize compatibility
+
+Okay, but since, as we've seen, no frontend currently implements this, 
+we need to make it clear that a backend shouldn't necessarily expect the 
+kick injected from every frontend, but should support it in some way 
+since some of them can inject it.
+
+IMHO especially new backend implementations shouldn't rely on the kick 
+injection.
+
+So, to summarize:
+- the frontend should also send a kick to restart the queues
+- the backend should restart the queues after VHOST_USER_SET_VRING_KICK, 
+   but it might also receive a kick
+
+>> with implementations that follow the current spec wording. And at the
+>> same time I think the spec should also be changed to say that
+>> VHOST_USER_SET_VRING_KICK starts the ring and back-ends SHOULD check the
+>> vring upon processing the message.
+
+Yep, I think we are aligned.
+
+>>
+>> That seems like it would clean up the issues without introducing
+>> compatibility issues or making existing implementations non-compliant
+>> with the updated spec.
+>>
+>> What do you think?
+
+LGTM!
+
 >
-> Hi Marc-Andr=C3=A9,
-> This patch changes the .gfx_update callback prototype and fails to
-> compile due to the following recently-merged commit:
+>Sounds good to me
 >
-> commit 5ef60a3787e8e0dccf30dae3704d4f5249160e7d
-> Author: Yucai Liu <1486344514@qq.com>
-> Date:   Sun Apr 12 19:02:39 2026 +0800
->
->     hw/display: Add i.MX6UL LCDIF device model
 
-For reference, here is the CI build failure:
+@Jorge do you want to propose this change?
 
-../hw/display/imx6ul_lcdif.c:221:19: error: initialization of =E2=80=98_Boo=
-l
-(*)(void *)=E2=80=99 from incompatible pointer type =E2=80=98void (*)(void =
-*)=E2=80=99
-[-Wincompatible-pointer-types]
-221 | .gfx_update =3D imx6ul_lcdif_update_display,
-| ^~~~~~~~~~~~~~~~~~~~~~~~~~~
-../hw/display/imx6ul_lcdif.c:221:19: note: (near initialization for
-=E2=80=98imx6ul_lcdif_graphic_ops.gfx_update=E2=80=99)
+Thanks,
+Stefano
 
-https://gitlab.com/qemu-project/qemu/-/jobs/14124076225
-
-Stefan
 
