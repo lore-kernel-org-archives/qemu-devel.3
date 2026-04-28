@@ -4,89 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98B5DFF885A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC4CBFF8868
 	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 13:36:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHibS-0005We-96; Tue, 28 Apr 2026 09:35:54 -0400
+	id 1wHibZ-0005ZJ-Rn; Tue, 28 Apr 2026 09:36:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
- id 1wHdhg-0004lv-PU
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:22:00 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
- id 1wHdhf-0000SA-2b
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:22:00 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-35fc2b18363so11749846a91.0
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 01:21:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777364517; x=1777969317; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5iH/8nHXuDSaocTzGMvuAMz0SIDQSlYOBoUtR+nV0VA=;
- b=enUmztD7fA8dzlJPdnlOCAxhsLPxq5U3W5IVOkvFglrXlbK/hzP42JsKNj7BEVhKoN
- wdCMWDyaA8tFjf9tGVD49LwJmW1dgJSkOMnbSzXGluep52jwAHU/fliYFUkFB7zA55PK
- HNBS/2CF4bUHwEwo44eONPuTvgsuoSO3E2hmaqh2YUfv4sdUIuaiaGeIz6Kp1ugI54Vk
- XkPixZJlpoIIKiAp87yIMtzVjNc2VM7sxXrpZ66YzomPqIqaXIAe60JMKz+Egnhcl3N7
- tNO36Xb8oJmzXrK2OCtmRzXS87Y6lhOuKX+hp947/y0hXflGSzbt6Tln7yHTUmj4pfzR
- lyug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777364517; x=1777969317;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=5iH/8nHXuDSaocTzGMvuAMz0SIDQSlYOBoUtR+nV0VA=;
- b=Skumsmf3C6XLjOucJkdT0xh8qOiKy8tzRqER0nVc3/AWICBxoGiSOgbEySFoh47YtS
- tUKz36ynDMMHdit4KAad43+rSioijn9KPxP3i7cOa0+c1i+WEmgI1xaYKKy6tWkPf0jq
- tp21ts3/3EB2JMRSA1Xgu6hGdJjDc3L4PnP235/epT4PrQagY3kcRLZexlve6gST9sEs
- qwJGllggWVsYBJ66uH8djiVC8yI+lht8zWb85DQ23kHgEXuJ2QID6zQA/ztvgXGQfuGz
- YqdLv6Qc3cxhH/c2KcwjG8j/kYSQc5raFyF4H0rz1nnSHDsUm6OPICsIkZaX6TLgeD3a
- qZsQ==
-X-Gm-Message-State: AOJu0YxF6Na2aHExgLRRHfKSB/JltHwLlOCvQWt1/Pz2pvyTKBTq/h8q
- KJ9htxDlZuHT19oqLV2sXemV3CCE7wWKp7lhIGtwvjmY6TMFo85r8TGgfsEhSW/Z
-X-Gm-Gg: AeBDieuzuqQsJJGfc3tVDRFzJaOZx1wcnMEkTN8nEaIy+lxdnVVBBgO4WPACCbQ3wD6
- 34ft7DcqFv0t6Smka6HQUBdGYjaYjz6o4rXZtAOXrOg99aoEuB6sTEN/CbHth2sjE7TTKlqsMHP
- TVYjW0iSqwwRSkE/8QNS6UlX0uSjy0KL5gCNVWrKNp2j8DQyhKeahAEVow7VxD/EsGRbxOwAk6U
- KgA+bTWOoLv928UMaZZ3HoHugpKMdkJ1aWq2VtaaRNSfq8z9gDOopS4SB7WJtWO+BWWLKqmwPzM
- TI2kTyngDSNWXkm0GCd3hRqVP4U+v6mnhPjABUpwBjx1C99Erm2lHU13LM0VqNOyDAt5dJJMTlo
- lgWecrRouhGTN8Fjla6xoXiuqZ30q7gTLMSZ53vRPP2biUM6YbaM6F03b1/1ayr1U2u7SXFVb8a
- OJB+QHGk63tA1Ib/VajKkK/lRVAdcjeLTbm3FfHvR34vMOpX5PmsA=
-X-Received: by 2002:a17:90b:3850:b0:35a:329:73d8 with SMTP id
- 98e67ed59e1d1-36491ff66cdmr2288267a91.4.1777364516774; 
- Tue, 28 Apr 2026 01:21:56 -0700 (PDT)
-Received: from localhost.localdomain ([114.249.134.218])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-36490fbc41bsm2065290a91.13.2026.04.28.01.21.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Apr 2026 01:21:56 -0700 (PDT)
-From: Jia Jia <physicalmtea@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>,
- qemu-stable@nongnu.org
-Subject: Please ignore my [PATCH] 9pfs: fix deep path truncation in V9fsPath
-Date: Tue, 28 Apr 2026 16:21:51 +0800
-Message-Id: <20260428082151.3234483-1-physicalmtea@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260428074614.3169999-1-physicalmtea@gmail.com>
-References: <20260428074614.3169999-1-physicalmtea@gmail.com>
+ (Exim 4.90_1) (envelope-from <Gautam.Menghani@ibm.com>)
+ id 1wHfoN-0003hE-Na; Tue, 28 Apr 2026 06:37:03 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Gautam.Menghani@ibm.com>)
+ id 1wHfoL-0008KB-To; Tue, 28 Apr 2026 06:37:03 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63S8Y6G2036865; Tue, 28 Apr 2026 10:36:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=Fmr4fsjDCSje8LaRXFevkKK/e5kpy7KbCEwat6mo5
+ wg=; b=WT6d33Xg1CjkMnPYjgKqeINiniulyzxCJVQ7rhyyW03sB7fnG7ksRJ2TN
+ m84GYQLI7D1sJGNHcuKlsuHLWrct8J+hA1XqLJ0RwOCwFfiU5IwLCikH3SxILPCc
+ WpW+cgfpBU/hLmPx/o8nCQNc6nSHzidFwiD7umA+72hIRapu/0GamfA68KoVpbUw
+ xoQvJnSalu3va487ZhqYf5Yl24DUjueyuz2WIB0E6xs5uNKds7rpStQ3utpv6ZJf
+ 63fWb/X8mhvZLiZL8UUYlbEeS9QoV6CP6lM7lHlQm/Ifv0sa7m836ym2Cr/F0k5Q
+ JHk/bnQuAqTGKsjUTP7uR7E7CkYfw==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drm1duw9a-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Apr 2026 10:36:58 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63SANvJ5001198;
+ Tue, 28 Apr 2026 10:36:57 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dsamy917p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 28 Apr 2026 10:36:57 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63SAareX60621098
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 28 Apr 2026 10:36:53 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8F6692004B;
+ Tue, 28 Apr 2026 10:36:53 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D712220040;
+ Tue, 28 Apr 2026 10:36:51 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.43.36.19])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 28 Apr 2026 10:36:51 +0000 (GMT)
+From: Gautam Menghani <Gautam.Menghani@ibm.com>
+To: npiggin@gmail.com, harshpb@linux.ibm.com, adityag@linux.ibm.com
+Cc: kiki <Chan9Yan9@gmail.com>, qemu-ppc@nongnu.org, qemu-devel@nongnu.org,
+ Zexiang Zhang <chan9yan9@gmail.com>, Gautam Menghani <gautam@linux.ibm.com>
+Subject: [PATCH v2] hw/intc/xics: Add a check for an invalid server id
+Date: Tue, 28 Apr 2026 16:06:44 +0530
+Message-ID: <20260428103645.50617-1-Gautam.Menghani@ibm.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=physicalmtea@gmail.com; helo=mail-pj1-x102c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: niRNXtms5A0aSykIOvL3piamIEvrHa-I
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDA5MSBTYWx0ZWRfXya1fBzqhH+Z0
+ JdHCadIdHXuPao0K31kzLe5R17Wou/7mCyKPqyZjDlysAg2Sl09EarhV8BO6Kf+u6OkSM7SPF0a
+ dkQ4WAGvB4QaLULFLZKiEOoa+M878gU8TIt4X6wta24nmbU3dQ9tG47uAFDrl9nLXdaJyM+jOZF
+ HpVMRXS1gPNV+8iIEl4sXieezYh25z0NByTwXSUCZMQfQNtupZGar4PlrnyGWxwbzVgg1gtCHe1
+ FVs2ELbD+lYAF8OyXakHn3RCkQnTGbUdiM5L0RuSVXhwIniQ9fzgEpef07t6mrVmYV2lWoVzd/v
+ eGoanjFGiZ8HSlQ94E3oGm3QHf6KfZFV2RxhnUQJlptpvjO4kunNqK93BJe1EoM52Ci/CxYfqeo
+ Bf+sOimb49JunIVBC2kh9MfmKX924okg8NehCh+JIbwX2E+67HaRoeaYqFLC5vDFnyfFNAEthva
+ 85zEpcJ0p8rGuzKZQLA==
+X-Authority-Analysis: v=2.4 cv=VZLH+lp9 c=1 sm=1 tr=0 ts=69f08dca cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8
+ a=gDGxtpEj6ED9AaWiFCkA:9
+X-Proofpoint-GUID: UrssTfQayPXaH2P0i-Va2YOmuDEpzajl
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-28_02,2026-04-21_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 suspectscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
+ spamscore=0 malwarescore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604280091
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=Gautam.Menghani@ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 28 Apr 2026 09:35:52 -0400
+X-Mailman-Approved-At: Tue, 28 Apr 2026 09:36:00 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,16 +117,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+From: kiki <Chan9Yan9@gmail.com>
 
-Please ignore my [PATCH] 9pfs: fix deep path truncation in V9fsPath.
+A malformed IVE value can result in an invalid server field being
+passed to icp_irq(). The function assumes the server id is valid and
+may access invalid state otherwise, potentially leading to a crash.
 
-Sorry. This issue has already been submitted, and the existing GitLab
-report already includes a concrete fix proposal:
-https://gitlab.com/qemu-project/qemu/-/work_items/3358
+Fix this by validating the server id before using it and ignoring
+invalid values.
 
-Please ignore my patch, and sorry for the noise.
+Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
+Signed-off-by: Zexiang Zhang <chan9yan9@gmail.com>
+Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+---
+v2:
+1. Fix build error and subject line
 
-Thanks,
-Jia Jia
+ hw/intc/xics.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/hw/intc/xics.c b/hw/intc/xics.c
+index c0a252d051..e32984e9fc 100644
+--- a/hw/intc/xics.c
++++ b/hw/intc/xics.c
+@@ -26,6 +26,7 @@
+  */
+ 
+ #include "qemu/osdep.h"
++#include "qemu/log.h"
+ #include "qapi/error.h"
+ #include "trace.h"
+ #include "qemu/timer.h"
+@@ -222,6 +223,13 @@ void icp_irq(ICSState *ics, int server, int nr, uint8_t priority)
+ 
+     trace_xics_icp_irq(server, nr, priority);
+ 
++    if (!icp) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XICS: invalid server %d for IRQ 0x%x\n",
++                      server, nr);
++        ics_reject(ics, nr);
++        return;
++    }
++
+     if ((priority >= CPPR(icp))
+         || (XISR(icp) && (icp->pending_priority <= priority))) {
+         ics_reject(ics, nr);
+-- 
+2.52.0
+
 
