@@ -4,60 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03410FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 13:36:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98B5DFF885A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 13:36:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHibT-0005Wm-Uj; Tue, 28 Apr 2026 09:35:55 -0400
+	id 1wHibS-0005We-96; Tue, 28 Apr 2026 09:35:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gs_liugan@163.com>)
- id 1wHdrg-00088S-46; Tue, 28 Apr 2026 04:32:20 -0400
-Received: from m16.mail.163.com ([117.135.210.3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gs_liugan@163.com>)
- id 1wHdrZ-0004Ay-9Z; Tue, 28 Apr 2026 04:32:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
- s=s110527; h=From:To:Subject:Date:Message-ID:MIME-Version; bh=nd
- INuL6QIvXx9NNGe9DLNHQgIRcEsSwATo/VEV4bvgc=; b=eOi4rsRL7Tddem8R/u
- pAx64XiyAalnpSC/G07nFxBA+l4WOS16/fS6BZK7oz78iMK7rP/GNJgIWKjVzGmt
- 6NKJ22IcHR8OAcSKeT0vCQCvvUdz9jeNAb+i11Am9Su0LwbHAYjoZBa7fLETuhh1
- g8Vh7Sa9y3z82E28Xh2iNMZ1U=
-Received: from PC-YLX4Y6J2.company.local (unknown [])
- by gzga-smtp-mtada-g1-1 (Coremail) with SMTP id
- _____wCHeop0cPBplDlxCA--.30779S2; 
- Tue, 28 Apr 2026 16:31:49 +0800 (CST)
-From: liugan1 <gs_liugan@163.com>
+ (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
+ id 1wHdhg-0004lv-PU
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:22:00 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
+ id 1wHdhf-0000SA-2b
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:22:00 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-35fc2b18363so11749846a91.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 01:21:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1777364517; x=1777969317; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5iH/8nHXuDSaocTzGMvuAMz0SIDQSlYOBoUtR+nV0VA=;
+ b=enUmztD7fA8dzlJPdnlOCAxhsLPxq5U3W5IVOkvFglrXlbK/hzP42JsKNj7BEVhKoN
+ wdCMWDyaA8tFjf9tGVD49LwJmW1dgJSkOMnbSzXGluep52jwAHU/fliYFUkFB7zA55PK
+ HNBS/2CF4bUHwEwo44eONPuTvgsuoSO3E2hmaqh2YUfv4sdUIuaiaGeIz6Kp1ugI54Vk
+ XkPixZJlpoIIKiAp87yIMtzVjNc2VM7sxXrpZ66YzomPqIqaXIAe60JMKz+Egnhcl3N7
+ tNO36Xb8oJmzXrK2OCtmRzXS87Y6lhOuKX+hp947/y0hXflGSzbt6Tln7yHTUmj4pfzR
+ lyug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777364517; x=1777969317;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=5iH/8nHXuDSaocTzGMvuAMz0SIDQSlYOBoUtR+nV0VA=;
+ b=Skumsmf3C6XLjOucJkdT0xh8qOiKy8tzRqER0nVc3/AWICBxoGiSOgbEySFoh47YtS
+ tUKz36ynDMMHdit4KAad43+rSioijn9KPxP3i7cOa0+c1i+WEmgI1xaYKKy6tWkPf0jq
+ tp21ts3/3EB2JMRSA1Xgu6hGdJjDc3L4PnP235/epT4PrQagY3kcRLZexlve6gST9sEs
+ qwJGllggWVsYBJ66uH8djiVC8yI+lht8zWb85DQ23kHgEXuJ2QID6zQA/ztvgXGQfuGz
+ YqdLv6Qc3cxhH/c2KcwjG8j/kYSQc5raFyF4H0rz1nnSHDsUm6OPICsIkZaX6TLgeD3a
+ qZsQ==
+X-Gm-Message-State: AOJu0YxF6Na2aHExgLRRHfKSB/JltHwLlOCvQWt1/Pz2pvyTKBTq/h8q
+ KJ9htxDlZuHT19oqLV2sXemV3CCE7wWKp7lhIGtwvjmY6TMFo85r8TGgfsEhSW/Z
+X-Gm-Gg: AeBDieuzuqQsJJGfc3tVDRFzJaOZx1wcnMEkTN8nEaIy+lxdnVVBBgO4WPACCbQ3wD6
+ 34ft7DcqFv0t6Smka6HQUBdGYjaYjz6o4rXZtAOXrOg99aoEuB6sTEN/CbHth2sjE7TTKlqsMHP
+ TVYjW0iSqwwRSkE/8QNS6UlX0uSjy0KL5gCNVWrKNp2j8DQyhKeahAEVow7VxD/EsGRbxOwAk6U
+ KgA+bTWOoLv928UMaZZ3HoHugpKMdkJ1aWq2VtaaRNSfq8z9gDOopS4SB7WJtWO+BWWLKqmwPzM
+ TI2kTyngDSNWXkm0GCd3hRqVP4U+v6mnhPjABUpwBjx1C99Erm2lHU13LM0VqNOyDAt5dJJMTlo
+ lgWecrRouhGTN8Fjla6xoXiuqZ30q7gTLMSZ53vRPP2biUM6YbaM6F03b1/1ayr1U2u7SXFVb8a
+ OJB+QHGk63tA1Ib/VajKkK/lRVAdcjeLTbm3FfHvR34vMOpX5PmsA=
+X-Received: by 2002:a17:90b:3850:b0:35a:329:73d8 with SMTP id
+ 98e67ed59e1d1-36491ff66cdmr2288267a91.4.1777364516774; 
+ Tue, 28 Apr 2026 01:21:56 -0700 (PDT)
+Received: from localhost.localdomain ([114.249.134.218])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-36490fbc41bsm2065290a91.13.2026.04.28.01.21.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Apr 2026 01:21:56 -0700 (PDT)
+From: Jia Jia <physicalmtea@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- liugan1 <liugan1@lixiang.com>
-Subject: [PATCH] hw/intc/arm_gicv3: Fix NS write to ICC_AP1Rn_EL1 when prebits
- < 7
-Date: Tue, 28 Apr 2026 16:31:18 +0800
-Message-ID: <20260428083119.1400110-1-gs_liugan@163.com>
-X-Mailer: git-send-email 2.50.1
+Cc: Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>,
+ qemu-stable@nongnu.org
+Subject: Please ignore my [PATCH] 9pfs: fix deep path truncation in V9fsPath
+Date: Tue, 28 Apr 2026 16:21:51 +0800
+Message-Id: <20260428082151.3234483-1-physicalmtea@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260428074614.3169999-1-physicalmtea@gmail.com>
+References: <20260428074614.3169999-1-physicalmtea@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wCHeop0cPBplDlxCA--.30779S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxJF1fGw1DWry7tw1ftFW5Jrb_yoWrAFykpF
- s3G34fur4kt3WSvwsxtF4UZFyF9FZ5XF45CrsrK34UCrn8AF18Xw4akFyYk34jkr4DJF1a
- qrn0vrWkuFZ8XFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
- 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jCQ6LUUUUU=
-X-Originating-IP: [220.248.55.69]
-X-CM-SenderInfo: xjvbzxhxjd0qqrwthudrp/xtbC5BbP-WnwcHZjxQAA35
-Received-SPF: pass client-ip=117.135.210.3; envelope-from=gs_liugan@163.com;
- helo=m16.mail.163.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=physicalmtea@gmail.com; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 28 Apr 2026 09:35:54 -0400
+X-Mailman-Approved-At: Tue, 28 Apr 2026 09:35:52 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,98 +101,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: liugan1 <liugan1@lixiang.com>
+Hi,
 
-The existing code uses a blanket `regno < 2` check to make
-ICC_AP1R0_EL1 and ICC_AP1R1_EL1 writes from Non-secure code WI
-(Write Ignore) when EL3 is present. This is intended to prevent
-NS code from claiming active interrupts in the Secure priority
-range, which could block Secure interrupt delivery.
+Please ignore my [PATCH] 9pfs: fix deep path truncation in V9fsPath.
 
-However, that check assumes prebits=7 (4 APR registers), where the
-NS priority range (128..255) maps entirely to AP1R2/AP1R3. Since
-commit 39f29e599355 ("hw/intc/arm_gicv3: Use correct number of
-priority bits for the CPU", first in 7.1), all QEMU AArch64 CPUs
-are initialised with gic_pribits=5 (one APR register), so NS
-priorities map to AP1R0 bits [16:31]. Blanket WI of the entire
-AP1R0 register prevents NS code from clearing its own NS active
-priority bits. Machines using hw_compat_7_0 (e.g. virt-7.0) still
-force pribits=8 via force-8-bit-prio and are therefore unaffected.
+Sorry. This issue has already been submitted, and the existing GitLab
+report already includes a concrete fix proposal:
+https://gitlab.com/qemu-project/qemu/-/work_items/3358
 
-A concrete consequence observed in virtualisation scenarios: when
-a guest VM acknowledges an SPI interrupt but does not perform EOI,
-is force-killed and restarted, the new guest's attempt to clear
-the residual active state by writing ICC_AP1R0_EL1=0 is silently
-ignored. The running priority (RPR) remains stuck at the old
-interrupt's priority, preventing all equal-or-lower priority
-interrupts (including timer interrupts) from being delivered, and
-hanging the guest.
+Please ignore my patch, and sorry for the noise.
 
-Fix this by computing the exact Secure/NS boundary within the APR
-bank based on prebits. For registers entirely in the Secure range,
-keep the WI behaviour. For the register that straddles the
-boundary, preserve only the Secure bits while allowing NS bits to
-be modified. For registers entirely in the NS range, allow full
-write access.
-
-The new logic produces identical behaviour to the old code when
-prebits=7, preserving existing behaviour for machines that use
-force-8-bit-prio.
-
-Fixes: 39f29e599355 ("hw/intc/arm_gicv3: Use correct number of priority bits for the CPU")
-Signed-off-by: liugan1 <liugan1@lixiang.com>
----
- hw/intc/arm_gicv3_cpuif.c | 35 +++++++++++++++++++++++++++++++++--
- 1 file changed, 33 insertions(+), 2 deletions(-)
-
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index fcb3922fa0..921d1fdfde 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -1869,9 +1869,40 @@ static void icc_ap_write(CPUARMState *env, const ARMCPRegInfo *ri,
-      * at a priority outside the Non-secure range (128..255), since this
-      * would otherwise allow malicious NS code to block delivery of S interrupts
-      * by writing a bad value to these registers.
-+     *
-+     * The NS priority range (128..255) maps to APR bits starting at
-+     * aprbit = 0x80 >> (8 - prebits). Depending on prebits, this boundary
-+     * may fall within AP1R0 or AP1R1, so we cannot simply WI the entire
-+     * register. Instead we calculate which bits within each register
-+     * correspond to the Secure range and preserve those, while allowing
-+     * NS code to modify only the NS range bits.
-+     *
-+     *   prebits=4: num_aprs=1, NS starts at AP1R0[8]
-+     *   prebits=5: num_aprs=1, NS starts at AP1R0[16]
-+     *   prebits=6: num_aprs=2, NS starts at AP1R1[0]
-+     *   prebits=7: num_aprs=4, NS starts at AP1R2[0]
-      */
--    if (grp == GICV3_G1NS && regno < 2 && arm_feature(env, ARM_FEATURE_EL3)) {
--        return;
-+    if (grp == GICV3_G1NS && arm_feature(env, ARM_FEATURE_EL3)) {
-+        int ns_start_bit = 0x80 >> (8 - cs->prebits);
-+        int ns_start_regno = ns_start_bit / 32;
-+        int ns_start_regbit = ns_start_bit % 32;
-+
-+        if (regno < ns_start_regno) {
-+            /* This entire register is in the Secure range: WI */
-+            return;
-+        } else if (regno == ns_start_regno && ns_start_regbit > 0) {
-+            /*
-+             * This register is split: low bits are Secure, high bits are NS.
-+             * Preserve the Secure bits (below ns_start_regbit) from the
-+             * current value, and take the NS bits (at and above
-+             * ns_start_regbit) from the written value.
-+             */
-+            uint32_t secure_mask = MAKE_64BIT_MASK(0, ns_start_regbit);
-+
-+            value = (cs->icc_apr[grp][regno] & secure_mask) |
-+                    (value & ~secure_mask);
-+        }
-+        /* else: regno > ns_start_regno, entire register is NS: allow write */
-     }
- 
-     if (cs->nmi_support) {
--- 
-2.48.1
-
+Thanks,
+Jia Jia
 
