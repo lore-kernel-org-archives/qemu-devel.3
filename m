@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A8DAFF886F
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 17:21:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F81BFF886F
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 17:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHm7o-00040m-8g; Tue, 28 Apr 2026 13:21:32 -0400
+	id 1wHm7w-00041w-47; Tue, 28 Apr 2026 13:21:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1wHm7n-00040e-2v
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:21:31 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1wHm7u-00041o-Ah
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:21:38 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1wHm7l-0002nz-NY
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:21:30 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-43d7650202fso8752153f8f.2
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 10:21:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shorne@gmail.com>) id 1wHm7t-0002rB-0F
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:21:38 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-488a88aeec9so143358475e9.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 10:21:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777396884; x=1778001684; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=kNowD0TcLYhrB4CuZH19TpRiJOZYqasUwam8Xxvtx38=;
- b=exPAF5yZrAT/IRxcnC99Gj5REn25JqbrhJrFRZJe4L0Pt44NyGGRtu8vRpccWWj7gQ
- fBThluETh48mk21+pnK0nzr5281NSpUZiIggat9E6hR9RPgMadnzkFmw2+g383DGy+wu
- sF5S0t4+D+rJ3AhKZBpO4mOVUsE/Y2S9TxnntBciXazxpOHmky3dAPe/+9rDlDF1b2m/
- xbRblEz2GXgMQfOM6cvMBSjKqBNeukjiJjTbWPq4qUKKYemUsLXqjAwam7euwtwws83i
- 82/a6ggtfaIwSQDfW7nXfU6XsFL0ZjPATaSa94PCnm7oO1v48/WuP+7RPLmJd9IQpz/1
- o4IQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777396884; x=1778001684;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1777396894; x=1778001694; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kNowD0TcLYhrB4CuZH19TpRiJOZYqasUwam8Xxvtx38=;
- b=aALjhv5xhSDIRCghzcHvmqJ6Y/dJRfNpUYwd364JZBzjhREdGvkmaJfJcRPcIbN+IM
- U4lMb6NO6IRQBnRIzv8dNiLS28AS8/GU7zbWdTMb7M8j/w+c/QdelxbYTc8DQqeBAPsw
- jg4AAxa4yMOcfmu/6ueaJAHnRYvsbD8VokoWResFEYmM/iCU6hWD8bSzexACKm/7/0lG
- eZPnakhoxHhKDuY+QDlz03vyr1dyyXDSZu9ZOa0K0b4rcXIcv8L/jO+cndROd4hIZ2M/
- RFQG9RPNBWR1DIVKS5eU+CI5BIH4LOhLu0Wa9eTAmGADOJkJ5bGg6imH1elcNrM1T9zz
- P8Pw==
-X-Gm-Message-State: AOJu0Ywo0DUr0OZbiUBfPuU//z6OHtzx48g+APeOHMdzcBZraaDB3jmI
- d72X/uDBLnGhq+FWZetFaGhHMB0iUBUS/epJirnANBHqBInWsgkDg/G7pYJoqMDX
-X-Gm-Gg: AeBDievs6Gx2akO/6ZB5sUSXDpTDgRzE2XH+YR2Fo0GYFGSj1n916501W71JEGOj+4S
- YA/lODRLw5thgmKb+6gD2HAisaQ6SihtJjOUNcnYo3k1pUHbO75+rGPGPghNxQMdT8brSxsW7z/
- cqDcdJblugOTdMdJEu6Dk+paEyh/OyZK3YKP5Ce3X1V4PgDkMlCabiR6svLTnsSupNqVIm6OSyt
- mWekgT775+zYut+GJrCqeGknGUhkpojCsu4Wvx/+KpwEzZdjTYP3x+phv+54acpjCdybCYSf/6W
- Rbp8AImEmIUguHfeAqed/hnRscudNgvFGKbq8kxHsVnyLU/ESwDKRNiT0eb11E6S5Kwfafz26PJ
- v3PYzXb/9oeu+9rTC9DaGqKrxH2sR4tJbxG0RyLN9QCGuegpvVhZYsBRnUwp3WJqyI1jNIuHYwt
- 7N+bnioN8CS+kNahxXy4C5cVgkpCLxgnttD5JaZd5/9gpq/9ELhBOHUwUIO5xlC1EeYX8fSNKRg
- Jjb0L5gCH4RSWL/
-X-Received: by 2002:a05:6000:2007:b0:43d:50c:6f33 with SMTP id
- ffacd0b85a97d-446494ea060mr7114729f8f.26.1777396883748; 
- Tue, 28 Apr 2026 10:21:23 -0700 (PDT)
+ bh=RmGOYhAGLse9yeus0Owfrm0ZcexMp7LbBCY4UT6PZys=;
+ b=O0FNrf6DnWjWH3N0swv0Izls+kS5FJTbTzX8bDzeFoWCdL8vfOjcha5xFYZGQGqo4U
+ R2F064Qmyhj2PdH2v7BxfW/tnZJ02DARYiOdrAkHYnMc1EwcQf1NS3Yh6ksGexu9pFyH
+ bmkHiof1+XDm4R3/cpG7cU1TOIp5xJuuZPxe/LZUGqmMf6f2S/h9zYZ/k5JpHwJnmjwY
+ tCrAqP8DluMsB5rbXDsKgyiXR0VgCtPe9AiisCE1Rmp7dCqgtYplv9x4V0BKKHXqc6Rb
+ FyloUzX4AQ20Ba5tX9CQ7Rp5QucP9W0j9uLD76t1dWwFiqSWcosgY4bqy2srHSVuD1Pr
+ kT/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777396894; x=1778001694;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RmGOYhAGLse9yeus0Owfrm0ZcexMp7LbBCY4UT6PZys=;
+ b=YXp3WeJoUAAAmhsbuWARA1vuWjfUYbRkt93xIXIdj0a+lMlrxb1xgNp7RlcPHPPC5a
+ J1GsRe/GDhuFooipfyoRjuxyCOJ9dvx6fOdHpzK4OqgjhwzgoO6VRllNfCC8D9MEFmDI
+ hEvKaKMqRxo0Ms/sUOXg4rlzs3ouUz7ziqPEZe2xAkUfV5Ru1V3K6ZnYyTWwsSG2CrbW
+ lpj3XZETowv6cm16nwL2D+biqm34AHaBh6gnBIrXIMtgqfcnMG87+0Q84g1otN5J0zSy
+ qCFJRz1DZmi0jCSh04k0sy/3UWgZf0MReXvsj9X0GOCQs16vUtKJwGO3tqRdHTli/8Mo
+ 9/Zw==
+X-Gm-Message-State: AOJu0Yyn9nhvcJd7oI035K2YeMRPUDA34BDaXrE854M9MZdwyK4PvVaM
+ Y4lMZcsLdCI6y/U5qiYhANWVdT8cxvGNMvOJq+EiHW31pa86y9m0b6GoR9lmuNNw
+X-Gm-Gg: AeBDieuQJEzedup2Z9lxd1pHAG8vM2Js5n33auAXAFNnzL96IUOFNB2PJXgAvqm94XG
+ vvj/u3CRndcGYJ0h9rE+7Y9eNskJq0ZlO6LO6wQci8iveI+ihqrzH9dUqc0wxdgvlN7dyfOnzaP
+ 0torew678dklIdBR3IUB/0uJRxn2zXuCvQDCVKbtJFPcA7sCXdWI4LmI3YRm9Lx9i1mD7mqD6z+
+ TL82+0/iYfxm/J4fv2MGjUkBRq4lNUB/eRIsCudHUN9Q7dZo+SF3ROL9semK84yPwm4GUuj88QW
+ u6jg40H1Q4Y3Lo3eLgD3/aNzXg8jWTSGC/S/LSZe48KrNt+GhaxEgDmfJNp8pLQLtAk3QKq1ZDM
+ 2G07oZ4TGIsluc6mDBA5PQheGQ+ruXDaDknUAF9FSTIxzKx+6chTg3EMQGbybVToiGP+bGFCdvF
+ AGK67KHV4IW6OOVKDCy79kjy1l4U6TIU6sFj7OeGxO1mhbvLkwMBepr7WjMEIstzMdt2F7RtaOC
+ 513OFkVtHJiPfz5
+X-Received: by 2002:a05:600c:3b8a:b0:48a:56de:d640 with SMTP id
+ 5b1f17b1804b1-48a77b0a367mr70786875e9.16.1777396893535; 
+ Tue, 28 Apr 2026 10:21:33 -0700 (PDT)
 Received: from localhost
  (brnt-04-b2-v4wan-170138-cust2432.vm7.cable.virginm.net. [94.175.9.129])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4463d02f35csm9197860f8f.11.2026.04.28.10.21.22
+ 5b1f17b1804b1-48a7b900af7sm900415e9.1.2026.04.28.10.21.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Apr 2026 10:21:22 -0700 (PDT)
+ Tue, 28 Apr 2026 10:21:30 -0700 (PDT)
 From: Stafford Horne <shorne@gmail.com>
 To: QEMU Development <qemu-devel@nongnu.org>
 Cc: Linux OpenRISC <linux-openrisc@vger.kernel.org>,
  Peter Maydell <peter.maydell@linaro.org>, Stafford Horne <shorne@gmail.com>
-Subject: [PATCH 0/2] MAINTAINERS: Add myself as OpenRISC board maintainer
-Date: Tue, 28 Apr 2026 18:20:53 +0100
-Message-ID: <20260428172055.1525176-1-shorne@gmail.com>
+Subject: [PATCH 2/2] MAINTAINERS: Add myself as the OpenRISC virt maintainer
+Date: Tue, 28 Apr 2026 18:20:55 +0100
+Message-ID: <20260428172055.1525176-3-shorne@gmail.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260428172055.1525176-1-shorne@gmail.com>
+References: <20260428172055.1525176-1-shorne@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=shorne@gmail.com; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=shorne@gmail.com; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,16 +100,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the recent changes from Peter I realized the OpenRISC board maintainers were
-not properly documented.  Add myself and ensure virt is properly listed.
+I defined the virt board but didn't realize there is a separate section
+for listing boards in MAINTAINERS.  Add myself as maintainer.
 
-Stafford Horne (2):
-  MAINTAINERS: Add myself as maintainer for or1k-sim
-  MAINTAINERS: Add myself as the OpenRISC virt maintainer
+Signed-off-by: Stafford Horne <shorne@gmail.com>
+---
+ MAINTAINERS | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
- MAINTAINERS | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 44207949d7..e9807fe6c7 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1516,6 +1516,12 @@ F: hw/intc/ompic.c
+ F: hw/or1k/or1k-sim.c
+ F: tests/functional/or1k/test_sim.py
+ 
++virt
++M: Stafford Horne <shorne@gmail.com>
++S: Odd Fixes
++F: docs/system/or1k/virt.rst
++F: hw/or1k/virt.c
++
+ PowerPC Machines
+ ----------------
+ Bamboo
 -- 
 2.53.0
 
