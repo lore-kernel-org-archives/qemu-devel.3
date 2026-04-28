@@ -4,105 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7BB5FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 07:04:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB24FF886F
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 07:05:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHcUC-000738-Ri; Tue, 28 Apr 2026 03:04:00 -0400
+	id 1wHcVL-0007VT-Tk; Tue, 28 Apr 2026 03:05:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wHcU6-00072M-VL
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 03:03:55 -0400
+ id 1wHcVJ-0007V5-Kz
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 03:05:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wHcU5-0007Va-Bm
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 03:03:54 -0400
+ id 1wHcVI-00084m-1f
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 03:05:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777359831;
+ s=mimecast20190719; t=1777359906;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QyawPg9Aq3lbS5XDVMpEjzlUp1HDzjTtjnuHaBu5e2c=;
- b=gCCghBXOijgyvRJH+22uyM1qWMLtO3Weaww+YnUE8SVXGqtkbIf+w/duq54VQxiEs3Qc9a
- 8yksTrSMsNUxXsMzUNHxvZS91zSO5MkPBNWQIMka+Lrr83mQh78REbh05spiK4iXaVDaML
- zlXXx/kWMw/+Jqybv0dX14qk3yN5qDs=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+wmsyHNiym4ZauabkM84A/vR/ijgjrBaGACcvxDnE3o=;
+ b=f1u7pw+nthsqEwFAi5xeqH3J2IW4tx0sdMgelmvO8wf1HBuMseljNOCmbyesAg7dmW9/jT
+ CBPzM1HUw1CgguDoTygXRmm0ku092s2i72RuS+Re2bPfJxpUp3Mca4rImSUi210l5TRXq+
+ d5bdwQ5ewOlvVPSW+r6kgYYnptDkP1M=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-56-Wn1CRznnPSiT9fsNDaRlJg-1; Tue, 28 Apr 2026 03:03:50 -0400
-X-MC-Unique: Wn1CRznnPSiT9fsNDaRlJg-1
-X-Mimecast-MFC-AGG-ID: Wn1CRznnPSiT9fsNDaRlJg_1777359829
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8b1f39c5827so133798426d6.1
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 00:03:50 -0700 (PDT)
+ us-mta-260-b8YM6PdQMmCvVg1WADjnwA-1; Tue, 28 Apr 2026 03:05:04 -0400
+X-MC-Unique: b8YM6PdQMmCvVg1WADjnwA-1
+X-Mimecast-MFC-AGG-ID: b8YM6PdQMmCvVg1WADjnwA_1777359904
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8d3ea68b9cdso2122227285a.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 00:05:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777359829; x=1777964629; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777359904; x=1777964704; darn=nongnu.org;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:reply-to:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=QyawPg9Aq3lbS5XDVMpEjzlUp1HDzjTtjnuHaBu5e2c=;
- b=c+HiNqRApbKnxUNPuOAf1EZZ2OLGz7iYj70LtzrT0GPbe2mT7LHG4JWXvZzGxyEYE2
- TzyPv+n8EZHNpTafROTpml9l2tqVAc+DTTDcl7liWAdP/LPq4yV/7YMtKC0+R3NdHugy
- TuoG09hjZXlcyJcqyrqMvg3jatiCz23OnblOxtei7+R0A6IuXM0Qt7Yp+mekwIumj4fo
- edjJeoDS6n7CCmft2lPjcHXPkkk2yQoth/bxER/7HYnHuJeq+yxAy0Wsn0fo38RG/NSW
- fiX55A28DgwvXWMxaC1NvWaaHE0sTyPbSz7voanmV3BAJz47TySPyF+yGvrCPQB5C1Ab
- xTFA==
+ bh=+wmsyHNiym4ZauabkM84A/vR/ijgjrBaGACcvxDnE3o=;
+ b=QBaGAeAi33ndKw0zMdVOyOoiRoePE/4FXbefAohQDfMZbLXH20alf1t2iIpIUujGFj
+ q2aHKRWJCKDQyKKxjfiMxLXEcIoGUJesbEJNRcJ/xuBjgUxzQumZOSzZVfa99ee8P0Ad
+ EhpHW0QQt9lbq6pbltDKDvL8lYA4E2zfgBX/0vKP11gF7GBG2WebxAgsgYaRdhVo2UIo
+ PpviQnireLZTqIsPSJZrLtZ4p20kMm/mt/YghDQhyn+grpIjWRLKc3Ut3YxeEsnuCo16
+ 7/ShH0LIhm5gEhKw2jGbNlpCqc/4pnVPEidi1asB1ly2wmYl/Ss20mnNKeMF2ffmmOnL
+ CJBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777359829; x=1777964629;
+ d=1e100.net; s=20251104; t=1777359904; x=1777964704;
  h=user-agent:in-reply-to:content-transfer-encoding
  :content-disposition:mime-version:references:reply-to:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QyawPg9Aq3lbS5XDVMpEjzlUp1HDzjTtjnuHaBu5e2c=;
- b=ONyailM5N8vvuz0yBQBdA8vWfJfX6rMNPLFO49Ua1xgSi+IHisNbaCDCQilL3JdtP6
- uSccuyA7LVoJAc8K1Mw45Xk1x1F9ZKG6mCWvs60EImw4T7pHh8+hRyR3YYtgVlgYfIxm
- kArh+jvdpPn9d6IKl8wM0XPyw7YvMt0D5qWhJW35nRb05+JKDBqtr7FNSydk3k5/fqbS
- OsXlBjpLdvxTE2VUEWsOszkMnvB2ntxk9TpNgKkopg15ABNyTDY+yFaz+PvMtei8TeVY
- HzAEBmormPRo2DYKD3H9nz7ZN6lNwwQZxrmZ9Sx/9KwJknwzVi10NJiPgD2b+uGU1UJ5
- KQdw==
-X-Gm-Message-State: AOJu0YyUjy2haClA5QnKuqA7BYEQ/oUc9ICnSU5LyTtuJzzLzuDZQtVS
- mOVvmHAZJrMHRekbSInOHNPdG8oWaUtSnZO5ZqOHeUMWvmPvtMSlvlvAiJBRHKvbRHZLG+yCkyc
- +ayfhLkjQnFdsWR23errNTYqWvSbN6ta6eWTIERYHNx+U/E728epUkKV9
-X-Gm-Gg: AeBDies7ewcus6enD2bPsHVc/X61jH9k75xcMFM9iCT64qW/wTs6UkXWMHDisjW/TyQ
- AytJJNpBdkYoEZbj0ScQpYVpe9Po0G/vHOfj57xABrIVLR5p+SEmdhSO2uHCRMpwMoJcZXEbCxO
- /Z+Hx+bVgvjO1Ba5RVx0YOwkeLOIJHVahvZlh9a55T/soGe20qc4lp/KU1Ah6o3tx6W5IV78YVl
- QOzCjTxmrQNg3xfYIOqMQ/RZ2YPbF8fjh/52Wbj16SebYX1PBNS9v8lEIfCtUzvggKppnXzejwb
- 9FLojeuUFPgCwoS8GHSxMJju1jWSmbrhEvfHCuVVJomc3N5ctrfdwjaY7ww9zAUSAD/Vy4hPYZr
- ZLOMYXM/GxkbKfqLg0R346EskAGtL7M4=
-X-Received: by 2002:a05:6214:5992:b0:8b0:2910:a365 with SMTP id
- 6a1803df08f44-8b3e31d703bmr31235406d6.29.1777359829393; 
- Tue, 28 Apr 2026 00:03:49 -0700 (PDT)
-X-Received: by 2002:a05:6214:5992:b0:8b0:2910:a365 with SMTP id
- 6a1803df08f44-8b3e31d703bmr31235006d6.29.1777359828968; 
- Tue, 28 Apr 2026 00:03:48 -0700 (PDT)
+ bh=+wmsyHNiym4ZauabkM84A/vR/ijgjrBaGACcvxDnE3o=;
+ b=r4nxhczEyww+cykj1xM2HhKXtgyDIzoWllMc1bjneGXOZFfwYWEafFiWiX8fJxS3mJ
+ TcQycr9PJXM8Pzrc7OBESbCf+LP8l4R6WN14k4YJ1XSQQHULahHdkaNMnJA+CMgjqJIW
+ nCKLzcy5JeoGgk3dC7LVaqFhjGxAdhj+Uj9DAGqN8WF/J6nimRl987YIkJorrADm+sSL
+ xpQOgZmHdJZYIM2GV64E9b7dYYxmPnXmZrTJ1pw8R6o38Qtk3KVQECbr0zoPBYDmV+Fb
+ 6EMDl0a/t7AUpMTZrTaOQWsMrCITAMIEyfHSY+lAEojRRB6N+wlClllDphygQKL4QDJM
+ 5ZqA==
+X-Gm-Message-State: AOJu0YxUmmXHGgkZ27QU5kX7Q90+muMxKESKd9Jm2Xt8N4fF9tnHp9Yc
+ qt/mN1cB59hB6muh6m57jZtZtqqeF84xSmxkrdCReDLIxX+7qB2TUv+EFMI16gZkx6bPfMtL7Is
+ yJZ3QJoRDMTztgnsWJg0WEyeuxDurfjZfMzfcX0MHTa5hAOetTP+GaUuV
+X-Gm-Gg: AeBDieuoZ3Nv4z6lT+Q03yj7BMgCsG67lWngkxZGeXwnlVCUABBHCYzIc/ZB7P5aCCD
+ pt1Dd2vlUzBA2FBfROcSnNQrwdf3vbKcqcHWpJg9+ddB18ErwZzIZ9A0P/Oxhf2mLkfW8N4eUcJ
+ BD56BY8eY+gBM0xil7kVWTZH8YeLRg48Bn1O9qdKH7rhicBQneF5fhR7rtQGN+iBr5y9Ym7DbII
+ x/GTTYKU9EYkoHQKlEDwYx16BHtpp6RPWJpzT7urwrijiN2bcg02gZzb21LOGHa4pDJtF6mHMTy
+ hbwqZXn6ST0JAGgKeS6CuNHJ1aOCqtBDru+/PwUiCKTf+fBGt/qa5bu6uQkgofoDkpRKfL2mdK8
+ ptPODs9Kq/LhdlkUNCkm/WAG/4yu8uzg=
+X-Received: by 2002:a05:620a:404c:b0:8cd:8569:b957 with SMTP id
+ af79cd13be357-8f7d99027d7mr229491985a.43.1777359903938; 
+ Tue, 28 Apr 2026 00:05:03 -0700 (PDT)
+X-Received: by 2002:a05:620a:404c:b0:8cd:8569:b957 with SMTP id
+ af79cd13be357-8f7d99027d7mr229488285a.43.1777359903494; 
+ Tue, 28 Apr 2026 00:05:03 -0700 (PDT)
 Received: from redhat.com ([2a02:8012:f011:0:f1ce:ac56:d2cd:7c2e])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b3e2956a8bsm13690806d6.31.2026.04.28.00.03.47
+ af79cd13be357-8f7c49c0993sm142261485a.6.2026.04.28.00.05.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Apr 2026 00:03:48 -0700 (PDT)
-Date: Tue, 28 Apr 2026 08:03:45 +0100
+ Tue, 28 Apr 2026 00:05:03 -0700 (PDT)
+Date: Tue, 28 Apr 2026 08:05:00 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Jind=C5=99ich_Makovi=C4=8Dka?= <makovick@gmail.com>
-Cc: qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v5 2/2] ui/gtk: Turn clipboard flag into runtime option
-Message-ID: <afBb0cwglKDhWeQj@redhat.com>
-References: <20260427-gtk-clipboard-v5-0-6968feb31a5d@gmail.com>
- <20260427-gtk-clipboard-v5-2-6968feb31a5d@gmail.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, peterx@redhat.com
+Subject: Re: [PATCH 11/41] RFC io/net-listener: move mutex init to
+ instance_init
+Message-ID: <afBcHHhu5CUefACW@redhat.com>
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-11-c413f3605311@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260427-gtk-clipboard-v5-2-6968feb31a5d@gmail.com>
+In-Reply-To: <20260427-qom-tests-v1-11-c413f3605311@redhat.com>
 User-Agent: Mutt/2.3.1 (2026-03-20)
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -129,20 +125,27 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 27, 2026 at 10:06:44PM +0200, Jindřich Makovička wrote:
-> - Compile the GTK clipboard support unconditionally
+On Mon, Apr 27, 2026 at 11:42:10PM +0400, Marc-André Lureau wrote:
+> The QIONetListener mutex is initialized in the convenience
+> constructor qio_net_listener_new() rather than in an instance_init.
+> This means a bare object_new(TYPE_QIO_NET_LISTENER) produces an
+> object with an uninitialized mutex, but instance_finalize
+> unconditionally calls qemu_mutex_destroy() on it, which aborts.
 > 
-> - Introduce GTK clipboard option, defaulting to off
+> Move the mutex initialization to a proper instance_init so that init
+> and finalize are always paired regardless of how the object is
+> created.
 > 
-> Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
+> This patch is just added for completeness, but "qio: Fix
+> qom-list-properties crash on net listener object" from Peter Xu is
+> basically the same.
+> 
+> Fixes: 9d86181874a ("qio: Protect NetListener callback with mutex")
+> Cc: peterx@redhat.com
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  meson.build       | 4 ----
->  meson_options.txt | 7 -------
->  qapi/ui.json      | 6 +++++-
->  qemu-options.hx   | 9 ++++++---
->  ui/gtk.c          | 8 +++++---
->  ui/meson.build    | 4 +---
->  6 files changed, 17 insertions(+), 21 deletions(-)
+>  io/net-listener.c | 9 ++++++++-
+>  1 file changed, 8 insertions(+), 1 deletion(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
