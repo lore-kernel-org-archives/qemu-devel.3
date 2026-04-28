@@ -4,107 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ACB6FF885D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 09:52:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46276FF8868
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 09:55:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHf6u-00035K-Ms; Tue, 28 Apr 2026 05:52:08 -0400
+	id 1wHf9s-0004Oq-Rt; Tue, 28 Apr 2026 05:55:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHf6t-00034n-2V
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:52:07 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHf6r-0006fd-KJ
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:52:06 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-654672a6d68so5625065d50.0
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 02:52:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777369924; cv=none;
- d=google.com; s=arc-20240605;
- b=MktmqDJjfSnQLIJihT0LJff8q8Kpg0upQH2ncSiD+PFu5PBhJdirMtLTqzVyOVM9R5
- 9oGZyiUeSB/XIs3joESB91rVi0NJn4lruwbQ1oamzcWsN9s9A1fzT1jSv2ydYmcH7DJM
- ZaN4gYoew/Kp6l56CiSHr8IaRhpwmn0zJykOHrhZDPEDgGY+0ZEdDe+RH+RZUpcXDBww
- imAiFbPzjjm103QdgNgPv3N6pUBEp6Xwbfh4eFL15TZstL9B8Rp+wS2WNedmSh5D2YuW
- sqZA26fcNi+B4VdXkMDM68a6adtWuQzrYhEG0g2j5sy/HcaqbqZ5H1PuLF43DvRyA98t
- +JKQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Jf83sOe0igZW+OLTsh7KdIXlnA6gpK2sB4ZNna8MjBY=;
- fh=BBXXBmZbsnh1iUcPA7aYGot0GnoKedpL6BO7ZAJRQVM=;
- b=Kqoin7jsH401306KtV38YTPyylOEZk22H6vQZwR9rmVD227TX8BhsSTopFvTlP3UEU
- DyKVA8PGTm1aM4trQbCIOcDsq9sL3KsE7GVr6rQ8CkqqiA54RkIjKkly28FWVUX+njYe
- F8ClHbPYD48z3Ti0Y1h505+UgcoiW/x3r5okHNfjJkvrxZ1ZvZULVI4gPIw2bu8iFmhx
- IUdwukz/ijdcH0S6RC3rAKevt2z8wZbWdHEmctc3uRvQQQT+JgG4nYldWjdgCF4jEppv
- yn89cWC225rOiFiqx1KbW0b/C5CAAR5emIrGQNXcymF5Hg3bfBoBPBv5lG83lS0UaRQi
- HOEQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wHf9q-0004Ng-LI
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:55:10 -0400
+Received: from out30-133.freemail.mail.aliyun.com ([115.124.30.133])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
+ id 1wHf9o-00082r-7O
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:55:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777369924; x=1777974724; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Jf83sOe0igZW+OLTsh7KdIXlnA6gpK2sB4ZNna8MjBY=;
- b=EKJB1l9KO+snjTd6eRM/5DLCoW7svOqmKFJUIC8RG4AyjKqw/0SweiDudlOJXkt1kV
- Y3VLt8H5Kx5stU5kIoY8rTik8cVgbKmXINfNAEfAJBCdfX2/weU1GvlOtJITJCT7y9q1
- 40AUlcKnH7GbELi/5qHumJ+hGlPYgcPYG86B8JgjrmETbZnot9yzqT2Q7jMzu917U8UX
- qcaZ1S8flY6JBu/EeiGJoEHC/szFtnTd5OJvleUGbfaDBzlDMzJvCfiXu7BBQRYTZ1QQ
- utKWu33KEssOvhhcQHbS9WvUTdUrRvST5aOSV4njDMDAlt4xeWXxeRO56i1K0f1oGNop
- yyjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777369924; x=1777974724;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Jf83sOe0igZW+OLTsh7KdIXlnA6gpK2sB4ZNna8MjBY=;
- b=LQXgIAzRvHvKQljb11/tldGThzp9U27B3d2nBve8+i4J28uuhq/v2HQ97qK5OTnpv6
- 8v7XW9xmV46GWJUNt8lUcv8MqJF8tZLn0S2X0mmuRAnhz5XH/Bi2i7/8O18B8WFBUR7K
- jhcj8N/XyPbPjL5GF3K11XIOZQIlN7cJ9/pJzSYR1VCS7MjoT8RfSd7yN+6LyKDwqgv9
- A6b1mbrjoNu4NqUotZwsUT9T7+YLatLO75uyLmJ2Is7LGgsJqKAxXNxXqodzbainVPJe
- lY36G8+s8Jy1cicj15L5QqkJhQlhGvhLu/vU/wc4vfBTOE/DzURvH4sboGSMEixyorHO
- G+Aw==
-X-Gm-Message-State: AOJu0YxF8ktMmwABZKCwWwHY/b5OPq6n69PrZPTl5aO/3m3coj8VB6P7
- /uCAvGcPMWYWSmFmvf0RPeYR5RdwUanV4megYrdLbtTSN1fUIdXSlTbQh2O8PFh6u2MIvtEsgHh
- d1lESJtBF1fWVnHfIOPbyCwUJoZ8oGHhYxPEqF/rIoQ==
-X-Gm-Gg: AeBDiesmeY0tkCnNlxKaxTxdVelx+pwT4GPPi0B5UKafiKUt1ISx2PpWvw/ze/0uOGV
- a2Fa9q0HSR135JhSf3wEMaNjrFVEISbc85oiegR1UCpjF6tPfJ1YfIWzT61O3J+GoHHuJAzFJH8
- 8nIKTNNjaJNjYPpcTiU/4bCXVvotH1qL19Xc64WUKcwrmGPf43W4R9m0bzaCmWhGSz7zQ62SHQI
- uZ9dinfNbsomDddnqAv2O52+HWXuNhCelZyQU7uG+pOGb/sTjnmN2aKNTcTa5Ozj0UZux+tbCsd
- OqrQ5PM9YWxzGI/uMks3JStP/j2y7UTl/0UcyjzI5fhO5v4fnIzGrhWmZULqF8tBu8IEulrWJW0
- LEQ==
-X-Received: by 2002:a05:690e:4813:b0:654:a4fd:ebfc with SMTP id
- 956f58d0204a3-65beed4b37dmr1477104d50.5.1777369924253; Tue, 28 Apr 2026
- 02:52:04 -0700 (PDT)
+ d=linux.alibaba.com; s=default;
+ t=1777370096; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=EuN8QYLMABegW93bH0lChbTIz1DIZ96znFN8/Pwg8g0=;
+ b=arbr+yMKCgMws/ofydjSXa3FM2HjHQ6mATwSzohjXsdhtwtwPkUUAmXDwCacqIaV3peSPgLAszMU6vrRCiNuukBPYRRrzcJEqp64PZaSQdlXRYR4iCdiw7j83hEKUDO80BYftnzsAS7R0GdQiLfXR4sUuOt3komOC8FZoxPoupg=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
+ MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=5; SR=0;
+ TI=SMTPD_---0X1uDXNA_1777370091; 
+Received: from localhost(mailfrom:guobin@linux.alibaba.com
+ fp:SMTPD_---0X1uDXNA_1777370091 cluster:ay36) by smtp.aliyun-inc.com;
+ Tue, 28 Apr 2026 17:54:56 +0800
+From: Bin Guo <guobin@linux.alibaba.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, stefanha@redhat.com, fam@euphon.net,
+ qemu-block@nongnu.org
+Subject: [PATCH 1/2] util/aio-posix: fix poll_ready handlers dropped in
+ aio_prepare()
+Date: Tue, 28 Apr 2026 17:54:50 +0800
+Message-ID: <20260428095450.77419-1-guobin@linux.alibaba.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-References: <20260308203516.160103-1-shentey@gmail.com>
- <20260308203516.160103-4-shentey@gmail.com>
-In-Reply-To: <20260308203516.160103-4-shentey@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Apr 2026 10:51:53 +0100
-X-Gm-Features: AVHnY4LN6oyQ5hgpGpRcO4ZdokEuLd-PlagZ965MDMbtumluQ7kS8dcp9G1gEZw
-Message-ID: <CAFEAcA_BFzFSOrXB9DorTftGYVmvP7gB8_+14fpwGEC6vasAeA@mail.gmail.com>
-Subject: Re: [PATCH 3/5] hw/arm/imx8mp-evk: Fix reference count of SoC object
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, 
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- qemu-trivial@nongnu.org, 
- qemu-arm@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.30.133;
+ envelope-from=guobin@linux.alibaba.com;
+ helo=out30-133.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,42 +69,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 8 Mar 2026 at 20:35, Bernhard Beschow <shentey@gmail.com> wrote:
->
-> object_new() leaves a reference count of one, and object_property_add_child()
-> then leaves it at two. This would leak the SoC object if the machine object was
-> destroyed since the machine is the SoC's sole owner. Fix this by converting to
-> object_new_with_props() which gets the parenting and reference count right in
-> one go.
->
-> Fixes: a4eefc69b237 ("hw/arm: Add i.MX 8M Plus EVK board")
-> cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->  hw/arm/imx8mp-evk.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-> index b84ac91a17..cfc3038c36 100644
-> --- a/hw/arm/imx8mp-evk.c
-> +++ b/hw/arm/imx8mp-evk.c
-> @@ -74,8 +74,8 @@ static void imx8mp_evk_init(MachineState *machine)
->          .modify_dtb = imx8mp_evk_modify_dtb,
->      };
->
-> -    s = FSL_IMX8MP(object_new(TYPE_FSL_IMX8MP));
-> -    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
-> +    s = FSL_IMX8MP(object_new_with_props(TYPE_FSL_IMX8MP, OBJECT(machine),
-> +                                         "soc", &error_fatal, NULL));
->      object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
->      sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+When aio_prepare() calls poll_set_started(ctx, &ready_list, false) to
+disable poll mode, the last poll round may find ready handlers and mark
+them poll_ready=true while inserting them into a local ready_list.
+However, that local list is discarded on function return, so those
+handlers are silently dropped and must wait until the next GLib main
+loop iteration to be processed.
 
-There are more boards doing this as object_new / add_child / unref
-than with object_new_with_props(), but doing it in one call seems
-better than three.
+This was noted by commit 826cc32423 as a TODO comment:
+  /* TODO what to do with this list? */
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Fix this by:
+- Extending aio_pending() to scan poll_aio_handlers for any node with
+  poll_ready=true, so GLib's check phase correctly reports pending work
+  and triggers dispatch.
+- Collecting poll_ready handlers in aio_dispatch() before calling
+  aio_dispatch_ready_handlers(), so they are actually executed in the
+  same dispatch cycle.
 
-thanks
--- PMM
+Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+---
+ util/aio-posix.c | 37 ++++++++++++++++++++++++++++++++++---
+ 1 file changed, 34 insertions(+), 3 deletions(-)
+
+diff --git a/util/aio-posix.c b/util/aio-posix.c
+index 488d964611..633bffd716 100644
+--- a/util/aio-posix.c
++++ b/util/aio-posix.c
+@@ -255,9 +255,12 @@ bool aio_prepare(AioContext *ctx)
+ {
+     AioHandlerList ready_list = QLIST_HEAD_INITIALIZER(ready_list);
+ 
+-    /* Poll mode cannot be used with glib's event loop, disable it. */
++    /*
++     * Poll mode cannot be used with glib's event loop, disable it.
++     * Any handlers that fire in the last poll are marked poll_ready=true
++     * and will be picked up by aio_pending() / aio_dispatch().
++     */
+     poll_set_started(ctx, &ready_list, false);
+-    /* TODO what to do with this list? */
+ 
+     ctx->fdmon_ops->gsource_prepare(ctx);
+     return false;
+@@ -265,7 +268,25 @@ bool aio_prepare(AioContext *ctx)
+ 
+ bool aio_pending(AioContext *ctx)
+ {
+-    return ctx->fdmon_ops->gsource_check(ctx);
++    AioHandler *node;
++
++    if (ctx->fdmon_ops->gsource_check(ctx)) {
++        return true;
++    }
++
++    /*
++     * Check if any poll handlers became ready during aio_prepare()'s
++     * last poll (when poll mode is stopped, poll_set_started(false)).
++     */
++    qemu_lockcnt_inc(&ctx->list_lock);
++    QLIST_FOREACH_RCU(node, &ctx->poll_aio_handlers, node_poll) {
++        if (!QLIST_IS_INSERTED(node, node_deleted) && node->poll_ready) {
++            qemu_lockcnt_dec(&ctx->list_lock);
++            return true;
++        }
++    }
++    qemu_lockcnt_dec(&ctx->list_lock);
++    return false;
+ }
+ 
+ static void aio_free_deleted_handlers(AioContext *ctx)
+@@ -395,6 +416,16 @@ void aio_dispatch(AioContext *ctx)
+         ctx->fdmon_ops->dispatch(ctx);
+     }
+ 
++    /* Collect handlers that became ready during aio_prepare()'s last poll */
++    {
++        AioHandler *node;
++        QLIST_FOREACH_RCU(node, &ctx->poll_aio_handlers, node_poll) {
++            if (!QLIST_IS_INSERTED(node, node_deleted) && node->poll_ready) {
++                aio_add_poll_ready_handler(&ready_list, node);
++            }
++        }
++    }
++
+     /* block_ns is 0 because polling is disabled in the glib event loop */
+     aio_dispatch_ready_handlers(ctx, &ready_list, 0);
+ 
+-- 
+2.50.1 (Apple Git-155)
+
 
