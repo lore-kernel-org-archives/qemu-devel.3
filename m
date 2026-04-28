@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87E31FF885D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 09:34:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B25EAFF885D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 09:34:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHepF-0003Sz-AR; Tue, 28 Apr 2026 05:33:53 -0400
+	id 1wHepA-0003OD-Jg; Tue, 28 Apr 2026 05:33:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHepB-0003Pv-No
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:33:49 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ id 1wHep8-0003MB-NC
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:33:46 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHepA-0007Rt-1i
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:33:49 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-488e1a8ac40so137997275e9.2
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 02:33:47 -0700 (PDT)
+ id 1wHep6-0007QK-Vb
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:33:46 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4896c22fcbaso83459735e9.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 02:33:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777368826; x=1777973626; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777368823; x=1777973623; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oIPgICtUT5mEW768v6oe59XIzNRMnfU3f85R7Lwvkp8=;
- b=ChUf3TpwErRjFtnd1jx33aEyljcZ0yBYDyG8DO1dOd0ZY/Uug6HZp49azaogAYwHY6
- 19K+KEzSp26z5EdSqOPZC6XTERMUj4BfoDk+cuZcXQtsjOGR8I/OCykY4o090sehHhMW
- Sh8xTqIVMDHO0XUSY9RkbbCTPfbrkXE2Fd3RUcDxtkYHlRJtjZZtUn/Y36kAyP3bh0+d
- l+3h35Xgi1EBg7ci+0Pvoya1NOKtzSelumfK3E/MoPjFvBldo+diOlUvbo+CWXU+JqsW
- rAiTryuNySaTGUdE8bWzONIlR2XpGPBqss7UFts+nBGMp8vGxZPSzws3lTPdmataOxIX
- +jIA==
+ bh=2cvYLVcnk1qS3FA5lQP8W94koZO4vK3ygKeMeP+mRXU=;
+ b=aeDDAU6SBs+NtD1I1J1pLZa0oKuSE4dJ/CGwLIpUWSNQhsPiGZb7l4hKGvvrCAgFr1
+ HFGk0elPnj0+MTJ+8VJ7sTjlyBK1XI5btiNOjPQjNS//PKAR7kB42gTKNjmtxKzvY8iK
+ DlbTqFr04jsDO4YJW6RI9KT8QNq/QMM+OPQ5FFXSxR8lf11b7n766ltbV0UdlN2LKtwN
+ RZJZ+Iso8BSwER/Dsn/eqeunOPgNOWcrnrxKw9tV7EkPrVJ0Lt/x9cyQ6L33c8HH/BtS
+ sdXw7w29JaYzrBNjmHxl3l0QUabpqEr6rJhLLR3wjQnAhNg+MipCEX0omptU6kad0e73
+ 9Omg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777368826; x=1777973626;
+ d=1e100.net; s=20251104; t=1777368823; x=1777973623;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=oIPgICtUT5mEW768v6oe59XIzNRMnfU3f85R7Lwvkp8=;
- b=DeC0F/4Sn+0rYmz1bmGy58VDcInEhLdO4XPtmlxuG6asx7g7lkqwsG4k7pZ71NKJR7
- iDww7FgPbxpdmjZKuRX7s3BAre5YsiBqyBSox4YtI9PbUSxooNU+LmJiExFXXsjqmQfG
- jJGfMU3DW9m9m7loK2ls2zMIoX7qrPd5W+Chr/ffbGFnsxbtSve6WLxP7AuBxNnwxX4h
- Yjgxui7+VITPlSZ4momkbP71PeaMJJzVky9ax7IjxwV9pBJTJnOVIzj5A/YLIzFBuZlS
- K9xRry8zH2HchxmVPvRu33vgIUogGTJ3jC4568tVciVFSlsMGAI09XBwSFOhoXmiESF6
- ya7w==
-X-Gm-Message-State: AOJu0YwER50P2s84M2zRiMBB3dsQrXO+NQBZOUwFyM/T+O3GkF4YzIAJ
- xNP2KS/hCOHR7DyHPqDbNj/ciQS4yhubZsrKPerjFYiVMi0VgG8/UNKx4kK6IkNouN5KrzdDe+d
- yLSYI
-X-Gm-Gg: AeBDievJxCtZVJdjiSph3uECxozMjdgalDznE0tsPB25OQH/cQTVdjnoxA13PxhF1C8
- uLQG2Bx53xgxJHW7urnPqi6m/Ox7egrNwSduWjuBR9CusDbYRYoUFpt0AnPpJKQMrvMzlLkLWMT
- 1tBkgl1FZB9/AlVwfFsG7laYCijrpSaP1WoMVxjh71QFyURer+R8acrkR0t/nsZL6gQ9meQa+Sn
- SBYcmp3ATzxuL6vggGH+JAiVCdLUFNsTWWE3vC7jfWdQwypJD56S7HrI5I+Mr/gPyXd0bHtOQmd
- 7bod6wOzCJDDz5semC162bjJCW7bPXQr2hGke3D7up+ZBa5eHCyyKdbANNw13aLlR1U17dBSPHc
- 0Tn3uMLASwyS2FhZ0SkD/1nsG3Bdz81W0a2klB1JRDOaA5AsfrU89SQWoRoMe5N1RP9WSEltdD3
- UAt3GVK9exN47eZfhzXr29p0kak5WdWhEcUQOBAF9HBBWXgWuY/OsuPX/2c3MS58wruZCu+AciE
- Du9uqrJ0HNtgZW5PHfXnEsK5cc8Jl2xKLmDn4rSAQ==
-X-Received: by 2002:a05:600c:a013:b0:48a:563c:c8e0 with SMTP id
- 5b1f17b1804b1-48a77ad5a89mr38930575e9.1.1777368826507; 
- Tue, 28 Apr 2026 02:33:46 -0700 (PDT)
+ bh=2cvYLVcnk1qS3FA5lQP8W94koZO4vK3ygKeMeP+mRXU=;
+ b=DbuNheGwvBM6QsfrRGPtwBm3lR2s//dbI35HxMC0EKkXkA6E+hQyHrZuRUu/3itm9W
+ Pl2PhUuFgPtnPJ+CeZfSX5nHvLcnR/2UiK3TI3Vd4EzN602JsnFzvEJJ8AnEsfdiTajh
+ UJGsOXjWO2F+OzUQAousowzL18V9wuA9Krr1jFJBnjrfU6XtskAyk2ih63NAbjDNSm2R
+ 4RHYcBUrvaAZIJpBWJtAnX9jfwUVJs3iaWp9mTG6RBdyj9MClKfmhZfz6Xg2inFfxoA+
+ 15igL1q/zFihkrWxOzG6++Brcw5BsXv/MqmlqmND34u3mND3bvLI8bWQ6ePXc6DR2bNA
+ 8hig==
+X-Gm-Message-State: AOJu0YztW9D5SXtSlnkGYIEF6n+bh1KM2WhJV7JwRF5Ay+dFTIMq5yU7
+ 4RHqiOKl/iLiQqoGhTxF/n8Bikhqcl5AZBYHO+kk7Iyzp3JrzW4knWvJDNOHrrUgSlaGLWl6mHr
+ tGuyp
+X-Gm-Gg: AeBDieurofJXdCllGOEOTTHLWYQI3+Fo62eEo/lRLOhwo0sgDIFjL20tvwmDSydQi8o
+ mEJI4OL2yygzYuNI01tPX60Y4UV6YDdcqM2J6ivdt/qFmEi2AF/NmwKQILEf7Y7aplyFOZYEaMz
+ 1BWoDJn//cDuhe+dOrj8mxC5ju/iVkrFSw30FoacStV+Mr/jMCj94035S5Vu9hnSMfB+slU7sfO
+ QNpH31F7Fjg+5Q7zrNWUsPGorhyFyLcG5uvu8DqzYF3DwF6aajQo4Qm9lvVu+BX13bvbrEaRlHh
+ XGura112IfHUVOVeY0R+b3MOUscIck3WD0G3ypV0LsV2B4ypxIuGbNPhc7sL45YSM2rRtKdnAfO
+ jdWkK5Mg+FAWnA3GDMt+eDFBMLnKZi3myj/iy2AV0zG36GfmzvqPgtZW4awNPtNxnICgtFRrYlz
+ GDf8KLriW1hoqS8Z0WS0lH55z9iQChkPjOqy8C6c14WbB8fgVKgQNg9HyggsuE/HF78vm2Xu8AB
+ Vfsqi0MvZE/M3fyiA4euM3Ua2hgUuIkqtM8mZ968A==
+X-Received: by 2002:a05:600c:3386:b0:488:a977:8de with SMTP id
+ 5b1f17b1804b1-48a77e64f29mr18307465e9.16.1777368823314; 
+ Tue, 28 Apr 2026 02:33:43 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a774d7a1fsm19665595e9.4.2026.04.28.02.33.45
+ 5b1f17b1804b1-48a774d7a1fsm19665595e9.4.2026.04.28.02.33.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Apr 2026 02:33:45 -0700 (PDT)
+ Tue, 28 Apr 2026 02:33:42 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Palmer Dabbelt <palmer@dabbelt.com>,
@@ -78,25 +78,23 @@ Cc: Palmer Dabbelt <palmer@dabbelt.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-riscv@nongnu.org, qemu-arm@nongnu.org
-Subject: [PATCH 4/4] system/memory: assert on invalid MemoryRegionOps
- .unaligned combo
-Date: Tue, 28 Apr 2026 10:33:39 +0100
-Message-ID: <20260428093339.2087081-5-peter.maydell@linaro.org>
+Subject: [PATCH 1/4] hw/riscv: iommu-trap: remove .impl.unaligned = true
+Date: Tue, 28 Apr 2026 10:33:36 +0100
+Message-ID: <20260428093339.2087081-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260428093339.2087081-1-peter.maydell@linaro.org>
 References: <20260428093339.2087081-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,40 +112,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: CJ Chen <cjchen@igel.co.jp>
 
-When it comes to this pattern: .valid.unaligned = false and
-impl.unaligned = true, is effectlvely contradictory. The .valid
-structure indicates that unaligned access should be rejected at
-the access validation phase, yet .impl suggests the underlying
-device implementation can handle unaligned operations. As a result,
-the upper-layer code will never even reach the .impl logic.
+The riscv_iommu_trap_ops MemoryRegionOps specifies that
+unaligned accesses are not valid for this device but that
+it does implement them. This doesn't make much sense, and
+we want to add an assertion that registered MRs don't specify
+this invalid combination of settings.
 
-Add an assertion that the MemoryRegionOps doesn't specify
-this invalid combination.
+Drop .impl.unaligned = true, with no behaviour change.
 
 Signed-off-by: CJ Chen <cjchen@igel.co.jp>
-Tested-by: CJ Chen <cjchen@igel.co.jp>
-Suggested-by: Peter Xu <peterx@redhat.com>
 Acked-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-[PMM: tweaked commit message]
+Reported-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+[PMM: reworded commit message]
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- system/memory.c | 1 +
- 1 file changed, 1 insertion(+)
+ hw/riscv/riscv-iommu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/system/memory.c b/system/memory.c
-index 225bbe38c3..739ba11da6 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1573,6 +1573,7 @@ void memory_region_init_io(MemoryRegion *mr, Object *owner,
-                            const MemoryRegionOps *ops, void *opaque,
-                            const char *name, uint64_t size)
- {
-+    g_assert(!ops || !(ops->impl.unaligned && !ops->valid.unaligned));
-     memory_region_init(mr, owner, name, size);
-     memory_region_set_ops(mr, ops, opaque);
- }
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index c3c9ed6469..f0de264a10 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -2433,7 +2433,6 @@ static const MemoryRegionOps riscv_iommu_trap_ops = {
+     .impl = {
+         .min_access_size = 4,
+         .max_access_size = 8,
+-        .unaligned = true,
+     },
+     .valid = {
+         .min_access_size = 4,
 -- 
 2.43.0
 
