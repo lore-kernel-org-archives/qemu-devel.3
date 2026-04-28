@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DC43FF8874
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 15:09:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC4D8FF885A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 15:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHk3a-0004Au-2E; Tue, 28 Apr 2026 11:09:02 -0400
+	id 1wHk2v-00026b-IX; Tue, 28 Apr 2026 11:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHk3Y-00045j-C9
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:09:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wHk2t-000269-9j
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHk3W-0000sU-Kx
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:09:00 -0400
+ id 1wHk2r-0000gQ-Mw
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777388938;
+ s=mimecast20190719; t=1777388897;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=VZ3v9VQLmjbd/tE/PA2CjBPWuruAgIP5WbE6prGPfFI=;
- b=DrfwSXiJEa9M1WEZFHDP3xyL8UF741KBu8t/eyfZ0eZablmUS8i26bkTzxNxXQZZpioOBl
- WZ6IrdYab/jZncMqV5HAMs8+G7X4Dak7ozAEoftkn2DEbRGWJJVhpRYPfX00S9Mka1zvh0
- pKURr/SSfBugzNwJwvMNluf2AzWe3T4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Q40IFlP5UbJ9de0udgFY1frJ1gOfFdIuGGwIuM2O9o8=;
+ b=GzygR4TUL9OMJtkgRjIqtNprTvSDQeDzWQlmRP9xhInN+bdvp4sQ1YYcvRlRLgYoQCF1A3
+ ZRz2dku8m3XUtz4nS2coAlsXS5pqxQe2Th1psSgYRrv9QpHyAw+2eSOe837Khw9dziEX0D
+ /QFtyztRpdMqOGadTdF/s8mV+szgTWQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-50-0GmMC3L-O2-A3VceQWzHXA-1; Tue,
- 28 Apr 2026 11:08:54 -0400
-X-MC-Unique: 0GmMC3L-O2-A3VceQWzHXA-1
-X-Mimecast-MFC-AGG-ID: 0GmMC3L-O2-A3VceQWzHXA_1777388933
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-v9MKjmmdPu6S00vqvWadbA-1; Tue,
+ 28 Apr 2026 11:08:15 -0400
+X-MC-Unique: v9MKjmmdPu6S00vqvWadbA-1
+X-Mimecast-MFC-AGG-ID: v9MKjmmdPu6S00vqvWadbA_1777388894
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9CABC195605E; Tue, 28 Apr 2026 15:08:53 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 358A7180036E; Tue, 28 Apr 2026 15:08:14 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4CB55180047F; Tue, 28 Apr 2026 15:08:51 +0000 (UTC)
+ id E32C31800446; Tue, 28 Apr 2026 15:08:12 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Gerd Hoffmann <kraxel@redhat.com>,
+Cc: stefanha@gmail.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v2 13/15] audio: Use unsigned PCM bias
-Date: Tue, 28 Apr 2026 19:07:23 +0400
-Message-ID: <20260428150726.1659814-14-marcandre.lureau@redhat.com>
+Subject: [PULL v2 07/15] ui/console: remove qemu_console_is_visible()
+Date: Tue, 28 Apr 2026 19:07:17 +0400
+Message-ID: <20260428150726.1659814-8-marcandre.lureau@redhat.com>
 In-Reply-To: <20260428150726.1659814-1-marcandre.lureau@redhat.com>
 References: <20260428150726.1659814-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -86,117 +85,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Clang warns for the uint32_t clip_ instantiations because HALF cannot be
-represented with mixeng_real:
+Drop the bookkeeping, we can simply afford an empty "foreach".
 
-[1115/2559] Compiling C object libqemuaudio.a.p/audio_mixeng.c.o
-In file included from ../../qemu/audio/mixeng.c:147:
-../../qemu/audio/mixeng_template.h:68:70: warning: implicit conversion from 'unsigned int' to 'float' changes value from 2147483647 to 2147483648 [-Wimplicit-const-int-float-conversion]
-   68 |     return ENDIAN_CONVERT((IN_T)((v * ((mixeng_real)IN_MAX / 2.f)) + HALF));
-      |            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
-../../qemu/audio/mixeng_template.h:31:22: note: expanded from macro 'HALF'
-   31 | #define HALF (IN_MAX >> 1)
-      |                      ^
-../../qemu/audio/mixeng.c:146:28: note: expanded from macro 'ENDIAN_CONVERT'
-  146 | #define ENDIAN_CONVERT(v) (v)
-      |                            ^
-In file included from ../../qemu/audio/mixeng.c:152:
-../../qemu/audio/mixeng_template.h:68:70: warning: implicit conversion from 'unsigned int' to 'float' changes value from 2147483647 to 2147483648 [-Wimplicit-const-int-float-conversion]
-   68 |     return ENDIAN_CONVERT((IN_T)((v * ((mixeng_real)IN_MAX / 2.f)) + HALF));
-      |            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
-../../qemu/audio/mixeng_template.h:31:22: note: expanded from macro 'HALF'
-   31 | #define HALF (IN_MAX >> 1)
-      |                      ^
-../../qemu/audio/mixeng.c:151:36: note: expanded from macro 'ENDIAN_CONVERT'
-  151 | #define ENDIAN_CONVERT(v) bswap32 (v)
-      |                           ~~~~~~~~~^~
-/Users/person/v/qemu/include/qemu/bswap.h:10:39: note: expanded from macro 'bswap32'
-   10 | #define bswap32(_x) __builtin_bswap32(_x)
-      |                                       ^~
-2 warnings generated.
+Notice that dpy_gfx_update_texture() is now called even when there are
+no listeners. This is more correct, as the texture is not fully
+refreshed when a listener connects, so it may be outdated/garbaged.
 
-HALF is not the right value here anyway. IN_MAX is odd, so the integer
-sample range has two middle codes. Unsigned PCM normally uses the upper
-middle code as the "bias": 0x80, 0x8000, or 0x80000000. HALF is instead
-defined as the lower middle code: 0x7f, 0x7fff, or 0x7fffffff.
-
-Replace HALF with BIAS, defined as the upper middle code. This fixes the
-warnings, since the value can be exactly represented with mixeng_real.
-
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20260423-audio-v1-3-e1d6b65c76f9@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- audio/mixeng_template.h | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
+ include/ui/console.h |  1 -
+ ui/console-priv.h    |  1 -
+ ui/console.c         | 29 -----------------------------
+ 3 files changed, 31 deletions(-)
 
-diff --git a/audio/mixeng_template.h b/audio/mixeng_template.h
-index 5b0014bdd9a..6db742188ed 100644
---- a/audio/mixeng_template.h
-+++ b/audio/mixeng_template.h
-@@ -28,7 +28,7 @@
-  */
+diff --git a/include/ui/console.h b/include/ui/console.h
+index e2e5ff76ec1..f04844263b9 100644
+--- a/include/ui/console.h
++++ b/include/ui/console.h
+@@ -399,7 +399,6 @@ QemuConsole *qemu_console_lookup_by_device(DeviceState *dev, uint32_t head);
+ QemuConsole *qemu_console_lookup_by_device_name(const char *device_id,
+                                                 uint32_t head, Error **errp);
+ QEMUCursor *qemu_console_get_cursor(QemuConsole *con);
+-bool qemu_console_is_visible(QemuConsole *con);
+ bool qemu_console_is_graphic(QemuConsole *con);
+ bool qemu_console_is_fixedsize(QemuConsole *con);
+ bool qemu_console_is_gl_blocked(QemuConsole *con);
+diff --git a/ui/console-priv.h b/ui/console-priv.h
+index 39798c3e9d7..2299898984d 100644
+--- a/ui/console-priv.h
++++ b/ui/console-priv.h
+@@ -16,7 +16,6 @@ struct QemuConsole {
+     DisplayState *ds;
+     DisplaySurface *surface;
+     DisplayScanout scanout;
+-    int dcls;
+     DisplayGLCtx *gl;
+     int gl_block;
+     QEMUTimer *gl_unblock_timer;
+diff --git a/ui/console.c b/ui/console.c
+index 8f65308958a..abb6cba2826 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -648,9 +648,6 @@ void register_displaychangelistener(DisplayChangeListener *dcl)
+     dcl->ds = get_alloc_displaystate();
+     QLIST_INSERT_HEAD(&dcl->ds->listeners, dcl, next);
+     gui_setup_refresh(dcl->ds);
+-    if (dcl->con) {
+-        dcl->con->dcls++;
+-    }
+     displaychangelistener_display_console(dcl, &error_fatal);
+     if (QEMU_IS_GRAPHIC_CONSOLE(dcl->con)) {
+         dcl_set_graphic_cursor(dcl, QEMU_GRAPHIC_CONSOLE(dcl->con));
+@@ -678,9 +675,6 @@ void unregister_displaychangelistener(DisplayChangeListener *dcl)
+     if (!ds) {
+         return;
+     }
+-    if (dcl->con) {
+-        dcl->con->dcls--;
+-    }
+     QLIST_REMOVE(dcl, next);
+     dcl->ds = NULL;
+     gui_setup_refresh(ds);
+@@ -745,9 +739,6 @@ void dpy_gfx_update(QemuConsole *con, int x, int y, int w, int h)
+     w = MIN(w, width - x);
+     h = MIN(h, height - y);
  
- #ifndef SIGNED
--#define HALF (IN_MAX >> 1)
-+#define BIAS ((IN_T)1 << (SHIFT - 1))
- #endif
+-    if (!qemu_console_is_visible(con)) {
+-        return;
+-    }
+     dpy_gfx_update_texture(con, con->surface, x, y, w, h);
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+         if (con != dcl->con) {
+@@ -846,9 +837,6 @@ void dpy_text_cursor(QemuConsole *con, int x, int y)
+     DisplayState *s = con->ds;
+     DisplayChangeListener *dcl;
  
- #define ET glue (ENDIAN_CONVERSION, glue (glue (glue (_, ITYPE), BSIZE), _t))
-@@ -43,13 +43,13 @@ static inline mixeng_real glue (conv_, ET) (IN_T v)
- #ifdef SIGNED
-     return nv * (2.f / ((mixeng_real)IN_MAX - IN_MIN));
- #else
--    return ((mixeng_real)nv - HALF) * (2.f / (mixeng_real)IN_MAX);
-+    return ((mixeng_real)nv - BIAS) * (1.f / BIAS);
- #endif
- #else  /* !RECIPROCAL */
- #ifdef SIGNED
-     return nv / (((mixeng_real)IN_MAX - IN_MIN) / 2.f);
- #else
--    return ((mixeng_real)nv - HALF) / ((mixeng_real)IN_MAX / 2.f);
-+    return ((mixeng_real)nv - BIAS) / BIAS;
- #endif
- #endif
- }
-@@ -65,9 +65,7 @@ static inline IN_T glue (clip_, ET) (mixeng_real v)
- #ifdef SIGNED
-     return ENDIAN_CONVERT((IN_T)(v * (((mixeng_real)IN_MAX - IN_MIN) / 2.f)));
- #else
--    return ENDIAN_CONVERT(MIN((int64_t)((v * ((mixeng_real)IN_MAX / 2.f)) +
--                                        HALF),
--                              IN_MAX));
-+    return ENDIAN_CONVERT(MIN((int64_t)(v * BIAS) + BIAS, IN_MAX));
- #endif
+-    if (!qemu_console_is_visible(con)) {
+-        return;
+-    }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+         if (con != dcl->con) {
+             continue;
+@@ -864,9 +852,6 @@ void dpy_text_update(QemuConsole *con, int x, int y, int w, int h)
+     DisplayState *s = con->ds;
+     DisplayChangeListener *dcl;
+ 
+-    if (!qemu_console_is_visible(con)) {
+-        return;
+-    }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+         if (con != dcl->con) {
+             continue;
+@@ -882,9 +867,6 @@ void dpy_text_resize(QemuConsole *con, int w, int h)
+     DisplayState *s = con->ds;
+     DisplayChangeListener *dcl;
+ 
+-    if (!qemu_console_is_visible(con)) {
+-        return;
+-    }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+         if (con != dcl->con) {
+             continue;
+@@ -904,9 +886,6 @@ void dpy_mouse_set(QemuConsole *c, int x, int y, bool on)
+     con->cursor_x = x;
+     con->cursor_y = y;
+     con->cursor_on = on;
+-    if (!qemu_console_is_visible(c)) {
+-        return;
+-    }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+         if (c != dcl->con) {
+             continue;
+@@ -925,9 +904,6 @@ void dpy_cursor_define(QemuConsole *c, QEMUCursor *cursor)
+ 
+     cursor_unref(con->cursor);
+     con->cursor = cursor_ref(cursor);
+-    if (!qemu_console_is_visible(c)) {
+-        return;
+-    }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+         if (c != dcl->con) {
+             continue;
+@@ -1285,11 +1261,6 @@ QEMUCursor *qemu_console_get_cursor(QemuConsole *con)
+     return QEMU_IS_GRAPHIC_CONSOLE(con) ? QEMU_GRAPHIC_CONSOLE(con)->cursor : NULL;
  }
  
-@@ -79,7 +77,7 @@ static inline int64_t glue (conv_, ET) (IN_T v)
- #ifdef SIGNED
-     return ((int64_t) nv) << (32 - SHIFT);
- #else
--    return ((int64_t) nv - HALF) << (32 - SHIFT);
-+    return ((int64_t) nv - BIAS) << (32 - SHIFT);
- #endif
- }
- 
-@@ -94,7 +92,7 @@ static inline IN_T glue (clip_, ET) (int64_t v)
- #ifdef SIGNED
-     return ENDIAN_CONVERT ((IN_T) (v >> (32 - SHIFT)));
- #else
--    return ENDIAN_CONVERT ((IN_T) ((v >> (32 - SHIFT)) + HALF));
-+    return ENDIAN_CONVERT((IN_T)((v >> (32 - SHIFT)) + BIAS));
- #endif
- }
- #endif
-@@ -150,5 +148,5 @@ static void glue (glue (clip_, ET), _from_mono)
- }
- 
- #undef ET
--#undef HALF
-+#undef BIAS
- #undef IN_T
+-bool qemu_console_is_visible(QemuConsole *con)
+-{
+-    return con->dcls > 0;
+-}
+-
+ bool qemu_console_is_graphic(QemuConsole *con)
+ {
+     return con && QEMU_IS_GRAPHIC_CONSOLE(con);
 -- 
 2.54.0
 
