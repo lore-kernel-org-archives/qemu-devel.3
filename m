@@ -4,108 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF586FF885D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 07:49:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F4EFFF885A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 08:04:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHdBs-0007b7-5l; Tue, 28 Apr 2026 03:49:08 -0400
+	id 1wHdQ0-0003EC-Aw; Tue, 28 Apr 2026 04:03:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHdBo-0007aL-Tv
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 03:49:04 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHdBn-00080s-2S
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 03:49:04 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-6501725d888so8991614d50.0
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 00:49:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777362542; cv=none;
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wHdPx-0003Da-1K
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:03:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wHdPt-00036u-5P
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:03:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777363414;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BPudrdLn0IK9sImuSyJc3hr6uP5V/FxPl5nefsdVox8=;
+ b=f1Zn2OPfyl0GKs7nbOtokh3LO0teNRQmWtF6jOnYjbyElzODRqt/V2LJBECi79cNYe3c29
+ 73ASGcMdL9RjP0tLNBe0jzGaRDwMyHEjBjsnJ1WRoUut+us0tHT8attBdJlZ+mo0RLxBVi
+ Q2ywUGQJTLNZMo8ER0Co24QiwlTqgLA=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-546-Hwwymu6vPwKHp6FK5fDTUA-1; Tue, 28 Apr 2026 04:03:33 -0400
+X-MC-Unique: Hwwymu6vPwKHp6FK5fDTUA-1
+X-Mimecast-MFC-AGG-ID: Hwwymu6vPwKHp6FK5fDTUA_1777363412
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2b461b36990so120912825ad.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 01:03:32 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777363412; cv=none;
  d=google.com; s=arc-20240605;
- b=BbcR8zSM93Arm2RdxNXkWa+9NzONTGdboB/uIJ7b2CjhVS8JsHZpTxs9WXCDxXCEw7
- Zx13Ej4k21Y9v+BnNTv9BrY1aZYzalPUUKJi7AGoysdTuCbOhurxOriNJ0gMjyFmpAc5
- q/4GZk69wgOcMXNOBzlLmdwOF2SpCpuuOrFncflxCDUOCiEsH2ECWrDBQrw1tq349gfu
- X+420QcVNPdOasMkjD4W5Ry62dA4v6boT27nYyetHcc4B8A36gT8wGqSJFa+WvAFVabP
- K67Hz8MHg0srMd7eALvb1djSN8DmYZ5EwunlcyM2BZd1b0T0W5VcaIFAakm//SifGPwx
- eTfw==
+ b=hRp7IXucmXEOjEQw6MrIfNC6gva3HaUs3v8df2ctFbddxyWCdECWCUEnN36pRV5aBE
+ uRlzz2Yzjt97XHHDrAm04Z1Vjao2uCzMaMWw7Oz9kqjY+7VUxu5YTp3M45pPmRbw4WUb
+ DcuOPVnPozHv7etu0izi/L51KH6hC8Iq1y9RpLB2GirZgzauZXa2FfkrUsP2beRtuLyh
+ Oj0TUenDEA9d1OMbQQnynu13yftnby37WuS0f9m1xFW67nU2QZLofD8lZYgmtWgMpJqZ
+ 0huZRuHHBHaLnFqjnzkM/8T5TITVii8FlB5TRcXEBqo59TIXz04qvPSLaMiGmTup7D6z
+ nBaw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=sD+CQsBvunLSQ8PKk34tXwXQ0myL91q/9Qi4cA3HYMU=;
- fh=1Xd7Wzgni5O6OiQrUAllr3/n2A2vZ24jpGmDtX3IXEk=;
- b=AE22V+CQ6IX+sgvxsJP27VV8K69QTccxdBT/66VlJLRZOqPVMXNlzkdfMlMx6rbqTN
- MpHUBu2fQbhQPtyLYE1DJ5kVw2UzDBY+6GdIAk1rH0iDpK+1xdy3yp9Qb4BW/9xuRQ5x
- uFBRKNyg4SNY6wYEvug1Uw2DMMbe44Vf24G2d3o3DIfvhEHjRj+Y3l7a6Y4gxoa6GJ+O
- rhQhobHz4QZPu+wWuJOn1ZVdNakMNaLE5YYATSv1yZ+8ajc7rXsH6PqVVs3jvCB+AbaL
- JA9GJstW8HrOs/PDr1mLhCGT15JgvoIaU0I60f39nXtM9+0GXUXlFf3KTDNH6BlNo/oI
- Z6uA==; darn=nongnu.org
+ bh=BPudrdLn0IK9sImuSyJc3hr6uP5V/FxPl5nefsdVox8=;
+ fh=Lp0EzGRgIYJPnfuILsQ/Ksar4E7WyhbafxG8toaFkq8=;
+ b=DzrNjbfFSsNpC21pbOwk7ClHmHeOY6JH3ng2tt3WSakRZ/pKtqWAhuRJ3I+85L25pG
+ Mg3LtqkMwT/IX7yG0WldBKOov5KE860sv1z7YQClhMByJt/S4ceh+N9vfKZbVK5sVaMe
+ 5kgZVyXgHIWQXb5bLj0fH+7H7OMg1Oy9Nx5HZLWmiaP5duuRjXV++YWt1A1unpAVfXvn
+ gFQTsELqchfayWtK0oaFsgrE1mVrfAAd2gZE/GS37r1P9VR6G0TsgcIG1IlUEScUzJVa
+ sFxyqhXuQjoZ82bPqRBp91TpHwvTqIa+ouTXNKC7FeBEJYPwhkI/BV8MZJ44m3ZQowur
+ oELg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777362542; x=1777967342; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777363412; x=1777968212; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sD+CQsBvunLSQ8PKk34tXwXQ0myL91q/9Qi4cA3HYMU=;
- b=ogPYf5aaBJU4BUHLlzFk9ghT9WFeWDwObk5+GHl2ewR7veUO2defVtCsJjpGmkKIDn
- T55JEJRUo+lYl0vb+hmxqN6+sGBqCCRiMM03Op5c8kDWcvQc84FbkpTxnp46CENtwID1
- oIg/PNLo1+YbGACvULHcDuzdMhTI2HpDcpWf9Btjz87OLr65wLAo18Fkqp1ausssagEh
- nBC6rTY7rADhYy9qTpWZfGY/nzjmQx1Y1Msx6YkRLX28W0MWOVMRbqIBFbCOwYWjiF2a
- lcuBCvoTlQ4rlALEl1MifLQ6uy8K/Mf0//TwF2pHMPkFSbk4XGyliz/XuEnAFnv7Cv9L
- tzlQ==
+ bh=BPudrdLn0IK9sImuSyJc3hr6uP5V/FxPl5nefsdVox8=;
+ b=PhPnt1S4oUmKE9tFbjwldG2Vwa69RDigjCRCynn/xtiFsjy3WJ/0QWPY/dHhk6MT4c
+ 93fyKoDJG81k+leNWP2uptf1A8Y8Eqh5bXIQnQ9qktIyqV75Dgft7rF4BS4DI8MVOPNl
+ SzL0EsTKuPzRzv8i709vBeEGY6Y6vFun0AQV5uNJ9MOCmcB+GlbaUFN/2985mqTNu9wm
+ h/30U6g9PTXgMseWGiGrZ5XajDnvgpe76IoYaah5DA7SUnKE8Yf4p5rUjrVM+5nCJptS
+ gJtzOLKj9MorRC3jzvX4APluUmj8QnRUBFxXqVevHoxiYNUw/7UXMLUmpyrXxMq3M/rS
+ EK3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777362542; x=1777967342;
+ d=1e100.net; s=20251104; t=1777363412; x=1777968212;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=sD+CQsBvunLSQ8PKk34tXwXQ0myL91q/9Qi4cA3HYMU=;
- b=cK7QQ1V4/kMn+tP6OfFG4nLAbqOd8j0wCvgsm0XU1iLAjOUqIxR0Dc2X19XPA3Ia9Y
- nMMeXvhCyWdwk9tO6XkU7GXdpp3Oxw6X4w+MSpxgaNcWskxIqXjrfda8ZkKwyUryCguo
- JAXxFv73fnXIB6C773j0nqMzHIoQsUp5r5ICEAnYO1mHl5jP/dy+nRVttEo6gEGhxqE7
- boRhz5U15WJFVs/HAbcVOKXFolQjXd0ni+Gell4PPGlAyppfjJ9xYb+r2f9BpZA9tyAq
- cr7EnFt+AqxGfSLMkiwvGCmRPP66ZAZNYcznXQndjmz/pWQhP4emGIqNwQrD+A3HwaFP
- X7fw==
-X-Gm-Message-State: AOJu0Yx6hr/TArjlXCqXU9MyivA6d+KMMEhUjpJZ7XZwyKvjk+MZ7HEk
- nqPkmnyC1qWsf4MFbl2uwiRoCt3eBRK5beQ2S+YPHqF/+qnEaUqlBPabvVPL4FCZt9Dauu7AYuH
- wY2S0N6pBCuiD3G/vxcy5j3kVz4SvgJiqmBb4/F0e1w==
-X-Gm-Gg: AeBDieukFxCtstQJ4ex6mYEgQuL29gF3VghXaMHfl1O/+VeFM/Fo+CgqoRwsbd8HsTC
- /KTfC8AK/8EbGkAppVoD7ahJlmOXDkrIbO1J5eVQGPHqtquy0TnKsgQA3Uq1TT6K72hQrWVKuwx
- XFrF2gzmkZ4TAnKZUdZXZlPMBfyLdRLpS/Rn6h/Sct64e1ldk46GaARlOnl2jcXZxv0W/9uXupE
- g4XELjMBtBEbmcJ9siIcZkQj4oAT6J4SzVaYlUvjJ4bmiA7kPWYRDCAHNau0LAomQ7PsYPG/+8x
- vrryyXacMlkCgsKAQA/Djf9LQP1unMd1vkKdjmonW64k69kA6kn7uy3dlhNehSHkwdFg9Vr2XWs
- PtQ==
-X-Received: by 2002:a05:690e:4388:b0:651:cc5e:b8d7 with SMTP id
- 956f58d0204a3-65beed7c474mr1184929d50.22.1777362541744; Tue, 28 Apr 2026
- 00:49:01 -0700 (PDT)
+ bh=BPudrdLn0IK9sImuSyJc3hr6uP5V/FxPl5nefsdVox8=;
+ b=qstAkKCidAMc6/0yUB3XSgbTKoSLoKHh1rv6UFLMWFQe6XCspYqtWXCoTAIPxSa0CF
+ rJ8UVeKFyEV+QoUW18XQpNE0/R+7aMl6s9rHVMgsN3ZIpZXNyh/5XLzNA0lIWbo4zn6d
+ CMx5PR1XLwJm2fH9G91v3nK+Yax5XUj2eFAwS0Fhv7xXgeaYhY64L4bGv4ktD/8Bjmh8
+ vEVJIeMcc4xhfLxm/VFu58w1NfDTwiYR0EFcV12iR4GDj6or6c6GyVtAMsMOn9jlbXwb
+ cLcUetJZK3TkJCwruqPgQoa0HbO9KXcKor2abOu3MTnJ8172N3Ds593Kk6h9mC51lex9
+ GBgA==
+X-Gm-Message-State: AOJu0YxVr0hJ0l+B9tjeeyqUHW1VEJFe9zQk3/pMOIkoHMfHHHErU1cW
+ hZ2cS2ub86gl8mXLkMc5G8JvndUSvoquZ9HLGNlsTawTRFiUgMDvmS1Bw6VMgP4MDZTzW2rcukh
+ UBgMdVth8+TlesDuavZM8O8OXsubHjn0RS0GURPf9XTnaDxOFPL8lJE1+ynK0GCd/ybukMdlW8O
+ BArTE/9c23VqvML2zVZ6o5XZ4REsD45bE=
+X-Gm-Gg: AeBDiev7f0GeNupZMoBloQE0jzVZYQr0VUNc2pJBoFg+YOXO4P0IsqlrwsmkO5S9NRp
+ flVXGJ/pfev18UFQqq0dzpPVgMHkH1tWiOghHsDA+gkHc9C5TV4YOtgp9hr8W2YWTXybptN+tGF
+ DpDCCnasiWQc1Ztb4z9QqAkEHhfr5EyggG5VPm46MGkZ1CH0TnN4UiwzIo7dyF/ZGpvasTyKbGF
+ ga4ZdTQEX3Jit0ZdVysm04NThi/DYtw1SmdAuMDf5QDkvlL66+Agzaf0/OQze9ICJtt8FREKO7l
+ 9xhhAJnZcWCb2PdeO5Rm+xwSSqCp9qOL2tE=
+X-Received: by 2002:a17:902:ebca:b0:2b9:6a47:787f with SMTP id
+ d9443c01a7336-2b97c4ca07bmr19618115ad.40.1777363412018; 
+ Tue, 28 Apr 2026 01:03:32 -0700 (PDT)
+X-Received: by 2002:a17:902:ebca:b0:2b9:6a47:787f with SMTP id
+ d9443c01a7336-2b97c4ca07bmr19617825ad.40.1777363411463; Tue, 28 Apr 2026
+ 01:03:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
- <20260427-qom-tests-v1-41-c413f3605311@redhat.com>
- <CAFEAcA_7LT-gpArvYpabe9UiFPDGDMEsGOTMeivw90SVDjabeg@mail.gmail.com>
- <CAJ+F1CJ1u16q+KBqsO3ofYTVERSvLC-w2MhA_oUF_tvd-mPZWQ@mail.gmail.com>
-In-Reply-To: <CAJ+F1CJ1u16q+KBqsO3ofYTVERSvLC-w2MhA_oUF_tvd-mPZWQ@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Apr 2026 08:48:50 +0100
-X-Gm-Features: AVHnY4LvJiWccyq5d0OGsdVumABKk42v_LpOoFO2S8aI4CaZNnh6i5EoUE0oAKQ
-Message-ID: <CAFEAcA-mkx-pymWq7nUOsNEBPr__RJZAV-h2YXSe=+_aGUZy8Q@mail.gmail.com>
-Subject: Re: [PATCH 41/41] qtest: add "qom-tests" command
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260427-gtk-clipboard-v5-0-6968feb31a5d@gmail.com>
+In-Reply-To: <20260427-gtk-clipboard-v5-0-6968feb31a5d@gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 28 Apr 2026 12:03:19 +0400
+X-Gm-Features: AVHnY4JXx8X6OCdh3KHq1F7XnSM5lV-4QyOKVnXosX8iaFpYR2uAoprjKHW3rS4
+Message-ID: <CAMxuvazzhm5-HwgW=h_9Rd4DBChgKZTMMCNUby5S=WQPJ+f8RQ@mail.gmail.com>
+Subject: Re: [PATCH v5 0/2] Fix and re-enable GTK clipboard
+To: =?UTF-8?B?SmluZMWZaWNoIE1ha292acSNa2E=?= <makovick@gmail.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,48 +139,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Apr 2026 at 07:37, Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@redhat.com> wrote:
->
-> Hi Peter
->
-> On Tue, Apr 28, 2026 at 12:08=E2=80=AFAM Peter Maydell <peter.maydell@lin=
-aro.org> wrote:
-> >
-> > On Mon, 27 Apr 2026 at 20:50, Marc-Andr=C3=A9 Lureau
-> > <marcandre.lureau@redhat.com> wrote:
-> > >
-> > > Add a new "qom-tests" to exercise basic object lifecycle. Instantiate
-> > > all non-abstract objects, get and set properties and unref.
-> > >
-> > > This should quickly find leaks and other related issues that are
-> > > eventually triggerable at run-time with QMP qom commands.
-> >
-> > Can we have a comment please that says what you think the
-> > basic object lifecycle is?
->
-> Hmm, what is not clear about the comment above and its list?
+Hi
 
-It's quite brief and it's not in the actual source file.
-More generally, there is a lifecycle for the basic QOM types,
-and a more complicated one for QOM types that happen to be
-qdev devices, some of which we are testing already. I think
-we are not very good with documentation of what we expect
-from QOM objects lifecycle-wise, so I think it's helpful to
-be more explicit and detailed rather than less.
-
-> > Also, the qom-test already has coverage of "init the object,
-> > introspect its properties, unref it" -- how does this differ?
+On Tue, Apr 28, 2026 at 12:06=E2=80=AFAM Jind=C5=99ich Makovi=C4=8Dka <mako=
+vick@gmail.com> wrote:
 >
-> It does introspect on already living and reachable objects, over QMP.
-> It doesn't instantiate, set, or unref.
+> The following patches change blocking clipboard retrieval function
+> calls in gtk-clipboard.c to non-blocking variants using callbacks to
+> avoid UI lockup. It is a follow-up to the patch proposed in the GitLab
+> issue
+>
+> https://gitlab.com/qemu-project/qemu/-/work_items/1150
+>
+> This version adds a similar change to gd_clipboard_request that also
+> uses the blocking clipboard API.
+>
+> The second patch removes the gtk-clipboard compile flag, keeping the
+> GTK clipboard always compiled in. By default, clipboard is off,
+> can be enabled by -display gtk,clipboard=3Don .
+>
+> Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
 
-Ah, sorry; I was getting this confused with device-introspect-test,
-which uses QMP and does a 'qom-list-types' to get all the
-QOM types QEMU knows about, and then does a 'device-list-properties',
-which implicitly will create the object with instance_init and then
-finalize it afterwards.
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-thanks
--- PMM
+> ---
+> Changes in v5:
+> - Runtime option added, clipboard still off by default
+> - Link to v4: https://lore.kernel.org/qemu-devel/20260427-gtk-clipboard-v=
+4-0-176ad9919931@gmail.com
+>
+> Changes in v4:
+> - Replace gtk_clipboard_request_contents with
+>   gtk_clipboard_request_targets which can utilize GTK's target cache
+> - Link to v3: https://lore.kernel.org/qemu-devel/20260426-gtk-clipboard-v=
+3-0-09555aaeda34@gmail.com
+>
+> Changes in v3:
+> - Use gtk_clipboard_request_contents to avoid text conversion
+>   when we only need to check if the text is available.
+> - Link to v2: https://lore.kernel.org/qemu-devel/20260425-gtk-clipboard-v=
+2-0-b098f3cf69cc@gmail.com
+>
+> Changes in v2:
+> - Removed forgotten gtk-clipboard comment in meson_options.txt
+> - Link to v1: https://lore.kernel.org/qemu-devel/20260425-gtk-clipboard-v=
+1-0-6bd99e708e14@gmail.com
+>
+> ---
+> Jind=C5=99ich Makovi=C4=8Dka (2):
+>       ui/gtk: Use non-blocking clipboard retrieval
+>       ui/gtk: Turn clipboard flag into runtime option
+>
+>  meson.build        |  4 ----
+>  meson_options.txt  |  7 -------
+>  qapi/ui.json       |  6 +++++-
+>  qemu-options.hx    |  9 ++++++---
+>  ui/gtk-clipboard.c | 53 ++++++++++++++++++++++++++++++++++++++++--------=
+-----
+>  ui/gtk.c           |  8 +++++---
+>  ui/meson.build     |  4 +---
+>  7 files changed, 57 insertions(+), 34 deletions(-)
+> ---
+> base-commit: aa15257174da180c6a8a9d58f87319cfe61c5520
+> change-id: 20260425-gtk-clipboard-fdf99db13ac0
+>
+> Best regards,
+> --
+> Jindrich Makovicka
+>
+
 
