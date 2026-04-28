@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F768FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 14:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48B80FF886D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 14:01:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHizX-0003wQ-Ii; Tue, 28 Apr 2026 10:00:47 -0400
+	id 1wHizs-00040Y-IB; Tue, 28 Apr 2026 10:01:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1wHiq9-0002St-1u
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:51:05 -0400
+ id 1wHiqD-0002Ti-Bq
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:51:09 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wHiq7-0005jm-LG
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:51:04 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wHiqB-0005kH-Qm
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:51:09 -0400
 Received: from laptop.localdomain (unknown [86.121.140.248])
- by linux.microsoft.com (Postfix) with ESMTPSA id C4E6520B716D;
- Tue, 28 Apr 2026 06:51:01 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C4E6520B716D
+ by linux.microsoft.com (Postfix) with ESMTPSA id AEE8420B716C;
+ Tue, 28 Apr 2026 06:51:05 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com AEE8420B716C
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1777384263;
- bh=iSlTLr4PLNpzYhYqZJq4BJSiCn3mNgEhOyCqyA5A3xI=;
+ s=default; t=1777384267;
+ bh=WJ38DvPHOqPdr07vUC966sHLG/3L8q3zyQeBdhMkfd8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=CTuFWs3C+ULWsLZQqNiBMcTvY5wxTlGD1mLcdepZ1TK6qvYFymEwAuLBT/9zdDb6J
- f/wa94gY826bQ1N5xDpzd6MoJMJe31gfqNi+FwjdouvQ9YYv6kyDFb9kMv3HvPVSA9
- t0iEsikj4Ek0oZEeSUaZjwCmq8IZCzBleJIVEHIE=
+ b=LYhAsljsNH8Fze7X7qLlONLrF6eA/2SZ4P1w+2pCowMkN91G60EYjKqvlTAXs3uDI
+ J6bsxFO06fJsQkIpuA1xB6E5sgDXJEsbyNdTSSVneyc5CbSNDbOWIhQGc/lwUt7gXJ
+ RDHDO1sUe9LR4faPcJc9BSfN2uFs5CJRKND3lGTs=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 1/6] target/i386/mshv: remove duplicate function for reading
- vcpu registers
-Date: Tue, 28 Apr 2026 16:50:48 +0300
-Message-ID: <20260428135053.251200-2-dblanzeanu@linux.microsoft.com>
+Subject: [PATCH 3/6] include/hw/hyperv: add hv_vp_register_page struct
+ definition
+Date: Tue, 28 Apr 2026 16:50:50 +0300
+Message-ID: <20260428135053.251200-4-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260428135053.251200-1-dblanzeanu@linux.microsoft.com>
 References: <20260428135053.251200-1-dblanzeanu@linux.microsoft.com>
@@ -54,7 +54,7 @@ X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 28 Apr 2026 10:00:15 -0400
+X-Mailman-Approved-At: Tue, 28 Apr 2026 10:00:24 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,53 +69,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Remove function `fetch_guest_state` because it is a duplicate function
-of `mshv_load_regs` function.
+Define the `hv_vp_register_page` structure that the linux kernel uses
+to allow access to vcpu registers.
+
+This structure is going to be used in later patches to access vcpu
+registers.
 
 Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 ---
- target/i386/mshv/mshv-cpu.c | 21 +--------------------
- 1 file changed, 1 insertion(+), 20 deletions(-)
+ include/hw/hyperv/hvgdk_mini.h | 103 +++++++++++++++++++++++++++++++++
+ 1 file changed, 103 insertions(+)
 
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 4ed6e7548f..9defd05db6 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -1291,25 +1291,6 @@ static int handle_pio_non_str(const CPUState *cpu,
-     return 0;
- }
+diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+index c3a8f33280..07e322865a 100644
+--- a/include/hw/hyperv/hvgdk_mini.h
++++ b/include/hw/hyperv/hvgdk_mini.h
+@@ -474,6 +474,109 @@ struct hv_input_assert_virtual_interrupt {
+     uint16_t rsvd_z1;
+ } QEMU_PACKED;
  
--static int fetch_guest_state(CPUState *cpu)
--{
--    int ret;
--
--    ret = mshv_get_standard_regs(cpu);
--    if (ret < 0) {
--        error_report("Failed to get standard registers");
--        return -1;
--    }
--
--    ret = mshv_get_special_regs(cpu);
--    if (ret < 0) {
--        error_report("Failed to get special registers");
--        return -1;
--    }
--
--    return 0;
--}
--
- static int read_memory(const CPUState *cpu, uint64_t initial_gva,
-                        uint64_t initial_gpa, uint64_t gva, uint8_t *data,
-                        size_t len)
-@@ -1429,7 +1410,7 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86_cpu->env;
- 
--    ret = fetch_guest_state(cpu);
-+    ret = mshv_load_regs(cpu);
-     if (ret < 0) {
-         error_report("Failed to fetch guest state");
-         return -1;
++/* Flags for dirty mask of hv_vp_register_page */
++enum hv_x64_register_class_type {
++    HV_X64_REGISTER_CLASS_GENERAL = 0,
++    HV_X64_REGISTER_CLASS_IP = 1,
++    HV_X64_REGISTER_CLASS_XMM = 2,
++    HV_X64_REGISTER_CLASS_SEGMENT = 3,
++    HV_X64_REGISTER_CLASS_FLAGS = 4,
++};
++
++#define HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT  7
++
++union hv_vp_register_page_interrupt_vectors {
++    uint64_t as_uint64;
++    struct {
++        uint8_t vector_count;
++        uint8_t vector[HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT];
++    };
++};
++
++struct hv_vp_register_page {
++    uint16_t version;
++    uint8_t isvalid;
++    uint8_t rsvdz;
++    uint32_t dirty;
++
++    union {
++        struct {
++            /* General purpose registers (HV_X64_REGISTER_CLASS_GENERAL) */
++            union {
++                struct {
++                    uint64_t rax;
++                    uint64_t rcx;
++                    uint64_t rdx;
++                    uint64_t rbx;
++                    uint64_t rsp;
++                    uint64_t rbp;
++                    uint64_t rsi;
++                    uint64_t rdi;
++                    uint64_t r8;
++                    uint64_t r9;
++                    uint64_t r10;
++                    uint64_t r11;
++                    uint64_t r12;
++                    uint64_t r13;
++                    uint64_t r14;
++                    uint64_t r15;
++                } QEMU_PACKED;
++
++                uint64_t gp_registers[16];
++            };
++            /* Instruction pointer (HV_X64_REGISTER_CLASS_IP) */
++            uint64_t rip;
++            /* Flags (HV_X64_REGISTER_CLASS_FLAGS) */
++            uint64_t rflags;
++        } QEMU_PACKED;
++
++        uint64_t registers[18];
++    };
++    uint8_t reserved[8];
++    /* Volatile XMM registers (HV_X64_REGISTER_CLASS_XMM) */
++    union {
++        struct {
++            struct hv_u128 xmm0;
++            struct hv_u128 xmm1;
++            struct hv_u128 xmm2;
++            struct hv_u128 xmm3;
++            struct hv_u128 xmm4;
++            struct hv_u128 xmm5;
++        } QEMU_PACKED;
++
++        struct hv_u128 xmm_registers[6];
++    };
++    /* Segment registers (HV_X64_REGISTER_CLASS_SEGMENT) */
++    union {
++        struct {
++            struct hv_x64_segment_register es;
++            struct hv_x64_segment_register cs;
++            struct hv_x64_segment_register ss;
++            struct hv_x64_segment_register ds;
++            struct hv_x64_segment_register fs;
++            struct hv_x64_segment_register gs;
++        } QEMU_PACKED;
++
++        struct hv_x64_segment_register segment_registers[6];
++    };
++    /* Misc. control registers (cannot be set via this interface) */
++    uint64_t cr0;
++    uint64_t cr3;
++    uint64_t cr4;
++    uint64_t cr8;
++    uint64_t efer;
++    uint64_t dr7;
++    union hv_x64_pending_interruption_register pending_interruption;
++    union hv_x64_interrupt_state_register interrupt_state;
++    uint64_t instruction_emulation_hints;
++    uint64_t xfem;
++
++    uint8_t reserved1[0x100];
++
++    /* Interrupts injected as part of HvCallDispatchVp. */
++    union hv_vp_register_page_interrupt_vectors interrupt_vectors;
++} QEMU_PACKED;
++
+ /* /dev/mshv */
+ #define MSHV_CREATE_PARTITION   _IOW(MSHV_IOCTL, 0x00, struct mshv_create_partition)
+ #define MSHV_CREATE_VP          _IOW(MSHV_IOCTL, 0x01, struct mshv_create_vp)
 -- 
 2.53.0
 
