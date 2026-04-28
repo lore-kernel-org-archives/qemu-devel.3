@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE731FF885A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FAA6FF886C
 	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 08:13:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHdZR-0005tu-Nu; Tue, 28 Apr 2026 04:13:29 -0400
+	id 1wHdZV-0005ux-E9; Tue, 28 Apr 2026 04:13:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHdZK-0005sr-6A
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:13:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wHdZT-0005ub-VT
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:13:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHdZI-0005io-NF
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:13:21 -0400
+ id 1wHdZS-0005op-Fr
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:13:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777363998;
+ s=mimecast20190719; t=1777364009;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DTwO7gzGMoGFPz1x9+2GvNTlpfFwIa7tMHQwc8A7sI8=;
- b=XGpu1waqaSYQaSEfhTmMJ6tPFAuFaCmYDe7OiW5C1mA9xLnZ1DP/cI0xpv3Ae3mhTqRXuF
- A8KKLgeO5qvKi9vSlgeJ+R2Iw1qg5pg8WaxcNoBGf39bwT1f0qXxUlxKYNA3ZO+zlWpcrw
- NRYWzOXKjNDX6SbdbyQNTeyr3xgQMMQ=
+ bh=qcHo94HuD0MwG1Lrycu+X8H89uP+8uG3alrwsl0qpx8=;
+ b=UAdXOi0bPq7MGq71bFykMQExjjD6IN+q+A9OEMamC20YKene3e9AHBSRa8+YGcmqytk8pt
+ Cpn2MgUYNO6aI9+/1i0FhFR1GsrbvAplxIzbGLDmb2tp1k/L/TCrFxMoqKLLVrG8qYv9io
+ uiix3GeLc9qFkVLpFJMFw0xzVwgFtoc=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-277-8COA24F5NRKrC9Elq7bW3g-1; Tue,
- 28 Apr 2026 04:13:16 -0400
-X-MC-Unique: 8COA24F5NRKrC9Elq7bW3g-1
-X-Mimecast-MFC-AGG-ID: 8COA24F5NRKrC9Elq7bW3g_1777363995
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-488-7NBnKe7uOn6hTuzQb1DDfg-1; Tue,
+ 28 Apr 2026 04:13:28 -0400
+X-MC-Unique: 7NBnKe7uOn6hTuzQb1DDfg-1
+X-Mimecast-MFC-AGG-ID: 7NBnKe7uOn6hTuzQb1DDfg_1777364007
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 58AD31956059; Tue, 28 Apr 2026 08:13:15 +0000 (UTC)
+ id 307B919560B7; Tue, 28 Apr 2026 08:13:27 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2FD4E180047F; Tue, 28 Apr 2026 08:13:13 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D08BA1800352; Tue, 28 Apr 2026 08:13:25 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 01/15] ui: move FONT_WIDTH/HEIGHT to vgafont.h
-Date: Tue, 28 Apr 2026 12:12:48 +0400
-Message-ID: <20260428081303.990973-2-marcandre.lureau@redhat.com>
+Subject: [PULL 03/15] ui: make qemu_default_pixelformat() static inline
+Date: Tue, 28 Apr 2026 12:12:50 +0400
+Message-ID: <20260428081303.990973-4-marcandre.lureau@redhat.com>
 In-Reply-To: <20260428081303.990973-1-marcandre.lureau@redhat.com>
 References: <20260428081303.990973-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -68,7 +68,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,75 +87,69 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Since those values are related to the VGA font, it make sense to move
-them here.
+The function is a trivial wrapper around qemu_default_pixman_format()
+and qemu_pixelformat_from_pixman(), so make it static inline in
+qemu-pixman.h instead of a standalone function in console.c, allowing to
+be easily reused.
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/console-priv.h | 5 -----
- ui/vgafont.h      | 6 +++++-
- ui/console-vc.c   | 1 +
- ui/console.c      | 1 +
- 4 files changed, 7 insertions(+), 6 deletions(-)
+ include/ui/qemu-pixman.h | 8 ++++++++
+ include/ui/surface.h     | 2 --
+ ui/console.c             | 7 -------
+ 3 files changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/ui/console-priv.h b/ui/console-priv.h
-index 8bcdb79d914..39798c3e9d7 100644
---- a/ui/console-priv.h
-+++ b/ui/console-priv.h
-@@ -9,11 +9,6 @@
- #include "qemu/coroutine.h"
- #include "qemu/timer.h"
+diff --git a/include/ui/qemu-pixman.h b/include/ui/qemu-pixman.h
+index 2ca0ed7029c..4bc7a59698e 100644
+--- a/include/ui/qemu-pixman.h
++++ b/include/ui/qemu-pixman.h
+@@ -73,6 +73,14 @@ typedef struct PixelFormat {
  
--#include "vgafont.h"
--
--#define FONT_HEIGHT 16
--#define FONT_WIDTH 8
--
- struct QemuConsole {
-     Object parent;
- 
-diff --git a/ui/vgafont.h b/ui/vgafont.h
-index 54aeeb7d192..d24b5d47a95 100644
---- a/ui/vgafont.h
-+++ b/ui/vgafont.h
-@@ -6,6 +6,10 @@
- 
- #include <stdint.h>
- 
--extern const uint8_t vgafont16[256 * 16];
-+/* supports only vga 8x16 */
-+#define FONT_WIDTH 8
-+#define FONT_HEIGHT 16
+ PixelFormat qemu_pixelformat_from_pixman(pixman_format_code_t format);
+ pixman_format_code_t qemu_default_pixman_format(int bpp, bool native_endian);
 +
-+extern const uint8_t vgafont16[256 * FONT_HEIGHT];
++static inline PixelFormat qemu_default_pixelformat(int bpp)
++{
++    pixman_format_code_t fmt = qemu_default_pixman_format(bpp, true);
++    PixelFormat pf = qemu_pixelformat_from_pixman(fmt);
++    return pf;
++}
++
+ pixman_format_code_t qemu_drm_format_to_pixman(uint32_t drm_format);
+ uint32_t qemu_pixman_to_drm_format(pixman_format_code_t pixman);
+ int qemu_pixman_get_type(int rshift, int gshift, int bshift, int endian);
+diff --git a/include/ui/surface.h b/include/ui/surface.h
+index d2542d3ace5..8e5f3e35e8c 100644
+--- a/include/ui/surface.h
++++ b/include/ui/surface.h
+@@ -24,8 +24,6 @@ typedef struct DisplaySurface {
+     uint32_t share_handle_offset;
+ } DisplaySurface;
  
- #endif
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 107294af1cc..6163e21d2c6 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -10,6 +10,7 @@
- #include "qemu/option.h"
- #include "qemu/queue.h"
- #include "ui/console.h"
-+#include "ui/vgafont.h"
- 
- #include "pixman.h"
- #include "trace.h"
+-PixelFormat qemu_default_pixelformat(int bpp);
+-
+ DisplaySurface *qemu_create_displaysurface_from(int width, int height,
+                                                 pixman_format_code_t format,
+                                                 int linesize, uint8_t *data);
 diff --git a/ui/console.c b/ui/console.c
-index a7bd22515b9..9606da7b1a6 100644
+index 475a72aa08f..ff561617657 100644
 --- a/ui/console.c
 +++ b/ui/console.c
-@@ -24,6 +24,7 @@
+@@ -1390,13 +1390,6 @@ DisplaySurface *qemu_console_surface(QemuConsole *console)
+     }
+ }
  
- #include "qemu/osdep.h"
- #include "ui/console.h"
-+#include "ui/vgafont.h"
- #include "hw/core/qdev.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-ui.h"
+-PixelFormat qemu_default_pixelformat(int bpp)
+-{
+-    pixman_format_code_t fmt = qemu_default_pixman_format(bpp, true);
+-    PixelFormat pf = qemu_pixelformat_from_pixman(fmt);
+-    return pf;
+-}
+-
+ static QemuDisplay *dpys[DISPLAY_TYPE__MAX];
+ 
+ void qemu_display_register(QemuDisplay *ui)
 -- 
 2.53.0
 
