@@ -4,105 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC4CBFF8868
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 13:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C731FF885A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 13:36:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHibZ-0005ZJ-Rn; Tue, 28 Apr 2026 09:36:01 -0400
+	id 1wHibb-0005Zw-Pd; Tue, 28 Apr 2026 09:36:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Gautam.Menghani@ibm.com>)
- id 1wHfoN-0003hE-Na; Tue, 28 Apr 2026 06:37:03 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Gautam.Menghani@ibm.com>)
- id 1wHfoL-0008KB-To; Tue, 28 Apr 2026 06:37:03 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63S8Y6G2036865; Tue, 28 Apr 2026 10:36:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=Fmr4fsjDCSje8LaRXFevkKK/e5kpy7KbCEwat6mo5
- wg=; b=WT6d33Xg1CjkMnPYjgKqeINiniulyzxCJVQ7rhyyW03sB7fnG7ksRJ2TN
- m84GYQLI7D1sJGNHcuKlsuHLWrct8J+hA1XqLJ0RwOCwFfiU5IwLCikH3SxILPCc
- WpW+cgfpBU/hLmPx/o8nCQNc6nSHzidFwiD7umA+72hIRapu/0GamfA68KoVpbUw
- xoQvJnSalu3va487ZhqYf5Yl24DUjueyuz2WIB0E6xs5uNKds7rpStQ3utpv6ZJf
- 63fWb/X8mhvZLiZL8UUYlbEeS9QoV6CP6lM7lHlQm/Ifv0sa7m836ym2Cr/F0k5Q
- JHk/bnQuAqTGKsjUTP7uR7E7CkYfw==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drm1duw9a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Apr 2026 10:36:58 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63SANvJ5001198;
- Tue, 28 Apr 2026 10:36:57 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dsamy917p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Apr 2026 10:36:57 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63SAareX60621098
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 Apr 2026 10:36:53 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8F6692004B;
- Tue, 28 Apr 2026 10:36:53 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D712220040;
- Tue, 28 Apr 2026 10:36:51 +0000 (GMT)
-Received: from localhost.localdomain (unknown [9.43.36.19])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 28 Apr 2026 10:36:51 +0000 (GMT)
-From: Gautam Menghani <Gautam.Menghani@ibm.com>
-To: npiggin@gmail.com, harshpb@linux.ibm.com, adityag@linux.ibm.com
-Cc: kiki <Chan9Yan9@gmail.com>, qemu-ppc@nongnu.org, qemu-devel@nongnu.org,
- Zexiang Zhang <chan9yan9@gmail.com>, Gautam Menghani <gautam@linux.ibm.com>
-Subject: [PATCH v2] hw/intc/xics: Add a check for an invalid server id
-Date: Tue, 28 Apr 2026 16:06:44 +0530
-Message-ID: <20260428103645.50617-1-Gautam.Menghani@ibm.com>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <joey.gouly@arm.com>)
+ id 1wHiT1-0002zw-Th
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:27:11 -0400
+Received: from foss.arm.com ([217.140.110.172])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <joey.gouly@arm.com>) id 1wHiSz-0006tT-Jo
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:27:11 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+ by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E2C0B497;
+ Tue, 28 Apr 2026 06:27:00 -0700 (PDT)
+Received: from e124191.cambridge.arm.com (e124191.cambridge.arm.com
+ [10.1.197.45])
+ by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0B23B3F62B;
+ Tue, 28 Apr 2026 06:27:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
+ t=1777382826; bh=IyapETfcrA5bdzogS0BMgrPXC9c/KLCTS2PzVSSlXMo=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=cMe7uZnXRS3E8eiaXBZbf/31/9iUxv+ImqQ6FjohOPE8MehQgU634Hpr6XSuDjIpo
+ igQNg12C5u3+RpzYi2ngwf9eqHo5924XcBQ1KN36+NNo3TPokhBaVJEBqBumQzpe0i
+ U/xwFwL5j/3UvcdUvyenH7P8iTzIyRS4oF2HdjvE=
+Date: Tue, 28 Apr 2026 14:26:57 +0100
+From: Joey Gouly <joey.gouly@arm.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Andrew Jones <andrew.jones@linux.dev>,
+ Alexandru Elisei <alexandru.elisei@arm.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ "open list:ARM" <kvmarm@lists.linux.dev>,
+ "open list:Default mailing list" <kvm@vger.kernel.org>
+Subject: Re: [kvm-unit-tests PATCH] arm: add wfx test case
+Message-ID: <20260428132657.GA591628@e124191.cambridge.arm.com>
+References: <20260427130045.3669851-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: niRNXtms5A0aSykIOvL3piamIEvrHa-I
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDA5MSBTYWx0ZWRfXya1fBzqhH+Z0
- JdHCadIdHXuPao0K31kzLe5R17Wou/7mCyKPqyZjDlysAg2Sl09EarhV8BO6Kf+u6OkSM7SPF0a
- dkQ4WAGvB4QaLULFLZKiEOoa+M878gU8TIt4X6wta24nmbU3dQ9tG47uAFDrl9nLXdaJyM+jOZF
- HpVMRXS1gPNV+8iIEl4sXieezYh25z0NByTwXSUCZMQfQNtupZGar4PlrnyGWxwbzVgg1gtCHe1
- FVs2ELbD+lYAF8OyXakHn3RCkQnTGbUdiM5L0RuSVXhwIniQ9fzgEpef07t6mrVmYV2lWoVzd/v
- eGoanjFGiZ8HSlQ94E3oGm3QHf6KfZFV2RxhnUQJlptpvjO4kunNqK93BJe1EoM52Ci/CxYfqeo
- Bf+sOimb49JunIVBC2kh9MfmKX924okg8NehCh+JIbwX2E+67HaRoeaYqFLC5vDFnyfFNAEthva
- 85zEpcJ0p8rGuzKZQLA==
-X-Authority-Analysis: v=2.4 cv=VZLH+lp9 c=1 sm=1 tr=0 ts=69f08dca cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8
- a=gDGxtpEj6ED9AaWiFCkA:9
-X-Proofpoint-GUID: UrssTfQayPXaH2P0i-Va2YOmuDEpzajl
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-28_02,2026-04-21_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 suspectscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
- spamscore=0 malwarescore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604280091
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=Gautam.Menghani@ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+In-Reply-To: <20260427130045.3669851-1-alex.bennee@linaro.org>
+Received-SPF: pass client-ip=217.140.110.172; envelope-from=joey.gouly@arm.com;
+ helo=foss.arm.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 28 Apr 2026 09:36:00 -0400
+X-Mailman-Approved-At: Tue, 28 Apr 2026 09:36:02 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -117,52 +73,246 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: kiki <Chan9Yan9@gmail.com>
+Hi,
 
-A malformed IVE value can result in an invalid server field being
-passed to icp_irq(). The function assumes the server id is valid and
-may access invalid state otherwise, potentially leading to a crash.
+Few small comments.
 
-Fix this by validating the server id before using it and ignoring
-invalid values.
+On Mon, Apr 27, 2026 at 02:00:45PM +0100, Alex Bennée wrote:
+> This is based on a similar test case I wrote for QEMU's tcg tests although
+> obviously able to take advantage of kvm-unit-tests additional plumbing for
+> dealing with the GIC and IRQs.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>  arm/Makefile.arm64        |   1 +
+>  lib/arm64/asm/processor.h |   7 ++
+>  lib/arm64/asm/sysreg.h    |   3 +
+>  arm/wfx.c                 | 137 ++++++++++++++++++++++++++++++++++++++
+>  arm/unittests.cfg         |   5 ++
+>  5 files changed, 153 insertions(+)
+>  create mode 100644 arm/wfx.c
+> 
+> diff --git a/arm/Makefile.arm64 b/arm/Makefile.arm64
+> index a40c830d..52b3f35d 100644
+> --- a/arm/Makefile.arm64
+> +++ b/arm/Makefile.arm64
+> @@ -64,6 +64,7 @@ tests += $(TEST_DIR)/cache.$(exe)
+>  tests += $(TEST_DIR)/debug.$(exe)
+>  tests += $(TEST_DIR)/fpu.$(exe)
+>  tests += $(TEST_DIR)/mte.$(exe)
+> +tests += $(TEST_DIR)/wfx.$(exe)
+>  
+>  include $(SRCDIR)/$(TEST_DIR)/Makefile.common
+>  
+> diff --git a/lib/arm64/asm/processor.h b/lib/arm64/asm/processor.h
+> index 32ddc1b3..2104036d 100644
+> --- a/lib/arm64/asm/processor.h
+> +++ b/lib/arm64/asm/processor.h
+> @@ -173,5 +173,12 @@ static inline bool system_supports_rndr(void)
+>  	return ((id_aa64isar0_el1 >> ID_AA64ISAR0_EL1_RNDR_SHIFT) & 0xf) != 0;
+>  }
+>  
+> +static inline bool system_supports_wfxt(void)
+> +{
+> +	u64 id_aa64isar2_el1 = read_sysreg_s(ID_AA64ISAR2_EL1);
+> +
+> +	return ((id_aa64isar2_el1 >> ID_AA64ISAR2_EL1_WFxT_SHIFT) & 0xf) != 0;
+> +}
+> +
+>  #endif /* !__ASSEMBLER__ */
+>  #endif /* _ASMARM64_PROCESSOR_H_ */
+> diff --git a/lib/arm64/asm/sysreg.h b/lib/arm64/asm/sysreg.h
+> index f2d05018..cb96a649 100644
+> --- a/lib/arm64/asm/sysreg.h
+> +++ b/lib/arm64/asm/sysreg.h
+> @@ -77,6 +77,9 @@ asm(
+>  #define ID_AA64ISAR0_EL1_RNDR_SHIFT	60
+>  #define ID_AA64PFR1_EL1_MTE_SHIFT	8
+>  
+> +#define ID_AA64ISAR2_EL1		sys_reg(3, 0, 0, 6, 2)
+> +#define ID_AA64ISAR2_EL1_WFxT_SHIFT	0
+> +
+>  #define ID_AA64MMFR0_EL1_FGT_SHIFT	56
+>  #define ID_AA64MMFR0_EL1_FGT_FGT2	0x2
+>  
+> diff --git a/arm/wfx.c b/arm/wfx.c
+> new file mode 100644
+> index 00000000..912e50e6
+> --- /dev/null
+> +++ b/arm/wfx.c
+> @@ -0,0 +1,137 @@
+> +/*
+> + * WFX Instructions Test (WFI, WFE, WFIT, WFET)
+> + *
+> + * Copyright (c) 2026 Linaro Ltd
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include <libcflat.h>
+> +#include <asm/processor.h>
+> +#include <asm/gic.h>
+> +#include <asm/timer.h>
+> +#include <asm/io.h>
+> +
+> +#define TIMEOUT 200000
 
-Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
-Signed-off-by: Zexiang Zhang <chan9yan9@gmail.com>
-Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
----
-v2:
-1. Fix build error and subject line
+Instead of a hardcoded TIMEOUT, what about something similar to arm/timer.c:
 
- hw/intc/xics.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+	u64 time_10ms = read_sysreg(cntfrq_el0) / 100;
 
-diff --git a/hw/intc/xics.c b/hw/intc/xics.c
-index c0a252d051..e32984e9fc 100644
---- a/hw/intc/xics.c
-+++ b/hw/intc/xics.c
-@@ -26,6 +26,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/log.h"
- #include "qapi/error.h"
- #include "trace.h"
- #include "qemu/timer.h"
-@@ -222,6 +223,13 @@ void icp_irq(ICSState *ics, int server, int nr, uint8_t priority)
- 
-     trace_xics_icp_irq(server, nr, priority);
- 
-+    if (!icp) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "XICS: invalid server %d for IRQ 0x%x\n",
-+                      server, nr);
-+        ics_reject(ics, nr);
-+        return;
-+    }
-+
-     if ((priority >= CPPR(icp))
-         || (XISR(icp) && (icp->pending_priority <= priority))) {
-         ics_reject(ics, nr);
--- 
-2.52.0
+> +
+> +#define sev() asm volatile("sev" : : : "memory")
+> +#define sevl() asm volatile("sevl" : : : "memory")
+> +#define wfi() asm volatile("wfi" : : : "memory")
+> +#define wfe() asm volatile("wfe" : : : "memory")
+> +
+> +#define wfit(reg) \
+> +	asm volatile(".arch armv8.7-a\n\twfit %0" : : "r" (reg) : "memory")
+> +#define wfet(reg) \
+> +	asm volatile(".arch armv8.7-a\n\twfet %0" : : "r" (reg) : "memory")
+> +
+> +static void timer_handler(struct pt_regs *regs)
+> +{
+> +	/* Disable timer to stop IRQ from re-firing */
+> +	write_sysreg(0, cntv_ctl_el0);
+> +}
+> +
+> +static bool check_elapsed(uint64_t start, uint64_t threshold, const char *test, bool more)
+> +{
+> +	uint64_t end = read_sysreg(cntvct_el0);
+> +	uint64_t elapsed = end - start;
+> +	bool pass = more ? elapsed >= threshold : elapsed <= threshold;
+> +
+> +	report(pass, "%s (%ld ticks)", test, elapsed);
+> +
+> +	if (!pass) {
+> +		report_info("%s %s", test, more ? "woke too early" : "slept despite SEV");
+> +	}
+> +	return pass;
+> +}
+> +
+> +static void test_wfi(void)
+> +{
+> +	uint64_t start;
+> +
+> +	report_info("Testing WFI...");
+> +
+> +	start = read_sysreg(cntvct_el0);
+> +	write_sysreg(TIMEOUT, cntv_tval_el0);
+> +	write_sysreg(1, cntv_ctl_el0); /* Enable timer, no mask */
+> +	isb();
+> +
+> +	local_irq_enable();
+> +	wfi();
+> +	local_irq_disable();
+> +
+> +	check_elapsed(start, TIMEOUT, "WFI", true);
+> +}
+> +
+> +static void test_wfe(void)
+> +{
+> +	uint64_t start;
+> +
 
+I think a comment here would be good, just to say it's testing that a wfe
+doesn't sleep for a 'long' period with no pending events, or something like
+that?
+
+> +	report_info("Testing WFE/SEV...");
+> +	sev();
+> +	start = read_sysreg(cntvct_el0);
+> +	wfe();
+> +	check_elapsed(start, TIMEOUT, "WFE/SEV", false);
+> +
+> +	report_info("Testing WFE/SEVL...");
+> +	sevl();
+> +	start = read_sysreg(cntvct_el0);
+> +	wfe();
+> +	check_elapsed(start, TIMEOUT, "WFE/SEVL", false);
+> +}
+> +
+> +static void test_wfit(void)
+> +{
+> +	uint64_t start, timeout;
+> +
+> +	report_info("Testing WFIT...");
+> +	start = read_sysreg(cntvct_el0);
+> +	timeout = start + TIMEOUT;
+> +	wfit(timeout);
+> +	check_elapsed(start, TIMEOUT, "WFIT", true);
+> +}
+> +
+> +static void test_wfet(void)
+> +{
+> +	uint64_t start, timeout;
+> +
+> +	report_info("Testing WFET...");
+> +	/* Ensure no pending events */
+> +	sev();
+
+Could this just be sevl here? Not that it really matters.
+
+> +	wfe();
+> +
+> +	start = read_sysreg(cntvct_el0);
+> +	timeout = start + TIMEOUT;
+> +	wfet(timeout);
+> +	check_elapsed(start, TIMEOUT, "WFET", true);
+> +}
+> +
+> +int main(void)
+> +{
+> +
+> +	if (gic_init() < 0) {
+> +		report_abort("GIC init failed");
+> +		return 1;
+> +	}
+> +
+> +	/* Install timer handler for WFI wake-up */
+> +	install_irq_handler(EL1H_IRQ, timer_handler);
+> +	gic_enable_defaults();
+> +
+> +	/* Enable Virtual Timer PPI */
+> +	gic_irq_set_clr_enable(27, true);
+
+Instead of hardcoding 27 here, you can use:
+
+	u32 irq = current_level() == CurrentEL_EL1 ? TIMER_VTIMER_IRQ : TIMER_HVTIMER_IRQ;                                                                     
+	gic_irq_set_clr_enable(irq, true);
+
+Which also allows the test to run at EL2.
+
+> +
+> +	report_prefix_push("WFx");
+> +	test_wfi();
+> +	test_wfe();
+> +	report_prefix_pop();
+> +
+> +	if (system_supports_wfxt()) {
+> +		report_prefix_push("WFxT");
+> +		test_wfit();
+> +		test_wfet();
+> +	} else {
+> +		report_skip("WFxT instructions not supported");
+> +	}
+> +
+> +	return report_summary();
+> +}
+> diff --git a/arm/unittests.cfg b/arm/unittests.cfg
+> index 12fc4468..7adf96f2 100644
+> --- a/arm/unittests.cfg
+> +++ b/arm/unittests.cfg
+> @@ -339,3 +339,8 @@ groups = mte
+>  test_args = asymm
+>  qemu_params = -machine mte=on
+>  arch = arm64
+> +
+> +[wfx]
+> +file = wfx.flat
+> +groups = wfx
+> +arch = arm64
+
+Thanks,
+Joey
 
