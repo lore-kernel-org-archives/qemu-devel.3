@@ -4,114 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACE87FF885D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 09:08:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1422FF886D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 09:34:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHeQG-0004qy-9Q; Tue, 28 Apr 2026 05:08:04 -0400
+	id 1wHepD-0003Qr-4k; Tue, 28 Apr 2026 05:33:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHeQC-0004q9-Rc
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:08:02 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ id 1wHep9-0003NR-O5
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:33:47 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHeQA-00064T-LP
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:08:00 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-65492d097acso4265459d50.3
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 02:07:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777367277; cv=none;
- d=google.com; s=arc-20240605;
- b=TAQbIGZ4vaZ9nsP0Yclb5K+phYe01+hgDW7mIwcqB+rup+IHvluaFQawgAJzFpQiQD
- b6aqWhvxGrOgFDRulsyd3rbPjsBNvRQMX+3TXwqNpVSry+y92TxnK5BAodaFr+zShbNu
- +e2Ne7qpXJh5S25DXfQiYHEf8PPDthPtoLIB+kzU8/ZPDzTL6AuscAgBbofxIY49U1vu
- IOAhicTWT59lThAXyysCYXdp7pVroC1zOJQLdcOQECYwOJ7k+peaFhfHAeMgy/6dRD0k
- DRW3+D7XNe13Qk+GbUPn9Jb+9ZdJ2U9VpyWGTX225hgwtNvHniP4h0WL4OJopoH/gDad
- gKKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=DThF0XUL4dy9R6fRsfQztI3lmJ5+02kga/scEtudiAs=;
- fh=3Nd3mw0zDQF5Tv/7iMILd31jXeg5H2sRXNpFJQZKP5Q=;
- b=jNJP09NxiJgiawIYS3f66WJJvKUiobsG4P43ET8zCMHwUWuTMSg9xYDj50NamtrHSe
- cF5I+uYKbZvGrEslgMZmRl6hHzhgTULZxYS7zOAyvFZvadrPJWSpmhy9+KZzwRnmaOz1
- bFSdRFB4lnn1U63X+3Qzaawd3iA6G495HauxRGWYILNQZBCfL7jxRHfcsL61RB7g0DMV
- X/5t69i7ZQ7IiDoH/llv0meWEdC3awnFFw1mkbnssVxXzNLQbe6C0boLRG9dbmizdJTy
- pD5bgok2LR0x8Di7+hpl8hiUNv5kmWWMa/LJO+Q4Vpv8HoVApG57Ms91Qhuv5pJQD2wH
- X+Ug==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ id 1wHep8-0007Qo-3c
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 05:33:47 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4890098abbaso88560305e9.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 02:33:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777367277; x=1777972077; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=DThF0XUL4dy9R6fRsfQztI3lmJ5+02kga/scEtudiAs=;
- b=Ba7XyxvtssUcifAhCHTNjymztDGxM+isa02pVd1I7I1K+Rc0CtJcTPzG3Y7Z00vcKH
- PZIVZZ9dSPdo7XDv9f/uVJE3N48RJPCASv668cSEreko/K+vkmLN7r1UBkF1zQZy/zVb
- 51y9/KpKcdn44SzH1PhqZOM6Onniq/oXstPaWhrNpyhIn1HHiQKPwUxSWJQu+XZBaZIS
- a3nyM0asmGQGGWVge/3T2/A2XRkfQbdnNZo0Pmbg0OrMDunGoHaRwIJHfLwqRWRGxHUm
- 8ke36JIWJP6QDN0QjHWDvgo6LA6bCpd/tFZw4Yo7+G78md6kKOWooDP3IQ76UG6mVu9i
- r98A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777367277; x=1777972077;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1777368824; x=1777973624; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DThF0XUL4dy9R6fRsfQztI3lmJ5+02kga/scEtudiAs=;
- b=RrvnzHvYepfC/eDg6Ueqe8fsi7+vR2enswFfj3l3hTGi+DgW4ulzANsSchRs5HDUNK
- VimASDvrVBuj6lB1LvwJCqsiojrY72z2q7UNENFc9xsKfP5+X+FTu/HjndnOu/GwRoZ4
- hkoQ3hfZV7E2/Ew3grM7CPmX4cJWc2YlBYOmKlBeCsz7Dh3b+rgpj3xj5gnNI3ZABfkx
- MErWaV3t4maq2AOKKNj1anr0FKHB5BzhnsVBgZrEVL4SJWqXzcxZG/2XZMA1NKTBvJ4T
- 0PcPM5bCfiSENiFKbPOZgZHvZ/vwdjrJ6xTzUDMbAqsA5bxwUFCnMXcmOEhKldpCKTDC
- wq/A==
-X-Gm-Message-State: AOJu0Yw7SYZD9chtLyDO4dnyGfFm2fk4KHMMTicbYoF4Z3MhAPMKV9YQ
- EBPPwY5gk58XrdITkC8DCkrbQoEfLvc0TMjMczMDsIW17nGkLXAs79orvJCHg5FBDCgFIicOcIF
- d54sWJvAYcXu6dIltiqNnDp+mLfOUZ0uRVMQQzvq0WBNgfBzvk/9y
-X-Gm-Gg: AeBDievxhcVjjRXZgp1F33yurJ6626KTlk4JVD/cHreFHeQnoyH1hXDeMcc8SX44XE1
- BP9qco8OGwNu/88oh9HMjiqCYx9B7tm6jkeTgtBIgSxelMd27rYeFHl7JCTRjc1ZnYioCTycUH4
- VteSxnT+n5SjrD/ewo574I3x0bWfxYWMomfTzzDHa8kZXIcoURCI+QLwjiWRIbljGE0/IyPW3uS
- AEqoh/gIqSmiimjvWKMG/n/HIiJ5ZYOtbirbbe6WhNLECC9BzEKWzEHE1F8E930lleySv0PLxp6
- CPUx3F558R46G9+vBkoMJILJOtFPLYqSCNTtYdnQkm6o0VlnGOiUHfVMIDFoZLaRvOHt7wuxviN
- Qcw==
-X-Received: by 2002:a05:690e:4808:b0:653:f72:f482 with SMTP id
- 956f58d0204a3-65beed7c943mr1462369d50.22.1777367276912; Tue, 28 Apr 2026
- 02:07:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250822092410.25833-1-cjchen@igel.co.jp>
- <CAAMq-Y86UY7LNe-p2P_d8mw7FgTqLm=HQdqbMvV8xxTdsZmx1A@mail.gmail.com>
- <CAFEAcA_EZxgnSHOEwdF5QayAxsncYnGGe4RDPP-vwYTqwU+dNA@mail.gmail.com>
- <CAFEAcA_-XVMWr2ksaypuCiAZwU3GUKnvK26e35W-Tne8+BMNCg@mail.gmail.com>
-In-Reply-To: <CAFEAcA_-XVMWr2ksaypuCiAZwU3GUKnvK26e35W-Tne8+BMNCg@mail.gmail.com>
+ bh=WVC3itSIffFeC7Z8GlSjGgA9Tg3i0GpOS5eY/5lxrn4=;
+ b=rj7zdTA8M/AZW7o8vRqn91sKKqoXjmGfBR0Pv3NXWQh4kjT5S1hNDBT9K8yhs9Quh8
+ 02+Xn0ZBMYwv12pcIjRVo4fN+T8fK4UisSRsBRowVX1tPMu50lzcccMQ6yE9T8UnWf6G
+ FWNYThWxIWBW0E1FX4cPndl1eVfAnNo/TQQxqzLxcbdn6vNB4oU/CrgGwWhQOMxaJduT
+ KwHcb604gg+ACBDtq4iAwA5BSVNKRUd86k1SngxYnXj0EIQ4Tc+2NqZj0eNPibG+Iq9O
+ jw5uquvw+AVsZoEbOZg/By9WQRUmQE67f/krqDOC2jAIYpBFoAEAGOpJhS2HZ3PUqY9P
+ b1ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777368824; x=1777973624;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=WVC3itSIffFeC7Z8GlSjGgA9Tg3i0GpOS5eY/5lxrn4=;
+ b=p2zuq9PEo09PA2UyiPgqWqtVpYeQOOGLak2zZ6CLiG4IVu/6QrXqZG7XJkF14vLhIa
+ vnEdw16A167w9Ft885e8izaKGu9wXv3SJPCMV8qeylOcXQlP4cpLiNmBGdyRHG0x0+bN
+ dFOmIwToYim10kp1cAVlAjEcwDhDaJ4mZE8iqEgSBWoC3o7k54Pq+6Z4meLmwNcTYaSJ
+ CFjQCfGBM2lj+0L7Q/FaJJhm12LzvtnHOYHqbN61aiBQ5uFy4nB82DBUEngNdOoN14VO
+ l/Y3pNkECvOdnx234R9ExqU3VDl2gfeGAc21LeHx64jh1zZ0HMKnFtNQ/i6YfzmZ9nF6
+ p6Xg==
+X-Gm-Message-State: AOJu0Yz4ngLdqmO4/s3jtC8RbEaRpugsJu/eBvU40k+3UNFazJ7OiyCu
+ b9SDVrg1kgRFOUrrp7Eji0Hon13K5ebMABx1ICmub+9dlBvGOgamXD8IbSxMB91dkQAP8Ic+Gt6
+ XGvj5
+X-Gm-Gg: AeBDietiL9CEtn5DHEhqCnW6AP2s2RYw6GTr7tVqhHDantxe55KZbA/GJVRzycvptwN
+ +Mb28q3Yx6ET/SKtxJokCQXAX1d6UBjvghPWSuJ4YSJZDMuxl1Kjkj8eMQMTECbKhAwm955OleB
+ bBVh5lhtnc51X38dNtNDY27GiXjR5mvmhWSlkIxVsew0Q+c2+ILT1GPmN306uxdBWvhOt9gD4ZU
+ pGJ/SqyfZZwEwAkQbx/TUs3MBGQ0frHHb4OljTBoSq5J95ZW6HrG0hAElrOkJuBFcZc+Br4Z3mG
+ jC//1EPsegRAH2Vcx+7ecZPyRywwS/ZtZBLOzD/FdSjMeetCzzgZGkQLTRDzDoIjy0S6xonOnA7
+ ZyFxf3SvXZWnuJqtDwfkr2JN5pxQYmTITjQukjqXoJBIfnbCU6N9hF4XXNXVh2wfg89kOlHadK1
+ WVsn5tvPsp0HABoAhhI/Bwvq8Vnn+oMRVDbvxAAi8EzBz7Qs0KTJccLdVBkOcGIeTnpoSvATUl6
+ 4Ivbwp3iuJG9fEUc3mGRDXU51GRxb+yDIYR9XVqnw==
+X-Received: by 2002:a05:600c:6995:b0:488:a2ac:a334 with SMTP id
+ 5b1f17b1804b1-48a77aee4a3mr37301045e9.3.1777368824444; 
+ Tue, 28 Apr 2026 02:33:44 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a774d7a1fsm19665595e9.4.2026.04.28.02.33.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 28 Apr 2026 02:33:43 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Apr 2026 10:07:45 +0100
-X-Gm-Features: AVHnY4KstMNquk6IryevfBCOQQnOKaiZM9BtwUkrtbTy2PKKRoLE1R2F2g-uOUU
-Message-ID: <CAFEAcA_0Gw5oOV5_AVXSzCWOsqSJDWvDj=aP3aiwBdHJagA0pw@mail.gmail.com>
-Subject: Re: [Withdrawn] [RFC PATCH v2 0/9] support unaligned access to xHCI
- Capability
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Klaus Jensen <its@irrelevant.dk>, 
- Jesper Devantier <foss@defmacro.it>, Palmer Dabbelt <palmer@dabbelt.com>, 
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Max Filippov <jcmvbkbc@gmail.com>, Peter Xu <peterx@redhat.com>, 
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Tomoyuki Hirose <hrstmyk811m@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+Cc: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Tyrone Ting <kfting@nuvoton.com>,
+ Hao Wu <wuhaotsh@google.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org
+Subject: [PATCH 2/4] hw/npcm7xx_fiu: Specify .impl for npcm7xx_fiu_flash_ops
+Date: Tue, 28 Apr 2026 10:33:37 +0100
+Message-ID: <20260428093339.2087081-3-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260428093339.2087081-1-peter.maydell@linaro.org>
+References: <20260428093339.2087081-1-peter.maydell@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,77 +110,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 24 Apr 2026 at 19:01, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Wed, 3 Sept 2025 at 10:47, Peter Maydell <peter.maydell@linaro.org> wrote:
-> >
-> > On Wed, 3 Sept 2025 at 06:03, chen CJ <cjchen@igel.co.jp> wrote:
-> > >
-> > > I would like to withdraw this patch series.
-> > >
-> > > Sorry for the inconvenience, and thank you for your understanding.
-> >
-> > That's unfortunate; I think it's an issue we really do need to fix,
-> > but I entirely understand if you don't have the time to work
-> > on it further.
-> >
-> > I might pick it up if I have the time to do so.
->
-> I eventually found some time/inclination to have another
-> look at this. I have something that I think is mostly good to
-> go, but I need to chase down the last few issues with it first.
-> Hope to send a patchset next week sometime.
+Currently npcm7xx_fiu_flash_ops provides no .impl substruct; this
+means that it gets the default of "implements 1, 2 and 4 byte aligned
+accesses".  This is more constrained than the device permits in its
+.valid substruct, and also narrower than the functions are written to
+handle.
 
-Hmm, this turns out to be a little more awkward than I thought. There's
-a fundamental question about what a MemoryRegion wants for a case like:
+Add a .impl substruct matching the .valid substruct; this means that
+all guest accesses are handled directly by the read and write
+functions, and are never synthesized by the memory subsystem
+performing multiple accesses to the device (which would not behave
+correctly, as these read and write fucntions have side effects).
 
-{ .impl.min_access_size = 4, .impl.max_access_size = 4,
-  .valid.min_access_size = 1, .valid.max_access_size = 4 }
-i.e. "I only handle word accesses, synthesize byte and halfword for me".
+Based-on-a-patch-by: CJ Chen <cjchen@igel.co.jp>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/ssi/npcm7xx_fiu.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Option A:
- * a byte write is zero-extended and sent as a word write
-(so "byte write 0x42 to offset 0x20" becomes "word write 0x00000042
-to offset 0x20")
+diff --git a/hw/ssi/npcm7xx_fiu.c b/hw/ssi/npcm7xx_fiu.c
+index 02707de350..2d5bed005a 100644
+--- a/hw/ssi/npcm7xx_fiu.c
++++ b/hw/ssi/npcm7xx_fiu.c
+@@ -250,6 +250,11 @@ static const MemoryRegionOps npcm7xx_fiu_flash_ops = {
+     .read = npcm7xx_fiu_flash_read,
+     .write = npcm7xx_fiu_flash_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
++    .impl = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++        .unaligned = true,
++    },
+     .valid = {
+         .min_access_size = 1,
+         .max_access_size = 8,
+-- 
+2.43.0
 
-Option B:
- * a byte write is handled by read-modify-write
-(so "byte write 0x42 to offset 0x20" becomes "word read from 0x20,
-deposit 0x42 to the low byte of what we read, word write to 0x20".
-
-This series implements Option B, but we have devices in the tree
-that want and assume the existing Option A behaviour. (The one
-I ran into was the PL011, which wants to allow byte writes to its
-registers, and those registers have read-sensitive behaviour:
-the UART data register reads a byte from the FIFO or writes one
-back to it, so a read-modify-write will drop incoming data.)
-
-So I think our choices here are:
-
-(1) say that we will never synthesize a write via read-modify-write;
-Option A is the only behaviour we provide. This is OK for all our
-existing devices. It also isn't a problem for the USB-xhci capability
-registers that the series is trying to enable, because those are
-read-only writes-ignored.
-
-(2) allow Option B, but only opt-in via some new MemoryRegionOps
-field that you have to set. (This is sort of like saying "my MR
-is ram-like, in that neither reads nor writes have side effects
-and it's really accessible at any size and perhaps any alignment,
-I just haven't implemented all of it that way".)
-
-(I don't think "find all the devices implicitly relying on Option A
-behaviour and change them" is a feasible or desirable choice.)
-
-For synthesizing unaligned writes where the MR doesn't implement
-them, since we don't do these at all at the moment we get a freer
-choice of behaviour: we can either do these as read-modify-write,
-or say that you get two writes with the non-provided data being
-zeroes.
-
-Any opinions?  I think I would find it an easier decision if
-we had a direct use case for the read-modify-write choice...
-
-thanks
--- PMM
 
