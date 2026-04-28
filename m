@@ -4,63 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BA1CFF8868
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D3EDFF885A
 	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 15:09:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHk3Y-00045p-KU; Tue, 28 Apr 2026 11:09:01 -0400
+	id 1wHk3x-0004as-Eg; Tue, 28 Apr 2026 11:09:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHk3U-0003sT-HC
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:56 -0400
+ id 1wHk3i-0004Jk-RO
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:09:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHk3T-0000pv-0r
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:56 -0400
+ id 1wHk3g-0000uB-Kg
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:09:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777388934;
+ s=mimecast20190719; t=1777388947;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=C1siF59IQLLkwWV4Hr2hpuNpiCtK/UTs8uPqiiiQpCo=;
- b=M6zUa8iVzpGOsFJDRXgTMIBm+uJW8c9khUx18ad+n+JhHF5EZxdAgGrHixxLz6tddxfnk5
- /yrutyMQQQ7GBQT8Og3cWauJIAov1qMcSb/XyDOou4b1l24q/gPy8ZKKZCiiKYrImwpk6B
- RhSO8yIlCDsD2KY/QY39nP5rxqcKewc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=ZX+m/6bPPeLovcy5LSomlbMNC6WXFdgx77ohqNBz5/M=;
+ b=UbopDAgjsrL8HtTSGfKVZHsNp3I5JmhJHr5NYVxV+l6D+WMPfmv2op2rt/7Ln4QPU44YSE
+ Z0jOx2KFZ4DFt7wOPNy9+2bUa9Uc48i1GPS1AUd5hwqWnjjR67J4HikEHdia+xJcFNMTpC
+ zhY2QPr5KU44p1E2wd1tEILMkNVd0EI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-vUPXfbJ0MqurTAMYq5-mdA-1; Tue,
- 28 Apr 2026 11:08:49 -0400
-X-MC-Unique: vUPXfbJ0MqurTAMYq5-mdA-1
-X-Mimecast-MFC-AGG-ID: vUPXfbJ0MqurTAMYq5-mdA_1777388928
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-263-rLy0ZmtiNmahxuBY95-sLw-1; Tue,
+ 28 Apr 2026 11:09:06 -0400
+X-MC-Unique: rLy0ZmtiNmahxuBY95-sLw-1
+X-Mimecast-MFC-AGG-ID: rLy0ZmtiNmahxuBY95-sLw_1777388944
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E3501954B1B; Tue, 28 Apr 2026 15:08:48 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B998F1800245; Tue, 28 Apr 2026 15:09:04 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 952B619560B7; Tue, 28 Apr 2026 15:08:46 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 80ECE180047F; Tue, 28 Apr 2026 15:09:03 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v2 12/15] audio: Clamp unsigned sample conversion
-Date: Tue, 28 Apr 2026 19:07:22 +0400
-Message-ID: <20260428150726.1659814-13-marcandre.lureau@redhat.com>
+Cc: stefanha@gmail.com,
+ =?UTF-8?q?Jind=C5=99ich=20Makovi=C4=8Dka?= <makovick@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL v2 15/15] ui/gtk: Turn clipboard flag into runtime option
+Date: Tue, 28 Apr 2026 19:07:25 +0400
+Message-ID: <20260428150726.1659814-16-marcandre.lureau@redhat.com>
 In-Reply-To: <20260428150726.1659814-1-marcandre.lureau@redhat.com>
 References: <20260428150726.1659814-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -86,43 +92,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Jindřich Makovička <makovick@gmail.com>
 
-clip_*_uint32_t() returns 0 when v == 1.f because it computes the result
-as (IN_T)((v * ((mixeng_real)IN_MAX / 2.f)) + HALF):
+- Compile the GTK clipboard support unconditionally
 
-- (v * ((mixeng_real)IN_MAX / 2.f)) + HALF == 0x100000000.f, which does
-  not fit in uint32_t.
-- (v * ((mixeng_real)IN_MAX / 2.f)) == 0x80000000.f
-- ((mixeng_real)IN_MAX / 2.f) == 0x80000000.f
-- (mixeng_real)IN_MAX == 0x100000000.f because 0xffffffff cannot be
-  represented exactly in float.
-- HALF == 0x7fffffff, which is implicitly converted to 0x80000000.f.
+- Introduce GTK clipboard option, defaulting to off
 
-Clamp the result to avoid the overflow.
-
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20260423-audio-v1-2-e1d6b65c76f9@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20260427-gtk-clipboard-v5-2-6968feb31a5d@gmail.com>
 ---
- audio/mixeng_template.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ meson.build                   | 4 ----
+ qapi/ui.json                  | 6 +++++-
+ ui/gtk.c                      | 8 +++++---
+ meson_options.txt             | 7 -------
+ qemu-options.hx               | 9 ++++++---
+ scripts/meson-buildoptions.sh | 3 ---
+ ui/meson.build                | 4 +---
+ 7 files changed, 17 insertions(+), 24 deletions(-)
 
-diff --git a/audio/mixeng_template.h b/audio/mixeng_template.h
-index 881653c44bf..5b0014bdd9a 100644
---- a/audio/mixeng_template.h
-+++ b/audio/mixeng_template.h
-@@ -65,7 +65,9 @@ static inline IN_T glue (clip_, ET) (mixeng_real v)
- #ifdef SIGNED
-     return ENDIAN_CONVERT((IN_T)(v * (((mixeng_real)IN_MAX - IN_MIN) / 2.f)));
- #else
--    return ENDIAN_CONVERT((IN_T)((v * ((mixeng_real)IN_MAX / 2.f)) + HALF));
-+    return ENDIAN_CONVERT(MIN((int64_t)((v * ((mixeng_real)IN_MAX / 2.f)) +
-+                                        HALF),
-+                              IN_MAX));
- #endif
- }
+diff --git a/meson.build b/meson.build
+index 7d25b1ec7ef..4176d020c21 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1932,7 +1932,6 @@ endif
+ gtk = not_found
+ gtkx11 = not_found
+ vte = not_found
+-have_gtk_clipboard = get_option('gtk_clipboard').enabled()
  
+ if get_option('gtk') \
+              .disable_auto_if(not have_system) \
+@@ -1954,8 +1953,6 @@ if get_option('gtk') \
+                        method: 'pkg-config',
+                        required: get_option('vte'))
+     endif
+-  elif have_gtk_clipboard
+-    error('GTK clipboard requested, but GTK not found')
+   endif
+ endif
+ 
+@@ -2475,7 +2472,6 @@ if glusterfs.found()
+ endif
+ config_host_data.set('CONFIG_GTK', gtk.found())
+ config_host_data.set('CONFIG_VTE', vte.found())
+-config_host_data.set('CONFIG_GTK_CLIPBOARD', have_gtk_clipboard)
+ config_host_data.set('CONFIG_HEXAGON_IDEF_PARSER', get_option('hexagon_idef_parser'))
+ config_host_data.set('CONFIG_LIBATTR', have_old_libattr)
+ config_host_data.set('CONFIG_LIBCAP_NG', libcap_ng.found())
+diff --git a/qapi/ui.json b/qapi/ui.json
+index e3da77632a8..b2c42a7f578 100644
+--- a/qapi/ui.json
++++ b/qapi/ui.json
+@@ -1319,6 +1319,9 @@
+ #
+ # GTK display options.
+ #
++# @clipboard: Enable host-guest clipboard sharing.  Defaults to "off".
++#     (Since 11.1)
++#
+ # @grab-on-hover: Grab keyboard input on mouse hover.
+ #
+ # @zoom-to-fit: Zoom guest display to fit into the host window.  When
+@@ -1344,7 +1347,8 @@
+ # Since: 2.12
+ ##
+ { 'struct'  : 'DisplayGTK',
+-  'data'    : { '*grab-on-hover'     : 'bool',
++  'data'    : { '*clipboard'         : 'bool',
++                '*grab-on-hover'     : 'bool',
+                 '*zoom-to-fit'       : 'bool',
+                 '*show-tabs'         : 'bool',
+                 '*show-menubar'      : 'bool',
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 8fd39c90c29..ec95f0f294a 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -2601,9 +2601,11 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
+         opts->u.gtk.show_tabs) {
+         gtk_menu_item_activate(GTK_MENU_ITEM(s->show_tabs_item));
+     }
+-#ifdef CONFIG_GTK_CLIPBOARD
+-    gd_clipboard_init(s);
+-#endif /* CONFIG_GTK_CLIPBOARD */
++
++    if (opts->u.gtk.has_clipboard &&
++        opts->u.gtk.clipboard) {
++        gd_clipboard_init(s);
++    }
+ 
+     /* GTK's event polling must happen on the main thread. */
+     qemu_main = NULL;
+diff --git a/meson_options.txt b/meson_options.txt
+index 31d5916cfce..286461129bd 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -262,13 +262,6 @@ option('vnc_sasl', type : 'feature', value : 'auto',
+        description: 'SASL authentication for VNC server')
+ option('vte', type : 'feature', value : 'auto',
+        description: 'vte support for the gtk UI')
+-
+-# GTK Clipboard implementation is disabled by default, since it may cause hangs
+-# of the guest VCPUs. See gitlab issue 1150:
+-# https://gitlab.com/qemu-project/qemu/-/issues/1150
+-
+-option('gtk_clipboard', type: 'feature', value : 'disabled',
+-       description: 'clipboard support for the gtk UI (EXPERIMENTAL, MAY HANG)')
+ option('xkbcommon', type : 'feature', value : 'auto',
+        description: 'xkbcommon support')
+ option('zstd', type : 'feature', value : 'auto',
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 21972f83268..e780bc2ac06 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -2209,9 +2209,9 @@ DEF("display", HAS_ARG, QEMU_OPTION_display,
+     "            [,window-close=on|off]\n"
+ #endif
+ #if defined(CONFIG_GTK)
+-    "-display gtk[,full-screen=on|off][,gl=on|off][,grab-on-hover=on|off]\n"
+-    "            [,show-tabs=on|off][,show-cursor=on|off][,window-close=on|off]\n"
+-    "            [,show-menubar=on|off][,zoom-to-fit=on|off]\n"
++    "-display gtk[,clipboard=on|off][,full-screen=on|off][,gl=on|off]\n"
++    "            [,grab-on-hover=on|off][,show-tabs=on|off][,show-cursor=on|off]\n"
++    "            [,window-close=on|off][,show-menubar=on|off][,zoom-to-fit=on|off]\n"
+ #endif
+ #if defined(CONFIG_VNC)
+     "-display vnc=<display>[,<optargs>]\n"
+@@ -2295,6 +2295,9 @@ SRST
+         drop-down menus and other UI elements to configure and control
+         the VM during runtime. Valid parameters are:
+ 
++        ``clipboard=on|off`` : Enable host-guest clipboard sharing,
++                               defaults to "off"
++
+         ``full-screen=on|off`` : Start in fullscreen mode
+ 
+         ``gl=on|off`` : Use OpenGL for displaying
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index ca5b113119a..80de8c4af42 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -124,7 +124,6 @@ meson_options_help() {
+   printf "%s\n" '  glusterfs       Glusterfs block device driver'
+   printf "%s\n" '  gnutls          GNUTLS cryptography support'
+   printf "%s\n" '  gtk             GTK+ user interface'
+-  printf "%s\n" '  gtk-clipboard   clipboard support for the gtk UI (EXPERIMENTAL, MAY HANG)'
+   printf "%s\n" '  guest-agent     Build QEMU Guest Agent'
+   printf "%s\n" '  guest-agent-msi Build MSI package for the QEMU Guest Agent'
+   printf "%s\n" '  hv-balloon      hv-balloon driver (requires Glib 2.68+ GTree API)'
+@@ -336,8 +335,6 @@ _meson_option_parse() {
+     --disable-gnutls) printf "%s" -Dgnutls=disabled ;;
+     --enable-gtk) printf "%s" -Dgtk=enabled ;;
+     --disable-gtk) printf "%s" -Dgtk=disabled ;;
+-    --enable-gtk-clipboard) printf "%s" -Dgtk_clipboard=enabled ;;
+-    --disable-gtk-clipboard) printf "%s" -Dgtk_clipboard=disabled ;;
+     --enable-guest-agent) printf "%s" -Dguest_agent=enabled ;;
+     --disable-guest-agent) printf "%s" -Dguest_agent=disabled ;;
+     --enable-guest-agent-msi) printf "%s" -Dguest_agent_msi=enabled ;;
+diff --git a/ui/meson.build b/ui/meson.build
+index 3d15ff96287..ceaf110683d 100644
+--- a/ui/meson.build
++++ b/ui/meson.build
+@@ -112,9 +112,7 @@ if gtk.found()
+ 
+   gtk_ss = ss.source_set()
+   gtk_ss.add(gtk, vte, pixman, files('gtk.c'))
+-  if have_gtk_clipboard
+-    gtk_ss.add(files('gtk-clipboard.c'))
+-  endif
++  gtk_ss.add(files('gtk-clipboard.c'))
+   gtk_ss.add(when: x11, if_true: files('x_keymap.c'))
+   gtk_ss.add(when: opengl, if_true: files('gtk-gl-area.c'))
+   gtk_ss.add(when: [x11, opengl], if_true: files('gtk-egl.c'))
 -- 
 2.54.0
 
