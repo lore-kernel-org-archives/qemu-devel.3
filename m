@@ -4,75 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6C4FFF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 17:50:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DD2AFF8877
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 17:58:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHmZX-00006J-BW; Tue, 28 Apr 2026 13:50:15 -0400
+	id 1wHmh1-0001dY-Rx; Tue, 28 Apr 2026 13:57:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wHmZF-0008Vn-Ss
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:49:54 -0400
-Received: from pv-2004d-snip4-11.eps.apple.com ([57.103.65.211]
- helo=outbound.pv.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wHmZB-0000J2-Sa
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:49:53 -0400
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-7 (Postfix) with ESMTPS id
- 288901800B17; Tue, 28 Apr 2026 17:49:34 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwROEwVSB11NVg1HD1geXBQXCEVDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTHtJcV4CXwZCFEADKAFGBkJ7TB5UcVIFXQBBdygOUwRGAEpwVHceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1777398576; x=1779990576;
- bh=qobqHpRSJ1F450uGsl5kSV0cQ2DFQoDst55k0y+Yj0E=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=H8vofbnvzyP2YSLbIYp7mOkTk+opd7vyOFJYu1YRS2qBRa51mFG4R0yqA7Gr8PDGvH+Gwl3uK2kUPTFNlllt4yJYryKl1g4dpSzSA0hRdGnu+KQUWQjGFXm/MVogzXQ9lyY/0KEGkbEdDbICku6CG+60nEig4wpy/l8fm7lMgWkgdoj/s3wFKeECflIBpjwo+1hOA/+He4kCsh0rfw5AzECU87mI7LMzKdYB7WGRdGl6Tlrm5/7TOl5drPeM7pcU/WkHRz486oJ9dN3k/A0CWrd5mmiJ5pRAzRKatJFqhOi/eeuSYpcC+Zx1xKJ1neWRhnWFclNI3lNKC88R2uHmiQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.56.9.36])
- by p00-icloudmta-asmtp-us-west-1a-60-percent-7 (Postfix) with ESMTPSA id
- 7815A1800B0F; Tue, 28 Apr 2026 17:49:33 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH 4/6] target/i386/mshv: hv_vp_register_page setup for the
- vcpu
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260428135053.251200-5-dblanzeanu@linux.microsoft.com>
-Date: Tue, 28 Apr 2026 19:49:21 +0200
-Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B1B35442-80E6-42B4-9F97-99DE986692C9@unpredictable.fr>
-References: <20260428135053.251200-1-dblanzeanu@linux.microsoft.com>
- <20260428135053.251200-5-dblanzeanu@linux.microsoft.com>
-To: =?utf-8?Q?Doru_Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDE3MiBTYWx0ZWRfXztQmE7Hdjd5C
- ptVln8nok1Qm5/HFF8VpHfquVbfQwO2lBXWX/q0kcIlqrQNbAo4Fcy0CUs3GEEntbHp4VGKRNgB
- W9hWjsvpLYOkH1y2OUuMG0IzpZxXs1mwcubuW7YKMYGCWfKswQvsvpUyXVRomH0/rAdNpGsorDh
- RABuW5TT934h2GJfzzdfqoo4oyk1lhu1/kS9ITtAKO9MrKsg+kMI3dKviGv5kNhlOyOaMQrnMi/
- c75jOH2Rxbvj47witEXMTuQAipmm8MszWurPQk8TuYqwSfzJarlHMbR4nvsb76kvlYJcGqQq8YY
- UtnstcCigApFMBfr+ExwjjOF0WsXDF7zLbTTM8mK2JTWiEauylfH0SeYeq3Mm4=
-X-Proofpoint-ORIG-GUID: ZY78yl0Wl_-SZBHUO2RL8jgEVOAPfYbX
-X-Authority-Info-Out: v=2.4 cv=BvuQAIX5 c=1 sm=1 tr=0 ts=69f0f32f
- cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=yMhMjlubAAAA:8 a=ADczPIEOeSqyNKhzclwA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: ZY78yl0Wl_-SZBHUO2RL8jgEVOAPfYbX
-Received-SPF: pass client-ip=57.103.65.211;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHmgx-0001dB-DV
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:57:51 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHmgv-0005Sg-MZ
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:57:51 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-44261378651so59556f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 10:57:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777399067; x=1778003867; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=e5dLgzUq25eFXbjvfMZAItHmjh4pTq4+QRuSVfgK4SU=;
+ b=WS0m8PCSQwSjKwA2VdvMmzRVyrDF7P+B2H0soD+6DqAm7rDXbx3KIO79ykwXT2ZOIj
+ JEVpMmSGzYLKadXEk8ucEAis41+ZUHAfF810/gAkrSd77PNrYBYqd1DLD2qCfgb7yiJ6
+ QA2d0Ow/coVky0vzuC29sWBUxL7bNwYD6x2Wiv9gG8+b9P4vudjEjOI9HcCt27QMARmj
+ YKVgsX/300qDM7EgsU0gTlPDiYhZaP6Wlp6ERqSByAUQ7wVD9nKFahZe7dWcA3vGbKzd
+ Mq6tRHyF/RnTjyTRZUgQogmga4yenuIBqu0gHGFb5CTdgHaCJG8snY3/LtloPSR/4wFY
+ 9aWg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777399067; x=1778003867;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=e5dLgzUq25eFXbjvfMZAItHmjh4pTq4+QRuSVfgK4SU=;
+ b=Xovf0i397mzyGzrX7/eEOZKRpzP4a7VHHhG25NIkaOD519zb+BskPbQk4mEhMbzXg2
+ 112p6B/dxJBqtqyVEgX3uwzYBIIvdjtxwYYQohENBN6norC42WV4cXsCxvr3cz2FVUua
+ gmXdwVDoz3BsPHkD+qgGwPaf5lSZbPAr8QNbilqGaTvNA/Rxm76ittCKO1s2L0j7eUFw
+ NofWFDp7dMzMR/IprieKAS2ZVtNTCIlAcBahCYd4qGf8vdPzJNqrU+Zl+jPRQhWQ+e0J
+ 3mi/7AwQWNwNwsfVIcwkCY8PXiqXXF8glv+Gak1qaz6ZNC1byuw44y8vHm2ryAy1GTxt
+ VGKw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8+Io/DYmr7H9waNRDnK5H1EpScifLremC23Tu5mV1NDVtXuC/gS24Z14spPQ+APP97dsArnYIS3EsE@nongnu.org
+X-Gm-Message-State: AOJu0Yxkq03Q86zJh5NJcLOKuLu/yhdiyn/yHgIVWZjg/wJcg24qMg/J
+ uReSzfIct9fyFX3qSpYsioFq5Q5+0TOmfV01rWR3kQKh7JLUwPoxITfiEf1hfPgpIqQ=
+X-Gm-Gg: AeBDieuz9O0IlXhzxGeppW9bxTJpzye6GOTYyPhOAEh2ov7d9Q5uIvs0maD/jMBiqb7
+ x14GMLSPsf5ZDUXNvYp66EvkZE4zQctFJcLUS808tjUceNRjt5yFBCZxvh3MkX2rvG3OdKSZqTg
+ nNTt9ontPGHUqQ9oOlcmoR9yQwcCDx6hhkaBWz5pdlJ4gZmB54rni6NefcVX1TXtVhhpQyqedbV
+ 7XZYfAx7ipBbmwM2atKwv4mL0jVvNCkjw9jiXasmRNFpS23I3285PymIKy7W3C6RnLClmIULewC
+ g28JbAAj8ZOMecgmLUpFa6OhQQ0quQxN+BuGUzDZwr+9LUacTm/GYDGdV0UQ/u6/8BWGCObiN1h
+ j4UKwLtNrsSkPWJsm92p+5Ln4gUpgNwXMu7Zla5z+c5IIlBwJfekusmE0k8/w9Xp1+ed5vDl2IS
+ WCnMSqOIywD1PnMDiASSNP0M26eLJ1+FrkEu1aY8iVNydU3VJT8L7ZG8/cTPO20YvP2m4/grF0c
+ A2Y
+X-Received: by 2002:a05:600c:c08f:b0:489:1d7a:4537 with SMTP id
+ 5b1f17b1804b1-48a7beee40bmr244545e9.3.1777399067159; 
+ Tue, 28 Apr 2026 10:57:47 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a7bea9824sm819825e9.13.2026.04.28.10.57.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 28 Apr 2026 10:57:46 -0700 (PDT)
+Message-ID: <24efbecd-446f-453f-abc2-2955a65d5e87@linaro.org>
+Date: Tue, 28 Apr 2026 19:57:44 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] MAINTAINERS: Add myself as OpenRISC board maintainer
+Content-Language: en-US
+To: Stafford Horne <shorne@gmail.com>, QEMU Development <qemu-devel@nongnu.org>
+Cc: Linux OpenRISC <linux-openrisc@vger.kernel.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20260428172055.1525176-1-shorne@gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260428172055.1525176-1-shorne@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,87 +104,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 28/4/26 19:20, Stafford Horne wrote:
+> In the recent changes from Peter I realized the OpenRISC board maintainers were
+> not properly documented.  Add myself and ensure virt is properly listed.
 
+Thanks Stafford!
 
-> On 28. Apr 2026, at 15:50, Doru Bl=C3=A2nzeanu =
-<dblanzeanu@linux.microsoft.com> wrote:
->=20
-> When the vcpu is created, call mmap to configure access to the =
-register page.
->=20
-> Update CPUArchState to store a pointer to the mmapped =
-hv_vp_register_page.
->=20
-> Signed-off-by: Doru Bl=C3=A2nzeanu <dblanzeanu@linux.microsoft.com>
-> ---
-> target/i386/cpu.h           |  3 +++
-> target/i386/mshv/mshv-cpu.c | 18 ++++++++++++++++++
-> 2 files changed, 21 insertions(+)
->=20
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 0b539155c4..0108e2157b 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -2016,6 +2016,9 @@ typedef struct CPUArchState {
->     uint64_t msr_bndcfgs;
->     uint64_t efer;
->=20
-> +    /* Shared register page */
-> +    struct hv_vp_register_page *regs_page;
-> +
->     /* Beginning of state preserved by INIT (dummy marker).  */
->     struct {} start_init_save;
->=20
-> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-> index 9defd05db6..42b6fb1912 100644
-> --- a/target/i386/mshv/mshv-cpu.c
-> +++ b/target/i386/mshv/mshv-cpu.c
-> @@ -1595,6 +1595,19 @@ void mshv_arch_init_vcpu(CPUState *cpu)
->                       + sizeof(hv_input_get_vp_registers)
->> HV_HYP_PAGE_SIZE));
->=20
-> +
-> +    /* mmap the registers page */
-> +    void *rp =3D mmap(NULL, page, PROT_READ | PROT_WRITE,
-> +                    MAP_SHARED, mshv_vcpufd(cpu),
-> +                    MSHV_VP_MMAP_OFFSET_REGISTERS * page);
-> +    if (rp =3D=3D MAP_FAILED) {
-> +        warn_report("register page mmap failed, falling back to =
-hypercalls: %s",
-> +                    strerror(errno));
-Hi,
+Series:
 
-I think it=E2=80=99s better to make this fatal tbh, the perf hit is just =
-way
-too big imo.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Otherwise,
-
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-
-> +        env->regs_page =3D NULL;
-> +    } else {
-> +        env->regs_page =3D (struct hv_vp_register_page *) rp;
-> +    }
-> +
->     state->hvcall_args.base =3D mem;
->     state->hvcall_args.input_page =3D mem;
->     state->hvcall_args.output_page =3D (uint8_t *)mem + page;
-> @@ -1608,6 +1621,11 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
->     CPUX86State *env =3D &x86_cpu->env;
->     AccelCPUState *state =3D cpu->accel;
->=20
-> +    /* Unmap the register page */
-> +    if (env->regs_page) {
-> +        munmap(env->regs_page, HV_HYP_PAGE_SIZE);
-> +        env->regs_page =3D NULL;
-> +    }
->     g_free(state->hvcall_args.base);
->     state->hvcall_args =3D (MshvHvCallArgs){0};
->     g_clear_pointer(&env->emu_mmio_buf, g_free);
-> --=20
-> 2.53.0
->=20
->=20
+> Stafford Horne (2):
+>    MAINTAINERS: Add myself as maintainer for or1k-sim
+>    MAINTAINERS: Add myself as the OpenRISC virt maintainer
+> 
+>   MAINTAINERS | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
 
 
