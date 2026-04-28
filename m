@@ -4,103 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F183BFF886F
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 06:16:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CC1BFF886F
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 06:38:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHbk8-0006u4-43; Tue, 28 Apr 2026 02:16:25 -0400
+	id 1wHc4z-0002Rf-PT; Tue, 28 Apr 2026 02:37:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wHbk1-0006sC-O4
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 02:16:18 -0400
-Received: from mail-dy1-x132c.google.com ([2607:f8b0:4864:20::132c])
+ id 1wHc4x-0002RT-Qk
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 02:37:56 -0400
+Received: from mail-dy1-x1329.google.com ([2607:f8b0:4864:20::1329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wHbjz-000136-VJ
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 02:16:17 -0400
-Received: by mail-dy1-x132c.google.com with SMTP id
- 5a478bee46e88-2d8ffdc31d0so2793981eec.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 23:16:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777356974; cv=none;
+ id 1wHc4w-0008Rx-F9
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 02:37:55 -0400
+Received: by mail-dy1-x1329.google.com with SMTP id
+ 5a478bee46e88-2c156c4a9efso15143339eec.1
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 23:37:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777358272; cv=none;
  d=google.com; s=arc-20240605;
- b=fX+lymzwoErFm3aJdd2ygtomp49IRSLp5vSUiLp+FthPYSaZ/iizC4tMdDgme68sY0
- oWW+WaVLOJ5P35GwbS6iOeK+J2PhKhTZhzw4pJNOhTPm4aAIsTsZhVWVi9qBDFortVjI
- gzlXPUEsVGFoyzW/4moDwJ8zB19RAO2jk3Hd/nmGd55BMeHO9BNuDbjcmS26Dvs25UUU
- Gz6NCP4ESENMM5WSabBngjJIvHIPSF9QynCXaQaRohcat8jp/526vhLDXKw7LxFWaQSz
- TLnWDdMd1C7eNqBd3D8aBSr83KtYgM4//reok97PTjsjp6RvyVbRv6UjZ9U8+HlilJAn
- OLow==
+ b=db0CoBbxP1I8Q0AgHKitFDKu61wTr8eoh0H/qPLRhEm8JXK5cpOt76hgubut5F7YGK
+ OLGrfEtKeF4lCDGb/aQw3DH1gUWE8C3dfRG+ZSJACon/gr14jjRvdrZmohbga6fB13rD
+ Ka+gJClmQtckrHnQzRSGz/GkQcbm9nd2graEA+7Z12n0IGlbTOLkvIVooRMbz3MoCzhJ
+ mgBpz7VSU1aKwwyRA/nnmtnZo2ketIbv/QmPYeFRLs4exiP0eUSsE4p7yEiBZPe2U9ML
+ m2BdFRIfpoACW0QzuCMo2Peoqnj4INLsGh/j8BfBjJLNzNryFNy+86ZDtnb5JFwP11zy
+ PBrQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=2dOBHRaGvuQxnPccomI7bJCXmVZwYQ5QB2PSNIreMPs=;
- fh=lOBSB/Hs2AAkL9G+pX/8nWevA4VW0M0kVZpTB7kbXLg=;
- b=fsW9jLXIHPyXWK0+8p7PLSVXMBPp8tUGjsN4/Prm+CtgX3CejirCaTdBR25VJCV0b1
- Xei8r0nu/nhEvvHfDWEUhA7NWpqZAyL+TmoUElcQznKJIbnuCTTq1bJFcURdHI973TZv
- pCeBO6Qz1F4p9J6gm48q18H7KFG9ekSz7NiQqRqQMaVurOFZE3N8AzVgCM+B8aBkM8Oh
- 7ZbkTliRa3Tl5ogB0WRgcXKgfpNorI5UhIQG1rXJUxljHce5zzekdIpDH8D5RIC6ugWC
- ntoGfr6S6iZ0SeXZ8w33arqqwtDI2n0U2A6WJTRVnnHJpvX+BgJEY3xlUMXeqbV3krIS
- N0Vw==; darn=nongnu.org
+ bh=DwnNYWToZtZo3CnfRFPbncCR570CNeme7m91QKrNCsU=;
+ fh=s2Dydi+Wu7zyQaN6Y8WUD3LgD/NbTcHsN51+8tC3Wu0=;
+ b=FPpg2LPVq1wG62sue8v+8Kr+d+bKsyiMTnbWwPRwhf0O55p+89eyvsGDFJ60qT4yFH
+ OGzjP0cZNm/UAycN1dT0HMNRCJU9j4Nl+n1IcrScoCQVX9rsU0cl+2C0YKUpZurYqmx1
+ UtBqUcOsNzQlbre8RmaEI0iWKiA6hbRsIiQLw+XDheocJ1J8whilu7eoNKGXiUzgp3XU
+ l4nno6w6g7qKoR6cRyJSJjmpA9cCkYMeE+llm1Gj0502lkSA979zMzBm2KHRYcYTowwe
+ Xk31N1Wpfhasjqxqr4KXU5Y4v+E1mhOmBNYoBPZnO5eBFMBODLxugXzVuqh2HdCH80GZ
+ 959g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777356974; x=1777961774; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777358272; x=1777963072; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2dOBHRaGvuQxnPccomI7bJCXmVZwYQ5QB2PSNIreMPs=;
- b=MSxu2RqyQfVOLcay9dwhSThDYk7ikWfkYn4TYWigVwxjYJ6YIZW0sO6oNObUWc9Mre
- zVVieJHj2X7qt1b55PUlHJIMP+DI6FZGcjxsh+zbLVMxvHoHnnkHVZZuvp55Bhq1lrNH
- US8rpC/5Osez+uDwNvwZMNxMjLlZnMYk8fxpYYQrB9Rr1HX6Sem4H37ifiPtrnzWFIKs
- iRTw0OIlXEgZkdDt9NDR1rryXTviQHYnGEHDS+0dSNhNjuzrnurLVckaQPrR1F2yFasH
- wgZOV6Lx5wvk/vtZEDgZfiBO1/LTcl4WlQO0FePfXJ/vzxra67Bnx2QE/8giQEeaExT0
- 2Zbg==
+ bh=DwnNYWToZtZo3CnfRFPbncCR570CNeme7m91QKrNCsU=;
+ b=UY5imZSL+QJRK3XHJ7hEnhP44uczfFKCYbObUqbGQFpXr/+i/jsiS/LoMzJnmZLsiY
+ APOyzUeMVsFFZh5LqUlqu2Y6m63imnWEpT0Jz2OhdRNwgxQhduLWIGRH3lG7ZafJeYx+
+ Kp+a1ybTDGk5cM+Ef5oOypYuewdkoN0lllKthrTmmg3+Jd+fYhHPU/x5NUXHtutC6NF6
+ fStK5KhrWrV0mgjEgXlk5ys/vbCfzJoC04yz8aS8/qsSfPSTJ0gx48WzolGSL2mUWSGR
+ dcXATMTC0h40KrzpjIxtHw2KqQ/fRt+IkDw6P6ADu84GZCmJ3qSVjMQL/8oU5t5/BeXA
+ jESA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777356974; x=1777961774;
+ d=1e100.net; s=20251104; t=1777358272; x=1777963072;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2dOBHRaGvuQxnPccomI7bJCXmVZwYQ5QB2PSNIreMPs=;
- b=rhoEuERYYDqLB1Ph+5x3AW+Scn8QHjmvCAEY/4YekbJWC9gyA2W/WGDwS6kT/ELcl8
- QUWJiiY3YsxsBhSsXIk2/WkzJUnvhUIG5LPEc4PNTsTzbl2HG9viF2F5f0Tv9IQri9wU
- bG0O/y+wqOfb84eHpMkwWg93PTXOsa91suzjO4FvIYWT8F/Y6pJPcXvAB+GysC8Md4U2
- kCsyvOt5zTPdKtCCLkKk0dILke7Kr+4ntzuW0/+HljKLRsk58hVeRK8IEYAXmbdKzOcE
- QvA0kaZntFgpWkBQlg8HkxwxfC5VlVW1mv7QhLt9KX5G9sI3u1MxzXXUc/gP+oFvPBxr
- o1Gw==
-X-Gm-Message-State: AOJu0YzB8kc8+JI2gsiz+c0xzZpmEEzL8v8kiAN6vAX6o6D/IX/kWVZH
- OfB+ygBreYMePVwg2l4nkjFtBy8Li0ormCoKKquu7pmA1obFPJVQn4j6btqqreQYobatYs+gh/V
- eTnugLND1JkNYe6i6Ny6oLLLXIj6Aq0Q=
-X-Gm-Gg: AeBDievfzKsQwHyRqn3NTrvzj7rYAy1sjfXdDTg5yK1QNjttLZXeeP5o+43kiVSI7mR
- zd4+M6vyDB4wau3iTGCEOnliSR76m9mmDizLeJ8r0iBD2saa/+2Jq/zfpzWcBZwhz8gxVlmL3g1
- d5REudebS10Z1Cqsh7PGwgUWWLR+Eggy71bScUKU1WLVtQpte4HZI7ocqvytHS+L7mKwczhZOv1
- 6T+VZizj+0rcj9gY0LhrnP1miT8irvJHTko9EP7Dik2XBVMxQCOUzeVWQXT2o0O1cpxz28Xssfp
- Qu9H5pV3vfh74ziYT3Tv4Gg3BS1BcW5uMuwUryJbl455on/XLX8=
-X-Received: by 2002:a05:7300:73c7:b0:2e6:e504:5435 with SMTP id
- 5a478bee46e88-2ed0a015a63mr879217eec.12.1777356974100; Mon, 27 Apr 2026
- 23:16:14 -0700 (PDT)
+ bh=DwnNYWToZtZo3CnfRFPbncCR570CNeme7m91QKrNCsU=;
+ b=Ekpxx4YC+XdgURjYwwbrURJwSCgFy4IDIM0uANTdHWJQXlYRA7XLTPHTSpaLxo5+dH
+ iF+hrOAD5H5T+T74a/6xfGsBNomGKU8yKOXJSXzXFFGQw9EDzn3bcLMGV9V75jgaw3Os
+ dLHd0LWRw8wMV0515QwOoTTP5aH58kfE/Qpd/IRG32OO0eHNFMBcs0Lx3wbXGwiYtfjR
+ QuH9Lnq7Xget+Y82VYklTV3VIzDkrjVC5cVP4GfqenMMvo4T+3zVWKg8Ctea0D4Tk6c0
+ xwTLgeJqn0WP6w7qy12+OV6cVJUg2Z1OxI2SWEAgm0Rg8KDG37WHQawYxk3qOMEv6fAU
+ I++w==
+X-Gm-Message-State: AOJu0YzqD7RUZq091J8si7WKpGQnxlllGn3l4CrwLAXE446bWyoOXM0L
+ XiFIx12nVyjZs7u08FLUZkMOo6r7KKnwZJWjci1C5v4EXcxpKcdRJxxoIO02KesaqgtvttsYF0+
+ su6lBYHs4feSSNizXnXsvSoZZcrbeEvM=
+X-Gm-Gg: AeBDiesS+R40HPdT14Y2P9Yqt4ZFHuFQj5OjJdHJ3WjNyMYQaYd63wb3EYU/8NPAvPS
+ +zDpW87337b0glLDAWGGFjdP6sdXUh3rHuQxBJx+tPRWgDh3Ab/SGFI7T4Y3z4GcYdrew2o3cxH
+ A9CVxf1COEGfSme+8GKpl2QVhpRTAPLc14DG2JwiCavpVUFDz0Z+gR2XZWWAp0JGZJ2YfHVU6ma
+ G/TTkhZtGkI8A7Ly+ZpMiL7Zn9Bv9HvfXJdj1Ee1F190052/BdA8W+DGtgrFl6vecEx+va3ngFX
+ uIS1Jek0+uV4qhCsFwQIL6fEgXhOnbXemH3mMnsrFTSMcy5XSEs=
+X-Received: by 2002:a05:693c:37c8:b0:2ed:e14:e954 with SMTP id
+ 5a478bee46e88-2ed0e14ea48mr408025eec.30.1777358272017; Mon, 27 Apr 2026
+ 23:37:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260427223928.2742270-1-luc.fast2004@gmail.com>
-In-Reply-To: <20260427223928.2742270-1-luc.fast2004@gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 28 Apr 2026 10:16:01 +0400
-X-Gm-Features: AVHnY4JvwDhkzLh3hsw8skf9bQ9lbpQq6XEnVo-sr1AW0bKIGAMEek6IOmV5Nqs
-Message-ID: <CAJ+F1C+fKiDfVOC1JTNeZiX2rY22+1CdaHi_t84JJaf_=tU4vA@mail.gmail.com>
-Subject: Re: [PATCH] hw/audio/fmopl.c: Convert malloc, free to g_malloc0,
- g_new and g_free
-To: Lucas Cardoso <luc.fast2004@gmail.com>
-Cc: qemu-devel@nongnu.org, kraxel@redhat.com, qemu-trivial@nongnu.org
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-41-c413f3605311@redhat.com>
+ <CAFEAcA_7LT-gpArvYpabe9UiFPDGDMEsGOTMeivw90SVDjabeg@mail.gmail.com>
+In-Reply-To: <CAFEAcA_7LT-gpArvYpabe9UiFPDGDMEsGOTMeivw90SVDjabeg@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 28 Apr 2026 10:37:39 +0400
+X-Gm-Features: AVHnY4KtHkkKhqGGlbiImDkCZp65HO3_QH_LyvmTsE4f-uGytyjE2xsjDe5YpzI
+Message-ID: <CAJ+F1CJ1u16q+KBqsO3ofYTVERSvLC-w2MhA_oUF_tvd-mPZWQ@mail.gmail.com>
+Subject: Re: [PATCH 41/41] qtest: add "qom-tests" command
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132c;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1329;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1329.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,112 +120,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 28, 2026 at 3:48=E2=80=AFAM Lucas Cardoso <luc.fast2004@gmail.c=
-om> wrote:
->
-> In accordance with QEMU's coding style guidelines, replace raw memory
-> allocation functions (malloc/free) with their GLib equivalents
-> (g_new/g_malloc0/g_free).
->
-> Also removes the old generic error-handling code from
-> OPLOpenTable(), since the Glib functions abort the program automatically
-> if memory is exhausted.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/1798
-> Signed-off-by: Lucas Cardoso <luc.fast2004@gmail.com>
+Hi Peter
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+On Tue, Apr 28, 2026 at 12:08=E2=80=AFAM Peter Maydell <peter.maydell@linar=
+o.org> wrote:
+>
+> On Mon, 27 Apr 2026 at 20:50, Marc-Andr=C3=A9 Lureau
+> <marcandre.lureau@redhat.com> wrote:
+> >
+> > Add a new "qom-tests" to exercise basic object lifecycle. Instantiate
+> > all non-abstract objects, get and set properties and unref.
+> >
+> > This should quickly find leaks and other related issues that are
+> > eventually triggerable at run-time with QMP qom commands.
+>
+> Can we have a comment please that says what you think the
+> basic object lifecycle is?
 
-> ---
->  hw/audio/fmopl.c | 41 +++++++++++------------------------------
->  1 file changed, 11 insertions(+), 30 deletions(-)
->
-> diff --git a/hw/audio/fmopl.c b/hw/audio/fmopl.c
-> index a63ad0f04d..aeefc4c9fe 100644
-> --- a/hw/audio/fmopl.c
-> +++ b/hw/audio/fmopl.c
-> @@ -607,26 +607,10 @@ static int OPLOpenTable( void )
->         double pom;
->
->         /* allocate dynamic tables */
-> -       if( (TL_TABLE =3D malloc(TL_MAX*2*sizeof(int32_t))) =3D=3D NULL)
-> -               return 0;
-> -       if( (SIN_TABLE =3D malloc(SIN_ENT*4 *sizeof(int32_t *))) =3D=3D N=
-ULL)
-> -       {
-> -               free(TL_TABLE);
-> -               return 0;
-> -       }
-> -       if( (AMS_TABLE =3D malloc(AMS_ENT*2 *sizeof(int32_t))) =3D=3D NUL=
-L)
-> -       {
-> -               free(TL_TABLE);
-> -               free(SIN_TABLE);
-> -               return 0;
-> -       }
-> -       if( (VIB_TABLE =3D malloc(VIB_ENT*2 *sizeof(int32_t))) =3D=3D NUL=
-L)
-> -       {
-> -               free(TL_TABLE);
-> -               free(SIN_TABLE);
-> -               free(AMS_TABLE);
-> -               return 0;
-> -       }
-> +    TL_TABLE =3D g_new(int32_t, TL_MAX * 2);
-> +    SIN_TABLE =3D g_new(int32_t *, SIN_ENT * 4);
-> +    AMS_TABLE =3D g_new(int32_t, AMS_ENT * 2);
-> +    VIB_TABLE =3D g_new(int32_t, VIB_ENT * 2);
->      ENV_CURVE =3D g_new(int32_t, 2 * EG_ENT + 1);
->         /* make total level table */
->         for (t =3D 0;t < EG_ENT-1 ;t++){
-> @@ -696,10 +680,10 @@ static int OPLOpenTable( void )
->  static void OPLCloseTable( void )
->  {
->      g_free(ENV_CURVE);
-> -       free(TL_TABLE);
-> -       free(SIN_TABLE);
-> -       free(AMS_TABLE);
-> -       free(VIB_TABLE);
-> +    g_free(TL_TABLE);
-> +    g_free(SIN_TABLE);
-> +    g_free(AMS_TABLE);
-> +    g_free(VIB_TABLE);
+Hmm, what is not clear about the comment above and its list?
 
-To make this function idempotent, I would rather use
-g_clear_pointer(), but that might not be necessary
+> Also, the qom-test already has coverage of "init the object,
+> introspect its properties, unref it" -- how does this differ?
 
->  }
->
->  /* CSM Key Control */
-> @@ -1081,11 +1065,8 @@ FM_OPL *OPLCreate(int clock, int rate)
->         /* allocate OPL state space */
->         state_size  =3D sizeof(FM_OPL);
->         state_size +=3D sizeof(OPL_CH)*max_ch;
-> -       /* allocate memory block */
-> -       ptr =3D malloc(state_size);
-> -       if(ptr=3D=3DNULL) return NULL;
-> -       /* clear */
-> -       memset(ptr,0,state_size);
-> +    /* allocate memory block and zero-initialize */
-> +    ptr =3D g_malloc0(state_size);
->         OPL        =3D (FM_OPL *)ptr; ptr+=3Dsizeof(FM_OPL);
->         OPL->P_CH  =3D (OPL_CH *)ptr; ptr+=3Dsizeof(OPL_CH)*max_ch;
->         /* set channel state pointer */
-> @@ -1128,7 +1109,7 @@ void OPLDestroy(FM_OPL *OPL)
->         }
->  #endif
->         OPL_UnLockTable();
-> -       free(OPL);
-> +    g_free(OPL);
->  }
->
->  /* ----------  Option handlers ----------       */
-> --
-> 2.51.0
->
->
+It does introspect on already living and reachable objects, over QMP.
+It doesn't instantiate, set, or unref.
 
+> Does it duplicate parts of it? (qom-test is already a very
+> slow test so we don't want to duplicate work if we can avoid it.)
 
---=20
-Marc-Andr=C3=A9 Lureau
+I wouldn't say they overlap much. I wrote it as a qtest command to
+make the test relatively fast (~100ms per target), and easy to invoke
+on CLI (-qtest stdio <<< qom-tests). Its purpose is not to exercise
+QMP. I agree though that adding a 1-2 seconds to CI is costly. We may
+run it under g_test_thorough().
 
