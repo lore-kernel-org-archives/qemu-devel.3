@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E245FFF8868
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 15:09:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62C0FFF8868
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 15:09:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHk3E-0002tf-7w; Tue, 28 Apr 2026 11:08:40 -0400
+	id 1wHk2q-00025r-Nt; Tue, 28 Apr 2026 11:08:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHk3B-0002jZ-FV
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:37 -0400
+ id 1wHk2o-00025a-OF
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHk39-0000ka-EV
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:37 -0400
+ id 1wHk2n-0000f0-8n
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777388914;
+ s=mimecast20190719; t=1777388892;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l2i3x+eDYXXk9cfWr/IeBQOYE2X03s17Dn3GAzkjgRY=;
- b=BpauzZ8nkfXwVf/eeombGxd11b/P6N/k7/rt/AITGsahE/ZmIUJ2lEL2t+ua8tzPfnM/Hs
- 8YiCSLGzy9lW9XCNgzb5Ga0JViqsOzSkbgT+yv0sRmHm/H7aUnP9l/6TDJflvHIOzIXUAo
- MLDDloJ7PVShJCVtAKRvEvxqkiJluq8=
+ bh=EE6I4Y7uJB/7Fj6higSfUyqejKTnpEcfeyTTOwYcfLA=;
+ b=KhsMQvf7votzs1F/epnDcfZArZqp9daL4nK0W3uGUmwAQIvdGuezzuM80FPA+OMP1dYTxn
+ QnuaVfFso+rrJ2XEAfwCnPtyytYJm/iVRLB3FeEXwUpCOVH7oqT/KEr5zuWS9yVx9iLA/3
+ hqOuQp3ML/EaXn+5hZ3mWBntJolKkvU=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-1zk_ZmlzNyKvsRS6mNQPSA-1; Tue,
- 28 Apr 2026 11:08:30 -0400
-X-MC-Unique: 1zk_ZmlzNyKvsRS6mNQPSA-1
-X-Mimecast-MFC-AGG-ID: 1zk_ZmlzNyKvsRS6mNQPSA_1777388909
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-683-aXhtddxVNryXPPctK3o0mg-1; Tue,
+ 28 Apr 2026 11:08:09 -0400
+X-MC-Unique: aXhtddxVNryXPPctK3o0mg-1
+X-Mimecast-MFC-AGG-ID: aXhtddxVNryXPPctK3o0mg_1777388888
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1B9F21956056; Tue, 28 Apr 2026 15:08:29 +0000 (UTC)
+ id 496F41956056; Tue, 28 Apr 2026 15:08:08 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B2DD5180047F; Tue, 28 Apr 2026 15:08:27 +0000 (UTC)
+ id 8C74B180047F; Tue, 28 Apr 2026 15:08:06 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v2 09/15] ui/console: move console_handle_touch_event() to input
-Date: Tue, 28 Apr 2026 19:07:19 +0400
-Message-ID: <20260428150726.1659814-10-marcandre.lureau@redhat.com>
+Subject: [PULL v2 06/15] ui: rename init_keyboard_layout->kbd_layout_new()
+Date: Tue, 28 Apr 2026 19:07:16 +0400
+Message-ID: <20260428150726.1659814-7-marcandre.lureau@redhat.com>
 In-Reply-To: <20260428150726.1659814-1-marcandre.lureau@redhat.com>
 References: <20260428150726.1659814-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -87,257 +87,96 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The function uses input.c functions to provide a simpler abstraction for
-touch events. Let's move it from the already overloaded console.c, and
-to avoid some unnecessary dependency from console.c on input.c.
+Use a more convential name.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/ui/console.h | 14 ----------
- include/ui/input.h   | 15 ++++++++++
- ui/console.c         | 65 --------------------------------------------
- ui/dbus-console.c    |  6 ++--
- ui/gtk.c             |  8 +++---
- ui/input.c           | 65 ++++++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 87 insertions(+), 86 deletions(-)
+ ui/keymaps.h       | 4 ++--
+ ui/curses.c        | 4 ++--
+ ui/input-barrier.c | 4 ++--
+ ui/keymaps.c       | 4 ++--
+ ui/vnc.c           | 6 +++---
+ 5 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 0bc9e544fad..27eacc39cc0 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -111,20 +111,6 @@ void qemu_text_console_put_keysym(QemuTextConsole *s, int keysym);
- bool qemu_text_console_put_qcode(QemuTextConsole *s, int qcode, bool ctrl);
- void qemu_text_console_put_string(QemuTextConsole *s, const char *str, int len);
+diff --git a/ui/keymaps.h b/ui/keymaps.h
+index e8917e56404..89bfbb2704d 100644
+--- a/ui/keymaps.h
++++ b/ui/keymaps.h
+@@ -52,8 +52,8 @@ typedef struct {
  
--/* Touch devices */
--typedef struct touch_slot {
--    int x;
--    int y;
--    int tracking_id;
--} touch_slot;
--
--void console_handle_touch_event(QemuConsole *con,
--                                struct touch_slot touch_slots[INPUT_EVENT_SLOTS_MAX],
--                                uint64_t num_slot,
--                                int width, int height,
--                                double x, double y,
--                                InputMultiTouchType type,
--                                Error **errp);
- /* consoles */
+ typedef struct kbd_layout_t kbd_layout_t;
  
- struct QemuConsoleClass {
-diff --git a/include/ui/input.h b/include/ui/input.h
-index 8f9aac562ed..52c164bde57 100644
---- a/include/ui/input.h
-+++ b/include/ui/input.h
-@@ -70,6 +70,21 @@ void qemu_input_queue_mtt_abs(QemuConsole *src, InputAxis axis, int value,
-                               int min_in, int max_in,
-                               int slot, int tracking_id);
- 
-+/* Touch devices */
-+typedef struct touch_slot {
-+    int x;
-+    int y;
-+    int tracking_id;
-+} touch_slot;
-+
-+void qemu_input_touch_event(QemuConsole *con,
-+                            struct touch_slot touch_slots[INPUT_EVENT_SLOTS_MAX],
-+                            uint64_t num_slot,
-+                            int width, int height,
-+                            double x, double y,
-+                            InputMultiTouchType type,
-+                            Error **errp);
-+
- void qemu_input_check_mode_change(void);
- void qemu_add_mouse_mode_change_notifier(Notifier *notify);
- void qemu_remove_mouse_mode_change_notifier(Notifier *notify);
-diff --git a/ui/console.c b/ui/console.c
-index a608c29b843..799d61ec1a5 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -548,71 +548,6 @@ static bool console_compatible_with(QemuConsole *con,
-     return true;
+-kbd_layout_t *init_keyboard_layout(const name2keysym_t *table,
+-                                   const char *language, Error **errp);
++kbd_layout_t *kbd_layout_new(const name2keysym_t *table,
++                             const char *language, Error **errp);
+ void kbd_layout_free(kbd_layout_t *k);
+ int keysym2scancode(kbd_layout_t *k, int keysym,
+                     QKbdState *kbd, bool down);
+diff --git a/ui/curses.c b/ui/curses.c
+index 161f78c35c3..af4ccb4227d 100644
+--- a/ui/curses.c
++++ b/ui/curses.c
+@@ -770,8 +770,8 @@ static void curses_keyboard_setup(void)
+         keyboard_layout = "en-us";
+ #endif
+     if(keyboard_layout) {
+-        kbd_layout = init_keyboard_layout(name2keysym, keyboard_layout,
+-                                          &error_fatal);
++        kbd_layout = kbd_layout_new(name2keysym, keyboard_layout,
++                                    &error_fatal);
+     }
  }
  
--void console_handle_touch_event(QemuConsole *con,
--                                struct touch_slot touch_slots[INPUT_EVENT_SLOTS_MAX],
--                                uint64_t num_slot,
--                                int width, int height,
--                                double x, double y,
--                                InputMultiTouchType type,
--                                Error **errp)
--{
--    struct touch_slot *slot;
--    bool needs_sync = false;
--    int update;
--    int i;
--
--    if (num_slot >= INPUT_EVENT_SLOTS_MAX) {
--        error_setg(errp,
--                   "Unexpected touch slot number: % " PRId64" >= %d",
--                   num_slot, INPUT_EVENT_SLOTS_MAX);
--        return;
--    }
--
--    slot = &touch_slots[num_slot];
--    slot->x = x;
--    slot->y = y;
--
--    if (type == INPUT_MULTI_TOUCH_TYPE_BEGIN) {
--        slot->tracking_id = num_slot;
--    }
--
--    for (i = 0; i < INPUT_EVENT_SLOTS_MAX; ++i) {
--        if (i == num_slot) {
--            update = type;
--        } else {
--            update = INPUT_MULTI_TOUCH_TYPE_UPDATE;
--        }
--
--        slot = &touch_slots[i];
--
--        if (slot->tracking_id == -1) {
--            continue;
--        }
--
--        if (update == INPUT_MULTI_TOUCH_TYPE_END) {
--            slot->tracking_id = -1;
--            qemu_input_queue_mtt(con, update, i, slot->tracking_id);
--            needs_sync = true;
--        } else {
--            qemu_input_queue_mtt(con, update, i, slot->tracking_id);
--            qemu_input_queue_btn(con, INPUT_BUTTON_TOUCH, true);
--            qemu_input_queue_mtt_abs(con,
--                                    INPUT_AXIS_X, (int) slot->x,
--                                    0, width,
--                                    i, slot->tracking_id);
--            qemu_input_queue_mtt_abs(con,
--                                    INPUT_AXIS_Y, (int) slot->y,
--                                    0, height,
--                                    i, slot->tracking_id);
--            needs_sync = true;
--        }
--    }
--
--    if (needs_sync) {
--        qemu_input_event_sync();
--    }
--}
--
- void qemu_console_set_display_gl_ctx(QemuConsole *con, DisplayGLCtx *gl)
+diff --git a/ui/input-barrier.c b/ui/input-barrier.c
+index 0a2198ca500..74724be8f45 100644
+--- a/ui/input-barrier.c
++++ b/ui/input-barrier.c
+@@ -679,8 +679,8 @@ static void input_barrier_instance_init(Object *obj)
+     /* always use generic keymaps */
+     if (keyboard_layout && !kbd_layout) {
+         /* We use X11 key id, so use VNC name2keysym */
+-        kbd_layout = init_keyboard_layout(name2keysym, keyboard_layout,
+-                                          &error_fatal);
++        kbd_layout = kbd_layout_new(name2keysym, keyboard_layout,
++                                    &error_fatal);
+     }
+ 
+     ib->saddr.type = SOCKET_ADDRESS_TYPE_INET;
+diff --git a/ui/keymaps.c b/ui/keymaps.c
+index d1b3f43dc8a..6822c097be7 100644
+--- a/ui/keymaps.c
++++ b/ui/keymaps.c
+@@ -187,8 +187,8 @@ void kbd_layout_free(kbd_layout_t *k)
+     g_free(k);
+ }
+ 
+-kbd_layout_t *init_keyboard_layout(const name2keysym_t *table,
+-                                   const char *language, Error **errp)
++kbd_layout_t *kbd_layout_new(const name2keysym_t *table,
++                             const char *language, Error **errp)
  {
-     /* display has opengl support */
-diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-index 85e215ef233..564f004bd86 100644
---- a/ui/dbus-console.c
-+++ b/ui/dbus-console.c
-@@ -424,9 +424,9 @@ dbus_touch_send_event(DBusDisplayConsole *ddc,
-     width = qemu_console_get_width(ddc->dcl.con, 0);
-     height = qemu_console_get_height(ddc->dcl.con, 0);
+     kbd_layout_t *k;
  
--    console_handle_touch_event(ddc->dcl.con, touch_slots,
--                               num_slot, width, height,
--                               x, y, kind, &error);
-+    qemu_input_touch_event(ddc->dcl.con, touch_slots,
-+                           num_slot, width, height,
-+                           x, y, kind, &error);
-     if (error != NULL) {
-         g_dbus_method_invocation_return_error(
-             invocation, DBUS_DISPLAY_ERROR,
-diff --git a/ui/gtk.c b/ui/gtk.c
-index 9ebe7e8df0d..8fd39c90c29 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -1201,10 +1201,10 @@ static gboolean gd_touch_event(GtkWidget *widget, GdkEventTouch *touch,
-         return FALSE;
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 16dbb0cd6c2..c87d1f61a0a 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3443,10 +3443,10 @@ void vnc_display_init(const char *id, Error **errp)
+ 
+     if (keyboard_layout) {
+         trace_vnc_key_map_init(keyboard_layout);
+-        vd->kbd_layout = init_keyboard_layout(name2keysym,
+-                                              keyboard_layout, errp);
++        vd->kbd_layout = kbd_layout_new(name2keysym,
++                                        keyboard_layout, errp);
+     } else {
+-        vd->kbd_layout = init_keyboard_layout(name2keysym, "en-us", errp);
++        vd->kbd_layout = kbd_layout_new(name2keysym, "en-us", errp);
      }
  
--    console_handle_touch_event(vc->gfx.dcl.con, touch_slots,
--                               num_slot, surface_width(vc->gfx.ds),
--                               surface_height(vc->gfx.ds), touch->x,
--                               touch->y, type, &err);
-+    qemu_input_touch_event(vc->gfx.dcl.con, touch_slots,
-+                           num_slot, surface_width(vc->gfx.ds),
-+                           surface_height(vc->gfx.ds), touch->x,
-+                           touch->y, type, &err);
-     if (err) {
-         warn_report_err(err);
-     }
-diff --git a/ui/input.c b/ui/input.c
-index 147e69c1c3c..57e7817878a 100644
---- a/ui/input.c
-+++ b/ui/input.c
-@@ -609,3 +609,68 @@ bool qemu_mouse_set(int index, Error **errp)
-     notifier_list_notify(&mouse_mode_notifiers, NULL);
-     return true;
- }
-+
-+void qemu_input_touch_event(QemuConsole *con,
-+                            struct touch_slot touch_slots[INPUT_EVENT_SLOTS_MAX],
-+                            uint64_t num_slot,
-+                            int width, int height,
-+                            double x, double y,
-+                            InputMultiTouchType type,
-+                            Error **errp)
-+{
-+    struct touch_slot *slot;
-+    bool needs_sync = false;
-+    int update;
-+    int i;
-+
-+    if (num_slot >= INPUT_EVENT_SLOTS_MAX) {
-+        error_setg(errp,
-+                   "Unexpected touch slot number: % " PRId64" >= %d",
-+                   num_slot, INPUT_EVENT_SLOTS_MAX);
-+        return;
-+    }
-+
-+    slot = &touch_slots[num_slot];
-+    slot->x = x;
-+    slot->y = y;
-+
-+    if (type == INPUT_MULTI_TOUCH_TYPE_BEGIN) {
-+        slot->tracking_id = num_slot;
-+    }
-+
-+    for (i = 0; i < INPUT_EVENT_SLOTS_MAX; ++i) {
-+        if (i == num_slot) {
-+            update = type;
-+        } else {
-+            update = INPUT_MULTI_TOUCH_TYPE_UPDATE;
-+        }
-+
-+        slot = &touch_slots[i];
-+
-+        if (slot->tracking_id == -1) {
-+            continue;
-+        }
-+
-+        if (update == INPUT_MULTI_TOUCH_TYPE_END) {
-+            slot->tracking_id = -1;
-+            qemu_input_queue_mtt(con, update, i, slot->tracking_id);
-+            needs_sync = true;
-+        } else {
-+            qemu_input_queue_mtt(con, update, i, slot->tracking_id);
-+            qemu_input_queue_btn(con, INPUT_BUTTON_TOUCH, true);
-+            qemu_input_queue_mtt_abs(con,
-+                                    INPUT_AXIS_X, (int) slot->x,
-+                                    0, width,
-+                                    i, slot->tracking_id);
-+            qemu_input_queue_mtt_abs(con,
-+                                    INPUT_AXIS_Y, (int) slot->y,
-+                                    0, height,
-+                                    i, slot->tracking_id);
-+            needs_sync = true;
-+        }
-+    }
-+
-+    if (needs_sync) {
-+        qemu_input_event_sync();
-+    }
-+}
+     if (!vd->kbd_layout) {
 -- 
 2.54.0
 
