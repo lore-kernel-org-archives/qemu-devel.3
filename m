@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C789FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 08:14:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B66DFF885D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 08:14:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHdZr-00069h-SZ; Tue, 28 Apr 2026 04:13:55 -0400
+	id 1wHdaB-0006Nt-9g; Tue, 28 Apr 2026 04:14:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHdZq-000679-E0
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:13:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wHda8-0006KF-TM
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:14:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHdZo-00062A-P8
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:13:54 -0400
+ id 1wHda5-00063S-Mk
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:14:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777364032;
+ s=mimecast20190719; t=1777364048;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZBBF7t1JGaQ+5NkzBMe2IvOwuHtbPA/oX7g06ftpQZY=;
- b=ghF490mASe8hENqzmZIlpPLx7jO29bjF7dljMscOtpM9CsRnGyhad8gNAHkQp/m7OkTpoR
- 3Luh62XoAvr3/F2pZ2g8wHtW7DzL1z2mjFxoX8juoA6GrEVgAdNkdUrg3ZVQwjpJbepX0x
- 5Q/uHXxttsqygpj+ZYHbvx1RrCJztzc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=A/mpi7G9rL8KC/F4nDYxWvV9R1JjB0TCeVbGtyXxvrU=;
+ b=aTxMEVYp/y8PqpBtnlKBXDy7vHW589DSYLNMjEgmcUQ8WlOBF8MkEf5MXSsnmbS9RolzGC
+ rqxkohc1w4kU4aOH73QqtYeqJiXV4WxvXHnluo7s8pmDdIhMEB5swmJxvcBIcRBX8iga30
+ b81s0KYS5ypaGsBHbL+MMUEA/pHL7GU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-480--TiiULULPFO0jEBIeQ57Ug-1; Tue,
- 28 Apr 2026 04:13:50 -0400
-X-MC-Unique: -TiiULULPFO0jEBIeQ57Ug-1
-X-Mimecast-MFC-AGG-ID: -TiiULULPFO0jEBIeQ57Ug_1777364029
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-Vc8-WJfoM8GBI8FyjxyHMw-1; Tue,
+ 28 Apr 2026 04:14:04 -0400
+X-MC-Unique: Vc8-WJfoM8GBI8FyjxyHMw-1
+X-Mimecast-MFC-AGG-ID: Vc8-WJfoM8GBI8FyjxyHMw_1777364044
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 83FD61800358; Tue, 28 Apr 2026 08:13:49 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E066C1955F0B; Tue, 28 Apr 2026 08:14:03 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 860E3196B8FB; Tue, 28 Apr 2026 08:13:48 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 879EA180047F; Tue, 28 Apr 2026 08:14:02 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 07/15] ui/console: remove qemu_console_is_visible()
-Date: Tue, 28 Apr 2026 12:12:54 +0400
-Message-ID: <20260428081303.990973-8-marcandre.lureau@redhat.com>
+Subject: [PULL 09/15] ui/console: move console_handle_touch_event() to input
+Date: Tue, 28 Apr 2026 12:12:56 +0400
+Message-ID: <20260428081303.990973-10-marcandre.lureau@redhat.com>
 In-Reply-To: <20260428081303.990973-1-marcandre.lureau@redhat.com>
 References: <20260428081303.990973-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -68,7 +68,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,140 +87,257 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Drop the bookkeeping, we can simply afford an empty "foreach".
+The function uses input.c functions to provide a simpler abstraction for
+touch events. Let's move it from the already overloaded console.c, and
+to avoid some unnecessary dependency from console.c on input.c.
 
-Notice that dpy_gfx_update_texture() is now called even when there are
-no listeners. This is more correct, as the texture is not fully
-refreshed when a listener connects, so it may be outdated/garbaged.
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/ui/console.h |  1 -
- ui/console-priv.h    |  1 -
- ui/console.c         | 29 -----------------------------
- 3 files changed, 31 deletions(-)
+ include/ui/console.h | 14 ----------
+ include/ui/input.h   | 15 ++++++++++
+ ui/console.c         | 65 --------------------------------------------
+ ui/dbus-console.c    |  6 ++--
+ ui/gtk.c             |  8 +++---
+ ui/input.c           | 65 ++++++++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 87 insertions(+), 86 deletions(-)
 
 diff --git a/include/ui/console.h b/include/ui/console.h
-index e2e5ff76ec1..f04844263b9 100644
+index 0bc9e544fad..27eacc39cc0 100644
 --- a/include/ui/console.h
 +++ b/include/ui/console.h
-@@ -399,7 +399,6 @@ QemuConsole *qemu_console_lookup_by_device(DeviceState *dev, uint32_t head);
- QemuConsole *qemu_console_lookup_by_device_name(const char *device_id,
-                                                 uint32_t head, Error **errp);
- QEMUCursor *qemu_console_get_cursor(QemuConsole *con);
--bool qemu_console_is_visible(QemuConsole *con);
- bool qemu_console_is_graphic(QemuConsole *con);
- bool qemu_console_is_fixedsize(QemuConsole *con);
- bool qemu_console_is_gl_blocked(QemuConsole *con);
-diff --git a/ui/console-priv.h b/ui/console-priv.h
-index 39798c3e9d7..2299898984d 100644
---- a/ui/console-priv.h
-+++ b/ui/console-priv.h
-@@ -16,7 +16,6 @@ struct QemuConsole {
-     DisplayState *ds;
-     DisplaySurface *surface;
-     DisplayScanout scanout;
--    int dcls;
-     DisplayGLCtx *gl;
-     int gl_block;
-     QEMUTimer *gl_unblock_timer;
+@@ -111,20 +111,6 @@ void qemu_text_console_put_keysym(QemuTextConsole *s, int keysym);
+ bool qemu_text_console_put_qcode(QemuTextConsole *s, int qcode, bool ctrl);
+ void qemu_text_console_put_string(QemuTextConsole *s, const char *str, int len);
+ 
+-/* Touch devices */
+-typedef struct touch_slot {
+-    int x;
+-    int y;
+-    int tracking_id;
+-} touch_slot;
+-
+-void console_handle_touch_event(QemuConsole *con,
+-                                struct touch_slot touch_slots[INPUT_EVENT_SLOTS_MAX],
+-                                uint64_t num_slot,
+-                                int width, int height,
+-                                double x, double y,
+-                                InputMultiTouchType type,
+-                                Error **errp);
+ /* consoles */
+ 
+ struct QemuConsoleClass {
+diff --git a/include/ui/input.h b/include/ui/input.h
+index 8f9aac562ed..52c164bde57 100644
+--- a/include/ui/input.h
++++ b/include/ui/input.h
+@@ -70,6 +70,21 @@ void qemu_input_queue_mtt_abs(QemuConsole *src, InputAxis axis, int value,
+                               int min_in, int max_in,
+                               int slot, int tracking_id);
+ 
++/* Touch devices */
++typedef struct touch_slot {
++    int x;
++    int y;
++    int tracking_id;
++} touch_slot;
++
++void qemu_input_touch_event(QemuConsole *con,
++                            struct touch_slot touch_slots[INPUT_EVENT_SLOTS_MAX],
++                            uint64_t num_slot,
++                            int width, int height,
++                            double x, double y,
++                            InputMultiTouchType type,
++                            Error **errp);
++
+ void qemu_input_check_mode_change(void);
+ void qemu_add_mouse_mode_change_notifier(Notifier *notify);
+ void qemu_remove_mouse_mode_change_notifier(Notifier *notify);
 diff --git a/ui/console.c b/ui/console.c
-index 8f65308958a..abb6cba2826 100644
+index a608c29b843..799d61ec1a5 100644
 --- a/ui/console.c
 +++ b/ui/console.c
-@@ -648,9 +648,6 @@ void register_displaychangelistener(DisplayChangeListener *dcl)
-     dcl->ds = get_alloc_displaystate();
-     QLIST_INSERT_HEAD(&dcl->ds->listeners, dcl, next);
-     gui_setup_refresh(dcl->ds);
--    if (dcl->con) {
--        dcl->con->dcls++;
--    }
-     displaychangelistener_display_console(dcl, &error_fatal);
-     if (QEMU_IS_GRAPHIC_CONSOLE(dcl->con)) {
-         dcl_set_graphic_cursor(dcl, QEMU_GRAPHIC_CONSOLE(dcl->con));
-@@ -678,9 +675,6 @@ void unregister_displaychangelistener(DisplayChangeListener *dcl)
-     if (!ds) {
-         return;
-     }
--    if (dcl->con) {
--        dcl->con->dcls--;
--    }
-     QLIST_REMOVE(dcl, next);
-     dcl->ds = NULL;
-     gui_setup_refresh(ds);
-@@ -745,9 +739,6 @@ void dpy_gfx_update(QemuConsole *con, int x, int y, int w, int h)
-     w = MIN(w, width - x);
-     h = MIN(h, height - y);
- 
--    if (!qemu_console_is_visible(con)) {
--        return;
--    }
-     dpy_gfx_update_texture(con, con->surface, x, y, w, h);
-     QLIST_FOREACH(dcl, &s->listeners, next) {
-         if (con != dcl->con) {
-@@ -846,9 +837,6 @@ void dpy_text_cursor(QemuConsole *con, int x, int y)
-     DisplayState *s = con->ds;
-     DisplayChangeListener *dcl;
- 
--    if (!qemu_console_is_visible(con)) {
--        return;
--    }
-     QLIST_FOREACH(dcl, &s->listeners, next) {
-         if (con != dcl->con) {
-             continue;
-@@ -864,9 +852,6 @@ void dpy_text_update(QemuConsole *con, int x, int y, int w, int h)
-     DisplayState *s = con->ds;
-     DisplayChangeListener *dcl;
- 
--    if (!qemu_console_is_visible(con)) {
--        return;
--    }
-     QLIST_FOREACH(dcl, &s->listeners, next) {
-         if (con != dcl->con) {
-             continue;
-@@ -882,9 +867,6 @@ void dpy_text_resize(QemuConsole *con, int w, int h)
-     DisplayState *s = con->ds;
-     DisplayChangeListener *dcl;
- 
--    if (!qemu_console_is_visible(con)) {
--        return;
--    }
-     QLIST_FOREACH(dcl, &s->listeners, next) {
-         if (con != dcl->con) {
-             continue;
-@@ -904,9 +886,6 @@ void dpy_mouse_set(QemuConsole *c, int x, int y, bool on)
-     con->cursor_x = x;
-     con->cursor_y = y;
-     con->cursor_on = on;
--    if (!qemu_console_is_visible(c)) {
--        return;
--    }
-     QLIST_FOREACH(dcl, &s->listeners, next) {
-         if (c != dcl->con) {
-             continue;
-@@ -925,9 +904,6 @@ void dpy_cursor_define(QemuConsole *c, QEMUCursor *cursor)
- 
-     cursor_unref(con->cursor);
-     con->cursor = cursor_ref(cursor);
--    if (!qemu_console_is_visible(c)) {
--        return;
--    }
-     QLIST_FOREACH(dcl, &s->listeners, next) {
-         if (c != dcl->con) {
-             continue;
-@@ -1285,11 +1261,6 @@ QEMUCursor *qemu_console_get_cursor(QemuConsole *con)
-     return QEMU_IS_GRAPHIC_CONSOLE(con) ? QEMU_GRAPHIC_CONSOLE(con)->cursor : NULL;
+@@ -548,71 +548,6 @@ static bool console_compatible_with(QemuConsole *con,
+     return true;
  }
  
--bool qemu_console_is_visible(QemuConsole *con)
+-void console_handle_touch_event(QemuConsole *con,
+-                                struct touch_slot touch_slots[INPUT_EVENT_SLOTS_MAX],
+-                                uint64_t num_slot,
+-                                int width, int height,
+-                                double x, double y,
+-                                InputMultiTouchType type,
+-                                Error **errp)
 -{
--    return con->dcls > 0;
+-    struct touch_slot *slot;
+-    bool needs_sync = false;
+-    int update;
+-    int i;
+-
+-    if (num_slot >= INPUT_EVENT_SLOTS_MAX) {
+-        error_setg(errp,
+-                   "Unexpected touch slot number: % " PRId64" >= %d",
+-                   num_slot, INPUT_EVENT_SLOTS_MAX);
+-        return;
+-    }
+-
+-    slot = &touch_slots[num_slot];
+-    slot->x = x;
+-    slot->y = y;
+-
+-    if (type == INPUT_MULTI_TOUCH_TYPE_BEGIN) {
+-        slot->tracking_id = num_slot;
+-    }
+-
+-    for (i = 0; i < INPUT_EVENT_SLOTS_MAX; ++i) {
+-        if (i == num_slot) {
+-            update = type;
+-        } else {
+-            update = INPUT_MULTI_TOUCH_TYPE_UPDATE;
+-        }
+-
+-        slot = &touch_slots[i];
+-
+-        if (slot->tracking_id == -1) {
+-            continue;
+-        }
+-
+-        if (update == INPUT_MULTI_TOUCH_TYPE_END) {
+-            slot->tracking_id = -1;
+-            qemu_input_queue_mtt(con, update, i, slot->tracking_id);
+-            needs_sync = true;
+-        } else {
+-            qemu_input_queue_mtt(con, update, i, slot->tracking_id);
+-            qemu_input_queue_btn(con, INPUT_BUTTON_TOUCH, true);
+-            qemu_input_queue_mtt_abs(con,
+-                                    INPUT_AXIS_X, (int) slot->x,
+-                                    0, width,
+-                                    i, slot->tracking_id);
+-            qemu_input_queue_mtt_abs(con,
+-                                    INPUT_AXIS_Y, (int) slot->y,
+-                                    0, height,
+-                                    i, slot->tracking_id);
+-            needs_sync = true;
+-        }
+-    }
+-
+-    if (needs_sync) {
+-        qemu_input_event_sync();
+-    }
 -}
 -
- bool qemu_console_is_graphic(QemuConsole *con)
+ void qemu_console_set_display_gl_ctx(QemuConsole *con, DisplayGLCtx *gl)
  {
-     return con && QEMU_IS_GRAPHIC_CONSOLE(con);
+     /* display has opengl support */
+diff --git a/ui/dbus-console.c b/ui/dbus-console.c
+index 85e215ef233..564f004bd86 100644
+--- a/ui/dbus-console.c
++++ b/ui/dbus-console.c
+@@ -424,9 +424,9 @@ dbus_touch_send_event(DBusDisplayConsole *ddc,
+     width = qemu_console_get_width(ddc->dcl.con, 0);
+     height = qemu_console_get_height(ddc->dcl.con, 0);
+ 
+-    console_handle_touch_event(ddc->dcl.con, touch_slots,
+-                               num_slot, width, height,
+-                               x, y, kind, &error);
++    qemu_input_touch_event(ddc->dcl.con, touch_slots,
++                           num_slot, width, height,
++                           x, y, kind, &error);
+     if (error != NULL) {
+         g_dbus_method_invocation_return_error(
+             invocation, DBUS_DISPLAY_ERROR,
+diff --git a/ui/gtk.c b/ui/gtk.c
+index 9ebe7e8df0d..8fd39c90c29 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -1201,10 +1201,10 @@ static gboolean gd_touch_event(GtkWidget *widget, GdkEventTouch *touch,
+         return FALSE;
+     }
+ 
+-    console_handle_touch_event(vc->gfx.dcl.con, touch_slots,
+-                               num_slot, surface_width(vc->gfx.ds),
+-                               surface_height(vc->gfx.ds), touch->x,
+-                               touch->y, type, &err);
++    qemu_input_touch_event(vc->gfx.dcl.con, touch_slots,
++                           num_slot, surface_width(vc->gfx.ds),
++                           surface_height(vc->gfx.ds), touch->x,
++                           touch->y, type, &err);
+     if (err) {
+         warn_report_err(err);
+     }
+diff --git a/ui/input.c b/ui/input.c
+index 147e69c1c3c..57e7817878a 100644
+--- a/ui/input.c
++++ b/ui/input.c
+@@ -609,3 +609,68 @@ bool qemu_mouse_set(int index, Error **errp)
+     notifier_list_notify(&mouse_mode_notifiers, NULL);
+     return true;
+ }
++
++void qemu_input_touch_event(QemuConsole *con,
++                            struct touch_slot touch_slots[INPUT_EVENT_SLOTS_MAX],
++                            uint64_t num_slot,
++                            int width, int height,
++                            double x, double y,
++                            InputMultiTouchType type,
++                            Error **errp)
++{
++    struct touch_slot *slot;
++    bool needs_sync = false;
++    int update;
++    int i;
++
++    if (num_slot >= INPUT_EVENT_SLOTS_MAX) {
++        error_setg(errp,
++                   "Unexpected touch slot number: % " PRId64" >= %d",
++                   num_slot, INPUT_EVENT_SLOTS_MAX);
++        return;
++    }
++
++    slot = &touch_slots[num_slot];
++    slot->x = x;
++    slot->y = y;
++
++    if (type == INPUT_MULTI_TOUCH_TYPE_BEGIN) {
++        slot->tracking_id = num_slot;
++    }
++
++    for (i = 0; i < INPUT_EVENT_SLOTS_MAX; ++i) {
++        if (i == num_slot) {
++            update = type;
++        } else {
++            update = INPUT_MULTI_TOUCH_TYPE_UPDATE;
++        }
++
++        slot = &touch_slots[i];
++
++        if (slot->tracking_id == -1) {
++            continue;
++        }
++
++        if (update == INPUT_MULTI_TOUCH_TYPE_END) {
++            slot->tracking_id = -1;
++            qemu_input_queue_mtt(con, update, i, slot->tracking_id);
++            needs_sync = true;
++        } else {
++            qemu_input_queue_mtt(con, update, i, slot->tracking_id);
++            qemu_input_queue_btn(con, INPUT_BUTTON_TOUCH, true);
++            qemu_input_queue_mtt_abs(con,
++                                    INPUT_AXIS_X, (int) slot->x,
++                                    0, width,
++                                    i, slot->tracking_id);
++            qemu_input_queue_mtt_abs(con,
++                                    INPUT_AXIS_Y, (int) slot->y,
++                                    0, height,
++                                    i, slot->tracking_id);
++            needs_sync = true;
++        }
++    }
++
++    if (needs_sync) {
++        qemu_input_event_sync();
++    }
++}
 -- 
 2.53.0
 
