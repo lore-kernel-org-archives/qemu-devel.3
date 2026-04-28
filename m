@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2374FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 05:58:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B67CFF885A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 05:59:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHbRu-0004cR-2j; Tue, 28 Apr 2026 01:57:34 -0400
+	id 1wHbTI-00058R-8T; Tue, 28 Apr 2026 01:59:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHbRp-0004bN-70
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 01:57:29 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHbTE-000557-66
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 01:58:56 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHbRn-0003bP-6R
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 01:57:28 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-488b0e1b870so187064425e9.2
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 22:57:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHbTC-0004Dh-Le
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 01:58:55 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-43d74086e5bso10386758f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 22:58:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777355845; x=1777960645; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777355933; x=1777960733; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=58NWE18BxBgpTyWIA+sI/0wlxjjj334LHi5XYAo8o6I=;
- b=EMP59MM1OLfFkkRHb4harwvNaihRbJ/PYpP18d7Of0m10Ar+xA1V3GF7WhwzWzYV+j
- D/oWOyvvjhIvSKG8wI6tFVaM/BSpT0A7f7AkMj/WCpp7OU029kS+pzHHWRCBBApW6h7S
- XO6ar2M3UxX5jURQvU4km9jzAZ+jQMzwg3XFMyBWd179RlWz1dTe4ULalcYC4IdOjgDG
- r07sUN9g1BJXMGGKsK1sTHTshhCA8tJDZXKyPbcjvyLnD9Oh2CgW9ax2fUyM+a6Wb7hg
- Nt9McUf2c/3xPm/15wC3CkOnnrrbOhmN1xJpr9i72wpc1vZ0D2QZOfbfkckk3pHbt1fD
- A6Pw==
+ bh=wp6/+swH8UtlBUJwoZipXsUqU7m6hWS6O+3Lv6wC/ak=;
+ b=TjQsZflf8PKigTVjIodI1rmPqqRzzyUG2TjE0dxya/S+BH9nNPrlJcrYdwYjXz3iFn
+ HXkY/uLX/a+qe0XjojBgHJ+G3sNTBlzqGs5dSojSbdaHl8odqPZAWjmC+DqVcEfCGuPd
+ eywwkpVnk84UAIUuzAcCj4fUzMZBuAsXe/XiudlsUqW+i0YhEGPI1gsQB9A4WRaZmYC7
+ Sr0e4gpreL4x8qGonDmqnSPK3Rd5NWQCwI52q1aqqADAPsP51taUdC1yUEWhUMXFeZmL
+ B01dp4K7ZGCAiBVVRwkW3o/5RFeR6+5Ky6Uex0PQlky0Bblb8xZRU+inecvB40fz/Fv5
+ wTcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777355845; x=1777960645;
+ d=1e100.net; s=20251104; t=1777355933; x=1777960733;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=58NWE18BxBgpTyWIA+sI/0wlxjjj334LHi5XYAo8o6I=;
- b=k+OLOGYyhwQPFfHYEB83M/NTp5R1xyE2Id9tADMHIloS87jWSOXs9Zj5d/yXnZxabw
- iHQ2VD8iYdPM43GpIXopRIFuDxV41fmyDmxfDdXUUl4UZa6yn7t9XzqdNz5eDvX2krs5
- OjtFOT7IfyHAYbz0QJG0Ky2pnoCKbFpAR7JmrqnxmHMkHGz+DxXhZi6cDAkv+Kmxtvit
- 6FRVbcF8dd2PM1ki6xi+IUzYDthiMNQOk7QEOOVMQPLESyAJEf7CAzzJty3tgWyVHB+z
- MAktrU0qkkKz/3mSCuFDQfOu3VLpE8m5SxCU6A52wQLZXMXefHYkUCzVTVWhGhAz2FhI
- mRIQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/Gqlrqx2QvhDgv7HpK46d6KNQbz3B4oah3GskDIfFaftA/0FNFGGHgAJQKwC6JzFeG6e6Zn67F1xeS@nongnu.org
-X-Gm-Message-State: AOJu0YyuhQGerw15XlyVCG+X2kXGYbgcB4Cb51t8/Eegp3ZIzS+3bNbI
- vdQwl8kNgYXqUHP/Ffnq97zzdHLdV8MWnuWdlMPSdyM5kYmbRhZ7FkMyqDSPCXoh+K0=
-X-Gm-Gg: AeBDievhFaCd+3UNkg5p/Hyp3+IDh1VrGqphPYsaRhd6ya6YFZCDYEnk5qDvRpNiVcr
- MRT+VwDRbGZVs/fFyVcCtiqY60cWEetl+5J/cgPt2BlJgqMTEJ3kmKd8P8xmVeIDLEdTMPwJWwq
- 02eQrDiTrfFdauXwru2LXc05kxPxbHOb6e4T+GHTvFGGUGSPEBWrbhWnVrhe+oxhs+WQI3FhG14
- CYOJS4j0PKsr/gzVrU2RhaYDuuMP64AZ1lOdpjJW52r2YQGTHjs0V+TVKMPnCil9UW1+SuwWA/y
- EhDemZzTuwnX35aks/7ybBlisop72lE0VcBIql4zsYjUVhvbPElMBzZmng/cQ9Xnp/QqrUsWUUr
- vBRVqRwWwjkP/mYvAdZSMsdjZavdItHJNTQ0U3jYeRpNT32r8Pvw3bcZmB3C47HDuZkdDL/uRvJ
- IEJdqr1di85nV98M/wfOtwW7KUxZdKZgat0X4KEfsVIMDLzcjno/bWfYIv2e6AN3W0melujVOIy
- bfa
-X-Received: by 2002:a05:600c:8b52:b0:488:a882:c7 with SMTP id
- 5b1f17b1804b1-48a77b1a4aemr26466575e9.25.1777355845165; 
- Mon, 27 Apr 2026 22:57:25 -0700 (PDT)
+ bh=wp6/+swH8UtlBUJwoZipXsUqU7m6hWS6O+3Lv6wC/ak=;
+ b=EcRvUkR/3YtDs9FGq2QPwaNs5wUGmjMdFw39v7KUELFv9jEcNabVS+cknOqiKP45Q7
+ ATC2oY2f6K6rGx0lHdn6akgM/RdJ9c2nm8gUv8dhvUMoFnuNKINp4Q3Bwrc4BZkPA4Xn
+ vt9rVrwz+kwVZMSMMD1LS8J6E0Rixa8QFsefuBK42VwASom2Tfjg9mUTX8VfahghffRF
+ mswr4GFi+W9xFVsxQrTXDGDuRsFgQpA9VlRl6k3CGIkEF1o14+I9Lo20TspNVZJZCwql
+ ABxs9QwNWhITg53SRn2GgdtjfS0NRAf6hTs++Q/311hHxmyC9s4x+/HKlfgSH2WvTlpH
+ h7UQ==
+X-Gm-Message-State: AOJu0YwuYC8/2UarNPTHAmSasBqvkSEQCKeYxSQVTVtGvLyiEmqJDYy9
+ RbfBEsWZmldxk0W9yHDqYmnVRudWrxlerT6U/DtFqGBsxtE8Jorxo57WEq0wvs2PDLc=
+X-Gm-Gg: AeBDiesJ7UEQPBQhuSBoIeTCSucjF/1V5w+xWYZ6MpQhluwfNX62hyPvSNIJFfnW4p1
+ Nx85VicA/R0VAFDi9jUzxbWrb+/vCRa4dbnkgQVoi1Ks9llTX4zboYy6gCATzl0VbZo2addmQFz
+ EOw4HsEJwYPaNq5DypTcT+eSfbqeN/YKT+uxo/RxeVrAAW1tvH263Vah5WZwPubrUEPFabZeWib
+ 3rurotLhlWIE+jTkC7WrRwaCZSl7TlyLpzTKoaN0nfpv3gZTfKb7YKBhJ0s/JUo+xUmfZJQ0qMg
+ KQLxPijiL7B8iQA/dWqaNP/4yar2v/RqfC+qr5qem6OWewpqA2djAZcxepiScdBZcwoSj4g/Lfk
+ Muw6S21EUfZnmianIkvItil/fgnHiNIIH39mQKUVvLo/f64KuLM8kapxnJ0sddF3haF7SuC3q3c
+ 9bECJ9ixZBhwXVunZR0vTjlx6umGihToniv/+cq/4zeRpYoR87xC2IvBXxGMK7YOkcGyn2Gtbag
+ OuB
+X-Received: by 2002:a05:6000:18a6:b0:43b:5672:efe with SMTP id
+ ffacd0b85a97d-4464761b872mr2913035f8f.9.1777355932794; 
+ Mon, 27 Apr 2026 22:58:52 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4463d02f270sm3681230f8f.9.2026.04.27.22.57.24
+ ffacd0b85a97d-4463d02f6a1sm3650099f8f.13.2026.04.27.22.58.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Apr 2026 22:57:24 -0700 (PDT)
-Message-ID: <04a43cf5-b140-40e5-b397-250e2f6b7a2f@linaro.org>
-Date: Tue, 28 Apr 2026 07:57:23 +0200
+ Mon, 27 Apr 2026 22:58:52 -0700 (PDT)
+Message-ID: <0c46bcf1-5d33-4c6c-a849-7b47a104844d@linaro.org>
+Date: Tue, 28 Apr 2026 07:58:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 25/84] fpu: Drop parts_compare
+Subject: Re: [PATCH 0/2] hw/display/cirrus_vga: Fix packed-24 color-expansion
+ ops
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-s390x@nongnu.org
-References: <20260426134002.865628-1-richard.henderson@linaro.org>
- <20260426134002.865628-26-richard.henderson@linaro.org>
+To: Junjie Cao <junjie.cao@intel.com>, peter.maydell@linaro.org
+Cc: qemu-devel@nongnu.org, kraxel@redhat.com, balaton@eik.bme.hu,
+ chad@jablonski.xyz
+References: <20260410183249.4046456-1-peter.maydell@linaro.org>
+ <20260428101211.3469935-1-junjie.cao@intel.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260426134002.865628-26-richard.henderson@linaro.org>
+In-Reply-To: <20260428101211.3469935-1-junjie.cao@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,13 +104,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/4/26 15:39, Richard Henderson wrote:
-> Use parts{64,128}_compare at each call site.
+On 28/4/26 12:12, Junjie Cao wrote:
+> On Fri, 10 Apr 2026 19:32:47 +0100, Peter Maydell wrote:
+>> Big disclaimer on this: I have no guest images that try to use the
+>> Cirrus bitblt handling at all, so I have only developed these against
+>> the reference manual and confirmed that it fixes the UB repro case
+>> from the bug. If anybody does have test images for these that would be
+>> good to test...
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   fpu/softfloat.c | 22 +++++++---------------
->   1 file changed, 7 insertions(+), 15 deletions(-)
+> Confirmed: the qtest reproducer from the linked issue fires on
+> unpatched master and is clean with both patches applied.  I also
+> fuzz-tested the patched cirrus-vga (generic-fuzz, ASan + UBSan,
+> 20 workers, ~47M executions / 8 hours) with no new issues.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thank you Junjie :)
+
+> 
+> I have reviewed both patches and they look correct to me.
+> 
+> Junjie
+
 
