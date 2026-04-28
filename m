@@ -4,114 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DB96FF885D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 08:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC72FF885D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 08:43:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHdz7-0003Va-1D; Tue, 28 Apr 2026 04:40:01 -0400
+	id 1wHe1m-0006FG-2s; Tue, 28 Apr 2026 04:42:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wHdz2-0003DG-Ho
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:39:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <ewanhai-oc@zhaoxin.com>)
+ id 1wHe1W-0006Dg-JJ
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:42:31 -0400
+Received: from mx2.zhaoxin.com ([61.152.208.219])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wHdyz-0006cZ-M2
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:39:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777365591;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=U6sNButkxY1M0yTI4HRvW0XQjBJICxH363Wl8Rpn5KI=;
- b=UwbWXPRnF6VEXnE2X2iGAzdT/yGQ2qnxOho/u+aKor/pMMRTM+JidvofXAY0DlOD7iQsq8
- tscSiFlh2KFvfo2yGpav3mt9ptlZP0JhonxQYxveOp9q+VE2PGXtntJ4K3ZeVXmP+gjdSa
- 3urtJ4x5BbNQzcr5BlRNxxk+MVoN/Xg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-iN5-YVwLMbaGfiiEBpSyQg-1; Tue,
- 28 Apr 2026 04:39:47 -0400
-X-MC-Unique: iN5-YVwLMbaGfiiEBpSyQg-1
-X-Mimecast-MFC-AGG-ID: iN5-YVwLMbaGfiiEBpSyQg_1777365586
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 85869195608B; Tue, 28 Apr 2026 08:39:46 +0000 (UTC)
-Received: from [10.32.181.22] (unknown [10.32.181.22])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D45B1180047F; Tue, 28 Apr 2026 08:39:44 +0000 (UTC)
-Message-ID: <de48c866-6018-4a5f-9129-2c1d184f4495@redhat.com>
-Date: Tue, 28 Apr 2026 10:39:43 +0200
+ (Exim 4.90_1) (envelope-from <ewanhai-oc@zhaoxin.com>)
+ id 1wHe1S-0007ir-6q
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:42:28 -0400
+X-ASG-Debug-ID: 1777365730-1eb14e680f2b810001-jgbH7p
+Received: from zhaoxin.com (zxmail.zhaoxin.com [10.28.208.166]) by
+ mx2.zhaoxin.com with ESMTP id lFKtIK0Ory4J5Lyu;
+ Tue, 28 Apr 2026 16:42:10 +0800 (CST)
+X-Barracuda-Envelope-From: ewanhai-oc@zhaoxin.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.208.166
+X-ASG-Whitelist: Client
+X-Append-Disclaimer: 1
+Received: from [127.0.0.1] ([127.0.0.1] [10.28.24.2])
+ by zhaoxin.com (8.30) with ESMTP7effe6796d32c21aaca640dcc2b7505b
+ Tue, 28 Apr 2026 16:42:08 +0800
+X-Eyou-Smtpauth: EwanHai-oc@zhaoxin.com
+X-Eyou-EnvelopeSender: ewanhai-oc@zhaoxin.com
+Message-ID: <7a515afc-7cfd-4756-a8b0-bf7a8c0e7490@zhaoxin.com>
+Date: Tue, 28 Apr 2026 16:42:07 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 12/18] migration: VMStateInfo: introduce new handlers
- with errp
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- qemu-devel <qemu-devel@nongnu.org>, Markus Armbruster <armbru@redhat.com>
-References: <20260304212303.667141-1-vsementsov@yandex-team.ru>
- <20260304212303.667141-13-vsementsov@yandex-team.ru>
- <d80e91c1-2cbb-4081-a923-7b0c1da3b7cc@redhat.com>
- <f7525a89-7878-43e8-b791-69829589666f@yandex-team.ru>
- <CABgObfbz98A0P4_FAqeKVk_fS+o_3=79agYz=qwnMdmg-h2L-Q@mail.gmail.com>
- <b47b83aa-c574-4a38-bad2-4f42d6a7c597@yandex-team.ru>
-From: Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v5 2/9] hw/core: Make CPU topology enumeration
+ arch-agnostic
+To: Zhao Liu <zhao1.liu@intel.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, qemu-riscv@nongnu.org, qemu-arm@nongnu.org,
+ Zhenyu Wang <zhenyu.z.wang@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>
+X-ASG-Orig-Subj: Re: [PATCH v5 2/9] hw/core: Make CPU topology enumeration
+ arch-agnostic
+Cc: Yongwei Ma <yongwei.ma@intel.com>
+References: <20241101083331.340178-1-zhao1.liu@intel.com>
+ <20241101083331.340178-3-zhao1.liu@intel.com>
+From: Ewan Hai <ewanhai-oc@zhaoxin.com>
 Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <b47b83aa-c574-4a38-bad2-4f42d6a7c597@yandex-team.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20241101083331.340178-3-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+X-Eyou-Sender: <ewanhai-oc@zhaoxin.com>
+X-Barracuda-Connect: zxmail.zhaoxin.com[10.28.208.166]
+X-Barracuda-Start-Time: 1777365730
+X-Barracuda-URL: https://10.28.252.36:4443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at zhaoxin.com
+X-Barracuda-Scan-Msg-Size: 4941
+X-Barracuda-BRTS-Status: 1
+Received-SPF: pass client-ip=61.152.208.219;
+ envelope-from=ewanhai-oc@zhaoxin.com; helo=mx2.zhaoxin.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,73 +94,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/28/26 10:17, Vladimir Sementsov-Ogievskiy wrote:
-> [add Markus]
-> 
-> On 27.04.26 22:11, Paolo Bonzini wrote:
->>
->>
->> Il lun 27 apr 2026, 15:19 Vladimir Sementsov-Ogievskiy 
->> <vsementsov@yandex-team.ru <mailto:vsementsov@yandex-team.ru>> ha 
->> scritto:
->>
->>     On 26.04.26 11:33, Paolo Bonzini wrote:
->>      > On 3/4/26 21:22, Vladimir Sementsov-Ogievskiy wrote:
->>      >> +    bool coroutine_mixed_fn (*load)(QEMUFile *f, void *pv, 
->> size_t size,
->>      >> +                                    const VMStateField *field,
->>      >> +                                    Error **errp);
->>      >> +    bool coroutine_mixed_fn (*save)(QEMUFile *f, void *pv, 
->> size_t size,
->>      >> +                                    const VMStateField *field,
->>      >> +                                    JSONWriter *vmdesc,
->>      >> +                                    Error **errp);
->>      > Use void functions for callbacks, with a wrapper adding the 
->> bool type. While bool/errp is preferred in general, for callbacks it 
->> provides N opportunities to get it wrong instead of just one.
->>      >
->>
->>     Hmm, for now, the series is already merged.
->>
->>     Next, I'm unsure, how callbacks are different from other functions 
->> around errors?
->>
->>
->> As I wrote above, confusing the *error == NULL and bool return value 
->> is avoided without much extra effort for callbacks (or other kinds of 
->> virtual functions) l, because there is a single caller. So the balance 
->> between "avoiding the possibility of getting the return value wrong" 
->> and "convenience of having a return value" tilts more towards the former.
-> 
-> Understand. Hm.
-> 
-> An alternative for this single-caller case, is just add an assertion 
-> into this caller:
-> 
-> bool wrapper(..., errp) {
->     ERRP_GUARD();
->     bool ok = x->foo(..., errp);
->     assert(ok == !(*errp));
->     return ok;
-> }
-
-I don't think this makes sense, the assertion moves a compile-time 
-guarantee to a run-time guarantee which is strictly worse.
-
-There are many more examples of void+errp callbacks than bool+errp, the 
-most important one being .realize for devices.  A quick grep, which is 
-certainly not fully accurate, shows 63 vs. 27:
-
-$ git grep -w 'void.*(\*.*errp' | wc -l
-63
-$ git grep -w 'bool.*(\*.*errp' | wc -l
-27
-
-In many cases there are just two or three implementation so I wouldn't 
-go to great lengths to change it even if I disagree.  But for vmstate 
-(e.g. pre_load_errp and friends) this is not going to be the case in the 
-long run, and it's more similar to the device case.
-
-Paolo
+WmhhbyBMaXUgd3JvdGUgb24gMTEvMS8yNCA0OjMzIFBNOj4gQ2FjaGUgdG9wb2xvZ3kg
+bmVlZHMgdG8gYmUgZGVmaW5lZCBiYXNlZCBvbiBDUFUgdG9wb2xvZ3kgbGV2ZWxzLiBU
+aHVzLD4gZGVmaW5lIENQVSB0b3BvbG9neSBlbnVtZXJhdGlvbiBpbiBxYXBpL21hY2hp
+bmUuanNvbiB0byBtYWtlIGl0IGdlbmVyaWM+IGZvciBhbGwgYXJjaGl0ZWN0dXJlcy4+
+ID4gVG8gbWF0Y2ggdGhlIGdlbmVyYWwgdG9wb2xvZ3kgbmFtaW5nIHN0eWxlLCByZW5h
+bWUgQ1BVX1RPUE9fTEVWRUxfKiB0bz4gQ1BVX1RPUE9MT0dZX0xFVkVMXyosIGFuZCBy
+ZW5hbWUgU01UIGFuZCBwYWNrYWdlIGxldmVscyB0byB0aHJlYWQgYW5kPiBzb2NrZXQu
+PiA+IEFsc28sIGVudW1lcmF0ZSBhZGRpdGlvbmFsIHRvcG9sb2d5IGxldmVscyBmb3Ig
+bm9uLWkzODYgYXJjaGVzLCBhbmQgYWRkPiBhIENQVV9UT1BPTE9HWV9MRVZFTF9ERUZB
+VUxUIHRvIGhlbHAgZnV0dXJlIHNtcC1jYWNoZSBvYmplY3QgdG8gd29yaz4gd2l0aCBj
+b21wYXRpYmlsaXR5IHJlcXVpcmVtZW50IG9mIGFyY2gtc3BlY2lmaWMgY2FjaGUgdG9w
+b2xvZ3kgbW9kZWxzLj4gPiBTaWduZWQtb2ZmLWJ5OiBaaGFvIExpdSA8emhhbzEubGl1
+QGludGVsLmNvbT4+IFRlc3RlZC1ieTogWW9uZ3dlaSBNYSA8eW9uZ3dlaS5tYUBpbnRl
+bC5jb20+PiBSZXZpZXdlZC1ieTogSm9uYXRoYW4gQ2FtZXJvbiA8Sm9uYXRoYW4uQ2Ft
+ZXJvbkBodWF3ZWkuY29tPj4gQWNrZWQtYnk6IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOp
+IDxwaGlsbWRAbGluYXJvLm9yZz4+IC0tLS4uLj4gQEAgLTM3MywxNyArMzczLDE3IEBA
+IHN0YXRpYyB2b2lkIGVuY29kZV90b3BvX2NwdWlkMWYoQ1BVWDg2U3RhdGUgKmVudiwg
+dWludDMyX3QgY291bnQsPiAgICAgIHVuc2lnbmVkIGxvbmcgbGV2ZWwsIGJhc2VfbGV2
+ZWwsIG5leHRfbGV2ZWw7PiAgICAgIHVpbnQzMl90IG51bV90aHJlYWRzX25leHRfbGV2
+ZWwsIG9mZnNldF9uZXh0X2xldmVsOz4gID4gLSAgICBhc3NlcnQoY291bnQgPD0gQ1BV
+X1RPUE9fTEVWRUxfUEFDS0FHRSk7PiArICAgIGFzc2VydChjb3VudCA8PSBDUFVfVE9Q
+T0xPR1lfTEVWRUxfU09DS0VUKTs+ICBIaSBaaGFvLFdoaWxlIGJvb3RpbmcgTGludXgg
+dW5kZXIgVENHIFFFTVUgKC1rZXJuZWwgKyByb290ZnMpIHdpdGggYSBDUFUgbW9kZWwg
+dGhhdGVuYWJsZXMgY3B1aWRfMHgxZiAoZS5nLiBTaGlqaWRhZGFvLXYyKSwgSSBoaXQg
+dGhpcyBhc3NlcnQ6IHdoZW4gdGhlIGd1ZXN0cXVlcmllcyBDUFVJRC4xRiB3aXRoIGEg
+dG9wb2xvZ3kgbGV2ZWwgZ3JlYXRlciB0aGFuIENQVV9UT1BPTE9HWV9MRVZFTF9TT0NL
+RVQsUUVNVSBhYm9ydHMuIFVuZGVyIEtWTSB0aGUgcGF0aCBpc24ndCByZWFjaGVkIChD
+UFVJRCBpcyBzZXJ2ZWQgZnJvbUtWTV9TRVRfQ1BVSUQyKSwgc28gdGhpcyBpcyBUQ0ct
+b25seSwgd2hpY2ggaXMgcHJvYmFibHkgd2h5IGl0IGhhZG4ndCBiZWVuY2F1Z2h0IGVh
+cmxpZXIuSSdtIG5vdCBzdXJlIHRoZSBhc3NlcnQgaXMgbmVjZXNzYXJ5OiB0aGUgY29k
+ZSB0aGF0IGZvbGxvd3MgYWxyZWFkeSBoYW5kbGVzdGhlICJpbnB1dCBsZXZlbCBvdXQg
+b2YgcmFuZ2UiIGNhc2UgY29ycmVjdGx5LiBmaW5kX25leHRfYml0KCkgcmV0dXJucyBT
+T0NLRVRvbmNlIHRoZSBiaXRtYXAgaXMgZXhoYXVzdGVkLCB0aGUgbG9vcCBicmVha3Mg
+d2l0aCBsZXZlbCA9IElOVkFMSUQsIGFuZCB0aGVlbmNvZGluZyBwYXRoIGJlbG93IHBy
+b2R1Y2VzIHRoZSBTRE0tZGVmaW5lZCBpbnZhbGlkLWRvbWFpbiByZXNwb25zZSAoRUFY
+PTAsRUJYPTAsIEVDWCA9IGNvdW50IHwgSU5WQUxJRF90eXBlLCBFRFggPSBhcGljX2lk
+KS5QZXIgSW50ZWwgU0RNLCBDUFVJRCBMZWFmIDFGSCBkb2VzIG5vdCBjb25zdHJhaW4g
+dGhlIGlucHV0IEVDWCB2YWx1ZSwgc28gZ3Vlc3Rzb2Z0d2FyZSBpcyBmcmVlIHRvIHF1
+ZXJ5IGFueSBzdWItbGVhZiBpbmRleC4gRGlkIHRoZSBhc3NlcnQgaW50ZW50aW9uYWxs
+eXByb3RlY3QgYW4gaW52YXJpYW50IEknbSBtaXNzaW5nLCBvciBpcyBpdCBhIGxlZnRv
+dmVyIGRlZmVuc2l2ZSBjaGVjaz9Gb3IgcmVmZXJlbmNlLCB0aGUgS1ZNIGtlcm5lbCBz
+aWRlIChhcmNoL3g4Ni9rdm0vY3B1aWQuYyBrdm1fY3B1aWQoKSkgaGFzZXhwbGljaXRs
+eSBoYW5kbGVkIG91dC1vZi1yYW5nZSAweDFGIHN1YmxlYXZlcyB0aGlzIHdheSBzaW5j
+ZSAyMDE5OiAgICB9IGVsc2UgeyAgICAgICAgKmVheCA9ICplYnggPSAqZWN4ID0gKmVk
+eCA9IDA7ICAgICAgICAvKiAgICAgICAgICogV2hlbiBsZWFmIDBCSCBvciAxRkggaXMg
+ZGVmaW5lZCwgQ0wgaXMgcGFzcy10aHJvdWdoICAgICAgICAgKiBhbmQgRURYIGlzIGFs
+d2F5cyB0aGUgeDJBUElDIElELCBldmVuIGZvciB1bmRlZmluZWQgICAgICAgICAqIHN1
+YmxlYXZlcy4gLi4uICAgICAgICAgKi8gICAgICAgIGlmIChmdW5jdGlvbiA9PSAweGIg
+fHwgZnVuY3Rpb24gPT0gMHgxZikgeyAgICAgICAgICAgIGVudHJ5ID0ga3ZtX2ZpbmRf
+Y3B1aWRfZW50cnlfaW5kZXgodmNwdSwgZnVuY3Rpb24sIDEpOyAgICAgICAgICAgIGlm
+IChlbnRyeSkgeyAgICAgICAgICAgICAgICAqZWN4ID0gaW5kZXggJiAweGZmOyAgICAg
+ICAgICAgICAgICAqZWR4ID0gZW50cnktPmVkeDsgICAgICAgICAgICB9ICAgICAgICB9
+ICAgIH1pbnRyb2R1Y2VkIGluIGNvbW1pdCA0MzU2MTEyM2FiMzcgKCJrdm06IHg4Njog
+SW1wcm92ZSBlbXVsYXRpb24gb2YgQ1BVSUQgbGVhdmVzMEJIIGFuZCAxRkgiKS4gU28g
+S1ZNLWFjY2VsZXJhdGVkIGd1ZXN0cyBhbHJlYWR5IHNlZSB0aGUgU0RNLWNvbXBsaWFu
+dCByZXNwb25zZTtvbmx5IFRDRyBhYm9ydHMuVGhhbmtzLEV3YW4+ICAgICAgLyo+ICAg
+ICAgICogRmluZCB0aGUgTm8uKGNvdW50ICsgMSkgdG9wb2xvZ3kgbGV2ZWwgaW4gYXZh
+aWxfY3B1X3RvcG8gYml0bWFwLj4gLSAgICAgKiBUaGUgc2VhcmNoIHN0YXJ0cyBmcm9t
+IGJpdCAwIChDUFVfVE9QT19MRVZFTF9TTVQpLj4gKyAgICAgKiBUaGUgc2VhcmNoIHN0
+YXJ0cyBmcm9tIGJpdCAwIChDUFVfVE9QT0xPR1lfTEVWRUxfVEhSRUFEKS4+ICAgICAg
+ICovPiAtICAgIGxldmVsID0gQ1BVX1RPUE9fTEVWRUxfU01UOz4gKyAgICBsZXZlbCA9
+IENQVV9UT1BPTE9HWV9MRVZFTF9USFJFQUQ7PiAgICAgIGJhc2VfbGV2ZWwgPSBsZXZl
+bDs+ICAgICAgZm9yIChpbnQgaSA9IDA7IGkgPD0gY291bnQ7IGkrKykgez4gICAgICAg
+ICAgbGV2ZWwgPSBmaW5kX25leHRfYml0KGVudi0+YXZhaWxfY3B1X3RvcG8sPiAtICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgQ1BVX1RPUE9fTEVWRUxfUEFDS0FHRSw+
+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBDUFVfVE9QT0xPR1lfTEVWRUxf
+U09DS0VULD4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGJhc2VfbGV2ZWwp
+Oz4gID4gICAgICAgICAgLyo+IEBAIC0zOTEsMjAgKzM5MSwyMCBAQCBzdGF0aWMgdm9p
+ZCBlbmNvZGVfdG9wb19jcHVpZDFmKENQVVg4NlN0YXRlICplbnYsIHVpbnQzMl90IGNv
+dW50LD4gICAgICAgICAgICogYW5kIGl0IGp1c3QgZW5jb2RlcyB0aGUgaW52YWxpZCBs
+ZXZlbCAoYWxsIGZpZWxkcyBhcmUgMCk+ICAgICAgICAgICAqIGludG8gdGhlIGxhc3Qg
+c3VibGVhZiBvZiAweDFmLj4gICAgICAgICAgICovPiAtICAgICAgICBpZiAobGV2ZWwg
+PT0gQ1BVX1RPUE9fTEVWRUxfUEFDS0FHRSkgez4gLSAgICAgICAgICAgIGxldmVsID0g
+Q1BVX1RPUE9fTEVWRUxfSU5WQUxJRDs+ICsgICAgICAgIGlmIChsZXZlbCA9PSBDUFVf
+VE9QT0xPR1lfTEVWRUxfU09DS0VUKSB7PiArICAgICAgICAgICAgbGV2ZWwgPSBDUFVf
+VE9QT0xPR1lfTEVWRUxfSU5WQUxJRDs+ICAgICAgICAgICAgICBicmVhazs+ICAgICAg
+ICAgIH0+ICAgICAgICAgIC8qIFNlYXJjaCB0aGUgbmV4dCBsZXZlbC4gKi8+ICAgICAg
+ICAgIGJhc2VfbGV2ZWwgPSBsZXZlbCArIDE7PiAgICAgIH0+ICA+IC0gICAgaWYgKGxl
+dmVsID09IENQVV9UT1BPX0xFVkVMX0lOVkFMSUQpIHs+ICsgICAgaWYgKGxldmVsID09
+IENQVV9UT1BPTE9HWV9MRVZFTF9JTlZBTElEKSB7PiAgICAgICAgICBudW1fdGhyZWFk
+c19uZXh0X2xldmVsID0gMDs+ICAgICAgICAgIG9mZnNldF9uZXh0X2xldmVsID0gMDs+
+ICAgICAgfSBlbHNlIHs+ICAgICAgICAgIG5leHRfbGV2ZWwgPSBmaW5kX25leHRfYml0
+KGVudi0+YXZhaWxfY3B1X3RvcG8sPiAtICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICBDUFVfVE9QT19MRVZFTF9QQUNLQUdFLD4gKyAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgQ1BVX1RPUE9MT0dZX0xFVkVMX1NPQ0tFVCw+ICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGxldmVsICsgMSk7PiAgICAgICAg
+ICBudW1fdGhyZWFkc19uZXh0X2xldmVsID0gbnVtX3RocmVhZHNfYnlfdG9wb19sZXZl
+bCh0b3BvX2luZm8sPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICBuZXh0X2xldmVsKTsuLi4KCgoKCuS/neWvhuWj
+sOaYjgrmnKzpgq7ku7blkKvmnInkv53lr4bmiJbkuJPmnInkv6Hmga/vvIzku4Xkvpvm
+jIflrprmlLbku7bkurrkvb/nlKjjgILkuKXnpoHlr7nmnKzpgq7ku7bmiJblhbblhoXl
+rrnlgZrku7vkvZXmnKrnu4/mjojmnYPnmoTmn6XpmIXjgIHkvb/nlKjjgIHlpI3liLbm
+iJbovazlj5HjgIIKClRoaXMgZW1haWwgY29udGFpbnMgY29uZmlkZW50aWFsIG9yIGxl
+Z2FsbHkgcHJpdmlsZWdlZCBpbmZvcm1hdGlvbiBhbmQgaXMgZm9yIHRoZSBzb2xlIHVz
+ZSBvZiBpdHMgaW50ZW5kZWQgcmVjaXBpZW50LiBBbnkgdW5hdXRob3JpemVkIHJldmll
+dywgdXNlLCBjb3B5aW5nIG9yIGZvcndhcmRpbmcgb2YgdGhpcyBlbWFpbCBvciB0aGUg
+Y29udGVudCBvZiB0aGlzIGVtYWlsIGlzIHN0cmljdGx5IHByb2hpYml0ZWQu
 
 
