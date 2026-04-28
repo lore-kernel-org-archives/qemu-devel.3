@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48367FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 15:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BA1CFF8868
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 15:09:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHk3H-000343-TT; Tue, 28 Apr 2026 11:08:44 -0400
+	id 1wHk3Y-00045p-KU; Tue, 28 Apr 2026 11:09:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHk3E-0002vQ-Fw
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:40 -0400
+ id 1wHk3U-0003sT-HC
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHk3C-0000mb-Tc
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:40 -0400
+ id 1wHk3T-0000pv-0r
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 11:08:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777388918;
+ s=mimecast20190719; t=1777388934;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2qYOlV1SmWsUXxHnuxYiPGAE5z0mVJxCFAeqLYhhApk=;
- b=F45mtmXOyLNtt2naoOwjOGIzYv5gook96lBzTNxcLX6GNgvvLazrQyb3TQzYMl+GQnUdIm
- 4PoImWQU3FZsIrwsXZ+CdtP1ulZ9N2+QlRM7Ntkn47ENJsPQX+LiaHFUt5Lefiqmvt+wQ9
- bF3AXJMJgrhdjyYQbq+u/udlQd5wYfE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=C1siF59IQLLkwWV4Hr2hpuNpiCtK/UTs8uPqiiiQpCo=;
+ b=M6zUa8iVzpGOsFJDRXgTMIBm+uJW8c9khUx18ad+n+JhHF5EZxdAgGrHixxLz6tddxfnk5
+ /yrutyMQQQ7GBQT8Og3cWauJIAov1qMcSb/XyDOou4b1l24q/gPy8ZKKZCiiKYrImwpk6B
+ RhSO8yIlCDsD2KY/QY39nP5rxqcKewc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-509-_0qAWUZEPm65M7b0VACiqw-1; Tue,
- 28 Apr 2026 11:08:36 -0400
-X-MC-Unique: _0qAWUZEPm65M7b0VACiqw-1
-X-Mimecast-MFC-AGG-ID: _0qAWUZEPm65M7b0VACiqw_1777388915
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-vUPXfbJ0MqurTAMYq5-mdA-1; Tue,
+ 28 Apr 2026 11:08:49 -0400
+X-MC-Unique: vUPXfbJ0MqurTAMYq5-mdA-1
+X-Mimecast-MFC-AGG-ID: vUPXfbJ0MqurTAMYq5-mdA_1777388928
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6B3D8195608F; Tue, 28 Apr 2026 15:08:35 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1E3501954B1B; Tue, 28 Apr 2026 15:08:48 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EF585300756E; Tue, 28 Apr 2026 15:08:33 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 952B619560B7; Tue, 28 Apr 2026 15:08:46 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com,
+Cc: stefanha@gmail.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v2 10/15] ui/dbus: fix warning for clients without "Interfaces"
- property
-Date: Tue, 28 Apr 2026 19:07:20 +0400
-Message-ID: <20260428150726.1659814-11-marcandre.lureau@redhat.com>
+Subject: [PULL v2 12/15] audio: Clamp unsigned sample conversion
+Date: Tue, 28 Apr 2026 19:07:22 +0400
+Message-ID: <20260428150726.1659814-13-marcandre.lureau@redhat.com>
 In-Reply-To: <20260428150726.1659814-1-marcandre.lureau@redhat.com>
 References: <20260428150726.1659814-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -86,35 +86,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-The "Interfaces" property is not strictly required. We can just assume
-the peer doesn't implement the given interface. Fix warning:
-GLib: g_strv_contains: assertion 'strv != NULL' failed
+clip_*_uint32_t() returns 0 when v == 1.f because it computes the result
+as (IN_T)((v * ((mixeng_real)IN_MAX / 2.f)) + HALF):
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+- (v * ((mixeng_real)IN_MAX / 2.f)) + HALF == 0x100000000.f, which does
+  not fit in uint32_t.
+- (v * ((mixeng_real)IN_MAX / 2.f)) == 0x80000000.f
+- ((mixeng_real)IN_MAX / 2.f) == 0x80000000.f
+- (mixeng_real)IN_MAX == 0x100000000.f because 0xffffffff cannot be
+  represented exactly in float.
+- HALF == 0x7fffffff, which is implicitly converted to 0x80000000.f.
+
+Clamp the result to avoid the overflow.
+
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-Id: <20260423-audio-v1-2-e1d6b65c76f9@rsg.ci.i.u-tokyo.ac.jp>
 ---
- ui/dbus-listener.c | 4 +++-
+ audio/mixeng_template.h | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 37945236e11..e5ce92d1257 100644
---- a/ui/dbus-listener.c
-+++ b/ui/dbus-listener.c
-@@ -1026,9 +1026,11 @@ static bool
- dbus_display_listener_implements(DBusDisplayListener *ddl, const char *iface)
- {
-     QemuDBusDisplay1Listener *l = QEMU_DBUS_DISPLAY1_LISTENER(ddl->proxy);
-+    const char * const *interfaces;
-     bool implements;
+diff --git a/audio/mixeng_template.h b/audio/mixeng_template.h
+index 881653c44bf..5b0014bdd9a 100644
+--- a/audio/mixeng_template.h
++++ b/audio/mixeng_template.h
+@@ -65,7 +65,9 @@ static inline IN_T glue (clip_, ET) (mixeng_real v)
+ #ifdef SIGNED
+     return ENDIAN_CONVERT((IN_T)(v * (((mixeng_real)IN_MAX - IN_MIN) / 2.f)));
+ #else
+-    return ENDIAN_CONVERT((IN_T)((v * ((mixeng_real)IN_MAX / 2.f)) + HALF));
++    return ENDIAN_CONVERT(MIN((int64_t)((v * ((mixeng_real)IN_MAX / 2.f)) +
++                                        HALF),
++                              IN_MAX));
+ #endif
+ }
  
--    implements = g_strv_contains(qemu_dbus_display1_listener_get_interfaces(l), iface);
-+    interfaces = qemu_dbus_display1_listener_get_interfaces(l);
-+    implements = interfaces && g_strv_contains(interfaces, iface);
-     if (!implements) {
-         g_debug("Display listener does not implement: `%s`", iface);
-     }
 -- 
 2.54.0
 
