@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99607FF885D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 08:15:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C5BEFF885A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 08:15:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHdam-0007Dz-BQ; Tue, 28 Apr 2026 04:14:52 -0400
+	id 1wHdap-0007Nb-Cy; Tue, 28 Apr 2026 04:14:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHdaS-0006mO-Mr
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:14:35 -0400
+ id 1wHdaU-0006oE-PI
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:14:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wHdaP-000670-FT
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:14:30 -0400
+ id 1wHdaT-0006AK-1b
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:14:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777364065;
+ s=mimecast20190719; t=1777364072;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7XgOkAjsKIJNpzlp0Ng9zVsL4Sb3WXmh337O8gNtq/A=;
- b=hiDfKQwaGA/b8YGznp5bo5pcu61N6fAGahoT9JqtEYd3XTBjE8TpbolBJs3YmFEWFCFYNp
- kdqn3nIMRqPQIPDZu5xcF9KbXYTmhKqeoALGRndi9YbotByKVmaae+AQWvnAymZk9zU4D0
- KmXSAxhE205aceByujYDfkdqH9ACSk8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=msfcYbXdPoxDb4VF0TVAMI3ngZnG5gWrGEoAA3b9h/I=;
+ b=YfqUTIe5Z6c9Kk4qVSWyxgfqXHhTfx15usWAKYtHTzXY6GJi+3QSCub9CZ/rNyMnd3hdWJ
+ bqBu0UgMaKha6Pe7IlNTmf5XNHOK5WWVFWNM6B76iwP+Cdu505SgJ5he0MejhT/hDe5O0J
+ lol5WSzzxBW/Q+l6fLlLN3FqqNjRKQg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-363-I6z8aNFDNBmpQ3YWx-2M4A-1; Tue,
- 28 Apr 2026 04:14:23 -0400
-X-MC-Unique: I6z8aNFDNBmpQ3YWx-2M4A-1
-X-Mimecast-MFC-AGG-ID: I6z8aNFDNBmpQ3YWx-2M4A_1777364062
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-197-wKHKDJdlOJCTK1bjJnrX0Q-1; Tue,
+ 28 Apr 2026 04:14:28 -0400
+X-MC-Unique: wKHKDJdlOJCTK1bjJnrX0Q-1
+X-Mimecast-MFC-AGG-ID: wKHKDJdlOJCTK1bjJnrX0Q_1777364067
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1FB811956080; Tue, 28 Apr 2026 08:14:22 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C31FE195609E; Tue, 28 Apr 2026 08:14:27 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.6])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6070519560AB; Tue, 28 Apr 2026 08:14:19 +0000 (UTC)
+ id A5C4119560B7; Tue, 28 Apr 2026 08:14:26 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: peter.maydell@linaro.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 12/15] audio: Clamp unsigned sample conversion
-Date: Tue, 28 Apr 2026 12:12:59 +0400
-Message-ID: <20260428081303.990973-13-marcandre.lureau@redhat.com>
+Subject: [PULL 13/15] audio: Use unsigned PCM bias
+Date: Tue, 28 Apr 2026 12:13:00 +0400
+Message-ID: <20260428081303.990973-14-marcandre.lureau@redhat.com>
 In-Reply-To: <20260428081303.990973-1-marcandre.lureau@redhat.com>
 References: <20260428081303.990973-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -88,41 +88,115 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-clip_*_uint32_t() returns 0 when v == 1.f because it computes the result
-as (IN_T)((v * ((mixeng_real)IN_MAX / 2.f)) + HALF):
+Clang warns for the uint32_t clip_ instantiations because HALF cannot be
+represented with mixeng_real:
 
-- (v * ((mixeng_real)IN_MAX / 2.f)) + HALF == 0x100000000.f, which does
-  not fit in uint32_t.
-- (v * ((mixeng_real)IN_MAX / 2.f)) == 0x80000000.f
-- ((mixeng_real)IN_MAX / 2.f) == 0x80000000.f
-- (mixeng_real)IN_MAX == 0x100000000.f because 0xffffffff cannot be
-  represented exactly in float.
-- HALF == 0x7fffffff, which is implicitly converted to 0x80000000.f.
+[1115/2559] Compiling C object libqemuaudio.a.p/audio_mixeng.c.o
+In file included from ../../qemu/audio/mixeng.c:147:
+../../qemu/audio/mixeng_template.h:68:70: warning: implicit conversion from 'unsigned int' to 'float' changes value from 2147483647 to 2147483648 [-Wimplicit-const-int-float-conversion]
+   68 |     return ENDIAN_CONVERT((IN_T)((v * ((mixeng_real)IN_MAX / 2.f)) + HALF));
+      |            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../../qemu/audio/mixeng_template.h:31:22: note: expanded from macro 'HALF'
+   31 | #define HALF (IN_MAX >> 1)
+      |                      ^
+../../qemu/audio/mixeng.c:146:28: note: expanded from macro 'ENDIAN_CONVERT'
+  146 | #define ENDIAN_CONVERT(v) (v)
+      |                            ^
+In file included from ../../qemu/audio/mixeng.c:152:
+../../qemu/audio/mixeng_template.h:68:70: warning: implicit conversion from 'unsigned int' to 'float' changes value from 2147483647 to 2147483648 [-Wimplicit-const-int-float-conversion]
+   68 |     return ENDIAN_CONVERT((IN_T)((v * ((mixeng_real)IN_MAX / 2.f)) + HALF));
+      |            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~
+../../qemu/audio/mixeng_template.h:31:22: note: expanded from macro 'HALF'
+   31 | #define HALF (IN_MAX >> 1)
+      |                      ^
+../../qemu/audio/mixeng.c:151:36: note: expanded from macro 'ENDIAN_CONVERT'
+  151 | #define ENDIAN_CONVERT(v) bswap32 (v)
+      |                           ~~~~~~~~~^~
+/Users/person/v/qemu/include/qemu/bswap.h:10:39: note: expanded from macro 'bswap32'
+   10 | #define bswap32(_x) __builtin_bswap32(_x)
+      |                                       ^~
+2 warnings generated.
 
-Clamp the result to avoid the overflow.
+HALF is not the right value here anyway. IN_MAX is odd, so the integer
+sample range has two middle codes. Unsigned PCM normally uses the upper
+middle code as the "bias": 0x80, 0x8000, or 0x80000000. HALF is instead
+defined as the lower middle code: 0x7f, 0x7fff, or 0x7fffffff.
+
+Replace HALF with BIAS, defined as the upper middle code. This fixes the
+warnings, since the value can be exactly represented with mixeng_real.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20260423-audio-v1-2-e1d6b65c76f9@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260423-audio-v1-3-e1d6b65c76f9@rsg.ci.i.u-tokyo.ac.jp>
 ---
- audio/mixeng_template.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ audio/mixeng_template.h | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
 
 diff --git a/audio/mixeng_template.h b/audio/mixeng_template.h
-index 881653c44bf..5b0014bdd9a 100644
+index 5b0014bdd9a..6db742188ed 100644
 --- a/audio/mixeng_template.h
 +++ b/audio/mixeng_template.h
-@@ -65,7 +65,9 @@ static inline IN_T glue (clip_, ET) (mixeng_real v)
+@@ -28,7 +28,7 @@
+  */
+ 
+ #ifndef SIGNED
+-#define HALF (IN_MAX >> 1)
++#define BIAS ((IN_T)1 << (SHIFT - 1))
+ #endif
+ 
+ #define ET glue (ENDIAN_CONVERSION, glue (glue (glue (_, ITYPE), BSIZE), _t))
+@@ -43,13 +43,13 @@ static inline mixeng_real glue (conv_, ET) (IN_T v)
+ #ifdef SIGNED
+     return nv * (2.f / ((mixeng_real)IN_MAX - IN_MIN));
+ #else
+-    return ((mixeng_real)nv - HALF) * (2.f / (mixeng_real)IN_MAX);
++    return ((mixeng_real)nv - BIAS) * (1.f / BIAS);
+ #endif
+ #else  /* !RECIPROCAL */
+ #ifdef SIGNED
+     return nv / (((mixeng_real)IN_MAX - IN_MIN) / 2.f);
+ #else
+-    return ((mixeng_real)nv - HALF) / ((mixeng_real)IN_MAX / 2.f);
++    return ((mixeng_real)nv - BIAS) / BIAS;
+ #endif
+ #endif
+ }
+@@ -65,9 +65,7 @@ static inline IN_T glue (clip_, ET) (mixeng_real v)
  #ifdef SIGNED
      return ENDIAN_CONVERT((IN_T)(v * (((mixeng_real)IN_MAX - IN_MIN) / 2.f)));
  #else
--    return ENDIAN_CONVERT((IN_T)((v * ((mixeng_real)IN_MAX / 2.f)) + HALF));
-+    return ENDIAN_CONVERT(MIN((int64_t)((v * ((mixeng_real)IN_MAX / 2.f)) +
-+                                        HALF),
-+                              IN_MAX));
+-    return ENDIAN_CONVERT(MIN((int64_t)((v * ((mixeng_real)IN_MAX / 2.f)) +
+-                                        HALF),
+-                              IN_MAX));
++    return ENDIAN_CONVERT(MIN((int64_t)(v * BIAS) + BIAS, IN_MAX));
  #endif
  }
  
+@@ -79,7 +77,7 @@ static inline int64_t glue (conv_, ET) (IN_T v)
+ #ifdef SIGNED
+     return ((int64_t) nv) << (32 - SHIFT);
+ #else
+-    return ((int64_t) nv - HALF) << (32 - SHIFT);
++    return ((int64_t) nv - BIAS) << (32 - SHIFT);
+ #endif
+ }
+ 
+@@ -94,7 +92,7 @@ static inline IN_T glue (clip_, ET) (int64_t v)
+ #ifdef SIGNED
+     return ENDIAN_CONVERT ((IN_T) (v >> (32 - SHIFT)));
+ #else
+-    return ENDIAN_CONVERT ((IN_T) ((v >> (32 - SHIFT)) + HALF));
++    return ENDIAN_CONVERT((IN_T)((v >> (32 - SHIFT)) + BIAS));
+ #endif
+ }
+ #endif
+@@ -150,5 +148,5 @@ static void glue (glue (clip_, ET), _from_mono)
+ }
+ 
+ #undef ET
+-#undef HALF
++#undef BIAS
+ #undef IN_T
 -- 
 2.53.0
 
