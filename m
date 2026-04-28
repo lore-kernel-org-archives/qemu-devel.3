@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22513FF8876
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 14:01:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7FE1FF885A
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 14:01:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHizg-0003yi-Jf; Tue, 28 Apr 2026 10:00:56 -0400
+	id 1wHizs-0003zn-CO; Tue, 28 Apr 2026 10:01:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1wHiq9-0002Ss-1W
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:51:05 -0400
+ id 1wHiqJ-0002Us-CB
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:51:15 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wHiq7-0005ja-Ge
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:51:04 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wHiqH-0005l8-OK
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:51:14 -0400
 Received: from laptop.localdomain (unknown [86.121.140.248])
- by linux.microsoft.com (Postfix) with ESMTPSA id C446D20B716C;
- Tue, 28 Apr 2026 06:50:59 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C446D20B716C
+ by linux.microsoft.com (Postfix) with ESMTPSA id C7E3F20B716D;
+ Tue, 28 Apr 2026 06:51:11 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C7E3F20B716D
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1777384261;
- bh=lWFKO/4N7bNP6xaYO1XrGPYlQpmwKgGrR6emuANYzJY=;
- h=From:To:Cc:Subject:Date:From;
- b=UQ0mwcmqh2UH6w0bzqEUS8Ss/aVKCexD0YiW0QnlJEaYVoz3q3bVYpD269872Y8gk
- o5nbFnopOwRI0p5sotKEWjlz9jzPpDInIPFN1rcLYIZtVgjhuxHzntolLFIVNh+8rq
- NUNtS5OApBrrrjlgUUUIkmj/jH9mf154bMeIvHg4=
+ s=default; t=1777384273;
+ bh=oDMv6RpiVhNqo/MNbET/1Zb0452I13sXrm3TmE7k/Zs=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=anhuUjB7zuJOk0Nl/rKiekFPy64SZjl72UrOVNAa6mUo8+dVp6G6Q5sa3vhLNfXPM
+ veO82o5OHAncsiIkoBkB1u+oovCs1Vviyn85lbS82YB5a5/MW5+MJ3Udw6uN8ehKH4
+ mxMBF7PWoJn3wzz6gzD15EoLDzTc/8CCFtTI2ifo=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 0/6] target/i386/mshv: use hv_vp_register_page for fast
- register access
-Date: Tue, 28 Apr 2026 16:50:47 +0300
-Message-ID: <20260428135053.251200-1-dblanzeanu@linux.microsoft.com>
+Subject: [PATCH 6/6] target/i386/mshv: use the register page to set registers
+Date: Tue, 28 Apr 2026 16:50:53 +0300
+Message-ID: <20260428135053.251200-7-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260428135053.251200-1-dblanzeanu@linux.microsoft.com>
+References: <20260428135053.251200-1-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
@@ -52,7 +53,7 @@ X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 28 Apr 2026 10:00:19 -0400
+X-Mailman-Approved-At: Tue, 28 Apr 2026 10:00:29 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,51 +68,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds support for using the hypervisor's vp register page
-in the mshv accelerator to optimize vcpu register access on mmio and pio
-exits.
+Update mshv_store_regs to use the register page when it is mmapped and
+valid to set registers.
+Otherwise use the ioctls to set the registers.
 
-Currently, all register reads and write go through hypercalls (ioctls),
-which adds overhead on every VM exit. The VP register page is a shared
-memory page that the hypervisor populates with vcpu register state,
-allowing Qemu to read and write registers directly without hypercalls.
+Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+---
+ target/i386/mshv/mshv-cpu.c | 45 +++++++++++++++++++++++++++++++++----
+ 1 file changed, 41 insertions(+), 4 deletions(-)
 
-The series is structured as follows:
-1. Remove the duplicate `fetch_guest_state` function, consolidating
-  register loading into `mshv_load_regs`.
-2. Move `mshv_arch_init_vcpu` after vcpu creation so the vcpu fd is
-  valid when we need it for mmap.
-3. Define the `hv_vp_register_page` structure in `hvgdk_mini.h`, matching
-  the layout used by the Linux kernel's mshv driver.
-4. Set up the register page by mmapping the vcpu fd at init time. If the
-  mmap fails, we fall back gracefully to the existing hypercall path.
-5. Use the register page to read registers on VM exit. General purpose
-  registers, RIP, RFLAGS, segment registers, and control registers
-  (CR0, CR4, CR4, CR8, EFER) are read directly from the page. Registers
-  not present on the page (TR, LDTR, GDTR, IDTR, CR2, APIC_BASE) are still
-  fetched via hypercall.
-6. Use register page to write registers on vmentry. GP registers,
-  RIP, and RFLAGS are written to the page with the appropriate dirty
-  bits set, avoiding the hypercall for the standard register store.
-
-The register page is only used when it has been successfully mmapped and
-the hypervisor has marked it as valid (`isvalid != 0`). Otherwise, the
-existing hypercall-based path is used as a fallback.
-
-Doru Blânzeanu (6):
-  target/i386/mshv: remove duplicate function for reading vcpu registers
-  accel/mshv: move vcpu arch specific initialization after vcpu creation
-  include/hw/hyperv: add hv_vp_register_page struct definition
-  target/i386/mshv: hv_vp_register_page setup for the vcpu
-  target/i386/mshv: use the register page to get registers
-  target/i386/mshv: use the register page to set registers
-
- accel/mshv/mshv-all.c          |   3 +-
- include/hw/hyperv/hvgdk_mini.h | 103 +++++++++++++++
- target/i386/cpu.h              |   3 +
- target/i386/mshv/mshv-cpu.c    | 221 ++++++++++++++++++++++++++++-----
- 4 files changed, 296 insertions(+), 34 deletions(-)
-
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 7949493e97..6bb3e6d4a9 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -294,14 +294,51 @@ static int set_standard_regs(const CPUState *cpu)
+     return 0;
+ }
+ 
++static void mshv_set_standard_regs_vp_page(CPUState *cpu)
++{
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
++
++    env->regs_page->rax = env->regs[R_EAX];
++    env->regs_page->rbx = env->regs[R_EBX];
++    env->regs_page->rcx = env->regs[R_ECX];
++    env->regs_page->rdx = env->regs[R_EDX];
++    env->regs_page->rsi = env->regs[R_ESI];
++    env->regs_page->rdi = env->regs[R_EDI];
++    env->regs_page->rsp = env->regs[R_ESP];
++    env->regs_page->rbp = env->regs[R_EBP];
++    env->regs_page->r8  = env->regs[R_R8];
++    env->regs_page->r9  = env->regs[R_R9];
++    env->regs_page->r10 = env->regs[R_R10];
++    env->regs_page->r11 = env->regs[R_R11];
++    env->regs_page->r12 = env->regs[R_R12];
++    env->regs_page->r13 = env->regs[R_R13];
++    env->regs_page->r14 = env->regs[R_R14];
++    env->regs_page->r15 = env->regs[R_R15];
++    env->regs_page->rip = env->eip;
++    lflags_to_rflags(env);
++    env->regs_page->rflags = env->eflags;
++
++    env->regs_page->dirty |= (1u << HV_X64_REGISTER_CLASS_GENERAL)
++                                | (1u << HV_X64_REGISTER_CLASS_IP)
++                                | (1u << HV_X64_REGISTER_CLASS_FLAGS);
++}
++
+ int mshv_store_regs(CPUState *cpu)
+ {
++    X86CPU *x86cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86cpu->env;
+     int ret;
+ 
+-    ret = set_standard_regs(cpu);
+-    if (ret < 0) {
+-        error_report("Failed to store standard registers");
+-        return -1;
++    /* Use register vp page to optimize registers access */
++    if (env->regs_page && env->regs_page->isvalid != 0) {
++        mshv_set_standard_regs_vp_page(cpu);
++    } else {
++        ret = set_standard_regs(cpu);
++        if (ret < 0) {
++            error_report("Failed to store standard registers");
++            return -1;
++        }
+     }
+ 
+     return 0;
 -- 
 2.53.0
 
