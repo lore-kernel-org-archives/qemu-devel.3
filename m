@@ -4,71 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EB44FF885D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 13:38:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7443FF886D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 14:01:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHidq-0008O1-Ly; Tue, 28 Apr 2026 09:38:22 -0400
+	id 1wHizk-0003zD-JD; Tue, 28 Apr 2026 10:01:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wHidp-0008Ns-JQ
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:38:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wHido-0002Pm-9s
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:38:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777383499;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ocx8N2mt4WdUmHqCNWykli72Gb/YYk+jAAZJxdbLtG4=;
- b=XBN+hvU9ptjBNiJtoU+nr+SRHenERN0GvkAwD9CnqZeWLIyErTmqPgjb4JgAqfVgByhJDh
- N8kpP6CzPbelRtGSU5G1r6+OhGjHnNlTe9W9Cloaz0aNU97pGQ9Qzng57TSnC/J6nRDg4K
- +ejsnCe229yjC0jy7LK73nxwIzREgAw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-477-ft_uwsKAPm63BJeenSfOFQ-1; Tue,
- 28 Apr 2026 09:38:15 -0400
-X-MC-Unique: ft_uwsKAPm63BJeenSfOFQ-1
-X-Mimecast-MFC-AGG-ID: ft_uwsKAPm63BJeenSfOFQ_1777383495
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E97201800473; Tue, 28 Apr 2026 13:38:14 +0000 (UTC)
-Received: from localhost (unknown [10.44.33.158])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2F43D3000C22; Tue, 28 Apr 2026 13:38:13 +0000 (UTC)
-Date: Tue, 28 Apr 2026 08:02:25 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PULL 00/63] target-arm queue
-Message-ID: <20260428120225.GA254530@fedora>
-References: <20260427124738.966578-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
+ id 1wHiqF-0002Ts-23
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:51:11 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wHiqD-0005kb-ML
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:51:10 -0400
+Received: from laptop.localdomain (unknown [86.121.140.248])
+ by linux.microsoft.com (Postfix) with ESMTPSA id C3B7F20B716D;
+ Tue, 28 Apr 2026 06:51:07 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C3B7F20B716D
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1777384269;
+ bh=vi+2zPtESIahFHfthSCIzZP3Nn/uf9LxqY4nu2yzcP8=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=B1c638cnZulelb4VFMD5pLXXQhChp8aebTHc+NrxPIhQxWpguXnQwe6jB4Zv6P/55
+ 79EC/IZriKILS4Q1J67gsTv6vlQsZwn8KdYA60ZLhU8TMFNw4BTrQyeH2U12y+dqNY
+ nnpgw8Rm7Q6er44rBdvvuubcOdy9ocqPDGzRTiKM=
+From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 4/6] target/i386/mshv: hv_vp_register_page setup for the vcpu
+Date: Tue, 28 Apr 2026 16:50:51 +0300
+Message-ID: <20260428135053.251200-5-dblanzeanu@linux.microsoft.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260428135053.251200-1-dblanzeanu@linux.microsoft.com>
+References: <20260428135053.251200-1-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="vc6IbBkkWqcbDyNG"
-Content-Disposition: inline
-In-Reply-To: <20260427124738.966578-1-peter.maydell@linaro.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.109,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 28 Apr 2026 10:00:25 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,30 +68,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+When the vcpu is created, call mmap to configure access to the register page.
 
---vc6IbBkkWqcbDyNG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Update CPUArchState to store a pointer to the mmapped hv_vp_register_page.
 
-Applied, thanks.
+Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+---
+ target/i386/cpu.h           |  3 +++
+ target/i386/mshv/mshv-cpu.c | 18 ++++++++++++++++++
+ 2 files changed, 21 insertions(+)
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
-
---vc6IbBkkWqcbDyNG
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnwodEACgkQnKSrs4Gr
-c8gLRAgAwYPtw5W72DyPmT6U8BAEKcfPlGlPCEb6UiPld6wLcnSg+1rkCAu/dKhZ
-FfkvZZSd85y0gnHB0o1eyMJ/IW43ZfkSa5VkeXp7gqR5tFUTRQqPqRebhxQqK1bq
-hfZFINc4CRi10xMOpS1XTfa3M0QsynFmHraO4NSesvKFwqv5lpAY/25T0+0jauoc
-8XT0PBv/kUFg4y6KPj8NTvgMTtNPhhaRjHh+BX3ivdqRXgr8PIBiioEPF1jG3Tp1
-CjS9eZ5218eK/ddLWoP3gcIAy3Etj72C/O1vepHFP3SeXiROOLZquD0sTLtjvEmd
-uNbhNVBCU2HqxHAddyUdJ5cjkMAr4Q==
-=WJfO
------END PGP SIGNATURE-----
-
---vc6IbBkkWqcbDyNG--
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 0b539155c4..0108e2157b 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2016,6 +2016,9 @@ typedef struct CPUArchState {
+     uint64_t msr_bndcfgs;
+     uint64_t efer;
+ 
++    /* Shared register page */
++    struct hv_vp_register_page *regs_page;
++
+     /* Beginning of state preserved by INIT (dummy marker).  */
+     struct {} start_init_save;
+ 
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 9defd05db6..42b6fb1912 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -1595,6 +1595,19 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+                       + sizeof(hv_input_get_vp_registers)
+                       > HV_HYP_PAGE_SIZE));
+ 
++
++    /* mmap the registers page */
++    void *rp = mmap(NULL, page, PROT_READ | PROT_WRITE,
++                    MAP_SHARED, mshv_vcpufd(cpu),
++                    MSHV_VP_MMAP_OFFSET_REGISTERS * page);
++    if (rp == MAP_FAILED) {
++        warn_report("register page mmap failed, falling back to hypercalls: %s",
++                    strerror(errno));
++        env->regs_page = NULL;
++    } else {
++        env->regs_page = (struct hv_vp_register_page *) rp;
++    }
++
+     state->hvcall_args.base = mem;
+     state->hvcall_args.input_page = mem;
+     state->hvcall_args.output_page = (uint8_t *)mem + page;
+@@ -1608,6 +1621,11 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+     CPUX86State *env = &x86_cpu->env;
+     AccelCPUState *state = cpu->accel;
+ 
++    /* Unmap the register page */
++    if (env->regs_page) {
++        munmap(env->regs_page, HV_HYP_PAGE_SIZE);
++        env->regs_page = NULL;
++    }
+     g_free(state->hvcall_args.base);
+     state->hvcall_args = (MshvHvCallArgs){0};
+     g_clear_pointer(&env->emu_mmio_buf, g_free);
+-- 
+2.53.0
 
 
