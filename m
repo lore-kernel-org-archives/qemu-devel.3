@@ -4,106 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92650FF8868
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 10:18:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB83FF8868
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 10:27:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHfVW-0003ma-96; Tue, 28 Apr 2026 06:17:34 -0400
+	id 1wHfdz-0007rz-SD; Tue, 28 Apr 2026 06:26:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wHfVV-0003lo-0H
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 06:17:33 -0400
-Received: from mail-dy1-x1329.google.com ([2607:f8b0:4864:20::1329])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHfdy-0007r6-GL
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 06:26:18 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wHfVT-0000v9-95
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 06:17:32 -0400
-Received: by mail-dy1-x1329.google.com with SMTP id
- 5a478bee46e88-2ecf9e398f4so2968370eec.1
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 03:17:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777371449; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHfdw-0004Mb-VL
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 06:26:18 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-65006c99d38so10182854d50.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 03:26:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777371976; cv=none;
  d=google.com; s=arc-20240605;
- b=ChdzLu0Bz4QBXxQhSHuaPyc7y9OZmoPUIRMN2A6edDa+qpE2HJVtqZ//4MZmyT4/ym
- 5fYPNwrXQ/idJu/YQQ9qs2NUpn+i8E6x1iy7Yj4JuQU1r1b/fkUa6gPiHANireV8AYkd
- 3o6SMczB2RrIFHBRRcHstcoPAp+Nmy1xyBR8syXsCPmQSc5hoTXMQJ9rNMmrpDxMmn9n
- 27nHeDc8DWGekRBnonnP6PWPPvijYKr2Ay4ur2g+8dzqdnXijWdaCXIn/ek2btN5yEPW
- +UuKcdX0BrMk1aBTPCZMekcCbwsbz9eZTvkPZ6pFW9/De9Zz6vdwWidA+do2qEItxmbu
- fkvw==
+ b=RThd3Ajl+TFmQ6ej36fCuZhjKocy8TGFmSZBlCjXSj0NCVFixGH4u7KqWbmWVDRMeK
+ RyVA09xG0TOkiZ+70mj0d3mB4Mi2S/Rema2oBN4RxlOgtZxctEdoGjppTao1xyKjqDxi
+ +nVw4TLsa8ry9VXmFDAPSLOATFKPOMgV2vlW/s+1U30GCzXwg+aaF/NmdJtDq38GyC58
+ ceWI+BsJSVnw/mx3J+TuIzKeXDph6jn72b+L2la1XQ96WlmevTUsAMtY7rIHUv+HuZ/c
+ hy2zNQZxxSYs4sCQXUtCaj1frCb+SFWiorUiqSvRTKaOx8gAs8atXnxhpiLqmXixzQdy
+ qUaA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=1Mi1yJ503u+Doo3QDs87pihdsS2ollrbbDsZdS44yPo=;
- fh=BCuY/beMqJdGc2e0khfFuFCQpH3R3sHADBiZ/molWiI=;
- b=BTxNozscZ72vsbcH1ZmUiD1XCm+2ufKddPEX/KS+OQDxxzr8/sTIGHL88IdEASAhTi
- XMLd/+HJtA/XeaIuWk23SOp9WhJLGHHeSoaNc3VSFo+eMYgV/nqeuxkvcvEdDRR2stiB
- c4jfzTlrH7o/rFBoFE+KyA93NzZqdDcZeef9f/vnrZv1UmiiJorJxYbLzFDgx6X0eAu+
- oeb/yIzFT07tshwaavhzx6bae01q0KFQ99UiH3sUbwxirUB53QGRIrCF3S/QbqRWFOSW
- 6e8onveBSiIa17bZiAwdY0xuPMhzpubG64ifyqI2ujyRTwhe87nwhdydei5jIV9l7mab
- sQlQ==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=bNYuY+mpqB9tvsQdv75FUl/u/ykE7yH04LUmseV2WuA=;
+ fh=Wx9lP9KQCr/8T/aA0zVmV2r0ZF0yKqo5FrZtAofl334=;
+ b=XuS4zBV5zuxHaDe47imdaRhCAu+noul7fbcrn63qYEk0fd/k3OHBMBQHsUOSTjuldn
+ uTloToql6zKmCjG7w2lLQ5w/t7krDgzhtd9S2ed9konHAv94lCmDe3UOt+LpEQgS3Sq5
+ /s1teH4mXZLyxQntgPOEiUeHVsERc+NgsCuRNaRr/0Voaqoo78bZFWELbkP28PfiuhDp
+ 01tDeZIuW9NCEsS11osm+/wCreX2fEYGr6GtVyWLQk39/NifDF58dZX9smhY6P/1Tyl+
+ caoJUh7eGUkYvtjMK5Tebdv4PBqPYQAQcsESuRYzr5G2ky20+o9s2Yi+5cVUOP8C2xjz
+ Iw1g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777371449; x=1777976249; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1Mi1yJ503u+Doo3QDs87pihdsS2ollrbbDsZdS44yPo=;
- b=S/5JoyvCVxMRPWe5aB16JKSte++s6SSB/v07RT1bzI8BKNo0ICYbZxh/0EdCbqUJdO
- z7jZcN7KUdEEDKf61L/57y6MDaLWM0E2e9/2ouoI/BA6mqDt7lIzB+oew8zzzcwZMIEl
- KWI+EwANmiakiicr6xhhAArPFrDNG1TgX1nSHrVY6rVeVjsRSBcr9He8285PEISUtIhU
- q6VCOPsye6/mLTh8Djbbmx5CWt8IvsPbYPMXaFvPBeew28MnaJaJFAHlkhBUDGLTsLJQ
- JVf4+8A7EpR/UqETkfoKCAYcen6FYVBINKZNjIVjomrgP+VxSWvRS3BQoRX26+jkCQA8
- f1Zg==
+ d=linaro.org; s=google; t=1777371976; x=1777976776; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=bNYuY+mpqB9tvsQdv75FUl/u/ykE7yH04LUmseV2WuA=;
+ b=Ok+hUxiXN4yYoDdVO90FJc2Okdz3P8sYPXVArTttI5wyVdLKgpHq6rbXO9lfWWfKiw
+ ZoAZM9DOcT1EZ0OeirT/HQ/mUp9pAhayx5bAQsy4I7WEedIiZhRx1Wh4kFAnb2NGZaiL
+ TIrkioqIXpJcF6L9v1jUyeZ449ArzcRA0cCAczpPYILXmwlbv28N8tNyO0PkyEjKu933
+ mHe9YyFKdFV9RtmpUoq4cNDxyAu703pL8KBJoJIzyJIvQax2fSCe74cOx8RsXOKsFy8W
+ T9xAzuSv7hYbAbDvwjHcaQylZ/lYazgn1zUo6fQ9NPPGAsqtmlEbc0dp4Z39ywz9X4Df
+ O+/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777371449; x=1777976249;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1Mi1yJ503u+Doo3QDs87pihdsS2ollrbbDsZdS44yPo=;
- b=kmaQRbAC2EVAjWCBP2Nfw3NWstbG9/GJHdYq/6/TcfdQo0l26Y++OR66etZCyIQRlZ
- zgGcRGmVVJEWzZrhrdgCkSAzb2/Uz/pg+Z4r8XDXAxeZeZt02cBSKpKl37LTyoVRsp15
- PX9zkO3YK4yJ4xwMB6K4cefwfc5fzI9ooi6Kxlgs+3JyhVy1nmCaMug6DvsQ6fEyD6q2
- LoBF9FuoY+a8tiIuI6lkYMtQr7TNNDHZuv4c7wlj+8qsvNexMQCfIbilM94VxEHGGmFW
- GhL1uA9FgR0gQWQZ5LW7RtQ2UfeL9dhaTZTWGIwCj5TCt6eawlCzIX3Khn14WURu7rZK
- ILFw==
-X-Gm-Message-State: AOJu0YxsneXN4VLjl+rwMnXj/b7Haq5/xixh29n6VQqOxkUKRd4oOpsQ
- HbXyvCThzkikoWiLur2c0cl43KTIIrAPgAXfsKK631ejo2lHLfHTAFct+ganDrhDLrrt+/m/9Sv
- i52zufGZgGojGJjoLhFaC4BKAcuLGLm4=
-X-Gm-Gg: AeBDiesC3TRH8UMYRmiC0S6XNZUKYZONnrAl+biQcq9bAqSp54AxNHtVvGa7EnSJQow
- qscSlSKAm62a6ZUE/pP77GgpY2vPBrO0wpJQWzDcYfgsEvtclpKiqPX4TlkVmmPjYewHPqNYcRr
- ivIRMOyoUjT58kp7fhFco8sa2sFsVAYt18n2LGMbEcvHIB9q+7/u/yr8JU8ft2LJEYDYw417YIP
- xw77N2UFq4Sjyl5QtkECDfQasNERtiWRV2HhaGKrz44kPrfWkOSkwmCuJjhx5oTnHaZkefWhNO4
- 9fRXyMSAi5+1NU1Fs1NFgxODs0gsT1dUCaYCuOkjuGVzRCu0R0xetHyG+LqZBA==
-X-Received: by 2002:a05:7300:724e:b0:2c9:1943:e7ff with SMTP id
- 5a478bee46e88-2ed09fd8f72mr1259921eec.10.1777371449172; Tue, 28 Apr 2026
- 03:17:29 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777371976; x=1777976776;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bNYuY+mpqB9tvsQdv75FUl/u/ykE7yH04LUmseV2WuA=;
+ b=InE+5M7MY6NVusXNkjkREQZZGwnZbB4pYqEaej+4D1drIBR78NEvinGWRnVnRaGejQ
+ o/SD41oMTurndtSCbYOdb7KSWREJWR22eYrUCQxjmL8Bd4GVTB2A/++lw+QLjhkrD1cJ
+ 6DxEKh66Ac09ocTdVRUL09816MPzz2Oyu/nJMjf2g2QoOemPMoQtJJ1DpI48UzB7Yvqj
+ vxgS5S40FOtYHY1iyncgW9x4/eJWyeyohRTMLNWBB7aI4PAFBnp/KV6GUXowcjJOSHtA
+ 0h4ZT053oV50LvmIBlFqkH8dxN8/zZRXdbBaYhZ02s4TwNB1iVyf6Aq4cN0qgwtSVFjm
+ bOAA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+0Lfx7XhU3Nab/1hz1W8FySSdGT7mB/vzZbUOsrQSYzxzenWAIMjldwJm4x4kouo9HOBBIuL0ZI7z1@nongnu.org
+X-Gm-Message-State: AOJu0YxdBgLlWG7C44d/wFqyfjyIF2tXvkGsp2eQZavzyRxQPvhSZ9h8
+ gBpoLzzDauyfLP3g4OXSoVZ/NfH5dk1Gttr/r7D8/6TmyGIgelTulR4YtLqeIlgb5lQpHcpyrQG
+ C1AryH2Yvgg/7Ow3Wf8fFKToG/bZxILqWrlMmdWYl4w==
+X-Gm-Gg: AeBDieukt09H29BGk1vMoSAId8nXqgROfiSj8jwu1dhmjM6qFGPOSabUDqEb9K3njqs
+ NL+pAkBJAPBs2CqnllstfeIEC56wD1lV5eI7gMTNOKYupIYB6FKLww0+iGVXSUuQq4DE6rjuxMS
+ a/0ZHAq6I6RMKhn+wGGMw1CiTUKCw0nvBEsnyT3gQevriMpNIM0Qy7F1qnkcjklOl71NyJnCa0h
+ 5I+g4pPRiEdmpTliZqUKC03rUtmlheELRhLbcfPH+phE3oT/YOwPL4YloOaN891JPCjjqRjmwMP
+ GCB+K6MxrZDrEvJkQywpNj5iGkivwVmEfFBe80Hwm0TMNZiBiOtp9c1iZTPbknwsoU5mI4EdPxX
+ Bxg==
+X-Received: by 2002:a05:690e:1406:b0:650:3e1f:907c with SMTP id
+ 956f58d0204a3-65beeba511amr1996675d50.0.1777371975587; Tue, 28 Apr 2026
+ 03:26:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
- <20260427-qom-tests-v1-9-c413f3605311@redhat.com>
- <ce69a79e-5013-4a01-a333-cf979be17b3f@oracle.com>
-In-Reply-To: <ce69a79e-5013-4a01-a333-cf979be17b3f@oracle.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 28 Apr 2026 14:17:17 +0400
-X-Gm-Features: AVHnY4IVlViS2gdkhfWI73L2OXgq_sDxGMrBSpLtRsgpxArKMyzwYAnV7JU4GXQ
-Message-ID: <CAJ+F1CJ6z7uyjgr7yW-f5gLcPmLDufpXoa0Qzwv+0p__nhoyDA@mail.gmail.com>
-Subject: Re: [PATCH 09/41] RFC hw/remote: guard listener unregister in finalize
-To: Jagannathan Raman <jag.raman@oracle.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, 
- Elena Ufimtseva <elena.ufimtseva@oracle.com>
+References: <20260417173105.1648172-1-peter.maydell@linaro.org>
+ <20260417173105.1648172-17-peter.maydell@linaro.org>
+ <44df274b-6179-4e63-aee4-1e29ad5f4b23@linaro.org>
+In-Reply-To: <44df274b-6179-4e63-aee4-1e29ad5f4b23@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 Apr 2026 11:26:01 +0100
+X-Gm-Features: AVHnY4JOrdpIlO27eYt75ZDtPg1k4zS9uDE0SB4DBSEbiX4Ru8l4hWpH_ip6_yQ
+Message-ID: <CAFEAcA8fXkUmcLd0D09GWR66fnDEe_PdnFnUvvvctCaqma8iRQ@mail.gmail.com>
+Subject: Re: [PATCH 16/17] target/arm: Implement translate_for_debug
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1329;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x1329.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,55 +118,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Thu, 23 Apr 2026 at 04:12, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 4/18/26 03:31, Peter Maydell wrote:
+> > @@ -3935,25 +3936,30 @@ static hwaddr arm_cpu_get_phys_addr(CPUARMState *env, vaddr addr,
+> >       GetPhysAddrResult res = {};
+> >       ARMMMUFaultInfo fi = {};
+> >       bool ret = get_phys_addr_gpc(env, &ptw, addr, MMU_DATA_LOAD, 0, &res, &fi);
+> > -    *attrs = res.f.attrs;
+> >
+> > -    if (ret) {
+> > -        return -1;
+> > +    if (!ret) {
+> > +        /* translation succeeded */
+> > +        result->physaddr = res.f.phys_addr;
+> > +        result->attrs = res.f.attrs;
+> > +        result->lg_page_size = res.f.lg_page_size;
+> >       }
+> > -    return res.f.phys_addr;
+> > +    return ret;
+> >   }
+>
+> Inverted return value.
+> This would be obvious with s/ret/fault/.
 
-On Tue, Apr 28, 2026 at 12:02=E2=80=AFAM Jagannathan Raman <jag.raman@oracl=
-e.com> wrote:
->
->
-> On 4/27/26 3:42 PM, Marc-Andr=C3=A9 Lureau wrote:
-> > Guard the unregister by checking whether the listener callback was
-> > set, which only happens right before registration.
-> >
-> > This is probably better addressed by "[PATCH] qdev: test if DeviceListe=
-ner
-> > is in use". Just adding this patch for completeness.
-> >
-> > Cc: jag.raman@oracle.com
-> > Fixes: c7d80c7c1d9 ("multi-process: Associate fd of a PCIDevice with it=
-s object")
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >   hw/remote/remote-obj.c | 4 +++-
-> >   1 file changed, 3 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/hw/remote/remote-obj.c b/hw/remote/remote-obj.c
-> > index 86192dc8dad..4e74ae76158 100644
-> > --- a/hw/remote/remote-obj.c
-> > +++ b/hw/remote/remote-obj.c
-> > @@ -154,7 +154,9 @@ static void remote_object_finalize(Object *obj)
-> >       RemoteObjectClass *k =3D REMOTE_OBJECT_GET_CLASS(obj);
-> >       RemoteObject *o =3D REMOTE_OBJECT(obj);
-> >
-> > -    device_listener_unregister(&o->listener);
-> > +    if (o->listener.unrealize) {
-> > +        device_listener_unregister(&o->listener);
-> > +    }
-> >
-> >       if (o->ioc) {
-> >           qio_channel_shutdown(o->ioc, QIO_CHANNEL_SHUTDOWN_BOTH, NULL)=
-;
-> >
-> Hi Marc-Andre,
->
-> I submitted a patch a short while back concerning this:
-> https://patchew.org/QEMU/20260427162700.89750-1-jag.raman@oracle.com/
->
-> Do you want to stick to your patch, or want me to proceed with mine
-> (while addressing feedback from Peter Maydell)? I'm OK with either approa=
-ch.
+This function returns true on fault, matching the other
+get_phys_addr functions in this file, so "return ret" is
+what I intended here.
 
-I'd be happy to review/take your patch. Then I might include it in
-future iterations of this series if you don't mind.
-You may consider adding the Fixes: trailer.
+arm_cpu_translate_for_debug() returns true on success, which
+is the opposite convention, so it does:
+
+     if (!arm_cpu_get_phys_addr(env, addr, result, mmu_idx)) {
+         return true;
+     }
+so as to return true if arm_cpu_get_phys_addr returns false
+(the successful-translation case).
+
+I agree that this is confusing, but that's why I put the comments
+in and the commit message. I had a choice of making the
+translate_for_debug() function follow the existing
+tlb_fill_align() convention or the one we use here in ptw.c,
+and I picked the former. That leaves us having to do a
+flip-the-sense-of-the-boolean somewhere, unless we want to
+redo all of ptw.c to use true-for-success instead.
+
+-- PMM
 
