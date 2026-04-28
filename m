@@ -4,104 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F360AFF885D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 12:58:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCCF6FF885D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 13:08:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHi0S-0004s2-Ni; Tue, 28 Apr 2026 08:57:40 -0400
+	id 1wHiAG-0006Vb-Kt; Tue, 28 Apr 2026 09:07:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wHi0Q-0004ru-Gy
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 08:57:38 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wHiA3-0006Rx-B3
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:07:35 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wHi0O-0006lt-AI
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 08:57:38 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wHi9y-0001Jg-Qu
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 09:07:33 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63S6ulRU2943552; Tue, 28 Apr 2026 12:57:34 GMT
+ 63S6rbWJ3705253; Tue, 28 Apr 2026 13:07:30 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=l3mQZj
- XC4YJigCUt2rxyN+JGJYonLurAvhVLeoJbD8Y=; b=CT4dXg2XebtfydV8D9C+v6
- E2uffpXdbjCl3n25YmCM8ydxQ/GPMlVoxgpW6l9oFovMXbpeOuuNW5SpIzCGvDvF
- Q85zJPdmvj6jMDXCaEegv0X+fiafowHZMS1YlYTBuunGN6sUVquF5qOXZR86ziJl
- Zm7d8t0aXqe9rUeIoQijoFntWE9qo9qhphFduHsgubFGnb7XEmbVjK+Ze9o0ywpk
- qbZpYYC4HwQkUu2TpWqQNcGkxYJbiFClN7whKX+20JXsxilHyQewz+1AVnKehE3M
- GoMU5hfaXxABQIdK00NbggAzdyWw2WCt8AXaSb6Ti1j8qmMmQ0FD9U+vpeRwoeDg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drnb55h0m-1
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=arkGtvuBxPGsuc49P
+ Jzg8dPUFOvRGwp5KxPfimG25hQ=; b=bmuO26f8HafDZr2vxWfxEntbpTu49HIWi
+ xdvB1StDCh7LP5r1Z7nT9e63Fd4bLIkCp9L7NauV2VeCNAiVIfJszcdfv9wyl3oR
+ /L15wnThgq6ixHcbVxZTWxubTxwcO7ETNGKXm7kgEwAyMRj98XItSAjmkPGJj536
+ 3tFZjm+auAZoob0TGn+o8k/XzlJCZOCDw6wHT3xh7oqxphwsXd58Zsvr5wFK/j8d
+ gYy/95pZjS+aFQYbB+d3FQQfqz1jnsEN0QmClsh4jYLde0gJUUV0QfNbv+iy+aY8
+ vD/slXeaGTGzfdEazXmZAGZmRhs3d8OpF9i7R+NLU3qdcxLFDFnjg==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drm1dvfty-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Apr 2026 12:57:33 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63SCcoS0012901;
- Tue, 28 Apr 2026 12:57:33 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dsamy9g31-1
+ Tue, 28 Apr 2026 13:07:29 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63SCwJD5006292;
+ Tue, 28 Apr 2026 13:07:29 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ds9eh9pj2-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 28 Apr 2026 12:57:33 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63SCvWpB12124762
+ Tue, 28 Apr 2026 13:07:29 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63SD7SFJ33620632
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 28 Apr 2026 12:57:32 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4161858064;
- Tue, 28 Apr 2026 12:57:32 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DCB465805F;
- Tue, 28 Apr 2026 12:57:31 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 28 Apr 2026 12:57:31 +0000 (GMT)
-Message-ID: <84607c2e-1da9-43d2-8a5b-e50e91c0f8ba@linux.ibm.com>
-Date: Tue, 28 Apr 2026 08:57:31 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tpm: Dynamically allocate tpm-tis buffer
-To: armenon@redhat.com
-Cc: qemu-devel@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>
-References: <20260427200134.453022-1-armenon@redhat.com>
- <765f0577-ee8f-4944-93fe-bb93e420668f@linux.ibm.com>
- <afBbLDmdYFY5feJx@fedora>
-Content-Language: en-US
+ Tue, 28 Apr 2026 13:07:29 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A52EA58056;
+ Tue, 28 Apr 2026 13:07:28 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 60C9658052;
+ Tue, 28 Apr 2026 13:07:28 +0000 (GMT)
+Received: from mycroft-2.pok.ibm.com (unknown [9.47.158.222])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 28 Apr 2026 13:07:28 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <afBbLDmdYFY5feJx@fedora>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, armenon@redhat.com,
+ Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PATCH 3/6] tests: Set sizes for arrays of expected TPM responses and
+ requests
+Date: Tue, 28 Apr 2026 13:07:15 +0000
+Message-ID: <20260428130718.1325177-4-stefanb@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260428130718.1325177-1-stefanb@linux.ibm.com>
+References: <20260428130718.1325177-1-stefanb@linux.ibm.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=AqDeGu9P c=1 sm=1 tr=0 ts=69f0aebd cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=NEAV23lmAAAA:8
- a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=p0WdMEafAAAA:8 a=Veu011aRk9TlpGnrHNoA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDExOCBTYWx0ZWRfX4TOUZ3zJUUrY
- O2Ymrbw4OuWQsARXNf4+4IIR+1nvIy6SDRJcePYatCLdoTXoqgGz0UyuME4LxI82hMViDaRR+TL
- vAiVDfmcl/8LTaBFnaGMaQNUjb1aDuBshy3wBWf149wylwFfbQD+qSyfyLej3IE2JdvJIRY4R0l
- LEJjLJvmZAN/3jic+Qxn9Mi3iJVKLA44dw7AXiMxHzcz2pPP2oJPgpcZcwFa8jJcu+JhNhzYAUG
- 2OyKLvmEQXZBxBgqOag88fPSdAUVmn//gVSmWBCeyxSaQh8rfANINpzWCXV9AaIrTr5ZK9WsJqM
- Z816FFpQYaT+l8pchCPs/O7hvBQN+qTOP7CsbY+tGY0vnQnwoM84/I79ov13/2dd9PyjkZu9PgR
- mJBIBphJdK95kMVe5QLlDTbQS58ck+3expU6q4vGaOlpmZKKdNy7p5a+3uI/sI1m/P4Dwjul3f+
- hQGfvbbPAB7xRBjUIPw==
-X-Proofpoint-GUID: mJAeKoQavfxzyWqSyUXnptNHVx9n_QSp
-X-Proofpoint-ORIG-GUID: mJAeKoQavfxzyWqSyUXnptNHVx9n_QSp
+X-Proofpoint-ORIG-GUID: BxsYcDWTSJOeVmG8mebhPuC3eU5Eikv6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI4MDExOCBTYWx0ZWRfX5Hf644nmEPpF
+ XqxXtKjtlbSk3Xtpq43N9vesmj7AYcAWMDlKqIHLV7AFNuh4Z///LW4ezVxz/ithn5jnTXPTond
+ 2Ri5sjrUiUjnBMUg5qiJmGxLEcRpSJG1B5br7GAZWFuE2IeU0gM47dIhZ3NqH8GJcP2216cImDN
+ AOAgC8qEFGc7H+9vDoRXwX1oAvcEdLMweDVKfoVnv2W+S/7rvr7AtYjJfV/EXMp8zZifWd963C7
+ lOOpN3o6AhfezeD7Sw1dE/5YsIiEiqNg1ofIAiLNZCFHxlKNwc2JUdW0Eo6UZXgdUoezJGq6wFC
+ EC7hl7mtU8gsZt7UnpubUDyDaH0wvkfOLLZZ2Vu6/wwV95TyurWo6paR/0NgEaOImLy/pAqX0vV
+ ohbadE8aRsDbgNz/gn5qI5+6DpUrp5N1Wrmw7oU+Xhwp9eT/9sn9ujbwie1osw9tp6gDTdHDhR7
+ kJQqtK+PyFOqtrmlhuQ==
+X-Authority-Analysis: v=2.4 cv=VZLH+lp9 c=1 sm=1 tr=0 ts=69f0b111 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=E-MnKC11_1REocI9e9kA:9
+X-Proofpoint-GUID: BxsYcDWTSJOeVmG8mebhPuC3eU5Eikv6
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-28_04,2026-04-28_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 phishscore=0 suspectscore=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 bulkscore=0 impostorscore=0 malwarescore=0
+ clxscore=1015 suspectscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
+ spamscore=0 malwarescore=0 bulkscore=0 priorityscore=1501 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604280118
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -124,161 +119,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Set the sizes of byte arrays holding TPM requests and responses to avoid a
+terminating NUL byte to be added and to only compare the expected part of
+responses.
 
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+---
+ tests/qtest/tpm-tests.c |  4 ++--
+ tests/qtest/tpm-util.c  | 10 +++++-----
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-On 4/28/26 3:01 AM, Arun Menon wrote:
-> Hi Stefan,
-> 
-> Thank you for taking a look.
-> 
-> On Mon, Apr 27, 2026 at 04:49:04PM -0400, Stefan Berger wrote:
->>
->>
->> On 4/27/26 4:01 PM, Arun Menon wrote:
->>> From: Arun Menon <armenon@redhat.com>
->>>
->>> The TPM TIS buffer is currently a fixed-size static array. Change this
->>> to a dynamically allocated heap block. The buffer size is now determined
->>> at runtime by querying the TPM backend.
->>
->> Do we really need this? I mean for the forseeable future 8kb should be
->> sufficient.
-> 
-> You are right that 8kb should be sufficient.
-> I implemented this to address the TODO mentioned here:
-> https://github.com/qemu/qemu/commit/e5f62d87e3c03bda6006085cf6303736fb57f5c5
-> 
-> That is why this patch is  deliberately posted outside the v5 series.
-> It is more about future-proofing than a strict requirement. I thought it
-> was worth addressing while the context was fresh. I am happy to leave it
-> out if we prefer that.
-
-Actually, go ahead. It's better than hard coding the size.
-
-> 
->>
->>>
->>> To support VM migration,
->>> 1. Replace the static VMSTATE_BUFFER macro with pointer-based variant
->>>      VMSTATE_BUFFER_POINTER_UNSAFE, explicitly mentioning the size.
->>> 2. Introduce ext_buffer and ext_size in the migration subsection to
->>>      track allocation exceeding TPM_TIS_BUFFER_MAX. Allocate ext_buffer
->>>      using VMSTATE_VBUFFER_ALLOC_UINT32 only to be freed later after it is
->>>      appended to the main buffer.
->>>
->>> This allows us to migrate to a destination host without breaking
->>> backward compatibility. Old QEMU does not include a size field along
->>> with the buffer in the migration stream, and therefore the
->>> new QEMU is also forced to keep expecting exactly 4096 bytes.
->>>
->>> Implement a post_load hook that will validate the incoming data size
->>> from the migration stream, failing the migration if it exceeds the
->>> destination backend capacity. Add unrealize functions for the TIS interface
->>> types ISA, SysBus and I2C to ensure that the buffer is safely freed on
->>> device destruction.
->>>
->>> Signed-off-by: Arun Menon <armenon@redhat.com>
->>> ---
->>> Dependencies:
->>> This patch depends on the following patch currently in the mailing list:
->>> https://lore.kernel.org/qemu-devel/20260422103018.123608-10-armenon@redhat.com/
->>
->> I had tried to apply your v5 series to master but could not. Do you have a
->> git repo where you keep your patches?
-> 
-> Yes. Here is the repo: https://gitlab.com/armenon/qemu-dev/-/tree/pqc_tpm?ref_type=heads
-> I have applied the GByteArray change first, followed by the 10 commits.
-> 
->>
->>>
->>> Depends-on: <20260422103018.123608-10-armenon@redhat.com>
->>>
->>>    hw/tpm/tpm_tis.h        |  6 ++++-
->>>    hw/tpm/tpm_tis_common.c | 56 +++++++++++++++++++++++++++++++++++------
->>>    hw/tpm/tpm_tis_i2c.c    | 28 +++++++++++++++++++--
->>>    hw/tpm/tpm_tis_isa.c    | 31 +++++++++++++++++++++--
->>>    hw/tpm/tpm_tis_sysbus.c | 32 +++++++++++++++++++++--
->>>    5 files changed, 138 insertions(+), 15 deletions(-)
->>>
->>> diff --git a/hw/tpm/tpm_tis.h b/hw/tpm/tpm_tis.h
->>> index b2d9c0116c..c736ecedc1 100644
->>> --- a/hw/tpm/tpm_tis.h
->>> +++ b/hw/tpm/tpm_tis.h
->>> @@ -56,7 +56,9 @@ typedef struct TPMLocality {
->>>    typedef struct TPMState {
->>>        MemoryRegion mmio;
->>> -    unsigned char buffer[TPM_TIS_BUFFER_MAX];
->>> +    uint8_t *buffer;
->>> +    uint8_t *ext_buffer;
->>> +    uint32_t ext_size;
->>>        uint16_t rw_offset;
->>>        uint8_t active_locty;
->>> @@ -82,6 +84,8 @@ extern const VMStateDescription vmstate_locty;
->>>    extern const MemoryRegionOps tpm_tis_memory_ops;
->>>    int tpm_tis_pre_save(TPMState *s);
->>> +int tpm_tis_post_load(TPMState *s);
->>> +int tpm_tis_ext_buffer_post_load(TPMState *s);
->>>    void tpm_tis_reset(TPMState *s, bool ppi_enabled);
->>>    enum TPMVersion tpm_tis_get_tpm_version(TPMState *s);
->>>    void tpm_tis_request_completed(TPMState *s, int ret);
->>> diff --git a/hw/tpm/tpm_tis_common.c b/hw/tpm/tpm_tis_common.c
->>> index 43e68410f8..c9c4dd1190 100644
->>> --- a/hw/tpm/tpm_tis_common.c
->>> +++ b/hw/tpm/tpm_tis_common.c
->>> @@ -270,7 +270,7 @@ static uint32_t tpm_tis_data_read(TPMState *s, uint8_t locty)
->>>        uint16_t len;
->>>        if ((s->loc[locty].sts & TPM_TIS_STS_DATA_AVAILABLE)) {
->>> -        len = MIN(tpm_cmd_get_size(&s->buffer),
->>> +        len = MIN(tpm_cmd_get_size(s->buffer),
->>>                      s->be_buffer_size);
->>>            ret = s->buffer[s->rw_offset++];
->>> @@ -317,7 +317,7 @@ static void tpm_tis_dump_state(TPMState *s, hwaddr addr)
->>>               "tpm_tis: result buffer : ",
->>>               s->rw_offset);
->>>        for (idx = 0;
->>> -         idx < MIN(tpm_cmd_get_size(&s->buffer), s->be_buffer_size);
->>> +         idx < MIN(tpm_cmd_get_size(s->buffer), s->be_buffer_size);
->>>             idx++) {
->>>            printf("%c%02x%s",
->>>                   s->rw_offset == idx ? '>' : ' ',
->>> @@ -383,7 +383,7 @@ static uint64_t tpm_tis_mmio_read(void *opaque, hwaddr addr,
->>>            if (s->active_locty == locty) {
->>>                if ((s->loc[locty].sts & TPM_TIS_STS_DATA_AVAILABLE)) {
->>>                    val = TPM_TIS_BURST_COUNT(
->>> -                       MIN(tpm_cmd_get_size(&s->buffer),
->>> +                       MIN(tpm_cmd_get_size(s->buffer),
->>>                               s->be_buffer_size)
->>>                           - s->rw_offset) | s->loc[locty].sts;
->>>                } else {
->>> @@ -754,7 +754,7 @@ static void tpm_tis_mmio_write(void *opaque, hwaddr addr,
->>>                    /* we have a packet length - see if we have all of it */
->>>                    bool need_irq = !(s->loc[locty].sts & TPM_TIS_STS_VALID);
->>> -                len = tpm_cmd_get_size(&s->buffer);
->>> +                len = tpm_cmd_get_size(s->buffer);
->>>                    if (len > s->rw_offset) {
->>>                        tpm_tis_sts_set(&s->loc[locty],
->>>                                        TPM_TIS_STS_EXPECT | TPM_TIS_STS_VALID);
->>> @@ -818,9 +818,10 @@ void tpm_tis_reset(TPMState *s, bool ppi_enabled)
->>>        int c;
->>>        s->be_tpm_version = tpm_backend_get_tpm_version(s->be_driver);
->>> -    s->be_buffer_size = MIN(tpm_backend_get_buffer_size(s->be_driver),
->>> -                            TPM_TIS_BUFFER_MAX);
->>> +    s->be_buffer_size = tpm_backend_get_buffer_size(s->be_driver);
->>> +    s->buffer = g_realloc(s->buffer, MAX(s->be_buffer_size,
->>> +                          TPM_TIS_BUFFER_MAX));
->>
->> With MAX() it can now be bigger than TPM_TIS_BUFFER_MAX if the backend says
->> so -- hm...
-> 
-> TPM_TIS_BUFFER_MAX is still 4096.
-
-Oh, I had still based my patches on your TPM_TIS_BUFFER_MAX increase to 
-8192 bytes. Let me fixes this along with a few other things. I will let 
-you know.
-
-I have another series that I will post now that can be applied to 
-master. It's adding a test for TIS over I2C but I will need to extend 
-that one also with the large transfer test case then.
-
+diff --git a/tests/qtest/tpm-tests.c b/tests/qtest/tpm-tests.c
+index 197714f8d9..dcbf5457ed 100644
+--- a/tests/qtest/tpm-tests.c
++++ b/tests/qtest/tpm-tests.c
+@@ -59,7 +59,7 @@ void tpm_test_swtpm_test(const char *src_tpm_path, tx_func *tx,
+     tpm_util_startup(s, tx);
+     tpm_util_pcrextend(s, tx);
+ 
+-    static const unsigned char tpm_pcrread_resp[] =
++    static const unsigned char tpm_pcrread_resp[62] =
+         "\x80\x01\x00\x00\x00\x3e\x00\x00\x00\x00\x00\x00\x00\x16\x00\x00"
+         "\x00\x01\x00\x0b\x03\x00\x04\x00\x00\x00\x00\x01\x00\x20\xf6\x85"
+         "\x98\xe5\x86\x8d\xe6\x8b\x97\x29\x99\x60\xf2\x71\x7d\x17\x67\x89"
+@@ -105,7 +105,7 @@ void tpm_test_swtpm_migration_test(const char *src_tpm_path,
+     tpm_util_startup(src_qemu, tx);
+     tpm_util_pcrextend(src_qemu, tx);
+ 
+-    static const unsigned char tpm_pcrread_resp[] =
++    static const unsigned char tpm_pcrread_resp[62] =
+         "\x80\x01\x00\x00\x00\x3e\x00\x00\x00\x00\x00\x00\x00\x16\x00\x00"
+         "\x00\x01\x00\x0b\x03\x00\x04\x00\x00\x00\x00\x01\x00\x20\xf6\x85"
+         "\x98\xe5\x86\x8d\xe6\x8b\x97\x29\x99\x60\xf2\x71\x7d\x17\x67\x89"
+diff --git a/tests/qtest/tpm-util.c b/tests/qtest/tpm-util.c
+index 2cb2dd4796..1a47099807 100644
+--- a/tests/qtest/tpm-util.c
++++ b/tests/qtest/tpm-util.c
+@@ -54,9 +54,9 @@ void tpm_util_crb_transfer(QTestState *s,
+ void tpm_util_startup(QTestState *s, tx_func *tx)
+ {
+     unsigned char buffer[1024];
+-    static const unsigned char tpm_startup[] =
++    static const unsigned char tpm_startup[12] =
+         "\x80\x01\x00\x00\x00\x0c\x00\x00\x01\x44\x00\x00";
+-    static const unsigned char tpm_startup_resp[] =
++    static const unsigned char tpm_startup_resp[10] =
+         "\x80\x01\x00\x00\x00\x0a\x00\x00\x00\x00";
+ 
+     tx(s, tpm_startup, sizeof(tpm_startup), buffer, sizeof(buffer));
+@@ -68,14 +68,14 @@ void tpm_util_startup(QTestState *s, tx_func *tx)
+ void tpm_util_pcrextend(QTestState *s, tx_func *tx)
+ {
+     unsigned char buffer[1024];
+-    static const unsigned char tpm_pcrextend[] =
++    static const unsigned char tpm_pcrextend[65] =
+         "\x80\x02\x00\x00\x00\x41\x00\x00\x01\x82\x00\x00\x00\x0a\x00\x00"
+         "\x00\x09\x40\x00\x00\x09\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00"
+         "\x0b\x74\x65\x73\x74\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+         "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+         "\x00";
+ 
+-    static const unsigned char tpm_pcrextend_resp[] =
++    static const unsigned char tpm_pcrextend_resp[19] =
+         "\x80\x02\x00\x00\x00\x13\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+         "\x01\x00\x00";
+ 
+@@ -89,7 +89,7 @@ void tpm_util_pcrread(QTestState *s, tx_func *tx,
+                       const unsigned char *exp_resp, size_t exp_resp_size)
+ {
+     unsigned char buffer[1024];
+-    static const unsigned char tpm_pcrread[] =
++    static const unsigned char tpm_pcrread[20] =
+         "\x80\x01\x00\x00\x00\x14\x00\x00\x01\x7e\x00\x00\x00\x01\x00\x0b"
+         "\x03\x00\x04\x00";
+ 
+-- 
+2.43.0
 
 
