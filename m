@@ -4,89 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B67CFF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 05:59:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A31D5FF886F
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 05:59:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHbTI-00058R-8T; Tue, 28 Apr 2026 01:59:00 -0400
+	id 1wHbTR-0005GG-AS; Tue, 28 Apr 2026 01:59:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHbTE-000557-66
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 01:58:56 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
+ id 1wHbTP-0005G0-92
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 01:59:07 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHbTC-0004Dh-Le
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 01:58:55 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-43d74086e5bso10386758f8f.0
- for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 22:58:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
+ id 1wHbTN-0004GA-GT
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 01:59:06 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-488a8ca4aadso152236335e9.3
+ for <qemu-devel@nongnu.org>; Mon, 27 Apr 2026 22:59:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777355933; x=1777960733; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wp6/+swH8UtlBUJwoZipXsUqU7m6hWS6O+3Lv6wC/ak=;
- b=TjQsZflf8PKigTVjIodI1rmPqqRzzyUG2TjE0dxya/S+BH9nNPrlJcrYdwYjXz3iFn
- HXkY/uLX/a+qe0XjojBgHJ+G3sNTBlzqGs5dSojSbdaHl8odqPZAWjmC+DqVcEfCGuPd
- eywwkpVnk84UAIUuzAcCj4fUzMZBuAsXe/XiudlsUqW+i0YhEGPI1gsQB9A4WRaZmYC7
- Sr0e4gpreL4x8qGonDmqnSPK3Rd5NWQCwI52q1aqqADAPsP51taUdC1yUEWhUMXFeZmL
- B01dp4K7ZGCAiBVVRwkW3o/5RFeR6+5Ky6Uex0PQlky0Bblb8xZRU+inecvB40fz/Fv5
- wTcw==
+ d=gmail.com; s=20251104; t=1777355944; x=1777960744; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=/WkmntmYq1lL6k7YcNrMzZ0/534/DWxK37YNwawLpPg=;
+ b=GD5XsfUPYbIrDiQXm89t5bHXkELVv1JsFvp+zzb0sskLxYMHerH3uxRGjY8K2rmQij
+ icQoRblUpl1oDLnL1XRG5nhzSbI/GfkJfHaY7SP9RSyhktITrkiXlWMJj+af/uspR1dq
+ d4xI4p7MZpK/pdm/sTNw82NJXOmD8PNesc4qrVUWqYtzEO3yu1kZAPssGMCv41weD1k1
+ scYaKE09gDxOzvWJkXQmTzgbEV461EyKogOBmfx0/o07HoIhpFWF2pPEZiimPK5dyZdF
+ chk/sOPXx+wadVRIfPVE9SQcYYScoHaE6eVz69WgMtH++sDNBT594bQyWDbRA6w1JkHk
+ vlEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777355933; x=1777960733;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wp6/+swH8UtlBUJwoZipXsUqU7m6hWS6O+3Lv6wC/ak=;
- b=EcRvUkR/3YtDs9FGq2QPwaNs5wUGmjMdFw39v7KUELFv9jEcNabVS+cknOqiKP45Q7
- ATC2oY2f6K6rGx0lHdn6akgM/RdJ9c2nm8gUv8dhvUMoFnuNKINp4Q3Bwrc4BZkPA4Xn
- vt9rVrwz+kwVZMSMMD1LS8J6E0Rixa8QFsefuBK42VwASom2Tfjg9mUTX8VfahghffRF
- mswr4GFi+W9xFVsxQrTXDGDuRsFgQpA9VlRl6k3CGIkEF1o14+I9Lo20TspNVZJZCwql
- ABxs9QwNWhITg53SRn2GgdtjfS0NRAf6hTs++Q/311hHxmyC9s4x+/HKlfgSH2WvTlpH
- h7UQ==
-X-Gm-Message-State: AOJu0YwuYC8/2UarNPTHAmSasBqvkSEQCKeYxSQVTVtGvLyiEmqJDYy9
- RbfBEsWZmldxk0W9yHDqYmnVRudWrxlerT6U/DtFqGBsxtE8Jorxo57WEq0wvs2PDLc=
-X-Gm-Gg: AeBDiesJ7UEQPBQhuSBoIeTCSucjF/1V5w+xWYZ6MpQhluwfNX62hyPvSNIJFfnW4p1
- Nx85VicA/R0VAFDi9jUzxbWrb+/vCRa4dbnkgQVoi1Ks9llTX4zboYy6gCATzl0VbZo2addmQFz
- EOw4HsEJwYPaNq5DypTcT+eSfbqeN/YKT+uxo/RxeVrAAW1tvH263Vah5WZwPubrUEPFabZeWib
- 3rurotLhlWIE+jTkC7WrRwaCZSl7TlyLpzTKoaN0nfpv3gZTfKb7YKBhJ0s/JUo+xUmfZJQ0qMg
- KQLxPijiL7B8iQA/dWqaNP/4yar2v/RqfC+qr5qem6OWewpqA2djAZcxepiScdBZcwoSj4g/Lfk
- Muw6S21EUfZnmianIkvItil/fgnHiNIIH39mQKUVvLo/f64KuLM8kapxnJ0sddF3haF7SuC3q3c
- 9bECJ9ixZBhwXVunZR0vTjlx6umGihToniv/+cq/4zeRpYoR87xC2IvBXxGMK7YOkcGyn2Gtbag
- OuB
-X-Received: by 2002:a05:6000:18a6:b0:43b:5672:efe with SMTP id
- ffacd0b85a97d-4464761b872mr2913035f8f.9.1777355932794; 
- Mon, 27 Apr 2026 22:58:52 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4463d02f6a1sm3650099f8f.13.2026.04.27.22.58.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 27 Apr 2026 22:58:52 -0700 (PDT)
-Message-ID: <0c46bcf1-5d33-4c6c-a849-7b47a104844d@linaro.org>
-Date: Tue, 28 Apr 2026 07:58:51 +0200
+ d=1e100.net; s=20251104; t=1777355944; x=1777960744;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/WkmntmYq1lL6k7YcNrMzZ0/534/DWxK37YNwawLpPg=;
+ b=fVQdguxCNg0e4BmEFMOgaB3FnGDhBn6DFPXiOuY+aBgYRlXPJhzzzv6oVtyY07ItIA
+ btESMYjrlGfRnJJwZO2yaY2TG0EIYYmh21nspQMdIr9X9sOsgpou/GP5s2u/1Z96/6Bw
+ BbQqrcozXrceIv1awwM2BBVhjoD33TRy98Ye5Bd48IHdYM0OB6upGzGvKD0rsNzLf3A2
+ cRcZ9G2jo3u2Gqhd8jHd0tzAFBA80ZOcRlxWTj6t+5UPhwj3fM0TLCjwPnyY8QepGA/C
+ 0D6j38mMUhLeVxuFDIutunObZAMa9fNiSXaMQq/kvmZd7yISZVkbeDSo6EE2TmefbmSQ
+ aDLw==
+X-Gm-Message-State: AOJu0Yz2Kooyb+B3o1VWKvu27Z/4NKyb7lj6CG/4AyITF6ZtJyxX1j/P
+ c5fXGJQtg05k4aJ0wcTM5moSD1Xyw3U+SP5NTadgY3RG409mh5fVyER7
+X-Gm-Gg: AeBDieu06UlfX2OYxjTBSpiTEtZQNKh3nrzzHOCc8BsRsjjp+pB+ftIT4r0Tk4WZU/y
+ 7Wjx2H1oDmbdWmONfIVQOIEDBnC16KmjQDXzTL/U3CCkJV3c4YGP91CK915UQWeN6YRCnrxtbfp
+ +6eKbKNap/aztV7rguSqLzbLhKr53qZBvdJCpPhejKRzLLhshptfGRHoIbD/8HNJz6qwZfHsvry
+ yTuy+nKMYAceETSiDz3KbzzDMm6baz7wfz9CFB5v1mqVjdfk+7eMEu60Ufl/9wMrk4o1Uw+/iXl
+ Ed5cPoG1JW2vT3Sr95Ovv7ED2mwtzNfMjZRiyygvzlwEPydzYcP4iL3nN5Jb0yxIjaj/IEcmgUM
+ 9bkbndWshlbhxRRWmSG9NbWxfUldDaJNd2qDanmSGi4artgo6PmmJB3Oyo86mDjwZM/LhJ9qxKQ
+ XjEPY3JuBmMSmfNavTXqXae1SPEaIluAzLMcECEPnw9h8UOrBQLDA=
+X-Received: by 2002:a05:600c:8590:b0:489:1fa4:50c6 with SMTP id
+ 5b1f17b1804b1-48a77b19f8bmr16926915e9.20.1777355943498; 
+ Mon, 27 Apr 2026 22:59:03 -0700 (PDT)
+Received: from holly.home.arpa ([2a03:ab00:1000:1b60:331a:b316:78f6:effc])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a773e7c26sm30372275e9.9.2026.04.27.22.59.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 27 Apr 2026 22:59:03 -0700 (PDT)
+Message-ID: <b6edce93663c531df35d2f995a736c9bdfb46dae.camel@gmail.com>
+Subject: Re: [PATCH v3 1/2] ui/gtk: Use non-blocking clipboard retrieval
+From: Jindrich Makovicka <makovick@gmail.com>
+To: =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, "Daniel P."
+ =?ISO-8859-1?Q?Berrang=E9?=
+ <berrange@redhat.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Date: Tue, 28 Apr 2026 07:59:02 +0200
+In-Reply-To: <96a72d0c9fec24f3c710ecacfe8ab36e2d006d3b.camel@gmail.com>
+References: <20260426-gtk-clipboard-v3-0-09555aaeda34@gmail.com>
+ <20260426-gtk-clipboard-v3-1-09555aaeda34@gmail.com>
+ <CAJ+F1CLwkT9EJLFNDoW1Z6B7adrL=hr_3xUHE9m4K9K1AG=WJw@mail.gmail.com>
+ <96a72d0c9fec24f3c710ecacfe8ab36e2d006d3b.camel@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2-9 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] hw/display/cirrus_vga: Fix packed-24 color-expansion
- ops
-Content-Language: en-US
-To: Junjie Cao <junjie.cao@intel.com>, peter.maydell@linaro.org
-Cc: qemu-devel@nongnu.org, kraxel@redhat.com, balaton@eik.bme.hu,
- chad@jablonski.xyz
-References: <20260410183249.4046456-1-peter.maydell@linaro.org>
- <20260428101211.3469935-1-junjie.cao@intel.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260428101211.3469935-1-junjie.cao@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=makovick@gmail.com; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,24 +106,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/4/26 12:12, Junjie Cao wrote:
-> On Fri, 10 Apr 2026 19:32:47 +0100, Peter Maydell wrote:
->> Big disclaimer on this: I have no guest images that try to use the
->> Cirrus bitblt handling at all, so I have only developed these against
->> the reference manual and confirmed that it fixes the UB repro case
->> from the bug. If anybody does have test images for these that would be
->> good to test...
-> 
-> Confirmed: the qtest reproducer from the linked issue fires on
-> unpatched master and is clean with both patches applied.  I also
-> fuzz-tested the patched cirrus-vga (generic-fuzz, ASan + UBSan,
-> 20 workers, ~47M executions / 8 hours) with no new issues.
+On Mon, 2026-04-27 at 21:26 +0200, Jindrich Makovicka wrote:
+> Hi,
+>=20
+> On Mon, 2026-04-27 at 12:52 +0400, Marc-Andr=C3=A9 Lureau wrote:
+> > Hi Jind=C5=99ich
+> >=20
+> > On Sun, Apr 26, 2026 at 11:53=E2=80=AFAM Jind=C5=99ich Makovi=C4=8Dka
+> > <makovick@gmail.com> wrote:
+> > >=20
+> >=20
+> > Could you review & compare with the previous lost patch ("[PATCH
+> > v4]
+> > ui/gtk-clipboard: async owner_change clipboard_request")
+> >=20
+> > https://patchew.org/QEMU/20231206142243.510068-1-edmund.raile@proton.me=
+/
+>=20
+> The GTK part of this patch is basically my v2, with both paths using=20
+> gtk_clipboard_request_text .
+>=20
+> Then there is the serial number checking I am not familiar
+> with.=C2=A0However, qemu_clipboard_check_serial seems to require info-
+> > has_serial set to true which is not done in this patch (only info-
+> > serial is set) so this half of serial number check is effectively
+> > no-
+> op.
 
-Thank you Junjie :)
+I think the change below should work if we want to be safe from out-of-
+order clipboard events, but I'd rather leave it to someone who has
+experience with this feature (i.e. vdagent or dbus dev)
 
-> 
-> I have reviewed both patches and they look correct to me.
-> 
-> Junjie
+diff --git a/include/ui/gtk.h b/include/ui/gtk.h
+index 3e6ce3cb48..321f02e656 100644
+--- a/include/ui/gtk.h
++++ b/include/ui/gtk.h
+@@ -149,6 +149,7 @@ struct GtkDisplayState {
+     uint32_t cbpending[QEMU_CLIPBOARD_SELECTION__COUNT];
+     GtkClipboard *gtkcb[QEMU_CLIPBOARD_SELECTION__COUNT];
+     bool cbowner[QEMU_CLIPBOARD_SELECTION__COUNT];
++    uint32_t cb_serial_owner_change;
+=20
+     DisplayOptions *opts;
+ };
+diff --git a/ui/gtk-clipboard.c b/ui/gtk-clipboard.c
+index 463ed4e905..6a3b0dbb32 100644
+--- a/ui/gtk-clipboard.c
++++ b/ui/gtk-clipboard.c
+@@ -143,7 +143,7 @@
+gd_clipboard_request_text_received_callback(GtkClipboard *clipboard,
+ {
+     QemuClipboardInfo *info =3D (QemuClipboardInfo *)data;
+=20
+-    if (text) {
++    if (text && qemu_clipboard_check_serial(info, true)) {
+         qemu_clipboard_set_data(info->owner, info,
+QEMU_CLIPBOARD_TYPE_TEXT,
+                                 strlen(text), text, true);
+     }
+@@ -202,6 +202,8 @@ static void gd_owner_change(GtkClipboard
+*clipboard,
+     switch (event->owner_change.reason) {
+     case GDK_OWNER_CHANGE_NEW_OWNER:
+         info =3D qemu_clipboard_info_new(&gd->cbpeer, s);
++        info->serial =3D ++gd->cb_serial_owner_change;
++        info->has_serial =3D true;
+         gtk_clipboard_request_targets(
+             clipboard,
+             gd_clipboard_owner_change_targets_received_callback,
 
+Regards,
+--=20
+Jindrich Makovicka
 
