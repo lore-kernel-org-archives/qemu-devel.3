@@ -4,113 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58269FF885D
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 08:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A7FDFF885D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 08:08:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHdRu-0003xe-KU; Tue, 28 Apr 2026 04:05:43 -0400
+	id 1wHdU4-0004a0-WE; Tue, 28 Apr 2026 04:07:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHdRr-0003vo-O9
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:05:39 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wHdRp-00040L-LC
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:05:39 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-6501725d888so9002984d50.0
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 01:05:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777363536; cv=none;
- d=google.com; s=arc-20240605;
- b=Od1fUHmbArB+c2faW33hIp2Utub8z3bAj+JM1S+7y2tzwRwcLH8wp+czvZVG+km9V3
- rnbVwk+nOF7IcA6s3AVG4+uLaVIj1bDKnvxF3AyNUxoLi0oJV1AHqpehtYafYN8h0dWM
- WJocDc2imvWDghuZIpd39PmW63GCg1Knwx95yi3vIOJpXq58tcUa9Syt6F14jNyywCfg
- chHZQfbhyDnl+MdkaXKRY5ML7F+j2QvTW7M5p7Gn8a5C2qPoOKcviaCKauGVluzjmgdS
- 819Yknbk9HRt1pCi4RZz1OzUKIOcRJArLtCDt/qAql0ygLR1q2cTmyoARw9DReSZVQPT
- e4Yg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=3p6JM+SR761BTEBtVAwiHNtyumubWwYU22QwXID24vg=;
- fh=M/bNlt4bsN+Nhx06lHjVtTmXzFrq2ct96MDClRYMSKs=;
- b=h1WmfQPmjx101y4r/MCpNS/A31B9I5CqQMP7ND/bS64jwQASl3d5DiBSemMPQZX18N
- jlkhM1WMjbfDKME/nW/uJegR3T12kdkic7+4zJuxkXM+kTkcESNv+jMsYKx8OQuGIB/D
- X7cWWjPvzmRkxgRvTtbW2NHXBPQ6qADo+4o9un8k2y5VVE8QQx80JS1b9r3bOXTUSun/
- 6EEUhqVi6q2h9wrv+StZa+u1Kqb64bl6/lRN71jwsv3OvAY0s+H7neK2ySyjSFknHNF3
- sIv+exDN4lEtn0ri85xVQ3eq8kgvGk3NV44FlIMw7UltYn72JZx1nF+CURN6P8ULwmWj
- W1gg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777363536; x=1777968336; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3p6JM+SR761BTEBtVAwiHNtyumubWwYU22QwXID24vg=;
- b=bnf/iXPDo+Yt0geVTbEaiJygo1UBsONQc/RHwDqQVrXkpXuO9ewLcK0G0iLzaBBZXh
- 1ouX079Y7Vnc/yYsTpi275zCvjQf3jCaq+fHZeGt4gmj+gc41gcAphitTjlaaGKi2kVW
- DLc9yTtiZ4/HOC8AkpbyE4I89EMCt2J1I0yLjFGVsBIYQu0BLGhd9jBS+74283wqc71G
- 6PcPCBpNIZaHFGe+FVekdoaCoNDnuTFA3eSklZ+d1W5/g8i6GU7k0wIR50rO5odh3dqG
- HHmNbojqEUKoMvoxJdyUUAERCLCUWa65aHybWzkxhs34HAEDhYTgIyZr05bY9bT8REOv
- jF0g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777363536; x=1777968336;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3p6JM+SR761BTEBtVAwiHNtyumubWwYU22QwXID24vg=;
- b=e0z1g6FSUY3YMyaMIpTsXjLwvyGivCQpEbhm4LBUJnBwqCNikUfZfqOJitC3Vn3jaO
- D2Tmqi4nCik0U02DTu3yD0Z0iJcIvJbmWM2DIQ+8iXnp2CtaL+VaInRvgJH1FEViKeNz
- LHWrTJVjU4drdMJICiuPJQsnz39S9q+xAG6d10exr9FaB8QWLyMPtiwZ5m9qESHyF11C
- Ees/W3O5B+Cix1sQxuMRoLFYaQwm5PGdWajQIp3dlh+0RjFQqe43xPzcTMLSnzWUAUAB
- i+HWVGMtxEBv6hCgyXpBnNgC6/L9ku9SFU2tASY7T/SFUO22E7eZMRJynrVcvQoUCIrW
- 2vGw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9bZwCfZlQslqwUq+zRJez0xqRuGMzLEtvfMAfzD4iw5upwi8txPDtJDtz57ILTsUId8orSYEynatli@nongnu.org
-X-Gm-Message-State: AOJu0YyOp7nhwgY6If4qz3VGwuAH4HnZA7YvnDVs3nyyYukIqFGO9Gjd
- /cxUYup4H/ER9c6QBSSNWisGqIBtVZGGM+j/Q2WM+4XVs4Us3h4AZyn5ak5k0QWJGLgnqgDB6zP
- VKytGdRQhU5yjXxuCBwPOGMjUAssjSb96trvamJfKnQ==
-X-Gm-Gg: AeBDievjljcFDNYeqNjYRSsUmrCadWg3XMlgzju/gLU9uE/WVZzoDFCHzL25kSuhH1p
- 1m/oA9Zg7DWHymx1XSiN18XgN8oSXISZrAgfP6YsYxxuV7L82Aw1Z5O6MM6ZwTAzWFbQ4PNu8PM
- 5P0SepGglIWxnRnMUPYTbQ2u8eUDpSu7tYFgPKH6QxBq9YXkSFNnhhgTSMu5AkWu5wSH3Vfyav8
- uhuVbCG/eBMe3N3kK9El2q/74hqQD7BPF8TlCN3QDfqoAmYHLTGF1ZZWCS0kkjPvV5nm1+W3KNG
- UPq7kceasLHNR0fqxwwWa0EAatdL9+Nl65AWVjyB+DOuaY/Ds26xB0nnyEhTeaDdsU6wsQFOZQc
- 5xcO1DoGHQJq5
-X-Received: by 2002:a05:690e:14cc:b0:654:ea8a:f2e with SMTP id
- 956f58d0204a3-65beed3d1cemr1676384d50.3.1777363536304; Tue, 28 Apr 2026
- 01:05:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wHdU2-0004Z3-Ca; Tue, 28 Apr 2026 04:07:54 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wHdTy-0004Mo-W4; Tue, 28 Apr 2026 04:07:53 -0400
+Received: from h205.csg.ci.i.u-tokyo.ac.jp (h205.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.205]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 63S87UMu001425
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 28 Apr 2026 17:07:40 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=ZsX0U/9xuugcD5yPUItOyYoEt/O08ddTGev4YjQLges=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1777363660; v=1;
+ b=Qd8ZIubzI5Go3svg+MQDT+IkczHKpm0rpdhXDb84Nyv+yTYXv1ox54SmwrqzCAPC
+ 5Pfoxq6Iyv2RzCfVrlMn+qmP/qyYp1Liz5rPdjzcvBiYvJquGyxUfBaHveJgl+t7
+ ZQHIXn4sy4w+/UmMkRSUPObvJjyahO0qEyENnlpx6hNt+G0HRxyRYkHAFsaNYuS8
+ I6hU2c4AiWBbefZANUN8wRXY1tLzPHNR98Gj9neiGesPlsbz99RtYtxdConl7Lxv
+ UxbXR0c6FTgl9vJGDw1/1FkrkmbDrKx0dbtsocbJdry/ALCJEpIFsmXJUCUgwjuX
+ ib3DAgupeWTxj7SMwh1blA==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 28 Apr 2026 17:07:27 +0900
+Subject: [PATCH] target/arm/kvm: Cache host CPU probe failure
 MIME-Version: 1.0
-References: <20260409220614.65558-1-lucaaamaral@gmail.com>
- <CAFEAcA-8BeBte6CxH._5F5Zsk3wvs0zJJW6+=8cNaroRTBegK-M5A@mail.gmail.com>
- <20260427184540.80415-1-lucaaamaral@gmail.com>
- <CAFEAcA9yGmWq--JsyZpPnOQ74i=j7JeeO0Xf6be7wWxJGbXLdg@mail.gmail.com>
- <8A075A86-D6D9-4C97-BE31-C94D58F796FB@unpredictable.fr>
-In-Reply-To: <8A075A86-D6D9-4C97-BE31-C94D58F796FB@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 28 Apr 2026 09:05:25 +0100
-X-Gm-Features: AVHnY4KeGH0WyyxQvKCaRKcMnc1goi-jzR7sy7-stK8-wqpk1UqkEuC8IRmENT0
-Message-ID: <CAFEAcA_TOBD0p-Vom2f14DimmvSJMNUWZEXyg=0onjgn3OrB0g@mail.gmail.com>
-Subject: Re: [PATCH v6 0/6] target/arm: ISV=0 data abort emulation library
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: Lucas Amaral <lucaaamaral@gmail.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Alexander Graf <agraf@csgraf.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260428-features-v1-1-1841b39da7e6@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXMQQ5AMBCF4avIrDWpkqZxFbGo6WAskA4iEXdXL
+ L/kf+8CocgkUGcXRDpYeJkTijwDHP08kOKQDEYbqyvjVE9+2yOJ8rYM6EOHziKkfI3U8/ldNe1
+ v2buJcHv3cN8PThZJNmwAAAA=
+X-Change-ID: 20260428-features-a63dcadbc86c
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ kvm@vger.kernel.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.16-dev-16047
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,36 +73,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 27 Apr 2026 at 21:15, Mohamed Mediouni <mohamed@unpredictable.fr> w=
-rote:
-> > On 27. Apr 2026, at 22:02, Peter Maydell <peter.maydell@linaro.org> wro=
-te:
-> > I would like any memory access emulation to come with an
-> > attached description of what the guest workload is that
-> > is triggering the requirement for it, so we can check that
-> > it makes sense to do so. (Mohamed mentions the Windows TPM
-> > device, though I am still not sure what exactly is going on
-> > there and whether emulating the access is the right approach
-> > to it.)
-> >
-> For the TPM:
->
-> TL;DR is that currently we have a workaround in QEMU that maps the page
-> to the guest for direct read but traps writes. As it=E2=80=99s an MMIO ra=
-nge,
-> it relies on FEAT_S2FWB to keep things consistent and misbehaves on CPUs
-> without it.
->
-> Emulating ldp is enough to get rid of that hack and instead map the TPM
-> as a regular device.
->
-> ldp/stp are also used by recent macOS guests to the GICv2m...
+kvm_arm_set_cpu_features_from_host() does not properly handle host CPU
+probe failure with caching. The current algorithm can be summarized as
+follows:
 
-This feels to me like something that would be better fixed
-in the guest -- doing LDP/STP to hardware is just asking for
-problems under a hypervisor, and there's no good reason to
-be doing it in the first place. But being a bit more practical,
-it is a good reason for having emulation of ldp/stp I guess.
+    If dtb_compatible is not cached:
+        If kvm_arm_create_scratch_host_vcpu() fails:
+            Report failure
 
--- PMM
+        Cache dtb_compatible
+
+        If getting register values fails:
+            Report failure
+
+    Report success
+
+This algorithm has the following problems:
+
+- If kvm_arm_create_scratch_host_vcpu() fails, probing may be repeated.
+- If getting register values fails, later invocations incorrectly report
+  success.
+
+Make two changes to fix them:
+
+- Cache dtb_compatible whenever a probe is attempted.
+- Record probe failure by assigning QEMU_KVM_ARM_TARGET_NONE to
+  arm_host_cpu_features.target.
+
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+---
+Supersedes: <20260422-arm-v1-1-106a9a9e22dd@rsg.ci.i.u-tokyo.ac.jp>
+---
+ target/arm/kvm.c | 38 ++++++++++++++++++++++----------------
+ 1 file changed, 22 insertions(+), 16 deletions(-)
+
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index d4a68874b880..7d194ea112b1 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -273,7 +273,7 @@ static uint32_t kvm_arm_sve_get_vls(int fd)
+     return vls[0] & MAKE_64BIT_MASK(0, ARM_MAX_VQ);
+ }
+ 
+-static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
++static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+ {
+     /* Identify the feature bits corresponding to the host CPU, and
+      * fill out the ARMHostCPUClass fields accordingly. To do this
+@@ -287,6 +287,13 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     uint64_t features = 0;
+     int err;
+ 
++    ahcf->target = QEMU_KVM_ARM_TARGET_NONE;
++    ahcf->dtb_compatible = "arm,armv8";
++
++    if (!kvm_enabled()) {
++        return;
++    }
++
+     /*
+      * target = -1 informs kvm_arm_create_scratch_host_vcpu()
+      * to use the preferred target
+@@ -326,11 +333,9 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     }
+ 
+     if (!kvm_arm_create_scratch_host_vcpu(fdarray, &init)) {
+-        return false;
++        return;
+     }
+ 
+-    ahcf->target = init.target;
+-    ahcf->dtb_compatible = "arm,armv8";
+     int fd = fdarray[2];
+ 
+     err = get_host_cpu_reg(fd, ahcf, ID_AA64PFR0_EL1_IDX);
+@@ -454,7 +459,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     kvm_arm_destroy_scratch_host_vcpu(fdarray);
+ 
+     if (err < 0) {
+-        return false;
++        return;
+     }
+ 
+     /*
+@@ -471,9 +476,8 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+         features |= 1ULL << ARM_FEATURE_EL2;
+     }
+ 
++    ahcf->target = init.target;
+     ahcf->features = features;
+-
+-    return true;
+ }
+ 
+ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
+@@ -481,18 +485,20 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
+     CPUARMState *env = &cpu->env;
+ 
+     if (!arm_host_cpu_features.dtb_compatible) {
+-        if (!kvm_enabled() ||
+-            !kvm_arm_get_host_cpu_features(&arm_host_cpu_features)) {
+-            /* We can't report this error yet, so flag that we need to
+-             * in arm_cpu_realizefn().
+-             */
+-            cpu->kvm_target = QEMU_KVM_ARM_TARGET_NONE;
+-            cpu->host_cpu_probe_failed = true;
+-            return;
+-        }
++        kvm_arm_get_host_cpu_features(&arm_host_cpu_features);
+     }
+ 
+     cpu->kvm_target = arm_host_cpu_features.target;
++
++    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
++        /*
++         * We can't report this error yet, so flag that we need to
++         * in arm_cpu_realizefn().
++         */
++        cpu->host_cpu_probe_failed = true;
++        return;
++    }
++
+     cpu->dtb_compatible = arm_host_cpu_features.dtb_compatible;
+     cpu->isar = arm_host_cpu_features.isar;
+     cpu->sve_vq.supported = arm_host_cpu_features.sve_vq_supported;
+
+---
+base-commit: 98b060da3a4f92b2a994ead5b16a87e783baf77c
+change-id: 20260428-features-a63dcadbc86c
+
+Best regards,
+--  
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
 
