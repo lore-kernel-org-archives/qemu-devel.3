@@ -4,126 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F4EFFF885A
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 08:04:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58269FF885D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 08:05:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHdQ0-0003EC-Aw; Tue, 28 Apr 2026 04:03:44 -0400
+	id 1wHdRu-0003xe-KU; Tue, 28 Apr 2026 04:05:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wHdPx-0003Da-1K
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:03:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1wHdPt-00036u-5P
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:03:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777363414;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BPudrdLn0IK9sImuSyJc3hr6uP5V/FxPl5nefsdVox8=;
- b=f1Zn2OPfyl0GKs7nbOtokh3LO0teNRQmWtF6jOnYjbyElzODRqt/V2LJBECi79cNYe3c29
- 73ASGcMdL9RjP0tLNBe0jzGaRDwMyHEjBjsnJ1WRoUut+us0tHT8attBdJlZ+mo0RLxBVi
- Q2ywUGQJTLNZMo8ER0Co24QiwlTqgLA=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-546-Hwwymu6vPwKHp6FK5fDTUA-1; Tue, 28 Apr 2026 04:03:33 -0400
-X-MC-Unique: Hwwymu6vPwKHp6FK5fDTUA-1
-X-Mimecast-MFC-AGG-ID: Hwwymu6vPwKHp6FK5fDTUA_1777363412
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2b461b36990so120912825ad.3
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 01:03:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777363412; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHdRr-0003vo-O9
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:05:39 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wHdRp-00040L-LC
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 04:05:39 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-6501725d888so9002984d50.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 01:05:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777363536; cv=none;
  d=google.com; s=arc-20240605;
- b=hRp7IXucmXEOjEQw6MrIfNC6gva3HaUs3v8df2ctFbddxyWCdECWCUEnN36pRV5aBE
- uRlzz2Yzjt97XHHDrAm04Z1Vjao2uCzMaMWw7Oz9kqjY+7VUxu5YTp3M45pPmRbw4WUb
- DcuOPVnPozHv7etu0izi/L51KH6hC8Iq1y9RpLB2GirZgzauZXa2FfkrUsP2beRtuLyh
- Oj0TUenDEA9d1OMbQQnynu13yftnby37WuS0f9m1xFW67nU2QZLofD8lZYgmtWgMpJqZ
- 0huZRuHHBHaLnFqjnzkM/8T5TITVii8FlB5TRcXEBqo59TIXz04qvPSLaMiGmTup7D6z
- nBaw==
+ b=Od1fUHmbArB+c2faW33hIp2Utub8z3bAj+JM1S+7y2tzwRwcLH8wp+czvZVG+km9V3
+ rnbVwk+nOF7IcA6s3AVG4+uLaVIj1bDKnvxF3AyNUxoLi0oJV1AHqpehtYafYN8h0dWM
+ WJocDc2imvWDghuZIpd39PmW63GCg1Knwx95yi3vIOJpXq58tcUa9Syt6F14jNyywCfg
+ chHZQfbhyDnl+MdkaXKRY5ML7F+j2QvTW7M5p7Gn8a5C2qPoOKcviaCKauGVluzjmgdS
+ 819Yknbk9HRt1pCi4RZz1OzUKIOcRJArLtCDt/qAql0ygLR1q2cTmyoARw9DReSZVQPT
+ e4Yg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=BPudrdLn0IK9sImuSyJc3hr6uP5V/FxPl5nefsdVox8=;
- fh=Lp0EzGRgIYJPnfuILsQ/Ksar4E7WyhbafxG8toaFkq8=;
- b=DzrNjbfFSsNpC21pbOwk7ClHmHeOY6JH3ng2tt3WSakRZ/pKtqWAhuRJ3I+85L25pG
- Mg3LtqkMwT/IX7yG0WldBKOov5KE860sv1z7YQClhMByJt/S4ceh+N9vfKZbVK5sVaMe
- 5kgZVyXgHIWQXb5bLj0fH+7H7OMg1Oy9Nx5HZLWmiaP5duuRjXV++YWt1A1unpAVfXvn
- gFQTsELqchfayWtK0oaFsgrE1mVrfAAd2gZE/GS37r1P9VR6G0TsgcIG1IlUEScUzJVa
- sFxyqhXuQjoZ82bPqRBp91TpHwvTqIa+ouTXNKC7FeBEJYPwhkI/BV8MZJ44m3ZQowur
- oELg==; darn=nongnu.org
+ bh=3p6JM+SR761BTEBtVAwiHNtyumubWwYU22QwXID24vg=;
+ fh=M/bNlt4bsN+Nhx06lHjVtTmXzFrq2ct96MDClRYMSKs=;
+ b=h1WmfQPmjx101y4r/MCpNS/A31B9I5CqQMP7ND/bS64jwQASl3d5DiBSemMPQZX18N
+ jlkhM1WMjbfDKME/nW/uJegR3T12kdkic7+4zJuxkXM+kTkcESNv+jMsYKx8OQuGIB/D
+ X7cWWjPvzmRkxgRvTtbW2NHXBPQ6qADo+4o9un8k2y5VVE8QQx80JS1b9r3bOXTUSun/
+ 6EEUhqVi6q2h9wrv+StZa+u1Kqb64bl6/lRN71jwsv3OvAY0s+H7neK2ySyjSFknHNF3
+ sIv+exDN4lEtn0ri85xVQ3eq8kgvGk3NV44FlIMw7UltYn72JZx1nF+CURN6P8ULwmWj
+ W1gg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777363412; x=1777968212; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777363536; x=1777968336; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BPudrdLn0IK9sImuSyJc3hr6uP5V/FxPl5nefsdVox8=;
- b=PhPnt1S4oUmKE9tFbjwldG2Vwa69RDigjCRCynn/xtiFsjy3WJ/0QWPY/dHhk6MT4c
- 93fyKoDJG81k+leNWP2uptf1A8Y8Eqh5bXIQnQ9qktIyqV75Dgft7rF4BS4DI8MVOPNl
- SzL0EsTKuPzRzv8i709vBeEGY6Y6vFun0AQV5uNJ9MOCmcB+GlbaUFN/2985mqTNu9wm
- h/30U6g9PTXgMseWGiGrZ5XajDnvgpe76IoYaah5DA7SUnKE8Yf4p5rUjrVM+5nCJptS
- gJtzOLKj9MorRC3jzvX4APluUmj8QnRUBFxXqVevHoxiYNUw/7UXMLUmpyrXxMq3M/rS
- EK3A==
+ bh=3p6JM+SR761BTEBtVAwiHNtyumubWwYU22QwXID24vg=;
+ b=bnf/iXPDo+Yt0geVTbEaiJygo1UBsONQc/RHwDqQVrXkpXuO9ewLcK0G0iLzaBBZXh
+ 1ouX079Y7Vnc/yYsTpi275zCvjQf3jCaq+fHZeGt4gmj+gc41gcAphitTjlaaGKi2kVW
+ DLc9yTtiZ4/HOC8AkpbyE4I89EMCt2J1I0yLjFGVsBIYQu0BLGhd9jBS+74283wqc71G
+ 6PcPCBpNIZaHFGe+FVekdoaCoNDnuTFA3eSklZ+d1W5/g8i6GU7k0wIR50rO5odh3dqG
+ HHmNbojqEUKoMvoxJdyUUAERCLCUWa65aHybWzkxhs34HAEDhYTgIyZr05bY9bT8REOv
+ jF0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777363412; x=1777968212;
+ d=1e100.net; s=20251104; t=1777363536; x=1777968336;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=BPudrdLn0IK9sImuSyJc3hr6uP5V/FxPl5nefsdVox8=;
- b=qstAkKCidAMc6/0yUB3XSgbTKoSLoKHh1rv6UFLMWFQe6XCspYqtWXCoTAIPxSa0CF
- rJ8UVeKFyEV+QoUW18XQpNE0/R+7aMl6s9rHVMgsN3ZIpZXNyh/5XLzNA0lIWbo4zn6d
- CMx5PR1XLwJm2fH9G91v3nK+Yax5XUj2eFAwS0Fhv7xXgeaYhY64L4bGv4ktD/8Bjmh8
- vEVJIeMcc4xhfLxm/VFu58w1NfDTwiYR0EFcV12iR4GDj6or6c6GyVtAMsMOn9jlbXwb
- cLcUetJZK3TkJCwruqPgQoa0HbO9KXcKor2abOu3MTnJ8172N3Ds593Kk6h9mC51lex9
- GBgA==
-X-Gm-Message-State: AOJu0YxVr0hJ0l+B9tjeeyqUHW1VEJFe9zQk3/pMOIkoHMfHHHErU1cW
- hZ2cS2ub86gl8mXLkMc5G8JvndUSvoquZ9HLGNlsTawTRFiUgMDvmS1Bw6VMgP4MDZTzW2rcukh
- UBgMdVth8+TlesDuavZM8O8OXsubHjn0RS0GURPf9XTnaDxOFPL8lJE1+ynK0GCd/ybukMdlW8O
- BArTE/9c23VqvML2zVZ6o5XZ4REsD45bE=
-X-Gm-Gg: AeBDiev7f0GeNupZMoBloQE0jzVZYQr0VUNc2pJBoFg+YOXO4P0IsqlrwsmkO5S9NRp
- flVXGJ/pfev18UFQqq0dzpPVgMHkH1tWiOghHsDA+gkHc9C5TV4YOtgp9hr8W2YWTXybptN+tGF
- DpDCCnasiWQc1Ztb4z9QqAkEHhfr5EyggG5VPm46MGkZ1CH0TnN4UiwzIo7dyF/ZGpvasTyKbGF
- ga4ZdTQEX3Jit0ZdVysm04NThi/DYtw1SmdAuMDf5QDkvlL66+Agzaf0/OQze9ICJtt8FREKO7l
- 9xhhAJnZcWCb2PdeO5Rm+xwSSqCp9qOL2tE=
-X-Received: by 2002:a17:902:ebca:b0:2b9:6a47:787f with SMTP id
- d9443c01a7336-2b97c4ca07bmr19618115ad.40.1777363412018; 
- Tue, 28 Apr 2026 01:03:32 -0700 (PDT)
-X-Received: by 2002:a17:902:ebca:b0:2b9:6a47:787f with SMTP id
- d9443c01a7336-2b97c4ca07bmr19617825ad.40.1777363411463; Tue, 28 Apr 2026
- 01:03:31 -0700 (PDT)
+ bh=3p6JM+SR761BTEBtVAwiHNtyumubWwYU22QwXID24vg=;
+ b=e0z1g6FSUY3YMyaMIpTsXjLwvyGivCQpEbhm4LBUJnBwqCNikUfZfqOJitC3Vn3jaO
+ D2Tmqi4nCik0U02DTu3yD0Z0iJcIvJbmWM2DIQ+8iXnp2CtaL+VaInRvgJH1FEViKeNz
+ LHWrTJVjU4drdMJICiuPJQsnz39S9q+xAG6d10exr9FaB8QWLyMPtiwZ5m9qESHyF11C
+ Ees/W3O5B+Cix1sQxuMRoLFYaQwm5PGdWajQIp3dlh+0RjFQqe43xPzcTMLSnzWUAUAB
+ i+HWVGMtxEBv6hCgyXpBnNgC6/L9ku9SFU2tASY7T/SFUO22E7eZMRJynrVcvQoUCIrW
+ 2vGw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9bZwCfZlQslqwUq+zRJez0xqRuGMzLEtvfMAfzD4iw5upwi8txPDtJDtz57ILTsUId8orSYEynatli@nongnu.org
+X-Gm-Message-State: AOJu0YyOp7nhwgY6If4qz3VGwuAH4HnZA7YvnDVs3nyyYukIqFGO9Gjd
+ /cxUYup4H/ER9c6QBSSNWisGqIBtVZGGM+j/Q2WM+4XVs4Us3h4AZyn5ak5k0QWJGLgnqgDB6zP
+ VKytGdRQhU5yjXxuCBwPOGMjUAssjSb96trvamJfKnQ==
+X-Gm-Gg: AeBDievjljcFDNYeqNjYRSsUmrCadWg3XMlgzju/gLU9uE/WVZzoDFCHzL25kSuhH1p
+ 1m/oA9Zg7DWHymx1XSiN18XgN8oSXISZrAgfP6YsYxxuV7L82Aw1Z5O6MM6ZwTAzWFbQ4PNu8PM
+ 5P0SepGglIWxnRnMUPYTbQ2u8eUDpSu7tYFgPKH6QxBq9YXkSFNnhhgTSMu5AkWu5wSH3Vfyav8
+ uhuVbCG/eBMe3N3kK9El2q/74hqQD7BPF8TlCN3QDfqoAmYHLTGF1ZZWCS0kkjPvV5nm1+W3KNG
+ UPq7kceasLHNR0fqxwwWa0EAatdL9+Nl65AWVjyB+DOuaY/Ds26xB0nnyEhTeaDdsU6wsQFOZQc
+ 5xcO1DoGHQJq5
+X-Received: by 2002:a05:690e:14cc:b0:654:ea8a:f2e with SMTP id
+ 956f58d0204a3-65beed3d1cemr1676384d50.3.1777363536304; Tue, 28 Apr 2026
+ 01:05:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260427-gtk-clipboard-v5-0-6968feb31a5d@gmail.com>
-In-Reply-To: <20260427-gtk-clipboard-v5-0-6968feb31a5d@gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 28 Apr 2026 12:03:19 +0400
-X-Gm-Features: AVHnY4JXx8X6OCdh3KHq1F7XnSM5lV-4QyOKVnXosX8iaFpYR2uAoprjKHW3rS4
-Message-ID: <CAMxuvazzhm5-HwgW=h_9Rd4DBChgKZTMMCNUby5S=WQPJ+f8RQ@mail.gmail.com>
-Subject: Re: [PATCH v5 0/2] Fix and re-enable GTK clipboard
-To: =?UTF-8?B?SmluZMWZaWNoIE1ha292acSNa2E=?= <makovick@gmail.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <20260409220614.65558-1-lucaaamaral@gmail.com>
+ <CAFEAcA-8BeBte6CxH._5F5Zsk3wvs0zJJW6+=8cNaroRTBegK-M5A@mail.gmail.com>
+ <20260427184540.80415-1-lucaaamaral@gmail.com>
+ <CAFEAcA9yGmWq--JsyZpPnOQ74i=j7JeeO0Xf6be7wWxJGbXLdg@mail.gmail.com>
+ <8A075A86-D6D9-4C97-BE31-C94D58F796FB@unpredictable.fr>
+In-Reply-To: <8A075A86-D6D9-4C97-BE31-C94D58F796FB@unpredictable.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 28 Apr 2026 09:05:25 +0100
+X-Gm-Features: AVHnY4KeGH0WyyxQvKCaRKcMnc1goi-jzR7sy7-stK8-wqpk1UqkEuC8IRmENT0
+Message-ID: <CAFEAcA_TOBD0p-Vom2f14DimmvSJMNUWZEXyg=0onjgn3OrB0g@mail.gmail.com>
+Subject: Re: [PATCH v6 0/6] target/arm: ISV=0 data abort emulation library
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: Lucas Amaral <lucaaamaral@gmail.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Alexander Graf <agraf@csgraf.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,73 +126,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Mon, 27 Apr 2026 at 21:15, Mohamed Mediouni <mohamed@unpredictable.fr> w=
+rote:
+> > On 27. Apr 2026, at 22:02, Peter Maydell <peter.maydell@linaro.org> wro=
+te:
+> > I would like any memory access emulation to come with an
+> > attached description of what the guest workload is that
+> > is triggering the requirement for it, so we can check that
+> > it makes sense to do so. (Mohamed mentions the Windows TPM
+> > device, though I am still not sure what exactly is going on
+> > there and whether emulating the access is the right approach
+> > to it.)
+> >
+> For the TPM:
+>
+> TL;DR is that currently we have a workaround in QEMU that maps the page
+> to the guest for direct read but traps writes. As it=E2=80=99s an MMIO ra=
+nge,
+> it relies on FEAT_S2FWB to keep things consistent and misbehaves on CPUs
+> without it.
+>
+> Emulating ldp is enough to get rid of that hack and instead map the TPM
+> as a regular device.
+>
+> ldp/stp are also used by recent macOS guests to the GICv2m...
 
-On Tue, Apr 28, 2026 at 12:06=E2=80=AFAM Jind=C5=99ich Makovi=C4=8Dka <mako=
-vick@gmail.com> wrote:
->
-> The following patches change blocking clipboard retrieval function
-> calls in gtk-clipboard.c to non-blocking variants using callbacks to
-> avoid UI lockup. It is a follow-up to the patch proposed in the GitLab
-> issue
->
-> https://gitlab.com/qemu-project/qemu/-/work_items/1150
->
-> This version adds a similar change to gd_clipboard_request that also
-> uses the blocking clipboard API.
->
-> The second patch removes the gtk-clipboard compile flag, keeping the
-> GTK clipboard always compiled in. By default, clipboard is off,
-> can be enabled by -display gtk,clipboard=3Don .
->
-> Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
+This feels to me like something that would be better fixed
+in the guest -- doing LDP/STP to hardware is just asking for
+problems under a hypervisor, and there's no good reason to
+be doing it in the first place. But being a bit more practical,
+it is a good reason for having emulation of ldp/stp I guess.
 
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-> ---
-> Changes in v5:
-> - Runtime option added, clipboard still off by default
-> - Link to v4: https://lore.kernel.org/qemu-devel/20260427-gtk-clipboard-v=
-4-0-176ad9919931@gmail.com
->
-> Changes in v4:
-> - Replace gtk_clipboard_request_contents with
->   gtk_clipboard_request_targets which can utilize GTK's target cache
-> - Link to v3: https://lore.kernel.org/qemu-devel/20260426-gtk-clipboard-v=
-3-0-09555aaeda34@gmail.com
->
-> Changes in v3:
-> - Use gtk_clipboard_request_contents to avoid text conversion
->   when we only need to check if the text is available.
-> - Link to v2: https://lore.kernel.org/qemu-devel/20260425-gtk-clipboard-v=
-2-0-b098f3cf69cc@gmail.com
->
-> Changes in v2:
-> - Removed forgotten gtk-clipboard comment in meson_options.txt
-> - Link to v1: https://lore.kernel.org/qemu-devel/20260425-gtk-clipboard-v=
-1-0-6bd99e708e14@gmail.com
->
-> ---
-> Jind=C5=99ich Makovi=C4=8Dka (2):
->       ui/gtk: Use non-blocking clipboard retrieval
->       ui/gtk: Turn clipboard flag into runtime option
->
->  meson.build        |  4 ----
->  meson_options.txt  |  7 -------
->  qapi/ui.json       |  6 +++++-
->  qemu-options.hx    |  9 ++++++---
->  ui/gtk-clipboard.c | 53 ++++++++++++++++++++++++++++++++++++++++--------=
------
->  ui/gtk.c           |  8 +++++---
->  ui/meson.build     |  4 +---
->  7 files changed, 57 insertions(+), 34 deletions(-)
-> ---
-> base-commit: aa15257174da180c6a8a9d58f87319cfe61c5520
-> change-id: 20260425-gtk-clipboard-fdf99db13ac0
->
-> Best regards,
-> --
-> Jindrich Makovicka
->
-
+-- PMM
 
