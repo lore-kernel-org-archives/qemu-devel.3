@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DD2AFF8877
-	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 17:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E04B4FF886D
+	for <qemu-devel@archiver.kernel.org>; Tue, 28 Apr 2026 17:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHmh1-0001dY-Rx; Tue, 28 Apr 2026 13:57:56 -0400
+	id 1wHmhe-0001hT-Ac; Tue, 28 Apr 2026 13:58:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHmgx-0001dB-DV
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:57:51 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHmhM-0001fY-CU
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:58:17 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHmgv-0005Sg-MZ
- for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:57:51 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-44261378651so59556f8f.0
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 10:57:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHmhJ-0005aR-CB
+ for qemu-devel@nongnu.org; Tue, 28 Apr 2026 13:58:15 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-43d73352cf2so9856329f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 10:58:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777399067; x=1778003867; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777399091; x=1778003891; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=e5dLgzUq25eFXbjvfMZAItHmjh4pTq4+QRuSVfgK4SU=;
- b=WS0m8PCSQwSjKwA2VdvMmzRVyrDF7P+B2H0soD+6DqAm7rDXbx3KIO79ykwXT2ZOIj
- JEVpMmSGzYLKadXEk8ucEAis41+ZUHAfF810/gAkrSd77PNrYBYqd1DLD2qCfgb7yiJ6
- QA2d0Ow/coVky0vzuC29sWBUxL7bNwYD6x2Wiv9gG8+b9P4vudjEjOI9HcCt27QMARmj
- YKVgsX/300qDM7EgsU0gTlPDiYhZaP6Wlp6ERqSByAUQ7wVD9nKFahZe7dWcA3vGbKzd
- Mq6tRHyF/RnTjyTRZUgQogmga4yenuIBqu0gHGFb5CTdgHaCJG8snY3/LtloPSR/4wFY
- 9aWg==
+ bh=3Aq2Gil1AMXyD/F9EJ4y46TV8rTmmGtXbXlr2sBHriQ=;
+ b=PvQ52J+2I1VPjV+rC4vwcwqIcQYEA9JpBeekkOH/KzdAJ9+dRW5kByHCQAddsP2Yk1
+ s/uEbLh34+bw8o0b1omAmAphuxA17haSowh5zv34o35ZtlY/XvhRFR9A7g1vba3bN67s
+ 7qyukaEbM4FBH98mR+PLi30ltOpK+7KmRLFyCEwrBFsVwG2uFuMTGwkkf9afmXnCJx1d
+ +ifhWqr3mIZzLuDV8j6SDMX3H+NPhgXq94WT2Cxt1GM4FQ+C6ZZBT3vma/dtDWRRU43f
+ wdzA6e9uyFcC9FInIlTeSUyawinxl3XKeWAi8rqE7RiJWPYqoW0Fc7p5Z7KjJIdFixGC
+ VPtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777399067; x=1778003867;
+ d=1e100.net; s=20251104; t=1777399091; x=1778003891;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=e5dLgzUq25eFXbjvfMZAItHmjh4pTq4+QRuSVfgK4SU=;
- b=Xovf0i397mzyGzrX7/eEOZKRpzP4a7VHHhG25NIkaOD519zb+BskPbQk4mEhMbzXg2
- 112p6B/dxJBqtqyVEgX3uwzYBIIvdjtxwYYQohENBN6norC42WV4cXsCxvr3cz2FVUua
- gmXdwVDoz3BsPHkD+qgGwPaf5lSZbPAr8QNbilqGaTvNA/Rxm76ittCKO1s2L0j7eUFw
- NofWFDp7dMzMR/IprieKAS2ZVtNTCIlAcBahCYd4qGf8vdPzJNqrU+Zl+jPRQhWQ+e0J
- 3mi/7AwQWNwNwsfVIcwkCY8PXiqXXF8glv+Gak1qaz6ZNC1byuw44y8vHm2ryAy1GTxt
- VGKw==
+ bh=3Aq2Gil1AMXyD/F9EJ4y46TV8rTmmGtXbXlr2sBHriQ=;
+ b=Ij6QVjpevBsnFvTaXdOOAFQKgx34DdowOIjL3y4EtHDWK1P4IbUSYFAH9C15+fV6LW
+ VDgV7PK/OR3+ZvnTKh/PW7auP2hdYFUhimYixpBzlp30qF01TYoApdOmI7u7MH0oHJEz
+ zkKDCKWq8p2oOgM+T6CHn6y8vAO9UZEGqRhRbrlw/KZxc9/Z+xeIvuIoitsFM5V6kZDp
+ MKFFAOrwxDQiZawVyVKIq43ku/5c5TR7rSkKbE+8Nx/oLnc/wOzBUns45H73pTfNOQ3w
+ KCAoT/YdI8rUrO4zQNnCcesSPARKCqRA2yqxdWCGK8gt2OmAZI3W4PWb5P7vup5JRgdP
+ /TpQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8+Io/DYmr7H9waNRDnK5H1EpScifLremC23Tu5mV1NDVtXuC/gS24Z14spPQ+APP97dsArnYIS3EsE@nongnu.org
-X-Gm-Message-State: AOJu0Yxkq03Q86zJh5NJcLOKuLu/yhdiyn/yHgIVWZjg/wJcg24qMg/J
- uReSzfIct9fyFX3qSpYsioFq5Q5+0TOmfV01rWR3kQKh7JLUwPoxITfiEf1hfPgpIqQ=
-X-Gm-Gg: AeBDieuz9O0IlXhzxGeppW9bxTJpzye6GOTYyPhOAEh2ov7d9Q5uIvs0maD/jMBiqb7
- x14GMLSPsf5ZDUXNvYp66EvkZE4zQctFJcLUS808tjUceNRjt5yFBCZxvh3MkX2rvG3OdKSZqTg
- nNTt9ontPGHUqQ9oOlcmoR9yQwcCDx6hhkaBWz5pdlJ4gZmB54rni6NefcVX1TXtVhhpQyqedbV
- 7XZYfAx7ipBbmwM2atKwv4mL0jVvNCkjw9jiXasmRNFpS23I3285PymIKy7W3C6RnLClmIULewC
- g28JbAAj8ZOMecgmLUpFa6OhQQ0quQxN+BuGUzDZwr+9LUacTm/GYDGdV0UQ/u6/8BWGCObiN1h
- j4UKwLtNrsSkPWJsm92p+5Ln4gUpgNwXMu7Zla5z+c5IIlBwJfekusmE0k8/w9Xp1+ed5vDl2IS
- WCnMSqOIywD1PnMDiASSNP0M26eLJ1+FrkEu1aY8iVNydU3VJT8L7ZG8/cTPO20YvP2m4/grF0c
- A2Y
-X-Received: by 2002:a05:600c:c08f:b0:489:1d7a:4537 with SMTP id
- 5b1f17b1804b1-48a7beee40bmr244545e9.3.1777399067159; 
- Tue, 28 Apr 2026 10:57:47 -0700 (PDT)
+ AFNElJ8kw6X5GWRGEtKK4WGvEVxNF9UMYx0fqV7G8IPZqYrGc7IZ/uPOoDKvzSbpG0Y7fuqbYKdBp0023rKU@nongnu.org
+X-Gm-Message-State: AOJu0Yw5LVL7xGPlthRU529qGjowZ9skQguDDn8I9st0yRuIU3C1kzu1
+ CTHO8tcZRGAC38ntSNWxFsDdPHyMwXuo4adDkRSoKBvMOiRMcPscGbamhM6BOd8p9c0=
+X-Gm-Gg: AeBDietm0dP0xZDnqnahECFNlr3vvSLf5G9hFt+qEtls5cAmUorbF2iZDhsf3534EQw
+ yc4whanEaGdxbcPz8XHpmXE7k5D1UMJFzbBLznhc3T1pTYah8W39NRH77mCA7hMjd0k2FWsFSiL
+ yuRZibVGS3O77Szyn+997NxWJF2Wfw9YWiF1JRfxxLIUwBcXufJvrF5AUsZ1PDf9ddzosabnChn
+ /7ng2mtO0vKgtLKl+ZweZQXEZO/w0z2JdNj59kqEuhLagYa4O3/bjZUy2/6LU9GuVQ4iIPTCZBe
+ L87ndD2xeU7Lf9p0RdYS/GRgB612SpNC0qVnvet6ublfTd2y7nqsBCAp4ZopgRUGs45xrK9R+Lo
+ y3Mi9Z5mb6vD+LnWX5ty4PPoLu2f2hQgSNXTNufkkcVsyn11lschzzZIdU8aMmSSczrI8tnpwwN
+ xfYLR7hJrfGqi575vxzgWs1Vk6Ql83+bwdliEp0yfxstxJWivHi52M+Y+ieDaWrVgs/DG1AzgvT
+ jX4
+X-Received: by 2002:a05:6000:250f:b0:43f:e41d:85f2 with SMTP id
+ ffacd0b85a97d-4464839c9bcmr7788263f8f.2.1777399091141; 
+ Tue, 28 Apr 2026 10:58:11 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a7bea9824sm819825e9.13.2026.04.28.10.57.45
+ ffacd0b85a97d-4463f4c07a2sm8261041f8f.20.2026.04.28.10.58.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 28 Apr 2026 10:57:46 -0700 (PDT)
-Message-ID: <24efbecd-446f-453f-abc2-2955a65d5e87@linaro.org>
-Date: Tue, 28 Apr 2026 19:57:44 +0200
+ Tue, 28 Apr 2026 10:58:10 -0700 (PDT)
+Message-ID: <e991f3fc-9a82-4383-bf11-13e39e2995e2@linaro.org>
+Date: Tue, 28 Apr 2026 19:58:09 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] MAINTAINERS: Add myself as OpenRISC board maintainer
+Subject: Re: [PATCH] hw/vfio: Drop superfluous inclusion of hw-error.h
 Content-Language: en-US
-To: Stafford Horne <shorne@gmail.com>, QEMU Development <qemu-devel@nongnu.org>
-Cc: Linux OpenRISC <linux-openrisc@vger.kernel.org>,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20260428172055.1525176-1-shorne@gmail.com>
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>, Tomita Moeko <tomitamoeko@gmail.com>, 
+ qemu-trivial@nongnu.org
+References: <20260428163702.3224323-1-thuth@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260428172055.1525176-1-shorne@gmail.com>
+In-Reply-To: <20260428163702.3224323-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,21 +105,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/4/26 19:20, Stafford Horne wrote:
-> In the recent changes from Peter I realized the OpenRISC board maintainers were
-> not properly documented.  Add myself and ensure virt is properly listed.
-
-Thanks Stafford!
-
-Series:
+On 28/4/26 18:37, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> None of these files use the hw_error() function, so there is no
+> need to include hw-error.h here.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   hw/vfio/device.c      | 1 -
+>   hw/vfio/helpers.c     | 1 -
+>   hw/vfio/igd.c         | 1 -
+>   hw/vfio/kvm-helpers.c | 1 -
+>   4 files changed, 4 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> Stafford Horne (2):
->    MAINTAINERS: Add myself as maintainer for or1k-sim
->    MAINTAINERS: Add myself as the OpenRISC virt maintainer
-> 
->   MAINTAINERS | 9 ++++++++-
->   1 file changed, 8 insertions(+), 1 deletion(-)
-
 
