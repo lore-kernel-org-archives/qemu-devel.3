@@ -4,53 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16AF7FF887E
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 14:53:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F331FF887E
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 15:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI6Hn-0003NC-Ho; Wed, 29 Apr 2026 10:53:11 -0400
+	id 1wI6Uh-0006UW-BX; Wed, 29 Apr 2026 11:06:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wI6Hm-0003N3-Cy
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:53:10 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <aastharawat@linux.microsoft.com>) id 1wI6Hk-0005tq-S5
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:53:10 -0400
-Received: by linux.microsoft.com (Postfix, from userid 1236)
- id 1FF3920B716C; Wed, 29 Apr 2026 07:53:08 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1FF3920B716C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1777474388;
- bh=ulbsgmglWJFxHZVgAVotrjUU/zyHAz2tyZm6exAIthQ=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=d2IQ4dD51yWq3a5SelZOnUtEqPe7saPoowNynIa1c8j5JbQe9mvfbbZgcijHFlPqz
- fLoZeLpJPS1b8DYUaVrzouGghnVAcNmJOeiPi5ETnf6EQgcHj7GM7vSWT3lrIQ/YsM
- kIAuCrVEi4cUR1B3sjspDI9DTIWAAzvsfRiU1uGY=
-Date: Wed, 29 Apr 2026 07:53:08 -0700
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 03/14] meson, target/arm/mshv: Enable arm64 build &
- add initial MSHV support
-Message-ID: <afIbVDZwnqzu8wFM@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20260421-mshv_accel_arm64_supp-v3-0-469f544778ba@linux.microsoft.com>
- <20260421-mshv_accel_arm64_supp-v3-3-469f544778ba@linux.microsoft.com>
- <e049b50d-1ffb-49da-8d82-7ee77a18274b@linaro.org>
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wI6Ud-0006Rm-Bc; Wed, 29 Apr 2026 11:06:27 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wI6Ub-0000yr-BS; Wed, 29 Apr 2026 11:06:27 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 6ECE887559;
+ Wed, 29 Apr 2026 17:06:13 +0200 (CEST)
+Message-ID: <c0e3fe09-6491-4a36-ae81-41c0de0befd2@proxmox.com>
+Date: Wed, 29 Apr 2026 17:06:12 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e049b50d-1ffb-49da-8d82-7ee77a18274b@linaro.org>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/4] commit: Drain nodes across all of bdrv_commit()
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org
+Cc: hreitz@redhat.com, den@openvz.org, stefanha@redhat.com,
+ qemu-stable@nongnu.org, qemu-devel@nongnu.org
+References: <20260427170520.101242-1-kwolf@redhat.com>
+ <20260427170520.101242-2-kwolf@redhat.com>
+Content-Language: en-US
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <20260427170520.101242-2-kwolf@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1777475074912
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,38 +60,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 23, 2026 at 11:14:38AM +1000, Richard Henderson wrote:
-> On 4/21/26 15:21, Aastha Rawat wrote:
-> > diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
-> > new file mode 100644
-> > index 0000000000..1c82e2c593
-> > --- /dev/null
-> > +++ b/target/arm/mshv/mshv-all.c
-> > @@ -0,0 +1,54 @@
-> > +/*
-> > + * QEMU MSHV support
-> > + *
-> > + * Copyright Microsoft, Corp. 2026
-> > + *
-> > + * Authors: Aastha Rawat<aastharawat@linux.microsoft.com>
-> > + *          Anirudh Rayabharam<anirudh@anirudhrb.com>
-> > + *
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + */
-> > +
-> > +#include "system/mshv.h"
-> > +#include "system/mshv_int.h"
+Am 27.04.26 um 7:43 PM schrieb Kevin Wolf:
+> The whole implementation of bdrv_commit() is only correct if no new
+> writes come in while it's running: It has only a single loop checking
+> the allocation status for each block and finally calls bdrv_make_empty()
+> without checking if that throws away any new changes.
 > 
-> #include "qemu/osdep.h"
+> We already have to drain while taking the graph write lock. Just extend
+> the drained section to all of bdrv_commit() to make sure that we don't
+> get any inconsistencies.
 > 
-> is always first, for all .c files.
+> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> ---
+>  block/commit.c | 10 ++++++++--
+>  1 file changed, 8 insertions(+), 2 deletions(-)
 > 
-> 
-> r~
->
+> diff --git a/block/commit.c b/block/commit.c
+> index 0d9e1a16d7a..c5e3ef03a21 100644
+> --- a/block/commit.c
+> +++ b/block/commit.c
+> @@ -518,6 +518,7 @@ int bdrv_commit(BlockDriverState *bs)
+>      if (!drv)
+>          return -ENOMEDIUM;
+>  
+> +    bdrv_drain_all_begin();
 
-Thanks, will add the missing #include "qemu/osdep.h" as the first
-include. Will be fixed in v4.
+I suppose we could instead drain only the affected BDSs? Blocking all
+for the whole duration of the blk_pread+blk_pwrite loop seems a bit much.
 
-Aastha  
+Independently of that, I wonder if blk_commit_all() should drain all?
+I'm not familiar with it, but it seems that the intent is to have a
+point-in-time state which is consistent between different BDSs? That
+intent could be made explicit by draining all.
+
+>      bdrv_graph_rdlock_main_loop();
+>  
+>      backing_file_bs = bdrv_cow_bs(bs);
+> @@ -549,6 +550,10 @@ int bdrv_commit(BlockDriverState *bs)
+>                    BLK_PERM_ALL);
+>      backing = blk_new(ctx, BLK_PERM_WRITE | BLK_PERM_RESIZE, BLK_PERM_ALL);
+>  
+> +    /* We drained all nodes, but still make requests through BlockBackends */
+> +    blk_set_disable_request_queuing(src, true);
+> +    blk_set_disable_request_queuing(backing, true);
+> +
+>      ret = blk_insert_bs(src, bs, &local_err);
+>      if (ret < 0) {
+>          error_report_err(local_err);
+> @@ -565,7 +570,7 @@ int bdrv_commit(BlockDriverState *bs)
+>  
+>      bdrv_graph_rdunlock_main_loop();
+>  
+> -    bdrv_graph_wrlock_drained();
+> +    bdrv_graph_wrlock();
+>      bdrv_set_backing_hd(commit_top_bs, backing_file_bs, &error_abort);
+>      bdrv_set_backing_hd(bs, commit_top_bs, &error_abort);
+>      bdrv_graph_wrunlock();
+> @@ -647,7 +652,7 @@ ro_cleanup:
+>      blk_unref(backing);
+>  
+>      bdrv_graph_rdunlock_main_loop();
+> -    bdrv_graph_wrlock_drained();
+> +    bdrv_graph_wrlock();
+>      if (bdrv_cow_bs(bs) != backing_file_bs) {
+>          bdrv_set_backing_hd(bs, backing_file_bs, &error_abort);
+>      }
+> @@ -663,6 +668,7 @@ ro_cleanup:
+>  
+>  out:
+>      bdrv_graph_rdunlock_main_loop();
+> +    bdrv_drain_all_end();
+>  
+>      return ret;
+>  }
+
+
 
