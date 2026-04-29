@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 417EBFF8867
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 04:56:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F2DCFF8864
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 04:56:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHwtA-0007Nu-I9; Wed, 29 Apr 2026 00:51:08 -0400
+	id 1wHwsE-0004vZ-0w; Wed, 29 Apr 2026 00:50:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHwss-00072i-Tr
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:50:53 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1wHwsC-0004rU-IC
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:50:08 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHwsq-0000oH-OU
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:50:50 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2b2429f98d0so72269315ad.2
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 21:50:47 -0700 (PDT)
+ id 1wHwsB-0000Mo-0k
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:50:08 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2ab077e3f32so53035935ad.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 21:50:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777438247; x=1778043047; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777438205; x=1778043005; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CyWTd4V1LX1FwIyi0fsHKZKqus546/diDeVLNl78gPI=;
- b=R/EqJdLMI7sSu3+G20o+wtCk5jOM9WjqIjp7eyCy6M85RZxN1buhxEFcFPE9E1WlkX
- juY3SGxEpwG/SsrsbsQEWSwjbBcC3BV1QXicDTeEEG9fr85oqysKhH3cjKUtehJBbbc+
- m+plw75BzTgghWkhpWgCnD+B1C756mza4ZLe370Sr+DgfsnQnEmm56vc5PPTZUWRLGYe
- 7kLlRqtccYexM36s1p+CfgKAQqwHqgunEzjGB+FT/cmutb/xeUawAY12wcH/zp7g4uvQ
- a4Gj90iirQrAkl5rqJ1M1EVb2+6tveROE7ZZKKfdJlwkHn+ZNKjT4m2Zjq8XZL3zpWGX
- PkCA==
+ bh=6LT1/EJ4TmcNjWWSWxvrhRM1oUkyUaxsMz6fDhIwFOg=;
+ b=fz4BG+bGwBVYlMHfjfbxzbaglFp3atiGW1sYJqELE8H1F3zLfqQVu7i9ILHQRqxIPb
+ oNusGJx7TZChTvf2zCuIx35fLKQHSFtQo9W+ctTmUj9vX7k0AQAyP3NcnlJk7b23PvYH
+ ErKHkKeNKUq3djenFDxNWZCA2p4BGWfZAhDaFymmneiaRjUCbeeWNgf1K958dQ0b7sdv
+ 0yX/oBp0r4qltOAnI6Rzzk9e2Vnktkv5unoHHMnZDNIGT1EV9/YNSb/alUj1NscRliHV
+ F0EanEBAOEvtTxRzxf0QjqrUTtr0S6i8o6IhcwprNNWlfsiPpPHC6NWs33Oi4DRkjbRn
+ AyiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777438247; x=1778043047;
+ d=1e100.net; s=20251104; t=1777438205; x=1778043005;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=CyWTd4V1LX1FwIyi0fsHKZKqus546/diDeVLNl78gPI=;
- b=p3lDd/jJe5KwyuejLHh2C9mNhLlJPW4Qf6HGpKfXsOEev0SODPPtuuDyhkbMwJyHZ4
- QWYLQfDQhyyfGRtrr3Dr+MAHqHpkOaDj7EvwyXewWA6WQjMTLSisYdyoDDIvReGHWtXD
- iCHqG35IcdGOlf5RebgkwPcmO3o3mS3K03B3Q2O5gewU4poFqDzx7MTKXIo29Cvds/af
- rBiRZwRdwsVY6fYgXqjCH2av5s0KQ1rsQXclZ21uuDLZ7GBXZrWbkhnqCRKTvPU2d6Dm
- fO6chWk3/TkKxCkQ4cZruqwuqzDtOsLyavfCOvgrun2WzzwP0MN1u1Xw7IB1fnzTqGx4
- hPMg==
+ bh=6LT1/EJ4TmcNjWWSWxvrhRM1oUkyUaxsMz6fDhIwFOg=;
+ b=gWSEB9BU4yCNXFVNJpxNYlYdfSalHj4Rz3pAB822f7+Lfcx4nUAyCdS64qg7Kwhv9t
+ H1HKNExhcSOCK+EDGi9Dx56dhGIwJMmX+e5NuT3tCnmXh1U5h5OfvtKu9jUWYf6jrbcw
+ dgjMgkoMVmhoorCxaW0TR7R6dcWatR+taxVcABoEj9MVVGT6ibY2ona1hgJUOodYizll
+ fgFggLFBxCKOYzO/E0b2p3hlDwIjdLkqiDgIhPuKoa6AiU5hwptnMR5ihD8+9PsZohbn
+ FAEhhQXO/EoLH9ge4eKOSEdQn9xoC5TFMZtYTtpo++++x7kVBCeZS1ecU8L8fK9L1hLp
+ 5ZBQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+COue6U0/ZjZTclxkv2TWtStzfOhWEnAkewU0ADhRgf4cJtdRKNI9M9dCEiTZudgESs8d01HLUVDtm@nongnu.org
-X-Gm-Message-State: AOJu0Yz4tEYfKGkwLlOS4ZstR3be2i05UTrIEawMnGnxCzCS9HD76kdD
- FdpmROHsxMDofm1kEDhGErfiC4Sq70LCZlHUbwNbjRDJf5uqGvKiR8+i
-X-Gm-Gg: AeBDietXq53wknx4gMc6cBuUUjwS0W8SufgKTbt/c+GRUwNb6MZu2MkNUnq0ox/Zwkm
- w96kqIOiHE6t/6pzlZneBoj9Jk5ao+R1g1FBLSBG9SJc3Rh1PQTejVNv8LRCx2ZIVhvhuYfRvp/
- HeHUQK05tSKvJqkFVS/PG5/wEPRBWBvb39NRbpFJHBTM6SYJiz03bWNS/w3uykfLlMzjN632i1v
- oevu1aZpj4OSCBvcvhQKTxL9g/mtU/Sj70HTnjTge8UnmsHRcfymNevCQ8cqb0+DTa8/PGCmWtu
- IAAVlq5OMyBFzjWv6Qs26y1Oa+CudNhilpoPEARR+u9Ks0ljCvqcNXg0tVjZDMTkG+4MDlzYUTy
- RaY7HgjmEXOgXp3SP00NfYa58MWrtniUrx0Lwatds0OKQqomoWD0wO9s52kuNX9rFjwK9gdsPvE
- 8VGOMqMo26r/QqyhBWjDNN0jPVx/zJ/R76aXnQ9Raw77O1waY9wgRU
-X-Received: by 2002:a17:902:c40e:b0:2b0:7e4d:f390 with SMTP id
- d9443c01a7336-2b97c4f4770mr60006375ad.41.1777438246956; 
- Tue, 28 Apr 2026 21:50:46 -0700 (PDT)
+ AFNElJ/lV3okcGJa296ihZfvvpmHzi6GhvFsn3jvobSJZPU0+6ZI/caMQPr8OcW7PgW7N0RRc7E9iqZDU9tE@nongnu.org
+X-Gm-Message-State: AOJu0Yw8cxqxSXZKqxY0U1vNlBjzO0TAz2YiSZBavsAxC/lN1+MWCYz3
+ wQAcsOODZL9BxW3JRh40Vy/LPrHLWmgaLhpe+pv6L3eyWIzbOfOiJ8RJ
+X-Gm-Gg: AeBDievjyOZZGR2QGSOwCZv5IFhFn70UImEXyv6h0zLG2d2LFmbEkSirDO4QQDmYdcN
+ nEe1gPw5zXPfo6u3NAlLgKYkKB5yK6WYUUvG+7mKTzvuyhLkUk7NTUb7IzC1ZD6fUsSTXpRMcfw
+ GpJ5OjfdlET1Sp+Tme3wS7A/HlrNIufbRwEDelHbBjNLCrpMgNsJL66B0p/x4pnBkqp3gfEhswJ
+ Fzhy3VeTMj1qLwRR8LdEfc/AkFM4dkauNKw+Fqni0pgOk4pdzSkqAiP1WbPC9OtEBQUXGnj8/tF
+ G62U8W936jL7wyOkkqSHTrn0Z5ARQxBQy6f58ZEU42f7c2sVmJADE3e12VAAOIlL2sx6QeSYyhy
+ W1/VuUl5+7xnncNirANlSVQAP1jpw090MJQ9pA3ttfED+ZtNKFayJLlKTjEw2r48nl2FJs7k/Yy
+ F7bXKDy60JFgP+nJNolEU0/CyVAKwQa/1FxmiHbaUFnqvrEhb2iJLXf8uXRq83USo=
+X-Received: by 2002:a17:902:f212:b0:2b4:5743:2395 with SMTP id
+ d9443c01a7336-2b97c4b2a2fmr41125825ad.19.1777438205527; 
+ Tue, 28 Apr 2026 21:50:05 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b988772ae8sm7756145ad.7.2026.04.28.21.50.42
+ d9443c01a7336-2b988772ae8sm7756145ad.7.2026.04.28.21.50.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Apr 2026 21:50:46 -0700 (PDT)
+ Tue, 28 Apr 2026 21:50:05 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
  qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Max Chou <max.chou@sifive.com>,
+Cc: alistair23@gmail.com,
+ =?UTF-8?q?Sebasti=C3=A1n=20Alba=20Vives?= <sebasjosue84@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 31/51] target/riscv: Use the tb->cs_base as the extend tb flags
-Date: Wed, 29 Apr 2026 14:47:32 +1000
-Message-ID: <20260429044752.4176397-32-alistair.francis@wdc.com>
+Subject: [PULL 23/51] target/riscv: fix stale ptshift and base on page walk
+ restart
+Date: Wed, 29 Apr 2026 14:47:24 +1000
+Message-ID: <20260429044752.4176397-24-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260429044752.4176397-1-alistair.francis@wdc.com>
 References: <20260429044752.4176397-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -90,7 +93,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,90 +109,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Sebastián Alba Vives <sebasjosue84@gmail.com>
 
-We have more than 32-bits worth of state per TB, so use the
-tb->cs_base, which is otherwise unused for RISC-V, as the extend flag.
+When the atomic compare-and-swap for updating A/D bits in the page
+table entry fails due to a concurrent PTE modification by another
+vCPU, get_physical_address() jumps to the 'restart' label to re-walk
+the page table from the root.
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Message-ID: <20260402125234.1371897-6-max.chou@sifive.com>
+However, neither 'ptshift' nor 'base' are re-initialized before the
+restart. After the walk completes, ptshift has been decremented to
+its final value and base has been overwritten with an inner PTE PPN.
+On goto restart, the for loop resets i=0 but ptshift and base remain
+stale, causing the restarted walk to compute incorrect PTE addresses.
+
+In an SMP guest with MTTCG and Svadu active, this can result in
+incorrect physical address mappings or guest crashes.
+
+Fix by saving the root base address and re-initializing both ptshift
+and base on each restart.
+
+Fixes: 0c3e702aca ("RISC-V CPU Helpers")
+Signed-off-by: Sebastián Alba Vives <sebasjosue84@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260401053853.10473-1-sebasjosue84@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/exec/translation-block.h | 1 +
- target/riscv/cpu.h               | 3 +++
- target/riscv/tcg/tcg-cpu.c       | 7 ++++++-
- 3 files changed, 10 insertions(+), 1 deletion(-)
+ target/riscv/cpu_helper.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
-index 4f83d5bec9..40cc699031 100644
---- a/include/exec/translation-block.h
-+++ b/include/exec/translation-block.h
-@@ -65,6 +65,7 @@ struct TranslationBlock {
-      * arm: an extension of tb->flags,
-      * s390x: instruction data for EXECUTE,
-      * sparc: the next pc of the instruction queue (for delay slots).
-+     * riscv: an extension of tb->flags,
-      */
-     uint64_t cs_base;
- 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 962cc45073..4c0676ed53 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -703,6 +703,9 @@ FIELD(TB_FLAGS, BCFI_ENABLED, 28, 1)
- FIELD(TB_FLAGS, PM_PMM, 29, 2)
- FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
- 
-+FIELD(EXT_TB_FLAGS, MISA_EXT, 0, 32)
-+FIELD(EXT_TB_FLAGS, ALTFMT, 32, 1)
-+
- #ifdef TARGET_RISCV32
- #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
- #else
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index c4f7da7193..f3f7808895 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -104,6 +104,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
-     RISCVCPU *cpu = env_archcpu(env);
-     RISCVExtStatus fs, vs;
-     uint32_t flags = 0;
-+    uint64_t ext_flags = 0;
-     bool pm_signext = riscv_cpu_virt_mem_enabled(env);
- 
-     if (cpu->cfg.ext_zve32x) {
-@@ -118,6 +119,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
- 
-         /* lmul encoded as in DisasContext::lmul */
-         int8_t lmul = sextract32(FIELD_EX64(env->vtype, VTYPE, VLMUL), 0, 3);
-+        uint8_t altfmt = FIELD_EX64(env->vtype, VTYPE, ALTFMT);
-         uint32_t vsew = FIELD_EX64(env->vtype, VTYPE, VSEW);
-         uint32_t vlmax = vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
-         uint32_t maxsz = vlmax << vsew;
-@@ -133,6 +135,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
-         flags = FIELD_DP32(flags, TB_FLAGS, VMA,
-                            FIELD_EX64(env->vtype, VTYPE, VMA));
-         flags = FIELD_DP32(flags, TB_FLAGS, VSTART_EQ_ZERO, env->vstart == 0);
-+        ext_flags = FIELD_DP64(ext_flags, EXT_TB_FLAGS, ALTFMT, altfmt);
-     } else {
-         flags = FIELD_DP32(flags, TB_FLAGS, VILL, 1);
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index c28832e0e3..659150c646 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -1316,12 +1316,15 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+         adue = adue && (env->henvcfg & HENVCFG_ADUE);
      }
-@@ -189,10 +192,12 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState *cs)
-     flags = FIELD_DP32(flags, TB_FLAGS, PM_PMM, riscv_pm_get_pmm(env));
-     flags = FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
  
-+    ext_flags = FIELD_DP64(ext_flags, EXT_TB_FLAGS, MISA_EXT, env->misa_ext);
-+
-     return (TCGTBCPUState){
-         .pc = env->xl == MXL_RV32 ? env->pc & UINT32_MAX : env->pc,
-         .flags = flags,
--        .cs_base = env->misa_ext,
-+        .cs_base = ext_flags,
-     };
- }
+-    int ptshift = (levels - 1) * ptidxbits;
++    int ptshift;
+     target_ulong pte;
+     hwaddr pte_addr;
++    const hwaddr base_root = base;
+     int i;
  
+  restart:
++    ptshift = (levels - 1) * ptidxbits;
++    base = base_root;
+     for (i = 0; i < levels; i++, ptshift -= ptidxbits) {
+         target_ulong idx;
+         if (i == 0) {
 -- 
 2.53.0
 
