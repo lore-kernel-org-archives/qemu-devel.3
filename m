@@ -4,68 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EACCFF8873
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:08:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF016FF8875
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:08:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIC99-0007E5-Jj; Wed, 29 Apr 2026 17:08:39 -0400
+	id 1wIC9H-0007F4-4o; Wed, 29 Apr 2026 17:08:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wIC98-0007DW-6L
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:08:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wIC9B-0007EN-5N
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:08:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wIC96-0004CM-T3
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:08:37 -0400
+ id 1wIC99-0004Ca-Gb
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:08:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777496916;
+ s=mimecast20190719; t=1777496918;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=sXku8IWtJSI83NxH3yrxXtSrbpDESyb8joiOPSbz53E=;
- b=JkWnnw/N4VntA1g23+Oc8QnR7p6zRmwPtPSv29H6Tihv8URCj7NHoS9rPx0Dfge8e0da9D
- 9iLBEiH3VLNzLE872HBtfoMii+6cKiw0kts+r3Ay5nFsHyAbRF46idVKzfO+v7FSk9Wge2
- 03E2Juu7rofiwBWfM+mviAgRRzZ7rtA=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2ZqsZv9loFBmynySrdqG5+CtntaPpDuLB1gnJtovPfo=;
+ b=GS/Q0A4I2xIxIruTnxnWfo4FpnjSvXsQKMB6oqHIP1sI+SoInQicfiZVMGjSl9q5gcfE6v
+ gAWKTv4p00n0brPttA4V/Z4p857fEXkXjazeTqfAAPL5mVEySQdeCFybffOHQXFTxgU1Zw
+ GnpIBe7rCNNPFTwl0WxDsWf041pdBac=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-495-p3566KlUMR2VWIj6sWvIKg-1; Wed,
- 29 Apr 2026 17:08:34 -0400
-X-MC-Unique: p3566KlUMR2VWIj6sWvIKg-1
-X-Mimecast-MFC-AGG-ID: p3566KlUMR2VWIj6sWvIKg_1777496914
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-RIyrnFNXM_W1Gm3MU7nUIA-1; Wed,
+ 29 Apr 2026 17:08:36 -0400
+X-MC-Unique: RIyrnFNXM_W1Gm3MU7nUIA-1
+X-Mimecast-MFC-AGG-ID: RIyrnFNXM_W1Gm3MU7nUIA_1777496916
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D759519560AA
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 21:08:33 +0000 (UTC)
+ id 21BA8195605C
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 21:08:36 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.48.62])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7F034300019F; Wed, 29 Apr 2026 21:08:32 +0000 (UTC)
+ id 8B955300019F; Wed, 29 Apr 2026 21:08:34 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 0/9] qom: misc cleanups / fixes
-Date: Wed, 29 Apr 2026 22:08:21 +0100
-Message-ID: <20260429210830.594724-1-berrange@redhat.com>
+Subject: [PATCH 1/9] qom: add trace events for object/property lifecycle
+Date: Wed, 29 Apr 2026 22:08:22 +0100
+Message-ID: <20260429210830.594724-2-berrange@redhat.com>
+In-Reply-To: <20260429210830.594724-1-berrange@redhat.com>
+References: <20260429210830.594724-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -83,32 +86,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The overall theme of this patch is to move some logic out of
-object_interfaces.c into object.c, since it is not tied to
-the user creatable interface.
+This adds tracing around object allocation & finalization, the addition &
+deletion of properties, and the addition & deletion of children.
 
-Daniel P. Berrangé (9):
-  qom: add trace events for object/property lifecycle
-  qom: validate ID format when creating objects
-  qom: make errp last param in methods taking va_list
-  qom: shorten name of object_set_properties_from_keyval
-  qom: have object_set_props_keyval return bool
-  qom: move object_set_prop_keyval into object.c
-  qom: add object_new_with_props_from_qdict
-  qom: fix ability to create objects without a parent
-  qom: drop user_creatable_add_type method
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ qom/object.c     | 34 +++++++++++++++++++++++++++-------
+ qom/trace-events | 12 ++++++++++--
+ 2 files changed, 37 insertions(+), 9 deletions(-)
 
- authz/listfile.c                |   4 +-
- include/qom/object.h            | 121 ++++++++++++++---
- include/qom/object_interfaces.h |  18 ---
- qom/object.c                    | 229 +++++++++++++++++++++++++++++---
- qom/object_interfaces.c         | 101 +-------------
- qom/trace-events                |  12 +-
- system/qdev-monitor.c           |   4 +-
- system/vl.c                     |   7 +-
- tests/unit/check-qom-proplist.c |  97 +++++++++++---
- 9 files changed, 409 insertions(+), 184 deletions(-)
-
+diff --git a/qom/object.c b/qom/object.c
+index f981e27044..b99da7309d 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -603,6 +603,8 @@ static void object_property_del_all(Object *obj)
+         object_property_iter_init(&iter, obj);
+         while ((prop = object_property_iter_next(&iter)) != NULL) {
+             if (g_hash_table_add(done, prop)) {
++                trace_object_property_del(obj, obj->class->type->name,
++                                          prop->name, prop->opaque);
+                 if (prop->release) {
+                     prop->release(obj, prop->name, prop->opaque);
+                     released = true;
+@@ -621,10 +623,14 @@ static void object_property_del_child(Object *obj, Object *child)
+     GHashTableIter iter;
+     gpointer key, value;
+ 
++    trace_object_property_del_child(obj, obj->class->type->name,
++                                    child, child->class->type->name);
+     g_hash_table_iter_init(&iter, obj->properties);
+     while (g_hash_table_iter_next(&iter, &key, &value)) {
+         prop = value;
+         if (object_property_is_child(prop) && prop->opaque == child) {
++            trace_object_property_del(obj, obj->class->type->name,
++                                      prop->name, prop->opaque);
+             if (prop->release) {
+                 prop->release(obj, prop->name, prop->opaque);
+                 prop->release = NULL;
+@@ -664,7 +670,7 @@ static void object_finalize(void *data)
+ {
+     Object *obj = data;
+     TypeImpl *ti = obj->class->type;
+-
++    trace_object_finalize(obj, obj->class->type->name);
+     object_property_del_all(obj);
+     object_deinit(obj, ti);
+ 
+@@ -714,6 +720,7 @@ static Object *object_new_with_type(Type type)
+     object_initialize_with_type(obj, size, type);
+     obj->free = obj_free;
+ 
++    trace_object_new(obj, obj ? obj->class->type->name : "(null)");
+     return obj;
+ }
+ 
+@@ -844,8 +851,9 @@ Object *object_dynamic_cast(Object *obj, const char *typename)
+ Object *object_dynamic_cast_assert(Object *obj, const char *typename,
+                                    const char *file, int line, const char *func)
+ {
+-    trace_object_dynamic_cast_assert(obj ? obj->class->type->name : "(null)",
+-                                     typename, file, line, func);
++    trace_object_dynamic_cast_assert(
++        obj, obj ? obj->class->type->name : "(null)",
++        typename, file, line, func);
+ 
+ #ifdef CONFIG_QOM_CAST_DEBUG
+     int i;
+@@ -935,8 +943,9 @@ ObjectClass *object_class_dynamic_cast_assert(ObjectClass *class,
+ {
+     ObjectClass *ret;
+ 
+-    trace_object_class_dynamic_cast_assert(class ? class->type->name : "(null)",
+-                                           typename, file, line, func);
++    trace_object_class_dynamic_cast_assert(
++        class ? class->type->name : "(null)",
++        typename, file, line, func);
+ 
+ #ifdef CONFIG_QOM_CAST_DEBUG
+     int i;
+@@ -1220,6 +1229,8 @@ object_property_try_add(Object *obj, const char *name, const char *type,
+     prop->release = release;
+     prop->opaque = opaque;
+ 
++    trace_object_property_add(obj, obj->class->type->name,
++                              prop->name, prop->opaque);
+     g_hash_table_insert(obj->properties, prop->name, prop);
+     return prop;
+ }
+@@ -1258,6 +1269,8 @@ object_class_property_add(ObjectClass *klass,
+     prop->release = release;
+     prop->opaque = opaque;
+ 
++    trace_object_class_property_add(klass->type->name, prop->name,
++                                    prop->opaque);
+     g_hash_table_insert(klass->properties, prop->name, prop);
+ 
+     return prop;
+@@ -1346,6 +1359,8 @@ void object_property_del(Object *obj, const char *name)
+ {
+     ObjectProperty *prop = g_hash_table_lookup(obj->properties, name);
+ 
++    trace_object_property_del(obj, obj->class->type->name, prop->name,
++                              prop->opaque);
+     if (prop->release) {
+         prop->release(obj, name, prop->opaque);
+     }
+@@ -1634,8 +1649,11 @@ int object_property_get_enum(Object *obj, const char *name,
+ bool object_property_parse(Object *obj, const char *name,
+                            const char *string, Error **errp)
+ {
+-    Visitor *v = string_input_visitor_new(string);
+-    bool ok = object_property_set(obj, name, v, errp);
++    Visitor *v;
++    bool ok;
++    trace_object_property_parse(obj, obj->class->type->name, name, string);
++    v = string_input_visitor_new(string);
++    ok = object_property_set(obj, name, v, errp);
+ 
+     visit_free(v);
+     return ok;
+@@ -1766,6 +1784,8 @@ object_property_try_add_child(Object *obj, const char *name,
+     g_autofree char *type = NULL;
+     ObjectProperty *op;
+ 
++    trace_object_property_add_child(obj, obj->class->type->name, name,
++                                    child, child->class->type->name);
+     assert(!child->parent);
+ 
+     type = g_strdup_printf("child<%s>", object_get_typename(child));
+diff --git a/qom/trace-events b/qom/trace-events
+index b2e9f4a712..9aabbae4f7 100644
+--- a/qom/trace-events
++++ b/qom/trace-events
+@@ -1,5 +1,13 @@
+ # See docs/devel/tracing.rst for syntax documentation.
+ 
+ # object.c
+-object_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "%s->%s (%s:%d:%s)"
+-object_class_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "%s->%s (%s:%d:%s)"
++object_dynamic_cast_assert(void *obj, const char *type, const char *target, const char *file, int line, const char *func) "obj=%p type=%s->%s (%s:%d:%s)"
++object_finalize(void *obj, const char *type) "obj=%p type=%s"
++object_new(void *obj, const char *type) "obj=%p type=%s"
++object_property_add(void *obj, const char *type, const char *name, void *value) "obj=%p type=%s name=%s value=%p"
++object_property_add_child(void *obj, const char *type, const char *name, void *parent, const char *parenttype) "obj=%p type=%s name=%s parent=%p parent-type=%s"
++object_property_del(void *obj, const char *type, const char *name, void *value) "obj=%p type=%s name=%s value=%p"
++object_property_del_child(void *obj, const char *type, void *parent, const char *parenttype) "obj=%p type=%s parent=%p parent-type=%s"
++object_property_parse(void *obj, const char *type, const char *name, const char *value) "obj=%p type=%s prop=%s value=%s"
++object_class_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "type=%s->%s (%s:%d:%s)"
++object_class_property_add(const char *type, const char *name, void *value) "type=%s name=%s value=%p"
 -- 
 2.54.0
 
