@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15257FF8864
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 06:19:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 446EEFF8867
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 06:19:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHyG6-00030g-Cm; Wed, 29 Apr 2026 02:19:00 -0400
+	id 1wHyGu-0003Sy-Vq; Wed, 29 Apr 2026 02:19:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wHyFk-0002x5-9M; Wed, 29 Apr 2026 02:18:34 -0400
+ id 1wHyGh-0003O7-2o; Wed, 29 Apr 2026 02:19:31 -0400
 Received: from fhigh-b7-smtp.messagingengine.com ([202.12.124.158])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wHyFi-0006Hg-8A; Wed, 29 Apr 2026 02:18:32 -0400
+ id 1wHyGd-0006eo-2O; Wed, 29 Apr 2026 02:19:30 -0400
 Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 804727A00A5;
- Wed, 29 Apr 2026 02:18:25 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-05.internal (MEProxy); Wed, 29 Apr 2026 02:18:26 -0400
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 1C8427A00D7;
+ Wed, 29 Apr 2026 02:19:24 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-05.internal (MEProxy); Wed, 29 Apr 2026 02:19:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-type:content-type:date:date:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1777443505; x=
- 1777529905; bh=TV9kc4iShjRSzB/yejf1EMqz2Nq4q335ld0T0GfipmM=; b=A
- LZ8XSzfe1d5iz1JNe2voH+gGAh7A4WSg+c8cFzZM7GQm1uqGHIXfXJV5yFYX4Tl0
- Zgsfg/W61mQufIrb2yGFCU5EcnDCgSBUhUdMO+Kxy9vX5stzf3SHgfsbqAS4esB2
- RYnBBxKXLmGf6qXVKJ1Oivx2WKui7pE+Cr2r3Ud0Zy/DRn59Yt6SiI4eZWcVTfoe
- j/GJpRPeaR1kK2k46e1fEVZ+kkaCldvmn9Q3SsqD/zV9EIpIUrAN9/lvwFUC3jzX
- KOiCm7LgsqumeiY/rTZfAs+UmzPkVuRWuiNVbj9sv3W/xQfHYOR6D94M9CXgXG8v
- 3DHjjuWK5U2F+4g8VggLw==
+ :reply-to:subject:subject:to:to; s=fm1; t=1777443563; x=
+ 1777529963; bh=gHm5gi/U9SZ1qunpAMomYsZ9bbFJ8GKfUxUZpAE0ABc=; b=f
+ 3rfOPZuu28zfJ/74KcdVby9SlU3sEY8QLDXEYCI7OEDfJ2LmRTyqn8ILQffawXLN
+ XG0PpKkuy8k9eK5MUHzEXl12294Nd/rnUBoIcrXml8KP940Zph3WDRBcFdIeG7Q5
+ n0lUWfdYbgESev1LdIEcXgYdy8sGjGXEilJ2XQ8W4nsRqjvKIx9IlVJDDEsf8SLa
+ 3Aql9NrPhVA39yk4HQD0FHeMKE9s/ObaeR05KVvwCzyTsYDFHrOfXLkCR9MFoUsC
+ X9IBTU7NI+AaKKq9i80ZBUEg6VJHyB82h40jqUazAcFCrzXcWxhj+rAVn02aih44
+ Ptp2l3lJcAeL+2yRhptfg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-type:content-type:date:date
  :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
  :message-id:mime-version:references:reply-to:subject:subject:to
  :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1777443505; x=1777529905; bh=TV9kc4iShjRSzB/yejf1EMqz2Nq4q335ld0
- T0GfipmM=; b=RcjbLbNqmN4pOu+5Xf9qE3w36iBNfSzRRwQ2A1yDCg8N2HyfpYX
- bYHaXiW31EJ1hTwneJVwGk5T2o3O9kzsPy/3bmiwCaJWG4qElvBGeNi9Mrc60sjo
- 2BDmidVxtRDBEtIa9q4KdgDkwbIHV3+KPZgbPSzyDhJIk32l92W3N9FgB2XELtYU
- ezkMHea7sVcb4/Bt2Z5baxrrW9Fjzje6KAsG2fQCqKiCbDLywnbAcEvbMiUTz2qS
- j/5z9pFxdSmPFMEig9n4wkdmHV1BEtIhZxPhWC6Su3hVq0qg5Q+6O8Ao0k2jmqsz
- 1sPiXB84O8KUduEXAusgNXxUktoxipJx9+w==
-X-ME-Sender: <xms:r6LxaXEIymF2j3lD9ldc2tKLAg6m9WxloWRDR8Cf6AcWm1nFv-m9NA>
- <xme:r6LxaVSc_yiJkBNVn898qCvr_bdKZd8rwC838GTfJIL6miAy4sPdlskoU8RJWmUV0
- D41LyMYEYkY2pHNiqoI0HksXjz5Wy5Oo2wFS6wK_MxYTa4fqWldOO8>
-X-ME-Received: <xmr:r6LxaZcNZu8P08_LdunfU3avqWtefLM-Imul2O49zWsAiElfKurUsvWM0sDU8NGHTnrMp0ICpHc3371mabhfEKHbMB6mJhU>
+ 1777443563; x=1777529963; bh=gHm5gi/U9SZ1qunpAMomYsZ9bbFJ8GKfUxU
+ ZpAE0ABc=; b=dccmUdqHZCtzmIe95TyU7lD3Ytgww6D7P9B6N80T73AenJ3hYy+
+ 8Ad18YXRjopPKzYPtX++4H0yi2GEG+yuWaXrGXkuAdIyaNh2Ews97vFdfLq948GC
+ rqXTtYV+ZI8YqgjYVI912z2l9C+amM2oL7ZWkCCdsRWxJiOkIjMJ3JlZlqkf5ZmK
+ Vu4XjqlnKkc5yQgftxthI//97GuwRrRfsAly+MmhdZm6qC+ILejlOChUdr0Hv0Zu
+ UNA4IM+bC47G28IBz1TimuwpEHLdbsVHCslazNAkShKuTHz4hiBx7hpcRSNfrjju
+ DwSZVBfVoy4R+2z3/XpCuUQkqyDGK807k0w==
+X-ME-Sender: <xms:66LxaYuqxR1jd_GHPC4nL3RZcvbOGttFb0pIB4LCSS8qEoK06lxcBw>
+ <xme:66LxaQKFM-U2NaeEV8HxsRuJSlKJHuxgwpIeV0q9I1veQXwANEP-sUJeGAAWA42U2
+ iDqJELBmXiiBkFoDKVhcNjMKIdypktHNRXBiZKaKn93EVd44ViNENM>
+X-ME-Received: <xmr:66Lxacc3yecByJFau1Qy16RABKRwImx9LDeKDLJ2u-awGazF-pRQsNB80w9uX8D4x88bY5WeR0CL-aEZIKWV86n2OHOI3sI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdekfeejtdcutefuodetggdotefrod
  ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
  ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
  hrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefmlhgruhhsucfl
  vghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtthgvrh
  hnpeejgfejfeffvdeuhfeifefhgffgueelhedukeevjeevtdduudegieegteffffejveen
- ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehithhsse
+ ucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehithhsse
  hirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopedukedpmhhouggvpehsmhht
  phhouhhtpdhrtghpthhtoheprghlvgigrghnuggvrhesmhhihhgrlhhitgihnhdrtghomh
  dprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthht
@@ -66,15 +66,15 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdekfeejtdcutefuodetgg
  epphhhihhlmhgusehlihhnrghrohdrohhrghdprhgtphhtthhopehpsghonhiiihhnihes
  rhgvughhrghtrdgtohhmpdhrtghpthhtohepshhtvghfrghnhhgrsehrvgguhhgrthdrtg
  homh
-X-ME-Proxy: <xmx:r6LxaTg9X8Uw8Wq3zmfwRFLDOkCQ6cgJmW1P2yAU5USX9CxgXx-rHQ>
- <xmx:r6LxaUIDI1TAv84X0Niiav5DyXvmUTWHWVvwWzD_lInGNlzVEQNzRQ>
- <xmx:r6LxaQFu8s2UqcT5pCNLNlugkwMsQ7DThBTyfJYWUGdhfqfVbY8pPw>
- <xmx:r6Lxaa1Y24jDv4F-Cmv89fjr8MIFO8xIn-sJGXp1iGxMDwagAHfULQ>
- <xmx:saLxaZP6CTI1xPJOFyuyq7gsTLERlp2IHua3oCdt-cnwfR2Bk2HKyiN9>
+X-ME-Proxy: <xmx:66LxaSUsMzAQzAM-3X_FV7qqUCgQ6lVvE4apJ1bfjiQf-JL9RLaPpA>
+ <xmx:66LxaajI05Dn3tcF9W_Ey4N9x6SFC9zZcusbC4Mm2nZMeJ3ouOHaew>
+ <xmx:66Lxacj7NF4s35agdjbqNVz7vSjIHO8cbZYBPbWPuNBKvWIEo-CAgw>
+ <xmx:66Lxafu8ymXC0-BHYhZjo_pEDkTrSdhB_SYt9zavlDwlRWKC-POcOA>
+ <xmx:66LxaSLQuVBSWKbqH3me3YnSaAZlWQCQ5LwlK2VI6BIGUJUNPy8UAvxS>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Apr 2026 02:18:23 -0400 (EDT)
-Date: Wed, 29 Apr 2026 08:18:21 +0200
+ 29 Apr 2026 02:19:23 -0400 (EDT)
+Date: Wed, 29 Apr 2026 08:19:22 +0200
 From: Klaus Jensen <its@irrelevant.dk>
 To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
@@ -87,15 +87,16 @@ Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Keith Busch <kbusch@kernel.org>, Peter Xu <peterx@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: Re: [PATCH v6 4/8] hw/nvme: set CQE.sq_id earlier in nvme_process_sq
-Message-ID: <afGirZIPZ0TT5ipC@AALNPWKJENSEN.aal.scsc.local>
+Subject: Re: [PATCH v6 5/8] hw/nvme: unmap req->sg earlier in
+ nvme_enqueue_req_completion
+Message-ID: <afGi6jJymcv8Qic9@AALNPWKJENSEN.aal.scsc.local>
 References: <20260419130139.15554-1-alexander@mihalicyn.com>
- <20260419130139.15554-5-alexander@mihalicyn.com>
+ <20260419130139.15554-6-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="RX0EiVYpKZIZ2q7j"
+ protocol="application/pgp-signature"; boundary="pz5XJJaRdA0OJcZR"
 Content-Disposition: inline
-In-Reply-To: <20260419130139.15554-5-alexander@mihalicyn.com>
+In-Reply-To: <20260419130139.15554-6-alexander@mihalicyn.com>
 Received-SPF: pass client-ip=202.12.124.158; envelope-from=its@irrelevant.dk;
  helo=fhigh-b7-smtp.messagingengine.com
 X-Spam_score_int: -27
@@ -121,7 +122,7 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---RX0EiVYpKZIZ2q7j
+--pz5XJJaRdA0OJcZR
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
@@ -129,62 +130,63 @@ Content-Transfer-Encoding: quoted-printable
 On Apr 19 15:01, Alexander Mikhalitsyn wrote:
 > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 >=20
-> Instead of filling req->cqe.sq_id in nvme_post_cqes, let's set it earlier
-> in nvme_process_sq.
->=20
-> This shouldn't cause any issues, because req->cqe.sq_id never changes
-> during lifetime of req.
->=20
-> This will help us for migration support.
+> Instead of unmapping req->sg in nvme_post_cqes(), we can do it earlier in
+> nvme_enqueue_req_completion(). When req completion is enqueued we don't
+> need to access req->sg anymore. We only care about req->sq, req->cqe and
+> req->status.
 >=20
 > Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.i=
 o>
 
+Nice cleanup,
+
 Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
 
 > ---
->  hw/nvme/ctrl.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>  hw/nvme/ctrl.c | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
 >=20
 > diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index 191398e700f..d9bf32bff2c 100644
+> index d9bf32bff2c..1ff91493b60 100644
 > --- a/hw/nvme/ctrl.c
 > +++ b/hw/nvme/ctrl.c
-> @@ -1520,7 +1520,6 @@ static void nvme_post_cqes(void *opaque)
+> @@ -1534,7 +1534,6 @@ static void nvme_post_cqes(void *opaque)
+>          QTAILQ_REMOVE(&cq->req_list, req, entry);
 > =20
->          sq =3D req->sq;
->          req->cqe.status =3D cpu_to_le16((req->status << 1) | cq->phase);
-> -        req->cqe.sq_id =3D cpu_to_le16(sq->sqid);
->          req->cqe.sq_head =3D cpu_to_le16(sq->head);
->          addr =3D cq->dma_addr + (cq->tail << NVME_CQES);
->          ret =3D pci_dma_write(PCI_DEVICE(n), addr, (void *)&req->cqe,
-> @@ -7848,6 +7847,7 @@ static void nvme_process_sq(void *opaque)
->          QTAILQ_REMOVE(&sq->req_list, req, entry);
->          QTAILQ_INSERT_TAIL(&sq->out_req_list, req, entry);
->          nvme_req_clear(req);
-> +        req->cqe.sq_id =3D cpu_to_le16(sq->sqid);
->          req->cqe.cid =3D cmd.cid;
->          memcpy(&req->cmd, &cmd, sizeof(NvmeCmd));
+>          nvme_inc_cq_tail(cq);
+> -        nvme_sg_unmap(&req->sg);
+> =20
+>          if (QTAILQ_EMPTY(&sq->req_list) && !nvme_sq_empty(sq)) {
+>              qemu_bh_schedule(sq->bh);
+> @@ -1564,6 +1563,8 @@ static void nvme_enqueue_req_completion(NvmeCQueue =
+*cq, NvmeRequest *req)
+>                                        req->status, req->cmd.opcode);
+>      }
+> =20
+> +    nvme_sg_unmap(&req->sg);
+> +
+>      QTAILQ_REMOVE(&req->sq->out_req_list, req, entry);
+>      QTAILQ_INSERT_TAIL(&cq->req_list, req, entry);
 > =20
 > --=20
 > 2.47.3
 >=20
 >=20
 
---RX0EiVYpKZIZ2q7j
+--pz5XJJaRdA0OJcZR
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmnxoqoACgkQTeGvMW1P
-Dek9oQf+IRc5ZxrN9j4mVldYKAwfkUWp5HN+YH7PPpIPj7dyYP2rxt0ZFLl6olfJ
-adey1Du5VODXvjV/wT2255jRvn3oVxIn07AQPtKZt9KsCzE4Mm01J1VJKu8ljsMP
-2nWB9g3kqijSPaWdyH7ehAiWFx4tuUEaQt6R1PKS1QuoazCQx312RsLHuBtTzxT9
-VqISAKoOubCb2OPRllk7cOHiihXKVM9Xwatr5B4MMDaXqh+fxdIGk5A8TsKqc74d
-YFwDVnzOBvN51eReS36OhuO64I/nTUFxfgrvC16jkFAL56WMKEWYQ6ALAoOBkVZJ
-LFmYkObFZhuouv7dXh4SJu0nhXm7Cw==
-=BDQ8
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmnxoukACgkQTeGvMW1P
+Delncgf+KtfBJOzycVezlsX9wMxONrCZ9MR27Ag4kw0s9ZrPP14ML8sQQJBdy4UQ
+eqdcnbomcwNKeIKIglKzbPo9uk5/9zGq7neVnsq/bVLVv9CpDmSbGHjFWkfUJT2N
+sEjrrnf8TfiKXTbR92EsWLE38RPxdX5cCAYHXLFl9mZUiyY2mXzkDhYjN6Is5DTF
+ngMvejNyB7WhnY4uBVqO/8Hoo7smsbHInelu/To2QzrTrUCFr9scBIdqZzxXFdMb
+/edgoSVRq2dTkSZcKBcjxAAAQTDwndpsClN8tznksso2EOBrQJT9uFfcWZhSYTh0
+5+WWChk86oh+TgnlaWWaRtu1dQlCjA==
+=qwKW
 -----END PGP SIGNATURE-----
 
---RX0EiVYpKZIZ2q7j--
+--pz5XJJaRdA0OJcZR--
 
