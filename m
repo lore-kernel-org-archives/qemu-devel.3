@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EBFCFF8873
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D73FFF8873
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:06:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIC6S-00070N-IG; Wed, 29 Apr 2026 17:05:53 -0400
+	id 1wIC6f-0007Zo-Ak; Wed, 29 Apr 2026 17:06:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wIC5K-0006Il-4j
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:04:43 -0400
+ id 1wIC5R-0006Jo-5R
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:04:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wIC5H-0003TX-U2
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:04:41 -0400
+ id 1wIC5P-0003UQ-Gh
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:04:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777496679;
+ s=mimecast20190719; t=1777496685;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LQG0qN6rFQpchqEjkKkpkK6wYq5eQ1JvZPMXVcU8sd0=;
- b=JlTKN5FnD31WpRQ7kxWu9h7d6WDLZSKkqdKA7cPa3rTzPh1/WHntycHSxkYDr7hR1xcTxx
- wkOWOBoO88Hxbih/nMaJpmdKNtBpIfJlunrQLiK9yigr6rcNHfKGkeX5ImotgewiW8Ys9J
- vZqD8WKKE2OWPziPt9lgGbIHLxrL+iU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=9xsmB+cqBRqaS9skMbjA7XRg5bZVpVFUgMg50GnuroM=;
+ b=b8WAZlFscC06ruO5zPzyWVhWGI9JqXbWQLET9KDEFXkBM6b6ZuTW/ULXrpqAISLxITSFR+
+ Jq+w6gr8vEgGrVlVaiN5xjZ3KzUOmTkYEm8A3sDE9u09FmYerVXSDYdukTunbXVJyHrxCb
+ Aoer9zAPI28tG/7TIFTmKxJCbQz6cD4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-183-blbw-yUNOneR9_FZY0jX-w-1; Wed,
- 29 Apr 2026 17:04:37 -0400
-X-MC-Unique: blbw-yUNOneR9_FZY0jX-w-1
-X-Mimecast-MFC-AGG-ID: blbw-yUNOneR9_FZY0jX-w_1777496676
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-451-RWvMftFHO42LrwLjx79PZw-1; Wed,
+ 29 Apr 2026 17:04:44 -0400
+X-MC-Unique: RWvMftFHO42LrwLjx79PZw-1
+X-Mimecast-MFC-AGG-ID: RWvMftFHO42LrwLjx79PZw_1777496682
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8C9921956095
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 21:04:36 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1A1331956050; Wed, 29 Apr 2026 21:04:42 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.2])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 41438300019F; Wed, 29 Apr 2026 21:04:34 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BCB27195608E; Wed, 29 Apr 2026 21:04:40 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 30 Apr 2026 01:02:47 +0400
-Subject: [PATCH v3 14/26] ui/vnc: make the worker thread per-VncDisplay
+Date: Thu, 30 Apr 2026 01:02:48 +0400
+Subject: [PATCH v3 15/26] ui/vnc: vnc_display_init() and vnc_display_open()
+ return bool
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260430-qemu-vnc-v3-14-be96757428d0@redhat.com>
+Message-Id: <20260430-qemu-vnc-v3-15-be96757428d0@redhat.com>
 References: <20260430-qemu-vnc-v3-0-be96757428d0@redhat.com>
 In-Reply-To: <20260430-qemu-vnc-v3-0-be96757428d0@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6513;
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3384;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=XCDp9S7HaL4bLvRrQfhchRC/cgPquwTPMALLwTkY/1Y=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp8nIMP0Sg7vWQoEo0cWOvJtxIFY1cyJY8gVql1
- BItB7/gZb2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafJyDAAKCRDa6OEJdZac
- 5WkrD/4pyTQhgKTK/q5u2m/HYnH7/mbTqz5Dih3S4FfLbOKhRuwK7yrVPULAJpYjX8gSYoml+72
- G9FsQN8hX9Ctw/brPbTmVZsfxOOSyL5xMxzyEMvmNwOo0pIS5OYnLpe88mzEDu8O4eqDzY1AVkJ
- CyMianmfUFhmp2vPJodB2TqrLaTc7M5C1TxlYR8X7fv2G+QCFRHcBMYLYcG/bp067NefkvrzdZI
- KrAHGzn+wsf2hRxcmAMZs1wvt4/yGyj0FHv4mK3kqT/IqArZ4uVEuEhXd+Z5MTF+JKEMRdKXiNl
- 0HAxImgN6F8XDwrYV6KFI4LPhzhu1oWgeOdiVVPBOHK1NwBgtXH3JYcw9QnLh0Uks1TLm6r7D/H
- rF53OUwyVoFy0MZtRnN+Rvkw1LBtsAfUFeuicu9PmapHEoO/j7gdIbrW67sdTKjuy1Qw073JziC
- wM5BmyYdDi5ixxKhOPz92j+0SIiGf4cXtvrxQ3dyP+WcAvorNGM5Yr5t2RyoIuPtk696swqHxvO
- lr/ndM13sygc6nPuGSqzDO8wdwJRAvx9sztvoWBgl32i/uWPzYRDEKLVXCZ+khUMwBnmxy/1l2e
- VklNKY3ou6Rpf8GrbBdFw3WkyZ1L1JJCDWwvRY5SjlZEgzD2lAVXzVkSooCfllvWgijvwNIgPb5
- Ju8J/h07pXRIAtg==
+ bh=1BdF+ZE2ZaZ7NQ/12KK1Q24noSi6tIoILVGECxV0ikY=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp8nIMKXhnRdo6HWaNS9G8J/dKMbJdtptmf9uYN
+ 0VTyhqYG06JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafJyDAAKCRDa6OEJdZac
+ 5XpdEACyKd4WFtudHsU368hBdh6Ab0Ojh6moGqf+tdEGlLib0ez3H7Z5t0WQVqSwmszgUkeQ0wu
+ oLqUGbdkB+4oixkVw1r6PrlsNtGxdZnBrycrF2jmcB6DGpe2WtpeGLkpSe1c5L+vunpu5lTryRU
+ hjHB4QH+iP3xJ9FpN1MxNdXVaRSB1a+6cRlpf66Gm9OhRATmru5WkxXmzGjd1/krqBFT8NoDnn0
+ OY7s1H52kLK2ChMcKCotM1JMg+CO0SpmsS9US1vBBfzUgxAoE+Yuo8N6AYoPSTKdAaZUFAt8PT7
+ VD59+9HKrYd3acB0Zrib3oZbQHZx9KOHUctWK9qFuDj5chIS0nIIcA8sl53Q8rmbivzW4iUWKAM
+ xqwWVMJq1zopsif4YkET/LyzoC/5wOE1DNmAASSEHasYHUrbqy6gAXHFQah1n8P1smPPAhKNnF+
+ FYi2xyMnZYOey0CRv/WSLYonoA8Z1LpPHP34BUWaGDe6nzFZs8Ad5nHeWqN3qSTgi7fW2r+9BIL
+ /GRPqoX7+g/Y6q94mD9ZL1oJsfxMY9xKemDvVbA+csBO0bL7mJ2XIljdb/PUKVd5IRj3CJHS/Gk
+ hWatWV0o51PFfINn1dQVI/iD/h5rj89JdxTrvZ5FLbMEEwlu5N7rVK+Q4xeJ0rxrtojAqyZ1eCn
+ iIxaNRoOdmyN1Gw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,225 +105,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VNC encoding worker thread was using a single global queue shared
-across all VNC displays, with no way to stop it. This made it impossible
-to properly clean up resources when a VncDisplay is freed.
+Use the QEMU-style error pattern returning "true" on success.
 
-Move the VncJobQueue from a file-scoped global to a per-VncDisplay
-member, so each display owns its worker thread and queue. Add
-vnc_stop_worker_thread() to perform an orderly shutdown: signal the
-thread to exit, join it, and destroy the queue. The thread is now
-created as QEMU_THREAD_JOINABLE instead of QEMU_THREAD_DETACHED.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/vnc-jobs.h |  3 ++-
- ui/vnc.h      |  2 ++
- ui/vnc-jobs.c | 62 ++++++++++++++++++++++++++++++++++++++---------------------
- ui/vnc.c      |  3 ++-
- 4 files changed, 46 insertions(+), 24 deletions(-)
+ include/ui/console.h |  4 ++--
+ ui/vnc.c             | 20 ++++++++++----------
+ 2 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/ui/vnc-jobs.h b/ui/vnc-jobs.h
-index 59f66bcc353..e5ab55c1da6 100644
---- a/ui/vnc-jobs.h
-+++ b/ui/vnc-jobs.h
-@@ -37,7 +37,8 @@ void vnc_job_push(VncJob *job);
- void vnc_jobs_join(VncState *vs);
+diff --git a/include/ui/console.h b/include/ui/console.h
+index 2bf768ed482..7224b8142f3 100644
+--- a/include/ui/console.h
++++ b/include/ui/console.h
+@@ -438,8 +438,8 @@ const char *qemu_display_get_vc(DisplayOptions *opts);
+ void qemu_display_help(void);
  
- void vnc_jobs_consume_buffer(VncState *vs);
--void vnc_start_worker_thread(void);
-+void vnc_start_worker_thread(VncDisplay *vd);
-+void vnc_stop_worker_thread(VncDisplay *vd);
- 
- /* Locks */
- static inline int vnc_trylock_display(VncDisplay *vd)
-diff --git a/ui/vnc.h b/ui/vnc.h
-index 472a55f7b5f..780fd39469f 100644
---- a/ui/vnc.h
-+++ b/ui/vnc.h
-@@ -62,6 +62,7 @@
- 
- typedef struct VncState VncState;
- typedef struct VncJob VncJob;
-+typedef struct VncJobQueue VncJobQueue;
- typedef struct VncRect VncRect;
- typedef struct VncRectEntry VncRectEntry;
- 
-@@ -158,6 +159,7 @@ struct VncDisplay
-     int ledstate;
-     QKbdState *kbd;
-     QemuMutex mutex;
-+    VncJobQueue *queue;
- 
-     int cursor_msize;
-     uint8_t *cursor_mask;
-diff --git a/ui/vnc-jobs.c b/ui/vnc-jobs.c
-index 5b17ef54091..90b68bf4cb9 100644
---- a/ui/vnc-jobs.c
-+++ b/ui/vnc-jobs.c
-@@ -29,8 +29,6 @@
- #include "qemu/osdep.h"
- #include "vnc.h"
- #include "vnc-jobs.h"
--#include "qemu/sockets.h"
--#include "qemu/main-loop.h"
- #include "trace.h"
- 
- /*
-@@ -56,17 +54,10 @@ struct VncJobQueue {
-     QemuCond cond;
-     QemuMutex mutex;
-     QemuThread thread;
-+    bool exit;
-     QTAILQ_HEAD(, VncJob) jobs;
- };
- 
--typedef struct VncJobQueue VncJobQueue;
--
--/*
-- * We use a single global queue, but most of the functions are
-- * already reentrant, so we can easily add more than one encoding thread
-- */
--static VncJobQueue *queue;
--
- static void vnc_lock_queue(VncJobQueue *queue)
- {
-     qemu_mutex_lock(&queue->mutex);
-@@ -125,12 +116,15 @@ static void vnc_job_free(VncJob *job)
-  */
- void vnc_job_push(VncJob *job)
- {
-+    VncJobQueue *queue = job->vs->vd->queue;
-+
-     assert(!QTAILQ_IN_USE(job, next));
- 
-     if (QLIST_EMPTY(&job->rectangles)) {
-         vnc_job_free(job);
-     } else {
-         vnc_lock_queue(queue);
-+        assert(!queue->exit);
-         QTAILQ_INSERT_TAIL(&queue->jobs, job, next);
-         qemu_cond_broadcast(&queue->cond);
-         vnc_unlock_queue(queue);
-@@ -139,6 +133,7 @@ void vnc_job_push(VncJob *job)
- 
- static bool vnc_has_job_locked(VncState *vs)
- {
-+    VncJobQueue *queue = vs->vd->queue;
-     VncJob *job;
- 
-     QTAILQ_FOREACH(job, &queue->jobs, next) {
-@@ -151,6 +146,8 @@ static bool vnc_has_job_locked(VncState *vs)
- 
- void vnc_jobs_join(VncState *vs)
- {
-+    VncJobQueue *queue = vs->vd->queue;
-+
-     vnc_lock_queue(queue);
-     while (vnc_has_job_locked(vs)) {
-         qemu_cond_wait(&queue->cond, &queue->mutex);
-@@ -252,9 +249,13 @@ static int vnc_worker_thread_loop(VncJobQueue *queue)
-     int saved_offset;
- 
-     vnc_lock_queue(queue);
--    while (QTAILQ_EMPTY(&queue->jobs)) {
-+    while (QTAILQ_EMPTY(&queue->jobs) && !queue->exit) {
-         qemu_cond_wait(&queue->cond, &queue->mutex);
-     }
-+    if (queue->exit) {
-+        vnc_unlock_queue(queue);
-+        return 1;
-+    }
-     job = QTAILQ_FIRST(&queue->jobs);
-     vnc_unlock_queue(queue);
- 
-@@ -340,7 +341,7 @@ disconnected:
-     return 0;
- }
- 
--static VncJobQueue *vnc_queue_init(void)
-+static VncJobQueue *vnc_queue_new(void)
- {
-     VncJobQueue *queue = g_new0(VncJobQueue, 1);
- 
-@@ -350,29 +351,46 @@ static VncJobQueue *vnc_queue_init(void)
-     return queue;
- }
- 
-+static void vnc_queue_free(VncJobQueue *queue)
-+{
-+    qemu_cond_destroy(&queue->cond);
-+    qemu_mutex_destroy(&queue->mutex);
-+    g_free(queue);
-+}
-+
- static void *vnc_worker_thread(void *arg)
- {
-     VncJobQueue *queue = arg;
- 
-     while (!vnc_worker_thread_loop(queue)) ;
--    g_assert_not_reached();
-+
-     return NULL;
- }
- 
--static bool vnc_worker_thread_running(void)
-+void vnc_start_worker_thread(VncDisplay *vd)
- {
--    return queue; /* Check global queue */
-+    assert(vd->queue == NULL);
-+
-+    vd->queue = vnc_queue_new();
-+    qemu_thread_create(&vd->queue->thread, "vnc_worker", vnc_worker_thread, vd->queue,
-+                       QEMU_THREAD_JOINABLE);
- }
- 
--void vnc_start_worker_thread(void)
-+void vnc_stop_worker_thread(VncDisplay *vd)
- {
--    VncJobQueue *q;
-+    VncJobQueue *queue = vd->queue;
- 
--    if (vnc_worker_thread_running())
-+    if (!queue) {
-         return;
-+    }
-+
-+    /* all VNC clients must have finished before we can stop the worker thread */
-+    vnc_lock_queue(queue);
-+    assert(QTAILQ_EMPTY(&queue->jobs));
-+    queue->exit = true;
-+    qemu_cond_broadcast(&queue->cond);
-+    vnc_unlock_queue(queue);
- 
--    q = vnc_queue_init();
--    qemu_thread_create(&q->thread, "vnc_worker", vnc_worker_thread, q,
--                       QEMU_THREAD_DETACHED);
--    queue = q; /* Set global queue */
-+    qemu_thread_join(&queue->thread);
-+    g_clear_pointer(&vd->queue, vnc_queue_free);
- }
+ /* vnc.c */
+-void vnc_display_init(const char *id, Error **errp);
+-void vnc_display_open(const char *id, Error **errp);
++bool vnc_display_init(const char *id, Error **errp);
++bool vnc_display_open(const char *id, Error **errp);
+ void vnc_display_add_client(const char *id, int csock, bool skipauth);
+ int vnc_display_password(const char *id, const char *password, Error **errp);
+ int vnc_display_pw_expire(const char *id, time_t expires);
 diff --git a/ui/vnc.c b/ui/vnc.c
-index c87d1f61a0a..3a908670ab9 100644
+index 3a908670ab9..067f534cf08 100644
 --- a/ui/vnc.c
 +++ b/ui/vnc.c
-@@ -3457,7 +3457,7 @@ void vnc_display_init(const char *id, Error **errp)
+@@ -3425,12 +3425,12 @@ static void vmstate_change_handler(void *opaque, bool running, RunState state)
+ 
+ static void vnc_display_free(VncDisplay *vd);
+ 
+-void vnc_display_init(const char *id, Error **errp)
++bool vnc_display_init(const char *id, Error **errp)
+ {
+     VncDisplay *vd;
+ 
+     if (vnc_display_find(id) != NULL) {
+-        return;
++        return true;
+     }
+     vd = g_malloc0(sizeof(*vd));
+ 
+@@ -3451,7 +3451,7 @@ void vnc_display_init(const char *id, Error **errp)
+ 
+     if (!vd->kbd_layout) {
+         vnc_display_free(vd);
+-        return;
++        return false;
+     }
+ 
      vd->share_policy = VNC_SHARE_POLICY_ALLOW_EXCLUSIVE;
-     vd->connections_limit = 32;
+@@ -3465,6 +3465,7 @@ void vnc_display_init(const char *id, Error **errp)
+         &vmstate_change_handler, vd);
  
--    vnc_start_worker_thread();
-+    vnc_start_worker_thread(vd);
+     QTAILQ_INSERT_TAIL(&vnc_displays, vd, next);
++    return true;
+ }
  
-     register_displaychangelistener(&vd->dcl);
-     vd->kbd = qkbd_state_init(vd->dcl.con);
-@@ -3513,6 +3513,7 @@ static void vnc_display_free(VncDisplay *vd)
+ static void vnc_display_close(VncDisplay *vd)
+@@ -4070,7 +4071,7 @@ bool vnc_display_update(DisplayUpdateOptionsVNC *arg, Error **errp)
+     return true;
+ }
  
-     assert(QTAILQ_EMPTY(&vd->clients));
+-void vnc_display_open(const char *id, Error **errp)
++bool vnc_display_open(const char *id, Error **errp)
+ {
+     VncDisplay *vd = vnc_display_find(id);
+     QemuOpts *opts = qemu_opts_find(&qemu_vnc_opts, id);
+@@ -4273,7 +4274,7 @@ void vnc_display_open(const char *id, Error **errp)
+     qkbd_state_set_delay(vd->kbd, key_delay_ms);
  
-+    vnc_stop_worker_thread(vd);
+     if (saddr_list == NULL) {
+-        return;
++        return true;
+     }
+ 
+     if (reverse) {
+@@ -4291,10 +4292,11 @@ void vnc_display_open(const char *id, Error **errp)
+     }
+ 
+     /* Success */
+-    return;
++    return true;
+ 
+ fail:
      vnc_display_close(vd);
-     unregister_displaychangelistener(&vd->dcl);
-     qkbd_state_free(vd->kbd);
++    return false;
+ }
+ 
+ void vnc_display_add_client(const char *id, int csock, bool skipauth)
+@@ -4350,12 +4352,10 @@ int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp)
+         id = vnc_auto_assign_id(opts);
+     }
+ 
+-    vnc_display_init(id, errp);
+-    if (*errp) {
++    if (!vnc_display_init(id, errp)) {
+         return -1;
+     }
+-    vnc_display_open(id, errp);
+-    if (*errp) {
++    if (!vnc_display_open(id, errp)) {
+         return -1;
+     }
+     return 0;
 
 -- 
 2.54.0
