@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 143EAFF887E
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 14:47:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50485FF8867
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 14:47:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI6Bk-0004S2-P5; Wed, 29 Apr 2026 10:46:56 -0400
+	id 1wI6CE-00054c-SF; Wed, 29 Apr 2026 10:47:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bi-0004RM-HU
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:46:54 -0400
-Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6C4-0004lG-Dc
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:47:16 -0400
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bg-0004XZ-O5
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:46:54 -0400
-Received: by mail-oo1-xc32.google.com with SMTP id
- 006d021491bc7-6948d7ccfbbso3973574eaf.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 07:46:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6C2-0004er-Em
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:47:15 -0400
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-7dbe07d3ec3so6230169a34.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 07:47:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777474011; x=1778078811;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777474031; x=1778078831;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AMr7jz7FRFjQWOZT8lC9LVSiGIZkZ996tBpI4CHStjU=;
- b=SBCBQIlyRlDhE86INXN4VoYGDTZtT5NoLeGUiXDu1hJewRlksXqwmVVfxflhMxlOsy
- 3MCsiKetjme0EmvLQDyJ5ZSY3YuwdQy6+k0skECyecEXBOZYSWerYfIkFwldS9+WwG0+
- 6Yf4JtTPpfuEbkj2eEcX2zcB3K93zIkazIHdVz3ndNhCEYzQ8L0eQ8v56H4REpEH/xnT
- yWujJI3+2zvy5QPT/z3sikBVt6TRgwkT33GFrXMShqMyIrr7Eop/U3nP/INau/fehEou
- zyX1ierGKvlhvYictB6Y9t4ba7nUGCx9sGRz8/pOvcCUFjiyCyV2Khzy7oc6w9dD8gel
- aIoA==
+ :reply-to; bh=ydItN197xR3dfX4ljekOGS/5kkStQ6bZhyq8u2u6ke0=;
+ b=qEr2Kljt671d6a9qeWdETxq34XXCdhnOYnLhkl/0lEfq3b0gSP4ZpSshjc7T8oGrCd
+ mylslD8As4qnqRS9uljXhLJQf7DP02xT9kMwPp06TxS/nSWINZ1xzo+3GVGQ8kIj9rTF
+ exjSR82y3DxLAQeUUDcFc1ztzmwmRe3+ZmptwoCvW6hoFVjTfXUy5ZUxDUscfrK8/XKy
+ 2nhbXOJMiZBfbvf2I+qSRo5w4y2taA0+yShzceCxwsmNw391vN1UpDRNZQMAsLhNgJix
+ LVx7hoIOBtOWIzDx3FTaQxxFxWKRn01ULXKCgzfDaZnsNtmLJ9qhgrYLzADowKl6uLE7
+ e+cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777474011; x=1778078811;
+ d=1e100.net; s=20251104; t=1777474031; x=1778078831;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=AMr7jz7FRFjQWOZT8lC9LVSiGIZkZ996tBpI4CHStjU=;
- b=Q7/eDNw+gRkzYNTS5VGjdV51zGO44pQFrv/qgVzqnvrseKMJn8IqlXMLlsbOHppvUO
- NnHL3+jdSbAksor1juyAERF8BLj92+HcBDdGleEw4xbs1pjf7q3WOAPk5f9EpCioBvrz
- 1TLHoDTOgLmA91l5RhT4tgfm5wwZJyzRAVwaxULzKIARMBHrfgzeLsB/FG2kkEL9A/zI
- b9yyX1P9ul0IZaRQ3e9+i3cEsUsDZOXLuidiaTMABFtrYB02spyyOwVKP5uhVR58Bdlv
- fdWgpXaZvD5Ct9Kvf7fJzYopEmPRQDseN9tOiMdCPdbAbrhDy9vv+ZCHWpsBKc1Th5zh
- QF1g==
-X-Gm-Message-State: AOJu0YymWnkvBcaP7mhtdOlc3zGjpt2imzm/98b2rUYRu/yi2xjCP1Qp
- t8QGjLTelwGRC57lFfpM4uXauBJEcLnc/BA/tri2O/B8ZPWR+v4xF/ePKX/KmSgXdfQ=
-X-Gm-Gg: AeBDieuQp2GsYFcavVrUJSlVuAGpzMWPp3r1FOwJYeiWsfpvbtmqaZZA1/Eckekxq9R
- IIm9b1C0iVNhHkCUkU/90dLbZvQSlGG4+K79ZmOZjbHuvzpdktBNc0Rl99jgw8ikDPVHU19Xu0B
- 5+hlFGQCmCWUg2bA1crsAOJ9bp9EvozE5fXFeWVgUBLJ3hYE9xuXn11BCtzQCtU7n6pM36pu5vi
- 6/BYP/Z/mGaEihQltFY9fVlPs1JLkl1cakQMOGxta968oRAkYD2uw9pxVqC+sqXbcrp6XMgSdjI
- HW+QfVTkwm8IjmKdXVMZArO33OhCDGGYqDnM7IRMJiZhvtPz8Saz9Q7IUUe5YeXcpeVtR8wHC7C
- BHWOQ2f7n26g68j/ey5jGCXF7UGCld+GvuFcdjDqWDh9R42WWD4Wio+PUBcFNHGXrHGcxbNxxvc
- 0h7xw1CrPNOU85Vqbi+7ag
-X-Received: by 2002:a05:6820:2916:b0:67e:21c9:ab55 with SMTP id
- 006d021491bc7-6965ca67f02mr3987868eaf.3.1777474011471; 
- Wed, 29 Apr 2026 07:46:51 -0700 (PDT)
+ bh=ydItN197xR3dfX4ljekOGS/5kkStQ6bZhyq8u2u6ke0=;
+ b=tUHSpFF8iNIXPW4hBKAw/buSpboLnBIJ8lqA59UtX9Fxwmb53ht8BdHy2Xi3UWgP7+
+ Bda6M7PzJZ6dQ9aUBvqmeKhTEK5SQ/4bdDZR1cWC6OLXuCKC1///MZGw979f0ORB9+eI
+ HPM8xFowHdb/eoDBoXy0cuRjCM8Uwe5vWKl52N46JlL7HAcBhhoBKIoryKiPCtTyZc+5
+ +iahxvDWb6EmaFvHw6jfWgtUgpSswuTR1N6ex26CoOD6snGmKJvx4DDpnsRECGYslQqb
+ FVCcwSIyCo6MqqAVRanEM7N98CmxyeRbCjD56xqwzYza0MR1OWoeoUE5sm+pT58MafWk
+ Sd7Q==
+X-Gm-Message-State: AOJu0YxFDhxDWGld5z5vWkCau1kXGQ9hCtbA8KaG30SVTkALfBSa2FRE
+ SziujlluykRG69lKfX8IIAyG9vL//Sj60TNCtDlVxrsqeLE7MuJ8jfEchTDLQWOOu3o=
+X-Gm-Gg: AeBDieu2u5ML1XSg22QeRyDALqnsqyZGDwsQW8GlHfUXTLrnKtehiVUhDAj74DLRFZ6
+ fPPW8kIJZlADhZQFo/C2Qe3Nsmtaz/GayhXp32CM/QdayWMi/ixZNSFH1B3gCM/7EAIEEdttuTy
+ 9PZWm/OKfCjueCbtWqOQCHae7afCZLCDqqmifjxVLw/v/VWFvNvsBdOYMPx1xbHurlkR0YgX48Y
+ ygJ6YWEikjpYOgfsS9epkRh67OnHeLWy+ZiqhaPuIKTSAhg+wixsDQVJ5tkn2GNKPKsLongmdWC
+ 0c0rPD3J0y74HP+qR6hRQjUVy/WgBzZhNsHDZKwtwF/Cha2GdoJ+BD7ZcBvDxlwm6dzOyTL2d4D
+ q6ak/ZN+pYAoAsPoBTZeVubSsz643/GoAiqMmndzdCQ6oSkwDGFzvRYM7L+4ikybWucl/5a46cG
+ EV8uHztf8jwqi9hNsb2403
+X-Received: by 2002:a05:6820:2219:b0:694:984c:1a7a with SMTP id
+ 006d021491bc7-6965ca4d56cmr3726905eaf.10.1777474025613; 
+ Wed, 29 Apr 2026 07:47:05 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6966b93d58csm1313984eaf.0.2026.04.29.07.46.50
+ 006d021491bc7-6966b93d58csm1313984eaf.0.2026.04.29.07.47.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 07:46:50 -0700 (PDT)
+ Wed, 29 Apr 2026 07:47:04 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Wed, 29 Apr 2026 08:45:08 -0600
-Subject: [PATCH v2 02/17] bsd-user: Add FreeBSD file I/O ioctl definitions
+Date: Wed, 29 Apr 2026 08:45:19 -0600
+Subject: [PATCH v2 13/17] bsd-user: Add do_ioctl_unsupported function
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260429-ioctl-v2-2-288639bc2427@bsdimp.com>
+Message-Id: <20260429-ioctl-v2-13-288639bc2427@bsdimp.com>
 References: <20260429-ioctl-v2-0-288639bc2427@bsdimp.com>
 In-Reply-To: <20260429-ioctl-v2-0-288639bc2427@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -77,24 +77,24 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, "Stacey D. Son" <sson@freebsd.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1819; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=EbvF/Y9N6ysKAY6EEB2dujgG2t2X2bzpyoB14Ggqvkg=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp8hl8CtnogfFwFkClwNKPs1v8dheSvwwlCXoEn
- MaA+5pHeHGJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafIZfAAKCRBsHNEofbAR
- AINEEACG9CB18khRE/WWENqq7O5AXHI9cfzae1FwUzE+GbGu7UJVlKfYYaiuJgPDeEpN8wVXcqK
- AOQChJnHonJWBEOPsjCS8D5kVQD0g4A+3rzHsNa5n4GGm6Pe0oWk/syHN3mhMuvFmG6mPUNtP47
- Sl9tHcwv3JzGx1uhX+iwoWhdG74DjopEQUS5BJzXCItXUz8gzUq23taKhOaYXxFs+kZei9wNBb7
- SA/UkA7VujxRBr2T2NEsc/A30nSuzXLw98TQ46ytHaseD8AWEW+HzxW76fQEYwp//IscxF17J/j
- zP2h4lUtuc/QKWCyqsQqKxZ0cM9hgXsaHmCCyuKTvNUGqXunkSf0OxrjsYrmjv9oRl2CBWOpqjn
- /dRBf/UpZtZzhpuoEud7aPDN0b17LHbyHchuOkk4UPfqps4jPIZo+IU8z7qoN/BErdt1bwhG8v6
- dSaJGOhIV+iEFM+2VSxZFM7r/Q2xsKFx6AyHb+ZW7T0vZva3Kkj3cGMfujRbp51ki9Ff60sDU7w
- YU3q7sXLuSrMU1Yp/oXRLl4Op9KlYnQ0W30vOmnjJocdg9UoR0uEP4PsxpEpJJpQ2Ja+a0oO2pj
- 3TaaA8Wz1P/6UgbJJq4GsxfF026Jj6IYUR+bBrSMj1LL3ZzhC2jDfwnAZetjpZ81ePf8pwqbGfI
- 7Ht1QiFL/DDeycA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=924; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=z3kSXcpgHWSbT8rO0VakkW+JCopL97J9zLmtTQWWN9s=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp8hl9fWobJVTjCLnEpntYHONeQ+supMyuuPkM4
+ yEvMdwW7fKJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafIZfQAKCRBsHNEofbAR
+ AGQOEADJlUse7gewwgZjHVjE3sdSIA+qOqYGY+gVk2otoINMjAkWs0poAFl49kpmXyyIQ5GZfDK
+ Lk2xL2l+44D1a028pKUaep2T+XU3Sic2xGFelvqvuiD7JIlE/vFqRl33Ca6fsCEPxyDkRsO/B3v
+ Cu14gg+ngIYXEPbexaucV2cL4LmdXriw0IJETnqwzUP4ZWyJ+zff2j0k3poLA5erXwf22JxdGr4
+ MFZ7UwHcoH++JeItZ5IUNdlCHdNvry2b4EqOkmBCZFu24DnD0fC7cBDyK+SxDgi1jF/YStX3kMG
+ FUql/S2rKgq1+m3VvitTSYG0HCRKmWhJbtIcoEfsdoVyo/SNAN/PIGngz+J+OwK3HBLmKLv6BJf
+ 3sz3zEjFy45rtRSGRgaLZ1mew7oijQolzQUXcJLJyZIrW9/UXx+xAHQLAPQ4CxZxV7DTKAeBQAI
+ TLfnUylgDVt78FOYvA8Hkt8DGPKrUjSeQmd4AHMcanulwnNK5xIbZEBrSDPJjvzjcaXBZbZFsan
+ yTLsBgq6oRJ3fKXDXNMGwdQyTS5a4Xz00eR4b+vcWsV2qhZhv3M4j7gkPyPhuYwJI/3i2cCfmCJ
+ 1M6Wcf0rt8aMaPsoSzDLPtwhutxgM7jeZgPAhRy3DcHw7daUPjSh4yfbI29n2qtLiCo3qHeg4JK
+ FJpDwlbw7jdCu+g==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::c32;
- envelope-from=imp@bsdimp.com; helo=mail-oo1-xc32.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::333;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x333.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,57 +116,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Stacey D. Son" <sson@freebsd.org>
-
-Add os-ioctl-filio.h with file I/O control ioctl definitions including
-FIONREAD, FIONBIO, FIOASYNC, and FIOSETOWN for file descriptor control.
+Add handler function for unsupported ioctl commands that returns
+TARGET_ENXIO.
 
 Signed-off-by: Stacey D. Son <sson@freebsd.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-ioctl-filio.h | 34 ++++++++++++++++++++++++++++++++++
- 1 file changed, 34 insertions(+)
+ bsd-user/bsd-ioctl.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/bsd-user/freebsd/os-ioctl-filio.h b/bsd-user/freebsd/os-ioctl-filio.h
-new file mode 100644
-index 0000000000..79e8f0b83d
---- /dev/null
-+++ b/bsd-user/freebsd/os-ioctl-filio.h
-@@ -0,0 +1,34 @@
-+/*
-+ * FreeBSD filio definitions for ioctl(2) emulation
-+ *
-+ * Copyright (c) 2013 Stacey D. Son
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef BSD_USER_FREEBSD_OS_IOCTL_FILIO_H
-+#define BSD_USER_FREEBSD_OS_IOCTL_FILIO_H
+diff --git a/bsd-user/bsd-ioctl.c b/bsd-user/bsd-ioctl.c
+index 049188e5e1..41f310c734 100644
+--- a/bsd-user/bsd-ioctl.c
++++ b/bsd-user/bsd-ioctl.c
+@@ -243,3 +243,11 @@ static void log_unsupported_ioctl(unsigned long cmd)
+     gemu_log(" '%c' %3d %lu\n", (char)IOCGROUP(cmd), (int)(cmd & 0xff),
+              IOCPARM_LEN(cmd));
+ }
 +
-+/* see sys/filio.h */
-+#define TARGET_FIOCLEX      TARGET_IO('f', 1)
-+#define TARGET_FIONCLEX     TARGET_IO('f', 2)
-+#define TARGET_FIONREAD     TARGET_IOR('f', 127, int)
-+#define TARGET_FIONBIO      TARGET_IOW('f', 126, int)
-+#define TARGET_FIOASYNC     TARGET_IOW('f', 125, int)
-+#define TARGET_FIOSETOWN    TARGET_IOW('f', 124, int)
-+#define TARGET_FIOGETOWN    TARGET_IOR('f', 123, int)
-+#define TARGET_FIODTYPE     TARGET_IOR('f', 122, int)
-+#define TARGET_FIOGETLBA    TARGET_IOR('f', 121, int)
-+
-+struct target_fiodgname_arg {
-+    int32_t     len;
-+    abi_ulong   buf;
-+};
-+
-+#define TARGET_FIODGNAME    TARGET_IOW('f', 120,    \
-+                struct target_fiodgname_arg)
-+#define TARGET_FIONWRITE    TARGET_IOR('f', 119, int)
-+#define TARGET_FIONSPACE    TARGET_IOR('f', 118, int)
-+#define TARGET_FIOSEEKDATA  TARGET_IOWR('f', 97, off_t)
-+#define TARGET_FIOSEEKHOLE  TARGET_IOWR('f', 98, off_t)
-+
-+#endif /* BSD_USER_FREEBSD_OS_IOCTL_FILIO_H */
++static abi_long do_ioctl_unsupported(__unused const IOCTLEntry *ie,
++                                     __unused uint8_t *buf_temp,
++                                     __unused int fd, __unused abi_long cmd,
++                                     __unused abi_long arg)
++{
++    return -TARGET_ENXIO;
++}
 
 -- 
 2.52.0
