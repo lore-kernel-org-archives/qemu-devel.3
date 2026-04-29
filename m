@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B49FF8867
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 04:50:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69506FF8867
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 04:50:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHwqU-0000wu-0b; Wed, 29 Apr 2026 00:48:22 -0400
+	id 1wHws9-0004hG-Kg; Wed, 29 Apr 2026 00:50:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHwqS-0000wc-5L
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:48:20 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1wHws7-0004VR-Vt
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:50:04 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHwqP-00087Y-Vd
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:48:19 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-c76c60c7502so197317a12.0
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 21:48:17 -0700 (PDT)
+ id 1wHws6-00008m-74
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:50:03 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2ad9516a653so61696535ad.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 21:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777438096; x=1778042896; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777438201; x=1778043001; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=up6skKqJSQQNZDXlNUFBGctHSex7FpmhenPiP1DwEl0=;
- b=XGcsUc7yjmkpakthUY1UqVi8AJo9VC2sa4LwQ1s9gNG62kzkW6ZWFik4BGtCQgeZit
- tiKg75qv2eqZXZSMt/TsY36pY02j8FR1/DhePEJ+6IEtS33Gu12U2W7FZksgfBY2o7fv
- imSQDZmKBVCjIVQBGTuPLs9kvzWvRrYz6w+1NySl0oIshaiHoSIeZx4XCZ5+u4kbBD23
- xXlUxCQbKDIkqdmWIkV+u7glcN2hYjHSE6GLDIIZVFcFUWWOd5xQ1pzC/57jQGiE7eKU
- lYlNWJbGCLPOaTspOhMmWCt7NmNG1edMm6YVojr6ZWRKcmYEygZlp0c8tDxLkabGOBFN
- /nNw==
+ bh=8aJdIKQsrxZX3dfBBdKm1LLNMdym3GoXLlya5UAy0ms=;
+ b=C6lxuA69JsRGcmeK1doHk5hCe6aBtYjxq0gNfKRtnKZF6tfEzsMBBoFgDpMNoCI3n2
+ XRlatSxqXhBQ4fXYUhmstQyhfL8xEuhfrVs/5yhqxP1U4PdSNFzPDuCuQy9THalS1Ong
+ T8CnS6jL3hI+X9Kq4AQ26zY0bpzlejAGfk9sjEBgdFyo+SwBYGWhBnyysO5Yk6QK+HCz
+ 9HG9e7G3OzIRyQ0BMcntiodN2ZL4f4as1QW2z4SF4loXfsOWeolOv0AIaV5IVdsCuDbc
+ l3uQtKuA6eWd2L1e+qKl4Y63nchnO1PHrT7M+NV7324JRY8PuAGQoWRFIPz8tEcQCbJR
+ j5gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777438096; x=1778042896;
+ d=1e100.net; s=20251104; t=1777438201; x=1778043001;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=up6skKqJSQQNZDXlNUFBGctHSex7FpmhenPiP1DwEl0=;
- b=OvNMc5NifPv1kliLJyduHiuCXX1c6kIVxQ06OtMh+HjnhP3U+5xlSwlbKMNBRS95YE
- oX8QzAHrZVL8aSlGzzrtfWjecdmq2lxeD5zK0cG++XjM/RgG9oGn7KDNbX+XFpjuDSEi
- ZBPcssv3yQmSbJy3AjQP8PKI4LYB1vzlPdqJhyMPdFjyGikCLP/FMevKpjcF4JSmVYH3
- HCdj8CMLfFZjI8jk3rdndYPhDh43aj91LAWAeRJt+aWkGqeud/RX+aXSrSu7lh3VADY5
- 3Gjz5ycKIsZRAJUhrkBqzsWTRg4oaA+IhV1o2MMYv7kZ+/KNVLbJ1IgEmKEH97iF273U
- +sBg==
+ bh=8aJdIKQsrxZX3dfBBdKm1LLNMdym3GoXLlya5UAy0ms=;
+ b=kwDIdk2d0+obJsFfO4M3XRJiZG9NL7cGlSk/jC8Wism+abanp10b8qIZ4oo0MDN4J3
+ ErGpuBnPginkzvLEk8o+kTk3/ghOGEfFfY28q9hW4RIH2HkC76eRRDwPOYz/DaMnjYDt
+ jRTHMxTXsY4jpkuBGpNR+tZQSOPCLmOEDJPA12sSK5u9BnNIguYxOhhbe/1AvU0QwnEh
+ j59qXdWICDsAHhbuyHNidqdblQf8rxNNdQGd5aukCAbhKKnJqD6sZKaWZcusO65q4qZy
+ qNidY8D/XbYtrEulWEO4tRmfP8SCoESA/bV0QfzdHy0epZwKgTnO0Igq9z02ZcC4HACZ
+ Ibmg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9JcHxhcSWD6EXU6AsuXyZeC9hJ8y+JVhcMHktjaTulichR4MmIFRo4hX/lZhXpgkOVfQBRR5dvg+Pu@nongnu.org
-X-Gm-Message-State: AOJu0YyDYkPwL/3K7WA3RTtsorTtrqFotcl8reJN+Q4mFLgdBmP6ZOS0
- tchu2rEOTye9bvz+Qg2vaIt5ox2k7GTy64wkw6JWrpOoNZf7s/oesxtn
-X-Gm-Gg: AeBDiesokmrLxOnfqVZzTo3Ciq1SxZ8gaAUzzFq1JBLi8cBj7TxRgbPk09b3HHx/4r3
- D2O/8iXWrRu0ga8m9dme6oO1OEQCscSZ2whwRXg7YISBTqZIHbgtqB2CnZp6WD2ROKPNXrvvNbd
- yxQ+UJlacblFV9T+mLnNJmEzY9413wPLk65koU5vnmXWjdARF654hWukR2rkcH2iPDW5S2p+B77
- eoI76YMcXs31ylrqtNyx/KIZdAWT91B6ZxsrJ4xCM75co4EXlB1fuMlBCgu/uUngfzv9th5qEUb
- 5BLQBMB1xO/h6CgOOotcE61Bt13SSTcIOQ7vOldGTWNC7U6xG+npZ7MvV6DCVsfC5lW3q2s2Zq1
- s0NIYbQYECMkXHGATyXLvBlSslHrcI30mG2jf0pkRnT0B6LEoLVNNerjFpy6yXC5COEGD6Vn4sH
- kQcvajg/ul7RfFfIKooQquSVO17/nKeUEJMNWbIYwXWYXtdCWdl7rs
-X-Received: by 2002:a17:903:2b0b:b0:2b9:6cde:c34b with SMTP id
- d9443c01a7336-2b988238921mr15113085ad.15.1777438096502; 
- Tue, 28 Apr 2026 21:48:16 -0700 (PDT)
+ AFNElJ9K+i4iY9PKXOYIew5Z1TWpGoIR0L9jFpq8v9ZTmg4LVjtQrQn6aG+J5rZzhJOscOvdWDAxjgkdcbIg@nongnu.org
+X-Gm-Message-State: AOJu0Yx0t5NqdlJPnApINFjf73+n3rKutB6hc4XK8B4q9mcBswo6xbyP
+ AyIyUp2Meq3KvHW8oOPpWbUbQFlOKAUF+ZBnYzZfJgMNEhlfqj6sTjrs
+X-Gm-Gg: AeBDievgZRt35rmn5bxOZqlybIdQ2ukWywN91wFL3/kllbRfQBR18qMeuU4xZjuYc7D
+ snnI76A6ILpGpOZoouSLxBmZGkYknNWpDg9ZhVg7pqLFoFZJc2rhcrBNEPLIMBAAnSV5x2vb5bl
+ iH25k5ltDJvyFMZ4dMaioy4mhv9t7EwyzyYFw8WVfxo1yHRx70E36zCkWW24teyCgvq6RmZ8yt+
+ ueY3I7u0HgU4JtB4s6dhw/6qIbsHX0a27RZfD/ZGF/E2ZHn5WUXM2ecY5c55GaLTGXvcOlTdz3d
+ PhuFCiqG2H5bEGMijdOJceqSiYbHEKACAbpgcKL92f10R/e3rFM3urK3cJ/F9mTiyaEhEjjIvMd
+ jyzAEa0VUuGdWjL+OMK0YSs7ZKovjg4Fk5byVtVD/mT7Hsndgw70VHOGF3RXbwiKo1brjjaN/5Q
+ x8LQDP/ObrU7HwAANB3QkVFcFQuA+9lz7G2gpzMpTf8qfaWXj5Uo0apwI+i3xTZl4=
+X-Received: by 2002:a17:903:11c7:b0:2b2:65db:8c51 with SMTP id
+ d9443c01a7336-2b98730ce7fmr20980545ad.8.1777438200784; 
+ Tue, 28 Apr 2026 21:50:00 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b988772ae8sm7756145ad.7.2026.04.28.21.48.11
+ d9443c01a7336-2b988772ae8sm7756145ad.7.2026.04.28.21.49.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Apr 2026 21:48:15 -0700 (PDT)
+ Tue, 28 Apr 2026 21:50:00 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
  qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Jay Chang <jay.chang@sifive.com>,
- Frank Chang <frank.chang@sifive.com>, Nutty Liu <nutty.liu@hotmail.com>,
+Cc: alistair23@gmail.com, Yicong Yang <yang.yicong@picoheart.com>,
+ Andrew Jones <andrew.jones@oss.qualcomm.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 01/51] hw/riscv/riscv-iommu: Use standard EN_PRI bit for PRI
-Date: Wed, 29 Apr 2026 14:47:02 +1000
-Message-ID: <20260429044752.4176397-2-alistair.francis@wdc.com>
+Subject: [PULL 22/51] hw/riscv/virt-acpi-build.c: Use kvm timer frequency when
+ kvm enabled
+Date: Wed, 29 Apr 2026 14:47:23 +1000
+Message-ID: <20260429044752.4176397-23-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260429044752.4176397-1-alistair.francis@wdc.com>
 References: <20260429044752.4176397-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,40 +108,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jay Chang <jay.chang@sifive.com>
+From: Yicong Yang <yang.yicong@picoheart.com>
 
-Replace the temporary custom extension bit (TC[32]) with the
-standard EN_PRI bit defined in RISC-V IOMMU specification.
+The timer frequency is decided by the host(kvm) rather than a fixed
+RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ on kvm accelerated VM. So build
+RCHT with KVM provided timer frequency if KVM is enabled, just like
+how we build the timer node on DT based VM.
 
-Signed-off-by: Jay Chang <jay.chang@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Signed-off-by: Jay Chang <jay.chang@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260325014856.58948-1-jay.chang@sifive.com>
+Fixes: ebfd39289370 ("hw/riscv/virt: virt-acpi-build.c: Add RHCT Table")
+Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>
+Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Message-ID: <20260325081314.57089-1-yang.yicong@picoheart.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/riscv-iommu.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ hw/riscv/virt-acpi-build.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index c3c9ed6469..8476405d0e 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -1572,11 +1572,8 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
-     riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_URQ);
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index f1406cb683..fd6ca5dbc4 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -35,9 +35,11 @@
+ #include "hw/riscv/virt.h"
+ #include "hw/riscv/numa.h"
+ #include "hw/virtio/virtio-acpi.h"
++#include "kvm/kvm_riscv.h"
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
++#include "system/kvm.h"
+ #include "system/reset.h"
  
-     iot_cache = g_hash_table_ref(s->iot_cache);
--    /*
--     * TC[32] is reserved for custom extensions, used here to temporarily
--     * enable automatic page-request generation for ATS queries.
--     */
--    enable_pri = (iotlb->perm == IOMMU_NONE) && (ctx->tc & BIT_ULL(32));
-+    enable_pri = (iotlb->perm == IOMMU_NONE) &&
-+                 (ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI);
-     enable_pid = (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
+ #define ACPI_BUILD_TABLE_SIZE             0x20000
+@@ -296,7 +298,10 @@ static void build_rhct(GArray *table_data,
  
-     /* Check for ATS request. */
+     /* Time Base Frequency */
+     build_append_int_noprefix(table_data,
+-                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, 8);
++                              kvm_enabled() ?
++                              kvm_riscv_get_timebase_frequency(&s->soc->harts[0]) :
++                              RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ,
++                              8);
+ 
+     /* ISA + N hart info */
+     num_rhct_nodes = 1 + ms->smp.cpus;
 -- 
 2.53.0
 
