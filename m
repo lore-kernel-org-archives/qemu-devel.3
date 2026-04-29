@@ -4,102 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5725FF8867
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 11:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2369FF8875
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 11:39:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI39s-0004iP-Mb; Wed, 29 Apr 2026 07:32:53 -0400
+	id 1wI3Fe-0006Ep-WC; Wed, 29 Apr 2026 07:38:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wI39j-0004ga-Ok
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 07:32:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wI39f-0000jC-RH
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 07:32:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777462355;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WEfpl/T+syi3v38UyNihVZXbXMtDsLRzVNxbEldEB5E=;
- b=GWMK39uc0K+LhEigPTIjN2GxF0CVFOe9y9CyaECrD98HiTJIFp8hzbzJcI9lx9lYE4htF5
- MCl0MPR86uNcZVnOx2dJDzpvXYGfOo+5sh7vY510JhuD+3RCZ4bofBARLXS24Me8QIuVEG
- TUWk5D5SCcnqZUU7nbrD4jeAMC9ruaw=
-Received: from mail-pl1-f198.google.com (mail-pl1-f198.google.com
- [209.85.214.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-36-w0zHImdnPFuWCTSlGlTrOg-1; Wed, 29 Apr 2026 07:32:31 -0400
-X-MC-Unique: w0zHImdnPFuWCTSlGlTrOg-1
-X-Mimecast-MFC-AGG-ID: w0zHImdnPFuWCTSlGlTrOg_1777462350
-Received: by mail-pl1-f198.google.com with SMTP id
- d9443c01a7336-2b24308165dso178893095ad.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 04:32:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777462350; x=1778067150; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=WEfpl/T+syi3v38UyNihVZXbXMtDsLRzVNxbEldEB5E=;
- b=di0wuQ7JyNVeQoFn8nXJgO8LA+ZyHIWmpz13p7YoJ61BrXUj5QErtEX2DVOvBfp34o
- BBgF5fBQnt9Xq2QoZMXqQUZWZpuxpw3oLkMy2ecVbN9ndUHYQ4Ir3ZoqM0wMvtJs6NBN
- Ojj3QDeUMwXLYZHZ1aHxToqZ/MYJbt09guLbnFNT1r+vDYQUeoRZrjZXOBUosXRlmody
- FeDc2RfRGgR1jOhRIqTpKwwaxh7ajaqy7KYk/KfDjweqheQSWmoqzIqZHzSaYGSS8RIz
- IBUJcCUvDiZHY4zpWnd+pS1mmRII6NEKdshDK4pCFGt3Iq66LySNjVnrBkJ7JBQ8O5NI
- SjiQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777462350; x=1778067150;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=WEfpl/T+syi3v38UyNihVZXbXMtDsLRzVNxbEldEB5E=;
- b=VZtxPczr/ZlyHgsCWjidhLLRVLXMkgATh/ncSowTXzmQfYqdF+vPO5xq6kMi0a3iyg
- ohc6c1UL8vqe2tiSiR/ZR9NVGxG1he7Y1wXNvhy1CRMnVnKQHMjoa7tqf238FqCZTrCa
- BJXOwh8nNT86Q0F0LtLWBPuqrGr4Hrt3oGnwB236ecD5GJKxBqMNg3Hoj18cZwnF+xC8
- O/mA78N58CXspb69EccOi8RAbpJ+q+cqBBv1ZvhSN9oajuaELoPfkjBMiP/xD52/O9OK
- WAINzE6eNkh0uu2i/TnuoitoLKQ7dtPEL9MRrS5vS6yPAkszru/swC3Ug0p30GKTJtRv
- cWnA==
-X-Gm-Message-State: AOJu0YzQTUx8ytBw7NGynR/qSCm1YXHCPgOiCKAcvXMvSipSwTRHov7Y
- VB1jCR9YKKZnDK/a157NwSaZrcYBEvZWUsmHBgHM5t1XB2mFEBGyBunShHdmvVmBK4sXifsLapS
- eK+DIKvHgur29jad5w77DNcNzHduM9jm1BmjwKUaOtJQBkIZ0YyeIaIfJ
-X-Gm-Gg: AeBDieuAoEBAQd1RWCNkhohG9E/bLZKj4XKdVeBMocS8XvAAr2Qu/T7rCxLojGAz7pS
- eM69y05ToNR4F71+Z0l8zOj/94H0sHPq4q592VgORy1y6SXs5+bG0ZewdXJD2VWl/Y0zB5jJMSx
- QT4JRCjWIZf/PaAGhjL0DYlLdrnpW3mC8nkLUht6RyqA6C2gNw+o6ZM3fdnhYBxcLaRS2iXrXtm
- nrn90PK0LkiopJuiiGJGZmeha7pqbdHWj9JAW52MGieCJ2r+DuDN3ErurLP4Z4EgqIrKdcFUOuH
- 081tyjeDnj/2Vku802MmtfupcUcGE4GC5K+DH+zv3ywqtsV8cOKio5cOWAXtFVwaSIxIjgrE3v9
- nvRV62BNgyl6uVvDOOT6H68g=
-X-Received: by 2002:a17:903:2ac5:b0:2b7:abc0:3bd7 with SMTP id
- d9443c01a7336-2b97c3fe759mr72552375ad.9.1777462350383; 
- Wed, 29 Apr 2026 04:32:30 -0700 (PDT)
-X-Received: by 2002:a17:903:2ac5:b0:2b7:abc0:3bd7 with SMTP id
- d9443c01a7336-2b97c3fe759mr72551875ad.9.1777462349809; 
- Wed, 29 Apr 2026 04:32:29 -0700 (PDT)
-Received: from fedora ([49.36.106.198]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b98893f132sm20046805ad.49.2026.04.29.04.32.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 04:32:29 -0700 (PDT)
-Date: Wed, 29 Apr 2026 17:02:24 +0530
-From: Arun Menon <armenon@redhat.com>
-To: Stefan Berger <stefanb@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com
-Subject: Re: [PATCH 6/6] tests: Add a TPM TIS I2C swtpm test
-Message-ID: <afHsSJlhvtjYCJ_e@fedora>
-References: <20260428130718.1325177-1-stefanb@linux.ibm.com>
- <20260428130718.1325177-7-stefanb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1wI3FO-0006Du-Vj
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 07:38:33 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wI3FM-0003LE-4D
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 07:38:29 -0400
+Received: from example.com (unknown [167.220.208.81])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 9FC6320B716C;
+ Wed, 29 Apr 2026 04:38:24 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9FC6320B716C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1777462705;
+ bh=NS7XOFJ1CtQnB/JU8/hzjogMH1giz3e0WYCtN5uCU4Q=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=Z7OAF+PSjF9gyXiOtmogIhXaFHGW+n5TNYEdWCiQj/aNc4+98A9J8X9K71Uf58dDu
+ D/S/Yw/u1CzmZoXhZEuLxRKebFOm8d1LSZCuGkENIEIzbZISgH8UVP+E7EsvUtkjes
+ EQ5R7Bmvq23K0z6dr7TxlMlfUtqcnaXPKG/j3H58=
+Date: Wed, 29 Apr 2026 13:38:21 +0200
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 6/6] target/i386/mshv: use the register page to set
+ registers
+Message-ID: <afHtrYCfOwAKoL+B@example.com>
+References: <20260428135053.251200-1-dblanzeanu@linux.microsoft.com>
+ <20260428135053.251200-7-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20260428130718.1325177-7-stefanb@linux.ibm.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260428135053.251200-7-dblanzeanu@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,213 +68,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 28, 2026 at 01:07:18PM +0000, Stefan Berger wrote:
-> Add a test case testing the TPM TIS over I2C with swtpm.
+On Tue, Apr 28, 2026 at 04:50:53PM +0300, Doru Blânzeanu wrote:
+> Update mshv_store_regs to use the register page when it is mmapped and
+> valid to set registers.
+> Otherwise use the ioctls to set the registers.
 > 
-> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+> Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 > ---
->  tests/qtest/meson.build              |  5 +-
->  tests/qtest/tpm-tis-i2c-swtpm-test.c | 86 ++++++++++++++++++++++++++++
->  tests/qtest/tpm-tis-i2c-util.c       | 38 ++++++++++++
->  tests/qtest/tpm-tis-i2c-util.h       |  4 ++
->  4 files changed, 131 insertions(+), 2 deletions(-)
->  create mode 100644 tests/qtest/tpm-tis-i2c-swtpm-test.c
+>  target/i386/mshv/mshv-cpu.c | 45 +++++++++++++++++++++++++++++++++----
+>  1 file changed, 41 insertions(+), 4 deletions(-)
 > 
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index 823be192e7..1a94f20f7f 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -241,7 +241,7 @@ qtests_arm = \
->    (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed : []) + \
->    (config_all_devices.has_key('CONFIG_NPCM7XX') ? qtests_npcm7xx : []) + \
->    (config_all_devices.has_key('CONFIG_GENERIC_LOADER') ? ['hexloader-test'] : []) + \
-> -  (config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
-> +  (config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test', 'tpm-tis-i2c-swtpm-test'] : []) + \
->    (config_all_devices.has_key('CONFIG_VEXPRESS') ? ['test-arm-mptimer'] : []) + \
->    (config_all_devices.has_key('CONFIG_MICROBIT') ? ['microbit-test'] : []) + \
->    (config_all_devices.has_key('CONFIG_STM32L4X5_SOC') ? qtests_stm32l4x5 : []) + \
-> @@ -260,7 +260,7 @@ qtests_aarch64 = \
->    (config_all_devices.has_key('CONFIG_XLNX_VERSAL') ? ['xlnx-canfd-test', 'xlnx-versal-trng-test'] : []) + \
->    (config_all_devices.has_key('CONFIG_RASPI') ? ['bcm2835-dma-test', 'bcm2835-i2c-test'] : []) +  \
->    (config_all_accel.has_key('CONFIG_TCG') and                                            \
-> -   config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test'] : []) + \
-> +   config_all_devices.has_key('CONFIG_TPM_TIS_I2C') ? ['tpm-tis-i2c-test', 'tpm-tis-i2c-swtpm-test'] : []) + \
->    (config_all_devices.has_key('CONFIG_ASPEED_SOC') ? qtests_aspeed64 : []) + \
->    (config_all_devices.has_key('CONFIG_NPCM8XX') ? qtests_npcm8xx : []) + \
->    (config_all_devices.has_key('CONFIG_IOMMU_TESTDEV') and
-> @@ -398,6 +398,7 @@ qtests = {
->    'tpm-tis-swtpm-test': [io, tpmemu_files, 'tpm-tis-util.c'],
->    'tpm-tis-test': [io, tpmemu_files, 'tpm-tis-util.c'],
->    'tpm-tis-i2c-test': [io, tpmemu_files, 'tpm-tis-i2c-util.c', 'qtest_aspeed.c'],
-> +  'tpm-tis-i2c-swtpm-test': [io, tpmemu_files, 'tpm-tis-i2c-util.c', 'qtest_aspeed.c'],
->    'tpm-tis-device-swtpm-test': [io, tpmemu_files, 'tpm-tis-util.c'],
->    'tpm-tis-device-test': [io, tpmemu_files, 'tpm-tis-util.c'],
->    'virtio-net-failover': test_migration_files,
-> diff --git a/tests/qtest/tpm-tis-i2c-swtpm-test.c b/tests/qtest/tpm-tis-i2c-swtpm-test.c
-> new file mode 100644
-> index 0000000000..54a84251f8
-> --- /dev/null
-> +++ b/tests/qtest/tpm-tis-i2c-swtpm-test.c
-> @@ -0,0 +1,86 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * QTest testcase for TPM TIS over I2C talking to external swtpm
-> + *
-> + * Copyright (c) 2018, 2026 IBM Corporation
-> + *  with parts borrowed from migration-test.c that is:
-> + *     Copyright (c) 2016-2018 Red Hat, Inc. and/or its affiliates
-> + *
-> + * Authors:
-> + *   Stefan Berger <stefanb@linux.ibm.com>
-> + *
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +
-> +#include "libqtest.h"
-> +#include "qemu/module.h"
-> +#include "tpm-tests.h"
-> +#include "tpm-tis-i2c-util.h"
-> +#include "qtest_aspeed.h"
-> +
-> +typedef struct TestState {
-> +    char *src_tpm_path;
-> +    char *dst_tpm_path;
-> +    char *uri;
-> +    const char *machine_options;
-> +    char *ifmodel;
-> +} TestState;
-> +
-> +static void tpm_tis_i2c_swtpm_test(const void *data)
-> +{
-> +    const TestState *ts = data;
-> +
-> +    aspeed_i2c_restart();
-> +
-> +    tpm_test_swtpm_test(ts->src_tpm_path, tpm_tis_i2c_transfer,
-> +                        ts->ifmodel, ts->machine_options);
-> +}
-> +
-> +static void tpm_tis_swtpm_migration_test(const void *data)
-> +{
-> +    const TestState *ts = data;
-> +
-> +    aspeed_i2c_restart();
-> +
-> +    tpm_test_swtpm_migration_test(ts->src_tpm_path, ts->dst_tpm_path,
-> +                                  ts->uri, tpm_tis_i2c_transfer,
-> +                                  ts->ifmodel, ts->machine_options);
-> +}
-> +
-> +
-> +int main(int argc, char **argv)
-> +{
-> +    int ret;
-> +    TestState ts;
-> +
-> +    ts.src_tpm_path = g_dir_make_tmp("qemu-tpm-tis-i2c-swtpm-test.XXXXXX",
-> +                                     NULL);
-> +    ts.dst_tpm_path = g_dir_make_tmp("qemu-tpm-tis-i2c-swtpm-test.XXXXXX",
-> +                                     NULL);
-> +    ts.uri = g_strdup_printf("unix:%s/migsocket", ts.src_tpm_path);
-> +    ts.machine_options = "-machine rainier-bmc -accel tcg";
-> +    ts.ifmodel = g_strdup_printf(
-> +                            "tpm-tis-i2c,bus=aspeed.i2c.bus.%d,address=0x%x",
-> +                            I2C_DEV_BUS_NUM, I2C_SLAVE_ADDR);
-> +
-> +    module_call_init(MODULE_INIT_QOM);
-> +    g_test_init(&argc, &argv, NULL);
-> +
-> +    aspeed_bus_addr = ast2600_i2c_calc_bus_addr(I2C_DEV_BUS_NUM);
-> +
-> +    qtest_add_data_func("/tpm/tis-i2c-swtpm/test", &ts, tpm_tis_i2c_swtpm_test);
-> +    qtest_add_data_func("/tpm/tis-i2c-swtpm-migration/test", &ts,
-> +                        tpm_tis_swtpm_migration_test);
-> +    ret = g_test_run();
-> +
-> +    tpm_util_rmdir(ts.dst_tpm_path);
-> +    g_free(ts.dst_tpm_path);
-> +    tpm_util_rmdir(ts.src_tpm_path);
-> +    g_free(ts.src_tpm_path);
-> +    g_free(ts.uri);
-> +    g_free(ts.ifmodel);
-> +
-> +    return ret;
-> +}
-> diff --git a/tests/qtest/tpm-tis-i2c-util.c b/tests/qtest/tpm-tis-i2c-util.c
-> index 6e724a4a47..c73420ec5b 100644
-> --- a/tests/qtest/tpm-tis-i2c-util.c
-> +++ b/tests/qtest/tpm-tis-i2c-util.c
-> @@ -15,6 +15,7 @@
->  #include "libqtest-single.h"
->  #include "qtest_aspeed.h"
->  #include "tpm-tis-i2c-util.h"
-> +#include "tpm-emu.h"
->  
->  uint32_t aspeed_bus_addr;
->  
-> @@ -62,3 +63,40 @@ void tpm_tis_i2c_writel(QTestState *s, uint8_t locty, uint8_t reg, uint32_t v)
->      }
->      aspeed_i2c_writel(s, aspeed_bus_addr, I2C_SLAVE_ADDR, reg, v);
+> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+> index 7949493e97..6bb3e6d4a9 100644
+> --- a/target/i386/mshv/mshv-cpu.c
+> +++ b/target/i386/mshv/mshv-cpu.c
+> @@ -294,14 +294,51 @@ static int set_standard_regs(const CPUState *cpu)
+>      return 0;
 >  }
-> +
-> +void tpm_tis_i2c_transfer(QTestState *s,
-> +                          const unsigned char *req, size_t req_size,
-> +                          unsigned char *rsp, size_t rsp_size)
-> +{
-> +    uint32_t sts;
-> +    size_t i;
-> +
-> +    /* request use of locality 0 */
-> +    tpm_tis_i2c_writeb(s, 0, TPM_I2C_REG_ACCESS, TPM_TIS_ACCESS_REQUEST_USE);
-> +
-> +    tpm_tis_i2c_writel(s, 0, TPM_I2C_REG_STS, TPM_TIS_STS_COMMAND_READY);
-> +
-> +    /* transmit command */
-> +    for (i = 0; i < req_size; i++) {
-> +        tpm_tis_i2c_writeb(s, 0, TPM_I2C_REG_DATA_FIFO, req[i]);
-> +    }
-> +
-> +    /* start processing */
-> +    tpm_tis_i2c_writeb(s, 0, TPM_I2C_REG_STS, TPM_TIS_STS_TPM_GO);
-> +
-> +    uint64_t end_time = g_get_monotonic_time() + 50 * G_TIME_SPAN_SECOND;
-> +    do {
-> +        sts = tpm_tis_i2c_readl(s, 0, TPM_I2C_REG_STS);
-> +        if ((sts & TPM_TIS_STS_DATA_AVAILABLE) != 0) {
-> +            break;
-> +        }
-> +    } while (g_get_monotonic_time() < end_time);
-> +
-> +    /* read response */
-> +    for (i = 0; i < rsp_size; i++) {
-> +        rsp[i] = tpm_tis_i2c_readb(s, 0, TPM_I2C_REG_DATA_FIFO);
-> +    }
-> +    /* relinquish use of locality 0 */
-> +    tpm_tis_i2c_writeb(s, 0,
-> +                       TPM_I2C_REG_ACCESS, TPM_TIS_ACCESS_ACTIVE_LOCALITY);
-> +}
-> diff --git a/tests/qtest/tpm-tis-i2c-util.h b/tests/qtest/tpm-tis-i2c-util.h
-> index 3289545f61..499bf4964a 100644
-> --- a/tests/qtest/tpm-tis-i2c-util.h
-> +++ b/tests/qtest/tpm-tis-i2c-util.h
-> @@ -27,4 +27,8 @@ uint32_t tpm_tis_i2c_readl(QTestState *s, uint8_t locty, uint8_t reg);
->  void tpm_tis_i2c_writeb(QTestState *s, uint8_t locty, uint8_t reg, uint8_t v);
->  void tpm_tis_i2c_writel(QTestState *s, uint8_t locty, uint8_t reg, uint32_t v);
 >  
-> +void tpm_tis_i2c_transfer(QTestState *s,
-> +                          const unsigned char *req, size_t req_size,
-> +                          unsigned char *rsp, size_t rsp_size);
+> +static void mshv_set_standard_regs_vp_page(CPUState *cpu)
+> +{
+> +    X86CPU *x86cpu = X86_CPU(cpu);
+> +    CPUX86State *env = &x86cpu->env;
 > +
->  #endif /* TESTS_TPM_TIS_I2C_UTIL_H */
+> +    env->regs_page->rax = env->regs[R_EAX];
+> +    env->regs_page->rbx = env->regs[R_EBX];
+> +    env->regs_page->rcx = env->regs[R_ECX];
+> +    env->regs_page->rdx = env->regs[R_EDX];
+> +    env->regs_page->rsi = env->regs[R_ESI];
+> +    env->regs_page->rdi = env->regs[R_EDI];
+> +    env->regs_page->rsp = env->regs[R_ESP];
+> +    env->regs_page->rbp = env->regs[R_EBP];
+> +    env->regs_page->r8  = env->regs[R_R8];
+> +    env->regs_page->r9  = env->regs[R_R9];
+> +    env->regs_page->r10 = env->regs[R_R10];
+> +    env->regs_page->r11 = env->regs[R_R11];
+> +    env->regs_page->r12 = env->regs[R_R12];
+> +    env->regs_page->r13 = env->regs[R_R13];
+> +    env->regs_page->r14 = env->regs[R_R14];
+> +    env->regs_page->r15 = env->regs[R_R15];
+> +    env->regs_page->rip = env->eip;
+> +    lflags_to_rflags(env);
+> +    env->regs_page->rflags = env->eflags;
+> +
+> +    env->regs_page->dirty |= (1u << HV_X64_REGISTER_CLASS_GENERAL)
+> +                                | (1u << HV_X64_REGISTER_CLASS_IP)
+> +                                | (1u << HV_X64_REGISTER_CLASS_FLAGS);
+> +}
+> +
+>  int mshv_store_regs(CPUState *cpu)
+>  {
+> +    X86CPU *x86cpu = X86_CPU(cpu);
+> +    CPUX86State *env = &x86cpu->env;
+>      int ret;
+>  
+> -    ret = set_standard_regs(cpu);
+> -    if (ret < 0) {
+> -        error_report("Failed to store standard registers");
+> -        return -1;
+> +    /* Use register vp page to optimize registers access */
+> +    if (env->regs_page && env->regs_page->isvalid != 0) {
+> +        mshv_set_standard_regs_vp_page(cpu);
+> +    } else {
+> +        ret = set_standard_regs(cpu);
+> +        if (ret < 0) {
+> +            error_report("Failed to store standard registers");
+> +            return -1;
+> +        }
+>      }
+
+I think for consistency sake it would be better to also write back
+sregs, but this is reworked in the migration patch series anyway, so we
+can leave it as is here.
+
+>  
+>      return 0;
 > -- 
-> 2.43.0
-> 
+> 2.53.0
 
-Reviewed-by: Arun Menon <armenon@redhat.com>
-
-Regards,
-Arun Menon
-
+Reviewed-By: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
