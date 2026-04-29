@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 832EDCCFA13
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:26:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EB21CCFA13
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:26:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIAYS-0006RR-UM; Wed, 29 Apr 2026 15:26:40 -0400
+	id 1wIAYH-0006IB-9F; Wed, 29 Apr 2026 15:26:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wIAYQ-0006R3-HI
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:26:38 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wIAYE-0006Bg-J2
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:26:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wIAYO-0007qs-BY
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:26:38 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wIAYC-0007dk-Tu
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:26:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777490795;
+ s=mimecast20190719; t=1777490782;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=r3bFlvRyNHuo5LAmox46R5ptUST3XkFKOLqwa+xbG2U=;
- b=foWJcgRXKGpr9m9CMd5cutlE6O7Ku2j/cLRJr5zGGsCdpqxACP1S+TU8FO8JWApWssnSid
- fi+dgYNu8Y3RRdAtVL9e/rWUap3ItRzcYNyqjF5nDrG/7VAzEsBOv3i4zE8CPrZo3Zhz5N
- o7pbLGCoCHUl/toFOBDgoARNJFOBVuQ=
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=gE7lnCa/yZ2FWSaG/fHh3KUOFynL2xQEVw/BkW7oA90=;
+ b=OGLFFZaX2uiFtCaZD+gUnwUc2Btu+uzeiTN12Ek3yFqfQXLmX5M8qoEF/SiXZc6z1dO2rW
+ wKje3VFy+SPokWizPh3RkQOIHxO9jZ+jrPCAfzi+ViCyAxWfgPnLYEesxLLec+t2Sjg8+2
+ O1WQXVErDa+zx8Jw4O20GJ69z0op8RI=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-338-NVrDnU5xPNK-mbGhr7cGVQ-1; Wed,
- 29 Apr 2026 15:26:31 -0400
-X-MC-Unique: NVrDnU5xPNK-mbGhr7cGVQ-1
-X-Mimecast-MFC-AGG-ID: NVrDnU5xPNK-mbGhr7cGVQ_1777490790
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-210-xHU29jW2PUOFt8HqY24IHw-1; Wed,
+ 29 Apr 2026 15:26:19 -0400
+X-MC-Unique: xHU29jW2PUOFt8HqY24IHw-1
+X-Mimecast-MFC-AGG-ID: xHU29jW2PUOFt8HqY24IHw_1777490777
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 512D91800350; Wed, 29 Apr 2026 19:26:30 +0000 (UTC)
+ id 863411800578; Wed, 29 Apr 2026 19:26:17 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.204])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 63C511800446; Wed, 29 Apr 2026 19:26:26 +0000 (UTC)
+ id 8755F180045E; Wed, 29 Apr 2026 19:26:13 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>, Eric Blake <eblake@redhat.com>,
@@ -59,14 +58,12 @@ Cc: Michael Roth <michael.roth@amd.com>, Eric Blake <eblake@redhat.com>,
  Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v2 03/13] qapi/docs: make remaining subsection members
- "private"
-Date: Wed, 29 Apr 2026 15:26:01 -0400
-Message-ID: <20260429192611.1581223-4-jsnow@redhat.com>
-In-Reply-To: <20260429192611.1581223-1-jsnow@redhat.com>
-References: <20260429192611.1581223-1-jsnow@redhat.com>
+Subject: [PATCH v2 00/13] qapi: add formal "intro" section
+Date: Wed, 29 Apr 2026 15:25:58 -0400
+Message-ID: <20260429192611.1581223-1-jsnow@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -92,165 +89,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These fields are used to provide error checking and internal logistics
-and should not be used by a user of the library to directly access
-documentation sections, so make them private.
-
-The "since" field alone is left public, as the qapidoc generator does
-use this field to pull that section out of the regular flow of the
-document.
-
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- scripts/qapi/parser.py | 54 +++++++++++++++++++++++-------------------
- 1 file changed, 29 insertions(+), 25 deletions(-)
-
-diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-index b33edbba74f..da4756a7424 100644
---- a/scripts/qapi/parser.py
-+++ b/scripts/qapi/parser.py
-@@ -555,7 +555,7 @@ def get_doc(self) -> 'QAPIDoc':
-                     break
-                 # Non-blank line, first of a section
-                 if line == 'Features:':
--                    if doc.features:
-+                    if doc.has_features:
-                         raise QAPIParseError(
-                             self, "duplicated 'Features:' line")
-                     self.accept(False)
-@@ -570,7 +570,7 @@ def get_doc(self) -> 'QAPIDoc':
-                         if text:
-                             doc.append_line(text)
-                         line = self.get_doc_indented(doc)
--                    if not doc.features:
-+                    if not doc.has_features:
-                         raise QAPIParseError(
-                             self, 'feature descriptions expected')
-                     no_more_args = True
-@@ -733,14 +733,18 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
-             QAPIDoc.Section(info, QAPIDoc.Kind.PLAIN)
-         ]
-         # dicts mapping parameter/feature names to their description
--        self.args: Dict[str, QAPIDoc.ArgSection] = {}
--        self.features: Dict[str, QAPIDoc.ArgSection] = {}
-+        self._args: Dict[str, QAPIDoc.ArgSection] = {}
-+        self._features: Dict[str, QAPIDoc.ArgSection] = {}
-         # a command's "Returns" and "Errors" section
--        self.returns: Optional[QAPIDoc.Section] = None
--        self.errors: Optional[QAPIDoc.Section] = None
-+        self._returns: Optional[QAPIDoc.Section] = None
-+        self._errors: Optional[QAPIDoc.Section] = None
-         # "Since" section
-         self.since: Optional[QAPIDoc.Section] = None
- 
-+    @property
-+    def has_features(self) -> bool:
-+        return bool(self._features)
-+
-     def end(self) -> None:
-         for section in self.all_sections:
-             section.text = section.text.strip('\n')
-@@ -771,15 +775,15 @@ def new_tagged_section(
-     ) -> None:
-         section = self.Section(info, kind)
-         if kind == QAPIDoc.Kind.RETURNS:
--            if self.returns:
-+            if self._returns:
-                 raise QAPISemError(
-                     info, "duplicated '%s' section" % kind)
--            self.returns = section
-+            self._returns = section
-         elif kind == QAPIDoc.Kind.ERRORS:
--            if self.errors:
-+            if self._errors:
-                 raise QAPISemError(
-                     info, "duplicated '%s' section" % kind)
--            self.errors = section
-+            self._errors = section
-         elif kind == QAPIDoc.Kind.SINCE:
-             if self.since:
-                 raise QAPISemError(
-@@ -803,16 +807,16 @@ def _new_description(
-         desc[name] = section
- 
-     def new_argument(self, info: QAPISourceInfo, name: str) -> None:
--        self._new_description(info, name, QAPIDoc.Kind.MEMBER, self.args)
-+        self._new_description(info, name, QAPIDoc.Kind.MEMBER, self._args)
- 
-     def new_feature(self, info: QAPISourceInfo, name: str) -> None:
--        self._new_description(info, name, QAPIDoc.Kind.FEATURE, self.features)
-+        self._new_description(info, name, QAPIDoc.Kind.FEATURE, self._features)
- 
-     def append_line(self, line: str) -> None:
-         self.all_sections[-1].append_line(line)
- 
-     def connect_member(self, member: 'QAPISchemaMember') -> None:
--        if member.name not in self.args:
-+        if member.name not in self._args:
-             assert member.info
-             if self.symbol not in member.info.pragma.documentation_exceptions:
-                 raise QAPISemError(member.info,
-@@ -823,7 +827,7 @@ def connect_member(self, member: 'QAPISchemaMember') -> None:
- 
-             section = QAPIDoc.ArgSection(
-                 self.info, QAPIDoc.Kind.MEMBER, member.name)
--            self.args[member.name] = section
-+            self._args[member.name] = section
- 
-             # Determine where to insert stub doc - it should go at the
-             # end of the members section(s), if any. Note that index 0
-@@ -835,14 +839,14 @@ def connect_member(self, member: 'QAPISchemaMember') -> None:
-                     index += 1
-             self.all_sections.insert(index, section)
- 
--        self.args[member.name].connect(member)
-+        self._args[member.name].connect(member)
- 
-     def connect_feature(self, feature: 'QAPISchemaFeature') -> None:
--        if feature.name not in self.features:
-+        if feature.name not in self._features:
-             raise QAPISemError(feature.info,
-                                "feature '%s' lacks documentation"
-                                % feature.name)
--        self.features[feature.name].connect(feature)
-+        self._features[feature.name].connect(feature)
- 
-     def ensure_returns(self, info: QAPISourceInfo) -> None:
- 
-@@ -883,18 +887,18 @@ def _insert_near_kind(
- 
-     def check_expr(self, expr: QAPIExpression) -> None:
-         if 'command' in expr:
--            if self.returns and 'returns' not in expr:
-+            if self._returns and 'returns' not in expr:
-                 raise QAPISemError(
--                    self.returns.info,
-+                    self._returns.info,
-                     "'Returns' section, but command doesn't return anything")
-         else:
--            if self.returns:
-+            if self._returns:
-                 raise QAPISemError(
--                    self.returns.info,
-+                    self._returns.info,
-                     "'Returns' section is only valid for commands")
--            if self.errors:
-+            if self._errors:
-                 raise QAPISemError(
--                    self.errors.info,
-+                    self._errors.info,
-                     "'Errors' section is only valid for commands")
- 
-     def check(self) -> None:
-@@ -914,5 +918,5 @@ def check_args_section(
-                         "do" if len(bogus) > 1 else "does"
-                     ))
- 
--        check_args_section(self.args, 'member')
--        check_args_section(self.features, 'feature')
-+        check_args_section(self._args, 'member')
-+        check_args_section(self._features, 'feature')
--- 
-2.54.0
+Hiya, this is a series that explores a potential syntax for a=0D
+designated "Intro" section. Markus knows why I want this, but for=0D
+everyone else: a designated "Introduction" section is useful for the=0D
+desired "inliner" feature for the new QAPI doc system. Commits explain=0D
+a bit more. This is prep work and doesn't really change anything=0D
+tangibly except source code syntax for the QAPI docs.=0D
+=0D
+It is designed so that this conversion can happen incrementally with=0D
+no actual difference to the rendered manuals, so each QAPI module can=0D
+be converted one at a time for easier review and merging in an=0D
+arbitrary order.=0D
+=0D
+This series demonstrates conversion of just four modules; if I'm given=0D
+a thumbs up, I will convert the rest of QAPI, one module (or=0D
+maintainer stanza) per patch like how I handled adding=0D
+cross-references.=0D
+=0D
+**=0D
+=0D
+V2: punt intro sections to the subsequent line and adjust the parser=0D
+accordingly. Left as an RFC patch that undoes some things this series=0D
+does instead of properly factoring into the series.=0D
+=0D
+John Snow (13):=0D
+  tests/qapi: generate output in source order=0D
+  qapi/docs: remove unused QAPIDoc subsection members=0D
+  qapi/docs: make remaining subsection members "private"=0D
+  qapi/docs: add "Intro" section=0D
+  qapi/docs: adjust stub member insertion algorithm=0D
+  qapi/docs: remove implicit Plain section=0D
+  qapi/docs: add "Intro" section parsing=0D
+  qapi/docs: Add rendering for INTRO sections=0D
+  qapi: convert intro sections for accelerator.json=0D
+  qapi: convert intro sections for acpi-hest.json=0D
+  qapi: convert intro sections for acpi.json=0D
+  qapi: convert intro sections for audio.json=0D
+  rfc: intro starts on next line=0D
+=0D
+ docs/devel/qapi-code-gen.rst   |  17 ++-=0D
+ docs/sphinx/qapidoc.py         |  53 +++++----=0D
+ qapi/accelerator.json          |  18 +--=0D
+ qapi/acpi-hest.json            |   4 +-=0D
+ qapi/acpi.json                 |  18 ++-=0D
+ qapi/audio.json                |  88 ++++++---------=0D
+ scripts/qapi/parser.py         | 198 ++++++++++++++++++++-------------=0D
+ tests/qapi-schema/doc-good.out |  30 ++---=0D
+ tests/qapi-schema/test-qapi.py |  15 +--=0D
+ 9 files changed, 231 insertions(+), 210 deletions(-)=0D
+=0D
+-- =0D
+2.54.0=0D
+=0D
 
 
