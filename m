@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88C1FFF8875
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:07:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02E0BFF8875
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:07:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIC7s-0002CJ-FW; Wed, 29 Apr 2026 17:07:20 -0400
+	id 1wIC8A-0003fe-1n; Wed, 29 Apr 2026 17:07:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIC7k-0001UB-BO
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:07:13 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1wIC84-0003HY-0D
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:07:32 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIC7i-0003yq-04
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:07:12 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-35da9c0c007so166146a91.2
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 14:07:09 -0700 (PDT)
+ id 1wIC81-000427-SP
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:07:31 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2b2589c26e3so1620305ad.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 14:07:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777496828; x=1778101628; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777496848; x=1778101648; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+dzUFNSSesW62gQcIG+WdwMO0/PUjXTzosaVNqk8UaM=;
- b=R3jxBHxQLmhHmXOOhKH+JMTXd0rvuVqBGI+BgJpJxhlBsGJyxE6dlMTe8ZFbYsDAcv
- 389t33o3xOHsv1evGhYnr2pVtwHRUIWtvvS1V+6P15gXeOeSmzFHSTeqX4i3bWBoQpFO
- ouHANVlRsn0n9n8at5gkXEUsZey8OQr+89IEkHJpf8yAfQcBCB7aLekQP6O1GEmOWmEv
- KuMxd1HsulJ1r+S61IcPj59CVhrtrz0O2Ip9Nqt8IT+pCvx1GDU8HLIKTYJm84U/I4C3
- 5XpW7/tNsZqz0XYOLgEOg0YGjDusrDtcjdkGyWQvdh++8a6HSf81TyOFNRTRHN4qEzWv
- eMrQ==
+ bh=LjS1vnZQm0ZoOJPdJwKVJRdnYKrGCiXMt+6uMj5ykEc=;
+ b=mgjf4k3hWPxyr3QOVs+2LmihDpcMy7oWS7GKS3UH7amrMXPgUdPC+idVxR1bVbv+RT
+ Q7ameLbYOuXPpjTnUx7QLHDvfUNNHskjs9xXv0GZGegJ8snjhIVikgiX9/6wkQki3xQm
+ Oeo7MAwfYPQofI7PizWs2Q663awp+Z2CNXpF77PgI2eJ3RMuRX2ttTI15ubYhaROi6u5
+ 4BkkKEOSXuDBME6jTdAJO+bHcH+eosfVdjB9lWYmNaJj288ak2NDz3V0bwq+uCcfD3oE
+ A1p6Hx4ACdjEbJ6V8ALScSLx1NynaBZIXdW6RnpVIOM4RLKtU9esLlr1IuKmq4t2BifL
+ uYvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777496828; x=1778101628;
+ d=1e100.net; s=20251104; t=1777496848; x=1778101648;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=+dzUFNSSesW62gQcIG+WdwMO0/PUjXTzosaVNqk8UaM=;
- b=QLQIR5uoAZ6NP8azd/MzM6NgaSNffd8p1hWFuahydgOm5hDWZNyxayJ0gcgsN18y26
- zsxvjf5rORGC/s/i/gW2XRgUptPvM2Yt557iUPO88QRvjOoarLEvxfM2Q4oU2w2YR/1j
- USW+127zJxzK9fUfNzR/9s/AsLYSKZ07VjE2t0bM1ge7dVL6zCiqkD6qTXkk1b9DlNbc
- xghJ3kHqG2dkZcP95uveftXfo0/qGrjGMV6QJZUjT6hTLeKwmy/OzZDN4ueBErGCiX4d
- 5mOK8eMNi99tEb2bAVjYj8Yp/OA2Xli0riMpX6Mhd+KX9Drs4hXeMmZ+IK7EIHH65U3r
- ut7A==
-X-Gm-Message-State: AOJu0Yxt3lcY4tWpJ9AEwnFelsfgeqoVGBWl8dUZWZt3jAFYGZ6F9YX7
- MviATR/SH3LgrSt6g4I1NFbip8k6VCLHiaaSvjMEjJm9WKpFlhZf2xsa46oIXTg+we7pMI/V9Ca
- +oshnYyQ=
-X-Gm-Gg: AeBDietcCRLVFwcX58JhtaprXoUQnait2xXMcpbL3kKRC8p8g5GZ2ImTQnM5OsjKixE
- Paqmo99QhT5nSeSK6QHcTgLNQlTrCtQUO/uDWF2QLvbf/c9BpBna3H9bN+UjJFFl/1oLdih6ifI
- FnV3a4qepoRti8rxK/z9g1qMMeuhR3bQoF1g9CV8pjrD03MoYwq3ge3y8rS/3JIRmdpOSNb00Q7
- OzMyGjhegp82T7VgU4Ev/2kFf9OtnN9n8ZM0BAezCx+gM5wiE1azmizo6+u0fQPo1AgHn8NH1Pl
- RnfcM5OwK9HqFCgtl9E1fFwvN1iq7tDuufVLQtOXhG1/vnkFJ6VqwPm9qtQfkVE/aaZRWsehTDU
- Yq/Kuwu0bLQHEqr1rFcZSJQYo4TBxqAwPSOkUmj4xQ4K7UQR8k/ex++UjIDmekYOrCLZP/YiEcF
- sqIHZkeflNWHHWBzXK5vFqwEr/h0bmobW3L8KQ7qefz5ROmZs6exKZ
-X-Received: by 2002:a17:90a:e18c:b0:356:2c7b:c026 with SMTP id
- 98e67ed59e1d1-364921bf8famr10148188a91.23.1777496827943; 
- Wed, 29 Apr 2026 14:07:07 -0700 (PDT)
+ bh=LjS1vnZQm0ZoOJPdJwKVJRdnYKrGCiXMt+6uMj5ykEc=;
+ b=pqP4f6PyPMBlqaAYZA9BGwLC4OnIlCJKHYMAW+h7jN1MilzMllLMg1bvuiKhr932Hf
+ a6dB7wi01DydIdR0K/9lkwEFX30KFuljVNgz8r7xt4E6RKlhlymQnU5GDvWA3uchgR7C
+ ZDS7pG3m3M76EV7yEO6/+amVmX5VIx/zcH6YVHMH5XcaqQLFFKZ4155vHu7/po9IRwvw
+ ZGtH+8oOWz5fQetjNW8X0wjkIYuok66erSW707PFNFxnqKjSJFN46HvrnEDQn7Dvgc18
+ ouSii6DNxfwxsg/HqJtWGorlVcSXwigLN28OdcRC2myycNmfmFt75dNzpTp9MnalZnBJ
+ KC3A==
+X-Gm-Message-State: AOJu0YxJCzArefEMcwUvjaNohik84V+CPWrYy+oV7/+vxdc/rAryKJZJ
+ jMl/w0jD8vsvVTqnhSGGHIqm0hEXlhIDcuh4SCk7N1prkW3tkhjSZCNhO9oCj2Mi4EXz2JhBzlE
+ MO2DasDE=
+X-Gm-Gg: AeBDietZ4BaRiVb6MJbfqS1BdACBxR0zC4T2RKbjRVt819uevnbTzSlQPz74RiP87Y+
+ 6vAcdy3/NoYV1euNK0xpXxB3/PQyFdJYTldirr4sWbxRrriBi/bcc/Dt3dIxfOo/WZf4M0gy8KT
+ moCcO7vVKw5Q8ahpwTF8RhmdnomxFiJgWrsWXRifWnstHkLFKgIRT+cBOPjan4WxB24eywnoa/v
+ 4GoH5j5Yw3RJ+LebivdwPy9rSz8iTH4r6uizkqjYiViekG6MyioKQY0aLN/MHFVZgPLDWMffJ+P
+ 7uRJLRjePxzOFXEK7VGrUHCHqN6mzmtwZ84tHvr84YSexkLr8eGqgzcv0KMj00SCdRu1TN1GKax
+ Yj28P3FuFA+qCUHIrNa2/69KbS3cmHl+IJv6GhGxOfcTfiT7na5/s4Mq8a0JYNp0gDHKjRKdwAk
+ 2teEx5ZI2e+aqwfj1mVkgIMlY6g6KQ9XsYbR4xHpv+q5SeruyAzYrb
+X-Received: by 2002:a17:903:1447:b0:2b0:51f6:d46e with SMTP id
+ d9443c01a7336-2b9a23494d8mr754815ad.15.1777496847589; 
+ Wed, 29 Apr 2026 14:07:27 -0700 (PDT)
 Received: from [192.168.10.140] ([180.233.125.15])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-364be00b168sm494951a91.12.2026.04.29.14.07.06
+ d9443c01a7336-2b98893f4f7sm29059105ad.50.2026.04.29.14.07.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Apr 2026 14:07:07 -0700 (PDT)
-Message-ID: <81772bda-5aed-43a0-ab2d-ac9b95b518d5@linaro.org>
-Date: Thu, 30 Apr 2026 07:07:03 +1000
+ Wed, 29 Apr 2026 14:07:27 -0700 (PDT)
+Message-ID: <df5fa8f6-1e6b-4327-9ac2-6944288f9d53@linaro.org>
+Date: Thu, 30 Apr 2026 07:07:22 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] qom/object: merge double hash table traversal in
- object_property_del_child
+Subject: Re: [PATCH 2/3] block/block-backend: delegate blk_co_preadv to
+ blk_co_preadv_part
 To: qemu-devel@nongnu.org
 References: <20260429062004.36582-1-guobin@linux.alibaba.com>
- <20260429062004.36582-2-guobin@linux.alibaba.com>
+ <20260429062004.36582-3-guobin@linux.alibaba.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260429062004.36582-2-guobin@linux.alibaba.com>
+In-Reply-To: <20260429062004.36582-3-guobin@linux.alibaba.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,43 +106,44 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/29/26 16:20, Bin Guo wrote:
-> object_property_del_child() previously performed two full iterations
-> over obj->properties: the first to find the matching child property and
-> call its release callback, the second to find the same property again
-> and remove it from the hash table.
+> blk_co_preadv() and blk_co_preadv_part() share identical bodies except
+> that blk_co_preadv() always passes qiov_offset=0.  blk_co_pwritev()
+> already uses this pattern and simply calls blk_co_pwritev_part() with
+> qiov_offset=0.  Apply the same simplification to the read side so that
+> both pairs are consistent and the shared logic lives in a single place.
 > 
-> Merge the two loops into one: when the matching property is found, call
-> the release callback and immediately remove the entry via
-> g_hash_table_iter_remove(), then break.  This halves the number of hash
-> table operations in the common case and avoids the redundant second scan.
+> Before this change blk_co_preadv() duplicated the
+> blk_inc_in_flight / blk_co_do_preadv_part / blk_dec_in_flight
+> sequence.  After this change it is a one-liner wrapper, matching the
+> write side.
 > 
 > Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 > ---
->   qom/object.c | 7 -------
->   1 file changed, 7 deletions(-)
+>   block/block-backend.c | 8 +-------
+>   1 file changed, 1 insertion(+), 7 deletions(-)
 > 
-> diff --git a/qom/object.c b/qom/object.c
-> index f981e27044..9c0e8dfd02 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -629,13 +629,6 @@ static void object_property_del_child(Object *obj, Object *child)
->                   prop->release(obj, prop->name, prop->opaque);
->                   prop->release = NULL;
->               }
-> -            break;
-> -        }
-> -    }
-> -    g_hash_table_iter_init(&iter, obj->properties);
-> -    while (g_hash_table_iter_next(&iter, &key, &value)) {
-> -        prop = value;
-> -        if (object_property_is_child(prop) && prop->opaque == child) {
->               g_hash_table_iter_remove(&iter);
->               break;
->           }
+> diff --git a/block/block-backend.c b/block/block-backend.c
+> index 9944657120..490b149bf8 100644
+> --- a/block/block-backend.c
+> +++ b/block/block-backend.c
+> @@ -1376,14 +1376,8 @@ int coroutine_fn blk_co_preadv(BlockBackend *blk, int64_t offset,
+>                                  int64_t bytes, QEMUIOVector *qiov,
+>                                  BdrvRequestFlags flags)
+>   {
+> -    int ret;
+>       IO_OR_GS_CODE();
+> -
+> -    blk_inc_in_flight(blk);
+> -    ret = blk_co_do_preadv_part(blk, offset, bytes, qiov, 0, flags);
+> -    blk_dec_in_flight(blk);
+> -
+> -    return ret;
+> +    return blk_co_preadv_part(blk, offset, bytes, qiov, 0, flags);
+>   }
+>   
+>   int coroutine_fn blk_co_preadv_part(BlockBackend *blk, int64_t offset,
 
-Fixes: b604a854e84 ("qom: Replace object property list with GHashTable")
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
