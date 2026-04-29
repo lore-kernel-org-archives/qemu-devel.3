@@ -4,111 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA62DCCFA13
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 15:44:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E39B3CCFA13
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 15:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI754-0005Gz-J7; Wed, 29 Apr 2026 11:44:07 -0400
+	id 1wI7Bw-0006Lu-EY; Wed, 29 Apr 2026 11:51:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wI750-0005Gn-Q3
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 11:44:02 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wI7Br-0006Kc-ST
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 11:51:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wI74z-0002tC-4w
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 11:44:02 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wI7Bp-0004kx-BI
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 11:51:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777477438;
+ s=mimecast20190719; t=1777477862;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=d7MRepjFLJT74hAVA+oe3OARbWDyMeZACl0QFpDbepg=;
- b=PqlAJYvrSMsgDgZKTJVnOt7VQteUjDdzDNyXlRuMk/vuk/ATw2T85JbBUDYjTuSPlEnKyy
- nt7eNIfWRfGRTcDL7fZKxBYLWOH5oaKbjFZZmzUQNhdaX+NcOqgbl4ZfCNdZRBaQXzVrrd
- MCscppnxF5Phm82SlkQ5E1m5q8XmzdY=
-Received: from mail-ua1-f71.google.com (mail-ua1-f71.google.com
- [209.85.222.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-64-gSNzDmZ0PyatvVSM2gTF9Q-1; Wed, 29 Apr 2026 11:43:56 -0400
-X-MC-Unique: gSNzDmZ0PyatvVSM2gTF9Q-1
-X-Mimecast-MFC-AGG-ID: gSNzDmZ0PyatvVSM2gTF9Q_1777477436
-Received: by mail-ua1-f71.google.com with SMTP id
- a1e0cc1a2514c-953d479ea6eso15513253241.3
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 08:43:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777477435; x=1778082235; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=d7MRepjFLJT74hAVA+oe3OARbWDyMeZACl0QFpDbepg=;
- b=p4UXlLqU2Ue6w498TvpiXQqXBZVkbf6iN9eKjHHC8W4xnpMSJdOPQEEVwudEKeS+/p
- QrwtqvQ6H7tnttLyaRPiC8T/ngkviLnQJswlA71J+mp4YPYPUyIONmfss80dJLSiZOsB
- Y4QAR6EU9Gva2Hp5SfdD5ZeieN1nRX8tner+pekKiyB8Hmsk3fmgrhqFRU7MQBtzU5jP
- xgoO89hwH66KLajl9txC3BDCjqDHVZuwfkMy8z7PNNsDXZPoFO089x24Rx50XVZjhlnR
- isjdbzi/2jeqMToO+gLXVtyE5Z7XSoEuwC4t4MuSvDgpqFloXu6sDMejzKdk+lYITW0E
- 5T+A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777477435; x=1778082235;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=d7MRepjFLJT74hAVA+oe3OARbWDyMeZACl0QFpDbepg=;
- b=IODe48XUGPX5t2Kz5CAMDf3PlIuEnIlbpiarzq13ofNALjlQoiiDk244TGMfKg36JP
- 6WoAK6A/zdaGHQ0xh9NeoG89t5ijpn0VVD4AVIzDbRJM0DEjXaDGOryNbRcKxifF/w5j
- rOA436LMpTZ0QKczkFOiZhml5knOPEoUDX9ykLChPDFgpVorWfmxMzvXV3a32JoKO6Ml
- /lnV5rVRePMTtfp2yCvTxc+kBWwkuRkFFbctLNm2wKJpa41ksWNB/R3kfPzccOyW9Y4c
- gNL0Mj8HRNaZFi51klEdZI/Ity39uwr+ir53AZcsAshCCsdCMTYiLjlYSft/7NQ6VJ5r
- WP6A==
-X-Gm-Message-State: AOJu0YxwzfOt+h107qXGsMLuoW+LabuqVAw40NPvMuR6eNwXjE57jUnf
- yXJ9FPlZ3t6x7WdJ3n88wA1HdYNFUs+Bfb5V6L2fKgmzlTi35B2G05vM/g9AV75o2P+EJzlNhvf
- AreKp8E51z/vlm+RSrduisgcUi+nz4X3X7CHehf4dp390x7XtuPeASY+m
-X-Gm-Gg: AeBDievCuSTuJQQvmPE1yJVNgB4QHtd5XHZ6Gc3WOmULm5jW1qRptTmm8lBmJCz9geb
- ODuHAveUJcDUAS6eglSoTBuFAUGl/P+5fEzyaougNkHWgxM/tRoLZivLoNPPRwNe+xSwGgjk9Rk
- LzeM7jJmGJbJVH/usNiiCj0Ol/8YBGCfYTasuXOXJig4meNyxQr33Sa3Q/MYWvC3HjfTWxSNKvN
- u6dWu+Mv87Hh9kcRoiSATevkZMQfAQn7Z/BlahhrTyMOvleQD25eXDqdIOoAdfz6be8+nj3f/Nr
- E+8u9Coab8mdr/uI56O/Gy3jaUe2R+9ZH7qbYSi4iRk4SinUUzLmgIYrHZNQU5omVZM3BxTXbsu
- GmOw/gKV1WGnC+ElAsEpFzb5bZR2XMYQVgajYHowY2Lr/dWQ2xBe60jaBJw==
-X-Received: by 2002:a05:6102:149d:b0:612:164e:ab02 with SMTP id
- ada2fe7eead31-62924c7c009mr2781101137.5.1777477435481; 
- Wed, 29 Apr 2026 08:43:55 -0700 (PDT)
-X-Received: by 2002:a05:6102:149d:b0:612:164e:ab02 with SMTP id
- ada2fe7eead31-62924c7c009mr2781057137.5.1777477434895; 
- Wed, 29 Apr 2026 08:43:54 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b3ef71b471sm20700436d6.22.2026.04.29.08.43.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 08:43:53 -0700 (PDT)
-Date: Wed, 29 Apr 2026 11:43:52 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: qemu-devel@nongnu.org, Joao Martins <joao.m.martins@oracle.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>,
- Alex Williamson <alex@shazbot.org>,
- Kirti Wankhede <kwankhede@nvidia.com>, Zhiyi Guo <zhguo@redhat.com>,
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH v2 16/16] vfio/migration: Add tracepoints for
- precopy/stopcopy query ioctls
-Message-ID: <afInOIANAJLftQ7w@x1.local>
-References: <20260421202110.306051-1-peterx@redhat.com>
- <20260421202110.306051-17-peterx@redhat.com>
- <8943abf6-fdc8-4684-8e2d-3a8c95d59c19@nvidia.com>
+ bh=ISZEAZ7VMWWT4Bw50hN9nNn/vvnM1Q6eoaJ/YXhlgHo=;
+ b=CEA7+A6B6Ab5cOpCnNjhZuuSHlQVZsKFgjXon+T2M5N3fVbeGO0TEKxfAxGQpKSmuffkIk
+ PxOtmBYNRyPVWDbRtT6/gjFtXa3bIv0mRVduyd7i1wmzI1CgthnZ7Jbmgvb4vxsTdw/PyG
+ wK2SR5PhOOibbLzupePj60YY/7JlHLg=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-108-Ruk4-R88OtWHpOkqF94hRA-1; Wed,
+ 29 Apr 2026 11:51:00 -0400
+X-MC-Unique: Ruk4-R88OtWHpOkqF94hRA-1
+X-Mimecast-MFC-AGG-ID: Ruk4-R88OtWHpOkqF94hRA_1777477859
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D470F195608D; Wed, 29 Apr 2026 15:50:58 +0000 (UTC)
+Received: from localhost (unknown [10.44.33.46])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 95DD11800480; Wed, 29 Apr 2026 15:50:56 +0000 (UTC)
+Date: Wed, 29 Apr 2026 11:50:55 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Jorge Moreira <jemoreira@google.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, hreitz@redhat.com,
+ gmaglione@redhat.com, Hanna Czenczek <xanclic@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] vhost-user.rst: Explicitly allow front-end to write to
+ kick FDs
+Message-ID: <20260429155055.GA12211@fedora>
+References: <20260411021205.3592118-1-jemoreira@google.com>
+ <aeYvCK2qhZd1W9sA@sgarzare-redhat> <20260420181818.GC405461@fedora>
+ <CAJi--PPzd_fqcsBU-aA11624apoKTtEW6GTKE3_OyZ4SJ90DzA@mail.gmail.com>
+ <20260421211237.GC466778@fedora>
+ <CAJi--PP6gsR5E7RtQ_RwV8fG9Xivk0fXTfNxWuZ6cX+uWBPV=A@mail.gmail.com>
+ <CAGxU2F7UJhbikjFKMgMcFenFx35vmic-hj4pFm7vM0-gk-nCyg@mail.gmail.com>
+ <CAJi--PNoJmei-076Y5geaft98w-nB3OFK2e093EWkN+ZTaQK1Q@mail.gmail.com>
+ <20260427224545.GH218226@fedora>
+ <20260428025111-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="pIKY3MKqzu32nLxz"
 Content-Disposition: inline
-In-Reply-To: <8943abf6-fdc8-4684-8e2d-3a8c95d59c19@nvidia.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20260428025111-mutt-send-email-mst@kernel.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,79 +96,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 29, 2026 at 05:46:19PM +0300, Avihai Horon wrote:
-> Ah sorry, I just noticed this now while doing some other work -- if you
-> respin the series, could you add the device name to both traces? And while
-> at it keep the traces alphabetically sorted?
 
-Could you help check if below fixup is suitable to be squashed?
+--pIKY3MKqzu32nLxz
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Apr 28, 2026 at 02:59:58AM -0400, Michael S. Tsirkin wrote:
+> On Mon, Apr 27, 2026 at 06:45:45PM -0400, Stefan Hajnoczi wrote:
+> > On Wed, Apr 22, 2026 at 12:20:52PM -0700, Jorge Moreira wrote:
+> > > On Wed, Apr 22, 2026 at 1:32=E2=80=AFAM Stefano Garzarella <sgarzare@=
+redhat.com> wrote:
+> > > >
+> > > > On Wed, 22 Apr 2026 at 03:16, Jorge Moreira <jemoreira@google.com> =
+wrote:
+> > > > >
+> > > > > On Tue, Apr 21, 2026 at 2:12=E2=80=AFPM Stefan Hajnoczi <stefanha=
+@redhat.com> wrote:
+> > > > > >
+> > > > > > On Mon, Apr 20, 2026 at 05:48:13PM -0700, Jorge Moreira wrote:
+> > > > > > > While starting the vrings on SET_VRING_KICK could solve the s=
+tate
+> > > > > > > machine issue, it still won't notify the back-end that buffer=
+s are
+> > > > > > > ready (the driver won't do this). Non-polling back-ends depen=
+d on this
+> > > > > > > kick, especially for queues where data flows only from the dr=
+iver to
+> > > > > > > the back-end. Most implementations likely attempt to read fro=
+m the
+> > > > > > > queue only after receiving the kick.
+> > > > > >
+> > > > > > This is an interesting question to clarify in the spec.
+> > > >
+> > > > Yep, which is in part related to what I wrote in the other reply:
+> > > > "I think the main issue to clarify is what the device should do
+> > > > when the vrings are configured, but the driver has already been
+> > > > initialized (which is usually the case after migration)."
+> > > >
+> > > > > >
+> > > > > > Stefan
+> > > > >
+> > > > > This is the question that interests me most, to be honest. I'd ra=
+ther
+> > > > > have the discussion about when to activate the vrings in a differ=
+ent
+> > > > > thread and keep this one focused on whether the front-end should =
+send
+> > > > > the kick or if the back-end is expected to check if there are "ne=
+w"
+> > > > > buffers in the vring after restore.
+> > > > >
+> > > >
+> > > > IMO we don't need anything from the VMM. When the device receives
+> > > > SET_VRING_KICK, it can check if the vring already contains buffers
+> > > > (and this is the part we might need to clarify) and wake-up the oth=
+er
+> > > > threads (or always wake-ups them, as crosvm does IIUC, and let them
+> > > > perform this check).
+> > > > After sending the SET_VRING_KICK message to the device, the VMM has
+> > > > the exact same knowledge of the vring state as the device, therefor=
+e,
+> > > > it's still unclear to me why we need to inject that kick.
+> > > >
+> > > > Stefano
+> > > >
+> > >=20
+> > > Is it possible to activate a vring after it has been deactivated with
+> > > VHOST_USER_GET_VRING_BASE? If yes, does the front-end need to send the
+> > > kick file descriptor again with VHOST_USER_SET_VRING_KICK to
+> > > reactivate it?
+> >=20
+> > Hi Jorge and Stefano,
+> > Yes, VHOST_USER_GET_VRING_BASE -> VHOST_USER_SET_VRING_KICK occurs when
+> > a VM is paused and then resumed.
+> >=20
+> > You can stress test this by driving I/O using iperf (virtio-net) or fio
+> > (virtio-blk) inside the guest and sending 'stop'/'cont' commands to
+> > QEMU's monitor.
+> >=20
+> > Here is QEMU's code for starting (including re-starting) rings:
+> > https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost.c?re=
+f_type=3Dheads#L1341
+> >=20
+> > QEMU does not inject a kick. The back-end must check the rings itself.
+>=20
+>=20
+> I would worry that there could be buggy drivers that expect buffers not
+> consumed until the 1st kick.
+
+This describes the behavior today. I'm not sure whether you are
+commenting on the paragraph I wrote below suggesting how to change
+things or whether you are commenting on the current state?
+
+> A safer thing to do would be for source to record the fact there
+> was a kick after reset and for destination to then inject/check.
+
+Can you rephrase that, it's unclear to me what "source" and
+"destination" mean?
 
 Thanks,
+Stefan
 
-===8<===
-From 930723da46e16c2ed5405916a7e10d4f560e22fa Mon Sep 17 00:00:00 2001
-From: Peter Xu <peterx@redhat.com>
-Date: Wed, 29 Apr 2026 11:41:49 -0400
-Subject: [PATCH] fixup! vfio/migration: Add tracepoints for precopy/stopcopy
- query ioctls
+> > I'm not sure that all vhost-user back-ends actually check the rings. I
+> > think back-ends should do it, but we should also update the spec with an
+> > front-end implementation note recommending injecting a kick after
+> > VHOST_USER_SET_VRING_KICK completes in order to maximize compatibility
+> > with implementations that follow the current spec wording. And at the
+> > same time I think the spec should also be changed to say that
+> > VHOST_USER_SET_VRING_KICK starts the ring and back-ends SHOULD check the
+> > vring upon processing the message.
+> >=20
+> > That seems like it would clean up the issues without introducing
+> > compatibility issues or making existing implementations non-compliant
+> > with the updated spec.
+> >=20
+> > What do you think?
+> >=20
+> > Stefan
+>=20
+>=20
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- hw/vfio/migration.c  | 6 ++++--
- hw/vfio/trace-events | 4 ++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+--pIKY3MKqzu32nLxz
+Content-Type: application/pgp-signature; name=signature.asc
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index 04d9f94edb..150e28656e 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -350,7 +350,8 @@ static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
-         ret = 0;
-     }
- 
--    trace_vfio_query_stop_copy_size(migration->stopcopy_size, ret);
-+    trace_vfio_query_stop_copy_size(vbasedev->name,
-+                                    migration->stopcopy_size, ret);
- 
-     return ret;
- }
-@@ -374,7 +375,8 @@ static int vfio_query_precopy_size(VFIOMigration *migration)
-         ret = 0;
-     }
- 
--    trace_vfio_query_precopy_size(migration->precopy_init_size,
-+    trace_vfio_query_precopy_size(migration->vbasedev->name,
-+                                  migration->precopy_init_size,
-                                   migration->precopy_dirty_size, ret);
- 
-     return ret;
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index 854a7e4b19..ab27ff5ea2 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -162,6 +162,8 @@ vfio_migration_realize(const char *name) " (%s)"
- vfio_migration_set_device_state(const char *name, const char *state) " (%s) state %s"
- vfio_migration_set_state(const char *name, const char *new_state, const char *recover_state) " (%s) new state %s, recover state %s"
- vfio_migration_state_notifier(const char *name, int state) " (%s) state %d"
-+vfio_query_stop_copy_size(const char *name, uint64_t size, int ret) " (%s) stopcopy size %"PRIu64" ret %d"
-+vfio_query_precopy_size(const char *name, uint64_t init_size, uint64_t dirty_size, int ret) " (%s) init %"PRIu64" dirty %"PRIu64" ret %d"
- vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
- vfio_save_block_precopy_empty_hit(const char *name) " (%s)"
- vfio_save_cleanup(const char *name) " (%s)"
-@@ -176,8 +178,6 @@ vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer
- vfio_state_pending(const char *name, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size, bool exact) " (%s) stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64 " exact %d"
- vfio_vmstate_change(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
- vfio_vmstate_change_prepare(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
--vfio_query_stop_copy_size(uint64_t size, int ret) "stopcopy size %"PRIu64" ret %d"
--vfio_query_precopy_size(uint64_t init_size, uint64_t dirty_size, int ret) "init %"PRIu64" dirty %"PRIu64" ret %d"
- 
- #iommufd.c
- 
--- 
-2.53.0
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnyKN4ACgkQnKSrs4Gr
+c8hG9wf8C88jPEDgW2AmKGwYu6wYS++24GO+D9lkftmwB+FTqx40JzH0SPD4PPu9
+7JomubO95MgKjMmuo48siGGSwaVpBBHfMVPe8U5UKZcnR0YDEoml/NkW67ncYq4Z
+yeKlrmPX7CBrzz62Xvt5eehF9j9+xW/A26jdBlnCP/pRli1EWH/RNhglKkRy0zdT
++c+8a0dFH8Ossk2VSxhiiCmF9BAjZEd9WZsotKnKIvaxlYfszTiChwVDjeG4X7Vd
+YWegXw5L08wBrOr0W/1itiR3k0B7830Zm9e71TC1K/m+ehUds9skMuu9KoV+eURG
+82tVwTxYCCe5/mu+X+/pYQ0A5D/aHQ==
+=gDNZ
+-----END PGP SIGNATURE-----
 
--- 
-Peter Xu
+--pIKY3MKqzu32nLxz--
 
 
