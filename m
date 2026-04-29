@@ -4,105 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 213C9FF8864
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 08:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 487CCFF8864
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 08:32:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI0K4-0002wi-96; Wed, 29 Apr 2026 04:31:08 -0400
+	id 1wI0L9-0003FC-NT; Wed, 29 Apr 2026 04:32:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wI0Ju-0002vm-LL
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 04:31:00 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wI0L7-0003ES-Rs
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 04:32:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wI0Js-0006aD-HM
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 04:30:58 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wI0L6-0006sW-5A
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 04:32:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777451452;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1777451530;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1NrbY0h6p9/tm9rAzoaLseHsXWtV+Uu+ajF0aU9JQRw=;
- b=dyUCAxis54N7MRkWRPVnHWRQ6nnzinHOodu62XJz9eShfJ0fjUivr3/Gyb/jhK5GKWDDrv
- gCx+naenExpEFHOlrLuQamza3KRJrvQBZjsFL7mo/m9HA/fygCHus+dxIcrTSjeq3mxEIB
- LbsphilYPF1NO7OcJzAvzzjPdLpiG+k=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-612-egs0DmJaM02FOU-vfZ1JjA-1; Wed, 29 Apr 2026 04:30:51 -0400
-X-MC-Unique: egs0DmJaM02FOU-vfZ1JjA-1
-X-Mimecast-MFC-AGG-ID: egs0DmJaM02FOU-vfZ1JjA_1777451450
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-440d12a472eso9108397f8f.3
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 01:30:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777451450; x=1778056250; darn=nongnu.org;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:reply-to:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=1NrbY0h6p9/tm9rAzoaLseHsXWtV+Uu+ajF0aU9JQRw=;
- b=BPFdN4yE7UBJK6SA/mYkKHgLNhNdx728WWLxJw1p+Zm1fAXeK+eW/nlRlyYCFRekGU
- GvNAf71eBuflDKkl0FSrMVzol/L7SAHOfmSvuSUvqYmrSKu+2RtmaItHUYLnjOZuQ0AL
- 4mstpAOKpYFf5k5g5ZwUn/to3OTOGUaixcsWZ1LDCG4tdrxN1Uwxcw8qCH6ZGiipxfWT
- ivzSlIXei3PI5mnOwM1qI5AKI43fpeRwxdR4YizA3PdeppbJEDv1y7IjFC4LmFNW0KE+
- w2bcN1pCKGqP4vfflwMEbIk4HE74LURidoCyFB164nuyU/ze1Z7ZhMyhr4jNaWoOwU43
- 96iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777451450; x=1778056250;
- h=user-agent:in-reply-to:content-transfer-encoding
- :content-disposition:mime-version:references:reply-to:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1NrbY0h6p9/tm9rAzoaLseHsXWtV+Uu+ajF0aU9JQRw=;
- b=cDtTNY8q6Ix05YpJOkkFel1FEhlykXKXEUq7hLprriGTVEr4hD1RLYtXz9jboM6eib
- ncrg8OJSIDKuR0aav3c3sqCxt2wAlIyMgakT2oclQfBuN8xtGbN6i0SpOFbBo0LKezwv
- 97YPZxDKlnOCsw6IyfHaX+Sa/zSwyAew2JpZDlfOguKJEqWV8xxqTjNaoi1X78TaiNVi
- j4lxHzXi9XOALXuqPuqSYU7yeTgWmZdmuS6pgX/0XsnR4jd+FmO+a1iGUMSJNtUubYrI
- XJLCbOyEGHOe0mC+d6jiix+EardlLb2gapXa1AQRrWa96wy+c5zvN1QOBRaGYTqzf/q5
- 8lfA==
-X-Gm-Message-State: AOJu0YxUI4JdNBh/1CEMnvZK6z1VD/Mjvr7qlwc8NPC0jFRSgnmvn7Gn
- sAzNxrNdNCLZ6qAxbOOgn265f/aEpqtkuXqUfK0IRkRgwKcQMVOlWZdZeg+G7NQgUSe1pPX+FX8
- rYrXG2dBAzgRvySrczQ7Q8oZ2Nb3pFDBdzmC50/uke4zMtMvUEn/fiOZh
-X-Gm-Gg: AeBDievXb18pd9b4r+lsBZYHeKWozPOdfRC6VF34zOewxyJU8l6ZG3x6b8xHh3AV/dj
- cSTyiWuwjL4PtwZ06RciwJdaX63zWQ5SEUmm8wK6a1lcPrJjUPUFjhwtMJcah2Px6DqWmmowBwv
- V5Hxcaf+R257tNsX8n1dhtz0vG/eWmjzbaU7IjTONnfzO6kgsR3GmroRMgyeZBzl3Rb7StyspRI
- 8vFR++yDeEVZDXxesHeiV7rDa3EZ8THhY7QloJOMu/zxqtxTqf4Nrpijlfy5lgvMbQtBCr4yqa0
- X+HY6FKjoghDCWzu4Ch56L5PUhif9xjnWSaNy4zW97PDf5PsuDtFMSaGM9KDv+jdOdqu6HoE/OF
- ewt2pTwsyQ9NMt5HHqC6x1rOU9jnvwjw=
-X-Received: by 2002:a05:6000:3107:b0:43b:5b25:67f8 with SMTP id
- ffacd0b85a97d-44648963af5mr11733176f8f.20.1777451449688; 
- Wed, 29 Apr 2026 01:30:49 -0700 (PDT)
-X-Received: by 2002:a05:6000:3107:b0:43b:5b25:67f8 with SMTP id
- ffacd0b85a97d-44648963af5mr11733099f8f.20.1777451449029; 
- Wed, 29 Apr 2026 01:30:49 -0700 (PDT)
-Received: from redhat.com ([2a02:8012:f011:0:f1ce:ac56:d2cd:7c2e])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-447b3d47ff1sm4260511f8f.6.2026.04.29.01.30.48
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 01:30:48 -0700 (PDT)
-Date: Wed, 29 Apr 2026 09:30:46 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 09/67] ui/console-vc: add UTF-8 input decoding with
- CP437 rendering
-Message-ID: <afHBtmEr4tWPgZyC@redhat.com>
-References: <20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com>
- <20260410-qemu-vnc-v2-9-231416f76dc3@redhat.com>
- <ad91dIuoiLOdIHHN@redhat.com>
- <CAMxuvaxw3mBdhE24dT+CrBhVtvosQYzMEt3f-gGdtvwj4Ce3qg@mail.gmail.com>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=KGxs10dHNhwPiME27iFE/rHbfp2q2PD4JRlbozrcXCw=;
+ b=Q9xcnR0JWFjp2gneXe9E5Cp8+Yr9WP/tmg/Jelst7OX/Ntuwit8gvaWRFiu9ioMTSK12kZ
+ 0y8E8PGSkjqk+NdqWuChheKGqw3zs1iS5sK7Gyf72aU9F9VCdenHfaqN0amR6dxi9AyhRg
+ qvqWk0sKykp0rNxTJEe8XcK8ovd54cY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-272-W8V3zmzeP-GrytG4dNWNDA-1; Wed,
+ 29 Apr 2026 04:32:06 -0400
+X-MC-Unique: W8V3zmzeP-GrytG4dNWNDA-1
+X-Mimecast-MFC-AGG-ID: W8V3zmzeP-GrytG4dNWNDA_1777451525
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8E5341800579; Wed, 29 Apr 2026 08:32:05 +0000 (UTC)
+Received: from [10.44.33.170] (unknown [10.44.33.170])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 505C830001BB; Wed, 29 Apr 2026 08:32:04 +0000 (UTC)
+Message-ID: <389edd46-c25d-473c-8603-1a5d411d0d63@redhat.com>
+Date: Wed, 29 Apr 2026 10:32:01 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAMxuvaxw3mBdhE24dT+CrBhVtvosQYzMEt3f-gGdtvwj4Ce3qg@mail.gmail.com>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: Rust builds don't use link_args
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <24ba9372-a691-4a63-a6da-e8340343faaf@oss.qualcomm.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <24ba9372-a691-4a63-a6da-e8340343faaf@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -110,7 +105,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.109,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,60 +119,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 20, 2026 at 11:54:40AM +0400, Marc-André Lureau wrote:
-> Hi
+On 4/29/26 01:16, Pierrick Bouvier wrote:
+> I noticed that plugins are not working when building with with
+> --enable-rust.
 > 
-> On Wed, Apr 15, 2026 at 3:24 PM Daniel P. Berrangé <berrange@redhat.com> wrote:
-> >
-> > On Fri, Apr 10, 2026 at 11:18:31PM +0400, Marc-André Lureau wrote:
-> > > The text console receives bytes that may be UTF-8 encoded (e.g. from
-> > > a guest running a modern distro), but currently treats each byte as a
-> > > raw character index into the VGA/CP437 font, producing garbled output
-> > > for any multi-byte sequence.
-> >
-> > Presumably the key words here are  "may be" .... as in, it
-> > also "may NOT be" UTF-8.
-> >
-> > IIUC, the current code is assuming that all data from the guest
-> > is in the CP437 encoding (8-bit Extended ASCII), and that encoding
-> > has valid characters for all 256 code points.
-> >
-> > By adding UTF-8 decoding for val > 0x80 this is breaking compat
-> > with any guest that is outputting data with the full range of
-> > CP437.
-> >
-> > IOW, this patch is moving the brokeness from guests which
-> > use UTF8, onto guests which use CP437.
-> >
-> > Only guests which strictly limit themselves to 7-bit ASCII
-> > are unaffected.
-> >
-> > I accept the UTF8 should probably be considered the common
-> > case for modern guests, but this hardcoding a different type
-> > of breakage feels undesirable to me.
-> >
-> > Surely we need an explicit config property here to select
-> > the between character sets we expect from the guest ?
+> We explicitly export qemu_plugin_* symbols from QEMU binary using:
+> plugins/meson.build:24 [1]
+> ```
+> emulator_link_args += '-Xlinker', '--dynamic-list=' +
+> qemu_plugin_symbols.full_path()
+> ```
 > 
-> Probably, I don't know if many guest/apps rely on the serial encoding,
-> but we should probably be conservative.
+> Tracing a rust enabled build, it seems that rustc is responsible for
+> doing the final link, by calling the compiler (cc here).
+> However, I didn't see those flags being passed.
 > 
-> Adjusting the decoding at runtime may be possible, but it could be tricky.
-> 
-> Instead, we could add a vc chardev option like charset=cp437/utf8.
-> 
-> What should be the default? For compatibility reasons, use CP437 for
-> pc machine <=11.0 and default to utf8 for others? wdyt?
+> Any idea how to make rustc apply these flags correctly?
 
-Strictly speaking this is not guest ABI, just a change in defaults
-for the backend. So as long as we provide the config option, we could
-potentially just change the default to UTF8 unconditionally, on the
-basis that UTF8 has been the default charset in mainstream Linux for
-20 years. Not sure what Windows uses by default, but use of the serial
-console with Linux guests is much more likely than Windows guests IMHO.
+I would start by testing Meson 1.11. From 
+https://mesonbuild.com/Release-notes-for-1-11-0.html:
+
+---
+## Change to handling of linker arguments for Rust
+
+Since the Rust compiler integrates the compiler and linker phase, 
+previous Meson versions did not obey link_args, 
+add_project_link_arguments or add_global_link_arguments.
+
+Starting in this version, add_project_link_arguments(), 
+add_global_link_arguments(), and the link_args keyword argument are 
+supported for Rust. They wrap the arguments with -Clink-arg= when 
+invoking rustc, and are only included when creating binary or shared 
+library crates.
+
+Likewise, methods such as has_link_argument() now wrap the arguments 
+being tested with -Clink-arg=.
+----
+
+Paolo
 
 
