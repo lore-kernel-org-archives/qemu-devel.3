@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D73FFF8873
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:06:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31297CCFA13
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIC6f-0007Zo-Ak; Wed, 29 Apr 2026 17:06:05 -0400
+	id 1wIC6Y-0007A7-4x; Wed, 29 Apr 2026 17:05:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wIC5R-0006Jo-5R
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:04:57 -0400
+ id 1wIC5x-0006hn-Th
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:05:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wIC5P-0003UQ-Gh
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:04:48 -0400
+ id 1wIC5s-0003Wt-2F
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:05:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777496685;
+ s=mimecast20190719; t=1777496713;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9xsmB+cqBRqaS9skMbjA7XRg5bZVpVFUgMg50GnuroM=;
- b=b8WAZlFscC06ruO5zPzyWVhWGI9JqXbWQLET9KDEFXkBM6b6ZuTW/ULXrpqAISLxITSFR+
- Jq+w6gr8vEgGrVlVaiN5xjZ3KzUOmTkYEm8A3sDE9u09FmYerVXSDYdukTunbXVJyHrxCb
- Aoer9zAPI28tG/7TIFTmKxJCbQz6cD4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Dw3WlezUpgW1Ac2LZpVgWB6GhjwurpwxGK8jST2SZXg=;
+ b=KVoXT9StYk6M03FM7ci+nx//zbE+Sh3tJzMZbGnxatHbz0UDET2heATolbOK8A5IbEeos3
+ 3p4fEV5jYpf4Kp/8fiPAWDmDH+gRaQjcirja+dUBaH0axGRIkyQWXc7RNLtA28MvFf9eux
+ KgGBqeC3hkFbRHdK5cTQ2uukI4Ztm8I=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-451-RWvMftFHO42LrwLjx79PZw-1; Wed,
- 29 Apr 2026 17:04:44 -0400
-X-MC-Unique: RWvMftFHO42LrwLjx79PZw-1
-X-Mimecast-MFC-AGG-ID: RWvMftFHO42LrwLjx79PZw_1777496682
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-0YUU2C5aNn-Tv3G7y5z3Zg-1; Wed,
+ 29 Apr 2026 17:05:11 -0400
+X-MC-Unique: 0YUU2C5aNn-Tv3G7y5z3Zg-1
+X-Mimecast-MFC-AGG-ID: 0YUU2C5aNn-Tv3G7y5z3Zg_1777496711
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A1331956050; Wed, 29 Apr 2026 21:04:42 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DE08A18003FC; Wed, 29 Apr 2026 21:05:10 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.2])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BCB27195608E; Wed, 29 Apr 2026 21:04:40 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E42E830001A1; Wed, 29 Apr 2026 21:05:08 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 30 Apr 2026 01:02:48 +0400
-Subject: [PATCH v3 15/26] ui/vnc: vnc_display_init() and vnc_display_open()
- return bool
+Date: Thu, 30 Apr 2026 01:02:53 +0400
+Subject: [PATCH v3 20/26] ui/console: simplify registering display/console
+ change listener
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260430-qemu-vnc-v3-15-be96757428d0@redhat.com>
+Message-Id: <20260430-qemu-vnc-v3-20-be96757428d0@redhat.com>
 References: <20260430-qemu-vnc-v3-0-be96757428d0@redhat.com>
 In-Reply-To: <20260430-qemu-vnc-v3-0-be96757428d0@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3384;
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=17792;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=1BdF+ZE2ZaZ7NQ/12KK1Q24noSi6tIoILVGECxV0ikY=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp8nIMKXhnRdo6HWaNS9G8J/dKMbJdtptmf9uYN
- 0VTyhqYG06JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafJyDAAKCRDa6OEJdZac
- 5XpdEACyKd4WFtudHsU368hBdh6Ab0Ojh6moGqf+tdEGlLib0ez3H7Z5t0WQVqSwmszgUkeQ0wu
- oLqUGbdkB+4oixkVw1r6PrlsNtGxdZnBrycrF2jmcB6DGpe2WtpeGLkpSe1c5L+vunpu5lTryRU
- hjHB4QH+iP3xJ9FpN1MxNdXVaRSB1a+6cRlpf66Gm9OhRATmru5WkxXmzGjd1/krqBFT8NoDnn0
- OY7s1H52kLK2ChMcKCotM1JMg+CO0SpmsS9US1vBBfzUgxAoE+Yuo8N6AYoPSTKdAaZUFAt8PT7
- VD59+9HKrYd3acB0Zrib3oZbQHZx9KOHUctWK9qFuDj5chIS0nIIcA8sl53Q8rmbivzW4iUWKAM
- xqwWVMJq1zopsif4YkET/LyzoC/5wOE1DNmAASSEHasYHUrbqy6gAXHFQah1n8P1smPPAhKNnF+
- FYi2xyMnZYOey0CRv/WSLYonoA8Z1LpPHP34BUWaGDe6nzFZs8Ad5nHeWqN3qSTgi7fW2r+9BIL
- /GRPqoX7+g/Y6q94mD9ZL1oJsfxMY9xKemDvVbA+csBO0bL7mJ2XIljdb/PUKVd5IRj3CJHS/Gk
- hWatWV0o51PFfINn1dQVI/iD/h5rj89JdxTrvZ5FLbMEEwlu5N7rVK+Q4xeJ0rxrtojAqyZ1eCn
- iIxaNRoOdmyN1Gw==
+ bh=bNajfHycqchmwU1i8YMXXyZVCFfcYK1+9bm/MFXideQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp8nIMjZNAvRxOxC6yxAwPOivKMhYd5TnOJKj+8
+ HDorjrmroKJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafJyDAAKCRDa6OEJdZac
+ 5fsVD/sFilojNecetEKlEqH/RWaHNj+19lNOnU63AGknjh7qeS20kWEbSuxwzyLKggYH8XmqZ1A
+ FOT4sA0abGEjwfu7pIIFtxLbD0hF8shhkn33OSA86PdO9JnoJ567s0s+D9LYbTJF4hmHkitwkmz
+ K9AUMCRuixuScbtMXBffkiFY7L+4LyS1iGClzloPQPBOIWvx+s8LY/QyL79+dM5QtJXqqxAlULe
+ 7TroRM6/D1nATIzcNGMZkyWYPkcjgiS7u8IXYyYHEOFehq56kU12q7OVjnRbHSbpHvLHyN9ATds
+ qi0snSentnWzI38eu+4NkzMafDo5IMxlAe+lHzunMM9b4v5y6RIArDBdMf2r0igIeTpZ31tNiuV
+ arsYGYYwQGO2S8ND4jX1EG717/4MyaGXH4+TL5uqPVB3lhiVMjrTrsz76QixDGUNd78UHNRJ1Hc
+ PcCqQMS9mMebQHjJxW6i1G9I94QkygULs4L9wd8fiPY4h75bKJ4mFZH9XvTKumVRgwTjuHjaGUT
+ mnLVAEglovtthAyNQWXioA6+Kc0BNPLE8UPdeTNaj4rTN6g+jhJRrhLofsgdezcLKRqpimIOeKi
+ otjCnYvtwPSOtAxdTGU3O4aYiUoBkfSN51/8w7h7w3ExPT80xmyJ0yDxL8Lfc3UxsFDP6TgxQ0a
+ PGsqVocSuPFMsYw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,113 +103,459 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use the QEMU-style error pattern returning "true" on success.
+Introduce qemu_console_register_listener() which combines setting
+dcl->con, dcl->ops and calling register_displaychangelistener() into a
+single call. This removes repetitive boilerplate across all display
+backends and makes it harder to forget setting one of the fields.
+
+Also move the early-return check in unregister_displaychangelistener()
+before the trace call, so that unregistering a never-registered listener
+(e.g. on error paths) does not dereference a NULL ops pointer.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/ui/console.h |  4 ++--
- ui/vnc.c             | 20 ++++++++++----------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ include/ui/console.h |  6 ++++--
+ hw/display/qxl.c     |  4 +---
+ ui/console.c         | 11 ++++++++---
+ ui/curses.c          |  9 +++------
+ ui/dbus-console.c    |  6 ++----
+ ui/dbus-listener.c   | 27 ++++++++-------------------
+ ui/egl-headless.c    |  4 +---
+ ui/gtk.c             | 10 ++++------
+ ui/sdl2.c            |  8 +++-----
+ ui/spice-display.c   |  8 +++-----
+ ui/vnc.c             | 11 ++++-------
+ ui/cocoa.m           | 13 ++++---------
+ 12 files changed, 45 insertions(+), 72 deletions(-)
 
 diff --git a/include/ui/console.h b/include/ui/console.h
-index 2bf768ed482..7224b8142f3 100644
+index 89fb4c1942a..69ac7b01b33 100644
 --- a/include/ui/console.h
 +++ b/include/ui/console.h
-@@ -438,8 +438,8 @@ const char *qemu_display_get_vc(DisplayOptions *opts);
- void qemu_display_help(void);
+@@ -291,10 +291,12 @@ struct DisplayGLCtx {
  
- /* vnc.c */
--void vnc_display_init(const char *id, Error **errp);
--void vnc_display_open(const char *id, Error **errp);
-+bool vnc_display_init(const char *id, Error **errp);
-+bool vnc_display_open(const char *id, Error **errp);
- void vnc_display_add_client(const char *id, int csock, bool skipauth);
- int vnc_display_password(const char *id, const char *password, Error **errp);
- int vnc_display_pw_expire(const char *id, time_t expires);
+ DisplayState *init_displaystate(void);
+ 
+-void register_displaychangelistener(DisplayChangeListener *dcl);
++void qemu_console_register_listener(QemuConsole *con,
++                                    DisplayChangeListener *dcl,
++                                    const DisplayChangeListenerOps *ops);
+ void update_displaychangelistener(DisplayChangeListener *dcl,
+                                   uint64_t interval);
+-void unregister_displaychangelistener(DisplayChangeListener *dcl);
++void qemu_console_unregister_listener(DisplayChangeListener *dcl);
+ 
+ bool dpy_ui_info_supported(const QemuConsole *con);
+ const QemuUIInfo *dpy_get_ui_info(const QemuConsole *con);
+diff --git a/hw/display/qxl.c b/hw/display/qxl.c
+index 0a3c42c8ec2..4244ebe51d2 100644
+--- a/hw/display/qxl.c
++++ b/hw/display/qxl.c
+@@ -2251,9 +2251,7 @@ static void qxl_realize_primary(PCIDevice *dev, Error **errp)
+         return;
+     }
+ 
+-    qxl->ssd.dcl.ops = &display_listener_ops;
+-    qxl->ssd.dcl.con = vga->con;
+-    register_displaychangelistener(&qxl->ssd.dcl);
++    qemu_console_register_listener(vga->con, &qxl->ssd.dcl, &display_listener_ops);
+ }
+ 
+ static void qxl_realize_secondary(PCIDevice *dev, Error **errp)
+diff --git a/ui/console.c b/ui/console.c
+index b837ce1c9fc..4f3b4394268 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -572,10 +572,15 @@ dcl_set_graphic_cursor(DisplayChangeListener *dcl, QemuGraphicConsole *con)
+     }
+ }
+ 
+-void register_displaychangelistener(DisplayChangeListener *dcl)
++void qemu_console_register_listener(QemuConsole *con,
++                                    DisplayChangeListener *dcl,
++                                    const DisplayChangeListenerOps *ops)
+ {
+     assert(!dcl->ds);
+ 
++    dcl->con = con;
++    dcl->ops = ops;
++
+     trace_displaychangelistener_register(dcl, dcl->ops->dpy_name);
+     dcl->ds = get_alloc_displaystate();
+     QLIST_INSERT_HEAD(&dcl->ds->listeners, dcl, next);
+@@ -600,10 +605,10 @@ void update_displaychangelistener(DisplayChangeListener *dcl,
+     }
+ }
+ 
+-void unregister_displaychangelistener(DisplayChangeListener *dcl)
++void qemu_console_unregister_listener(DisplayChangeListener *dcl)
+ {
+     DisplayState *ds = dcl->ds;
+-    trace_displaychangelistener_unregister(dcl, dcl->ops->dpy_name);
++    trace_displaychangelistener_unregister(dcl, dcl->ops ? dcl->ops->dpy_name : NULL);
+     if (!ds) {
+         return;
+     }
+diff --git a/ui/curses.c b/ui/curses.c
+index 96427aa6bb9..dbb5992981c 100644
+--- a/ui/curses.c
++++ b/ui/curses.c
+@@ -324,9 +324,8 @@ static void curses_refresh(DisplayChangeListener *dcl)
+                         if (con) {
+                             erase();
+                             wnoutrefresh(stdscr);
+-                            unregister_displaychangelistener(dcl);
+-                            dcl->con = con;
+-                            register_displaychangelistener(dcl);
++                            qemu_console_unregister_listener(dcl);
++                            qemu_console_register_listener(con, dcl, dcl->ops);
+ 
+                             invalidate = 1;
+                         }
+@@ -805,9 +804,7 @@ static void curses_display_init(DisplayState *ds, DisplayOptions *opts)
+     curses_winch_init();
+ 
+     dcl = g_new0(DisplayChangeListener, 1);
+-    dcl->con = qemu_console_lookup_default();
+-    dcl->ops = &dcl_ops;
+-    register_displaychangelistener(dcl);
++    qemu_console_register_listener(qemu_console_lookup_default(), dcl, &dcl_ops);
+ 
+     invalidate = 1;
+ }
+diff --git a/ui/dbus-console.c b/ui/dbus-console.c
+index 564f004bd86..23f547a673d 100644
+--- a/ui/dbus-console.c
++++ b/ui/dbus-console.c
+@@ -143,7 +143,6 @@ dbus_display_console_init(DBusDisplayConsole *object)
+     DBusDisplayConsole *ddc = DBUS_DISPLAY_CONSOLE(object);
+ 
+     ddc->listeners = g_ptr_array_new_with_free_func(g_object_unref);
+-    ddc->dcl.ops = &dbus_console_dcl_ops;
+ }
+ 
+ static void
+@@ -151,7 +150,7 @@ dbus_display_console_dispose(GObject *object)
+ {
+     DBusDisplayConsole *ddc = DBUS_DISPLAY_CONSOLE(object);
+ 
+-    unregister_displaychangelistener(&ddc->dcl);
++    qemu_console_unregister_listener(&ddc->dcl);
+     g_clear_object(&ddc->iface_touch);
+     g_clear_object(&ddc->iface_mouse);
+     g_clear_object(&ddc->iface_kbd);
+@@ -553,7 +552,6 @@ dbus_display_console_new(DBusDisplay *display, QemuConsole *con)
+                         "g-object-path", path,
+                         NULL);
+     ddc->display = display;
+-    ddc->dcl.con = con;
+     /* handle errors, and skip non graphics? */
+     qemu_console_fill_device_address(
+         con, device_addr, sizeof(device_addr), NULL);
+@@ -611,7 +609,7 @@ dbus_display_console_new(DBusDisplay *display, QemuConsole *con)
+         slot->tracking_id = -1;
+     }
+ 
+-    register_displaychangelistener(&ddc->dcl);
++    qemu_console_register_listener(con, &ddc->dcl, &dbus_console_dcl_ops);
+     ddc->mouse_mode_notifier.notify = dbus_mouse_mode_change;
+     qemu_add_mouse_mode_change_notifier(&ddc->mouse_mode_notifier);
+     dbus_mouse_update_is_absolute(ddc);
+diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+index e5ce92d1257..cc2c969686e 100644
+--- a/ui/dbus-listener.c
++++ b/ui/dbus-listener.c
+@@ -957,7 +957,7 @@ dbus_display_listener_dispose(GObject *object)
+ {
+     DBusDisplayListener *ddl = DBUS_DISPLAY_LISTENER(object);
+ 
+-    unregister_displaychangelistener(&ddl->dcl);
++    qemu_console_unregister_listener(&ddl->dcl);
+     g_clear_object(&ddl->conn);
+     g_clear_pointer(&ddl->bus_name, g_free);
+     g_clear_object(&ddl->proxy);
+@@ -978,28 +978,12 @@ dbus_display_listener_dispose(GObject *object)
+     G_OBJECT_CLASS(dbus_display_listener_parent_class)->dispose(object);
+ }
+ 
+-static void
+-dbus_display_listener_constructed(GObject *object)
+-{
+-    DBusDisplayListener *ddl = DBUS_DISPLAY_LISTENER(object);
+-
+-    ddl->dcl.ops = &dbus_dcl_ops;
+-#ifdef CONFIG_OPENGL
+-    if (display_opengl) {
+-        ddl->dcl.ops = &dbus_gl_dcl_ops;
+-    }
+-#endif
+-
+-    G_OBJECT_CLASS(dbus_display_listener_parent_class)->constructed(object);
+-}
+-
+ static void
+ dbus_display_listener_class_init(DBusDisplayListenerClass *klass)
+ {
+     GObjectClass *object_class = G_OBJECT_CLASS(klass);
+ 
+     object_class->dispose = dbus_display_listener_dispose;
+-    object_class->constructed = dbus_display_listener_constructed;
+ }
+ 
+ static void
+@@ -1258,6 +1242,7 @@ dbus_display_listener_new(const char *bus_name,
+                           GDBusConnection *conn,
+                           DBusDisplayConsole *console)
+ {
++    const DisplayChangeListenerOps *ops = &dbus_dcl_ops;
+     DBusDisplayListener *ddl;
+     QemuConsole *con;
+     g_autoptr(GError) err = NULL;
+@@ -1290,8 +1275,12 @@ dbus_display_listener_new(const char *bus_name,
+ 
+     con = qemu_console_lookup_by_index(dbus_display_console_get_index(console));
+     assert(con);
+-    ddl->dcl.con = con;
+-    register_displaychangelistener(&ddl->dcl);
++#ifdef CONFIG_OPENGL
++    if (display_opengl) {
++        ops = &dbus_gl_dcl_ops;
++    }
++#endif
++    qemu_console_register_listener(con, &ddl->dcl, ops);
+ 
+     return ddl;
+ }
+diff --git a/ui/egl-headless.c b/ui/egl-headless.c
+index 352b30b43fb..4f046c975a9 100644
+--- a/ui/egl-headless.c
++++ b/ui/egl-headless.c
+@@ -229,13 +229,11 @@ static void egl_headless_init(DisplayState *ds, DisplayOptions *opts)
+         }
+ 
+         edpy = g_new0(egl_dpy, 1);
+-        edpy->dcl.con = con;
+-        edpy->dcl.ops = &egl_ops;
+         edpy->gls = qemu_gl_init_shader();
+         ctx = g_new0(DisplayGLCtx, 1);
+         ctx->ops = &eglctx_ops;
+         qemu_console_set_display_gl_ctx(con, ctx);
+-        register_displaychangelistener(&edpy->dcl);
++        qemu_console_register_listener(con, &edpy->dcl, &egl_ops);
+     }
+ }
+ 
+diff --git a/ui/gtk.c b/ui/gtk.c
+index ec95f0f294a..ef3707b3634 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -2251,6 +2251,7 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
+                               QemuConsole *con, int idx,
+                               GSList *group, GtkWidget *view_menu)
+ {
++    const DisplayChangeListenerOps *ops = &dcl_ops;
+     bool zoom_to_fit = false;
+     int i;
+ 
+@@ -2275,7 +2276,7 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
+             vc->gfx.drawing_area = gtk_gl_area_new();
+             g_signal_connect(vc->gfx.drawing_area, "realize",
+                              G_CALLBACK(gl_area_realize), vc);
+-            vc->gfx.dcl.ops = &dcl_gl_area_ops;
++            ops = &dcl_gl_area_ops;
+             vc->gfx.dgc.ops = &gl_area_ctx_ops;
+         } else {
+ #ifdef CONFIG_X11
+@@ -2290,7 +2291,7 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
+ #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+             gtk_widget_set_double_buffered(vc->gfx.drawing_area, FALSE);
+ #pragma GCC diagnostic pop
+-            vc->gfx.dcl.ops = &dcl_egl_ops;
++            ops = &dcl_egl_ops;
+             vc->gfx.dgc.ops = &egl_ctx_ops;
+             vc->gfx.has_dmabuf = qemu_egl_has_dmabuf();
+ #else
+@@ -2301,7 +2302,6 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
+ #endif
+     {
+         vc->gfx.drawing_area = gtk_drawing_area_new();
+-        vc->gfx.dcl.ops = &dcl_ops;
+     }
+ 
+ 
+@@ -2325,12 +2325,10 @@ static GSList *gd_vc_gfx_init(GtkDisplayState *s, VirtualConsole *vc,
+                              vc->tab_item, gtk_label_new(vc->label));
+ 
+     vc->gfx.kbd = qkbd_state_init(con);
+-    vc->gfx.dcl.con = con;
+-
+     if (display_opengl) {
+         qemu_console_set_display_gl_ctx(con, &vc->gfx.dgc);
+     }
+-    register_displaychangelistener(&vc->gfx.dcl);
++    qemu_console_register_listener(con, &vc->gfx.dcl, ops);
+ 
+     gd_connect_vc_gfx_signals(vc);
+     group = gd_vc_menu_init(s, vc, idx, group, view_menu);
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index 5dd612d9a6a..89516f95c41 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -934,6 +934,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+     sdl2_console = g_new0(struct sdl2_console, sdl2_num_outputs);
+     for (i = 0; i < sdl2_num_outputs; i++) {
+         QemuConsole *con = qemu_console_lookup_by_index(i);
++        const DisplayChangeListenerOps *ops = &dcl_2d_ops;
+         assert(con != NULL);
+         if (!qemu_console_is_graphic(con) &&
+             qemu_console_get_index(con) != 0) {
+@@ -943,13 +944,11 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+         sdl2_console[i].opts = o;
+ #ifdef CONFIG_OPENGL
+         sdl2_console[i].opengl = display_opengl;
+-        sdl2_console[i].dcl.ops = display_opengl ? &dcl_gl_ops : &dcl_2d_ops;
+         sdl2_console[i].dgc.ops = display_opengl ? &gl_ctx_ops : NULL;
++        ops = display_opengl ? &dcl_gl_ops : &dcl_2d_ops;
+ #else
+         sdl2_console[i].opengl = 0;
+-        sdl2_console[i].dcl.ops = &dcl_2d_ops;
+ #endif
+-        sdl2_console[i].dcl.con = con;
+         sdl2_console[i].kbd = qkbd_state_init(con);
+ #ifdef CONFIG_OPENGL
+         if (display_opengl) {
+@@ -957,8 +956,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+             sdl2_gl_console_init(&sdl2_console[i]);
+         }
+ #endif
+-        register_displaychangelistener(&sdl2_console[i].dcl);
+-
++        qemu_console_register_listener(con, &sdl2_console[i].dcl, ops);
+ #if defined(SDL_VIDEO_DRIVER_WINDOWS) || defined(SDL_VIDEO_DRIVER_X11)
+         if (SDL_GetWindowWMInfo(sdl2_console[i].real_window, &info)) {
+ #if defined(SDL_VIDEO_DRIVER_WINDOWS)
+diff --git a/ui/spice-display.c b/ui/spice-display.c
+index 87cc193cdee..56d8140fad8 100644
+--- a/ui/spice-display.c
++++ b/ui/spice-display.c
+@@ -1387,13 +1387,13 @@ static void qemu_spice_display_init_one(QemuConsole *con)
+     SimpleSpiceDisplay *ssd = g_new0(SimpleSpiceDisplay, 1);
+     Error *err = NULL;
+     char device_address[256] = "";
++    const DisplayChangeListenerOps *ops = &display_listener_ops;
+ 
+     qemu_spice_display_init_common(ssd);
+ 
+-    ssd->dcl.ops = &display_listener_ops;
+ #ifdef HAVE_SPICE_GL
+     if (spice_opengl) {
+-        ssd->dcl.ops = &display_listener_gl_ops;
++        ops = &display_listener_gl_ops;
+         ssd->dgc.ops = &gl_ctx_ops;
+         ssd->gl_unblock_bh = qemu_bh_new(qemu_spice_gl_unblock_bh, ssd);
+         ssd->gl_unblock_timer = timer_new_ms(QEMU_CLOCK_REALTIME,
+@@ -1403,8 +1403,6 @@ static void qemu_spice_display_init_one(QemuConsole *con)
+         ssd->have_scanout = false;
+     }
+ #endif
+-    ssd->dcl.con = con;
+-
+     ssd->qxl.base.sif = &dpy_interface.base;
+     qemu_spice_add_display_interface(&ssd->qxl, con);
+ 
+@@ -1422,7 +1420,7 @@ static void qemu_spice_display_init_one(QemuConsole *con)
+     if (spice_opengl) {
+         qemu_console_set_display_gl_ctx(con, &ssd->dgc);
+     }
+-    register_displaychangelistener(&ssd->dcl);
++    qemu_console_register_listener(con, &ssd->dcl, ops);
+ }
+ 
+ void qemu_spice_display_init(void)
 diff --git a/ui/vnc.c b/ui/vnc.c
-index 3a908670ab9..067f534cf08 100644
+index 154b07e2e4e..e8c8773a36e 100644
 --- a/ui/vnc.c
 +++ b/ui/vnc.c
-@@ -3425,12 +3425,12 @@ static void vmstate_change_handler(void *opaque, bool running, RunState state)
+@@ -1860,10 +1860,9 @@ static void do_key_event(VncState *vs, int down, int keycode, int sym)
+             qkbd_state_modifier_get(vs->vd->kbd, QKBD_MOD_ALT)) {
+             QemuConsole *con = qemu_console_lookup_by_index(qcode - Q_KEY_CODE_1);
+             if (con) {
+-                unregister_displaychangelistener(&vs->vd->dcl);
++                qemu_console_unregister_listener(&vs->vd->dcl);
+                 qkbd_state_switch_console(vs->vd->kbd, con);
+-                vs->vd->dcl.con = con;
+-                register_displaychangelistener(&vs->vd->dcl);
++                qemu_console_register_listener(con, &vs->vd->dcl, vs->vd->dcl.ops);
+             }
+             return;
+         }
+@@ -3434,7 +3433,6 @@ VncDisplay *vnc_display_new(const char *id, Error **errp)
+     vd = g_new0(VncDisplay, 1);
+     qemu_mutex_init(&vd->mutex);
+     vd->id = g_strdup(id);
+-    vd->dcl.ops = &dcl_ops;
  
- static void vnc_display_free(VncDisplay *vd);
- 
--void vnc_display_init(const char *id, Error **errp)
-+bool vnc_display_init(const char *id, Error **errp)
- {
-     VncDisplay *vd;
- 
-     if (vnc_display_find(id) != NULL) {
--        return;
-+        return true;
+     QTAILQ_INIT(&vd->clients);
+     vd->expires = TIME_MAX;
+@@ -3524,7 +3522,7 @@ void vnc_display_free(VncDisplay *vd)
      }
-     vd = g_malloc0(sizeof(*vd));
  
-@@ -3451,7 +3451,7 @@ void vnc_display_init(const char *id, Error **errp)
- 
-     if (!vd->kbd_layout) {
-         vnc_display_free(vd);
--        return;
-+        return false;
+     vnc_stop_worker_thread(vd);
+-    unregister_displaychangelistener(&vd->dcl);
++    qemu_console_unregister_listener(&vd->dcl);
+     qkbd_state_free(vd->kbd);
+     qemu_del_vm_change_state_handler(vd->vmstate_handler_entry);
+     kbd_layout_free(vd->kbd_layout);
+@@ -4267,8 +4265,7 @@ static bool vnc_display_open(VncDisplay *vd, Error **errp)
+         con = qemu_console_lookup_default();
      }
  
-     vd->share_policy = VNC_SHARE_POLICY_ALLOW_EXCLUSIVE;
-@@ -3465,6 +3465,7 @@ void vnc_display_init(const char *id, Error **errp)
-         &vmstate_change_handler, vd);
- 
-     QTAILQ_INSERT_TAIL(&vnc_displays, vd, next);
-+    return true;
- }
- 
- static void vnc_display_close(VncDisplay *vd)
-@@ -4070,7 +4071,7 @@ bool vnc_display_update(DisplayUpdateOptionsVNC *arg, Error **errp)
-     return true;
- }
- 
--void vnc_display_open(const char *id, Error **errp)
-+bool vnc_display_open(const char *id, Error **errp)
- {
-     VncDisplay *vd = vnc_display_find(id);
-     QemuOpts *opts = qemu_opts_find(&qemu_vnc_opts, id);
-@@ -4273,7 +4274,7 @@ void vnc_display_open(const char *id, Error **errp)
+-    vd->dcl.con = con;
+-    register_displaychangelistener(&vd->dcl);
++    qemu_console_register_listener(con, &vd->dcl, &dcl_ops);
+     vd->kbd = qkbd_state_init(vd->dcl.con);
      qkbd_state_set_delay(vd->kbd, key_delay_ms);
  
-     if (saddr_list == NULL) {
--        return;
-+        return true;
-     }
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index 9093d1e408f..aaf82421589 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -93,9 +93,7 @@ static void cocoa_switch(DisplayChangeListener *dcl,
+     .dpy_mouse_set = cocoa_mouse_set,
+     .dpy_cursor_define = cocoa_cursor_define,
+ };
+-static DisplayChangeListener dcl = {
+-    .ops = &dcl_ops,
+-};
++static DisplayChangeListener dcl;
+ static QKbdState *kbd;
+ static int cursor_hide = 1;
+ static int left_command_key_enabled = 1;
+@@ -425,8 +423,7 @@ - (void) selectConsoleLocked:(unsigned int)index
  
-     if (reverse) {
-@@ -4291,10 +4292,11 @@ void vnc_display_open(const char *id, Error **errp)
-     }
- 
-     /* Success */
--    return;
-+    return true;
- 
- fail:
-     vnc_display_close(vd);
-+    return false;
+     unregister_displaychangelistener(&dcl);
+     qkbd_state_switch_console(kbd, con);
+-    dcl.con = con;
+-    register_displaychangelistener(&dcl);
++    qemu_console_register_listener(con, &dcl, &dcl_ops);
+     [self notifyMouseModeChange];
+     [self updateUIInfo];
  }
+@@ -2145,11 +2142,9 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
+     add_console_menu_entries();
+     addRemovableDevicesMenuItems();
  
- void vnc_display_add_client(const char *id, int csock, bool skipauth)
-@@ -4350,12 +4352,10 @@ int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp)
-         id = vnc_auto_assign_id(opts);
-     }
- 
--    vnc_display_init(id, errp);
--    if (*errp) {
-+    if (!vnc_display_init(id, errp)) {
-         return -1;
-     }
--    vnc_display_open(id, errp);
--    if (*errp) {
-+    if (!vnc_display_open(id, errp)) {
-         return -1;
-     }
-     return 0;
+-    dcl.con = qemu_console_lookup_default();
++    qemu_console_register_listener(qemu_console_lookup_default(),
++                                   &dcl, &dcl_ops);
+     kbd = qkbd_state_init(dcl.con);
+-
+-    // register vga output callbacks
+-    register_displaychangelistener(&dcl);
+     qemu_add_mouse_mode_change_notifier(&mouse_mode_change_notifier);
+     [cocoaView notifyMouseModeChange];
+     [cocoaView updateUIInfo];
 
 -- 
 2.54.0
