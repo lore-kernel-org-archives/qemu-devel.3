@@ -4,101 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B324CD13D2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28D6FF8875
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 18:34:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI9jD-0007ZJ-V0; Wed, 29 Apr 2026 14:33:43 -0400
+	id 1wI9j4-0007XY-A1; Wed, 29 Apr 2026 14:33:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wI9jC-0007Yy-4M
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 14:33:42 -0400
+ id 1wI9j2-0007X8-DF
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 14:33:32 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wI9jA-00076d-4g
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 14:33:41 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1wI9iz-000754-NL
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 14:33:32 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63TAAawi2648672
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 18:33:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=t6QdNpq2Lpdm5fmub
- W6/oX5deZfDgTJkb5AO4ubPE3k=; b=cqGGqUTuEgYjW4HaOhNPhMc1Tajr8gpfu
- cUFBCOIUa0Kq9xbLlQdRlFqVcwPl9efH0KL1dDnfWcXheMkYuui3Xk963HV3DLCz
- OBz2vrC1caLmIMA+jTqc605EconxrT8ImyWZqxkli8h8tMo7wiOimBAAEk1P0Ew5
- /6f8JvWdPN7pWz+RPEbGNj7nHvSjXpisaIr6tv2lmvwRKhlKY5sAQJ+x4A49Naqy
- lPDavQ7vLwMu226WDPasCD2poMOZWguMS0t9My/pSlpp0ndh9zieeFWjdWhdUM/4
- clwg8p3/Fkfw72nxnKWbODMVtbP/ktORU/+U0icVULYyq6M12yQyw==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drn8vjh5j-1
+ 63TGAKjY1823949
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 18:33:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=W3+7rJuGrxJce4Q0VjKxIQOqDAfx
+ dSw231OQ5SPm/n0=; b=mTtgsL4O8Lo5LalxjGzFJoCQRtxHIv76b/JizPheGG7r
+ adiVyYPwyglU58eg8jyPmoW8GlzveRoSAoOS4azwXjSiWCe0Ydg0MBhOXfbyylC1
+ yqWWm4pjNPoi2UWTXBSRBn8BsCIP1btTe0bm+JRgY95gSV39zdgfS6gl95+7G8Dd
+ Sj3Yu45oPkAEb8zWLyc+EzKWYi4oQo7pbCdxMY7qfKd9A33gNK/BmUu3otrpTYFK
+ Kaj5+S4g8uPnJyDsrqpzRFxKdNMTbui3N6FiRLtY3OGCPXokP8jh1FB1YMFrrA+G
+ Qodxkz2eRHsq21r9ieMOMrPVI7fjNWxx2qljzZ4o0Q==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drm1e2khn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 18:33:38 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63TINmlm004882
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 18:33:37 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ds9ehfgp1-1
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 18:33:27 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63TINsD0017139
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 18:33:26 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ds8avynv3-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 18:33:37 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 18:33:26 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63TIXXMq50266486
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 29 Apr 2026 18:33:33 GMT
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63TIXOUd26673576
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 18:33:25 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AA9A720049;
- Wed, 29 Apr 2026 18:33:33 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D7A1D20040
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 18:33:24 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C4EF32004E;
- Wed, 29 Apr 2026 18:33:31 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E6DD12004B
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 18:33:23 +0000 (GMT)
 Received: from localhost.localdomain (unknown [9.39.31.77])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 29 Apr 2026 18:33:31 +0000 (GMT)
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 18:33:23 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: Aditya Gupta <adityag@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>
-Subject: [PULL 02/13] ppc/mpipl: Implement S0 SBE interrupt
-Date: Thu, 30 Apr 2026 00:02:52 +0530
-Message-ID: <20260429183310.12455-3-harshpb@linux.ibm.com>
+Subject: [PULL 00/13] PPC PR for 11.1 (2026-04-29)
+Date: Thu, 30 Apr 2026 00:02:50 +0530
+Message-ID: <20260429183310.12455-1-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260429183310.12455-1-harshpb@linux.ibm.com>
-References: <20260429183310.12455-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=CIIamxrD c=1 sm=1 tr=0 ts=69f24f02 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=A5OVakUREuEA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=0EWF82VJ2pR67mXLOX4A:9
-X-Proofpoint-ORIG-GUID: oTeEaW6mz1fpJOrT2dd8bcEVgu7GqJDo
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDE4NCBTYWx0ZWRfX9wPxH8Db3943
- 0d0Glqs0rs6wcIW+7uUrwfX10ZvuimZwEyDS6pJkz5QSKygX0UEfaJNzGesmSnl6cHRNuIg3t8/
- Xr9EUoSydDrhIQMQks25XXcdRgcD+Hmm8f8iC2CVz1z6R1PABlzixoB0VO0SDBTBmTTef848Ez4
- HARdk0W4OVu6bPnu4DJzyZSATU9J1/12MSOE8MU0a7bl8CQ+LbioeYqVIH3frmhUXle7qvgxBek
- ZoXk055OanVFb6Hn7rfxqw6WL1BuxIzmjr/fkzrOa2BH1yDPskgtgIbp7esf6N27qVFJ27O4C0T
- rjugRzjjdolHvi8AtnquzdQA+S0xqyTo8M59SqJM76M1Srqqm1h89Cv+cEJjMKDlGh3PudbWl7+
- WMeTFAgISGkl24ab/rUMIYZqB8jeZJP6YNFmins0YYO4wb1kOjuFOnXK4KTmy5o3fQQO06BDk9S
- LMP04K4KyY5c0f8Ua7A==
-X-Proofpoint-GUID: oTeEaW6mz1fpJOrT2dd8bcEVgu7GqJDo
+X-Proofpoint-ORIG-GUID: 3QYyXSL4zVEQ5UNR0G24xCdogTDTXrh4
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDE4NCBTYWx0ZWRfX4wyLGUgVdOi6
+ 1KnXJZTEITIIS1JnW7phGdEMUAPESu074XVh8TjqyUc3anfVrGql1S4E++QYC9+3DYoCXVIdtrG
+ aIy9brnDi2efFXjVlRrictxAYO+wXGOPVfeyvaFI33YCcHiZRMs7vNXzqpfwCPZF5GHKJMCTFWS
+ clnpMykdLC8RwBJSyDCny4sLmPjP8z3QhTeVzu6NWbCvSIvKJsPAEiQZQxuc3OsqaCBmonHSth+
+ jdF+TNfomoP6y8rL0rcp7XuBIxilAXU2sRiCMgj8fO8MU08FVTgoToQZkirszowXbGztCO8E+rY
+ LjuyiBKhryEW8x/aNhxHpWgAmjfW3pLFeFje8qF6b7ZItx3YbCm86SUGcip9GRMB9VDQj/6iA3l
+ nx+t0XQH7/jSU2krVg4lpM2VtkZ8w3KzCpFujeiyIOgVzMJGSS5EX0oI755YRBv7VbSEKw6PLha
+ JmBABrnHMdzAb6Mo/Lg==
+X-Authority-Analysis: v=2.4 cv=VZLH+lp9 c=1 sm=1 tr=0 ts=69f24ef7 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22
+ a=NEAV23lmAAAA:8 a=p0WdMEafAAAA:8 a=hGGjgxr9mvmLQU8hyTkA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 3QYyXSL4zVEQ5UNR0G24xCdogTDTXrh4
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-29_01,2026-04-28_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 malwarescore=0 suspectscore=0 adultscore=0
- impostorscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2604290184
+ clxscore=1015 suspectscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
+ spamscore=0 malwarescore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604290184
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -123,192 +117,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+The following changes since commit 282771e1f9b9b6e0147adf5f9d676325175b1767:
 
-During MPIPL (aka fadump), after a kernel crash, the kernel does
-opal_cec_reboot2 opal call, signifying an abnormal termination.
-When OPAL receives this opal call, it further triggers SBE S0 interrupt,
-to trigger a MPIPL boot.
+  Merge tag 'pull-riscv-to-apply-20260429-1' of https://github.com/alistair23/qemu into staging (2026-04-29 09:22:51 -0400)
 
-Currently S0 interrupt is unimplemented in QEMU.
+are available in the Git repository at:
 
-Implement S0 interrupt as 'pause_vcpus' + 'guest_reset' in QEMU, as the
-SBE's implementation of S0 seems to be basically "stop all clocks" and
-then "host reset".
+  https://gitlab.com/harshpb/qemu.git tags/pull-ppc-for-11.1-20260429
 
-pause_vcpus is done in a later patch when register preserving support is
-added
+for you to fetch changes up to 1aee8067fce95d15061eca8fbb6772d8a90ea699:
 
-See 'stopClocksS0' in SBE source code for more information.
+  hw/intc/xics: Add a check for an invalid server id (2026-04-29 22:51:06 +0530)
 
-Also log both S0 and S1 interrupts.
+----------------------------------------------------------------
+PPC PR for 11.1
 
-Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
-Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260424083837.214947-3-adityag@linux.ibm.com
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
----
- include/hw/ppc/pnv.h       |  5 +++++
- include/hw/ppc/pnv_mpipl.h | 19 +++++++++++++++++++
- hw/ppc/pnv_mpipl.c         | 26 ++++++++++++++++++++++++++
- hw/ppc/pnv_sbe.c           | 29 +++++++++++++++++++++++++++++
- hw/ppc/meson.build         |  1 +
- 5 files changed, 80 insertions(+)
+* MPIPL support for PowerNV
+* ppc/pnv: Add a nest MMU model
+* hw/ssi/pnv_spi: Fix fifo8 memory leak on unrealize
+* hw/intc/xics: Add a check for an invalid server id
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEa4EM1tK+EPOIPSFCRUTplPnWj7sFAmnySUMACgkQRUTplPnW
+j7veug/9ERfiOVoFLe9qYY+IRlAI7yWwieTW7gW1huXstcshk6e3y1tXH43DakE4
+CAN5hzqBo/iUwgx7QaSgQUxtOU4waLURkBFWQUQ0syZcKKIg2rENELm4VN6GJunz
+L5JOs0/55lcdLHCb4lJIhuW4AlYuVWYEzC9kGQD4dyliv7b9VygPnaYwWrmOM8KF
+BiPXumDpbBJAwqnuMec08x6IU/I8CGyJuj6pbsPbL4XAVKfXmB5xM3zbK2gUUhky
+cpD9AzdvPpeMCJCWwijYq3/s6ZqH4E4HrpEWqS8vVeorTvA4069bPw4ZBj6CFeJN
+V1WvTMOukTwC4u6QMKnjrIaoKgIvtvHtSCTTdy6QhfMQxmguksAGMeoIDqKDLlQu
+povwybYGh9viASpyPNaqkVM//ni1C68/rhsQ2wSk75f/D706M1JjGkTmAHclZRl3
+xWiw3LxkGNka2BRWkfJCP+e7ntK4+k9j/kGwnLDTn870c7CcYO6bUiBdrNbqvWcP
+5Rg5NeZeAc7caHZL+Zju28V2ntGdR+9dPyynDSliDJvUzb/biOdVLFfAZzD9rwYT
+0yeLahsIlG2CQpr4LmmrQa7si+ZrYDHEUf3mjNPVS3rEDpdaso+TnSzulsYguIEM
+fcmyhVw4cYqhaxn+nKpVQGfF/MQZfOHDmVi2DoEiTXr6xxTzLwc=
+=Y8PU
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------------
+Aditya Gupta (10):
+      ppc/pnv: Move SBE host doorbell function to top of file
+      ppc/mpipl: Implement S0 SBE interrupt
+      ppc/pnv: Handle stash command in PowerNV SBE
+      pnv/mpipl: Preserve memory regions as per MDST/MDDT tables
+      pnv/mpipl: Preserve CPU registers after crash
+      pnv/mpipl: Set thread entry size to be allocated by firmware
+      pnv/mpipl: Write the preserved CPU and MDRT state
+      pnv/mpipl: Enable MPIPL support
+      tests/functional: Add test for MPIPL in PowerNV
+      MAINTAINERS: Add entry for MPIPL (PowerNV)
+
+Caleb Schlossin (2):
+      hw/ssi/pnv_spi: Fix fifo8 memory leak on unrealize
+      ppc/pnv: Add a nest MMU model
+
+kiki (1):
+      hw/intc/xics: Add a check for an invalid server id
+
+ MAINTAINERS                           |   9 +
+ include/hw/ppc/pnv.h                  |   6 +
+ include/hw/ppc/pnv_chip.h             |   3 +
+ include/hw/ppc/pnv_mpipl.h            | 168 ++++++++++++
+ include/hw/ppc/pnv_nmmu.h             |  28 ++
+ include/hw/ppc/pnv_xscom.h            |   4 +
+ hw/intc/xics.c                        |   8 +
+ hw/ppc/pnv.c                          | 128 ++++++++-
+ hw/ppc/pnv_mpipl.c                    | 482 ++++++++++++++++++++++++++++++++++
+ hw/ppc/pnv_nmmu.c                     | 132 ++++++++++
+ hw/ppc/pnv_sbe.c                      |  85 +++++-
+ hw/ssi/pnv_spi.c                      |   8 +
+ hw/ppc/meson.build                    |   2 +
+ tests/functional/ppc64/test_fadump.py |  35 +--
+ 14 files changed, 1066 insertions(+), 32 deletions(-)
  create mode 100644 include/hw/ppc/pnv_mpipl.h
+ create mode 100644 include/hw/ppc/pnv_nmmu.h
  create mode 100644 hw/ppc/pnv_mpipl.c
-
-diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-index ce3ce73b53..19c7170e74 100644
---- a/include/hw/ppc/pnv.h
-+++ b/include/hw/ppc/pnv.h
-@@ -25,6 +25,7 @@
- #include "hw/core/sysbus.h"
- #include "hw/ipmi/ipmi.h"
- #include "hw/ppc/pnv_pnor.h"
-+#include "hw/ppc/pnv_mpipl.h"
- 
- #define TYPE_PNV_CHIP "pnv-chip"
- 
-@@ -113,6 +114,7 @@ struct PnvMachineState {
-     bool         lpar_per_core;
- 
-     Notifier     machine_init_done;
-+    MpiplPreservedState mpipl_state;
- };
- 
- PnvChip *pnv_get_chip(PnvMachineState *pnv, uint32_t chip_id);
-@@ -292,4 +294,7 @@ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor);
- 
- #define PNV11_OCC_SENSOR_BASE(chip) PNV10_OCC_SENSOR_BASE(chip)
- 
-+/* MPIPL helpers */
-+void do_mpipl_preserve(PnvMachineState *pnv);
-+
- #endif /* PPC_PNV_H */
-diff --git a/include/hw/ppc/pnv_mpipl.h b/include/hw/ppc/pnv_mpipl.h
-new file mode 100644
-index 0000000000..61ef7ef8fe
---- /dev/null
-+++ b/include/hw/ppc/pnv_mpipl.h
-@@ -0,0 +1,19 @@
-+/*
-+ * Emulation of MPIPL (Memory Preserving Initial Program Load), aka fadump
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef PNV_MPIPL_H
-+#define PNV_MPIPL_H
-+
-+#include <stdbool.h>
-+
-+typedef struct MpiplPreservedState MpiplPreservedState;
-+
-+/* Preserved state to be saved in PnvMachineState */
-+struct MpiplPreservedState {
-+    bool       is_next_boot_mpipl;
-+};
-+
-+#endif
-diff --git a/hw/ppc/pnv_mpipl.c b/hw/ppc/pnv_mpipl.c
-new file mode 100644
-index 0000000000..d8c9b7a428
---- /dev/null
-+++ b/hw/ppc/pnv_mpipl.c
-@@ -0,0 +1,26 @@
-+/*
-+ * Emulation of MPIPL (Memory Preserving Initial Program Load), aka fadump
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "system/runstate.h"
-+#include "hw/ppc/pnv.h"
-+#include "hw/ppc/pnv_mpipl.h"
-+
-+void do_mpipl_preserve(PnvMachineState *pnv)
-+{
-+    /* Mark next boot as Memory-preserving boot */
-+    pnv->mpipl_state.is_next_boot_mpipl = true;
-+
-+    /*
-+     * Do a guest reset.
-+     * Next reset will see 'is_next_boot_mpipl' as true, and trigger MPIPL
-+     *
-+     * Requirement:
-+     * GUEST_RESET is expected to NOT clear the memory, as is the case when
-+     * this is merged
-+     */
-+    qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
-+}
-diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
-index 247617338a..5a2b3342d1 100644
---- a/hw/ppc/pnv_sbe.c
-+++ b/hw/ppc/pnv_sbe.c
-@@ -26,6 +26,9 @@
- #include "hw/ppc/pnv.h"
- #include "hw/ppc/pnv_xscom.h"
- #include "hw/ppc/pnv_sbe.h"
-+#include "hw/ppc/pnv_mpipl.h"
-+#include "system/cpus.h"
-+#include "system/runstate.h"
- #include "trace.h"
- 
- /*
-@@ -113,11 +116,37 @@ static uint64_t pnv_sbe_power9_xscom_ctrl_read(void *opaque, hwaddr addr,
- static void pnv_sbe_power9_xscom_ctrl_write(void *opaque, hwaddr addr,
-                                        uint64_t val, unsigned size)
- {
-+    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-+    PnvSBE *sbe = opaque;
-     uint32_t offset = addr >> 3;
- 
-     trace_pnv_sbe_xscom_ctrl_write(addr, val);
- 
-     switch (offset) {
-+    case SBE_CONTROL_REG_RW:
-+        switch (val) {
-+        case SBE_CONTROL_REG_S0:
-+            qemu_log_mask(LOG_UNIMP, "SBE: S0 Interrupt triggered\n");
-+
-+            pnv_sbe_set_host_doorbell(sbe, sbe->host_doorbell | SBE_HOST_RESPONSE_MASK);
-+
-+            /* Preserve memory regions and CPU state, if MPIPL is registered */
-+            do_mpipl_preserve(pnv);
-+
-+            /*
-+             * Control may not come back here as 'do_mpipl_preserve' triggers
-+             * a guest reboot
-+             */
-+            break;
-+        case SBE_CONTROL_REG_S1:
-+            qemu_log_mask(LOG_UNIMP, "SBE: S1 Interrupt triggered\n");
-+            break;
-+        default:
-+            qemu_log_mask(LOG_UNIMP,
-+                "SBE: CONTROL_REG_RW: Unknown value: Ox%."
-+                  HWADDR_PRIx "\n", val);
-+        }
-+        break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "SBE Unimplemented register: Ox%"
-                       HWADDR_PRIx "\n", addr >> 3);
-diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
-index f7dac87a2a..c61fba4ec8 100644
---- a/hw/ppc/meson.build
-+++ b/hw/ppc/meson.build
-@@ -56,6 +56,7 @@ ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
-   'pnv_pnor.c',
-   'pnv_nest_pervasive.c',
-   'pnv_n1_chiplet.c',
-+  'pnv_mpipl.c',
- ))
- # PowerPC 4xx boards
- ppc_ss.add(when: 'CONFIG_PPC405', if_true: files(
--- 
-2.52.0
-
+ create mode 100644 hw/ppc/pnv_nmmu.c
 
