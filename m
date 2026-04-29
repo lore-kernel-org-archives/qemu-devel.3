@@ -4,76 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD2F1CD13D2
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:07:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA9FDFF8875
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:07:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIAER-0001j1-Do; Wed, 29 Apr 2026 15:05:59 -0400
+	id 1wIAEV-0001lU-BQ; Wed, 29 Apr 2026 15:06:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wIAEP-0001iI-Tl
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:05:57 -0400
-Received: from ms-2001d-snip4-2.eps.apple.com ([57.103.73.163]
- helo=outbound.ms.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wIAEN-0000KW-Uv
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:05:57 -0400
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-6 (Postfix) with ESMTPS id
- BCD0318000F6; Wed, 29 Apr 2026 19:05:50 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRJAE1fDl4fBBdGGVUERx5dVl4eGQJRHFYNV0NUBF9QSQxBUGxaAEcXSB1dGVlvUF0cDhhZG0AVXRFQGVYJXhUXHkFNWgJWTQVKA18BWwZCAEkKXQJYAF4LTgZeD0YHXVQXWwxaDlYwTBZDH1IPWxNNGVEBUkVUAgdYRxRHDg8TTAtHAlo0Vh9UGVoD
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1777489554; x=1780081554;
- bh=Xwojjz3yhXK980QCgbfBRrp9bUp/38rhPoNhD1XZIzs=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=Dw/+sarZUDBXCEhXMl3TFGG+HP6tJzA7Bw6UQOQGH0Srmn3H5Vw4eerNX4Pf50GzWJpzuS/nD9RgnNPK73XqpotuvrDTtuKpGdTxp7Dr0KGUpPSyNShlBUWC0iR6dH9tvs0Kz+IcFC66jzAXxfAshZJaTCqpK5o4f2aNGW2Fj/fSVHIJMMxbjKdChrayYd4cY/STa+PMgWJLiBbUAoH0mZg5OmIlBWdhEPsFwLM06GYS7UTBPMOSyXXbSFdghjrg7vhBLg3WDP5yRisF0+QeBvkZocMpOhV1GeF3zu5ItP0ILw+cDLWtC0v8gGI+fhj5xK7BM52fUo7q413+PXMaSw==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-6 (Postfix) with ESMTPSA id
- 5676E18000C9; Wed, 29 Apr 2026 19:05:47 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wIAET-0001k0-1c
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:06:01 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wIAEQ-0000LF-5o
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:06:00 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 4EC176A815;
+ Wed, 29 Apr 2026 19:05:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1777489556; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eUxDq/SnIjAGROivgUJT7M70dRNJv1YG66xD1uHbj4c=;
+ b=pkwV8D+es/Mq2FDs3LFf3Xn6L5FYJ5EqRhO8wqPH86alJD1MsnVGUvZDvIu3I7JxYWO7h4
+ m2Bo3+AzkaM291W9XM3AOGJ3HzHeBEbH9BsXp0pFdqxA1LmWhrOZyaeRNVUtZxw0loZ023
+ OBFuvyu+vP9ZiZnfSbhbGxeRqmL0Wlg=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1777489556;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eUxDq/SnIjAGROivgUJT7M70dRNJv1YG66xD1uHbj4c=;
+ b=1If5pFj+dtSPaBRyH3HLT1QCV6IXLeG30k2uyKDlnkHnkkMFxWateXobdVsrrtcVO9ZcNS
+ RZP29h2Yp/6NcNBg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=1B8+HuC3;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=bME7acoI
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1777489555; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eUxDq/SnIjAGROivgUJT7M70dRNJv1YG66xD1uHbj4c=;
+ b=1B8+HuC3k7/rbbhTdO1yZjVFm4X77j14GOXDfOeTq8KpppTiMPemio+69/Ar4t5XJyfq7r
+ qTXwaWwBbdEvifr5IDtPvp2p6HwzlG2jlQqbkNk5HXBpJ66mHduxj+7wLr8R/GvZDBvvUj
+ Y0Xa2zTM/FhZLUjzmEoMCR5hJe01R6E=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1777489555;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=eUxDq/SnIjAGROivgUJT7M70dRNJv1YG66xD1uHbj4c=;
+ b=bME7acoIXKngUIVFdLcyg9RETTp+zRWMDqS7xAkQz4SiznduE2MLn2oR0mXXGOf3aPOece
+ oqh6DFjMKVMgmkCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EA272593B0;
+ Wed, 29 Apr 2026 19:05:53 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ELK6LZFW8mm/eQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 29 Apr 2026 19:05:53 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Alexander Graf <agraf@csgraf.de>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v21 04/15] target/arm: hvf: instantiate GIC early
-Date: Wed, 29 Apr 2026 21:05:21 +0200
-Message-ID: <20260429190532.26538-5-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260429190532.26538-1-mohamed@unpredictable.fr>
-References: <20260429190532.26538-1-mohamed@unpredictable.fr>
+Cc: Peter Xu <peterx@redhat.com>, marcandre.lureau@redhat.com,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v1 1/5] tests/qtest/dbus-vmstate: Bring the test up-to-date
+Date: Wed, 29 Apr 2026 16:05:46 -0300
+Message-ID: <20260429190550.20122-2-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260429190550.20122-1-farosas@suse.de>
+References: <20260429190550.20122-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDE5MCBTYWx0ZWRfX+fVOTO/uTFvA
- qLFXLO/HiI6UcFYc3eVRpQoV+od7nEuqJxH1mb6VHy9OF4ZnwHAAW+xjz22bp29Q3UNB14Bnx3E
- n66nvHcVOtdg5kZd1QkQcw2E8O/+LDgvT7yrzkH2Q2asPYfMe7T7119v3MJImkbnz58QBhqId9v
- n/sJmzSDCNXT3kFKUsOs4yaGOsfaQo2lo3eEEs6qFSWmz+j3SsfwShO1DuYgGHk4XZq7q84fo0M
- xgl+h3CQZ6DAY1lC85+gK2xPxcSaq084n58xRIURp1O3avLeDwiEfW0Tyn5pfzhsizcxe5p1cEC
- o9mpLrQB3OQ0/WR6i3vfOqHqOB4CcjJHy9kIl0PbKE+ZDZ4rgucS6TzS8GqRDU=
-X-Proofpoint-GUID: SyKwCBgXXH0NIwYFKXb4_uPFfybJWY5q
-X-Proofpoint-ORIG-GUID: SyKwCBgXXH0NIwYFKXb4_uPFfybJWY5q
-X-Authority-Info-Out: v=2.4 cv=Ur1u9uwB c=1 sm=1 tr=0 ts=69f25690
- cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
- a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8
- a=8CAvFU3GWpP82fccr8MA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-Received-SPF: pass client-ip=57.103.73.163;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid,suse.de:email];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: 4EC176A815
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,51 +128,247 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While figuring out a better spot for it, put it in hv_arch_vm_create().
+The dbus-vmstate-test has been disabled for years. Here's the things
+that have changed in the meantime and how to update the test:
 
-After hv_vcpu_create is documented as too late, and deferring
-vCPU initialization isn't enough either.
+- Migration tests got new headers.
+Update the includes.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+- migrate_qmp got new parameters.
+Update the caller.
+
+- migrate_incoming_qmp is now used instead of -incoming URL.
+Use -incoming defer.
+
+- Tests expecting failure should not check non-zero return code.
+Check for failed migration state instead.
+
+- The test result enum was introduced.
+Replace the migration_fail flag with the enum.
+
+- The DEVICE state was added.
+Replace wait_for_migration_complete with migration_event_wait, which
+won't trip on intermediary states.
+
+- Migration completion was reworked.
+Explicitly wait for the RESUME event before asserting runstate is
+RUNNING to avoid checking too quickly and seeing FINISH_MIGRATE
+instead.
+
+- The FAILING state was added.
+Wait for it before waiting for the RESUME event.
+
+- Sanity checks were added to migration_get_env().
+Start calling that function in main.
+
+- qtest_add_func now has a wrapper.
+Replace qtest_add_func with migration_test_add. Update tests'
+signatures to take MigrationCommon, although it's unused.
+
+- meson now sets up G_TEST_DBUS_DAEMON.
+Remove the logic around it.
+
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- target/arm/hvf/hvf.c | 22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ tests/qtest/dbus-vmstate-test.c | 71 +++++++++++++++++++--------------
+ tests/qtest/meson.build         |  7 +++-
+ 2 files changed, 46 insertions(+), 32 deletions(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index ef4c3671e9..a028c99e24 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1230,6 +1230,28 @@ hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
-     chosen_ipa_bit_size = pa_range;
+diff --git a/tests/qtest/dbus-vmstate-test.c b/tests/qtest/dbus-vmstate-test.c
+index 0a82cc9f93..90c050b448 100644
+--- a/tests/qtest/dbus-vmstate-test.c
++++ b/tests/qtest/dbus-vmstate-test.c
+@@ -2,8 +2,8 @@
+ #include <glib/gstdio.h>
+ #include <gio/gio.h>
+ #include "libqtest.h"
++#include "migration/migration-qmp.h"
+ #include "dbus-vmstate1.h"
+-#include "migration-helpers.h"
  
-     ret = hv_vm_create(config);
-+    if (hvf_irqchip_in_kernel()) {
-+        if (__builtin_available(macOS 15.0, *)) {
-+            /*
-+             * Instantiate GIC.
-+             * This must be done prior to the creation of any vCPU
-+             * but past hv_vm_create()
-+             */
-+            hv_gic_config_t cfg = hv_gic_config_create();
-+            hv_gic_config_set_distributor_base(cfg, 0x08000000);
-+            hv_gic_config_set_redistributor_base(cfg, 0x080A0000);
-+            ret = hv_gic_create(cfg);
-+            if (ret != HV_SUCCESS) {
-+                error_report("error creating platform VGIC");
-+                goto cleanup;
-+            }
-+            os_release(cfg);
-+        } else {
-+            error_report("HVF: Unsupported OS for platform vGIC.");
-+            ret = HV_UNSUPPORTED;
-+            goto cleanup;
-+        }
-+    }
+ static char *workdir;
  
- cleanup:
-     os_release(config);
+@@ -29,7 +29,7 @@ typedef struct TestServer {
+ 
+ typedef struct Test {
+     const char *id_list;
+-    bool migrate_fail;
++    int result;
+     bool without_dst_b;
+     TestServer srcA;
+     TestServer dstA;
+@@ -190,6 +190,7 @@ test_dbus_vmstate(Test *test)
+     g_autofree char *uri = NULL;
+     QTestState *src_qemu = NULL, *dst_qemu = NULL;
+     guint ownsrcA, ownsrcB, owndstA, owndstB;
++    QTestMigrationState src_state = { };
+ 
+     uri = g_strdup_printf("unix:%s/migsocket", workdir);
+ 
+@@ -224,17 +225,33 @@ test_dbus_vmstate(Test *test)
+ 
+     src_qemu = qtest_init(src_qemu_args);
+     dst_qemu = qtest_init(dst_qemu_args);
++
++    migrate_set_capability(src_qemu, "events", true);
++    qtest_qmp_set_event_callback(src_qemu, migrate_watch_for_events,
++                                 &src_state);
++
+     set_id_list(test, src_qemu);
+     set_id_list(test, dst_qemu);
+ 
+     thread = g_thread_new("dbus-vmstate-thread", dbus_vmstate_thread, loop);
+ 
+     migrate_incoming_qmp(dst_qemu, uri, NULL, "{}");
+-    migrate_qmp(src_qemu, uri, "{}");
++    migrate_ensure_converge(src_qemu);
++    migrate_qmp(src_qemu, NULL, uri, NULL, "{}");
+     test->src_qemu = src_qemu;
+-    if (test->migrate_fail) {
+-        wait_for_migration_fail(src_qemu, true);
+-        qtest_set_expected_status(dst_qemu, EXIT_FAILURE);
++
++    if (test->result != MIG_TEST_SUCCEED) {
++        QDict *rsp;
++
++        migration_event_wait(src_qemu, "failing");
++        wait_for_resume(src_qemu, &src_state);
++        migration_event_wait(src_qemu, "failed");
++
++        rsp = qtest_qmp_assert_success_ref(src_qemu,
++                                           "{ 'execute': 'query-status' }");
++        g_assert(qdict_haskey(rsp, "running"));
++        g_assert(qdict_get_bool(rsp, "running"));
++        qobject_unref(rsp);
+     } else {
+         wait_for_migration_complete(src_qemu);
+     }
+@@ -270,7 +287,7 @@ check_migrated(TestServer *s, TestServer *d)
+ }
+ 
+ static void
+-test_dbus_vmstate_without_list(void)
++test_dbus_vmstate_without_list(char *name, MigrateCommon *args)
+ {
+     Test test = { 0, };
+ 
+@@ -281,7 +298,7 @@ test_dbus_vmstate_without_list(void)
+ }
+ 
+ static void
+-test_dbus_vmstate_with_list(void)
++test_dbus_vmstate_with_list(char *name, MigrateCommon *args)
+ {
+     Test test = { .id_list = "idA,idB" };
+ 
+@@ -292,7 +309,7 @@ test_dbus_vmstate_with_list(void)
+ }
+ 
+ static void
+-test_dbus_vmstate_only_a(void)
++test_dbus_vmstate_only_a(char *name, MigrateCommon *args)
+ {
+     Test test = { .id_list = "idA" };
+ 
+@@ -303,9 +320,10 @@ test_dbus_vmstate_only_a(void)
+ }
+ 
+ static void
+-test_dbus_vmstate_missing_src(void)
++test_dbus_vmstate_missing_src(char *name, MigrateCommon *args)
+ {
+-    Test test = { .id_list = "idA,idC", .migrate_fail = true };
++    Test test = { .id_list = "idA,idC",
++        .result = MIG_TEST_FAIL };
+ 
+     /* run in subprocess to silence QEMU error reporting */
+     if (g_test_subprocess()) {
+@@ -320,11 +338,11 @@ test_dbus_vmstate_missing_src(void)
+ }
+ 
+ static void
+-test_dbus_vmstate_missing_dst(void)
++test_dbus_vmstate_missing_dst(char *name, MigrateCommon *args)
+ {
+     Test test = { .id_list = "idA,idB",
+                   .without_dst_b = true,
+-                  .migrate_fail = true };
++                  .result = MIG_TEST_FAIL };
+ 
+     /* run in subprocess to silence QEMU error reporting */
+     if (g_test_subprocess()) {
+@@ -343,15 +361,8 @@ int
+ main(int argc, char **argv)
+ {
+     GError *err = NULL;
+-    g_autofree char *dbus_daemon = NULL;
+     int ret;
+ 
+-    dbus_daemon = g_build_filename(G_STRINGIFY(SRCDIR),
+-                                   "tests",
+-                                   "dbus-vmstate-daemon.sh",
+-                                   NULL);
+-    g_setenv("G_TEST_DBUS_DAEMON", dbus_daemon, true);
+-
+     g_test_init(&argc, &argv, NULL);
+ 
+     workdir = g_dir_make_tmp("dbus-vmstate-test-XXXXXX", &err);
+@@ -362,16 +373,16 @@ main(int argc, char **argv)
+ 
+     g_setenv("DBUS_VMSTATE_TEST_TMPDIR", workdir, true);
+ 
+-    qtest_add_func("/dbus-vmstate/without-list",
+-                   test_dbus_vmstate_without_list);
+-    qtest_add_func("/dbus-vmstate/with-list",
+-                   test_dbus_vmstate_with_list);
+-    qtest_add_func("/dbus-vmstate/only-a",
+-                   test_dbus_vmstate_only_a);
+-    qtest_add_func("/dbus-vmstate/missing-src",
+-                   test_dbus_vmstate_missing_src);
+-    qtest_add_func("/dbus-vmstate/missing-dst",
+-                   test_dbus_vmstate_missing_dst);
++    migration_test_add("/dbus-vmstate/without-list",
++                       test_dbus_vmstate_without_list);
++    migration_test_add("/dbus-vmstate/with-list",
++                       test_dbus_vmstate_with_list);
++    migration_test_add("/dbus-vmstate/only-a",
++                       test_dbus_vmstate_only_a);
++    migration_test_add("/dbus-vmstate/missing-src",
++                       test_dbus_vmstate_missing_src);
++    migration_test_add("/dbus-vmstate/missing-dst",
++                       test_dbus_vmstate_missing_dst);
+ 
+     ret = g_test_run();
+ 
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index b735f55fc4..0d04e2cbaa 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -126,10 +126,12 @@ if dbus_daemon.found() and gdbus_codegen.found()
+   # Temporarily disabled due to Patchew failures:
+   #qtests_i386 += ['dbus-vmstate-test']
+   dbus_vmstate1 = custom_target('dbus-vmstate description',
+-                                output: ['dbus-vmstate1.h', 'dbus-vmstate1.c'],
++                                build_by_default: true,
++                                output: [ 'dbus-vmstate1.h', 'dbus-vmstate1.c'],
+                                 input: meson.project_source_root() / 'backends/dbus-vmstate1.xml',
+                                 command: [gdbus_codegen, '@INPUT@',
+                                           '--interface-prefix', 'org.qemu',
++                                          '--output-directory', meson.current_build_dir(),
+                                           '--generate-c-code', '@BASENAME@']).to_list()
+ else
+   dbus_vmstate1 = []
+@@ -385,7 +387,8 @@ qtests = {
+   'bios-tables-test': [io, 'boot-sector.c', 'acpi-utils.c', 'tpm-emu.c'],
+   'cdrom-test': files('boot-sector.c'),
+   'dbus-vmstate-test': files('migration/migration-qmp.c',
+-                             'migration/migration-util.c') + dbus_vmstate1,
++                             'migration/migration-util.c') + dbus_vmstate1 +
++                       [gio],
+   'erst-test': files('erst-test.c'),
+   'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
+   'migration-test': test_migration_files + migration_tls_files + migration_colo_files,
 -- 
-2.50.1 (Apple Git-155)
+2.51.0
 
 
