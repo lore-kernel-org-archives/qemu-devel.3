@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C769CFF8873
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:33:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A40DCCFA13
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:41:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wICWu-0006Rj-Ql; Wed, 29 Apr 2026 17:33:12 -0400
+	id 1wICe9-0007ai-1o; Wed, 29 Apr 2026 17:40:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wICWr-0006RX-FV
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:33:10 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wICWp-0000BU-1Q
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:33:08 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-82418b0178cso156446b3a.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 14:33:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777498385; x=1778103185; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=APrdlNOVOzTzNsfgJfjshYUX+ge9YC/XpNtcfI09iYo=;
- b=LRkvn0Kil+KxoGzepHXzHY52lpF1WwvS52HoO3+Rt49qODM60yWSQZGrmOVhGwX6KK
- MkdT2I3XCXKsWSmz7QPlfc4WPh8xP9LhH6ByxaxqW/MCPxUepVKwqtXVBN+eottor+6O
- jJqEPQ031gi4f+UI9IOxqh0XK/DdU+MLXofLQU/Tkd0ej3MEyYFJPDqUgBXHaAlQ1rYC
- mKHxhiI1zfkKosYdMaBgjIIEviHC4nGRL2xvfAjXjjneTQZCJ8TQbg+KSEL1dBeqGCbC
- kT+ACtIQrxE79q88bPQrL4xcPeOFJ7AJtSQ3VE4WxBlpP5S/qHnE7rLNPicQkeWCRW/w
- mhPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777498385; x=1778103185;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=APrdlNOVOzTzNsfgJfjshYUX+ge9YC/XpNtcfI09iYo=;
- b=YUa40MqLT/VtTP7tC3OjU76dw2uWxobmFwmGkcL5yms36urzR/ZK+dsYbCZPPazxZ8
- /d0LMActZgDZvS0CCgcBwYgI/SssaUTjFwC37FLr1idJTH/2iUabQbqVDwDLeo432gxW
- Uuf+WIN748l8Xw+d4ZP88fwbwRSq3WmPeuC5FuYE9faStu+gd6rZsqoXNjT9iVxVAaM8
- Sx50Y6wBP/VMAukdYZQ0d/rkewNiuGWz4QIToCdhjwVz0MGfznkZXgW38HrgaQDtBcL1
- b/MS0RfpujbhWAuMbUB1zFmgOdOT7qZOqSFqOkwDgP1CyUobupk2mCVuTYpw3KfYIYfk
- 4OzA==
-X-Gm-Message-State: AOJu0YwbKcekUMvQRuiAwSvjDBwdfFLVWUnHftc66Z9qLy1hTfVDIKYe
- Yc1lfuI21nrfiZMIEfAJ8UgKuD27F0ms1iqklB1u4mXIqEMt++iRGc9g2evXxqbNNzOSlWnrg0t
- NCnV6klQ=
-X-Gm-Gg: AeBDies8P/h5pzgxSwrI0KIfaiXiZ9rw0YJQdKfEuGN3uNl7BKq157iwsk174gpkJIS
- Jthm6ZqW1kzYJ12Zd91tprWMY13MYvv4O0qyrGc0ysaadsbpAnwNfmpcKCtbcB9vAqK9Mw/ROGg
- 3wvm807JqJOxMeQ/IL7jnEVrYSRcjIqJ3G2CA82FMaA5XmF3aGCUSZ5r/Yxq2v1VoLZ8nRtf68K
- nek3PBilHOeiUIj12Fmyn8YB4WG9CQks9ISwjThErNI6m7Ocn1QVqb93tY1Nu2b7BT0xKmurUzD
- nkgiOl1211W7w+k9tg5X67TnpgND71dKLDWfZml2qKI11BLIC/CzIolAJvsJbGBxYUulwgsO6Ie
- 4EAhrD1bBgSWlbeHT4KrZQYjkiMxubplZfCDblRc3h1CO5ZZAs6up1cIg59mPhVugWUHwrzNp1M
- 0iP72y2gsOyTDkJdtOwu+bg6LINh0GzD6tibhHdN6Xy1IRuuw3WWTC8N0RGQVxHbM=
-X-Received: by 2002:a05:6a00:369a:b0:82f:6bd2:eac5 with SMTP id
- d2e1a72fcca58-834fdb16d75mr359612b3a.2.1777498384968; 
- Wed, 29 Apr 2026 14:33:04 -0700 (PDT)
-Received: from [192.168.10.140] ([180.233.125.15])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-834ed80dfbfsm3039920b3a.53.2026.04.29.14.33.03
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Apr 2026 14:33:04 -0700 (PDT)
-Message-ID: <ed3d3306-5bd0-4d9c-bc27-8f3e091c8171@linaro.org>
-Date: Thu, 30 Apr 2026 07:33:00 +1000
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wICe6-0007aS-Fn
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:40:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wICe4-0001bn-5H
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:40:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777498835;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=KbTZ2/A31vu8u5Fk63E89SiOYzPV3tayMh7vwYj5E5w=;
+ b=DDflbL6TQPF7+ovsFgztI/CYkGVJwPf9ZQmZbWMPMA04zHnGMZH3oKUVOG+IdEmR+hFf16
+ oUZjGYsGerRBQqQ8ULdWgmoSLMndOweLmqa14Q8aAajFumpgT6UYUQb1zkx8Zx6D8h8j/q
+ 9VAcSLaBerotFKeAzCVwExzFpQZBw7o=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-GhD7BgPvOne4Q7XhGh-BWQ-1; Wed,
+ 29 Apr 2026 17:40:33 -0400
+X-MC-Unique: GhD7BgPvOne4Q7XhGh-BWQ-1
+X-Mimecast-MFC-AGG-ID: GhD7BgPvOne4Q7XhGh-BWQ_1777498832
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9229B1800366
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 21:40:32 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.2])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 26DF1180045E; Wed, 29 Apr 2026 21:40:30 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] target/or1k: fix gen_div INT_MIN / -1 undefined
- behavior
-To: qemu-devel@nongnu.org
-References: <20260429170519.2137725-1-joel@airwebreathe.org.uk>
- <20260429170519.2137725-3-joel@airwebreathe.org.uk>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260429170519.2137725-3-joel@airwebreathe.org.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 6/9] qom: move object_set_prop_keyval into object.c
+From: marcandre.lureau@redhat.com
+To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+In-Reply-To: <20260429210830.594724-7-berrange@redhat.com>
+References: <20260429210830.594724-1-berrange@redhat.com>
+ <20260429210830.594724-7-berrange@redhat.com>
+Date: Thu, 30 Apr 2026 01:40:15 +0400
+Message-Id: <177749881570.809163.1931324275553253319.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=528;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=qVBvMaqWiSGckAh0pYehlbLc/P8sERtJ/XAVYaiKziU=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp8nrFz7jF7o4kHUeMK2V3at+E9ZpL/qU6upli9
+ RFsR+VsyHeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafJ6xQAKCRDa6OEJdZac
+ 5TkiEACl2ywhHMJu3MrWuTXsYJ51X9xaCFPYD9dE3dzOXAGHk/NU701Y6fBrQXXHShju4WOQcJd
+ P4yOjBUQ7jwCs8/jG1+Dh2KwYBomW7xfYrFuKB2EXwq610xZjlRCbr7d/MBhbk8MK1eaqJqmHon
+ qtnvabrKCMHnBcvPpIS50++gS2Zh3cSzMkSccIcYQ2FHYlGWvwFqroIygtt0b0k/VC5uVOy1aOg
+ YUd/ZEsUVd2NKkjmJ40Ixhi+Ei/+DJoifo9MZooNHhBYrIp3y3o/i4cKxWk9R1GAK1Aug0B4Hj7
+ akxCQ6gdem9RHRvm0eJBr928CoC3O0Kj75AeadeIpw52psXYFWUq/HgCF0jGiHNhf5FZ/AN4CEW
+ zeieAEUJHEGPhpw8aq7zbZFpLHPkaCQQgAMi0OF412wz/d/ljUIZc77xHfrCGn6nf1J9Qrlf6O4
+ BHPrTTp2bLtgtaOp+4M5jRpfT/xrmqFeh6VClu47px5qYmEHR93jdLH7t5T7KxO0L7lI0vyM13m
+ ujPSPKM2xWqmIscfVOjzXcQcbcJXx/wiKvFNgFB3aXUZy/icEOniQeHUyZq2gt4CvJs4bWGQNX3
+ QceAdmzf++Qb8J4pFkj9xuvwdviEIvK/v1xTZQUq/oNBSFYVLspVZxj6SiU1mktMUTC1Bs8tMZt
+ 955sWtz0aErAgOA==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,82 +103,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/30/26 03:03, joel--- via qemu development wrote:
-> From: Joel Holdsworth <jholdsworth@nvidia.com>
-> 
-> Signed division of INT_MIN (0x80000000) by -1 produces a result that
-> overflows a 32-bit signed integer.  On many host architectures (x86,
-> ARM) this triggers a hardware exception.  The existing code only guards
-> against divide-by-zero but not this case.
-> 
-> Add an explicit check for the INT_MIN / -1 pattern and suppress the
-> host-side exception by substituting a divisor of 1, setting the
-> overflow flag instead.
-> 
-> Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
-> ---
->   target/or1k/translate.c | 22 ++++++++++++++++++----
->   1 file changed, 18 insertions(+), 4 deletions(-)
-> 
-> diff --git a/target/or1k/translate.c b/target/or1k/translate.c
-> index 1602e204fe..68d40111f0 100644
-> --- a/target/or1k/translate.c
-> +++ b/target/or1k/translate.c
-> @@ -279,13 +279,27 @@ static void gen_div(DisasContext *dc, TCGv_i32 dest,
->                       TCGv_i32 srca, TCGv_i32 srcb)
->   {
->       TCGv_i32 t0 = tcg_temp_new_i32();
-> +    TCGv_i32 ov = tcg_temp_new_i32();
->   
-> -    tcg_gen_setcondi_i32(TCG_COND_EQ, cpu_sr_ov, srcb, 0);
-> -    /* The result of divide-by-zero is undefined.
-> -       Suppress the host-side exception by dividing by 1. */
-> -    tcg_gen_or_i32(t0, srcb, cpu_sr_ov);
-> +    /* Check for divide-by-zero. */
-> +    tcg_gen_setcondi_i32(TCG_COND_EQ, ov, srcb, 0);
-> +
-> +    /* Check for INT_MIN / -1 overflow (0x80000000 / -1). */
-> +    TCGv_i32 t_is_min = tcg_temp_new_i32();
-> +    TCGv_i32 t_is_neg1 = tcg_temp_new_i32();
-> +    TCGv_i32 t_intmin_ov = tcg_temp_new_i32();
-> +
-> +    tcg_gen_setcondi_i32(TCG_COND_EQ, t_is_min, srca, (int32_t)0x80000000);
+On Wed, 29 Apr 2026 22:08:27 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> diff --git a/qom/object.c b/qom/object.c
+> index 2671c471ab2..c44e2b2eff4 100644
+> --- a/qom/object.c
+> +++ b/qom/object.c
+> @@ -23,7 +23,9 @@
+>  #include "qapi/qobject-input-visitor.h"
+>  #include "qapi/forward-visitor.h"
+>  #include "qapi/qapi-builtin-visit.h"
+> +#include "qobject/qdict.h"
+>  #include "qobject/qjson.h"
+> +#include "qobject/qdict.h"
 
-Just use INT32_MIN here.
+double-included
 
-> +    tcg_gen_setcondi_i32(TCG_COND_EQ, t_is_neg1, srcb, -1);
-> +    tcg_gen_and_i32(t_intmin_ov, t_is_min, t_is_neg1);
-> +    tcg_gen_or_i32(ov, ov, t_intmin_ov);
-> +
-> +    /* Suppress the host-side exception by dividing by 1 on overflow. */
-> +    tcg_gen_movcond_i32(TCG_COND_NE, t0, ov, tcg_constant_i32(0),
-> +                        tcg_constant_i32(1), srcb);
->       tcg_gen_div_i32(dest, srca, t0);
->   
-> +    tcg_gen_mov_i32(cpu_sr_ov, ov);
->       tcg_gen_neg_i32(cpu_sr_ov, cpu_sr_ov);
->       gen_ove_ov(dc);
->   }
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
-It doesn't make much difference, but you can write this without adding new temps, 
-especially since you don't need to avoid cpu_sr_ov like you're doing.
-
-     /* Check for INT_MIN / -1 overflow */
-     tcg_gen_setcondi_i32(TCG_COND_EQ, cpu_sr_ov, srca, INT_MIN);
-     tcg_gen_setcondi_i32(TCG_COND_EQ, t0, srcb, -1);
-     tcg_gen_and_i32(cpu_sr_ov, cpu_sr_ov, t0);
-
-     /* Check for divide-by-zero. */
-     tcg_gen_setcondi_i32(TCG_COND_EQ, t0, srcb, 0);
-     tcg_gen_or_i32(cpu_sr_ov, cpu_sr_ov, t0);
-
-     /* Suppress the host-side exception by dividing by 1 on overflow. */
-     tcg_gen_movcond_i32(TCG_COND_NE, t0, cpu_sr_ov, tcg_constant_i32(0),
-                         tcg_constant_i32(1), srcb);
-     tcg_gen_div_i32(dest, srca, t0);
-
-     tcg_gen_neg_i32(cpu_sr_ov, cpu_sr_ov);
-
-
-r~
 
