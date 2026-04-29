@@ -4,93 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F19C1FF8873
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:05:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39817FF8873
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:05:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIC4h-0003o0-UB; Wed, 29 Apr 2026 17:04:03 -0400
+	id 1wIC4P-0003WM-4N; Wed, 29 Apr 2026 17:03:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIC4f-0003f9-5T
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:04:01 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIC4c-0003JD-RM
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:04:00 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-8296dabef74so221676b3a.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 14:03:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777496637; x=1778101437; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=O+lJTz9HmPluv508e7JwiB4tGCitMUuOPuXqa+lBO2o=;
- b=L6BK+4ghndttyP+0oGR5P0bLGt+w76sm1j2J8Kngvg3ecBBYimL7T4mdjowAJkZxQR
- /arvgZUXsli/AQndHhwhN4L52lsudJAubN9J9PvrkU8/SoTlPU2UJywCtSFL/e7ZsNu/
- x5pQ/scERXccH/mEVCua9QAN8IcX5tHy71aPTLy7+Om2YlVQTrIMmh781tovxmvR7/Ro
- leVUdqT7ZSEK+Stv2W0MzPljp0igCKhRjqkBjIz6UqK9GJLDUl9PyJbwoilHyt+LnMV1
- HAQ/JOJnTnSejzOBlK5iJIuXkFVwdG+VKP+XFHiXgSsx5RT08RFrZchL71LlJrcJZr7N
- j1/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777496637; x=1778101437;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=O+lJTz9HmPluv508e7JwiB4tGCitMUuOPuXqa+lBO2o=;
- b=T0S5+AerjhJuFtec1fodBGBVdiuMY0hb4llnFCFnRCdKBIPc7eQFfaA9Uczu35bscK
- PCDET48XwTYJgmsMaPPDgSgYyeOw4rh98TdkaU9c7ojqESmBXorrFBGTKeMxU2h2sNA8
- UtdysuEKlN+PQg0b495bG1KwerWdSjBFp0HK9ss0wM5+eCExum9z6kg5yGMhCTfue38b
- jwdzo+RtmuWkWp5Da/96Oq2zC8JO5b/+yU6u8arMBh91O5eLxC2fA4dLb7dYw9IymCNp
- 8FnarbcQYMBCR7Tx7ImlTj+6VJBacv8LKK8eFDbjZwglrkzpYn91YYhoaiPQmsUjLZ2W
- +qaA==
-X-Gm-Message-State: AOJu0YyEAmUZjJUa5BCeWZ/Be0n4UDcturN12A1IJM9dqLknnz1mpjc7
- guMAKuu/jz47FOD4dvt4p/kn+o2BVeb4SbwB3MJQjRF6qHOn3b9rXmUZzsMtYpJIZskcn9B8smO
- oUVsqhB4=
-X-Gm-Gg: AeBDietJyB8lRFJT1c9EKbYMD6PACkMQjSxArgLjynWYv+Wz+96RYmjLAnSIDLBVG6R
- BBjRBfqSFIp3TXdBoqzeZQMDmX9+j1V/emhj1GLNfTGSrbX8NGi3zpQit8QzAmz7owTV9jaseBh
- xPfHTT6eaomuTc2UjdqRw1Gg/HEl60SEST7CXBdHj0gJ/4VmhqR2uHNZ/U51Py7kpGv2sazSdQd
- yctKgE7xAhEguIeG19n2BE2HUUKhpEymRYc+FR8bhOUWlRpvl22uzPYgPHwPYF4UwLeZplrFfUQ
- 1aJ5/vvMFLLH0FMv2G8Fc/8pNfY0GZtf/8uveBsvJ4jZxu47Oq5zrNAqGJ0++SVOOgfxKS1bMv+
- goCznt2DXRLTR4iJ5ETzo7qaoUYtmn1RoaED8KQna5UyYWo9Sfe+MMyUo5NEOB08dOKcg1cdvb+
- TUuWMcMZRJExBzsINkncH+eMCVMxnJn0qIoeGvjz6J1L9CCXuhyDfb
-X-Received: by 2002:a05:6a00:4b4f:b0:834:e043:ffd8 with SMTP id
- d2e1a72fcca58-834fdb166b9mr265379b3a.17.1777496636766; 
- Wed, 29 Apr 2026 14:03:56 -0700 (PDT)
-Received: from [192.168.10.140] ([180.233.125.15])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-834ed6de621sm3679035b3a.29.2026.04.29.14.03.55
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Apr 2026 14:03:56 -0700 (PDT)
-Message-ID: <feda4269-fe96-4c73-a87e-c3181b43efdd@linaro.org>
-Date: Thu, 30 Apr 2026 07:03:46 +1000
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wIC4M-0003Vd-Rq
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:03:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wIC4K-0003EY-RH
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:03:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777496619;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=lOr5ZL7bHRKd8fAlE/hxuW/GBXSIWog+NxkF9A50Knk=;
+ b=UVy3Y1RaMun9rFKNOJtjJF3xVtkDJDPewdD/pkusjP1ju/RTGC2jU1o3bLQZ5X58MBX9vL
+ 3DseK6z8EskjZTG/52p43dbGtlQ3r6i+LoqHP2ywEjxNDpa96PaA87bJXeeoEarhfL2xL0
+ lsKQ2rBYEpK8I5cGU0/UedA7kXyLyUU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-624-hqAMBod7PvOZbYgooL0sVA-1; Wed,
+ 29 Apr 2026 17:03:38 -0400
+X-MC-Unique: hqAMBod7PvOZbYgooL0sVA-1
+X-Mimecast-MFC-AGG-ID: hqAMBod7PvOZbYgooL0sVA_1777496617
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5BDEB1800366
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 21:03:37 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.2])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EE350300019F; Wed, 29 Apr 2026 21:03:35 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Thu, 30 Apr 2026 01:02:37 +0400
+Subject: [PATCH v3 04/26] ui/console: default vc encoding to cp437 for
+ machine < 11.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] system/vl.c: inline qemu_opts_parse_noisily() result
- checks
-To: qemu-devel@nongnu.org
-References: <20260429062004.36582-1-guobin@linux.alibaba.com>
- <20260429062004.36582-4-guobin@linux.alibaba.com>
- <708ac3f4-bb55-459a-9506-77751133c973@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <708ac3f4-bb55-459a-9506-77751133c973@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Message-Id: <20260430-qemu-vnc-v3-4-be96757428d0@redhat.com>
+References: <20260430-qemu-vnc-v3-0-be96757428d0@redhat.com>
+In-Reply-To: <20260430-qemu-vnc-v3-0-be96757428d0@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6927;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=QReFTyG+sKmftwnoD428OyLIJhjEp+YtsXRj2SNT6aw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp8nILC+QFxP9v1wHNLcMQja/O3xPIpBQaBTdem
+ EZpDR/J9pOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafJyCwAKCRDa6OEJdZac
+ 5UFuEACfiBbvgfObJ3KBPIt1rBrK39CxH/hyLv5FBojhBh/GXLSuI+y3ktRMqm0YBS26wVv6b+F
+ cF6juhUNXgKK5h4GL8yES/kmpFOi8nO0mqp+23KaEQzdrcM6KEGKcw6kf0Pc8ZGF/ARN9EgJJBb
+ DlAFq5Hbw8NC8hcOCGG5jN0oJ/WlL7Gmc2tsdFJoLAeZrbfO851UNgSg2EcwN3UGVDRrzvuFK6N
+ PEgLNT1RYUaO68RtfE0Du7sxB4pdbl9/iD+1b+cJ1rFUG4ydDWc1zxLCLZnEyK8rAS5cpqmE3qJ
+ v3YrR5d0+7pedPIfCN3Cf5JhpROFk0JyF/S+3ydFHISyGqSfQrnS9n51tOJxb+ti7EO+Xrn0jWZ
+ x/+7GxPXI1D6kdJ6IUsqzSzsX62VlkZdAXTKzbKhkXb717irEuvFtrE6gOKhIN+6FUY+Ifn6aiw
+ 9PTxOkUSsAc5UzBEF1yFg6pDiz77nVK79q+gOV62Q54NUqKJAWKKCRJPj+HUwBTY38W6sFtJB9v
+ QaJaje3vHUpqi6J50FdWfNLRtP3S/7OUUMosqWcb/pQxZA0hJobgS8EtvUUVdiuwvm/rVo8iyzH
+ wqVdPbJodScds9lpklgUAN6PT3LV53EUtEC1eGns9RLfivpFtOrjfC7kx4+/d3aCVSAL54ByJAa
+ DrhZ4O+JEVMOgGA==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,70 +103,218 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/29/26 18:04, Philippe Mathieu-Daudé wrote:
-> On 29/4/26 08:20, Bin Guo wrote:
->> In qemu_init()'s option parsing switch, several cases assigned the
->> return value of qemu_opts_parse_noisily() to the shared 'opts'
->> variable solely to check for NULL, without using the pointer
->> afterwards.  Inline the call directly into the if-condition, matching
->> the style already used by QEMU_OPTION_action.
->>
->> This affects the following options:
->>    -drive, -numa, -iscsi, -m, -mon, -chardev, -fsdev, -fwcfg
->>
->> Cases where the returned QemuOpts* is subsequently used (e.g.
->> -acpitable, -smbios, -virtfs) are left unchanged.
->>
->> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
->> ---
->>   system/vl.c | 37 +++++++++++++++----------------------
->>   1 file changed, 15 insertions(+), 22 deletions(-)
->>
->> diff --git a/system/vl.c b/system/vl.c
->> index 0e1fc217b4..0e0d3cb761 100644
->> --- a/system/vl.c
->> +++ b/system/vl.c
->> @@ -2961,9 +2961,8 @@ void qemu_init(int argc, char **argv)
->>                       break;
->>                   }
->>               case QEMU_OPTION_drive:
->> -                opts = qemu_opts_parse_noisily(qemu_find_opts("drive"),
->> -                                               optarg, false);
->> -                if (opts == NULL) {
->> +                if (!qemu_opts_parse_noisily(qemu_find_opts("drive"),
->> +                                             optarg, false)) {
->>                       exit(1);
->>                   }
->>                   break;
-> 
-> For clarity I'd also squash in this patch:
-> 
-> -- >8 --
-> diff --git a/system/vl.c b/system/vl.c
-> index cab8106984a..237334236aa 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -2842,3 +2842,2 @@ void qemu_init(int argc, char **argv)
->   {
-> -    QemuOpts *opts;
->       QemuOpts *icount_opts = NULL, *accel_opts = NULL;
-> @@ -2921,2 +2920,4 @@ void qemu_init(int argc, char **argv)
->       for(;;) {
-> +        QemuOpts *opts;
-> +
->           if (optind >= argc)
-> ---
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Add a QOM "encoding" enum property to some chardev-vc backends
+(console-vc & dbus - gtk and spice don't make use of it) so that the
+machine compat mechanism can override the default. For machine versions
+prior to 11.1, the charset defaults to cp437 (raw 8-bit VGA) instead of
+utf8, preserving the historical behaviour.
 
-If you're going to move the decl, the innermost block is just below with
+The following commits are going to wire this to VT100 emulation code and
+an extra exported D-Bus property.
 
-         } else {
-             const QEMUOption *popt;
-+           QemuOpts *opts;
+Note that GTK libvte uses utf8 unconditionally, and Spice doesn't have a
+way to set the encoding, and typically just use libvte in client too.
 
-             popt = lookup_opt(argc, argv, &optarg, &optind);
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ include/chardev/char.h | 19 +++++++++++++++++++
+ hw/core/machine.c      |  4 +++-
+ ui/console-vc.c        | 18 ++++++++++++++++++
+ ui/dbus.c              | 40 ++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 80 insertions(+), 1 deletion(-)
 
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index f05e8dba0a9..7377d8e60a0 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -332,4 +332,23 @@ void resume_mux_open(void);
+ char *qemu_chr_get_pty_name(Chardev *chr);
+ char *qemu_chr_get_filename(Chardev *chr);
+ 
++#define CHARDEV_VC_ENCODING_PROPERTY_DEFINE(cast_func)          \
++static int get_encoding(Object *obj, Error **errp)              \
++{                                                               \
++    return cast_func(obj)->encoding;                            \
++}                                                               \
++                                                                \
++static void set_encoding(Object *obj, int value, Error **errp)  \
++{                                                               \
++    cast_func(obj)->encoding = value;                           \
++}
++
++static inline void chardev_vc_add_encoding_prop(ObjectClass *oc,
++    int (*get)(Object *, Error **),
++    void (*set)(Object *, int, Error **))
++{
++    object_class_property_add_enum(oc, "encoding", "ChardevVCEncoding",
++                                   &ChardevVCEncoding_lookup, get, set);
++}
++
+ #endif
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 1b661fd36ae..63baff859f3 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -39,7 +39,9 @@
+ #include "hw/acpi/generic_event_device.h"
+ #include "qemu/audio.h"
+ 
+-GlobalProperty hw_compat_11_0[] = {};
++GlobalProperty hw_compat_11_0[] = {
++    { "chardev-vc", "encoding", "cp437" },
++};
+ const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
+ 
+ GlobalProperty hw_compat_10_2[] = {
+diff --git a/ui/console-vc.c b/ui/console-vc.c
+index 7bb6a483753..fd7e6fb7b06 100644
+--- a/ui/console-vc.c
++++ b/ui/console-vc.c
+@@ -9,6 +9,7 @@
+ #include "qemu/fifo8.h"
+ #include "qemu/option.h"
+ #include "qemu/queue.h"
++#include "qom/compat-properties.h"
+ #include "ui/console.h"
+ #include "ui/vgafont.h"
+ 
+@@ -109,6 +110,7 @@ struct VCChardev {
+     TextAttributes t_attrib; /* currently active text attributes */
+     TextAttributes t_attrib_saved;
+     int x_saved, y_saved;
++    ChardevVCEncoding encoding;
+ };
+ typedef struct VCChardev VCChardev;
+ 
+@@ -1189,6 +1191,9 @@ static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+ 
+     s->chr = chr;
+     drv->console = s;
++    if (vc->has_encoding) {
++        drv->encoding = vc->encoding;
++    }
+ 
+     /* set current text attributes to default */
+     drv->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
+@@ -1253,6 +1258,8 @@ static void vc_chr_parse(QemuOpts *opts, ChardevBackend *backend, Error **errp)
+     }
+ }
+ 
++CHARDEV_VC_ENCODING_PROPERTY_DEFINE(VC_CHARDEV)
++
+ static void char_vc_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+@@ -1264,12 +1271,23 @@ static void char_vc_class_init(ObjectClass *oc, const void *data)
+     cc->chr_set_echo = vc_chr_set_echo;
+     cc->supports_size_opts = true;
+     cc->supports_encoding_opts = true;
++
++    chardev_vc_add_encoding_prop(oc, get_encoding, set_encoding);
++}
++
++static void char_vc_init(Object *obj)
++{
++    VCChardev *vc = VC_CHARDEV(obj);
++
++    vc->encoding = CHARDEV_VC_ENCODING_UTF8;
+ }
+ 
+ static const TypeInfo char_vc_type_info = {
+     .name = TYPE_CHARDEV_VC,
+     .parent = TYPE_CHARDEV,
+     .instance_size = sizeof(VCChardev),
++    .instance_init = char_vc_init,
++    .instance_post_init = object_apply_compat_props,
+     .class_init = char_vc_class_init,
+ };
+ 
+diff --git a/ui/dbus.c b/ui/dbus.c
+index 721cc71d39b..59b73e0aa94 100644
+--- a/ui/dbus.c
++++ b/ui/dbus.c
+@@ -28,6 +28,7 @@
+ #include "qemu/main-loop.h"
+ #include "qemu/option.h"
+ #include "qom/object_interfaces.h"
++#include "qapi-types-char.h"
+ #include "system/system.h"
+ #include "ui/dbus-module.h"
+ #ifdef CONFIG_OPENGL
+@@ -455,12 +456,20 @@ dbus_display_class_init(ObjectClass *oc, const void *data)
+ 
+ #define TYPE_CHARDEV_VC "chardev-vc"
+ 
++typedef struct DBusVCChardev {
++    DBusChardev parent;
++
++    ChardevVCEncoding encoding;
++} DBusVCChardev;
++
+ typedef struct DBusVCClass {
+     DBusChardevClass parent_class;
+ 
+     void (*parent_parse)(QemuOpts *opts, ChardevBackend *b, Error **errp);
+ } DBusVCClass;
+ 
++DECLARE_INSTANCE_CHECKER(DBusVCChardev, DBUS_VC_CHARDEV,
++                         TYPE_CHARDEV_VC)
+ DECLARE_CLASS_CHECKERS(DBusVCClass, DBUS_VC,
+                        TYPE_CHARDEV_VC)
+ 
+@@ -500,6 +509,23 @@ dbus_vc_parse(QemuOpts *opts, ChardevBackend *backend,
+     }
+ }
+ 
++CHARDEV_VC_ENCODING_PROPERTY_DEFINE(DBUS_VC_CHARDEV)
++
++static bool
++dbus_vc_open(Chardev *chr, ChardevBackend *backend, Error **errp)
++{
++    DBusVCChardev *vc = DBUS_VC_CHARDEV(chr);
++    ChardevClass *parent =
++        CHARDEV_CLASS(object_class_by_name(TYPE_CHARDEV_DBUS));
++    ChardevDBus *be = backend->u.dbus.data;
++
++    if (be->has_encoding) {
++        vc->encoding = be->encoding;
++    }
++
++    return parent->chr_open(chr, backend, errp);
++}
++
+ static void
+ dbus_vc_class_init(ObjectClass *oc, const void *data)
+ {
+@@ -508,12 +534,26 @@ dbus_vc_class_init(ObjectClass *oc, const void *data)
+ 
+     klass->parent_parse = cc->chr_parse;
+     cc->chr_parse = dbus_vc_parse;
++    cc->chr_open = dbus_vc_open;
+     cc->supports_encoding_opts = true;
++
++    chardev_vc_add_encoding_prop(oc, get_encoding, set_encoding);
++}
++
++static void
++dbus_vc_init(Object *obj)
++{
++    DBusVCChardev *vc = DBUS_VC_CHARDEV(obj);
++
++    vc->encoding = CHARDEV_VC_ENCODING_UTF8;
+ }
+ 
+ static const TypeInfo dbus_vc_type_info = {
+     .name = TYPE_CHARDEV_VC,
+     .parent = TYPE_CHARDEV_DBUS,
++    .instance_size = sizeof(DBusVCChardev),
++    .instance_init = dbus_vc_init,
++    .instance_post_init = object_apply_compat_props,
+     .class_size = sizeof(DBusVCClass),
+     .class_init = dbus_vc_class_init,
+ };
 
-r~
+-- 
+2.54.0
+
 
