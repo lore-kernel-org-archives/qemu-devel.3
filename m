@@ -4,97 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E9A7FF8867
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 11:06:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17345FF8867
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 11:22:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI2jX-0006fr-Ie; Wed, 29 Apr 2026 07:05:36 -0400
+	id 1wI2z5-0001ES-Sy; Wed, 29 Apr 2026 07:21:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wI2jV-0006fe-Cy
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 07:05:33 -0400
-Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
- id 1wI2jT-0000GK-4R
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 07:05:33 -0400
-Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id DF35C4272A
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 11:05:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
- s=20210803; t=1777460728;
- bh=h9hMYLc37+ZBACm0kRQpVDGjaZXoSB3U+59AIVAVYg0=;
- h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
- Message-Id:Subject;
- b=mvnY5fv6Bkw9Sqj+Rb19641UytApOcqavd7z/3LO+7qPnCgLTIdWYa8iiT+tHSkQz
- PimQAHysFTTCDcOc8ILZGxGcyGR9T5FaqIKkgZywrBjatvgm5Z3iMAeTIcaexy3QSv
- LAhKx3D5UdW5a0KmmC/R37r4bE+B+oPlvQh1sAAUdTzC9+hETmHggJM1Fc4VLSjrU3
- DV4ZNZ5zqOw0J5tuIl6IC+UY4FLnmKW6rmWX0WwXS9Er8szNfh81c1uJk5/wqqRhly
- j7aEeJIQ2NXbHdVOSPmIeXbl1a4AlA+PgbokY6B3112kBzhYo3Xwety9wj88aeDW1I
- Pd6F6yU3qVqFQ==
-Received: from scripts.lp.internal (localhost [127.0.0.1])
- by scripts.lp.internal (Postfix) with ESMTP id C801D7EEC0
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 11:05:28 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1wI2yx-0001E2-LG
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 07:21:32 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wI2yw-0005UW-33
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 07:21:31 -0400
+Received: from example.com (unknown [167.220.208.81])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 9749920B716C;
+ Wed, 29 Apr 2026 04:21:27 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9749920B716C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1777461688;
+ bh=ILqMNi8E0ZWRUMXGxnAYzHgDf8g8EDMKniRpfLKbTYs=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=jyfLNQ4dGfQxmjRYDIUE78qhAZTwkWKUr/vQMaG3cikg+1TjSrOeT1/Dmj8Jc7hTo
+ BjwCghWEAi5MDbxgQdEthZepkfLxz7yr2KL6PpOaU4ZVm2Ov1XhH/1f3ZMV8vmlfbG
+ WPMZ9T8GUtE3R/wX2coWqxm5dp3+BK7KjkcgsJv8=
+Date: Wed, 29 Apr 2026 13:21:24 +0200
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 4/6] target/i386/mshv: hv_vp_register_page setup for the
+ vcpu
+Message-ID: <afHptC4d/vEs7sQv@example.com>
+References: <20260428135053.251200-1-dblanzeanu@linux.microsoft.com>
+ <20260428135053.251200-5-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Date: Wed, 29 Apr 2026 10:59:04 -0000
-From: Launchpad Bug Tracker <2133804@bugs.launchpad.net>
-To: qemu-devel@nongnu.org
-X-Launchpad-Notification-Type: bug
-X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
- assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
- milestone=ubuntu-26.04; status=Fix Released; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
- component=main; status=Confirmed; importance=Medium;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
- component=main; milestone=ubuntu-24.04.4; status=In Progress;
- importance=Medium; assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
- component=main; status=Won't Fix; importance=Medium; assignee=None; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
- component=main; status=In Progress; importance=Medium;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
- component=main; milestone=ubuntu-26.04; status=Fix Released; importance=High;
- assignee=hector.cao@canonical.com; 
-X-Launchpad-Bug-Tags: server-todo
-X-Launchpad-Bug-Information-Type: Public
-X-Launchpad-Bug-Private: no
-X-Launchpad-Bug-Security-Vulnerability: no
-X-Launchpad-Bug-Commenters: hectorcao janitor mjt+launchpad-tls paelzer
- utkarsh xypron
-X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
-X-Launchpad-Bug-Modifier: Launchpad Janitor (janitor)
-References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
-Message-Id: <177746034532.2549166.10020878409759136381.launchpad@scripts-bzrsyncd.lp.internal>
-Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
-X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
-X-Launchpad-Message-For: qemu-devel-ml
-Precedence: bulk
-X-Generated-By: Launchpad (canonical.com);
- Revision="91d5f4cbcbec62cc98ca9991c8ad99af4e21f85a";
- Instance="launchpad-scripts"
-X-Launchpad-Hash: 281a5afbc985440024b02c49b4c199976a887f6d
-Received-SPF: pass client-ip=185.125.188.250;
- envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
-X-Spam_score_int: -42
-X-Spam_score: -4.3
-X-Spam_bar: ----
-X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260428135053.251200-5-dblanzeanu@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -103,136 +65,89 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-** Merge proposal linked:
-   https://code.launchpad.net/~hectorcao/ubuntu/+source/qemu/+git/qemu/+mer=
-ge/504461
+On Tue, Apr 28, 2026 at 04:50:51PM +0300, Doru Blânzeanu wrote:
+> When the vcpu is created, call mmap to configure access to the register page.
+> 
+> Update CPUArchState to store a pointer to the mmapped hv_vp_register_page.
+> 
+> Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+> ---
+>  target/i386/cpu.h           |  3 +++
+>  target/i386/mshv/mshv-cpu.c | 18 ++++++++++++++++++
+>  2 files changed, 21 insertions(+)
+> 
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 0b539155c4..0108e2157b 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2016,6 +2016,9 @@ typedef struct CPUArchState {
+>      uint64_t msr_bndcfgs;
+>      uint64_t efer;
+>  
+> +    /* Shared register page */
+> +    struct hv_vp_register_page *regs_page;
+> +
 
---=20
-You received this bug notification because you are a member of qemu-
-devel-ml, which is subscribed to QEMU.
-https://bugs.launchpad.net/bugs/2133804
+We probably want to put this behind a compile-time guard:
 
-Title:
-  QEMU does not emulate IOCTL TCGETS2
+#if defined(CONFIG_MSHV)
+...
+#endif
 
-Status in QEMU:
-  Fix Released
-Status in qemu package in Ubuntu:
-  Fix Released
-Status in qemu source package in Jammy:
-  Confirmed
-Status in qemu source package in Noble:
-  In Progress
-Status in qemu source package in Plucky:
-  Won't Fix
-Status in qemu source package in Questing:
-  In Progress
-Status in qemu source package in Resolute:
-  Fix Released
+>      /* Beginning of state preserved by INIT (dummy marker).  */
+>      struct {} start_init_save;
+>  
+> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+> index 9defd05db6..42b6fb1912 100644
+> --- a/target/i386/mshv/mshv-cpu.c
+> +++ b/target/i386/mshv/mshv-cpu.c
+> @@ -1595,6 +1595,19 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+>                        + sizeof(hv_input_get_vp_registers)
+>                        > HV_HYP_PAGE_SIZE));
+>  
+> +
+> +    /* mmap the registers page */
+> +    void *rp = mmap(NULL, page, PROT_READ | PROT_WRITE,
+> +                    MAP_SHARED, mshv_vcpufd(cpu),
+> +                    MSHV_VP_MMAP_OFFSET_REGISTERS * page);
 
-Bug description:
-  [ Impact ]
+nit: convention is to declare variables at the top of a fn:
 
-  - Terminal prompt is missing for multiarch containers with qemu-user
+int cpu_fd = mshv_vcpufd(cpu);
+void *regs_page;
+...
+regs_page = mmap(..., cpu_fd, ...);
 
-  - Users cannot see the prompt but still can type the commands
-  =C2=A0=C2=A0However the absence of the prompt can be misleading and make =
-users think that the container hangs.
+> +    if (rp == MAP_FAILED) {
+> +        warn_report("register page mmap failed, falling back to hypercalls: %s",
 
-  - this fix implements the missing ioctl TERMIOS2
+We're not falling back at this specific place. so it probably makes
+sense to just say register page mmap failed and leave it at that here.
 
-  [ Test Plan ]
-
-  On an amd64 host
-
-  $ sudo apt install -y docker.io qemu-user-static
-  $ sudo usermod -aG docker ubuntu
-  $ newgrp docker
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
-  =C2=A0(this runs on AMD64 host, if you are runnig on ARM64, use -platform=
-=3Dlinux/riscv64 instead)
-
-  After docker pulls the image and run the container, you cannot see the
-  prompt
-
-  ...
-  Status: Downloaded newer image for ubuntu:26.04
-  ...
-
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
-
-  Doing the same for Ubuntu Noble image works.
-
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
-  Unable to find image 'ubuntu:24.04' locally
-  24.04: Pulling from library/ubuntu
-  818154cda96d: Pull complete
-  352b2c3faa58: Download complete
-  Digest: sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebc=
-c41c7b
-  Status: Downloaded newer image for ubuntu:24.04
-  root@bf8124075385:/#
-
-  With this fix, the users should see the prompt when they run bash
-  interactively in the container:
-
-  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
-  root@bf8124075385:/#
-
-  [ Where problems could occur ]
-
-  The fix is around the termios managament so regressions can happen there.
-  There might be regressions on the prompt display.
-
-  The prompt display is widely used so potential regressions should be
-  visible quickly.
-
-  [ Other Info ]
-
-  None
-
-  -- Original bug report ---
-
-  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
-  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
-  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
-  arm64, ...).
-
-  This leads to failures in containers for foreign architectures. E.g. no c=
-onsole prompt is displayed.
-  A detailed analysis is contained in LP #2133188.
-
-  A proper implementation of the missing IOCTLs will include:
-
-  Functions:
-
-  in linux-user/syscall.c:
-  host_to_target_termios2()
-  target_to_host_termios2()
-  print_termios2()
-
-  Definitions:
-
-  in linux-user/syscall.c
-  #define termios2 host_termios2
-
-  in linux-user/syscall_types.h
-  STRUCT_SPECIAL(termios2)
-
-  in linux-user/ioctls.h:
-  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
-
-  in linux-user/user-internals.h:
-  void print_termios2(void *arg);
-
-To manage notifications about this bug go to:
-https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
-
+> +                    strerror(errno));
+> +        env->regs_page = NULL;
+> +    } else {
+> +        env->regs_page = (struct hv_vp_register_page *) rp;
+> +    }
+> +
+>      state->hvcall_args.base = mem;
+>      state->hvcall_args.input_page = mem;
+>      state->hvcall_args.output_page = (uint8_t *)mem + page;
+> @@ -1608,6 +1621,11 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+>      CPUX86State *env = &x86_cpu->env;
+>      AccelCPUState *state = cpu->accel;
+>  
+> +    /* Unmap the register page */
+> +    if (env->regs_page) {
+> +        munmap(env->regs_page, HV_HYP_PAGE_SIZE);
+> +        env->regs_page = NULL;
+> +    }
+>      g_free(state->hvcall_args.base);
+>      state->hvcall_args = (MshvHvCallArgs){0};
+>      g_clear_pointer(&env->emu_mmio_buf, g_free);
+> -- 
+> 2.53.0
 
