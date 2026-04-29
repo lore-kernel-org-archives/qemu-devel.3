@@ -4,103 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07595FF8867
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 12:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 820C7FF8867
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 12:18:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI3nw-0003YA-Jh; Wed, 29 Apr 2026 08:14:12 -0400
+	id 1wI3rY-0004FB-Ak; Wed, 29 Apr 2026 08:17:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wI3nn-0003Wx-3V
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 08:14:03 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1wI3rV-0004En-5P
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 08:17:53 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wI3nl-000884-2T
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 08:14:02 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ id 1wI3rT-0000nv-JZ
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 08:17:52 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63TB5X7b2943552; Wed, 29 Apr 2026 12:13:57 GMT
+ 63T3F59k1895497; Wed, 29 Apr 2026 12:17:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=hnhvPm
- 2yU+88WK5l/4Czffc1JWL6RpD5SnnsG8wrBfM=; b=VeHF7Kcn3JK1jeFc1WdeWt
- yU9TJwsL900HeLTOG3W7Uyx29MYVQ8bEJo7EgmOvAdWvQ6fB4xXvgOrKtz9cTJBg
- 101nQXKDe6UahUQpjLXZzKuXpy5ZUX1QPwkUnaTJ4HafgtHg7kFP1B+VaqD1yaNX
- LlcvpAwgGyoM/+oiBJIW9GzIujvBEKhi1lnuAoBDbTLFm7mJ3ALgJcPJhwNo6vlE
- aF+FXMzLyH0sQ2O+hTGgQAbu9MqhveVP7SPdzObeN5Zr1VYSKWkcoX0a1+tz4gUr
- 2TzqCBGEzMbI13Xf/SANBlPhNRI6pXHZlCYRRC3TtKlPNu4oo1fotCnFP7d8VhNg
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drnb5abr0-1
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=+9Z4ukb/m3lvKut2QpYsrhyAF25IFKA5zi8QcSAmI
+ ug=; b=a8w2j+TwzWUSQLXnGXigu3YlrWQ3hNF8oY+TSEovAzJxncQ3p6wrM6i5D
+ Z1iNLjCPfyZlr6iIbX5u6DeKiuv01NwrlYgAYffl18YJIHJhKrukNTQxmxIrDG0G
+ UYiF/zhX1ffbG9ckFZ+Ok20q+pHo1appQoECKrf/TPfTmCIzdPTiTGOiLbPSyNAr
+ kI3AoF7YaligSRuUieyAKoUvxIw8V/AZ5L3fsn68oMxcR53qGb+mDNGsQ+mbkq9H
+ zth5vxv7W5+PLvHOMOgUUkZEhnzMFJ75VWlMc/3678OnAD/p8UatUuWLh4S0iJF4
+ hFUYAXZzhMvtaQ0xCJpvxF5m66p7A==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drm1e0ydn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Apr 2026 12:13:57 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63TC8jol002147;
- Wed, 29 Apr 2026 12:13:56 GMT
+ Wed, 29 Apr 2026 12:17:50 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63TC8jj4031983;
+ Wed, 29 Apr 2026 12:17:49 GMT
 Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ds8avx8vs-1
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ds7xqeare-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Apr 2026 12:13:56 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
+ Wed, 29 Apr 2026 12:17:49 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
  by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63TCDt8O32244270
+ 63TCHmiV27656822
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 29 Apr 2026 12:13:55 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4D5EF58066;
- Wed, 29 Apr 2026 12:13:55 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E28DB5804B;
- Wed, 29 Apr 2026 12:13:54 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 29 Apr 2026 12:13:54 +0000 (GMT)
-Message-ID: <4208e277-05eb-4bb7-af42-62e255e281f8@linux.ibm.com>
-Date: Wed, 29 Apr 2026 08:13:54 -0400
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] tests: Implement aspeed_i2c_restart to reenable
- selection of master
-To: Arun Menon <armenon@redhat.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com
-References: <20260428130718.1325177-1-stefanb@linux.ibm.com>
- <20260428130718.1325177-6-stefanb@linux.ibm.com> <afHsM-XJk_yq54aw@fedora>
-Content-Language: en-US
+ Wed, 29 Apr 2026 12:17:49 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B8FA358050;
+ Wed, 29 Apr 2026 12:17:48 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3673F58056;
+ Wed, 29 Apr 2026 12:17:48 +0000 (GMT)
+Received: from mycroft-2.pok.ibm.com (unknown [9.47.158.222])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 29 Apr 2026 12:17:48 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <afHsM-XJk_yq54aw@fedora>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, armenon@redhat.com,
+ Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PATCH v2 0/6] Add test case for TPM over I2C with swtpm
+Date: Wed, 29 Apr 2026 12:17:37 +0000
+Message-ID: <20260429121743.1346635-1-stefanb@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=AqDeGu9P c=1 sm=1 tr=0 ts=69f1f605 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=ZwfPkkqzTLwIGs-ka7UA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDEyMCBTYWx0ZWRfX0zLicJcaUhoF
- Fw+h/zuCrjboO2PI0cYDt0AxM+4ouKrWZ/rVSyqcj5yl2knJpIjK+JGoozPqacJjv/4IpbXY6V2
- d9yKeT0UHVHrGNmRhQJX8hY08kGcjijvvYex4PJ3Z8XrXd5ZwKzSsVv/RkjzZkk+xjaGXgG8nwX
- YOUMz5iJufoMOqa1dVGUQvysA++H7W24de+1ttcX5iuC1qEmwXy/grtNu789wHIYCXHjT9OhHVp
- hQgM9tZE/PBFCX80AgHiJ+vfHpBncHz2M0PuQX6CR/hLUrUO3d5jh9AfjgWC6ejYUbE8U+v5i5r
- fNl/kp6rpTNWANUScorABYLqkUeVqQNxu7ZuspAPLO+9cqG+rfqs2ukTX6KFQegrqjoj+zL/Vk9
- 8t7+ga+9ioZAY9xlN/e0+L+8iRWcji/0iCZ814fiC2KYcHeoNP88x4ynfvvodgfWTR/4a0oQ89S
- pMyQvd/wPpgZTT+DP8w==
-X-Proofpoint-GUID: 0a0nlJHBNRjv5PyTPNoWOgEb9CmOfVFc
-X-Proofpoint-ORIG-GUID: 0a0nlJHBNRjv5PyTPNoWOgEb9CmOfVFc
+X-Proofpoint-ORIG-GUID: l1-751gKbn706hw_6i1jdWMnTtyNI8U5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDEyNSBTYWx0ZWRfXxCOozmsC2P1U
+ vDEedcVQy97qcttFKfV1cC4OCj53Gtz+AOb8kjPJevOcFAtMOESrxdlYFrhCZwYXDZWaGQRUxYQ
+ p7o2EQcZj0BwrnSD7ufqtNtkaWe6kc36az94IUNFvPI5vRVmKyK40E6RdENngDlxBow5mr/zm70
+ tWChqiha6sTU2DoQgqT0U46nA5VAkddTBLmediC6Q/WNQkfR0BcEEzsg6dVhy9WTyEAM2wKOe03
+ KnhP/vKSFnixnMfnXQ7o3NPOobmeuTw+y0xu2tfFjhySbS/JNYaAOV40qBApby4qmJmIaT6bZjm
+ /ahogFSfAA0tRALg4g0QOAaOKVLB7H0m1b6iV+DNXhObvq9djyoJkr5mNi068q7QqTUcDSsxjN2
+ ubg2IrQH+LAVaNlz1Ks44gqT7GYAHtZNQBMpo2TGIFQFxieBFdo0CCefwjnTnl60ZOjrMSNEDau
+ gdL7mXrdqc7dywcnYDA==
+X-Authority-Analysis: v=2.4 cv=VZLH+lp9 c=1 sm=1 tr=0 ts=69f1f6ee cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=WTSeslsn95BALrEyGCwA:9
+X-Proofpoint-GUID: l1-751gKbn706hw_6i1jdWMnTtyNI8U5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-04-28_05,2026-04-28_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 phishscore=0 suspectscore=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 bulkscore=0 impostorscore=0 malwarescore=0
+ clxscore=1015 suspectscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
+ spamscore=0 malwarescore=0 bulkscore=0 priorityscore=1501 impostorscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604290120
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604290125
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -123,66 +116,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This series adds a test case for TPM over I2C with external swtpm. It is
+based on existing test cases for the TPM TIS and CRB. The first patches
+refactor and fix some issues in exising code to prepare it for reuse by
+the new test case.
 
+   Stefan
 
-On 4/29/26 7:32 AM, Arun Menon wrote:
-> Hi,
-> 
-> On Tue, Apr 28, 2026 at 01:07:17PM +0000, Stefan Berger wrote:
->> For some TPM  I2C tests it is important to be able to reenable the
->> selection of the master. Implement aspeed_i2c_restart to enable this.
->>
->> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
->> ---
->>   tests/qtest/qtest_aspeed.c | 8 +++++++-
->>   tests/qtest/qtest_aspeed.h | 2 ++
->>   2 files changed, 9 insertions(+), 1 deletion(-)
->>
->> diff --git a/tests/qtest/qtest_aspeed.c b/tests/qtest/qtest_aspeed.c
->> index f6da9adea9..13934cc660 100644
->> --- a/tests/qtest/qtest_aspeed.c
->> +++ b/tests/qtest/qtest_aspeed.c
->> @@ -15,11 +15,17 @@
->>   #include "qtest_aspeed.h"
->>   #include "hw/i2c/aspeed_i2c.h"
->>   
->> +static int once;
-> 
-> can we make this a boolean?
-> 
->> +
->> +void aspeed_i2c_restart(void)
->> +{
->> +    once = false;
->> +}
->> +
->>   static void aspeed_i2c_startup(QTestState *s, uint32_t baseaddr,
->>                                  uint8_t slave_addr, uint8_t reg)
->>   {
->>       uint32_t v;
->> -    static int once;
-> 
-> Can we check if the A_I2CD_MASTER_EN bit is set directly without having
-> the need to store a global static variable? For example:
-> 
-> static bool is_aspeed_i2c_master_enabled(QTestState *s, uint32_t baseaddr)
-> {
->      uint32_t reg_val;
-> 
->      return ((qtest_readl(s, baseaddr + A_I2CC_FUN_CTRL)
->              & A_I2CD_MASTER_EN) != 0);
-> }
->>   
-> and use it here:
->>       if (!once) {
-> if (!is_aspeed_i2c_master_enabled(s, baseaddr)) {
-> 
-> 
-> for restarts, we can directly write to the register
->    qtest_writel(s, bus_addr + A_I2CC_FUN_CTRL, 0);
-> and the subsequent call to aspeed_i2c_startup() will handle the init properly.
+v2: Addressed some issues pointed out by Arun
 
-Yes, that's better. Thanks.
+Stefan Berger (6):
+  tests: Move TPM I2C bus read/write functions to common files
+  tests: Have TPM I2C read/write functions take QTestState as first
+    parameter
+  tests: Convert string arrays to byte arrays
+  tests: Rename id of tpmdev to tpm0
+  tests: Check whether the I2C master flag is set
+  tests: Add a TPM TIS I2C swtpm test
 
-> 
+ tests/qtest/meson.build              |   7 +-
+ tests/qtest/qtest_aspeed.c           |   9 +-
+ tests/qtest/tpm-tests.c              |  34 +++--
+ tests/qtest/tpm-tis-i2c-swtpm-test.c |  82 ++++++++++
+ tests/qtest/tpm-tis-i2c-test.c       | 221 +++++++++++----------------
+ tests/qtest/tpm-tis-i2c-util.c       | 102 +++++++++++++
+ tests/qtest/tpm-tis-i2c-util.h       |  34 +++++
+ tests/qtest/tpm-util.c               |  53 ++++---
+ 8 files changed, 373 insertions(+), 169 deletions(-)
+ create mode 100644 tests/qtest/tpm-tis-i2c-swtpm-test.c
+ create mode 100644 tests/qtest/tpm-tis-i2c-util.c
+ create mode 100644 tests/qtest/tpm-tis-i2c-util.h
+
+-- 
+2.43.0
+
 
