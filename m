@@ -4,78 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8713AFF8867
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 12:21:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2C75FF8867
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 12:27:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI3uE-0007Dc-0P; Wed, 29 Apr 2026 08:20:42 -0400
+	id 1wI40C-0008J1-Aw; Wed, 29 Apr 2026 08:26:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wI3tw-00070x-PW
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 08:20:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wI3to-0001s4-2l
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 08:20:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777465212;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=bxCZTO1vjWEUis2mApUIK1leKROtNBLIIf31dvOWC7c=;
- b=PqBTHO7zxrXw68tZkchYGjF4wI5UMbEhll23RoA+S23kRH2lgxUiqBO+Q5v6EgVyKBZwU/
- voN7GpIRLxpzk8O4skl1/X3j8D10sPitzP05l2+kCASyhr/RK07oKzYNxQPn5FdBwFO4uT
- 0qPc4hbXp+ES1VyeN+gE8B+tiv6mwXI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-563-zgoiV67FNHudMBYHLV_csw-1; Wed,
- 29 Apr 2026 08:20:08 -0400
-X-MC-Unique: zgoiV67FNHudMBYHLV_csw-1
-X-Mimecast-MFC-AGG-ID: zgoiV67FNHudMBYHLV_csw_1777465207
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B6264195609D; Wed, 29 Apr 2026 12:20:06 +0000 (UTC)
-Received: from localhost (unknown [10.44.32.30])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B48C01800480; Wed, 29 Apr 2026 12:20:04 +0000 (UTC)
-Date: Wed, 29 Apr 2026 08:20:02 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: "open list:Network Block Dev..." <qemu-block@nongnu.org>,
- QEMU Developers <qemu-devel@nongnu.org>, Fam Zheng <fam@euphon.net>,
- Hanna Czenczek <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Thomas Lamprecht <t.lamprecht@proxmox.com>, Jens Axboe <axboe@kernel.dk>
-Subject: Re: Excessive IO PSI for iothread when using io_uring since QEMU 10.2
-Message-ID: <20260429122002.GA317605@fedora>
-References: <017dc767-90e3-4983-8417-e541b3fb04f6@proxmox.com>
- <20260427191343.GD218226@fedora>
- <317ab384-f8c2-49af-89c4-407bb2f5617c@proxmox.com>
- <20260428161927.GB278591@fedora>
- <9b11dec1-f27c-4c69-8dfc-34ef0bdc7e8f@proxmox.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wI40A-0008Ia-S5
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 08:26:50 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wI409-0003W4-3o
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 08:26:50 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-65c0bda7cc4so73259d50.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 05:26:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777465607; cv=none;
+ d=google.com; s=arc-20240605;
+ b=CCn67COhRZ69d2rWKPG4L+1ic+rVgoBKZghMwZMjYt2F2km/FjFmIiwkpaQevKlrfO
+ UE2u/UGj3GiSlns67Bx7OmNkGIutulRRuUwDsaO6TEczlKPqp5HKSwTq2Ad2I7Ne7b4W
+ YXLxGn+2tsCSmjJNPM2BdtPliMITVaWr8KgLvv2IFqrq2SRM9kq2ImaWNydZu7Q6DMtM
+ fdbwvwob+TRF83mBXRPRh4O2yuu2ho7SOsMZmyXKj2knhuheswJTIWpprw+Mm4bElN8/
+ iSDX+FPaYT1aoOyPSANqiwEd6Ri9LqhWkb2R/as7Blw3O9x0l7YUdTvC8mc+aZvtpXGT
+ hgZg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=EwGdksgi20BRYKCVCuNf0F+Y5NNX3iBGHIlo8Hqvv+Y=;
+ fh=JBfI+04RMrp2AInPQ6otKgawYEzW5V/CT6AwJoD2GBw=;
+ b=eKUw6hue5snB0rgUdgsTkPgOLS1iUF7dYRMnvFnWumj0XaAcaUqTxUx52lL3FK+cpF
+ B4U0WEatvzorwsMErAcOyeB5h5YbYkYa9nGmsxXjXNv5xC8IN0IJ/CgHXE7YZbsZ+ciw
+ XtXtsADSRqiNZEL7I1T5rHZ/oW9ub5E4BxO64ngz5B7C7xBRHiqia1m85QQgPUTUojt1
+ X3X1QL0NBk+emgWON+OkbYfhSMY++pvesDpghBaHqiAxS4HhBWp6mQ7BP/HezbVnBqKs
+ lvFBH+Huv3vZYxV1AvAg7BsZ0/afpMZkfnL3rCIz3FtJ18WNwDhegI80dFs4K+ydDxMX
+ reOQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777465607; x=1778070407; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EwGdksgi20BRYKCVCuNf0F+Y5NNX3iBGHIlo8Hqvv+Y=;
+ b=p1/r/kkmtqIYXxBIVAe1EwAN9wEbXNXWXKrhWQs+b1ssY1kzWnrXWVCYWr/ndo2A51
+ Fja0wTtkWMbhjPhxc3dRdM8h9VlKW96mahBcG6Ix0XBvC+9705jgF37OY2XI3HFdCj0o
+ C11Jx7qZtEVnKJTs0PKs54ysV1S6eVk4OBiSPDfjrZrSqYE+qn58wOn++jL2+jlnLR8i
+ dSNDPSnBPbnlNDEjSMrJvZd1RmHeQ5LYsmsVymq7Fg2K0huTQtX/QtvvOHaUnGWKsKB/
+ KCa3x8WJv/4SuTNDCOSHJjP+AluQ24pi+ISpK4pdX7FxmvaCVkwk0LDTU33ZrA/HlOox
+ yisQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777465607; x=1778070407;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=EwGdksgi20BRYKCVCuNf0F+Y5NNX3iBGHIlo8Hqvv+Y=;
+ b=gjAStQipzeOgeTiwts31raSnSzcejSEP/6ncJsRCRppeYx/t3qk+DOf2LXjQHWzJzR
+ ZDU3pRKb9UzwtjdJ4tqh8JP4JaPwlLrzMJk7mJO5KPs+QWFNeRiBHO9xF4Vl46O3w3HM
+ bIIKFGY5zWQ8sKKThlL5KqGhlVtyb3WnyKRyBO9Jv5K9Tyz3QkmyFz/13NougGqFpoxj
+ UFIppLpNj5yDQ7cW8AW71TouXePKCNhW4RpOvIt0HL4pg2cHUIycdN8m0yZfBwa1pzvA
+ jZ91auW9PE9D9wKruvXhRDIjxIy9k1dTvJeGISiEDaiDM9mNyNk7TNdKOCSZM+ZP/klO
+ pdZg==
+X-Gm-Message-State: AOJu0YyGeHCH90vpzvhAch4oLQw0xFFF27WnM1YYWMdNxhlD+KL5r4VP
+ 4w5OhvnQXizAOXqzLm12xxbD+vKNom2y/mtOsIwvCaVYW1gjnSh2CKd0pP8g8U4rxWtdb/FXN68
+ vhCDTP0Rnum4dNBamOhQ/i/nF1GTbG3zLLyAhpwMH1A==
+X-Gm-Gg: AeBDietVno2aaU3QPr9As+xI/jkkUMomffGISZI1fjI7z1H4DcOmxd5Sw0mF801HRHb
+ 6G7FQgdFqiCzeU00csk4oJztwNrUqad1yrmTqrDGwouVw2PRN/3JMMg0kcQRw8pQbkaHFNHzll0
+ GWjt5zMJHIQNunegM7RR6xoy0y7Hg2RSdjvKWyte1zbirHN6OS6M0rkq6gLvt9NFVTGp6+PJhuz
+ JhgI24TmsY03/nnf1tw9NOI+zvTXW0tSWYEMCUL/ACObwv8CocxaEdg4RNyyPmJMBkBLnDMka/P
+ O0eLBFq96Ple9O95Y9o5W4A1IqusLAOX7tI7LKrpiDG/wzFic4qljPY8iOY8nryTdIBlesw2n1H
+ brw==
+X-Received: by 2002:a53:e1f9:0:b0:650:88fa:f716 with SMTP id
+ 956f58d0204a3-65bfb893165mr2750693d50.65.1777465607457; Wed, 29 Apr 2026
+ 05:26:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="4kXzE+PWiEmyNhhJ"
-Content-Disposition: inline
-In-Reply-To: <9b11dec1-f27c-4c69-8dfc-34ef0bdc7e8f@proxmox.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260428093339.2087081-1-peter.maydell@linaro.org>
+ <20260428093339.2087081-3-peter.maydell@linaro.org>
+ <22ce7f65-39ee-45cb-a021-ac275d036f38@linaro.org>
+In-Reply-To: <22ce7f65-39ee-45cb-a021-ac275d036f38@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 29 Apr 2026 13:26:36 +0100
+X-Gm-Features: AVHnY4JVCX6KjxR99iaIxZWBDvVmLgSRQLNyiwHMWrkbUUU8yGX0gEHpw0qFbTI
+Message-ID: <CAFEAcA8SpD+X0kLg-6kQ+TR2VSJqhtMpzQrfsOqEZE_EzfkW3Q@mail.gmail.com>
+Subject: Re: [PATCH 2/4] hw/npcm7xx_fiu: Specify .impl for
+ npcm7xx_fiu_flash_ops
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, Tyrone Ting <kfting@nuvoton.com>, 
+ Hao Wu <wuhaotsh@google.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ qemu-riscv@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,177 +126,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, 29 Apr 2026 at 08:38, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> On 28/4/26 11:33, Peter Maydell wrote:
+> > Currently npcm7xx_fiu_flash_ops provides no .impl substruct; this
+> > means that it gets the default of "implements 1, 2 and 4 byte aligned
+> > accesses".  This is more constrained than the device permits in its
+> > .valid substruct, and also narrower than the functions are written to
+> > handle.
+> >
+> > Add a .impl substruct matching the .valid substruct; this means that
+> > all guest accesses are handled directly by the read and write
+> > functions, and are never synthesized by the memory subsystem
+> > performing multiple accesses to the device (which would not behave
+> > correctly, as these read and write fucntions have side effects).
+>
+> Typo "functions".
+>
+> >
+> > Based-on-a-patch-by: CJ Chen <cjchen@igel.co.jp>
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >   hw/ssi/npcm7xx_fiu.c | 5 +++++
+> >   1 file changed, 5 insertions(+)
+> >
+> > diff --git a/hw/ssi/npcm7xx_fiu.c b/hw/ssi/npcm7xx_fiu.c
+> > index 02707de350..2d5bed005a 100644
+> > --- a/hw/ssi/npcm7xx_fiu.c
+> > +++ b/hw/ssi/npcm7xx_fiu.c
+> > @@ -250,6 +250,11 @@ static const MemoryRegionOps npcm7xx_fiu_flash_ops=
+ =3D {
+> >       .read =3D npcm7xx_fiu_flash_read,
+> >       .write =3D npcm7xx_fiu_flash_write,
+> >       .endianness =3D DEVICE_LITTLE_ENDIAN,
+> > +    .impl =3D {
+> > +        .min_access_size =3D 1,
+> > +        .max_access_size =3D 8,
+>
+> IMO this device should be adapted to have byte granularity ops handlers,
+> thus .max_access_size =3D 1.
 
---4kXzE+PWiEmyNhhJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Looking at the implementation that doesn't look like it
+would be possible. The implementation does operations
+to start an SSI transfer, then transfers the number
+of bytes written. That makes "guest does an 8 byte
+write" different from "guest does 8 separate byte writes",
+and so the read/write fns need to really handle all
+the possible access sizes.
 
-On Wed, Apr 29, 2026 at 10:00:34AM +0200, Fiona Ebner wrote:
-> Am 28.04.26 um 6:18 PM schrieb Stefan Hajnoczi:
-> > On Tue, Apr 28, 2026 at 02:10:02PM +0200, Fiona Ebner wrote:
-> >> Hi Stefan,
-> >>
-> >> Am 27.04.26 um 9:12 PM schrieb Stefan Hajnoczi:
-> >>> On Fri, Apr 24, 2026 at 12:25:41PM +0200, Fiona Ebner wrote:
-> >>>> Dear maintainers,
-> >>>>
-> >>>> since QEMU 10.2, if io_uring is enabled, it will be used for the eve=
-nt
-> >>>> loop of iothreads and this causes an IO pressure stall value of near=
-ly
-> >>>> 100 when idle.
-> >>>>
-> >>>> The issue was also reported on the kernel mailing list [0]. The
-> >>>> suggestion from Jens Axboe was to just turn off the iowait accounting
-> >>>> completely. But since (for block/file-posix.c), there is actual IO
-> >>>> submitted via the same ring, I wasn't sure if that is the right appr=
-oach.
-> >>>>
-> >>>> So the idea was to keep track of whether the event loop is otherwise
-> >>>> idle and only use the IORING_ENTER_NO_IOWAIT flag in that case [1].
-> >>>>
-> >>>> However, doing so would only help for block/file-posix.c, which subm=
-its
-> >>>> IO via luring_co_submit() -> fdmon_io_uring_add_sqe(). For example, =
-for
-> >>>> block/rbd.c, only a poll SQE for the AioHandler node's fd is used. W=
-hen
-> >>>> submitting that poll SQE in the iothread, we would need to be able to
-> >>>> know if IO for RBD is currently in-flight or not to be able to decide
-> >>>> whether to use the IORING_ENTER_NO_IOWAIT flag or not. Is there a go=
-od
-> >>>> way to do this (in a general way)?
-> >>>>
-> >>>> Or should the flag really always be used (if supported by the kernel=
-)?
-> >>>> Is there a way to tell io_uring/kernel that we are an event loop and=
- our
-> >>>> waiting should only be accounted for when there is actual IO in-flig=
-ht?
-> >>>>
-> >>>> Happy to hear your opinions and suggestions!
-> >>>>
-> >>>> [0]:
-> >>>> https://lore.kernel.org/io-uring/14bc6266-5bc9-4454-9518-d1016bfe417=
-b@proxmox.com/T/
-> >>>
-> >>> Hi Fiona,
-> >>> Jens replied yesterday confirmed your suspicion that the number of
-> >>> inflight requests is not being tracked correctly.
-> >>>
-> >>> Is there still a problem after fixing the kernel's inflight counting?=
- If
-> >>> not, then no QEMU change is necessary and that seems like the cleanest
-> >>> solution anyway. The kernel should know whether there is I/O in flight
-> >>> and so it doesn't seem right that userspace needs to hint this.
-> >>
-> >>
-> >> unfortunately, yes. Even with the kernel fix [2], the real problem with
-> >> poll SQEs described above remains. I'm still seeing high IO pressure
-> >> stall values when using QEMU. In add_poll_add_sqe(), QEMU submits poll
-> >> SQEs for the AioHandler node fd, and that does count as pending IO. A
-> >> small reproducer modeling this [3].
-> >=20
-> > Does the kernel account POLL_ADD SQEs as blocking I/O activity?
->=20
-> Apparently yes. See the C program below [3].
->=20
-> > That behavior is inconsistent if select(2)/poll(2)/epoll_wait(2)
-> > syscalls do not count as blocking I/O activity. The kernel io_uring code
-> > should account them correctly and not rely on a userspace hint.
->=20
-> @Jens Axboe: should there be a separate internal counter for
-> poll/timeout SQEs and have them not count towards IO wait by default?
-
-I wanted to add more nuance to what I wrote:
-
-As a baseline, io_uring should account IO activity in the same way as
-the traditional syscalls for those operations. However, it does seem
-like userspace hints can be useful in some cases.
-
-For example, if a server process is reading from a socket/eventfd/pipe
-waiting for an incoming request then it is not stalled by IO. However,
-if the same process makes a request to another process and is reading a
-socket/eventfd/pipe waiting for the response, then it may indeed be
-considered as waiting for IO. In other words, whether a read means the
-process is stalled waiting for IO or not depends on the application and
-the kernel doesn't know that. Userspace hints make sense in this case.
-
-I just think that in this case io_uring isn't following the IO pressure
-stall accounting of the equivalent traditional system calls and that
-seems like a gap that should be fixed in the kernel rather than
-userspace.
-
-Stefan
-
-> >=20
-> > Stefan
-> >=20
-> >>
-> >> So the question from above, how to deal with this for block drivers not
-> >> going through file-posix.c remains.
-> >>
-> >> Best Regards,
-> >> Fiona
-> >>
-> >> [2]:
-> >> https://lore.kernel.org/io-uring/b4d2aa36-8301-4e58-be3e-1451267b8c43@=
-proxmox.com/T/
-> >>
-> >> [3]:
-> >>
-> >> #include <assert.h>
-> >> #include <errno.h>
-> >> #include <stdio.h>
-> >> #include <unistd.h>
-> >> #include <liburing.h>
-> >> #include <sys/eventfd.h>
-> >>
-> >> int main(void) {
-> >>     int fd;
-> >>     int ret;
-> >>     struct io_uring ring;
-> >>     struct io_uring_sqe *sqe;
-> >>
-> >>     fd =3D eventfd(0, 0);
-> >>     assert(fd >=3D 0);
-> >>
-> >>     ret =3D io_uring_queue_init(128, &ring, 0);
-> >>     assert(ret =3D=3D 0);
-> >>
-> >>     sqe =3D io_uring_get_sqe(&ring);
-> >>     assert(sqe);
-> >>
-> >>     io_uring_prep_poll_add(sqe, fd, 1);
-> >>
-> >>     ret =3D io_uring_submit_and_wait(&ring, 1);
-> >>     printf("got ret %d\n", ret);
-> >>
-> >>     io_uring_queue_exit(&ring);
-> >>
-> >>     return 0;
-> >> }
-> >>
-> >>
->=20
->=20
-
---4kXzE+PWiEmyNhhJ
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmnx93IACgkQnKSrs4Gr
-c8gTygf+J/BGBJEjAS2FmT8zwEQoKH0HGC2SxNrAEbMKF8yAN3YkHhml74JGNbVJ
-3WEeA6lVW2lYYPDTn3Txu/YUcxHq0LiukPs2DN01y1DotEGODOEP5uev2A5QGv+A
-Lc+2CQAOzeeLjntHCTPRBDSRaRoc8EAydUuZ1zFkfKOaad4X7lvlJVt7YfdURSGo
-XmYtvlIEBDJHs8d9p9k0b3MXqH2dKUFkZkJ6FwohDTjmIKQv36R49N2KVKpb5nt5
-zQGdf81kZww77JXl2nJIFe/AgECJlbw7Xr6UkbJxerJkEW7knnayXw/uz34uav2I
-RZmctfubZ5yGH5fxHGfs3uJ/b4yBKw==
-=/gE/
------END PGP SIGNATURE-----
-
---4kXzE+PWiEmyNhhJ--
-
+thanks
+-- PMM
 
