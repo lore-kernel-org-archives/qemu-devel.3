@@ -4,80 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40BFDCCFA13
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 025A3CCFA13
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:08:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIAEa-0001ne-5w; Wed, 29 Apr 2026 15:06:08 -0400
+	id 1wIAEa-0001nN-1m; Wed, 29 Apr 2026 15:06:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wIAEY-0001mu-Pi
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wIAEY-0001mR-Gr
  for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:06:06 -0400
-Received: from p-west3-cluster3-host8-snip4-10.eps.apple.com ([57.103.72.211]
- helo=outbound.ms.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wIAEU-0000NP-AY
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wIAEW-0000Nh-GQ
  for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:06:06 -0400
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-6 (Postfix) with ESMTPS id
- BBDC718000C5; Wed, 29 Apr 2026 19:05:58 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRJB01fDl4fBBdGGVUERx5dVl4eGQJRHFYNV0NUBF9QSQxBUGxaAEcXSB1dGVlvUF0cDhhZG0AVXRFQGVYJXhUXHkFNWgJWTQVKA18BWwZCAEkKXQJYAF4LTgZeD0YKXVQXWwxaDlYwTBZDH1IPWxNNGVEBUkVUAgdYRxRHDg8TTAtHAlo0Vh9UGVoD
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1777489561; x=1780081561;
- bh=okJ5cnEaqKHvGtSWn7uQC28UhrgcqlO+u8jRZ447zdE=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=VgAXrGmd1RTg8i3p3hCpPBig9F502cQ/mJZB2JYBCI+ja2OIwaOFlfF+rnJwEDgTnmYky3bIBQC4+N/kjn7XN2PZfbZ46KzvEscj+xWzvgLm2W/S7GhQq9y9BRwpI7Fo3oE4qgPz3APP2Oc2pNJl0mc97vydaqX3XZP7dWv2o5CWOFUxp4kp3S0LZf+XMxf+v4/9jUxZvrofdjyXgMmi2q8GAnfGO3ernimcxiLAZsOKdbaKSkcnnWf5uY4L/XylxB6pfoWBdDDyk+BIlzavqgqTeKOzFtluUo+wn+pFTsWgt6TAYIPZHUv02zlaW/XunrXgtYeGY2rBrjqAL1rymA==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-6 (Postfix) with ESMTPSA id
- A0DBA18002E8; Wed, 29 Apr 2026 19:05:55 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 16F656A81A;
+ Wed, 29 Apr 2026 19:05:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1777489557; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5Q11033ixT9HAxDsw1JBkEAYwLqftpwNv4tC1cNzWxc=;
+ b=fWoIChkEdsZIGGjQyYF+d9cMjEAw+7I6okZFA8A2NMBuYbyusXkNOURG5VsSii5DZIUc1v
+ 0FH935L9kyl1hhU/ImlfwhIDQrgZAPWKfYj8baVg+rRYLWZ4R6K9GMhIm7wuy33anU4qYQ
+ G9r4x58wZGRV8uel4sETiF2qzp7uwJQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1777489557;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5Q11033ixT9HAxDsw1JBkEAYwLqftpwNv4tC1cNzWxc=;
+ b=lIOiwFlEO/SIqa/N/BLmB4/Dxsb+Mk8mzZbhahih0SC6pgzlyq7FBqGxDh+qex8A1egxxj
+ rJNK2Zqs6J6PToCg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=fWoIChkE;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=lIOiwFlE
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1777489557; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5Q11033ixT9HAxDsw1JBkEAYwLqftpwNv4tC1cNzWxc=;
+ b=fWoIChkEdsZIGGjQyYF+d9cMjEAw+7I6okZFA8A2NMBuYbyusXkNOURG5VsSii5DZIUc1v
+ 0FH935L9kyl1hhU/ImlfwhIDQrgZAPWKfYj8baVg+rRYLWZ4R6K9GMhIm7wuy33anU4qYQ
+ G9r4x58wZGRV8uel4sETiF2qzp7uwJQ=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1777489557;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5Q11033ixT9HAxDsw1JBkEAYwLqftpwNv4tC1cNzWxc=;
+ b=lIOiwFlEO/SIqa/N/BLmB4/Dxsb+Mk8mzZbhahih0SC6pgzlyq7FBqGxDh+qex8A1egxxj
+ rJNK2Zqs6J6PToCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B3317593B1;
+ Wed, 29 Apr 2026 19:05:55 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id MMhBIJNW8mm/eQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 29 Apr 2026 19:05:55 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Alexander Graf <agraf@csgraf.de>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH v21 07/15] hvf: gate ARM_FEATURE_PMU register emulation when
- using the Apple vGIC
-Date: Wed, 29 Apr 2026 21:05:24 +0200
-Message-ID: <20260429190532.26538-8-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260429190532.26538-1-mohamed@unpredictable.fr>
-References: <20260429190532.26538-1-mohamed@unpredictable.fr>
+Cc: Peter Xu <peterx@redhat.com>, marcandre.lureau@redhat.com,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH v1 2/5] tests/qtest/dbus-vmstate: Mute Glib complaints about
+ g_unsetenv thread-safety
+Date: Wed, 29 Apr 2026 16:05:47 -0300
+Message-ID: <20260429190550.20122-3-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260429190550.20122-1-farosas@suse.de>
+References: <20260429190550.20122-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=bcFmkePB c=1 sm=1 tr=0 ts=69f25698
- cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
- a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8
- a=TzKBU_9rahY9vEVlUJ4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDE5MCBTYWx0ZWRfX+BvahotabncE
- lBg+pkYd+AW5Rzfmt63auj8IxV5kcXijmSMigjf5w7ihkwSusAJGrl0yuZzQWkWfdNUgOIzI/0U
- GBvJMfUuFCaqaVqfk1aFzFIreMTnaNKQsck+OQPXGGxlbGjDxiZzFZui0qdrZcY2LJJihi3VAk+
- p18Z4k9gMCux3ym2TpcAt6odOvZDSgwcYUQP6pG95FcxilQ47mlObd9xnI4XOpBQPjQSN8aQqL2
- PurW2yL2uGZwIP+HD4HobxH7anyN6izH2YgbdKpgKckPlCH5+xdQow4pPCt3KzvP79VIi/wWEA+
- R856341yxTFhJS/YgHANn/GpxiOv3QjTrJBDRfyxYm69ZsqrVQsti8yld8f8O4=
-X-Proofpoint-GUID: P_1tUE1L_zcqw_geOAwAWCtloDsnZgfZ
-X-Proofpoint-ORIG-GUID: P_1tUE1L_zcqw_geOAwAWCtloDsnZgfZ
-Received-SPF: pass client-ip=57.103.72.211;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ ARC_NA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email,gnome.org:url];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 16F656A81A
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,51 +131,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From Apple documentation:
+TLDR: GLib is bugged, the dbus-vmstate-test spams debug messages
+unconditionally. Mute them.
 
-> When EL2 is disabled, PMU register accesses trigger "Trapped MSR, MRS, or
-> System Instruction" exceptions. When this happens, hv_vcpu_run() returns, and the
->  hv_vcpu_exit_t object contains the information about this exception.
+GLib is trying to protect against the lack of thread-safety of
+setenv/unsetsenv functions by warning when those functions were
+invoked after a thread has been started.
+https://gitlab.gnome.org/GNOME/glib/issues/715
 
-> When EL2 is enabled, the handling of PMU register accesses is determined by the PMUVer
-> field of ID_AA64DFR0_EL1 register.
-> If the PMUVer field value is zero or is invalid, PMU register accesses generate "Undefined"
-> exceptions, which are sent to the guest.
-> If the PMUVer field value is non-zero and valid, PMU register accesses are emulated by the framework.
-> The ID_AA64DFR0_EL1 register can be modified via hv_vcpu_set_sys_reg API.
+Unfortunately:
+1) GLib itself starts a thread pool via _g_dbus_initialize when
+working around a bug in its type dependency chain. This happens in
+many places, but the test triggers it via
+g_dbus_address_get_for_bus_sync.
+https://bugzilla.gnome.org/show_bug.cgi?id=627724
 
-However, despite what that documentation says this is actually gated on using the Apple vGIC
-instead of nested virtualisation per se. Apple introduced both at the same time.
+2) GLib itself calls g_unsetenv after the test calls g_test_dbus_up.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+3) The debug message at g_unsetenv is issued to the G_LOG_DOMAIN
+defined while compiling the library, i.e "GLib", but this domain is
+never initialized, so the log functions go into a fallback chain that
+results in ignoring the G_MESSAGES_DEBUG environment variable, causing
+the debug messages to not be suppressed when they should.
+
+Mute the messages by implementing a handler for G_LOG_LEVEL_DEBUG
+in the "GLib" log domain and honoring G_MESSAGES_DEBUG.
+
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- target/arm/hvf/hvf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tests/qtest/dbus-vmstate-test.c | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index fa0a22fdc3..9d64f2e1a5 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1601,7 +1601,7 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
-     ARMCPU *arm_cpu = ARM_CPU(cpu);
-     CPUARMState *env = &arm_cpu->env;
+diff --git a/tests/qtest/dbus-vmstate-test.c b/tests/qtest/dbus-vmstate-test.c
+index 90c050b448..51c5fdb995 100644
+--- a/tests/qtest/dbus-vmstate-test.c
++++ b/tests/qtest/dbus-vmstate-test.c
+@@ -357,12 +357,33 @@ test_dbus_vmstate_missing_dst(char *name, MigrateCommon *args)
+     g_test_trap_assert_passed();
+ }
  
--    if (arm_feature(env, ARM_FEATURE_PMU)) {
-+    if (!hvf_irqchip_in_kernel() && arm_feature(env, ARM_FEATURE_PMU)) {
-         switch (reg) {
-         case SYSREG_PMCR_EL0:
-             *val = env->cp15.c9_pmcr;
-@@ -1862,7 +1862,7 @@ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
-                            SYSREG_OP2(reg),
-                            val);
++static void log_func(const gchar *log_domain, GLogLevelFlags log_level,
++                     const gchar *message, gpointer user_data)
++{
++    const gchar *domains;
++
++    assert(log_level & G_LOG_LEVEL_DEBUG);
++
++    domains = getenv("G_MESSAGES_DEBUG");
++    if (!domains || (!strstr(domains, "GLib") && !strstr(domains, "all"))) {
++        return;
++    }
++    g_log_default_handler("GLib", G_LOG_LEVEL_DEBUG, message, NULL);
++}
++
+ int
+ main(int argc, char **argv)
+ {
+     GError *err = NULL;
+     int ret;
  
--    if (arm_feature(env, ARM_FEATURE_PMU)) {
-+    if (!hvf_irqchip_in_kernel() && arm_feature(env, ARM_FEATURE_PMU)) {
-         switch (reg) {
-         case SYSREG_PMCCNTR_EL0:
-             pmu_op_start(env);
++    /*
++     * GLib currently emits debug messages that ignore
++     * G_MESSAGES_DEBUG. Set a custom log handler to work around the
++     * issue.
++     */
++    g_log_set_handler("GLib", G_LOG_LEVEL_DEBUG, log_func, NULL);
++
+     g_test_init(&argc, &argv, NULL);
+ 
+     workdir = g_dir_make_tmp("dbus-vmstate-test-XXXXXX", &err);
 -- 
-2.50.1 (Apple Git-155)
+2.51.0
 
 
