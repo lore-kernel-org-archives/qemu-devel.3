@@ -4,117 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2AF6FF8867
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 14:27:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 833EDFF8873
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 14:27:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI5sF-0005Wg-Qd; Wed, 29 Apr 2026 10:26:47 -0400
+	id 1wI5sL-0005Y6-Ru; Wed, 29 Apr 2026 10:26:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wI5s8-0005WS-3y
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:26:41 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wI5s9-0005WZ-Po
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:26:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wI5s5-0003Pw-VX
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:26:39 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63TBe7Bu3687580; Wed, 29 Apr 2026 14:26:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=3cm18s
- sFXL6ZOsd3CEhC3VWk352lIBOoYXV2K9KGCb4=; b=PTrFoxRGGyeyXF272tOFna
- EY3mH3mMl8hPDxp6fG1iy1b8qkniOrOdLMCFek4TwJmvGEY0WmNAq9B+RRxp0jSd
- QB95iEwB0vb5JJTmpnx2tKlJuabl6yv5c81Ge8uxiCjatHjyzQuEf35ukZZEnDdT
- 7CzUF9/mOxc7PvK7BoeSPpiYsPPxOZpcCjrXuknrlpx6qNzqI9Ffst5f4S+Db95D
- 8af2vAl9PcqDqgmxFfSj4pPgI760NkaABRxuHEFnR1J02JeKUnq4L6PBPXTzzCfO
- 7nZro0BbyijN9csj74cxlIvu19HWoWcIwWzkp0uTK773m6xD6Y5YivOfs495z4hw
+ (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
+ id 1wI5s6-0003Qo-8p
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:26:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777472797;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aQGapfFhm+VascVMXlY9hzfYSzdFZRqW36R/ebjTCYw=;
+ b=VTlV0QTwx6TI0HOZllh7mf52zjjCv9xpZdPcFTAFTXr1uIFaNZSkZ0jtu12lJR0eAzhT1c
+ +HtWwsgkb5iotgjRmRKnaJh4RX0G0BUWkdAubkVLOg9jEwCoJJqbnqlVhryDClVhvqcQxW
+ 99WezaGrgnwIgYqYxyE3P1sg+GRTxhE=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-136-XfA8HDZMN1uKIpijmfBpzw-1; Wed, 29 Apr 2026 10:26:35 -0400
+X-MC-Unique: XfA8HDZMN1uKIpijmfBpzw-1
+X-Mimecast-MFC-AGG-ID: XfA8HDZMN1uKIpijmfBpzw_1777472794
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-488d56f87e8so96368145e9.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 07:26:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1777472794; x=1778077594; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=aQGapfFhm+VascVMXlY9hzfYSzdFZRqW36R/ebjTCYw=;
+ b=JK4QzJBoj/SHZRUFdrQzIbaj4jG+/ga/cZzOiKKesTlwEqI170RWQTruyCQuxdnuoQ
+ hGzy9DnmNwfK7duwYYijXNQ3qWYeV3gVti+txuTIMnGz5aurH8cn0fud+He0Kb7MFuNZ
+ DaUkWhZnSq1QV1MeRmyNv4CoiMjVBkQemKV8wR9UIol2Y807pOnebX1D54fxjrBJfHB0
+ ah0aTSt0Xo3NUJq1uf95+diW8Rli2ljY0TTFVjmIS533T9FKgS2SYxuBoH7QfuBoKOuw
+ pvKgn/ddZKuBkNpjmLNb3YCS5yOWV+gb4jj4emSHtL7k2/eAZxI5eg0QsKmEodahOJjI
+ Z9dw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777472794; x=1778077594;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=aQGapfFhm+VascVMXlY9hzfYSzdFZRqW36R/ebjTCYw=;
+ b=g1P+pdfQi2+jdIfuOz14Vbp5TJwLogv+Q0FUz7UFVPjMqG9CoZB7l8bWEqDv2hfhq3
+ BOW4Xau4xJxRwFsBSNN2RzeZfnQccDhuR0bwSE4mu5dTr7mQQb9OBvayIeHOJjMqtG+w
+ aAHy8V97nO5jXXSNDCEbfqVyf4vqVv44X/DIZgAN8Ai3UxCwdSvSD7FDIsDzTBiJz8rP
+ EWD0MUSCYFf83VG/M6tRWr6BrPK0TvNOotrHEpiqWq/IOL/lSZWK6lSj28FPCv2o0Ry8
+ iV12M5ZjmngcBnyG5ZbmdzRtSC+WFGh4rVxNoM5av/QG3MyeziNOwYXNflzX/fF+2q0U
+ T9pg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8ioIj1CfHwELFJri66HsW++U+fZnj7ATbp1iLW1CagSEhSdzPsdizAaQKwg6ruNlU4C5R9bIKm9K59@nongnu.org
+X-Gm-Message-State: AOJu0YwE2ZsLSG5kSRQWcVsZNzinDtJZ+B+9FvMzEAyzWg64qs48GS7h
+ ynckXCxpPQ+Dz0LiBnu824rZIz4TVG2XgIeJedgVPwFnRQsattysJ4y9DYEyb+GjHDPqcaNgJWl
+ H0CdGxOt7J9VJpLoiEXkprlHxZF3StSYNbwR4I3W+fA1mui/dDgius5jc
+X-Gm-Gg: AeBDiet43Mckp2G2zLQhFAxm8bNpEcmdgsTJsvh7k+8c+46GuD4FkjmCSBx9w0Eg27W
+ loK9zCkTO6kF0fjr0IiBOHqAqQ5lQrE366lESCwK2foTyeeEgN2iYtvOEtOmIJrPC1WsM/7eu4X
+ ItSaIALBD48BArHYdKnYQJQ1m1Nu64ZHk5WTds4e33S00nCoBD8Ue9Pk3zV6FkpIL3x5ISna/nB
+ blEkNU5NZ2Sf/ChcGk4xwSV8m2DzyJgKKZWFYsobESqsP21gYhhrogCnnfXnyAz0TL1T/AlRUuW
+ 3eoZnG7Cl77ZupXE4ostgMgvpkt2FGTzx6rWPSvbCmz5W8f72VdfgYmMnUA+PuuiJFToe0Nx8Zm
+ Zw7m6cB2kpG9irzUoHV1Omr8n/97e+j5ICTdXNew/3/6hjAFuwFrWgs5PHjRaHEGK2ORD+A5oJA
  ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drm1e1gx7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Apr 2026 14:26:27 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63TENojq008047;
- Wed, 29 Apr 2026 14:26:26 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ds8xk6n0a-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 29 Apr 2026 14:26:26 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63TEQQEw6095434
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 29 Apr 2026 14:26:26 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 383C158054;
- Wed, 29 Apr 2026 14:26:26 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9D16A5804E;
- Wed, 29 Apr 2026 14:26:24 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 29 Apr 2026 14:26:24 +0000 (GMT)
-Message-ID: <a0ae9f3e-3124-42c4-937a-bbf23e7d6625@linux.ibm.com>
-Date: Wed, 29 Apr 2026 10:26:23 -0400
+X-Received: by 2002:a05:600c:3b0f:b0:489:1c32:210d with SMTP id
+ 5b1f17b1804b1-48a77b0a507mr122008055e9.15.1777472793591; 
+ Wed, 29 Apr 2026 07:26:33 -0700 (PDT)
+X-Received: by 2002:a05:600c:3b0f:b0:489:1c32:210d with SMTP id
+ 5b1f17b1804b1-48a77b0a507mr122007615e9.15.1777472793131; 
+ Wed, 29 Apr 2026 07:26:33 -0700 (PDT)
+Received: from sgarzare-redhat (host-87-11-6-2.retail.telecomitalia.it.
+ [87.11.6.2]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a7b92adefsm30673255e9.3.2026.04.29.07.26.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Apr 2026 07:26:32 -0700 (PDT)
+Date: Wed, 29 Apr 2026 16:26:24 +0200
+From: Stefano Garzarella <sgarzare@redhat.com>
+To: Jorge Moreira <jemoreira@google.com>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, hreitz@redhat.com, 
+ gmaglione@redhat.com, "Michael S . Tsirkin" <mst@redhat.com>, 
+ Hanna Czenczek <xanclic@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] vhost-user.rst: Explicitly allow front-end to write to
+ kick FDs
+Message-ID: <afITtroWfjUkyCaR@sgarzare-redhat>
+References: <20260420181818.GC405461@fedora>
+ <CAJi--PPzd_fqcsBU-aA11624apoKTtEW6GTKE3_OyZ4SJ90DzA@mail.gmail.com>
+ <20260421211237.GC466778@fedora>
+ <CAJi--PP6gsR5E7RtQ_RwV8fG9Xivk0fXTfNxWuZ6cX+uWBPV=A@mail.gmail.com>
+ <CAGxU2F7UJhbikjFKMgMcFenFx35vmic-hj4pFm7vM0-gk-nCyg@mail.gmail.com>
+ <CAJi--PNoJmei-076Y5geaft98w-nB3OFK2e093EWkN+ZTaQK1Q@mail.gmail.com>
+ <20260427224545.GH218226@fedora>
+ <CAJi--PPPVc3-z8G3E_qucWhE4bn7hdKYJK4iOcP0Db4tUAw8zQ@mail.gmail.com>
+ <afDClLiylMgvPiUn@sgarzare-redhat>
+ <CAJi--PMNCY26wqJiRw1xnAZVvOQUajcz534ocVhQx_Ox4u8GHg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 05/10] test/qtest: Add test for tpm crb chunking
-To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Igor Mammedov <imammedo@redhat.com>, marcandre.lureau@redhat.com,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>, Ani Sinha <anisinha@redhat.com>
-References: <20260422103018.123608-1-armenon@redhat.com>
- <20260422103018.123608-6-armenon@redhat.com>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <20260422103018.123608-6-armenon@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: N3_EjlmBK9Qi_iuPeQ3yrMLTN7nv4TYe
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDE0NSBTYWx0ZWRfX26LQPRxQNA4a
- WHsF99SsnUXuvhtO1Cs+X5ms1fLTT/l6pH3YaWEB58HbkwKgLqoId/gYfHhzH9wr2FY2SFZD/uc
- 92rDli64RXW2obgoixaAH23WAHtXMFhe30tZCj7Jf98Zz0CXm/Lu3xFvt1UTRQFqDivV+Yy9GBi
- db+3wb/iKqOb3fsVZ87y6kNpyR9CPe4sv2ULh2vINVKxtAJ6gCDvTsSVgncfRjfmOu3yRg4gxL9
- TNTB8swTbNVTCSXbaubSc8LAt972OhJk3V85l/JhIL4lzDg2Iu6/nZQMmV14NE2USNm8TrBySAa
- Xg8zAe91KjWXpCSRXtBZLDugQiPOpXhwkdmEhuWgw3b/sbVq4P2hhrtDPyNe7mEzIP+gzZeHBNL
- ZaNBeWHXfnHfpk/11bHEiEr0eqH33qxp09bf8SqLpqstJKHeZcTQSAnMPzryC0YplG7gVc3Veyb
- ihETgJhvoazWD2vC3Cg==
-X-Authority-Analysis: v=2.4 cv=VZLH+lp9 c=1 sm=1 tr=0 ts=69f21513 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=WVLlgutBtSRJ_CmmLvwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: 2nZ1B1XOcuCGDKSZw2l77U-DLn_iBPS1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-28_05,2026-04-28_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 suspectscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
- spamscore=0 malwarescore=0 bulkscore=0 priorityscore=1501 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604290145
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+In-Reply-To: <CAJi--PMNCY26wqJiRw1xnAZVvOQUajcz534ocVhQx_Ox4u8GHg@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=sgarzare@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,220 +135,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Apr 28, 2026 at 10:19:30AM -0700, Jorge Moreira wrote:
+>On Tue, Apr 28, 2026 at 7:33 AM Stefano Garzarella <sgarzare@redhat.com> wrote:
+>>
+>> On Mon, Apr 27, 2026 at 03:48:44PM -0700, Jorge Moreira wrote:
+>> >On Mon, Apr 27, 2026 at 3:45 PM Stefan Hajnoczi <stefanha@redhat.com> wrote:
+>> >>
+>> >> On Wed, Apr 22, 2026 at 12:20:52PM -0700, Jorge Moreira wrote:
+>> >> > On Wed, Apr 22, 2026 at 1:32 AM Stefano Garzarella <sgarzare@redhat.com> wrote:
+>> >> > >
+>> >> > > On Wed, 22 Apr 2026 at 03:16, Jorge Moreira <jemoreira@google.com> wrote:
+>> >> > > >
+>> >> > > > On Tue, Apr 21, 2026 at 2:12 PM Stefan Hajnoczi <stefanha@redhat.com> wrote:
+>> >> > > > >
+>> >> > > > > On Mon, Apr 20, 2026 at 05:48:13PM -0700, Jorge Moreira wrote:
+>> >> > > > > > While starting the vrings on SET_VRING_KICK could solve the state
+>> >> > > > > > machine issue, it still won't notify the back-end that buffers are
+>> >> > > > > > ready (the driver won't do this). Non-polling back-ends depend on this
+>> >> > > > > > kick, especially for queues where data flows only from the driver to
+>> >> > > > > > the back-end. Most implementations likely attempt to read from the
+>> >> > > > > > queue only after receiving the kick.
+>> >> > > > >
+>> >> > > > > This is an interesting question to clarify in the spec.
+>> >> > >
+>> >> > > Yep, which is in part related to what I wrote in the other reply:
+>> >> > > "I think the main issue to clarify is what the device should do
+>> >> > > when the vrings are configured, but the driver has already been
+>> >> > > initialized (which is usually the case after migration)."
+>> >> > >
+>> >> > > > >
+>> >> > > > > Stefan
+>> >> > > >
+>> >> > > > This is the question that interests me most, to be honest. I'd rather
+>> >> > > > have the discussion about when to activate the vrings in a different
+>> >> > > > thread and keep this one focused on whether the front-end should send
+>> >> > > > the kick or if the back-end is expected to check if there are "new"
+>> >> > > > buffers in the vring after restore.
+>> >> > > >
+>> >> > >
+>> >> > > IMO we don't need anything from the VMM. When the device receives
+>> >> > > SET_VRING_KICK, it can check if the vring already contains buffers
+>> >> > > (and this is the part we might need to clarify) and wake-up the other
+>> >> > > threads (or always wake-ups them, as crosvm does IIUC, and let them
+>> >> > > perform this check).
+>> >> > > After sending the SET_VRING_KICK message to the device, the VMM has
+>> >> > > the exact same knowledge of the vring state as the device, therefore,
+>> >> > > it's still unclear to me why we need to inject that kick.
+>> >> > >
+>> >> > > Stefano
+>> >> > >
+>> >> >
+>> >> > Is it possible to activate a vring after it has been deactivated with
+>> >> > VHOST_USER_GET_VRING_BASE? If yes, does the front-end need to send the
+>> >> > kick file descriptor again with VHOST_USER_SET_VRING_KICK to
+>> >> > reactivate it?
+>> >>
+>> >> Hi Jorge and Stefano,
+>> >> Yes, VHOST_USER_GET_VRING_BASE -> VHOST_USER_SET_VRING_KICK occurs when
+>> >> a VM is paused and then resumed.
+>> >>
+>> >> You can stress test this by driving I/O using iperf (virtio-net) or fio
+>> >> (virtio-blk) inside the guest and sending 'stop'/'cont' commands to
+>> >> QEMU's monitor.
+>> >>
+>> >> Here is QEMU's code for starting (including re-starting) rings:
+>> >> https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost.c?ref_type=heads#L1341
+>> >>
+>> >> QEMU does not inject a kick. The back-end must check the rings itself.
+>> >>
+>> >> I'm not sure that all vhost-user back-ends actually check the rings. I
+>> >> think back-ends should do it, but we should also update the spec with an
+>> >> front-end implementation note recommending injecting a kick after
+>> >> VHOST_USER_SET_VRING_KICK completes in order to maximize compatibility
+>>
+>> Okay, but since, as we've seen, no frontend currently implements this,
+>> we need to make it clear that a backend shouldn't necessarily expect the
+>> kick injected from every frontend, but should support it in some way
+>> since some of them can inject it.
+>>
+>> IMHO especially new backend implementations shouldn't rely on the kick
+>> injection.
+>>
+>> So, to summarize:
+>> - the frontend should also send a kick to restart the queues
+>> - the backend should restart the queues after VHOST_USER_SET_VRING_KICK,
+>>    but it might also receive a kick
+>>
+>> >> with implementations that follow the current spec wording. And at the
+>> >> same time I think the spec should also be changed to say that
+>> >> VHOST_USER_SET_VRING_KICK starts the ring and back-ends SHOULD check the
+>> >> vring upon processing the message.
+>>
+>> Yep, I think we are aligned.
+>>
+>> >>
+>> >> That seems like it would clean up the issues without introducing
+>> >> compatibility issues or making existing implementations non-compliant
+>> >> with the updated spec.
+>> >>
+>> >> What do you think?
+>>
+>> LGTM!
+>>
+>> >
+>> >Sounds good to me
+>> >
+>>
+>> @Jorge do you want to propose this change?
+>
+>You have a much better idea of where and how this should be written,
+>it will save us a few rounds of review if one of you makes that
+>change.
 
+Okay, I can try, but next week.
 
-On 4/22/26 6:30 AM, Arun Menon wrote:
-> From: Arun Menon <armenon@redhat.com>
-> 
-> - New test case added to the swtpm test. Data is written and read from
->    the buffer in chunks.
-> - The chunk size is dynamically calculated by reading the
->    CRB_CTRL_CMD_SIZE address. This can be changed manually to test.
-> - Add a helper function tpm_wait_till_bit_clear()
-> - Note that this commit does not yet exercise the chunked read/write
->    logic, as current transfer sizes remain small. Testing for large
->    transfers is introduced in a subsequent patch: 'tests: Use ML-DSA-87
->    operations to cause large TPM transfers with CRB'
-> 
-> Signed-off-by: Arun Menon <armenon@redhat.com>
-> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> ---
->   tests/qtest/tpm-crb-swtpm-test.c |  10 +++
->   tests/qtest/tpm-util.c           | 110 ++++++++++++++++++++++++++-----
->   tests/qtest/tpm-util.h           |   5 ++
->   3 files changed, 110 insertions(+), 15 deletions(-)
-> 
-> diff --git a/tests/qtest/tpm-crb-swtpm-test.c b/tests/qtest/tpm-crb-swtpm-test.c
-> index ffeb1c396b..050c7b0c1f 100644
-> --- a/tests/qtest/tpm-crb-swtpm-test.c
-> +++ b/tests/qtest/tpm-crb-swtpm-test.c
-> @@ -33,6 +33,14 @@ static void tpm_crb_swtpm_test(const void *data)
->                           "tpm-crb", NULL);
->   }
->   
-> +static void tpm_crb_chunk_swtpm_test(const void *data)
-> +{
-> +    const TestState *ts = data;
-> +
-> +    tpm_test_swtpm_test(ts->src_tpm_path, tpm_util_crb_chunk_transfer,
-> +                        "tpm-crb", NULL);
-> +}
-> +
->   static void tpm_crb_swtpm_migration_test(const void *data)
->   {
->       const TestState *ts = data;
-> @@ -54,6 +62,8 @@ int main(int argc, char **argv)
->       g_test_init(&argc, &argv, NULL);
->   
->       qtest_add_data_func("/tpm/crb-swtpm/test", &ts, tpm_crb_swtpm_test);
-> +    qtest_add_data_func("/tpm/crb-chunk-swtpm/test", &ts,
-> +                        tpm_crb_chunk_swtpm_test);
->       qtest_add_data_func("/tpm/crb-swtpm-migration/test", &ts,
->                           tpm_crb_swtpm_migration_test);
->       ret = g_test_run();
-> diff --git a/tests/qtest/tpm-util.c b/tests/qtest/tpm-util.c
-> index 2cb2dd4796..744592763f 100644
-> --- a/tests/qtest/tpm-util.c
-> +++ b/tests/qtest/tpm-util.c
-> @@ -14,16 +14,44 @@
->   
->   #include "qemu/osdep.h"
->   #include <glib/gstdio.h>
-> +#include "qemu/bswap.h"
->   
->   #include "hw/acpi/tpm.h"
->   #include "libqtest.h"
->   #include "tpm-util.h"
->   #include "qobject/qdict.h"
->   
-> +#define CRB_ADDR_START (TPM_CRB_ADDR_BASE + A_CRB_CTRL_START)
-> +#define CRB_ADDR_CTRL_STS (TPM_CRB_ADDR_BASE + A_CRB_CTRL_STS)
-> +#define CRB_ADDR_CTRL_CMD_SIZE \
-> +    (TPM_CRB_ADDR_BASE + A_CRB_CTRL_CMD_SIZE)
-> +
-> +#define CRB_START_INVOKE  (1 << 0)
-> +#define CRB_START_RSP_RETRY (1 << 1)
-> +#define CRB_START_NEXT_CHUNK (1 << 2)
-> +
-> +void tpm_wait_till_bit_clear(QTestState *s, uint64_t addr, uint32_t mask)
-> +{
-> +    uint32_t sts;
-> +    uint64_t end_time = g_get_monotonic_time() + 5 * G_TIME_SPAN_SECOND;
-> +
-> +    while (true) {
-> +        sts = qtest_readl(s, addr);
-> +        if ((sts & mask) == 0) {
-> +            break;
-> +        }
-> +        if (g_get_monotonic_time() >= end_time) {
-> +            g_assert_cmphex(sts & mask, ==, 0);
-> +            break;
-> +        }
-> +    }
-> +}
-> +
->   void tpm_util_crb_transfer(QTestState *s,
->                              const unsigned char *req, size_t req_size,
->                              unsigned char *rsp, size_t rsp_size)
->   {
-> +    uint32_t tpm_sts;
->       uint64_t caddr = qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_CMD_LADDR);
->       uint64_t raddr = qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_RSP_ADDR);
->   
-> @@ -31,24 +59,76 @@ void tpm_util_crb_transfer(QTestState *s,
->   
->       qtest_memwrite(s, caddr, req, req_size);
->   
-> -    uint32_t sts, start = 1;
-> -    uint64_t end_time = g_get_monotonic_time() + 5 * G_TIME_SPAN_SECOND;
-> -    qtest_writel(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_START, start);
-> -    while (true) {
-> -        start = qtest_readl(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_START);
-> -        if ((start & 1) == 0) {
-> -            break;
-> +    qtest_writel(s, CRB_ADDR_START, CRB_START_INVOKE);
-> +    tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_INVOKE);
-> +
-> +    tpm_sts = qtest_readl(s, CRB_ADDR_CTRL_STS);
-> +    g_assert_cmpint(tpm_sts & 1, ==, 0);
-> +
-> +    qtest_memread(s, raddr, rsp, rsp_size);
-> +}
-> +
-> +void tpm_util_crb_chunk_transfer(QTestState *s,
-> +                                 const unsigned char *req, size_t req_size,
-> +                                 unsigned char *rsp, size_t rsp_size)
-> +{
-> +    uint32_t tpm_sts;
-> +    size_t chunk_size;
-> +
-> +    uint64_t caddr = qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_CMD_LADDR);
-> +    uint64_t raddr = qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_RSP_ADDR);
-> +    uint32_t crb_ctrl_cmd_size = qtest_readl(s, CRB_ADDR_CTRL_CMD_SIZE);
-> +
-> +    chunk_size = crb_ctrl_cmd_size;
-> +
-> +    qtest_writeb(s, TPM_CRB_ADDR_BASE + A_CRB_LOC_CTRL, 1);
-> +
-> +    for (size_t i = 0; i < req_size; i += chunk_size) {
-> +        bool last_chunk = false;
-> +        size_t current_chunk_size = chunk_size;
-> +
-> +        if (i + chunk_size > req_size) {
-> +            last_chunk = true;
-> +            current_chunk_size = req_size - i;
->           }
-> -        if (g_get_monotonic_time() >= end_time) {
-> -            break;
-> +
-> +        qtest_memwrite(s, caddr, req + i, current_chunk_size);
-> +
-> +        if (last_chunk) {
-> +            qtest_writel(s, CRB_ADDR_START, CRB_START_INVOKE);
-> +            tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_INVOKE);
-> +        } else {
-> +            qtest_writel(s, CRB_ADDR_START, CRB_START_NEXT_CHUNK);
-> +            tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_NEXT_CHUNK);
->           }
-> -    };
-> -    start = qtest_readl(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_START);
-> -    g_assert_cmpint(start & 1, ==, 0);
-> -    sts = qtest_readl(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_STS);
-> -    g_assert_cmpint(sts & 1, ==, 0);
-> +    }
-> +    tpm_sts = qtest_readl(s, CRB_ADDR_CTRL_STS);
-> +    g_assert_cmpint(tpm_sts & 1, ==, 0);
->   
-> -    qtest_memread(s, raddr, rsp, rsp_size);
-> +    /*
-> +     * Read response in chunks
-> +     */
-> +
-> +    unsigned char header[10];
-> +    uint32_t actual_response_size = 0;
-> +
-> +    qtest_memread(s, raddr, header, sizeof(header));
-> +    actual_response_size = ldl_be_p(&header[2]);
-> +
-> +    if (actual_response_size > rsp_size) {
-> +        actual_response_size = rsp_size;
-> +    }
-> +
-> +    for (size_t i = 0; i < actual_response_size; i += chunk_size) {
-> +        size_t to_read = i + chunk_size > actual_response_size
-> +                       ? actual_response_size - i
-> +                       : chunk_size;
-> +        if (i > 0) {
-> +            qtest_writel(s, CRB_ADDR_START, CRB_START_NEXT_CHUNK);
-> +            tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_NEXT_CHUNK);
-> +        }
-> +        qtest_memread(s, raddr, rsp + i, to_read);
-> +    }
->   }
->   
->   void tpm_util_startup(QTestState *s, tx_func *tx)
-> diff --git a/tests/qtest/tpm-util.h b/tests/qtest/tpm-util.h
-> index 0cb28dd6e5..681544e7d8 100644
-> --- a/tests/qtest/tpm-util.h
-> +++ b/tests/qtest/tpm-util.h
-> @@ -24,10 +24,15 @@ typedef void (tx_func)(QTestState *s,
->                          const unsigned char *req, size_t req_size,
->                          unsigned char *rsp, size_t rsp_size);
->   
-> +void tpm_wait_till_bit_clear(QTestState *s, uint64_t addr, uint32_t mask);
->   void tpm_util_crb_transfer(QTestState *s,
->                              const unsigned char *req, size_t req_size,
->                              unsigned char *rsp, size_t rsp_size);
->   
-> +void tpm_util_crb_chunk_transfer(QTestState *s,
-> +                                 const unsigned char *req, size_t req_size,
-> +                                 unsigned char *rsp, size_t rsp_size);
-> +
->   void tpm_util_startup(QTestState *s, tx_func *tx);
->   void tpm_util_pcrextend(QTestState *s, tx_func *tx);
->   void tpm_util_pcrread(QTestState *s, tx_func *tx,
-
-
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Thanks,
+Stefano
 
 
