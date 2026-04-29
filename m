@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1999DFF8867
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20494CCFA13
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 14:48:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI6CG-0005C3-Il; Wed, 29 Apr 2026 10:47:28 -0400
+	id 1wI6Bm-0004SV-BG; Wed, 29 Apr 2026 10:46:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6C9-0004qM-9j
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:47:21 -0400
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bk-0004Rt-90
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:46:56 -0400
+Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6C4-0004fz-8z
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:47:17 -0400
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-7dea1272943so943393a34.0
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 07:47:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bh-0004Xo-N4
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:46:56 -0400
+Received: by mail-oo1-xc35.google.com with SMTP id
+ 006d021491bc7-6966f99716fso259043eaf.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 07:46:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777474035; x=1778078835;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777474012; x=1778078812;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=BIEcMXAa7oyuBcQ1J23D6kVpY/4XNgxRO50EvsP93+M=;
- b=l0OD4eOGXTsvfRqxJ9Y0Axz7LOJ34L+Jf4Xu1e51qQn9Z6DoMdY6XPjltTkqfPX5K5
- SpjfPW+G5FhKrcm7DSkXLvea/mvD8kc2Z7wYy5BIxuFHwlyaNDWzLWlMm/JVHxG5VLZp
- 68WSYmbUWDGf5E9TqzT4xdnOpMyK1fRia3/y1HnB9iaOhC9Nx+7OhtwLpWEoTI20UAKN
- NzgfWbp3KS8zDWQtK5g9Cpsy5cSLjU4eKcCdPTFEsP+6uG0tLvAVGqycw0T6lW/IDrQR
- gJpHXnAVAuf64c2Sg61dWVUueSTABGVP9EbhU6X+o4ltP9gIdngJUNc1HzHPpFsRZ6tw
- acbA==
+ :reply-to; bh=BTe/D/bvROg9C7EiZvO4+y9jfPH29sCoFwKyN55BCew=;
+ b=yaTOsuJP0UjzsM5twTsYHaFB5soSA0GSEc9mVronp/21iJ8lbBX2CNGspwzeYjO14r
+ k91uyjsWQVyrZhw/4ZffyTxm627PjxKz6xa5JNH+YcC5afa66vIy4qMcE9bhpEzvGFyf
+ rN2KwzLlOuQiCoO+opnGHUqCheYQObUIIpgTZbOThUrXaGY8gqRuIPW1G+RtNeFr1apI
+ MQfv00GJG2R6BHVMXZydPkcli4sK6/PiSiNP7ocDnzIGZYKwetusAHoPBfLkKyTp5XWX
+ wzaoCW2pGP6mtYAtevw42YY8xwa9VYrDDusoAoXRzlDL1C0MW/TkFbiiEqwLYuCjChG+
+ CfcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777474035; x=1778078835;
+ d=1e100.net; s=20251104; t=1777474012; x=1778078812;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=BIEcMXAa7oyuBcQ1J23D6kVpY/4XNgxRO50EvsP93+M=;
- b=URVgyCcd3kYFOeWAAhzY9fua/kpStosNn+8q0FiemuxPe3FClCBZQhB2OEoddv932N
- bykkBNJXmXuwJLz7h0HS1c77RDCyTW30WgNQ2Do5E3UuC5xUc7/ZsOZw9/NrJAw2JyEa
- AIeOJTtaf1kndVbG1QWtfXyI7TinwIlOLzRmQjEqe+CawK+CevNfiovN2H7bfXY/P8hl
- uH1PBiwgnKT1ZakELJAXj0hyRvLQxFwldpz9W+O7pQ0nxbWZYnxfKQ5f2QIixF3HpEPT
- hhkZpX8KroViDPbXK9g6ez0jetQnCUSAVNLzOvhtBsY5uQX9dBlyQTtyJjaagsUsDjrF
- 7oRg==
-X-Gm-Message-State: AOJu0YwKvGKO67YZ4iIKfaQuhWyT/kXO11Ql2sbHn0tl+6bLmDJ1izoG
- ctLiZso00GLrqjV6CyTGC30deiOywNQvwa6WmVpp35/02BOa69o+fk6qdQt/BlMvdRw=
-X-Gm-Gg: AeBDieuhQblR58j9tWefynWbiKVSrw0bMfLbrU5vV1Y5xa6hvt1iphNXrobm/vvE7LJ
- ozekIkmUMi7urEomrxK11Q6sw6My9CmxdwW+HsjDqeCPkc5pmOnaQTedkkierZUoyREmQOflUyb
- BM3hm0WLO1Pojnfz8XqznHhGYnH7a83eYLufVJ/8j01v6lm65o9FwpHkzvVWiUPfrOb9RArEmZk
- cBuYKWlvpmeUqFXtA8ODyVRNLXBoSX8uq2LbEgvmR2pjD6Yh+FKjlgVuQU/4ZWg2Xl9J0U0zytO
- pNFvQ1FjMJ2nWPM2qGg6cj1kM7vLfOVSGG+qjLN0Vrgn5uc7sT2sE/mA5pqTn8Hhd0ZVr0fuZ+d
- UQDWSl9dYYUS+ieltn6n9884xHQqX6IdT2tD2+Jd82ZZld4lCFdA7tmQuxydJ8f/6i4QGa7iLRw
- OAldNt+33Lwn2BIH7sVpRH
-X-Received: by 2002:a4a:e904:0:b0:695:818c:e552 with SMTP id
- 006d021491bc7-6965cbeee7fmr4135050eaf.55.1777474035001; 
- Wed, 29 Apr 2026 07:47:15 -0700 (PDT)
+ bh=BTe/D/bvROg9C7EiZvO4+y9jfPH29sCoFwKyN55BCew=;
+ b=KetBIPlYqU8sNd+ALzrSDmyE9q3IusoKe4c1R1pHJTZhn2pMaYiGRLsS7DOafq+aWD
+ ryiT4T+OkZZY2sIKxM1h+5jncOvYKQyCtJmeY6OsQVxJdNCdQVFZ1QBJYrR3rBFNu5a7
+ x884FSubE4kp7cErAvr6B4jTOG0kbHKuEonnhN2MUU3EZeqZcE7pIgIgAaDLut2KQ1go
+ a/KUwN+2LWnH1aw1McSSOs0F/cU5cCmu1ioNLOD91+PwolYPDjFUAkcjpD4Xo/NSrD9M
+ h7vupiOopo8xRHjuX0GuwHxrM/NJ0XRWFv4gug7UGvi3bWGYoAsMS8E5xLEEvcIKDhZJ
+ CXyg==
+X-Gm-Message-State: AOJu0YyXyhxc1WSLGvIBQWzzoiPj65kDobak1f5fCpwgF2u2Miu/nELZ
+ h/e7SOl9/PK0dU41wOpmDc7AjG/XhOEDxYsznSAO+svw/TJeSOnEXepM4MSQ2wzmrJ4=
+X-Gm-Gg: AeBDiesEQzgnLF+AnVFcW/zwkUA+HrZ1rh8wjHYqEClhNbsCn4lP1rC911RdhCMuav8
+ yuDgwFVBdoyti75eZ1zeimmb0EZ6JvxrX8wg6XN9zvwdKR7QvueVy9gEc0mHXmX9BUBXeHwz8y0
+ y3igO9aj+5fqXRsmuPmpyKr1tCikDIdLT4/IkoQgfZSubCidiSooUHMUgWuIM/Y/8jG1V40zM8g
+ eNHLQ+3bGFte/760RLd9xbn3AlUEc2quQt0TYPHD0NwDK02t8mYHwuTo6pfSN9L6nMI+sAph/NG
+ 81WkD82Ne7H6Q9UmaDHzo3KoZPtNYJCKzkKPYR7qmT5YoOfGs+qiUngMNtJXiVtCWSvAaYs7a6N
+ V2LBGHJ0rLqqN0jYxvnNxFcnvMlLyu+R1OA+M+tEeejOkLHibq0aa3shnxgd6Sou31uJaYwhuZQ
+ u7YQPDJ3rSoFpYMfxKA4Cj
+X-Received: by 2002:a05:6820:1997:b0:696:14c0:3f9f with SMTP id
+ 006d021491bc7-6965ca3b5d4mr3753761eaf.11.1777474012423; 
+ Wed, 29 Apr 2026 07:46:52 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6966b93d58csm1313984eaf.0.2026.04.29.07.47.14
+ 006d021491bc7-6966b93d58csm1313984eaf.0.2026.04.29.07.46.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 07:47:14 -0700 (PDT)
+ Wed, 29 Apr 2026 07:46:51 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Wed, 29 Apr 2026 08:45:22 -0600
-Subject: [PATCH v2 16/17] bsd-user: Add do_bsd_ioctl main function
+Date: Wed, 29 Apr 2026 08:45:09 -0600
+Subject: [PATCH v2 03/17] bsd-user: Add FreeBSD socket ioctl definitions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260429-ioctl-v2-16-288639bc2427@bsdimp.com>
+Message-Id: <20260429-ioctl-v2-3-288639bc2427@bsdimp.com>
 References: <20260429-ioctl-v2-0-288639bc2427@bsdimp.com>
 In-Reply-To: <20260429-ioctl-v2-0-288639bc2427@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -77,24 +77,24 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, "Stacey D. Son" <sson@freebsd.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3864; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=ocknaMBKcFWF+U0DHJKsIdFpogAJcD7isOX+33qY5G8=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp8hl+T5MS7QGyCrTdd/e8EOU0/EhE9fdp8NC8q
- EaFfljwq36JAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafIZfgAKCRBsHNEofbAR
- AHuFD/9Ba1XITWHq0F2MbIDryw7QpfwERJZE5CZeEX60wtNXxhL4wmuBNTLSFgf5fza+PKlJtEK
- TWJ3tD40N1nCOElkrDLfgFENYWVnm2HvN8i3+EvYAnqvLpdcH9rKrFLe5iejFm8nKZH7vMD83sh
- dc1pvoBfVB6oAWGIpMA37IDE1ZqgStRqVgVeCW6z0s/iDuUYmr2X5SqBTMnLfzLKSbO+opkiZRN
- gfvoyVrk7rgrcj6yBGk7SW7NCeMZAYyIi7n2XM+sHVkYsNb/lswRNoc4w+bE7H/zOYJKAUQAIao
- x8octjvT8qu/+CX1PeDErtgBx3jwKYWylhHPe9hKdpft/eIqyxf/Do/mSE7e03Sydeun/LArYNb
- h++cXQ5URSlSbb3ucybzKfw8kl3pwUY6bqpiB0n42hnqH3JH9OmQMTYOafBd+FHO2IFbNL/DxIq
- XICBSQ1PJYxuH56vMXomlGx8SM2g2OejGeY6khXOkmt693aXk8czRDUJr7mj1oGRE2lpbSnFNL8
- Ux+SqaAu2R5p2gT8bdAfhR3Nqi4298kqxFLPT9WtkdpWpiCu0Q7iFNkTP0R4AOgr+OEXWvfUGFq
- 5jfBJrRan0TwUFCBxjm9w+Pf+HjcSg0dkBzMJhWtMttW0+2idDEWTVNItl4a9rYzjbcH8I9eGdT
- +ilq0acqEMFMQtg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9965; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=E5TcCxhlYakiFKXgpDFbtw1vmY+ujW4UaM+sGPBsaMY=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp8hl82wKrDBT/ncm4SJtUTLBowZCKQNDoQ9FK2
+ sqEv4j3MVuJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafIZfAAKCRBsHNEofbAR
+ AEdID/9UAQYvEyMO2dqA7PqYWOudsJBJuSCJq6sO7a84+p3xbqf9+/ZoYNsRtWJJ5e/nI3jFcDW
+ LzvBr1MnvpMCU2nOpHdI1PPmvPz/U+VaINJ2yCXYHllrwiK8PhzpBKA6HMS9ybelV7YtDaS/NKo
+ NSsdf3yw6RCfxKWiWxFFOH/gnor0aCzMvobcyRrGGdrRxbD7OP3PJebIBaJTsxvcos8Kw1MULMv
+ 0CWJ/8OKsuVkNxSi0HlI3w54kAeSNQz3DnzfyjfjLSRt9aqdQUdqzJ3FectbrUWVnNp6EW9DHS7
+ jOffGJD4pZXzAKTm94V47h/Xkzg/NaqyOuyd28ZvwAl2BjsLINot56MinDfjvEPXrb9wmS2GXcR
+ gAvBKbn8uV00Hj+JjLaot/Zf4Y3x43GtJed8ohUkvBWLF53eGYCIo5OJlE374ofYqsNNQlaO76M
+ cy3dEIsVhAyjyHqnx3aouOswLLcb+mIAwC61CQiVSEpAF+zCfuOcyjhlpjkomCfGVKJ3jXLcyaT
+ OaOFcUjxRB9j3R9HehtY/bNyfPJdV6HR5CK4/aZKu8bqnLhoC5BO33Uyv7gR0RRuxdzAOvAmhLb
+ 3cfuVmuBBhQWa6QgFe1kXGe6CaPfnNCxP3tFfYQGAuVFs1ri75ReDpHTlYhJPq/JHqzf0S9WOJk
+ GL7K3dKcNPrpdjA==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::334;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x334.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::c35;
+ envelope-from=imp@bsdimp.com; helo=mail-oo1-xc35.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,125 +116,264 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add main ioctl emulation dispatcher that handles table-driven
-ioctl translation with thunk-based structure conversion. Supports
-TYPE_NULL, TYPE_INT, and TYPE_PTR argument types with read, write,
-and read-write access modes.
+From: "Stacey D. Son" <sson@freebsd.org>
+
+Add os-ioctl-sockio.h with network socket and interface control ioctl
+definitions including SIOCGIFADDR, SIOCSIFADDR, SIOCGIFCONF, and
+related network interface ioctls with target_ structure definitions.
 
 Signed-off-by: Stacey D. Son <sson@freebsd.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-ioctl.c | 100 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 100 insertions(+)
+ bsd-user/freebsd/os-ioctl-sockio.h | 240 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 240 insertions(+)
 
-diff --git a/bsd-user/bsd-ioctl.c b/bsd-user/bsd-ioctl.c
-index aa0153bbaa..ae3ac7ae24 100644
---- a/bsd-user/bsd-ioctl.c
-+++ b/bsd-user/bsd-ioctl.c
-@@ -294,3 +294,103 @@ static abi_long do_ioctl_in6_ifreq_sockaddr_int(const IOCTLEntry *ie,
- 
-     return ret;
- }
+diff --git a/bsd-user/freebsd/os-ioctl-sockio.h b/bsd-user/freebsd/os-ioctl-sockio.h
+new file mode 100644
+index 0000000000..90a9950177
+--- /dev/null
++++ b/bsd-user/freebsd/os-ioctl-sockio.h
+@@ -0,0 +1,240 @@
++/*
++ * FreeBSD sockio.h definitions for ioctl(2) emulation
++ *
++ * Copyright (c) 2015 Stacey D. Son
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef OS_IOCTL_SOCKIO_H
++#define OS_IOCTL_SOCKIO_H
 +
-+abi_long do_bsd_ioctl(int fd, abi_long cmd, abi_long arg)
-+{
-+    const IOCTLEntry *ie;
-+    const argtype *arg_type;
-+    abi_long ret;
-+    uint8_t buf_temp[MAX_STRUCT_SIZE];
-+    int target_size;
-+    void *argptr;
++/* See sys/sockio.h */
++#define TARGET_SIOCSHIWAT       TARGET_IOW('s',  0, int32_t)
++#define TARGET_SIOCGHIWAT       TARGET_IOR('s',  1, int32_t)
++#define TARGET_SIOCSLOWAT       TARGET_IOW('s',  2, int32_t)
++#define TARGET_SIOCGLOWAT       TARGET_IOR('s',  3, int32_t)
++#define TARGET_SIOCATMARK       TARGET_IOR('s',  7, int32_t)
++#define TARGET_SIOCSPGRP        TARGET_IOW('s',  8, int32_t)
++#define TARGET_SIOCGPGRP        TARGET_IOR('s',  9, int32_t)
 +
-+    ie = ioctl_entries;
-+    for (;;) {
-+        if (ie->target_cmd == 0) {
-+            gemu_log("QEMU unsupported ioctl: ");
-+            log_unsupported_ioctl(cmd);
-+            return -TARGET_ENOSYS;
-+        }
-+        if (ie->target_cmd == cmd) {
-+            break;
-+        }
-+        ie++;
-+    }
-+    arg_type = ie->arg_type;
-+#if defined(DEBUG)
-+    gemu_log("ioctl: cmd=0x%04lx (%s)\n", (long)cmd, ie->name);
-+#endif
-+    if (ie->do_ioctl) {
-+        return ie->do_ioctl(ie, buf_temp, fd, cmd, arg);
-+    }
++/* See net/if.h */
++struct target_ifreq_buffer {
++    abi_ulong  length;
++    abi_ulong  buffer;
++};
 +
-+    switch (arg_type[0]) {
-+    case TYPE_NULL:
-+        /* no argument */
-+        ret = get_errno(safe_ioctl(fd, ie->host_cmd));
-+        break;
++#define TARGET_IFNAMSIZ 16
 +
-+    case TYPE_PTRVOID:
-+    case TYPE_INT:
-+        /* int argument */
-+        ret = get_errno(safe_ioctl(fd, ie->host_cmd, arg));
-+        break;
++struct target_ifreq {
++    char    ifr_name[TARGET_IFNAMSIZ];
++    union {
++        struct  target_sockaddr ifru_addr;
++        struct  target_sockaddr ifru_dstaddr;
++        struct  target_sockaddr ifru_broadaddr;
++        struct  target_ifreq_buffer ifru_buffer;
++        int16_t   ifru_flags[2];
++        int16_t   ifru_index;
++        int32_t     ifru_jid;
++        int32_t     ifru_metric;
++        int32_t     ifru_mtu;
++        int32_t     ifru_phys;
++        int32_t     ifru_media;
++        abi_ulong ifru_data;
++        int32_t     ifru_cap[2];
++        uint32_t   ifru_fib;
++    } ifr_ifru;
++};
 +
-+    case TYPE_PTR:
-+        arg_type++;
-+        target_size = thunk_type_size(arg_type, 0);
-+        switch (ie->access) {
-+        case IOC_R:
-+            ret = get_errno(safe_ioctl(fd, ie->host_cmd, buf_temp));
-+            if (!is_error(ret)) {
-+                argptr = lock_user(VERIFY_WRITE, arg,
-+                    target_size, 0);
-+                if (!argptr) {
-+                    return -TARGET_EFAULT;
-+                }
-+                thunk_convert(argptr, buf_temp, arg_type,
-+                    THUNK_TARGET);
-+                unlock_user(argptr, arg, target_size);
-+            }
-+            break;
 +
-+        case IOC_W:
-+            argptr = lock_user(VERIFY_READ, arg, target_size, 1);
-+            if (!argptr) {
-+                return -TARGET_EFAULT;
-+            }
-+            thunk_convert(buf_temp, argptr, arg_type, THUNK_HOST);
-+            unlock_user(argptr, arg, 0);
-+            ret = get_errno(safe_ioctl(fd, ie->host_cmd, buf_temp));
-+            break;
++#define TARGET_SIOCSIFADDR      TARGET_IOW('i', 12, struct target_ifreq)
++#define TARGET_SIOCGIFADDR      TARGET_IOWR('i', 33, struct target_ifreq)
++#define TARGET_SIOCSIFDSTADDR   TARGET_IOW('i', 14, struct target_ifreq)
++#define TARGET_SIOCGIFDSTADDR   TARGET_IOWR('i', 34, struct target_ifreq)
++#define TARGET_SIOCSIFFLAGS     TARGET_IOW('i', 16, struct target_ifreq)
++#define TARGET_SIOCGIFFLAGS     TARGET_IOWR('i', 17, struct target_ifreq)
++#define TARGET_SIOCGIFBRDADDR   TARGET_IOWR('i', 35, struct target_ifreq)
++#define TARGET_SIOCSIFBRDADDR   TARGET_IOW('i', 19, struct target_ifreq)
++#define TARGET_SIOCGIFNETMASK   TARGET_IOWR('i', 37, struct target_ifreq)
++#define TARGET_SIOCSIFNETMASK   TARGET_IOW('i', 22, struct target_ifreq)
++#define TARGET_SIOCGIFMETRIC    TARGET_IOWR('i', 23, struct target_ifreq)
++#define TARGET_SIOCSIFMETRIC    TARGET_IOW('i', 24, struct target_ifreq)
++#define TARGET_SIOCDIFADDR      TARGET_IOW('i', 25, struct target_ifreq)
++#define TARGET_SIOCSIFCAP       TARGET_IOW('i', 30, struct target_ifreq)
++#define TARGET_SIOCGIFCAP       TARGET_IOWR('i', 31, struct target_ifreq)
++#define TARGET_SIOCGIFINDEX     TARGET_IOWR('i', 32, struct target_ifreq)
++#define TARGET_SIOCGIFMAC       TARGET_IOWR('i', 38, struct target_ifreq)
++#define TARGET_SIOCSIFMAC       TARGET_IOW('i', 39, struct target_ifreq)
++#define TARGET_SIOCSIFNAME      TARGET_IOW('i', 40, struct target_ifreq)
++#define TARGET_SIOCSIFDESCR     TARGET_IOW('i', 41, struct target_ifreq)
++#define TARGET_SIOCGIFDESCR     TARGET_IOWR('i', 42, struct target_ifreq)
++#define TARGET_SIOCADDMULTI     TARGET_IOW('i', 49, struct target_ifreq)
++#define TARGET_SIOCDELMULTI     TARGET_IOW('i', 50, struct target_ifreq)
++#define TARGET_SIOCGIFMTU       TARGET_IOWR('i', 51, struct target_ifreq)
++#define TARGET_SIOCSIFMTU       TARGET_IOW('i', 52, struct target_ifreq)
++#define TARGET_SIOCGIFPHYS      TARGET_IOWR('i', 53, struct target_ifreq)
++#define TARGET_SIOCSIFPHYS      TARGET_IOW('i', 54, struct target_ifreq)
++#define TARGET_SIOCSIFMEDIA     TARGET_IOWR('i', 55, struct target_ifreq)
++#define TARGET_SIOCSIFGENERIC   TARGET_IOW('i', 57, struct target_ifreq)
++#define TARGET_SIOCGIFGENERIC   TARGET_IOWR('i', 58, struct target_ifreq)
++#define TARGET_SIOCSIFLLADDR    TARGET_IOW('i', 60, struct target_ifreq)
++#define TARGET_SIOCGIFPSRCADDR  TARGET_IOWR('i', 71, struct target_ifreq)
++#define TARGET_SIOCGIFPDSTADDR  TARGET_IOWR('i', 72, struct target_ifreq)
++#define TARGET_SIOCDIFPHYADDR   TARGET_IOW('i', 73, struct target_ifreq)
++#define TARGET_SIOCGPRIVATE_0   TARGET_IOWR('i', 80, struct target_ifreq)
++#define TARGET_SIOCGPRIVATE_1   TARGET_IOWR('i', 81, struct target_ifreq)
++#define TARGET_SIOCSIFVNET      TARGET_IOWR('i', 90, struct target_ifreq)
++#define TARGET_SIOCSIFRVNET     TARGET_IOWR('i', 91, struct target_ifreq)
++#define TARGET_SIOCGIFFIB       TARGET_IOWR('i', 92, struct target_ifreq)
++#define TARGET_SIOCSIFFIB       TARGET_IOW('i', 93, struct target_ifreq)
++#define TARGET_SIOCGTUNFIB      TARGET_IOWR('i', 94, struct target_ifreq)
++#define TARGET_SIOCIFCREATE     TARGET_IOWR('i', 122, struct target_ifreq)
++#define TARGET_SIOCIFCREATE2    TARGET_IOWR('i', 124, struct target_ifreq)
++#define TARGET_SIOCIFDESTROY    TARGET_IOW('i', 121, struct target_ifreq)
 +
-+        case IOC_RW:
-+            /* fallthrough */
-+        default:
-+            argptr = lock_user(VERIFY_READ, arg, target_size, 1);
-+            if (!argptr) {
-+                return -TARGET_EFAULT;
-+            }
-+            thunk_convert(buf_temp, argptr, arg_type, THUNK_HOST);
-+            unlock_user(argptr, arg, 0);
-+            ret = get_errno(safe_ioctl(fd, ie->host_cmd, buf_temp));
-+            if (!is_error(ret)) {
-+                argptr = lock_user(VERIFY_WRITE, arg, target_size, 0);
-+                if (!argptr) {
-+                    return -TARGET_EFAULT;
-+                }
-+                thunk_convert(argptr, buf_temp, arg_type, THUNK_TARGET);
-+                unlock_user(argptr, arg, target_size);
-+            }
-+            break;
-+        }
-+        break;
++/* net/if_gre.h */
++#define TARGET_GREGKEY          TARGET_IOWR('i', 107, struct target_ifreq)
++#define TARGET_GREGOPTS         TARGET_IOWR('i', 109, struct target_ifreq)
 +
-+    default:
-+        gemu_log("QEMU unknown ioctl: type=%d ", arg_type[0]);
-+        log_unsupported_ioctl(cmd);
-+        ret = -TARGET_ENOSYS;
-+        break;
-+    }
-+    return ret;
-+}
++/* net/if_gif.h */
++#define TARGET_GIFGOPTS         TARGET_IOWR('i', 150, struct target_ifreq)
++
++/* netinet/ip_carp.h */
++#define TARGET_SIOCGVH          TARGET_IOWR('i', 246, struct target_ifreq)
++
++/* netinet/ip_carp.h */
++#define TARGET_SIOCGVH          TARGET_IOWR('i', 246, struct target_ifreq)
++
++/* net/if_pfsync.h */
++#define TARGET_SIOCGETPFSYNC    TARGET_IOWR('i', 248, struct target_ifreq)
++
++
++/* See net/if.h */
++struct target_ifconf {
++    int32_t ifc_len;
++    union {
++        abi_ulong   ifcu_buf;
++        abi_ulong   ifcu_reg;
++    } ifc_ifcu;
++};
++
++#define TARGET_SIOCGIFCONF     TARGET_IOWR('i', 36, struct target_ifconf)
++
++/* See net/if.h */
++struct  target_ifdrv {
++    char            ifd_name[TARGET_IFNAMSIZ];
++    abi_ulong       ifd_cmd;
++    abi_ulong       ifd_len;
++    abi_ulong       ifd_data;
++};
++
++#define TARGET_SIOCSDRVSPEC    TARGET_IOW('i', 123, struct target_ifdrv)
++#define TARGET_SIOCGDRVSPEC    TARGET_IOWR('i', 123, struct target_ifdrv)
++
++/* See net/if.h */
++struct target_ifg_req {
++    union {
++        char        ifgrqu_group[TARGET_IFNAMSIZ];
++        char        ifgrqu_member[TARGET_IFNAMSIZ];
++    } ifgrq_ifgrqu;
++};
++
++struct target_ifgroupreq {
++    char            ifgr_name[TARGET_IFNAMSIZ];
++    uint32_t        ifgr_len;
++    union {
++        char        ifgru_group[TARGET_IFNAMSIZ];
++        abi_ulong   ifgru_groups;
++    } ifgr_ifgru;
++};
++
++#define TARGET_SIOCGIFGROUP    TARGET_IOWR('i', 136, struct target_ifgroupreq)
++
++struct target_ifmediareq {
++    char        ifm_name[TARGET_IFNAMSIZ];
++    int32_t     ifm_current;
++    int32_t     ifm_mask;
++    int32_t     ifm_status;
++    int32_t     ifm_active;
++    int32_t     ifm_count;
++    abi_ulong   ifm_ulist;
++};
++
++#define TARGET_SIOCGIFMEDIA  TARGET_IOWR('i', 56, struct target_ifmediareq)
++#define TARGET_SIOCGIFXMEDIA  TARGET_IOWR('i', 139, struct target_ifmediareq)
++
++#define TARGET_IFSTATMAX    800
++struct target_ifstat {
++    char    ifs_name[TARGET_IFNAMSIZ];
++    char    ascii[TARGET_IFSTATMAX + 1];
++};
++
++#define TARGET_SIOCGIFSTATUS TARGET_IOWR('i', 59, struct target_ifstat)
++
++/* net80211/ieee80211_ioctl.h */
++struct target_ieee80211req {
++    char            i_name[TARGET_IFNAMSIZ];
++    uint16_t        i_type;
++    int16_t         i_val;
++    uint16_t        i_len;
++    abi_ulong       i_data;
++};
++
++#define TARGET_SIOCG80211 TARGET_IOWR('i', 235, struct target_ieee80211req)
++
++/* net/if_lagg.h */
++struct target_lacp_opreq {
++    uint16_t        actor_prio;
++    uint8_t         actor_mac[ETHER_ADDR_LEN];
++    uint16_t        actor_key;
++    uint16_t        actor_portprio;
++    uint16_t        actor_portno;
++    uint8_t         actor_state;
++    uint16_t        partner_prio;
++    uint8_t         partner_mac[ETHER_ADDR_LEN];
++    uint16_t        partner_key;
++    uint16_t        partner_portprio;
++    uint16_t        partner_portno;
++    uint8_t         partner_state;
++};
++
++struct target_lagg_reqport {
++    char            rp_ifname[TARGET_IFNAMSIZ];
++    char            rp_portname[TARGET_IFNAMSIZ];
++    u_int32_t       rp_prio;
++    u_int32_t       rp_flags;
++    union {
++        struct target_lacp_opreq rpsc_lacp;
++    } rp_psc;
++};
++#define TARGET_SIOCGLAGGPORT TARGET_IOWR('i', 140, struct target_lagg_reqport)
++
++struct target_lagg_reqall {
++    char            ra_ifname[TARGET_IFNAMSIZ];
++    uint32_t        ra_proto;
++
++    abi_ulong       ra_size;
++    abi_ulong       ra_port;
++    int32_t         ra_ports;
++    union {
++        struct target_lacp_opreq rpsc_lacp;
++    } ra_psc;
++};
++#define TARGET_SIOCGLAGG TARGET_IOWR('i', 143, struct target_lagg_reqall)
++
++struct target_lagg_reqflags {
++    char            rf_ifname[TARGET_IFNAMSIZ];
++    uint32_t        rf_flags;
++};
++#define TARGET_SIOCGLAGGFLAGS TARGET_IOWR('i', 145, struct target_lagg_reqflags)
++
++struct target_lagg_reqopts {
++    char            ro_ifname[IFNAMSIZ];
++    int32_t         ro_opts;
++    uint32_t        ro_count;
++    uint32_t        ro_active;
++    uint32_t        ro_flapping;
++    int32_t         ro_flowid_shift;
++};
++#define TARGET_SIOCGLAGGOPTS TARGET_IOWR('i', 152, struct target_lagg_reqopts)
++
++#endif /* OS_IOCTL_SOCKIO_H */
 
 -- 
 2.52.0
