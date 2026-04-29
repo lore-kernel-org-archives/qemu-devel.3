@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CBCECCFA13
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:26:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 832EDCCFA13
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:26:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIAYL-0006LV-In; Wed, 29 Apr 2026 15:26:33 -0400
+	id 1wIAYS-0006RR-UM; Wed, 29 Apr 2026 15:26:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wIAYH-0006JP-Vv
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:26:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wIAYQ-0006R3-HI
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:26:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wIAYG-0007jY-0n
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:26:29 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wIAYO-0007qs-BY
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:26:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777490786;
+ s=mimecast20190719; t=1777490795;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u0MZS1bSbu4EQv/u0Yr8n1ph2IX/3wmcQ+CPEwREwE4=;
- b=gT+n+3mXZ3aBN289ui8TKBLlUpjWgNwOUg8xPgAT5D9IyleTNJYOh4aDU1LBAXV0S0kE+9
- dH5w5m5RjIUOsUISLg2/nj49f3MChElxMExkyCtOueHzYOKyTeC1i9jN3FfF90NEfppsNO
- Nr8BawNEa/6FvNtUSh6n0BzD6zA574U=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=r3bFlvRyNHuo5LAmox46R5ptUST3XkFKOLqwa+xbG2U=;
+ b=foWJcgRXKGpr9m9CMd5cutlE6O7Ku2j/cLRJr5zGGsCdpqxACP1S+TU8FO8JWApWssnSid
+ fi+dgYNu8Y3RRdAtVL9e/rWUap3ItRzcYNyqjF5nDrG/7VAzEsBOv3i4zE8CPrZo3Zhz5N
+ o7pbLGCoCHUl/toFOBDgoARNJFOBVuQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-s-oFL-bnO269XFOLdvC4lQ-1; Wed,
- 29 Apr 2026 15:26:23 -0400
-X-MC-Unique: s-oFL-bnO269XFOLdvC4lQ-1
-X-Mimecast-MFC-AGG-ID: s-oFL-bnO269XFOLdvC4lQ_1777490782
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-338-NVrDnU5xPNK-mbGhr7cGVQ-1; Wed,
+ 29 Apr 2026 15:26:31 -0400
+X-MC-Unique: NVrDnU5xPNK-mbGhr7cGVQ-1
+X-Mimecast-MFC-AGG-ID: NVrDnU5xPNK-mbGhr7cGVQ_1777490790
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D204618003FC; Wed, 29 Apr 2026 19:26:21 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 512D91800350; Wed, 29 Apr 2026 19:26:30 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.204])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 31716180045E; Wed, 29 Apr 2026 19:26:17 +0000 (UTC)
+ id 63C511800446; Wed, 29 Apr 2026 19:26:26 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>, Eric Blake <eblake@redhat.com>,
@@ -59,22 +59,23 @@ Cc: Michael Roth <michael.roth@amd.com>, Eric Blake <eblake@redhat.com>,
  Ani Sinha <anisinha@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v2 01/13] tests/qapi: generate output in source order
-Date: Wed, 29 Apr 2026 15:25:59 -0400
-Message-ID: <20260429192611.1581223-2-jsnow@redhat.com>
+Subject: [PATCH v2 03/13] qapi/docs: make remaining subsection members
+ "private"
+Date: Wed, 29 Apr 2026 15:26:01 -0400
+Message-ID: <20260429192611.1581223-4-jsnow@redhat.com>
 In-Reply-To: <20260429192611.1581223-1-jsnow@redhat.com>
 References: <20260429192611.1581223-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,157 +92,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rewrite the test doc generator to produce output in source order instead
-of arbitrarily by section name.
+These fields are used to provide error checking and internal logistics
+and should not be used by a user of the library to directly access
+documentation sections, so make them private.
 
-This patch removes our last use of the "body" field, which has an effect
-on how the first plaintext section of each test documented is printed:
-we now print "section=Plain" followed by the section text instead of
-"body=[...]".
-
-This patch is motivated by a desire to move the QAPIDoc API away from
-named fields for specific sections in a bid to force all users to simply
-iterate through all_sections in order, instead - and to remove the named
-subsections.
+The "since" field alone is left public, as the qapidoc generator does
+use this field to pull that section out of the regular flow of the
+document.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- tests/qapi-schema/doc-good.out | 26 +++++++++++++-------------
- tests/qapi-schema/test-qapi.py | 15 ++++++++-------
- 2 files changed, 21 insertions(+), 20 deletions(-)
+ scripts/qapi/parser.py | 54 +++++++++++++++++++++++-------------------
+ 1 file changed, 29 insertions(+), 25 deletions(-)
 
-diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
-index 04a55072646..e2be6f96bbf 100644
---- a/tests/qapi-schema/doc-good.out
-+++ b/tests/qapi-schema/doc-good.out
-@@ -54,15 +54,15 @@ event EVT_BOXED Object
-     boxed=True
-     feature feat3
- doc freeform
--    body=
-+    section=Plain
- *******
- Section
- *******
- doc freeform
--    body=
-+    section=Plain
- Just text, no heading.
- doc freeform
--    body=
-+    section=Plain
- Subsection
- ==========
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+index b33edbba74f..da4756a7424 100644
+--- a/scripts/qapi/parser.py
++++ b/scripts/qapi/parser.py
+@@ -555,7 +555,7 @@ def get_doc(self) -> 'QAPIDoc':
+                     break
+                 # Non-blank line, first of a section
+                 if line == 'Features:':
+-                    if doc.features:
++                    if doc.has_features:
+                         raise QAPIParseError(
+                             self, "duplicated 'Features:' line")
+                     self.accept(False)
+@@ -570,7 +570,7 @@ def get_doc(self) -> 'QAPIDoc':
+                         if text:
+                             doc.append_line(text)
+                         line = self.get_doc_indented(doc)
+-                    if not doc.features:
++                    if not doc.has_features:
+                         raise QAPIParseError(
+                             self, 'feature descriptions expected')
+                     no_more_args = True
+@@ -733,14 +733,18 @@ def __init__(self, info: QAPISourceInfo, symbol: Optional[str] = None):
+             QAPIDoc.Section(info, QAPIDoc.Kind.PLAIN)
+         ]
+         # dicts mapping parameter/feature names to their description
+-        self.args: Dict[str, QAPIDoc.ArgSection] = {}
+-        self.features: Dict[str, QAPIDoc.ArgSection] = {}
++        self._args: Dict[str, QAPIDoc.ArgSection] = {}
++        self._features: Dict[str, QAPIDoc.ArgSection] = {}
+         # a command's "Returns" and "Errors" section
+-        self.returns: Optional[QAPIDoc.Section] = None
+-        self.errors: Optional[QAPIDoc.Section] = None
++        self._returns: Optional[QAPIDoc.Section] = None
++        self._errors: Optional[QAPIDoc.Section] = None
+         # "Since" section
+         self.since: Optional[QAPIDoc.Section] = None
  
-@@ -106,7 +106,7 @@ Examples:
- - *verbatim*
- - {braces}
- doc symbol=Enum
--    body=
-+    section=Plain
++    @property
++    def has_features(self) -> bool:
++        return bool(self._features)
++
+     def end(self) -> None:
+         for section in self.all_sections:
+             section.text = section.text.strip('\n')
+@@ -771,15 +775,15 @@ def new_tagged_section(
+     ) -> None:
+         section = self.Section(info, kind)
+         if kind == QAPIDoc.Kind.RETURNS:
+-            if self.returns:
++            if self._returns:
+                 raise QAPISemError(
+                     info, "duplicated '%s' section" % kind)
+-            self.returns = section
++            self._returns = section
+         elif kind == QAPIDoc.Kind.ERRORS:
+-            if self.errors:
++            if self._errors:
+                 raise QAPISemError(
+                     info, "duplicated '%s' section" % kind)
+-            self.errors = section
++            self._errors = section
+         elif kind == QAPIDoc.Kind.SINCE:
+             if self.since:
+                 raise QAPISemError(
+@@ -803,16 +807,16 @@ def _new_description(
+         desc[name] = section
  
-     arg=one
- The _one_ {and only}, description on the same line
-@@ -119,13 +119,13 @@ a member feature
-     section=Plain
- @two is undocumented
- doc symbol=Base
--    body=
-+    section=Plain
+     def new_argument(self, info: QAPISourceInfo, name: str) -> None:
+-        self._new_description(info, name, QAPIDoc.Kind.MEMBER, self.args)
++        self._new_description(info, name, QAPIDoc.Kind.MEMBER, self._args)
  
-     arg=base1
-  description starts on a new line,
-  minimally indented
- doc symbol=Variant1
--    body=
-+    section=Plain
- A paragraph
+     def new_feature(self, info: QAPISourceInfo, name: str) -> None:
+-        self._new_description(info, name, QAPIDoc.Kind.FEATURE, self.features)
++        self._new_description(info, name, QAPIDoc.Kind.FEATURE, self._features)
  
- Another paragraph
-@@ -138,15 +138,15 @@ a feature
-     feature=member-feat
- a member feature
- doc symbol=Variant2
--    body=
-+    section=Plain
+     def append_line(self, line: str) -> None:
+         self.all_sections[-1].append_line(line)
  
- doc symbol=Object
--    body=
-+    section=Plain
+     def connect_member(self, member: 'QAPISchemaMember') -> None:
+-        if member.name not in self.args:
++        if member.name not in self._args:
+             assert member.info
+             if self.symbol not in member.info.pragma.documentation_exceptions:
+                 raise QAPISemError(member.info,
+@@ -823,7 +827,7 @@ def connect_member(self, member: 'QAPISchemaMember') -> None:
  
-     feature=union-feat1
- a feature
- doc symbol=Alternate
--    body=
-+    section=Plain
+             section = QAPIDoc.ArgSection(
+                 self.info, QAPIDoc.Kind.MEMBER, member.name)
+-            self.args[member.name] = section
++            self._args[member.name] = section
  
-     arg=i
- description starts on the same line
-@@ -157,11 +157,11 @@ description starts on the same line
-     feature=alt-feat
- a feature
- doc freeform
--    body=
-+    section=Plain
- Another subsection
- ==================
- doc symbol=cmd
--    body=
-+    section=Plain
+             # Determine where to insert stub doc - it should go at the
+             # end of the members section(s), if any. Note that index 0
+@@ -835,14 +839,14 @@ def connect_member(self, member: 'QAPISchemaMember') -> None:
+                     index += 1
+             self.all_sections.insert(index, section)
  
-     arg=arg1
-     description starts on a new line,
-@@ -210,7 +210,7 @@ Note::
-     section=Since
- 2.10
- doc symbol=cmd-boxed
--    body=
-+    section=Plain
- If you're bored enough to read this, go see a video of boxed cats
-     feature=cmd-feat1
- a feature
-@@ -223,7 +223,7 @@ another feature
+-        self.args[member.name].connect(member)
++        self._args[member.name].connect(member)
  
-    <- ... has no title ...
- doc symbol=EVT_BOXED
--    body=
-+    section=Plain
+     def connect_feature(self, feature: 'QAPISchemaFeature') -> None:
+-        if feature.name not in self.features:
++        if feature.name not in self._features:
+             raise QAPISemError(feature.info,
+                                "feature '%s' lacks documentation"
+                                % feature.name)
+-        self.features[feature.name].connect(feature)
++        self._features[feature.name].connect(feature)
  
-     feature=feat3
- a feature
-diff --git a/tests/qapi-schema/test-qapi.py b/tests/qapi-schema/test-qapi.py
-index cf7fb8a6df5..27885147b4d 100755
---- a/tests/qapi-schema/test-qapi.py
-+++ b/tests/qapi-schema/test-qapi.py
-@@ -19,6 +19,7 @@
- from io import StringIO
+     def ensure_returns(self, info: QAPISourceInfo) -> None:
  
- from qapi.error import QAPIError
-+from qapi.parser import QAPIDoc
- from qapi.schema import QAPISchema, QAPISchemaVisitor
+@@ -883,18 +887,18 @@ def _insert_near_kind(
  
- 
-@@ -116,13 +117,13 @@ def test_frontend(fname):
-             print('doc symbol=%s' % doc.symbol)
+     def check_expr(self, expr: QAPIExpression) -> None:
+         if 'command' in expr:
+-            if self.returns and 'returns' not in expr:
++            if self._returns and 'returns' not in expr:
+                 raise QAPISemError(
+-                    self.returns.info,
++                    self._returns.info,
+                     "'Returns' section, but command doesn't return anything")
          else:
-             print('doc freeform')
--        print('    body=\n%s' % doc.body.text)
--        for arg, section in doc.args.items():
--            print('    arg=%s\n%s' % (arg, section.text))
--        for feat, section in doc.features.items():
--            print('    feature=%s\n%s' % (feat, section.text))
--        for section in doc.sections:
--            print('    section=%s\n%s' % (section.kind, section.text))
-+        for section in doc.all_sections:
-+            if section.kind == QAPIDoc.Kind.MEMBER:
-+                print('    arg=%s\n%s' % (section.name, section.text))
-+            elif section.kind == QAPIDoc.Kind.FEATURE:
-+                print('    feature=%s\n%s' % (section.name, section.text))
-+            else:
-+                print('    section=%s\n%s' % (section.kind, section.text))
+-            if self.returns:
++            if self._returns:
+                 raise QAPISemError(
+-                    self.returns.info,
++                    self._returns.info,
+                     "'Returns' section is only valid for commands")
+-            if self.errors:
++            if self._errors:
+                 raise QAPISemError(
+-                    self.errors.info,
++                    self._errors.info,
+                     "'Errors' section is only valid for commands")
  
+     def check(self) -> None:
+@@ -914,5 +918,5 @@ def check_args_section(
+                         "do" if len(bogus) > 1 else "does"
+                     ))
  
- def open_test_result(dir_name, file_name, update):
+-        check_args_section(self.args, 'member')
+-        check_args_section(self.features, 'feature')
++        check_args_section(self._args, 'member')
++        check_args_section(self._features, 'feature')
 -- 
 2.54.0
 
