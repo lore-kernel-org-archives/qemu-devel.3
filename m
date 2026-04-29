@@ -4,114 +4,178 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA9FDFF8875
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:07:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1144ECCFA13
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:08:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIAEV-0001lU-BQ; Wed, 29 Apr 2026 15:06:03 -0400
+	id 1wIAER-0001in-4B; Wed, 29 Apr 2026 15:05:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wIAET-0001k0-1c
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:06:01 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wIAEQ-0000LF-5o
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:06:00 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 4EC176A815;
- Wed, 29 Apr 2026 19:05:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1777489556; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eUxDq/SnIjAGROivgUJT7M70dRNJv1YG66xD1uHbj4c=;
- b=pkwV8D+es/Mq2FDs3LFf3Xn6L5FYJ5EqRhO8wqPH86alJD1MsnVGUvZDvIu3I7JxYWO7h4
- m2Bo3+AzkaM291W9XM3AOGJ3HzHeBEbH9BsXp0pFdqxA1LmWhrOZyaeRNVUtZxw0loZ023
- OBFuvyu+vP9ZiZnfSbhbGxeRqmL0Wlg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1777489556;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eUxDq/SnIjAGROivgUJT7M70dRNJv1YG66xD1uHbj4c=;
- b=1If5pFj+dtSPaBRyH3HLT1QCV6IXLeG30k2uyKDlnkHnkkMFxWateXobdVsrrtcVO9ZcNS
- RZP29h2Yp/6NcNBg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=1B8+HuC3;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=bME7acoI
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1777489555; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eUxDq/SnIjAGROivgUJT7M70dRNJv1YG66xD1uHbj4c=;
- b=1B8+HuC3k7/rbbhTdO1yZjVFm4X77j14GOXDfOeTq8KpppTiMPemio+69/Ar4t5XJyfq7r
- qTXwaWwBbdEvifr5IDtPvp2p6HwzlG2jlQqbkNk5HXBpJ66mHduxj+7wLr8R/GvZDBvvUj
- Y0Xa2zTM/FhZLUjzmEoMCR5hJe01R6E=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1777489555;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=eUxDq/SnIjAGROivgUJT7M70dRNJv1YG66xD1uHbj4c=;
- b=bME7acoIXKngUIVFdLcyg9RETTp+zRWMDqS7xAkQz4SiznduE2MLn2oR0mXXGOf3aPOece
- oqh6DFjMKVMgmkCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EA272593B0;
- Wed, 29 Apr 2026 19:05:53 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id ELK6LZFW8mm/eQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 29 Apr 2026 19:05:53 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, marcandre.lureau@redhat.com,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v1 1/5] tests/qtest/dbus-vmstate: Bring the test up-to-date
-Date: Wed, 29 Apr 2026 16:05:46 -0300
-Message-ID: <20260429190550.20122-2-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260429190550.20122-1-farosas@suse.de>
-References: <20260429190550.20122-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wIAEO-0001i8-TC
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:05:56 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wIAEL-0000Jg-N3
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:05:56 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63TFKj2q3067056
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 19:05:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ CwNZRyAYFDDz2eUgIuC5FOG334+JMRlR9zpHV3dUNDY=; b=X2jDtODejOTDFnTa
+ XXW+PoA4zNvI7Q71kCaYsr/6E7unR/GGUIyshNdCOlfdNp7zkzcVvtMMy0MutH6F
+ 7jFF+CCjhuL8+fZmwxsLWPdn/4Yzw2Nr+VoYFM+5I0QKPtmEG71wOZDCbMnmupVp
+ y4vliavAHksojunnTWeYL71wUMGLO9mw0+NO1ZRI6DwedDbnZ10flkMbzHItJq5/
+ QjRJMzzznJNid61BknXJ/2nYtZEGRehsWRp5sJ8E3jKwDIEPSR3Fei01rQN7r5j8
+ cqxA8gjF4Wru71ZaNc8osgX+VaaESTLePnopqn+bEKsnWk9iKg2GvVQienzA/Tn/
+ gyYeSA==
+Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
+ [74.125.82.200])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4du7sxc70a-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 19:05:50 +0000 (GMT)
+Received: by mail-dy1-f200.google.com with SMTP id
+ 5a478bee46e88-2bdf6fe90a9so289599eec.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 12:05:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1777489550; x=1778094350; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CwNZRyAYFDDz2eUgIuC5FOG334+JMRlR9zpHV3dUNDY=;
+ b=ZsPpjooUTFN7iRSIyiDC2dtYXMpuNMov4n8IMZUdAXrz7QHyaLsCvohmEfH3cY18Ez
+ uEfN5EtRqWilibGWfe6T+eLsf5oPaFGYYhIbb3n6iNayoj+SFC3AoGukbg4m4uHUbDbQ
+ OzivzZz3JcNZtuHztcckim6WRkU424hmYODbxueqdmMAXvK63gY4dvOAl0FrYeuE8ZIK
+ dL2Rz8SP6B4kdvibCsPNfygzk480O+73tF/1W159kLbJFWdVDcHeyLxOEWSblUcTfHlA
+ Yy8nU2QOFNfeCrDUUeR5YWLd5DZ3p9Vd44Upcw5mjoOFyx0tlimbD2NNstt+mQub8HPB
+ 4Svg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777489550; x=1778094350;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CwNZRyAYFDDz2eUgIuC5FOG334+JMRlR9zpHV3dUNDY=;
+ b=WmTRyCFrZorS0LuKPJBLYVV4iR1qp+l2Xe03BDOKw70SQnp36rZNf0o5YcJRGw3G+K
+ qGvGsnP/l3A19IzthE0f7tbSqKrcyXLeq5i+GfY/2WcosonOTAtc3iuE2RG4X+tAHekJ
+ IjKm/BpWrnJUyuBXUJR97X2GeMOM1+iZq3t3ID5CbMBlElkRF4Qri4AiLbIaLp4G2shX
+ 0Hl+VyP3GPyw6bBJQ+ADQQIg4SQMgEan/Q3qHpL9cma1u5vhdSM2veLEsCVlwI2DA/NH
+ D8RxwHdGtnXmNXpT1+CKDUtV07po3LaNYkgOAXu4RlLXHfHX7cjOad51H8Bl4lrE/hzt
+ skig==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/Z/4EeNeQFHC1Hk02TTMdxWhbhoK9uPcuXvzZF1s/i//I5qtq2dzZCLhIT2fIRndPh+Gin6t5g5tAs@nongnu.org
+X-Gm-Message-State: AOJu0YxPbrI13XYEAC8lhPNpBysdWsHeBqIRKnmQRVUnDhNanBZb3RSh
+ x1bhWcz8CDCKIW1ZI4kLNYpBSUjYfUVPvj7ouLJJp1HT0MaZqYoSJR9/DwlrKPhxX7eRNKH6fF5
+ dGCxbpEFDOXxl4iXWQgQZBCIcx/rsfa/2JW8tH+VaS/H97mzq3DkEczQfbQ==
+X-Gm-Gg: AeBDievT7A4UnEUg36XeBd7Fs/C+/Rjf1+Z0MviNvLHHWzhNxfklsh95f+xWl7FpjyO
+ vvYCWFsVcU+GhTLgGr5zs5pUxIh/WWBR3X9lQKB5Eqieo68gpTlA4af6YknpmyejwBko6xnDdUd
+ z+K6P9m1a9JN8/wlxrL2NMa2RPZfPx2BO95aVUMqdwTP3xD5Ib7yFEw62Pzo8BJvWKUfgrkzUu+
+ 4AqgL/lvV5ZAJdLWyZGagRfEe9x5CKMxmRfHJkFppSZl14CX4Goi3dzd8dlNEDHre9v8VD7ysye
+ k/+ypwlXj6tAUps/+io4W54dxQdPMFkjNqZ5bZ0ICAB573txaLM8acKFseLmG8n32tjwsodvtzP
+ LEtWNXx/TzDHopCka4wAQCcr5/JeXwnAJAdWVqcqYT02Hj/4w5CxXfcOyoRd0iZyPAkZOIeznF8
+ b7RsWKxjUxIbt9kvf3Dm10vwwm
+X-Received: by 2002:a05:7300:8622:b0:2e2:a4ba:84ae with SMTP id
+ 5a478bee46e88-2ed198bf616mr2544577eec.25.1777489549601; 
+ Wed, 29 Apr 2026 12:05:49 -0700 (PDT)
+X-Received: by 2002:a05:7300:8622:b0:2e2:a4ba:84ae with SMTP id
+ 5a478bee46e88-2ed198bf616mr2544513eec.25.1777489548910; 
+ Wed, 29 Apr 2026 12:05:48 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2ed1c070beesm3442349eec.14.2026.04.29.12.05.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 29 Apr 2026 12:05:48 -0700 (PDT)
+Message-ID: <18567655-8712-459c-8d13-dc656ed4405b@oss.qualcomm.com>
+Date: Wed, 29 Apr 2026 12:05:44 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: KVM/QEMU community call 28/4/2026 agenda items?
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
+ Alessandro Di Federico <ale@rev.ng>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Anton Johansson <anjo@rev.ng>, Markus Armbruster <armbru@redhat.com>,
+ Brian Cain <bcain@quicinc.com>,
+ Chao Peng <chao.p.peng@linux.intel.com>, cjia@nvidia.com,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, cw@f00f.org,
+ Stefan Hajnoczi <stefanha@gmail.com>,
+ Demi Marie Obenour <demiobenour@gmail.com>, dhedde@kalrayinc.com,
+ Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Auger Eric <eric.auger@redhat.com>, felipe@nutanix.com,
+ Alyssa Ross <hi@alyssa.is>, iggy@theiggy.com,
+ Warner Losh <imp@bsdimp.com>, jacob.oursland@gmail.com,
+ Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
+ jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>,
+ Joao Martins <joao.m.martins@oracle.com>,
+ Konrad Rzeszutek Wilk <konrad.wilk@oracle.com>,
+ Luc Michel <luc@lmichel.fr>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@gmail.com>,
+ matthieu@minio.io, Max Chou <max.chou@sifive.com>,
+ Mark Burton <mburton@qti.qualcomm.com>, mdean@redhat.com,
+ "Ho, Nelson" <nelson.ho@windriver.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
+ Bernhard Beschow <shentey@gmail.com>, Thomas Huth <thuth@redhat.com>,
+ Wei Wang <wei.w.wang@intel.com>, z.huo@139.com,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
+References: <874il05rwo.fsf@draig.linaro.org>
+ <ce906d97-7022-4671-8590-2f8f58b098bf@linaro.org>
+ <e341ea82-5389-4e13-9fb5-a00c3383da85@oss.qualcomm.com>
+ <afIZYIgaAZiQ6xQu@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <afIZYIgaAZiQ6xQu@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid,suse.de:email];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 4EC176A815
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Proofpoint-GUID: _R-fl78zTGItdVLDgxuOJONTTdFT235i
+X-Authority-Analysis: v=2.4 cv=eeANubEH c=1 sm=1 tr=0 ts=69f2568e cx=c_pps
+ a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=nXA5WNwiAAAA:8 a=IvsrRCchTg0M033JI4YA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=6Ab_bkdmUrQuMsNx7PHu:22 a=fGr-7aqQv4RST94IA8XU:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDE4OSBTYWx0ZWRfX5X1urjMTC+p4
+ CqXuyPOF8zBE4NpvBgYaBElZ5SUDI8T8HMRp2wl/YNp/7DUcCeC2KaWmfbcv9i1VWMt0dMZ9V5x
+ YDFLhjnrebXOz3ASgFtH0wp9zPyusHtZ287/VdZ6+DgkNLatd3Wuw+I1ez40NZc88z00HDk1Vi0
+ OeFoJrUIMryhcttEQsU+SB9gAVJBQqn1knRUxITExpISv0prYf1q4x1iH6FU+s8u496snkz1116
+ nGGpMYSSnvNZawFJMuNfgVrSEqoHGksJl7nWTanjJvUTQLojzZzm3A1oT4peHw44TUvrzwwthu8
+ zJeO7rLMYrO7kgZ3OJmUjTJfX8lxlZhk4C5tBW4m2xjwO+P0bwfEkGkh/ihBti/o4oZbL/AKDWt
+ zrXQGqmhwylBKqlKLStP9y6knjSASMU6cpMBhqZbwYkNPJmmfnplra3jrkYqWM/zpPiVMXWIhwf
+ zfpKr9ZCBqrJfNGpaDQ==
+X-Proofpoint-ORIG-GUID: _R-fl78zTGItdVLDgxuOJONTTdFT235i
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-29_01,2026-04-28_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 clxscore=1015 malwarescore=0 impostorscore=0
+ phishscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604290189
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,247 +192,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The dbus-vmstate-test has been disabled for years. Here's the things
-that have changed in the meantime and how to update the test:
+On 4/29/2026 7:44 AM, Daniel P. Berrangé wrote:
+> On Fri, Apr 24, 2026 at 12:31:06PM -0700, Pierrick Bouvier wrote:
+>> On 4/24/2026 8:40 AM, Philippe Mathieu-Daudé wrote:
+>>> Hi,
+>>>
+>>> On 24/4/26 16:55, Alex Bennée wrote:
+>>>
+>>>> The KVM/QEMU community call is at:
+>>>>
+>>>> https://meet.jit.si/kvmcallmeeting
+>>>> @
+>>>> 28/04/2026 14:00 UTC
+>>>>
+>>>> Are there any agenda items for the sync-up?
+>>>
+>>> I'd like to have a discussion with Stefan and Pierrick about the
+>>> possible improvements that can be done on our CI system, and
+>>> review our git-forge use in general.
+>>>
+>>
+>> That's a nice topic I would be happy to talk about with all of you.
+>>
+>>> Pierrick: Stefan is available this Tuesday, are you?
+>>>
+>>
+>> It would be 6am on my side, which is too early sorry.
+>>
+>> However, I would be very happy to talk about it in private with Stefan and
+>> you, and other people interested in this specific topic.
+>>
+>> I just feel it will be a conversation that may derail very easily with many
+>> people participating, and it would be better to restrict it to people very
+>> enthusiastic about it first.
+>>
+>> Once we have a concrete plan, we can share it more widely and deal with
+>> critics and see what can really be done.
+> 
+> Can we please keep the discussions in public. Yes, sometimes the threads
+> can derail, but that's just a characteristic of our open collaboration
+> process. Switching to private design and then presenting a solution is
+> not the way to work in the community.
+>
 
-- Migration tests got new headers.
-Update the includes.
+Sorry for the misunderstanding. The goal was not to do anything in
+"secret" among a chosen group of people, but to restrict it to people
+who are enthusiastic about this change. Anyone (including you :)) who
+wants to join in early conversations is welcome. See it as working group
+in the wider community.
 
-- migrate_qmp got new parameters.
-Update the caller.
+This way, we can focus on proper benefits/downsides of the approach,
+instead of having to manage fear of change. It's just a different
+audience to approach this topic.
 
-- migrate_incoming_qmp is now used instead of -incoming URL.
-Use -incoming defer.
+As well, the format, an oral conversation, is not a good match for a
+subject that might derail easily. It would work better with a written
+conversation, but we need a first email with content to start this.
 
-- Tests expecting failure should not check non-zero return code.
-Check for failed migration state instead.
+That's why we need a first concrete "plan"/"proposal", to get something
+to start from. It's not supposed to be a final solution, quite the
+opposite actually.
 
-- The test result enum was introduced.
-Replace the migration_fail flag with the enum.
+> With regards,
+> Daniel
+> 
 
-- The DEVICE state was added.
-Replace wait_for_migration_complete with migration_event_wait, which
-won't trip on intermediary states.
-
-- Migration completion was reworked.
-Explicitly wait for the RESUME event before asserting runstate is
-RUNNING to avoid checking too quickly and seeing FINISH_MIGRATE
-instead.
-
-- The FAILING state was added.
-Wait for it before waiting for the RESUME event.
-
-- Sanity checks were added to migration_get_env().
-Start calling that function in main.
-
-- qtest_add_func now has a wrapper.
-Replace qtest_add_func with migration_test_add. Update tests'
-signatures to take MigrationCommon, although it's unused.
-
-- meson now sets up G_TEST_DBUS_DAEMON.
-Remove the logic around it.
-
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/dbus-vmstate-test.c | 71 +++++++++++++++++++--------------
- tests/qtest/meson.build         |  7 +++-
- 2 files changed, 46 insertions(+), 32 deletions(-)
-
-diff --git a/tests/qtest/dbus-vmstate-test.c b/tests/qtest/dbus-vmstate-test.c
-index 0a82cc9f93..90c050b448 100644
---- a/tests/qtest/dbus-vmstate-test.c
-+++ b/tests/qtest/dbus-vmstate-test.c
-@@ -2,8 +2,8 @@
- #include <glib/gstdio.h>
- #include <gio/gio.h>
- #include "libqtest.h"
-+#include "migration/migration-qmp.h"
- #include "dbus-vmstate1.h"
--#include "migration-helpers.h"
- 
- static char *workdir;
- 
-@@ -29,7 +29,7 @@ typedef struct TestServer {
- 
- typedef struct Test {
-     const char *id_list;
--    bool migrate_fail;
-+    int result;
-     bool without_dst_b;
-     TestServer srcA;
-     TestServer dstA;
-@@ -190,6 +190,7 @@ test_dbus_vmstate(Test *test)
-     g_autofree char *uri = NULL;
-     QTestState *src_qemu = NULL, *dst_qemu = NULL;
-     guint ownsrcA, ownsrcB, owndstA, owndstB;
-+    QTestMigrationState src_state = { };
- 
-     uri = g_strdup_printf("unix:%s/migsocket", workdir);
- 
-@@ -224,17 +225,33 @@ test_dbus_vmstate(Test *test)
- 
-     src_qemu = qtest_init(src_qemu_args);
-     dst_qemu = qtest_init(dst_qemu_args);
-+
-+    migrate_set_capability(src_qemu, "events", true);
-+    qtest_qmp_set_event_callback(src_qemu, migrate_watch_for_events,
-+                                 &src_state);
-+
-     set_id_list(test, src_qemu);
-     set_id_list(test, dst_qemu);
- 
-     thread = g_thread_new("dbus-vmstate-thread", dbus_vmstate_thread, loop);
- 
-     migrate_incoming_qmp(dst_qemu, uri, NULL, "{}");
--    migrate_qmp(src_qemu, uri, "{}");
-+    migrate_ensure_converge(src_qemu);
-+    migrate_qmp(src_qemu, NULL, uri, NULL, "{}");
-     test->src_qemu = src_qemu;
--    if (test->migrate_fail) {
--        wait_for_migration_fail(src_qemu, true);
--        qtest_set_expected_status(dst_qemu, EXIT_FAILURE);
-+
-+    if (test->result != MIG_TEST_SUCCEED) {
-+        QDict *rsp;
-+
-+        migration_event_wait(src_qemu, "failing");
-+        wait_for_resume(src_qemu, &src_state);
-+        migration_event_wait(src_qemu, "failed");
-+
-+        rsp = qtest_qmp_assert_success_ref(src_qemu,
-+                                           "{ 'execute': 'query-status' }");
-+        g_assert(qdict_haskey(rsp, "running"));
-+        g_assert(qdict_get_bool(rsp, "running"));
-+        qobject_unref(rsp);
-     } else {
-         wait_for_migration_complete(src_qemu);
-     }
-@@ -270,7 +287,7 @@ check_migrated(TestServer *s, TestServer *d)
- }
- 
- static void
--test_dbus_vmstate_without_list(void)
-+test_dbus_vmstate_without_list(char *name, MigrateCommon *args)
- {
-     Test test = { 0, };
- 
-@@ -281,7 +298,7 @@ test_dbus_vmstate_without_list(void)
- }
- 
- static void
--test_dbus_vmstate_with_list(void)
-+test_dbus_vmstate_with_list(char *name, MigrateCommon *args)
- {
-     Test test = { .id_list = "idA,idB" };
- 
-@@ -292,7 +309,7 @@ test_dbus_vmstate_with_list(void)
- }
- 
- static void
--test_dbus_vmstate_only_a(void)
-+test_dbus_vmstate_only_a(char *name, MigrateCommon *args)
- {
-     Test test = { .id_list = "idA" };
- 
-@@ -303,9 +320,10 @@ test_dbus_vmstate_only_a(void)
- }
- 
- static void
--test_dbus_vmstate_missing_src(void)
-+test_dbus_vmstate_missing_src(char *name, MigrateCommon *args)
- {
--    Test test = { .id_list = "idA,idC", .migrate_fail = true };
-+    Test test = { .id_list = "idA,idC",
-+        .result = MIG_TEST_FAIL };
- 
-     /* run in subprocess to silence QEMU error reporting */
-     if (g_test_subprocess()) {
-@@ -320,11 +338,11 @@ test_dbus_vmstate_missing_src(void)
- }
- 
- static void
--test_dbus_vmstate_missing_dst(void)
-+test_dbus_vmstate_missing_dst(char *name, MigrateCommon *args)
- {
-     Test test = { .id_list = "idA,idB",
-                   .without_dst_b = true,
--                  .migrate_fail = true };
-+                  .result = MIG_TEST_FAIL };
- 
-     /* run in subprocess to silence QEMU error reporting */
-     if (g_test_subprocess()) {
-@@ -343,15 +361,8 @@ int
- main(int argc, char **argv)
- {
-     GError *err = NULL;
--    g_autofree char *dbus_daemon = NULL;
-     int ret;
- 
--    dbus_daemon = g_build_filename(G_STRINGIFY(SRCDIR),
--                                   "tests",
--                                   "dbus-vmstate-daemon.sh",
--                                   NULL);
--    g_setenv("G_TEST_DBUS_DAEMON", dbus_daemon, true);
--
-     g_test_init(&argc, &argv, NULL);
- 
-     workdir = g_dir_make_tmp("dbus-vmstate-test-XXXXXX", &err);
-@@ -362,16 +373,16 @@ main(int argc, char **argv)
- 
-     g_setenv("DBUS_VMSTATE_TEST_TMPDIR", workdir, true);
- 
--    qtest_add_func("/dbus-vmstate/without-list",
--                   test_dbus_vmstate_without_list);
--    qtest_add_func("/dbus-vmstate/with-list",
--                   test_dbus_vmstate_with_list);
--    qtest_add_func("/dbus-vmstate/only-a",
--                   test_dbus_vmstate_only_a);
--    qtest_add_func("/dbus-vmstate/missing-src",
--                   test_dbus_vmstate_missing_src);
--    qtest_add_func("/dbus-vmstate/missing-dst",
--                   test_dbus_vmstate_missing_dst);
-+    migration_test_add("/dbus-vmstate/without-list",
-+                       test_dbus_vmstate_without_list);
-+    migration_test_add("/dbus-vmstate/with-list",
-+                       test_dbus_vmstate_with_list);
-+    migration_test_add("/dbus-vmstate/only-a",
-+                       test_dbus_vmstate_only_a);
-+    migration_test_add("/dbus-vmstate/missing-src",
-+                       test_dbus_vmstate_missing_src);
-+    migration_test_add("/dbus-vmstate/missing-dst",
-+                       test_dbus_vmstate_missing_dst);
- 
-     ret = g_test_run();
- 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index b735f55fc4..0d04e2cbaa 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -126,10 +126,12 @@ if dbus_daemon.found() and gdbus_codegen.found()
-   # Temporarily disabled due to Patchew failures:
-   #qtests_i386 += ['dbus-vmstate-test']
-   dbus_vmstate1 = custom_target('dbus-vmstate description',
--                                output: ['dbus-vmstate1.h', 'dbus-vmstate1.c'],
-+                                build_by_default: true,
-+                                output: [ 'dbus-vmstate1.h', 'dbus-vmstate1.c'],
-                                 input: meson.project_source_root() / 'backends/dbus-vmstate1.xml',
-                                 command: [gdbus_codegen, '@INPUT@',
-                                           '--interface-prefix', 'org.qemu',
-+                                          '--output-directory', meson.current_build_dir(),
-                                           '--generate-c-code', '@BASENAME@']).to_list()
- else
-   dbus_vmstate1 = []
-@@ -385,7 +387,8 @@ qtests = {
-   'bios-tables-test': [io, 'boot-sector.c', 'acpi-utils.c', 'tpm-emu.c'],
-   'cdrom-test': files('boot-sector.c'),
-   'dbus-vmstate-test': files('migration/migration-qmp.c',
--                             'migration/migration-util.c') + dbus_vmstate1,
-+                             'migration/migration-util.c') + dbus_vmstate1 +
-+                       [gio],
-   'erst-test': files('erst-test.c'),
-   'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
-   'migration-test': test_migration_files + migration_tls_files + migration_colo_files,
--- 
-2.51.0
-
+Regards,
+Pierrick
 
