@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8202FF887E
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 14:48:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2E16CD13CF
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 14:48:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI6C9-0004ry-Rz; Wed, 29 Apr 2026 10:47:21 -0400
+	id 1wI6CC-00051K-GN; Wed, 29 Apr 2026 10:47:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bs-0004VD-EA
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:47:06 -0400
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bv-0004Zm-Dk
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:47:10 -0400
+Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bp-0004Zf-Ss
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:47:04 -0400
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-7dbccf6a23dso9848527a34.2
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 07:47:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bs-0004bI-7b
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:47:05 -0400
+Received: by mail-ot1-x329.google.com with SMTP id
+ 46e09a7af769-7dca00c1591so4077156a34.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 07:47:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777474020; x=1778078820;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777474023; x=1778078823;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=BKC2bjWi/SrtpYK3J2TKDXq3sEnsuUf9zoPfckC3H0A=;
- b=HLzElVufIzTpXirk0VUUF3uTPnxqhPN0ndLBAu70pW7AOD5Htrq+nh1rSOBPv2wa0D
- MyXIT2oD7bZG0uZKOuEvj52vWPjWYf+W+JITdeHOMblyUV3vsSZ8N6ak2sN3MpIpzZOE
- Em8FOc2FaLDm57bALEnqeZB6SSBxUAcBGVgcGrg0qHS2jbFtoEXiW3f79xum8PFwOEAC
- wJ2SCCjH93F6XKMUQeimPeR5yuKR699KXb6MYHEkkNPgFGBM2mMZC5yGDd2rlMdtJIl4
- NU1NoIwGgmMG/yvfXZxcQ9Y8N7hn0r+gWjBEIDHh+ZZDAbDu1RT8SHb0qIW2YKZ9poxj
- KA8Q==
+ :reply-to; bh=OG67MzhAjbi8mtn9vqr3Qx3q3JjHQoONM9JlGgCF1mM=;
+ b=GYbN90h+6deHBUN4IE7AWXogzHSM7qpcdHJ4qR9GWJYr1Nrsts/8ZUZQiunaodndIU
+ +RRw4XDILQfEdHlpYxEMl+g8m9kXSW41grya/SlKcJWqAfAvsw7mQ8EttCkE42Xm9z0J
+ BERpiPBe7bsqQ+zskkSN0/bLGtNVjZG8vSXADrSBjaTiD0sWPHNCqqzE9NISjQHrHX45
+ CMjKLgUb+bT4Fxc/VCuVrRID4gCGNa02T2nWHgBXH7uNa32oVeuJjMIBwYyx+dej6A37
+ dXMnINxQD9QxriDnINf4swQyYaCHI5DwdfzT44HJcQRmuqWNL1k7KakGAxVhy0DTj/O4
+ i3Ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777474020; x=1778078820;
+ d=1e100.net; s=20251104; t=1777474023; x=1778078823;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=BKC2bjWi/SrtpYK3J2TKDXq3sEnsuUf9zoPfckC3H0A=;
- b=eSI3zpCtdsiXnyohMy6MP3KLFiAfhbhU3h3LlX6XNi6voNhsg5PsktFMwNteAv9gRa
- AmD5jlc017b16NgEWx+LKF7RkJGj5q5mEaO9vUmecqCUU9eRQHlgg+5mSfqzmQsBM4p9
- aLNmZ4dczJjO037gYYkVdPzpm0Oy4ZETQPsID0S+BBa+Er6LEVR7Y5d2AuyyulNWTtq9
- Hqu9HP6E+gMVJtCv9TQ7aFzGJl8VkVavFRHHr6stpyZwN7BsyMluyIzmVlr4KWROInZN
- g91a7BDIZwA+Z4dxBPu4jRBARYSuYZAOYlURWOYI4+X1O7jMgcnxPSvUxzzXwuU45XwJ
- SXRw==
-X-Gm-Message-State: AOJu0Yz1RziieAsB9McaLDZwqFX5GNyX9/p9/6CSmnIk3ddRtTKGe9BT
- 8SgeU0mDhgwyY4MLzNJSjlpAEeclC2ofNCIY51fDECWT0jTPrPA4yJdBoMy7wLkgE68=
-X-Gm-Gg: AeBDietCGPRbWeLSs3csSiBy0SE9a+NB3fimOWDqEbEEbPZhafV5h+DfHkMeD1iy92Z
- G5IcyRGvQzBC8BrMuKhOL8Ci1YtXQA4Bia7OYUrnqg4x4kiUShCtDYCxF2wnFmT3iVnqOtbnTAs
- 4n+G2YZgfU9wLhr1SJ2TqZmuSinWCjDPZ02Qrj4DK1Ig9hJgeoY4eJsZbIWU1cRRmiSdx2ZpElK
- rV4SwIOjN982O+S2Qu9D06QH3iLOXEB0twAKArvz7V/NYaHzeGwxw+Iw7kHTds+Xig2ZCh0GS6P
- gMPnFd7RY5tHEkhVcCyZn7ayDxdchLnnChhbxeJsbMlzo6bsgBq4z0g1WivRv8P/At9fVajUJOY
- 1LZ2BhmqFtNPn5dFcYrwwvEpFnZD56FQQ8ny5e2YtQV8JSj8yfmlmMTMzUK8i48FXUzX+ytKzb+
- 0+6S4dPNEz1KrlTK7qXDyt
-X-Received: by 2002:a05:6820:1886:b0:67e:160c:36ba with SMTP id
- 006d021491bc7-6965cb7f189mr4184371eaf.48.1777474019766; 
- Wed, 29 Apr 2026 07:46:59 -0700 (PDT)
+ bh=OG67MzhAjbi8mtn9vqr3Qx3q3JjHQoONM9JlGgCF1mM=;
+ b=hMkCXvxcnI5xoOh+ET7XFMAhXnhCLhSeGshejNh9Tdy/uTxU9DzSVQLfB9v9qzsodF
+ TRqVQtFIE62rv67S74hX/dzWB9Iwm6n9tVRmLJkc4nQW36D7tFWHOXy1gUwuJ76I3lQV
+ lm28bsfnyGbQFMAHW5mwOenu0f7YMJWnbcZA4caa3ewf0KbRwo5QomsXSTEwj99U4aYG
+ KzCVo1I/qqEfbyOXCdDg3OOpYUt1GizXpu3i1EK+H7JQaj/mx+/XEZZaPIxJLZA29NNU
+ 7fZaWaiS0qgkVwIqeYHGAeXRQdvrX/6VLUpfg3yRAv6KDGFzH5AtFB0849U6XW7f2P7C
+ Arfw==
+X-Gm-Message-State: AOJu0YzrxGOZBKvnmUVmFxzvWxNomKS1lz8NrGB2F4VwtZb0lEeDRdv5
+ 4R15jAyYRmKCQd6mJ4hBTyjNsMg2/km5HJ3pFr+2p+TEzMtQf8oygQ+modk4GFrghLDHTU7+lIQ
+ TtFFG7jQ=
+X-Gm-Gg: AeBDievhA4Edo8IWqJVdfYtkL+P27u/guezOT2c/HBCXtrMBsV1qv8KPJdYOH3Oqk6N
+ 06dFSHwPaW4ZDlqKSyZa/yJf/pMbn9ridWGHov8PI0zlodd8MU/J9dFEFI7V5k+v4VvNeIlW+uZ
+ ZeBYkNLJm6017pKisCUBTjZgjXpLSHSM0crNAypuudK2F2wSZXfP+BUXp01B6MLjpdwoUTHVJcq
+ 45lBvbTbWWTTwz7N5KPr29pvd9VrDesXbpT5qS/biDIH/9smZfGFCNvbn8ya2qgl7lG+Ak7PdOq
+ KOQPTow4ulpj/52dj9Cozi1bIfI0/weanFx92ZOwrIoCukcmngiA3b9mgj3+HRx5NraOjO+surn
+ mngRNYMckzARbrk5hTkQECimxkkFt5/B2Ic8vdB129V15Ikgu3Q9uowxLXaT4DYCwrLngSoj0Ma
+ JAyDK09Ba+dybYENowG6JZ
+X-Received: by 2002:a05:6820:a28b:10b0:696:749e:5ce9 with SMTP id
+ 006d021491bc7-696749e617amr208806eaf.46.1777474023026; 
+ Wed, 29 Apr 2026 07:47:03 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6966b93d58csm1313984eaf.0.2026.04.29.07.46.58
+ 006d021491bc7-6966b93d58csm1313984eaf.0.2026.04.29.07.47.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 07:46:58 -0700 (PDT)
+ Wed, 29 Apr 2026 07:47:02 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Wed, 29 Apr 2026 08:45:14 -0600
-Subject: [PATCH v2 08/17] bsd-user: Add FreeBSD ioctl command table
+Date: Wed, 29 Apr 2026 08:45:17 -0600
+Subject: [PATCH v2 11/17] bsd-user: Add bsd-ioctl.c infrastructure and
+ termios conversion
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260429-ioctl-v2-8-288639bc2427@bsdimp.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260429-ioctl-v2-11-288639bc2427@bsdimp.com>
 References: <20260429-ioctl-v2-0-288639bc2427@bsdimp.com>
 In-Reply-To: <20260429-ioctl-v2-0-288639bc2427@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -76,32 +78,32 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, "Stacey D. Son" <sson@freebsd.org>, 
- Alexander Kabaev <kan@FreeBSD.org>
+ Sean Bruno <sbruno@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6990; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=NmJqk3FSVLIKDs2qsRfZvQlgCcX5khfFeERHrIqG7cM=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp8hl9qrjhVui8SBbbbR+nMEWkWB5CVAma2l+7s
- 6muIUcuLxGJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafIZfQAKCRBsHNEofbAR
- ALLoD/9Ov4nOOz2T3A2N3DcEVTpQoQv72bpaDYsXISWSaKVQL3FYvHXQxCQ4AD45yOBm10I96wa
- DZADT+AdqU6XTln5QesYg7Ma5lTH9RpEXZVcogmoE6AHJebz6vq413kyROG3fu9FO0yl9S1ZZYd
- DyfulXe3I3LbCMa6MfCzb6D9nVrWCW6GdMrlil6SGCtlYTb7NWW3/C9EYS+XIJWewN9q8O58Nus
- 0fGIus5E1nqs+Sop4VJmrhc2bWVlVMLNSwuXiqbkn3CGxqnI1JPzCLRkKpv7pGYJARir2Xkcy9k
- viIXjSxKsKT7GnC0AOJBj5IFAzcBfRZl7JlZ5tKapSZ/S5S9LVK2g+RIN11ePljxPmW1+t18fcQ
- V69aIo9SmPru0PnL50eEF/KucdOyLYQjzVst3ZaTSe8eIMn4nO6ubr04AYC6tYro01Ndi+iMngi
- 8dmzheUMWP1GuGdnIEFuvYRu5rWe0OCdAhl2JuoXKGu89DH4JWQC4IBzhy24TxfJhiDbEkgqXnI
- rgx5B7tcIcXmTBtuNL18s+867+a7iBSPXP50hT3aTleUrR5CrAFcvw/ZWAY25ymmmWnOaadIlvn
- Al+cHRiMHUu3o8YRAjz6OybjsundbuTd7StnsmgA2Mk0qU5n821NL/yPO43jiVa19ELlue8iL0T
- 0KIhyVU5qwSVDxA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8449; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=bk41F2WqzI69O5FRTdWBtdF3GnnfoknoNTPXwZvfnHA=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp8hl9he6R4syuh7oIwIg858d2JphYS+VQdWy8x
+ 9IccXSexYaJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafIZfQAKCRBsHNEofbAR
+ ADY9EACB4pk29fwUBYbl3zbFBOZzMfBNyXzOHfLVyVGrmLBT/ZSfC9eeyI919+RZwGbN/ZbbiFr
+ 8Xl9j0JSq1kCDpV2X7yZyRPA2NtOJP2IjIi/Uw2WZ8I2V0XIvrttHUEhKA09mYQHqQhwUu0QNXo
+ D1R2PVdiIR1M303RgBhcO4Dlppfl1mWr9K/gAp93fLojwzTaOUmiSJDqLyoNUZviTqYlMm42gOL
+ 5Lb6DsoH88eVwdh2dIe6cBIKeHuwYebLoB6jLoi/pTbIYb5/D52Mqmmdnsm4Wws0pK9TFBxFyUU
+ X/UMNg97XAwSkDJMAxyh8Ug+3vwM32/Iwy560Y+/sGD4SL9euON0h1nI95i6OcL9m2t5NhVyy6h
+ M6YWLzoTfoef/kg5QXe6t9KGKJsW+FEEBdkm2K2jAOqUm0QX5eGXzwbBIL720BGsF20/FS96JFR
+ 9Skbr5b3scsu+fknaxThtR26Xqk9vx4ZP+eI6A3eYgA6onzD4KDE1ydbYrqqyqvW7ShOGBdHMFX
+ OF86p5kvZJflZCtW6hE3m0/J/KYV9YG7mtwiAlfrAWk0wWXLzK/SVIzWbGkJHuhYGkr9bfOmK7N
+ bN98UozsTvKwJJvMjI0SSWeCeLQDp/Tz7MZfRFJvz7saMTde+fKcfAYqyZnqugPZEV2Ii6XrUuE
+ CuDc0JM+43iBx6w==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::32a;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x32a.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::329;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x329.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
 X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001, UPPERCASE_50_75=0.008 autolearn=no autolearn_force=no
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,176 +119,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Stacey D. Son" <sson@freebsd.org>
+Add initial bsd-ioctl.c file with termios conversion functions,
+structure type definitions, and ioctl table infrastructure.
+Includes target_to_host_termios and host_to_target_termios for
+terminal I/O control conversion, along with the ioctl dispatch
+table framework.
 
-Add os-ioctl-cmds.h containing the complete ioctl command table
-mapping TARGET_* ioctl commands to their handlers. Uses IOCTL and
-IOCTL_SPECIAL macros for table generation.
+Style complains about STRUCT and STRUCT_SPECIAL defines:
+  ● checkpatch.pl: 197: ERROR: Macros with complex values should be enclosed in parenthesis
+  ● checkpatch.pl: 198: ERROR: Macros with complex values should be enclosed in parenthesis
+but that's fine. We are doing weird things with macros, and it's fine.
+We can't put parens or do while (0) around these since they are table
+building macros for files that are included multiple times.
 
 Signed-off-by: Stacey D. Son <sson@freebsd.org>
-Signed-off-by: Alexander Kabaev <kan@FreeBSD.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
+Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
 ---
- bsd-user/freebsd/os-ioctl-cmds.h | 151 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 151 insertions(+)
+ bsd-user/bsd-ioctl.c | 221 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 221 insertions(+)
 
-diff --git a/bsd-user/freebsd/os-ioctl-cmds.h b/bsd-user/freebsd/os-ioctl-cmds.h
+diff --git a/bsd-user/bsd-ioctl.c b/bsd-user/bsd-ioctl.c
 new file mode 100644
-index 0000000000..359e0dbe08
+index 0000000000..32fa9c3d33
 --- /dev/null
-+++ b/bsd-user/freebsd/os-ioctl-cmds.h
-@@ -0,0 +1,151 @@
++++ b/bsd-user/bsd-ioctl.c
+@@ -0,0 +1,221 @@
 +/*
-+ * FreeBSD file related system call shims and definitions
++ * BSD ioctl(2) emulation
 + *
-+ * Copyright (c) 2014 Stacey D. Son
++ * Copyright (c) 2013-2015 Stacey D. Son
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
++#include "qemu/osdep.h"
 +
-+/* sys/ttycom.h tty(4) */
-+IOCTL(TIOCSETD, IOC_W, MK_PTR(TYPE_INT))
-+IOCTL(TIOCGETD, IOC_R, MK_PTR(TYPE_INT))
-+IOCTL(TIOCSBRK, IOC_, TYPE_NULL)
-+IOCTL(TIOCCBRK, IOC_, TYPE_NULL)
-+IOCTL(TIOCSDTR, IOC_, TYPE_NULL)
-+IOCTL(TIOCCDTR, IOC_, TYPE_NULL)
-+IOCTL(TIOCGPGRP, IOC_R, MK_PTR(TYPE_INT))
-+IOCTL(TIOCSPGRP, IOC_W, MK_PTR(TYPE_INT))
-+IOCTL(TIOCGETA, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios)))
-+IOCTL(TIOCSETA, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios)))
-+IOCTL(TIOCSETAW, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios)))
-+IOCTL(TIOCSETAF, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios)))
-+IOCTL(TIOCPTMASTER, IOC_, TYPE_NULL)
-+IOCTL(TIOCOUTQ, IOC_R, MK_PTR(TYPE_INT))
-+IOCTL(TIOCSTI, IOC_W, MK_PTR(TYPE_CHAR))
-+IOCTL(TIOCNOTTY, IOC_, TYPE_NULL)
-+IOCTL(TIOCSTOP, IOC_, TYPE_NULL)
-+IOCTL(TIOCSTART, IOC_, TYPE_NULL)
-+IOCTL(TIOCPKT, IOC_W, MK_PTR(TYPE_INT))
-+IOCTL(TIOCSCTTY, IOC_, TYPE_NULL)
-+IOCTL(TIOCDRAIN, IOC_, TYPE_NULL)
-+IOCTL(TIOCEXCL, IOC_, TYPE_NULL)
-+IOCTL(TIOCNXCL, IOC_, TYPE_NULL)
-+IOCTL(TIOCFLUSH, IOC_W, MK_PTR(TYPE_INT))
-+IOCTL(TIOCGWINSZ, IOC_R, MK_PTR(MK_STRUCT(STRUCT_winsize)))
-+IOCTL(TIOCSWINSZ, IOC_W, MK_PTR(MK_STRUCT(STRUCT_winsize)))
-+IOCTL(TIOCCONS, IOC_W, MK_PTR(TYPE_INT))
-+IOCTL(TIOCMSET, IOC_W, MK_PTR(TYPE_INT))
-+IOCTL(TIOCMGET, IOC_R, MK_PTR(TYPE_INT))
-+IOCTL(TIOCMBIS, IOC_W, MK_PTR(TYPE_INT))
-+IOCTL(TIOCMBIC, IOC_W, MK_PTR(TYPE_INT))
++#include <sys/types.h>
++#include <sys/param.h>
++#include <sys/disk.h>
++#include <sys/ioccom.h>
++#include <sys/ioctl.h>
++#include <sys/sockio.h>
++#include <sys/_termios.h>
++#include <sys/ttycom.h>
++#include <sys/filio.h>
 +
-+/* sys/filio.h */
-+IOCTL(FIOCLEX, IOC_, TYPE_NULL)
-+IOCTL(FIONCLEX, IOC_, TYPE_NULL)
-+IOCTL(FIONREAD, IOC_R, MK_PTR(TYPE_INT))
-+IOCTL(FIONBIO, IOC_W, MK_PTR(TYPE_INT))
-+IOCTL(FIOASYNC, IOC_W, MK_PTR(TYPE_INT))
-+IOCTL(FIOSETOWN, IOC_W, MK_PTR(TYPE_INT))
-+IOCTL(FIOGETOWN, IOC_R, MK_PTR(TYPE_INT))
-+IOCTL(FIODTYPE, IOC_R, MK_PTR(TYPE_INT))
-+IOCTL(FIOGETLBA, IOC_R, MK_PTR(TYPE_INT))
-+IOCTL(FIODGNAME, IOC_W, MK_PTR(MK_STRUCT(STRUCT_fiodgname_arg)))
-+IOCTL(FIONWRITE, IOC_R, MK_PTR(TYPE_INT))
-+IOCTL(FIONSPACE, IOC_R, MK_PTR(TYPE_INT))
-+IOCTL(FIOSEEKDATA, IOC_RW, MK_PTR(TYPE_ULONG))
-+IOCTL(FIOSEEKHOLE, IOC_RW, MK_PTR(TYPE_ULONG))
++#include <crypto/cryptodev.h>
 +
-+/* crypto/cryptodev.h */
-+IOCTL_SPECIAL(CIOCGSESSION, IOC_RW, do_ioctl_unsupported, TYPE_INT)
-+IOCTL_SPECIAL_UNIMPL(CRIOGET, IOC_RW, do_ioctl_unsupported, TYPE_INT)
++#include <net/ethernet.h>
++#include <net/if.h>
++#include <net/if_var.h>
++#include <net/if_types.h>
++#include <net/route.h>
++#include <net/if_dl.h>
++#include <net/if_gif.h>
++#include <net/if_gre.h>
++#include <net/if_lagg.h>
++#include <net/if_media.h>
++#include <net/pfvar.h>
++#include <net/if_pfsync.h>
++#include <net/ethernet.h>
++#include <netinet/icmp6.h>
++#include <netinet/in.h>
++#include <netinet/ip_carp.h>
++#include <netinet6/in6_var.h>
++#include <netinet6/nd6.h>
++#include <net80211/ieee80211_ioctl.h>
 +
-+/* netinet6/in6_var.h */
-+IOCTL_SPECIAL(SIOCGIFAFLAG_IN6, IOC_RW, do_ioctl_in6_ifreq_sockaddr_int,
-+    MK_PTR(MK_STRUCT(STRUCT_in6_ifreq_int)))
-+IOCTL_SPECIAL(SIOCGIFALIFETIME_IN6, IOC_RW, do_ioctl_in6_ifreq_sockaddr_int,
-+    MK_PTR(MK_STRUCT(STRUCT_in6_ifreq_int)))
-+IOCTL(SIOCGIFPSRCADDR_IN6, IOC_RW,
-+    MK_PTR(MK_STRUCT(STRUCT_in6_ifreq_sockaddr_in6)))
-+IOCTL(SIOCGIFINFO_IN6, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_in6_ndireq)))
-+IOCTL(SIOCGDEFIFACE_IN6, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_in6_ndifreq)))
++#include <stdio.h>
 +
-+/* sys/disk.h */
-+IOCTL(DIOCGSECTORSIZE, IOC_R, MK_PTR(TYPE_INT))
-+IOCTL(DIOCGMEDIASIZE, IOC_R, MK_PTR(TYPE_LONGLONG))
++#include "qemu.h"
 +
-+/* sys/sockio.h */
-+IOCTL_SPECIAL(SIOCGIFMAC, IOC_RW, do_ioctl_unsupported,
-+    MK_PTR(MK_STRUCT(STRUCT_ifreq_int)))
++#include "syscall_defs.h"
++#include "bsd-ioctl.h"
++#include "os-ioctl-cryptodev.h"
++#include "os-ioctl-disk.h"
++#include "os-ioctl-filio.h"
++#include "os-ioctl-in6_var.h"
++#include "os-ioctl-sockio.h"
++#include "os-ioctl-ttycom.h"
 +
-+IOCTL(SIOCGIFCONF, IOC_RW, MK_PTR(MK_STRUCT(STRUCT_ifconf)))
++static void target_to_host_termios(void *dst, const void *src)
++{
++    struct termios *host = dst;
++    const struct target_termios *target = src;
 +
-+IOCTL(SIOCGIFFLAGS, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_short)))
-+IOCTL(SIOCSIFFLAGS, IOC_W, MK_PTR(MK_STRUCT(STRUCT_ifreq_short)))
++    host->c_iflag = target_to_host_bitmask(tswap32(target->c_iflag), iflag_tbl);
++    host->c_oflag = target_to_host_bitmask(tswap32(target->c_oflag), oflag_tbl);
++    host->c_cflag = target_to_host_bitmask(tswap32(target->c_cflag), cflag_tbl);
++    host->c_lflag = target_to_host_bitmask(tswap32(target->c_lflag), lflag_tbl);
 +
-+IOCTL(SIOCGIFMETRIC, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_int)))
-+IOCTL(SIOCSIFMETRIC, IOC_W, MK_PTR(MK_STRUCT(STRUCT_ifreq_int)))
-+IOCTL(SIOCGIFMTU, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_int)))
-+IOCTL(SIOCSIFMTU, IOC_W, MK_PTR(MK_STRUCT(STRUCT_ifreq_int)))
-+IOCTL(SIOCGIFINDEX, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_int)))
-+IOCTL(SIOCGIFFIB, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_int)))
-+#ifdef SIOCGTUNFIB
-+IOCTL(SIOCGTUNFIB, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_int)))
++    memset(host->c_cc, 0, sizeof(host->c_cc));
++    host->c_cc[VEOF] = target->c_cc[TARGET_VEOF];
++    host->c_cc[VEOL] = target->c_cc[TARGET_VEOL];
++#ifdef VEOL2
++    host->c_cc[VEOL2] = target->c_cc[TARGET_VEOL2];
++#endif
++    host->c_cc[VERASE] = target->c_cc[TARGET_VERASE];
++#ifdef VWERASE
++    host->c_cc[VWERASE] = target->c_cc[TARGET_VWERASE];
++#endif
++    host->c_cc[VKILL] = target->c_cc[TARGET_VKILL];
++#ifdef VREPRINT
++    host->c_cc[VREPRINT] = target->c_cc[TARGET_VREPRINT];
++#endif
++#ifdef VERASE2
++    host->c_cc[VERASE2] = target->c_cc[TARGET_VERASE2];
++#endif
++    host->c_cc[VINTR] = target->c_cc[TARGET_VINTR];
++    host->c_cc[VQUIT] = target->c_cc[TARGET_VQUIT];
++    host->c_cc[VSUSP] = target->c_cc[TARGET_VSUSP];
++#ifdef VDSUSP
++    host->c_cc[VDSUSP] = target->c_cc[TARGET_VDSUSP];
++#endif
++    host->c_cc[VSTART] = target->c_cc[TARGET_VSTART];
++    host->c_cc[VSTOP] = target->c_cc[TARGET_VSTOP];
++#ifdef VLNEXT
++    host->c_cc[VLNEXT] = target->c_cc[TARGET_VLNEXT];
++#endif
++#ifdef VDISCARD
++    host->c_cc[VDISCARD] = target->c_cc[TARGET_VDISCARD];
++#endif
++    host->c_cc[VMIN] = target->c_cc[TARGET_VMIN];
++    host->c_cc[VTIME] = target->c_cc[TARGET_VTIME];
++#ifdef VSTATUS
++    host->c_cc[VSTATUS] = target->c_cc[TARGET_VSTATUS];
 +#endif
 +
-+IOCTL(SIOCGIFCAP, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_cap)))
++    host->c_ispeed = tswap32(target->c_ispeed);
++    host->c_ospeed = tswap32(target->c_ospeed);
++}
 +
-+IOCTL(SIOCGIFADDR, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_sockaddr)))
-+IOCTL(SIOCSIFADDR, IOC_W, MK_PTR(MK_STRUCT(STRUCT_ifreq_sockaddr)))
-+IOCTL(SIOCGIFBRDADDR, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_sockaddr)))
-+IOCTL(SIOCSIFBRDADDR, IOC_W, MK_PTR(MK_STRUCT(STRUCT_ifreq_sockaddr)))
-+IOCTL(SIOCGIFDSTADDR, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_sockaddr)))
-+IOCTL(SIOCSIFDSTADDR, IOC_W, MK_PTR(MK_STRUCT(STRUCT_ifreq_sockaddr)))
-+IOCTL(SIOCGIFNETMASK, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_sockaddr)))
-+IOCTL(SIOCSIFNETMASK, IOC_W, MK_PTR(MK_STRUCT(STRUCT_ifreq_sockaddr)))
-+IOCTL(SIOCADDMULTI, IOC_W, MK_PTR(MK_STRUCT(STRUCT_ifreq_sockaddr)))
-+IOCTL(SIOCDELMULTI, IOC_W, MK_PTR(MK_STRUCT(STRUCT_ifreq_sockaddr)))
-+IOCTL(SIOCGIFPSRCADDR, IOC_W | IOC_R,
-+    MK_PTR(MK_STRUCT(STRUCT_ifreq_sockaddr)))
++static void host_to_target_termios(void *dst, const void *src)
++{
++    struct target_termios *target = dst;
++    const struct termios *host = src;
 +
-+IOCTL(SIOCGIFGENERIC, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_ptr)))
++    target->c_iflag = tswap32(host_to_target_bitmask(host->c_iflag, iflag_tbl));
++    target->c_oflag = tswap32(host_to_target_bitmask(host->c_oflag, oflag_tbl));
++    target->c_cflag = tswap32(host_to_target_bitmask(host->c_cflag, cflag_tbl));
++    target->c_lflag = tswap32(host_to_target_bitmask(host->c_lflag, lflag_tbl));
 +
-+IOCTL(SIOCGIFDESCR, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_buf)))
-+
-+IOCTL(SIOCGDRVSPEC, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifdrv)))
-+
-+IOCTL(SIOCGIFGROUP, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifgroupreq_ptr)))
-+
-+IOCTL(SIOCGIFMEDIA, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifmediareq)))
-+#ifdef SIOCGIFXMEDIA
-+IOCTL(SIOCGIFXMEDIA, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifmediareq)))
++    memset(target->c_cc, 0, sizeof(target->c_cc));
++    target->c_cc[TARGET_VEOF] = host->c_cc[VEOF];
++    target->c_cc[TARGET_VEOL] = host->c_cc[VEOL];
++#ifdef VEOL2
++    target->c_cc[TARGET_VEOL2] = host->c_cc[VEOL2];
++#endif
++    target->c_cc[TARGET_VERASE] = host->c_cc[VERASE];
++#ifdef VWERASE
++    target->c_cc[TARGET_VWERASE] = host->c_cc[VWERASE];
++#endif
++    target->c_cc[TARGET_VKILL] = host->c_cc[VKILL];
++#ifdef VREPRINT
++    target->c_cc[TARGET_VREPRINT] = host->c_cc[VREPRINT];
++#endif
++#ifdef VERASE2
++    target->c_cc[TARGET_VERASE2] = host->c_cc[VERASE2];
++#endif
++    target->c_cc[TARGET_VINTR] = host->c_cc[VINTR];
++    target->c_cc[TARGET_VQUIT] = host->c_cc[VQUIT];
++    target->c_cc[TARGET_VSUSP] = host->c_cc[VSUSP];
++#ifdef VDSUSP
++    target->c_cc[TARGET_VDSUSP] = host->c_cc[VDSUSP];
++#endif
++    target->c_cc[TARGET_VSTART] = host->c_cc[VSTART];
++    target->c_cc[TARGET_VSTOP] = host->c_cc[VSTOP];
++#ifdef VLNEXT
++    target->c_cc[TARGET_VLNEXT] = host->c_cc[VLNEXT];
++#endif
++#ifdef VDISCARD
++    target->c_cc[TARGET_VDISCARD] = host->c_cc[VDISCARD];
++#endif
++    target->c_cc[TARGET_VMIN] = host->c_cc[VMIN];
++    target->c_cc[TARGET_VTIME] = host->c_cc[VTIME];
++#ifdef VSTATUS
++    target->c_cc[TARGET_VSTATUS] = host->c_cc[VSTATUS];
 +#endif
 +
-+IOCTL(SIOCGIFSTATUS, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifstat)))
++    target->c_ispeed = tswap32(host->c_ispeed);
++    target->c_ospeed = tswap32(host->c_ospeed);
++}
 +
-+/* net/if_gre.h */
-+IOCTL(GREGKEY, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_ptr)))
-+#ifdef GREGOPTS
-+IOCTL(GREGOPTS, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_ptr)))
-+#endif
++static const StructEntry struct_termios_def = {
++    .convert = { host_to_target_termios, target_to_host_termios },
++    .size = { sizeof(struct target_termios), sizeof(struct termios) },
++    .align = { __alignof__(struct target_termios),
++        __alignof__(struct termios) },
++};
 +
-+/* net/if_gif.h */
-+IOCTL(GIFGOPTS, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_ptr)))
 +
-+/* net/if_pfsync.h */
-+#ifdef SIOCGETPFSYNC
-+IOCTL(SIOCGETPFSYNC, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ifreq_ptr)))
-+#endif
++/* ioctl structure type definitions */
++#define STRUCT(name, ...) STRUCT_ ## name,
++#define STRUCT_SPECIAL(name) STRUCT_ ## name,
++enum {
++#include "os-ioctl-types.h"
++STRUCT_MAX
++};
++#undef STRUCT
++#undef STRUCT_SPECIAL
 +
-+/* net80211/ieee80211_ioctl.h */
-+IOCTL(SIOCG80211, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_ieee80211req)))
++#define STRUCT(name, ...) \
++    static const argtype struct_ ## name ## _def[] = { __VA_ARGS__, TYPE_NULL };
++#define STRUCT_SPECIAL(name)
++#include "os-ioctl-types.h"
++#undef STRUCT
++#undef STRUCT_SPECIAL
 +
-+/* net/if_lagg.h */
-+IOCTL(SIOCGLAGGPORT, IOC_W | IOC_R,
-+    MK_PTR(MK_STRUCT(STRUCT_lagg_reqport_lacp_opreq)))
-+IOCTL(SIOCGLAGG, IOC_W | IOC_R,
-+    MK_PTR(MK_STRUCT(STRUCT_lagg_reqall_lacp_opreq)))
-+IOCTL(SIOCGLAGGFLAGS, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_lagg_reqflags)))
-+#ifdef SIOCGLAGGOPTS
-+IOCTL(SIOCGLAGGOPTS, IOC_W | IOC_R, MK_PTR(MK_STRUCT(STRUCT_lagg_reqopts)))
-+#endif
 +
++struct IOCTLEntry;
++
++typedef abi_long do_ioctl_fn(const struct IOCTLEntry *ie, uint8_t *buf_temp,
++                int fd, abi_long cmd, abi_long arg);
++
++struct IOCTLEntry {
++    unsigned int target_cmd;
++    unsigned int host_cmd;
++    const char *name;
++    int access;
++    do_ioctl_fn *do_ioctl;
++    const argtype arg_type[5];
++};
++typedef struct IOCTLEntry IOCTLEntry;
++
++#define MAX_STRUCT_SIZE 4096
++
++static abi_long do_ioctl_unsupported(__unused const IOCTLEntry *ie,
++                                     __unused uint8_t *buf_temp,
++                                     __unused int fd, __unused abi_long cmd,
++                                     __unused abi_long arg);
++
++static abi_long do_ioctl_in6_ifreq_sockaddr_int(const IOCTLEntry *ie,
++        uint8_t *buf_temp, int fd, abi_long cmd, abi_long arg);
++
++static IOCTLEntry ioctl_entries[] = {
++#define IOC_    0x0000
++#define IOC_R   0x0001
++#define IOC_W   0x0002
++#define IOC_RW  (IOC_R | IOC_W)
++#define IOCTL(cmd, access, ...) \
++    { TARGET_ ## cmd, cmd, #cmd, access, 0, { __VA_ARGS__ } },
++#define IOCTL_SPECIAL(cmd, access, dofn, ...) \
++    { TARGET_ ## cmd, cmd, #cmd, access, dofn, { __VA_ARGS__ } },
++#define IOCTL_SPECIAL_UNIMPL(cmd, access, dofn, ...) \
++    { TARGET_ ## cmd, 0, #cmd, access, dofn, { __VA_ARGS__ } },
++#include "os-ioctl-cmds.h"
++    { 0, 0 },
++};
 
 -- 
 2.52.0
