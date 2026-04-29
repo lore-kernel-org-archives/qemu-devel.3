@@ -4,141 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57BACFF887E
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 22:28:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 365C2FF8875
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 22:28:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIDOZ-0002in-2V; Wed, 29 Apr 2026 18:28:39 -0400
+	id 1wIDMH-0002W7-PT; Wed, 29 Apr 2026 18:26:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wIDOX-0002RS-02
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 18:28:37 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wIDOV-0006Fu-9L
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 18:28:36 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63TKbv4B2872979
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 22:28:33 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- MjunACGh/RPfSIqpR9jG7FFLD8sE1FYNGbNcSd1MzDU=; b=AYCX60h4q21PIKQq
- okBcmtBDiGsoJjWmc/x9L2BSSAxmLm+RRZXUd+TOKtq1tS24QVzNku5D4gYqdVqn
- R+oq6iwqQRbR7tS5XtbGdThkgnOYGa4VRcLTOaXRC42qjANA/uk5TcFi8Jr1Zo8r
- u07dHF/S+n7exzhBTkehujW/TyWDIlpzPgAS1G2TD6zrvxXyIeNFiTV9WyEI8gf0
- jHoL1H2uzUsCiiGKjLRwBTL5hheF1IrPJ/lerUsSjj0VI/8w9TrH0vyDIkShQdRp
- +10ZuRHpzsCiGhJLKkJENHEWG8MHJiQTdCiFsCN/IOW1g5t6BjRpXKjdvcJxOag2
- cBuk5w==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com
- [74.125.82.200])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dubq9kugt-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 22:28:33 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id
- 5a478bee46e88-2d93379001eso1217994eec.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 15:28:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wIDME-000228-LT
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 18:26:14 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wIDMB-0005EN-UG
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 18:26:14 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-35fb16e56efso133352a91.2
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 15:26:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1777501713; x=1778106513; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MjunACGh/RPfSIqpR9jG7FFLD8sE1FYNGbNcSd1MzDU=;
- b=T6aJoW2dd8VeheCUN3XpsUnVeq/p/63fxp3gbt7guwOQ8Go6nC5xk4gCQxW15+SL+j
- wUu8EW/Q1rzT9zQ72EfCRQ7HfjnYrDG5V2J9GyDHRsA7IF6TeXqcsQzobDXlxvAjm1qz
- SRMVuH27SFnhOlrEv3hpN+E1Iz555eXP2B8SjTk79KEiMLz8aCPVH+69yGzhJ5HlJ1ks
- wGErVmnz0pryvuDnQxB9lvmqM80ttQysuppKIrLYYkj+5rBqUdHh/6InyC9P6dK5ulkJ
- LQSn24xvZkDKnSQf7YSm3tCvRcsrk2nCmL8dRx3nnuRuitbTrkVIMT8y/Hlw02bB9MCr
- /Fbg==
+ d=linaro.org; s=google; t=1777501570; x=1778106370; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HWZQajC/tHGSK7fSPh9L60VVX/n9t/233b4QjeCHzU4=;
+ b=cWyqMfJUGzwFAzmTWQQiJ5u8Gm3FKMyRushEXl49SyNBo4MFXVflr/9QNoH60DCoZJ
+ uk3zEdtgFvHQiGSyqC38LfoTgJDb7sUE2Wi/m1hPNvlA0r7JrF0/MKcqn0zd9TpobgWS
+ KMU5tPxruUeIUiOEeBH8dbY/I2xxague1L4ZR0k9jHc7Cvw8uS/t5k30DWiCzAqmluUt
+ gAjBwrr8Ud+v+AkuThV81ibWc4B/SxIp6SUCrUTN/IzrxWj6GYPb9wiO71wKOuWo0tRZ
+ i5GT49paIJwyFSSMzmWclHdHW3B4B2qXwxw3i9/eG9Mk934XBb7Fg72ynEWErgVap2Jq
+ eBJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777501713; x=1778106513;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MjunACGh/RPfSIqpR9jG7FFLD8sE1FYNGbNcSd1MzDU=;
- b=qR+f9HU+OQvxYUgptGja/eLtuS5jOX2KFAVlLmxF6RhQzyABpsNgbGfnN6yWj6hEPd
- lPgIwkcLsyNYSC5tGzYcR43m1PBTN4jBn0st6GJinBQDNHnIoEVVPe9oGp7buhHU/h9p
- fnE0IsvtKytAk6YBUMmWcZ19zbSW1NzhAltLGbKbjSvCQC/S2V3QBKMbCENN9SZSTbD2
- zR9ZgSmupuP+oLDThGRHOAvk1lnqPUfZrwD1vtV7uYcrP+J/5I7Ji7U1qOmFhajHatzB
- Tc2Fp+XAvGoIoU7qte/U0O9IF8QjNtdB9c3pRAuqeXIQubarWRAd7AK7vMYTpNJi6+T5
- gv8A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+krDjybUUwISdB/D3rb8GvyrrWUZKCN6oFmJSt4G8WWz67jRR/kCJMlAM9vNR7/jdkCCy3UowPAOAO@nongnu.org
-X-Gm-Message-State: AOJu0YzTNQHDonWwkEsabyw8voKSqZcX7Z3AIkeQN+MzjX95qDSuP0td
- mAVxCQQSLAdyLPJY/vGD6TGbh+WjbMSxSDIK8jIMloprO1PYj2t3qqbCfjUWyhb6RjcG8FWuwlN
- 583kDAbUrBG/QSAcRwLXVWAudce6JbmPZ1id/nEMfQ79688FisN939vFcFg==
-X-Gm-Gg: AeBDiesuDFU2dIZt0fveYZ7E0If1I4kLbTSMigRq1DZG3jFNXZj0QN3Z+3PCRiyWqtM
- Trmb1RKq2EFznfW9qyibXeDHGMOMBw0Pvk+Ers+Pxq2hqSJFra4d//B96RJBcNyox0M/SnmZj/9
- pVNceMM2FHP+r6tiGz7rnDULt1gXwh8PI0aoUl1Bxt+zUxxJEB7i/JQ/K/PG2qOvSxpOmME6ROg
- gqHbTJytiOCC8KTPQkaSxH6UGf/U4/gYdLaZLcfRCWs+FX9MdKRRg1d30UXGjMUEONhcFLg301y
- ewa7GZ0D2+sToboiJjoQOEgy9cBxUc/26Yy7hZ3wNYGv2hrbcA8Eee4Sl0JEFBaiAa/V4JFoZ7R
- mBH+nLEu9Pf/DxP9ipQvWOr34ZK/wRp5BvP/2u9tZKjr0uH+ZRgh4o3BUCz6uWaDanqKAgWNPQK
- rYFKc9KMBxeN2ycLUChD/PBQtc
-X-Received: by 2002:a05:7300:bb08:b0:2ed:e16:6b4c with SMTP id
- 5a478bee46e88-2ed40367481mr88195eec.34.1777501712649; 
- Wed, 29 Apr 2026 15:28:32 -0700 (PDT)
-X-Received: by 2002:a05:7300:bb08:b0:2ed:e16:6b4c with SMTP id
- 5a478bee46e88-2ed40367481mr88182eec.34.1777501712171; 
- Wed, 29 Apr 2026 15:28:32 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2ed1bf6d315sm4474351eec.1.2026.04.29.15.28.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Apr 2026 15:28:31 -0700 (PDT)
-Message-ID: <0fcf1045-3c35-4528-bda4-903f4c93b297@oss.qualcomm.com>
-Date: Wed, 29 Apr 2026 15:28:30 -0700
+ d=1e100.net; s=20251104; t=1777501570; x=1778106370;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=HWZQajC/tHGSK7fSPh9L60VVX/n9t/233b4QjeCHzU4=;
+ b=MxkVgSgxEG6iFgZx+uGhKy/uqkNgW/N7RkOHKMimZuRYbkP3oepboCQknaGwT/hV+C
+ ukhWydTPwT8ML4KUDM113pAkdv9esEeZr1LnmZMF3tIGfGnhazqAhSwSohX4yTAjWydB
+ 4Jm+50bJsfprqrB69R59CCisjtuOOLOa2DdgL2cGo6c41uooLTDDj1I+mYqRbFgbiAEo
+ hWmxOM4ryYP4LbsFiJLe4Lc0BmXrEziu548/B0cUbbBoVIQDTZPEw7/gwyewZKswJKXS
+ 9AqKfuP2R3RlKoFL4Z57mixVU2KvUdy+0OR59UoOjojPY8k1O1LOH9VMuSeG+m1QXT+Z
+ WlzA==
+X-Gm-Message-State: AOJu0YxkPRaThOb3FLgWm5sqwmZWAG7guDfMv0wyPCd6Xjmi+ENxPr0n
+ VmhoQsmkOQGqDM+O3B5q86KNpLnX2mc9/yT4TURK2FiBNMvmOMwvrUjlBEmphgkSHH+FCHsTE6m
+ dngu1nGI=
+X-Gm-Gg: AeBDieupqZurzwcIYRySccx7b+1giognfYapvB0xHxUbWvS08ONGE7QmFjFwr48prv+
+ d9+/n4NZPuZx0RQi2ybUEiyrrMBrpnYkCrOEC36rPsV7kwrDvhlz7Rabc5RQ0VYr8xt+dQTwy4G
+ /DcUzTlXbMr97Z2sF8JmmTqJAj90qbtxrbG4OJOBquFDzSDqZEz0ZhtXkThxR52BnJp968CnEEM
+ 0nBW9t6HmstAKwJXmy+o/Aerbpog2vuFAYFm9m7F5QcwkHKgS4NhB7CWdKSFsHaZYnEzkJ++M0r
+ O7rxnyaE384mv3G9Kr6hDS+1lyE789NWPSfISW6GbVAfQyoQtq67qDcP0/2vPURt4K7GrLd3EaQ
+ qlWn12JSb5m0dHqLBC7/K1fSrlslDgReayuPo5Npb5ioRQpL9GJHxiQbzUnuJZX8ccgmCYWIIUj
+ 0yFfipkMWP+gOaBuOAi8DcVLA+kBma6EsKprm6WWYj
+X-Received: by 2002:a17:90b:270b:b0:359:f43d:4a6e with SMTP id
+ 98e67ed59e1d1-364c2d88673mr235815a91.0.1777501570359; 
+ Wed, 29 Apr 2026 15:26:10 -0700 (PDT)
+Received: from stoup.. ([180.233.125.15]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-364a2732502sm1888471a91.3.2026.04.29.15.26.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Apr 2026 15:26:09 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: stefanha@redhat.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 31/48] fpu: Constify frac{64,128,256}_* inputs
+Date: Thu, 30 Apr 2026 08:24:28 +1000
+Message-ID: <20260429222445.26301-32-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260429222445.26301-1-richard.henderson@linaro.org>
+References: <20260429222445.26301-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/3] docs/devel/qtest: Mention environment variables
- usage
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260429003130.15164-1-farosas@suse.de>
- <20260429003130.15164-4-farosas@suse.de>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260429003130.15164-4-farosas@suse.de>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: mUbzJLNMZA6_TQSC2RTTsEFS21ikddbv
-X-Proofpoint-ORIG-GUID: mUbzJLNMZA6_TQSC2RTTsEFS21ikddbv
-X-Authority-Analysis: v=2.4 cv=Wak8rUhX c=1 sm=1 tr=0 ts=69f28611 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=kd8EGV1GfTYJ6KBzTKcA:9 a=QEXdDO2ut3YA:10
- a=6Ab_bkdmUrQuMsNx7PHu:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDIyNiBTYWx0ZWRfX98cvHgN5lGU6
- WVQKyPNGTsyXe0b2EfFXCImrf8s0UbKswuYD8wK9YOFK97fdRMVB3XZV56E1My7R/CNz/nVdo9s
- AEYi7oyLOxp2ULbuhuzvSeloRBIlXjWQrDVFq9WVbhmWVB9OVzs8GAfpE8eut+2GapMGSF185+k
- XPa56jyZIvNWfruoQcnPVwwEhQ77s67wMfR7B1YeW7vMB0Mlih45Dsyx8J+mFFPHsPlUwdFbfv9
- bn9FpfNtMvbf7smFg+/XcRkqCpgmjqvwXl09ZoNxwqiT46+6RaOr7wdyvZAlXZLI7wO8nSjwTgX
- PDoQSsKQW30XSI5j/GIiS2n0jw4IS5EeOItr7I8xVEFmafBIVTZ4eFeC2jivmfwM6QfYTBTVYk0
- bLu8KBpLDMiUwcLq2QQzo3iHJQcKaxFbCk7nAa2ofoTqbvMWoMV4TOSkn9xFQsXnaIpg2Lqbfrw
- kuc/2mkV0FNnPHIF7kg==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-29_02,2026-04-28_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 malwarescore=0 suspectscore=0 spamscore=0 clxscore=1015
- bulkscore=0 impostorscore=0 adultscore=0 phishscore=0 priorityscore=1501
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604290226
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -155,17 +101,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/28/2026 5:31 PM, Fabiano Rosas wrote:
-> Document the QTEST_ environment variables. Only include the ones used
-> by QTest itself, don't document test-specific variables as they are
-> more prone to change.
-> 
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  docs/devel/testing/qtest.rst | 33 +++++++++++++++++++++++++++++++++
->  1 file changed, 33 insertions(+)
-> 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ fpu/softfloat.c | 53 +++++++++++++++++++++++++++++--------------------
+ 1 file changed, 31 insertions(+), 22 deletions(-)
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+diff --git a/fpu/softfloat.c b/fpu/softfloat.c
+index e462fb7d74..6cca31af30 100644
+--- a/fpu/softfloat.c
++++ b/fpu/softfloat.c
+@@ -774,12 +774,14 @@ static float128 QEMU_FLATTEN float128_pack_raw(const FloatParts128 *p)
+  * Helper functions for softfloat-parts.c.inc, per-size operations.
+  */
+ 
+-static bool frac64_add(FloatParts64 *r, FloatParts64 *a, FloatParts64 *b)
++static bool frac64_add(FloatParts64 *r,
++                       const FloatParts64 *a, const FloatParts64 *b)
+ {
+     return uadd64_overflow(a->frac, b->frac, &r->frac);
+ }
+ 
+-static bool frac128_add(FloatParts128 *r, FloatParts128 *a, FloatParts128 *b)
++static bool frac128_add(FloatParts128 *r,
++                        const FloatParts128 *a, const FloatParts128 *b)
+ {
+     bool c = 0;
+     r->frac_lo = uadd64_carry(a->frac_lo, b->frac_lo, &c);
+@@ -787,7 +789,8 @@ static bool frac128_add(FloatParts128 *r, FloatParts128 *a, FloatParts128 *b)
+     return c;
+ }
+ 
+-static bool frac256_add(FloatParts256 *r, FloatParts256 *a, FloatParts256 *b)
++static bool frac256_add(FloatParts256 *r,
++                        const FloatParts256 *a, const FloatParts256 *b)
+ {
+     bool c = 0;
+     r->frac_lo = uadd64_carry(a->frac_lo, b->frac_lo, &c);
+@@ -797,12 +800,12 @@ static bool frac256_add(FloatParts256 *r, FloatParts256 *a, FloatParts256 *b)
+     return c;
+ }
+ 
+-static bool frac64_addi(FloatParts64 *r, FloatParts64 *a, uint64_t c)
++static bool frac64_addi(FloatParts64 *r, const FloatParts64 *a, uint64_t c)
+ {
+     return uadd64_overflow(a->frac, c, &r->frac);
+ }
+ 
+-static bool frac128_addi(FloatParts128 *r, FloatParts128 *a, uint64_t c)
++static bool frac128_addi(FloatParts128 *r, const FloatParts128 *a, uint64_t c)
+ {
+     c = uadd64_overflow(a->frac_lo, c, &r->frac_lo);
+     return uadd64_overflow(a->frac_hi, c, &r->frac_hi);
+@@ -818,14 +821,14 @@ static void frac128_allones(FloatParts128 *a)
+     a->frac_hi = a->frac_lo = -1;
+ }
+ 
+-static FloatRelation frac64_cmp(FloatParts64 *a, FloatParts64 *b)
++static FloatRelation frac64_cmp(const FloatParts64 *a, const FloatParts64 *b)
+ {
+     return (a->frac == b->frac ? float_relation_equal
+             : a->frac < b->frac ? float_relation_less
+             : float_relation_greater);
+ }
+ 
+-static FloatRelation frac128_cmp(FloatParts128 *a, FloatParts128 *b)
++static FloatRelation frac128_cmp(const FloatParts128 *a, const FloatParts128 *b)
+ {
+     uint64_t ta = a->frac_hi, tb = b->frac_hi;
+     if (ta == tb) {
+@@ -847,7 +850,7 @@ static void frac128_clear(FloatParts128 *a)
+     a->frac_hi = a->frac_lo = 0;
+ }
+ 
+-static bool frac64_div(FloatParts64 *a, FloatParts64 *b)
++static bool frac64_div(FloatParts64 *a, const FloatParts64 *b)
+ {
+     uint64_t n1, n0, r, q;
+     bool ret;
+@@ -879,7 +882,7 @@ static bool frac64_div(FloatParts64 *a, FloatParts64 *b)
+     return ret;
+ }
+ 
+-static bool frac128_div(FloatParts128 *a, FloatParts128 *b)
++static bool frac128_div(FloatParts128 *a, const FloatParts128 *b)
+ {
+     uint64_t q0, q1, a0, a1, b0, b1;
+     uint64_t r0, r1, r2, r3, t0, t1, t2, t3;
+@@ -926,22 +929,24 @@ static bool frac128_div(FloatParts128 *a, FloatParts128 *b)
+     return ret;
+ }
+ 
+-static bool frac64_eqz(FloatParts64 *a)
++static bool frac64_eqz(const FloatParts64 *a)
+ {
+     return a->frac == 0;
+ }
+ 
+-static bool frac128_eqz(FloatParts128 *a)
++static bool frac128_eqz(const FloatParts128 *a)
+ {
+     return (a->frac_hi | a->frac_lo) == 0;
+ }
+ 
+-static void frac64_mulw(FloatParts128 *r, FloatParts64 *a, FloatParts64 *b)
++static void frac64_mulw(FloatParts128 *r,
++                        const FloatParts64 *a, const FloatParts64 *b)
+ {
+     mulu64(&r->frac_lo, &r->frac_hi, a->frac, b->frac);
+ }
+ 
+-static void frac128_mulw(FloatParts256 *r, FloatParts128 *a, FloatParts128 *b)
++static void frac128_mulw(FloatParts256 *r,
++                         const FloatParts128 *a, const FloatParts128 *b)
+ {
+     mul128To256(a->frac_hi, a->frac_lo, b->frac_hi, b->frac_lo,
+                 &r->frac_hi, &r->frac_hm, &r->frac_lm, &r->frac_lo);
+@@ -1041,7 +1046,8 @@ static int frac256_normalize(FloatParts256 *a)
+     return ret;
+ }
+ 
+-static void frac64_modrem(FloatParts64 *a, FloatParts64 *b, uint64_t *mod_quot)
++static void frac64_modrem(FloatParts64 *a, const FloatParts64 *b,
++                          uint64_t *mod_quot)
+ {
+     uint64_t a0, a1, b0, t0, t1, q, quot;
+     int exp_diff = a->exp - b->exp;
+@@ -1124,7 +1130,7 @@ static void frac64_modrem(FloatParts64 *a, FloatParts64 *b, uint64_t *mod_quot)
+     a->frac = a0 | (a1 != 0);
+ }
+ 
+-static void frac128_modrem(FloatParts128 *a, FloatParts128 *b,
++static void frac128_modrem(FloatParts128 *a, const FloatParts128 *b,
+                            uint64_t *mod_quot)
+ {
+     uint64_t a0, a1, a2, b0, b1, t0, t1, t2, q, quot;
+@@ -1353,12 +1359,14 @@ static void frac256_shrjam(FloatParts256 *a, int c)
+     a->frac_hi = a0;
+ }
+ 
+-static bool frac64_sub(FloatParts64 *r, FloatParts64 *a, FloatParts64 *b)
++static bool frac64_sub(FloatParts64 *r,
++                       const FloatParts64 *a, const FloatParts64 *b)
+ {
+     return usub64_overflow(a->frac, b->frac, &r->frac);
+ }
+ 
+-static bool frac128_sub(FloatParts128 *r, FloatParts128 *a, FloatParts128 *b)
++static bool frac128_sub(FloatParts128 *r,
++                        const FloatParts128 *a, const FloatParts128 *b)
+ {
+     bool c = 0;
+     r->frac_lo = usub64_borrow(a->frac_lo, b->frac_lo, &c);
+@@ -1366,7 +1374,8 @@ static bool frac128_sub(FloatParts128 *r, FloatParts128 *a, FloatParts128 *b)
+     return c;
+ }
+ 
+-static bool frac256_sub(FloatParts256 *r, FloatParts256 *a, FloatParts256 *b)
++static bool frac256_sub(FloatParts256 *r,
++                        const FloatParts256 *a, const FloatParts256 *b)
+ {
+     bool c = 0;
+     r->frac_lo = usub64_borrow(a->frac_lo, b->frac_lo, &c);
+@@ -1376,24 +1385,24 @@ static bool frac256_sub(FloatParts256 *r, FloatParts256 *a, FloatParts256 *b)
+     return c;
+ }
+ 
+-static void frac64_truncjam(FloatParts64 *r, FloatParts128 *a)
++static void frac64_truncjam(FloatParts64 *r, const FloatParts128 *a)
+ {
+     r->frac = a->frac_hi | (a->frac_lo != 0);
+ }
+ 
+-static void frac128_truncjam(FloatParts128 *r, FloatParts256 *a)
++static void frac128_truncjam(FloatParts128 *r, const FloatParts256 *a)
+ {
+     r->frac_hi = a->frac_hi;
+     r->frac_lo = a->frac_hm | ((a->frac_lm | a->frac_lo) != 0);
+ }
+ 
+-static void frac64_widen(FloatParts128 *r, FloatParts64 *a)
++static void frac64_widen(FloatParts128 *r, const FloatParts64 *a)
+ {
+     r->frac_hi = a->frac;
+     r->frac_lo = 0;
+ }
+ 
+-static void frac128_widen(FloatParts256 *r, FloatParts128 *a)
++static void frac128_widen(FloatParts256 *r, const FloatParts128 *a)
+ {
+     r->frac_hi = a->frac_hi;
+     r->frac_hm = a->frac_lo;
+-- 
+2.43.0
+
 
