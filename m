@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70958FF8864
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 06:22:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CD46FF8867
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 06:22:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHyJ4-0004pj-5T; Wed, 29 Apr 2026 02:21:58 -0400
+	id 1wHyJ6-0004r5-I5; Wed, 29 Apr 2026 02:22:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wHyHz-0004Xq-Li; Wed, 29 Apr 2026 02:20:51 -0400
+ id 1wHyHx-0004Vr-Gw; Wed, 29 Apr 2026 02:20:51 -0400
 Received: from out30-118.freemail.mail.aliyun.com ([115.124.30.118])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wHyHv-00078Y-EO; Wed, 29 Apr 2026 02:20:51 -0400
+ id 1wHyHr-00078I-Uj; Wed, 29 Apr 2026 02:20:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1777443637; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=7BNMZsf0OZfChDgYsNAXBHtNNdE/HIiReKu3r1PFxt0=;
- b=OVbluQTkoFojZVXSiYms0TDXuBcuZCZIMO04xuYsF+uB+Pnp2nPxivUPpRicP/vP6eyhBXcfoHwV5q+mosPSjBoTuLk85TvPqyRL37mNlp/WkHYOpCfzdVT3yTnJuWTF3tBAjEx5FUNUhLnD+OCoSWdqpCFGo+RlmRygmolA4kE=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R171e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
+ t=1777443629; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=MARf+gfsHcq6jSDjRoPtErFT1ue1g868Ee90sY5sqak=;
+ b=wr0U93eZxno4saD9w/3jnAR7Nb08wjxxWZjLsGQCsdzxv+9Z8XQi5VJE/OcpCHHfLvOWeHAdbHP1a1lQsV+nTYD5lk1FbSGyBLkWmaI7bOJhuXE03XZVdcEKvvqviB+B2og92h/g4FOIwKkBYHA7jlxKvDSpvqqGwI2prqtwCCo=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R201e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam011083073210;
  MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=6; SR=0;
- TI=SMTPD_---0X1wgCi6_1777443629; 
+ TI=SMTPD_---0X1wgCg6_1777443622; 
 Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X1wgCi6_1777443629 cluster:ay36) by smtp.aliyun-inc.com;
- Wed, 29 Apr 2026 14:20:36 +0800
+ fp:SMTPD_---0X1wgCg6_1777443622 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 29 Apr 2026 14:20:28 +0800
 From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, berrange@redhat.com, kwolf@redhat.com,
  hreitz@redhat.com, qemu-block@nongnu.org
-Subject: [PATCH 3/3] system/vl.c: inline qemu_opts_parse_noisily() result
- checks
-Date: Wed, 29 Apr 2026 14:20:04 +0800
-Message-ID: <20260429062004.36582-4-guobin@linux.alibaba.com>
+Subject: [PATCH 2/3] block/block-backend: delegate blk_co_preadv to
+ blk_co_preadv_part
+Date: Wed, 29 Apr 2026 14:20:03 +0800
+Message-ID: <20260429062004.36582-3-guobin@linux.alibaba.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260429062004.36582-1-guobin@linux.alibaba.com>
 References: <20260429062004.36582-1-guobin@linux.alibaba.com>
@@ -69,118 +69,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In qemu_init()'s option parsing switch, several cases assigned the
-return value of qemu_opts_parse_noisily() to the shared 'opts'
-variable solely to check for NULL, without using the pointer
-afterwards.  Inline the call directly into the if-condition, matching
-the style already used by QEMU_OPTION_action.
+blk_co_preadv() and blk_co_preadv_part() share identical bodies except
+that blk_co_preadv() always passes qiov_offset=0.  blk_co_pwritev()
+already uses this pattern and simply calls blk_co_pwritev_part() with
+qiov_offset=0.  Apply the same simplification to the read side so that
+both pairs are consistent and the shared logic lives in a single place.
 
-This affects the following options:
-  -drive, -numa, -iscsi, -m, -mon, -chardev, -fsdev, -fwcfg
-
-Cases where the returned QemuOpts* is subsequently used (e.g.
--acpitable, -smbios, -virtfs) are left unchanged.
+Before this change blk_co_preadv() duplicated the
+blk_inc_in_flight / blk_co_do_preadv_part / blk_dec_in_flight
+sequence.  After this change it is a one-liner wrapper, matching the
+write side.
 
 Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 ---
- system/vl.c | 37 +++++++++++++++----------------------
- 1 file changed, 15 insertions(+), 22 deletions(-)
+ block/block-backend.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/system/vl.c b/system/vl.c
-index 0e1fc217b4..0e0d3cb761 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2961,9 +2961,8 @@ void qemu_init(int argc, char **argv)
-                     break;
-                 }
-             case QEMU_OPTION_drive:
--                opts = qemu_opts_parse_noisily(qemu_find_opts("drive"),
--                                               optarg, false);
--                if (opts == NULL) {
-+                if (!qemu_opts_parse_noisily(qemu_find_opts("drive"),
-+                                             optarg, false)) {
-                     exit(1);
-                 }
-                 break;
-@@ -2988,9 +2987,8 @@ void qemu_init(int argc, char **argv)
-                 replay_add_blocker("-snapshot");
-                 break;
-             case QEMU_OPTION_numa:
--                opts = qemu_opts_parse_noisily(qemu_find_opts("numa"),
--                                               optarg, true);
--                if (!opts) {
-+                if (!qemu_opts_parse_noisily(qemu_find_opts("numa"),
-+                                             optarg, true)) {
-                     exit(1);
-                 }
-                 break;
-@@ -3049,9 +3047,8 @@ void qemu_init(int argc, char **argv)
-                 break;
- #ifdef CONFIG_LIBISCSI
-             case QEMU_OPTION_iscsi:
--                opts = qemu_opts_parse_noisily(qemu_find_opts("iscsi"),
--                                               optarg, false);
--                if (!opts) {
-+                if (!qemu_opts_parse_noisily(qemu_find_opts("iscsi"),
-+                                             optarg, false)) {
-                     exit(1);
-                 }
-                 break;
-@@ -3104,8 +3101,8 @@ void qemu_init(int argc, char **argv)
-                 exit(0);
-                 break;
-             case QEMU_OPTION_m:
--                opts = qemu_opts_parse_noisily(qemu_find_opts("memory"), optarg, true);
--                if (opts == NULL) {
-+                if (!qemu_opts_parse_noisily(qemu_find_opts("memory"),
-+                                             optarg, true)) {
-                     exit(1);
-                 }
-                 break;
-@@ -3226,17 +3223,15 @@ void qemu_init(int argc, char **argv)
-                 default_monitor = 0;
-                 break;
-             case QEMU_OPTION_mon:
--                opts = qemu_opts_parse_noisily(qemu_find_opts("mon"), optarg,
--                                               true);
--                if (!opts) {
-+                if (!qemu_opts_parse_noisily(qemu_find_opts("mon"), optarg,
-+                                             true)) {
-                     exit(1);
-                 }
-                 default_monitor = 0;
-                 break;
-             case QEMU_OPTION_chardev:
--                opts = qemu_opts_parse_noisily(qemu_find_opts("chardev"),
--                                               optarg, true);
--                if (!opts) {
-+                if (!qemu_opts_parse_noisily(qemu_find_opts("chardev"),
-+                                             optarg, true)) {
-                     exit(1);
-                 }
-                 break;
-@@ -3246,8 +3241,7 @@ void qemu_init(int argc, char **argv)
-                     error_report("fsdev support is disabled");
-                     exit(1);
-                 }
--                opts = qemu_opts_parse_noisily(olist, optarg, true);
--                if (!opts) {
-+                if (!qemu_opts_parse_noisily(olist, optarg, true)) {
-                     exit(1);
-                 }
-                 break;
-@@ -3386,9 +3380,8 @@ void qemu_init(int argc, char **argv)
-                 smbios_entry_add(opts, &error_fatal);
-                 break;
-             case QEMU_OPTION_fwcfg:
--                opts = qemu_opts_parse_noisily(qemu_find_opts("fw_cfg"),
--                                               optarg, true);
--                if (opts == NULL) {
-+                if (!qemu_opts_parse_noisily(qemu_find_opts("fw_cfg"),
-+                                             optarg, true)) {
-                     exit(1);
-                 }
-                 break;
+diff --git a/block/block-backend.c b/block/block-backend.c
+index 9944657120..490b149bf8 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -1376,14 +1376,8 @@ int coroutine_fn blk_co_preadv(BlockBackend *blk, int64_t offset,
+                                int64_t bytes, QEMUIOVector *qiov,
+                                BdrvRequestFlags flags)
+ {
+-    int ret;
+     IO_OR_GS_CODE();
+-
+-    blk_inc_in_flight(blk);
+-    ret = blk_co_do_preadv_part(blk, offset, bytes, qiov, 0, flags);
+-    blk_dec_in_flight(blk);
+-
+-    return ret;
++    return blk_co_preadv_part(blk, offset, bytes, qiov, 0, flags);
+ }
+ 
+ int coroutine_fn blk_co_preadv_part(BlockBackend *blk, int64_t offset,
 -- 
 2.50.1 (Apple Git-155)
 
