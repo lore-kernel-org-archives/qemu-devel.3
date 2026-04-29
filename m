@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55F85FF8875
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9CDBCCFA13
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 20:06:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIB7t-0003V0-PN; Wed, 29 Apr 2026 16:03:17 -0400
+	id 1wIB7u-0003VV-Oo; Wed, 29 Apr 2026 16:03:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joshualant@gmail.com>)
- id 1wI5QR-00087h-8u
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:03 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ id 1wI5QS-0008CD-Fa
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:04 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joshualant@gmail.com>)
- id 1wI5QN-0007gs-VQ
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:02 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-43cfd1f9fd1so7861526f8f.3
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 06:57:59 -0700 (PDT)
+ id 1wI5QQ-0007hQ-U6
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:04 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso128829745e9.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 06:58:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777471078; x=1778075878; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777471081; x=1778075881; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i55Tulez84uC6S30BzMAZAX+g+KufDCaRfey8FY/Ij4=;
- b=AjgfJkzQuv9875UMnxr7oiePC2iOaA3LUlWzD5QQfhtMPtxPewMd96Tnv6kjc+6stn
- ougsQUUQ9ZoulwOOlUtgBdrm0R1qlDyQUGdqu3XLnXghjA4eJaa8BOIKK3KxHIldbCsF
- QCaMQLUYZFUZN5euRl8trySjS6bUow4DUZjHz5x2eekKSYbKwzyzI61RX3Nz7utRC8in
- I2qSeJG2MqOtTfcL+aOfXwt6DBHEOAt+P4Hulsu7N3VdpcEHQGGCJjwiW3wMTAbmqiPO
- iNGXCltdHLdijCSMSGzmBnmtOnWbdK0UabSwW3++wHhOVEK5JhQpH1jtag0NbfKhOVGD
- RzSQ==
+ bh=4CbYkDBPpXawZZfXwyECFDKJfotfIOnbxLhrwBo3n24=;
+ b=r6MZzKzs/RFZzPVTtiwcovxiyBxme8QU1tjIPt0vKTzNIYPuV/R2KpSaJ7M+bIQrca
+ NUPA2JYPKEXu1MQ0oeD9tV6M9KTnTbNaDk7twc0ZkClFwfrtLf63UM8FM4q1ak0Usxzl
+ 57074sOyed5a0vMWlztOmAqpgGUfIdBUAc0lMB7/MSGk+/7oadriztTwfC+e2F0HTeJW
+ nVMx0irq+ThowISym/THWJUSVvMpsoDv3oWJ3RGZnVQvsviYgn6Ju0sSknuA2GvS/OUR
+ WEMIB/EGPxevl+7IzRVFP4ta3FK3MQbtQ4DgwIhFvgbeEgPBMoEKRL5w24BpEjFrpoVc
+ pgQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777471078; x=1778075878;
+ d=1e100.net; s=20251104; t=1777471081; x=1778075881;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=i55Tulez84uC6S30BzMAZAX+g+KufDCaRfey8FY/Ij4=;
- b=qFguAHw5vKgjxIPOPf1VTsKlvdGVxPdh47voKQoBmneCbIoutvQacIxYqfNxl3a7gv
- 3KBsnyK7xUDbblbMeg6/KtbASOp8Jf6HUJZhEwyiJ6/OSsb7EC9rEW2ZzQT+52jM0T+a
- XwzaIZeMg5nOwIQWDd0JwElPv3+h6w1TAk1uPK9lahP2ku4B5DkFmzOoHamPyR8/hKBO
- TRgIOFbY00zXikOLsI2fRGZvOih8TzpGu0OtjSlImsPlncMVeiqocAAkn9YLuBke7mvs
- HtSenEbKJYYYmEBoe8ESyJEipqhJPl5hZHrWXXaP/HzY5Qu0j81DoxAbd2qQ1gUpNOjj
- aAaw==
-X-Gm-Message-State: AOJu0Yyaan91Ai+LHaz67AR7MklXhG3X7byG1XqLJ0k/6OZAQ2LpXjfV
- D2/OedbL2wyn5pM3qSq1rz/LHaLB8eCjYlnrPib/qgcuQqafWhXuWGnGNz3fzmBg
-X-Gm-Gg: AeBDieuDLIYp33Do3T41kjln/whi30Px6hOLCXWbOlFW/akcpmHlNPY3Dtg1w5LP/HD
- OLdFnmhXvq1UpTmalJC96hnjPN1gstnLnk3kpScjMeh3I1X+EItDo6qrnzdV372TASuKCq8b6pY
- Flux34acy3HaUOY1kAtfuF+27sc2yUm4uEZ8NeOJnfbBcQoT+4V/MeamaXm8sD1qdbGfrbuAn5X
- M2Du2C2G6oKz/Mb6yl4ZKdeTJ7dNFBDKh8hrAcWgjzYkEgfNfSBUu4Bdyp5TtGYA6Da7/z0qUho
- QMpZe9WZKMwrSwbirrXm6lPtvqO7XKE7TfyNI1AGHqOTMg2GKL4O6kf7konNq4JScnJcDoO0dYi
- +U/u8V9o76t9CSrPVw4JuBTgtjSBB7kbevA8DcU7OyGpt8WTmOdtRrpzNLEaL96sTz5TqTT40J8
- d7lv6+lr51NJl9/DaJysfv8ZqNYqmZ+OHW244kSIDffD2OgFXXWQ0gSARHO4/VUmzAze6+SMbt
-X-Received: by 2002:a05:6000:2304:b0:43d:75ec:26f7 with SMTP id
- ffacd0b85a97d-4464aced724mr14325698f8f.29.1777471077272; 
- Wed, 29 Apr 2026 06:57:57 -0700 (PDT)
+ bh=4CbYkDBPpXawZZfXwyECFDKJfotfIOnbxLhrwBo3n24=;
+ b=LiOwFcdbMIbtr8xcNfX/aZPAYCQlQm8ZSJmTvPfEjyOHm3EB0A6cycxGwqbAR7prYI
+ Gvwgl+G+aeC8xkwFGkmtqgXc1kSHfLBE01KL8S2Bf1vR/5vOlEvC0flA3G6EF/EUw2p+
+ NH0iBllavkK/+uFC/oFEZUmQfsoXF5rX0hMDrmmZkFWFrBhwFt2R+6FmUeOrOzexTqmU
+ aQ4BIRkB47rjFV8PJNd8ehjmg7I6SF+suZiSxMXkizfkgf5DMf5HNgmAoDvo7vqecHLM
+ DAKWCQNHG1foH1y58RAC9j0DJdI4fR9sipwffNaMdHVHaIn8RiWeAkPUyIsxYjjO1EHV
+ VYCA==
+X-Gm-Message-State: AOJu0Yx5IIFynnspEmqZptoLps6a1zOjbZgR7SD5yxC7i7iObx/5dLLD
+ H6UEzE60B63OIUa2gFmF7UWjRhc2zFznRtLDWNO+7u8fW2ZoXTmbVN/h
+X-Gm-Gg: AeBDiesAG14OvQHrwrH4fxbWLRabju0+zKMbQo/zCAcAj0DafxN5fHvND3uAsVrKptT
+ 9OB7E6fRThOeuHxpMbMa0KavAXLk2PKBjOgyxQ8boBwfQU3QjxrcaqOdxbN9lzZiyxosyg0OYP0
+ FwY7n0mTxWjZKwzGx6YHJa8b5Ce0V4GMJJxiGxi3FGC6QgkBNnit/kK7rupZ8RCOuf315zJHW6P
+ VzIzGz+3doxFIXQk722hvjQPMCaRbeWDboHnLDzDayZ2CSo5fQkFR4OjkvS2pesCuKCFIpX9/NH
+ 0ZeS3BM3JQDZ+9g7qhV3KEKoVqd/YG/94fHjwY0q3CH/kP+TnVLzRHdThgNl4d0y1CFu1VmBhZU
+ GyJ9fayxryP4VrN0POQ5WXroo011JV8TmjbP481//ZCpOYX0zeoZR3LSvJdX8wBzAEHqm4MrATK
+ /OSZuATO4evMwOrFuJirmuLFrjMxWE0+EjWngot/pA1zL+sY1hYNmangWnlzagcebQpJz6uaiZ
+X-Received: by 2002:a05:600c:528d:b0:480:69b6:dfed with SMTP id
+ 5b1f17b1804b1-48a7b546b7dmr72438825e9.24.1777471080538; 
+ Wed, 29 Apr 2026 06:58:00 -0700 (PDT)
 Received: from node1.manccluster.local (revolution.cs.man.ac.uk.
  [130.88.198.135]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-447b3d48517sm5205950f8f.5.2026.04.29.06.57.55
+ ffacd0b85a97d-447b3d48517sm5205950f8f.5.2026.04.29.06.57.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 06:57:56 -0700 (PDT)
+ Wed, 29 Apr 2026 06:57:59 -0700 (PDT)
 From: Joshua Lant <joshualant@gmail.com>
 To: linux-cxl@vger.kernel.org
 Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com,
  arpit1.kumar@samsung.com, Joshua Lant <joshualant@gmail.com>
-Subject: [RFC QEMU PATCH 02/10] qdev/qbus: Allow hidden devices to be busless
- on QEMU startup
-Date: Wed, 29 Apr 2026 14:48:36 +0100
-Message-ID: <20260429135717.3048713-3-joshualant@gmail.com>
+Subject: [RFC QEMU PATCH 04/10] cxl_downstream: enable power controller
+ present capability.
+Date: Wed, 29 Apr 2026 14:48:38 +0100
+Message-ID: <20260429135717.3048713-5-joshualant@gmail.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260429135717.3048713-1-joshualant@gmail.com>
 References: <20260429135717.3048713-1-joshualant@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=joshualant@gmail.com; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=joshualant@gmail.com; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,74 +102,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extend the capability for hiding devices, introduced for virtio-net
-device in:
-
-commit f3a8505656935cde32e28c1c6317f725084da1e0
-Author: Jens Freimann <jfreimann@redhat.com>
-Date:   Tue Oct 29 12:48:55 2019 +0100
-qdev/qbus: add hidden device support
-
-Currently only endpoint devices can be hidden with a primary device
-and failover (known static configuration). However, looking at future
-composable systems, we see a need for hidden devices which have no associated
-bus upon boot. Move the check for hidden devices to before the bus
-search, and if it is hidden ignore the case where the device was
-described on the CLI without the "bus=" field.
-
-This is motivated by a specific use-case: implementing the VCS
-command set, part of the CXL specification (CXL r3.2 Section 7.1.3). In
-this scenario a switch controlled by a Fabric Manager is able to change the
-virtual hierarchy of devices seen by a guest within a fixed physical system
-topology. The connecting bus is not known until runtime when
-a bind command is issued by the Fabric Manager.
+PCI_EXP_SLTCAP_PCP (Power Controller Present) must be set in the DSP's
+slot capabilities for PCIe managed hot-remove to complete. Without this
+notification from the guest of removal cannot be sent back to the
+device, so device listeners for unrealizing will not fire.
 
 Signed-off-by: Joshua Lant <joshualant@gmail.com>
 ---
- system/qdev-monitor.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ hw/pci-bridge/cxl_downstream.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index f2aa400a77..b51dfe0645 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -650,6 +650,7 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
-     DeviceState *dev;
-     BusState *bus = NULL;
-     QDict *properties;
-+    bool hide_device;
+diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
+index 91c5e6a605..5322c46900 100644
+--- a/hw/pci-bridge/cxl_downstream.c
++++ b/hw/pci-bridge/cxl_downstream.c
+@@ -228,6 +228,8 @@ static const Property cxl_dsp_props[] = {
+     DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
+                                 width, PCIE_LINK_WIDTH_16),
+     DEFINE_PROP_BOOL("x-256b-flit", PCIESlot, flitmode, true),
++    DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
++                    QEMU_PCIE_SLTCAP_PCP_BITNR, true),
+ };
  
-     driver = qdict_get_try_str(opts, "driver");
-     if (!driver) {
-@@ -663,6 +664,11 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
-         return NULL;
-     }
- 
-+    /* Is the device hidden from the guest?
-+     * If yes, no need to find a default bus if none given...
-+     * Bus could be provided at runtime (i.e. in a switch)*/
-+    hide_device = qdev_should_hide_device(opts, from_json, errp);
-+
-     /* find bus */
-     path = qdict_get_try_str(opts, "bus");
-     if (path != NULL) {
-@@ -675,14 +681,14 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
-                        driver, object_get_typename(OBJECT(bus)));
-             return NULL;
-         }
--    } else if (dc->bus_type != NULL) {
-+    } else if (dc->bus_type != NULL && !hide_device) {
-         bus = qdev_find_default_bus(dc, errp);
-         if (!bus) {
-             return NULL;
-         }
-     }
- 
--    if (qdev_should_hide_device(opts, from_json, errp)) {
-+    if (hide_device) {
-         if (bus && !qbus_is_hotpluggable(bus)) {
-             error_setg(errp, "Bus '%s' does not support hotplugging",
-                        bus->name);
+ static void cxl_dsp_class_init(ObjectClass *oc, const void *data)
 -- 
 2.47.3
 
