@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A690DFF8867
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 04:49:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98408FF8864
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 04:49:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHwqx-00013x-AU; Wed, 29 Apr 2026 00:48:51 -0400
+	id 1wHwrF-0001LD-Ka; Wed, 29 Apr 2026 00:49:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHwqw-00013b-EK
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:48:50 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1wHwrE-0001IH-Cc
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:49:08 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHwqu-0008IL-R3
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:48:50 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-35fbca04006so6092243a91.1
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 21:48:48 -0700 (PDT)
+ id 1wHwr9-0008LO-3u
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:49:08 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2b45cb89f7eso75747825ad.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 21:49:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777438127; x=1778042927; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777438142; x=1778042942; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vTreqGd/1Raf3RsX/9R0sQ7/2mzs2tC0VLy5UcXV31E=;
- b=iuR9IbI9pPZgR0YwyP4FCU079bAXUHdf67eO9aTQ98MEK1/vCrYoPDLVs+gZJItS60
- 6BeGCZ2KlF6jYgb7bCAG8WgS/B7J5DurAmD+zmw3Qm3XUrQ/Xu3axWwXoCyZZ4WO7Q8K
- LprwgfNxneYDpf+Y8Ydm5u7yLSuXAy6TEs7Cfrh1U6w1IzZNaJ+dLp0DysoGXwBEDc5c
- Yg4OVuEGZbwtNEFhO648+NCfN5o4+IUk55ejH6O5igTeqKo25bbplAl/jnO/1NF5AbGB
- +p+WNoXyL5bTQ+Hmb5IW16iJ8xF/QH6ZjupG0N4PDcmKXHPaZEJSs5HbyDlAbgi1/+CU
- rysg==
+ bh=YzCQglAuFo55n1ndLCOchCoUqIiCrL+yg0KWpQOh6n0=;
+ b=ENeIIFyB6cSeSKWRd0efUekk9TITZvBb5So5/cNPI2ZXOOT80C+viUbLG6OMp8vKkm
+ jFF0L4WbUSH9PLB+pI4kvGyi7izeA2Y7VDoPcy9yzCwqDhEI73NqZ5cRkSHhthOWbp28
+ EYvBZW7ZuIUbi4pueOy0FIPKahkemkUdWRlWO44mMhBCHQQ/+sdjv7VWeudJl8IcWiZK
+ n0+Ui9HZgh9A30VwLSGy18TCedxaQzWmPFl8yX+xK18ZUJr1nhvhNBL/5fNgUZokzjvl
+ InrJlc8GP2g76o2HRJJQF2DCrPOKHZ++zi90naqkuTdCvarh+oK51OyVd8uP2D/LDJbw
+ EsFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777438127; x=1778042927;
+ d=1e100.net; s=20251104; t=1777438142; x=1778042942;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=vTreqGd/1Raf3RsX/9R0sQ7/2mzs2tC0VLy5UcXV31E=;
- b=tWMJx5wo/128ZVza4pZOGneFjN5Tb53pzRndE5J1fde4FDlMLbISi9mN2XucxDLGFd
- RCBP2vGHpLwLFqOPjnW6f9RV1cv8yAodfts60pLa/m0PWD+qNBOx60PaITo0xJ5sirwS
- 6bVScGFAawur7h4dj/TtMLTVZaBDKPOle4Dl8/gbI6wuReb/mr8ltnR7m+FvVFGDYMLu
- 3H4/6JK72p2eJDnz8srBCn0Yj4nxBH+8VS6/FsonVFDr5onjtf/XCIDsdgdoVkxc1lpM
- BG+kBnFCHlff44MokQxC7au9SlMxpM/qh8pxmyPlj+6g0yxZ3gEsE40imIUYxTQvNvq6
- fQmQ==
+ bh=YzCQglAuFo55n1ndLCOchCoUqIiCrL+yg0KWpQOh6n0=;
+ b=CZxP/6U/YL9yrhiBwgyTPYWZoydqWsXjIKJLy915LxjhjTXElCUqPHAN0v3b2T+Fs5
+ gX/+UbYBhQFXQRZbt3Q6szo3vE6CQ0IKiquqWDIep1CEOd5YtqQvjx9a8KiHn9x4TiBC
+ 6QsUmIm2U4s2Zx2NT9QWEc6t+/hvPXzHuPk/ikkFSf7ivyFMKUUe6ylPokAJNyko9lci
+ 99Zw4DaSp2C0qGxGrFhrvzCrV/4IH4AOytScF2BnQcWaiBEz0MwSDoqwMGK6xPYnswyy
+ QxdNzKUgx9ltEk0Nf6ZrTuF5KK8dXTkD5z8T/RACJBjcJP+kve7KLqzmO26pn6BJ4c/6
+ TJVw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8dc914SPwG+yYoy4DtN7sVdr9ypSnM2Hw7FEGlheMf6k410ZL/J1I19CVD1MUI2igB8Ht5xiJFo2Hj@nongnu.org
-X-Gm-Message-State: AOJu0Yz1Ip2GUuJXm+AT5KmGZQl7XkGRq3WmsOewORsnoVRTqCB/77mg
- Hlvhnrw3WbY/Dc+ENydqTLyNFDenFVF5JMo89a5+dc6uQ5JlQFqRVxJC
-X-Gm-Gg: AeBDieu8ZIVyxmq+6bHVPmrGNGASA39Job52D0eHGc6pzz9tYHPunGRYWzwoaouWYKq
- R0pF4taUGB2xmc++XyHa4bQ+9rssmReq+5ZvFEdFuH0juXE44Fl2fLYxEBCD3hfaKufD5pgJSq0
- +STB/n4gUSStgh/JxEEZ9y2TzfMDM89vz8zFmxTnm0R0UPlHYAzKKcjsAmnJnfm8IX3rclQLtis
- h03Z6zFkFeZY0zml8DsculuugNcQ0x9VZI4SpCKoP6GtnRH6JgVrZ0kVDKvHAau5K3qQybUA0hJ
- M5nRvYztm/455iRvM6LwI7K6Qps5I2r0l5yp3CXpDx52wRaeDzBSpEowRzQXTqYNYpPCIDB+0SI
- mIJXsaz4v7/B3JsmPOL1B30rAFfGn5Wx3OtQ7Qg8pVS8RzscoMZ6hroU6n4c9duPCMkAfPirxwd
- XyY/CHtqsommU+I5BZ3yF0WXcJ0TPoqL+vYtNq8EtrfNBtIgWuY3sk
-X-Received: by 2002:a17:902:e746:b0:2b7:97b9:54fa with SMTP id
- d9443c01a7336-2b97c4b5056mr69431435ad.32.1777438127345; 
- Tue, 28 Apr 2026 21:48:47 -0700 (PDT)
+ AFNElJ+V4rCz3ZFs0qdInuLcpu0zamMxBrZlMljbG4ygddDua+LwfOL9gvx5CI4UAdZXMqcEWJLfriyx0CwQ@nongnu.org
+X-Gm-Message-State: AOJu0YxxuhdCbJcZqnUxUUqQDj+le2UomdO+DxdgvZZPIgQ9c60uPDti
+ QUqhdDorFYMOXiYfNmBZp4g6SN0XbXD4bcZVPIU70lWvN3GVDfSfO3J2
+X-Gm-Gg: AeBDietn4PdOd8D+yVpPx7cIvENhcl/NCoMStrpDJNXy4EU8824+7lNEmSalJGTzg8o
+ uXt7gau0XcUZwBnmGu8YBSywXq4gnQAO+UcRAqrX6sJFYk2qIS8LgiBHW+tWrr6JuRljJQaefi8
+ P10RJCC9SYZd6I9xiApKNdwIAjCnjlbuyNk9Y6Twjc+hjyOpXbMhqW3upzVt10pHs+yZNvyYfg3
+ UacBzTDLN8FwaGcHMb8fdswwgqN1r5pF5r4LpOYHLPUCHjcB/e2kpRiAJrLwJ6k+K9N+StJ5gAe
+ VxQRrg07defIcKVPQKC88ca18FXjfK1aU/dZMS/u8J1h97aqkjG+kreoir2uTRHGK01NfYOh8Yz
+ C6yA9Vp08NWCJ9GFcWEAPI1Tlfdyw/i+jjkUta0cko6+7OYJ5IRIjTZaHMzGg6iYN7QAqMjfuJ4
+ 1YxoThbwtYfH2b2hOUPNASti8u8YDOYQ/Wsq/TfwjPXJhqi6hVGzMrAihtPKS/UwU=
+X-Received: by 2002:a17:902:e0c6:b0:2b2:49a7:a5d0 with SMTP id
+ d9443c01a7336-2b97c43c7d4mr45808795ad.11.1777438141766; 
+ Tue, 28 Apr 2026 21:49:01 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b988772ae8sm7756145ad.7.2026.04.28.21.48.42
+ d9443c01a7336-2b988772ae8sm7756145ad.7.2026.04.28.21.48.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Apr 2026 21:48:46 -0700 (PDT)
+ Tue, 28 Apr 2026 21:49:01 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
  qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
- <frederic.petrot@univ-grenoble-alpes.fr>, 
+Cc: alistair23@gmail.com,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 07/51] target/riscv: Remove MTTCG check for x-rv128 CPU model
-Date: Wed, 29 Apr 2026 14:47:08 +1000
-Message-ID: <20260429044752.4176397-8-alistair.francis@wdc.com>
+Subject: [PULL 10/51] target/riscv: Factor tiny ldn() helper in gdbstub
+Date: Wed, 29 Apr 2026 14:47:11 +1000
+Message-ID: <20260429044752.4176397-11-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260429044752.4176397-1-alistair.francis@wdc.com>
 References: <20260429044752.4176397-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -109,45 +108,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-We had to check that mttcg was not used when executing QEMU with
--cpu x-rv128 as a single 128-bit access was done as two distinct
-64-bit accesses.
-Now that we use the 128-bit ld/st that access the data atomically,
-this check is no longer necessary.
+In preparation of having this helper handle CPU runtime
+endianness changes, factor the ldn() helper out.
 
-Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
-Message-ID: <20260101181442.2489496-3-frederic.petrot@univ-grenoble-alpes.fr>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260318103122.97244-5-philmd@linaro.org>
+Message-ID: <20260318103122.97244-8-philmd@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/tcg-cpu.c | 10 ----------
- 1 file changed, 10 deletions(-)
+ target/riscv/gdbstub.c | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 988b2d905f..3407191c22 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1305,16 +1305,6 @@ static bool riscv_tcg_cpu_realize(CPUState *cs, Error **errp)
-     }
+diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+index 6a5b7a82fd..be42566bcc 100644
+--- a/target/riscv/gdbstub.c
++++ b/target/riscv/gdbstub.c
+@@ -47,6 +47,11 @@ static const struct TypeSize vec_lanes[] = {
+     { "uint8", "bytes", 8, 'b' },
+ };
  
- #ifndef CONFIG_USER_ONLY
--    RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cpu);
--
--    if (mcc->def->misa_mxl_max >= MXL_RV128 && qemu_tcg_mttcg_enabled()) {
--        /* Missing 128-bit aligned atomics */
--        error_setg(errp,
--                   "128-bit RISC-V currently does not work with Multi "
--                   "Threaded TCG. Please use: -accel tcg,thread=single");
--        return false;
--    }
--
++static uint64_t ldn(CPURISCVState *env, uint8_t *mem_buf, size_t regsz)
++{
++    return ldn_p(mem_buf, regsz);
++}
++
+ int riscv_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+ {
+     RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cs);
+@@ -84,15 +89,15 @@ int riscv_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
+ 
+     switch (mcc->def->misa_mxl_max) {
+     case MXL_RV32:
+-        tmp = (int32_t)ldl_p(mem_buf);
++        tmp = (int32_t)ldn(env, mem_buf, 4);
+         length = 4;
+         break;
+     case MXL_RV64:
+     case MXL_RV128:
+         if (env->xl < MXL_RV64) {
+-            tmp = (int32_t)ldq_p(mem_buf);
++            tmp = (int32_t)ldn(env, mem_buf, 8);
+         } else {
+-            tmp = ldq_p(mem_buf);
++            tmp = ldn(env, mem_buf, 8);
+         }
+         length = 8;
+         break;
+@@ -130,7 +135,7 @@ static int riscv_gdb_set_fpu(CPUState *cs, uint8_t *mem_buf, int n)
      CPURISCVState *env = &cpu->env;
  
-     tcg_cflags_set(CPU(cs), CF_PCREL);
+     if (n < 32) {
+-        env->fpr[n] = ldq_p(mem_buf); /* always 64-bit */
++        env->fpr[n] = ldn(env, mem_buf, 8); /* always 64-bit */
+         return sizeof(uint64_t);
+     }
+     return 0;
+@@ -162,7 +167,7 @@ static int riscv_gdb_set_vector(CPUState *cs, uint8_t *mem_buf, int n)
+     if (n < 32) {
+         int i;
+         for (i = 0; i < vlenb; i += 8) {
+-            env->vreg[(n * vlenb + i) / 8] = ldq_p(mem_buf + i);
++            env->vreg[(n * vlenb + i) / 8] = ldn(env, mem_buf + i, 8);
+         }
+         return vlenb;
+     }
+@@ -194,7 +199,7 @@ static int riscv_gdb_set_csr(CPUState *cs, uint8_t *mem_buf, int n)
+     const unsigned regsz = riscv_cpu_is_32bit(cpu) ? 4 : 8;
+ 
+     if (n < CSR_TABLE_SIZE) {
+-        uint64_t val = ldn_p(mem_buf, regsz);
++        uint64_t val = ldn(env, mem_buf, regsz);
+         int result;
+ 
+         result = riscv_csrrw_debug(env, n, NULL, val, -1);
+@@ -230,8 +235,7 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
+         const unsigned regsz = riscv_cpu_is_32bit(cpu) ? 4 : 8;
+ #ifndef CONFIG_USER_ONLY
+         CPURISCVState *env = &cpu->env;
+-
+-        target_ulong new_priv = ldn_p(mem_buf, regsz) & 0x3;
++        uint64_t new_priv = ldn(env, mem_buf, regsz) & 0x3;
+         bool new_virt = 0;
+ 
+         if (new_priv == PRV_RESERVED) {
+@@ -239,7 +243,7 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
+         }
+ 
+         if (new_priv != PRV_M) {
+-            new_virt = (ldn_p(mem_buf, regsz) & BIT(2)) >> 2;
++            new_virt = (ldn(env, mem_buf, regsz) & BIT(2)) >> 2;
+         }
+ 
+         if (riscv_has_ext(env, RVH) && new_virt != env->virt_enabled) {
 -- 
 2.53.0
 
