@@ -4,109 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 487CCFF8864
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 08:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F141FF8864
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 08:36:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI0L9-0003FC-NT; Wed, 29 Apr 2026 04:32:16 -0400
+	id 1wI0PG-0004Oi-Ab; Wed, 29 Apr 2026 04:36:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wI0L7-0003ES-Rs
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 04:32:13 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wI0PC-0004OH-8G
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 04:36:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wI0L6-0006sW-5A
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 04:32:13 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wI0PA-0007wz-Tq
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 04:36:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777451530;
+ s=mimecast20190719; t=1777451784;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=KGxs10dHNhwPiME27iFE/rHbfp2q2PD4JRlbozrcXCw=;
- b=Q9xcnR0JWFjp2gneXe9E5Cp8+Yr9WP/tmg/Jelst7OX/Ntuwit8gvaWRFiu9ioMTSK12kZ
- 0y8E8PGSkjqk+NdqWuChheKGqw3zs1iS5sK7Gyf72aU9F9VCdenHfaqN0amR6dxi9AyhRg
- qvqWk0sKykp0rNxTJEe8XcK8ovd54cY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ in-reply-to:in-reply-to:references:references;
+ bh=ZaZj8pal5da/zaSmOZv4b0JsFZgLKcdDgZj+F88KO7w=;
+ b=Yw0BwOtKi1sVsbwaD2z23nN5/ZaugD/iMjFxhXfwd8Ad8hgHpNgWem6wwSI03nqC037VKY
+ /Q3/y0wOsRCYGxDBKfMG57QODsLxoexdETBL1Amdnx66z/9QQ3dPEXRij7RYL4gjnglAdV
+ JxF7ySHHTJeRKMsKwBPY3EC82V0ODJY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-272-W8V3zmzeP-GrytG4dNWNDA-1; Wed,
- 29 Apr 2026 04:32:06 -0400
-X-MC-Unique: W8V3zmzeP-GrytG4dNWNDA-1
-X-Mimecast-MFC-AGG-ID: W8V3zmzeP-GrytG4dNWNDA_1777451525
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-622-VvZceKEWMeSc4Vcn9z1nnA-1; Wed,
+ 29 Apr 2026 04:36:20 -0400
+X-MC-Unique: VvZceKEWMeSc4Vcn9z1nnA-1
+X-Mimecast-MFC-AGG-ID: VvZceKEWMeSc4Vcn9z1nnA_1777451779
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8E5341800579; Wed, 29 Apr 2026 08:32:05 +0000 (UTC)
-Received: from [10.44.33.170] (unknown [10.44.33.170])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 505C830001BB; Wed, 29 Apr 2026 08:32:04 +0000 (UTC)
-Message-ID: <389edd46-c25d-473c-8603-1a5d411d0d63@redhat.com>
-Date: Wed, 29 Apr 2026 10:32:01 +0200
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8505A1956048; Wed, 29 Apr 2026 08:36:19 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.34])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EC2CC19560AB; Wed, 29 Apr 2026 08:36:16 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Rust builds don't use link_args
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <24ba9372-a691-4a63-a6da-e8340343faaf@oss.qualcomm.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <24ba9372-a691-4a63-a6da-e8340343faaf@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 2/6] target-info: introduce TargetInfo in QOM
+From: marcandre.lureau@redhat.com
+To: qemu-devel@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: Markus Armbruster <armbru@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Anton Johansson <anjo@rev.ng>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+In-Reply-To: <20260428234519.1812371-3-pierrick.bouvier@oss.qualcomm.com>
+References: <20260428234519.1812371-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260428234519.1812371-3-pierrick.bouvier@oss.qualcomm.com>
+Date: Wed, 29 Apr 2026 12:36:03 +0400
+Message-Id: <177745176382.2166241.2505852709346670944.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=742;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=xp/ueK2QFidmpq3m9A6rwbfNgzIcR540qNMtm7qpkqQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp8cL3nVW28ObQHq43vYcdit0B9r5VL6L6lhHJA
+ 8xsdvmQxSOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafHC9wAKCRDa6OEJdZac
+ 5eZtD/94UqtW6RIT5k0ywTwC8oM/SCnG2y97M1KtGYr25j3cdugBrq7/WkC0r/7pia8rdxnvLQQ
+ 5BYXKWin8YUsOVnrSy/XY5pXuhMhwELCYUOF/w6sS4DgPRnR0/jw8rri0YdaBHywX3JnkAW9nq3
+ Cq7uAGNnGihtYog6w3xnFwxnFChXlAAD/bStcfZUm+lqF9Zl4WIrOsS0HF9xTCUkv8+9Km2/A1s
+ eYIXp351/3qPSjZKMO3XIjHr19O7DTo/HBsvxU6sAaHCDTdrLmdM6VGcmAkLzeFrC96ywUj8cey
+ 2Adm2VtPN16v5zrXczldG7zpb2wxJz/GqEsJb38bhP+MpKzMcqlYLmhA0lKKxLMIuEH0WamnUoE
+ VP1599aMzqiju408gSI7F5PXHTEPF/PGXMKN1qRTLYVcmxCoXQO9+PUd0YQHvDDRXz0+qfUAnVB
+ DJBAK0xG7YgPDsMRlYTClq7RfDGL1G0kSh1uEAnTRRRkk2SbhoFMPpRo566ZcdNHkJimaZTxdZ1
+ XGsDyBloNiExPdruts5Sjf8b8Lfe1/nd8QRi7UBjszrb1wOINh80KAkaAPk/MMaDhnxCp72D/Xz
+ 5v/x4SSR+fH/xgqUo61KKq7KEU/y2z7qZ5iFao8lpdrTxYgxI5vuwjHwdZhMjbkqEaWxS7eUaCm
+ yNbh0edYhuR50cg==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.109,
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.109,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,43 +109,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/29/26 01:16, Pierrick Bouvier wrote:
-> I noticed that plugins are not working when building with with
-> --enable-rust.
-> 
-> We explicitly export qemu_plugin_* symbols from QEMU binary using:
-> plugins/meson.build:24 [1]
-> ```
-> emulator_link_args += '-Xlinker', '--dynamic-list=' +
-> qemu_plugin_symbols.full_path()
-> ```
-> 
-> Tracing a rust enabled build, it seems that rustc is responsible for
-> doing the final link, by calling the compiler (cc here).
-> However, I didn't see those flags being passed.
-> 
-> Any idea how to make rustc apply these flags correctly?
+On Tue, 28 Apr 2026 16:45:15 -0700, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
+> diff --git a/include/qemu/target-info-qom.h b/include/qemu/target-info-qom.h
+> new file mode 100644
+> index 00000000000..db069db718a
+> --- /dev/null
+> +++ b/include/qemu/target-info-qom.h
+> @@ -0,0 +1,23 @@
+> +/*
+> + * QEMU target info QOM types
+> + *
+> + * Copyright (c) Qualcomm
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/target-info-impl.h"
+> +#include "qom/object.h"
 
-I would start by testing Meson 1.11. From 
-https://mesonbuild.com/Release-notes-for-1-11-0.html:
+Missing include guard. Add:
 
----
-## Change to handling of linker arguments for Rust
+  #ifndef QEMU_TARGET_INFO_QOM_H
+  #define QEMU_TARGET_INFO_QOM_H
 
-Since the Rust compiler integrates the compiler and linker phase, 
-previous Meson versions did not obey link_args, 
-add_project_link_arguments or add_global_link_arguments.
+before the includes, and a matching #endif at the end.
 
-Starting in this version, add_project_link_arguments(), 
-add_global_link_arguments(), and the link_args keyword argument are 
-supported for Rust. They wrap the arguments with -Clink-arg= when 
-invoking rustc, and are only included when creating binary or shared 
-library crates.
-
-Likewise, methods such as has_link_argument() now wrap the arguments 
-being tested with -Clink-arg=.
-----
-
-Paolo
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
