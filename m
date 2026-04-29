@@ -4,97 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6306CFF8867
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 14:47:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FF00FF887E
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 14:47:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI6Bq-0004Tu-RB; Wed, 29 Apr 2026 10:47:03 -0400
+	id 1wI6Bi-0004RD-Hh; Wed, 29 Apr 2026 10:46:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bm-0004Sx-Vw
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:46:59 -0400
-Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bg-0004R4-VW
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:46:52 -0400
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bl-0004Yf-52
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:46:58 -0400
-Received: by mail-oi1-x230.google.com with SMTP id
- 5614622812f47-4756e74f8edso8740360b6e.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 07:46:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Be-0004XH-MI
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:46:52 -0400
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-7dbd23bc684so7103333a34.2
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 07:46:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777474016; x=1778078816;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777474009; x=1778078809;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AFqJHU2l3M+7nH4aoIVAt7Us+qXXcU/vpI78plz7qKM=;
- b=z79WnyVpxXXermsqpy2eoBcvzesyrNzDLzavUBNDNWTuVtiXucakIIPQTU4nhpGr2x
- uzMwmiuz/pmf7Ra+XeR2emfdarFmlzV+IGvMAYaqgymkOklwH96hnzVP9nyWyJ5B8rqV
- 3dR+0MonBx7g/MAyqpmZGMSqDQNE2Q7MFeINlenEoTbWHy1KGbO4EXovJ7NY7YQJe2G5
- SgeriRkdsOTP7H/zAI5qEyS3SFEMmuIGWao5Se05xFPxowFWpHuv8ByUeJhl5CxTm/+6
- 24nTpj77VqxtjjEeEnqhnrA+4dZcbv6P9wDqK8kaudsguSO8zDggc2pc3tUrvLSusAFF
- sHcw==
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=CC/5fWdBzD5vebSyF1z+Tawq9ewU1BUuAdGgeXpooyw=;
+ b=JG04/91SbLtVGSCBImUBP2/vjdzQD3RTKwT/xg5ZaYjadsmKUtaReT2MUdZ/aB70x8
+ DfddJ9b71uacqLlgVjyZlTUg6FX5v2GZqtGBG5tXm682qyeMrnVRj4Ix3c1H+zFlhDr4
+ 7hrc02zZGyFaW5EtBo8Cry22DDSIDWZNQIRwi0DwRX5Aihw96Cu4SsmOa5Fe3htMAtts
+ NhokEZ5/BHGMHQL4jKnPn+ZAAvzu0ZYh4kpSTTYdF8rpVeo/IrRL81U5TJ2X0m5IZ9aF
+ ePpRJNQBREAX9vcwmC1dBk5heWqx4FPM9eoOp0C5+TFIhmVCnwPFeeviCmrH/2NQTODx
+ rcSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777474016; x=1778078816;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=AFqJHU2l3M+7nH4aoIVAt7Us+qXXcU/vpI78plz7qKM=;
- b=TZssw4H/uV03281/T0k2UuCo4hSsZ+JC9iWq4IsLFuDbHZwb318c2UWyN8QFnpcl/j
- OxSJsRR3SeXkmgyKJugk/jnfTVBDGy/mnKshi0txSpB851LwUzu4QcxzMxWlqgDQ8WHV
- sGYjuLORq6l57+dmd2e+PS6jCo+czGGeQ0Q+/NjfG+BXTq3O8gmzMtYpAyXAsYUeF+Xo
- 3rsbw9Bo2JzqFzN++d9RqTczVVEwIiDuHDLXCk7/czGict3ECOtHVipqgvTDE0ep0Hw0
- SDALDi9Mps8T4g51LIruut8+2NFQYYJ1p3CZ3iMOLezs4zHVVcnOgQAr4CDAtEDUAbLz
- 6JLQ==
-X-Gm-Message-State: AOJu0YxTrwnRGARRAyhM1SDuXvai3L5y7Ol0HV4zqSdH8CufDDrkpLZ7
- ZnjWqyDphiMUqT5ENqH68q1xe5+QWSd0xKNKw1D+jZxZ3eywCBTyDWaWfjBNO8LNxMc=
-X-Gm-Gg: AeBDievYdc+EpiuG+fiD5Z2QNiYo2SVJtDKw+jw0UeQrzss0V20FTKqNchcSDxjUvLj
- c0x8RbDbQeWNPqYL2un1+KAodPI8N+90/mH6I2EDS+aGtUSfMUaRdYmBPaupPk6y4cR75m4z8gE
- UO/T89oAvYmXjoNQUxZVNOxxa7q1pWmqX1kH4qFq0kbB3Y2o/eZkmXt4Io40ebEJpO8IjJaqJXx
- OimqAINRocOqSlN/JCrmzFQOJnG9C8Nwy1vBlQ9D1TOzPegy5HMCvKp40LczGoltspUSz8PDSwm
- DbaBI1QNAXf8etOrYzXahjGB31WuQVoZNMDUyKzw6+dF0cmj+SaWaeqcSkWX2bC4RttmhqPU+fL
- r28eyXsvifzNZ/Fg1aOj0Qg/gc/SGY0+HVsl87sv/GNqpMyjADeo9aNvdmQzJdh5i/o6BAQkMwQ
- XijmKCjLQCZkSWRAhODrYG
-X-Received: by 2002:a4a:ee0e:0:b0:694:91ab:ec85 with SMTP id
- 006d021491bc7-696684c2c8emr1993860eaf.42.1777474015840; 
- Wed, 29 Apr 2026 07:46:55 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777474009; x=1778078809;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CC/5fWdBzD5vebSyF1z+Tawq9ewU1BUuAdGgeXpooyw=;
+ b=bty03EJWEg4r6LwFhn8cyu669NjW+ToHN2oPkYIjvuQQdGnsgz4yDdQPORuFLx+YTz
+ dPl3b85SjDmLMTgjkhwL6+1E9NyLVoLlSoKa2jgGjHh48enoXGbJT/l9nu43yeFFW/RA
+ 26AxUtnjS+Dsqw4Tlgmpy+PS980gE6Z2bsq0cD++2jhiqOblwGZueCWUZVnZqG32LWBi
+ oG+TfLfOqX5rJEPXazZQpr2N/J/wHp2xKqfGVO9EC1tH841yURERBzZefnc5kkLDTv1E
+ 5OjD78+EBf3Nx0iw44nNk0EGB+ehkM96t5t10E3AEjRbW2qT+lKAqKxtHEpEDXgPB4fp
+ qdkg==
+X-Gm-Message-State: AOJu0YxU65JKVQwWmOQl/ugLOsooC+bxuzTD1M21C1tdRgz8j/6bqkeZ
+ 73cGFgLjs0SapCKwBm/R13EVjjJiLye3CxTXYmZhzGNMo4ouNsfhS8m7Ds0ulcrKQn0=
+X-Gm-Gg: AeBDieua6S9GMq16bSwKeVWWEViNvpfZbcU/wqmSMO3afq67uM2BT/Cb6cZkeyKqYQ2
+ tdxTULT8vewiFQNuS0DU6cJZjRtWXana5wTGe4D/9qsE+bShJ4I2Bw2tUbLuh6moPOPdQXiicbB
+ Lepjy59HPixWDGqd67TYl1XN+MZnIpQvtk06ycB03cdDxUGzYrvuEZhNu6so5QEpaafm8iREn7K
+ rj2PZC8Fw2BYewU2yMWoX87KgrF8G7Ypn5ZK3Hrr/Tocg8FqZLCgzMkFLwL+h+6cvg8CCJiM4g/
+ V1nrZctsKO+KB37xAsInLUoCtiRO0nzLx/WkMMTH1bfr55AlSwBSBAlA3eeivHSzqHg7ofN9Gz2
+ UofKDCXnZT+nwTDYgDn6C1iArodNUJb+t6DmhvzvLbzOaSED6BT7RMvrDNPkuz79d2UvXsgT8Zq
+ sWlz6syVEEqSvDxfevAR/V
+X-Received: by 2002:a05:6820:1a81:b0:696:64ab:cd83 with SMTP id
+ 006d021491bc7-69664abd594mr2408375eaf.55.1777474009062; 
+ Wed, 29 Apr 2026 07:46:49 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6966b93d58csm1313984eaf.0.2026.04.29.07.46.54
+ 006d021491bc7-6966b93d58csm1313984eaf.0.2026.04.29.07.46.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 07:46:54 -0700 (PDT)
+ Wed, 29 Apr 2026 07:46:48 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Wed, 29 Apr 2026 08:45:11 -0600
-Subject: [PATCH v2 05/17] bsd-user: Add FreeBSD disk ioctl definitions
+Subject: [PATCH v2 00/17] bsd-user: upstream ioctl
+Date: Wed, 29 Apr 2026 08:45:06 -0600
+Message-Id: <20260429-ioctl-v2-0-288639bc2427@bsdimp.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260429-ioctl-v2-5-288639bc2427@bsdimp.com>
-References: <20260429-ioctl-v2-0-288639bc2427@bsdimp.com>
-In-Reply-To: <20260429-ioctl-v2-0-288639bc2427@bsdimp.com>
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAHMZ8mkC/0WPy27DIBBFf8ViXSIYMA+v+h9VFjwmMUptp0CsV
+ pH/vcSJlOUZjc7VuZOCOWEhQ3cnGddU0jI3gI+OhNHNZ6QpNibAQDHJOU1LqN9UmWCY09pFAaT
+ 9XjOe0u/u+To+OePPrenq8/i2NfnDJTjQMrqMtI63+UKd573ppdbW2mHdpd4VpGGZplSHzmOIA
+ KcYwDHNtRHRIpMSeA9KCaE1eOGtCeQxP6ZSl/y3V618338FwCtg5ZRRHq01TirWK/bpS0zT9dD
+ 2yHHbtn/7xgd2GgEAAA==
+X-Change-ID: 20260411-ioctl-68c80a77ad32
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>, "Stacey D. Son" <sson@freebsd.org>
+ Warner Losh <imp@bsdimp.com>, "Stacey D. Son" <sson@freebsd.org>, 
+ Alexander Kabaev <kan@FreeBSD.org>, Sean Bruno <sbruno@FreeBSD.org>, 
+ Kyle Evans <kevans@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2199; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=cMb3ivJfUvUazhrawmKHI2pYvxgGoimqonpCHhslrO0=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp8hl8CmmHIQTydgLsIOBB9gyAUWp/CKxqREOGp
- S8UXK3eEOGJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafIZfAAKCRBsHNEofbAR
- ACi8EACqtd1zOktWZcKK44xogxLQaf5r+p0qGMg2O6GdbUn/lQkpDDhGBJwvNXSZwALEr894Bq8
- Sn/yIfuMkqZqFWa0otx9KCLToiHofqPsPZaQhuVS7qcGz+TVs4ZZWvGPiq4wvZB4S1dYiHqQLL2
- 6v6gW6qS3DgrHJKRQhmxfX4VEHREuFoxsu1Dh/cPRJKsYHd0zGfn6NeqD7MpIOUeK6PWY/92+Mu
- iOM/b8ofdeF54uh6UfDNFi68LT5tOXQkDMQ+Z6dUTfEKTiH27WpKLGBoS1Lfg9uxm7JXOHBbRWP
- 04srzmHB8Dt1iSwN08R2mR361YfLYltHfemsFmmIGWCwgw1pkWlnatdbgRe/ZgvRJ/1h7UOiJOE
- ep9aCpyTpo1CZHGjD9TpfaoT2+9BTSEf18TEcq/7Qzf3y2ziLu61J2qeazlXAtoZD/uBb7a3r4C
- jY9+6IMdrsncijmWCSlV9Na4E5/X0AT6an+0ZxUov56FWiXyose+KELje2z7AcqtK9KDvc65Pf5
- qhwGXvgx4BiEM6VPbIGDcW3s4RIz5OL7II1kR4JoDxa8nR5y5XveppunNgo+nMB3Z6e93Ce7zdR
- SlO4579uBnh4Q0d/5M7XKOu2PvDlstpTMf4CJ9eJdHNm1HVvaF9sVM8AadWkWRiYtJ0IynRPRuJ
- uzD33y8Jvs3T+ow==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3222; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=h7lWbo76mSsNTVc+7DDA11jabhBzVz44+sh22FNm/Mg=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp8hl8BaqQj5Qy/lYh6N2JYr0rWwZP248+WGs6L
+ zAVfYaZOtyJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafIZfAAKCRBsHNEofbAR
+ APJJD/98hsWOEd5fjJE5+Ir6a94VaqIOrcSRp1mA9ZP8qi3GlBZPx+/FHoNMmvIZXcZLOorLzKG
+ w9G+2EDcy8i07STKNGMQNa0nX1LTSWvi1lmFcMzuUKgmTT3hoZWb6Yjj1QmolcOImOqj8PwjnLA
+ U1brmH4H47uNNL72hgIx9damhJ9wfh7jJJvl3Pu0+fh5ZTtlcQ3NnJsADebf/n1whhCnfGzINDG
+ MztGgnyZ6U464AviiLyi7w67HEaFITODXbG3D7ev0aPBCSdsfh9b1db1ht+MWwiKMCCkac+t1Z0
+ 70taVAhSGkYP0qnzvNpMbx0S5VI2b7k+vTjqqEVtNVDLCzIuYsrmZA63Cwawq09DEkijiOhsS4Q
+ Hj97ao49V8WOYPghlTqKU4RD+Spm0KQA25izRUW1w+MON/ypEyPKHnRGEZGP2xbyQiQyR3UO1EW
+ EHq1Erqtz1UY3dkG4siPJnwMOgg51G/FjYx8bvRp0uJ7HBTyM3mfvHqmf/6sdlCMpYu+VApLXSF
+ KFDf8v8y8tgJVRuynBnw44+FfJWZCJ+ernwyNhAGeOlZYBbpENkFZzctj1FnJNl5QmEcTVZW3Ml
+ DOb9bQTyJjmOoCOfhmIywc0ljExGr6THCSc6OPKsrGD6JQHNEXR9lfMMdqjnf7RI6TP5gUVM0C3
+ I3nyHfr+UlpwvNA==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::230;
- envelope-from=imp@bsdimp.com; helo=mail-oi1-x230.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32f.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,67 +122,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Stacey D. Son" <sson@freebsd.org>
+Again with the help of claude, harvest the ioctl changes from
+bsd-user blitz branch. These are a bit messy, since ioctls tend
+to be a bit messy. Ideally, all this would be generated, but
+that code isn't ready yet, so we go with what we have.
 
-Add os-ioctl-disk.h with disk and storage device ioctl definitions
-including DIOCGMEDIASIZE, DIOCGSECTORSIZE, and related disk
-management ioctls.
+Please note: All style complaints are false positives. The > 80
+character ones are fine: these files are semi-generated from upstream
+and fixing them makes syncing harder. Harder syncing in code that's
+basically boilerplate is worse than lines that are too long for
+definitions people are never going to read.
 
-Signed-off-by: Stacey D. Son <sson@freebsd.org>
+The two errors:
+● b64902a56387: bsd-user: Add bsd-ioctl.c infrastructure and termios conversion
+  ● checkpatch.pl: 197: ERROR: Macros with complex values should be enclosed in parenthesis
+  ● checkpatch.pl: 198: ERROR: Macros with complex values should be enclosed in parenthesis
+are impossible to fix: they are what they need to be for the macro
+tricks that are being used. One cannot add parenthesis and have correct
+code.
+
+This is largerly unchanged from v1, which didn't get any reviews.
+
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-ioctl-disk.h | 41 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+Changes in v2:
+- rebase forward, minor tweaks for blitz branch evolution
+- Link to v1: https://lore.kernel.org/qemu-devel/20260412-ioctl-v1-0-1d998a460560@bsdimp.com
 
-diff --git a/bsd-user/freebsd/os-ioctl-disk.h b/bsd-user/freebsd/os-ioctl-disk.h
-new file mode 100644
-index 0000000000..9260953dc6
---- /dev/null
-+++ b/bsd-user/freebsd/os-ioctl-disk.h
-@@ -0,0 +1,41 @@
-+/*
-+ * FreeBSD disk.h definitions for ioctl(2) emulation
-+ *
-+ * Copyright (c) 2015 Stacey D. Son
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef OS_IOCTL_DISK_H
-+#define OS_IOCTL_DISK_H
-+
-+/* See sys/disk.h */
-+
-+#define TARGET_DIOCGSECTORSIZE      TARGET_IOR('d', 128, uint32_t)
-+#define TARGET_DIOCGMEDIASIZE       TARGET_IOR('d', 129, int64_t)
-+#define TARGET_DIOCGFWSECTORS       TARGET_IOR('d', 130, uint32_t)
-+#define TARGET_DIOCGFWHEADS         TARGET_IOR('d', 131, uint32_t)
-+#define TARGET_DIOCSKERNELDUMP      TARGET_IOW('d', 133, uint32_t)
-+#define TARGET_DIOCGFRONTSTUFF      TARGET_IOR('d', 134, int64_t)
-+#define TARGET_DIOCGFLUSH           TARGET_IO('d', 135)
-+#define TARGET_DIOCGDELETE          TARGET_IOW('d', 136, int64_t[2])
-+#define TARGET_DISK_IDENT_SIZE 256
-+#define TARGET_DIOCGIDENT           TARGET_IOR('d', 137,            \
-+                                        char[TARGET_DISK_IDENT_SIZE])
-+#define TARGET_DIOCGPROVIDERNAME    TARGET_IOR('d', 138, char[MAXPATHLEN])
-+#define TARGET_DIOCGSTRIPESIZE      TARGET_IOR('d', 139, int64_t)
-+#define TARGET_DIOCGSTRIPEOFFSET    TARGET_IOR('d', 140, int64_t)
-+#define TARGET_DIOCGPHYSPATH        TARGET_IOR('d', 141, char[MAXPATHLEN])
-+
-+struct target_diocgattr_arg {
-+        char name[64];
-+        int32_t len;
-+        union {
-+                char str[TARGET_DISK_IDENT_SIZE];
-+                int64_t off;
-+                int32_t i;
-+        } value;
-+};
-+
-+#define TARGET_DIOCGATTR    TARGET_IOWR('d', 142, struct target_diocgattr_arg)
-+
-+#endif /* OS_IOCTL_DISK_H */
+---
+Stacey D. Son (10):
+      bsd-user: Add FreeBSD tty ioctl definitions
+      bsd-user: Add FreeBSD file I/O ioctl definitions
+      bsd-user: Add FreeBSD socket ioctl definitions
+      bsd-user: Add FreeBSD cryptodev ioctl definitions
+      bsd-user: Add FreeBSD disk ioctl definitions
+      bsd-user: Add FreeBSD IPv6 ioctl definitions
+      bsd-user: Add FreeBSD ioctl type definitions
+      bsd-user: Add FreeBSD ioctl command table
+      bsd-user: Add bsd-ioctl.h header
+      bsd-user: Add target_sockaddr and safe_ioctl to syscall_defs.h
 
+Warner Losh (7):
+      bsd-user: Add bsd-ioctl.c infrastructure and termios conversion
+      bsd-user: Add log_unsupported_ioctl function
+      bsd-user: Add do_ioctl_unsupported function
+      bsd-user: Add target_to_host_sockaddr_in6 function
+      bsd-user: Add do_ioctl_in6_ifreq_sockaddr_int function
+      bsd-user: Add do_bsd_ioctl main function
+      bsd-user: Add init_bsd_ioctl function
+
+ bsd-user/bsd-ioctl.c                  | 438 ++++++++++++++++++++++++++++++++++
+ bsd-user/bsd-ioctl.h                  |  14 ++
+ bsd-user/freebsd/os-ioctl-cmds.h      | 151 ++++++++++++
+ bsd-user/freebsd/os-ioctl-cryptodev.h |  74 ++++++
+ bsd-user/freebsd/os-ioctl-disk.h      |  41 ++++
+ bsd-user/freebsd/os-ioctl-filio.h     |  34 +++
+ bsd-user/freebsd/os-ioctl-in6_var.h   | 217 +++++++++++++++++
+ bsd-user/freebsd/os-ioctl-sockio.h    | 240 +++++++++++++++++++
+ bsd-user/freebsd/os-ioctl-ttycom.h    | 237 ++++++++++++++++++
+ bsd-user/freebsd/os-ioctl-types.h     | 104 ++++++++
+ bsd-user/syscall_defs.h               |  10 +
+ 11 files changed, 1560 insertions(+)
+---
+base-commit: becd22fdc2a071783d9e04421526633772b3b98c
+change-id: 20260411-ioctl-68c80a77ad32
+prerequisite-change-id: 20260312-share-thunk-ab1585477999:v2
+prerequisite-patch-id: a048e442d9dda7ee4ed1070ef5eb524e078b9a3b
+
+Best regards,
 -- 
-2.52.0
+Warner Losh <imp@bsdimp.com>
 
 
