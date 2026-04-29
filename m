@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED238CCFA13
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 20:05:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55F85FF8875
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 20:06:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIB7v-0003Vm-Qk; Wed, 29 Apr 2026 16:03:19 -0400
+	id 1wIB7t-0003V0-PN; Wed, 29 Apr 2026 16:03:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joshualant@gmail.com>)
- id 1wI5QP-00083v-GF
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:01 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1wI5QR-00087h-8u
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:03 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joshualant@gmail.com>)
- id 1wI5QM-0007gU-P2
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:00 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-43d73422431so11721511f8f.2
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 06:57:57 -0700 (PDT)
+ id 1wI5QN-0007gs-VQ
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:02 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43cfd1f9fd1so7861526f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 06:57:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777471076; x=1778075876; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777471078; x=1778075878; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hCHtycy4An6frL027okw83jsdSBE9b+29TxohlVbQig=;
- b=pu3gZXaRDjkF8MnZTK8zHq0cBdaQbcJ5YsqztboPj0YSY0W7Vp+0Ecz2436OCHfOww
- 8GBhTyfXKPsEr0d373lXoTBEPvwWmCavdsRdq7PZxR4PBo0swqj8CholdLN0yp52UzQu
- aAEch4UzCobG1ptNcVKa9eK6m8ZVhwncRlUtRZjG9GzkWqeibaU/xAluQPsyMcyau3T3
- 8YzCrSgBN8kBJLD84bankUI2z++FLHr7BBumSJi+EkTKSOmhDNUr8PmuulH1jTclkgiG
- iMPU1TxiGxDXS2NA7G82Yv9GHe7Z0Lvt3+EquL6U5mxnLTfdA27O4An70kqFR3MDnt9p
- xdhQ==
+ bh=i55Tulez84uC6S30BzMAZAX+g+KufDCaRfey8FY/Ij4=;
+ b=AjgfJkzQuv9875UMnxr7oiePC2iOaA3LUlWzD5QQfhtMPtxPewMd96Tnv6kjc+6stn
+ ougsQUUQ9ZoulwOOlUtgBdrm0R1qlDyQUGdqu3XLnXghjA4eJaa8BOIKK3KxHIldbCsF
+ QCaMQLUYZFUZN5euRl8trySjS6bUow4DUZjHz5x2eekKSYbKwzyzI61RX3Nz7utRC8in
+ I2qSeJG2MqOtTfcL+aOfXwt6DBHEOAt+P4Hulsu7N3VdpcEHQGGCJjwiW3wMTAbmqiPO
+ iNGXCltdHLdijCSMSGzmBnmtOnWbdK0UabSwW3++wHhOVEK5JhQpH1jtag0NbfKhOVGD
+ RzSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777471076; x=1778075876;
+ d=1e100.net; s=20251104; t=1777471078; x=1778075878;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hCHtycy4An6frL027okw83jsdSBE9b+29TxohlVbQig=;
- b=fM+LGX8aAxft59OS0XaJ+7KM54nfILe4MtAajziQOto+6+jShuvDH3rks8Uc7mWqpd
- N6YO1di/aU6kyLSeGXyCAAE67nGIbUkLXhIxRGP19e95Lek+jmY9+fzC6EplV5n06nQ3
- X8qNQFxvCzv6YZwXznjCM3P5Rp5Zh1F7qN5BS0SqqlZhj9Ub0WwCDxQV2/+mMs9KZBW0
- ph/S0NB4j/NNXcfMWU0GklR7fNR9yOxuaPIsJME8pThMWWhRv25cnQGDSlF7YkEkGliW
- CmUT/fP8qoXCayJlfCuqsRAiRn/f9fWN6qtKrYBUVsy1vfyAZf9OD1hRg5DvGDeup/gT
- SefA==
-X-Gm-Message-State: AOJu0YzvX9nYc+axBEtwsna0lbGOjMhBQots+oL4lPMnnrEvoNAfg1Ji
- STvZnI7SuEqDCAmtld0ZZz3HB4UjXzqN2c+eZvTGfUURXvjtwy2vkRVB
-X-Gm-Gg: AeBDietW4TbpFA5+Cna7Oh4RHQIy/nvyHhsls7mRzaSIgYNQChLmZUQlP7oBr5G0wm7
- cjGDBP1S7OCVmM6RMLNJUL8xVNSrtL32DUsS4WnJqRrgxGYdnGUIPn0zBnZ7eZ/CLfrN28PE7Bm
- sr6SnyI2jmuvqrsootLnlf0U4/+CrdK1BfKo+JNHUK6efO/zP8yQlnS7hzPe+PGGvNNwiYeDmrE
- 9Rpkg/3kE/+RdL4qpPkCe6EjqTZlMz7KRbD/M0r4zdDvV9MqoOSghN0YyWc21OGEmBqhKNedhvd
- 1H/10xWC3VxKCSka87Ecmgv8aPxY7X/Ap1HVs5crfpNfhisrY2PIRBTrQ/SxJh4d041TNxFJyQ8
- qOg1LUiXfnNH0u5DWSsY4ZX6+y1EKq0Dp1ZEnqK8NIZzWiB6kPN0lctnmqqJC9fFAvgBVRfYYpq
- 8diYWvTY8I9gVVIEsdQXSJw1xJ1rYAroikZ/eeUTiokvVLyG9tKvXE3T6YTQxr5fCub0X4t3WS
-X-Received: by 2002:a05:6000:1843:b0:439:b8b2:fad0 with SMTP id
- ffacd0b85a97d-4478e6b3b9cmr7209099f8f.5.1777471075822; 
- Wed, 29 Apr 2026 06:57:55 -0700 (PDT)
+ bh=i55Tulez84uC6S30BzMAZAX+g+KufDCaRfey8FY/Ij4=;
+ b=qFguAHw5vKgjxIPOPf1VTsKlvdGVxPdh47voKQoBmneCbIoutvQacIxYqfNxl3a7gv
+ 3KBsnyK7xUDbblbMeg6/KtbASOp8Jf6HUJZhEwyiJ6/OSsb7EC9rEW2ZzQT+52jM0T+a
+ XwzaIZeMg5nOwIQWDd0JwElPv3+h6w1TAk1uPK9lahP2ku4B5DkFmzOoHamPyR8/hKBO
+ TRgIOFbY00zXikOLsI2fRGZvOih8TzpGu0OtjSlImsPlncMVeiqocAAkn9YLuBke7mvs
+ HtSenEbKJYYYmEBoe8ESyJEipqhJPl5hZHrWXXaP/HzY5Qu0j81DoxAbd2qQ1gUpNOjj
+ aAaw==
+X-Gm-Message-State: AOJu0Yyaan91Ai+LHaz67AR7MklXhG3X7byG1XqLJ0k/6OZAQ2LpXjfV
+ D2/OedbL2wyn5pM3qSq1rz/LHaLB8eCjYlnrPib/qgcuQqafWhXuWGnGNz3fzmBg
+X-Gm-Gg: AeBDieuDLIYp33Do3T41kjln/whi30Px6hOLCXWbOlFW/akcpmHlNPY3Dtg1w5LP/HD
+ OLdFnmhXvq1UpTmalJC96hnjPN1gstnLnk3kpScjMeh3I1X+EItDo6qrnzdV372TASuKCq8b6pY
+ Flux34acy3HaUOY1kAtfuF+27sc2yUm4uEZ8NeOJnfbBcQoT+4V/MeamaXm8sD1qdbGfrbuAn5X
+ M2Du2C2G6oKz/Mb6yl4ZKdeTJ7dNFBDKh8hrAcWgjzYkEgfNfSBUu4Bdyp5TtGYA6Da7/z0qUho
+ QMpZe9WZKMwrSwbirrXm6lPtvqO7XKE7TfyNI1AGHqOTMg2GKL4O6kf7konNq4JScnJcDoO0dYi
+ +U/u8V9o76t9CSrPVw4JuBTgtjSBB7kbevA8DcU7OyGpt8WTmOdtRrpzNLEaL96sTz5TqTT40J8
+ d7lv6+lr51NJl9/DaJysfv8ZqNYqmZ+OHW244kSIDffD2OgFXXWQ0gSARHO4/VUmzAze6+SMbt
+X-Received: by 2002:a05:6000:2304:b0:43d:75ec:26f7 with SMTP id
+ ffacd0b85a97d-4464aced724mr14325698f8f.29.1777471077272; 
+ Wed, 29 Apr 2026 06:57:57 -0700 (PDT)
 Received: from node1.manccluster.local (revolution.cs.man.ac.uk.
  [130.88.198.135]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-447b3d48517sm5205950f8f.5.2026.04.29.06.57.54
+ ffacd0b85a97d-447b3d48517sm5205950f8f.5.2026.04.29.06.57.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 06:57:54 -0700 (PDT)
+ Wed, 29 Apr 2026 06:57:56 -0700 (PDT)
 From: Joshua Lant <joshualant@gmail.com>
 To: linux-cxl@vger.kernel.org
 Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com,
  arpit1.kumar@samsung.com, Joshua Lant <joshualant@gmail.com>
-Subject: [RFC QEMU PATCH 01/10] docs: Add documentation for cxl-vcs-switch
-Date: Wed, 29 Apr 2026 14:48:35 +0100
-Message-ID: <20260429135717.3048713-2-joshualant@gmail.com>
+Subject: [RFC QEMU PATCH 02/10] qdev/qbus: Allow hidden devices to be busless
+ on QEMU startup
+Date: Wed, 29 Apr 2026 14:48:36 +0100
+Message-ID: <20260429135717.3048713-3-joshualant@gmail.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260429135717.3048713-1-joshualant@gmail.com>
 References: <20260429135717.3048713-1-joshualant@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=joshualant@gmail.com; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=joshualant@gmail.com; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,119 +102,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Extend the capability for hiding devices, introduced for virtio-net
+device in:
+
+commit f3a8505656935cde32e28c1c6317f725084da1e0
+Author: Jens Freimann <jfreimann@redhat.com>
+Date:   Tue Oct 29 12:48:55 2019 +0100
+qdev/qbus: add hidden device support
+
+Currently only endpoint devices can be hidden with a primary device
+and failover (known static configuration). However, looking at future
+composable systems, we see a need for hidden devices which have no associated
+bus upon boot. Move the check for hidden devices to before the bus
+search, and if it is hidden ignore the case where the device was
+described on the CLI without the "bus=" field.
+
+This is motivated by a specific use-case: implementing the VCS
+command set, part of the CXL specification (CXL r3.2 Section 7.1.3). In
+this scenario a switch controlled by a Fabric Manager is able to change the
+virtual hierarchy of devices seen by a guest within a fixed physical system
+topology. The connecting bus is not known until runtime when
+a bind command is issued by the Fabric Manager.
+
 Signed-off-by: Joshua Lant <joshualant@gmail.com>
 ---
- docs/system/devices/cxl.rst | 90 ++++++++++++++++++++++++++++++++++---
- 1 file changed, 85 insertions(+), 5 deletions(-)
+ system/qdev-monitor.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/docs/system/devices/cxl.rst b/docs/system/devices/cxl.rst
-index 32b1b5d773..9e8452e576 100644
---- a/docs/system/devices/cxl.rst
-+++ b/docs/system/devices/cxl.rst
-@@ -119,11 +119,11 @@ and associated component register access via PCI bars.
- CXL Switch
- ~~~~~~~~~~
- Here we consider a simple CXL switch with only a single
--virtual hierarchy. Whilst more complex devices exist, their
--visibility to a particular host is generally the same as for
--a simple switch design. Hosts often have no awareness
--of complex rerouting and device pooling, they simply see
--devices being hot added or hot removed.
-+virtual hierarchy. Whilst more complex devices exist (see VCS
-+Switching below), their visibility to a particular host is
-+generally the same as for a simple switch design. Hosts often
-+have no awareness of complex rerouting and device pooling,
-+they simply see devices being hot added or hot removed.
+diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
+index f2aa400a77..b51dfe0645 100644
+--- a/system/qdev-monitor.c
++++ b/system/qdev-monitor.c
+@@ -650,6 +650,7 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+     DeviceState *dev;
+     BusState *bus = NULL;
+     QDict *properties;
++    bool hide_device;
  
- A CXL switch has a similar architecture to those in PCIe,
- with a single upstream port, internal PCI bus and multiple
-@@ -467,6 +467,86 @@ Example configuration:
- Guest OS communication with the MCTP CCI can then be established using standard
- MCTP configuration tools.
+     driver = qdict_get_try_str(opts, "driver");
+     if (!driver) {
+@@ -663,6 +664,11 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+         return NULL;
+     }
  
-+CXL Multi-VCS Switching
-+-----------------------
++    /* Is the device hidden from the guest?
++     * If yes, no need to find a default bus if none given...
++     * Bus could be provided at runtime (i.e. in a switch)*/
++    hide_device = qdev_should_hide_device(opts, from_json, errp);
 +
-+The cxl-vcs-switch object allows for a Fabric Manager to dynamically reconfigure
-+the switching within a multi-upstream port CXL/PCIe topology, This moves beyond
-+the static switching configuration described above. The use of vcs=X on an
-+endpoint device indicates that it should be hidden from guests at boot. Each
-+upstream port with vcs=X set will conceptually become an upstream PPB. Any
-+downstream port that is connected to an upstream port with vcs=X set will
-+automatically become a vPPB for that VCS. The overall cxl-virtual-switch has a
-+single CCI mailbox used for config/status of all ports within the switch.
-+Setting local-fm=true indicates that this QEMU instance has the CCI mailbox
-+attached. Setting it false will create listeners for commands from a remote
-+QEMU process (yet to be implemented).
-+
-+An example of how the topology is described on the CLI is shown below:
-+
-+  -object cxl-vcs-switch,id=vcs0,usp-ppbs=2,dsp-ppbs=4,local-fm=true \
-+  -device pxb-cxl,bus_nr=12,bus=pcie.0,id=cxl.0,hdm_for_passthrough=true \
-+  -device cxl-rp,port=0,bus=cxl.0,id=root_port1,chassis=0,slot=1 \
-+  -device pxb-cxl,bus_nr=22,bus=pcie.0,id=cxl.1,hdm_for_passthrough=true \
-+  -device cxl-rp,port=0,bus=cxl.1,id=root_port2,chassis=1,slot=1 \
-+  -device cxl-upstream,port=0,sn=1234,bus=root_port1,id=us0,addr=0.0,multifunction=on,vcs=vcs0,usppb=0 \
-+  -device cxl-upstream,port=0,sn=5678,bus=root_port2,id=us1,addr=0.0,multifunction=on,vcs=vcs0,usppb=1 \
-+  -device cxl-switch-mailbox-cci,bus=root_port1,addr=0.3,target=vcs0 \
-+  -device usb-cxl-mctp,bus=ehci.0,id=usb0,target=vcs0 \
-+  -device cxl-downstream,port=0,bus=us0,id=dsp0,slot=3 \
-+  -device cxl-downstream,port=1,bus=us0,id=dsp1,slot=4 \
-+  -device cxl-downstream,port=0,bus=us1,id=dsp2,slot=7 \
-+  -device cxl-downstream,port=1,bus=us1,id=dsp3,slot=8 \
-+  -device cxl-type3,persistent-memdev=cxl-mem1,id=cxl-ep1,lsa=cxl-lsa1,sn=99,vcs=vcs0,dsppb=0 \
-+  -device cxl-type3,persistent-memdev=cxl-mem2,id=cxl-ep2,lsa=cxl-lsa2,sn=100,vcs=vcs0,dsppb=1 \
-+  -device cxl-type3,persistent-memdev=cxl-mem3,id=cxl-ep3,lsa=cxl-lsa3,sn=101,vcs=vcs0,dsppb=2 \
-+  -device cxl-type3,persistent-memdev=cxl-mem4,id=cxl-ep4,lsa=cxl-lsa4,sn=102,vcs=vcs0,dsppb=3 \
-+  -machine cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=8G,cxl-fmw.1.targets.0=cxl.1,cxl-fmw.1.size=8G
-+
-+Example topology involving VCS switching::
-+
-+               +--------------------+  +--------------------+
-+               |   Host Bridge 0    |  |   Host Bridge 1    |
-+               +----------+---------+  +----------+---------+
-+    +-------+             |                       |
-+    | MCTP  |             |                       |
-+    | USB/  |  +----------+---------+  +----------+---------+
-+    | I2C   |  |    Root Port 0     |  |    Root Port 1     |
-+    +-----+-+  +----------+---------+  +----------+---------+
-+          |               |                       |
-+          |               |                       |
-+   +------|---------------+-----------------------+-----------------------+
-+   |    +-+--------+      |  cxl-vcs-switch (vcs0)|                       |
-+   | +--| CCI MBOX |---*  |                       |                       |
-+   | |  +----------+      |                       |                       |
-+   | |  +-----------------+--------+      +-------+------------------+    |
-+   | +--+                 |   VCS0 |  *---+       |             VCS1 |    |
-+   |    | +---------------+------+ |      | +-----+----------------+ |    |
-+   |    | |                      | |      | |                      | |    |
-+   |    | |        USP 0         | |      | |        USP 1         | |    |
-+   |    | |                      | |      | |                      | |    |
-+   |    | +----+------------+----+ |      | +----+------------+----+ |    |
-+   |    |      |            |      |      |      |            |      |    |
-+   |    | +----+----+  +----+----+ |      | +----+----+  +----+----+ |    |
-+   |    | |  DSP 0  |  |  DSP 1  | |      | |  DSP 2  |  |  DSP 3  | |    |
-+   |    | |(vPPB 0) |  |(vPPB 1) | |      | |(vPPB 0) |  |(vPPB 1) | |    |
-+   |    | |         |  |         | |      | |         |  |         | |    |
-+   |    | +---------+  +---------+ |      | +---------+  +----+----+ |    |
-+   |    +--------------------------+      +-------------------+------+    |
-+   |                                                          |           |
-+   |           +----------------------------------------------+           |
-+   |           |                                                          |
-+   |           |            -                    -            -           |
-+   +-----------|------------|--------------------|------------|-----------+
-+               |            |                    |            |
-+          +---------+  +---------+          +---------+  +---------+
-+          |CXL/PCIe |  |CXL/PCIe |          |CXL/PCIe |  |CXL/PCIe |
-+          |  EP 0   |  |  EP 1   |          |  EP 2   |  |  EP 3   |
-+          | (PPB0)  |  | (PPB1)  |          | (PPB2)  |  | (PPB3)  |
-+          +---------+  +---------+          +---------+  +---------+
-+                 PPB0 Bound to VCS1, vPPB1. Others unbound...
-+
-+
- References
- ----------
+     /* find bus */
+     path = qdict_get_try_str(opts, "bus");
+     if (path != NULL) {
+@@ -675,14 +681,14 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
+                        driver, object_get_typename(OBJECT(bus)));
+             return NULL;
+         }
+-    } else if (dc->bus_type != NULL) {
++    } else if (dc->bus_type != NULL && !hide_device) {
+         bus = qdev_find_default_bus(dc, errp);
+         if (!bus) {
+             return NULL;
+         }
+     }
  
+-    if (qdev_should_hide_device(opts, from_json, errp)) {
++    if (hide_device) {
+         if (bus && !qbus_is_hotpluggable(bus)) {
+             error_setg(errp, "Bus '%s' does not support hotplugging",
+                        bus->name);
 -- 
 2.47.3
 
