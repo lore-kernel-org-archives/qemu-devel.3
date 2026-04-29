@@ -4,99 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6001FF8867
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 07:53:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A70BFF8867
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 08:02:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHzjp-0003A2-AQ; Wed, 29 Apr 2026 03:53:43 -0400
+	id 1wHzrX-00056r-2j; Wed, 29 Apr 2026 04:01:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHzjd-00035h-9X
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 03:53:31 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wHzjX-0002gq-Fn
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 03:53:28 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4852b81c73aso101279325e9.3
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 00:53:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777449200; x=1778054000; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4iJTF7s4xf7jEja14GUmMXd4Uy2YPQsyOGJb5Bfuvm8=;
- b=t8UO5yNs9Q2zx8O0lWRRCyCnFMdJj244mJ6Rl8tyAbjapeog4tC4vI2EY+vtieS10Y
- QUB83qeSvb+ezk1k6s1I9tCJ9YhFForzlRp1LfLG0PhLxRt05JKP3EuDM90fVeReTjqO
- 5A3LFAyyerjXWk1KONjBDWwJnMtf1Gto6PT1Y77BTJEDIG/xnbHiAfJpJbusUFmAimbu
- hyZudh3T0/RKvwUM8uPIL0Ek/y1rZpDyxM2tAvamyXndEiCW32zYj5cXJOaaEWRoqlZR
- J0Q6V0zlUaYWrgeUu55kgMxc9DDlAZPuz74p3u6cinaBaegPuQLoy4qGEXuqEPaTeWu+
- jJkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777449200; x=1778054000;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4iJTF7s4xf7jEja14GUmMXd4Uy2YPQsyOGJb5Bfuvm8=;
- b=doxUhHsg12+1AnDeRBuzZyGTOSac1lsTIGec7Sw1wspwwKbz9ibEWiIYraFw48eDsV
- QhX//Ebi2Mnqb7HrzFzWlU4+s0O+1IIsZqiWxgnJpMv73cSx1X80LUTdEkOh4wbs5QEh
- Xz3e/pNG7B8NqcMtQ7YmQYt2JIV1FkoNpcf2M+PlGVT0LgH/sQxUGGSIkep1c1LAB0B8
- +t/OvmjPYnsMFdOl2wCAXJtvhkH6sok5NKPW0bEKhz0eE53lBhPu31AD7na+XPjWdoez
- kEijEpeQF83ABSJNgGgLYRogQAjqf8R7TodzhE6K3hcCmpKLUpzLqOPPNfCQJ+wXaLa+
- Daiw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/AntXH9WcOb+bPK4iSbTbN2hmIzCwKiNjHasHR1DE/DVH3OGjSKtWY1J4jogK/mxW+iwusXQ3Ge9W8@nongnu.org
-X-Gm-Message-State: AOJu0YyC8MRMMv19AWscar4Sz0n9bsjn7rOaPqtNi1GCobhhHYWBkNq+
- UuGWQau1fSxbOXkBnkedo5earvEef28qc5SUye0zXH4wl0b81d1qWbuMvx7XTAE0bH8=
-X-Gm-Gg: AeBDietoVZwryhwz9HkfL2vTyHiWAK7mL4if7Ge+YWCibmZDLQnUflyWf/s30PeWIg7
- oa3RMtqdntH4CvdBKA9FAljizhUqA4r/dW940+8JVYHNt2ayb6ttaLvJPJxbbqGSOJvqefC2Qjz
- ppS2FG76AsJxolWMeu2Z/Y27Jf5K4+HZXASqKEj8xjImD++tFVaNq++iTY7zdQZuYCVYJllL3+I
- ZRGKdNZ9/lFLXNlTpAlPAou5sxxf/ViMVj1t8U3aPqhQ7h00fHqRHgC2o4wCoJCoGslrJTx98ww
- BDuZam2E1whpYlyBJDErYu5pufxJCTTPYyFes1WQlkyz7RVQ76IwBl5ZwHYuWSbsQFc6JK7xUJa
- pzKnojIw2jnHjXUoE6xc2q8C94HzV3jFn/3cTnk6irQH7m6M38NU4oyRx+mgHAzQBmoO128BSFl
- jmtU/6fO2Y2vQNFcK81p3o71hWPlH5ABsZuzf6NbzamMUmJBAI1KJYmbmXPgCjMjk41i7FOtHZv
- 8QD
-X-Received: by 2002:a05:600c:3b13:b0:488:9e43:9690 with SMTP id
- 5b1f17b1804b1-48a77afd324mr103392925e9.10.1777449199758; 
- Wed, 29 Apr 2026 00:53:19 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a7bc23f4asm42959205e9.7.2026.04.29.00.53.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Apr 2026 00:53:18 -0700 (PDT)
-Message-ID: <9ce0f3a2-3593-4fad-84b0-256494e3fe1d@linaro.org>
-Date: Wed, 29 Apr 2026 09:53:17 +0200
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wHzqw-00053L-7f; Wed, 29 Apr 2026 04:01:05 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wHzqe-0005PE-FX; Wed, 29 Apr 2026 04:00:55 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id B061445007;
+ Wed, 29 Apr 2026 10:00:40 +0200 (CEST)
+Message-ID: <9b11dec1-f27c-4c69-8dfc-34ef0bdc7e8f@proxmox.com>
+Date: Wed, 29 Apr 2026 10:00:34 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] hw/riscv: iommu-trap: remove .impl.unaligned = true
+Subject: Re: Excessive IO PSI for iothread when using io_uring since QEMU 10.2
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: "open list:Network Block Dev..." <qemu-block@nongnu.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, Fam Zheng <fam@euphon.net>,
+ Hanna Czenczek <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Thomas Lamprecht <t.lamprecht@proxmox.com>, Jens Axboe <axboe@kernel.dk>
+References: <017dc767-90e3-4983-8417-e541b3fb04f6@proxmox.com>
+ <20260427191343.GD218226@fedora>
+ <317ab384-f8c2-49af-89c4-407bb2f5617c@proxmox.com>
+ <20260428161927.GB278591@fedora>
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Tyrone Ting <kfting@nuvoton.com>,
- Hao Wu <wuhaotsh@google.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- qemu-riscv@nongnu.org, qemu-arm@nongnu.org
-References: <20260428093339.2087081-1-peter.maydell@linaro.org>
- <20260428093339.2087081-2-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260428093339.2087081-2-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+From: Fiona Ebner <f.ebner@proxmox.com>
+In-Reply-To: <20260428161927.GB278591@fedora>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1777449542268
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,27 +64,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/4/26 11:33, Peter Maydell wrote:
-> From: CJ Chen <cjchen@igel.co.jp>
+Am 28.04.26 um 6:18 PM schrieb Stefan Hajnoczi:
+> On Tue, Apr 28, 2026 at 02:10:02PM +0200, Fiona Ebner wrote:
+>> Hi Stefan,
+>>
+>> Am 27.04.26 um 9:12 PM schrieb Stefan Hajnoczi:
+>>> On Fri, Apr 24, 2026 at 12:25:41PM +0200, Fiona Ebner wrote:
+>>>> Dear maintainers,
+>>>>
+>>>> since QEMU 10.2, if io_uring is enabled, it will be used for the event
+>>>> loop of iothreads and this causes an IO pressure stall value of nearly
+>>>> 100 when idle.
+>>>>
+>>>> The issue was also reported on the kernel mailing list [0]. The
+>>>> suggestion from Jens Axboe was to just turn off the iowait accounting
+>>>> completely. But since (for block/file-posix.c), there is actual IO
+>>>> submitted via the same ring, I wasn't sure if that is the right approach.
+>>>>
+>>>> So the idea was to keep track of whether the event loop is otherwise
+>>>> idle and only use the IORING_ENTER_NO_IOWAIT flag in that case [1].
+>>>>
+>>>> However, doing so would only help for block/file-posix.c, which submits
+>>>> IO via luring_co_submit() -> fdmon_io_uring_add_sqe(). For example, for
+>>>> block/rbd.c, only a poll SQE for the AioHandler node's fd is used. When
+>>>> submitting that poll SQE in the iothread, we would need to be able to
+>>>> know if IO for RBD is currently in-flight or not to be able to decide
+>>>> whether to use the IORING_ENTER_NO_IOWAIT flag or not. Is there a good
+>>>> way to do this (in a general way)?
+>>>>
+>>>> Or should the flag really always be used (if supported by the kernel)?
+>>>> Is there a way to tell io_uring/kernel that we are an event loop and our
+>>>> waiting should only be accounted for when there is actual IO in-flight?
+>>>>
+>>>> Happy to hear your opinions and suggestions!
+>>>>
+>>>> [0]:
+>>>> https://lore.kernel.org/io-uring/14bc6266-5bc9-4454-9518-d1016bfe417b@proxmox.com/T/
+>>>
+>>> Hi Fiona,
+>>> Jens replied yesterday confirmed your suspicion that the number of
+>>> inflight requests is not being tracked correctly.
+>>>
+>>> Is there still a problem after fixing the kernel's inflight counting? If
+>>> not, then no QEMU change is necessary and that seems like the cleanest
+>>> solution anyway. The kernel should know whether there is I/O in flight
+>>> and so it doesn't seem right that userspace needs to hint this.
+>>
+>>
+>> unfortunately, yes. Even with the kernel fix [2], the real problem with
+>> poll SQEs described above remains. I'm still seeing high IO pressure
+>> stall values when using QEMU. In add_poll_add_sqe(), QEMU submits poll
+>> SQEs for the AioHandler node fd, and that does count as pending IO. A
+>> small reproducer modeling this [3].
 > 
-> The riscv_iommu_trap_ops MemoryRegionOps specifies that
-> unaligned accesses are not valid for this device but that
-> it does implement them. This doesn't make much sense, and
-> we want to add an assertion that registered MRs don't specify
-> this invalid combination of settings.
-> 
-> Drop .impl.unaligned = true, with no behaviour change.
-> 
-> Signed-off-by: CJ Chen <cjchen@igel.co.jp>
-> Acked-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
-> Reported-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> [PMM: reworded commit message]
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/riscv/riscv-iommu.c | 1 -
->   1 file changed, 1 deletion(-)
+> Does the kernel account POLL_ADD SQEs as blocking I/O activity?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Apparently yes. See the C program below [3].
+
+> That behavior is inconsistent if select(2)/poll(2)/epoll_wait(2)
+> syscalls do not count as blocking I/O activity. The kernel io_uring code
+> should account them correctly and not rely on a userspace hint.
+
+@Jens Axboe: should there be a separate internal counter for
+poll/timeout SQEs and have them not count towards IO wait by default?
+
+> 
+> Stefan
+> 
+>>
+>> So the question from above, how to deal with this for block drivers not
+>> going through file-posix.c remains.
+>>
+>> Best Regards,
+>> Fiona
+>>
+>> [2]:
+>> https://lore.kernel.org/io-uring/b4d2aa36-8301-4e58-be3e-1451267b8c43@proxmox.com/T/
+>>
+>> [3]:
+>>
+>> #include <assert.h>
+>> #include <errno.h>
+>> #include <stdio.h>
+>> #include <unistd.h>
+>> #include <liburing.h>
+>> #include <sys/eventfd.h>
+>>
+>> int main(void) {
+>>     int fd;
+>>     int ret;
+>>     struct io_uring ring;
+>>     struct io_uring_sqe *sqe;
+>>
+>>     fd = eventfd(0, 0);
+>>     assert(fd >= 0);
+>>
+>>     ret = io_uring_queue_init(128, &ring, 0);
+>>     assert(ret == 0);
+>>
+>>     sqe = io_uring_get_sqe(&ring);
+>>     assert(sqe);
+>>
+>>     io_uring_prep_poll_add(sqe, fd, 1);
+>>
+>>     ret = io_uring_submit_and_wait(&ring, 1);
+>>     printf("got ret %d\n", ret);
+>>
+>>     io_uring_queue_exit(&ring);
+>>
+>>     return 0;
+>> }
+>>
+>>
+
+
 
