@@ -4,90 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEF4FFF8875
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 20:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72112FF8875
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 20:08:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIB7w-0003WU-CT; Wed, 29 Apr 2026 16:03:20 -0400
+	id 1wIBCa-0001pK-KT; Wed, 29 Apr 2026 16:08:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joshualant@gmail.com>)
- id 1wI5QX-0008KF-DE
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:12 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joshualant@gmail.com>)
- id 1wI5QU-0007iW-EQ
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:08 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso128830365e9.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 06:58:05 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1wIBBw-0001ce-8q
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 16:07:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1wIBBu-00030n-Jn
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 16:07:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777493245;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DQE1HWutJZrccc4xhn8bIEm1VSEiR13vxsMi+6wM40Y=;
+ b=e6eHj9dKq2TPebzMnG0TIBproC0UCI7axPX2+Kdr4++b/n9+HQRbOoSquhMbul/3eIxdvh
+ 3av+kzgeQhTUqJdo9QKtLrxiOa1lC2WPmo5FQGG4DwQwc7pb3s2TpbYZ7xSIzhm5t+RBM5
+ xLz6UAPV1Rpeeit6sTBci8fL5XHZbxw=
+Received: from mail-pf1-f197.google.com (mail-pf1-f197.google.com
+ [209.85.210.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-486-Qagf-15PMumVpnfBcRpD6Q-1; Wed, 29 Apr 2026 16:07:23 -0400
+X-MC-Unique: Qagf-15PMumVpnfBcRpD6Q-1
+X-Mimecast-MFC-AGG-ID: Qagf-15PMumVpnfBcRpD6Q_1777493243
+Received: by mail-pf1-f197.google.com with SMTP id
+ d2e1a72fcca58-82f9429f49cso259090b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 13:07:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777471084; x=1778075884; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dPS8B/0ftELxPYBJPOi/Jw2N6PyAu4qwVtoZHd48FII=;
- b=jsKAgWblGo17yKNZPtv6njNOEEO1oQbqEahzK8KLNZs/W38NLxT5Q7LYTylPMQqn/w
- mRKVR9F7e/gQAx+hdHDH+IX32ZlVDMzJUi7AzLiLkK1FkkLmCDXCg72Yp1/kJN9ooZ+b
- 6GoK6jfzUO15SZQsyZ7jd+dPI6HLU6b/q8ISoz4ZSbxBKSVzX/A555QOMIc9w4kXFJs+
- MzltzdLsTgZuanKJ4jox4a5wXuF6MZm3NJnOu0cMlbWHucQcKQZ77sWpTJf8Sxz/6KsE
- C9kcCJmOuvjQLXN+PuGQtIOM6Hyt9UwYfQIN09tL7bhko7fR5gkDdppOIP4KsoVAYtvp
- MVOQ==
+ d=redhat.com; s=google; t=1777493243; x=1778098043; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=DQE1HWutJZrccc4xhn8bIEm1VSEiR13vxsMi+6wM40Y=;
+ b=njHDF2AhXsMimu8Sgw9uEXtyexn0wicBnma9czZtsy7ehBw3OJ36/3nj8ukxEZLy7B
+ H2/SsRr392pE+WL9dYVgFp0e4c+aKb6W9kiSmz6v//OMWmDTzV9kZo5RF3/5qk5drN7B
+ P0iXBb5aeM5pc7phWA0MWOZblT3DA/MSld5kKAw75eBBEk8izC2YNsrZ6oXXD8tSSPv4
+ dK605mWMbgV/IY/TM4h8lq/E2mEe2a5/VDNAet4LmFHBFVsSAq8dSyaD3FTNKYdcERr/
+ x15BP+fSDX6AeQnutgKpt1nNHzoiSmmH6nYhN2DHUCJk3X6XJklJLJITeE5xrUplrq1g
+ jXPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777471084; x=1778075884;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=dPS8B/0ftELxPYBJPOi/Jw2N6PyAu4qwVtoZHd48FII=;
- b=jPJMHyZq4dIZJToPN/b9uLu643kf5YUtngxFgOexarUBMvFzxXch1Wv6l6ppaa1zpx
- ZoznHsVEja176tniC2Yvm1dpH5v5GE+Osy9DPz164eRZO+8mgXnJueSzLTH+RnyvSsep
- FmtE9lD/ySYgXJ4C1Lm0iLLgBDn4mk/Mf12lC3C8+k5ZsNbbFFy6r66zGpUs+ko+IhsR
- AvOJY86eQ/dE6cfGso3OkzeL0R+PEW3qFxXid2o0wTKgdwzPvqfc4Zv13Kn3tphFuSdE
- dkbr585eYbKI56ONa/ThWARDiYyQ5wpJ+8PR9Mdcsm17j4khFZqqvcHb9MEiTuIm3dQ8
- TvfA==
-X-Gm-Message-State: AOJu0Yy5kfkklPG/TPr0LRQxEi8vCL1Oii5qHR/b+k7QIGOvj1ziECuQ
- i7vwZP6m0we8L4QjaLBSNb9vFs9xScjDn3qxuQ2/0t70+sG4ho7pLaxY
-X-Gm-Gg: AeBDieukf8ZDui0sX2Nkg0UXum4BzS0ftVDqLkgCV3oYM9HTAw+gNAHTX+nCWbzWUAk
- S+xzG9BwOgg1vEJWrtJaHWJvKVbehLElG+Jz8ppQJeVE2CYy3gW1j7SHCLHOUgbUxBwMHPgBKZj
- +FEKHEGQTQyGMnGW2Yvg+BqXbGOfPdQMnnnUW7maXmgv1MAdFzCDmXgBRi1abxZklDfGEGohsvA
- q3bLGs/riLXfx5UTKsPWTEJyPlqMfzm+CGjC0R9NGf/QPHEU8qlfihBfRey77Js41DspWL+GbX8
- VrhM74t9OTEj2udps+EdRUsiXy11ChABS2M8iKgXo16yM8+gLJbc9oqqYtLty4EjIulYits9oQy
- rcFhySbVTsV00Y/6NV9Duqun2v8sQR47kmmmLWPTMEamfvklo1nzc3DH7VqeNkJr5RQH8g0Ovh7
- rDWpEJYVBgJo86RGjBRt241eNFv0QUNZB9u1IVcGMEaxWrmFdfU6mbrTuEnrMth7C6qu2Q9q2i
-X-Received: by 2002:a05:600c:c4a3:b0:488:fd7e:1063 with SMTP id
- 5b1f17b1804b1-48a7b54eb83mr71355305e9.29.1777471084202; 
- Wed, 29 Apr 2026 06:58:04 -0700 (PDT)
-Received: from node1.manccluster.local (revolution.cs.man.ac.uk.
- [130.88.198.135]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-447b3d48517sm5205950f8f.5.2026.04.29.06.58.03
+ d=1e100.net; s=20251104; t=1777493243; x=1778098043;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DQE1HWutJZrccc4xhn8bIEm1VSEiR13vxsMi+6wM40Y=;
+ b=Z3ulmvyc1itY3MLgb5DIcsp3KIOjzSSsC9KvmdM+HooRAhf+IGrdTAmiIpKLHI/ttc
+ tqyzYmbcfy91//7bkGtWIlEmZS0x6c3IkCmYhNAqcRHxqoovONG8z8g1O81qFYyNYEzW
+ FV8djxCxMBscyNf9UfoUN8bSfTBLS9HKsxv2OSS0v/S1kxsXbw/hpiwWIOGCbvSsIzNW
+ 3qP3gT5Rejl2sPmhocdPiMIumDhxGWqDkqv2HNV2vqkoXlBnwQKXcFgEFs1MKifULk8W
+ 9YFkI+Ke0lHUhU7ouvZwU7AKLM+TCx6w7wHRnkjeiZS1+hQPUSJdgqo1GhoA9RqghEwt
+ iAZQ==
+X-Gm-Message-State: AOJu0Yzs5BYrv0DNFGm2tYQ7scq8tnSURRfRLL5irptJpe2OJngANUkP
+ ycpI+Xp9ggUkYx7CL1QMriJ/EJTVKoGYfVcaq2G8QBfFbaHO0UNiByob/qfkKKAvMjcWOWWemq/
+ vj2A5dxs9rMtFHNjVUN4NArd9xSWKuvEwqkwTL+qcd3pNnbu8pcPzhAeb9rGzSuVz
+X-Gm-Gg: AeBDiesQfjfMoLXn6Nbmmz/CCZNA3xiqOO79Vg5j1ErYjHCOPbEKnwVoxWDmGHOU5O9
+ i8XyI/l9QDYJy3TpiLJ4ofjwHCytVXDkv3YqZK9BFqGAjg9KEt0RZhsGFkeObnyFcqbf6936GmG
+ bUMLJusv9sTKe4W7lHwUp0pG3wIbje5pEYC2vJ7ZicqmCNU/yV0KpDxCh86/5M8EB0hPigLlS0V
+ 6LldKNE68qL+LTsokF0cl48bOdBAnvRFBNo0x2nV1HtofY/zOpCHU8VJ8Gr8Aj9yXePfaFBa5EQ
+ E7lt9pxBzOEcGfVs9MxInrDRtPoSFxl5d1QYWpvNxPaY+wV7enExNy8gii/ywdk3M6HLQf/YuaD
+ Voo0xMY6l09goTPtLDUZOg6c=
+X-Received: by 2002:a05:6a00:2d16:b0:82c:9c90:54cf with SMTP id
+ d2e1a72fcca58-834fdc1e9demr89976b3a.43.1777493242580; 
+ Wed, 29 Apr 2026 13:07:22 -0700 (PDT)
+X-Received: by 2002:a05:6a00:2d16:b0:82c:9c90:54cf with SMTP id
+ d2e1a72fcca58-834fdc1e9demr89947b3a.43.1777493241960; 
+ Wed, 29 Apr 2026 13:07:21 -0700 (PDT)
+Received: from fedora ([49.36.109.214]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-834ed80ec94sm2932261b3a.52.2026.04.29.13.07.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 06:58:03 -0700 (PDT)
-From: Joshua Lant <joshualant@gmail.com>
-To: linux-cxl@vger.kernel.org
-Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com,
- arpit1.kumar@samsung.com, Joshua Lant <joshualant@gmail.com>
-Subject: [RFC QEMU PATCH 07/10] cxl-downstream-port: Add support for VCS
- switching
-Date: Wed, 29 Apr 2026 14:48:41 +0100
-Message-ID: <20260429135717.3048713-8-joshualant@gmail.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260429135717.3048713-1-joshualant@gmail.com>
-References: <20260429135717.3048713-1-joshualant@gmail.com>
+ Wed, 29 Apr 2026 13:07:21 -0700 (PDT)
+Date: Thu, 30 Apr 2026 01:37:16 +0530
+From: Arun Menon <armenon@redhat.com>
+To: Stefan Berger <stefanb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>
+Subject: Re: [PATCH] tpm: Dynamically allocate tpm-tis buffer
+Message-ID: <afJk9Lsn25UQOnwE@fedora>
+References: <20260427200134.453022-1-armenon@redhat.com>
+ <765f0577-ee8f-4944-93fe-bb93e420668f@linux.ibm.com>
+ <afBbLDmdYFY5feJx@fedora>
+ <84607c2e-1da9-43d2-8a5b-e50e91c0f8ba@linux.ibm.com>
+ <4b5c983e-8bbb-4851-bb0f-f478ad14121b@linux.ibm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=joshualant@gmail.com; helo=mail-wm1-x335.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4b5c983e-8bbb-4851-bb0f-f478ad14121b@linux.ibm.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 29 Apr 2026 16:03:16 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,53 +119,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a downstream port is connnected to an upstream port which is
-defined as a VCS within a cxl-vcs-switch, the port will automatically be
-instantiated as a VPPB within that VCS. This downstream port will then
-appear normally to the guest, but can be connected to a real downstream
-PPB at runtime when the switch is issued a bind command by the Fabric
-Manager.
+Hi Stefan,
 
-Signed-off-by: Joshua Lant <joshualant@gmail.com>
----
- hw/pci-bridge/cxl_downstream.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+On Wed, Apr 29, 2026 at 02:15:16PM -0400, Stefan Berger wrote:
+> 
+> 
+> On 4/28/26 8:57 AM, Stefan Berger wrote:
+> > 
+> > 
+> > On 4/28/26 3:01 AM, Arun Menon wrote:
+> 
+> > > > 
+> > > > With MAX() it can now be bigger than TPM_TIS_BUFFER_MAX if the
+> > > > backend says
+> > > > so -- hm...
+> > > 
+> > > TPM_TIS_BUFFER_MAX is still 4096.
+> > 
+> > Oh, I had still based my patches on your TPM_TIS_BUFFER_MAX increase to
+> > 8192 bytes. Let me fixes this along with a few other things. I will let
+> > you know.
+> > 
+> > I have another series that I will post now that can be applied to
+> > master. It's adding a test for TIS over I2C but I will need to extend
+> > that one also with the large transfer test case then.
+> > 
+> > 
+> 
+> So I have resolved this issue now along with a few other things. My branch
+> is here: https://github.com/stefanberger/qemu-tpm/tree/work-tpm-for-11.1
+> 
+> - I have applied the i2c swtpm test case series first since it could be
+> easily upstreamed first
+> - Then your patch "migration/vmstate: Add VMState support for GByteArray"
+> - Then the CRB chunk + TIS extended buffer support series. I modified my
+> patches (last 4 in that series) to
+>   - increased MAX_TIS_BUFFER_SIZE to 8192
+>   - added migration blockers dynamically for TIS whenever >4096 bytes are
+> either in the request or response; remove them later on again when device
+> goes into ready state for example
+>   - added large transfer test also for i2c
+> 
+> Please pick up those patches for v6 posting, or otherwise you can split your
+> v5 series up into CRB-only support for v6 and I post my (last 4) patches
+> later on.
+>
 
-diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
-index 5322c46900..5e7ce6410d 100644
---- a/hw/pci-bridge/cxl_downstream.c
-+++ b/hw/pci-bridge/cxl_downstream.c
-@@ -14,11 +14,14 @@
- #include "hw/pci/pcie.h"
- #include "hw/pci/pcie_port.h"
- #include "hw/pci-bridge/cxl_downstream_port.h"
-+#include "hw/pci-bridge/cxl_upstream_port.h"
- #include "hw/qdev-properties.h"
- #include "hw/qdev-properties-system.h"
- #include "hw/cxl/cxl.h"
- #include "hw/cxl/cxl_port.h"
- #include "qapi/error.h"
-+#include "hw/cxl/cxl_vcs_switch.h"
-+
- 
- typedef struct CXLDownstreamPort {
-     /*< private >*/
-@@ -199,6 +202,14 @@ static void cxl_dsp_realize(PCIDevice *d, Error **errp)
-                          PCI_BASE_ADDRESS_MEM_TYPE_64,
-                      component_bar);
- 
-+    PCIDevice *parent = pci_bridge_get_device(pci_get_bus(PCI_DEVICE(d)));
-+    if (parent && object_dynamic_cast(OBJECT(parent), TYPE_CXL_USP)) {
-+        CXLUpstreamPort *usp = CXL_USP(parent);
-+        if (usp->vcs_name) {
-+            cxl_vcs_register_vppb(usp->swcci.vcs, usp, dsp, errp);
-+        }
-+    }
-+
-     return;
- 
-  err_chassis:
--- 
-2.47.3
+Thank you. I agree. I will post v6 as CRB-only support. The GByteArray
+patch is already accepted. The complex TIS changes can be posted
+separately later.
+
+Regarding the TIS buffer: I saw you implemented the migration blockers
+and 8192-byte increase in your branch. Should I discard my
+'Dynamically allocate tpm-tis buffer' patch entirely, or do you want to
+try and adapt that logic into your TIS follow-up series later?
+
+Since your new migration blockers are based on the 4096/8192 threshold,
+it might be simpler to stick with the static approach for now, but let
+me know what you prefer.
+
+
+Regards,
+Arun Menon
+
+> 
 
 
