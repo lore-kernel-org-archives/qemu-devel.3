@@ -4,107 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43EDACCFA13
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:07:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B13FF8875
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:07:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIAF0-00024j-FA; Wed, 29 Apr 2026 15:06:35 -0400
+	id 1wIAEf-0001wc-Tb; Wed, 29 Apr 2026 15:06:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wIAEk-000235-Us
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:06:18 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wIAEf-0001uN-23
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:06:13 -0400
 Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wIAEi-0000V7-UP
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:06:18 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wIAEc-0000Rs-Ru
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:06:12 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id A01896A820;
- Wed, 29 Apr 2026 19:06:00 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id D65926A81C;
+ Wed, 29 Apr 2026 19:05:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1777489561; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1777489558; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YuIC/5ApKnZIeBsrthfG2kENi8s5IqdSqJq9eBy6xCM=;
- b=QvNqfviQ46jREZ/i5WFNKBEg35w5OTN5KdX1WZ1RdVPRkYLNxOpWUPulzP7pxHZs+QO7aO
- fiD8WBMmTDawcUOWBqulvo+2TNpfKGnC/SbNm8VPKOYRLT9yhxIuy/1eqMntskLVXAD6+Q
- pSbo1y3xrjrXOZt5KaS9JQOSogbTPiw=
+ bh=7W+LG/e4N84hX6vct4e3E6sskFPEJKhlBBC5LD9xxeI=;
+ b=wXD1NvKKOa6nwk1FEdsR9VXb4sxy95k2w4iBSh4ox6N5vaOVvOZfusKXe8dzon42pmTCeJ
+ QTPTonDhclVFyKJNUHXAqWMQzXqNUAzp2dZDsRJu9Kp0w45zjDSkRnTguICavHHRImGpno
+ ncY0MgVXr99jaS6+to0sGa+a6oWNGsw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1777489561;
+ s=susede2_ed25519; t=1777489558;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YuIC/5ApKnZIeBsrthfG2kENi8s5IqdSqJq9eBy6xCM=;
- b=Cg5YxdUH9yV3tBfeumcCIs4X1DSXFpwTIOTsH2jJW5kT20hdJnZosss0PmlsBVb/+AFNoz
- 1LhUbshL8DK7NhAw==
+ bh=7W+LG/e4N84hX6vct4e3E6sskFPEJKhlBBC5LD9xxeI=;
+ b=rpjVOoXpYhgqDWOru3XggElXVsaR3Kn+FpIGjy1XQDZPHECKi60i8sr+jn+hhKHFvzTD/L
+ QBvQNVpJUQhASeBg==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=SyqCtA9l;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="yXNb0n/1"
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1777489560; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1777489558; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YuIC/5ApKnZIeBsrthfG2kENi8s5IqdSqJq9eBy6xCM=;
- b=SyqCtA9lV3j6YpTOyCJhHmubdbg4KVAQQGnrbS8lYF/fr/puHQ1NyfU3UosFQ/KUu9GLlR
- ylz/Cy9HNZurogUtzTbdIcYKbaUd64urXM9UyK2Ut611grSLZ2iKVhx3zNIejrTBRlvBtm
- jNgOl9igduX3iC2J1q84LO0jzoXZYyc=
+ bh=7W+LG/e4N84hX6vct4e3E6sskFPEJKhlBBC5LD9xxeI=;
+ b=wXD1NvKKOa6nwk1FEdsR9VXb4sxy95k2w4iBSh4ox6N5vaOVvOZfusKXe8dzon42pmTCeJ
+ QTPTonDhclVFyKJNUHXAqWMQzXqNUAzp2dZDsRJu9Kp0w45zjDSkRnTguICavHHRImGpno
+ ncY0MgVXr99jaS6+to0sGa+a6oWNGsw=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1777489560;
+ s=susede2_ed25519; t=1777489558;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YuIC/5ApKnZIeBsrthfG2kENi8s5IqdSqJq9eBy6xCM=;
- b=yXNb0n/1ofw2PcJXkOmxcnfgCdvDQwgOja0WXX6QqZm6gXtKwVeoYZgo1aupLmXRGdHn3I
- 7UHYI8GVvkjgujCw==
+ bh=7W+LG/e4N84hX6vct4e3E6sskFPEJKhlBBC5LD9xxeI=;
+ b=rpjVOoXpYhgqDWOru3XggElXVsaR3Kn+FpIGjy1XQDZPHECKi60i8sr+jn+hhKHFvzTD/L
+ QBvQNVpJUQhASeBg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 44CE2593B0;
- Wed, 29 Apr 2026 19:05:59 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7D44B593B0;
+ Wed, 29 Apr 2026 19:05:57 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id UHZXBZdW8mm/eQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 29 Apr 2026 19:05:59 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 8NEgE5VW8mm/eQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 29 Apr 2026 19:05:57 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, marcandre.lureau@redhat.com,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v1 4/5] tests/qtest/dbus-vmstate: Stop the daemons explicitly
-Date: Wed, 29 Apr 2026 16:05:49 -0300
-Message-ID: <20260429190550.20122-5-farosas@suse.de>
+Subject: [PATCH v1 3/5] tests/qtest/dbus-vmstate: Honor QTEST_LOG env variable
+Date: Wed, 29 Apr 2026 16:05:48 -0300
+Message-ID: <20260429190550.20122-4-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260429190550.20122-1-farosas@suse.de>
 References: <20260429190550.20122-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MIME_TRACE(0.00)[0:+]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: A01896A820
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
  envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
@@ -128,38 +117,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The dbus-vmstate test is currently non-deterministically emitting a
-"cleaning up pid" message, followed by the PID of one of the
-dbus-daemon processes used during the test. This is due to a race
-between the GTestDBus g_autoptr destructor and a child process that
-does cleanup when the program ends.
-
-Add calls to g_test_dbus_down() to make the issuance of the SIGTERM to
-the dbus-daemon deterministic.
+Don't hide QEMU error messages unconditionally, make the tests that
+expect to fail honor QTEST_LOG and show every output if the variable
+is set.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/dbus-vmstate-test.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tests/qtest/dbus-vmstate-test.c | 28 +++++++++++++++-------------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
 diff --git a/tests/qtest/dbus-vmstate-test.c b/tests/qtest/dbus-vmstate-test.c
-index 05e598a3e3..15c35e7c0f 100644
+index 51c5fdb995..05e598a3e3 100644
 --- a/tests/qtest/dbus-vmstate-test.c
 +++ b/tests/qtest/dbus-vmstate-test.c
-@@ -260,11 +260,12 @@ test_dbus_vmstate(Test *test)
-     qtest_quit(src_qemu);
-     g_bus_unown_name(ownsrcA);
-     g_bus_unown_name(ownsrcB);
-+    g_test_dbus_down(srcbus);
-     g_bus_unown_name(owndstA);
-     if (!test->without_dst_b) {
-         g_bus_unown_name(owndstB);
+@@ -324,17 +324,18 @@ test_dbus_vmstate_missing_src(char *name, MigrateCommon *args)
+ {
+     Test test = { .id_list = "idA,idC",
+         .result = MIG_TEST_FAIL };
++    bool silent = !getenv("QTEST_LOG");
+ 
+     /* run in subprocess to silence QEMU error reporting */
+-    if (g_test_subprocess()) {
+-        test_dbus_vmstate(&test);
+-        check_not_migrated(&test.srcA, &test.dstA);
+-        check_not_migrated(&test.srcB, &test.dstB);
++    if (silent && !g_test_subprocess()) {
++        g_test_trap_subprocess(NULL, 0, 0);
++        g_test_trap_assert_passed();
+         return;
      }
--
-+    g_test_dbus_down(dstbus);
-     g_main_loop_quit(test->loop);
+ 
+-    g_test_trap_subprocess(NULL, 0, 0);
+-    g_test_trap_assert_passed();
++    test_dbus_vmstate(&test);
++    check_not_migrated(&test.srcA, &test.dstA);
++    check_not_migrated(&test.srcB, &test.dstB);
  }
  
+ static void
+@@ -343,18 +344,19 @@ test_dbus_vmstate_missing_dst(char *name, MigrateCommon *args)
+     Test test = { .id_list = "idA,idB",
+                   .without_dst_b = true,
+                   .result = MIG_TEST_FAIL };
++    bool silent = !getenv("QTEST_LOG");
+ 
+     /* run in subprocess to silence QEMU error reporting */
+-    if (g_test_subprocess()) {
+-        test_dbus_vmstate(&test);
+-        assert(test.srcA.save_called);
+-        assert(test.srcB.save_called);
+-        assert(!test.dstB.save_called);
++    if (silent && !g_test_subprocess()) {
++        g_test_trap_subprocess(NULL, 0, 0);
++        g_test_trap_assert_passed();
+         return;
+     }
+ 
+-    g_test_trap_subprocess(NULL, 0, 0);
+-    g_test_trap_assert_passed();
++    test_dbus_vmstate(&test);
++    assert(test.srcA.save_called);
++    assert(test.srcB.save_called);
++    assert(!test.dstB.save_called);
+ }
+ 
+ static void log_func(const gchar *log_domain, GLogLevelFlags log_level,
 -- 
 2.51.0
 
