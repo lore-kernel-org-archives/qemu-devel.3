@@ -4,106 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BA04FF8875
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 20:59:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19111FF8875
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:03:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIBzT-0002OC-Ay; Wed, 29 Apr 2026 16:58:40 -0400
+	id 1wIC49-0003TQ-9c; Wed, 29 Apr 2026 17:03:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wIBzQ-0002Nx-Af
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 16:58:36 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wIC46-0003TD-HH
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:03:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wIBzO-0002A5-Ac
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 16:58:36 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wIC45-0003C9-2j
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:03:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777496312;
+ s=mimecast20190719; t=1777496602;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=umX7UCeSkkaG6aO+7tOzFGLyJ5B5mxsVAIzWXtb8y4k=;
- b=a+iaJdgF3RRIDdxZS7LroOfvgsZn6tZWRe6m7RUNW3miibcUdSoAORY0WFdiz8PdLvfdyk
- pB7A/X8U1D1wZMMCg6yopqDXbnAPiOk0ecgDLGzkEKV9JmtKKlprDLJCA0p+o9fWkuB7lP
- aaaK7tty9WgaSqHthwYrvmIAY6lb0So=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-37-kp8fTe31P-CWlWCkNGr1zA-1; Wed, 29 Apr 2026 16:58:30 -0400
-X-MC-Unique: kp8fTe31P-CWlWCkNGr1zA-1
-X-Mimecast-MFC-AGG-ID: kp8fTe31P-CWlWCkNGr1zA_1777496310
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-50d826ed6f9so28105051cf.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 13:58:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777496310; x=1778101110; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=umX7UCeSkkaG6aO+7tOzFGLyJ5B5mxsVAIzWXtb8y4k=;
- b=HK9NpQyflm1dMDlkNdEbwdcqREsDbtX8T0ZS+Yhwtu+MfzSanSmsIHmKpWrEcrkdeR
- h2DLlyh6v2cL2V992xZmzZ9IV15RBKPR9hu7pBDcWKAlN43GyXjTFN0PaGXTqEnysPmD
- svXy9cBcKBNus7Knqe1ySZb7mhk5KXMJb4VVShShScy/mmJOf1IBQgcdUqPbOtdDt4xJ
- JD1ym2qS07ueAqgm/kxSMdjPkMf1lWRvNbA0CdFcExaiR4RL9sDdSjqaZIcPTO7LcQvy
- u/mSB/S4VOgSeljr7+A1EmPwHocXqjp20AmY7md4ELxEFP1NPmLzE+nPNtRxJlYOP8Rh
- wa0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777496310; x=1778101110;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=umX7UCeSkkaG6aO+7tOzFGLyJ5B5mxsVAIzWXtb8y4k=;
- b=C7iYYXpiZMLHOD8daFQf9k2ulgaxvGnKBATAvp7WrQDzGRNoIZPfJhoQxp56C5se/y
- puUdS+bSnIN1fGJnFFbp3bnzRQFfIeNPCEj7aJQk70Ql+xsz9mRy5biT2L0eDRU79IDN
- vpwp9t1mkp7C9I3ZSwSusMKkXt5Mrxa0epLTSVUs4Gi1MNqnZ61/poao+3B8FomSEnYc
- Heg3RA0Pm2FchdPC666TjGiYguxYjQ+QM+rcOvY1tmT5mcK9HhWuynI/RgJ58yYSf2wB
- yOTMrlgmgUmOeelRn7XKFCgtuRAbb32ZNvGdWTxtO/ZTEJzkwq5qbN6PNhsLJgqaGTWs
- aa8g==
-X-Gm-Message-State: AOJu0YzQIcerSScNLyg7EiMOMuEnVoq29KIrWckKUltZqxkxf71rwVjx
- eBV7q5d70MFOq0S6YZeTx/U9uI4j9BXzcK5wHQRg8lPsVMet9rBRl3WmqU/9kE7j9dGApNKBQ8/
- +aMXdXNWQaVtSwrwMfjtRkP0Z3DBb1bMzaCtngOF+xHzr9eY/MRB5lfqK
-X-Gm-Gg: AeBDiesyV0jLO2aj/t8HtBChcJ3W96czhkv3UZ7ShaHWQB7J7kSnYxk80zjGNqd1pU0
- aSKEWxctQ6/itq4Qknhyuy2nVDcTaOuH6A5iu4z4o9I9gI5P1bHgpk717OsrIIoDkig1GbX+ot2
- Ibe4ZLnyHYSGrcoOVSA+k5qAGdTFPYz+UttoHsP7NPbx8fiS9CAJpIvPWp/G5a4KLHu/oXKDk2S
- P7+cEfy1C0FjDeYbooN8Hdl3YhUx9XE2O1WfIwiIXjljlX2eEMxj1ITj+M4gWZDOPBpEabb4Uls
- BW/AEmyBewCXtlnb4eKMWVhnNQ9XcN0nsGovMie+PIaCVsUrKnL6o28T2/SBMJjLqcIi+UMk0w5
- lvYDayU7puOmP41C25WV08L2YBi3Y5pRkzPQmpxxSz2Nc6f01lNYzc5oC6Q==
-X-Received: by 2002:a05:622a:88:b0:50d:af03:c9ca with SMTP id
- d75a77b69052e-51019b8a956mr60815271cf.38.1777496310186; 
- Wed, 29 Apr 2026 13:58:30 -0700 (PDT)
-X-Received: by 2002:a05:622a:88:b0:50d:af03:c9ca with SMTP id
- d75a77b69052e-51019b8a956mr60814941cf.38.1777496309619; 
- Wed, 29 Apr 2026 13:58:29 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5101accd24asm30793801cf.9.2026.04.29.13.58.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 13:58:29 -0700 (PDT)
-Date: Wed, 29 Apr 2026 16:58:28 -0400
-From: Peter Xu <peterx@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, Zhang Chen <zhangckid@gmail.com>,
- Li Zhijian <lizhijian@fujitsu.com>, Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH 12/41] RFC net/colo-compare: guard finalize against
- uninitialized state
-Message-ID: <afJw9Pz0alpWvRdd@x1.local>
-References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
- <20260427-qom-tests-v1-12-c413f3605311@redhat.com>
+ bh=59PFEgMXfzUbVp1BVkysKDYZbBbk20cj4itZloqYX+8=;
+ b=hZ4LZghERj/IqxdjTh4GekiU8WjChdBg4JwHXh/Y7cg9ZbSCwRj+zFAbvrc42wzrLmh5I1
+ R51DCwI/O28hddKsBRXOaP4jy1l2YMLjueeqyj0/YNi+lb3W+/1OP2yM4FY/IFP6q05ydt
+ F633j6DuM+Zd6fawmGo9qWjCbkq26MQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-443-nIp_h41NMvuzNubEwvxHrg-1; Wed,
+ 29 Apr 2026 17:03:21 -0400
+X-MC-Unique: nIp_h41NMvuzNubEwvxHrg-1
+X-Mimecast-MFC-AGG-ID: nIp_h41NMvuzNubEwvxHrg_1777496600
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 226C61956094
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 21:03:20 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.2])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C10B319560B6; Wed, 29 Apr 2026 21:03:18 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Thu, 30 Apr 2026 01:02:34 +0400
+Subject: [PATCH v3 01/26] qemu-options.hx: document -chardev vc
+ backend-specific behavior
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260427-qom-tests-v1-12-c413f3605311@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Message-Id: <20260430-qemu-vnc-v3-1-be96757428d0@redhat.com>
+References: <20260430-qemu-vnc-v3-0-be96757428d0@redhat.com>
+In-Reply-To: <20260430-qemu-vnc-v3-0-be96757428d0@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1375;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=TCKGeNX61zdbvMDhyprN1vYtrHLQam3/ghGCoyv8Sxs=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp8nILkRBxIeIoQ4+LsCD5F6x5RBXr0ViTmuPHS
+ dnYPz6Jj1aJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafJyCwAKCRDa6OEJdZac
+ 5SdYEACSqBybqqDslqKprC2aPEPWqWOat0Z6rlOVHfjGtALK+w6PZXX0AiHzwOTZ/xRcHGLYcoR
+ G8Ffq/xBVgwmgVE1ZLnrPScPkkMNofJpm+Yoldrzf+UL0qYSMlHABVAtwH03ZkLW2GgdJlQRcRj
+ XdePk7+YLabKyeave/IMVYOE/W9LAOeUHZmdDwe0P7K1sdocgO+MLH+fRIWEvM/w+9QkfvxzxAX
+ ictlpZguMX4RCxkgbuTRLhPs40WKGd1yfcuiCOwq3DFah6p1tacpy3floECNJXTNEdWBcYyoP6b
+ JFSSZE6RZ/FsdlXWJyLd3sOHH/wQTlm9wHurYjK/4h8b+jAAapr88jAGAnHjJc4EXCBeaGiynos
+ U6xlu8bxUrZfY1AlJb9NR4BnEkiiUUpA2R4vtYsD8YrqhFyq/ORvK/dFZL+EqmJLCSJVVhlyoue
+ aWTjcyfaQvW7S/qKauUbu+Ip+ypHl1414LprtIt7wNUZLspyXnDzBs92RgtSwEKO1bxfF68n8tA
+ wSv/u8vYWRLPWmf6F7T3SQJZHiyrjFs8r/GaRskdq5Id+TGHRzN9/vHo8nwzKO7GoFG1p4q+HcB
+ PTceyRrIyO0L61x2s/7kf8NP1D2Dhdyb4J4HvodBq+fhtcTcGPl1N3X1B6OfS9zCX32O+WudS/W
+ KmgIBmtJ8J9Y6oQ==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,104 +104,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 27, 2026 at 11:42:11PM +0400, Marc-André Lureau wrote:
-> colo_compare_finalize() assumes the object was fully set up by
-> colo_compare_complete(), but a bare object_new() followed by
-> object_unref() skips the complete callback entirely.
-> 
-> This causes two crashes:
-> - qemu_mutex_destroy on the static event_mtx which was never
->   initialized (colo_compare_active is false)
-> - qemu_bh_delete(NULL) and iothread dereference when s->iothread
->   is NULL
-> 
-> Guard the event_mtx teardown with colo_compare_active, and the
-> iothread-dependent cleanup with an s->iothread NULL check.
-> 
-> This is an alternative to patch "colo-compare: Fix QMP
-> qom-list-properties crashing", sent earlier, hence the RFC.
-> 
-> Fixes: 45942b79b9f8 ("net/colo-compare.c: Check that colo-compare is active")
-> Cc: peterx@redhat.com
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+The -chardev vc documentation only mentioned the built-in console with
+optional size parameters, but the actual behavior depends on the display
+backend. Document the GTK (libvte), D-Bus and spice-app cases.
 
-For this one, wouldn't the early version be better?
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ qemu-options.hx | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-https://lore.kernel.org/all/20260423183212.468047-2-peterx@redhat.com/
-
-It's simpler and skip everything when complete() isn't properly invoked.
-E.g. if there'll be new things added to complete() in the future, we also
-don't need to worry on whether there will be one more null-deref we may
-overlook.
-
-> ---
->  net/colo-compare.c | 31 +++++++++++++++----------------
->  1 file changed, 15 insertions(+), 16 deletions(-)
-> 
-> diff --git a/net/colo-compare.c b/net/colo-compare.c
-> index c356419d6a8..be819db06c9 100644
-> --- a/net/colo-compare.c
-> +++ b/net/colo-compare.c
-> @@ -1416,7 +1416,7 @@ static void colo_compare_finalize(Object *obj)
->              break;
->          }
->      }
-> -    if (QTAILQ_EMPTY(&net_compares)) {
-> +    if (colo_compare_active && QTAILQ_EMPTY(&net_compares)) {
->          colo_compare_active = false;
->          qemu_mutex_destroy(&event_mtx);
->          qemu_cond_destroy(&event_complete_cond);
-> @@ -1431,30 +1431,29 @@ static void colo_compare_finalize(Object *obj)
->      }
->  
->      colo_compare_timer_del(s);
-> +    g_clear_pointer(&s->event_bh, qemu_bh_delete);
->  
-> -    qemu_bh_delete(s->event_bh);
-> +    if (s->iothread) {
-> +        AioContext *ctx = iothread_get_aio_context(s->iothread);
->  
-> -    AioContext *ctx = iothread_get_aio_context(s->iothread);
-> -    AIO_WAIT_WHILE(ctx, !s->out_sendco.done);
-> -    if (s->notify_dev) {
-> -        AIO_WAIT_WHILE(ctx, !s->notify_sendco.done);
-> -    }
-> +        AIO_WAIT_WHILE(ctx, !s->out_sendco.done);
-> +        if (s->notify_dev) {
-> +            AIO_WAIT_WHILE(ctx, !s->notify_sendco.done);
-> +        }
-> +
-> +        /* Release all unhandled packets after compare thread exited */
-> +        g_queue_foreach(&s->conn_list, colo_flush_packets, s);
-> +        AIO_WAIT_WHILE(NULL, !s->out_sendco.done);
->  
-> -    /* Release all unhandled packets after compare thead exited */
-> -    g_queue_foreach(&s->conn_list, colo_flush_packets, s);
-> -    AIO_WAIT_WHILE(NULL, !s->out_sendco.done);
-> +        object_unref(OBJECT(s->iothread));
-> +    }
->  
->      g_queue_clear(&s->conn_list);
->      g_queue_clear(&s->out_sendco.send_list);
->      if (s->notify_dev) {
->          g_queue_clear(&s->notify_sendco.send_list);
->      }
-> -
-> -    if (s->connection_track_table) {
-> -        g_hash_table_destroy(s->connection_track_table);
-> -    }
-> -
-> -    object_unref(OBJECT(s->iothread));
-> +    g_clear_pointer(&s->connection_track_table, g_hash_table_destroy);
->  
->      g_free(s->pri_indev);
->      g_free(s->sec_indev);
-> 
-> -- 
-> 2.53.0
-> 
+diff --git a/qemu-options.hx b/qemu-options.hx
+index e780bc2ac06..efffeaaf55e 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -4277,8 +4277,17 @@ The available backends are:
+     and hub devices is not supported as well.
+ 
+ ``-chardev vc,id=id[[,width=width][,height=height]][[,cols=cols][,rows=rows]]``
+-    Connect to a QEMU text console. ``vc`` may optionally be given a
+-    specific size.
++    Connect to a QEMU text console. The implementation and supported feature
++    set depend on the selected display backend.
++
++    - The GTK backend uses libvte for the emulation and display (when available).
++
++    - The D-Bus backend exports the character device as a Chardev object.
++
++    - spice-app backend exports it as a Spice port.
++
++    In other cases, QEMU uses its own emulated VT100, and ``vc`` may optionally be
++    given a specific size.
+ 
+     ``width`` and ``height`` specify the width and height respectively
+     of the console, in pixels.
 
 -- 
-Peter Xu
+2.54.0
 
 
