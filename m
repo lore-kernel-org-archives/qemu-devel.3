@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8307FF887E
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 22:27:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20245FF8875
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 22:27:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIDMR-0003tM-Te; Wed, 29 Apr 2026 18:26:27 -0400
+	id 1wIDLO-00007g-7W; Wed, 29 Apr 2026 18:25:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIDMQ-0003jc-GL
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 18:26:26 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1wIDLJ-00006l-JE
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 18:25:17 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIDMO-0005KF-7y
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 18:26:26 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-36146ae9dd4so179267a91.3
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 15:26:23 -0700 (PDT)
+ id 1wIDLI-0004nC-41
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 18:25:17 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-362e50b4641so142740a91.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 15:25:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777501583; x=1778106383; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777501515; x=1778106315; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wOo9Ej8oauL+yt74QGsLK9i6wkNOq1Wi6G6vU7WjjcY=;
- b=fS38waavuCzF0kaJ6YJyia83JbU8OpJ7cFTaQnNQ3dSzsaqmaVetL3q9CCHhA3t8/F
- 649z5emO8Ejaewn6/l3m62pZ+6yJfTSDlLyhPLflk+N4PXgOqC/J42AMt8/uWb+6BdN2
- +Br7WRxbq7caPSk09V8oYkXTgJ7PdEg2P71gI9JPT+GzC4zdDz8z9VPerttdTg3TxWRz
- +csaeQbmKj0sJwEHaqPl42ugTgMZnMtnHroxLLigHwAIeLP2v3jhIMeZrO30zA/HXS2x
- +dqkTD6KJul7j/ZyvRLhbu81C+YhXnqnlnLFVWwTnDOyscMT/h3i4+pBGSLoZp9L/Kj4
- SWQA==
+ bh=5FtnIdI9pw6cJ7qbwPdimy6vNdGRmRCr1/CjHQQ42OQ=;
+ b=JzUGKwiJWwaW0WriRvv9kjDx7iYfEF1DCkPNqc9vCDsenskPFsl0G6DFYYfULy+AFv
+ d+uGbBjAvpKzS9Sy45vUi2H2yRRxGTWFcvAIhasUJwx1GlpCczm6HC1HTS+s0nIF06HT
+ 4r8wpFioxOxD5YNBG0MPmLioYGEwyH5LpCl7nWFdPYDrby9ptZi3995OHreJSJiM4QRc
+ T2mCk/8bEStjT97GqMOMVYqtfv7OySig+07AF7eiNFRIwN3o0tud34RGUp5RGaD2rvb1
+ Mgdo/5oV+RLJRG9MGZvDmi2E8sGc7bzv9ZrPXYr46vHzb8qo7N0XE3wwSVmipN7DVBOl
+ 6Ldg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777501583; x=1778106383;
+ d=1e100.net; s=20251104; t=1777501515; x=1778106315;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=wOo9Ej8oauL+yt74QGsLK9i6wkNOq1Wi6G6vU7WjjcY=;
- b=nx4oH8koUNaARcK4RbHCokPM4TxAeOHsP+JNnpO5lKKTT+AmwGdALNF1v9xUMdLFOt
- cC20Dlr+RTxw03mTm0Wjnn59f8B5goIPTSXPARVBz2uhrYf/6rR/Alr2wsIkGuZOT9Re
- 3g3a/nefy2JncDZvuwRN9AR4i0SAqSMhC98g7U9n36BsA67kxalNvH9jr38M/0USzwUT
- S+APdZ15yR3t37PtemGZXWMH528io6y0+Jftvtp5RS5grtqKUDxP7p3e5E+0FIxxWXki
- d3vDpUBN2MOovfhN584qDfpSLzQhPnRhSBxasvV1luglh8kyfBv/22BtKiKM/C3uLqwT
- C+Dg==
-X-Gm-Message-State: AOJu0Yyanktg4Xy4A+XzdXgxIyodSmuhtC7rhm3jVRXnImthbhA6OEcZ
- GPFubEfp7+q+5MDJncnFd0lu2lzb/aPAC6ickXEiiYjpE4zrjUPi4rGIVzqWbvLGz+UpmHX+K9S
- yNp3Tk8o=
-X-Gm-Gg: AeBDietvGSJfYcBuEuwjh2FgXsiZchqQj28XHTwYKdLxi3TFFssk/Y1TdVtcqXUKxJg
- CeBaN3v/Nezocj3lrqnbXohpiiEBKUEO9+TmoT1Gq4B++qU8B5qDJt8DGGa+eqGYtGXiNYUuBmX
- nZT6xg0bmaCXhwXqQ4Qnfr6QRfPJth5kWPTBsdrceY0qqI2ftLk+hySPgZRla59/GE9ehHFV5+x
- gv/ESKCv0l/+NmD0Y9nJ35isRVdbYoVq6l4YWSjMU1MZpqAl/Bz/sgle5mIx9g9zdmn6HGKILX3
- VdcaXXu+DWL+JkOJqUIuMvuFJ0uPU59LQgYktrmaOHE2mMEBDeGLoQOtl9JF8ZPyu5xtdWf+xcs
- cKXKjB1XvuI5/0MgOWnwCYJEUmemymdxnO+dbkc7pbRMM/WV9hY4YqB3JuBI9JoHyNBV9kCMrd5
- h7z0N630d0vJ9qpupV/LTGyghe3DMhdYjMcVYY1se8
-X-Received: by 2002:a17:90b:4fcc:b0:35f:b75e:fff5 with SMTP id
- 98e67ed59e1d1-364c30ae79dmr222844a91.22.1777501582886; 
- Wed, 29 Apr 2026 15:26:22 -0700 (PDT)
+ bh=5FtnIdI9pw6cJ7qbwPdimy6vNdGRmRCr1/CjHQQ42OQ=;
+ b=EETRPegBJddCJx7kJ9rCs0OMlfrv2FovNVBG1dLevti/81W0lexh/DiyFlE9M7NYdk
+ RXPDlSmxexLDYZI3NpUMoqg//cdd5twxYJ6kgp03t7d8IzPEQYBKlXPs7D1880XVHQcQ
+ JNwu+0bF77sQWaI4riwjJFgckxlAreo/QFFzNr1UFcSNgCei7kv70YFJQvUhT+lJ0M3B
+ Lgk73PQLR09HFkKfbrO4Ws55ORpFb95iQcZQ3N1vt6SZLNmpDDTHKscBzbAUfZVD0/aE
+ Lp0TZkADd/TgLKrHU+gZdVbvjRXA8NRaOORsEkoUzAb9p4rJ14Z5qK/V3X38bfd0Iqsx
+ uxKA==
+X-Gm-Message-State: AOJu0Yw0j9r+uuakqVmKLFnmxqObnY6r1DJnGK0R8jdpiRikGWFp9B91
+ C7a9EDXKfZHvK7Wn/QkDMBHFcorTPIYjP++n/KYXOkunDIbcFLd4QoqDuj74BHzcGmMn00tNxH1
+ m2CiAtFg=
+X-Gm-Gg: AeBDievZfle99FjClOGL8Ry9DOrB8dBYrQ6/T+GpJZREZ1647xSqZOS1kf8fyDUqMZ1
+ nr8Mwu8HD5D3CZWJ8h6ZFYYEegfgA0p8OISmMbpBZTbVcDS88SpB2L6L0Q1IwAo+jGH7uvqF7JV
+ lHv8ipETC/3YbcXbv2EhcyIIogh0n0K76VUPSzacg0QexoHJGOLdYjqXS7ZEk6Hnv2w5f1JJPvl
+ VGVBFO12nD84mU611YBLK6slzpaq5TIl3D3Hk+Z0Pbj/3R2nyY/AvM+KGl4pt1TMz3Hw69Op2RP
+ WOMWX54rbXgGIPX2gs+BB5VkIdZUMLSafsSLlDayax2+zAOqLG58nfuSFNlZw51EFyl9FopI0mS
+ 4KAfjefL5QSGfJP+v7GgIw8e+gSglmKxVMZD31yEKhbPpULQhM6VaApSMwiud3YyaAd92o6NXxT
+ SO0flXZ7PudnYahMRbu0AleH/+fshcRG8SKqHZf5Ko
+X-Received: by 2002:a17:90b:5890:b0:35f:b5df:449 with SMTP id
+ 98e67ed59e1d1-364c30e18f0mr183144a91.21.1777501514530; 
+ Wed, 29 Apr 2026 15:25:14 -0700 (PDT)
 Received: from stoup.. ([180.233.125.15]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-364a2732502sm1888471a91.3.2026.04.29.15.26.20
+ 98e67ed59e1d1-364a2732502sm1888471a91.3.2026.04.29.15.25.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 15:26:22 -0700 (PDT)
+ Wed, 29 Apr 2026 15:25:13 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 36/48] fpu: Inline float16_unpack_raw into callers
-Date: Thu, 30 Apr 2026 08:24:33 +1000
-Message-ID: <20260429222445.26301-37-richard.henderson@linaro.org>
+Subject: [PULL 09/48] fpu: Reverse the order of softfloat-parts* inclusions
+Date: Thu, 30 Apr 2026 08:24:06 +1000
+Message-ID: <20260429222445.26301-10-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260429222445.26301-1-richard.henderson@linaro.org>
 References: <20260429222445.26301-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1031.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,59 +101,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Define the widest addition primitives first, so that
+they're already defined before being used by the
+narrower muladd primitive.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- fpu/softfloat.c | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ fpu/softfloat.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index bc6450954e..cdf95a8517 100644
+index e5d8b9573a..aa96ac530d 100644
 --- a/fpu/softfloat.c
 +++ b/fpu/softfloat.c
-@@ -646,11 +646,6 @@ static FloatParts64 unpack_raw64(const FloatFmt *fmt, uint64_t raw)
-     };
- }
+@@ -1638,14 +1638,11 @@ static const uint16_t rsqrt_tab[128] = {
+ #define FloatPartsN    glue(FloatParts,N)
+ #define FloatPartsW    glue(FloatParts,W)
  
--static void QEMU_FLATTEN float16_unpack_raw(FloatParts64 *p, float16 f)
--{
--    *p = unpack_raw64(&float16_params, f);
--}
--
- static void QEMU_FLATTEN bfloat16_unpack_raw(FloatParts64 *p, bfloat16 f)
- {
-     *p = unpack_raw64(&bfloat16_params, f);
-@@ -1482,7 +1477,7 @@ static FloatParts64 float8_e5m2_unpack_canonical(float8_e5m2 f, float_status *s)
- static void float16a_unpack_canonical(FloatParts64 *p, float16 f,
-                                       float_status *s, const FloatFmt *params)
- {
--    float16_unpack_raw(p, f);
-+    *p = unpack_raw64(&float16_params, f);
-     parts64_canonicalize(p, s, params);
- }
+-#define N 64
+-#define W 128
++#define N 256
  
-@@ -4978,9 +4973,8 @@ bfloat16 bfloat16_default_nan(float_status *status)
+ #include "softfloat-parts-addsub.c.inc"
+-#include "softfloat-parts.c.inc"
  
- float16 float16_silence_nan(float16 a, float_status *status)
- {
--    FloatParts64 p;
-+    FloatParts64 p = unpack_raw64(&float16_params, a);
+ #undef  N
+-#undef  W
+ #define N 128
+ #define W 256
  
--    float16_unpack_raw(&p, a);
-     p.frac <<= float16_params.frac_shift;
-     parts64_silence_nan(&p, status);
-     p.frac >>= float16_params.frac_shift;
-@@ -5049,9 +5043,8 @@ static bool parts_squash_denormal(FloatParts64 p, float_status *status)
- float16 float16_squash_input_denormal(float16 a, float_status *status)
- {
-     if (status->flush_inputs_to_zero) {
--        FloatParts64 p;
-+        FloatParts64 p = unpack_raw64(&float16_params, a);
+@@ -1654,9 +1651,11 @@ static const uint16_t rsqrt_tab[128] = {
  
--        float16_unpack_raw(&p, a);
-         if (parts_squash_denormal(p, status)) {
-             return float16_set_sign(float16_zero, p.sign);
-         }
+ #undef  N
+ #undef  W
+-#define N            256
++#define N 64
++#define W 128
+ 
+ #include "softfloat-parts-addsub.c.inc"
++#include "softfloat-parts.c.inc"
+ 
+ #undef  N
+ #undef  W
 -- 
 2.43.0
 
