@@ -4,143 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7B86FF887E
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 23:29:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A43BFF8875
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 23:35:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIEKz-0003zq-D1; Wed, 29 Apr 2026 19:29:01 -0400
+	id 1wIEQa-0004q7-O8; Wed, 29 Apr 2026 19:34:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wIEKx-0003zN-KC
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 19:28:59 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wIEKv-000132-PJ
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 19:28:59 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63TKcA3G434910
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 23:28:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- Y8QjHS2xFyZOCrCDX3iUx3kdSaiLVbQzkOAoAcvRk+A=; b=WbDnX3wv3t9sIlkA
- z4q5uCaDuSn1b+Vg7/ntxvDZKwD40NZlpvObFVbIYCDyj1s9eBqc1FlmVaYtXu/m
- xtYNphmm70plCOEx9hMoNpwS5KKfOJ7awDtoh9oQJILYBhDznF0/qDA1XuvMMgB5
- wAlqRw0wftwgxdWKFuI86JmI13JoBvwA4vy13gwoupVtyxJPmWaemlW+XLvehv4t
- 503UBJ2PZdTZJVMWUCkQVhGOATh023vb6NUdQEBSyG2uhDmGU94AeBWaQTXpSgPH
- ArqljZJ8CGZDp8cGzzeHKhLhoRDoUGrWgb9ZINdYHamEllqTvPLKUMiHnCKjCnL/
- K37xEg==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4du7sxcxxf-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 23:28:55 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2de07c12745so1897291eec.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 16:28:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ericsonjoseph@gmail.com>)
+ id 1wICoi-00010s-Df
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:51:36 -0400
+Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ericsonjoseph@gmail.com>)
+ id 1wICog-0004Hv-7D
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:51:36 -0400
+Received: by mail-dy1-x1333.google.com with SMTP id
+ 5a478bee46e88-2d8fa0fadfeso217141eec.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 14:51:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1777505335; x=1778110135; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Y8QjHS2xFyZOCrCDX3iUx3kdSaiLVbQzkOAoAcvRk+A=;
- b=HGgB09Q5MamZY5y0B9f0nhOdd+ggd/HP2HjjrtG80/UczwjoirZrwZkVGAs232dGiY
- UfSNJy3+jnOnd/VcsfguHkQ8L0pktRvV1Rm6I9aaL+FiPzsRs1gVLkyveKxt4GJxk5De
- Yl4OPY0tpOkg8bP+OInlFu0pC/LY9Zr9GlWXtxjKlgxSPPfG1kdGWywN52axXeOzd3hZ
- etswn1naPhDVQzi//Dzl0bK2jy9zf+wqMnWa7c0cnOqNFEvk5DINBYZvGy4uz/sOO7kb
- 5Tvv3BuWELLE9r0vB/rrX/V0zZ/DxuZhQFi5Mgrjwtmn3Yn8zApQxT23Ho7wgpGHFaSh
- rt/A==
+ d=gmail.com; s=20251104; t=1777499490; x=1778104290; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=5PebPglHoe6H/36VNwDhbR2OIGR9F5WehVi5N/W11q8=;
+ b=Op6wWrug93x551st9CxQyFGJgaQCkivBI850kDNPEArCZb62DtVZNhfgM0nANGZh0W
+ TbfS1oXlFLuF1dJhGWVxO45YR9suafwZzJcP6sYv43x1vzm/3S/G9JghCV2tdHwF5yMa
+ fFW+/Pw4AMAlpMwlj5LkNMEasfshe7qbAByiLbAZnzsfPb3tiBxJmCEI9JtIwkYn99ic
+ g1j7ZLGmWBpP5BBjIDuRfQRXVoJzy2NuMgsEPOTa+nQO93fw+4zQhib+oeMhcBVXFwCa
+ 0m6m/gR038ON3NVXKodMPgWd4TxqC5LwCpC76F7AunCROU6EG7SCXEZj65PWZVIW7qFe
+ glPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777505335; x=1778110135;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Y8QjHS2xFyZOCrCDX3iUx3kdSaiLVbQzkOAoAcvRk+A=;
- b=UinlhuJ40RCq/22xv8uqO6GnVN21X6jHzE0B/mNIiGXGNa/3NgqQsfE8wVvK4WYybE
- 0TOHC/abjqoyd1i/atvWuiAQQaId2W5APzbOUyLzZLnNsRHVFaxn2EfGDSRMJyImb2Xu
- r9cetr7TYrGwooERqdd17fQ9nxXBsy3eSYj3byjbXyy/rRDMZi+UstGFNYJkZ+Z5JNvl
- /MH56V+JCt/MpHO55mKz60moNdp7Hk0nK9Spw4/AcxT2ZvDa/EOfdUVuk10ix3VHY+I4
- yNXu7fOJJOMkmjsl+URij8D7ykPhquA2xS9ItB5qpjVMCxkGlHrBDnrPjXGWPfSvJsLy
- iNdw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9gFhHIG2NQXeBZRHv5w9xg8Lh3Pa8gzhaWE69XY4VHXBnJB8AFe8k8EWXs2WUC6ntQVMT4j7uTFPLf@nongnu.org
-X-Gm-Message-State: AOJu0YzWsnTGSus0IkFhu6VNaednbFICDIIi34VH/8JyO9OROzUIA/Ob
- 7IkyTB1/0Kt8M6Yd1AGVv3mvA8OtDm4BbxabZDbUsd2XdRK7jDBd343n/IPSdSNhIMMogFDnh5a
- QakROo2g0DDIGLBf4iTtWlkmtFuGzVIohwrU5t8VKgR3NKfvK7V5RartyCw==
-X-Gm-Gg: AeBDiesWSrt99/aLZLTIVqWwYkRppmlmAZy6dH7JNuVMf1vrkHuOcAbqLZ6XIjtmZLq
- P0N6SHiAYwkjHHnvazVHMj38FppY/Vvpzl9G5+OJBdPHApyY8hxdAA2SmJC3BFVYlCxwEfQfi+q
- 0iJ611E6Uii8klOjEJm7k5NB/NYnhajskVC8d7vPwo+Y4WUOimEy8NP7q8s0Py4EhsI6xIXVxla
- Dn8ep7ELqXLhCX55XrDTiF+5y2evt/MVF7S6Mw9dB/w3O9ilNR4alWZ4gbHuyGCgf9cq1o9KCf2
- 2VNkTBaRHm84wmh0jLh5ry30Mi1jCGzw6CjaworDGcjp3dOL3HjsBkcPfCHNruXVTTyw6rCWy5R
- RfWgg7ytivk/QX+aD1bPVRpTqy1LHq0qWLlpEgtci7XiPtpOPscHTcXAyXXNhfdRPpU5g0WGkER
- nCZ4sceu6nyy0ZJC2A6KOv27Zn
-X-Received: by 2002:a05:7300:5bab:b0:2e6:e916:7105 with SMTP id
- 5a478bee46e88-2ed3c5cc1d4mr161043eec.13.1777505334820; 
- Wed, 29 Apr 2026 16:28:54 -0700 (PDT)
-X-Received: by 2002:a05:7300:5bab:b0:2e6:e916:7105 with SMTP id
- 5a478bee46e88-2ed3c5cc1d4mr161037eec.13.1777505334245; 
- Wed, 29 Apr 2026 16:28:54 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2ed46afda3fsm448622eec.30.2026.04.29.16.28.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Apr 2026 16:28:53 -0700 (PDT)
-Message-ID: <76cb2cb3-9306-4d17-9a19-e6262ffc0ad7@oss.qualcomm.com>
-Date: Wed, 29 Apr 2026 16:28:52 -0700
+ d=1e100.net; s=20251104; t=1777499490; x=1778104290;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=5PebPglHoe6H/36VNwDhbR2OIGR9F5WehVi5N/W11q8=;
+ b=YcKOijVP3KkcRnjFy+DGJPAIW9+Wzq53aBg4u7NZFOx1e8V/vXeOpSd9HMy+snOop0
+ gRrqa465pWBYiotkOkGWo4WWQz7FgX/Sw6WjgqnqbXHyil2Kpu7MJ9ZPFXxT0tAmqCKK
+ 3LgH9uHrb0kf5GO1amSoC2+NSGaJkjLmdg701+L3eCpLI8Hj3b+k4sNyPb9pCWrsHpcj
+ IrLqyvl+TQwO40teSlyQCJb6cRYLbgVqD4qcdbVZgaj/+kpu1o0yu+U4fz4XlS5V3nHI
+ S8D2mCQ8xQBa3FulkzZvX5Q3OVKeZ0/K69d6MRfOG5wH699JAEV1tAvoj/bBe6Q0Vn6d
+ AHow==
+X-Gm-Message-State: AOJu0YwQMzuxn+Ru+XgyWysEqN+etTsaLHthk3wnyRnpv1cNbPvrZ9OH
+ aaNY/WluuexcQo3bI4MWcAKj0VmW9kev067TVjWuE5XoKo9NBND+EoNA
+X-Gm-Gg: AeBDievhB2F6kAEUayz/5FNqezrmQJER6DT5Z9j98DHS6+oUvlT4KSh1/IPt508Sa6m
+ Usjd2ZZjHReEnpRyRo3kMpA7+H2vtRiz6lZaVyCs0N+nL7nW9l44/sclM7hag/GcNFv1pTd7/Ex
+ MOvc4mCCwgZsxYYkhzXfQI8Mpkr8QQGWG3S5Cmlws8rp4zaLrnddrD870UkTaLvgwSDf2DzJU6t
+ Au6rvg2qqMB11gI//uLR91XP0f3PjIyxZ3TUjkpftMIn+flZYvrnvEeLRyaM+kGUtep8BNBVum7
+ uV2yZ94NzMEpTSJ4/KsoWdVGSS7FQyegz71d85EdOW2TCs57fK/F6SK54FnlNm93OUykESlmgLP
+ C8cJ3MtNP4rCj+OxcbluNP5u3w2VVXIel4hQRSpz//80a2vRRZeuolKIBapNwnTwx/CHw0BLGs1
+ K4Uz17MdxlGYruYw/81vlRhglRTdOVw5e19vwrd/E4j8oGwwAshiQ=
+X-Received: by 2002:a05:7300:a583:b0:2c6:67b6:3acc with SMTP id
+ 5a478bee46e88-2ed1bb3f483mr1902728eec.15.1777499490144; 
+ Wed, 29 Apr 2026 14:51:30 -0700 (PDT)
+Received: from [127.0.1.1] ([2803:9800:9001:c4f0:5d16:7dac:ff8:d8ff])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2ed1bf6d315sm4353878eec.1.2026.04.29.14.51.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Apr 2026 14:51:29 -0700 (PDT)
+From: Ericson Joseph <ericsonjoseph@gmail.com>
+Date: Wed, 29 Apr 2026 18:51:18 -0300
+Subject: [PATCH RFC 2/3] tests: add PIC32MK functional and qtest coverage
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Rust builds don't use link_args
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-To: Paolo Bonzini <pbonzini@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <24ba9372-a691-4a63-a6da-e8340343faaf@oss.qualcomm.com>
- <389edd46-c25d-473c-8603-1a5d411d0d63@redhat.com>
- <5aed20fb-9df4-4f87-83f2-2309a8d6ad8f@oss.qualcomm.com>
- <8209d049-83ee-4900-a3dd-0797eb99ecf9@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <8209d049-83ee-4900-a3dd-0797eb99ecf9@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: _VjN0qoNWzgyP5m970PnNK6Tixg3clYZ
-X-Authority-Analysis: v=2.4 cv=eeANubEH c=1 sm=1 tr=0 ts=69f29437 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=ukH1R-b_AAAA:8 a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=4gpYruzheLjQzouPzScA:9
- a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22 a=zUGFzhdS3I8ccRoxxLmr:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDIzNSBTYWx0ZWRfX/hbsOMcy6UBN
- REyAlQL9fxj7ynYVjdfc4SjLcQPwRNShGyBbTGKrb/axAUtziRP8x5C5eM89jKSY143mv0U7y9U
- FI1wmxf5nQkirhBFM/ogwe/E5CjdHPwQRuoWfqC5lryMb5Z648Eo3OJNR+X9EUdbfnPEhQg07UN
- UOG0TEGfaFeBPi4XXpD6cFC/ga5BCCQe3SPUUqECbdcyfD03s1r2zFG23a9bf2SWl0JYTC7IOMM
- ORhjuxZo8MqV/K2AVlHMZ6KWaUAX2NgnAiPS3h93etS3Ur2VAJaii7PIPCdZDHWKT/BIdnBG5rJ
- H5+0ZKD6m7yYajR7p4ntIJ7jDnvVqmYUtF6d6rLFsa0B6vMOjfWrV9tYGxUJafxWZUGy98xemio
- DY0LDu8E1VnDkLkzRCm2uStQPNeKvyswCbh6OeHbNR9Mu5BeFFeIheqkwdF7Yu+FC/4tLAulzCY
- 3j/3zNgOYcUyw3JKt3Q==
-X-Proofpoint-ORIG-GUID: _VjN0qoNWzgyP5m970PnNK6Tixg3clYZ
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-29_02,2026-04-28_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 clxscore=1015 malwarescore=0 impostorscore=0
- phishscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604290235
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260429-pic32mk-board-support-v1-2-1dfac14f8e2d@voltumotor.com>
+References: <20260429-pic32mk-board-support-v1-0-1dfac14f8e2d@voltumotor.com>
+In-Reply-To: <20260429-pic32mk-board-support-v1-0-1dfac14f8e2d@voltumotor.com>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Ericson Joseph <ericsonjoseph@gmail.com>
+X-Mailer: b4 0.15.2
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
+ envelope-from=ericsonjoseph@gmail.com; helo=mail-dy1-x1333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_PORT=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 29 Apr 2026 19:34:47 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -155,72 +104,210 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/29/2026 1:25 PM, Pierrick Bouvier wrote:
-> On 4/29/2026 11:03 AM, Pierrick Bouvier wrote:
->> On 4/29/2026 1:32 AM, Paolo Bonzini wrote:
->>> On 4/29/26 01:16, Pierrick Bouvier wrote:
->>>> I noticed that plugins are not working when building with with
->>>> --enable-rust.
->>>>
->>>> We explicitly export qemu_plugin_* symbols from QEMU binary using:
->>>> plugins/meson.build:24 [1]
->>>> ```
->>>> emulator_link_args += '-Xlinker', '--dynamic-list=' +
->>>> qemu_plugin_symbols.full_path()
->>>> ```
->>>>
->>>> Tracing a rust enabled build, it seems that rustc is responsible for
->>>> doing the final link, by calling the compiler (cc here).
->>>> However, I didn't see those flags being passed.
->>>>
->>>> Any idea how to make rustc apply these flags correctly?
->>>
->>> I would start by testing Meson 1.11. From https://mesonbuild.com/
->>> Release-notes-for-1-11-0.html:
->>>
->>> ---
->>> ## Change to handling of linker arguments for Rust
->>>
->>> Since the Rust compiler integrates the compiler and linker phase,
->>> previous Meson versions did not obey link_args,
->>> add_project_link_arguments or add_global_link_arguments.
->>>
->>> Starting in this version, add_project_link_arguments(),
->>> add_global_link_arguments(), and the link_args keyword argument are
->>> supported for Rust. They wrap the arguments with -Clink-arg= when
->>> invoking rustc, and are only included when creating binary or shared
->>> library crates.
->>>
->>> Likewise, methods such as has_link_argument() now wrap the arguments
->>> being tested with -Clink-arg=.
->>> ----
->>>
->>> Paolo
->>>
->>
->> This works with meson 1.11.0, I'll send a patch to update version after
->> running a full CI.
->>
->> Regards,
->> Pierrick
->>
-> 
-> Sent patch (not yet available on lore, hope the updated wheel didn't
-> break it):
-> 20260429202051.2998084-1-pierrick.bouvier@oss.qualcomm.com
-> 
-> Regards,
-> Pierrick
+Wire the PIC32MK tests into the build system:
 
-This test is the only one left that fails with --enable-rust build.
-qemu:func-x86_64-rebuild_vmfd
+- tests/functional/mipsel: register pic32mk as a quick test (30s),
+  build pic32mk_test_fw.bin from assembly source using the mipsel-linux-gnu
+  cross toolchain when available, and run test_pic32mk.py which boots the
+  board and waits for "Hello, PIC32MK!" on UART1.
 
-However, it's pretty surprising because the log does not show any
-special error, so I'm not sure what is going on with this one.
+- tests/qtest/meson.build: add pic32mk-test and pic32mk-canfd-test to
+  qtests_mipsel (gated on CONFIG_PIC32MK).
 
-I reproduced it locally, but see an online log here:
-https://github.com/p-b-o/qemu-ci/actions/runs/25131702774/job/73660160251
+Signed-off-by: Ericson Joseph <ericsonjoseph@gmail.com>
+---
+ tests/functional/mipsel/meson.build     | 28 ++++++++++
+ tests/functional/mipsel/test_pic32mk.py | 99 +++++++++++----------------------
+ tests/qtest/meson.build                 |  4 +-
+ 3 files changed, 63 insertions(+), 68 deletions(-)
 
-Regards,
-Pierrick
+diff --git a/tests/functional/mipsel/meson.build b/tests/functional/mipsel/meson.build
+index 8bfdf0649b..62ae73c1db 100644
+--- a/tests/functional/mipsel/meson.build
++++ b/tests/functional/mipsel/meson.build
+@@ -2,9 +2,37 @@
+ 
+ test_mipsel_timeouts = {
+   'malta' : 420,
++  'pic32mk' : 30,
+   'replay' : 480,
+ }
+ 
++# Build the minimal PIC32MK test firmware from assembly source.
++# Requires the mipsel-linux-gnu cross toolchain; silently skipped if absent.
++_mipsel_cc = find_program('mipsel-linux-gnu-gcc', required: false)
++_mipsel_objcopy = find_program('mipsel-linux-gnu-objcopy', required: false)
++
++if _mipsel_cc.found() and _mipsel_objcopy.found() and \
++   config_all_devices.has_key('CONFIG_PIC32MK')
++  _fw_ld   = meson.current_source_dir() / 'pic32mk_test_fw.ld'
++  _fw_src  = meson.current_source_dir() / 'pic32mk_test_fw.S'
++  _fw_elf  = custom_target('pic32mk_test_fw_elf',
++    input  : [_fw_src, _fw_ld],
++    output : 'pic32mk_test_fw.elf',
++    command: [_mipsel_cc,
++              '-march=mips32r2', '-EL', '-nostdlib',
++              '-T', _fw_ld, _fw_src,
++              '-o', '@OUTPUT@'],
++  )
++  _fw_bin = custom_target('pic32mk_test_fw.bin',
++    input  : _fw_elf,
++    output : 'pic32mk_test_fw.bin',
++    command: [_mipsel_objcopy, '-O', 'binary', '@INPUT@', '@OUTPUT@'],
++  )
++  tests_mipsel_system_quick = ['pic32mk']
++else
++  tests_mipsel_system_quick = []
++endif
++
+ tests_mipsel_system_thorough = [
+   'malta',
+   'replay',
+diff --git a/tests/functional/mipsel/test_pic32mk.py b/tests/functional/mipsel/test_pic32mk.py
+index 4af91c4f88..ebfc94f388 100644
+--- a/tests/functional/mipsel/test_pic32mk.py
++++ b/tests/functional/mipsel/test_pic32mk.py
+@@ -1,9 +1,12 @@
+ #!/usr/bin/env python3
++# SPDX-License-Identifier: GPL-2.0-or-later
+ #
+-# Functional tests for the PIC32MK board emulation
++# Functional test for the Microchip PIC32MK GPK/MCM board emulation.
+ #
+-# Copyright (c) 2026 QEMU contributors
+-# SPDX-License-Identifier: GPL-2.0-or-later
++# The test firmware (pic32mk_test_fw.S) is a minimal MIPS assembly program
++# that initialises UART1 and writes "Hello, PIC32MK!\r\n" then spins.
++# This verifies that the board boots, the CPU executes code, and UART1 TX
++# produces output on the emulated serial console.
+ 
+ import os
+ 
+@@ -11,81 +14,43 @@
+ from qemu_test import wait_for_console_pattern
+ 
+ 
++def _fw_path():
++    """Return the path to the pre-built test firmware binary."""
++    build_dir = os.environ.get('BUILD_DIR', '')
++    if build_dir:
++        candidate = os.path.join(build_dir,
++                                 'tests', 'functional', 'mipsel',
++                                 'pic32mk_test_fw.bin')
++        if os.path.isfile(candidate):
++            return candidate
++    # Fallback: look next to this file (for out-of-tree runs)
++    here = os.path.dirname(os.path.abspath(__file__))
++    return os.path.join(here, 'pic32mk_test_fw.bin')
++
++
+ class PIC32MKMachine(QemuSystemTest):
+     """
+-    Tests for the PIC32MK MCU board (-M pic32mk).
++    Boot test for the Microchip PIC32MK GPK/MCM board (-M pic32mk).
+ 
+-    The FreeRTOS firmware is expected to be pre-built at
+-    tests/freertos/hello_freertos.bin relative to the source tree.
++    Requires pic32mk_test_fw.bin built from pic32mk_test_fw.S by meson.
++    The binary must be present in the meson build tree under
++    tests/functional/mipsel/pic32mk_test_fw.bin.
+     """
+ 
+     timeout = 30
+ 
+-    def get_firmware_path(self):
+-        """Locate the pre-built FreeRTOS firmware binary."""
+-        # data_file() resolves relative to tests/functional/
+-        # We need to go up two levels to reach the source root
+-        src_root = os.path.join(
+-            os.path.dirname(__file__), '..', '..', '..')
+-        fw_path = os.path.realpath(
+-            os.path.join(src_root, 'tests', 'freertos', 'hello_freertos.bin'))
+-        if not os.path.isfile(fw_path):
++    def test_uart_boot_message(self):
++        """Board boots and UART1 TX prints the expected banner."""
++        fw = _fw_path()
++        if not os.path.isfile(fw):
+             self.skipTest(
+-                f'FreeRTOS firmware not built: {fw_path}\n'
+-                'Run: make -C tests/freertos')
+-        return fw_path
+-
+-    def test_boot_message(self):
+-        """PIC32MK boots and prints the FreeRTOS banner."""
+-        self.set_machine('pic32mk')
+-        self.vm.set_console()
+-        self.vm.add_args('-bios', self.get_firmware_path(),
+-                         '-nographic')
+-        self.vm.launch()
+-        wait_for_console_pattern(self,
+-                                 'PIC32MK QEMU booting FreeRTOS...')
+-
+-    def test_freertos_hello_task(self):
+-        """FreeRTOS scheduler starts and the Hello task fires."""
+-        self.set_machine('pic32mk')
+-        self.vm.set_console()
+-        self.vm.add_args('-bios', self.get_firmware_path(),
+-                         '-nographic')
+-        self.vm.launch()
+-        # First: boot banner
+-        wait_for_console_pattern(self,
+-                                 'PIC32MK QEMU booting FreeRTOS...')
+-        # Second: at least one Hello message (proves Timer1 tick + UART TX IRQ)
+-        wait_for_console_pattern(self,
+-                                 'Hello from FreeRTOS!')
+-
+-    def test_freertos_recurring_ticks(self):
+-        """Timer1 delivers recurring ticks — multiple Hello messages appear."""
+-        self.set_machine('pic32mk')
+-        self.vm.set_console()
+-        self.vm.add_args('-bios', self.get_firmware_path(),
+-                         '-nographic')
+-        self.vm.launch()
+-        wait_for_console_pattern(self,
+-                                 'PIC32MK QEMU booting FreeRTOS...')
+-        # Wait for a second Hello — proves the tick ISR fires repeatedly
+-        # and context switches work (CS0 yield + Timer1 preemption).
+-        wait_for_console_pattern(self,
+-                                 'Hello from FreeRTOS!')
+-        wait_for_console_pattern(self,
+-                                 'Hello from FreeRTOS!')
+-
+-    def test_freertos_ping_task(self):
+-        """Second FreeRTOS task (Ping) also runs — proves multitasking."""
++                'pic32mk_test_fw.bin not found — '
++                'build with: ninja -C <builddir> pic32mk_test_fw.bin')
+         self.set_machine('pic32mk')
+         self.vm.set_console()
+-        self.vm.add_args('-bios', self.get_firmware_path(),
+-                         '-nographic')
++        self.vm.add_args('-bios', fw, '-nographic')
+         self.vm.launch()
+-        wait_for_console_pattern(self,
+-                                 'PIC32MK QEMU booting FreeRTOS...')
+-        # Ping task fires every 5 seconds
+-        wait_for_console_pattern(self, 'Ping')
++        wait_for_console_pattern(self, 'Hello, PIC32MK!')
+ 
+ 
+ if __name__ == '__main__':
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index b735f55fc4..769de2054f 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -164,7 +164,9 @@ qtests_mips = \
+   (config_all_devices.has_key('CONFIG_ISA_TESTDEV') ? ['endianness-test'] : []) +            \
+   (config_all_devices.has_key('CONFIG_VGA') ? ['display-vga-test'] : [])
+ 
+-qtests_mipsel = qtests_mips
++qtests_mipsel = qtests_mips + \
++  (config_all_devices.has_key('CONFIG_PIC32MK') ? ['pic32mk-test',
++                                                    'pic32mk-canfd-test'] : [])
+ qtests_mips64 = qtests_mips
+ qtests_mips64el = qtests_mips
+ 
+
+-- 
+2.48.1
+
 
