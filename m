@@ -4,107 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22023FF8864
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 06:23:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25149FF8864
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 06:52:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHyJ3-0004ob-72; Wed, 29 Apr 2026 02:21:57 -0400
+	id 1wHym8-0002bH-45; Wed, 29 Apr 2026 02:52:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wHyI0-0004Ym-QF; Wed, 29 Apr 2026 02:20:53 -0400
-Received: from fhigh-b7-smtp.messagingengine.com ([202.12.124.158])
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wHym2-0002as-Q8; Wed, 29 Apr 2026 02:51:55 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1wHyHy-0007Ad-Ml; Wed, 29 Apr 2026 02:20:52 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfhigh.stl.internal (Postfix) with ESMTP id C41BC7A00D7;
- Wed, 29 Apr 2026 02:20:44 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Wed, 29 Apr 2026 02:20:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-type:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:subject:subject:to:to; s=fm1; t=1777443644; x=
- 1777530044; bh=0bwSaUsoV2tnXSfctUDa1jx4PG8j/+1OdtyMER4F9Ik=; b=I
- HqxcEDIs5k4RBnErWYN+uRVJRKcEvygLjuuWqJXfRytisGUHZgkYcZRXcwepZSGd
- YQeOro8NyUnIk75Hmrs2tQwhwNl4Kfcr5X9SHmhniDWKzwDQtUeCHrq6v4f4MOPc
- C6AyOfgDJdu0CGfXgp3bvxcZdI+XMIvSksh20JivlPB1eugk45zHn0vFxSpf+4IM
- vNL2Zb3d86Z+ixamj8Sq8yWG/lKHVjqc8az7TyMV03Ev5fRomBppdnAvuOmWgaxz
- UKqwTetUxIpwqTcjxVIdpzES4bxDumvG93zy7RZdT71M8dHwxXZf1AjnFEzu6h4X
- JBGWMA45U4IIIVvS1G7eg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
- 1777443644; x=1777530044; bh=0bwSaUsoV2tnXSfctUDa1jx4PG8j/+1Odty
- MER4F9Ik=; b=qYKwxY22meV/EwxtCAczqmOL8jF/nk1QA7xO9gfWQ3UEw1BSEOi
- /+It6Jebf9jLJAZ0H1L/pvMdDb+L4zvNyXHpVyxbH0lF0DJWYzYtyn8a9vXwOyLh
- jBSk0uPResLRiY05sdyS7D2+Kdo9l2BuJLe8CGuqWtEOEXvBZPHgCFpmk7INRKu1
- C+Kxv2U5eISuvcrd06+g908gw+jLZCf4VuZptNBnBzS+HeXlxOtHBpt140caVDvP
- WpuEFImVy8XsxYH/nsx5HeFNCtj7otowFeMl6nbJoFgvR5QKT06sfYS6WwGe40GO
- 43LSjYEWbJtmUdlHBi7dqqjDhX2qT3lv3Sw==
-X-ME-Sender: <xms:PKPxaQdH7mcpDu0tscSPxihBOSuXNbzIi5F6gg67Cr_I3Ylal1m7UA>
- <xme:PKPxac6NZb-4aoxrRViuUVxlmT6Ft2y_m4HxoOHA3kbrVzG9eYHbi_tkhWwwWcRWA
- aql28DgEwzIhxODbPNIXQcrqx2oEHKIQFRbn1-atRnsy23Zq8nS6EG9>
-X-ME-Received: <xmr:PKPxaaM-DsdEp0bfTNKh4bKuJ8E0hnAd1bQZIpiiPqy17rSKaW0HpmrUnVmrjH8a3NjLSR0l0fVPaAkaT-EjqCsuEU57n-U>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdekfeejtdcutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
- ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
- hrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefmlhgruhhsucfl
- vghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtthgvrh
- hnpeejgfejfeffvdeuhfeifefhgffgueelhedukeevjeevtdduudegieegteffffejveen
- ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehithhsse
- hirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopedukedpmhhouggvpehsmhht
- phhouhhtpdhrtghpthhtoheprghlvgigrghnuggvrhesmhhihhgrlhhitgihnhdrtghomh
- dprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthht
- ohepkhifohhlfhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepqhgvmhhuqdgslhhotg
- hksehnohhnghhnuhdrohhrghdprhgtphhtthhopehfrghmsegvuhhphhhonhdrnhgvthdp
- rhgtphhtthhopehsthhgrhgrsggvrhesshhtghhrrggsvghrrdhorhhgpdhrtghpthhtoh
- epphhhihhlmhgusehlihhnrghrohdrohhrghdprhgtphhtthhopehpsghonhiiihhnihes
- rhgvughhrghtrdgtohhmpdhrtghpthhtohepshhtvghfrghnhhgrsehrvgguhhgrthdrtg
- homh
-X-ME-Proxy: <xmx:PKPxadG_kF-u_BJ-GAfCOXaB5DcNHK9Dl4PcfVLfvUnGQ4TzGX1j4Q>
- <xmx:PKPxaeQw6Bgh0ojJhdapEVxYP4i4nZ8FLxP8Ro74dfnfw7QezavHlQ>
- <xmx:PKPxaVRF28NtgDpUSVbNsjCrpPyXbX810FHG5wHodmwerFU2Zn-hcQ>
- <xmx:PKPxaZfVu0gDbS4JiXW5HjOeyPMz58zCDtF_4I9vSu3L3a4wohPs5Q>
- <xmx:PKPxaV4MnFn-aR4eIPEYSc2k0KNIqJeshA3k6UUv5Vq_16RKEpgJa6cZ>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Apr 2026 02:20:43 -0400 (EDT)
-Date: Wed, 29 Apr 2026 08:20:42 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>,
- =?utf-8?B?U3TDqXBoYW5l?= Graber <stgraber@stgraber.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Jesper Devantier <foss@defmacro.it>,
- Fabiano Rosas <farosas@suse.de>, Zhao Liu <zhao1.liu@intel.com>,
- Keith Busch <kbusch@kernel.org>, Peter Xu <peterx@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: Re: [PATCH v6 3/8] hw/nvme: split nvme_init_sq/nvme_init_cq into
- helpers
-Message-ID: <afGjOqwqeug2JIWf@AALNPWKJENSEN.aal.scsc.local>
-References: <20260419130139.15554-1-alexander@mihalicyn.com>
- <20260419130139.15554-4-alexander@mihalicyn.com>
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1wHym0-0008Nq-Ve; Wed, 29 Apr 2026 02:51:54 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63T606XY1892388; Wed, 29 Apr 2026 06:51:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=ackvfLE23OIA3/Emi6Nwt4GfZWO3HPJBwLWkv/WbH
+ m8=; b=tUbsbUr34HQN0kkNbWz7DCJUstqxGngXPtMT3yiLd/rSpdJcIF6KvCd2A
+ IyYU/DNA38fpMmCFeeCO2W0y/6G73DFoS6C/P28N6K1hSKIfncUl6GvD8h1x/408
+ Hk43ExpFLrRGByl17JXGOPUBwQPhuSJH86atrDSDn46w6HaG21SRYQccyCfTHqJ4
+ bLXMZzY5vA8NaHYs8HSQPbvQlDF2mNSBtkJT5SmJvzDtdFShge0z3ZtfdSnIIr35
+ 3cHmLMEWfBNKbeTQB0kc2IvncCOX/NQnugyVdDThpHu9Get4iX+nT7i2xz0BRLG+
+ F9tzPQqnxHS84birShGhnSNJwgQ9A==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drm1dyu68-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 29 Apr 2026 06:51:50 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63T6cnst018790;
+ Wed, 29 Apr 2026 06:51:50 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ds8avwa2s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 29 Apr 2026 06:51:49 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63T6pi7949545656
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 29 Apr 2026 06:51:44 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 83EED20043;
+ Wed, 29 Apr 2026 06:51:44 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A99DD20040;
+ Wed, 29 Apr 2026 06:51:42 +0000 (GMT)
+Received: from shivang.com (unknown [9.123.12.247])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 29 Apr 2026 06:51:42 +0000 (GMT)
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+Cc: Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Aditya Gupta <adityag@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
+Subject: [PATCH] ppc/spapr: make fadump collect regs for maxcpus
+Date: Wed, 29 Apr 2026 12:21:27 +0530
+Message-ID: <20260429065127.366813-1-shivangu@linux.ibm.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="Yhx4C6eW4jqtuNzK"
-Content-Disposition: inline
-In-Reply-To: <20260419130139.15554-4-alexander@mihalicyn.com>
-Received-SPF: pass client-ip=202.12.124.158; envelope-from=its@irrelevant.dk;
- helo=fhigh-b7-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: dJdOv-P-JoEwq5jzLy4p0RLSqsO0pNSy
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDA2NiBTYWx0ZWRfX8hlaRZaHH2HK
+ 52jJyErWtNCire8YHR0Sy1bz24TPaBW4GtIDLrzxii320W7riwdgr+8U1Cj99h5IiE+l3cNEaaH
+ pHlv48ZGEJK8MpFmwrro2DhqZBRRVO+OX7IJw6EI8kJZ7M0cDryxtjWKD6GuKYJ8OVGXoPiSuaw
+ VOhY4JfZv0Rhzt0wIpSzn0kSZTdqnrDbuqbTqk3RXGZcSIY/BeTlMDO11LtasaODyNpKh1hne4q
+ DSHAZtw/WfrT6P9MFMjtLlaWbEVGaosFE3/f142PObRWiu/Hgn/2gxLAqWm0yX3MjIWOCQ8J2A6
+ 8ioW4aqWV5NI82RSFpVXiyMnNl0D7XZtAmX4Y75O/8oLSxUcNW3uGV9BDOC1n1ocnkywY+jhVsH
+ oV5XTOzrtX3PaiZWYtunCshhQmVn3jSfl1DlSDOn3cC38E6baGHOvPe3ScKS76NRrTzN03sSv0S
+ DJR/GJgu4yKibC4UMow==
+X-Authority-Analysis: v=2.4 cv=VZLH+lp9 c=1 sm=1 tr=0 ts=69f1aa86 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=RuK-KQVcXEPILYYYT2UA:9
+X-Proofpoint-GUID: dJdOv-P-JoEwq5jzLy4p0RLSqsO0pNSy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-28_05,2026-04-28_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 suspectscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
+ spamscore=0 malwarescore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604290066
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -121,151 +118,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+When a ppc machine is started with maxcpus greater than the number of
+present CPUs (e.g., -smp cpus=2,maxcpus=8), firmware allocates the CPU
+state data buffer based on maxcpus and advertises this size to the
+kernel during fadump registration.
 
---Yhx4C6eW4jqtuNzK
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+However, fadump currently fails to generate a vmcore during the
+rebooted kernel because:
 
-On Apr 19 15:01, Alexander Mikhalitsyn wrote:
-> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
->=20
-> Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.i=
-o>
+1. The CPU state buffer length does not match what firmware advertised
+   (QEMU only populates entries for present CPUs, not maxcpus)
+2. The kernel cannot find CPU data for all maxcpus slots
 
-LGTM, but a short description on why this is needed in preparation for
-later patches would be nice :)
+This patch adds placeholder entries for the unrealized cpus.
+The placeholder entries contain only the CPUSTRT and CPUEND markers
+with the CPU ID, which is sufficient for the kernel to recognize the
+CPU slot exists even though the CPU was never realized.
 
-Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+This ensures the CPU state buffer size and structure matches what
+firmware advertised to the kernel, allowing fadump to successfully
+generate vmcore.
 
-> ---
->  hw/nvme/ctrl.c | 59 +++++++++++++++++++++++++++++++-------------------
->  1 file changed, 37 insertions(+), 22 deletions(-)
->=20
-> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-> index 9f9c9bcbead..191398e700f 100644
-> --- a/hw/nvme/ctrl.c
-> +++ b/hw/nvme/ctrl.c
-> @@ -4854,18 +4854,14 @@ static uint16_t nvme_del_sq(NvmeCtrl *n, NvmeRequ=
-est *req)
->      return NVME_SUCCESS;
->  }
-> =20
-> -static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl *n, uint64_t dma_addr,
-> -                         uint16_t sqid, uint16_t cqid, uint16_t size)
-> +static void __nvme_init_sq(NvmeSQueue *sq)
->  {
-> +    NvmeCtrl *n =3D sq->ctrl;
-> +    uint16_t sqid =3D sq->sqid;
-> +    uint16_t cqid =3D sq->cqid;
->      int i;
->      NvmeCQueue *cq;
-> =20
-> -    sq->ctrl =3D n;
-> -    sq->dma_addr =3D dma_addr;
-> -    sq->sqid =3D sqid;
-> -    sq->size =3D size;
-> -    sq->cqid =3D cqid;
-> -    sq->head =3D sq->tail =3D 0;
->      sq->io_req =3D g_new0(NvmeRequest, sq->size);
-> =20
->      QTAILQ_INIT(&sq->req_list);
-> @@ -4895,6 +4891,18 @@ static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl =
-*n, uint64_t dma_addr,
->      n->sq[sqid] =3D sq;
->  }
-> =20
-> +static void nvme_init_sq(NvmeSQueue *sq, NvmeCtrl *n, uint64_t dma_addr,
-> +                         uint16_t sqid, uint16_t cqid, uint16_t size)
-> +{
-> +    sq->ctrl =3D n;
-> +    sq->dma_addr =3D dma_addr;
-> +    sq->sqid =3D sqid;
-> +    sq->size =3D size;
-> +    sq->cqid =3D cqid;
-> +    sq->head =3D sq->tail =3D 0;
-> +    __nvme_init_sq(sq);
-> +}
-> +
->  static uint16_t nvme_create_sq(NvmeCtrl *n, NvmeRequest *req)
->  {
->      NvmeSQueue *sq;
-> @@ -5555,25 +5563,16 @@ static uint16_t nvme_del_cq(NvmeCtrl *n, NvmeRequ=
-est *req)
->      return NVME_SUCCESS;
->  }
-> =20
-> -static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
-> -                         uint16_t cqid, uint16_t vector, uint16_t size,
-> -                         uint16_t irq_enabled)
-> +static void __nvme_init_cq(NvmeCQueue *cq)
->  {
-> +    NvmeCtrl *n =3D cq->ctrl;
->      PCIDevice *pci =3D PCI_DEVICE(n);
-> +    uint16_t cqid =3D cq->cqid;
-> =20
-> -    if (msix_enabled(pci) && irq_enabled) {
-> -        msix_vector_use(pci, vector);
-> +    if (msix_enabled(pci) && cq->irq_enabled) {
-> +        msix_vector_use(pci, cq->vector);
->      }
-> =20
-> -    cq->ctrl =3D n;
-> -    cq->cqid =3D cqid;
-> -    cq->size =3D size;
-> -    cq->dma_addr =3D dma_addr;
-> -    cq->phase =3D 1;
-> -    cq->irq_enabled =3D irq_enabled;
-> -    cq->vector =3D vector;
-> -    cq->head =3D cq->tail =3D 0;
-> -    QTAILQ_INIT(&cq->req_list);
->      QTAILQ_INIT(&cq->sq_list);
->      if (n->dbbuf_enabled) {
->          cq->db_addr =3D n->dbbuf_dbs + (cqid << 3) + (1 << 2);
-> @@ -5590,6 +5589,22 @@ static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl =
-*n, uint64_t dma_addr,
->                                   &DEVICE(cq->ctrl)->mem_reentrancy_guard=
-);
->  }
-> =20
-> +static void nvme_init_cq(NvmeCQueue *cq, NvmeCtrl *n, uint64_t dma_addr,
-> +                         uint16_t cqid, uint16_t vector, uint16_t size,
-> +                         uint16_t irq_enabled)
-> +{
-> +    cq->ctrl =3D n;
-> +    cq->cqid =3D cqid;
-> +    cq->size =3D size;
-> +    cq->dma_addr =3D dma_addr;
-> +    cq->phase =3D 1;
-> +    cq->irq_enabled =3D irq_enabled;
-> +    cq->vector =3D vector;
-> +    cq->head =3D cq->tail =3D 0;
-> +    QTAILQ_INIT(&cq->req_list);
-> +    __nvme_init_cq(cq);
-> +}
-> +
->  static uint16_t nvme_create_cq(NvmeCtrl *n, NvmeRequest *req)
->  {
->      NvmeCQueue *cq;
-> --=20
-> 2.47.3
->=20
->=20
+Cc: Aditya Gupta <adityag@linux.ibm.com>
+Cc: Sourabh Jain <sourabhjain@linux.ibm.com>
+Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Reported-by: Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+---
+ hw/ppc/spapr_fadump.c | 57 +++++++++++++++++++++++++++++++++----------
+ 1 file changed, 44 insertions(+), 13 deletions(-)
 
---Yhx4C6eW4jqtuNzK
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
+index 13cab0cfe1..b1a21ff115 100644
+--- a/hw/ppc/spapr_fadump.c
++++ b/hw/ppc/spapr_fadump.c
+@@ -309,6 +309,30 @@ static bool do_preserve_region(FadumpSection *region)
+     return true;
+ }
+ 
++/*
++ * Populate placeholder register entries for an unrealized CPU
++ *
++ * For CPUs that are not realized (cpu_index < maxcpus), we need to
++ * create minimal register entries containing only CPUSTRT and CPUEND
++ * markers to maintain the expected buffer structure.
++ *
++ * Returns pointer just past the placeholder entries, which can be used
++ * as the start address for the next CPU's register entries
++ */
++static FadumpRegEntry *populate_cpu_reg_entries_placeholder(int cpu_id,
++                                                             FadumpRegEntry *curr_reg_entry)
++{
++    curr_reg_entry->reg_id = cpu_to_be64(fadump_str_to_u64("CPUSTRT"));
++    curr_reg_entry->reg_value = cpu_to_be64(cpu_id & FADUMP_CPU_ID_MASK);
++    ++curr_reg_entry;
++
++    curr_reg_entry->reg_id = cpu_to_be64(fadump_str_to_u64("CPUEND"));
++    curr_reg_entry->reg_value = cpu_to_be64(cpu_id & FADUMP_CPU_ID_MASK);
++    ++curr_reg_entry;
++
++    return curr_reg_entry;
++}
++
+ /*
+  * Populate the passed CPUs register entries, in the buffer starting at
+  * the argument 'curr_reg_entry'
+@@ -450,7 +474,7 @@ static FadumpRegEntry *populate_cpu_reg_entries(CPUState *cpu,
+  * callers), and sets the size of this buffer in the argument
+  * 'cpu_state_len'
+  */
+-static void *get_cpu_state_data(uint64_t *cpu_state_len)
++static void *get_cpu_state_data(uint64_t *cpu_state_len, MachineState *ms)
+ {
+     FadumpRegSaveAreaHeader reg_save_hdr;
+     g_autofree FadumpRegEntry *reg_entries = NULL;
+@@ -459,15 +483,11 @@ static void *get_cpu_state_data(uint64_t *cpu_state_len)
+ 
+     uint32_t num_reg_entries;
+     uint32_t reg_entries_size;
+-    uint32_t num_cpus = 0;
++    uint32_t num_cpus = ms->smp.max_cpus;
+ 
+     void *cpu_state_buffer = NULL;
+     uint64_t offset = 0;
+ 
+-    CPU_FOREACH(cpu) {
+-        ++num_cpus;
+-    }
+-
+     reg_save_hdr.version = cpu_to_be32(0);
+     reg_save_hdr.magic_number =
+         cpu_to_be64(fadump_str_to_u64("REGSAVE"));
+@@ -484,10 +504,20 @@ static void *get_cpu_state_data(uint64_t *cpu_state_len)
+     /* Pointer to current CPU's registers */
+     curr_reg_entry = reg_entries;
+ 
+-    /* Populate register entries for all CPUs */
+-    CPU_FOREACH(cpu) {
+-        cpu_synchronize_state(cpu);
+-        curr_reg_entry = populate_cpu_reg_entries(cpu, curr_reg_entry);
++    /*
++     * Populate register entries for all CPU slots (0 to maxcpus-1)
++     */
++    for (int i = 0; i < num_cpus; i++) {
++        cpu = qemu_get_cpu(i);
++        if (cpu) {
++            /* CPU is realized - populate full register entries */
++            cpu_synchronize_state(cpu);
++            curr_reg_entry = populate_cpu_reg_entries(cpu, curr_reg_entry);
++        } else {
++            /* CPU slot is empty - populate placeholder entries */
++            curr_reg_entry = populate_cpu_reg_entries_placeholder(i,
++                                                                   curr_reg_entry);
++        }
+     }
+ 
+     *cpu_state_len = 0;
+@@ -526,7 +556,7 @@ static void *get_cpu_state_data(uint64_t *cpu_state_len)
+  * such as invalid destination address or non-fatal error errors likely
+  * caused due to invalid parameters, return true and set region->error_flags
+  */
+-static bool do_populate_cpu_state(FadumpSection *region)
++static bool do_populate_cpu_state(FadumpSection *region, MachineState *ms)
+ {
+     uint64_t dest_addr = be64_to_cpu(region->destination_address);
+     uint64_t cpu_state_len = 0;
+@@ -541,7 +571,7 @@ static bool do_populate_cpu_state(FadumpSection *region)
+     attrs.user = 0;
+     attrs.memory = 1;
+ 
+-    cpu_state_buffer  = get_cpu_state_data(&cpu_state_len);
++    cpu_state_buffer  = get_cpu_state_data(&cpu_state_len, ms);
+ 
+     io_result = address_space_write(default_as, dest_addr, attrs,
+             cpu_state_buffer, cpu_state_len);
+@@ -597,6 +627,7 @@ static bool do_populate_cpu_state(FadumpSection *region)
+ static bool fadump_preserve_mem(SpaprMachineState *spapr)
+ {
+     FadumpMemStruct *fdm = &spapr->registered_fdm;
++    MachineState *ms = MACHINE(spapr);
+     uint16_t dump_num_sections, data_type;
+ 
+     assert(spapr->fadump_registered);
+@@ -627,7 +658,7 @@ static bool fadump_preserve_mem(SpaprMachineState *spapr)
+ 
+         switch (data_type) {
+         case FADUMP_CPU_STATE_DATA:
+-            if (!do_populate_cpu_state(&fdm->rgn[i])) {
++            if (!do_populate_cpu_state(&fdm->rgn[i], ms)) {
+                 qemu_log_mask(LOG_GUEST_ERROR,
+                     "FADump: Failed to store CPU State Data");
+                 fdm->header.dump_status_flag |=
+-- 
+2.53.0
 
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmnxozoACgkQTeGvMW1P
-DemMzQf/X3MsIMzaiXQhJyuv9ojUz5QuXrzbdLuQGkNWAf3OcGF/ESiwy/MAwyYy
-n5OIwDIEfxYtvLiAvv6R0cODipjw5/q3Xhinbq8FIuL6RsznpZ6R9ED2oRpkCGuJ
-G3TZt8FCaTaBU4ES+jM8RpB3boGAtxEjOsdZfkG2I14T0on+kp7cHuokCFObv5Kd
-weXSFNc5gZzAmR4qyfojc0eHFZjnjN7hfIXK7wZDZ6JWQiYZYtn+I/gtkk9bFHPH
-bL0Htxhw2cRPoarHD0csEOuguCgVEedv1Xc/dSgJBW99NeWX99bNgYI14RUhYDqd
-zlUsYKDPGvRa/fO9rQEmNhOLfN/pWA==
-=zEST
------END PGP SIGNATURE-----
-
---Yhx4C6eW4jqtuNzK--
 
