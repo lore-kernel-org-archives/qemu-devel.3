@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 602B8CD13D3
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4392ACD13DE
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:04:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIC4K-0003VT-8R; Wed, 29 Apr 2026 17:03:40 -0400
+	id 1wIC56-0005ZD-2S; Wed, 29 Apr 2026 17:04:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wIC4I-0003Uz-3P
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:03:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wIC54-0005UJ-7U
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:04:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wIC4G-0003Dp-7p
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:03:37 -0400
+ id 1wIC52-0003N2-Au
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:04:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777496615;
+ s=mimecast20190719; t=1777496663;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Cno5h8iE+Ze095lareXK4yoKI0EkSMjjNdtAoCEZ2Xk=;
- b=OyhTkVYdua8x3jN8ykDQfsZZFFnIthWVLiDKCOijwPmnaZdZpDCNMScF170D172Xj6Dmgh
- VpIUzO4MaLaoYbjgKzduAatJ2Hf91w/wEo2/V01EbCC3KumaqZGkY5EGjufvJPaAwbbYzn
- gAqRN8cBj/fLhFNP/HsiLLF/4sy9J04=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=IfE3kM3GXvE+FVkLELiXcNJAoP1JDi8ACboNIJNy4Bc=;
+ b=Zge7OOeM+LKtzZLdIl7Gg7P6pbUjFPBc9tHW6+TGdVmE2l3+t5Y3eLGG9SFq1j5dz7BrE+
+ SBU9OUciz3sfee6eeNviyyxezyWlZ20BzVTESMaH35M3m/pOxq5H62SHNqcGfG2y9WHn7s
+ uvY4wSMVhBpvap4obygE2IiMz+kio/s=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-74-_FgDjdECOwO9IYYMQNCqXQ-1; Wed,
- 29 Apr 2026 17:03:32 -0400
-X-MC-Unique: _FgDjdECOwO9IYYMQNCqXQ-1
-X-Mimecast-MFC-AGG-ID: _FgDjdECOwO9IYYMQNCqXQ_1777496611
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-313-aOrY4-u6MkuV1uGjYiXf4w-1; Wed,
+ 29 Apr 2026 17:04:19 -0400
+X-MC-Unique: aOrY4-u6MkuV1uGjYiXf4w-1
+X-Mimecast-MFC-AGG-ID: aOrY4-u6MkuV1uGjYiXf4w_1777496658
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8DD8E19560B5
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 21:03:31 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1B31119560B7; Wed, 29 Apr 2026 21:04:18 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.2])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5476619560AB; Wed, 29 Apr 2026 21:03:29 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AD4F61800348; Wed, 29 Apr 2026 21:04:16 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 30 Apr 2026 01:02:36 +0400
-Subject: [PATCH v3 03/26] ui/console: add vc encoding=utf8/cp437 option
+Date: Thu, 30 Apr 2026 01:02:44 +0400
+Subject: [PATCH v3 11/26] ui/console: remove console_ch_t typedef and
+ console_write_ch()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260430-qemu-vnc-v3-3-be96757428d0@redhat.com>
+Message-Id: <20260430-qemu-vnc-v3-11-be96757428d0@redhat.com>
 References: <20260430-qemu-vnc-v3-0-be96757428d0@redhat.com>
 In-Reply-To: <20260430-qemu-vnc-v3-0-be96757428d0@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8065;
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=10560;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=plQyXHsWEQ86pudBX8gWIrgkqQYgfrJswIQWOyKUTEg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp8nILCnWPdXZvxRFodwIiAEjcj560A237mj203
- +Rn6d3eGJuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafJyCwAKCRDa6OEJdZac
- 5W6hD/sFj10bw7CDXeBmjVTHNo26HWvtO23JSWXQGZQXam2FPfmBAM56ZwQmaQuy29iWroCml5n
- 7Eig9FrXdhYUVUCy9gk2rSHs3ggpzauAlrUHWvs11WAVD+Tw5VEHEHCOdxsL9hE/wKqYaQhxwV/
- MHtMAb6qSqurz3jliIh47pVsteGatdFeFSl2Z4ywZESlcdeXgIAwLpughd1GPMeAAkzmP7QcNBU
- xlTZ1hMCDBekQsKYXkC45LD0QhKDIWOffAxykjg8JwMlAPC+qDXiK9VuGY/0fBT7LbDS0DbGYBP
- yEMWPrhz/yrOWrF79CVV+zuukJjmORhvP34oGQ0wf4lE2y/HorTpmrWI8pMkTCw2FwmjmAW/W15
- nyesSW/OKDhsbIwR+zCLLd+pjwmE4cBjRgDusRYrMSjyWSTB4d1bqYgMp4Nni3jETtLF06ym/Oj
- z260OJGPQq9hXNuAEw5oidz5s1yE5JmI2acGwznKmPDpZZYyt8yaLt4pkdgovP2C+SfjyupnbAx
- DY/H+LVDSyd1jC6VmaNqxw+7VFV3OiTc5g8T/Fhn58iZ1PFkgVCg26Vq0/f4qN3lLpveKklaUHb
- rykXnEBeoqCoDgO5RFEjUBxYwWfoEXwi0cmk4G7G/pIinWCJlfuynO/ha3YYGgB4d7NR3ZOQImV
- ftUreP4q8QZZ9BQ==
+ bh=e4ykukOXoAYey5FeMaNxglAMqZqFZfYwcq4HSeTlZKg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp8nILZRHGHkK4Uk3uUpgz3fdoCRco6QPJSl/9n
+ hOE/xivobiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafJyCwAKCRDa6OEJdZac
+ 5au4D/9ispI+a/VHGpqozmM7YqGJI9I1cC5w5V+ClKF/oSWtN9Io8TWsd+JGH3Yf+tYgbbv/BMQ
+ czy06W2XwZAwEp8UZfZodJX1EoNF398sHM2Lxbi9PQ0xBesMijnffBtcFKyMdvF1MHAStfnMzX2
+ HIrYlG7zGNNT2Ptjrx63KEeMIBNh+EhBXAHvTmwr7K7yWBux8LWTOURCydJyruNN1cTJxCSMGHk
+ T71kkxDhu9vacMowkgr80Nefvmvu/VQPiiTyBmSGQZwrfz7zpR1QUoUuwfpdbGqUthl0QhvoAmA
+ YBic2zDY9ytFlZ2UQz89d+T0kHD+5iR9vAZSYmvs6PWI0RiGNysms80xohKdzpKVs6rgL8OGr38
+ qHABh7LcWv609XkpG1shdNh7H1xmr0A+9v41Bns/Pt7MQzA7EYT+0uRzBpzEaRSbizOSpp12lzW
+ tvrvBEyj45yGGuUG9lWLa35Ij8UIiSZzxImT8JOolYpdhBsG6lxBSXH3iwTc4HIotKTaKJoueOq
+ AwBbUBjeO3Pmu2uTrBddNV2i2HvH9MXVKJ9MJQdf9HWxwMBieR+Y77AGjFSVBp0XCliCfWsvraz
+ 42HuvBJJfrJMB0rP7aV0mVrS+HDQ3k3dXiumwmR5IJ6IBDjHkoyKX2Ev1+msUwwzfHxIFslU4cE
+ X1XZp0F/1mQXCyQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -85,7 +86,7 @@ X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -103,234 +104,263 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Expose a new "encoding" QemuOpt option.
+Since commit e2f82e924d05 ("console: purge curses bits from
+console.h"), console_ch_t is a plain uint32_t typedef and
+console_write_ch() is a trivial assignment (*dest = ch). These
+abstractions were originally needed because console_ch_t was the
+curses chtype when CONFIG_CURSES was enabled, and console_write_ch()
+handled VGA-to-curses character translation. That commit moved the
+curses logic into curses_update(), making the typedef and helper
+dead abstractions.
 
-Add the corresponding QAPI type and properties.
+Replace console_ch_t with uint32_t and console_write_ch() calls
+with direct assignments.
 
-This is going to be wired in the following commits.
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- qapi/char.json         | 30 ++++++++++++++++++++++++++++--
- include/chardev/char.h |  1 +
- chardev/char.c         | 10 ++++++++++
- ui/console-vc.c        | 12 ++++++++++++
- ui/dbus.c              | 13 +++++++++++++
- qemu-options.hx        |  7 +++++--
- 6 files changed, 69 insertions(+), 4 deletions(-)
+ include/ui/console.h         |  9 +--------
+ hw/display/jazz_led.c        | 10 +++++-----
+ hw/display/vga.c             | 16 ++++++++--------
+ hw/display/virtio-gpu-base.c |  2 +-
+ hw/display/virtio-vga.c      |  2 +-
+ hw/display/vmware_vga.c      |  2 +-
+ ui/console-vc.c              | 11 +++++------
+ ui/console.c                 |  2 +-
+ ui/curses.c                  |  6 +++---
+ 9 files changed, 26 insertions(+), 34 deletions(-)
 
-diff --git a/qapi/char.json b/qapi/char.json
-index a4abafa6803..aa5ee9ffcd0 100644
---- a/qapi/char.json
-+++ b/qapi/char.json
-@@ -377,6 +377,24 @@
-   'base': 'ChardevCommon',
-   'if': 'CONFIG_SPICE' }
+diff --git a/include/ui/console.h b/include/ui/console.h
+index 27eacc39cc0..2bf768ed482 100644
+--- a/include/ui/console.h
++++ b/include/ui/console.h
+@@ -336,13 +336,6 @@ int dpy_gl_ctx_make_current(QemuConsole *con, QEMUGLContext ctx);
  
-+##
-+# @ChardevVCEncoding:
-+#
-+# Character encoding expected from the guest on a virtual console.
-+#
-+# @cp437: CP437 (8-bit Extended ASCII / VGA).  Every byte maps
-+#     directly to a glyph; suitable for DOS or other guests that
-+#     output raw CP437.
-+#
-+# @utf8: UTF-8.  Multi-byte sequences are decoded and then mapped
-+#     back to CP437 glyphs for display; unmappable codepoints are
-+#     shown as '?'.  Suitable for modern Linux guests.
-+#
-+# Since: 11.1
-+##
-+{ 'enum': 'ChardevVCEncoding',
-+  'data': [ 'cp437', 'utf8' ] }
-+
- ##
- # @ChardevDBus:
- #
-@@ -384,10 +402,14 @@
- #
- # @name: name of the channel (following docs/spice-port-fqdn.txt)
- #
-+# @encoding: character encoding the guest is expected to use
-+#     (since 11.1)
-+#
- # Since: 7.0
- ##
- { 'struct': 'ChardevDBus',
--  'data': { 'name': 'str' },
-+  'data': { 'name': 'str',
-+            '*encoding': 'ChardevVCEncoding' },
-   'base': 'ChardevCommon',
-   'if': 'CONFIG_DBUS_DISPLAY' }
+ bool console_has_gl(QemuConsole *con);
  
-@@ -404,6 +426,9 @@
- #
- # @rows: console height, in chars
- #
-+# @encoding: character encoding the guest is expected to use
-+#     (since 11.1)
-+#
- # .. note:: The options are only effective when the VNC or SDL
- #    graphical display backend is active.  They are ignored with the
- #    GTK, Spice, VNC and D-Bus display backends.
-@@ -414,7 +439,8 @@
-   'data': { '*width': 'int',
-             '*height': 'int',
-             '*cols': 'int',
--            '*rows': 'int' },
-+            '*rows': 'int',
-+            '*encoding': 'ChardevVCEncoding' },
-   'base': 'ChardevCommon' }
+-typedef uint32_t console_ch_t;
+-
+-static inline void console_write_ch(console_ch_t *dest, uint32_t ch)
+-{
+-    *dest = ch;
+-}
+-
+ enum {
+     GRAPHIC_FLAGS_NONE     = 0,
+     /* require a console/display with GL callbacks */
+@@ -377,7 +370,7 @@ void graphic_console_close(QemuConsole *con);
+ void graphic_hw_update(QemuConsole *con);
+ void graphic_hw_update_done(QemuConsole *con);
+ void graphic_hw_invalidate(QemuConsole *con);
+-void graphic_hw_text_update(QemuConsole *con, console_ch_t *chardata);
++void graphic_hw_text_update(QemuConsole *con, uint32_t *chardata);
+ void graphic_hw_gl_block(QemuConsole *con, bool block);
  
- ##
-diff --git a/include/chardev/char.h b/include/chardev/char.h
-index 51995f06a82..f05e8dba0a9 100644
---- a/include/chardev/char.h
-+++ b/include/chardev/char.h
-@@ -255,6 +255,7 @@ struct ChardevClass {
-     bool internal; /* TODO: eventually use TYPE_USER_CREATABLE */
-     bool supports_yank;
-     bool supports_size_opts;
-+    bool supports_encoding_opts;
+ void qemu_console_early_init(void);
+diff --git a/hw/display/jazz_led.c b/hw/display/jazz_led.c
+index 7d1a020d4d9..ee9758a94b5 100644
+--- a/hw/display/jazz_led.c
++++ b/hw/display/jazz_led.c
+@@ -228,7 +228,7 @@ static void jazz_led_invalidate_display(void *opaque)
+     s->state |= REDRAW_SEGMENTS | REDRAW_BACKGROUND;
+ }
  
-     /* parse command line options and populate QAPI @backend */
-     void (*chr_parse)(QemuOpts *opts, ChardevBackend *backend, Error **errp);
-diff --git a/chardev/char.c b/chardev/char.c
-index 55dce9725e8..ca8b37ed8d7 100644
---- a/chardev/char.c
-+++ b/chardev/char.c
-@@ -650,6 +650,13 @@ ChardevBackend *qemu_chr_parse_opts(QemuOpts *opts, Error **errp)
-             return NULL;
-         }
+-static void jazz_led_text_update(void *opaque, console_ch_t *chardata)
++static void jazz_led_text_update(void *opaque, uint32_t *chardata)
+ {
+     LedState *s = opaque;
+     char buf[3];
+@@ -238,10 +238,10 @@ static void jazz_led_text_update(void *opaque, console_ch_t *chardata)
+ 
+     /* TODO: draw the segments */
+     snprintf(buf, 3, "%02hhx", s->segments);
+-    console_write_ch(chardata++, ATTR2CHTYPE(buf[0], QEMU_COLOR_BLUE,
+-                                             QEMU_COLOR_BLACK, 1));
+-    console_write_ch(chardata++, ATTR2CHTYPE(buf[1], QEMU_COLOR_BLUE,
+-                                             QEMU_COLOR_BLACK, 1));
++    *chardata++ = ATTR2CHTYPE(buf[0], QEMU_COLOR_BLUE,
++                              QEMU_COLOR_BLACK, 1);
++    *chardata++ = ATTR2CHTYPE(buf[1], QEMU_COLOR_BLUE,
++                              QEMU_COLOR_BLACK, 1);
+ 
+     dpy_text_update(s->con, 0, 0, 2, 1);
+ }
+diff --git a/hw/display/vga.c b/hw/display/vga.c
+index 776aa443246..2f266f47a39 100644
+--- a/hw/display/vga.c
++++ b/hw/display/vga.c
+@@ -1901,13 +1901,13 @@ static void vga_reset(void *opaque)
+         ((v & 0x00000800) << 10) | ((v & 0x00007000) >> 1))
+ /* relay text rendering to the display driver
+  * instead of doing a full vga_update_display() */
+-static void vga_update_text(void *opaque, console_ch_t *chardata)
++static void vga_update_text(void *opaque, uint32_t *chardata)
+ {
+     VGACommonState *s =  opaque;
+     int graphic_mode, i, cursor_offset, cursor_visible;
+     int cw, cheight, width, height, size, c_min, c_max;
+     uint32_t *src;
+-    console_ch_t *dst, val;
++    uint32_t *dst, val;
+     char msg_buffer[80];
+     int full_update = 0;
+ 
+@@ -2007,14 +2007,14 @@ static void vga_update_text(void *opaque, console_ch_t *chardata)
+ 
+         if (full_update) {
+             for (i = 0; i < size; src ++, dst ++, i ++)
+-                console_write_ch(dst, VMEM2CHTYPE(le32_to_cpu(*src)));
++                *dst = VMEM2CHTYPE(le32_to_cpu(*src));
+ 
+             dpy_text_update(s->con, 0, 0, width, height);
+         } else {
+             c_max = 0;
+ 
+             for (i = 0; i < size; src ++, dst ++, i ++) {
+-                console_write_ch(&val, VMEM2CHTYPE(le32_to_cpu(*src)));
++                val = VMEM2CHTYPE(le32_to_cpu(*src));
+                 if (*dst != val) {
+                     *dst = val;
+                     c_max = i;
+@@ -2023,7 +2023,7 @@ static void vga_update_text(void *opaque, console_ch_t *chardata)
+             }
+             c_min = i;
+             for (; i < size; src ++, dst ++, i ++) {
+-                console_write_ch(&val, VMEM2CHTYPE(le32_to_cpu(*src)));
++                val = VMEM2CHTYPE(le32_to_cpu(*src));
+                 if (*dst != val) {
+                     *dst = val;
+                     c_max = i;
+@@ -2061,14 +2061,14 @@ static void vga_update_text(void *opaque, console_ch_t *chardata)
+     dpy_text_resize(s->con, s->last_width, height);
+ 
+     for (dst = chardata, i = 0; i < s->last_width * height; i ++)
+-        console_write_ch(dst ++, ' ');
++        *dst++ = ' ';
+ 
+     size = strlen(msg_buffer);
+     width = (s->last_width - size) / 2;
+     dst = chardata + s->last_width + width;
+     for (i = 0; i < size; i ++)
+-        console_write_ch(dst ++, ATTR2CHTYPE(msg_buffer[i], QEMU_COLOR_BLUE,
+-                                             QEMU_COLOR_BLACK, 1));
++        *dst++ = ATTR2CHTYPE(msg_buffer[i], QEMU_COLOR_BLUE,
++                             QEMU_COLOR_BLACK, 1);
+ 
+     dpy_text_update(s->con, 0, 0, s->last_width, height);
+ }
+diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+index 94cf362d152..bdc24492850 100644
+--- a/hw/display/virtio-gpu-base.c
++++ b/hw/display/virtio-gpu-base.c
+@@ -88,7 +88,7 @@ static bool virtio_gpu_update_display(void *opaque)
+     return true;
+ }
+ 
+-static void virtio_gpu_text_update(void *opaque, console_ch_t *chardata)
++static void virtio_gpu_text_update(void *opaque, uint32_t *chardata)
+ {
+ }
+ 
+diff --git a/hw/display/virtio-vga.c b/hw/display/virtio-vga.c
+index f4713b91a66..efd4858f3d0 100644
+--- a/hw/display/virtio-vga.c
++++ b/hw/display/virtio-vga.c
+@@ -31,7 +31,7 @@ static bool virtio_vga_base_update_display(void *opaque)
      }
-+    if (!cc->supports_encoding_opts) {
-+        if (qemu_opt_get(opts, "encoding")) {
-+            error_setg(errp, "chardev '%s' does not support encoding option",
-+                       qemu_opts_id(opts));
-+            return NULL;
-+        }
-+    }
+ }
  
-     backend = g_new0(ChardevBackend, 1);
-     backend->type = CHARDEV_BACKEND_KIND_NULL;
-@@ -972,6 +979,9 @@ QemuOptsList qemu_chardev_opts = {
-         },{
-             .name = "rows",
-             .type = QEMU_OPT_NUMBER,
-+        },{
-+            .name = "encoding",
-+            .type = QEMU_OPT_STRING,
-         },{
-             .name = "mux",
-             .type = QEMU_OPT_BOOL,
+-static void virtio_vga_base_text_update(void *opaque, console_ch_t *chardata)
++static void virtio_vga_base_text_update(void *opaque, uint32_t *chardata)
+ {
+     VirtIOVGABase *vvga = opaque;
+     VirtIOGPUBase *g = vvga->vgpu;
+diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
+index c84c84a445e..11f13c98d7a 100644
+--- a/hw/display/vmware_vga.c
++++ b/hw/display/vmware_vga.c
+@@ -1184,7 +1184,7 @@ static void vmsvga_invalidate_display(void *opaque)
+     s->invalidated = 1;
+ }
+ 
+-static void vmsvga_text_update(void *opaque, console_ch_t *chardata)
++static void vmsvga_text_update(void *opaque, uint32_t *chardata)
+ {
+     struct vmsvga_state_s *s = opaque;
+ 
 diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 62a5e3caf57..7bb6a483753 100644
+index b58fe5de827..b9da9ddf30d 100644
 --- a/ui/console-vc.c
 +++ b/ui/console-vc.c
-@@ -1211,6 +1211,7 @@ static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- static void vc_chr_parse(QemuOpts *opts, ChardevBackend *backend, Error **errp)
+@@ -386,7 +386,7 @@ void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym)
+     vt100_keysym(&s->vt, keysym);
+ }
+ 
+-static void text_console_update(void *opaque, console_ch_t *chardata)
++static void text_console_update(void *opaque, uint32_t *chardata)
  {
-     int val;
-+    const char *str;
-     ChardevVC *vc;
- 
-     backend->type = CHARDEV_BACKEND_KIND_VC;
-@@ -1240,6 +1241,16 @@ static void vc_chr_parse(QemuOpts *opts, ChardevBackend *backend, Error **errp)
-         vc->has_rows = true;
-         vc->rows = val;
+     QemuTextConsole *s = QEMU_TEXT_CONSOLE(opaque);
+     int i, j, src;
+@@ -396,11 +396,10 @@ static void text_console_update(void *opaque, console_ch_t *chardata)
+         chardata += s->vt.text_y[0] * s->vt.width;
+         for (i = s->vt.text_y[0]; i <= s->vt.text_y[1]; i ++)
+             for (j = 0; j < s->vt.width; j++, src++) {
+-                console_write_ch(chardata ++,
+-                                 ATTR2CHTYPE(s->vt.cells[src].ch,
+-                                             s->vt.cells[src].t_attrib.fgcol,
+-                                             s->vt.cells[src].t_attrib.bgcol,
+-                                             s->vt.cells[src].t_attrib.bold));
++                *chardata++ = ATTR2CHTYPE(s->vt.cells[src].ch,
++                                          s->vt.cells[src].t_attrib.fgcol,
++                                          s->vt.cells[src].t_attrib.bgcol,
++                                          s->vt.cells[src].t_attrib.bold);
+             }
+         dpy_text_update(QEMU_CONSOLE(s), s->vt.text_x[0], s->vt.text_y[0],
+                         s->vt.text_x[1] - s->vt.text_x[0], i - s->vt.text_y[0]);
+diff --git a/ui/console.c b/ui/console.c
+index 799d61ec1a5..1c75b1a355b 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -210,7 +210,7 @@ void graphic_hw_invalidate(QemuConsole *con)
      }
-+
-+    str = qemu_opt_get(opts, "encoding");
-+    if (str) {
-+        int cs = qapi_enum_parse(&ChardevVCEncoding_lookup, str, -1, errp);
-+        if (cs < 0) {
-+            return;
-+        }
-+        vc->has_encoding = true;
-+        vc->encoding = cs;
-+    }
  }
  
- static void char_vc_class_init(ObjectClass *oc, const void *data)
-@@ -1252,6 +1263,7 @@ static void char_vc_class_init(ObjectClass *oc, const void *data)
-     cc->chr_accept_input = vc_chr_accept_input;
-     cc->chr_set_echo = vc_chr_set_echo;
-     cc->supports_size_opts = true;
-+    cc->supports_encoding_opts = true;
- }
+-void graphic_hw_text_update(QemuConsole *con, console_ch_t *chardata)
++void graphic_hw_text_update(QemuConsole *con, uint32_t *chardata)
+ {
+     if (con && con->hw_ops->text_update) {
+         con->hw_ops->text_update(con->hw, chardata);
+diff --git a/ui/curses.c b/ui/curses.c
+index af4ccb4227d..96427aa6bb9 100644
+--- a/ui/curses.c
++++ b/ui/curses.c
+@@ -57,7 +57,7 @@ enum maybe_keycode {
+ };
  
- static const TypeInfo char_vc_type_info = {
-diff --git a/ui/dbus.c b/ui/dbus.c
-index 794b65c4ada..721cc71d39b 100644
---- a/ui/dbus.c
-+++ b/ui/dbus.c
-@@ -471,6 +471,8 @@ dbus_vc_parse(QemuOpts *opts, ChardevBackend *backend,
-     DBusVCClass *klass = DBUS_VC_CLASS(object_class_by_name(TYPE_CHARDEV_VC));
-     const char *name = qemu_opt_get(opts, "name");
-     const char *id = qemu_opts_id(opts);
-+    const char *str;
-+    ChardevDBus *dbus;
- 
-     if (name == NULL) {
-         if (g_str_has_prefix(id, "compat_monitor")) {
-@@ -486,6 +488,16 @@ dbus_vc_parse(QemuOpts *opts, ChardevBackend *backend,
+ static DisplayChangeListener *dcl;
+-static console_ch_t *screen;
++static uint32_t *screen;
+ static WINDOW *screenpad = NULL;
+ static int width, height, gwidth, gheight, invalidate;
+ static int px, py, sminx, sminy, smaxx, smaxy;
+@@ -68,7 +68,7 @@ static cchar_t *vga_to_curses;
+ static void curses_update(DisplayChangeListener *dcl,
+                           int x, int y, int w, int h)
+ {
+-    console_ch_t *line;
++    uint32_t *line;
+     g_autofree cchar_t *curses_line = g_new(cchar_t, width);
+     wchar_t wch[CCHARW_MAX];
+     attr_t attrs;
+@@ -796,7 +796,7 @@ static void curses_display_init(DisplayState *ds, DisplayOptions *opts)
+     if (opts->u.curses.charset) {
+         font_charset = opts->u.curses.charset;
      }
- 
-     klass->parent_parse(opts, backend, errp);
-+    dbus = backend->u.dbus.data;
-+    str = qemu_opt_get(opts, "encoding");
-+    if (str) {
-+        int cs = qapi_enum_parse(&ChardevVCEncoding_lookup, str, -1, errp);
-+        if (cs < 0) {
-+            return;
-+        }
-+        dbus->has_encoding = true;
-+        dbus->encoding = cs;
-+    }
- }
- 
- static void
-@@ -496,6 +508,7 @@ dbus_vc_class_init(ObjectClass *oc, const void *data)
- 
-     klass->parent_parse = cc->chr_parse;
-     cc->chr_parse = dbus_vc_parse;
-+    cc->supports_encoding_opts = true;
- }
- 
- static const TypeInfo dbus_vc_type_info = {
-diff --git a/qemu-options.hx b/qemu-options.hx
-index efffeaaf55e..44aa3a4cd3b 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4044,7 +4044,7 @@ DEF("chardev", HAS_ARG, QEMU_OPTION_chardev,
-     "         [,logfile=PATH][,logappend=on|off]\n"
-     "-chardev msmouse,id=id[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-     "-chardev vc,id=id[[,width=width][,height=height]][[,cols=cols][,rows=rows]]\n"
--    "         [,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-+    "         [,mux=on|off][,logfile=PATH][,logappend=on|off][,encoding=ENCODING]\n"
-     "-chardev ringbuf,id=id[,size=size][,logfile=PATH][,logappend=on|off]\n"
-     "-chardev file,id=id,path=path[,input-path=input-file][,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-     "-chardev pipe,id=id,path=path[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
-@@ -4276,7 +4276,7 @@ The available backends are:
-     Several frontend devices is not supported. Stacking of multiplexers
-     and hub devices is not supported as well.
- 
--``-chardev vc,id=id[[,width=width][,height=height]][[,cols=cols][,rows=rows]]``
-+``-chardev vc,id=id[[,width=width][,height=height]][[,cols=cols][,rows=rows]][,encoding=ENCODING]``
-     Connect to a QEMU text console. The implementation and supported feature
-     set depend on the selected display backend.
- 
-@@ -4295,6 +4295,9 @@ The available backends are:
-     ``cols`` and ``rows`` specify that the console be sized to fit a
-     text console with the given dimensions.
- 
-+    ``encoding`` specifies the character set expected from the guest:
-+    ``utf8`` or ``cp437`` (8-bit Extended ASCII / VGA).
-+
- ``-chardev ringbuf,id=id[,size=size]``
-     Create a ring buffer with fixed size ``size``. size must be a power
-     of two and defaults to ``64K``.
+-    screen = g_new0(console_ch_t, 160 * 100);
++    screen = g_new0(uint32_t, 160 * 100);
+     vga_to_curses = g_new0(cchar_t, 256);
+     curses_setup();
+     curses_keyboard_setup();
 
 -- 
 2.54.0
