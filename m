@@ -4,53 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9FDEFF8864
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 08:36:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B979FFF8864
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 08:37:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI0PQ-0004QE-JN; Wed, 29 Apr 2026 04:36:40 -0400
+	id 1wI0PU-0004R2-Vm; Wed, 29 Apr 2026 04:36:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wI0PI-0004PG-Iy
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 04:36:34 -0400
+ id 1wI0PO-0004QD-NA
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 04:36:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wI0PH-0007yX-9u
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 04:36:32 -0400
+ id 1wI0PN-0007zQ-8v
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 04:36:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777451790;
+ s=mimecast20190719; t=1777451796;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MFp7jzmv88vJ5NcRT5dloAB9vlIWlJbhgxOJhfQmhUE=;
- b=ddz4LqaKBkytzcT1v4U0vwUYnrwhFkEC1WSu1viNNrZndBSXTLxL97uDa1d7EwqAjnqamF
- cDn4oaTPseL4pfcVMlQmM0Zw/GkI59K+T8jnlM202/wcSIW7HNhe+KCfEnNTO7LUpiuS/u
- 8p4yEBectfRZGdJ0LVzGlkZtOfM5hxY=
+ bh=52gWwmPnwekOSbUdQK4Ka4J854ivbj25GsoneAkk3ck=;
+ b=Lq1EmGqikK7dYJDyLu9Xt8orlpFANAXnUQAocWQGQ3Lz3v4OMiV1EZlHl+Pelh66AOiZn6
+ StX8br4Fx/5JgSRuGZH28jEFaCjVyuIs2RkclIAebGom8AKimYyOaTRQ9IQPydYheQa2dz
+ d7Hg+o0ZT5DMBqoRJ2V+C5C67KipLFM=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-22-1ayG7UkiP8SnxHus4tV1Vw-1; Wed,
- 29 Apr 2026 04:36:27 -0400
-X-MC-Unique: 1ayG7UkiP8SnxHus4tV1Vw-1
-X-Mimecast-MFC-AGG-ID: 1ayG7UkiP8SnxHus4tV1Vw_1777451786
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-664-2wXAITtJMW22cpE4O41Jiw-1; Wed,
+ 29 Apr 2026 04:36:33 -0400
+X-MC-Unique: 2wXAITtJMW22cpE4O41Jiw-1
+X-Mimecast-MFC-AGG-ID: 2wXAITtJMW22cpE4O41Jiw_1777451792
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D0ADE1956089; Wed, 29 Apr 2026 08:36:25 +0000 (UTC)
+ id E7CCE195608B; Wed, 29 Apr 2026 08:36:31 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.34])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 553AB1954199; Wed, 29 Apr 2026 08:36:23 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9FB861800480; Wed, 29 Apr 2026 08:36:30 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 3/6] system/vl: initialize QOM first
+Subject: Re: [PATCH 4/6] qom/object: add object_class_get_list_by_name_prefix
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
@@ -60,29 +60,29 @@ Cc: Markus Armbruster <armbru@redhat.com>,
  Anton Johansson <anjo@rev.ng>, 
  Richard Henderson <richard.henderson@linaro.org>, 
  Paolo Bonzini <pbonzini@redhat.com>
-In-Reply-To: <20260428234519.1812371-4-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260428234519.1812371-5-pierrick.bouvier@oss.qualcomm.com>
 References: <20260428234519.1812371-1-pierrick.bouvier@oss.qualcomm.com>
- <20260428234519.1812371-4-pierrick.bouvier@oss.qualcomm.com>
+ <20260428234519.1812371-5-pierrick.bouvier@oss.qualcomm.com>
 Date: Wed, 29 Apr 2026 12:36:03 +0400
-Message-Id: <177745176384.2166241.6921788598496135839.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=834;
+Message-Id: <177745176385.2166241.2869123011864084966.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1896;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=cPi2jWRM79AR65Rt+J7IdH1m64+OE2pG43tGRo7VKVU=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp8cL3Bgubct81/V0ln1Zr/K5DTvYJHk+vp8ueP
- uurEYcHN0OJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafHC9wAKCRDa6OEJdZac
- 5Z0wD/47jLVwhRInDRxNvfTFkzek4y+/WfMwxL6Qh8PP1rqq6y8uaom87pZ7Kq7osOy5HxI9oWj
- sBmvC4+7Uai/X9Id3Y9xFPApmq0tP43oSq4lfksFORpaCeLAXv3FD5R+DU4xtlXZfXeaWWnxuCT
- TLNr1B5YCOhElltX5bQd/yINSDG7XrYBDclrqZz/JBkF2IMJZCJ0UIn6KHypGiFlNYBs1HPDq2g
- o40hEAB9BM+wGRkdJajRRd0Xt9ihnPJ4l1Citpcz6rs3vpFzytn9J7e+0zF/nk8sSpRiIrtPtdZ
- BozlQ3SrnGQAkz/7Prfk4P6/s/FuVpvEBvzbj2zZcFfZSiA1TdzUo3w5Fc8w5Q0dtn+OFHDry5J
- H3jmdQLLIvuaaK8J0x1W7ekcSEeJgE7/1vb7Su1t+LkJkOsKSKKLVjzRc1Cx4hlZiipbkcl2gri
- pvYG+h40N1GOUnxnF4dysmnA8bygG+d+l71DIB5xwXbKpMEpgILrVgqe+dT2arVuAqTQq6J1iwr
- SjsU07s+hHSvACWk7vRtTkoJ+OK8N+fi7TAPkx50PnmI9beBfu66Kb++n6jX7HRl3tbpqSSbHJQ
- NFZxpys7ZhAViTnRwnGSldFP5oRCYCgwuZJp+uP1s6D7/8aBAt9JLY+absUemNbPN9CD/0N/TIt
- M7CMkcSUWRtnGcw==
+ bh=8le0V1VYBSGkxSc1z327vQD0o86nj6zGUQhIvZLAXLo=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp8cL3fISFygaaUhTUmafMVrbMgCUkwzUHYN24P
+ JCbuw5CW7yJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafHC9wAKCRDa6OEJdZac
+ 5VwBD/9BbD7IzBuW1GGmokzEeJYDxD0gWV+Nyt9YvnujHXY3OsHM+YBs1p1iSTWw9KHzphjA6TC
+ DxLuizeZdvn0rj1zFay+GU2pwTKiVsTX5i9DNv2KA7w7XshpMh96Cjoknj/UJUYPQ9uBVIHpCD0
+ Rs+n6wRu4IyvOtGsIsnVkpS7E/K9nrhc69gSZJwqK1iwOzB4P04cV0WlMAIcWZe9DqaK38+20l2
+ H1xqyyQzhKsAIR0UoHZRIdesZcchzt8TTWLQrNNkaqLaXjQlhqdhnOwAdM86WqhWWpU66/Pdzj1
+ ZaRhQHdP+A7AGAcZmnpRS5eDgSRmrGvvEvLDFXzrTkTBk4pe2jE6hTdZIhacFbB1sNh6OWzYcK9
+ Dig/ygmyzxHBRr/23Y/d8rkoOTSIYJCWIVKgSfJ8YV4C9SL/KIZDcm7afDTMUB25iIFZTj9JuZs
+ 0pxaiNxcWVsnau62TyPVcf+3cPhxsKkV1lvlY8Tk881H5m5nFIChYWx3RSG6Y+fbkggoNN1VrTe
+ pvYknq1WiiRLozdTIsDqzx6JhYVpY48gigDYba78g7gBVNetaYMSc2vWapGd43uB6saxU2m8A9A
+ 0opoPs5JQ/zw8kOyUBtLfGTVzmTIiUrCOEnOMA4tj8z0ugOpDFoz3Qq/2RGn/zltYYXcKTdsoup
+ 6lSjwinoMHd5THw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -109,24 +109,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Apr 2026 16:45:16 -0700, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
-> diff --git a/system/vl.c b/system/vl.c
-> index 0e1fc217b4f..b4a5ea6f857 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -2889,6 +2889,9 @@ void qemu_init(int argc, char **argv)
->      os_setup_limits();
+On Tue, 28 Apr 2026 16:45:17 -0700, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com> wrote:
+> diff --git a/include/qom/object.h b/include/qom/object.h
+> index 510885218ba..a6d7b3874a7 100644
+> --- a/include/qom/object.h
+> +++ b/include/qom/object.h
+> @@ -1033,6 +1033,19 @@ GSList *object_class_get_list(const char *implements_type,
+>  GSList *object_class_get_list_sorted(const char *implements_type,
+>                                bool include_abstract);
 >  
->      module_init_info(qemu_modinfo);
-> +    /* We need to initialize QOM first to detect target */
-> +    module_call_init(MODULE_INIT_QOM);
-> +
->      module_allow_arch(target_name());
+> +/**
+> + * object_class_get_list:
 
-This change is not trivial. By moving the call here, we lose the
-initializations from qemu_init_subsystems(). Verifying that all
-type_init() code is safe to run without it is a tedious task. It might
-be better to introduce a new MODULE_INIT_TARGET_INFO instead
+Should be "object_class_get_list_by_name_prefix:".
+
+> + * @name_prefix: Name prefix for type to filter for.
+> + * @include_abstract: Whether to include abstract classes.
+> + *
+> + * To the opposite of object_class_get_list, only matching types are
+
+Suggest "Unlike object_class_get_list,"
+
+>
+> diff --git a/qom/object.c b/qom/object.c
+> index f981e270440..14527108a2e 100644
+> --- a/qom/object.c
+> +++ b/qom/object.c
+> @@ -1062,6 +1062,30 @@ static void object_class_foreach_tramp(gpointer key, gpointer value,
+>      data->fn(k, data->opaque);
+>  }
+>  
+> +static void object_class_foreach_match_name_prefix(gpointer key, gpointer value,
+> +                                                   gpointer opaque)
+> +{
+> +    OCFData *data = opaque;
+> +    TypeImpl *type = value;
+> +    ObjectClass *k;
+> +
+> +    const char *name_prefix = data->implements_type;
+
+Perhaps the "implements_type" field should be renamed.
+
+> [ ... skip 11 lines ... ]
+> +    }
+> +
+> +    data->fn(k, data->opaque);
+> +}
+> +
+>  void object_class_foreach(void (*fn)(ObjectClass *klass, void *opaque),
+
+I wonder if we introduce MODULE_INIT_TARGET_INFO, is this all needed?
+since only TargetInfo types would be registered..
+
+Suggest: "Unlike object_class_get_list,"
+
+Suggest: "Unlike object_class_get_list,"
 
 -- 
 Marc-André Lureau <marcandre.lureau@redhat.com>
