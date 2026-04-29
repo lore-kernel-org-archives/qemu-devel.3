@@ -4,109 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26552FF8867
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 05:36:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15257FF8864
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 06:19:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHxZn-00045A-Qt; Wed, 29 Apr 2026 01:35:11 -0400
+	id 1wHyG6-00030g-Cm; Wed, 29 Apr 2026 02:19:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wHxZk-000446-1r
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 01:35:10 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1wHxZh-0008Rn-H9
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 01:35:07 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-6563f83ae9fso6556080d50.1
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 22:35:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777440901; cv=none;
- d=google.com; s=arc-20240605;
- b=MA6ip/4Q/uWpcA9P1Vx0W76J8Jlrrlpo1p8O6v/GnoNL/bTxAINy2qGZ9L5B8UUhBm
- ZWdnfRM5y9UO92/54vRgdhRBO3nsXAtSGzUZDpH1iaN8k00bRE0DZBHuu7KdCDSsxzKM
- cE1Crwi3zHc47sF8KMqC4ucZSfj6X4EtAwzt3XjHad8QvPfwueiL5P+aXZetYKqHZycC
- 6bwkx85Ebo2M7oA2D+FXuJwJHDIKA1NlnuRIM1uPut6ZFULIUxD3xy4ekkAJsHf07Cmy
- JgloXdH9+ECSPQ2LR+BSGQM1itlV3olDtbuMG/6Edvp55myhkpoP33UioRCbyBYWqKe3
- VNJQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=p0NKE8Vn5tc5A1Tl5ZRm+yn2kT4FSU4qzhBrwrwtFc8=;
- fh=2vCTedxg5r0JPg5LnC8s7len6poc60rIFIIE/ngH4cY=;
- b=FJlhw3tlLN+17j3vexCfqKDJcIZVDokK/Ooki2+VUaCpIMfkcfsR6Ygxz/lceu6oM8
- atU3HyzMzPm/TzHcetNk+95qCqSYydoXLM0+/8SvHkkGeHU58aMQfdhxsHmwrDu/27VE
- lnR12al/3S0dxvCUZd+uZOMlRHJNFiEZIQNtT+TZwvTq00rVudjhD9dHXlcfAHpAKMNm
- YIVBBw1raeXkQYOsIyKlju4JNqGUygbBv3S4379u7ldWZdDsEhyYBuYIbfHtQwKriK3m
- dxa+BR0Uft+02hrHRxwnjiJtqQKTzdNPE3hylp8sWDbD37vhZ/CMl+b0rrbd1fOM/LZD
- Aq7g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777440901; x=1778045701; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=p0NKE8Vn5tc5A1Tl5ZRm+yn2kT4FSU4qzhBrwrwtFc8=;
- b=aJ6v+ovpoCG/VtphX1LDD15J3EzugUGXNie06oMVW09fMVilexLhX3kRMQYKH6MY/0
- SMYvstRgVMFVd83ojtUEuMF8SKKCWeRKHY46wLvCzZc7/l9XPiWTKwUgPWs1Zd7KhKAb
- Ikb5yFPKf7gVwHVzRLyVbT72hlmQhkzI7KZrc++Vu2RKBXIohEthyUEMuT6npLLc5yfJ
- fIbx6KllDNy8g/KWiAJnT0QAdJTgwyleYMtTCw9Ept8Dea6ZIDu+Dieo5gzOworrhoFk
- 63gV0P7ht2VfGQhd3nrOsC1hGnb7FS0iMXJ5MI1yx5bpbrqaNrwpTWtaQrkHm5owLcNU
- Djhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777440901; x=1778045701;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=p0NKE8Vn5tc5A1Tl5ZRm+yn2kT4FSU4qzhBrwrwtFc8=;
- b=YKlYLQNpD8qbg1WRQUmJrhjJGjR0NJyzBsqd1gQa36UK1qLkpknze5bmY4xoDFNm7a
- nU3PTjxcJ0QvGGTSN4dps+/czXIdLVd7Ldl0vVNKq5GZfMVQ/vna4P4/TdOfp0VeUpib
- BldoRb1oMEE/M3oA1VapsLomYyypJhqr/Chss2i7t/B8n+dIikst00PehTgX2Ccn0bAA
- HA8EJHJHv1IaPc0H9Or4jleBAP+gt3DvQXHjHixGbFbNl0IMUL+4Xrqep4hrMSy1Pitx
- uIhgdyzFNK91zfyUqt3QQ25lH/5+nAbTx+4Wo/MXYsVwU4l+zZCPhWUwvaMXFtB4O9jx
- GSVA==
-X-Gm-Message-State: AOJu0YwXwWxrfxU81Bm28oOv0p2s4ad2JC7fGkCIPyiiW/kc3Vyi84MR
- btvVHDMU7rHl5q93MXyjYMz/b/5VAZ1z01Pogl6+6d6R8J6fBficxPcWmyJ4Ff/bWkaU129xSgZ
- 3CVUhs0HhoLCRoFSkF3PWQHKN8a5NPhA=
-X-Gm-Gg: AeBDiesRsIWtClZdLw37pwvsFPIUnpsyNwsQi4sAFrcfOmGhdOeYlWXgLqEshNTMS/D
- aG3rHfm1WD2BiMcCSRT58LgKYaEMHWCyusW8R1Pkb279/wqq3oNujwn9CL+053tWQp40lTNddys
- 69vq4WtvsyLCQW2bazC3wNqQ2FKYkZExNnuy6YdEnHYAvL1mw55FV+jJr1TmaqsYTGuTiVdmO2w
- X6EtSyjiNJ5BTpsGX5iPCJ49oPptGrDKSwh/6pHFKPhYM9WgbsnMRNMehbJs1VjolqZfDOM77+f
- aO1Y2urBbMZARcDLT0Y=
-X-Received: by 2002:a05:690e:4399:b0:650:1ac4:65ea with SMTP id
- 956f58d0204a3-65beeda783cmr4493368d50.22.1777440901378; Tue, 28 Apr 2026
- 22:35:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wHyFk-0002x5-9M; Wed, 29 Apr 2026 02:18:34 -0400
+Received: from fhigh-b7-smtp.messagingengine.com ([202.12.124.158])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1wHyFi-0006Hg-8A; Wed, 29 Apr 2026 02:18:32 -0400
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id 804727A00A5;
+ Wed, 29 Apr 2026 02:18:25 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-05.internal (MEProxy); Wed, 29 Apr 2026 02:18:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm1; t=1777443505; x=
+ 1777529905; bh=TV9kc4iShjRSzB/yejf1EMqz2Nq4q335ld0T0GfipmM=; b=A
+ LZ8XSzfe1d5iz1JNe2voH+gGAh7A4WSg+c8cFzZM7GQm1uqGHIXfXJV5yFYX4Tl0
+ Zgsfg/W61mQufIrb2yGFCU5EcnDCgSBUhUdMO+Kxy9vX5stzf3SHgfsbqAS4esB2
+ RYnBBxKXLmGf6qXVKJ1Oivx2WKui7pE+Cr2r3Ud0Zy/DRn59Yt6SiI4eZWcVTfoe
+ j/GJpRPeaR1kK2k46e1fEVZ+kkaCldvmn9Q3SsqD/zV9EIpIUrAN9/lvwFUC3jzX
+ KOiCm7LgsqumeiY/rTZfAs+UmzPkVuRWuiNVbj9sv3W/xQfHYOR6D94M9CXgXG8v
+ 3DHjjuWK5U2F+4g8VggLw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+ 1777443505; x=1777529905; bh=TV9kc4iShjRSzB/yejf1EMqz2Nq4q335ld0
+ T0GfipmM=; b=RcjbLbNqmN4pOu+5Xf9qE3w36iBNfSzRRwQ2A1yDCg8N2HyfpYX
+ bYHaXiW31EJ1hTwneJVwGk5T2o3O9kzsPy/3bmiwCaJWG4qElvBGeNi9Mrc60sjo
+ 2BDmidVxtRDBEtIa9q4KdgDkwbIHV3+KPZgbPSzyDhJIk32l92W3N9FgB2XELtYU
+ ezkMHea7sVcb4/Bt2Z5baxrrW9Fjzje6KAsG2fQCqKiCbDLywnbAcEvbMiUTz2qS
+ j/5z9pFxdSmPFMEig9n4wkdmHV1BEtIhZxPhWC6Su3hVq0qg5Q+6O8Ao0k2jmqsz
+ 1sPiXB84O8KUduEXAusgNXxUktoxipJx9+w==
+X-ME-Sender: <xms:r6LxaXEIymF2j3lD9ldc2tKLAg6m9WxloWRDR8Cf6AcWm1nFv-m9NA>
+ <xme:r6LxaVSc_yiJkBNVn898qCvr_bdKZd8rwC838GTfJIL6miAy4sPdlskoU8RJWmUV0
+ D41LyMYEYkY2pHNiqoI0HksXjz5Wy5Oo2wFS6wK_MxYTa4fqWldOO8>
+X-ME-Received: <xmr:r6LxaZcNZu8P08_LdunfU3avqWtefLM-Imul2O49zWsAiElfKurUsvWM0sDU8NGHTnrMp0ICpHc3371mabhfEKHbMB6mJhU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdekfeejtdcutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+ ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+ hrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefmlhgruhhsucfl
+ vghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtthgvrh
+ hnpeejgfejfeffvdeuhfeifefhgffgueelhedukeevjeevtdduudegieegteffffejveen
+ ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehithhsse
+ hirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopedukedpmhhouggvpehsmhht
+ phhouhhtpdhrtghpthhtoheprghlvgigrghnuggvrhesmhhihhgrlhhitgihnhdrtghomh
+ dprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthht
+ ohepkhifohhlfhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepqhgvmhhuqdgslhhotg
+ hksehnohhnghhnuhdrohhrghdprhgtphhtthhopehfrghmsegvuhhphhhonhdrnhgvthdp
+ rhgtphhtthhopehsthhgrhgrsggvrhesshhtghhrrggsvghrrdhorhhgpdhrtghpthhtoh
+ epphhhihhlmhgusehlihhnrghrohdrohhrghdprhgtphhtthhopehpsghonhiiihhnihes
+ rhgvughhrghtrdgtohhmpdhrtghpthhtohepshhtvghfrghnhhgrsehrvgguhhgrthdrtg
+ homh
+X-ME-Proxy: <xmx:r6LxaTg9X8Uw8Wq3zmfwRFLDOkCQ6cgJmW1P2yAU5USX9CxgXx-rHQ>
+ <xmx:r6LxaUIDI1TAv84X0Niiav5DyXvmUTWHWVvwWzD_lInGNlzVEQNzRQ>
+ <xmx:r6LxaQFu8s2UqcT5pCNLNlugkwMsQ7DThBTyfJYWUGdhfqfVbY8pPw>
+ <xmx:r6Lxaa1Y24jDv4F-Cmv89fjr8MIFO8xIn-sJGXp1iGxMDwagAHfULQ>
+ <xmx:saLxaZP6CTI1xPJOFyuyq7gsTLERlp2IHua3oCdt-cnwfR2Bk2HKyiN9>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 29 Apr 2026 02:18:23 -0400 (EDT)
+Date: Wed, 29 Apr 2026 08:18:21 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>,
+ =?utf-8?B?U3TDqXBoYW5l?= Graber <stgraber@stgraber.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Jesper Devantier <foss@defmacro.it>,
+ Fabiano Rosas <farosas@suse.de>, Zhao Liu <zhao1.liu@intel.com>,
+ Keith Busch <kbusch@kernel.org>, Peter Xu <peterx@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: Re: [PATCH v6 4/8] hw/nvme: set CQE.sq_id earlier in nvme_process_sq
+Message-ID: <afGirZIPZ0TT5ipC@AALNPWKJENSEN.aal.scsc.local>
+References: <20260419130139.15554-1-alexander@mihalicyn.com>
+ <20260419130139.15554-5-alexander@mihalicyn.com>
 MIME-Version: 1.0
-References: <20260410150457.85190-1-zhangckid@gmail.com>
- <20260410150457.85190-7-zhangckid@gmail.com>
- <87ldedongv.fsf@pond.sub.org>
- <CAK3tnvLHHXoEVngnyUbeTeVdj3w997wSc6heOPJG6-aWmzNazg@mail.gmail.com>
- <877bpr5ywi.fsf@pond.sub.org>
-In-Reply-To: <877bpr5ywi.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Wed, 29 Apr 2026 13:34:22 +0800
-X-Gm-Features: AVHnY4LZsp1R5sDh1Iio6i7Bm_AY1f6UU4uDvHr25gH9iUQgx05HugsrNS1qd7A
-Message-ID: <CAK3tnvKh39qJe11OgXrP91fNEY1-fZV9SvC-Pcf2iM6RrzC74g@mail.gmail.com>
-Subject: Re: [PATCH V6 06/14] monitor: Update tracking iothread users with
- holder name
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=zhangckid@gmail.com; helo=mail-yx1-xb12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="RX0EiVYpKZIZ2q7j"
+Content-Disposition: inline
+In-Reply-To: <20260419130139.15554-5-alexander@mihalicyn.com>
+Received-SPF: pass client-ip=202.12.124.158; envelope-from=its@irrelevant.dk;
+ helo=fhigh-b7-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,88 +120,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 28, 2026 at 3:26=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
->
-> Zhang Chen <zhangckid@gmail.com> writes:
->
-> > On Thu, Apr 23, 2026 at 8:44=E2=80=AFPM Markus Armbruster <armbru@redha=
-t.com> wrote:
-> >> Oh.
-> >>
-> >> PATCH 02 defines QAPI type IoThreadHolder as a union with two branches
-> >> for the two kinds of holders: one for block node holder, and one for Q=
-OM
-> >> object holder.  Both branches use a string to identify the holder.
-> >>
-> >> The C code in PATCH 02 uses just a string to identify the holder.  Thi=
-s
-> >> silently assumes that the strings for block nodes are distinct from th=
-e
-> >> strings for QOM objects.  True as long as we only use absolute QOM
-> >> paths: these start with '/', and block nodes can't.
-> >>
-> >> This patch shows me there's actually a third kind: monitor.  You use t=
-he
-> >> QOM object branch for it.  That's confusing; a monitor is not a QOM
-> >> object.  Moreover, you make yet another silent assumption: absolute QO=
-M
-> >> paths do not start with "/monitor/".
-> >>
-> >> This is too much for me.
-> >>
-> >> Please use a separate IoThreadHolderKind value and IoThreadHolder bran=
-ch
-> >> for each kind of holder.  The kinds I've seen so far are block-node, Q=
-OM
-> >> object, monitor.
-> >>
-> >> If Daniel Berrang=C3=A9's "[PATCH RFC 00/17] monitor: turn QMP and HMP=
- into
-> >> QOM objects" gets merged, kind monitor can go away.
-> >>
-> >> Use of just a string to identify the holder requires strings for
-> >> different kinds to be distinct.  The argument why they are must be
-> >> written down, simple, and likely to remain true.
-> >>
-> >> But I'd prefer to use IoThreadHolder instead of string.  No assumption=
-s
-> >> necessary then.
-> >>
-> >> If this IoThreadHolder arguments make the calls ugly or overly verbose=
-,
-> >> consider thin wrappers for each kind, i.e.
-> >>
-> >>     new_ctx =3D iothread_get_aio_context_block(iothread, bs);
-> >>
-> >> instead of
-> >>
-> >>     holder_name =3D bdrv_get_node_name(bs);
-> >>     new_ctx =3D iothread_get_aio_context(iothread, holder_name);
-> >>
-> >> and so forth.
-> >>
-> >> Questions?
-> >
-> > Thank you for the detailed explanation.
-> > You are right, in this patch I silent assumption: absolute QOM paths
-> > do not start with "/monitor/".
-> > Because the Daniel Berrang=C3=A9's RFC patch and the monitor implementa=
-tion
-> > is very special,
-> > it creates the iothread for itself. The iothread lifecycle is same
-> > with the monitor.
-> > It is not a general case like QOM and block node.
-> > Maybe no need for this case add a third kind here?
->
-> I don't know.  Or maybe I don't understand the question.
->
 
-If no other comments I will keep the assumption in the next version.
-At the same time, I will try to keep looking at Daniel Berrang=C3=A9's RFC =
-patch
-about monitor QOM.
+--RX0EiVYpKZIZ2q7j
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks
-Chen
+On Apr 19 15:01, Alexander Mikhalitsyn wrote:
+> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+>=20
+> Instead of filling req->cqe.sq_id in nvme_post_cqes, let's set it earlier
+> in nvme_process_sq.
+>=20
+> This shouldn't cause any issues, because req->cqe.sq_id never changes
+> during lifetime of req.
+>=20
+> This will help us for migration support.
+>=20
+> Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.i=
+o>
+
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+
+> ---
+>  hw/nvme/ctrl.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+> index 191398e700f..d9bf32bff2c 100644
+> --- a/hw/nvme/ctrl.c
+> +++ b/hw/nvme/ctrl.c
+> @@ -1520,7 +1520,6 @@ static void nvme_post_cqes(void *opaque)
+> =20
+>          sq =3D req->sq;
+>          req->cqe.status =3D cpu_to_le16((req->status << 1) | cq->phase);
+> -        req->cqe.sq_id =3D cpu_to_le16(sq->sqid);
+>          req->cqe.sq_head =3D cpu_to_le16(sq->head);
+>          addr =3D cq->dma_addr + (cq->tail << NVME_CQES);
+>          ret =3D pci_dma_write(PCI_DEVICE(n), addr, (void *)&req->cqe,
+> @@ -7848,6 +7847,7 @@ static void nvme_process_sq(void *opaque)
+>          QTAILQ_REMOVE(&sq->req_list, req, entry);
+>          QTAILQ_INSERT_TAIL(&sq->out_req_list, req, entry);
+>          nvme_req_clear(req);
+> +        req->cqe.sq_id =3D cpu_to_le16(sq->sqid);
+>          req->cqe.cid =3D cmd.cid;
+>          memcpy(&req->cmd, &cmd, sizeof(NvmeCmd));
+> =20
+> --=20
+> 2.47.3
+>=20
+>=20
+
+--RX0EiVYpKZIZ2q7j
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmnxoqoACgkQTeGvMW1P
+Dek9oQf+IRc5ZxrN9j4mVldYKAwfkUWp5HN+YH7PPpIPj7dyYP2rxt0ZFLl6olfJ
+adey1Du5VODXvjV/wT2255jRvn3oVxIn07AQPtKZt9KsCzE4Mm01J1VJKu8ljsMP
+2nWB9g3kqijSPaWdyH7ehAiWFx4tuUEaQt6R1PKS1QuoazCQx312RsLHuBtTzxT9
+VqISAKoOubCb2OPRllk7cOHiihXKVM9Xwatr5B4MMDaXqh+fxdIGk5A8TsKqc74d
+YFwDVnzOBvN51eReS36OhuO64I/nTUFxfgrvC16jkFAL56WMKEWYQ6ALAoOBkVZJ
+LFmYkObFZhuouv7dXh4SJu0nhXm7Cw==
+=BDQ8
+-----END PGP SIGNATURE-----
+
+--RX0EiVYpKZIZ2q7j--
 
