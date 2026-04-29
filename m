@@ -4,96 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5558CCCFA13
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 17:37:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA53FFF887E
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 17:39:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI8qF-0000H6-08; Wed, 29 Apr 2026 13:36:55 -0400
+	id 1wI8sK-0000iK-0f; Wed, 29 Apr 2026 13:39:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wI8qD-0000Gv-6I
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 13:36:53 -0400
+ id 1wI8sF-0000i1-Lx
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 13:39:00 -0400
 Received: from fout-a2-smtp.messagingengine.com ([103.168.172.145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1wI8qB-0007AP-Dn
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 13:36:52 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfout.phl.internal (Postfix) with ESMTP id EA1D2EC00E7;
- Wed, 29 Apr 2026 13:36:48 -0400 (EDT)
+ id 1wI8sE-00088D-97
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 13:38:59 -0400
+Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
+ by mailfout.phl.internal (Postfix) with ESMTP id A9466EC0173;
+ Wed, 29 Apr 2026 13:38:57 -0400 (EDT)
 Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-06.internal (MEProxy); Wed, 29 Apr 2026 13:36:48 -0400
+ by phl-compute-02.internal (MEProxy); Wed, 29 Apr 2026 13:38:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm1;
- t=1777484208; x=1777570608; bh=Enzqa/P5xUfSI5hVYwGVonA/sIVKpSUy
- SjUyU4wy758=; b=Ua8nJT8iVwUhm2O0TONZAJ4es8hEMz5cKQHZQsciMzWxauni
- /rpZqBTFGfnZpySC/1Ve8xo98WzvtIpXBta6SsBt4JjnggzwJ0ojfF78wcZRWlTa
- HWeXZ0s5+unRGzttjcaTXr+AKsvp1NNAi5HHGUmzeyDy3LsrD0Ov38nxc76AdfIG
- 8tSdJIiw9BcFr4ubQcgkpXag/I1cUz/1ixU0kPVBRNZlAWDtcaSqoun57V/pkvV/
- 1SuK43tscrt/ML8602q+Z3Przx/hJTCuYeYU8acUO1Rh9y/GgQDkFcrZM+yXL3hb
- PHPAUGcgMTNlYGkful7T2bIEf27XPQMZhnzx6g==
+ t=1777484337; x=1777570737; bh=Am/oLMBWtNf5BvWpjOv4hm0GPV17ex8b
+ 8T84V2D+xWM=; b=hIIivx788GFsOEu06qvsNCLZCZQJL3JllT2b33FvJAXnL4Xc
+ W6+ew4L+9+Vll47rD5XLdO/pIl5qrGcVexbZE4sDnJ88odto2R8Vc5onmyfhvyHk
+ QJAzN1wqulegcRctwD5MD08bU+FEithI2Ve1Ja0AMw7//Y+WEGYe6yx8VAarsb+s
+ XjKt91RygED7EE9QAoLZhhdQ95iGdwryZVCyrLx4TKxlXKCkIR1O/PX5kK96NFTx
+ Hak6Qo7vNIXmOiqRNOFpVRBXK5m9O0kROS4LTLSSKpNYsov8C9a0TtP23mQxwvEm
+ vJMTg5EmiAcrvjczL2WQXe4M4WvNjAvPeDMaUw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1777484208; x=
- 1777570608; bh=Enzqa/P5xUfSI5hVYwGVonA/sIVKpSUySjUyU4wy758=; b=X
- 7mcvyNjcBYTribXsGbwguAskRETd1Q+Svc5mTzZfFItvgmlbJ3Fj3b+ooSoKCdOE
- ViZsseRfrFaHJ+/jqAMhl3eWtPHqMgi5uP5hqkf6dfKVdzACfsQ5fhckxqWs4zMb
- 1UrxR0xdgPOYkAlGq5t21IDwwBZEvv1B0hxdPXI3n+9Ym8RuOkrQL0ym6XxwzsUt
- ixsPbx9tL5uBmWid4Y/ZnsSJoyw4/BisGavyCTTazPsWirERag+1GBLPioPeANzR
- eWOtBmjJH7mGf9+XhabEWdGr2NS8p73yUBe1mwlmxogPxOZ+BVcIaDQVxpNX8HAS
- P3pzmjTNH325DOTedbNqQ==
-X-ME-Sender: <xms:sEHyaeOMUeGg6JeiX5hRAwYJoqyyb5EbAyRI4v6GZ0z-1-NK-s2wvw>
- <xme:sEHyaT3VvQq4UTiw665DjkbGtQ7Oet5r0JyIUv4_Kmj0L2muhrO98Dl3UHS23l4Z4
- 7rKzqu8CCXySaIardBuwjMxWQzOUc5nFu7riZ7oc54ikiKmXoN4sRE>
-X-ME-Received: <xmr:sEHyadkrtz2aqbrY7CZxLFDI__uNVNpSPim4D_jSbdEoNG2ERsrvrCdtHKzZ>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1777484337; x=
+ 1777570737; bh=Am/oLMBWtNf5BvWpjOv4hm0GPV17ex8b8T84V2D+xWM=; b=h
+ faXy+DS4CVG/HzZcJKfYEIiIktqE903Q9shTs7j+rpvxL5VyEd7uS2bz+i3Ed6jr
+ Ee5poxLPhnQqtAqJv6J17/6pOBH8RqNwJmKKjZBycKlcU9y21qPPc+P2ruuAeEUb
+ Is7Up0wSJMjKgOkn4lIAqL04+ng7pul2hBHIEviQHzhtS0Igc4ngLblB1p/H9aQJ
+ mUV5jXVyUi9E5R1kpgluEiDio4ixANpfiWK0nQiwxoDUq1uqZ2RwYcPFutpYucIQ
+ CrkPylhdffqvR5exzBo9W3CnZf+yuG4QDasbdDZSIfDrXSIr6ow0YKS4T11bIWQX
+ BbKYvFhjZsxOXSCG89FqA==
+X-ME-Sender: <xms:MULyafmr0QlL1_Rqoj48zfYeCEP3z7w1d5gBCvSNJKVDXtKpDaWtOw>
+ <xme:MULyaeWBZqkc_eXHQGlFZQ8e1kVEJXyBYI1FE9WIeS6FHT2xAWIaYlCUjtsLR7fqf
+ mLPY8EpAcT3i96OEK8hWON27ME_ktopqHYjMv8vW91iMhiEdC1G3Dc1>
+X-ME-Received: <xmr:MULyacE2FhQR88QWOnPDpNQliVUFavcXjr5FUkZnoUMGJw5jo91ctBxLTth->
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefhedrtddtgdekhedtiecutefuodetggdotefrod
  ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
  ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlh
- cuvffnffculdejtddmnecujfgurhepggfgtgffkfevuffhvffofhgjsehtqhertdertdej
+ cuvffnffculdejtddmnecujfgurhepggfgtgffkffvvefuhffofhgjsehtqhertdertdej
  necuhfhrohhmpedfvehhrgguucflrggslhhonhhskhhifdcuoegthhgrugesjhgrsghloh
- hnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhephfefudffkeffheduffetledvkeet
- vdejhedtheektefhhedvgefhheethfffkeegnecuvehluhhsthgvrhfuihiivgeptdenuc
+ hnshhkihdrgiihiieqnecuggftrfgrthhtvghrnhepkeffkeduvddtheejudfhkeetteeg
+ vdefffeiuefgfeffveehgefgtdekueetkeetnecuvehluhhsthgvrhfuihiivgeptdenuc
  frrghrrghmpehmrghilhhfrhhomheptghhrggusehjrggslhhonhhskhhirdighiiipdhn
- sggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmrghrtg
- grnhgurhgvrdhluhhrvggruhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepkhhrrgig
- vghlsehrvgguhhgrthdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonh
- hgnhhurdhorhhgpdhrtghpthhtohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhupdhr
- tghpthhtoheptghhrggusehjrggslhhonhhskhhirdighiii
-X-ME-Proxy: <xmx:sEHyaaXLD_hVtKQXpGCuMCfJNQSB8tStKemk1qpVXVhc9gY21qGv1g>
- <xmx:sEHyaTuw4dad2qjgku6H67Nq9pM5u-XjzZaSdbhZ367Ib7RM1hc1xA>
- <xmx:sEHyadZkzeaIW62uuL6xoH3CznQQRgUEGwwpsCfFp4EwR9quLMTfpQ>
- <xmx:sEHyaSV7ja1GbNHzNPS5Dto7ceEs1YRWXJEcxGWKG4GmDqyW_zKVmw>
- <xmx:sEHyaaR6cYGbPkRDTf26bmIXlu5nknTv-C1FyWt_D2aAOSTYVuGbybfa>
+ sggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhgrug
+ esjhgrsghlohhnshhkihdrgiihiidprhgtphhtthhopehkrhgrgigvlhesrhgvughhrght
+ rdgtohhmpdhrtghpthhtohepmhgrrhgtrghnughrvgdrlhhurhgvrghusehrvgguhhgrth
+ drtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhr
+ tghpthhtohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhu
+X-ME-Proxy: <xmx:MULyaSdzqI-WJJD7ckwgd4r9fAyT6BgRh1OsZ1UD2USjy0eQpnqPsA>
+ <xmx:MULyaVJrHoBUfqBmeFOZawXZfqOUH8I5zLZQ1IaqQfkAqrdfVFDv8A>
+ <xmx:MULyafGlMEPmk8SMXPwaU9NAT9wLdYGHzliobcNul8gsA-GIT6FrNA>
+ <xmx:MULyaQBvakCvyInwuG9QtGCBne20zf6PKJEOTSvbbIxFmb-1zu1igw>
+ <xmx:MULyaaC-nKAuPRZTvsX3m2r5guxOgLonFfeGVtXtbKw03MLQ_sR7Wypj>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 29 Apr 2026 13:36:47 -0400 (EDT)
+ 29 Apr 2026 13:38:56 -0400 (EDT)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 2a4a9bf8;
- Wed, 29 Apr 2026 17:36:46 +0000 (UTC)
+ by chomposaur (OpenSMTPD) with ESMTPA id e356a92e;
+ Wed, 29 Apr 2026 17:38:56 +0000 (UTC)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 29 Apr 2026 13:36:46 -0400
-Message-Id: <DI5TKBSTXIKZ.2BMHPF7BB45LC@jablonski.xyz>
+Date: Wed, 29 Apr 2026 13:38:56 -0400
+Message-Id: <DI5TLZB5BUHN.3EVV3B79DTS8A@jablonski.xyz>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Chad Jablonski"
+ <chad@jablonski.xyz>
 Cc: <qemu-devel@nongnu.org>, "Gerd Hoffmann" <kraxel@redhat.com>,
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
 Subject: Re: [PATCH] ati-vga: fix ati_set_dirty address calculation
 From: "Chad Jablonski" <chad@jablonski.xyz>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, "Chad Jablonski"
- <chad@jablonski.xyz>
 X-Mailer: aerc 0.21.0
 References: <20260417205752.3932801-1-chad@jablonski.xyz>
  <58180aa1-4e39-4aa8-6d3b-586d4461deba@eik.bme.hu>
  <DHWB25SYYESE.QMQK5VPNXSVK@jablonski.xyz>
- <ef33b737-1f62-032a-5e97-4fc0a371f202@eik.bme.hu>
-In-Reply-To: <ef33b737-1f62-032a-5e97-4fc0a371f202@eik.bme.hu>
+ <6d7f3031-225b-31d9-dcca-45e34ba61783@eik.bme.hu>
+In-Reply-To: <6d7f3031-225b-31d9-dcca-45e34ba61783@eik.bme.hu>
 Received-SPF: pass client-ip=103.168.172.145; envelope-from=chad@jablonski.xyz;
  helo=fout-a2-smtp.messagingengine.com
 X-Spam_score_int: -2
@@ -119,55 +119,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->>
->> I think if we want to avoid this the way to do it may be to just take
->> the intersection of the currently visible screen area and the
->> destination area and mark just that as dirty.
 >
-> That could work but maybe we also have problems with calculating=20
-> intersects. The ATI docs say SC values can be negative (Range -8192 to=20
-> 8191) but we don't seem to handle that correctly. I don't know if any=20
-> drivers use negative values in scissor clipping, I've only noticed it whe=
-n=20
-> checking with different values so maybe that's not be a problem in common=
-=20
-> cases.
->
-
-Ah, right, we're not currently handling negative clipping values. We're
-also not applying clipping to the dst on the ctx passed into ati_set_dirty
-right now. Given that, for v2 I went ahead and did this intersection as-is.
-It'll mean overmarking dirty in some cases, but no more than the
-previous implementation and I think it's something we can fix separately.
-
->> Even fixing the unit issue
->> the old bounds check would miss blits that began outside of the visible
->> screen and continued onto the visible screen.
->
-> Maybe this is the real reason but I still don't see how a relatively smal=
+> I've found a case which this patch seems to fix and does not involve=20
+> panning (unfortunately I can't give a reproducer as it is with AmigaOS=20
+> that isn't free) but I don't understand why and what exactly happens.=20
+> Maybe updates are missed when guest updates display by directly writing t=
+o=20
+> VRAM? But such writes should cause region to become dirty due to=20
+> vga_dirty_log_start() called at the end of vga_common_init() which we cal=
 l=20
-> blit of one character in a fully visible xterm not even near the left of=
+> from ati_vga_realize(). Without this patch after a mode change display is=
 =20
-> screen could be missed this way if the screen is panned so I'm still=20
-> suspecting clipping might have something to do with this. Not marking out=
+> only updated around the mouse where it's explicitely marked dirty (with=
 =20
-> of screen updates also does not explain that so it's probably just wrong=
+> guest_hwcursor=3Don as guest_hwcursor=3Doff is bugged) but with this patc=
+h=20
+> updates correctly but I don't know if it's just a side effect or actual=
 =20
-> calculation of visible area. Or you meant that's just another way the=20
-> current calculation could miss updates. Yes that's possible.
+> fix for something. Maybe it's just the calculation fix and not the off=20
+> screen dirty marking part, I haven't try to test it with restricting to=
+=20
+> visible screen (maybe I wait for v2 of the patch).
 >
 
-Yep, I just meant this is another way the current calculation can miss
-updates.
-
->> Another thought, we could clear dirty bits on full screen updates. But
->> that's a change with a much larger blast radius and I would be nervous t=
-o
->> make it.
->
-> Can we invalidate dirty rect in ati_vga_set_offset to avoid changing vga?
->
-
-v2 is incoming with the intersection approach. If that doesn't work out
-we can investigate this further.
+Interesting! I haven't run into a case without panning yet so I'd
+definitely be interested to hear if v2 still fixes this or if it behaves
+any differently at all.
 
