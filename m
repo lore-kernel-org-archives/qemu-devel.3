@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B045DFF887E
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 14:48:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80C5BFF8867
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 14:48:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI6Bm-0004Sk-Q3; Wed, 29 Apr 2026 10:46:58 -0400
+	id 1wI6C1-0004iE-SE; Wed, 29 Apr 2026 10:47:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bk-0004S3-OX
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:46:56 -0400
-Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bw-0004Zs-I1
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:47:10 -0400
+Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bj-0004Y9-3B
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:46:56 -0400
-Received: by mail-oo1-xc35.google.com with SMTP id
- 006d021491bc7-6949f3eeaf6so434579eaf.0
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 07:46:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bu-0004bp-Vp
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:47:08 -0400
+Received: by mail-ot1-x335.google.com with SMTP id
+ 46e09a7af769-7dca5f64e86so7988144a34.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 07:47:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777474014; x=1778078814;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777474024; x=1778078824;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uXMRYLbIrSLe9wi5/S8Sasx5IZ6DFxOdiiRJnfLgI/Q=;
- b=u7WDJEIJZGiHzyxlNXV7eJ5wjf/lH3nUTZVTSeIJYKoUMSyvrTCO8S1xTzCLPHL+TH
- 2OyiS3IBYMKkNf/PsmPmhIU7uqPxSwtFOimQvoKuYIEdRR5YpKGESYL7R57UuWh66AQb
- pNxUVPj+sRLJNTbhQUTPa1TtD6P7dtipT7thr/CUVQnhqPBMtAkx325Se0T2hxSHvFsh
- jemvn5qymy4Mw7dRjP8ttRjQy8fSV587wgGJHTCqs9N1mtMEzINDozkodYMRKKLjDK0i
- p0Mmm91yMWhdOp/tES1tFfFBl4B07FA9ZE3EEDZ/4aDeOV2bgS3iwGt6OXmrvvBkwI13
- FD8A==
+ :reply-to; bh=flxXVM9IUYo3v5A37ldvuHn8wPg9FyAcz4uvyK53nnI=;
+ b=LEAlQik/XnQYUJQfHzKLn8DjYpB2NPC/xmvHGrr2Yuq/cLKM9I73W3UG14N/JCcuj/
+ zI+ZvHU498ThfW5ZldweEwM2+EhJu97Tc/WglSKc0PgZq9ebQt2Y40FKxw+YtPLxmtTq
+ +H9TJjEYWTueZwRNmTBpmlQ9GaaTu3KMnds1vxBuB4X7ogPsP6ZOR3nRv8acuugSpEMF
+ Qx1jdntVWE8VHB2PeM1RI8SgBwR15gdigqvSapPqR97S6AqISDSoOqEpHepvCINPT791
+ Xhn3TmgCRqqCBNrEiUGni0Jjc+FdP4DrCe4SBRL53BAa/vHxaP0kjW/2ZUKPyWv+9Sb7
+ L3QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777474014; x=1778078814;
+ d=1e100.net; s=20251104; t=1777474024; x=1778078824;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=uXMRYLbIrSLe9wi5/S8Sasx5IZ6DFxOdiiRJnfLgI/Q=;
- b=sRzrCA7Eu4kRB8GhZZaxw0Hm0xi0hvhoWtQmaZDL5Ve3tIa8hh0P8cETIWxNs/9ezz
- d5/ql++l1kaXouNJILNOqeQ66RaxcWpcYKLl4hVCq9wb2zUCpDYaOiguFdQrzyGq2Jpc
- dB2Nb/FpAjFnVYPeJfgNh2P4+/Qb+bqS6Sr9R1lHN6YI3S6qSTBRJPp7bAh13Qmv+kTQ
- 7OFHr4vS/5zVCQSp+agCRcRseZK65UuSoyJVDTJan14G1SGBR0e2Q2gWWGcDz+zbptx4
- JH9ZKqL/gpi5Cdi0oiQErzer/KTv9oqvPrjzCJY4RVXTZxJ6AIBK4bWSl/Z6lZlq75n2
- 9VsQ==
-X-Gm-Message-State: AOJu0YzHKFllwi/G0UlXXG6noPP65ZnqSXvh3lSSJSnM4hNJBy4BZyfj
- Wl3F8XJAU0UyBWYb51uw9V3OxIJf02PRWna/SlCQZZqS0wh6eYjp9mUxtkJ47ceR++g=
-X-Gm-Gg: AeBDievrsM8OHQYDcIS0iBEaBIy2Gds4+u6v+k74bNdvU+Fr5jbe/1oOhmUb7fUsfAQ
- GjTndGaoeBBFnD9Dr3HRW2E7pOVT+3hFG7aX6OJ9/KMCIZLFOHMsVL23pq/nPFcEmyCWMle8xea
- bHDJkapwLj/KGBaQLvWQJhHJIztHEXCqnE52aE6r/S8EeyIpbHwok/Qs5q+2tNFeXSICmV4va4O
- Ffx7gOzuPkxilsM0mj9fuNR3osZcDtye7SVDzZgh4LYsVXCcIUVFg/niUKCHLmVSAgsF+VdL//1
- Ydtk4rISw0JUAiCmRFA0DA/dJQPfIs4CvTkKtbU93xJTjQGcUeJvZwNjAjMxMKVgin3iA6nHbIq
- 7Dpz91kBGp5wyfZMNrU1Q/sW12FNf/L5WVfSat4hftwK4iNpA2QvOrlh1JXIyXpSxNaVYO+T3ly
- us6KPhIwneTjGS3xCePKl9
-X-Received: by 2002:a05:6820:60c:b0:689:dc9a:3a79 with SMTP id
- 006d021491bc7-69669a3c85amr1258166eaf.27.1777474014021; 
- Wed, 29 Apr 2026 07:46:54 -0700 (PDT)
+ bh=flxXVM9IUYo3v5A37ldvuHn8wPg9FyAcz4uvyK53nnI=;
+ b=F2eRFaz7GAIXLAnfuOdTtl122/64YeEOfKt6BYAdB3epy05zOoa9R5k8fhCyOuP123
+ MbiB9k+m9DVzLu80FDiZz4D9sYE/tVzrHT8o4ir+tFg/cwn/RnX68wBAmay+wjOy0WLz
+ gRZOKjfPjXy7CttHqu5M36GYu483d23bQnpqCrtFFB1uOHRcsIREDdtRy0xxwx1gUXUh
+ eAW25rgmnX1VPuXXa1VWZWaK6R+oWAwyZ6VMh6sr6Ptj1Cp7JYG+PDApnjMYzPVSuAKv
+ g7yPdBF8+iJW2YdAaKL7WvHsTB2aOt39Sy5AcsKQOvV0ztSLnYCF/XLY3n8Qot3KKDIz
+ GP4Q==
+X-Gm-Message-State: AOJu0Yy4LfDE0tq4O3YOHBbw2PBtlmhHcirmDlqs5TG7jI+eLU4ZZ2as
+ yJ6A9+Sl6/J5hahix/TPMPe+NaLB1OQLMlSsJ0CXNcetaXBpADpGCNlpxz41BKfuzcY=
+X-Gm-Gg: AeBDiesp0bHCLdsDTrf0PbPGlsrfHWZftBphO16mVVXjHUC0YRgdLsejz+3jNVhCTBe
+ sfklzGCugSBnGgAjefxdJEgccXHAz2woTTH63//FKYJuN01dOabnHNz76KsNETWSFT+hBCa80Hs
+ qNXqYWBeVO+8XywY4swRc4go+Hs5hPSg7srzkIXM/G2VN2kpfDPqv/7TJdIp7Dy42zucTp/dkqU
+ VwuYgpQ7C7z0qPiCJGnyjmjL+h9kmHRiOzTLjdj774T8o+pAyQO34blILaYZtM8gN1LR+/p9yMD
+ 0V5KQYiW0watEn/jkQlYjfo3g+pDECKYAvJuC5YXlIKFPQhdpa+dqN6By6ceJd/5ChIcnTIyc0Z
+ wHeZ4dDljvxCtOR7zPcWZl7mTWqBrVws/dRYWKqArUCXqzw8Qw1zATlXfKBNaEE3p/LMyZJ5acC
+ tkWUNbnjV39jaOEwn4JB2f
+X-Received: by 2002:a05:6820:1c8c:b0:696:2cf3:3bc3 with SMTP id
+ 006d021491bc7-696684f21cfmr1910299eaf.41.1777474024187; 
+ Wed, 29 Apr 2026 07:47:04 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6966b93d58csm1313984eaf.0.2026.04.29.07.46.52
+ 006d021491bc7-6966b93d58csm1313984eaf.0.2026.04.29.07.47.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 07:46:53 -0700 (PDT)
+ Wed, 29 Apr 2026 07:47:03 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Wed, 29 Apr 2026 08:45:10 -0600
-Subject: [PATCH v2 04/17] bsd-user: Add FreeBSD cryptodev ioctl definitions
+Date: Wed, 29 Apr 2026 08:45:18 -0600
+Subject: [PATCH v2 12/17] bsd-user: Add log_unsupported_ioctl function
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260429-ioctl-v2-4-288639bc2427@bsdimp.com>
+Message-Id: <20260429-ioctl-v2-12-288639bc2427@bsdimp.com>
 References: <20260429-ioctl-v2-0-288639bc2427@bsdimp.com>
 In-Reply-To: <20260429-ioctl-v2-0-288639bc2427@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -77,24 +77,24 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, "Stacey D. Son" <sson@freebsd.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2915; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=HQVEx98MB+ubgsNcOdd8V62hijQU2ZsZtPK3SIbf1KQ=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp8hl8UDPRgfRfV9yBhSmMZGctoXqi/udB2cmlt
- FLBWPvJ0TmJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafIZfAAKCRBsHNEofbAR
- AAOAD/9kg7q1Znm6Y3Wn05SIndpSgso5g4O9p91Z0aasYA4+tQq1bmzLI0x01l/0vhTY8MS7riM
- gSAFY5QHKXMZuB5VOl++ETQmEWkUyxe/6tUximjDOIOihB8dUt9ppiq8O6PzDFTCa3t2mBQLIhs
- EfJIlzVfmRb1xI2Y0eNxU+Zas8Xg+JQeQO/ccwy9YwAygVij1Z67+0UY+9J+zTJgRQXFvF0MxT0
- OQ+UYrE3y2i4zom7/ycqEZb1xYCHzzy/VFHfwTp62XwYYUYR/GM6O6Xb6Fw6chk0ebVl29CxHpY
- jzehDesRujlCzupcD0MpZwIp+vcO2hEkG+UmIMsXjnP2oX89QmFUSgPHvewb0PTfPwmySTh4te9
- kZYswqPqzab7aU63lQ/zJ4cJPvglpazx60yVrAxiqPC4TmfXTdUvlTED48rTXVU5bObV28prV10
- 84A1V7bcx9+1RG/oa/ZJ5bclzXUQSt0NzJm81UHLBnqcqoixnXyVWbFewt6WXpMDdebXqI0k9VS
- pwLCXmlNhyIZxW1mEtDeEpFEUWmTwjiG9wwrC4AQgZIQIyrtRQx69LDdwlg0XG8r1TGSUBw7/ZL
- /zITM6buEHOK7oikCAjRrXmZrkNfTGsEkb3n89iAgLzyFIjpGQi4D+zl4wimY3aOgM+baJqndCB
- 461r2yMA0dq259A==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1215; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=xbGD7IcDXbypQMwK7rI7j0iz7UJrizyHubokpLPYvRQ=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp8hl948SF6Ai/tO+7OXoit/A5zE3r0e4KfFFUJ
+ 0wTI3lSGLyJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafIZfQAKCRBsHNEofbAR
+ AK7dEADMpJqmSOQE/EGBAFmoRw+xeT6OfUSHwY0+SfeD/bEfinHJzPbVRlDTOrrOep9SDljbcUu
+ kjgMrRd6FPI8gqfs45Scm0hW3vmCoXyxKvr1iso26yp2dEF+6Z2AxuqohwENk+F3jzZNGd/SWob
+ xSRFrb+iPEh8Z3ziC6tLGArPBquOtptmhLwJmGmNkG2p0m9U8SLCqfe/m0y+YvTB+KMtDSxX8yC
+ 0Y5E/RDJKyFyOPswqvcLFmVvCvuITQvUOCPpDFs1e85FsYCC/hB2W37SQJ+C5WHw15Iro+sqmHB
+ TbN1OToh4BLGB5IJQhXnmo/BmLZAsmm2WZNWO6qPUMvpWjLrOR+vGYiJ33rT3XCeLQN+RNnVZqd
+ ZyXbvlx1bMRESgcXGaoWudJa6o7SoDnLXR5K0STa1Yu8cEddp0u7h1SKkIa/13KwOiJSMxykkUV
+ cMkVyHFVQsyCvrLjfWwO9HnBdmvpPBhhTsL7G50VTSJxnuQLSDQBdjJ+k5182VituIRGJMAi9XG
+ McAWpW+bE/J8UD7bsSjegqWktvsVJP6MqBha91eU/k1Ck/+WWAhSbsy6CUQDj7C2FQVEbRRg8ca
+ jEThfLt5NCtu8zmk2Vj8XybY6sR2Pc8+Y5pIYlnfylWtNVheRkWIkgBTC8mgDt3ssn7aV0sis/v
+ sT/GEAdeLN+aTUA==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::c35;
- envelope-from=imp@bsdimp.com; helo=mail-oo1-xc35.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::335;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x335.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -116,98 +116,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Stacey D. Son" <sson@freebsd.org>
-
-Add os-ioctl-cryptodev.h with /dev/crypto ioctl definitions including
-CIOCGSESSION, CIOCCRYPT, and related cryptographic device control
-ioctls.
+Add helper function to log detailed information about unsupported
+ioctl commands, including direction, group, and parameter length.
 
 Signed-off-by: Stacey D. Son <sson@freebsd.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-ioctl-cryptodev.h | 74 +++++++++++++++++++++++++++++++++++
- 1 file changed, 74 insertions(+)
+ bsd-user/bsd-ioctl.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/bsd-user/freebsd/os-ioctl-cryptodev.h b/bsd-user/freebsd/os-ioctl-cryptodev.h
-new file mode 100644
-index 0000000000..dc88521057
---- /dev/null
-+++ b/bsd-user/freebsd/os-ioctl-cryptodev.h
-@@ -0,0 +1,74 @@
-+/*
-+ * FreeBSD cryptodev definitions for ioctl(2) emulation
-+ *
-+ * Copyright (c) 2014 Stacey D. Son
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef BSD_USER_FREEBSD_OS_IOCTL_CRYPTODEV_H
-+#define BSD_USER_FREEBSD_OS_IOCTL_CRYPTODEV_H
+diff --git a/bsd-user/bsd-ioctl.c b/bsd-user/bsd-ioctl.c
+index 32fa9c3d33..049188e5e1 100644
+--- a/bsd-user/bsd-ioctl.c
++++ b/bsd-user/bsd-ioctl.c
+@@ -219,3 +219,27 @@ static IOCTLEntry ioctl_entries[] = {
+ #include "os-ioctl-cmds.h"
+     { 0, 0 },
+ };
 +
-+/* see opencrypto/cryptodev.h */
-+
-+struct target_session_op {
-+        u_int32_t       cipher;
-+        u_int32_t       mac;
-+
-+        u_int32_t       keylen;
-+        abi_ulong       key;
-+        int32_t         mackeylen;
-+        abi_ulong       mackey;
-+
-+        u_int32_t       ses;
-+};
-+
-+
-+struct target_session2_op {
-+        u_int32_t       cipher;
-+        u_int32_t       mac;
-+
-+        u_int32_t       keylen;
-+        abi_ulong       key;
-+        int32_t         mackeylen;
-+        abi_ulong       mackey;
-+
-+        u_int32_t       ses;
-+        int32_t         crid;
-+        int             pad[4];
-+};
-+
-+struct target_crypt_find_op {
-+        int             crid;
-+        char            name[32];
-+};
-+
-+struct target_crparam {
-+        abi_ulong       crp_p;
-+        u_int           crp_nbits;
-+};
-+
-+#define TARGET_CRK_MAXPARAM     8
-+
-+struct target_crypt_kop {
-+        u_int           crk_op;
-+        u_int           crk_status;
-+        u_short         crk_iparams;
-+        u_short         crk_oparams;
-+        u_int           crk_crid;
-+        struct target_crparam   crk_param[TARGET_CRK_MAXPARAM];
-+};
-+
-+#define TARGET_CRIOGET          TARGET_IOWR('c', 100, u_int32_t)
-+#define TARGET_CRIOASYMFEAT     TARGET_CIOCASYMFEAT
-+#define TARGET_CRIOFINDDEV      TARGET_CIOCFINDDEV
-+
-+#define TARGET_CIOCGSESSION     TARGET_IOWR('c', 101, struct target_session_op)
-+#define TARGET_CIOCFSESSION     TARGET_IOW('c', 102, u_int32_t)
-+#define TARGET_CIOCCRYPT        TARGET_IOWR('c', 103, struct target_crypt_op)
-+#define TARGET_CIOCKEY          TARGET_IOWR('c', 104, struct target_crypt_kop)
-+#define TARGET_CIOCASYMFEAT     TARGET_IOR('c', 105, u_int32_t)
-+#define TARGET_CIOCGSESSION2    TARGET_IOWR('c', 106, struct target_session2_op)
-+#define TARGET_CIOCKEY2         TARGET_IOWR('c', 107, struct target_crypt_kop)
-+#define TARGET_CIOCFINDDEV TARGET_IOWR('c', 108, struct target_crypt_find_op)
-+
-+#endif /* BSD_USER_FREEBSD_OS_IOCTL_CRYPTODEV_H */
++static void log_unsupported_ioctl(unsigned long cmd)
++{
++    gemu_log("cmd=0x%08lx dir=", cmd);
++    switch (cmd & IOC_DIRMASK) {
++    case IOC_VOID:
++        gemu_log("VOID ");
++        break;
++    case IOC_OUT:
++        gemu_log("OUT ");
++        break;
++    case IOC_IN:
++        gemu_log("IN  ");
++        break;
++    case IOC_INOUT:
++        gemu_log("INOUT");
++        break;
++    default:
++        gemu_log("%01lx ???", (cmd & IOC_DIRMASK) >> 29);
++        break;
++    }
++    gemu_log(" '%c' %3d %lu\n", (char)IOCGROUP(cmd), (int)(cmd & 0xff),
++             IOCPARM_LEN(cmd));
++}
 
 -- 
 2.52.0
