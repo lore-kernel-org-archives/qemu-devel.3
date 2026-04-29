@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE978FF8867
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 04:52:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3744EFF8867
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 04:52:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHwtx-0000pK-2G; Wed, 29 Apr 2026 00:51:57 -0400
+	id 1wHwuF-0001UG-0r; Wed, 29 Apr 2026 00:52:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHwtu-0000iI-MI
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:51:54 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1wHwu1-0000x9-42
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:52:01 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHwto-00014K-45
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:51:49 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2b25cf1b5f0so66525025ad.3
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 21:51:47 -0700 (PDT)
+ id 1wHwty-000179-9Y
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:52:00 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2b24fede2acso80046105ad.3
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 21:51:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777438307; x=1778043107; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777438317; x=1778043117; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ji1NoMhMP6oxBXvm+pUAsoPg0oAMp1mJbkRgT3H2pso=;
- b=PwOtenrh2mBLd6oAqy58nW63YbskqEjsLweyjkt7CZtPCgqAN1xMLjK2WxYJsXOIl3
- Q7mRuW7OAc+eTDOhqhYB75WCDmFx9Hjlg4kDq7fFafeu3HRT0WkqpYRI3U93gcpkCsVI
- gY979ptFNlLxUrQyvJ0MLA+QXLDzNnqbkJ1YttJm3dgKAeUoqi2C8vZvyYBUNUOkpGho
- mzo1KoDyMBeTuruTx6WbazCwjeJvXRLhVQiopX8meweyhexyc/YeHL7g0Ru2yf2hTjKV
- uitxGosP/rYoXjaBFLEb7+VM10wFQeMiONMi5kS9OhEjUw0HnOpSYy9MjQxe98IyFbiV
- BTWg==
+ bh=g9DymTxIeXo8zUEFCFX6E1SMqxSkLlASH4pmiq50A40=;
+ b=ZQ/3elzkLpBwGGPVg2mtfBivIO8rKD8BYfSMG0VhupoAyytuWTugRsJRAniTTbw20G
+ TjrlN6lqVsbd38Z3R+izwQ/WY3N8mlzeQt3mJ+ppxWewcZizzJy+V9lyeN01Tjdq1gAq
+ 76Uqy0RVAby1oIb7PymI6Q/YFGeXXhI8fNnW29xMEGt5IRIktjUVvQLX7C6QB9vL+yLA
+ ca477ITAFYIAR/GE74mlpA03g9R/Nun/CxHEAY/XSj7mPGhahy0Thg5xW5vQ3Ds5fUe9
+ IEoguA8FwBdPXOU35UjXHTqfF+koE1AxYDq8iIERiF0UeEgA3jE2zdOdfyY/u7LeVhgB
+ 7N3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777438307; x=1778043107;
+ d=1e100.net; s=20251104; t=1777438317; x=1778043117;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ji1NoMhMP6oxBXvm+pUAsoPg0oAMp1mJbkRgT3H2pso=;
- b=ZIvSN2A8BEWJs2baJslz12e4gh5fZmc9hKX/9Lkkb+HIynM+EdwWBhESCHc7/h2maS
- QboFgusF9kYf1e9WbgVMJHRxKC4j54bYxmZkSXgHKznKTrRD6zSkpwg94yLSPfIdhv4u
- xMvHWMZ2Y0AMOfWapfKfXNo6Vr1UiZvRR83i/iowDyacH2rUy1V3iZIP9Txb1YiyP/gQ
- jTL5BfdR4x0dCbLORKpoRezqVfv77sQUNVXLVGlXdTq4doaj8NaR+ZL/vc6mM4ZPZwt5
- O7eLB9Myvb7QlWKsvVtyPP2aD9tcw3GkAlrYumOqN3wUVlfdwIdcMWbJRHX08W2+kUhi
- QGSA==
+ bh=g9DymTxIeXo8zUEFCFX6E1SMqxSkLlASH4pmiq50A40=;
+ b=AGOj5CFGiop3LxVLYC1KsxI7BDc9BVbHud2cHuXiQGHETly6BGB1Cgs5wszUkHygVE
+ buQe7/aBSBoKfVl6qjHM0tuXXbKxNj8KoFzag4dpkiKTDwWtBKpyL8ttUULm5iVkODpZ
+ sADdZ6P3XSErLiJ7VwEanbSokEK++Ui6p/v/FtuWq5ue738hCZav0X7ql8Lo0scOFthu
+ isa8uAf6+GWISSNISqm3TsHBXeS+v1Nrfhsf9T7L4t2XoT6LuRrhxqwmpfEdlLXElZPx
+ 4mCYlGyP+uBrOa42S2jw/Fx7yqxgoMpWjgvJWWic9/ppnaAaF/EeB2hZJFDkLzuH6asN
+ c6LA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/tHEahyG3/Zf4xvsgix2fXcpyEAwwVwg0aXwiIAZbPLFchjmKZ9OQi0MUtPdM081B3kn5xCUp8BbQv@nongnu.org
-X-Gm-Message-State: AOJu0YxapD4I5sDxb6fzxKYRjaG3bGiu225ekdcsezpy2CAK0m8tYQkS
- hGcwYKJ00z1/DnQ2aMLdCHZvC5QKk5/+WPLu90cntrU48MxGvda1il4j
-X-Gm-Gg: AeBDieupJytETNQAwb5zwXrIu5Dpp0V+YbFRmcXrPFcDVtf4T/41Qkzs7GGeOlUjQDS
- rLSOMfta6gpTYDLBKpjCdRdSl1Po0Yi9tnROoMlPakmb6DudLUVH69QQG9aOKZBPphV3a4qvtQM
- WK4EoBbubHypsd/Qude4xEOsccCuDrdvJB/pKiXwN8Ci2MUgq2AdSMMFy7X1cclYrAdgU0nKUcq
- QYO2cV5pVpQF6pKqErqfDvfOX3chF+fbmRu4wIsPPcy9HibdcboBa+zT3jl5RxLs63ROX+2BO/S
- n5md2SxOaGUb+Zw16ayytu/7AoLGCAU7aSh93XS5UCDg1I44BpzxRZ3TzedH0zrwNVw9cp9YAFw
- 6uTLipMNU4WRrB++HqT8+Ui6boHvxsKY9nFRvTGAQgPQeOtdyW6Pl8Egh1PNDp95DwcRaT/ORWW
- WvXFhutbVlWWR2OMohLZ7MfRMGtAVj0/CCL5TVRNo8Dyg2TCMmZG6g
-X-Received: by 2002:a17:902:e78f:b0:2b0:5795:9ead with SMTP id
- d9443c01a7336-2b98720063fmr20969775ad.0.1777438306816; 
- Tue, 28 Apr 2026 21:51:46 -0700 (PDT)
+ AFNElJ8QsJ18+2KtRY6w5qC6vXwDzvljeeNnb45QXGfbuQbbNZtQMsTFTXwuhi1W2tq6uQ6EVqTPNmSIK+sT@nongnu.org
+X-Gm-Message-State: AOJu0YwsoMduptaPSEOrjE2vqN6cxZL4cXCz8p4PuHzZpS2MpbveCOA/
+ gV+pZ+3Mhyi/MajjR4dHXl+Edkm2R1QhuXYxoAJ2Xt3TmiOIKe8k4gtR
+X-Gm-Gg: AeBDievz4a+tLWQ4b5zZnwnSPgVZsEu8+U1OgS8YACZdVHH03wEeBWU5QUFrCTHZvJ7
+ spNuIMWh2bQgAc0gtNosBO8oHL5GjhR2rlpHafxq4y2h9ax7nnrl0sOc2yHygjCDpLW8UZ0A1QC
+ 3Ujk4DBbAcVqK4S+U+M5ZaZ8GQkm/wa1mO9IWHVbykpbkdgvTJNAbycXVsEs4vrWUISSoARV3kk
+ ds6SYQRlgqKOWsRZgbA0TgGmzXtMsufwlOfFnC8eVDM7aMs4b162+uXr161g8VQ8yLo5D1dLU3s
+ 5ZlV5f216NhAnJA1X0UxGIal2gRFR7pAVX5vwLi2Or2/sx7oi6cP1XkIvC3RIWQT4HthH8cdSdu
+ HZdgV7VFTf//Qqr3GVae4GRAviDjqekC851A+Pz2EeaA9WoUjZl2b6lbSTnemfB2u3itTX0eTKX
+ a07fwHHFJS5Y87ll5MFkpbZJY42uOHDKXZOJunBJRZX2BpHAKRUm7h
+X-Received: by 2002:a17:903:1b2e:b0:2b0:445a:8c7b with SMTP id
+ d9443c01a7336-2b98733d3e1mr19772065ad.15.1777438317009; 
+ Tue, 28 Apr 2026 21:51:57 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b988772ae8sm7756145ad.7.2026.04.28.21.51.42
+ d9443c01a7336-2b988772ae8sm7756145ad.7.2026.04.28.21.51.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Apr 2026 21:51:46 -0700 (PDT)
+ Tue, 28 Apr 2026 21:51:56 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
  qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Alistair Francis <alistair.francis@wdc.com>,
- qemu-stable@nongnu.org, Nutty Liu <nutty.liu@hotmail.com>
-Subject: [PULL 43/51] target/riscv: Don't OR mip.SEIP when mvien is one
-Date: Wed, 29 Apr 2026 14:47:44 +1000
-Message-ID: <20260429044752.4176397-44-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 45/51] target/riscv: fix address masking
+Date: Wed, 29 Apr 2026 14:47:46 +1000
+Message-ID: <20260429044752.4176397-46-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260429044752.4176397-1-alistair.francis@wdc.com>
 References: <20260429044752.4176397-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,49 +107,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 
-The RISC-V spec states that
+The pmlen should get the corresponding value before shifting address.
 
-"""
-But when bit 9 of mvien is one, bit SEIP in mip is read-only and does
-not include the value of bit 9 of mvip. Rather, the value of mip.SEIP
-is simply the supervisor external interrupt signal from the hart’s
-external interrupt controller (APLIC or IMSIC).
-"""
-
-As such let's mark the mip.SEIP in rmw_mip64().
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2828
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Message-ID: <20260415233740.3027321-4-alistair.francis@wdc.com>
+Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260421093715.2995067-2-frank.chang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/csr.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ target/riscv/internals.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 80727aa81e..da366cf562 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -3728,6 +3728,14 @@ static RISCVException rmw_mip64(CPURISCVState *env, int csrno,
-     uint64_t old_mip, mask = wr_mask & delegable_ints;
-     uint32_t gin;
+diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+index ab8dea45c9..d090db2641 100644
+--- a/target/riscv/internals.h
++++ b/target/riscv/internals.h
+@@ -222,8 +222,8 @@ static inline target_ulong adjust_addr_body(CPURISCVState *env,
+     if (!is_virt_addr) {
+         signext = riscv_cpu_virt_mem_enabled(env);
+     }
+-    addr = addr << pmlen;
+     pmlen = riscv_pm_get_pmlen(pmm);
++    addr = addr << pmlen;
  
-+    /*
-+     * When mvien[9]=1, mip.SEIP is read-only and reflects only
-+     * the external interrupt signal from the interrupt controller.
-+     */
-+    if (env->mvien & MIP_SEIP) {
-+        mask &= ~MIP_SEIP;
-+    }
-+
-     if (mask & MIP_SEIP) {
-         env->software_seip = new_val & MIP_SEIP;
-         new_val |= env->external_seip * MIP_SEIP;
+     /* sign/zero extend masked address by N-1 bit */
+     if (signext) {
 -- 
 2.53.0
 
