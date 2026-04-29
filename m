@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EC4BFF8864
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 06:21:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70958FF8864
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 06:22:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHyIO-0004an-5O; Wed, 29 Apr 2026 02:21:27 -0400
+	id 1wHyJ4-0004pj-5T; Wed, 29 Apr 2026 02:21:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wHyHv-0004Vk-34; Wed, 29 Apr 2026 02:20:51 -0400
-Received: from out30-101.freemail.mail.aliyun.com ([115.124.30.101])
+ id 1wHyHz-0004Xq-Li; Wed, 29 Apr 2026 02:20:51 -0400
+Received: from out30-118.freemail.mail.aliyun.com ([115.124.30.118])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <guobin@linux.alibaba.com>)
- id 1wHyHl-00077C-EA; Wed, 29 Apr 2026 02:20:46 -0400
+ id 1wHyHv-00078Y-EO; Wed, 29 Apr 2026 02:20:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linux.alibaba.com; s=default;
- t=1777443622; h=From:To:Subject:Date:Message-ID:MIME-Version;
- bh=wpsQePTv0btTrCLyqE5kqL0DTPlWHThu8xlylHlpxhs=;
- b=qaPq+dntt/OqqMDlomsSmPYNpKpsz92jXSMAVhfgA9RkUdTD1Qlkr3uY9LHJeBrAwsTx3Iv8pJ7rRatNz1hg/h/g6pn1VDjvPCLKYaPQBBCqQ+adT74wh1NpPeb3ce3VMohbWSN07MfQy1plImPz2qzHWkn4/2ADqWcujlUI4ro=
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R111e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037026112;
+ t=1777443637; h=From:To:Subject:Date:Message-ID:MIME-Version;
+ bh=7BNMZsf0OZfChDgYsNAXBHtNNdE/HIiReKu3r1PFxt0=;
+ b=OVbluQTkoFojZVXSiYms0TDXuBcuZCZIMO04xuYsF+uB+Pnp2nPxivUPpRicP/vP6eyhBXcfoHwV5q+mosPSjBoTuLk85TvPqyRL37mNlp/WkHYOpCfzdVT3yTnJuWTF3tBAjEx5FUNUhLnD+OCoSWdqpCFGo+RlmRygmolA4kE=
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R171e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=maildocker-contentspam033037033178;
  MF=guobin@linux.alibaba.com; NM=1; PH=DS; RN=6; SR=0;
- TI=SMTPD_---0X1wRJXH_1777443612; 
+ TI=SMTPD_---0X1wgCi6_1777443629; 
 Received: from localhost(mailfrom:guobin@linux.alibaba.com
- fp:SMTPD_---0X1wRJXH_1777443612 cluster:ay36) by smtp.aliyun-inc.com;
- Wed, 29 Apr 2026 14:20:22 +0800
+ fp:SMTPD_---0X1wgCi6_1777443629 cluster:ay36) by smtp.aliyun-inc.com;
+ Wed, 29 Apr 2026 14:20:36 +0800
 From: Bin Guo <guobin@linux.alibaba.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, berrange@redhat.com, kwolf@redhat.com,
  hreitz@redhat.com, qemu-block@nongnu.org
-Subject: [PATCH 1/3] qom/object: merge double hash table traversal in
- object_property_del_child
-Date: Wed, 29 Apr 2026 14:20:02 +0800
-Message-ID: <20260429062004.36582-2-guobin@linux.alibaba.com>
+Subject: [PATCH 3/3] system/vl.c: inline qemu_opts_parse_noisily() result
+ checks
+Date: Wed, 29 Apr 2026 14:20:04 +0800
+Message-ID: <20260429062004.36582-4-guobin@linux.alibaba.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260429062004.36582-1-guobin@linux.alibaba.com>
 References: <20260429062004.36582-1-guobin@linux.alibaba.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=115.124.30.101;
+Received-SPF: pass client-ip=115.124.30.118;
  envelope-from=guobin@linux.alibaba.com;
- helo=out30-101.freemail.mail.aliyun.com
+ helo=out30-118.freemail.mail.aliyun.com
 X-Spam_score_int: -174
 X-Spam_score: -17.5
 X-Spam_bar: -----------------
@@ -69,39 +69,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-object_property_del_child() previously performed two full iterations
-over obj->properties: the first to find the matching child property and
-call its release callback, the second to find the same property again
-and remove it from the hash table.
+In qemu_init()'s option parsing switch, several cases assigned the
+return value of qemu_opts_parse_noisily() to the shared 'opts'
+variable solely to check for NULL, without using the pointer
+afterwards.  Inline the call directly into the if-condition, matching
+the style already used by QEMU_OPTION_action.
 
-Merge the two loops into one: when the matching property is found, call
-the release callback and immediately remove the entry via
-g_hash_table_iter_remove(), then break.  This halves the number of hash
-table operations in the common case and avoids the redundant second scan.
+This affects the following options:
+  -drive, -numa, -iscsi, -m, -mon, -chardev, -fsdev, -fwcfg
+
+Cases where the returned QemuOpts* is subsequently used (e.g.
+-acpitable, -smbios, -virtfs) are left unchanged.
 
 Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
 ---
- qom/object.c | 7 -------
- 1 file changed, 7 deletions(-)
+ system/vl.c | 37 +++++++++++++++----------------------
+ 1 file changed, 15 insertions(+), 22 deletions(-)
 
-diff --git a/qom/object.c b/qom/object.c
-index f981e27044..9c0e8dfd02 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -629,13 +629,6 @@ static void object_property_del_child(Object *obj, Object *child)
-                 prop->release(obj, prop->name, prop->opaque);
-                 prop->release = NULL;
-             }
--            break;
--        }
--    }
--    g_hash_table_iter_init(&iter, obj->properties);
--    while (g_hash_table_iter_next(&iter, &key, &value)) {
--        prop = value;
--        if (object_property_is_child(prop) && prop->opaque == child) {
-             g_hash_table_iter_remove(&iter);
-             break;
-         }
+diff --git a/system/vl.c b/system/vl.c
+index 0e1fc217b4..0e0d3cb761 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2961,9 +2961,8 @@ void qemu_init(int argc, char **argv)
+                     break;
+                 }
+             case QEMU_OPTION_drive:
+-                opts = qemu_opts_parse_noisily(qemu_find_opts("drive"),
+-                                               optarg, false);
+-                if (opts == NULL) {
++                if (!qemu_opts_parse_noisily(qemu_find_opts("drive"),
++                                             optarg, false)) {
+                     exit(1);
+                 }
+                 break;
+@@ -2988,9 +2987,8 @@ void qemu_init(int argc, char **argv)
+                 replay_add_blocker("-snapshot");
+                 break;
+             case QEMU_OPTION_numa:
+-                opts = qemu_opts_parse_noisily(qemu_find_opts("numa"),
+-                                               optarg, true);
+-                if (!opts) {
++                if (!qemu_opts_parse_noisily(qemu_find_opts("numa"),
++                                             optarg, true)) {
+                     exit(1);
+                 }
+                 break;
+@@ -3049,9 +3047,8 @@ void qemu_init(int argc, char **argv)
+                 break;
+ #ifdef CONFIG_LIBISCSI
+             case QEMU_OPTION_iscsi:
+-                opts = qemu_opts_parse_noisily(qemu_find_opts("iscsi"),
+-                                               optarg, false);
+-                if (!opts) {
++                if (!qemu_opts_parse_noisily(qemu_find_opts("iscsi"),
++                                             optarg, false)) {
+                     exit(1);
+                 }
+                 break;
+@@ -3104,8 +3101,8 @@ void qemu_init(int argc, char **argv)
+                 exit(0);
+                 break;
+             case QEMU_OPTION_m:
+-                opts = qemu_opts_parse_noisily(qemu_find_opts("memory"), optarg, true);
+-                if (opts == NULL) {
++                if (!qemu_opts_parse_noisily(qemu_find_opts("memory"),
++                                             optarg, true)) {
+                     exit(1);
+                 }
+                 break;
+@@ -3226,17 +3223,15 @@ void qemu_init(int argc, char **argv)
+                 default_monitor = 0;
+                 break;
+             case QEMU_OPTION_mon:
+-                opts = qemu_opts_parse_noisily(qemu_find_opts("mon"), optarg,
+-                                               true);
+-                if (!opts) {
++                if (!qemu_opts_parse_noisily(qemu_find_opts("mon"), optarg,
++                                             true)) {
+                     exit(1);
+                 }
+                 default_monitor = 0;
+                 break;
+             case QEMU_OPTION_chardev:
+-                opts = qemu_opts_parse_noisily(qemu_find_opts("chardev"),
+-                                               optarg, true);
+-                if (!opts) {
++                if (!qemu_opts_parse_noisily(qemu_find_opts("chardev"),
++                                             optarg, true)) {
+                     exit(1);
+                 }
+                 break;
+@@ -3246,8 +3241,7 @@ void qemu_init(int argc, char **argv)
+                     error_report("fsdev support is disabled");
+                     exit(1);
+                 }
+-                opts = qemu_opts_parse_noisily(olist, optarg, true);
+-                if (!opts) {
++                if (!qemu_opts_parse_noisily(olist, optarg, true)) {
+                     exit(1);
+                 }
+                 break;
+@@ -3386,9 +3380,8 @@ void qemu_init(int argc, char **argv)
+                 smbios_entry_add(opts, &error_fatal);
+                 break;
+             case QEMU_OPTION_fwcfg:
+-                opts = qemu_opts_parse_noisily(qemu_find_opts("fw_cfg"),
+-                                               optarg, true);
+-                if (opts == NULL) {
++                if (!qemu_opts_parse_noisily(qemu_find_opts("fw_cfg"),
++                                             optarg, true)) {
+                     exit(1);
+                 }
+                 break;
 -- 
 2.50.1 (Apple Git-155)
 
