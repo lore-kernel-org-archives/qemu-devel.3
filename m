@@ -4,59 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C2BFFF8875
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 10:29:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BEBBFF8867
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 10:30:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI2A3-0000sa-SC; Wed, 29 Apr 2026 06:28:57 -0400
+	id 1wI2Bq-0001TO-Nl; Wed, 29 Apr 2026 06:30:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wI29y-0000sL-Bj
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 06:28:50 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wI29v-00071l-2Q
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 06:28:49 -0400
-Received: from example.com (unknown [167.220.208.81])
- by linux.microsoft.com (Postfix) with ESMTPSA id 6A4EF20B716C;
- Wed, 29 Apr 2026 03:28:44 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6A4EF20B716C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1777458525;
- bh=BQTZQZJpyPOZP8Q4VLbsIux3awQ7Yq1u1L0CJlBdCAY=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=eXWkpYsjAIfpbKkVqA/hY0+We7rhnnG3XEn+Q4oT3Mu5rw0wWZ34D/lDMMFtA7y1j
- 17h/yca+pK/yJuEXK5NMg8Xml4ucBZgR+kJ+UAlqmBLVt8y7OPjDHsIlkibfxqAyc3
- SNa4Q4yBoBc2URH7OLfF5LluauIKN07dsfXBN0mg=
-Date: Wed, 29 Apr 2026 12:28:41 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH 3/6] include/hw/hyperv: add hv_vp_register_page struct
- definition
-Message-ID: <afHdWUlOt1ldMy6V@example.com>
-References: <20260428135053.251200-1-dblanzeanu@linux.microsoft.com>
- <20260428135053.251200-4-dblanzeanu@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wI2Bn-0001T5-C6
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 06:30:43 -0400
+Received: from smtp-relay-services-0.canonical.com ([185.125.188.250])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wI2Bk-0007qV-R6
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 06:30:43 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-0.canonical.com (Postfix) with ESMTPSA id 86B70420DB
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 10:30:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1777458636;
+ bh=AASKTEEtu3y5Xzlogrwn3M+krSaOArFN1EsrDgujXCY=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=D1MPlFmtsvYjX4ywuPsd5Wa+/7xPjiAcvCYU/pqKvGaq7/Fwv2sANI8gF/XSW4952
+ I7Y+hj9eRaA+OTMwVL9MMa3taXYowGaL20ki1h3+yAvjaOwWYkJt5CRfhwZzRSswpj
+ ItK4k69VyNiEF6H8iARDNRH+AFfXGt3QZFSUQ0GegyFNTI4e2QLxp8uiWOrZ4oJKTa
+ LK/8Rv9n+75QA8cVDX4uHjv0HKQPQBzo0DBhye01QZxvNy6lvEqqrBcB2X4J4kdtW1
+ T0VKpJbwVN/0TeElsV86pMj43EklQB1quY0zXNYww0JyCBIXh9MaiLleiXzLSNxfMm
+ ZDsWCeiNqSkmA==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 682007EE84
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 10:30:36 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260428135053.251200-4-dblanzeanu@linux.microsoft.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Wed, 29 Apr 2026 10:25:14 -0000
+From: Hector CAO <2133804@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=Fix Released; importance=Unknown;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ milestone=ubuntu-26.04; status=Fix Released; importance=High;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=jammy; sourcepackage=qemu;
+ component=main; status=Confirmed; importance=Medium;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; milestone=ubuntu-24.04.4; status=In Progress;
+ importance=Medium; assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=Won't Fix; importance=Medium; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=In Progress; importance=Medium;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
+ component=main; milestone=ubuntu-26.04; status=Fix Released; importance=High;
+ assignee=hector.cao@canonical.com; 
+X-Launchpad-Bug-Tags: server-todo
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: hectorcao janitor mjt+launchpad-tls paelzer
+ utkarsh xypron
+X-Launchpad-Bug-Reporter: Heinrich Schuchardt (xypron)
+X-Launchpad-Bug-Modifier: Hector CAO (hectorcao)
+References: <176477927666.3767208.4954653462090539439.malonedeb@juju-98d295-prod-launchpad-3>
+Message-Id: <177745831502.4028012.8052266960981753128.launchpad@juju-98d295-prod-launchpad-55>
+Subject: [Bug 2133804] Re: QEMU does not emulate IOCTL TCGETS2
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="91d5f4cbcbec62cc98ca9991c8ad99af4e21f85a";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: e9eaf893d867e0c9e83a90a896db65e88b5142a6
+Received-SPF: pass client-ip=185.125.188.250;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-0.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -65,139 +103,234 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2133804 <2133804@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 28, 2026 at 04:50:50PM +0300, Doru Blânzeanu wrote:
-> Define the `hv_vp_register_page` structure that the linux kernel uses
-> to allow access to vcpu registers.
-> 
-> This structure is going to be used in later patches to access vcpu
-> registers.
-> 
-> Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
-> ---
->  include/hw/hyperv/hvgdk_mini.h | 103 +++++++++++++++++++++++++++++++++
->  1 file changed, 103 insertions(+)
-> 
-> diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+** Description changed:
 
-In the kernel and the mshv crates the definitions are in hvhdk.h. We
-probably want to put it into the same header in QEMU to avoid confusion.
+  [ Impact ]
+ =20
+  - Terminal prompt is missing for multiarch containers with qemu-user
+ =20
+  - Users cannot see the prompt but still can type the commands
+-   However the absence of the prompt can be misleading and make users thin=
+k that the container hangs.
++ =C2=A0=C2=A0However the absence of the prompt can be misleading and make =
+users think that the container hangs.
++=20
++ - this fix implements the missing ioctl TERMIOS2
+ =20
+  [ Test Plan ]
+ =20
+  On an amd64 host
+ =20
+  $ sudo apt install -y docker.io qemu-user-static
+  $ sudo usermod -aG docker ubuntu
+  $ newgrp docker
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
+  =C2=A0(this runs on AMD64 host, if you are runnig on ARM64, use -platform=
+=3Dlinux/riscv64 instead)
+ =20
+  After docker pulls the image and run the container, you cannot see the
+  prompt
+ =20
+  ...
+  Status: Downloaded newer image for ubuntu:26.04
+  ...
+ =20
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
+ =20
+  Doing the same for Ubuntu Noble image works.
+ =20
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
+  Unable to find image 'ubuntu:24.04' locally
+  24.04: Pulling from library/ubuntu
+  818154cda96d: Pull complete
+  352b2c3faa58: Download complete
+  Digest: sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebc=
+c41c7b
+  Status: Downloaded newer image for ubuntu:24.04
+  root@bf8124075385:/#
+ =20
+  With this fix, the users should see the prompt when they run bash
+  interactively in the container:
+ =20
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
+  root@bf8124075385:/#
+ =20
+-=20
+  [ Where problems could occur ]
+ =20
+  The fix is around the termios managament so regressions can happen there.
+- There might ne regressions on the prompt display.
++ There might be regressions on the prompt display.
++=20
++ The prompt display is widely used so potential regressions should be
++ visible quickly.
+ =20
+  [ Other Info ]
+ =20
+  None
+ =20
+  -- Original bug report ---
+ =20
+  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
+  implementation of isatty(). It now uses IOCTL TCGETS2 instead of TCGETS.
+  TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-arm64, ...).
+ =20
+  This leads to failures in containers for foreign architectures. E.g. no c=
+onsole prompt is displayed.
+  A detailed analysis is contained in LP #2133188.
+ =20
+  A proper implementation of the missing IOCTLs will include:
+ =20
+  Functions:
+ =20
+  in linux-user/syscall.c:
+  host_to_target_termios2()
+  target_to_host_termios2()
+  print_termios2()
+ =20
+  Definitions:
+ =20
+  in linux-user/syscall.c
+  #define termios2 host_termios2
+ =20
+  in linux-user/syscall_types.h
+  STRUCT_SPECIAL(termios2)
+ =20
+  in linux-user/ioctls.h:
+  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+ =20
+  in linux-user/user-internals.h:
+  void print_termios2(void *arg);
 
-> index c3a8f33280..07e322865a 100644
-> --- a/include/hw/hyperv/hvgdk_mini.h
-> +++ b/include/hw/hyperv/hvgdk_mini.h
-> @@ -474,6 +474,109 @@ struct hv_input_assert_virtual_interrupt {
->      uint16_t rsvd_z1;
->  } QEMU_PACKED;
->  
-> +/* Flags for dirty mask of hv_vp_register_page */
-> +enum hv_x64_register_class_type {
-> +    HV_X64_REGISTER_CLASS_GENERAL = 0,
-> +    HV_X64_REGISTER_CLASS_IP = 1,
-> +    HV_X64_REGISTER_CLASS_XMM = 2,
-> +    HV_X64_REGISTER_CLASS_SEGMENT = 3,
-> +    HV_X64_REGISTER_CLASS_FLAGS = 4,
-> +};
-> +
-> +#define HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT  7
-> +
-> +union hv_vp_register_page_interrupt_vectors {
-> +    uint64_t as_uint64;
-> +    struct {
-> +        uint8_t vector_count;
-> +        uint8_t vector[HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT];
-> +    };
-> +};
-> +
-> +struct hv_vp_register_page {
-> +    uint16_t version;
-> +    uint8_t isvalid;
-> +    uint8_t rsvdz;
-> +    uint32_t dirty;
-> +
-> +    union {
-> +        struct {
-> +            /* General purpose registers (HV_X64_REGISTER_CLASS_GENERAL) */
-> +            union {
-> +                struct {
-> +                    uint64_t rax;
-> +                    uint64_t rcx;
-> +                    uint64_t rdx;
-> +                    uint64_t rbx;
-> +                    uint64_t rsp;
-> +                    uint64_t rbp;
-> +                    uint64_t rsi;
-> +                    uint64_t rdi;
-> +                    uint64_t r8;
-> +                    uint64_t r9;
-> +                    uint64_t r10;
-> +                    uint64_t r11;
-> +                    uint64_t r12;
-> +                    uint64_t r13;
-> +                    uint64_t r14;
-> +                    uint64_t r15;
-> +                } QEMU_PACKED;
-> +
-> +                uint64_t gp_registers[16];
-> +            };
-> +            /* Instruction pointer (HV_X64_REGISTER_CLASS_IP) */
-> +            uint64_t rip;
-> +            /* Flags (HV_X64_REGISTER_CLASS_FLAGS) */
-> +            uint64_t rflags;
-> +        } QEMU_PACKED;
-> +
-> +        uint64_t registers[18];
-> +    };
-> +    uint8_t reserved[8];
-> +    /* Volatile XMM registers (HV_X64_REGISTER_CLASS_XMM) */
-> +    union {
-> +        struct {
-> +            struct hv_u128 xmm0;
-> +            struct hv_u128 xmm1;
-> +            struct hv_u128 xmm2;
-> +            struct hv_u128 xmm3;
-> +            struct hv_u128 xmm4;
-> +            struct hv_u128 xmm5;
-> +        } QEMU_PACKED;
-> +
-> +        struct hv_u128 xmm_registers[6];
-> +    };
-> +    /* Segment registers (HV_X64_REGISTER_CLASS_SEGMENT) */
-> +    union {
-> +        struct {
-> +            struct hv_x64_segment_register es;
-> +            struct hv_x64_segment_register cs;
-> +            struct hv_x64_segment_register ss;
-> +            struct hv_x64_segment_register ds;
-> +            struct hv_x64_segment_register fs;
-> +            struct hv_x64_segment_register gs;
-> +        } QEMU_PACKED;
-> +
-> +        struct hv_x64_segment_register segment_registers[6];
-> +    };
-> +    /* Misc. control registers (cannot be set via this interface) */
-> +    uint64_t cr0;
-> +    uint64_t cr3;
-> +    uint64_t cr4;
-> +    uint64_t cr8;
-> +    uint64_t efer;
-> +    uint64_t dr7;
-> +    union hv_x64_pending_interruption_register pending_interruption;
-> +    union hv_x64_interrupt_state_register interrupt_state;
-> +    uint64_t instruction_emulation_hints;
-> +    uint64_t xfem;
-> +
-> +    uint8_t reserved1[0x100];
-> +
-> +    /* Interrupts injected as part of HvCallDispatchVp. */
-> +    union hv_vp_register_page_interrupt_vectors interrupt_vectors;
-> +} QEMU_PACKED;
-> +
->  /* /dev/mshv */
->  #define MSHV_CREATE_PARTITION   _IOW(MSHV_IOCTL, 0x00, struct mshv_create_partition)
->  #define MSHV_CREATE_VP          _IOW(MSHV_IOCTL, 0x01, struct mshv_create_vp)
-> -- 
-> 2.53.0
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2133804
+
+Title:
+  QEMU does not emulate IOCTL TCGETS2
+
+Status in QEMU:
+  Fix Released
+Status in qemu package in Ubuntu:
+  Fix Released
+Status in qemu source package in Jammy:
+  Confirmed
+Status in qemu source package in Noble:
+  In Progress
+Status in qemu source package in Plucky:
+  Won't Fix
+Status in qemu source package in Questing:
+  In Progress
+Status in qemu source package in Resolute:
+  Fix Released
+
+Bug description:
+  [ Impact ]
+
+  - Terminal prompt is missing for multiarch containers with qemu-user
+
+  - Users cannot see the prompt but still can type the commands
+  =C2=A0=C2=A0However the absence of the prompt can be misleading and make =
+users think that the container hangs.
+
+  - this fix implements the missing ioctl TERMIOS2
+
+  [ Test Plan ]
+
+  On an amd64 host
+
+  $ sudo apt install -y docker.io qemu-user-static
+  $ sudo usermod -aG docker ubuntu
+  $ newgrp docker
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
+  =C2=A0(this runs on AMD64 host, if you are runnig on ARM64, use -platform=
+=3Dlinux/riscv64 instead)
+
+  After docker pulls the image and run the container, you cannot see the
+  prompt
+
+  ...
+  Status: Downloaded newer image for ubuntu:26.04
+  ...
+
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
+
+  Doing the same for Ubuntu Noble image works.
+
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:24.04 bash
+  Unable to find image 'ubuntu:24.04' locally
+  24.04: Pulling from library/ubuntu
+  818154cda96d: Pull complete
+  352b2c3faa58: Download complete
+  Digest: sha256:c4a8d5503dfb2a3eb8ab5f807da5bc69a85730fb49b5cfca2330194ebc=
+c41c7b
+  Status: Downloaded newer image for ubuntu:24.04
+  root@bf8124075385:/#
+
+  With this fix, the users should see the prompt when they run bash
+  interactively in the container:
+
+  $ docker run --platform=3Dlinux/arm64 -it ubuntu:26.04 bash
+  root@bf8124075385:/#
+
+  [ Where problems could occur ]
+
+  The fix is around the termios managament so regressions can happen there.
+  There might be regressions on the prompt display.
+
+  The prompt display is widely used so potential regressions should be
+  visible quickly.
+
+  [ Other Info ]
+
+  None
+
+  -- Original bug report ---
+
+  In Ubuntu 25.10 we moved to glibc 2.42. Here glibc has changed the
+  implementation of isatty(). It now uses IOCTL TCGETS2 instead of
+  TCGETS. TCGETS2 is not emulated by static QEMU (qemu-riscv64, qemu-
+  arm64, ...).
+
+  This leads to failures in containers for foreign architectures. E.g. no c=
+onsole prompt is displayed.
+  A detailed analysis is contained in LP #2133188.
+
+  A proper implementation of the missing IOCTLs will include:
+
+  Functions:
+
+  in linux-user/syscall.c:
+  host_to_target_termios2()
+  target_to_host_termios2()
+  print_termios2()
+
+  Definitions:
+
+  in linux-user/syscall.c
+  #define termios2 host_termios2
+
+  in linux-user/syscall_types.h
+  STRUCT_SPECIAL(termios2)
+
+  in linux-user/ioctls.h:
+  IOCTL(TCGETS2, IOC_R, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETS2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSF2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+  IOCTL(TCSETSW2, IOC_W, MK_PTR(MK_STRUCT(STRUCT_termios2)))
+
+  in linux-user/user-internals.h:
+  void print_termios2(void *arg);
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2133804/+subscriptions
+
 
