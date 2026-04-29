@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B56BFF8875
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:09:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ACFEFF8873
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:09:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIC9R-0007VS-8z; Wed, 29 Apr 2026 17:08:57 -0400
+	id 1wIC9S-0007a6-Nc; Wed, 29 Apr 2026 17:08:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wIC9N-0007Lq-0g
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:08:53 -0400
+ id 1wIC9O-0007OI-9y
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:08:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wIC9I-0004Dv-SH
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:08:51 -0400
+ id 1wIC9M-0004E7-7g
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:08:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777496928;
+ s=mimecast20190719; t=1777496930;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Jqdq5nRRPqYHke78GS6zG6n5tV3IIu7WzZNe/sdNwxU=;
- b=NLoEL/Czs3vwSyUifCJpVoLlYmx2DcSEiykg8EOhiOwF5U8JAbKC9SRvXNnaiU4DqxO7Il
- U6t6tWYBerHSNi7TaPWhFAFqI+s8kzV1/HRQ1aJHIHsqW+O7Xp07aqJhqsLp1CWqATbGMA
- g7NT3CfG3nroJ2//XGCyb6GS+2sZ1NA=
+ bh=4iMiSVCvkm2ytzX3BKXVXaxFnTCTRwNA1ZGhKYgR6MM=;
+ b=dlhkaTxcVopVyQ+c7NtK9n92DbI4Y9mw7f+/COatjAW59+RFedsHxMjav8tXY7vSQTvYB8
+ X/TGq7Gm1Pf+eWqIp/RTjMyymy1UhlA2R9TEHa3SrYQ2M+kipBE6mS1FlV4R+tzZjaEUbv
+ HkzV/uhCeuRBIsTEM5S7JVb3OqmiUp0=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-612-2WGvkuWrMM2ihsrx_s0z1Q-1; Wed,
- 29 Apr 2026 17:08:47 -0400
-X-MC-Unique: 2WGvkuWrMM2ihsrx_s0z1Q-1
-X-Mimecast-MFC-AGG-ID: 2WGvkuWrMM2ihsrx_s0z1Q_1777496926
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-348-lW501HedOM2r642MboSMiA-1; Wed,
+ 29 Apr 2026 17:08:49 -0400
+X-MC-Unique: lW501HedOM2r642MboSMiA-1
+X-Mimecast-MFC-AGG-ID: lW501HedOM2r642MboSMiA_1777496928
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 41DD5195609F
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 21:08:46 +0000 (UTC)
+ id 4F45C19560A2
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 21:08:48 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.48.62])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C678C300019F; Wed, 29 Apr 2026 21:08:44 +0000 (UTC)
+ id D2123300019F; Wed, 29 Apr 2026 21:08:46 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 6/9] qom: move object_set_prop_keyval into object.c
-Date: Wed, 29 Apr 2026 22:08:27 +0100
-Message-ID: <20260429210830.594724-7-berrange@redhat.com>
+Subject: [PATCH 7/9] qom: add object_new_with_props_from_qdict
+Date: Wed, 29 Apr 2026 22:08:28 +0100
+Message-ID: <20260429210830.594724-8-berrange@redhat.com>
 In-Reply-To: <20260429210830.594724-1-berrange@redhat.com>
 References: <20260429210830.594724-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -86,186 +86,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This matches the location of the object_set_props and object_set_propv
-methods, since this method is not inherently tied to the user creatable
-interface. As part of this, object_set_props_from_qdict is also exposed
-as a public API since it is still called from object_interfaces.c.
+This will be used to replace user_creatable_add_type with an impl
+that shares most code with object_new_with_props, and is not tied
+to the user creatable interface.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qom/object.h    | 47 +++++++++++++++++++++++++++--------------
- qom/object.c            | 37 ++++++++++++++++++++++++++++++++
- qom/object_interfaces.c | 36 -------------------------------
- 3 files changed, 68 insertions(+), 52 deletions(-)
+ include/qom/object.h | 19 +++++++++++
+ qom/object.c         | 75 ++++++++++++++++++++++++++++++++++++++++----
+ 2 files changed, 88 insertions(+), 6 deletions(-)
 
 diff --git a/include/qom/object.h b/include/qom/object.h
-index 20a04cc4a9..1b2b2702fc 100644
+index 1b2b2702fc..cd59f1f171 100644
 --- a/include/qom/object.h
 +++ b/include/qom/object.h
-@@ -748,6 +748,37 @@ bool object_set_props(Object *obj, Error **errp, ...) G_GNUC_NULL_TERMINATED;
-  */
- bool object_set_propv(Object *obj, va_list vargs, Error **errp);
+@@ -700,6 +700,25 @@ Object *object_new_with_propv(const char *typename,
+                               va_list vargs,
+                               Error **errp);
  
 +/**
-+ * object_set_props_from_qdict:
-+ * @obj: a QOM object
-+ * @qdict: a dictionary with the properties to be set
-+ * @v: a visitor to iterate over @dict
++ * object_new_with_props_from_qdict:
++ * @typename:  The name of the type of the object to instantiate.
++ * @parent: the parent object
++ * @id: The unique ID of the object
++ * @props: dictionary of property names and values
++ * @v: visitor to iterate over @props
 + * @errp: pointer to error object
 + *
-+ * For each key in the dictionary, set the corresponding
-+ * property in @obj.
-+ *
-+ * Returns: %true on success, %false on error.
++ * A variant of object_new_with_props() which accepts the
++ * properties in a QDict.
 + */
-+bool object_set_props_from_qdict(Object *obj, const QDict *qdict,
-+                                 Visitor *v, Error **errp);
-+
-+/**
-+ * object_set_props_from_keyval:
-+ * @obj: a QOM object
-+ * @qdict: a dictionary with the properties to be set
-+ * @from_json: true if leaf values of @qdict are typed, false if they
-+ * are strings
-+ * @errp: pointer to error object
-+ *
-+ * For each key in the dictionary, parse the value string if needed,
-+ * then set the corresponding property in @obj.
-+ *
-+ * Returns: %true on success, %false on error.
-+ */
-+bool object_set_props_from_keyval(Object *obj, const QDict *qdict,
-+                                  bool from_json, Error **errp);
++Object *object_new_with_props_from_qdict(const char *typename,
++                                         Object *parent,
++                                         const char *id,
++                                         QDict *props,
++                                         Visitor *v,
++                                         Error **errp);
 +
  /**
-  * object_initialize:
-  * @obj: A pointer to the memory to be used for the object.
-@@ -914,22 +945,6 @@ type_init(do_qemu_init_ ## type_array)
-  */
- bool type_print_class_properties(const char *type);
- 
--/**
-- * object_set_props_from_keyval:
-- * @obj: a QOM object
-- * @qdict: a dictionary with the properties to be set
-- * @from_json: true if leaf values of @qdict are typed, false if they
-- * are strings
-- * @errp: pointer to error object
-- *
-- * For each key in the dictionary, parse the value string if needed,
-- * then set the corresponding property in @obj.
-- *
-- * Returns: %true on success, %false on error.
-- */
--bool object_set_props_from_keyval(Object *obj, const QDict *qdict,
--                                  bool from_json, Error **errp);
--
- /**
-  * object_class_dynamic_cast_assert:
-  * @klass: The #ObjectClass to attempt to cast.
+  * object_set_props:
+  * @obj: the object instance to set properties on
 diff --git a/qom/object.c b/qom/object.c
-index 2671c471ab..c44e2b2eff 100644
+index c44e2b2eff..b35a3dff06 100644
 --- a/qom/object.c
 +++ b/qom/object.c
-@@ -23,7 +23,9 @@
- #include "qapi/qobject-input-visitor.h"
- #include "qapi/forward-visitor.h"
- #include "qapi/qapi-builtin-visit.h"
-+#include "qobject/qdict.h"
- #include "qobject/qjson.h"
-+#include "qobject/qdict.h"
- #include "qemu/id.h"
- #include "qapi/qmp/qerror.h"
- #include "trace.h"
-@@ -847,6 +849,41 @@ bool object_set_propv(Object *obj,
-     return true;
+@@ -758,11 +758,14 @@ Object *object_new_with_props(const char *typename,
  }
  
-+bool object_set_props_from_qdict(Object *obj, const QDict *qdict,
-+                                 Visitor *v, Error **errp)
-+{
-+    ERRP_GUARD();
-+    const QDictEntry *e;
-+
-+    if (!visit_start_struct(v, NULL, NULL, 0, errp)) {
-+        return false;
-+    }
-+    for (e = qdict_first(qdict); e; e = qdict_next(qdict, e)) {
-+        if (!object_property_set(obj, e->key, v, errp)) {
-+            goto out;
-+        }
-+    }
-+    visit_check_struct(v, errp);
-+out:
-+    visit_end_struct(v, NULL);
-+
-+    return *errp == NULL;
-+}
-+
-+bool object_set_props_from_keyval(Object *obj, const QDict *qdict,
-+                                  bool from_json, Error **errp)
-+{
-+    bool ret;
-+    Visitor *v;
-+    if (from_json) {
-+        v = qobject_input_visitor_new(QOBJECT(qdict));
-+    } else {
-+        v = qobject_input_visitor_new_keyval(QOBJECT(qdict));
-+    }
-+    ret = object_set_props_from_qdict(obj, qdict, v, errp);
-+    visit_free(v);
-+    return ret;
-+}
  
- Object *object_dynamic_cast(Object *obj, const char *typename)
+-Object *object_new_with_propv(const char *typename,
+-                              Object *parent,
+-                              const char *id,
+-                              va_list vargs,
+-                              Error **errp)
++static Object *
++object_new_with_props_helper(const char *typename,
++                             Object *parent,
++                             const char *id,
++                             void *props,
++                             bool (set_props)(Object *obj, void *props,
++                                              Error **errp),
++                             Error **errp)
  {
-diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-index 50736b80c8..e0a3cd8d0f 100644
---- a/qom/object_interfaces.c
-+++ b/qom/object_interfaces.c
-@@ -44,42 +44,6 @@ bool user_creatable_can_be_deleted(UserCreatable *uc)
+     Object *obj;
+     ObjectClass *klass;
+@@ -787,7 +790,7 @@ Object *object_new_with_propv(const char *typename,
      }
+     obj = object_new_with_type(klass->type);
+ 
+-    if (!object_set_propv(obj, vargs, errp)) {
++    if (!set_props(obj, props, errp)) {
+         goto error;
+     }
+ 
+@@ -813,6 +816,66 @@ Object *object_new_with_propv(const char *typename,
+     return NULL;
  }
  
--static bool object_set_props_from_qdict(Object *obj, const QDict *qdict,
--                                        Visitor *v, Error **errp)
--{
--    ERRP_GUARD();
--    const QDictEntry *e;
--
--    if (!visit_start_struct(v, NULL, NULL, 0, errp)) {
--        return false;
--    }
--    for (e = qdict_first(qdict); e; e = qdict_next(qdict, e)) {
--        if (!object_property_set(obj, e->key, v, errp)) {
--            goto out;
--        }
--    }
--    visit_check_struct(v, errp);
--out:
--    visit_end_struct(v, NULL);
--
--    return *errp == NULL;
--}
--
--bool object_set_props_from_keyval(Object *obj, const QDict *qdict,
--                                  bool from_json, Error **errp)
--{
--    bool ret;
--    Visitor *v;
--    if (from_json) {
--        v = qobject_input_visitor_new(QOBJECT(qdict));
--    } else {
--        v = qobject_input_visitor_new_keyval(QOBJECT(qdict));
--    }
--    ret = object_set_props_from_qdict(obj, qdict, v, errp);
--    visit_free(v);
--    return ret;
--}
--
- Object *user_creatable_add_type(const char *type, const char *id,
-                                 const QDict *qdict,
-                                 Visitor *v, Error **errp)
++struct ObjectNewVargsData {
++    va_list vargs;
++};
++
++static bool object_new_with_propv_setter(Object *obj,
++                                         void *props,
++                                         Error **errp)
++{
++    struct ObjectNewVargsData *data = props;
++    return object_set_propv(obj, data->vargs, errp);
++}
++
++Object *object_new_with_propv(const char *typename,
++                              Object *parent,
++                              const char *id,
++                              va_list vargs,
++                              Error **errp)
++{
++    Object *obj;
++    struct ObjectNewVargsData data;
++
++    va_copy(data.vargs, vargs);
++    obj = object_new_with_props_helper(typename,
++                                       parent,
++                                       id,
++                                       &data,
++                                       object_new_with_propv_setter,
++                                       errp);
++    va_end(data.vargs);
++    return obj;
++}
++
++struct ObjectNewQDictData {
++    QDict *props;
++    Visitor *v;
++};
++
++static bool object_new_with_qdict_setter(Object *obj,
++                                         void *props,
++                                         Error **errp)
++{
++    struct ObjectNewQDictData *data = props;
++    return object_set_props_from_qdict(obj, data->props, data->v, errp);
++}
++
++Object *object_new_with_props_from_qdict(const char *typename,
++                                         Object *parent,
++                                         const char *id,
++                                         QDict *props,
++                                         Visitor *v,
++                                         Error **errp)
++{
++    struct ObjectNewQDictData data = { props, v };
++    return object_new_with_props_helper(typename,
++                                        parent,
++                                        id,
++                                        &data,
++                                        object_new_with_qdict_setter,
++                                        errp);
++}
+ 
+ bool object_set_props(Object *obj,
+                       Error **errp,
 -- 
 2.54.0
 
