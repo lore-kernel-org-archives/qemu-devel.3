@@ -4,92 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A43BFF8875
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 23:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1320EFF887E
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 23:35:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIEQa-0004q7-O8; Wed, 29 Apr 2026 19:34:48 -0400
+	id 1wIEQj-0004rl-70; Wed, 29 Apr 2026 19:34:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ericsonjoseph@gmail.com>)
- id 1wICoi-00010s-Df
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:51:36 -0400
-Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wIEQh-0004rF-8L
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 19:34:55 -0400
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ericsonjoseph@gmail.com>)
- id 1wICog-0004Hv-7D
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:51:36 -0400
-Received: by mail-dy1-x1333.google.com with SMTP id
- 5a478bee46e88-2d8fa0fadfeso217141eec.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 14:51:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wIEQf-0001k2-Fp
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 19:34:55 -0400
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-ba699316b42so38395066b.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 16:34:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777505692; cv=none;
+ d=google.com; s=arc-20240605;
+ b=VqWsO4OmpXVQe77cz8ZX0FGQJrxKkMxGvi9KDVUquiTO8FzFo1p1jZA0Lo3dBdwKTX
+ PS3Z/2bj6DC/NIOm23LozrJ+wtHQVxAVZv4LDomHPnX1WWUCvIKO7cAkg5qLvgMiAEmb
+ b9lvaWlnGSfDE33dAYg6c3Z2xJLzk3Se1Nr+iohocx0XmrOnBsjmLuf9xmcUBMmT37Zc
+ pkzSH+YjKtbjbS2VnMrjM53/ag4OvqpIyE1ATpnyGWit+kkUNLJ5vEhyZvyk8yfNHvCk
+ HnNrw8UImMFT4sOwflbFWIEc3X6d9gEknN1FXpoOtXHlTmVDLB2oK0EsPRuSy9/FWhAT
+ PX1w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=PRpFTIshTUtRJIsim236X/XKK1X11xrkJJlh9CqlaqI=;
+ fh=HvQTaN+ehH9UI39K7HVtUl3dsFAtybFn5AiT+5+G0WU=;
+ b=g8B20BghUSAlpb1WZS2wiRVTDHmj96hNZqg8Qhwl57VLqLO1yAow4TF8ux7b37JhTV
+ DkmwRTrpt2C7UzdkEqPoPqRChKPZgCLZp0QopLPTW2LZdqsTkKxsho44dxT40zyEpjC3
+ AqApICIBGBTy4bpScZ5ea3E4dY+4lQdgpl4BJvf9gm7HknFHf7RBl0t2RHbynRjjt51t
+ lY1WChzlynhAL2ShZTDEycpf1EX9btp751T2xFKCB2SgJfBGDUtwkbRxhu1uOIP4KxJv
+ kGUyyhRFwCBmlJG+qT8jkJTF6h6bNG6xXixKWztJanFtoA8uKR5AVtiKDi56MxfzPvHX
+ S2SQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777499490; x=1778104290; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5PebPglHoe6H/36VNwDhbR2OIGR9F5WehVi5N/W11q8=;
- b=Op6wWrug93x551st9CxQyFGJgaQCkivBI850kDNPEArCZb62DtVZNhfgM0nANGZh0W
- TbfS1oXlFLuF1dJhGWVxO45YR9suafwZzJcP6sYv43x1vzm/3S/G9JghCV2tdHwF5yMa
- fFW+/Pw4AMAlpMwlj5LkNMEasfshe7qbAByiLbAZnzsfPb3tiBxJmCEI9JtIwkYn99ic
- g1j7ZLGmWBpP5BBjIDuRfQRXVoJzy2NuMgsEPOTa+nQO93fw+4zQhib+oeMhcBVXFwCa
- 0m6m/gR038ON3NVXKodMPgWd4TxqC5LwCpC76F7AunCROU6EG7SCXEZj65PWZVIW7qFe
- glPQ==
+ d=gmail.com; s=20251104; t=1777505692; x=1778110492; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PRpFTIshTUtRJIsim236X/XKK1X11xrkJJlh9CqlaqI=;
+ b=mZsX2W7npe70Rq9RD0xm1D9zZAOYlhixjZ2HBiQgSsn/d6F2sVV7lpoaK/u6rbvmNl
+ USaY/oPA4ebr83oOdoYotL9H7i+lDdePO517jeg/YzGa7qcEYezzIyAuna3GplM2JgyM
+ UNyQZSyXexrjYuqhn6WEpNQHsuucWyy+JJSrRGLgpqvI4kExCcvhaNenHTqJgj91o6QX
+ +hT2K1D35fD9zNSmbYFXx0+nqW7lYn4/50IdqOSH6OQvfICpY0y4FLLsURRKJgpnaHUQ
+ 9wBnNqWPhcBaPK0/zlu6ergPr1Qat5hngKHu79jcCfriXsM2rMxdX/9Ftb8fxJRDAbP+
+ dzPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777499490; x=1778104290;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=5PebPglHoe6H/36VNwDhbR2OIGR9F5WehVi5N/W11q8=;
- b=YcKOijVP3KkcRnjFy+DGJPAIW9+Wzq53aBg4u7NZFOx1e8V/vXeOpSd9HMy+snOop0
- gRrqa465pWBYiotkOkGWo4WWQz7FgX/Sw6WjgqnqbXHyil2Kpu7MJ9ZPFXxT0tAmqCKK
- 3LgH9uHrb0kf5GO1amSoC2+NSGaJkjLmdg701+L3eCpLI8Hj3b+k4sNyPb9pCWrsHpcj
- IrLqyvl+TQwO40teSlyQCJb6cRYLbgVqD4qcdbVZgaj/+kpu1o0yu+U4fz4XlS5V3nHI
- S8D2mCQ8xQBa3FulkzZvX5Q3OVKeZ0/K69d6MRfOG5wH699JAEV1tAvoj/bBe6Q0Vn6d
- AHow==
-X-Gm-Message-State: AOJu0YwQMzuxn+Ru+XgyWysEqN+etTsaLHthk3wnyRnpv1cNbPvrZ9OH
- aaNY/WluuexcQo3bI4MWcAKj0VmW9kev067TVjWuE5XoKo9NBND+EoNA
-X-Gm-Gg: AeBDievhB2F6kAEUayz/5FNqezrmQJER6DT5Z9j98DHS6+oUvlT4KSh1/IPt508Sa6m
- Usjd2ZZjHReEnpRyRo3kMpA7+H2vtRiz6lZaVyCs0N+nL7nW9l44/sclM7hag/GcNFv1pTd7/Ex
- MOvc4mCCwgZsxYYkhzXfQI8Mpkr8QQGWG3S5Cmlws8rp4zaLrnddrD870UkTaLvgwSDf2DzJU6t
- Au6rvg2qqMB11gI//uLR91XP0f3PjIyxZ3TUjkpftMIn+flZYvrnvEeLRyaM+kGUtep8BNBVum7
- uV2yZ94NzMEpTSJ4/KsoWdVGSS7FQyegz71d85EdOW2TCs57fK/F6SK54FnlNm93OUykESlmgLP
- C8cJ3MtNP4rCj+OxcbluNP5u3w2VVXIel4hQRSpz//80a2vRRZeuolKIBapNwnTwx/CHw0BLGs1
- K4Uz17MdxlGYruYw/81vlRhglRTdOVw5e19vwrd/E4j8oGwwAshiQ=
-X-Received: by 2002:a05:7300:a583:b0:2c6:67b6:3acc with SMTP id
- 5a478bee46e88-2ed1bb3f483mr1902728eec.15.1777499490144; 
- Wed, 29 Apr 2026 14:51:30 -0700 (PDT)
-Received: from [127.0.1.1] ([2803:9800:9001:c4f0:5d16:7dac:ff8:d8ff])
- by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2ed1bf6d315sm4353878eec.1.2026.04.29.14.51.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 14:51:29 -0700 (PDT)
-From: Ericson Joseph <ericsonjoseph@gmail.com>
-Date: Wed, 29 Apr 2026 18:51:18 -0300
-Subject: [PATCH RFC 2/3] tests: add PIC32MK functional and qtest coverage
+ d=1e100.net; s=20251104; t=1777505692; x=1778110492;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PRpFTIshTUtRJIsim236X/XKK1X11xrkJJlh9CqlaqI=;
+ b=pCFPOLmHvgA87MxIOQo4cqHYMQWVV931Ag3nytFMPJ41uZakWFEFoAiBlfqHGBXQNt
+ D4CJxpYr5S4RQCrx3vmxAFptfMihoQ++33x4jlPnusORrtlJWcwQJB3HLIcbas1/YG50
+ RnCFsDRKKKq0Hx3v0q6So8Exiolig3OQi+RMyq6/w6Y8Qu9R2HnDqgkZvX4dYtHxJFkt
+ tDlVBJJ/9NlU9gexV0A0EQveHGib8kPZQfe0pEpIgahBI8+TzOQMXN8XdCxBpJL2Vroi
+ aDH0RjXDgvU4Q4ql+nWaoKdKP9wXFQp9+EnscbsGtcV0zV4O/j6dgLKLcbQpumTEDq+8
+ vdrQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+HTLrtlO/M6xcow/d9ed9AqyyQJhxNUvxXHgJohdUsI3/GCM8zFnX2khPgrwPdlaVz5FP9LamBAXXr@nongnu.org
+X-Gm-Message-State: AOJu0YwMbb8Zeftc+5RRc/Br2e5a3ISjVQKhASwr2YFjz/LFL+WdmF9s
+ e9QIEVZMMXkfN/ISpX8jE42zVbTLv6l36l0bfe1154j0vMRB+ulLz8PoKKw+dMbLdie0HjyS1ym
+ aNxSvY9IFyPmsAJvhYEigTxTPNNeL8NNwcYF6
+X-Gm-Gg: AeBDieuOcElV66awmVPomaBFwLwsxwEH0j1YVrrhw4CjgDIZoyCbJVJng7tRiOOhPmz
+ /i9P/gon0EGUCxhQC8YniP5VayUfka3rL0JjO2LEn1AlqKlG7/Ay6WVwLCXOIwcQR+8EWcW0Jn9
+ smkCjJSIgkaokuvJA0Ee6UE6T2g1elFURBotpnJiJDs4NbHMCtS0+40rviS0z4D3WYkJoL+JgB9
+ H9clLfyU0gbBi30twCOM+6K+DrBF7koJ7sTWFWdj5Jm49p9WCAcJ2R4QB7b1GsfMMqm0KlULudc
+ tY53UzArTDVpLlT3Chb0XJu3htRqnYIfIwK+XB2qdx2WK+eI
+X-Received: by 2002:a17:907:1b29:b0:b97:c719:14d4 with SMTP id
+ a640c23a62f3a-bbac7e84df9mr33465366b.29.1777505691676; Wed, 29 Apr 2026
+ 16:34:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260429-pic32mk-board-support-v1-2-1dfac14f8e2d@voltumotor.com>
-References: <20260429-pic32mk-board-support-v1-0-1dfac14f8e2d@voltumotor.com>
-In-Reply-To: <20260429-pic32mk-board-support-v1-0-1dfac14f8e2d@voltumotor.com>
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Ericson Joseph <ericsonjoseph@gmail.com>
-X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
- envelope-from=ericsonjoseph@gmail.com; helo=mail-dy1-x1333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+References: <20260425131721.932250-1-joel@jms.id.au>
+ <20260425131721.932250-4-joel@jms.id.au>
+In-Reply-To: <20260425131721.932250-4-joel@jms.id.au>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 30 Apr 2026 09:34:24 +1000
+X-Gm-Features: AVHnY4IHuf0fZ9wHXY1ZHgYEMsZTS4PxWHP1VWaowVgbHwrkeS3U38ME90fsv-o
+Message-ID: <CAKmqyKPY0oxFzOXxZG5Mgj9qUdFiNg8wMxnCa5V0f0-Oc_sJBQ@mail.gmail.com>
+Subject: Re: [PATCH v4 03/13] hw/riscv/boot: Account for discontiguous memory
+ when loading firmware
+To: Joel Stanley <joel@jms.id.au>
+Cc: Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Michael Ellerman <mpe@kernel.org>, 
+ Joel Stanley <jms@oss.tenstorrent.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x629.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 29 Apr 2026 19:34:47 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,210 +127,164 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Wire the PIC32MK tests into the build system:
+On Sat, Apr 25, 2026 at 11:20=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrot=
+e:
+>
+> From: Nicholas Piggin <npiggin@gmail.com>
+>
+> This loads firmware into the first (low) memory range,
+> accounting for machines having discontiguous memory regions.
+>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+> v4: Make RISCVBootInfo *info const in riscv_load_firmware
+> v3: Call riscv_boot_info_init before riscv_find_and_load_firmware in
+>     sifive_u
+> ---
+>  include/hw/riscv/boot.h    |  5 ++++-
+>  hw/riscv/boot.c            | 18 ++++++++++++------
+>  hw/riscv/microchip_pfsoc.c |  6 ++++--
+>  hw/riscv/opentitan.c       |  6 ++++--
+>  hw/riscv/shakti_c.c        |  6 +++++-
+>  hw/riscv/sifive_u.c        |  6 ++++--
+>  hw/riscv/spike.c           |  6 ++++--
+>  hw/riscv/virt.c            |  7 ++++---
+>  hw/riscv/xiangshan_kmh.c   |  6 +++++-
+>  9 files changed, 46 insertions(+), 20 deletions(-)
+>
+> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+> index 115e3222174f..b2ef64fb1d14 100644
+> --- a/include/hw/riscv/boot.h
+> +++ b/include/hw/riscv/boot.h
+> @@ -53,13 +53,16 @@ void riscv_boot_info_init_discontig_mem(RISCVBootInfo=
+ *info,
+>  vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
+>                                     hwaddr firmware_end_addr);
+>  hwaddr riscv_find_and_load_firmware(MachineState *machine,
+> +                                    RISCVBootInfo *info,
+>                                      const char *default_machine_firmware=
+,
+>                                      hwaddr *firmware_load_addr,
+>                                      symbol_fn_t sym_cb);
+>  const char *riscv_default_firmware_name(RISCVHartArrayState *harts);
+>  char *riscv_find_firmware(const char *firmware_filename,
+>                            const char *default_machine_firmware);
+> -hwaddr riscv_load_firmware(const char *firmware_filename,
+> +hwaddr riscv_load_firmware(MachineState *machine,
+> +                           const RISCVBootInfo *info,
+> +                           const char *firmware_filename,
+>                             hwaddr *firmware_load_addr,
+>                             symbol_fn_t sym_cb);
+>  void riscv_load_kernel(MachineState *machine,
+> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+> index 5c9547429a36..4fbc778263cf 100644
+> --- a/hw/riscv/boot.c
+> +++ b/hw/riscv/boot.c
+> @@ -145,6 +145,7 @@ char *riscv_find_firmware(const char *firmware_filena=
+me,
+>  }
+>
+>  hwaddr riscv_find_and_load_firmware(MachineState *machine,
+> +                                    RISCVBootInfo *info,
+>                                      const char *default_machine_firmware=
+,
+>                                      hwaddr *firmware_load_addr,
+>                                      symbol_fn_t sym_cb)
+> @@ -157,7 +158,8 @@ hwaddr riscv_find_and_load_firmware(MachineState *mac=
+hine,
+>
+>      if (firmware_filename) {
+>          /* If not "none" load the firmware */
+> -        firmware_end_addr =3D riscv_load_firmware(firmware_filename,
+> +        firmware_end_addr =3D riscv_load_firmware(machine, info,
+> +                                                firmware_filename,
+>                                                  firmware_load_addr, sym_=
+cb);
+>          g_free(firmware_filename);
+>      }
+> @@ -165,10 +167,13 @@ hwaddr riscv_find_and_load_firmware(MachineState *m=
+achine,
+>      return firmware_end_addr;
+>  }
+>
+> -hwaddr riscv_load_firmware(const char *firmware_filename,
+> +hwaddr riscv_load_firmware(MachineState *machine,
+> +                           const RISCVBootInfo *info,
+> +                           const char *firmware_filename,
+>                             hwaddr *firmware_load_addr,
+>                             symbol_fn_t sym_cb)
+>  {
+> +    uint64_t mem_size =3D info->ram_low_size ?: machine->ram_size;
+>      uint64_t firmware_entry, firmware_end;
+>      ssize_t firmware_size;
+>
+> @@ -197,7 +202,7 @@ hwaddr riscv_load_firmware(const char *firmware_filen=
+ame,
+>
+>      firmware_size =3D load_image_targphys_as(firmware_filename,
+>                                             *firmware_load_addr,
+> -                                           current_machine->ram_size, NU=
+LL,
+> +                                           mem_size, NULL,
+>                                             NULL);
+>
+>      if (firmware_size > 0) {
+> @@ -212,7 +217,7 @@ hwaddr riscv_load_firmware(const char *firmware_filen=
+ame,
+>  static void riscv_load_initrd(MachineState *machine, RISCVBootInfo *info=
+)
+>  {
+>      const char *filename =3D machine->initrd_filename;
+> -    uint64_t mem_size =3D machine->ram_size;
+> +    uint64_t mem_size =3D info->ram_low_size ?: machine->ram_size;
+>      void *fdt =3D machine->fdt;
+>      hwaddr start, end;
+>      ssize_t size;
+> @@ -258,6 +263,7 @@ void riscv_load_kernel(MachineState *machine,
+>                         bool load_initrd,
+>                         symbol_fn_t sym_cb)
+>  {
+> +    uint64_t mem_size =3D info->ram_low_size ?: machine->ram_size;
+>      const char *kernel_filename =3D machine->kernel_filename;
+>      ssize_t kernel_size;
+>      void *fdt =3D machine->fdt;
+> @@ -289,7 +295,7 @@ void riscv_load_kernel(MachineState *machine,
+>      }
+>
+>      kernel_size =3D load_image_targphys_as(kernel_filename, kernel_start=
+_addr,
+> -                                         current_machine->ram_size, NULL=
+, NULL);
+> +                                         mem_size, NULL, NULL);
+>      if (kernel_size > 0) {
+>          info->kernel_size =3D kernel_size;
+>          info->image_low_addr =3D kernel_start_addr;
+> @@ -385,7 +391,7 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwa=
+ddr dram_size,
+>      dtb_start =3D QEMU_ALIGN_DOWN(temp - fdtsize, 2 * MiB);
+>
+>      if (dtb_start_limit && (dtb_start < dtb_start_limit)) {
+> -        error_report("No enough memory to place DTB after kernel/initrd"=
+);
+> +        error_report("Not enough memory to place DTB after kernel/initrd=
+");
+>          exit(1);
+>      }
+>
+> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+> index 743f31f00578..1d1ddb05a882 100644
+> --- a/hw/riscv/microchip_pfsoc.c
+> +++ b/hw/riscv/microchip_pfsoc.c
+> @@ -618,18 +618,20 @@ static void microchip_icicle_kit_machine_init(Machi=
+neState *machine)
+>          firmware_load_addr =3D RESET_VECTOR;
+>      }
+>
+> +    riscv_boot_info_init(&boot_info, &s->soc.u_cpus);
 
-- tests/functional/mipsel: register pic32mk as a quick test (30s),
-  build pic32mk_test_fw.bin from assembly source using the mipsel-linux-gnu
-  cross toolchain when available, and run test_pic32mk.py which boots the
-  board and waits for "Hello, PIC32MK!" on UART1.
+We should be able to use the new riscv_boot_info_init_discontig_mem() here
 
-- tests/qtest/meson.build: add pic32mk-test and pic32mk-canfd-test to
-  qtests_mipsel (gated on CONFIG_PIC32MK).
-
-Signed-off-by: Ericson Joseph <ericsonjoseph@gmail.com>
----
- tests/functional/mipsel/meson.build     | 28 ++++++++++
- tests/functional/mipsel/test_pic32mk.py | 99 +++++++++++----------------------
- tests/qtest/meson.build                 |  4 +-
- 3 files changed, 63 insertions(+), 68 deletions(-)
-
-diff --git a/tests/functional/mipsel/meson.build b/tests/functional/mipsel/meson.build
-index 8bfdf0649b..62ae73c1db 100644
---- a/tests/functional/mipsel/meson.build
-+++ b/tests/functional/mipsel/meson.build
-@@ -2,9 +2,37 @@
- 
- test_mipsel_timeouts = {
-   'malta' : 420,
-+  'pic32mk' : 30,
-   'replay' : 480,
- }
- 
-+# Build the minimal PIC32MK test firmware from assembly source.
-+# Requires the mipsel-linux-gnu cross toolchain; silently skipped if absent.
-+_mipsel_cc = find_program('mipsel-linux-gnu-gcc', required: false)
-+_mipsel_objcopy = find_program('mipsel-linux-gnu-objcopy', required: false)
-+
-+if _mipsel_cc.found() and _mipsel_objcopy.found() and \
-+   config_all_devices.has_key('CONFIG_PIC32MK')
-+  _fw_ld   = meson.current_source_dir() / 'pic32mk_test_fw.ld'
-+  _fw_src  = meson.current_source_dir() / 'pic32mk_test_fw.S'
-+  _fw_elf  = custom_target('pic32mk_test_fw_elf',
-+    input  : [_fw_src, _fw_ld],
-+    output : 'pic32mk_test_fw.elf',
-+    command: [_mipsel_cc,
-+              '-march=mips32r2', '-EL', '-nostdlib',
-+              '-T', _fw_ld, _fw_src,
-+              '-o', '@OUTPUT@'],
-+  )
-+  _fw_bin = custom_target('pic32mk_test_fw.bin',
-+    input  : _fw_elf,
-+    output : 'pic32mk_test_fw.bin',
-+    command: [_mipsel_objcopy, '-O', 'binary', '@INPUT@', '@OUTPUT@'],
-+  )
-+  tests_mipsel_system_quick = ['pic32mk']
-+else
-+  tests_mipsel_system_quick = []
-+endif
-+
- tests_mipsel_system_thorough = [
-   'malta',
-   'replay',
-diff --git a/tests/functional/mipsel/test_pic32mk.py b/tests/functional/mipsel/test_pic32mk.py
-index 4af91c4f88..ebfc94f388 100644
---- a/tests/functional/mipsel/test_pic32mk.py
-+++ b/tests/functional/mipsel/test_pic32mk.py
-@@ -1,9 +1,12 @@
- #!/usr/bin/env python3
-+# SPDX-License-Identifier: GPL-2.0-or-later
- #
--# Functional tests for the PIC32MK board emulation
-+# Functional test for the Microchip PIC32MK GPK/MCM board emulation.
- #
--# Copyright (c) 2026 QEMU contributors
--# SPDX-License-Identifier: GPL-2.0-or-later
-+# The test firmware (pic32mk_test_fw.S) is a minimal MIPS assembly program
-+# that initialises UART1 and writes "Hello, PIC32MK!\r\n" then spins.
-+# This verifies that the board boots, the CPU executes code, and UART1 TX
-+# produces output on the emulated serial console.
- 
- import os
- 
-@@ -11,81 +14,43 @@
- from qemu_test import wait_for_console_pattern
- 
- 
-+def _fw_path():
-+    """Return the path to the pre-built test firmware binary."""
-+    build_dir = os.environ.get('BUILD_DIR', '')
-+    if build_dir:
-+        candidate = os.path.join(build_dir,
-+                                 'tests', 'functional', 'mipsel',
-+                                 'pic32mk_test_fw.bin')
-+        if os.path.isfile(candidate):
-+            return candidate
-+    # Fallback: look next to this file (for out-of-tree runs)
-+    here = os.path.dirname(os.path.abspath(__file__))
-+    return os.path.join(here, 'pic32mk_test_fw.bin')
-+
-+
- class PIC32MKMachine(QemuSystemTest):
-     """
--    Tests for the PIC32MK MCU board (-M pic32mk).
-+    Boot test for the Microchip PIC32MK GPK/MCM board (-M pic32mk).
- 
--    The FreeRTOS firmware is expected to be pre-built at
--    tests/freertos/hello_freertos.bin relative to the source tree.
-+    Requires pic32mk_test_fw.bin built from pic32mk_test_fw.S by meson.
-+    The binary must be present in the meson build tree under
-+    tests/functional/mipsel/pic32mk_test_fw.bin.
-     """
- 
-     timeout = 30
- 
--    def get_firmware_path(self):
--        """Locate the pre-built FreeRTOS firmware binary."""
--        # data_file() resolves relative to tests/functional/
--        # We need to go up two levels to reach the source root
--        src_root = os.path.join(
--            os.path.dirname(__file__), '..', '..', '..')
--        fw_path = os.path.realpath(
--            os.path.join(src_root, 'tests', 'freertos', 'hello_freertos.bin'))
--        if not os.path.isfile(fw_path):
-+    def test_uart_boot_message(self):
-+        """Board boots and UART1 TX prints the expected banner."""
-+        fw = _fw_path()
-+        if not os.path.isfile(fw):
-             self.skipTest(
--                f'FreeRTOS firmware not built: {fw_path}\n'
--                'Run: make -C tests/freertos')
--        return fw_path
--
--    def test_boot_message(self):
--        """PIC32MK boots and prints the FreeRTOS banner."""
--        self.set_machine('pic32mk')
--        self.vm.set_console()
--        self.vm.add_args('-bios', self.get_firmware_path(),
--                         '-nographic')
--        self.vm.launch()
--        wait_for_console_pattern(self,
--                                 'PIC32MK QEMU booting FreeRTOS...')
--
--    def test_freertos_hello_task(self):
--        """FreeRTOS scheduler starts and the Hello task fires."""
--        self.set_machine('pic32mk')
--        self.vm.set_console()
--        self.vm.add_args('-bios', self.get_firmware_path(),
--                         '-nographic')
--        self.vm.launch()
--        # First: boot banner
--        wait_for_console_pattern(self,
--                                 'PIC32MK QEMU booting FreeRTOS...')
--        # Second: at least one Hello message (proves Timer1 tick + UART TX IRQ)
--        wait_for_console_pattern(self,
--                                 'Hello from FreeRTOS!')
--
--    def test_freertos_recurring_ticks(self):
--        """Timer1 delivers recurring ticks — multiple Hello messages appear."""
--        self.set_machine('pic32mk')
--        self.vm.set_console()
--        self.vm.add_args('-bios', self.get_firmware_path(),
--                         '-nographic')
--        self.vm.launch()
--        wait_for_console_pattern(self,
--                                 'PIC32MK QEMU booting FreeRTOS...')
--        # Wait for a second Hello — proves the tick ISR fires repeatedly
--        # and context switches work (CS0 yield + Timer1 preemption).
--        wait_for_console_pattern(self,
--                                 'Hello from FreeRTOS!')
--        wait_for_console_pattern(self,
--                                 'Hello from FreeRTOS!')
--
--    def test_freertos_ping_task(self):
--        """Second FreeRTOS task (Ping) also runs — proves multitasking."""
-+                'pic32mk_test_fw.bin not found — '
-+                'build with: ninja -C <builddir> pic32mk_test_fw.bin')
-         self.set_machine('pic32mk')
-         self.vm.set_console()
--        self.vm.add_args('-bios', self.get_firmware_path(),
--                         '-nographic')
-+        self.vm.add_args('-bios', fw, '-nographic')
-         self.vm.launch()
--        wait_for_console_pattern(self,
--                                 'PIC32MK QEMU booting FreeRTOS...')
--        # Ping task fires every 5 seconds
--        wait_for_console_pattern(self, 'Ping')
-+        wait_for_console_pattern(self, 'Hello, PIC32MK!')
- 
- 
- if __name__ == '__main__':
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index b735f55fc4..769de2054f 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -164,7 +164,9 @@ qtests_mips = \
-   (config_all_devices.has_key('CONFIG_ISA_TESTDEV') ? ['endianness-test'] : []) +            \
-   (config_all_devices.has_key('CONFIG_VGA') ? ['display-vga-test'] : [])
- 
--qtests_mipsel = qtests_mips
-+qtests_mipsel = qtests_mips + \
-+  (config_all_devices.has_key('CONFIG_PIC32MK') ? ['pic32mk-test',
-+                                                    'pic32mk-canfd-test'] : [])
- qtests_mips64 = qtests_mips
- qtests_mips64el = qtests_mips
- 
-
--- 
-2.48.1
-
+Alistair
 
