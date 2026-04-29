@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19111FF8875
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 017E5FF8873
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:03:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIC49-0003TQ-9c; Wed, 29 Apr 2026 17:03:31 -0400
+	id 1wIC44-0003Sh-9g; Wed, 29 Apr 2026 17:03:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wIC46-0003TD-HH
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:03:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wIC40-0003SL-Fm
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:03:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wIC45-0003C9-2j
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:03:26 -0400
+ id 1wIC3y-0003Be-Gz
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:03:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777496602;
+ s=mimecast20190719; t=1777496597;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=59PFEgMXfzUbVp1BVkysKDYZbBbk20cj4itZloqYX+8=;
- b=hZ4LZghERj/IqxdjTh4GekiU8WjChdBg4JwHXh/Y7cg9ZbSCwRj+zFAbvrc42wzrLmh5I1
- R51DCwI/O28hddKsBRXOaP4jy1l2YMLjueeqyj0/YNi+lb3W+/1OP2yM4FY/IFP6q05ydt
- F633j6DuM+Zd6fawmGo9qWjCbkq26MQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding;
+ bh=r3oSa83zjymYTA4wJzHr5ynKYatofS4KaV1vQrVllEs=;
+ b=bElJo/xj+mlchTgHUwLDhq8nF1kQh9B39NPOxkJyYC9BshkJlXJqqtFvCQRm238XyCjmWe
+ Qt9/DerdTGrJqfS0daXQ3o763Qy/nZ7+6uFWQDesmvWJiUCxDOwtOvPuIM1e5xGv6gPRHA
+ GePoDe1yl7qyf25YA4m5jSGJi4iWZRg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-443-nIp_h41NMvuzNubEwvxHrg-1; Wed,
- 29 Apr 2026 17:03:21 -0400
-X-MC-Unique: nIp_h41NMvuzNubEwvxHrg-1
-X-Mimecast-MFC-AGG-ID: nIp_h41NMvuzNubEwvxHrg_1777496600
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-134-H9sj_JB2MSy5OBqoeyZezQ-1; Wed,
+ 29 Apr 2026 17:03:15 -0400
+X-MC-Unique: H9sj_JB2MSy5OBqoeyZezQ-1
+X-Mimecast-MFC-AGG-ID: H9sj_JB2MSy5OBqoeyZezQ_1777496594
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 226C61956094
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 21:03:20 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7F355195609F; Wed, 29 Apr 2026 21:03:14 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.2])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C10B319560B6; Wed, 29 Apr 2026 21:03:18 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EDD0A1800480; Wed, 29 Apr 2026 21:03:12 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Thu, 30 Apr 2026 01:02:34 +0400
-Subject: [PATCH v3 01/26] qemu-options.hx: document -chardev vc
- backend-specific behavior
+Subject: [PATCH v3 00/26] ui: add standalone VNC server over D-Bus
+Date: Thu, 30 Apr 2026 01:02:33 +0400
+Message-Id: <20260430-qemu-vnc-v3-0-be96757428d0@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260430-qemu-vnc-v3-1-be96757428d0@redhat.com>
-References: <20260430-qemu-vnc-v3-0-be96757428d0@redhat.com>
-In-Reply-To: <20260430-qemu-vnc-v3-0-be96757428d0@redhat.com>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/1WMyw7CIBBFf6VhLQaGOqgr/8O4aGGwLPoQKtE0/
+ XdpE1Ndnpt7zsQiBU+RnYuJBUo++r7LoHYFM03V3Yl7m5mBABRKAn9Q++SpM/yECM4cNAACy/c
+ hkPOvNXW9ZW58HPvwXstJLus3ordIklzw8ki1tMbpWuMlkG2qcW/6li2VBJtZSvFjQjZByVKi0
+ 2iN+jPnef4AjHFfUtsAAAA=
+X-Change-ID: 20260312-qemu-vnc-9662fc572262
 To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1375;
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=9597;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=TCKGeNX61zdbvMDhyprN1vYtrHLQam3/ghGCoyv8Sxs=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp8nILkRBxIeIoQ4+LsCD5F6x5RBXr0ViTmuPHS
- dnYPz6Jj1aJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafJyCwAKCRDa6OEJdZac
- 5SdYEACSqBybqqDslqKprC2aPEPWqWOat0Z6rlOVHfjGtALK+w6PZXX0AiHzwOTZ/xRcHGLYcoR
- G8Ffq/xBVgwmgVE1ZLnrPScPkkMNofJpm+Yoldrzf+UL0qYSMlHABVAtwH03ZkLW2GgdJlQRcRj
- XdePk7+YLabKyeave/IMVYOE/W9LAOeUHZmdDwe0P7K1sdocgO+MLH+fRIWEvM/w+9QkfvxzxAX
- ictlpZguMX4RCxkgbuTRLhPs40WKGd1yfcuiCOwq3DFah6p1tacpy3floECNJXTNEdWBcYyoP6b
- JFSSZE6RZ/FsdlXWJyLd3sOHH/wQTlm9wHurYjK/4h8b+jAAapr88jAGAnHjJc4EXCBeaGiynos
- U6xlu8bxUrZfY1AlJb9NR4BnEkiiUUpA2R4vtYsD8YrqhFyq/ORvK/dFZL+EqmJLCSJVVhlyoue
- aWTjcyfaQvW7S/qKauUbu+Ip+ypHl1414LprtIt7wNUZLspyXnDzBs92RgtSwEKO1bxfF68n8tA
- wSv/u8vYWRLPWmf6F7T3SQJZHiyrjFs8r/GaRskdq5Id+TGHRzN9/vHo8nwzKO7GoFG1p4q+HcB
- PTceyRrIyO0L61x2s/7kf8NP1D2Dhdyb4J4HvodBq+fhtcTcGPl1N3X1B6OfS9zCX32O+WudS/W
- KmgIBmtJ8J9Y6oQ==
+ bh=XZccesYayirKxP1kNjWgcUVsDNcyuofaX912irk6JjI=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp8nIL1XvkeyA7xTCecy1qeGUcPYrYnT/S6QeZ5
+ c9tpsXoHSWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafJyCwAKCRDa6OEJdZac
+ 5VAwD/9WTvCWgVaVcgxmX1HN809EqalZyl27DR56OgWr0NYJq+Yz/dPQKHRoDKFzL8e7oSJoSBt
+ /DkaegPnP+nx8ZODr+u0q5+IjTcdN3JBoNpvgjvkb19n5lwdzJWNESv/jTXsTPPi5st9IM39sgb
+ bSCRRqrUsjW5OZ9HasVo7zskgHV/3fP/MVLC61uRUDz8wtDbWs97s5ohnKfugAtq0C4MTDRzyKI
+ AIZAXOFPZEJf0FcK9tRvBt5f+f6IItc6u/fRwVSs8KjNObhLvyutc7kChGdvM2J87mXi02oodyd
+ r8uw6PGlLByXKJGhbj6uqfnPvZnDRd3qzxQ1Hy2MxG4O93F4BlMGeNAe+BChDchdfCThhAG3exG
+ lnyjeFs/+H9A+fczKpMBZQnG30IPAfMVfRSjwfZNRjuEely2L8PEAWSNlzOYAAogAHL4Gdo+B+5
+ TsUuzkILuHCmcBKfTDvWc6gNzPEaL7e5Thpjc1T/x9Bbzqv1vKDBmZvMFTxMr8RtqqC1cnhNW5N
+ fTOdDoFjhl4s2xV1zI2WSAQQ9hTsu+vooBWHEhYdBQHgyJDOgIg/iq0vbt496N3pNIOUfgWgErk
+ 1UmUs4qp03I0iJdtbpEOYddZLydarqEhxeNzxw7CX5Yud/UdQXEo8C8vJ4lH5QLDZn7cfuR8S8B
+ TGSz9fvVjtOoF8Q==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
@@ -86,7 +88,7 @@ X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -104,41 +106,205 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The -chardev vc documentation only mentioned the built-in console with
-optional size parameters, but the actual behavior depends on the display
-backend. Document the GTK (libvte), D-Bus and spice-app cases.
+This series adds qemu-vnc, a standalone VNC server that connects to a
+running QEMU instance via the D-Bus display interface (org.qemu.Display1).
+This allows serving a VNC display as a separate process with an independent
+lifecycle and privilege domain, without requiring VNC support compiled into
+the QEMU system emulator itself.
+
+The bulk of the series is preparatory refactoring:
+
+- Clean up VNC code: merge init/open, fix leaks, simplify error handling
+- Extract and clean up VT100 emulation from console-vc into a reusable unit
+- Reorganize ui/ code: move DisplaySurface functions, vgafont, datadir
+and other pieces into their own files
+- Refactor console APIs: rename methods, simplify listener registration,
+return completion status from gfx_update
+- Extract common ui sources into a static library that can be linked by
+both the system emulator and the new standalone binary
+
+The final patch adds contrib/qemu-vnc, built when both VNC and D-Bus
+display support are enabled.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- qemu-options.hx | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+Changes in v3:
+- added "encoding" property to vc chardev, default to cp437 for <=11.0
+- keep vnc_queue_new/free()
+- added an assert(!vnc_display_find(id)) in vnc_display_new()
+- modify vnc_cleanup(), pushing some work in vnc_display_close/free()
+- drop "ui/vnc: expose vnc_disconnect_start()" patch
+- added Server.AddClient method
+- dropped dbus-vmstate patches
+- rebased, collect trailer tags
+- Link to v2: https://lore.kernel.org/qemu-devel/20260410-qemu-vnc-v2-0-231416f76dc3@redhat.com
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index e780bc2ac06..efffeaaf55e 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4277,8 +4277,17 @@ The available backends are:
-     and hub devices is not supported as well.
- 
- ``-chardev vc,id=id[[,width=width][,height=height]][[,cols=cols][,rows=rows]]``
--    Connect to a QEMU text console. ``vc`` may optionally be given a
--    specific size.
-+    Connect to a QEMU text console. The implementation and supported feature
-+    set depend on the selected display backend.
-+
-+    - The GTK backend uses libvte for the emulation and display (when available).
-+
-+    - The D-Bus backend exports the character device as a Chardev object.
-+
-+    - spice-app backend exports it as a Spice port.
-+
-+    In other cases, QEMU uses its own emulated VT100, and ``vc`` may optionally be
-+    given a specific size.
- 
-     ``width`` and ``height`` specify the width and height respectively
-     of the console, in pixels.
+Changes in v2:
+- renamed utf8_ DFA function/symbols with bh_ (Bjoern Hoehrmann) prefix
+- use "QemuVT *vt = &s->vt;" to avoid some code churn
+- use size_t for vt100_input()
+- replace back compound literal usage for QEMUUIInfo, use variable
+- add a preliminary patch to convert vnc_display_init/open() to return bool
+- add doc comment for qemu_console_{un}register_listener()
+- document GraphicsHwOps.gfx_update better
+- add "ui/vnc: make the worker thread per-VncDisplay", and free it on vnc_display_free()
+- add "ui/vnc: add vnc_cleanup()"
+- add "replace VNC_DEBUG with trace-events"
+- qemu-vnc: add sasl & authz support, doc updates
+- move qemu-vnc under tools/
+- rebased, collect trailer tags
+- Link to v1: https://lore.kernel.org/qemu-devel/20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com
 
--- 
-2.54.0
+---
+Marc-André Lureau (26):
+      qemu-options.hx: document -chardev vc backend-specific behavior
+      char: error out if given unhandled size options
+      ui/console: add vc encoding=utf8/cp437 option
+      ui/console: default vc encoding to cp437 for machine < 11.1
+      ui/dbus: expose vc encoding via D-Bus Chardev.VCEncoding interface
+      ui/console-vc: add UTF-8 input decoding with CP437 rendering
+      ui/console-vc: move VT100 state machine and output FIFO into QemuVT100
+      ui/console-vc: extract vt100_input() from vc_chr_write()
+      ui/console-vc: extract vt100_keysym() from qemu_text_console_handle_keysym()
+      ui/console-vc: extract vt100_init() and vt100_fini()
+      ui/console: remove console_ch_t typedef and console_write_ch()
+      ui: move FONT_WIDTH/HEIGHT to vgafont.h
+      ui/console-vc: move VT100 emulation into separate unit
+      ui/vnc: make the worker thread per-VncDisplay
+      ui/vnc: vnc_display_init() and vnc_display_open() return bool
+      ui/vnc: merge vnc_display_init() and vnc_display_open()
+      ui/vnc: clean up VNC displays on exit
+      ui/vnc: defer listener registration until the console is known
+      ui/vnc: add vnc-system unit, to allow different implementations
+      ui/console: simplify registering display/console change listener
+      ui/console: add doc comment for qemu_console_{un}register_listener()
+      ui/console: rename public API to use consistent qemu_console_ prefix
+      ui/vnc: replace VNC_DEBUG with trace-events
+      ui: extract common sources into a static library
+      tests/qtest: drop DBUS_VMSTATE_TEST_TMPDIR
+      tools/qemu-vnc: add standalone VNC server over D-Bus
+
+ MAINTAINERS                      |    5 +
+ docs/conf.py                     |    3 +
+ docs/interop/dbus-display.rst    |    2 +
+ docs/interop/dbus-vnc.rst        |   26 +
+ docs/interop/index.rst           |    1 +
+ docs/meson.build                 |    1 +
+ docs/tools/index.rst             |    1 +
+ docs/tools/qemu-vnc.rst          |  226 +++++++
+ meson.build                      |   17 +
+ qapi/char.json                   |   30 +-
+ include/chardev/char.h           |   21 +
+ include/qemu/option.h            |    1 +
+ include/ui/console.h             |  124 ++--
+ tools/qemu-vnc/qemu-vnc.h        |   49 ++
+ tools/qemu-vnc/trace.h           |    4 +
+ ui/console-priv.h                |    1 -
+ ui/cp437.h                       |   13 +
+ ui/dbus.h                        |    1 +
+ ui/vnc-jobs.h                    |    3 +-
+ ui/vnc.h                         |   17 +-
+ ui/vt100.h                       |   95 +++
+ chardev/char.c                   |   22 +
+ hw/arm/musicpal.c                |    4 +-
+ hw/core/machine.c                |    4 +-
+ hw/display/artist.c              |    4 +-
+ hw/display/ati.c                 |   16 +-
+ hw/display/bcm2835_fb.c          |    5 +-
+ hw/display/bochs-display.c       |   14 +-
+ hw/display/cg3.c                 |    6 +-
+ hw/display/cirrus_vga.c          |    8 +-
+ hw/display/cirrus_vga_isa.c      |    2 +-
+ hw/display/dm163.c               |    6 +-
+ hw/display/exynos4210_fimd.c     |    4 +-
+ hw/display/g364fb.c              |   10 +-
+ hw/display/jazz_led.c            |   18 +-
+ hw/display/macfb.c               |    6 +-
+ hw/display/next-fb.c             |    4 +-
+ hw/display/omap_lcdc.c           |    4 +-
+ hw/display/pl110.c               |    4 +-
+ hw/display/qxl-render.c          |   12 +-
+ hw/display/qxl.c                 |   18 +-
+ hw/display/ramfb-standalone.c    |    2 +-
+ hw/display/ramfb.c               |    4 +-
+ hw/display/sm501.c               |    6 +-
+ hw/display/ssd0303.c             |    4 +-
+ hw/display/ssd0323.c             |    5 +-
+ hw/display/tcx.c                 |   16 +-
+ hw/display/vga-isa.c             |    2 +-
+ hw/display/vga-mmio.c            |    2 +-
+ hw/display/vga-pci.c             |    6 +-
+ hw/display/vga.c                 |   56 +-
+ hw/display/vhost-user-gpu.c      |   22 +-
+ hw/display/virtio-gpu-base.c     |    4 +-
+ hw/display/virtio-gpu-rutabaga.c |   10 +-
+ hw/display/virtio-gpu-udmabuf.c  |    4 +-
+ hw/display/virtio-gpu-virgl.c    |   20 +-
+ hw/display/virtio-gpu.c          |   26 +-
+ hw/display/virtio-vga.c          |    4 +-
+ hw/display/vmware_vga.c          |   14 +-
+ hw/display/xenfb.c               |    6 +-
+ hw/display/xlnx_dp.c             |   10 +-
+ hw/vfio/display.c                |   32 +-
+ system/runstate.c                |    5 +
+ tests/qtest/dbus-vmstate-test.c  |    2 -
+ tests/qtest/dbus-vnc-test.c      | 1346 ++++++++++++++++++++++++++++++++++++++
+ tools/qemu-vnc/audio.c           |  308 +++++++++
+ tools/qemu-vnc/chardev.c         |  148 +++++
+ tools/qemu-vnc/clipboard.c       |  378 +++++++++++
+ tools/qemu-vnc/console.c         |  170 +++++
+ tools/qemu-vnc/dbus.c            |  474 ++++++++++++++
+ tools/qemu-vnc/display.c         |  456 +++++++++++++
+ tools/qemu-vnc/input.c           |  239 +++++++
+ tools/qemu-vnc/qemu-vnc.c        |  581 ++++++++++++++++
+ tools/qemu-vnc/stubs.c           |   62 ++
+ tools/qemu-vnc/utils.c           |   59 ++
+ ui/console-vc-stubs.c            |    1 +
+ ui/console-vc.c                  | 1074 +++---------------------------
+ ui/console.c                     |  173 ++---
+ ui/cp437.c                       |  205 ++++++
+ ui/curses.c                      |   23 +-
+ ui/dbus-chardev.c                |   10 +
+ ui/dbus-console.c                |   10 +-
+ ui/dbus-listener.c               |   37 +-
+ ui/dbus.c                        |   59 ++
+ ui/egl-headless.c                |    8 +-
+ ui/gtk-egl.c                     |    6 +-
+ ui/gtk-gl-area.c                 |    6 +-
+ ui/gtk.c                         |   28 +-
+ ui/sdl2-2d.c                     |    2 +-
+ ui/sdl2-gl.c                     |    2 +-
+ ui/sdl2.c                        |   14 +-
+ ui/spice-display.c               |   24 +-
+ ui/vnc-auth-sasl.c               |   13 +-
+ ui/vnc-enc-tight.c               |    4 +-
+ ui/vnc-enc-zlib.c                |    4 +-
+ ui/vnc-jobs.c                    |   62 +-
+ ui/vnc-system.c                  |   19 +
+ ui/vnc-ws.c                      |   10 +-
+ ui/vnc.c                         |  232 +++----
+ ui/vt100.c                       |  984 ++++++++++++++++++++++++++++
+ util/qemu-option.c               |   13 +
+ hw/display/apple-gfx.m           |   16 +-
+ meson_options.txt                |    2 +
+ qemu-options.hx                  |   20 +-
+ scripts/meson-buildoptions.sh    |    3 +
+ tests/dbus-daemon.sh             |   16 +-
+ tests/qtest/meson.build          |   13 +
+ tools/qemu-vnc/meson.build       |   26 +
+ tools/qemu-vnc/qemu-vnc1.xml     |  201 ++++++
+ tools/qemu-vnc/trace-events      |   21 +
+ ui/cocoa.m                       |   23 +-
+ ui/dbus-display1.xml             |   18 +
+ ui/meson.build                   |  103 +--
+ ui/trace-events                  |   29 +-
+ 114 files changed, 7113 insertions(+), 1696 deletions(-)
+---
+base-commit: 282771e1f9b9b6e0147adf5f9d676325175b1767
+change-id: 20260312-qemu-vnc-9662fc572262
+
+Best regards,
+--  
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
