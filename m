@@ -4,81 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 274DCFF8875
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 12:51:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F62CFF8875
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 12:56:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI4NI-00056Y-AX; Wed, 29 Apr 2026 08:50:44 -0400
+	id 1wI4SH-0006Al-N2; Wed, 29 Apr 2026 08:55:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ashish.a6@samsung.com>)
- id 1wI4ND-00056P-Kk
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 08:50:40 -0400
-Received: from mailout4.samsung.com ([203.254.224.34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ashish.a6@samsung.com>)
- id 1wI4NA-0003JZ-HO
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 08:50:39 -0400
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
- by mailout4.samsung.com (KnoxPortal) with ESMTP id
- 20260429125025epoutp045810accc0d201dac5f7ce85aee64ac10~q1Neae0hr3235732357epoutp04H
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 12:50:25 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
- 20260429125025epoutp045810accc0d201dac5f7ce85aee64ac10~q1Neae0hr3235732357epoutp04H
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1777467025;
- bh=GTuucdU2OAlcj8BfVn7RB5j2AhxYgooB4aQz/pOSuKY=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=cpFpCwOhROTD5K58+LYMHk3MTHM7VLSkJuk6fz2x2goa6v6s5cXLvIiKqL9kSvVG/
- PGrl5kTUkBDnq4HuECkBaMlRHQraEu8YSvv7iBbCUS3/PQQBf8wpcUGF2xPP3RC4u8
- lKvYJQlOtR93r+f64KneKtygNFZz5Sh5icLcW2+c=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
- epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
- 20260429125024epcas5p3e7721392539af2382bb2aa684decdfc7~q1NdxlKcH2886528865epcas5p30;
- Wed, 29 Apr 2026 12:50:24 +0000 (GMT)
-Received: from epcas5p3.samsung.com (unknown [182.195.38.93]) by
- epsnrtp02.localdomain (Postfix) with ESMTP id 4g5HG75jklz2SSKX; Wed, 29 Apr
- 2026 12:50:23 +0000 (GMT)
-Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
- epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
- 20260429125023epcas5p4dabb35157221f09bebfbcfea41071658~q1NcdwtgY0094500945epcas5p4i;
- Wed, 29 Apr 2026 12:50:23 +0000 (GMT)
-Received: from test-System-Product-Name (unknown [107.99.41.85]) by
- epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
- 20260429125021epsmtip2c54ca8f099b16dc45076220623e69b5b~q1Na-jgNx0179601796epsmtip2S;
- Wed, 29 Apr 2026 12:50:21 +0000 (GMT)
-Date: Wed, 29 Apr 2026 18:16:21 +0530
-From: Ashish Anand <ashish.a6@samsung.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, komlodi@google.com, clg@kaod.org,
- jamin_lin@aspeedtech.com, nabihestefan@google.com, saurabh@samsung.com, 
- vishwa.mg@samsung.com, y.kaushal@samsung.com, ashish.anand202@gmail.com
-Subject: Re: [PATCH] hw/i3c/dw-i3c: Fix incorrect BCR/DCR extraction during
- ENTDAA
-Message-ID: <exdu52mug6fh3bwj7ofo3jlltyuwjfnddxobio4w3jhaq6uv7k@boxo3j5ocef2>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wI4SF-00069n-Fw
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 08:55:51 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wI4SD-0005VA-PR
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 08:55:51 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-651b4d09141so1386803d50.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 05:55:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777467348; cv=none;
+ d=google.com; s=arc-20240605;
+ b=KSG8g+o1xIJGdof+a70DvezcNV8azKapIqRH9OmPFjwCqivG4ksXA3BMawwkIMccv8
+ oE0aNFGQw5Oi8KJnLthTlB6fhxTpoqnQ+7yrXbsFx/IwIEKqKBYdDxz/FVOMMEuQiGKS
+ BcEQFfzt8uBQCpQ1B8j3oGVWMEMvJyZli+vXa2273UBe3npLyW7Cr9TB+W3EvCCam98P
+ +u2A+bWxcGSpIwYcPgKywb9vrnf4LKCWKyXEN56aAGoXd2/vBYNa3XWcFS0PIYz+eiQX
+ X/WceVoWzSgZQRfODSiQ+YeGjL4F19MIqnC0Ba9SNiyMvkar8bpNLlk7GkgBnJlf5/l9
+ OEUw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=fkMCORstw1q/GpjWOTwzVTaXdmkD/VRw81ImyyOInAk=;
+ fh=Mz2y12wzJJW1Rmbmc0KL1Q2SaGBmA6oT2H9N5PtSfoA=;
+ b=H5KsZ/Yx+Oc7E25Oipx42ykXbxen7hQDZotFS9/Q5oaH43hjLOj1mCbrjmLfl+bX4s
+ zjkC92KunfZVTYp31KHDXg9QABJN4B1feRH4/f2+EE9OFBGZTmBPiKGxw/yjBkkulWE6
+ N3YAQCDPadEGya1caTRBWjWvekmCdhCj1abMoOyfbhZV1IR4F591xY4LgTe6JxJgvigE
+ K1GmmxHeBv787RK/lMcjXUpd8QzWoLhzNeA/8Uzy0puMGlvnrnN2y9n8aJQEb2Tub+3u
+ hqDUlZIOlUgfqwWJKgYgUodfnvYCz/YPVH+9NS2ZTB2ust/zPinx6EZ18dOLcD2x/7G1
+ IQPw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777467348; x=1778072148; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=fkMCORstw1q/GpjWOTwzVTaXdmkD/VRw81ImyyOInAk=;
+ b=wHlL5Y5pG4VOJRB7MG0hlevPWkQCFziQLudEZHfvvu6wC0VRNezM9ELtwOSHn8+1Wm
+ LxklsKUpJvAmPsNTWeOMEieGk/EU3RVNWt4WKu0QyA+0BHoONBz/MNwiZ6Ivt4Ena4Em
+ aKYk02bk7NqJgsW79utk1rxRbhZ6npM60FBxjQea9a9scau1iTWrMFpwv8UgsQk57YC5
+ gcKwgv+kg0X1hLI3nrEMvkvc8CkvWs88oVETdk7HD999N3XbjPvmYljgarM2Ga2+qn4l
+ xR3evBIeKTNfWEG9tXY30I2BIhLxZa9fQM8j6EFSa6QhBoEzsf5Blt8Q+m09UUfCZoLz
+ 91UA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777467348; x=1778072148;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fkMCORstw1q/GpjWOTwzVTaXdmkD/VRw81ImyyOInAk=;
+ b=diLrK3/XdV7JP4j83C8H7XOPBLUNc9+0F4Yd9nchq8WAwj/jIa4boMpSC4a4CtKUKf
+ N9tWRq81KcJgdzUQtpcboJQeMKRfTvZsOEctaiL9B3I2Y6Fs7HmzPQzJ3B/EVEfW+GAr
+ k5nVPr+5LOMM+M/wgiOC1fCTicvAkoYlxvDjLDFZf97LP28SeyWMpsU56jqqZZ+DLxMa
+ 4obhMlucQ0cO78uV0VpB09pvQU8Nierhboxr+VNOY4O2dwYwJ6HzZVmZsMeOAniWYfmI
+ Z5s9i91nor0jjs5Hf5YvQGWmHZ+1/5DP+SxeRZpO8Qgrhute2DdOTbbBPq8TTKyFObBY
+ IRPw==
+X-Gm-Message-State: AOJu0Yx48U4RE3GBVzDz3gLniVoHV7D6LbjI1rTAG8FMh85xQrk0xYom
+ Y37cNieIPyTHe+1MRQrX6u4eCJSCAPHzX2ru3At7Mut8JcmZg8oE2WkIts3CcoJ/Z8gQ7VRNSCq
+ 4rmWSzzw284PzOSCL7XDysNmFA6n5mdHlv5qjn/4ZPQ==
+X-Gm-Gg: AeBDiet49Nutk6tYzcZL8jWAfPiMoGc+MfsKxVQuP7at0PRlx13CXUSRDJi1c02srOR
+ 3uj37Lkc3Nup/kAZe9coIgSrGeOQrhlp8E7DAUj8l8bHSwYzSgBjukI9KJJ/1fVhh6HbUA98itT
+ iqdDOAwK/hTxKSoSOdQnwavpZuYPIQuN0sb+WLWcT3v3uwfr7QXx2OpvWbgUfIwNwNleUVO2T4q
+ TvZFEhHU/3pj0xjVyP8By4oiDEFoyjBcR99qtAUg9XIrg+Le7iONUQUfX36dkdyLvNFOWHECFEO
+ 0Sz0IEJvBPJZnNvF0Cv/4RZTZcOHi+HYExGjMyZuP4QH3X3BFA1lSgD1Qy4JzDu/yliRYhdUVUN
+ /rg==
+X-Received: by 2002:a05:690e:4091:b0:657:a0f4:ac7b with SMTP id
+ 956f58d0204a3-65bff4263d9mr2028601d50.34.1777467347695; Wed, 29 Apr 2026
+ 05:55:47 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <a19adcf8-de59-4c34-8e19-0234fa8e68d1@linaro.org>
-X-CMS-MailID: 20260429125023epcas5p4dabb35157221f09bebfbcfea41071658
-X-Msg-Generator: CA
-Content-Type: multipart/mixed;
- boundary="----NsOwSKzRCMo1F7NCLP8h0BXJf.fS38eRA1mrMVinGGpiNbWw=_fa53_"
-CMS-TYPE: 105P
-cpgsPolicy: CPGSC10-542,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20260428102910epcas5p3980610701ef7374b681f74d75bc34f29
-References: <CGME20260428102910epcas5p3980610701ef7374b681f74d75bc34f29@epcas5p3.samsung.com>
- <20260428102503.1641162-1-ashish.a6@samsung.com>
- <a19adcf8-de59-4c34-8e19-0234fa8e68d1@linaro.org>
-Received-SPF: pass client-ip=203.254.224.34;
- envelope-from=ashish.a6@samsung.com; helo=mailout4.samsung.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260429122845.2119072-1-physicalmtea@gmail.com>
+In-Reply-To: <20260429122845.2119072-1-physicalmtea@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 29 Apr 2026 13:55:34 +0100
+X-Gm-Features: AVHnY4KaeB9L-D9V76cFF0OT_CHNlLnwjglyxnEfzHvm20Q7xDJxEAcTxBwiNsw
+Message-ID: <CAFEAcA_DnrvSCVY3f2q=3OnXt0+708BcwSJ=KhMn1t3sbbXQbg@mail.gmail.com>
+Subject: Re: [PATCH] hw/cxl: bound remaining Set Feature writes
+To: Jia Jia <physicalmtea@gmail.com>
+Cc: qemu-devel@nongnu.org, jonathan.cameron@huawei.com, fan.ni@samsung.com, 
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,65 +115,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------NsOwSKzRCMo1F7NCLP8h0BXJf.fS38eRA1mrMVinGGpiNbWw=_fa53_
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Transfer-Encoding: 8bit
-Content-Disposition: inline
-
-On 28/04/26 01:54PM, Philippe Mathieu-Daudé wrote:
-
-Hi Philippe,
-Thanks for the review.
-
->Directly use .b[] instead of .pid[]?
-Will drop the anonymous struct and use .b[] directly in v2.
-
->Or (untested):
+On Wed, 29 Apr 2026 at 13:46, Jia Jia <physicalmtea@gmail.com> wrote:
 >
->           dcr = target_info.b[0];
->           bcr = target_info.b[1];
-
-On BCR/DCR indices: using b[6] for BCR and b[7] for DCR per the ENTDAA frame diagram in the I3C v1.1.1 databook.
-
-
->           pid = extract64(be64_to_cpu(target_info.d), 16, 48);
+> Commit c1c4d6b38b13 added offset + length checks for the
+> patrol_scrub and ecs Set Feature branches, but the remaining
+> branches still copy mailbox payload data into fixed-size
+> write-attribute objects without the same validation.
 >
->or:
->           pid = be64_to_cpu(target_info.d) >> 16;
-
-On PID assembly and the be64_to_cpu suggestion:
-The current loop (j * 8) was written assuming t->pid holds the logical
-value (e.g. 0x0000AABBCCDDEEFF with AA as MSB). core.c sends using
-(offset * 8) which puts the LSB on wire first, so the loop recovered the
-original logical value end to end.
-
-For spec compliance (pid[47:40] on wire first), given that core.c uses
-(offset * 8), t->pid must be stored pre-reversed by the target modeller.
-With that assumption be64_to_cpu >> 16 correctly recovers the logical pid
-on the controller side on both LE and BE hosts. Will adopt this in v2 and add
-a comment to i3c.h documenting this requirement for t->pid.
-
+> A full mailbox payload can still reach rank_sparing and overrun
+> CXLMemSparingWriteAttrs on current master. With an ASan build
+> this aborts the host process with:
 >
->>+        dw_i3c_update_char_table(s, cmd.dev_index + i, pid, target_info.bcr,
->>+                                 target_info.dcr, addr);
-
-Also found a pre-existing bug in dw_i3c_update_char_table() - PID is
-split at bit 32 but spec DCT layout (verified from databook) requires the
-split at bit 16:
-     LOC1 = pid[47:16]    (pid >> 16) & 0xffffffff
-     LOC2 = pid[15:0]     pid & 0xffff
-Will fold this fix into v2.
-
+>   ERROR: AddressSanitizer: heap-buffer-overflow
+>   WRITE of size 2016
+>       #0 __interceptor_memcpy
+>       #1 cmd_features_set_feature ../hw/cxl/cxl-mailbox-utils.c:1908
+>       #2 cxl_process_cci_message ../hw/cxl/cxl-mailbox-utils.c:4622
+>       #3 mailbox_reg_write ../hw/cxl/cxl-device-utils.c:209
 >
+> Apply the same offset + length validation to soft_ppr,
+> hard_ppr, cacheline_sparing, row_sparing, bank_sparing, and
+> rank_sparing so oversized requests fail with
+> CXL_MBOX_INVALID_PAYLOAD_LENGTH instead of overflowing the
+> write-attribute buffers.
+>
+> Add a qtest covering the rank_sparing path.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3458
+> Signed-off-by: Jia Jia <physicalmtea@gmail.com>
 
-Will send v2 shortly.
+I don't think we should mix refactoring with this bug fix,
+but I do notice there's a lot of very repetitive looking
+code in this function, which is why the patch has to add a
+length check in six different places, and any new feature
+type will have to add another one. maybe there's a way to make
+it less awkwardly repetitive...
 
-Thanks,
-Ashish
-
-------NsOwSKzRCMo1F7NCLP8h0BXJf.fS38eRA1mrMVinGGpiNbWw=_fa53_
-Content-Type: text/plain; charset="utf-8"
-
-
-------NsOwSKzRCMo1F7NCLP8h0BXJf.fS38eRA1mrMVinGGpiNbWw=_fa53_--
+thanks
+-- PMM
 
