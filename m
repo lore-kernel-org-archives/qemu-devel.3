@@ -4,72 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B302ACCFA13
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:10:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00B9BFF8875
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 21:19:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIC9N-0007MN-H2; Wed, 29 Apr 2026 17:08:53 -0400
+	id 1wICJ9-0003fG-Ul; Wed, 29 Apr 2026 17:18:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wIC9I-0007Io-Dv
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:08:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wIC9G-0004DH-DW
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:08:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777496925;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=PAIy/s8R/WGvTm75Mfk/jdXNHMzsKjhVZ/kEIqB/i3E=;
- b=IQKXvQBpkP5mqinLvUAqM7rsGl7XioP94UJVbw0buV9SHgCupkbQFszPg3xxcyhJISxbLW
- 4t2gUnyPfkyEagPMXBdCGb49cFTx+hLeBd5Jz6J7q+gcqY8tg/497JWWPJ1BeJx0JPrbMq
- Djpy+4Lsnj+r7SUTrXsu2DbufE0NmDY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-57sK7GgFNOG1jUrOi3XxbA-1; Wed,
- 29 Apr 2026 17:08:43 -0400
-X-MC-Unique: 57sK7GgFNOG1jUrOi3XxbA-1
-X-Mimecast-MFC-AGG-ID: 57sK7GgFNOG1jUrOi3XxbA_1777496922
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4C7391800347
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 21:08:42 +0000 (UTC)
-Received: from berrange.com (unknown [10.44.48.62])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D0791300019F; Wed, 29 Apr 2026 21:08:40 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 4/9] qom: shorten name of object_set_properties_from_keyval
-Date: Wed, 29 Apr 2026 22:08:25 +0100
-Message-ID: <20260429210830.594724-5-berrange@redhat.com>
-In-Reply-To: <20260429210830.594724-1-berrange@redhat.com>
-References: <20260429210830.594724-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wICJ8-0003f7-Us
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:18:59 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wICJ7-0005pU-3s
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 17:18:58 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-35fc2b18363so209299a91.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 14:18:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777497535; x=1778102335; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tttFjNJDScdOZ7d6FSNF16frydDmhALEyz/A74P/348=;
+ b=QpnoXdb1m6NCRCMUdVTJ51vgFZICE8AMK2mXSGuxA11mOChC0GT175atBjcfZUVUZi
+ RQFPDMg4j/4ngZmht+vkWKLVKqk6ELNIN1J1Vy4vYzJLEbarP+nFM+rNNpX4cuZY7wB8
+ 4NFjBRLZ0GoWf3FCoJEHuWq6+ww8hOQzxCIWUJhxIrIf2C5UIwON90CWEBUobJAiCziS
+ RJ3qDGonLT6AbSC9tvI7N8TIRUG6Y9bzmh6jTgMnC1gqpFp75LJRr5aemuSOD/WoJLyb
+ No8rrBqbSQ9LWN1lDmVabPojgYxUF7suMzXrRzcA84RJoG87+LyYhGr7fJooVceAY1Gr
+ SGcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777497535; x=1778102335;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=tttFjNJDScdOZ7d6FSNF16frydDmhALEyz/A74P/348=;
+ b=Qe2whHG8dQ9GIAnqeIJULDxTBOgzv+yjInabRVPd/vuPNXRAOiNE1geNopf+VZQYDQ
+ klaWbYkYXL01q+CNfK5E7JNIFRFzyIfbYSKwJ3oZrGxzHrWGrYLP9jVCx2zprl1yE4X3
+ eZcVl+98+Lj+ty40zuHq/zvxNwfI766+mgqrTgTYxEPMRLcIjuFHsBfRPzx2aM3OK+ZS
+ 4iPozusEy8nO9IbnnYnZFsR8Vo/TM0p6kb6OEDoyN42fDT9f+9aqmfys/uj3qFfQJU+u
+ S87ctb/Z2waI44P7giyYMZoYfnxmofPEAc7YLr3uAETyCVqAvucCUGSHiG50rRqLgflp
+ WBag==
+X-Gm-Message-State: AOJu0YyS/CzpPWElX9Qo9R9MMPCe0Z8hLBu+Dfa1ib7y740zFi7g+reg
+ wAb6Tge4Eg3pScKez5BQcXCYrtazDL6f8v5bI6BN/MzzWLlviGQbmof82/4RdWMTL2k9C9ar3kE
+ VeaaNAow=
+X-Gm-Gg: AeBDievxFT+jTLDX65+84jmt4/XfGSm0opxwj76wp/o5IvX208YbJw0NGt+8ORmT2pd
+ aRa6zHNAEVb6BxTfF17xjIeynF/zyaoKZSyaA2Ccz1IpVpdiLGEyKCYCTOK6Q0dnqBel0iqm8w/
+ BUGJuAU264M3M7+FyIVlq1dfLPretFIGflusHDwwhCtKq7o2QK5lNMa2MSCUmSPGnTyLL/KPz7d
+ BGK5LagnOToXae5kybSuisMkSuRK7wQHhH6lRJyZL0whUTkgvFyTGSKTODta4lXx+6MHpuH/pos
+ qcvJuWIgqEBCM3m4SGDEVKSLCizbGJxH3uz2is81QH5o2kcgwV9eLHOm0+DiBeRTQ6vYqJht2ut
+ PlFXaKJPPM7Vdvpmvu55kWuV4tU01YyzRgn/Zdqcvt7wclnwXLohFRfmhaxAKUNoU+/7GlRCAdu
+ XM30k89PDEswLRAHlQG8Ikb598xad/cfvoJBV78cAn4PUep0UO17JH
+X-Received: by 2002:a17:90b:2803:b0:35f:b6d3:da7a with SMTP id
+ 98e67ed59e1d1-364c306430dmr2858a91.15.1777497535150; 
+ Wed, 29 Apr 2026 14:18:55 -0700 (PDT)
+Received: from [192.168.10.140] ([180.233.125.15])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-c7fd64f219dsm2935065a12.18.2026.04.29.14.18.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 29 Apr 2026 14:18:54 -0700 (PDT)
+Message-ID: <97129d63-fe70-41f5-a103-61a7f6fd51d7@linaro.org>
+Date: Thu, 30 Apr 2026 07:18:49 +1000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] target/or1k: fix gen_mulu using signed multiply for
+ unsigned operation
+To: qemu-devel@nongnu.org, Stafford Horne <shorne@gmail.com>
+References: <20260429170519.2137725-1-joel@airwebreathe.org.uk>
+ <20260429170519.2137725-2-joel@airwebreathe.org.uk>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260429170519.2137725-2-joel@airwebreathe.org.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,126 +104,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This matches the convention established by the object_set_props and
-object_set_propv methods.
+On 4/30/26 03:03, joel--- via qemu development wrote:
+> From: Joel Holdsworth <jholdsworth@nvidia.com>
+> 
+> gen_mulu() uses tcg_gen_muls2_i32 (signed widening multiply) but it
+> implements the l.mulu instruction which is an unsigned multiply.  The
+> low 32-bit result is the same either way, but the high word written to
+> cpu_sr_cy (used for carry/overflow detection) will be incorrect when
+> the sign bits of the operands differ.
+> 
+> Switch to tcg_gen_mulu2_i32 so the carry flag is computed correctly.
+> 
+> Signed-off-by: Joel Holdsworth <jholdsworth@nvidia.com>
+> ---
+>   target/or1k/translate.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/or1k/translate.c b/target/or1k/translate.c
+> index eb4485312f..1602e204fe 100644
+> --- a/target/or1k/translate.c
+> +++ b/target/or1k/translate.c
+> @@ -269,7 +269,7 @@ static void gen_mul(DisasContext *dc, TCGv_i32 dest,
+>   static void gen_mulu(DisasContext *dc, TCGv_i32 dest,
+>                        TCGv_i32 srca, TCGv_i32 srcb)
+>   {
+> -    tcg_gen_muls2_i32(dest, cpu_sr_cy, srca, srcb);
+> +    tcg_gen_mulu2_i32(dest, cpu_sr_cy, srca, srcb);
+>       tcg_gen_setcondi_i32(TCG_COND_NE, cpu_sr_cy, cpu_sr_cy, 0);
+>   
+>       gen_ove_cy(dc);
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- include/qom/object.h    |  6 +++---
- qom/object_interfaces.c | 12 ++++++------
- system/qdev-monitor.c   |  4 ++--
- system/vl.c             |  7 ++++---
- 4 files changed, 15 insertions(+), 14 deletions(-)
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index c7d80914fb..d841c338a2 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -915,7 +915,7 @@ type_init(do_qemu_init_ ## type_array)
- bool type_print_class_properties(const char *type);
- 
- /**
-- * object_set_properties_from_keyval:
-+ * object_set_props_from_keyval:
-  * @obj: a QOM object
-  * @qdict: a dictionary with the properties to be set
-  * @from_json: true if leaf values of @qdict are typed, false if they
-@@ -925,8 +925,8 @@ bool type_print_class_properties(const char *type);
-  * For each key in the dictionary, parse the value string if needed,
-  * then set the corresponding property in @obj.
-  */
--void object_set_properties_from_keyval(Object *obj, const QDict *qdict,
--                                       bool from_json, Error **errp);
-+void object_set_props_from_keyval(Object *obj, const QDict *qdict,
-+                                  bool from_json, Error **errp);
- 
- /**
-  * object_class_dynamic_cast_assert:
-diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-index 415cbee8c5..4377d65b76 100644
---- a/qom/object_interfaces.c
-+++ b/qom/object_interfaces.c
-@@ -44,8 +44,8 @@ bool user_creatable_can_be_deleted(UserCreatable *uc)
-     }
- }
- 
--static void object_set_properties_from_qdict(Object *obj, const QDict *qdict,
--                                             Visitor *v, Error **errp)
-+static void object_set_props_from_qdict(Object *obj, const QDict *qdict,
-+                                        Visitor *v, Error **errp)
- {
-     const QDictEntry *e;
- 
-@@ -62,8 +62,8 @@ out:
-     visit_end_struct(v, NULL);
- }
- 
--void object_set_properties_from_keyval(Object *obj, const QDict *qdict,
--                                       bool from_json, Error **errp)
-+void object_set_props_from_keyval(Object *obj, const QDict *qdict,
-+                                  bool from_json, Error **errp)
- {
-     Visitor *v;
-     if (from_json) {
-@@ -71,7 +71,7 @@ void object_set_properties_from_keyval(Object *obj, const QDict *qdict,
-     } else {
-         v = qobject_input_visitor_new_keyval(QOBJECT(qdict));
-     }
--    object_set_properties_from_qdict(obj, qdict, v, errp);
-+    object_set_props_from_qdict(obj, qdict, v, errp);
-     visit_free(v);
- }
- 
-@@ -110,7 +110,7 @@ Object *user_creatable_add_type(const char *type, const char *id,
- 
-     assert(qdict);
-     obj = object_new_with_class(klass);
--    object_set_properties_from_qdict(obj, qdict, v, &local_err);
-+    object_set_props_from_qdict(obj, qdict, v, &local_err);
-     if (local_err) {
-         goto out;
-     }
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 1ac6d9a857..bbbab5acae 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -721,8 +721,8 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
-     qdict_del(properties, "bus");
-     qdict_del(properties, "id");
- 
--    object_set_properties_from_keyval(&dev->parent_obj, properties, from_json,
--                                      errp);
-+    object_set_props_from_keyval(&dev->parent_obj, properties, from_json,
-+                                 errp);
-     qobject_unref(properties);
-     if (*errp) {
-         goto err_del_dev;
-diff --git a/system/vl.c b/system/vl.c
-index 0e1fc217b4..c599ee57b9 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2007,7 +2007,8 @@ static bool object_create_early(const char *type)
- 
- static void qemu_apply_machine_options(QDict *qdict)
- {
--    object_set_properties_from_keyval(OBJECT(current_machine), qdict, false, &error_fatal);
-+    object_set_props_from_keyval(OBJECT(current_machine), qdict,
-+                                 false, &error_fatal);
- 
-     if (semihosting_enabled(false) && !semihosting_get_argc()) {
-         /* fall back to the -kernel/-append */
-@@ -2222,8 +2223,8 @@ static void qemu_create_machine(QDict *qdict)
-             keyval_parse(machine_class->default_machine_opts, NULL, NULL,
-                          &error_abort);
-         qemu_apply_legacy_machine_options(default_opts);
--        object_set_properties_from_keyval(OBJECT(current_machine), default_opts,
--                                          false, &error_abort);
-+        object_set_props_from_keyval(OBJECT(current_machine), default_opts,
-+                                     false, &error_abort);
-         qobject_unref(default_opts);
-     }
- }
--- 
-2.54.0
-
+r~
 
