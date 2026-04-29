@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C5CFF8864
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 04:50:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B49FF8867
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 04:50:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHwrH-0001M6-1s; Wed, 29 Apr 2026 00:49:11 -0400
+	id 1wHwqU-0000wu-0b; Wed, 29 Apr 2026 00:48:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHwrF-0001Kt-E6
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:49:09 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1wHwqS-0000wc-5L
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:48:20 -0400
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHwrD-0008Lz-Qf
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:49:09 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2b9705613ddso16498695ad.1
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 21:49:07 -0700 (PDT)
+ id 1wHwqP-00087Y-Vd
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:48:19 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-c76c60c7502so197317a12.0
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 21:48:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777438146; x=1778042946; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777438096; x=1778042896; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CvgZDDVcfV8DLmoSwqxj+6lV+VN16zkZ0t0yAAk4yH4=;
- b=R2uXS83b7aVfhSyZLH/hmDazZiuLInWzeWuedNA8PS3NxjRERE3pI9V2fkHl/Qom4l
- 1Tcv/PN5yYV5NAPnyVHg7pAimUtQ6NToOIxK4OLVU0LzuMxW8qIfWaJUH/SWm4IiNjhT
- HG+deM9YpjXk5LrYubl+wB5MwiPY4+PXboAgtDYxJES0F/31Hv0OuYhN52yAxGSm5U+U
- JVNeIpSoDlFwV5S2GmTwix6mQZfM5VTkgCpvkW3XlUyYrJHTx4Q2lWDsZa8vIZp2pOcT
- yaWg9gkIgC6XsKUY1+0F8dIxuoYTkzZZGaxnTT1R1KVhhD2QgeSg7oEGskBFnNsh1MRx
- PNog==
+ bh=up6skKqJSQQNZDXlNUFBGctHSex7FpmhenPiP1DwEl0=;
+ b=XGcsUc7yjmkpakthUY1UqVi8AJo9VC2sa4LwQ1s9gNG62kzkW6ZWFik4BGtCQgeZit
+ tiKg75qv2eqZXZSMt/TsY36pY02j8FR1/DhePEJ+6IEtS33Gu12U2W7FZksgfBY2o7fv
+ imSQDZmKBVCjIVQBGTuPLs9kvzWvRrYz6w+1NySl0oIshaiHoSIeZx4XCZ5+u4kbBD23
+ xXlUxCQbKDIkqdmWIkV+u7glcN2hYjHSE6GLDIIZVFcFUWWOd5xQ1pzC/57jQGiE7eKU
+ lYlNWJbGCLPOaTspOhMmWCt7NmNG1edMm6YVojr6ZWRKcmYEygZlp0c8tDxLkabGOBFN
+ /nNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777438146; x=1778042946;
+ d=1e100.net; s=20251104; t=1777438096; x=1778042896;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=CvgZDDVcfV8DLmoSwqxj+6lV+VN16zkZ0t0yAAk4yH4=;
- b=JibmKz2P4le6Jcdv9Yc7fvWzyndNPER+pJoiqn4YN02LPTuiwxh5QJ1ToavZkF8KUb
- fZ7FVifr/3bE5w337Gw7ZZwWM9jPlRRW1RDXt1OzhOF+e/n1eeulx02R0CRMtXbRnhbG
- rEE2+d03fpPtW4As5ByArWdJ3VJwe79FX3U4b0t9LmGpeKHCXGCH3lPQJc1SteBSNLwW
- PIGF/xXzPqZHDMdX0eJY1bK8U2l/pE/YjJ9LyrqDQjwC0dV862GiraLdcdvXZHBO3t7o
- E+Wy7zjALbYQIyxAPK+73XCchYxhWG/SiCdLzLNrGsxjIN7Niia7ak6n+ht/zHDkUfil
- yRVg==
+ bh=up6skKqJSQQNZDXlNUFBGctHSex7FpmhenPiP1DwEl0=;
+ b=OvNMc5NifPv1kliLJyduHiuCXX1c6kIVxQ06OtMh+HjnhP3U+5xlSwlbKMNBRS95YE
+ oX8QzAHrZVL8aSlGzzrtfWjecdmq2lxeD5zK0cG++XjM/RgG9oGn7KDNbX+XFpjuDSEi
+ ZBPcssv3yQmSbJy3AjQP8PKI4LYB1vzlPdqJhyMPdFjyGikCLP/FMevKpjcF4JSmVYH3
+ HCdj8CMLfFZjI8jk3rdndYPhDh43aj91LAWAeRJt+aWkGqeud/RX+aXSrSu7lh3VADY5
+ 3Gjz5ycKIsZRAJUhrkBqzsWTRg4oaA+IhV1o2MMYv7kZ+/KNVLbJ1IgEmKEH97iF273U
+ +sBg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/+hkydnOXpUa5dxsZZull3IOHdQcKZCq8pZ3yzoyrwVIsNolCt0pZu1P6mslAdR2sjB3eF7ggr4y+L@nongnu.org
-X-Gm-Message-State: AOJu0Yzbiotu8ZPP12yssWo4TDRPXTqygd7V4GSSVRwP38azu2fDE9PW
- 1mAdHaiRHHqbwX3LIFU8ONDwHQ35OKgwE54EXf0bcVnzCUaglwwQBV6i
-X-Gm-Gg: AeBDieuyWMd6MIQcCQ7TRWhXlwFMz/OYdUKUsS0NSRHaFJ65n9K8Rs4cG/Xaro3yZ27
- 4Bp9PoYoSwYqNVtoWs+gTCmksKEIeW/6gXFjNVxNr1u5SrbBJUvj2p/d997TJzgBDTcdKtO8Ezl
- nUUS+4iF/BkmZwyYmkxStA0Y0nLqhP9+0VGtESv31Q1IISa/u5x4u4fNgyHDDpd4A9KEJXn103k
- Kw+4295A4p5GwhF2kF2obTgtjEPHTAfWG0KfHnq8ykTBS8M52hmQ9Au3l8WUXGUL1jhB8Jt3oyW
- AmgWrEGAtrSdmZYvFD0QATKNeatnz9/ZC5ShUuo7UI2ygm6aAdFc0gSD5aCfnHPmP9Kf+nNGFI0
- RxZKsxC4yRX/WmOBRHPLiDRYuSGLmHsECEoqzugmQwG+H2M01NsS9fxKaiER1LM2eO9ut55PqvY
- QTJnyOIFDaaPr+3iGMnt5HFmndMb60JmCbtCSevxM/hfSAHB7VXcSq
-X-Received: by 2002:a17:902:eec2:b0:2b4:5f67:5914 with SMTP id
- d9443c01a7336-2b987442b4fmr16318365ad.33.1777438146530; 
- Tue, 28 Apr 2026 21:49:06 -0700 (PDT)
+ AFNElJ9JcHxhcSWD6EXU6AsuXyZeC9hJ8y+JVhcMHktjaTulichR4MmIFRo4hX/lZhXpgkOVfQBRR5dvg+Pu@nongnu.org
+X-Gm-Message-State: AOJu0YyDYkPwL/3K7WA3RTtsorTtrqFotcl8reJN+Q4mFLgdBmP6ZOS0
+ tchu2rEOTye9bvz+Qg2vaIt5ox2k7GTy64wkw6JWrpOoNZf7s/oesxtn
+X-Gm-Gg: AeBDiesokmrLxOnfqVZzTo3Ciq1SxZ8gaAUzzFq1JBLi8cBj7TxRgbPk09b3HHx/4r3
+ D2O/8iXWrRu0ga8m9dme6oO1OEQCscSZ2whwRXg7YISBTqZIHbgtqB2CnZp6WD2ROKPNXrvvNbd
+ yxQ+UJlacblFV9T+mLnNJmEzY9413wPLk65koU5vnmXWjdARF654hWukR2rkcH2iPDW5S2p+B77
+ eoI76YMcXs31ylrqtNyx/KIZdAWT91B6ZxsrJ4xCM75co4EXlB1fuMlBCgu/uUngfzv9th5qEUb
+ 5BLQBMB1xO/h6CgOOotcE61Bt13SSTcIOQ7vOldGTWNC7U6xG+npZ7MvV6DCVsfC5lW3q2s2Zq1
+ s0NIYbQYECMkXHGATyXLvBlSslHrcI30mG2jf0pkRnT0B6LEoLVNNerjFpy6yXC5COEGD6Vn4sH
+ kQcvajg/ul7RfFfIKooQquSVO17/nKeUEJMNWbIYwXWYXtdCWdl7rs
+X-Received: by 2002:a17:903:2b0b:b0:2b9:6cde:c34b with SMTP id
+ d9443c01a7336-2b988238921mr15113085ad.15.1777438096502; 
+ Tue, 28 Apr 2026 21:48:16 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b988772ae8sm7756145ad.7.2026.04.28.21.49.02
+ d9443c01a7336-2b988772ae8sm7756145ad.7.2026.04.28.21.48.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Apr 2026 21:49:06 -0700 (PDT)
+ Tue, 28 Apr 2026 21:48:15 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
  qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: alistair23@gmail.com, Jay Chang <jay.chang@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>, Nutty Liu <nutty.liu@hotmail.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 11/51] target/riscv: Simplify riscv_cpu_gdb_write_register()
-Date: Wed, 29 Apr 2026 14:47:12 +1000
-Message-ID: <20260429044752.4176397-12-alistair.francis@wdc.com>
+Subject: [PULL 01/51] hw/riscv/riscv-iommu: Use standard EN_PRI bit for PRI
+Date: Wed, 29 Apr 2026 14:47:02 +1000
+Message-ID: <20260429044752.4176397-2-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260429044752.4176397-1-alistair.francis@wdc.com>
 References: <20260429044752.4176397-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,62 +107,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Jay Chang <jay.chang@sifive.com>
 
-Use a single ldn() call, sign-extend once.
+Replace the temporary custom extension bit (TC[32]) with the
+standard EN_PRI bit defined in RISC-V IOMMU specification.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Jay Chang <jay.chang@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
+Signed-off-by: Jay Chang <jay.chang@sifive.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260318103122.97244-9-philmd@linaro.org>
+Message-ID: <20260325014856.58948-1-jay.chang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/gdbstub.c | 25 ++++++-------------------
- 1 file changed, 6 insertions(+), 19 deletions(-)
+ hw/riscv/riscv-iommu.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-index be42566bcc..a5c1263878 100644
---- a/target/riscv/gdbstub.c
-+++ b/target/riscv/gdbstub.c
-@@ -84,33 +84,20 @@ int riscv_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
-     RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cs);
-     RISCVCPU *cpu = RISCV_CPU(cs);
-     CPURISCVState *env = &cpu->env;
--    int length = 0;
--    uint64_t tmp;
-+    const size_t regsize = mcc->def->misa_mxl_max == MXL_RV32 ? 4 : 8;
-+    uint64_t tmp = ldn(env, mem_buf, regsize);
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index c3c9ed6469..8476405d0e 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -1572,11 +1572,8 @@ static int riscv_iommu_translate(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+     riscv_iommu_hpm_incr_ctr(s, ctx, RISCV_IOMMU_HPMEVENT_URQ);
  
--    switch (mcc->def->misa_mxl_max) {
--    case MXL_RV32:
--        tmp = (int32_t)ldn(env, mem_buf, 4);
--        length = 4;
--        break;
--    case MXL_RV64:
--    case MXL_RV128:
--        if (env->xl < MXL_RV64) {
--            tmp = (int32_t)ldn(env, mem_buf, 8);
--        } else {
--            tmp = ldn(env, mem_buf, 8);
--        }
--        length = 8;
--        break;
--    default:
--        g_assert_not_reached();
-+    if (env->xl < MXL_RV64) {
-+        tmp = (int32_t)tmp;
-     }
-+
-     if (n > 0 && n < 32) {
-         env->gpr[n] = tmp;
-     } else if (n == 32) {
-         env->pc = tmp;
-     }
+     iot_cache = g_hash_table_ref(s->iot_cache);
+-    /*
+-     * TC[32] is reserved for custom extensions, used here to temporarily
+-     * enable automatic page-request generation for ATS queries.
+-     */
+-    enable_pri = (iotlb->perm == IOMMU_NONE) && (ctx->tc & BIT_ULL(32));
++    enable_pri = (iotlb->perm == IOMMU_NONE) &&
++                 (ctx->tc & RISCV_IOMMU_DC_TC_EN_PRI);
+     enable_pid = (ctx->tc & RISCV_IOMMU_DC_TC_PDTV);
  
--    return length;
-+    return regsize;
- }
- 
- static int riscv_gdb_get_fpu(CPUState *cs, GByteArray *buf, int n)
+     /* Check for ATS request. */
 -- 
 2.53.0
 
