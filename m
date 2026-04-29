@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E31FF8875
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 20:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E978FCCFA13
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 20:06:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIB7w-0003WQ-Bj; Wed, 29 Apr 2026 16:03:20 -0400
+	id 1wIB7t-0003VA-VN; Wed, 29 Apr 2026 16:03:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joshualant@gmail.com>)
- id 1wI5QX-0008KH-Py
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:12 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1wI5QR-00087f-82
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:03 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joshualant@gmail.com>)
- id 1wI5QV-0007if-Bp
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:09 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-43cfd832155so9244876f8f.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 06:58:06 -0700 (PDT)
+ id 1wI5QP-0007h4-7G
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:02 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-488b0046078so113902205e9.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 06:58:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777471085; x=1778075885; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777471079; x=1778075879; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dISlLOgELyvKWF7YlFcG2dTrk3AD7+Q7q5PPE/Lrnp4=;
- b=AY1XTYdY7q6ngV4c/WA1GN6v1TNY8SZUOuypAlo/qOH1dARMzQcJhL1adKyeULerQf
- hImhofaznjYfd9GYENlHHAHCE6mazZR3DN33PNMxqUeBaa+FbgPTeEB3YQNI+cTKuXXd
- xOQnOu9X8lUKxwnafiJYR4Hs1FV7OCSdnDKN36Edo7A0mndYYp7p4E7rFObEF4ey8jJ0
- fVuPSPCQmNdhbCnRQ5GKYHAzy1S71ER/OtdDUGBkmyzLBxZE+kZr4MXswxiZlnuE1aMb
- 3zVm0luerjVFvEvmGbrSUWguVMyPMhlK8uMtRt4pUUnnmxtnXMA/esGvkbbBGWeKZsIC
- VjSg==
+ bh=6CTSBzsBgkNvhDnVz+9h4ZL7e9PYIu5uJhtdDT/D+nI=;
+ b=UwEqwGh2PYO4Gre5r7ocHwshvBFK4kVDivUiqWB8cOSpkA+bSilWJk7rWDdx5dcazT
+ xpvJ9WdyCTrF4l4VJBNKJJ1SFN6o8xJajZkQa3nuEUK67JOHbKWqU9CkMsGA2+NoSKsB
+ +UEjzOIFW+HNxlpIYIewF2m7bBP0khBLNZ2hXatTu+3l4b0eKD28eTU37ljm9xFRPsMZ
+ loaM8rdlp2EIxKi0QMiBPo4syP1e/04kljBAsoP668qV3pzaICYJ3SzrxRZwWGVkoG7U
+ DLiVucsfGkunMxE8ephG61jjIW/MjT3/JKgtdX2OAtsMYqcreVRqGp6exCc94bblRSiq
+ mpfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777471085; x=1778075885;
+ d=1e100.net; s=20251104; t=1777471079; x=1778075879;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dISlLOgELyvKWF7YlFcG2dTrk3AD7+Q7q5PPE/Lrnp4=;
- b=LuOug9YPl72J6Q4ikTvvDL2lZ21khIYgMAWJK4oqUn2j8+wn4O6nfDqAbBKk9y/32v
- Lf39oPbbHXuEM0/xXlQztgBC0CeAiDZy6h2iRhRFBuTymNDcXFUBxErbmzvjcBiANSs5
- qGF/zSJIawdA+HIEF+PdNiPkAMAzZ1yogfHIBr9FRMUayl578tQcYa1QyS7u8OnlC/JY
- cAbi4ui8QoXGAImhpT4+DyYoOL+PCtopXvER4iTHhAQ02uugOb1tv9xgBxu7TWaZ8Cmv
- +oSpUZY66D4+XzZg+5hL42SL3ygHGukMCPA9QB4SjR/QNUy0pVuf10xtbUCH3pjyfIXr
- ePiw==
-X-Gm-Message-State: AOJu0YxNZ9/xvYGtqp6KHtMOEvIoIfIztYRGUvn83/zhDxUihaQ14UQh
- d/3qf2nvYAVdcTQUdXk+k3Ysy7qpIElekV6QICTaJk79PPekPRHjB06U
-X-Gm-Gg: AeBDiestvrpmztxWSzJoYpiJJlJ5qj19nb0WMYzwGquDUVbew9M6e+QdTiLl7u0DAks
- 94YR9XT+Xi+pZaRq18YjXs1LAcK0rVmnWKDum/CQPG9WvudQHUiPTMPBULBCDgVvHzJxnloeSd5
- EFmqbLE9x7XrwgFbJE77BMqmXHv0dRB+MLuqP/uxE4wbJ80Rzrkb7MMmXUwOTIrKu6IfpEYxmp6
- A3sfZ7i7eNPESgUk6LLIturFhCvAaoayHmrjVxto7DjCefqAwfsV9MIAXSoy9T+6pzhm/s3W6Wm
- xVfOeIzCSIJTyN0eVM15mpS64+ymRieAkvSBN2ZSjX2VeTrBNXgSkY+K63eLoeHWe4w7SEbY3c6
- PFB4daZ9lrDfvXCgujAdD5LTlikARl2QTl3kFX7NrKE6FDNKlzXGPDK9Lgfd2EM1N6AWzzeDssK
- zewe6GVRIcKoA/Fng0HfjrOGooc6nzfK/2xa7yBUUSJAAR8Q3uFT13q/GsoKTzPHMy2nyS2EdL8
- AL/IS5VDXk=
-X-Received: by 2002:a5d:5848:0:b0:441:2473:c30a with SMTP id
- ffacd0b85a97d-446496d79aemr13966246f8f.31.1777471085059; 
- Wed, 29 Apr 2026 06:58:05 -0700 (PDT)
+ bh=6CTSBzsBgkNvhDnVz+9h4ZL7e9PYIu5uJhtdDT/D+nI=;
+ b=DOyXxu7PDL3qzzYo+EUN2PGVZYi8qtolWgFEn5iTfpRu+ubyP/DHiGfLL9YGn4O8u5
+ YCTHHDGIYcRqSquwWI8ucL8rPeDU5IWeae6tjcKjXqbkR2NGCcxi3f2U2aLkpOjUZq5g
+ kZHaKfTAB6bsGfQxw6Iv+8ic1+lOYatM7p2hD92WVnHtgQdv7nG029aWcwEBIT1gQzel
+ Sir1YFDJ3IdY3GZbFGQEeZyTkXutmg86voPH7piut2vHBEgi/eDnTz8UrdVPwR1p4raS
+ b1LSi1upLCmfxCNRkIg/9Mlr6d8oGvgMKh2AEODY1+/pqIRRCeKk0IOdO9bfsobg+nrf
+ 09Gg==
+X-Gm-Message-State: AOJu0YwSKEszMOkHD6uP/gyXZQa5X/lNMepKpkNS928rv16NIL1u2SbQ
+ EDrk9X2kn4xnS86wQ4VIv5Q2YeTbOUc8U/8NeMyM40QEyGPBeM4Fsqk4
+X-Gm-Gg: AeBDiesSjhu9swlteLn77igY37+D0GZXEWrcv58g8gDRVlY6h3UxPgAshQ2hHgfcerU
+ mCZfASWYkbtIXbVpoRhZLmLErjfEeHmjAAPzNO9MDEM6QZhqGTglmwpxGmAHbv/WSeXHrgRCNAi
+ cEsqcq4V1vKlN5KJ/xEDDfDVW8YWc7ddX4wUix3dyRA7kcn2BLGoV+hS/yHXt53dfVV84bUlUzQ
+ fjE6vVvLp+e2PfZsrOIPRNeVDrWVGmBZb3NSPY421HDA7+sQDQNXyP1u/Zz0cZTRVdKSsdPxqGi
+ XwvFlLiuo1p6II9Bx/qJtOZEpx3R8kGOMn1dlxNoKcaj4ALzVaLWHFIcKoVWJB60nUQ+wk49eg9
+ 0Qmf9V2xivq91c7ggZI+GLNpmVzxnIvPzB9dBlYYxSD6tSdW1g3cXerKrq8RX2Vq8O+8Zy0jOdE
+ V+JdN5qgCpbYWoj/rwOX1bAI++fyP4NA6AA0BL8cR9G6SqPalgk5pQhYill8MKftY7+FyLVKu3
+X-Received: by 2002:a5d:5d0f:0:b0:43d:7b90:fa23 with SMTP id
+ ffacd0b85a97d-4464a447024mr14262935f8f.29.1777471079173; 
+ Wed, 29 Apr 2026 06:57:59 -0700 (PDT)
 Received: from node1.manccluster.local (revolution.cs.man.ac.uk.
  [130.88.198.135]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-447b3d48517sm5205950f8f.5.2026.04.29.06.58.04
+ ffacd0b85a97d-447b3d48517sm5205950f8f.5.2026.04.29.06.57.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 06:58:04 -0700 (PDT)
+ Wed, 29 Apr 2026 06:57:57 -0700 (PDT)
 From: Joshua Lant <joshualant@gmail.com>
 To: linux-cxl@vger.kernel.org
 Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com,
  arpit1.kumar@samsung.com, Joshua Lant <joshualant@gmail.com>
-Subject: [RFC QEMU PATCH 08/10] cxl-cci-mailbox: Add support for targeting a
- VCS switch
-Date: Wed, 29 Apr 2026 14:48:42 +0100
-Message-ID: <20260429135717.3048713-9-joshualant@gmail.com>
+Subject: [RFC QEMU PATCH 03/10] cxl-type3: Properly unmap the memory-backend
+ on device exit
+Date: Wed, 29 Apr 2026 14:48:37 +0100
+Message-ID: <20260429135717.3048713-4-joshualant@gmail.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260429135717.3048713-1-joshualant@gmail.com>
 References: <20260429135717.3048713-1-joshualant@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=joshualant@gmail.com; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=joshualant@gmail.com; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -103,248 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allows a cci mailbox and mctp device to target a cxl-vcs-switch. The
-target needs to be changed from a PCIDevice to a more generic Object,
-since the target can now also be a cxl-vcs-switch, as well as USP or
-type3 device. The VCS is an object which is composed of many
-PCI devices, but cannot be classed as one itself (since it is busless).
+Currently the backend remains mapped, meaning that if the device owning
+the backend is hot-removed, it cannot be readded in the same QEMU
+instance.
 
 Signed-off-by: Joshua Lant <joshualant@gmail.com>
 ---
- hw/cxl/cxl-mailbox-utils.c  | 44 +++++++++++++++++++++++--------------
- hw/cxl/switch-mailbox-cci.c | 33 ++++++++++++++++++++++------
- hw/usb/dev-mctp.c           | 23 ++++++++++++++++---
- include/hw/cxl/cxl_device.h | 10 ++++++++-
- 4 files changed, 83 insertions(+), 27 deletions(-)
+ hw/mem/cxl_type3.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index f12e42a648..779138cdc8 100644
---- a/hw/cxl/cxl-mailbox-utils.c
-+++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -4600,22 +4600,24 @@ int cxl_process_cci_message(CXLCCI *cci, uint8_t set, uint8_t cmd,
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 68cd04b7d9..414c776028 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -1072,12 +1072,15 @@ static void ct3_exit(PCIDevice *pci_dev)
+     cxl_destroy_cci(&ct3d->cci);
+     if (ct3d->dc.host_dc) {
+         cxl_destroy_dc_regions(ct3d);
++        host_memory_backend_set_mapped(ct3d->dc.host_dc, false);
+         address_space_destroy(&ct3d->dc.host_dc_as);
      }
- 
-     /* forbid any selected commands while the media is disabled */
--    if (object_dynamic_cast(OBJECT(cci->d), TYPE_CXL_TYPE3)) {
--        cxl_dstate = &CXL_TYPE3(cci->d)->cxl_dstate;
--
--        if (cxl_dev_media_disabled(cxl_dstate)) {
--            if (h == cmd_events_get_records ||
--                h == cmd_ccls_get_partition_info ||
--                h == cmd_ccls_set_lsa ||
--                h == cmd_ccls_get_lsa ||
--                h == cmd_logs_get_log ||
--                h == cmd_media_get_poison_list ||
--                h == cmd_media_inject_poison ||
--                h == cmd_media_clear_poison ||
--                h == cmd_sanitize_overwrite ||
--                h == cmd_firmware_update_transfer ||
--                h == cmd_firmware_update_activate) {
--                return CXL_MBOX_MEDIA_DISABLED;
-+    if(cci->d) {
-+        if (object_dynamic_cast(OBJECT(cci->d), TYPE_CXL_TYPE3)) {
-+            cxl_dstate = &CXL_TYPE3(cci->d)->cxl_dstate;
-+
-+            if (cxl_dev_media_disabled(cxl_dstate)) {
-+                if (h == cmd_events_get_records ||
-+                    h == cmd_ccls_get_partition_info ||
-+                    h == cmd_ccls_set_lsa ||
-+                    h == cmd_ccls_get_lsa ||
-+                    h == cmd_logs_get_log ||
-+                    h == cmd_media_get_poison_list ||
-+                    h == cmd_media_inject_poison ||
-+                    h == cmd_media_clear_poison ||
-+                    h == cmd_sanitize_overwrite ||
-+                    h == cmd_firmware_update_transfer ||
-+                    h == cmd_firmware_update_activate) {
-+                    return CXL_MBOX_MEDIA_DISABLED;
-+                }
-             }
-         }
+     if (ct3d->hostpmem) {
++        host_memory_backend_set_mapped(ct3d->hostpmem, false);
+         address_space_destroy(&ct3d->hostpmem_as);
      }
-@@ -4909,3 +4911,13 @@ void cxl_initialize_usp_mctpcci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
-     cci->intf = intf;
-     cxl_init_cci(cci, payload_max);
+     if (ct3d->hostvmem) {
++        host_memory_backend_set_mapped(ct3d->hostvmem, false);
+         address_space_destroy(&ct3d->hostvmem_as);
+     }
  }
-+
-+void cxl_initialize_vcs_mctpcci(CXLCCI *cci, CXLVCSSwitch *vcs, DeviceState *d,
-+        DeviceState *intf, size_t payload_max)
-+{
-+    cxl_copy_cci_commands(cci, cxl_cmd_set_usp_mctp);
-+    cci->vcs = vcs;
-+    cci->d = d;
-+    cci->intf = intf;
-+    cxl_init_cci(cci, payload_max);
-+}
-diff --git a/hw/cxl/switch-mailbox-cci.c b/hw/cxl/switch-mailbox-cci.c
-index 223f220433..73f76484cc 100644
---- a/hw/cxl/switch-mailbox-cci.c
-+++ b/hw/cxl/switch-mailbox-cci.c
-@@ -16,6 +16,7 @@
- #include "qemu/module.h"
- #include "hw/qdev-properties.h"
- #include "hw/cxl/cxl.h"
-+#include "include/hw/cxl/cxl_vcs_switch.h"
- 
- #define CXL_SWCCI_MSIX_MBOX 3
- 
-@@ -32,17 +33,26 @@ static void cswbcci_realize(PCIDevice *pci_dev, Error **errp)
-     CXLDeviceState *cxl_dstate = &cswmb->cxl_dstate;
-     CXLDVSECRegisterLocator *regloc_dvsec;
-     CXLUpstreamPort *usp;
-+    CXLVCSSwitch *vcs = 0;
- 
-     if (!cswmb->target) {
--        error_setg(errp, "Target not set");
-+        error_setg(errp, "No target or vcs has been set...");
-         return;
-     }
--    usp = CXL_USP(cswmb->target);
- 
-     pcie_endpoint_cap_init(pci_dev, 0x80);
-     cxl_cstate->dvsec_offset = 0x100;
-     cxl_cstate->pdev = pci_dev;
--    cswmb->cci = &usp->swcci;
-+    if (object_dynamic_cast(cswmb->target, TYPE_CXL_VCS_SWITCH)) {
-+	vcs = CXL_VCS_SWITCH(cswmb->target);
-+	cswmb->cci = &vcs->swcci;
-+    } else if (object_dynamic_cast(cswmb->target, TYPE_CXL_USP)) {
-+	usp = CXL_USP(cswmb->target);
-+	cswmb->cci = &usp->swcci;
-+    } else {
-+	error_setg(errp, "Target must be a VCS switch or USP");
-+	return;
-+    }
-     cxl_device_register_block_init(OBJECT(pci_dev), cxl_dstate, cswmb->cci);
-     pci_register_bar(pci_dev, 0,
-                      PCI_BASE_ADDRESS_SPACE_MEMORY |
-@@ -57,9 +67,18 @@ static void cswbcci_realize(PCIDevice *pci_dev, Error **errp)
-                                REG_LOC_DVSEC_LENGTH, REG_LOC_DVSEC,
-                                REG_LOC_DVSEC_REVID, (uint8_t *)regloc_dvsec);
- 
--    cxl_initialize_mailbox_swcci(cswmb->cci, DEVICE(pci_dev),
--                                 DEVICE(cswmb->target),
--                                 CXL_MAILBOX_MAX_PAYLOAD_SIZE);
-+    if(vcs) {
-+	if(vcs->usp_ppbs[0]) {
-+	    cxl_initialize_vcs_mctpcci(cswmb->cci,
-+		vcs, DEVICE(vcs->usp_ppbs[0]->usp), DEVICE(pci_dev), CXL_MAILBOX_MAX_PAYLOAD_SIZE);
-+	} else {
-+	    error_setg(errp, "The VCS requires a master USP...");
-+	}
-+    } else {
-+	cxl_initialize_mailbox_swcci(cswmb->cci, DEVICE(pci_dev),
-+				     DEVICE(CXL_USP(cswmb->target)),
-+				     CXL_MAILBOX_MAX_PAYLOAD_SIZE);
-+    }
- }
- 
- static void cswmbcci_exit(PCIDevice *pci_dev)
-@@ -69,7 +88,7 @@ static void cswmbcci_exit(PCIDevice *pci_dev)
- 
- static const Property cxl_switch_cci_props[] = {
-     DEFINE_PROP_LINK("target", CSWMBCCIDev,
--                     target, TYPE_CXL_USP, PCIDevice *),
-+                     target, TYPE_OBJECT, Object *),
- };
- 
- static void cswmbcci_class_init(ObjectClass *oc, const void *data)
-diff --git a/hw/usb/dev-mctp.c b/hw/usb/dev-mctp.c
-index aafb9e7e96..792a375245 100644
---- a/hw/usb/dev-mctp.c
-+++ b/hw/usb/dev-mctp.c
-@@ -25,6 +25,7 @@
- #include "hw/usb.h"
- #include "hw/usb/desc.h"
- #include "net/mctp.h"
-+#include "include/hw/cxl/cxl_vcs_switch.h"
- 
- /* TODO: Move to header */
- 
-@@ -77,7 +78,7 @@ enum cxl_dev_type {
- 
- typedef struct USBCXLMCTPState {
-     USBDevice dev;
--    PCIDevice *target;
-+    Object *target;
-     CXLCCI *cci;
-     enum cxl_dev_type type;
-     USBPacket *cached_tohost;
-@@ -600,12 +601,28 @@ static void usb_cxl_mctp_realize(USBDevice *dev, Error **errp)
-         return;
-     }
- 
-+    if (object_dynamic_cast(OBJECT(s->target), TYPE_CXL_VCS_SWITCH)) {
-+        CXLVCSSwitch *sw = CXL_VCS_SWITCH(s->target);
-+
-+        s->type = cxl_switch;
-+        s->cci = &sw->mctpcci;
-+	s->cci->vcs = sw;
-+
-+	if(sw->usp_ppbs[0]) {
-+	    cxl_initialize_vcs_mctpcci(s->cci, CXL_VCS_SWITCH(s->target),
-+		DEVICE(sw->usp_ppbs[0]->usp), DEVICE(dev), MCTP_CXL_MAILBOX_BYTES);
-+	} else {
-+	    error_setg(errp, "No master USP associated with the VCS");
-+	}
-+        return;
-+    }
-+
-     error_setg(errp, "Unhandled target type for CXL MCTP EP");
- }
- 
- static const Property usb_cxl_mctp_properties[] = {
--    DEFINE_PROP_LINK("target", USBCXLMCTPState, target, TYPE_PCI_DEVICE,
--                     PCIDevice *),
-+    DEFINE_PROP_LINK("target", USBCXLMCTPState, target, TYPE_OBJECT,
-+                     Object *),
- };
- 
- static void usb_cxl_mctp_class_initfn(ObjectClass *klass, const void *data)
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 6158560e6c..5d9f537a03 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -143,6 +143,7 @@ typedef enum {
- } CXLDSMASFlags;
- 
- typedef struct CXLCCI CXLCCI;
-+typedef struct CXLVCSSwitch CXLVCSSwitch;
- typedef struct cxl_device_state CXLDeviceState;
- struct cxl_cmd;
- typedef CXLRetCode (*opcode_handler)(const struct cxl_cmd *cmd,
-@@ -212,6 +213,8 @@ typedef struct CXLCCI {
-     DeviceState *d;
-     /* Pointer to the device hosting the protocol conversion */
-     DeviceState *intf;
-+    /* Pointer to the vcs hosting the CCI (if used) */
-+    CXLVCSSwitch *vcs;
-     bool initialized;
- } CXLCCI;
- 
-@@ -349,6 +352,10 @@ void cxl_initialize_t3_ld_cci(CXLCCI *cci, DeviceState *d,
- void cxl_initialize_usp_mctpcci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
-                                 size_t payload_max);
- 
-+void cxl_initialize_vcs_mctpcci(CXLCCI *cci, CXLVCSSwitch *vcs,
-+	DeviceState *d, DeviceState *intf, size_t payload_max);
-+
-+
- #define cxl_device_cap_init(dstate, reg, cap_id, ver)                      \
-     do {                                                                   \
-         uint32_t *cap_hdrs = dstate->caps_reg_state32;                     \
-@@ -820,9 +827,10 @@ struct CXLType3Class {
-                           uint8_t *data);
- };
- 
-+
- struct CSWMBCCIDev {
-     PCIDevice parent_obj;
--    PCIDevice *target;
-+    Object *target;
-     CXLComponentState cxl_cstate;
-     CXLDeviceState cxl_dstate;
-     CXLCCI *cci;
 -- 
 2.47.3
 
