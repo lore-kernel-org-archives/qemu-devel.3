@@ -4,103 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CA19CCFA13
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 13:24:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 109A3FF8867
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 13:37:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI4se-0001ZM-34; Wed, 29 Apr 2026 09:23:08 -0400
+	id 1wI55w-0004oO-QW; Wed, 29 Apr 2026 09:36:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wI4sc-0001Z8-Q0
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:23:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wI4s9-0003gB-DB
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:23:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777468741;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wI55t-0004oC-A6
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:36:49 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wI55r-0007qs-89
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:36:48 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 846495BD58;
+ Wed, 29 Apr 2026 13:36:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1777469799; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=R80XNyhECYyHOqYawSkigCKtybqAUxewXFMHZeRfyKM=;
- b=LfraV+ay4g5+nvJFNYRlbFqQapgrzjpZjvVk1UHX2grc9MR+OkN4rlVo9X3tbssqw5s/Bc
- /jA/sC9HcX56zlPzTQpXXQNz6mN64wboYA1NI2wcSIUlqs3Ujlg1yiMDEKCiDuTk4lZSJx
- v7r3pwRbps03et9XryHYvjI14VvrxhQ=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-335-p5Ow9IlOOmSsOmLYjudzbA-1; Wed, 29 Apr 2026 09:13:43 -0400
-X-MC-Unique: p5Ow9IlOOmSsOmLYjudzbA-1
-X-Mimecast-MFC-AGG-ID: p5Ow9IlOOmSsOmLYjudzbA_1777468422
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-35d99c2908cso12142334a91.0
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 06:13:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777468422; x=1778073222; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=R80XNyhECYyHOqYawSkigCKtybqAUxewXFMHZeRfyKM=;
- b=eEWdCCRwm8Prc/umdboz1oGRx5DUlrJVmmb1ErR2LTEXMU04Llx1+AnGqIK4jPj/19
- g+mqZ2LSYN3xvImhKzIzzrv7Xh3fyLdKqNx3GHeZHm4DNXSqxHNKfNq8lSXGpNUzmXML
- BO9th/fHiWyargWIxN7o4zMGMX/D5CVh4vy89aL5JcQL+0cJJcLy50dYsUUQXMNkSamj
- il2hrufrCEVwaPbvgd67SiPfS8St1BWKPYD/Dut22E/6Vbp1U+YrVYQZ7Mp8R+LU7qtL
- ssDY3b9K95TWIQzIXFu4woGuKhXgfoGeze5sF9wpWpm+3FzPw8bwKu5zaqXs0KkluSUr
- wloA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777468422; x=1778073222;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=R80XNyhECYyHOqYawSkigCKtybqAUxewXFMHZeRfyKM=;
- b=ay74QwFOQp7bh6ZFTMR4L5djCDQ5O68B8UyuyyeLSy0w2KvawjSAEx1jqU9rV01XlK
- +4DYlwY1j+Gjo6KzA3xWtEZuxxoMx3EIlklWiQCWV4/xinEUtTVZ5uTaRjssfTNZoCn5
- jExvQQapcszAbZYRxFtisZ++EH+J85UIz1PBmLj7pP8DIFXpdSqWStobxG6qsrgoDXsD
- HzinUqAhGhwo6UzqRA5Pxbos/w/bPhUgiS5GY+DfeCq0Mq6CFxc2PFMLliZIsWS2p4Gw
- ++ctXYjaV6m77wrrtYzUTHKZG883YgCTb9/Q4l9+rx4BWeOdsQaFOASVkFWNH0T9qzNG
- S7tQ==
-X-Gm-Message-State: AOJu0YwGvikRBMPfzAJQ0Tn9UUkpdhiKoP/Qs3BMj4UdAgVO5CkhILzE
- ni/y1B/LldCeI+WxzFYYMx6ankYejpWjgBmiFRX5Gg3xIfaYkNosd3YUHlzroNMB+1DKLkt5OiG
- Sn3+QB0MP4ToYFwdYJS/sjCZat8XrObfo890blEz7X0N99gR6qEa01GH1
-X-Gm-Gg: AeBDies0+KN3uWP8EFg1rw+JZIlomyQR5rGCQ4Ak0Qe+sb/QaAFK2NVpw3Za3BHLrL5
- nQjFwtoB5ZHkX4KTz3S8cqvBsGpHHBP6Yt5qiAPDXsC4ttX5rNpEAQ5FvsVASQqp6NgnIhnscIO
- g9zvVdBGk1thjbY1I/7zOoNbGtuMT6V8zGWm0VcFiWB+jnmzCc9f4W/dpxHVoZI4jpCSLQ5H3dC
- M+oC99vQZtS12erHhh+xzOTkdAAA/Dd+STzZe8YMCoB4W/J4s152GmuDIaOx6n6ML2FpdRTwin6
- n95nerEbGVuBz8KijKlwW31SeGvJI5A5YdF2f+KT79lTJdKwRCLC/2wgOJcDnlgGaO05KVmCBYR
- udCpObtJcvkEGwuQfyn5FVPc=
-X-Received: by 2002:a17:90b:1d51:b0:359:8e5e:43de with SMTP id
- 98e67ed59e1d1-3649203b479mr7587215a91.22.1777468421648; 
- Wed, 29 Apr 2026 06:13:41 -0700 (PDT)
-X-Received: by 2002:a17:90b:1d51:b0:359:8e5e:43de with SMTP id
- 98e67ed59e1d1-3649203b479mr7587189a91.22.1777468421227; 
- Wed, 29 Apr 2026 06:13:41 -0700 (PDT)
-Received: from fedora ([49.36.110.142]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-364a4152038sm3253907a91.2.2026.04.29.06.13.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 06:13:40 -0700 (PDT)
-Date: Wed, 29 Apr 2026 18:43:34 +0530
-From: Arun Menon <armenon@redhat.com>
-To: Stefan Berger <stefanb@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com
-Subject: Re: [PATCH v2 5/6] tests: Check whether the I2C master flag is set
-Message-ID: <afID_pQ_OkmqrABE@fedora>
-References: <20260429121743.1346635-1-stefanb@linux.ibm.com>
- <20260429121743.1346635-6-stefanb@linux.ibm.com>
+ bh=iKND0YhH8rEkJ4B1tEfZy+p/BbPX0YQQP6TX5dPHW94=;
+ b=wHShWwL144+qTyclXRG8jbLob5/yHi+dVynSx77/ahoIJ7EBU8xCSs1yHa5VeNIr5q3l3L
+ qtwJVmB4mbJPjMH4eWlXJjBNItzdA9NW5qHNkNfJoiy21yefp23L1IQJULc8Yla71aWtJx
+ LcD/QPlLdQjZEx2/h7YR94vUSUTbIJY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1777469799;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iKND0YhH8rEkJ4B1tEfZy+p/BbPX0YQQP6TX5dPHW94=;
+ b=LDyStsS+1+/8b4LGofeyV0bTD0uZQsVmobSO2Vl0m9EJH2qj/xujsO6cocM8UoV2y4uVTl
+ k/aILW1JK6h8qTDg==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=jJjplc7j;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=pr8zojy5
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1777469795; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iKND0YhH8rEkJ4B1tEfZy+p/BbPX0YQQP6TX5dPHW94=;
+ b=jJjplc7jmY83UgSZYKiMZAbD3VI6+0TDAeBSoOz6sFjhxRelYEhv7REKMpUgzmElC8t3xN
+ RqLbYBHoTp0BNGLeDh7MAKZpRj733vSFvJ0xVcIYLlzeP/DCw5YId5G6XpCd1paSBimnx9
+ N2rG6qBxWtbSCCLa7tqCbbzJvL45akU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1777469795;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iKND0YhH8rEkJ4B1tEfZy+p/BbPX0YQQP6TX5dPHW94=;
+ b=pr8zojy58zdC/zTjsuGY0Tni9/ygjRM8hcIjlcPsnAziXeMA5CZYn6uSgeM+tmEpkHzs31
+ QHg/joPsmhyWTvDQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1F26B593B0;
+ Wed, 29 Apr 2026 13:36:34 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id igfgN2IJ8mk0MgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 29 Apr 2026 13:36:34 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Elisey Konstantinov <elisey.konstantinov@gmail.com>
+Cc: qemu-devel@nongnu.org, berrange@redhat.com, pbonzini@redhat.com,
+ marcandre.lureau@redhat.com, peter.maydell@linaro.org, philmd@linaro.org
+Subject: Re: [PATCH] build: prefer sigaltstack over ucontext on Linux
+In-Reply-To: <87jytsig98.fsf@suse.de>
+References: <616E96C0-F0A5-4A9E-A63B-3BC1B5F18094@gmail.com>
+ <aeswZxFn0zMj-3jb@redhat.com>
+ <06C2CFB8-BA33-46D6-9F84-B1F81A2A319E@gmail.com>
+ <aes4kEdQ_x8eI-m6@redhat.com>
+ <4FFF1823-815E-4956-9C80-9C62A98033B0@gmail.com>
+ <CAFEAcA_gX4N6YrhQBTi-YDvkafJXWEkkDU8Y9vz5nYce9OrHwQ@mail.gmail.com>
+ <a4fd79f8-43fa-4894-80d3-ed31ffec1ff6@ilande.co.uk>
+ <87a4usdmcp.fsf@suse.de> <6B7E6259-86A8-4CAB-8FFF-A406FA36F277@gmail.com>
+ <87jytsig98.fsf@suse.de>
+Date: Wed, 29 Apr 2026 10:36:24 -0300
+Message-ID: <87a4ulriqv.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260429121743.1346635-6-stefanb@linux.ibm.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ TAGGED_RCPT(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[]; FREEMAIL_TO(0.00)[gmail.com];
+ RCPT_COUNT_SEVEN(0.00)[7]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 846495BD58
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,53 +135,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+(tried to stitch the thread back together)
 
-On Wed, Apr 29, 2026 at 12:17:42PM +0000, Stefan Berger wrote:
-> Replace the 'once' variable with a check for whether the master flag is
-> set so that the flag can be set when needed.
-> 
-> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
-> ---
->  tests/qtest/qtest_aspeed.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/tests/qtest/qtest_aspeed.c b/tests/qtest/qtest_aspeed.c
-> index f6da9adea9..7bf5abb9be 100644
-> --- a/tests/qtest/qtest_aspeed.c
-> +++ b/tests/qtest/qtest_aspeed.c
-> @@ -15,18 +15,21 @@
->  #include "qtest_aspeed.h"
->  #include "hw/i2c/aspeed_i2c.h"
->  
-> +static bool aspeed_i2c_is_master_enabled(QTestState *s, uint32_t baseaddr)
-> +{
-> +    return qtest_readl(s, baseaddr + A_I2CC_FUN_CTRL) & A_I2CD_MASTER_EN;
-> +}
-> +
->  static void aspeed_i2c_startup(QTestState *s, uint32_t baseaddr,
->                                 uint8_t slave_addr, uint8_t reg)
->  {
->      uint32_t v;
-> -    static int once;
->  
-> -    if (!once) {
-> +    if (!aspeed_i2c_is_master_enabled(s, baseaddr)) {
->          /* one time: enable master */
->         qtest_writel(s, baseaddr + A_I2CC_FUN_CTRL, 0);
->         v = qtest_readl(s, baseaddr + A_I2CC_FUN_CTRL) | A_I2CD_MASTER_EN;
->         qtest_writel(s, baseaddr + A_I2CC_FUN_CTRL, v);
-> -       once = 1;
->      }
->  
->      /* select device */
-> -- 
-> 2.43.0
-> 
+Elisey Konstantinov <elisey.konstantinov@gmail.com> writes:
 
-Reviewed-by: Arun Menon <armenon@redhat.com>
+> Fabiano Rosas <farosas@suse.de> writes:
+>
+>> Elisey Konstantinov <elisey.konstantinov@gmail.com> writes:
+>>
+>>> Oh, thanks for the feedback, however, could you please describe the env=
+ironment you=E2=80=99re using?
+>>
+>> x86_64 host running Linux kernel 6.4.0. QEMU configured with:
+>>
+>> ../configure
+>> --target-list=3Dx86_64-softmmu,aarch64-softmmu,ppc64-softmmu,ppc-softmmu=
+,s390x-softmmu,riscv64-softmmu,aarch64-linux-user,mips64-softmmu
+>> --disable-plugins --enable-modules --enable-werror --enable-debug --disa=
+ble-docs
+>>
+>> QEMU cmdline:
+>>
+>> qemu-system-ppc -machine mac99 -boot d -d guest_errors,unimp,cpu_reset
+>> -cdrom osx_100_4k78_install.iso -prom-env "boot-args=3D-v"
+>>
+>> Connecting via VNC shows the machine runs up to and past the point shown
+>> in the screenshot posted as the working example in:
+>> https://gitlab.com/qemu-project/qemu/-/work_items/3276#note_3105980116
+>>
+>> Clicking around, the VM seems functional.
+>
+> Yeah, this sounds weird, could you please test on the old distribution,
+> like Debian 12?See three of my latest messages in the main thread for
+> more information
 
-Regards,
-Arun Menon
+Sorry, I don't have the means to test this on Debian 12. It's not clear
+from the thread, have you reproduced the issue using the HEAD of QEMU's
+master branch? If so, then I think the best we could do is go back to
+the original issue[1] on Gitlab and continue the investigation.
 
+From the information you posted there, the execution should have gotten
+past the happy mac screen. You could try running with -prom-env
+"boot-args=3D-v" as I did above and see if it gives you any logging past
+that screen. Post a screenshot of your VNC session showing those logs.
+
+1- https://gitlab.com/qemu-project/qemu/-/work_items/3276
 
