@@ -4,36 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A5F3CCFA13
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8C48CD13D2
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:07:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIAEf-0001vm-BQ; Wed, 29 Apr 2026 15:06:13 -0400
+	id 1wIAEJ-0001Zg-39; Wed, 29 Apr 2026 15:05:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wIAEd-0001s4-TH
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:06:11 -0400
-Received: from p-west3-cluster3-host7-snip4-10.eps.apple.com ([57.103.72.201]
+ id 1wIAEH-0001ZS-Uf
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:05:49 -0400
+Received: from ms-2001b-snip4-3.eps.apple.com ([57.103.73.144]
  helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wIAEa-0000R2-Op
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:06:11 -0400
+ id 1wIAEF-0000Hs-Ej
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:05:49 -0400
 Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-3a-60-percent-6 (Postfix) with ESMTPS id
- B2FA418005ED; Wed, 29 Apr 2026 19:06:06 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRJAE1fDl4fBBdGGVUERx5dVl4eGQJRHFYNV0NUBF9QSQxBUGxaAEcXSB1dGVlvUF0cDhhZG0AVXRFQGVYJXhUXHkFNWgJWTQVKA18BWwZCAEkKXQJYAF4LTgZeD0YDQRQVXAVWBlcUeQ1dHUUOVhlaDFIPWw4cFktGExlOG1dNWg1AGVgGbRRWFVIEWQ==
+ D13D218005C4; Wed, 29 Apr 2026 19:05:44 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRJB01fDl4fBBdGGVUERx5dVl4eGQJRHFYNV0NUBF9QSQxBUGxaAEcXSB1dGVlvUF0cDhhZG0AVXRFQGVYJXhUXHkFNWgJWTQVKA18BWwZCAEkKXQJYAF4LTgZeD0YBXVQXWwxaDlYwTBZDH1IPWxNNGVEBUkVUAgdYRxRHDg8TTAtHAlo0Vh9UGVoD
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1777489567; x=1780081567;
- bh=S/YYV6/sLaH5DGZiOicMcJLSUKhjsA0gq+dKJ4/hfiA=;
+ s=sig1; t=1777489546; x=1780081546;
+ bh=2plkI8G/xtaBqtwyh6xOVg+3IVt0va4ZwnudgPTYjC8=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=WX0gT54h6umS+MOG+FvWID8dkPRYh4nYRDOBhL9JmMh1l7y4Xmkcc0myxQY9nB9/MFo5/1h3ZlWoQiCeIyvdDVwFNgg3W1KStuZHDBirZHWQKtIARftC/1JfId4r/joZO38uKSOg6/lJeXXrN2s3WTdlfTw+u4jRM9ymhdq5p6A3vn7wk+yOWB2WDUDxPX9aitlCmzprJxm9DviXPEo2vMZpTyB2QJWoDpRmommrJy3NWtYBTpykPHG3c0rUfaxyE4k8r67o8JCc7Cp3mo9U57l3t4fSPtx44GxQQLmMesPgmX1uaRn4Ku9I8uY7HR3HHfQhMlobtaTAfe8+bOvCzQ==
+ b=XqTHwzCzIoZ47Z3/Rn2YOiDGTc61rqJ1rchUAOxhAHwk8nLUsXAl8sqpw8e8t4g5bNxQ7HVw23LAvgh4O6H2YYsOncwE/g/G5YzvEgdjIS2ojsN6WQh18upg90Ha8ANvWjh+8TR+JS2XhvfR+S56qkxa2ezr2bpYH2wepBZeG6Y+bpELOknRQ3TAQYRajZpfx/NvvZyTrP8AvbdGpvLa66Y5JkFPpaj5k661xaCqZgf1lFdWl6EIaVOFp3etATgIKx+IaGeymsDQ0okwsqr7uAINa1avgruuEW+HkMQK2IsF4D7mfgB1uS4zMiAn7DcTpcdVz3h8XbfepCSUjHwBTg==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.154.37])
  by p00-icloudmta-asmtp-us-west-3a-60-percent-6 (Postfix) with ESMTPSA id
- F3BD518002CB; Wed, 29 Apr 2026 19:06:03 +0000 (UTC)
+ CBFA918000F6; Wed, 29 Apr 2026 19:05:41 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
@@ -44,38 +44,39 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
  Alexander Graf <agraf@csgraf.de>, Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v21 10/15] hvf: sync registers used at EL2
-Date: Wed, 29 Apr 2026 21:05:27 +0200
-Message-ID: <20260429190532.26538-11-mohamed@unpredictable.fr>
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Subject: [PATCH v21 02/15] hw/intc: arm_gicv3_hvf: save/restore Apple GIC state
+Date: Wed, 29 Apr 2026 21:05:19 +0200
+Message-ID: <20260429190532.26538-3-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260429190532.26538-1-mohamed@unpredictable.fr>
 References: <20260429190532.26538-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: aPgPvV8mqebDN-kp7rK4HaEcMrjCN6eO
-X-Proofpoint-ORIG-GUID: aPgPvV8mqebDN-kp7rK4HaEcMrjCN6eO
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDE5MCBTYWx0ZWRfX9Yl051/m/gds
- Y1ec8ziIXeqehIl57XXACARcLRfdRNrSd5MJc1+R6OzfEe/Uus4YoVPCTqa29l/pXDdxw361xYv
- Gqvge20CUu4sI8HBgAb7W8qriJi+0HESkNqGDe6sB0L7ntnOVtPYTFHG+lrLAviLys5pYmQ9C4E
- KbrAFJxXfGp0/Meta1TRZgepwMSjxGPiNEm/GwRxfFX5P9Dd9+sKweIhT+2yzZa1KzICdzxaugy
- wNK2cOPl1g0xcHQqIVpCsLqgotBQine4ufcNnh5sSUMZ7L/u0hKs8MCXLVHWQnVEFpjqWF/8JnW
- a0P3IQ3qrYPUuh3/xswl2YvFt7LyLwvfxTZTd9SwfwtDmFpk/RroJOHYE0ACUU=
-X-Authority-Info-Out: v=2.4 cv=eovSD4pX c=1 sm=1 tr=0 ts=69f2569f
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDE5MCBTYWx0ZWRfXxS/RbWKnmguq
+ GkHbWTwc3iiwREbPI6zbv/F3JAhKE6ELPtSl+70J6mHbpAtPTr0JZQcyHYKhCvTNoDjTgft6rK1
+ qFbMSDGbfb8/EFdmdLGzeHO6nM+wNSdhMdx9nP2xcSIRSGhs0hhuZ9DXKzHQ+KT7ZedpY3Og6Bw
+ HQO94dwMHz1TRlxqvwAnw6e1pl7M7ZIeT7tBisfptgrMWpwdhMrw9tEoTkq/tnJhfnpCsFWhiBi
+ VWmPjUOZrukQE/Is4Sk5Wv6vsPcN1GFxyL7s8KF23LkHiahb/XvwNRMKc2fg+/Iz6vGa3MYHkhx
+ HtYnPrHaKLoRFUYnxWaCSIgBvPfu9IMmshUeACIn+wNISFHzpsBD43l1BFCaRY=
+X-Proofpoint-GUID: cp22U5CM6eTCRlqNTmnbr1fyGUJJSHO-
+X-Proofpoint-ORIG-GUID: cp22U5CM6eTCRlqNTmnbr1fyGUJJSHO-
+X-Authority-Info-Out: v=2.4 cv=aIv9aL9m c=1 sm=1 tr=0 ts=69f25689
  cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
  a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8
- a=Ml6fgdKjPmdD6r9HfocA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=kNOF8fv34t_zTB2Y_VIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
  a=cvBusfyB2V15izCimMoJ:22
-Received-SPF: pass client-ip=57.103.72.201;
+Received-SPF: pass client-ip=57.103.73.144;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,194 +92,222 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When starting up the VM at EL2, more sysregs are available. Sync the state of those.
+On HVF, some of the GIC state is in an opaque Apple-provided structure.
 
-In addition, sync the state of the EL1 physical timer when the vGIC is used, even
-if running at EL1. However, no OS running at EL1 is expected to use those registers.
+Save/restore that state to be able to save/restore VMs that use the hardware GIC.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 ---
- target/arm/hvf/hvf.c        | 61 +++++++++++++++++++++++++++++++++----
- target/arm/hvf/sysreg.c.inc | 44 ++++++++++++++++++++++++++
- 2 files changed, 99 insertions(+), 6 deletions(-)
+ hw/intc/arm_gicv3_common.c         |  1 +
+ hw/intc/arm_gicv3_hvf.c            | 94 ++++++++++++++++++++++++++++--
+ hw/intc/arm_gicv3_hvf_stub.c       | 25 ++++++++
+ hw/intc/meson.build                |  1 +
+ include/hw/intc/arm_gicv3_common.h |  3 +
+ 5 files changed, 120 insertions(+), 4 deletions(-)
+ create mode 100644 hw/intc/arm_gicv3_hvf_stub.c
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 38f88c1a80..c40327ea2f 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -467,37 +467,75 @@ static const struct hvf_reg_match hvf_sme2_preg_match[] = {
-  *
-  * SME2 registers are guarded by a runtime availability attribute instead of a
-  * compile-time def, so verify those at runtime in hvf_arch_init_vcpu() below.
-+ *
-+ * Nested virt registers are handled via a runtime check, so override the guarded
-+ * availability check done by Clang.
-  */
- 
-+#pragma clang diagnostic push
-+#pragma clang diagnostic ignored "-Wunguarded-availability"
-+
- #define DEF_SYSREG(HVF_ID, ...) \
-   QEMU_BUILD_BUG_ON(HVF_ID != KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_ARGS__)));
- #define DEF_SYSREG_15_02(...)
- 
-+#define DEF_SYSREG_EL2(HVF_ID, ...) \
-+  QEMU_BUILD_BUG_ON(HVF_ID != KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_ARGS__)));
-+
-+#define DEF_SYSREG_VGIC(HVF_ID, ...) \
-+  QEMU_BUILD_BUG_ON(HVF_ID != KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_ARGS__)));
-+
-+#define DEF_SYSREG_VGIC_EL2(HVF_ID, ...) \
-+  QEMU_BUILD_BUG_ON(HVF_ID != KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_ARGS__)));
-+
- #include "sysreg.c.inc"
- 
- #undef DEF_SYSREG
- #undef DEF_SYSREG_15_02
-+#undef DEF_SYSREG_EL2
-+#undef DEF_SYSREG_VGIC
-+#undef DEF_SYSREG_VGIC_EL2
- 
--#define DEF_SYSREG(HVF_ID, op0, op1, crn, crm, op2)  HVF_ID,
-+#define DEF_SYSREG(HVF_ID, op0, op1, crn, crm, op2)  {HVF_ID},
- #define DEF_SYSREG_15_02(...)
-+#define DEF_SYSREG_EL2(HVF_ID, op0, op1, crn, crm, op2)  {HVF_ID, .el2 = true},
-+#define DEF_SYSREG_VGIC(HVF_ID, op0, op1, crn, crm, op2)  {HVF_ID, .vgic = true},
-+#define DEF_SYSREG_VGIC_EL2(HVF_ID, op0, op1, crn, crm, op2)  {HVF_ID, true, true},
-+
-+struct hvf_sreg {
-+    hv_sys_reg_t sreg;
-+    bool vgic;
-+    bool el2;
-+};
- 
--static const hv_sys_reg_t hvf_sreg_list[] = {
-+static struct hvf_sreg hvf_sreg_list[] = {
- #include "sysreg.c.inc"
+diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
+index 9200671c7a..9c3fb2f4bf 100644
+--- a/hw/intc/arm_gicv3_common.c
++++ b/hw/intc/arm_gicv3_common.c
+@@ -305,6 +305,7 @@ static const VMStateDescription vmstate_gicv3 = {
+     .subsections = (const VMStateDescription * const []) {
+         &vmstate_gicv3_gicd_no_migration_shift_bug,
+         &vmstate_gicv3_gicd_nmi,
++        &vmstate_gicv3_hvf,
+         NULL
+     }
  };
+diff --git a/hw/intc/arm_gicv3_hvf.c b/hw/intc/arm_gicv3_hvf.c
+index 7935846bc7..a0f32acb82 100644
+--- a/hw/intc/arm_gicv3_hvf.c
++++ b/hw/intc/arm_gicv3_hvf.c
+@@ -13,6 +13,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/module.h"
+ #include "system/runstate.h"
++#include "migration/vmstate.h"
+ #include "system/hvf.h"
+ #include "system/hvf_int.h"
+ #include "hvf_arm.h"
+@@ -34,8 +35,13 @@ struct HVFARMGICv3Class {
  
- #undef DEF_SYSREG
- #undef DEF_SYSREG_15_02
-+#undef DEF_SYSREG_EL2
-+#undef DEF_SYSREG_VGIC
-+#undef DEF_SYSREG_VGIC_EL2
+ typedef struct HVFARMGICv3Class HVFARMGICv3Class;
+ 
+-/* This is reusing the GICv3State typedef from ARM_GICV3_ITS_COMMON */
+-DECLARE_OBJ_CHECKERS(GICv3State, HVFARMGICv3Class,
++typedef struct HVFGICv3State {
++    GICv3State parent_obj;
++    uint32_t size;
++    void *state;
++} HVFGICv3State;
 +
-+#pragma clang diagnostic pop
- 
- #define DEF_SYSREG(...)
--#define DEF_SYSREG_15_02(HVF_ID, op0, op1, crn, crm, op2) HVF_ID,
-+#define DEF_SYSREG_15_02(HVF_ID, op0, op1, crn, crm, op2) {HVF_ID},
-+#define DEF_SYSREG_EL2(...)
-+#define DEF_SYSREG_VGIC(...)
-+#define DEF_SYSREG_VGIC_EL2(...)
- 
- API_AVAILABLE(macos(15.2))
--static const hv_sys_reg_t hvf_sreg_list_sme2[] = {
-+static struct hvf_sreg hvf_sreg_list_sme2[] = {
- #include "sysreg.c.inc"
- };
- 
- #undef DEF_SYSREG
- #undef DEF_SYSREG_15_02
-+#undef DEF_SYSREG_EL2
-+#undef DEF_SYSREG_VGIC
-+#undef DEF_SYSREG_VGIC_EL2
++DECLARE_OBJ_CHECKERS(HVFGICv3State, HVFARMGICv3Class,
+                      HVF_GICV3, TYPE_HVF_GICV3);
  
  /*
-  * For FEAT_SME2 migration, we need to store PSTATE.{SM,ZA} bits which are
-@@ -1335,6 +1373,9 @@ int hvf_arch_init_vcpu(CPUState *cpu)
- #define DEF_SYSREG_15_02(HVF_ID, ...) \
-         g_assert(HVF_ID == KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_ARGS__)));
- #define DEF_SYSREG(...)
-+#define DEF_SYSREG_EL2(...)
-+#define DEF_SYSREG_VGIC(...)
-+#define DEF_SYSREG_VGIC_EL2(...)
+@@ -659,7 +665,7 @@ static const ARMCPRegInfo gicv3_cpuif_reginfo[] = {
+ static void hvf_gicv3_realize(DeviceState *dev, Error **errp)
+ {
+     ERRP_GUARD();
+-    GICv3State *s = HVF_GICV3(dev);
++    GICv3State *s = (GICv3State *)HVF_GICV3(dev);
+     HVFARMGICv3Class *kgc = HVF_GICV3_GET_CLASS(s);
+     int i;
  
- #include "sysreg.c.inc"
+@@ -706,6 +712,86 @@ static void hvf_gicv3_realize(DeviceState *dev, Error **errp)
+     }
+ }
  
-@@ -1362,11 +1403,19 @@ int hvf_arch_init_vcpu(CPUState *cpu)
- 
-     /* Populate cp list for all known sysregs */
-     for (i = 0; i < ARRAY_SIZE(hvf_sreg_list); i++) {
--        hv_sys_reg_t hvf_id = hvf_sreg_list[i];
-+        hv_sys_reg_t hvf_id = hvf_sreg_list[i].sreg;
-         uint64_t kvm_id = HVF_TO_KVMID(hvf_id);
-         uint32_t key = kvm_to_cpreg_id(kvm_id);
-         const ARMCPRegInfo *ri = get_arm_cp_reginfo(arm_cpu->cp_regs, key);
- 
-+        if (hvf_sreg_list[i].vgic && !hvf_irqchip_in_kernel()) {
-+            continue;
-+        }
-+
-+        if (hvf_sreg_list[i].el2 && !hvf_nested_virt_enabled()) {
-+            continue;
-+        }
-+
-         if (ri) {
-             assert(!(ri->type & ARM_CP_NO_RAW));
-             arm_cpu->cpreg_indexes[sregs_cnt++] = kvm_id;
-@@ -1375,7 +1424,7 @@ int hvf_arch_init_vcpu(CPUState *cpu)
-     if (__builtin_available(macOS 15.2, *)) {
-         if (hvf_arm_sme2_supported()) {
-             for (i = 0; i < ARRAY_SIZE(hvf_sreg_list_sme2); i++) {
--                hv_sys_reg_t hvf_id = hvf_sreg_list_sme2[i];
-+                hv_sys_reg_t hvf_id = hvf_sreg_list_sme2[i].sreg;
-                 uint64_t kvm_id = HVF_TO_KVMID(hvf_id);
-                 uint32_t key = kvm_to_cpreg_id(kvm_id);
-                 const ARMCPRegInfo *ri = get_arm_cp_reginfo(arm_cpu->cp_regs, key);
-diff --git a/target/arm/hvf/sysreg.c.inc b/target/arm/hvf/sysreg.c.inc
-index 7a2f880f78..c11dbf274e 100644
---- a/target/arm/hvf/sysreg.c.inc
-+++ b/target/arm/hvf/sysreg.c.inc
-@@ -153,3 +153,47 @@ DEF_SYSREG_15_02(HV_SYS_REG_ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
- DEF_SYSREG_15_02(HV_SYS_REG_ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
- DEF_SYSREG_15_02(HV_SYS_REG_SMPRI_EL1, 3, 0, 1, 2, 4)
- DEF_SYSREG_15_02(HV_SYS_REG_SMCR_EL1, 3, 0, 1, 2, 6)
 +/*
-+ * Block these because of the same issue as virtual counters in
-+ * that caused the revert in 28b0ed32b32c7e5094cf2f1ec9c0645c65fad2aa
-+ *
-+ * DEF_SYSREG_VGIC(HV_SYS_REG_CNTP_CTL_EL0, 3, 3, 14, 2, 1)
-+ * DEF_SYSREG_VGIC(HV_SYS_REG_CNTP_CVAL_EL0, 3, 3, 14, 2, 2)
++ * HVF doesn't have a way to save the RDIST pending tables
++ * to guest memory, only to an opaque data structure.
 + */
-+#ifdef SYNC_NO_RAW_REGS
-+DEF_SYSREG_VGIC(HV_SYS_REG_CNTP_TVAL_EL0, 3, 3, 14, 2, 0)
-+#endif
++static bool gicv3_is_hvf(void *opaque)
++{
++    return hvf_enabled() && hvf_irqchip_in_kernel();
++}
 +
++static int hvf_gic_opaque_state_save(void *opaque)
++{
++    HVFGICv3State *gic = opaque;
++    hv_gic_state_t gic_state;
++    hv_return_t err;
++    size_t size;
++
++    gic_state = hv_gic_state_create();
++    if (gic_state == NULL) {
++        error_report("hvf: vgic: failed to create hv_gic_state_create.");
++        return 1;
++    }
++    err = hv_gic_state_get_size(gic_state, &size);
++    gic->size = size;
++    if (err != HV_SUCCESS) {
++        error_report("hvf: vgic: failed to get GIC state size.");
++        os_release(gic_state);
++        return 1;
++    }
++    gic->state = g_malloc0(gic->size);
++    err = hv_gic_state_get_data(gic_state, gic->state);
++    if (err != HV_SUCCESS) {
++        error_report("hvf: vgic: failed to get GIC state.");
++        os_release(gic_state);
++        return 1;
++    }
++
++    os_release(gic_state);
++    return 0;
++}
++
++static void hvf_gic_opaque_state_free(void *opaque)
++{
++    HVFGICv3State *gic = opaque;
++    free(gic->state);
++}
++
++static int hvf_gic_opaque_state_restore(void *opaque, int version_id)
++{
++    HVFGICv3State *gic = opaque;
++    hv_return_t err;
++    if (!gic->size) {
++        return 0;
++    }
++    err = hv_gic_set_state(gic->state, gic->size);
++    if (err != HV_SUCCESS) {
++        error_report("hvf: vgic: failed to restore GIC state.");
++        return 1;
++    }
++    return 0;
++}
++
++const VMStateDescription vmstate_gicv3_hvf = {
++    .name = "arm_gicv3/hvf_gic_state",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = gicv3_is_hvf,
++    .pre_save = hvf_gic_opaque_state_save,
++    .post_save = hvf_gic_opaque_state_free,
++    .post_load = hvf_gic_opaque_state_restore,
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT32(size, HVFGICv3State),
++        VMSTATE_VBUFFER_ALLOC_UINT32(state,
++                                     HVFGICv3State, 0, 0,
++                                     size),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
+ static void hvf_gicv3_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -725,7 +811,7 @@ static void hvf_gicv3_class_init(ObjectClass *klass, const void *data)
+ static const TypeInfo hvf_arm_gicv3_info = {
+     .name = TYPE_HVF_GICV3,
+     .parent = TYPE_ARM_GICV3_COMMON,
+-    .instance_size = sizeof(GICv3State),
++    .instance_size = sizeof(HVFGICv3State),
+     .class_init = hvf_gicv3_class_init,
+     .class_size = sizeof(HVFARMGICv3Class),
+ };
+diff --git a/hw/intc/arm_gicv3_hvf_stub.c b/hw/intc/arm_gicv3_hvf_stub.c
+new file mode 100644
+index 0000000000..a587332c7c
+--- /dev/null
++++ b/hw/intc/arm_gicv3_hvf_stub.c
+@@ -0,0 +1,25 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/*
-+ * Also block these because of the same issue as virtual counters in
-+ * that caused the revert in 28b0ed32b32c7e5094cf2f1ec9c0645c65fad2aa
++ * ARM Generic Interrupt Controller using HVF platform support stub
 + *
-+ * DEF_SYSREG_VGIC_EL2(HV_SYS_REG_CNTHP_CVAL_EL2, 3, 4, 14, 2, 2)
-+ * DEF_SYSREG_VGIC_EL2(HV_SYS_REG_CNTHP_CTL_EL2, 3, 4, 14, 2, 1)
++ * Copyright (c) 2026 Mohamed Mediouni
++ *
 + */
-+DEF_SYSREG_VGIC_EL2(HV_SYS_REG_CNTHCTL_EL2, 3, 4, 14, 1, 0)
-+#ifdef SYNC_NO_RAW_REGS
-+DEF_SYSREG_VGIC_EL2(HV_SYS_REG_CNTHP_TVAL_EL2, 3, 4, 14, 2, 0)
-+#endif
-+DEF_SYSREG_VGIC_EL2(HV_SYS_REG_CNTVOFF_EL2, 3, 4, 14, 0, 3)
++#include "qemu/osdep.h"
++#include "hw/intc/arm_gicv3_common.h"
++#include "migration/vmstate.h"
++#include "qemu/typedefs.h"
 +
-+DEF_SYSREG_EL2(HV_SYS_REG_CPTR_EL2, 3, 4, 1, 1, 2)
-+DEF_SYSREG_EL2(HV_SYS_REG_ELR_EL2, 3, 4, 4, 0, 1)
-+DEF_SYSREG_EL2(HV_SYS_REG_ESR_EL2, 3, 4, 5, 2, 0)
-+DEF_SYSREG_EL2(HV_SYS_REG_FAR_EL2, 3, 4, 6, 0, 0)
-+DEF_SYSREG_EL2(HV_SYS_REG_HCR_EL2, 3, 4, 1, 1, 0)
-+DEF_SYSREG_EL2(HV_SYS_REG_HPFAR_EL2, 3, 4, 6, 0, 4)
-+DEF_SYSREG_EL2(HV_SYS_REG_MAIR_EL2, 3, 4, 10, 2, 0)
-+DEF_SYSREG_EL2(HV_SYS_REG_MDCR_EL2, 3, 4, 1, 1, 1)
-+DEF_SYSREG_EL2(HV_SYS_REG_SCTLR_EL2, 3, 4, 1, 0, 0)
-+DEF_SYSREG_EL2(HV_SYS_REG_SPSR_EL2, 3, 4, 4, 0, 0)
-+DEF_SYSREG_EL2(HV_SYS_REG_SP_EL2, 3, 6, 4, 1, 0)
-+DEF_SYSREG_EL2(HV_SYS_REG_TCR_EL2, 3, 4, 2, 0, 2)
-+DEF_SYSREG_EL2(HV_SYS_REG_TPIDR_EL2, 3, 4, 13, 0, 2)
-+DEF_SYSREG_EL2(HV_SYS_REG_TTBR0_EL2, 3, 4, 2, 0, 0)
-+DEF_SYSREG_EL2(HV_SYS_REG_TTBR1_EL2, 3, 4, 2, 0, 1)
-+DEF_SYSREG_EL2(HV_SYS_REG_VBAR_EL2, 3, 4, 12, 0, 0)
-+DEF_SYSREG_EL2(HV_SYS_REG_VMPIDR_EL2, 3, 4, 0, 0, 5)
-+DEF_SYSREG_EL2(HV_SYS_REG_VPIDR_EL2, 3, 4, 0, 0, 0)
-+DEF_SYSREG_EL2(HV_SYS_REG_VTCR_EL2, 3, 4, 2, 1, 2)
-+DEF_SYSREG_EL2(HV_SYS_REG_VTTBR_EL2, 3, 4, 2, 1, 0)
++static bool needed_never(void *opaque)
++{
++    return false;
++}
++
++const VMStateDescription vmstate_gicv3_hvf = {
++    .name = "arm_gicv3/hvf_gic_state",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = needed_never,
++    .version_id = 1,
++    .minimum_version_id = 1,
++};
+diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+index b7baf8a0f6..c6de2d9d00 100644
+--- a/hw/intc/meson.build
++++ b/hw/intc/meson.build
+@@ -43,6 +43,7 @@ arm_common_ss.add(when: 'CONFIG_ARM_GICV3', if_true: files('arm_gicv3_cpuif.c'))
+ specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: files('arm_gic_kvm.c'))
+ specific_ss.add(when: ['CONFIG_WHPX', 'TARGET_AARCH64'], if_true: files('arm_gicv3_whpx.c'))
+ specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_true: files('arm_gicv3_hvf.c'))
++specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_false: files('arm_gicv3_hvf_stub.c'))
+ specific_ss.add(when: ['CONFIG_ARM_GIC_KVM', 'TARGET_AARCH64'], if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
+ arm_common_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_nvic.c'))
+ specific_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_irqmp.c'))
+diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
+index 9adcab0a0c..03ab3e8f2f 100644
+--- a/include/hw/intc/arm_gicv3_common.h
++++ b/include/hw/intc/arm_gicv3_common.h
+@@ -339,4 +339,7 @@ void gicv3_init_irqs_and_mmio(GICv3State *s, qemu_irq_handler handler,
+  */
+ const char *gicv3_class_name(void);
+ 
++/* HVF vGIC-specific state: stubbed out on a build with HVF disabled */
++extern const VMStateDescription vmstate_gicv3_hvf;
++
+ #endif
 -- 
 2.50.1 (Apple Git-155)
 
