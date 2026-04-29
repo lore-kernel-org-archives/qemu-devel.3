@@ -4,55 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17345FF8867
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 11:22:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37DA1FF8875
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 11:28:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI2z5-0001ES-Sy; Wed, 29 Apr 2026 07:21:41 -0400
+	id 1wI34w-0002AY-1U; Wed, 29 Apr 2026 07:27:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wI2yx-0001E2-LG
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 07:21:32 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wI2yw-0005UW-33
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 07:21:31 -0400
-Received: from example.com (unknown [167.220.208.81])
- by linux.microsoft.com (Postfix) with ESMTPSA id 9749920B716C;
- Wed, 29 Apr 2026 04:21:27 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9749920B716C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1777461688;
- bh=ILqMNi8E0ZWRUMXGxnAYzHgDf8g8EDMKniRpfLKbTYs=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=jyfLNQ4dGfQxmjRYDIUE78qhAZTwkWKUr/vQMaG3cikg+1TjSrOeT1/Dmj8Jc7hTo
- BjwCghWEAi5MDbxgQdEthZepkfLxz7yr2KL6PpOaU4ZVm2Ov1XhH/1f3ZMV8vmlfbG
- WPMZ9T8GUtE3R/wX2coWqxm5dp3+BK7KjkcgsJv8=
-Date: Wed, 29 Apr 2026 13:21:24 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Wei Liu <wei.liu@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH 4/6] target/i386/mshv: hv_vp_register_page setup for the
- vcpu
-Message-ID: <afHptC4d/vEs7sQv@example.com>
-References: <20260428135053.251200-1-dblanzeanu@linux.microsoft.com>
- <20260428135053.251200-5-dblanzeanu@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1wI34u-0002AB-Tf; Wed, 29 Apr 2026 07:27:40 -0400
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jic23@kernel.org>)
+ id 1wI34t-0006rp-F7; Wed, 29 Apr 2026 07:27:40 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 32EC940440;
+ Wed, 29 Apr 2026 11:27:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C339C2BCC4;
+ Wed, 29 Apr 2026 11:27:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1777462056;
+ bh=Xq+n2bbiLDEKLGpiOU5SVgpFI+rU//O6b93BK78badw=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=jjoyoL+z6rpszkKXUzm+eYIPuElFAdq9H3fsZztRGrj2MZM/nXSOrcW0GSOKBHZ4r
+ OAQ9rKA9zJwWc4qUnzTWP9MBFFUx2iMwdOMjTqaaeJgbcgA23PMkrfBiCDTtQVRH/h
+ SMAi70zmo/4PnN+3bxbpJKCRn6y8cGOp3l79T9rYtcuKpaoJ6+NIkyJR/c01IGXBZ9
+ u9gVBzRu0SNXKkh5OF+wm1hyXKdyP9u/tkejQ5D6OAuujSlzxkD/pRfZ8tqqTXFOg7
+ Omrl1BjkdYsnoYNHTb9jOBBxvWU+EQ7pyCqEPbXVY8KRF/laVk2FTUKydRDgAMotje
+ xOnERJY/hlllA==
+Date: Wed, 29 Apr 2026 12:27:27 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>, Jonathan
+ Cameron <jonathan.cameron@huawei.com>, Mads Ynddal <mads@ynddal.dk>,
+ qemu-arm@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>, Peter
+ Maydell <peter.maydell@linaro.org>, Richard Henderson
+ <richard.henderson@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>, Fan Ni <fan.ni@samsung.com>
+Subject: Re: [PATCH 02/16] hw/cxl: Define cxl_fmws_get_all_sorted() stub
+Message-ID: <20260429122727.1c7d31a9@jic23-huawei>
+In-Reply-To: <20260423170229.64655-3-philmd@linaro.org>
+References: <20260423170229.64655-1-philmd@linaro.org>
+ <20260423170229.64655-3-philmd@linaro.org>
+X-Mailer: Claws Mail 4.4.0 (GTK 3.24.52; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260428135053.251200-5-dblanzeanu@linux.microsoft.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=jic23@kernel.org; helo=sea.source.kernel.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,86 +74,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Apr 28, 2026 at 04:50:51PM +0300, Doru Blânzeanu wrote:
-> When the vcpu is created, call mmap to configure access to the register page.
-> 
-> Update CPUArchState to store a pointer to the mmapped hv_vp_register_page.
-> 
-> Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+On Thu, 23 Apr 2026 19:02:14 +0200
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+
+> Add a stub for cxl_fmws_get_all_sorted() to fix building
+> a QEMU configured with the '--without-default-devices' option:
+>=20
+>   Undefined symbols for architecture arm64:
+>     "_cxl_fmws_get_all_sorted", referenced from:
+>         _cxl_build_cedt in hw_acpi_cxl.c.o
+>=20
+> Note, the CXL <-> ACPI Kconfig relationship is a bit convoluted.
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
->  target/i386/cpu.h           |  3 +++
->  target/i386/mshv/mshv-cpu.c | 18 ++++++++++++++++++
->  2 files changed, 21 insertions(+)
-> 
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 0b539155c4..0108e2157b 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -2016,6 +2016,9 @@ typedef struct CPUArchState {
->      uint64_t msr_bndcfgs;
->      uint64_t efer;
->  
-> +    /* Shared register page */
-> +    struct hv_vp_register_page *regs_page;
+
+Acked-by: Jonathan Cameron <jic23@kernel.org>
+
+>  hw/cxl/cxl-host-stubs.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+>=20
+> diff --git a/hw/cxl/cxl-host-stubs.c b/hw/cxl/cxl-host-stubs.c
+> index c015baac813..9b515913ea4 100644
+> --- a/hw/cxl/cxl-host-stubs.c
+> +++ b/hw/cxl/cxl-host-stubs.c
+> @@ -18,3 +18,8 @@ hwaddr cxl_fmws_set_memmap(hwaddr base, hwaddr max_addr)
+>  void cxl_fmws_update_mmio(void) {};
+> =20
+>  const MemoryRegionOps cfmws_ops;
 > +
+> +GSList *cxl_fmws_get_all_sorted(void)
+> +{
+> +    g_assert_not_reached();
+> +}
 
-We probably want to put this behind a compile-time guard:
-
-#if defined(CONFIG_MSHV)
-...
-#endif
-
->      /* Beginning of state preserved by INIT (dummy marker).  */
->      struct {} start_init_save;
->  
-> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-> index 9defd05db6..42b6fb1912 100644
-> --- a/target/i386/mshv/mshv-cpu.c
-> +++ b/target/i386/mshv/mshv-cpu.c
-> @@ -1595,6 +1595,19 @@ void mshv_arch_init_vcpu(CPUState *cpu)
->                        + sizeof(hv_input_get_vp_registers)
->                        > HV_HYP_PAGE_SIZE));
->  
-> +
-> +    /* mmap the registers page */
-> +    void *rp = mmap(NULL, page, PROT_READ | PROT_WRITE,
-> +                    MAP_SHARED, mshv_vcpufd(cpu),
-> +                    MSHV_VP_MMAP_OFFSET_REGISTERS * page);
-
-nit: convention is to declare variables at the top of a fn:
-
-int cpu_fd = mshv_vcpufd(cpu);
-void *regs_page;
-...
-regs_page = mmap(..., cpu_fd, ...);
-
-> +    if (rp == MAP_FAILED) {
-> +        warn_report("register page mmap failed, falling back to hypercalls: %s",
-
-We're not falling back at this specific place. so it probably makes
-sense to just say register page mmap failed and leave it at that here.
-
-> +                    strerror(errno));
-> +        env->regs_page = NULL;
-> +    } else {
-> +        env->regs_page = (struct hv_vp_register_page *) rp;
-> +    }
-> +
->      state->hvcall_args.base = mem;
->      state->hvcall_args.input_page = mem;
->      state->hvcall_args.output_page = (uint8_t *)mem + page;
-> @@ -1608,6 +1621,11 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
->      CPUX86State *env = &x86_cpu->env;
->      AccelCPUState *state = cpu->accel;
->  
-> +    /* Unmap the register page */
-> +    if (env->regs_page) {
-> +        munmap(env->regs_page, HV_HYP_PAGE_SIZE);
-> +        env->regs_page = NULL;
-> +    }
->      g_free(state->hvcall_args.base);
->      state->hvcall_args = (MshvHvCallArgs){0};
->      g_clear_pointer(&env->emu_mmio_buf, g_free);
-> -- 
-> 2.53.0
 
