@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAF6BCD1297
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BACD2CCFA13
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 20:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIB7w-0003XH-Vg; Wed, 29 Apr 2026 16:03:21 -0400
+	id 1wIB7v-0003Vj-N9; Wed, 29 Apr 2026 16:03:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <joshualant@gmail.com>)
- id 1wI5QX-0008KG-DO
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:12 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ id 1wI5QV-0008Jl-R7
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:08 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <joshualant@gmail.com>)
- id 1wI5QT-0007iG-3e
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:08 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-441209fb77eso584483f8f.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 06:58:04 -0700 (PDT)
+ id 1wI5QR-0007hs-R3
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 09:58:06 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso128830005e9.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 06:58:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777471083; x=1778075883; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777471082; x=1778075882; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gfj+OEin87giEu8kZpIKXoKArfkMj1N2Z6jKqDhBiuE=;
- b=gbj3zRB4KWrjceG1CsmwwOK66pctwjHIAvR2BEVhkPPO74yzhsZ82uvCEhI1C203Ix
- AzbrX++Zj1XqzkGJG6qlf0+H9aKeA9uKkOR4ARPNnrZvybO3RPd1ATQ/2lq4hkxLdhTl
- eOIHydu/4Ia9l+Lg2hxqZlsjUP7gDvIvNrV3f+lzjVDBiQvqD6iurvS4X9IjY0eG01ew
- 5ltvAQtjm+21j5uiG1aT298CHI7luRiuNhV2/G0xgVzSWNOZpEzr2zEZpthfzpPA3r0P
- xwhVYbMR77Sm2wlMFGk5fgsDHT3RLq4f08EpNHpnVGGe42iWBvBTSjyMNJ3gO+S3Zsm5
- LntQ==
+ bh=mwHA3nK3tLpyQIT1y1aThj/ymGzWpwwSiiTYweRTIgw=;
+ b=jYV3YnpjAahmWAP75TP9MJLT9r94bhW+9vIb1nqfNn+QplexstLdeQ/jBShvluXh5C
+ iAR4thWIvedYhMo7WvT6E4akEf32sZ8xGFxXDJAM0i0Do/CpdbERXjOXbd+QToTfdvXD
+ ufjUDVs3rEnhhJ0Zo3ztplXCF/VNUqcr9NgT7st9HFUOYvFgh7CVb4SRJkwSEpuKVSzM
+ t+g07AkqDCCqBkpVEixA0/8us2U57Ns62Lz+tDR3kmrNWDr2fn0ZUSLn6RtfqN/VGB62
+ XdSBSDwdKznCuFq/2eObDYYhfQaPsav0o0RgcLz8URaeJvJcrBsdbpqvt+FooZhxu6fq
+ O+8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777471083; x=1778075883;
+ d=1e100.net; s=20251104; t=1777471082; x=1778075882;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gfj+OEin87giEu8kZpIKXoKArfkMj1N2Z6jKqDhBiuE=;
- b=XgU6dWFTikbm4mXrmulytdOVt2M0CxQfo6g1qsDQXDdL2sYGeUGegzJqhCmorMmBDg
- iWltddScB21zpUXLSY7uXLXLPrekys2Bl/OjUbWrxQITCV088QtVAWl0SWQ9AFvtPAAH
- 57qa2Lwjq4m7H2HSTzFBKHBT4Lx5Ca+2iIOf3bW2cI6uT7zJxZjWt23XnJqBcQcFKRuL
- vbibuoyZSL4aX5oqLu90EKJLvIdlwnSTp264aR4EYkM5Nm/5IsE3/yCRCgBJZrmBtytg
- la7eK4U04tt7JVYDkd2uWRk4OWR940bXOTh8SX22jNNReJYKuO7VHr6S1AjBKTeHbA4h
- g+5w==
-X-Gm-Message-State: AOJu0YzT1OtQHOhE266a6IXvoHyUaBcNO9ueLlrbvYkOBWwcuxlAvob6
- aou6LI28Mv8wKfCJHNhq3Arbc7sWC2SZVm+ScE8UEUCozmixzqOOJOmQ
-X-Gm-Gg: AeBDieusOcHUeSNiJ7O1KeKsxK0tzudieQdKFMwj+p1MmkBikDedYFG5NPcvIAs92P1
- jlrFaMXKcKreth5mEbh1tt99tXnv0OGHEQugFgw/WWPkgY3yk1/QxeXJ2KjI1sEKw0dyz+TmSMr
- eW/wURMnULAoS3jpoE9UaPMgUnsgCjre1QY1MBmBcXM+XVjfdPnEHVYkGB70D/pO57d6vAZmOk2
- ojrnqgyNE52a63y8NWfmbvj2MuaKTIo7zMw4EiFAyOarIxUy2K/vuRaf/C6ziPbHb4mPZsm853Q
- 57lsRsQX2HVScGlD/56uj16cBW68haeXaGZ9Mp/un6rj6FblhXiSprFclpRwcStZviMu2U3DN8i
- WJ6YNPgVG5wiPmYrQ6jl4gdkuSUXBMfvv71+jp9kVk2gt0GbJbUKZ1dCzMJNuDtknqrO3NIsqSj
- SKq8s7l3ixRNiaGQlVfA8e0spzFBcQQu1q9MppokQbMFEo+7Is1CRIbPWhf++9V5jJ74fEyK3R
-X-Received: by 2002:a05:6000:2102:b0:445:7f70:70d3 with SMTP id
- ffacd0b85a97d-447a3421972mr4063484f8f.5.1777471083406; 
- Wed, 29 Apr 2026 06:58:03 -0700 (PDT)
+ bh=mwHA3nK3tLpyQIT1y1aThj/ymGzWpwwSiiTYweRTIgw=;
+ b=meUwZlgUmDvzAozFry/068V0cUkJpbrcnmmRi5D04ia431aCrAxtsStsEGLJz2P9zh
+ O0/+jslVgwzVvIu7byQtIqoTgcuFFELAzvTPZ21zplOpeDIFPnefXFUJz1uFmRRqEWcn
+ 2PQTDcSHl+9+tVhu6hL1j4XLq8xFsH2U9AC1O9FRR6z3tuiVZ7NpRnM/7JcM97Rm+Tsl
+ Cm894mSj0aq3HSPIMAELSZXKn1iJPYVfW2WuTIsjcP94LKLefzBgH5QKYKol2tC5OL3+
+ Ca5u1MAgKkixkCgJ7H+TG77yFQP2GiuqMUP6cwiGN78SIPBwJliwI53CkDYhPJc3qjqb
+ UbNQ==
+X-Gm-Message-State: AOJu0YztjVDItzRUB+hB2qf6WOgCHf46oZu4cckUH6Dnidz43s/+Pn7h
+ XWbfUM9+3os+3fHXEfhnbz6349oKuq0fXLA2jwQfj0mwWY/PkiORSW19PxCERVIK
+X-Gm-Gg: AeBDievbVkxcM5OARxQC+MoR2HfeLymkiJ3J7SBNh+6IrdOG37KpcLR8i/74clmN06s
+ lBX7mYhNSkF5LtbGg4MGE0L12HD3wuHk6siShWDVNg1gbZWVO+QpY6Uy++a8w9fdtmRyKIo9ixY
+ 5YKt+oNGEL0SPPoVo+Ng33xKb7/b8BzrJj8ftC/Fun9WquwQqd/MzzqKyvL64d5yXlxgMMgS9s2
+ 2nbEa87+FroTUw30/+vUVDnARwrfXWrBPLseZZYCa0IclZIHCqa66915WTc0Y3skuHGMj8giuhV
+ EuErus1F9EaJIlppBbTcfRlnL3wl4kaTmQVqtvjoQdkh9i8iLYF7qVJMloh6ZoNft2D3D0m6ytv
+ sYEptpU9yN41fTbXwBONOIa3s56by1NFRnNeL9R8E7YpIDS6WugokmSyc3QYoZGDKpAXIHh4uPr
+ 7uPZsCEId6cm0kebhcXZZIF2b+kB5XBbny1ahCPKWkGGGYCx8IHwulpR09F35PjHufFbR0Bj9L
+X-Received: by 2002:a05:600c:3f18:b0:485:35d3:ce59 with SMTP id
+ 5b1f17b1804b1-48a7b51beebmr72235865e9.10.1777471082058; 
+ Wed, 29 Apr 2026 06:58:02 -0700 (PDT)
 Received: from node1.manccluster.local (revolution.cs.man.ac.uk.
  [130.88.198.135]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-447b3d48517sm5205950f8f.5.2026.04.29.06.58.02
+ ffacd0b85a97d-447b3d48517sm5205950f8f.5.2026.04.29.06.58.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 06:58:02 -0700 (PDT)
+ Wed, 29 Apr 2026 06:58:01 -0700 (PDT)
 From: Joshua Lant <joshualant@gmail.com>
 To: linux-cxl@vger.kernel.org
 Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com,
  arpit1.kumar@samsung.com, Joshua Lant <joshualant@gmail.com>
-Subject: [RFC QEMU PATCH 06/10] cxl-upstream-port: Add support for targeting a
- VCS switch
-Date: Wed, 29 Apr 2026 14:48:40 +0100
-Message-ID: <20260429135717.3048713-7-joshualant@gmail.com>
+Subject: [RFC QEMU PATCH 05/10] cxl-vcs-switch: Initial support for CXL VCS.
+Date: Wed, 29 Apr 2026 14:48:39 +0100
+Message-ID: <20260429135717.3048713-6-joshualant@gmail.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260429135717.3048713-1-joshualant@gmail.com>
 References: <20260429135717.3048713-1-joshualant@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=joshualant@gmail.com; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=joshualant@gmail.com; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -87,7 +87,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 29 Apr 2026 16:03:14 -0400
+X-Mailman-Approved-At: Wed, 29 Apr 2026 16:03:16 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,75 +102,750 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allows an upstream port to be registered on the CLI as a VCS within a
-cxl-vcs-switch. A VCS is defined as an upstream pci-pci bridge, and a set of
-downstream virtual pci-pci bridges VPPBs, which form a single Virtual
-Hierarchy within the switch.
+Add initial support for VCS (multi-USP/multi-logic-device) switch
+emulation in CXL. Currently the object only supports the identify/bind/unbind
+commands (0x5200/0x5201/0x5202), as well as support for device hiding
+listeners. This enables preliminary testing of the VCS capability,
+but will not allow for complete emulated flow as described in
+spec (CXL v3.2, 7.2.3). Nor will it allow for multiple USP's to be
+disributed over multiple QEMU instances.
 
 Signed-off-by: Joshua Lant <joshualant@gmail.com>
 ---
- hw/pci-bridge/cxl_upstream.c              | 20 ++++++++++++++++++++
- include/hw/pci-bridge/cxl_upstream_port.h |  2 ++
- 2 files changed, 22 insertions(+)
+ hw/cxl/cxl-vcs-switch.c         | 524 ++++++++++++++++++++++++++++++++
+ hw/cxl/meson.build              |   1 +
+ include/hw/cxl/cxl_vcs_switch.h | 134 ++++++++
+ qapi/qom.json                   |  19 ++
+ 4 files changed, 678 insertions(+)
+ create mode 100644 hw/cxl/cxl-vcs-switch.c
+ create mode 100644 include/hw/cxl/cxl_vcs_switch.h
 
-diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
-index 3fcfc2cde6..a91f721c9e 100644
---- a/hw/pci-bridge/cxl_upstream.c
-+++ b/hw/pci-bridge/cxl_upstream.c
-@@ -16,6 +16,8 @@
- #include "hw/pci/pcie.h"
- #include "hw/pci/pcie_port.h"
- #include "hw/pci-bridge/cxl_upstream_port.h"
+diff --git a/hw/cxl/cxl-vcs-switch.c b/hw/cxl/cxl-vcs-switch.c
+new file mode 100644
+index 0000000000..9a492330cc
+--- /dev/null
++++ b/hw/cxl/cxl-vcs-switch.c
+@@ -0,0 +1,524 @@
++/*
++ * CXL VCS Capable Switch Object
++ *
++ * Copyright(C) 2026 University of Manchester.
++ * Author: Joshua Lant <joshualant@gmail.com>.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2. See the
++ * COPYING file in the top-level directory.
++ *
++ * SPDX-License-Identifier: GPL-v2-only
++ */
 +#include "hw/cxl/cxl_vcs_switch.h"
++#include "qobject/qdict.h"
++#include "monitor/qdev.h"
 +
- /*
-  * Null value of all Fs suggested by IEEE RA guidelines for use of
-  * EU, OUI and CID
-@@ -346,6 +348,22 @@ static void cxl_usp_realize(PCIDevice *d, Error **errp)
-         goto err_cap;
-     }
- 
-+    if (usp->vcs_name && usp->ppb != UINT8_MAX) {
-+        Object *obj = object_resolve_path_component(
-+                          object_get_objects_root(), usp->vcs_name);
-+        if (!obj) {
-+            error_setg(errp, "vcs '%s' not found", usp->vcs_name);
-+            goto err_cap;
-+        }
-+        if (!object_dynamic_cast(obj, TYPE_CXL_VCS_SWITCH)) {
-+            error_setg(errp, "'%s' is not a cxl-vcs-switch", usp->vcs_name);
-+            goto err_cap;
-+        }
-+        cxl_vcs_register_usp(CXL_VCS_SWITCH(obj), usp, errp);
-+        if (*errp) 
-+            goto err_cap;
++/* Primary FM here is used when the FM is local to the QEMU instance. Setting
++ * local-fm=false in cli results in instantiation of remote listener for FM
++ * commands (TODO: to be implemented) */
++static bool cxl_vcs_get_local_fm(Object *obj, Error **errp)
++{
++    CXLVCSSwitch *vcs = CXL_VCS_SWITCH(obj);
++    return vcs->local_fm;
++}
++static void cxl_vcs_set_local_fm(Object *obj, bool value, Error **errp)
++{
++    CXLVCSSwitch *vcs = CXL_VCS_SWITCH(obj);
++    vcs->local_fm = value;
++}
++
++/* Binds an already realized MLD to a VPPB in the switch */
++static CXLRetCode cxl_vcs_bind_realized_vppb(CXLVCSSwitch *sw, uint8_t vcs_id,
++        uint8_t vppb_id, uint8_t dsp_ppb_id, uint8_t ld_id)
++{
++    /* TODO: Implement... Required for handling MLD devices... */
++    return CXL_MBOX_UNSUPPORTED;
++}
++
++/* Binds a hidden device (simple SLD) to a VPPB in the switch */
++static CXLRetCode cxl_vcs_bind_qdict_vppb(CXLVCSSwitch *sw, uint8_t vcs_id,
++        uint8_t vppb_id, uint8_t dsp_ppb_id, uint8_t ld_id)
++{
++    Error *local_err = NULL;
++    CXLVPPBInfo *vppb;
++    CXLDownstreamPPB *dspppb;
++    QDict *bind_opts;
++    DeviceState *dev;
++
++    // Upstream to bind
++    if(!sw->usp_ppbs[vcs_id]) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++    vppb = sw->usp_ppbs[vcs_id]->info->vppbs[vppb_id];
++    if(!vppb) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++    PCIDevice *vppb_dev = PCI_DEVICE(vppb->dsp);
++
++    //Downstream to bind
++    dspppb = sw->dsp_ppbs[dsp_ppb_id];
++    if(!dspppb) {
++        return CXL_MBOX_INVALID_INPUT;
 +    }
 +
-     return;
++    // Get DSP bus id from qdev
++    bind_opts = qdict_clone_shallow(dspppb->opts);
++    qdict_put_str(bind_opts, "bus", vppb_dev->qdev.id);
++    qdict_del(bind_opts, "vcs");
++    qdict_del(bind_opts, "dsppb");
++
++    uint8_t prev_binding_status = vppb->binding_status;
++    vppb->binding_status = CXL_VPPB_BINDING_STATUS_IN_PROGRESS;
++    dev = qdev_device_add_from_qdict(bind_opts, dspppb->from_json, &local_err);
++    if(!dev || local_err) {
++        vppb->binding_status = prev_binding_status;
++        return CXL_MBOX_INTERNAL_ERROR;
++    }
++
++    vppb->bound_port_id = dsp_ppb_id;
++    vppb->bound_ld_id = CXL_INVALID_BOUND_LD_ID; // TODO: support MLDs.
++    vppb->binding_status = CXL_VPPB_BINDING_STATUS_BOUND_PORT;
++    dspppb->dev = dev;
++    dspppb->is_bound = true;
++    dspppb->bound_vcs_id = vcs_id;
++    dspppb->bound_vppb_id = vppb_id;
++    qobject_unref(bind_opts);
++
++    return CXL_MBOX_SUCCESS;
++}
++
++CXLRetCode cxl_vcs_bind_vppb(CXLVCSSwitch *sw, uint8_t vcs_id, uint8_t vppb_id,
++        uint8_t dsp_ppb_id, uint16_t ld_id)
++{
++    if(cxl_vcs_get_local_fm(OBJECT(sw), NULL)) {
++        if(ld_id == CXL_UNSUPPORTED_LD_ID) {
++            return cxl_vcs_bind_qdict_vppb(sw, vcs_id, vppb_id,
++                    dsp_ppb_id, ld_id);
++        } else {
++            // TODO: Connect up already realized device
++            // (needed for MLD support).
++            return cxl_vcs_bind_realized_vppb(sw, vcs_id, vppb_id,
++                    dsp_ppb_id, ld_id);
++        }
++    }
++    else {
++        // TODO: Send bind command to remote QEMU process...
++        return CXL_MBOX_UNSUPPORTED;
++    }
++}
++
++static CXLRetCode cxl_vcs_unbind_qdict_vppb(CXLVCSSwitch *sw, uint8_t vcs_id,
++                                       uint8_t vppb_id, uint8_t options)
++{
++    Error *local_err = NULL;
++    CXLVPPBInfo *vppb_info;
++    CXLDownstreamPPB *dspppb = NULL;
++
++    if(!sw->usp_ppbs[vcs_id]) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++    vppb_info = sw->usp_ppbs[vcs_id]->info->vppbs[vppb_id];
++    if (!vppb_info ||
++        (vppb_info->binding_status == CXL_VPPB_BINDING_STATUS_UNBOUND) ||
++        (vppb_info->binding_status == CXL_VPPB_BINDING_STATUS_IN_PROGRESS)) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++    for (int i = 0; i < sw->num_dsp_ppbs; i++) {
++        if (sw->dsp_ppbs[i] &&
++                sw->dsp_ppbs[i]->is_bound &&
++                sw->dsp_ppbs[i]->bound_vcs_id == vcs_id &&
++                sw->dsp_ppbs[i]->bound_vppb_id == vppb_id) {
++            dspppb = sw->dsp_ppbs[i];
++            break;
++        }
++    }
++
++    if (!dspppb) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++    if (!dspppb->dev) {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++    /* Options from cxl v3.2 (Table 7-34), Bits[3:0].
++      — 0h = Wait for port Link Down before unbinding
++      — 1h = Simulate Managed Hot-Remove
++      — 2h = Simulate Surprise Hot-Remove */
++    options = options & 0x0F;
++    if (options == CXL_VPPB_UNBIND_WAIT_FOR_LINK_DOWN) {
++        // TODO: implement
++        return CXL_MBOX_INVALID_INPUT;
++    }
++    else if(options == CXL_VPPB_UNBIND_MANAGED_HOT_REMOVE) {
++        // unrealize listener will fire once guest notifies the port...
++        qdev_unplug(dspppb->dev, &local_err);
++        vppb_info->binding_status = CXL_VPPB_BINDING_STATUS_IN_PROGRESS;
++        if (local_err) {
++            return CXL_MBOX_INTERNAL_ERROR;
++        }
++        return CXL_MBOX_SUCCESS;
++    }
++    else if (options == CXL_VPPB_UNBIND_SURPRISE_HOT_REMOVE) {
++        // TODO: implement, This isn't a true surprise removal...
++        qdev_unplug(dspppb->dev, &local_err);
++        if (local_err) {
++            return CXL_MBOX_INTERNAL_ERROR;
++        }
++        object_unparent(OBJECT(dspppb->dev));
++        dspppb->is_bound      = false;
++        dspppb->bound_vcs_id  = 0;
++        dspppb->bound_vppb_id = 0;
++
++        /* Clear VPPB binding state so Get Virtual Switch Info reflects unbound */
++        vppb_info->binding_status = CXL_VPPB_BINDING_STATUS_UNBOUND;
++        vppb_info->bound_port_id  = 0;
++        vppb_info->bound_ld_id    = CXL_INVALID_BOUND_LD_ID;
++        dspppb->dev = NULL;
++        /* TODO: Generate Virtual CXL Switch Event Record per CXL spec
++         * section 7.6.6.6  */
++        return CXL_MBOX_SUCCESS;
++    }
++    else {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++}
++
++CXLRetCode cxl_vcs_unbind_vppb(CXLVCSSwitch *sw, uint8_t vcs_id,
++        uint8_t vppb_id, uint16_t option)
++{
++    /*TODO: Only currently unbinding an unrealizing whole device.
++     * Implement for MLD partial unbinding of single extents etc.
++     * */
++    return cxl_vcs_unbind_qdict_vppb(sw, vcs_id, vppb_id, option);
++}
++
++void cxl_vcs_identify_switch_device(CXLVCSSwitch *sw)
++{
++    //TODO: implement
++}
++void cxl_vcs_get_physical_port_state(CXLVCSSwitch *sw)
++{
++    //TODO: implement
++}
++void cxl_vcs_physical_port_control(CXLVCSSwitch *sw)
++{
++    //TODO: implement
++}
++void cxl_vcs_get_virtual_switch_info(CXLVCSSwitch *sw)
++{
++    //TODO: implement
++}
++
++void cxl_vcs_register_usp(CXLVCSSwitch *sw, CXLUpstreamPort *usp,
++        Error **errp)
++{
++    uint8_t ppb = usp->ppb;
++
++    if(strcmp(object_get_canonical_path_component(OBJECT(sw)), usp->vcs_name)) {
++        error_setg(errp, "VCS id for USP and switch do not match...\n");
++    }
++
++    if (ppb >= sw->num_usp_ppbs) {
++        error_setg(errp, "vcs '%s': ppb %u >= usp-ppbs %u",
++                   object_get_canonical_path_component(OBJECT(sw)),
++                   ppb, sw->num_usp_ppbs);
++        return;
++    }
++    if (sw->usp_ppbs[ppb]) {
++        error_setg(errp, "vcs '%s': USP slot %u already registered",
++                   object_get_canonical_path_component(OBJECT(sw)), ppb);
++        return;
++    }
++
++    sw->usp_ppbs[ppb] = g_new0(CXLUpstreamPPB, 1);
++    sw->usp_ppbs[ppb]->usp = usp;
++    sw->usp_ppbs[ppb]->info = g_new0(CXLVCSInfoBlock, 1);
++    sw->usp_ppbs[ppb]->info->vcs_id = ppb;
++    sw->usp_ppbs[ppb]->info->usp_id = ppb;
++    sw->usp_ppbs[ppb]->info->num_vppbs = 0;
++    sw->usp_ppbs[ppb]->info->vcs_state = CXL_VCS_STATE_ENABLED;
++    usp->swcci.vcs = sw;
++}
++
++void cxl_vcs_register_vppb(CXLVCSSwitch *sw, CXLUpstreamPort *usp,
++        CXLDownstreamPort *dsp, Error **errp)
++{
++    CXLUpstreamPPB *vcs;
++
++    for(int i = 0; i < CXL_MAX_VCS_PORTS; i++) {
++        if(sw->usp_ppbs[i]) {
++            if(usp == sw->usp_ppbs[i]->usp) {
++                vcs = sw->usp_ppbs[i];
++                break;
++            }
++        } else {
++            error_setg(errp, "The USP was not found in the VCS list...");
++            return;
++        }
++    }
++
++    for(int i = 0; i < CXL_MAX_VPPB_PER_VCS; i++) {
++        if(!vcs->info->vppbs[i]) {
++            // Free vppb slot.. lets allocate and populate it...
++            CXLVPPBInfo *vppb = g_new0(CXLVPPBInfo, 1);
++            vppb->dsp = PCI_DEVICE(dsp);
++            vppb->binding_status = CXL_VPPB_BINDING_STATUS_UNBOUND;
++            vcs->info->vppbs[i] = vppb;
++            vcs->info->num_vppbs = vcs->info->num_vppbs + 1;
++            return;
++        }
++    }
++
++    error_setg(errp, "No free VPPB slots in the VCS...");
++    return;
++}
++
++void cxl_vcs_register_qdict_dsppb(CXLVCSSwitch *sw, const QDict *opts,
++        bool from_json, Error **errp)
++{
++    QDict *dev_opts;
++    int ppb;
++    const char *ppb_str = qdict_get_try_str(opts, "dsppb");
++    ppb = atoi(ppb_str);
++    if(ppb == -1) {
++        error_setg(errp, "No ppb id given in cli.");
++        return;
++    }
++
++    if (ppb >= sw->num_dsp_ppbs) {
++        error_setg(errp, "vcs '%s': dsppb %u >= dsp-ppbs %u",
++                   object_get_canonical_path_component(OBJECT(sw)),
++                   ppb, sw->num_dsp_ppbs);
++        return;
++    }
++    if (sw->dsp_ppbs[ppb]) {
++        error_setg(errp, "vcs '%s': DSP PPB slot %u already occupied",
++                   object_get_canonical_path_component(OBJECT(sw)), ppb);
++        return;
++    }
++
++    dev_opts = qdict_clone_shallow(opts);
++    qdict_del(dev_opts, "vcs");
++    qdict_del(dev_opts, "dsppb");
++    qdict_del(dev_opts, "bus");
++
++    sw->dsp_ppbs[ppb] = g_new0(CXLDownstreamPPB, 1);
++    sw->dsp_ppbs[ppb]->opts      = dev_opts;
++    sw->dsp_ppbs[ppb]->from_json = from_json;
++    sw->dsp_ppbs[ppb]->is_bound  = false;
++}
++
++void cxl_vcs_register_dsppb(CXLVCSSwitch *sw, const QDict *opts,
++        bool from_json, Error **errp)
++{
++
++    DeviceState *dev = qdev_new(qdict_get_str(opts, "driver"));
++    qdev_set_id(dev, g_strdup(qdict_get_try_str(opts, "id")), errp);
++    int ppb;
++    const char *ppb_str = qdict_get_try_str(opts, "dsppb");
++    ppb = atoi(ppb_str);
++    if(ppb == -1) {
++        error_setg(errp, "No ppb id given in cli.");
++        return;
++    }
++
++    QDict *dev_opts = qdict_clone_shallow(opts);
++    qdict_del(dev_opts, "driver");
++    qdict_del(dev_opts, "bus");
++    qdict_del(dev_opts, "id");
++    qdict_del(dev_opts, "vcs");
++    qdict_del(dev_opts, "dsppb");
++    object_set_properties_from_keyval(OBJECT(dev), dev_opts, from_json, errp);
++    qobject_unref(dev_opts);
++    // store, don't realize
++    sw->dsp_ppbs[ppb]->dev = dev;
++}
++
++static bool cxl_vcs_switch_can_be_deleted(UserCreatable *uc)
++{
++    return false;
++}
++
++/* When a device is instantiated downstream of a VCS's PPB, we
++ * store the qdicts from the CLI, to realize the device at a
++ * future time.
++ */
++bool cxl_vcs_hide_device_listener(DeviceListener *listener, const QDict *opts,
++                        bool from_json, Error **errp)
++{
++    CXLVCSSwitch *vcs = container_of(listener, CXLVCSSwitch, listener);
++    const char *vcs_id_str   = qdict_get_try_str(opts, "vcs");
++    const char *ppb_str = qdict_get_try_str(opts, "dsppb");
++    int ppb;
++
++    /* Not our device — don't claim it */
++    if (!vcs_id_str || !ppb_str) {
++        return false;
++    }
++    if(vcs_id_str) {
++        if(strcmp(vcs_id_str,
++                    object_get_canonical_path_component(OBJECT(vcs)))) {
++            return false;
++        }
++    }
++    if(ppb_str) {
++        ppb = atoi(ppb_str);
++        if(vcs->dsp_ppbs[ppb]) {
++            error_setg(errp,
++                "The ppb %s is already populated by another device.", ppb_str);
++            return false;
++        }
++    }
++
++    cxl_vcs_register_qdict_dsppb(vcs, opts, from_json, errp);
++
++    return true;
++}
++
++/*
++ * Listener is added for unbinding. When a device is unbound using the
++ * Fabric Manager with 'managed' hot-remove option, a notificaiton is
++ * sent to the guest, which should perform a graceful teardown and notify
++ * the port of completion. At this point this listener unrealizes the device.
++ */
++static void cxl_vcs_ppb_unrealize_listener(DeviceListener *listener,
++        DeviceState *dev)
++{
++    CXLVCSSwitch *sw = container_of(listener, CXLVCSSwitch, listener);
++    CXLDownstreamPPB *dspppb;
++    CXLVPPBInfo *vppb_info;
++
++    for (int i = 0; i < sw->num_dsp_ppbs; i++) {
++        if (sw->dsp_ppbs[i] && (sw->dsp_ppbs[i]->dev == dev)) {
++            dspppb = sw->dsp_ppbs[i];
++            break;
++        }
++    }
++    if(!dspppb) {
++        return;
++    }
++
++    vppb_info =
++        sw->usp_ppbs[dspppb->bound_vcs_id]->info->vppbs[dspppb->bound_vppb_id];
++    object_unparent(OBJECT(dspppb->dev));
++    dspppb->dev = NULL;
++    dspppb->is_bound      = false;
++    dspppb->bound_vcs_id  = 0;
++    dspppb->bound_vppb_id = 0;
++    vppb_info->binding_status = CXL_VPPB_BINDING_STATUS_UNBOUND;
++    vppb_info->bound_port_id  = 0;
++    vppb_info->bound_ld_id    = CXL_INVALID_BOUND_LD_ID;
++    /* TODO: generate Virtual CXL Switch Event Record */
++}
++
++static void cxl_vcs_switch_complete(UserCreatable *uc, Error **errp)
++{
++    CXLVCSSwitch *sw = CXL_VCS_SWITCH(uc);
++    sw->listener.hide_device = cxl_vcs_hide_device_listener;
++    sw->listener.unrealize = cxl_vcs_ppb_unrealize_listener;
++    device_listener_register(&sw->listener);
++}
++
++static void vcs_get_usp_ppbs(Object *obj, Visitor *v, const char *name,
++                              void *opaque, Error **errp)
++{
++    CXLVCSSwitch *vcs = CXL_VCS_SWITCH(obj);
++    uint8_t val = vcs->num_usp_ppbs;
++    visit_type_uint8(v, name, &val, errp);
++}
++
++static void vcs_set_usp_ppbs(Object *obj, Visitor *v, const char *name,
++                              void *opaque, Error **errp)
++{
++    CXLVCSSwitch *vcs = CXL_VCS_SWITCH(obj);
++    uint8_t val;
++    if (!visit_type_uint8(v, name, &val, errp)) {
++        return;
++    }
++    vcs->num_usp_ppbs = val;
++}
++static void vcs_get_dsp_ppbs(Object *obj, Visitor *v, const char *name,
++                              void *opaque, Error **errp)
++{
++    CXLVCSSwitch *vcs = CXL_VCS_SWITCH(obj);
++    uint8_t val = vcs->num_dsp_ppbs;
++    visit_type_uint8(v, name, &val, errp);
++}
++
++static void vcs_set_dsp_ppbs(Object *obj, Visitor *v, const char *name,
++                              void *opaque, Error **errp)
++{
++    CXLVCSSwitch *vcs = CXL_VCS_SWITCH(obj);
++    uint8_t val;
++    if (!visit_type_uint8(v, name, &val, errp)) {
++        return;
++    }
++    vcs->num_dsp_ppbs = val;
++}
++
++static void cxl_vcs_class_init(ObjectClass *oc, const void *data)
++{
++    CXLVCSSwitchClass *cc = CXL_VCS_SWITCH_CLASS(oc);
++    UserCreatableClass *ucc = USER_CREATABLE_CLASS(oc);
++    ucc->complete = cxl_vcs_switch_complete;
++    ucc->can_be_deleted = cxl_vcs_switch_can_be_deleted;
++    cc->identify_switch_device = cxl_vcs_identify_switch_device;
++    cc->get_physical_port_state = cxl_vcs_get_physical_port_state;
++    cc->physical_port_control = cxl_vcs_physical_port_control;
++    cc->get_virtual_switch_info = cxl_vcs_get_virtual_switch_info;
++    cc->bind_vppb = cxl_vcs_bind_vppb;
++    cc->unbind_vppb = cxl_vcs_unbind_vppb;
++
++    object_class_property_add_bool(oc, "local-fm",
++                              cxl_vcs_get_local_fm, cxl_vcs_set_local_fm);
++    object_class_property_set_description(oc, "local-fm",
++        "true = FM authority (mctp connected guest), \
++        false = slave listener (IPC)");
++    object_class_property_add(oc, "usp-ppbs", "uint8",
++                          vcs_get_usp_ppbs, vcs_set_usp_ppbs,
++                          NULL, NULL);
++    object_class_property_set_description(oc, "usp-ppbs",
++        "Number of upstream ports in the switch");
++    object_class_property_add(oc, "dsp-ppbs", "uint8",
++                          vcs_get_dsp_ppbs, vcs_set_dsp_ppbs,
++                          NULL, NULL);
++    object_class_property_set_description(oc, "dsp-ppbs",
++        "Number of downstream ports in the switch");
++}
++
++static void cxl_vcs_instance_init(Object *obj)
++{
++    // TODO: Nothing here yet...
++}
++
++static void cxl_vcs_instance_finalize(Object *obj)
++{
++    // TODO: Nothing here yet...
++}
++
++static const InterfaceInfo cxl_vcs_interfaces[] = {
++    { TYPE_USER_CREATABLE },
++    { }
++};
++
++static const TypeInfo cxl_vcs_info = {
++    .name = TYPE_CXL_VCS_SWITCH,
++    .parent = TYPE_OBJECT,
++    .instance_size = sizeof(CXLVCSSwitch),
++    .class_size = sizeof(CXLVCSSwitchClass),
++    .class_init = cxl_vcs_class_init,
++    .instance_init = cxl_vcs_instance_init,
++    .instance_finalize = cxl_vcs_instance_finalize,
++    .interfaces = cxl_vcs_interfaces,
++};
++
++static void cxl_vcs_register(void)
++{
++    type_register_static(&cxl_vcs_info);
++}
++
++type_init(cxl_vcs_register)
+diff --git a/hw/cxl/meson.build b/hw/cxl/meson.build
+index ccad565c5c..c37563cd05 100644
+--- a/hw/cxl/meson.build
++++ b/hw/cxl/meson.build
+@@ -7,6 +7,7 @@ system_ss.add(when: 'CONFIG_CXL',
+                    'cxl-cdat.c',
+                    'cxl-events.c',
+                    'switch-mailbox-cci.c',
++                   'cxl-vcs-switch.c',
+                ),
+                if_false: files(
+                    'cxl-host-stubs.c',
+diff --git a/include/hw/cxl/cxl_vcs_switch.h b/include/hw/cxl/cxl_vcs_switch.h
+new file mode 100644
+index 0000000000..6576870bf3
+--- /dev/null
++++ b/include/hw/cxl/cxl_vcs_switch.h
+@@ -0,0 +1,134 @@
++/*
++ * CXL VCS Capable Switch Object Header
++ *
++ * Copyright(C) 2026 University of Manchester
++ * Author: Joshua Lant <joshualant@gmail.com>.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2. See the
++ * COPYING file in the top-level directory.
++ *
++ * SPDX-License-Identifier: GPL-v2-only
++ */
++
++#ifndef CXL_VCS_SWITCH_H
++#define CXL_VCS_SWITCH_H
++
++#include "qemu/osdep.h"
++#include "qapi/error.h"
++#include "qom/object.h"
++#include "qom/object_interfaces.h"
++#include "hw/pci-bridge/cxl_upstream_port.h"
++#include "hw/pci-bridge/cxl_downstream_port.h"
++#include "include/hw/cxl/cxl_device.h"
++
++#define TYPE_CXL_VCS_SWITCH "cxl-vcs-switch"
++OBJECT_DECLARE_TYPE(CXLVCSSwitch, CXLVCSSwitchClass, CXL_VCS_SWITCH);
++
++#define CXL_VPPB_BINDING_STATUS_UNBOUND        0x00
++#define CXL_VPPB_BINDING_STATUS_IN_PROGRESS    0x01
++#define CXL_VPPB_BINDING_STATUS_BOUND_PORT     0x02
++#define CXL_VPPB_BINDING_STATUS_BOUND_LD       0x03
++#define CXL_VPPB_BINDING_STATUS_BOUND_PID      0x04
++
++#define CXL_VPPB_UNBIND_WAIT_FOR_LINK_DOWN      0x0
++#define CXL_VPPB_UNBIND_MANAGED_HOT_REMOVE      0x1
++#define CXL_VPPB_UNBIND_SURPRISE_HOT_REMOVE     0x2
++
++#define CXL_UNSUPPORTED_LD_ID 0xFFFF
++#define CXL_INVALID_BOUND_LD_ID 0xFF
++
++#define CXL_VCS_STATE_INVALID_ID        0xFF
++#define CXL_VCS_STATE_DISABLED 0x0
++#define CXL_VCS_STATE_ENABLED 0x1
++
++#define CXL_MAX_VCS_PORTS 0x8
++#define CXL_MAX_VPPB_PER_VCS 0x8
++#define CXL_MAX_USP_PPBS CXL_MAX_VCS_PORTS
++#define CXL_MAX_DSP_PPBS CXL_MAX_VPPB_PER_VCS
++
++#define CXL_MAX_PPBS (CXL_MAX_USP_PPBS + CXL_MAX_DSP_PPBS)
++#define VPPB_LIST_LIMIT 8
++
++struct CXLVCSSwitchClass {
++    ObjectClass parent_class;
++    void (*identify_switch_device)(CXLVCSSwitch *sw);
++    void (*get_physical_port_state)(CXLVCSSwitch *sw);
++    void (*physical_port_control)(CXLVCSSwitch *sw);
++    void (*get_virtual_switch_info)(CXLVCSSwitch *sw);
++    CXLRetCode (*bind_vppb)(CXLVCSSwitch *sw, uint8_t vcs_id, uint8_t vppb_id,
++            uint8_t dsppb_id, uint16_t ld_id);
++    CXLRetCode (*unbind_vppb)(CXLVCSSwitch *sw, uint8_t vcs_id, uint8_t vppb_id,
++            uint16_t option);
++};
++
++/* CXL r3.2 Table 7-32: Get Virtual CXL Switch Info VCS Info Block Format */
++typedef struct CXLVPPBInfo {
++        PCIDevice *dsp;
++        uint8_t binding_status;
++        uint8_t bound_port_id;
++        uint8_t bound_ld_id;
++        uint8_t rsv1;
++} CXLVPPBInfo;
++
++typedef struct CXLVCSInfoBlock {
++        uint8_t vcs_id;
++        uint8_t vcs_state;
++        uint8_t usp_id;
++        uint8_t num_vppbs;
++        struct CXLVPPBInfo *vppbs[CXL_MAX_VPPB_PER_VCS];
++} CXLVCSInfoBlock;
++
++/* Physical Upstream and Downstream PCI-PCI Bridge (PPBs) structs */
++typedef struct CXLUpstreamPPB {
++    CXLUpstreamPort   *usp;
++    struct CXLVCSInfoBlock *info;
++} CXLUpstreamPPB;
++
++typedef struct CXLDownstreamPPB {
++    DeviceState *dev;
++    PCIDevice   *pdev;
++    // store opts and json in case of simple device hiding.
++    QDict       *opts;
++    bool        from_json;
++    bool        is_bound;
++    uint8_t     bound_vcs_id;
++    uint8_t     bound_vppb_id;
++} CXLDownstreamPPB;
++
++typedef struct CXLVCSSwitch {
++    Object parent;
++    uint8_t num_usp_ppbs;
++    uint8_t num_dsp_ppbs;
++    uint8_t num_vppbs_per_vcs;
++    CXLCCI swcci;
++    CXLCCI mctpcci;
++    DeviceListener listener;
++    CXLUpstreamPPB *usp_ppbs[CXL_MAX_USP_PPBS];
++    CXLDownstreamPPB *dsp_ppbs[CXL_MAX_DSP_PPBS];
++    // true if FM is in this guest, false if remote FM.
++    bool local_fm;
++} CXLVCSSwitch;
++
++// Called by USP/DSP/EP CXL devices to build the VCS structures.
++void cxl_vcs_register_usp(CXLVCSSwitch *sw, CXLUpstreamPort *usp, Error **errp);
++void cxl_vcs_register_vppb(CXLVCSSwitch *sw, CXLUpstreamPort *usp,
++        CXLDownstreamPort *dsp, Error **errp);
++void cxl_vcs_register_dsppb(CXLVCSSwitch *sw, const QDict *opts,
++        bool from_json, Error **errp);
++void cxl_vcs_register_qdict_dsppb(CXLVCSSwitch *sw, const QDict *opts,
++        bool from_json, Error **errp);
++bool cxl_vcs_hide_device_listener(DeviceListener *listener,
++        const QDict *device_opts, bool from_json, Error **errp);
++
++
++// Called by the CCI mailbox utils for FMAPI control of VCS.
++CXLRetCode cxl_vcs_bind_vppb(CXLVCSSwitch *sw, uint8_t vcs_id, uint8_t vppb_id,
++        uint8_t dsppb_id, uint16_t ld_id);
++CXLRetCode cxl_vcs_unbind_vppb(CXLVCSSwitch *sw, uint8_t vcs_id,
++        uint8_t vppb_id, uint16_t option);
++void cxl_vcs_identify_switch_device(CXLVCSSwitch *sw);
++void cxl_vcs_get_physical_port_state(CXLVCSSwitch *sw);
++void cxl_vcs_physical_port_control(CXLVCSSwitch *sw);
++void cxl_vcs_get_virtual_switch_info(CXLVCSSwitch *sw);
++
++#endif /* CXL_VCS_SWITCH_H */
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 6f5c9de0f0..f66ef6b68b 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -357,6 +357,23 @@
+   'data': { 'chardev': 'str' },
+   'if': 'CONFIG_VHOST_CRYPTO' }
  
- err_cap:
-@@ -372,6 +390,8 @@ static const Property cxl_upstream_props[] = {
-     DEFINE_PROP_PCIE_LINK_WIDTH("x-width", CXLUpstreamPort,
-                                 width, PCIE_LINK_WIDTH_16),
-     DEFINE_PROP_BOOL("x-256b-flit", CXLUpstreamPort, flitmode, false),
-+    DEFINE_PROP_STRING("vcs", CXLUpstreamPort, vcs_name),
-+    DEFINE_PROP_UINT8("usppb", CXLUpstreamPort, ppb, UINT8_MAX),
- };
- 
- static void cxl_upstream_class_init(ObjectClass *oc, const void *data)
-diff --git a/include/hw/pci-bridge/cxl_upstream_port.h b/include/hw/pci-bridge/cxl_upstream_port.h
-index ce248f3dca..05632286db 100644
---- a/include/hw/pci-bridge/cxl_upstream_port.h
-+++ b/include/hw/pci-bridge/cxl_upstream_port.h
-@@ -22,6 +22,8 @@ typedef struct CXLUpstreamPort {
- 
-     DOECap doe_cdat;
-     uint64_t sn;
-+    char *vcs_name;
-+    uint8_t ppb;
- } CXLUpstreamPort;
- 
- #endif /* CXL_SUP_H */
++##
++# @CXLVCSSwitchProperties:
++#
++# Properties for cxl-vcs-switch objects.
++#
++# @usp-ppbs: number of physical upstream PPBs in the switch
++# @dsp-ppbs: number of physical downstream PPBs in the switch
++# @local-fm: true if this instance of qemu contains the MCTP device
++# (FM capabilities), false if vcs will listen for incoming traffic
++# from the remote FM.
++##
++{ 'struct': 'CXLVCSSwitchProperties',
++  'data': {
++    '*usp-ppbs': 'uint8',
++    '*dsp-ppbs': 'uint8',
++    '*local-fm':   'bool'} }
++
+ ##
+ # @DBusVMStateProperties:
+ #
+@@ -1194,6 +1211,7 @@
+     'cryptodev-backend-lkcf',
+     { 'name': 'cryptodev-vhost-user',
+       'if': 'CONFIG_VHOST_CRYPTO' },
++    'cxl-vcs-switch',
+     'dbus-vmstate',
+     'filter-buffer',
+     'filter-dump',
+@@ -1272,6 +1290,7 @@
+       'cryptodev-backend-lkcf':     'CryptodevBackendProperties',
+       'cryptodev-vhost-user':       { 'type': 'CryptodevVhostUserProperties',
+                                       'if': 'CONFIG_VHOST_CRYPTO' },
++      'cxl-vcs-switch':             'CXLVCSSwitchProperties',
+       'dbus-vmstate':               'DBusVMStateProperties',
+       'filter-buffer':              'FilterBufferProperties',
+       'filter-dump':                'FilterDumpProperties',
 -- 
 2.47.3
 
