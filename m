@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A677FF8873
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB8F2FF8867
 	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 04:50:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wHws3-00041a-LD; Wed, 29 Apr 2026 00:49:59 -0400
+	id 1wHwsK-00058n-5f; Wed, 29 Apr 2026 00:50:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHws2-0003q8-DL
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:49:58 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1wHwsI-000501-E6
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:50:14 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wHws0-00007c-Tm
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:49:58 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2b2503753efso125122475ad.0
- for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 21:49:56 -0700 (PDT)
+ id 1wHwsG-0000PC-0v
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 00:50:14 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2b2429f98d0so72267465ad.2
+ for <qemu-devel@nongnu.org>; Tue, 28 Apr 2026 21:50:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777438195; x=1778042995; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777438211; x=1778043011; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hxLLYH9MzoUJ2vk/paiI+vtwF1wl9GSiiqD56bk7rlg=;
- b=YhuOmwpPEdGml56UBOnB6aAfsMKsfBj0wWYkBksJp/hezPNkfOWQQ3vObSArOLSiBU
- aAWcL6LMG73PYohLNtEt/8TqmB8CIP8VJ5QSftSiTxOELEGTPlc4IxkLBgosvdBJ1tv/
- J9VZsmAxYpGJaXbHZ7YcZBYqDU/95gOhiAabZ+q3bvXqqRJ7aI/l/9LcblYh33NqXq0Q
- 5/6t5IJJMweAYNErKv5W2hk0hYQCApCQUUmgK/Tzp1+wiAn+lsR42j9lybTLifqViqEl
- tigAxl+WbXU3/x8UuBSsV0PLcNQQjABatEqfQd1wuRzSh9WBlI+wB6ZINf6F0hJRGpnj
- vt0A==
+ bh=yMpS+oxPJGbRpex+VelLT6bbUjNH9wP4CLelzYLvWOg=;
+ b=rmD0JejQu8AW2AthOjFd6LgOkAMBv8tsp/2BFseC3dwGbpKE6eiZDx+ZaNznBXaDyX
+ VrpXdZbmZdVCYaLw2gXwtV5eeoVhYSeVJXzoJX0WBVpBXx8sHzky6qGL+Ss156WZvfQe
+ Wv27oaCsAOQiPazRLI0y+pNl8KaymTMIBSLwScOVciSysdVwg3TVy3jsjjuSnHgnxQq2
+ ZsJ/omd6zo1sLgMCAlU5RiIP94FvcjUhluPJUv1y9UCsmwsw2czHscMuyy2dd+RmhGvI
+ TOxX22077jRT5EHilXBZjEw6acFKaW4duCE+cgKv3xjygNwQOZmpEHxEN8Tzp046JTxd
+ j5jA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777438195; x=1778042995;
+ d=1e100.net; s=20251104; t=1777438211; x=1778043011;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hxLLYH9MzoUJ2vk/paiI+vtwF1wl9GSiiqD56bk7rlg=;
- b=eXCI14iqPbmiF13G5/LQHMtqwSgdZmmryIuMfV8eXptPCB/jgoQ73f9ytxILsaWisk
- u+bCBhqlLmL2RbifeTUVls+vZE+rD4xPZQKWv+B2IHRX+zNJtf9U5icmdbRD+MA78CSu
- XLz5sQqsnCPsZkgsAfsWnY1I2e8FVfmD3RisyGWChMC7ozse53eWQIqXYVsdOPZJZy6w
- iIWWWc25zros7i5rnvB4O2b/ZQFndRq48pfvk3gylGyxo6B1ZlpRHZcAx08lXWHIFLna
- PPoKndBv5OZj7kJbWcr9UV99g9sY50OQspm/vmAzNUrPFBnDcWTYjoXGe/CDtDwgnEMN
- QU7g==
+ bh=yMpS+oxPJGbRpex+VelLT6bbUjNH9wP4CLelzYLvWOg=;
+ b=USTQA5Exb/WwEFo1cMBITsomm01Q8f4/MhRzUL6MFLXyJtggRWxulHYHJHuObpb+ie
+ Saj8/zmg6AoqlybLZA0R5culyHfhDMwxb294y7vYiccr9H9I1hU3HNSTQD2lcys9SxLh
+ shEsYYprP3NNNJLifszgHefIgl6P9PWeV9wMbZUuBZG3YiMfWUfrvaxAxQJSYjEsQLhO
+ A1R6i6CjzvuHDjV00APNSePSXNxgdlxSWx27If7ui8ci93k9+S7HfjyqVPZnqnZhs+KL
+ MDz6dcWrcUIOZr5kAPr0mITwUoi05/63vfyXTPh+cJIoE5nSQVNwDKv6gTrmrsST7hFt
+ Mk3w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ92FLc5c+heI5t7GoP4uOz/Ptfw+PnIUSR80trJTH/OVqICDLlyPiRxehn1TIgr+cvVsJ3quPvZuuih@nongnu.org
-X-Gm-Message-State: AOJu0Yyv4s7NTCYFze+tk17ygqmr6nW9Mb6QE/toI3z2Pp/7ZoJKXSkD
- o/KTdqcQo0FSMypG/Pc3z+6vEx/pLMiklTA7g2fyWU8VIjxVukWAupAk
-X-Gm-Gg: AeBDieukMD/9WykOqABW0HJ9CDZea6hH+7wP8WCu4CbjOJgDmWq50dwV34/RAvA9TjV
- 0StkvwAW6bnd5JwPEX7iVDham66iFYwQexySpyjyzobSR2ZYwPmE3hsKo6+ZZPDhuStGMTfvGws
- 8zmLYvSZKamjCNmkZsD6pYUkO5faAMXsywkmfhfQodY9vnvl6sFHtKUU708LQUMkkRXzVdY9ObJ
- je3b08Lj2uHmhE/uIe/T9lwnr5oTordDx+AO/yOaoDEgzbHWJ1jRafd8hb8lmQSP0benkIIvYt7
- cZkf12u22FvZSmIDGu0IHUpNSWvehb2EIQLIkim+pSxwbhiha8oCE6CEPZvTTZ2zrQSPWydvCEz
- F1xBvc8APeQ3y4k/2gtyMuAygE4GCitS7/1ofO6L0geM/TFhHinX5uU9eUNcN8+tPK4ZpNr6MNs
- Xkd/0AABfhclGXm5QHrWWCHjIR/bN8YqnyAUTUdllPJsCrGhS/SNevFww0odq9YRo=
-X-Received: by 2002:a17:903:2c9:b0:2b2:42da:25cb with SMTP id
- d9443c01a7336-2b97c4aa15cmr56774395ad.19.1777438195628; 
- Tue, 28 Apr 2026 21:49:55 -0700 (PDT)
+ AFNElJ/5ncJ8ql+TVGcQvJp4650fdGOlvSNWy4vyYkLyqGVmhuGlmIzbuRKHJJ1bypMvHNRrl7fUwQQk6Vn8@nongnu.org
+X-Gm-Message-State: AOJu0YzWJOyWpNB8jE5CJEnmaKJKoetsJ4ES+q17yuL1XjyAtdq5EZAd
+ Py3cYpQkbWTzXwGgEG/D0aiZrsW/6xbE3gc3AI694EcdPpNKwP6ZJJT1
+X-Gm-Gg: AeBDiesEU0aNx6nxPXU3rrwlwt1w1af0BF0QyIJE2pcM866/Igu6V3J2pYKBc3jtBJ7
+ nWLLN+kgH3LAfri6lZn5ipW1dnF6s8b16TYCLinY7BfWQ6jKeGRFQJMxEqbsriDsDTnbjI02RXR
+ x0HlRvjtHnN1IZyKZ426B/CkvkuqogLud1G7s7iIkMA7MeHI7Th3ezY/jtvnfLJkNNHbTYMW5R6
+ NQ2Tx/8XiPH0nUWZuN4FtEHKiWwl3LNbIfCAKxYqHz+ghfkJTGrm9xDyOISpQCYxRqMxQnOmWE6
+ x0I45AavT/pKYLhiR04yCa7RhGUwIsARoMGU4WP5qj2fV08PrBvo10FZqcIAfiPAZWSewsviuj0
+ H9FsaK4MPExlzIQMBoX/d6Wcg+m4leO4x6HS6gnK1e0iprlmZ0dsLoQr0WyGlOtOh25ypbnW9uW
+ VFboMqN0rCSY/hbcv/+4gYT2kV8kXdEehnvKuseMX5bc0dvuTMyAq8xR3kDQLaQZU=
+X-Received: by 2002:a17:903:2a8b:b0:2b9:8e63:71c8 with SMTP id
+ d9443c01a7336-2b98e63730amr751005ad.29.1777438210678; 
+ Tue, 28 Apr 2026 21:50:10 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b988772ae8sm7756145ad.7.2026.04.28.21.49.50
+ d9443c01a7336-2b988772ae8sm7756145ad.7.2026.04.28.21.50.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 28 Apr 2026 21:49:55 -0700 (PDT)
+ Tue, 28 Apr 2026 21:50:10 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
  zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
  qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Jay Chang <jay.chang@sifive.com>,
- Frank Chang <frank.chang@sifive.com>, Nutty Liu <nutty.liu@hotmail.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 21/51] hw/riscv/riscv-iommu: Add IPSR.PMIP RW1C support
-Date: Wed, 29 Apr 2026 14:47:22 +1000
-Message-ID: <20260429044752.4176397-22-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com,
+ =?UTF-8?q?Sebasti=C3=A1n=20Alba=20Vives?= <sebasjosue84@gmail.com>,
+ qemu-security@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 24/51] hw/intc: fix heap OOB in ACLINT MTIMER multi-socket
+Date: Wed, 29 Apr 2026 14:47:25 +1000
+Message-ID: <20260429044752.4176397-25-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260429044752.4176397-1-alistair.francis@wdc.com>
 References: <20260429044752.4176397-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,50 +108,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jay Chang <jay.chang@sifive.com>
+From: Sebastián Alba Vives <sebasjosue84@gmail.com>
 
-Add proper RW1C (Read/Write 1 to Clear) support for the IPSR.PMIP
-(Performance Monitor Interrupt Pending) bit, which was missing from
-the IPSR register implementation.
+The MMIO read/write handlers index timecmp[] with the absolute hartid
+(hartid_base + offset) but the array is allocated with num_harts
+elements. In multi-socket configurations with hartid_base > 0 this
+causes heap OOB access in the QEMU process.
 
-Signed-off-by: Jay Chang <jay.chang@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Message-ID: <20260325050011.66722-3-jay.chang@sifive.com>
+Fix by using the relative offset for array indexing.
+
+Cc: qemu-security@nongnu.org
+Signed-off-by: Sebastián Alba Vives <sebasjosue84@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260401053853.10473-2-sebasjosue84@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/riscv-iommu-bits.h | 1 +
- hw/riscv/riscv-iommu.c      | 4 ++++
- 2 files changed, 5 insertions(+)
+ hw/intc/riscv_aclint.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-index 47fe01bee5..a938fd3eb4 100644
---- a/hw/riscv/riscv-iommu-bits.h
-+++ b/hw/riscv/riscv-iommu-bits.h
-@@ -189,6 +189,7 @@ enum riscv_iommu_ddtp_modes {
- #define RISCV_IOMMU_REG_IPSR            0x0054
- #define RISCV_IOMMU_IPSR_CIP            BIT(0)
- #define RISCV_IOMMU_IPSR_FIP            BIT(1)
-+#define RISCV_IOMMU_IPSR_PMIP           BIT(2)
- #define RISCV_IOMMU_IPSR_PIP            BIT(3)
- 
- enum {
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 8476405d0e..7ba3240552 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -2150,6 +2150,10 @@ static void riscv_iommu_update_ipsr(RISCVIOMMUState *s, uint64_t data)
-         ipsr_clr |= RISCV_IOMMU_IPSR_FIP;
-     }
- 
-+    if (!(data & RISCV_IOMMU_IPSR_PMIP)) {
-+        ipsr_clr |= RISCV_IOMMU_IPSR_PMIP;
-+    }
-+
-     if (data & RISCV_IOMMU_IPSR_PIP) {
-         pqcsr = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_PQCSR);
- 
+diff --git a/hw/intc/riscv_aclint.c b/hw/intc/riscv_aclint.c
+index 9c1491bd04..e27e5fb394 100644
+--- a/hw/intc/riscv_aclint.c
++++ b/hw/intc/riscv_aclint.c
+@@ -131,6 +131,7 @@ static uint64_t riscv_aclint_mtimer_read(void *opaque, hwaddr addr,
+         addr < (mtimer->timecmp_base + (mtimer->num_harts << 3))) {
+         size_t hartid = mtimer->hartid_base +
+                         ((addr - mtimer->timecmp_base) >> 3);
++        size_t hartid_offset = hartid - mtimer->hartid_base;
+         CPUState *cpu = cpu_by_arch_id(hartid);
+         CPURISCVState *env = cpu ? cpu_env(cpu) : NULL;
+         if (!env) {
+@@ -138,11 +139,11 @@ static uint64_t riscv_aclint_mtimer_read(void *opaque, hwaddr addr,
+                           "aclint-mtimer: invalid hartid: %zu", hartid);
+         } else if ((addr & 0x7) == 0) {
+             /* timecmp_lo for RV32/RV64 or timecmp for RV64 */
+-            uint64_t timecmp = mtimer->timecmp[hartid];
++            uint64_t timecmp = mtimer->timecmp[hartid_offset];
+             return (size == 4) ? (timecmp & 0xFFFFFFFF) : timecmp;
+         } else if ((addr & 0x7) == 4) {
+             /* timecmp_hi */
+-            uint64_t timecmp = mtimer->timecmp[hartid];
++            uint64_t timecmp = mtimer->timecmp[hartid_offset];
+             return (timecmp >> 32) & 0xFFFFFFFF;
+         } else {
+             qemu_log_mask(LOG_UNIMP,
+@@ -174,6 +175,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
+         addr < (mtimer->timecmp_base + (mtimer->num_harts << 3))) {
+         size_t hartid = mtimer->hartid_base +
+                         ((addr - mtimer->timecmp_base) >> 3);
++        size_t hartid_offset = hartid - mtimer->hartid_base;
+         CPUState *cpu = cpu_by_arch_id(hartid);
+         CPURISCVState *env = cpu ? cpu_env(cpu) : NULL;
+         if (!env) {
+@@ -182,7 +184,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
+         } else if ((addr & 0x7) == 0) {
+             if (size == 4) {
+                 /* timecmp_lo for RV32/RV64 */
+-                uint64_t timecmp_hi = mtimer->timecmp[hartid] >> 32;
++                uint64_t timecmp_hi = mtimer->timecmp[hartid_offset] >> 32;
+                 riscv_aclint_mtimer_write_timecmp(mtimer, RISCV_CPU(cpu), hartid,
+                     timecmp_hi << 32 | (value & 0xFFFFFFFF));
+             } else {
+@@ -193,7 +195,7 @@ static void riscv_aclint_mtimer_write(void *opaque, hwaddr addr,
+         } else if ((addr & 0x7) == 4) {
+             if (size == 4) {
+                 /* timecmp_hi for RV32/RV64 */
+-                uint64_t timecmp_lo = mtimer->timecmp[hartid];
++                uint64_t timecmp_lo = mtimer->timecmp[hartid_offset];
+                 riscv_aclint_mtimer_write_timecmp(mtimer, RISCV_CPU(cpu), hartid,
+                     value << 32 | (timecmp_lo & 0xFFFFFFFF));
+             } else {
 -- 
 2.53.0
 
