@@ -4,104 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A5AEFF8867
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 14:48:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F0BFFF8867
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 14:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI6C1-0004i9-P3; Wed, 29 Apr 2026 10:47:13 -0400
+	id 1wI6GJ-0002nd-3M; Wed, 29 Apr 2026 10:51:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Bt-0004VJ-A1
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:47:08 -0400
-Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wI6Br-0004aZ-0e
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:47:04 -0400
-Received: by mail-oo1-xc32.google.com with SMTP id
- 006d021491bc7-694891f8f75so5626582eaf.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 07:47:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777474022; x=1778078822;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=X+vpUTgmmUCDm+9ikvEVgt8ooJ9JXNNdESCppn40+QE=;
- b=l05BuCCut0s1RmASxsI1VpEV60h/aN2xrJXBzKtIdZRU59kebtc7nTn0CpXZTRahGI
- RHbW1RbNkTT//CKhimh5fnxqLRe7N69P8ZiXsSAGpZ2CirB7AyoO6Y+OXvwN6ZiFJ8tZ
- sOzCXI6oGoQmCaX7hdTkRzfobn+H7M/2+aYXpHSnQz5RpbINVX6EpoZGeeXN1cCVCkWm
- bb4uejkKKcM9nVewRRL8Eo+/YpLOtmhV8fkmV4aNdtcBS0XwmpRZA4VqwWuYmjIpvb2O
- m1IQT6hZKeuaxqdF1CkSPbm+oJIxHZ1ie2xAp/vygWEZxTDsCYsd9KtwU7IPIvI0w74X
- zy6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777474022; x=1778078822;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=X+vpUTgmmUCDm+9ikvEVgt8ooJ9JXNNdESCppn40+QE=;
- b=WLMOr6kHNOMwU1qpdlA9K9qSkonPAt4kDrU6j2QipGO/x7LrKJq37mil86uDYKj0RP
- LC94pupRbOMpaavySJ/QWcafPturez1NY7XdtIIkS6kTvMnY8rCvVyl+ruSRpr4MJr6i
- AD9/q+7BeFQWs+vkOkyxgSx7HL2jlO/xhJeksXlpnV16cxDtj0NSjBGTU2LaFavyWQOf
- ZFoUgEChVkndq9KmLvlta+nBTig9J/OzLBM5C5l6zajLczk+vinryF/gp9Z5b3HjinMg
- 58QFQSfzG9JRf71jLE55BGDmVU87gArkD0hQxvrLdu5WtUJKOD7GTNw8IQVD7hzz/edQ
- GIEw==
-X-Gm-Message-State: AOJu0YyqCFER3ly7HyY4/cwYEP5pvDtC673HKI3eOExkKVH39f3vqpBk
- 9zuXRDc690I3DoN7uFK1pwhCzK6FfsRB0raYKcGyFYP+uF1Eo8YODAHahhdfugEIjek=
-X-Gm-Gg: AeBDieuZF9Y7bv6oNssyLBFZzXfOBVqlRkzuNsNPeu4DaEmW4b1otqn4npSDKLvUcSs
- EzN3LUs8iKU6mGm1xPKkZku5zxZ+tmvGYe9FeyeWWw5wSWtiifTA2XXUcAeA6TGdOGY2Kb7Wa/x
- G7xXQWoOEiVxBAJDWmOMyxmN/Fa/TWuMu14Jzp/Z+ZOfXTZ2rOjczL5QHZn19biFfAaMpzp1mAV
- eju0ErtEC5WNh+RzdTdy74yGSOJTBSBpfC8+xowyVLHTux/zVd0FgTp0LvcbBcr2snfCYeUb7cI
- MJ/ELHi8iSWBTx6E8D+HEtPX4krclaM+qIIzP0oChnsbqSnd8jz+NvJRq47tShi6S5oaoCwRhCH
- xZxI0mcUNcIuyMKFydJ2VqikIIJGLcztVYfDrX0RB/lIUBdo+9/o0kYga8javxa9m3PCbljHYn4
- 2Q42dCwRHb2RTb5odD4eOAkNhDt91sG7s=
-X-Received: by 2002:a05:6820:1989:b0:696:25d4:1e62 with SMTP id
- 006d021491bc7-6966838808amr2229839eaf.2.1777474021924; 
- Wed, 29 Apr 2026 07:47:01 -0700 (PDT)
-Received: from rebo.bsdimp.com ([50.253.99.174])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-6966b93d58csm1313984eaf.0.2026.04.29.07.47.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 07:47:01 -0700 (PDT)
-From: Warner Losh <imp@bsdimp.com>
-Date: Wed, 29 Apr 2026 08:45:16 -0600
-Subject: [PATCH v2 10/17] bsd-user: Add target_sockaddr and safe_ioctl to
- syscall_defs.h
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1wI6GH-0002nR-8r
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:51:37 -0400
+Received: from mail-centralusazon11011045.outbound.protection.outlook.com
+ ([52.101.62.45] helo=DM5PR21CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1wI6GF-0005bl-EP
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 10:51:37 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=x7y9IVaIbKXWbzn3t39nFb3o4InJCXT1VClPt1JL9FNbRH+VuaBrOP14XwAE+UWMGWoaJcpMNmExT6cF3oLGOXpT4fas/Un3tUYeHjx6ZIEbX025/VmBBKGjB/6t7okflGcjYKyRpbjXP6SYmEuSltMPwA/EURZdPzTpGSjTmolGKpKlLMrzn/DgrQvUYGuaVjSV9JaUmF3hG7WlLwYNgAQ0myqP8rteBCLNUB4dM9bkT9940RtB+HWQgK5F2OeOpq1eHufPXYbHx916Jvf01itA7BK/t9RTJfOLYb6VsIRpH1Cn2Ib5rG/dM+hz3sir50yDTGG3WLzFJrirNM1wqA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=x+Z+wc7y1TC0jOem8VyzQxeeGvf2KMYfN3p+XEzmlnU=;
+ b=s9p+Pi1KT21fPYZ/VSCW1XvRWGWY7jh+EWyhRySj2+jSLwBYF6CAPM1heT19A3mahl6S2z64X38uNKwCCG5OanN2RIoTCrwlhrxERhrSNpZSQ0CK4QnU6LI3TWT8WlC7U33+LlI+PQSvITOedlGwKDGD/EfLgvH/zYcLAqi4mTybHsWyBNoVM6XjsBQLdTMttm6WQAjkS2iaPaLsg5dAlxvMsp1K2MPofmCea5rsTq8LWPkT/RLjKcENhmh/0aTrbEZI+HBfje513ksKglcRLqn0yYVxr9Y+Ou2ILoPhmjxhJun5NSVu68o7ocI+6vzvMKvgrAxSr9owOYJuljlENA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=x+Z+wc7y1TC0jOem8VyzQxeeGvf2KMYfN3p+XEzmlnU=;
+ b=AkciBE/6juK4F11UbbFYdLU1iwEL+AHjo9IJzttn3ze3ij0OpCzlAATvP/HDRX0pMgxNggScLU124gbbCAmNugquVugUOQxxh6/9kmCJWcwaHOM9lqcc2jyvWWM9EplqC/Q8qk3WyCw0tWk+dFI+L9AmJduz2rxvRSyrS2LjtCEaICqo4vKtt0p25eav8Ns00RTjxk0aDaEZs3W7n0f1Uw7x09Rx+oewINj9mj0bWGLXn9Jw/j/aEGAy/LwGH0QtenOCU3cpAuj00WWOR9ZFSixY0AQV0op+9rd7pwj3DmtiwZ9AznMyADklScnQHoeYHFM4uyW4BkzvMgv5t5UIOQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
+ by DS5PPF78FC67EBA.namprd12.prod.outlook.com (2603:10b6:f:fc00::655)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.26; Wed, 29 Apr
+ 2026 14:46:26 +0000
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da%7]) with mapi id 15.20.9846.016; Wed, 29 Apr 2026
+ 14:46:25 +0000
+Message-ID: <8943abf6-fdc8-4684-8e2d-3a8c95d59c19@nvidia.com>
+Date: Wed, 29 Apr 2026 17:46:19 +0300
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 16/16] vfio/migration: Add tracepoints for
+ precopy/stopcopy query ioctls
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Joao Martins <joao.m.martins@oracle.com>,
+ Markus Armbruster <armbru@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Prasad Pandit <ppandit@redhat.com>, Alex Williamson <alex@shazbot.org>,
+ Kirti Wankhede <kwankhede@nvidia.com>, Zhiyi Guo <zhguo@redhat.com>,
+ "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ Juraj Marcin <jmarcin@redhat.com>
+References: <20260421202110.306051-1-peterx@redhat.com>
+ <20260421202110.306051-17-peterx@redhat.com>
+Content-Language: en-US
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <20260421202110.306051-17-peterx@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260429-ioctl-v2-10-288639bc2427@bsdimp.com>
-References: <20260429-ioctl-v2-0-288639bc2427@bsdimp.com>
-In-Reply-To: <20260429-ioctl-v2-0-288639bc2427@bsdimp.com>
-To: qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>, "Stacey D. Son" <sson@freebsd.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1053; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=1aWdqqfETnObSvDu3kjSpmHIrNfg8gEN8mkXnAbEnzk=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp8hl96AQn+PECZiJ3RTtcNWN4DC2Ob+vVr71kZ
- 46fnIrc0qqJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafIZfQAKCRBsHNEofbAR
- APZ/D/9pP4M8CMNUN0jI1a7vXqmzGPcS8MmcYjWoWAR3AU4RkiOBAbYo19vGLigKWJf6ga/kA3P
- IpB2cN7wojN2I7XQ/ygnABxOoEjawOezdKkD751Njb8fvSzdI7TL92QfGnTS/Aa+h4uCltQ9leh
- 2qDrnstDYsJAlQoMCTJ1auEOlR9kI29kObJzfUjH+PUR0pxOFsaKD2tMiucLa1j06UCHuQk8rhf
- M2xPkgUeG2Qe1r9DuIzHcsxpH33bavyp/JonyFGypOLigHa10BFDCui39cyrfrTOP10C9IRXQMc
- cfkIbaTrY7ucjB07u+JqdZVMcPVOmCrlv97Cq6GbwOHR9w/xJiK3Np/Ao/yArp1b64McAp+z/QV
- MP6OZZsplt+2NSlTSpOFoY9WX6FN7ijoGcZdefrMTUjr4z85wDdHGhcmC3W2Lja3jUI/zkJTau0
- lDzG3YlCG1KwKz3hUD4+fiXNFGirnTCWztIxmtTAMNqwGBTiGVKo3ivPS80y1D1VogzxhGEco93
- E29na0zdtRnAlaU4lXTUnyxh2S8YGUu6y1VgFu4yO276EQyFK5oB4SD0QNi4vZ5WkeeTJY9gtWn
- KZEnRU7uoLSde2LMLbNN9gL2ZOFaAJaOlcgP1gsTYP0Nb8wq9xQAizIIWB3xKoQJimD8P0CVVyR
- 9fdjpL5f7BBdYHw==
-X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
- fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::c32;
- envelope-from=imp@bsdimp.com; helo=mail-oo1-xc32.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+X-ClientProxiedBy: TL2P290CA0021.ISRP290.PROD.OUTLOOK.COM
+ (2603:1096:950:3::15) To BL1PR12MB5063.namprd12.prod.outlook.com
+ (2603:10b6:208:31a::11)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|DS5PPF78FC67EBA:EE_
+X-MS-Office365-Filtering-Correlation-Id: 5a62ccb1-b741-40b0-c87b-08dea5fe16ca
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|7416014|376014|366016|18002099003|56012099003|22082099003;
+X-Microsoft-Antispam-Message-Info: ExsNUmt4WpBGwZS1TUnP7cd4KnnIbYLEER80vYlKhLEc1wdFRRCcaBAk7fza7dUox/FIPmR4wvcFnMz+/yMs1RtJv3/TLejQOR5AOwkN+K79KtGKx5Gs0zMVQAvg7+hiG9pcjbVIVKSyxw4Ln7kH7fVNlZUqxZtqubXEfCFIn/cJ1ky3VkKAD1s/DgK8by1WIU++UU/2WdHNd4o7rXyt8RvBFr3oWE26lbm+OyWRyym7djVC624gzMiZHqWo7uXsWV9gJbS4lqFm2r/KANJhAcH6u/tq35APzBqhvB7zPJGJ9MyuCBoDHS7vo3pH3/IPzBbO79Zxcl7//RU9hGh0P2CYzqltOmrdYXyeVeR46pw+Y4Gx9+LMeH/zPt2+pGKhfLtbIOrNXTkBKGWzMDN/b2r2fVHyexBB+nwkcRtSMF9swvsH6uwpJ2MOsbd9nxifuCRl2oCq3Kj+UhVTTDy2Kii4oK+25/xoLgXiLnSRyUGjyyrR6YUvJ9N2K9nZ7xaNKsd5qx47dgGYGTD9A3gMkLWYgzOP+GXOSITZ8P7eNlJlW3G9Xo/u0F9sEEfbQ6S+ekiDmXu7v4JBXOjJApW/avqWHnAOjRSB4kduMHTXl/awA1+lnnCFnPQRjyKrG8xBn7Jz0m048Xm7oUJ127DUPCkUdysDT2DiJ3Qf1+2yp2HDN/7O4fqXr/3FPVaibb5bQJqrlviR0HR+4nJfgzsugNyYBjZembVK0pb1pMUBPFo=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(7416014)(376014)(366016)(18002099003)(56012099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dy9uUWpPOWNHSzFvTHBZcStqWFZuaXh4d3p1em9VOWpBVmZMaVlIUVhrQUpF?=
+ =?utf-8?B?V1QyZzRYYmg0eUlaOEFZMDBZcStrVEtIZStxMWh2QTBvTExuZlZxVUNQT2Vv?=
+ =?utf-8?B?azJLempKM2RvNjN1RzdhNHF3MmJJVW1Ud0VkLzNxWUNSejZzb1h2L3ZhaGZa?=
+ =?utf-8?B?RGxqdngrdCtJUVVBd0ZmSVZNcFhHZUdwNWRvdlZ5cVdGam8xd0lIT3N4YXFv?=
+ =?utf-8?B?VE5seDEzOGNabGFOaDM5OUp2ZzlHdWNEQjErMW1kd2NnR3AxVTA0cUc1VThY?=
+ =?utf-8?B?eURNZHdRc2VxSHN1QzJvUTlqTTc4VCtEc05yMndJWHROZkxlaFR6NEk5VEw1?=
+ =?utf-8?B?THlVMnM3dU9IbEt5elUyZklkOHJyQndYbDRjV2hPYW5UeXYwZ2dPMGhtZmJ1?=
+ =?utf-8?B?Zm9DVnAwS05QQUlKVWtNNlpPYisvSktzUUhHWGl6bmpmWEoreTlrbGFFSFRB?=
+ =?utf-8?B?V0RRbWFlOFgzMmw0RzN4cDJUWEVKRVVNdklzZndRanBvM2daNC9MdllEd2pB?=
+ =?utf-8?B?eVE0N0FtOUV6VDFuMm1uV1hxbllRdzBTWlNud1QrK3dyeU5OWFZOM0FmS0hM?=
+ =?utf-8?B?TlRBQWxzUU03T2orbk9oWjNmdmJicHhZMjdxRDJFL1QzS2pxR0lsYytYeW9W?=
+ =?utf-8?B?MHE5aG4vT0JnNmFwVFpVZ1c0Y0t1ZnNnSG1WUHF6WGgvcGU0TXc0SlIvbFRX?=
+ =?utf-8?B?MVVaU1VSVDdVWk8vbmYxWkZUZUFBc1l3L1BZM01McnUySWpvWGFVeVd6SWVt?=
+ =?utf-8?B?VS9Bamx0VUR4aEdzUGxYVHlaZjkzY29kbElPSFdzOXVud05NVjR3MjV5WmRN?=
+ =?utf-8?B?Rms3ZExLNUZ6c2c0WW5nTTBVZFRDUDV5RzAzZWsxNTgrWGdCWEF2Y3Q4dU5G?=
+ =?utf-8?B?UDZTNFZJblA4STJ2bjFabmVhcFNaV0I1bjU4Y1pUd3RxdkNxUlAwWjBoZ2Nr?=
+ =?utf-8?B?QUhUdnNydThDRkVFSXhPYWVIZHI4RnJvZzVydm1oSmloV1Q4ZWtDUXBjT09J?=
+ =?utf-8?B?Y25TTlQrTGUxZVFBRGQyQVFlZEo1MDhWdVpFdmRvWENwOTZwRFYxUXRncDRF?=
+ =?utf-8?B?SVB2UE80QlFtOHA0VVNnbERrdTJhTk9qdWNBd1JESWJVZFRGaU9ldGlNaG1C?=
+ =?utf-8?B?MG1oUWZxTldYRWZmQ3NhRmRQZlowcmp0SWdQdGJzd1NaazlCeHh5ajRHaUgv?=
+ =?utf-8?B?WmN6aGN0WnBxb1lNTStrL3B4THVacmZIR0N1dGZQQTkxRTJuTVlzOHlTU3Zw?=
+ =?utf-8?B?U3hraEJBd2F5NXlYa1hnak83Y1pIWmJseWlHSGZYM0RZYmtjZThWdWRxRzRw?=
+ =?utf-8?B?ck52c3IrS0ZTcUlDQ0NjZ0RGNS8vUHgyTkkxdXJOQ1J5OVQ0dnB5UkxIaUJI?=
+ =?utf-8?B?bHVBQmhDMmpPRTNtTkF5RC9CcTNYUkxIUjU0clprQ0xqRklIclhDOVVEMkdy?=
+ =?utf-8?B?bXJMQkE1dEpNTGkyVm5lYXQ0OC8wOHFMVnc3cmlxelIxbmhiTlVTOVRJVHEr?=
+ =?utf-8?B?dWlXSlYvcnhnQkcvUTlUQWx4U21rbUpKNnRncVByd3ovbmdEai9oTTdvYjI2?=
+ =?utf-8?B?ODUxb3NOWjRkTVg0WWc3NmpJRVVLVnVXelEvZUF0VUtPY0diY0Z4Um9DMWx6?=
+ =?utf-8?B?SDU2c3puc2hSRk1BL3NYWG1kVGdWa2dzNkJmZ3U0NFY0aDNkWnhmK2cyVmt6?=
+ =?utf-8?B?RW4yU210WkJ5T0ZOZFVCZkxmeXhqczNPMS9PcUYvVGM5aVBjNDJEcmkzVEUr?=
+ =?utf-8?B?YmNhemhWZS9GenEwNk5iYVIxVWRrK3JyVEltTzlCeUM5QzByVU00cS91REVn?=
+ =?utf-8?B?eTlqOVlEcWxhQjdxRlBaTUI0c1dzYkpTMGQ2VFJKTmdyZXlSNmUydUZpTU0w?=
+ =?utf-8?B?NWZiaG83UnA1UWx1U1RWZllLRy9MYjNsZ2s0RVcyeGtpYWpnQUs4dlhJM29h?=
+ =?utf-8?B?a3VTTUNVMzdIcnVkY2thUWJ1K2lQWmJhZFRzWjdOVWNVRFNGZnlOSC9vcGo2?=
+ =?utf-8?B?VGlHZWl6a3BDSU81SkxUWUxEQWo1ZkxNdE8rTklvMXR0U1BTQXhEU05YYmZV?=
+ =?utf-8?B?bDJmQi8vK3VlVm9qWW5HWDBmajJkeDFRMkIxbU01aWVTaDk2VnBDOFc5WFJH?=
+ =?utf-8?B?WGNlTCtra042SGpvcUZnamF2Z0hzNWhWdkkxUW4yZ1JrMmpKaWlHQWV0QWRp?=
+ =?utf-8?B?UFVyUU9pMGR2SGI3aGMzYjhneUd5YXdGT3M5clVCZnlFU2djTVgybUVFNUhZ?=
+ =?utf-8?B?WjJWc0NuMHJrRk0wKytzZHhGbjFlN1BEVDRrcnAwMWtxRkkwd3NMM25HNEVj?=
+ =?utf-8?B?NW1lMm92L3UveVpUaU9TbXhxdHozVy9LTTBIVk1vN3RZK1VBYytsQT09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5a62ccb1-b741-40b0-c87b-08dea5fe16ca
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Apr 2026 14:46:25.7844 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: omPBvT6OtK14VJTFSwh9M/01xSOzoD2xUbxeQEwm/m2qtTIiKo1SDbXKZlCxj7iVOQNLPaN0l5tB8uD+zKMi5A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS5PPF78FC67EBA
+Received-SPF: permerror client-ip=52.101.62.45;
+ envelope-from=avihaih@nvidia.com;
+ helo=DM5PR21CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,41 +159,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Stacey D. Son" <sson@freebsd.org>
 
-Add struct target_sockaddr definition for socket address handling
-and safe_ioctl macro for safe ioctl system calls. These are required
-dependencies for the ioctl emulation subsystem.
+On 4/21/2026 23:21, Peter Xu wrote:
+> External email: Use caution opening links or attachments
+>
+>
+> Add two tracepoints for both precopy and stopcopy query ioctls.  When at
+> it, add one warn_report_once() for each of them when it fails.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>   hw/vfio/migration.c  | 33 +++++++++++++++++++++++----------
+>   hw/vfio/trace-events |  2 ++
+>   2 files changed, 25 insertions(+), 10 deletions(-)
+>
+> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+> index e6e6a0d53d..04d9f94edb 100644
+> --- a/hw/vfio/migration.c
+> +++ b/hw/vfio/migration.c
+> @@ -329,6 +329,7 @@ static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
+>       struct vfio_device_feature_mig_data_size *mig_data_size =
+>           (struct vfio_device_feature_mig_data_size *)feature->data;
+>       VFIOMigration *migration = vbasedev->migration;
+> +    int ret;
+>
+>       feature->argsz = sizeof(buf);
+>       feature->flags =
+> @@ -340,12 +341,18 @@ static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
+>            * is reported so downtime limit won't be violated.
+>            */
+>           migration->stopcopy_size = VFIO_MIG_STOP_COPY_SIZE;
+> -        return -errno;
+> +        ret = -errno;
+> +        warn_report_once("VFIO device %s ioctl(VFIO_DEVICE_FEATURE) on "
+> +                         "VFIO_DEVICE_FEATURE_MIG_DATA_SIZE failed (%d)",
+> +                         vbasedev->name, ret);
+> +    } else {
+> +        migration->stopcopy_size = mig_data_size->stop_copy_length;
+> +        ret = 0;
+>       }
+>
+> -    migration->stopcopy_size = mig_data_size->stop_copy_length;
+> +    trace_vfio_query_stop_copy_size(migration->stopcopy_size, ret);
+>
+> -    return 0;
+> +    return ret;
+>   }
+>
+>   static int vfio_query_precopy_size(VFIOMigration *migration)
+> @@ -353,18 +360,24 @@ static int vfio_query_precopy_size(VFIOMigration *migration)
+>       struct vfio_precopy_info precopy = {
+>           .argsz = sizeof(precopy),
+>       };
+> -
+> -    migration->precopy_init_size = 0;
+> -    migration->precopy_dirty_size = 0;
+> +    int ret;
+>
+>       if (ioctl(migration->data_fd, VFIO_MIG_GET_PRECOPY_INFO, &precopy)) {
+> -        return -errno;
+> +        migration->precopy_init_size = 0;
+> +        migration->precopy_dirty_size = 0;
+> +        ret = -errno;
+> +        warn_report_once("VFIO device %s ioctl(VFIO_MIG_GET_PRECOPY_INFO) "
+> +                         "failed (%d)", migration->vbasedev->name, ret);
+> +    } else {
+> +        migration->precopy_init_size = precopy.initial_bytes;
+> +        migration->precopy_dirty_size = precopy.dirty_bytes;
+> +        ret = 0;
+>       }
+>
+> -    migration->precopy_init_size = precopy.initial_bytes;
+> -    migration->precopy_dirty_size = precopy.dirty_bytes;
+> +    trace_vfio_query_precopy_size(migration->precopy_init_size,
+> +                                  migration->precopy_dirty_size, ret);
+>
+> -    return 0;
+> +    return ret;
+>   }
+>
+>   /* Returns the size of saved data on success and -errno on error */
+> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+> index 287df0b8cb..854a7e4b19 100644
+> --- a/hw/vfio/trace-events
+> +++ b/hw/vfio/trace-events
+> @@ -176,6 +176,8 @@ vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer
+>   vfio_state_pending(const char *name, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size, bool exact) " (%s) stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64 " exact %d"
+>   vfio_vmstate_change(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+>   vfio_vmstate_change_prepare(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
+> +vfio_query_stop_copy_size(uint64_t size, int ret) "stopcopy size %"PRIu64" ret %d"
+> +vfio_query_precopy_size(uint64_t init_size, uint64_t dirty_size, int ret) "init %"PRIu64" dirty %"PRIu64" ret %d"
 
-Signed-off-by: Stacey D. Son <sson@freebsd.org>
-Signed-off-by: Warner Losh <imp@bsdimp.com>
----
- bsd-user/syscall_defs.h | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+Ah sorry, I just noticed this now while doing some other work -- if you 
+respin the series, could you add the device name to both traces? And 
+while at it keep the traces alphabetically sorted?
 
-diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-index 4dbd90c2f1..873aea2fdd 100644
---- a/bsd-user/syscall_defs.h
-+++ b/bsd-user/syscall_defs.h
-@@ -565,6 +565,16 @@ type safe_##name(type1 arg1, type2 arg2, type3 arg3, type4 arg4, \
-     return safe_syscall(SYS_##name, arg1, arg2, arg3, arg4, arg5, arg6); \
- }
- 
-+/*
-+ * sys/socket.h
-+ */
-+struct target_sockaddr {
-+    uint8_t sa_len;
-+    uint8_t sa_family;
-+    uint8_t sa_data[14];
-+} QEMU_PACKED;
-+
-+#define safe_ioctl(...) safe_syscall(SYS_ioctl, __VA_ARGS__)
- #define safe_fcntl(...) safe_syscall(SYS_fcntl, __VA_ARGS__)
- 
- /* So far all target and host bitmasks are the same */
+Thanks.
 
--- 
-2.52.0
-
+>
+>   #iommufd.c
+>
+> --
+> 2.53.0
+>
 
