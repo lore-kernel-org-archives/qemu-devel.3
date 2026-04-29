@@ -4,147 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87724FF887E
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 18:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDE1BFF887E
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 18:16:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wI9Ge-0006qi-MU; Wed, 29 Apr 2026 14:04:12 -0400
+	id 1wI9RT-0000Ad-Q1; Wed, 29 Apr 2026 14:15:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wI9Gc-0006q6-RO
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 14:04:10 -0400
-Received: from mail-westus2azlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c005::5] helo=CO1PR03CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1wI9RS-0000AQ-M2
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 14:15:22 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wI9Ga-0007Uj-VW
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 14:04:10 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aGPvdeVIH8JWWcM0xmeIPmSws7+YiHBCm4JkDVjzUe0jzUmmptzZ/jepbFehViP7IloFUCxDxHeKmyICZvFAtteFzqI1UjzzyM+4pdJxvaVOzChgVYTTuytiEe4qwiSiymjgmm5ybuUMJKMOwVel1s5/KUj9c989XGBYDWuw/Wf8uVVPgLNzRUBfRWk6BIp5EQ5D+vWaEKCCv5dqT/vsDPue8iLlB/wiecD/cEb6C45xIsuL3yGS7fJPhrsFzCxJqREKLCFJ0ySlA7nrID5NnA6Sn+uwYE0WZYt0yG2Dwm1xFoon6e/+xhNDC+mLUQLF3FqKkgDUKe+paJLkf9R5KA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JEB86E/YVyeAmC62VZ5SRGQYycVhKAl7GAFmqDKy9nI=;
- b=x9KHIqgABklTTUvtiW4ZHZlL8Mk0ya/qtmJMtxy3EUSZXzxvSzHMpwZFueQQRCjRaRRYQPPC8PU1yqC6xgxNUpfaJrbEkK7PV71UmoHjilmLMpbPS5WzVAZATvlFpMp03c1TG+j3nsUotnJBfdd6dvEva1fMIMizuWNb/NpKnFCxuAb8mBiqhwZ9cWEd92Mi1WMOxOs409Pc0qfIMUDQIyHjUMJ3iHufwjtPxixxhFbyTqvg8xSPl+tLQlocZFeObCbcY6HsR24Efd18Ysx3zdzPzVI5P40SNlCc+CK9NXeCW2hp4r/HgFOTf1xjmalCpoBpbefqAXSsNCDB9IgqAw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JEB86E/YVyeAmC62VZ5SRGQYycVhKAl7GAFmqDKy9nI=;
- b=jnEiOydxB3pKWcW22/6Tu1gZfonrNnL92xS3e50KBvJnh4N1GaurkDaiiJQ0Yh8+BbaArsOQTNfMTD4B8B9GdF4JwNR+fVzG4SaVCO9ZtxZL1/MPQMHMrfqK0qIt2HamM6CvqG4eAXRmesUZlLN4MztTSw6FGtztwBZUWJhoBMLbAixisOz9ceTASZd6tJZ2PYSt/cDYFwLrSTFAVUgbcKVJ5moXBlLrO46+8aDrkuU1MbWeXjPaV11aiP/6bgWYprWitNtvqxfOqf9Mkm8h6EmX+oKOP6FpNeQbxX8PnnLlttR/qJW1nHdvWZUjJjGoTl05mBAoAWzdku/LsDibLQ==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
- by IA1PR12MB6411.namprd12.prod.outlook.com (2603:10b6:208:388::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.19; Wed, 29 Apr
- 2026 18:04:02 +0000
-Received: from BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
- ([fe80::a0c2:5681:4aca:90da%7]) with mapi id 15.20.9846.016; Wed, 29 Apr 2026
- 18:04:01 +0000
-Message-ID: <6d166a37-7418-4a25-ad1d-90abe0f9d153@nvidia.com>
-Date: Wed, 29 Apr 2026 21:03:55 +0300
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1wI9RQ-0001zc-Ng
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 14:15:22 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63TAk1tR2888876; Wed, 29 Apr 2026 18:15:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=sWCXM4
+ hYASBedMxsXcfR/ZnVbfQm3kkN5XTa2N+NfrM=; b=m1vrvIr8wpCHWRDRlXyEad
+ dILIubYxC2I26KI+JGK8FTQeysTV9dT9B8iV7+mwIzXJws3bpUKSjrObgHfZIY2+
+ F/2loh2x4gbuRgpFFLYwzgBIgUJcJXSHauOZIt2RW7rlzKwuVrxxiJ7w5RY4XhqT
+ +YUY7j+8exXiR/W1nkslrQn21740jNnHTxXP7Oz206sDZt1YlukNcisg+qivWojP
+ D07KZ1GSc24FLHA/4OsOrxXjHDDHJN7/4RTvPCBnmba34E3C6R2q9b6MdYYyIz12
+ OwHjBVf6ryz957iQ9vhOE0VkncY/OPrhXrRWA3FKjV1HCdO8+3tyR1cGokyRK01A
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drnb5bynw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 29 Apr 2026 18:15:18 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63TI8qBR030846;
+ Wed, 29 Apr 2026 18:15:17 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ds7xqfn79-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 29 Apr 2026 18:15:17 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63TIFHq324183406
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 29 Apr 2026 18:15:17 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 64A6F58056;
+ Wed, 29 Apr 2026 18:15:17 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E76F95803F;
+ Wed, 29 Apr 2026 18:15:16 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 29 Apr 2026 18:15:16 +0000 (GMT)
+Message-ID: <4b5c983e-8bbb-4851-bb0f-f478ad14121b@linux.ibm.com>
+Date: Wed, 29 Apr 2026 14:15:16 -0400
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 16/16] vfio/migration: Add tracepoints for
- precopy/stopcopy query ioctls
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Joao Martins <joao.m.martins@oracle.com>,
- Markus Armbruster <armbru@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Prasad Pandit <ppandit@redhat.com>, Alex Williamson <alex@shazbot.org>,
- Kirti Wankhede <kwankhede@nvidia.com>, Zhiyi Guo <zhguo@redhat.com>,
- "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- Juraj Marcin <jmarcin@redhat.com>
-References: <20260421202110.306051-1-peterx@redhat.com>
- <20260421202110.306051-17-peterx@redhat.com>
- <8943abf6-fdc8-4684-8e2d-3a8c95d59c19@nvidia.com> <afInOIANAJLftQ7w@x1.local>
+Subject: Re: [PATCH] tpm: Dynamically allocate tpm-tis buffer
+From: Stefan Berger <stefanb@linux.ibm.com>
+To: armenon@redhat.com
+Cc: qemu-devel@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>
+References: <20260427200134.453022-1-armenon@redhat.com>
+ <765f0577-ee8f-4944-93fe-bb93e420668f@linux.ibm.com>
+ <afBbLDmdYFY5feJx@fedora>
+ <84607c2e-1da9-43d2-8a5b-e50e91c0f8ba@linux.ibm.com>
 Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <afInOIANAJLftQ7w@x1.local>
+In-Reply-To: <84607c2e-1da9-43d2-8a5b-e50e91c0f8ba@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TL0P290CA0015.ISRP290.PROD.OUTLOOK.COM (2603:1096:950:5::7)
- To BL1PR12MB5063.namprd12.prod.outlook.com
- (2603:10b6:208:31a::11)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|IA1PR12MB6411:EE_
-X-MS-Office365-Filtering-Correlation-Id: 05b848a1-b3b3-488e-ec22-08dea619b174
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|7416014|22082099003|18002099003|56012099003;
-X-Microsoft-Antispam-Message-Info: T45I/0ZRCxiW73M1OS+2ZSSOXvTMul7+XBjPgJjnjfcT3foCfaNxF5hYRuoi6gf1X1DQ5B2o6SaKHXpZAvT5LSAAdriEdA77+DkqGnJ9WkLmwzxKJiPngpzkx09SCSRs9LVjlnQiODDBjxNGGCg4Jb1Oa3sLRGOZSSHpY9WFIuM1+NyJFkRmSkoAR7a0/zOi32JfUTeaLciHK/Zd5rKW8+jY0ozYUDiZRsmCX/arQ17MoSBZagOkcaEYkbiX4DArRYUGYkbD4NCOEEFPaI+lRh1vTuC6oQbqEAABGSkZhxrMTwT4Vd5KTMLfR5lIg19MhBE8pbX0zsjLuf4tDGjtz5XhGm7FiVWBe6Lp2JZC4+rlyJSReS+nrCf85/Nk7xPX2AypWVu4pRjunF+3uDOsqiq/AY1MTtiCi+aQ0IbU2rXaF7LkyI3eFH5wt44J9SMbipX3sq6G41B8xZOkU1Hzd/rLkTYPRODqPwj0ozwQqGNbjmJ2LGxRaH+9sQSP3RpVOo8B1CQN56IDokCcIfO4flS0QpdDJu4EKBAI/mipop0apBPaQtueAPkw/Uc4S44pOX67GDFmhKgNbRsLULnb/tgkJY4hcsV0jjIp7gjsKirz+45LQbA/QCHCQwYTwh80KXYnxKsmr/yFgNkcdKVmY37XGU34ix1IzUJLPi5pBeLV+vz28G/X5i5PB3AM+W3nNpgQqKXFqSjKA1Wy/yTFlNYAzGCxT8QNHQeeZOBuEUM=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(7416014)(22082099003)(18002099003)(56012099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bEVjc3N6aVpSODhWZkV4MmZRWDlXbERvOU1VSkRDT0pLa3p0dnRCZmhMY2dy?=
- =?utf-8?B?d0xiVENlVEhqOHh0V3UxcGxTNjdRSGdyTmlQR3BzZm95Mk1yRkNITjhNYkQ1?=
- =?utf-8?B?OWdhMWd4N2dPUWs1MVp6RkdKUlNKWjczWmpiNUxhOGt5aFc2dGYyRjVKUzN4?=
- =?utf-8?B?SExtVXkyZzF0RGhqRUM5Q0w3RktncGswRFZOS2ZxSk11OFczU1FvU1hONG9M?=
- =?utf-8?B?U21IZ3ViYW5qeGwveXFvd0NPV1dOWEhDV0xLQWV3dk1NTS9mbEgwckZYSjRH?=
- =?utf-8?B?aWc1SkVKdFU4ZVRUdFNYVnJMbXRlWGdtSFpPSG13Q3lHK0s0YzBadmcxZ3hh?=
- =?utf-8?B?YStUUmdZTHVsbDk4L0RCdE1TVlJ1VVlwZnIxcXA1bHY2RUE4ZlFMWFN5aStw?=
- =?utf-8?B?VUd6Ni9YTkJ3UXk4a01TV0RXNm4yOVZlWlhzLzdBelRxdG9KU3Jmam9tT3RY?=
- =?utf-8?B?SHJNSFBNNUhYNlRRRWtHMlF0dTg5N002OEdGRnIwcG1KVVlNdnNvdEFLU25l?=
- =?utf-8?B?TVpMang4bnA3OXdvbzJjSGZwTUJjS014U3dBTDVReU05YUlnWVNtMnZrdzhW?=
- =?utf-8?B?S3lNM2s4YlNVL3dIWXNoL2huS2F1OVZCTzJUYzRiRUlzRlNIUVpOSmhESzhx?=
- =?utf-8?B?RGJSZm9mNXhTSENBS1h6djZCKzZCMjBFOGZPRjRsTVpHcnZyNkRFN1psamI0?=
- =?utf-8?B?aUhFUzZ1SWtzdGI5aEthRWhRUTBoZExwRVVaY1lxTzZ4c2Z3T1hKL0c4c0RT?=
- =?utf-8?B?RnQvSWdLMlRkNE14ajhxeDVXRUdPbXJmd2lrZGV4dXBXd1JENlpZUE1ISlFY?=
- =?utf-8?B?NVk5T1ZlVm5nT3g0Y0pLU2h3cTl4TGw4dlZlaWNMekFFd3g3cVNqVjdvYnEv?=
- =?utf-8?B?dG8za1hPVWl5V3Z5bWJBK0VYYWdnWktCVVBkSVFwWkIreUVQRHpmOVF2cXF4?=
- =?utf-8?B?ejZOb3VUK1M3dklmc1c2UTRBanV5TU9DUTZ6NkpPV0h1RVNwM1V4bm1SQjlY?=
- =?utf-8?B?QUdOZUIwenUvVmoxc3FQWm1CQVg2SW1PRERaM3d0aHYzQlA4ZHNmMXJtQ0FJ?=
- =?utf-8?B?TFdHVUM1Nnp3ZFRjMVJEU080bzl4N1lad3BxZGxJdWx3cDZHdmQ2OFNoVXhM?=
- =?utf-8?B?MkZKV094VCs5Y1h3bVlVY3FJYk95MXFaSklRWUpUc0lsU1NEL2RDenBFd1JH?=
- =?utf-8?B?WkpvbS8wMEpnSFlWK3pyZ0RLVmN4LzZxMEYzVGVJZm1lR0JjZ0t3NjVUQlRM?=
- =?utf-8?B?ZDFoZkIzUzlpaUxUaDE0azl1b2NuZXNhVXl3bXZ4VlV6MFZKbHFIYnZvTjlm?=
- =?utf-8?B?R2pkeDc1cGMyT0RpaGQ5Q0xWKzR2VGlGQXppN3dQUHByV2Rta0ZvbFMvYmVr?=
- =?utf-8?B?cEdpM1RsZlY0aXZtYTJZU0VUZDBRSFl4QXgxSVd1dkNvL3l1ZGI0NktiMm5y?=
- =?utf-8?B?Y1dKYzRiVURrVGdRbE9OdG9BaW83eTFRWkVUb0JvbXkxSnhQS21ITFdrSVF5?=
- =?utf-8?B?ZEY0NEYzd0VuV0tna2VEdnJEMStRNWpjRHQ1Q2pHZDAwWkw1Ui9GQ05XWWNa?=
- =?utf-8?B?NENDZEcrUTdzTVgwRHloOXRTcG1CVm1ZV2VCSCtlbDEwNmZNd28vc1FZYVJ3?=
- =?utf-8?B?ekxSNXVYZjNiMmx5dGt0ak9qZUN6WGx5eWlDTFdEZVVXOHF0K3F1OW9OeHM3?=
- =?utf-8?B?ckFQZFRUUUU3NDc3SU5YQVV2RG14NWFla2VTbTZ6RDJFNXdFMXVrQmZoQzg0?=
- =?utf-8?B?bFBnYVVXRVBzYVpIeEhBN0xxVkVFM2NJVFdFMmhVd2NnMEh4c1dUR2NLNGxh?=
- =?utf-8?B?L2M0VFdKU1F4QkIweDlQN3hEbllpKy9RUkdWU1hVTUJrK1VST2R5eGZTMGFX?=
- =?utf-8?B?a1UwamlicUVQNEg5cURPdGVWWElrRENVTDFKRTZxU1RqalhmSy96M2o5MjhQ?=
- =?utf-8?B?cUZVVGZQb0VIU1I5MWFLemdCQ21PZGlIeFZLT1lHbUJkSllGY0dYaVpMM3lP?=
- =?utf-8?B?anJJaHhtWXJzbVVuTElJM3V6TnlVdllLQk1CVjlDb05LR3dhbTgwcVA4TkNw?=
- =?utf-8?B?N1RQMWtsVWc2UVY4ZjM5ZzNjd05SVUIrUUdGdVVUWGUyUUp2ak9GMTZpL0Uy?=
- =?utf-8?B?RzVSWVExSHVjZkY4K3lMWmNING1BNndGSUV1OXFibjhwZzhGTGFXakFRQzhq?=
- =?utf-8?B?MnFobG5hZ3lrbkRVUXdrWUpYZVJxUS9kRjR2MkVsOXk2aWtERVQ1MXYySHoz?=
- =?utf-8?B?dU42QTRYSVZmUmpGeEFNbENIM2JHazExYmFwNmZvWkFIYXZMQldsM01TS0w0?=
- =?utf-8?B?azZOMkRUTXVFTUdXazBKSGxnMm9WdmJvRjZkcitKc05yQnZNSmVTUT09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 05b848a1-b3b3-488e-ec22-08dea619b174
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Apr 2026 18:04:01.8555 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: aX3C8Lde/10019pWfwOGBOqiNE5hK9AOS7fZ4mNjeoQcpVHBEiOGtg5DuUDxVrb/ZzawopfJb6w5bz9UrNcALg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6411
-Received-SPF: permerror client-ip=2a01:111:f403:c005::5;
- envelope-from=avihaih@nvidia.com;
- helo=CO1PR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=AqDeGu9P c=1 sm=1 tr=0 ts=69f24ab6 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=NEAV23lmAAAA:8
+ a=43Lr1NG5gbHmFVOjAS0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDE3OSBTYWx0ZWRfXwtF43ZqIMU0H
+ iZODollo9Q8qgLRsiUZ0U48BrkVJGHUtk6od3SRxVw0ECd1xkyjZX9ZF61Pnm4o44Bd6nX/HS8D
+ XnqfNm1D1SW47Q6yfeGWv431rT/JMEynloRGSmUxm8I1OE6dpmp0uMXMFVKNtGutpHoRK0ffM2O
+ lk/0O51Y5OHwRL+Zc5fWl5dgx10k/CCEmDEmfbs9/JgMj+AlhrI3EZdczd9FHUK+fp2QslRFYFM
+ mUDMOYer/dV1wRvuw+U59wmRaoGLXdz2PGw/5KArmovTl0SDwPJYKKAzt1YQTDjPWPCZJH6NDSG
+ okA74lzTTHpfzVGIhKTIY3e0y50KxL7lG3uwU2ptnYAAEGHnu+6Z1znL62QfDAnP5oBo1hMkkp2
+ M8uHscaShb4u6l0SE+YufCzAtba3u6V7cTItOHpHBGu+7Jy/TzrOJb54+/DGWlji740Kq3h3ocm
+ SXR8GZ+jvGtOZK7ssMg==
+X-Proofpoint-GUID: 7SMGNaD1V7u7kpSezmk0H9l4E93DZsno
+X-Proofpoint-ORIG-GUID: 7SMGNaD1V7u7kpSezmk0H9l4E93DZsno
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-29_01,2026-04-28_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 priorityscore=1501 phishscore=0 suspectscore=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 bulkscore=0 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604290179
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,85 +125,46 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 4/29/2026 18:43, Peter Xu wrote:
-> External email: Use caution opening links or attachments
->
->
-> On Wed, Apr 29, 2026 at 05:46:19PM +0300, Avihai Horon wrote:
->> Ah sorry, I just noticed this now while doing some other work -- if you
->> respin the series, could you add the device name to both traces? And while
->> at it keep the traces alphabetically sorted?
-> Could you help check if below fixup is suitable to be squashed?
 
-Yes, looks good, thanks!
+On 4/28/26 8:57 AM, Stefan Berger wrote:
+> 
+> 
+> On 4/28/26 3:01 AM, Arun Menon wrote:
 
->
-> Thanks,
->
-> ===8<===
->  From 930723da46e16c2ed5405916a7e10d4f560e22fa Mon Sep 17 00:00:00 2001
-> From: Peter Xu <peterx@redhat.com>
-> Date: Wed, 29 Apr 2026 11:41:49 -0400
-> Subject: [PATCH] fixup! vfio/migration: Add tracepoints for precopy/stopcopy
->   query ioctls
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->   hw/vfio/migration.c  | 6 ++++--
->   hw/vfio/trace-events | 4 ++--
->   2 files changed, 6 insertions(+), 4 deletions(-)
->
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index 04d9f94edb..150e28656e 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -350,7 +350,8 @@ static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
->           ret = 0;
->       }
->
-> -    trace_vfio_query_stop_copy_size(migration->stopcopy_size, ret);
-> +    trace_vfio_query_stop_copy_size(vbasedev->name,
-> +                                    migration->stopcopy_size, ret);
->
->       return ret;
->   }
-> @@ -374,7 +375,8 @@ static int vfio_query_precopy_size(VFIOMigration *migration)
->           ret = 0;
->       }
->
-> -    trace_vfio_query_precopy_size(migration->precopy_init_size,
-> +    trace_vfio_query_precopy_size(migration->vbasedev->name,
-> +                                  migration->precopy_init_size,
->                                     migration->precopy_dirty_size, ret);
->
->       return ret;
-> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-> index 854a7e4b19..ab27ff5ea2 100644
-> --- a/hw/vfio/trace-events
-> +++ b/hw/vfio/trace-events
-> @@ -162,6 +162,8 @@ vfio_migration_realize(const char *name) " (%s)"
->   vfio_migration_set_device_state(const char *name, const char *state) " (%s) state %s"
->   vfio_migration_set_state(const char *name, const char *new_state, const char *recover_state) " (%s) new state %s, recover state %s"
->   vfio_migration_state_notifier(const char *name, int state) " (%s) state %d"
-> +vfio_query_stop_copy_size(const char *name, uint64_t size, int ret) " (%s) stopcopy size %"PRIu64" ret %d"
-> +vfio_query_precopy_size(const char *name, uint64_t init_size, uint64_t dirty_size, int ret) " (%s) init %"PRIu64" dirty %"PRIu64" ret %d"
->   vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
->   vfio_save_block_precopy_empty_hit(const char *name) " (%s)"
->   vfio_save_cleanup(const char *name) " (%s)"
-> @@ -176,8 +178,6 @@ vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) data buffer
->   vfio_state_pending(const char *name, uint64_t stopcopy_size, uint64_t precopy_init_size, uint64_t precopy_dirty_size, bool exact) " (%s) stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy dirty size %"PRIu64 " exact %d"
->   vfio_vmstate_change(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
->   vfio_vmstate_change_prepare(const char *name, int running, const char *reason, const char *dev_state) " (%s) running %d reason %s device state %s"
-> -vfio_query_stop_copy_size(uint64_t size, int ret) "stopcopy size %"PRIu64" ret %d"
-> -vfio_query_precopy_size(uint64_t init_size, uint64_t dirty_size, int ret) "init %"PRIu64" dirty %"PRIu64" ret %d"
->
->   #iommufd.c
->
-> --
-> 2.53.0
->
->
-> --
-> Peter Xu
->
+>>>
+>>> With MAX() it can now be bigger than TPM_TIS_BUFFER_MAX if the 
+>>> backend says
+>>> so -- hm...
+>>
+>> TPM_TIS_BUFFER_MAX is still 4096.
+> 
+> Oh, I had still based my patches on your TPM_TIS_BUFFER_MAX increase to 
+> 8192 bytes. Let me fixes this along with a few other things. I will let 
+> you know.
+> 
+> I have another series that I will post now that can be applied to 
+> master. It's adding a test for TIS over I2C but I will need to extend 
+> that one also with the large transfer test case then.
+> 
+> 
+
+So I have resolved this issue now along with a few other things. My 
+branch is here: 
+https://github.com/stefanberger/qemu-tpm/tree/work-tpm-for-11.1
+
+- I have applied the i2c swtpm test case series first since it could be 
+easily upstreamed first
+- Then your patch "migration/vmstate: Add VMState support for GByteArray"
+- Then the CRB chunk + TIS extended buffer support series. I modified my 
+patches (last 4 in that series) to
+   - increased MAX_TIS_BUFFER_SIZE to 8192
+   - added migration blockers dynamically for TIS whenever >4096 bytes 
+are either in the request or response; remove them later on again when 
+device goes into ready state for example
+   - added large transfer test also for i2c
+
+Please pick up those patches for v6 posting, or otherwise you can split 
+your v5 series up into CRB-only support for v6 and I post my (last 4) 
+patches later on.
+
 
