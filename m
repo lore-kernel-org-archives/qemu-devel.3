@@ -4,77 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ACB4CD13D3
-	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:09:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA245CCFA13
+	for <qemu-devel@archiver.kernel.org>; Wed, 29 Apr 2026 19:26:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIAFI-0002Cx-EE; Wed, 29 Apr 2026 15:06:52 -0400
+	id 1wIAXT-0005z5-Lm; Wed, 29 Apr 2026 15:25:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wIAEo-00023y-IX
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:06:22 -0400
-Received: from p-west3-cluster3-host9-snip4-10.eps.apple.com ([57.103.72.241]
- helo=outbound.ms.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wIAEl-0000WY-NY
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:06:22 -0400
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-6 (Postfix) with ESMTPS id
- 8D2DF18000C6; Wed, 29 Apr 2026 19:06:17 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRJB01fDl4fBBdGGVUERx5dVl4eGQJRHFYNV0NUBF9QSQxBUGxaAEcXSB1dGVlvUF0cDhhZG0AVXRFQGVYJXhUXHkFNWgJWTQVKA18BWwZCAEkKXQJYAF4LTgZeD0YDRRQVXAVWBlcUeQ1dHUUOVhlaDFIPWw4cFktGExlOG1dNWg1AGVgGbRRWFVIEWQ==
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1777489578; x=1780081578;
- bh=oFaW6jR5lddoGoGwR6tTxwA6nE1Ag8Stsv9wMgLDDpc=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=Eb9VAnzKcKZ8PT/4cE5BNJQg3njUrwP+jm3IkDONy9DRyxyOJ1CPKRrN4f1qjQfu6PbrMw226CQ2nau1vjDlrwXgB8n41QFFCfq3bg18YC2Mw+vFHwU/6tbv+noaf0dc06Bu+6VZMUYpQX9VholPKpKbM4OLERdRRh3KNTzSbMv5+zFof9sM0vSKhoDpb9Wm47pyvtWN87wAYzeEwJAwc9Y+1mB4WQE1qiCkylxeeKjhjvVhmHdkMLqzW1Lc7tNrw0exppTK17AFFwzTAo0U6NHLmN8MXKkxW2NTsbtcYa4vpkTP5bhjL0UlAA3rlBYG+6p4YSb7+gI8I+CTlwk/Dg==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-6 (Postfix) with ESMTPSA id
- 9FAFE18002DD; Wed, 29 Apr 2026 19:06:14 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Phil Dennis-Jordan <phil@philjordan.eu>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Roman Bolshakov <rbolshakov@ddn.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Alexander Graf <agraf@csgraf.de>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Subject: [PATCH v21 14/15] hvf: enable nested virtualisation support
-Date: Wed, 29 Apr 2026 21:05:31 +0200
-Message-ID: <20260429190532.26538-15-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260429190532.26538-1-mohamed@unpredictable.fr>
-References: <20260429190532.26538-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1wIAXQ-0005yL-27
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:25:37 -0400
+Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
+ id 1wIAXO-0007J7-2E
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 15:25:35 -0400
+Received: by mail-oi1-x235.google.com with SMTP id
+ 5614622812f47-479ef2b7979so136910b6e.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 12:25:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777490732; cv=none;
+ d=google.com; s=arc-20240605;
+ b=luIZy8rQvSe9QNWb1bB5HMjoZwkysGVVM9KTnN/7anp8RcSyHftIbOI+WGAT8KMA26
+ d2XOkP1sjnvrrIn3ldh7SWB1WyvbGF/3llBxq8/7ZXosI+jBTjnGklhlW+KivnmtsMgK
+ rgyoAhoXu/Ip3Y7WacoNz8iNPkaHS2IwrKo522rrmCoj+mzmtmUrrnzuCSAOBJgR8Ujd
+ OKPfo+UJ0Ze/kz8f/NCUYQvgplZj+uyTuQcukneDRrTGr/2PUSpK7EHjfppXDyrmAn1T
+ 9AYGjFUUl8y/h7bCAMugtm90jSgyMqteztN9fayWjyoXy8ULAU+9bojrFWGJqOYGr8qM
+ Hd8A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=PCfJVk5QzJgss4BpyoIAnlfL4C3sSPEnkOOMEArHUC4=;
+ fh=aanhhsDZTnRjNFO3zk3hYWwug1kw07jijXkDz3YiQC4=;
+ b=NgjWqNDjpCctyMlrVkQlSUPm5c5twbfo7FoQpVnPE2eiGbFnBoj/Wb7lxlD8tydxK9
+ 4Amk1Rn1i8C+Hpkg32lDROFgp2auhTMpd46hU3IqGGinfR4djX70yVIwmh2WNCPHZKwV
+ cgXv2Di/1woIi9y/nm6Fls/FHSpqyC3hV82MHgtD//YwKzO1e+UwgAFbF5uAHf9hbJZC
+ oshHfwPvjzpeXNZqEiP9tzK4LPiSLzHaDcb3D/hcDWd4aEBsrao9sgcvopC188fp8xoi
+ iZJYh5ZFRTl+HBz0XcMYgx2taeEubSrjzkwjsmE2oiKjNORv/XndVXWRIYkaVf8kR5rY
+ gTOw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1777490732; x=1778095532; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PCfJVk5QzJgss4BpyoIAnlfL4C3sSPEnkOOMEArHUC4=;
+ b=r+doJxrAlWrRoqN1eb5myZ3ZwJ9r2Wplkwd7hVYorPydJKryiF6db3SwzFOmytPk6d
+ Ghe6mGL1s9cUTjn8rrsfNp6Y7QNhcgIHjw0kygFgk5s/bnVIXomonOGgG3PNYveAzmpc
+ wjWuXX6sxr5Ariw5LPLW/uWDmZTin9HIXuW2od9LWaXxUrDmh/99Kfhr3P+b0z36Kmr+
+ 51vFYlot22VzfaHItoFXuGNhWSh2xBcM9olGYFXpMpzyY3wl/9Du4/V60YBInRVjbl9X
+ 6bG61gA81mLiSv/Edwp791oGECvF7F3kWpPLT/7YKTBBtf7Nch9BzQBGjRIGSU1HJ1Nx
+ nEFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777490732; x=1778095532;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PCfJVk5QzJgss4BpyoIAnlfL4C3sSPEnkOOMEArHUC4=;
+ b=Gk7F7AnWqU8sxHuNMXuITqdv5o5ny0KFo2Y/RVVyMQqRlTMxOlhVDJ58/kl3yJ+pBv
+ OxPrqWZy0rYifksUr6ovqdhjfnCu0Lj5GHEuXXyHl7BJJp5wv3SSXaRTf2RANLkc9dp/
+ PbiZx/YqqmOQUOQ+5IdVOQVOIrRlMPr553VNX8y2OrGhAoZZl5/mtc4CNIt8qoKBHKj0
+ 7QouuydZZSID6szIQoviTyW/fzn7DyipvQkyEuvZRHwssmi6U8HdxLeT/WKOvJI9Fh79
+ 29xA+PmGku/UMaYLuEbtruli40iUoBQSHrpVhH2cJpZWKW56xGEZ/kHwrAdI2FvQ/cng
+ 9uwg==
+X-Gm-Message-State: AOJu0Yy2748CEKyE2ZJCfgHFL533kWLxTbsziclrfp4Qzw+BUBuWrbvj
+ dyodcUcnxgz2buB8c9Ap8cxSuHf3bs50rwCcfoFcmnXM84WWjfimcTlesQTdoIULCk5INajpnQK
+ al7teUqiS6ioOubxaxVABqHZnXgCYo34=
+X-Gm-Gg: AeBDietP2H7IvwExq3QxZQw5i5qJHKC2D+o0f6rKaejgXnvhjbNtESlSReufxTq/QQO
+ 6mvUqJXOwyRlVjhF25v6Us5FVrvtgtt3zQQEdF+/ECzjoMw3pP2nG3iIUG0SRqz44vaJg48MTwh
+ Yx/5Lb4c5KqdfOT35qGkqxV1xTU2+8xbC3JO3SWn69aNwkCmuU0aycuk2qkczBRvuts3Rnx2Iz9
+ vd58+JXD8vJsvp7ge7GmZcb8xklTPMwbTQy33S77lUGjZPlx6hk4VUTdQzdFgnftS0WYxHlQrbF
+ dsItelJnM2zfEF8Mig==
+X-Received: by 2002:a05:6808:d49:b0:479:fbdb:4f85 with SMTP id
+ 5614622812f47-47c5f19c0f1mr85724b6e.0.1777490732289; Wed, 29 Apr 2026
+ 12:25:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Authority-Info-Out: v=2.4 cv=TPRIilla c=1 sm=1 tr=0 ts=69f256aa
- cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=A5OVakUREuEA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=gc5wapfoLYamzdkEL9IA:9
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: Fsw_g0Z9jSgsqejDFOy-Cj2llGkhA3li
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDI5MDE5MCBTYWx0ZWRfX5Tg6wS/m+6fA
- +wJ6ZNhelT2Q4q5iUF1JPO5KuZtC7wyH67q7P+5oJzfS5Ghx3BYuYEmmt/HO2uWMymZR7p6hOf0
- e5N40SJP1yuBkRpkzOX+tDFH3WXZ3Cclf8CGHa6xUEAx8Dk/lODYtf0fStANze2CiApUx/kzZjM
- rLd4S+SDith5TvQZIM4cj9bStIwYPm9AqzfNVSCN/jMckc+Blz4tr45BbFtZL8Z0K2B53Eqv6G7
- E4QlJI/5ElUaUMWJqbWhNC3/8yIgAievY9k46S7O3C8X+Ba6krcDjuFLVE0v6Qi9E2l1wJ4tRj6
- MCHmBXhGMwPejdtLRpOO4ySO8yvsoE7a+82WlCm4fjTScuJUwluf6LF4r37zuU=
-X-Proofpoint-ORIG-GUID: Fsw_g0Z9jSgsqejDFOy-Cj2llGkhA3li
-Received-SPF: pass client-ip=57.103.72.241;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <CAN-aV1EiKRh-Zpb9=77rXYPD2uT7HZmeNfvVW-wAToT+gaVC=A@mail.gmail.com>
+ <87v7dvgw58.fsf@pond.sub.org>
+ <CAN-aV1ERB-vdvMyRuNo2tog9-EPPyCunXJkk-kC=DkX-kU6VCQ@mail.gmail.com>
+In-Reply-To: <CAN-aV1ERB-vdvMyRuNo2tog9-EPPyCunXJkk-kC=DkX-kU6VCQ@mail.gmail.com>
+From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
+Date: Wed, 29 Apr 2026 21:25:21 +0200
+X-Gm-Features: AVHnY4I9GvHD5cXveSzznX9tl0o9wlXsWSg_zblf_NvEG_gfuitDjsq989ddjyQ
+Message-ID: <CAN-aV1HDZfoJv3OCm9_f3epNtvvr5CrvB-1Fi4y7jGLwF3Xx7g@mail.gmail.com>
+Subject: Re: Question on preferred location for QEMU sample projects
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, artem_mygaiev@epam.com, 
+ takahiro.nakata.wr@renesas.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-oi1-x235.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,27 +118,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
----
- hw/arm/virt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+On Mon, Apr 13, 2026 at 4:04=E2=80=AFPM Ruslan Ruslichenko
+<ruslichenko.r@gmail.com> wrote:
+>
+> On Mon, Apr 13, 2026 at 9:25=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
+> >
+> > Ruslan Ruslichenko <ruslichenko.r@gmail.com> writes:
+> >
+> > > Hi everyone,
+> > >
+> > > We are currently preparing the v2 patch series for the Remote-Port
+> > > Co-simulation protocol for interfacing with SystemC modules. The firs=
+t
+> > > revision was here:
+> > > https://lists.nongnu.org/archive/html/qemu-devel/2026-02/msg01760.htm=
+l.
+> > >
+> > > As part of this submission, we would like to publish a sample project
+> > > serving as a demonstration of how to connect a QEMU Remote-Port
+> > > frontend to a SystemC backend.
+> > >
+> > > The sample project implements a standard SystemC IP core and uses
+> > > several external components such as:
+> > > - libsystemctlm-soc: https://github.com/Xilinx/libsystemctlm-soc
+> > > - VCML Library: https://github.com/machineware-gmbh/vcml
+> > > - SystemC Library: https://github.com/accellera-official/systemc
+> > >
+> > > We have a question regarding the location for this kind of project.
+> > > Could you please suggest if there is a preferred location or some
+> > > standard practice for hosting such a sample project?
+> >
+> > Location within the QEMU source tree?
+> >
+>
+> Hello Markus,
+>
+> Yes, it would be good to include this project within the QEMU source tree=
+.
+> To build the project, the mentioned SystemC, libsystemctlm-soc and
+> VCML libraries and their specific dependencies need to be built and
+> installed separately.
+> Would this approach be acceptable?
+>
+> Alternatively, is there an auxiliary repository within the QEMU
+> infrastructure that is better suited for these types of sample
+> projects,
+> perhaps somewhere under https://gitlab.com/qemu-project?
+>
+> --
+> BR,
+> Ruslan
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index ca50411020..ad0a459987 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2719,7 +2719,8 @@ static void machvirt_init(MachineState *machine)
-         exit(1);
-     }
- 
--    if (vms->virt && !kvm_enabled() && !tcg_enabled() && !qtest_enabled()) {
-+    if (vms->virt && !kvm_enabled() && !tcg_enabled()
-+       && !hvf_enabled() && !qtest_enabled()) {
-         error_report("mach-virt: %s does not support providing "
-                      "Virtualization extensions to the guest CPU",
-                      current_accel_name());
--- 
-2.50.1 (Apple Git-155)
+Hello Markus,
 
+Do you have any thoughts on the preferred location for this sample project?
+
+Best regards,
+Ruslan
 
