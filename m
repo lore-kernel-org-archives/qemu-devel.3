@@ -4,75 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F5BFF8875
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 14:25:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41C17FF8873
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 14:25:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wISGQ-00042Y-6s; Thu, 30 Apr 2026 10:21:14 -0400
+	id 1wISJ6-000169-2Z; Thu, 30 Apr 2026 10:24:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iyzsong@envs.net>)
- id 1wIIh6-0004Zd-8h; Thu, 30 Apr 2026 00:08:09 -0400
-Received: from mail.envs.net ([157.180.15.194])
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1wISIu-0000Ws-Mk
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 10:23:48 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iyzsong@envs.net>)
- id 1wIIh4-0007ZY-40; Thu, 30 Apr 2026 00:08:08 -0400
-Received: from localhost (mail.envs.net [127.0.0.1])
- by mail.envs.net (Postfix) with ESMTP id 7EF2C1C00DD;
- Thu, 30 Apr 2026 04:08:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=envs.net; s=modoboa;
- t=1777522081; bh=M/o/a1TyFk+0yQMyxATHnbbQVaeQgIhIOXOPCY6uvpE=;
- h=From:To:Cc:Subject:Date:From;
- b=TKitUcOVcKYnGnoO4jWxDrYT/gzY+GH3agoRQ3J0dxCmMsprW2a4JCx2DoAGWq0xP
- 9rd9BlNfdP909agM41AyP/y13RM/G7hJ8c1ZX38eRIpAzupSKpvKoQxa1QCBx+bWuv
- r6B4Un7QVHxEzIoaNOzzjMpHSMcXl6pecs6uwcS6nQzg7l1+tIVVzc7HTheS7AoebL
- kjlcm1yRyLwGP2gFw+NjeZlupTY+mXMI8YHT+Ujpzllexn5iAKaE8FR3iKAFja1GIR
- dozEBWoyu+Cp/HO+Cb6DB/pnSA+Jf54rgzH65/qRfnHaUBMaJ9qmNQamgx3X/wp84s
- g+3janzp1a0YPIdgEF6oj9i75U0RVAcgHSEwORpA/HkQxCLBcKqCVWjq8eRRR97Zpj
- OLjf/DhfKLs3PEBC54Wu+Zp71PXMbus8bu3EC56W2o5a6esZU9qslDs0eqG+ghv6QL
- Q5w/Ln8TYjrlKz1slvFlV32VBZX8FLivW6evFHubZyHICOi+nRjR0yvn7KhglIDrzv
- XH32e06kH6/+j9IDCxi2GFq9i6WBxAgGURS+n8CgvMGguzWUWeeFClTNy3SyCc9vw3
- 5ymSBbXv5KWyjgaUWOfwR1Sf5ej2eUYdaWYgt37/Pa/iK7WB2bJHKnqh14+1A36BVC
- fX1pn1q/hBir91r6yR9lrqF0=
-X-Virus-Scanned: Debian amavisd-new at mail.envs.net
-Received: from mail.envs.net ([127.0.0.1])
- by localhost (mail.envs.net [127.0.0.1]) (amavisd-new, port 10026)
- with ESMTP id HIpJV7EzxxDy; Thu, 30 Apr 2026 04:07:52 +0000 (UTC)
-Received: from localhost (unknown [183.220.24.234])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by mail.envs.net (Postfix) with ESMTPSA;
- Thu, 30 Apr 2026 04:07:52 +0000 (UTC)
-Received: from noisemaker.lan (localhost.lan [127.0.0.1])
- by localhost (OpenSMTPD) with ESMTP id d6e4a97f;
- Thu, 30 Apr 2026 04:08:03 +0000 (UTC)
-From: iyzsong@envs.net
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1wISIs-0007Eg-GU
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 10:23:48 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63UCUqPF2648672; Thu, 30 Apr 2026 14:23:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=SddztLBHByQ33xZD34wZSZQBRCXfTJ2UcmUdcyl+C
+ R4=; b=jCERhyYw4Z+ngUqjrQciS7pMptiex/7MwAYYBYCzwyVg+tw8pTk6hAmYl
+ mcVHB01JrRh4ALbRy3b3MxQ/OwhckHzy2rbHPb1WNJnVtXg9DLCYEh03OyXNW3Pk
+ Z6eyzb836u6qL77W+dOLElOuObSwxUSsa3+N3dS82NNNcDT1HP90XQqf196F/4um
+ qw9bkewmjLheP6W3blT00SKsx/tiEq029ubuxK9eewH+MM/cAe67CgRYZUGM8HQW
+ sEIPFUPop6mOVZrX8sOV1SrGsLbR9V80c3Zk7uMoc3CRjXD1fvh1jXb5FFrJyVmB
+ 0EI43d6xtlURVjvrIxWdqZe2IlSeg==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drn8vpdty-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Apr 2026 14:23:43 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63UE8n84032667;
+ Thu, 30 Apr 2026 14:23:42 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dsa5gk72j-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Apr 2026 14:23:42 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63UENEav22872790
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 30 Apr 2026 14:23:15 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id CD3D958062;
+ Thu, 30 Apr 2026 14:23:41 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7F35558056;
+ Thu, 30 Apr 2026 14:23:41 +0000 (GMT)
+Received: from mycroft-2.pok.ibm.com (unknown [9.47.158.222])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 30 Apr 2026 14:23:41 +0000 (GMT)
+From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?=E5=AE=8B=E6=96=87=E6=AD=A6?= <iyzsong@member.fsf.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Jason Wang <jasowang@redhat.com>,
- qemu-arm@nongnu.org (open list:Allwinner-a10)
-Subject: [PATCH] hw/net/allwinner-sun8i-emac: Flush queued packets when rx is
- enabled
-Date: Thu, 30 Apr 2026 12:06:49 +0800
-Message-ID: <20260430040753.3337-1-iyzsong@envs.net>
-X-Mailer: git-send-email 2.52.0
+Cc: marcandre.lureau@redhat.com, armenon@redhat.com,
+ Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PATCH v2 0/2] Improve handling of response buffer size in
+ tpm_emulator
+Date: Thu, 30 Apr 2026 14:23:35 +0000
+Message-ID: <20260430142337.2104726-1-stefanb@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=157.180.15.194; envelope-from=iyzsong@envs.net;
- helo=mail.envs.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=CIIamxrD c=1 sm=1 tr=0 ts=69f365ef cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=0s17AUUPUcYwv1RGZiYA:9 a=ZXulRonScM0A:10
+X-Proofpoint-ORIG-GUID: fMmAjRymj2-gj9qcrtMrASEVEfGvMW61
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDMwMDE0NyBTYWx0ZWRfX5IDyubAk1eit
+ KKWGAJFULkUHjjwT5O5NOOkzT6zYNP4d3eo9XC0c/HVnH646zC9cTEMTErsnMQb2nfSc99ds67P
+ RVAaMnTMD7Q1DInQ2uwTPUOIrIJO9SmNmwZ3FjfeTG5Aqq994QF1vL3SRwJLsfhLHq+bLjJZ5ns
+ tRctR6vGTt2IDXuyoOk2tdLKHd8uHgKbBeUq4nnshPpUGxYMHArUEH3Id9u4CIN56JqA5/AP74j
+ eh8+pUIIWEI+TIdMdzm8O+4Ro7TEzz439e1ebrNfSQNC7e5NLvwBuMNl9vqt0kSAaL+OnDWncyh
+ S5hISPj6ZiXBMiF0kJCqWGw0dehk6vrsjfBoXtjxgbzchxDsVzcOAcbf768iwgzvMeQZnlcizKU
+ nMuzxPsSMXJk3L47TQTSDyG7x9YU/PgJmu4mwz56OesJZYXW19sBXHV2IIpS4j+o7a+u5mPS0G/
+ BvlK1CXhfb5eEujzcaQ==
+X-Proofpoint-GUID: fMmAjRymj2-gj9qcrtMrASEVEfGvMW61
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-30_04,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 malwarescore=0 suspectscore=0 adultscore=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2604300147
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 30 Apr 2026 08:57:35 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,30 +118,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: 宋文武 <iyzsong@member.fsf.org>
+This series addresses some issues with the handling of the negotiated
+buffer size that the TPM frontends tell the tpm_emulator (swtpm) to use.
+Also, it improves on limiting the number of bytes read from the packet
+sent from swtpm.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3459
-Signed-off-by: 宋文武 <iyzsong@member.fsf.org>
----
- hw/net/allwinner-sun8i-emac.c | 4 ++++
- 1 file changed, 4 insertions(+)
+   Stefan
 
-diff --git a/hw/net/allwinner-sun8i-emac.c b/hw/net/allwinner-sun8i-emac.c
-index 9b7c67ae8e..7cc06b73c2 100644
---- a/hw/net/allwinner-sun8i-emac.c
-+++ b/hw/net/allwinner-sun8i-emac.c
-@@ -727,6 +727,10 @@ static void allwinner_sun8i_emac_write(void *opaque, hwaddr offset,
-         break;
-     case REG_RX_CTL_0:          /* Receive Control 0 */
-         s->rx_ctl0 = value;
-+        if ((value & RX_CTL0_RX_EN) &&
-+             allwinner_sun8i_emac_can_receive(nc)) {
-+            qemu_flush_queued_packets(nc);
-+        }
-         break;
-     case REG_RX_CTL_1:          /* Receive Control 1 */
-         s->rx_ctl1 = value | RX_CTL1_RX_MD;
+Stefan Berger (2):
+  tpm_emulator: Reject a buffer size larger than what was requested
+  tpm_emulator: Limit number of bytes read to negotiated buffer size
+
+ backends/tpm/tpm_emulator.c | 24 ++++++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
+
 -- 
-2.52.0
+2.43.0
 
 
