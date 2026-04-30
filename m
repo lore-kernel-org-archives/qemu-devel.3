@@ -4,53 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE45AFF886F
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 09:16:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38DFDFF8875
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 09:19:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wINUf-0006lc-Oz; Thu, 30 Apr 2026 05:15:38 -0400
+	id 1wINXq-0007Gy-NK; Thu, 30 Apr 2026 05:18:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wINUe-0006lG-Bu
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:15:36 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <aastharawat@linux.microsoft.com>) id 1wINUc-0004l6-KX
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:15:36 -0400
-Received: by linux.microsoft.com (Postfix, from userid 1236)
- id C14F020B7175; Thu, 30 Apr 2026 02:15:33 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com C14F020B7175
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1777540533;
- bh=yDoPahrleWfkN7RarI/Isxu+lk4AcJ+ao1fJpw4jfew=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=UUawMWDcZEgRvUr+XOQPXzvW4otcfGyb+IR09w5mWc1BVkpB3dZYwwLUq+T6C5AWc
- fkcOxlooweTo1oF7UDpEhGPeZt0J3+n2OGAQjyl51W8CVJF8U5SvBT59sBjqeiwlEv
- znzHzgxYgK4ScP9YKEMl7a3bXQ9qBavGaR4rN5qE=
-Date: Thu, 30 Apr 2026 02:15:33 -0700
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 04/14] target/arm/mshv: implement vcpu state
- operations for ARM64
-Message-ID: <afMdtYRslv5xTURI@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20260421-mshv_accel_arm64_supp-v3-0-469f544778ba@linux.microsoft.com>
- <20260421-mshv_accel_arm64_supp-v3-4-469f544778ba@linux.microsoft.com>
- <66a7a9ef-bdec-44a2-89e3-28cf77d6684b@linaro.org>
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wINXm-0007GW-Dk
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:18:50 -0400
+Received: from mail-westusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c000::1] helo=BYAPR05CU005.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kchiu@axiado.com>) id 1wINXk-0005d1-EB
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:18:50 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=hTfGVLNlRXOeWUMjVRfW52iQ0aEV7TaLjIbKdTySPV98n84LGSXPTFzUQhrjJTy2Cv4muCnT9392XgXqiV/fHqkeHyxkHD0Xkh6k5UppSB0DioyAnnH8akAiz9JgcLAiqJBD7AATJp4ROPc2DvyN7m39/QsVQmAnImTJU09LD79V0TzaEtBKkxjE5QvnSFUW75Nqwhlow0pHQfZDwAErInU/RY8LD7c3X8PXf9xHx68woyg9K6dCDnkXRr8Myym5kriYiDotouSTg/xy2dL7cgDqme0Vrg1j2VudhcqVHM8n9L6dnK1fCNxqRH9Kjdbi9fTSZjkGjXDTNdMneY9xhw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1CksYlyAEZEF1qTPwvp3rD20mFpJzoQOIZcb3Xbnr7E=;
+ b=InS0C7aCiAB88s+yZuHOLJ37fa0uOIvsF9AzZyVkomr56/B/r69GrobbXOyBYRcW8PO+4GcwkiW/c8tf9mJ9ftkvUGPCQJnaeLOJ5BEf2/z7E3jotVniSB3lFS85T+DvHm/Al8JXfQLWp26+NhpeMQBHecUsKTmgs5nMSzeE+oIfDchjOB6V0Pr2D8XQ03io0w6Sk43p/b/rmfpZMpfWTMXh682az6qJbhwQi+f1sGQcYRHAZuhCBOhNcb7M/AkCP6GdBmqp3JOb7Wqea4Hm+hCtVR/V4DHH9hgfWWFWRT5lrjvgWJaqHGDfrfBtJIjkdHeWmakJhpmNx2uVCUoWwg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
+ 64.62.143.114) smtp.rcpttodomain=axiado.com smtp.mailfrom=axiado.com;
+ dmarc=none action=none header.from=axiado.com; dkim=none (message not
+ signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axiado.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1CksYlyAEZEF1qTPwvp3rD20mFpJzoQOIZcb3Xbnr7E=;
+ b=bttcOJVvmWjbZziqcbZogHQoRji+pKbHIU3DjJIKxTCGOgdGPUnJyj8A826vIaxCkLa9ombIdut4N0dus5/8qALdO+BQ/NthFe41vCcna8lZcd+PvJ1UKeNPkHQCXnQtk20unuB7W+xZ/l+bXgpW57ZasI8AgDf01lG9BqGv5QJxN9I5Yh+YsmSbGXqsHVZ1lKNIGbxQIN05978BjSWm/7yjqJYRmrUudvsAjRVFGvoJ3BvvAxA8+J13wc1KVV84BIDcvTEFEKYuui2U6E97sVZ9Rebl6wGNJtBYLo4c1VcaZh4VCGvyJPPwkxfm8Yy6InlIpBDe0JN9gozZzh+JDw==
+Received: from DS0PR17CA0005.namprd17.prod.outlook.com (2603:10b6:8:191::6) by
+ SAWPR18MB988333.namprd18.prod.outlook.com (2603:10b6:806:4e0::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.22; Thu, 30 Apr
+ 2026 09:18:42 +0000
+Received: from DS3PEPF0000C37C.namprd04.prod.outlook.com
+ (2603:10b6:8:191:cafe::a0) by DS0PR17CA0005.outlook.office365.com
+ (2603:10b6:8:191::6) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9846.30 via Frontend Transport; Thu,
+ 30 Apr 2026 09:18:42 +0000
+X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 64.62.143.114)
+ smtp.mailfrom=axiado.com; dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=axiado.com;
+Received-SPF: Fail (protection.outlook.com: domain of axiado.com does not
+ designate 64.62.143.114 as permitted sender) receiver=protection.outlook.com; 
+ client-ip=64.62.143.114; helo=smtp.corp.axiado.com;
+Received: from smtp.corp.axiado.com (64.62.143.114) by
+ DS3PEPF0000C37C.mail.protection.outlook.com (10.167.23.6) with Microsoft SMTP
+ Server (version=TLS1_3, cipher=TLS_AES_256_GCM_SHA384) id 15.20.9846.18 via
+ Frontend Transport; Thu, 30 Apr 2026 09:18:41 +0000
+Received: from axiado.com (vm-swbuild01.axiadoRD [10.4.1.181])
+ by smtp.corp.axiado.com (Postfix) with ESMTP id 404D34186B5B;
+ Thu, 30 Apr 2026 02:16:49 -0700 (PDT)
+From: Kuan-Jui Chiu <kchiu@axiado.com>
+To: qemu-devel@nongnu.org
+Cc: Kuan-Jui Chiu <kchiu@axiado.com>
+Subject: [PATCH v2 2/4] hw/arm: Add Axiado EVK SCM3003
+Date: Thu, 30 Apr 2026 02:18:30 -0700
+Message-Id: <20260430091832.1846637-3-kchiu@axiado.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260430091832.1846637-1-kchiu@axiado.com>
+References: <20260430091832.1846637-1-kchiu@axiado.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <66a7a9ef-bdec-44a2-89e3-28cf77d6684b@linaro.org>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS3PEPF0000C37C:EE_|SAWPR18MB988333:EE_
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: b53d1427-6838-47c6-656b-08dea69978d4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|34020700016|82310400026|376014|36860700016|18002099003|22082099003|56012099003;
+X-Microsoft-Antispam-Message-Info: k4Av5bo55jfX3kQxltArooyfQNoNDJXqDrO9UwNLzw6MTMD5tAPdyyXYQ4bQyXdix/oQXx6qb31noqqN5E49a8h0GT1DPrs9BIl3sDIvpIUspxyZF+jXx92QZ7T7oXjbWaaCaL0v0H1oAuLBt7UNMPDBuD8fvTGJJv67mVf4RAfFN2XWCOkNCd25vD4ZEFxLuC2aQQBmGeqrKVZ961qUhjXqYUWleu6Gsml8DvG/cXoSWAfWIsto4D0aW66LvTqaMQalAM2SCaVd0+z/0doXV/kbHfrIft1iZsD4LTni+GrCmQNxaDrKQ2tNTm6id2gdor/L4zWRxAiZ7L33anDNHvfXELlzInt7HeKxumoeWr05xC8hg8I5MYizxfZYZWa38X2Q7SfEhErGBlUHWxnSVTUolFSkODzitcpidBvFm0OQU+rgO3gGMiSXcSeINbEcaSp1qvqXiwsMk+a7H1Vqc09FcFl6DacHq4jcGqJ9amrpTmE66x+7/FbVyfnvt6XacUXPHTLs6u/FfH2hFWX1bGMY7BZ9fdgz/F08KNI/lQ3EBuHz+ecg53Xm/sf/VioeU2zd8AMoQ8cSVVB25d+j4cS6lBlMjh5BqS1oKt8mv4cRdflnb8tFWspbZEyuuRREg0cJ2/qf1ntF3dfsRp8BwlrgBly2B6z9iEmrpb22wtFZjfxDgOhsSQU+WpH6T2zDcITAdYfc2mhjHg5D86ljQ7kzZ81xEdE2Twyv6Bn0SL0Reu2gz7DZ8DjHweZwTrtw8IxkF66lHF+cqTo+Jr+lkQ==
+X-Forefront-Antispam-Report: CIP:64.62.143.114; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:smtp.corp.axiado.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(34020700016)(82310400026)(376014)(36860700016)(18002099003)(22082099003)(56012099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: vNa583o2SNqEbxAifjXCkCWCTDQ/oFx8OXOMsZHO///v6lMp2kolXizu2npa8EkrqZc8id3y+XpQNaMiU+J8z2Gmb2ytegBWSd/kMSc0WbRlKnt4RNZFFKEa3LQgndoQoIQb8cuV5MlOPzLHGvvjXcs7gGkv7aXSQ2j8vvpTq2O9SAtuh6gz6sxrVAG84ruiwRN8GkSVKuZoej52Z9FkCAyxomTJSyR9HB349OI0VYBIoq/J/oZdprHDid0wJqYuKTMZuP7K0bz0+fcdFmGf6hy7+IP/jrtG6kNhoVr/tbq6r0g1RnBNpg+ua5TDgA50DnA4cjR0Hgx+Tl22M9Xhs0SIMrur2kSj7sYNfWv+Xo1p2KfgcsdquGqxrq65y87iKhM8Rm951z+v1UwWpnPIBVDdm/xkCM1fbTjhdcv6tpfbBNN5nVKJyPcN1r+gYJSH
+X-OriginatorOrg: axiado.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Apr 2026 09:18:41.9305 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b53d1427-6838-47c6-656b-08dea69978d4
+X-MS-Exchange-CrossTenant-Id: ff2db17c-4338-408e-9036-2dee8e3e17d7
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=ff2db17c-4338-408e-9036-2dee8e3e17d7; Ip=[64.62.143.114];
+ Helo=[smtp.corp.axiado.com]
+X-MS-Exchange-CrossTenant-AuthSource: DS3PEPF0000C37C.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SAWPR18MB988333
+Received-SPF: pass client-ip=2a01:111:f403:c000::1;
+ envelope-from=kchiu@axiado.com;
+ helo=BYAPR05CU005.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,120 +120,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 23, 2026 at 11:31:15AM +1000, Richard Henderson wrote:
-> On 4/21/26 15:21, Aastha Rawat wrote:
-> > Add support for reading and writing ARM64 CPU registers in the MSHV
-> > accelerator. This includes functions to set and get registers,
-> > initialize and destroy VCPU state, and manage register state
-> > synchronization between QEMU and hypervisor.
-> > 
-> > Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
-> > ---
-> >   include/hw/hyperv/hvgdk_mini.h |  42 +++++++++++++
-> >   target/arm/mshv/mshv-all.c     | 138 +++++++++++++++++++++++++++++++++++++++++
-> >   2 files changed, 180 insertions(+)
-> > 
-> > diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-> > index cb52cc9de2..dfe94050f4 100644
-> > --- a/include/hw/hyperv/hvgdk_mini.h
-> > +++ b/include/hw/hyperv/hvgdk_mini.h
-> > @@ -13,6 +13,46 @@ typedef enum hv_register_name {
-> >       /* Pending Interruption Register */
-> >       HV_REGISTER_PENDING_INTERRUPTION = 0x00010002,
-> > +#if defined(__aarch64__)
-> 
-> Not ideal, having target/host-specific stuff in a global header.
-> That said, you don't actually need the ifdefs at all.
+Add EVK axiado-scm3003 built with AX3000 SoC
 
-These header definitions are imported directly from the hypervisor
-headers to maintain parity with MSHV interface. We need to maintain
-this layout. 
+Signed-off-by: Kuan-Jui Chiu <kchiu@axiado.com>
+---
+ hw/arm/Kconfig                 |  5 ++++
+ hw/arm/ax3000-boards.c         | 52 ++++++++++++++++++++++++++++++++++
+ hw/arm/ax3000-evk.c            | 27 ++++++++++++++++++
+ hw/arm/meson.build             |  3 ++
+ include/hw/arm/ax3000-boards.h | 28 ++++++++++++++++++
+ 5 files changed, 115 insertions(+)
+ create mode 100644 hw/arm/ax3000-boards.c
+ create mode 100644 hw/arm/ax3000-evk.c
+ create mode 100644 include/hw/arm/ax3000-boards.h
 
-> > +static enum hv_register_name STANDARD_REGISTER_NAMES[32] = {
-> 
-> const.
->
-
-Will fix.
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 4fb23122fd..e569d8ee9e 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -699,3 +699,8 @@ config AXIADO_SOC
+     select CADENCE # UART
+     select AXIADO_SDHCI
+     select UNIMP
++
++config AXIADO_EVK
++    bool
++    default y
++    select AXIADO_SOC
+diff --git a/hw/arm/ax3000-boards.c b/hw/arm/ax3000-boards.c
+new file mode 100644
+index 0000000000..cadbac8edc
+--- /dev/null
++++ b/hw/arm/ax3000-boards.c
+@@ -0,0 +1,52 @@
++/*
++ * Axiado Boards
++ *
++ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/arm/ax3000-boards.h"
++#include "hw/arm/machines-qom.h"
++#include "qemu/error-report.h"
++#include "qom/object.h"
++
++static const char *ax3000_machine_get_default_cpu_type(const MachineState *ms)
++{
++    return ARM_CPU_TYPE_NAME("cortex-a53");
++}
++
++static void ax3000_machine_init(MachineState *machine)
++{
++    Ax3000MachineState *ams = AX3000_MACHINE(machine);
++
++    ams->soc = AX3000_SOC(object_new(TYPE_AX3000_SOC));
++    object_property_add_child(OBJECT(machine), "soc", OBJECT(ams->soc));
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(ams->soc), &error_fatal);
++}
++
++static void ax3000_machine_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    mc->init = ax3000_machine_init;
++    mc->default_cpus = AX3000_NUM_CPUS;
++    mc->min_cpus = AX3000_NUM_CPUS;
++    mc->max_cpus = AX3000_NUM_CPUS;
++    mc->get_default_cpu_type = ax3000_machine_get_default_cpu_type;
++}
++
++static const TypeInfo ax3000_machine_types[] = {
++    {
++        .name          = TYPE_AX3000_MACHINE,
++        .parent        = TYPE_MACHINE,
++        .instance_size = sizeof(Ax3000MachineState),
++        .class_size    = sizeof(Ax3000MachineClass),
++        .class_init    = ax3000_machine_class_init,
++        .interfaces    = aarch64_machine_interfaces,
++        .abstract      = true,
++    }
++};
++
++DEFINE_TYPES(ax3000_machine_types)
+diff --git a/hw/arm/ax3000-evk.c b/hw/arm/ax3000-evk.c
+new file mode 100644
+index 0000000000..a170848871
+--- /dev/null
++++ b/hw/arm/ax3000-evk.c
+@@ -0,0 +1,27 @@
++/*
++ * Axiado Evaluation Kit Emulation
++ *
++ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/arm/ax3000-boards.h"
++
++static void axiado_scm3003_class_init(ObjectClass *oc, const void *data)
++{
++    MachineClass *mc = MACHINE_CLASS(oc);
++
++    mc->desc = "Axiado SCM3003 EVK Board";
++}
++
++static const TypeInfo ax3000_evk_types[] = {
++    {
++        .name          = MACHINE_TYPE_NAME("axiado-scm3003"),
++        .parent        = TYPE_AX3000_MACHINE,
++        .class_init    = axiado_scm3003_class_init,
++    }
++};
++
++DEFINE_TYPES(ax3000_evk_types)
+diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+index e32f5eb0c7..39db50bcef 100644
+--- a/hw/arm/meson.build
++++ b/hw/arm/meson.build
+@@ -107,6 +107,9 @@ arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
  
-> > +    HV_ARM64_REGISTER_X0,
-> > +    HV_ARM64_REGISTER_X1,
-> > +    HV_ARM64_REGISTER_X2,
-> > +    HV_ARM64_REGISTER_X3,
-> > +    HV_ARM64_REGISTER_X4,
-> > +    HV_ARM64_REGISTER_X5,
-> > +    HV_ARM64_REGISTER_X6,
-> > +    HV_ARM64_REGISTER_X7,
-> > +    HV_ARM64_REGISTER_X8,
-> > +    HV_ARM64_REGISTER_X9,
-> > +    HV_ARM64_REGISTER_X10,
-> > +    HV_ARM64_REGISTER_X11,
-> > +    HV_ARM64_REGISTER_X12,
-> > +    HV_ARM64_REGISTER_X13,
-> > +    HV_ARM64_REGISTER_X14,
-> > +    HV_ARM64_REGISTER_X15,
-> > +    HV_ARM64_REGISTER_X16,
-> > +    HV_ARM64_REGISTER_X17,
-> > +    HV_ARM64_REGISTER_X18,
-> > +    HV_ARM64_REGISTER_X19,
-> > +    HV_ARM64_REGISTER_X20,
-> > +    HV_ARM64_REGISTER_X21,
-> > +    HV_ARM64_REGISTER_X22,
-> > +    HV_ARM64_REGISTER_X23,
-> > +    HV_ARM64_REGISTER_X24,
-> > +    HV_ARM64_REGISTER_X25,
-> > +    HV_ARM64_REGISTER_X26,
-> > +    HV_ARM64_REGISTER_X27,
-> > +    HV_ARM64_REGISTER_X28,
-> > +    HV_ARM64_REGISTER_FP,
-> > +    HV_ARM64_REGISTER_LR,
-> > +    HV_ARM64_REGISTER_PC,
-> 
-> Why are you placing PC at name[31], given that you have to special case it
-> everywhere else below?
-
-Again, this is same as the register layout used by the hypervisor.
+ arm_common_ss.add(when: ['CONFIG_AXIADO_SOC', 'TARGET_AARCH64'], if_true: files(
+   'ax3000-soc.c'))
++arm_common_ss.add(when: ['CONFIG_AXIADO_EVK', 'TARGET_AARCH64'], if_true: files(
++  'ax3000-boards.c',
++  'ax3000-evk.c'))
  
-> > +static int set_standard_regs(const CPUState *cpu)
-> > +{
-> > +    size_t n_regs = ARRAY_SIZE(STANDARD_REGISTER_NAMES);
-> > +    struct hv_register_assoc *assocs;
-> > +    int ret;
-> > +    ARMCPU *arm_cpu = ARM_CPU(cpu);
-> > +    CPUARMState *env = &arm_cpu->env;
-> > +
-> > +    assocs = g_new0(hv_register_assoc, n_regs);
-> 
-> This is small enough to allocate in the local stack frame.
-> Same for get_standard_regs.
+ arm_common_ss.add(files('boot.c'))
+ 
+diff --git a/include/hw/arm/ax3000-boards.h b/include/hw/arm/ax3000-boards.h
+new file mode 100644
+index 0000000000..4a632661e1
+--- /dev/null
++++ b/include/hw/arm/ax3000-boards.h
+@@ -0,0 +1,28 @@
++/*
++ * Axiado Boards
++ *
++ * Author: Kuan-Jui Chiu <kchiu@axiado.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef AXIADO_BOARD_H
++#define AXIADO_BOARD_H
++
++#include "hw/core/boards.h"
++#include "hw/arm/ax3000-soc.h"
++
++#define TYPE_AX3000_MACHINE       MACHINE_TYPE_NAME("ax3000")
++OBJECT_DECLARE_TYPE(Ax3000MachineState, Ax3000MachineClass, AX3000_MACHINE)
++
++typedef struct Ax3000MachineState {
++    MachineState parent;
++
++    Ax3000SoCState *soc;
++} Ax3000MachineState;
++
++typedef struct Ax3000MachineClass {
++    MachineClass parent;
++
++} Ax3000MachineClass;
++#endif
+-- 
+2.34.1
 
-Will switch to stack allocation for both.
-
-> > +static void populate_standard_regs(const hv_register_assoc *assocs,
-> > +                                   CPUARMState *env)
-> > +{
-> > +    size_t n_regs = ARRAY_SIZE(STANDARD_REGISTER_NAMES);
-> > +
-> > +    for (size_t i = 0; i < n_regs - 1; i++) {
-> > +        env->xregs[i] = assocs[i].value.reg64;
-> > +    }
-> > +
-> > +    /* Last register is the program counter */
-> > +    env->pc = assocs[n_regs - 1].value.reg64;
-> > +}
-> 
-> Why is this separate from get_standard_regs?
-> You don't have a similar split for set_standard_regs...
-
-Right. Will inline populate_standard_regs into get_standard_regs.
-
-> > +int mshv_get_standard_regs(CPUState *cpu)
-> 
-> I'll note that this isn't used outside of this file, and similarly for
-> i386/mshv.  It doesn't need to be declared globally at all.
-
-Sure, will make it static and drop declaration from mshv_int.h.
-
-Thanks,
-Aastha
 
