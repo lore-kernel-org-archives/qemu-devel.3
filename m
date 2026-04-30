@@ -4,84 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 681C1CD13DA
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 15:07:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57A97FF8873
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 15:14:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wISz8-00024h-6k; Thu, 30 Apr 2026 11:07:26 -0400
+	id 1wIT4m-0004sm-Ju; Thu, 30 Apr 2026 11:13:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wISz5-0001w2-T8
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:07:23 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wIT4j-0004qy-Rh
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:13:14 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wISz3-0001wd-KH
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:07:23 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4891c00e7aeso9553455e9.2
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 08:07:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wIT4g-0003lE-DR
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:13:13 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-6501547d7edso997604d50.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 08:13:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777561989; cv=none;
+ d=google.com; s=arc-20240605;
+ b=DvOITAYbi4Xc5ypzfDX03EKw20iU51bsK+DWL3mpOCNvtLcn6jArGVG7ZZo4EAD9kJ
+ OxRS0meDjspuQscgujoM7ABTfm4OQSoqcUpUZFPgrcjDJvXN8IhDJYut9PkXwwDMfJzV
+ JeKwvKmjrYYqGNl7lZrnvu2M2k14vG3PmxT5AIetkA2Nf7dodZQaRBp64OO5mAnPTA8c
+ yrpY/kPba+9klOvdtDm+ddEEPtteu1i2cQQKjt7kQSDLsjUtm6j7zyBpAp4STpyckvTo
+ NTOZlvLhB3p/ATYb+fOsiPDdvPfZ1dHOBLI6UWel8g8SGDh9s7nShjJopvMC3EjED1ms
+ G0hQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=kRfmg2/lhe8tE7lO46l2bILxIDcNmnU0tR5MUeOwWAg=;
+ fh=N1YcepiC2/ZNEdJeGCZFuEiACpW3uxChQGpyM5xjiIc=;
+ b=KgphFD4O/ZcXSfgwUmGfEbhEdmDIOtT/h981OnxvHTjD94C8RCb3viUSWePtSrWzb7
+ fJFfFI4ekVrrdHZjLA2jAm0GulWsfLMmw/3WO80nb0a6D4xRSJ52Ys9svGQZFLEvtkXI
+ O0NW4zV6LBC3L+5nWwxMEABa+93BkCSRlfnqMBsE9ujAfv0DQMOVuAo3yK5Ao8Eg78AF
+ 70YP+ebv/bMW+TBPbYxf26YosUYohI8JzUnBYKe8wh4va7t0g8e3J7aBOWDX36A+E+N3
+ ipnrHtxzAgRsIB+ZfD38grMRiEcYHsAsjKni6Ed/alMxBfUjbP0OIpSGzCAFwHlkigId
+ 6saw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777561640; x=1778166440; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yMUFq8AmuEOAXbtPYxSXrSwF78SMceSmi5y4QsYpfvA=;
- b=K7xI9N+ZFipMGxb6Rq1k1/tZG3l/5tO0GYxWiX2dr5n5klWFE/N5zCTMPdS0S0SuZF
- hmvesSvwMubp3tCHL2XRO4mHjY05X2Hx38gDd7LJhqMeIuaR71u2nhBV2oXdV+m9GC7R
- lK49dIasMD66OaGNiPCMe4Z2UtmWFI/biIwd9stQlZ/mkkflSS73oozoiaGURUEPkhhj
- FVXmf0ZPUx2il2/AKWGTUykIzo9CvF90uRD9w2zNQv21p2zrQZ0DQWktsMlrDw9+13VL
- 2k45cmLfvz3qJdl3X2eO9r1/XuXe7rGMnmRX5n5CAARdOiy+7xu1gRRArIvUouEhgDrU
- /t2g==
+ d=linaro.org; s=google; t=1777561989; x=1778166789; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kRfmg2/lhe8tE7lO46l2bILxIDcNmnU0tR5MUeOwWAg=;
+ b=T6EU5rNJEExEnhicpO6hdl0dQD72ByleSG9tgVFc7hIYO3GFWM/5vHGY6oX3luBgVK
+ xKd5iK+pIF39/6bDgbXIkDmQ0VCUEwiPyeWduOnLCPsjL6k7k5pGMo11uxjVeOBEB4cV
+ v51L9wqgosCWG0h5oWZdn3S1BGrC91jgkSr11u4XLio89M5ILVa4bi+9ct7N6ScD58b1
+ Snstd/Vj+/3lZkAhqNPmcif/atOXxyYdLbm5cC8iSFK+uGvmxwchnoNRyzRRpawbWb7p
+ cAh8LLg0M1YkSng8SRODYNCMyiRHhfpirm5FFZR/2SweGyK932FhY/PbthqcV7MMwsD7
+ tFDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777561640; x=1778166440;
- h=content-transfer-encoding:in-reply-to:references:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yMUFq8AmuEOAXbtPYxSXrSwF78SMceSmi5y4QsYpfvA=;
- b=OexrYuH2a3yr0tSUEJQOCCEzulbm2pXlyfQe32XgizTOPWo3Gv9TEmkavDZZFn6p1r
- M48Th7YGIjAbKe7ICDmLOPUpVRO7ImFsvfIgrwJLKs1Onfg4A4DA9BYH4682RVZ9P7qF
- u9AB4Va8uxeXwsAiRe6QvPcrouUYbZ5Wsrp12lGe9pUK1tVw8FQ6DBYDWzKueZgO6SjZ
- 8UdE6+LCEGR0FtZs06VmuoY1Yp4V/Lm0pWrLx8Fli0pYIhGRsTsV+/S8Rldam755V5E9
- pGsKEGWhg3uSAbxI5ID+fxaAMrXlg2Y2VfvDpPlyOPppedUvZZ3dD6rfunj16gIvcR7m
- Rthg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/BnvgJwS3OlK1UU7/+tI3Q/B2VyXMF7dyHboMIOay2kT+fJxWgyt+0SW//kKMjqp+3QZt9cfwHFkLA@nongnu.org
-X-Gm-Message-State: AOJu0YysagNPAHW2/oCK/kxvsscB84y6Dv5q624rqyuWLS653QBO5rLY
- 7U/iynZpFOEwn0p4a0rjdrqaN7h5WWB9frbvTU72JQ1HZOnkKYBUbytXJTqQGxgci5I=
-X-Gm-Gg: AeBDieuX5Je2Im1d9lRqsRwN3KXXbQTGFoH5IwBiap2CvyaweiHKD7qMVxDzXEof4JT
- u0eaUBEwfAAcam0ofr2wAPEIBvwHlwRX8ZVcwutN4PVwdZ4BnJdKI9WtDVN9wvwPiOqnmY983jt
- lv/52S1atII0FORfbZpC+4QrvZS9P2/THiTp5m7bj8tMRAQn9o7yY7PSGiSbMdxAG+IGCqNuEdH
- lxBTL86IWUK9R3LATwt+RYnIwnXBBydNCy0DoWH0amTmSBoNuRLBqubdTRdU36qL/ciSsHb4x42
- JhenbKy4xup7J7R0HrHC5Qnw0WPKHgJvLB6WkBy6svy1M4/tob8F06KyFliCBXD//cBkQN2FL6W
- QQhAFWV1NNhusN+f7hUPcoCboUzjXXwfvNqV7jTbWP1Vh3wVGN5SxYvshn+ZnM/tdyLoRvE9nuM
- cliZUqLMXA44OM2qU5YqUiZTR8JYlQz+rJyw/sTxd+0jxw16wKHnbD8wTxNuV3EZBjmDs7OeopJ
- cnZ
-X-Received: by 2002:a05:600c:64cd:b0:487:243f:dc3e with SMTP id
- 5b1f17b1804b1-48a83d6e17cmr60481705e9.6.1777561640055; 
- Thu, 30 Apr 2026 08:07:20 -0700 (PDT)
-Received: from [192.168.69.232] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a7b8ce444sm70012675e9.0.2026.04.30.08.07.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Apr 2026 08:07:17 -0700 (PDT)
-Message-ID: <7e4ec7d1-51d2-4587-8c2a-c85c21f01713@linaro.org>
-Date: Thu, 30 Apr 2026 17:07:16 +0200
+ d=1e100.net; s=20251104; t=1777561989; x=1778166789;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=kRfmg2/lhe8tE7lO46l2bILxIDcNmnU0tR5MUeOwWAg=;
+ b=d3KMHM7aUp096wXkuzlR8fiR/USS15Pxe3/oXW0TonnrdpOk1O3gMR66xH8Y2G/MI9
+ nxaOE6dMIL9KdQ2NItKNF0uCs4+3Db7hQIiWpsem/c1ktudRK/T9rQeuFw38n4annxRY
+ cCAAZEHOGqFBzjeZNuYSJKoameiXuMehz3OZETw6kAPio5c8mEHF60efORkHKy2fX3Ki
+ HtgvCgxDAWx4TupDBXkS1FZ4hDE4egQMgS1UWIcvI/ne485wPQmLPHmrnQou+N2U3czv
+ AmbvZ1+ATFj7oMgul0JuR2/AqKLiOgx9KwoCNESKWU5P5ILHrbl66sCmRirFspxzGQY3
+ r8pQ==
+X-Gm-Message-State: AOJu0YxBDePj8VSWxihRdpqmNzZ7S24ZTsWiN9A9QHZ/s+f6Yb0y/3em
+ 2vOCMlkVJKfyD3lm6wUw5pANnocC2nALcjWL1qcazaYm+AqKZktEHdcjQ60D75xpfwvQv7FK3De
+ MotCclPugUXsdM70vGgqzabzTgzMW5LZyRRSKxvIhcQ==
+X-Gm-Gg: AeBDievgILVC8J2Z6oqsahHgggLKkcMgj9wxeURBsVQXcl68rQEfR/j41vdJl/IfmWV
+ UBkZJjusDGcm1QgcDp3ifizJeKhRR8uJ9a/jvhwuPAF5Kq1f+RCeFbRAbtXlYtIBaT5PlbvGTqY
+ u1vRFqiFw7aA5j3IqqZBfA154Us2OJMpP6zzyQ1QHes9UTuNMW34lgBjPAc0UEN7pD0FypZKrgU
+ 4ge5Y5BTwki8GikCduii0Ja0Of0i07SyBQfMjlQfERWJY5aCJ3NcoFqBxzYBo5Yx1WoYUH5R85E
+ 2M8bJ0LKHVosRmGqflMIm+Zj6HupiGG4Sqhlr+wuPhT3MgOzMBueoUNbpzWd8hqdonYRekWVmdG
+ w7Q==
+X-Received: by 2002:a53:d00a:0:b0:650:1aa5:8594 with SMTP id
+ 956f58d0204a3-65c18fda650mr2289939d50.49.1777561988902; Thu, 30 Apr 2026
+ 08:13:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 13/40] fpu: Return struct from parts{64,128}_silence_nan
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260430000524.56046-1-richard.henderson@linaro.org>
- <20260430000524.56046-14-richard.henderson@linaro.org>
- <d4bcf6ae-f5bb-41fc-941e-4d43d3cf9e88@linaro.org>
-In-Reply-To: <d4bcf6ae-f5bb-41fc-941e-4d43d3cf9e88@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-34-c413f3605311@redhat.com>
+In-Reply-To: <20260427-qom-tests-v1-34-c413f3605311@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 30 Apr 2026 16:12:56 +0100
+X-Gm-Features: AVHnY4JeMnIGjW_otRFblPTUn3jQCgGaBWfqVHBDMQj5iHWMWPdDCK7cPH3MyWA
+Message-ID: <CAFEAcA-tSqa7SQUE-f5yTq_P9eW6p_XrnNSnHZjw4g=Z2WncAQ@mail.gmail.com>
+Subject: Re: [PATCH 34/41] hw/arm/virt: free flash devices and OEM strings on
+ finalization
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,72 +118,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/4/26 07:55, Philippe Mathieu-Daudé wrote:
-> On 30/4/26 02:04, Richard Henderson wrote:
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   fpu/softfloat.c                | 10 +++++-----
->>   fpu/softfloat-parts.c.inc      |  6 +++---
->>   fpu/softfloat-specialize.c.inc | 20 ++++++++++++++------
->>   3 files changed, 22 insertions(+), 14 deletions(-)
-> 
-> 
->> diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat- 
->> specialize.c.inc
->> index dd65432813..2723bf5e61 100644
->> --- a/fpu/softfloat-specialize.c.inc
->> +++ b/fpu/softfloat-specialize.c.inc
->> @@ -179,16 +179,24 @@ static uint64_t parts_silence_nan_frac(uint64_t 
->> frac, float_status *status)
->>       return frac;
->>   }
->> -static void parts64_silence_nan(FloatParts64 *p, float_status *status)
->> +static FloatParts64 parts64_silence_nan(const FloatParts64 *p,
->> +                                        float_status *status)
->>   {
->> -    p->frac = parts_silence_nan_frac(p->frac, status);
->> -    p->cls = float_class_qnan;
->> +    FloatParts64 r = *p;
->> +
->> +    r.frac = parts_silence_nan_frac(r.frac, status);
->> +    r.cls = float_class_qnan;
->> +    return r;
->>   }
->> -static void parts128_silence_nan(FloatParts128 *p, float_status *status)
->> +static FloatParts128 parts128_silence_nan(const FloatParts128 *p,
->> +                                          float_status *status)
->>   {
->> -    p->frac_hi = parts_silence_nan_frac(p->frac_hi, status);
->> -    p->cls = float_class_qnan;
->> +    FloatParts128 r = *p;
->> +
->> +    r.frac_hi = parts_silence_nan_frac(r.frac_hi, status);
->> +    r.cls = float_class_qnan;
->> +    return r;
->>   }
-> 
-> Why not use compound literal like the rest?
-> 
->      static FloatParts64 parts64_silence_nan(const FloatParts64 *p,
->                                              float_status *status)
->      {
->          return (FloatParts64) {
->              .frac = parts_silence_nan_frac(p->frac, status),
->              .cls = float_class_qnan,
->          };
->      }
-> 
->      static FloatParts128 parts128_silence_nan(const FloatParts128 *p,
->                                                float_status *status)
->      {
->          return (FloatParts128) {
->              .frac_hi = parts_silence_nan_frac(p->frac_hi, status),
->              .cls = float_class_qnan,
->          };
->      }
+On Mon, 27 Apr 2026 at 20:45, Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+>
+> Flash devices created in instance_init via qdev_new() hold an extra
+> reference that is only dropped on sysbus_realize_and_unref(). When the
+> machine is destroyed before realization, the flash objects leak. Also,
+> the oem_id and oem_table_id strings from g_strndup() are never freed.
+>
+> Fixes: 602b458201ff ("acpi: Permit OEM ID and OEM table ID fields to be c=
+hanged")
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  hw/arm/virt.c | 14 ++++++++++++++
+>  1 file changed, 14 insertions(+)
+>
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index f62253e1aba..fac825ccd47 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -4032,6 +4032,19 @@ static void virt_instance_init(Object *obj)
+>      cxl_machine_init(obj, &vms->cxl_devices_state);
+>  }
+>
+> +static void virt_instance_finalize(Object *obj)
+> +{
+> +    VirtMachineState *vms =3D VIRT_MACHINE(obj);
+> +
+> +    for (int i =3D 0; i < ARRAY_SIZE(vms->flash); i++) {
+> +        if (vms->flash[i] && !qdev_is_realized(DEVICE(vms->flash[i]))) {
+> +            object_unref(OBJECT(vms->flash[i]));
+> +        }
 
-Regardless:
+We currently use qdev_is_realized() almost nowhere in
+the codebase. Isn't there some way to do this such that we
+don't have to care about this because the object is
+parented and gets auto-dereffed ? Having each object
+have to care about the possibility of "inited but
+not realized" devices in finalize seems like it's going
+to result in a lot of bugs...
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> +    }
+> +    g_free(vms->oem_id);
+> +    g_free(vms->oem_table_id);
+> +}
 
+thanks
+-- PMM
 
