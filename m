@@ -4,46 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4072FF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:46:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33340FF8873
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:51:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIUWc-0005Fp-Bs; Thu, 30 Apr 2026 12:46:06 -0400
+	id 1wIUbA-0006He-PV; Thu, 30 Apr 2026 12:50:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIUWY-0005Dv-Ai; Thu, 30 Apr 2026 12:46:02 -0400
+ id 1wIUb7-0006Gr-GJ; Thu, 30 Apr 2026 12:50:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIUWN-00021p-VQ; Thu, 30 Apr 2026 12:46:00 -0400
+ id 1wIUb3-0003GT-Ts; Thu, 30 Apr 2026 12:50:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777567455; bh=ZiKt4yg05TpwOgFMoFiG2hgiCFMqRuzORJJbi/YXnUo=;
+ t=1777567748; bh=8gxqLapNuGKYCqdFCNVrIXi6aQnkwhuoXLKn3wUXMU8=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Vd7vp5iGz9Q0wwqd8T5HgVI01OYZwvpeYB1c7Bw6PIqqFdPH4JrqJ9P98srDkaxs8
- B6zYsazA3gGQDfIkuEbo4siSgOPrJMVErjsXdJ58ir8gTVNw8XE9yerpv03h8t4jJq
- jLnKyYk7FZionuX4qvRfaxdw/i8Dlhmltx2XdPKW9XSGsOZrwdbfZQ4Y3PS4If64NW
- CwKitS22rZee1wJPRuJt7QF/d9h5G4PJtipDC7SFxqg3YPos8MgPUk3GFybEelBylC
- voWmiCdSKxf1GAXMb31DwxszHT7VxQkZ3MOmR8Y+YKYHA5JVSnf/GVtWb7w4BUTsrs
- Ig0HOzwGpbPtg==
+ b=Fv5uQUoZq9UFNcQWNN3uL7A1IDdGzpK+dzNCBa15LSyUT0gJRMFipabk2sSgeWiny
+ I9TrzGoqq7hphT0OcfpubiPqDOKMLtDx10PSPEHv0aIaZLYSJuwgnFQNtPgIhTmVM6
+ n+5rPzbsH+8vWisRK/7x8W8l4WGuXcBDgehD54zziA12pTgEho8+7ezAxJrgDt+GoU
+ vgprb1nl35jRW40cyhqS86FX0TzTa+h86AjiRLiFpJWxA4q1ujyYPfEP7scpeEUkR+
+ u19leSnE3sgbTWj+fDZ3kH3dGfJn49HcgiNfNqQOW9asXOKErMWugEJ+aWN2tLgvzo
+ xz4BNZlVJBrUA==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id DF29F1A5668;
- Thu, 30 Apr 2026 19:44:13 +0300 (MSK)
-Message-ID: <6d8bded7-a796-4144-b4cc-cb1b2f227528@tls.msk.ru>
-Date: Thu, 30 Apr 2026 19:45:43 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 3EBFE1A566E;
+ Thu, 30 Apr 2026 19:49:08 +0300 (MSK)
+Message-ID: <c51c87a7-e224-4785-8f64-f4c59af0d066@tls.msk.ru>
+Date: Thu, 30 Apr 2026 19:50:38 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/core/register: add register_array_get_owner
-To: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Frederic Konrad <frederic.konrad@amd.com>,
- "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair@alistair23.me>, qemu-arm@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260424155646.533334-1-luc.michel@amd.com>
+Subject: Re: [PATCH] hw/arm: Remove hw_error() for the unimplemented
+ CM_LMBUSCNT register
+To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
+References: <20260420064933.64765-1-thuth@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -89,7 +85,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260424155646.533334-1-luc.michel@amd.com>
+In-Reply-To: <20260420064933.64765-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -115,34 +111,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.04.2026 18:56, Luc Michel wrote:
-> Add the register_array_get_owner function to the register API. This
-> function can be used to retrieve the device owning the given
-> RegisterInfoArray.
+On 20.04.2026 09:49, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> This was previously done inline by some devices.
-> 5c6367bc1c8850f74812eeaaf87cff9911be58de modified the way register
-> blocks are created and parented to the device. Since this is an
-> implementation detail of the register API, it makes sense to have a
-> function for this.
+> When writing to this register, QEMU currently aborts:
 > 
-> Use it in the Versal OSPI and Versal/ZynqMP eFuse models instead of
-> tinkering with the API internals.
+>   $ echo "readl 0x10000018" | ./qemu-system-arm -audiodev none,id=snd0 \
+>      -M integratorcp,accel=qtest,audiodev=snd0 -display none -qtest stdio
+>   [I 0.000000] OPENED
+>   [R +0.001907] readl 0x10000018
+>   qemu: hardware error: integratorcm_read: CM_LMBUSCNT
+>   [...]
+>   Aborted                    (core dumped)
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3421
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3422
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3423
-> Signed-off-by: Luc Michel <luc.michel@amd.com>
-> ---
->   include/hw/core/register.h        | 11 +++++++++++
->   hw/core/register.c                |  5 +++++
->   hw/nvram/xlnx-versal-efuse-ctrl.c |  4 ++--
->   hw/nvram/xlnx-zynqmp-efuse.c      |  4 ++--
->   hw/ssi/xlnx-versal-ospi.c         | 10 +++-------
->   5 files changed, 23 insertions(+), 11 deletions(-)
+> This is bad, a guest should ideally never be able to kill QEMU like this.
+> 
+> Now, according to the "Intergrator/CP User Guide" from:
+> 
+>   https://developer.arm.com/documentation/dui0159/b/porting-integrator-ap-and-im-pd1/registers
+> 
+>   "The Integrator/AP CM_LMBUSCNT has been removed."
+> 
+> That means this register does not seem to be implemented on real CP boards
+> at all, only for older AP boards. Thus it should be fine if we simply
+> ignore this register in QEMU and handle it like all other unimplemented
+> registers in the "default" handler of the case statement.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3407
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-This looks like a qemu-stable material (for 11.0.x series), I'm picking
-it up.  Please let me know if I shouldn't.
+Not sure how important it is, but from the bug report it seems this is
+a real issue which triggers for real use cases, so I'm picking this one
+up for qemu stable series.  Please let me know if I shouldn't.
 
 Thanks,
 
