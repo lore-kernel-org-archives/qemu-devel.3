@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02985FF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 18:07:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB46CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 18:08:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIVmz-00019C-U6; Thu, 30 Apr 2026 14:07:06 -0400
+	id 1wIVoA-0001hf-Fu; Thu, 30 Apr 2026 14:08:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIVme-00018O-Uv; Thu, 30 Apr 2026 14:06:49 -0400
+ id 1wIVo4-0001gC-Ot; Thu, 30 Apr 2026 14:08:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIVmV-0000IL-7H; Thu, 30 Apr 2026 14:06:40 -0400
+ id 1wIVo3-0000fJ-3a; Thu, 30 Apr 2026 14:08:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777572300; bh=+02eLNB2MigkXJ4M9XeOWWkycvdxyax2aDB87gIhPUc=;
+ t=1777572397; bh=SFOd74Xpx8HuUQIk1PLExHwNbOstNAKpRm95hALcSDM=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=UfTH8F+ffyuWnUjER0UZD+7yL5c64behfoM1iSWADGDY8nUpriKunSn1Gl8wN3mo8
- 7xTBxzU1d64sEISTWTu5Y61jpff8TU0mGUoGdjxVLZ9WIJL3ySiBV0NToxiDgWxwwM
- 2P0eY2NE7Zdnmuv6YgWfucJn5y8mRXO67fxUFQK1yG/CVeNcIDNUGQ6BAIV0+hZFFS
- yDhUkAauuj4VU2jnBU4SJVO1zg7xNzp4A/T42SzX7ZFsjsWZK9qx/WA2ZtKRFGMUIs
- 2B9w0730RhoztE+aI5ga6qCGEzcTr2iO0FzuCu19/arTGCMhLSekerlCmDEMVJkg3U
- vEin7BLMghCMQ==
+ b=sASZBYfuYToWm9k5DUQHKJe+1/IZMwtVU2flfhKn5KHHqea0FTEAVYkh48kga/j7G
+ 08YFtwwEO7m5k9mxhPYlDmVrY4uDkhXpDxbFgcHnZ4B2Kq28/y5B5a4VIyk+m4MLIS
+ qangLfd6hSMeLLtUBw7mhjiS+jRfPorYn/cVif1uodMvNjM2N/0+Pb/Mwetln4CIdw
+ cwgZQzi9laKUzEWy2CERHXTiVNiiNLDJ2i0DOjl/G7GrA+iictXCAm7cL6FD4AR9bX
+ icJegmGjPzkOQtGS/b9hbmMgdYpk5kj4p6sZikaEDOLZKtwb0vM3RgF0GjAKpgm2EF
+ gHxyE2AG9Kyrw==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 5731D1A56B7;
- Thu, 30 Apr 2026 21:04:59 +0300 (MSK)
-Message-ID: <8b0d4604-1ef6-41ab-a866-6377d21de55a@tls.msk.ru>
-Date: Thu, 30 Apr 2026 21:06:28 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 0365E1A56BB;
+ Thu, 30 Apr 2026 21:06:36 +0300 (MSK)
+Message-ID: <db954ab0-3a2c-46c7-a0a4-161fa0df0876@tls.msk.ru>
+Date: Thu, 30 Apr 2026 21:08:06 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/riscv/virt-acpi-build.c: Use kvm timer frequency when
- kvm enabled
-To: Yicong Yang <yang.yicong@picoheart.com>, sunilvl@ventanamicro.com,
- palmer@dabbelt.com, alistair.francis@wdc.com
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, geshijian@picoheart.com,
- wangziang.ok@picoheart.com, qemu-stable <qemu-stable@nongnu.org>
-References: <20260325081314.57089-1-yang.yicong@picoheart.com>
+Subject: Re: [PATCH 1/2] target/riscv: fix stale ptshift and base on page walk
+ restart
+To: =?UTF-8?Q?Sebasti=C3=A1n_Alba_Vives?= <sebasjosue84@gmail.com>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, palmer@dabbelt.com,
+ berrange@redhat.com, qemu-stable <qemu-stable@nongnu.org>
+References: <20260401053853.10473-1-sebasjosue84@gmail.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -86,9 +86,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260325081314.57089-1-yang.yicong@picoheart.com>
+In-Reply-To: <20260401053853.10473-1-sebasjosue84@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -19
@@ -112,17 +112,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25.03.2026 11:13, Yicong Yang wrote:
-> The timer frequency is decided by the host(kvm) rather than a fixed
-> RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ on kvm accelerated VM. So build
-> RCHT with KVM provided timer frequency if KVM is enabled, just like
-> how we build the timer node on DT based VM.
+On 01.04.2026 08:38, Sebastián Alba Vives wrote:
+> When the atomic compare-and-swap for updating A/D bits in the page
+> table entry fails due to a concurrent PTE modification by another
+> vCPU, get_physical_address() jumps to the 'restart' label to re-walk
+> the page table from the root.
 > 
-> Fixes: ebfd39289370 ("hw/riscv/virt: virt-acpi-build.c: Add RHCT Table")
-> Signed-off-by: Yicong Yang <yang.yicong@picoheart.com>
+> However, neither 'ptshift' nor 'base' are re-initialized before the
+> restart. After the walk completes, ptshift has been decremented to
+> its final value and base has been overwritten with an inner PTE PPN.
+> On goto restart, the for loop resets i=0 but ptshift and base remain
+> stale, causing the restarted walk to compute incorrect PTE addresses.
+> 
+> In an SMP guest with MTTCG and Svadu active, this can result in
+> incorrect physical address mappings or guest crashes.
+> 
+> Fix by saving the root base address and re-initializing both ptshift
+> and base on each restart.
+> 
+> Fixes: 0c3e702aca ("RISC-V CPU Helpers")
+> Signed-off-by: Sebastián Alba Vives <sebasjosue84@gmail.com>
 
-Shouldn't this change be in stable series too?  I'm picking it up, please
-let me know if I shouldn't.
+Shouldn't this change be in stable qemu series too?
+I'm picking it up, please let me know if I shouldn't.
 
 Thanks,
 
