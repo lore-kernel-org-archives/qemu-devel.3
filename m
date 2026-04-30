@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB46CD13D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 18:08:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15190CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 18:10:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIVoA-0001hf-Fu; Thu, 30 Apr 2026 14:08:18 -0400
+	id 1wIVqP-0002YI-2l; Thu, 30 Apr 2026 14:10:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIVo4-0001gC-Ot; Thu, 30 Apr 2026 14:08:13 -0400
+ id 1wIVpo-0002J3-8M; Thu, 30 Apr 2026 14:10:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIVo3-0000fJ-3a; Thu, 30 Apr 2026 14:08:12 -0400
+ id 1wIVpj-00017a-P1; Thu, 30 Apr 2026 14:09:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777572397; bh=SFOd74Xpx8HuUQIk1PLExHwNbOstNAKpRm95hALcSDM=;
+ t=1777572503; bh=9jqFYSTtNplknb5S7QzCaKCtp9XiGwKPxsgEBJmjOYA=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=sASZBYfuYToWm9k5DUQHKJe+1/IZMwtVU2flfhKn5KHHqea0FTEAVYkh48kga/j7G
- 08YFtwwEO7m5k9mxhPYlDmVrY4uDkhXpDxbFgcHnZ4B2Kq28/y5B5a4VIyk+m4MLIS
- qangLfd6hSMeLLtUBw7mhjiS+jRfPorYn/cVif1uodMvNjM2N/0+Pb/Mwetln4CIdw
- cwgZQzi9laKUzEWy2CERHXTiVNiiNLDJ2i0DOjl/G7GrA+iictXCAm7cL6FD4AR9bX
- icJegmGjPzkOQtGS/b9hbmMgdYpk5kj4p6sZikaEDOLZKtwb0vM3RgF0GjAKpgm2EF
- gHxyE2AG9Kyrw==
+ b=ZTA3hsM7LX+UA+SMi5VVf3g5XdQmas7GQrESt4EnzdK29rgILqYTJOpV7rlT7QZI3
+ NT9ugzxz1Y+YUwJShWYwRQ9ewzUcL8P6eC/HXvgTFBjOg3F3zEw/OivDxwYvwx4MLA
+ neD8NzIurfZYacB1fkYd78cYtRkQUZ1wAndobgqIhDm+C1IPao/ZkmHGcx1KyeyLMH
+ +TgBlA8HgiStdWaH0UGN7c5dR8NX7i68Rmlgu6uIQwLK/FzPlwjagPtyzhwxLMIczu
+ vjFOKxmP/r7OX1TB0Mdvez9y1mSg6ZCFf3T8zFodHG+4yI/Nmw5/0HxxD7nTw1ic+/
+ wQnyWx0dVleSA==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 0365E1A56BB;
- Thu, 30 Apr 2026 21:06:36 +0300 (MSK)
-Message-ID: <db954ab0-3a2c-46c7-a0a4-161fa0df0876@tls.msk.ru>
-Date: Thu, 30 Apr 2026 21:08:06 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 96D501A56BF;
+ Thu, 30 Apr 2026 21:08:22 +0300 (MSK)
+Message-ID: <94e4cc1e-dbd4-4662-8a22-8d1291fb297b@tls.msk.ru>
+Date: Thu, 30 Apr 2026 21:09:52 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/riscv: fix stale ptshift and base on page walk
- restart
+Subject: Re: [PATCH 2/2] hw/intc: fix heap OOB in ACLINT MTIMER multi-socket
 To: =?UTF-8?Q?Sebasti=C3=A1n_Alba_Vives?= <sebasjosue84@gmail.com>,
  qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, palmer@dabbelt.com,
- berrange@redhat.com, qemu-stable <qemu-stable@nongnu.org>
+ berrange@redhat.com, qemu-security@nongnu.org
 References: <20260401053853.10473-1-sebasjosue84@gmail.com>
+ <20260401053853.10473-2-sebasjosue84@gmail.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -86,7 +86,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260401053853.10473-1-sebasjosue84@gmail.com>
+In-Reply-To: <20260401053853.10473-2-sebasjosue84@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -113,28 +113,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 01.04.2026 08:38, Sebastián Alba Vives wrote:
-> When the atomic compare-and-swap for updating A/D bits in the page
-> table entry fails due to a concurrent PTE modification by another
-> vCPU, get_physical_address() jumps to the 'restart' label to re-walk
-> the page table from the root.
+> The MMIO read/write handlers index timecmp[] with the absolute hartid
+> (hartid_base + offset) but the array is allocated with num_harts
+> elements. In multi-socket configurations with hartid_base > 0 this
+> causes heap OOB access in the QEMU process.
 > 
-> However, neither 'ptshift' nor 'base' are re-initialized before the
-> restart. After the walk completes, ptshift has been decremented to
-> its final value and base has been overwritten with an inner PTE PPN.
-> On goto restart, the for loop resets i=0 but ptshift and base remain
-> stale, causing the restarted walk to compute incorrect PTE addresses.
+> Fix by using the relative offset for array indexing.
 > 
-> In an SMP guest with MTTCG and Svadu active, this can result in
-> incorrect physical address mappings or guest crashes.
-> 
-> Fix by saving the root base address and re-initializing both ptshift
-> and base on each restart.
-> 
-> Fixes: 0c3e702aca ("RISC-V CPU Helpers")
+> Cc: qemu-security@nongnu.org
 > Signed-off-by: Sebastián Alba Vives <sebasjosue84@gmail.com>
+> ---
+>   hw/intc/riscv_aclint.c | 10 ++++++----
+>   1 file changed, 6 insertions(+), 4 deletions(-)
 
-Shouldn't this change be in stable qemu series too?
-I'm picking it up, please let me know if I shouldn't.
+This one too, feels like it should be applied to the current stable
+series.  I'm picking it up, please let me know if I shouldn't.
 
 Thanks,
 
