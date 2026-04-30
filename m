@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37CEEFF886F
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 07:14:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78E88FF886F
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 07:15:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wILbc-0005hZ-5Q; Thu, 30 Apr 2026 03:14:40 -0400
+	id 1wILbT-0005TY-Ci; Thu, 30 Apr 2026 03:14:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wILbH-0005IH-5G
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:14:21 -0400
+ id 1wILay-00059m-93
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:14:00 -0400
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wILbC-0008QN-VO
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:14:18 -0400
+ id 1wILav-0008OO-CQ
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:13:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1777533255; x=1809069255;
+ t=1777533237; x=1809069237;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=mfXdfQl9POujA0hQEorAHvjyvPh51rTk6rz0RNAFMBU=;
- b=biQgmriitbaYgvgwJy8C+io4W6xxiGYbEJx+mDILqgjZnWxQymWUkQMK
- Comku6ge3pMu4ywIe5WHS+AX4T8gxAeKBxghT95nDDG7/MyiEGPeh4Ruw
- gwHf7dCYcsitDzD9A7ypjhIMv6u6VWIRKtJeBpqmnLOgrdp+eYo0pH2SS
- ZAR4XCFvpI/ddPtyrzO7JDnKEz18yDycJhH7ZLfSSqpvrmtUXVDnDLp36
- wnU3smlaLs5Yd7MJamW0tCisVtpY9lKdzMvdxLbb/u5g2EeRGXbAF6TT3
- GD3s/TEmD656jCSCbbamDN6pY+k7nKYwk6aqlt1UAfQEiL9INsxGN7o4P w==;
-X-CSE-ConnectionGUID: 9NP0EAuBRFicbqiExQRONQ==
-X-CSE-MsgGUID: I7beH8trSPCL8++196mvJA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11771"; a="81051654"
-X-IronPort-AV: E=Sophos;i="6.23,207,1770624000"; d="scan'208";a="81051654"
+ bh=Q4Fw4ltwvutTLAbtZBqSgsuKVIFYq+CsbSlbzEQGT3k=;
+ b=SXNHAtsiVrALEVaFTV9q7lcIFlRCuBzf/rEOX4bHC1CxuKSMVyXuKEii
+ hR1JfWiXLOYHwuTtUsObp6aP1dwfjsl2eCgy/jcmciTdQcCeFRTPX1kui
+ QVxs16DlsRqV/8FAYhUkkpke9CyOI+H/cIZBdf/oiOgNV+44WSZ5R2K2K
+ zntQQxvrUJ3nmmgHbpa5HggX4BCmqkX11KGoOeFqryF+pALg7A4ZPX9Uk
+ 2Go+fyPa/hMPOBKGkPexj3fgnGboH9N9l289CQ7dUmPZhxcpzSI++G5mv
+ qaq85XL43DZlnLo9fhN8zrtEcaTTmd/PNpyfPvOh0lS2TV/gR2TmGILBb A==;
+X-CSE-ConnectionGUID: cAbkaFGzRg2tRU8xpNH1bw==
+X-CSE-MsgGUID: fyaUeXmqS1KK+CVFYVOt7w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11771"; a="81051615"
+X-IronPort-AV: E=Sophos;i="6.23,207,1770624000"; d="scan'208";a="81051615"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Apr 2026 00:14:12 -0700
-X-CSE-ConnectionGUID: D+c42W4HT7+HE/5GK4vmhA==
-X-CSE-MsgGUID: KN9Y9UW1TPGJRVkJCTGcJg==
+ 30 Apr 2026 00:13:54 -0700
+X-CSE-ConnectionGUID: 7aqVwRynRfeAkxYqcZk00w==
+X-CSE-MsgGUID: ngSa8bLVRrKUdoHH98oB1g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,207,1770624000"; d="scan'208";a="234771564"
+X-IronPort-AV: E=Sophos;i="6.23,207,1770624000"; d="scan'208";a="234771518"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Apr 2026 00:14:09 -0700
+ 30 Apr 2026 00:13:51 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  jasowang@redhat.com, jgg@nvidia.com, nicolinc@nvidia.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v4 11/15] intel_iommu_accel: Bypass PASID entry addition for
- just deleted entry
-Date: Thu, 30 Apr 2026 03:13:07 -0400
-Message-ID: <20260430071315.354333-12-zhenzhong.duan@intel.com>
+ xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Subject: [PATCH v4 06/15] intel_iommu: Export some functions
+Date: Thu, 30 Apr 2026 03:13:02 -0400
+Message-ID: <20260430071315.354333-7-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260430071315.354333-1-zhenzhong.duan@intel.com>
 References: <20260430071315.354333-1-zhenzhong.duan@intel.com>
@@ -86,77 +86,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For VTD_INV_DESC_PASIDC_G_PASID_SI typed pc_inv_dsc invalidation, if an
-pasid entry is just removed, it can never be a new entry to add. So
-calling vtd_replay_pasid_bind_for_dev() is unnecessary.
+Export some functions for accel code usages. Inline functions and MACROs
+are moved to internal header files. Then accel code in following patches
+could access them.
 
-Introduce a new field accel_pce_deleted in VTDPASIDCacheInfo to mark
-this case and to do the bypassing.
-
-Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 Tested-by: Xudong Hao <xudong.hao@intel.com>
 ---
- hw/i386/intel_iommu_internal.h |  1 +
- hw/i386/intel_iommu_accel.c    | 16 +++++++++++++---
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ hw/i386/intel_iommu_internal.h | 31 +++++++++++++++++++++++++
+ hw/i386/intel_iommu.c          | 42 ++++++++--------------------------
+ 2 files changed, 40 insertions(+), 33 deletions(-)
 
 diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 623dc24760..2c716c5297 100644
+index db4f186a3e..c7e107fe87 100644
 --- a/hw/i386/intel_iommu_internal.h
 +++ b/hw/i386/intel_iommu_internal.h
-@@ -630,6 +630,7 @@ typedef struct VTDPASIDCacheInfo {
+@@ -620,6 +620,12 @@ typedef struct VTDRootEntry VTDRootEntry;
+ #define VTD_SM_CONTEXT_ENTRY_RSVD_VAL1      0xffffffffffe00000ULL
+ #define VTD_SM_CONTEXT_ENTRY_PRE            0x10ULL
+ 
++/* context entry operations */
++#define VTD_CE_GET_PASID_DIR_TABLE(ce) \
++    ((ce)->val[0] & VTD_PASID_DIR_BASE_ADDR_MASK)
++#define VTD_CE_GET_PRE(ce) \
++    ((ce)->val[0] & VTD_SM_CONTEXT_ENTRY_PRE)
++
+ typedef struct VTDPASIDCacheInfo {
      uint8_t type;
      uint16_t did;
-     uint32_t pasid;
-+    bool accel_pce_deleted;
- } VTDPASIDCacheInfo;
- 
- typedef struct VTDPIOTLBInvInfo {
-diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index b951d90135..457fdcba62 100644
---- a/hw/i386/intel_iommu_accel.c
-+++ b/hw/i386/intel_iommu_accel.c
-@@ -302,10 +302,15 @@ static void vtd_accel_fill_pc(VTDHostIOMMUDevice *vtd_hiod, uint32_t pasid,
-     QLIST_INSERT_HEAD(&vtd_hiod->pasid_cache_list, vtd_pce, next);
- }
- 
--static void vtd_accel_delete_pc(VTDAccelPASIDCacheEntry *vtd_pce)
-+static void vtd_accel_delete_pc(VTDAccelPASIDCacheEntry *vtd_pce,
-+                                VTDPASIDCacheInfo *pc_info)
+@@ -746,4 +752,29 @@ static inline bool vtd_pe_pgtt_is_fst(VTDPASIDEntry *pe)
  {
-     QLIST_REMOVE(vtd_pce, next);
-     g_free(vtd_pce);
-+
-+    if (pc_info->type == VTD_INV_DESC_PASIDC_G_PASID_SI) {
-+        pc_info->accel_pce_deleted = true;
-+    }
+     return (VTD_SM_PASID_ENTRY_PGTT(pe) == VTD_SM_PASID_ENTRY_FST);
  }
++
++static inline bool vtd_pdire_present(VTDPASIDDirEntry *pdire)
++{
++    return pdire->val & 1;
++}
++
++static inline bool vtd_pe_present(VTDPASIDEntry *pe)
++{
++    return pe->val[0] & VTD_PASID_ENTRY_P;
++}
++
++static inline int vtd_pasid_entry_compare(VTDPASIDEntry *p1, VTDPASIDEntry *p2)
++{
++    return memcmp(p1, p2, sizeof(*p1));
++}
++
++int vtd_get_pdire_from_pdir_table(dma_addr_t pasid_dir_base, uint32_t pasid,
++                                  VTDPASIDDirEntry *pdire);
++int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s, uint32_t pasid,
++                                   dma_addr_t addr, VTDPASIDEntry *pe);
++int vtd_dev_to_context_entry(IntelIOMMUState *s, uint8_t bus_num,
++                             uint8_t devfn, VTDContextEntry *ce);
++int vtd_ce_get_pasid_entry(IntelIOMMUState *s, VTDContextEntry *ce,
++                           VTDPASIDEntry *pe, uint32_t pasid);
++VTDAddressSpace *vtd_get_as_by_sid(IntelIOMMUState *s, uint16_t sid);
+ #endif
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index d1946e3a59..6715cc4383 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -42,12 +42,6 @@
+ #include "migration/vmstate.h"
+ #include "trace.h"
  
- static void
-@@ -339,7 +344,7 @@ vtd_accel_pasid_cache_invalidate_one(VTDAccelPASIDCacheEntry *vtd_pce,
-          * to be either all-zero or non-present. Either case means existing
-          * pasid cache should be invalidated.
-          */
--        vtd_accel_delete_pc(vtd_pce);
-+        vtd_accel_delete_pc(vtd_pce, pc_info);
+-/* context entry operations */
+-#define VTD_CE_GET_PASID_DIR_TABLE(ce) \
+-    ((ce)->val[0] & VTD_PASID_DIR_BASE_ADDR_MASK)
+-#define VTD_CE_GET_PRE(ce) \
+-    ((ce)->val[0] & VTD_SM_CONTEXT_ENTRY_PRE)
+-
+ /*
+  * Paging mode for first-stage translation (VTD spec Figure 9-6)
+  * 00: 4-level paging, 01: 5-level paging
+@@ -831,18 +825,12 @@ static inline bool vtd_pe_type_check(IntelIOMMUState *s, VTDPASIDEntry *pe)
      }
  }
  
-@@ -502,7 +507,12 @@ void vtd_accel_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
-          * removed.
-          */
-         vtd_accel_pasid_cache_invalidate(vtd_hiod, pc_info);
--        vtd_accel_replay_pasid_bind_for_dev(vtd_hiod, start, end, pc_info);
-+
-+        if (pc_info->accel_pce_deleted) {
-+            pc_info->accel_pce_deleted = false;
-+        } else {
-+            vtd_accel_replay_pasid_bind_for_dev(vtd_hiod, start, end, pc_info);
-+        }
-     }
+-static inline bool vtd_pdire_present(VTDPASIDDirEntry *pdire)
+-{
+-    return pdire->val & 1;
+-}
+-
+ /**
+  * Caller of this function should check present bit if wants
+  * to use pdir entry for further usage except for fpd bit check.
+  */
+-static int vtd_get_pdire_from_pdir_table(dma_addr_t pasid_dir_base,
+-                                         uint32_t pasid,
+-                                         VTDPASIDDirEntry *pdire)
++int vtd_get_pdire_from_pdir_table(dma_addr_t pasid_dir_base, uint32_t pasid,
++                                  VTDPASIDDirEntry *pdire)
+ {
+     uint32_t index;
+     dma_addr_t addr, entry_size;
+@@ -860,15 +848,8 @@ static int vtd_get_pdire_from_pdir_table(dma_addr_t pasid_dir_base,
+     return 0;
  }
  
+-static inline bool vtd_pe_present(VTDPASIDEntry *pe)
+-{
+-    return pe->val[0] & VTD_PASID_ENTRY_P;
+-}
+-
+-static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
+-                                          uint32_t pasid,
+-                                          dma_addr_t addr,
+-                                          VTDPASIDEntry *pe)
++int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s, uint32_t pasid,
++                                   dma_addr_t addr, VTDPASIDEntry *pe)
+ {
+     uint8_t pgtt;
+     uint32_t index;
+@@ -954,8 +935,8 @@ static int vtd_get_pe_from_pasid_table(IntelIOMMUState *s,
+     return 0;
+ }
+ 
+-static int vtd_ce_get_pasid_entry(IntelIOMMUState *s, VTDContextEntry *ce,
+-                                  VTDPASIDEntry *pe, uint32_t pasid)
++int vtd_ce_get_pasid_entry(IntelIOMMUState *s, VTDContextEntry *ce,
++                           VTDPASIDEntry *pe, uint32_t pasid)
+ {
+     dma_addr_t pasid_dir_base;
+ 
+@@ -1526,8 +1507,8 @@ static int vtd_ce_pasid_0_check(IntelIOMMUState *s, VTDContextEntry *ce)
+ }
+ 
+ /* Map a device to its corresponding domain (context-entry) */
+-static int vtd_dev_to_context_entry(IntelIOMMUState *s, uint8_t bus_num,
+-                                    uint8_t devfn, VTDContextEntry *ce)
++int vtd_dev_to_context_entry(IntelIOMMUState *s, uint8_t bus_num,
++                             uint8_t devfn, VTDContextEntry *ce)
+ {
+     VTDRootEntry re;
+     int ret_fr;
+@@ -1909,7 +1890,7 @@ static VTDAddressSpace *vtd_get_as_by_sid_and_pasid(IntelIOMMUState *s,
+                              vtd_find_as_by_sid_and_pasid, &key);
+ }
+ 
+-static VTDAddressSpace *vtd_get_as_by_sid(IntelIOMMUState *s, uint16_t sid)
++VTDAddressSpace *vtd_get_as_by_sid(IntelIOMMUState *s, uint16_t sid)
+ {
+     return vtd_get_as_by_sid_and_pasid(s, sid, PCI_NO_PASID);
+ }
+@@ -3133,11 +3114,6 @@ static inline int vtd_dev_get_pe_from_pasid(VTDAddressSpace *vtd_as,
+     return vtd_ce_get_pasid_entry(s, &ce, pe, vtd_as->pasid);
+ }
+ 
+-static int vtd_pasid_entry_compare(VTDPASIDEntry *p1, VTDPASIDEntry *p2)
+-{
+-    return memcmp(p1, p2, sizeof(*p1));
+-}
+-
+ /* Update or invalidate pasid cache based on the pasid entry in guest memory. */
+ static void vtd_pasid_cache_sync_locked(gpointer key, gpointer value,
+                                         gpointer user_data)
 -- 
 2.47.3
 
