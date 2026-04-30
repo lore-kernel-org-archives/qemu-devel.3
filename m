@@ -4,107 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C231CD13DA
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 15:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7CE1CD13DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 15:52:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wITgZ-0001we-61; Thu, 30 Apr 2026 11:52:20 -0400
+	id 1wITgZ-0001wT-4G; Thu, 30 Apr 2026 11:52:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wITgJ-0001sG-Ew
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:52:05 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wITgH-0004jB-SU
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:52:03 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63UEd5UO2932084; Thu, 30 Apr 2026 15:51:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=4X/nQS0TSCCirG4ZP
- McTDv7LT8fe4TTA12WwKMp3BOQ=; b=PvXZBs3QxczVDoPJMR7y5dhAMDOculoCJ
- uUwVy2pd/amZL4WyGEebt37a49J7Avc3pvyCLYrgiNilW67dM+uVCy8dFkOCHiTL
- +nfzRokAawZL+yX0tCv9In9y5Z6FF87iwyiikrS9ToQWuybuF7CRegApYXV7sPT/
- WrDgBKvNU3+BgCDew8DBBYWX23Kkfqg5iSr5QcFiNiwskFTwuqGk5kXowPKsO28l
- tomWKYEaJ1Ugqp1FrO2oEIrFPO/5jo+kejREGaWLhGmtpaxgxAMnoimR8IsxBsRT
- oc7N05THIqiVwGF0T8254wElBzLjkIHSPT1A6b3AAYIoMnPz8/EiQ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drn9rgksv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Apr 2026 15:51:57 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63UFNw2E030859;
- Thu, 30 Apr 2026 15:51:56 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ds8aw3r6e-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Apr 2026 15:51:56 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63UFpu4D4457228
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Apr 2026 15:51:56 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4A7E05805A;
- Thu, 30 Apr 2026 15:51:56 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AE0FF58054;
- Thu, 30 Apr 2026 15:51:55 +0000 (GMT)
-Received: from mycroft-2.pok.ibm.com (unknown [9.47.158.222])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 Apr 2026 15:51:55 +0000 (GMT)
-From: Stefan Berger <stefanb@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, armenon@redhat.com, philmd@linaro.org,
- Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH v3 2/2] tpm_emulator: Limit number of bytes read to negotiated
- buffer size
-Date: Thu, 30 Apr 2026 15:51:50 +0000
-Message-ID: <20260430155150.2139517-3-stefanb@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260430155150.2139517-1-stefanb@linux.ibm.com>
-References: <20260430155150.2139517-1-stefanb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wITg2-0001p3-I8
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:51:50 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wITg1-0004gL-7g
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:51:46 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-65318dafbcbso1016308d50.2
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 08:51:41 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777564301; cv=none;
+ d=google.com; s=arc-20240605;
+ b=lYfSH6Ox06B6tI2HhPWPq6DWJD9sT1Haz9i3NcMv6iXYPJmvfYBN+b5JuoZ+gL9583
+ s1SXwLpCNN6ivDBye23/no1v0N+M3BS7u/9XzaUQeLPNSfG7tX0Q347d+A5NlLQPBzjk
+ RVRGuPmafKrtHSomLs9Z9Woy1cpU2GmN3eg8Xk9KkCO2XWKDd0K/eJPLa8X/Tj/ybr44
+ gkVYYFrr+1hW9gI6xjP+i8OC+ZAH3HS15UGp1rjR9GyatdZAozj2mKCVMrZRZY2Eo7OG
+ XUuog7r04jf4IknBqSFyR/R4O1LHfNowkNjruq+Dg4hE1BakaluagQNPoRkr+5lQN0ax
+ rrpw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=xCiMC4tA6vJvaCTtDwTNRlRYCOReF+ZXex/8bgvfDno=;
+ fh=yw7K3BubHk8SjCQukUdlqRWuLdMhG2KU5Qk39I/xouQ=;
+ b=EOj8oH6nGqdFxaAJu32ttrbRMCV5nDtsTdxkik3s6W0+YajZaVj/aaJv81GBfWq7F9
+ uTeUe+eDHdvH5X8Dcs5FznZ/6G0kfFyg6N/RdwaVIDGW3ze68QjtxlETrYfD7XTkhlyE
+ wQmDRAzBTUw3jn27BSge/74BAB+gRs4ebJCDJUe0BDTL2zdIOJO46kzmEJSEvnBIRA5z
+ fd3wSB95e5mGORGwfPgZxXPK8B7IeWAoAtehjtp3qGZPGOd6WxwJdlrSYDIKp8UlqPqw
+ sPofMmgRtIo9akOdpA0facUU+80ivBhX85mCy/ii0s6gdLrH+Zg9Bvh/rDvBA9eAINm4
+ s0sg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777564301; x=1778169101; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xCiMC4tA6vJvaCTtDwTNRlRYCOReF+ZXex/8bgvfDno=;
+ b=WmYN97vxJKHCrHSexpZuTd6ecbOpleEjJJ5v/dUw6arjkGdWfuqnYlEp/AtOMmiKe3
+ LywCrfZJgifJS2YE7NKWRkZLTQzuQvtZJRK1LM4Hm4As4CdACezO0zdYK6/2BWxS/NAC
+ LaATyBNXOV8eoSlQUHsV1RlWh1V/y2+E8n2qrhy8rxxvdy/QmShO7XIRYRorPeZIIA2C
+ qAnJTKHyvYKLUPySGvoysoXNG6Z9HZshDcfDc6KC/uhIAtXhSXXRFX4mYptzwLCpZYvs
+ 5TZFSy4I4NvsE9ZWG+BFLvgbO0LXqf9q+gCgBlO30gVWLQovr6IHMBRNnqAkcPnACdAB
+ 5Vxg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777564301; x=1778169101;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=xCiMC4tA6vJvaCTtDwTNRlRYCOReF+ZXex/8bgvfDno=;
+ b=gc41Mm+/gBfB4blc5xP0qOJFBRZK2CsNI6+FKyWQS/u9dmO+Fa567168GrgIbchcLw
+ GxtjOX+Khi/fcX4bgHiH5VO84E4VX0WlS3iywqxaFJefS9b+RYFbnKIJUUFldo5pXyu4
+ kl7xTiC5LzbeOuThKg4IZX+oeDfgVtlp17LYl6L0DRZfBBdQuABmEUQxxI7XRGrra8vB
+ dOI1BIfs8QdezOJTRh0MbrQIRYsgVde0jsTkKjE67Vfjtf+qQ4tcyk/X9Rrog3gUfpmf
+ AfY19IxhtGDjuzbegl0GZrgLEH/9EdTRBQu24vFL+Odncfj1O/tm8fgj7iXFgEfNhkRo
+ OV/A==
+X-Gm-Message-State: AOJu0YwHas7K1vuf5sEG4EFieNHLTNlyKwWct4a+vnYh5PkoP8W39omY
+ CzD+P/GMrfnXHyTyGvE5M3YkU/El3ruiaF0Jdvjzo8x8ava+kQ1cfKohoYQQ8EcTuRBnx1Z/iUm
+ pgdRes4pQ71uymHKAO4Tqe4sTqhCuiNkzRSaICnlgTA==
+X-Gm-Gg: AeBDiev3FEGZkMIxH9Nkk4YF2oW10QVec15k1UdzdT4P4mlj/DBvBTNrZ2UNoWe+xOn
+ q1EMStTbaUPhV6pBFE/knVJPxHoqcSenrq8CazpaRKI2HDixrCpq24FL24LZ7+3Cxzyg3ZL0F3u
+ KS8r+ca3Vi484Wr2um9W0s+u24SciTma2HQoVbO9iItSAoMBNyqoDOXWBPYOcL3QkW7L57msO3j
+ 4DL2UZKXiGiXwl8DO81teGsHmjZejgeTsKtW+4ACRu3ApknJzKNmX/okrvDLA+bJ38fyI0Egyv5
+ /3XTgN0kYE3pmxw70QALFn/UkLECypjpvTWHe4oxP78mknPTGGRVypU3jtPtit5EujFN7pDRdSQ
+ kSA==
+X-Received: by 2002:a05:690e:1687:b0:652:f16e:952e with SMTP id
+ 956f58d0204a3-65c18b484c9mr2617042d50.14.1777564300819; Thu, 30 Apr 2026
+ 08:51:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: _mmg4HUeEy0rDppEzshFqFMtXUBdktPR
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDMwMDE2MyBTYWx0ZWRfXxQxVwnX5+gFq
- Hx6xdbOUJTIai/RB2e+SrYG0161MHAHxTH+oGeRB/Thck35UjOHdLgBms3W2vnJNYhkSpHUrbDs
- QgT1Wg+FP+T9FxD3D6prbXJbKYfn9QNc5MHF+lqv3GJIIbuAgx9veucQcKArJHlRWGZOsGpLk0Q
- I1Y0LUv4cPPH8S/BufDG+aeN5EaxqnG7kuwALslC4W/V0ida+obi1LfB5q6NiojpfkdP/2bTw8M
- cAhPhNvuElAeBxcYCe6Gygc61egF/y38g3n/eSAtHisYZbUeF9c6M2upeGmzDQ43+epGUSrtcrP
- 39AwAKbReiScqqkEEayFLZPGYhFFD8iPodMz5U3a8hqOl/VSJDgdhVqAsCdvjwzuWQXr7obH0Qu
- X1CgYEeX1tKQ00GlCu1javM2jUQPLIFT/o+CJekPlmtjhHBa2XN3lpW0GzirreGF2SEYlrz3xm0
- iWWZ1Ln5WVYmLg+FOFQ==
-X-Authority-Analysis: v=2.4 cv=Kc7idwYD c=1 sm=1 tr=0 ts=69f37a9d cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=R_BpO4H6iBiOJCEtfBAA:9
-X-Proofpoint-ORIG-GUID: _mmg4HUeEy0rDppEzshFqFMtXUBdktPR
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-30_04,2026-04-30_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0 bulkscore=0 adultscore=0 spamscore=0
- malwarescore=0 impostorscore=0 priorityscore=1501 lowpriorityscore=0
- suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2604300163
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-25-c413f3605311@redhat.com>
+In-Reply-To: <20260427-qom-tests-v1-25-c413f3605311@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 30 Apr 2026 16:51:28 +0100
+X-Gm-Features: AVHnY4IBJJZhmEOcVVDeaxG_03HjZi4zMLPH30k_u9yxXssu88W54ra-EWYYX20
+Message-ID: <CAFEAcA9r0XpbX6_1oMOAXNo7BZBTFh_HpzZd5UnPzuuG3xix1Q@mail.gmail.com>
+Subject: Re: [PATCH 25/41] scsi/pr-manager-helper: free path on finalization
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ qemu-block@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,51 +119,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Limit the number of bytes read from the TPM response to the size of the
-receiving buffer, which is the same as the size of the buffer negotiated
-with swtpm.
+On Mon, 27 Apr 2026 at 20:45, Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+>
+> set_path allocates path via g_strdup, but
+> pr_manager_helper_instance_finalize did not free it.
+>
+> Fixes: 9bad2a6b9d0a ("scsi: add persistent reservation manager using qemu=
+-pr-helper")
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  scsi/pr-manager-helper.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/scsi/pr-manager-helper.c b/scsi/pr-manager-helper.c
+> index f6454cd80de..53432e6d606 100644
+> --- a/scsi/pr-manager-helper.c
+> +++ b/scsi/pr-manager-helper.c
+> @@ -284,6 +284,7 @@ static void pr_manager_helper_instance_finalize(Objec=
+t *obj)
+>  {
+>      PRManagerHelper *pr_mgr =3D PR_MANAGER_HELPER(obj);
+>
+> +    g_free(pr_mgr->path);
+>      object_unref(OBJECT(pr_mgr->ioc));
+>      qemu_mutex_destroy(&pr_mgr->lock);
+>  }
 
-The TPM TIS and SPAPR use 4096 bytes and the CRB 3968 bytes. There are
-currently no TPM 2 responses using this size of a buffer and therefore
-no response will be sent that is exceeding this size.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
----
- backends/tpm/tpm_emulator.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
-
-diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-index 653989ac0e..050a1f4225 100644
---- a/backends/tpm/tpm_emulator.c
-+++ b/backends/tpm/tpm_emulator.c
-@@ -176,8 +176,9 @@ static int tpm_emulator_unix_tx_bufs(TPMEmulator *tpm_emu,
-                                      bool *selftest_done,
-                                      Error **errp)
- {
--    ssize_t ret;
-     bool is_selftest = false;
-+    size_t to_read;
-+    ssize_t ret;
- 
-     if (selftest_done) {
-         *selftest_done = false;
-@@ -195,9 +196,13 @@ static int tpm_emulator_unix_tx_bufs(TPMEmulator *tpm_emu,
-         return -1;
-     }
- 
-+    /*
-+     * Size of response from swtpm must be <= out_len (= negotiated buffer size)
-+     */
-+    to_read = MIN(tpm_cmd_get_size(out), out_len) - sizeof(struct tpm_resp_hdr);
-+
-     ret = qio_channel_read_all(tpm_emu->data_ioc,
--              (char *)out + sizeof(struct tpm_resp_hdr),
--              tpm_cmd_get_size(out) - sizeof(struct tpm_resp_hdr), errp);
-+              (char *)out + sizeof(struct tpm_resp_hdr), to_read, errp);
-     if (ret != 0) {
-         return -1;
-     }
--- 
-2.43.0
-
+thanks
+-- PMM
 
