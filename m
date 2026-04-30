@@ -4,106 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECE81FF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 15:40:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01CD5FF8873
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 15:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wITUk-0005iY-CX; Thu, 30 Apr 2026 11:40:06 -0400
+	id 1wITYb-0007ry-BI; Thu, 30 Apr 2026 11:44:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wITUi-0005g0-CT
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:40:04 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wITUg-0001wB-C3
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:40:03 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-651c5d525f6so943657d50.3
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 08:40:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777563601; cv=none;
- d=google.com; s=arc-20240605;
- b=PqdlsjBOfV0kFvVU1fQ5gV2OYpsUgkVBSrZQqL2Lx8dIdNTj5vKYRhgJ2fyDNc/PdM
- OPXdODraazYplg4crCQB0EN120gqRt6sOsMMCKy4HsV1/oahPGReZa2buiRgBOsoHI2f
- y84KmZ1N7zqFkzOiqpmniQM3HBUUN97qFZafLFeEEmlA4rVfB+EGAh7OczH5i7CApFa7
- FzdmKwGIoyJAg/wO6KhL6m6zSdC2FU4U1AH8F9WqpjL/jL531kcEll0JxCwIH9dVJc21
- 2J8HTBDePVlve2nZW4VFnpXIqIjzo66d7H5ptDMUGkXs00a0mXjiMlZQYNNISlUHjaJ+
- M+Qw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=ReDWy72RBwlCfXkKdQA2a7wP1OoBOa5MlmjTpVb60nw=;
- fh=BBXXBmZbsnh1iUcPA7aYGot0GnoKedpL6BO7ZAJRQVM=;
- b=GhYNZDqFFziJIyr/SpinZO4/itoGbMjURABwsLUFVJ8ku8NwonnoSy/S3LcH+Z9rNP
- dawCIkLukn7B5Ec9S1RSXOUEoHNSmNjUBtstMkP7aiuiGnXLx6vErrdoFH1SO8H0z2PU
- GY1jM8gMbzbcqR8vXR+TQNDdprRdChZtwJD2n/rjQfbgauhdC+yhoZ8Z2X9KHo/UIfrj
- dCXg0Q6JqTTsIHdMfv10UpxKR8nnk4AtAAq+j1+hEglGF0pUxfJlcCX1xCnKZP89JXIi
- PAx2s0Zqy2slm7UYqOE8/Fr0aXuK8CGKd2wIuL+DB9z2mRG8yX799RTo8jXoJ3T4a0sB
- G9JA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777563601; x=1778168401; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ReDWy72RBwlCfXkKdQA2a7wP1OoBOa5MlmjTpVb60nw=;
- b=VwKL/nJkikvNyFYp6LoqNCS5hZOwiL2C2KoXYAYje169uarkMz39pDaRv8szXZDR4d
- 4sV/ERlL6OxZWOcXp8SVJL6xG0G5MUL5hA48sDc2UZR6f3SvxJCEYmX2HenBFIfaipY1
- mJF3ua8PUnD+xvZjIyqJv+SUdPUcX09tCG91Z1+2ndKvJXy8kz1N/wkVRPfaDQIL63iq
- RpDyR/WHdJlJpteD31M+Q7NMskWvN9c13V0OzFESNuMMNIWaTZLbzp8XzRtuT75X17a/
- 8Cpb69OON7wIVmOhqHnVzaat756y6RQSHNn9s9twpsUZ5yFA4pdzPntW5Hu1YsQlKVw1
- BmRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777563601; x=1778168401;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ReDWy72RBwlCfXkKdQA2a7wP1OoBOa5MlmjTpVb60nw=;
- b=nXW9EtVB0ch/KbMhaeNPQV88auDf6ny+0z90muK9D0wmoCJSIltVKadQT52GHcFIMY
- EylXsh9cRPle1kNe1W/7hLG9sZBGRcXqz6UQoLqXLo6n0gZRkv1yuIkx05+6jIOVcSSw
- EqKnUaTTQ5YN0ACem4aODYVibjsU4LmUX1a0gChBQeacpTGG3U5hdeo1NdJzyDPQ7N0B
- C84OheAm8vksSDYRqWtMzeuvdcz8lz4UrGKnrFSB7eoqZgMjE3fpd8vLRslWPkpP6xFT
- 7BFaIoR2Lpx5ROFDSlkORIuuVtFqIkaZI5HBtk0d9vccoeMu9NYXQ7D1BoO/+FBlL9Ws
- 2qOA==
-X-Gm-Message-State: AOJu0YxQsfoEPJ9rqgO2lIS5pxl66/u85RS/y35aQvL4CSS9cywvd0O7
- NFj7qJLuSUZOgRoyd3BL27ygMWXrozjWZnDnS0RlrwzUlY2RgBLos6rwisLl0sgxF6v/1dzkIhI
- O/mxPkZzGz3XTOupB9KI1uCmyqG1K62TRm5+smMB7mA==
-X-Gm-Gg: AeBDieu6y1cjOFJ5hBAu/oL0a5xQYr9daiDfp5210aij+0wI2l0sfSV3fMFOHdGvsMd
- b62qpyOQIlwA9QsxqjxvsEHmoOCwfamizYeCc2cDjATdvS5Xw7YmjQurjAwNOeivehYjuNjf+wD
- ak68eNpB+jmma0W9XgBmmsNV2hI+lqG2+WilDdkILc25S9uaYDQx/5xfuX/HESQT6yT6eLVZC/f
- gvcqFX0aV/aO0HAutm92SHQXkJtrBRsR1ytdC6mv7XxZzg/IKMHqEDpg2B6LxhR7F2Crosb5G5T
- qrs6xpcx+W7meC2VlrmGgLnSbEimDiRNoEHE0VRWv91j1JfKBBC0cDa7IeZZjF8KGkA7+Z/YiB1
- 6Nw==
-X-Received: by 2002:a05:690e:1206:b0:658:ac79:ad4d with SMTP id
- 956f58d0204a3-65c18f55fe5mr2776193d50.47.1777563600816; Thu, 30 Apr 2026
- 08:40:00 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260308203516.160103-1-shentey@gmail.com>
- <20260308203516.160103-4-shentey@gmail.com>
-In-Reply-To: <20260308203516.160103-4-shentey@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 Apr 2026 16:39:48 +0100
-X-Gm-Features: AVHnY4J8zxXW6fxl_n0y_3WVqX0LkzYyp3tUTgzLovV3Dib0GiEAegikkClToJw
-Message-ID: <CAFEAcA_cYDwOFP_h_pKyUQ0kKmT671iZiNntzMC5O5tF=1cC=A@mail.gmail.com>
-Subject: Re: [PATCH 3/5] hw/arm/imx8mp-evk: Fix reference count of SoC object
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, 
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- qemu-trivial@nongnu.org, 
- qemu-arm@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Gaurav Sharma <gaurav.sharma_7@nxp.com>
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wITYa-0007qp-3f; Thu, 30 Apr 2026 11:44:04 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
+ id 1wITYY-0002vF-6N; Thu, 30 Apr 2026 11:44:03 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63UBUHQM2134186; Thu, 30 Apr 2026 15:43:59 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:to; s=pp1;
+ bh=OP3AzPnq30zAxg4JIWyin9zxI67vbeujnK3bO1ASYd8=; b=qsuhZwCv7NHx
+ mdqdGa1wzVRJr5sJR3tX+EGZEdFTwOYTfOy7zdi4cf0v/pE1Qq/KhLBGYsnKJY7d
+ A+ts1QBpBf5IuVgPG14MPnUj9ddsuSz59xtCIz+1QRBjLaXAasVNWkpgwtbFTq/b
+ Sozb6fGVMhcTJKyRQfSv2y4+8UKR6SqbfiCiXKqOzroN3WTlqVaAzzZH9qWwk31i
+ 9SQYpX3Rp6BBWpHHUMpPoAjZIy4N9N0cuh1rRIskGgCHMdv/xrqd7XAsLegsgb6a
+ i+ZH1cfwcL+8ytiddUpb9VDYKO/0wbYGtRa/mZ/kujyqMhFP+VJlS4nwfZpdDTjQ
+ QvYW+C32Pg==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drn9rgjrf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Apr 2026 15:43:59 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63UFciPs007185;
+ Thu, 30 Apr 2026 15:43:58 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ds7xqksad-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Apr 2026 15:43:58 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63UFhv3k32178744
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 30 Apr 2026 15:43:57 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4020A58052;
+ Thu, 30 Apr 2026 15:43:57 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 406695805D;
+ Thu, 30 Apr 2026 15:43:56 +0000 (GMT)
+Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 30 Apr 2026 15:43:56 +0000 (GMT)
+Message-ID: <4def4bcbfe241bcd8437a195757dd753ce09a32e.camel@linux.ibm.com>
+Subject: Re: [PATCH 3/9] ppc/ppc405: Remove CPU
+From: Miles Glenn <milesg@linux.ibm.com>
+To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, Harsh
+ Prateek Bora <harshpb@linux.ibm.com>, =?ISO-8859-1?Q?C=E9dric?= Le Goater
+ <clg@redhat.com>, Nicholas Piggin <npiggin@gmail.com>, Richard Henderson
+ <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Laurent Vivier <laurent@vivier.eu>, Chinmay Rath <rathc@linux.ibm.com>
+Date: Thu, 30 Apr 2026 10:43:55 -0500
+In-Reply-To: <06e2bccb-975e-418a-a3d8-210be3a337c0@linaro.org>
+References: <20250110141800.1587589-1-clg@redhat.com>
+ <20250110141800.1587589-4-clg@redhat.com>
+ <1c294e9e-8774-4e3c-874c-d64bcc0f7ce7@linaro.org>
+ <08932dd4-f4d2-4eae-b237-2975c820cec1@linaro.org>
+ <D71LX5ZNBHSB.9MP9IHEN5WLU@gmail.com>
+ <bd1941e9-bc24-4bed-9f27-3020ae6ab54d@redhat.com>
+ <52d11eed-751c-4272-b31c-c14f13a5c829@linaro.org>
+ <7629e08d-7d9e-496b-8310-27a075d52430@linux.ibm.com>
+ <06e2bccb-975e-418a-a3d8-210be3a337c0@linaro.org>
+Organization: IBM
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
+Mime-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: LYKKxBipLlxEdAEyI72G7zCLjleplTxm
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDMwMDE1OCBTYWx0ZWRfX08VuQzb9VoZB
+ 4jIk643LB6+juR+t6KcGFGtVygaPFWogVPJ1E/DbC67w5TVkaqettTBvZdSxLP+TWsQrdxso6UZ
+ ZzAStBS9Aasxo+9uBrRM3ZmgUnh6NrAtidM0q1cH1i6KDzRm2RvG3tKjiO/4q30G50Kjjw3vwu/
+ jb9V315SOn68lff9M3nDhS9W6TYIQa4q1l2P1ofbC7T4C6x3I6OgxUUqY7qyDhNR9VYEHbZPUM6
+ eFZiXreJXhi3Vwqd44oWnOaIM2mst9DuUQWXk+BxAG373fSaj2uJ01+CXQ6oo5VpWeSka4Tp11G
+ HlANIQyGft/n2Qn+lzLBVO7aePD1VJZFqbwI87BTEIexred3IeGL3SWG1ob1K2D4YV45FM97HdF
+ QWyj0WS13PwqAKHQPY8XwjgFy3/Cm9CzfJc2P8AMva+h6xNiDsehyQWaiqrYJzfmbYIn9iYZVUQ
+ 3eicdSx+rvQogZMvc2w==
+X-Authority-Analysis: v=2.4 cv=Kc7idwYD c=1 sm=1 tr=0 ts=69f378bf cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=NEAV23lmAAAA:8
+ a=sUPKZ96fmHwcYvpxElwA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: B0fl1raFP4MRaDJ8eW_tQamkxpXteiCB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-30_04,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 phishscore=0 bulkscore=0 adultscore=0 spamscore=0
+ malwarescore=0 impostorscore=0 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2604300158
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -117,59 +130,101 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 8 Mar 2026 at 20:35, Bernhard Beschow <shentey@gmail.com> wrote:
->
-> object_new() leaves a reference count of one, and object_property_add_child()
-> then leaves it at two. This would leak the SoC object if the machine object was
-> destroyed since the machine is the SoC's sole owner. Fix this by converting to
-> object_new_with_props() which gets the parenting and reference count right in
-> one go.
->
-> Fixes: a4eefc69b237 ("hw/arm: Add i.MX 8M Plus EVK board")
-> cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->  hw/arm/imx8mp-evk.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
-> index b84ac91a17..cfc3038c36 100644
-> --- a/hw/arm/imx8mp-evk.c
-> +++ b/hw/arm/imx8mp-evk.c
-> @@ -74,8 +74,8 @@ static void imx8mp_evk_init(MachineState *machine)
->          .modify_dtb = imx8mp_evk_modify_dtb,
->      };
->
-> -    s = FSL_IMX8MP(object_new(TYPE_FSL_IMX8MP));
-> -    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
-> +    s = FSL_IMX8MP(object_new_with_props(TYPE_FSL_IMX8MP, OBJECT(machine),
-> +                                         "soc", &error_fatal, NULL));
->      object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
->      sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+On Thu, 2026-04-30 at 17:15 +0200, Philippe Mathieu-Daudé wrote:
+> Hi Harsh,
+> 
+> On 30/4/26 08:54, Harsh Prateek Bora wrote:
+> > Adding Glenn (since PPE42 seems to make use of CONFIG_PPC405)
+> > 
+> > Glenn,
+> > Please take a look and let us know your thoughts.
+> 
+> Glenn can have a look, but I think we are good to remove them now,
+> they have been deprecated for more than 1 year, enough time for
+> any reaction ;) Otherwise that'd defeat the point of deprecating
+> and the pain for us to schedule and wait for months.
 
-Looking again at this, is this really right?
-object_property_add_child(...) creates the object (refcount 1),
-adds it as a child of the specified parent (refcount 2), then
-does object_unref() (refcount 1). Then in this code we call
-sysbus_realize_and_unref(), which calls qdev_realize_and_unref().
-That function:
- * (indirectly) calls bus_add_child(), which takes a reference and
-   hands it to the link property on the parent (refcount 2)
- * calls object_unref(), as its name suggests (refcount 1)
+Philippe,
 
-So now we have the object with refcount 1, so it doesn't just
-vanish, but on the other hand both the QOM tree parent and the
-qbus tree parent think they own a reference to the object,
-so our refcount is wrong.
+Sorry, I thought it had been made clear back in August of last year
+that we would need the PPC405 CPU to hang around.  The topic was
+brought up by Cedric when I added support for the PPE42 processor.  Is
+there some formal process I need to go through to have it removed from
+the deprecated list?
 
-I think the existing code here was correct: we get a reference
-because we call object_new(), and then we drop it by calling
-the realize_and_unref function.
+Thanks,
 
-I'm going to drop this patch from target-arm.next.
+Glenn
 
--- PMM
+> 
+> My 'Should we proceed' was more of a polite ping than a question ;)
+> 
+> > regards,
+> > Harsh
+> > 
+> > On 30/04/26 11:00 am, Philippe Mathieu-Daudé wrote:
+> > > On 14/1/25 08:47, Cédric Le Goater wrote:
+> > > > On 1/14/25 08:11, Nicholas Piggin wrote:
+> > > > > On Sat Jan 11, 2025 at 2:25 AM AEST, Richard Henderson wrote:
+> > > > > > On 1/10/25 08:15, Philippe Mathieu-Daudé wrote:
+> > > > > > > Hi Cédric,
+> > > > > > > 
+> > > > > > > Cc'ing Laurent & Richard for user emulation.
+> > > > > > > 
+> > > > > > ...
+> > > > > > > The deprecation message (see previous patch) was about the
+> > > > > > > "ppc ``ref405ep`` machine". Is that OK we remove these CPUs
+> > > > > > > for user emulation?
+> > > > > > > 
+> > > > > > > $ qemu-ppc -cpu help|fgrep 405
+> > > > > > > PowerPC 405d2            PVR 20010000
+> > > > > > > PowerPC 405gpa           PVR 40110000
+> > > > > > > PowerPC 405gpb           PVR 40110040
+> > > > > > > PowerPC 405cra           PVR 40110041
+> > > > > > > PowerPC 405gpc           PVR 40110082
+> > > > > > > PowerPC 405gpd           PVR 401100c4
+> > > > > > > PowerPC 405gp            (alias for 405gpd)
+> > > > > > > PowerPC 405crb           PVR 401100c5
+> > > > > > > PowerPC 405crc           PVR 40110145
+> > > > > > > PowerPC 405cr            (alias for 405crc)
+> > > > > > > PowerPC 405gpe           (alias for 405crc)
+> > > > > > > PowerPC npe405h          PVR 414100c0
+> > > > > > > PowerPC npe405h2         PVR 41410140
+> > > > > > > PowerPC 405ez            PVR 41511460
+> > > > > > > PowerPC npe405l          PVR 416100c0
+> > > > > > > PowerPC 405d4            PVR 41810000
+> > > > > > > PowerPC 405              (alias for 405d4)
+> > > > > > > PowerPC 405lp            PVR 41f10000
+> > > > > > > PowerPC 405gpr           PVR 50910951
+> > > > > > > PowerPC 405ep            PVR 51210950
+> > > > > > 
+> > > > > > Up to the ppc maintainers.  I don't know of anything interesting at 
+> > > > > > the user-only level
+> > > > > > wrt these cpus.
+> > > > > 
+> > > > > Just getting back to things after the break...
+> > > > > 
+> > > > > We are looking at modeling some microcontrollers on the POWER
+> > > > > chips. There is an OCC power management controller which is a 405
+> > > > > and some other weird cut down 405 derivatives, we're not up to
+> > > > > those yet but we want to model them.
+> > > > > 
+> > > > > We should be able to remove a bunch of boards and CPUs, I just
+> > > > > haven't started looking, so might be easier to wait for a bit.
+> > > > > If it's not causing others too much problem, could we leave this
+> > > > > in for the time being?
+> > > > 
+> > > > Sure. We will need a new SoC for the OCC and a firmware image. I think
+> > > > these can be built from https://github.com/open-power/occ or, if not,
+> > > > they should be made available.
+> > > 
+> > > Should we proceed with this removal now than v11.0.0 is released?
+> > > 
+> > 
+> > 
+
 
