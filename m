@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9AFDCD13D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51205CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:28:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIV8Y-0002a4-NN; Thu, 30 Apr 2026 13:25:18 -0400
+	id 1wIV7n-0007pv-9J; Thu, 30 Apr 2026 13:24:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV8H-0001vv-MU
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:25:09 -0400
+ id 1wIV7i-0007Gd-9v
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:24:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV8D-00050R-LC
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:25:00 -0400
+ id 1wIV7f-0004s3-PV
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:24:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777569894;
+ s=mimecast20190719; t=1777569862;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=23mc5aBTTO2rCi1UiT36jDv8Lv14DhuBboQ/8mkVWUY=;
- b=NJuhZ7NJfScYtFyz9IdHPRkQyetzWV4i8U2Whtwq9qC4LFERUBp9Z6/RbXwQe8JoWsuN65
- Yn/vs5fN5pY+pjWdz1XRhU2xhVCFso/t3Tplks25FjRccuSuPbSPq5RyxHA03slSIjRuMb
- SPKUcwIk561emg7CGNWcW94oYMPqpRM=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cqWwjTx+0ttmQaI1B24B0fZSc2nNrkhkxV8siWtbPhw=;
+ b=itc5Svt8fP2fXpbGjozF15vpnTg95CRTbRlIMJ13MXtEivjbMrahGQZv8CscSBeDCUnq8W
+ FgA8QghuCq5MKNBDO9JFuhYdHNlfBK/sd+00f8bioUrWN+Vkr0WZ6AW5S5D9Jz5sxmn38N
+ fJdknlWxn20aDXMMoIcFkl24ttFLPKI=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-649-gF99JjVrNZWFtwtNGW5yxw-1; Thu, 30 Apr 2026 13:24:52 -0400
-X-MC-Unique: gF99JjVrNZWFtwtNGW5yxw-1
-X-Mimecast-MFC-AGG-ID: gF99JjVrNZWFtwtNGW5yxw_1777569892
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8a16036c90eso33257766d6.2
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:24:52 -0700 (PDT)
+ us-mta-583-z7QRvY3yMT6i-0l2pctvHw-1; Thu, 30 Apr 2026 13:24:20 -0400
+X-MC-Unique: z7QRvY3yMT6i-0l2pctvHw-1
+X-Mimecast-MFC-AGG-ID: z7QRvY3yMT6i-0l2pctvHw_1777569860
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8acb26fbbb2so19372036d6.2
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:24:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777569891; x=1778174691; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777569859; x=1778174659; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=23mc5aBTTO2rCi1UiT36jDv8Lv14DhuBboQ/8mkVWUY=;
- b=PKBK2C0coXz2CqYHmdEQ0yuPzHr1x37TEl1UGi75XpnbvlUHMcTOZinYWqkxxzTCTw
- OlRkbb5VBz3i+bkQuvFw0HjpZKYQCKjJxw7CR2lTUMrY75NcSbRd9i06Z5pngDRoPU/B
- ZDJSv8dAkNPltfWmgdXN+igWcSCDEEMNMzvt29UXAzR+OfeyFeOUBzZav230zqEGLW/F
- XBNzOvt4QF4HDFB9Jp69KjwV1+DlNPdROfK/1oJPfKr8kJSsH8R9ygk1tYefvpnHlcuj
- xlkyPYVsPS4EJzVZ4ronS6IhqnJJ34MSHR3RUZPCv3NOdPPiVLoBwKha5pZEOjmTilWv
- VkVw==
+ bh=cqWwjTx+0ttmQaI1B24B0fZSc2nNrkhkxV8siWtbPhw=;
+ b=Rm17YPoD359XWTK8lR04obCr5k7gXnduXgn1hcj6qHIKqoR2vYSg+lnNeqJAu40W0G
+ gEsnyhckP0lBgCG8cPkCaEWEamPG0pcaLEVOjQIXdH9uZC6WKikrsDMpO5+CYEg8gMJw
+ pbZ5qdzUeaNKjksCtAjyD481bDUnakqdRE01hOiW6bXyEOZz/3b+GEbkPEmpfoetpMHS
+ HoSCi4VoYt8J1TxuFZCz6aQI92Bhq8xwam0YtaD0yNFam/ta/+6rQgYXS1W4GXW15t+y
+ wB8qFkej5kaMl+vkERPevESIEBcuwdn8pHGfEZTFWPrFgcAZ0XZYE2WVjULjxLnVYypE
+ MGSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777569892; x=1778174692;
+ d=1e100.net; s=20251104; t=1777569859; x=1778174659;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=23mc5aBTTO2rCi1UiT36jDv8Lv14DhuBboQ/8mkVWUY=;
- b=a98j5RfJLKliSQ/bsMJgcUD9QsYViYdnpIs+St0n6W+f2LUVAEd1YMSfGLM+lyyeei
- EKUdO6/9urquTZzEFwFY47t5tIFwenFFIuLBJ+QaO4a4OReAupGOWLI4U/I+g+BqYYXH
- olwlnMkyPrXm7H+Mfgu2Fb392cBpRz0JvxZCHYVoyVVWPaiPgtTQVkW23muA9JHMPQbH
- dHYjivPLMIQlYfQNphGEXEIYdX583KRsJnc+cMMUGb04ozPBQAK2/jUGZPyh9sG+Ht9o
- MbnZWcC/LKRiQ5ZHpTQ8wb7SZsYxmJzBrwk2ZrBSR6uSSLiN0row5NdkcBjuamjr2/8S
- R/Ig==
-X-Gm-Message-State: AOJu0Yw+QeH/YWXamqR1aP+2hK3M9H6JOD2Q+2b35c7VneNWBE6+tDWN
- L1btJchWaP20DtTrbmSQyF1YX2uY9XFcdJpaiF1M+lEOLyVAZK1FDwW2wIt7h5ynLbW5+H9kVY+
- BMvb0/gPExNH5fj9nNC/Sf0FG8UHaFTf0gm2P3h+SeiD0ihLKgqLc1uIKRszknVa0lOB4BQtl5O
- /7LDNGRGHZvAmQQgpdbAfl5+9srkTSGsgY91OraOHR
-X-Gm-Gg: AeBDieuEqa1CSNhthv6W4GLzq+xRYJpx1sPUpfgrcl7BMm4zUoBSaoWY74nkj5j9xQc
- JR7MqAq7UKOTnoYZxfRsC8FMC8eelNnzR6KDqdLYdEC+4uUygG/jGnsFiQ1LpyilFJGBbKVsq5P
- sKhTAZNCtM75SyerXiQhOUKF7KEBsICt+8GxffG4Tvgq7i/s8LvwYhQ7XmmEmS/uZbE0ZHIuGLY
- XMpjPov8AX0yyqAFt1LG6ohCayy1lEfYiJxBnrY5LM4AEIxCqa0wYiuRVFLc1lwUev4l5oIkNLD
- lf4S1Pi71ADL0LQeq0GrqOiI7paEvr8T3kOhOV3DOReuWjrDqqr5bOPQcaftqDXR4b8qFxvC0/d
- G1BJLUFXSobRFu668HnEOcqNLQeRO44qNNHzZu/5PjqqXYXJ9vxMF7GQ8HbdJupKgQyY2Dm3KdB
- SXvdYnjwVr7JnfL3R4RngszUmmun7z3XKKRdY=
-X-Received: by 2002:a05:6214:411a:b0:89a:666:ad2b with SMTP id
- 6a1803df08f44-8b3fe809fbemr55197546d6.27.1777569891259; 
- Thu, 30 Apr 2026 10:24:51 -0700 (PDT)
-X-Received: by 2002:a05:6214:411a:b0:89a:666:ad2b with SMTP id
- 6a1803df08f44-8b3fe809fbemr55196676d6.27.1777569890342; 
- Thu, 30 Apr 2026 10:24:50 -0700 (PDT)
+ bh=cqWwjTx+0ttmQaI1B24B0fZSc2nNrkhkxV8siWtbPhw=;
+ b=BbOzOXwSp5AkyYyfdQXxvkCocvVOJCye8eYVoCJjGC8vC7l3x51esJcPNqOduVEeT8
+ k8xcPw1OV6rX51+EaoUo9TOmlLw9If+UypEEtQlkuZ935Sfuq7Tlzp1tEGqAS6ZqKy+0
+ DVJLi++h9So/2Iw9/dxvyeIGfzlpwqXtfmqkuYLO/L2K6TtGPT8X9xxNPhXSfHsJXjEx
+ b5CsIGnwBCWV31Wzdkg95ewpDlhl2qA/2IGQXRc0KzHrNICINi3uLnQR7Fp2mutkNMQd
+ YuiapJ261aTVN6sbSgSoYqvlPTETnddRqWrMtr9zZrTlInTXrhPfNncYZMdGfY1cU73+
+ mXhA==
+X-Gm-Message-State: AOJu0YynztzWPn5HcTkl16mfn6PJX7OmCw4RbNuhASOdntw5c/2hFDXM
+ s5NnMG56bIskPa9FCnE6ldYgN0R54VFEWigzkSy0prVpmtnBSO8q9Z/onwwX2Zc9oHytywp5E4l
+ i0hO+q77mk5Ing7Qdxd9Ywx5PQ8k7twXXrFH+FPYUq0aCd7ZZkMV1VpDrKPHsKJ/uJlvB/verbp
+ 44C9xaZvjTjJDlB4zPbQI4EOo7ycl6GQUT5bL8/Rkx
+X-Gm-Gg: AeBDiesYJXCoizxdx9IU5QIm0au7/tejTO3HFnjFTs9q5SzO9sHnh50BR6ImdTOuGA1
+ J3mC5j1Jji3I2TiJawAzhRpPZJhe2uWT2j7IRbe1d6UXtvOyJ9+e8DLE9+q8uwTeiam5ouDT3s7
+ FPefRjonktPc0U7E9KOlqNbrTv/x8etPyzIFaxa62TynUVf3dnK8NLLyLilFp1zFvlfoKgN/jvx
+ TPrvNmGUBQljIoloS1+WAlBwP5Ows1p7VMVc8xaxXl1BF/Qefo3i8c20Ihwsl+Z7dtok8u+ofdT
+ QUE5yhhbTaX+QK5pV61xlTmy/NFJ5kfuiCu9o0CzXZx8wSbEWKqrah90vF9ADT7FtpQOcGhoUU1
+ et24NY1VI2kUkm0XJlv0Bf+JYTRs7WVOp8m1pTKRJvb1n+OCWIZV9zpCn0zDjUpJ8vRqmSc8Akb
+ 8hpyHPWXEKVWSVNcSA0tgTYRYShT2hIQaCRLc=
+X-Received: by 2002:a05:622a:199d:b0:50d:863d:b50e with SMTP id
+ d75a77b69052e-5102ab1c200mr54010491cf.3.1777569859301; 
+ Thu, 30 Apr 2026 10:24:19 -0700 (PDT)
+X-Received: by 2002:a05:622a:199d:b0:50d:863d:b50e with SMTP id
+ d75a77b69052e-5102ab1c200mr54009721cf.3.1777569858579; 
+ Thu, 30 Apr 2026 10:24:18 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b3ff328884sm22944026d6.14.2026.04.30.10.24.48
+ d75a77b69052e-5103d1c6bb7sm649231cf.5.2026.04.30.10.24.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 10:24:49 -0700 (PDT)
+ Thu, 30 Apr 2026 10:24:17 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PULL 53/58] whpx: xsave support
-Date: Thu, 30 Apr 2026 19:21:59 +0200
-Message-ID: <20260430172204.1006673-54-pbonzini@redhat.com>
+Subject: [PULL 42/58] target/i386: emulate, hvf: rdmsr/wrmsr GPF handling
+Date: Thu, 30 Apr 2026 19:21:48 +0200
+Message-ID: <20260430172204.1006673-43-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260430172204.1006673-1-pbonzini@redhat.com>
 References: <20260430172204.1006673-1-pbonzini@redhat.com>
@@ -122,524 +122,131 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
+In that case, the instruction pointer mustn't be incremented.
+
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Link: https://lore.kernel.org/r/20260422214225.2242-30-mohamed@unpredictable.fr
+Link: https://lore.kernel.org/r/20260422214225.2242-34-mohamed@unpredictable.fr
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/whpx-internal.h |  16 ++
- target/i386/whpx/whpx-all.c    | 379 ++++++++++++++++++++++++---------
- target/i386/meson.build        |   2 +-
- 3 files changed, 293 insertions(+), 104 deletions(-)
+ target/i386/emulate/x86_emu.h |  4 ++--
+ target/i386/hvf/hvf-i386.h    |  4 ++--
+ target/i386/emulate/x86_emu.c | 10 ++++++----
+ target/i386/hvf/hvf.c         |  9 +++++++--
+ 4 files changed, 17 insertions(+), 10 deletions(-)
 
-diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
-index 86639627b36..0aae83bd7c8 100644
---- a/include/system/whpx-internal.h
-+++ b/include/system/whpx-internal.h
-@@ -99,6 +99,22 @@ void whpx_apic_get(APICCommonState *s);
-          UINT32 StateSize)) \
-   X(HRESULT, WHvResetPartition, \
-         (WHV_PARTITION_HANDLE Partition)) \
-+  X(HRESULT, WHvGetVirtualProcessorXsaveState, \
-+        (WHV_PARTITION_HANDLE Partition, UINT32 VpIndex, \
-+        PVOID Buffer, \
-+        UINT32 BufferSizeInBytes, UINT32 *BytesWritten)) \
-+  X(HRESULT, WHvSetVirtualProcessorXsaveState, \
-+        (WHV_PARTITION_HANDLE Partition, UINT32 VpIndex, \
-+        PVOID Buffer, \
-+        UINT32 BufferSizeInBytes)) \
-+  X(HRESULT, WHvGetVirtualProcessorState, \
-+        (WHV_PARTITION_HANDLE Partition, UINT32 VpIndex, \
-+        WHV_VIRTUAL_PROCESSOR_STATE_TYPE StateType, PVOID Buffer, \
-+        UINT32 BufferSizeInBytes, UINT32 *BytesWritten)) \
-+  X(HRESULT, WHvSetVirtualProcessorState, \
-+        (WHV_PARTITION_HANDLE Partition, UINT32 VpIndex, \
-+        WHV_VIRTUAL_PROCESSOR_STATE_TYPE StateType, PVOID Buffer, \
-+        UINT32 BufferSizeInBytes)) \
-   LIST_WINHVPLATFORM_FUNCTIONS_SUPPLEMENTAL_ARCH(X)
+diff --git a/target/i386/emulate/x86_emu.h b/target/i386/emulate/x86_emu.h
+index a8d4c93098d..b985240b90e 100644
+--- a/target/i386/emulate/x86_emu.h
++++ b/target/i386/emulate/x86_emu.h
+@@ -31,8 +31,8 @@ struct x86_emul_ops {
+     target_ulong (*read_cr) (CPUState *cpu, int cr);
+     void (*handle_io)(CPUState *cpu, uint16_t port, void *data, int direction,
+                       int size, int count);
+-    void (*simulate_rdmsr)(CPUState *cs);
+-    void (*simulate_wrmsr)(CPUState *cs);
++    bool (*simulate_rdmsr)(CPUState *cs);
++    bool (*simulate_wrmsr)(CPUState *cs);
+     bool (*is_protected_mode)(CPUState *cpu);
+     bool (*is_long_mode)(CPUState *cpu);
+     bool (*is_user_mode)(CPUState *cpu);
+diff --git a/target/i386/hvf/hvf-i386.h b/target/i386/hvf/hvf-i386.h
+index 8c42ae6b013..b91c17e2fc2 100644
+--- a/target/i386/hvf/hvf-i386.h
++++ b/target/i386/hvf/hvf-i386.h
+@@ -19,8 +19,8 @@
+ uint32_t hvf_get_supported_cpuid(uint32_t func, uint32_t idx, int reg);
  
- #define WHP_DEFINE_TYPE(return_type, function_name, signature) \
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 8d8aabf4db7..717d47f9cce 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -10,6 +10,7 @@
+ void hvf_handle_io(CPUState *, uint16_t, void *, int, int, int);
+-void hvf_simulate_rdmsr(CPUState *cpu);
+-void hvf_simulate_wrmsr(CPUState *cpu);
++bool hvf_simulate_rdmsr(CPUState *cpu);
++bool hvf_simulate_wrmsr(CPUState *cpu);
  
- #include "qemu/osdep.h"
- #include "cpu.h"
-+#include "qemu/typedefs.h"
- #include "system/address-spaces.h"
- #include "system/ioport.h"
- #include "gdbstub/helpers.h"
-@@ -20,6 +21,7 @@
- #include "system/cpus.h"
- #include "system/runstate.h"
- #include "qemu/main-loop.h"
-+#include "qemu/memalign.h"
- #include "hw/core/boards.h"
- #include "hw/intc/ioapic.h"
- #include "hw/intc/i8259.h"
-@@ -108,34 +110,6 @@ static const WHV_REGISTER_NAME whpx_register_names[] = {
-      * WHvX64RegisterDr7,
-      */
+ /* Host specific functions */
+ int hvf_inject_interrupt(CPUArchState *env, int vector);
+diff --git a/target/i386/emulate/x86_emu.c b/target/i386/emulate/x86_emu.c
+index c2da1a133f3..c6ea8542902 100644
+--- a/target/i386/emulate/x86_emu.c
++++ b/target/i386/emulate/x86_emu.c
+@@ -792,15 +792,17 @@ void x86_emul_raise_exception(CPUX86State *env, int exception_index, int error_c
  
--    /* X64 Floating Point and Vector Registers */
--    WHvX64RegisterXmm0,
--    WHvX64RegisterXmm1,
--    WHvX64RegisterXmm2,
--    WHvX64RegisterXmm3,
--    WHvX64RegisterXmm4,
--    WHvX64RegisterXmm5,
--    WHvX64RegisterXmm6,
--    WHvX64RegisterXmm7,
--    WHvX64RegisterXmm8,
--    WHvX64RegisterXmm9,
--    WHvX64RegisterXmm10,
--    WHvX64RegisterXmm11,
--    WHvX64RegisterXmm12,
--    WHvX64RegisterXmm13,
--    WHvX64RegisterXmm14,
--    WHvX64RegisterXmm15,
--    WHvX64RegisterFpMmx0,
--    WHvX64RegisterFpMmx1,
--    WHvX64RegisterFpMmx2,
--    WHvX64RegisterFpMmx3,
--    WHvX64RegisterFpMmx4,
--    WHvX64RegisterFpMmx5,
--    WHvX64RegisterFpMmx6,
--    WHvX64RegisterFpMmx7,
--    WHvX64RegisterFpControlStatus,
--    WHvX64RegisterXmmControlStatus,
--
-     /* X64 MSRs */
-     WHvX64RegisterEfer,
- #ifdef TARGET_X86_64
-@@ -182,6 +156,36 @@ static const WHV_REGISTER_NAME whpx_register_names_for_vmexit[] = {
-     WHvX64RegisterR15,
- };
- 
-+static const WHV_REGISTER_NAME whpx_register_names_legacy_fp[] = {
-+    /* X64 Floating Point and Vector Registers (non-xsave) */
-+    WHvX64RegisterXmm0,
-+    WHvX64RegisterXmm1,
-+    WHvX64RegisterXmm2,
-+    WHvX64RegisterXmm3,
-+    WHvX64RegisterXmm4,
-+    WHvX64RegisterXmm5,
-+    WHvX64RegisterXmm6,
-+    WHvX64RegisterXmm7,
-+    WHvX64RegisterXmm8,
-+    WHvX64RegisterXmm9,
-+    WHvX64RegisterXmm10,
-+    WHvX64RegisterXmm11,
-+    WHvX64RegisterXmm12,
-+    WHvX64RegisterXmm13,
-+    WHvX64RegisterXmm14,
-+    WHvX64RegisterXmm15,
-+    WHvX64RegisterFpMmx0,
-+    WHvX64RegisterFpMmx1,
-+    WHvX64RegisterFpMmx2,
-+    WHvX64RegisterFpMmx3,
-+    WHvX64RegisterFpMmx4,
-+    WHvX64RegisterFpMmx5,
-+    WHvX64RegisterFpMmx6,
-+    WHvX64RegisterFpMmx7,
-+    WHvX64RegisterFpControlStatus,
-+    WHvX64RegisterXmmControlStatus,
-+};
-+
- struct whpx_register_set {
-     WHV_REGISTER_VALUE values[RTL_NUMBER_OF(whpx_register_names)];
- };
-@@ -392,6 +396,123 @@ static int whpx_set_tsc(CPUState *cpu)
+ static bool exec_rdmsr(CPUX86State *env, struct x86_decode *decode)
+ {
+-    emul_ops->simulate_rdmsr(env_cpu(env));
+-    env->eip += decode->len;
++    if (!emul_ops->simulate_rdmsr(env_cpu(env))) {
++        env->eip += decode->len;
++    }
      return 0;
  }
  
-+static bool whpx_is_xsave_enabled(CPUState *cpu)
-+{
-+    CPUX86State *env = &X86_CPU(cpu)->env;
-+    return env->cr[4] & CR4_OSXSAVE_MASK;
-+}
-+
-+static size_t whpx_get_xsave_max_len(void)
-+{
-+    return whpx_get_supported_cpuid(0xd, 0, R_ECX);
-+}
-+
-+static int whpx_set_xsave_state(const CPUState *cpu)
-+{
-+    struct whpx_state *whpx = &whpx_global;
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-+    HRESULT hr;
-+    void *xsavec_buf;
-+    size_t page = qemu_real_host_page_size();
-+    size_t xsavec_buf_len;
-+
-+    /* allocate and populate compacted buffer */
-+    xsavec_buf_len = whpx_get_xsave_max_len();
-+    xsavec_buf = qemu_memalign(page, xsavec_buf_len);
-+
-+    /* save registers to standard format buffer */
-+    x86_cpu_xsave_all_areas(x86cpu, env->xsave_buf, env->xsave_buf_len);
-+
-+    /* store compacted version of xsave area in xsavec_buf */
-+    compact_xsave_area(env, xsavec_buf, xsavec_buf_len);
-+
-+    if (!whpx_is_legacy_os()) {
-+        hr = whp_dispatch.WHvSetVirtualProcessorState(
-+            whpx->partition, cpu->cpu_index,
-+            WHvVirtualProcessorStateTypeXsaveState,
-+            xsavec_buf,
-+            xsavec_buf_len);
-+    } else {
-+        hr = whp_dispatch.WHvSetVirtualProcessorXsaveState(
-+            whpx->partition, cpu->cpu_index,
-+            xsavec_buf,
-+            xsavec_buf_len);
-+    }
-+
-+    qemu_vfree(xsavec_buf);
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to get virtual processor context, hr=%08lx",
-+                     hr);
-+    }
-+
-+    return 0;
-+}
-+
-+static void whpx_set_legacy_fp_registers(CPUState *cpu, WHPXStateLevel level)
-+{
-+    struct whpx_state *whpx = &whpx_global;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    struct whpx_register_set vcxt;
-+    HRESULT hr;
-+    int idx = 0;
-+    int i;
-+    int idx_next;
-+
-+    assert(cpu_is_stopped(cpu) || qemu_cpu_is_self(cpu));
-+
-+    /* 16 XMM registers */
-+    assert(whpx_register_names_legacy_fp[idx] == WHvX64RegisterXmm0);
-+    idx_next = idx + 16;
-+    for (i = 0; i < sizeof(env->xmm_regs) / sizeof(ZMMReg); i += 1, idx += 1) {
-+        vcxt.values[idx].Reg128.Low64 = env->xmm_regs[i].ZMM_Q(0);
-+        vcxt.values[idx].Reg128.High64 = env->xmm_regs[i].ZMM_Q(1);
-+    }
-+    idx = idx_next;
-+
-+    /* 8 FP registers */
-+    assert(whpx_register_names_legacy_fp[idx] == WHvX64RegisterFpMmx0);
-+    for (i = 0; i < 8; i += 1, idx += 1) {
-+        vcxt.values[idx].Fp.AsUINT128.Low64 = env->fpregs[i].mmx.MMX_Q(0);
-+        /* vcxt.values[idx].Fp.AsUINT128.High64 =
-+               env->fpregs[i].mmx.MMX_Q(1);
-+        */
-+    }
-+
-+    /* FP control status register */
-+    assert(whpx_register_names_legacy_fp[idx] == WHvX64RegisterFpControlStatus);
-+    vcxt.values[idx].FpControlStatus.FpControl = env->fpuc;
-+    vcxt.values[idx].FpControlStatus.FpStatus =
-+        (env->fpus & ~0x3800) | (env->fpstt & 0x7) << 11;
-+    vcxt.values[idx].FpControlStatus.FpTag = 0;
-+    for (i = 0; i < 8; ++i) {
-+        vcxt.values[idx].FpControlStatus.FpTag |= (!env->fptags[i]) << i;
-+    }
-+    vcxt.values[idx].FpControlStatus.Reserved = 0;
-+    vcxt.values[idx].FpControlStatus.LastFpOp = env->fpop;
-+    vcxt.values[idx].FpControlStatus.LastFpRip = env->fpip;
-+    idx += 1;
-+
-+    /* XMM control status register */
-+    assert(whpx_register_names_legacy_fp[idx] == WHvX64RegisterXmmControlStatus);
-+    vcxt.values[idx].XmmControlStatus.LastFpRdp = 0;
-+    vcxt.values[idx].XmmControlStatus.XmmStatusControl = env->mxcsr;
-+    vcxt.values[idx].XmmControlStatus.XmmStatusControlMask = 0x0000ffff;
-+    idx += 1;
-+
-+    hr = whp_dispatch.WHvSetVirtualProcessorRegisters(
-+        whpx->partition, cpu->cpu_index,
-+        whpx_register_names_legacy_fp,
-+        idx,
-+        &vcxt.values[0]);
-+
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to set virtual processor context, hr=%08lx",
-+                     hr);
-+    }
-+}
-+
- void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
+ static bool exec_wrmsr(CPUX86State *env, struct x86_decode *decode)
  {
-     struct whpx_state *whpx = &whpx_global;
-@@ -491,45 +612,11 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
-          */
-         whpx_set_xcrs(cpu);
+-    emul_ops->simulate_wrmsr(env_cpu(env));
+-    env->eip += decode->len;
++    if (!emul_ops->simulate_wrmsr(env_cpu(env))) {
++        env->eip += decode->len;
++    }
+     return 0;
+ }
  
--        /* 16 XMM registers */
--        assert(whpx_register_names[idx] == WHvX64RegisterXmm0);
--        idx_next = idx + 16;
--        for (i = 0; i < sizeof(env->xmm_regs) / sizeof(ZMMReg); i += 1, idx += 1) {
--            vcxt.values[idx].Reg128.Low64 = env->xmm_regs[i].ZMM_Q(0);
--            vcxt.values[idx].Reg128.High64 = env->xmm_regs[i].ZMM_Q(1);
-+        if (whpx_is_xsave_enabled(cpu)) {
-+            whpx_set_xsave_state(cpu);
-+        } else {
-+            whpx_set_legacy_fp_registers(cpu, level);
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index cdc8bd19504..2d1a943b96c 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -536,7 +536,7 @@ void hvf_store_regs(CPUState *cs)
+     macvm_set_rip(cs, env->eip);
+ }
+ 
+-void hvf_simulate_rdmsr(CPUState *cs)
++bool hvf_simulate_rdmsr(CPUState *cs)
+ {
+     X86CPU *cpu = X86_CPU(cs);
+     CPUX86State *env = &cpu->env;
+@@ -557,6 +557,7 @@ void hvf_simulate_rdmsr(CPUState *cs)
+         ret = apic_msr_read(cpu->apic_state, index, &val);
+         if (ret < 0) {
+             x86_emul_raise_exception(env, EXCP0D_GPF, 0);
++            return 1;
          }
--        idx = idx_next;
--
--        /* 8 FP registers */
--        assert(whpx_register_names[idx] == WHvX64RegisterFpMmx0);
--        for (i = 0; i < 8; i += 1, idx += 1) {
--            vcxt.values[idx].Fp.AsUINT128.Low64 = env->fpregs[i].mmx.MMX_Q(0);
--            /* vcxt.values[idx].Fp.AsUINT128.High64 =
--                       env->fpregs[i].mmx.MMX_Q(1);
--            */
--        }
--
--        /* FP control status register */
--        assert(whpx_register_names[idx] == WHvX64RegisterFpControlStatus);
--        vcxt.values[idx].FpControlStatus.FpControl = env->fpuc;
--        vcxt.values[idx].FpControlStatus.FpStatus =
--            (env->fpus & ~0x3800) | (env->fpstt & 0x7) << 11;
--        vcxt.values[idx].FpControlStatus.FpTag = 0;
--        for (i = 0; i < 8; ++i) {
--            vcxt.values[idx].FpControlStatus.FpTag |= (!env->fptags[i]) << i;
--        }
--        vcxt.values[idx].FpControlStatus.Reserved = 0;
--        vcxt.values[idx].FpControlStatus.LastFpOp = env->fpop;
--        vcxt.values[idx].FpControlStatus.LastFpRip = env->fpip;
--        idx += 1;
--
--        /* XMM control status register */
--        assert(whpx_register_names[idx] == WHvX64RegisterXmmControlStatus);
--        vcxt.values[idx].XmmControlStatus.LastFpRdp = 0;
--        vcxt.values[idx].XmmControlStatus.XmmStatusControl = env->mxcsr;
--        vcxt.values[idx].XmmControlStatus.XmmStatusControlMask = 0x0000ffff;
--        idx += 1;
--
-         /* MSRs */
-         assert(whpx_register_names[idx] == WHvX64RegisterEfer);
-         vcxt.values[idx++].Reg64 = env->efer;
-@@ -662,6 +749,110 @@ static void whpx_get_registers_for_vmexit(CPUState *cpu, WHPXStateLevel level)
-     x86_update_hflags(env);
- }
  
-+static void whpx_get_legacy_fp_registers(CPUState *cpu, WHPXStateLevel level)
-+{
-+    struct whpx_state *whpx = &whpx_global;
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+    struct whpx_register_set vcxt;
-+    HRESULT hr;
-+    int i;
-+    int idx;
-+    int idx_next;
-+
-+    assert(cpu_is_stopped(cpu) || qemu_cpu_is_self(cpu));
-+
-+    hr = whp_dispatch.WHvGetVirtualProcessorRegisters(
-+        whpx->partition, cpu->cpu_index,
-+        whpx_register_names_legacy_fp,
-+        RTL_NUMBER_OF(whpx_register_names_legacy_fp),
-+        &vcxt.values[0]);
-+
-+    if (FAILED(hr)) {
-+        error_report("WHPX: Failed to get virtual processor context, hr=%08lx",
-+                     hr);
-+    }
-+
-+    idx = 0;
-+    /* 16 XMM registers */
-+    assert(whpx_register_names_legacy_fp[idx] == WHvX64RegisterXmm0);
-+    idx_next = idx + 16;
-+    for (i = 0; i < sizeof(env->xmm_regs) / sizeof(ZMMReg); i += 1, idx += 1) {
-+        env->xmm_regs[i].ZMM_Q(0) = vcxt.values[idx].Reg128.Low64;
-+        env->xmm_regs[i].ZMM_Q(1) = vcxt.values[idx].Reg128.High64;
-+    }
-+    idx = idx_next;
-+
-+    /* 8 FP registers */
-+    assert(whpx_register_names_legacy_fp[idx] == WHvX64RegisterFpMmx0);
-+    for (i = 0; i < 8; i += 1, idx += 1) {
-+        env->fpregs[i].mmx.MMX_Q(0) = vcxt.values[idx].Fp.AsUINT128.Low64;
-+        /* env->fpregs[i].mmx.MMX_Q(1) =
-+               vcxt.values[idx].Fp.AsUINT128.High64;
-+        */
-+    }
-+
-+    /* FP control status register */
-+    assert(whpx_register_names_legacy_fp[idx] == WHvX64RegisterFpControlStatus);
-+    env->fpuc = vcxt.values[idx].FpControlStatus.FpControl;
-+    env->fpstt = (vcxt.values[idx].FpControlStatus.FpStatus >> 11) & 0x7;
-+    env->fpus = vcxt.values[idx].FpControlStatus.FpStatus & ~0x3800;
-+    for (i = 0; i < 8; ++i) {
-+        env->fptags[i] = !((vcxt.values[idx].FpControlStatus.FpTag >> i) & 1);
-+    }
-+    env->fpop = vcxt.values[idx].FpControlStatus.LastFpOp;
-+    env->fpip = vcxt.values[idx].FpControlStatus.LastFpRip;
-+    idx += 1;
-+
-+    /* XMM control status register */
-+    assert(whpx_register_names_legacy_fp[idx] == WHvX64RegisterXmmControlStatus);
-+    env->mxcsr = vcxt.values[idx].XmmControlStatus.XmmStatusControl;
-+    idx += 1;
-+}
-+
-+static int whpx_get_xsave_state(CPUState *cpu)
-+{
-+    struct whpx_state *whpx = &whpx_global;
-+    X86CPU *x86cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86cpu->env;
-+    int ret;
-+    HRESULT hr;
-+    void *xsavec_buf;
-+    const size_t page = qemu_real_host_page_size();
-+    size_t xsavec_buf_len = whpx_get_xsave_max_len();
-+    UINT32 bytes_written;
-+
-+    xsavec_buf = qemu_memalign(page, xsavec_buf_len);
-+    memset(xsavec_buf, 0, xsavec_buf_len);
-+
-+    if (!whpx_is_legacy_os()) {
-+        hr = whp_dispatch.WHvGetVirtualProcessorState(
-+            whpx->partition, cpu->cpu_index,
-+            WHvVirtualProcessorStateTypeXsaveState,
-+            xsavec_buf,
-+            xsavec_buf_len, &bytes_written);
-+    } else {
-+        hr = whp_dispatch.WHvGetVirtualProcessorXsaveState(
-+            whpx->partition, cpu->cpu_index,
-+            xsavec_buf,
-+            xsavec_buf_len, &bytes_written);
-+    }
-+    if (FAILED(hr) || bytes_written == 0) {
-+        error_report("failed to get xsave state: %s", strerror(errno));
-+        return -errno;
-+    }
-+
-+    ret = decompact_xsave_area(xsavec_buf, xsavec_buf_len, env);
-+    qemu_vfree(xsavec_buf);
-+    if (ret < 0) {
-+        error_report("failed to decompact xsave area");
-+        return ret;
-+    }
-+    x86_cpu_xrstor_all_areas(x86cpu, env->xsave_buf, env->xsave_buf_len);
-+
+         break;
+@@ -639,9 +640,10 @@ void hvf_simulate_rdmsr(CPUState *cs)
+ 
+     RAX(env) = (uint32_t)val;
+     RDX(env) = (uint32_t)(val >> 32);
 +    return 0;
-+}
-+
- void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
- {
-     struct whpx_state *whpx = &whpx_global;
-@@ -758,40 +949,11 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-      */
-     whpx_get_xcrs(cpu);
- 
--    /* 16 XMM registers */
--    assert(whpx_register_names[idx] == WHvX64RegisterXmm0);
--    idx_next = idx + 16;
--    for (i = 0; i < sizeof(env->xmm_regs) / sizeof(ZMMReg); i += 1, idx += 1) {
--        env->xmm_regs[i].ZMM_Q(0) = vcxt.values[idx].Reg128.Low64;
--        env->xmm_regs[i].ZMM_Q(1) = vcxt.values[idx].Reg128.High64;
-+    if (whpx_is_xsave_enabled(cpu)) {
-+        whpx_get_xsave_state(cpu);
-+    } else {
-+        whpx_get_legacy_fp_registers(cpu, level);
-     }
--    idx = idx_next;
--
--    /* 8 FP registers */
--    assert(whpx_register_names[idx] == WHvX64RegisterFpMmx0);
--    for (i = 0; i < 8; i += 1, idx += 1) {
--        env->fpregs[i].mmx.MMX_Q(0) = vcxt.values[idx].Fp.AsUINT128.Low64;
--        /* env->fpregs[i].mmx.MMX_Q(1) =
--               vcxt.values[idx].Fp.AsUINT128.High64;
--        */
--    }
--
--    /* FP control status register */
--    assert(whpx_register_names[idx] == WHvX64RegisterFpControlStatus);
--    env->fpuc = vcxt.values[idx].FpControlStatus.FpControl;
--    env->fpstt = (vcxt.values[idx].FpControlStatus.FpStatus >> 11) & 0x7;
--    env->fpus = vcxt.values[idx].FpControlStatus.FpStatus & ~0x3800;
--    for (i = 0; i < 8; ++i) {
--        env->fptags[i] = !((vcxt.values[idx].FpControlStatus.FpTag >> i) & 1);
--    }
--    env->fpop = vcxt.values[idx].FpControlStatus.LastFpOp;
--    env->fpip = vcxt.values[idx].FpControlStatus.LastFpRip;
--    idx += 1;
--
--    /* XMM control status register */
--    assert(whpx_register_names[idx] == WHvX64RegisterXmmControlStatus);
--    env->mxcsr = vcxt.values[idx].XmmControlStatus.XmmStatusControl;
--    idx += 1;
- 
-     /* MSRs */
-     assert(whpx_register_names[idx] == WHvX64RegisterEfer);
-@@ -1586,6 +1748,9 @@ void whpx_arch_destroy_vcpu(CPUState *cpu)
-     X86CPU *x86cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86cpu->env;
-     g_free(env->emu_mmio_buf);
-+    qemu_vfree(env->xsave_buf);
-+    env->xsave_buf = NULL;
-+    env->xsave_buf_len = 0;
  }
  
- /* Returns the address of the next instruction that is about to be executed. */
-@@ -2446,6 +2611,9 @@ int whpx_init_vcpu(CPUState *cpu)
-     Error *local_error = NULL;
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86_cpu->env;
-+    X86XSaveHeader *header;
-+    size_t page_size = qemu_real_host_page_size();
-+    size_t xsave_len;
-     UINT64 freq = 0;
-     int ret;
+-void hvf_simulate_wrmsr(CPUState *cs)
++bool hvf_simulate_wrmsr(CPUState *cs)
+ {
+     X86CPU *cpu = X86_CPU(cs);
+     CPUX86State *env = &cpu->env;
+@@ -657,6 +659,7 @@ void hvf_simulate_wrmsr(CPUState *cs)
+         r = cpu_set_apic_base(cpu->apic_state, data);
+         if (r < 0) {
+             x86_emul_raise_exception(env, EXCP0D_GPF, 0);
++            return 1;
+         }
  
-@@ -2522,6 +2690,15 @@ int whpx_init_vcpu(CPUState *cpu)
-     qemu_add_vm_change_state_handler(whpx_cpu_update_state, env);
+         break;
+@@ -668,6 +671,7 @@ void hvf_simulate_wrmsr(CPUState *cs)
+         ret = apic_msr_write(cpu->apic_state, index, data);
+         if (ret < 0) {
+             x86_emul_raise_exception(env, EXCP0D_GPF, 0);
++            return 1;
+         }
  
-     env->emu_mmio_buf = g_new(char, 4096);
-+    /* Initialize XSAVE buffer page-aligned */
-+    xsave_len = whpx_get_xsave_max_len();
-+    env->xsave_buf = qemu_memalign(page_size, xsave_len);
-+    env->xsave_buf_len = xsave_len;
-+    memset(env->xsave_buf, 0, env->xsave_buf_len);
-+
-+    /* we need to set the compacted format bit in xsave header for Hyper-V */
-+    header = (X86XSaveHeader *)(env->xsave_buf + sizeof(X86LegacyXSaveArea));
-+    header->xcomp_bv = header->xstate_bv | (1ULL << 63);
+         break;
+@@ -746,6 +750,7 @@ void hvf_simulate_wrmsr(CPUState *cs)
+          g_hypervisor_iface->wrmsr_handler(cs, msr, data);
  
-     return 0;
+     printf("write msr %llx\n", RCX(cs));*/
++    return 0;
+ }
  
-@@ -2722,10 +2899,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         error_report("WHPX: Failed to query XSAVE capability, hr=%08lx", hr);
-     }
- 
--    if (!whpx_has_xsave()) {
--        printf("WHPX: Partition is not XSAVE capable\n");
--    }
--
-     memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-     prop.ProcessorCount = ms->smp.cpus;
-     hr = whp_dispatch.WHvSetPartitionProperty(
-diff --git a/target/i386/meson.build b/target/i386/meson.build
-index 14b1d2977d5..80062d1d0d8 100644
---- a/target/i386/meson.build
-+++ b/target/i386/meson.build
-@@ -10,7 +10,7 @@ i386_ss.add(when: 'CONFIG_SEV', if_true: files('host-cpu.c', 'confidential-guest
- # x86 cpu type
- i386_ss.add(when: 'CONFIG_KVM', if_true: files('xsave_helper.c', 'host-cpu.c'))
- i386_ss.add(when: 'CONFIG_HVF', if_true: files('xsave_helper.c', 'host-cpu.c'))
--i386_ss.add(when: 'CONFIG_WHPX', if_true: files('host-cpu.c'))
-+i386_ss.add(when: 'CONFIG_WHPX', if_true: files('xsave_helper.c', 'host-cpu.c'))
- i386_ss.add(when: 'CONFIG_NVMM', if_true: files('host-cpu.c'))
- i386_ss.add(when: 'CONFIG_MSHV', if_true: files('host-cpu.c'))
- 
+ static int hvf_handle_vmexit(CPUState *cpu)
 -- 
 2.54.0
 
