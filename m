@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10513CD13D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 07:19:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A984CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 07:19:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wILgM-0003Z7-GG; Thu, 30 Apr 2026 03:19:34 -0400
+	id 1wILgQ-0003aq-2Q; Thu, 30 Apr 2026 03:19:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wILgK-0003YW-UG
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:19:33 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wILgM-0003ZA-Ia
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:19:34 -0400
 Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wILgJ-00012i-Ex
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:19:32 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wILgK-00014D-ST
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:19:34 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 6BE2260582;
- Thu, 30 Apr 2026 07:19:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E58AC2BCB4;
- Thu, 30 Apr 2026 07:19:25 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 404596132D;
+ Thu, 30 Apr 2026 07:19:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D780BC2BCB4;
+ Thu, 30 Apr 2026 07:19:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777533567;
- bh=Q/iXGdIHYdJNB8woaida8AHWG6igtbbz4i/W4/TIG+0=;
+ s=k20201202; t=1777533572;
+ bh=xPd4mYwGCWKwRuBmVbsvO0gF+W85kx/Ix/pQDEmxgro=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=F15aGzoVswA5Er2JrE7SXJ3fm2jsOA5UtmllEkOkpvkhA2rz98xP82freZE7RLelr
- qJ+x9710nyoiXpjN0S+FC/7DY3W4JF0QXB25vgGfv4U+asAqBjODK1nKAx1IuyNLqv
- raUcb89HpKREjaKhlIPTPoDLfCN0VAo6aqF9X3c7VgngzpqFOnJP+OacA8DrMHMu/a
- TLI58dkqmVfz+Bpy/Wibp+PGHloElbsgkL6wfNC7LxVaXh1dNgTwSaFeCO95gHUrUN
- clN/eUnhGjGblV4nS4ENEA7Iw3qHi2NFsgnTAOg7ZKyvgp5xN8SNfR1eVoytYgmPUk
- L4cyAXI8jhaCw==
+ b=ZCnitvkC022m6HcRIF0szQqHYhPEKt8ugaYjka8uks7LrSa/z77Nu5nbnmYnd8KqH
+ pHu6jcUp7sp3RWdzOotRV75Ztfsnjm3KSi8zRFufzFk321cN6OOq5O6lowonTa7+Nn
+ /uCtKaHC+YJj0tqX5+EOufZrz9UZI/aLUJs2fcIiED+zslYTkWSp+2Gpcyfe3GiwT2
+ eaKlJPTYsImzXwHxOPimP4ORrdzsV8EwTTYiaC1M3t6yLtjqUUp78F1nzqf7bHQeJf
+ Il8trewOdxLP4YXulMI+TZFOzMCZ/N/4MbrwYotjtqS6DDTQzfPw/eizaPZ7eJwvPC
+ GEPgxHLKWZlRQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 1/4] linux-user: Add missing CDROM ioctls
-Date: Thu, 30 Apr 2026 09:19:19 +0200
-Message-ID: <20260430071922.15341-2-deller@kernel.org>
+Subject: [PULL 4/4] linux-user: Translate errno in IP_RECVERR and IPV6_RECVERR
+Date: Thu, 30 Apr 2026 09:19:22 +0200
+Message-ID: <20260430071922.15341-5-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260430071922.15341-1-deller@kernel.org>
 References: <20260430071922.15341-1-deller@kernel.org>
@@ -52,8 +52,7 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UPPERCASE_75_100=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,72 +70,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Add the missing CDROM ioctls and bring them in same order as
-documentation.
+Translate host error codes of IP_RECVERR and IPV6_RECVERR control messages to
+target error codes before returning to the caller.
+For example, this is important for architectures (e.g. hppa, alpha, sparc,
+mips) on which the value of ECONNREFUSED is different to the value on a x86_64
+host.
 
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/602
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/ioctls.h | 29 +++++++++++++++++------------
- 1 file changed, 17 insertions(+), 12 deletions(-)
+ linux-user/syscall.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
-index 5b7d00e92f..aa485ee6e5 100644
---- a/linux-user/ioctls.h
-+++ b/linux-user/ioctls.h
-@@ -416,19 +416,18 @@
- #endif
- 
-   IOCTL(CDROMPAUSE, 0, TYPE_NULL)
--  IOCTL(CDROMSTART, 0, TYPE_NULL)
--  IOCTL(CDROMSTOP, 0, TYPE_NULL)
-   IOCTL(CDROMRESUME, 0, TYPE_NULL)
--  IOCTL(CDROMEJECT, 0, TYPE_NULL)
--  IOCTL(CDROMEJECT_SW, 0, TYPE_INT)
--  IOCTL(CDROMCLOSETRAY, 0, TYPE_NULL)
--  IOCTL(CDROMRESET, 0, TYPE_NULL)
-   IOCTL(CDROMPLAYMSF, IOC_W, MK_PTR(TYPE_INT))
-   IOCTL(CDROMPLAYTRKIND, IOC_W, MK_PTR(TYPE_INT))
-   IOCTL(CDROMREADTOCHDR, IOC_R, MK_PTR(TYPE_INT))
-   IOCTL(CDROMREADTOCENTRY, IOC_RW, MK_PTR(TYPE_INT))
-+  IOCTL(CDROMSTOP, 0, TYPE_NULL)
-+  IOCTL(CDROMSTART, 0, TYPE_NULL)
-+  IOCTL(CDROMEJECT, 0, TYPE_NULL)
-   IOCTL(CDROMVOLCTRL, IOC_W, MK_PTR(TYPE_INT))
-   IOCTL(CDROMSUBCHNL, IOC_RW, MK_PTR(TYPE_INT))
-+  IOCTL(CDROMEJECT_SW, IOC_W, TYPE_INT)
-+  IOCTL(CDROMRESET, 0, TYPE_NULL)
-   /* XXX: incorrect (need specific handling) */
-   IOCTL(CDROMREADAUDIO, IOC_W, MK_PTR(MK_STRUCT(STRUCT_cdrom_read_audio)))
-   IOCTL(CDROMREADCOOKED, IOC_RW, MK_PTR(TYPE_INT))
-@@ -438,16 +437,22 @@
-   IOCTL(CDROMREADALL, IOC_RW, MK_PTR(TYPE_INT))
-   IOCTL(CDROMMULTISESSION, IOC_RW, MK_PTR(TYPE_INT))
-   IOCTL(CDROM_GET_UPC, IOC_R, MK_PTR(TYPE_INT))
-+  IOCTL(CDROM_LAST_WRITTEN, IOC_R, MK_PTR(TYPE_LONG))
-   IOCTL(CDROMVOLREAD, IOC_R, MK_PTR(TYPE_INT))
-   IOCTL(CDROMSEEK, IOC_W, MK_PTR(TYPE_INT))
-   IOCTL(CDROMPLAYBLK, IOC_W, MK_PTR(TYPE_INT))
--  IOCTL(CDROM_MEDIA_CHANGED, 0, TYPE_NULL)
--  IOCTL(CDROM_SET_OPTIONS, 0, TYPE_INT)
--  IOCTL(CDROM_CLEAR_OPTIONS, 0, TYPE_INT)
--  IOCTL(CDROM_SELECT_SPEED, 0, TYPE_INT)
--  IOCTL(CDROM_SELECT_DISC, 0, TYPE_INT)
--  IOCTL(CDROM_DRIVE_STATUS, 0, TYPE_NULL)
-+  IOCTL(CDROMCLOSETRAY, 0, TYPE_NULL)
-+  IOCTL(CDROM_SET_OPTIONS, IOC_W, TYPE_INT)
-+  IOCTL(CDROM_CLEAR_OPTIONS, IOC_W, TYPE_INT)
-+  IOCTL(CDROM_SELECT_SPEED, IOC_W, TYPE_INT)
-+  IOCTL(CDROM_SELECT_DISC, IOC_W, TYPE_INT)
-+  IOCTL(CDROM_MEDIA_CHANGED, IOC_W, TYPE_INT)
-+  IOCTL(CDROM_DRIVE_STATUS, IOC_W, TYPE_INT)
-   IOCTL(CDROM_DISC_STATUS, 0, TYPE_NULL)
-+  IOCTL(CDROM_CHANGER_NSLOTS, 0, TYPE_NULL)
-+  IOCTL(CDROM_LOCKDOOR, IOC_W, TYPE_INT)
-+  IOCTL(CDROM_DEBUG, IOC_W, TYPE_INT)
-+  IOCTL(CDROM_GET_CAPABILITY, 0, TYPE_NULL)
-   IOCTL(CDROMAUDIOBUFSIZ, 0, TYPE_INT)
- 
- #if 0
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index d68edb7afd..d3d9fffb54 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -2008,7 +2008,8 @@ static inline abi_long host_to_target_cmsg(struct target_msghdr *target_msgh,
+                     tgt_len != sizeof(struct errhdr_t)) {
+                     goto unimplemented;
+                 }
+-                __put_user(errh->ee.ee_errno, &target_errh->ee.ee_errno);
++                __put_user(host_to_target_errno(errh->ee.ee_errno),
++                           &target_errh->ee.ee_errno);
+                 __put_user(errh->ee.ee_origin, &target_errh->ee.ee_origin);
+                 __put_user(errh->ee.ee_type,  &target_errh->ee.ee_type);
+                 __put_user(errh->ee.ee_code, &target_errh->ee.ee_code);
+@@ -2062,7 +2063,8 @@ static inline abi_long host_to_target_cmsg(struct target_msghdr *target_msgh,
+                     tgt_len != sizeof(struct errhdr6_t)) {
+                     goto unimplemented;
+                 }
+-                __put_user(errh->ee.ee_errno, &target_errh->ee.ee_errno);
++                __put_user(host_to_target_errno(errh->ee.ee_errno),
++                           &target_errh->ee.ee_errno);
+                 __put_user(errh->ee.ee_origin, &target_errh->ee.ee_origin);
+                 __put_user(errh->ee.ee_type,  &target_errh->ee.ee_type);
+                 __put_user(errh->ee.ee_code, &target_errh->ee.ee_code);
 -- 
 2.53.0
 
