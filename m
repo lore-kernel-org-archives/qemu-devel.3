@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1D37FF887E
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 00:07:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 639ADFF8875
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 00:07:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIEuQ-00064c-R9; Wed, 29 Apr 2026 20:05:38 -0400
+	id 1wIEv4-0007ap-Jq; Wed, 29 Apr 2026 20:06:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIEuO-000647-Oc
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 20:05:36 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1wIEv1-0007Md-3T
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 20:06:15 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIEuN-0001i7-8t
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 20:05:36 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-834da62e52dso158921b3a.3
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 17:05:34 -0700 (PDT)
+ id 1wIEuz-0001p0-J3
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 20:06:14 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-82cebbdbdccso224764b3a.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 17:06:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777507534; x=1778112334; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777507572; x=1778112372; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8KddSzfu6h2SYxUnVyJmdaPI//25dV/tGyPD+hJSdvk=;
- b=JQEAneSZziATNDhR0HcslGc5i8ENokGUNRicaTlA6niGjCY6lQ/7LoCCQzNiwccZXF
- mQATQTm8OvR1/iJfo0gybLKtYx+hitMHfA6A3n6cSGzelMIOe8Wd4NQGetVULb//DpCU
- waKP6LzFiLPfg2GInKAWAiH5dhTDUNhG9ovMvMPOj4mDmdd80rf9PSg1CLHEmFWfQ1sE
- hSfIG4nBIdXVZrTbFXI3CoKgEDsCcpavQwjB9xrUjbpMRwtZuOtlH/C0kbok5Gsnz3Op
- 51yeSczND3B7YX6FoGrropp079tA2JxeTOxDs8pjHpnFuODyDXLccsAFUEs8phlIMgHX
- qbmA==
+ bh=t8q92mP0WsVg7jShnJO3IJxQ7Z8BkHGBrtVLkPQnGUU=;
+ b=cMz2GRKxpXPCt5gWCqtI8lHt+wdibTHrjbkvh/r1suU5YK6LZJ2LNSGovTX+HZ85nL
+ y9EtHPA56EjdFM9xYtz+C7d2PzWwinPfr2YkvFY9eev16tN/qT9YW05Df4H6COykweCJ
+ oKbmFSuuqhOqqDjpSBwR94qz0EK9BKy9pgws+KmollgSgoEZe+2rwiG0PyuqHDrDuXl7
+ YRO/lTKXF2rjuyOdTBOKrkB6AZBUqJMkBKTzwsLMJ1UZAbCbnVSuBFVYHElNEOhd+YJO
+ DW1v6L9YFh1J4eMe5I6s6pbaoqbFLUsxYcft9+6iQqRgWxNG5kg/53d/0KxDfd2wMerM
+ Bqzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777507534; x=1778112334;
+ d=1e100.net; s=20251104; t=1777507572; x=1778112372;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=8KddSzfu6h2SYxUnVyJmdaPI//25dV/tGyPD+hJSdvk=;
- b=VbV8Iyvy8wFAgU7Z/7rJq/1Ba4eSvCiYkuxrm/MLkQXqXr4PjFrYXb0lnpd8btz0yV
- IIzI6lMli8AExi26LCkK4DX4X9Pv/ZQwujRpJ4GF3Ft/sB8F18hLcsAWFSGRmAsDdWei
- UG8rOivP1kMgb1JJphHlKiAkMKKrBeUW1DKMpVmh6CdbJpMenplsOnIISqv64u3qdZ4Z
- FNzaVWvgrPpDOZ/3GWxKJUH40jMUuqBE6KG4PIz+Hw7a41GAE5zUgafxB2tdWZC0ryNF
- yT8lH2Qrqd6ISxZkkGHY/ZcShAesNAUtqbnE/vpBvEqxdJ6Yw7zexjwFFptWs/gl2d/0
- 7rMw==
-X-Gm-Message-State: AOJu0Yz+kmLy3qhPGIXta1YOAychqDwVLDoNgo7qe2uBJAvcdzVHr3+h
- KwBv73h37jQU1yvuXAB3sOM4r0rgOj+lZh3QFpP0qDBhx9cLrRwanHA2I2Pwi91BHoPuA986kdn
- xjXG0XSM=
-X-Gm-Gg: AeBDieulTF3zar3e13dX4Ta1FF+oaX1+VVy8R4UTKx9tHpC31gI/Ns/CEKp6V8vcWMp
- a809Bb3ccxZeAsKTx90zwIh3/NSF+ikLFgd+K7Tikn2Ohzdio7nCYkbcYfFqqJYLM9MPgN4kZ0v
- Yy2n5sX7CpYaHggR1sW1IcgfWwOQIYImo6/+q5wU9PALX/EQUo1USsBb8yRBx0QFT7QyBSlLQVf
- mIujTnzZ4t69NXj26MRLhg4p3HhgUSEF3z+XW9H4kTZXcpbDEocRbe+nMjbyqD9qhfgVA6I3cg5
- EAcOpX9kr8vkwrwtWY1TwslZbSbF2+ZB8DqGZUGezJ3iGwImMJh6hzjXUhiE5GlWT6XR5doXjLY
- o7xEOnMYSfx0JnninHPu0AUl11Km6ssYkWYtkTT7O+kkC4LSQDRHOzJrl3v690au8d/vcH4X2tQ
- +ay/6zMNGmtx55cuKuce8OlazUA1G2nX2u5VIqnzC1
-X-Received: by 2002:a05:6a00:8e01:b0:81f:3bcb:af2a with SMTP id
- d2e1a72fcca58-834fdbd238emr708570b3a.26.1777507533761; 
- Wed, 29 Apr 2026 17:05:33 -0700 (PDT)
+ bh=t8q92mP0WsVg7jShnJO3IJxQ7Z8BkHGBrtVLkPQnGUU=;
+ b=VjzaMfW4imG/9DHMzp0wgbSf0rQ7pcwkG4z7hi1BfG1vAKCc1LosJO+L3ao5jgUIM/
+ aR/XzpAZsnI9bdCigiRkGETHNc2sFpqw/1YhIfrmsTXJ9WJCwWFESmTy0XTfvpQbD3t9
+ fWcRqk9iYsl5PhYHB41HJSB7gNoijm/23KmlfuvDzobniBWqOd8R4hLwoRtTbvfNqJkO
+ 8rFci+HFAvVHP+3HhJdio+6f0H62JsC257AXWLWdof8U3nTTF3XgJG4ox7AL1ncHe2rq
+ EJdT2IvYGzEcY7NWJoIV3ghynxSlE7IS25lrg5+sQhoCDzPjNqfeaLT0Bz+7BBuyqTwC
+ ut2A==
+X-Gm-Message-State: AOJu0YwJJXq+vAO+sDLuf0fHoNE0N2bRPvsCKRHCku/3lxrJ3Vdt0Xyk
+ QQJjt7zB2gxiXTilubJ/fsPVaZkHVQzNJQEy7ofNoTqEQaJWTVEe7s2q4wPuh4kS9uzJgR27v/X
+ pTpzNkvw=
+X-Gm-Gg: AeBDievmeQqFfTdKqA2Cj/XZ6tOcphqcn2oJwumjqsJzsD4am4BvxtFL8C7BG3Z4O/Q
+ 3QqQUpeFgq6J1XUvzC6gEHnMZujH0K1pl5TmbEyCs18wXPJ0xKw7bMLcNzlUbBMZNhfhK5NIdzR
+ +JOyBnQOoM2JTyqz59PVEXPVFx0P5BaOmadXUc+pXTrAJ3h7YS09ZeMvnsnOYpUCTFqlbHbiEjV
+ yN58kD4iZ3M7lMs24fDarH/kowLMOWUmzh8BeNzt5mv3vPn367qy5fWM5r8v2nWEhzd27RsCY1F
+ gU36qyYz/aEHDrZECQyRc2khnfxjcCQRAfzAe6orNd14OrgMTnGGzj7I6e+GuMe7eIjhX1vpqCe
+ n7npQUVi6V/2+TCiKw4jGKWtXhpeddV/Xo/L60oiH+joF99o1C8PzdC9zOYSr2zJ1CZu5Nr0A7Z
+ SZgGWAoZaQltnv3jkNr7O2WI4PKnlNIaoYtcZrDFS6
+X-Received: by 2002:a05:6a00:9284:b0:834:e24c:3f9c with SMTP id
+ d2e1a72fcca58-8350000ec86mr216657b3a.22.1777507571986; 
+ Wed, 29 Apr 2026 17:06:11 -0700 (PDT)
 Received: from stoup.. ([180.233.125.15]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-834ed7ef7a8sm2928667b3a.47.2026.04.29.17.05.32
+ d2e1a72fcca58-834ed7ef7a8sm2928667b3a.47.2026.04.29.17.06.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 17:05:33 -0700 (PDT)
+ Wed, 29 Apr 2026 17:06:11 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org
-Subject: [PATCH v2 02/40] fpu: Inline float8_e5m2_pack_raw into single caller
-Date: Thu, 30 Apr 2026 10:04:45 +1000
-Message-ID: <20260430000524.56046-3-richard.henderson@linaro.org>
+Subject: [PATCH v2 19/40] fpu: Use parts64_round_to_int in
+ parts_s390_divide_to_integer
+Date: Thu, 30 Apr 2026 10:05:02 +1000
+Message-ID: <20260430000524.56046-20-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260430000524.56046-1-richard.henderson@linaro.org>
 References: <20260430000524.56046-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,37 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+We will not expose parts_round_to_int_normal.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- fpu/softfloat.c | 7 +------
- 1 file changed, 1 insertion(+), 6 deletions(-)
+ fpu/softfloat.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
 diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 18f2ca900f..5269e5f977 100644
+index b71bd49483..e42782c656 100644
 --- a/fpu/softfloat.c
 +++ b/fpu/softfloat.c
-@@ -673,11 +673,6 @@ static uint64_t pack_raw64(const FloatParts64 *p, const FloatFmt *fmt)
-     return ret;
- }
+@@ -5161,12 +5161,11 @@ static void parts_s390_divide_to_integer(FloatParts64 *a, FloatParts64 *b,
+          * Rounding of partial quotient may be inexact. This is the whole point
+          * of distinguishing partial quotients, so ignore the exception.
+          */
+-        *n = *q;
+-        parts64_round_to_int_normal(n,
+-                                    is_q_smallish
+-                                    ? final_quotient_rounding_mode
+-                                    : float_round_to_zero,
+-                                    0, fmt->frac_size);
++        *n = parts64_round_to_int(q,
++                                  is_q_smallish
++                                  ? final_quotient_rounding_mode
++                                  : float_round_to_zero,
++                                  0, status, fmt);
  
--static float8_e5m2 QEMU_FLATTEN float8_e5m2_pack_raw(const FloatParts64 *p)
--{
--    return pack_raw64(p, &float8_e5m2_params);
--}
--
- static float16 QEMU_FLATTEN float16_pack_raw(const FloatParts64 *p)
- {
-     return make_float16(pack_raw64(p, &float16_params));
-@@ -1477,7 +1472,7 @@ static float8_e5m2 float8_e5m2_round_pack_canonical(FloatParts64 *p,
-                                                     bool saturate)
- {
-     parts64_uncanon(p, s, &float8_e5m2_params, saturate);
--    return float8_e5m2_pack_raw(p);
-+    return pack_raw64(p, &float8_e5m2_params);
- }
- 
- static float16 float16a_round_pack_canonical(FloatParts64 *p,
+         /* Compute precise remainder */
+         r_precise_buf = *b;
 -- 
 2.43.0
 
