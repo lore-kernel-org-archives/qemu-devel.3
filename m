@@ -4,92 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 612DDCD13D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 18:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6747DCD13DA
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 18:58:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIW6a-0006ol-Au; Thu, 30 Apr 2026 14:27:20 -0400
+	id 1wIWaI-0000jI-8E; Thu, 30 Apr 2026 14:58:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matyas.bobek@gmail.com>)
- id 1wIW5i-0006WD-A3
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 14:26:34 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <matyas.bobek@gmail.com>)
- id 1wIW5e-0005UF-B3
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 14:26:25 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4838c15e3cbso10979865e9.3
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 11:26:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wIWaH-0000iV-1e
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 14:58:01 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wIWaF-0005Vt-70
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 14:58:00 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63UIcfo62481611
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 18:57:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ GHeS/udXX6vBaQob3MOD1n/8dZbFX01HzDglj4PtmMk=; b=dgqASWqvvVBJ3Rs6
+ 4MtOGWagnq3ddvGR4uElfX3NLo5yKNPZQm+Ar8DzsgQhmTJAuara11u0anABD4J7
+ RGNngSpzBJBhG4hfTyyV0g+H2CK6J4lyGCzv9Lh+OgLa74DBBdFipjgW4YAxHXOb
+ SORLhI6/dn3hnULZD3gcmxHp6wmF+SnQKLObBrIIVGjQYnZDLJjFDKnOTEqYbIMQ
+ fiF0rknXtZu505qcsIpe67xjf3dD13M8/y/m97ZkPLbzDv2Cl7phyoXIvj2s1shP
+ o40RjV28QIKCsRi+mi4n6Sc6bMQ2ULAo/rQNfEe3QpwXDK+N6hUgUkY+RIVGq8Zy
+ eSI8XQ==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dv7x6hqes-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 18:57:57 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-2cc75e79b97so4289004eec.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 11:57:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777573580; x=1778178380; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cjrEUWzgQ3jtROLjE/XI5eJeSsceU5zngdQg8kP4PY8=;
- b=j+4uKgOlC+cTVRPwmjYT1KX5p49QyGP4pNrVXyC0CPV3I2j6kfGQe1rH8x+r5pRibl
- vZQWv1Is4YH1ZU87kLu0tc/qJbTDvinMF6lRZ9lx9P2PHxAS4n0CNikwVpyOB4RvAGGi
- TC0C5K+zioczhtnHuW4fg6gmMNgRJTKp6qQWtznNU54lgxqR+H8BvYVlSi6fJyuaU5tG
- l/rO0IMcXGUaX/FHZ8338lN2S1cVgE/BtA2qo47J4XrdSnjzsDp0FDKNzr/VctiLmL6m
- /jvQscTiJghdBTiSqYl9NROThwduqHY+bsFNENwkv/qSHkHt81ZJ4I5tRFxQJUsBA3WX
- DGRA==
+ d=oss.qualcomm.com; s=google; t=1777575477; x=1778180277; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GHeS/udXX6vBaQob3MOD1n/8dZbFX01HzDglj4PtmMk=;
+ b=N8ntKCO5yxtoh4oE0ioeEiv8YXJJ8z8JZlC3dXBgU30iu5KP5JXksP6GoTUt5P9bss
+ Un5piq2/Jb8yUpIy83YY9xzFIGWpaIKj246esBm/92b1xKf17ukHHpcyfDJhdd+GWagh
+ PVeFMYjI1phnmEmDmtG5mZhCljGcbCFbyFJ3gQu0JCTBj1OkyrAKKfudyJcrwuTnlGAT
+ jVvC0NWP95yTntq8ICDo+wb156F0dIhKZht0IrvcBLvOjQxIaGKbeZv+8rzHiDh92wQN
+ xV6UPrrPoTsweuDkyRVIBfx/5ShuRBF9lk4/DrU8/9/XN2r3ixq8uxNMcuD2HDrt/Y+l
+ 7v1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777573580; x=1778178380;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cjrEUWzgQ3jtROLjE/XI5eJeSsceU5zngdQg8kP4PY8=;
- b=VdKY/KKoKxPn6TQ9RtG2Fa1QdsCOYx10evBOkXdcK7173EuhVjJT6ymVAHE9zwkLHf
- 0t6C4XpmdmfP6vY/0q1aMApbZuP4n5mcniS5QnCPE4FqeBxhjY4odKwClrvwVEUwEAv3
- vfq3D1GDj1jUaGenOT/uwiARYqVTqxJnP0mCYkgjYQ24EqzfNPXEn7YI+Y7zKg6gEBGL
- j/3PSF4RhblUrarcL73E89SINpoGx3SWlngu/HNsZIZlw7nDd4EnQB2BYwZNdDySZrx2
- +dZMK01eVeEprwVIp1qBTjgeARroiNjupHGSh19TAezAtm//nIscBAmxrGbo56XhNYaf
- 0Bhw==
-X-Gm-Message-State: AOJu0YyaEq+81OZ+JsUYTKYjZ1OKiT5nLbCZJKyttW/oxroU9qtTYuQ0
- Z4s2NJVADEeJZoAV8fgAZ7rJk2XeVqymUV8bfkKK7aE2iEqVECkBB7N/NtXaxgRE
-X-Gm-Gg: AeBDieshihInslV/Wkz6z+PphsWfS0hnR4KzftqPsFCzsv7XoesAFVNV9B6ojsDKVlS
- zKemodFOiBnVRcHblAs7vM/Q9HotVPF+mXh4itGu5T78bqIItfRPzWauZKOCV1jn2QPgQS8cDZ9
- +VlpVPqSa5v90YXxqiMKKHk4TkXpmM9rK9jwVQpAZtadJyQXZQfqERUvRDSuQGd8NSc7BE/I7zN
- N7+9KHCGatOyfmfPouVC0+Rb1UxpvT/b0jzHWDcO7wzJd8/MkGXJ7KlfA5kxhvMjU+GwO04qiwP
- XsV/KAR9touUzQ/5fFjyvwxH3GX8mzSl5rEd+fMS1mpNWjbkH3mc8Vd8Y7tYSN3DzadWhKloXQA
- Gr/Br7aETibMK295TZdpSj8cwpFWvM1CwcmkdDE5nlKUBEPBdjHTKUvS1LEh1b/sWbHtKB/o04F
- cSJXOkI2GkS4CHGmdjGaTB7TXV0Dhid0WRRfVKLwWNBAudGIlm8ElciX+DdmglDocfSfEQbIBYn
- RI=
-X-Received: by 2002:a05:600c:4e55:b0:486:fa35:aef2 with SMTP id
- 5b1f17b1804b1-48a83d62fdbmr73935545e9.4.1777573579959; 
- Thu, 30 Apr 2026 11:26:19 -0700 (PDT)
-Received: from acidburn.pod.cvut.cz (acidburn.pod.cvut.cz. [147.32.90.2])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-447b76e5c00sm14674925f8f.25.2026.04.30.11.26.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 11:26:19 -0700 (PDT)
-From: =?UTF-8?q?Maty=C3=A1=C5=A1=20Bobek?= <matyas.bobek@gmail.com>
-To: qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
- Pavel Pisa <pisa@fel.cvut.cz>, Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-arm@nongnu.org, Marc Kleine-Budde <mkl@pengutronix.de>,
- Oliver Hartkopp <socketcan@hartkopp.net>,
- Nikita Ostrenkov <n.ostrenkov@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Maty=C3=A1=C5=A1=20Bobek?= <matyas.bobek@gmail.com>
-Subject: [PATCH v3 1/7] hw/arm/sabrelite: Open code DEFINE_MACHINE_ARM
-Date: Thu, 30 Apr 2026 20:26:03 +0200
-Message-ID: <369e80856c6c25fc1b1f7f41362026990d2c2c24.1777571962.git.matyas.bobek@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <cover.1777571962.git.matyas.bobek@gmail.com>
-References: <cover.1777571962.git.matyas.bobek@gmail.com>
+ d=1e100.net; s=20251104; t=1777575477; x=1778180277;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GHeS/udXX6vBaQob3MOD1n/8dZbFX01HzDglj4PtmMk=;
+ b=bXsTki2ASJ0cffBvr/aLJXKlPi4MaI83DKvRgOYRhHx+t3RYu9x+4a2DplRpm2zL9X
+ 0nrqvF4PWCxwed0JEuX3d8i6owzweL5leCZWF8USbBgNJLrfeSq88mIlwIDBYzk7+U1O
+ QnK64mrRaM7Rf0JOR1h2v3EQAgWL50A3MCwUCCtyFtta73NFwuK+v1iSyPqPRf4INUIw
+ SbeS4DGYlbvaClnRFa3V9XxjFuhDMKYGg+WOConZPBum1DYGxve4I0NzdVk+Hwze9grW
+ CHY+Lq3+9/5PYSPPY8d4SGRmdBhqP8ENuoPVqrv8G3qfQIXJoM4CtJXmPXCvC5SNl0h0
+ sWkg==
+X-Gm-Message-State: AOJu0YxFmopEvioXQl5+bG35MriHOqNRnuwTVlOjO2pO773lU9ooMmou
+ 8v2HfWfXB1XOQ6RBTWAKPlowx8g0NCltDKSilr5FfoV6VO5azSDaEUO3CEUMNw1qrgK/uvmpGll
+ 9Q9eU+MyauFIRWbP110RMk30wtBL0f+LWyNa0FPBOEjfkrYv5rN3zXkOMvw==
+X-Gm-Gg: AeBDievGggqTXuTbgMVUVy7SXmvK1pcfryNzIK2fqF46bLNUmAKVitaxTlzjt8ZpFlM
+ N7jlmYn7+fkWNsqVCctrMpbxmCFxDGXjA4Mpc+LwApc93FvQCUts+aAs/xz+DdcLf6ISdmDbCzS
+ YXKfprj3Edju4QCy74CHj8OQgVZSkYl1KbB6hYK7LduSmkh3UR0dBbzqNMnyY0EgDli5mq7O6/Y
+ t0NggTyiVy9Wgfa41GB3eTs2GA+tl3LtOiFsLQzOJ/myG+v8oriXKDpNLiVtGGiXZjpdmm4gUnv
+ wCitw3PRLtBfkDKMPNlxj2IMlcsfJR/rVkzjAUwvz7JI/bVtq5rLFL9P4+Uw6QmQ5H1YmSuf8sU
+ p2fe1hx7B0a+zNqPMzOUs2SFphqB978bKSIcfGxmV03wyrlxq0DhBwgWVrk8h2UnwLr+98f0blg
+ A5hswm3SKdpL1BT//hA7WsYc/F
+X-Received: by 2002:a05:7300:6919:b0:2df:919f:ce59 with SMTP id
+ 5a478bee46e88-2ed3d7b9916mr2153708eec.19.1777575476575; 
+ Thu, 30 Apr 2026 11:57:56 -0700 (PDT)
+X-Received: by 2002:a05:7300:6919:b0:2df:919f:ce59 with SMTP id
+ 5a478bee46e88-2ed3d7b9916mr2153683eec.19.1777575476054; 
+ Thu, 30 Apr 2026 11:57:56 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2ee3bc6a79esm1325937eec.26.2026.04.30.11.57.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 30 Apr 2026 11:57:55 -0700 (PDT)
+Message-ID: <efaa7987-f8ee-43af-a8c0-793ea1092021@oss.qualcomm.com>
+Date: Thu, 30 Apr 2026 11:57:54 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/7] system/vl: register target info types first in qom
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>, Anton Johansson <anjo@rev.ng>,
+ marcandre.lureau@redhat.com, Paolo Bonzini <pbonzini@redhat.com>,
+ Max Filippov <jcmvbkbc@gmail.com>
+References: <20260430035626.3511676-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260430035626.3511676-6-pierrick.bouvier@oss.qualcomm.com>
+ <afMBbYSwZcobHaUY@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <afMBbYSwZcobHaUY@redhat.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=matyas.bobek@gmail.com; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-GUID: sCaxeuTetUs9w7dyUe5khBzCxnLtSSSD
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDMwMDE5NiBTYWx0ZWRfX67FKu/fnFwh9
+ leS6/5P1sbHVfZWHZv4a8D/xY8lqhOYuSOqY0I/YVdwPoJ+n45rFBji8ojWuf8IwqKtlDNBjKCu
+ 2BhF/SzpzbVgreC7TlbsmsG2K8Qqu6Lv5dWoEYyjdiA7GZJnifnTpgcyLmEBrY7PyRD8rB73ZKW
+ SPV5acqowfz2iw4Wc04Rn9W6wfOYMMUV+WcZDTWKGxtFl2weYGZvkZFNOr+yKohacUtq5wL8l+c
+ bwDDvft6idJHG9zXm0qubKn6yKuIPsguNeC4/986tF+j7X3C1V1AnACu1ohYWmLGpVh+2EpopE1
+ wuWtGcPzNdPy7ZLYNdDqDz7EJ6lA0shbdYEZKFgQCWdzaa1Zc/Tl7//O4S98OjnfEQpGRdE4IJl
+ K4jz0t1EfZD/lcUl0Ch83IgkldxSovKoaZqgnylULa2Kce/kBYz+zRSFpLuLBhqZT7EyilHw4Ko
+ Psve605rLogWehaOu5g==
+X-Authority-Analysis: v=2.4 cv=XoTK/1F9 c=1 sm=1 tr=0 ts=69f3a635 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=EUspDBNiAAAA:8 a=0_1-tGrxsJUxPedztfQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-ORIG-GUID: sCaxeuTetUs9w7dyUe5khBzCxnLtSSSD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-30_05,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 bulkscore=0 clxscore=1015 phishscore=0
+ lowpriorityscore=0 malwarescore=0 impostorscore=0 spamscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2604300196
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,55 +157,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Open code the DEFINE_MACHINE_ARM macro in preparation of creating
-SabreliteMachineState class.
+On 4/30/2026 12:47 AM, Daniel P. Berrangé wrote:
+> On Wed, Apr 29, 2026 at 08:56:24PM -0700, Pierrick Bouvier wrote:
+>> We will introduce detection of target from QOM, so we need to make sure
+>> those types are registered. As well, it ensure no other types are
+>> registered yet, so we can safely call object_class_get_list.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> ---
+>>  include/qemu/module.h           |  1 +
+>>  include/qemu/target-info-init.h | 17 +++++++++++++----
+>>  system/vl.c                     |  3 +++
+>>  target-info-qom.c               | 18 +++++++++++-------
+>>  4 files changed, 28 insertions(+), 11 deletions(-)
+>>
+>> diff --git a/include/qemu/module.h b/include/qemu/module.h
+>> index 9885ac9afb3..fccf017bf9e 100644
+>> --- a/include/qemu/module.h
+>> +++ b/include/qemu/module.h
+>> @@ -43,6 +43,7 @@ typedef enum {
+>>      MODULE_INIT_MIGRATION,
+>>      MODULE_INIT_BLOCK,
+>>      MODULE_INIT_OPTS,
+>> +    MODULE_INIT_TARGET_INFO,
+> 
+> Please introduce a MODULE_INIT_QOM_EARLY as requested in v1. As well
+> as being needed for the base classes in an earlier patch, it is
+> inevitable that we will find module scenarios needing early init
+> over time. 
+>
 
-Signed-off-by: Matyáš Bobek <matyas.bobek@gmail.com>
-Signed-off-by: Pavel Pisa <pisa@fel.cvut.cz>
-Tested-by: Pavel Pisa <pisa@fel.cvut.cz>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Pavel Pisa <pisa@fel.cvut.cz>
----
- hw/arm/sabrelite.c | 20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+Done in v3 coming.
 
-diff --git a/hw/arm/sabrelite.c b/hw/arm/sabrelite.c
-index db5669c5c2..04484aaa14 100644
---- a/hw/arm/sabrelite.c
-+++ b/hw/arm/sabrelite.c
-@@ -104,8 +104,10 @@ static void sabrelite_init(MachineState *machine)
-     }
- }
- 
--static void sabrelite_machine_init(MachineClass *mc)
-+static void sabrelite_machine_class_init(ObjectClass *oc, const void *data)
- {
-+    MachineClass *mc = MACHINE_CLASS(oc);
-+
-     mc->desc = "Freescale i.MX6 Quad SABRE Lite Board (Cortex-A9)";
-     mc->init = sabrelite_init;
-     mc->max_cpus = FSL_IMX6_NUM_CPUS;
-@@ -114,4 +116,18 @@ static void sabrelite_machine_init(MachineClass *mc)
-     mc->auto_create_sdcard = true;
- }
- 
--DEFINE_MACHINE_ARM("sabrelite", sabrelite_machine_init)
-+static const TypeInfo sabrelite_machine_init_typeinfo = {
-+    .name          = MACHINE_TYPE_NAME("sabrelite"),
-+    .parent        = TYPE_MACHINE,
-+    .class_init    = sabrelite_machine_class_init,
-+    .instance_size = sizeof(MachineState),
-+    .abstract      = false,
-+    .interfaces    = arm_machine_interfaces,
-+};
-+
-+static void sabrelite_machine_init_register_types(void)
-+{
-+    type_register_static(&sabrelite_machine_init_typeinfo);
-+}
-+
-+type_init(sabrelite_machine_init_register_types)
--- 
-2.53.0
-
+Thanks,
+Pierrick
 
