@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 556E8CD13D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:37:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E6ABFF8873
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:40:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIUOI-00028C-BO; Thu, 30 Apr 2026 12:37:30 -0400
+	id 1wIUQo-0003TZ-3i; Thu, 30 Apr 2026 12:40:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIUO0-00026S-QQ; Thu, 30 Apr 2026 12:37:18 -0400
+ id 1wIUQj-0003MB-RW; Thu, 30 Apr 2026 12:40:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIUNx-0008Cu-8T; Thu, 30 Apr 2026 12:37:12 -0400
+ id 1wIUQg-0000Qv-FJ; Thu, 30 Apr 2026 12:40:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777566934; bh=7PupNdm5DExb0yIKLo9VAB6rjgVJp3dJyP1W5X9cub0=;
+ t=1777567103; bh=fu0KxtgDuc+qrnpsZ2yKGRcT6ZjiqWHxux81NORFIFk=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=WFdJsGYoAoQtpYLUU3tkABygWoM6JLn7/F3aGxhMOVQKNxicxZhJAwprYbuz+Pas0
- mbuGZDyOP8LZ53XvY8gKXPA2LH2z37LbC+/6QnvhLm4K76L4/IHU61U7eYqwUF5Qow
- WdXNceGcw3eyrEDWZ2E40+CoxCSp4Uu3m+KCuafKwXkmdQB1thi6DmSFwOs+9I+Igb
- q1/fCrF+Dsde9V9oVJZFcYibjxR9GI6PgiuI5lXes5dCxY1fT3bX8DuBx1YVyhiGWA
- hoHHGmWojp3eWb0XrJ2W3PWREhXkCNSPqBHjAuEMHZBmIxakOmkCkzmDMYoIiuRnnq
- +/wNKriiLNxxw==
+ b=oNViIup1rfsa0gnC49FRvk9l9scM+UaEpBqSQ4BklVo23NBnOcwjOptivFODAswWT
+ 4nVzVhQc98yl6zWbr7I+kkqjnIQI+WhpozyEkKPZ+O9jj8gf3mHz9Di3ArD7v8AZJe
+ VZc8sy/fOQI/5O/QTko0p0qr8omGDhvYPV3n3Yz5fhhippyHcSk/VOfn4v747X9krI
+ 2yxh2mH1WLZxXU20aV8tYIqAviop+aMc3kmOpzB+1UstxyiGJg4rFfBMq5JIayLmKs
+ Do7JBYTb48NvBnFc9utNT9BW303Mzyv7PtyTRWo0SA8kEiZhR8Y4j2mzDpWuIczjK8
+ U0a8qIA+4mVfw==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 6355D1A565A;
- Thu, 30 Apr 2026 19:35:33 +0300 (MSK)
-Message-ID: <01758f7e-dd9f-495b-9f6c-db6d9f86baa4@tls.msk.ru>
-Date: Thu, 30 Apr 2026 19:37:03 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 6F50D1A5661;
+ Thu, 30 Apr 2026 19:38:23 +0300 (MSK)
+Message-ID: <8e0011c5-77b1-41ef-8c55-9ec5f21c3a9b@tls.msk.ru>
+Date: Thu, 30 Apr 2026 19:39:53 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Fix CLONE_PARENT_SETTID when using fork-like
- clone
+Subject: Re: [PATCH] linux-user: Use abi_int for imr_ifindex in ip_mreqn struct
 To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, qemu-stable <qemu-stable@nongnu.org>
-References: <20260424132824.27733-1-deller@kernel.org>
+Cc: Helge Deller <deller@gmx.de>,
+ Peter Hartley <peter@talesfromthearmchair.net>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260424153600.46116-1-deller@kernel.org>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -84,7 +85,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260424132824.27733-1-deller@kernel.org>
+In-Reply-To: <20260424153600.46116-1-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -110,24 +111,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.04.2026 16:28, Helge Deller wrote:
+On 24.04.2026 18:36, Helge Deller wrote:
 > From: Helge Deller <deller@gmx.de>
 > 
-> The CLONE_PARENT_SETTID option requires the implementation to store the
-> child thread ID at the location pointed to by parent_tid in the parent's
-> memory.
+> Peter Hartley noticed, that in the qemu code the imr_ifindex member of
+> struct target_ip_mreq needs to be of type "int" instead of "long", which
+> is what the Linux kernel uses on all architectures.
 > 
-> Fix our implementation and move the code from the client side (where
-> fork returned 0), to the parent side and store the return value from the
-> fork call (which is the client TID) in the parent_tid pointer.
+> Adjust the type accordingly, and add a QEMU_BUILD_BUG_ON() checker to
+> prevent such issues in the future.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3340
+> This change should fix multicast issues when using hosts and guests with
+> different endianess or bit size.
+> 
+> Reported-by: Peter Hartley <peter@talesfromthearmchair.net>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2553
 > Signed-off-by: Helge Deller <deller@gmx.de>
-> ---
->   linux-user/syscall.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
 
-I'm picking this one up for qemu stable series too.
+This too seems to be qemu-stable material, I'm picking it up.
 Please let me know if I shouldn't.
 
 Thanks,
