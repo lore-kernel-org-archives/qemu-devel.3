@@ -4,100 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC9E4CD13D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:23:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29C67FF8873
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:23:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIV6i-00056t-VQ; Thu, 30 Apr 2026 13:23:24 -0400
+	id 1wIV6M-0004kq-Ft; Thu, 30 Apr 2026 13:23:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV6h-00056E-7t
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:23:23 -0400
+ id 1wIV6I-0004jZ-Fk
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:22:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV6f-0004Vl-Id
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:23:22 -0400
+ id 1wIV6H-0004M3-1E
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:22:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777569800;
+ s=mimecast20190719; t=1777569776;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sfkdwlFj2YA+Zv6GpIGsjW3a53Cm6pY/xczWrPNM46M=;
- b=C4qR7MrHikzG1G4Zvv7bSS8RyvltuAYXPH+UROLHKGrQ+slY67XEIPXtw0g6NL16EEpopZ
- HxQozrzHdgw2oz2vgQ7n7Dqz++l/3MytjCMO+V5u+vatRZVzmZt1yiYRrdUPp8xU4pXHIu
- +m1wHqI+G7boEW1CGbYuZjXnGO6mMSw=
-Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
- [209.85.217.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kJi7d6kHNwTM2v2NfPDK0qijysu3iQN9L8nEe3bv5og=;
+ b=TVo9nyFLb93C5cIku9ibmLgfTU4FUYAQsDaJR4DKh2x2fPv/H7P+an5GBNmRb5VY3ZaQSr
+ s5mrvbSkRM4DHLafI5UXp+QQlbHcZTDqHYtNEUKEMy8uqu7ChmkRHPj1G4baILYEMegOPa
+ V9//DGDzI3ZW+qsnK8a3Pjha95uFisc=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-Kz5IHlrXNzOR3ERcFZhnFA-1; Thu, 30 Apr 2026 13:23:19 -0400
-X-MC-Unique: Kz5IHlrXNzOR3ERcFZhnFA-1
-X-Mimecast-MFC-AGG-ID: Kz5IHlrXNzOR3ERcFZhnFA_1777569799
-Received: by mail-vs1-f72.google.com with SMTP id
- ada2fe7eead31-6059d4c73d5so785560137.2
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:23:19 -0700 (PDT)
+ us-mta-461-hVHB8jHQODmBOe-MjI2fZQ-1; Thu, 30 Apr 2026 13:22:55 -0400
+X-MC-Unique: hVHB8jHQODmBOe-MjI2fZQ-1
+X-Mimecast-MFC-AGG-ID: hVHB8jHQODmBOe-MjI2fZQ_1777569774
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8eb9f8bbbb3so675082985a.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:22:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777569798; x=1778174598; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777569774; x=1778174574; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sfkdwlFj2YA+Zv6GpIGsjW3a53Cm6pY/xczWrPNM46M=;
- b=iZoSKlk5sNf1McpzPm3XOTpTWY2QyIvjEzXsOaTnynfKZEkwylAJor1iq/1hetEsWP
- 169cfvegVbKctp+SMiai+sxPf9ipalFP0RYtVNN23Ss3jG5MEx82FRpsblMerUDMR7q6
- kjugF3wV3bqTmGxxw+F+f/wIKbeRmh3SGKKbmY+tVI6B0zsKbrtCztPuC744x7vIOYR0
- BkFTBKPlEuSQIknYc1i6P5cLHXTF0yRr0hyAuYII7XsSGA5UjtDQUXWcQZyRsEDlz0lh
- TKGA2HJyb0otHFEqpJ9CGcziGrm2AJThptmn9Xif+8A+QWr1uR8XJKD1PqZC0LDNgcNA
- gnjw==
+ bh=kJi7d6kHNwTM2v2NfPDK0qijysu3iQN9L8nEe3bv5og=;
+ b=lIHAouhCqm0nVuNws6glaspBt7GenAekpg+1TcshRyu0vmZVvnvygp4SXJBWZHR2It
+ aRvxej5yDI2EMXJujsjTALtqio6iDB/JHJPrjvGQSh7C4KWZZgF4Zzs7DvgZgsmrtDhY
+ 2epBnZLwiCg0XD+ZErfY973OZjmnc2AbwiERClKNNS8oa1PbqoVy/qD7okk3hambNbmK
+ E0gpX6ykwv07+W06KV9OEhYnDCrazLD39da+grJmYcNhYU9W+MG++TOddse38qqXctAQ
+ cIzPZrVZNJxUIiuUASnTy9uRC1CAY7jZRlRF5oKfN+r1LsBkH0VTZk3O8PQyJaO/ZygE
+ s+1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777569798; x=1778174598;
+ d=1e100.net; s=20251104; t=1777569774; x=1778174574;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=sfkdwlFj2YA+Zv6GpIGsjW3a53Cm6pY/xczWrPNM46M=;
- b=dKiikKBzPIOUzrEcH8Pki7FDeXaztvj/Mq7IATk8X+3xvOR6n9Kz4HDd/Tp4eAXw6+
- AlonL6KpBZwjBjK/5+KKr6SIDhyaxM1FhpDjxv9hjR6pl247jPgnB5jpsqtWG/ZKmsOs
- PTxX6pBqGAFt1M7BstnTeNyn6r84KKb3fGXY7vSqS/JQKn2xAWM0pRKZ13gmfw50VNiq
- iX86tdFtKM4GawAqDkASIL5EAPB4vzUjM/AiUAu2FFVGZB2NCcUI1l2dnjc9O9qGkd1N
- lAjU0DaSZ8d6LTgKhkrXXsKR3ASY6I6BHOp15Rxn8K60XbS7t2RhmjUgKzSlaLMnTsH4
- 2P9w==
-X-Gm-Message-State: AOJu0YwbSYfVeqlWaP7BybVnocce8TeGjh4dwEMP2+IPwI1RUNnqGNlu
- PRxrcjsQt0JDwhGI++KPkO7dBEBbNAF2c855vpaViyuwaZsx1fxIR3ivLZnuMbTODhTZuw3YJzJ
- CkKY4+dlqjGHBM3jmrsWzzaXnnhMBEutqxFDSiORp/jukjLGxwYnX9VU1r10X+b2MBVvVjcUng9
- IluW7A8DUsSrQmDPWehlzQt9EF2uGJZk3DcTtHI/fq
-X-Gm-Gg: AeBDiev/uo6YxRggNJmeFUdWZ2D9Zz1/Dt2PvAxTXgudP+uHcX/FtiRqo9T/lDW8UWW
- x1gp1f0NeChA+MEjumtgDefXW0wigMIw71kBaavIhGAC6XK0haUOysKRJfgF1yRXfsjgwyGwbES
- MTVj0DcdWYa+gmEfmC+sudLeM1iRHkCQbIlftRV0QG0KYUVk0H+RN20T/wYs6WSGvQr64CAj+K1
- gUeDl7Bt7BfYL3xdkqpp54KDgmdIkFqyTMfAI0xThSOKH2+n+zuYkcroDW/fo7B7OyAzXXm6SLW
- 1tcetJSv8Oc7X8qYMadk9RDlFEMNbnRLz+rLYiVs3QqKCEgEKg2l+f9hkF6LaN/yg5i2lykP7xh
- dtPvVoNQgBNe/0UMLkoHYCVrXAy53+FhAs3eMv/XJ6QrfRxHjH1Zg3Ssygpfv9Pzlhy8IZ4AolU
- hTOmQURdJ/nDP4eWExrZ5FiojXxTJkGPoHxgI=
-X-Received: by 2002:a05:6102:4415:b0:61d:8fd9:fb26 with SMTP id
- ada2fe7eead31-62ad1e41270mr2245110137.7.1777569797933; 
- Thu, 30 Apr 2026 10:23:17 -0700 (PDT)
-X-Received: by 2002:a05:6102:4415:b0:61d:8fd9:fb26 with SMTP id
- ada2fe7eead31-62ad1e41270mr2245020137.7.1777569797329; 
- Thu, 30 Apr 2026 10:23:17 -0700 (PDT)
+ bh=kJi7d6kHNwTM2v2NfPDK0qijysu3iQN9L8nEe3bv5og=;
+ b=QtRumxXtja3877p7Plw5RoVmSipHP+jacj7Z8rHZCD4Is6DQp6H6f23QLrJd2LLbjg
+ 0GHkMAeCIvtDrSECaekBeRAxTnvK6zcqZCnRTzZgM69SWYmfN+bSfwvsdM8f6N9GD2js
+ Dq3eZLjhYKqaZv64SH4CxP2XwwSUJfxat7BylsWPbADtjU1C0YFxZB3z8WPRWcJWHB7Z
+ 6DpdvAC3SgusuF0nZXHM8U+QBKyCr/7p0I7m1GgRU7SRd0LmJsimVr0MoJOvFVN/fB5d
+ NuaZe5TqfahWIEasI30stMChOohSKR4U5/h9SdQ/XV2ESPe2yxOoi/BHJNIPPwkTLLN8
+ Lb8w==
+X-Gm-Message-State: AOJu0YyB3Qn19vCLE5O1yYhT35t9rUQezN1gfRvJrGahAWQQwkakAiBr
+ SvgvjKklE67SBKY2LPBX/N4GeRoxLsjc2PKS3vedlwmo7yTHDI/6UnbEy47rQtzc8PmYaeVHoku
+ srgjvBlPi2d9fvqzRxRXyrAIZY/U/7z4hp6QiJJTsz1F3sAynIEbHaU+hInKnu5KgsXGnl2c179
+ lZvwvhX7ui8xEDOdULTPYgWdlljDc+t/EjDlet/lTk
+X-Gm-Gg: AeBDietosUrKhFQ7xXpDr/DRWUTSMVzX2m5AJ0HOROYiWeB4e5P79co+z4dyomm7Vep
+ Gy+uKbzHiyBM443ratj8BR1MaKZ/WuS9dcdScR2ND0a7WlhWUQIpZMsD1hovGfJadZPNDlltTwi
+ Tke30k7UODnQkxpg6fvtZzFMqEXprsJCJg+mbLtP93oAjGjIsYuqX5lwT81ICD7BbxmyMHAgOfC
+ ZPX8XuYwmcSGQRP3La8dXwNBN/fsv+oVKxI0xbGVh6zvUWA8w+prsQm/M49whjfQeWWdl+St7rU
+ JUj/WeEQLZzz8t+VC1P3WAk6u4Q/lGU01lai+N8q2A1KUw75bepff0a5Fp8zAlpXm9bXY13CMEq
+ a9wLcZTnRUNBWB3fTnaeMSP86IdIowF8hRxeNpSBPuS2O4kSx0oZ8iEQkvD3ZN/hyS+rZfxH/4w
+ DSbQ0Og6LkH5ubqqUF14bwO2aPAmtdxOsnZC4=
+X-Received: by 2002:ac8:7f8c:0:b0:50e:5eac:cf7d with SMTP id
+ d75a77b69052e-5102d1d0c3bmr40928431cf.25.1777569773895; 
+ Thu, 30 Apr 2026 10:22:53 -0700 (PDT)
+X-Received: by 2002:ac8:7f8c:0:b0:50e:5eac:cf7d with SMTP id
+ d75a77b69052e-5102d1d0c3bmr40927971cf.25.1777569773351; 
+ Thu, 30 Apr 2026 10:22:53 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b3ff459caasm22560376d6.36.2026.04.30.10.23.15
+ d75a77b69052e-5103d2f63dbsm287131cf.18.2026.04.30.10.22.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 10:23:16 -0700 (PDT)
+ Thu, 30 Apr 2026 10:22:52 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Jon Kohler <jon@nutanix.com>,
- Pawan Gupta <pawan.kumar.gupta@linux.intel.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 22/58] target/i386: add new Intel models for MMIO/GDS/RFDS
- mitigation status
-Date: Thu, 30 Apr 2026 19:21:28 +0200
-Message-ID: <20260430172204.1006673-23-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 14/58] minikconf: pull main program into a function
+Date: Thu, 30 Apr 2026 19:21:20 +0200
+Message-ID: <20260430172204.1006673-15-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260430172204.1006673-1-pbonzini@redhat.com>
 References: <20260430172204.1006673-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -123,106 +121,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jon Kohler <jon@nutanix.com>
+Avoid pulluting the global namespace.
 
-Add new bits to ARCH_CAPABILITIES MSR to enumerate the status of the
-MMIO/GDS/RFDS mitigations on Cascade Lake, Ice Lake, Sapphire Rapids,
-and Granite Rapids processors.
-
-These have been advertised in Intel microcode updates for a while now,
-but require user space to opt in to advertise them to guests.
-
-New models are:
-- Cascadelake-Server-v6
-- Icelake-Server-v8
-- SapphireRapids-v7 (note, already got MMIO fixes on commit [1])
-- GraniteRapids-v6
-
-[1] 3baf7ae63505 ("target/i386: Add few security fix bits in
-                   ARCH_CAPABILITIES into SapphireRapids CPU model")
-
-Cc: Pawan Gupta <pawan.kumar.gupta@linux.intel.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Jon Kohler <jon@nutanix.com>
-Link: https://lore.kernel.org/r/20260330193428.1663253-3-jon@nutanix.com
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 41 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 41 insertions(+)
+ scripts/minikconf.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index b19bdf99792..196665d83c7 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -4901,6 +4901,17 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-                   { /* end of list */ }
-               },
-             },
-+            { .version = 6,
-+              .note = "with MMIO/GDS/RFDS mitigation status",
-+              .props = (PropValue[]) {
-+                  { "fb-clear", "on" },
-+                  { "gds-no", "on" },
-+                  { "psdp-no", "on" },
-+                  { "rfds-no", "on" },
-+                  { "sbdr-ssdp-no", "on" },
-+                  { /* end of list */ }
-+              },
-+            },
-             { /* end of list */ }
-         }
-     },
-@@ -5183,6 +5194,18 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-                     { /* end of list */ }
-                 },
-             },
-+            {
-+                .version = 8,
-+                .note = "with MMIO/GDS/RFDS mitigation status",
-+                .props = (PropValue[]) {
-+                    { "fb-clear", "on" },
-+                    { "gds-no", "on" },
-+                    { "psdp-no", "on" },
-+                    { "rfds-no", "on" },
-+                    { "sbdr-ssdp-no", "on" },
-+                    { /* end of list */ }
-+                },
-+            },
-             { /* end of list */ }
-         }
-     },
-@@ -5360,6 +5383,15 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-                     { /* end of list */ },
-                 }
-             },
-+            {
-+                .version = 7,
-+                .note = "with GDS and RFDS mitigation status",
-+                .props = (PropValue[]) {
-+                    { "gds-no", "on" },
-+                    { "rfds-no", "on" },
-+                    { /* end of list */ },
-+                }
-+            },
-             { /* end of list */ }
-         }
-     },
-@@ -5541,6 +5573,15 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-                     { /* end of list */ },
-                 }
-             },
-+            {
-+                .version = 6,
-+                .note = "with GDS and RFDS mitigation status",
-+                .props = (PropValue[]) {
-+                    { "gds-no", "on" },
-+                    { "rfds-no", "on" },
-+                    { /* end of list */ },
-+                }
-+            },
-             { /* end of list */ },
-         },
-     },
+diff --git a/scripts/minikconf.py b/scripts/minikconf.py
+index 7f0b64b1e08..d728fd867f3 100644
+--- a/scripts/minikconf.py
++++ b/scripts/minikconf.py
+@@ -666,7 +666,7 @@ def scan_token(self, ch):
+ 
+         return None
+ 
+-if __name__ == '__main__':
++def main() -> None:
+     argv = sys.argv
+     mode = defconfig
+     if len(sys.argv) > 1:
+@@ -712,3 +712,6 @@ def scan_token(self, ch):
+     for fname in data.previously_included:
+         print ('%s: %s' % (argv[1], fname), file=deps)
+     deps.close()
++
++if __name__ == '__main__':
++    main()
 -- 
 2.54.0
 
