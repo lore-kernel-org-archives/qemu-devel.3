@@ -4,43 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15190CD13D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 18:10:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58EA0FF8873
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 18:15:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIVqP-0002YI-2l; Thu, 30 Apr 2026 14:10:37 -0400
+	id 1wIVuW-0003SN-H4; Thu, 30 Apr 2026 14:14:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIVpo-0002J3-8M; Thu, 30 Apr 2026 14:10:00 -0400
+ id 1wIVuG-0003Ra-8l; Thu, 30 Apr 2026 14:14:37 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIVpj-00017a-P1; Thu, 30 Apr 2026 14:09:59 -0400
+ id 1wIVuD-0002EJ-0i; Thu, 30 Apr 2026 14:14:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777572503; bh=9jqFYSTtNplknb5S7QzCaKCtp9XiGwKPxsgEBJmjOYA=;
+ t=1777572774; bh=5ZV+JPPudW/i0sJsnF+Pi+GLLRiR8JCVUNl+0w4WBe4=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=ZTA3hsM7LX+UA+SMi5VVf3g5XdQmas7GQrESt4EnzdK29rgILqYTJOpV7rlT7QZI3
- NT9ugzxz1Y+YUwJShWYwRQ9ewzUcL8P6eC/HXvgTFBjOg3F3zEw/OivDxwYvwx4MLA
- neD8NzIurfZYacB1fkYd78cYtRkQUZ1wAndobgqIhDm+C1IPao/ZkmHGcx1KyeyLMH
- +TgBlA8HgiStdWaH0UGN7c5dR8NX7i68Rmlgu6uIQwLK/FzPlwjagPtyzhwxLMIczu
- vjFOKxmP/r7OX1TB0Mdvez9y1mSg6ZCFf3T8zFodHG+4yI/Nmw5/0HxxD7nTw1ic+/
- wQnyWx0dVleSA==
+ b=NrI6B2/N13smtE9k6E+ctkZy8UqShTgSovtBLdG7vpmTcSGfXS6cDm1+UyQESuZgK
+ op+L9/26JOQMaFl3ts/BOSvnVLkHur+ebULchxfjyNBES40AELA4Wc1RBPQdyEt4Uq
+ N4nCW12pfSpjTKMdYe6feYW+E8O3Udz4H29oxBBGKEZehPM740VBLPFQM3Q37rgUNC
+ +FxxQrHFfGf4+mMwFB4DWv+Xe17ZewCPp3Fs6yzdkoPhDZ9maigsg+jN1RPDJALXAS
+ 4I0h13YiMwPB1cKDnn1gaI+eIHCFOEWz3UwPYB628szhc5EeSqE3hDN/21a92+4/0k
+ 2BJIu/mH3d4pA==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 96D501A56BF;
- Thu, 30 Apr 2026 21:08:22 +0300 (MSK)
-Message-ID: <94e4cc1e-dbd4-4662-8a22-8d1291fb297b@tls.msk.ru>
-Date: Thu, 30 Apr 2026 21:09:52 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 3F7101A56C4;
+ Thu, 30 Apr 2026 21:12:53 +0300 (MSK)
+Message-ID: <aebe990e-e658-4a26-a8f3-6ecc18fc6908@tls.msk.ru>
+Date: Thu, 30 Apr 2026 21:14:23 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/intc: fix heap OOB in ACLINT MTIMER multi-socket
-To: =?UTF-8?Q?Sebasti=C3=A1n_Alba_Vives?= <sebasjosue84@gmail.com>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, palmer@dabbelt.com,
- berrange@redhat.com, qemu-security@nongnu.org
-References: <20260401053853.10473-1-sebasjosue84@gmail.com>
- <20260401053853.10473-2-sebasjosue84@gmail.com>
+Subject: Re: [PULL 25/51] riscv_htif: reject invalid signature ranges (end <=
+ begin)
+To: alistair23@gmail.com, palmer@dabbelt.com, liwei1518@gmail.com,
+ daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Tao Tang <tangtao1634@phytium.com.cn>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260429044752.4176397-1-alistair.francis@wdc.com>
+ <20260429044752.4176397-26-alistair.francis@wdc.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -86,7 +91,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260401053853.10473-2-sebasjosue84@gmail.com>
+In-Reply-To: <20260429044752.4176397-26-alistair.francis@wdc.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -112,22 +117,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01.04.2026 08:38, Sebastián Alba Vives wrote:
-> The MMIO read/write handlers index timecmp[] with the absolute hartid
-> (hartid_base + offset) but the array is allocated with num_harts
-> elements. In multi-socket configurations with hartid_base > 0 this
-> causes heap OOB access in the QEMU process.
+On 29.04.2026 07:47, alistair23@gmail.com wrote:
+> From: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
 > 
-> Fix by using the relative offset for array indexing.
+> Prevents huge allocations and crashes caused by malformed HTIF signature
+> addresses.
 > 
-> Cc: qemu-security@nongnu.org
-> Signed-off-by: Sebastián Alba Vives <sebasjosue84@gmail.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3205
+> Signed-off-by: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> Message-ID: <20251209085349.61510-1-munkhuu0825@gmail.com>
+> [ Squashed with following commit to fix build failures
+>      hw/char/riscv_htif: Fix format specifier for uint64_t
+> 
+>      Message-ID: <20260415134826.1742308-1-chao.liu.zevorn@gmail.com>
+>      Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> ]
+> Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 > ---
->   hw/intc/riscv_aclint.c | 10 ++++++----
->   1 file changed, 6 insertions(+), 4 deletions(-)
+>   hw/char/riscv_htif.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
 
-This one too, feels like it should be applied to the current stable
-series.  I'm picking it up, please let me know if I shouldn't.
+This change, it looks like, should be part of stable qemu series.
+I'm picking it up, please let me know if I shouldn't.
 
 Thanks,
 
