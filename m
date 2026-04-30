@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B15F6FF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:29:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54DF0CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:29:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIV80-000142-6l; Thu, 30 Apr 2026 13:24:44 -0400
+	id 1wIV7a-0006BR-CG; Thu, 30 Apr 2026 13:24:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV7v-0000fL-9L
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:24:39 -0400
+ id 1wIV6t-0005HB-9j
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:23:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV7t-0004vO-K7
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:24:38 -0400
+ id 1wIV6r-0004Z5-6X
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:23:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777569877;
+ s=mimecast20190719; t=1777569812;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Pll79ubvj2WY+vR4reNM8nqRiqCLK9Som46Z/qrJjIE=;
- b=F0Fx1U1HIRzIzvNM6+khYMBdKr/Jm7tNnNbdwt2viFIbpNH6d1C9PABkeXbUgEfLRjcJSB
- dz+Q8ZcAlmPnL/stvYVb8yX9oUgbOZ6Uouw/jxPGXUSds44fB3F4XSrtf87lazIalkfCaI
- 2CIB8qu54+MqGdBo1AX+TLh1+4uWs48=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+9TVppSkjsNhYMHQxAmEzqCx8qVYljwJJfpsf/snmUs=;
+ b=DsKmNyg4wrUOQMIz0v8C690cekb700MHBXCrwYXrPX7gzbZ+PI265N0WrRtm8w6h8SY4jY
+ I1TkqvaaPn1QCQ9UzrbwqNLVAoCUQBqPnM49whviNFUgsSyBApvx/0jgZaaOGQujMs6gRE
+ xaI7wq7ltJkceTvayhKfPiJge90+pLM=
+Received: from mail-vs1-f72.google.com (mail-vs1-f72.google.com
+ [209.85.217.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-512--GeKzMCANAin6rieVg-T9g-1; Thu, 30 Apr 2026 13:24:35 -0400
-X-MC-Unique: -GeKzMCANAin6rieVg-T9g-1
-X-Mimecast-MFC-AGG-ID: -GeKzMCANAin6rieVg-T9g_1777569875
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-50f13da9684so12960011cf.3
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:24:35 -0700 (PDT)
+ us-mta-330-lLPhSDCkPWKFhFHGvuit4w-1; Thu, 30 Apr 2026 13:23:31 -0400
+X-MC-Unique: lLPhSDCkPWKFhFHGvuit4w-1
+X-Mimecast-MFC-AGG-ID: lLPhSDCkPWKFhFHGvuit4w_1777569810
+Received: by mail-vs1-f72.google.com with SMTP id
+ ada2fe7eead31-611af0d600bso783493137.2
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:23:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777569874; x=1778174674; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777569810; x=1778174610; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Pll79ubvj2WY+vR4reNM8nqRiqCLK9Som46Z/qrJjIE=;
- b=SX6ZAJ8B7cpcraEqnKVs2PWuG2nxrTd/meIiltZucuQxJv6z0ypq4UwsHN76dDEtEA
- lm6md4Agj3EugfJdweFYZ3cjqqgHsBXohxMhKs74LfZmxA1GTX/0DhZk/3kl1Pwmyqem
- 3JvgzEdqVVu2ubVBHIfCe8ArMD495fg0QU4aadFeJJtuSbOTkSYpM8vl1HK1BMM4VYXX
- ZJ9OdqJESXqWHvXOpgedjNnqz1gv5QOQaxLdm07OY6tDR4DIFJPr2+TL+N4tfs0SQglZ
- 9BoLoMjmiFtgOPZxFbbr/1HaJu8AcCMTH9Wm6XEWOoUllaNtdcg2CV3Y5H7kBqnRVlNh
- 8MQA==
+ bh=+9TVppSkjsNhYMHQxAmEzqCx8qVYljwJJfpsf/snmUs=;
+ b=XFdY4mDuT0tA4JAyb9k5di+N4yIueAWM++d4juuTaef82mtoj1f3yjkAULdv2Z6Uzu
+ 0ucN1Jlpc4YC5bpBJmdK8IWjlR2C925tuahccaF1vRRLttNWi2OEXnVYpPNva6NrxV+j
+ iEyvnQF+OM4JAV3bsAkKPopE1EOKsVgSxa/q1slVan6yedJ4P0NVj2EA3N5n/UXN0vks
+ yjr7wOiHnBmmi6uZvoVwMtlnhCKwneb1Z2Jsb79FLcyD8U8EtEcbU3cCRWTpM2FLgAAw
+ h/tlBuh2uhTvqbAXo0QNfg8YjqHDC8JibTUKW+kLrjKOqhYUlBeNvz0oswveZvTN8aJH
+ v7dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777569874; x=1778174674;
+ d=1e100.net; s=20251104; t=1777569810; x=1778174610;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Pll79ubvj2WY+vR4reNM8nqRiqCLK9Som46Z/qrJjIE=;
- b=CZgqRKUzNXVgYP9LufRFgJDcgU++ac5RfO0WLxuSWG+NYm8vK82f4nru9Z5RljKZlb
- GA0TX4bRGNPHvRgPnG2vqE08eS7LLiJEOrStCNTGqYrFONDjgRqP7igDNXYDjsHZX8qL
- 9z9AzMT3tzUn/AgEhDwZgc8H14HZx627SpbFeziUqPVyPhZY6vpylZjui3B/zE8hx6ev
- aY8HWlrABF/gqvPWvdN+W5ITHcAtkI7w3tDYgDfbIn8+MiKzM+XG37JAoJ/NEOca1GqV
- tQq09PRLUTWMLNvoL2XUJmpxCBePFkl8Kl3neLE/frQyV6wwgI6nSuekEyKUJV3XpSq/
- 7q1Q==
-X-Gm-Message-State: AOJu0YyFl9Q4VHqWAUp57hxhfOCDxxF4FlHspdwER02xmz2UNJiraOPZ
- QeN+dHE5IjlNkvq9yZlJNkbPpqOHK2oSZTGa5XZ9Mj20w+hAXXuqHjU+/ooymBIL/BLk1t8/M01
- xXO6IpiHQU/BAu8SVD1A8NZN6PitD4abh6ZB95pop99O4sMHz9MUccgHnFJZGKLvqTdsyrCdgJG
- gXKjgL+QIbjqTkbREvQWuiUGs2O9/dCpVJRycmjJOY
-X-Gm-Gg: AeBDieso3os3WUWk/kSW+HNvhd/GKZFzxzDEdBdecEZBp9Qx7aci5EfYyXRqGDyhaxI
- cLkQw5fpijTO4StJbzNdGNiryWkG72IBMWFWV5J4Wr5P65rDtRcJLc8r4Mn2USSIbs0jWwy0+L4
- pJNkDDBRG1VFKv/bqcjkp9v667pZp1YeD9iD5SJcszkP8ZhzvlFZfWFnqsS8kJcyrz5u4562hU9
- XCqjLXadAx0qwG9dmM37e7MvdqCxRa/tqX5XKAE844etFvOFt1NovSdlj0coERv36+3eXY/iI4B
- sM/1NgOzkiKT4XO4F/SxM72Zu7Ien3RXFJiJPHTcX4uirUekTlyCmeRZ3QLyDMvBZQsPHYspg9v
- 7r1Z24GG59OKphCWAETkpd1zD0aR6Q3LtcaCuXRRdSDYBrPw1adG6MnBkQOzHuooaRWyZlqWy5J
- 8gsJLcoWBtAAlFQ63VyhUO7yGrJqRU1aRJDdE=
-X-Received: by 2002:ac8:5c88:0:b0:50e:5ffd:dec2 with SMTP id
- d75a77b69052e-5102ab1bf61mr57490231cf.1.1777569874419; 
- Thu, 30 Apr 2026 10:24:34 -0700 (PDT)
-X-Received: by 2002:ac8:5c88:0:b0:50e:5ffd:dec2 with SMTP id
- d75a77b69052e-5102ab1bf61mr57489571cf.1.1777569873828; 
- Thu, 30 Apr 2026 10:24:33 -0700 (PDT)
+ bh=+9TVppSkjsNhYMHQxAmEzqCx8qVYljwJJfpsf/snmUs=;
+ b=NOiMHBgjw0c6Cn+hJupz0r4MsL6tasDji6DP5mSzccap4F23Wn1WH5XmymTndyBSR6
+ ZrRhf05O1NtfGCfeJaTzswo5mugxz/GcbtdWMNjPRFSNSivaHtrydQlUjeHZtq4vPpkd
+ DguCSWGWUDDRHgOV/NDxanYIqz4NhhwwWEDmLruz6tDI+BueeGxH8VH/0QfBtc9S9HFa
+ DtK/+0bm4WPcTIl+KIGdVjxasg16xO+oiWqqtwm3fbVAv2deQHETdCNcG+EuUkc6MrFs
+ HIakkfchy6qgoL4bc9HucdyWnOoGR82ynoKrzZYkll3lS4GFnsDwWL8oMeZC+E8x93up
+ 4big==
+X-Gm-Message-State: AOJu0YwCLPsUmYqWwNOszhu1UlZCYm9pOnFJQXuBlWYe/NcgJKrqS8mn
+ NnF9B6h0spvvun36Fr7cfpnQIKMSgR/QdURd7iDrhn/7RfIXxizcePjbMyNf30OekboHTOK9wLt
+ Yum0EQReoidZa9kDtD/3wULPdWA03jU0YlX/eotbdhoQgjlhpaaGd5/82n6TJYRxcJ7DYqxwTyL
+ TmIXvEsNjdrwuS/MSGEONt8W7p0HloQHsTMfC+mTOk
+X-Gm-Gg: AeBDievfROhOQT9OTNQIBjNCuP1YIl65svt+qj+HvHp3OqE+P6qojg833A3UXL+fBWH
+ J5SwBwhsqQEwXKwki2lZTMSxWiqW7b3Ixz5Z8jBWscEEEJj1W/pSC+gCnhJWP2heErJ93+IgtnY
+ lbfMeVSLhv55VmMAl2jtkKBiKBG/Sf8H5Hn4Qs7/MCboVh/N5qCRgio4xroUwmg/m4MvPrCxHfZ
+ 9Qn/KcvyV1ODzrnye/hW85vrWHv1trfLnar+BDI1LgP4Hp554V+v8oN68Cn424Mf4+0mKfeovec
+ 8xpKYBJD7Ho+Xyy2x+QNdF548sng/+WGcxw9cQDKBAYEAVPrO0wdT68a5/o2DjytD6k9pDuNGMJ
+ R2rO9SJg7E1p4Qv4qDOXYCJwOuOjWcSEAjpqQi6W6ER/zJG7f1qiD/o2FSvebkMbyJIM9AoRFb3
+ 5rhu4UvKs/BTsvlTb8ewsetLc695+bri8zFy0=
+X-Received: by 2002:a05:6102:cd4:b0:611:c935:f9c5 with SMTP id
+ ada2fe7eead31-62ad4261073mr1993015137.24.1777569809867; 
+ Thu, 30 Apr 2026 10:23:29 -0700 (PDT)
+X-Received: by 2002:a05:6102:cd4:b0:611:c935:f9c5 with SMTP id
+ ada2fe7eead31-62ad4261073mr1992956137.24.1777569809235; 
+ Thu, 30 Apr 2026 10:23:29 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5103d3485c5sm229391cf.30.2026.04.30.10.24.32
+ 6a1803df08f44-8b3ff43b912sm24880946d6.26.2026.04.30.10.23.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 10:24:32 -0700 (PDT)
+ Thu, 30 Apr 2026 10:23:28 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PULL 47/58] whpx: i386: some x2APIC awareness
-Date: Thu, 30 Apr 2026 19:21:53 +0200
-Message-ID: <20260430172204.1006673-48-pbonzini@redhat.com>
+Subject: [PULL 26/58] whpx: i386: disable TbFlushHypercalls for emulated LAPIC
+Date: Thu, 30 Apr 2026 19:21:32 +0200
+Message-ID: <20260430172204.1006673-27-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260430172204.1006673-1-pbonzini@redhat.com>
 References: <20260430172204.1006673-1-pbonzini@redhat.com>
@@ -122,43 +122,46 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
+AccessHypercallRegs was present twice so clean that up.
+
+Remove TbFlushHypercalls (and its extended Gva range sub-feature)
+from the user-mode LAPIC case as it behaves oddly there.
+
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Link: https://lore.kernel.org/r/20260422214225.2242-24-mohamed@unpredictable.fr
+Link: https://lore.kernel.org/r/20260422214225.2242-5-mohamed@unpredictable.fr
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/whpx/whpx-apic.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ target/i386/whpx/whpx-all.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/target/i386/whpx/whpx-apic.c b/target/i386/whpx/whpx-apic.c
-index 65629ca45f9..cc272f82a5a 100644
---- a/target/i386/whpx/whpx-apic.c
-+++ b/target/i386/whpx/whpx-apic.c
-@@ -33,7 +33,11 @@ static void whpx_put_apic_state(APICCommonState *s,
-     int i;
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index d211b3f2efa..8f03616cb97 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -2577,10 +2577,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+     synthetic_features.Bank0.AccessPartitionReferenceTsc = 1;
+     synthetic_features.Bank0.AccessHypercallRegs = 1;
+     synthetic_features.Bank0.AccessFrequencyRegs = 1;
+-    synthetic_features.Bank0.EnableExtendedGvaRangesForFlushVirtualAddressList = 1;
+     synthetic_features.Bank0.AccessVpIndex = 1;
+-    synthetic_features.Bank0.AccessHypercallRegs = 1;
+-    synthetic_features.Bank0.TbFlushHypercalls = 1;
  
-     memset(kapic, 0, sizeof(*kapic));
--    kapic->fields[0x2].data = s->id << 24;
-+    if (s->apicbase & MSR_IA32_APICBASE_EXTD) {
-+        kapic->fields[0x2].data = s->initial_apic_id;
-+    } else {
-+        kapic->fields[0x2].data = s->id << 24;
-+    }
-     kapic->fields[0x3].data = s->version | ((APIC_LVT_NB - 1) << 16);
-     kapic->fields[0x8].data = s->tpr;
-     kapic->fields[0xd].data = s->log_dest << 24;
-@@ -61,7 +65,11 @@ static void whpx_get_apic_state(APICCommonState *s,
- {
-     int i, v;
+     if (whpx_irqchip_in_kernel()) {
+         synthetic_features.Bank0.AccessSynicRegs = 1;
+@@ -2588,6 +2585,12 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+         synthetic_features.Bank0.AccessIntrCtrlRegs = 1;
+         synthetic_features.Bank0.SyntheticClusterIpi = 1;
+         synthetic_features.Bank0.DirectSyntheticTimers = 1;
++        /*
++         * These technically work without the Hyper-V LAPIC
++         * but behave oddly for multi-core VMs.
++         */
++        synthetic_features.Bank0.TbFlushHypercalls = 1;
++        synthetic_features.Bank0.EnableExtendedGvaRangesForFlushVirtualAddressList = 1;
+     }
  
--    s->id = kapic->fields[0x2].data >> 24;
-+    if (s->apicbase & MSR_IA32_APICBASE_EXTD) {
-+        assert(kapic->fields[0x2].data == s->initial_apic_id);
-+    } else {
-+        s->id = kapic->fields[0x2].data >> 24;
-+    }
-     s->tpr = kapic->fields[0x8].data;
-     s->arb_id = kapic->fields[0x9].data;
-     s->log_dest = kapic->fields[0xd].data >> 24;
+     if (is_modern_os && whpx->hyperv_enlightenments_allowed) {
 -- 
 2.54.0
 
