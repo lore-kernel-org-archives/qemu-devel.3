@@ -4,105 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADA8BFF8875
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 09:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72ACBFF8875
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 09:06:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wINLN-0007zi-O2; Thu, 30 Apr 2026 05:06:01 -0400
+	id 1wINLB-0007vO-6L; Thu, 30 Apr 2026 05:05:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wINLK-0007ys-2A
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:05:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wINL8-0007rX-Gy
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:05:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wINLI-00038n-CL
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:05:57 -0400
+ id 1wINL5-00032p-Al
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:05:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777539955;
+ s=mimecast20190719; t=1777539940;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KDJRYPPLDzkY3EK1Q+ay5cnp96vxNf8VANGXo/2TzNc=;
- b=gabKHb/SeWpeR/s7yVL4q5G2hKi+ordy7JVKRdhImCy+gttP1FYjW3GgpbuHXETTkmBFht
- yJfz9OYiFiYmIqW2CmhrYIXWg9QFcSqPNep9RnZ6TPXuj95KY6+w30HNOZ89OVU8flICtF
- 6ttmlWMhKOCXgR9JheV4b4OtIk08iok=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=0L6UPQqIBvtEwpkdo/ifxNJlu1wz3w2ZGV+lBliBaK0=;
+ b=Os0pnFKsmnUZzjlltZ4Q5wIONfzevtd1CH39N5yjbYFqgDzuVN0Y9/CY6qgHGiOOlA6s3V
+ 4OZ3FIxJogmn2a+oJqU2YycQNlJrF6YbawvIc8r9kcX/FpeneiVRqyE/9Acp0g15fCvwWL
+ 8P+S8ESdljT+CVFRSSzoHaEYBAgdbvI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-327-zCYeDxwAN0mNICdlYZdfFw-1; Thu, 30 Apr 2026 05:05:53 -0400
-X-MC-Unique: zCYeDxwAN0mNICdlYZdfFw-1
-X-Mimecast-MFC-AGG-ID: zCYeDxwAN0mNICdlYZdfFw_1777539952
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-488c0fcc6deso5134915e9.2
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 02:05:53 -0700 (PDT)
+ us-mta-422-FosuL2jlNBeOtYMqFN4SdQ-1; Thu, 30 Apr 2026 05:05:39 -0400
+X-MC-Unique: FosuL2jlNBeOtYMqFN4SdQ-1
+X-Mimecast-MFC-AGG-ID: FosuL2jlNBeOtYMqFN4SdQ_1777539938
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-488d9e1e61aso6861265e9.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 02:05:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777539951; x=1778144751; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KDJRYPPLDzkY3EK1Q+ay5cnp96vxNf8VANGXo/2TzNc=;
- b=JBu81qUtHoi7Bwmd6Rrqs+myobzQ4YOoK2I+v6c+Wj4bHDESeBGT/osY7JspwED/Vb
- lZkJNw5SdxceM6DgPdMhUBWXqy0k9KNmnZlyO+Y+4+GlCEOI4BTvgvLkb3DlfFXtEcaB
- EReSSC5S1IfeaREiXs6WlaAUnpqsJmY4uqNKXLs01EfkO5QmVC0QIFNk9fPpC+2coMIB
- 3IYElJcmJRy4j7HjFK69Y320nO5rXpt/JGVYEWi6R/EXl4rEOceWkwda8DYp90WFoNUH
- yzmscuS0UZuHeJ1prCmo8WQejcGeW9MHzJSTD3AN88nDCbJuo99740dm+XPFPOQDuIJy
- KB9A==
+ d=redhat.com; s=google; t=1777539937; x=1778144737; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=0L6UPQqIBvtEwpkdo/ifxNJlu1wz3w2ZGV+lBliBaK0=;
+ b=edloc8NA8R7Fy+Sp2TL0qSWHmberdHbceDwuVxlV27WBFr+8uYX+gN9zAPIrm8dGUR
+ XyFaXVHmxhzByrUA3U0KMfYytkZyZT4r8rnk9G58OCuHzXD5c0b8lcrtTJ3b443AY1jT
+ gDU/PZvzTtWljqYYauJSxlLVaMxBcER0ER00UNp/w0zijlMrLBO211ctZZgMze5KZkjQ
+ x/UomUEuHNnWDhEy3hfQCMG/oUrM443puX732oRwanjeuQ6hu34/3izaYHauunrkMf3R
+ RMkezgpr+eq4nzF4I49hF9oa6Z5IZT6nKga3o+B+iQ7otOnwUWPdfw2uH0CIWOenFeGY
+ js1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777539951; x=1778144751;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=KDJRYPPLDzkY3EK1Q+ay5cnp96vxNf8VANGXo/2TzNc=;
- b=ot45jGyaomRRWdUXCoVwI8zWMGD5V/n1SX6Zmsjt5GIAD4nq1Uvm354WqSxTxJezAK
- uyBCOv5m5FwCp2hZi8Hvm3S83kTkiOE5Zk5seCLfK7uDYqBcsX5jFlmb1Sfk6gPi1iA+
- KNq2Z5ZZrhUTu1B/iHhCPk1oQZN06o0kCOUPogYF38nnJP5idAzCV/QUYa/zMkfyl+3b
- 8mw4pfQq1E5nygGDTEPqgJrLa3octsDMetvpVg96Lqf7svGEcX3Cb2ozkpALD29pVAl2
- FfQKqxdTiFZFxu89jicMyy4Y5JfzEnUs6j+jCPvv/I5O8/yKUdEFP/JG2rJq7/7w1UF/
- 9s5w==
-X-Gm-Message-State: AOJu0YxisQU2FjIQZ1V3xThsE6AuJPlRV7p5SnqPJ6KfVC7+hIJ+p5BK
- A/4NW4HaXJJXAW0penkdADtxlRsLeEEgait5ccYEkWa07iBQuXiSwucmo4pAD4959reqaCyQf03
- 1a60Lru2Mu9ccIz9fajBCl7x4CaN6LBEeBvYyC7adqm77issNfgpnCzCgPFk6ZNbP6vSyObO/Ih
- 598dy+WdAypOO5opIqkRcrLzelTbLiMddMt5Yd9a56
-X-Gm-Gg: AeBDieu0yQRLCQudQfHed6LkH7d/jGOK8PaSMKcN2pVcFWDAamOdhQ1JQBq4kamj+89
- D9bLO+cXMBRDt5b/VRxFxnfDaXTGOD+VrZSIhBvwkInIWUjChPhfaxZM1IM6eONLgDDMLcYeOpm
- g9YTrQZiLZ2If7KX7LJz3YAma/WxmZIS4a6JmiamkPAbf6hl6jvdY+EO7kbYxpKsFEcqpc/yaUZ
- YU0pEOGmEhVGnrKLKp5KwsCXHbPl7OyNIfqwF/xLG7u8w5uyVATE92U5DtHyXQyjhy9bmhk4uN7
- 6jPZXjqmF7igpCV4qxZRDFOkSqRgDHsDPUeqMIH9MAUJG91oRrSfq1RqgHHZQ+ZmQkLHGRjM6ee
- 6VGf48tpVN0xerLzsKYf9gjMWsqGzU9oh6LHt6mp2HotKLekr2WMGJxM19AFtkr46+YY5iL+/OR
- rzcWhS5j9M5HIHd983ihdgkzaXPW6t/dpVzrU=
-X-Received: by 2002:a05:600c:a14:b0:489:ecee:c4ef with SMTP id
- 5b1f17b1804b1-48a84451b9fmr31196975e9.13.1777539951344; 
- Thu, 30 Apr 2026 02:05:51 -0700 (PDT)
-X-Received: by 2002:a05:600c:a14:b0:489:ecee:c4ef with SMTP id
- 5b1f17b1804b1-48a84451b9fmr31196365e9.13.1777539950735; 
- Thu, 30 Apr 2026 02:05:50 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777539937; x=1778144737;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0L6UPQqIBvtEwpkdo/ifxNJlu1wz3w2ZGV+lBliBaK0=;
+ b=NbIu9D8mlEt8jOWI2CmhaH+KWjs8dPTHft3FN7UoHDuRa38t47TaBDAdf4Sojh61lA
+ BkrfMtnXLajQ1Uq3Sk/c0ZPKbPy3Y7W6id6tad9BitZDwmtrAw2XH3fvR3VaLbsegwRj
+ kKso/jlloe61oIoblZr+6mR2HWuKf/1jB+/q93TCHJOpYVliz+uGIsVybekC+TpqDwVy
+ rnLPJYLyL5RH9OsDxdLQ/cDd6lm10bNeZi/F1gCVRE5DtkUIcjWSUqfXhr/0DLJTQQQ3
+ aYKzvF+s0xq3S2oW4YZgxuk8ylZpBzXeaWM1H5BYG6YKFMP8fMgyzG3MAheZYhChMGF9
+ 2nuA==
+X-Gm-Message-State: AOJu0YwP2VI/n2gY1zrWta7DgDki60d3H54FhmRu6/COJBhQrY6L1tU9
+ RuX44fSdX5Y8+LDBOcpDnVvg3IJEFej640cde7o0IQQfFxISquBhRD2h68x3WTiXJjFtQ4ylvZy
+ gZafz958LIPnnXmvuNc8iUPsowcJZ4o01leZwgeQpd0HURP61d7SHEc2tkMKanUJ98CC9fGCFsy
+ DKq/0lm2D7cqcgzHO6BgaN8wG1HV5q138ZLOvauxMa
+X-Gm-Gg: AeBDievvylnQ6M0AkqIvJPDz+xdGvHjDAFXvbZDorqF5YM66hi5e3xHtqL3hwbwFg5V
+ 9aEMloUGedvAeR39RdrqpkZgEEcMvOqQ++yZe6+RUr2Df2qJV72XlXYYFLdc8Rez71wxuMNCp0R
+ 7ROLfWHSO8N3b/XVJUsGIoBV2zW7NmOIwUxwkkB4mK/Jk9aIUI9tpZ8ETt9OTOUm9hNOGtD04c6
+ bYSbTdK5baArC0T3osli+m4j66un4ujyJEw4Rm0TDD3RSFzHiKmmZbnuxy5tk3ONMyzC2M5NZJh
+ +V0xMFlzAUzkzg2S8K0+2JhUjgjDjPHKq/oHcwrd6t19lxgL+GlEvayr2xVDzSdlOZo09bSTd3V
+ CAemaodohukWwVDI0CqhUmEtyUVKfyIxy8pkubGvivHgLASIZfW/YcLU++swL4Mh2pKXGS/hTYW
+ WLnj8UOa1tL7V2mnp+aL5urC5F/j3qeHx7Wdc=
+X-Received: by 2002:a05:600c:198b:b0:488:a2ac:a334 with SMTP id
+ 5b1f17b1804b1-48a83d66cb9mr34798825e9.3.1777539937024; 
+ Thu, 30 Apr 2026 02:05:37 -0700 (PDT)
+X-Received: by 2002:a05:600c:198b:b0:488:a2ac:a334 with SMTP id
+ 5b1f17b1804b1-48a83d66cb9mr34798165e9.3.1777539936338; 
+ Thu, 30 Apr 2026 02:05:36 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a7b9219f3sm44778695e9.9.2026.04.30.02.05.49
+ 5b1f17b1804b1-48a81ed6b65sm84075865e9.3.2026.04.30.02.05.35
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 02:05:49 -0700 (PDT)
+ Thu, 30 Apr 2026 02:05:35 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 08/13] minikconf: modernize handling of include chain
-Date: Thu, 30 Apr 2026 11:05:29 +0200
-Message-ID: <20260430090534.841894-9-pbonzini@redhat.com>
+Subject: [PATCH 0/8] kconfig cleanups and mypy annotations
+Date: Thu, 30 Apr 2026 11:05:21 +0200
+Message-ID: <20260430090534.841894-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260430090534.841894-1-pbonzini@redhat.com>
-References: <20260430090534.841894-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,143 +116,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use a dataclass, and store it in the parser to avoid having to
-save and restore it.
+Modernize the code a bit and fix some issues that were found while
+adding mypy annotations to minikconf.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- scripts/minikconf.py | 66 +++++++++++++++++++++++++-------------------
- 1 file changed, 37 insertions(+), 29 deletions(-)
+While this stops short of adding flake8 and pylint, it already
+improves the style and fixes a bug (see patches 1-2).
 
-diff --git a/scripts/minikconf.py b/scripts/minikconf.py
-index 3d63cc6b21f..07a5152ef54 100644
---- a/scripts/minikconf.py
-+++ b/scripts/minikconf.py
-@@ -15,11 +15,30 @@
- import random
- import re
- import sys
-+from dataclasses import dataclass
- 
- __all__ = [ 'KconfigDataError', 'KconfigParserError',
-             'KconfigData', 'KconfigParser' ,
-             'defconfig', 'allyesconfig', 'allnoconfig', 'randconfig' ]
- 
-+@dataclass
-+class IncludeInfo:
-+    file: str
-+    line: int
-+    parent: IncludeInfo | None
-+
-+    def __iter__(self):
-+        inf = self
-+        while inf is not None:
-+            yield "%s:%d" % (inf.file, inf.line)
-+            inf = inf.parent
-+
-+    def error_path(self):
-+        res = ""
-+        for loc in self:
-+            res = "In file included from %s:\n" % loc + res
-+        return res
-+
- def debug_print(*args):
-     #print('# ' + (' '.join(str(x) for x in args)))
-     pass
-@@ -202,7 +221,6 @@ def process(self):
-     def __init__(self, value_mangler=defconfig):
-         self.value_mangler = value_mangler
-         self.previously_included = []
--        self.incl_info = None
-         self.defined_vars = set()
-         self.referenced_vars = dict()
-         self.clauses = list()
-@@ -342,13 +360,12 @@ def __str__(self):
- class KconfigParser:
- 
-     @classmethod
--    def parse(cls, fp, data):
--        cls(data).parse_file(fp)
-+    def parse(cls, fp, data, incl_info=None):
-+        cls(fp, data, incl_info).parse_config()
- 
--    def __init__(self, data):
-+    def __init__(self, fp, data, incl_info):
-         self.data = data
--
--    def parse_file(self, fp):
-+        self.incl_info = incl_info
-         self.abs_fname = os.path.abspath(fp.name)
-         self.fname = fp.name
-         self.data.previously_included.append(self.abs_fname)
-@@ -360,19 +377,9 @@ def parse_file(self, fp):
-         self.line = 1
-         self.line_pos = 0
-         self.get_token()
--        self.parse_config()
- 
-     # file management -----
- 
--    def error_path(self):
--        inf = self.data.incl_info
--        res = ""
--        while inf:
--            res = ("In file included from %s:%d:\n" % (inf['file'],
--                                                       inf['line'])) + res
--            inf = inf['parent']
--        return res
--
-     def location(self):
-         col = 1
-         for ch in self.src[self.line_pos:self.pos]:
-@@ -380,33 +387,34 @@ def location(self):
-                 col += 8 - ((col - 1) % 8)
-             else:
-                 col += 1
--        return '%s%s:%d:%d' %(self.error_path(), self.fname, self.line, col)
-+        inf = self.incl_info
-+        incl_chain = inf.error_path() if inf is not None else ""
-+        return '%s%s:%d:%d' % (incl_chain, self.fname, self.line, col)
- 
-     def do_include(self, include):
-         incl_abs_fname = os.path.join(os.path.dirname(self.abs_fname),
-                                       include)
-         # catch inclusion cycle
--        inf = self.data.incl_info
-+        inf = self.incl_info
-         while inf:
--            if incl_abs_fname == os.path.abspath(inf['file']):
-+            if incl_abs_fname == os.path.abspath(inf.file):
-                 raise KconfigParserError(self, "Inclusion loop for %s"
-                                     % include)
--            inf = inf['parent']
-+            inf = inf.parent
- 
-         # skip multiple include of the same file
-         if incl_abs_fname in self.data.previously_included:
-             return
-         try:
--            fp = open(incl_abs_fname, 'rt', encoding='utf-8')
--        except IOError as e:
--            raise KconfigParserError(self,
--                                '%s: %s' % (e.strerror, include))
-+            try:
-+                fp = open(incl_abs_fname, 'rt', encoding='utf-8')
-+            except IOError as e:
-+                raise KconfigParserError(self, '%s: %s' % (e.strerror, include))
- 
--        inf = self.data.incl_info
--        self.data.incl_info = { 'file': self.fname, 'line': self.line,
--                'parent': inf }
--        KconfigParser(self.data).parse_file(fp)
--        self.data.incl_info = inf
-+            inner = IncludeInfo(file=self.fname, line=self.line, parent=self.incl_info)
-+            type(self).parse(fp, self.data, inner)
-+        finally:
-+            fp.close()
- 
-     # recursive descent parser -----
- 
+Paolo Bonzini (13):
+  kconfig: remove duplicate declaration of CONFIG_CXL
+  kconfig: remove duplicate declaration of CONFIG_MIPS_BOSTON_AIA
+  minikconf: run through isort
+  minikconf: small cleanups and dead code removal
+  minikconf: move command-line assignment out of the parser
+  minikconf: fix type mismatch in do_declaration
+  minikconf: simplify self.tok
+  minikconf: modernize handling of include chain
+  minikconf: use .items()
+  minikconf: pull main program into a function
+  minikconf: remove unnecessary semicolons
+  minikconf: replace else with early return and avoid unnecessary else
+  minikconf: add mypy annotations
+
+ hw/Kconfig              |   1 -
+ hw/cxl/Kconfig          |   3 -
+ hw/misc/Kconfig         |   8 -
+ hw/riscv/Kconfig        |   4 +
+ python/tests/linters.py |   6 +
+ scripts/minikconf.py    | 465 +++++++++++++++++++++-------------------
+ 6 files changed, 254 insertions(+), 233 deletions(-)
+ delete mode 100644 hw/cxl/Kconfig
+
 -- 
 2.54.0
 
