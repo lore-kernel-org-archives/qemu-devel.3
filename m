@@ -4,83 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FAEBCD1297
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 06:00:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88498CD1297
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 06:07:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIKR6-0000Jd-IK; Thu, 30 Apr 2026 01:59:44 -0400
+	id 1wIKYU-0001Tf-1C; Thu, 30 Apr 2026 02:07:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIKR4-0000Iv-Ou
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 01:59:42 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIKYR-0001TI-VF
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 02:07:20 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIKR3-0003pR-6T
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 01:59:42 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-488af96f6b2so6474475e9.0
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 22:59:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIKYQ-0005DJ-8u
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 02:07:19 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488af96f6b2so6551285e9.0
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 23:07:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777528779; x=1778133579; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777529237; x=1778134037; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=FIHJ7D7YFuXIN81xtCLVVmaG4xLfzXZKWOr/nwnRhDQ=;
- b=ENx1sd/I7+imAuvP7HbpjPyZ8nho8nJc88tF7Kdug+pH4VWujsricO61oIMXl9Cdj4
- g6PptlnvaHWXySke4IrS3mKL9Qw8GLzQKLY8XWBK1L/fy/i1swIvGWLrpMAkdRpK1VB5
- zvvt28t11eZH3GrNUK8Zw7Ayyy0faZI3vPnA+GrGi5M9AtV63b7yfSBbE2tLBN2dTUWc
- Ss2lOLmBuulh+Ue0vz3wjMqBjmB3GCiuksorBjOld6Z1i6bzdzF7cVz/8LIqOikH8Mt+
- P+LTbhubD7F5ujxg54T4FOqys02zGrkZEgWLjDR0CwcebNFQJHmK8evQ2G1Vt9coe72h
- MiIg==
+ bh=3CM1QpRGwe4fxOogzXqaymSoudqNNvTlB1wkNCmr7Vo=;
+ b=tpWH/YCOibqDa21TsblO1A4T9qvaxHcDJ/YKZ4fXhMhWEL4S2nciLDgNO5FAULLjkC
+ WXm8MoJ1LNB5nRl6E8teeztRHDW8nmcYEgCTUg/2r5EesPMGIB4UmuS8gKY4TlNnU8jE
+ Q2tG/AsXPhUpOqmPv7+MTkjsnmhlUaeMILw5+yHOo8uST6nvRvFxHcsFhcPzY9XuU6gr
+ nClnjJKK3fF0yHiPBGMVKNXWF/a5o4oeNU0MUzUJqoFoykrsweFdg+ii7KQq5Jr+CLL9
+ xF7wh/euG3VEBTQjJQR3too3CiVVnRE31oviP5C9DX6dmVKs5wczCwbHY85Giy5lxa8H
+ zveg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777528779; x=1778133579;
+ d=1e100.net; s=20251104; t=1777529237; x=1778134037;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=FIHJ7D7YFuXIN81xtCLVVmaG4xLfzXZKWOr/nwnRhDQ=;
- b=aOhlwh5LQY7tS/5/r/W02SZDAV+HvPF745JjYFO5JDxwY0GOIQV39PF37Zn7pNkfbe
- KqC+Ib/+2EgqN6i7uuz7CH07Qw2uUna30iDgzrTlReXU5cmkM7noj/ZseEDWWOSUYeAz
- s5fSQEzWJNrx+eenn9rolRMH2dUYG0Y45pM4A6YsbJ+Id3SR+8zVctSZ0vut7WgZHM52
- KXT8ZGwpt2MbNvt2pqmhO7zZJ1W3zXETOFSbZkjROdIw+UZnZlf5jnC+egL0g54BR76l
- 4OqDqwiipM/1Wizr2dxT5BG1PRaUsn+6BO/zoF21YOdB5MW3+Tw47T4sfbaBs9qgFzhz
- rLSQ==
+ bh=3CM1QpRGwe4fxOogzXqaymSoudqNNvTlB1wkNCmr7Vo=;
+ b=a9nCFQeGbATeVksk2UcDfwAGZQeI7swzv8/YbwLvfHBhuKAT1D5FEgxlXM2t4CnY8S
+ KZDE5Bo7lemwgovqkkxbBrAc9Xhf6jOfUPbIH/s0yf9dQ9sQIvT0hxJ+apWSpGfsmY6Z
+ jYcPxz1x6gM086bRAG9OAelY4Xp/wyCr2AzrSS5nd3OKODCVJ4A4jsOV9H3g21gZH2PR
+ JCLb1vLm1zbGgvQc1UCrxWYAXVAcIlMLqYkBHhek1sSyJVqgZ6FHUtIyVyAW88hsFRyW
+ lUxWDEDBUVB1FnW7tlKZ/r2FyDUT3YS+ZTFOtFJpctz5ycVeXa7skqUlddz70WsCnpqA
+ FlJQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+d2oethswT4GSL/LNAUBRc/HKKUSEXrdvLhgnf7aa1bqoxi2cDASvXhd6cAOEr6O6fl29Sy5Ok2z41@nongnu.org
-X-Gm-Message-State: AOJu0YwfZkTp+YKhwr7nwfRotiRrB5ePA0C91flk8pbAP4bbOeLzG/3+
- hNGUaC72clsmhSeiOdM2i4TwZAB5aItyW6clRpO5ZA84d8wrP2Mn/ywN+f9/9gyDo44=
-X-Gm-Gg: AeBDiesBZstFAwj4QRPg1CoEBHY+2+uh9K1eg38H/e6Mcqmvso1Eamaxec6gJlCnd9/
- BXjOCvqWNNYFzUhYg7MXsi4bpMGCRD1dr08rZOY3ndYvetqgsjUgfRX6Es5U2lheY4hCEYF/TTy
- WDhAl4aV8aRfHoMrYMyoqz0S9xvI7/rqh0o5HzvIaWFo8sIoeMoDKxg7E7WOfPaz4QbjW4kSJB1
- uxwG8zeJld4iL2m92Jq8Oax/2t+T4FbfWKjkd/77fHctKiHQSK2xBs3mos+5/qbH9ywjEQHzJcF
- N3eV93gMmjnPd5fw0TKx1G+qwJf5XG9IkwjjrJbvXzz6NSoqpXIam/TqhJ8kxzwJJHrmfhFLMZL
- CnXFgqHNww3cIdCdDo19tXgLBqct3pytQEchvUFsmghD2AU2C65NWwBLzUK/ufPNoWa4xU5NjeQ
- 0UQf22U188keXrt5ovvy6ljIYNAXmaR5QiiFU7f4W3xbtx8R5LfCsl3CM9/nphMrMnujWTHf+pd
- 8Dw
-X-Received: by 2002:a05:600c:4e4f:b0:486:ff92:63e5 with SMTP id
- 5b1f17b1804b1-48a83f6c7f6mr23713685e9.6.1777528779469; 
- Wed, 29 Apr 2026 22:59:39 -0700 (PDT)
+ AFNElJ8THR096SG8aXFUpphLKP/aaI8cUII+GgWzhng1HV5JrnKWqD0YdDpTarTPIhD1XPxhM74PVq7ssRKs@nongnu.org
+X-Gm-Message-State: AOJu0YxCmz7k4bOF9BGouuqT/EkQF2vUBjhmHJcfvqahOVN0iIBrepb0
+ wlshk73uNz7jbh6Y+2saL+AVkU/cx2z8+UPx81ulAKS+9LcuadqvQHV3HZ5q/YtBDpc=
+X-Gm-Gg: AeBDievRs+0qGWCLtkeUoetekxsF5WzOSBqQRBtgDAHxRYOvtPiA9fJdkCAmhbGDkut
+ mu1Fa0X+BcwqpRGbpyH6YPTOeDe0eUDMnnZgnTuxYRj4mJZw+vk0rs2FXTsg3XHWW1RDZtNiiTT
+ e1QpzlCRk5Cc2sDT9pz3i+AMsyUm9O+RY5Wc7ZDYH7MhaS7h2F/CBoEr2oU4OlSXU3KouGom/Jy
+ rRbNieBaE4KuqhpcgbwLrlTHWbbcJVfJfsa11TULSAeEIlrB/rffXpiCt1lp88AFIbcTERY8pc7
+ q70Ts4ydG/+knEfO4DLjROuqHLUttTv1RwDYSVAeie5b4h8ySiTG31d15cMi5kha2or+W/g//TL
+ 5j+fZXp2NmXXJaECnLMHHJZjp3kUnmNCWNxHiKoA5xG/OdEI1naNp1eDZt+1n3SkruBRKeErpqT
+ YZfR2VAaLeBy4WcgFlbJdEDOF08dnlsiqteXcTJ9RJFF6+kzoDxGj0MjRXbFh1RFk4L7vW+aJLU
+ U1pu3Hwh5hi1z0=
+X-Received: by 2002:a05:600c:a110:b0:48a:5c23:cab with SMTP id
+ 5b1f17b1804b1-48a84470807mr17284465e9.19.1777529236514; 
+ Wed, 29 Apr 2026 23:07:16 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a82307f7csm42046885e9.12.2026.04.29.22.59.38
+ 5b1f17b1804b1-48a81ed6bafsm67918315e9.2.2026.04.29.23.07.13
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Apr 2026 22:59:38 -0700 (PDT)
-Message-ID: <5d6dc1e9-f5ac-4118-b60a-c9e3ace530b5@linaro.org>
-Date: Thu, 30 Apr 2026 07:59:37 +0200
+ Wed, 29 Apr 2026 23:07:14 -0700 (PDT)
+Message-ID: <16b3c3a7-2f1c-488a-a416-36979d9901f0@linaro.org>
+Date: Thu, 30 Apr 2026 08:07:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 27/40] fpu: Drop QEMU_FLATTEN from muladd routines
+Subject: Re: [PATCH 3/3] system/vl.c: inline qemu_opts_parse_noisily() result
+ checks
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260430000524.56046-1-richard.henderson@linaro.org>
- <20260430000524.56046-28-richard.henderson@linaro.org>
+References: <20260429062004.36582-1-guobin@linux.alibaba.com>
+ <20260429062004.36582-4-guobin@linux.alibaba.com>
+ <708ac3f4-bb55-459a-9506-77751133c973@linaro.org>
+ <feda4269-fe96-4c73-a87e-c3181b43efdd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260430000524.56046-28-richard.henderson@linaro.org>
+In-Reply-To: <feda4269-fe96-4c73-a87e-c3181b43efdd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,14 +106,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/4/26 02:05, Richard Henderson wrote:
-> The float16, bfloat16 and float128 paths are not so
-> important that they require forced optimization.
+On 29/4/26 23:03, Richard Henderson wrote:
+> On 4/29/26 18:04, Philippe Mathieu-Daudé wrote:
+>> On 29/4/26 08:20, Bin Guo wrote:
+>>> In qemu_init()'s option parsing switch, several cases assigned the
+>>> return value of qemu_opts_parse_noisily() to the shared 'opts'
+>>> variable solely to check for NULL, without using the pointer
+>>> afterwards.  Inline the call directly into the if-condition, matching
+>>> the style already used by QEMU_OPTION_action.
+>>>
+>>> This affects the following options:
+>>>    -drive, -numa, -iscsi, -m, -mon, -chardev, -fsdev, -fwcfg
+>>>
+>>> Cases where the returned QemuOpts* is subsequently used (e.g.
+>>> -acpitable, -smbios, -virtfs) are left unchanged.
+>>>
+>>> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
+>>> ---
+>>>   system/vl.c | 37 +++++++++++++++----------------------
+>>>   1 file changed, 15 insertions(+), 22 deletions(-)
+>>>
+>>> diff --git a/system/vl.c b/system/vl.c
+>>> index 0e1fc217b4..0e0d3cb761 100644
+>>> --- a/system/vl.c
+>>> +++ b/system/vl.c
+>>> @@ -2961,9 +2961,8 @@ void qemu_init(int argc, char **argv)
+>>>                       break;
+>>>                   }
+>>>               case QEMU_OPTION_drive:
+>>> -                opts = qemu_opts_parse_noisily(qemu_find_opts("drive"),
+>>> -                                               optarg, false);
+>>> -                if (opts == NULL) {
+>>> +                if (!qemu_opts_parse_noisily(qemu_find_opts("drive"),
+>>> +                                             optarg, false)) {
+>>>                       exit(1);
+>>>                   }
+>>>                   break;
+>>
+>> For clarity I'd also squash in this patch:
+>>
+>> -- >8 --
+>> diff --git a/system/vl.c b/system/vl.c
+>> index cab8106984a..237334236aa 100644
+>> --- a/system/vl.c
+>> +++ b/system/vl.c
+>> @@ -2842,3 +2842,2 @@ void qemu_init(int argc, char **argv)
+>>   {
+>> -    QemuOpts *opts;
+>>       QemuOpts *icount_opts = NULL, *accel_opts = NULL;
+>> @@ -2921,2 +2920,4 @@ void qemu_init(int argc, char **argv)
+>>       for(;;) {
+>> +        QemuOpts *opts;
+>> +
+>>           if (optind >= argc)
+>> ---
+>>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   fpu/softfloat.c | 13 ++++++-------
->   1 file changed, 6 insertions(+), 7 deletions(-)
+> If you're going to move the decl, the innermost block is just below with
+> 
+>          } else {
+>              const QEMUOption *popt;
+> +           QemuOpts *opts;
+> 
+>              popt = lookup_opt(argc, argv, &optarg, &optind);
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Good catch.
+
 
