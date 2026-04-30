@@ -4,85 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E9A7FF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 15:39:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECE81FF8873
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 15:40:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wITU2-0005LJ-5H; Thu, 30 Apr 2026 11:39:22 -0400
+	id 1wITUk-0005iY-CX; Thu, 30 Apr 2026 11:40:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wITTz-0005Ki-3r
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:39:20 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wITUi-0005g0-CT
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:40:04 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wITTx-0001m5-OX
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:39:18 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-488ba840146so9086995e9.1
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 08:39:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wITUg-0001wB-C3
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:40:03 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-651c5d525f6so943657d50.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 08:40:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777563601; cv=none;
+ d=google.com; s=arc-20240605;
+ b=PqdlsjBOfV0kFvVU1fQ5gV2OYpsUgkVBSrZQqL2Lx8dIdNTj5vKYRhgJ2fyDNc/PdM
+ OPXdODraazYplg4crCQB0EN120gqRt6sOsMMCKy4HsV1/oahPGReZa2buiRgBOsoHI2f
+ y84KmZ1N7zqFkzOiqpmniQM3HBUUN97qFZafLFeEEmlA4rVfB+EGAh7OczH5i7CApFa7
+ FzdmKwGIoyJAg/wO6KhL6m6zSdC2FU4U1AH8F9WqpjL/jL531kcEll0JxCwIH9dVJc21
+ 2J8HTBDePVlve2nZW4VFnpXIqIjzo66d7H5ptDMUGkXs00a0mXjiMlZQYNNISlUHjaJ+
+ M+Qw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ReDWy72RBwlCfXkKdQA2a7wP1OoBOa5MlmjTpVb60nw=;
+ fh=BBXXBmZbsnh1iUcPA7aYGot0GnoKedpL6BO7ZAJRQVM=;
+ b=GhYNZDqFFziJIyr/SpinZO4/itoGbMjURABwsLUFVJ8ku8NwonnoSy/S3LcH+Z9rNP
+ dawCIkLukn7B5Ec9S1RSXOUEoHNSmNjUBtstMkP7aiuiGnXLx6vErrdoFH1SO8H0z2PU
+ GY1jM8gMbzbcqR8vXR+TQNDdprRdChZtwJD2n/rjQfbgauhdC+yhoZ8Z2X9KHo/UIfrj
+ dCXg0Q6JqTTsIHdMfv10UpxKR8nnk4AtAAq+j1+hEglGF0pUxfJlcCX1xCnKZP89JXIi
+ PAx2s0Zqy2slm7UYqOE8/Fr0aXuK8CGKd2wIuL+DB9z2mRG8yX799RTo8jXoJ3T4a0sB
+ G9JA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777563555; x=1778168355; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=7c7gE+DSEv7ZdAzEy/AHRGBXzOiwvdoVtjeIYzhkOT4=;
- b=Cld9uxyY7IsXjgbXztEwjl3O+TOD3SrOaBQ/q97JQ94qx+j8WZTZxYHRa/S7MiS5KK
- B37C7kzB/CI73vNZlOW9lkbFkLxtxBrcZ/JhB2zQdVNih2+YQk0bbZo63GeYX19v13OZ
- o6C4mqHwW/BvXgJZy4sXKnSgIxone1Vch5bqEvBFAZ0/iExQNWIrNtQ/WwYYw3HvwQVM
- +5wfuUKQubyRsdNwLw+HLADBM1yPpYc3yEyDriDRllvvbH0UyeY6WsCn+WY594HBuGip
- akkUPEHN6KrTDZBusK4kmY9ShOh8kKi7rddTdjk7JNnC3oiZgvxvGvqlee7UuO/kW49M
- KXPA==
+ d=linaro.org; s=google; t=1777563601; x=1778168401; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ReDWy72RBwlCfXkKdQA2a7wP1OoBOa5MlmjTpVb60nw=;
+ b=VwKL/nJkikvNyFYp6LoqNCS5hZOwiL2C2KoXYAYje169uarkMz39pDaRv8szXZDR4d
+ 4sV/ERlL6OxZWOcXp8SVJL6xG0G5MUL5hA48sDc2UZR6f3SvxJCEYmX2HenBFIfaipY1
+ mJF3ua8PUnD+xvZjIyqJv+SUdPUcX09tCG91Z1+2ndKvJXy8kz1N/wkVRPfaDQIL63iq
+ RpDyR/WHdJlJpteD31M+Q7NMskWvN9c13V0OzFESNuMMNIWaTZLbzp8XzRtuT75X17a/
+ 8Cpb69OON7wIVmOhqHnVzaat756y6RQSHNn9s9twpsUZ5yFA4pdzPntW5Hu1YsQlKVw1
+ BmRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777563555; x=1778168355;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7c7gE+DSEv7ZdAzEy/AHRGBXzOiwvdoVtjeIYzhkOT4=;
- b=PsjYw9kGlN4TTuY38u7LxQnqSqMKJX50eoZSkbp9AmvnsYvrklfRY+/Wu6WIyVlADY
- EeThLf8gzhizyMMLqjqLITcdYCKlnWngugJT8OsmHHbIA3gekafE5Ay0MKbMDb/AqT8w
- OP3MJLxD3Qnk0fEIdpau5isBGj51IKK/HzRJ3x2tbOtNgO5SSWaIBeRZFscujgLHFPqo
- 1mxxX2Xs9qwQ6HzAC5JkNBi6P7KKBlURCHp9xmQqx5aqRNp8RD5W2LfKf3uDOx28XaCa
- OoYmhBEUtsGKj0AEyHJ1l3j7I8vG2LCWXsMxZ2Os1sZ4CdH1u1XJymc1KpzsFL2LWfHQ
- 8ujg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9k8d160jH5vIV9D+CGBKxtT1BQgA73JHG0oNncJuLt7wOCVsAMbUtkPQW2Sl4265wWT7DE8dDLhop0@nongnu.org
-X-Gm-Message-State: AOJu0Yw2IDZFBtCb0d0Ekgkn2SMIZACNNgXcbQuW7xMkW4WDURjR5Om2
- GR/rmw+MH/j+XCY81JEegD+QC7MBRRoMIYlcE8nZWiZlxOrTGmNoqP5AapJVFO+I0p8=
-X-Gm-Gg: AeBDietSmzq7S1lOW46jPfcCJn3FeO/z6b4QDidbhzYrA9gcSd5JgIka7/4jeSxLffz
- E39Do3/vQv66Iq5BWvDVsqH7vERsv5uiZBf5L7MZtXxe2H8Rb9i/8Tjpk3LURQ0FNhnOh8ZKm3+
- Rui/L9IHkeBFGLpIfruQjY4Kd87FZ9AtE3ri92GnINIwsaRtH96QtTTzQGnEzuXir1KE319YIGy
- AF3NwOFS3v/qsk4S079ImnNXSKarHve9Tah/Tav6NArjvNqyjCzAuldNn3cF9d6DFbqNhW1DUqH
- j844be2CliN0cK4TZGlz/inl0BS2pxD9IWKc9dhVXnKZhlWZSVDHk/pQEqqFT8HxOimZ14Mk0Lo
- v56c47BKKE4tL6kvyzicXishyItmzJVTkwdec8LxqBnRnfOi4bOjoreITsWLWCkjP2v4sz8IIu7
- PcNGTSArVQFfREggi/F8SaoPa8E8gMo31/uKyV4IxUDcK0UhS7hI1APHTeDdYhwtzd1Egj708YX
- h0i
-X-Received: by 2002:a05:600c:8904:b0:487:55c:e0c1 with SMTP id
- 5b1f17b1804b1-48a84451b8emr44525235e9.14.1777563554807; 
- Thu, 30 Apr 2026 08:39:14 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a7c2ddc65sm69759595e9.4.2026.04.30.08.39.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Apr 2026 08:39:14 -0700 (PDT)
-Message-ID: <3a981e61-67d4-45ee-8bb8-efce9c8849d0@linaro.org>
-Date: Thu, 30 Apr 2026 17:39:13 +0200
+ d=1e100.net; s=20251104; t=1777563601; x=1778168401;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ReDWy72RBwlCfXkKdQA2a7wP1OoBOa5MlmjTpVb60nw=;
+ b=nXW9EtVB0ch/KbMhaeNPQV88auDf6ny+0z90muK9D0wmoCJSIltVKadQT52GHcFIMY
+ EylXsh9cRPle1kNe1W/7hLG9sZBGRcXqz6UQoLqXLo6n0gZRkv1yuIkx05+6jIOVcSSw
+ EqKnUaTTQ5YN0ACem4aODYVibjsU4LmUX1a0gChBQeacpTGG3U5hdeo1NdJzyDPQ7N0B
+ C84OheAm8vksSDYRqWtMzeuvdcz8lz4UrGKnrFSB7eoqZgMjE3fpd8vLRslWPkpP6xFT
+ 7BFaIoR2Lpx5ROFDSlkORIuuVtFqIkaZI5HBtk0d9vccoeMu9NYXQ7D1BoO/+FBlL9Ws
+ 2qOA==
+X-Gm-Message-State: AOJu0YxQsfoEPJ9rqgO2lIS5pxl66/u85RS/y35aQvL4CSS9cywvd0O7
+ NFj7qJLuSUZOgRoyd3BL27ygMWXrozjWZnDnS0RlrwzUlY2RgBLos6rwisLl0sgxF6v/1dzkIhI
+ O/mxPkZzGz3XTOupB9KI1uCmyqG1K62TRm5+smMB7mA==
+X-Gm-Gg: AeBDieu6y1cjOFJ5hBAu/oL0a5xQYr9daiDfp5210aij+0wI2l0sfSV3fMFOHdGvsMd
+ b62qpyOQIlwA9QsxqjxvsEHmoOCwfamizYeCc2cDjATdvS5Xw7YmjQurjAwNOeivehYjuNjf+wD
+ ak68eNpB+jmma0W9XgBmmsNV2hI+lqG2+WilDdkILc25S9uaYDQx/5xfuX/HESQT6yT6eLVZC/f
+ gvcqFX0aV/aO0HAutm92SHQXkJtrBRsR1ytdC6mv7XxZzg/IKMHqEDpg2B6LxhR7F2Crosb5G5T
+ qrs6xpcx+W7meC2VlrmGgLnSbEimDiRNoEHE0VRWv91j1JfKBBC0cDa7IeZZjF8KGkA7+Z/YiB1
+ 6Nw==
+X-Received: by 2002:a05:690e:1206:b0:658:ac79:ad4d with SMTP id
+ 956f58d0204a3-65c18f55fe5mr2776193d50.47.1777563600816; Thu, 30 Apr 2026
+ 08:40:00 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] tpm_emulator: Reject a buffer size larger than
- what was requested
-Content-Language: en-US
-To: Stefan Berger <stefanb@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: marcandre.lureau@redhat.com, armenon@redhat.com
-References: <20260430142337.2104726-1-stefanb@linux.ibm.com>
- <20260430142337.2104726-2-stefanb@linux.ibm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260430142337.2104726-2-stefanb@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+References: <20260308203516.160103-1-shentey@gmail.com>
+ <20260308203516.160103-4-shentey@gmail.com>
+In-Reply-To: <20260308203516.160103-4-shentey@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 30 Apr 2026 16:39:48 +0100
+X-Gm-Features: AVHnY4J8zxXW6fxl_n0y_3WVqX0LkzYyp3tUTgzLovV3Dib0GiEAegikkClToJw
+Message-ID: <CAFEAcA_cYDwOFP_h_pKyUQ0kKmT671iZiNntzMC5O5tF=1cC=A@mail.gmail.com>
+Subject: Re: [PATCH 3/5] hw/arm/imx8mp-evk: Fix reference count of SoC object
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-trivial@nongnu.org, 
+ qemu-arm@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,22 +120,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/4/26 16:23, Stefan Berger wrote:
-> When the TIS, SPAPR, or CRB frontends negotiate a buffer size with the
-> TPM backend, then the tpm_emulator (swtpm) could still adjust this size
-> of the buffer to within bounds supported by swtpm+libtpms if the chosen
-> size was outside the acceptable range. This could theoretically lead to
-> the TPM 2 using a bigger buffer than what was requested and memory
-> allocated for. In practice this would not happend since the requested size
-> of 4096 bytes for TIS and SPAPR and 3968 bytes for CRB are in the
-> (currently) supported range of ~2.5kb to 4096 bytes. With PQC support
-> the range will have an upper bound of 8kb and a lower bound that will
-> support the (pre-PQC) CRB with 3968 bytes.
-> 
-> Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+On Sun, 8 Mar 2026 at 20:35, Bernhard Beschow <shentey@gmail.com> wrote:
+>
+> object_new() leaves a reference count of one, and object_property_add_child()
+> then leaves it at two. This would leak the SoC object if the machine object was
+> destroyed since the machine is the SoC's sole owner. Fix this by converting to
+> object_new_with_props() which gets the parenting and reference count right in
+> one go.
+>
+> Fixes: a4eefc69b237 ("hw/arm: Add i.MX 8M Plus EVK board")
+> cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->   backends/tpm/tpm_emulator.c | 13 ++++++++++++-
->   1 file changed, 12 insertions(+), 1 deletion(-)
+>  hw/arm/imx8mp-evk.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/arm/imx8mp-evk.c b/hw/arm/imx8mp-evk.c
+> index b84ac91a17..cfc3038c36 100644
+> --- a/hw/arm/imx8mp-evk.c
+> +++ b/hw/arm/imx8mp-evk.c
+> @@ -74,8 +74,8 @@ static void imx8mp_evk_init(MachineState *machine)
+>          .modify_dtb = imx8mp_evk_modify_dtb,
+>      };
+>
+> -    s = FSL_IMX8MP(object_new(TYPE_FSL_IMX8MP));
+> -    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
+> +    s = FSL_IMX8MP(object_new_with_props(TYPE_FSL_IMX8MP, OBJECT(machine),
+> +                                         "soc", &error_fatal, NULL));
+>      object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fatal);
+>      sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Looking again at this, is this really right?
+object_property_add_child(...) creates the object (refcount 1),
+adds it as a child of the specified parent (refcount 2), then
+does object_unref() (refcount 1). Then in this code we call
+sysbus_realize_and_unref(), which calls qdev_realize_and_unref().
+That function:
+ * (indirectly) calls bus_add_child(), which takes a reference and
+   hands it to the link property on the parent (refcount 2)
+ * calls object_unref(), as its name suggests (refcount 1)
+
+So now we have the object with refcount 1, so it doesn't just
+vanish, but on the other hand both the QOM tree parent and the
+qbus tree parent think they own a reference to the object,
+so our refcount is wrong.
+
+I think the existing code here was correct: we get a reference
+because we call object_new(), and then we drop it by calling
+the realize_and_unref function.
+
+I'm going to drop this patch from target-arm.next.
+
+-- PMM
 
