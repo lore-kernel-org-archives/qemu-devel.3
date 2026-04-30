@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 295E3CCFA13
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 00:07:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65075FF8875
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 00:07:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIEvR-000807-LB; Wed, 29 Apr 2026 20:06:49 -0400
+	id 1wIEwO-0001pX-H8; Wed, 29 Apr 2026 20:07:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIEv6-0007ij-VS
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 20:06:24 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1wIEvc-0008Eg-4O
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 20:06:57 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIEv4-0001pf-34
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 20:06:19 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-82fbf5d4dc2so266230b3a.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 17:06:17 -0700 (PDT)
+ id 1wIEvZ-0001xV-4A
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 20:06:50 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-82f6b592fc7so143258b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 17:06:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777507577; x=1778112377; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777507606; x=1778112406; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=P36S9oF3hhIawVjz64/S26T69xm/jo805Qcqz+Wuw4E=;
- b=NU5NACyd/E4ij8DgZOqBpAW2Ka9xb7L4KnztNG3C4DJodsKFm3lBxkuHPX432JToZ1
- +mZMnGjEmY+By+nf9qo90nc3szLHd3NradSejWyGljxpu8r+hYEL2x0yLQKaZ4QPeA3d
- QcGEuHQUj14Y30CReDx+Ok+dOAOr2Z72HK/Ldv3dj31hgmqdQ+w3jv3qTIXHAuhbKZ8B
- YGTgCD05FilN4UQjxT4ww9XpPLHRn5xk2qzuHRh/z+cmqaxEdG/uvB9jAOggiOxgwAJF
- fCR93gG4+isVEvimE877mlVR6KqBuisGEwL26yxEP3JQ47QvnLYCPy+tOTVSiSPecSbz
- k/NA==
+ bh=Pu3TZxm2iTRUBoR9MHlryIG9+4ZyXp6ZsL5bLZgQwto=;
+ b=b3GRJzBLv7zF9txX1X8KGbjNffeFCwZeOzEm6oRSCSHq1vYoPg2uFtSpybUmFveEzn
+ qBAfrTV8pNJ14kiaunKcA22zA080i7Pwg35DHoPpb/dNbPAjLaCWy16wQYsXy4asUoqG
+ Uc3pmYN81UH0aeSt3TZBcKkkmhKK3EoMne7JSiemiHd+Bv2T5ypRqBmW3OdsZsIaXKqr
+ o5y6YSsDAGYFdOYYFj9w3djrdnHqyp41W4k6eNLd0iOIr6j6UiYrlGPqzjL2Zuo875bi
+ 6Ha3Vnb55wsXMzRZEQBbiNcnlMfD3N3i7VTii+XrtX/JXR7k5gXHHBU9kkolKjPaUAq2
+ mG7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777507577; x=1778112377;
+ d=1e100.net; s=20251104; t=1777507606; x=1778112406;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=P36S9oF3hhIawVjz64/S26T69xm/jo805Qcqz+Wuw4E=;
- b=SxMNrFuSeOEjLXPLuJm0SI/MwW/EXjOSgIwkEyQI74G5add9vD188S96f/XzdO24Gm
- JM1X6QNSnJzRwwwUK1SccHZKFxbv2T0hHiB3I2yX2dGkWlmelVY8iNCWDmEn3teSwuww
- F5B8qHugLcCWCCKmkCuclnCJA+TNKXHnHoByMbFrvM2p9p9HO36yBfYZF/SFi2LwFIyL
- SWyCGvCyf2vBetFmW0FUgEiG1DHvJJ69COwbGn+Jj9yFcUAbM9uY0C82s3Ps1u9V4GxO
- 0kHcJ13LmDqWDl7bUjcqaLbhgIL27KaUHF/KhxEb3lfUY8peMZg0Ey4k+N5J3tDSpa+u
- B5bw==
-X-Gm-Message-State: AOJu0Yy/KtXuD/30Wvd+6h1ciYAJnNA+yL+QtQis4SLLSAX8quuV1nYl
- 49g8UZgJxbHk/DYK78tIuSUWvZvv9d65BbLUTFYD/UjUTSb4WuFDZ4Iklmx/l/QSZgkVQKNEcjU
- 6n/ODmUw=
-X-Gm-Gg: AeBDievAieqe8b+zecNvsDKGiWT2AfxRwGUAR119h3aYV7t8X8lXzwmmyEhnTZ4400P
- tQwFZn4aCN1JrPMoDFoZWJBYZbBBQBjsvwRXvwKdmQSf7bdYHZ+eBLjhtuCmkrWX7nT6WjD7U09
- Z7n6K0st9X4MH9K7hSfIzVGAeF2fSySrmlNHILJcslm5nac2r1UWWtuCy2nTenmIAD4R4pOCp+Y
- iFqoFYhtcoSmayp20uoV0FZoPs1t7D8p4eqxJH7fpm/MOBLHP9qcbLyQW1aOJcBpo0Q4DOYEb1N
- suCYsqQjwYVLiQb/vyyhYOCISlbue6kMQVMxgmU5jEAMv5jK4KVWLnIrFbaABCakXccNTjQmNNk
- bBADKLklZI8idf+yVk6ucJgyQlFgx8P2i1Hi4T2MJkADpsnmo5YE9WzdQM9S+U6xvIwhvstyX36
- SDPJ7AX2aFywCyqEygUSXGINQ1X33NuuZ07IFEXzCd
-X-Received: by 2002:a05:6a00:812:b0:82f:1369:7268 with SMTP id
- d2e1a72fcca58-834fdbd904cmr780578b3a.30.1777507576502; 
- Wed, 29 Apr 2026 17:06:16 -0700 (PDT)
+ bh=Pu3TZxm2iTRUBoR9MHlryIG9+4ZyXp6ZsL5bLZgQwto=;
+ b=fmpNiPWh5wi7l4exw5tVkrjqA8m53Df1MXDMoPpx7xYh3hPBUe0cAz/G36OfNXR1ov
+ 9ZcmxRtFs6iqUBEHuKdyzFxODTWVF5ONAgEBYDQQsXreH2C79gxEhCoJdsfwvuFLkYuA
+ OqGgcFdeUp7RjCUN5SLFjbtAQRAzYXnzxFudfOFKlwvPqtSQVrorXib8LoTNetueME6n
+ 4CZgr+cQBKAYiE4Bn8iXO/BdnKvUqHdJ12//Mm8/+XYmRpmFe975hXbi3nFebcGEOBCT
+ /9rujDMV2def1bmGPkBoVvc2SN4S5Jm6mBx2hs2vCC4uDskelRwDGXV+FlXPBHoOad8l
+ gH1Q==
+X-Gm-Message-State: AOJu0YwJUgsOXd0gZbLrZn+VxAGNIMaQ+G80l3/91AMI+pzRhO7nOkkv
+ 0H1kpMExPbnBSWc4hG1au1VwZ/JTKkpRX7iVRoffcsYIasmWKOlxwMKM/pCz9qSkp7SX/9tm1Xo
+ 8f8p8sgs=
+X-Gm-Gg: AeBDietxxObbLlKEkjDXgImuPq65IGRBH7gT30fSGxRRlKkYbgkhXBq27F4E8kmTrH/
+ UpFA8o4vV0S7AhkibCZ+l/xPh7ovupOO8n4kcsmmdgOScVIbUgzw6H2tcVG3g7v7ajLw4X/Nxj4
+ 1H/kW6g88cwA2ipejXYVeBAlHfSKdsccUL3N/v3o/SIdsRi0E4pP8IJkseYHrPAVaYZ8OQag4WF
+ QPpSah3ZcUGavRVJ4DerZ0j48vJkSgT36jo4a4g4b/cq1p1HR4stFbyfD9Cofffm6Uq6Xg4L0n2
+ gGwG2yOa4ah1iYjCcgwYqH5MlCrQMRlqabYIOvtsaox+V6Lk9H017lKup7SRvWyM4O25OOot4JG
+ ddCd/k8Njim5RRl9GwaudmI62pUPdR9snAjuoCT0M280LciK82XYWopD42/wXk1DaOpshRj7CZ8
+ Lh8i0zv2B/MiS4Vjbm0d2sRKLrMNMDcoFDhR4rrJXZ
+X-Received: by 2002:a05:6a00:228e:b0:834:df57:9d67 with SMTP id
+ d2e1a72fcca58-834fdc16541mr779425b3a.32.1777507605997; 
+ Wed, 29 Apr 2026 17:06:45 -0700 (PDT)
 Received: from stoup.. ([180.233.125.15]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-834ed7ef7a8sm2928667b3a.47.2026.04.29.17.06.14
+ d2e1a72fcca58-834ed7ef7a8sm2928667b3a.47.2026.04.29.17.06.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 17:06:16 -0700 (PDT)
+ Wed, 29 Apr 2026 17:06:45 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org
-Subject: [PATCH v2 21/40] fpu: Introduce parts64_round_to_fmt
-Date: Thu, 30 Apr 2026 10:05:04 +1000
-Message-ID: <20260430000524.56046-22-richard.henderson@linaro.org>
+Subject: [PATCH v2 34/40] target/arm: Use FloatParts64 in bfdotadd_ebf
+Date: Thu, 30 Apr 2026 10:05:17 +1000
+Message-ID: <20260430000524.56046-35-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260430000524.56046-1-richard.henderson@linaro.org>
 References: <20260430000524.56046-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,65 +99,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Use softfloat-parts.h so that we can more naturally
+perform the required operations witha single rounding step.
+This happens to also simplify the NaN detection step.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/fpu/softfloat-parts.h |  3 +++
- fpu/softfloat.c               | 22 +++++++++++++++++++---
- 2 files changed, 22 insertions(+), 3 deletions(-)
+ target/arm/tcg/vec_helper.c | 77 +++++++++++++++++++------------------
+ 1 file changed, 40 insertions(+), 37 deletions(-)
 
-diff --git a/include/fpu/softfloat-parts.h b/include/fpu/softfloat-parts.h
-index 8c3a94bbbc..1876264d43 100644
---- a/include/fpu/softfloat-parts.h
-+++ b/include/fpu/softfloat-parts.h
-@@ -196,4 +196,7 @@ FloatParts128 parts128_round_to_int(const FloatParts128 *a,
-                                     int scale, float_status *s,
-                                     const FloatFmt *fmt);
- 
-+FloatParts64 parts64_round_to_fmt(const FloatParts64 *p, float_status *s,
-+                                  const FloatFmt *fmt);
-+
- #endif
-diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index e42782c656..4efafbf05a 100644
---- a/fpu/softfloat.c
-+++ b/fpu/softfloat.c
-@@ -1396,6 +1396,24 @@ float64 float64_round_pack_canonical(FloatParts64 *p, float_status *s)
-     return pack_raw64(p, &float64_params);
- }
- 
-+/*
-+ * Round to Fmt while remaining canonicalized.
-+ */
-+FloatParts64 parts64_round_to_fmt(const FloatParts64 *p, float_status *s,
-+                                  const FloatFmt *fmt)
-+{
-+    FloatParts64 r = *p;
-+
-+    parts64_uncanon(&r, s, fmt, false);
-+    /*
-+     * We normally expect uncanon to be followed by pack_raw,
-+     * so we don't actually crop the bits.  Do so now.
-+     */
-+    r.frac &= MAKE_64BIT_MASK(0, fmt->frac_size);
-+    parts64_canonicalize(&r, s, fmt);
-+    return r;
-+}
-+
- static float64 float64r32_pack_raw(FloatParts64 *p)
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index 91e98d28ae..85bcaac3d1 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -22,6 +22,7 @@
+ #include "helper.h"
+ #include "tcg/tcg-gvec-desc.h"
+ #include "fpu/softfloat.h"
++#include "fpu/softfloat-parts.h"
+ #include "qemu/int128.h"
+ #include "crypto/clmul.h"
+ #include "vec_internal.h"
+@@ -2895,61 +2896,63 @@ float32 bfdotadd(float32 sum, uint32_t e1, uint32_t e2, float_status *fpst)
+ float32 bfdotadd_ebf(float32 sum, uint32_t e1, uint32_t e2,
+                      float_status *fpst, float_status *fpst_odd)
  {
-     /*
-@@ -5175,10 +5193,8 @@ static void parts_s390_divide_to_integer(FloatParts64 *a, FloatParts64 *b,
-         /* Round remainder to the target format */
-         *r = *r_precise;
-         status->float_exception_flags = 0;
--        parts64_uncanon(r, status, fmt, false);
-+        *r = parts64_round_to_fmt(r, status, fmt);
-         r_flags = status->float_exception_flags;
--        r->frac &= (1ULL << fmt->frac_size) - 1;
--        parts64_canonicalize(r, status, fmt);
++    /* Unpack two BFloat16 into two Float32, trivially. */
+     float32 s1r = e1 << 16;
+     float32 s1c = e1 & 0xffff0000u;
+     float32 s2r = e2 << 16;
+     float32 s2c = e2 & 0xffff0000u;
+     float32 t32;
  
-         /* POp table "Results: DIVIDE TO INTEGER (Part 2 of 2)" */
-         if (is_q_smallish) {
++    /*
++     * Compare f16_dotadd() in sme_helper.c, but here we have
++     * bfloat16 inputs. In particular that means that we do not
++     * want the FPCR.FZ16 flush semantics, so we use the normal
++     * float_status for the input handling here.
++     */
++    FloatParts64 p1r = float32_unpack_canonical(s1r, fpst);
++    FloatParts64 p1c = float32_unpack_canonical(s1c, fpst);
++    FloatParts64 p2r = float32_unpack_canonical(s2r, fpst);
++    FloatParts64 p2c = float32_unpack_canonical(s2c, fpst);
++
++    int all_mask = (float_cmask(p1r.cls) | float_cmask(p1c.cls) |
++                    float_cmask(p1r.cls) | float_cmask(p1c.cls));
++
+     /* C.f. FPProcessNaNs4 */
+-    if (float32_is_any_nan(s1r) || float32_is_any_nan(s1c) ||
+-        float32_is_any_nan(s2r) || float32_is_any_nan(s2c)) {
+-        if (float32_is_signaling_nan(s1r, fpst)) {
+-            t32 = s1r;
+-        } else if (float32_is_signaling_nan(s1c, fpst)) {
+-            t32 = s1c;
+-        } else if (float32_is_signaling_nan(s2r, fpst)) {
+-            t32 = s2r;
+-        } else if (float32_is_signaling_nan(s2c, fpst)) {
+-            t32 = s2c;
+-        } else if (float32_is_any_nan(s1r)) {
+-            t32 = s1r;
+-        } else if (float32_is_any_nan(s1c)) {
+-            t32 = s1c;
+-        } else if (float32_is_any_nan(s2r)) {
+-            t32 = s2r;
++    if (unlikely(all_mask & float_cmask_anynan)) {
++        if (unlikely(all_mask & float_cmask_snan)) {
++            if (p1r.cls == float_class_snan) {
++                t32 = s1r;
++            } else if (p1c.cls == float_class_snan) {
++                t32 = s1c;
++            } else if (p2r.cls == float_class_snan) {
++                t32 = s2r;
++            } else {
++                t32 = s2c;
++            }
+         } else {
+-            t32 = s2c;
++            if (p1r.cls == float_class_qnan) {
++                t32 = s1r;
++            } else if (p1c.cls == float_class_qnan) {
++                t32 = s1c;
++            } else if (p2r.cls == float_class_qnan) {
++                t32 = s2r;
++            } else {
++                t32 = s2c;
++            }
+         }
+         /*
+          * FPConvertNaN(FPProcessNaN(t32)) will be done as part
+          * of the final addition below.
+          */
+     } else {
+-        /*
+-         * Compare f16_dotadd() in sme_helper.c, but here we have
+-         * bfloat16 inputs. In particular that means that we do not
+-         * want the FPCR.FZ16 flush semantics, so we use the normal
+-         * float_status for the input handling here.
+-         */
+-        float64 e1r = float32_to_float64(s1r, fpst);
+-        float64 e1c = float32_to_float64(s1c, fpst);
+-        float64 e2r = float32_to_float64(s2r, fpst);
+-        float64 e2c = float32_to_float64(s2c, fpst);
+-        float64 t64;
+-
+         /*
+          * The ARM pseudocode function FPDot performs both multiplies
+-         * and the add with a single rounding operation.  Emulate this
+-         * by performing the first multiply in round-to-odd, then doing
+-         * the second multiply as fused multiply-add, and rounding to
+-         * float32 all in one step.
++         * and the add with a single rounding operation.
+          */
+-        t64 = float64_mul(e1r, e2r, fpst_odd);
+-        t64 = float64r32_muladd(e1c, e2c, t64, 0, fpst);
++        FloatParts64 tmp = parts64_mul(&p1r, &p2r, fpst);
++        tmp = parts64_muladd(&p1c, &p2c, &tmp, 0, fpst);
+ 
+-        /* This conversion is exact, because we've already rounded. */
+-        t32 = float64_to_float32(t64, fpst);
++        t32 = float32_round_pack_canonical(&tmp, fpst);
+     }
+ 
+     /* The final accumulation step is not fused. */
 -- 
 2.43.0
 
