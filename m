@@ -4,108 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 531C3FF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:32:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0260CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:32:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIV7v-0000dQ-Uk; Thu, 30 Apr 2026 13:24:39 -0400
+	id 1wIVFi-0000Ql-1f; Thu, 30 Apr 2026 13:32:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV7s-0000Ml-UF
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:24:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wIVFW-0000ER-Dp
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:32:33 -0400
+Received: from 9.mo533.mail-out.ovh.net ([188.165.47.174])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV7q-0004ui-Su
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:24:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777569874;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wyoUkF/bjkIeC5ZoeQHhKzjY0RW68pJmMim6gYvuPMQ=;
- b=cQAgrdeu6G1et/gin36zRolYapu3SMh84Mc3ns6xvVn1rvm1U28wqXiaLhQkNpAa7Zm7JJ
- W4jIJJhRa0AYG9N/Lrm7VSUTtF4LM0ozs4Zy/+kMrlPE3tkpOh7ZC4KjGjNtShv5+vC7Gv
- lpT4CFV/YKg+EJFpalL1qCiiuvDuER4=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-263-KQiAV-vyMyqlUZNOQEICvg-1; Thu, 30 Apr 2026 13:24:32 -0400
-X-MC-Unique: KQiAV-vyMyqlUZNOQEICvg-1
-X-Mimecast-MFC-AGG-ID: KQiAV-vyMyqlUZNOQEICvg_1777569872
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8b46c014a26so15280236d6.0
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:24:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777569871; x=1778174671; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wyoUkF/bjkIeC5ZoeQHhKzjY0RW68pJmMim6gYvuPMQ=;
- b=KWGCEjYPcKsSCJCzfW/U21ZtNNrUGlMm1/3GErqTDyMxre3PustVfu+sOiAKPpHzGz
- Jg97WHksJBWCxLqWVYSS4/vZ+W2hFUQpAVTLL3k4TnMW3I5V6tvkh3zgtd8nCQ97eJb1
- 8CMGTulbt7fo7Sn+G64kfKb46KXnRaBdWj1Vg4JXoP89V30RS5mNmDP8jL64hice9YE1
- A1QO/vjuw+H7e4wEx7OHgrEdHGB9l57wyegJ7DV9WOsaoeoVmbC/z30FnlDoNvPCrcqy
- C+fPjYJ5iykfnTzJ4xEm78RvZseEz6UflZPaV0uBfiN2Q6nm9bMzq3wcQNL9FMJXFg2f
- DuYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777569871; x=1778174671;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wyoUkF/bjkIeC5ZoeQHhKzjY0RW68pJmMim6gYvuPMQ=;
- b=ZcL254DW0Y7f50nvVj5edRR389E6+raoAEfHLSWz+OnInviGCj5XbBmm1NWZNlw0+7
- ZELSuvfnRGqDsX9/On405YRxvJ5J5CQTwKI3FT2hhKuSIFG723uSTYrcBYwqmp4IMsID
- f4NlWaeLQ1Nwa7Asyo2X7SaVcvBc4efH4OacI8DiLWJulShmyDKZGwoLkxrGIy+ELhFV
- 1aGVdUl1vK5iAY3mpQLkzCAo8E9lXLOUD3LtIoe+BRCHKSYT+dK6k8vyVYt0v4ejuGUf
- yu1VCNBaylpUUw7SpNf8PipDej1k7370JpsXTnpqO6zFoaPjC57HxXZCXxTmubxqE+6X
- DdgA==
-X-Gm-Message-State: AOJu0YypU74a1z4pHSclKHOmUyPSCGECXZt0P6OqD8qBhrEH4IvFIK46
- iEAdAPL8BQA6cokH/lwevGAU8P3qkcgFNwCYNfmR0BrL5htsZWuvCqJeY77cfmuvE5i/sOxgzvZ
- GG8632+D1r1+Fbq33cGF/31i+v9zvuUQD4iVPBORZ2eJiZEASZ2KCs/cNGHxbiEKZ4EahKijvLp
- n/nombWTOlD+90X2bCIC3zp4ucxpLnp3OvNPhBwLYf
-X-Gm-Gg: AeBDieuRbwqkH8U+s+IhKvhteAEia2b6p9PFV6mkilsbhYG474LMDkzKOS0yt6Vtf/l
- 1oq0cLkJCOVWuvtTcnKkI/FWhNEkg2xK3srYfmlWkJpj0xBMQCSvMP5VQ5GBJocwlxVaoqadAYm
- 02cB5NniydL4Ti5YPYaV4OyufLYnHn2bHTWgSRBQEwdxA9qkzvdGNuNklg+McbWIJKXvS8UsWBZ
- 7+ykFqVcIkos784aY7QhRgz9O4JQgADRHpItTEqN0gSJ0Xyj2XZV0ROzLt3/oH6NPhR/l9ghC8S
- Rnz8SRjqCkzhPXB3Ol/vhRDikaoKeZQc9oXzG+KLf9UyDRvTwJ0IVcocDZSjXh/fGuDCY9Kp3EW
- LOpedOZqXwAFF05QRkfQdDNUpp4u5VSxkouNJE3CuU++uaKbyb6o5sM0YvOZ/O9lMLo6N4qcPcI
- gQqN7mwFFWYGVJcFJctlJRhunetbRgfI0/4uE=
-X-Received: by 2002:a05:6214:3986:b0:8ac:a62a:a451 with SMTP id
- 6a1803df08f44-8b3fe727594mr60926886d6.12.1777569870956; 
- Thu, 30 Apr 2026 10:24:30 -0700 (PDT)
-X-Received: by 2002:a05:6214:3986:b0:8ac:a62a:a451 with SMTP id
- 6a1803df08f44-8b3fe727594mr60926246d6.12.1777569870315; 
- Thu, 30 Apr 2026 10:24:30 -0700 (PDT)
-Received: from [192.168.10.48] ([151.49.85.67])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b3ff4850e5sm22901446d6.49.2026.04.30.10.24.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 10:24:29 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PULL 46/58] whpx: i386: add HV_X64_MSR_GUEST_IDLE when
- !kernel-irqchip
-Date: Thu, 30 Apr 2026 19:21:52 +0200
-Message-ID: <20260430172204.1006673-47-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260430172204.1006673-1-pbonzini@redhat.com>
-References: <20260430172204.1006673-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wIVFS-0007Pj-BN
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:32:28 -0400
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net [51.68.94.138])
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4g61T25SP3z61Nx;
+ Thu, 30 Apr 2026 17:32:22 +0000 (UTC)
+Received: from director5.derp.mail-out.ovh.net
+ (director5.derp.mail-out.ovh.net. [127.0.0.1])
+ by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Thu, 30 Apr 2026 17:32:22 +0000 (UTC)
+Received: from mta2.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.101.90])
+ by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4g61T232tbz7trq; Thu, 30 Apr 2026 17:32:22 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.2])
+ (Authenticated sender: clg@kaod.org)
+ by mta2.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id EA5D09416C6; 
+ Thu, 30 Apr 2026 17:32:20 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-95G0018f7417ea-e8db-4db6-b72f-26738ce481e9,
+ 9F47DE0B15482FF6BC55B1CE858CC0DAC5AE7A4F) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 90.14.253.154
+Message-ID: <261f2311-225f-4895-b1d8-0f0cf8811a60@kaod.org>
+Date: Thu, 30 Apr 2026 19:32:20 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 31/41] hw/arm/aspeed: free fmc_model and spi_model on
+ finalization
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: armbru@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-31-c413f3605311@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260427-qom-tests-v1-31-c413f3605311@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+x-ovh-tracer-id: 10531104782745971739
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTFTIkxvobcF6oSVoAzrTjLrjV+nnpqae9MtzyUEVPscw4wrQh7sVN/1k2tD0Xu7TGr6f6rOJQC6krZ2CSSR6OckswrRFcbtgeirYgDjb+hMtB17EroG1aXMbBFBOM9lvQBngZwVZfDwX54Yp1crO9wpsWCeac4fTM6vv4iy/azjsjVN9kHrVomkmZA3F+u/X+nq0cKhRn0fc+CuEeBqLXKlGZRtodFckvrwyint9+9sPqA4+ixvd4OtcFKGG45IhqmFLdKmf1BFdazqBELi2a1xRf+h4mGleTSvMyLLq+l8++iVyhBuWhVZItxESDxM4N+B5a6umI2Gej+iWwBMLqJSlXJ24H/bW4pbKmr2qofR7emxwbggbCPpFcgyWWs9t74pvyVrFH5fb8R9Zz6fadXC63napkjbCbVF6PdDfmh1psz76kZAlcDChxk8zA+bXdz6QynpnLoyRLKK7O74YxCBGNSWlpdIHtcnzs6Kxf/+pc9ZEZ0UcFvYdlzASFJTqS1KTTRJzT43G6lbS7CCB1lmp06Tzh6xwvGMm8jCJdoJSB1yqSKHIm2NP23nYfRiDtdc4rhi4ZA5nKAkR6UKhGc++NGNhYvocEu2ePRBwTIHMfiglTKeHib8kGsbE08B8s7DLGOVZtsYWeyZGm7nm7GFn1xIbJDZxi6lX2Qddvsd9w
+DKIM-Signature: a=rsa-sha256; bh=Sl/KtSdQZKCGH0M8LhZHZBhUD+ERC5eTzHmT46PZ7BY=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1777570343; v=1;
+ b=DY7ogC9pU4UYGy4s15bkLsCKm/wNzqTIkVdgN9zXQtV/Rd5w9TPmm5KqbJ7gbJpVpVNxZN4d
+ 74xkpsdTYyBYRD2JG0w6CWK7gcSuiam8m1wR5tXTBiAYpcTBI3mk0svO2tcZzQNxFA8fQ3OpaTs
+ YurTGu+FMw3ceDShev1OoaVbptPoS06IYRqVeHkhrjBPWAsGooLSbJmwDwlqJBDE9brWR4Fyljr
+ tb/5l1hJCscBq4JW2c6p9XCT+vQdw1CObhAwfubsEek0qaw6aIDRFPOhLGM+LulmOgvK2y5Gghq
+ sTax6/1xYP5n+FlDhmyE/A1d8aV32ig0NuthXz/jy4QMQ==
+Received-SPF: pass client-ip=188.165.47.174; envelope-from=clg@kaod.org;
+ helo=9.mo533.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,80 +135,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+On 4/27/26 21:42, Marc-André Lureau wrote:
+> The fmc_model and spi_model strings are allocated via g_strdup in
+> property setters but never freed when the machine object is destroyed.
+> 
+> Fixes: 9820e52fbef7 ("hw/arm/aspeed: Add machine properties to define the flash models")
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> ---
+>   hw/arm/aspeed.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+> 
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index a3db3406c5f..a48c4420583 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -419,12 +419,21 @@ static void aspeed_machine_class_init(ObjectClass *oc, const void *data)
+>       aspeed_machine_class_props_init(oc);
+>   }
+>   
+> +static void aspeed_machine_instance_finalize(Object *obj)
+> +{
+> +    AspeedMachineState *bmc = ASPEED_MACHINE(obj);
+> +
+> +    g_free(bmc->fmc_model);
+> +    g_free(bmc->spi_model);
+> +}
+> +
+>   static const TypeInfo aspeed_machine_types[] = {
+>       {
+>           .name          = TYPE_ASPEED_MACHINE,
+>           .parent        = TYPE_MACHINE,
+>           .instance_size = sizeof(AspeedMachineState),
+>           .instance_init = aspeed_machine_instance_init,
+> +        .instance_finalize = aspeed_machine_instance_finalize,
+>           .class_size    = sizeof(AspeedMachineClass),
+>           .class_init    = aspeed_machine_class_init,
+>           .abstract      = true,
+> 
 
-Add support for an oddball HV_X64_MSR_GUEST_IDLE not-quite-an-HLT
-that wakes the vCPU even if EFLAGS.IF is set.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Link: https://lore.kernel.org/r/20260422214225.2242-23-mohamed@unpredictable.fr
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- target/i386/whpx/whpx-all.c | 27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index bc8d673c31a..593a707e219 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -52,6 +52,7 @@
- /* for kernel-irqchip=off */
- #define HV_X64_MSR_APIC_FREQUENCY       0x40000023
- #define HV_X64_MSR_VP_ASSIST_PAGE       0x40000073
-+#define HV_X64_MSR_GUEST_IDLE           0x400000f0
- 
- static bool is_modern_os = true;
- 
-@@ -1648,6 +1649,15 @@ static int whpx_handle_halt(CPUState *cpu)
-     return ret;
- }
- 
-+static int whpx_handle_hyperv_guestidle(CPUState *cpu)
-+{
-+    X86CPU *x86_cpu = X86_CPU(cpu);
-+    CPUX86State *env = &x86_cpu->env;
-+
-+    env->hflags2 |= HF2_HYPERV_HLT_MASK;
-+    return whpx_handle_halt(cpu);
-+}
-+
- static void whpx_vcpu_kick_out_of_hlt(CPUState *cpu) 
- {
-     WHV_REGISTER_VALUE reg;
-@@ -1851,9 +1861,10 @@ static void whpx_vcpu_process_async_events(CPUState *cpu)
-     }
- 
-     if ((cpu_test_interrupt(cpu, CPU_INTERRUPT_HARD) &&
--         (env->eflags & IF_MASK)) ||
-+         ((env->eflags & IF_MASK) || (env->hflags2 & HF2_HYPERV_HLT_MASK))) ||
-         cpu_test_interrupt(cpu, CPU_INTERRUPT_NMI)) {
-         cpu->halted = false;
-+        env->hflags2 &= ~HF2_HYPERV_HLT_MASK;
-     }
- 
-     if (cpu_test_interrupt(cpu, CPU_INTERRUPT_SIPI)) {
-@@ -2128,6 +2139,20 @@ int whpx_vcpu_run(CPUState *cpu)
-                 }
-             }
- 
-+            /*
-+             * Windows and Linux both use this MSR.
-+             * Windows 11 25H2 uses it even when not advertised.
-+             */
-+            if (vcpu->exit_ctx.MsrAccess.MsrNumber == HV_X64_MSR_GUEST_IDLE
-+                && !vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite
-+                && !whpx_irqchip_in_kernel()
-+                && whpx->hyperv_enlightenments_enabled) {
-+                is_known_msr = 1;
-+                whpx_bump_rip(cpu, &vcpu->exit_ctx);
-+                ret = whpx_handle_hyperv_guestidle(cpu);
-+                break;
-+            }
-+
-             /*
-              * Linux tries to use it anyway even when not exposed.
-              * Ignore the write as the VP assist page is not used.
--- 
-2.54.0
+Thanks,
+
+C.
+
 
 
