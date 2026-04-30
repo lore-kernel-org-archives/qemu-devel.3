@@ -4,106 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDD26CD13D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:28:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44ABFCD13DE
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:28:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIV7p-0008MZ-OA; Thu, 30 Apr 2026 13:24:33 -0400
+	id 1wIV9w-0003QF-Vw; Thu, 30 Apr 2026 13:26:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV7V-0005x3-Lu
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:24:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wIV8P-00021K-Tl
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:25:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV7U-0004oV-3a
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:24:13 -0400
+ id 1wIV8N-0005GB-H6
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:25:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777569851;
+ s=mimecast20190719; t=1777569906;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=c7W/td9WC7oKoDNYDbvCT7O24njWTCLlpWgd2uxsklc=;
- b=WZNfONA5pSQsSxva1kRg/IpwTzqh0zLjVfpIHe7JTLSz8cqb/Lo4xDravWOY9hOm0t98Cq
- Zkf2LGwjaTammuMxZnTHaWid4Xf3c2cEUqfJ+d+Kzoi6XtvjdWYz24SVzHqghZJShMbke7
- YrUey0P8yweLPbtGGAWLEF2QMG8xx6I=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yugXUOUaHOka23f8HtiD3QBvgDV06yZwDFtu+hKNV3U=;
+ b=ccSffwSHeAc69QrSLW2+nOQyKOyhgNhmSWTNE9gQlJZcW2+OODb58g4IJunNlONTuyA9bP
+ 0HH6pC9fmN0vA2ckJ315yii1GBpsnUYRctrf3tHQz1ASeU6gVkLpeDspZD+dG8ko+19sT1
+ VvHxZJL+LExS9kZmJle9lbrB+3HgjQE=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-632-SU2nW3NoNbGyXKtcGzzOoQ-1; Thu, 30 Apr 2026 13:24:10 -0400
-X-MC-Unique: SU2nW3NoNbGyXKtcGzzOoQ-1
-X-Mimecast-MFC-AGG-ID: SU2nW3NoNbGyXKtcGzzOoQ_1777569850
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8aca29dcd69so31074346d6.1
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:24:10 -0700 (PDT)
+ us-mta-37-WEvvA5KfO6q8N0Oo85kPCw-1; Thu, 30 Apr 2026 13:25:05 -0400
+X-MC-Unique: WEvvA5KfO6q8N0Oo85kPCw-1
+X-Mimecast-MFC-AGG-ID: WEvvA5KfO6q8N0Oo85kPCw_1777569905
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-50fb6d713ddso19772191cf.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:25:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777569849; x=1778174649; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777569904; x=1778174704; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=c7W/td9WC7oKoDNYDbvCT7O24njWTCLlpWgd2uxsklc=;
- b=mIp2J+s8VqiSGUyrZiT2fG++fMSdLhhHIHPLEpGAtByGghrE6zpyZYzcP+GQuSL6dN
- LfNksNQeF188Y9a6PufOF71j8j2KaMlWrZgZqamOOJ9ArWMB1ERaA4DqjLVukMGyjWvB
- olAXLYmQ309exjgP6VIeM1amDYIAzvDQEYTfc0byRwRtIIEWjfbJ+P2j+yS6Cp/O5Y+Z
- dHUN2Lg3rHaMhjHZ6cTv7A4rDeSGEd91CjeO6gdZmvuGv9e1yeRE8sJ31duINM/bAwMr
- V96PUzcAleBbK5rZLIO8NcyYaN2LC2aoz+TFOpWFrk+tXKBrBWkpFD+6qFuPOqVWJQDS
- yQKA==
+ bh=yugXUOUaHOka23f8HtiD3QBvgDV06yZwDFtu+hKNV3U=;
+ b=PMJH6Hwm/9YXZSYdDKuucQWe95/aDWokdcyaR/aDKvVqx23TW95CFJHV3Oali3gM4x
+ SboQeQqYvORLcqcQC8UQKq3LORc6wHFRxh1uO2tFT25PpEl89CtDUQDaItW745eGAH4K
+ UEIm8W9FMZdN0gL4mIo6fXCIza29g3caJ2Dbho5iZLQr1VDapMgvRBZz3UYaIMoTOlPm
+ MdDft8aPalDsbXumqxEvbrmZEKsEvxaK1WG/8Wol13ANxThTA4+BNU7cuKQa/JVtIA48
+ 2mG920+DXbLmf2Pm7UwyXqOxikdduF/G4ayPjDxdlmgtsVolKNl82VtiOpRJ360Pbqxd
+ Eeqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777569849; x=1778174649;
+ d=1e100.net; s=20251104; t=1777569904; x=1778174704;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=c7W/td9WC7oKoDNYDbvCT7O24njWTCLlpWgd2uxsklc=;
- b=IDeRk0JT7t0HbAnMViEeRmcbT5/EATexQT6cynEeJV6AdPki62Tj+m/MPL9svsWUbX
- UIt/H8np55bJIfh7xytM/XzJV/pVbA/Mxc5tvLwYoe1WXvbtKFsgCOoFnTGHdX9qV1pJ
- iHH7CtMrWjOLDMazuRaQodFehaG/A1ywCmzvISFBCz6PIe0Taz1ZcSGfEEtdTIzpihwL
- nkYZAXkvkDfFsHcCXMlXYanPcZW5yKu7Mzqkppv1+paE74hAamkacMB/n0kkqLnDCB+0
- i5+m6bbpOedD6v0a1s2tQq8hbn9fO8/NYqk1UnKA7IfGsvxORNRjdi8kVMQA2yuUawz5
- Lo2A==
-X-Gm-Message-State: AOJu0YwZuSJ9PUtKR30otK8U2zOZwVGu7J1NuQwGE9hAFAgie/0RhdaN
- PhPheUi9RPg4t/pZxdGj9Ugc1f+HVru4SoCI2sxtxqX3gNXYRo9FQbc/dkCI0q96oSqS5VGfGuJ
- 6CMiZkFruOsP4qd2xzc6Wh3NxDTC3yOPuUgT7saDV20+9OxY9I0XmXpzMFCdl87uKaxD+RtBK5R
- kx/JN6RRXxSqTb+9kWlRXMU9XYY/ddAijro1f2ncK1
-X-Gm-Gg: AeBDievMeddrNhjUggTdVA4NR1kxZy9jDM0zYA2dNDoul+zQN5WPx2iDHcZVGXja3We
- c40T6UNiNHN2CW8UbbeX3p6ghYjwZBrlfSJeqIbpnAPi0HGBTO9hFhadUGyOjDnSzZREzd4Ur6b
- jIpFSbzpPky2NaPtHBZN7lAtD6+HDfvZSRoPM2y4SPXLC4745j77894GmEH62PviaXbk5j9eByh
- DIbcCLHAmufQ/bAtYWh9MKayTss24Vv1dSn08/EJKG1PHQVGQoZfOzVS4rnOfwG7J5IQ7Hv/lgA
- PSvwqK2xoUkuQqtjmxfFl9klTSooIhvM6Ixr5WbhsBU1rQnjMz68AvriZDLNvjuu2IU8p2GsDwG
- +L3kkTnAaTz3MJ8QiwJQDYyBHkYztKREfpTotNdSvugNsbbflJN3d2uqPdcLX9q9id0QjtIVHIi
- tyeEy0FE6rHvK22JxUB0g5Cc3nGYn6GC2d8+4=
-X-Received: by 2002:a05:6214:262d:b0:8ac:b24a:f543 with SMTP id
- 6a1803df08f44-8b3fece0147mr52755136d6.50.1777569849177; 
- Thu, 30 Apr 2026 10:24:09 -0700 (PDT)
-X-Received: by 2002:a05:6214:262d:b0:8ac:b24a:f543 with SMTP id
- 6a1803df08f44-8b3fece0147mr52754366d6.50.1777569848556; 
- Thu, 30 Apr 2026 10:24:08 -0700 (PDT)
+ bh=yugXUOUaHOka23f8HtiD3QBvgDV06yZwDFtu+hKNV3U=;
+ b=C8mfRpe8a717jtU+2wSXkUwhD83Lc7qVxmZamFkh7LAf352jlKv0+poLZtUmUNp7Ix
+ RflOjyYe4sVEI1X1dOHSdYfBNHP6A3qb+07QLDQAdVgPS6mMB5INebW1hLDc1oEIwDN2
+ RcGCdjHm02W6tjtUiz27h8fFMSh9NPGuKUnVRz7KwQZ7MXZ4oGlMUfOjJmWH04ekNT1A
+ ujoM03q83Vx61YptUpGFdkycCu0/9MkeCXnz4S3+4VK4L8xLdVqmYeXmE9t6crVio7iw
+ SgtTbONTSDK2Tb6dFdtMkVMvFpWIs0Gp4RpMUdDM38jQzYa8nciBCqvIWSSbdPHHxjDC
+ u1XA==
+X-Gm-Message-State: AOJu0Yw6c/aWTUHzCIphTRf2NwYOXBQptx35KW9VC/ylmUEEBXL/8E+n
+ cTDbtFHUOnBCfJZi+OUyaFAte7Y1r+MVjAgGMD8+jEGW9K4lC5q4OS2H3SHPRhfvsPTNXprv227
+ 1aL+pYBJpyBEEjAsZxoAQyZEiCMllJZQCpJL8Yry4fl8ZUrUvmExENrQUW8sQnK0Igb0CD2P8bc
+ SLEGQtKF9b4Hc4mGtgiIUXHCtgEMjGinUuOdqbHh4n
+X-Gm-Gg: AeBDieuSaUQn0Dtdb4xX+r5ikerERbEV4PjecYHLj6kSY146jDosyfiRPl/MkxJi1q/
+ zxiSJNuSwZbN3PTplk/2lkCkG6bV/YW78mvNwDadTNH6CSJxbqdqioTW2jiytqr6q/8ULEDdkmJ
+ 0m5SmSRIblx3vx1tRMwX32WsIbUs+JQg4fwvGgRzP1tVzGbc7cgg5n/efOnAYMsAC/QVoUPhe32
+ ivCPJ+WbwY4qCBbYnpOpYmM9N6L0lkMhCo8EV6H1ZbUgFc1f+pGVSFek81qOSKN15dgD6JvtJ6L
+ 6qi+9Jfi08YoiP1ub5aOvwYH1ydE6aSk/E6cczLR8JB1qGLMtqpwkwmcdIo487PvS12DwgjJvxj
+ VH8W8RKaGedq5/eX+QLy0EpMjC1cGJGdLxDPLogvvlaBZrIJfBj0K/NiSyQ4fYI0xf/Beu0irmH
+ pxVguBUirO6v42eSZXAdmkNfRbxxw4m3qHrqE=
+X-Received: by 2002:a05:622a:4d92:b0:50b:445a:4139 with SMTP id
+ d75a77b69052e-5102ae9301amr58774221cf.54.1777569903758; 
+ Thu, 30 Apr 2026 10:25:03 -0700 (PDT)
+X-Received: by 2002:a05:622a:4d92:b0:50b:445a:4139 with SMTP id
+ d75a77b69052e-5102ae9301amr58773251cf.54.1777569902941; 
+ Thu, 30 Apr 2026 10:25:02 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b3ff328884sm22928646d6.14.2026.04.30.10.24.07
+ d75a77b69052e-5103d1cb574sm605151cf.6.2026.04.30.10.25.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 10:24:07 -0700 (PDT)
+ Thu, 30 Apr 2026 10:25:02 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PULL 39/58] whpx: i386: enable GuestIdleReg enlightenment
-Date: Thu, 30 Apr 2026 19:21:45 +0200
-Message-ID: <20260430172204.1006673-40-pbonzini@redhat.com>
+Subject: [PULL 57/58] whpx: i386: add SeparateSecurityDomain flag and make
+ default
+Date: Thu, 30 Apr 2026 19:22:03 +0200
+Message-ID: <20260430172204.1006673-58-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260430172204.1006673-1-pbonzini@redhat.com>
 References: <20260430172204.1006673-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,29 +123,132 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-This corresponds to HV_X64_MSR_GUEST_IDLE (0x400000f0).
-
-This enlightenment is only available by the HV when using the Hyper-V LAPIC.
+For workloads where isolation is less important, -accel whpx,ssd=off
+will provide significantly higher MMIO performance.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Link: https://lore.kernel.org/r/20260422214225.2242-19-mohamed@unpredictable.fr
+Link: https://lore.kernel.org/r/20260422214225.2242-37-mohamed@unpredictable.fr
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/whpx/whpx-all.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/system/whpx-internal.h |  2 ++
+ accel/whpx/whpx-common.c       |  1 +
+ target/i386/whpx/whpx-all.c    | 64 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 67 insertions(+)
 
+diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
+index 15027a7d524..c295c5a5290 100644
+--- a/include/system/whpx-internal.h
++++ b/include/system/whpx-internal.h
+@@ -47,6 +47,8 @@ struct whpx_state {
+     bool hyperv_enlightenments_required;
+     bool hyperv_enlightenments_enabled;
+ 
++    bool separate_security_domain;
++
+     bool ignore_unknown_msr;
+     bool intercept_msr_gp;
+ };
+diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
+index d846e08714b..247e12db812 100644
+--- a/accel/whpx/whpx-common.c
++++ b/accel/whpx/whpx-common.c
+@@ -556,6 +556,7 @@ static void whpx_accel_instance_init(Object *obj)
+     whpx->hyperv_enlightenments_enabled = false;
+     whpx->ignore_unknown_msr = true;
+     whpx->intercept_msr_gp = false;
++    whpx->separate_security_domain = true;
+ }
+ 
+ static const TypeInfo whpx_accel_type = {
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 3426811c482..9fc44f8a67e 100644
+index d6bc36686c2..9d0c391e36f 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -2761,6 +2761,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         synthetic_features.Bank0.AccessIntrCtrlRegs = 1;
-         synthetic_features.Bank0.SyntheticClusterIpi = 1;
-         synthetic_features.Bank0.DirectSyntheticTimers = 1;
-+        synthetic_features.Bank0.AccessGuestIdleReg = 1;
-         /*
-          * These technically work without the Hyper-V LAPIC
-          * but behave oddly for multi-core VMs.
+@@ -2962,6 +2962,39 @@ static void whpx_set_intercept_msr_gp(Object *obj, Visitor *v,
+     }
+ }
+ 
++static void whpx_set_ssd(Object *obj, Visitor *v,
++                                   const char *name, void *opaque,
++                                   Error **errp)
++{
++    struct whpx_state *whpx = &whpx_global;
++    OnOffAuto mode;
++
++    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
++        return;
++    }
++
++    switch (mode) {
++    case ON_OFF_AUTO_ON:
++        whpx->separate_security_domain = true;
++        break;
++
++    case ON_OFF_AUTO_OFF:
++        whpx->separate_security_domain = false;
++        break;
++
++    case ON_OFF_AUTO_AUTO:
++        whpx->separate_security_domain = true;
++        break;
++    default:
++        /*
++         * The value was checked in visit_type_OnOffAuto() above. If
++         * we get here, then something is wrong in QEMU.
++         */
++        abort();
++    }
++}
++
++
+ void whpx_arch_accel_class_init(ObjectClass *oc)
+ {
+     object_class_property_add(oc, "ignore-unknown-msr", "OnOffAuto",
+@@ -2974,6 +3007,11 @@ void whpx_arch_accel_class_init(ObjectClass *oc)
+         NULL, NULL);
+     object_class_property_set_description(oc, "intercept-msr-gp",
+         "Intercept #GP to log erroring MSR accesses.");
++    object_class_property_add(oc, "ssd", "OnOffAuto",
++        NULL, whpx_set_ssd,
++        NULL, NULL);
++    object_class_property_set_description(oc, "ssd",
++        "Separate security domain");
+ }
+ 
+ int whpx_accel_init(AccelState *as, MachineState *ms)
+@@ -3169,6 +3207,32 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+         }
+     }
+ 
++    /*
++     * The combination of separate security domain off
++     * and disabling specifically these features results
++     * in a significant vmexit performance improvement
++     * by skipping speculative execution mitigations.
++     */
++    if (!whpx->separate_security_domain) {
++        processor_features.Bank0.IbrsSupport = 0;
++        processor_features.Bank0.StibpSupport = 0;
++        processor_features.Bank0.IbpbSupport = 0;
++        processor_features.Bank0.SsbdSupport = 0;
++        processor_features.Bank0.IbrsAllSupport = 0;
++        processor_features.Bank1.PsfdSupport = 0;
++        memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
++        prop.SeparateSecurityDomain = 0;
++        hr = whp_dispatch.WHvSetPartitionProperty(
++            whpx->partition,
++            WHvPartitionPropertyCodeSeparateSecurityDomain,
++            &prop,
++            sizeof(WHV_PARTITION_PROPERTY));
++        if (FAILED(hr)) {
++            error_report("WHPX: failed to unset separate security domain, hr=%08lx", hr);
++            /* Some old Windows 10 releases didn't have this, so not fatal*/
++        }
++    }
++
+     hr = whp_dispatch.WHvSetPartitionProperty(
+             whpx->partition,
+             WHvPartitionPropertyCodeProcessorFeaturesBanks,
 -- 
 2.54.0
 
