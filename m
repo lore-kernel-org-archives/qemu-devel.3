@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 969B4CD13DE
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:30:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD1BBCD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:30:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIV7e-0006lM-35; Thu, 30 Apr 2026 13:24:22 -0400
+	id 1wIV8e-0002fi-V7; Thu, 30 Apr 2026 13:25:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV6y-0005ZJ-KT
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:23:47 -0400
+ id 1wIV8K-0001yQ-Sy
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:25:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV6w-0004cm-KQ
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:23:40 -0400
+ id 1wIV8F-00052c-Uc
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:25:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777569817;
+ s=mimecast20190719; t=1777569899;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cl5a3vj9rnwbfPX/dYSVMjKJHNNMYrzpW3sXgWpfcTE=;
- b=hlDF4LoAY+syJ+Z9KqDplemjAvv+USPv4kkX3vgQ7Ft9TuD/0nI1Z5BjMiBFeMet7TV1Ih
- HHgUTL9jYwAiKhAKT3unFoiJtuHiAi2edEAWIsMA7fiO/Bm3KU6CzP3Unv0cm9tLiiuTbB
- SDKmTdAP1nSV8wdDsl2jE34+/OgO8mc=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nLW0aaUZkJx8RbCCaKKrQoxsx4JCtu9Gx9IDHjchKLU=;
+ b=dvQoMx7vqkDkMmnS3knTxlOrKd3yzojFn45gcUDJXuyV5faFPUk8Ac1ABwORCHQD4i9JWF
+ uWCwEwtKvb2W0FmQnoxeWPSkHyGVtMwV/OTiwUCEyI3zCrJ3om7QE1ujglRWooMNOWvhml
+ GpkpHmQgzfjX52NPW7RJ6RLigL3P7GE=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-475-XuUWmEiHMo6D22x66pFAMw-1; Thu, 30 Apr 2026 13:23:36 -0400
-X-MC-Unique: XuUWmEiHMo6D22x66pFAMw-1
-X-Mimecast-MFC-AGG-ID: XuUWmEiHMo6D22x66pFAMw_1777569816
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8a22dbeeb96so25824296d6.3
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:23:36 -0700 (PDT)
+ us-mta-633-TISnxUsuN4SAmG_JaSvqtg-1; Thu, 30 Apr 2026 13:24:57 -0400
+X-MC-Unique: TISnxUsuN4SAmG_JaSvqtg-1
+X-Mimecast-MFC-AGG-ID: TISnxUsuN4SAmG_JaSvqtg_1777569897
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8d654ade33aso487389985a.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:24:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777569815; x=1778174615; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777569897; x=1778174697; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cl5a3vj9rnwbfPX/dYSVMjKJHNNMYrzpW3sXgWpfcTE=;
- b=PDjvzOR/Vo4S3etgFeUjmcvuDtKbIxF7kvt07Zt+Hx+n2y0zQpUJ4McaxefWeoTt7L
- LWJ89h65nMbLSlP+Ovd2xjTnnm/CH4TKUv8kZ3lEevhSNBWZOg2Lcg4SaOaHSve/o6A5
- dzjRXti/c3nGQGlmVETEMYHXQE3IADZughT2tDTfxcDr01Q8SZNeXjwNdH9JTR2Yr5M7
- vCGGSiI5nEAaaUN8pDs8ZiHvJE5k/K9lFk4LWsqgn7IRZsexLZ+myguScYMC23tOvhg6
- gUIA8h5tHJcT+SVoV9S5MwtUc5HkmENMOCask3lUJd9AnqQCwUeD3CNzFZnBbXBTInkO
- IRRw==
+ bh=nLW0aaUZkJx8RbCCaKKrQoxsx4JCtu9Gx9IDHjchKLU=;
+ b=PIWTcvgKHcp+j1uYafRifGHROaTtXx3EUEN8NfO6tWk294EVg4QaHYGV9MLeQDdNpl
+ ElmJpXmK0LmpSDHAUy+yXMzvNN72Cf9B6rdmoUftNSLUBxUe5eg9hle0mxcnghEJfaDY
+ obyjeQmphdXbR+goG3PBhQTbRII0xXofVM4SR0RydpZLWLLpv8gDr+ksVr/BOlqFyR7Q
+ P+pdg/2ccCYfO2A3pkkjnV47NtJQ9/E1OKSgnWXpd+oZRWji2kLZ32Ls9uQGb9aK5tRe
+ ZQIEmA/Wf/OYpAgNsYVgyIv5+/ktnCGbJ44W3YGDtA2VMQUMuZ+h8BuvhqiDdiJEwKhQ
+ 1KSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777569815; x=1778174615;
+ d=1e100.net; s=20251104; t=1777569897; x=1778174697;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cl5a3vj9rnwbfPX/dYSVMjKJHNNMYrzpW3sXgWpfcTE=;
- b=FCah4Rs482ImeRlaTxPSrBnJblvZedM45ybOVil5nITHBmm2d/yq9zf6YZ4spzTzHT
- 8e5jjlskKkfEo6YrKS/5/IjiHiRUFSWPU806iu0v0oLkvq/edX1QUcvHwLWaCxIm0Mo2
- Q9JqS+VLuv4PVM6rivwEA7RB5TC/q0UMIFeNwQXY3B7tWcvo4ct4sAg06CjpbLbvsxoH
- /yaTjOKCgH3XsHs4lfDE0Ddrwo8dV5nJBSeDGaV7kd6+WrSRfoI2148fbNI99lhSRNaM
- 3CALYT2jkCZimG+E1bTx1N+F9liqpuKNdJWRtXVAayw3nn34m7a6QbEX7YygpH5ujgAR
- eErw==
-X-Gm-Message-State: AOJu0YwwU8V5o2+EGDqKW3G6hzhHlM9xsGjVw0+f2rCM72PqK9GhY4cw
- bleVlSMLUtnx88svv1BVB6cnefhCYKQjU89tOHNuwyqCZvluF9KY6L+ggZtBLVl0fXOrG00Zn9a
- aOKZ6zF5gifZgJ/81gQIFq+aH1sdkPOw7RL1YPXlvtTTUPATBMf1F/FLcQT4Eb9ej+QdkzROL/f
- YFNogpkpkbkk9WpXl7dW571WKmpeYjs+/phfkeFz25
-X-Gm-Gg: AeBDietBuCL0a+lhTh7ZKcHp3jF0EkLbmbaF31HV2zFFbNGiBc6eP3dkzhQMPTBwCuE
- Z8/s3wa3MaDiZA5gfxaFcgfbe0WFyr+6Fd5raNpv77HXo45FCiKEVCNSlwqu0kT7hGaRSdy1Yh6
- umSrQSAxRSO+7yUVobT7C00V9S5BW15cJL5xtKQTPcvYYJptX9tIi7rZaatyt2XYTCFiJ3a/NMf
- bi6ZSGPP23umhN2VVaYeXHVKNWE8jTfh9g8EJq/dQDQwq2EPEIa/F/ToWXV/nbNjmb0H2a5UsyR
- jVCtn28VZu3Gm2tS9Ff7yjIf6taKFJlXtUdMe38mX0Gk+RRdmjRneFLFOG80IcQwq0t50a1XYZa
- k56lSxEm8ot5EkTPBUIAsCDDaotf7+8kiIabgbJ7+E7/ARjNFmaLbOTF2LI3jqrZfBrOWPx09AX
- w3eWgoy1MhmL8+zjQtkJE6XqL4I749D9NoPVc=
-X-Received: by 2002:a05:6214:600c:b0:8ac:801d:c3dc with SMTP id
- 6a1803df08f44-8b3fe6f7050mr51807866d6.9.1777569815179; 
- Thu, 30 Apr 2026 10:23:35 -0700 (PDT)
-X-Received: by 2002:a05:6214:600c:b0:8ac:801d:c3dc with SMTP id
- 6a1803df08f44-8b3fe6f7050mr51807256d6.9.1777569814646; 
- Thu, 30 Apr 2026 10:23:34 -0700 (PDT)
+ bh=nLW0aaUZkJx8RbCCaKKrQoxsx4JCtu9Gx9IDHjchKLU=;
+ b=g97e1talYysu2UW4uEQWXyKxLM89+kHvt9EwdQq+GGGxMZHWnZ7uVb1hhLZmjnUg/c
+ yYFMIsU4h8ukw7NwpHTBwBfHwLtKritkmx4m4oT0ozi69J3pl8bjztIaaH++7y6b+FEm
+ JNNVS8YIKVMvxBdb6ZDj+6f+/yE9zXGbY3sMwZRqUyvd/kMqu9tCd9Kj41MnDQJpQzxJ
+ QhDpC+0zOaQ+B/YaJLJf7Z8rsR0Jwd4KkPXKwC88Mz+11fbcQ7wYSm8B0Vb9LNz0GMyq
+ 9GAezI7zm1pomvC+tGPnBCVw6lRlYlByFRIg+AmLbuthHamxwn/k73IbOxpoXGwTCkq9
+ aing==
+X-Gm-Message-State: AOJu0YyPObOlr7BgwlxqOQaqGdS7CzLS/wjTATCre4P0Rqk9ddmzdM8y
+ f26DY51lm8MujuliFM9iTgDt4rGBgr2DMG+gly3OSOkbr+v+cYakgEj+ZUY3Q+GdihY/tGK+wx3
+ AOZReTJ/XntjE6XSzN6LZk4bvnLJIa6qrWOibqp68zFQcgtWZYjpyTuo7ElPj1U+WL2E0kDtF9y
+ /wur0yvP0t742QoGD77woMCODPTEpfITKSHZ/v8S8D
+X-Gm-Gg: AeBDievwFnR+dw86kXL0B4wg7CbnEHTvGu5nWha6xGBkEpmyDMMoeOfOCUUUotU/JM5
+ fOdfvKoYK79/uF507hF45wesGQR1Koi4RUUJXZKQ4QEoLO+VGVb8yESE8VGbI67dfWarQ4tyL71
+ y8km6ExsFxKYMvCpuklNsu8HFHW4D6s5PUmldFZI2Fbzz+12q0EPQ9dQYl+GWI4L6F9kT6ppXw8
+ ta+rslmBM2nGfLNHtiXZAtldyFX+KqeNsLQAoOkrJaNHxTHLqRSd0EZ4APpXn5vt7CNWfVR+d94
+ XQDWIQqHV0aXmKIUgUsfFbFG+TIiutaDuNMkUdxntor9dqQiQpshJOACK60hfX0QhV2u+FoYtX/
+ P4LHPdmbf0JIlVBKL+rI4ca6Egeol+Y51y6Pjg/10Aaa8YyHjT4TJpTwVr/fFR2cNkfA7frKGoL
+ dP28ekAevYqjTgA0eK3r9uHbnTL/o6ypg2K78=
+X-Received: by 2002:a05:620a:4726:b0:8f2:8bb8:cb6d with SMTP id
+ af79cd13be357-8fab8d08b37mr468671485a.12.1777569896864; 
+ Thu, 30 Apr 2026 10:24:56 -0700 (PDT)
+X-Received: by 2002:a05:620a:4726:b0:8f2:8bb8:cb6d with SMTP id
+ af79cd13be357-8fab8d08b37mr468665385a.12.1777569896335; 
+ Thu, 30 Apr 2026 10:24:56 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b3ff307a48sm23204516d6.8.2026.04.30.10.23.32
+ af79cd13be357-8fbb09fc964sm27957485a.9.2026.04.30.10.24.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 10:23:33 -0700 (PDT)
+ Thu, 30 Apr 2026 10:24:55 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PULL 28/58] whpx: i386: reintroduce enlightenments for Windows 10
-Date: Thu, 30 Apr 2026 19:21:34 +0200
-Message-ID: <20260430172204.1006673-29-pbonzini@redhat.com>
+Subject: [PULL 55/58] whpx: i386: update migration blocker message
+Date: Thu, 30 Apr 2026 19:22:01 +0200
+Message-ID: <20260430172204.1006673-56-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260430172204.1006673-1-pbonzini@redhat.com>
 References: <20260430172204.1006673-1-pbonzini@redhat.com>
@@ -122,158 +122,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Was removed in 2c08624 but it's still useful for
-Windows 10 so reintroduce it there.
-
-And this time, actually make it work by reporting
-the hypervisor bit in CPUID.
-
-Pretend to be vmware to be able to use vmport's functionality.
-
-If the vmware frequency leaf is disabled, pretend to be
-KVM, with the only capability reported being X2APIC support.
+Quite a part of it is from older times...
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Link: https://lore.kernel.org/r/20260422214225.2242-7-mohamed@unpredictable.fr
+Link: https://lore.kernel.org/r/20260422214225.2242-32-mohamed@unpredictable.fr
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/whpx-internal.h |  1 +
- accel/whpx/whpx-common.c       |  2 ++
- target/arm/whpx/whpx-all.c     |  1 +
- target/i386/whpx/whpx-all.c    | 61 +++++++++++++++++++++++++++++-----
- 4 files changed, 57 insertions(+), 8 deletions(-)
+ target/i386/whpx/whpx-all.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
-index 5902124b637..cf782cf5f89 100644
---- a/include/system/whpx-internal.h
-+++ b/include/system/whpx-internal.h
-@@ -45,6 +45,7 @@ struct whpx_state {
- 
-     bool hyperv_enlightenments_allowed;
-     bool hyperv_enlightenments_required;
-+    bool hyperv_enlightenments_enabled;
- 
- };
- 
-diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-index b813a5d9d25..59be996aefc 100644
---- a/accel/whpx/whpx-common.c
-+++ b/accel/whpx/whpx-common.c
-@@ -550,6 +550,8 @@ static void whpx_accel_instance_init(Object *obj)
- 
-     whpx->hyperv_enlightenments_allowed = true;
-     whpx->hyperv_enlightenments_required = false;
-+    /* Value determined at whpx_accel_init */
-+    whpx->hyperv_enlightenments_enabled = false;
- }
- 
- static const TypeInfo whpx_accel_type = {
-diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-index bbf0f6be961..4019a513aa7 100644
---- a/target/arm/whpx/whpx-all.c
-+++ b/target/arm/whpx/whpx-all.c
-@@ -968,6 +968,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-      * as they're not needed for performance.
-      */
-     if (whpx->hyperv_enlightenments_required) {
-+        whpx->hyperv_enlightenments_enabled = true;
-         hr = whp_dispatch.WHvSetPartitionProperty(
-                 whpx->partition,
-                 WHvPartitionPropertyCodeSyntheticProcessorFeaturesBanks,
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index 4954e0557a7..f9f330c038f 100644
+index ce04d6b06f9..5750539ee49 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -2168,14 +2168,57 @@ int whpx_vcpu_run(CPUState *cpu)
-                 vcpu->exit_ctx.VpContext.Rip +
-                 vcpu->exit_ctx.VpContext.InstructionLength;
+@@ -2622,8 +2622,8 @@ int whpx_init_vcpu(CPUState *cpu)
+      */
+     if (whpx_migration_blocker == NULL) {
+         error_setg(&whpx_migration_blocker,
+-               "State blocked due to non-migratable CPUID feature support,"
+-               "dirty memory tracking support, and XSAVE/XRSTOR support");
++               "State blocked due to missing dirty memory tracking support,"
++               "And some system register/state save-restore ");
  
--            reg_values[1].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRax;
--            reg_values[2].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRcx;
--            reg_values[3].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRdx;
--            reg_values[4].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRbx;
-+            if (whpx_is_legacy_os()) {
-+                reg_values[1].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRax;
-+                reg_values[2].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRcx;
-+                reg_values[3].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRdx;
-+                reg_values[4].Reg64 = vcpu->exit_ctx.CpuidAccess.DefaultResultRbx;
-+            } else {
-+                cpu_x86_cpuid(env, vcpu->exit_ctx.CpuidAccess.Rax,
-+                    vcpu->exit_ctx.CpuidAccess.Rcx,
-+                    (UINT32 *)&reg_values[1].Reg32,
-+                    (UINT32 *)&reg_values[4].Reg32, (UINT32 *)&reg_values[2].Reg32,
-+                    (UINT32 *)&reg_values[3].Reg32);
-+            }
- 
--            if (vcpu->exit_ctx.CpuidAccess.Rax == 1) {
--                if (cpu_has_x2apic_feature(env)) {
--                    reg_values[2].Reg64 |= CPUID_EXT_X2APIC;
-+            if (!whpx->hyperv_enlightenments_enabled) {
-+                switch (vcpu->exit_ctx.CpuidAccess.Rax) {
-+                case 1:
-+                    reg_values[2].Reg64 |= CPUID_EXT_HYPERVISOR;
-+                    break;
-+                case 0x40000000:
-+                    /*
-+                     * Use vmware_cpuid_freq as a proxy to report VMware.
-+                     * This is to get the TSC/APIC frequency query functionality
-+                     * provided through vmport, as Linux doesn't use leaf
-+                     * 0x40000010 for getting those frequencies.
-+                     */
-+                    if (x86_cpu->vmware_cpuid_freq) {
-+                        reg_values[1].Reg64 = 0x40000010;
-+                        reg_values[4].Reg64 = 0x61774d56;
-+                        reg_values[2].Reg64 = 0x4d566572;
-+                        reg_values[3].Reg64 = 0x65726177;
-+                    } else {
-+                        /* report KVM otherwise if that's disabled */
-+                        reg_values[1].Reg64 = 0x40000001;
-+                        reg_values[4].Reg64 = 0x4b4d564b;
-+                        reg_values[2].Reg64 = 0x564b4d56;
-+                        reg_values[3].Reg64 = 0x4d;
-+                    }
-+                    break;
-+                case 0x40000001:
-+                    if (!x86_cpu->vmware_cpuid_freq) {
-+                        /* KVM reporting of X2APIC support */
-+                        reg_values[1].Reg64 = reg_values[4].Reg64 =
-+                            reg_values[2].Reg64 = 1 << 15;
-+                    }
-+                    break;
-+                case 0x40000010:
-+                    if (x86_cpu->vmware_cpuid_freq) {
-+                        reg_values[1].Reg64 = env->tsc_khz;
-+                        reg_values[4].Reg64 = env->apic_bus_freq / 1000; /* Hz to KHz */
-+                    }
-+                    break;
-                 }
-             }
- 
-@@ -2396,6 +2439,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     WHV_PROCESSOR_FEATURES_BANKS processor_features;
-     WHV_PROCESSOR_PERFMON_FEATURES perfmon_features;
-     UINT32 cpuidExitList[] = {1};
-+    UINT32 cpuidExitList_nohyperv[] = {1, 0x40000000, 0x40000001, 0x40000010};
- 
-     whpx = &whpx_global;
- 
-@@ -2601,6 +2645,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     }
- 
-     if (is_modern_os && whpx->hyperv_enlightenments_allowed) {
-+        whpx->hyperv_enlightenments_enabled = true;
-         hr = whp_dispatch.WHvSetPartitionProperty(
-                 whpx->partition,
-                 WHvPartitionPropertyCodeSyntheticProcessorFeaturesBanks,
-@@ -2653,7 +2698,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     hr = whp_dispatch.WHvSetPartitionProperty(
-         whpx->partition,
-         WHvPartitionPropertyCodeCpuidExitList,
--        cpuidExitList,
-+        whpx->hyperv_enlightenments_enabled ? cpuidExitList : cpuidExitList_nohyperv,
-         RTL_NUMBER_OF(cpuidExitList) * sizeof(UINT32));
- 
-     if (FAILED(hr)) {
+         if (migrate_add_blocker(&whpx_migration_blocker, &local_error) < 0) {
+             error_report_err(local_error);
 -- 
 2.54.0
 
