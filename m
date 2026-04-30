@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3AF2FF8875
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 05:21:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 570FFFF8875
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 05:22:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIJqI-0006Nk-30; Thu, 30 Apr 2026 01:21:42 -0400
+	id 1wIJrD-0006mk-DS; Thu, 30 Apr 2026 01:22:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIJqG-0006Nb-Uw
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 01:21:40 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wIJrC-0006mF-AQ
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 01:22:38 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIJqF-0006Ih-Cp
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 01:21:40 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-488af9fdaa7so2163325e9.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 22:21:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wIJrA-0006T6-Su
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 01:22:38 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2b941cd869cso2970805ad.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 22:22:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777526498; x=1778131298; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2rO332CAFh7rKoeauTxc8pTMwUBPGstC6T94TCgKw6g=;
- b=l6AG7JvP27lFgp/bGOXBy5Rc9FIfeqXvhkRhRdgjZ6d/k6cCwfYB+o3aA/oClXWR+B
- 2C8FiKE2c5rpeIyI2uBz85uP2CjKCnvMkHWaPqiDtCE6nNWN3Z4PrWzvwZXvkzQjzRIC
- T1FFi3E6awMwgRxxhh87UFwjnpEdPkDSqWywb+VBTTNru2p04tiY8CzdvntzN9N8timK
- gJDU5uWn8Vlho5RVb1aXnxXBbmtU/TcigEZEO5riRBM2nRZlfvclsCNJjxDrgELulEsJ
- iLTXKgqtrAofjpmlW7ZG3tL0tTjd/HQtSr1aD8FnoRqkb5PXLKPBwFXpnOGHtwgB6vDL
- aoOw==
+ d=gmail.com; s=20251104; t=1777526555; x=1778131355; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=zglM3fCY+SQjEWXlZqniJXtYbtvWTZBMJy9hZhgaAJw=;
+ b=obe0tcJvTbAU9Bt9vaKe1mNsNyuyDv9dg1GhBx+d8dDPga0x5Vq9bgz8nMs2miwyPv
+ 5HjfrefQgwOq/5U9XzWHGD/ZcHzZQV6SRPrdj6NmIfqrXxo5dZYNXObhW3OcDID7OtYv
+ kK3aVOHJNPs/jd2yfWqTWW9oTBHGwv7+AKAuldq01B94cv+ylbhbn4zhDgyYzxMmvhd5
+ 4qj1PhqPwfm+FVJLF0+ngcJNKRXhr2i5fPKq4Gr4j3QSCXeWptYxmMOguCMnotgYe9Wz
+ o+eWUq/D0hwngyTe8y/ljI+rvUtDz03kvQz9l1Y56d4FSl1cZUmFsEdvfvH+aAKSy2hy
+ UttA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777526498; x=1778131298;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2rO332CAFh7rKoeauTxc8pTMwUBPGstC6T94TCgKw6g=;
- b=b0lnSkamYMBEtp283W75lRDNF+nyCuhSdh4U1B+kpxihfl2LElYjTpE5y/0PuYn0rI
- 2dkrNuPGkdszGV6Yi50YvNgdWfXJ6E/U4VML33080nDqmSH59LNbyh2NpzcdyrdfgyiM
- JTH5Y0o0baRgrPktkxQtdNjra7jVmm6cF38BI6J4COAqnHyBBWgGfFuZEbFFJrlM4JJv
- bvLbwBfWqk9to0MWi9bMiq0o6vFmcGfXYjc39HYTsAXh1mm6wDWNlpKEXqFQU+WoUYC2
- O9P/Ew77hHWR3gzLH9tIN7OcAIaT/uHe8MwHkT/HbhJdpgeR1HoWNcszXaKGjlXXqgGq
- WlzA==
+ d=1e100.net; s=20251104; t=1777526555; x=1778131355;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zglM3fCY+SQjEWXlZqniJXtYbtvWTZBMJy9hZhgaAJw=;
+ b=ZtaVlNLNDz96BDJtur9KoKzb9i73wzNCaJgsN6FDqiFgeP1GBqC7RV6Pz+Y/CQ7EW8
+ kGJM3B/tDL47PfjhUsgrsJkAB3ogKZnhdIH/TWlfpAYxSGasgtd91Ts+oWqVw+k7LUNa
+ fl5bJXfiPQ9hvqIMnAXftq2mjlx9OFEShGkJCvBWUNRr/FANaxyRNSEYDQQjpXqA/kOx
+ aVkcOzRCnqZtCVSkzWHbQyLmjSBTxDNBZcL6rTM/VE02J/bnCalNnBcJ0grT5cWrH8Nq
+ rbUx/p3x1RTfMk8lBkHc9iXT5NYoaa8OjUM3nJOhcaYhfX1rTNdIHreINr0dIYXXXR22
+ 0uOw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8oiKYk7Q5r6eIh/NkYuxOyo21K3azfV9y2hf55Vg0FgUr/iut+rK1Jg6U3VyVwNhtQvxi9V7SiaL8B@nongnu.org
-X-Gm-Message-State: AOJu0Yz2We33hpkhYGZ7RYzsWkbLdP79B5Kq5cksmwgJYcOuGLrx43Tu
- 4GJ+Cf0CkASBc7b7nrdNqdJFiTdx4y/UENm6SZTPdfFIDB63/wvTmqW2c/H42imimto=
-X-Gm-Gg: AeBDievCIUBUok8IJBWnDQyObmoKsEEKdgY6/4q53lU9gJDpkfTeac4rEcXQqAYmxbA
- kB8H5tuEqY+ijbGHjoN4ApeOHc0izrE8R+tXaLzoDrjPCTnwK7z+OJh3+s1M0p9kGy9x9CAJwub
- sB49nrUGRK/HvkAMq7TviEkL1fmFfo4uv5mnBpIIpg4S0qNQE7oAW2FKRUnklsqlpkzws60fLin
- VqDZ7sksApd4cGuWlR7ZYqq2Q+gIbk8tavQ5eJiFJcRtvMsrCoU+DQX3Kc7MTtrYTA+Kjyp47ee
- ljWB/OTliHVf0ccsYHNLVYgDFtxVUkUxr8tkErJpmJIM8J29jVrnxz0yy9ahsWjF3B7BDhAuKIH
- eOBosuHy5iHj+AflIXdpTOmaA7cb5gzMWO39vSN08jZfUOY0n3m3WGPUREeurb8mp/lUFiSfMeG
- zePX5ytOCmypbhsJHigipQX5mrhHSOfFuC4oiVQwwkNHbkKE8SYMPWuzZ4Fe//DuubaPdrn64z7
- g0+
-X-Received: by 2002:a05:600c:8710:b0:48a:581c:ead with SMTP id
- 5b1f17b1804b1-48a844448f9mr23602025e9.10.1777526497735; 
- Wed, 29 Apr 2026 22:21:37 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a81ed69fasm52410255e9.3.2026.04.29.22.21.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Apr 2026 22:21:36 -0700 (PDT)
-Message-ID: <eae051c5-29fb-4aa6-802b-d157f46fd1a5@linaro.org>
-Date: Thu, 30 Apr 2026 07:21:36 +0200
+ AFNElJ9ajtviAZThp1LrGPtmjoiySBQnw4mjbAOAUqNt7Uxrfw38PkFteWC/nHiAqUsO9TwtbR/5xE774HlJ@nongnu.org
+X-Gm-Message-State: AOJu0YyB2pSIDFSz4tEwWOn8BH1tvszGjFYMG9ztHeQKKVlQz9vPExKP
+ HXaeyOHYWyLPH7b7aLpoRDrD0QLb6hFZOz5AdudTssY5mRooS4N+HRTIiaXNfw==
+X-Gm-Gg: AeBDiet9LnRuNFeRVf/bxqiq8DglUJ4NPtsD6x3nsyNM2tYPV3R96xXcnn5W0cYSA4+
+ 2Uor3wVmjjJOOlEXg2unQXzNt68HFXZCl7/EDROt5ZyxjjWJTYhbTIfj4+2JeWIWkbm6y2VYrpL
+ qxXbAQnNqjEsyh25TO4Wa6dSSoRdSUUm52VFYv0H8/ffIBhnaO7AGkcQfJLBeWRx0hg6TLevI/1
+ wEUv6cF0ZNdFAmdPcO2ZtecTJb1ntgFgnZgvC1PrUaINlXRJKfFrf5F60gpehTAvrdN4jBwtSdE
+ fqDvV+HOGVqMdZw8B+foKLetnPOvvl7+sC03y799XuudbqUhOrU10It63xMsHPej5/tshPvjVT8
+ Rz7TzUJ6IKIhLKXSK/NEoYnPlRufJFBDLVzdHWqgGrRBrws8LQYzLUDAUp+ZY/rnDIQFPktBR0e
+ wfUERNkgH/T29UC3r+YQm+cECzUW5kB+egCSHFhm4UgvUZsQHO6QyM
+X-Received: by 2002:a17:902:c406:b0:2b2:4a9a:b149 with SMTP id
+ d9443c01a7336-2b9a233d195mr15649275ad.9.1777526554864; 
+ Wed, 29 Apr 2026 22:22:34 -0700 (PDT)
+Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b988985b52sm38934965ad.75.2026.04.29.22.22.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Apr 2026 22:22:34 -0700 (PDT)
+From: alistair23@gmail.com
+X-Google-Original-From: alistair.francis@wdc.com
+To: palmer@dabbelt.com, liwei1518@gmail.com, daniel.barboza@oss.qualcomm.com,
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com,
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: alistair23@gmail.com,
+	Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH 0/2] target/riscv: Update deprecated machines
+Date: Thu, 30 Apr 2026 15:22:16 +1000
+Message-ID: <20260430052218.771358-1-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 37/40] fpu: Return struct from parts{64,128}_scalbn
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260430000524.56046-1-richard.henderson@linaro.org>
- <20260430000524.56046-38-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260430000524.56046-38-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,14 +103,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/4/26 02:05, Richard Henderson wrote:
-> At the same time, export.
-> 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/fpu/softfloat-parts.h |  3 +++
->   fpu/softfloat-parts.c.inc     | 14 ++++++++------
->   2 files changed, 11 insertions(+), 6 deletions(-)
+From: Alistair Francis <alistair.francis@wdc.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This series removes spike as the default machine following a long
+depreation timeline.
+
+We also deprecate the now unmaintained shakti_c machine.
+
+Alistair Francis (2):
+  target/riscv: Remove spike as default machine
+  target/riscv: Deprecate the shakti_c machine
+
+ docs/about/deprecated.rst | 19 ++++---------------
+ hw/riscv/shakti_c.c       |  1 +
+ hw/riscv/spike.c          |  1 -
+ 3 files changed, 5 insertions(+), 16 deletions(-)
+
+-- 
+2.53.0
+
 
