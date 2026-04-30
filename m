@@ -4,94 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E14C3FF8875
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 10:47:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5FB4CCFA13
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 10:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIOt7-0008MY-70; Thu, 30 Apr 2026 06:44:57 -0400
+	id 1wIP6V-0006zR-BA; Thu, 30 Apr 2026 06:58:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wIOt1-0008If-Ls
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 06:44:51 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wIP6L-0006yQ-GN
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 06:58:37 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wIOsv-0005LC-NR
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 06:44:51 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-488b150559bso5380835e9.1
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 03:44:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wIP6J-0000DN-KM
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 06:58:37 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-6563f83ae9fso843004d50.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 03:58:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777546714; cv=none;
+ d=google.com; s=arc-20240605;
+ b=e0m1Zem76ChxHtqREYhrLHc4RNBHBRLYBknok5TFr6YGvAkuHAQL8zjqIIjVlUVxJX
+ q2h7NJGw4BfY+7H9ISXFPovR0CvOwBXmxi9RCZ/qJG88/W8KiAG9bGpQVEXbFTtMymOz
+ DVnDCN04EQHNR3vPBSFCJPiEaL7iKRM5gJAcSGfjUoUfBr4SAMM0+miO0xEgMZIjuTjq
+ 5GwZqiVHPKh4JkV6G6U/RkndkejXPv5beNv1KHbRzZDsl6sdkZdiyRgcU4iC8a+Mr+Nl
+ mznPpo5THd/Bqi0ZI1AjsNxFX54eiLy0K+CMEUXRcYArbpSblVe8gyppd0JCQzeKVzeS
+ Jdmw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=jPSxtL6gUHm/KeScKjAHVZDuKSG3q6q2SErUdUcQGDw=;
+ fh=L0+NiO1dk2svgH8TdO1hLVvvgiN+SVSZdG3CsBcLNBc=;
+ b=BBsQr8YchititGcQrs6dA+j0YNxJOcRLcnZxO5cWBoiczau0Rg8N/njQS66thWC9EH
+ vIrsh4PmdUuK2Kz3YtaE22zZjnK/HNieUAnx7/G962FuFKSLQEmTEjVg3NstebsDikw2
+ 6kfBypaxabBnebLX/thWCVMvbbb3boB+JPKvVRkBxnTY6Cx2+zmfLRyYJ2iBPugbZgFX
+ K1dvx6eV9yuXTr41Z+MkYuNY2A2psD/4os+kfjiKxDVAfL+JNBFCRTPCZcuB6Mb8tC+x
+ GWDaFcChvlNL9T+7xkXUmdnWu3QZdOOCzXCuHsQaFplR/MrBcSi/HQ4tdZgNkQzJkgiK
+ 1aaQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777545881; x=1778150681; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1777546714; x=1778151514; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IcPSBiwzrF8PlqagZ+bzBqOtmIa2hTG8ka0zp0wOeJQ=;
- b=DsfR6PUzNJ8BWzigpIAZjf1xA7tNoZELc2oceB618l5Em9IP9AK2Y/1hxVKry8r6V1
- ZYYF9QES1wVz68R+vgaipJy4d0hfxh9O4oFZ3ok9NyG3xwx4j2pWodQDGKAi2/xVN5oS
- oX8STPHa+s+r5HQ/GhgH9V7VHzkUuxecseLltYBe+tPWTSzFCn6How2iGg35jGxaO1yP
- ilQwB5Jq1c6IwHRMA5JxDNa+lwS4TLxjtTKmSx3+ygR7fT4nzk9N7Ez9+Hid70EZpXzC
- QaQMzecuDvvp7e/pI49xZ1pnhSvle9ttujTNKq2xxnDCIiodC+bO5fJgcKCsKWH3Zuwo
- S9tw==
+ bh=jPSxtL6gUHm/KeScKjAHVZDuKSG3q6q2SErUdUcQGDw=;
+ b=ZvY4rIO26vDX3zl1pKYMpWcGKP/W86rGepPfSCqHXoA7kxWz/SQi4kvpZU+IGlm1ue
+ OtNWhdHR8FrX/ruWNpEvY+s5TOr1fbg/fVvYAPMOkujrzvf9/fnn/Eo0X5wn0qgk3vom
+ hVGOsBVJTUBnuSa/57RaZoK6bvrlsR3lo+ruBjGvVc77XTjWzHi5C5ieolRLXsUHhoWB
+ NRI+220rI/U9zLTBUi5K7DuXnrevJgvn8aV8GZ0POYs+oCT7HaCnIMhg7p2WAghvy0Hn
+ yEjcnXsLWFoLU1JTODOE6/q2YmEPcrlTdm2JfeyjwkD4hofhrpxOE04BghKuXi9FxdW/
+ NYnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777545881; x=1778150681;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1777546714; x=1778151514;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=IcPSBiwzrF8PlqagZ+bzBqOtmIa2hTG8ka0zp0wOeJQ=;
- b=OfAR2XASVZreT6Y0nj2w/akC0x0u+RSg+hCHWXqJb8WXGyPjj6dhwtTS/K1DDXwJzD
- Md74UBeXRe2Lu4l/SbXWcXVX/34L0Cu9NJ7aGW675rsw6tPPCqy4zaE85SCIeS4AoZXq
- qL4BpN7UqqTMzK9U37myKH/XA3ABXn6rFXE8mnTFDwUB+6HQOKXVdpEjyxCKQZoZE2kd
- 9juTOBJU3KH6YwGpB8H52MmEGne8Qx96+6PWz7JNgJcPftzFFzhbz+ja/2mGypVoKcjA
- VQMqcdEAlTsVre9e3xNgv6ZhupyvrQw0dX0WNIqv/X5EZnBhVNH+EV0MpfUcwr7YT+uQ
- w0EQ==
-X-Gm-Message-State: AOJu0YxBcViUJHg3KIrgrwVILXD5/1p6dQvoro+zaZyWXsTJO8khVAVE
- t89RIE2aBZDs/86lUMVficWde6tJlBGvtABCOoyVkeEIXDtoc0Df/C/Jxehtdhr1Fa0=
-X-Gm-Gg: AeBDieuMyQRblOWQGGWi1AL970kpah5t+80Si73oQylnIAKmSbhUGpLZPFOazSg604A
- I2i3rYcMe4jm8CulJREFyBa1id5J6WN74A0WjBPzGc3jRvDKxBlNTL5AGWG0swd30nFnTkaAfkD
- C8xIs41PhotdKqk4Ng1V5VBbZhSncwQmnbLE3da18V70Jxvr46Ybz7VGqMEXKcJQRUTOHC0NyhD
- EZkp5b3L/+dYBuzvOgYHBrL6DoHiCyg2r8Z1PwkidBsvBDowKwLwZky3A9wfWl3S37gqVFxQQBK
- T5Y7WV8LCWq3j3KGwRIec43T/3nGm3PrILHZhJZooOj/SwuteMn3DbGprzHww1Pnc2BvwE8LPQ/
- Xf7plivaQ/IuE58i+OnJ2p+xCCGFXX3jpowTYNDEpApnl8WYL2IZuN8W8OkKygKdEGlMcwEADV0
- qBkS54w0iK84q89rwqnWJRTkV7Sv/OLX1PXg==
-X-Received: by 2002:a05:600c:3e10:b0:488:bc6a:528d with SMTP id
- 5b1f17b1804b1-48a844721d9mr41943205e9.22.1777545880894; 
- Thu, 30 Apr 2026 03:44:40 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a7c31c6ddsm39447895e9.27.2026.04.30.03.44.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 03:44:38 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 64EE35F944;
- Thu, 30 Apr 2026 11:44:35 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-arm@nongnu.org,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
- Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v4 6/7] target/arm: handle the WFE trap case
-Date: Thu, 30 Apr 2026 11:44:33 +0100
-Message-ID: <20260430104434.1482407-7-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260430104434.1482407-1-alex.bennee@linaro.org>
-References: <20260430104434.1482407-1-alex.bennee@linaro.org>
+ bh=jPSxtL6gUHm/KeScKjAHVZDuKSG3q6q2SErUdUcQGDw=;
+ b=a+X3c7gKHIUe3oHVnnlgdjPiNVnTSMGfhyM4qNtQ7petMdwndERAkq1sfOg7+V1fAO
+ HZcQdT91gX6u9XmZk9UnAu4DKRBlx09UFF79zITGkd8eVT4KwHwfgjj63WAA2tpQnT1X
+ IwT/iRvkXdmDMIZrGETwGAvz9heJtf53p7KklnWs1s4b1vDSwL4GAiCwX/8lyhCvzy4h
+ CCNQGOLyZ4wlBmReJ+q3e91E+IO487LZ/rHQ2mbMK5rbLfBT8g75tSvd4CbK6BAQJBre
+ QVzY3YF8v1LTTvkK9xOYBsUuUSbQPxwWyI36s0nd78TrFFYZpJ1MY72sK2Vwu0ne/PDn
+ y7hA==
+X-Gm-Message-State: AOJu0Yz61wU9xnsi5hqyp9E2GPg/kc+q0bSKgXKss94kYGavaEwCIld/
+ FA1mht2VSq0ItNMNVwUuBcx/2tscT9vb2zWJNCTxWTr75no8j8nlor0+q7a2DcXq+XT/GdeFzal
+ 50jIITQLmlhwfYeWAQTSCOoSFWkTsj9/lZXFy4dkEmg==
+X-Gm-Gg: AeBDieuIclHzd04LKR1sZ6cfir83j1BwHx02pzIE00ZO1rT+IKDLBbnIOuflDzPCr+e
+ E6EyJcTQ0tsLj4lhLMTNOhOPuag1iKKaGgsUFREZ+yoT4FPJz8hBGY1o+aazOhrQD3/zCn+NqpB
+ sfp2ko8JNmJNvzl4UodTAFytG7198qNn/K4JP6gu7fwKw2TdodmkzFNrxdtbf1g22dloBWyA2jt
+ 35WmNMMVmbL9K4oxBklSsQGII5nMwcYo5+q1+hR4KXbXVcHp4Gxy9uRU19h1DGFOq7ZadB0Wg64
+ 1oTcO5+ndHljs9ikpaLq9wuRPYxjjTwZBkPoGEh+d0DdCPYab3EmFR9PGMEZCLPPQVedKev1+2J
+ y8g==
+X-Received: by 2002:a53:c059:0:20b0:654:2820:f657 with SMTP id
+ 956f58d0204a3-65c18f55f9cmr1277807d50.47.1777546714124; Thu, 30 Apr 2026
+ 03:58:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+References: <20250802110549.23438-1-pali@kernel.org>
+ <20250810130948.3yzymcxtkmfkgk67@pali>
+ <20251109134141.ur2s3bk5e6dgquxv@pali>
+ <CAFEAcA8+cycE_JvFDEtAmbJtXwRVwU026rOBYNV+cZaq5wZ+XQ@mail.gmail.com>
+ <20260418012012.by2qdlkbryjf2ugv@pali>
+In-Reply-To: <20260418012012.by2qdlkbryjf2ugv@pali>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 30 Apr 2026 11:58:21 +0100
+X-Gm-Features: AVHnY4LRW9_lSvGP8hJ9qpGtiLE0o7efvrngVKNmkkYY9BnUgK351duQNnAIyIY
+Message-ID: <CAFEAcA8VcTN1ANX0EpCqCiyBVDckCp-D99TxabAghxtLdnMkgA@mail.gmail.com>
+Subject: Re: [PATCH] qemu-options: Improve description for -smb option
+To: =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>
+Cc: qemu-devel@nongnu.org, Samuel Thibault <samuel.thibault@ens-lyon.org>, 
+ Jason Wang <jasowang@redhat.com>, Mohamed Mediouni <mohamed@unpredictable.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,97 +121,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now WFE can actually suspend on A-profile we also need to handle when
-its trapped. To do this we need to pass the instruction size so we can
-deal with the is_16bit syndrome encoding.
+On Sat, 18 Apr 2026 at 02:20, Pali Roh=C3=A1r <pali@kernel.org> wrote:
+> Yes, this is a good idea to mention. Finding those information would be
+> harder in future, specially when Microsoft already removed those KB
+> articles from own servers and web archive does not have copies of them.
+>
+>
+> About about path to LMHOSTS file. On 3x/9x/Me systems it is <WIN>\LMHOSTS
+> and on NT systems it is <WIN>\SYSTEM32\DRIVERS\ETC\LMHOSTS
+> <WIN> is the Windows directly which can chosen during installation of
+> Windows itself. 3x/9x/Me has default C:\Windows; NT 3.1-2000 has default
+> C:\WINNT and since Windows XP it is default C:\Windows. So path to the
+> LMHOSTS file depends on installation and default path was changed more
+> times.
+>
+> Note that Microsoft Network Client 3.0 and Microsoft LAN Manager Client
+> (both are DOS based) also need that adjustment of the LMHOSTS file.
+> Default location for Network Client is C:\NET\LMHOSTS and for LAN Manager
+> is C:\LANMAN\ETC\LMHOSTS. I check Network Client 3.0 and it is working
+> fine with and also without #PRE #NOFNR.
+>
+> Maybe the documentation could be extended and mention something like:
+>
+>     must be added in the file ``C:\NET\LMHOSTS`` (for DOS Network Client)
+>     or ``C:\LANMAN\ETC\LMHOSTS`` (for DOS LAN Manager)
+>     or ``C:\WINDOWS\LMHOSTS`` (for Windows 3x/9x/Me)
+>     or ``C:\WINNT\SYSTEM32\DRIVERS\ETC\LMHOSTS`` (for Windows NT/2000)
+>     or ``C:\WINDOWS\SYSTEM32\DRIVERS\ETC\LMHOSTS`` (for Windows XP and ne=
+w)
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- target/arm/tcg/helper-defs.h   |  2 +-
- target/arm/tcg/op_helper.c     | 15 ++++++++++++++-
- target/arm/tcg/translate-a64.c |  2 +-
- target/arm/tcg/translate.c     |  2 +-
- 4 files changed, 17 insertions(+), 4 deletions(-)
+Thanks for doing the testing on different Windows versions. Based
+on this conversation, I'm going to take this patch, with some
+expansion of it, like this, so we explain what #PRE and #NOFNR do,
+and list LMHOSTS locations for newer Windows. Let me know if you're
+OK with this or you'd prefer some other changes.
 
-diff --git a/target/arm/tcg/helper-defs.h b/target/arm/tcg/helper-defs.h
-index a05f2258f29..ebdf09be38a 100644
---- a/target/arm/tcg/helper-defs.h
-+++ b/target/arm/tcg/helper-defs.h
-@@ -54,7 +54,7 @@ DEF_HELPER_2(exception_swstep, noreturn, env, i32)
- DEF_HELPER_2(exception_pc_alignment, noreturn, env, vaddr)
- DEF_HELPER_1(setend, void, env)
- DEF_HELPER_2(wfi, void, env, i32)
--DEF_HELPER_1(wfe, void, env)
-+DEF_HELPER_2(wfe, void, env, i32)
- DEF_HELPER_2(wfit, void, env, i32)
- DEF_HELPER_1(yield, void, env)
- DEF_HELPER_1(pre_hvc, void, env)
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index d0f45522b05..77ac6161e93 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -574,7 +574,7 @@ static int64_t gt_calc_next_event_stream(CPUARMState *env)
- }
- #endif
- 
--void HELPER(wfe)(CPUARMState *env)
-+void HELPER(wfe)(CPUARMState *env, uint32_t insn_len)
- {
- #ifdef CONFIG_USER_ONLY
-     /*
-@@ -592,12 +592,25 @@ void HELPER(wfe)(CPUARMState *env)
-      */
-     CPUState *cs = env_cpu(env);
-     ARMCPU *cpu = ARM_CPU(cs);
-+    uint32_t excp;
-+    int target_el = check_wfx_trap(env, true, &excp);
- 
-     if (env->event_register) {
-         env->event_register = false;
-         return;
-     }
- 
-+    /* We might sleep, so now we check to see if we should trap */
-+    if (target_el) {
-+        if (env->aarch64) {
-+            env->pc -= insn_len;
-+        } else {
-+            env->regs[15] -= insn_len;
-+        }
-+        raise_exception(env, excp, syn_wfx(1, 0xe, 0, false, WFE, insn_len == 2),
-+                        target_el);
-+    }
+diff --git a/qemu-options.hx b/qemu-options.hx
+index e780bc2ac0..98e39a1ad4 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -3415,7 +3415,7 @@ SRST
+
+     ``smb=3Ddir[,smbserver=3Daddr]``
+         When using the user mode network stack, activate a built-in SMB
+-        server so that Windows OSes can access to the host files in
++        server so that Windows OSes can access the host files in
+         ``dir`` transparently. The IP address of the SMB server can be
+         set to addr. By default the 4th IP in the guest network is used,
+         i.e. x.x.x.4.
+@@ -3424,11 +3424,20 @@ SRST
+
+         ::
+
+-            10.0.2.4 smbserver
++            10.0.2.4 smbserver #PRE #NOFNR
+
+-        must be added in the file ``C:\WINDOWS\LMHOSTS`` (for windows
+-        9x/Me) or ``C:\WINNT\SYSTEM32\DRIVERS\ETC\LMHOSTS`` (Windows
+-        NT/2000).
++        must be added in the ``LMHOSTS`` file. In this line, ``#PRE``
++        requests pre-caching of the mapping, which speeds up the initial
++        connection on some Windows versions. ``#NOFNR`` is necessary for
++        Windows NT 3.1 to tell it not to send QEMU NBNS query packets that
++        QEMU does not handle, and is harmlessly ignored on other versions.
 +
-     /*
-      * If the CPU has entered the exclusive region we could sleep
-      * until the global monitor moves from Exclusive to Open Access.
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 8b97136e78b..a6f392a28f8 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -10938,7 +10938,7 @@ static void aarch64_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-          */
-         case DISAS_WFE:
-             gen_a64_update_pc(dc, 4);
--            gen_helper_wfe(tcg_env);
-+            gen_helper_wfe(tcg_env, tcg_constant_i32(4));
-             tcg_gen_exit_tb(NULL, 0);
-             break;
-         case DISAS_WFI:
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 3ab49887ce6..686980b58e3 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -6836,7 +6836,7 @@ static void arm_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-             tcg_gen_exit_tb(NULL, 0);
-             break;
-         case DISAS_WFE:
--            gen_helper_wfe(tcg_env);
-+            gen_helper_wfe(tcg_env, tcg_constant_i32(curr_insn_len(dc)));
-             /*
-              * The helper can return if the event register is set, so we
-              * must go back to the main loop to check for events.
--- 
-2.47.3
++        The ``LMHOSTS`` file may be in different locations depending on
++        the Windows version:
++
++        -  ``C:\WINDOWS\LMHOSTS`` for Windows 3x/9x/Me
++        -  ``C:\WINNT\SYSTEM32\DRIVERS\ETC\LMHOSTS`` for Windows NT/2000
++        -  ``C:\WINDOWS\SYSTEM32\DRIVERS\ETC\LMHOSTS`` for Windows XP and =
+newer
 
+         Then ``dir`` can be accessed in ``\\smbserver\qemu``.
+
+thanks
+-- PMM
 
