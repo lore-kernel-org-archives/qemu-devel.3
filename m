@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7C94FF886F
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 09:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF4C6FF886F
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 09:44:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wINr3-0004vU-3m; Thu, 30 Apr 2026 05:38:45 -0400
+	id 1wINrA-00054k-4p; Thu, 30 Apr 2026 05:38:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wINqr-0004gY-Hx
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:38:33 -0400
+ id 1wINqs-0004jF-VK
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:38:35 -0400
 Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wINqi-0002Ry-TX
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:38:33 -0400
+ id 1wINqi-0002VI-Vi
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:38:34 -0400
 Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-43cf8d550bdso633762f8f.0
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 02:38:14 -0700 (PDT)
+ ffacd0b85a97d-441209fb77eso415862f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 02:38:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777541893; x=1778146693; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777541901; x=1778146701; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1Axtq64X+5rSvIEqryvcspUpFF2IjRCQsS7/Lsf4JrE=;
- b=MPkuY9akhcw6HuHD7r3F2Oc8P/xcwX5Ognkvun23QXB+owtMpSQbDFkTE66EUd/Rpq
- rweqAnCbXKNwwJUzHdM6yF1M2caN3jeSE7EOoE/LEcyukyEIsB/X/Kl52olrgCyCyHDu
- eReW4EsGqi356/4/Jxw161ElNGZn54Z3YYn0hxg+6HtakTPYohBO9L/xZfLBxoxdRPtb
- SHADi/rI8I+Nt89O7bmYCPTmVSskD5iPIVyvulN1474Y7a+iFPsGiEv32+2liW5jmyCr
- b2zIvjE6SsJR3uIeACsdFGJHod76K7yZdBP+J2pxH5j251hVYnfpxzzX28X3aHAUCHo9
- zmtA==
+ bh=DOKX0DPjwYUZpph6iph7SwRnGuSF5f4WQz6+Qq/UgBQ=;
+ b=A+lK18QNA6IxuMjUR/9/ESTG7vCZs5U5PQi2j76GI0FUWCjBTIbGyGHh3l0jp4pUdN
+ 0lBURg0e0tPdcANAiGnRNE7GkhD0EAhLRyisiYi2gIYRleJUBNmLhKfTJP4aPYFnj6VQ
+ cm1q3afaW2lopDPmePZnhYJ2EkzRgouuCqt8su4Yy/8+zLoFfU53fgBhzaHmEQhPHS9B
+ c8Dgoc8N/+1+EbxbhbwztZxTHoJEvzFu+yCIXCqiWkqqo0V0VAtoJ+XLxjICSu6M3x3g
+ 68ehSFXk/kqQKRO7RWEeJKczrgQ1nW8VrRYOabaidbbI5cu6ZPCQNHag7Mzc65Sj2wRa
+ uB0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777541893; x=1778146693;
+ d=1e100.net; s=20251104; t=1777541901; x=1778146701;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1Axtq64X+5rSvIEqryvcspUpFF2IjRCQsS7/Lsf4JrE=;
- b=m/JCDPnDVmfcy54RgV9CJ4OTPip1Tx+88cIhWR7yBVpntz4hqLSQafsAJAcpinVIJE
- rrrV9Mf0nFPCfWbRD4qRnKth/+kZWrUqOQGNYSn6JnubL0SRBRfuw8VbHIeq9HebfxBV
- mHOncyCIvRXwE4mj9cnmrXdhIFkuHkig1d2oE3VLkOXzwLrwGQa3iG2HcsmDoKU57EJT
- hHQtpWAjgGg9wrLCWJ0RAa0vw/IwxskAXiQCvcP9OIuvXgVwfJ8iLpe9W8lYGXZfBPFo
- b86BeoYTXNcM6FwfAH0r9CcJzM/GXFoygFXzsj+/+lNCDkGaepUp6l1L5GFeGUd4GkfO
- M/8Q==
-X-Gm-Message-State: AOJu0Yx6UVhcnZ137y5wMXMJ3pdyEvoBTLkzQFSlmKIgyugX4f3CFV95
- HPi1Ts2jgCG6MVf1+j63UmS00KCVh8bvxqjmYs5kJtTkOlY5iWxQ4zhCj4rp/7TpQFaXk0/wyJF
- rrSGm
-X-Gm-Gg: AeBDiesoAvmICofKt+skP5LA1bhikQ+pFC5xlP5JgZjDxINFRzD5P3wBH1zm5f4zCgr
- +PKgIWjtwrHFLzixzRNbdrYEHZ69YlhHQC6Lf7dw4SFHbEgE/5Vamzr7cXTg/SInRJlFUtrm+Q0
- VOFLAgTcUw9tW/4x1koljfSrlgppLo0mctol7fLaTnKmcs7MTuOxhTBxJSj0PvvA0wDJLi2sPqo
- aq0PPRSSUnDXXqvi8/1baOpmIHi8qCXXsfgwGjwQVlndoqA8eNh2vBtsA8c9w5XuvFiF5KqS0ta
- Zvdwh7T+GHHdcE8flVUkkHufSPVKWHwwDbdR8gRqYdJb18XGSzViELghtxqbIgcl4AS+BMpW/HK
- MTRUwdjDkFkC+CpJnhe5ZI4exmIDOYwN7e0dH8lYkiyYI7+WQ1r8tB3AAvNNLvLvk6I7oY4Rsy4
- /83exM4ba6jJhiA3a5RegHxMHXVyF3vKBghbrn7gfPYKXiMjf6jXZO7emJgWkLCn3ux7nZkdz5Z
- oBRwpdIUBYGjC6ZVkOZgGikSwMOPvIEtLK7LgeZLA==
-X-Received: by 2002:a05:6000:40cc:b0:441:1df5:480c with SMTP id
- ffacd0b85a97d-4493ffcdca0mr3451189f8f.42.1777541893235; 
- Thu, 30 Apr 2026 02:38:13 -0700 (PDT)
+ bh=DOKX0DPjwYUZpph6iph7SwRnGuSF5f4WQz6+Qq/UgBQ=;
+ b=jRpp+cSEXw4ljU/ldByKaqmaVEx+JxPCrA7fNUuNrdBGIoA951t60Qn95K5E+gCy/9
+ uldPXadW9wUWwF+itEKVdhUxwcnuxNCxiI5vOC4YJQapYkPnVySPOsIM1gdzXiGgOcEO
+ lSmFsBz1dA47pq+MNd6DMKzM7Nsifs5vzneCWTJu2u1T4+Sil4SVjYSp29tE5ZNd/rsk
+ VWBMaUqHZgn3Qf85FeKSEkxlyauZV+5pH6aVvB/h+2+0NLBp9bGO4EuXoYIp8zuvLPUI
+ 1ylyTYioSszMgc0ntcw9I0u33/TBxXLqynECUo3Rqcvzdyg7bbcxz3/IMvqSO6WrphBm
+ 7jqg==
+X-Gm-Message-State: AOJu0YykP7rGrOFieFGISSCfMfiZ/KRsas6sZ0jsF+EDBh3LL8VV5Uei
+ kVxVuPaiRLLEZPEZjZT1jVbquJjZWFVMExyGJn3TEg+mlWEd6Jydx77MBmLaVvNwMlKKZn1chMr
+ RK0pJ
+X-Gm-Gg: AeBDiev+7MtBONI4Q8VeEln/0PxWVGZb6jk3L57TUv4IZGPPdljPmn95Ng09l3JjKRx
+ vZdBtgwTIMnmmNmNHZvicoDCfK5hImGxg+d+6tvynd0imQ2+AMjrc5v3KcmTv9dfni5uAoYQ1a/
+ vLweLhw2Q6/BRsi/tFlQHS9HHs+lxZL1TPJS+0enMR5Xw2LOuVCEOT2l8dL5MTAOQk69pP6OxAB
+ Kb0yEo2smYVRVAkyapaVyCL1HFCUDXdG3+2AlT2kfDAxcXxuONpdJljwzPtbQUnbm74SUhw5U2W
+ u47hMX7/ApsTr2Eznpgro5s/+zLEPpF/D+RtPhYYJ4FuUbUAg+hdc/J1yNcPvIrPfKojg94VZn6
+ m6RthySOjrCMRYxtnxhrcVQxslljE57GU62X26OBVXC1NCrO6nsqs/qWbOdxueWh0jfQ3+uck2j
+ xzBeXPEU+A0/Jv7z1kdSHypdvuQxcf8cEp5QnYKd+ISWmvBiURh3GFJOgZOI0K85UUy+NUmW1RE
+ jd3ma3I4nMKJHmX3KxS2MPJg6joRobffRgtDrqbXA==
+X-Received: by 2002:a05:6000:2381:b0:43f:e9f0:87bd with SMTP id
+ ffacd0b85a97d-4494e8d7bc5mr3084907f8f.10.1777541900731; 
+ Thu, 30 Apr 2026 02:38:20 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-447b421721fsm10816795f8f.15.2026.04.30.02.38.12
+ ffacd0b85a97d-447b421721fsm10816795f8f.15.2026.04.30.02.38.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 02:38:12 -0700 (PDT)
+ Thu, 30 Apr 2026 02:38:20 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
@@ -91,10 +91,10 @@ Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
  David Hildenbrand <david@kernel.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v2 01/25] hw/i386/vapic: Cope with non-page-aligned return
- from cpu_get_phys_page_debug()
-Date: Thu, 30 Apr 2026 10:37:46 +0100
-Message-ID: <20260430093810.2762539-2-peter.maydell@linaro.org>
+Subject: [PATCH v2 07/25] target/s390x: Make get_phys_page_debug handle
+ non-page-aligned addrs
+Date: Thu, 30 Apr 2026 10:37:52 +0100
+Message-ID: <20260430093810.2762539-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260430093810.2762539-1-peter.maydell@linaro.org>
 References: <20260430093810.2762539-1-peter.maydell@linaro.org>
@@ -124,33 +124,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the i386 implementation of get_phys_page_debug() always
-returns an address aligned to a page boundary, and the vapic.c code
-assumes this: it adds back in the page offset after the call.  Change
-this to OR in the page offset, so that it works whether
-cpu_get_phys_page_debug() returns the page address or the exact
-physical address. This will mean the code continues to work when
-we change the semantics to standardize on "return exact
-physical address".
+Currently our implementations of SysemuCPUOps::get_phys_page_debug
+and SysemuCPUOps::get_phys_page_attrs_debug are a mix of "accepts a
+non-page-aligned virtual address and returns the corresponding
+non-page-aligned physical address" and "only returns a page-aligned
+physical address".  This is awkward for callsites, which in practice
+all want the physical address for an arbitrary virtual address and
+have to work around the possibility of getting a page-aligned
+address, and it doesn't account for protection being possibly on a
+sub-page-sized granularity.  We want to standardize on the
+implementation having to handle non-page-aligned addresses.
+
+s390x already has an implementation of "give me the actual physical
+address, not rounded down", in s390_get_phys_addr_debug(), so we can
+use this for the SysemuCPUOps::get_phys_page_debug method, and merge
+the s390_cpu_get_phys_page_debug() function into
+s390_get_phys_addr_debug() which is now its only caller.
+
+This leaves the function implementing the method with a name
+that doesn't match the method name, but we will fix that shortly
+by renaming the method to *_addr_* for all targets.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260417173105.1648172-7-peter.maydell@linaro.org
 ---
- hw/i386/vapic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/s390x/cpu-system.c     |  2 +-
+ target/s390x/helper.c         | 20 +++++---------------
+ target/s390x/s390x-internal.h |  1 -
+ 3 files changed, 6 insertions(+), 17 deletions(-)
 
-diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
-index 1acb9f91b2..3738031a05 100644
---- a/hw/i386/vapic.c
-+++ b/hw/i386/vapic.c
-@@ -309,7 +309,7 @@ static int update_rom_mapping(VAPICROMState *s, CPUX86State *env, target_ulong i
-     if (paddr == -1) {
+diff --git a/target/s390x/cpu-system.c b/target/s390x/cpu-system.c
+index 881171d71a..c133b0c262 100644
+--- a/target/s390x/cpu-system.c
++++ b/target/s390x/cpu-system.c
+@@ -176,7 +176,7 @@ void s390_cpu_finalize(Object *obj)
+ 
+ static const struct SysemuCPUOps s390_sysemu_ops = {
+     .has_work = s390_cpu_has_work,
+-    .get_phys_page_debug = s390_cpu_get_phys_page_debug,
++    .get_phys_page_debug = s390_cpu_get_phys_addr_debug,
+     .get_crash_info = s390_cpu_get_crash_info,
+     .write_elf64_note = s390_cpu_write_elf64_note,
+     .legacy_vmsd = &vmstate_s390_cpu,
+diff --git a/target/s390x/helper.c b/target/s390x/helper.c
+index 667d4a0da7..1a2658eaf9 100644
+--- a/target/s390x/helper.c
++++ b/target/s390x/helper.c
+@@ -39,7 +39,7 @@ void s390x_cpu_timer(void *opaque)
+     cpu_inject_cpu_timer((S390CPU *) opaque);
+ }
+ 
+-hwaddr s390_cpu_get_phys_page_debug(CPUState *cs, vaddr vaddr)
++hwaddr s390_cpu_get_phys_addr_debug(CPUState *cs, vaddr addr)
+ {
+     S390CPU *cpu = S390_CPU(cs);
+     CPUS390XState *env = &cpu->env;
+@@ -47,10 +47,11 @@ hwaddr s390_cpu_get_phys_page_debug(CPUState *cs, vaddr vaddr)
+     int prot;
+     uint64_t asc = env->psw.mask & PSW_MASK_ASC;
+     uint64_t tec;
++    vaddr page = addr & TARGET_PAGE_MASK;
+ 
+     /* 31-Bit mode */
+     if (!(env->psw.mask & PSW_MASK_64)) {
+-        vaddr &= 0x7fffffff;
++        page &= 0x7fffffff;
+     }
+ 
+     /* We want to read the code (e.g., see what we are single-stepping).*/
+@@ -62,24 +63,13 @@ hwaddr s390_cpu_get_phys_page_debug(CPUState *cs, vaddr vaddr)
+      * We want to read code even if IEP is active. Use MMU_DATA_LOAD instead
+      * of MMU_INST_FETCH.
+      */
+-    if (mmu_translate(env, vaddr, MMU_DATA_LOAD, asc, &raddr, &prot, &tec)) {
++    if (mmu_translate(env, page, MMU_DATA_LOAD, asc, &raddr, &prot, &tec)) {
          return -1;
      }
--    paddr += rom_state_vaddr & ~TARGET_PAGE_MASK;
-+    paddr |= rom_state_vaddr & ~TARGET_PAGE_MASK;
-     if (paddr != s->rom_state_paddr) {
-         return -1;
-     }
++    raddr += (addr & ~TARGET_PAGE_MASK);
+     return raddr;
+ }
+ 
+-hwaddr s390_cpu_get_phys_addr_debug(CPUState *cs, vaddr v_addr)
+-{
+-    hwaddr phys_addr;
+-    vaddr page;
+-
+-    page = v_addr & TARGET_PAGE_MASK;
+-    phys_addr = cpu_get_phys_page_debug(cs, page);
+-    phys_addr += (v_addr & ~TARGET_PAGE_MASK);
+-
+-    return phys_addr;
+-}
+-
+ static inline bool is_special_wait_psw(uint64_t psw_addr)
+ {
+     /* signal quiesce */
+diff --git a/target/s390x/s390x-internal.h b/target/s390x/s390x-internal.h
+index 40850bcdc4..e7e4f2b45d 100644
+--- a/target/s390x/s390x-internal.h
++++ b/target/s390x/s390x-internal.h
+@@ -321,7 +321,6 @@ void do_restart_interrupt(CPUS390XState *env);
+ void s390x_tod_timer(void *opaque);
+ void s390x_cpu_timer(void *opaque);
+ void s390_handle_wait(S390CPU *cpu);
+-hwaddr s390_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
+ hwaddr s390_cpu_get_phys_addr_debug(CPUState *cpu, vaddr addr);
+ LowCore *cpu_map_lowcore(CPUS390XState *env);
+ void cpu_unmap_lowcore(CPUS390XState *env, LowCore *lowcore);
 -- 
 2.43.0
 
