@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A984CD13D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 07:19:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17A7FCD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 07:19:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wILgQ-0003aq-2Q; Thu, 30 Apr 2026 03:19:38 -0400
+	id 1wILgQ-0003ar-2K; Thu, 30 Apr 2026 03:19:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wILgM-0003ZA-Ia
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wILgM-0003Z9-HL
  for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:19:34 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wILgK-00014D-ST
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wILgJ-00012S-Ej
  for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:19:34 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 404596132D;
- Thu, 30 Apr 2026 07:19:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D780BC2BCB4;
- Thu, 30 Apr 2026 07:19:30 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id AF324404F7;
+ Thu, 30 Apr 2026 07:19:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D024C2BCB3;
+ Thu, 30 Apr 2026 07:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777533572;
- bh=xPd4mYwGCWKwRuBmVbsvO0gF+W85kx/Ix/pQDEmxgro=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ZCnitvkC022m6HcRIF0szQqHYhPEKt8ugaYjka8uks7LrSa/z77Nu5nbnmYnd8KqH
- pHu6jcUp7sp3RWdzOotRV75Ztfsnjm3KSi8zRFufzFk321cN6OOq5O6lowonTa7+Nn
- /uCtKaHC+YJj0tqX5+EOufZrz9UZI/aLUJs2fcIiED+zslYTkWSp+2Gpcyfe3GiwT2
- eaKlJPTYsImzXwHxOPimP4ORrdzsV8EwTTYiaC1M3t6yLtjqUUp78F1nzqf7bHQeJf
- Il8trewOdxLP4YXulMI+TZFOzMCZ/N/4MbrwYotjtqS6DDTQzfPw/eizaPZ7eJwvPC
- GEPgxHLKWZlRQ==
+ s=k20201202; t=1777533565;
+ bh=FJtLfLlU5tGib5MdE/xwM+prJdYI09ZeCOyg0IA8Yvs=;
+ h=From:To:Cc:Subject:Date:From;
+ b=lCurtcFxlcS4GLpckcCMFuyaWPKAhADhOaLffEtrjSrvS+H2OGdQ4rUivOvjcMk29
+ lVZ/QwM4saGmIUCKVbIMAWEIGTxJs31p67h0S3+OpF/PPoNPmBGs6f5iCjNAMP6wvg
+ yXR6T5tw6XfbMCVVzO6n3Sv7MhTirzdHKcN4B/cWsH9uBMfwCqqxLlo+A2TOlCAV9J
+ 0julaMbV4lrcN/gll6HeiPotT7OmW4hvB4qmthi0Dh2imSbkMZrOEuGB9tM+ppJVSi
+ ueP+rXdznXgTbIqNIVH7Uqa61Y0sQi/SDjCw+3yumWgBqfp8V9HxLDpWpW5GttHg+D
+ 7owowd0FD4maQ==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 4/4] linux-user: Translate errno in IP_RECVERR and IPV6_RECVERR
-Date: Thu, 30 Apr 2026 09:19:22 +0200
-Message-ID: <20260430071922.15341-5-deller@kernel.org>
+Subject: [PULL 0/4] Linux user next patches
+Date: Thu, 30 Apr 2026 09:19:18 +0200
+Message-ID: <20260430071922.15341-1-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260430071922.15341-1-deller@kernel.org>
-References: <20260430071922.15341-1-deller@kernel.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=sea.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -70,42 +69,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-Translate host error codes of IP_RECVERR and IPV6_RECVERR control messages to
-target error codes before returning to the caller.
-For example, this is important for architectures (e.g. hppa, alpha, sparc,
-mips) on which the value of ECONNREFUSED is different to the value on a x86_64
-host.
+The following changes since commit 759c456b1d22fe4083c8b384da27d3f56fd53f82:
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/602
-Signed-off-by: Helge Deller <deller@gmx.de>
----
- linux-user/syscall.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+  Merge tag 'linux-user-next-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-04-27 12:57:33 -0400)
 
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index d68edb7afd..d3d9fffb54 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -2008,7 +2008,8 @@ static inline abi_long host_to_target_cmsg(struct target_msghdr *target_msgh,
-                     tgt_len != sizeof(struct errhdr_t)) {
-                     goto unimplemented;
-                 }
--                __put_user(errh->ee.ee_errno, &target_errh->ee.ee_errno);
-+                __put_user(host_to_target_errno(errh->ee.ee_errno),
-+                           &target_errh->ee.ee_errno);
-                 __put_user(errh->ee.ee_origin, &target_errh->ee.ee_origin);
-                 __put_user(errh->ee.ee_type,  &target_errh->ee.ee_type);
-                 __put_user(errh->ee.ee_code, &target_errh->ee.ee_code);
-@@ -2062,7 +2063,8 @@ static inline abi_long host_to_target_cmsg(struct target_msghdr *target_msgh,
-                     tgt_len != sizeof(struct errhdr6_t)) {
-                     goto unimplemented;
-                 }
--                __put_user(errh->ee.ee_errno, &target_errh->ee.ee_errno);
-+                __put_user(host_to_target_errno(errh->ee.ee_errno),
-+                           &target_errh->ee.ee_errno);
-                 __put_user(errh->ee.ee_origin, &target_errh->ee.ee_origin);
-                 __put_user(errh->ee.ee_type,  &target_errh->ee.ee_type);
-                 __put_user(errh->ee.ee_code, &target_errh->ee.ee_code);
+are available in the Git repository at:
+
+  https://github.com/hdeller/qemu-hppa.git tags/linux-user-next-pull-request
+
+for you to fetch changes up to 9667bf3249256788245c6ca07bc12106f3e4fa22:
+
+  linux-user: Translate errno in IP_RECVERR and IPV6_RECVERR (2026-04-30 09:00:04 +0200)
+
+----------------------------------------------------------------
+Pull request for linux-user
+
+Please pull 4 fixes for the linux-user target.
+Two patches fix open bug reports regarding return error codes and allowed parameters.
+One adds missing CDROM ioctls (and fixes a few), and the last patch is a leftover
+from the previous pull request and helps flushing error strings at exit.
+
+----------------------------------------------------------------
+
+Helge Deller (4):
+  linux-user: Add missing CDROM ioctls
+  linux-user: Flush errors by using exit() instead of _exit() in error
+    path
+  linux-user: Allow getsockopt() with NULL optval address
+  linux-user: Translate errno in IP_RECVERR and IPV6_RECVERR
+
+ linux-user/ioctls.h  | 29 +++++++++++++----------
+ linux-user/main.c    |  2 +-
+ linux-user/syscall.c | 56 +++++++++++++++++++++++++-------------------
+ 3 files changed, 50 insertions(+), 37 deletions(-)
+
 -- 
 2.53.0
 
