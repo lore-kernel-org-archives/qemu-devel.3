@@ -4,97 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F1CDCCFA13
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 14:23:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B355FF8873
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 14:23:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wISGN-00040B-A9; Thu, 30 Apr 2026 10:21:11 -0400
+	id 1wISGQ-00043a-LV; Thu, 30 Apr 2026 10:21:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIRRC-0003fR-Vf
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:28:19 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ id 1wIR2P-0006oE-62
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:02:41 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIRRB-00014G-4n
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:28:18 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-651d692e833so897433d50.3
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 06:28:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777555696; cv=none;
+ id 1wIR2M-0004A5-Hk
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:02:40 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-64eaf8aa893so671095d50.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 06:02:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777554157; cv=none;
  d=google.com; s=arc-20240605;
- b=NHonmFgyDx/j4TH6uEIY60C1DUtrk75Y24bPTw/oU2xiNi7O1VX6GrUjn5MFiWH9Y0
- qyylx/9dRysMnujh9h7viRi3U1B7QutK9O3ZZgAT48QRPw8mSYjw2jA23Jar/2FIrHMy
- pdy3Nl2/pQX7lSUO6tUkh65Eif6NTz6FQjGkhqh6UelWrqBAwlAAtodW50+bmWRzgm9m
- Rxu/qEuIX+10f23DZDmV2+43WMC0GkLI7iOWrzaJsPONg4MMgm3wXrQgOr0uf6cLP+RP
- U8gPegBl9AgYZM5tMgdgV+MsI6Z07eVC4Ope0h9uTM6qrFbYUn7F2r9ArHz5/vjtD3oy
- U6VA==
+ b=LiGTnNNUsdzIS2SRLZEMpfNZTUH10ENFLiqkmOjGxzjdft45YOBuCe1e0UJgksf+Kx
+ rLVBTqJSGIPcgY+f4JeY6ETWGKMjCpT8d1516mpWubKwap2N4HaLqlgr2Wal4ZHpCWAV
+ hFKPhr1gVQR+TZxqGfyPer+YCqwK1D5mK0ZIznEgx7L56lwO7NDah+kZJy//Lc9UQZzl
+ gXcRNLE1uZ1YnEhCgvXLyi8DHNZu+t2IIGmsoNeiAarq9y+JYODYMUU0NcEncnvHjvKs
+ iu1f8/5mJ6ch+VO2higu/0rkSqy09oshtDANIPymhLr8WkLlDFI/MgvDNQPHcPJQMQDs
+ eL9w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=AkotdRa75/QsnNXDPjSrO6zfePlBt8CR6fWk5G2AGHQ=;
- fh=TnDbL9mYH20MplIPRJjnJR4NKrcSt7fGISPEXk7FgyM=;
- b=AJlRVbjO9ZznkzplzEZujy5WkshSz3PE4JqI7j1d5/FaMb42grNDZt8Y3RZgzcC9lv
- 0d5PRVMkpNW3oh74L4szLcsSIQ5GonIgE6113BLjcRNzepf12LvMi1I4sMDYCFXP1pX+
- Lbdp9kPRUq/J7VTOT6ch6cu+AP+3Pwmr/xoTTVPtbsOyPguTSoq9CBoqyf84ZeqeHEJ1
- 3e4cV8dKOSTLpM8N8GiMp9yfdPAMONImHFRLoXB1zQ58KHGHe90BlhpG4BmRMeePxo2G
- eXiIumOAOoWiwy5RD+GbSnj+q+wVjb3ZQa1MFKTgj0394tphcjOWrHuAr+MM7AwRpcd4
- GzFQ==; darn=nongnu.org
+ bh=AfbNeZ46DpVJJ0z6NgJouJu2HGCX8AKmImOqv3PMdlQ=;
+ fh=hHQwqgTY7ltwat616CldellfBTSzzr31raK2NubcdK0=;
+ b=K0XwOC7kHNNO2olk5rljwj6W0rTSvoitvtv1M7iDLOesbJ66pejYcqmMYbvZsNRdhP
+ 9uRLJLneySJONd2EyMah22IgiqJBHZkNFSogldr4D574He1VMIUl/u8DzL6+gWo1OqCm
+ bpnfi+b2rtGPsHsdX7vY2f9vDil7grBItPy9isJnpUF6NZc86Hv1TbPaH2jjl6Cpm7J5
+ cOxtYn/LZmE3+VZGpjihmytk+SJOLc9DJvJI6ZPgNAIHkVZ53PTDMo6pouEmtXhiNB96
+ d9z5M7GuOiokp7hr/dvmu0uo9xnasVXkidpylb72TGDgT9yc5nyEXL9QWWmof7IHcoyl
+ uyKg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777555696; x=1778160496; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777554157; x=1778158957; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=AkotdRa75/QsnNXDPjSrO6zfePlBt8CR6fWk5G2AGHQ=;
- b=e5JREhln1ecRZHxyJNcPi7a6wT/+ItT3IJ0lUl3+7Ilrr6YpkeFQ1DLBtl5ku+zpLE
- 1UPvpA0usD7YQ8YlCdJtP3vtEOdnupDRER0jtZql+78ajfclS3RflGaW0e/IId1VVd6y
- D3NozpkxzVcR7rB9/coB468ZI8lScU27Y4OBF3GC+gIa/kv8qsuOEjtPwyMhf8jdioCh
- VubaAqvKKsXzLRuGJmfxxyVNR4c6iZ1UaOgbSU/RBR7/VO7qR8eWQ2DfhDupftcloDRl
- wV2tp/g0ZDVpsrByj1Fklab+f+gtI+NR3KVkFMa8bgGa3GVcqEBriqdTMpz9PXx6vaAF
- b9ig==
+ bh=AfbNeZ46DpVJJ0z6NgJouJu2HGCX8AKmImOqv3PMdlQ=;
+ b=Yc7MMwgdoz7N6o2Ke1A/Hh1UahKhJsbcNoVunXX0sMtoRMbCwXTosNwRG9BAdP7emA
+ aJFr0lDKGqJHTPdCYjz5QneGS67Zvl4BwD17Qr17V2Mk+pV8+djrz8VrQiz9RwfYKk9W
+ JOtV1bPbPiZvVYq+ZO+n2Iq7Isdk/bUC74WGrnwM+DylPXsgd2iETwHDw5CDe4NGPlkE
+ RJjlpem/BP82apH9xLnLFYkhOLCgKEn7/zO8m1sYqFsquy1/rO+6cgcAjThxtYA37EyJ
+ 2MA3+fDPOF+D2HFTUQpRH0MMXKyqZFHbBfO4XzgXI6uPTFparDCs4A/YwaSU3GMBOwkE
+ F6zA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777555696; x=1778160496;
+ d=1e100.net; s=20251104; t=1777554157; x=1778158957;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AkotdRa75/QsnNXDPjSrO6zfePlBt8CR6fWk5G2AGHQ=;
- b=ArdCCw4gdH3Mbo3NQWdmoaeKTCL7Efx/jhYCugPxHKupAoLBhW13e5gYu+ukajCAng
- dgYi2UgIATdtUrLtN1VVW9Mo6cnnDvzm2ZwrbaauXy8qqog8PQ0Uqv6nooaMIhZtgpzJ
- dRNx2BaeyZA4TmcmkNHrl/DEI8DkoHY0gI+5+BdkDMRoPZcgItxX9BhDW3DE7F0N6bjx
- rSwXjORlChkCjVtSPmKPEMq8eMXrIjTq7NJsjkt7/6GAATAkSt/ZIyA0pHfx1Pxuon+R
- eQH3yXIeJapS8aQZqlI3fmazg1w4WAQapI0iqswwAh0xr154qZjAvuAqzQ+pxgITqYDB
- VHUg==
-X-Gm-Message-State: AOJu0Yw5CXzU7Mw5jpk2kRoqxHA3vOYMMY53uFY8AfGRYseqJZuySLWx
- h/Oiq0Zog9tnLHbCbFg26j9ZNzjtSJobHciZ++0lG0LU3GwA9T73CbE2uuEVITbqlwrBaUF5Xv1
- BtmGb/ikGJTTZEuxPNMdd2n29clvaAjM5NaezMNz1mg==
-X-Gm-Gg: AeBDieuNT9LhgcSWK0YXDAeKtEJ0zUZCJtoBfZmqb7UcxnAS9boQ5kUUUiohZIusUHM
- +wLXSKnotgYsJsqVu4a9kzfSdAc3vhBNjFE8KdSmMexfvji68EGcC0ha+tgiFQENdBTZvwo3jVy
- 98Hloj5Eg4+NuatQFpQ1g77j5xIeHX858NizrCSfAKRTtCAhfCejoD0UDf4ROp2apjlUyf0kMwr
- C8uje0KGMPaPB+POUN47i9xRClDO87s9Nn040zEQgxr2WDeLnJFuzIGuzoEJiGHRqWYJGHrVeoq
- /+6BvRif/dWJgUEpiehKRTZip9+lfwWqaLdpr3SQ912O9U61sAEtGy1KRDhkng1nbaWCMYfK3aO
- KGw==
-X-Received: by 2002:a05:690e:140f:b0:653:c9e:306 with SMTP id
- 956f58d0204a3-65c18cecb05mr2089666d50.20.1777555695666; Thu, 30 Apr 2026
- 06:28:15 -0700 (PDT)
+ bh=AfbNeZ46DpVJJ0z6NgJouJu2HGCX8AKmImOqv3PMdlQ=;
+ b=SgcfvIposlrDEGMSS9tqD4JHxldBaUfxzg43RTfcW+SSNYabbOiKBmZ2P7jmDEanJb
+ h0F02uqk1Z5j7LIBQ75TUwc92J6Smc4+aqOluLsH1e1DTXNbY3/IHl8cu6sUDQGZAiKC
+ WwdtjMwqkVRXZ77IkGwVcrWCtnvaufQQ4HBJxUMbR1NKsjk9vBdNND4ge8nyrMgB6uAY
+ aymAP/b04ges6hTZ42dDZ4O4qig86Wpv/ofJF6pUhPbCecR1Dx1MU+tLVWWBbAt+VFKw
+ 6sHvdwPtejCTrFN1rKYzY09Q9hgdaPCU2MAMg3mMM/bm0KuB1GFoL/fYmt+AcAmE6hBP
+ oFmA==
+X-Gm-Message-State: AOJu0YwGv/Tlc/PXKgl534oVXPZvfTfvX6YixMF67qhvcYe42Ymj9g+e
+ uDwSz32PjMVmJ4/j+UvweaJSegMKuDHOGvI/3KTm+M2wJIeW1xgAvbigtS5KkR0IRrKBLPbBoFU
+ zFUPcbPIYdgAojd1TOr5tpWCOApUhM89z9Yiv75ig+w==
+X-Gm-Gg: AeBDievyZIKXPnMENhOV4Rt4Mc4FwvCpjgGLfGE5Vz0PM2iAnDYzd3Qwev78jSISk2j
+ 4F0eEAkixtFH8On8mPDkVI7NdeSYG/QHFjX8f9N38DO637mG0eXhMAr1QBojaOCHb9yC40LhkQK
+ 4r1mKmD/IzFN0XM8ktk4Z+Fxh6Zwg/EZQtUwxrTuP7XZT8RmucykR2NVZQ3nTLLlWOW5uBrbj+0
+ g/mKDHu9QV7mT4koNgQpqLtUDZmumDGqSSgHeaIbDKJfFxDzVwLVYX7up2tEVfHL63gHWF8htrt
+ bg/0mx+M7CNu4sFxZ2aAseQeJj1E6HUtrDdkz6OdIu7wlvJNj9t2Ax3KZT80/L7PCg22bKV8puQ
+ SS8S21+2TZ6gy
+X-Received: by 2002:a05:690e:120b:b0:651:cc9c:af0a with SMTP id
+ 956f58d0204a3-65c18b4d2dcmr1935210d50.15.1777554156600; Thu, 30 Apr 2026
+ 06:02:36 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260429003130.15164-1-farosas@suse.de>
- <20260429003130.15164-2-farosas@suse.de>
-In-Reply-To: <20260429003130.15164-2-farosas@suse.de>
+References: <20260313170938.449538-1-peter.maydell@linaro.org>
+ <48fdece2-5b98-4785-9b47-9eb2528803e2@ilande.co.uk>
+ <CAFEAcA_zf5joZKeiU=c5qP+PzbkrPEVOBZ0nMrOhidiywi_s8w@mail.gmail.com>
+In-Reply-To: <CAFEAcA_zf5joZKeiU=c5qP+PzbkrPEVOBZ0nMrOhidiywi_s8w@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 Apr 2026 14:28:02 +0100
-X-Gm-Features: AVHnY4Ka6TrjVFLvVXcjeOH8DrPRN51oksEknAA94skS1-7E1eqKgtosPMSgvA0
-Message-ID: <CAFEAcA_5hpKE3t07+NqjXWnhwAiRCBugt1DirJ+2-bq4r657jg@mail.gmail.com>
-Subject: Re: [PATCH v1 1/3] tests/qtest/libqtest: Replace QTEST_TRACE with
- QTEST_QEMU_ARGS
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 30 Apr 2026 14:02:23 +0100
+X-Gm-Features: AVHnY4LvuS9AHENUl7bUhr_nCSbNsqhLbMoqgAQBKwFviE1V5wxcbKE0tFdqCkQ
+Message-ID: <CAFEAcA-MQ8tObH=9j-O-bqfGMLc2oTwaM1xEzv__GU2qrncmgw@mail.gmail.com>
+Subject: Re: [PATCH] target/sparc: Set reg window data structures currently
+ after vmstate load
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>,
+ qemu-stable@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,73 +118,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 Apr 2026 at 01:32, Fabiano Rosas <farosas@suse.de> wrote:
->
-> The QTEST_TRACE environment variable allows for any QEMU command line
-> option to be passed if used like so:
->
-> export QTEST_TRACE="-trace tracepoint -more -opts -here"
->
-> Formalize that usage by accepting a new QTEST_QEMU_ARGS
-> variable. Since the QTEST_TRACE now becomes redundant, remove its
-> usage.
->
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  tests/qtest/libqtest.c | 11 +++++------
->  1 file changed, 5 insertions(+), 6 deletions(-)
->
-> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
-> index 051faf31e1..a580d75179 100644
-> --- a/tests/qtest/libqtest.c
-> +++ b/tests/qtest/libqtest.c
-> @@ -454,11 +454,9 @@ gchar *qtest_qemu_args(const char *extra_args)
->  {
->      g_autofree gchar *socket_path = qtest_socket_path("sock");
->      g_autofree gchar *qmp_socket_path = qtest_socket_path("qmp");
-> -    const char *trace = g_getenv("QTEST_TRACE");
-> -    g_autofree char *tracearg = trace ? g_strdup_printf("-trace %s ", trace) :
-> -                                        g_strdup("");
-> +    const char *args_from_env = g_getenv("QTEST_QEMU_ARGS");
-> +
->      gchar *args = g_strdup_printf(
-> -                      "%s"
->                        "-qtest unix:%s "
->                        "-qtest-log %s "
->                        "-chardev socket,path=%s,id=char0 "
-> @@ -466,16 +464,17 @@ gchar *qtest_qemu_args(const char *extra_args)
->                        "-display none "
->                        "-audio none "
->                        "%s"
-> +                      "%s "
->                        "%s"
->                        " -accel qtest",
->
-> -                      tracearg,
->                        socket_path,
->                        getenv("QTEST_LOG") ? DEV_STDERR : DEV_NULL,
->                        qmp_socket_path,
->                        can_exit_with_parent() ?
->                        "-run-with exit-with-parent=on " : "",
-> -                      extra_args ?: "");
-> +                      extra_args ?: "",
-> +                      args_from_env ?: "");
-
-Maybe we should have all those "%s" consistently be "%s "
-(and drop the trailing space in the "-run-with exit-with-parent=on "
-string and the leading one in " -accel qtest")?
-
-Sometimes we might get an extra space we don't technically
-need in the command line, but on the other hand we would be able
-to look at the format string and see at a glance that it
-definitely doesn't potentially run one argument into the next
-without having to cross-check all the %s with the arguments,
-and the arguments would consistently always be just strings
-with no requirement to bring along a leading or trailing space.
-
-But either way
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Ping ? Now we're in the 11.1 cycle it would be nice to get these
+remaining sanitizer errors fixed so we can maybe get a CI job
+to test a sanitizer build.
 
 thanks
 -- PMM
+
+On Fri, 20 Mar 2026 at 11:02, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> On Mon, 16 Mar 2026 at 21:42, Mark Cave-Ayland
+> <mark.cave-ayland@ilande.co.uk> wrote:
+> >
+> > On 13/03/2026 17:09, Peter Maydell wrote:
+> >
+> > > In the SPARC CPU state, env->regwptr points into the env->regbase
+> > > array at wherever the architectural CWP (current window pointer) says
+> > > we are in the register windows.  We don't migrate this directly,
+> > > since it's a host pointer, so we must ensure it is set up again
+> > > after migration load.
+> > >
+> > > We also have to deal with a special case when CWP is (nwindows - 1).
+> > > In this case, while running we keep the "in" register data for this
+> > > window in a temporary location at the end of the regbase[] array, so
+> > > that generated code doesn't have to special case this "wrap around"
+> > > case.  In cpu_pre_save() we call cpu_set_cwp() to force a copy of the
+> > > wrapped data from its temporary location into the architectural
+> > > location in window 0's "out" registers.  We then migrate only
+> > > (nwindows * 16) entries in the regbase[] array.  So on the
+> > > destination we need to copy the "in" register data back to its
+> > > temporary location again.
+> > >
+> > > For 32-bit SPARC we get this right, because the CWP is in the PSR.
+> > > The get_psr() function does:
+> > >      env->cwp = 0;
+> > >      cpu_put_psr_raw(env, val);
+> > > which causes cpu_put_psr_raw() to call cpu_set_cwp() in a way that
+> > > sets up both regwptr and the wrapped-register data.
+> > >
+> > > However, for 64-bit SPARC the CWP is not in the PSR, and
+> > > cpu_put_psr_raw() will not call cpu_set_cwp().  This leaves the guest
+> > > register state in a corrupted state, and the guest will likely crash
+> > > on the destination if it didn't happen to be executing with CWP == 0.
+> > >
+> > > Fix this by adding a cpu_post_load hook which does the cpu_set_cwp()
+> > > for the 64-bit case, and enough commentary to explain what is going
+> > > on.
+> > >
+> > > Cc: qemu-stable@nongnu.org
+> > > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > > ---
+> > > I ran into this because the "sparc64-migration" functional test seems
+> > > to hit this reliably when built with the address sanitizer.  This is
+> > > probably a timing thing, because it doesn't trip any ASAN failures,
+> > > the guest just crashes on the destination side most of the time
+> > > because it returns from a subroutine to a corrupt %o7 return address.
+> > >
+> > > As far as I can tell this is what the problem is, but I'm a bit
+> > > surprised that we have never hit this, given how likely you are to
+> > > hit it on a vmsave/vmload or migration.  So am I missing something?
+> > > ---
+> > >   target/sparc/machine.c | 41 +++++++++++++++++++++++++++++++++++++++--
+> > >   1 file changed, 39 insertions(+), 2 deletions(-)
+> > >
+> > > diff --git a/target/sparc/machine.c b/target/sparc/machine.c
+> > > index 4dd75aff74..b935c31630 100644
+> > > --- a/target/sparc/machine.c
+> > > +++ b/target/sparc/machine.c
+> > > @@ -167,14 +167,50 @@ static int cpu_pre_save(void *opaque)
+> > >       SPARCCPU *cpu = opaque;
+> > >       CPUSPARCState *env = &cpu->env;
+> > >
+> > > -    /* if env->cwp == env->nwindows - 1, this will set the ins of the last
+> > > -     * window as the outs of the first window
+> > > +    /*
+> > > +     * If env->cwp == env->nwindows - 1, this will set the ins of the last
+> > > +     * window as the outs of the first window. We do this because we only
+> > > +     * transfer the (nwindows * 16) entries of regbase[] that correspond
+> > > +     * to the "proper" locations of the registers; this call has the
+> > > +     * effect of copying the wrap register values from their temporary
+> > > +     * location down to their proper location ready for migration.
+> > >        */
+> > >       cpu_set_cwp(env, env->cwp);
+> > >
+> > >       return 0;
+> > >   }
+> > >
+> > > +static int cpu_post_load(void *opaque, int version_id)
+> > > +{
+> > > +    /*
+> > > +     * For 32-bit SPARC we set the register window data structures
+> > > +     * up again correctly when get_psr() called cpu_put_psr_raw(),
+> > > +     * which calls cpu_set_cwp(). But for 64-bit SPARC the CWP isn't
+> > > +     * part of the PSR, so we need to handle it here.
+> > > +     *
+> > > +     * There are two things we need to have happen:
+> > > +     * 1. regwptr points into regbase[] at the location determined by CWP.
+> > > +     * 2. If CWP is (nwindows - 1) then we keep the "in" regs of this window
+> > > +     *    in a copy at a temporary location at the end of the regbase[]
+> > > +     *    array. For migration we only transferred the (nwindows * 16)
+> > > +     *    entries of regbase[] that correspond to the "proper" locations
+> > > +     *    of the registers, so now we must copy the wrap registers back to
+> > > +     *    their temporary location.
+> > > +     *
+> > > +     * We achieve both of these by setting env->cwp to 0 and then calling
+> > > +     * cpu_set_cwp(). This is the same thing get_psr() does for 32-bit.
+> > > +     */
+> > > +#if defined(TARGET_SPARC64)
+> > > +    SPARCCPU *cpu = opaque;
+> > > +    CPUSPARCState *env = &cpu->env;
+> > > +    uint32_t cwp = env->cwp;
+> > > +
+> > > +    env->cwp = 0;
+> > > +    cpu_set_cwp(env, cwp);
+> > > +#endif
+> > > +    return 0;
+> > > +}
+> > > +
+> > >   /* 32-bit SPARC retains migration compatibility with older versions
+> > >    * of QEMU; 64-bit SPARC has had a migration break since then, so the
+> > >    * versions are different.
+> > > @@ -190,6 +226,7 @@ const VMStateDescription vmstate_sparc_cpu = {
+> > >       .version_id = SPARC_VMSTATE_VER,
+> > >       .minimum_version_id = SPARC_VMSTATE_VER,
+> > >       .pre_save = cpu_pre_save,
+> > > +    .post_load = cpu_post_load,
+> > >       .fields = (const VMStateField[]) {
+> > >           VMSTATE_UINTTL_ARRAY(env.gregs, SPARCCPU, 8),
+> > >           VMSTATE_UINT32(env.nwindows, SPARCCPU),
+> >
+> > Nice analysis! I suspect the reason this doesn't always show up is because any
+> > context switch (e.g. OpenBIOS, kernel to user, 32-bit to 64-bit etc.) will flush the
+> > entire register window set to the stack, and hence reset env->cwp back to 0.
+> >
+> > It does instinctively feel odd that 32-bit and 64-bit aren't handled in the same way
+> > - I wonder if this implicit behaviour on 32-bit somehow needs to be more explicit?
+>
+> I did wonder about that, but I preferred leaving the 32-bit handling
+> the way it is -- trying to unify it with 64-bit would require making
+> the get_psr() code path go out of its way to avoid updating the
+> reg window data structures, which seems awkward and a bit unnecessary
+> given the code does work. So I opted to describe the way the 32-bit
+> targets do it in the cpu_post_load() comment, so at least we have
+> a record of it.
+>
+> Are you OK with this patch as it stands, or would you like me to
+> change it?
 
