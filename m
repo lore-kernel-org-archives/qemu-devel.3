@@ -4,109 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAF3DCD13DA
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 15:58:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E72ECD13DA
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:02:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wITmB-0005BR-O2; Thu, 30 Apr 2026 11:58:09 -0400
+	id 1wITpo-0006hR-Vm; Thu, 30 Apr 2026 12:01:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1wITlj-00052H-IY; Thu, 30 Apr 2026 11:57:46 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vishalc@linux.ibm.com>)
- id 1wITlc-0005pc-0U; Thu, 30 Apr 2026 11:57:34 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63U4ZJPh1684395; Thu, 30 Apr 2026 15:57:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=67T9Sb
- q4gJTCPa/+uBWWben/qoxAohbiSQfzHvc55zI=; b=cSfGsxypeqiQxoLwjMjoXQ
- sXO34NtUAzq4H9MAAcF/7ukKS+8u/sWhpsVyElauXRR0mU2UhD1sOoZEaIJLlaei
- ni4zU1pAoLMC9kXacnpphRAqM9MixKLkSrtrCQgt/JyDZjj7SGcI2PhTTHlOTZEQ
- UexCtEuoZ6JCubHoL8zW9fQrnXPdmnfPT2VqpiW0nN53aBAoCeRpmZrP21bmAwsK
- pNlng2yB4UZbFqKa1GmMunGFJYqXrntZFE6ypZ5+MFtL4DcWdBhuTaU1y+Z4ApG0
- Nqg20SLbBbSDVfzIQUFvtf0CFKAkUuVKIaYSTKrDpB6r0IjsALic3Z4Lw2mdFTNw
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drnb5gmhj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Apr 2026 15:57:27 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63UFrsfu020623;
- Thu, 30 Apr 2026 15:57:26 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ds8xkbp4w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Apr 2026 15:57:26 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63UFvKeq40501706
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Apr 2026 15:57:20 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0730020043;
- Thu, 30 Apr 2026 15:57:20 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3E48920040;
- Thu, 30 Apr 2026 15:57:17 +0000 (GMT)
-Received: from [9.124.223.167] (unknown [9.124.223.167])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 Apr 2026 15:57:16 +0000 (GMT)
-Message-ID: <65e1b092-146c-4839-89ee-66d2b0589000@linux.ibm.com>
-Date: Thu, 30 Apr 2026 21:27:14 +0530
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wITpi-0006Zb-Ao
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 12:01:50 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wITpb-0006kX-VI
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 12:01:45 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-651c366f7efso1187104d50.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 09:01:27 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777564887; cv=none;
+ d=google.com; s=arc-20240605;
+ b=SxBHbtUU12ZR+0W5K1iNthEhtEK2ziVA9z78REHv4NcFuZemOyxG6HU7VRPgA8vZcd
+ IjWRlRsAFFf4Ako6pogA2om6UzNofixzpCHLn9tQuY/qER9qW+8UL/GtDGs3dUpwRYHF
+ MoDt/LRlWPw69q90PpXGg0fApOf34nQ6x6Bwfy+NhBmRrfjYckLqrek4PWdp5w6Lh+RZ
+ 8CLEBT58OxFz1ODp/a0s383BsrTmWxMvQpDTtOABqCmbOIl9bxEiUuv5+qr+7fjWqX5P
+ OrI0kTkAaAUdjLcUYDd/OMnFinhRng/UR2/ddHvEsV/5z2aJF+FlylCz8V+L3mXGf83K
+ 4JlA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=2Nqmuu0q1VA7O5p0Fl15oGxxc/q2JB2NepdreunCmFY=;
+ fh=TGBch+i9L9x+vQVJeh6H3Zbat5wVEME4NP11pLlUfvk=;
+ b=MhnOfYpHKE5fYTXm0D7w5T1TM2bYt0S3xEK6AGNi9lZujFVd5+EoSmYW4a5Ldj0K5A
+ pQ6aFj4AT0TKAPat4BegLE3Th7KH2ls46Fiyhk6vCtqOKObVxbZIQ+neQ/lQlT465mMX
+ gumCp9/7Nxt5Fj+zxKNWZK0+oXFcoaO+tkaNW2Ilq43jglkq1df7NJQGA1fm1Uq1qZc/
+ nGTBdiCSlJgiwcNJs+HzXPX/jNAuj6Bu2PVccIwn89FI751D693YxLxB4EesY0BUKvEg
+ amoDSh1VRaFzkmkJyoytQ1CMdeC+bWM8Czp0pusLnYtNfq1iaDL80+l395cBqV529WHP
+ OKrQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777564887; x=1778169687; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2Nqmuu0q1VA7O5p0Fl15oGxxc/q2JB2NepdreunCmFY=;
+ b=JlZAjSbuHBXBrG+PV4WzOdDP0WqE/NtMiYtwbtfyat8gN/76Z0dMSeHec/uOZXFd+o
+ TroGpZL/xlHH39FjJmCbuTxbLbM9WV5NJLEX4o9Pcyt8XmTk/0ZwqreYHcHgKi+4ZP58
+ OXdKncoIt3Z/ZmZSH0VjKd/FGb/liOwWgaGqfDtjkubYhkibqorQTIBsunvwIRY+RPdM
+ tBaIJH9RYhWd6zalL7D61Llnpw1oDthEZzcJ/GYwUBHh9gzijWpHuENyReHU5Iy0GzSr
+ F6qRFk7rpD2iZZA+VsV/4+hLVuknEJPRrxopQI87/VoqYBbPGejdo1yVq+3aF+C5oYuk
+ goow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777564887; x=1778169687;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2Nqmuu0q1VA7O5p0Fl15oGxxc/q2JB2NepdreunCmFY=;
+ b=cHDtjZxhDikJh9y7oxXE/ss8nFYdND7bXePDQXRaqZ4njWLfIPA8sYFF9uZz+opUF6
+ Y+b4ugi+qbbLwzQqr4et3ANiunCrW2vQ4Om0r98SYshZA1XqL1ax7wwTjkY3AD6j/woX
+ Dtd/ergtjkNXht0su8eTrxnDOpWVxc/O9vHjw1DuWS3xZIywjQuFvR/Ak7FH4cnkJUAX
+ wvXr2i7715zxPxVovGBEm3BwudELsU5usQp2+OIRX12nviw0whIy9MzY6PEtdTl5WpFb
+ AK68gyskBMzZgVuDpQhVjFWRt+eOj8BCLxp+/tbx8OQBb/3SFWUKbToNUXnjSdPCGIoT
+ 8Deg==
+X-Gm-Message-State: AOJu0YxYan72oIaBfnHg573qlEYNNWJz+6F25vIj0lrhlPKOZQRl2nl7
+ Go+HntysDnZWS+duaUkFtvfIKBUGVlvtkXRnubdjKJkCVQ+9Dgihgy9pbrNA3kv2WjnXzklEl3/
+ CKDue5CXCereGjqNgQ6CgnNjIrzKn97hlucR66NRwsQ==
+X-Gm-Gg: AeBDiesHDAGlFXRVqk3muoPYl08+ZstVF9+9nqCZCHNxasSXS0WF8MKiijkUTt4926P
+ X6bZzlGqDiXMdCXGUQw+QMITs+6KScrtJnatpCNYk/zO4w5O+AqK6wPylLCSydHu3h7sFrMctai
+ /5Zehj+7TfwVnHe5Ywrc1x9kBISMSNzY2e/OkIaDWgwS1eRAe7Rui7dzisadjfXpXeEozlHCHRP
+ o9ntfAjuFexLQIhLbeAP18hY0XbUqbNUcJiJG9YAg0EDu4pfj/p2Z9pvHSQm4CdGaJgatpbfkUN
+ a7ZshkypoS7KzdsWqQLZVuC1ydJJFRLKWZfihKFwNENr5ljIGi4/OuJQ4+dNDy47JTis8lh6ody
+ AzpaRale2S/Is
+X-Received: by 2002:a53:ad4a:0:b0:651:cf23:6612 with SMTP id
+ 956f58d0204a3-65c18de285amr2133354d50.34.1777564886022; Thu, 30 Apr 2026
+ 09:01:26 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc/spapr: Skip system reset for quiesced CPUs
-To: Shivang Upadhyay <shivangu@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Sourabh Jain <sourabhjain@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
-References: <20260430085409.680930-1-shivangu@linux.ibm.com>
-Content-Language: en-US, en-IN
-From: Vishal Chourasia <vishalc@linux.ibm.com>
-In-Reply-To: <20260430085409.680930-1-shivangu@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=AqDeGu9P c=1 sm=1 tr=0 ts=69f37be7 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=D23PPXuEu1KsBxDnNFkA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDMwMDE2MyBTYWx0ZWRfXw2edKP1bc7fu
- JwKp5XtBa5DdRO5ARM+QoqMrCLbGABAOQZ+zXLiJRT+G58KTR7GqmxvK233A3V1G0FLRjHv4jzD
- EyC1wb987trpvCi7Lmo/PJF1pg8w1aHoCBG5PmXJlKwcSchifEXzdylVgebzivz6xzi5SfMC8GJ
- Se5yKxuudC4+oujllW5LeebrXSefeZxTGN9FU3LsDe/WjT4iDAEwTMadG3RHddpZInRZItKAkxR
- +hYENziPaHqJzcf5X6hgpOyHv/EHoEvYgSePFjXBqOqOv2PJkUogHSBGhLHrUeohds4bgVNerI5
- 3B7tStgAqYl8tKGjcf/mEz5TCUiK+PvTXRyrrijcE5Dg+MLWkVWooqeb+WRf5IvYAcUBA0OeQyQ
- dGDWdjUm3DVNtFyvXIV0A2eH8UnRtUU9YQYADRBn3MysT81mR8Xu2dGcV74RfQ51vn4GWp/1U+2
- Rcyn4xkRJc3rgTRtQ2g==
-X-Proofpoint-GUID: VvvoQit9FX_IMdEpautXDepwEmzU1AtY
-X-Proofpoint-ORIG-GUID: VvvoQit9FX_IMdEpautXDepwEmzU1AtY
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-30_04,2026-04-30_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 phishscore=0 suspectscore=0 clxscore=1011
- lowpriorityscore=0 spamscore=0 bulkscore=0 impostorscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604300163
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=vishalc@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-27-c413f3605311@redhat.com>
+In-Reply-To: <20260427-qom-tests-v1-27-c413f3605311@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 30 Apr 2026 17:01:14 +0100
+X-Gm-Features: AVHnY4KD53D6a_4F67aZzj5GNKzQNWNF6lzGEl0DrXwLi4hJylMBYawgNBgPUZE
+Message-ID: <CAFEAcA9HMUcY2kVXgwxjZTptAtyhbVfFq4rPSp5buQ-9jvS8mw@mail.gmail.com>
+Subject: Re: [PATCH 27/41] system/qtest: free log path on finalization
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,52 +118,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Anushree, Shivang,
-
-Thank you for working on this patch.
-
-On 30/04/26 14:24, Shivang Upadhyay wrote:
-> During DLPAR CPU hotplug, newly added CPUs start in RTAS stopped state
-> (quiesced). If a kexec crash occurs before the guest starts these CPUs
-> via start-cpu RTAS call, H_SIGNAL_SYS_RESET_ALL_OTHERS will reset them
-> anyway, causing the kdump kernel to hang:
+On Mon, 27 Apr 2026 at 20:46, Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
 >
->    [    5.519483][    T1] Processor 0 is stuck.
->    [   11.089481][    T1] Processor 1 is stuck.
+> qtest_set_log allocates log via g_strdup, but no instance_finalize
+> existed for the qtest type.
 >
-> The hypervisor should only reset CPUs that the guest has started. The
-> cpu->env.quiesced flag tracks RTAS stopped state - CPUs in this state
-> are already inactive and should not be reset.
->
-> Skip system reset for quiesced CPUs to prevent kdump hangs during CPU
-> hotplug operations.
-Also worth noting that when the system reboots, the newly DLPAR'ed CPUs
-that were never started via start-cpu will not be present.
->
-> Cc: Sourabh Jain <sourabhjain@linux.ibm.com>
-> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
-> Reported-by: Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
-> Suggested-by: Vishal Chourasia <vishalc@linux.ibm.com>
-> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+> Fixes: 6ba7ada3559e ("qtest: add a QOM object for qtest")
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > ---
->   hw/ppc/spapr_hcall.c | 4 ++++
->   1 file changed, 4 insertions(+)
+>  system/qtest.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 >
-> diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-> index 032805a8d0..e63ec24f0c 100644
-> --- a/hw/ppc/spapr_hcall.c
-> +++ b/hw/ppc/spapr_hcall.c
-> @@ -1105,6 +1105,10 @@ static target_ulong h_signal_sys_reset(PowerPCCPU *cpu,
->                       continue;
->                   }
->               }
+> diff --git a/system/qtest.c b/system/qtest.c
+> index cf90cd53adb..e9e5773341f 100644
+> --- a/system/qtest.c
+> +++ b/system/qtest.c
+> @@ -1020,10 +1020,18 @@ static void qtest_class_init(ObjectClass *oc, con=
+st void *data)
+>                                    qtest_get_log, qtest_set_log);
+>  }
+>
+> +static void qtest_finalize(Object *obj)
+> +{
+> +    QTest *q =3D QTEST(obj);
 > +
-> +            /* Skip quiesced CPUs */
-> +            if (c->env.quiesced) continue;
+> +    g_free(q->log);
+> +}
 > +
->               run_on_cpu(cs, spapr_do_system_reset_on_cpu, RUN_ON_CPU_NULL);
->           }
->           return H_SUCCESS;
-Reviewed-by: Vishal Chourasia <vishalc@linux.ibm.com>
+>  static const TypeInfo qtest_info =3D {
+>      .name =3D TYPE_QTEST,
+>      .parent =3D TYPE_OBJECT,
+>      .class_init =3D qtest_class_init,
+> +    .instance_finalize =3D qtest_finalize,
+>      .instance_size =3D sizeof(QTest),
+>      .interfaces =3D (const InterfaceInfo[]) {
+>          { TYPE_USER_CREATABLE },
+
+Doesn't the chr_name string have the same issue?
+
+This pattern of "the object has a string property, and the
+char *field that backs it is allocated if we give the property
+a default value, and the setter has to free the old value
+and strdup a copy of the new value, and you have to remember
+to free the string in finalize" seems to be very common.
+I wonder if there's some way we could make this less
+error-prone and boilerplatey?
+
+thanks
+-- PMM
 
