@@ -4,89 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 601E8FF886F
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 05:00:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD379FF8875
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 05:02:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIJVj-0007vS-4G; Thu, 30 Apr 2026 01:00:27 -0400
+	id 1wIJXk-0000ak-4f; Thu, 30 Apr 2026 01:02:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIJVZ-0007uv-7D
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 01:00:17 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
+ id 1wIJX7-0000FC-Br
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 01:01:57 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIJVW-0004LI-FX
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 01:00:15 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-488af9fdaa7so2091545e9.1
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 22:00:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <physicalmtea@gmail.com>)
+ id 1wIJWR-00057x-UA
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 01:01:50 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2b24fede2acso3002405ad.3
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 22:01:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777525213; x=1778130013; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rYg8Rb789PIhsepo2/JfoP35d7MRc0SkGtjpFWMEIcA=;
- b=CdAU7GKf1qL+Zl50jcOJJEi29foy95uoAyFAxh7IPEa8A8JgfiA6UqwEej9Q2bT3JM
- BV8BTVzlj9i/+g0kG47cmbtGqagVCwjCMzJITFpUz+Fo5qlmr1qwyfguLdLCgaHzxFI0
- jkHNu4fJLfo+ODskxLu619lvLiY8HnLaSjw5KiZiOnnT7MteKU5nbKUl7WqWWV2UXjw4
- nOtmC50Ik/dlLjnckGb9qa8X9BcFY+8aRDqMUfyYU30G6wzsBltqneTVwwIGdyN0hxLR
- qwhb8gzRIDwj8jS+Xy/lhzAzcXrxEhe04/Sew78Mhj3Fz4IBY7n1o3vZdYjhlb//2Gtz
- zqgQ==
+ d=gmail.com; s=20251104; t=1777525270; x=1778130070; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=yQ10o/nhNMp9WiPLO3oSpqcfumGQlVQMd3hRta3eci0=;
+ b=prk+x0crdHLN1fKm8sw9lNOCLlurerEG/Kv+XiJy/mPxH53gLKqCTQ69aC/1lC5WRw
+ v3bgGr4JzQKn2Q63jhzGYaARJegu+7mIOfJwL5evAeOKB7g8L6hDe5Ry7S6UVmP/tB26
+ 9dk05Nxk1b5+/I39bBwaB0BQeRcmYvnD8CMWGUTDxKST1cFdHiQp8bP34UB5v/iSDua3
+ okBckwqtMPXCafjzzh5ONI0P8bxXeemxNvP+tbhYxeDBrinY/xy8it+juojv8prD7UF7
+ 7cJSenDo9xLQhnA+z7VZeX/KBABH1oqgmmcPVZas49PaPWkOuYdT9nTIitlNLOiDraJd
+ x3qg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777525213; x=1778130013;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rYg8Rb789PIhsepo2/JfoP35d7MRc0SkGtjpFWMEIcA=;
- b=S4GMJ3FXvi6HvvR31uqQ98uLZIYQxH3LRuXuBjxoFQ1G9nPC12i4qfMaTtVrFkqcHV
- 11jMeMBMBeKkQeM2SXqqYk0QI5zT5LJ6Prkyz1C7azZzy0Q80VaQB3gxAMdpGcbUp2Ra
- YKtpexAG20oIINTEO1DGInzy8IfALK5S2Hc9SA9VaQjNalENh/lR8phS5405YzgJPYdp
- QUeWN9qzGnaQy29i2d24mq0/TyHdJj5/GXsdiPermydiL0McsMZd6FKGKLXRRA2xX//T
- fzTcm4E3SSo/Jqrkd3q8nC7x1dcpSdtCPp+EbrnUUufzvcHsmpyPrcmRYu7YL+Olt4kv
- V9LA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8YkOT6ztZhS30/fbvHqN6mGLAw917d55jIQ1dcretH3asSvJZNwcVD1lXs6eVtgDj905MwAWg1eW6m@nongnu.org
-X-Gm-Message-State: AOJu0YxfAnwYpuiB1uXLyNFRiriuY/9zHUxVeArBQqlvmKw2HUljW6fX
- F5flzlPdgI4Xrn0AHraS3m888QLCkJpIqfZAiu54/fJGtiktqN2GdOiq9CaL9PqdQwo=
-X-Gm-Gg: AeBDieuE+P7Cw8I7zBCPDTAiLGmHU4G0l9JH9BBNAeI0Z5Dx+akNp4V4xZF/r8q2/RO
- 3k3NWd0+j0XgMVR8vy2APgUtRsObVKvticMI7cNJRQ8uo8gMn3lMi3uNIqJwg8CK/jCRkWzGZiw
- PJJh9/XOzlLKFlVYprbqZE5lO4Oorlq8J5/5QT54RJlFWoiuWqJk+mSQT8N2ePsyGvoQ31uOS6P
- 6N/zvfNJa5omndPfJbNyojZvWYUMRN4CnyiXTj/PjA6Pyl261DuvZRL4rC+TGfI4TN0AllNX5cb
- sF9pI0CMuedPD0DLkAMi8ZX/hIDLWs+lFoeMuS80gnX3rHcp6JTCnN83CH+MQw/zCfKVJPG8Hzr
- 0nV0mloSo05aUPa5+65JeEiO9TLD+DskZ7vYvx+J2E7eXHR2VfraLzCSCC42grlpfO7Liz1LGSi
- Duf/noRiIHPo1rZzpa+nNliqDKIMq+61+CbwqK5hVg6BCyLAcNMY11i+vQ7ofZI2PErJphymYZ6
- QQr
-X-Received: by 2002:a05:600c:6285:b0:48a:75b9:b0bc with SMTP id
- 5b1f17b1804b1-48a8448564cmr23452715e9.29.1777525212271; 
- Wed, 29 Apr 2026 22:00:12 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-447b3d48517sm9158999f8f.5.2026.04.29.22.00.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Apr 2026 22:00:11 -0700 (PDT)
-Message-ID: <21fd8dc4-d97c-447f-839c-c3c5945ec6ed@linaro.org>
-Date: Thu, 30 Apr 2026 07:00:10 +0200
+ d=1e100.net; s=20251104; t=1777525270; x=1778130070;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yQ10o/nhNMp9WiPLO3oSpqcfumGQlVQMd3hRta3eci0=;
+ b=LtRHJiIH23TpeEt/46v3l/HzXuX9umbcCV3lPWtHi1M3ghsEyFguNDvk1CfFqB27cs
+ nvmnrLAAKt9NpyqizyjdADLlYo+aHrrNdPROxWf24THWH+RIy0xLb5/Vfi9VBzZ8tZuc
+ cR6FaW7JzIFLa3dmt3i2OkdxRbAK5D5Sb8FsD+u02u2IO12vMch0GztiKK56B3TO7B4a
+ pPMfKQXpjE7ryK9BRbANln563+9iujKnYCzen1Vv3J/NaCMsLMhiuMKpBSfSgl+29C+q
+ 6wgw+tX8eQ/L8yzREB7PXfmoNuzI17hBVtT8t4GUW6JKo5Cizp8klEPpWXaJ0GBUR1V4
+ pK/A==
+X-Gm-Message-State: AOJu0YwH4lEJ2SXtKjWEp9jDQJf+cyWJ4fgbR+SqERqv9J8ud9M3McHL
+ Mkkw4sjV0ZpUbtPBIfnahbfQjRvMRChxKUCLBwHrcMMH1MPnF0U2Zs0lr97Ql15bDPgKnQ==
+X-Gm-Gg: AeBDietN5x57hmtK6m8wIp6WUDtXlYq48Sgo2f2JlfYFi/YPJNRBiL/vHmsKu96+X23
+ UISGS/pYpEUME0Lf6W+6rU1eX4TY7zfwSNgeVuxKrOpwNgbU4IPEhrd2l1UXG6FbjHzYLnWH2iY
+ j+wNH2otiFtkwqulGFHASonWY1rqecSoXviF7EynSHADMT1xIbLCfD5r2qQZN3j/gcqlQBiqNar
+ CzFWc6njBS4Ru0LhSOqURppm/kYNYzoAV8erOn6Qtcks7aKvf9dkf+ZllOX5izzePrzGY2KtA+g
+ w5geJ31l1nLN1L7BiBLmbLq2abJbk1hxKbOgoMSPtvhV1p6nu+zJasmew2bXZmH3SSoBzvbwrNe
+ v7Z/Ck1+5P0o2PGp7amVo5w+V1i49gmU8u3Jm/5bqdmRkKdPqtNaW5PH8ati1E5sO3ytlqX702I
+ Q2oIr07oX/xk0XQ3Y7Np7nqQ008PqkDgRCOfbLn3pmcQ1EHPU1m64=
+X-Received: by 2002:a17:903:3c4f:b0:2b0:6e6a:8504 with SMTP id
+ d9443c01a7336-2b9a24b954fmr12675645ad.27.1777525269442; 
+ Wed, 29 Apr 2026 22:01:09 -0700 (PDT)
+Received: from localhost.localdomain ([114.249.134.218])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b988963ed0sm39527405ad.65.2026.04.29.22.01.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 29 Apr 2026 22:01:09 -0700 (PDT)
+From: Jia Jia <physicalmtea@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: jonathan.cameron@huawei.com, fan.ni@samsung.com, farosas@suse.de,
+ lvivier@redhat.com, pbonzini@redhat.com
+Subject: [PATCH] hw/cxl: bound Set Feature cleanup to written extent
+Date: Thu, 30 Apr 2026 13:01:03 +0800
+Message-Id: <20260430050103.3172190-1-physicalmtea@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 20/40] fpu: Export default_nan, pick_nan, return_nan
- routines
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260430000524.56046-1-richard.henderson@linaro.org>
- <20260430000524.56046-21-richard.henderson@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260430000524.56046-21-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=physicalmtea@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,13 +97,286 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/4/26 02:05, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/fpu/softfloat-parts.h  | 15 +++++++++++++++
->   fpu/softfloat-parts.c.inc      |  6 +++---
->   fpu/softfloat-specialize.c.inc |  4 ++--
->   3 files changed, 20 insertions(+), 5 deletions(-)
+cmd_features_set_feature() validates each fragment against the target
+write-attribute buffer, but it tracks data_size as the sum of every
+fragment copied so far.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+That becomes a problem at transfer completion. Cleanup uses data_size as
+its memset() length, so a sequence of legal partial transfers can keep
+rewriting the same small range while growing data_size far beyond the
+feature buffer that is actually being updated.
+
+On an ASan build, repeatedly sending 2-byte rank_sparing fragments at
+offset 0 and then finishing aborts the host with:
+
+  ERROR: AddressSanitizer: heap-buffer-overflow
+  WRITE of size 1144
+      #0 __interceptor_memset
+      #1 cmd_features_set_feature ../hw/cxl/cxl-mailbox-utils.c:1961
+      #2 cxl_process_cci_message ../hw/cxl/cxl-mailbox-utils.c:4642
+      #3 mailbox_reg_write ../hw/cxl/cxl-device-utils.c:209
+
+Fix this by tracking the maximum written extent instead of the cumulative
+number of copied bytes. That keeps cleanup bounded to the actual
+write-attribute window without changing the rest of the transfer flow.
+
+Add a qtest that confirms a multipart bank_sparing transfer does not
+clobber adjacent rank_sparing state during cleanup.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3461
+Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+
+---
+ hw/cxl/cxl-mailbox-utils.c |  11 +---
+ tests/qtest/cxl-test.c     | 119 ++++++++++++++++++++++++++++++++++++-
+ 2 files changed, 121 insertions(+), 9 deletions(-)
+
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index ce139e30eb..8346177b79 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -1769,7 +1769,6 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+         memcpy((uint8_t *)&ct3d->patrol_scrub_wr_attrs + hdr->offset,
+                ps_write_attrs,
+                bytes_to_copy);
+-        set_feat_info->data_size += bytes_to_copy;
+ 
+         if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+             data_transfer_flag ==  CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER) {
+@@ -1796,7 +1795,6 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+         memcpy((uint8_t *)&ct3d->ecs_wr_attrs + hdr->offset,
+                ecs_write_attrs,
+                bytes_to_copy);
+-        set_feat_info->data_size += bytes_to_copy;
+ 
+         if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+             data_transfer_flag ==  CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER) {
+@@ -1820,7 +1818,6 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+         }
+         memcpy((uint8_t *)&ct3d->soft_ppr_wr_attrs + hdr->offset,
+                sppr_write_attrs, bytes_to_copy);
+-        set_feat_info->data_size += bytes_to_copy;
+ 
+         if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+             data_transfer_flag ==  CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER) {
+@@ -1842,7 +1839,6 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+         }
+         memcpy((uint8_t *)&ct3d->hard_ppr_wr_attrs + hdr->offset,
+                hppr_write_attrs, bytes_to_copy);
+-        set_feat_info->data_size += bytes_to_copy;
+ 
+         if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+             data_transfer_flag ==  CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER) {
+@@ -1864,7 +1860,6 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+         }
+         memcpy((uint8_t *)&ct3d->cacheline_sparing_wr_attrs + hdr->offset,
+                mem_sparing_write_attrs, bytes_to_copy);
+-        set_feat_info->data_size += bytes_to_copy;
+ 
+         if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+             data_transfer_flag == CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER) {
+@@ -1885,7 +1880,6 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+         }
+         memcpy((uint8_t *)&ct3d->row_sparing_wr_attrs + hdr->offset,
+                mem_sparing_write_attrs, bytes_to_copy);
+-        set_feat_info->data_size += bytes_to_copy;
+ 
+         if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+             data_transfer_flag == CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER) {
+@@ -1906,7 +1900,6 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+         }
+         memcpy((uint8_t *)&ct3d->bank_sparing_wr_attrs + hdr->offset,
+                mem_sparing_write_attrs, bytes_to_copy);
+-        set_feat_info->data_size += bytes_to_copy;
+ 
+         if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+             data_transfer_flag == CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER) {
+@@ -1927,7 +1920,6 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+         }
+         memcpy((uint8_t *)&ct3d->rank_sparing_wr_attrs + hdr->offset,
+                mem_sparing_write_attrs, bytes_to_copy);
+-        set_feat_info->data_size += bytes_to_copy;
+ 
+         if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+             data_transfer_flag == CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER) {
+@@ -1938,6 +1930,9 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+         return CXL_MBOX_UNSUPPORTED;
+     }
+ 
++    set_feat_info->data_size = MAX(set_feat_info->data_size,
++                                   (size_t)end_offset);
++
+     if (data_transfer_flag == CXL_SET_FEATURE_FLAG_FULL_DATA_TRANSFER ||
+         data_transfer_flag ==  CXL_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER ||
+         data_transfer_flag ==  CXL_SET_FEATURE_FLAG_ABORT_DATA_TRANSFER) {
+diff --git a/tests/qtest/cxl-test.c b/tests/qtest/cxl-test.c
+index a9fcd98736..ed222aca4b 100644
+--- a/tests/qtest/cxl-test.c
++++ b/tests/qtest/cxl-test.c
+@@ -99,6 +99,21 @@ typedef struct QEMU_PACKED CXLSetFeatureInHeaderTest {
+     uint8_t rsvd[9];
+ } CXLSetFeatureInHeaderTest;
+ 
++typedef struct QEMU_PACKED CXLGetFeatureInHeaderTest {
++    uint8_t uuid[16];
++    uint16_t offset;
++    uint16_t count;
++    uint8_t selection;
++} CXLGetFeatureInHeaderTest;
++
++enum {
++    CXL_TEST_GET_FEATURE_SEL_CURRENT_VALUE = 0,
++    CXL_TEST_SET_FEATURE_FLAG_FULL_DATA_TRANSFER = 0,
++    CXL_TEST_SET_FEATURE_FLAG_INITIATE_DATA_TRANSFER = 1,
++    CXL_TEST_SET_FEATURE_FLAG_CONTINUE_DATA_TRANSFER = 2,
++    CXL_TEST_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER = 3,
++};
++
+ static void cxl_basic_hb(void)
+ {
+     qtest_start("-machine q35,cxl=on");
+@@ -177,15 +192,37 @@ static uint16_t cxl_test_t3d_mailbox_errno(void)
+ 
+ static void cxl_test_fill_set_feature_header(CXLSetFeatureInHeaderTest *hdr,
+                                              const uint8_t uuid[16],
++                                             uint32_t flags,
+                                              uint16_t offset,
+                                              uint8_t version)
+ {
+     memset(hdr, 0, sizeof(*hdr));
+     memcpy(hdr->uuid, uuid, 16);
++    hdr->flags = cpu_to_le32(flags);
+     hdr->offset = cpu_to_le16(offset);
+     hdr->version = version;
+ }
+ 
++static void cxl_test_fill_get_feature_header(CXLGetFeatureInHeaderTest *hdr,
++                                             const uint8_t uuid[16],
++                                             uint16_t offset,
++                                             uint16_t count)
++{
++    memset(hdr, 0, sizeof(*hdr));
++    memcpy(hdr->uuid, uuid, 16);
++    hdr->offset = cpu_to_le16(offset);
++    hdr->count = cpu_to_le16(count);
++    hdr->selection = CXL_TEST_GET_FEATURE_SEL_CURRENT_VALUE;
++}
++
++static void cxl_test_t3d_submit_get_feature(const void *payload, size_t len)
++{
++    memwrite(cxl_test_t3d_payload_base(), payload, len);
++    writeq(cxl_test_t3d_mailbox_base() + A_CXL_DEV_MAILBOX_CMD,
++           ((uint64_t)len << 16) | (0x05 << 8) | 0x01);
++    writel(cxl_test_t3d_mailbox_base() + A_CXL_DEV_MAILBOX_CTRL, 1);
++}
++
+ static void cxl_t3d_set_feature_rejects_oversized_rank_sparing(void)
+ {
+     static const uint8_t rank_sparing_uuid[16] = {
+@@ -203,7 +240,7 @@ static void cxl_t3d_set_feature_rejects_oversized_rank_sparing(void)
+     qtest_start(cmdline->str);
+     cxl_test_t3d_enable_bar2();
+ 
+-    cxl_test_fill_set_feature_header(hdr, rank_sparing_uuid, 0,
++    cxl_test_fill_set_feature_header(hdr, rank_sparing_uuid, 0, 0,
+                                      CXL_MEMDEV_SPARING_SET_FEATURE_VERSION);
+     memset(payload + sizeof(*hdr), 0x41,
+            sizeof(payload) - sizeof(*hdr));
+@@ -215,6 +252,84 @@ static void cxl_t3d_set_feature_rejects_oversized_rank_sparing(void)
+     rmdir(tmpfs);
+ }
+ 
++static void cxl_t3d_set_feature_cleanup_stays_within_feature_state(void)
++{
++    static const uint8_t bank_sparing_uuid[16] = {
++        0x36, 0x96, 0xb7, 0x78, 0xac, 0x90, 0x64, 0x4b,
++        0xa4, 0xef, 0xfa, 0xac, 0x5d, 0x18, 0xa8, 0x63,
++    };
++    static const uint8_t rank_sparing_uuid[16] = {
++        0x34, 0xdb, 0xaf, 0xf5, 0x05, 0x52, 0x42, 0x81,
++        0x8f, 0x76, 0xda, 0x0b, 0x5e, 0x7a, 0x76, 0xa7,
++    };
++    g_autoptr(GString) cmdline = g_string_new(NULL);
++    g_autofree const char *tmpfs = NULL;
++    uint8_t set_payload[sizeof(CXLSetFeatureInHeaderTest) + 2] = { 0 };
++    uint8_t get_payload[sizeof(CXLGetFeatureInHeaderTest)] = { 0 };
++    uint8_t out[2];
++    CXLSetFeatureInHeaderTest *set_hdr = (void *)set_payload;
++    CXLGetFeatureInHeaderTest *get_hdr = (void *)get_payload;
++    int i;
++
++    tmpfs = g_dir_make_tmp("cxl-test-XXXXXX", NULL);
++    g_string_printf(cmdline, QEMU_T3D_DIRECT_PMEM, tmpfs, tmpfs);
++
++    qtest_start(cmdline->str);
++    cxl_test_t3d_enable_bar2();
++
++    cxl_test_fill_set_feature_header(
++        set_hdr, rank_sparing_uuid,
++        CXL_TEST_SET_FEATURE_FLAG_FULL_DATA_TRANSFER, 0,
++        CXL_MEMDEV_SPARING_SET_FEATURE_VERSION);
++    set_payload[sizeof(*set_hdr)] = 0x34;
++    set_payload[sizeof(*set_hdr) + 1] = 0x12;
++    cxl_test_t3d_submit_set_feature(set_payload, sizeof(set_payload));
++    g_assert_cmphex(cxl_test_t3d_mailbox_errno(), ==, CXL_MBOX_SUCCESS);
++
++    cxl_test_fill_set_feature_header(set_hdr, bank_sparing_uuid,
++                                     CXL_TEST_SET_FEATURE_FLAG_INITIATE_DATA_TRANSFER,
++                                     0,
++                                     CXL_MEMDEV_SPARING_SET_FEATURE_VERSION);
++    set_payload[sizeof(*set_hdr)] = 0x78;
++    set_payload[sizeof(*set_hdr) + 1] = 0x56;
++    cxl_test_t3d_submit_set_feature(set_payload, sizeof(set_payload));
++    g_assert_cmphex(cxl_test_t3d_mailbox_errno(), ==, CXL_MBOX_SUCCESS);
++
++    /* Repeating the same 2-byte fragment must not clobber adjacent state. */
++    for (i = 0; i < 2; i++) {
++        cxl_test_fill_set_feature_header(
++            set_hdr, bank_sparing_uuid,
++            CXL_TEST_SET_FEATURE_FLAG_CONTINUE_DATA_TRANSFER,
++            0, CXL_MEMDEV_SPARING_SET_FEATURE_VERSION);
++        set_payload[sizeof(*set_hdr)] = 0xaa;
++        set_payload[sizeof(*set_hdr) + 1] = 0xbb;
++        cxl_test_t3d_submit_set_feature(set_payload, sizeof(set_payload));
++        g_assert_cmphex(cxl_test_t3d_mailbox_errno(), ==, CXL_MBOX_SUCCESS);
++    }
++
++    cxl_test_fill_set_feature_header(set_hdr, bank_sparing_uuid,
++                                     CXL_TEST_SET_FEATURE_FLAG_FINISH_DATA_TRANSFER,
++                                     0,
++                                     CXL_MEMDEV_SPARING_SET_FEATURE_VERSION);
++    set_payload[sizeof(*set_hdr)] = 0xcc;
++    set_payload[sizeof(*set_hdr) + 1] = 0xdd;
++    cxl_test_t3d_submit_set_feature(set_payload, sizeof(set_payload));
++    g_assert_cmphex(cxl_test_t3d_mailbox_errno(), ==, CXL_MBOX_SUCCESS);
++
++    cxl_test_fill_get_feature_header(get_hdr, rank_sparing_uuid,
++                                     offsetof(CXLMemSparingReadAttrs, op_mode),
++                                     2);
++    cxl_test_t3d_submit_get_feature(get_payload, sizeof(get_payload));
++    g_assert_cmphex(cxl_test_t3d_mailbox_errno(), ==, CXL_MBOX_SUCCESS);
++
++    memread(cxl_test_t3d_payload_base(), out, sizeof(out));
++    g_assert_cmphex(out[0], ==, 0x34);
++    g_assert_cmphex(out[1], ==, 0x12);
++
++    qtest_end();
++    rmdir(tmpfs);
++}
++
+ static void cxl_t3d_deprecated(void)
+ {
+     g_autoptr(GString) cmdline = g_string_new(NULL);
+@@ -337,6 +452,8 @@ int main(int argc, char **argv)
+         qtest_add_func("/pci/cxl/type3_device_vmem_lsa", cxl_t3d_volatile_lsa);
+         qtest_add_func("/pci/cxl/type3_device_set_feature_rank_sparing_bounds",
+                        cxl_t3d_set_feature_rejects_oversized_rank_sparing);
++        qtest_add_func("/pci/cxl/type3_device_set_feature_cleanup_bounds",
++                       cxl_t3d_set_feature_cleanup_stays_within_feature_state);
+         qtest_add_func("/pci/cxl/rp_x2_type3_x2", cxl_1pxb_2rp_2t3d);
+         qtest_add_func("/pci/cxl/pxb_x2_root_port_x4_type3_x4",
+                        cxl_2pxb_4rp_4t3d);
+-- 
+2.34.1
+
 
