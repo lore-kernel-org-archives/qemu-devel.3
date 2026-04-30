@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D7DACD13D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 19:00:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1632CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 19:00:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIWbd-000192-DY; Thu, 30 Apr 2026 14:59:25 -0400
+	id 1wIWcn-0001zC-NI; Thu, 30 Apr 2026 15:00:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIWbS-00014D-P6
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 14:59:16 -0400
+ id 1wIWcY-0001q0-PE
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 15:00:25 -0400
 Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIWbQ-0005lB-NW
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 14:59:14 -0400
+ id 1wIWcW-0006CA-7M
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 15:00:22 -0400
 Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-65c2cd216c9so265252d50.3
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 11:59:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777575550; cv=none;
+ 956f58d0204a3-651cfaa21e6so1193204d50.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 12:00:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777575619; cv=none;
  d=google.com; s=arc-20240605;
- b=dC685TBvDQtKkGoz9eRTYl5MXqLJPFfdXIk/fqWX8936BDqWkshNpbLe0PiYviIcL3
- comebN+7WXSkqG+/h6qLejlXA5pQzLR0A5Lo7ITWHUtaT2YYJxIsuZexQG/YQ9YitnEF
- EaevsdT2FPpG2WVjJ803ga4+DYmzj44mDutP0McdLwHm7nSy4ZgM+7TVnMa9rOKh5F4M
- kyta0c9j2nidnDmMfU1LBJDMswF5D2wOyhBcWnG7NkNJne2boCmRY7JvdUFUlwmwDZFx
- Cgzch4xyBDBn+X7uj/DqtRb64RLWNcKeeYXYUCquLLjF03NZjU3LnB1IAx5bTg8pv2Ew
- ZOaA==
+ b=UAFhbqA7CDUHrap0BYHIX9A9I2yE9SxzQk06RjdrLN5JbXPtkmUYI/PtkzMzwERpGm
+ 2qQ2wom2uSCgWQXW7oqVg8tBI8ZT97PnvCm/8PCZwZlpGrl84w7uq8G8oJeFtsBk/eKO
+ bed1U/YC7otvkOnFfln3oMJ1Fm7eOcwVmhXYFaOs+4TybMPo9ibZQhlQKiLvC8eg0WsW
+ mIZOKdClgTiivb6XLl27KcgYUtYFy74dG4DkCuqWTAXjG6ZbfEUn4GBEV4z62cYgqicI
+ mdczNCDhNx0GEEexSEOlRhtWci2QdxgbsUjokBG/Kgy2olGm20lNGAv7o0yrhj4Bc9GK
+ qKzQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=QMWsypGprU2vf2WaeRTAV+hObzHLR83YenxHnUaqiMw=;
- fh=7h/hL4H/2TqCtEC3HrEDvuFF/zRWaxDGzWBr9wKj618=;
- b=dONAtoAGOOV6ZgD4rd9bpcsPYsHjUJ6Z8rtghqHePpAGb7rY160fKlKVb6M7vxFk8a
- Y0KodNFynQ3Tw46rN86Bd1UG6pa+NZlpEQRbJ9UJ5BU/SZlXCaEZ/+ZDhcmrb6Waxbch
- uYuDFq7VG57/KbgXOt2nTYpwpV7juVyZbHFTAKVUtaaaGuK7cgG8eCb0NBng8Ln6fr6X
- 4qrX/U/5InQ/aKZ1DaeI1nZoOsiXkSxTxA1B4paO5f0dkBZPIuWhmnuPtJoUs4ZZQi+V
- q+5dHDjpA5rfz57p/Wxf7BYqCi56Y7IEG8BjFoZiEi+HQ/ljl3PnBPdN0jqxkUasBk/V
- XuLw==; darn=nongnu.org
+ bh=33PsOdfRzSkdPROcUPsbwRof+hEAHu2aY8Z1kMr6zvs=;
+ fh=qsSgpkl+6XmdYWhRLMAbTUE72QWsJeCxh+IYdLSlTrk=;
+ b=JLHA8zeuFdsF8BnKWOr9Nhc8YqOyFC14hUP6S+XViPyv2o7F5OByn+AAT/RYTKhvTx
+ 3lV6nZ+aS5Fvl3r8mugXVCbyd6309bj0Bf8mOYugTPMeyPMIyoT0a0RDDalDwN5OkqMj
+ +OqJqIzWa7p9RhUPuhsYokrGb5HULOHF7u1A3sukpHIXNhCzbzlJ/vkwo9Piyb0I9d7K
+ 5cN7qh3u6ar5eKTiV4tzMRgHjQzJFQQ5bIzXGfUve+FI9eQkf+Ubx5ZCld5DDrty0hPk
+ 6IIQQKhsrOMOqazVdzu/87ZtZk42eeYMYC2QIx6rzRYrSskvaKGQYlRpDtbk4JFNKKr+
+ EQBg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777575550; x=1778180350; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777575619; x=1778180419; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=QMWsypGprU2vf2WaeRTAV+hObzHLR83YenxHnUaqiMw=;
- b=rD5fiEXIXbnP1Hf5gt5+xkyuIRzB9VgwzrCo/A8J2k85qeR8Kq7pxLIcXNA3EBCWjn
- fojQR0cZr9sH+jADrizfClu8fRwqDkxjyGG6tietYq9XYREeyaDcIzBAEZbRypZSQUJL
- 49D3Q8LKVocepCA3uHbXcdYVwcwoBPslPaLsvkvLMtgBMKtvMAyFg6kBSJ01Suwc/ZIl
- /qqetntBHFHxmhkbbTtqT6uYMJ6Od4C4LLiJ1EMeYShG+Q0CB396tBWgx9YgCtGssKSv
- /Ixd9fNOPcpD3fNbWItc8NP4kYp2uKBEDGtyWHjKMC71IU8ZJhOLzq3qgi1pDOIEbEhU
- fAIg==
+ bh=33PsOdfRzSkdPROcUPsbwRof+hEAHu2aY8Z1kMr6zvs=;
+ b=wfZ5RmLyy1aeg9tydWBBrvlTovPmV85YU6oPfZSp6RgcK2vUr71thVxrq4YpgoTY5V
+ herAt3fXnn+oSh8NyDsUdytOWzBEhrrgUAF7yElMwx6Y7DF0jRmk6zlkZqlGfwaCb/Tb
+ MaB3XAJ3GICHzN5z0Hwt3buWg/8XNriGn2yIZTgJvZQsqwfAsq0sxp957QR8/5EQeboh
+ SyNheuB1C9x2CHESs01B1e5kc1DKq+eCwicAW3LNvy+w5Ea/ldq/PYQqRkle0/HtDV/3
+ jRDsDG8jh0H9EUta7S/OEbpEXL2e5XQTnx00T5ZGbbNClIhYPG5qiCauBJb0NYkYb/uK
+ hCqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777575550; x=1778180350;
+ d=1e100.net; s=20251104; t=1777575619; x=1778180419;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QMWsypGprU2vf2WaeRTAV+hObzHLR83YenxHnUaqiMw=;
- b=K7hfuEc9+HveOuaPW8BGU5fNffxggIllEARTNUgA7qLV6cHQl5KLN5JtbTz0R0pj5r
- gtH15xxrZ4sAeWUz0sZb/+AgUZTqU78Ukuvd8FD1wCSSdkDEmJm03FKwq7Jm+bgJGFUb
- 6DjZjeZ5G1CtO2X7Zq4wxQ2ijBA2JAscRMUJx/0ti6PSdvvwKvc6Lw8n8HJgs5KXsNyC
- NRBApNHfKQ1paR2QR+E+i+gHZIzAtURK0vXe0ClVB0Rlweu3c02RpQdYN0Bz1WqeqN2Y
- j3sD+DUNxo09qT4wK0NJLqpTmmdaXFYOlXYk1jsRG3hz16geGfasyo+oUl5WT8FpRkgz
- 71rQ==
-X-Gm-Message-State: AOJu0Yz4UmtWcoEnlGSJ/8JIZiHNPfm8YwBibseAC4xKd4QUa7ea4aMy
- 2C5KvQ/8VVWLN2rE3ozLwKGRoAFLnTt+n+VuakkHZ4ekvrUQbLrmyOm5MVbJ88geyvPGLwTBu5n
- 416tUWxkr3bgYX9A8UyC/1aq0RkELNhunU0PHViqEkQ==
-X-Gm-Gg: AeBDievO06rGIJUHZXqV78FnaAZkQnW+6mIiPNM0uK4/2luQkIFcuM6U9utruNUfddR
- rR5g3bmTWd6zgfMpQ5r2ERuFXO/8XIJzn98eK6TeU2dDSBQ6onBX9NVCK0/zJjosYZHgrJDaeqj
- huLIaFcNLfI4Am7Kbh8JCMvdZb/WF2teJzjQ7uRVkcW21E+8V/5PdHEBvGHrd0y3jMGMfvREMeU
- cj2F6Kt/vPFHlWgw0RyUTlSNfUSUstl3iU4pO6L7dp/1z64setz++6UuvTj/uDFu6DUL9Fr4JKg
- UMtpSGeRk6mSVcMELO3spEWrWLFQCM0kX0+Lmz0c0GEVG3J9HnvewW81NgtFbEBnLBirpJibVrK
- uyA==
-X-Received: by 2002:a05:690e:43c5:b0:658:7513:5ee8 with SMTP id
- 956f58d0204a3-65c30584863mr24561d50.21.1777575550014; Thu, 30 Apr 2026
- 11:59:10 -0700 (PDT)
+ bh=33PsOdfRzSkdPROcUPsbwRof+hEAHu2aY8Z1kMr6zvs=;
+ b=bKB3zoNLZJtJhqG3nLd5qAav6TWH44+KRbx3tRpHHNfu1YUyVb2Azu/6mcN9XzMsL4
+ VibDbRb58UyN9tmQNZ6oz1Dnf77tivq5V5gd6OR/Zs+h+t/Uj23Oa0PNLKXB8TyO9QBN
+ M62LCA4CQ4l3pq5J/sAav34ZZpvybBsBvtMQ1YtfkRVa5pIgd5hSpbtNNaHD7tDaWJXz
+ mITELk6lrIYVjQ7tkiLJPMZbwvW87tw+P6YzwNyK+8496n+zgwOdkfmJDA2LwHHK6g2J
+ MzLAWCWQtqBKYRrsSwxG6xCiCaQdo/mDg14Jbwn4pFM7t3f9vLQoTUX5T/3eOSTAvRTa
+ dIvg==
+X-Gm-Message-State: AOJu0Yzf0Ky5IBeIGkBKtQhwz5tyHqZ/9M2nqsRoAGDLnyM9BdZr42P/
+ 1C9anEG+n8jzybjG8zygEQrmFQFyiqphs3EPrrTXrei3o/onjPbv9U6OCBPIvW9vhcK6+z2QjTa
+ ek2qlJNBt28svMf1WdaOqXzM1pZg0E+8cvIK/2sTHsQ==
+X-Gm-Gg: AeBDieviZF/OWghmuENEIOWbDcnn8IzuvOJDls3hf6f1CnnnUIK2IecJ0M6+nSNMePW
+ o1pOH+vwKxqZuZTrsW5ZZYxnV0ScKZTp+8wkAqE2iMpWqnHbjumeNO/Uku6T5TXV9kjizfbJ0S/
+ wc2s6X1ETL1JlkK1ddk6XAGIOqhwzb/W0bceYvS75LFkhJY9/ojXsEALkX5LKGaDLqVo+6/cIrP
+ gtQ5/JOw2AFqV5OZu/s7mqZRqbFlyJMtE8RfUQORgB/SGDRAaZAqMs4Kocfrb6HZ4ssgIG9+O+X
+ 6fwEPLzJcvOyMKRjMZ6yvS6fs0uKWJDBjf6jW+qJ9IQK4npZYO5yS876vh2E6S+eAqtGjqkmAxe
+ QoA==
+X-Received: by 2002:a05:690e:1207:b0:65c:2dde:1f20 with SMTP id
+ 956f58d0204a3-65c2dde2dcemr379405d50.22.1777575618555; Thu, 30 Apr 2026
+ 12:00:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260428083119.1400110-1-gs_liugan@163.com>
-In-Reply-To: <20260428083119.1400110-1-gs_liugan@163.com>
+References: <20260428-features-v1-1-1841b39da7e6@rsg.ci.i.u-tokyo.ac.jp>
+ <CAFEAcA9_Sc=+Cn7JiPOo9GjOZFU4KCc7nFVqU=9=QAsNBG6AsQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA9_Sc=+Cn7JiPOo9GjOZFU4KCc7nFVqU=9=QAsNBG6AsQ@mail.gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 Apr 2026 19:58:58 +0100
-X-Gm-Features: AVHnY4I8zCXnTDxY2b4ksJBdjV5c-6MxSMh8812SItYPoloSnXgfhrDIVi1U85U
-Message-ID: <CAFEAcA9HADVEBT=6pQSAr93G6uSmVo7Tz54U7nk0AKG57RXFGg@mail.gmail.com>
-Subject: Re: [PATCH] hw/intc/arm_gicv3: Fix NS write to ICC_AP1Rn_EL1 when
- prebits < 7
-To: liugan1 <gs_liugan@163.com>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, liugan1 <liugan1@lixiang.com>
+Date: Thu, 30 Apr 2026 20:00:05 +0100
+X-Gm-Features: AVHnY4IS446GOgig4mj2hWyzIYZXt735BiHhTy8NoMwOpE3wZw3c3RnA8q9fDSc
+Message-ID: <CAFEAcA8kk=mUYaqzbqT_C55398SknRUdCmkWKk1ruLMnr=0vOw@mail.gmail.com>
+Subject: Re: [PATCH] target/arm/kvm: Cache host CPU probe failure
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org, kvm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
  envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
@@ -99,7 +100,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,50 +116,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Apr 2026 at 09:31, liugan1 <gs_liugan@163.com> wrote:
+On Thu, 30 Apr 2026 at 14:09, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
-> From: liugan1 <liugan1@lixiang.com>
+> On Tue, 28 Apr 2026 at 09:07, Akihiko Odaki
+> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+> >
+> > kvm_arm_set_cpu_features_from_host() does not properly handle host CPU
+> > probe failure with caching. The current algorithm can be summarized as
+> > follows:
+> >
+> >     If dtb_compatible is not cached:
+> >         If kvm_arm_create_scratch_host_vcpu() fails:
+> >             Report failure
+> >
+> >         Cache dtb_compatible
+> >
+> >         If getting register values fails:
+> >             Report failure
+> >
+> >     Report success
+> >
+> > This algorithm has the following problems:
+> >
+> > - If kvm_arm_create_scratch_host_vcpu() fails, probing may be repeated.
+> > - If getting register values fails, later invocations incorrectly report
+> >   success.
+> >
+> > Make two changes to fix them:
+> >
+> > - Cache dtb_compatible whenever a probe is attempted.
+> > - Record probe failure by assigning QEMU_KVM_ARM_TARGET_NONE to
+> >   arm_host_cpu_features.target.
+> >
+> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> > Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> > ---
+> > Supersedes: <20260422-arm-v1-1-106a9a9e22dd@rsg.ci.i.u-tokyo.ac.jp>
 >
-> The existing code uses a blanket `regno < 2` check to make
-> ICC_AP1R0_EL1 and ICC_AP1R1_EL1 writes from Non-secure code WI
-> (Write Ignore) when EL3 is present. This is intended to prevent
-> NS code from claiming active interrupts in the Secure priority
-> range, which could block Secure interrupt delivery.
->
-> However, that check assumes prebits=7 (4 APR registers), where the
-> NS priority range (128..255) maps entirely to AP1R2/AP1R3. Since
-> commit 39f29e599355 ("hw/intc/arm_gicv3: Use correct number of
-> priority bits for the CPU", first in 7.1), all QEMU AArch64 CPUs
-> are initialised with gic_pribits=5 (one APR register), so NS
-> priorities map to AP1R0 bits [16:31]. Blanket WI of the entire
-> AP1R0 register prevents NS code from clearing its own NS active
-> priority bits. Machines using hw_compat_7_0 (e.g. virt-7.0) still
-> force pribits=8 via force-8-bit-prio and are therefore unaffected.
->
-> A concrete consequence observed in virtualisation scenarios: when
-> a guest VM acknowledges an SPI interrupt but does not perform EOI,
-> is force-killed and restarted, the new guest's attempt to clear
-> the residual active state by writing ICC_AP1R0_EL1=0 is silently
-> ignored. The running priority (RPR) remains stuck at the old
-> interrupt's priority, preventing all equal-or-lower priority
-> interrupts (including timer interrupts) from being delivered, and
-> hanging the guest.
->
-> Fix this by computing the exact Secure/NS boundary within the APR
-> bank based on prebits. For registers entirely in the Secure range,
-> keep the WI behaviour. For the register that straddles the
-> boundary, preserve only the Secure bits while allowing NS bits to
-> be modified. For registers entirely in the NS range, allow full
-> write access.
->
-> The new logic produces identical behaviour to the old code when
-> prebits=7, preserving existing behaviour for machines that use
-> force-8-bit-prio.
->
-> Fixes: 39f29e599355 ("hw/intc/arm_gicv3: Use correct number of priority bits for the CPU")
-> Signed-off-by: liugan1 <liugan1@lixiang.com>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Whoops, yes; thanks for the bug fix.
+
 
 Applied to target-arm.next, thanks.
 
