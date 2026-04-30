@@ -4,126 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BBD4FF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59B34CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 18:00:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIVdf-0006KA-Ua; Thu, 30 Apr 2026 13:57:27 -0400
+	id 1wIVgA-0007M7-Vk; Thu, 30 Apr 2026 14:00:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wIVdN-0006Fd-K2; Thu, 30 Apr 2026 13:57:11 -0400
-Received: from smtpout9.mo534.mail-out.ovh.net ([178.33.251.187])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>)
- id 1wIVdI-0006C6-J0; Thu, 30 Apr 2026 13:57:09 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [51.68.94.138])
- by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4g621Q2h8Zz6G69;
- Thu, 30 Apr 2026 17:56:57 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Thu, 30 Apr 2026 17:56:57 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.178.131])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4g621P3Fbtz7tlB; Thu, 30 Apr 2026 17:56:57 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.6])
- (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 9F3CC1B434C0;
- Thu, 30 Apr 2026 17:56:55 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-104R0054db59235-6891-4e65-b1c7-7b93527e40a2,
- 9F47DE0B15482FF6BC55B1CE858CC0DAC5AE7A4F) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 90.14.253.154
-Message-ID: <0e8d1755-3354-4e81-ac80-24d3b65247ae@kaod.org>
-Date: Thu, 30 Apr 2026 19:56:55 +0200
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wIVg8-0007L1-Oi
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 14:00:00 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wIVg6-0006lK-BO
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 14:00:00 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-82f8cebc935so620865b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:59:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777571996; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Q2euWfMgLLcKBkOqQdvqliEHMeCBrCQ21D7Y3LvbxNs8VHl04blJtTJUkTszWnlKYE
+ 9PYLNIdDI5E2p3Z1dAfqr/bp4VLvEvbLiBVRh894CW9fxW22YfuXr8M0KAnRKAg+s9Au
+ hQ72AZuanhjv1Y4a8V20Znw8cnsMjxSMXuOf/nrptuJAUCi0aFrEYvi6+FxpKrpq6QTE
+ MrIewW5sjbtsSHqqo6VoxQurIe3c/um7gp/pFTUqKSC4XrMCxQdzhzHtlqgEKcePR0SB
+ zo++xagpGdjEQevxUbczUo5L/4HnVmIEdqh9F8CssQTMWx1mkLJjR5c1jLuWUN8vUUXA
+ ogNg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=W0ub+sw+MaRX9tcCcJvZdexi34mPPJ5FpkN1X/DOqhY=;
+ fh=3g/RtmIJ0XnJ/LUnge+xkvMPyaxE90w9XFljHdbWMco=;
+ b=GiloxtpvUMefftUeJyvfXwnqbo1QjIq8OAevrdurrBvAQKbCAD20X3GMLCnj3q4DAj
+ kgXyE6/uv/O0nhAKpk6c/5fs/VtpmzNE/Y8YMGyWSMc+6ObO8iQnONKra/xOShrn+LLU
+ BaQp+bmk0a0YQBTM+iLFpf4XE+lUai1TgpblmMuezDniugqg+5lYNeF/Fn3OlHkvA2tL
+ MH6Y4kizIPjKo63SEY2/1o34wekJYgDWbI8Q61T3zUvtc679O3FEW1fLiy+8X8Yad2+L
+ bR2+ECCnYsEfZTj9TBSuPxAykJuhPF7sxE4kpUl357YEikyl9ISarFNNsAbjqYGt7wsA
+ d7wg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777571996; x=1778176796;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=W0ub+sw+MaRX9tcCcJvZdexi34mPPJ5FpkN1X/DOqhY=;
+ b=iLAR32ILIxJG5X1VtYP/wu3rJQcNNC5xmVG+YDCkvdWd8sKfs53LI5dQwJ2jjq+JZQ
+ QhyEjs+6yIyjLYkseZHSadZ9N/SU6XFhRIlhdMGJMCwU7+0FW8AMmc55DtIjVn+hKV9W
+ oWRDIT1Skg/aA2SMTifYjj5Vxpl2pu+dQ4WPTbxvVQlgvBOvj54gamT0PYVNPyQTL+b9
+ PhKdoVyiJWTnNHwBGq47mVYcXxJUdIR8tWOvs64VN73hH16MJ6hSy/nyhzYfLfquSnej
+ 72Pu5bYhJkjTL0JoqmkcIhuM3E3ny/t0LEngj4zPO08Z+Rs6BsPrBPB/CSnnzCJErg60
+ hj4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777571996; x=1778176796;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=W0ub+sw+MaRX9tcCcJvZdexi34mPPJ5FpkN1X/DOqhY=;
+ b=jEhG+EfaRradLr0gKhzosAnhR+P1VJhmIBVUa+doTyKeCHyralLgdGvwGowWSh6Uo5
+ +itGUz+xUV9YsNlsN654YDiBCQkBR63K8HW+T4bXn96m+JsxDMsnoegzoM9gzxJFSKED
+ PyxYJChPDj1vrml722ELb0seKBzidGaAbFdf5okB2/0CMYMAFBFzojp744eS43Qr8EGS
+ 0hyCV1yk2QhG5kT4LYzlcU1NuNxAPJpeMjCmPG5K7/YuEJ3AE2/91CQEnScbY+5v9cOS
+ v58vCii1G2Tzmv9cVu6VdLQoPfOxYOiBJVihvqsWoa9ZY5F1ESDXCQ6VO8mNm6l+ddLM
+ Sukg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/caTn7etaop0k+jaq3ZalNLYuuyFJb8M7hBpJDfvIy5otyCMzJ8A8th/CL7WD42gxv9jp15B+r1SvP@nongnu.org
+X-Gm-Message-State: AOJu0YyBpQA4pIvnBnpMo8pixyn+Du3ekm60hU0r7UOcIVSYlCZ6wraS
+ giyKHM7d5WdzqKpP1Y3K4m7fLMQtb0CKm8vrav/utMqsFYzVZjCA4qivbExcHfgVLA4O3qNuc7m
+ 6FAZ9YIjENHYQLojROGlRzGgxnLiKFwO39kcgE5lsmQ==
+X-Gm-Gg: AeBDieshZkodt7hi+PzaE+00wUbaHtH9zxTELbDEva504oeeM430/yIoe3WLRP+RR/B
+ cD9rjuKdcUIpd+4w1AHukuJuAv+tDKlSKpsAil83JMTJ/eBerIeiOuO9i9zVjVVGZXZ8mpK0eq7
+ M0xH0yRCp8xRMpEsvaR5fPM7c4wIVAVyHjdpwlOCJsPn9dDMU0yTLQOiuVCUxrec314U3VJ+eDX
+ HBxwX0+Yg8FVFQjDaibIeN+9qfaqha9MgSsbqO262ImtWcaSG582Z/jT/GauBNK4Rda4Ul9ZsuG
+ /Yf5VVzHEk6FZkN2yg==
+X-Received: by 2002:a05:6a00:b46:b0:81f:be3c:9c9e with SMTP id
+ d2e1a72fcca58-834fdcb6d48mr4736066b3a.33.1777571996383; Thu, 30 Apr 2026
+ 10:59:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 1/1] hw/misc/aspeed_sbc: Add bounds checking for OTP
- write operations
-To: Peter Maydell <peter.maydell@linaro.org>,
- Kane Chen <kane_chen@aspeedtech.com>
-Cc: Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- Troy Lee <troy_lee@aspeedtech.com>,
- "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20260428055254.76581-1-kane_chen@aspeedtech.com>
- <20260428055254.76581-2-kane_chen@aspeedtech.com>
- <CAFEAcA8i+v_7KVPBMHGkjf=tuGuVCW_d-XUBb1cr-ezmD_F7xg@mail.gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <CAFEAcA8i+v_7KVPBMHGkjf=tuGuVCW_d-XUBb1cr-ezmD_F7xg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 10946280371420179480
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTF5GneqQL7z9mPF0lejjtz1El37lCvZlaD/z2Mgo0S8EU15XDjeZoakE1etBVuRNxGxqikfGtpJvBMJSC5nnUlUoR679SZoRMlZbtUmoCHoAF77tgICSgSQ272GNHODoiWlePgVu42EmMDVObDOZFHzbEoB6jkxDd6NEhd0TKJuyDmJsSKA/01BPEZkQt/VgZFjUgXRBqfb3hrlEp6nUCHLJ/vkRLUtKHyCRV0sYFDgDDAgtjqnMpRwlzqsYGHp4sPLs0kie/ijNWIWIEa5fSJzETx2V/++NY5wtKR4chIudW+yhP9pVE2gGFM9WkohGcESa564xcyRc32W7pUS1Wx3L65TVtL2lAE4lFjmsVWuvkgxs2Fx4B2o4/dmc8Kt3Q4X0fdGQB+I354UikPyJwI0sgsHKuz2+UmoVsGzYhGXT7rWomam19gF+xSAnsYHX3BlYAsgWYEZjvfXfCh9gdCOaTEm8RXVuFs4phAipudIeu5zaDWWq9kvqkcYksPUB+VA7TWlzYMsll7AorB6VpkrUuG2TLSFPUCn1Gez7balhgfwSlbQ9m6ZN3RtpWFImbYqTHmXYntKQAauIBWPEudMQyst0YXNp9/WFHTtSLqQyuZypuQnORbgpl38PxQ55yYLOvJ5bRLow1mF2up4SEf+idpSdn/+W2UJvR7gFIWHzg
-DKIM-Signature: a=rsa-sha256; bh=YrJO5/lPIBYq2vjVwAo+ggjBZr+bT94S9Ur+wI5dAEo=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1777571819; v=1;
- b=W6zxUBwQJSw6dsRZ0f2Pi+34wgBYCyL9jMXeZxmnuhiDjTZ3MhBix8RM7yLFoA28XQq4IK4C
- Pj72kY+ClFS8jKTPDE40qw4hK6CqQ+b+lQ6HoX3qNhOnBgHMO8l7mdybESnpNLqdyRqY9wPNvCQ
- Rt7a13WByPmBS1xq19Lsj3CCaR2FKhhGDytw4TUK8Wqm3/DvUz1UaIHMh5L8+KdaVnPtUAV28OK
- ryB5YzuTYMGYTuNXersUglbCgF7DOyZBKsSTK399K1XDyjLG2YxA917eFkn0DErgs70kNc7kZNy
- GPU3q+zvUuK/YNPCr/qLeIgrQdoQJKjbvoiJRLqY9aDaQ==
-Received-SPF: pass client-ip=178.33.251.187; envelope-from=clg@kaod.org;
- helo=smtpout9.mo534.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20260430162941.584960-1-mohamedaymanworkspace@gmail.com>
+ <CAFEAcA9zPTngrm4ZG3t96Rr7bKRrmx7MB6-0QSjd=ntj+X0uNA@mail.gmail.com>
+In-Reply-To: <CAFEAcA9zPTngrm4ZG3t96Rr7bKRrmx7MB6-0QSjd=ntj+X0uNA@mail.gmail.com>
+From: Warner Losh <imp@bsdimp.com>
+Date: Thu, 30 Apr 2026 11:59:45 -0600
+X-Gm-Features: AVHnY4LRGFExhiNf9pXh5BHjM8t-tPrdvB_Thuur3NozWKiw2QyBfNGUyaLPr2M
+Message-ID: <CANCZdfo4LrwUFxgp5E1ovAZVL1VBEkVknPEzrZH3mxZ02hhnvA@mail.gmail.com>
+Subject: Re: [PATCH] bsd-user: remove cached host page size and rely on
+ qemu_real_host_page_size()
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Mohamed Ayman <mohamedaymanworkspace@gmail.com>,
+ Kyle Evans <kevans@freebsd.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="0000000000006849550650b13b52"
+Received-SPF: none client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=wlosh@bsdimp.com; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,82 +117,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/30/26 13:03, Peter Maydell wrote:
-> On Tue, 28 Apr 2026 at 06:53, Kane Chen <kane_chen@aspeedtech.com> wrote:
->>
->> There is a mismatch between the Aspeed OTP model and the Aspeed SBC
->> model in how the guest-provided address is handled.
->> aspeed_sbc_otp_prog() passes a word-indexed address directly
->> to address_space_write() without converting it to a byte offset,
->> whereas aspeed_otp_write() expects a byte offset and applies an
->> additional shift (otp_addr << 2). This double-shift confusion means
->> that an out-of-range word address can lead to a write beyond the
->> allocated storage.
->>
->> Fix this by adding bounds checking on the word offset before
->> converting to byte offset and passing to address_space_write().
->> This matches the existing bounds check in aspeed_sbc_otp_read().
->>
->> Cc: Kane-Chen-AS <kane_chen@aspeedtech.com>
->> Cc: qemu-stable@nongnu.org
->> Fixes: 1a00754ccf15 ("hw/misc: Add Aspeed Secure Boot Controller model")
->> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3436
->> Reported-by: Peter Maydell <peter.maydell@linaro.org>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
->> ---
->>   hw/misc/aspeed_sbc.c  | 14 +++++++++++---
->>   hw/nvram/aspeed_otp.c | 13 ++++++-------
->>   2 files changed, 17 insertions(+), 10 deletions(-)
->>
->> diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
->> index 065e822e70..8b74dca13c 100644
->> --- a/hw/misc/aspeed_sbc.c
->> +++ b/hw/misc/aspeed_sbc.c
->> @@ -159,13 +159,21 @@ static bool aspeed_sbc_otp_prog(AspeedSBCState *s,
->>       MemTxResult ret;
->>       AspeedOTPState *otp = &s->otp;
->>       uint32_t value = s->regs[R_CAMP1];
->> +    uint32_t otp_offset = otp_addr << 2;
->>
->> -    ret = address_space_write(&otp->as, otp_addr, MEMTXATTRS_UNSPECIFIED,
->> -                        &value, sizeof(value));
->> +    if (otp_addr >= OTP_TOTAL_DWORD_COUNT) {
->> +        qemu_log_mask(LOG_GUEST_ERROR,
->> +                      "Invalid OTP addr 0x%x\n",
->> +                      otp_addr);
->> +        return false;
->> +    }
->> +
->> +    ret = address_space_write(&otp->as, otp_offset, MEMTXATTRS_UNSPECIFIED,
->> +                              &value, sizeof(value));
->>       if (ret != MEMTX_OK) {
->>           qemu_log_mask(LOG_GUEST_ERROR,
->>                         "Failed to write OTP memory, addr = %x\n",
->> -                      otp_addr);
->> +                      otp_offset);
-> 
-> I would stick to reporting otp_addr here:
->   - it's the value the guest actually writes
->   - it matches the logging for "invalid OTP addr above"
->   - it matches what aspeed_sbc_otp_read() logs in the equivalent case
-> 
-> Otherwise
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+--0000000000006849550650b13b52
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Thu, Apr 30, 2026 at 11:46=E2=80=AFAM Peter Maydell <peter.maydell@linar=
+o.org>
+wrote:
+
+> On Thu, 30 Apr 2026 at 18:08, Mohamed Ayman
+> <mohamedaymanworkspace@gmail.com> wrote:
+> >
+> > The bsd-user implementation previously cached host page size and mask
+> > in global variables (qemu_host_page_size and qemu_host_page_mask),
+> > which duplicated information already available through
+> > qemu_real_host_page_size().
+> >
+> > This introduces unnecessary global state and potential inconsistencies
+> > if the host page size is queried or changes during initialization.
+> >
+> > Replace all usages of qemu_host_page_size and qemu_host_page_mask with
+> > qemu_real_host_page_size() and derived expressions, and update all
+> > alignment and masking logic accordingly.
+> >
+> > This simplifies the code and ensures a single source of truth for host
+> > page size handling across bsd-user memory management paths.
+> >
+> > No functional change intended.
+> >
+> > Signed-off-by: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
+> > ---
+>
+> This would be a nice change to have to the bsd-user code,
+> because it opens the way for us to rename qemu_real_host_page_size()
+> to qemu_host_page_size(), and similarly qemu_real_host_page_mask().
+> (If I remember a recent IRC conversation correctly, they only have
+> the _real_ infix for historical reasons and because the bsd-user
+> globals are currently using the more obvious names.)
 
 
+I'd love to see this as well. This has been one of my todo items for far to=
+o
+long since I've been distracted with other things (like upstreaming).
 
-Applied to
+I wonder if these changes have been tried against the blitz branch at
+https://github.com/qemu-bsd-user/qemu-bsd-user? I just pushed an 11.0-based
+version of that branch, but have only lightly tested it. Theres some pendin=
+g
+issues with some shared libraries on riscv (IIRC the issue correctly) whose
+fixes
+break shared libraries on other platforms). If you could test against that,
+I'd love
+to bring them in with this quarter's upstream pull request that I'm
+planning on doing
+once I get the ioctl patch series sorted out (and it seems like I made
+several
+mistakes somewhere with it that I need to go patch up).
 
-     https://github.com/legoater/qemu aspeed-next
+Warner
 
-with this change.
+--0000000000006849550650b13b52
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Peter,
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Apr 30,=
+ 2026 at 11:46=E2=80=AFAM Peter Maydell &lt;<a href=3D"mailto:peter.maydell=
+@linaro.org">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
+d rgb(204,204,204);padding-left:1ex">On Thu, 30 Apr 2026 at 18:08, Mohamed =
+Ayman<br>
+&lt;<a href=3D"mailto:mohamedaymanworkspace@gmail.com" target=3D"_blank">mo=
+hamedaymanworkspace@gmail.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; The bsd-user implementation previously cached host page size and mask<=
+br>
+&gt; in global variables (qemu_host_page_size and qemu_host_page_mask),<br>
+&gt; which duplicated information already available through<br>
+&gt; qemu_real_host_page_size().<br>
+&gt;<br>
+&gt; This introduces unnecessary global state and potential inconsistencies=
+<br>
+&gt; if the host page size is queried or changes during initialization.<br>
+&gt;<br>
+&gt; Replace all usages of qemu_host_page_size and qemu_host_page_mask with=
+<br>
+&gt; qemu_real_host_page_size() and derived expressions, and update all<br>
+&gt; alignment and masking logic accordingly.<br>
+&gt;<br>
+&gt; This simplifies the code and ensures a single source of truth for host=
+<br>
+&gt; page size handling across bsd-user memory management paths.<br>
+&gt;<br>
+&gt; No functional change intended.<br>
+&gt;<br>
+&gt; Signed-off-by: Mohamed Ayman &lt;<a href=3D"mailto:mohamedaymanworkspa=
+ce@gmail.com" target=3D"_blank">mohamedaymanworkspace@gmail.com</a>&gt;<br>
+&gt; ---<br>
+<br>
+This would be a nice change to have to the bsd-user code,<br>
+because it opens the way for us to rename qemu_real_host_page_size()<br>
+to qemu_host_page_size(), and similarly qemu_real_host_page_mask().<br>
+(If I remember a recent IRC conversation correctly, they only have<br>
+the _real_ infix for historical reasons and because the bsd-user<br>
+globals are currently using the more obvious names.)</blockquote><div><br><=
+/div><div>I&#39;d love to see this as well. This has been one of my todo it=
+ems for far too</div><div>long since I&#39;ve been distracted with other th=
+ings (like upstreaming).</div><div><br></div><div>I wonder if these changes=
+ have been tried against the blitz branch at</div><div><a href=3D"https://g=
+ithub.com/qemu-bsd-user/qemu-bsd-user">https://github.com/qemu-bsd-user/qem=
+u-bsd-user</a>? I just pushed an 11.0-based</div><div>version of that branc=
+h, but have only lightly tested it. Theres some pending</div><div>issues wi=
+th some shared libraries on riscv (IIRC the issue correctly) whose fixes</d=
+iv><div>break shared libraries on other platforms). If you could test again=
+st that, I&#39;d love</div><div>to bring them in with this quarter&#39;s up=
+stream pull request that I&#39;m planning on doing</div><div>once I get the=
+ ioctl patch series sorted out (and it seems like I made several</div><div>=
+mistakes somewhere with it that I need to go patch up).</div><div><br></div=
+><div>Warner</div><div><br></div></div></div>
 
-Feel free to pick the change if needed.
-
-Thanks,
-
-C.
+--0000000000006849550650b13b52--
 
