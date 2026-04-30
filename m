@@ -4,92 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88498CD1297
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 06:07:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D52EDCD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 06:14:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIKYU-0001Tf-1C; Thu, 30 Apr 2026 02:07:22 -0400
+	id 1wIKf8-0002yP-9H; Thu, 30 Apr 2026 02:14:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIKYR-0001TI-VF
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 02:07:20 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIKYQ-0005DJ-8u
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 02:07:19 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-488af96f6b2so6551285e9.0
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 23:07:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777529237; x=1778134037; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3CM1QpRGwe4fxOogzXqaymSoudqNNvTlB1wkNCmr7Vo=;
- b=tpWH/YCOibqDa21TsblO1A4T9qvaxHcDJ/YKZ4fXhMhWEL4S2nciLDgNO5FAULLjkC
- WXm8MoJ1LNB5nRl6E8teeztRHDW8nmcYEgCTUg/2r5EesPMGIB4UmuS8gKY4TlNnU8jE
- Q2tG/AsXPhUpOqmPv7+MTkjsnmhlUaeMILw5+yHOo8uST6nvRvFxHcsFhcPzY9XuU6gr
- nClnjJKK3fF0yHiPBGMVKNXWF/a5o4oeNU0MUzUJqoFoykrsweFdg+ii7KQq5Jr+CLL9
- xF7wh/euG3VEBTQjJQR3too3CiVVnRE31oviP5C9DX6dmVKs5wczCwbHY85Giy5lxa8H
- zveg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777529237; x=1778134037;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3CM1QpRGwe4fxOogzXqaymSoudqNNvTlB1wkNCmr7Vo=;
- b=a9nCFQeGbATeVksk2UcDfwAGZQeI7swzv8/YbwLvfHBhuKAT1D5FEgxlXM2t4CnY8S
- KZDE5Bo7lemwgovqkkxbBrAc9Xhf6jOfUPbIH/s0yf9dQ9sQIvT0hxJ+apWSpGfsmY6Z
- jYcPxz1x6gM086bRAG9OAelY4Xp/wyCr2AzrSS5nd3OKODCVJ4A4jsOV9H3g21gZH2PR
- JCLb1vLm1zbGgvQc1UCrxWYAXVAcIlMLqYkBHhek1sSyJVqgZ6FHUtIyVyAW88hsFRyW
- lUxWDEDBUVB1FnW7tlKZ/r2FyDUT3YS+ZTFOtFJpctz5ycVeXa7skqUlddz70WsCnpqA
- FlJQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8THR096SG8aXFUpphLKP/aaI8cUII+GgWzhng1HV5JrnKWqD0YdDpTarTPIhD1XPxhM74PVq7ssRKs@nongnu.org
-X-Gm-Message-State: AOJu0YxCmz7k4bOF9BGouuqT/EkQF2vUBjhmHJcfvqahOVN0iIBrepb0
- wlshk73uNz7jbh6Y+2saL+AVkU/cx2z8+UPx81ulAKS+9LcuadqvQHV3HZ5q/YtBDpc=
-X-Gm-Gg: AeBDievRs+0qGWCLtkeUoetekxsF5WzOSBqQRBtgDAHxRYOvtPiA9fJdkCAmhbGDkut
- mu1Fa0X+BcwqpRGbpyH6YPTOeDe0eUDMnnZgnTuxYRj4mJZw+vk0rs2FXTsg3XHWW1RDZtNiiTT
- e1QpzlCRk5Cc2sDT9pz3i+AMsyUm9O+RY5Wc7ZDYH7MhaS7h2F/CBoEr2oU4OlSXU3KouGom/Jy
- rRbNieBaE4KuqhpcgbwLrlTHWbbcJVfJfsa11TULSAeEIlrB/rffXpiCt1lp88AFIbcTERY8pc7
- q70Ts4ydG/+knEfO4DLjROuqHLUttTv1RwDYSVAeie5b4h8ySiTG31d15cMi5kha2or+W/g//TL
- 5j+fZXp2NmXXJaECnLMHHJZjp3kUnmNCWNxHiKoA5xG/OdEI1naNp1eDZt+1n3SkruBRKeErpqT
- YZfR2VAaLeBy4WcgFlbJdEDOF08dnlsiqteXcTJ9RJFF6+kzoDxGj0MjRXbFh1RFk4L7vW+aJLU
- U1pu3Hwh5hi1z0=
-X-Received: by 2002:a05:600c:a110:b0:48a:5c23:cab with SMTP id
- 5b1f17b1804b1-48a84470807mr17284465e9.19.1777529236514; 
- Wed, 29 Apr 2026 23:07:16 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a81ed6bafsm67918315e9.2.2026.04.29.23.07.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 29 Apr 2026 23:07:14 -0700 (PDT)
-Message-ID: <16b3c3a7-2f1c-488a-a416-36979d9901f0@linaro.org>
-Date: Thu, 30 Apr 2026 08:07:12 +0200
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wIKez-0002vi-CN; Thu, 30 Apr 2026 02:14:05 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wIKew-0006GL-Gs; Thu, 30 Apr 2026 02:14:05 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63TFUqqp1317126; Thu, 30 Apr 2026 06:14:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=I1hsOJZQR2XGOk7WI
+ H8LLfPojJ5cB30a2SQsOUbn0oU=; b=E9kEm3Q7SEJCEDJ1Wlqdl6QdDNWO4uaY8
+ OdS//P6q2nEKbTXWL+2rNtMTFwtjfyxggppL61EeYYtI5UWMBvRcBcdmlfD5CQJK
+ y2N1VvtgbRpleh71LtuxOubno0WH2urEoTofS6n3Ua31cCS6A/UxqC0C8jI6X+Qq
+ 4wNeepwqEkPJZEnHVirPuOR/sjAqODKCZvvg7MElfPfm6T6PSuZt5Pn3Ne0Kc9VU
+ 3qrGHTsIAMIdSgDK57WksIevioO576aK8EXTOeY0Y2FwS1OMMycwUGq+4jtrq2Di
+ vTbkyaS87mxJO339Q+z2BxfbND+IiqdwCqcixLcbcFON55yXfqc+A==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drk1jvq79-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Apr 2026 06:14:00 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63U6CYqc028392;
+ Thu, 30 Apr 2026 06:14:00 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ds8aw1rn5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Apr 2026 06:14:00 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63U6Du6D30605936
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 30 Apr 2026 06:13:56 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5294120043;
+ Thu, 30 Apr 2026 06:13:56 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EEECC20040;
+ Thu, 30 Apr 2026 06:13:53 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.39.18.70])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 30 Apr 2026 06:13:53 +0000 (GMT)
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Amit Machhiwal <amachhiw@linux.ibm.com>,
+ Vaibhav Jain <vaibhav@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Subject: [PATCH 1/2] hw/ppc/spapr: Do not fallback to raw mode when KVM
+ rejects compat
+Date: Thu, 30 Apr 2026 11:43:32 +0530
+Message-ID: <20260430061333.37905-2-amachhiw@linux.ibm.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260430061333.37905-1-amachhiw@linux.ibm.com>
+References: <20260430061333.37905-1-amachhiw@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] system/vl.c: inline qemu_opts_parse_noisily() result
- checks
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260429062004.36582-1-guobin@linux.alibaba.com>
- <20260429062004.36582-4-guobin@linux.alibaba.com>
- <708ac3f4-bb55-459a-9506-77751133c973@linaro.org>
- <feda4269-fe96-4c73-a87e-c3181b43efdd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <feda4269-fe96-4c73-a87e-c3181b43efdd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDMwMDA1NSBTYWx0ZWRfX6VCigxYIKKr0
+ b/8YiwUEaMyKVkRjAs4p7vcXuyXokQ64IcFPMhrNOabc3SlybJntLquRAQrlcWlUT/fmJQNrRUn
+ rczP/whc6ixPACFovwVR/acpuhX9LjL00O5rZWA/BnA22+L/ke4tsok765c0oL7Kxyq9l7YW+Zk
+ xhGMGqOz489Hihl1mR96GGysE5dWwRXes/9YSe462JnydwGJOFJItlsYxVqHXA145IqiWfTtEfe
+ MP/OJ+Ti/NkqqXhO9bgzXh63+Fo2/fngyPHG9InXz+iN257dXKtPREifB+a8LSk7AnaI7H4hvqp
+ 7j2o6OJls3dKPKMHJ2p5dYUmob2nFVBySjTf1X7xnczhDDNZX9lxj1YRbiSK6dDUd5aQfEAkGxd
+ hPRbFqIYh1nc9NJAJCxmzwEAMXLwzn3g89zmUJPZjn86okorga66/2gqCbteeDuX/jGVhxR2a7v
+ w15vJTXHu5DZXvgDPrA==
+X-Proofpoint-GUID: uyRCmT0r1xCx0KyvyebRTrbDtt7UnBtE
+X-Proofpoint-ORIG-GUID: ZDy38hcoxYTltlot8ycqj1HW3oiC3TMj
+X-Authority-Analysis: v=2.4 cv=MohiLWae c=1 sm=1 tr=0 ts=69f2f329 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=i5GS84888sUNcPDMq4UA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-30_01,2026-04-28_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0 suspectscore=0 bulkscore=0 spamscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 lowpriorityscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2604300055
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,71 +120,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/4/26 23:03, Richard Henderson wrote:
-> On 4/29/26 18:04, Philippe Mathieu-Daudé wrote:
->> On 29/4/26 08:20, Bin Guo wrote:
->>> In qemu_init()'s option parsing switch, several cases assigned the
->>> return value of qemu_opts_parse_noisily() to the shared 'opts'
->>> variable solely to check for NULL, without using the pointer
->>> afterwards.  Inline the call directly into the if-condition, matching
->>> the style already used by QEMU_OPTION_action.
->>>
->>> This affects the following options:
->>>    -drive, -numa, -iscsi, -m, -mon, -chardev, -fsdev, -fwcfg
->>>
->>> Cases where the returned QemuOpts* is subsequently used (e.g.
->>> -acpitable, -smbios, -virtfs) are left unchanged.
->>>
->>> Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
->>> ---
->>>   system/vl.c | 37 +++++++++++++++----------------------
->>>   1 file changed, 15 insertions(+), 22 deletions(-)
->>>
->>> diff --git a/system/vl.c b/system/vl.c
->>> index 0e1fc217b4..0e0d3cb761 100644
->>> --- a/system/vl.c
->>> +++ b/system/vl.c
->>> @@ -2961,9 +2961,8 @@ void qemu_init(int argc, char **argv)
->>>                       break;
->>>                   }
->>>               case QEMU_OPTION_drive:
->>> -                opts = qemu_opts_parse_noisily(qemu_find_opts("drive"),
->>> -                                               optarg, false);
->>> -                if (opts == NULL) {
->>> +                if (!qemu_opts_parse_noisily(qemu_find_opts("drive"),
->>> +                                             optarg, false)) {
->>>                       exit(1);
->>>                   }
->>>                   break;
->>
->> For clarity I'd also squash in this patch:
->>
->> -- >8 --
->> diff --git a/system/vl.c b/system/vl.c
->> index cab8106984a..237334236aa 100644
->> --- a/system/vl.c
->> +++ b/system/vl.c
->> @@ -2842,3 +2842,2 @@ void qemu_init(int argc, char **argv)
->>   {
->> -    QemuOpts *opts;
->>       QemuOpts *icount_opts = NULL, *accel_opts = NULL;
->> @@ -2921,2 +2920,4 @@ void qemu_init(int argc, char **argv)
->>       for(;;) {
->> +        QemuOpts *opts;
->> +
->>           if (optind >= argc)
->> ---
->>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> If you're going to move the decl, the innermost block is just below with
-> 
->          } else {
->              const QEMUOption *popt;
-> +           QemuOpts *opts;
-> 
->              popt = lookup_opt(argc, argv, &optarg, &optind);
+During H_CLIENT_ARCHITECTURE_SUPPORT, QEMU attempts to set the requested
+CPU compatibility mode via ppc_set_compat_all(). If this fails, the
+existing code may fall back to raw mode when supported by the guest.
 
-Good catch.
+The current logic treats all failures uniformly and tried to fall back
+to raw mode whenever possible. As a result, errors from KVM (e.g.
+kvmppc_set_compat() returning -EINVAL) are silently masked, making
+debugging difficult and allowing the guest to proceed with an
+unsupported or incompatible configuration.
+
+When running with KVM, such failures indicate that the requested
+compatibility level is not supported by the host. Do not fallback in
+this case; instead, report the error and fail the CAS negotiation.
+
+This makes the failure visible to the user and ensures that invalid
+compatibility requests are rejected early rather than being hidden by
+fallback behavior. For example, the following error is now reported:
+
+  qemu-system-ppc64: Unable to set CPU compatibility mode in KVM: Invalid argument
+
+Fixes: cc7b35b169e9 ("spapr: fallback to raw mode if best compat mode cannot be set during CAS")
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+---
+ hw/ppc/spapr_hcall.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+index 032805a8d0db..de2ea6f5e579 100644
+--- a/hw/ppc/spapr_hcall.c
++++ b/hw/ppc/spapr_hcall.c
+@@ -1204,6 +1204,15 @@ target_ulong do_client_architecture_support(PowerPCCPU *cpu,
+         Error *local_err = NULL;
+ 
+         if (ppc_set_compat_all(cas_pvr, &local_err) < 0) {
++            /*
++             * If KVM rejected the compat mode, do not fallback. This indicates
++             * the host cannot support the requested level.
++             */
++            if (kvm_enabled()) {
++                error_report_err(local_err);
++                return H_HARDWARE;
++            }
++
+             /* We fail to set compat mode (likely because running with KVM PR),
+              * but maybe we can fallback to raw mode if the guest supports it.
+              */
+-- 
+2.50.1 (Apple Git-155)
 
 
