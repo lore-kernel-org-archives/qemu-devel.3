@@ -4,96 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4C54CD13DF
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:24:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD97CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:24:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIV5z-0004cR-OK; Thu, 30 Apr 2026 13:22:39 -0400
+	id 1wIV6G-0004iF-D0; Thu, 30 Apr 2026 13:22:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV5q-0004Yp-7P
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:22:33 -0400
+ id 1wIV6E-0004hs-R5
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:22:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV5n-0004Az-AD
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:22:29 -0400
+ id 1wIV6D-0004Jh-7f
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:22:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777569744;
+ s=mimecast20190719; t=1777569772;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=z0z3XL+n9Zll9qCigaTT2NKDDvuOn9S6esTZ+bYQfJ8=;
- b=MrLFw1ovqQkQLewglOtIdqguGD2PLjDyoHs3A2H9HZkLWp1ZblQtTB3CbD/4BLkOGvU842
- uwLcsjqmJ235+1ESudXZ9m/ls2ePk+5fI9080kQ56Q2WDHCzJv74htQjU3vJknZNecFH1M
- 32ANjFIRmF1k6yxqSrznkyZupvjo8+w=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XGYB/Qea4Rw59yZSl456XX9o94gifzjhM+3vdt+q8MM=;
+ b=NA72SdiLzmipohSt8+w2F6h8dgFqtRHIKC4xC+Z6HZce6UaUNa9VW8HZaWyLz+OafKKrCO
+ BGVOJ9SPjQXBODNDOFO0TRiT2n3CXyEiWWHI0t2j6aa00rNcHJ8L1gCepgEdax6j+Wb9yJ
+ L8BqKMSCkhwZh3EWbWW4q/oXU+sMnQk=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-454-2aOcmuJdPaaNzXoQt_lh4A-1; Thu, 30 Apr 2026 13:22:21 -0400
-X-MC-Unique: 2aOcmuJdPaaNzXoQt_lh4A-1
-X-Mimecast-MFC-AGG-ID: 2aOcmuJdPaaNzXoQt_lh4A_1777569741
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8ee9a11aa75so257752685a.2
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:22:21 -0700 (PDT)
+ us-mta-62-kLHjyBl9N5qJxAL1dDx-1g-1; Thu, 30 Apr 2026 13:22:50 -0400
+X-MC-Unique: kLHjyBl9N5qJxAL1dDx-1g-1
+X-Mimecast-MFC-AGG-ID: kLHjyBl9N5qJxAL1dDx-1g_1777569770
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8eb04352924so223839885a.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:22:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777569740; x=1778174540; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777569769; x=1778174569; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=z0z3XL+n9Zll9qCigaTT2NKDDvuOn9S6esTZ+bYQfJ8=;
- b=d4J/0HbBajg106OATMq5DI1DSWJBqzNjm1a++93g5PLY/h4fyEQ6oCy44xxbxohHgH
- gbcvBRP9f93CXuhx3I9Syx3R/ZpsDoh9dkosnYigxYRL5PLLfk628mJZblEIJJp1p9R2
- MiyOLFPOzNCBIqRYuULDUN+9m3s1XaNjrS13ZaTzOcNiCfN2Yebw0Qdu0KJusa8S10Of
- vI8+o+srYO0Ca0ro2mlNdLqa2UMzRfmFAzKYG6yLTrCODJLo04LwcOJEDgEcZQ2u0k6V
- KknA9XZNC5FDkxov7j4ZIQE8ZZDV6aMYecidIhv8JqLzbeB1fCFZmQC4kAPcON0RIE2p
- kwuQ==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XGYB/Qea4Rw59yZSl456XX9o94gifzjhM+3vdt+q8MM=;
+ b=qdIfiPkijnE/iWl372NCw4dRrXzORL77vNI/BFq3RLvpltyO9L2ozJsnAR42Cblb3Q
+ 6KLARDXo4plFFA8trtmWNDA/+fOb6vA7U8NfvyXXaCMYr/LI7nbt1IXVfdfps05gPZ9s
+ 2cHovP1HU2SLSSR6oJNElbaeGTmaVDeic+/nLX55E3oMr8/4EA1QmTUgni0z1N1jA6N2
+ B21Whsk5ZBk/kWvfmaA8Asbd5wyWzTkverN56XS79QRiqFUhlcgWWTEAkIuEzxRXcLDd
+ Etma2ypohZRaztvIVT5zpD3Xd6hVuozX1XBiw2AKDelul/H42Fa5CwtKT8ivdA2sHHlA
+ DIKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777569740; x=1778174540;
+ d=1e100.net; s=20251104; t=1777569769; x=1778174569;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=z0z3XL+n9Zll9qCigaTT2NKDDvuOn9S6esTZ+bYQfJ8=;
- b=hMfp7Rubc7QUyyRZm6lHnT5gsmM5AypP+vlbMEc+PAaoEshpl4NP8f/01FPS6wac5X
- W8A9BMJfHDJGMFS7hqFIhlTWYCfBvRhOQZL2GKzrLxac261hMn/qi3ivshQIikTTuv7E
- G+DY1LWmk4/1Kq1HLf8UDCqRgQXpMqiIARvyaqbJgWdlNxGDIAvggQJsxJCcF3FnoAMz
- ap1GbE8c3wD6vv9XYsUnFZm++RdLLWzVRUVQwJ8dfcVUTdjlRcUG+1VYw3WbAoO4eCt4
- Cj84gdgvptxA1fV8y5iycKg7Ndlnz3hSA69Z42rpSmyQ8SUxo/6mf7YOCD/EUMENswo8
- sCKg==
-X-Gm-Message-State: AOJu0YymCcMj/unPdilLweRx34O2j1yyitzGCcNrNj8LMa8RcSHWZ5nM
- 0GZ78zyg29PbI/FmHTOylO6APD+8xNhjZ+SwKolOOIwIw85nz2MI80Qy87JMIpc+VRbz2OrvfeW
- lY4PEvKIofctgRx3omIwGMhPQZprrAGDrTKWB12cxUSy+8gg7vSfzMSBi3mN6RDNU7Iww7wmBXj
- bYKIik98rS2lCsNAJWOO6SC31KRdrFdTGu8jIoe9j3
-X-Gm-Gg: AeBDieus0KDkLulJS3TymOemwA8iPdnt/ycQFbIw+Jbeq9H5jwen+W+uAqlQ5STmwGL
- 1GNQRucC1Bq0FD8WvfHiJpIaR7HDjHsYp2pH1QrtYMFHKrTMXDzs9KV6fkEbtM0GJ5zmr/DiOSa
- 6Zqc1MkPsOYvKqig8i1uasrYu37xp8gRXV5Ov43IiqWtPXcmBbUU8rIN83I31HHvsWv7JgIctpb
- i1/4dKxrGTE7qGo4zJGhXbswESz5/HBa39Q/Jgu0AxqQ1tpEJ+pWgR2qpTaPqZedsRMcUXjTI5p
- LWeyPKKNUhCaSwG+EB4mcmSMQxr1wKG8oV4ep8SQRYbdeDnrsJOtPPxri77Jnh7Mz9SYawrd3Yw
- C/tpuzN6Ha25R1GtNCVb/TKR5yfd6EeIWhApkosUW1/95hvHAZYYA9ecxLAmqgDsNwRS7+yyrKz
- JDaSwj5tA3NZVXrlms1rIujLqI5AReZ9z4B+0=
-X-Received: by 2002:a05:620a:4627:b0:8d0:191:69b5 with SMTP id
- af79cd13be357-8fab2140c16mr479873585a.54.1777569740314; 
- Thu, 30 Apr 2026 10:22:20 -0700 (PDT)
-X-Received: by 2002:a05:620a:4627:b0:8d0:191:69b5 with SMTP id
- af79cd13be357-8fab2140c16mr479862885a.54.1777569739527; 
- Thu, 30 Apr 2026 10:22:19 -0700 (PDT)
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XGYB/Qea4Rw59yZSl456XX9o94gifzjhM+3vdt+q8MM=;
+ b=CTSzlPe9OFllE8nIdKAG7YvzVRcagehhpKH1C8wRTwh/yLstwwJ+H9XTvOCWU2QO/g
+ zkPS87V1LOOfDcNt/w+7fms4I9BsGZkOTlVOsFRCwFA2U4aIf0W7yIl0RMB1lStRDzpv
+ Irnrjyaha8k8VbBPlCeCQy1VWOlnuxwPck1Wz1Fzk9wIRSnTWC5ckBaiPt1JaKbadhZn
+ ad1NLvTFOCzCSEfUVTg9ylqO0mSpqy0bDfu6+Ld8hFKifdXL/QUmponIVkBXzMqueRLU
+ /Z2vtrFOvAHWQ904+u8tavjv3UpGzAY8ZXy4ZYIGqH8TQgkOzMoXTb15kdZArrweDdZ+
+ r7WA==
+X-Gm-Message-State: AOJu0YysWdUlig7AwO2Kio2Yf32qgCuK8/rf+Klv+6HscG9SkjJlerHT
+ 68tizmfMSbN9CQL2CRXG8WS1OK8KjZOKQG9P07FQDrA/a+OXBnzw4fEjos3edb7e0BiZaWWYtTW
+ j5qkRK9vqoPV3RKKhwBgVaDmX1BucjowTxDLVaNRV7SfdACzn4uVgKDDcLlfoJjY0MYQNTdtjWf
+ DbPaaYtQ/R5UvNrgEFq0bQb6CLS37gbfiZT0lY9+uv
+X-Gm-Gg: AeBDiet99l1PBlE7zLvwyz6CaDFyclwaiE0fWJFQlM/hzzktDa5HdfyJYwt8kUHBq39
+ cHAvR1dYMckJAxux9v81XTJMCREemyXOLxGj0JS8my+O8oooMhI6guvnX/fqecOD84W95Zqe7vj
+ ysELt5ZzdxTw1dJUG4B2c4gcC8n4fvoAF0rXVrbwDH2TGwjDANqNOdiGfDYLhxLfXHrRvHbNqjp
+ zZAYqg1CnfPg2HDW7K/qCm1HBrufI/vhvgLVQjZyQQWjhcOWJQl9xUOHP2zX/axjWDjnMg1UtGp
+ Y7yQ3pVcdg80O27n3cCkoe51dPGdcYMbK1NW7pjTd2vmgPGnp22ODkBUxIpHXbnOP0JUKIwFQS0
+ Nqzaau6aV/bsrheKvb5xkzk36eyO1Tq0KQjOrLI5LWvWAuo2juQwMUMWmFpo3BtJfhpnDribn+x
+ NWdrwAQkRVBBB1tKY/ni4qw1l943SG2k/BGkg=
+X-Received: by 2002:a05:620a:bc7:b0:8ee:1073:320b with SMTP id
+ af79cd13be357-8fa88847176mr596811885a.32.1777569769035; 
+ Thu, 30 Apr 2026 10:22:49 -0700 (PDT)
+X-Received: by 2002:a05:620a:bc7:b0:8ee:1073:320b with SMTP id
+ af79cd13be357-8fa88847176mr596803685a.32.1777569768379; 
+ Thu, 30 Apr 2026 10:22:48 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8fbb0fe8572sm25554785a.14.2026.04.30.10.22.18
- for <qemu-devel@nongnu.org>
+ af79cd13be357-8fbb09fc96fsm27525985a.6.2026.04.30.10.22.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 10:22:18 -0700 (PDT)
+ Thu, 30 Apr 2026 10:22:47 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/58] target/i386/tcg: simplify decoding of 0F 38 F0...FF
-Date: Thu, 30 Apr 2026 19:21:09 +0200
-Message-ID: <20260430172204.1006673-4-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PULL 12/58] minikconf: modernize handling of include chain
+Date: Thu, 30 Apr 2026 19:21:18 +0200
+Message-ID: <20260430172204.1006673-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260430172204.1006673-1-pbonzini@redhat.com>
 References: <20260430172204.1006673-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -119,101 +121,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These lines are shown in the manual with a weird representation that
-confers a special meaning to 0x66 0xF2 prefixes.  In reality, this is
-just the CRC32 instruction (chosen by 0xF2) plus a data size override
-prefix.  All other instruction in the range that use the 0xF2 prefix
-are VEX-encoded and therefore they do not support multiple prefixes.
-Because of this, it is possible to handle the four prefixes normally
-using decode_by_prefix; the 0x66 0xF2 combination for CRC32 is handled
-naturally by the "v" operand size.
+Use a dataclass, and store it in the parser to avoid having to
+save and restore it.
 
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/decode-new.c.inc | 21 +++------------------
- 1 file changed, 3 insertions(+), 18 deletions(-)
+ scripts/minikconf.py | 68 +++++++++++++++++++++++++-------------------
+ 1 file changed, 39 insertions(+), 29 deletions(-)
 
-diff --git a/target/i386/tcg/decode-new.c.inc b/target/i386/tcg/decode-new.c.inc
-index c8b5bd6ad26..ac181308ca4 100644
---- a/target/i386/tcg/decode-new.c.inc
-+++ b/target/i386/tcg/decode-new.c.inc
-@@ -873,8 +873,8 @@ static const X86OpEntry opcodes_0F38_00toEF[240] = {
-     [0xef] = X86_OP_ENTRY3(CMPccXADD,   M,y, G,y, B,y,  vex13 xchg chk(o64) cpuid(CMPCCXADD) p_66),
- };
+diff --git a/scripts/minikconf.py b/scripts/minikconf.py
+index 3d63cc6b21f..c46c73f82d9 100644
+--- a/scripts/minikconf.py
++++ b/scripts/minikconf.py
+@@ -11,15 +11,36 @@
+ # or, at your option, any later version.  See the COPYING file in
+ # the top-level directory.
  
--/* five rows for no prefix, 66, F3, F2, 66+F2  */
--static const X86OpEntry opcodes_0F38_F0toFF[16][5] = {
-+/* four rows for no prefix, 66, F3, F2 (including 66+F2 operand size override) */
-+static const X86OpEntry opcodes_0F38_F0toFF[16][4] = {
-     /*
-      * MOVBE and CRC32 are incorrectly listed as always doing 32-bit operation
-      * without prefix and 16-bit operation with 0x66.
-@@ -884,49 +884,42 @@ static const X86OpEntry opcodes_0F38_F0toFF[16][5] = {
-         X86_OP_ENTRYwr(MOVBE, G,v, M,v, cpuid(MOVBE)),
-         {},
-         X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
--        X86_OP_ENTRY2(CRC32, G,d, E,b, cpuid(SSE42)),
-     },
-     [1] = {
-         X86_OP_ENTRYwr(MOVBE, M,v, G,v, cpuid(MOVBE)),
-         X86_OP_ENTRYwr(MOVBE, M,v, G,v, cpuid(MOVBE)),
-         {},
-         X86_OP_ENTRY2(CRC32, G,d, E,v, cpuid(SSE42)),
--        X86_OP_ENTRY2(CRC32, G,d, E,v, cpuid(SSE42)),
-     },
-     [2] = {
-         X86_OP_ENTRY3(ANDN, G,y, B,y, E,y, vex13 cpuid(BMI1)),
-         {},
-         {},
-         {},
--        {},
-     },
-     [3] = {
-         X86_OP_GROUP3(group17, B,y, None,None, E,y, vex13 cpuid(BMI1)),
-         {},
-         {},
-         {},
--        {},
-     },
-     [5] = {
-         X86_OP_ENTRY3(BZHI, G,y, E,y, B,y, vex13 cpuid(BMI1)),
-         {},
-         X86_OP_ENTRY3(PEXT, G,y, B,y, E,y, vex13 zextT0 cpuid(BMI2)),
-         X86_OP_ENTRY3(PDEP, G,y, B,y, E,y, vex13 zextT0 cpuid(BMI2)),
--        {},
-     },
-     [6] = {
-         {},
-         X86_OP_ENTRY2(ADCX, G,y, E,y, cpuid(ADX)),
-         X86_OP_ENTRY2(ADOX, G,y, E,y, cpuid(ADX)),
-         X86_OP_ENTRY3(MULX, /* B,y, */ G,y, E,y, 2,y, vex13 cpuid(BMI2)),
--        {},
-     },
-     [7] = {
-         X86_OP_ENTRY3(BEXTR, G,y, E,y, B,y, vex13 zextT0 cpuid(BMI1)),
-         X86_OP_ENTRY3(SHLX, G,y, E,y, B,y, vex13 cpuid(BMI1)),
-         X86_OP_ENTRY3(SARX, G,y, E,y, B,y, vex13 sextT0 cpuid(BMI1)),
-         X86_OP_ENTRY3(SHRX, G,y, E,y, B,y, vex13 zextT0 cpuid(BMI1)),
--        {},
-     },
- };
++from __future__ import annotations
++
+ import os
+ import random
+ import re
+ import sys
++from dataclasses import dataclass
  
-@@ -936,15 +929,7 @@ static void decode_0F38(DisasContext *s, CPUX86State *env, X86OpEntry *entry, ui
-     if (*b < 0xf0) {
-         *entry = opcodes_0F38_00toEF[*b];
-     } else {
--        int row = 0;
--        if (s->prefix & PREFIX_REPZ) {
--            /* The REPZ (F3) prefix has priority over 66 */
--            row = 2;
--        } else {
--            row += s->prefix & PREFIX_REPNZ ? 3 : 0;
--            row += s->prefix & PREFIX_DATA ? 1 : 0;
--        }
--        *entry = opcodes_0F38_F0toFF[*b & 15][row];
-+        *entry = *decode_by_prefix(s, opcodes_0F38_F0toFF[*b & 15]);
-     }
- }
+ __all__ = [ 'KconfigDataError', 'KconfigParserError',
+             'KconfigData', 'KconfigParser' ,
+             'defconfig', 'allyesconfig', 'allnoconfig', 'randconfig' ]
+ 
++@dataclass
++class IncludeInfo:
++    file: str
++    line: int
++    parent: IncludeInfo | None
++
++    def __iter__(self):
++        inf = self
++        while inf is not None:
++            yield "%s:%d" % (inf.file, inf.line)
++            inf = inf.parent
++
++    def error_path(self):
++        res = ""
++        for loc in self:
++            res = "In file included from %s:\n" % loc + res
++        return res
++
+ def debug_print(*args):
+     #print('# ' + (' '.join(str(x) for x in args)))
+     pass
+@@ -202,7 +223,6 @@ def process(self):
+     def __init__(self, value_mangler=defconfig):
+         self.value_mangler = value_mangler
+         self.previously_included = []
+-        self.incl_info = None
+         self.defined_vars = set()
+         self.referenced_vars = dict()
+         self.clauses = list()
+@@ -342,13 +362,12 @@ def __str__(self):
+ class KconfigParser:
+ 
+     @classmethod
+-    def parse(cls, fp, data):
+-        cls(data).parse_file(fp)
++    def parse(cls, fp, data, incl_info=None):
++        cls(fp, data, incl_info).parse_config()
+ 
+-    def __init__(self, data):
++    def __init__(self, fp, data, incl_info):
+         self.data = data
+-
+-    def parse_file(self, fp):
++        self.incl_info = incl_info
+         self.abs_fname = os.path.abspath(fp.name)
+         self.fname = fp.name
+         self.data.previously_included.append(self.abs_fname)
+@@ -360,19 +379,9 @@ def parse_file(self, fp):
+         self.line = 1
+         self.line_pos = 0
+         self.get_token()
+-        self.parse_config()
+ 
+     # file management -----
+ 
+-    def error_path(self):
+-        inf = self.data.incl_info
+-        res = ""
+-        while inf:
+-            res = ("In file included from %s:%d:\n" % (inf['file'],
+-                                                       inf['line'])) + res
+-            inf = inf['parent']
+-        return res
+-
+     def location(self):
+         col = 1
+         for ch in self.src[self.line_pos:self.pos]:
+@@ -380,33 +389,34 @@ def location(self):
+                 col += 8 - ((col - 1) % 8)
+             else:
+                 col += 1
+-        return '%s%s:%d:%d' %(self.error_path(), self.fname, self.line, col)
++        inf = self.incl_info
++        incl_chain = inf.error_path() if inf is not None else ""
++        return '%s%s:%d:%d' % (incl_chain, self.fname, self.line, col)
+ 
+     def do_include(self, include):
+         incl_abs_fname = os.path.join(os.path.dirname(self.abs_fname),
+                                       include)
+         # catch inclusion cycle
+-        inf = self.data.incl_info
++        inf = self.incl_info
+         while inf:
+-            if incl_abs_fname == os.path.abspath(inf['file']):
++            if incl_abs_fname == os.path.abspath(inf.file):
+                 raise KconfigParserError(self, "Inclusion loop for %s"
+                                     % include)
+-            inf = inf['parent']
++            inf = inf.parent
+ 
+         # skip multiple include of the same file
+         if incl_abs_fname in self.data.previously_included:
+             return
+         try:
+-            fp = open(incl_abs_fname, 'rt', encoding='utf-8')
+-        except IOError as e:
+-            raise KconfigParserError(self,
+-                                '%s: %s' % (e.strerror, include))
++            try:
++                fp = open(incl_abs_fname, 'rt', encoding='utf-8')
++            except IOError as e:
++                raise KconfigParserError(self, '%s: %s' % (e.strerror, include))
+ 
+-        inf = self.data.incl_info
+-        self.data.incl_info = { 'file': self.fname, 'line': self.line,
+-                'parent': inf }
+-        KconfigParser(self.data).parse_file(fp)
+-        self.data.incl_info = inf
++            inner = IncludeInfo(file=self.fname, line=self.line, parent=self.incl_info)
++            type(self).parse(fp, self.data, inner)
++        finally:
++            fp.close()
+ 
+     # recursive descent parser -----
  
 -- 
 2.54.0
