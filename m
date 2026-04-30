@@ -4,101 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E9ABFF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 14:24:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8949FF8873
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 14:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wISGQ-00043J-FX; Thu, 30 Apr 2026 10:21:14 -0400
+	id 1wISJ5-000146-Pn; Thu, 30 Apr 2026 10:23:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIRKZ-0001ug-Md
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:21:27 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIRKW-0007lL-P8
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:21:26 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2aae146b604so6013545ad.3
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 06:21:23 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777555282; cv=none;
- d=google.com; s=arc-20240605;
- b=RtBJxGBacPWyDMlGQ9llXsmPUWWfEcJe54VgUHxjtMhmVOM4+Tn5D8HBKrXFCAi9Fn
- 5L3HddCP2rp3tUbAVkPWVpTtIJJ/weJwOClO0YcghCmRt4OfDoX8+e6R1LBiXC82XUGq
- 6+TvX9quMe5hS6ed/aD9KicZovVhFvpF41UJvWJjf56SMJ+p4sZZsecAC4FtZZM9cd08
- VGttc+a9F0/Ga2K16i/vM1QuhqNphRaMFz46PlGY9VI5aadXPeC6un71DO0KrfOFX3l3
- 41fBFgZl6+OL/oBsYsElFkiMR5aUH7vCDJPnoo1LAPFI5DfulF6w5pyUSBwJc6snBj44
- NX+w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=FxbWF8KbXOGlfQKsgorPOT1msBKMLNNbj2kYslbT5dc=;
- fh=qsSgpkl+6XmdYWhRLMAbTUE72QWsJeCxh+IYdLSlTrk=;
- b=QPDj6ihlGL/RcnaT+pxnCvYxJFse+OViOqfQi9FzvsyRT4ikLuaRZxsXV8toofhhG4
- vtwEviroYgV4RzfEldspr+QgQz/cQTIW115dQNKrNM9+NV/9BSsyA/hs+bnl2FCabdA9
- PcJKG/XGMykJkGUqRup9aYnuw/l8ieoWTkiD8VthIzn6NMtrZ7Y2rkcV1G9yXPIoLh6q
- Pv7tghrBuP2bTWyq+gOOngVhd7YgBkTGlF7fJSTRez80DCyiZQlMAjSkZc7wgdIZIGz/
- 7AB0J7FRO1Pj1nYrPCLd2369yn3EUcffSbrI9SHiwjH+pK/SnQ90EOz4SUNS1OTT4wg0
- 4L/A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777555282; x=1778160082; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=FxbWF8KbXOGlfQKsgorPOT1msBKMLNNbj2kYslbT5dc=;
- b=Z1A7o3lgG+AnI0xpVGC6Mw3hSTLg7HsBNA5QGhI+KO+4P2V3Pdz+O6dyxF9A6Wygk1
- g5czHD86Qc+zuTWU6WmCTsUxOmz2WFMvWsfyz4V9kHEBfJtGF1X1sf3I1tTkNY7Ww6R0
- rTPkvVn+NGPm9+dcro759bfQUPH34ZA8j7F+XAesYmwhuiQoN/hsNvRDKktzLQQyEUWa
- TSJpHcibMqWr8h20qIjsC63qWATwp3R31+uq1AnfPI838BNRCVR2+/jtc4rzB0fYg5Eu
- iOwOELj1jFQ4e7HQ/YnVfLEEmwUQEMOEl59lHnuelYTWiDrg2g7a3clKGNso2MNlyGXR
- c/JQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777555282; x=1778160082;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FxbWF8KbXOGlfQKsgorPOT1msBKMLNNbj2kYslbT5dc=;
- b=piYQxC45N8OUAgYuuVvYEngQ7DE5nrR36f/qDPGOLqMqy+suCiZJAz2tRna6UmP4qJ
- RdcOfy8+i1+B4EuPlhQZntlDjEjtRWGA6zaRwo5idxrOM6H2VbFNSrxlvA7g92EXNt6l
- KzG9tu/THT2kjfF7a55onweYDsdMIKxXlw6NAC6eCw46bEkQmfTRV9r/IOQhdaY0zmp3
- JXPtXHHwDSeOqIqbyUtpZtZ42RglYOTxXzBiho0h639+XLvS2acjYGXo4B+vDqHuL5Ah
- qin4n8I0ccrvDgmWZNQIYxQWSWzoJamcXXU8yy+djqtI92KX1UuOD/W6ixEK+257PD36
- SL3w==
-X-Gm-Message-State: AOJu0Yw+wVqVIOqr9yglfSN09rhhwxs8FNxM0a0lMUkRoryPUGazO5/5
- V/lSh6nTC7/DA5SSXjHfNnieI8CZMWMxBQwA6QNVJhD0qFt5PAwM3YZj1WSyCE9cP10sUO3g5Bz
- ylhtyOZ4xsC0/0fNLELOyzpukzuLJlHa1TPW2J28iPWekYaYllzeE
-X-Gm-Gg: AeBDievrOic452oAnwq4TbhNWCWH8g9vWQ6pRz2pIUd2aU21kPfzClbdh5tymN0rPKR
- MVmXOyUNAoNRmS26R5sJJy8m2MZ9jQD+nqh0/S84L22qit7XrqA1+fW318/vg6KqyUzegG1P35/
- 03iI+Ppbt6aj8O0A3G2q5HTc7t9z0mxkMVtc2KJgqzr7YL5TK+uDauFeb1iw+3iLCm72vLhe47l
- tIKNDC25c0TQx5paLOuuVamyysTz0VRakHyQVrkWplYz1C3aFS97XOPPv4PmgMwpsMC+lLLxRPg
- dyZ5wjACeo0GuMzNLsKyvM2D5BYdX7IZ1E5a9N2ifWi3pr8PumvtA6m1dULzaQEwVT1xwKlzZIW
- 6+w==
-X-Received: by 2002:a05:690e:2451:b0:649:ed08:1a01 with SMTP id
- 956f58d0204a3-65c18de27b4mr1561059d50.35.1777554591429; Thu, 30 Apr 2026
- 06:09:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1wISIw-0000j1-68
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 10:23:50 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1wISIs-0007El-NA
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 10:23:49 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63UCvmXq139212; Thu, 30 Apr 2026 14:23:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=zsWnJH5GgQCFiFn5C
+ udQxKO1XJQhAqeJ98oS2wtcwiM=; b=TuzKhAUVzGr0F2bAeRJkBDREmKC18iGcL
+ 83+dEfIYz5wgXHPGCo2TvFRicwcAYx8yw9bMXsYo7AItqFjNOuXaGg0w576KaITu
+ D5cNs3x5QE7q65ZbJmmZm/VL51Rp2hPM9UyokY72QdvPAi/CTGe6uNVevk6YfDaF
+ UJI/nbYoNX2QLestBJ95cLiWBGOn/gfKP/cT/aFDgBB2EnrfDIkoUYjz5a61kcZ2
+ YbG5eqK2Ont8953UoIpU+3DnExzzAtD+PEZy6ykrnzbKj++7lr7ndsvWycu29lTd
+ qJN/XqUI87kJsViynX6rk5e0M/9DrecT6G2mO8qHI9pEV5J1YM10Q==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drk1jxn2k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Apr 2026 14:23:44 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63UE8p6L031991;
+ Thu, 30 Apr 2026 14:23:43 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dsamyk40p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 30 Apr 2026 14:23:43 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 63UENghh64618988
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 30 Apr 2026 14:23:42 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3B2D05805A;
+ Thu, 30 Apr 2026 14:23:42 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E242C58063;
+ Thu, 30 Apr 2026 14:23:41 +0000 (GMT)
+Received: from mycroft-2.pok.ibm.com (unknown [9.47.158.222])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 30 Apr 2026 14:23:41 +0000 (GMT)
+From: Stefan Berger <stefanb@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: marcandre.lureau@redhat.com, armenon@redhat.com,
+ Stefan Berger <stefanb@linux.ibm.com>
+Subject: [PATCH v2 1/2] tpm_emulator: Reject a buffer size larger than what
+ was requested
+Date: Thu, 30 Apr 2026 14:23:36 +0000
+Message-ID: <20260430142337.2104726-2-stefanb@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260430142337.2104726-1-stefanb@linux.ibm.com>
+References: <20260430142337.2104726-1-stefanb@linux.ibm.com>
 MIME-Version: 1.0
-References: <20260428-features-v1-1-1841b39da7e6@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260428-features-v1-1-1841b39da7e6@rsg.ci.i.u-tokyo.ac.jp>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 Apr 2026 14:09:40 +0100
-X-Gm-Features: AVHnY4ISyJss64q1Mf2DvH6h2BtrzOWFl1ukcMtkQZ4nxtYAaw3YZoAhJwZVxFM
-Message-ID: <CAFEAcA9_Sc=+Cn7JiPOo9GjOZFU4KCc7nFVqU=9=QAsNBG6AsQ@mail.gmail.com>
-Subject: Re: [PATCH] target/arm/kvm: Cache host CPU probe failure
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org, kvm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=peter.maydell@linaro.org; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDMwMDE0NyBTYWx0ZWRfX75WoeqzYsUSv
+ G835lwKl0/rf/32WdHF+Z4lL2M0M9qCE7ssn0RqEHO9JdKw2BNlt5irOZawaH0AlvlK69PQ15US
+ zbRG/D42tRSeJPARewkszKYQHxNZvClTz10zlRBMSepDkFQMKtoyFwTjhFS3GGcZ0MOdGsH5pXV
+ uBbZU9UMlsggH+6cmBFLsIk5guTYkWcQ/uk/LJkF+JNdjhVjYQq6pGKI8n3qUEPy1+J38ZA1KSu
+ 9jMlbhuxY472kR+AhWljqag/FeVkMxK5NOI6P23SXgFqe6pzpNoieLvqTnriWWRGmvhxl79kkte
+ T++RKw71DESOoVY3M75oEaqNiBq54fOoqfIPL74wnX6uSPByHxu3VuDAlWZHgZrAUFmecxBmiVG
+ 6GV52hVV7KQfAvvX6KWYUJmM0rH/pYsd4rzCDR+FNLco+xDh5LtSdFNOdbzhXQak2hgb1V1NghB
+ i+3d4DSXIfCCV5ToHMA==
+X-Proofpoint-GUID: _Vq3QSgZkElKKDzDW2aUjmNAzyWYU3Qy
+X-Proofpoint-ORIG-GUID: _Vq3QSgZkElKKDzDW2aUjmNAzyWYU3Qy
+X-Authority-Analysis: v=2.4 cv=MohiLWae c=1 sm=1 tr=0 ts=69f365f0 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=lp88FLx_Zl_lkmcsHRgA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-04-30_04,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 adultscore=0 suspectscore=0 bulkscore=0 spamscore=0
+ priorityscore=1501 malwarescore=0 clxscore=1015 lowpriorityscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2604300147
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,43 +120,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 28 Apr 2026 at 09:07, Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> kvm_arm_set_cpu_features_from_host() does not properly handle host CPU
-> probe failure with caching. The current algorithm can be summarized as
-> follows:
->
->     If dtb_compatible is not cached:
->         If kvm_arm_create_scratch_host_vcpu() fails:
->             Report failure
->
->         Cache dtb_compatible
->
->         If getting register values fails:
->             Report failure
->
->     Report success
->
-> This algorithm has the following problems:
->
-> - If kvm_arm_create_scratch_host_vcpu() fails, probing may be repeated.
-> - If getting register values fails, later invocations incorrectly report
->   success.
->
-> Make two changes to fix them:
->
-> - Cache dtb_compatible whenever a probe is attempted.
-> - Record probe failure by assigning QEMU_KVM_ARM_TARGET_NONE to
->   arm_host_cpu_features.target.
->
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
-> Supersedes: <20260422-arm-v1-1-106a9a9e22dd@rsg.ci.i.u-tokyo.ac.jp>
+When the TIS, SPAPR, or CRB frontends negotiate a buffer size with the
+TPM backend, then the tpm_emulator (swtpm) could still adjust this size
+of the buffer to within bounds supported by swtpm+libtpms if the chosen
+size was outside the acceptable range. This could theoretically lead to
+the TPM 2 using a bigger buffer than what was requested and memory
+allocated for. In practice this would not happend since the requested size
+of 4096 bytes for TIS and SPAPR and 3968 bytes for CRB are in the
+(currently) supported range of ~2.5kb to 4096 bytes. With PQC support
+the range will have an upper bound of 8kb and a lower bound that will
+support the (pre-PQC) CRB with 3968 bytes.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+---
+ backends/tpm/tpm_emulator.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-thanks
--- PMM
+diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
+index 75c33d290e..10ab909474 100644
+--- a/backends/tpm/tpm_emulator.c
++++ b/backends/tpm/tpm_emulator.c
+@@ -364,6 +364,7 @@ static int tpm_emulator_set_buffer_size(TPMBackend *tb,
+ {
+     TPMEmulator *tpm_emu = TPM_EMULATOR(tb);
+     ptm_setbuffersize psbs;
++    size_t tpm_buffersize;
+ 
+     if (tpm_emulator_stop_tpm(tb, errp) < 0) {
+         return -1;
+@@ -387,8 +388,18 @@ static int tpm_emulator_set_buffer_size(TPMBackend *tb,
+         return -1;
+     }
+ 
++    tpm_buffersize = be32_to_cpu(psbs.u.resp.buffersize);
++    /* Reject a bigger buffer used by the TPM than what was requested. */
++    if (wanted_size != 0 && wanted_size < tpm_buffersize) {
++        error_setg(errp,
++                   "tpm-emulator: TPM did not accept the requested buffer size "
++                   "of %zu bytes but adjusted it to %zu bytes\n",
++                   wanted_size, tpm_buffersize);
++        return -1;
++    }
++
+     if (actual_size) {
+-        *actual_size = be32_to_cpu(psbs.u.resp.buffersize);
++        *actual_size = tpm_buffersize;
+     }
+ 
+     trace_tpm_emulator_set_buffer_size(
+-- 
+2.43.0
+
 
