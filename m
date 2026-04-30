@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57AB4FF8875
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 07:55:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1B38CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 07:57:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIMEq-0000jJ-JD; Thu, 30 Apr 2026 03:55:13 -0400
+	id 1wIMH7-0001bj-Sf; Thu, 30 Apr 2026 03:57:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wIMER-0000eu-1M
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:54:48 -0400
+ id 1wIMGj-0001Xg-V4
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:57:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wIMEO-0008NX-Dv
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:54:45 -0400
+ id 1wIMGi-0000bW-D2
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:57:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777535677;
+ s=mimecast20190719; t=1777535827;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iI9YM6eedaHPqJ5PzVHEvplFKMdAkmMS50r3AaQ/KZg=;
- b=dEKT1DE2NbmR/yJ8181Uq1q48jJHuN22M3dDVpB/5K2N3YFhO0kYy0NFdKCVv4GGiwJnuY
- zg93SsETZaXHGV364RexR2dcUVXsr7iliQNFWWjaAEDJw2VBqB1Fycd7NFGtlhGFJiuDjf
- 9d5kw5nsw2tu0rxkeWZOphsNTPvu5sw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=SMUHqV3/S1OCEN/Z1Bk3oZqV9TG8An88Wv5LTmQ2pgg=;
+ b=cgbegOc/gRkXYvsgw38nmulyJi4SEc6FTU0Wxv1oQK1I0773R7fc5wM0dGhpIzmLNwJvi+
+ VMJwMbcnA9QFtC+EelTFQnj2KCYvTXhYdlNx/xww14m3mQ08Lg6Gfb/wiiGymLilpPVrip
+ XIaoO4c25vf7E/qacTn+rVrqQFlUMS0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-350-zlBN439oPAazxMuzO_Suig-1; Thu,
- 30 Apr 2026 03:54:35 -0400
-X-MC-Unique: zlBN439oPAazxMuzO_Suig-1
-X-Mimecast-MFC-AGG-ID: zlBN439oPAazxMuzO_Suig_1777535674
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-Uoqh6XwYMLqDFwT4Q7l_xg-1; Thu,
+ 30 Apr 2026 03:57:05 -0400
+X-MC-Unique: Uoqh6XwYMLqDFwT4Q7l_xg-1
+X-Mimecast-MFC-AGG-ID: Uoqh6XwYMLqDFwT4Q7l_xg_1777535824
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 71312195604F
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 07:54:34 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ABB8218001FB
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 07:57:04 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.48.62])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 23AE119560A6; Thu, 30 Apr 2026 07:54:32 +0000 (UTC)
-Date: Thu, 30 Apr 2026 08:54:29 +0100
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2C7B9300019F; Thu, 30 Apr 2026 07:57:02 +0000 (UTC)
+Date: Thu, 30 Apr 2026 08:56:59 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: marcandre.lureau@redhat.com
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 9/9] qom: drop user_creatable_add_type method
-Message-ID: <afMKtQ12egtJu4Va@redhat.com>
+Subject: Re: [PATCH 1/9] qom: add trace events for object/property lifecycle
+Message-ID: <afMLSxSx6_6qX2hs@redhat.com>
 References: <20260429210830.594724-1-berrange@redhat.com>
- <20260429210830.594724-10-berrange@redhat.com>
- <177749881571.809163.14770089192117728910.b4-review@b4>
+ <20260429210830.594724-2-berrange@redhat.com>
+ <177749881568.809163.3651828558097466353.b4-review@b4>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <177749881571.809163.14770089192117728910.b4-review@b4>
+In-Reply-To: <177749881568.809163.3651828558097466353.b4-review@b4>
 User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,27 +91,21 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Thu, Apr 30, 2026 at 01:40:15AM +0400, marcandre.lureau@redhat.com wrote:
-> On Wed, 29 Apr 2026 22:08:30 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-> > index e0a3cd8d0f7..7080f85f95f 100644
-> > --- a/qom/object_interfaces.c
-> > +++ b/qom/object_interfaces.c
-> > @@ -44,75 +44,11 @@ bool user_creatable_can_be_deleted(UserCreatable *uc)
-> > [ ... skip 14 lines ... ]
-> > -        error_append_hint(errp, "Identifiers consist of letters, digits, "
-> > -                          "'-', '.', '_', starting with a letter.\n");
-> > -        return NULL;
-> > -    }
-> > -
-> > -    klass = module_object_class_by_name(type);
+> On Wed, 29 Apr 2026 22:08:22 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > diff --git a/qom/object.c b/qom/object.c
+> > index f981e270440..b99da7309db 100644
+> > --- a/qom/object.c
+> > +++ b/qom/object.c
+> > @@ -714,6 +720,7 @@ static Object *object_new_with_type(Type type)
+> >      object_initialize_with_type(obj, size, type);
+> >      obj->free = obj_free;
+> >  
+> > +    trace_object_new(obj, obj ? obj->class->type->name : "(null)");
 > 
-> object_new_with_props*() does not load from module. I don't think it
-> matters for now (module objects are not user-creatable?), but is this
-> intended?
+> It looks like there should be an assert(obj != NULL) after qemu_memalign() instead.
 
-No, that is an over-sight. This was not supposed to loose any
-functionality. We should allow user creatable objects to be
-put into modules.
+qemu_memalign aborts on OOM.  This "obj ? .. : .." check was a mistake,
+copy+pasted from the dynamic cast trace events.
 
 With regards,
 Daniel
