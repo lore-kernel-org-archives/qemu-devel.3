@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ED76CCFA13
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 09:42:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79926FF8875
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 09:42:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wINrG-0005OJ-W1; Thu, 30 Apr 2026 05:38:59 -0400
+	id 1wINr0-0004p5-TJ; Thu, 30 Apr 2026 05:38:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wINrA-000587-Qc
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:38:52 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1wINqk-0004b9-Qz
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:38:26 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wINqy-0002lx-7w
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:38:52 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-43d73422431so625125f8f.2
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 02:38:37 -0700 (PDT)
+ id 1wINqg-0002U9-Ea
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 05:38:26 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-445795cf6f1so437948f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 02:38:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777541917; x=1778146717; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777541898; x=1778146698; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=R4M1+8MaNJJPZqDo1tunWUHC1iAqc51w+I18EtZXKXs=;
- b=kLCoc72uPLbYaNNZNYJN/9cIVYu0BYkw4FcdmysF1s6fTH4ufhczaAzLP8BJLvae5b
- GBUYpXA3ODqy353LtujKBjOXIZT1Pxcb0O8QcDxcpsE64pN2Iwuigr5Mv5cFFWglTk3S
- dR3W2e/rb1mUUzVAgKfooNX9/43pC0rrwLDd5F5qjgDY0FFhlW7Qm6IkPHtu3HZLkM4T
- 4+gnY8yCdl1am7oYBvjTkROhJ40qh4m77FCqCFqaC6wN49Q7p0v73DEip2OxpW0b4uBO
- ah/uqTYTKqwbMfXXkXkPBMoBEvuB0GeOwibYw4Sb4js0ofukj0PX68HLQWnqUMg6Ajgx
- XkiQ==
+ bh=HT5u+p0qjQEaNXx84eQO2RGfa34EknNr47WRL7RZ/Fs=;
+ b=VATf0LZ5eLgfWlcYXeqrM5rN2BCKp/NTuu6HkWzrsGJTiDpvZpNLRyaLNko1L1emr0
+ I688w3Kv5YFnaPg+WL+U6SA6+nvUriZEYkb/k/PSrvrmhGcf8Wqa53Rk9HFz/z7uoeTV
+ xmp/vNy9yPj6jGW7xCqZzJFv1yY3k+Mipt4O8uummAzAkNEQDE37Iovb9wwRIW2LibX8
+ SbCK2Z0SO8FRcfnWh3cr8ArECYlswaWlquM6AIzicX1kjcqd6oLkN5xiSrsLFRV0BlB1
+ 37f+itSSwbWKFhuFO86ZPSOLI1XOYhNwun9Masaq30Uq36gn8mq/L27MXvEl9wTRkgLt
+ 1a3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777541917; x=1778146717;
+ d=1e100.net; s=20251104; t=1777541898; x=1778146698;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=R4M1+8MaNJJPZqDo1tunWUHC1iAqc51w+I18EtZXKXs=;
- b=tDKBdjskbEQtPMEDR5U1icQv4xMRxF8+d2DeyoN7CtKYIiBpoLyi5AQxCDTfGzf8Cr
- 0o8jt/OwHOLHN6D33o8KLrqzrvQx3J5vh2KZoEMS/lBKNKQDMC4nA3cSZySW0YkKYI/e
- IllazV3d8KPjca6v4sNrQ0SiP/HOdiyXE+jqBHEcRQ0QnSxGmx9DF6VcVf+iTD2ks4sN
- oG0qzlA2cFz3ocHnx/7jzxzQTGTr+z/VsdIwdPar7R/4M0AWoZxty04HY6KMtcrjZLwd
- itulzeHJXOCAOLdqhj/AGHabWPfBFUucOmrMYcDicAPQufmbMqLo1+OmzUAPxi3wrbtR
- 7YEA==
-X-Gm-Message-State: AOJu0YxXGm7ZMzmd7PeBX609QS9Pr5Zdy1h4lcqiUzEBb/xXaQxDguUz
- 7yoWVY6z+D0FMA22ZJ2RCxSGKOaC4iTpjlR9Ogum58c1Q6mxZqjyD5bxE61Oj0gpX4qeFhuXckU
- U5Fmo
-X-Gm-Gg: AeBDieso/heGWuRPzbpumoEGm1FDjeqn4f+e760UWMDbmgKT0GnMfQFU4nIKSNS4ZG4
- flHul5sewzVgEiBKYacNJhKotLgnrr5IZYQElr70AzHqH9i320XJI2v6SY89a/5HpB+t+lwszqP
- iTEczDCSHzEDIdm4t9dJk+gMVVrFd0cVLJZSNgxWWeKcga6po1GxNIuWRUiT7EbwPz1i8c7kSlZ
- 3hQRv4lEJ1IQq+0kvKfJHOyU61hD6dBf2g+uwD/J7lvJkRPZLXEqUb3YnTr/aGjAvfg4LdpLtvW
- 374e8Ua+kQNc3FbmzzX0GMqCAfJyxHNEqAI4vNDg3DJoHxt1xKAaQ4CCOJx6apK9sMuG+C7Yqo4
- SuINZUu8xfXZTEtuBdDqnKpoYu/jBd2xtCaqHYMz0PuIPssh0/SLJYOkQLrk8Kz/4iENoFEJuWm
- fAqjBvMUnhmmJPAq6GdXBDkFmW+qQKO+NTwnh9jOw4M9F/VMtNj6meXJksKF4zr+XGgz8kHS3sw
- sLXVgVEmTUUgSXy94GbXe1fOttFLdSJddWLf6zb9g==
-X-Received: by 2002:a5d:5f44:0:b0:43c:ff58:35c3 with SMTP id
- ffacd0b85a97d-4493d02aaa6mr3458793f8f.10.1777541916662; 
- Thu, 30 Apr 2026 02:38:36 -0700 (PDT)
+ bh=HT5u+p0qjQEaNXx84eQO2RGfa34EknNr47WRL7RZ/Fs=;
+ b=JrJpL+ZKAZori5brSet6k5/oGyLEmMXvSFFwy87wb5MZOXP/UJiGKwlkJEIFuPYVng
+ 1HU4bx6TqI2rhveP7xiCPgoeQuH11mFhQEYItpuLwp9KO3VIC2Lx6JIoMzCv8UvmFyIY
+ qeAdTqkVGI+2kiti5gI1Us4RFGuVv/1yvCb4WIgpLUzCuxTwE4KxcAijCJuzdqI7Z2Up
+ 5VgOohgpBvqZbVq47qga8EFoYioKxygCVu4yjfOyl8bpqW2Jsitivsvx9ScZu2P2pB22
+ NQQOsGzdmGy7zpTWzybp8VWYlRrBBlgd4kvtVlaXYkFo6RSF42UDdxfesXEtw4f+OhWr
+ sUNA==
+X-Gm-Message-State: AOJu0Yz2ejDxDt8YDnFROdPE8R/IxeM0brQYFaDsJkfziCB9tfIWNcY4
+ ibuf6O97f8PDvAJORT7mi75FO3XcJg2i5aDkG6zAWgCWQi95I/P7nJb7bbhimXbDnIkhiNnzTcw
+ ks7IH
+X-Gm-Gg: AeBDieur9meUu/IUXwx9pGPJEPkYO1DBkBtitIw398TBJS0un4//6lgnzyoa3kKI8Lq
+ AeDEG493XWbfTDbAIZUMhpkMRy5QBuqYdhOQEgp3e1TjQXa5BLxXdRiicDXFV9cFX52w7X6Yc7W
+ F9H7GHBN0/c2gCar5Ddasb1ipUJImBcZ4IcFFHg6qp+P6MtFB9lw/UnFGFgfR9mheneLQaRNeV9
+ oZqqlE+0tgYyuXKVDB122yzNQBf6Z0Q4MOfGUd/Z2y0ofHBJRS5Ijy16ZEjNQN65fNxmAf1cmKD
+ YE8vXMvhMmt+1xF5tX5Agc6WCCLTRySNBHLcQv592eGim/CgTR1NwPSsIEWa0Wm75oZsHNDzsZh
+ OIJlZzI9mAwx1JUwIutYmyy5gyM3mFUvne0GlRjmhe665pNvHLN6waNw/ub42HNhSE4nfyrYXmC
+ kmOhpZDkbU+iERxfGtZ2ykRFEeBh5TVK8/EyxImtF4x1KPb54dupppXVX7gnaWHx6+7aZK+UwUL
+ lA7Q3IIC9NGBSjDta7uu2sBu9/WJ2iaKBmOqLWtN++6hO3oLJH4
+X-Received: by 2002:a05:6000:2f85:b0:441:1d53:cd9e with SMTP id
+ ffacd0b85a97d-4493faf7702mr3049961f8f.37.1777541898314; 
+ Thu, 30 Apr 2026 02:38:18 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-447b421721fsm10816795f8f.15.2026.04.30.02.38.35
+ ffacd0b85a97d-447b421721fsm10816795f8f.15.2026.04.30.02.38.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 02:38:36 -0700 (PDT)
+ Thu, 30 Apr 2026 02:38:17 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
@@ -91,16 +91,17 @@ Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
  David Hildenbrand <david@kernel.org>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH v2 19/25] hw/i386/vapic.c: Use cpu_translate_for_debug()
-Date: Thu, 30 Apr 2026 10:38:04 +0100
-Message-ID: <20260430093810.2762539-20-peter.maydell@linaro.org>
+Subject: [PATCH v2 05/25] target/sparc: Make get_phys_page_debug handle
+ non-page-aligned addrs
+Date: Thu, 30 Apr 2026 10:37:50 +0100
+Message-ID: <20260430093810.2762539-6-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260430093810.2762539-1-peter.maydell@linaro.org>
 References: <20260430093810.2762539-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,67 +124,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We would like to remove the cpu_get_phys_addr_debug() function, by
-moving all callers to cpu_translate_for_debug(). Update the callsites
-in vapic.c.
+Currently our implementations of SysemuCPUOps::get_phys_page_debug
+and SysemuCPUOps::get_phys_page_attrs_debug are a mix of "accepts a
+non-page-aligned virtual address and returns the corresponding
+non-page-aligned physical address" and "only returns a page-aligned
+physical address".  This is awkward for callsites, which in practice
+all want the physical address for an arbitrary virtual address and
+have to work around the possibility of getting a page-aligned
+address, and it doesn't account for protection being possibly on a
+sub-page-sized granularity.  We want to standardize on the
+implementation having to handle non-page-aligned addresses.
 
-In the process we can drop the old "OR the page offset back in"
-workaround that we had for when cpu_get_phys_page_addr() returned
-the physaddr of the page base rather than the exact physaddr of
-the input virtual address.
+The sparc TLB lookup code can handle non-aligned input addresses but
+will return page-aligned results.  Rather than attempting to change
+the internals of the lookup code, we take the simple approach of
+ORing the page offset back into the phys_addr result.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260417173105.1648172-5-peter.maydell@linaro.org
 ---
- hw/i386/vapic.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ target/sparc/mmu_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/i386/vapic.c b/hw/i386/vapic.c
-index 225f19a75c..781bf2a7fa 100644
---- a/hw/i386/vapic.c
-+++ b/hw/i386/vapic.c
-@@ -161,7 +161,6 @@ static void update_guest_rom_state(VAPICROMState *s)
- static int find_real_tpr_addr(VAPICROMState *s, CPUX86State *env)
- {
-     CPUState *cs = env_cpu(env);
--    hwaddr paddr;
-     target_ulong addr;
- 
-     if (s->state == VAPIC_ACTIVE) {
-@@ -173,8 +172,10 @@ static int find_real_tpr_addr(VAPICROMState *s, CPUX86State *env)
-      * virtual address space for the APIC mapping.
-      */
-     for (addr = 0xfffff000; addr >= 0x80000000; addr -= TARGET_PAGE_SIZE) {
--        paddr = cpu_get_phys_addr_debug(cs, addr);
--        if (paddr != APIC_DEFAULT_ADDRESS) {
-+        TranslateForDebugResult tres;
-+
-+        if (!cpu_translate_for_debug(cs, addr, &tres) ||
-+            tres.physaddr != APIC_DEFAULT_ADDRESS) {
-             continue;
+diff --git a/target/sparc/mmu_helper.c b/target/sparc/mmu_helper.c
+index a6f76a1ab7..25f8a85fae 100644
+--- a/target/sparc/mmu_helper.c
++++ b/target/sparc/mmu_helper.c
+@@ -913,7 +913,7 @@ hwaddr sparc_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+             return -1;
          }
-         s->real_tpr_addr = addr + 0x80;
-@@ -292,6 +293,7 @@ static int update_rom_mapping(VAPICROMState *s, CPUX86State *env, target_ulong i
-     hwaddr paddr;
-     uint32_t rom_state_vaddr;
-     uint32_t pos, patch, offset;
-+    TranslateForDebugResult tres;
- 
-     /* nothing to do if already activated */
-     if (s->state == VAPIC_ACTIVE) {
-@@ -305,11 +307,10 @@ static int update_rom_mapping(VAPICROMState *s, CPUX86State *env, target_ulong i
- 
-     /* find out virtual address of the ROM */
-     rom_state_vaddr = s->rom_state_paddr + (ip & 0xf0000000);
--    paddr = cpu_get_phys_addr_debug(cs, rom_state_vaddr);
--    if (paddr == -1) {
-+    if (!cpu_translate_for_debug(cs, rom_state_vaddr, &tres)) {
-         return -1;
      }
--    paddr |= rom_state_vaddr & ~TARGET_PAGE_MASK;
-+    paddr = tres.physaddr;
-     if (paddr != s->rom_state_paddr) {
-         return -1;
-     }
+-    return phys_addr;
++    return phys_addr | (addr & ~TARGET_PAGE_MASK);
+ }
+ 
+ G_NORETURN void sparc_cpu_do_unaligned_access(CPUState *cs, vaddr addr,
 -- 
 2.43.0
 
