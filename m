@@ -4,109 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E999EFF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:48:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52C07CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:48:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIVUT-0002Sd-Aq; Thu, 30 Apr 2026 13:47:57 -0400
+	id 1wIVUs-0002f3-HJ; Thu, 30 Apr 2026 13:48:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIVUK-0002Is-6H
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:47:49 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIVUD-0003TJ-1A
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:47:42 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-6530287803cso1317465d50.1
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:47:38 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777571257; cv=none;
- d=google.com; s=arc-20240605;
- b=QoR0bwD3i96I9kbIuY34x1Bxk5RM3CiqTqlS8xDIx4IZS3R9XimBPlTrSEz4hzYBBa
- FLyWaPmXErFpz0W8X+d/N8qLogMULWypNJt4lnomRJBdGtvZAEdlUAwyOoqIOPQXxBJV
- MqzSMDgnPShp1adP2qc61jEa67A/RFYso0iuMaiorLYBbSnp2xWpl6Z94za/qJ+BngEH
- nB62kij64B+Qn+Kg3AvJfICZjvJXdP6/0V4RWZa3/XPqPT30jb+yf8Cs0PuR93gVNy1N
- rePY3sVd3wg+JibJWvOZXxM6u9zLxWAD8rGvjjhm7fyQK9A670h5s7zUbk0W/v0mcPeg
- mcsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=+xsimC4zkj0u+Nzi3MHOnfRd+xMdIt5+KK2Pf+MhexI=;
- fh=LQhq4Jhj8OAQPsF8kySYPfwOtGsuuF3EYzuvfR7PILE=;
- b=DRkqzS+kgmHOw24QnzG9NI24hOBJE7e6Mv1vD/A0tFdMM1aCfbJHG+xTJpPRXoOpYr
- ySLU9hLMQ4lni+erX6GLxujfZ73lYLaAdmcEb2FjKTEWppffNUNIDLvvJ+bIV25o94G1
- pqRwl7u7FzguGlPbc0FjAGBM9vuWwJzspD4S7VE41UXDBcEvakYfD7AojHTlrO2t3+Nf
- g1P7lFNMP/gDFGi5cVr0QiHwG8nzwLdjuo2TWbIxBLc5RZfrMCn6G3GI88zOFOweMg2P
- /t6+uVREeALu3HPG64lHwtmwXUdeGuNdkuvd9snKX6HdfUjTFmPEL8mMYTvcw206ajZm
- lBsg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777571257; x=1778176057; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+xsimC4zkj0u+Nzi3MHOnfRd+xMdIt5+KK2Pf+MhexI=;
- b=yM2Nx7Eqf9ZxEQGNvc379jJt0KCfHJH10je7uuppHi+5OC+w8doSxk2wmjuE8x9Zt3
- Mngt+krWiSchiP2PWjfPUjcadB8eyZFVD3KQ0OFG6HKoTYABUkbFHZ9l5kAQ6Be3ZZ2V
- ciGz/Ssbne9MuFL2yGFFPB78/TonljatoVB8KsboyO2A4pBdsC1hTQ0o0Lb8K3tdDHwx
- 2MsUm3I6Cb5bipEEpu4MDy6cmSfKE1NFY5rEWIsOtaKgLGHn0GIrWMBG5mdNGXtdJGXk
- 3vGFTLUeBg6t6zv01S/8A1AMmHAg9FuC0IOy2EaKkIAS3b/09g0JjVuh4mPiFfmhbL6A
- QKdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777571257; x=1778176057;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+xsimC4zkj0u+Nzi3MHOnfRd+xMdIt5+KK2Pf+MhexI=;
- b=oLwnhhAiYa6jPd4+iYzDsPfMm9fX5Wak0KH0JvtY2v5zKXVPAhyNIqzZqul3AQjCI3
- gKHhrNfcmHImOTLJK2iD/lMEwvEdEeLMgjvP5tEWMv9znCkITnUjabyk3T3UAUrz2pHv
- FM+EysGGhvklUPA6H5bie/fCaYSsUqdnGXUXqr8PClKdjdHxG5fAgZVymP4oioNagsyc
- Du7yZqm3hwUv6RejtRy567sCr4rEZ1ssNmqh5bmlcI0610Lkee/NOGCSv3CWGchC/kID
- O4xddI24JFfqjUVyX1/U1mwCQbnBANqjWDUkdi2Idym5LTYt9nBYDjZ2kg1dPMYEtHHq
- wT3g==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/Y5LcXrItwQMRv4ydRnwRNskyQ2uJx7CnNDz1drSQ6nMljMx37xJzcJyAVFhwHSftTcS6oilJEeSHg@nongnu.org
-X-Gm-Message-State: AOJu0YybzWptimun7WdHPOHG3m+R8RqmUN34PohPZH0/Iji1Cmp4Z0qK
- MZveV36svbTBqzVJJL8XOZThYt9KzSps9itlOXfCHC6YPlVmnQUIAAFm+8yz4hk43ydHn4vKAcl
- IcXgu6k631LqXLZALNBJx6gb+U4aTgsjnGjzud347Uw==
-X-Gm-Gg: AeBDietD3NuVNOglK5mOSSAW+M7Fs/TegxiCR8QB3QGTQTmp0Z/VUEjP36FE6SEMB2K
- YnBWe9Wt7jcva5XQDhgOf8D7+/2GYThklpXdUxrHlxZWzRFe97X7T9lfbR9W8jKE9IUukva/cav
- 4dHafeN7qmwdy5j2jTLJVJ2kvYpFzUpuGMaj3uilfjDYLK01Tm2lQTXvigicfDCk0xBG+j3Kr+a
- EsTr8fVFnynmbSstOnNweTmGdqTTiCHBb/4xyDbANJPhMK94u+lApTJech6kF2rVLEXjzQkrMMk
- CTd0xMN5iEOcNjpSNN/mdyK6svCUF646AFm9l6yg0r+JsOjSq+mamxM+v4ZCeahsSU9B5xB31ym
- yhA==
-X-Received: by 2002:a05:690e:4809:b0:651:b2d9:7754 with SMTP id
- 956f58d0204a3-65c2b87cc3dmr703631d50.38.1777571257178; Thu, 30 Apr 2026
- 10:47:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wIVUS-0002T1-Hh
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:47:57 -0400
+Received: from 7.mo533.mail-out.ovh.net ([54.36.140.182])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wIVUJ-0003Uc-RP
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:47:54 -0400
+Received: from director6.derp.mail-out.ovh.net
+ (director6.derp.mail-out.ovh.net [51.255.22.22])
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4g61pk33Hgz61Sw;
+ Thu, 30 Apr 2026 17:47:42 +0000 (UTC)
+Received: from director6.derp.mail-out.ovh.net
+ (director6.derp.mail-out.ovh.net. [127.0.0.1])
+ by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Thu, 30 Apr 2026 17:47:42 +0000 (UTC)
+Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.37.170])
+ by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4g61pk1qDPz7tl2; Thu, 30 Apr 2026 17:47:42 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.7])
+ (Authenticated sender: clg@kaod.org)
+ by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
+ D96022403AF6; Thu, 30 Apr 2026 17:47:40 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-101G0049375919d-e85e-4ca9-b6ab-3be7c6e77efb,
+ 9F47DE0B15482FF6BC55B1CE858CC0DAC5AE7A4F) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 90.14.253.154
+Message-ID: <e5c8fbe2-c22b-4d95-ad52-87b29ed92a96@kaod.org>
+Date: Thu, 30 Apr 2026 19:47:40 +0200
 MIME-Version: 1.0
-References: <20260428055254.76581-1-kane_chen@aspeedtech.com>
- <20260428055254.76581-2-kane_chen@aspeedtech.com>
- <2b4f5cca-f064-4326-863c-9ab164e11c44@kaod.org>
-In-Reply-To: <2b4f5cca-f064-4326-863c-9ab164e11c44@kaod.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 Apr 2026 18:47:24 +0100
-X-Gm-Features: AVHnY4KX-x91-963dm6junMSietxMqUsmDE1oQDD4JQaRTzwFg9Gbw93p5ENBOg
-Message-ID: <CAFEAcA__w=Nrs0tr0W3TyHmKM3V=J1+Wa5vLKA8kv0iNaL5Avg@mail.gmail.com>
-Subject: Re: [PATCH v1 1/1] hw/misc/aspeed_sbc: Add bounds checking for OTP
- write operations
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Cc: Kane Chen <kane_chen@aspeedtech.com>,
- Steven Lee <steven_lee@aspeedtech.com>, 
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>,
- Troy Lee <troy_lee@aspeedtech.com>, 
- "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 29/41] hw/fsi: move OPBus address space init to realize
+To: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com,
+ Ninad Palsule <ninad@linux.ibm.com>, Steven Lee <steven_lee@aspeedtech.com>,
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-29-c413f3605311@redhat.com>
+ <CAFEAcA-krpQw4atHeDkCae_7EJEtUrwGNHMnYxu4eNAXdyykeQ@mail.gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <CAFEAcA-krpQw4atHeDkCae_7EJEtUrwGNHMnYxu4eNAXdyykeQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 10790061758303022107
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTG0CqItN+gnkCjlq+XxABJQ4Z/JnGQ1F6r7bnFdERQpEms/WdjRHPy7hAAR9TDx/TrZC2UopsB4572nx4wLBSHoDwbtsECQNZ71YJdltEe0Wru1HdBBMQc563AWvZiNjr1/higOCct09hmYp0YpcRGqgYC8gkrdUAetuTBI1NSR5UzStRr7ySiP14fk8tifOK3nypTX6vnCO+pPaPk2lfoUxDfz4zvmPnv9sOxI+J9D340tgf5f9SICKWnK2ieXbG5NGNPfoayskKD26AfzHVhEPEKUFtjdzvY9LCIlY1V09aX+eocAiSbDVebAdtzQuqO1i9SkMbuMiHiA5dPhew9ZQYGHTwtC7yVNjRXYxuaQlnOqceZ70d8q2uttrZ02cngMNcdFJRKwWU2jfTqmq11Ej++TsYjGYNgLyHqcuFgpsakZ9SmOSOv4cUAF27WalhhEgMsywcry0hNcEjRQQLE6zKVmwiyy5jOnKYRdljzqtw/hYl5G0mgoyWyRLsMFvA4w9AwL7gyqsjfZvh4IcUi1U3uDYwbn//Bq6xc6paYA9JQ1kEYko8y5Q4kszFIE2a64ZYtYQfLVa4pJT8P1jpvREg/0HKsAxg4nAkoJ7w/ihFcP6FGVgxqzbTj2274kn5k/ytkAM0kU9opIpe1TJdT/JDtwqLVgvzhCLDKOzFq+Xw
+DKIM-Signature: a=rsa-sha256; bh=ea1UUJdMFsM6tOAMjh0/ZUK6MYHuD+kl8s66Zioz5J0=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1777571262; v=1;
+ b=cdH9PW88DMR5nEtws+NnnJCJjg9nagirG9Qu/bENR4woNlNTOktFomJv08m+DE1tU2G0WI5y
+ uyI6iOr3OlN4ED4JwnFRspLZJxKzX+1SlFznO/imXwM1pFr2aQsp84vUf8csmJCb3srns0TVab0
+ sBe22T/iMhQYFHJTyNKdyJldVKTKbPIRyqayA+i2Y98yoNkuV4VEryO0jZNMjRokuJ12fykvWX8
+ C19fGLIw1hX478Kdpu+as4Vjpn9HOPbzV45ldTw0tHlu4B/rf7TdEzAmG7+3yV26AWvpeh+KXmJ
+ qmA5uLYeA4AKyusdD8FwopHc3j/Bh9M94oZjgfrnwgl3Q==
+Received-SPF: pass client-ip=54.36.140.182; envelope-from=clg@kaod.org;
+ helo=7.mo533.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,90 +136,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 30 Apr 2026 at 18:26, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
->
-> On 4/28/26 07:52, Kane Chen wrote:
-> > There is a mismatch between the Aspeed OTP model and the Aspeed SBC
-> > model in how the guest-provided address is handled.
-> > aspeed_sbc_otp_prog() passes a word-indexed address directly
-> > to address_space_write() without converting it to a byte offset,
-> > whereas aspeed_otp_write() expects a byte offset and applies an
-> > additional shift (otp_addr << 2). This double-shift confusion means
-> > that an out-of-range word address can lead to a write beyond the
-> > allocated storage.
-> >
-> > Fix this by adding bounds checking on the word offset before
-> > converting to byte offset and passing to address_space_write().
-> > This matches the existing bounds check in aspeed_sbc_otp_read().
-> >
-> > Cc: Kane-Chen-AS <kane_chen@aspeedtech.com>
-> > Cc: qemu-stable@nongnu.org
-> > Fixes: 1a00754ccf15 ("hw/misc: Add Aspeed Secure Boot Controller model"=
-)
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3436
-> > Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> > Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
-> > Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
-> > ---
-> >   hw/misc/aspeed_sbc.c  | 14 +++++++++++---
-> >   hw/nvram/aspeed_otp.c | 13 ++++++-------
-> >   2 files changed, 17 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
-> > index 065e822e70..8b74dca13c 100644
-> > --- a/hw/misc/aspeed_sbc.c
-> > +++ b/hw/misc/aspeed_sbc.c
-> > @@ -159,13 +159,21 @@ static bool aspeed_sbc_otp_prog(AspeedSBCState *s=
-,
-> >       MemTxResult ret;
-> >       AspeedOTPState *otp =3D &s->otp;
-> >       uint32_t value =3D s->regs[R_CAMP1];
-> > +    uint32_t otp_offset =3D otp_addr << 2;
-> >
-> > -    ret =3D address_space_write(&otp->as, otp_addr, MEMTXATTRS_UNSPECI=
-FIED,
-> > -                        &value, sizeof(value));
-> > +    if (otp_addr >=3D OTP_TOTAL_DWORD_COUNT) {
-> > +        qemu_log_mask(LOG_GUEST_ERROR,
-> > +                      "Invalid OTP addr 0x%x\n",
-> > +                      otp_addr);
->
-> This log event could be on one line.
->
-> > +        return false;
-> > +    }
-> > +
-> > +    ret =3D address_space_write(&otp->as, otp_offset, MEMTXATTRS_UNSPE=
-CIFIED,
-> > +                              &value, sizeof(value));
-> >       if (ret !=3D MEMTX_OK) {
-> >           qemu_log_mask(LOG_GUEST_ERROR,
-> >                         "Failed to write OTP memory, addr =3D %x\n",
-> > -                      otp_addr);
-> > +                      otp_offset);
-> >           return false;
-> >       }
-> >
-> > diff --git a/hw/nvram/aspeed_otp.c b/hw/nvram/aspeed_otp.c
-> > index a60289000c..1a9d3841b8 100644
-> > --- a/hw/nvram/aspeed_otp.c
-> > +++ b/hw/nvram/aspeed_otp.c
-> > @@ -57,12 +57,12 @@ static bool valid_program_data(uint32_t otp_addr,
-> >       return has_programmable_bits !=3D 0;
-> >   }
-> >
-> > -static bool program_otpmem_data(void *opaque, uint32_t otp_addr,
-> > +static bool program_otpmem_data(void *opaque, hwaddr otp_offset,
-> >                                uint32_t prog_bit, uint32_t *value)
-> >   {
-> >       AspeedOTPState *s =3D opaque;
-> > +    uint32_t otp_addr =3D otp_offset >> 2;
->
-> I think 'opt_addr' is a bit confusing. It's a word offset.
+On 4/30/26 18:09, Peter Maydell wrote:
+> On Mon, 27 Apr 2026 at 20:45, Marc-André Lureau
+> <marcandre.lureau@redhat.com> wrote:
+>>
+>> The OPBus instance_init initializes an AddressSpace, registering it in
+>> the global address_spaces list. When a bare OPBus object is created
+>> and destroyed (e.g. by qom-tests), there is no finalize to remove the
+>> stale entry, leading to a heap-use-after-free when a subsequent
+>> flatviews_reset iterates the list.
+>>
+>> Move address_space_init to the bus realize callback and add the
+>> corresponding address_space_destroy in unrealize, following the
+>> NubusBus pattern. Also fix the memory_region_init owner from NULL to
+>> the OPBus object, so the MR is properly parented instead of dangling
+>> under the "unattached" container.
+>>
+>> Fixes: eb04c35da2c0 ("hw/fsi: Aspeed APB2OPB & On-chip peripheral bus")
+>> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+>> ---
+>>   hw/fsi/aspeed_apb2opb.c | 31 +++++++++++++++++++++++--------
+>>   1 file changed, 23 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/hw/fsi/aspeed_apb2opb.c b/hw/fsi/aspeed_apb2opb.c
+>> index b9d72f3ecf6..5d1e471288b 100644
+>> --- a/hw/fsi/aspeed_apb2opb.c
+>> +++ b/hw/fsi/aspeed_apb2opb.c
+>> @@ -282,13 +282,6 @@ static void fsi_aspeed_apb2opb_realize(DeviceState *dev, Error **errp)
+>>       AspeedAPB2OPBState *s = ASPEED_APB2OPB(dev);
+>>       int i;
+>>
+>> -    /*
+>> -     * TODO: The OPBus model initializes the OPB address space in
+>> -     * the .instance_init handler and this is problematic for test
+>> -     * device-introspect-test. To avoid a memory corruption and a QEMU
+>> -     * crash, qbus_init() should be called from realize(). Something to
+>> -     * improve. Possibly, OPBus could also be removed.
+>> -     */
+> 
+> I think that what this TODO comment is trying to note is that
+> we do the qbus_init() in realize because the implementation
+> of the bus does things in its instance_init that it ought
+> to be deferring to realize. If we fix the bus to do those
+> things in realize instead, we ought to be able to move
+> this qbus_init() to the fsi_aspeed_apb2opb_init function
+> where it more logically belongs.
+Yes, I spent some time trying to understand and untangle
+the issue, but eventually left a TODO comment as it was
+too complex to address at the time.
 
-It's the variable name we're currently using for that meaning
-everywhere in these two devices, though. It might be better
-to keep that cleanup in a separate patch from this one.
+> Cédric, I think you wrote this comment; 
 
--- PMM
+I did.
+
+> what do you think?
+
+If it is now safe to call qbus_init() in fsi_aspeed_apb2opb_init() :
+
+     for (i = 0; i < ASPEED_FSI_NUM; i++) {
+         object_initialize_child(o, "fsi-master[*]", &s->fsi[i],
+                                 TYPE_FSI_MASTER);
+         qbus_init(&s->opb[i], sizeof(s->opb[i]), TYPE_OP_BUS, DEVICE(s),
+                   NULL);
+     }
+
+then, let's do that and remove the comment. If not, I'd rather
+keep the comment.
+
+I don't remember why I thought OPBus could be removed.
+
+Thanks,
+
+C.
+
+
+> 
+>>       for (i = 0; i < ASPEED_FSI_NUM; i++) {
+>>           qbus_init(&s->opb[i], sizeof(s->opb[i]), TYPE_OP_BUS, DEVICE(s),
+>>                     NULL);
+>> @@ -348,15 +341,37 @@ static void fsi_opb_init(Object *o)
+>>   {
+>>       OPBus *opb = OP_BUS(o);
+>>
+>> -    memory_region_init(&opb->mr, 0, TYPE_FSI_OPB, UINT32_MAX);
+>> +    memory_region_init(&opb->mr, o, TYPE_FSI_OPB, UINT32_MAX);
+>> +}
+>> +
+>> +static void fsi_opb_realize(BusState *bus, Error **errp)
+>> +{
+>> +    OPBus *opb = OP_BUS(bus);
+>> +
+>>       address_space_init(&opb->as, &opb->mr, TYPE_FSI_OPB);
+>>   }
+>>
+>> +static void fsi_opb_unrealize(BusState *bus)
+>> +{
+>> +    OPBus *opb = OP_BUS(bus);
+>> +
+>> +    address_space_destroy(&opb->as);
+>> +}
+>> +
+>> +static void fsi_opb_class_init(ObjectClass *klass, const void *data)
+>> +{
+>> +    BusClass *bc = BUS_CLASS(klass);
+>> +
+>> +    bc->realize = fsi_opb_realize;
+>> +    bc->unrealize = fsi_opb_unrealize;
+>> +}
+>> +
+>>   static const TypeInfo opb_info = {
+>>       .name = TYPE_OP_BUS,
+>>       .parent = TYPE_BUS,
+>>       .instance_init = fsi_opb_init,
+>>       .instance_size = sizeof(OPBus),
+>> +    .class_init = fsi_opb_class_init,
+>>   };
+>>
+>>   static void fsi_opb_register_types(void)
+> 
+> thanks
+> -- PMM
+
 
