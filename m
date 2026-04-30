@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51E9DCD13D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:06:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B6BCD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:07:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wITs0-0000xE-AZ; Thu, 30 Apr 2026 12:04:08 -0400
+	id 1wITt1-0003oc-It; Thu, 30 Apr 2026 12:05:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wITrN-0007d1-Np
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 12:03:30 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wITsS-0001pk-RZ
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 12:04:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wITrH-00079p-QA
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 12:03:28 -0400
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wITsQ-0007aj-3f
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 12:04:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777565001;
+ s=mimecast20190719; t=1777565070;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xRYLKOrmE7/oEuDtADR2OmYYnbN1a9jH/1mSe5dCafw=;
- b=At23GtMHrDQZeVwzahr8GA9GCqJQUEhEiuUI82v3kBMfnD1owbMWJHrqONK5A9u/m5TRQw
- 6qyocV+YnXryaciYQrDDbImM5EfTaoWQH6BOG6b9DtacGN1KNhze1JghRMcriYL8ofOSYA
- s0Iyzu1OJSEV5h8CM31k5x0AYIqPPM4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=x0cvoD2oURrpVEeD1ACbJuj3eZot/d2GpctRCJzX2uU=;
+ b=At3wifnvjMln6SLDYKqKl8KMiWiqQlbmrt1j7ytwGugfAzSSaAp1tR9C6SFN44qvj2Zku9
+ 5iqPtFpNQ5/I8cC9ulvQkRoeO3u5gg8BewIfCKVxfPXN/JbvWCa66Hz65LRbUj/mGjJ38O
+ 7uRXP/kx5ceLqdpr1O4yNGYm6ZDgq84=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-364-ysVl5qMaMWKfXlaZvHY3Jg-1; Thu,
- 30 Apr 2026 12:03:16 -0400
-X-MC-Unique: ysVl5qMaMWKfXlaZvHY3Jg-1
-X-Mimecast-MFC-AGG-ID: ysVl5qMaMWKfXlaZvHY3Jg_1777564995
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-TnTjpwHCNwyPXAWb9vQxsg-1; Thu,
+ 30 Apr 2026 12:03:43 -0400
+X-MC-Unique: TnTjpwHCNwyPXAWb9vQxsg-1
+X-Mimecast-MFC-AGG-ID: TnTjpwHCNwyPXAWb9vQxsg_1777565011
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 312E519560B4; Thu, 30 Apr 2026 16:03:15 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A0B7518002CA; Thu, 30 Apr 2026 16:03:30 +0000 (UTC)
 Received: from gondolin.redhat.com (unknown [10.44.50.47])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1C31D18001ED; Thu, 30 Apr 2026 16:03:12 +0000 (UTC)
+ id 75B091800446; Thu, 30 Apr 2026 16:03:28 +0000 (UTC)
 From: Cornelia Huck <cohuck@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Eric Farman <farman@linux.ibm.com>,
+Cc: qemu-s390x@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Matthew Rosato <mjrosato@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Cornelia Huck <cohuck@redhat.com>
-Subject: [PULL v2 01/11] target/s390x/kvm: Simplify the async pfault handling
- code
-Date: Thu, 30 Apr 2026 18:02:57 +0200
-Message-ID: <20260430160307.634093-2-cohuck@redhat.com>
+Subject: [PULL v2 08/11] target/s390x: Prefer MO_128 definition over magic
+ value
+Date: Thu, 30 Apr 2026 18:03:04 +0200
+Message-ID: <20260430160307.634093-9-cohuck@redhat.com>
 In-Reply-To: <20260430160307.634093-1-cohuck@redhat.com>
 References: <20260430160307.634093-1-cohuck@redhat.com>
 MIME-Version: 1.0
-Content-type: text/plain
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
@@ -86,131 +87,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Since commit 126e7f78036 ("kvm: require KVM_CAP_IOEVENTFD and
-KVM_CAP_IOEVENTFD_ANY_LENGTH") we require at least kernel v4.4 to
-be able to use KVM. KVM_CAP_ASYNC_PF is available in the kernel
-since v3.15 and KVM_SYNC_PFAULT is available since kernel v3.18,
-so we can assume now that they are available in all supported
-kernels. Thus simplify the code a little bit by removing the
-checks for these features.
+The MO_128 definition was not existing when commit 6d841663be8
+("s390x/tcg: Implement VECTOR GATHER ELEMENT") introduced the
+ES_128 definition. It was added 2 years later in commit 4b473e0c60d
+("tcg: Expand MO_SIZE to 3 bits"). Since it is now available,
+replace the magic '4' by the more explicit 'MO_128'.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Message-ID: <20260317134531.460141-1-thuth@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-ID: <20260415220358.93063-1-philmd@linaro.org>
 Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 ---
- target/s390x/kvm/kvm.c | 52 +++++++++---------------------------------
- 1 file changed, 11 insertions(+), 41 deletions(-)
+ target/s390x/tcg/translate_vx.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 54d28e37d4dd..133e8c12fd4d 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -140,7 +140,6 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
-     KVM_CAP_LAST_INFO
- };
+diff --git a/target/s390x/tcg/translate_vx.c.inc b/target/s390x/tcg/translate_vx.c.inc
+index b53e9e526391..447641df25c0 100644
+--- a/target/s390x/tcg/translate_vx.c.inc
++++ b/target/s390x/tcg/translate_vx.c.inc
+@@ -50,7 +50,7 @@
+ #define ES_16   MO_16
+ #define ES_32   MO_32
+ #define ES_64   MO_64
+-#define ES_128  4
++#define ES_128  MO_128
  
--static int cap_async_pf;
- static int cap_mem_op;
- static int cap_mem_op_extension;
- static int cap_s390_irq;
-@@ -333,6 +332,7 @@ int kvm_arch_get_default_type(MachineState *ms)
- int kvm_arch_init(MachineState *ms, KVMState *s)
- {
-     int required_caps[] = {
-+        KVM_CAP_ASYNC_PF,
-         KVM_CAP_DEVICE_CTRL,
-         KVM_CAP_SYNC_REGS,
-     };
-@@ -340,7 +340,7 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-     for (int i = 0; i < ARRAY_SIZE(required_caps); i++) {
-         if (!kvm_check_extension(s, required_caps[i])) {
-             error_report("KVM is missing capability #%d - "
--                         "please use kernel 3.15 or newer", required_caps[i]);
-+                         "please use kernel 4.4 or newer", required_caps[i]);
-             return -1;
-         }
-     }
-@@ -354,7 +354,6 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
-         return -1;
-     }
- 
--    cap_async_pf = kvm_check_extension(s, KVM_CAP_ASYNC_PF);
-     cap_mem_op = kvm_check_extension(s, KVM_CAP_S390_MEM_OP);
-     cap_mem_op_extension = kvm_check_extension(s, KVM_CAP_S390_MEM_OP_EXTENSION);
-     mem_op_storage_key_support = cap_mem_op_extension > 0;
-@@ -466,7 +465,8 @@ static int can_sync_regs(CPUState *cs, int regs)
- }
- 
- #define KVM_SYNC_REQUIRED_REGS (KVM_SYNC_GPRS | KVM_SYNC_ACRS | \
--                                KVM_SYNC_CRS | KVM_SYNC_PREFIX)
-+                                KVM_SYNC_CRS | KVM_SYNC_PREFIX | \
-+                                KVM_SYNC_PFAULT)
- 
- int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
- {
-@@ -550,25 +550,10 @@ int kvm_arch_put_registers(CPUState *cs, KvmPutState level, Error **errp)
-     }
- 
-     /* pfault parameters */
--    if (can_sync_regs(cs, KVM_SYNC_PFAULT)) {
--        cs->kvm_run->s.regs.pft = env->pfault_token;
--        cs->kvm_run->s.regs.pfs = env->pfault_select;
--        cs->kvm_run->s.regs.pfc = env->pfault_compare;
--        cs->kvm_run->kvm_dirty_regs |= KVM_SYNC_PFAULT;
--    } else if (cap_async_pf) {
--        r = kvm_set_one_reg(cs, KVM_REG_S390_PFTOKEN, &env->pfault_token);
--        if (r < 0) {
--            return r;
--        }
--        r = kvm_set_one_reg(cs, KVM_REG_S390_PFCOMPARE, &env->pfault_compare);
--        if (r < 0) {
--            return r;
--        }
--        r = kvm_set_one_reg(cs, KVM_REG_S390_PFSELECT, &env->pfault_select);
--        if (r < 0) {
--            return r;
--        }
--    }
-+    cs->kvm_run->s.regs.pft = env->pfault_token;
-+    cs->kvm_run->s.regs.pfs = env->pfault_select;
-+    cs->kvm_run->s.regs.pfc = env->pfault_compare;
-+    cs->kvm_run->kvm_dirty_regs |= KVM_SYNC_PFAULT;
- 
-     if (can_sync_regs(cs, KVM_SYNC_GSCB)) {
-         memcpy(cs->kvm_run->s.regs.gscb, env->gscb, 32);
-@@ -673,24 +658,9 @@ int kvm_arch_get_registers(CPUState *cs, Error **errp)
-     }
- 
-     /* pfault parameters */
--    if (can_sync_regs(cs, KVM_SYNC_PFAULT)) {
--        env->pfault_token = cs->kvm_run->s.regs.pft;
--        env->pfault_select = cs->kvm_run->s.regs.pfs;
--        env->pfault_compare = cs->kvm_run->s.regs.pfc;
--    } else if (cap_async_pf) {
--        r = kvm_get_one_reg(cs, KVM_REG_S390_PFTOKEN, &env->pfault_token);
--        if (r < 0) {
--            return r;
--        }
--        r = kvm_get_one_reg(cs, KVM_REG_S390_PFCOMPARE, &env->pfault_compare);
--        if (r < 0) {
--            return r;
--        }
--        r = kvm_get_one_reg(cs, KVM_REG_S390_PFSELECT, &env->pfault_select);
--        if (r < 0) {
--            return r;
--        }
--    }
-+    env->pfault_token = cs->kvm_run->s.regs.pft;
-+    env->pfault_select = cs->kvm_run->s.regs.pfs;
-+    env->pfault_compare = cs->kvm_run->s.regs.pfc;
- 
-     if (can_sync_regs(cs, KVM_SYNC_DIAG318)) {
-         env->diag318_info = cs->kvm_run->s.regs.diag318;
+ /* Floating-Point Format */
+ #define FPF_SHORT       2
 -- 
 2.53.0
 
