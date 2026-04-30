@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18B4AFF8875
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 14:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D64DFF8875
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 14:39:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wISXL-0002Bp-RW; Thu, 30 Apr 2026 10:38:43 -0400
+	id 1wISXw-0002Ve-Bd; Thu, 30 Apr 2026 10:39:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wISXJ-000268-Ou
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 10:38:42 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wISXo-0002Sj-Fi
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 10:39:12 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wISXH-0002o1-M2
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 10:38:41 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-43d73422431so906748f8f.2
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 07:38:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wISXl-000385-8m
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 10:39:11 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-488b3f8fa2bso21055205e9.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 07:39:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777559918; x=1778164718; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777559947; x=1778164747; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Pt/6Tssxcg3GQ/+W+7CLqtasUkOu/tSuW4Ia5egDNiY=;
- b=whQZWJhOQtGdfxiXgFw9TrMxJ3NbY2ql270j8LtQYNh0eUEsKZY49M91fM8OnoLagS
- xiSrOl4QTboe1cezosLI4dGMU96uZ5JPEoQOje2YD7fv6TbeGDNos3d02fKlIdYLkBMO
- YgHbICbu8H3IFWJHlz2UVgskhQvPdqIzYRPvKMgLGET7o3sjJd2NpY93R/rTMmMsc9YW
- OzgLGZidyPBbA720exeHNUWBfw93rUGVzlu1g6KhIUet3nms5SGwbIkb5WvaWGZYGHV1
- N3KJvhnoUSJZzwOgaFPhahwuNKsGAS/hg8Fv8QIUb2ZPgmAR8pH1JxA6r/h/iq+1igCN
- gEIw==
+ bh=OjMn/mb8ojGsmuC+TVNzUwCgCzyFSL24LMWiHkmQcS0=;
+ b=tg2xwsrtod2P81CKu7/BgkJqhICzI0r7TlSVrPn9Z3tFTnia1PmwFaNoqiVfVqYKoN
+ XP2V3mLP5/kzwhFxZws6QSMmlv6scGpE2ISZ5gcYTfFsEasT0xEO84lvI1A2abmPDnjo
+ fRq6IIwhFBvi1TZWODcP3Mj+reRm0WZeG43ku7ROyq1mDlhoBMbwY7JD9UtH9cenDum9
+ TqU2F6USAHf7nd+J4vpxZGYWPKtXhqjOvoD5d5/DPoLU/48goK5rJDtcUKzBs8f05ZhI
+ Ny8aYNumpb+9/jpT2JfRUq4QC8jmVVYrFB7avMFyj/+oT88ZimJB66QUD2AX4n+cTiFu
+ XKMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777559918; x=1778164718;
+ d=1e100.net; s=20251104; t=1777559947; x=1778164747;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Pt/6Tssxcg3GQ/+W+7CLqtasUkOu/tSuW4Ia5egDNiY=;
- b=GTLkiNBPpsKh63xzqFTdxKCJNIL3v4Scf1qD9zI2wTqrwxDSgh1BB7D+nBG9u1rYA9
- 6ijNcvUqKXtMCaK+YBA5LTUAklC/JQqGuCf+NLGzUagTn7rWfSa8GZyxcpcZQDnDDBLY
- npXBhEk9itz83cWKfKJTOL3vdadiBj0O4gsYao6ZIkEuL6eWAP2jiMIbUUmv32SHMfqV
- lWkG1CPuLDx2iP9ELBNaaqmGykRzuYN2q+ytc2Mt1q/mcSxdHVICi6VQ9e8YjCAlyZGK
- kzJNSq4kN69mFzRl9l9iZSEd4I0untrksIRE2opfACIDlY9fpSuxOW+SqqojdYPMkCGv
- MRYw==
+ bh=OjMn/mb8ojGsmuC+TVNzUwCgCzyFSL24LMWiHkmQcS0=;
+ b=oaM+6zP/v6OxGzqA7ycUOaCiRBAXJtGUHK+8X8KC+m1JK9KkitDXli63ecLRg439Vq
+ LIpqbHd5hTZsnLUyjUCQ8n1yQur9ftqnNMSrN7ouOwc4zBXi78tgaVV+ybz5y3H0Slf7
+ /QQuArRfaxYx5r6e13RFtKwGnFFIuH8EsXwyupQieq4o9BUezVwjB5pOom3whRX3Dk2c
+ hrW7uiXQsV8fvGDdhRibt2BFHxd84locXFTSs+6FY65282V1zAVBXCpqbWEw6TlMaM1u
+ rwbVuKyT36gemVK4HM1FS9fG3V6gRFlKcA8pJM3uxoviwG/Q3WVYf8X5pIJuDfVFcE1W
+ DiNg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+tBRx/g/X0+tWpxNHVAS+KFZjV0O2PwPNf5CWK+nK5qN64BODZ0ZtjtJRa6G5EmpRgwGB1S0kE67rm@nongnu.org
-X-Gm-Message-State: AOJu0Yx6RgqOsRpbtK6wh+U6GoYUkOuBXjef/kMbax9lg+IaIdi5Mzqu
- PM6+OWaPUuSVqxYw3ByUrtzygrNFqik94CMsBMSwhai/u5MD+xFize6Bb5bEHwXW3Ms=
-X-Gm-Gg: AeBDieuW2m3zgHpc37+VfUs5Jb3fzURxxUdkYT0DZI3nFM/RT9vGFr8llEDm+Q3cKxz
- n4zAaCqIqhgSm+lVYFF5G1tvJ6JAjEj30lZ96As9CaOaAKu+v8CikTp80EOVsHAqCrPHKOSqA5Q
- JDVeSiEbuz8qd215cWqJUbFVGH2LBUaz2RJmff0E44Tjdc1JaNh7WkXD0zgw4omKfJNDBBeGZfO
- +IIBfrL+JRd2ihCHExxIIbtzS1j/vX0ip4noNJ/bxMn1hGf4UXJIss9AJ4uuga0jXvntR038/wk
- qOxu8tzAxns8EuAEJTs0ugwtoPwJoz+F3sO72sxqCyLTF67/KOf4hY205Rz7hKhRszRc+HeWPBq
- /fiahDnmfdm67HxvDnnWCieWuoiou9IhHlKz/lyd3cG7+CftqvDPXBHYu238fZV+AiS6LTvLmxw
- gfuXfgywFLlmGq7wDR1on4mE+ca4nuUOyELNwZwRgqX+X6XHvjxVp5ca2G4aaPVK98lPJw2rrFx
- Z5a
-X-Received: by 2002:a05:6000:1a8f:b0:441:1e41:194 with SMTP id
- ffacd0b85a97d-4493d02c36amr5697052f8f.17.1777559917982; 
- Thu, 30 Apr 2026 07:38:37 -0700 (PDT)
+ AFNElJ/jWsazrVXBsMAJhG5mA84PGQ7750sPNQTuDNJz37SpP3OuErk2LyRmHyi95p0slbo1vvtfFHuL7Ikr@nongnu.org
+X-Gm-Message-State: AOJu0YwB+Z2ZmDnKBv1xDUk4EU0bLR8ueZ8ovD1bwY2/IX4xhB7PrK2i
+ +96pD0x0FS6Qbtprn4u1SMi2E2bMeJyrHDF2mStJzllNlLhjI6y+1kPO7/d1BMx45rk=
+X-Gm-Gg: AeBDievzbQQtAVUWqa1Z2B5nxYZxgP5av5HOqTGxh/xup6RK2XDBrPorEWWbUtLK/WO
+ LFDW902HvekaGzxiuhxxKtLQBlj6xjJ0eFjaUQXPOcwGS4RFFObchyWXZZZMVGq2xBS41sXiqy9
+ UNUH+AhOlHVzNaeBVxLFOv+4K7lzu51Jw+nIutA03MtZc3Faghd+t1z41/oBB1tBKLA7pBm8EWd
+ M5eokd72U0YyOdxDWJqb/17od/25K0Vc68jpeK78QDfjqRyklPTiFZvog5uRZ7hAgJw2m0V0a3o
+ 6DJwdV0FmoSgn/5h1H/wSMJQtMWqE1mNzwVsuwD8bJrlon0DbpUutB9xfX23VjDEFFDd22q9pBW
+ LvGBaxgjbG1BmPEZOCPCY9zMsxexEv6A+nFWC87tpXA7fuQ3uqd8fBiR/GdC6aMDBaeQfsmF6Cf
+ dIAXv1Kc6HRG+Kz/5eLCa8zaLfH5zMh/Jy/XwYk6MwRyX7lumTrTivHbn9xWWibbNk0swvexw21
+ NhU
+X-Received: by 2002:a05:600c:4b1a:b0:488:aa33:dc8f with SMTP id
+ 5b1f17b1804b1-48a85dc37c2mr27192005e9.0.1777559947022; 
+ Thu, 30 Apr 2026 07:39:07 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-447b7217b20sm12950691f8f.22.2026.04.30.07.38.36
+ 5b1f17b1804b1-48a822d4b57sm177135985e9.15.2026.04.30.07.39.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Apr 2026 07:38:37 -0700 (PDT)
-Message-ID: <943120f9-c8a6-43db-b210-a3524c7b4a7e@linaro.org>
-Date: Thu, 30 Apr 2026 16:38:35 +0200
+ Thu, 30 Apr 2026 07:39:06 -0700 (PDT)
+Message-ID: <e5655674-ed63-4f1b-a6ea-28992db38a8f@linaro.org>
+Date: Thu, 30 Apr 2026 16:39:04 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 22/25] target/xtensa/xtensa-semi: Use
- cpu_translate_for_debug()
+Subject: Re: [PATCH v2 23/25] monitor/hmp-cmds: Use cpu_translate_for_debug()
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
@@ -96,20 +95,20 @@ Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
 References: <20260430093810.2762539-1-peter.maydell@linaro.org>
- <20260430093810.2762539-23-peter.maydell@linaro.org>
+ <20260430093810.2762539-24-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260430093810.2762539-23-peter.maydell@linaro.org>
+In-Reply-To: <20260430093810.2762539-24-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,12 +126,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 30/4/26 11:38, Peter Maydell wrote:
 > We want to remove the cpu_get_phys_addr_debug() function; update the
-> xtensa semihosting code to use cpu_translate_for_debug() instead.
+> HMP gva2gpa command implementation to use cpu_translate_for_debug()
+> instead.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   target/xtensa/xtensa-semi.c | 9 +++++++--
->   1 file changed, 7 insertions(+), 2 deletions(-)
+>   monitor/hmp-cmds.c | 7 +++----
+>   1 file changed, 3 insertions(+), 4 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
