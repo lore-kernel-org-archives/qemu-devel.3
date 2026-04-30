@@ -4,101 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38F2CFF8875
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F1CDCCFA13
 	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 14:23:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wISGX-00046A-Ol; Thu, 30 Apr 2026 10:21:21 -0400
+	id 1wISGN-00040B-A9; Thu, 30 Apr 2026 10:21:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIRUy-0004Xr-ES
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:32:12 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ id 1wIRRC-0003fR-Vf
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:28:19 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIRUw-0002GW-S3
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:32:12 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-651c7ddf514so862541d50.1
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 06:32:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777555929; cv=none;
+ id 1wIRRB-00014G-4n
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:28:18 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-651d692e833so897433d50.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 06:28:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777555696; cv=none;
  d=google.com; s=arc-20240605;
- b=WI1oFy551WDRz2ZeCqbncAiaoeFffKN/5oRyjAjlF6mPfj5tT9B67V/Qwar/xmUJYF
- 5KNisKrlea3Haol2dTcTqPot8QULkliO28xlc+OmA1gmVmS8BuuSE5uCFrcZUmgdv8PP
- fOLbsoOW6hHQ8Vqwrrd/y+p9MU+T93aaB7IX8YrBtgckGZ5eH3HGUlMOItmqTuCzvc++
- Yb8bFZd1J4a4M9Pww6xFylwQyyhm+OjunWq0CgFlFwTzmxbFeVW9vVY0AHC6LmGJHhlo
- QRgFgVo9q9XuGzPAV/znbn+ROf41BtUS/mnW74Dq7X3oh0Jek4gI4Ov6YPGSaOiupj+J
- Om7w==
+ b=NHonmFgyDx/j4TH6uEIY60C1DUtrk75Y24bPTw/oU2xiNi7O1VX6GrUjn5MFiWH9Y0
+ qyylx/9dRysMnujh9h7viRi3U1B7QutK9O3ZZgAT48QRPw8mSYjw2jA23Jar/2FIrHMy
+ pdy3Nl2/pQX7lSUO6tUkh65Eif6NTz6FQjGkhqh6UelWrqBAwlAAtodW50+bmWRzgm9m
+ Rxu/qEuIX+10f23DZDmV2+43WMC0GkLI7iOWrzaJsPONg4MMgm3wXrQgOr0uf6cLP+RP
+ U8gPegBl9AgYZM5tMgdgV+MsI6Z07eVC4Ope0h9uTM6qrFbYUn7F2r9ArHz5/vjtD3oy
+ U6VA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=SZsm9sv+cuNmJqNx0VZNyQGE5jjNo8t94F3ekG9P1x4=;
- fh=zxz4leYHlK8liCTg8IjU8MgvAL+aTbMLdpPccU2byLQ=;
- b=G9YhZs+zro056j8f66eb4A0UW//RIIcP5WwQyvWl6f4Qg2sLiPJ5uw9Bs0W6AmUfR6
- X7oZqdyGeFQDEQGfZ+MGRvQl3tw450tQBzLJYzEZ204MC8iKS9IdBtNm/3daYHsjHffN
- fc56rlk7n1K0TB2hXGHsI3hoep7MguHgtHkKfxUmw5WYn7wK8iWRBcN5MRzyUfzUHetU
- ov6IR++FiMy8ZrD31ydfLVAqM1YGYWw2EDLRvPjJmtZHBNlmYFPvUU6yiV6/IJkwuCM0
- iiyYDQq7qR5mPj91VclrAIuLPo2V9EydT2en5dX7c9r8h9s+LuMHaJW+stgTHzgJIbkY
- khUw==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=AkotdRa75/QsnNXDPjSrO6zfePlBt8CR6fWk5G2AGHQ=;
+ fh=TnDbL9mYH20MplIPRJjnJR4NKrcSt7fGISPEXk7FgyM=;
+ b=AJlRVbjO9ZznkzplzEZujy5WkshSz3PE4JqI7j1d5/FaMb42grNDZt8Y3RZgzcC9lv
+ 0d5PRVMkpNW3oh74L4szLcsSIQ5GonIgE6113BLjcRNzepf12LvMi1I4sMDYCFXP1pX+
+ Lbdp9kPRUq/J7VTOT6ch6cu+AP+3Pwmr/xoTTVPtbsOyPguTSoq9CBoqyf84ZeqeHEJ1
+ 3e4cV8dKOSTLpM8N8GiMp9yfdPAMONImHFRLoXB1zQ58KHGHe90BlhpG4BmRMeePxo2G
+ eXiIumOAOoWiwy5RD+GbSnj+q+wVjb3ZQa1MFKTgj0394tphcjOWrHuAr+MM7AwRpcd4
+ GzFQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777555929; x=1778160729; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SZsm9sv+cuNmJqNx0VZNyQGE5jjNo8t94F3ekG9P1x4=;
- b=AztCJw2VoMDCpvodYsYQlVDGQJvfrlehCR0XJki0JfmtlvlJjqYkl6/pmmD3FtNbBP
- wNEZ2KkkjFT0Ano088ZEaCyrhH9b9gh+U7XkF2OUgND4bbqTr6Z4dLQGSaHwY/Iaf9f1
- y1kysyBxrQt3Dj8eiNZTBmJuN0oYTqWzmy/E+2yP6gvdao+vP0ZZnJHd9bgelbL0Il2b
- YGVDxSsTLSj46k2mE/FQU9xQvVDggkTlwz15IhUGoBeG5TYcfLM3RvcBppKZdIlcXhnG
- XwbKOiEZdnokH85qcmDvwT2V/RzMreBEyOXRUjrhD4p1ievLvUzUjsqRnkqPbCcCLMsC
- A/wA==
+ d=linaro.org; s=google; t=1777555696; x=1778160496; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=AkotdRa75/QsnNXDPjSrO6zfePlBt8CR6fWk5G2AGHQ=;
+ b=e5JREhln1ecRZHxyJNcPi7a6wT/+ItT3IJ0lUl3+7Ilrr6YpkeFQ1DLBtl5ku+zpLE
+ 1UPvpA0usD7YQ8YlCdJtP3vtEOdnupDRER0jtZql+78ajfclS3RflGaW0e/IId1VVd6y
+ D3NozpkxzVcR7rB9/coB468ZI8lScU27Y4OBF3GC+gIa/kv8qsuOEjtPwyMhf8jdioCh
+ VubaAqvKKsXzLRuGJmfxxyVNR4c6iZ1UaOgbSU/RBR7/VO7qR8eWQ2DfhDupftcloDRl
+ wV2tp/g0ZDVpsrByj1Fklab+f+gtI+NR3KVkFMa8bgGa3GVcqEBriqdTMpz9PXx6vaAF
+ b9ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777555929; x=1778160729;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=SZsm9sv+cuNmJqNx0VZNyQGE5jjNo8t94F3ekG9P1x4=;
- b=f0pWaKssnKAZjSC2st722OnVzPiPjsC6KryTyK5TAq5vqz/waFDzATsKHgirZaMZeb
- PPCMeFtBoPo8MJGvcolOTuAk6vJWhhphAw7iLU6SRCIbZTL0AqeFR6nkIpQtFNzCyJjG
- 9C6FswWG5qmOqHTUYRFubSRxWcXzpoaiR1vMz34JpikevKkB3hb5uM180SwnGf6LjlJt
- wSmlokLDR3JzhJ2lkLg5lfdji3HODJal7rdmCrmpjKGzqO/gDFtkbeCPYHzq+1yrGS9K
- JFHztucWupKbY/dzA6bUU3m+3SonYAgQnW6zd88R43gB6Vdy9+z24LUGKPEtTR8H+rFl
- 2f+A==
-X-Gm-Message-State: AOJu0YxEKjUl/S0nGT1viTNuAeK2cMSXD1zNM9ABX+UJVVDVTIpw42tn
- mOFZFblgquFk4FN6lROFxrQXAz83TV1NxsHDoopLL1N3eJXw5lw14OXosobTEjOHozSLfwdej+g
- eOnq0Fe2aUrjax9MU6wSZaYffS04ycdnnMQqfmMpwNQ==
-X-Gm-Gg: AeBDietq7mgZKjpE12bF/u1XWeL9zNjk/LNK5Dj0SbAv6XkO1t2T9O6N2XpMNGbfJa0
- xRgD9YspgkdkLQ72LUItbcbhlz8SFDFT5sh7l6vQgK3MpAW4arA5n3x4LX9HRFoDPgkB09K7ESl
- WcMxCvD7PpliR/LluUq4Vhxz07o9RZWU8xulzyzPg5s7MkTwwVn9+dSBYTM05t+1Yc4ndL5J1oJ
- PV1ehc9c8L9WlOgGp6LT3CckEfDdnSQ8YNiM+jzMYkdGfIevQ5U3ZjbqajdIcFI5xvC+rPJWSZb
- HFv9xirgRNFzEc7o9qQPn4nnN9QHRh1XGFF27Cv+IoQ0mZcfvIi3G2qPnjfYwnkhHAt/cL6tK2R
- n+w==
-X-Received: by 2002:a05:690e:140d:b0:65c:2a49:883c with SMTP id
- 956f58d0204a3-65c2a499a16mr170676d50.29.1777555928737; Thu, 30 Apr 2026
- 06:32:08 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777555696; x=1778160496;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AkotdRa75/QsnNXDPjSrO6zfePlBt8CR6fWk5G2AGHQ=;
+ b=ArdCCw4gdH3Mbo3NQWdmoaeKTCL7Efx/jhYCugPxHKupAoLBhW13e5gYu+ukajCAng
+ dgYi2UgIATdtUrLtN1VVW9Mo6cnnDvzm2ZwrbaauXy8qqog8PQ0Uqv6nooaMIhZtgpzJ
+ dRNx2BaeyZA4TmcmkNHrl/DEI8DkoHY0gI+5+BdkDMRoPZcgItxX9BhDW3DE7F0N6bjx
+ rSwXjORlChkCjVtSPmKPEMq8eMXrIjTq7NJsjkt7/6GAATAkSt/ZIyA0pHfx1Pxuon+R
+ eQH3yXIeJapS8aQZqlI3fmazg1w4WAQapI0iqswwAh0xr154qZjAvuAqzQ+pxgITqYDB
+ VHUg==
+X-Gm-Message-State: AOJu0Yw5CXzU7Mw5jpk2kRoqxHA3vOYMMY53uFY8AfGRYseqJZuySLWx
+ h/Oiq0Zog9tnLHbCbFg26j9ZNzjtSJobHciZ++0lG0LU3GwA9T73CbE2uuEVITbqlwrBaUF5Xv1
+ BtmGb/ikGJTTZEuxPNMdd2n29clvaAjM5NaezMNz1mg==
+X-Gm-Gg: AeBDieuNT9LhgcSWK0YXDAeKtEJ0zUZCJtoBfZmqb7UcxnAS9boQ5kUUUiohZIusUHM
+ +wLXSKnotgYsJsqVu4a9kzfSdAc3vhBNjFE8KdSmMexfvji68EGcC0ha+tgiFQENdBTZvwo3jVy
+ 98Hloj5Eg4+NuatQFpQ1g77j5xIeHX858NizrCSfAKRTtCAhfCejoD0UDf4ROp2apjlUyf0kMwr
+ C8uje0KGMPaPB+POUN47i9xRClDO87s9Nn040zEQgxr2WDeLnJFuzIGuzoEJiGHRqWYJGHrVeoq
+ /+6BvRif/dWJgUEpiehKRTZip9+lfwWqaLdpr3SQ912O9U61sAEtGy1KRDhkng1nbaWCMYfK3aO
+ KGw==
+X-Received: by 2002:a05:690e:140f:b0:653:c9e:306 with SMTP id
+ 956f58d0204a3-65c18cecb05mr2089666d50.20.1777555695666; Thu, 30 Apr 2026
+ 06:28:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260309152617.1611566-1-peter.maydell@linaro.org>
- <87fr69ge53.fsf@draig.linaro.org>
- <CAFEAcA-JEtwT_AkKHQCOgvRjkAwcO3rAZjv7_4rdpkyQHEQGVw@mail.gmail.com>
- <87bjf0egr8.fsf@draig.linaro.org>
-In-Reply-To: <87bjf0egr8.fsf@draig.linaro.org>
+References: <20260429003130.15164-1-farosas@suse.de>
+ <20260429003130.15164-2-farosas@suse.de>
+In-Reply-To: <20260429003130.15164-2-farosas@suse.de>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 Apr 2026 14:31:56 +0100
-X-Gm-Features: AVHnY4K6Uu8L7RTbG4J4nMclQ457gfN7B-lKCoa2O24wiMeXTYd61JvBkS89tw0
-Message-ID: <CAFEAcA_RGBNmOw_Xx-Z3_DVTG75wAc6diyWV0n__XxObEUXBEA@mail.gmail.com>
-Subject: Re: [PATCH] docs/devel/decodetree: Fix formatting in "field examples"
- table
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Date: Thu, 30 Apr 2026 14:28:02 +0100
+X-Gm-Features: AVHnY4Ka6TrjVFLvVXcjeOH8DrPRN51oksEknAA94skS1-7E1eqKgtosPMSgvA0
+Message-ID: <CAFEAcA_5hpKE3t07+NqjXWnhwAiRCBugt1DirJ+2-bq4r657jg@mail.gmail.com>
+Subject: Re: [PATCH v1 1/3] tests/qtest/libqtest: Replace QTEST_TRACE with
+ QTEST_QEMU_ARGS
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,39 +117,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 30 Apr 2026 at 14:10, Alex Benn=C3=A9e <alex.bennee@linaro.org> wro=
-te:
+On Wed, 29 Apr 2026 at 01:32, Fabiano Rosas <farosas@suse.de> wrote:
 >
-> Peter Maydell <peter.maydell@linaro.org> writes:
+> The QTEST_TRACE environment variable allows for any QEMU command line
+> option to be passed if used like so:
 >
-> > On Mon, 9 Mar 2026 at 16:29, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
-wrote:
-> >>
-> >> Peter Maydell <peter.maydell@linaro.org> writes:
-> >>
-> >> > The rST syntax for a table uses ASCII art to draw the cell
-> >> > boundaries; then inside each cell the text is treated as a body
-> >> > element, so it is rendered the same way as text at the top level of =
-a
-> >> > document.
-> >> >
-> >> > The "field examples" table was assuming a "literal document" format
-> >> > for its cell bodies; this meant that the single line cells were bein=
-g
-> >> > rendered in plain text, not a fixed width font, and the multi line
-> >> > cells were rendered as definition-lists because of their "second and
-> >> > subsequent lines are indented" layout.
-> >> >
-> >> > Fix this by consistently using inline-code markup for the left colum=
-n
-> >> > and literal blocks for the right column.  (We want to be consistent
-> >> > within each column because a literal block renders differently to
-> >> > inline-code, with a green background.)
-
+> export QTEST_TRACE="-trace tracepoint -more -opts -here"
 >
-> Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Formalize that usage by accepting a new QTEST_QEMU_ARGS
+> variable. Since the QTEST_TRACE now becomes redundant, remove its
+> usage.
+>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  tests/qtest/libqtest.c | 11 +++++------
+>  1 file changed, 5 insertions(+), 6 deletions(-)
+>
+> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+> index 051faf31e1..a580d75179 100644
+> --- a/tests/qtest/libqtest.c
+> +++ b/tests/qtest/libqtest.c
+> @@ -454,11 +454,9 @@ gchar *qtest_qemu_args(const char *extra_args)
+>  {
+>      g_autofree gchar *socket_path = qtest_socket_path("sock");
+>      g_autofree gchar *qmp_socket_path = qtest_socket_path("qmp");
+> -    const char *trace = g_getenv("QTEST_TRACE");
+> -    g_autofree char *tracearg = trace ? g_strdup_printf("-trace %s ", trace) :
+> -                                        g_strdup("");
+> +    const char *args_from_env = g_getenv("QTEST_QEMU_ARGS");
+> +
+>      gchar *args = g_strdup_printf(
+> -                      "%s"
+>                        "-qtest unix:%s "
+>                        "-qtest-log %s "
+>                        "-chardev socket,path=%s,id=char0 "
+> @@ -466,16 +464,17 @@ gchar *qtest_qemu_args(const char *extra_args)
+>                        "-display none "
+>                        "-audio none "
+>                        "%s"
+> +                      "%s "
+>                        "%s"
+>                        " -accel qtest",
+>
+> -                      tracearg,
+>                        socket_path,
+>                        getenv("QTEST_LOG") ? DEV_STDERR : DEV_NULL,
+>                        qmp_socket_path,
+>                        can_exit_with_parent() ?
+>                        "-run-with exit-with-parent=on " : "",
+> -                      extra_args ?: "");
+> +                      extra_args ?: "",
+> +                      args_from_env ?: "");
 
-Thanks; I'll take this patch via target-arm.next.
+Maybe we should have all those "%s" consistently be "%s "
+(and drop the trailing space in the "-run-with exit-with-parent=on "
+string and the leading one in " -accel qtest")?
 
+Sometimes we might get an extra space we don't technically
+need in the command line, but on the other hand we would be able
+to look at the format string and see at a glance that it
+definitely doesn't potentially run one argument into the next
+without having to cross-check all the %s with the arguments,
+and the arguments would consistently always be just strings
+with no requirement to bring along a leading or trailing space.
+
+But either way
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+
+thanks
 -- PMM
 
