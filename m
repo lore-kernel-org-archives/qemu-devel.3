@@ -4,98 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33340FF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:51:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E1F4FF8873
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:08:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIUbA-0006He-PV; Thu, 30 Apr 2026 12:50:48 -0400
+	id 1wIUrG-0001F4-ME; Thu, 30 Apr 2026 13:07:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIUb7-0006Gr-GJ; Thu, 30 Apr 2026 12:50:46 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wIUrE-0001Dk-KC
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:07:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIUb3-0003GT-Ts; Thu, 30 Apr 2026 12:50:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777567748; bh=8gxqLapNuGKYCqdFCNVrIXi6aQnkwhuoXLKn3wUXMU8=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Fv5uQUoZq9UFNcQWNN3uL7A1IDdGzpK+dzNCBa15LSyUT0gJRMFipabk2sSgeWiny
- I9TrzGoqq7hphT0OcfpubiPqDOKMLtDx10PSPEHv0aIaZLYSJuwgnFQNtPgIhTmVM6
- n+5rPzbsH+8vWisRK/7x8W8l4WGuXcBDgehD54zziA12pTgEho8+7ezAxJrgDt+GoU
- vgprb1nl35jRW40cyhqS86FX0TzTa+h86AjiRLiFpJWxA4q1ujyYPfEP7scpeEUkR+
- u19leSnE3sgbTWj+fDZ3kH3dGfJn49HcgiNfNqQOW9asXOKErMWugEJ+aWN2tLgvzo
- xz4BNZlVJBrUA==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 3EBFE1A566E;
- Thu, 30 Apr 2026 19:49:08 +0300 (MSK)
-Message-ID: <c51c87a7-e224-4785-8f64-f4c59af0d066@tls.msk.ru>
-Date: Thu, 30 Apr 2026 19:50:38 +0300
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wIUrA-00082t-Vz
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:07:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777568838;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=neqj4Fgl2AnLiL3xT3MAZ7r0NKcfxOW0iMB97X1Jk+Y=;
+ b=MKvG0q7icm8JAvlxNv8UNV0JhFtFGWMFabonx6HjUV1MRA07L5a7zUDqKrygru7UV83RG6
+ SLGkTVDvlS56NUy3pdnGw9y7SEfiewqPlKhIyMfZro2rUaTnCXZACS8JcfgwDGhyHhHGZ7
+ 6yKc1K5dKBHfWCJlltUmEShsO4kV0Qk=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-203-lCVHPJLUPU-Ira2B64bjjg-1; Thu,
+ 30 Apr 2026 13:07:14 -0400
+X-MC-Unique: lCVHPJLUPU-Ira2B64bjjg-1
+X-Mimecast-MFC-AGG-ID: lCVHPJLUPU-Ira2B64bjjg_1777568833
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2DDEE19560B7; Thu, 30 Apr 2026 17:07:13 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.48.62])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 74A2C300019F; Thu, 30 Apr 2026 17:07:09 +0000 (UTC)
+Date: Thu, 30 Apr 2026 18:07:05 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Anton Johansson <anjo@rev.ng>, marcandre.lureau@redhat.com,
+ Paolo Bonzini <pbonzini@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>
+Subject: Re: [PATCH v2 3/7] qom/object: register OBJECT and INTERFACE QOM
+ types before main
+Message-ID: <afOMOcbpEnjzfyj6@redhat.com>
+References: <20260430035626.3511676-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260430035626.3511676-4-pierrick.bouvier@oss.qualcomm.com>
+ <afMA8SCcF9XJ8VUe@redhat.com>
+ <d95d58da-764d-4967-ae93-2cb7418d8c5d@oss.qualcomm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm: Remove hw_error() for the unimplemented
- CM_LMBUSCNT register
-To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-References: <20260420064933.64765-1-thuth@redhat.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260420064933.64765-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d95d58da-764d-4967-ae93-2cb7418d8c5d@oss.qualcomm.com>
+User-Agent: Mutt/2.3.1 (2026-03-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,43 +92,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20.04.2026 09:49, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On Thu, Apr 30, 2026 at 09:03:52AM -0700, Pierrick Bouvier wrote:
+> On 4/30/2026 12:12 AM, Daniel P. Berrangé wrote:
+> > On Wed, Apr 29, 2026 at 08:56:22PM -0700, Pierrick Bouvier wrote:
+> >> Those types are special, as they are the base of all other QOM types. In
+> >> next commit, we'll introduce an extra step in module initialization for
+> >> target-info-* types.
+> >>
+> >> However, those types depend on TYPE_OBJECT, which is only registered
+> >> at MODULE_INIT_QOM step.
+> >>
+> >> To avoid having to introduce another step, and modify all code calling
+> >> module_call_init(MODULE_INIT_QOM), we simply register those base types
+> >> directly in the static constructor, before anything else.
+> >>
+> >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> >> ---
+> >>  qom/object.c | 4 +---
+> >>  1 file changed, 1 insertion(+), 3 deletions(-)
+> >>
+> >> diff --git a/qom/object.c b/qom/object.c
+> >> index f981e270440..a5d268d0722 100644
+> >> --- a/qom/object.c
+> >> +++ b/qom/object.c
+> >> @@ -2839,7 +2839,7 @@ static void object_class_init(ObjectClass *klass, const void *data)
+> >>                                    NULL);
+> >>  }
+> >>  
+> >> -static void register_types(void)
+> >> +static void __attribute__((constructor)) register_types(void)
+> >>  {
+> >>      static const TypeInfo interface_info = {
+> >>          .name = TYPE_INTERFACE,
+> >> @@ -2857,5 +2857,3 @@ static void register_types(void)
+> >>      type_interface = type_register_internal(&interface_info);
+> >>      type_register_internal(&object_info);
+> >>  }
+> >> -
+> >> -type_init(register_types)
+> > 
+> > IMHO this should have been done using the MODULE_INIT_QOM_EARLY
+> > approach that I suggested on v1, rather than special casing both
+> > the base classes and MODULE_INIT_TARGET_INFO
+> >
 > 
-> When writing to this register, QEMU currently aborts:
-> 
->   $ echo "readl 0x10000018" | ./qemu-system-arm -audiodev none,id=snd0 \
->      -M integratorcp,accel=qtest,audiodev=snd0 -display none -qtest stdio
->   [I 0.000000] OPENED
->   [R +0.001907] readl 0x10000018
->   qemu: hardware error: integratorcm_read: CM_LMBUSCNT
->   [...]
->   Aborted                    (core dumped)
-> 
-> This is bad, a guest should ideally never be able to kill QEMU like this.
-> 
-> Now, according to the "Intergrator/CP User Guide" from:
-> 
->   https://developer.arm.com/documentation/dui0159/b/porting-integrator-ap-and-im-pd1/registers
-> 
->   "The Integrator/AP CM_LMBUSCNT has been removed."
-> 
-> That means this register does not seem to be implemented on real CP boards
-> at all, only for older AP boards. Thus it should be fine if we simply
-> ignore this register in QEMU and handle it like all other unimplemented
-> registers in the "default" handler of the case statement.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3407
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> I'm ok to follow your approach if you really prefer it.
+> However, can you specify what should be the semantic to put in comment
+> for it? I have trouble finding to explain what is early vs non early,
+> while it's clear for me what is TARGET_INFO vs REST_OF_QOM.
 
-Not sure how important it is, but from the bug report it seems this is
-a real issue which triggers for real use cases, so I'm picking this one
-up for qemu stable series.  Please let me know if I shouldn't.
+I don't think we need to set our strong rules. It is just an early
+startup hook to be used by classes which are a dependency of other
+initialization code.  Conceptually this is similar to what we did
+in system/vl.c, where we have various stages for creating -object
+args. What goes in each stage is simply determined by a functional
+need at the point in time.
 
-Thanks,
+> As well, adding a INIT_QOM_EARLY implies we need to call it in all
+> locations where we already call INIT_QOM for future-proofing, which
+> seems very redundant. Should we had it or not?
 
-/mjt
+Yep, that's true, but not the end of the world imho.
+
+Ultimately an solution is a bit of a hack. Long term what we need
+to do is follow glib's approach from GType and have "just in time"
+initialization on first use which will make everything "just work"
+without having to think about ordering. I didn't want to suggest
+that now though, as it has potential to be a can of worms.
+
 
