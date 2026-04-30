@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 921E1FF886F
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 07:15:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C98CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 07:15:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wILbP-0005NI-MJ; Thu, 30 Apr 2026 03:14:27 -0400
+	id 1wILbe-0005sS-U9; Thu, 30 Apr 2026 03:14:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wILao-00058f-G2
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:13:52 -0400
+ id 1wILbP-0005O7-Ll
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:14:27 -0400
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1wILal-0008G4-75
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:13:48 -0400
+ id 1wILbM-0008U6-PK
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:14:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1777533227; x=1809069227;
+ t=1777533265; x=1809069265;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=WhVGnhbo+Pqtx83Hy48OkP5Wl8zor8CPU++Q6Tws2aA=;
- b=lOojp8KIsxZnw7Gd4ASdFauVJ/E1j2+8BpE7QMQb5QQ1nuRTR/SNHkFz
- vpqObFuSyQqGKVz4xVk2iceFgWKbcU0agFCERh9ycLH7G+SQ4fXcQyVyZ
- 9C5kM6og1mulMsBtF1wbzQ1GUT/h0B3cJbrY4aAhAIIKyf9y2zQwSZ17x
- 22K1pHgmPoMKqWqvAMUx+5WYK63XslkMwFilpGF55KRn8DCjyCI0lQmcx
- BKOFFmaiX3xWLtGBOcrluFI7yGU0rAbTFW9ZN+EzpLLA3aifLDS1QlReR
- XEiWLDs6Hfd+UtavGswDODS/9DKahxNM1qMP9D1EKdY7MxnbIiCtAEyxy g==;
-X-CSE-ConnectionGUID: bJ3nY/vyRyS78sfIoaOzXQ==
-X-CSE-MsgGUID: M1y169s0SiW195TSifr4Zw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11771"; a="81051592"
-X-IronPort-AV: E=Sophos;i="6.23,207,1770624000"; d="scan'208";a="81051592"
+ bh=dGH7AKNPye7pa21NQqS6gyCl3SsbmtcntGG+WP23ozw=;
+ b=Khn6M+rR8Xko+CQYx2egD53409mIanjwLI3Z91K9UrYtktM40XGQlDAC
+ ZliZhNTbf7Jnvz39UFUapzpQtuxiHfMHCn9worRzx4TcN8UhqvDLcdNCL
+ bO6OtlOc5ksyIJ15SabFQPUHLuWdZIo4uf1oATebFK3WfXP6saKvJqSKA
+ Y1HOBLmsN1+AD6FJMaWMJ8MOn0tBn9Nwdv0HrPcZaHAyv9fq2lTet1qcD
+ ow80s/B5U59DWFO0NdzrQ32AGrN2+X9DxZ9ng9cLkFV2UxBZJpfmmw2wz
+ FZneEeucROyqnNJD3A5284St8nO8wbL+Kw3IPrIURby6dELfRhqL+Xysi A==;
+X-CSE-ConnectionGUID: DJM0tWwxRu2SpWyFF4k7EQ==
+X-CSE-MsgGUID: pc0vWTCmTwSCPCvsnIGnOQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11771"; a="81051682"
+X-IronPort-AV: E=Sophos;i="6.23,207,1770624000"; d="scan'208";a="81051682"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Apr 2026 00:13:46 -0700
-X-CSE-ConnectionGUID: rcmfRGstQoOfl59joyaDMw==
-X-CSE-MsgGUID: 1syNqg47T1OsEEoBlEd9Ww==
+ 30 Apr 2026 00:14:23 -0700
+X-CSE-ConnectionGUID: URWdG8X0Rc6ikFSQcCI5EQ==
+X-CSE-MsgGUID: XiOcXqVARKanLgSTiKaJZQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,207,1770624000"; d="scan'208";a="234771483"
+X-IronPort-AV: E=Sophos;i="6.23,207,1770624000"; d="scan'208";a="234771602"
 Received: from unknown (HELO gnr-sp-2s-612.sh.intel.com) ([10.112.230.229])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 Apr 2026 00:13:44 -0700
+ 30 Apr 2026 00:14:20 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
@@ -53,10 +53,9 @@ Cc: alex@shazbot.org, clg@redhat.com, eric.auger@redhat.com, mst@redhat.com,
  skolothumtho@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@bull.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  xudong.hao@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v4 04/15] intel_iommu: Create the nested hwpt with
- IOMMU_HWPT_ALLOC_PASID flag
-Date: Thu, 30 Apr 2026 03:13:00 -0400
-Message-ID: <20260430071315.354333-5-zhenzhong.duan@intel.com>
+Subject: [PATCH v4 14/15] intel_iommu_accel: Add pasid bits size check
+Date: Thu, 30 Apr 2026 03:13:10 -0400
+Message-ID: <20260430071315.354333-15-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260430071315.354333-1-zhenzhong.duan@intel.com>
 References: <20260430071315.354333-1-zhenzhong.duan@intel.com>
@@ -86,86 +85,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When pasid is enabled, any hwpt attached to non-PASID or PASID should be
-IOMMU_HWPT_ALLOC_PASID flagged, or else attachment fails.
-
-Change vtd_destroy_old_fs_hwpt() to pass in 'VTDHostIOMMUDevice *' for
-naming consistency.
+If pasid bits size is bigger than host side, host could fail to emulate
+all bindings in guest. Add a check to fail device plug early.
 
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 Tested-by: Xudong Hao <xudong.hao@intel.com>
+Reviewed-by: Clement Mathieu--Drif <clement.mathieu--drif@bull.com>
 ---
- hw/i386/intel_iommu_accel.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ hw/i386/intel_iommu_internal.h | 1 +
+ hw/i386/intel_iommu_accel.c    | 8 ++++++++
+ 2 files changed, 9 insertions(+)
 
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 2c716c5297..519af3fa90 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -196,6 +196,7 @@
+ #define VTD_ECAP_SRS                (1ULL << 31)
+ #define VTD_ECAP_NWFS               (1ULL << 33)
+ #define VTD_ECAP_SET_PSS(x, v)      ((x)->ecap = deposit64((x)->ecap, 35, 5, v))
++#define VTD_ECAP_GET_PSS(ecap)      extract64(ecap, 35, 5)
+ #define VTD_ECAP_PASID              (1ULL << 40)
+ #define VTD_ECAP_PDS                (1ULL << 42)
+ #define VTD_ECAP_SMTS               (1ULL << 43)
 diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-index 3217a2afac..bd1236c070 100644
+index 6377db1fb9..32e2c4633f 100644
 --- a/hw/i386/intel_iommu_accel.c
 +++ b/hw/i386/intel_iommu_accel.c
-@@ -69,11 +69,13 @@ VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
-     return NULL;
- }
+@@ -44,6 +44,7 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+     HostIOMMUDevice *hiod = vtd_hiod->hiod;
+     struct HostIOMMUDeviceCaps *caps = &hiod->caps;
+     struct iommu_hw_info_vtd *vtd = &caps->vendor_caps.vtd;
++    uint8_t hpasid = VTD_ECAP_GET_PSS(vtd->ecap_reg) + 1;
+     PCIBus *bus = vtd_hiod->bus;
+     PCIDevice *pdev = bus->devices[vtd_hiod->devfn];
  
--static bool vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
-+static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
-                                VTDPASIDEntry *pe, uint32_t *fs_hwpt_id,
-                                Error **errp)
- {
-+    HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-     struct iommu_hwpt_vtd_s1 vtd = {};
-+    uint32_t flags = vtd_hiod->iommu_state->pasid ? IOMMU_HWPT_ALLOC_PASID : 0;
+@@ -64,6 +65,13 @@ bool vtd_check_hiod_accel(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+         return false;
+     }
  
-     vtd.flags = (VTD_SM_PASID_ENTRY_SRE(pe) ? IOMMU_VTD_S1_SRE : 0) |
-                 (VTD_SM_PASID_ENTRY_WPE(pe) ? IOMMU_VTD_S1_WPE : 0) |
-@@ -82,13 +84,16 @@ static bool vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
-     vtd.pgtbl_addr = (uint64_t)vtd_pe_get_fspt_base(pe);
- 
-     return iommufd_backend_alloc_hwpt(hiodi->iommufd, hiodi->devid,
--                                      hiodi->hwpt_id, 0, IOMMU_HWPT_DATA_VTD_S1,
--                                      sizeof(vtd), &vtd, fs_hwpt_id, errp);
-+                                      hiodi->hwpt_id, flags,
-+                                      IOMMU_HWPT_DATA_VTD_S1, sizeof(vtd), &vtd,
-+                                      fs_hwpt_id, errp);
- }
- 
--static void vtd_destroy_old_fs_hwpt(HostIOMMUDeviceIOMMUFD *hiodi,
-+static void vtd_destroy_old_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
-                                     VTDAddressSpace *vtd_as)
- {
-+    HostIOMMUDeviceIOMMUFD *hiodi = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
++    /* Only do the check when host device support PASIDs */
++    if (caps->max_pasid_log2 && s->pasid > hpasid) {
++        error_setg(errp, "PASID bits size %d > host IOMMU PASID bits size %d",
++                   s->pasid, hpasid);
++        return false;
++    }
 +
-     if (!vtd_as->fs_hwpt_id) {
-         return;
-     }
-@@ -116,7 +121,7 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
-     }
- 
-     if (vtd_pe_pgtt_is_fst(pe)) {
--        if (!vtd_create_fs_hwpt(hiodi, pe, &hwpt_id, errp)) {
-+        if (!vtd_create_fs_hwpt(vtd_hiod, pe, &hwpt_id, errp)) {
-             return false;
-         }
-     }
-@@ -126,7 +131,7 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
-     trace_vtd_device_attach_hwpt(hiodi->devid, IOMMU_NO_PASID, hwpt_id, ret);
-     if (ret) {
-         /* Destroy old fs_hwpt if it's a replacement */
--        vtd_destroy_old_fs_hwpt(hiodi, vtd_as);
-+        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_as);
-         if (vtd_pe_pgtt_is_fst(pe)) {
-             vtd_as->fs_hwpt_id = hwpt_id;
-         }
-@@ -161,7 +166,7 @@ static bool vtd_device_detach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
-     }
- 
-     if (ret) {
--        vtd_destroy_old_fs_hwpt(hiodi, vtd_as);
-+        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_as);
-     }
- 
-     return ret;
+     if (pci_device_get_iommu_bus_devfn(pdev, &bus, NULL, NULL)) {
+         error_setg(errp, "Host device downstream to a PCI bridge is "
+                    "unsupported when x-flts=on");
 -- 
 2.47.3
 
