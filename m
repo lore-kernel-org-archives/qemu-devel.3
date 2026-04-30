@@ -4,92 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F79CD13DA
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 08:15:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ECA7CCFA13
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 08:18:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIMXy-00052g-0n; Thu, 30 Apr 2026 04:14:58 -0400
+	id 1wIMbV-0006bi-EG; Thu, 30 Apr 2026 04:18:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIMXw-000521-7x
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 04:14:56 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIMXu-000584-Qu
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 04:14:56 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-488ad135063so5104765e9.0
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 01:14:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777536893; x=1778141693; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=FyqKssiYVYgco7mPDSjtbNkf1qh0ZvzsNlxrcp9d+ko=;
- b=NjdpQWh5YAMlB6lk7i4QEqGWyfLy2SO40Rr+PGyKSi1TVlE/cRDGTgwHjhAqszVC8L
- f827rQN7LIYUfA3qFgIZivw5zp/rVY2L8GnWGtnp7WfVl0wXU1DCzowsMT0uwkxTKzwr
- jb73WErkgkCwZmUKoZlYOs8EpcEdQXrltv6icIXdE92r4XS+F88SLIe9ZW27tfcUf4HU
- +JbTKcWtonme06btp/j85TGL2l+D1M0TdP1j26+paPMF5+MhhfJLFdvX2YD81EV99Bci
- 4WPxZVmwG9HRXln3nx59jpdsQsH9mTR1tR90AU9cgr6XSuG37ree74rtU2sXI66RP4Rk
- cTKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777536893; x=1778141693;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FyqKssiYVYgco7mPDSjtbNkf1qh0ZvzsNlxrcp9d+ko=;
- b=tRgGQujQFM2a7zJ4O/HYiPwFzvEn3aeVZZuSJrhw8WhMzkB5GteeLFfo3GIhhuWwzg
- GyBQrXFJJrpIR1GZzO9VuzM75TLA51EcFrDfNxgJQAvhDc8MTH4cL//8Oz28djJUYd/V
- trUJkBYdRQJJl4jpubAazE6JgFH+ticK3wPfwgCfNfwM0ZQjM3NYO8tnwBMbyoh3rojZ
- 4H7Uqw2IaeWEdAmFDJW5iOHv3GodQ5Jawg6sPHS/Yc070Jc5yIjhZlfQWQvfwa47fLx/
- G6GkPLBgNrC1DTZxlLJRTLDNffY95Dqg6xMUjAioK7Lh6CPT+CdeYDS1HY+8+Jce40on
- ANBw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/dcrNffQEVGiT1xo64mhLTteT0IdUO0/F3lIQoyA6E/RveK+xlkmiv4dC4XLSJGIDPC6QXwX86wKuN@nongnu.org
-X-Gm-Message-State: AOJu0Yx0noZy0zKms+5AIext2STkXGzSsqXDaNCXspJLz/m6uC48DMYD
- hfvOohJ11A8dBW35odbKXPZDIaFFsTFsU1+DPOQ7VgMwK2pWzsEpGeea3Td0IMLqB3M=
-X-Gm-Gg: AeBDies2lCOuVzNByHPQ6l152BJ0VoHX3WVuDppkajHhvvqJJ7uiUSqt3S9KB3jbXH2
- f7AwJRVGO9UOo+CK40Mk6NWAVOin/78Cj8Y82K6GWwunaHktwFwusUNp1xSTedjUbijZLim1meX
- jWGyUeM2vFJxUODSzIs1NeRLYDrY3wFfdDhcVcxInleQCVtUH1L39pzaoTuHzQ8lgIbae2Bcl4I
- D/sTQIdpv5zTIruEyStmNzknpXgYh9X/3jvfF7iFjVNdz3y0rUpw+TqTSWVpIKfT+hPZb28YfhZ
- x1UjyiPBhyH4QEMI0BnJcuHwrbtUyReC+G6PcN3Y2TbA5nWCXrR2UHXBJYe0G+hVs5J45OvyTZV
- HPOBRgOR1dD4rsXqys4qE2aGzAUhU3t50z+7yl5GPIjI7Fw3042d72q8KZYwpqNRomt3gY1H0L6
- JGWjImShD451FVAGq9mnzY2zfYH+N1J80uWEvdUm8l2bE/R9GcUwqlCHfca0VMXEppMzN49UzmD
- cx0
-X-Received: by 2002:a05:600c:3d97:b0:488:ab37:b442 with SMTP id
- 5b1f17b1804b1-48a84467813mr29087245e9.28.1777536893109; 
- Thu, 30 Apr 2026 01:14:53 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a7b900af7sm38501545e9.1.2026.04.30.01.14.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Apr 2026 01:14:52 -0700 (PDT)
-Message-ID: <9cf5f63c-4bf9-4927-b2a6-1d0109eb1349@linaro.org>
-Date: Thu, 30 Apr 2026 10:14:51 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wIMbQ-0006aJ-4w
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 04:18:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wIMbM-0006cG-OL
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 04:18:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777537107;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=QJJSKaiXPLYIwBfPXHJsF9JwxzwA6NiKRTZJlrlVC4M=;
+ b=bHLkH/Y2V0MREe11U5f3D/SXCla9x8HuNebBg4MQ/RMtBQssqupAHiqTvbS9JMfIQqYsm1
+ BgeyeccBuV5PV/vbJx36aBPUTSdbz3n0gMb3UJGIzTM/WYNqm2rLMwGbHH+iPjOm47yYR8
+ +R3OY8wlERelMiQdA8NjFLftI3YBQkw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-102-7IcWcTyjNw-r5xAC9P2EsA-1; Thu,
+ 30 Apr 2026 04:18:23 -0400
+X-MC-Unique: 7IcWcTyjNw-r5xAC9P2EsA-1
+X-Mimecast-MFC-AGG-ID: 7IcWcTyjNw-r5xAC9P2EsA_1777537101
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 580D0195608A; Thu, 30 Apr 2026 08:18:21 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.48.62])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 40FC3180045E; Thu, 30 Apr 2026 08:18:17 +0000 (UTC)
+Date: Thu, 30 Apr 2026 09:18:14 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Warner Losh <imp@bsdimp.com>
+Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: Re: [PATCH v2 5/5] bsd-user: Regnerate strace.list
+Message-ID: <afMQRlu2_ONaBxCX@redhat.com>
+References: <20260429-syscall-nr-v2-0-67a8d09dc13e@bsdimp.com>
+ <20260429-syscall-nr-v2-5-67a8d09dc13e@bsdimp.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/9] qom: shorten name of object_set_properties_from_keyval
-Content-Language: en-US
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-References: <20260429210830.594724-1-berrange@redhat.com>
- <20260429210830.594724-5-berrange@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260429210830.594724-5-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260429-syscall-nr-v2-5-67a8d09dc13e@bsdimp.com>
+User-Agent: Mutt/2.3.1 (2026-03-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,20 +86,518 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/4/26 23:08, Daniel P. Berrangé wrote:
-> This matches the convention established by the object_set_props and
-> object_set_propv methods.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   include/qom/object.h    |  6 +++---
->   qom/object_interfaces.c | 12 ++++++------
->   system/qdev-monitor.c   |  4 ++--
->   system/vl.c             |  7 ++++---
->   4 files changed, 15 insertions(+), 14 deletions(-)
+On Wed, Apr 29, 2026 at 08:38:55AM -0600, Warner Losh wrote:
+> Note: I derived this script from one of the FreeBSD system call
+> generation scripts, so it needs to be BSD-2-Clause license, which
+> deviates a bit from the GPL-2.0-or-newer preference, but I think is OK
+> since it's not folded into the qemu binaries themselves (and output of
+> scripts is typically public domain, as is the case here).
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Yes, that's all absolutely fine - when pulling incode from outside,
+or derived from outside, it is required to preserve the license.
+The GPL-2.0-or-newer rule only applies to green field code written
+for QEMU.
+
+It would be fine even if it applied to code that needs to be linked
+into QEMU, since BSD-2-Clause is compatible with GPL-2 in a combined
+work.
+
+>                                                           This script is
+> written in lua, but every FreeBSD installation has a 'flua' binary that
+> can run this script, and it leverages about 7k lines of library and
+> metadata FreeBSD maintains well.
+> 
+> Signed-off-by: Warner Losh <imp@bsdimp.com>
+> ---
+>  bsd-user/freebsd/scripts/strace.lua | 117 ++++++
+>  bsd-user/freebsd/strace.list        | 708 ++++++++++++++++++++++--------------
+>  2 files changed, 556 insertions(+), 269 deletions(-)
+> 
+> diff --git a/bsd-user/freebsd/scripts/strace.lua b/bsd-user/freebsd/scripts/strace.lua
+> new file mode 100755
+> index 0000000000..c89e8e3aeb
+> --- /dev/null
+> +++ b/bsd-user/freebsd/scripts/strace.lua
+> @@ -0,0 +1,117 @@
+
+> +				gen:write(string.format(
+> +				    "{ %d, \"%s\", %s, %s, NULL },\n",
+> +				    v.num, v.arg_alias, fmt, fcn))
+
+Is there a reason to use v.num, instead of the symbolic name that
+was previously used ?  eg something like:
+
+    "{ TARGET_FREEBSD_NR_%s, \"%s\", %s, %s, NULL },\n",
+    v.arg_alias, v.arg_alias, fmt, fcn))
+
+
+> diff --git a/bsd-user/freebsd/strace.list b/bsd-user/freebsd/strace.list
+> index d7f61f480e..2c4176475a 100644
+> --- a/bsd-user/freebsd/strace.list
+> +++ b/bsd-user/freebsd/strace.list
+> @@ -1,273 +1,443 @@
+>  /*
+
+If comparing the first few:
+
+> -{ TARGET_FREEBSD_NR___acl_aclcheck_fd, "__acl_aclcheck_fd", "%s(%d, %d, %#x)", NULL, NULL },
+> -{ TARGET_FREEBSD_NR___acl_aclcheck_file, "__acl_aclcheck_file", "%s(\"%s\", %d, %#x)", NULL, NULL },
+> -{ TARGET_FREEBSD_NR___acl_aclcheck_link, "__acl_aclcheck_link", "%s(\"%s\", %d, %#x)", NULL, NULL },
+
+vs
+
+> +{ 354, "__acl_aclcheck_fd_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 353, "__acl_aclcheck_file_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 428, "__acl_aclcheck_link_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+
+The args pattern has changed significantly. Everything is now
+%#x, where as before it was formatting strings and integers.
+
+Looking further at just the new definitions, essentially
+everything is now %#x.  Is that really intentional ? If
+so just put a note in the commit message about why nearly
+all the args are changing format.
+
+> +{ 352, "__acl_delete_fd_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 351, "__acl_delete_file_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 427, "__acl_delete_link_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 349, "__acl_get_fd_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 347, "__acl_get_file_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 425, "__acl_get_link_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 350, "__acl_set_fd_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 348, "__acl_set_file_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 426, "__acl_set_link_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 515, "__cap_rights_get_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 326, "__getcwd_args", "%s(%s, %#x)", NULL, NULL },
+> +{ 415, "__mac_execve_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 386, "__mac_get_fd_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 387, "__mac_get_file_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 410, "__mac_get_link_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 409, "__mac_get_pid_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 384, "__mac_get_proc_args", "%s(%#x)", NULL, NULL },
+> +{ 388, "__mac_set_fd_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 389, "__mac_set_file_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 411, "__mac_set_link_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 385, "__mac_set_proc_args", "%s(%#x)", NULL, NULL },
+> +{ 574, "__realpathat_args", "%s(%#x, %#x, %s, %#x, %#x)", NULL, NULL },
+> +{ 510, "__semctl_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 374, "__setugid_args", "%s(%#x)", NULL, NULL },
+> +{ 577, "__specialfd_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 202, "__sysctl_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 570, "__sysctlbyname_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 1, "_exit_args", "%s(%#x)", NULL, NULL },
+> +{ 454, "_umtx_op_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 463, "abort2_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 541, "accept4_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 30, "accept_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 33, "access_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 51, "acct_args", "%s(%#x)", NULL, NULL },
+> +{ 140, "adjtime_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 377, "afs3_syscall_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 316, "aio_cancel_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 317, "aio_error_args", "%s(%#x)", NULL, NULL },
+> +{ 465, "aio_fsync_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 543, "aio_mlock_args", "%s(%#x)", NULL, NULL },
+> +{ 255, "aio_read_args", "%s(%#x)", NULL, NULL },
+> +{ 579, "aio_readv_args", "%s(%#x)", NULL, NULL },
+> +{ 314, "aio_return_args", "%s(%#x)", NULL, NULL },
+> +{ 315, "aio_suspend_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 359, "aio_waitcomplete_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 256, "aio_write_args", "%s(%#x)", NULL, NULL },
+> +{ 578, "aio_writev_args", "%s(%#x)", NULL, NULL },
+> +{ 445, "audit_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 453, "auditctl_args", "%s(%#x)", NULL, NULL },
+> +{ 446, "auditon_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 104, "bind_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 538, "bindat_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 17, "break_args", "%s(%s)", NULL, NULL },
+> +{ 516, "cap_enter_args", NULL, NULL, NULL },
+> +{ 537, "cap_fcntls_get_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 536, "cap_fcntls_limit_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 517, "cap_getmode_args", "%s(%#x)", NULL, NULL },
+> +{ 535, "cap_ioctls_get_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 534, "cap_ioctls_limit_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 533, "cap_rights_limit_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 12, "chdir_args", "%s(%#x)", NULL, NULL },
+> +{ 34, "chflags_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 540, "chflagsat_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 15, "chmod_args", "%s(%#x, %o)", NULL, NULL },
+> +{ 16, "chown_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 61, "chroot_args", "%s(%#x)", NULL, NULL },
+> +{ 247, "clock_getcpuclockid2_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 234, "clock_getres_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 232, "clock_gettime_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 244, "clock_nanosleep_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 233, "clock_settime_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 6, "close_args", "%s(%#x)", NULL, NULL },
+> +{ 575, "close_range_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 98, "connect_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 539, "connectat_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 569, "copy_file_range_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 484, "cpuset_args", "%s(%#x)", NULL, NULL },
+> +{ 487, "cpuset_getaffinity_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 561, "cpuset_getdomain_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 486, "cpuset_getid_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 488, "cpuset_setaffinity_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 562, "cpuset_setdomain_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 485, "cpuset_setid_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 90, "dup2_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 41, "dup_args", "%s(%#x)", NULL, NULL },
+> +{ 376, "eaccess_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 59, "execve_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 373, "extattr_delete_fd_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 358, "extattr_delete_file_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 414, "extattr_delete_link_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 372, "extattr_get_fd_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 357, "extattr_get_file_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 413, "extattr_get_link_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 437, "extattr_list_fd_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 438, "extattr_list_file_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 439, "extattr_list_link_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 371, "extattr_set_fd_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 356, "extattr_set_file_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 412, "extattr_set_link_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 355, "extattrctl_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 592, "exterrctl_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 489, "faccessat_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 13, "fchdir_args", "%s(%#x)", NULL, NULL },
+> +{ 35, "fchflags_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 124, "fchmod_args", "%s(%#x, %o)", NULL, NULL },
+> +{ 490, "fchmodat_args", "%s(%#x, %#x, %o, %#x)", NULL, NULL },
+> +{ 123, "fchown_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 491, "fchownat_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 590, "fchroot_args", "%s(%#x)", NULL, NULL },
+> +{ 92, "fcntl_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 550, "fdatasync_args", "%s(%#x)", NULL, NULL },
+> +{ 492, "fexecve_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 241, "ffclock_getcounter_args", "%s(%#x)", NULL, NULL },
+> +{ 243, "ffclock_getestimate_args", "%s(%#x)", NULL, NULL },
+> +{ 242, "ffclock_setestimate_args", "%s(%#x)", NULL, NULL },
+> +{ 565, "fhlink_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 566, "fhlinkat_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 298, "fhopen_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 567, "fhreadlink_args", "%s(%#x, %s, %#x)", NULL, NULL },
+> +{ 553, "fhstat_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 558, "fhstatfs_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 131, "flock_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 2, "fork_args", NULL, NULL, NULL },
+> +{ 192, "fpathconf_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 434, "freebsd10__umtx_lock_args", "%s(%#x)", NULL, NULL },
+> +{ 435, "freebsd10__umtx_unlock_args", "%s(%#x)", NULL, NULL },
+> +{ 42, "freebsd10_pipe_args", NULL, NULL, NULL },
+> +{ 299, "freebsd11_fhstat_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 398, "freebsd11_fhstatfs_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 189, "freebsd11_fstat_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 493, "freebsd11_fstatat_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 397, "freebsd11_fstatfs_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 272, "freebsd11_getdents_args", "%s(%#x, %s, %#x)", NULL, NULL },
+> +{ 196, "freebsd11_getdirentries_args", "%s(%#x, %s, %#x, %#x)", NULL, NULL },
+> +{ 395, "freebsd11_getfsstat_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 363, "freebsd11_kevent_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 190, "freebsd11_lstat_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 14, "freebsd11_mknod_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 498, "freebsd11_mknodat_args", "%s(%#x, %#x, %o, %#x)", NULL, NULL },
+> +{ 279, "freebsd11_nfstat_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 280, "freebsd11_nlstat_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 278, "freebsd11_nstat_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 188, "freebsd11_stat_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 396, "freebsd11_statfs_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 72, "freebsd11_vadvise_args", "%s(%#x)", NULL, NULL },
+> +{ 509, "freebsd12_closefrom_args", "%s(%#x)", NULL, NULL },
+> +{ 482, "freebsd12_shm_open_args", "%s(%#x, %#x, %o)", NULL, NULL },
+> +{ 424, "freebsd13_swapoff_args", "%s(%#x)", NULL, NULL },
+> +{ 79, "freebsd14_getgroups_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 80, "freebsd14_setgroups_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 580, "fspacectl_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 551, "fstat_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 552, "fstatat_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 556, "fstatfs_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 95, "fsync_args", "%s(%#x)", NULL, NULL },
+> +{ 480, "ftruncate_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 568, "funlinkat_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 546, "futimens_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 206, "futimes_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 494, "futimesat_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 451, "getaudit_addr_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 449, "getaudit_args", "%s(%#x)", NULL, NULL },
+> +{ 447, "getauid_args", "%s(%#x)", NULL, NULL },
+> +{ 421, "getcontext_args", "%s(%#x)", NULL, NULL },
+> +{ 554, "getdirentries_args", "%s(%#x, %s, %#x, %#x)", NULL, NULL },
+> +{ 89, "getdtablesize_args", NULL, NULL, NULL },
+> +{ 43, "getegid_args", NULL, NULL, NULL },
+> +{ 25, "geteuid_args", NULL, NULL, NULL },
+> +{ 161, "getfh_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 564, "getfhat_args", "%s(%#x, %s, %#x, %#x)", NULL, NULL },
+> +{ 557, "getfsstat_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 47, "getgid_args", NULL, NULL, NULL },
+> +{ 595, "getgroups_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 86, "getitimer_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 49, "getlogin_args", "%s(%s, %#x)", NULL, NULL },
+> +{ 523, "getloginclass_args", "%s(%s, %#x)", NULL, NULL },
+> +{ 31, "getpeername_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 207, "getpgid_args", "%s(%#x)", NULL, NULL },
+> +{ 81, "getpgrp_args", NULL, NULL, NULL },
+> +{ 20, "getpid_args", NULL, NULL, NULL },
+> +{ 39, "getppid_args", NULL, NULL, NULL },
+> +{ 100, "getpriority_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 563, "getrandom_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 361, "getresgid_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 360, "getresuid_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 194, "getrlimit_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 589, "getrlimitusage_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 117, "getrusage_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 310, "getsid_args", "%s(%#x)", NULL, NULL },
+> +{ 32, "getsockname_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 118, "getsockopt_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 116, "gettimeofday_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 24, "getuid_args", NULL, NULL, NULL },
+> +{ 593, "inotify_add_watch_at_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 594, "inotify_rm_watch_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 54, "ioctl_args", "%s(%#x, %#x, %s)", NULL, NULL },
+> +{ 253, "issetugid_args", NULL, NULL, NULL },
+> +{ 338, "jail_args", "%s(%#x)", NULL, NULL },
+> +{ 436, "jail_attach_args", "%s(%#x)", NULL, NULL },
+> +{ 597, "jail_attach_jd_args", "%s(%#x)", NULL, NULL },
+> +{ 506, "jail_get_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 508, "jail_remove_args", "%s(%#x)", NULL, NULL },
+> +{ 598, "jail_remove_jd_args", "%s(%#x)", NULL, NULL },
+> +{ 507, "jail_set_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 588, "kcmp_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 390, "kenv_args", "%s(%#x, %#x, %s, %#x)", NULL, NULL },
+> +{ 560, "kevent_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 599, "kexec_load_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 37, "kill_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 306, "kldfind_args", "%s(%#x)", NULL, NULL },
+> +{ 309, "kldfirstmod_args", "%s(%#x)", NULL, NULL },
+> +{ 304, "kldload_args", "%s(%#x)", NULL, NULL },
+> +{ 307, "kldnext_args", "%s(%#x)", NULL, NULL },
+> +{ 308, "kldstat_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 337, "kldsym_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 305, "kldunload_args", "%s(%#x)", NULL, NULL },
+> +{ 444, "kldunloadf_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 461, "kmq_notify_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 457, "kmq_open_args", "%s(%#x, %#x, %o, %#x)", NULL, NULL },
+> +{ 458, "kmq_setattr_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 459, "kmq_timedreceive_args", "%s(%#x, %s, %#x, %#x, %#x)", NULL, NULL },
+> +{ 460, "kmq_timedsend_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 462, "kmq_unlink_args", "%s(%#x)", NULL, NULL },
+> +{ 362, "kqueue_args", NULL, NULL, NULL },
+> +{ 583, "kqueuex_args", "%s(%#x)", NULL, NULL },
+> +{ 400, "ksem_close_args", "%s(%#x)", NULL, NULL },
+> +{ 408, "ksem_destroy_args", "%s(%#x)", NULL, NULL },
+> +{ 407, "ksem_getvalue_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 404, "ksem_init_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 405, "ksem_open_args", "%s(%#x, %#x, %#x, %o, %#x)", NULL, NULL },
+> +{ 401, "ksem_post_args", "%s(%#x)", NULL, NULL },
+> +{ 441, "ksem_timedwait_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 403, "ksem_trywait_args", "%s(%#x)", NULL, NULL },
+> +{ 406, "ksem_unlink_args", "%s(%#x)", NULL, NULL },
+> +{ 402, "ksem_wait_args", "%s(%#x)", NULL, NULL },
+> +{ 235, "ktimer_create_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 236, "ktimer_delete_args", "%s(%#x)", NULL, NULL },
+> +{ 239, "ktimer_getoverrun_args", "%s(%#x)", NULL, NULL },
+> +{ 238, "ktimer_gettime_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 237, "ktimer_settime_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 45, "ktrace_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 391, "lchflags_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 274, "lchmod_args", "%s(%#x, %o)", NULL, NULL },
+> +{ 254, "lchown_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 160, "lgetfh_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 9, "link_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 495, "linkat_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 257, "lio_listio_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 106, "listen_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 513, "lpathconf_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 478, "lseek_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 276, "lutimes_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 394, "mac_syscall_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 75, "madvise_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 584, "membarrier_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 78, "mincore_args", "%s(%#x, %#x, %s)", NULL, NULL },
+> +{ 250, "minherit_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 136, "mkdir_args", "%s(%#x, %o)", NULL, NULL },
+> +{ 496, "mkdirat_args", "%s(%#x, %#x, %o)", NULL, NULL },
+> +{ 132, "mkfifo_args", "%s(%#x, %o)", NULL, NULL },
+> +{ 497, "mkfifoat_args", "%s(%#x, %#x, %o)", NULL, NULL },
+> +{ 559, "mknodat_args", "%s(%#x, %#x, %o, %#x)", NULL, NULL },
+> +{ 203, "mlock_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 324, "mlockall_args", "%s(%#x)", NULL, NULL },
+> +{ 477, "mmap_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 303, "modfind_args", "%s(%#x)", NULL, NULL },
+> +{ 302, "modfnext_args", "%s(%#x)", NULL, NULL },
+> +{ 300, "modnext_args", "%s(%#x)", NULL, NULL },
+> +{ 301, "modstat_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 21, "mount_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 74, "mprotect_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 511, "msgctl_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 225, "msgget_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 227, "msgrcv_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 226, "msgsnd_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 170, "msgsys_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 65, "msync_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 204, "munlock_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 325, "munlockall_args", NULL, NULL, NULL },
+> +{ 73, "munmap_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 240, "nanosleep_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 155, "nfssvc_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 154, "nlm_syscall_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 378, "nmount_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 339, "nnpfs_syscall_args", "%s(%#x, %s, %#x, %#x, %#x)", NULL, NULL },
+> +{ 176, "ntp_adjtime_args", "%s(%#x)", NULL, NULL },
+> +{ 248, "ntp_gettime_args", "%s(%#x)", NULL, NULL },
+> +{ 5, "open_args", "%s(%#x, %#x, %o)", NULL, NULL },
+> +{ 499, "openat_args", "%s(%#x, %#x, %#x, %o)", NULL, NULL },
+> +{ 191, "pathconf_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 518, "pdfork_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 520, "pdgetpid_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 519, "pdkill_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 600, "pdrfork_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 601, "pdwait_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 542, "pipe2_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 209, "poll_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 531, "posix_fadvise_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 530, "posix_fallocate_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 504, "posix_openpt_args", "%s(%#x)", NULL, NULL },
+> +{ 545, "ppoll_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 475, "pread_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 289, "preadv_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 544, "procctl_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 44, "profil_args", "%s(%s, %#x, %#x, %#x)", NULL, NULL },
+> +{ 522, "pselect_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 26, "ptrace_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 476, "pwrite_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 290, "pwritev_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 148, "quotactl_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 528, "rctl_add_rule_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 527, "rctl_get_limits_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 525, "rctl_get_racct_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 526, "rctl_get_rules_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 529, "rctl_remove_rule_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 3, "read_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 58, "readlink_args", "%s(%#x, %s, %#x)", NULL, NULL },
+> +{ 500, "readlinkat_args", "%s(%#x, %#x, %s, %#x)", NULL, NULL },
+> +{ 120, "readv_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 55, "reboot_args", "%s(%#x)", NULL, NULL },
+> +{ 29, "recvfrom_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 27, "recvmsg_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 128, "rename_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 602, "renameat2_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 501, "renameat_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 56, "revoke_args", "%s(%#x)", NULL, NULL },
+> +{ 251, "rfork_args", "%s(%#x)", NULL, NULL },
+> +{ 137, "rmdir_args", "%s(%#x)", NULL, NULL },
+> +{ 576, "rpctls_syscall_args", "%s(%#x)", NULL, NULL },
+> +{ 166, "rtprio_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 466, "rtprio_thread_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 332, "sched_get_priority_max_args", "%s(%#x)", NULL, NULL },
+> +{ 333, "sched_get_priority_min_args", "%s(%#x)", NULL, NULL },
+> +{ 581, "sched_getcpu_args", NULL, NULL, NULL },
+> +{ 328, "sched_getparam_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 330, "sched_getscheduler_args", "%s(%#x)", NULL, NULL },
+> +{ 334, "sched_rr_get_interval_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 327, "sched_setparam_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 329, "sched_setscheduler_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 331, "sched_yield_args", NULL, NULL, NULL },
+> +{ 474, "sctp_generic_recvmsg_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 472, "sctp_generic_sendmsg_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 473, "sctp_generic_sendmsg_iov_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 471, "sctp_peeloff_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 93, "select_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 221, "semget_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 222, "semop_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 169, "semsys_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 393, "sendfile_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 28, "sendmsg_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 133, "sendto_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 452, "setaudit_addr_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 450, "setaudit_args", "%s(%#x)", NULL, NULL },
+> +{ 448, "setauid_args", "%s(%#x)", NULL, NULL },
+> +{ 422, "setcontext_args", "%s(%#x)", NULL, NULL },
+> +{ 591, "setcred_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 182, "setegid_args", "%s(%#x)", NULL, NULL },
+> +{ 183, "seteuid_args", "%s(%#x)", NULL, NULL },
+> +{ 175, "setfib_args", "%s(%#x)", NULL, NULL },
+> +{ 181, "setgid_args", "%s(%#x)", NULL, NULL },
+> +{ 596, "setgroups_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 83, "setitimer_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 50, "setlogin_args", "%s(%#x)", NULL, NULL },
+> +{ 524, "setloginclass_args", "%s(%#x)", NULL, NULL },
+> +{ 82, "setpgid_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 96, "setpriority_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 127, "setregid_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 312, "setresgid_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 311, "setresuid_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 126, "setreuid_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 195, "setrlimit_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 147, "setsid_args", NULL, NULL, NULL },
+> +{ 105, "setsockopt_args", "%s(%#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 122, "settimeofday_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 23, "setuid_args", "%s(%#x)", NULL, NULL },
+> +{ 571, "shm_open2_args", "%s(%#x, %#x, %o, %#x, %#x)", NULL, NULL },
+> +{ 572, "shm_rename_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 483, "shm_unlink_args", "%s(%#x)", NULL, NULL },
+> +{ 228, "shmat_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 512, "shmctl_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 230, "shmdt_args", "%s(%#x)", NULL, NULL },
+> +{ 231, "shmget_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 171, "shmsys_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 134, "shutdown_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 416, "sigaction_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 53, "sigaltstack_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 573, "sigfastblock_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 343, "sigpending_args", "%s(%#x)", NULL, NULL },
+> +{ 340, "sigprocmask_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 456, "sigqueue_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 417, "sigreturn_args", "%s(%#x)", NULL, NULL },
+> +{ 341, "sigsuspend_args", "%s(%#x)", NULL, NULL },
+> +{ 345, "sigtimedwait_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 429, "sigwait_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 346, "sigwaitinfo_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 97, "socket_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 135, "socketpair_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 555, "statfs_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 423, "swapcontext_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 582, "swapoff_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 85, "swapon_args", "%s(%#x)", NULL, NULL },
+> +{ 57, "symlink_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 502, "symlinkat_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 36, "sync_args", NULL, NULL, NULL },
+> +{ 165, "sysarch_args", "%s(%#x, %s)", NULL, NULL },
+> +{ 430, "thr_create_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 431, "thr_exit_args", "%s(%#x)", NULL, NULL },
+> +{ 481, "thr_kill2_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 433, "thr_kill_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 455, "thr_new_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 432, "thr_self_args", "%s(%#x)", NULL, NULL },
+> +{ 464, "thr_set_name_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 442, "thr_suspend_args", "%s(%#x)", NULL, NULL },
+> +{ 443, "thr_wake_args", "%s(%#x)", NULL, NULL },
+> +{ 585, "timerfd_create_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 586, "timerfd_gettime_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 587, "timerfd_settime_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 479, "truncate_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 60, "umask_args", "%s(%o)", NULL, NULL },
+> +{ 205, "undelete_args", "%s(%#x)", NULL, NULL },
+> +{ 10, "unlink_args", "%s(%#x)", NULL, NULL },
+> +{ 503, "unlinkat_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 22, "unmount_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 547, "utimensat_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 138, "utimes_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 335, "utrace_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 392, "uuidgen_args", "%s(%#x, %#x)", NULL, NULL },
+> +{ 66, "vfork_args", NULL, NULL, NULL },
+> +{ 7, "wait4_args", "%s(%#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 532, "wait6_args", "%s(%#x, %#x, %#x, %#x, %#x, %#x)", NULL, NULL },
+> +{ 4, "write_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 121, "writev_args", "%s(%#x, %#x, %#x)", NULL, NULL },
+> +{ 321, "yield_args", NULL, NULL, NULL },
+> 
+> -- 
+> 2.52.0
+> 
+
 
