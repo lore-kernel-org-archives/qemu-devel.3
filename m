@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51791CD13D2
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 21:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6BA2CCFA13
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 21:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIYfI-0007A8-LL; Thu, 30 Apr 2026 17:11:20 -0400
+	id 1wIYh9-00083k-Dw; Thu, 30 Apr 2026 17:13:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIYfC-00078u-TU
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 17:11:14 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wIYh5-00082g-OX
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 17:13:13 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIYfB-0003le-3z
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 17:11:14 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4891cd41959so12230415e9.3
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 14:11:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wIYh3-0004Pb-32
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 17:13:11 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-c7973bbc16dso823382a12.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 14:13:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777583471; x=1778188271; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777583587; x=1778188387; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2d8AhPvxOgNXbHHOP+pS9E2glqx8OE+fYauqQN8rph4=;
- b=XO6Ql7qnC53oBswns+XMbaOAqVJ4M1LHfpLp4L/3Xx3KbwsGL+hBhR1bpjJ5QuyxgM
- 8bHa2eKHH16MhZeoGDDOl/obstMqJ/0JpwzHFjc6QgEB5SIf0tSD5HLxNKbeGoCA8Gsi
- cCIWM/E8rUzg5PKixhxOW59HbMbmJK24ulGT1N13cvCfXUp8WjlI2F/4AZvqUa7vzfyi
- xRQbjma3P4C6Y33kzcXUD/1HaMNvFTDgmnZHONxXJzW0TUj82pm+qNMwYUQl1JNJdiGH
- jmBO/sFFpBIvjC0NlPBS5U90eAeeV7PQ2ZA7dBURSuCawwGXGXNzDwfXzukcJLsp9t/D
- iaHg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=m7Nsai2albiqcEfbfQj2W4D9BBX02/q6qOSdrAAUtI0=;
+ b=erhikneK7NHExU6tFZBYb/X+v04kkHiRR9kGWiKMLYQZ41K3I60/SK8/8biYrQVbMb
+ 9nF/G846Q5UgaY0KIjIIFIZq3mH0a15Dj2adVQrwqjwUARVSxdGr9vTKtrbKx6k2WREV
+ qHf0qsI8awcOHBRLS33wx9P/KmMb+0BWzKQbrULmLZC2H6MUfH97mBFloQR1ddf6FfD9
+ 5ob5zkQ63T6F19roDepchvDxYJE+K6O+9F1ECi6/sRZjCvWFZUkDu8rs+AMG1cQgt8jl
+ ZONraEZG/d1N6muIe9j2OrAN9bDhPLpa9C+zN9FPl3dKofjibW5Squeg5uPrRxQGenRM
+ v57A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777583471; x=1778188271;
+ d=1e100.net; s=20251104; t=1777583587; x=1778188387;
  h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2d8AhPvxOgNXbHHOP+pS9E2glqx8OE+fYauqQN8rph4=;
- b=MWfU93fackZl6ZMYrTTCFINabIQIgdye6o0EEJEEOaBl+maRI5KRltitZYx2M1WTOe
- OrZCGp4nJTva049m9T8i8WNjl+Y5ykun9sHYez09lHlMWsfnI8fneYVKX/zPLrPpyzvM
- 0KJY0FYcPSXoxcH7o8nmhkuVAqmmZCyq5Hr0AW0EoSy6koW2YOmPxd1Ewh5LY9DvQ0ix
- cazv3haRI35kJLFEiYSUrJknLU9qjQoS1r9kd2MyGm5kTHAzNClSUIzQdrkHUdrWgZU7
- nCTXNTfRRkHO6OU55QSEAaiUrjjRududd56EHAHNtSew6saNpVejiXY+I4mhei6HgW4L
- TKrQ==
+ bh=m7Nsai2albiqcEfbfQj2W4D9BBX02/q6qOSdrAAUtI0=;
+ b=hj/lbxvtJI8KSD36Os9i+Fed4kCMWPztDPHfZ0mdgvlCZRWw09nHQyIEtDjesjJCQh
+ tFbtQzVRhHn3QwpaTNGEZ6YLxPQDMH7qV/O3dxjtTu/Pl7gfDKSxwnQES2w7/m6935Ai
+ /7Hcy6ANaKbzVDYkmYjZwX1sOU3BFyxlAenkdZbK0Ar+fW26GTv57whfM9MK8kTlhyx9
+ cIrMcaI2+AlYrFAZD1b9O2WtU80AMZ5bGmoN1LmjbHxO9kiC8LHaSyy96FD3O3vEpkXM
+ f16TjTS/+F5C2iVhw7lkIB/EsfPOxzEfoM89Ti8uqw0ux+u7OexMlgCkhBTdG0b0pLPc
+ +hfQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/KauHs02eD6zNjTh30HUQJnLGALCSSybVKL/Rkph4SVKxFRxXBinhqNF917pPLfCgQhRwtkJ/QIsMA@nongnu.org
-X-Gm-Message-State: AOJu0Yxk2eq7KbG8u1M8wwTTmSq57dBLDes0ieG4HpRpaf1xWNabuNiB
- EGOlbdrNk9wnDQ8L70H3ohxjpv3efWTvVJ9LytLmyXYCg57Qz3BuaGdIepxFwV6kmaw=
-X-Gm-Gg: AeBDietd9w7A9TZbgJ9t2C/hfkqSC8AytlY6KvTw109QXR9kqnvqOPYTjEUQeEOQ3Bc
- 6SK2AHibYMApMrVDTIvJHdYq+umI9chUQTi3Sb5yv+aPb9WpBhtNvgfEit6A48+W9QvJJetC7cR
- 6bLs/SeVuQGhUwSBu5Hyyz5x7CYTSeP8abHXLG76E0jG5Lz+5apSAXdLWOIG3k1Wbh03Il/WvPJ
- 6x/yBXIw+Kj7kkwkQ1kwXBcvKT0FI4mvo9jYuULJkJUfDdjOKoVW8mXpsf7ElvIJ1S9gtnpRehd
- CGnop10NB7sr5r24PcBBVDl4hSDrjMYojzYkvW+LxMD1hQtSYyg6k11RVDWeuoZPoDEmMHWKpa1
- Y/3HK4c3WBk6IOSrL6lOylc0BG+K40iDB0jwrSs86AyVMIjkQ08IED9OJtEQUe5HSZp5GEHpShk
- lNwlOixUK3zq0LUdgbJJwUZiYY6h4JcfStPQVglW85Tr4NnEnIZIgWXmOX44rcWPlbEa1dTUWhL
- LY3
-X-Received: by 2002:a05:600c:8217:b0:488:9bf8:7f17 with SMTP id
- 5b1f17b1804b1-48a84444973mr81372635e9.14.1777583471451; 
- Thu, 30 Apr 2026 14:11:11 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8ebb2fa5sm5919245e9.12.2026.04.30.14.11.10
+ AFNElJ+jxKsEF8YLdNjBK8nNNWgnUKXeuSFf+N6RGaQIpQ4ZqtIF27Gvs0QJtQoFv9fhHCnRMU6dPY5PCK9u@nongnu.org
+X-Gm-Message-State: AOJu0Yz4VbKMyjulyQokGm/06GDyBiXtLuHSL44i+0qxCRxsD6g7fOpE
+ yCqkkDVk2bD2g2WppJjkpnm8VMrt8h3CNvd5wHrpWraGq0SOTt6k67DZW2eDwTIm/AdL5uptJY0
+ 0JDHp2I0=
+X-Gm-Gg: AeBDieuJxWk8kBDyawV7dCb7kOzco3WogE4oJ5hTjsWulqHfqgZRuWf3w+a25dq1m0N
+ KxIfH1ETmJZ6m37NY0BlgeLVgHWEAib6km29GL6ej8DcfHSEeHP7KiwBBNOEaiSh1nfMenJs7ss
+ +CFk87vUh7rhq/4Z7vYlueFUmkH+sIKA6aU0NoO7bTbhRwG3n1W6m944RLuWLKDfSGPIRG0/+FF
+ dLxAXiMjTRGvL8EWMqPG0KyNoqAE2+BHloq0guwlu0BJewsjhSk5zEOHW9gQkK02qglTHe/GcC9
+ ONS+4NAlCkJfge7jtEl8z5dOvZp2zwBDkRtMK4HBK/BJxZPcBmPRWwiPMjh9fA7Rmg7Dy0Gnom1
+ ofBWxZVDFGDr0K3hcUOhi7KQqP8T7wFBR+U6B4734zdPOara/Heng24l+wfWFTwdMDdYeyBkt8p
+ L6BQHowNrDhdhULUrOEoVJWickQq+6C/+ShOYhlHm/CJmQkD2dULc1
+X-Received: by 2002:a05:6a00:a15:b0:82c:21b8:4a1f with SMTP id
+ d2e1a72fcca58-834fdb0ab80mr5270726b3a.5.1777583587009; 
+ Thu, 30 Apr 2026 14:13:07 -0700 (PDT)
+Received: from [192.168.10.140] ([180.233.125.15])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-83515b57d3fsm534729b3a.52.2026.04.30.14.13.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Apr 2026 14:11:10 -0700 (PDT)
-Message-ID: <75c8fcab-61eb-4c27-ad10-0180f335e85c@linaro.org>
-Date: Thu, 30 Apr 2026 23:11:09 +0200
+ Thu, 30 Apr 2026 14:13:06 -0700 (PDT)
+Message-ID: <35b14bcb-b0b6-459b-83c9-7269ea7fbdef@linaro.org>
+Date: Fri, 1 May 2026 07:13:01 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/8] qemu/module: add a new QOM_EARLY init step
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- marcandre.lureau@redhat.com, Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>,
- Max Filippov <jcmvbkbc@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260430203842.29156-1-pierrick.bouvier@oss.qualcomm.com>
- <20260430203842.29156-2-pierrick.bouvier@oss.qualcomm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 13/40] fpu: Return struct from parts{64,128}_silence_nan
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20260430000524.56046-1-richard.henderson@linaro.org>
+ <20260430000524.56046-14-richard.henderson@linaro.org>
+ <d4bcf6ae-f5bb-41fc-941e-4d43d3cf9e88@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260430203842.29156-2-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <d4bcf6ae-f5bb-41fc-941e-4d43d3cf9e88@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,72 +107,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/4/26 22:38, Pierrick Bouvier wrote:
-> This step will be used to initialize fundamental QOM types, like OBJECT,
-> INTERFACE or TARGET_INFO that will be introduced in this series. It may
-> be used in the future if needed.
+On 4/30/26 15:55, Philippe Mathieu-Daudé wrote:
+> On 30/4/26 02:04, Richard Henderson wrote:
+>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+>> ---
+>>   fpu/softfloat.c                | 10 +++++-----
+>>   fpu/softfloat-parts.c.inc      |  6 +++---
+>>   fpu/softfloat-specialize.c.inc | 20 ++++++++++++++------
+>>   3 files changed, 22 insertions(+), 14 deletions(-)
 > 
-> We need to patch all call sites to module_init(MODULE_INIT_QOM) to call
-> module_init(MODULE_INIT_QOM_EARLY) as well.
+> 
+>> diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+>> index dd65432813..2723bf5e61 100644
+>> --- a/fpu/softfloat-specialize.c.inc
+>> +++ b/fpu/softfloat-specialize.c.inc
+>> @@ -179,16 +179,24 @@ static uint64_t parts_silence_nan_frac(uint64_t frac, float_status 
+>> *status)
+>>       return frac;
+>>   }
+>> -static void parts64_silence_nan(FloatParts64 *p, float_status *status)
+>> +static FloatParts64 parts64_silence_nan(const FloatParts64 *p,
+>> +                                        float_status *status)
+>>   {
+>> -    p->frac = parts_silence_nan_frac(p->frac, status);
+>> -    p->cls = float_class_qnan;
+>> +    FloatParts64 r = *p;
+>> +
+>> +    r.frac = parts_silence_nan_frac(r.frac, status);
+>> +    r.cls = float_class_qnan;
+>> +    return r;
+>>   }
+>> -static void parts128_silence_nan(FloatParts128 *p, float_status *status)
+>> +static FloatParts128 parts128_silence_nan(const FloatParts128 *p,
+>> +                                          float_status *status)
+>>   {
+>> -    p->frac_hi = parts_silence_nan_frac(p->frac_hi, status);
+>> -    p->cls = float_class_qnan;
+>> +    FloatParts128 r = *p;
+>> +
+>> +    r.frac_hi = parts_silence_nan_frac(r.frac_hi, status);
+>> +    r.cls = float_class_qnan;
+>> +    return r;
+>>   }
+> 
+> Why not use compound literal like the rest?
+> 
+>      static FloatParts64 parts64_silence_nan(const FloatParts64 *p,
+>                                              float_status *status)
+>      {
+>          return (FloatParts64) {
+>              .frac = parts_silence_nan_frac(p->frac, status),
+>              .cls = float_class_qnan,
+>          };
+>      }
+> 
+>      static FloatParts128 parts128_silence_nan(const FloatParts128 *p,
+>                                                float_status *status)
+>      {
+>          return (FloatParts128) {
+>              .frac_hi = parts_silence_nan_frac(p->frac_hi, status),
+>              .cls = float_class_qnan,
+>          };
+>      }
+> 
 
-Just wondering, could we add some module_type dependency, so
-when module_call_init(MODULE_INIT_QOM) is called and
-modules_init_done[MODULE_INIT_QOM_EARLY] is not set, then
-it calls module_call_init(MODULE_INIT_QOM_EARLY) first.
-Modifying module.c for that is trivial, but I couldn't find
-where to register such dependency (keeping module.c generic).
+We also need to copy the exponent, sign, and frac_lo for FloatParts128.  I thought it was 
+easier to emulate the existing path and simply modify the two fields.
 
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-> ---
->   bsd-user/main.c                         | 1 +
->   include/qemu/module.h                   | 2 ++
->   linux-user/main.c                       | 1 +
->   qemu-img.c                              | 1 +
->   qemu-io.c                               | 1 +
->   qemu-nbd.c                              | 1 +
->   rust/hw/core/tests/tests.rs             | 1 +
->   scsi/qemu-pr-helper.c                   | 1 +
->   storage-daemon/qemu-storage-daemon.c    | 1 +
->   system/runstate.c                       | 1 +
->   tests/audio/test-audio.c                | 1 +
->   tests/qtest/bios-tables-test.c          | 1 +
->   tests/qtest/fuzz/fuzz.c                 | 1 +
->   tests/qtest/migration-test.c            | 1 +
->   tests/qtest/qos-test.c                  | 1 +
->   tests/qtest/tpm-crb-swtpm-test.c        | 1 +
->   tests/qtest/tpm-crb-test.c              | 1 +
->   tests/qtest/tpm-tis-device-swtpm-test.c | 1 +
->   tests/qtest/tpm-tis-device-test.c       | 1 +
->   tests/qtest/tpm-tis-i2c-test.c          | 1 +
->   tests/qtest/tpm-tis-swtpm-test.c        | 1 +
->   tests/qtest/tpm-tis-test.c              | 1 +
->   tests/unit/check-qom-interface.c        | 1 +
->   tests/unit/check-qom-proplist.c         | 1 +
->   tests/unit/test-authz-list.c            | 1 +
->   tests/unit/test-authz-listfile.c        | 1 +
->   tests/unit/test-authz-pam.c             | 1 +
->   tests/unit/test-authz-simple.c          | 1 +
->   tests/unit/test-char.c                  | 1 +
->   tests/unit/test-crypto-block.c          | 1 +
->   tests/unit/test-crypto-secret.c         | 1 +
->   tests/unit/test-crypto-tlscredsx509.c   | 1 +
->   tests/unit/test-crypto-tlssession.c     | 1 +
->   tests/unit/test-io-channel-buffer.c     | 1 +
->   tests/unit/test-io-channel-command.c    | 1 +
->   tests/unit/test-io-channel-file.c       | 1 +
->   tests/unit/test-io-channel-null.c       | 1 +
->   tests/unit/test-io-channel-socket.c     | 1 +
->   tests/unit/test-io-channel-tls.c        | 1 +
->   tests/unit/test-io-task.c               | 1 +
->   tests/unit/test-qdev-global-props.c     | 1 +
->   tests/unit/test-qdev.c                  | 1 +
->   tests/unit/test-smp-parse.c             | 1 +
->   tests/unit/test-throttle.c              | 1 +
->   tests/unit/test-vmstate.c               | 1 +
->   tests/unit/test-xs-node.c               | 1 +
->   tests/unit/test-yank.c                  | 1 +
->   tools/i386/qemu-vmsr-helper.c           | 1 +
->   48 files changed, 49 insertions(+)
 
+r~
 
