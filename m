@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6194FFF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:25:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03F20CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:25:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIV6X-0004sc-4Y; Thu, 30 Apr 2026 13:23:13 -0400
+	id 1wIV7f-0006up-HS; Thu, 30 Apr 2026 13:24:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV6V-0004nG-JF
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:23:11 -0400
+ id 1wIV7C-0005kW-3h
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:24:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV6T-0004Qu-Lk
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:23:11 -0400
+ id 1wIV79-0004iB-Hg
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:23:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777569789;
+ s=mimecast20190719; t=1777569830;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+j0fl0DNtcWoFMMUu4/jC4alYmSV0o7g9FyZIwu1dMs=;
- b=fkBGuMYXLmN/KCaEoxlYwx0Q7LYID5pCkimb+Gz/ocCz/g/u2LyT/+g01z/f0h5tcanFbA
- 0pSsXyBQM+i8AtXueRbRvsl9hEcvurEnWGDmKYYK2WKeVQQuwwKlPFDW/4J96LfVx+0DbY
- lPkXeqOgPnTJ68S5hD20nDUU6vT69Wc=
+ bh=p4g0uz/P7j9K70N0flDT+IgeE2GHWNDfoeHg+Js6mkw=;
+ b=GLSqN9VJksa2+QFkFxt5Ix5k6739AASRz7MLU7iI2GXcixhBfhd0OES6g1vvqnh6uVUfvh
+ 1t0sIdjQD6Bdbd6jNgDWoTfb+uY/LniOgAbfESFeYbxQyYFrw3ngDI2C2VtcZJh8Uo5DGD
+ rYqfNxpMtzI5p7KRZJdmwHR7obDB9aw=
 Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
  [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-314-NXr-__kOPzaUjF7ZpEqmeA-1; Thu, 30 Apr 2026 13:23:07 -0400
-X-MC-Unique: NXr-__kOPzaUjF7ZpEqmeA-1
-X-Mimecast-MFC-AGG-ID: NXr-__kOPzaUjF7ZpEqmeA_1777569787
+ us-mta-154-ql0aXfpxOQKw00v_3JqoWA-1; Thu, 30 Apr 2026 13:23:49 -0400
+X-MC-Unique: ql0aXfpxOQKw00v_3JqoWA-1
+X-Mimecast-MFC-AGG-ID: ql0aXfpxOQKw00v_3JqoWA_1777569829
 Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8b49260e3d5so18117406d6.2
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:23:07 -0700 (PDT)
+ 6a1803df08f44-8ac9609d3d6so29718456d6.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:23:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777569786; x=1778174586; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777569828; x=1778174628; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+j0fl0DNtcWoFMMUu4/jC4alYmSV0o7g9FyZIwu1dMs=;
- b=n/gLD4fH4M/eoplLJ+ta5nF7YhlRlK5Mo7p1aoHFISxLj06jQ+tSwkpSAXD1apZ3dl
- C4K02Zgj3vFDeaX4qaBt7uwO1vRBjONa/Qmaj3sojWUJBcwSLqPlV0q5X2psZYGk6cNI
- IIMFrvnoig5XZMkr89vAPy5aZ/NhvCuLgU8TshCC831H6iOn/EuEM0mCc2O9ceC/tal3
- LbJsvl8cI2GqPyqHeZbxNO1Ey2E6l4m11HQ+HqyjeOeD2S14oL8lh+h9rW98mRhQ+lwp
- upVeWDavTSBrz/QaMbZGIhZBj6gf7o5ZQ4GZDS/ink0IB0aAq/LuXsnf8j8n8JRO9j/7
- C5yQ==
+ bh=p4g0uz/P7j9K70N0flDT+IgeE2GHWNDfoeHg+Js6mkw=;
+ b=sdL9Z313OSJIKfV175x7/cUlA/VrU5Iz84qMqMoPfekF78C+m7Vcf9WI4Utz5y+xRH
+ bQtKsnppeG+xEtVt/16qOEQrNcPotfH29gz5rUltQqaizvei317Si7lGuEtJqVm6q1gm
+ a3lqQCTU1Fv8/Dv32ULtitS39vBiZmB4GP2JugPWERZ6pd+kUHxvIbapRZ25W2SgJROe
+ ryzco6ORZ452137qAa+TO1eL81W/8BvQgq+eEBUIXvmiffcxAAMedtVluu8tW/i6a9bh
+ QksjWC+qCLvDU9wHsavyVgIhoej76O9gODrgAy9+ZrHqkd8qoCI9U9in1W4577XxKGDU
+ rP5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777569786; x=1778174586;
+ d=1e100.net; s=20251104; t=1777569828; x=1778174628;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+j0fl0DNtcWoFMMUu4/jC4alYmSV0o7g9FyZIwu1dMs=;
- b=sbZrBLSfDUrb7AbngSZwLiOHsj2oc/5IhsfJJfFq7H0i/JxPt/MYXx0Tjx5nSHILtu
- qbcU+d19LOhaqb20pJREGPMNUIcHmXudW9UXVX3RR2UcdnkN2OXyFKGn7NJFeynmoZX6
- ZGLCRonI9pDvRUkMGI8xEpQm7PYJfIBKM3vIGebtRJ5N1SCpJTR0y8yfFzFfJ8H4oC0h
- v4tQOPpXk9w4W25WYPYMkgAU4rYx38VBWZh6I5Ppz9BoPiTP+uMrL6JBfYsazj1SBUsP
- JwgSw6xp9cmwlNKTx9P0iMR4zXoe/O4HpjH/aKQVyxtkmNwjfnIkVlZoEIVwoWxgZ4Uk
- 45LA==
-X-Gm-Message-State: AOJu0Yz/bX1kmACAzdNwQhGGuUjckiBuy8IjPvP6GgxcvDCrlSKbON63
- UMBA7vGEDuWkTlF0zlOUwUGRb8BWByjAd7ClR4quTTH6lWuxaA7T85ujWWMfdCbCr2o9fxUvrK2
- VlXvN6AxVz7cmCTnWQi8A+9+rcwK+ePxCqzcHD2kcKUNTQSfGbfn2yaiLs9mbxw3+o9rZtj1Y6P
- 83jQ2dyXr9nlVMoosX8b5UjwmYsIwQcXd5T776KjJ9
-X-Gm-Gg: AeBDietEQ20J9EbiPT3UbjFGxUlV+gr4m6o8jqQbuFok+HiJ4wBpaT9Z4Zf3XSuHUSf
- ROvJejfzjny/fhJI6LiA0aAIFpX5eS3jQWqhyWkVNlBIiwii341Wv2MnJi2ktTghy+7NsZ+gPKq
- aWBCChXaXUT+mYzW8XNtSUN5ikvEoMWlV078Ebkz2uh6yjcskFBONxi2wz5qNTm/y9HydlCnSk4
- JyQvbK2/pv2Bd4VNwbhnpdzg+oSUu0zGJKa+TZzuLr/AUKNOZwVKvDFMo2Srj/nfZqPgSQONlAU
- +585yUAiQyQOwDdh4h5g0IiqrR2d5VxAJYr+Tv8bmOViBtFVpGUeCwDN6oAVYnpZQjTs9h2gpUR
- c/29NROfe7pVAV2wmTuD+8Dheayo6DelqKIMOfpC3daRmnh0L1lff0FrENN7CUs1Bv6x5JbNsmK
- jZ2bjLY2QjJ1yG77XH9kkXTqqgkuZT6Kc1a5c=
-X-Received: by 2002:a05:6214:4699:b0:8b1:f5da:f811 with SMTP id
- 6a1803df08f44-8b3fe808413mr62036386d6.48.1777569786153; 
- Thu, 30 Apr 2026 10:23:06 -0700 (PDT)
-X-Received: by 2002:a05:6214:4699:b0:8b1:f5da:f811 with SMTP id
- 6a1803df08f44-8b3fe808413mr62035586d6.48.1777569785340; 
- Thu, 30 Apr 2026 10:23:05 -0700 (PDT)
+ bh=p4g0uz/P7j9K70N0flDT+IgeE2GHWNDfoeHg+Js6mkw=;
+ b=AzlfWBSfXrQlQG1qPx3IR+qLDJSyfGbNTDtmbPhUEXbI/OPkSWze1O0w3mZ2r+RNMI
+ aPKGriLXN+0RgqCKgubuxPhA3oRej20xCGJEhsvM/KYmP66vOYSkBgDy6MoWF32z0LnR
+ GMjbswPwBxxrhLdC5bw+E7cvljDQ8FARp15jybpfZUbB2kAL81SMCVOXHBQzTooTf3OO
+ WRmAU7yc0ePz2+czowXmfFGx52ppJbHTgcJRFZN6PuZ6/WjfAazxEXkq8V1xAOtSU0TP
+ P69lruNEXstIlMWSiI0BZcTrk0GLI4YYKkeF+lA2Sm/ZuPwBO0f1ZVVjAh44RFc2wtwn
+ UEfQ==
+X-Gm-Message-State: AOJu0YwDF2KpgJYwF/GeQg7tzB72QZZqkB7dHNtdWj4MnheFAOsjiGIt
+ sOkQqJ/cYCl+VJS0MVBGqnOIDiP/b8b2R/zKVZhzc10Pnr7jVBtdup+MHA+duMUYr2BwA9DldOJ
+ GGqbVV5gyWPyJ1JUGHWeIl7lsI1qa/lBBhkQTcGH88UJGMJEOyrHqmxSoJQFIwesxcYg0GJ9zjH
+ 0t/WDQZLXY3TA7t8ShglrhjfP1JNjN8ytv/HcMJ45N
+X-Gm-Gg: AeBDieulKy0gQUvnzdHzNMLizVMAOpLcJXUd1pCLHRcEUQkorYMoxf6uWyZJsXOLzJK
+ AvlxCHYElRN2WKT3yvB6NmCQNe3qIXYGhNcv8K6M/4ETqXBoVH8cZismXPjnq4ITwXkdgROEc4n
+ rEo5bzwGYSiU9rqbgfh1N9sfMFBJUl0jg/i21en+//XQwe6ugUHh+jC9aUzIWDoaCk0Z6Mhb2t0
+ eM9UnHq/9yeE+Xl0DjRWpFxHWdCweDtNG2B1gpB/aDm52ux9KQ0ZPvqzmIo7vhZ6UG1zEpDwnur
+ Z4niIS9i6DTFy0NyjVvqOnZ9VdVxDICFhflfKTumC/KDoJ4d7u3ddtYel7+7aJX0a5JeVNqptSO
+ HmVpbO40XQ0n6bOxPC3hLBTU2cZQS6IGXlU3wCX1/8M/uCZisxsv2/aMbZeNV5l1BNlaB+WSQ0C
+ Zr6JiGFN5MdEIgbvSmSFPhBiAFIjpaZtLOwbs=
+X-Received: by 2002:a05:6214:4608:b0:8b1:f2f6:33b with SMTP id
+ 6a1803df08f44-8b3fe7af5dbmr57264646d6.22.1777569828231; 
+ Thu, 30 Apr 2026 10:23:48 -0700 (PDT)
+X-Received: by 2002:a05:6214:4608:b0:8b1:f2f6:33b with SMTP id
+ 6a1803df08f44-8b3fe7af5dbmr57263826d6.22.1777569827351; 
+ Thu, 30 Apr 2026 10:23:47 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b3ff439c2csm22584136d6.23.2026.04.30.10.23.03
+ 6a1803df08f44-8b3ff43a465sm22165976d6.28.2026.04.30.10.23.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 10:23:04 -0700 (PDT)
+ Thu, 30 Apr 2026 10:23:46 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Alessandro Ratti <alessandro@0x65c.net>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 18/58] hw/qdev: Clarify fallback order in
- qdev_get_printable_name()
-Date: Thu, 30 Apr 2026 19:21:24 +0200
-Message-ID: <20260430172204.1006673-19-pbonzini@redhat.com>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PULL 32/58] whpx: i386: disable kernel-irqchip on Windows 10 when
+ PIC enabled
+Date: Thu, 30 Apr 2026 19:21:38 +0200
+Message-ID: <20260430172204.1006673-33-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260430172204.1006673-1-pbonzini@redhat.com>
 References: <20260430172204.1006673-1-pbonzini@redhat.com>
@@ -122,90 +121,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alessandro Ratti <alessandro@0x65c.net>
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Replace the uninformative "<unknown device>" final fallback with the
-canonical QOM path (e.g. /machine/peripheral-anon/device[0]).
+Move WHvCapabilityCodeProcessorPerfmonFeatures queries
+as that's how we distinguish if on a legacy OS.
 
-Also clean up comments to accurately describe qdev_get_dev_path()
-behavior, drop an unnecessary comment on the dev->id check, and rename
-the @vdev parameter to @dev for consistency with surrounding code.
+Now that Windows guests are booting, disable kernel-irqchip=on
+by default for Windows 10 when the PIC is enabled.
 
-Update the doc comment in qdev.h to reflect the new fallback chain.
-
-Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Link: https://lore.kernel.org/r/20260321100405.1525059-2-alessandro@0x65c.net
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Link: https://lore.kernel.org/r/20260422214225.2242-11-mohamed@unpredictable.fr
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/core/qdev.h |  8 +++-----
- hw/core/qdev.c         | 26 +++++++-------------------
- 2 files changed, 10 insertions(+), 24 deletions(-)
+ target/i386/whpx/whpx-all.c | 69 +++++++++++++++++++++----------------
+ 1 file changed, 39 insertions(+), 30 deletions(-)
 
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index 337d69ea2c3..226bd662901 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -1067,11 +1067,9 @@ char *qdev_get_dev_path(DeviceState *dev);
-  * user-facing error messages. The function will never return NULL,
-  * so the name can be used without further checking or fallbacks.
-  *
-- * If the device has an explicitly set ID (e.g. by the user on the
-- * command line via "-device thisdev,id=myid") this is preferred.
-- * Otherwise we try the canonical QOM device path (which will be
-- * the PCI ID for PCI devices, for example). If all else fails
-- * we will return the placeholder "<unknown device">.
-+ * Return the device's ID if it has one.  Else, return the path of a
-+ * device on its bus if it has one.  Else return its canonical QOM
-+ * path.
-  */
- const char *qdev_get_printable_name(DeviceState *dev);
+diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+index 03c146dfb8c..ab8e97787fe 100644
+--- a/target/i386/whpx/whpx-all.c
++++ b/target/i386/whpx/whpx-all.c
+@@ -2523,6 +2523,13 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+         0x80000002, 0x80000003, 0x80000004, 0x80000007, 0x80000008,
+         0x8000000A, 0x80000021, 0x80000022, 0xC0000000, 0xC0000001};
  
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index b36101f3a75..78156185d57 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -412,33 +412,21 @@ char *qdev_get_dev_path(DeviceState *dev)
-     return NULL;
- }
++    X86MachineState *x86ms = X86_MACHINE(ms);
++    bool pic_enabled = false;
++
++    if (x86ms->pic == ON_OFF_AUTO_ON || x86ms->pic == ON_OFF_AUTO_AUTO) {
++        pic_enabled = true;
++    }
++
+     whpx = &whpx_global;
  
--const char *qdev_get_printable_name(DeviceState *vdev)
-+const char *qdev_get_printable_name(DeviceState *dev)
- {
--    /*
--     * Return device ID if explicity set
--     * (e.g. -device virtio-blk-pci,id=foo)
--     * This allows users to correlate errors with their custom device
--     * names.
--     */
--    if (vdev->id) {
--        return g_strdup(vdev->id);
-+    if (dev->id) {
-+        return g_strdup(dev->id);
+     if (!init_whp_dispatch()) {
+@@ -2594,6 +2601,35 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+         goto error;
      }
+ 
++    /* Enable supported performance monitoring capabilities */
++    hr = whp_dispatch.WHvGetCapability(
++        WHvCapabilityCodeProcessorPerfmonFeatures, &perfmon_features,
++        sizeof(WHV_PROCESSOR_PERFMON_FEATURES), &whpx_cap_size);
++    /*
++     * Relying on this is a crutch to maintain Windows 10 support.
++     *
++     * WHvCapabilityCodeProcessorPerfmonFeatures and
++     * WHvPartitionPropertyCodeSyntheticProcessorFeaturesBanks
++     * are implemented starting from Windows Server 2022 (build 20348).
++     */
++    if (FAILED(hr)) {
++        warn_report("WHPX: Failed to get performance "
++                    "monitoring features, hr=%08lx", hr);
++        is_modern_os = false;
++    } else {
++        hr = whp_dispatch.WHvSetPartitionProperty(
++                whpx->partition,
++                WHvPartitionPropertyCodeProcessorPerfmonFeatures,
++                &perfmon_features,
++                sizeof(WHV_PROCESSOR_PERFMON_FEATURES));
++        if (FAILED(hr)) {
++            error_report("WHPX: Failed to set performance "
++                         "monitoring features, hr=%08lx", hr);
++            ret = -EINVAL;
++            goto error;
++        }
++    }
++
      /*
--     * Fall back to the canonical QOM device path (eg. ID for PCI
--     * devices).
--     * This ensures the device is still uniquely and meaningfully
--     * identified.
-+     * Fall back to a bus-specific device path, if the bus
-+     * provides one (e.g. PCI address "0000:00:04.0").
-      */
--    const char *path = qdev_get_dev_path(vdev);
-+    const char *path = qdev_get_dev_path(dev);
-     if (path) {
-         return path;
+      * Error out if WHP doesn't support apic emulation and user is requiring
+      * it.
+@@ -2606,8 +2642,9 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+         goto error;
      }
  
--    /*
--     * Final fallback: if all else fails, return a placeholder string.
--     * This ensures the error message always contains a valid string.
--     */
--    return g_strdup("<unknown device>");
-+    return object_get_canonical_path(OBJECT(dev));
- }
+-    if (whpx->kernel_irqchip_allowed && features.LocalApicEmulation &&
+-        whp_dispatch.WHvSetVirtualProcessorInterruptControllerState2) {
++    if (whpx->kernel_irqchip_allowed && !(whpx_is_legacy_os() && pic_enabled
++        && !whpx->kernel_irqchip_required) && features.LocalApicEmulation
++        && whp_dispatch.WHvSetVirtualProcessorInterruptControllerState2) {
+         WHV_X64_LOCAL_APIC_EMULATION_MODE mode =
+             WHvX64LocalApicEmulationModeX2Apic;
+         hr = whp_dispatch.WHvSetPartitionProperty(
+@@ -2669,34 +2706,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+         goto error;
+     }
  
- void qdev_add_unplug_blocker(DeviceState *dev, Error *reason)
+-    /* Enable supported performance monitoring capabilities */
+-    hr = whp_dispatch.WHvGetCapability(
+-        WHvCapabilityCodeProcessorPerfmonFeatures, &perfmon_features,
+-        sizeof(WHV_PROCESSOR_PERFMON_FEATURES), &whpx_cap_size);
+-    /*
+-     * Relying on this is a crutch to maintain Windows 10 support.
+-     *
+-     * WHvCapabilityCodeProcessorPerfmonFeatures and
+-     * WHvPartitionPropertyCodeSyntheticProcessorFeaturesBanks
+-     * are implemented starting from Windows Server 2022 (build 20348).
+-     */
+-    if (FAILED(hr)) {
+-        warn_report("WHPX: Failed to get performance "
+-                    "monitoring features, hr=%08lx", hr);
+-        is_modern_os = false;
+-    } else {
+-        hr = whp_dispatch.WHvSetPartitionProperty(
+-                whpx->partition,
+-                WHvPartitionPropertyCodeProcessorPerfmonFeatures,
+-                &perfmon_features,
+-                sizeof(WHV_PROCESSOR_PERFMON_FEATURES));
+-        if (FAILED(hr)) {
+-            error_report("WHPX: Failed to set performance "
+-                         "monitoring features, hr=%08lx", hr);
+-            ret = -EINVAL;
+-            goto error;
+-        }
+-    }
+ 
+     /* Enable synthetic processor features */
+     WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS synthetic_features;
 -- 
 2.54.0
 
