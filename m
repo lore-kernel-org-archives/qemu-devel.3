@@ -4,80 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91F3ACCFA13
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 10:37:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 998E1CCFA13
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 10:43:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIOlM-0005b3-F2; Thu, 30 Apr 2026 06:36:56 -0400
+	id 1wIOrA-0007MC-MP; Thu, 30 Apr 2026 06:42:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wIOlK-0005XS-Us
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 06:36:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wIOlI-0003nK-9j
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 06:36:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777545411;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=E9NpKpy1RFZXSbC6WpGj6qRqO3uGV/5aYuhgPXXiN/c=;
- b=c6YC0kqyQ3j0N2J/jEAgrmLD4mUYsF9GcHCnMKMXjVOv1AHqt0uBg3PYcLWeh58aIKJr4d
- nlgPbuiWJgjcxMabpkkRM+aJO+Pbflz3uoa3DzI6eOYLZ9UAPH19E4zRN0uJJSO7daIyPJ
- KWQdFO7cbF2yxlC1DwwHPPjaQWaPhlU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-248-acD8eVcROpqGeMZb8icAtw-1; Thu,
- 30 Apr 2026 06:36:45 -0400
-X-MC-Unique: acD8eVcROpqGeMZb8icAtw-1
-X-Mimecast-MFC-AGG-ID: acD8eVcROpqGeMZb8icAtw_1777545404
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B145A195608F; Thu, 30 Apr 2026 10:36:43 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.48.62])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 17476300019F; Thu, 30 Apr 2026 10:36:38 +0000 (UTC)
-Date: Thu, 30 Apr 2026 11:36:35 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: "Zhang, GuoQing (Sam)" <guoqzhan@amd.com>
-Cc: Samuel Zhang <guoqing.zhang@amd.com>, qemu-devel@nongnu.org,
- peterx@redhat.com, farosas@suse.de, lizhijian@fujitsu.com,
- eblake@redhat.com, armbru@redhat.com, Emily.Deng@amd.com,
- Victor.Zhao@amd.com, PengJu.Zhou@amd.com, Qing.Ma@amd.com,
- Guoqing Zhang <simpzan@gmail.com>
-Subject: Re: [PATCH v6] migration/rdma: add x-rdma-chunk-size parameter
-Message-ID: <afMwszhgeMN8Mtl2@redhat.com>
-References: <20260427031401.3895523-1-guoqing.zhang@amd.com>
- <ae8NhTr69D7Wzejz@redhat.com>
- <5481c478-1957-4a6a-9732-806b81100e1d@amd.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wIOr9-0007LI-0F
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 06:42:55 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wIOr7-0004z3-Cy
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 06:42:54 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-6501418152cso662001d50.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 03:42:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777545772; cv=none;
+ d=google.com; s=arc-20240605;
+ b=OHkhiJmKWP7l8F43id0DOXBWFKbGU0AkMaW3k/Qti6pW9iWGeP9Jkgd9qICp75ODCT
+ RudxvhUAWmJeeZYnmQ4VdsmsqJ1SA5dNKx283co4dLsDk98XKQwhkcGYz6+TyVhD10uw
+ GIRu4EZ2u6BCrbBptaRqVgwwxDMAScBBE2gDYJndTAR7XLNZQ9VisdiiqhuWJgHgwf4K
+ nbjgvD6Bh/1EPxOOawjCV2DtEsmIqZP7hiFL5Eh1YG6HV6rJ8KGuyNffddMuCycUWF4+
+ ibp2jxcgEcpxrUOM3y7Rmq3BF79p8E8uGgjLmoPNW++Lo4ejWt/mCNgEh36XoiGUsMs9
+ lTYQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=2g0y1nWNZc+AxGadVPMcazKrF3IG5aUDZC2BcCua7G8=;
+ fh=YtKYAKb7movrsKSF8t3D2EtC6r4tz7cDma5VL9EGwyU=;
+ b=EQl7yGRbvvweaZUuUgCzbC9RenR2dgCufCOFy8reKXOC8z9tqfNjAsYm0csCdi3y1G
+ lR4Pg1qB9iqKrBPUd5Six8Ot0UDHAQfL0FXeQP8DM0gC9zn725N2IaLqW/Z/6w44PlQ3
+ 7o6pgBLWJ2FkFMWvttbEgSwSTCQs2pXzD6SfWGKg/ZDmXLHna6vrWtDvghZAFnVs4aId
+ OQZUPs4SyPrjM9YpEg85oRvpzzKNZdjr7FDc9/+SXrxzivQjjyZoRpKlH1l4gMzJV5Bg
+ SvVHe6m5j0ArlP8hdAwH0VWOzhOEyH8RtUsZCpPD+0cyHo8NlMmJkgrLL0Bw59TONYmL
+ c/+w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777545772; x=1778150572; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=2g0y1nWNZc+AxGadVPMcazKrF3IG5aUDZC2BcCua7G8=;
+ b=u2CXR4cBppGDhrV2A68ihgDWzSPPtclXe/tzhEm/X9Cbw74n7Q2A5MLTB3GXN7eEZV
+ kShllx9KuR5JPMGhAuq73WQsvacYgCY5JJRsVcl+LH75KMuMMkrsZ0ZvS6dSp9ZWURTJ
+ H2Hdx/nViUZp3vFShu//T71zWpWjOp8cUhkH4maciR5+s1lOwKLSzq+ehR4La3PiwcrC
+ vYpJXtiUI8LjvcRwcDVU5dMo1wwm1Bryf4faJXbLBjSdAdI15e4VFTdpD+kMYqXgPBQv
+ vltiKxr1vbeBPAyZ9s+BWdiNQVBAK0Nwqj1mzJ8pjlMnGKPHS/SCzWaQ7xMmWC3bx38x
+ 5Z1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777545772; x=1778150572;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2g0y1nWNZc+AxGadVPMcazKrF3IG5aUDZC2BcCua7G8=;
+ b=l0oTs2bqhmBGCXt63tsuZIbjXRb38wAfFxRXOVj4msR7sMbtd+kmSFFMW93z6zEyhy
+ ndPyTAWFo9rxnTNOQHN+LejagBQMskhLP/BBl+si84aA2djTHyvXOa7FtX0zRTY03AoV
+ Yb3fNC57Hpq6CUfH6kmR6rxNh7RS4QvPGXKPR63cS4puhxaNnlhibhSr61yGTNseUbGN
+ fZl3b4ZzrbxjTNxVm14lG4DVy4LJ9o9W6F1ZAu/T++YqCF0HfhinuNM+xOCZrl4Jazdh
+ aj4EiD0RdUYHaqlRivW3zKrv+Kg17SMSIh+BrOlxXtEl8o1fAROHQWGGAXKWYGEJZgZK
+ Entg==
+X-Gm-Message-State: AOJu0YxbIqKNPs7ige50QDZ202y6U/yZ3AnDRn6LxMwIJqYxCPaf3t2U
+ y+tY3PwHs22i8EPN9RbCHT6PLmcj4NMIFgGJeFPWIagPXyEUznUyVY0WPmlcjBDoiDAEjmbvmTo
+ s4iwLzR4bexue33plKgTAcXSNda0XvdIUxg1yIcSpew==
+X-Gm-Gg: AeBDietva6+LIoQ/agZggl1lFYAxpWEVz+jIj2QuDtkDHOPyTMmfQWdPflksWs3JAmL
+ wXH3mzc4S9ewv+Sa/z4+DAMaa4nQ3MSAzVSjwf1p9QojNl0rYi6HBayVcv5Le5ZWIJ/D8K1n33l
+ JiSze2UZ1kIraWLQjL/jUXGTYA7i2+fnWsGjcs2sPGp0ShKOy4S3uWBooTuTrZOh2En2fnrjDZF
+ Ir6fqJjYhlXXop/nPx9uDnVKu5P8hdiaIIk/u3Vtlv7V8D6hVhALU47AVsIM4L+irrIwONkasZC
+ jjFU60fQipfVLdxK3aZJ6D6CkVnXu3zItr/E8WgpTaayG9ft17nXOzBg437w/lT9q8ChXscxq54
+ 3EI8Swaj5mn10
+X-Received: by 2002:a53:d104:0:b0:64e:d610:71cf with SMTP id
+ 956f58d0204a3-65c18fce8afmr1242841d50.58.1777545771829; Thu, 30 Apr 2026
+ 03:42:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5481c478-1957-4a6a-9732-806b81100e1d@amd.com>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260308203516.160103-1-shentey@gmail.com>
+In-Reply-To: <20260308203516.160103-1-shentey@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 30 Apr 2026 11:42:40 +0100
+X-Gm-Features: AVHnY4JM2dYns_HE7ObRADh3zyxX8nLpEzAfCcCKftBVuoCubM6J_aRvFr41S54
+Message-ID: <CAFEAcA8DbrVdRQK4Cy8gqU__FXYsTa0nZERqrd4he0Y1WRW7uA@mail.gmail.com>
+Subject: Re: [PATCH 0/5] Trivial cleanup
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-trivial@nongnu.org, 
+ qemu-arm@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,99 +115,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 30, 2026 at 05:46:43PM +0800, Zhang, GuoQing (Sam) wrote:
-> 
-> On 2026/4/27 15:17, Daniel P. Berrangé wrote:
-> > [You don't often get email from berrange@redhat.com. Learn why this is important at https://aka.ms/LearnAboutSenderIdentification ]
-> > 
-> > On Mon, Apr 27, 2026 at 11:14:01AM +0800, Samuel Zhang wrote:
-> > > The default 1MB RDMA chunk size causes slow live migration because
-> > > each chunk triggers a write_flush (ibv_post_send). For 8GB RAM,
-> > > 1MB chunk size produces ~15000 flushes vs ~3700 with 1024MB chunk size.
-> > > 
-> > > Add x-rdma-chunk-size parameter to configure the RDMA chunk size for
-> > > faster migration.
-> > > Usage: `migrate_set_parameter x-rdma-chunk-size 1024M`
-> > > 
-> > > Performance with RDMA live migration of 8GB RAM VM:
-> > > 
-> > > | x-rdma-chunk-size (B) | time (s) | throughput (MB/s) |
-> > > |-----------------------|----------|-------------------|
-> > > | 1M (default)          | 37.915   |  1,007            |
-> > > | 32M                   | 17.880   |  2,260            |
-> > > | 1024M                 |  4.368   | 17,529            |
-> > What is the downside of setting a larger chunk size ?
-> > 
-> > IOW, why should we keep 1M as the default when it gives
-> > such terrible relative performance ?  Why not make 1G
-> > be the default instead of creating this flag and requiring
-> > people to know about setting it ?
-> > 
-> Hi Daniel,
-> 
-> Thank you for the very good question.
-> I dug into the git history. The 1M chunk size dates back to the original
-> RDMA implementation by Michael R. Hines in 2013 (commit 2da776db48).
-> I agree 1M is too conservative for modern hardware. However, I found that 1G
-> is not necessarily the optimal chunk size either.
-> 
-> I collected the following performance data on my server:
-> 
-> NIC: Mellanox Technologies MT43244 BlueField-3 integrated ConnectX-7 network
-> controller
-> qemu version: v11.0.0-rc2-139-g25fcd86805
-> qemu config: pin-all off (default setting)
-> VM system RAM size: 8GB
-> guest workload: `stress-ng --vm 4 --vm-bytes 1G --vm-method rand-set
-> --timeout 0`
-> ```
-> chunk_size  total(ms) setup(ms)   down(ms)  Throughput(Mbps) total_size 
-> transferred
-> 1m            45,156       864      1,166         1,252.50  8.02 GiB   
->  6.46 GiB
-> 2m            41,848       853      1,161         1,354.11  8.02 GiB   
->  6.46 GiB
-> 4m            37,836       861      1,435         1,523.33  8.02 GiB   
->  6.56 GiB
-> 8m            37,684       852      1,176         1,537.98  8.02 GiB   
->  6.59 GiB
-> 16m           37,620       852      1,173         1,538.96  8.02 GiB   
->  6.59 GiB
-> 32m           15,034       963      1,864         3,401.26  8.02 GiB   
->  5.57 GiB
-> 64m            4,492       868      1,554        13,637.46  8.02 GiB   
->  5.75 GiB
-> 128m           3,940       851      1,662        16,860.59  8.02 GiB   
->  6.06 GiB
-> 256m           3,640       852      2,206        19,390.99  8.02 GiB   
->  6.29 GiB
-> 512m           3,645       852      2,179        23,200.67  8.02 GiB   
->  7.54 GiB
-> 1024m          3,665       865      2,238        24,676.59  8.02 GiB   
->  8.04 GiB
-> ```
-> 
-> The downside of a larger chunk size:
-> A larger chunk causes more data to be transferred per dirty region. For
-> example, a single dirty page (4K) will cause a full 1G
-> chunk to be transferred when chunk size is 1G. As a result, the total
-> migration time may not be the shortest with the largest chunk
-> size. See 256m row and 1024m row in the table as an example.
-> 
-> Based on my data, 128m appears to be the sweet spot for my hardware and
-> workload, but different configurations may have different
-> optimal values. I think increasing the default (e.g., to 64m or 128m) while
-> keeping this parameter for user tuning would be a good
-> approach.
+On Sun, 8 Mar 2026 at 20:35, Bernhard Beschow <shentey@gmail.com> wrote:
+>
+> This series contains some low-hanging fruit fixes I came up with when
+> investigating Rust for QEMU, especially QOM object lifecycle vs. the Drop trait.
+>
+> I noticed that no finalize methods were called in Rust sysbus devices when QEMU
+> quits, and neither are its C variants. What is probably missing in the first
+> place is a
+>
+>   object_unref(object_get_root());
+>
+> at the end of qemu_cleanup() in runstate.c (see TODO there). Adding it before
+> this series won't clean up machines since their refcount won't reach zero. With
+> this series applied this additional line will cause various issues when quitting
+> QEMU, allowing the problem to be investigated. Fixing it is beyond the scope of
+> this series (and my time budget).
+>
+> Testing done:
+> * `make check`
+> * Run imx8mp-evk with a Buildroot image
+>
+> Bernhard Beschow (5):
+>   hw/arm/fsl-imx8mp: Do not create redundant unimplemented devices
+>   hw/arm/fsl-imx8mp: Fix parent of ocram memory region
+>   hw/arm/imx8mp-evk: Fix reference count of SoC object
+>   system/vl: Fix reference count of machine object
+>   Revert "sysbus: add irq_routing_notifier"
 
-Yep, that sounds reasonable.  Also I think it possibly justifies
-adding this tunable without the 'x-' prefix.
+Hi; I've applied patches 1, 2, 3 and 5 to target-arm.next, since
+they're all either arm-specific or the obviously-OK patch that
+deletes the unused connect_irq_notifier method.
 
-With regards,
-Daniel
+Patch 4 (the system/vl one) I am not applying, because it hasn't been
+reviewed and I don't know enough to know if it's correct or not.
+(My guess is that it is correct.) You might want to repost
+it as a standalone patch to try to get it a bit more attention.
 
+thanks
+-- PMM
 
