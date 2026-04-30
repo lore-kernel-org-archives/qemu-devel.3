@@ -4,107 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2E07FF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:31:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 531C3FF8873
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 17:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIV7j-0007LB-MC; Thu, 30 Apr 2026 13:24:27 -0400
+	id 1wIV7v-0000dQ-Uk; Thu, 30 Apr 2026 13:24:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV7B-0005iJ-0Z
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:23:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wIV7s-0000Ml-UF
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:24:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIV77-0004hI-9v
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:23:52 -0400
+ id 1wIV7q-0004ui-Su
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 13:24:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777569827;
+ s=mimecast20190719; t=1777569874;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2Wc1TGXWRaRkTUOIeFKCA6LN9gc3pqEx/i8/Vgj91Ac=;
- b=ALtNdupFkdCBIHBhL8fWnfpGB3kVjt98kYQHIR+p7qnnpKAwcpXXgP3Gg8ndvJll8gECk0
- v1LBNL2l7sMmffuwqXtUQECdg1StvRiBkT6gqcWEk8WTX3fTR5LkoIA7Fv0j1b8m1nrwil
- KsyHd2PIpFZ067AwJdoDgITXW6vacVc=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wyoUkF/bjkIeC5ZoeQHhKzjY0RW68pJmMim6gYvuPMQ=;
+ b=cQAgrdeu6G1et/gin36zRolYapu3SMh84Mc3ns6xvVn1rvm1U28wqXiaLhQkNpAa7Zm7JJ
+ W4jIJJhRa0AYG9N/Lrm7VSUTtF4LM0ozs4Zy/+kMrlPE3tkpOh7ZC4KjGjNtShv5+vC7Gv
+ lpT4CFV/YKg+EJFpalL1qCiiuvDuER4=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-70-D8M8DYexMFWaKioY8wHQRw-1; Thu, 30 Apr 2026 13:23:46 -0400
-X-MC-Unique: D8M8DYexMFWaKioY8wHQRw-1
-X-Mimecast-MFC-AGG-ID: D8M8DYexMFWaKioY8wHQRw_1777569826
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-50fb6d713ddso19730641cf.1
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:23:46 -0700 (PDT)
+ us-mta-263-KQiAV-vyMyqlUZNOQEICvg-1; Thu, 30 Apr 2026 13:24:32 -0400
+X-MC-Unique: KQiAV-vyMyqlUZNOQEICvg-1
+X-Mimecast-MFC-AGG-ID: KQiAV-vyMyqlUZNOQEICvg_1777569872
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-8b46c014a26so15280236d6.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:24:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777569825; x=1778174625; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777569871; x=1778174671; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2Wc1TGXWRaRkTUOIeFKCA6LN9gc3pqEx/i8/Vgj91Ac=;
- b=WY6Jz2+XEbDuEK2SBeh9/p/TEYNkvXBfvU/+NhUzHh2b4fkKB2czvWunNKjuzv79iY
- b4wRY9S6N5LcsYrukKQm5NRjXVRqH4qpaU+JprP4o7X3tdsnw1dr5VVautdc5/ndDiWl
- PJJkT17xKsF7vTcWjLZFJi/KvZeDqVemViRyqL0bPmiMxh9bYyygDjtl5n70AR/P3xaV
- d28do2H/ZsudYmweoIVEB3a0ATdaj1/vDNUzkewg935OOvUyJIef/NeY+3jz62eum95G
- 0I+UydwPX/nlJkhBryoR0PwvJkW9AnQDZJV8VbOtclRRCtsrDDn0cuPNefwVEG9T22RZ
- 6ASw==
+ bh=wyoUkF/bjkIeC5ZoeQHhKzjY0RW68pJmMim6gYvuPMQ=;
+ b=KWGCEjYPcKsSCJCzfW/U21ZtNNrUGlMm1/3GErqTDyMxre3PustVfu+sOiAKPpHzGz
+ Jg97WHksJBWCxLqWVYSS4/vZ+W2hFUQpAVTLL3k4TnMW3I5V6tvkh3zgtd8nCQ97eJb1
+ 8CMGTulbt7fo7Sn+G64kfKb46KXnRaBdWj1Vg4JXoP89V30RS5mNmDP8jL64hice9YE1
+ A1QO/vjuw+H7e4wEx7OHgrEdHGB9l57wyegJ7DV9WOsaoeoVmbC/z30FnlDoNvPCrcqy
+ C+fPjYJ5iykfnTzJ4xEm78RvZseEz6UflZPaV0uBfiN2Q6nm9bMzq3wcQNL9FMJXFg2f
+ DuYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777569825; x=1778174625;
+ d=1e100.net; s=20251104; t=1777569871; x=1778174671;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2Wc1TGXWRaRkTUOIeFKCA6LN9gc3pqEx/i8/Vgj91Ac=;
- b=VOlILwCtPYxGMEwPCdOXRo6N8LXnc3ygkQJth/gc/xkxsFHqAp1OTeGxKIKZhHHDE6
- +PpXKbcaX2Qg86qGzWFBAF6voElUAdgLZgShJjrpPjuJ3IU9E0iL9HW0Q5IMp4aJJLkf
- +9N/7VQMCZyjbJGqUSsVIZjMRVDpeeNiHKVzQ+OZoi0XCHM9EXAPN79f0nKfXJf2bghh
- zemuDvmPw6zckS+EUdjwBtrv35i1JZaCZtBaRObPrhiJ+vW8Qxp3e20BWStGKKHkXH+O
- 4k0JZylfbDEr6W6CIsKF52+odfoa3VYd3lipXdrHsMmTlUFoGeq0gstl25mgUABkm58P
- EK9g==
-X-Gm-Message-State: AOJu0YxJtmHd7GtvVTngMnplWE3zb/cih+bVVHh6n3B8a7Yi5BSL9pOL
- n+QhdT8f3bt7kGsBzeyMyHUS4MqjJA71W9gdJF4mDNkqGPWGOFvLkf5mr4H315zAcKS6TrmSaY2
- gmLoAK8Qh57Q4k5/HOwkVHz3FX79U4JbvWPoGESI0Ol9fr7fWvrKxbx0YnloqwBfWn/jWArDNNH
- yG86wGS80tGzJQ7/nO8G0jTyaW/GOYz3fm3pmWagZu
-X-Gm-Gg: AeBDievB+NRA8wXf9e/j3n5GkyINwaj5Hlvxi1EtbQMZylpnPPRHcD0LmnKS8xNho9a
- opKw3tl6K8fCt6ZtstPDz23v1I9MS9bM66mrc/rjvyQWU/Zu3CyRoW1QugBVASyPHYIrpC6h2io
- tF8PRm0PkeU/oJ41gjvnJHOXSyxd5BNJQYZ+2GAugVJFQrX1drdsKJK9Flz3xFnAiajnmau7gVF
- h8O025U8fjenwtmlJeXgqDnYDrtjTGAkNGfHhmULh95Yf+AoKyj7VS9/Jtpaly+c3qp8/mxMCVi
- iJGEkV5sPCcsYn2i+GFweiI0t1B5G/vFJF9MdtyauJQKeNYn+LQZy6OjBXTGrwZ8wVxuLIKee+1
- jCh1rF78ifWkh265v7IV9PO1Ai6QGeN2MgDz0hRfHkhapSpHGPEzOKvq+mouQ+3qn8usQVNwqeC
- QgDR35gpn+tuLVGUYrwhRXqxAsR4nlVFe+KSo=
-X-Received: by 2002:a05:622a:513:b0:50f:b81e:c655 with SMTP id
- d75a77b69052e-5102afa4e75mr53971391cf.57.1777569825130; 
- Thu, 30 Apr 2026 10:23:45 -0700 (PDT)
-X-Received: by 2002:a05:622a:513:b0:50f:b81e:c655 with SMTP id
- d75a77b69052e-5102afa4e75mr53970681cf.57.1777569824459; 
- Thu, 30 Apr 2026 10:23:44 -0700 (PDT)
+ bh=wyoUkF/bjkIeC5ZoeQHhKzjY0RW68pJmMim6gYvuPMQ=;
+ b=ZcL254DW0Y7f50nvVj5edRR389E6+raoAEfHLSWz+OnInviGCj5XbBmm1NWZNlw0+7
+ ZELSuvfnRGqDsX9/On405YRxvJ5J5CQTwKI3FT2hhKuSIFG723uSTYrcBYwqmp4IMsID
+ f4NlWaeLQ1Nwa7Asyo2X7SaVcvBc4efH4OacI8DiLWJulShmyDKZGwoLkxrGIy+ELhFV
+ 1aGVdUl1vK5iAY3mpQLkzCAo8E9lXLOUD3LtIoe+BRCHKSYT+dK6k8vyVYt0v4ejuGUf
+ yu1VCNBaylpUUw7SpNf8PipDej1k7370JpsXTnpqO6zFoaPjC57HxXZCXxTmubxqE+6X
+ DdgA==
+X-Gm-Message-State: AOJu0YypU74a1z4pHSclKHOmUyPSCGECXZt0P6OqD8qBhrEH4IvFIK46
+ iEAdAPL8BQA6cokH/lwevGAU8P3qkcgFNwCYNfmR0BrL5htsZWuvCqJeY77cfmuvE5i/sOxgzvZ
+ GG8632+D1r1+Fbq33cGF/31i+v9zvuUQD4iVPBORZ2eJiZEASZ2KCs/cNGHxbiEKZ4EahKijvLp
+ n/nombWTOlD+90X2bCIC3zp4ucxpLnp3OvNPhBwLYf
+X-Gm-Gg: AeBDieuRbwqkH8U+s+IhKvhteAEia2b6p9PFV6mkilsbhYG474LMDkzKOS0yt6Vtf/l
+ 1oq0cLkJCOVWuvtTcnKkI/FWhNEkg2xK3srYfmlWkJpj0xBMQCSvMP5VQ5GBJocwlxVaoqadAYm
+ 02cB5NniydL4Ti5YPYaV4OyufLYnHn2bHTWgSRBQEwdxA9qkzvdGNuNklg+McbWIJKXvS8UsWBZ
+ 7+ykFqVcIkos784aY7QhRgz9O4JQgADRHpItTEqN0gSJ0Xyj2XZV0ROzLt3/oH6NPhR/l9ghC8S
+ Rnz8SRjqCkzhPXB3Ol/vhRDikaoKeZQc9oXzG+KLf9UyDRvTwJ0IVcocDZSjXh/fGuDCY9Kp3EW
+ LOpedOZqXwAFF05QRkfQdDNUpp4u5VSxkouNJE3CuU++uaKbyb6o5sM0YvOZ/O9lMLo6N4qcPcI
+ gQqN7mwFFWYGVJcFJctlJRhunetbRgfI0/4uE=
+X-Received: by 2002:a05:6214:3986:b0:8ac:a62a:a451 with SMTP id
+ 6a1803df08f44-8b3fe727594mr60926886d6.12.1777569870956; 
+ Thu, 30 Apr 2026 10:24:30 -0700 (PDT)
+X-Received: by 2002:a05:6214:3986:b0:8ac:a62a:a451 with SMTP id
+ 6a1803df08f44-8b3fe727594mr60926246d6.12.1777569870315; 
+ Thu, 30 Apr 2026 10:24:30 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.85.67])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5103d1c66edsm771311cf.1.2026.04.30.10.23.42
+ 6a1803df08f44-8b3ff4850e5sm22901446d6.49.2026.04.30.10.24.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 10:23:43 -0700 (PDT)
+ Thu, 30 Apr 2026 10:24:29 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PULL 31/58] whpx: i386: use WHvX64RegisterCr8 only when
- kernel-irqchip=off
-Date: Thu, 30 Apr 2026 19:21:37 +0200
-Message-ID: <20260430172204.1006673-32-pbonzini@redhat.com>
+Subject: [PULL 46/58] whpx: i386: add HV_X64_MSR_GUEST_IDLE when
+ !kernel-irqchip
+Date: Thu, 30 Apr 2026 19:21:52 +0200
+Message-ID: <20260430172204.1006673-47-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260430172204.1006673-1-pbonzini@redhat.com>
 References: <20260430172204.1006673-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,93 +123,77 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-When kernel-irqchip=on, manage TPR as part of the APIC state instead entirely.
-
-This fixes some failure to set state errors.
+Add support for an oddball HV_X64_MSR_GUEST_IDLE not-quite-an-HLT
+that wakes the vCPU even if EFLAGS.IF is set.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Link: https://lore.kernel.org/r/20260422214225.2242-10-mohamed@unpredictable.fr
+Link: https://lore.kernel.org/r/20260422214225.2242-23-mohamed@unpredictable.fr
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/whpx/whpx-all.c | 37 ++++++++++++++++++++++---------------
- 1 file changed, 22 insertions(+), 15 deletions(-)
+ target/i386/whpx/whpx-all.c | 27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index d470c5b9d37..03c146dfb8c 100644
+index bc8d673c31a..593a707e219 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -95,7 +95,6 @@ static const WHV_REGISTER_NAME whpx_register_names[] = {
-     WHvX64RegisterCr2,
-     WHvX64RegisterCr3,
-     WHvX64RegisterCr4,
--    WHvX64RegisterCr8,
+@@ -52,6 +52,7 @@
+ /* for kernel-irqchip=off */
+ #define HV_X64_MSR_APIC_FREQUENCY       0x40000023
+ #define HV_X64_MSR_VP_ASSIST_PAGE       0x40000073
++#define HV_X64_MSR_GUEST_IDLE           0x400000f0
  
-     /* X64 Debug Registers */
-     /*
-@@ -478,8 +477,11 @@ void whpx_set_registers(CPUState *cpu, WHPXStateLevel level)
-         vcxt.values[idx++].Reg64 = env->cr[3];
-         assert(whpx_register_names[idx] == WHvX64RegisterCr4);
-         vcxt.values[idx++].Reg64 = env->cr[4];
--        assert(whpx_register_names[idx] == WHvX64RegisterCr8);
--        vcxt.values[idx++].Reg64 = vcpu->tpr;
-+        /* For kernel-irqchip=on, TPR is managed as part of APIC state */
-+        if (!whpx_irqchip_in_kernel()) {
-+            WHV_REGISTER_VALUE cr8 = {.Reg64 = vcpu->tpr};
-+            whpx_set_reg(cpu, WHvX64RegisterCr8, cr8);
-+        }
+ static bool is_modern_os = true;
  
-         /* 8 Debug Registers - Skipped */
+@@ -1648,6 +1649,15 @@ static int whpx_handle_halt(CPUState *cpu)
+     return ret;
+ }
  
-@@ -735,11 +737,14 @@ void whpx_get_registers(CPUState *cpu, WHPXStateLevel level)
-     env->cr[3] = vcxt.values[idx++].Reg64;
-     assert(whpx_register_names[idx] == WHvX64RegisterCr4);
-     env->cr[4] = vcxt.values[idx++].Reg64;
--    assert(whpx_register_names[idx] == WHvX64RegisterCr8);
--    tpr = vcxt.values[idx++].Reg64;
--    if (tpr != vcpu->tpr) {
--        vcpu->tpr = tpr;
--        cpu_set_apic_tpr(x86_cpu->apic_state, tpr);
++static int whpx_handle_hyperv_guestidle(CPUState *cpu)
++{
++    X86CPU *x86_cpu = X86_CPU(cpu);
++    CPUX86State *env = &x86_cpu->env;
 +
-+    /* For kernel-irqchip=on, TPR is managed as part of APIC state */
-+    if (!whpx_irqchip_in_kernel()) {
-+        tpr = vcpu->exit_ctx.VpContext.Cr8;
-+        if (tpr != vcpu->tpr) {
-+            vcpu->tpr = tpr;
-+            cpu_set_apic_tpr(x86_cpu->apic_state, tpr);
-+        }
++    env->hflags2 |= HF2_HYPERV_HLT_MASK;
++    return whpx_handle_halt(cpu);
++}
++
+ static void whpx_vcpu_kick_out_of_hlt(CPUState *cpu) 
+ {
+     WHV_REGISTER_VALUE reg;
+@@ -1851,9 +1861,10 @@ static void whpx_vcpu_process_async_events(CPUState *cpu)
      }
  
-     /* 8 Debug Registers - Skipped */
-@@ -1745,7 +1750,7 @@ static void whpx_vcpu_pre_run(CPUState *cpu)
- 
-     /* Sync the TPR to the CR8 if was modified during the intercept */
-     tpr = cpu_get_apic_tpr(x86_cpu->apic_state);
--    if (tpr != vcpu->tpr) {
-+    if (!whpx_irqchip_in_kernel() && tpr != vcpu->tpr) {
-         vcpu->tpr = tpr;
-         reg_values[reg_count].Reg64 = tpr;
-         qatomic_set(&cpu->exit_request, true);
-@@ -1787,12 +1792,14 @@ static void whpx_vcpu_post_run(CPUState *cpu)
- 
-     env->eflags = vcpu->exit_ctx.VpContext.Rflags;
- 
--    uint64_t tpr = vcpu->exit_ctx.VpContext.Cr8;
--    if (vcpu->tpr != tpr) {
--        vcpu->tpr = tpr;
--        bql_lock();
--        cpu_set_apic_tpr(x86_cpu->apic_state, vcpu->tpr);
--        bql_unlock();
-+    if (!whpx_irqchip_in_kernel()) {
-+        uint64_t tpr = vcpu->exit_ctx.VpContext.Cr8;
-+        if (vcpu->tpr != tpr) {
-+            vcpu->tpr = tpr;
-+            bql_lock();
-+            cpu_set_apic_tpr(x86_cpu->apic_state, vcpu->tpr);
-+            bql_unlock();
-+        }
+     if ((cpu_test_interrupt(cpu, CPU_INTERRUPT_HARD) &&
+-         (env->eflags & IF_MASK)) ||
++         ((env->eflags & IF_MASK) || (env->hflags2 & HF2_HYPERV_HLT_MASK))) ||
+         cpu_test_interrupt(cpu, CPU_INTERRUPT_NMI)) {
+         cpu->halted = false;
++        env->hflags2 &= ~HF2_HYPERV_HLT_MASK;
      }
  
-     vcpu->interruption_pending =
+     if (cpu_test_interrupt(cpu, CPU_INTERRUPT_SIPI)) {
+@@ -2128,6 +2139,20 @@ int whpx_vcpu_run(CPUState *cpu)
+                 }
+             }
+ 
++            /*
++             * Windows and Linux both use this MSR.
++             * Windows 11 25H2 uses it even when not advertised.
++             */
++            if (vcpu->exit_ctx.MsrAccess.MsrNumber == HV_X64_MSR_GUEST_IDLE
++                && !vcpu->exit_ctx.MsrAccess.AccessInfo.IsWrite
++                && !whpx_irqchip_in_kernel()
++                && whpx->hyperv_enlightenments_enabled) {
++                is_known_msr = 1;
++                whpx_bump_rip(cpu, &vcpu->exit_ctx);
++                ret = whpx_handle_hyperv_guestidle(cpu);
++                break;
++            }
++
+             /*
+              * Linux tries to use it anyway even when not exposed.
+              * Ignore the write as the VP assist page is not used.
 -- 
 2.54.0
 
