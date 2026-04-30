@@ -4,100 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4614AFF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 15:49:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 451C3CD13DA
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 15:50:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wITdQ-0000uH-7I; Thu, 30 Apr 2026 11:49:04 -0400
+	id 1wITej-0001V6-27; Thu, 30 Apr 2026 11:50:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wITdJ-0000ti-0M
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:48:58 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1wITeh-0001Ul-Cq
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:50:23 -0400
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wITdD-0003zR-Tv
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:48:53 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-64eaf8aa893so872224d50.3
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 08:48:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777564130; cv=none;
+ id 1wITee-0004UT-8B
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 11:50:22 -0400
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-65318dafbcbso1014854d50.2
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 08:50:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777564219; cv=none;
  d=google.com; s=arc-20240605;
- b=IfciLnEFOZmQvch64XU8fILaKb4CTS6t8JSrFUE7xssJz6gg4mxI6m5p/5DYk9Ndq1
- q0OQ+ww3RNvHa6eELW8NDEFuXN5QLOU9bPVoJHC2fP9Nx/Kwgprhm8tRxDG6UDNTs3X1
- wLxEr9LbGEKSl+rbgrQIKZXqqMFhtLDMtsoM/lpSGEwpZEchr3UM0TPHdYK7mGjz7Fc6
- fyTC2yBT6o8FkHKF02rSHrXZVipJYPIIlEPjpHZarx5kO19WARXvwN4YJ33uFu0y8AaV
- rgXMByTiqT98bih98a3KiRWcHNtiU95dznONRR34Vx81qveRe945BA25VJkIv8HR03Ot
- 3koA==
+ b=fcU1vZrtvVHQ0eL2asNZ8WCG1368WsKjML7OD5VnGUGFNpeKtbqjj3REDAqpXZ90Dm
+ d8JqH+QiqHKrDEmx+OURp/vRvjNQ1TDJhLrmsHZXPs5lj1BzH3u02z/kp+3Hnhe2MmXk
+ ZO+Dc8VDJQmcGOB86rail0+u+5gWleugFi+j6bT/nc0LB/Yc1MNzvoaa6mEa7fl5eDEz
+ d59klVDNdCCB7OfyTYVQDU7rMJZy+FcRGGOknmqyYdc8+KeRYqznpRc8I/RnRSodtjam
+ Ko6IH0JO5PgUPECvA+IUOfNz1esjD3YqUpbi6fe2KXVt6u/zOERYUiBFcxBWUYnFNSth
+ iaiA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=Cy+FrtKdiXTwWMcABDhwFsT4sxdsP6UzaGrtK70XbD0=;
- fh=TY0pstkCkk7axbyimUXQMiBzpNM8x5gBc3j5ZXXNigM=;
- b=lAj0jX0+UbnnxvsnHSBgWi0Z3wK/HvVxbLW/jbi3plO3tseB9TrV7MrzPPW0WAt9Im
- werp/ElpbKyeX3PTmE4QXwbcgC/Z9u5m59mAFH5Lby1oW7HEsPKhoRzUieeJsYCOmWMa
- NkLwmYNYETAixC6+2kN+PIPm9TC5VvI2ocbGkGrpX/ippFkEaJ5mKhbhA8uR9CQtLfj4
- +3E3eaUhPIcKkSnzpZHpegoyIHo5n61JcBKb7BThdC59fCa6liGKtdsqi0FwyUgPvnRF
- LJewk9sF9SMvtwmyWWLuaBcn7w6els0oCZo8GH2m3hV9D0isKEyjbTx996Bwyhvmw7PD
- cCRA==; darn=nongnu.org
+ bh=IGSm8Kf+kUvKCOtRp5JgBM+cCLxPk+wJOrl+rqFcctg=;
+ fh=+1firF9KONN4Yc1L4UE+f7hjZIqv5yKMPW+CbJoXUyw=;
+ b=lNNZZ6CUOZ7vKqErNpr/HGTXpimx2dOZ7fHJJ7TAH2A0zCaxTfiVCg2YlseatuccJM
+ Y6SLXBrdqMEGJ8ZWvHOFTPzxVBbligiC94cRlHSEkA/HeouHBM2ffsCvlHYs3ZI03XoV
+ Op6BrktXBhqeigssIFWF3TKQJOt4/e/asXg0YVWmgHR0xVaPjWccA4+gbFr6/g+fnnHJ
+ r9myTqFnoiWpxD7WY6fIl65m9bBe8b0xhZkobgkCBwapE80i9c3OBQChf4xDtidMoO5h
+ PPBSh8yS2DFbo3i2S+JV2DU5ijN6qdSeDg2pag0VGXXB4tlZQekyBluDgNkxsNTpwZek
+ LX7g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777564130; x=1778168930; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777564219; x=1778169019; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Cy+FrtKdiXTwWMcABDhwFsT4sxdsP6UzaGrtK70XbD0=;
- b=CI0wr/EnltG4Qj1oynZ/b2AxCgiwGyalVmHqR0cn25W/BkqblzvLy0Nz53et6ggAcV
- 6/nHFIt+++GGy3OofEnFDUjSUEcCQIui8jJ2tkruE78/IE9cJSsN3nR0BwIKUtzf9Dt9
- 2JvelKsQmti23sPrN6RK1NmDoe5x6/R8KExaBdbjd4li6RSNnmMFIpDI0iE3czSxzBfo
- q07OAVd5FS9BtIY0B3UfBnTdJwstwSGao96duxtq1CRTsdk4+cH1kd1feDnh/6UDXESA
- pZ34f939QFlpto8rdSYuKs9CMqt8xy8RWFsOepzGTErMvEwnsbKNRT1+hGDsxzS1OWHm
- jFAA==
+ bh=IGSm8Kf+kUvKCOtRp5JgBM+cCLxPk+wJOrl+rqFcctg=;
+ b=pEHou9fpFVLSV5Q1R8qENyWXGyjq3SVgWnvfs9KDvFNyoNMBLd9y243U946l1+e3Dl
+ gEevnXS4bQscSMPbjIGIsqXxTNYi7IduhWjiN71b/DY+w3WtBARv9I8DrlUnwW1H4Y4h
+ FHT95GrdSbRPO0n7qu3vvb/BNlDnfO17iOgkZ99PB/kVKtLcDXXhwmQojYMsZ29LVds4
+ 0kHX1yb+SJUQjKRiM5QquXpXrrHZHwK2mlICwtQoSjGJa7T5VMmJAN9cq+XrMAE694l+
+ 7MGYfJCDtUNg5/nbLvJSF25Pgm83hLacRAyADG7iQrJJwZ7k2+e+yfvH242JV6KCkiE9
+ 1zoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777564130; x=1778168930;
+ d=1e100.net; s=20251104; t=1777564219; x=1778169019;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Cy+FrtKdiXTwWMcABDhwFsT4sxdsP6UzaGrtK70XbD0=;
- b=MgJ+fQz3k6gwIfH83So618s8JiruyPG7jRv2kx19+FQ2nUjHWwCAQDutuFlUsEkEjQ
- m308h/MfxdRkjEf9BrCechuQYnp289+DGxopoyHUYw3ovJ+AcRIKXFBNIQFuCZnH03WL
- dMiYxB9IuAjhmfLKqLnFtUM9f8sfl0/lbGK4cBE91BoqweZtP6fi0Jz5ftyUJv4H1h/c
- U0rdItxrq8HLCtKymFRZ2BgYIV+0mVv4vOymQomnlsmrr92eHlp8J3TBO2vmFesMeX2V
- R5VTIKYh0tc9zyvaM0LXdQMLqDIxKNpQ15mbGzzXS1ohc2i2+aj7xFE9E4Iq1BAnj6E0
- GsKw==
-X-Gm-Message-State: AOJu0YzRzyfjir5m7pvOo6HmSGz2U3acLlq20qv7DFNaI0BSK7UZ3tTM
- xOAUcFGqCNkn5H/XEHbPErMwzlYdNn0orEKoR3YNr/U+4JYpr3IvuAnND4YjOWfweaTbD1Tah+J
- U9EvJgXf25saDF1gWDy4f2AqDNZZj+Tao/IaK4fCxkQ==
-X-Gm-Gg: AeBDievLWMR8sCGbeZxxLtT4qXG7RA+/j7eaDXEjtCRRk0JEJJOe4pW0bT4jPWazDn3
- LIC+x1je6IDVO18uDdjo+JZ7FF2uodhYS/ADPzgKF/zQm0ldR1AqVF/B0tUEHYrPNNABIOxzjBj
- z479OL/IttBRxWVUVXSAwMw+TrpU2QCxRjgYx40O0xvlSu9VRhUbqfmn/1nBdO6AAdTFkv80CQ3
- x+XaAuL/CJX9LV+BcyjoTXJAViV7s/naNEsDUGurpQdIsCcUc/4Lj01XN97hG0UlacpCF8q+t88
- KJIXMPi1yiF6g5X5W9E2SVcQms16Cf8LQ3RIrgsUJUf5oVfYGrXqxIyPvh9PemORo0FJ7rVAKxE
- b4A==
-X-Received: by 2002:a05:690e:c44:b0:651:b108:be59 with SMTP id
- 956f58d0204a3-65c18f2fb77mr2627563d50.44.1777564130424; Thu, 30 Apr 2026
- 08:48:50 -0700 (PDT)
+ bh=IGSm8Kf+kUvKCOtRp5JgBM+cCLxPk+wJOrl+rqFcctg=;
+ b=fsg8mTWuV0kTQOFgMxsDVWrt8FOM7g+jDcNtGVEUhF+9Wgi+R9Gfe6Huu6WW8yNr5g
+ cwEYMEU5GUoy6zlGDRBeHXfz2spVXNmnLqnQU8pK5fLuHlSU4iJCB/QOLqx3tyNQZsib
+ o9YzDLIp4BAT4ii7DurXBR0bjbyMDv4HqagXrGBCae8ReVqOEZZLmjeOG84us7cPbeJF
+ RpNBYr1Oe/xZ11IHStL7GWYrNMchqfDuf2inctXpYeOyC5vyROQhraDyjWYVM1xVKx6S
+ rdkhn1I+OMJQktK79cbRXOVFowi++kDrGhtXYSlYjd50ZQsoHJL46fnKI9oSilH1Hpoy
+ SLCA==
+X-Gm-Message-State: AOJu0YxKB4x8Di2x+UFj6lFNr8B6hUbx0M/zM8OTfFfzuJVBBlLA02Dl
+ XjzaDacwRlpUV+fCUaF8wdl5vRssw28fTNaVfOgaEb2CLKb4qtERfEtdAPSHvaKOdPXShEHxhDS
+ aLMyoZpyB2N0EPHY6aNPRserVFNg2Vy1FF1yJ6+iuy++41lWWAmLa
+X-Gm-Gg: AeBDietN9c2W7ET4tDXpESQBXoA2RCGf0lY0wg+eT0Ikg5vTlY0C0qhEZroASPo9uu/
+ tzFblcb7r9DJz1muLYWQM4dHpD24WbaztMm4rQGgcEvZ1q/b7PSl8IREVP9zY76jqhIYQ+yyUhd
+ tS6y5Bzl/dp2o6RJpliAlTQ0z+X5dMh5TZiWsm6Q3To+h+I7lfVMO+sYF5u1NsemW1BEObmANm1
+ anIX7EFEJjFkMx6nxPYcN+5iaTxeoTOc6CeatxLjoLHzNkKvRVKZsh1P+Q9VXe0lnyGgalkDCXH
+ wRbyL2Rn03XAMfLvz56rSpkNrb8IPOc27BSJRWWYbtSKvCa8g5+wr9qKrnikl3+zTrbN4+NcWpf
+ iSA==
+X-Received: by 2002:a05:690e:1c2:b0:65c:2b92:f8ed with SMTP id
+ 956f58d0204a3-65c2b932447mr297440d50.22.1777564218927; Thu, 30 Apr 2026
+ 08:50:18 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
- <20260427-qom-tests-v1-7-c413f3605311@redhat.com>
-In-Reply-To: <20260427-qom-tests-v1-7-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-17-c413f3605311@redhat.com>
+In-Reply-To: <20260427-qom-tests-v1-17-c413f3605311@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 Apr 2026 16:48:38 +0100
-X-Gm-Features: AVHnY4KCwHwYRmcgHuCq-7lWAsAGFbBdL8GY84dHBVtbAKUtfFZ_h_WPWRtL2_M
-Message-ID: <CAFEAcA-Q33zfAfST-4qZNcHSR0r9J_g5RVPz9_Cgbeg=2q0QoA@mail.gmail.com>
-Subject: Re: [PATCH 07/41] qom: skip link property check callback when
- clearing link
+Date: Thu, 30 Apr 2026 16:50:07 +0100
+X-Gm-Features: AVHnY4IsZUDhToJ2uUO-0Y6YHNkRsnWqhqeS6BlrKZBz4EIbhBOxVC_aLwIdD_c
+Message-ID: <CAFEAcA8Gq8xBOMUmC4BwtVmJMxn1cnOKcURt=gr2yPOhFjdjxg@mail.gmail.com>
+Subject: Re: [PATCH 17/41] hw/core/resetcontainer: free children array on
+ finalization
 To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,55 +121,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Mon, 27 Apr 2026 at 20:44, Marc-Andr=C3=A9 Lureau
 <marcandre.lureau@redhat.com> wrote:
 >
-> When setting a link property to an empty string (clearing the link),
-> new_target is NULL. The check callback is still invoked with this NULL
-> value, but callbacks like isa_ipmi_bmc_check() cast it with
-> type-checking macros (IPMI_BMC(val)) which crash on NULL.
+> resettable_container_init allocates a GPtrArray for children, but
+> resettable_container_finalize was empty and never freed it.
 >
-> There is nothing to validate when the link is being cleared, so skip
-> the check callback entirely when new_target is NULL.
->
+> Fixes: 4c046ce37af0 ("hw/core: Add ResetContainer which holds objects imp=
+lementing Resettable")
 > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > ---
->  qom/object.c | 10 ++++++----
->  1 file changed, 6 insertions(+), 4 deletions(-)
+>  hw/core/resetcontainer.c | 3 +++
+>  1 file changed, 3 insertions(+)
 >
-> diff --git a/qom/object.c b/qom/object.c
-> index f981e270440..c50334b3023 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -1903,10 +1903,12 @@ static void object_set_link_property(Object *obj,=
- Visitor *v,
+> diff --git a/hw/core/resetcontainer.c b/hw/core/resetcontainer.c
+> index ef84aa2374a..a4a6476a036 100644
+> --- a/hw/core/resetcontainer.c
+> +++ b/hw/core/resetcontainer.c
+> @@ -66,6 +66,9 @@ static void resettable_container_init(Object *obj)
 >
->      g_free(path);
+>  static void resettable_container_finalize(Object *obj)
+>  {
+> +    ResettableContainer *rc =3D RESETTABLE_CONTAINER(obj);
+> +
+> +    g_ptr_array_unref(rc->children);
+>  }
 >
-> -    prop->check(obj, name, new_target, &local_err);
-> -    if (local_err) {
-> -        error_propagate(errp, local_err);
-> -        return;
-> +    if (new_target) {
-> +        prop->check(obj, name, new_target, &local_err);
-> +        if (local_err) {
-> +            error_propagate(errp, local_err);
-> +            return;
-> +        }
->      }
-
-I think that this would incorrectly allow setting a link
-property to NULL on a property that uses
-qdev_prop_allow_set_link_before_realize(). If the device
-wants to forbid changing the link prop after realize, that
-should include forbidding "clear existing link to NULL" as
-well as "set it to some non-NULL thing".
-
-Fortunately almost no users of object_property_add_link()
-seem to use a function other than either
-object_property_allow_set_link or
-qdev_prop_allow_set_link_before_realize. The exceptions
-I think are just xlnx_dp_set_dpdma and isa_ipmi_bmc_check.
-So I think we need to fix those, and make sure the
-docs point out that the check method can be passed a
-NULL object.
+>  static void resettable_container_class_init(ObjectClass *klass,
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
