@@ -4,112 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5991CCFA13
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 14:21:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 993EAFF8873
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 14:21:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wISGa-00046j-HE; Thu, 30 Apr 2026 10:21:24 -0400
+	id 1wISGP-00042h-UB; Thu, 30 Apr 2026 10:21:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIRWb-0004tQ-3a
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:33:53 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wIR3n-00072u-Be
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:04:07 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIRWY-0003NU-9l
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:33:52 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-488a8ca4aadso10506205e9.3
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 06:33:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wIR3i-0004Yk-UP
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:04:07 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-65c24be9e4bso318146d50.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 06:04:02 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777554242; cv=none;
+ d=google.com; s=arc-20240605;
+ b=i+INZ9Z2h39CdUfZ0BkTDKFcFAkRnZQ/d9WmlUS80BGcEtRaC0/zg5ROv+QQHmWUod
+ vFz8BBjgfJ9G7Vj3zn5YeR9XwayXs+nOTmpQ07f/lIY/q7wG08/3aolH6+9u6CO0vpat
+ rm+ZsJ8Ovz3ACfHyj0QSDNYuhHDxjWOpF/MDbLxvmXrbabjQf5iGOmVCt1gWY27T1bZN
+ JO3L9qEeSY+pH4iITo5m17Jr326O3O3oWOZSMKG9IYDVfVg1se0BIIh4nK7VbnSIpq99
+ 6A90poijzWVCafS+x3sFCMevLPqzoHAJ/I5cLxKhA5vlju6jSjzTZq0vux+k7Wz1F+Vf
+ 8YpA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=HIxBMsJTZHKdbns51p3aoFGGmnWk2RZsQGGMX5I0d4Q=;
+ fh=oiF8dhPxD6+w5M0oFKMgDkQ/sXE5JE9Y8kXtIO1nrJA=;
+ b=cTkYVg0CFT+PlBcjs5/oyFqlcN84VABojC+lVlOEZPus/5bgJvvLsdrHJhbMY7rfQm
+ QHeEi0vp3DKoyqIdJJZPlBv2HAvj3QU5ZaXSeiR4Z135wPxnX7t8XL6LXq7OIdAlwtPq
+ uRTo/w3/1w5YxM36iz8LK+HhTW/aUDcJyV2qDfVy4n0ZzErn3OqVbw6P5w+xcnDgbbzB
+ oeBNxvmIYvFito/QEZ0bP3Zm2xq/HvEFnihrsq/2CtfCUYfuQax5xKTCwZP0QQzgg8wi
+ vQXL7qDaef70DKwWXQxFEGVVElfhJg2hodPUrSmb61U9wBD53y8cfIgW8LRUoQhfoDQK
+ /eqw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777556028; x=1778160828; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dEpvF3607F+qemfhpeYGfsinknF3G0PYbhra3ynjbnU=;
- b=sVoMLJ170faQeixgmjKgvFUrOzt59dlOEK3wKzW4bJBeFyuMOQh4uUS+og47/EEaL6
- R9LY+9gSAdEFX4WDpwJNQbIAOOtnSuvR4w/65TwwqzHi6nH470ShH2lSH5AajbMqXPxx
- KAz21NVNX/630rjG8xJMb9gZU4mkMfcrO3aOaqsvmVudH8KQBdj31o5wNbvfiin/05Tc
- e3XYr4yYhES09D1eJzTZAxT9/TPMjL/m40y3VMde/u2C5djOp+JL22AttBz4fb27b4G0
- NMV946sHsOaEbi3ezLefceIYIGU9KNo7KqGblo1XSdVtENBS25kP/OsLgMKmDaqoaa/j
- /RqQ==
+ d=linaro.org; s=google; t=1777554242; x=1778159042; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=HIxBMsJTZHKdbns51p3aoFGGmnWk2RZsQGGMX5I0d4Q=;
+ b=C0L6n4a7EVPY9yOitN7TC5IpR0Of2tdVXbzRNB91ChIzHd6pB2PTR9xTEFEn2e5+ji
+ a55+iWMXuZVuYJBvEKrnqmQn2PvvFynkZsuXjnLO74MTlgvES/V3SxtJrl+cDZhitZed
+ EN5lT8O4En5Xtr6fBsOOih2gsPlLbTCPaFqqGCXinTDnXUyDeY9K+w8+WwoV6NZdSeQt
+ yLmpiAozDTiVn52rO5pnDkY/u+2LQIvKob2z5iF1oFAKWFqWAcGc1q64AeZU3dBkNDR3
+ UlzwKCJcjtB7qDUo3gGguJ7PAu4Rgeznxxdb0fNe3wQWpbdxn7viGggVmtoKu8pdMZbq
+ S+6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777556028; x=1778160828;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dEpvF3607F+qemfhpeYGfsinknF3G0PYbhra3ynjbnU=;
- b=XlCKWJwfuAC8IpGvD6FdW8scPAUVivnkUoGluNN8MVmpw9SKyIzz+6ChsDpJLC8pMS
- 9ajm47TZAH9gncCYaSbimC3cyyE8h8alfTNjjtkSayzrVMjtqDFOW7LUpGu/ihKN5ToH
- JCRxTk7vcVb/HcTnbH9VqvZDTaMkrd7klmi/JRFrNwwSZWu2zIjxP9uxkjZO8gIZWHUp
- wycEoJASShB8O7slxjy24jx0J9ZUJsG0ZSbY/Sl4oIM5iv2vdLR414wLvnjflHHURA9m
- PJt8bKYNU3HmZ2Rq5uEqXLk7bE0u9w7SADMcnFN/7FjPLnPGHbXNXNwUdGZg/UrGjVG9
- Y4kQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+FNaUd3TQjnDI508lUEelfsEEgxDuNENVTFRoUY0Q5/itw0ar9Q0LuMBxYFDZdkvG7dGleAthfJqDp@nongnu.org
-X-Gm-Message-State: AOJu0YzaV6Xit5TaTejkUzWTWDp9VE65y7/96sgwIEVyBLf4nm9q95Wg
- LBlmAsyN8qVUgbhgwApPck2+L2ZVtOuMXOhj2wN4U1loXhSgmoTvzc1zFuzJzk0BvIg=
-X-Gm-Gg: AeBDieuk7ZBstwL9vyj+Yk1Tc09jMOROzP5e5wY1kgCOpPDQuYXc/MM1O8Z4RTT1ndv
- hxYvcZ2bTc9PnRbdUDbICGuPhMFxi8Cz5vG+6U5yKpACkDzmToX80/JYef7CDU+23CnoxoqTDAg
- 5CQdX7CqIHk9/Yv4951j4bn3EAE6p72LWWghwuKxXpL681KYpHsiZcRiSLwA4Ka3fcElJmyf8IB
- hYLqU6RoLHC7wvH1j4cDoWcoFuel8XKoX/aSERNclg/3poKggTbnVDmPb1KTUsJ0d84nkPeMZeD
- OISldf2uQE29kjyglB9ZdHANLSc0UTJUTB9uiECgOlV99toLoZdOZLxlasPDt3pxGArtNNEjMA/
- avDbQ+2LmHU7/dhXBBPQYn4Ls7A1ey7VNKFPi+PJ6EAuQABRi6VmFsKbnpzPDv5NDgtMz14ucAs
- 4J8NyAhjy771jmbtjZx2KuUmcOti75OmbC02ZUP366y8EPB8cqfPx/3z3qDZX73wR/bFG65yq+k
- yQc
-X-Received: by 2002:a05:600c:3e8d:b0:48a:53ea:140b with SMTP id
- 5b1f17b1804b1-48a844a4728mr50392305e9.28.1777556027849; 
- Thu, 30 Apr 2026 06:33:47 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a7c310048sm40810635e9.22.2026.04.30.06.33.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 30 Apr 2026 06:33:47 -0700 (PDT)
-Message-ID: <71c7f6ef-e22d-4fd8-b57f-1408c1aabaf6@linaro.org>
-Date: Thu, 30 Apr 2026 15:33:44 +0200
+ d=1e100.net; s=20251104; t=1777554242; x=1778159042;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HIxBMsJTZHKdbns51p3aoFGGmnWk2RZsQGGMX5I0d4Q=;
+ b=OdNeyY6/sL6iLO0n5E/R4sjLDXP3KtwJK7qVnYv1LdeHzrc0AGo8SyA6Ip8bNbTtzC
+ bxuCwrn7Ftdk2mjcri1k311xjGn4y3pvtcmNN8q7eQkNk/HnamYI9HJKBGusVFQvQ5as
+ e9as9S/M4gC7TNRnXNc+GuYBUuWN4JyHFqVqtyhlKK18ToiuHrtKMMz9inZ8eHq3Ubpe
+ bN1BAKDrbjDN5n20T2giNa8sLcaWxc0/ZBYH1R12Pu7VVYGjXiHBh+BNw7QZYy+9HnDa
+ Z5fGUsRZHtZ+nd101RNQ9Qsu0FvAsyMHU8jcp79q08jHbDF0d/c4SxEKSvcbi7oR6414
+ UaOw==
+X-Gm-Message-State: AOJu0YxK1o2cdMVE+Od3byxHIS8iJYu9qNh8xExrZO6lv8V/1LmbU9OB
+ zgml/xXFMUK1Jut0xIq44k+YwG2V/CzgeMXMz1vUmXMkXqS3ShRLUjTlxApn/1dkAIrF95kot3H
+ gNgt8huPGuVR0xHIMtasZCz/frNI82TmWPJCgVAb2jxzn2xhKsTEy
+X-Gm-Gg: AeBDiesMoRBkzhvjYqKGG49r2K621qJrC6YEDSGtcWNH1Sz1NybNYy8ZGi+rEZXoOss
+ FO0cp4gz9Dnj3XRbzljFGWSFEplicdFmtc3ptEdpxp5dtIevAut+ISXNoJx3BNFgVKCwCx8x029
+ thYG3srQdRqLE8fYbaDg5YyUQoICtFrj3tluFejSWOlB9He32DQzUwJSKS2y/9a+4zzf1DZNhfA
+ fLy2dA/0yU19fTikt+fAmVUm3DpFT+XF4fMeHUihKh7y3c2JQD96FuT7AwAEL1dj6FN22erXE6b
+ rJ9z8umypvE7b1JWlXiAU3TNvb94PXMVi1bPFS+smPTOkmjcB2eocNhAbxApt42oExr18bqzvOe
+ Chg==
+X-Received: by 2002:a05:690e:134f:b0:651:b728:6f49 with SMTP id
+ 956f58d0204a3-65c18f7f291mr2104908d50.49.1777554240781; Thu, 30 Apr 2026
+ 06:04:00 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/25] hw/i386/vapic: Cope with non-page-aligned return
- from cpu_get_phys_page_debug()
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- qemu-s390x@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, Peter Xu <peterx@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
- <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- David Hildenbrand <david@kernel.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
-References: <20260430093810.2762539-1-peter.maydell@linaro.org>
- <20260430093810.2762539-2-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260430093810.2762539-2-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+References: <20260317175031.3035740-1-peter.maydell@linaro.org>
+In-Reply-To: <20260317175031.3035740-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 30 Apr 2026 14:03:49 +0100
+X-Gm-Features: AVHnY4K6bA5gx5m7bafvG1_0CyHENpuT63A4b0weZhC0_shwJHeqtrBHAMzYDpo
+Message-ID: <CAFEAcA-OS4m7ejnq_oMDcW2hJnC947yB9JFMo-nyDFW0N2uB4g@mail.gmail.com>
+Subject: Re: [PATCH 0/3] target/mips: Move non-shallow-copy fields out of env
+ to fix leaks
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,20 +116,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/4/26 11:37, Peter Maydell wrote:
-> Currently the i386 implementation of get_phys_page_debug() always
-> returns an address aligned to a page boundary, and the vapic.c code
-> assumes this: it adds back in the page offset after the call.  Change
-> this to OR in the page offset, so that it works whether
-> cpu_get_phys_page_debug() returns the page address or the exact
-> physical address. This will mean the code continues to work when
-> we change the semantics to standardize on "return exact
-> physical address".
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/i386/vapic.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+Ping? Now that 11.0 is out it would be nice to get fixes
+for the remaining leak sanitizer fixes in, so we can think
+about getting a CI job set up to test a sanitizer build.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+thanks
+-- PMM
+
+On Tue, 17 Mar 2026 at 17:50, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> At the moment the linux-user cpu_copy() implementation assumes that it
+> can clone a CPU object for a new guest thread by first creating and
+> resetting a fresh CPU object and then doing a shallow copy with
+> memcpy() of the CPU's env struct.  This is obviously a very dubious
+> assumption, but for the most part it works.
+>
+> One place where it doesn't currently work is MIPS, where we have a few
+> pointer fields at the end of the CPU struct.  Currently we don't ever
+> try to free the objects we point to when the CPU is destroyed, so this
+> is a leak but not incorrect behaviour. However, we can't fix the leak
+> by freeing memory in CPU unrealize, because then we would get a
+> double-free because both old and new thread point to the same memory.
+>
+> In the long term we should really reimplement cpu_copy by having CPU
+> objects have a method for doing this, rather than accumulating
+> architecture-specific hacks. But since in practice I only see leaks in
+> 'make check-tcg' for MIPS, this series takes the simpler approach of
+> moving the fields of CPUMIPSState that cannot be shallow-copied and
+> that are used in user-only mode out to the MIPSCPU struct.  There are
+> only two to move: mvp_init and count_clock.
+>
+> The remaining pointer fields in CPUMIPSState are:
+>  * several fields inside the !defined(CONFIG_USER_ONLY) block
+>  * cpu_model, which is always equal to MIPSCPUClass::cpu_def
+>    and so can be shallow-copied
+>  * timer, which is only set in system-emulation and is
+>    NULL in user-only mode
+>
+> This patchset does the two moves of fields out of the env
+> struct, and adds an unrealize method where we can free the
+> mvp struct that we would otherwise leak.
+>
+> thanks
+> -- PMM
+>
+> Peter Maydell (3):
+>   target/mips: Move 'mvp' field from CPUMIPSState to MIPSCPU
+>   target/mips: Free mvp in unrealize
+>   target/mips: Move count_clock to MIPSCPU struct
+>
+>  hw/mips/malta.c                     |  4 ++--
+>  target/mips/cpu-defs.c.inc          | 10 +++++----
+>  target/mips/cpu.c                   | 18 ++++++++++++---
+>  target/mips/cpu.h                   |  6 +++--
+>  target/mips/internal.h              |  3 ++-
+>  target/mips/system/cp0_timer.c      | 12 ++++++----
+>  target/mips/system/machine.c        |  2 +-
+>  target/mips/tcg/system/cp0_helper.c | 35 ++++++++++++++++++-----------
+>  target/mips/tcg/translate.c         |  6 +++--
+>  9 files changed, 64 insertions(+), 32 deletions(-)
+>
+> --
+> 2.43.0
 
