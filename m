@@ -4,103 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 993EAFF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 14:21:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0682FF8875
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 14:22:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wISGP-00042h-UB; Thu, 30 Apr 2026 10:21:13 -0400
+	id 1wISGV-00045t-RY; Thu, 30 Apr 2026 10:21:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIR3n-00072u-Be
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:04:07 -0400
-Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIR3i-0004Yk-UP
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:04:07 -0400
-Received: by mail-yx1-xb130.google.com with SMTP id
- 956f58d0204a3-65c24be9e4bso318146d50.1
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 06:04:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777554242; cv=none;
- d=google.com; s=arc-20240605;
- b=i+INZ9Z2h39CdUfZ0BkTDKFcFAkRnZQ/d9WmlUS80BGcEtRaC0/zg5ROv+QQHmWUod
- vFz8BBjgfJ9G7Vj3zn5YeR9XwayXs+nOTmpQ07f/lIY/q7wG08/3aolH6+9u6CO0vpat
- rm+ZsJ8Ovz3ACfHyj0QSDNYuhHDxjWOpF/MDbLxvmXrbabjQf5iGOmVCt1gWY27T1bZN
- JO3L9qEeSY+pH4iITo5m17Jr326O3O3oWOZSMKG9IYDVfVg1se0BIIh4nK7VbnSIpq99
- 6A90poijzWVCafS+x3sFCMevLPqzoHAJ/I5cLxKhA5vlju6jSjzTZq0vux+k7Wz1F+Vf
- 8YpA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=HIxBMsJTZHKdbns51p3aoFGGmnWk2RZsQGGMX5I0d4Q=;
- fh=oiF8dhPxD6+w5M0oFKMgDkQ/sXE5JE9Y8kXtIO1nrJA=;
- b=cTkYVg0CFT+PlBcjs5/oyFqlcN84VABojC+lVlOEZPus/5bgJvvLsdrHJhbMY7rfQm
- QHeEi0vp3DKoyqIdJJZPlBv2HAvj3QU5ZaXSeiR4Z135wPxnX7t8XL6LXq7OIdAlwtPq
- uRTo/w3/1w5YxM36iz8LK+HhTW/aUDcJyV2qDfVy4n0ZzErn3OqVbw6P5w+xcnDgbbzB
- oeBNxvmIYvFito/QEZ0bP3Zm2xq/HvEFnihrsq/2CtfCUYfuQax5xKTCwZP0QQzgg8wi
- vQXL7qDaef70DKwWXQxFEGVVElfhJg2hodPUrSmb61U9wBD53y8cfIgW8LRUoQhfoDQK
- /eqw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777554242; x=1778159042; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=HIxBMsJTZHKdbns51p3aoFGGmnWk2RZsQGGMX5I0d4Q=;
- b=C0L6n4a7EVPY9yOitN7TC5IpR0Of2tdVXbzRNB91ChIzHd6pB2PTR9xTEFEn2e5+ji
- a55+iWMXuZVuYJBvEKrnqmQn2PvvFynkZsuXjnLO74MTlgvES/V3SxtJrl+cDZhitZed
- EN5lT8O4En5Xtr6fBsOOih2gsPlLbTCPaFqqGCXinTDnXUyDeY9K+w8+WwoV6NZdSeQt
- yLmpiAozDTiVn52rO5pnDkY/u+2LQIvKob2z5iF1oFAKWFqWAcGc1q64AeZU3dBkNDR3
- UlzwKCJcjtB7qDUo3gGguJ7PAu4Rgeznxxdb0fNe3wQWpbdxn7viGggVmtoKu8pdMZbq
- S+6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777554242; x=1778159042;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HIxBMsJTZHKdbns51p3aoFGGmnWk2RZsQGGMX5I0d4Q=;
- b=OdNeyY6/sL6iLO0n5E/R4sjLDXP3KtwJK7qVnYv1LdeHzrc0AGo8SyA6Ip8bNbTtzC
- bxuCwrn7Ftdk2mjcri1k311xjGn4y3pvtcmNN8q7eQkNk/HnamYI9HJKBGusVFQvQ5as
- e9as9S/M4gC7TNRnXNc+GuYBUuWN4JyHFqVqtyhlKK18ToiuHrtKMMz9inZ8eHq3Ubpe
- bN1BAKDrbjDN5n20T2giNa8sLcaWxc0/ZBYH1R12Pu7VVYGjXiHBh+BNw7QZYy+9HnDa
- Z5fGUsRZHtZ+nd101RNQ9Qsu0FvAsyMHU8jcp79q08jHbDF0d/c4SxEKSvcbi7oR6414
- UaOw==
-X-Gm-Message-State: AOJu0YxK1o2cdMVE+Od3byxHIS8iJYu9qNh8xExrZO6lv8V/1LmbU9OB
- zgml/xXFMUK1Jut0xIq44k+YwG2V/CzgeMXMz1vUmXMkXqS3ShRLUjTlxApn/1dkAIrF95kot3H
- gNgt8huPGuVR0xHIMtasZCz/frNI82TmWPJCgVAb2jxzn2xhKsTEy
-X-Gm-Gg: AeBDiesMoRBkzhvjYqKGG49r2K621qJrC6YEDSGtcWNH1Sz1NybNYy8ZGi+rEZXoOss
- FO0cp4gz9Dnj3XRbzljFGWSFEplicdFmtc3ptEdpxp5dtIevAut+ISXNoJx3BNFgVKCwCx8x029
- thYG3srQdRqLE8fYbaDg5YyUQoICtFrj3tluFejSWOlB9He32DQzUwJSKS2y/9a+4zzf1DZNhfA
- fLy2dA/0yU19fTikt+fAmVUm3DpFT+XF4fMeHUihKh7y3c2JQD96FuT7AwAEL1dj6FN22erXE6b
- rJ9z8umypvE7b1JWlXiAU3TNvb94PXMVi1bPFS+smPTOkmjcB2eocNhAbxApt42oExr18bqzvOe
- Chg==
-X-Received: by 2002:a05:690e:134f:b0:651:b728:6f49 with SMTP id
- 956f58d0204a3-65c18f7f291mr2104908d50.49.1777554240781; Thu, 30 Apr 2026
- 06:04:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wIRNM-0002iF-3k
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:24:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wIRNK-0008BV-L2
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 09:24:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777555458;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Ei/JiBarx99zKkJN3MukTGL7jS1eCljl5MC4ClhshKY=;
+ b=YrmeF9Qq51+VeLms3kyLyBI4AyZeDvUmUmbKuhsl32evLMxAu63w1InHTaDJTSyfJ4nnkX
+ nxIMHHhxU3Z1yOp0iqmQ5q9x/S+hQ670sLtJwpEY1hjOTahIi2KOi6d01QZFwCVspwBAwl
+ Hz+0wrJHi9dv7YYB6traAFTFVAgtXdA=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-au-qcht0N4iluBpyjIwXpA-1; Thu,
+ 30 Apr 2026 09:24:12 -0400
+X-MC-Unique: au-qcht0N4iluBpyjIwXpA-1
+X-Mimecast-MFC-AGG-ID: au-qcht0N4iluBpyjIwXpA_1777555451
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D2F9B19560A3; Thu, 30 Apr 2026 13:24:10 +0000 (UTC)
+Received: from [10.44.50.160] (unknown [10.44.50.160])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B3FCB19560AB; Thu, 30 Apr 2026 13:24:06 +0000 (UTC)
+Message-ID: <d9f053a4-d867-4a9a-a522-cadc0829cce1@redhat.com>
+Date: Thu, 30 Apr 2026 15:24:05 +0200
 MIME-Version: 1.0
-References: <20260317175031.3035740-1-peter.maydell@linaro.org>
-In-Reply-To: <20260317175031.3035740-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 Apr 2026 14:03:49 +0100
-X-Gm-Features: AVHnY4K6bA5gx5m7bafvG1_0CyHENpuT63A4b0weZhC0_shwJHeqtrBHAMzYDpo
-Message-ID: <CAFEAcA-OS4m7ejnq_oMDcW2hJnC947yB9JFMo-nyDFW0N2uB4g@mail.gmail.com>
-Subject: Re: [PATCH 0/3] target/mips: Move non-shallow-copy fields out of env
- to fix leaks
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Aleksandar Rikalo <arikalo@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 26/37] target/i386: emulate: use exception_payload for
+ fault address
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Wei Liu <wei.liu@kernel.org>, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Peter Maydell <peter.maydell@linaro.org>, Zhao Liu <zhao1.liu@intel.com>
+References: <20260422214225.2242-1-mohamed@unpredictable.fr>
+ <20260422214225.2242-27-mohamed@unpredictable.fr>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20260422214225.2242-27-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,66 +127,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping? Now that 11.0 is out it would be nice to get fixes
-for the remaining leak sanitizer fixes in, so we can think
-about getting a CI job set up to test a sanitizer build.
+On 4/22/26 23:42, Mohamed Mediouni wrote:
+> Instead of directly putting it in cr[2], put it in exception_payload.
 
-thanks
--- PMM
+Magnus, can you add on your todo list to handle exceptions from the 
+emulator in target/i386/mshv?
 
-On Tue, 17 Mar 2026 at 17:50, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> At the moment the linux-user cpu_copy() implementation assumes that it
-> can clone a CPU object for a new guest thread by first creating and
-> resetting a fresh CPU object and then doing a shallow copy with
-> memcpy() of the CPU's env struct.  This is obviously a very dubious
-> assumption, but for the most part it works.
->
-> One place where it doesn't currently work is MIPS, where we have a few
-> pointer fields at the end of the CPU struct.  Currently we don't ever
-> try to free the objects we point to when the CPU is destroyed, so this
-> is a leak but not incorrect behaviour. However, we can't fix the leak
-> by freeing memory in CPU unrealize, because then we would get a
-> double-free because both old and new thread point to the same memory.
->
-> In the long term we should really reimplement cpu_copy by having CPU
-> objects have a method for doing this, rather than accumulating
-> architecture-specific hacks. But since in practice I only see leaks in
-> 'make check-tcg' for MIPS, this series takes the simpler approach of
-> moving the fields of CPUMIPSState that cannot be shallow-copied and
-> that are used in user-only mode out to the MIPSCPU struct.  There are
-> only two to move: mvp_init and count_clock.
->
-> The remaining pointer fields in CPUMIPSState are:
->  * several fields inside the !defined(CONFIG_USER_ONLY) block
->  * cpu_model, which is always equal to MIPSCPUClass::cpu_def
->    and so can be shallow-copied
->  * timer, which is only set in system-emulation and is
->    NULL in user-only mode
->
-> This patchset does the two moves of fields out of the env
-> struct, and adds an unrealize method where we can free the
-> mvp struct that we would otherwise leak.
->
-> thanks
-> -- PMM
->
-> Peter Maydell (3):
->   target/mips: Move 'mvp' field from CPUMIPSState to MIPSCPU
->   target/mips: Free mvp in unrealize
->   target/mips: Move count_clock to MIPSCPU struct
->
->  hw/mips/malta.c                     |  4 ++--
->  target/mips/cpu-defs.c.inc          | 10 +++++----
->  target/mips/cpu.c                   | 18 ++++++++++++---
->  target/mips/cpu.h                   |  6 +++--
->  target/mips/internal.h              |  3 ++-
->  target/mips/system/cp0_timer.c      | 12 ++++++----
->  target/mips/system/machine.c        |  2 +-
->  target/mips/tcg/system/cp0_helper.c | 35 ++++++++++++++++++-----------
->  target/mips/tcg/translate.c         |  6 +++--
->  9 files changed, 64 insertions(+), 32 deletions(-)
->
-> --
-> 2.43.0
+Thanks,
+
+Paolo
+
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>   target/i386/emulate/x86_mmu.c | 3 ++-
+>   target/i386/whpx/whpx-all.c   | 6 +++---
+>   2 files changed, 5 insertions(+), 4 deletions(-)
+> 
+> diff --git a/target/i386/emulate/x86_mmu.c b/target/i386/emulate/x86_mmu.c
+> index 007de582de..8d4371467f 100644
+> --- a/target/i386/emulate/x86_mmu.c
+> +++ b/target/i386/emulate/x86_mmu.c
+> @@ -277,7 +277,8 @@ static MMUTranslateResult x86_write_mem_ex(CPUState *cpu, void *data, target_ulo
+>           translate_res = mmu_gva_to_gpa(cpu, gva, &gpa, translate_flags);
+>           if (translate_res) {
+>               int error_code = translate_res_to_error_code(translate_res, true, is_user(cpu));
+> -            env->cr[2] = gva;
+> +            env->exception_has_payload = 1;
+> +            env->exception_payload = gva;
+>               x86_emul_raise_exception(env, EXCP0E_PAGE, error_code);
+>               return translate_res;
+>           }
+> diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
+> index 8e54fcc403..8d51293384 100644
+> --- a/target/i386/whpx/whpx-all.c
+> +++ b/target/i386/whpx/whpx-all.c
+> @@ -1903,11 +1903,11 @@ static void whpx_inject_exceptions(CPUState* cpu)
+>           WHV_REGISTER_VALUE reg = {};
+>           reg.ExceptionEvent.EventPending = 1;
+>           reg.ExceptionEvent.EventType = WHvX64PendingEventException;
+> -        reg.ExceptionEvent.DeliverErrorCode = 1;
+> +        reg.ExceptionEvent.DeliverErrorCode = env->has_error_code;
+>           reg.ExceptionEvent.Vector = env->exception_nr;
+>           reg.ExceptionEvent.ErrorCode = env->error_code;
+> -        if (env->exception_nr == EXCP0E_PAGE) {
+> -            reg.ExceptionEvent.ExceptionParameter = env->cr[2];
+> +        if (env->exception_has_payload) {
+> +            reg.ExceptionEvent.ExceptionParameter = env->exception_payload;
+>           }
+>           whpx_set_reg(cpu, WHvRegisterPendingEvent, reg);
+>       }
+
 
