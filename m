@@ -4,42 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E6ABFF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4072FF8873
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:46:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIUQo-0003TZ-3i; Thu, 30 Apr 2026 12:40:06 -0400
+	id 1wIUWc-0005Fp-Bs; Thu, 30 Apr 2026 12:46:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIUQj-0003MB-RW; Thu, 30 Apr 2026 12:40:02 -0400
+ id 1wIUWY-0005Dv-Ai; Thu, 30 Apr 2026 12:46:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIUQg-0000Qv-FJ; Thu, 30 Apr 2026 12:40:00 -0400
+ id 1wIUWN-00021p-VQ; Thu, 30 Apr 2026 12:46:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777567103; bh=fu0KxtgDuc+qrnpsZ2yKGRcT6ZjiqWHxux81NORFIFk=;
+ t=1777567455; bh=ZiKt4yg05TpwOgFMoFiG2hgiCFMqRuzORJJbi/YXnUo=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=oNViIup1rfsa0gnC49FRvk9l9scM+UaEpBqSQ4BklVo23NBnOcwjOptivFODAswWT
- 4nVzVhQc98yl6zWbr7I+kkqjnIQI+WhpozyEkKPZ+O9jj8gf3mHz9Di3ArD7v8AZJe
- VZc8sy/fOQI/5O/QTko0p0qr8omGDhvYPV3n3Yz5fhhippyHcSk/VOfn4v747X9krI
- 2yxh2mH1WLZxXU20aV8tYIqAviop+aMc3kmOpzB+1UstxyiGJg4rFfBMq5JIayLmKs
- Do7JBYTb48NvBnFc9utNT9BW303Mzyv7PtyTRWo0SA8kEiZhR8Y4j2mzDpWuIczjK8
- U0a8qIA+4mVfw==
+ b=Vd7vp5iGz9Q0wwqd8T5HgVI01OYZwvpeYB1c7Bw6PIqqFdPH4JrqJ9P98srDkaxs8
+ B6zYsazA3gGQDfIkuEbo4siSgOPrJMVErjsXdJ58ir8gTVNw8XE9yerpv03h8t4jJq
+ jLnKyYk7FZionuX4qvRfaxdw/i8Dlhmltx2XdPKW9XSGsOZrwdbfZQ4Y3PS4If64NW
+ CwKitS22rZee1wJPRuJt7QF/d9h5G4PJtipDC7SFxqg3YPos8MgPUk3GFybEelBylC
+ voWmiCdSKxf1GAXMb31DwxszHT7VxQkZ3MOmR8Y+YKYHA5JVSnf/GVtWb7w4BUTsrs
+ Ig0HOzwGpbPtg==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 6F50D1A5661;
- Thu, 30 Apr 2026 19:38:23 +0300 (MSK)
-Message-ID: <8e0011c5-77b1-41ef-8c55-9ec5f21c3a9b@tls.msk.ru>
-Date: Thu, 30 Apr 2026 19:39:53 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id DF29F1A5668;
+ Thu, 30 Apr 2026 19:44:13 +0300 (MSK)
+Message-ID: <6d8bded7-a796-4144-b4cc-cb1b2f227528@tls.msk.ru>
+Date: Thu, 30 Apr 2026 19:45:43 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Use abi_int for imr_ifindex in ip_mreqn struct
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>,
- Peter Hartley <peter@talesfromthearmchair.net>,
+Subject: Re: [PATCH] hw/core/register: add register_array_get_owner
+To: Luc Michel <luc.michel@amd.com>, qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Frederic Konrad <frederic.konrad@amd.com>,
+ "Edgar E . Iglesias" <edgar.iglesias@amd.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alistair Francis <alistair@alistair23.me>, qemu-arm@nongnu.org,
  qemu-stable <qemu-stable@nongnu.org>
-References: <20260424153600.46116-1-deller@kernel.org>
+References: <20260424155646.533334-1-luc.michel@amd.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -85,7 +89,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260424153600.46116-1-deller@kernel.org>
+In-Reply-To: <20260424155646.533334-1-luc.michel@amd.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -111,25 +115,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.04.2026 18:36, Helge Deller wrote:
-> From: Helge Deller <deller@gmx.de>
+On 24.04.2026 18:56, Luc Michel wrote:
+> Add the register_array_get_owner function to the register API. This
+> function can be used to retrieve the device owning the given
+> RegisterInfoArray.
 > 
-> Peter Hartley noticed, that in the qemu code the imr_ifindex member of
-> struct target_ip_mreq needs to be of type "int" instead of "long", which
-> is what the Linux kernel uses on all architectures.
+> This was previously done inline by some devices.
+> 5c6367bc1c8850f74812eeaaf87cff9911be58de modified the way register
+> blocks are created and parented to the device. Since this is an
+> implementation detail of the register API, it makes sense to have a
+> function for this.
 > 
-> Adjust the type accordingly, and add a QEMU_BUILD_BUG_ON() checker to
-> prevent such issues in the future.
+> Use it in the Versal OSPI and Versal/ZynqMP eFuse models instead of
+> tinkering with the API internals.
 > 
-> This change should fix multicast issues when using hosts and guests with
-> different endianess or bit size.
-> 
-> Reported-by: Peter Hartley <peter@talesfromthearmchair.net>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2553
-> Signed-off-by: Helge Deller <deller@gmx.de>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3421
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3422
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3423
+> Signed-off-by: Luc Michel <luc.michel@amd.com>
+> ---
+>   include/hw/core/register.h        | 11 +++++++++++
+>   hw/core/register.c                |  5 +++++
+>   hw/nvram/xlnx-versal-efuse-ctrl.c |  4 ++--
+>   hw/nvram/xlnx-zynqmp-efuse.c      |  4 ++--
+>   hw/ssi/xlnx-versal-ospi.c         | 10 +++-------
+>   5 files changed, 23 insertions(+), 11 deletions(-)
 
-This too seems to be qemu-stable material, I'm picking it up.
-Please let me know if I shouldn't.
+This looks like a qemu-stable material (for 11.0.x series), I'm picking
+it up.  Please let me know if I shouldn't.
 
 Thanks,
 
