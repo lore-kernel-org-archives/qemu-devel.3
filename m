@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AFFFCD13D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 00:07:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEE29FF8875
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 00:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIEwJ-00015U-Ma; Wed, 29 Apr 2026 20:07:35 -0400
+	id 1wIEwL-0001L4-Bn; Wed, 29 Apr 2026 20:07:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIEvh-0008F8-FT
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 20:06:58 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ id 1wIEvE-0007sW-PW
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 20:06:30 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIEvd-0001zp-5i
- for qemu-devel@nongnu.org; Wed, 29 Apr 2026 20:06:55 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-82f351ca23cso157622b3a.2
- for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 17:06:52 -0700 (PDT)
+ id 1wIEvC-0001sm-Sz
+ for qemu-devel@nongnu.org; Wed, 29 Apr 2026 20:06:28 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-82d0b68837aso184920b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 17:06:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777507611; x=1778112411; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777507585; x=1778112385; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LMcpEFYI4IhEZgzdOBWNJ8qlgQLS+b48/lPnLmqusZc=;
- b=EMAoDgMzzOvSCqaQ0it+xikIWCugijPKmPzBrKi2rT/CQO0epAg2USHprNFd0UYSqm
- WWIVCHujt4U9fEWNh0PCSm1CWBoC5lpyyTGB9GurfATnvV9Tsvq6P+aXqiJDeCzAhgix
- MscK040J61yprFcOwpPZ0v8b50PM0C5SV8vQ0DlnK8RgjcmkOg/Mq7w5Vchz3vG73H7d
- MEigr9ok1CpmqjN0fq0rjzOZJLTKQLFLrflhKt3mPsMiiGOvtmTRbTBKttxed2Ashweq
- QVQZpaSEqHzBX0spUCnnmhxs+hmf9/CcYS6G9hzcKvQm21Ge58V5oWfxLp0Ab8+J4o+l
- vehg==
+ bh=5ufTVgbdGLWNTrUsYza5RsHlQnemu/cr0uM1Uo8UApo=;
+ b=gRVLtQQOnuFa+vH+rU1Z3/FHa9tk0ObLSznN59xHEPCrA/vRPrvyLR14de9akv2+B3
+ FVz3p817k9gGZH7B2cqd/sQjjYDzQme0DHyhWwtMLbj7s5DCReX2LHf2XdyFqCdQf0fo
+ UP06eT+4W0nQPkqS9l2sUpvxpHseT8T9DIsFGCZuR0BaXSZSupwxQH+GjThAjEWvqw8D
+ nIpNiOW2gCHCYY+0KqJ0X7MgH8KN9yHaUsCerj7FPt9cRvpbf0VEojP45lypqGSalScT
+ 4iIkGngZDnCgBs6Phj/TZwtZPX5pakIH9yWZ212mjXyrHdowFT+0Xo0zhRnzuEf/s4FG
+ IXog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777507611; x=1778112411;
+ d=1e100.net; s=20251104; t=1777507585; x=1778112385;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=LMcpEFYI4IhEZgzdOBWNJ8qlgQLS+b48/lPnLmqusZc=;
- b=lw7YeApiW60LDVHtJvLcNGsY9h4Z/Au2Zq6P8nUE1sFs66+6rQAoL5oV/7z53nHGQb
- wZ/9sL7si5gjnwyhDFWkVtXF8y9tdSvnJb3vOd5VxqG4LbZUUVtbLMhVavYGHbvs4p+O
- G0+Y048Plt1pbV7Betj2pS4UNAGYVmPqVgAUeqCfe0w8yBNQU24XjdEHkTVdWeWjtiGm
- KYZ4lWNStRTlKDOJcgK7H8oJ/kdtYlZ7VKCqDnKr2sZnT1bdn2oGnZk6jckGN0mCEEbF
- JWkL/iwkHYhjTpqrlpYOLjQBtsNUxJjR8fxRcZ09+j7syLJTasLmiOfpGpOwJv3Xg+Nz
- hozQ==
-X-Gm-Message-State: AOJu0YymmLbiSxr1fCj2tE7tV0qn5BGc+5He/ChzhCV9UEVpKKZwTJ11
- mx+fLBmDxhcO1//rkLsTzeQmWZ7mQ0sPXxOHuiEn2N9SgIugZHp3J6Gao6cdgzsyiF0iHFVI+tr
- I1PDqDZ4=
-X-Gm-Gg: AeBDievdClW7NtLxd2LKY/FubU2deTO+sbYh40MZBddvF4HzbWPg7LG6U5QL7kCX2Hm
- vhpbyjDskcbsXvWPKgJ5Ln/vpUmkjTvI+FgwyeFtbojdJod45x6FAnxXI+/W80t5oZP35vmUSaq
- 0EvwPT8pOSYyx4XPufOiVYrN5sd0nh5ML/8UWRHemilYQZLiJ8X9CeOnxHjF40qEwYCK6Nzm4s6
- GaDIAmonB4BoGKRZcYU2GMYGaik2/f2kRtv0rowKFWvKAY0E3j/oi3aXcT+cCIZTLt5dDcV0gU1
- WeXayodOAX//dAVnjn8pj5j0rlUGMBeIb7bgOS95uvaEys40guS4XwOlQGbHtaFwbvXoYcax4u/
- v2Zdi5q1+zQ10cwRmNBCkMHqMBfJ83mQLxdVW/TWzg+klYj8lviKczD9Jql57vnBS+HL02ZKZAJ
- DUcXlumaJLXcdxYU+DHfFLe0u0fKCKH9YnHaRWoBE5
-X-Received: by 2002:a05:6a00:1ca5:b0:82f:5154:d1d9 with SMTP id
- d2e1a72fcca58-834fdb07c68mr829066b3a.6.1777507611094; 
- Wed, 29 Apr 2026 17:06:51 -0700 (PDT)
+ bh=5ufTVgbdGLWNTrUsYza5RsHlQnemu/cr0uM1Uo8UApo=;
+ b=TIXEIUpwLtZ24HS2aDVJ9DEBB39CqzFXfM4oQB5fTU822Xu9JHsm4KUMuynckKAFn/
+ HvJKM5MW80BMwL9a2sItq9H5oUKc6ei9k/OcvMbnm/gbqByzCKx0yflOdkVUKDqD8SMa
+ C8llxR9K/b+LD3O8OR+NMk57bKAACBzZ/GhHc6d5C+6E0u4inIXXMZldp2EuVfADB2SV
+ YURakZVBkB5GXjNQgajIi+N9PMzu7UsZa2/kaWoa3i21omktqVEA5rWwM1cvzNkkUi47
+ /XANX5PnkNjqgwqtVM4ctEeJp1xU1Kwq6jLyDLNCxzXHsHOXbGIbe5HjjMWfi/0yw+gS
+ Y/kw==
+X-Gm-Message-State: AOJu0YwFkt+6cu4QAofQmh7cWiQoeD0aVJNz+spNWMiVWr6Cq54TcLCS
+ cjw1xUtCvZ8QsOdsudXqO4PJtovMqLpZ01Eu9Dchfmd3Y3k1ll9r9vpywqNEEWGTaNLstW6qFuC
+ J0AssqwU=
+X-Gm-Gg: AeBDietJ8pP4lxgW5r9xuaaB3BTNU2L5hyAWZLb8o1TcEmxCTCgb2y7VKK+sCFf3ZQH
+ zn5BVGjCu6zj6ZR0NilO6PvB24tE/3lqRRDcA+LHNB3azHIxa7PZzDQYUZVJivj2DEg5ojh/0Q5
+ w8cer45B/RdiG8YK7l3H2MEJU6VKwXFctLjAXWB2cfNUGTU3N+COvYvnSGiVQRd62KLu5VgVdJH
+ VGLzwBlwf+DqWJr+4/xSpR/UaqwpDt+CrU1pJronh+xutc4jnij+OOB68DUwbbRJDnYTyjbcIfN
+ +hoONg1Yonb3PzHu29qwsiP6LsPEdjdAM1vUpteOFKC+Cme80LeuzSlQ1i6Gl68/4ip31vXGYhL
+ 6D41RLON8k42DLuCcGxkZu4UcVSUqMD0PhSmx3Go/8zZIHTSS3vUu6dhPTUJOEj5MMHI50XCTA2
+ NIFgYt0l8K714N3GMNUjaFMjOtXeixB3FFvxyffRHl
+X-Received: by 2002:a05:6a00:2998:b0:82c:9897:70ef with SMTP id
+ d2e1a72fcca58-834fdbd1668mr776079b3a.27.1777507585421; 
+ Wed, 29 Apr 2026 17:06:25 -0700 (PDT)
 Received: from stoup.. ([180.233.125.15]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-834ed7ef7a8sm2928667b3a.47.2026.04.29.17.06.49
+ d2e1a72fcca58-834ed7ef7a8sm2928667b3a.47.2026.04.29.17.06.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 29 Apr 2026 17:06:50 -0700 (PDT)
+ Wed, 29 Apr 2026 17:06:25 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org
-Subject: [PATCH v2 36/40] target/arm: Use FloatParts64 in f16_dotadd
-Date: Thu, 30 Apr 2026 10:05:19 +1000
-Message-ID: <20260430000524.56046-37-richard.henderson@linaro.org>
+Subject: [PATCH v2 25/40] fpu: Reorganize partsN(muladd)
+Date: Thu, 30 Apr 2026 10:05:08 +1000
+Message-ID: <20260430000524.56046-26-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260430000524.56046-1-richard.henderson@linaro.org>
 References: <20260430000524.56046-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,212 +99,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use softfloat-parts.h so that we can more naturally
-perform the required operations witha single rounding step.
-This happens to also simplify the NaN detection step.
+Check the likely case of normal product and normal or
+zero addend first; shift NaN and infinity detection down;
+end with zero product + addend.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/sme_helper.c | 96 ++++++++++++++++---------------------
- 1 file changed, 40 insertions(+), 56 deletions(-)
+ fpu/softfloat-parts.c.inc | 155 +++++++++++++++++---------------------
+ 1 file changed, 70 insertions(+), 85 deletions(-)
 
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index 0702a1b129..16b96890cc 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -27,6 +27,7 @@
- #include "accel/tcg/helper-retaddr.h"
- #include "qemu/int128.h"
- #include "fpu/softfloat.h"
-+#include "fpu/softfloat-parts.h"
- #include "vec_internal.h"
- #include "sve_ldst_internal.h"
- 
-@@ -1227,18 +1228,15 @@ static inline uint32_t bf16mop_ah_neg_adj_pair(uint32_t pair, uint32_t pg)
- }
- 
- static float32 f16_dotadd(float32 sum, uint32_t e1, uint32_t e2,
--                          float_status *s_f16, float_status *s_std,
--                          float_status *s_odd)
-+                          float_status *s_f16, float_status *s_std)
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index b8baaf1e76..77465cce6e 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -683,11 +683,47 @@ static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
+                                    FloatPartsN *c,
+                                    int flags, float_status *s)
  {
+-    int ab_mask, abc_mask;
+-    FloatPartsW p_widen, c_widen;
++    int ab_mask = float_cmask(a->cls) | float_cmask(b->cls);
++    int c_mask = float_cmask(c->cls);
++    int abc_mask = ab_mask | c_mask;
++    bool c_sign = c->sign ^ !!(flags & float_muladd_negate_c);
++    bool p_sign = a->sign ^ b->sign ^ !!(flags & float_muladd_negate_product);
+ 
+-    ab_mask = float_cmask(a->cls) | float_cmask(b->cls);
+-    abc_mask = float_cmask(c->cls) | ab_mask;
++    /*
++     * The "likely" case is A and B normal, so that the product is normal,
++     * and C normal or zero so that the result is normal.
++     */
++    int likely_mask = ab_mask | (c_mask & ~float_cmask_zero);
++    if (likely(cmask_is_only_normals(likely_mask))) {
++        record_denormals_used(abc_mask, s);
++
++        /* Perform the multiplication step. */
++        FloatPartsW p_widen = { .sign = p_sign, .exp = a->exp + b->exp + 1 };
++        fracN(mulw)(&p_widen, a, b);
++        if (!(p_widen.frac_hi & DECOMPOSED_IMPLICIT_BIT)) {
++            fracW(add)(&p_widen, &p_widen, &p_widen);
++            p_widen.exp -= 1;
++        }
++
++        /* Perform the addition step. */
++        if (!(c_mask & float_cmask_zero)) {
++            /* Zero-extend C to less significant bits. */
++            FloatPartsW c_widen = { .sign = c_sign, .exp = c->exp };
++            fracN(widen)(&c_widen, c);
++
++            if (p_sign == c_sign) {
++                partsW(add_normal)(&p_widen, &c_widen);
++            } else if (!partsW(sub_normal)(&p_widen, &c_widen)) {
++                goto return_sub_zero;
++            }
++        }
++
++        /* Narrow with sticky bit, for proper rounding later. */
++        fracN(truncjam)(a, &p_widen);
++        a->sign = p_widen.sign;
++        a->exp = p_widen.exp;
++        return a;
++    }
+ 
      /*
--     * We need three different float_status for different parts of this
-+     * We need two different float_status for different parts of this
-      * operation:
-      *  - the input conversion of the float16 values must use the
-      *    f16-specific float_status, so that the FPCR.FZ16 control is applied
-      *  - operations on float32 including the final accumulation must use
-      *    the normal float_status, so that FPCR.FZ is applied
--     *  - we have pre-set-up copy of s_std which is set to round-to-odd,
--     *    for the multiply (see below)
-      */
-     float16 h1r = e1 & 0xffff;
-     float16 h1c = e1 >> 16;
-@@ -1246,48 +1244,49 @@ static float32 f16_dotadd(float32 sum, uint32_t e1, uint32_t e2,
-     float16 h2c = e2 >> 16;
-     float32 t32;
+      * It is implementation-defined whether the cases of (0,inf,qnan)
+@@ -700,97 +736,46 @@ static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
+         return a;
+     }
  
-+    FloatParts64 p1r = float16_unpack_canonical(h1r, s_f16);
-+    FloatParts64 p1c = float16_unpack_canonical(h1c, s_f16);
-+    FloatParts64 p2r = float16_unpack_canonical(h2r, s_f16);
-+    FloatParts64 p2c = float16_unpack_canonical(h2c, s_f16);
+-    if (flags & float_muladd_negate_c) {
+-        c->sign ^= 1;
++    if (unlikely(ab_mask == float_cmask_infzero)) {
++        /* Inf * Zero == NaN */
++        float_raise(float_flag_invalid | float_flag_invalid_imz, s);
++        goto d_nan;
+     }
+ 
+-    /* Compute the sign of the product into A. */
+-    a->sign ^= b->sign;
+-    if (flags & float_muladd_negate_product) {
+-        a->sign ^= 1;
+-    }
+-
+-    if (unlikely(!cmask_is_only_normals(ab_mask))) {
+-        if (unlikely(ab_mask == float_cmask_infzero)) {
+-            float_raise(float_flag_invalid | float_flag_invalid_imz, s);
++    if (unlikely(ab_mask & float_cmask_inf)) {
++        if ((c_mask & float_cmask_inf) && p_sign != c_sign) {
++            /* Inf - Inf == NaN */
++            float_raise(float_flag_invalid | float_flag_invalid_isi, s);
+             goto d_nan;
+         }
+-
+-        if (ab_mask & float_cmask_inf) {
+-            if (c->cls == float_class_inf && a->sign != c->sign) {
+-                float_raise(float_flag_invalid | float_flag_invalid_isi, s);
+-                goto d_nan;
+-            }
+-            goto return_inf;
+-        }
+-
+-        g_assert(ab_mask & float_cmask_zero);
+-        if (is_anynorm(c->cls)) {
+-            *a = *c;
+-            goto finish_sign;
+-        }
+-        if (c->cls == float_class_zero) {
+-            if (flags & float_muladd_suppress_add_product_zero) {
+-                a->sign = c->sign;
+-            } else if (a->sign != c->sign) {
+-                goto return_sub_zero;
+-            }
+-            goto return_zero;
+-        }
+-        g_assert(c->cls == float_class_inf);
++        /* Inf + C == Inf */
++        record_denormals_used(abc_mask, s);
++        a->sign = p_sign;
++        a->cls = float_class_inf;
++        return a;
+     }
+-
+-    if (unlikely(c->cls == float_class_inf)) {
+-        a->sign = c->sign;
+-        goto return_inf;
+-    }
+-
+-    /* Perform the multiplication step. */
+-    p_widen.sign = a->sign;
+-    p_widen.exp = a->exp + b->exp + 1;
+-    fracN(mulw)(&p_widen, a, b);
+-    if (!(p_widen.frac_hi & DECOMPOSED_IMPLICIT_BIT)) {
+-        fracW(add)(&p_widen, &p_widen, &p_widen);
+-        p_widen.exp -= 1;
+-    }
+-
+-    /* Perform the addition step. */
+-    if (c->cls != float_class_zero) {
+-        /* Zero-extend C to less significant bits. */
+-        fracN(widen)(&c_widen, c);
+-        c_widen.exp = c->exp;
+-
+-        if (a->sign == c->sign) {
+-            partsW(add_normal)(&p_widen, &c_widen);
+-        } else if (!partsW(sub_normal)(&p_widen, &c_widen)) {
+-            goto return_sub_zero;
+-        }
+-    }
+-
+-    /* Narrow with sticky bit, for proper rounding later. */
+-    fracN(truncjam)(a, &p_widen);
+-    a->sign = p_widen.sign;
+-    a->exp = p_widen.exp;
+-
+- finish_sign:
+-    /*
+-     * All result types except for "return the default NaN
+-     * because this is an Invalid Operation" go through here;
+-     * this matches the set of cases where we consumed a
+-     * denormal input.
+-     */
+     record_denormals_used(abc_mask, s);
+-    return a;
 +
-+    int all_mask = (float_cmask(p1r.cls) | float_cmask(p1c.cls) |
-+                    float_cmask(p1r.cls) | float_cmask(p1c.cls));
++    /* Only remaining case is zero product. */
++    assert(ab_mask & float_cmask_zero);
 +
-     /* C.f. FPProcessNaNs4 */
--    if (float16_is_any_nan(h1r) || float16_is_any_nan(h1c) ||
--        float16_is_any_nan(h2r) || float16_is_any_nan(h2c)) {
-+    if (unlikely(all_mask & float_cmask_anynan)) {
-         float16 t16;
++    /*
++     * 0 + C == C,
++     * except for 0 - 0, which needs special rounding,
++     * except for when we want to suppress this addition step.
++     */
++    if (!(c_mask & float_cmask_zero)
++        || p_sign == c_sign
++        || (flags & float_muladd_suppress_add_product_zero)) {
++        c->sign = c_sign;
++        return c;
++    }
  
--        if (float16_is_signaling_nan(h1r, s_f16)) {
--            t16 = h1r;
--        } else if (float16_is_signaling_nan(h1c, s_f16)) {
--            t16 = h1c;
--        } else if (float16_is_signaling_nan(h2r, s_f16)) {
--            t16 = h2r;
--        } else if (float16_is_signaling_nan(h2c, s_f16)) {
--            t16 = h2c;
--        } else if (float16_is_any_nan(h1r)) {
--            t16 = h1r;
--        } else if (float16_is_any_nan(h1c)) {
--            t16 = h1c;
--        } else if (float16_is_any_nan(h2r)) {
--            t16 = h2r;
-+        if (unlikely(all_mask & float_cmask_snan)) {
-+            if (p1r.cls == float_class_snan) {
-+                t16 = h1r;
-+            } else if (p1c.cls == float_class_snan) {
-+                t16 = h1c;
-+            } else if (p2r.cls == float_class_snan) {
-+                t16 = h2r;
-+            } else {
-+                t16 = h2c;
-+            }
-         } else {
--            t16 = h2c;
-+            if (p1r.cls == float_class_qnan) {
-+                t16 = h1r;
-+            } else if (p1c.cls == float_class_qnan) {
-+                t16 = h1c;
-+            } else if (p2r.cls == float_class_qnan) {
-+                t16 = h2r;
-+            } else {
-+                t16 = h2c;
-+            }
-         }
-         t32 = float16_to_float32(t16, true, s_f16);
-     } else {
--        float64 e1r = float16_to_float64(h1r, true, s_f16);
--        float64 e1c = float16_to_float64(h1c, true, s_f16);
--        float64 e2r = float16_to_float64(h2r, true, s_f16);
--        float64 e2c = float16_to_float64(h2c, true, s_f16);
--        float64 t64;
+  return_sub_zero:
++    /* 0 - 0 == -0 for round_down, +0 otherwise. */
+     a->sign = s->float_rounding_mode == float_round_down;
+- return_zero:
+     a->cls = float_class_zero;
+-    goto finish_sign;
 -
-         /*
-          * The ARM pseudocode function FPDot performs both multiplies
--         * and the add with a single rounding operation.  Emulate this
--         * by performing the first multiply in round-to-odd, then doing
--         * the second multiply as fused multiply-add, and rounding to
--         * float32 all in one step.
-+         * and the add with a single rounding operation.
-          */
--        t64 = float64_mul(e1r, e2r, s_odd);
--        t64 = float64r32_muladd(e1c, e2c, t64, 0, s_std);
-+        FloatParts64 tmp = parts64_mul(&p1r, &p2r, s_std);
-+        tmp = parts64_muladd(&p1c, &p2c, &tmp, 0, s_std);
+- return_inf:
+-    a->cls = float_class_inf;
+-    goto finish_sign;
++    return a;
  
--        /* This conversion is exact, because we've already rounded. */
--        t32 = float64_to_float32(t64, s_std);
-+        t32 = float32_round_pack_canonical(&tmp, s_std);
-     }
- 
-     /* The final accumulation step is not fused. */
-@@ -1299,9 +1298,6 @@ static void do_fmopa_w_h(void *vza, void *vzn, void *vzm, uint16_t *pn,
-                          uint32_t negx, bool ah_neg)
- {
-     intptr_t row, col, oprsz = simd_maxsz(desc);
--    float_status fpst_odd = env->vfp.fp_status[FPST_ZA];
--
--    set_float_rounding_mode(float_round_to_odd, &fpst_odd);
- 
-     for (row = 0; row < oprsz; ) {
-         uint16_t prow = pn[H2(row >> 4)];
-@@ -1325,8 +1321,7 @@ static void do_fmopa_w_h(void *vza, void *vzn, void *vzm, uint16_t *pn,
-                         m = f16mop_adj_pair(m, pcol, 0);
-                         *a = f16_dotadd(*a, n, m,
-                                         &env->vfp.fp_status[FPST_ZA_F16],
--                                        &env->vfp.fp_status[FPST_ZA],
--                                        &fpst_odd);
-+                                        &env->vfp.fp_status[FPST_ZA]);
-                     }
-                     col += 4;
-                     pcol >>= 4;
-@@ -1363,15 +1358,12 @@ void HELPER(sme2_fdot_h)(void *vd, void *vn, void *vm, void *va,
-     bool za = extract32(desc, SIMD_DATA_SHIFT, 1);
-     float_status *fpst_std = &env->vfp.fp_status[za ? FPST_ZA : FPST_A64];
-     float_status *fpst_f16 = &env->vfp.fp_status[za ? FPST_ZA_F16 : FPST_A64_F16];
--    float_status fpst_odd = *fpst_std;
-     float32 *d = vd, *a = va;
-     uint32_t *n = vn, *m = vm;
- 
--    set_float_rounding_mode(float_round_to_odd, &fpst_odd);
--
-     for (i = 0; i < oprsz / sizeof(float32); ++i) {
-         d[H4(i)] = f16_dotadd(a[H4(i)], n[H4(i)], m[H4(i)],
--                              fpst_f16, fpst_std, &fpst_odd);
-+                              fpst_f16, fpst_std);
-     }
- }
- 
-@@ -1385,17 +1377,14 @@ void HELPER(sme2_fdot_idx_h)(void *vd, void *vn, void *vm, void *va,
-     bool za = extract32(desc, SIMD_DATA_SHIFT + 2, 1);
-     float_status *fpst_std = &env->vfp.fp_status[za ? FPST_ZA : FPST_A64];
-     float_status *fpst_f16 = &env->vfp.fp_status[za ? FPST_ZA_F16 : FPST_A64_F16];
--    float_status fpst_odd = *fpst_std;
-     float32 *d = vd, *a = va;
-     uint32_t *n = vn, *m = (uint32_t *)vm + H4(idx);
- 
--    set_float_rounding_mode(float_round_to_odd, &fpst_odd);
--
-     for (i = 0; i < elements; i += eltspersegment) {
-         uint32_t mm = m[i];
-         for (j = 0; j < eltspersegment; ++j) {
-             d[H4(i + j)] = f16_dotadd(a[H4(i + j)], n[H4(i + j)], mm,
--                                      fpst_f16, fpst_std, &fpst_odd);
-+                                      fpst_f16, fpst_std);
-         }
-     }
- }
-@@ -1408,24 +1397,19 @@ void HELPER(sme2_fvdot_idx_h)(void *vd, void *vn, void *vm, void *va,
-     intptr_t eltspersegment = MIN(4, elements);
-     int idx = extract32(desc, SIMD_DATA_SHIFT, 2);
-     int sel = extract32(desc, SIMD_DATA_SHIFT + 2, 1);
--    float_status fpst_odd, *fpst_std, *fpst_f16;
-     float32 *d = vd, *a = va;
-     uint16_t *n0 = vn;
-     uint16_t *n1 = vn + sizeof(ARMVectorReg);
-     uint32_t *m = (uint32_t *)vm + H4(idx);
- 
--    fpst_std = &env->vfp.fp_status[FPST_ZA];
--    fpst_f16 = &env->vfp.fp_status[FPST_ZA_F16];
--    fpst_odd = *fpst_std;
--    set_float_rounding_mode(float_round_to_odd, &fpst_odd);
--
-     for (i = 0; i < elements; i += eltspersegment) {
-         uint32_t mm = m[i];
-         for (j = 0; j < eltspersegment; ++j) {
-             uint32_t nn = (n0[H2(2 * (i + j) + sel)])
-                         | (n1[H2(2 * (i + j) + sel)] << 16);
-             d[i + H4(j)] = f16_dotadd(a[i + H4(j)], nn, mm,
--                                      fpst_f16, fpst_std, &fpst_odd);
-+                                      &env->vfp.fp_status[FPST_ZA_F16],
-+                                      &env->vfp.fp_status[FPST_ZA]);
-         }
-     }
- }
+  d_nan:
+     *a = partsN(default_nan)(s);
 -- 
 2.43.0
 
