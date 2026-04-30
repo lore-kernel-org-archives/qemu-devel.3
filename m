@@ -4,104 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91E60FF886F
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 08:55:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D623DFF886F
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 08:58:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wINAd-0005HB-K4; Thu, 30 Apr 2026 04:54:57 -0400
+	id 1wINDI-0006A8-E0; Thu, 30 Apr 2026 04:57:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wINAH-0005GD-BO; Thu, 30 Apr 2026 04:54:34 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wINDG-00069k-Nm; Thu, 30 Apr 2026 04:57:38 -0400
+Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
- id 1wINAF-00011j-Jd; Thu, 30 Apr 2026 04:54:33 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 63TLU0DV2980335; Thu, 30 Apr 2026 08:54:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=VxRae1HQC2CYuXasuQKwTR+evDo63C89Io5E48FhD
- O0=; b=D2cpdBE0Cmeg0EyBNKIlzyNDSfWguuk9F7dEE0dUJy6srkorMzNfUIFI9
- D8biSV+IVUDbrv5oi7rIGcGwiBHERYSeq31F20wy2m2XalDEHKLqZzLzbglEBJz6
- x6+2Q4Zw2NtqcVWWCwxT1Gshg5fzrPZKu560dnMtgdFUpf+40HNva0TV+n3zHDp3
- g4uAuFUD3u+4WcUJECKcu6zVOlYXv8qgMpsCBd7bX9MyrzkpgsdmqDBH05hQLtNx
- IiuYJFEFgmPPnC1DFNzJhhYFhFuhVVsMufpSpbvB2vE+jBLX4ctZhuTAhB8wkX+z
- lpFuSLpAdi672PSTLNysKi4nEKBHg==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drnb5esp0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Apr 2026 08:54:27 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 63U8ruRI028929;
- Thu, 30 Apr 2026 08:54:26 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ds7xqja7w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 30 Apr 2026 08:54:26 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 63U8sMrb29360404
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 30 Apr 2026 08:54:22 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3334A20043;
- Thu, 30 Apr 2026 08:54:22 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E8F6020040;
- Thu, 30 Apr 2026 08:54:19 +0000 (GMT)
-Received: from shivang.com (unknown [9.123.12.247])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 30 Apr 2026 08:54:19 +0000 (GMT)
-From: Shivang Upadhyay <shivangu@linux.ibm.com>
-To: qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-Cc: Shivang Upadhyay <shivangu@linux.ibm.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>,
- Vishal Chourasia <vishalc@linux.ibm.com>
-Subject: [PATCH] ppc/spapr: Skip system reset for quiesced CPUs
-Date: Thu, 30 Apr 2026 14:24:09 +0530
-Message-ID: <20260430085409.680930-1-shivangu@linux.ibm.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
+ id 1wINDE-0001id-UY; Thu, 30 Apr 2026 04:57:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Content-ID:Content-Description;
+ bh=IWwvq8hRTp+RgtNm5y9MAV6GLt7GzGdhEXG+fHLNIJs=; b=VG3YH0AyUqjqgEmrfN6dfbBcAT
+ byHfmtpXsdGqFx6NM0Xmu4HCBy8sA/dM3xHqBnVEjpa1u/iKpiNirjG/W82tU0t3sBQ4Yk/eoi142
+ THhaw17WdBnowkbzUHP9OJryDCAonZIFFPjtBi+D1nmbnViGx/BCjl1C4bxUNY7GasmJ29jtUEdeG
+ GrvVGbJxYUYloqex2bu9EEx+B2GLUrskxoSP3RsJpAC2izYH/IzjzRZ4dsjnagNYEYWQCCIieJkEC
+ EL1d0rCGw3243J2YsnOSOIHANg8C1OjNrd3k2QDN+jMX7DN9QGI2aB23usgY6e66aZfVC4fapW492
+ GP7Lw6qNCmT9wOGNXWqrxUYKJ4qKBPHKiYp5GgoBXjOuahM/Nvk6Ip+pKpENFxPYYxAAkJRRiNsiw
+ Q2BSJfmV55P9uxVx5nx/Q65f1ycOd153oBindFOR28F9ly4MqDTDF+Mpg/+zjPPJa4FkJCiT/JyxD
+ m7mD/rXb9/XiDiO7LohZYohxJWjRwbC5Kd4t7xg909aWkD8OQgEUoqSjzUpBdPm+daIgLTLcjCD4q
+ G0o7ekiDKnDeVQohQxuaGng4kgGgJid++9far5JdlyEjQQIAVaqHKUM5m9ZmpmMVZqpQQUB/EYkFj
+ YyMq1vTFiVMvthL/qH01HO6DAfwk1sjWqDs/4Hfjg=;
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+To: qemu-devel@nongnu.org
+Cc: Greg Kurz <groug@kaod.org>, qemu-stable@nongnu.org,
+ Jia Jia <physicalmtea@gmail.com>
+Subject: Re: [PATCH] 9pfs: fix deep path truncation in V9fsPath
+Date: Thu, 30 Apr 2026 10:57:32 +0200
+Message-ID: <1954333.tdWV9SEqCh@weasel>
+In-Reply-To: <20260428074614.3169999-1-physicalmtea@gmail.com>
+References: <20260428074614.3169999-1-physicalmtea@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=AqDeGu9P c=1 sm=1 tr=0 ts=69f318c3 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=A5OVakUREuEA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=792TYEGmVTkjWTrGcAYA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNDMwMDA4NyBTYWx0ZWRfXy5MMaPBh1Prj
- N2i/mcvICBPkmYilXvuX8Q0h/QWnvANVdJXi2kho5Wq19Cu+teJMfkm3ZXa99Qpacofai4r3d0D
- f+QPlqXcoEjyhsMu80eoMMPdUzXvvfe72b1zULsbgmHsuQtYCVcVOnWKZS7rrGArdL/3+avZsrC
- Wo1+vsZNRLmfCgDkV0cRnijO2InsTxJntek68jkZOImPNVlcgKvjmC/E8cGu97JksNRG5lGhFxR
- ShV6t/+zDZh3hECrdc1gE4/ReYD/LQdMr/efW37h6WkJD7rHrZ9BjqmV1B7crA6u7aqMXHNhpwI
- yfQIknkc6glrjUFHbxe8QrRoBMQyWWyKbVsOjKYRKjUxLP94BhRVio0t/HeoRbQHUfeTQ4dN6ks
- L1v9w7XW1W+JqDqEbirjzVpx1IvSITs584pDi4G7wNpDwt+XFMr7DIL7wdOqFHl8FQ9DqrBk56J
- 6r9GGO5jvw9YNH4pbmw==
-X-Proofpoint-GUID: RlCB-gKURb2FDNLNWEUhaYE8cEGnzqBX
-X-Proofpoint-ORIG-GUID: RlCB-gKURb2FDNLNWEUhaYE8cEGnzqBX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-04-30_02,2026-04-28_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 priorityscore=1501 phishscore=0 suspectscore=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 bulkscore=0 impostorscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2604300087
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+Received-SPF: pass client-ip=5.189.157.229;
+ envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,47 +67,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-During DLPAR CPU hotplug, newly added CPUs start in RTAS stopped state
-(quiesced). If a kexec crash occurs before the guest starts these CPUs
-via start-cpu RTAS call, H_SIGNAL_SYS_RESET_ALL_OTHERS will reset them
-anyway, causing the kdump kernel to hang:
+On Tuesday, 28 April 2026 09:46:14 CEST Jia Jia wrote:
+> V9fsPath.size tracks the length of backend path data. Storing it in a
+> uint16_t truncates local backend paths longer than 65535 bytes, so later
+> path copies can end up much smaller than the string data they are
+> supposed to describe.
+> 
+> A guest can reach this with normal 9p filesystem operations by creating
+> and walking a sufficiently deep directory tree on the local backend. On
+> an ASan build, calling readdir() in that deep directory aborts the host
+> process with:
+> 
+>   ERROR: AddressSanitizer: heap-buffer-overflow
+>     #0 __interceptor_strrchr
+>     #1 g_path_get_dirname
+>     #2 local_lstat
+>     #3 v9fs_co_lstat
+>     #4 v9fs_getattr
+> 
+> Fix this by storing V9fsPath lengths in size_t.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3358
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Jia Jia <physicalmtea@gmail.com>
+> ---
 
-  [    5.519483][    T1] Processor 0 is stuck.
-  [   11.089481][    T1] Processor 1 is stuck.
+Hi Jia, thanks for looking at this issue!
 
-The hypervisor should only reset CPUs that the guest has started. The
-cpu->env.quiesced flag tracks RTAS stopped state - CPUs in this state
-are already inactive and should not be reset.
+> Runtime reproducer:
+>   confirmed on current master (11.0.50) with an x86_64 ASan build and a
+>   local 9p backend
+> 
+>   guest actions:
+>     - mount the 9p share
+>     - create a 260-level directory tree with 255-byte names
+>     - walk back to the deepest directory
+>     - call readdir()
+> 
+>   host abort:
+>     ERROR: AddressSanitizer: heap-buffer-overflow
+>       #0 __interceptor_strrchr
+>       #1 g_path_get_dirname
+>       #2 local_lstat
+>       #3 v9fs_co_lstat
+>       #4 v9fs_getattr
+> 
+>  fsdev/file-op-9p.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/fsdev/file-op-9p.h b/fsdev/file-op-9p.h
+> index b85c9934def..e8d0661c4b5 100644
+> --- a/fsdev/file-op-9p.h
+> +++ b/fsdev/file-op-9p.h
+> @@ -112,7 +112,7 @@ struct FsContext {
+>  };
+> 
+>  struct V9fsPath {
+> -    uint16_t size;
+> +    size_t size;
+>      char *data;
+>  };
+>  P9ARRAY_DECLARE_TYPE(V9fsPath);
 
-Skip system reset for quiesced CPUs to prevent kdump hangs during CPU
-hotplug operations.
+I fear it is not that simple. Just changing this data type would only move the 
+problem and furthermore turn a small OOB into a giant OOB: g_vasprintf() 
+(called by v9fs_path_sprintf()) has as return type gint -> int, and 
+v9fs_path_sprintf() returns -1 on error, and this change would then implicitly 
+cast -1 to a giant unsigned value.
 
-Cc: Sourabh Jain <sourabhjain@linux.ibm.com>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
-Reported-by: Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
-Suggested-by: Vishal Chourasia <vishalc@linux.ibm.com>
-Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
----
- hw/ppc/spapr_hcall.c | 4 ++++
- 1 file changed, 4 insertions(+)
+AFAICS the only way for truly fixing this is by getting rid of dragging full 
+paths around with FIDs in general, which would be a massive change though.
 
-diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-index 032805a8d0..e63ec24f0c 100644
---- a/hw/ppc/spapr_hcall.c
-+++ b/hw/ppc/spapr_hcall.c
-@@ -1105,6 +1105,10 @@ static target_ulong h_signal_sys_reset(PowerPCCPU *cpu,
-                     continue;
-                 }
-             }
-+
-+            /* Skip quiesced CPUs */
-+            if (c->env.quiesced) continue;
-+
-             run_on_cpu(cs, spapr_do_system_reset_on_cpu, RUN_ON_CPU_NULL);
-         }
-         return H_SUCCESS;
--- 
-2.53.0
+On short term I only see a possible mitigation: adding error handling to 
+v9fs_path_sprintf(), and for FIDs where v9fs_fix_path() fails, making the fids 
+inaccessible for good (i.e. immediately closing those FIDs).
+
+/Christian
+
 
 
