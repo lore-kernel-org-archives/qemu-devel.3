@@ -4,77 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58397FF886F
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 04:48:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED0CFFF8875
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 04:49:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIJKD-0003VZ-7t; Thu, 30 Apr 2026 00:48:33 -0400
+	id 1wIJLL-0004GA-4u; Thu, 30 Apr 2026 00:49:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wIJK9-0003Uw-FN
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 00:48:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wIJK7-0000Vr-Ld
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 00:48:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777524505;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VlHbAtFYGFhAjMeDY9uflk6XcTBIpL2UuyGmQMU07HY=;
- b=aVLOTetAWpFKBoF+FsT1yBhSja7ykRAzlriRUyLFSCea3kyJ7r/aEyYISCJLOTYwqYSlYZ
- 4tk7f1iJtoGaSrWHAFPJnWEMb0L3cdNy3qfJ79qZ8FUkuVy3esmM+ZmZLdsp6Fy9nccbbJ
- yyMOrgRi8dUL5HfmfENm2DuyuUHzzYM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-283-E75EfKS0OWe73Sm8r6MnMA-1; Thu,
- 30 Apr 2026 00:48:21 -0400
-X-MC-Unique: E75EfKS0OWe73Sm8r6MnMA-1
-X-Mimecast-MFC-AGG-ID: E75EfKS0OWe73Sm8r6MnMA_1777524500
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5A699193530E; Thu, 30 Apr 2026 04:48:20 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.9])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B8C0C195608E; Thu, 30 Apr 2026 04:48:19 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 588EF21E6A28; Thu, 30 Apr 2026 06:48:17 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  artem_mygaiev@epam.com,
- takahiro.nakata.wr@renesas.com, Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: Question on preferred location for QEMU sample projects
-In-Reply-To: <CAN-aV1HDZfoJv3OCm9_f3epNtvvr5CrvB-1Fi4y7jGLwF3Xx7g@mail.gmail.com>
- (Ruslan Ruslichenko's message of "Wed, 29 Apr 2026 21:25:21 +0200")
-References: <CAN-aV1EiKRh-Zpb9=77rXYPD2uT7HZmeNfvVW-wAToT+gaVC=A@mail.gmail.com>
- <87v7dvgw58.fsf@pond.sub.org>
- <CAN-aV1ERB-vdvMyRuNo2tog9-EPPyCunXJkk-kC=DkX-kU6VCQ@mail.gmail.com>
- <CAN-aV1HDZfoJv3OCm9_f3epNtvvr5CrvB-1Fi4y7jGLwF3Xx7g@mail.gmail.com>
-Date: Thu, 30 Apr 2026 06:48:17 +0200
-Message-ID: <875x59vysu.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIJLG-0004EG-32
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 00:49:38 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wIJLE-0000hL-CD
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 00:49:37 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-48a3e9862f0so2336995e9.1
+ for <qemu-devel@nongnu.org>; Wed, 29 Apr 2026 21:49:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777524575; x=1778129375; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=720Bx1bKlVjFNst/T9lTike7WOGhI8gorlmW7itupxU=;
+ b=K2MAed6XC7Z9buonn1HbtNzpW1mkWTOs8zFHWiB4L6AfzUKnAtWvnrh7l+WVUbIcpE
+ XnKL1A/xBoOG/sV76NZtbm3oVbrgtQOy9CnNd6fVaR+AHPmAr7LrFkd2shl74x3PK37u
+ Alw6idpJRgC7Qw0hjncQlebe5cwe9L9CJzY9eHwOcCXcMI3Lc/Berp8Fo21Aim0scikZ
+ htoIGlPC+UkVML4D6y0P6iWzYeNxF6sISGFAih87L24d//ZtXGK3BbL9wxWk/XhPhe6p
+ RteRmlykkT0sScpfsUDK0DZYcry6oU10i+eGHf12tQF46vVP1oGWQBUjNo0jIjT4gwey
+ 4rCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777524575; x=1778129375;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=720Bx1bKlVjFNst/T9lTike7WOGhI8gorlmW7itupxU=;
+ b=BX30ohn8wm0Aq1hl1iQcjpdofS4tbSYZD8opbln0fyFc+50R1FO81oRnSLjOhXfoGH
+ dx9r3v+vdZWzyVFjVAO9XFlS+gF1LaTvjQ74SXraszlam7NuYz8HU2oIGtdtHeNqqhmF
+ JEfCv6iJq0OwqBFiBhwSGmaBgn1Z2BEwd8WS1LyEgWO6r2A1g9XeThx8EUdMAuvJ3AIC
+ 8UYIm3EL4hF99FQrxa2l0Jr3KS1g1bgI0jYTg61xTEPYb5F9ZoH3cSW0wkR05i+XEonk
+ k2qFhq8MJrq2bq0gnKN0FKnoMpYKe+T9dvljW8dkSHR75qm6UdQBmf9EnCxoCCEqfCsR
+ cWIQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+uWBN0vGVOaSSIwzbEr5xoWHmrzQdKc7yW45GijzLvAD+uyGGf2rJG80PdJfy+6CN8T79FhVuubFCn@nongnu.org
+X-Gm-Message-State: AOJu0YzAzC2/pP5r09feC2FWd10/eVnhaNYQSYb+69/SNLoRonxfEL4M
+ CRWrvPML5N60CIE+9TqW7op8DwF+de4SqOfqqBOBnMn+fDS9/MTabh3Lrv7ySnzDlz4=
+X-Gm-Gg: AeBDieusoz3mOAUoQIED2NqpukxnDVAVA+4uKlQZO/tcjNhOUe6ZpJd/L4aneorzgky
+ gXbiN03r+CllJ/uvaSdCcC+mTouZ7OsZ0AlyIa0IV2+WtQnsNihi0MZkSMdbkuCJxLFKLmA4n58
+ up98V0ZeQEa8s3EJCgCyDSyGSXUphu1EFZ1Zfavxfo97X4B5zNqDyzLJQ1N0mlHOMgeeXN9HTPU
+ kh8EY6pq0gejibCyLQE9hWc0NnXvgWNosWYpDhiozIOnBLuyZdmc/Bfl/4NbkX9Uhu7m694wavP
+ 9JfUB8j+QSgnM93nC1glroKw5hFo+5JsO2IcNMh9lrFlDWMsqtJhfkApq/S1iVbC8Bh/m16CJHh
+ uVmHX3LbrXaBbKkjGrJCdm/5x0HZ8sAcHENfpb7h+STjyqBXY98Tj71pRHi/Hc0jfucVnfPj3Op
+ VA++QmfvEeUtXnXcgovMBBai5Flpw6byMA1XFuS0lNM/u/LI1631UZLpywTc9ZNLYZmnGnzDUDs
+ vH5
+X-Received: by 2002:a05:600c:8b62:b0:48a:53cb:8604 with SMTP id
+ 5b1f17b1804b1-48a8609bebdmr13745475e9.14.1777524574731; 
+ Wed, 29 Apr 2026 21:49:34 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a7b912ee3sm56403145e9.2.2026.04.29.21.49.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 29 Apr 2026 21:49:33 -0700 (PDT)
+Message-ID: <d425d96f-cd89-4808-8833-9a89010c2da9@linaro.org>
+Date: Thu, 30 Apr 2026 06:49:33 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/40] fpu: Inline float16_pack_raw into callers
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260430000524.56046-1-richard.henderson@linaro.org>
+ <20260430000524.56046-4-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260430000524.56046-4-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,72 +103,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ruslan Ruslichenko <ruslichenko.r@gmail.com> writes:
+On 30/4/26 02:04, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   fpu/softfloat.c | 13 ++++---------
+>   1 file changed, 4 insertions(+), 9 deletions(-)
 
-> On Mon, Apr 13, 2026 at 4:04=E2=80=AFPM Ruslan Ruslichenko
-> <ruslichenko.r@gmail.com> wrote:
->>
->> On Mon, Apr 13, 2026 at 9:25=E2=80=AFAM Markus Armbruster <armbru@redhat=
-.com> wrote:
->> >
->> > Ruslan Ruslichenko <ruslichenko.r@gmail.com> writes:
->> >
->> > > Hi everyone,
->> > >
->> > > We are currently preparing the v2 patch series for the Remote-Port
->> > > Co-simulation protocol for interfacing with SystemC modules. The fir=
-st
->> > > revision was here:
->> > > https://lists.nongnu.org/archive/html/qemu-devel/2026-02/msg01760.ht=
-ml.
->> > >
->> > > As part of this submission, we would like to publish a sample project
->> > > serving as a demonstration of how to connect a QEMU Remote-Port
->> > > frontend to a SystemC backend.
->> > >
->> > > The sample project implements a standard SystemC IP core and uses
->> > > several external components such as:
->> > > - libsystemctlm-soc: https://github.com/Xilinx/libsystemctlm-soc
->> > > - VCML Library: https://github.com/machineware-gmbh/vcml
->> > > - SystemC Library: https://github.com/accellera-official/systemc
->> > >
->> > > We have a question regarding the location for this kind of project.
->> > > Could you please suggest if there is a preferred location or some
->> > > standard practice for hosting such a sample project?
->> >
->> > Location within the QEMU source tree?
->> >
->>
->> Hello Markus,
->>
->> Yes, it would be good to include this project within the QEMU source tre=
-e.
->> To build the project, the mentioned SystemC, libsystemctlm-soc and
->> VCML libraries and their specific dependencies need to be built and
->> installed separately.
->> Would this approach be acceptable?
-
-We have a few (small) examples under contrib/.  However, Peter (cc'ed)
-has been trying to clean out that directory.
-
->>
->> Alternatively, is there an auxiliary repository within the QEMU
->> infrastructure that is better suited for these types of sample
->> projects,
->> perhaps somewhere under https://gitlab.com/qemu-project?
->>
->> --
->> BR,
->> Ruslan
->
-> Hello Markus,
->
-> Do you have any thoughts on the preferred location for this sample projec=
-t?
->
-> Best regards,
-> Ruslan
-
-Peter, what about you?
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
