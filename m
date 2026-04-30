@@ -4,48 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17A7FCD13D3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49150FF886F
 	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 07:19:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wILgQ-0003ar-2K; Thu, 30 Apr 2026 03:19:38 -0400
+	id 1wILgN-0003a9-Pd; Thu, 30 Apr 2026 03:19:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wILgM-0003Z9-HL
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wILgM-0003Z6-DB
  for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:19:34 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wILgJ-00012S-Ej
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1wILgJ-00012y-F2
  for qemu-devel@nongnu.org; Thu, 30 Apr 2026 03:19:34 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id AF324404F7;
- Thu, 30 Apr 2026 07:19:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D024C2BCB3;
- Thu, 30 Apr 2026 07:19:24 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 2AD246111B;
+ Thu, 30 Apr 2026 07:19:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 936EDC2BCB3;
+ Thu, 30 Apr 2026 07:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1777533565;
- bh=FJtLfLlU5tGib5MdE/xwM+prJdYI09ZeCOyg0IA8Yvs=;
- h=From:To:Cc:Subject:Date:From;
- b=lCurtcFxlcS4GLpckcCMFuyaWPKAhADhOaLffEtrjSrvS+H2OGdQ4rUivOvjcMk29
- lVZ/QwM4saGmIUCKVbIMAWEIGTxJs31p67h0S3+OpF/PPoNPmBGs6f5iCjNAMP6wvg
- yXR6T5tw6XfbMCVVzO6n3Sv7MhTirzdHKcN4B/cWsH9uBMfwCqqxLlo+A2TOlCAV9J
- 0julaMbV4lrcN/gll6HeiPotT7OmW4hvB4qmthi0Dh2imSbkMZrOEuGB9tM+ppJVSi
- ueP+rXdznXgTbIqNIVH7Uqa61Y0sQi/SDjCw+3yumWgBqfp8V9HxLDpWpW5GttHg+D
- 7owowd0FD4maQ==
+ s=k20201202; t=1777533568;
+ bh=YYJ3K4vj89HsrgIOawl8CF/AyDRKlWRjLCis0xBu3b4=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=DBEZkbrmCPcnLsSLuEtbr0trBbmqLmdUDf1W2eVUjs4n8nvs0KS5zfM/MThcEPjVW
+ DbglYFbjql/a9w0MXUCqqsNezq/JwDbuVploLCzZiDXHchXo7nw2w3i341YLzesKz/
+ gNwZw0ty7tn1i1KNhQhQx3oHL9PRzONAc4LTjL3AXMPgbishJWOvXIDfrrveMZcsrc
+ I/qPpNBfEz/J6NzrWMm1eg6yGRuyp1Btw6HgZhm0/PmNfQqtY5bPv9pihpuJac8YFm
+ 8kigE9QMe3IUqUt0nlO1HihRzeDkVW2mnsGvrixLBJQSRgCCXSYGsDgGQ3+0DFUH33
+ 8b14HsGQHNQYA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 0/4] Linux user next patches
-Date: Thu, 30 Apr 2026 09:19:18 +0200
-Message-ID: <20260430071922.15341-1-deller@kernel.org>
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Warner Losh <imp@bsdimp.com>
+Subject: [PULL 2/4] linux-user: Flush errors by using exit() instead of
+ _exit() in error path
+Date: Thu, 30 Apr 2026 09:19:20 +0200
+Message-ID: <20260430071922.15341-3-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260430071922.15341-1-deller@kernel.org>
+References: <20260430071922.15341-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -69,40 +72,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-The following changes since commit 759c456b1d22fe4083c8b384da27d3f56fd53f82:
+Similiar to previous patch - ensure that we always flush I/O by using
+exit() instead of _exit().
 
-  Merge tag 'linux-user-next-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-04-27 12:57:33 -0400)
+Reported by: Tobias Bergkvist <tobias@bergkv.ist>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/2544
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ linux-user/main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-are available in the Git repository at:
-
-  https://github.com/hdeller/qemu-hppa.git tags/linux-user-next-pull-request
-
-for you to fetch changes up to 9667bf3249256788245c6ca07bc12106f3e4fa22:
-
-  linux-user: Translate errno in IP_RECVERR and IPV6_RECVERR (2026-04-30 09:00:04 +0200)
-
-----------------------------------------------------------------
-Pull request for linux-user
-
-Please pull 4 fixes for the linux-user target.
-Two patches fix open bug reports regarding return error codes and allowed parameters.
-One adds missing CDROM ioctls (and fixes a few), and the last patch is a leftover
-from the previous pull request and helps flushing error strings at exit.
-
-----------------------------------------------------------------
-
-Helge Deller (4):
-  linux-user: Add missing CDROM ioctls
-  linux-user: Flush errors by using exit() instead of _exit() in error
-    path
-  linux-user: Allow getsockopt() with NULL optval address
-  linux-user: Translate errno in IP_RECVERR and IPV6_RECVERR
-
- linux-user/ioctls.h  | 29 +++++++++++++----------
- linux-user/main.c    |  2 +-
- linux-user/syscall.c | 56 +++++++++++++++++++++++++-------------------
- 3 files changed, 50 insertions(+), 37 deletions(-)
-
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 84e110dfe9..86d04cca3c 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -975,7 +975,7 @@ int main(int argc, char **argv, char **envp)
+                       info, &bprm);
+     if (ret != 0) {
+         printf("Error while loading %s: %s\n", exec_path, strerror(-ret));
+-        _exit(EXIT_FAILURE);
++        exit(EXIT_FAILURE);
+     }
+ 
+     for (wrk = target_environ; *wrk; wrk++) {
 -- 
 2.53.0
 
