@@ -4,108 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5FB4CCFA13
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 10:59:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4497CCFA13
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 11:04:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIP6V-0006zR-BA; Thu, 30 Apr 2026 06:58:47 -0400
+	id 1wIPBp-0008Uv-Pz; Thu, 30 Apr 2026 07:04:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIP6L-0006yQ-GN
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 06:58:37 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ id 1wIPBa-0008Sh-Mq
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 07:04:04 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIP6J-0000DN-KM
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 06:58:37 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-6563f83ae9fso843004d50.1
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 03:58:35 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777546714; cv=none;
+ id 1wIPBY-0001aD-3q
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 07:04:02 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-65c0bda7f15so742208d50.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 04:03:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777547039; cv=none;
  d=google.com; s=arc-20240605;
- b=e0m1Zem76ChxHtqREYhrLHc4RNBHBRLYBknok5TFr6YGvAkuHAQL8zjqIIjVlUVxJX
- q2h7NJGw4BfY+7H9ISXFPovR0CvOwBXmxi9RCZ/qJG88/W8KiAG9bGpQVEXbFTtMymOz
- DVnDCN04EQHNR3vPBSFCJPiEaL7iKRM5gJAcSGfjUoUfBr4SAMM0+miO0xEgMZIjuTjq
- 5GwZqiVHPKh4JkV6G6U/RkndkejXPv5beNv1KHbRzZDsl6sdkZdiyRgcU4iC8a+Mr+Nl
- mznPpo5THd/Bqi0ZI1AjsNxFX54eiLy0K+CMEUXRcYArbpSblVe8gyppd0JCQzeKVzeS
- Jdmw==
+ b=Gs8J1wl2HwSTUAjLOhHysf99JlW1WrJ9FOyc6QtM9Rn29CWPA/hdKVwQCRVRsIVIr3
+ h6+WX/LWz0VFW2IyIo+dcTtgRMPeBPDTh+IOXeOhjoRTM9VspHvq9xsuR+21gEuuxpWy
+ MmoINipJIjGcwT/sWi4UsPmdsbb2SoTmZqPU5D1SnZk3Bc6BsxmIPEYsimjEB3QdIPXr
+ 4aDhctvj9fKAMzqQVS3/Equv6tn0uO6DTb2Fqnh20BrMAlIE6zFO6/0tf86rFTbL5xOl
+ lxg0O7xO3sbwnDn6mE/pqwyvBi2Bd9S0vwU37j/eVYDOHNbLANLfywVR4wZMzBCMYirc
+ l2Hw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=jPSxtL6gUHm/KeScKjAHVZDuKSG3q6q2SErUdUcQGDw=;
- fh=L0+NiO1dk2svgH8TdO1hLVvvgiN+SVSZdG3CsBcLNBc=;
- b=BBsQr8YchititGcQrs6dA+j0YNxJOcRLcnZxO5cWBoiczau0Rg8N/njQS66thWC9EH
- vIrsh4PmdUuK2Kz3YtaE22zZjnK/HNieUAnx7/G962FuFKSLQEmTEjVg3NstebsDikw2
- 6kfBypaxabBnebLX/thWCVMvbbb3boB+JPKvVRkBxnTY6Cx2+zmfLRyYJ2iBPugbZgFX
- K1dvx6eV9yuXTr41Z+MkYuNY2A2psD/4os+kfjiKxDVAfL+JNBFCRTPCZcuB6Mb8tC+x
- GWDaFcChvlNL9T+7xkXUmdnWu3QZdOOCzXCuHsQaFplR/MrBcSi/HQ4tdZgNkQzJkgiK
- 1aaQ==; darn=nongnu.org
+ bh=E7q++YOPrYLptnVGanGUQ+j8Ph9Xt1q9SNXtQGZ8Osc=;
+ fh=0byzlVstFqngb+1AiUdJWLuz92Tm9uanUlmvpcwzmE4=;
+ b=jiiMxbFY9d7VKaCCihprusR6v5MVn2w1A1Ev8u5qdJK9HWZiKjq5Nir/NNDpEpubHZ
+ GT6cAI44hmzbDfLyBmvF9P05ag3DIoaOCya8hTGk2/451V1Scg3GSt0rkQrYb1n0nkuG
+ v+jdTq9kDAlRkEW/7QXnB28HDA/WuYlZ4cR8GGOSQDeKNOMlsGxZEUOn4pJWIM/VZZg9
+ uQCi032zF9s01b/Rx6xTaVq59yif5rVTA7LFi0f7o1A3nqKCDQ3qTDQD/ZZ4VKzj6uL/
+ z5QKFofxO4o+K3B2czl385ByMLNWSsSO7tpei32Y/Tzd+unYCBZ1qxdj074ewewJliEl
+ Ri3w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777546714; x=1778151514; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777547039; x=1778151839; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jPSxtL6gUHm/KeScKjAHVZDuKSG3q6q2SErUdUcQGDw=;
- b=ZvY4rIO26vDX3zl1pKYMpWcGKP/W86rGepPfSCqHXoA7kxWz/SQi4kvpZU+IGlm1ue
- OtNWhdHR8FrX/ruWNpEvY+s5TOr1fbg/fVvYAPMOkujrzvf9/fnn/Eo0X5wn0qgk3vom
- hVGOsBVJTUBnuSa/57RaZoK6bvrlsR3lo+ruBjGvVc77XTjWzHi5C5ieolRLXsUHhoWB
- NRI+220rI/U9zLTBUi5K7DuXnrevJgvn8aV8GZ0POYs+oCT7HaCnIMhg7p2WAghvy0Hn
- yEjcnXsLWFoLU1JTODOE6/q2YmEPcrlTdm2JfeyjwkD4hofhrpxOE04BghKuXi9FxdW/
- NYnQ==
+ bh=E7q++YOPrYLptnVGanGUQ+j8Ph9Xt1q9SNXtQGZ8Osc=;
+ b=u7Wsr4o/xnircL6XhLNIZBhac6sRUNvrRAe8QENmlq3RMh3HfG7OX75d4cbJqUhY67
+ nDl6hdHPbE2mRmnsb8iQ5BYDrL9IPvfUkG6ye20hvJ4cPeY4giE9JjW3NSUpoRlHrKBN
+ TPF94FunZTjreuOPsUSPZIsfvV0MpcGEykgQgkbDfOucTKnGIagyxYbCdNiPLsLDSM5A
+ /A0ADKYH5b9xvnVguHVT2hhy5Y6U2Sxu486zcagrpTsVZ+i9KJb4c8l0lCov0kHrF6jJ
+ f+T+xUWxlKodN4LdIYSdXlb+CXoqInfSm18t3/+tW8F9GUom57xmhUbcHuU6waFSlOUn
+ wXAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777546714; x=1778151514;
+ d=1e100.net; s=20251104; t=1777547039; x=1778151839;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=jPSxtL6gUHm/KeScKjAHVZDuKSG3q6q2SErUdUcQGDw=;
- b=a+X3c7gKHIUe3oHVnnlgdjPiNVnTSMGfhyM4qNtQ7petMdwndERAkq1sfOg7+V1fAO
- HZcQdT91gX6u9XmZk9UnAu4DKRBlx09UFF79zITGkd8eVT4KwHwfgjj63WAA2tpQnT1X
- IwT/iRvkXdmDMIZrGETwGAvz9heJtf53p7KklnWs1s4b1vDSwL4GAiCwX/8lyhCvzy4h
- CCNQGOLyZ4wlBmReJ+q3e91E+IO487LZ/rHQ2mbMK5rbLfBT8g75tSvd4CbK6BAQJBre
- QVzY3YF8v1LTTvkK9xOYBsUuUSbQPxwWyI36s0nd78TrFFYZpJ1MY72sK2Vwu0ne/PDn
- y7hA==
-X-Gm-Message-State: AOJu0Yz61wU9xnsi5hqyp9E2GPg/kc+q0bSKgXKss94kYGavaEwCIld/
- FA1mht2VSq0ItNMNVwUuBcx/2tscT9vb2zWJNCTxWTr75no8j8nlor0+q7a2DcXq+XT/GdeFzal
- 50jIITQLmlhwfYeWAQTSCOoSFWkTsj9/lZXFy4dkEmg==
-X-Gm-Gg: AeBDieuIclHzd04LKR1sZ6cfir83j1BwHx02pzIE00ZO1rT+IKDLBbnIOuflDzPCr+e
- E6EyJcTQ0tsLj4lhLMTNOhOPuag1iKKaGgsUFREZ+yoT4FPJz8hBGY1o+aazOhrQD3/zCn+NqpB
- sfp2ko8JNmJNvzl4UodTAFytG7198qNn/K4JP6gu7fwKw2TdodmkzFNrxdtbf1g22dloBWyA2jt
- 35WmNMMVmbL9K4oxBklSsQGII5nMwcYo5+q1+hR4KXbXVcHp4Gxy9uRU19h1DGFOq7ZadB0Wg64
- 1oTcO5+ndHljs9ikpaLq9wuRPYxjjTwZBkPoGEh+d0DdCPYab3EmFR9PGMEZCLPPQVedKev1+2J
- y8g==
-X-Received: by 2002:a53:c059:0:20b0:654:2820:f657 with SMTP id
- 956f58d0204a3-65c18f55f9cmr1277807d50.47.1777546714124; Thu, 30 Apr 2026
- 03:58:34 -0700 (PDT)
+ bh=E7q++YOPrYLptnVGanGUQ+j8Ph9Xt1q9SNXtQGZ8Osc=;
+ b=sRRBo3KW4FaHw74zDL0rbIbDoZEnvbpR5yLI32mC+QZsoOUmqubfy36/WIqFMqsI/k
+ MCwpYY8xemNu+eQqBxlX1p+ACHj4roP+e/l+0qcJszhzJZsz6LnbTNk6IsH4HXB662bE
+ fB3gykyLDBp6yETskyXpGwbgyLCUv/h8mmD8NU9TuVM6dw1XUMrhvhcTeFm1Nsks1ZCQ
+ C7Cv8DgyZ+XrIr3TXHlokDvhUwH2nn+2bb3DtArWQ98KXcbVQTVKI5CoP0GylL+IgKlk
+ /s094auGTFQNcEPxCNMEAlfwa/Iu6TDDWp6x7qiCIHm4pM7k2B0Sd98yDNZxwXeFR2Ge
+ KTyA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9gAedyWDuxZXOUQF1ZYZRJ9/n8rTkj1U+r8GvKBaHrJIKjMPWh1GuvGwsqt9qpVy5/Uc1tjBoR3rmx@nongnu.org
+X-Gm-Message-State: AOJu0YzFrMOXh+xT2qqhOOm1ZLb+XnVpVz6gj6avrQ39aY2mPyvP2cmb
+ 7HWayVpqqNEA45pVAz6lV40Ys+fPFCEuSO53x6BmAkfsLO8VXk1WKanAI5Z5NRYHLgAB8skVw3u
+ s0lF9UXKhOKzxRJdqAdQHbYVgoRi3LKx5jIqRGYnN4w==
+X-Gm-Gg: AeBDiev+VpdcDppEOhNyqYw2vuKMNv2smbCDk+n99mwrnEn5ORVeMdyLR55AGOWvQpl
+ uvDilydbmwDFmViscMYtIl4pMJ1nQHl28Eqe1QyGqOllF6p0vfXYdm2h64PVIwItiVtSnM3q46p
+ 5H2jbHZiNM/g/0BtGJgGmApmuLoVmk/nYQmckUW83ikkkVyf+8XRf6Vq5HYuIcSToNfAMi9JPZa
+ 1vhFwvoR6I/JCMNps5GFnNvu2j3P06f+9ZaEMNlGIywrOcDdpZwj4ovSO7nLzC1uU+WYry1VrCw
+ jmG3rti5/X37IPZMF3TRbA8TR1cLEYl92B8ky78PLa/bmJykivoar03gx2Sn+03rRVM8VSIsIy5
+ vY9vvSalrmLve
+X-Received: by 2002:a05:690e:b45:b0:654:c28:598 with SMTP id
+ 956f58d0204a3-65c18aec741mr1726257d50.9.1777547038679; Thu, 30 Apr 2026
+ 04:03:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250802110549.23438-1-pali@kernel.org>
- <20250810130948.3yzymcxtkmfkgk67@pali>
- <20251109134141.ur2s3bk5e6dgquxv@pali>
- <CAFEAcA8+cycE_JvFDEtAmbJtXwRVwU026rOBYNV+cZaq5wZ+XQ@mail.gmail.com>
- <20260418012012.by2qdlkbryjf2ugv@pali>
-In-Reply-To: <20260418012012.by2qdlkbryjf2ugv@pali>
+References: <20260428055254.76581-1-kane_chen@aspeedtech.com>
+ <20260428055254.76581-2-kane_chen@aspeedtech.com>
+In-Reply-To: <20260428055254.76581-2-kane_chen@aspeedtech.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 30 Apr 2026 11:58:21 +0100
-X-Gm-Features: AVHnY4LRW9_lSvGP8hJ9qpGtiLE0o7efvrngVKNmkkYY9BnUgK351duQNnAIyIY
-Message-ID: <CAFEAcA8VcTN1ANX0EpCqCiyBVDckCp-D99TxabAghxtLdnMkgA@mail.gmail.com>
-Subject: Re: [PATCH] qemu-options: Improve description for -smb option
-To: =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>
-Cc: qemu-devel@nongnu.org, Samuel Thibault <samuel.thibault@ens-lyon.org>, 
- Jason Wang <jasowang@redhat.com>, Mohamed Mediouni <mohamed@unpredictable.fr>
+Date: Thu, 30 Apr 2026 12:03:46 +0100
+X-Gm-Features: AVHnY4IFen5KA8fZusdxr76RW5tZDif4YPg0lC7lXI4mYoR7FWcZzQysA2JYDkM
+Message-ID: <CAFEAcA8i+v_7KVPBMHGkjf=tuGuVCW_d-XUBb1cr-ezmD_F7xg@mail.gmail.com>
+Subject: Re: [PATCH v1 1/1] hw/misc/aspeed_sbc: Add bounds checking for OTP
+ write operations
+To: Kane Chen <kane_chen@aspeedtech.com>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Joel Stanley <joel@jms.id.au>, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ Troy Lee <troy_lee@aspeedtech.com>, 
+ "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,79 +128,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 18 Apr 2026 at 02:20, Pali Roh=C3=A1r <pali@kernel.org> wrote:
-> Yes, this is a good idea to mention. Finding those information would be
-> harder in future, specially when Microsoft already removed those KB
-> articles from own servers and web archive does not have copies of them.
+On Tue, 28 Apr 2026 at 06:53, Kane Chen <kane_chen@aspeedtech.com> wrote:
 >
+> There is a mismatch between the Aspeed OTP model and the Aspeed SBC
+> model in how the guest-provided address is handled.
+> aspeed_sbc_otp_prog() passes a word-indexed address directly
+> to address_space_write() without converting it to a byte offset,
+> whereas aspeed_otp_write() expects a byte offset and applies an
+> additional shift (otp_addr << 2). This double-shift confusion means
+> that an out-of-range word address can lead to a write beyond the
+> allocated storage.
 >
-> About about path to LMHOSTS file. On 3x/9x/Me systems it is <WIN>\LMHOSTS
-> and on NT systems it is <WIN>\SYSTEM32\DRIVERS\ETC\LMHOSTS
-> <WIN> is the Windows directly which can chosen during installation of
-> Windows itself. 3x/9x/Me has default C:\Windows; NT 3.1-2000 has default
-> C:\WINNT and since Windows XP it is default C:\Windows. So path to the
-> LMHOSTS file depends on installation and default path was changed more
-> times.
+> Fix this by adding bounds checking on the word offset before
+> converting to byte offset and passing to address_space_write().
+> This matches the existing bounds check in aspeed_sbc_otp_read().
 >
-> Note that Microsoft Network Client 3.0 and Microsoft LAN Manager Client
-> (both are DOS based) also need that adjustment of the LMHOSTS file.
-> Default location for Network Client is C:\NET\LMHOSTS and for LAN Manager
-> is C:\LANMAN\ETC\LMHOSTS. I check Network Client 3.0 and it is working
-> fine with and also without #PRE #NOFNR.
+> Cc: Kane-Chen-AS <kane_chen@aspeedtech.com>
+> Cc: qemu-stable@nongnu.org
+> Fixes: 1a00754ccf15 ("hw/misc: Add Aspeed Secure Boot Controller model")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3436
+> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+> Signed-off-by: C=C3=A9dric Le Goater <clg@redhat.com>
+> Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>
+> ---
+>  hw/misc/aspeed_sbc.c  | 14 +++++++++++---
+>  hw/nvram/aspeed_otp.c | 13 ++++++-------
+>  2 files changed, 17 insertions(+), 10 deletions(-)
 >
-> Maybe the documentation could be extended and mention something like:
+> diff --git a/hw/misc/aspeed_sbc.c b/hw/misc/aspeed_sbc.c
+> index 065e822e70..8b74dca13c 100644
+> --- a/hw/misc/aspeed_sbc.c
+> +++ b/hw/misc/aspeed_sbc.c
+> @@ -159,13 +159,21 @@ static bool aspeed_sbc_otp_prog(AspeedSBCState *s,
+>      MemTxResult ret;
+>      AspeedOTPState *otp =3D &s->otp;
+>      uint32_t value =3D s->regs[R_CAMP1];
+> +    uint32_t otp_offset =3D otp_addr << 2;
 >
->     must be added in the file ``C:\NET\LMHOSTS`` (for DOS Network Client)
->     or ``C:\LANMAN\ETC\LMHOSTS`` (for DOS LAN Manager)
->     or ``C:\WINDOWS\LMHOSTS`` (for Windows 3x/9x/Me)
->     or ``C:\WINNT\SYSTEM32\DRIVERS\ETC\LMHOSTS`` (for Windows NT/2000)
->     or ``C:\WINDOWS\SYSTEM32\DRIVERS\ETC\LMHOSTS`` (for Windows XP and ne=
-w)
+> -    ret =3D address_space_write(&otp->as, otp_addr, MEMTXATTRS_UNSPECIFI=
+ED,
+> -                        &value, sizeof(value));
+> +    if (otp_addr >=3D OTP_TOTAL_DWORD_COUNT) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "Invalid OTP addr 0x%x\n",
+> +                      otp_addr);
+> +        return false;
+> +    }
+> +
+> +    ret =3D address_space_write(&otp->as, otp_offset, MEMTXATTRS_UNSPECI=
+FIED,
+> +                              &value, sizeof(value));
+>      if (ret !=3D MEMTX_OK) {
+>          qemu_log_mask(LOG_GUEST_ERROR,
+>                        "Failed to write OTP memory, addr =3D %x\n",
+> -                      otp_addr);
+> +                      otp_offset);
 
-Thanks for doing the testing on different Windows versions. Based
-on this conversation, I'm going to take this patch, with some
-expansion of it, like this, so we explain what #PRE and #NOFNR do,
-and list LMHOSTS locations for newer Windows. Let me know if you're
-OK with this or you'd prefer some other changes.
+I would stick to reporting otp_addr here:
+ - it's the value the guest actually writes
+ - it matches the logging for "invalid OTP addr above"
+ - it matches what aspeed_sbc_otp_read() logs in the equivalent case
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index e780bc2ac0..98e39a1ad4 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -3415,7 +3415,7 @@ SRST
-
-     ``smb=3Ddir[,smbserver=3Daddr]``
-         When using the user mode network stack, activate a built-in SMB
--        server so that Windows OSes can access to the host files in
-+        server so that Windows OSes can access the host files in
-         ``dir`` transparently. The IP address of the SMB server can be
-         set to addr. By default the 4th IP in the guest network is used,
-         i.e. x.x.x.4.
-@@ -3424,11 +3424,20 @@ SRST
-
-         ::
-
--            10.0.2.4 smbserver
-+            10.0.2.4 smbserver #PRE #NOFNR
-
--        must be added in the file ``C:\WINDOWS\LMHOSTS`` (for windows
--        9x/Me) or ``C:\WINNT\SYSTEM32\DRIVERS\ETC\LMHOSTS`` (Windows
--        NT/2000).
-+        must be added in the ``LMHOSTS`` file. In this line, ``#PRE``
-+        requests pre-caching of the mapping, which speeds up the initial
-+        connection on some Windows versions. ``#NOFNR`` is necessary for
-+        Windows NT 3.1 to tell it not to send QEMU NBNS query packets that
-+        QEMU does not handle, and is harmlessly ignored on other versions.
-+
-+        The ``LMHOSTS`` file may be in different locations depending on
-+        the Windows version:
-+
-+        -  ``C:\WINDOWS\LMHOSTS`` for Windows 3x/9x/Me
-+        -  ``C:\WINNT\SYSTEM32\DRIVERS\ETC\LMHOSTS`` for Windows NT/2000
-+        -  ``C:\WINDOWS\SYSTEM32\DRIVERS\ETC\LMHOSTS`` for Windows XP and =
-newer
-
-         Then ``dir`` can be accessed in ``\\smbserver\qemu``.
+Otherwise
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
