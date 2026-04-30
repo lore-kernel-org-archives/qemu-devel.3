@@ -4,71 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A3BCCD13D3
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:08:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D83F9CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 16:10:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wITsi-0002rc-Tq; Thu, 30 Apr 2026 12:04:53 -0400
+	id 1wITy3-0002eq-Jl; Thu, 30 Apr 2026 12:10:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wITrZ-0008AD-Ap
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 12:03:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1wITrX-0007Gp-6L
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 12:03:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777565018;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MkYxmbrCwBUm4h9tBZGzxIDYxBUQTYz73TS7PdYKhs8=;
- b=Kdo7n4ia8kgd5hZga2zUQPsEG7Xy9H3IV1k7ZVtzdyxfrFrPX6AOsU20Mxa2xj/Hpb89S9
- 6qpJkgoCH97a0jsh5PfBx3wTJnhmZLUrM2ojhfC165Ed+x119OAZxYuSP4RJ6JpM7zuq04
- xgJwprLigqhQU8wPHMNefbktyuglzr8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-ocuA9cPUNjW4TAwr0s3VLg-1; Thu,
- 30 Apr 2026 12:03:34 -0400
-X-MC-Unique: ocuA9cPUNjW4TAwr0s3VLg-1
-X-Mimecast-MFC-AGG-ID: ocuA9cPUNjW4TAwr0s3VLg_1777565013
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2CA781956057; Thu, 30 Apr 2026 16:03:33 +0000 (UTC)
-Received: from gondolin.redhat.com (unknown [10.44.50.47])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1B4681800446; Thu, 30 Apr 2026 16:03:30 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-s390x@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>
-Subject: [PULL v2 09/11] MAINTAINERS: Update s390 trees
-Date: Thu, 30 Apr 2026 18:03:05 +0200
-Message-ID: <20260430160307.634093-10-cohuck@redhat.com>
-In-Reply-To: <20260430160307.634093-1-cohuck@redhat.com>
-References: <20260430160307.634093-1-cohuck@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wITxv-0002Ve-04
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 12:10:15 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wITxs-00013U-J8
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 12:10:14 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-651c366f7efso1199650d50.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 09:10:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777565411; cv=none;
+ d=google.com; s=arc-20240605;
+ b=cH8j4nuHQahv7+BPrEqqdIHVSzZ7Fusvf/a0AA6lJ1veveiteODXvsZ7mMI43PTC3s
+ C+Uej2DKlSUrOWtW5lbnCCh83JP6KfSeTtKeLkQTGQehdpGCTNcsEkMr3JwG8Oeg43iU
+ yaW4hcfCvBI1lTL34yAfdQJhFIv+twGK3FbBAxResVez55H9KKVqwsu0rKJDP/56e/+x
+ KLm/tGD+pTRKY4mWBsn5pNW3+evrM763j7ZORWDnCvvjx/leCZX/vR42aeFIeqUqGUMl
+ mlANaJHrePPv9XT9F4QvNC6+TFRMx/z5w0K+58Og42SOCRsq9/kpEbVpCtkr/+cp/PNh
+ HO0w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=yIRhBPiNG2fZPL4JkXkwwlyyh7IKbh7lsx43tGMtUXg=;
+ fh=qtf0wp7Ga0YjtXJK66oCw9X/Teye76cTzs4AhVle1vI=;
+ b=P7Pq98aNBEkB13YoUBmG/54UCtVFxJ9OAfzdcFrldvmxYnlr+NzYSExaqvDjgGaxuC
+ PioC+YdQKOM0Sur37/jmSfJkZMlvqDxtw0pf+PmBBK3OsuXr7Hihs+5Tf7UBoWyZ/fpD
+ vZKszZ0OATFY8ulCRcrHAd7LuJWaKrhNHNM3VIDGh73+FUiU6R0BepXGJwIBqVKU08Jb
+ FRcbHPUPITFC29NHn3RKyt6gH5L9KWrHJtJ7AA0e1/ttd4SxaDbHn7D3E2nGYr6AGjPl
+ t78FRAe+RsLIaiuniKnd6NMiRCYB96E1R7WoPJrKBSGvUv3T+JKR2JzacgGWrVQdyKzS
+ +7cg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777565411; x=1778170211; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yIRhBPiNG2fZPL4JkXkwwlyyh7IKbh7lsx43tGMtUXg=;
+ b=ue+6m8KGWYjmpDFKfDYhUEniFARbtv3+JSp3fOlB/l4dHAY/mi5uCWp8ClpvHWJ01a
+ clS8qruu9ub50BM5x7aXjZXtpSdeuo8u9P/TrXfrJpHn3AYGfmb51GcAUuYLZJ4kANEd
+ 9xrcIJr1EoodQdm1xTPLJp0VZ/AwQNDFJ6kBu3iOh/HvwmsjObjunW2vbLxfGfXOfQ8f
+ 5DsUMF/qmyVfkdE5L6QS5x7tXXN68w7WI7w4BPvbVWNp9+StJVY+fJ0YLkJMEcGFZkE1
+ EEizUmH2JzfVFOguerkdHAXYG1M742OGDnNZOBjCOt+auTEg+Y+e/gnETu/0RMKnQLl1
+ HpUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777565411; x=1778170211;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=yIRhBPiNG2fZPL4JkXkwwlyyh7IKbh7lsx43tGMtUXg=;
+ b=NNpoHziaJBIvaIzZyjPgP4/E2H7R3INN+y8vonD8GZJ57bjHuFKlWw2iH6aYZ1cDSX
+ d5eqI2giUqSBl7rlpEF2N9Zjul+ghFpcqJx0iguuHYpUdgPsZQOLyAvFlnV1YdDxqlm8
+ FDYuZtuUcHdfZOMwWcLdGItl055kdDLH8rh2lqrJUROUNDAfenviEOV2DEewELcawSuT
+ 2pzS1DqTf1brAKaZABl/0c1OIAmt8G/eyi/YcMWeGyVhEI1MBORlR6DcAuu/Du8xPzA6
+ ETNJY+v4XP1CSyyCxBC8WnpZ1txR3fF0DgXXJhARsdUjzUQo/fDdFKUYDOy62cAHh1pW
+ BfqA==
+X-Gm-Message-State: AOJu0YzXMR2O5SFC2XYxlZ8nzErHHV/lHBjF2116Hkr9ciAy6Fl/OLEl
+ zodGh8bY05FraLl/oHi+8A5fy6kyyhLL3Rt3SlEx3LnWbuqeP7EEy+N3B2W7tVPhg3qMc7iQNln
+ QV8aoYUBUiexgI99GEgpwhsv3mjTdniVQksGWYWGC0Q==
+X-Gm-Gg: AeBDiesfiviSqQzdW7e4+8BzU//55zAMtxHWP4vLj8oohOpvqNdTypt8PYh/9t+5jYb
+ hSEsk7Dc7LlLKCBMKC7NNGdhRosA8dlr8gNnnzE7AI18xCt/xeV54We5F6wxuQ2MzTtoeL9DOXV
+ /ArqKy5D/fKmkU9F/rfJ7I1Zgs8mhIzMRMGzBdL5e/UVuER00zeEBZOpG5w4s11uvILavM8vUhH
+ ZCyKgua9j3Xo4R9SSQ6u/NC5pOjLda8KdI04j93WrvTbnahcaMhv17fFcLmm38e3NGS2kfGeKH4
+ Acu+VJ+AbOKaZWRX0i5AdRKToKZET/1IP25YsdpuGoRa4tiglqUeOXglv1Yt46GqFeY2TvFvLvK
+ yOg==
+X-Received: by 2002:a05:690e:d51:b0:64e:f106:60e5 with SMTP id
+ 956f58d0204a3-65c18f66c0cmr2674463d50.52.1777565410827; Thu, 30 Apr 2026
+ 09:10:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-29-c413f3605311@redhat.com>
+In-Reply-To: <20260427-qom-tests-v1-29-c413f3605311@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 30 Apr 2026 17:09:59 +0100
+X-Gm-Features: AVHnY4Ke4Cid2FV_aVKZWaQIt0WEv-APM4TG41TEi3GLqv3C2uD5CedPrO88uOA
+Message-ID: <CAFEAcA-krpQw4atHeDkCae_7EJEtUrwGNHMnYxu4eNAXdyykeQ@mail.gmail.com>
+Subject: Re: [PATCH 29/41] hw/fsi: move OPBus address space init to realize
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, 
+ Ninad Palsule <ninad@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,72 +123,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Farman <farman@linux.ibm.com>
+On Mon, 27 Apr 2026 at 20:45, Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+>
+> The OPBus instance_init initializes an AddressSpace, registering it in
+> the global address_spaces list. When a bare OPBus object is created
+> and destroyed (e.g. by qom-tests), there is no finalize to remove the
+> stale entry, leading to a heap-use-after-free when a subsequent
+> flatviews_reset iterates the list.
+>
+> Move address_space_init to the bus realize callback and add the
+> corresponding address_space_destroy in unrealize, following the
+> NubusBus pattern. Also fix the memory_region_init owner from NULL to
+> the OPBus object, so the MR is properly parented instead of dangling
+> under the "unattached" container.
+>
+> Fixes: eb04c35da2c0 ("hw/fsi: Aspeed APB2OPB & On-chip peripheral bus")
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  hw/fsi/aspeed_apb2opb.c | 31 +++++++++++++++++++++++--------
+>  1 file changed, 23 insertions(+), 8 deletions(-)
+>
+> diff --git a/hw/fsi/aspeed_apb2opb.c b/hw/fsi/aspeed_apb2opb.c
+> index b9d72f3ecf6..5d1e471288b 100644
+> --- a/hw/fsi/aspeed_apb2opb.c
+> +++ b/hw/fsi/aspeed_apb2opb.c
+> @@ -282,13 +282,6 @@ static void fsi_aspeed_apb2opb_realize(DeviceState *=
+dev, Error **errp)
+>      AspeedAPB2OPBState *s =3D ASPEED_APB2OPB(dev);
+>      int i;
+>
+> -    /*
+> -     * TODO: The OPBus model initializes the OPB address space in
+> -     * the .instance_init handler and this is problematic for test
+> -     * device-introspect-test. To avoid a memory corruption and a QEMU
+> -     * crash, qbus_init() should be called from realize(). Something to
+> -     * improve. Possibly, OPBus could also be removed.
+> -     */
 
-Move Cornelia's git tree from virtio-ccw to the overall
-s390 architecture group, since all the subgroups funnel
-up through that.
+I think that what this TODO comment is trying to note is that
+we do the qbus_init() in realize because the implementation
+of the bus does things in its instance_init that it ought
+to be deferring to realize. If we fix the bus to do those
+things in realize instead, we ought to be able to move
+this qbus_init() to the fsi_aspeed_apb2opb_init function
+where it more logically belongs.
 
-Remove Christian's tree from the subgroups, since they are
-not specified consistently across areas but also haven't
-been used in ~6 years.
+C=C3=A9dric, I think you wrote this comment; what do you think?
 
-Signed-off-by: Eric Farman <farman@linux.ibm.com>
-Acked-by: Halil Pasic <pasic@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Message-ID: <20260417152236.1305333-2-farman@linux.ibm.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
----
- MAINTAINERS | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+>      for (i =3D 0; i < ASPEED_FSI_NUM; i++) {
+>          qbus_init(&s->opb[i], sizeof(s->opb[i]), TYPE_OP_BUS, DEVICE(s),
+>                    NULL);
+> @@ -348,15 +341,37 @@ static void fsi_opb_init(Object *o)
+>  {
+>      OPBus *opb =3D OP_BUS(o);
+>
+> -    memory_region_init(&opb->mr, 0, TYPE_FSI_OPB, UINT32_MAX);
+> +    memory_region_init(&opb->mr, o, TYPE_FSI_OPB, UINT32_MAX);
+> +}
+> +
+> +static void fsi_opb_realize(BusState *bus, Error **errp)
+> +{
+> +    OPBus *opb =3D OP_BUS(bus);
+> +
+>      address_space_init(&opb->as, &opb->mr, TYPE_FSI_OPB);
+>  }
+>
+> +static void fsi_opb_unrealize(BusState *bus)
+> +{
+> +    OPBus *opb =3D OP_BUS(bus);
+> +
+> +    address_space_destroy(&opb->as);
+> +}
+> +
+> +static void fsi_opb_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    BusClass *bc =3D BUS_CLASS(klass);
+> +
+> +    bc->realize =3D fsi_opb_realize;
+> +    bc->unrealize =3D fsi_opb_unrealize;
+> +}
+> +
+>  static const TypeInfo opb_info =3D {
+>      .name =3D TYPE_OP_BUS,
+>      .parent =3D TYPE_BUS,
+>      .instance_init =3D fsi_opb_init,
+>      .instance_size =3D sizeof(OPBus),
+> +    .class_init =3D fsi_opb_class_init,
+>  };
+>
+>  static void fsi_opb_register_types(void)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index e41f0eb92cfd..39618d89b6f1 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -126,6 +126,7 @@ F: docs/system/target-s390x.rst
- F: docs/system/s390x/
- F: tests/qtest/migration/s390x/
- K: ^Subject:.*(?i)s390x?
-+T: git https://gitlab.com/cohuck/qemu.git s390-next
- L: qemu-s390x@nongnu.org
- 
- MIPS general architecture support
-@@ -500,7 +501,6 @@ F: target/s390x/kvm/
- F: target/s390x/machine.c
- F: target/s390x/sigp.c
- F: gdbstub/gdb-xml/s390*.xml
--T: git https://github.com/borntraeger/qemu.git s390-next
- L: qemu-s390x@nongnu.org
- 
- X86 KVM CPUs
-@@ -1863,7 +1863,6 @@ F: hw/s390x/
- F: include/hw/s390x/
- F: configs/devices/s390x-softmmu/default.mak
- F: tests/functional/s390x
--T: git https://github.com/borntraeger/qemu.git s390-next
- L: qemu-s390x@nongnu.org
- 
- S390-ccw boot
-@@ -1877,7 +1876,6 @@ F: pc-bios/s390-ccw/
- F: pc-bios/s390-ccw.img
- F: docs/devel/s390-dasd-ipl.rst
- F: tests/functional/s390x/test_pxelinux.py
--T: git https://github.com/borntraeger/qemu.git s390-next
- L: qemu-s390x@nongnu.org
- 
- S390 PCI
-@@ -2464,8 +2462,6 @@ M: Eric Farman <farman@linux.ibm.com>
- S: Supported
- F: hw/s390x/virtio-ccw*.[hc]
- F: hw/s390x/vhost-*-ccw.c
--T: git https://gitlab.com/cohuck/qemu.git s390-next
--T: git https://github.com/borntraeger/qemu.git s390-next
- L: qemu-s390x@nongnu.org
- 
- virtio-dmabuf
--- 
-2.53.0
-
+thanks
+-- PMM
 
