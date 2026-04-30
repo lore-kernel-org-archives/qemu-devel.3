@@ -4,114 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25D44FF8875
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44388CD13DA
 	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 10:36:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIOjy-0004Gw-Ji; Thu, 30 Apr 2026 06:35:30 -0400
+	id 1wIOjr-0004Fx-Vv; Thu, 30 Apr 2026 06:35:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIOjw-0004Gf-WF
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 06:35:29 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wIOjr-0004Fl-5q
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 06:35:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wIOjv-0003dC-FJ
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 06:35:28 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wIOjp-0003cP-Lh
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 06:35:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777545326;
+ s=mimecast20190719; t=1777545321;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qFGZxvfSbLtfoczaIPPC/TynxGZ0ECl7dXJgvHjsB3c=;
- b=FXUGEoauU0MMAXW6KiZa9C9UM6aRUOf7Yv/oGllCXg3cj3bVt7exAekc+/d/Tq5WPAFcXz
- hKASExnkmGvvn4AixG0Gb13h6s3ORfVSt/8hWdagD1b9D8JF+/puan0FkCg2IqK86UQBWY
- Vw8o8/9ztvxRtSOnypo9UDL4zTtOwjw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ in-reply-to:in-reply-to:references:references;
+ bh=qEiaM4nnLIL8FvWNwqi93qDfFi/OsG+rt+TEb/RJdAU=;
+ b=f1+tJFP6UZPJ+7ykwCEJekeUSyPQfbMnGHJSCJUpSyM6McMF3PwvIC/rFKGel9Bg1RcXyM
+ BMo4laimP8WDnn6KAed48NC75xELY71hOSkpLpsd9GOBJBXVtzwEFVPfTp00zYoWSMAEz2
+ jTgskinSRWm5yt7toDhXSroOrHft6rI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-695-QbHSrucvMHmVIwYe2wxg5w-1; Thu,
- 30 Apr 2026 06:35:23 -0400
-X-MC-Unique: QbHSrucvMHmVIwYe2wxg5w-1
-X-Mimecast-MFC-AGG-ID: QbHSrucvMHmVIwYe2wxg5w_1777545322
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-387-axAvCK9PPdGXHFCYjuVcAA-1; Thu,
+ 30 Apr 2026 06:35:17 -0400
+X-MC-Unique: axAvCK9PPdGXHFCYjuVcAA-1
+X-Mimecast-MFC-AGG-ID: axAvCK9PPdGXHFCYjuVcAA_1777545317
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3B72E1956094; Thu, 30 Apr 2026 10:35:22 +0000 (UTC)
-Received: from [10.44.50.160] (unknown [10.44.50.160])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 19E8C180045E; Thu, 30 Apr 2026 10:35:19 +0000 (UTC)
-Message-ID: <80b64cb9-1e39-4b88-921c-0b0fd43fd2e0@redhat.com>
-Date: Thu, 30 Apr 2026 12:35:16 +0200
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DE58B1800473
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 10:35:16 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.2])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 852E51800480; Thu, 30 Apr 2026 10:35:14 +0000 (UTC)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pythondeps: bump to meson 1.11.0
-To: John Snow <jsnow@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Cleber Rosa <crosa@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-References: <20260429202051.2998084-1-pierrick.bouvier@oss.qualcomm.com>
- <CAFn=p-ZgJd13Z_Rr01J_NJ4eNah7LgSPXbmYBvHwX8rMJxyd9A@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <CAFn=p-ZgJd13Z_Rr01J_NJ4eNah7LgSPXbmYBvHwX8rMJxyd9A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Subject: Re: [PATCH 08/13] minikconf: modernize handling of include chain
+From: marcandre.lureau@redhat.com
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+In-Reply-To: <20260430090534.841894-9-pbonzini@redhat.com>
+References: <20260430090534.841894-1-pbonzini@redhat.com>
+ <20260430090534.841894-9-pbonzini@redhat.com>
+Date: Thu, 30 Apr 2026 14:34:59 +0400
+Message-Id: <177754529909.1138192.2800708626696584583.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=805;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=MIv5ViCfUh3ZBAMjPOdpncMHX6pn4FQ6+URFFxXSr4w=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp8zBWjGial43B8t++lAE5vbX/LCfj7W2yUTjiq
+ 5tVddhq5FaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafMwVgAKCRDa6OEJdZac
+ 5VoQD/0S4YC2bnlz1pLXOtf/kURtHkghsZx3VnAPLRnQlzMhZHOy3jYE3UR5ZnRQKmm9b2VqE7G
+ tnSwFbz1jZtKGbNHeHrQGb7+PR0jiKNCbJablL3qIPZEGtvK3eQn7sz0x/5XMq4xxHguAS4xsge
+ nnzoWBpjZU1+/lgz2Y5jBNYR6qsgEVtjm9yeqUbUhIl/MS/l64eoT22S/yOSmiavhLnsg3+wfbx
+ tgYjpkBkvbC8f66fO43CsDZVHx3EcgIB5NDtnWWTeHYrKB4r8w9Jc0xHflT+l0ObpOr9pIE5wZZ
+ E3cyMYk5inSiAdSvvna8CD+LvCFH3djxFAwpd4rzefa8WaJgvjG1ZYeT5iCkIg4ivFrEIJZrfWm
+ /CcyY6SwII8e/CwTPtv6gKL7qpQwFCoxQUtOSKN/Lg57Dc10n1CIScEbOPHPanNLvqFO2B/onVR
+ vq35r6z99W13haZIyRIR8DES1oPLBPuMc5+UteQsVhFZfIVGuSBDrCNucgdaASbTgzH+VqMWdO/
+ xCCnAhSe+SJAF7VCi/BdGjrTGBfko9ln+AxC8HTfdcJAkoC7GpF2gZCRJ1WMAPGGg8CSeupTGPn
+ k+6ITlWqMuhxlXn8QfI9NzrOyxHPWbVGwtbPuyIBhS0VyQvIwnwrOh3I6nGTAWrHdrkrH8o3tNn
+ o1HxELZfM5m8inw==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,36 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/29/26 22:46, John Snow wrote:
-> 
-> 
-> On Wed, Apr 29, 2026, 4:22 PM Pierrick Bouvier 
-> <pierrick.bouvier@oss.qualcomm.com 
-> <mailto:pierrick.bouvier@oss.qualcomm.com>> wrote:
-> 
->     Prior to 1.11.0, build with rust didn't use link_args.
->     In QEMU case, it means that plugins could not work, since they rely on
->     link_args to expose symbols from QEMU binary.
-> 
->     https://mesonbuild.com/Release-notes-for-1-11-0.html#change-to-
->     handling-of-linker-arguments-for-rust <https://mesonbuild.com/
->     Release-notes-for-1-11-0.html#change-to-handling-of-linker-
->     arguments-for-rust>
-> 
->     With this change, QEMU built with --enable-rust can pass all CI tests,
->     including tests related to plugins.
-> 
->     Suggested-by: Paolo Bonzini <pbonzini@redhat.com
->     <mailto:pbonzini@redhat.com>>
->     Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com
->     <mailto:pierrick.bouvier@oss.qualcomm.com>>
-> 
-> ACK, lgtm
+On Thu, 30 Apr 2026 11:05:29 +0200, Paolo Bonzini <pbonzini@redhat.com> wrote:
+> diff --git a/scripts/minikconf.py b/scripts/minikconf.py
+> index 3d63cc6b21f..07a5152ef54 100644
+> --- a/scripts/minikconf.py
+> +++ b/scripts/minikconf.py
+> @@ -15,11 +15,30 @@
+>  import random
+>  import re
+>  import sys
+> +from dataclasses import dataclass
+>  
+>  __all__ = [ 'KconfigDataError', 'KconfigParserError',
+>              'KconfigData', 'KconfigParser' ,
+>              'defconfig', 'allyesconfig', 'allnoconfig', 'randconfig' ]
+>  
+> +@dataclass
+> +class IncludeInfo:
+> +    file: str
+> +    line: int
+> +    parent: IncludeInfo | None
 
-Queued, but I will update it to 1.11.1.
+Add `from __future__ import annotations` with this patch or add the annotations with patch 13?
 
-Thanks,
-
-Paolo
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
