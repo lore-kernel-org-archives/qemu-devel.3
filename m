@@ -4,104 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58EA0FF8873
-	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 18:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F39A5CD13D3
+	for <qemu-devel@archiver.kernel.org>; Thu, 30 Apr 2026 18:15:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIVuW-0003SN-H4; Thu, 30 Apr 2026 14:14:54 -0400
+	id 1wIVur-0003gn-Di; Thu, 30 Apr 2026 14:15:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIVuG-0003Ra-8l; Thu, 30 Apr 2026 14:14:37 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIVuD-0002EJ-0i; Thu, 30 Apr 2026 14:14:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777572774; bh=5ZV+JPPudW/i0sJsnF+Pi+GLLRiR8JCVUNl+0w4WBe4=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=NrI6B2/N13smtE9k6E+ctkZy8UqShTgSovtBLdG7vpmTcSGfXS6cDm1+UyQESuZgK
- op+L9/26JOQMaFl3ts/BOSvnVLkHur+ebULchxfjyNBES40AELA4Wc1RBPQdyEt4Uq
- N4nCW12pfSpjTKMdYe6feYW+E8O3Udz4H29oxBBGKEZehPM740VBLPFQM3Q37rgUNC
- +FxxQrHFfGf4+mMwFB4DWv+Xe17ZewCPp3Fs6yzdkoPhDZ9maigsg+jN1RPDJALXAS
- 4I0h13YiMwPB1cKDnn1gaI+eIHCFOEWz3UwPYB628szhc5EeSqE3hDN/21a92+4/0k
- 2BJIu/mH3d4pA==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 3F7101A56C4;
- Thu, 30 Apr 2026 21:12:53 +0300 (MSK)
-Message-ID: <aebe990e-e658-4a26-a8f3-6ecc18fc6908@tls.msk.ru>
-Date: Thu, 30 Apr 2026 21:14:23 +0300
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1wIVuq-0003gP-8M
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 14:15:12 -0400
+Received: from mail-qv1-xf2f.google.com ([2607:f8b0:4864:20::f2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <danielpaziyski@gmail.com>)
+ id 1wIVuo-0002Xa-RF
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 14:15:11 -0400
+Received: by mail-qv1-xf2f.google.com with SMTP id
+ 6a1803df08f44-8a0ac5c1f70so1046946d6.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 11:15:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777572909; cv=none;
+ d=google.com; s=arc-20240605;
+ b=BSPwtgatIkvDMUHcogj8Ez+qXq3pCW9CfI7XTD6dMtBTSuE+Doop+V6EkpKSHsrqAN
+ zuxgyv3HGTDSnyqKC/snQRxs4hmNI4shU8a+YFu3+z6LGfDg0D842oA7yZljGjWYgMUm
+ 2ddQIdsM0fyFe6zNUpqQAk1R+kSh6Lt8yw93C4xKYO/kn+ms5l41gipZojLjdMVTiWQ9
+ 3ckSbYnyuAVAnw21zPGYkd0FIhI3vuvPrR/Mzvyye8oC1anE80/qsT/NURMExq6eb70y
+ Z2W9fJNxFb3kIb7bb4xx0ejcci2VzBQBSC2UtW1T02vj4lDcKVVwgNduJx1JLX3ozi20
+ 5YOA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=krRonHVJrX/AM3Nh6AH5T0UFeYhSLpzdF/4nvnQSNLk=;
+ fh=lrmPJ0Yto0CZ98BsYiLmCZW7N+RxTbMi63WegqQblAU=;
+ b=MYfqkA7bK9sicObw465kNYJcJ5bC+tsqUhNnrVzas5iVxm71WqQ2l2DXOddSoxmWn5
+ zs1PlgHVY/XT/ydZdG2dTV01q9nr/xJhe005I0haPaMdPIn5OBG2KiE6kKoBWAmZ7lTb
+ 4H/kFXmFMKbMu+bKvonkEeq6Gf+jITdQRUO/EFfp8xb6LPxWUbQ+HVLKgp3bW1ieQThG
+ eOSW5rcMRBTFDpVE2eklJBmojbwdIpr07uxICN4zWqhNuZB3x9IWY1wvack9irfPIBRb
+ GJsVgwxfZHqQmxBrGJbGfTyyUMGAyt7c+V7TLcTkPGnMVeYMADKSOC1R6G0prEfCM477
+ Ja7g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1777572909; x=1778177709; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=krRonHVJrX/AM3Nh6AH5T0UFeYhSLpzdF/4nvnQSNLk=;
+ b=E5hbQcy+Rr6VtKDB3wUJKoRjUu4T6JC2PKvlqBlydztIDx+6mZL/iuc9eW93sgA8A5
+ ctnvnbJCKhbFKTRL0yQnFpKfzOW5srxoSNMN2qOJVrXQXHwn6G3NtMWf2tNydLU8fbaP
+ 614l+W83PwCclfHj8jcK94EuyPKN8872HT+Kigmiv5yAY3nps43AX1DWX3kIjFFqmk57
+ 4l6LkhzZrod7vUaaO92GrFz1dDMd+DgUXpU3yPzn0j9beVIAsr5pMJurLgw+U1nKNARC
+ NNm2g6odDyDxfarnTNi+G9DOR3Srrw/RRqyw6ugV4/UhVId9hdfACvuvFunYQ5bOxx7f
+ cHrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777572909; x=1778177709;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=krRonHVJrX/AM3Nh6AH5T0UFeYhSLpzdF/4nvnQSNLk=;
+ b=miBVB8vD+hGjcCEq+hf8PaDrVw3mqQmTxSMc4+4RBdDAaGhNt4+BhdnYtxKUgEXvPQ
+ gqjNOlm+E5oaxHNhz64lEfvBC8Mewrd/nEUwtAII56+dQs+babnmfjKT6jMfMbxptrlb
+ m/aMWuq3ujYxPB0SUkjaYuv8exJzv7CR59YzahaAfyTIyOUbY+Dsmk0SJ9B0pI1wzZrg
+ GSf/buRGX3ekpPbOlCna1pMqEQ7u5Mh1pNWElwm2Gu4qMxRq0toha9NMOHS0dFbp6pI8
+ c/CxPZJPTYhzIiS2t2MYjvwH7r0YX9TJx+Xz9LUompYf20fgRTCHO0xSyfY7vcT8YhSL
+ I1gQ==
+X-Gm-Message-State: AOJu0YzzZm/bXm5aLpeziFWxiY7vuCqz2T3Qp2m6+YARpQw0vS9Wtcnl
+ ywi3MtERVwUt7YeAyJi0qwijiIiaLDabfna8Ys7TwrDSJ3wJLxsuOEEH4NEugWTF5UdUa/s2L0G
+ BQ35WPeeVFQexjPiKOIAPQDm3ZBj+SRc=
+X-Gm-Gg: AeBDiesAlyv+sYNTUqe6rOAli33wBOEOTxnqd1C5fs9dvi/OTEYt/RNIJrWq6mOGRhY
+ 8oyd/KfZUfPUTMLzfEOm5bBMDsVflu2YrT7LinPfR9MDBG9+v/HEG1qi+UxLIre3eelRVpARPAK
+ 7BJfB7nOvwzbkk4VBDdRZA/QXXD3n5WD5LeNcmqcm1QTQib1xQaQcC3g+JvwcK3p9rdVpg/BoSX
+ ZbmeHg9+D/5onv59wdn8x20av3OxQPhhf2EUaq1nABTcERMYJvRI6XSTCWHZaE9QPKV35He+WMi
+ V41fIs4IhaHlx7U6gU8=
+X-Received: by 2002:a05:6214:e65:b0:89c:c7ee:fe96 with SMTP id
+ 6a1803df08f44-8b3fe7d1d5bmr37284396d6.8.1777572908585; Thu, 30 Apr 2026
+ 11:15:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 25/51] riscv_htif: reject invalid signature ranges (end <=
- begin)
-To: alistair23@gmail.com, palmer@dabbelt.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Tao Tang <tangtao1634@phytium.com.cn>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260429044752.4176397-1-alistair.francis@wdc.com>
- <20260429044752.4176397-26-alistair.francis@wdc.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260429044752.4176397-26-alistair.francis@wdc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260225180555.154428-1-danielpaziyski@gmail.com>
+ <20260420173816.63673-1-danielpaziyski@gmail.com>
+In-Reply-To: <20260420173816.63673-1-danielpaziyski@gmail.com>
+From: Daniel Paziyski <danielpaziyski@gmail.com>
+Date: Thu, 30 Apr 2026 20:14:57 +0200
+X-Gm-Features: AVHnY4I3626fpItXs7zvnEnHnXEcxIgXc3eo2ivifZEOBHsQKWfOAfW9yvI5I3Y
+Message-ID: <CANukVxuz3feJuiOV8s3oCYb0PrE3p173mLSyzRGdkA_7haGeGw@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/intc/apic: mask LVTs when software disabling the
+ APIC
+To: mst@redhat.com, pbonzini@redhat.com
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f2f;
+ envelope-from=danielpaziyski@gmail.com; helo=mail-qv1-xf2f.google.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ PYZOR_CHECK=1.392, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,34 +115,5 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.04.2026 07:47, alistair23@gmail.com wrote:
-> From: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
-> 
-> Prevents huge allocations and crashes caused by malformed HTIF signature
-> addresses.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3205
-> Signed-off-by: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> Message-ID: <20251209085349.61510-1-munkhuu0825@gmail.com>
-> [ Squashed with following commit to fix build failures
->      hw/char/riscv_htif: Fix format specifier for uint64_t
-> 
->      Message-ID: <20260415134826.1742308-1-chao.liu.zevorn@gmail.com>
->      Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> ]
-> Tested-by: Tao Tang <tangtao1634@phytium.com.cn>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
->   hw/char/riscv_htif.c | 6 ++++++
->   1 file changed, 6 insertions(+)
-
-This change, it looks like, should be part of stable qemu series.
-I'm picking it up, please let me know if I shouldn't.
-
-Thanks,
-
-/mjt
+Ping.
 
