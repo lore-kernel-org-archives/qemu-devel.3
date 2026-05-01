@@ -4,100 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B44ECD3423
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 20:04:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EC73CD3423
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 20:04:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIu6E-0001r3-Fh; Fri, 01 May 2026 16:04:35 -0400
+	id 1wIu68-0001W2-0Y; Fri, 01 May 2026 16:04:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
- id 1wIu6B-0001k6-FS; Fri, 01 May 2026 16:04:31 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1wIu5w-0001K4-E1; Fri, 01 May 2026 16:04:21 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
- id 1wIu69-0001ei-NF; Fri, 01 May 2026 16:04:31 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1wIu5s-0001VB-Qq; Fri, 01 May 2026 16:04:16 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 641EjivY2840313; Fri, 1 May 2026 20:04:26 GMT
+ 641F1BxZ3060766; Fri, 1 May 2026 20:04:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=1Mthas14dUCzArtmP
- BHd0kOVwbr1CPycXWbV3rNFn9E=; b=NcmrTnxXIgN0jgRp5cZSBR3nZyFXHcebN
- Mjw/N3W6mr+NbZOaeH8giEGDuHC1s41DGeTRxC8vcBorX49rZ1IYLvKuqJ+MD8Af
- sSYwyUDn+uIrf3wCUvpPFWRbnLnaak1tMYVijm0I7HTSA38AZX7L9/rVUZ66AXuI
- lI8D5pZprW8wq9aUCbTCypwWCnrBrOM4jPcZiMocjXFrkSAOKp7k7fy/LoOtEV6e
- /zkpW8oWcicGqCzOikdWz+COQ697wNr68no6w7+r6NvL07mURgmySb1N7wsLUu0J
- L9wF5dizI/CIJKYnCjifgmB2v6b/5Pkh++N4KsTjVGQfmcC2ofAzw==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drn8vv63q-1
+ :mime-version:references:subject:to; s=pp1; bh=KlGpvEC4RDK74fAGE
+ yEIgsDl+lYkwifLPb2H0Dd9tLY=; b=I/llce4RLFMSnf0nfRinO6R9njgkgUNL2
+ TXBv2EgTdHRBs8Qk08UyfeI7t5qUmS1Zxp4POLCZx7O4EGQ2poUUVEeymxhkm4fB
+ 9wbSQ2J5QJkkWWhYtAGRrYCB3uOjl786CZ/LOLiCbyTw4sfvVqAnezyAz1jLmIuM
+ IgyGViyjzjMLcPtEOCOlDaRy+jCCjZ14Tfg9LecHUYKcXMTZEsf6/tplj0NredSy
+ YoYeueW/+DC0hOR44OF4Ro76sh3FNTGc7ulYEeqmQ64c5b5E1f1dSV480rJlOoJJ
+ 28tD3Rri+RJ4W7oQnZ46f8mKX40dUoM2JtDvHmO8stL44xX3xpOOQ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drn9rp5uj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 01 May 2026 20:04:26 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 641JcjSM023096;
- Fri, 1 May 2026 20:04:25 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dsamyrqrd-1
+ Fri, 01 May 2026 20:04:07 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 641Jrs3G000757;
+ Fri, 1 May 2026 20:04:06 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ds9ehrucg-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 01 May 2026 20:04:25 +0000 (GMT)
+ Fri, 01 May 2026 20:04:06 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 641K4MFf32244260
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 641K438Z31916704
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 1 May 2026 20:04:22 GMT
+ Fri, 1 May 2026 20:04:03 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5714B58043;
- Fri,  1 May 2026 20:04:22 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4B23D58043;
+ Fri,  1 May 2026 20:04:03 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 399CA58059;
- Fri,  1 May 2026 20:04:21 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 2DA7C58055;
+ Fri,  1 May 2026 20:04:02 +0000 (GMT)
 Received: from Mac.ibm.com (unknown [9.61.247.25])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  1 May 2026 20:04:21 +0000 (GMT)
+ Fri,  1 May 2026 20:04:02 +0000 (GMT)
 From: Omar Elghoul <oelghoul@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
 Cc: oelghoul@linux.ibm.com, mjrosato@linux.ibm.com, alifm@linux.ibm.com,
  farman@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
  richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
  cohuck@redhat.com, mst@redhat.com, pbonzini@redhat.com, clg@redhat.com
-Subject: [RFC PATCH v1 5/5] hw/s390x: Report FMB passthrough and/or FMB DMA
- counters to the guest
-Date: Fri,  1 May 2026 16:00:26 -0400
-Message-ID: <20260501200026.22784-6-oelghoul@linux.ibm.com>
+Subject: [RFC PATCH v1 4/5] hw/s390x: Internal support for FMB passthrough
+Date: Fri,  1 May 2026 16:00:25 -0400
+Message-ID: <20260501200026.22784-5-oelghoul@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260501200026.22784-1-oelghoul@linux.ibm.com>
 References: <20260501200026.22784-1-oelghoul@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=CIIamxrD c=1 sm=1 tr=0 ts=69f5074a cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-GUID: QCgjdcwJE6JZFuXGzB2h9KzUVfNCWFze
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTAxMDE5NSBTYWx0ZWRfX9RN79WnRGezD
+ 3DERqgp+H6BOq3s/oTU+IFuWxyZ0c1kZ5fGmtEpW5DB/qIU7ajU0lRS6tq4/EkjZ3MBEhCxiwPv
+ 2VwiCSlPScLWm64IJ18mgghxpgA8t+W5MMk0Yp6LL7JOch+tAtBQu/yd/ApYT7MI4G+MeXOn9ki
+ M6Z3y5yTQ5bHuvqVBmSiTq+m7VJGYl9XVI/S723kmZ7gzMT6os3y5N2ghxzoke8CTJuEg+D/riN
+ 372AYHOm4sO2A+JJ+jpBnA4aHkf3LWLj1l/GKVQdtg289XfsbrZim70jmqqx8O5QJC2/B0rNzrx
+ Djku8wWTvAgwIlEZ/ANwIgoSsdmtrw0GZeTTNsHgzKFXyBHolNoJB2Bh3Ja+nCvDKmz2J5s5Ba+
+ zqQyo4qVe+W0bKoYPWuXEcxi6T/GvuvMSLQsnZKYtvvD6Q9gPSoHZUx+iG8gT4qwGjeCZG6xGtv
+ 1Ee1G3b6ewrKo4ew+Sg==
+X-Authority-Analysis: v=2.4 cv=Kc7idwYD c=1 sm=1 tr=0 ts=69f50737 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=i_3ZhW82j95uuV7xZWQA:9
-X-Proofpoint-ORIG-GUID: X75OfkJzypko5NRi3CMG-1B3je4RkAGK
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTAxMDE5NSBTYWx0ZWRfXz4H/9MW1LOHI
- HnII2MpVDCK8yl6GGUuwxFVBEh/qDKLD4vhlEsnUGJtgehJ7LQ5LYipm1+Ir3xUBCetxmgR7V8F
- e4DbDVEuY0jpcPlwOrtHjRYhHj9252oREg2cdsq3fpbu/nrMlH1064P0zfKRzQBHPyDfCiLfKTs
- 3AJ2vH2zE24zimcAqMdC2nWEcsBD1yu0sYpYTJCPACAnD4Go1OhrOiir4TDFRiWSB8g5bexfSkl
- VpK521WaXOQMbB8ccKyZBhKaMiAE5SshVfL9QrdQJSBtQ5B2HsK4wDnb2wVBG0xnROmf94/tJm9
- Otzrh8D4qfuFP/uYJBRt7mwabkJGq/bJ1Ar1VEAQYfByJ5b4KGFgLtvrOqgG8dTf/sGpuLYAwH2
- cmswwdLzeLNCZXA92E/zS6VS4cW8cADNneTc0gbe/TdRz92uNIAXQI+Hhd4mZF+3aojIkZBc5o2
- zpDmvtc8zj5/spejWNA==
-X-Proofpoint-GUID: X75OfkJzypko5NRi3CMG-1B3je4RkAGK
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=47rX_IKMaOKvU8u4J60A:9
+X-Proofpoint-ORIG-GUID: QCgjdcwJE6JZFuXGzB2h9KzUVfNCWFze
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-01_05,2026-04-30_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 malwarescore=0 suspectscore=0 adultscore=0
- impostorscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0
- priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ clxscore=1015 phishscore=0 bulkscore=0 adultscore=0 spamscore=0
+ malwarescore=0 impostorscore=0 priorityscore=1501 lowpriorityscore=0
+ suspectscore=0 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
  definitions=main-2605010195
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=oelghoul@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=oelghoul@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -120,138 +119,328 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Report the correct FMB length to the guest and report a more accurate
-snapshot of the FMB using the VFIO feature in the PCI passthrough case or
-the emulated counters in the emulated case. To preserve the behavior of
-earlier QEMU versions, do not report the PFT or the FMB length to the guest
-in the case where FMB passthrough is unavailable.
+Detect the FMB passthrough at runtime by probing for the VFIO FMB device
+feature and setting a flag indicating its presence. If present, during an
+FMB update cycle, read the device feature and add the VFIO-provided
+counters to QEMU's intercepted statistics, to account for operations that
+may be run without interpretation.
+
+If the device feature is not found, gracefully and silently fall back to
+QEMU's pre-existing intercepted FMB implementation.
+
+Introduce helper functions to allow enabling or disabling the FMB of the
+host device. These functions will allow QEMU to cascade FMB state and
+guarantee that the counters restart from zero when the guest expects them
+to after a new FMB (re-)enablement.
+
+Finally, remove the reduced aperture size for PCI ISM devices. This is
+necessary due to the kernel working around a firmware bug and incrementing
+the DMA limit by one full page when the PFT is reported correctly.
 
 Signed-off-by: Omar Elghoul <oelghoul@linux.ibm.com>
 ---
- hw/s390x/s390-pci-inst.c | 58 +++++++++++++++++++++++++++++++++++++---
- hw/s390x/s390-pci-vfio.c |  5 ++--
- 2 files changed, 57 insertions(+), 6 deletions(-)
+ hw/s390x/s390-pci-bus.c          |   2 +
+ hw/s390x/s390-pci-inst.c         |   7 ++
+ hw/s390x/s390-pci-vfio-stubs.c   |  16 ++++
+ hw/s390x/s390-pci-vfio.c         | 128 ++++++++++++++++++++++++++-----
+ include/hw/s390x/s390-pci-bus.h  |  27 ++++++-
+ include/hw/s390x/s390-pci-vfio.h |   4 +
+ 6 files changed, 165 insertions(+), 19 deletions(-)
 
+diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
+index 7eee1efeb7..88540a9eb6 100644
+--- a/hw/s390x/s390-pci-bus.c
++++ b/hw/s390x/s390-pci-bus.c
+@@ -1185,6 +1185,8 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
+                 pbdev->shutdown_notifier.notify = s390_pci_shutdown_notifier;
+                 qemu_register_shutdown_notifier(&pbdev->shutdown_notifier);
+             }
++            /* Detect VFIO FMB passthrough */
++            s390_pci_get_fmb_info(pbdev);
+         } else {
+             pbdev->fh |= FH_SHM_EMUL;
+             /* Always intercept emulated devices */
 diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index b22144751e..767c5b5cef 100644
+index 10066ca618..b22144751e 100644
 --- a/hw/s390x/s390-pci-inst.c
 +++ b/hw/s390x/s390-pci-inst.c
-@@ -20,6 +20,7 @@
- #include "system/hw_accel.h"
- #include "hw/core/boards.h"
- #include "hw/pci/pci_device.h"
-+#include "hw/vfio/pci.h"
- #include "hw/s390x/s390-pci-inst.h"
- #include "hw/s390x/s390-pci-bus.h"
- #include "hw/s390x/s390-pci-kvm.h"
-@@ -296,8 +297,13 @@ int clp_service_call(S390CPU *cpu, uint8_t r2, uintptr_t ra)
-         stw_be_p(&resquery->vfn, pbdev->zpci_fn.vfn);
-         resquery->flags = pbdev->zpci_fn.flags;
-         resquery->pfgid = pbdev->zpci_fn.pfgid;
--        resquery->pft = pbdev->zpci_fn.pft;
--        resquery->fmbl = pbdev->zpci_fn.fmbl;
+@@ -1313,9 +1313,16 @@ int mpcifc_service_call(S390CPU *cpu, uint8_t r1, uint64_t fiba, uint8_t ar,
+         if (!fmb_addr) {
+             /* Stop updating FMB. */
+             fmb_timer_free(pbdev);
++            if (pbdev->has_vfio_fmb) {
++                s390_pci_disable_vfio_fmb(pbdev);
++            }
+             break;
+         }
+ 
 +        if (pbdev->has_vfio_fmb) {
-+            resquery->pft = pbdev->zpci_fn.pft;
-+            resquery->fmbl = pbdev->zpci_fn.fmbl >> 2;
-+        } else {
-+            resquery->pft = 0;
-+            resquery->fmbl = 0;
++            s390_pci_enable_vfio_fmb(pbdev);
 +        }
-         stl_be_p(&resquery->fid, pbdev->zpci_fn.fid);
-         stl_be_p(&resquery->uid, pbdev->zpci_fn.uid);
-         memcpy(resquery->pfip, pbdev->zpci_fn.pfip, CLP_PFIP_NR_SEGMENTS);
-@@ -1096,6 +1102,9 @@ static void fmb_update(void *opaque)
++
+         if (!pbdev->fmb_timer) {
+             pbdev->fmb_timer = timer_new_ms(QEMU_CLOCK_VIRTUAL,
+                                             fmb_update, pbdev);
+diff --git a/hw/s390x/s390-pci-vfio-stubs.c b/hw/s390x/s390-pci-vfio-stubs.c
+index d9882b7aad..774a6615c6 100644
+--- a/hw/s390x/s390-pci-vfio-stubs.c
++++ b/hw/s390x/s390-pci-vfio-stubs.c
+@@ -30,3 +30,19 @@ bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh)
+ void s390_pci_get_clp_info(S390PCIBusDevice *pbdev)
  {
-     S390PCIBusDevice *pbdev = opaque;
-     int64_t t = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL);
-+    VFIOPCIDevice *vpdev;
-+    PCIDevice *pci = pbdev->pdev;
-+    uint8_t format = ZPCI_FMB_FORMAT(pbdev->fmb.format);
-     int i;
+ }
++
++void s390_pci_get_fmb_info(S390PCIBusDevice *pbdev)
++{
++}
++
++void s390_pci_update_vfio_fmb(S390PCIBusDevice *pbdev)
++{
++}
++
++void s390_pci_disable_vfio_fmb(S390PCIBusDevice *pbdev)
++{
++}
++
++void s390_pci_enable_vfio_fmb(S390PCIBusDevice *pbdev)
++{
++}
+diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
+index 7c754b656d..d749c8c80a 100644
+--- a/hw/s390x/s390-pci-vfio.c
++++ b/hw/s390x/s390-pci-vfio.c
+@@ -10,6 +10,7 @@
+  */
  
-     /* Update U bit */
-@@ -1107,6 +1116,48 @@ static void fmb_update(void *opaque)
-         return;
+ #include "qemu/osdep.h"
++#include "qemu/error-report.h"
+ 
+ #include <sys/ioctl.h>
+ #include <linux/vfio.h>
+@@ -110,7 +111,6 @@ static void s390_pci_read_base(S390PCIBusDevice *pbdev,
+     struct vfio_info_cap_header *hdr;
+     struct vfio_device_info_cap_zpci_base *cap;
+     VFIOPCIDevice *vpci = VFIO_PCI_DEVICE(pbdev->pdev);
+-    uint64_t vfio_size;
+ 
+     hdr = vfio_get_device_info_cap(info, VFIO_DEVICE_INFO_CAP_ZPCI_BASE);
+ 
+@@ -140,22 +140,6 @@ static void s390_pci_read_base(S390PCIBusDevice *pbdev,
+     if (pbdev->pft == ZPCI_PFT_ISM) {
+         pbdev->rtr_avail = false;
      }
+-
+-    /*
+-     * If appropriate, reduce the size of the supported DMA aperture reported
+-     * to the guest based upon the vfio DMA limit.  This is applicable for
+-     * devices that are guaranteed to not use relaxed translation.  If the
+-     * device is capable of relaxed translation then we must advertise the
+-     * full aperture.  In this case, if translation is used then we will
+-     * rely on the vfio DMA limit counting and use RPCIT CC1 / status 16
+-     * to request that the guest free DMA mappings as necessary.
+-     */
+-    if (!pbdev->rtr_avail) {
+-        vfio_size = pbdev->iommu->max_dma_limit << qemu_target_page_bits();
+-        if (vfio_size > 0 && vfio_size < cap->end_dma - cap->start_dma + 1) {
+-            pbdev->zpci_fn.edma = cap->start_dma + vfio_size - 1;
+-        }
+-    }
+ }
  
-+    /* Check for VFIO device */
-+    vpdev = (VFIOPCIDevice *) object_dynamic_cast(OBJECT(pbdev->pdev),
-+        TYPE_VFIO_PCI_DEVICE);
+ static bool get_host_fh(S390PCIBusDevice *pbdev, struct vfio_device_info *info,
+@@ -248,7 +232,7 @@ static void s390_pci_read_group(S390PCIBusDevice *pbdev,
+         }
+         resgrp->dasm = cap->dasm;
+         resgrp->msia = cap->msi_addr;
+-        resgrp->mui = cap->mui;
++        resgrp->mui = cap->mui > DEFAULT_MUI ? cap->mui : DEFAULT_MUI;
+         resgrp->i = cap->noi;
+         if (pbdev->interp && hdr->version >= 2) {
+             resgrp->maxstbl = cap->imaxstbl;
+@@ -370,3 +354,111 @@ void s390_pci_get_clp_info(S390PCIBusDevice *pbdev)
+     s390_pci_read_util(pbdev, info);
+     s390_pci_read_pfip(pbdev, info);
+ }
 +
-+    if (vpdev && pbdev->has_vfio_fmb) {
-+        s390_pci_update_vfio_fmb(pbdev);
-+        goto update_timer;
++void s390_pci_get_fmb_info(S390PCIBusDevice *pbdev)
++{
++    VFIOPCIDevice *vpdev = VFIO_PCI_DEVICE(pbdev->pdev);
++    int fd = vpdev->vbasedev.fd;
++    int ret;
++    struct vfio_device_feature probe = {
++        .argsz = sizeof(probe),
++        .flags = VFIO_DEVICE_FEATURE_PROBE | VFIO_DEVICE_FEATURE_ZPCI_FMB
++    };
++
++    ret = ioctl(fd, VFIO_DEVICE_FEATURE, &probe);
++    pbdev->has_vfio_fmb = !ret;
++}
++
++static void s390_pci_set_vfio_fmb(S390PCIBusDevice *pbdev, int enabled)
++{
++    VFIOPCIDevice *vpdev = VFIO_PCI_DEVICE(pbdev->pdev);
++    size_t size = sizeof(struct vfio_device_feature_zpci_fmb)
++        + sizeof(struct vfio_device_feature);
++    g_autofree struct vfio_device_feature *set = g_malloc(size);
++    struct vfio_device_feature_zpci_fmb *set_fmb;
++
++    set->argsz = size;
++    set->flags = VFIO_DEVICE_FEATURE_SET | VFIO_DEVICE_FEATURE_ZPCI_FMB;
++    set_fmb = (struct vfio_device_feature_zpci_fmb *) set->data;
++    if (enabled) {
++        set_fmb->flags |= VFIO_DEVICE_FEATURE_ZPCI_FMB_FLAGS_ENABLED;
++    } else {
++        set_fmb->flags &= ~VFIO_DEVICE_FEATURE_ZPCI_FMB_FLAGS_ENABLED;
 +    }
++    ioctl(vpdev->vbasedev.fd, VFIO_DEVICE_FEATURE, set);
++}
 +
-+    /* Update FMB format-specific counters */
-+    switch (format) {
-+    case 0:
-+        if (pci->dma_rbytes || pci->dma_wbytes) {
-+            pbdev->fmb.fmt0.dma_rbytes = pci->dma_rbytes;
-+            pbdev->fmb.fmt0.dma_wbytes = pci->dma_wbytes;
-+            pbdev->fmb.format |= ZPCI_FMB_DMA_COUNTER_VALID;
-+        }
++void s390_pci_enable_vfio_fmb(S390PCIBusDevice *pbdev)
++{
++    s390_pci_set_vfio_fmb(pbdev, 1);
++}
 +
-+        if (fmb_do_update(pbdev,
-+            offsetof(ZpciFmbFmt0, dma_rbytes) + offsetof(ZpciFmb, fmt0),
-+            pbdev->fmb.fmt0.dma_rbytes,
-+            sizeof(pbdev->fmb.fmt0.dma_rbytes))) {
-+            return;
-+        }
++void s390_pci_disable_vfio_fmb(S390PCIBusDevice *pbdev)
++{
++    s390_pci_set_vfio_fmb(pbdev, 0);
++}
 +
-+        if (fmb_do_update(pbdev,
-+            offsetof(ZpciFmbFmt0, dma_wbytes) + offsetof(ZpciFmb, fmt0),
-+            pbdev->fmb.fmt0.dma_wbytes,
-+            sizeof(pbdev->fmb.fmt0.dma_wbytes))) {
-+            return;
-+        }
-+    default:
-+        break;
-+    }
++void s390_pci_update_vfio_fmb(S390PCIBusDevice *pbdev)
++{
++    VFIOPCIDevice *vpdev = VFIO_PCI_DEVICE(pbdev->pdev);
++    size_t size = sizeof(struct vfio_device_feature_zpci_fmb)
++        + sizeof(struct vfio_device_feature);
++    g_autofree struct vfio_device_feature *get = g_malloc(size);
++    struct vfio_device_feature_zpci_fmb *get_fmb;
++    ZpciFmb fmb;
++    int ret;
++    MemTxResult memtx_ret;
 +
-+    /* Update format and DMA validity bit */
-+    if (fmb_do_update(pbdev, offsetof(ZpciFmb, format),
-+                      pbdev->fmb.format,
-+                      sizeof(pbdev->fmb.format))) {
++    get->argsz = size;
++    get->flags = VFIO_DEVICE_FEATURE_GET | VFIO_DEVICE_FEATURE_ZPCI_FMB;
++    ret = ioctl(vpdev->vbasedev.fd, VFIO_DEVICE_FEATURE, get);
++    if (ret < 0) {
 +        return;
 +    }
 +
-     /* Update FMB sample count */
-     if (fmb_do_update(pbdev, offsetof(ZpciFmb, sample),
-                       pbdev->fmb.sample++,
-@@ -1114,7 +1165,7 @@ static void fmb_update(void *opaque)
-         return;
-     }
++    get_fmb = (struct vfio_device_feature_zpci_fmb *) get->data;
++    if (!get_fmb->flags & VFIO_DEVICE_FEATURE_ZPCI_FMB_FLAGS_ENABLED) {
++        error_report_once("s390-pci-vfio: FMB is disabled on the host device.");
++        return;
++    }
++    fmb.format = (get_fmb->format << 24) | get_fmb->fmt_ind;
++    fmb.sample = get_fmb->samples;
++    fmb.last_update = get_fmb->last_update;
++    fmb.counter[ZPCI_FMB_CNT_LD] = get_fmb->ld_ops;
++    fmb.counter[ZPCI_FMB_CNT_ST] = get_fmb->st_ops;
++    fmb.counter[ZPCI_FMB_CNT_STB] = get_fmb->stb_ops;
++    fmb.counter[ZPCI_FMB_CNT_RPCIT] = get_fmb->rpcit_ops;
++
++    switch (get_fmb->format) {
++    case 0:
++        fmb.fmt0.dma_rbytes = get_fmb->fmt0.dma_rbytes;
++        fmb.fmt0.dma_wbytes = get_fmb->fmt0.dma_wbytes;
++        break;
++    case 1:
++        fmb.fmt1.rx_bytes = get_fmb->fmt1.rx_bytes;
++        fmb.fmt1.rx_packets = get_fmb->fmt1.rx_packets;
++        fmb.fmt1.tx_bytes = get_fmb->fmt1.tx_bytes;
++        fmb.fmt1.tx_packets = get_fmb->fmt1.tx_packets;
++        break;
++    case 2:
++        fmb.fmt2.consumed_work_units = get_fmb->fmt2.consumed_work_units;
++        fmb.fmt2.max_work_units = get_fmb->fmt2.max_work_units;
++        break;
++    case 3:
++        fmb.fmt3.tx_bytes = get_fmb->fmt3.tx_bytes;
++        break;
++    }
++
++    for (int i = 0; i < ZPCI_FMB_CNT_MAX; i++) {
++        fmb.counter[i] += pbdev->fmb.counter[i];
++    }
++
++    for (int i = 0; i < pbdev->zpci_fn.fmbl >> 2; i++) {
++        address_space_stl_be(&address_space_memory, pbdev->fmb_addr + (i << 2),
++            ((uint32_t *) &fmb)[i], MEMTXATTRS_UNSPECIFIED, &memtx_ret);
++
++        if (memtx_ret != MEMTX_OK) {
++            break;
++        }
++    }
++}
+diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
+index feaf6d4863..050e7fda99 100644
+--- a/include/hw/s390x/s390-pci-bus.h
++++ b/include/hw/s390x/s390-pci-bus.h
+@@ -302,6 +302,22 @@ typedef struct ZpciFmbFmt0 {
+     uint64_t dma_wbytes;
+ } ZpciFmbFmt0;
  
--    /* Update FMB counters */
-+    /* Update FMB generic counters */
-     for (i = 0; i < ZPCI_FMB_CNT_MAX; i++) {
-         if (fmb_do_update(pbdev, offsetof(ZpciFmb, counter[i]),
-                           pbdev->fmb.counter[i],
-@@ -1123,6 +1174,7 @@ static void fmb_update(void *opaque)
-         }
-     }
++typedef struct ZpciFmbFmt1 {
++    uint64_t rx_bytes;
++    uint64_t rx_packets;
++    uint64_t tx_bytes;
++    uint64_t tx_packets;
++} ZpciFmbFmt1;
++
++typedef struct ZpciFmbFmt2 {
++    uint64_t consumed_work_units;
++    uint64_t max_work_units;
++} ZpciFmbFmt2;
++
++typedef struct ZpciFmbFmt3 {
++    uint64_t tx_bytes;
++} ZpciFmbFmt3;
++
+ #define ZPCI_FMB_CNT_LD    0
+ #define ZPCI_FMB_CNT_ST    1
+ #define ZPCI_FMB_CNT_STB   2
+@@ -309,13 +325,21 @@ typedef struct ZpciFmbFmt0 {
+ #define ZPCI_FMB_CNT_MAX   4
  
-+update_timer:
-     /* Clear U bit and update the time */
-     pbdev->fmb.last_update = time2tod(qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
-     pbdev->fmb.last_update *= 2;
-diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
-index d749c8c80a..da630b23be 100644
---- a/hw/s390x/s390-pci-vfio.c
-+++ b/hw/s390x/s390-pci-vfio.c
-@@ -127,9 +127,8 @@ static void s390_pci_read_base(S390PCIBusDevice *pbdev,
-     pbdev->zpci_fn.pchid = cap->pchid;
-     pbdev->zpci_fn.vfn = cap->vfn;
-     pbdev->zpci_fn.pfgid = cap->gid;
--    /* The following values remain 0 until we support other FMB formats */
--    pbdev->zpci_fn.fmbl = 0;
--    pbdev->zpci_fn.pft = 0;
-+    pbdev->zpci_fn.fmbl = cap->fmb_length;
-+    pbdev->zpci_fn.pft = cap->pft;
-     /* Store function type separately for type-specific behavior */
-     pbdev->pft = cap->pft;
+ #define ZPCI_FMB_DEFAULT_FORMAT     0
++#define ZPCI_FMB_COMMON_SIZE        48
++#define ZPCI_FMB_FORMAT(f)          ((f >> 24) & 0xFF)
++#define ZPCI_FMB_DMA_COUNTER_VALID  (1 << 23)
  
+ typedef struct ZpciFmb {
+     uint32_t format;
+     uint32_t sample;
+     uint64_t last_update;
+     uint64_t counter[ZPCI_FMB_CNT_MAX];
+-    ZpciFmbFmt0 fmt0;
++    union {
++        ZpciFmbFmt0 fmt0;
++        ZpciFmbFmt1 fmt1;
++        ZpciFmbFmt2 fmt2;
++        ZpciFmbFmt3 fmt3;
++    };
+ } ZpciFmb;
+ QEMU_BUILD_BUG_MSG(offsetof(ZpciFmb, fmt0) != 48, "padding in ZpciFmb");
+ 
+@@ -364,6 +388,7 @@ struct S390PCIBusDevice {
+     bool forwarding_assist;
+     bool aif;
+     bool rtr_avail;
++    bool has_vfio_fmb;
+     QTAILQ_ENTRY(S390PCIBusDevice) link;
+ };
+ 
+diff --git a/include/hw/s390x/s390-pci-vfio.h b/include/hw/s390x/s390-pci-vfio.h
+index f7d6149daf..4a19747d7c 100644
+--- a/include/hw/s390x/s390-pci-vfio.h
++++ b/include/hw/s390x/s390-pci-vfio.h
+@@ -20,5 +20,9 @@ S390PCIDMACount *s390_pci_start_dma_count(S390pciState *s,
+ void s390_pci_end_dma_count(S390pciState *s, S390PCIDMACount *cnt);
+ bool s390_pci_get_host_fh(S390PCIBusDevice *pbdev, uint32_t *fh);
+ void s390_pci_get_clp_info(S390PCIBusDevice *pbdev);
++void s390_pci_get_fmb_info(S390PCIBusDevice *pbdev);
++void s390_pci_update_vfio_fmb(S390PCIBusDevice *pbdev);
++void s390_pci_disable_vfio_fmb(S390PCIBusDevice *pbdev);
++void s390_pci_enable_vfio_fmb(S390PCIBusDevice *pbdev);
+ 
+ #endif
 -- 
 2.52.0
 
