@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1FB8CD3424
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:17:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7796FF885A
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:17:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIkuO-000468-Ps; Fri, 01 May 2026 06:15:44 -0400
+	id 1wIkuT-00048q-1s; Fri, 01 May 2026 06:15:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIkuF-000417-Cj
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:36 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1wIkuO-000469-LJ
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:44 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIkuC-0000CM-C0
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:34 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-48984d29fe3so26212475e9.0
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:15:31 -0700 (PDT)
+ id 1wIkuM-0000M9-Ph
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:44 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-483487335c2so19480145e9.2
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:15:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777630531; x=1778235331; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777630541; x=1778235341; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Lb+Hv2gpBFCMBdugccmdMigUPrnD4ShbuSoaq16Of18=;
- b=EHPjQVOXc0lhVi//RRcY6I0UNkISzQxGzSAqhe55eeYiP5cwyv3PfgKj7IhMevkalG
- YT90vqAcHYq+OSc4j27+O+xe7v+IbICGHb1ZyeLE02QcKRCpqAoeTR/bAmh8kd7Dbans
- JYglRBJB+XeuJJOmCcowfUpEFnaKThiWj9EooEALvX8ozNKPWNB4cipBJvZzoKRGrL0u
- wvVABi9YnKx9Dnd2/wefHHYylTgxSm21L2tnaH+NES9R/3mz5ldbvsPWHbjhYHw6B1yV
- xvV+V6qX+94P9mrO1l7SJMwJwuzN/nA60UYr5E7XWWuPFgO7cDEwb2FPK5GkWhmTEg+O
- N9JQ==
+ :reply-to; bh=L9CjgKuIn/enkAlQvRU0xfpossUgh2O4ehxD2AGrQ84=;
+ b=nNn3rHR6BdJVFtv2vUekuZlf1KPACpSkgsS5XhpzNZt5NOEoSO4qH1xdzVLpQ0+pAv
+ VbIV86duXpgdPBtG1T0oeEu0jtAu44x4RLKPUOej2XuDrkiaiECL6BmzdPU2oByIcWlE
+ RhZKW7SyBmhykfJ5cbfCjZvAnhjViTS9XnSjQz7TZMe0ra2zpONiJec5IJHZj+MoqGTN
+ jThNxZ1d9/i94i6KcMxprOYkRVS+xIwSY6G98ZXvQYEmCjUpZOT6KaHSeKjknJrH6OxK
+ Q7ivzqTwaqtA6U2uAzpJ3pl9Isvd4/lI0es6Rdu6d3tYJSX1WlI4IfDyAR7BA1IJt6iW
+ 1l5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777630531; x=1778235331;
+ d=1e100.net; s=20251104; t=1777630541; x=1778235341;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Lb+Hv2gpBFCMBdugccmdMigUPrnD4ShbuSoaq16Of18=;
- b=Nvftv1WGCbK3Y9OxxqWAo3OLK9whRvT3FqE8QA9bkUqJoTQjjvcjk4nvejrh+eTViE
- fcvjLdX4G4QVvLGoMlOjDkVxh2myJ4M6NAWkO/D1uU2C2nu7tutRarJJvOpw4bgaaJKS
- aGpKCpanUh2WXIpeEvcdWkRb4YsYjV89cxZx4Srmabs+2ROg6wElWDsIxb6L+tV7cFiX
- mqEKK7XBuvIf7yqX+bbVywFs176S5kfQLXhwIwqx8ctGQ2i4AW6XyEw6neVlgU344t3T
- P67KeqGad0Ke5EIOyytxkEbuDHirlUkoDeRG8hRmXmILJ+4HyPA0cy8ItHwvQHT69jDg
- 6TFg==
-X-Gm-Message-State: AOJu0YxH7SAgUnkOPflqLT685jiCzQi0T+GxAag/HF41rmv59gh8Hv4I
- HrFECTZOIjmDQ8c56kFNDKXPn+vpPOvG+jTYcGDkgeRV+RwqAftKuM2BnEbsKMr/syfGU+9fDhP
- OPasU
-X-Gm-Gg: AeBDietSLYH/HONXSf0tarajmYco1O7zik3bjDzEN/06juhmFuOahGbPdT/WjEf8ZSy
- ggxLHe3Xt2PzUhl6bWqy5UtZ0tkROPUv7U9O2vDwPJ+UvuNQy6H3QD0l8WacPJkUcuzNupddzBq
- MqctBUmvv+OTRUrf2BZ4akkSYL+ClK65Q+k22qDkrCCNvKGucfdoake1MduQmbZ+7d/mgW4k/x6
- x7EyWFhmLGi+9851YRb9jYRHaa2BG260NHUoj6yESdxRBz6WRD5xFyJd+uXgm6OyuoRPR/OmN7T
- Lz1PpBMprY6qCxyz8lRgziZYANvNjWcASkprCTpN+stk0Pr1Yv0YvcOjRfLdxvTFLSKP1rNczA0
- QrquEjTlVju1/FTtn5sfuqeydVZaTmu/Y5tw4Lq0BCdfju5LwTCJ/FwU19epcUoffOZmpX4ixJJ
- Fg41Hit1effc4vzlBqh7VS8JcYMoogUoa8lW6gQHSym0sstG4s/vPqMfZ3VDqOXjVRAXJchk1d+
- RRsC9HrhfPMWz88n7SStaTRSACOMiXiT/ZeRSTRyQ==
-X-Received: by 2002:a05:600c:1907:b0:488:c683:be89 with SMTP id
- 5b1f17b1804b1-48a83d6ee9dmr110383975e9.9.1777630530969; 
- Fri, 01 May 2026 03:15:30 -0700 (PDT)
+ bh=L9CjgKuIn/enkAlQvRU0xfpossUgh2O4ehxD2AGrQ84=;
+ b=nngXaoMywZutn67BytFGyNAzBoK49Nl+ADYzZ7mBZC3AdQRsUgR9ogy5ExFSP/KQ5Q
+ C/WCbVg7zqqL86dAaJ7v84cW5F0b4MwS0/DRrzqdzpgj5ribi9IaIVoznD2M8NVt2bYD
+ tZuwTumzkYSBgf/aQTKmtHjKPUCnHCn88XuvfydAGkyIdpYm9mDaxT8ubs8AzzQnBBUP
+ 0Y2kngYWynF/W3mBaYB82Q/StjEqhWI5CEm2wJkUWEBSpGsboZc91l7Si7bu/huk3AYN
+ zyvfVovIBlnZhGd+Yw9q5/7y1v6TA/ZkFb2m4TwWhnm0eAA+mPQ1SfnZlapYaDsnyivZ
+ tpQA==
+X-Gm-Message-State: AOJu0Yymc1w1qPVdwAflbhtB268p6trOIrE1M6dG28I1y35VxKmdK/Re
+ +lGuPzRjyQO+3z8vTeaMkFvBRZdCTOze6Am8uOA1bxAEo6ZTP23y0lFyla3unQ6SP3kr+RH8kh/
+ rk6Tt
+X-Gm-Gg: AeBDiev5dgpU1g1Vj4XIBn+H/lMIs19SfgGu+G3ca0zXbRXXaskbMGx/3ND1PLjRET9
+ nww7MURgIpxPvfUNgNdrYI6ZwipOcgNTcL+rhDVY08QWlq6KIc3CIEnqVYqToMiOuwaIKCzFDts
+ YZFQ9iQS9DVy3BfSp/Z86VXfdsY4+y6v24qbMLWiqbdfkFy4Dlz/LkbRaIGOKKwBJbT+U1N0vsa
+ KX4JxbTSJqK5+cjil6HigNNcZr3viksBSP4BpWQnKf8mS2s2zvXOF57f+VYZBYL73MLkKRv4hY3
+ ri1bzlUDBqZiTYQ7vLUBx3i3ekHN1L74/k/JBvVrk10VKpO665HUhrT2gTZbpqEjyNfWECIkniE
+ 83kwfg3jy2vhAvONYdTx1q+vkirpgbVoPqRcSHLDfi8guUd8lo4XpfjjRrnb8HN5h00uzn6DHw5
+ Wb+4Zxk69tDf9duGaaOgLuTZHPDqd7GwUUwgvB03h9703TkqBbmj15pKZcLx76KV90RQmeSJ/VN
+ 66ae2xk0+wFALhQbu5EwLBHjp5dg36nQL4pHUzwIA==
+X-Received: by 2002:a05:600c:6088:b0:489:1cd2:610a with SMTP id
+ 5b1f17b1804b1-48a844ec847mr102891865e9.9.1777630541439; 
+ Fri, 01 May 2026 03:15:41 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8fede418sm12863335e9.6.2026.05.01.03.15.30
+ 5b1f17b1804b1-48a8fede418sm12863335e9.6.2026.05.01.03.15.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 May 2026 03:15:30 -0700 (PDT)
+ Fri, 01 May 2026 03:15:40 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/28] hw/arm, target/arm: nested virtualisation on HVF
-Date: Fri,  1 May 2026 11:14:55 +0100
-Message-ID: <20260501101505.3485916-19-peter.maydell@linaro.org>
+Subject: [PULL 28/28] hvf: arm: enable vGIC by default for virt-11.1 and later
+Date: Fri,  1 May 2026 11:15:05 +0100
+Message-ID: <20260501101505.3485916-29-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260501101505.3485916-1-peter.maydell@linaro.org>
 References: <20260501101505.3485916-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,192 +102,140 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Add hvf_arm_el2_supported for querying EL2 availability.
-An hvf_nested_virt_enable workaround is added as nested virt has
-to be enabled early on HVF.
-
-And adds hvf_nested_virt_enabled.
+Save states are incompatible between kernel-irqchip=on and off on HVF due to opaque vGIC state.
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-id: 20260429190532.26538-6-mohamed@unpredictable.fr
+Message-id: 20260429190532.26538-16-mohamed@unpredictable.fr
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- accel/hvf/hvf-all.c    |  6 ++++++
- accel/stubs/hvf-stub.c | 11 +++++++++++
- hw/arm/virt.c          |  5 +++++
- include/system/hvf.h   |  5 +++++
- target/arm/hvf/hvf.c   | 42 ++++++++++++++++++++++++++++++++++++++++--
- 5 files changed, 67 insertions(+), 2 deletions(-)
+ accel/hvf/hvf-all.c      | 11 +++++++++++
+ hw/arm/virt.c            | 15 +++++++++++++++
+ include/hw/arm/virt.h    |  2 ++
+ include/hw/core/boards.h |  1 +
+ include/system/hvf_int.h |  1 +
+ 5 files changed, 30 insertions(+)
 
 diff --git a/accel/hvf/hvf-all.c b/accel/hvf/hvf-all.c
-index add265e0c8..da29aa3aa3 100644
+index da29aa3aa3..946dbca59d 100644
 --- a/accel/hvf/hvf-all.c
 +++ b/accel/hvf/hvf-all.c
-@@ -24,6 +24,12 @@
- 
+@@ -25,6 +25,7 @@
  bool hvf_allowed;
  bool hvf_kernel_irqchip;
-+bool hvf_nested_virt;
-+
-+void hvf_nested_virt_enable(bool nested_virt)
-+{
-+    hvf_nested_virt = nested_virt;
-+}
+ bool hvf_nested_virt;
++bool hvf_kernel_irqchip_override;
  
- const char *hvf_return_string(hv_return_t ret)
+ void hvf_nested_virt_enable(bool nested_virt)
  {
-diff --git a/accel/stubs/hvf-stub.c b/accel/stubs/hvf-stub.c
-index 6bd08759ba..7643e8c5f5 100644
---- a/accel/stubs/hvf-stub.c
-+++ b/accel/stubs/hvf-stub.c
-@@ -11,3 +11,14 @@
- 
- bool hvf_allowed;
- bool hvf_kernel_irqchip;
-+bool hvf_nested_virt;
-+
-+void hvf_nested_virt_enable(bool nested_virt)
-+{
-+    /*
-+     * This is called unconditionally from hw/arm/virt.c
-+     * because we don't know if HVF is going to be used
-+     * as that step of initialisation happens later.
-+     * As such, do nothing here instead of marking as unreachable.
-+     */
-+}
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 47400214a2..ca50411020 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2987,6 +2987,11 @@ static void virt_set_virt(Object *obj, bool value, Error **errp)
-     VirtMachineState *vms = VIRT_MACHINE(obj);
- 
-     vms->virt = value;
-+    /*
-+     * At this point, HVF is not initialised yet.
-+     * However, it needs to know if nested virt is enabled at init time.
-+     */
-+    hvf_nested_virt_enable(value);
- }
- 
- static bool virt_get_highmem(Object *obj, Error **errp)
-diff --git a/include/system/hvf.h b/include/system/hvf.h
-index dc8da85979..a961df8b95 100644
---- a/include/system/hvf.h
-+++ b/include/system/hvf.h
-@@ -28,11 +28,16 @@ extern bool hvf_allowed;
- #define hvf_enabled() (hvf_allowed)
- extern bool hvf_kernel_irqchip;
- #define hvf_irqchip_in_kernel()  (hvf_kernel_irqchip)
-+extern bool hvf_nested_virt;
-+#define hvf_nested_virt_enabled()  (hvf_nested_virt)
- #else /* !CONFIG_HVF_IS_POSSIBLE */
- #define hvf_enabled() 0
- #define hvf_irqchip_in_kernel() 0
-+#define hvf_nested_virt_enabled() 0
- #endif /* !CONFIG_HVF_IS_POSSIBLE */
- 
-+void hvf_nested_virt_enable(bool nested_virt);
-+
- #define TYPE_HVF_ACCEL ACCEL_CLASS_NAME("hvf")
- 
- typedef struct HVFState HVFState;
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index a028c99e24..09f41094e5 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -27,6 +27,7 @@
- #include "system/memory.h"
- #include "hw/core/boards.h"
- #include "hw/core/irq.h"
-+#include "hw/arm/virt.h"
- #include "qemu/main-loop.h"
- #include "system/cpus.h"
- #include "arm-powerctl.h"
-@@ -1103,6 +1104,10 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-                      (1ULL << ARM_FEATURE_PMU) |
-                      (1ULL << ARM_FEATURE_GENERIC_TIMER);
- 
-+    if (hvf_nested_virt_enabled()) {
-+        ahcf->features |= 1ULL << ARM_FEATURE_EL2;
-+    }
-+
-     for (i = 0; i < ARRAY_SIZE(regs); i++) {
-         r |= hv_vcpu_config_get_feature_reg(config, regs[i].reg,
-                                             &host_isar.idregs[regs[i].index]);
-@@ -1218,6 +1223,19 @@ void hvf_arch_vcpu_destroy(CPUState *cpu)
-     assert_hvf_ok(ret);
- }
- 
-+static bool hvf_arm_el2_supported(void)
-+{
-+    bool is_nested_virt_supported;
-+    if (__builtin_available(macOS 15.0, *)) {
-+        hv_return_t ret = hv_vm_config_get_el2_supported(&is_nested_virt_supported);
-+        assert_hvf_ok(ret);
-+    } else {
-+        return false;
-+    }
-+    return is_nested_virt_supported;
-+}
-+
-+
- hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
- {
-     hv_return_t ret;
-@@ -1229,6 +1247,20 @@ hv_return_t hvf_arch_vm_create(MachineState *ms, uint32_t pa_range)
+@@ -204,6 +205,13 @@ static int hvf_accel_init(AccelState *as, MachineState *ms)
+         }
      }
-     chosen_ipa_bit_size = pa_range;
  
-+    if (__builtin_available(macOS 15.0, *)) {
-+        if (hvf_nested_virt_enabled()) {
-+            if (!hvf_arm_el2_supported()) {
-+                error_report("Nested virtualization not supported on this system.");
-+                goto cleanup;
-+            }
-+            ret = hv_vm_config_set_el2_enabled(config, true);
-+            if (ret != HV_SUCCESS) {
-+                error_report("Failed to enable nested virtualization.");
-+                goto cleanup;
-+            }
++    if (mc->get_kernel_irqchip_default) {
++        bool kernel_irqchip_default = mc->get_kernel_irqchip_default(ms);
++        if (!hvf_kernel_irqchip_override) {
++            hvf_kernel_irqchip = kernel_irqchip_default;
 +        }
 +    }
 +
-     ret = hv_vm_create(config);
-     if (hvf_irqchip_in_kernel()) {
-         if (__builtin_available(macOS 15.0, *)) {
-@@ -1420,6 +1452,13 @@ static void hvf_psci_cpu_off(ARMCPU *arm_cpu)
-     assert(ret == QEMU_ARM_POWERCTL_RET_SUCCESS);
+     ret = hvf_arch_vm_create(ms, (uint32_t)pa_range);
+     if (ret == HV_DENIED) {
+         error_report("Could not access HVF. Is the executable signed"
+@@ -230,6 +238,8 @@ static void hvf_set_kernel_irqchip(Object *obj, Visitor *v,
+                                    Error **errp)
+ {
+     OnOffSplit mode;
++
++    hvf_kernel_irqchip_override = true;
+     if (!visit_type_OnOffSplit(v, name, &mode, errp)) {
+         return;
+     }
+@@ -269,6 +279,7 @@ static void hvf_accel_class_init(ObjectClass *oc, const void *data)
+     ac->init_machine = hvf_accel_init;
+     ac->allowed = &hvf_allowed;
+     ac->gdbstub_supported_sstep_flags = hvf_gdbstub_sstep_flags;
++    hvf_kernel_irqchip_override = false;
+     hvf_kernel_irqchip = false;
+     object_class_property_add(oc, "kernel-irqchip", "on|off|split",
+         NULL, hvf_set_kernel_irqchip,
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index ad0a459987..fe19030886 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -3769,6 +3769,17 @@ static int virt_get_physical_address_range(MachineState *ms,
+     return requested_ipa_size;
  }
  
-+static int hvf_psci_get_target_el(void)
++static bool get_kernel_irqchip_default(const MachineState *ms)
 +{
-+    if (hvf_nested_virt_enabled()) {
-+        return 2;
++    VirtMachineState *vms = VIRT_MACHINE(ms);
++    VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
++    if (hvf_allowed) {
++        return !vmc->hvf_no_kernel_irqchip_default;
++    } else {
++        return true;
 +    }
-+    return 1;
 +}
- /*
-  * Handle a PSCI call.
-  *
-@@ -1441,7 +1480,6 @@ static bool hvf_handle_psci_call(CPUState *cpu, int *excp_ret)
-     CPUState *target_cpu_state;
-     ARMCPU *target_cpu;
-     uint64_t entry;
--    int target_el = 1;
-     int32_t ret = 0;
++
+ static const char *virt_get_default_cpu_type(const MachineState *ms)
+ {
+     return tcg_enabled() ? ARM_CPU_TYPE_NAME("cortex-a15")
+@@ -3835,6 +3846,7 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+     mc->get_default_cpu_node_id = virt_get_default_cpu_node_id;
+     mc->kvm_type = virt_kvm_type;
+     mc->get_physical_address_range = virt_get_physical_address_range;
++    mc->get_kernel_irqchip_default = get_kernel_irqchip_default;
+     assert(!mc->get_hotplug_handler);
+     mc->get_hotplug_handler = virt_machine_get_hotplug_handler;
+     hc->pre_plug = virt_machine_device_pre_plug_cb;
+@@ -4079,8 +4091,11 @@ DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)
  
-     trace_arm_psci_call(param[0], param[1], param[2], param[3],
-@@ -1495,7 +1533,7 @@ static bool hvf_handle_psci_call(CPUState *cpu, int *excp_ret)
-         entry = param[2];
-         context_id = param[3];
-         ret = arm_set_cpu_on(mpidr, entry, context_id,
--                             target_el, target_aarch64);
-+                             hvf_psci_get_target_el(), target_aarch64);
-         break;
-     case QEMU_PSCI_0_1_FN_CPU_OFF:
-     case QEMU_PSCI_0_2_FN_CPU_OFF:
+ static void virt_machine_11_0_options(MachineClass *mc)
+ {
++    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
++
+     virt_machine_11_1_options(mc);
+     compat_props_add(mc->compat_props, hw_compat_11_0, hw_compat_11_0_len);
++    vmc->hvf_no_kernel_irqchip_default = true;
+ }
+ DEFINE_VIRT_MACHINE(11, 0)
+ 
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index fc7950da85..13e135a460 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -138,6 +138,8 @@ struct VirtMachineClass {
+     bool no_tcg_lpa2;
+     bool no_ns_el2_virt_timer_irq;
+     bool no_nested_smmu;
++    /* HVF specific: support for kernel-irqchip=on introduced in QEMU 11.1 */
++    bool hvf_no_kernel_irqchip_default;
+ };
+ 
+ struct VirtMachineState {
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index ca63304c95..29c68931d8 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -280,6 +280,7 @@ struct MachineClass {
+     int (*kvm_type)(MachineState *machine, const char *arg);
+     int (*get_physical_address_range)(MachineState *machine,
+         int default_ipa_size, int max_ipa_size);
++    bool (*get_kernel_irqchip_default) (const MachineState *machine);
+ 
+     BlockInterfaceType block_default_type;
+     int units_per_default_bus;
+diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
+index 2621164cb2..ad7d375109 100644
+--- a/include/system/hvf_int.h
++++ b/include/system/hvf_int.h
+@@ -112,4 +112,5 @@ bool hvf_arch_cpu_realize(CPUState *cpu, Error **errp);
+ uint32_t hvf_arch_get_default_ipa_bit_size(void);
+ uint32_t hvf_arch_get_max_ipa_bit_size(void);
+ 
++extern bool hvf_kernel_irqchip_override;
+ #endif
 -- 
 2.43.0
 
