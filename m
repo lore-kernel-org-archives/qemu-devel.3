@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9894ACD3425
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:15:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD991CD3427
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:15:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIku0-0003wS-Qq; Fri, 01 May 2026 06:15:20 -0400
+	id 1wIkuG-00041G-MC; Fri, 01 May 2026 06:15:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIktu-0003uR-Uf
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:14 -0400
+ id 1wIktz-0003wP-Du
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:20 -0400
 Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIktt-0008HU-8w
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:14 -0400
+ id 1wIktw-0008Kc-VI
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:18 -0400
 Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4891f625344so19352075e9.0
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:15:12 -0700 (PDT)
+ 5b1f17b1804b1-4891cd41959so15950445e9.3
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:15:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777630511; x=1778235311; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777630515; x=1778235315; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=CDst0IXYQnDF21W1Eul66jWjgyL41RzGLPKADSYQjbA=;
- b=KqjscGX6z7rirV7FFFNL3MDBqdW4LBG7ohr1ngSEt38A9rWUsRw9vEfHGppfI/Hc2E
- 845APHs36ZQphdReOV+VeTf4be41mpjADQ65T5TizUQkJ+F1k991mfTSKy1m0MTqyYvt
- clioL8YTa7OY/wyWOSBfsvQz1PQw1Lo5JYaH0TjNz0mOmxY4NgtRw+/21crjYAk4nKzD
- 7WKYIcBjfuc5m8d//ZFTpoJLyIhR2Geuah567Gpy20nItijN9XPDsQV+PlzhPVsKhSWZ
- Mk+20cWLpvRUCDULoynr5btm8oQIBh+VnxPj+g6Mdbi6mIFMEUrZVL1IOyQ8a7Oc5Wo4
- Z2Tg==
+ :reply-to; bh=1SqFziae8xxmF2dq3qr29rHFjOIsHc7vyCdhmtS47b0=;
+ b=mqbWFg0fzkAJ2v07KxM1MdPhmvkeAI+zoPxUMCYR7Ev9quDKzMa1o9JL/rLwPSW3bT
+ QTtBjN1wsrNiWwj5DoDYuacR2pLNuX7YgaFsEjLRiLBNYNl/D/lnwQx4qPIU+DKY5YvB
+ h/XB4WqK8HLyM9iHc7z9ApbvAl+xzu50WcYhqpVLJBAS+lkdhLBnaBlH0kpSk+TjVwY8
+ G8wgS7BsXGsoroi5uIK66JfN4+eqzVyrQE2ibnYS0IkzT4IxkTbjNs7opg2WMwz+b7Yk
+ ExLUu7ahKPsdE9atBU/Pv6HlZm8pvE47ke/+k8NMyQrtCiVcmtpHQsAQVpqnLraF/sRe
+ Nvvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777630511; x=1778235311;
+ d=1e100.net; s=20251104; t=1777630515; x=1778235315;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=CDst0IXYQnDF21W1Eul66jWjgyL41RzGLPKADSYQjbA=;
- b=DfK4NuMNEleSvF3fLa5pLaH8Wvei3C3pjyb8xnkSnHKBLqIFtxiNjF3lJSiYKZR6+G
- LIUvCcB0qKkI2cv9VA4e8WdJSDDG4QVcxJY59MVguk5m10DVbxcw9ONnEeiuw1wqAfvU
- 1XOGWLCxpyWqa5vVKxuVZTPK5srQ5IZAJUGxogjFt4bM+EhRmhsKwYCeWNT95HUetOUa
- SJgKsN0Abm5jSc8EtSgz9pDk3LQkhcpw6MhIddwVTSF0hOWaJdYLSNif8fbPMuJdHWUG
- 78lu1X4VPMuAYDbpi1Makez2IMaJJwv351sgiV31krTjlGpHzK9gr/s33xXZUZ0AVN8A
- ci/Q==
-X-Gm-Message-State: AOJu0YxwQteejgrmlKor9cg3x/vSXhhd/en9AFK4N8J5HmXaVfbylXPZ
- q1pSTTaoK9BF7P84PlFTF+pqnn/cdiM/WhIEnQHRFgh0jOaNyCUIsjEbwPSaEQREqCQ4pJZbK+J
- P+sVr
-X-Gm-Gg: AeBDiesKz4cGUWJckOQXrw3EUD7ZQYlcCMQ+F9xl00h5WgEAJ7kI8v1Fe/S8SWbhu5/
- a0BGd1TDpPhiCgHqUHNySmr70X8kATiPixI4iw1/+9EPQ1xV6mV5oXQ/S5F0clbeaD238skM0SV
- d7nt45jZxeUES560Bw5GW0XZYYTYLP8mvuXzbvph5cUzMh9iRD7tv8YcTqek2N7lwpywk2sDrQA
- 2UqCroESpqoNuVMhForlG8d6r8SOb9L/HQIzLnS4e3dssDLXh/rJtvN9d05hexKSJBsajG0gT6z
- fOgbz+YUKLx2xNj5K7giTEEm/RiDzHljrDoR5T9j6V6ZSKUF+noYzSmpJAnecelfexJWvk38V8r
- GAqePkwUo6LBvRxniRIn0fmsnKmcTc7O5H5k4t/XFx44yEUNA5Ngm1NPvK15Iru0DBSk4bSxI5t
- PjwCukKk96sVqwgn48YY9Erlt7ucdwvTborSixMaUFub+e1XP581hMfkkv1krgcYDRxCnTB2/+R
- OCf2Um1G455df8XK3wFVi2PV3ifD0korQMAIHw5dQ==
-X-Received: by 2002:a05:600c:6291:b0:48a:79d8:a8d6 with SMTP id
- 5b1f17b1804b1-48a85e75173mr98983315e9.7.1777630511543; 
- Fri, 01 May 2026 03:15:11 -0700 (PDT)
+ bh=1SqFziae8xxmF2dq3qr29rHFjOIsHc7vyCdhmtS47b0=;
+ b=JMBSSsMRD+1NzwCHhqaT2iYe1xBCmuV7fyI/iaDsJpn/RWYAPMaOq3x5DInr0VRr0e
+ qqe2764Z7pzSFQ0z9MCd9x80QaD45lDE4LJ4hQFodTMYnbOnngA9W11+HhFw1vXuFZEp
+ qzHh5oRNmDOcohtFI39mwPXcDQIwuwxrMfUZI2ArxTSTkdw9Ubkv2teiB/ANdCallqK1
+ aJ0lRNAnBDvHln5LUVcI+CvTrv+K8XD8FiM0DCNgvlIGWpJBzEO4+6hnROcqYgTDo0SB
+ Ck62K/90QMNo64xX/UfVA/6VJgui1DnfC7+PKfwMeYCieO8cgqsfZy4zRgM0pherDSO+
+ /5Pg==
+X-Gm-Message-State: AOJu0YxS9kDTYx26HDAdeILjbSDmSU5+s51j6v1dvZdKuoSDkVgA01NT
+ iiarRADITus8jOa0WbXewur2w14BZ/rnH+z7H52DWYbR/73qg9HeHyQz+sSJnydoVHTQs0pHQ0P
+ wjFIL
+X-Gm-Gg: AeBDieuV8E/fudq0QXccJRaiwIZ92OHuVAB8vX9jWFwHXxhiYeiFfMXk2hstSJa7p7f
+ i6VN9wLfpRj3lXCgFlpXXOEDOLs1WHJpMEP18G0pgDyKIPHtJ30bZTDF8oKXGeqUiDizYZcJeOQ
+ ozGnKUrCAZ2+ase89ebir+BWky5W6ghCUKVtknUmg1ozFXU0QKDQOeQddvFqpN9vxU/95inqX8S
+ fTqeJ9Qyjcr4K7bJYbxOMtWF1RxMuU4/4UcdwrJ8D6hDGi3jmQ44dNeD2EfWmiKsCpNqea08j6j
+ 2+NgqugDAHD7gDhBW6RIkCEpdnCAAXY/hcqhyfUUYv8Bi5jClYKWf0oM8vfobBkPNE6zn0EHVV0
+ ZnDy+D8emIwmAuf3L6wXXYd2Cyv49xCKrvD3ynf35ZvJsTRDWyoxM7P6hs9ikYI28wqk3dgmLrz
+ jxNIjenS/cGWC8k7P2Tgbtdk0O19macW26/9MpV3SiGWFEgXu/0QsgXK0uBnmN5esDsILJMQSD2
+ 3HHMRfBX0DCVjHGkbB07Mf4u4vUDmG5nb/83kWQCw==
+X-Received: by 2002:a05:600c:a416:b0:48a:568f:ae6b with SMTP id
+ 5b1f17b1804b1-48a83d6ec59mr92232585e9.7.1777630515499; 
+ Fri, 01 May 2026 03:15:15 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8fede418sm12863335e9.6.2026.05.01.03.15.10
+ 5b1f17b1804b1-48a8fede418sm12863335e9.6.2026.05.01.03.15.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 May 2026 03:15:10 -0700 (PDT)
+ Fri, 01 May 2026 03:15:14 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/28] linux-user/arm: Restrict regpairs_aligned
-Date: Fri,  1 May 2026 11:14:41 +0100
-Message-ID: <20260501101505.3485916-5-peter.maydell@linaro.org>
+Subject: [PULL 07/28] target/arm/cpu.h: New GPCCR fields
+Date: Fri,  1 May 2026 11:14:44 +0100
+Message-ID: <20260501101505.3485916-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260501101505.3485916-1-peter.maydell@linaro.org>
 References: <20260501101505.3485916-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
  envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
@@ -101,33 +100,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+From: Jim MacArthur <jim.macarthur@linaro.org>
 
-The function regpairs_aligned is for extracting a 64-bit
-quantity from a pair of 32-bit registers and does not
-apply to AArch64.
+Add SA, NSP, NA6, NA7 for GDI and GPCBW for good measure.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260409035015.132370-2-richard.henderson@linaro.org
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
+Message-id: 20260421-jmac-feat_rme_gdi-v3-2-ecd20c77eae1@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- linux-user/user-internals.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/cpu.h | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index 24d35998f0..e65373b204 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -136,7 +136,7 @@ void print_termios2(void *arg);
- #endif
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index be14a47c35..5e4f12f1e7 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -2091,6 +2091,11 @@ FIELD(GPCCR, TBGPCD, 18, 1)
+ FIELD(GPCCR, NSO, 19, 1)
+ FIELD(GPCCR, L0GPTSZ, 20, 4)
+ FIELD(GPCCR, APPSAA, 24, 1)
++FIELD(GPCCR, SA, 25, 1)
++FIELD(GPCCR, NSP, 26, 1)
++FIELD(GPCCR, NA6, 27, 1)
++FIELD(GPCCR, NA7, 28, 1)
++FIELD(GPCCR, GPCBW, 29, 1)
  
- /* ARM EABI and MIPS expect 64bit types aligned even on pairs or registers */
--#ifdef TARGET_ARM
-+#if defined(TARGET_ARM) && !defined(TARGET_AARCH64)
- static inline int regpairs_aligned(CPUArchState *cpu_env, int num)
- {
-     return cpu_env->eabi;
+ FIELD(MFAR, FPA, 12, 40)
+ FIELD(MFAR, NSE, 62, 1)
 -- 
 2.43.0
 
