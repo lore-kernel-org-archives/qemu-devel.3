@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0011DCCFA13
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 20:04:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B44ECD3423
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 20:04:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIu67-0001TA-Jw; Fri, 01 May 2026 16:04:27 -0400
+	id 1wIu6E-0001r3-Fh; Fri, 01 May 2026 16:04:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
- id 1wIu5M-0001C9-EP; Fri, 01 May 2026 16:03:52 -0400
+ id 1wIu6B-0001k6-FS; Fri, 01 May 2026 16:04:31 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <oelghoul@linux.ibm.com>)
- id 1wIu5J-0001QO-DL; Fri, 01 May 2026 16:03:40 -0400
+ id 1wIu69-0001ei-NF; Fri, 01 May 2026 16:04:31 -0400
 Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 641EkLAq2006058; Fri, 1 May 2026 20:03:34 GMT
+ 641EjivY2840313; Fri, 1 May 2026 20:04:26 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=IwvvP9MY8WoGYhdgJ
- WzLy3S2sw6QZcbw07ZcxAXwF0I=; b=orD4z5+arMyNKir+beBy1SzHib6xjAfUd
- ABeVKu5cJRWkM0zRjXl7eMkmHc5csg8sHJdglin/DU0CVGI/gD1mzNkS8gfykPQt
- 2rRUY2P5g4EX3FKMM8Hb2x0Zs7VFKC4OJZH7KdRPRjgsvYFe6g40A7K/vU/lP8n+
- MaODRc2wJhZ/zpl+VltwxEs4mtxw0PjU8yR9L4FhaWpwo1wahfLYEEb8ae07bSRZ
- ehpCZBH0XElLBq0Pf/l4RPmM06azyHerbvR8h6CZRtzrYcfmSuKa+7nJWseusQR1
- g3P5z9AMvcN0s1oWzKKVPKcfQTVQCjkI41xHYAUuuGxc0S+yoAPrw==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drn8vv61p-1
+ :mime-version:references:subject:to; s=pp1; bh=1Mthas14dUCzArtmP
+ BHd0kOVwbr1CPycXWbV3rNFn9E=; b=NcmrTnxXIgN0jgRp5cZSBR3nZyFXHcebN
+ Mjw/N3W6mr+NbZOaeH8giEGDuHC1s41DGeTRxC8vcBorX49rZ1IYLvKuqJ+MD8Af
+ sSYwyUDn+uIrf3wCUvpPFWRbnLnaak1tMYVijm0I7HTSA38AZX7L9/rVUZ66AXuI
+ lI8D5pZprW8wq9aUCbTCypwWCnrBrOM4jPcZiMocjXFrkSAOKp7k7fy/LoOtEV6e
+ /zkpW8oWcicGqCzOikdWz+COQ697wNr68no6w7+r6NvL07mURgmySb1N7wsLUu0J
+ L9wF5dizI/CIJKYnCjifgmB2v6b/5Pkh++N4KsTjVGQfmcC2ofAzw==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drn8vv63q-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 01 May 2026 20:03:33 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 641Js0Jo019209;
- Fri, 1 May 2026 20:03:33 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ds8aw91kk-1
+ Fri, 01 May 2026 20:04:26 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 641JcjSM023096;
+ Fri, 1 May 2026 20:04:25 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dsamyrqrd-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 01 May 2026 20:03:33 +0000 (GMT)
+ Fri, 01 May 2026 20:04:25 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 641K3T9b63242744
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 641K4MFf32244260
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 1 May 2026 20:03:29 GMT
+ Fri, 1 May 2026 20:04:22 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 87BCA58043;
- Fri,  1 May 2026 20:03:29 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5714B58043;
+ Fri,  1 May 2026 20:04:22 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 629E158059;
- Fri,  1 May 2026 20:03:28 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 399CA58059;
+ Fri,  1 May 2026 20:04:21 +0000 (GMT)
 Received: from Mac.ibm.com (unknown [9.61.247.25])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  1 May 2026 20:03:28 +0000 (GMT)
+ Fri,  1 May 2026 20:04:21 +0000 (GMT)
 From: Omar Elghoul <oelghoul@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
 Cc: oelghoul@linux.ibm.com, mjrosato@linux.ibm.com, alifm@linux.ibm.com,
  farman@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
  richard.henderson@linaro.org, iii@linux.ibm.com, david@kernel.org,
  cohuck@redhat.com, mst@redhat.com, pbonzini@redhat.com, clg@redhat.com
-Subject: [RFC PATCH v1 3/5] hw/virtio: Add DMA counters for virtio-pci devices
-Date: Fri,  1 May 2026 16:00:24 -0400
-Message-ID: <20260501200026.22784-4-oelghoul@linux.ibm.com>
+Subject: [RFC PATCH v1 5/5] hw/s390x: Report FMB passthrough and/or FMB DMA
+ counters to the guest
+Date: Fri,  1 May 2026 16:00:26 -0400
+Message-ID: <20260501200026.22784-6-oelghoul@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260501200026.22784-1-oelghoul@linux.ibm.com>
 References: <20260501200026.22784-1-oelghoul@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=CIIamxrD c=1 sm=1 tr=0 ts=69f50715 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Authority-Analysis: v=2.4 cv=CIIamxrD c=1 sm=1 tr=0 ts=69f5074a cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=456z7t5ePv1a_L0t-noA:9
-X-Proofpoint-ORIG-GUID: jUlSoWcWBnFT_KLsUJPayO9F9xhYjKfW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTAxMDE5NSBTYWx0ZWRfXyGg/RRSSQxjs
- dBwExYQDxtalSUcB4LnfalVhB/hQLfgnzOMtDiilkdlBNzX1mcHo/U0qjz93uNnuvMs6ngcwUG2
- 9iXaXn3KIXnp9L5qcKQWoDq9GCfmKhXrx9Nv9WekHPvMR4GVdZwLRkThPmdqFYV5q+8LHj7q3wW
- ypBUgabiYGOg/I7gJEvklVRqc1rQeZMraPzs4zrP3S9Ol2uFJAWTGRuW9ZxdoSNCjNWR+jH/CYZ
- lb8GggUBrHvSY1WczqJG4tDiCwbE/Zbm+uS3tOvMyRC4mhqyrOgZ2EDFLtROx3KBCRxoOcugVnM
- eyQvQkR6I1pSVFo8/bu5LIB1Rft83I/rl9bWjh2A5v6ABckO7dyra8BAJgE+Pr5Q1AH4SbOI+T5
- yc7Nal88cuxjXVcZr6bsyUE9+s1UnNjwOi7X/IX/smx7MfwcwD0y4Pw/mksycvkj+iGmTceETRL
- 8LPxB1Lkn+8O7ntQBpw==
-X-Proofpoint-GUID: jUlSoWcWBnFT_KLsUJPayO9F9xhYjKfW
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=i_3ZhW82j95uuV7xZWQA:9
+X-Proofpoint-ORIG-GUID: X75OfkJzypko5NRi3CMG-1B3je4RkAGK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTAxMDE5NSBTYWx0ZWRfXz4H/9MW1LOHI
+ HnII2MpVDCK8yl6GGUuwxFVBEh/qDKLD4vhlEsnUGJtgehJ7LQ5LYipm1+Ir3xUBCetxmgR7V8F
+ e4DbDVEuY0jpcPlwOrtHjRYhHj9252oREg2cdsq3fpbu/nrMlH1064P0zfKRzQBHPyDfCiLfKTs
+ 3AJ2vH2zE24zimcAqMdC2nWEcsBD1yu0sYpYTJCPACAnD4Go1OhrOiir4TDFRiWSB8g5bexfSkl
+ VpK521WaXOQMbB8ccKyZBhKaMiAE5SshVfL9QrdQJSBtQ5B2HsK4wDnb2wVBG0xnROmf94/tJm9
+ Otzrh8D4qfuFP/uYJBRt7mwabkJGq/bJ1Ar1VEAQYfByJ5b4KGFgLtvrOqgG8dTf/sGpuLYAwH2
+ cmswwdLzeLNCZXA92E/zS6VS4cW8cADNneTc0gbe/TdRz92uNIAXQI+Hhd4mZF+3aojIkZBc5o2
+ zpDmvtc8zj5/spejWNA==
+X-Proofpoint-GUID: X75OfkJzypko5NRi3CMG-1B3je4RkAGK
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-01_05,2026-04-30_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
  spamscore=0 phishscore=0 malwarescore=0 suspectscore=0 adultscore=0
- impostorscore=0 lowpriorityscore=0 clxscore=1011 bulkscore=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0
  priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
  route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
  definitions=main-2605010195
@@ -119,116 +120,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Internally track DMA read/write byte counters for virtio-pci devices by
-assigning them a DMA owner bus. This will allow an implementation of the
-FMB format-0 for zPCI. The assignment of an owner bus is also done from
-s390x-specific realization such that other architectures do not need to
-internally track unutilized counters.
+Report the correct FMB length to the guest and report a more accurate
+snapshot of the FMB using the VFIO feature in the PCI passthrough case or
+the emulated counters in the emulated case. To preserve the behavior of
+earlier QEMU versions, do not report the PFT or the FMB length to the guest
+in the case where FMB passthrough is unavailable.
 
 Signed-off-by: Omar Elghoul <oelghoul@linux.ibm.com>
 ---
- hw/s390x/s390-pci-bus.c     |  7 +++++++
- hw/virtio/virtio.c          | 16 ++++++++++++++++
- include/hw/pci/pci_device.h |  4 ++++
- include/hw/virtio/virtio.h  |  1 +
- 4 files changed, 28 insertions(+)
+ hw/s390x/s390-pci-inst.c | 58 +++++++++++++++++++++++++++++++++++++---
+ hw/s390x/s390-pci-vfio.c |  5 ++--
+ 2 files changed, 57 insertions(+), 6 deletions(-)
 
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index 128814f4c5..7eee1efeb7 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
+diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
+index b22144751e..767c5b5cef 100644
+--- a/hw/s390x/s390-pci-inst.c
++++ b/hw/s390x/s390-pci-inst.c
 @@ -20,6 +20,7 @@
- #include "hw/s390x/s390-pci-kvm.h"
- #include "hw/s390x/s390-pci-vfio.h"
- #include "hw/s390x/s390-virtio-ccw.h"
-+#include "hw/virtio/virtio-pci.h"
+ #include "system/hw_accel.h"
  #include "hw/core/boards.h"
- #include "hw/pci/pci_bus.h"
- #include "hw/core/qdev-properties.h"
-@@ -1192,6 +1193,12 @@ static void s390_pcihost_plug(HotplugHandler *hotplug_dev, DeviceState *dev,
-             pbdev->rtr_avail = false;
-         }
- 
-+        if (object_dynamic_cast(OBJECT(dev), TYPE_VIRTIO_PCI)) {
-+            VirtIOPCIProxy *virtio_proxy = VIRTIO_PCI(pbdev->pdev);
-+            VirtIODevice *vdev = virtio_bus_get_device(&virtio_proxy->bus);
-+            vdev->dma_owner = OBJECT(virtio_proxy);
+ #include "hw/pci/pci_device.h"
++#include "hw/vfio/pci.h"
+ #include "hw/s390x/s390-pci-inst.h"
+ #include "hw/s390x/s390-pci-bus.h"
+ #include "hw/s390x/s390-pci-kvm.h"
+@@ -296,8 +297,13 @@ int clp_service_call(S390CPU *cpu, uint8_t r2, uintptr_t ra)
+         stw_be_p(&resquery->vfn, pbdev->zpci_fn.vfn);
+         resquery->flags = pbdev->zpci_fn.flags;
+         resquery->pfgid = pbdev->zpci_fn.pfgid;
+-        resquery->pft = pbdev->zpci_fn.pft;
+-        resquery->fmbl = pbdev->zpci_fn.fmbl;
++        if (pbdev->has_vfio_fmb) {
++            resquery->pft = pbdev->zpci_fn.pft;
++            resquery->fmbl = pbdev->zpci_fn.fmbl >> 2;
++        } else {
++            resquery->pft = 0;
++            resquery->fmbl = 0;
 +        }
-+
-         if (s390_pci_msix_init(pbdev) && !pbdev->interp) {
-             error_setg(errp, "MSI-X support is mandatory "
-                        "in the S390 architecture");
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 8fcf6cfd0b..f61ad57821 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -24,6 +24,7 @@
- #include "qom/object_interfaces.h"
- #include "hw/core/cpu.h"
- #include "hw/virtio/virtio.h"
-+#include "hw/virtio/virtio-pci.h"
- #include "hw/virtio/vhost.h"
- #include "migration/qemu-file-types.h"
- #include "qemu/atomic.h"
-@@ -1617,9 +1618,16 @@ static bool virtqueue_map_desc(VirtIODevice *vdev, unsigned int *p_num_sg,
-                                hwaddr pa, size_t sz)
+         stl_be_p(&resquery->fid, pbdev->zpci_fn.fid);
+         stl_be_p(&resquery->uid, pbdev->zpci_fn.uid);
+         memcpy(resquery->pfip, pbdev->zpci_fn.pfip, CLP_PFIP_NR_SEGMENTS);
+@@ -1096,6 +1102,9 @@ static void fmb_update(void *opaque)
  {
-     bool ok = false;
-+    PCIDevice *pdev = NULL;
-     unsigned num_sg = *p_num_sg;
-     assert(num_sg <= max_num_sg);
+     S390PCIBusDevice *pbdev = opaque;
+     int64_t t = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL);
++    VFIOPCIDevice *vpdev;
++    PCIDevice *pci = pbdev->pdev;
++    uint8_t format = ZPCI_FMB_FORMAT(pbdev->fmb.format);
+     int i;
  
-+    if (vdev->dma_owner &&
-+        object_dynamic_cast(vdev->dma_owner, TYPE_VIRTIO_PCI)) {
-+        VirtIOPCIProxy *proxy = VIRTIO_PCI(vdev->dma_owner);
-+        pdev = &proxy->pci_dev;
+     /* Update U bit */
+@@ -1107,6 +1116,48 @@ static void fmb_update(void *opaque)
+         return;
+     }
+ 
++    /* Check for VFIO device */
++    vpdev = (VFIOPCIDevice *) object_dynamic_cast(OBJECT(pbdev->pdev),
++        TYPE_VFIO_PCI_DEVICE);
++
++    if (vpdev && pbdev->has_vfio_fmb) {
++        s390_pci_update_vfio_fmb(pbdev);
++        goto update_timer;
 +    }
 +
-     if (!sz) {
-         virtio_error(vdev, "virtio: zero sized buffers are not allowed");
-         goto out;
-@@ -1650,6 +1658,14 @@ static bool virtqueue_map_desc(VirtIODevice *vdev, unsigned int *p_num_sg,
-         sz -= len;
-         pa += len;
-         num_sg++;
-+
-+        if (pdev) {
-+            if (is_write) {
-+                pdev->dma_wbytes += len;
-+            } else {
-+                pdev->dma_rbytes += len;
-+            }
++    /* Update FMB format-specific counters */
++    switch (format) {
++    case 0:
++        if (pci->dma_rbytes || pci->dma_wbytes) {
++            pbdev->fmb.fmt0.dma_rbytes = pci->dma_rbytes;
++            pbdev->fmb.fmt0.dma_wbytes = pci->dma_wbytes;
++            pbdev->fmb.format |= ZPCI_FMB_DMA_COUNTER_VALID;
 +        }
-     }
-     ok = true;
- 
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index 5cac6e1688..5a4fd4f605 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -98,6 +98,10 @@ struct PCIDevice {
-     MemoryRegion bus_master_container_region;
-     MemoryRegion bus_master_enable_region;
- 
-+    /* DMA statistics */
-+    uint64_t dma_rbytes;
-+    uint64_t dma_wbytes;
 +
-     /* do not access the following fields */
-     PCIConfigReadFunc *config_read;
-     PCIConfigWriteFunc *config_write;
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 6344bd7b68..e9e7e437f9 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -161,6 +161,7 @@ struct VirtIODevice
-      */
-     bool use_guest_notifier_mask;
-     AddressSpace *dma_as;
-+    Object *dma_owner;
-     QLIST_HEAD(, VirtQueue) *vector_queues;
-     QTAILQ_ENTRY(VirtIODevice) next;
-     /**
++        if (fmb_do_update(pbdev,
++            offsetof(ZpciFmbFmt0, dma_rbytes) + offsetof(ZpciFmb, fmt0),
++            pbdev->fmb.fmt0.dma_rbytes,
++            sizeof(pbdev->fmb.fmt0.dma_rbytes))) {
++            return;
++        }
++
++        if (fmb_do_update(pbdev,
++            offsetof(ZpciFmbFmt0, dma_wbytes) + offsetof(ZpciFmb, fmt0),
++            pbdev->fmb.fmt0.dma_wbytes,
++            sizeof(pbdev->fmb.fmt0.dma_wbytes))) {
++            return;
++        }
++    default:
++        break;
++    }
++
++    /* Update format and DMA validity bit */
++    if (fmb_do_update(pbdev, offsetof(ZpciFmb, format),
++                      pbdev->fmb.format,
++                      sizeof(pbdev->fmb.format))) {
++        return;
++    }
++
+     /* Update FMB sample count */
+     if (fmb_do_update(pbdev, offsetof(ZpciFmb, sample),
+                       pbdev->fmb.sample++,
+@@ -1114,7 +1165,7 @@ static void fmb_update(void *opaque)
+         return;
+     }
+ 
+-    /* Update FMB counters */
++    /* Update FMB generic counters */
+     for (i = 0; i < ZPCI_FMB_CNT_MAX; i++) {
+         if (fmb_do_update(pbdev, offsetof(ZpciFmb, counter[i]),
+                           pbdev->fmb.counter[i],
+@@ -1123,6 +1174,7 @@ static void fmb_update(void *opaque)
+         }
+     }
+ 
++update_timer:
+     /* Clear U bit and update the time */
+     pbdev->fmb.last_update = time2tod(qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
+     pbdev->fmb.last_update *= 2;
+diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
+index d749c8c80a..da630b23be 100644
+--- a/hw/s390x/s390-pci-vfio.c
++++ b/hw/s390x/s390-pci-vfio.c
+@@ -127,9 +127,8 @@ static void s390_pci_read_base(S390PCIBusDevice *pbdev,
+     pbdev->zpci_fn.pchid = cap->pchid;
+     pbdev->zpci_fn.vfn = cap->vfn;
+     pbdev->zpci_fn.pfgid = cap->gid;
+-    /* The following values remain 0 until we support other FMB formats */
+-    pbdev->zpci_fn.fmbl = 0;
+-    pbdev->zpci_fn.pft = 0;
++    pbdev->zpci_fn.fmbl = cap->fmb_length;
++    pbdev->zpci_fn.pft = cap->pft;
+     /* Store function type separately for type-specific behavior */
+     pbdev->pft = cap->pft;
+ 
 -- 
 2.52.0
 
