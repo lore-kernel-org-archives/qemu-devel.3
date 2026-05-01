@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 428F5CD3424
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 09:29:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92EABFF885A
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 09:37:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIkBJ-00071S-IH; Fri, 01 May 2026 05:29:10 -0400
+	id 1wIkIt-0000Tn-6L; Fri, 01 May 2026 05:36:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIkBC-00070W-EI
- for qemu-devel@nongnu.org; Fri, 01 May 2026 05:29:07 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ id 1wIkIr-0000Tf-9e
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 05:36:57 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIkB9-0000YA-AS
- for qemu-devel@nongnu.org; Fri, 01 May 2026 05:29:00 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-b6ce6d1d3dcso634552a12.3
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 02:28:57 -0700 (PDT)
+ id 1wIkIp-0003Br-Rz
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 05:36:57 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2adbfab4501so7670105ad.2
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 02:36:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777627736; x=1778232536; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777628214; x=1778233014; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=40uCTyk0IHuBsF2dS8Fpr+ixEzoBi+6r0ZJfWphqVMY=;
- b=nh6rXjXrkOSf3rYz/NCHhbuIpb6ExTf6tBnfzHx00CctfsUMwrYjn+PdOa5S8pMXVY
- qGQi2bXK0Bkl+Sv5UyZitXSl0EhuIqnCnHCYp57wN4EtgENq+TjKY54oAZGHTMfv7HcZ
- mvUxhzCWPhdGAobnhJYqJ3owlgdgMM6ejewW3pzirMgW7VJYwXfdq5aN8AYuzXPnsRch
- MbldMTJUu3Inuhf8HR9ZojvgW6ugDoIcKJFPzyeDYeF3uptwpi9Rmyr7h963oP29kCCg
- V4wJFeXcWCSlM0lz1Z6nfuCV7PO1cj8jiDd2B8SPmGJAA7PABREKGlJw4LJpPfSUCyD0
- kL0g==
+ bh=cz/ingkOX9rnJiAR0BaZNZlFtqqNJnUoEA+uwl1m/i8=;
+ b=xul0yJJ4lYK7UXxN4gX8oOcMn2nQ8rnB685VzKC1mTW5Q3YfMtEhXMQe7+G1V6jfjX
+ ak5r03B7ZVM4n5nyVXvU9N5r7ZMhDUN9QaaShVQHEnLQ8dJjEn+TL83OjsVdXSs13FdS
+ Pk3fBiXxjjGeItdwTNlMw2dNxbqMtXaJQK2LOZiCLD/HpeyP2hQB8xQCFVhVTpeRL5mB
+ K2/tylsH/b4+bB/mHYZiNnO0OiggIx8z8NJaRJRpASD4fhDMm1yEeggy/ZG45Iq/6cOg
+ gh2PA1XZVb9Axc9i38WFjp5BI9XEgl/y1QJajXDBwuCSfeZMALYU/Qv+xlSGt+gl7GDV
+ H3nw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777627736; x=1778232536;
+ d=1e100.net; s=20251104; t=1777628214; x=1778233014;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=40uCTyk0IHuBsF2dS8Fpr+ixEzoBi+6r0ZJfWphqVMY=;
- b=iSDMmEWbsXgxOd4oHemrvBfa8Ku3h4vBovazZT02QV1CDxdbtkiT8ggJ3VSh62O7Ft
- ULVnZhBx1VLCWd6c97jiIyCfKai7ACLmIE4x+DrXEnx0gQK0zY4RXPwQAi5o2z1VLtaW
- mQhFMmJSs2VSkybUsilj32V6dj3DO77c1gi/qmZfF+yI1amgxLbysZ2eImp+O5x4TJoq
- 66bz/5+C4RY6T0aT9aNIy+22sIRsqqWP9iU4r9wNhGvTfCAaGb4r07Ov8JEwr82511on
- P6XctjedWIF+cB/FyatUGhH6NfnjuxK/EDr5gyHYJDGaDgTJ7b962juOgolLXPEif2qo
- 9KrA==
-X-Gm-Message-State: AOJu0YzAstRiTQDlUlCvXWIaMXHJyzEPEGHPM6eeFEpM1sWZbUaJjP+l
- ZBNnaISXkDuY/vpR7g3BHcvJxXpIsB62hg+dl0yJsm8QtK866GAzWWBR3SzDpFcnlhRYZldIh+j
- 1tS+P/GM=
-X-Gm-Gg: AeBDievKSrBIFRfa7zKfKE0VEo3NYbto+DuXFWSJdAyPP5pcgLApZW5X1H/np6euTi8
- 1AXPh59yCVB28meqiJWN3q6vk8/55P95Un+6howvp1rp44xwgBiY3ISRm6CnileMdbBDPMU+gml
- xmI49W09Ok1Kgomn6gbwqCqLqGPmE2hlBJ9VujeIbke7/jsN7Jz8i9lQeWiT/Kmdsp4TCOG6DoA
- bzfceydTq+naAoTBRHrbVUhCPtgnB7CfM7OJFIewn8fEEaOa3/rg5sS6q5R8KxjgtY1eNSq9xNf
- SwHWL1AY/VQ21aYcSVEwN2elLJTltSU8Kuw0kT+t70vHhgx98Ig9rQzwUtUJcuMGKMhVgS8qNvD
- 0eRbdOTIhHivkVxCrALs9DZOE1hEevI6pvUMXvtgSRYJx012JkApWoAJb5cX4vzmj93VFOkmEea
- aXrkK73qiEYXWJZwiZiUZNOivweVjthnefyrMpLdnFZ9JKVjLWet6i1vRTVWo1630=
-X-Received: by 2002:a05:6a21:32a0:b0:3a2:dc51:44e with SMTP id
- adf61e73a8af0-3a45fa9676emr2903722637.22.1777627735644; 
- Fri, 01 May 2026 02:28:55 -0700 (PDT)
+ bh=cz/ingkOX9rnJiAR0BaZNZlFtqqNJnUoEA+uwl1m/i8=;
+ b=KWpAPn/fUCT5KIC1iZ0lrohnn/TcUZFzupl8QSQfgkw3qv6R8dfckf8IWPcKRfhpBr
+ 4MQ/42SW+NlJtcw9a5cfEDt6/lpn0aqEi3Sa86UWJOrFMpmhTeNTI/1PiyuLr+xGwUOH
+ HJF0MfgTi5ZMBJqgMmZRUjyO0oyvEkB5mIPQXLBI5w41UqQEuu/5UTf2gBHbEoGyvX/6
+ gOBUjkbAEzzXTDiK0oxQrsKK/koEnvpE6GPybkVrjwjfTbJn4U4dqmuQvrx+jzWHTkIE
+ Y4J/NSX9Ficf+C6GgnymAYlcz37cVWN6FLPPgs/UUtPWjti1f7t7VYL+SSaMDrAS9avd
+ YztQ==
+X-Gm-Message-State: AOJu0YxtxL7XoYM3ToailuO4wwztBZWtsgXjTfYZRXEG4S+FNIjFB9iV
+ 50dAPNU32BjsaawrO/USe4qnsjxpQ9hmqKRGzoM4U1u+0SDaAiu8LY2khRHLodfIxGN+qh/ypxo
+ FwRh5JO4=
+X-Gm-Gg: AeBDieuRR8H0vaozXwAFiiTXsLVIB9sBMwQASnnzJ6GnKtR/oWEvkcVr5IFkKmOnA2J
+ 3i872c01lv6iStPr9WT+Mi9dtZ3/TdtOiG9dViP8MBsr5ObQvwbVF79x4KT1vizLFQQm7cV6zw9
+ 7IGSzQFsCloUev5QkM/Agf3sRbSjeHGT1ydRQKkffNk2glfjl067JFcUxNVWEtiRNpJkbNTLehl
+ mSgj+27miX7L3+9S7RBmsa3+JW3npmADz+lylWuhoVPxE0bEXhFzz8TRU/rBV2I4hqIM8p6wx1p
+ N6QAFfour2K5STdl6lkaAlpuxVMbDKdNvQHuL5Gs6hxL268wXKa3RfNjLsBz0suYLhIHGNHnKM6
+ 7WI+OUhBro2Mkg581OFhMPZQdIn0CKm7vgPhxzaXbEsNq/4X1fJzVvsemk7N4JGcvpIYYdqBV8H
+ ZMrDDU31lm8kdSW1f/8j/jBMfsVQ6i3YNa0bU4ZtD9seApiqh/nzV5
+X-Received: by 2002:a17:903:1af0:b0:2b0:6d33:e7c0 with SMTP id
+ d9443c01a7336-2b9a22f6fcfmr65783085ad.1.1777628213871; 
+ Fri, 01 May 2026 02:36:53 -0700 (PDT)
 Received: from [192.168.10.140] ([180.233.125.15])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-83515b84aedsm1940776b3a.57.2026.05.01.02.28.54
+ d9443c01a7336-2b9caa7e855sm18247605ad.10.2026.05.01.02.36.52
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 May 2026 02:28:55 -0700 (PDT)
-Message-ID: <6baaef0f-c9cf-4a70-b64b-99c1574c1e48@linaro.org>
-Date: Fri, 1 May 2026 19:28:51 +1000
+ Fri, 01 May 2026 02:36:53 -0700 (PDT)
+Message-ID: <5e440ba1-c029-4e2e-976a-41d35b4dffed@linaro.org>
+Date: Fri, 1 May 2026 19:36:49 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/7] target/arm: implements SEV/SEVL for all modes
+Subject: Re: [PATCH v4 5/7] target/arm: enable event stream on WFE instructions
 To: qemu-devel@nongnu.org
 References: <20260430104434.1482407-1-alex.bennee@linaro.org>
- <20260430104434.1482407-5-alex.bennee@linaro.org>
+ <20260430104434.1482407-6-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260430104434.1482407-5-alex.bennee@linaro.org>
+In-Reply-To: <20260430104434.1482407-6-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,29 +105,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/30/26 20:44, Alex Bennée wrote:
-> Remove the restrictions that make this a M-profile only operation and
-> enable the instructions for all Arm profiles.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
-> ---
-> v2
->    - fix alignment in a32.decode
->    - set bool directly, defend with QEMU_BUILD_BUG_ON
->    - s/instructions/profiles/
->    - share get_event_reg between translate/translate-a64
-> ---
->   target/arm/tcg/translate.h     | 18 ++++++++++++++++++
->   target/arm/tcg/a32.decode      |  5 ++---
->   target/arm/tcg/a64.decode      |  5 ++---
->   target/arm/tcg/t16.decode      |  4 +---
->   target/arm/tcg/t32.decode      |  4 +---
->   target/arm/tcg/op_helper.c     |  4 +---
->   target/arm/tcg/translate-a64.c | 17 +++++++++++++++++
->   target/arm/tcg/translate.c     | 13 ++++++++-----
->   8 files changed, 50 insertions(+), 20 deletions(-)
+>   void HELPER(wfe)(CPUARMState *env)
+>   {
+>   #ifdef CONFIG_USER_ONLY
+> @@ -495,32 +586,44 @@ void HELPER(wfe)(CPUARMState *env)
+>   #else
+>       /*
+>        * WFE (Wait For Event) is a hint instruction.
+> -     * For Cortex-M (M-profile), we implement the strict architectural behavior:
+> +     *
+>        * 1. Check the Event Register (set by SEV or SEVONPEND).
+>        * 2. If set, clear it and continue (consume the event).
+>        */
+> -    if (arm_feature(env, ARM_FEATURE_M)) {
+> -        CPUState *cs = env_cpu(env);
+> +    CPUState *cs = env_cpu(env);
+> +    ARMCPU *cpu = ARM_CPU(cs);
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+ARMCPU *cpu = env_archcpu(env);
+
+> +    /* For A-profile we also can be woken by the event stream */
+> +    if (arm_feature(env, ARM_FEATURE_AARCH64) && cpu->wfxt_timer) {
+> +        int64_t next_event = gt_calc_next_event_stream(env);
+> +        if (next_event > 0) {
+> +            timer_mod(cpu->wfxt_timer, next_event);
+> +        }
+>       }
+
+You shouldn't need the feature test, since we'll only instantiate the timer when the 
+feature is available.
+
+
 
 r~
 
