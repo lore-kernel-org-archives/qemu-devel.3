@@ -4,88 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54BCDFF8864
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 08:11:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BED9FF885A
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 08:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIixZ-0007bM-AN; Fri, 01 May 2026 04:10:54 -0400
+	id 1wIj8i-0000q8-9O; Fri, 01 May 2026 04:22:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
- id 1wIixV-0007bA-Ro
- for qemu-devel@nongnu.org; Fri, 01 May 2026 04:10:49 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wIj8e-0000pn-Qs
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 04:22:20 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <makovick@gmail.com>)
- id 1wIixT-0002n2-DC
- for qemu-devel@nongnu.org; Fri, 01 May 2026 04:10:49 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-488b0046078so14209145e9.1
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 01:10:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wIj8d-0006Iu-AS
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 04:22:20 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-651c366f7efso1848869d50.1
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 01:22:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777623738; cv=none;
+ d=google.com; s=arc-20240605;
+ b=SutDyt6augyPqEc/5AqCVn6zRfBOMnuuFjZpqubhCyEDsp4vFsJvhiFj/nJYngLbRW
+ U6JJeuzfrDPRQ5nFYRI+/6zM8mWDOMSBXQ0pl+DyIgRcQmFi90m17Bg80Jw9NUiq9fuS
+ HoWn0PY34ot+v+9nCNqVPw6p3zSoErSmGL5AUi/wMnRiMPfgFsqzSs4SvvPWGx++I2JM
+ hAZpT7bzDzxA25DEGFQQNPjEtGhOXVaOBArRE+jizZJxx3v4p8KLfgnXpkC0chLUxIHp
+ /cTAbvzpicSNyfD89QEuNKO9PwojtbB8D1D/srrGvbRyhj6ZRCcgPYK+7R2701GVoXq4
+ zEEQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=VBNpCNuiCpFV2nOlypxmB0JL1T6t5pZBpv1vCJf9xMk=;
+ fh=67FIEAxCuvQIamkfYfieYWW8UW8BrMCsPo5FDyEN3kQ=;
+ b=KY/AQ6Vt5oSaTVInajReKTf+svOLaelChArQsukcKQBuUVdrrTGxtamfrTjg2dTnQV
+ HGExbXXF7oXLbnTSqARVx7gIrVvsDxzTGG72qSnB480wn+vgx3PEsx4Xsr+4czA6K7eE
+ TkgqPTkMwuWLyr/xQlH5pimgck29b1EoBLncBGHIXP0MWE2drojWcaq9PmivrgE1zJmL
+ wO+bapkFqDmugnJJfXyN2Ssg8iAJAH/Wv7Y6Lcr0Hb7IJuUB0NFc69FhkRv/+Ijt0RM5
+ P0CTC/u9eZp6ib5LB5IMzU//OBsyNfdrjH2IBdBRwYROP1wgnI+NwT4Xt8xLOv4uUmXx
+ P2VA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777623044; x=1778227844; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=OJUhC55K9A0xZ0ORpMZG0kGY/2Fw7VzTRIPuHLeV+Xw=;
- b=KKaXmBhbqleAC13a0ZE9iRB9F0t/KxD+ZzlIquRyHwSqmzmycTL/keHaSeLEd8bwcu
- h9AnCXPeslYR8rcdN04TkNgvvKe5KH0o5h9m5S8TxPvzx4xl7PCH1d42V9ONwttA2p8H
- 7ydfQKitUNnm8+R6gVufvVQRJh6W8lF176gVXLna+/b0coyKfz6oHtB5tucCetzszm/j
- i2WKEp0RkL8LGYB6NG+dmZv6aJ6eBOw9NFJWZ4egOYwMnZ8ZypVqP1niaXR/7srGlK+L
- hnGdfMFd5iPaLsJmBrqIHw2LAtqlQwlE83vD7v92tkN5S67AYvrzyWtMSSZ+F0WbUdzj
- sWMA==
+ d=linaro.org; s=google; t=1777623738; x=1778228538; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=VBNpCNuiCpFV2nOlypxmB0JL1T6t5pZBpv1vCJf9xMk=;
+ b=BcTLMR9FY47sN5cbxlC13URAUOwPR1/cGe7VxYPqqmB5j6uOfScX8ku57z1bXKkgJJ
+ t6WO6C/lvUHsMLUbRNUL3JruFODOcwMytdFa8nl2NZnrU2O1gG7gyCUcHbJnOpb2UTB+
+ 08+1AoTP2QwtGyBPcU8oNOK3LBExnwtneFvB7fGEF4MimURf2oSo5uwl/2ISRhIcJoG8
+ OIa3lE7eowF68bL02Tr57H9fAEQkzn+AQIFpeS+D+3S4U2HKAP3Xi/mSyp9zmZYyxkrP
+ +oV4J+5APelD5gaCHxA/H01G7xBtR8bunZDNAqNgbYTMS3VECl6BXWbL6dunGlgd2ieu
+ W66A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777623044; x=1778227844;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1777623738; x=1778228538;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OJUhC55K9A0xZ0ORpMZG0kGY/2Fw7VzTRIPuHLeV+Xw=;
- b=e1Zfg77HN0YCrA3GM5nSUTk+Tmp+u3vqL+368+wiedREhWZ6C08uJJmodSv8RG9bCa
- JEMkNy2dFX9o6Tgp8bLGGIJKFqsQ1BmW2rCk1YNuHGksi08z8Q7Aea4oFhi4vyhpzYPV
- KDujnpZGyJfUYRApv3g4Y1uLMHxctU69iWxXgKwo1Lphuyy8ku6fGFEjQVccupEC071R
- xIesVAJj/Glhy+aj3LVXrJeRt3ASRL1pK888O1r2SXMbX5cTBVvORL6oqSlUNmywr+fM
- WF7SbDzIe0CW8J+QRhTjL8v2Lyl0Y+UBmuN/nhOHcs0l2TGHesAltUPa1a7P+4H6i0SL
- YGAA==
-X-Gm-Message-State: AOJu0Yw/klQrsOmrI0dpxuladrscWe+eFF0xAKMN4ZrgG00kcCtYpax3
- RtyRehke3aJuwIWNbJ1UNlXPc+3VPmroO+St7OdQyiNslRQIWVzV49iPwy2pTdT2
-X-Gm-Gg: AeBDietGt7Mn/jJPp+WBf5fbOuqkZioqGmGEAm6WW/urxS8n4jxqH5En0n83kE7GCLW
- Lu2kY8D5hqjWnm6Od7cbV08sVwQ2cWHKkdZ3Zmo8h/T3KU6xxMSmukeGbicI4QaAomhCUSbDH45
- /cbx2w6nVlm572Y0Ga83X6EWn4MIrqO5DmuZp4KTS9BNePbwZ31hHpcL0aGITgqVz9fS9KOBcBn
- gAvtw7KDAtHpTBwF4M18O6VeNbz1rFVE9cyeYvXqZAmfpaDVRm8n34DGQV0qUuZGvOWB+t4GGrp
- TdOldzqQSBDCxLapGn9NWJxTcCQds0tfV4iVZ4fFLbp9jYQlu8gmth7osnWZL7iJEDGqqGwWU5A
- z9BRvhICp96w2T4dtqzY/81XsWIozFurXG4T28IEh/vvVcTYYhUTX3PZm1PqJGlbCrzYEeAcAOT
- RshyoJvN/KrBDCuWR6JHWnjQvB62KKW3L3Oy0e96A=
-X-Received: by 2002:a05:600c:859a:b0:489:1ba8:5be9 with SMTP id
- 5b1f17b1804b1-48a8ebaed76mr20781565e9.29.1777623043669; 
- Fri, 01 May 2026 01:10:43 -0700 (PDT)
-Received: from [192.168.0.10] ([2a03:ab00:1000:1b60:331a:b316:78f6:effc])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8fe92b3asm9151955e9.4.2026.05.01.01.10.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 May 2026 01:10:43 -0700 (PDT)
-From: =?utf-8?q?Jind=C5=99ich_Makovi=C4=8Dka?= <makovick@gmail.com>
-Date: Fri, 01 May 2026 10:10:38 +0200
-Subject: [PATCH] ui/gtk: Fix GTK assertion failure introduced with
- clipboard fixes
+ bh=VBNpCNuiCpFV2nOlypxmB0JL1T6t5pZBpv1vCJf9xMk=;
+ b=oLpsm3elBiqT6gG4Uoqy8hLY0pfGbMm0mkJQe0a04K+5vTbWNDw4zd92Vukm3tTiAG
+ yG66Q28tO655aoi2jP//ZAhk3zOtO6yuOgKDnyUObMYLRJGMT7myOyYgc9o3VJT3Edfq
+ qN7f3L1KnwyzwWAcTaUfnmc3dludNmofzd0lZ53VT3UVmAwGLWmAvJem6NOezBpnEiJ1
+ J8EcMvZquthzu5QvSLoH/u/RT+i7wQZQyvjDJvjXLw+fIni793Ui3cr05Bb7AZdtA+w5
+ iTqCQl4jXpr4Dkn9MZRQxTdcZ0VOj0R52gj8QOttOeL+TECFtlsBDmnzZpFBfB/rA40+
+ 8ihQ==
+X-Gm-Message-State: AOJu0YxYS95g6Iq6+SBXFNFlVLsLu5Au2cASYzyt3MAB1KADbTg1eolj
+ I7yfcO+dz7LEwpqpiSlv0aWNfyKptSnU7ClyKFlWhwXow8yk/tFNc+YPsg3ED6vMzFAuOQYt3ML
+ /PzQXvnRZ5cYfvNuCv94xPB2cEEbYjpWd+Qf7ZHep6Q==
+X-Gm-Gg: AeBDietFYiaHJ2po+03qPzWasL/5D8yOsqAwOJc3PFd+wMXoFW5Ul+dC7vuBXwvb2vN
+ JbQx8+VRa0QzxHGlpm+bDQrqBxPfpkG3ylcflPyOO5ziHa0LDYVVCx8Nnb5t4FFsguyZe1xD8MQ
+ iAKk0RGMG+Dp51MSoNwbxQNFpnv6TLX7b2NiwE6CrAGe+WgVX57Lnv9AokKaDgKgBRk+38jtAor
+ TC+AolYb/RKV+deIAHkFQKEoWJZ/FgAnQtonaFCHugTmE52JECPfNsnr2SjOkwaB7jsNM0KaBMN
+ jYqXqgEzzPSfwlRMVsEtWOJPst5Yj5wBUDSg45pOa1hLSjfGFx56eSefwLb4+H0bKBeo2ihMiMH
+ yidO5CpQMLd2P
+X-Received: by 2002:a05:690e:191d:b0:654:1261:8b57 with SMTP id
+ 956f58d0204a3-65c30518267mr1806097d50.6.1777623737892; Fri, 01 May 2026
+ 01:22:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260501-clipboard-assert-fix-v1-1-e549243e4583@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAP1f9GkC/x2MSQqAMAwAvyI5G6gFq/gV8dAl1YCotCJC6d8NH
- mdgpkCmxJRhagokejjzeQh0bQN+s8dKyEEYtNJG9apDv/PlTpsC2iztjZFf9F67OJpBk7Mg6ZV
- I9L+dl1o/5KY382YAAAA=
-X-Change-ID: 20260501-clipboard-assert-fix-cc2bf8672eba
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Jindrich Makovicka <makovick@gmail.com>
-X-Mailer: b4 0.14.3
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=makovick@gmail.com; helo=mail-wm1-x32c.google.com
+References: <20260429190532.26538-1-mohamed@unpredictable.fr>
+ <20260429190532.26538-4-mohamed@unpredictable.fr>
+In-Reply-To: <20260429190532.26538-4-mohamed@unpredictable.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 1 May 2026 09:22:06 +0100
+X-Gm-Features: AVHnY4KuyM6gYc5WFFzASu4wWdDm24T8QkofWmZBaWEjMzwcNkGwL1CsRgsKUtI
+Message-ID: <CAFEAcA-H-E4ERsz2534i5qVnr+VF9uy0N66MOs3QHmwkP8i1DQ@mail.gmail.com>
+Subject: Re: [PATCH v21 03/15] accel, hw/arm, include/system/hvf:
+ infrastructure changes for HVF vGIC
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>, 
+ Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Alexander Graf <agraf@csgraf.de>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,72 +122,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gtk_clipboard_request_targets actually returns n_targets == -1
-when targets ==  NULL instead of zero. This result in failed assertion
-within GTK:
+On Wed, 29 Apr 2026 at 20:05, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
+>
+> Misc changes needed for HVF vGIC enablement.
+>
+> Note: x86_64 macOS exposes interrupt controller virtualisation since macOS 12.
+> Keeping an #ifdef here in case we end up supporting that...
+>
+> However, given that x86_64 macOS is on its way out, it'll probably (?)
+> not be supported in QEMU.
+>
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
 
-qemu: Gtk: gtk_targets_include_text:
-assertion 'targets != NULL || n_targets == 0' failed
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-Extend the check to require non-null targets and positive n_targets.
-
-Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
----
-Hi,
-
-with my latest gtk-clipboard changes, I introduced the following GTK
-assertion failures due to unexpected n_targets value returned to
-callback from gtk_clipboard_request_targets
-
-qemu: Gtk: gtk_targets_include_text:
-assertion 'targets != NULL || n_targets == 0' failed
-
-from
-
-gboolean 
-gtk_targets_include_text (GdkAtom *targets,
-                          gint     n_targets)
-{
-  gint i;
-  gboolean result = FALSE;
-
-  g_return_val_if_fail (targets != NULL || n_targets == 0, FALSE);
-
-  /* Keep in sync with gtk_target_list_add_text_targets()
-   */
- 
-  init_atoms ();
- 
-  for (i = 0; i < n_targets; i++)
-...
-
-GTK actually returns -1 instead of zero when there are no targets,
-triggering the assert. The following patch extends the check to
-non-null targets and positive n_targets to be on the safe side.
----
- ui/gtk-clipboard.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/ui/gtk-clipboard.c b/ui/gtk-clipboard.c
-index 463ed4e905..ea9444be70 100644
---- a/ui/gtk-clipboard.c
-+++ b/ui/gtk-clipboard.c
-@@ -175,7 +175,7 @@ static void gd_clipboard_owner_change_targets_received_callback(
- {
-     QemuClipboardInfo *info = (QemuClipboardInfo *)data;
- 
--    if (n_targets) {
-+    if (targets && n_targets > 0) {
-         if (gtk_targets_include_text(targets, n_targets)) {
-             info->types[QEMU_CLIPBOARD_TYPE_TEXT].available = true;
-         }
-
----
-base-commit: 3d626609ccae61a2e552bccd59c7a0931bab8261
-change-id: 20260501-clipboard-assert-fix-cc2bf8672eba
-
-Best regards,
--- 
-Jindrich Makovicka
-
+thanks
+-- PMM
 
