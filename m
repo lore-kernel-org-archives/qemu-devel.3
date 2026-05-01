@@ -4,86 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4833CD3424
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 14:22:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9BE0CD3424
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 14:31:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIokB-00082q-2e; Fri, 01 May 2026 10:21:27 -0400
+	id 1wIosv-0001y5-UO; Fri, 01 May 2026 10:30:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wIokA-00082b-5f
- for qemu-devel@nongnu.org; Fri, 01 May 2026 10:21:26 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wIosi-0001uh-Cd
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 10:30:16 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wIok7-0007Zs-N6
- for qemu-devel@nongnu.org; Fri, 01 May 2026 10:21:25 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-43d7e23defbso1127057f8f.0
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 07:21:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wIosg-00031o-OX
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 10:30:16 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-65c396d3b36so305163d50.0
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 07:30:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777645813; cv=none;
+ d=google.com; s=arc-20240605;
+ b=HTE+M0TzJwNIlUiPNUgYgjjwrvRUvpY2ubUA9yxbggqL/RVifxMm355M49ULi2FaEb
+ FUfV9lntjycfPf2JZwe5Sc/wwobWdee4iwrp/SATq1vtQ3qS89EwLakkQaDEnlPJL2tr
+ GPoTTL2rRLfHxMMt5f0OjMNRMwbG6CV9f5c8p2cFvULJRL2d1rCxtHuxIa41Y3/Xxp5a
+ OnC97jgUn+fITVv617Di1efwrQyQ/sWo4lChBqf6cQiKjunY3lKGo9JQ/+C4/Sd/07gZ
+ 6AML2Uc+u5lym1NXi0FFPX21WedJYHCXgEN3kqLAmvLWOzVrUCiLOpgopUxlyvCjPPbC
+ fRrw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=yMFHiJ4MZZzu1s7IKs+b7jPJPkyjQ7l8xdqj0fWs6tA=;
+ fh=dEVg6uwYItpHJeEckWeY1SAUI6gUXVUgBtGRd8UKX7A=;
+ b=O+cD3mj9iNDFAUA+ZMP/M3qV2u6gcsEJFD+SOanO6QjYEsqzREzv9k4gDKkljK3dI4
+ HH8Slek7/SAxrjLNLLprkTPHCRkF44jlu8PSZFJshxcBz6y8t46kxqy+qKpJfzUxx/Ou
+ fFn1hRtjBMCI3p2L/RVWBL6Z7n71D3uLSO0PSkJVKhDWf3ceC2HNr+AXWBnlA/gxVOLF
+ mxvBg+wKZy6Wuoe/WHYg2uj++eS3TigIzjiJhxaaqhzYkKDxEG0iNwAr1W311SaxoWdT
+ bbg/XyZkKuY1IeVjE6DrbQNJK25nq3vsGXTF/WOJJBr/eIqGivs8DMdYgZAWpbYpinFg
+ fG/A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777645281; x=1778250081; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DBnnGCpYSonyRl/RZZsL4XC/Tyffyj/BGojejPAjpWk=;
- b=tE4HVR6TNGPD8f5NHWuAuCL2G2+tsQBmjjZNKngmWSOtItUVomdgmIgmcYpopky2Hz
- WD2QvJgSXhAs2Htf3slxJdMNBsF9PX+vflMrpNPzYkHiwmrTNEZaUcVkaTYSw1Jzcflf
- awNs/VMabxqkcjqhbmYAv/VzJWJdTgXWXAfQr7bm5Z9D/QPWoYXzwfSprcEJZRhr4ZKD
- mIepw9fETTaghkDgDpkknu31YTH9WHojP8wgRt3hlG5svWK9NvBlyI5QGSw0wJz91AUt
- Q/ON4ixb8bYJhPVu78/IURPc5h2xujBw39vFqR3C7xPTSoZMDpa2E7LE9Hetvb3uc9x9
- zKWQ==
+ d=linaro.org; s=google; t=1777645813; x=1778250613; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=yMFHiJ4MZZzu1s7IKs+b7jPJPkyjQ7l8xdqj0fWs6tA=;
+ b=BFXn59vWvFIGYOwWsks6SkFlYGYaJ++jNVVdKLZHrCLQUrEtYzrqVNaHiLjXg7kUk7
+ f93/lo6no9Q9QpTuza+FcOPqz8fOftcLYhFudXBIRv+ivLlJrSguhp1J2G126eXc8R37
+ 4oZyqYwNjRM+dynF81BliEag2owPEdo9Ssy/Yxf/qmSXMB+vyiMuqPeELbSXiSv9mDOw
+ jfV2/bqlQ71ut5za3MaSyI2xd53iHju22I2YX2GLT0LwZ29GouMPyC2OOtJ+Cy4mWnOu
+ PSbagmqUfJQgTbGr4/gZrk7NeqFCALey0vHzMp5K/48p/It56h67uKE4+up59ZulXxhb
+ ZgNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777645281; x=1778250081;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DBnnGCpYSonyRl/RZZsL4XC/Tyffyj/BGojejPAjpWk=;
- b=ZkWs1apVgJMhBq7c9eRW5pzj7BCCiprPrGT+9bRIMS1aNDngfVBCFrGJ/rhum+zoPG
- BCM+i33LcMWaYkKTEk84SwjqWxpxriSWWYPiKb/v0GAZtl7BlIvy70Sj96zlc5rY9epa
- buBZuFbNTLxb3p+FI0yAuaMoSiu5qvBZ+kFsBfsVZii+aS0Ei60bd0X7yXQ3NuoDHWRB
- yrnMBNi6pwLWc66Nu0Jj6ERsnSWtu4t1CAj4xOOtfXbXe+WRTAyhGUT0KEVGd2wgBAsq
- AV3ZXIM/xE0JdpeM2RZ5X7mMgGWBbEzzSUfH4j3PiaSWeqAVqPdyECACHNWaXZJKU9Ew
- 9qOw==
-X-Gm-Message-State: AOJu0YzmXlvZ1Hdht57o/K48Ps9rYqrjiTXS2f++7W0PHkPZTSdZnCqz
- K7xG50jlymPq6iSoWuNHp3U/MAsSbCNvQhKRkhscXPN+ixPQdAWWPAILpOlFtWF4acY=
-X-Gm-Gg: AeBDiest/cht+0alejtwTIsllKHFpNfirPoK3YMG5orp3FWK6LNfSp8eomlLpveV4qr
- wOHUIrZhedwdLuK0vM4fccSPvInSGo8nmz8r9CC37+m4+G4XdfTqOiUV4Dz7KMJUoQUuY5f87vL
- tfw3oxHl1TCudlMqOqPfAP+HNcSn//FynAs9e5EmT7ESLv45HsVfIBPD63zN5hxrKR599Z5+/G7
- NEjMgzoNdIptb2H6QvFwJqVegDb7LZ3UylRhC3Vp7ENvIkw2CTAPCfc6a0rcyOpPifaWenBfoqI
- cPgX2bNExSbqJHtT4kj41QJxp/NiAXZZQfyFM2Ria5F1/hMrxJpojvYX02mymhi88tsbB0KKSLq
- xZBk8n/of0robKWwV6AosIDFwqM8I37GZyQa3PxUy4fAwWYryi8uEtrErmEQTMEjkxbM895sBq7
- jjRxfXbPEoGRNysciHUwgvVQ6cvKjEhOqENw==
-X-Received: by 2002:a5d:5d83:0:b0:43f:e413:f6fd with SMTP id
- ffacd0b85a97d-44a83318609mr5106522f8f.0.1777645281205; 
- Fri, 01 May 2026 07:21:21 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-44a986aa3a5sm5802041f8f.26.2026.05.01.07.21.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 May 2026 07:21:20 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 8A2A75F8FC;
- Fri, 01 May 2026 15:21:19 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Alexandru Elisei <alexandru.elisei@arm.com>
-Cc: qemu-devel@nongnu.org,  Andrew Jones <andrew.jones@linux.dev>,  Eric
- Auger <eric.auger@redhat.com>,  "open list:ARM" <kvmarm@lists.linux.dev>,
- "open list:Default mailing list" <kvm@vger.kernel.org>
-Subject: Re: [kvm-unit-tests PATCH] arm: add wfx test case
-In-Reply-To: <afSnVJLe7HrB6ISS@raptor> (Alexandru Elisei's message of "Fri, 1
- May 2026 14:15:14 +0100")
-References: <20260427130045.3669851-1-alex.bennee@linaro.org>
- <afSnVJLe7HrB6ISS@raptor>
-User-Agent: mu4e 1.14.1-pre3; emacs 30.1
-Date: Fri, 01 May 2026 15:21:19 +0100
-Message-ID: <87zf2jcisg.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1777645813; x=1778250613;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yMFHiJ4MZZzu1s7IKs+b7jPJPkyjQ7l8xdqj0fWs6tA=;
+ b=S0Ur9ZMW5Mr12xCnSh8g9h2Nnn84gmWcnuJD3oOsn9nApZ94eVGBvu3gE345TeJxk8
+ 5jRmAeb7iHDAg/RwCsbZT51Qce1O+3NkoUAIrl6dOQ2itHypHX/OLc4BnhQunYYmrPP3
+ RO+me28K9utoStSTZigPRYKypupWia2iKYH0baXWsd1rksX+gesd4JYvdPOxHPpGqniu
+ Qp1Lk9ZtZTuofmza4YqxFMXewkPG6PZzMu0uo6y8TX8x7jrkeeFhLDZXOkvgDa+hIgh+
+ hbjbnK/GO++nB/FB+CIaE13E1W9LegrMB3eO/zNJeO9gqzoYBykAYgKMEMU2r8L27L5+
+ aoHg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8WNMV4fksTCWt7RDL/BZozrbo+VaHEkkN476y65nrq7SFpq6BNxnq8WmT3ZORo2A7XBXCnmwwkgtkE@nongnu.org
+X-Gm-Message-State: AOJu0YxbU1uS3i6OadoRaihEu4rcHLCQoD4fIXgmi22ngU+xGcojmRdW
+ cM2u78nTQ0M++QGmtJULfKJ5CKs/rFP81VePw3Orki6zydWBOlUmSbIfnCAqcssaToZKzxCSzaQ
+ cQu/Lp3ZGRV0EL0CupKdKMqjrGm7x2XMRoJIWCUVJ2w==
+X-Gm-Gg: AeBDiesSyWXtMB3AougFbilIHhu+QBzrNG80omAaq9qRdKbTQ7NYXKSDVaPrueqLzQq
+ pfbDE9y0niUwGDyXZhQQjl3Inpp5e4dSMqLmR+rXqxUFz8xoK7BB4hQ/jK6hhGQMNQhStuQdmRu
+ qra09wlChOPda5sA+D3DYaLZNjMag0GvG9do86LsKZ3x9OQ2ZXuw1Kka+HuDdmiVdD1gP2lsBJu
+ uRWsEGvavpxFNzgcuK9WG+8xkuv2SA4kpZolcyWYux/zOdFp2N4rppH4UicAm0ogKzpwIR3y99Q
+ rQ7K05NphR5zeqkBXC1cnu/NmhGHkEgoPrWPTIGWCeVp25BBRgoCwLoGs5aDvoH/E8XAxMs2pg5
+ JrA==
+X-Received: by 2002:a05:690e:d44:b0:650:1ac4:65ea with SMTP id
+ 956f58d0204a3-65c18c78c12mr5510656d50.22.1777645813190; Fri, 01 May 2026
+ 07:30:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+References: <20260424191129.1494381-1-daniel.barboza@oss.qualcomm.com>
+ <20260424191129.1494381-4-daniel.barboza@oss.qualcomm.com>
+ <CAKmqyKNZiA=rYVD6ighyFO+qmhdYVk=UgbaznBHrZ2yt1ZvOtA@mail.gmail.com>
+ <CAD=n3R15=vCCgQQhEWXPRc91T-8a02JJs2t9s88dVDLqTi_QZw@mail.gmail.com>
+In-Reply-To: <CAD=n3R15=vCCgQQhEWXPRc91T-8a02JJs2t9s88dVDLqTi_QZw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 1 May 2026 15:30:02 +0100
+X-Gm-Features: AVHnY4Lvd5bC5Bjb5B0gowbRniZvoDTtU_MpQnrflj-3wpCwSJ354tivCPjGs_A
+Message-ID: <CAFEAcA8ZcpUPGRPAsRgfaBd5xpXdCVuyNeoWubFKMLTdcoekSQ@mail.gmail.com>
+Subject: Re: [PATCH v5 3/4] hw/riscv: server platform reference machine
+To: Leif Lindholm <leif.lindholm@oss.qualcomm.com>
+Cc: Alistair Francis <alistair23@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, 
+ qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com, 
+ zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
+ Fei Wu <wu.fei9@sanechips.com.cn>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,213 +124,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alexandru Elisei <alexandru.elisei@arm.com> writes:
+On Fri, 1 May 2026 at 15:02, Leif Lindholm
+<leif.lindholm@oss.qualcomm.com> wrote:
+>
+> On Fri, 1 May 2026 at 04:28, Alistair Francis <alistair23@gmail.com> wrote:
+> > The first line of the README says:
+> >
+> > """
+> > This document is capturing discussions at the Server Platform TG.
+> > These are not official specifications and everything in this document
+> > may change.
+> > """
+> >
+> > So this machine needs to start out with version support (like the ARM
+> > virt board)
+>
+> We ended up not doing that for sbsa-ref, partially based on advice
+> from Peter (added to cc),
+> which I can't right now bring to mind in any great detail.
+>
+> I would expect the same argument holds here. Peter?
 
-> Hi Alex,
->
-> On Mon, Apr 27, 2026 at 02:00:45PM +0100, Alex Benn=C3=A9e wrote:
->> This is based on a similar test case I wrote for QEMU's tcg tests althou=
-gh
->> obviously able to take advantage of kvm-unit-tests additional plumbing f=
-or
->> dealing with the GIC and IRQs.
->>=20
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> ---
->>  arm/Makefile.arm64        |   1 +
->>  lib/arm64/asm/processor.h |   7 ++
->>  lib/arm64/asm/sysreg.h    |   3 +
->>  arm/wfx.c                 | 137 ++++++++++++++++++++++++++++++++++++++
->>  arm/unittests.cfg         |   5 ++
->>  5 files changed, 153 insertions(+)
->>  create mode 100644 arm/wfx.c
->>=20
->> diff --git a/arm/Makefile.arm64 b/arm/Makefile.arm64
->> index a40c830d..52b3f35d 100644
->> --- a/arm/Makefile.arm64
->> +++ b/arm/Makefile.arm64
->> @@ -64,6 +64,7 @@ tests +=3D $(TEST_DIR)/cache.$(exe)
->>  tests +=3D $(TEST_DIR)/debug.$(exe)
->>  tests +=3D $(TEST_DIR)/fpu.$(exe)
->>  tests +=3D $(TEST_DIR)/mte.$(exe)
->> +tests +=3D $(TEST_DIR)/wfx.$(exe)
->>=20=20
->>  include $(SRCDIR)/$(TEST_DIR)/Makefile.common
->>=20=20
->> diff --git a/lib/arm64/asm/processor.h b/lib/arm64/asm/processor.h
->> index 32ddc1b3..2104036d 100644
->> --- a/lib/arm64/asm/processor.h
->> +++ b/lib/arm64/asm/processor.h
->> @@ -173,5 +173,12 @@ static inline bool system_supports_rndr(void)
->>  	return ((id_aa64isar0_el1 >> ID_AA64ISAR0_EL1_RNDR_SHIFT) & 0xf) !=3D =
-0;
->>  }
->>=20=20
->> +static inline bool system_supports_wfxt(void)
->> +{
->> +	u64 id_aa64isar2_el1 =3D read_sysreg_s(ID_AA64ISAR2_EL1);
->> +
->> +	return ((id_aa64isar2_el1 >> ID_AA64ISAR2_EL1_WFxT_SHIFT) & 0xf) !=3D =
-0;
->> +}
->> +
->>  #endif /* !__ASSEMBLER__ */
->>  #endif /* _ASMARM64_PROCESSOR_H_ */
->> diff --git a/lib/arm64/asm/sysreg.h b/lib/arm64/asm/sysreg.h
->> index f2d05018..cb96a649 100644
->> --- a/lib/arm64/asm/sysreg.h
->> +++ b/lib/arm64/asm/sysreg.h
->> @@ -77,6 +77,9 @@ asm(
->>  #define ID_AA64ISAR0_EL1_RNDR_SHIFT	60
->>  #define ID_AA64PFR1_EL1_MTE_SHIFT	8
->>=20=20
->> +#define ID_AA64ISAR2_EL1		sys_reg(3, 0, 0, 6, 2)
->> +#define ID_AA64ISAR2_EL1_WFxT_SHIFT	0
->> +
->>  #define ID_AA64MMFR0_EL1_FGT_SHIFT	56
->>  #define ID_AA64MMFR0_EL1_FGT_FGT2	0x2
->>=20=20
->> diff --git a/arm/wfx.c b/arm/wfx.c
->> new file mode 100644
->> index 00000000..912e50e6
->> --- /dev/null
->> +++ b/arm/wfx.c
->> @@ -0,0 +1,137 @@
->> +/*
->> + * WFX Instructions Test (WFI, WFE, WFIT, WFET)
->> + *
->> + * Copyright (c) 2026 Linaro Ltd
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include <libcflat.h>
->> +#include <asm/processor.h>
->> +#include <asm/gic.h>
->> +#include <asm/timer.h>
->> +#include <asm/io.h>
->> +
->> +#define TIMEOUT 200000
->> +
->> +#define sev() asm volatile("sev" : : : "memory")
->> +#define sevl() asm volatile("sevl" : : : "memory")
->> +#define wfi() asm volatile("wfi" : : : "memory")
->> +#define wfe() asm volatile("wfe" : : : "memory")
->> +
->> +#define wfit(reg) \
->> +	asm volatile(".arch armv8.7-a\n\twfit %0" : : "r" (reg) : "memory")
->> +#define wfet(reg) \
->> +	asm volatile(".arch armv8.7-a\n\twfet %0" : : "r" (reg) : "memory")
->> +
->> +static void timer_handler(struct pt_regs *regs)
->> +{
->> +	/* Disable timer to stop IRQ from re-firing */
->> +	write_sysreg(0, cntv_ctl_el0);
->> +}
->
-> It is customary for the interrupt handler to ack the interrupt at the GIC=
- level.
->
->> +
->> +static bool check_elapsed(uint64_t start, uint64_t threshold, const cha=
-r *test, bool more)
->> +{
->> +	uint64_t end =3D read_sysreg(cntvct_el0);
->> +	uint64_t elapsed =3D end - start;
->> +	bool pass =3D more ? elapsed >=3D threshold : elapsed <=3D threshold;
->> +
->> +	report(pass, "%s (%ld ticks)", test, elapsed);
->> +
->> +	if (!pass) {
->> +		report_info("%s %s", test, more ? "woke too early" : "slept despite S=
-EV");
->> +	}
->> +	return pass;
->> +}
->> +
->> +static void test_wfi(void)
->> +{
->> +	uint64_t start;
->> +
->> +	report_info("Testing WFI...");
->> +
->> +	start =3D read_sysreg(cntvct_el0);
->> +	write_sysreg(TIMEOUT, cntv_tval_el0);
->> +	write_sysreg(1, cntv_ctl_el0); /* Enable timer, no mask */
->> +	isb();
->> +
->> +	local_irq_enable();
->> +	wfi();
->
-> Consider this scenario:
->
-> 	local_irq_enable();
-> 	// CPU takes the interrupt, handles it and returns.
-> 	wfi(); <- CPU now waits forever for an interrupt that will never come
->
-> The proper way to do it on baremetal would be:
->
-> 	local_irq_disable();
-> 	// Program timer to fire
-> 	wfi();
-> 	// Timer fires, GIC asserts the interrupt, WFI completes
-> 	local_irq_enable();
-> 	// CPU handles the interrupt
-> 	check_elapsed(..)
->
-> But this is not baremetal. KVM can decide not to trap WFI (look at
-> arch/arm64/kvm/arm.c::kvm_arch_vcpu_load() -> kvm_vpcu_should_clear_twi()=
-). In
-> that case, the WFI might complete due a host interrupt, and check_elapsed=
-() will
-> fail because the timer hasn't yet fired.
->
->> +	local_irq_disable();
->> +
->> +	check_elapsed(start, TIMEOUT, "WFI", true);
->> +}
->> +
->> +static void test_wfe(void)
->> +{
->> +	uint64_t start;
->> +
->> +	report_info("Testing WFE/SEV...");
->> +	sev();
->> +	start =3D read_sysreg(cntvct_el0);
->> +	wfe();
->> +	check_elapsed(start, TIMEOUT, "WFE/SEV", false);
->> +
->> +	report_info("Testing WFE/SEVL...");
->> +	sevl();
->> +	start =3D read_sysreg(cntvct_el0);
->> +	wfe();
->> +	check_elapsed(start, TIMEOUT, "WFE/SEVL", false);
->> +}
->
-> I haven't thought about this too much, but it looks to me like the same
-> situation with WFI can happen with WFE
->
-> Also, kvm-unit-tests() makes use of WFE and SEV for multithreading, and t=
-he fact
-> that multithreaded tests work at all might be taken as proof enough that =
-the two
-> instructions are correctly implemented.
+Roughly, QEMU versioned machine types are a big maintenance pain,
+so we should only have them where the use-case is that users
+really want to be able to run and migrate their workloads from
+old QEMU to new QEMU. The use case for sbsa-ref is "I am developing
+the full firmware/system software stack and I want a reference
+platform for that" -- nobody wants to be able to run the older
+version of the firmware/software stack on the newer QEMU,
+and certainly nobody is going to be doing live migration of the
+software between QEMU versions. The small population of people
+doing this development work will be running the bleeding edge of
+all the components involved anyway, and to the extent they care
+about running on an older / newer QEMU for convenience they can
+handle that in the firmware -- sbsa-ref passes the firmware a
+"machine-version-major" and "machine-version-minor" that we
+bump when we add something that would be a compat break with the
+firmware.
 
-So I'm using kvm-unit-test to exercise QEMU's TCG modelling of the
-instructions, see:
-
-  Message-ID: <20260430104434.1482407-1-alex.bennee@linaro.org>
-  Date: Thu, 30 Apr 2026 11:44:27 +0100
-  Subject: [PATCH v4 0/7] target/arm: fully model WFxT instructions for A-p=
-rofile
-
-So while I'm confident the current modelling doesn't cause issues
-(because we basically treat it as a NOP) I wanted to check the various
-modes behave as they should with the above patches.
-
-I can limit the test to TCG only if it is likely to fail under KVM.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+thanks
+-- PMM
 
