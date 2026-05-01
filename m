@@ -4,73 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 340ECCD13DA
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 03:02:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33A46FF886F
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 03:03:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIe9F-0001Ff-07; Thu, 30 Apr 2026 23:02:37 -0400
+	id 1wIe9A-0001EU-Vg; Thu, 30 Apr 2026 23:02:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wIe9D-0001FB-LH
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:02:35 -0400
-Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wIe98-0001E1-GW
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:02:30 -0400
+Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wIe9C-0005Xy-A6
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:02:35 -0400
-Received: by mail-oo1-xc2f.google.com with SMTP id
- 006d021491bc7-662efd1bdd4so983236eaf.0
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 20:02:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wIe96-0005Wj-Nm
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:02:30 -0400
+Received: by mail-oa1-x31.google.com with SMTP id
+ 586e51a60fabf-42fdab683b7so904483fac.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 20:02:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777604553; x=1778209353;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777604547; x=1778209347;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=m9XwErfiZQHdUZ8oppNNL3O8ab6JouMqBY+QIuvsbso=;
- b=Iy8NIpxO7/jddQkh+Q+1ysDbHsF5TKzSxF9EWt1Fo4gOk0uQZQ37Gty5J42pAVw+8B
- JJ3LNjaxcBlwtDcoQGov2b6DKKQm7KDWJSBGuV4nDOh3IAWrG2/LlaaqnmVpDJAlu/Pl
- Qiaz+QdCp7vyiBsOHipLOeBI5cjoc060Xet+JowGXP0inGb4J02AGEdyvT+a9VHzm5Pn
- cFpMTI46IVTg9bCVr/QKyoNGubHODECr4PKuwbZaXKXtXLUtyw5sftbqrIHgKIOZ0AP9
- +bYgcF7LcGEaszCeRR71WOHch2DO/Oi8DOMk4tTEa0FPwTqsFivh8w9KA8tCfzOKmg1z
- wKxg==
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=La9fZ55Ybv4Hk3SiJumG4N0jk+ElxiRkXK2LFs2Wz9s=;
+ b=cD5Xz7cWcpxIvPeFvgMEVBQin7xXczJYJcyrW0hmCrMoI4clx/x3Vvno6oHqtn9lGh
+ rdl9jv5G2h+3UFFlICD8CaJJzVDLDvXVeJPjdBmWSKmItdoELDfHSI+t6JzkrQhEcUpQ
+ lgjMajZMhId5AIjxWRGClS52DWAETwLFsrC6dZQmNu9+Ywn9qK+B8bIuk7J1ZW0eFU/L
+ +Yk/sQjcbTpod0YF3N2BqKnXUBf+/cOh9GJ6AaM7KbRhhsaBAL/6X1W6xk37BjNzeDzK
+ EgqX7br7OnMKSZm8o/5rC+p3UovNHcgYEM8EwFIu2HemoBY1m9KjYo74eyZi8dUt7n7g
+ vQxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777604553; x=1778209353;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=m9XwErfiZQHdUZ8oppNNL3O8ab6JouMqBY+QIuvsbso=;
- b=C43z7qiJtyOmwGBuIAsP9q72i3WQqEHI8fjCTcRdHbAbeDsXlgr6GwhBzaBVNWTvR+
- aMq+rjhK+2QbhSwoIc198R31ctTpCgQy2wSi/Yj4duKkoxH6bJdPCmdAYQWw7yxsTMGi
- pHG2vwdLVHBAx2WJTibyymMR5IUL9aJDzFQV9Dnxg0azNbj7RtOsPrCQEVHIs553Tn58
- 4AOGQOpyzKejUl65wR326KWvrIplklVGdLfbxbuE4MA4cDI4g8HysZrgmNpFWhT/M4Zw
- RqC+KCxPD4KmAr5OuM7i0SUdQhxDECqePffJ6MQ+zYI3NWuIrXwPnZrj6NGUtddxM3GL
- gmgQ==
-X-Gm-Message-State: AOJu0Yxj/GzCIOUDDrTI9vQXSJ+dd+WYy7LitYOmYsaEbImdt+jhhQ+9
- CS7vfw0bxkEVV0lvf9DZr6iU3slk9795yfRwbzmysjdWLzLJNPMHE8M28SSlQSoG9Iw=
-X-Gm-Gg: AeBDieunG5hN/K/upcIDc1VK++DBcrlXdzaLREZUw5xoGQ3MSNgSoXzvUXs24y03YKU
- JlrGuX9dsbVTh8Ws+6+J4V8bAHnIxQMBWdaejD6ofNkR3sQ/z0rIyE+DI62H0fy2M/jVTnRRqn8
- zbJzlMAHoYufgs0rAceshewMkVqsugrgMMzGljJRxco7Qg6hVbY0gfrzgxoFVAnayI/STQ4K5hr
- vTOhAB9cT5/+mCshCviEnJxD2drg1zM+noB3WVR7/PfacNzZT5fn+/xstfS5BmBaRtMqplhm5Qb
- 0LAyM+9OjaBtzntILSXiIsdh5Xq2EFgvxiamypJOb9aqylAm6GB6ALm2Y06w2T9C5Te4JKSg7td
- XRmftL4K/bGFJ1RRVcM/6DM4K/s5yuL/r2YgFRQKxMolU+0FGaErs9P7vqVEHhf97FT1TnLDQGZ
- 7ZoSHNEvPsaPgEytqqvjjA
-X-Received: by 2002:a05:6820:2229:b0:696:2225:d70d with SMTP id
- 006d021491bc7-6967bd1bce5mr2285759eaf.8.1777604552816; 
- Thu, 30 Apr 2026 20:02:32 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777604547; x=1778209347;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=La9fZ55Ybv4Hk3SiJumG4N0jk+ElxiRkXK2LFs2Wz9s=;
+ b=gAywtuBAXoAal1kiym3KTzcVswe7gQiTlUWZShJM9kHL+8/1C1wcqcV3p71qPHDZey
+ n5CeNwh/CVLzcWGUo3MGJLCEE3JqNL97bOQ5P4YdnJLLJ2ZSeNUnK/3Kd6I4DuKPmCjm
+ sBAwegGCognzKwAR8Wk1/CpAvNSn+U06waRaoeIPW0F97JT9wu5PsrUWo4fB7IPlo+hV
+ Cu7P9XrQ6I+Cm7PnFqI/uzdqDAgnHXdUK/HBj/XhOmIQWQLBObM85bYsjEuD73yJ1Miq
+ WkxQW8nbxwizVu5kQx0Xd23qpwbWH2e6j7dk4bNrCea+Mkx9nywAXE6eoxv153ikXEjP
+ Fa6g==
+X-Gm-Message-State: AOJu0YyqCSks/zvN2VmBEdQjzJrS1r7gWabBiu2RxCxQck9hs2v73g2R
+ 4cNvaBaVY6kXuc4bVTshEMxZSX15ceHV2DMWBCAVqhJEO0EAmswLfx/rnV1G8acxPJ0=
+X-Gm-Gg: AeBDieswclp22JMC3Cb0bIewVOb2CP2G/7aejYKlJMKJ9S7MWTbVB4GU6S0m1/QTI0I
+ /t70nixAbH9brLwZiwwA2QDf8pgO2ewsqW5j6FaNQ6il87vv59NSdpXjodpBLNeyhdajXyBQXdx
+ Ihq6AZfw8F2i/d7sFcU4ybytEsREMTLGQESdpJRBvTNAlxMRxmf9uvkTrSxIq/QYQ8gD+DtAeNs
+ IsP19WixLvqPRaKMZGK2Slwlk5GEobzNrSNDH882wQlPoLAZ1/5nqNycAT4QA4RxQfw3a8Q2tpo
+ ODOj0/GFcGCS/cdl9flmfJ6x1YMk8acvw8V3bVzXYmFrskXx5sNAsJgr0KgUmn2HhyU4PFfosUU
+ aY4pmDdBj7m8FAnrmKtB9UTECWOr1/fooyd2fEhxACST9zstvO6gLIINHqRVArbnQhhY7vutDsH
+ pRa6IYzS4wdR1iPBQLOkki
+X-Received: by 2002:a05:6870:241f:b0:41c:bab:5f9d with SMTP id
+ 586e51a60fabf-4345c027f53mr636827fac.4.1777604546615; 
+ Thu, 30 Apr 2026 20:02:26 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-43454cbc3c7sm1550875fac.12.2026.04.30.20.02.30
+ 586e51a60fabf-43454cbc3c7sm1550875fac.12.2026.04.30.20.02.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 20:02:31 -0700 (PDT)
+ Thu, 30 Apr 2026 20:02:25 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Thu, 30 Apr 2026 20:59:32 -0600
-Subject: [PATCH v3 3/4] bsd-user: Create os-syscall.h
+Subject: [PATCH v3 0/4] bsd-user: Generate system call numbers
+Date: Thu, 30 Apr 2026 20:59:29 -0600
+Message-Id: <20260430-syscall-nr-v3-0-4b1b2445e28f@bsdimp.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260430-syscall-nr-v3-3-4b1b2445e28f@bsdimp.com>
-References: <20260430-syscall-nr-v3-0-4b1b2445e28f@bsdimp.com>
-In-Reply-To: <20260430-syscall-nr-v3-0-4b1b2445e28f@bsdimp.com>
+X-B4-Tracking: v=1; b=H4sIABEX9GkC/1XMywqDMBCF4VeRrJsymYiXrvoepYs0GeuAN5ISK
+ uK7NwoFXZ4D37+IQJ4piFu2CE+RA49DGvqSCdua4U2SXdoCAQvIFcowB2u6Tg5eGjCVVo2l2oB
+ IYPLU8HePPZ5ptxw+o5/3dlTb+8/oYyYqCbIpIYfKQY5k7q/guJ+uduzF1ol4sFifLCZblCbJ2
+ lml6WTXdf0BKA4zueEAAAA=
+X-Change-ID: 20260412-syscall-nr-a0a831fce9a0
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
@@ -79,24 +82,24 @@ Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1144; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=uCV1VOv1XBSO7FkvHX+XqSDoeCNUcHfhnLIQTYjRcZM=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9BdiO3MVSY1TfY/5xcZZZof8pxJYQqfK8cXRu
- VMLaIqt1RyJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafQXYgAKCRBsHNEofbAR
- AARQEADgZXApaVNSHJCi15mLFwRtc7FVH+G8SW5TQOtbhq5Sww/JDfoAJAjbdLHTWnAmYuWhoFT
- lZ0FQTxdm5bjnzNWQpXU2FMdnoC9JgwCPYpUXGnzM/GcEQnkERul4IdNnlxXmK9CRjseVnYME0x
- BLVu108VmE06qEdQvYInIoXchw4VVd52+opA8dP3nHk1/QT7B7FBz2rvzbWAj2w3DaUDc+rVM0K
- 0dHx+/ArT68MsI/VPT/tWt00e1gUeGEIb/Gk/qsFw8HIJ2hKM6Xm2LVp1lPuJYCOeyBUefsCngR
- 2IDFuXhqJIimdPmFEck2kvGVR9Psn9UUiwo88OmtwiL2PipC5WcDN8M63dYHQ3dZRYRNO9Dozyy
- aEE1wA4lgh+nJCG95IO54ptugx6mhS6Yf2ljyx+YkLOW4v3ELUIpLv2/RRQuYJNlevsVeXd6zaY
- jM334tnx7r4qz9Bi4jxTK2D7PAQOJqJDztI0qK7pv9GSRt/v3G8cI/yJtwLJVoCe0gmHukKu2lS
- Q3F3JSIkLeRLibQU+zqWkG301bwNirk3KZGIYx4KgBkWv5kb4XxTRjDFBwHdDmp2SaLbBGx4vh7
- bRpKikv5pGze7fRuASgDStFYFKnRV0ZDg3b5T9UymdLYt+1fRa1CPkAM0x9z4Wok/DQJysvDKVk
- OlM2GqrysGGEb3g==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2289; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=lKHqamAG62DpM7OjBtdX0S6TLOZtOlswz9aiG/8nzDw=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9BdS2s9Owk9Sfexk9/FDpzOtWgYLLlTKTbvzQ
+ mUZmRKuE1eJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafQXUgAKCRBsHNEofbAR
+ AOmbEADNf1bRQU9A0v7qTjvhrQ+r0A4W3CPdD1NJaDU3+2HN84TREY5X1ZB3GhvYn0g2lGZkotF
+ FSPPSqwrGRdwSl/7jXajQ46/0U8v1GWHPwKGTJ9wjBaYu6PUTpxkt+jh7lIMXkcX9JCyAzl4Y6s
+ wmTghRb9VuyipyZ0t/J0BTQuiFc4hx5sMGEst6AibGFylMV/I8FaSalVOPNBayMn+30wBpqYFxQ
+ 8yk7SRUxoBp7+NKteK9zkUJ4QlJ/xql3SaTBT33doOhEqIzwVSZkZ0Ik9IvXPGTO8lwREM85ob4
+ x9vxAxhEF8LHSL1beiuP2wl5KDcd17M0Fn4xyHFgWcUycU4xSnoAUcaLMo8w9vICMS+l8+0qz6B
+ 2kY2IRl8z4w9EVByIFNYh+Qud+chKn7ixDqB+7hRmTzedRZ/ZrDubImPR42OdvOaXmnuEPAP++W
+ Z7omNPVoD9TEw0tAaCLVByLJcvsROFDYhqbPtK9cYRYxBOrJez2a7lno5Voo+0SRhR3M265f2Xu
+ usR0e+NUNEutaxjLhzTWPxlzcxsZCIULD0yn2j8f6H2/FsLuBP9IfOo/cSgK989hv/PEdlzehpx
+ 6rBBy0ZRek4UbHEk87E2Zv5HFyfnzehgGjX6Q2QrqZKIL83SZWr+46bE0SarZX7SKcFtDDKC5LJ
+ YNK11QzkZMDdCoA==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::c2f;
- envelope-from=imp@bsdimp.com; helo=mail-oo1-xc2f.google.com
+Received-SPF: none client-ip=2001:4860:4864:20::31;
+ envelope-from=imp@bsdimp.com; helo=mail-oa1-x31.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -118,46 +121,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create os-syscall.h. The purpose of this file is to define anything
-that's different among the BSDs, like system call numbers and
-time_t. While there's a lot more different between the BSDs, this is at
-least a start at capturing it.
+FreeBSD has a system call number header, sys/syscall.h, that's installed
+on every system that can compile qemu. Generate the system call numbers
+from that table rather than re-regenerating it yet again.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+To do this, I have to clean up a few stragglers for system calls we've
+removed. But these returned not supported anyway, so there's no net
+change.
+
+I also tried to do this in a way that the other bsds can coexist with
+should they show up again in the future. To that end, I moved the
+definition of time_t into os-syscall.h, where I noticed it was wrong for
+amd64 targets (which is little used and missing features, so it went
+unnoticed for a long time).
+
+More will be generated in the future, but this is the first steps.
+
+Finally, while this does add files, no adjustment to MAINTAINERS is
+needed.
+
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-syscall.h | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+Changes in v3:
+- Drop the strace stuff, since I thought it was ready, but not quite.
+- Drop extra files included in bsd-user/freebsd/meson.build (soon though)
+- Link to v2: https://lore.kernel.org/qemu-devel/20260429-syscall-nr-v2-0-67a8d09dc13e@bsdimp.com
 
-diff --git a/bsd-user/freebsd/os-syscall.h b/bsd-user/freebsd/os-syscall.h
-new file mode 100644
-index 0000000000..962adfa91a
---- /dev/null
-+++ b/bsd-user/freebsd/os-syscall.h
-@@ -0,0 +1,21 @@
-+/*
-+ * Copyright (c) 2023 Warner Losh <imp@bsdimp.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * OS-Specific portion of syscall_defs.h
-+ */
-+
-+#include "syscall_nr.h"
-+
-+/*
-+ * FreeBSD uses a 64bits time_t except on i386 so we have to add a special case
-+ * here.
-+ */
-+#if defined(TARGET_I386) && !defined(TARGET_X86_64)
-+typedef int32_t target_time_t;
-+#else
-+typedef int64_t target_time_t;
-+#endif
-+
-+typedef abi_long target_suseconds_t;
+Changes in v2:
+- Rebase to tip of master after 11.0 release
+- Regenerate strace.list, can't do this at runtime just yet so include script
+- Simplified syscall generator meson integration.
+- Link to v1: https://lore.kernel.org/qemu-devel/20260413-syscall-nr-v1-0-f70408d042ea@bsdimp.com
 
+---
+Warner Losh (4):
+      bsd-user: Add syscall header generator for FreeBSD
+      bsd-user: Delete sbrk and sstk system calls.
+      bsd-user: Create os-syscall.h
+      bsd-user: Switch to generated syscall_nr.h
+
+ bsd-user/bsd-mem.h                     |   2 +
+ bsd-user/freebsd/meson.build           |  10 +-
+ bsd-user/freebsd/os-syscall.c          |   8 -
+ bsd-user/freebsd/os-syscall.h          |  21 ++
+ bsd-user/freebsd/scripts/syscallhdr.sh |   9 +
+ bsd-user/freebsd/strace.list           |   4 +
+ bsd-user/freebsd/syscall_nr.h          | 515 ---------------------------------
+ bsd-user/syscall_defs.h                |  18 +-
+ 8 files changed, 45 insertions(+), 542 deletions(-)
+---
+base-commit: 759c456b1d22fe4083c8b384da27d3f56fd53f82
+change-id: 20260412-syscall-nr-a0a831fce9a0
+
+Best regards,
 -- 
-2.52.0
+Warner Losh <imp@bsdimp.com>
 
 
