@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA865CD3424
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:01:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE542CD3424
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:02:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIkgl-0006fa-PJ; Fri, 01 May 2026 06:01:39 -0400
+	id 1wIkhB-0006pZ-9A; Fri, 01 May 2026 06:02:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIkgk-0006d7-6e
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:01:38 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1wIkh9-0006pA-PT
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:02:03 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIkgi-0002Sv-OF
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:01:37 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-364ef7a759bso299602a91.1
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:01:36 -0700 (PDT)
+ id 1wIkh8-0002Uk-Am
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:02:03 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-c76b994f7a8so709693a12.3
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:02:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777629695; x=1778234495; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777629721; x=1778234521; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=exycjy4FAxHdjVOdXLZmsVYMkVF5iW6BRFb8MYIu4O4=;
- b=CVAWdFj9YiBMIvo7lJDMZFGm5VjiosUJWnnXZz2h+yv4lUfADfAGg/PaSp/gK+PoQ0
- tv+ksfGbRk2DNM0bgUmsZHbqW+zCBB0t7QQ+bLjX43k1aEpmJkv7EI+0PF8M3GhNPM22
- Hrp9fki6OFbTFehOXv4j7rZ0Sq84Lr6eDTOmusXJCl0TD9vsQAVWlqufGEl8eyG25gU2
- SD7GLoBSOngT2Z9Kp5d/onrxJ+2yCX3YvoE2ecbMFTBMtkrVIcsSVYo1L/1hSaiu4wTF
- vXOLyxTnv6Ob/KP0SCJ8mSVbMjFVkr87nI62ZqDCO/Qq2x1bUhnU88+1GXDT/VSdDeLN
- fhqQ==
+ bh=8lM0TP6AUT9UIAUxiMJVpvJ7ZaKHZi5WZQybrrZRgTA=;
+ b=UbGLp6Yjn1AKeDuNqhv0X+croxNYhXqzZjbm7uWQcdH09eu446QrolvQYYvAQoQuCp
+ 6Dt86XZBKdBL7LAUfGJhVUL5IWn7xsElfliWDY9Xwcl257NFqLO4UflkMi7C0wlK7vQr
+ UxG1qhhiMNcnHlvg4+wRCdjIT74MWwrSHOcRHsdft8sHZ2LZ8UITJAjXZbR2YnahMkvi
+ Nr0rqIxHAmgFYy72qUg0j9VuHq2dGVvSFoIKnz9+kcKg4nySwzFghqLeFDNOeW78YGM2
+ dnIJSzrTHKj4g2s6L5hWe4GEBuAzmMUViTxUPK4ETfn5rzoV7j+fuKitV/x9SIxDAsg5
+ mPbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777629695; x=1778234495;
+ d=1e100.net; s=20251104; t=1777629721; x=1778234521;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=exycjy4FAxHdjVOdXLZmsVYMkVF5iW6BRFb8MYIu4O4=;
- b=MZv6xPs+8YUyORm5PeDB7PYskks3v6oAahenkPVkVby0lrYsYbbc1rSFqwdEsVYj8L
- 1R/nsXhFkALsOYk/s2lkjouuUGllmyaXmbWsrBJkQc1X9F0t+5u47ZlWxjwMhjBX4EH9
- IKecrEHvTYHag1EQ4nBiasqCqJurRPKmjpggCgCUISw4t/APvnR5Dq++EkEMHzTagFjV
- yPjYbZvQ+yfQ/BDAkJPhmhOPLFBcZY/iED9nXJhSD1NsKafesGuKGiNmovnCyM2s0S1X
- gMA7g3+yh/iPoMxedytyisUWjaxs3cvh6gCMPOzs4e4nB6mtzWbTKVPYRCo/hnFpvTwH
- 3QJQ==
+ bh=8lM0TP6AUT9UIAUxiMJVpvJ7ZaKHZi5WZQybrrZRgTA=;
+ b=dwB8obHnWkGNp6rkUd48t3wlaEVzaOXKGmP4SSLM7dYIYRCeT5vfpLR4BE3ggOFZL/
+ mXtBj9yQvHFAWQCwH5Xk7/dnogl/vVIE1iCH6RS198CfjM3bk8VTApPzqwGsdiU+uYeo
+ +KPsDHjWaMhzQ08/MK7kPlG5OLpZqoXD130QeZgFQXMwOOSrbd3eMBTkCGE/RwiBljBg
+ XWLI6IMduIAhQ7ibqC9iY4ALzpBR0axfFLvlazZjWeCIydVsissjvO/UWkI3o5Svl90+
+ Jy9wMhNG5CaqaWKEKr7u03Wl5v8TEq5s+DnCEzFMZP7hbctwT282YNU3pBxRXIvHfJQ2
+ 1gnA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ//2iup9IY+QP64GSTFaC8ZvYw2TP4LNLgkZU0eFbrS9OS+SQ/V7B7o73+uroqvIkK0+MhrROsgDiaI@nongnu.org
-X-Gm-Message-State: AOJu0YxX9Zt3f3tbr9nzto4z/tkOs0UEAWtckiVu3L8iCjgxhSOu6GcE
- RcMhkkh6kTOGoetJgT0kjYFiFHTVKOFgUdhWYoUZIepii1xA0WLkkErox0MrX5SZz4Q=
-X-Gm-Gg: AeBDietEA/jpGVTW82Rkma2yQDGVX2+Pm+TJtCJ5GTcHPRqtNii4bj3FWpGv5uTZj+F
- qiJNDRL799M5klK283NfAIz6WpyaEsRxZl5LmJSSJntvtOyyJBJgSqTAKtSbMLH5RiC/qeIZylS
- qApBk75e98RruKErM2hGfkHi1oV5h8an3Pl5hci74USQjOXVoneMza+027ApvUG5uTmvetDntI8
- wsuFHDnBfoP9VXfQNX4yoMHw383oXHM/igCAqwC30g6yaKfm5zJYlkWMwDqq4OTVbAWfuTa82b0
- hAJcni+Fe2khpnKDFWG8SJtfookxZ6RbhQ0odKS+9eDGY008mPMawfHiKt/iQpoP43qCE/uMpql
- 0jv4vDGEKH/n3AsCavXjB7pl48ioU7SxkewQEeKbbsY7JwK4ejjotHd86aub3+fzCrAsqhOiUfO
- m/7yBvLawNoAbpI7mg468V3GP80s4T8/ODTuoUOyeWaN+ZVLR9Ujbf
-X-Received: by 2002:a17:90b:2742:b0:356:21e9:73ff with SMTP id
- 98e67ed59e1d1-364c489346emr5841158a91.11.1777629694744; 
- Fri, 01 May 2026 03:01:34 -0700 (PDT)
+ AFNElJ/Oqe+v4LAf9Mi1gDtrdoB5U4CarkNK6xoHF/sMpgc2dxpIkcBOmeWsqISl8zU1Eg7ZP9z+N9nSjIZ4@nongnu.org
+X-Gm-Message-State: AOJu0YzawHi+PiGDV/i9dohKUKUyiBTsWT7c3qAoQb9DCNEOweBIhCAA
+ iugGByoedOzV64uSdhCpO1+PrurMlumMgqVdOiC/WArTmJV29vyI6PKaCF63tapRq5M=
+X-Gm-Gg: AeBDieumLesMGdo1w+gx2HK7Fn+XoEg271b5pZsD+ecwwwoQwe6101x/sWdHfMh7J87
+ A93Bgzup6AA1B9ZEiX2goa9MS2Q5mpgRIdJqiM+SVcLTZGCk/LIMrryBoCXJVf5ywA+LVkidbr0
+ SA2fchbtDk7HiFsdtSi1OlyJ4Ig4t/Pg4em9IA/XGGAyqZMRT1skDqcJ8eZU7bxAMuqO/LFZtQM
+ r5JHXygAV3BN5yl3lvFUJHGlkTYULZC4aETcrA3ig7L/IjJIvbIvOD9KpD2fAzKz0I0tN/+2P0o
+ ZOuXZMY7fYxYo6cUmOtwot9sU86AKTETQJ9oXJA3i/Fxsl/v/6BVWCvGyLcDgEdvaVpX/Yeqjpd
+ KiwfaM/nJGcdUv0Rh36BR+BnthnrfJGphZfpbJ3HovQ3FTYsLLS/+YfuLN8IJlIg+hdIdWslcC2
+ g4moYQEiRRqB5BTAdZvVC77cnV21rFt0cYnsj6MGo3wjJXOuTl67FR41eJAyOnIM4=
+X-Received: by 2002:a17:902:cec3:b0:2b2:57f3:8d07 with SMTP id
+ d9443c01a7336-2b9a22f5926mr68990345ad.7.1777629720625; 
+ Fri, 01 May 2026 03:02:00 -0700 (PDT)
 Received: from [192.168.10.140] ([180.233.125.15])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-364dbeb2db0sm3844099a91.10.2026.05.01.03.01.33
+ d9443c01a7336-2b9caad2459sm18477945ad.33.2026.05.01.03.01.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 May 2026 03:01:34 -0700 (PDT)
-Message-ID: <8e8f3aa9-6ffc-4e95-a597-dc65399f233d@linaro.org>
-Date: Fri, 1 May 2026 20:01:30 +1000
+ Fri, 01 May 2026 03:02:00 -0700 (PDT)
+Message-ID: <65dba7c9-790e-4c16-aa95-32d224bc9dab@linaro.org>
+Date: Fri, 1 May 2026 20:01:56 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 22/25] target/xtensa/xtensa-semi: Use
- cpu_translate_for_debug()
+Subject: Re: [PATCH v2 23/25] monitor/hmp-cmds: Use cpu_translate_for_debug()
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20260430093810.2762539-1-peter.maydell@linaro.org>
- <20260430093810.2762539-23-peter.maydell@linaro.org>
+ <20260430093810.2762539-24-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260430093810.2762539-23-peter.maydell@linaro.org>
+In-Reply-To: <20260430093810.2762539-24-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,12 +106,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/30/26 19:38, Peter Maydell wrote:
 > We want to remove the cpu_get_phys_addr_debug() function; update the
-> xtensa semihosting code to use cpu_translate_for_debug() instead.
+> HMP gva2gpa command implementation to use cpu_translate_for_debug()
+> instead.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/xtensa/xtensa-semi.c | 9 +++++++--
->   1 file changed, 7 insertions(+), 2 deletions(-)
+>   monitor/hmp-cmds.c | 7 +++----
+>   1 file changed, 3 insertions(+), 4 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
