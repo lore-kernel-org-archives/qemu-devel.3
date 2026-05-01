@@ -4,107 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B336FF886F
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 03:04:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 884D6CD13DA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 03:09:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIeAk-00031W-HR; Thu, 30 Apr 2026 23:04:10 -0400
+	id 1wIeFv-0004CW-Ne; Thu, 30 Apr 2026 23:09:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wIeAe-0002xr-C5
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:04:05 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wIeFu-0004CJ-B2
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:09:30 -0400
+Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wIeAc-0005oH-Ky
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:04:04 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-ba7fd666666so198377966b.3
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 20:04:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777604641; cv=none;
- d=google.com; s=arc-20240605;
- b=flNduDgzoevlqFQ0w6hztn2vvRIkoZRu8QL1yZYP+Fhc1S9esGQPsb0tqigGvkfcJp
- 3K4bjAdT3nOwf7egIDo+QkuEx6HQuUecFfrLo2ABU4/RST3HHjnIqYHK7CHSdRM5XrS1
- gBXFltPKfWdBJJaS1zJdkDZP+ioxN7UKbGyzCRinvL/hLIDnA1gBOEQN8kHOuIRthbeD
- 8MR64cKej9CD9pmOI5E+suMn2sM04AvzMmrlbUHbkngTIUN1G2kqRX5s7iv0i7NFqOcm
- myVMo8lSniATEa1KjwEJn4m1zKGzIGwQVZkaam5zq70sPGK40mMGKOKZRBVe7orDDDjX
- bHzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=UcF8qHddirl4CF1hSp9nMX5emn8otr1B4TTFv92EENw=;
- fh=V4bRS0Y0BmHnHNqZQA5ANJ7h/rENqw8ecjUR3ynwrn8=;
- b=Tf5mvUgvbME/Swl0E1mFrndbxwf/N9sJXVpBddx9wF/gjG7rUNAaqDJvI5RBgOxppB
- EbICA8UWEge55AXb1zZIWG1niyS0OaLpU7Pq0Z65JfJoohg8oY4eNR30W9nzoYKqTm7E
- TPxiYaFnoRMqzV2++85THuH5s32+2lQxVb0JvVYM8Lts6w/P2Ci1LlJLsMBZMr7eJ5fq
- 0oKEOD2V0fTqVEByr8d9lX5/L/kLpfS41PGG6HU3+ytkLWgZDcrYw3ojQFB1K/i3alSS
- LSp+wvewSv238oXiNTtBbFGxC5xRPwYKgDbrZu7m5CduzqCFPmSBryrFSKOT/C7mEJzj
- LLnQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wIeFs-0008UF-Mq
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:09:30 -0400
+Received: by mail-ot1-x32e.google.com with SMTP id
+ 46e09a7af769-7de4ed0593fso987102a34.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 20:09:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777604641; x=1778209441; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UcF8qHddirl4CF1hSp9nMX5emn8otr1B4TTFv92EENw=;
- b=ICbwIX19T2lW7+uhRXCU9w9Nq8OU3/DHTvEoZ5fJ0lz9h3sUOfrFybEyPqYAFZZIMV
- UouMRQC4D6t6wj8g2XpvKN6hi97dFAcxrAHUVZx8PrXX2VIYhEQ0u9a0ldS2MwfeVzdE
- lCJ5u69qBQ74gXJvT+kCV66hl2Yg+7iUYpr0IHMGb4LzjNJmKr8vdsiD4hLDn475EdVW
- tBqPKLXWc3eEVWIR4GAr2AXQonq7ZFIXVhRvlbHMES1p7bpYYvSeBbbVI9kDaACLsm1H
- tKR3bqnZ0J4yiH+hqHgiZsfsGra37Q0XyM34gu8z4merr/YKw3fzC8QHhXdLXkH2Adkb
- PGzw==
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777604967; x=1778209767;
+ darn=nongnu.org; 
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=lUbDl4QgIbmOuxVLNZcdjXvd3ED4AO2j72fBIWJqpD4=;
+ b=0eMfVzCaB2vAlKj7HTsZGlfdg9+qBbGHqrI/GAzELErAIuvZdqZNP3NhOhv3qrIhv3
+ lGv8vAv3HFV4X78O+2GWwTCRgrdAnbzwcTuK2kdAMUIIfKoHSZZST+JovI2+qbvHQf8H
+ UGt6M2UlNXQOG4+GuwPLkxWFDFmqYZR182MPBnX8aTUELF2J6Q07l33aifThysLRQWf0
+ e0/ai3jeE9z7jASekpPRILPK1qcI2BUtDrhS8cUsrmGGKOjhkbW9Fw1W7ueazoHONqCO
+ isgWBQGBMYyNJ5TY3dA7zadpacoJ+m1I/6OtDspeYVuvuCJV76NZnXzwKiU4A64vO/mK
+ +H5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777604641; x=1778209441;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=UcF8qHddirl4CF1hSp9nMX5emn8otr1B4TTFv92EENw=;
- b=iJqBtC7Nrkns20RYzkyE3tzGalK1LJpN63e5qNhGqzGQqYMi8v+PAfSE8MGmWSrFfb
- eJG+Y8GZPk+9SchtWZa8VeAEUq5qZtW71VAzgm1XJj//Pu36MgZZVLXqfS1aE5gXmY4F
- zN4uFYb5R/IjphSUbXc2G5wiIuzXV7PEpylEiEKUNnKZr8RSgcpsJndjXxuFbkmz32+P
- NpDYP192v7StzJvUG4rzpPWU+nFQTDEn963UAiDKs1w4Qdb6mQgnrPfGxcYgsPLjIvKj
- LAwlqxgLc7Hnufw84LdVHG7ZajPm1pEvG4OUzlR0SPDvOsB0g+KCMqf7EaXrbUIt6F6S
- s5jg==
-X-Gm-Message-State: AOJu0YxZO10KU7UF4dCFwVP3nMil9ZBthg0MykM9kgiGaeWKiVZtZDgs
- 6EI4Z9pvJLafZFsjFbaitUZ8cs0g1+qU15Dj69SuoLzEhIJ+co+tGtjkB7ZG41IqQh2BGLlkiJ1
- U//uoPsKdqHObOyvw3TJ1JmtS6YAIaB8=
-X-Gm-Gg: AeBDievkJ9wgTFUw7h3yjZbaLDPJ7osICFGqHB4QWWVx6VXSumleLTxN+XRdZyZATdG
- i71GwTVM2WTLQbRCIRCiYnMhlH8dfp3QTNx4N9THapj2yTDE7jtkZcd1+a7+8rsVDdkV6jxtBxo
- PJNkLYLdNlwGzyAF2F4uWA84Vt9dqRo+oMnEbF5KgoDJtv6emZXKmnJreDXy/NpJhSVZiHSNOCT
- JkfgsgFJpc8Xq7quWHty83SPdgY1Mx3g3jAH0A4wB99m3+XBcWejRULg3qkBlPE4PmjWrd21s10
- N7+pNMVF40xM1F8D1m4lDBSrb4S9xBOvdA4LwUZPrS+ZmX7i
-X-Received: by 2002:a17:906:c39a:b0:bab:29d9:babf with SMTP id
- a640c23a62f3a-bbac6bbd5eamr278501966b.27.1777604640741; Thu, 30 Apr 2026
- 20:04:00 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777604967; x=1778209767;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=lUbDl4QgIbmOuxVLNZcdjXvd3ED4AO2j72fBIWJqpD4=;
+ b=gq92j+DCP+Tw5KnBgg0SLCJ/RaM/hjXeNbJlA+2Ym0u5rsTvr+8nGmaYgamta7Ey7c
+ FPjhrv8Mg5efRV69RDNaAi8gXQaAPPamOqSWcJPxFlre2NgdphzvvMtZVbxQK4WJnT0B
+ dMRBFDgHyVYo2FjXa98ZsQNHx2N6d8Z6xv6qCr7ATczzPxNsMjMZ8/zz2o0N7brrRgWa
+ CFCPOsx0wQyqIVjEkV4hdpDjZvZmNM5H/rYeZwWuoqdTlTOjqtQnQkliHCZ/zQuGGJBL
+ hcz29nB3pxFbQFPh+ANL8lYwQoDmpMvn6jzjEWJElOOvjDFguflmtVjatucKbnSPzrUH
+ vShQ==
+X-Gm-Message-State: AOJu0YzcAStcfzWsP7qSh3mZoNUCBDdbfhAo6kQkNg7jqJfiF3qAHX4y
+ zy0Sii3oIUBZ2ISdzMUfzmtacwT8xakCrZ3QyHnS6IZGKNNcBBkXygrz4r1Q0CuAyEXtcV9NapH
+ ehkRPRug=
+X-Gm-Gg: AeBDievz0oDPKXEZP7IxNWCsVInhE15t4IsQJoCy8PU0AorwJaRR+7tYUreF8F1/CI+
+ 6x4ysXlPwU0kvT0iDu2nxxK6Xim7KycXVYb5ewm8Z/R+1JfsOfQAIxkeKiOdroTMkwJHOGr66K5
+ gjQZU2/QZHJ3Gd+FPNS2B7PaGLp5cCILZjHcyGq8MA9D+S6iQWacp6oMHZiDSGM9iE4Ap1pk1UE
+ P5TqvGdAl2SKEjlxZtEIlXZuQ6RjzYibXssuJh4qPQHjo4ixndnR/oGUSRsx4ZYv9h45eCndyA5
+ YueNCTodphht+Cz73B5bAay/NzApw8CL4h72SJYMHu3c9Va11H8orpPDViLk5SrxRp+vfin10Y0
+ iWqweyZ5HsjfaWukSsFvMD6m+UqFEnUzHA8insexFOc/BYp8grJs7PsdooqPprzAx9fK02j+pjK
+ 5CgoE0/HZtmycgqQHHeti9
+X-Received: by 2002:a05:6830:668c:b0:7dc:db04:d30b with SMTP id
+ 46e09a7af769-7deba0c379bmr3185339a34.9.1777604967358; 
+ Thu, 30 Apr 2026 20:09:27 -0700 (PDT)
+Received: from rebo.bsdimp.com ([50.253.99.174])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7deca278d0bsm1238476a34.0.2026.04.30.20.09.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 30 Apr 2026 20:09:26 -0700 (PDT)
+From: Warner Losh <imp@bsdimp.com>
+Date: Thu, 30 Apr 2026 21:07:37 -0600
+Subject: [PATCH v4 2/4] bsd-user: Delete sbrk and sstk system calls.
 MIME-Version: 1.0
-References: <20260424191129.1494381-1-daniel.barboza@oss.qualcomm.com>
- <20260424191129.1494381-2-daniel.barboza@oss.qualcomm.com>
-In-Reply-To: <20260424191129.1494381-2-daniel.barboza@oss.qualcomm.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 1 May 2026 13:03:33 +1000
-X-Gm-Features: AVHnY4Jh0m55FsgmwE4gIWhh0W6Y72A5_mBeoOMS6XEsMpRfnbNl3-a34WWPSYE
-Message-ID: <CAKmqyKOQdsX+bWF7N5uGo6ooOehufOZJWYBDBTD_FU1gdY0A7Q@mail.gmail.com>
-Subject: Re: [PATCH v5 1/4] target/riscv/cpu.c: remove 'bare' condition for
- .profile
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
- leif.lindholm@oss.qualcomm.com, Andrew Jones <andrew.jones@oss.qualcomm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x636.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260430-syscall-nr-v4-2-80f512079a16@bsdimp.com>
+References: <20260430-syscall-nr-v4-0-80f512079a16@bsdimp.com>
+In-Reply-To: <20260430-syscall-nr-v4-0-80f512079a16@bsdimp.com>
+To: qemu-devel@nongnu.org
+Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
+ Warner Losh <imp@bsdimp.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3103; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=s1cNkl7oaOVINYGeXHehc9QlFbfyzLUyBMhD1vHNmOA=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9BkEQwkd8eIodphfajPLYsE8/mlktfqwU4ecq
+ qeE3B17yFSJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafQZBAAKCRBsHNEofbAR
+ ABP5EACqw24qmbV71RAgXIYgodVVn4tdIQQ4H4NxDBN56dQYPVedkDxZqTK/3NoLi2FJ2RFjA9p
+ T6e1IcKKdROnFLUhtGD3hZAccGpZu24P+qstKgDmXl5nVowpt1yUhCnYUMo6td22MW53TBnPpBw
+ dbLC96hWxdH6Diegnd3Rzugfn6PLJQe+s2KykxKganRQgJFDcoMIW+n/oHT9cR4aGdkNoC+Nvbe
+ P1wesWn+JsUoNIa+za6k+3cSxL8xWNmQXobDGYpvM6Qza1lxlrOP+7sBTTB6XYZaNNOMxfLdW/w
+ 5tuzq1E9oJ2d8nla+CyUSKK2qZpp/KBAHtEdcy3DaiGnXfHZMOCbB1osU0V2VxvLKU1Ikwi5Rrt
+ bd7nCX5k2nsDtAgf9kjYfWeU/0QM4ILIpVw4Y6j/faiGuxi2EeFs3SDXFfDXyY2yUB1O9O3+ZDt
+ QtlGSwAKeQxMWMxWfwCJZD4UoeFs1w5CZdbRCa7HoqyBNJVUUQR6LUrs/AmHqdGv7MKx0yh0Pu8
+ Njz1pvWm31Tnr4qd9asSnXrCHBp8UCQf5jst8zTL+9Cn9xz4FiAC2Z4kJxalg4Blos1O0OcYgC9
+ 7kZc7VK2wfEceEh0W6DBunxSXsihsurhkr0LCIgJNTAWiwWDpN0S3QO4krIRCCftHkut7tXC3DB
+ cUIdFLi1qB+HjBA==
+X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
+ fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
+Received-SPF: none client-ip=2607:f8b0:4864:20::32e;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,43 +119,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Apr 25, 2026 at 5:13=E2=80=AFAM Daniel Henrique Barboza
-<daniel.barboza@oss.qualcomm.com> wrote:
->
-> We want to configure other CPU types to use profiles as an alternative
-> to adding every profile extension explicitly, i.e. a profile is nothing
-> more than an extension bundle.
->
-> This means that a vendor CPU can set .profile=3Drva23s64 while having the
-> same handling as any other vendor CPU. Same thing with all other CPU
-> types.
->
-> Reviewed-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+sbrk and sstk were an experimental system call introduced in 4.2BSD, but
+with an blank implementation. They remained in subsequent 4BSD releases
+doing nothing (with 4.3-Reno and later returning not supported). FreeBSD
+1.x imported this. They were removed in 2023. Remove them from here
+because no real, non-contrived program on FreeBSD ever had them.
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Signed-off-by: Warner Losh <imp@bsdimp.com>
+---
+ bsd-user/bsd-mem.h            | 2 ++
+ bsd-user/freebsd/os-syscall.c | 8 --------
+ bsd-user/freebsd/strace.list  | 4 ++++
+ 3 files changed, 6 insertions(+), 8 deletions(-)
 
-Alistair
+diff --git a/bsd-user/bsd-mem.h b/bsd-user/bsd-mem.h
+index a118e57260..a20b703053 100644
+--- a/bsd-user/bsd-mem.h
++++ b/bsd-user/bsd-mem.h
+@@ -440,6 +440,7 @@ static inline abi_long do_bsd_vadvise(void)
+     return -TARGET_EINVAL;
+ }
+ 
++#ifdef TARGET_FREEBSD_NR_sbrk
+ static inline abi_long do_bsd_sbrk(void)
+ {
+     /* see sys_sbrk() in vm_mmap.c */
+@@ -451,5 +452,6 @@ static inline abi_long do_bsd_sstk(void)
+     /* see sys_sstk() in vm_mmap.c */
+     return -TARGET_EOPNOTSUPP;
+ }
++#endif
+ 
+ #endif /* BSD_USER_BSD_MEM_H */
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index 85e5db19a3..ca819fc530 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -918,14 +918,6 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+         ret = do_bsd_vadvise();
+         break;
+ 
+-    case TARGET_FREEBSD_NR_sbrk:
+-        ret = do_bsd_sbrk();
+-        break;
+-
+-    case TARGET_FREEBSD_NR_sstk:
+-        ret = do_bsd_sstk();
+-        break;
+-
+         /*
+          * Misc
+          */
+diff --git a/bsd-user/freebsd/strace.list b/bsd-user/freebsd/strace.list
+index 275d2dbe27..d7f61f480e 100644
+--- a/bsd-user/freebsd/strace.list
++++ b/bsd-user/freebsd/strace.list
+@@ -194,7 +194,9 @@
+ { TARGET_FREEBSD_NR_rfork, "rfork", NULL, NULL, NULL },
+ { TARGET_FREEBSD_NR_rmdir, "rmdir", NULL, NULL, NULL },
+ { TARGET_FREEBSD_NR_rtprio_thread, "rtprio_thread", "%s(%d, %d, %p)", NULL, NULL },
++#ifdef TARGET_FREEBSD_NR_sbrk
+ { TARGET_FREEBSD_NR_sbrk, "sbrk", NULL, NULL, NULL },
++#endif
+ { TARGET_FREEBSD_NR_sched_get_priority_max, "sched_get_priority_max", NULL, NULL, NULL },
+ { TARGET_FREEBSD_NR_sched_get_priority_min, "sched_get_priority_min", NULL, NULL, NULL },
+ { TARGET_FREEBSD_NR_sched_yield, "sched_yield", NULL, NULL, NULL },
+@@ -234,7 +236,9 @@
+ { TARGET_FREEBSD_NR_sigsuspend, "sigsuspend", NULL, NULL, NULL },
+ { TARGET_FREEBSD_NR_socket, "socket", "%s(%d,%d,%d)", NULL, NULL },
+ { TARGET_FREEBSD_NR_socketpair, "socketpair", NULL, NULL, NULL },
++#ifdef TARGET_FREEBSD_NR_sstk
+ { TARGET_FREEBSD_NR_sstk, "sstk", NULL, NULL, NULL },
++#endif
+ { TARGET_FREEBSD_NR_freebsd11_stat, "freebsd11_stat", "%s(\"%s\",%p)", NULL, NULL },
+ { TARGET_FREEBSD_NR_freebsd11_statfs, "freebsd11_statfs", "%s(\"%s\",%p)", NULL, NULL },
+ { TARGET_FREEBSD_NR_symlink, "symlink", "%s(\"%s\",\"%s\")", NULL, NULL },
 
-> ---
->  target/riscv/cpu.c | 1 -
->  1 file changed, 1 deletion(-)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index a81485981c..586683b28a 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2863,7 +2863,6 @@ static void riscv_cpu_class_base_init(ObjectClass *=
-c, const void *data)
->          mcc->def->bare |=3D def->bare;
->          if (def->profile) {
->              assert(profile_extends(def->profile, mcc->def->profile));
-> -            assert(mcc->def->bare);
->              mcc->def->profile =3D def->profile;
->          }
->          if (def->misa_mxl_max) {
-> --
-> 2.43.0
->
->
+-- 
+2.52.0
+
 
