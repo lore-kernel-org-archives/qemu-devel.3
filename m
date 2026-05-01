@@ -4,101 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78861CD13DE
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 01:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D1DFF886F
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 01:54:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIckx-0006yA-0L; Thu, 30 Apr 2026 21:33:27 -0400
+	id 1wId52-0000rc-VO; Thu, 30 Apr 2026 21:54:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wIcks-0006wm-Ez
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 21:33:22 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1wId51-0000r5-Cn
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 21:54:11 -0400
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wIckp-0001p2-7F
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 21:33:20 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-ba922426c5cso274407566b.3
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 18:33:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777599197; cv=none;
+ id 1wId4z-0001DN-L4
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 21:54:11 -0400
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-b9382e59c0eso260921966b.0
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 18:54:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777600448; cv=none;
  d=google.com; s=arc-20240605;
- b=TaPAJxM3JK9HyZ95z2P8B5BSbltqtvnyY38mxZy2sHD3l6pQuiO5hUJ0oQttPFHw3G
- dp3JfOLj8Al45IVC5bALpRUdNyOmOQLfOt4GO3r50e6LW5UssHdQ50yxpjaDUNgmNxfD
- wZxunkuQ5PkRhfZhT1e2ifI6frLfViX/h59Hs7rFJ51S0iGHeXnpMv5YULdR3kMDejyx
- ynZx9Mc7r1xMHqcfqx2r05wnePKsq+CiyK5+9AQT4G2YnMEhN0xZ3lzt49FfXj47k+K8
- 7KMNwmN8n4m3wvtOulgLVYABCRzyIvhmX5aM5OXs2vdkeI5z3Om5D91EiqHUW4RHY9vn
- IOLg==
+ b=S2F3XYdRY6enjT0SFUrodYD67d4bwpaxE25aLjXC9YsNAbEdaSVdnZhxBs+mORPCA8
+ RyK+o4Q2ZfGtca3XAGu3gLPOFY75cEGQuWRsOTg2znNWTSHg+qgrQfVgtQQhcEKLUHuG
+ 6WvLMkhafUuS3bOCQ1fleoRy+2pz9nwiXX03dcLa974l5h5iVifkq/MTq/bPcRcqK5Jj
+ CcI+WydIlC7HqBTJcvVQKl+Mr6X1Q1IIE369nJkkcsS7WQ7jaB00HrmRcjPXej5SOVk8
+ 1o+XXE1Z1nuf9+LD1QZgQqXMU8x8TopqFDsH/34QYwDOd9gs6rbPB1mKYeJtWDF0vcET
+ FL1g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=gCyEjZo40981JGMomOtsPb8wjxIYcDbOuIJf+/TERVo=;
- fh=FMJXwKgP2LoSd1RixKTqE9NcD79h3H2uNzu7zpimXsA=;
- b=B/lcgqR4qtjNQ2zL2HJ2h8Fy1cZaSpZ++zpl2C9XKaYRmp/EPNjUYZu94L4H2SG7Rn
- GKjPG1hJQc6728+7lNOkgpNl59OsBtJ96QueLRYTQtxG2Kyc5toZRAb3MAE32LohrRwL
- znO4eyeAVVG3/Lk+rgu2TqwrP/WATJw4+texcHMoAzjhzbt+oh0PHo1pQ6zSM1yv6W6v
- 7DD2DGl0eORq9vXJs4L7Ze1fTFB9kRQwAmoRjDJ+ARpEtO1Px+KsCmyUwplzVfT2NkgA
- ycTbt24OeKPr1UhyMFV8QDryjm9ID8vzm7guhTwNI43ctyOEoAowwkjTejaxoTYEx5RX
- pVag==; darn=nongnu.org
+ bh=Ircn2BEjGgDpdelDeQ4S47x0YWnSsTew6kHFdCmEDF0=;
+ fh=YIM9f+9AkDlR8k7CEzJDyJruqgjM59fv6z4QlF2aJX8=;
+ b=etdBOQGFWG1keNysLCnuCClAuyufsERMr123PscunfwaBnDFVOhMnE+4wcP/P1Xp9L
+ Ywqgv06HkIKT/Z1vs3GhT7lpYipm9OoIPlBZswDP49j1fFB0c54AiDqgeblCbxuhBtnZ
+ THcxu4fFRDWWMsEqcNy1yjSyHfu1ATPGM7sL35IQRwqWVO2os4A4nvPPF9Q44u9CogKY
+ d8q2dcqKLkPkjymwnOEwopU2fCFrGDq7SB7hLHu9vZRORcdfowPAULTkYPK2Q0FgSBGI
+ ckLM37fxnNDbBH3DIow5laNPmzv1H/1d/IQfd16jlZmJmySllkEKL19p+OZENyR/+xdJ
+ Ug9w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777599197; x=1778203997; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777600448; x=1778205248; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=gCyEjZo40981JGMomOtsPb8wjxIYcDbOuIJf+/TERVo=;
- b=FckcGAGLC5WnXJDPFNDaGrMYN6pr4atOmVApzWClLoqYbkKjlU27frIcfuNSki1jFQ
- HdMqWVHoQSTYiwKjW7nMBx9IFUeO81GS1gcbouaJIYgjsgjF3HwXEVP79uVxM108u4sO
- 6UoCzRFaPNWE/QITewOQ3gCpwE5SRfp6ZUckAaXTbISK9wVlUPLNgzkkli1b/zfjGLIh
- MiHBQ6W+lqzHdkGVHtH8hWv9FllkQn8gv54mkvx1+mtBFKXvCBu6MoqyLGAXZoQPYCDc
- Qtx3O/jGKeJmtv77hQjjhdoUyfMUdx+n+AupFH9Z6k7op6iuqRq9Txfftm7j6VuQUnSB
- AaVQ==
+ bh=Ircn2BEjGgDpdelDeQ4S47x0YWnSsTew6kHFdCmEDF0=;
+ b=YAuiaIiZ8w6xOasulqhosSHv5MMO4vGFbeyqQgM3/W9H+6DtD32JkYXS3Rnbv9LZw5
+ sQ6BMeHUVaW22MzUrkqeLvUo1318OIza0lqjy8OGC+8bf+2sjBrL02oDD7U4CYH2qjlc
+ 5403ccpG1AzZHVlY+Ky/A+hd/OQ9fQVP0cyQwYUQhJkPhlWdywh/S/yY1nnN3bAJS6/U
+ fGQPZnnZjjbAfRwfNl7/JTfV7O4LUcJ+JzJGCQph18S0s5xQGe1J0iU6NOlcRzDu/xMA
+ nI38RAxyINqHooOKoT4eeInjfvaO0vY2OxNFm1E/75xCwTaf4WtjRoXWgQlMlisUeg9w
+ cCYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777599197; x=1778203997;
+ d=1e100.net; s=20251104; t=1777600448; x=1778205248;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=gCyEjZo40981JGMomOtsPb8wjxIYcDbOuIJf+/TERVo=;
- b=aAtCZykSOuEuXgufz2JSICmPjRogIWDQQPtX61HypFeVXtac9UooCfsT4J/wFJ5vAr
- eE0/m0sqlljaUmPeAMuOW8rLdPmNAa/dAO7/EJLcZTWzk8OgJxLuI1PqVMhmuq2eePCi
- IrvUUALCDwCVeTTeAHSjAIm1mFOsHs6/Ew9/p/wbTC/SYvvY3atgqKivd3FuRnv7DG7W
- 9/xEbpxxfS/na+ORFf8brTMbUA5M08CuWOfacXLX9BFYKrB0BWMX5uA3bykbLkQ/5N1z
- /MSNPG8N2P+6GCjg0H3JUU8aAcGc//NCQ/Gq2w86RAYOhr7OvPfeFdQzemDhJzVQ1VnC
- 6pZQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8P8TMpYrlrtWlNbbMBNyooJNquNCCYBDcOqaRJyyqOQb5aP5Gvoh00rcUwyUwrbUxJNWpsPHVbCB/g@nongnu.org
-X-Gm-Message-State: AOJu0YztF3FSu1YQEVMd0sYxjk8w3rqoLYoXPAS7nPXAHM+tFOPRwHra
- Yx0sjdpwuQAxDHJx6Fg0QPiEpYo7xYAOkwX33jv5ylNvYskGF2oo7ubiCw9N3ld4bvvZn7wfxD+
- 1+kL1dryRlvbR4VRl3l1J1z4NHLcf02g=
-X-Gm-Gg: AeBDiesgEHI6Nqn6XBFTF8g97ozsTzcbNHsGX4eQRc3AJPbiFzPtLwhayLcUEQkxgxT
- EeACVxQMltKwMT1ZPwRitIVoIvz9tWDUex9j4vuZVXbmrgVywcsLOOvf5gHyvoscw3rwbWXMO5+
- EvJA3No2c11Tu00d9mkQ71GvgcI91pGtbtthz6sl+fmZty4kBlNhSOzybhuPP4kEDYnh22RO8dZ
- +hxbXNtU+DFRgB2WfyR3+Iiur7e7WEz/WaO3KDkLCjzEHKca0iIym1/hoWhKxLDXTRxZvFA4MjR
- xrC67lVvyWONO264CYLR/1sdiun7+ZpzTSqDwJjfqzKQ9MHn
-X-Received: by 2002:a17:907:6d15:b0:bad:3fc8:e88a with SMTP id
- a640c23a62f3a-bbac66a2ac3mr353736366b.28.1777599197008; Thu, 30 Apr 2026
- 18:33:17 -0700 (PDT)
+ bh=Ircn2BEjGgDpdelDeQ4S47x0YWnSsTew6kHFdCmEDF0=;
+ b=AJlrOsYvfeurtUQgJpgvO0NZ08eHHJziAyB3mZc1ETe3XTTenAsJmPGuIG3r6O68aT
+ fhJ21Y9RYVKGOZdmRPbUvlr4Wv7lkIZz9uRb/myF6d/beSg6ihdonSz0vYiaJOFxmmd7
+ CRh+pF5y2VIq3PNdmCztiYYLR0fVFkXdje2RC0aDerq4Lh5LdPAdVy7TpDg8qq/OeHmf
+ CR4368LRBknkk2J+oJGRgtVx1pUg+j5FPpEoAuc46jz3xjtj4dCRx/oaKnNpvE0HX7N5
+ OkVuwSSR6Bf1MiaqCuABSVe6OObDjGDp9izABQKIb5f8zw55dcTYoHBk5HkxH3oe/FGy
+ MAAw==
+X-Gm-Message-State: AOJu0Yw9xQtzsMeIFrMzmNEZf0uIbWqv9TTsqPLwMOCJV9fv/Wx0ZhsZ
+ 5VQnwhzgwI0U3f8wDFK8cyXL7KFAr9jhmxb2HuxIUwGQMapijAg1uc9KLzkMGEdu7nPhUuoYtAm
+ dP1bJ6TKndiLSgXlrokGmTVHTUtXV3WU=
+X-Gm-Gg: AeBDiesuyJutCq2POrnxb6YJ4lQ+Tt0tp73FyrXUagH9IKWnQWRqGNyL1YgP3ulaUek
+ 409cjkPNbqgfEa/9zTmgJRONXYYi8Zh06ltUc/vAmueMVrkrGmZA5LqJpmMqQOGVM9o11vBGQW1
+ JiGAtNStsqBurcpfnUzNjLQjGFV+Da1IjxsYEHYBqjZT8Rd0K8/0mMi+BYc7os16q+4LpC+y9JW
+ l/ulP78dQ6BzSxulY7FqMouqgqgAr6FQwYmwcmX777kh+88+Tfth19JqdNAa6sSU2PbAK0tyS24
+ vcYCp3dcgaOiVjIMoTRoeUuejdHV5g52ifvvEZ/Czwc1eCrfBAVbXKeu9+8=
+X-Received: by 2002:a17:907:3d10:b0:ba7:b198:7d25 with SMTP id
+ a640c23a62f3a-bbac66a25eemr360297366b.21.1777600447737; Thu, 30 Apr 2026
+ 18:54:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260401053853.10473-1-sebasjosue84@gmail.com>
- <db954ab0-3a2c-46c7-a0a4-161fa0df0876@tls.msk.ru>
-In-Reply-To: <db954ab0-3a2c-46c7-a0a4-161fa0df0876@tls.msk.ru>
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-38-c413f3605311@redhat.com>
+In-Reply-To: <20260427-qom-tests-v1-38-c413f3605311@redhat.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 1 May 2026 11:32:50 +1000
-X-Gm-Features: AVHnY4IQpWL5BPzcx3ZSfvBikASS3fgta6xD9ulmQtVOU73MuUqStfHBxW-We3M
-Message-ID: <CAKmqyKN134zPbbbwyF6MisrxXq+1fFH49iN5084sALrntsGzOg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] target/riscv: fix stale ptshift and base on page walk
- restart
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: =?UTF-8?Q?Sebasti=C3=A1n_Alba_Vives?= <sebasjosue84@gmail.com>, 
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- palmer@dabbelt.com, berrange@redhat.com, qemu-stable <qemu-stable@nongnu.org>
+Date: Fri, 1 May 2026 11:53:40 +1000
+X-Gm-Features: AVHnY4JeX1EEQZHP3hzV8HzmNi1gnNOMON2xU8ZU5kO4Cx6pY0Dhk_IumTxvkFU
+Message-ID: <CAKmqyKPQWSEtpgMSoMuBwa0L_QrjMoKq_mCoCXWSa-z5KaAEuw@mail.gmail.com>
+Subject: Re: [PATCH 38/41] target/riscv: fix general_user_opts hash table leak
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, qemu-riscv@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -122,35 +123,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 1, 2026 at 4:11=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> wro=
-te:
+On Tue, Apr 28, 2026 at 5:50=E2=80=AFAM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
 >
-> On 01.04.2026 08:38, Sebasti=C3=A1n Alba Vives wrote:
-> > When the atomic compare-and-swap for updating A/D bits in the page
-> > table entry fails due to a concurrent PTE modification by another
-> > vCPU, get_physical_address() jumps to the 'restart' label to re-walk
-> > the page table from the root.
-> >
-> > However, neither 'ptshift' nor 'base' are re-initialized before the
-> > restart. After the walk completes, ptshift has been decremented to
-> > its final value and base has been overwritten with an inner PTE PPN.
-> > On goto restart, the for loop resets i=3D0 but ptshift and base remain
-> > stale, causing the restarted walk to compute incorrect PTE addresses.
-> >
-> > In an SMP guest with MTTCG and Svadu active, this can result in
-> > incorrect physical address mappings or guest crashes.
-> >
-> > Fix by saving the root base address and re-initializing both ptshift
-> > and base on each restart.
-> >
-> > Fixes: 0c3e702aca ("RISC-V CPU Helpers")
-> > Signed-off-by: Sebasti=C3=A1n Alba Vives <sebasjosue84@gmail.com>
->
-> Shouldn't this change be in stable qemu series too?
+> The global general_user_opts hash table is recreated on every
+> riscv_cpu_init() call, leaking the previous one. Clear any existing
+> table before creating a new one, and destroy it on CPU finalization.
 
-Yes, it should.
-
-I thought the `Fixes` tags were picked up, should it also CC qemu-stable?
+@Daniel Henrique Barboza I'm pretty sure there should only ever be one
+instance of general_user_opts and that's the bug
 
 Alistair
+
+>
+> Fixes: d167a2247ede ("target/riscv: move 'pmu-mask' and 'pmu-num' to risc=
+v_cpu_properties[]")
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> ---
+>  target/riscv/cpu.c | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 8ac935ac06e..15fa03e22a4 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -1101,6 +1101,7 @@ static void riscv_cpu_init(Object *obj)
+>                              "riscv.cpu.rnmi", RNMI_MAX);
+>  #endif /* CONFIG_USER_ONLY */
+>
+> +    g_clear_pointer(&general_user_opts, g_hash_table_destroy);
+>      general_user_opts =3D g_hash_table_new(g_str_hash, g_str_equal);
+>
+>      /*
+> @@ -2961,6 +2962,11 @@ void riscv_isa_write_fdt(RISCVCPU *cpu, void *fdt,=
+ char *nodename)
+>      DEFINE_RISCV_CPU(type_name, parent_type_name,             \
+>          .profile =3D &(profile_))
+>
+> +static void riscv_cpu_instance_finalize(Object *obj)
+> +{
+> +    g_clear_pointer(&general_user_opts, g_hash_table_destroy);
+> +}
+> +
+>  static const TypeInfo riscv_cpu_type_infos[] =3D {
+>      {
+>          .name =3D TYPE_RISCV_CPU,
+> @@ -2968,6 +2974,7 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+>          .instance_size =3D sizeof(RISCVCPU),
+>          .instance_align =3D __alignof(RISCVCPU),
+>          .instance_init =3D riscv_cpu_init,
+> +        .instance_finalize =3D riscv_cpu_instance_finalize,
+>          .abstract =3D true,
+>          .class_size =3D sizeof(RISCVCPUClass),
+>          .class_init =3D riscv_cpu_common_class_init,
+>
+> --
+> 2.53.0
+>
+>
 
