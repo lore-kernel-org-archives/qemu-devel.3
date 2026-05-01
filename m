@@ -4,108 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3E4ACCFA13
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 11:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54DD2CD3424
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 11:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wImC3-0003fN-MH; Fri, 01 May 2026 07:38:03 -0400
+	id 1wImFr-0004Rr-Gi; Fri, 01 May 2026 07:41:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wImC1-0003eL-SK
- for qemu-devel@nongnu.org; Fri, 01 May 2026 07:38:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wImFp-0004RO-EZ
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 07:41:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jmarcin@redhat.com>)
- id 1wImC0-0004i4-2w
- for qemu-devel@nongnu.org; Fri, 01 May 2026 07:38:01 -0400
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wImFn-0005Nd-WD
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 07:41:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777635477;
+ s=mimecast20190719; t=1777635714;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Fi/BnHEBuV++gRvn5bhWIZb+uewOnahMhmLCl+TtdGk=;
- b=Mzi7/nKvlceaeLAhIIec9vi7jaBHFGhEb9OzYKS4epyg9Ry+T6X5iBVveerJGsvRnmmVDx
- 4ZZBkWKiooCvjFwVgkWDiWetRpRk2+y5+TTx+3WyBA3cjBqZMEOyFsm/8xj0bqNKA0m5G/
- rGcfzo60QmnLD2sGuSdrYIZ02h1jl3E=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rc5UaK5DBFn3kJThVJPc+i62A7X0vRXUwIwOTZ+J9I4=;
+ b=Czwm//hxcdXTuRZsRS34GOF5Fyqyjdmne21AqU5yNXxeBsALJKX5teUPvGvkPGhCv4LznA
+ PLG/B/BDSfVJV6MgBCQ9RHXDTUs0SpjYZG2Kf+jLyaf9S7k99l5SXMJkGAzpmX4bW3AHrS
+ 3Gths6dcxrCuK5dXMUq86qTBHp6y35o=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-688-z-4CHzrzP3uwBHtSfnVy8Q-1; Fri, 01 May 2026 07:37:56 -0400
-X-MC-Unique: z-4CHzrzP3uwBHtSfnVy8Q-1
-X-Mimecast-MFC-AGG-ID: z-4CHzrzP3uwBHtSfnVy8Q_1777635475
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-48919890a95so12844385e9.2
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 04:37:56 -0700 (PDT)
+ us-mta-339-uN71C5xyOWqRmRa_uOn9vw-1; Fri, 01 May 2026 07:41:53 -0400
+X-MC-Unique: uN71C5xyOWqRmRa_uOn9vw-1
+X-Mimecast-MFC-AGG-ID: uN71C5xyOWqRmRa_uOn9vw_1777635712
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-c7989b7cdd0so2208760a12.1
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 04:41:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777635712; cv=none;
+ d=google.com; s=arc-20240605;
+ b=KPvcqnNFTdufdzef+4v+i9J5bNMPx3auV7q3aHlkw3NlD8G4l5Vx5mQq6CP6ySudaH
+ Nb5tmwISjD7vBkjLPyKEZ9WaP62sNoVFpww/Zqjc8DCc2jukWhNfZWUDu38nN+uVvpYR
+ THLq69qhao9w17vOMWqGHKKCSL47nu9LIl4Cw1nbPqYCA+2DC92tJZHj/PoPUT0xapR3
+ eFsCQOH8RkUo4ome0wuYm/EonaCcYjvNuT2EDWqdiOiUXqaBM5ocYyHj0O+ZZmTcLtVl
+ QG33yWbsUcwQZXjEYkFmKksprkpLka6sBb6gLu1eg+mCKDznB6PjrQci0n3RNwBjsENj
+ OcQw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=rc5UaK5DBFn3kJThVJPc+i62A7X0vRXUwIwOTZ+J9I4=;
+ fh=4ZWcHei1al8MHWxiiWVKDV8qSzUI2Ji2Zw2//G2KLgU=;
+ b=gCo+XZ4ey9JYESOlDYxAnfdtO/JrpOBfYgyumxuIV1LSweyvKMhJETUtEFNqMnAw2s
+ LaFQC7LEqMfw/pxgUXbQ6ztcjrI1YEGK9xgX8yjxpnLj4nh+tgihMF/Ziynuuk4Xz7xS
+ /Ggq/HKTB6p7TJHNlt/6fSPmmq+iBRlIaoKHxjVGsDu6AFtthNF/2rXIvPc9xAnH7CYD
+ eNfsxUfYQjHqceY2DJj+rcYRadeeOyJsLi8YvKkvkNKw3ppVdv9/XGSCZTaLYaZ0Mj56
+ lslXWOrSAGpcv7UNFjWOalmVTSyeGyuwCKW69LbeGNNLIyeJ0ZOkTmbqFgWCFubI/e/S
+ U5Kw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777635475; x=1778240275; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Fi/BnHEBuV++gRvn5bhWIZb+uewOnahMhmLCl+TtdGk=;
- b=leT2VhCMjSm39ulVhVj6pV5XhlK71yAt5hm9/js8abtlLGj8IdyxU5Zv4yN3ZIWiDy
- RMh0knaBk5622niJ99cDc3rtx48l0RTLKS6cCNgfrPWa1sHQ7Yrytk7pvZfwwKxrbGzX
- FpdepvLgt2/iqZW48GTWIfcHkHkZYnPsSihkzfu6bktYSOpfjYx/ZTToRpXqeICNbaDA
- pgHe+Jjtiydmtz3cmrvXgGQogCC+iD/+630uTNuNCGnr4wO3i4LUwBDNIoMSmJ+HTaYG
- MT1ddTpi5dYVU7xB6uH02wXy06uH5oxG1/zKKD+s+WUPfB2zzc6A/QCXfi3Ay8rqU/MG
- MyKA==
+ d=redhat.com; s=google; t=1777635712; x=1778240512; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rc5UaK5DBFn3kJThVJPc+i62A7X0vRXUwIwOTZ+J9I4=;
+ b=XJaroYBm/5MbFDa9j8QCnZIZ+08e18dasnX5WvXwh1IKvqj0/cxwHMWH0HQuiuugd1
+ m5zL/44rq0gPuJaxyqvf51q8YlC1Z9ZApKHIgdKthzNDNuKQrSwRV+AAx42H8T64N9yb
+ KBEsV3PETte+YtVGFgGpzawPR0kcxyQ8NjfShrOlsfUX0wT7KzZrk3hc+GaI8J3OXIcX
+ c5XuAYRy4Q44IvQl6CGtdGaXo78tRuxEcI8gR0p/E1jaMT0kMkbTSf8zj9m8u8F0gio2
+ C/OlT1Z7Np1AI/uThOXLEsmzQV+BflH4GFu0RuQm23A0XO7VqPIdEoyWKhIe7Kdvc62e
+ attg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777635475; x=1778240275;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Fi/BnHEBuV++gRvn5bhWIZb+uewOnahMhmLCl+TtdGk=;
- b=L1avvSH6TED23i8lZYE3xneg4i2zyPcEtb87OFZe/LEQbN4d7zpP2YXf42ueP8g6UW
- RE26lm17210Lm+neW8Dpir5FW7KFc/IRnGysMnUsavG8wxRrDF0LdhG03/oubYq/KqSl
- K5N+le+znW3rc1/bafh6cNfJXy5gJOgJiHFQhc0HzRf56sYOJMfZNHvJ/uKBMsDVcRQz
- 21NRDzRUtT9k2JI4jOrXWfmat4R3FPtaSrhdV67UMYrE2EomKjc6bkjgAaXx81ORkhAa
- 9lginDFV9w3D+UDRhZqXKlopJJhdGglS1hv5nDKCrxJ+IiSG5Vb0d2KpFKSJ+Jx5Qovg
- x6wQ==
-X-Gm-Message-State: AOJu0Yx3nzr+t9qbVNuO5UZZFcruzbBOh9n+q4g7Vc+Rs7TPxYprZojj
- sUYkNQFL8GpAIFdq3ovs12kfn63h/wcXQxoTpGeVQB5uEfcUJhDa82HZEouMuC5dVOHJIRI/jQB
- ZSf58Kcm8JwdxQtdqx3VqmpKuSopcdsHoww7o/5VAZXMoDKu0tbTP7gPE
-X-Gm-Gg: AeBDievbshti+abq9Gl0wZmxu9FDCaM0lXhQMWCTbvo4FRYwgWS5uZcsbL5pL9cxxqq
- SrI54a6QABsqa+gu5f5d4QKqcHojg9eqwX9cFs8L9475Fcd99jHPQixSLNh4c14IdJhTSRALcja
- weEXrPXJlQjprB0S5gAbmL6skbWekOH2KlP0sHEsaVN+H7pO03hp0lHSEiLIHeVnfAun0sMFvui
- ogciSl+7KHczvcVVP0QFo0fk4efrKjKdW/SFSDONAqEsTYrzv97i9IQkBrDoWn0Oc4ZGPgahKf0
- aWVuL7f8FevgBw+z0wfgKiXpYWIheCKubW8m1Ojdvg4Fv1oLaqrGyYWY7yvpP46i8DBrAW24wXM
- YIKpq6B7PvFAzNu8/NkyEHIvtYRrNyCStgsf9P9RKmi4zoEF5ZwcjN0eA
-X-Received: by 2002:a05:600c:a310:b0:488:78f2:6b0 with SMTP id
- 5b1f17b1804b1-48a84460fcbmr85423425e9.29.1777635475259; 
- Fri, 01 May 2026 04:37:55 -0700 (PDT)
-X-Received: by 2002:a05:600c:a310:b0:488:78f2:6b0 with SMTP id
- 5b1f17b1804b1-48a84460fcbmr85423065e9.29.1777635474738; 
- Fri, 01 May 2026 04:37:54 -0700 (PDT)
-Received: from fedora (193-179-61-20.customers.tmcz.cz. [193.179.61.20])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8fea7de6sm11535775e9.12.2026.05.01.04.37.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 May 2026 04:37:54 -0700 (PDT)
-Date: Fri, 1 May 2026 13:37:51 +0200
-From: Juraj Marcin <jmarcin@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Jan Kiszka <jan.kiszka@siemens.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [RFC PATCH] migration: Synchronize CPUs sooner in postcopy
- switchover phase
-Message-ID: <afSPcy_9WZfpOztU@fedora>
-References: <20260423154525.10292-1-jmarcin@redhat.com>
- <afJg6VzsaslzZQW1@x1.local>
+ d=1e100.net; s=20251104; t=1777635712; x=1778240512;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=rc5UaK5DBFn3kJThVJPc+i62A7X0vRXUwIwOTZ+J9I4=;
+ b=a0otrI/LfCDWfRqw0AkI13A0cJUqvpsfNG5739RAFiTzZPiBi/yeMl8y7MilH/lkt/
+ QtYQf2p/YQ8WBKUr+rYA+rqZRoV6IiCUKHtKpBNzt4w4YL3N0EgxMSoLdxK7elIOTB/r
+ +booXW67hVD6098nJECZIiUdul0EAlJ9OQut5TN/EPiTLAHm4bce9Doo540owkF6c4aM
+ 9WgHwbtB7AHw+imtgIo9FiV8VgeQWUsEinAz+tomyFljslsVpAB8S2zX1hcBFeD+PDuD
+ qT7xgbO+KLzrOjD1d7J+55I1ie4zKp/gGydtB2wslaAlSYtM6GVjI/bt/MMkI1ztpxoN
+ ePQQ==
+X-Gm-Message-State: AOJu0Yw90zPDfFbGaP+NMYIR0lsPIW4wRFFmGNV+WxO0Cr1qzWNUHB4f
+ TDAYKAPZGwBZakDsFDQcSmMMq0yXQXiVJMAVWaTJyxKFEZbfB+120ceWFxwm3OrSGm0GcOlOva2
+ Bk/tKDjGw+jHvCHlRvHoV1X+Wwz1R9VZcHTZYe6UY+++xMaskL1a/74FhGyepxN6j0agaU4RqWI
+ XR3+ne5JNOedL/8tZOfsbNjYz+Hsr12Hc8rFV2GYA=
+X-Gm-Gg: AeBDieuG3n4X++scHAX16se00NbWiJOSscR/EsOw7gHpoZOzy9x/Nmhkd/T01Jfvu4x
+ 2+GkIynVM0KvWBluHm0LOgaQmxUxp5X/mfEUeavlC+vye2SSR3nqsBhZvv/DC4UlZp0cQLzaU2X
+ v1STBs7Ezt+VUkuIlETBwHvBV3mbQn6GNJL4QinSTyyPAQgDChOIygvFAcqHXcUn1/yJ/NNIY2O
+ mA7TId62PYJVJNqmR643H1oCW/+XiEH1RoqdemFDjPJKJCzMoHSLO2Ng2lM3Ou9c139ui0fU6h+
+ RJDBCe9VsNM6qaDwqONMymDHIbik+O84udk=
+X-Received: by 2002:a05:6a20:5493:b0:3a0:adc5:52c1 with SMTP id
+ adf61e73a8af0-3a3cf566c0bmr7896582637.11.1777635711911; 
+ Fri, 01 May 2026 04:41:51 -0700 (PDT)
+X-Received: by 2002:a05:6a20:5493:b0:3a0:adc5:52c1 with SMTP id
+ adf61e73a8af0-3a3cf566c0bmr7896561637.11.1777635711423; Fri, 01 May 2026
+ 04:41:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <afJg6VzsaslzZQW1@x1.local>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jmarcin@redhat.com;
+References: <20260501-clipboard-assert-fix-v1-1-e549243e4583@gmail.com>
+In-Reply-To: <20260501-clipboard-assert-fix-v1-1-e549243e4583@gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Fri, 1 May 2026 15:41:39 +0400
+X-Gm-Features: AVHnY4LZ0M41lUfIHnpuUMGAzrWWPrg0_BQQZmMPDdj5LW_rgC1EvuYcs3eN76E
+Message-ID: <CAMxuvay3C0rdWthOB_-oPUoCzHFcy9wF5MR7hCTUt4jcKjUQxA@mail.gmail.com>
+Subject: Re: [PATCH] ui/gtk: Fix GTK assertion failure introduced with
+ clipboard fixes
+To: =?UTF-8?B?SmluZMWZaWNoIE1ha292acSNa2E=?= <makovick@gmail.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,132 +136,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+Hi
 
-On 2026-04-29 15:50, Peter Xu wrote:
-> On Thu, Apr 23, 2026 at 05:45:20PM +0200, Juraj Marcin wrote:
-> > From: Juraj Marcin <jmarcin@redhat.com>
-> > 
-> > Previously, the post init CPU synchronization with the accelerator, like
-> > KVM, was performed in the bottom half of the POSTCOPY_RUN command
-> > handler. However, this causes several problems.
-> > 
-> > First issue is that if CPU synchronization fails, the destination QEMU
-> > crashes. However, it is too late to recover the source side as the
-> > response to special PING has been already sent, and both sides are
-> > already in the POSTCOPY_ACTIVE state.
-> > 
-> > By moving synchronization before responding, if the machine crashes, the
-> > response is never sent and the source side can resume from the
-> > POSTCOPY_DEVICE state.
-> > 
-> > Second issue is caused when migration is paused due to a network
-> > failure or user command right after transitioning to the POSTCOPY_ACTIVE
-> > state and the CPU synchronization causes a page fault. This page fault
-> > blocks the CPU and the main QEMU threads and cannot be resolved until
-> > postcopy migration is recovered. However, as libvirt also tries to
-> > execute 'cont' QMP command at this time (destination side transitions
-> > from POSTCOPY_DEVICE to POSTCOPY_ACTIVE), it will also halt waiting for
-> > the response from the blocked main QEMU thread, unaware of the fact that
-> > the migration is paused and needs to be recovered. Thus, it will wait
-> > indefinitely and never report postcopy migration error.
-> > 
-> > When the CPU synchronization happens sooner, and the network fails
-> > during it, the source side can transition from POSTCOPY_DEVICE to FAILED
-> > state and resume safely. If migration is paused later, the main thread
-> > won't be blocked by CPU synchronization and can respond to libvirt.
-> > 
-> > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
-> > ---
-> > I am posting this as RFC to discuss the point at which the CPU
-> > synchronization should happen.
-> > 
-> > For the POSTCOPY_DEVICE state to be effective, this synchronization must
-> > happen before the destination machine responds to the special PING
-> > command. This leaves us with 2 options:
-> > 
-> > 1) In the PING command handler before responding to the specific
-> >    request, as proposed in this patch.
-> > 
-> > 2) After loading CPU VMSD, for example in the post_load hook.
-> > 
-> > The first solution limits the number of places where synchronization
-> > needs to happen, however, having it in the PING command handler feels
-> > somewhat hacky.
-> 
-> Yes.
-> 
-> > 
-> > I have also tested the second solution, and while it seems natural to
-> > synchronize the CPU after its data is loaded in the post_load, there are
-> > multiple CPU types and VMSDs and each one would need to call
-> > synchronization in its post_load hook. This would basically revert Jan
-> > Kiszka's commit [1] which refactored CPU synchronization and united it
-> > to one place.
-> 
-> What I was thinking is not reverting all of it, but only removing the
-> migration relevant paths for post_init().
-> 
-> For example, we have different reasons to sync CPU, and we have two
-> directions to do that (from/to kernel, in KVM's context). For migration,
-> what used to be confusing is why we need to have CPU specific post_init()
-> hooks when each CPU has VMSD and post_load() on its own.
-> 
-> The other one is on savevm side (cpu_synchronize_all_states()) and we can
-> at least keep it as-is for now, simplify the discussion.
-> 
-> So if we want to move this into any of such post_load(), it means removal
-> of three call sites of post_init() only in migration/savevm.c, then do
-> per-CPU's post_init() in its post_load() hook.
-> 
-> I don't know the real answer of this one; I recall you tried it out but hit
-> some ARM specific issue.  Just to want to make sure we're on the same page
-> on what you have experimented.
+On Fri, May 1, 2026 at 12:10=E2=80=AFPM Jind=C5=99ich Makovi=C4=8Dka <makov=
+ick@gmail.com> wrote:
+>
+> gtk_clipboard_request_targets actually returns n_targets =3D=3D -1
+> when targets =3D=3D  NULL instead of zero. This result in failed assertio=
+n
+> within GTK:
+>
+> qemu: Gtk: gtk_targets_include_text:
+> assertion 'targets !=3D NULL || n_targets =3D=3D 0' failed
+>
+> Extend the check to require non-null targets and positive n_targets.
+>
+> Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
 
-I thought I did, however, that ARM issue in the CI turned out to be
-unrelated.
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 
-> 
-> Said that, I do see some complexity over such a change already.  For
-> example, cpu_vmstate_register() seems to be able to register more than one
-> VMSDs for each vCPU.  I don't know if it means at least we can't simply put
-> it into post_load() of vmstate_cpu_common, as when reaching there it is not
-> guaranteed that all vCPUs' registers are uptodate..
-> 
-> Besides..
-> 
-> I do have another thought, though, to avoid the hacky part of this patch
-> and looks pretty safe: dest QEMU does not reply directly to the
-> QEMU_VM_PING_PACKAGED_LOADED ping, instead it sets a flag. Then we move the
-> conditional PONG into loadvm_postcopy_handle_run().
-> 
-> With that, we can move post_init() into loadvm_postcopy_handle_run()
-> altogether.
-> 
->   loadvm_postcopy_handle_run():
->     ...
->     cpu_synchronize_all_post_init();
->     if (package_loaded_ping_received) {
->         send_pong();
->     }
->     migrate_set_state(POSTCOPY_DEVICE, POSTCOPY_ACTIVE);
->     migration_bh_schedule(mis);
-> 
-> Would this work?
-
-Interesting idea, I think it should work, but I am a bit unsure about
-delaying the PONG response in such way, if it could potentially break
-anything.
-
-Thank you!
-
-Best regards,
-
-Juraj Marcin
-
-> 
-> -- 
-> Peter Xu
-> 
+> ---
+> Hi,
+>
+> with my latest gtk-clipboard changes, I introduced the following GTK
+> assertion failures due to unexpected n_targets value returned to
+> callback from gtk_clipboard_request_targets
+>
+> qemu: Gtk: gtk_targets_include_text:
+> assertion 'targets !=3D NULL || n_targets =3D=3D 0' failed
+>
+> from
+>
+> gboolean
+> gtk_targets_include_text (GdkAtom *targets,
+>                           gint     n_targets)
+> {
+>   gint i;
+>   gboolean result =3D FALSE;
+>
+>   g_return_val_if_fail (targets !=3D NULL || n_targets =3D=3D 0, FALSE);
+>
+>   /* Keep in sync with gtk_target_list_add_text_targets()
+>    */
+>
+>   init_atoms ();
+>
+>   for (i =3D 0; i < n_targets; i++)
+> ...
+>
+> GTK actually returns -1 instead of zero when there are no targets,
+> triggering the assert. The following patch extends the check to
+> non-null targets and positive n_targets to be on the safe side.
+> ---
+>  ui/gtk-clipboard.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/ui/gtk-clipboard.c b/ui/gtk-clipboard.c
+> index 463ed4e905..ea9444be70 100644
+> --- a/ui/gtk-clipboard.c
+> +++ b/ui/gtk-clipboard.c
+> @@ -175,7 +175,7 @@ static void gd_clipboard_owner_change_targets_receive=
+d_callback(
+>  {
+>      QemuClipboardInfo *info =3D (QemuClipboardInfo *)data;
+>
+> -    if (n_targets) {
+> +    if (targets && n_targets > 0) {
+>          if (gtk_targets_include_text(targets, n_targets)) {
+>              info->types[QEMU_CLIPBOARD_TYPE_TEXT].available =3D true;
+>          }
+>
+> ---
+> base-commit: 3d626609ccae61a2e552bccd59c7a0931bab8261
+> change-id: 20260501-clipboard-assert-fix-cc2bf8672eba
+>
+> Best regards,
+> --
+> Jindrich Makovicka
+>
 
 
