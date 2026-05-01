@@ -4,110 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9BE0CD3424
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 14:31:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19A70CD3424
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 14:38:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIosv-0001y5-UO; Fri, 01 May 2026 10:30:29 -0400
+	id 1wIp0S-0003w1-EO; Fri, 01 May 2026 10:38:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIosi-0001uh-Cd
- for qemu-devel@nongnu.org; Fri, 01 May 2026 10:30:16 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIosg-00031o-OX
- for qemu-devel@nongnu.org; Fri, 01 May 2026 10:30:16 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-65c396d3b36so305163d50.0
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 07:30:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777645813; cv=none;
- d=google.com; s=arc-20240605;
- b=HTE+M0TzJwNIlUiPNUgYgjjwrvRUvpY2ubUA9yxbggqL/RVifxMm355M49ULi2FaEb
- FUfV9lntjycfPf2JZwe5Sc/wwobWdee4iwrp/SATq1vtQ3qS89EwLakkQaDEnlPJL2tr
- GPoTTL2rRLfHxMMt5f0OjMNRMwbG6CV9f5c8p2cFvULJRL2d1rCxtHuxIa41Y3/Xxp5a
- OnC97jgUn+fITVv617Di1efwrQyQ/sWo4lChBqf6cQiKjunY3lKGo9JQ/+C4/Sd/07gZ
- 6AML2Uc+u5lym1NXi0FFPX21WedJYHCXgEN3kqLAmvLWOzVrUCiLOpgopUxlyvCjPPbC
- fRrw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=yMFHiJ4MZZzu1s7IKs+b7jPJPkyjQ7l8xdqj0fWs6tA=;
- fh=dEVg6uwYItpHJeEckWeY1SAUI6gUXVUgBtGRd8UKX7A=;
- b=O+cD3mj9iNDFAUA+ZMP/M3qV2u6gcsEJFD+SOanO6QjYEsqzREzv9k4gDKkljK3dI4
- HH8Slek7/SAxrjLNLLprkTPHCRkF44jlu8PSZFJshxcBz6y8t46kxqy+qKpJfzUxx/Ou
- fFn1hRtjBMCI3p2L/RVWBL6Z7n71D3uLSO0PSkJVKhDWf3ceC2HNr+AXWBnlA/gxVOLF
- mxvBg+wKZy6Wuoe/WHYg2uj++eS3TigIzjiJhxaaqhzYkKDxEG0iNwAr1W311SaxoWdT
- bbg/XyZkKuY1IeVjE6DrbQNJK25nq3vsGXTF/WOJJBr/eIqGivs8DMdYgZAWpbYpinFg
- fG/A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777645813; x=1778250613; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=yMFHiJ4MZZzu1s7IKs+b7jPJPkyjQ7l8xdqj0fWs6tA=;
- b=BFXn59vWvFIGYOwWsks6SkFlYGYaJ++jNVVdKLZHrCLQUrEtYzrqVNaHiLjXg7kUk7
- f93/lo6no9Q9QpTuza+FcOPqz8fOftcLYhFudXBIRv+ivLlJrSguhp1J2G126eXc8R37
- 4oZyqYwNjRM+dynF81BliEag2owPEdo9Ssy/Yxf/qmSXMB+vyiMuqPeELbSXiSv9mDOw
- jfV2/bqlQ71ut5za3MaSyI2xd53iHju22I2YX2GLT0LwZ29GouMPyC2OOtJ+Cy4mWnOu
- PSbagmqUfJQgTbGr4/gZrk7NeqFCALey0vHzMp5K/48p/It56h67uKE4+up59ZulXxhb
- ZgNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777645813; x=1778250613;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yMFHiJ4MZZzu1s7IKs+b7jPJPkyjQ7l8xdqj0fWs6tA=;
- b=S0Ur9ZMW5Mr12xCnSh8g9h2Nnn84gmWcnuJD3oOsn9nApZ94eVGBvu3gE345TeJxk8
- 5jRmAeb7iHDAg/RwCsbZT51Qce1O+3NkoUAIrl6dOQ2itHypHX/OLc4BnhQunYYmrPP3
- RO+me28K9utoStSTZigPRYKypupWia2iKYH0baXWsd1rksX+gesd4JYvdPOxHPpGqniu
- Qp1Lk9ZtZTuofmza4YqxFMXewkPG6PZzMu0uo6y8TX8x7jrkeeFhLDZXOkvgDa+hIgh+
- hbjbnK/GO++nB/FB+CIaE13E1W9LegrMB3eO/zNJeO9gqzoYBykAYgKMEMU2r8L27L5+
- aoHg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8WNMV4fksTCWt7RDL/BZozrbo+VaHEkkN476y65nrq7SFpq6BNxnq8WmT3ZORo2A7XBXCnmwwkgtkE@nongnu.org
-X-Gm-Message-State: AOJu0YxbU1uS3i6OadoRaihEu4rcHLCQoD4fIXgmi22ngU+xGcojmRdW
- cM2u78nTQ0M++QGmtJULfKJ5CKs/rFP81VePw3Orki6zydWBOlUmSbIfnCAqcssaToZKzxCSzaQ
- cQu/Lp3ZGRV0EL0CupKdKMqjrGm7x2XMRoJIWCUVJ2w==
-X-Gm-Gg: AeBDiesSyWXtMB3AougFbilIHhu+QBzrNG80omAaq9qRdKbTQ7NYXKSDVaPrueqLzQq
- pfbDE9y0niUwGDyXZhQQjl3Inpp5e4dSMqLmR+rXqxUFz8xoK7BB4hQ/jK6hhGQMNQhStuQdmRu
- qra09wlChOPda5sA+D3DYaLZNjMag0GvG9do86LsKZ3x9OQ2ZXuw1Kka+HuDdmiVdD1gP2lsBJu
- uRWsEGvavpxFNzgcuK9WG+8xkuv2SA4kpZolcyWYux/zOdFp2N4rppH4UicAm0ogKzpwIR3y99Q
- rQ7K05NphR5zeqkBXC1cnu/NmhGHkEgoPrWPTIGWCeVp25BBRgoCwLoGs5aDvoH/E8XAxMs2pg5
- JrA==
-X-Received: by 2002:a05:690e:d44:b0:650:1ac4:65ea with SMTP id
- 956f58d0204a3-65c18c78c12mr5510656d50.22.1777645813190; Fri, 01 May 2026
- 07:30:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1wIp0P-0003vX-C1; Fri, 01 May 2026 10:38:13 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1wIp0M-0005uB-T5; Fri, 01 May 2026 10:38:13 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 63ULXYj72006058; Fri, 1 May 2026 14:38:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=d9IvaX
+ u2puBw4FYWewBZnV8UQnu7SX6W+gRbQynIjuk=; b=PWDixbEJ5qdlSwm/ZrvoGL
+ c0F2BeTp2VJpWrS4OkYw3M7AjyvPE0KO1wnmw2BlwcfjfJS6tlWA0nYWcFsqls69
+ Z+Gkw9ixQYJGt/tngQinS/MB8rBRPmtSFnDhw49Vbywv/b4ehudkpR0V452IPVCt
+ /Mlh101/DnlQis4OD4iyM8cLSgq4s3jhLNwMKrFJyeTd1HFPQxQ/ozmQLZ0IdIWI
+ cwJKYhLvidcAIIAykD/7B2/9LEaM/7SmkaMyREEjRX2TlEGSsfB/Pr0RqKzdu2Pg
+ A6jB5M/rnrJZhYhOLb/pvt+iIySYiM3VMnV7Cz6G//+kaAwmibbFiK4qXeyhsf0Q
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drn8vu0sj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 01 May 2026 14:38:01 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 641EOAS3015880;
+ Fri, 1 May 2026 14:38:00 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4ds7xqqxdh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 01 May 2026 14:38:00 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 641EbxPq34013650
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 1 May 2026 14:38:00 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DE3C958050;
+ Fri,  1 May 2026 14:37:59 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1939258045;
+ Fri,  1 May 2026 14:37:54 +0000 (GMT)
+Received: from [9.124.223.14] (unknown [9.124.223.14])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  1 May 2026 14:37:53 +0000 (GMT)
+Message-ID: <bdc3eaee-d117-476d-8d7c-2ffeb23730c3@linux.ibm.com>
+Date: Fri, 1 May 2026 20:07:51 +0530
 MIME-Version: 1.0
-References: <20260424191129.1494381-1-daniel.barboza@oss.qualcomm.com>
- <20260424191129.1494381-4-daniel.barboza@oss.qualcomm.com>
- <CAKmqyKNZiA=rYVD6ighyFO+qmhdYVk=UgbaznBHrZ2yt1ZvOtA@mail.gmail.com>
- <CAD=n3R15=vCCgQQhEWXPRc91T-8a02JJs2t9s88dVDLqTi_QZw@mail.gmail.com>
-In-Reply-To: <CAD=n3R15=vCCgQQhEWXPRc91T-8a02JJs2t9s88dVDLqTi_QZw@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 1 May 2026 15:30:02 +0100
-X-Gm-Features: AVHnY4Lvd5bC5Bjb5B0gowbRniZvoDTtU_MpQnrflj-3wpCwSJ354tivCPjGs_A
-Message-ID: <CAFEAcA8ZcpUPGRPAsRgfaBd5xpXdCVuyNeoWubFKMLTdcoekSQ@mail.gmail.com>
-Subject: Re: [PATCH v5 3/4] hw/riscv: server platform reference machine
-To: Leif Lindholm <leif.lindholm@oss.qualcomm.com>
-Cc: Alistair Francis <alistair23@gmail.com>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- qemu-devel@nongnu.org, 
- qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com, 
- zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
- Fei Wu <wu.fei9@sanechips.com.cn>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/9] pnv/phb4: Add reset logic to PHB4
+Content-Language: en-GB
+To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
+ thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com
+References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
+ <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
+ <20260305060923.3753402-3-saif.abrar@linux.vnet.ibm.com>
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20260305060923.3753402-3-saif.abrar@linux.vnet.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=CIIamxrD c=1 sm=1 tr=0 ts=69f4bac9 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22
+ a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=20KFwNOVAAAA:8 a=rYLnrmdl_moKlWV4vG0A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
+X-Proofpoint-ORIG-GUID: F7deu80aasj4lupivsVK6RLhngvlDmYv
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTAxMDEzOSBTYWx0ZWRfX0YuaE0jZHgKP
+ pfs9oGaPQLIo7qQaY7B3pjwihMBRuqFl1C6VvvsLN4i1K1ZJkWnfVGQAL3PuKpU6+oiXB/Tb71m
+ ISRW/xxdKydPZFXTbxh90I788WI5KhJ5MZyaZe41UwhudMeIW3ZCaWCdaUCLaQyU7wbKOYLolZW
+ GjbZRdqrN64K5wqQEJKOg7gL8QsISE0e5dl+YHU+eDvqYSIV1zEujodKS5ZAvdYY5XWsCGLfrPy
+ 2EyG2L3b7wqPHT5WrcNqrPvsk74I86uHd2u+DpFW/FtK4WGFh0M4lDqf3xXzn5Ds6hl34RK85xG
+ 7+2erhKr5UcSniJOU6zCqqS9k/DmTAG6DPik7fk3PqJtdex4/iWsr8def8eKujCQjJ7NSAHfT6T
+ CTnMqceGKjfGyKXpyg4hovlR7APQwOHitDCGjg0EyjPrKme9GAdjnpV8NUTkfmFCz9YdjuORYnU
+ 3NlvU2lg8qNJyEw6EZQ==
+X-Proofpoint-GUID: ZnVD7mXc2GFWu_TFdJBLMZj6Ns_quhuB
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-01_04,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 malwarescore=0 suspectscore=0 adultscore=0
+ impostorscore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0
+ priorityscore=1501 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2605010139
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,44 +127,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 1 May 2026 at 15:02, Leif Lindholm
-<leif.lindholm@oss.qualcomm.com> wrote:
->
-> On Fri, 1 May 2026 at 04:28, Alistair Francis <alistair23@gmail.com> wrote:
-> > The first line of the README says:
-> >
-> > """
-> > This document is capturing discussions at the Server Platform TG.
-> > These are not official specifications and everything in this document
-> > may change.
-> > """
-> >
-> > So this machine needs to start out with version support (like the ARM
-> > virt board)
->
-> We ended up not doing that for sbsa-ref, partially based on advice
-> from Peter (added to cc),
-> which I can't right now bring to mind in any great detail.
->
-> I would expect the same argument holds here. Peter?
 
-Roughly, QEMU versioned machine types are a big maintenance pain,
-so we should only have them where the use-case is that users
-really want to be able to run and migrate their workloads from
-old QEMU to new QEMU. The use case for sbsa-ref is "I am developing
-the full firmware/system software stack and I want a reference
-platform for that" -- nobody wants to be able to run the older
-version of the firmware/software stack on the newer QEMU,
-and certainly nobody is going to be doing live migration of the
-software between QEMU versions. The small population of people
-doing this development work will be running the bleeding edge of
-all the components involved anyway, and to the extent they care
-about running on an older / newer QEMU for convenience they can
-handle that in the firmware -- sbsa-ref passes the firmware a
-"machine-version-major" and "machine-version-minor" that we
-bump when we add something that would be a compat break with the
-firmware.
 
-thanks
--- PMM
+On 05/03/26 11:39 am, Saif Abrar wrote:
+> Add a method to be invoked on QEMU reset.
+> Also add CFG and PBL core-blocks reset logic using
+> appropriate bits of PHB_PCIE_CRESET register.
+> 
+> Tested by reading the reset value of a register.
+> 
+> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
+> Reviewed-by: Cédric Le Goater <clg@kaod.org>
+> Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+> ---
+> v3: Updates for coding guidelines.
+> v2:
+> - Using the ResettableClass.
+> - Reset of the root complex registers done in pnv_phb_root_port_reset_hold().
+> 
+>   hw/pci-host/pnv_phb.c               |   1 +
+>   hw/pci-host/pnv_phb4.c              | 103 +++++++++++++++++++++++++++-
+>   include/hw/pci-host/pnv_phb4.h      |   1 +
+>   include/hw/pci-host/pnv_phb4_regs.h |  16 ++++-
+>   tests/qtest/pnv-phb4-test.c         |  28 +++++++-
+>   5 files changed, 145 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/pci-host/pnv_phb.c b/hw/pci-host/pnv_phb.c
+> index 0b556d1bf5..d4f452d7b2 100644
+> --- a/hw/pci-host/pnv_phb.c
+> +++ b/hw/pci-host/pnv_phb.c
+> @@ -232,6 +232,7 @@ static void pnv_phb_root_port_reset_hold(Object *obj, ResetType type)
+>       pci_set_long(conf + PCI_PREF_BASE_UPPER32, 0x1); /* Hack */
+>       pci_set_long(conf + PCI_PREF_LIMIT_UPPER32, 0xffffffff);
+>       pci_config_set_interrupt_pin(conf, 0);
+> +    pnv_phb4_cfg_core_reset(d);
+
+Cover letter says updating to PHB5 spec, but here we are calling phb4 
+specific reset in common phb code?
+
+If the reset logic applies to all versions of PHBs, we should better 
+call it just pnv_phb_cfg_core_reset(). Otherwise, need to better 
+refactor code such that pnv_phb.{h,c} contains only common code which 
+applies to all versions of phb, keep phb4 specific code in pnv_phb4.c, 
+export reusable routines from common code which can be called from 
+phb{4,5} specific code in pnv_phb{4,5}.c files respectively.
+
+I understand we already have phb5 specific code in pnv_phb4.c, but we 
+need to reorg it at some point of time, and it will be great if we can 
+do it sometime soon, preferably along with this series. However, I am 
+fine if you wish to take it as a follow-up work. Having said that we 
+need to get the naming corrected as applicable (i.e. just phb vs 
+phb{3,4,5}), so that later we would only need to take care of moving 
+phb5 specific code to pnv_phb5.c.
+
+
+>   }
+>   
+>   static void pnv_phb_root_port_realize(DeviceState *dev, Error **errp)
+
+<snipped>
+
+> +
+> +static void phb4_tests(void)
+> +{
+
+I guess you meant phb5_tests here since using machine powernv10 inside ?
+
+> +    QTestState *qts = NULL;
+> +
+> +    qts = qtest_initf("-machine powernv10 -accel tcg");
+> +
+> +    /* Check reset value of a register */
+> +    phb4_reset_test(qts);
+> +
+> +    qtest_quit(qts);
+> +}
+> +
+>   /* Assert that 'PHB - Version Register' bits[24:31] are as expected */
+>   static void phb_version_test(const void *data)
+>   {
+> @@ -72,8 +95,6 @@ static void phb_version_test(const void *data)
+>       /* PHB Version register bits [24:31] */
+>       ver = ver >> (63 - 31);
+>       g_assert_cmpuint(ver, ==, expected_ver);
+> -
+> -    qtest_quit(qts);
+
+This should be cleaned up in the prev patch where it was introduced.
+
+Also, whenever sending next version of patches, please avoid sending as 
+reply to previous series. You can keep updating changelog in cover 
+letter with links to previous version when sending the next version.
+
+Thanks for looking into it, significant work!
+
+regards,
+Harsh
+
+>   }
+>   
+>   /* Verify versions of all supported PHB's */
+> @@ -94,5 +115,8 @@ int main(int argc, char **argv)
+>       /* PHB[345] tests */
+>       add_phbX_version_test();
+>   
+> +    /* PHB4 specific tests */
+> +    qtest_add_func("phb4", phb4_tests);
+> +
+>       return g_test_run();
+>   }
+
 
