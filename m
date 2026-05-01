@@ -4,67 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4039CD3427
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 23:15:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62894CD3427
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 23:21:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIx3d-0001Qq-UP; Fri, 01 May 2026 19:14:05 -0400
+	id 1wIxAT-0002Sl-Sc; Fri, 01 May 2026 19:21:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wIx3c-0001QX-Cy
- for qemu-devel@nongnu.org; Fri, 01 May 2026 19:14:04 -0400
-Received: from qs-2003a-snip4-1.eps.apple.com ([57.103.86.4]
- helo=outbound.qs.icloud.com)
+ id 1wIxAS-0002SX-Al
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 19:21:08 -0400
+Received: from p-east2-cluster1-host7-snip4-1.eps.apple.com ([57.103.76.64]
+ helo=outbound.st.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wIx3a-0005Fg-Ot
- for qemu-devel@nongnu.org; Fri, 01 May 2026 19:14:04 -0400
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-0 (Postfix) with ESMTPS id
- C72AD1823FD5; Fri, 01 May 2026 23:13:57 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRNEwVSB11NVg1HD1geXBQXCUBDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTAtIAVsHXgJBC0sCXgJYHEYKSQtZGlofHVYQUgBSD3IFVwhBCFMCUQRYGl8IGQ1AThkMSh1SVlEFSgxcAGgPXR1YEV0=
+ id 1wIxAQ-0000AM-Ct
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 19:21:08 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-3 (Postfix) with ESMTPS id
+ 90B5818000B2; Fri, 01 May 2026 23:21:02 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRLEwVSB11NVg1HD1geXBQXC0dDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTA9JcCxyXnFIFDoKKQJGBkYOPB5VBCh2XQ46ci9yKAFGDzkGL3ceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1777677238; x=1780269238;
- bh=CGSs6CJWNP1wY+Ol4DxldizRyP5cLjjcFoEWVaZx0V0=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=PoKnL/FClq1LtCzW70rFj+adz6rGPG6Cvn7/ma5ehSyeWWxvCqS3XQi8Du1FcveSf3lzmbSoZFrOyrRtphFdpxXupL/aDjRZ5gl7c1z4/GoMBvsTXY3pwle2N2hGcFy2oW0+dnqnpwgaBSyMEkf2umrs06PHOtB7Ma6tj1B7z0uyF9bizp18fLZfLOwPhwutEKwT8a2x0saxSiBlwxIclPOoOI2AekV0pxiyTl4ohJvYoEEUv9pNd9+yJU/U2uN6P9jnDimu4d+2FhCDenH/VbR+5EQSV8QwW6nxY84mvSMi8WcFRgGQ/vQpQ6f4oiN5+t78xJtxbtDEASaeeILJRg==
+ s=sig1; t=1777677664; x=1780269664;
+ bh=ht0w5h0EOU+eBdzReEnQLFAJTueavkd7qtwKgtTeE0U=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=fOVXv6t6H8lbS/4Rs24LZZnTcA08Mr1eLi/+NLAy5kzl7ebiaYvUGzqd3nFE65sDbInGZwvDpL+867agb9gaiaZz0w5MjmnZoEvwc1DVRgjOlLRJ8v/p6Mfgl7FNqBfR3gBHjJuFkUKs6D1Rnr5kBD41U4KX26k3e6cDGN/SHB/noY7yCjXIsFb2yFz4SxU392P7s+6RCPomoQGET+kgPeu3Ng4EyVMRYXQS3vcvl6FJHR4EDTHNgHxH7l52OX7ZcERY7fW18lVeHczxD9kBrIEY7S6MvH3pazeoZl2rM1vOZm0YSTEqsNF57pPISwHmtNqvSad5RrdyT6TOgD31+A==
 mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.155.37])
- by p00-icloudmta-asmtp-us-east-2d-60-percent-0 (Postfix) with ESMTPSA id
- 032B21823FCE; Fri, 01 May 2026 23:13:55 +0000 (UTC)
+Received: from smtpclient.apple (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-3 (Postfix) with ESMTPSA id
+ 5049A180013E; Fri, 01 May 2026 23:21:01 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PULL 23/28] hvf: sync registers used at EL2
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH] hvf: arm: override HV_SYS_REG_MDCR_EL2
-Date: Sat,  2 May 2026 01:13:53 +0200
-Message-ID: <20260501231353.63184-1-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: FUAH6HWu1Bov-7rRZiUtYvdvycdJn30K
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTAxMDIzMCBTYWx0ZWRfX5SdMU6Dwsh6j
- 0M8BaVWuBXO99AYcvSn5JmFDm0wiwtM25P5QHzl621+TQqDL8mo9Uih3eGlx0zpYBp8qar6+qKr
- oXAIodf0jKT17arx64dN3ZDfWWGniOiHjNTBzNlnGoTt1QnBptX7DetDuTPdQ4Cso2jWnh2Tpv3
- YJ7WQ4g9HmLEuljo1DTZmDXDVx8mxm/4Kz9iC4glwrlEKTVVCC7CU+/bEMEdY77IHKSMsuqkrXx
- DXfnf8Zh9m+Ka3YNs5hq+XgLNZr/SpGAP56pWxEDxx435QZGaZhWR2vidbG/iHK4l2qLABjOze4
- 6wSUy29YRE4t2sNDHjEjSjgnjMpWljkeYPEh+Q7Wu+B0PaaBtsJs8iwMH9Mzuc=
-X-Proofpoint-GUID: FUAH6HWu1Bov-7rRZiUtYvdvycdJn30K
-X-Authority-Info-Out: v=2.4 cv=Pu2ergM3 c=1 sm=1 tr=0 ts=69f533b6
- cx=c_apl:c_pps:t_out a=bsP7O+dXZ5uKcj+dsLqiMw==:117
- a=bsP7O+dXZ5uKcj+dsLqiMw==:17 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=VwQbUJbxAAAA:8 a=t-IPkPogAAAA:8 a=KvODUgOX9gEuU6Qg7WAA:9
-Received-SPF: pass client-ip=57.103.86.4;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.qs.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <CAJSP0QUuu8Vt403H1BpsuPFcuCA4WWbvoTu_GHUg7OrbBBPdPw@mail.gmail.com>
+Date: Sat, 2 May 2026 01:20:49 +0200
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ qemu-devel@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <61CAE5C8-B9D5-467D-83CD-7BABEC366A5B@unpredictable.fr>
+References: <20260501101505.3485916-1-peter.maydell@linaro.org>
+ <20260501101505.3485916-24-peter.maydell@linaro.org>
+ <CAJSP0QUuu8Vt403H1BpsuPFcuCA4WWbvoTu_GHUg7OrbBBPdPw@mail.gmail.com>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Authority-Info-Out: v=2.4 cv=eLQeTXp1 c=1 sm=1 tr=0 ts=69f5355f
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8
+ a=KKAkSRfTAAAA:8 a=BGBRJ4FIzYpjLOC2vMcA:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-GUID: BxLMCWPJmb0E4PNMUoxj9PWEt8w_bpT2
+X-Proofpoint-ORIG-GUID: BxLMCWPJmb0E4PNMUoxj9PWEt8w_bpT2
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTAxMDIzMSBTYWx0ZWRfX1T0zQLdPjbwL
+ oZZY1UxTKzNomVgYQ5zfh0Q4YksBGLKIil5pbjtOLK+FCL1jiD9CF4D6YmpPso5pFrAXAwELNNc
+ WQkE3ouqsgKFq2SHciGT3Uhnul2Y5A6D45Bvyv1e8yRerRJ+/aCHP41MSFQAL5S47c/SNVa7jij
+ S2zDaNG0MyVoYxTaXaQuEtqj1kVnRmxqwBglB5gj8AUiMSf8QvMkj9SA4lSq/ZUh4e/v/oXC0WZ
+ mV0/OcTrjzKwB/CWjrsyGtP/OwfcbXqR6BkSHiVufeiG4T9nWUq7mZCDXtSv2KAzZrq210L9ASo
+ oS7AJllS4ZNSn9AAXr5Q6K8GVE0z0X+62HnZBou43E3tZNudAKOYYmbO4VzIqc=
+Received-SPF: pass client-ip=57.103.76.64;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,44 +88,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In older SDKs, MDCR_EL2 was defined incorrectly.
 
-As such, override it with a #define if compiling with an older macOS
-SDK.
 
-This is a workaround because the macOS CI setup we currently rely on
-has not been kept up to date, to be able to land nested virtualization
-support.
+> On 1. May 2026, at 12:59, Stefan Hajnoczi <stefanha@gmail.com> wrote:
+>=20
+> On Fri, May 1, 2026 at 6:18=E2=80=AFAM Peter Maydell =
+<peter.maydell@linaro.org> wrote:
+>>=20
+>> From: Mohamed Mediouni <mohamed@unpredictable.fr>
+>>=20
+>> When starting up the VM at EL2, more sysregs are available. Sync the =
+state of those.
+>>=20
+>> In addition, sync the state of the EL1 physical timer when the vGIC =
+is used, even
+>> if running at EL1. However, no OS running at EL1 is expected to use =
+those registers.
+>=20
+> Hi Mohamed and Peter,
+> Please take a look at the following CI failure:
+>=20
+> In file included from ../target/arm/hvf/hvf.c:497:
+> ../target/arm/hvf/sysreg.c.inc:187:1: error: static assertion failed
+> due to requirement '!(HV_SYS_REG_MDCR_EL2 !=3D (((((1 << 28) | (19 <<
+> 16) | ((3) << 14) | ((4) << 11) | ((1) << 7) | ((1) << 3) | ((1) <<
+> 0)) | 13510798882111488ULL)) & 65535))': not expecting:
+> HV_SYS_REG_MDCR_EL2 !=3D KVMID_TO_HVF(KVMID_AA64_SYS_REG64(3, 4, 1, 1,
+> 1))
+> 187 | DEF_SYSREG_EL2(HV_SYS_REG_MDCR_EL2, 3, 4, 1, 1, 1)
+> | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> ../target/arm/hvf/hvf.c:489:3: note: expanded from macro =
+'DEF_SYSREG_EL2'
+> 489 | QEMU_BUILD_BUG_ON(HVF_ID !=3D
+> KVMID_TO_HVF(KVMID_AA64_SYS_REG64(__VA_ARGS__)));
+> | =
+^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~=
+~~
+> =
+/private/var/folders/q_/v_6k8zks62lb0q_8f10mvn8h0000gn/T/cirrus-ci-build/i=
+nclude/qemu/compiler.h:74:30:
+> note: expanded from macro 'QEMU_BUILD_BUG_ON'
+> 74 | #define QEMU_BUILD_BUG_ON(x) QEMU_BUILD_BUG_MSG(x, "not =
+expecting: " #x)
+> | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> =
+/private/var/folders/q_/v_6k8zks62lb0q_8f10mvn8h0000gn/T/cirrus-ci-build/i=
+nclude/qemu/compiler.h:72:51:
+> note: expanded from macro 'QEMU_BUILD_BUG_MSG'
+> 72 | #define QEMU_BUILD_BUG_MSG(x, msg) _Static_assert(!(x), msg)
+> | ^~~~
+> 1 error generated.
+>=20
+> https://gitlab.com/qemu-project/qemu/-/jobs/14176182142#L5618
 
-Once CI is updated, the SME stubs can be removed and this
-commit can be reverted.
+Thank you, it turned out to be an issue with older macOS SDKs
+that macOS CI still uses.=20
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- target/arm/hvf/hvf.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+Did send a (standalone) patch: =
+https://lore.kernel.org/qemu-devel/20260501231353.63184-1-mohamed@unpredic=
+table.fr/T/#u (looks like patchew is down at time of writing)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 4f0f7ffba1..79209bc8e9 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -468,6 +468,15 @@ static const struct hvf_reg_match hvf_sme2_preg_match[] = {
- #define HVF_TO_KVMID(HVF)  \
-     (CP_REG_ARM64 | CP_REG_SIZE_U64 | CP_REG_ARM64_SYSREG | (HVF))
- 
-+/*
-+ * In older SDKs, MDCR_EL2 was defined incorrectly.
-+ * As such, override it with a #define if compiling with an older macOS SDK.
-+ * https://lore.kernel.org/qemu-devel/BCCED674-EAEF-4755-9BE1-116FB36FB5C9@apple.com/
-+ */
-+#if !defined(MAC_OS_VERSION_26_0)
-+#define HV_SYS_REG_MDCR_EL2 0xe089
-+#endif
-+
- /*
-  * Verify this at compile-time.
-  *
--- 
-2.50.1 (Apple Git-155)
 
 
