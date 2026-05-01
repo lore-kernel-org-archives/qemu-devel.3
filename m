@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 223A9FF885A
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:00:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DF07CD3424
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:01:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIkfk-0005v3-2k; Fri, 01 May 2026 06:00:36 -0400
+	id 1wIkg9-0006G3-PY; Fri, 01 May 2026 06:01:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIkfh-0005uQ-OG
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:00:33 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1wIkg8-000682-2S
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:01:00 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIkfg-0002B8-60
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:00:33 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-362e50b4641so1103901a91.0
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:00:31 -0700 (PDT)
+ id 1wIkg6-0002Gh-Gi
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:00:59 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-82faf871346so1135880b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:00:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777629631; x=1778234431; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777629657; x=1778234457; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=pLkwIXJsjLAshz2fU0cTuffi/lJHGNRnY8UpHApKS+8=;
- b=StBKuuOvGX619AvrcKxVGCRncifrDvQ1WSo4Vx2nQs4/FCcAg9tgXJLwZEXcyF6rhA
- IZu/D3oiC1X9NlHVwFFcPMxKXDDrAFYmLfii0Gufvi/aQNtQes+tWIwGdL/792ShwZdF
- zRHueKvLVXMbaB2VrHLiCc8lKLVHjqZ+GJaX4vwHPULC52u5/wMZdAYoOp7f311XyT/g
- fp+7HM/1a4NvMqeK7niCxPYC89Pqd0UX+3/d5B0vHCzCp9bEKYeRM9evDJugrlpZ+Cux
- RnvTeT7WqAs0W5ZmSmXlsucp07wbIa9MDs0ObJKZ+iWDN+UbeOUkQUX+PeMOYkcga322
- aLeg==
+ bh=JXaVS1/goLgTCrLAsNTlWLMlo4tfxFnPwJXiw4w1tyI=;
+ b=TQeHJToEurxTOy5J8udEpTzAzSyd7oKSSV9i8nsGHT5roLwhS3J1R+zTHGYVumdz3n
+ AqBnfip9LgCoXgnGr3W54+bz64UdKgVf6V3qmQ1f7ypW1WbWN1YevvTpR/bsFYrrc3W8
+ P3sTQ+RExLxzCAdFC9SA8E8ObXrBAztHMUyDQVYzuTSH5Jolj6RXOk2QqtxVT7ce2O4u
+ jqYNhtTkTYCvESMhaD5YUz5XdO2BTTmHXkoCQs9jnbgZGRGyMzdtR4s4hAv1hYt6qKHg
+ qzVDsFcWRiH8V2r92xBlINO1IAauH0fZS6TW3tTymgBeGUcDZpBGOaN3CvSP0GRt3WEz
+ wKhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777629631; x=1778234431;
+ d=1e100.net; s=20251104; t=1777629657; x=1778234457;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=pLkwIXJsjLAshz2fU0cTuffi/lJHGNRnY8UpHApKS+8=;
- b=AcQG/2EnaoG+DqOORk0Ac/cSTHxhjgQbtDjurWzIrgJ+Llwkw0Nu1UiDc+4VGLV3FS
- 8AujP3OtRa2lh4/fsJkTRjq+YYblHY7j4kCqFb+e1Ke/MnfP0oW+tZ/V5ekARu7wSrMK
- 0WXUck4KhiEr+B2KcgrqUQMwUlabJdtaUDw8r6qGiSPZaPST2O/3tNoEeT5vtSMuub0Y
- PaRGR1Li/Y6R0gWZSZBqrbYOJzIVATV2zPrcAG+z1rMMa1IbjSAkvjoqgXquDQuQa0P9
- jABi3so+KSTxlFD8useukEMVgtUjtlbfZGC3Nhu14o/Le2bd3rabbIis/wofTZnlNe8M
- Qr0g==
+ bh=JXaVS1/goLgTCrLAsNTlWLMlo4tfxFnPwJXiw4w1tyI=;
+ b=g0p3uOhrdgh1pn/4pDgp3VMtnpcTCCXLwcvRH2lXKzJJPdvm/fNUMIDMAW1zD6DcqN
+ AkPVVvcG78RjZC70O9YfdfLTGKFycX5zDY8bdrgyMEeDk72YS+MWIqQW1fDze3lVhhay
+ Z3dTexd3aLuJtBQTVAJ0K4qkYzoTiiGsWwH83Dp8VyfqSq884N2o24p8oBDvb54QsFpj
+ 9p8Loe3qO5d9aTpc9RAcH3CL4EIwmPRoP2JGivIEEticGzRAdhD+0uTrwKejyS1ijD+n
+ 0p/o4kLMlh+YPLHbbykpXusNIp/AZPLR1mYjmwdHxlnULNIrFnauIokxVcxNjLMIN2Mk
+ BHeQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+q8ni5Xh0OdquOgKswkPMm8sjImSAT1WjGo3qoCm9IymvbGU0OybAqEnhG8zUpXDGkpMIfuHBTkNMt@nongnu.org
-X-Gm-Message-State: AOJu0Yx5kqkq4ruCOOPqvQSeDwNQy5YU1pw5T1ng5Rcn3P0ej1v04Ela
- gKHJFcE+nXgY7bM4Dd+UX3ViRD6ljtVkMjTQu6d6vN+l8OUlF2w9/9MQ4dvSYD4yZghEiEwVP8w
- YQhxbeGQ=
-X-Gm-Gg: AeBDiev7IG9K00CExH8CnXcGgboLfhXBzVMOPjRn1ECZdgw8AQlw1AjxBtfFuE9Xhvt
- TBS1qB/Ow6oC73v4437o5AFlzasTOtw/t2RagOu548Dsxie1e5poM+T1Gj5wqK1Sbd4yO5rPaOC
- U6OPUVOKmT5/Al1r2xEBtyqaItjfGH2t/43spnUY3Jcvl5yKHNJvn5m7/GJ8v/C96dk2mS7oAXH
- PBqkVG6j79i30Ltj9cvyZCw7hk5xU/VSVE8famNmD0QDe8c9r7miYvGkeQbhfiuWEvU12carmK5
- ZwMjGotXhu/bOc2I4duW0EnOAm5rL5nxsScKUrXEIctL2/LBkKucfAMDMrcTLsxQ9AXV2jzxX7A
- i1pOnw6VEbXnl8XgBMJtrVmOO/uJZo0Rb/yf1pbRRy49Xb/r/9Azz29jhgQ1Zx1NRTrjTyy8+GV
- rAziJgTPo+lxdpG3B7OM30OjMoY6OBQ8G7acEut1Kwds5FrgubZYtS
-X-Received: by 2002:a17:90b:1dcc:b0:35b:e4f8:7cc5 with SMTP id
- 98e67ed59e1d1-364ef654022mr2419214a91.25.1777629630577; 
- Fri, 01 May 2026 03:00:30 -0700 (PDT)
+ AFNElJ/R9cC48erbPRo8I/2HighcmKO2y22lBHDHKMuDdywO5JbF2BXmzehnZAZglZy0B/ACetU6H2RakMp+@nongnu.org
+X-Gm-Message-State: AOJu0YxGyxKlLaBzaA7bG8K7SycOeWHScmSqkxWplbLAxpKqncNXEXBJ
+ rlxe4Ykrc2ZxnhSSmM2gq/IZriXvb3FasVZ2wvxYRAGY40qzjpcVUtW4ciewC/v48Sr/IQ+oKnO
+ yUGY4ctg=
+X-Gm-Gg: AeBDieuYU22C4PAjOLKlKUKqXDbanESvzGzNDIG9ipbZFCXrlPZ6XY6dk0Lr0GncDpW
+ amW3PUN59pwxKYmzm7p4JGxVZRpOB3w+dseBh+n1C2gGtn0oED90qXgkYdtEQXJxMh38hJFPxMQ
+ l0iAjAyjy1zTjh3GRAmlx2NJgje5YgjCvVEt/JB5RK31BJi1Ig2IasHlWi/BzIpD9XsOOolb7np
+ 1IsFxMfgHzkI0osbnbEWgsaqfnTH8UKSa6SnQieTcBosXVVCPFP4W6j3KQNFEJQ1oiK/IoFOzfK
+ XAwy5CaqCl1eNIRFyfZSXqnMLUtgN8wuZfYUGNWDudZthtiRReJCyXcqxpXLQJ8LkLyV5QyRX5U
+ M+QJrj+O85CQ4x8Qe0jxS8AFMUX9NcO6TzTJLh0KBMTc98R/qVQk+5hgPckwww9sG3hfYvrgAPu
+ 06T+6m64t3wQpHct+X3JtkS014395S9yznb9KRw6CIoEbmdK27xLg/
+X-Received: by 2002:a05:6a00:1812:b0:82c:e83d:a9b0 with SMTP id
+ d2e1a72fcca58-834fdb63cc0mr7766524b3a.21.1777629656724; 
+ Fri, 01 May 2026 03:00:56 -0700 (PDT)
 Received: from [192.168.10.140] ([180.233.125.15])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-364be00ae51sm5308019a91.11.2026.05.01.03.00.28
+ d2e1a72fcca58-8351588f05dsm1951726b3a.16.2026.05.01.03.00.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 May 2026 03:00:30 -0700 (PDT)
-Message-ID: <01e02448-8ad2-4073-91e3-99a142540f1d@linaro.org>
-Date: Fri, 1 May 2026 20:00:25 +1000
+ Fri, 01 May 2026 03:00:56 -0700 (PDT)
+Message-ID: <e287e5f9-56aa-4b1d-8706-9de0a5c9f3be@linaro.org>
+Date: Fri, 1 May 2026 20:00:52 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 20/25] target/sparc: Use cpu_translate_for_debug()
+Subject: Re: [PATCH v2 21/25] hw/xtensa: Use cpu_translate_for_debug()
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20260430093810.2762539-1-peter.maydell@linaro.org>
- <20260430093810.2762539-21-peter.maydell@linaro.org>
+ <20260430093810.2762539-22-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260430093810.2762539-21-peter.maydell@linaro.org>
+In-Reply-To: <20260430093810.2762539-22-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,17 +107,13 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/30/26 19:38, Peter Maydell wrote:
 > We want to remove the cpu_get_phys_addr_debug() function; update the
-> sparc dump_mmu() function to use cpu_translate_for_debug() instead.
-> 
-> The "mmu_probe succeeds but debug translate fails" cases are probably
-> not possible in practice; since cpu_get_phys_addr_debug() would
-> return -1 in that situation we make this conversion retain that
-> behaviour.
+> xtensa boards to use cpu_translate_for_debug() instead.
 > 
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
 > ---
->   target/sparc/mmu_helper.c | 19 ++++++++++++++++---
->   1 file changed, 16 insertions(+), 3 deletions(-)
+>   hw/xtensa/sim.c    | 6 +++++-
+>   hw/xtensa/xtfpga.c | 6 +++++-
+>   2 files changed, 10 insertions(+), 2 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
