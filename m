@@ -4,100 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C59FFF8864
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 05:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 329DAFF8864
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 07:18:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIgT1-0008VZ-Dx; Fri, 01 May 2026 01:31:11 -0400
+	id 1wIi7c-0007C4-DM; Fri, 01 May 2026 03:17:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIgT0-0008VH-7Y; Fri, 01 May 2026 01:31:10 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1wIi7Z-0007B6-KB; Fri, 01 May 2026 03:17:09 -0400
+Received: from mail-northcentralusazon11013069.outbound.protection.outlook.com
+ ([40.107.201.69] helo=CH4PR04CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wIgSx-0008Ev-Am; Fri, 01 May 2026 01:31:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777613370; bh=CnGaA/NKMRL2kVQa1fXFWjXYvEYpPhn61jw5SmEw30I=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=i0cBBOqooGbjYWtZZPaUKYjf+mUGP5IH7Uw0DIhgOjVZq5kV8MgNfBUXTkBNPimmx
- vwlUfJ3jOsSM3UWCCt+XQt0q7EeiairJt+1YGGwLpbMf/eHlvswMn9kvebGphjcnHg
- fe53MP2SM78Y5fapPHSD1JWXmEzOcLLbJbInLJU3ml56IIzBIBJ4wczhBN0dfbQZpd
- rkyRx5aXWrekaV+FwS3C7z3aGd5Oqc7WiUsmiSa0pfQJDUSw3XkdNn9iblI+s0iSDY
- 77YmKCVpzCSu+EM8JRfj9cb11m0XMGVXttU35H3/VFEIt0/eberYf2k4ySne/V/pM5
- VwLHUJi2mbMSQ==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 823501A5819;
- Fri, 01 May 2026 08:29:29 +0300 (MSK)
-Message-ID: <0b838fb6-e840-475b-bffd-072936b2b0e1@tls.msk.ru>
-Date: Fri, 1 May 2026 08:30:58 +0300
+ (Exim 4.90_1) (envelope-from <Luc.Michel@amd.com>)
+ id 1wIi7X-0001hD-Ds; Fri, 01 May 2026 03:17:09 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=HcfcS53B2FeU60UD6HFzNYidxdGk6J2wiMavDPekO2msydBV1c2CqWk/lMyde1x+cWYy7Mh2ferKUzi0ccQMlaDEwtTCmzUk5SfY4NLC5PxtRKKmcSxe5KxkUatu9shzPcoNpynfCKdSMFalWOYtuubwrS43sSsxIb6Mv/b+U5qlTxfVmySDUwhhNavZqGzfcm2LWsCGwNzkMcBHMS77XVx157hj/WjI5MOxJg0hh4wpRg4ch7ptGp+Yagfa7WbnUASXEaupfDa1VqhvpjS6lCnSvVgYl8qpNUStYF0ceYe8+jSj+Vpff8dwWCCXeq333TT+izYJnIbSMp6E0t8Hqw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=3xC1xgD5105+XOtHwggseqN4CL+uGpq72S9CcHXqQc8=;
+ b=mSe0wytGk2JcXam/knI3w6CrRHFHhmOlsNu0CrWCvFhhNZhIl+t6GbSC+fadZj0MuWIMKcl0ga0Eej4LhLJL6x2bP/peFDWp90NR9eKUXmCCywHaW52Udn6TFz7nL8uj2gh04XqYRQ4l1SpJG6Dvb6rCFFVltb5YxsjkMS3ALpb6O0eObHSrYSAmLb/TJNKWBxk8e6D1dNgmuCt+s5XmdZeMvKZp/k+DJus83po4LxwJ1GBAE9jIzMAQa5IFaZVLBEhhK89d/v2iG6iRdwMqhP2ukoF7YCL9bcBt4CHPDLBUSdghxkf5JHIny1RDK0ltSXx651zrmn8+nSq+IjAeTQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=tls.msk.ru smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=3xC1xgD5105+XOtHwggseqN4CL+uGpq72S9CcHXqQc8=;
+ b=XTKcZI92HOtltQTCKp4Ot2B5GE1WDz7cs6iBoIPC3/zFS33EsCxRhrASv4QtXkMu7xaLzliayBliUm7nfeT/4ySLuwa/QH/M9y54DMrUm+zlFtEoKbzP9lALeS4yrgN2zFkmUZ1/oAsaUk1mA5Y8X4nIQBDpKI8NQ0sGLE+jg/M=
+Received: from PH7PR10CA0016.namprd10.prod.outlook.com (2603:10b6:510:23d::8)
+ by LV3PR12MB9119.namprd12.prod.outlook.com (2603:10b6:408:1a2::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.15; Fri, 1 May
+ 2026 07:11:59 +0000
+Received: from MW1PEPF0001615D.namprd21.prod.outlook.com
+ (2603:10b6:510:23d:cafe::64) by PH7PR10CA0016.outlook.office365.com
+ (2603:10b6:510:23d::8) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9870.23 via Frontend Transport; Fri,
+ 1 May 2026 07:11:58 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb08.amd.com; pr=C
+Received: from satlexmb08.amd.com (165.204.84.17) by
+ MW1PEPF0001615D.mail.protection.outlook.com (10.167.249.88) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9891.0 via Frontend Transport; Fri, 1 May 2026 07:11:56 +0000
+Received: from satlexmb07.amd.com (10.181.42.216) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Fri, 1 May
+ 2026 02:11:56 -0500
+Received: from XFR-LUMICHEL-L2.amd.com (10.180.168.240) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17 via Frontend
+ Transport; Fri, 1 May 2026 02:11:54 -0500
+Date: Fri, 1 May 2026 09:11:53 +0200
+From: Luc Michel <luc.michel@amd.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+CC: <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Francisco Iglesias <francisco.iglesias@amd.com>,
+ Frederic Konrad <frederic.konrad@amd.com>, "Edgar E . Iglesias"
+ <edgar.iglesias@amd.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Alistair Francis <alistair@alistair23.me>,
+ <qemu-arm@nongnu.org>, qemu-stable <qemu-stable@nongnu.org>
+Subject: Re: [PATCH] hw/core/register: add register_array_get_owner
+Message-ID: <afRSOdoqW27KAvRQ@XFR-LUMICHEL-L2.amd.com>
+References: <20260424155646.533334-1-luc.michel@amd.com>
+ <6d8bded7-a796-4144-b4cc-cb1b2f227528@tls.msk.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/riscv: fix stale ptshift and base on page walk
- restart
-To: Alistair Francis <alistair23@gmail.com>
-Cc: =?UTF-8?Q?Sebasti=C3=A1n_Alba_Vives?= <sebasjosue84@gmail.com>,
- qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
- palmer@dabbelt.com, berrange@redhat.com, qemu-stable <qemu-stable@nongnu.org>
-References: <20260401053853.10473-1-sebasjosue84@gmail.com>
- <db954ab0-3a2c-46c7-a0a4-161fa0df0876@tls.msk.ru>
- <CAKmqyKN134zPbbbwyF6MisrxXq+1fFH49iN5084sALrntsGzOg@mail.gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <CAKmqyKN134zPbbbwyF6MisrxXq+1fFH49iN5084sALrntsGzOg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <6d8bded7-a796-4144-b4cc-cb1b2f227528@tls.msk.ru>
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MW1PEPF0001615D:EE_|LV3PR12MB9119:EE_
+X-MS-Office365-Filtering-Correlation-Id: 16e36b2e-71c7-4b04-bffe-08dea750ee21
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|36860700016|82310400026|22082099003|18002099003|56012099003|13003099007;
+X-Microsoft-Antispam-Message-Info: hWGiVTqNjX6NGs9FRM/xk03OuNUEsKGpT3bcb8Jeha60ig++IbS9uZxhF1lJn34PmKxygrrW1pqSAdOxQjEw36Kh/dC0J99887ESYm8EuN7Yw1MOc2wqXFDjE/9upe1ieRKKVkdGYYEYEeTnfPPI+CiXRsvWaMtejsQs+f2u+kEDzR3ubHpUoxakeg/2QTk/Sh3g9kD3EqwVarYnBfSLEp1QzW++EgOXX0YSOpz27nMsTPZtryOYr1Xs3/jTnOVqhmjbsY39K+HC4IMOylEUVSLGwYwEFh0sZtJ2qyYJBWNtkgcUkS8AWBBv1X9MydsB4gKnwk6eSh0vA7qSqzXbvqXnFQn7L8cxtMcjGZFIabV7eDh83BXgPTFcMqiIpRTAsqMGkeXYHRCiVd6Wv3JjksXdJ19cemC2sxS1vW9imMJEQhqBRmU4d8qLVZS7LLWdgu5mLlN/tz5hDWIaShK3ftS19D6fNUx3XvWhkDzmZiuBmWrGGo4dITMmL6tT3gX/82Jquv0uTFVeX4wzRGosvrye3jbvCZwX/xWkVEFihlYaROh92tNMu1PVkHcavFNBgz6brM8usVcqGMPxyFpN8Mk344811F89cGqX8IARB6tpTllbrN887faItLjjI8J/NIVtGznJqHpj1fifpI157MNh0ncfpqPYNoF6x/atTdaq2dvl/Rrc0/XQbnOxcl5v
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb08.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(36860700016)(82310400026)(22082099003)(18002099003)(56012099003)(13003099007);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: bc78cXNAuAQWY/FBaJ19MOtddFbpLXBCnesrCXVi3cup0qYmxkJDMJ9EyPwr16OOhLAhF37E9eP9+FCjmPlH2bdsrgRk4ryV52vXEkYoyCZ1+e3uXeVHOB/cy44BenBzcamdCM0ri7dyhOOJT1lfxY9o5789aCrByS6naWyv2wsccr6VS+lLOa8YNgN8tZ6mKxww/saJFbaivMclEzVrXt+n3yRvmEXz4+5kUhGJZFthpaHsoj2/QF5ywGMafN0hrvWxWnMJLnXhG7LYPUdFiXf8wWS9TOYZplKg+hBeLVRtDsGNRjCAQ167ZJWsQRPKbZTke8oxewtGX4HBGBK8lmyP06xAIlCkAYbbt1SqMiLweW+yTpP77drH7SiFXYz9cvEHS20OpcrAe2NcwsAuvVjByphwmlyOYVqeqHYD1+pjvUPdj4SwuJ7h2gAAGJLK
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 May 2026 07:11:56.6304 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 16e36b2e-71c7-4b04-bffe-08dea750ee21
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb08.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: MW1PEPF0001615D.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9119
+Received-SPF: permerror client-ip=40.107.201.69;
+ envelope-from=Luc.Michel@amd.com;
+ helo=CH4PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,31 +129,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01.05.2026 04:32, Alistair Francis wrote:
-..
->>> Fixes: 0c3e702aca ("RISC-V CPU Helpers")
->>> Signed-off-by: Sebastián Alba Vives <sebasjosue84@gmail.com>
->>
->> Shouldn't this change be in stable qemu series too?
+On 19:45 Thu 30 Apr     , Michael Tokarev wrote:
+> On 24.04.2026 18:56, Luc Michel wrote:
+> > Add the register_array_get_owner function to the register API. This
+> > function can be used to retrieve the device owning the given
+> > RegisterInfoArray.
+> > 
+> > This was previously done inline by some devices.
+> > 5c6367bc1c8850f74812eeaaf87cff9911be58de modified the way register
+> > blocks are created and parented to the device. Since this is an
+> > implementation detail of the register API, it makes sense to have a
+> > function for this.
+> > 
+> > Use it in the Versal OSPI and Versal/ZynqMP eFuse models instead of
+> > tinkering with the API internals.
+> > 
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3421
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3422
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3423
+> > Signed-off-by: Luc Michel <luc.michel@amd.com>
+> > ---
+> >   include/hw/core/register.h        | 11 +++++++++++
+> >   hw/core/register.c                |  5 +++++
+> >   hw/nvram/xlnx-versal-efuse-ctrl.c |  4 ++--
+> >   hw/nvram/xlnx-zynqmp-efuse.c      |  4 ++--
+> >   hw/ssi/xlnx-versal-ospi.c         | 10 +++-------
+> >   5 files changed, 23 insertions(+), 11 deletions(-)
 > 
-> Yes, it should.
+> This looks like a qemu-stable material (for 11.0.x series), I'm picking
+> it up.  Please let me know if I shouldn't.
+
+Indeed, thank you!
+
+Luc
+
 > 
-> I thought the `Fixes` tags were picked up, should it also CC qemu-stable?
+> Thanks,
+> 
+> /mjt
 
-The "Fixes" tag does not necessary mean the change is for stable series.
-Many are, but definitely not all of them.  Especially when the talk's
-about anything related to migration - even more serious bugs might not
-be fixed in stable because the fix introduces a change in migration stream.
-
-So far I do watch for Fixes: tags and either pick stuff up like this
-one, with a notification, or as for confirmation if I'm not sure.
-
-You can also Cc: qemu-stable in regular email when discussing the
-changes, not necessary add Cc: tags.
-
-Either way works.
-
-Thank you!
-
-/mjt
+-- 
 
