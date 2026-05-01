@@ -4,108 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B5A4FF8864
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 08:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C75CCD3424
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 09:23:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIjEI-00029d-8w; Fri, 01 May 2026 04:28:10 -0400
+	id 1wIk13-00024h-2O; Fri, 01 May 2026 05:18:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIjEH-00029O-0L
- for qemu-devel@nongnu.org; Fri, 01 May 2026 04:28:09 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wIk0x-00022e-Ej
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 05:18:27 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIjEF-0007oh-MT
- for qemu-devel@nongnu.org; Fri, 01 May 2026 04:28:08 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-7b4ee3a88e1so25421297b3.1
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 01:28:06 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777624086; cv=none;
- d=google.com; s=arc-20240605;
- b=hufFWJDJxt/P6Rp9G7o6b6Aef1IqD/g31gmXeg7WbxMui6KHub8gVlvP6GdqO1p2FU
- k0e+rWGNFZj+OnDuGPSAv33kgVTMcZGICTuG0v4SOM89f97rAH4Hdhghx4jl/Q7oi9fD
- 6ANjCGo/daQbFCZD8OMEVdlyVdErdEOmFnt/H/gyCtRA+TzLZW/7vuSXPqnMVBhqnBsF
- x2Insnx/0JDrv+WE399s8Dz84A98KLhYGqPCm3ShGfUzdfeJKJnmXzlNP1YQnrml9TqG
- J4S+3dXUnBHAsHOm1+HHtxyhNSoyrIQGFNjuRc+fO6Y4PuVFLUCOtmna058xF8S7qeYq
- ChWw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=zdQB4DaMRDeYxlRocZwZMiI/ETSV0ATJmp7CBqXalRg=;
- fh=67FIEAxCuvQIamkfYfieYWW8UW8BrMCsPo5FDyEN3kQ=;
- b=aU1GtdMaIo7NLfbHuvQyy5EDPF8P7Bphl4EjU+87PWzY6ASHbw/u2Rd/5a0xdU8Zw9
- vpa38a+ss3KjuHOpMlZmTXQdts6sl+cTQvR2iumabSk6AaawOnQDLnxHuWBJHKII1m1r
- x3wa22+esdwwT17Xzk8TqxZt5EA7HPORs//PKh+NG5BsD+d0YuG45B6Yhxdr+8ZwYfv2
- U7EAfjleUa1DL6qS8A+jZXurdDZTWlfY8/876zBjMyZxEpQyl8NXsIwJfUoiyrpnSeeP
- d/M8d9T0m1ZZm1akl8j/9hXREc8LhFocpkm1us2gCeWwjsOjWsl97nsqU2pAuWYhsGFm
- 20/Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wIk0v-0006KX-Oc
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 05:18:27 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2ab46931cf1so18646085ad.0
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 02:18:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777624086; x=1778228886; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=zdQB4DaMRDeYxlRocZwZMiI/ETSV0ATJmp7CBqXalRg=;
- b=JDvOfX3Kd4dy6Lfhwe0ZDkPJMAun4hyYRANkzkrrnLUQKf4kD+NjBOt9482JN5JJDK
- sUhicMT5WGbor2B3quD/TLFyoVRUrYlAhfxv566Bs315rb3T7oP5SLTgC7/CFOvjWknZ
- /uRkGumc2hwbQjYx2aJsmB+pUsS1euaxmg+gVoCS8fHuIexc6jspQSY+GiV+ZIC7yfff
- jPR+CLejTlumpYGPCSgjFdtTwJGA11D8DwqBoRqhawvvOw53Sywtl9B2YvT56gSNXsv0
- 9zYtdfqLiNlZcGGhvMRNkG0all03fzSn/Lgvc56sXqTexSaa0pQ7msCqzHN87idolwyF
- 9wOg==
+ d=linaro.org; s=google; t=1777627104; x=1778231904; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=jXCkrC//GCi2/XK24O9hImxLbMG3Cjkj39H9Her/RJM=;
+ b=jlHBiAtnULY27J3qqIpE2CC1xmTtmQFjqlSokPsTNFTZGY+9yJf+QSgv68VzIVIu0m
+ YuyyKlvgVB4K4uoyi8BQI2fFqdJPPtokUzQJA2Lmj91sNRIHxsnEOL+r/yVQNNozyYp+
+ WYpe7jJ8KCE7MaUL7Oi36KyBlYCiN1LNIs/Zri8PGgRDX4fDudQtzCNxg+YZcWe12UYB
+ 4Z20L7AzLMb38qnIyQsb/DDIh8/MT+m2jggqbx1aI0gNu6KH+XZaRfjySwJcRgNXEO9B
+ 7ctyUWJ45ytFp9pogrdgiOyrPQ4Qoc504MOgxkgQkEYZPWqbe38fwkE9aVLkd/wAzK8u
+ 6tDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777624086; x=1778228886;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zdQB4DaMRDeYxlRocZwZMiI/ETSV0ATJmp7CBqXalRg=;
- b=SqNIvpb45XdrhyrB2txTHGT/Je9TB2Et4Zm4gOOebH4a3oJ4kXVr4gGH8ykGizjIef
- Rw/jUkSltouFdX6FIU/Xpk9mOIXl+l0X+owlWahut5n0o2b/zE6pr+f+7Zc9MYujGndI
- toNbCLmk8pJcMza11xS3p/iDDlSpNDJTw+KerqtsZBAeEAW6j1szdGB9lWdovtTk4KxQ
- wutI9AYSNS0KnaLyAuCVBQ7vO9fSskQZ10jYcz0lppkTMPzhV1840V6EUD5x+mjHWF2B
- MlgmkjJ2pDhqlgIdswfPkMrH0UNNgYq4plm/RHptN7WJmgjRBqPudg7sPwfphikY/7+H
- pqHw==
-X-Gm-Message-State: AOJu0YwJyUIu+dfNTwu9vPZadEPriRax3vp985/0jWKM2qrlWN6pbHil
- A0juGUmrW8q8ZzYgvKU2i5o7nFR6NOqBpuZtwzVFE4Oy1hQaYC8RzFC9g5by1WlJak+01wf7NVm
- IHPeCFIf0KMvWm7ZH+zDBERpp7DtM+MaUDzYnys9OVQ==
-X-Gm-Gg: AeBDies15idB8Yk0Br6GBpzGF+Qmo5XGofRDKYPbTu7CsXqB77A9AFQFY/nCXz0ieNJ
- oMldAiMsvvOAPwsuEBHzrJeKCzs1lLcGbKFSlUw5pKe8lD7CjbuD4t4DdynL77huJsj8nZW7K+Z
- 6tH+y1HMHAstT0gJfP3gvUghp0KgqoctCNtklu0MFzZz0EvujFA5zcHBoJbqf0exwVaqbWa7p+R
- ldBOYN6Id/pNQJhk1e5l0Dl0E9bdzuL0N7V5cJrV/7EJQmW7m78BdMOycKHShNxELy+ltm6m9cE
- +bUXOGklJvkwjx/E3EFGequMX/pnB5uQavhDIEz9+ES7wZ/rRmq7v5Mtp/M6K7oaURXWBlQur92
- oqQ==
-X-Received: by 2002:a05:690c:93:b0:7bd:6432:dab with SMTP id
- 00721157ae682-7bd643214a6mr30724147b3.43.1777624086066; Fri, 01 May 2026
- 01:28:06 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777627104; x=1778231904;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jXCkrC//GCi2/XK24O9hImxLbMG3Cjkj39H9Her/RJM=;
+ b=TvzMIuyrpRY6iE9aeD+L3QxlMx584oJbWjji/ZuDb8+iADf43C+w5ZemyeS61ZyOu5
+ iCa2ume4oH/QDCjw6fkBOQqmG5C/H2F175emFgE6jk76BX/J6lCKS9ePXrGh1A0sTMF5
+ G2suJyXgAzaOnnqzj9AI3nDHN3MpYLshge3nJK0e3n2gagducpx164afh0t5b3fdgP11
+ Xv0ZuEVJhN9h9d5sNG7GVluruYdMBCIDWisvdbZDIWXG5sG9M8khwWjc6oBpTKsk+93e
+ /10/dDUvSZGiHb3kOb2udBU0FvQTpVk0Wp/MVqonfvBv05hWZ8Q0olJfdMy5u60750n0
+ Pfpg==
+X-Gm-Message-State: AOJu0YzfGXmdAueVyU7acK2su44dvsuinksHinBaXi/H4L5RgIaMp6p6
+ s+BMaS1IeJdWmBnIqqOsIHPf5iJbUGuA1qjTiyv9ktFLn2j7pVfw0FJGaWDxdGb/6TIMPUDh1Tc
+ +6G1AmJE=
+X-Gm-Gg: AeBDietTl57Vx2XaFVQYMZxX+nirQ5X8+9gW4IWn23gdrx436XfUcCwziBvMgP1fO2s
+ +FwdNLwtO0RGy+sTmz+VhNSGdWnXBhm2/Wr5Wt9llPOnAJ9OW20glJ+a759Y/ayVN51ewP3Z0B3
+ 5O0u8+pxU8POvbkt5VKvLd3U+MVZvUlqopxvVOz6p/v0UM5EhL+wu1gvEvt8NdmET9Q+t3gMJDk
+ zfBOeVEXeqnNIx7qLiqGSnHX7csRV0sq0e8chJ8IxqEq1AS/pGTlsorvmGhmfsEFY5eQRvxL9cD
+ 47om1x6Dyqr+srpiAFV2ImYIigVhjiNnAIqwDDEH3UtHOunNuCSpuIR3Vn5YvvybehGc8e8ork+
+ PtUweirMrTJAjkSHqy4YTB9u6W6Nb0Y49whIVGaXj6klN1MOOzAbks1erzec4ALQGJMuzIE3Wa3
+ mAEXSKkrYnMPuXpPTBXzxiTNyihpPUGP3rXItiyxFLYOs0qV/8PYRk
+X-Received: by 2002:a17:903:120f:b0:2b2:4bbc:14b0 with SMTP id
+ d9443c01a7336-2b9a44e3639mr55661835ad.20.1777627103916; 
+ Fri, 01 May 2026 02:18:23 -0700 (PDT)
+Received: from [192.168.10.140] ([180.233.125.15])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b9cae110acsm16459795ad.42.2026.05.01.02.18.22
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 01 May 2026 02:18:23 -0700 (PDT)
+Message-ID: <58b6b468-1894-46ed-adce-2eb6d356826c@linaro.org>
+Date: Fri, 1 May 2026 19:18:18 +1000
 MIME-Version: 1.0
-References: <20260429190532.26538-1-mohamed@unpredictable.fr>
- <20260429190532.26538-14-mohamed@unpredictable.fr>
-In-Reply-To: <20260429190532.26538-14-mohamed@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 1 May 2026 09:27:54 +0100
-X-Gm-Features: AVHnY4LD9doMrkdvVfXyBUewM98Q9OeB9-W6KyQfg_-jN2Yig-EndN3N3AkaTdA
-Message-ID: <CAFEAcA-f21a7hHcGNrAAA=2x_AUtQDOs7jUkmv=gxnLSM39c5A@mail.gmail.com>
-Subject: Re: [PATCH v21 13/15] hvf: arm: physical timer emulation
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>, 
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Roman Bolshakov <rbolshakov@ddn.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Alexander Graf <agraf@csgraf.de>, Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/7] target/arm: teach arm_cpu_has_work about halting
+ reasons
+To: qemu-devel@nongnu.org
+References: <20260430104434.1482407-1-alex.bennee@linaro.org>
+ <20260430104434.1482407-2-alex.bennee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260430104434.1482407-2-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,23 +105,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 29 Apr 2026 at 20:06, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
->
-> Enable this through leveraging TCG's physical timer emulation.
-> This allows nested virtualisation to work with a kernel-irqchip=off + GICv2.
->
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+On 4/30/26 20:44, Alex Bennée wrote:
+> With the advent of WFE and WFI we need to pay closer attention to the
+> reason why the vCPU may be sleeping to figure out if we should wake
+> it up.
+> 
+> Create env->halt_reason to track this and then re-order the tests so
+> we:
+> 
+>    - ignore everything is the vCPU is powered off
+>    - wake up if the event_register is set and we were in a WFE
+>    - otherwise any IRQ event does wake the vCPU up.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> 
 > ---
->  target/arm/hvf/hvf.c | 28 +++++++++++++++++++---------
->  1 file changed, 19 insertions(+), 9 deletions(-)
+> v3
+>    - move arm_set_cpu_power_state to internals.h
+>    - drop excess brackets
+> ---
+>   target/arm/cpu.h           | 16 +++++++++++++++
+>   target/arm/internals.h     | 11 +++++++++++
+>   target/arm/arm-powerctl.c  |  4 +++-
+>   target/arm/cpu.c           | 40 +++++++++++++++++++++++++++-----------
+>   target/arm/kvm.c           |  5 +++--
+>   target/arm/machine.c       |  2 +-
+>   target/arm/tcg/op_helper.c |  3 +++
+>   7 files changed, 66 insertions(+), 15 deletions(-)
+> 
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index be14a47c357..357359011cb 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -257,6 +257,19 @@ typedef enum ARMFPStatusFlavour {
+>   } ARMFPStatusFlavour;
+>   #define FPST_COUNT  10
+>   
+> +/**
+> + * ARMHaltReason - the reason we have entered halt state
+> + *
+> + * To be able to correctly wake up via arm_cpu_has_work() we need to
+> + * track the reason we went to sleep.
+> + */
+> +typedef enum {
+> +    NOT_HALTED = 0,
+> +    HALT_PSCI,
+> +    HALT_WFI,
+> +    HALT_WFE
+> +} ARMHaltReason;
+> +
+>   typedef struct CPUArchState {
+>       /* Regs for current mode.  */
+>       uint32_t regs[16];
+> @@ -760,6 +773,9 @@ typedef struct CPUArchState {
+>       /* Optional fault info across tlb lookup. */
+>       ARMMMUFaultInfo *tlb_fi;
+>   
+> +    /* Reason the CPU is halted */
+> +    ARMHaltReason halt_reason;
+> +
+>       /*
+>        * The event register is shared by all ARM profiles (A/R/M),
+>        * so it is stored in the top-level CPU state.
+> diff --git a/target/arm/internals.h b/target/arm/internals.h
+> index a632584a4e0..4a1ea5465d7 100644
+> --- a/target/arm/internals.h
+> +++ b/target/arm/internals.h
+> @@ -1997,4 +1997,15 @@ bool arm_cpu_match_cpreg_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
+>                                          ARMCPRegMigToleranceType type);
+>   
+>   
+> +/**
+> + * arm_set_cpu_power_state() - set power state synced with halt_reason
+> + */
+> +static inline void arm_set_cpu_power_state(ARMCPU *cpu, ARMPSCIState state)
+> +{
+> +    CPUARMState *env = &cpu->env;
+> +
+> +    cpu->power_state = state;
+> +    env->halt_reason = state == PSCI_OFF ? HALT_PSCI : NOT_HALTED;
+> +}
+> +
+>   #endif
+> diff --git a/target/arm/arm-powerctl.c b/target/arm/arm-powerctl.c
+> index a788376d1d3..4ca63a54443 100644
+> --- a/target/arm/arm-powerctl.c
+> +++ b/target/arm/arm-powerctl.c
+> @@ -78,6 +78,7 @@ static void arm_set_cpu_on_async_work(CPUState *target_cpu_state,
+>   
+>       /* Finally set the power status */
+>       assert(bql_locked());
+> +    target_cpu->env.halt_reason = NOT_HALTED;
+>       target_cpu->power_state = PSCI_ON;
 
-The TCG emulation code looks like it ought to be OK called
-from an hvf context, though we do seem to be gradually
-extending the set of TCG sysreg implementations that are
-now silently required to work with HVF too...
+Use arm_set_cpu_power_state.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>   }
+>   
+> @@ -186,6 +187,7 @@ static void arm_set_cpu_on_and_reset_async_work(CPUState *target_cpu_state,
+>   
+>       /* Finally set the power status */
+>       assert(bql_locked());
+> +    target_cpu->env.halt_reason = NOT_HALTED;
+>       target_cpu->power_state = PSCI_ON;
+>   }
 
-thanks
--- PMM
+Likewise.
+
+Otherwise,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
