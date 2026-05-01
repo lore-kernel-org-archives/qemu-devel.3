@@ -4,108 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 921AFCD13DA
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 03:10:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9CC8FF886F
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 03:11:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIeFt-0004Bk-9p; Thu, 30 Apr 2026 23:09:29 -0400
+	id 1wIeHW-000677-C2; Thu, 30 Apr 2026 23:11:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wIeFr-0004BL-LI
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:09:27 -0400
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wIeHU-00066R-Hh
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:11:08 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wIeFp-0008Tv-Lw
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:09:27 -0400
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-7dbccf6a23dso1392358a34.2
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 20:09:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1wIeHS-0000cH-Ed
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:11:08 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-ba699316b42so225591866b.3
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 20:11:05 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777605063; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ieKnSSgx/BkhipnnifQvhJPBPeG9yf67mn+r9cEnUcbWEBXPlFeikrRIw0sGjFhLl3
+ BaDifvtLh4tkXkaVhWZ/qmI+fUJtkTOrBFZCZRsBfa2UYdzXZOT/O046EZDMXZ0y4T+9
+ vTn3VIueRkh4D4h45a+FwTp9ZyfMV8iB6g7dvEXbu2GYYf+/B4rnOnxNs/JgHlPZ2VHO
+ nZIUlZJZ0GTtbRk0iwv0UONAKTLtqgxP71vO44B4RAZgZyMECOnNFVWLKqaRkB47Gwjl
+ /n1Plg8uwlZSDFN1SF5p1FI135QVj22DoRjw7Aeoj4BOQMcuIBJeJCtwTfiCqvtiUctd
+ 479A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=cB1F79HbhefG7dQcP6hshdVQr+A+ou/V8zX3ebFsuD4=;
+ fh=I21oKyNy4Il063R1ym5YZ0eyRc5zhdOlCZYXtgX0pn0=;
+ b=K2lkQ3Kh7eNUhJXPtSGirtGxicvJochSrQyFYeDz+11VpC9q/zC2medZeNxxe0HxrU
+ y/rX1Pzc495URY8VZJRxuSaJVev99yNZZsbI2A9kOUe75NuZUiVBGtJt5NEVheGmmUGK
+ UKzmMK/jfLFYB4jX9jdrM1cmcswbi8rKLbZV0nBUxnjzceOQj2NhNxkeZXqDHUhBdijK
+ iasIaq9U5W45XsiMzF82XjM4gk0rGfJbORONyVBi/fWCnz45ZQQut9iTw0I7BYIzcw5p
+ tijZoEaC8CA2AI0QJSDFFroAmjej7VadX8SJgJgLbJqv0zLewQYkOZ0jr3UM6oVvELRY
+ wlLg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777604964; x=1778209764;
- darn=nongnu.org; 
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jZXwfeBdLypbadPXB3c+WtpTKadrsmPRbHbPNLwnnfU=;
- b=basLSntL8ph8sjs44Cb9LTCCxcI8tCPT5n6XQyI6ZB/eJx5jTEfH5hKOlMWqQHJ+aS
- sdlpwP0vvoAwYhnzZfZUL0ugkedreXQJpjzElGdVtW5SmX6AFFubZtaDJriDDfUHfwaK
- h/dqZW/0ucBv8e3owdLNXNCbUX4JUIbaJyi+z7svI8/MD6zduqjeCHjyReOdjn6afdpY
- lM0aJoI8TakVeInUcpN4K8VNDWHDKHPVnSSuqcaLYcLT1xltaIPQNdQ3W+7MavfaU7r7
- KWoAY6De4+uxeP5VVYfb8GMBZ4OM60XVK6/fA01Y6CtdfKJ0qQy3+RFmqifLQvEDl/0z
- wPqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777604964; x=1778209764;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1777605063; x=1778209863; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jZXwfeBdLypbadPXB3c+WtpTKadrsmPRbHbPNLwnnfU=;
- b=cu+wJdHaLF6ae3n6lPBjorIwZpy9IIjlQJsmSM2pwLjNwXH7i9FN4AF9MMyBRspdPo
- zNKFSQy6LABaAB/W2RuklZvXthZC/qH1R0QrfEYOtTpU+W6zFRJNh8TOp8t1p9n9lv+c
- d4qI0VlVa5YHl+Xedc4SBupdlp4fC7It390sLCcF3ucFaauVmmpb2EOw+N4D0Io+xTxv
- ZO5Dt1b16vrwuJTK6x5hiQES2LJzaN0ZpINs5/zOTcN3T8NRJQa13+W87LQTZjgZkaLi
- wlf+/705+zKWSQ3aFqCUs4QpkbWZtLT+sjvwuSJy4Q1zoJOrI+wQnFuAhK0EGr8/j7wl
- PEhg==
-X-Gm-Message-State: AOJu0YxHCS9Mw70HzV8FIdEsm3MxpsjK1dHonTGdVbzsVZRSgAZdpqGv
- th4IMXyRZDkflVC1VegsJ8X35cGKBTcBxJR5MVgLiWZRu0mUOZ7P/KFHziu7T3javIM=
-X-Gm-Gg: AeBDietDZP+BSnfeg2xPYapJ7IRnd7WNFtBcV976OHgOLWL/MtjflCvw1Lj79fPeDhY
- aGkGJrqRsMGACJCMy1cIxgXP3nBvD1YQJG0gKNwBigttpootW2O+xgIRPxN1lYhwfbiMAZe2z3j
- 7lUjATEXAW4V4wZMkb8HynGtPuUYZO/xtMyPYqroibNsEE55HukmBfuYsbBuDKhwZtPM8jtAvlo
- MnH5fjmx8iQveCqjxj73MFpTSfyw30p6dZGa8DfWKczmnK+httD0Eev6L4Hyn1PGhzGdqQ4h3+t
- yhqp+aKZHpuN97lVoRgkwe+RyVAGfqkL9HMiYMXk2SeQkOM6ckfkpV96GWwJ4Xx1pJXhKr0rVUE
- gW7S3TF2h813gYhaLOjtTTclCwdHSN9/R0k5mr/3WE9/XPTCaUOD9PsKzAA91UPxjWTXWKUq4m9
- 15QezYfHTanQO8W9sa3khR
-X-Received: by 2002:a05:6830:368c:b0:7d7:d60e:650a with SMTP id
- 46e09a7af769-7debdf163efmr3531119a34.23.1777604963963; 
- Thu, 30 Apr 2026 20:09:23 -0700 (PDT)
-Received: from rebo.bsdimp.com ([50.253.99.174])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7deca278d0bsm1238476a34.0.2026.04.30.20.09.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 20:09:22 -0700 (PDT)
-From: Warner Losh <imp@bsdimp.com>
-Subject: [PATCH v4 0/4] bsd-user: Generate system call numbers
-Date: Thu, 30 Apr 2026 21:07:35 -0600
-Message-Id: <20260430-syscall-nr-v4-0-80f512079a16@bsdimp.com>
+ bh=cB1F79HbhefG7dQcP6hshdVQr+A+ou/V8zX3ebFsuD4=;
+ b=ESsiR1rqchJjb8kvd2cuv6AwZWeZ2ufUOoSUGrh1mUiSos/aVfWD64/HfElrbZUy1E
+ IBKxijCBJ2VFmqHd96CNE2/AGIqmQ+3rCx/2xcd2XWxpWzzCONg4DaAD0DPMKAyp0mfc
+ sjo4s7Ugyc/PUM79SWcF0nPI3wxMJ1+MxwE1grJFQvfOd6hYe+igTxv2sHiLpzU0sMqm
+ VuYQF8xlUsUfNAu3VHMtvSWg7EFqc4fNcFrWvBOFfrwJv4OmjFmz/wMCGzA2E0FzRxog
+ 0LR9VYRpqIqWJwX8WQJ0C96cCjociZrOGySfLA8Z3YxKBLQlq6hd6aqgGfByxMX9fVBv
+ koUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777605063; x=1778209863;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cB1F79HbhefG7dQcP6hshdVQr+A+ou/V8zX3ebFsuD4=;
+ b=QVYyDGmbjIU/ppZ/vqMprLHuxxmMNJPDAbId3Z9fgb4NATshsQGFdN7T2QD45TfTB3
+ oOP5tPXKAUOZaDaeq3wD38gubiG/XrlB5Q32XFpW54OM2NlRDzJzAw4ZVuNBdUBMRov7
+ hNFQaIFPvNgJcksaasEIlYusscWKX+k2occ/P1saVn87ScRTgSarLzPMvN3cpZCgfMkI
+ PT459BJ+8Avs9OK1g844VC/PPbFn/cK6Gx5dKTtVJmlYTqbKJ/DFhFeGzRW9jRO1vr+G
+ 0M5IXmQtaavZad5UZ3e66xxo74OJwi2ITd0t9EqtiPOzuIUZF2vnqzBfqHIqbfDB0eWB
+ 1KPA==
+X-Gm-Message-State: AOJu0Yw9YvSq9NyKk0jY4tx/Xc9Q/7b5gw1JYXwM3Bs5CO258YE61SlD
+ bj2UVyTBJxSyaQeh3tD3qvAS0G9NJreReJpb0Eoq7sulxlumVnKzImqqpt6iHVRwSpJ0Fh2rxJ7
+ nmmg2JwaSJBPXhysoS+vwxyPLWEUsP94=
+X-Gm-Gg: AeBDiev6CJs3A3AFaT6wsZxfgHDiKFu4b8g+igjhPtwtg/dJXX0muac/SPoCS9ao9Tg
+ rF+3c2XMzAoL+Z17A4nbvNH8HMfBf40vizrIHB23frEJGIvuoWZUMwM0+WaP70+LNrqroWsO4VV
+ ronvPe5cJES0bCexuAwGu339fWR//IoEGMduske1t8ISfQWTbOMB6kv1NyReIDa1yCfurgjZmWd
+ aQM9M4L9OkSHd/5KHVCWlbNpirLjCtBF9tti5fALRPwXY5PWlPAWG/SFny11uZROaVYrl6cYWex
+ Sis3CR1Cyoo6cw8/LOb/Dfw8l1PoavVIxgHl2q16hxMheaV0oTzgPdRUdFw=
+X-Received: by 2002:a17:907:849:b0:ba6:1412:9326 with SMTP id
+ a640c23a62f3a-bbac67a986bmr358036966b.19.1777605062941; Thu, 30 Apr 2026
+ 20:11:02 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAPgY9GkC/2XMSwqDMBSF4a1Ixk25uUl9dNR9lA5icq0Bq5KUU
- BH33igUlA7Pge+fWSDvKLBrNjNP0QU39GmoU8ZMq/sncWfTZgiYgxLIwxSM7jree65Bl1I0hio
- NLIHRU+M+W+z+SLt14T34aWtHsb6/jNxnouDAmwIUlBYUkr7VwbrXeDbDi62diDuL1cFisnmhk
- 6ysEZL+rNxZCQcrk1W1qFGpC2HZHOyyLF8X+4FlHQEAAA==
-X-Change-ID: 20260412-syscall-nr-a0a831fce9a0
-To: qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2454; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=CMtij0Ti6MeRQieDSnmXrYj0LNguUNO5C9lyGf4rPuQ=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9BkDr8/6g2+Bmui0JfzWAi3WhAjNXCMAn+mxT
- bJ/Yxf35lGJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafQZAwAKCRBsHNEofbAR
- AEUVD/9oOS1E/JBEt4NpbCQMlb6dO2BqFbBEArPjFWdAobCfXKWV388AR0QTGyzyQIEE/qFV+IP
- wfvHO0RmDap7mjSnD13cfpu5NGz7ysVx0H5IF36XEqqDZTtuY44icehJgdFh8eb5RCUBzrE5s4T
- 4jc5mjEdSoN1DypkPDPKNl708yPXCtlPJ36D5dPd9WnM50SwLQ/s6i62NBVpEXCxbZpwXorIvsB
- vn74ur2OzDSa6lIRBLeAMhbgKHi7u1/7EU30K73SeXQvC4jqquyIvxsog9P+4cnS1oNIrT0hrxG
- 3G/6MwHpIbzVMH01UmG1mTdA35zj6dzAOGkWEiyOgzWyKpIPW1gW4dCstCgBQEl/iCZM6EDZBD8
- AlYsnceKX9cFo0PpERRHXIUJw9Y8/KAGZlQXglYvm70V4NxS65SOeVaaItSiTp7m0KvOVHWhBd0
- IVq7iNppmL1Abv3wo7BdG75OhTPZewFbhqsJRmnZ3gwPfntVs699P5E8NaG2z5Yh0nJ523fvg7E
- sdAoAoqpDMVG9+Fw9kTY5+i4oLgYHSDTknzCwYwqre6TzC6nDLjw0uY4CPWkkT+sS4XdOBfLMKQ
- BgZ+U+1m5QkaEF2a4r5UzXZWFDOeUMvG23SkfkzrRUJQO8Zv4YtfEq5/univvOMpWOZ+qFmgQwp
- sPA+6kqvWhSOTNg==
-X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
- fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::334;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x334.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20260424191129.1494381-1-daniel.barboza@oss.qualcomm.com>
+ <20260424191129.1494381-3-daniel.barboza@oss.qualcomm.com>
+In-Reply-To: <20260424191129.1494381-3-daniel.barboza@oss.qualcomm.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 1 May 2026 13:10:36 +1000
+X-Gm-Features: AVHnY4L-kHkK_2Ye22PtAf-SpQ-DwinnWUI_tj549cUFAo_3gJhe3Am1IbR9Mmk
+Message-ID: <CAKmqyKMmYewFC+nJtnwboapFZq_395kk9KeO3_zoC+WMpZfcyg@mail.gmail.com>
+Subject: Re: [PATCH v5 2/4] target/riscv: Add server platform reference cpu
+To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
+ leif.lindholm@oss.qualcomm.com, Fei Wu <wu.fei9@sanechips.com.cn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x633.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,64 +119,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-FreeBSD has a system call number header, sys/syscall.h, that's installed
-on every system that can compile qemu. Generate the system call numbers
-from that table rather than re-regenerating it yet again.
+On Sat, Apr 25, 2026 at 5:13=E2=80=AFAM Daniel Henrique Barboza
+<daniel.barboza@oss.qualcomm.com> wrote:
+>
+> From: Fei Wu <wu.fei9@sanechips.com.cn>
+>
+> The harts requirements of RISC-V server platform [1] require RVA23 ISA
+> profile support and others.
+>
+> This patch provides a new "riscv-server-ref" CPU to go along with the
+> future "riscv-server-ref" board.
+>
+> [1] https://github.com/riscv-non-isa/riscv-server-platform/blob/main/serv=
+er_platform_requirements.adoc
+>
+> Signed-off-by: Fei Wu <wu.fei9@sanechips.com.cn>
+> Signed-off-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> ---
+>  target/riscv/cpu-qom.h |  1 +
+>  target/riscv/cpu.c     | 11 +++++++++++
+>  2 files changed, 12 insertions(+)
+>
+> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+> index 30dcdcfaae..a150acd151 100644
+> --- a/target/riscv/cpu-qom.h
+> +++ b/target/riscv/cpu-qom.h
+> @@ -42,6 +42,7 @@
+>  #define TYPE_RISCV_CPU_RVA22S64         RISCV_CPU_TYPE_NAME("rva22s64")
+>  #define TYPE_RISCV_CPU_RVA23U64         RISCV_CPU_TYPE_NAME("rva23u64")
+>  #define TYPE_RISCV_CPU_RVA23S64         RISCV_CPU_TYPE_NAME("rva23s64")
+> +#define TYPE_RISCV_CPU_RVSERVER_REF     RISCV_CPU_TYPE_NAME("riscv-serve=
+r-ref")
+>  #define TYPE_RISCV_CPU_IBEX             RISCV_CPU_TYPE_NAME("lowrisc-ibe=
+x")
+>  #define TYPE_RISCV_CPU_SHAKTI_C         RISCV_CPU_TYPE_NAME("shakti-c")
+>  #define TYPE_RISCV_CPU_SIFIVE_E         RISCV_CPU_TYPE_NAME("sifive-e")
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 586683b28a..4b59dcabff 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -3401,6 +3401,17 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+>  #endif
+>      ),
+>
+> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_RVSERVER_REF, TYPE_RISCV_BARE_CPU,
+> +        .misa_mxl_max =3D MXL_RV64,
+> +        .profile =3D &RVA23S64,
+> +
+> +        .cfg.ext_zkr =3D true,
+> +        .cfg.ext_svadu =3D true,
+> +        .cfg.ext_sdext =3D true,
+> +
+> +        .cfg.max_satp_mode =3D VM_1_10_SV57,
 
-To do this, I have to clean up a few stragglers for system calls we've
-removed. But these returned not supported anyway, so there's no net
-change.
+Why not SV48?
 
-I also tried to do this in a way that the other bsds can coexist with
-should they show up again in the future. To that end, I moved the
-definition of time_t into os-syscall.h, where I noticed it was wrong for
-amd64 targets (which is little used and missing features, so it went
-unnoticed for a long time).
-
-More will be generated in the future, but this is the first steps.
-
-Finally, while this does add files, no adjustment to MAINTAINERS is
-needed.
-
-Signed-off-by: Warner Losh <imp@bsdimp.com>
----
-Changes in v4:
-- Uggg... Fix last-second error in last commit
-- Link to v3: https://lore.kernel.org/qemu-devel/20260430-syscall-nr-v3-0-4b1b2445e28f@bsdimp.com
-
-Changes in v3:
-- Drop the strace stuff, since I thought it was ready, but not quite.
-- Drop extra files included in bsd-user/freebsd/meson.build (soon though)
-- Link to v2: https://lore.kernel.org/qemu-devel/20260429-syscall-nr-v2-0-67a8d09dc13e@bsdimp.com
-
-Changes in v2:
-- Rebase to tip of master after 11.0 release
-- Regenerate strace.list, can't do this at runtime just yet so include script
-- Simplified syscall generator meson integration.
-- Link to v1: https://lore.kernel.org/qemu-devel/20260413-syscall-nr-v1-0-f70408d042ea@bsdimp.com
-
----
-Warner Losh (4):
-      bsd-user: Add syscall header generator for FreeBSD
-      bsd-user: Delete sbrk and sstk system calls.
-      bsd-user: Create os-syscall.h
-      bsd-user: Switch to generated syscall_nr.h
-
- bsd-user/bsd-mem.h                     |   2 +
- bsd-user/freebsd/meson.build           |  10 +-
- bsd-user/freebsd/os-syscall.c          |   8 -
- bsd-user/freebsd/os-syscall.h          |  21 ++
- bsd-user/freebsd/scripts/syscallhdr.sh |   9 +
- bsd-user/freebsd/strace.list           |   4 +
- bsd-user/freebsd/syscall_nr.h          | 515 ---------------------------------
- bsd-user/syscall_defs.h                |  18 +-
- 8 files changed, 45 insertions(+), 542 deletions(-)
----
-base-commit: 759c456b1d22fe4083c8b384da27d3f56fd53f82
-change-id: 20260412-syscall-nr-a0a831fce9a0
-
-Best regards,
--- 
-Warner Losh <imp@bsdimp.com>
-
+Alistair
 
