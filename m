@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6999CD3424
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:17:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A614CD3424
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:17:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIkuO-00045r-0d; Fri, 01 May 2026 06:15:44 -0400
+	id 1wIkuK-00043V-53; Fri, 01 May 2026 06:15:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIku5-0003yl-Lm
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:26 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1wIkuH-000421-8x
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:37 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIku3-0008Rx-Rw
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:25 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4852a9c6309so14802785e9.0
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:15:23 -0700 (PDT)
+ id 1wIkuF-0000Cy-4t
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:36 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-488a9033b2cso16032825e9.2
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:15:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777630522; x=1778235322; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777630533; x=1778235333; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=eMf0Nfv81bsOU7sGD8NbZmFV5EZggvO8uux0sh3Ikqk=;
- b=jVwRWowCq5OYpMDnD/P2WQzAJA85nSu6v9wuk6XhDkISa7tcQZbQayR1Befa7XzR8y
- 3XsGMdJN4kjQB1pOrjTyeyKPxLKOle0IuwhGJaxo8uGfCRGVqsfn++EvkU9VeYCPBheA
- pc3VVi72d1qDiTHSW8x3bUF8BjofMPk7d1RJgGjAmvcWBdxrs1zFst0C3qPkNVvtORMd
- ZWqRr3FIqYajuraq8YHJ/hZM0b0FGXEnwIxELUsNKcPleEsiOoU/uSyW69eTXF1OyNNA
- 3Ck2BFL2ou4EhpVj0cb34cnc7AvZj/i+AR2U7yKaoPQYzyCqrBk4fiMZJ8Nt9wDpBwj9
- 6ddQ==
+ :reply-to; bh=PWDJWe2AZnBQY7IEBTYHtAZi/b84KqQOngZk5MTLZWU=;
+ b=EPfgCyv530SKKZqhAfto+zEIYx/DSem6+rcMRqSkWVIiiPACDwSnFXFs0r9tgVhJoA
+ nTHhkjZyw5vzHEF/WQIkj/6uZHVHu/6L+o2vV+lOf9EOdSCxfV/aKc9crGwseEDujjgy
+ N/5k+6IeHVB4XOd1BdQbxT2ZOWE0tLFV34QV5W+pAwitR4NUK276juXK907J/VDKC7lM
+ +FUqFV3cB5htvIVyuDejcn4ssS9CaTi4WTfs5AJ5yrMTTk3hCB76kkDKaNdI06W/bdmW
+ NHTchkGlef3FL48g71nX2e+EzYNVRaNKxCiH26SsYi+2/sZNiRNkvpLgJp8AJglrckbS
+ O8Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777630522; x=1778235322;
+ d=1e100.net; s=20251104; t=1777630533; x=1778235333;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=eMf0Nfv81bsOU7sGD8NbZmFV5EZggvO8uux0sh3Ikqk=;
- b=DHgz2KXui//GKjBWYW1mY2850I1Fa1eorPDgq/1a28sNWOgdMjnbHCVS+rZVuSKEMt
- Vhy60a391TpP8QR5NX503RRiEPl/zw92/pmarBfeez0gx0gaiNbAbg/wuLaCPcFqZwdf
- ULzobVyO1Bduy6hRb1bqPK24wS+PWgepvr0x5etOJWfSBneNIovePwd6nrDg1Du+o60X
- 6Ry5gLKLy+NPaBDKelIv+hyM2m6bB0ZQ1Wly6a2jg4SoX+qbohxi+w12ccMWLMoWNURu
- ANRUklNaspoFYuY4tNvCq8s/kkXli3T5PGGVpzvZBZxyG//DO09DuTNxvg+q3Jfkyum+
- 13IA==
-X-Gm-Message-State: AOJu0Yx8wTTLBrG59HmVYaiV8AUh2k2nYFCDc4njZOSOeGcKBd20V9Zj
- qN8yfS+Kmfe5WFgV6K01YqtKoE6jVWQZH0OCwDN6293yoqiC8kAZbaXnVYzH/JVkRJSgYUMKflM
- ata8Z
-X-Gm-Gg: AeBDietWXk54JiIkm4cEuIiSxrmTLCtlBPstir0kyAU/Ok257F04jE64Qi0FVCSEf67
- EF7K+7tc5dSM7SvoA9rPGFmwXNtmeSfVR35j+XI2SU8YHG54u6jXLNkPL26QyoR1N7K94CIEEVF
- VnjoFKpTy+8T01DZqIxGKtgVQCfYMkkpnIp88px8+E7bW+3E4ud0/+5AMLjYUYh9F5qPRKvNnZC
- SDkBLsPtZc5pHTlrDGwmtIF0jWhZpdAur55Tz4sWYaIEnHIlt+BIosERblqmLHAxys9xL1AyoOg
- EK2SFfr549bI3v1Ody5qPCxB9287xKqo7LiIhJj0cV9EueekfBngsZ/AI7Jok035H8PtrnqgFwI
- sYVJY8BLMbDhBt0Y9GM20hsgXRFTF+9HSjbk8F0N83rQtKL7fddSjcC6yZLlletXKYcN2+ljPjb
- P0rdCOh3kP1kr6XcYeaDbv6NrP8dzZsgpNS0YyHRk37e+7/iplxstix58t9iinEfeG29Hkw+X1J
- iHpyH3spfi6ArymCRcx3EYccx3g6K2189GlmpAeEbcsiB0FU6P3
-X-Received: by 2002:a05:600c:3d97:b0:48a:53ea:1408 with SMTP id
- 5b1f17b1804b1-48a83d78a6cmr93951595e9.8.1777630521964; 
- Fri, 01 May 2026 03:15:21 -0700 (PDT)
+ bh=PWDJWe2AZnBQY7IEBTYHtAZi/b84KqQOngZk5MTLZWU=;
+ b=Z/ByJ2N18CyGbxWliPhqCsbRL/cWPc6crW2+I5F9Q7iglbZOtsXymxQnv7N+FCqDbj
+ HlXJZ2325O+5g4gguyCU+FbTgTX/ns+9neDEN2AFsTLFXJhi/9WBp7Kx803zxuoAlOvA
+ z1sJBnh+obhlLOmK/IwoAqCA7wmeP8o6vo3LmbiUPZixcoesLeo2+zjzPdXoUHuHtYfn
+ BBly6V1BJGSu7zS6FNkkLKNRJZgAVncVCXvQnf+j6F+v6OUn1g9+ZZLQ22JR9WGEYnnB
+ tx1ccgd4R3j6GHpvlC4khSwAtjxVfq5BGhej92OPnlVfbsDYRhw0QGjKGSxuYr+3uCYt
+ /p+Q==
+X-Gm-Message-State: AOJu0YyHes8JJL+R54uNqsyl5O42CkY+JeDpdjOFbz8TG7mYfQv0bpCL
+ z9OATjTQEJgEBYO615ckIsCx0yF/VY1PMbEkfH0aaOUGjI1gjiC0+hkPKT61OVEOoOhPhoES2C5
+ qrthj
+X-Gm-Gg: AeBDietVYsm5O9QEBin1V8bAZ0Gxvom2c47fXzEMAaPiVzEkmeAQR6xQ0JFWHbhDA9L
+ onvABjdn+BOYlu9dGgeYr1980Q1gCNS8XmEiqAjKIetF5WKvxqnk4FwuiDCIfeRwV9orBHhGK3z
+ FQg9g+QNXggrVSSKuKE9LX0sQ7Z6pHc9A77bj/zfaD43CaXnkdRmZWcXQ3OE4fVyGWZc0TIY2jM
+ 06pRYw/gdEfMYFtbv9oUFhIzcwUwvpBkQ3TfIo5xbNpL5hWgxoZYBdI6O6E4qwv9eqI4waspPdQ
+ 3GG4l5dnJnCRpdUCgkm5crMC/UFGNdMyZLWerGninAlFijRX9dl2xzCwDcZIWRTsy1wRYAjvDXw
+ Xmub+WJ1JM180dAxjNgX9JZPOX8X8jfupb5uheHDK2WTW3iX9rDhiy+9MoQJ99oh3ICAw5CCbIc
+ Eha4qu/gD3fLf/p4FBg/ctkEA24M0sjbUyTxRrnmtm9ujlPxDh4jk4gDhV2DwW3c0J6AFDJk0Tl
+ qdd4m0erIznEnsYJff0A3vwnJOs9uRVEmh0ofZVbA==
+X-Received: by 2002:a05:600c:8719:b0:489:1f97:6b1d with SMTP id
+ 5b1f17b1804b1-48a8ebaa93cmr39418675e9.28.1777630533518; 
+ Fri, 01 May 2026 03:15:33 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8fede418sm12863335e9.6.2026.05.01.03.15.18
+ 5b1f17b1804b1-48a8fede418sm12863335e9.6.2026.05.01.03.15.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 May 2026 03:15:19 -0700 (PDT)
+ Fri, 01 May 2026 03:15:32 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/28] docs/devel/decodetree: Fix formatting in "field
- examples" table
-Date: Fri,  1 May 2026 11:14:47 +0100
-Message-ID: <20260501101505.3485916-11-peter.maydell@linaro.org>
+Subject: [PULL 21/28] hvf: arm: allow exposing minimal PMU for
+ kernel-irqchip=on
+Date: Fri,  1 May 2026 11:14:58 +0100
+Message-ID: <20260501101505.3485916-22-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260501101505.3485916-1-peter.maydell@linaro.org>
 References: <20260501101505.3485916-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,83 +102,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The rST syntax for a table uses ASCII art to draw the cell
-boundaries; then inside each cell the text is treated as a body
-element, so it is rendered the same way as text at the top level of a
-document.
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-The "field examples" table was assuming a "literal document" format
-for its cell bodies; this meant that the single line cells were being
-rendered in plain text, not a fixed width font, and the multi line
-cells were rendered as definition-lists because of their "second and
-subsequent lines are indented" layout.
+When running with the Apple vGIC, a minimum PMU is exposed by Hypervisor.framework
+if a valid PMUVer register value is set. That PMU isn't exposed otherwise.
 
-Fix this by consistently using inline-code markup for the left column
-and literal blocks for the right column.  (We want to be consistent
-within each column because a literal block renders differently to
-inline-code, with a green background.)
-
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260429190532.26538-9-mohamed@unpredictable.fr
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/devel/decodetree.rst | 44 ++++++++++++++++++++++++---------------
- 1 file changed, 27 insertions(+), 17 deletions(-)
+ target/arm/hvf/hvf.c | 19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
-diff --git a/docs/devel/decodetree.rst b/docs/devel/decodetree.rst
-index 98ad33a487..33cd6fe583 100644
---- a/docs/devel/decodetree.rst
-+++ b/docs/devel/decodetree.rst
-@@ -64,23 +64,33 @@ A field with no ``fields`` and no ``!function`` is in error.
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 9d64f2e1a5..390a3529ff 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -1145,6 +1145,25 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
  
- Field examples:
+     clamp_id_aa64mmfr0_parange_to_ipa_size(&host_isar);
  
--+---------------------------+---------------------------------------------+
--| Input                     | Generated code                              |
--+===========================+=============================================+
--| %disp   0:s16             | sextract(i, 0, 16)                          |
--+---------------------------+---------------------------------------------+
--| %imm9   16:6 10:3         | extract(i, 16, 6) << 3 | extract(i, 10, 3)  |
--+---------------------------+---------------------------------------------+
--| %disp12 0:s1 1:1 2:10     | sextract(i, 0, 1) << 11 |                   |
--|                           |    extract(i, 1, 1) << 10 |                 |
--|                           |    extract(i, 2, 10)                        |
--+---------------------------+---------------------------------------------+
--| %shimm8 5:s8 13:1         | expand_shimm8(sextract(i, 5, 8) << 1 |      |
--|   !function=expand_shimm8 |               extract(i, 13, 1))            |
--+---------------------------+---------------------------------------------+
--| %sz_imm 10:2 sz:3         | expand_sz_imm(extract(i, 10, 2) << 3 |      |
--|   !function=expand_sz_imm |               extract(a->sz, 0, 3))         |
--+---------------------------+---------------------------------------------+
-++-----------------------------+----------------------------------------------+
-+| Input                       | Generated code                               |
-++=============================+==============================================+
-+| ``%disp   0:s16``           | ::                                           |
-+|                             |                                              |
-+|                             |   sextract(i, 0, 16)                         |
-++-----------------------------+----------------------------------------------+
-+| ``%imm9   16:6 10:3``       | ::                                           |
-+|                             |                                              |
-+|                             |   extract(i, 16, 6) << 3 | extract(i, 10, 3) |
-++-----------------------------+----------------------------------------------+
-+| ``%disp12 0:s1 1:1 2:10``   | ::                                           |
-+|                             |                                              |
-+|                             |   sextract(i, 0, 1) << 11 |                  |
-+|                             |       extract(i, 1, 1) << 10 |               |
-+|                             |       extract(i, 2, 10)                      |
-++-----------------------------+----------------------------------------------+
-+| ``%shimm8 5:s8 13:1         | ::                                           |
-+| !function=expand_shimm8``   |                                              |
-+|                             |   expand_shimm8(sextract(i, 5, 8) << 1 |     |
-+|                             |                 extract(i, 13, 1))           |
-++-----------------------------+----------------------------------------------+
-+| ``%sz_imm 10:2 sz:3         | ::                                           |
-+| !function=expand_sz_imm``   |                                              |
-+|                             |   expand_sz_imm(extract(i, 10, 2) << 3 |     |
-+|                             |                 extract(a->sz, 0, 3))        |
-++-----------------------------+----------------------------------------------+
++    /*
++     * Windows wants at least the PMU's cycles counter to be available.
++     *
++     * With kernel-irqchip=off, we "emulate" the cycles counter
++     * in reference to time in QEMU. Having that, even with
++     * ID_AA64DFR0_EL1.PMUVer = 0 is enough to make Windows happy.
++     *
++     * As it's a very inaccurate implementation with its only purpose
++     * being making Windows boot, expose ID_AA64DFR0_EL1.PMUVer = 0
++     * when kernel-irqchip=off.
++     *
++     * When kernel-irqchip=on *and* ID_AA64DFR0_EL1.PMUVer = 1,
++     * the OS provides its own PMU emulation, which is currently
++     * a cycles counter only emulation.
++     */
++    if (hvf_irqchip_in_kernel()) {
++        FIELD_DP64_IDREG(&host_isar, ID_AA64DFR0, PMUVER, 0x1);
++    }
++
+     ahcf->isar = host_isar;
  
- Argument Sets
- =============
+     /*
 -- 
 2.43.0
 
