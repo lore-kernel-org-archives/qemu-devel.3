@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96AE9CD3424
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9894ACD3425
 	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:15:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIktv-0003uU-1w; Fri, 01 May 2026 06:15:15 -0400
+	id 1wIku0-0003wS-Qq; Fri, 01 May 2026 06:15:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIktt-0003ty-0M
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:13 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1wIktu-0003uR-Uf
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:14 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIktr-0008FX-9A
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:12 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-488a88aeec9so18444295e9.2
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:15:10 -0700 (PDT)
+ id 1wIktt-0008HU-8w
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:14 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4891f625344so19352075e9.0
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:15:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777630510; x=1778235310; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777630511; x=1778235311; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KeBNe4wyqrjV7VPSNCuKtnzVllsWaRV++aujRpEZVKs=;
- b=ccIKruR5n9VWjoLLyTa4rHLQUXRQCKHtcxxWTKpaah8BMrDbMhHLTyZSqH1deHcuvf
- i/b/cVIeQmuogkv/qRELPfq55cA0mMJTZU9p2V2XAtquq7/TRpphD9j2Wc4xVZFa2eN9
- KSQO0K81803X6j3nMHqOVnOZXD0fS/yAg/KQecsfMkXzTGIMoAVegZbai5RAHhi//yzJ
- gEb5Or8NmT+2s3hSE8LAlBZOakqmE0UdgjVKiUyqacjWkBVO1arxakH+Py+izvTPPmXL
- rAr/hvjZjXmIAHbpo+7qGTu1zx0HUtQ7o2Sy3rNdSJHK94PISXLNIx8nc3H35jG9KY/8
- NY0g==
+ :reply-to; bh=CDst0IXYQnDF21W1Eul66jWjgyL41RzGLPKADSYQjbA=;
+ b=KqjscGX6z7rirV7FFFNL3MDBqdW4LBG7ohr1ngSEt38A9rWUsRw9vEfHGppfI/Hc2E
+ 845APHs36ZQphdReOV+VeTf4be41mpjADQ65T5TizUQkJ+F1k991mfTSKy1m0MTqyYvt
+ clioL8YTa7OY/wyWOSBfsvQz1PQw1Lo5JYaH0TjNz0mOmxY4NgtRw+/21crjYAk4nKzD
+ 7WKYIcBjfuc5m8d//ZFTpoJLyIhR2Geuah567Gpy20nItijN9XPDsQV+PlzhPVsKhSWZ
+ Mk+20cWLpvRUCDULoynr5btm8oQIBh+VnxPj+g6Mdbi6mIFMEUrZVL1IOyQ8a7Oc5Wo4
+ Z2Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777630510; x=1778235310;
+ d=1e100.net; s=20251104; t=1777630511; x=1778235311;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=KeBNe4wyqrjV7VPSNCuKtnzVllsWaRV++aujRpEZVKs=;
- b=jDRFcC9oj0nLM2QxHIjCp/fE0Y+HYjLVcpENqiWCDqtI6Z+O8oJs4jWm2kGjyn9KoO
- 2n7KVAdb0NTK2mLghtMBJqx/kHV/8dI1/7MZsJlsE9jOJ7naA7s/fY354KTpn9debd2x
- 3mp0X6wKBC7OhqYYzIrJ6h9ww/NbcD3pfDf2AB1Z4HHu9ZLrpkXoNQv72GlJC1p6zoEK
- sC0LGU/3NoneQnNh3h7BrvhE22sweAS2P0sxyCOPmng9Nf889x9Fp0R5oWKGOVkkKa5m
- Xp5S4lqMAaAHe31vIi7GHTOQeoFPqEUzL1m8RtCAn0E5TEH9B8b0sEMlzzIQgPu1SpDN
- u0DQ==
-X-Gm-Message-State: AOJu0YwE8mea/M9QWLe/voAPgSlITzAFncQ1VRXsVnOMzI/QaaeaskW2
- a3/C2d91ZPjd72KZudvPVJYk2hlZpj8fXWwFzgMWepEwfBkbghpzNiF04kaUbd/qVYysL7tqD4g
- ncvn6
-X-Gm-Gg: AeBDiestKXKwk5TBG9ukOeL9718CmYJ+r7p6L8wmo7b5XH3Ho7ytmMHOmKMIiYAW7gC
- acXfKmgoUIQUtQ3l3Q51AfLj1fyfs7itR+UES5ZOESXhQSGAtrht2ruVkgdYqyfH6o2cGwv7LOU
- RGypl34g1eK9a3CHZUxuQe73POoOU39MWioVIxHpS/5IBzHJBje0GXsmgBIb7e6SQ/53cupn6wH
- DvX/NAElm+SeYhQcApT0TStwXRCJKaimoOYKXhb7FnNfEin1hZbm9as+ckKW74z+KsfqkLUeeKD
- biJtrGEiZFxj7BNNOBrkoJzxN4DepJ3CwEC502n2W55O4N5ZAvdUaF6Cff83Lhhu8JrbuMixf6L
- Dwo+oDBcRzgvcb4kJcCqkyFFHNjxK5YxgrDIuGZCoM+zYDocbysdzzfud+ci7Vv9g7RU7Q/mtjH
- Xkumg22Ia/lGgN2NPkBmKP5zqXhNgcU8CgVPoXk0L1RuaLpOzFe3dQo3J1iuW7JmHe5pe0NIyfy
- HkRM4/hJQp++Swx4rzNAxohqyMH+iSHBGxeq/3aYQ==
-X-Received: by 2002:a05:600c:8b70:b0:483:2c98:4368 with SMTP id
- 5b1f17b1804b1-48a8eb88365mr34690405e9.18.1777630509734; 
- Fri, 01 May 2026 03:15:09 -0700 (PDT)
+ bh=CDst0IXYQnDF21W1Eul66jWjgyL41RzGLPKADSYQjbA=;
+ b=DfK4NuMNEleSvF3fLa5pLaH8Wvei3C3pjyb8xnkSnHKBLqIFtxiNjF3lJSiYKZR6+G
+ LIUvCcB0qKkI2cv9VA4e8WdJSDDG4QVcxJY59MVguk5m10DVbxcw9ONnEeiuw1wqAfvU
+ 1XOGWLCxpyWqa5vVKxuVZTPK5srQ5IZAJUGxogjFt4bM+EhRmhsKwYCeWNT95HUetOUa
+ SJgKsN0Abm5jSc8EtSgz9pDk3LQkhcpw6MhIddwVTSF0hOWaJdYLSNif8fbPMuJdHWUG
+ 78lu1X4VPMuAYDbpi1Makez2IMaJJwv351sgiV31krTjlGpHzK9gr/s33xXZUZ0AVN8A
+ ci/Q==
+X-Gm-Message-State: AOJu0YxwQteejgrmlKor9cg3x/vSXhhd/en9AFK4N8J5HmXaVfbylXPZ
+ q1pSTTaoK9BF7P84PlFTF+pqnn/cdiM/WhIEnQHRFgh0jOaNyCUIsjEbwPSaEQREqCQ4pJZbK+J
+ P+sVr
+X-Gm-Gg: AeBDiesKz4cGUWJckOQXrw3EUD7ZQYlcCMQ+F9xl00h5WgEAJ7kI8v1Fe/S8SWbhu5/
+ a0BGd1TDpPhiCgHqUHNySmr70X8kATiPixI4iw1/+9EPQ1xV6mV5oXQ/S5F0clbeaD238skM0SV
+ d7nt45jZxeUES560Bw5GW0XZYYTYLP8mvuXzbvph5cUzMh9iRD7tv8YcTqek2N7lwpywk2sDrQA
+ 2UqCroESpqoNuVMhForlG8d6r8SOb9L/HQIzLnS4e3dssDLXh/rJtvN9d05hexKSJBsajG0gT6z
+ fOgbz+YUKLx2xNj5K7giTEEm/RiDzHljrDoR5T9j6V6ZSKUF+noYzSmpJAnecelfexJWvk38V8r
+ GAqePkwUo6LBvRxniRIn0fmsnKmcTc7O5H5k4t/XFx44yEUNA5Ngm1NPvK15Iru0DBSk4bSxI5t
+ PjwCukKk96sVqwgn48YY9Erlt7ucdwvTborSixMaUFub+e1XP581hMfkkv1krgcYDRxCnTB2/+R
+ OCf2Um1G455df8XK3wFVi2PV3ifD0korQMAIHw5dQ==
+X-Received: by 2002:a05:600c:6291:b0:48a:79d8:a8d6 with SMTP id
+ 5b1f17b1804b1-48a85e75173mr98983315e9.7.1777630511543; 
+ Fri, 01 May 2026 03:15:11 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8fede418sm12863335e9.6.2026.05.01.03.15.08
+ 5b1f17b1804b1-48a8fede418sm12863335e9.6.2026.05.01.03.15.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 May 2026 03:15:09 -0700 (PDT)
+ Fri, 01 May 2026 03:15:10 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 02/28] hw/arm/fsl-imx8mp: Fix parent of ocram memory region
-Date: Fri,  1 May 2026 11:14:39 +0100
-Message-ID: <20260501101505.3485916-3-peter.maydell@linaro.org>
+Subject: [PULL 04/28] linux-user/arm: Restrict regpairs_aligned
+Date: Fri,  1 May 2026 11:14:41 +0100
+Message-ID: <20260501101505.3485916-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260501101505.3485916-1-peter.maydell@linaro.org>
 References: <20260501101505.3485916-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,35 +101,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Rather than having a NULL parent, let the containing SoC object be the
-parent. This cleans up the QOM composition tree a bit.
+The function regpairs_aligned is for extracting a 64-bit
+quantity from a pair of 32-bit registers and does not
+apply to AArch64.
 
-Fixes: 1aaf3478684f ("hw/arm/fsl-imx8mp: Add on-chip RAM")
-cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-id: 20260308203516.160103-3-shentey@gmail.com
-
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260409035015.132370-2-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/fsl-imx8mp.c | 2 +-
+ linux-user/user-internals.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index 33749d7fe1..7c03ed3c34 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -670,7 +670,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-                     fsl_imx8mp_memmap[FSL_IMX8MP_PCIE_PHY1].addr);
+diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
+index 24d35998f0..e65373b204 100644
+--- a/linux-user/user-internals.h
++++ b/linux-user/user-internals.h
+@@ -136,7 +136,7 @@ void print_termios2(void *arg);
+ #endif
  
-     /* On-Chip RAM */
--    if (!memory_region_init_ram(&s->ocram, NULL, "imx8mp.ocram",
-+    if (!memory_region_init_ram(&s->ocram, OBJECT(dev), "imx8mp.ocram",
-                                 fsl_imx8mp_memmap[FSL_IMX8MP_OCRAM].size,
-                                 errp)) {
-         return;
+ /* ARM EABI and MIPS expect 64bit types aligned even on pairs or registers */
+-#ifdef TARGET_ARM
++#if defined(TARGET_ARM) && !defined(TARGET_AARCH64)
+ static inline int regpairs_aligned(CPUArchState *cpu_env, int num)
+ {
+     return cpu_env->eabi;
 -- 
 2.43.0
 
