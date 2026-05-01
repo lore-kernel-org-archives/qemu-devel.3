@@ -4,91 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4252CD3424
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 09:39:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B68B0FF885A
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 09:50:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIkLE-0001Ia-2K; Fri, 01 May 2026 05:39:24 -0400
+	id 1wIkVn-000353-3e; Fri, 01 May 2026 05:50:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIkL8-0001I7-GA
- for qemu-devel@nongnu.org; Fri, 01 May 2026 05:39:18 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wIkVg-00030J-HF
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 05:50:13 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIkL6-0003ch-Tp
- for qemu-devel@nongnu.org; Fri, 01 May 2026 05:39:18 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-c795f096fa5so666836a12.3
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 02:39:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wIkVe-0007bE-QO
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 05:50:12 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-79ab5fd969aso20905927b3.0
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 02:50:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777629009; cv=none;
+ d=google.com; s=arc-20240605;
+ b=aKLLlrx2hda6XoxvSAkS/84YF1n3zsHGQN2UkDaaZXVXZjuI89bwKFFlvsukgHwClU
+ Ivi7UoVfZl/f2Oi/QFegSE5wapfB48GX6r4+C5Ut+HL+ulCc2jHXfqr3wlICUohUXv5W
+ NfjzbUF/2N3m1RRsNakn0WE5j9ROZe67WecCIt5sgXkJu4H2h4d+etdVVJu1ZE09JLZu
+ u8VaWvSr9hpusmdyyUjT+k6PRb5wzzpK/dQcjuzXKOryYfoT14EzPmOOKw4wOlc9tSeG
+ pAqX0yhZ6NwAXiNzVpAsxZ/bI387hGf1JAL7gUVdWUY+VSobNkgkd3FJC0/F92cylh7+
+ SEgw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=hIWpiTawUseQQPCN+9bltXY0EQ2B4/qK0zGFjkzJBcE=;
+ fh=67FIEAxCuvQIamkfYfieYWW8UW8BrMCsPo5FDyEN3kQ=;
+ b=BS4LFI3192/5w5oNBZi/v75bAZHR43ISPduTJXmoL18q9SsLxvFqN0xTCkaUYsosFE
+ O4JTUycSukfNjvkOSEKsOFyWJvNlvr7Lljb3jYWnsEJleGCRhHl6+AbpkOiw4T7ADvux
+ EazhxnL1xnM4zt9DiVu5vz7LryYMJ8DmPRf+YwlG+04tgWXVDWZfqJfks71dXZxU9Uzd
+ +1SRa9hJNFqv4ER2u2dtVMcmTMNxQsELiikwVLFJFW4S4mvefTw4WPa36uUjeZaSYV75
+ bmZFtPrEAYhAygjHlUSFvZ3ABoGrsO7eQU46EusIwVu2S3QwwM3DIooxI7N49SxieRbv
+ /75g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777628355; x=1778233155; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=NXzH+0bThSq+hixyp2oDpGP66Fd+UhVi1kTNl9/exDI=;
- b=eO6PpwUqGOOVhf+Oogw55PWPCmyOzpHs/9HPNE/5nuxfwL8Q3i3k7cuVX6tTOOQg1s
- z1h8Di1AjWoy9LEFIuaTCq4NSdDMJKmu8+i87ig/N+0ySMaUGvaDysjeGosnSruHBQ15
- 49RRu8YbieMryELSYsQAE3MFgrz7PoQ74/ztb6Ua/irjZRE6FbG2+I6dbg+Lq4SJAZv7
- FC7/JRMI1SzKluVlM2U0snbvXKJVmUWZ/RVjOiU2Js+TWDxKlEKgqG19h0l9d67Kos5Y
- 6GG09o5Nju3N7D7VOg6jY1ctjy3LVwn2ZsxJ96NLYeb6aoV9yW33lVbFdX0c3KWZgv3X
- 9jFw==
+ d=linaro.org; s=google; t=1777629009; x=1778233809; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=hIWpiTawUseQQPCN+9bltXY0EQ2B4/qK0zGFjkzJBcE=;
+ b=LFZWR8Ky4xs5ylmoMMr2cskrZz7YWD5xE/Mb54SRfKvhKBTNKk2EU4hDgcmWhs17qY
+ +diFi4tJyHzMjJGHta5BX4M1r4TTMuELjVzvdNAJzZIf0/HbQF/rseSB1B/wouA885SF
+ 1Q9Y1k+SFG5tOCrsp4ntYTZxD78jNc/pIhLkkeVzHuENCODUj+FuL0ykGjnIqfBdoQNV
+ yIdL/AZGZfdboFKpWW+OxZrpsRm0b3CZeojnbFRTh5N4V6kmB+MQS9Q8FnHBhZ7eSO3f
+ z9hvAj558eSHKdcv6Es3ff8kPWA8mmoeP9YnbfA8RVYzEbanGODaqWCE1pWOHrbaNsIy
+ 9mhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777628355; x=1778233155;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=NXzH+0bThSq+hixyp2oDpGP66Fd+UhVi1kTNl9/exDI=;
- b=fF3i7Q7WZVxtpK9KHW6FjH1ZKen4h9YvaiNbFUv4tGFeDx9pYgqvuWHFU7EPy8I7DP
- sv8T092HHNCIeOB/YcYiRZuYwjHAO9p4YxtU1RrQQUSynpQWPvWmomTioOIkEHz1imSW
- Gw8od2zOz/JafOP2Zln6kuI7va6hT5duVnCQvQoQoqDM83d4TYr7PW5WSSbfIq4Wx9Lp
- r3H+vAyUYwYlkONIktzbJrqQKyg/4h2gw/IBPh2/2jETDL0XOZi1gznZ6oJvi7f949Mn
- rrNqDGE04dcqwoyb45L0IIa1wFZTHBWB8cVfySsd7Km7xVodbwbFhEo7te+GLCQDn7Pd
- 3J6A==
-X-Gm-Message-State: AOJu0YybEipfPtFeziKDL8N6jJgwpzBXK0NXZ3CKXtA5wv00SoJ7RRlR
- K3Iy6Ztbz2XeZ8zo+cXiFQ3w6TJdV2xzkuotIViJktaH3fmzsBIkObr1nEDpzAhXUmiTUaF13Ct
- Khj/XxXI=
-X-Gm-Gg: AeBDieu5VZwkZnCEdxVV5aG8Vup+h2Vx7szWNLG2L5CnK6uwLKa9idrY6UgONuBdr2K
- vHio2E1TyMv8lryMcLtfU+1ZcUfk4J7JY7v24fUHhOc/lcLUn8ulsVYYbhRUFBiXTBaGyesXdwL
- YecLO7werQ5P573wrhINQX5ZtxyaK3XUPCk3/iAFBSEi7zXT22xaU6tQXaLT+5C06YZKdtGYpFN
- pfzjnldkztfNf+V28fOPk0qsiOojub3eCSxCyOj0sI6Icw12gw9aFV7CSlRCXcPxq4V82hIXcTn
- uoO+JIYJxTgpjoOCrIre+WmcEZYxDIhJMyDDocLGYpDb4F8OT9RN7K9YXli0axUY0+pg7n4rmkK
- uLD7VNoZqP3Vq98+MlMmFuDuuqj6cLDkoki+5OjiGwJ1RxMEP9valIh8qboVYLgFqEz23p/Tkpw
- pUQuUmrMjyT1COz/r7Qifod/pduwjdmGW6fXHKgtEskt0HCBTIWrHE
-X-Received: by 2002:a05:6a20:258e:b0:3a1:5cce:ca8d with SMTP id
- adf61e73a8af0-3a3cf7a8c0bmr7433843637.51.1777628354473; 
- Fri, 01 May 2026 02:39:14 -0700 (PDT)
-Received: from [192.168.10.140] ([180.233.125.15])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c7ffbc85c61sm1785445a12.22.2026.05.01.02.39.13
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 May 2026 02:39:14 -0700 (PDT)
-Message-ID: <59cbfe6b-656a-4b8f-a683-e9e79ddbd4de@linaro.org>
-Date: Fri, 1 May 2026 19:39:10 +1000
+ d=1e100.net; s=20251104; t=1777629009; x=1778233809;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hIWpiTawUseQQPCN+9bltXY0EQ2B4/qK0zGFjkzJBcE=;
+ b=Cxj2Fg3/T8nY/8oVpPxSgZsQdk1oyQYbzaFS4i/xcwhuRTQhbOGF6Hkj+8/N1R+uDi
+ 3iZ5gCRtWSFIxb/6uBZ+E1hpMIYmZYcd+d4JilYz0MPe7Ot2pWplLbhwfLXANqs31XrI
+ 34IBj6G7/ibFHQkzt1haWDY2oDnSSAm4JwEPIVyVFU98Gadat9xgwjY6Bl9u9p+cMeyp
+ /R52lYfz5mj0VH88bohYS6iBy5uHmM8MbUyQ1ZA/PX95IhkJitrPSoJCMsIiiMjn9gHN
+ 1hOcVj9kjMbqQ5UlajYfpzSo1wJuMGRT0tV1YNpalBnDnl53YUcQYr9yFRHpZQaIXBM2
+ WAsA==
+X-Gm-Message-State: AOJu0YwQZrNx78eSfOty7aXALvxo++bjGFjvDopn01QpHQw+UeanabvS
+ czhCg6aVjJkTtL43k/qUtc3up1G+U7AzRPl8Z6RHbW+niS+O/KujKsHujIJoOYd8lYXrb9dVsMd
+ ncCIQlcD2JeAFdbes89ckNg0DCFcb481rUxiLg9B9rg==
+X-Gm-Gg: AeBDiesjBb6m8g+WNLQ3LExcaBQ1/WvniF/UN5PXI4mD7iixOql+R074BXaSSgROUWQ
+ rc4I6Hi2vMBdZU9h7S6yt1RbDrcd5LhMo/CIcoaeFKhoQhJS0St9ktJ2LyQZYNQFZdO7Q9uCrIp
+ c5nZvJ80No/0VVe+waU11zT2blqQK51e9NjSiN8/QrH81Sn3oWHA394ED/ZTpXoLnoFU5zGtBph
+ sJMdVAdeKxvofdX1p/wmRiGUPNG7EofHWANCVwlkd7SE79GM8K7FY9lTDe0/Q2O+LmEUx/1g8QC
+ BpqnE+QMyP2oy/Zja9bKwLEzAOoFfgMI59Ci4XKxmkGHXP8GrCllSbfKHimeUgY19XOQqnnlhuS
+ K7g==
+X-Received: by 2002:a53:db07:0:b0:654:6a61:fb5a with SMTP id
+ 956f58d0204a3-65c18aedae4mr4030050d50.2.1777629009103; Fri, 01 May 2026
+ 02:50:09 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 7/7] target/arm: implement WFET
-To: qemu-devel@nongnu.org
-References: <20260430104434.1482407-1-alex.bennee@linaro.org>
- <20260430104434.1482407-8-alex.bennee@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260430104434.1482407-8-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
+References: <20260429190532.26538-1-mohamed@unpredictable.fr>
+In-Reply-To: <20260429190532.26538-1-mohamed@unpredictable.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 1 May 2026 10:49:56 +0100
+X-Gm-Features: AVHnY4I4HtaW2t8cz9v0J4YSOM_Gp0HgSC_gzLnG8im95OhzidTduIqee8IOS_Q
+Message-ID: <CAFEAcA_Rq+ggHLJEAmviCpTUfK8opcJ9B0wpD-WacbS2GP3abg@mail.gmail.com>
+Subject: Re: [PATCH v21 00/15] HVF: Add support for platform vGIC and nested
+ virtualisation
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>, 
+ Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-arm@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Alexander Graf <agraf@csgraf.de>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,34 +121,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/30/26 20:44, Alex Bennée wrote:
-> Now we have the event stream and SEV/SEVL implemented we can finally
-> enable WFET for Aarch64.
-> 
-> To avoid issues with QEMU's incomplete ldst exclusive handling causing
-> potential deadlocks in common WFE enabled locking patterns we take
-> advantage of the architectures flexibility and treat being in the
-> exclusive region as a reason to exit.
-> 
-> Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
-> 
-> ---
-> v2
->    - fix exception syndrome by using enum value
->    - use env->halt_reason
-> v3
->    - fix check_wfx_trap(s/false/true/) as it is a WFE
-> v4
->    - defer expensive calculations until needed
->    - treat cs->exclusive_addr as a IMPDEF WFE exit
->    - update commit message
-> ---
->   target/arm/tcg/helper-defs.h   |  1 +
->   target/arm/tcg/op_helper.c     | 95 ++++++++++++++++++++++++++++++++++
->   target/arm/tcg/translate-a64.c | 15 +++---
->   3 files changed, 104 insertions(+), 7 deletions(-)
+On Wed, 29 Apr 2026 at 20:05, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
+>
+> Link to branch: https://github.com/mediouni-m/qemu hvf-irqchip-and-nested
+> (tag for this submission: hvf-irqchip-and-nested-v21)
+>
+> This series adds support for nested virtualisation when using HVF on arm64 Macs.
+>
+> The first two patches are from the SME enablement series and are present for the
+> series to be buildable on its own.
+>
+> It has two parts:
+> - Apple vGICv3 support and necessary infrastructure changes for it
+> - Nested virtualisation support. Note that the nested virtualisation implementation
+> shipping as of macOS 26.3 is nVHE only (but it _does_ use VNCR as shipped).
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I've reviewed the last two patches and applied this to target-arm.next;
+hopefully it won't get tripped up by the CI this time.
 
-r~
+I had to fix a few checkpatch nits -- it would be helpful if you could
+run it on your end before submitting patches. It has a bit of a high
+false positive rate (especially the "long lines" one it's often better
+to keep the long line than make a particularly ugly linebreak), but
+things like "open brace for function definition is on its own line"
+and "multiline comments have the /* on their own" it will catch.
+
+thanks
+-- PMM
 
