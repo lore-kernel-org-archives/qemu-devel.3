@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACBBBCD3424
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 09:38:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4252CD3424
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 09:39:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIkK7-0000xe-Er; Fri, 01 May 2026 05:38:15 -0400
+	id 1wIkLE-0001Ia-2K; Fri, 01 May 2026 05:39:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIkK6-0000xL-79
- for qemu-devel@nongnu.org; Fri, 01 May 2026 05:38:14 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1wIkL8-0001I7-GA
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 05:39:18 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIkK4-0003R4-Jy
- for qemu-devel@nongnu.org; Fri, 01 May 2026 05:38:13 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-82f8892d4d6so826148b3a.0
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 02:38:12 -0700 (PDT)
+ id 1wIkL6-0003ch-Tp
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 05:39:18 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-c795f096fa5so666836a12.3
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 02:39:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777628291; x=1778233091; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777628355; x=1778233155; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cTc/gmbB6KSXb+l4ZU7rlAdbwcTLzpV4FDGiNz+eZc0=;
- b=imMf8Yc5NKswWWDRMemXtct4ci6XRiGx/ylaPJHmflVBjOflNWz5DSRg2AlbmlXn2H
- fKfOKh7742JVCC7O1WapiBYcigroIC89iPFkM1LptFeTGQSFNhcniqS3oEwT9HtsRUTp
- bT+uvOLGSXRvaT4UUcpL/Gu6589dmXIHt5Dfj9EI0yaClPLx/rjYrWETce0QjlIb2aJv
- saVv9HbrK12QZnO/H54YyFqNmueisFX2qlbD31BNTmIJmSb71VhJaTTE2VThpq8y+hUw
- EaDE/eyrUN5tQXgoW+tXomySHKxBg3JT9XJu0ZWtvp/3rGCcJPDOJkCGI0/rk2A5VlEv
- H8oQ==
+ bh=NXzH+0bThSq+hixyp2oDpGP66Fd+UhVi1kTNl9/exDI=;
+ b=eO6PpwUqGOOVhf+Oogw55PWPCmyOzpHs/9HPNE/5nuxfwL8Q3i3k7cuVX6tTOOQg1s
+ z1h8Di1AjWoy9LEFIuaTCq4NSdDMJKmu8+i87ig/N+0ySMaUGvaDysjeGosnSruHBQ15
+ 49RRu8YbieMryELSYsQAE3MFgrz7PoQ74/ztb6Ua/irjZRE6FbG2+I6dbg+Lq4SJAZv7
+ FC7/JRMI1SzKluVlM2U0snbvXKJVmUWZ/RVjOiU2Js+TWDxKlEKgqG19h0l9d67Kos5Y
+ 6GG09o5Nju3N7D7VOg6jY1ctjy3LVwn2ZsxJ96NLYeb6aoV9yW33lVbFdX0c3KWZgv3X
+ 9jFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777628291; x=1778233091;
+ d=1e100.net; s=20251104; t=1777628355; x=1778233155;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=cTc/gmbB6KSXb+l4ZU7rlAdbwcTLzpV4FDGiNz+eZc0=;
- b=C8P7EZQojC+PQgB358iX5Vl35dq0/Qid7XR371Ma2zSFDppJbvVfK3o7BdjtBDRDPQ
- ujPKoLIouPhfZjD9DFDifoZx1igcQy1+tGGEEooEsflgd6dcR/0fAaNILyR3oKRAtwEk
- Wd58mp988b9MQZsyFm/7g3Ptba2d9p29Y8HlvUI2z7VDhlGhP82WAEmUemH1UanyKjUU
- pfIpkYxAiBsGHx9IsyoMy8VZlBg8r+VEjr5X3Nb9mz32BTZVR4ZahbxnujLl9bAnSCGK
- ytbDS5SgBq9Cz+JSWZMESpTFMSj8AwuP4QXAZbpc8zS8xKI3oDN9ClMf5SOCWblidjfs
- XN1w==
-X-Gm-Message-State: AOJu0YxjnQSe5ymcnRX8uOSUxyUZ7LocCMWeWYZx/Mfon62iLWhZmQ05
- Wkw8QWySFXDk6SS9DXS2nHhYZ8WvkanIFeBJyoUm49DSZp7lsfTxxxB1hTmUjkz4X++kdq3Ljkc
- yxsw86hI=
-X-Gm-Gg: AeBDieuyofcB7HKMGjp/4WbbKQc9Tc0YJ+MoHpOPZ+4Cha/PmQ6NDUWt5tJIciUhu3A
- fHiJZu3rRwHyyuWKr30O9J4B2UNti+TAE/MxzP9LDDIJ/3nQKuQe6UjcipY86PXNJp/YWVDHKQR
- YY1cKICtQCtRsvoJRFVeqXIOd8etzpWSruY/yyQAPjImBlbr4Fjx/Dol8szJLdjYeq8QeyutCZ4
- Ftnd5BsbdnBL+wvaQUL5E9GJdK2CWwgZS0Rt1KoBFdnI0M7BwT6xG5wIBynJmWK6GBJBtjFS662
- l8lu9l2pWSoP0VlVoaIe6UA/6u+Ct4V3olE153wa/AZPBHb3lURM+z23jymPh+tU08+zGh6teRJ
- +8t/CBZpbKWkxLJmqdkKo3Hvoq305XGarXcN3ZTJOjIFU8kLyCc/45NAKPXFguFA59DmYz925r+
- 9GK9ChL8X4irIAXDSuKOsbIXgpRcWG5+uoP5bl/TBICBkxbIMvtEUc
-X-Received: by 2002:a05:6a00:aa04:b0:824:3bd9:aac6 with SMTP id
- d2e1a72fcca58-834fdb5c84amr7310673b3a.16.1777628290896; 
- Fri, 01 May 2026 02:38:10 -0700 (PDT)
+ bh=NXzH+0bThSq+hixyp2oDpGP66Fd+UhVi1kTNl9/exDI=;
+ b=fF3i7Q7WZVxtpK9KHW6FjH1ZKen4h9YvaiNbFUv4tGFeDx9pYgqvuWHFU7EPy8I7DP
+ sv8T092HHNCIeOB/YcYiRZuYwjHAO9p4YxtU1RrQQUSynpQWPvWmomTioOIkEHz1imSW
+ Gw8od2zOz/JafOP2Zln6kuI7va6hT5duVnCQvQoQoqDM83d4TYr7PW5WSSbfIq4Wx9Lp
+ r3H+vAyUYwYlkONIktzbJrqQKyg/4h2gw/IBPh2/2jETDL0XOZi1gznZ6oJvi7f949Mn
+ rrNqDGE04dcqwoyb45L0IIa1wFZTHBWB8cVfySsd7Km7xVodbwbFhEo7te+GLCQDn7Pd
+ 3J6A==
+X-Gm-Message-State: AOJu0YybEipfPtFeziKDL8N6jJgwpzBXK0NXZ3CKXtA5wv00SoJ7RRlR
+ K3Iy6Ztbz2XeZ8zo+cXiFQ3w6TJdV2xzkuotIViJktaH3fmzsBIkObr1nEDpzAhXUmiTUaF13Ct
+ Khj/XxXI=
+X-Gm-Gg: AeBDieu5VZwkZnCEdxVV5aG8Vup+h2Vx7szWNLG2L5CnK6uwLKa9idrY6UgONuBdr2K
+ vHio2E1TyMv8lryMcLtfU+1ZcUfk4J7JY7v24fUHhOc/lcLUn8ulsVYYbhRUFBiXTBaGyesXdwL
+ YecLO7werQ5P573wrhINQX5ZtxyaK3XUPCk3/iAFBSEi7zXT22xaU6tQXaLT+5C06YZKdtGYpFN
+ pfzjnldkztfNf+V28fOPk0qsiOojub3eCSxCyOj0sI6Icw12gw9aFV7CSlRCXcPxq4V82hIXcTn
+ uoO+JIYJxTgpjoOCrIre+WmcEZYxDIhJMyDDocLGYpDb4F8OT9RN7K9YXli0axUY0+pg7n4rmkK
+ uLD7VNoZqP3Vq98+MlMmFuDuuqj6cLDkoki+5OjiGwJ1RxMEP9valIh8qboVYLgFqEz23p/Tkpw
+ pUQuUmrMjyT1COz/r7Qifod/pduwjdmGW6fXHKgtEskt0HCBTIWrHE
+X-Received: by 2002:a05:6a20:258e:b0:3a1:5cce:ca8d with SMTP id
+ adf61e73a8af0-3a3cf7a8c0bmr7433843637.51.1777628354473; 
+ Fri, 01 May 2026 02:39:14 -0700 (PDT)
 Received: from [192.168.10.140] ([180.233.125.15])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-83515b864c7sm2356574b3a.59.2026.05.01.02.38.09
+ 41be03b00d2f7-c7ffbc85c61sm1785445a12.22.2026.05.01.02.39.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 May 2026 02:38:10 -0700 (PDT)
-Message-ID: <cd8456aa-f356-4b91-9a23-2f37e34d9c99@linaro.org>
-Date: Fri, 1 May 2026 19:38:06 +1000
+ Fri, 01 May 2026 02:39:14 -0700 (PDT)
+Message-ID: <59cbfe6b-656a-4b8f-a683-e9e79ddbd4de@linaro.org>
+Date: Fri, 1 May 2026 19:39:10 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 6/7] target/arm: handle the WFE trap case
+Subject: Re: [PATCH v4 7/7] target/arm: implement WFET
 To: qemu-devel@nongnu.org
 References: <20260430104434.1482407-1-alex.bennee@linaro.org>
- <20260430104434.1482407-7-alex.bennee@linaro.org>
+ <20260430104434.1482407-8-alex.bennee@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260430104434.1482407-7-alex.bennee@linaro.org>
+In-Reply-To: <20260430104434.1482407-8-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,17 +105,31 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/30/26 20:44, Alex Bennée wrote:
-> Now WFE can actually suspend on A-profile we also need to handle when
-> its trapped. To do this we need to pass the instruction size so we can
-> deal with the is_16bit syndrome encoding.
+> Now we have the event stream and SEV/SEVL implemented we can finally
+> enable WFET for Aarch64.
+> 
+> To avoid issues with QEMU's incomplete ldst exclusive handling causing
+> potential deadlocks in common WFE enabled locking patterns we take
+> advantage of the architectures flexibility and treat being in the
+> exclusive region as a reason to exit.
 > 
 > Signed-off-by: Alex Bennée<alex.bennee@linaro.org>
+> 
 > ---
->   target/arm/tcg/helper-defs.h   |  2 +-
->   target/arm/tcg/op_helper.c     | 15 ++++++++++++++-
->   target/arm/tcg/translate-a64.c |  2 +-
->   target/arm/tcg/translate.c     |  2 +-
->   4 files changed, 17 insertions(+), 4 deletions(-)
+> v2
+>    - fix exception syndrome by using enum value
+>    - use env->halt_reason
+> v3
+>    - fix check_wfx_trap(s/false/true/) as it is a WFE
+> v4
+>    - defer expensive calculations until needed
+>    - treat cs->exclusive_addr as a IMPDEF WFE exit
+>    - update commit message
+> ---
+>   target/arm/tcg/helper-defs.h   |  1 +
+>   target/arm/tcg/op_helper.c     | 95 ++++++++++++++++++++++++++++++++++
+>   target/arm/tcg/translate-a64.c | 15 +++---
+>   3 files changed, 104 insertions(+), 7 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
