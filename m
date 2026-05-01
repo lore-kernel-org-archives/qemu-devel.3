@@ -4,87 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D89E7CD3424
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:18:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70871CD3424
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:59:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIkuI-00042d-Ud; Fri, 01 May 2026 06:15:38 -0400
+	id 1wIlZP-0003QL-DI; Fri, 01 May 2026 06:58:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIkuA-000403-9b
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:30 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIku8-0000AB-Dh
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:29 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-48984d29fe3so26211545e9.0
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:15:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777630526; x=1778235326; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2YjxkgDmODhzB8F97AzDnOR+tGT6XYFOQgHnOUXmosQ=;
- b=oRXoGm9gk7R71IyQxNkHRQyGzFLOiB2vp5S6Ba3YLdZIh4Pe9X9T8jTjrkOWvj5vmS
- ps9FAYw5mONzDIsGcWE8nr2YqpT+ubJIFc3aG2jgGdGi5H4LOnvTXwKX1d9Oh1h5ICzx
- WpFuzt6rC0AT6/E6lepCyWnffvQYinCcYbrPA69CordLQ4GZ1jQvaIKGe7flDDGORRQl
- klTDx+9/pKlHkR7KwlASUiOKk5wP8/fVEVFbYpmxO1iFJLOOnTQo9sDKpr2T2BCBPx60
- 3Jzy1ldJYHhLV79KPf2t/6qgnBHUHQE1A9hNrRypCtmaDJegTqeXZNv1U9kNGGYX8qjQ
- 5avA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777630526; x=1778235326;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=2YjxkgDmODhzB8F97AzDnOR+tGT6XYFOQgHnOUXmosQ=;
- b=aDv1rorr6OiB5jocuHs2KgYtWdWFHz1xYSY9ydhbsCIAs1lR2w2b/SkeVQXnCVBsuF
- 3ZyxO5s/1u/PHcp492LdZYbWhL0TMv1XuVt6HxXOsya4pcEqvsF0PEQ590fCOhFM4PwT
- Qw4QZreoV5yvg8guB49rHLtknp/uuUU+lWtghwfBceqa2O+bNdibA4ZcJRWQ1K3PrjUJ
- KkZEibH75VL7wTYmwV/R3lwDTp9UVhOzwuupaG53zdrCrHfuzTIRQEqRrTFu4YJqcuHr
- nty5GTJ5FkZcuex89Kr37tAd5VetDdxLSCstxbBpFD+tizEZB2Yk31R+JF0zcOXvo/9e
- vadg==
-X-Gm-Message-State: AOJu0YwgPJ0enM35tDP8Ni4AtoAYhzJb+J6k8sBlekrubA/ddMGlJV31
- a67CuG6VMlg1VsNb2ECC7XixZwZ8Kg1wXsOmwVxdjjqwrPJI49VK85EcMY/MdLW02jBtZv60EMT
- mn3oi
-X-Gm-Gg: AeBDieuJSAUvPA5HFCUNUpjhyPuuEIZo77GjAHyOxU9AaeOHrTj0IE1wcG0CdK7IDi6
- I7pGYMoKEnRZU8uQWYrczUDT4z4W0vCh5zRedEmHtvs8VLaE9JMRuqE/aCb199KtlbAQAbUFU31
- L+cg2Z4Dv2L9+KMSpcKa2XXB03B9PKIYMIUouNPT3Z9HuD8O9X59u1Rrwbreu86Pe9C4mMldqIa
- Z5f8PCg1thEIUAiOjmRBDZY+YhgljmLCvLDsZtOPuN8+jtptrvaIvwde+R10Pr6rtjmnjkN1DFm
- BNqGHdU9cZGNpOSbh/BC9PPv72RL7U0HN4+nxZynMvPqijPNg4r58yC70KJIyraFqmPR7ssMchR
- lAvkd0GVu1jTSjNmbgzvhdtGnEoUAOCIEJYq1quxdSzC29XgQuuGnhGO/LUzqMdic9MetjwOBCp
- uecWzCjL6dULIcbh+dR+PGJULSaNLWR7WBhPxWUrGIAVfi17KcZMUCaxr26RzwRf9FOm0891Jdy
- UE9SRYC5TruEBpHUFxgficQEYR7yXz9YfrjScpCe2uUlhqxruFg
-X-Received: by 2002:a05:600c:1d1a:b0:485:30d4:6b9e with SMTP id
- 5b1f17b1804b1-48a84458d16mr114107105e9.21.1777630526469; 
- Fri, 01 May 2026 03:15:26 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8fede418sm12863335e9.6.2026.05.01.03.15.23
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 May 2026 03:15:24 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 13/28] target/arm/kvm: Cache host CPU probe failure
-Date: Fri,  1 May 2026 11:14:50 +0100
-Message-ID: <20260501101505.3485916-14-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260501101505.3485916-1-peter.maydell@linaro.org>
-References: <20260501101505.3485916-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wIlZM-0003QA-A6
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:58:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wIlZK-0006O9-5F
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:58:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777633079;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YhKd/UwyQX8ik+dMU0aJi04Dy5FcW5hQWROwkvyv1p0=;
+ b=Nbzo/QqtOs+fMfuvcanF20JNkyiKTaSo7JqTCzM7l9/R4JB91GmH5156H+jzkRI02LKrzZ
+ 5ros5a1TwgSIVv7UwJdCF6vgSdYnykbXbgVAuA2fdyBCOUEjgKVs3c0LxOxNrsGC06Egah
+ q2kjAR8d0oo8tcOWjNd54ALIYqlqDkc=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-396-4ox1cvc1MRG6ela3pSY4qg-1; Fri,
+ 01 May 2026 06:57:56 -0400
+X-MC-Unique: 4ox1cvc1MRG6ela3pSY4qg-1
+X-Mimecast-MFC-AGG-ID: 4ox1cvc1MRG6ela3pSY4qg_1777633075
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 206861956088; Fri,  1 May 2026 10:57:55 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.48.117])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A51101800906; Fri,  1 May 2026 10:57:52 +0000 (UTC)
+Date: Fri, 1 May 2026 11:57:48 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: Re: [PULL 14/42] tests/functional: add a module for handling asset
+ download & caching
+Message-ID: <afSHLJD0psvA8q8i@redhat.com>
+References: <20240904103923.451847-1-thuth@redhat.com>
+ <20240904103923.451847-15-thuth@redhat.com>
+ <CAFEAcA_TgEt2+=737G_XRU1+bWV=zypHFo0WTTG_Ms_DyyB5+g@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <CAFEAcA_TgEt2+=737G_XRU1+bWV=zypHFo0WTTG_Ms_DyyB5+g@mail.gmail.com>
+User-Agent: Mutt/2.3.1 (2026-03-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,138 +89,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+On Fri, May 01, 2026 at 11:02:48AM +0100, Peter Maydell wrote:
+> On Wed, 4 Sept 2024 at 11:41, Thomas Huth <thuth@redhat.com> wrote:
+> >
+> > From: Daniel P. Berrangé <berrange@redhat.com>
+> >
+> > The 'Asset' class is a simple module that declares a downloadable
+> > asset that can be cached locally. Downloads are stored in the user's
+> > home dir at ~/.cache/qemu/download, using a sha256 sum of the URL.
+> >
+> > [thuth: Drop sha1 support, use hash on file content for naming instead of URL,
+> >         add the possibility to specify the cache dir via environment variable]
+> >
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > Message-ID: <20240830133841.142644-15-thuth@redhat.com>
+> > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> 
+> An old change, but I've just noticed:
+> 
+> > +        try:
+> > +            with tmp_cache_file.open("wb+") as dst:
+> > +                copyfileobj(resp, dst)
+> > +        except:
+> > +            tmp_cache_file.unlink()
+> > +            raise
+> > +        try:
+> > +            # Set these just for informational purposes
+> > +            os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
+> > +                        self.url.encode('utf8'))
+> > +            os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
+> > +                        self.hash.encode('utf8'))
 
-kvm_arm_set_cpu_features_from_host() does not properly handle host CPU
-probe failure with caching. The current algorithm can be summarized as
-follows:
+snip
 
-    If dtb_compatible is not cached:
-        If kvm_arm_create_scratch_host_vcpu() fails:
-            Report failure
+> I guess since they're only for "informational purposes" we can
+> safely just skip them on non-Linux -- what's the Python way
+> to check for "do we have this" ?
 
-        Cache dtb_compatible
+  if hasattr(os, "setxattr"):
+     ...blah...
 
-        If getting register values fails:
-            Report failure
-
-    Report success
-
-This algorithm has the following problems:
-
-- If kvm_arm_create_scratch_host_vcpu() fails, probing may be repeated.
-- If getting register values fails, later invocations incorrectly report
-  success.
-
-Make two changes to fix them:
-
-- Cache dtb_compatible whenever a probe is attempted.
-- Record probe failure by assigning QEMU_KVM_ARM_TARGET_NONE to
-  arm_host_cpu_features.target.
-
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: 20260428-features-v1-1-1841b39da7e6@rsg.ci.i.u-tokyo.ac.jp
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/kvm.c | 38 ++++++++++++++++++++++----------------
- 1 file changed, 22 insertions(+), 16 deletions(-)
-
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index d4a68874b8..7d194ea112 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -273,7 +273,7 @@ static uint32_t kvm_arm_sve_get_vls(int fd)
-     return vls[0] & MAKE_64BIT_MASK(0, ARM_MAX_VQ);
- }
- 
--static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-+static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
- {
-     /* Identify the feature bits corresponding to the host CPU, and
-      * fill out the ARMHostCPUClass fields accordingly. To do this
-@@ -287,6 +287,13 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     uint64_t features = 0;
-     int err;
- 
-+    ahcf->target = QEMU_KVM_ARM_TARGET_NONE;
-+    ahcf->dtb_compatible = "arm,armv8";
-+
-+    if (!kvm_enabled()) {
-+        return;
-+    }
-+
-     /*
-      * target = -1 informs kvm_arm_create_scratch_host_vcpu()
-      * to use the preferred target
-@@ -326,11 +333,9 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     }
- 
-     if (!kvm_arm_create_scratch_host_vcpu(fdarray, &init)) {
--        return false;
-+        return;
-     }
- 
--    ahcf->target = init.target;
--    ahcf->dtb_compatible = "arm,armv8";
-     int fd = fdarray[2];
- 
-     err = get_host_cpu_reg(fd, ahcf, ID_AA64PFR0_EL1_IDX);
-@@ -454,7 +459,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     kvm_arm_destroy_scratch_host_vcpu(fdarray);
- 
-     if (err < 0) {
--        return false;
-+        return;
-     }
- 
-     /*
-@@ -471,9 +476,8 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-         features |= 1ULL << ARM_FEATURE_EL2;
-     }
- 
-+    ahcf->target = init.target;
-     ahcf->features = features;
--
--    return true;
- }
- 
- void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
-@@ -481,18 +485,20 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
-     CPUARMState *env = &cpu->env;
- 
-     if (!arm_host_cpu_features.dtb_compatible) {
--        if (!kvm_enabled() ||
--            !kvm_arm_get_host_cpu_features(&arm_host_cpu_features)) {
--            /* We can't report this error yet, so flag that we need to
--             * in arm_cpu_realizefn().
--             */
--            cpu->kvm_target = QEMU_KVM_ARM_TARGET_NONE;
--            cpu->host_cpu_probe_failed = true;
--            return;
--        }
-+        kvm_arm_get_host_cpu_features(&arm_host_cpu_features);
-     }
- 
-     cpu->kvm_target = arm_host_cpu_features.target;
-+
-+    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
-+        /*
-+         * We can't report this error yet, so flag that we need to
-+         * in arm_cpu_realizefn().
-+         */
-+        cpu->host_cpu_probe_failed = true;
-+        return;
-+    }
-+
-     cpu->dtb_compatible = arm_host_cpu_features.dtb_compatible;
-     cpu->isar = arm_host_cpu_features.isar;
-     cpu->sve_vq.supported = arm_host_cpu_features.sve_vq_supported;
--- 
-2.43.0
+With regards,
+Daniel
 
 
