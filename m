@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2AA5FF885A
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81B5FCD3424
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:17:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIkuA-00040C-Ln; Fri, 01 May 2026 06:15:30 -0400
+	id 1wIkuI-00042Z-9Z; Fri, 01 May 2026 06:15:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIktw-0003w4-Kt
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:16 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1wIku1-0003x8-13
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:21 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIktu-0008IZ-V1
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:16 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-488af9fdaa7so10168065e9.1
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:15:14 -0700 (PDT)
+ id 1wIktz-0008L6-4T
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:20 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-488b0e1b870so29038645e9.2
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:15:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777630513; x=1778235313; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777630517; x=1778235317; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Xl4HhnyBXMIn8KYzROgjNlZ37AqhnUlhFOr63vQnvhM=;
- b=ex2WuxsvGWEbFkEDizvuTZgCD6wi6L/RzWE/PAeNwMIPTBO6vOxMigy0xASy6R8uh2
- +CrfGGO4lddKZTZI4hpitTa+YclG0wfSW43BdKmlKIfqdi9IOM/LS7k6huGwt1f4qayE
- mp/Gh9v8TizcLc2ixlzaQ4wK7B9wwLbBYhmAZr94u75V5s6RJ6s1xalYZ3c4oAjyNYWg
- PEqTriZNxg4QBPHCdkonxUFtOF00+P1xxS7Y+1sTNrcrqNh5zM8FAJZeiphO6+BaCkpA
- QzV+d0LShcZVeLMJamAc8rpjpNEn7eaWZ0XoQniF7oPKQXTJSKm/ydQsI2P327XBJYKv
- E72Q==
+ :reply-to; bh=dwdpNuQzmGhSaNwgQnbl3GNGGmyJ/o/emE+Fj3bUbk0=;
+ b=c1oLbFQC9wb0vkDx+pLZdklwhS9yFRGJMvewPfH116RwSlnASE0p8CP+D3dyYZI45K
+ aTyzyTMYpfe+Ikx8/sTVwJ7LKmDk56GXUNCyaktVKfvKz06xzM2DRKMkSWlnA2a5//M2
+ /f3dUtXbYdiX6WGWIv5ijLXf8dKqrAhBnO9JGOVBNIB1WCzj6rfXnFwyYdMF1KfI8Udo
+ jnGJjERppwXPXurvtaaR/4y4mL1sBaaCeOEni6jjdoiBFCDkODD3PjarRzT5+vVu9mKL
+ stVt681ok631iIF2ZPRf9SRBBMCfiJ87uRNzq0XjYQpBSVS73z3lskqHu39OHOeDy2lz
+ rq9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777630513; x=1778235313;
+ d=1e100.net; s=20251104; t=1777630517; x=1778235317;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Xl4HhnyBXMIn8KYzROgjNlZ37AqhnUlhFOr63vQnvhM=;
- b=SO+iUbYBZkV3JNxMJL12spsMm4e7uScQdZHNEnptu3FdhgmA3lZixbUA34y4tvlcu6
- tc3T727rqIh4c4W+zBm9RcmTXAIW768RFN3rDwNVfFTNhXApFf09gbYy4fFS4Y16OdQf
- XSDjzTviNzWGJs2rYGjNU7URKOps/ielTGciYnYJLyvPcNLX7hywTh2/rVAeHEWWT5nJ
- dzrmQx47AbZIGSqqvlN5wRNx7UG2GNpmgKgRD3+7zyoNxjwM8/C4Ar3YiP3nfto9eYr1
- xnzdesFdHqNwfH262ynj9s4YFWBYLONUALiHWgws9Ex8LUO7HTAm92hknntueBrF3Sk2
- Py2A==
-X-Gm-Message-State: AOJu0YxE/86h7aYyKJu89pLP91c+GscwnPLBBknqe6fmMWyf3XSJgqL7
- oSkbk4I0F1ljN6+e4Gi/uK4nI85ORUFsQIcF+PcTbAdKUEjuMSA3xqx7642t5RPxKRbxTlMskAc
- TDoCy
-X-Gm-Gg: AeBDievS0rRl55SyzOygV9n8FAZFy/MRDqjSXcV1BbO4v+q0NBqmIjrmIDFV0ldZ7WD
- wvbHtx/oR1Ynj0GVU1zPBB+SaVtX9jW5vIdpRmuLoTbGU2gNhK120b3OM4HuydJ5arSH6ViVRKM
- z7ZDvoaPTI0Uw31+eU8FeZdOe5DeM61SXREl6yz172wY8YpeNtvUELbaR9h024RH67/vJSQ/k9I
- d6oy9t0hBFp+S0HS2hPLBMTfLqz5B2b9w1uUcpHOCmju6KBwZS54tnyUSfX+gW5hv09V6LZzvcc
- UUQlw4MpALjorvzwiRCHohObghOQEcrAFldBDCrPMgLUtSg7OLhsiEhUTxXNt6atIZty/ESmo/H
- ewEcpR9Qc/qqV9jBW+G+fa+2xmyUF6QIUeR9yLAcgH+49UmAzi7xMemqdJQMcL4qsEQBVNG+f4W
- SYiV2vNGzZmdjuD8QKVM9JT2TFoyTVn1e9hy4rQI6ck9q/phqpV3ZevBDwVt76n4CvN0GIEM/G/
- NovRH0yMSM8ni+Pg4L4fMA14Ra7XRiSxSLkT+N0LQ==
-X-Received: by 2002:a05:600c:1f8e:b0:488:a824:fe04 with SMTP id
- 5b1f17b1804b1-48a8447f466mr101081045e9.26.1777630513445; 
- Fri, 01 May 2026 03:15:13 -0700 (PDT)
+ bh=dwdpNuQzmGhSaNwgQnbl3GNGGmyJ/o/emE+Fj3bUbk0=;
+ b=G9lX5zEgkl+HvS0cCecIdx6ztE19g8W3J6odYYcs/mlvfOskhK03pvhPI9M4I4ULOd
+ riYADBO0NVYK4ktK77gWNaRZ02VOLAbzlbFjBbtgNh+SuUDwro2AHDK5Nrj+vbtO/FSA
+ nemh1s7WEd6vGGnUCgqAglQkqyi5UugLfjZxo9WXW2pHOYjlplOQBIF3LTRNBc4gxMd3
+ XzyavM5EuxMtueTfhFf/gAzFhHBANOTLxyPQmz4ErZZ5k8WUVPdRc9BT+EMOte5gU/8K
+ P2lI9+5VTdrrPDcCQpF8tZSNDrTR7uHXAnO9l+pZRPCLEiFwqWM0R4YLTCOZmgBrqap1
+ HNfw==
+X-Gm-Message-State: AOJu0YwzHjKAolFjRq5nAAZy3G6o9YjcBO3Rs/jWvojiEKS10oZeAS0f
+ cKkJf3EIFM96NfWwK87bdtdqLBJcuHJIghNAEOylxx2KWK4b0qvFd0N2b+if2V/2TKRxwiFpokI
+ FjI6f
+X-Gm-Gg: AeBDieuPMZIwBHTbl1YHlqfrF+cVwq8ohvjJP5Z7ukHeFCMULbT2aPAxPPuoZ97bxES
+ c/5fyYWziGIUGlBO80tsezBggV+fZUAntd+HV+pnbQ2zAnTz8IDqLLIVlcQWupnCCxKOq1LyxKQ
+ u0qSH9L/N1XsLSVCIRl3bhFXTCzELHEwiBXghy7w8/UvRK+yUcKZniQOOLqGbONyss3WSaOrJp9
+ twnLVa9UPC+cVPvXBM9u5p7OAtvscrphyBmRrbPz/LcSTxBUxhRI3KDPtDyhG5AWQVvhd0BOWfU
+ UjfDTzKjkkXBTPGqkdVVQxGBOEe5p8qZfmJ2zysyygKLBhxYKMuiZ5EuDXE9wNF4WwnltLi3aVw
+ vEO5WKlZ4pbzqgpMYnH2d2jXY1fsinGhwPhUOUqsO5T6S3AxGMKKbdHc9UEWx9BSVSbUOZKVepZ
+ 54YbA3Rz7gK5/BmIxvEPooVpyvqUzK3YymLD9S7uo0pp1s0JRk0fMss/WSssw+1+98XoFHtI3+1
+ UztI7u0znUr2zsVMLZQggLo6cBU+QnOcqHur3w4QQ==
+X-Received: by 2002:a05:600c:3e10:b0:488:a2ac:a34c with SMTP id
+ 5b1f17b1804b1-48a844533d6mr108261655e9.12.1777630516902; 
+ Fri, 01 May 2026 03:15:16 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8fede418sm12863335e9.6.2026.05.01.03.15.12
+ 5b1f17b1804b1-48a8fede418sm12863335e9.6.2026.05.01.03.15.15
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 May 2026 03:15:12 -0700 (PDT)
+ Fri, 01 May 2026 03:15:15 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/28] target/arm/cpu-features.c: New fields in AA64MMFR4
-Date: Fri,  1 May 2026 11:14:43 +0100
-Message-ID: <20260501101505.3485916-7-peter.maydell@linaro.org>
+Subject: [PULL 08/28] target/arm/ptw.c: Add GDI spaces to the granule
+ protection case
+Date: Fri,  1 May 2026 11:14:45 +0100
+Message-ID: <20260501101505.3485916-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260501101505.3485916-1-peter.maydell@linaro.org>
 References: <20260501101505.3485916-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,37 +103,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jim MacArthur <jim.macarthur@linaro.org>
 
-Added RMEGDI for FEAT_RME_GDI and other new fields.
+System Agent, Non-secure Protected and two other GPI field encodings.
+
+These are explicitly denied access for any processing element when
+the relevant GPCCR bit is set, and reserved values when the relevant
+GPCCR bit is zero.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
-Message-id: 20260421-jmac-feat_rme_gdi-v3-1-ecd20c77eae1@linaro.org
+Message-id: 20260421-jmac-feat_rme_gdi-v3-3-ecd20c77eae1@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/cpu-features.h | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ target/arm/ptw.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 6e5212ff6c..88fe3ed287 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -346,8 +346,16 @@ FIELD(ID_AA64MMFR3, SDERR, 52, 4)
- FIELD(ID_AA64MMFR3, ADERR, 56, 4)
- FIELD(ID_AA64MMFR3, SPEC_FPACC, 60, 4)
- 
-+FIELD(ID_AA64MMFR4, POPS, 0, 4)
-+FIELD(ID_AA64MMFR4, EIESB, 4, 4)
- FIELD(ID_AA64MMFR4, ASID2, 8, 4)
-+FIELD(ID_AA64MMFR4, HACDBS, 12, 4)
-+FIELD(ID_AA64MMFR4, FGWTE3, 16, 4)
-+FIELD(ID_AA64MMFR4, NV_FRAC, 20, 4)
- FIELD(ID_AA64MMFR4, E2H0, 24, 4)
-+FIELD(ID_AA64MMFR4, RMEGDI, 28, 4)
-+FIELD(ID_AA64MMFR4, E3DSE, 36, 4)
-+FIELD(ID_AA64MMFR4, SRMASK, 44, 4)
- 
- FIELD(ID_AA64DFR0, DEBUGVER, 0, 4)
- FIELD(ID_AA64DFR0, TRACEVER, 4, 4)
+diff --git a/target/arm/ptw.c b/target/arm/ptw.c
+index 7b993bb5b3..316e201cfe 100644
+--- a/target/arm/ptw.c
++++ b/target/arm/ptw.c
+@@ -510,6 +510,26 @@ bool arm_granule_protection_check(ARMGranuleProtectionConfig config,
+         break;
+     case 0b1111: /* all access */
+         return true;
++    case 0b0100: /* system agent only */
++        if (FIELD_EX64(gpccr, GPCCR, SA) == 0) {
++            goto fault_walk;
++        }
++        break;
++    case 0b0101: /* non-secure protected */
++        if (FIELD_EX64(gpccr, GPCCR, NSP) == 0) {
++            goto fault_walk;
++        }
++        break;
++    case 0b0110: /* reserved if NA6==0, otherwise no access */
++        if (FIELD_EX64(gpccr, GPCCR, NA6) == 0) {
++            goto fault_walk;
++        }
++        break;
++    case 0b0111: /* reserved if NA7==0, otherwise no access */
++        if (FIELD_EX64(gpccr, GPCCR, NA7) == 0) {
++            goto fault_walk;
++        }
++        break;
+     case 0b1000: /* secure */
+         if (!config.support_sel2) {
+             goto fault_walk;
 -- 
 2.43.0
 
