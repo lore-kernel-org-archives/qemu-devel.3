@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C64BCFF886F
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 03:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7196BCD13DA
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 03:03:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIe9E-0001FJ-CO; Thu, 30 Apr 2026 23:02:36 -0400
+	id 1wIe9C-0001Ex-JG; Thu, 30 Apr 2026 23:02:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wIe9C-0001F0-Ip
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:02:34 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wIe99-0001EI-RF
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:02:31 -0400
+Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wIe9A-0005XS-PF
- for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:02:34 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-7d4c12ff3d5so1503011a34.2
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 20:02:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wIe97-0005X4-T0
+ for qemu-devel@nongnu.org; Thu, 30 Apr 2026 23:02:31 -0400
+Received: by mail-oa1-x33.google.com with SMTP id
+ 586e51a60fabf-4232323a7daso727342fac.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 20:02:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777604551; x=1778209351;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777604548; x=1778209348;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lUbDl4QgIbmOuxVLNZcdjXvd3ED4AO2j72fBIWJqpD4=;
- b=tAlq3gsMeIv8C9EMSSSd40ZyI1jnPly6oAECyk7VufV/daxNWCJPMATW6mRRmBBKwa
- II6auYwjKuLB7DWf3xYR0fMaeXg38ny2zvJACiawsdGF8adgPFuizu9aFkXpIkKkJGwh
- tFDbLf10EXBbszhNwj3f9bSQDDONhFhNO0mq1l2PQglzd6iVSWfePYZHpf61q6Ruds1I
- ooE8ZeLkWGEEict2xgbaWgda66y/fb3sjh5InnNbU41WFhwm7UrTTTUpjxVB0AAL3Dyn
- ezAXz43f1+eHpnSY+K1UaGibW2fJ+sm7adVXWWNfKzjcX0E5egkRpkiT3dtbb6Wny1OQ
- G8JA==
+ :reply-to; bh=zXWcqieCQQGOx6uu0Rw2ijLJDJTmXXLiFYw3UPpcYgE=;
+ b=TG0Y0vM3uUUC+/MizVfOX7cqw/tbnIfBd7cK485KNP1Q4+Sn7kko0dd0rFcI81Rl0F
+ AS9SxXg1iN0tGijQ7F9Dzvu1Z7S67qRKTpMY/j/7sP3stojVKfcWQFJ+/QwBF0XikrS9
+ Icfh78sPYcgEEtkbtnxTnaCBTXPvIuYFhdHKChJtB3plkYhO0VQv29NUgJHxvm0URq12
+ cUzvAk8ydLIcHXCXh9GX63GGTOd0h1V6iMHN/9GZS9dOz8VIjSxZTm1n4+J3vF5iTJ/L
+ vPIQgt+nXdjNu2ENI8ojUGK2qyL15PNr6wH90E2XjykOEyaK9giiBaFYugzyYjXGQNkB
+ Pbng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777604551; x=1778209351;
+ d=1e100.net; s=20251104; t=1777604548; x=1778209348;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=lUbDl4QgIbmOuxVLNZcdjXvd3ED4AO2j72fBIWJqpD4=;
- b=e1z8UhLUg1ybsuVnjYEOyAd/5JETLDao01qMEED3HkaLsuSyut/DcpELbmSgl6ozNv
- LuLO4zs91ySBbEDfYp8UL1AWrhpp9VKj6MMpR9Fx4GzEQH+IEb7YMbRJD4QXLOS6DZ5Q
- 6GQlQP7hteEii07wRRIjMx4z/cXWINYWbHxdUTJkfS+7i11ctvGrnrPCWy/FRALhrW4Q
- 8lg1s3jTVRdds2V6Sl404WO8XOWVP84O7B9hCtJG0zKDO2QOn/1x5TcK0vKjdIeftqp0
- b2XVMEIEwlOmW8w0mHzJUr00NcjEXgVUJ5lskN/tgSkBFqUhZumZEC9vFNk1LCCfB9+H
- Evgg==
-X-Gm-Message-State: AOJu0Yy6YmQu3GzLaJNWzj1MehlfHL81fV4Ts8ZcTMXiTKBrNkGuAnxI
- jCadbaHztiTOZnkBAsxVv4o7mXlzLDvvPgb4GKuT4falZcEPeAjo5/ideS/zy1UVf9I=
-X-Gm-Gg: AeBDieu17LnnZquNcPdrnFJecdiUKpeqv+ZmaSxkc031nu29H37e8Ku1KUGgicAdlLx
- tMYTqDHeShHI0n9jSEZnXAWwfN1v2HN11ZC81TklaqxTjI5NJ/hjrot7uLBFBB2amUiQi43K0Mm
- DIoG3r0kh/wNkwpscMTHwPkYGhQDpafN2oH5bU/TEmQ1opyXfumMk5nU7mw8B5wcPV+opXfX1oy
- I8xHXLSiFD/Y4HKHAikZNBdSFz7ALJzrzRpYwHZaH2rv1obpLt1agbrTdKBDmQfngWS0yPXl8jz
- cIGPKpRlgsAbMDxjcVS3rblVOlKmdQnich5G7d7H2HxFWk2r5zJvRwhVHhC4Mx130amNoPjR0pi
- b05jGokJBX5J/RAHkIEjTn75H4gHZpKPKsQO4Ml3gM2fdKTica2KCTYBC/tDaWpJBukhT9HfPL5
- OaMhka7ANQWoOm+IkPBQ4z
-X-Received: by 2002:a05:6820:c84:b0:696:155e:cd67 with SMTP id
- 006d021491bc7-6967a649fb0mr2815244eaf.57.1777604550699; 
- Thu, 30 Apr 2026 20:02:30 -0700 (PDT)
+ bh=zXWcqieCQQGOx6uu0Rw2ijLJDJTmXXLiFYw3UPpcYgE=;
+ b=WEiHLBjevVrS96V7HQHq6bJU61gIdLhN3LZbwQM9p1fLNRhQzPmjnJ+GddmKFeMKsp
+ auhLJ+afcZU/MSzbVNsO2VBP2DBEiP2oWO67ojvy/5w91+bpJFIsSXPimK/oBpWBAYYW
+ LFjzvLufYJ7xzWcSXU9KBJr1pX/ap6Ep4eVGaaBZIdRemoauAjHoUAlvf4nAHcgv42WX
+ /ldzauH5ABifxBL8Up15Dkw72v25sKkfqRPZBKXV6sp//6GjB3qyF/lu9x+bfE8qWdrp
+ 1XmV/69OSS9KUQ14NS8p+eBD6zokfIAjHyvej/qWzFo0CzQt6hEJb5LPBMqKY56Y49Vl
+ JQTQ==
+X-Gm-Message-State: AOJu0YyP7wOQkqac3gMWYgLVN/jLGJhGzzuU2QBw9xdyJsKLj+Nyf3iF
+ F4dTTCi6ckCP1O+y3YK+XepkI8/S5VNCFJKRkUjH8msx9bvH3NHZWkogu+XE9YbvdIk=
+X-Gm-Gg: AeBDieto6L88lZwQnwqmylfW/FLuHG/2IIbqkt8h0BusMrnpozkoz5+QO9AI/2AX3mm
+ 92ja5z4V64FnueONMcXhx+aLANotYC+FlN0xKiIykajF1VZZJJCyt0EGC9HFTatPObm4gHS2U4i
+ XOAh1x8e36HrM5rQr4fSPnBCH4U6z4CHIb3Jw08VkdIDKP2Qc00w/JdVhadEb1KbmoUTK2xU/1w
+ RpXli0BPzm2TXRMIvuka1bv1YVxMRwrrTX23+SCn2tKmnNnvbzi7azJFL/KDKYsayMoCsXRFHLS
+ pyelQzjJbDBnRw2PwkXKuFiGEz71tj8RGpgkI8EdMJY6uphVDOfyR5+O5tZjXB03Jxg9JqzsAU3
+ Hv0qOFj1I6pikkxIMmom4sel872i+mzvuqmbigMYKvioiPvjP8ApjQ6RjzYbjXoikm1CbLG6o1s
+ j3sR8yN3c4CQZe2KukKfdB
+X-Received: by 2002:a05:6870:d87:b0:430:3591:26cc with SMTP id
+ 586e51a60fabf-434337221d1mr3252350fac.8.1777604548530; 
+ Thu, 30 Apr 2026 20:02:28 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-43454cbc3c7sm1550875fac.12.2026.04.30.20.02.28
+ 586e51a60fabf-43454cbc3c7sm1550875fac.12.2026.04.30.20.02.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 30 Apr 2026 20:02:29 -0700 (PDT)
+ Thu, 30 Apr 2026 20:02:27 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Thu, 30 Apr 2026 20:59:31 -0600
-Subject: [PATCH v3 2/4] bsd-user: Delete sbrk and sstk system calls.
+Date: Thu, 30 Apr 2026 20:59:30 -0600
+Subject: [PATCH v3 1/4] bsd-user: Add syscall header generator for FreeBSD
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260430-syscall-nr-v3-2-4b1b2445e28f@bsdimp.com>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260430-syscall-nr-v3-1-4b1b2445e28f@bsdimp.com>
 References: <20260430-syscall-nr-v3-0-4b1b2445e28f@bsdimp.com>
 In-Reply-To: <20260430-syscall-nr-v3-0-4b1b2445e28f@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -79,24 +79,24 @@ Cc: Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3103; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=s1cNkl7oaOVINYGeXHehc9QlFbfyzLUyBMhD1vHNmOA=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9BdiB3xQX9j85fS0NQJ8QsNkGY2HJc70Q2uAN
- IvS4MfJFo+JAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafQXYgAKCRBsHNEofbAR
- ALU0D/41u02jcTl9aRjHxpkaBcnY5GsMY7dIOSmO2hJtQugUcZYpwfDD2+2w5j2jsH4zZPwm75M
- y9quX5qcVsTdbsxQB2qEjjtuLMY07s4aGvRCzZGW5UwZ8Bea/XeKBfpIN8/nNrjETxdJltFCH5M
- Gdn4GcoK13b6ltQ5Zi9g8qZ6mNXEAcFLoiVKUYFlzV3BwCnbDQ9K+5/9bhbStyObNfliP2CNp/9
- hoEoQq2zuHW8mcFHpy9qOEkSev2Sj8q4ycBqUGzYZv2UOzd+OC45KVvg80zRFOFfxTzBJ7q96Tw
- wbFy8ypE2I1QNb+oObIRecpZA+jNIQS0htwJ3myVIge+dyVPyhd6GRJG6jXDO4hGHyLSwmZogpC
- 86d+9aluLcr4IUqmZJeDgOlZepp5XR7C/8XtRjf2yKQUfnfvoMtOpQKz8hC31X41iIrhx+9z04/
- HkCRBqKaaMEG+isygZUxNeX3zV+AWUrysD0FBr4HNKPXsPM65M1TGUAXiusIDTrCpteoPWpbIas
- wqrBLETKLSTg58eNc1bZR3QmT3YjXUNKyXoWdcbt6M1MjN9+jb5Cu40zuTmjrsvGszI2eeDlZV6
- jkCBUMbMsAeP/MO9yB1kDlcggQfF2Wstq/r9oKvmZGLVoJ9RT+p8Udeb70Z2b5ZebeMpqi+9tc9
- zSLTrNLqTubftIw==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1708; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=xEPjNFAagt+hU6d3LgpAiHD/UMD+gdHHXHPFBAUagE4=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9BdiB2tvPraB7AEKmxDEXkuu0WfX+WpLa69QM
+ u+2vyQsclqJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafQXYgAKCRBsHNEofbAR
+ AKJJEAC5ochC+1mM/sBJv+HiHHUNhDKwifx+MZrVPPzvYQIHHpGcyb0Hbt3Z0f3gJj7uXdJbrsi
+ FqS77EoQVW7/0SbZT8C1anP68Y4N4ad0ZNjqBhkUQveEx2lF20vdMTVa9MKrJlGTm6rWvw9tIXh
+ YvJ1cymzfu3M5BcDYaaoUMItL9EaoJjSUD6zAaSf7+HmQa1nutBTIzgnDkCBp4MMKm1NDSBhWv2
+ La43GqqNuXuXcglNANvA4lRVc1TQEgrT4AZKBppgHhgrbasZ9b+aabYfpJ5xryf96lbl8VCAO9e
+ S/FdrvMC19tDFiYwxU7PezmSuq7YBy559okq0qBMyW1+/e+DhCSapVWy0W+D+kUAq6Qj5xztE4H
+ kA3M+JoKTIaP4MHE9kNUS8aToH60QBNX1tvyQQ62JOLIHLm4gDvgHlCWtTTUeE12MgUL9GXnxuK
+ GNvB4HadJ+zp5YYIzeZGVjIhZmbl+FVzNPgmqko//PiU0zzp1aV3KAXKMm5wjmqkDpwsQZ/4ngc
+ l9VXq7arnKpAVTmVXq5fgF5kr1U2n/xBPpBC2xR83txj16xKF5uVDr38sW+SRCpsD1x7U74rKQq
+ QESD8BVOW++5N9ocT6P69LjNzUJXX5CtaMvXyDe2HkJTswQTCOiBXf362jNX54HnZAiKmi4OnQR
+ h2/MrOg/pI5vwbg==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::331;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x331.google.com
+Received-SPF: none client-ip=2001:4860:4864:20::33;
+ envelope-from=imp@bsdimp.com; helo=mail-oa1-x33.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -118,82 +118,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sbrk and sstk were an experimental system call introduced in 4.2BSD, but
-with an blank implementation. They remained in subsequent 4BSD releases
-doing nothing (with 4.3-Reno and later returning not supported). FreeBSD
-1.x imported this. They were removed in 2023. Remove them from here
-because no real, non-contrived program on FreeBSD ever had them.
+Generate the syscall numbers from the installed header that has them.
+Ideally, we'd use FreeBSD's lua infra for this, but that requires that
+we have those files installed, and they aren't quite the same across
+supported versions yet, so use this simple, but effective hack. Add to
+meson build, but unused.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-mem.h            | 2 ++
- bsd-user/freebsd/os-syscall.c | 8 --------
- bsd-user/freebsd/strace.list  | 4 ++++
- 3 files changed, 6 insertions(+), 8 deletions(-)
+ bsd-user/freebsd/meson.build           | 10 ++++++++--
+ bsd-user/freebsd/scripts/syscallhdr.sh |  9 +++++++++
+ 2 files changed, 17 insertions(+), 2 deletions(-)
 
-diff --git a/bsd-user/bsd-mem.h b/bsd-user/bsd-mem.h
-index a118e57260..a20b703053 100644
---- a/bsd-user/bsd-mem.h
-+++ b/bsd-user/bsd-mem.h
-@@ -440,6 +440,7 @@ static inline abi_long do_bsd_vadvise(void)
-     return -TARGET_EINVAL;
- }
- 
-+#ifdef TARGET_FREEBSD_NR_sbrk
- static inline abi_long do_bsd_sbrk(void)
- {
-     /* see sys_sbrk() in vm_mmap.c */
-@@ -451,5 +452,6 @@ static inline abi_long do_bsd_sstk(void)
-     /* see sys_sstk() in vm_mmap.c */
-     return -TARGET_EOPNOTSUPP;
- }
-+#endif
- 
- #endif /* BSD_USER_BSD_MEM_H */
-diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
-index 85e5db19a3..ca819fc530 100644
---- a/bsd-user/freebsd/os-syscall.c
-+++ b/bsd-user/freebsd/os-syscall.c
-@@ -918,14 +918,6 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
-         ret = do_bsd_vadvise();
-         break;
- 
--    case TARGET_FREEBSD_NR_sbrk:
--        ret = do_bsd_sbrk();
--        break;
--
--    case TARGET_FREEBSD_NR_sstk:
--        ret = do_bsd_sstk();
--        break;
--
-         /*
-          * Misc
-          */
-diff --git a/bsd-user/freebsd/strace.list b/bsd-user/freebsd/strace.list
-index 275d2dbe27..d7f61f480e 100644
---- a/bsd-user/freebsd/strace.list
-+++ b/bsd-user/freebsd/strace.list
-@@ -194,7 +194,9 @@
- { TARGET_FREEBSD_NR_rfork, "rfork", NULL, NULL, NULL },
- { TARGET_FREEBSD_NR_rmdir, "rmdir", NULL, NULL, NULL },
- { TARGET_FREEBSD_NR_rtprio_thread, "rtprio_thread", "%s(%d, %d, %p)", NULL, NULL },
-+#ifdef TARGET_FREEBSD_NR_sbrk
- { TARGET_FREEBSD_NR_sbrk, "sbrk", NULL, NULL, NULL },
-+#endif
- { TARGET_FREEBSD_NR_sched_get_priority_max, "sched_get_priority_max", NULL, NULL, NULL },
- { TARGET_FREEBSD_NR_sched_get_priority_min, "sched_get_priority_min", NULL, NULL, NULL },
- { TARGET_FREEBSD_NR_sched_yield, "sched_yield", NULL, NULL, NULL },
-@@ -234,7 +236,9 @@
- { TARGET_FREEBSD_NR_sigsuspend, "sigsuspend", NULL, NULL, NULL },
- { TARGET_FREEBSD_NR_socket, "socket", "%s(%d,%d,%d)", NULL, NULL },
- { TARGET_FREEBSD_NR_socketpair, "socketpair", NULL, NULL, NULL },
-+#ifdef TARGET_FREEBSD_NR_sstk
- { TARGET_FREEBSD_NR_sstk, "sstk", NULL, NULL, NULL },
-+#endif
- { TARGET_FREEBSD_NR_freebsd11_stat, "freebsd11_stat", "%s(\"%s\",%p)", NULL, NULL },
- { TARGET_FREEBSD_NR_freebsd11_statfs, "freebsd11_statfs", "%s(\"%s\",%p)", NULL, NULL },
- { TARGET_FREEBSD_NR_symlink, "symlink", "%s(\"%s\",\"%s\")", NULL, NULL },
+diff --git a/bsd-user/freebsd/meson.build b/bsd-user/freebsd/meson.build
+index 8fd6c7cfb8..38f2debf7e 100644
+--- a/bsd-user/freebsd/meson.build
++++ b/bsd-user/freebsd/meson.build
+@@ -1,6 +1,12 @@
++bsd_syscall_nr = custom_target('bsd-syscall-h',
++    output: '@BASENAME@_nr.h',
++    input: ['/usr/include/sys/syscall.h'],
++    command: [sh, meson.current_source_dir() / 'scripts/syscallhdr.sh', '@INPUT@', '@OUTPUT@', 'FREEBSD'])
++
+ bsd_user_ss.add(files(
+   'os-stat.c',
+   'os-proc.c',
+   'os-sys.c',
+-  'os-syscall.c',
+-))
++  'os-syscall.c'),
++  bsd_syscall_nr
++)
+diff --git a/bsd-user/freebsd/scripts/syscallhdr.sh b/bsd-user/freebsd/scripts/syscallhdr.sh
+new file mode 100644
+index 0000000000..fa38500775
+--- /dev/null
++++ b/bsd-user/freebsd/scripts/syscallhdr.sh
+@@ -0,0 +1,9 @@
++#!/bin/sh
++# Copyright (c) 2026 Warner Losh <imp@bsdimp.com>
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++in="$1"
++out="$2"
++bsd="$3"
++
++awk -v bsd="$3" '{sub("SYS_", "TARGET_" bsd "_NR_", $0); print;}' < $in > $out
 
 -- 
 2.52.0
