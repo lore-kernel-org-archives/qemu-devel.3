@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E12A9CD3424
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFE13CD3424
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:18:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIktt-0003u6-JC; Fri, 01 May 2026 06:15:13 -0400
+	id 1wIktt-0003u7-Nh; Fri, 01 May 2026 06:15:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIkts-0003tB-1l
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:12 -0400
+ id 1wIktr-0003si-NV
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:11 -0400
 Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIktp-0008CZ-Br
+ id 1wIktq-0008E2-5p
  for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:11 -0400
 Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-488b3f8fa2bso27609435e9.1
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:15:08 -0700 (PDT)
+ 5b1f17b1804b1-488b8bc6bc9so11353765e9.3
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:15:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777630507; x=1778235307; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=3OgovXw5Fvfw6RA6KlW8vcSRplYfEKQljM9POaKxMsI=;
- b=GmYU88OWYyORPB1kCzeiLjgJ1fLSZ9OlywIM59ngvE/dzaUUdSDzgjlvhZ/eh/pSgH
- s5PdQId+L8wtaHZJ7gSNcDBOyktWWc9u4fq68u6XDtqkQozDkMhh5UkTt4je1ENWFliA
- xRGfhbcXXdWBnUUsKoe1cP4nfPak8CP/NKupFVMhEgKWprcjm4b8eW0znCSn5Trx3+gG
- tkOikdDngmFqDYeTl1SnYfl8M263k5Gfdv1lFdSGQyIWvRx699pe1IxzTe24hh3Yz+/G
- jroBzA0xgnZM1uUAOdTOOAKAA2nXP4MvUD7sXJeASqWsSn7MozpYss9PkotiA460Qm9Z
- mDOg==
+ d=linaro.org; s=google; t=1777630509; x=1778235309; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=9t7sxXRLpO6MKTnicE2Ws/es6K6rtSZrGzRNv62qnpw=;
+ b=MluybssXDIArCkN8jgRhPYPoPiiJutvgjNrCo2v7OS1k5D3Cc4BacOOsBz/OpqGAo2
+ B7UMDlYKhsZSDoJArrlkTCUtSHG6cXOMyBQ2I+1QvsezlOZRvQ+VjBgzk3OfwUrOyYSb
+ 3/976mApRFFn7E+h0n7Xa7g5g4tFwmwnEOcxKB7w/YwxdoSrJCpOXFBKPQCD9uWlR+rB
+ NLLPu/vi3Si9Gtzznx3pHVfZOX94jyAgK2vkSdx9t55VS7M+fkA+mjMY2VoeAXRDumiM
+ H727HnHMWF1w3cVLC9Pe3lGdiN7TV/J0VftC4TIUsv2ikra/28mi27P/HF4Qo71cUT6/
+ fpvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777630507; x=1778235307;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3OgovXw5Fvfw6RA6KlW8vcSRplYfEKQljM9POaKxMsI=;
- b=TNK1UQp8QIu65xbOPDSMp0kWuRnv/4OJ79x7JcEjTv/fOfGqfEtDJihSMxXtiTPcRH
- lrVkzSMVkUs26Tj+IMyut/NGOMZuhKYyG7JCe0vVntbUdv7hHMMMnyGMuge0c71zQ9Mk
- af8YgoVdX0RiUwwSUsgQalqhzctRmjNcDBtpjGE+nkHb86gRWyj4rtY6XGLmxLcWJ9wq
- 2fUJAiBBOJ4Ana8WVf51kvT2kRYSpM1uLp3bt0uRKk+ur8sfVonbfm0b5g6ggXHTylE3
- 76IaLFcL2zUftqWklY05BXa9YWkegjmyiGBYsqlUP+9Of2M7HXNntEaoxI++4du8rEbS
- 5e0A==
-X-Gm-Message-State: AOJu0YxdQHVl8vtynkrrMvbvy3PG3zyU6YxFip+5zFwXZHJMxCl3jIAj
- gFkWvGz28T9+VO2BbV+J2PXtsvLzmEDHJx48GMW50dDB+tOztrjjF0FtBntDxO4lBMqhu7KJXdH
- pTdNB
-X-Gm-Gg: AeBDietrthmQCxnTqAGU1ryrpAsqDqxRx/YiXEK8OFKgxDwfB3f9AEwqjX73s9Ep26S
- MLVps5tyUJXWp6jHcfhBKrouA1fMcTKn/oKBvViFa0LHXNdMJsVALbe+pzbz4YPwLaQOxARqi86
- MsGCtusXDFx9DAt5+fNVikKMyMridC6DzWwNS8UwIub48jzQgZpBbpLvOpUeA9kSshz+QC7HYRl
- YWWRrzY5c1qA7ZZtqBOoKHRG8+a20+UdfGDc4GIgsNQLSIJeOoYWVnYrGf9CgdD1n4ldDl53x3m
- rDnfE+d6JFu3Q/VWP8EQnnI8iCUcpRydMfFpQJLaDH7C3rFmxgriExg8rwFhgug1y6Xun2euiPI
- tNtsQMxFDJu+ZRWcs3ed2i0smmmuoSv1MSTrey2Ja6eEpflSe/xby4jKlQmrBQ8SN6tzmWTlxzA
- rMe1wDDtWc65w95FdPSGeUGuckmFAAyW63EEDdRYR3/r74Zc5IF6+ui+KtV2/+H3ZHgpnGuE2VZ
- bTNVPF2QAU/mWhCMUfBDTGnEpEv9ps0vE/f4MhEkA==
-X-Received: by 2002:a05:600d:8449:b0:485:3cef:d6ea with SMTP id
- 5b1f17b1804b1-48a8609892bmr68084725e9.13.1777630507263; 
- Fri, 01 May 2026 03:15:07 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777630509; x=1778235309;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=9t7sxXRLpO6MKTnicE2Ws/es6K6rtSZrGzRNv62qnpw=;
+ b=SH8K3A6bbxaCHKBWg3n6gIlk1mlIVjnz+s32YrIPjsc39L1vCBagMLT0rbYqaNJ/Rk
+ KQruk6cDCZ2IyUa5P01fVS97T+8qOpBOuLmfnsuWPLCqLb080kYbWNICuOj06oabW0UP
+ ILJMsESDSoWiNQ4zRfDHhI64hStx3JB4w2IUOsm/fwiTR9DTu8aFouqk/0+wjer4sfTM
+ 9DSL26j4II7gkMkXbWK0zltnFx68mbsw6JZ6lzbK19jsC99i1bGrIxugwABNrVdIquYH
+ AtH4igeCZpowsLB22Re4MgDjh72rz031llELptFKxRB31howceEpZ5YKPogQDYW48LHZ
+ IN0g==
+X-Gm-Message-State: AOJu0YzZy/AEqhk6sti0gOsNa40DajgYmsBoPNWerRd3/cKYKf7EgRs3
+ wLh6iF259528HU8iirsXNo4/Bjt1PHH27Kgv+yRoJ/Dj6JaO/M4yluKYYI23wIK6WO4Q4P4qxV4
+ TJy5W
+X-Gm-Gg: AeBDietdyuWzsW74zgzUb1UZnc+91rf6/rv6ghO/sMJ+k37M+nsXkdU2csdx8SKxOfz
+ WIrxTLe0R8uYh+ZIVQKtWbS4WmKncgmEGqIy/RHMK/kXHOPmvslSGXGcihGHriJfomtafv4dAPT
+ vOL4v3YhzrSWXRhhl6TmJRKcyDWM8KE9indNrmDaAZ1jXz1I72gQZzJ4NXIH71qNK4uxcRsWBA2
+ FBsKEo9/AyyfyCDHJNKBvu0XBQxZJUv3FCWID/0p/4heprIg5zkehO8VsZpT3gyS8e0CjzEg/Ds
+ psS6du5inatxHXmyJtomu73aMiI5SU7/IxA69EDT0OgvD1+pvBgIlUttexnS0REKMvwMdLZasMV
+ UXSm6pXXChgQADz8ixHvDtrfvNV4bRNgi9P+AIr247jmNp37VvOEw9xKPcajzcr0KWtfmJOaTqD
+ fsUjIhqK6BlogF+SP7vmhpKqkRHfKf3ENDVPzsGRqx2j3F0fYO5MaIJ1nZlB/QFjlu4jOsC+Ssn
+ aQB3fn8R9tEvTW62LDmX/ZWIk3WkMKWZF+Ot9z9RnYQu+sE0Ms6
+X-Received: by 2002:a05:600c:888e:b0:487:12c:e7e1 with SMTP id
+ 5b1f17b1804b1-48a84446ed9mr78678975e9.11.1777630508798; 
+ Fri, 01 May 2026 03:15:08 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8fede418sm12863335e9.6.2026.05.01.03.15.06
+ 5b1f17b1804b1-48a8fede418sm12863335e9.6.2026.05.01.03.15.07
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 May 2026 03:15:06 -0700 (PDT)
+ Fri, 01 May 2026 03:15:07 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/28] target-arm queue
-Date: Fri,  1 May 2026 11:14:37 +0100
-Message-ID: <20260501101505.3485916-1-peter.maydell@linaro.org>
+Subject: [PULL 01/28] hw/arm/fsl-imx8mp: Do not create redundant unimplemented
+ devices
+Date: Fri,  1 May 2026 11:14:38 +0100
+Message-ID: <20260501101505.3485916-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260501101505.3485916-1-peter.maydell@linaro.org>
+References: <20260501101505.3485916-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
  envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
@@ -99,121 +101,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; here's an arm pullreq. There's a combination of small stuff, plus
-the hvf patchset that adds vGIC and nested-virt support. Last time we
-tried to land this we got tripped up by some gitlab CI failures on jobs
-that only run on the main staging CI run, not on the "run CI in your own
-repo before sending" CI. Hopefully that won't happen again, but it's
-possible...
+From: Bernhard Beschow <shentey@gmail.com>
 
-thanks
--- PMM
+The GPT devices are implemented. No need to create redundant
+unimplemented devices.
 
-The following changes since commit 282771e1f9b9b6e0147adf5f9d676325175b1767:
+Fixes: f8b26121762c ("hw/arm/fsl-imx8mp: Implement general purpose
+timers")
+cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260308203516.160103-2-shentey@gmail.com
 
-  Merge tag 'pull-riscv-to-apply-20260429-1' of https://github.com/alistair23/qemu into staging (2026-04-29 09:22:51 -0400)
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ hw/arm/fsl-imx8mp.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-are available in the Git repository at:
+diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
+index b36df82971..33749d7fe1 100644
+--- a/hw/arm/fsl-imx8mp.c
++++ b/hw/arm/fsl-imx8mp.c
+@@ -687,6 +687,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
+         case FSL_IMX8MP_GIC_DIST:
+         case FSL_IMX8MP_GIC_REDIST:
+         case FSL_IMX8MP_GPIO1 ... FSL_IMX8MP_GPIO5:
++        case FSL_IMX8MP_GPT1 ... FSL_IMX8MP_GPT6:
+         case FSL_IMX8MP_ECSPI1 ... FSL_IMX8MP_ECSPI3:
+         case FSL_IMX8MP_ENET1:
+         case FSL_IMX8MP_I2C1 ... FSL_IMX8MP_I2C6:
+-- 
+2.43.0
 
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260501
-
-for you to fetch changes up to 03f12c3244ceb862714707411fa842bf76df711d:
-
-  hvf: arm: enable vGIC by default for virt-11.1 and later (2026-05-01 10:44:18 +0100)
-
-----------------------------------------------------------------
-target-arm queue:
- * hw/arm/fsl-imx8mp: Do not create redundant unimplemented devices
- * hw/arm/fsl-imx8mp: Fix parent of ocram memory region
- * sysbus: Remove unused irq routing notifier method
- * linux-user/arm: Restrict regpairs_aligned
- * qemu-options: Improve description for -smb option
- * preliminary work for FEAT_RME_GDI
- * docs/devel/decodetree: Fix formatting in "field examples" table
- * hw/net/allwinner-sun8i-emac: Flush queued packets when rx is enabled
- * hw/intc/arm_gicv3: Fix NS write to ICC_AP1Rn_EL1 when prebits < 7
- * target/arm/kvm: Cache host CPU probe failure
- * hvf: support platform vGIC
- * hvf: support nested virtualization
-
-----------------------------------------------------------------
-Akihiko Odaki (1):
-      target/arm/kvm: Cache host CPU probe failure
-
-Bernhard Beschow (3):
-      hw/arm/fsl-imx8mp: Do not create redundant unimplemented devices
-      hw/arm/fsl-imx8mp: Fix parent of ocram memory region
-      Revert "sysbus: add irq_routing_notifier"
-
-Jim MacArthur (4):
-      target/arm/cpu-features.c: New fields in AA64MMFR4
-      target/arm/cpu.h: New GPCCR fields
-      target/arm/ptw.c: Add GDI spaces to the granule protection case
-      tests/tcg/aarch64/system/rme_gdi.c: Very basic test of GDI
-
-Mohamed Mediouni (15):
-      hw/intc: Add hvf vGIC interrupt controller support
-      hw/intc: arm_gicv3_hvf: save/restore Apple GIC state
-      accel, hw/arm, include/system/hvf: infrastructure changes for HVF vGIC
-      target/arm: hvf: instantiate GIC early
-      hw/arm, target/arm: nested virtualisation on HVF
-      hvf: only call hvf_sync_vtimer() when running without the platform vGIC
-      hvf: gate ARM_FEATURE_PMU register emulation when using the Apple vGIC
-      hvf: arm: allow exposing minimal PMU for kernel-irqchip=on
-      target/arm: hvf: add asserts for code paths not leveraged when using the vGIC
-      hvf: sync registers used at EL2
-      target/arm: hvf: pass through CNTHCTL_EL2 and MDCCINT_EL1
-      hvf: arm: disable SME when nested virt is active
-      hvf: arm: physical timer emulation
-      hvf: enable nested virtualisation support
-      hvf: arm: enable vGIC by default for virt-11.1 and later
-
-Pali Rohár (1):
-      qemu-options: Improve description for -smb option
-
-Peter Maydell (1):
-      docs/devel/decodetree: Fix formatting in "field examples" table
-
-Richard Henderson (1):
-      linux-user/arm: Restrict regpairs_aligned
-
-liugan1 (1):
-      hw/intc/arm_gicv3: Fix NS write to ICC_AP1Rn_EL1 when prebits < 7
-
-宋文武 (1):
-      hw/net/allwinner-sun8i-emac: Flush queued packets when rx is enabled
-
- accel/hvf/hvf-all.c                |  63 +++
- accel/stubs/hvf-stub.c             |  12 +
- docs/devel/decodetree.rst          |  44 +-
- hw/arm/fsl-imx8mp.c                |   3 +-
- hw/arm/virt.c                      |  46 +-
- hw/core/sysbus.c                   |   6 -
- hw/intc/arm_gicv3_common.c         |   4 +
- hw/intc/arm_gicv3_cpuif.c          |  35 +-
- hw/intc/arm_gicv3_hvf.c            | 835 +++++++++++++++++++++++++++++++++++++
- hw/intc/arm_gicv3_hvf_stub.c       |  25 ++
- hw/intc/meson.build                |   2 +
- hw/net/allwinner-sun8i-emac.c      |   3 +
- include/hw/arm/virt.h              |   2 +
- include/hw/core/boards.h           |   1 +
- include/hw/core/sysbus.h           |   1 -
- include/hw/intc/arm_gicv3_common.h |   4 +
- include/system/hvf.h               |   8 +
- include/system/hvf_int.h           |   1 +
- linux-user/user-internals.h        |   2 +-
- qemu-options.hx                    |  19 +-
- system/vl.c                        |   2 +
- target/arm/cpu-features.h          |   8 +
- target/arm/cpu.h                   |   5 +
- target/arm/hvf/hvf.c               | 208 ++++++++-
- target/arm/hvf/sysreg.c.inc        |  44 ++
- target/arm/hvf_arm.h               |   5 +
- target/arm/kvm.c                   |  38 +-
- target/arm/ptw.c                   |  20 +
- tests/tcg/aarch64/system/rme_gdi.c |  46 ++
- 29 files changed, 1418 insertions(+), 74 deletions(-)
- create mode 100644 hw/intc/arm_gicv3_hvf.c
- create mode 100644 hw/intc/arm_gicv3_hvf_stub.c
- create mode 100644 tests/tcg/aarch64/system/rme_gdi.c
 
