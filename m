@@ -4,116 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51BFECD3424
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 14:01:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC920CD3424
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 14:03:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIoQ1-0004AI-Gc; Fri, 01 May 2026 10:00:37 -0400
+	id 1wIoS5-0004mg-V7; Fri, 01 May 2026 10:02:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wIoPv-00046x-ST; Fri, 01 May 2026 10:00:32 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <leif.lindholm@oss.qualcomm.com>)
+ id 1wIoS2-0004m6-JL
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 10:02:43 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wIoPs-000655-2M; Fri, 01 May 2026 10:00:31 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 641BU9411957237; Fri, 1 May 2026 14:00:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=HdHTaO
- qQVd1bhiNjlr9VVUztDVvxCkqLZJ+KKnEmavY=; b=klB1iCUroIWVHZB0w2rFyV
- SHB67nzxwgoj/MJ6Ug34NgHAj2NJZ7gdR6wkIC2DDiurSvhC4b4UzTXy9RYcxqFT
- 7iSCHK5L1/yYVpy6gcB0hfisPPT9yWIgsGfO+MAqHytbp/tp8vsLEeMsZVKAPdmt
- Bhl5Ib0FTf7dNww9tEIEqu0uwWiCj8jxj7VtiiYrhEqm77GvZeB62GUV9AiITdVZ
- 6VNxmFFIbSjX2DvN57ZAYe4Brouis3GZjVzAC17GB3j6cglMdzq2GTD+MJTkFU91
- KdI17iHOJDVFfL4LWpIUnR+8wjBgYdg1U7XYSojDdBSY07JFM477qATTjW3wlMFA
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4drm1eawub-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 01 May 2026 14:00:13 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 641Drtwq010610;
- Fri, 1 May 2026 14:00:12 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dsamyqexd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 01 May 2026 14:00:12 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 641E0Ant33423914
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 1 May 2026 14:00:11 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9C3AE58061;
- Fri,  1 May 2026 14:00:10 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3A2BA5805A;
- Fri,  1 May 2026 14:00:02 +0000 (GMT)
-Received: from [9.39.16.180] (unknown [9.39.16.180])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  1 May 2026 14:00:01 +0000 (GMT)
-Message-ID: <a772b506-e306-4fef-a357-3f25374b7354@linux.ibm.com>
-Date: Fri, 1 May 2026 19:29:59 +0530
+ (Exim 4.90_1) (envelope-from <leif.lindholm@oss.qualcomm.com>)
+ id 1wIoS0-0007MO-L8
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 10:02:42 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 641AXD1U1917217
+ for <qemu-devel@nongnu.org>; Fri, 1 May 2026 14:02:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ rAxGlN6LBx5CWos407s1kRn0kJe8vAyovt7wn46Wt+E=; b=eQ7NB0TTxUYZ4aLN
+ PQiU9YPQxZLDvQG6hc3jFNXbtk78rFv93N3DDERL4mEaA7qA9xVnyKm/fiDiO30h
+ F4M1+61uildr5qq+8OKOy+L2AjxixdGeO2FhyjYQKS13Ib7gVdW0vIeL7rBXZHbx
+ bZhNQUox4F5gZ+U/yGAlGlMe4BEACny/0ufHTkSgZydUJcf6QA7Obg/Eyd4GPVqt
+ 3c3eXGDYVmdyVf62IvbG65YZYQOx26c8SKJPgAlDE7fCkcs0+jH7M9LuM6HjziOQ
+ GlOfLA+O32JV+c6wglaEpSPu14EXwTdn6z/qzEA82CCKEKZvocA1a7pq+MCUchur
+ 2mJYIw==
+Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dvhbthna4-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 14:02:37 +0000 (GMT)
+Received: by mail-dl1-f70.google.com with SMTP id
+ a92af1059eb24-12c726f4019so2746161c88.1
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 07:02:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777644157; cv=none;
+ d=google.com; s=arc-20240605;
+ b=bo9HWFG16KeRkf4txt0GTI//XYQyqeKkBKN9M9kAsYSILky5nB0nISLjAsxZDUI5WO
+ wyWR+44BfbFPTQm53Eg5LYGTYL4Z6AGG+Lrf+KiUcDpv1ARcoq6ydPAgnFTAxazGmL1v
+ Hn5E8jh+vwoefxLcwt37MauhAust3AKEUaBSN13nmglZTxb/s4JBwzJu+H/kVHGhxmIm
+ PCVmt7xMdFjQzHgvpV6G+1i+UYMULM0Tt2Yo3RrionNfrL1M5CYynwBe26QWKy+npHiZ
+ KOTo+g6n0xaicwu+whba4zN/76bsDEwbE4qetiEdPvX5OxaLB1QVSAjngGZnsIZB0zPh
+ czKA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=rAxGlN6LBx5CWos407s1kRn0kJe8vAyovt7wn46Wt+E=;
+ fh=UlJxZ0HXcHPNuy+M2ZMN9mBTmZNiQT6KoZslCoDS7kU=;
+ b=VbGq70XacmMLhk9GiTHZkV7/jO184ToFXRIqVPI9+oHK/cz4wndNRbLCWwzFgwFQ6z
+ 187WBpn0FsGbbJPZnWQbs8qK4gWCW8mmQAlczNHFDnpZKNQDI3esRFqf1w4LsX54y9fJ
+ +XVXvRsAgUnP01oJCwO7gJhGUUPvzPZKlLEWSdmcAYyuBwF3R+Z3xtvFbjcmpDA6LH16
+ rl+cc+plH4ClAXuWeXJ5sSAFDi9tETHx/Mut/nrkdZ0QllHRM6iEDhmjpdgSQriCpXNS
+ 2i0yLf5ADC7uJJRwEOPn79C1PB5BAeH6OHn34+3BAtfejmSsi/coRAOXCNr4VQIAaiqO
+ vFTg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1777644157; x=1778248957; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rAxGlN6LBx5CWos407s1kRn0kJe8vAyovt7wn46Wt+E=;
+ b=QBLb+NJo7lts5F9K0SGniJN1ZV/6a1k0K2UT2DrsdF6sdP4q8hvL2V/uLis+WiyrgD
+ rZHA3fBp6Vww5tBh0GQm/jfjhI776BZpuIpWnHWI8SqnHQoaIMiYeSVugweBIBM+V15H
+ zHJTFMpY5sFM5h/ZpsE582o3QhSGQWd90Y17/wgID2N38cHk74F950UvemUJntzGMy9c
+ psjHH85+UVIgkrx4MBOIRuOGBqDf/6Qp6pVf7An4lQ8X4+ghzphbd9GJ12OlZuTA/UUM
+ FvMrE9urDdXx/rCyjY4V3vuSP4NUVQVDl6ouU0LrqMuS0cm/osMjha7ZhID+fjjcnsbT
+ 8HFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777644157; x=1778248957;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=rAxGlN6LBx5CWos407s1kRn0kJe8vAyovt7wn46Wt+E=;
+ b=WR4Z/QvRHcpVZalAmqF+YBuyVOh91HNj/i5SKgQyA+exbf6mbRdBqJH2iO7mnztI1u
+ 5pDCHnvZBVIS6BUObjvYN1GOIlm5YyXBJFQT7WA3qi57Y1rM1gP+E6cREch/FDGQytgQ
+ DhBztiuG2PYMerawZqFAYes9vxmUhqWpJEyiuGKDwU7bB1+wFUR4S+gZVcTR37QqgaA9
+ 6KVx6rJ1TQybfI8GeKhXH1iB018PZkB9eYaNtFs4XmEF5ip/nfMYp1+FUyIpCLe1Wenh
+ 0jT8yVaiQ46Fry6xe/5SgD0fBm+YyYE+Kov84I4yDk9LCOFXaSdg/McHEsYYvNNBsHRj
+ QdCQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/G9rQYfueOHTG88vRwvWFPqRvrjKm347RYk/QQC8mh14m3PKLPcKpEe8wZX14wVd390s2YTXiXTnn3@nongnu.org
+X-Gm-Message-State: AOJu0YyxoSt4jfQgc6tUkSq5Iogefrmk/6//xpK6SgLuYSTsmG21Xxj5
+ hvYy3LHdOqn4emlYs5SwvluHDVaRMxR/OnEPQ6L58OYz91RSxk0P+NTY3xP0AwRgHKuJHPThU2z
+ RwfShAHOUdpPFGAHR62aZUyJy1ab5iYmLc2ZWoMm8Q9kPMrhy+sO+Ns+JCfw9gJ2Xk2Pjb8GIeD
+ 4kJnxvQhgPSFiTtKVNePHh6TPQBl0llCcy
+X-Gm-Gg: AeBDietsfXZFsEFOmQF4vGApL9TtSk+DmM7Olw/x/i9L7gfic5X+aJTotCEAILkc/a4
+ /j8QGmOyjhrWBgVpzTxvro/mqyJ/hQmAj5LQjPdu6+kC/CZiX750MHp4e5T/jaJKiDk/I9N2AOQ
+ +lEudkd8Woo8Wv4p1G+cMCafDNpLeSQBmLODueVpGCwUUfGlbyDqu+MswCkOdXnCH4haZfY8crQ
+ qsn6rq/BGfGyEVCH7Cn9OfpGHtP0K5VPF+NFWNvBfLnJu0grnU/pj2v/uxM00GUcHVyGYSjQfUt
+ lnKBW34jJ351KAhXkWGc0TsooYJUrIwtasM=
+X-Received: by 2002:a05:7022:f40b:b0:12d:c3fb:14a7 with SMTP id
+ a92af1059eb24-12df8225f2fmr1522216c88.18.1777644156222; 
+ Fri, 01 May 2026 07:02:36 -0700 (PDT)
+X-Received: by 2002:a05:7022:f40b:b0:12d:c3fb:14a7 with SMTP id
+ a92af1059eb24-12df8225f2fmr1522010c88.18.1777644154906; Fri, 01 May 2026
+ 07:02:34 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/9] qtest/phb4: Add testbench for PHB4
-Content-Language: en-GB
-To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
- Michael Kowal <kowal@linux.ibm.com>, chalapathi.v@linux.ibm.com,
- Caleb Schlossin <calebs@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>, jishnuvw@linux.ibm.com,
- Aditya Gupta <adityag@linux.ibm.com>, amachhiw@linux.ibm.com
-References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
- <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
- <20260305060923.3753402-2-saif.abrar@linux.vnet.ibm.com>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20260305060923.3753402-2-saif.abrar@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: 3nhT7DIsCkQZ0sQnsJeJDMn6WTKZxKGc
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTAxMDEzNCBTYWx0ZWRfX6wlaN2sB4ix4
- wA2JRqjXKm48LS0l6SA4BNU7cfysGd5IfAu8LxR0pTxbgJoSJsUw2BSr/T0aRYoYlYrDwO3GOaR
- 9T5WgJMld+W7dGh3Qv37L3Bd7IvSc5EsXw8MoW1dmyf9Xi8nVJci24rNDYsEfShf4VMrfHXWw2q
- B0mqq3Bcf1xpIM63LTIMFuhC8p3Zq8S042lm3XSxjMP+mHys6+MPZPk9ihCyWZSyEsbrOqbRg+m
- FeiwgIFpJN+nlxmcqkGu7jQeHfL3fVffFv/4uzBQ8jbhTB6ifQsTYQN91yMpssNoLiKQTagBP/1
- lNT9ZdlUQmqaNhBMoIMjDS7TEan3Td6FDDtdJwGTFDNx/eZ1B7tQtFVdUb2MZjKli1L7cLNh+ch
- S9doI5l1t7q1MAKdC7UX7S+UsI6C7fX7mgLeHAHhfRiGkCJhGFLDjEmkrcaY95wo9pNJUCKfLBH
- Wln5Dd4ea5Iw1SouNnA==
-X-Authority-Analysis: v=2.4 cv=VZLH+lp9 c=1 sm=1 tr=0 ts=69f4b1ed cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22
- a=VnNF1IyMAAAA:8 a=aow-egSQAAAA:8 a=cGCsTGRZkh4ummbXGDYA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=gFNbaldVC-z-bsjSTzMo:22
-X-Proofpoint-GUID: EwxHrBp5405GI-c7HGaZ0aWSrEbN5Dtw
+References: <20260424191129.1494381-1-daniel.barboza@oss.qualcomm.com>
+ <20260424191129.1494381-4-daniel.barboza@oss.qualcomm.com>
+ <CAKmqyKNZiA=rYVD6ighyFO+qmhdYVk=UgbaznBHrZ2yt1ZvOtA@mail.gmail.com>
+In-Reply-To: <CAKmqyKNZiA=rYVD6ighyFO+qmhdYVk=UgbaznBHrZ2yt1ZvOtA@mail.gmail.com>
+From: Leif Lindholm <leif.lindholm@oss.qualcomm.com>
+Date: Fri, 1 May 2026 15:02:22 +0100
+X-Gm-Features: AVHnY4Ia649qGmoT8S8M3cXqLoAWogZHODhQyihxCJQ4x7l45rh9FRDWvW590cQ
+Message-ID: <CAD=n3R15=vCCgQQhEWXPRc91T-8a02JJs2t9s88dVDLqTi_QZw@mail.gmail.com>
+Subject: Re: [PATCH v5 3/4] hw/riscv: server platform reference machine
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com, Fei Wu <wu.fei9@sanechips.com.cn>,
+ Peter Maydell <peter.maydell@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+X-Authority-Analysis: v=2.4 cv=cP7QdFeN c=1 sm=1 tr=0 ts=69f4b27d cx=c_pps
+ a=SvEPeNj+VMjHSW//kvnxuw==:117 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
+ a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=_glEPmIy2e8OvE2BGh3C:22 a=NEAV23lmAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8
+ a=uTRCLKPYAAAA:8 a=Oy0uSXd22lWd2as0m0kA:9 a=QEXdDO2ut3YA:10
+ a=Kq8ClHjjuc5pcCNDwlU0:22 a=T-agBWn15iSmxapsA1lH:22
+X-Proofpoint-ORIG-GUID: mRKGOkTYFjtfIDJLH6xPehYfiFkL50UI
+X-Proofpoint-GUID: mRKGOkTYFjtfIDJLH6xPehYfiFkL50UI
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTAxMDEzNSBTYWx0ZWRfXytaGcPixC/i3
+ +HNSLmcDdGpYSxmn8jmqoJybgokmeOufYZSgsU0Gsp5OnpuxDr3R9GHT8yC2NWuxaio7GYXlOvO
+ 3CIMKy3Iukbur4hpky4mVMrhLY588MWG7JnCqIj0aTWE9fy9I+utaC20f5zEqPXPALkRshuF8ZX
+ 0E/Wn1M+M2h0qsjr4hbwyLlFaao1i3sjyjvTQg+rRCOZZYe0hsqf67jFi455Y8rW06G0qk6uIXc
+ cqU2W64Dd0caTbYc+sW8F1fuPOuD8hEbaJtUZP49ie4ttXlffPrXkTizviWhrY1+IGAJyRzSm0W
+ lceEIJM67k0oH8Vjz2dVgjEz+pf1APRb4hfwO0KEjMSWbN31mscfbhKXcLlAcPLT9rM4jL7v3YI
+ mL/W3OjoUVGc72DaF8g1ER8B8x746tz9KKBo7lF+Zn3SR0jrOizhUwQXO7DHNWSsZJjGWiWUkAS
+ 6raAogCREIGizl6efNQ==
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-01_03,2026-04-30_02,2025-10-01_01
+ definitions=2026-05-01_04,2026-04-30_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 suspectscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
- spamscore=0 malwarescore=0 bulkscore=0 priorityscore=1501 impostorscore=0
+ suspectscore=0 impostorscore=0 bulkscore=0 malwarescore=0 adultscore=0
+ spamscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0 priorityscore=1501
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605010134
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605010135
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=leif.lindholm@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -130,164 +169,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-<Adding folks working in this area or who might be interested in it>
+On Fri, 1 May 2026 at 04:28, Alistair Francis <alistair23@gmail.com> wrote:
+> On Sat, Apr 25, 2026 at 5:13=E2=80=AFAM Daniel Henrique Barboza
+> <daniel.barboza@oss.qualcomm.com> wrote:
+> >
+> > From: Fei Wu <wu.fei9@sanechips.com.cn>
+> >
+> > The RISC-V Server Platform specification [1] defines a standardized set
+> > of hardware and software capabilities, that portable system software,
+> > such as OS and hypervisors can rely on being present in a RISC-V server
+> > platform.
+> >
+> > The main features included in this emulation are:
+> >
+> > - Based on riscv virt machine type;
+> > - A new memory map as close as virt machine as possible;
+> > - An always present IOMMU platform device (riscv-iommu-sys) that uses
+> >   IRQs 36 to 39, one IRQ for queue, similar to the 'virt' board;
+> > - AIA;
+> > - PCIe AHCI;
+> > - PCIe NIC;
+> > - No virtio device;
+> > - No fw_cfg device;
+> > - No ACPI table provided;
+> > - Only minimal device tree nodes.
+>
+> Can you describe why we actually need/want this? The virt machine
+> already covers a lot of this and OSes and Hypervisors can pretty
+> easily target that. I'm not clear what this buys us in QEMU. Maintaing
+> a machine isn't that hard, but it would be nice to have a good reason
+> to support it.
 
-On 05/03/26 11:39 am, Saif Abrar wrote:
-> New qtest testbench added for PHB[345].
-> Testbench reads PHB Version register and asserts that
-> bits[24:31] have value 0xA3, 0xA4 and 0xA5 respectively.
-> 
-> Signed-off-by: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-> Reviewed-by: Cédric Le Goater <clg@kaod.org>
-> ---
-> v3: Updates for coding guidelines.
-> v2: Added version check for PHB3 and PHB4 also.
-> 
->   tests/qtest/meson.build     |  1 +
->   tests/qtest/pnv-phb4-test.c | 98 +++++++++++++++++++++++++++++++++++++
->   2 files changed, 99 insertions(+)
->   create mode 100644 tests/qtest/pnv-phb4-test.c
-> 
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index ba9f59d2f8..030f3f4fc6 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -182,6 +182,7 @@ qtests_ppc64 = \
->     (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-xive2-test'] : []) +                 \
->     (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-spi-seeprom-test'] : []) +           \
->     (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-host-i2c-test'] : []) +              \
-> +  (config_all_devices.has_key('CONFIG_POWERNV') ? ['pnv-phb4-test'] : []) +                  \
+This is an equivalent to sbsa-ref for arm, and the reason is the same:
+QEMU is very useful for development and testing (+CI) of firmware and
+other software
+targeting real hardware, whereas virt serves the purpose of being a
+thin and light way
+to spin up virtual machines or do less-hardware-centric kernel development.
 
-Should we just call it pnv-phb-test as it takes care of all PHB 3/4/5.
+> Also we need machine docs that describe why people should use this machin=
+e.
 
-Also, need to audit all the patches whether to keep the naming as just 
-phb or phb{3,4,5} as applicable.
+(Yes, documenting this would be benefitial.)
 
+> Also, why no ACPI and why device tree? The spec talks about ACPI
+> tables, but I don't see a mention of device tree
 
->     (config_all_devices.has_key('CONFIG_PSERIES') ? ['numa-test'] : []) +                      \
->     (config_all_devices.has_key('CONFIG_PSERIES') ? ['rtas-test'] : []) +                      \
->     (slirp.found() ? ['pxe-test'] : []) +              \
-> diff --git a/tests/qtest/pnv-phb4-test.c b/tests/qtest/pnv-phb4-test.c
-> new file mode 100644
-> index 0000000000..797f6b6c87
-> --- /dev/null
-> +++ b/tests/qtest/pnv-phb4-test.c
-> @@ -0,0 +1,98 @@
-> +/*
-> + * QTest testcase for PowerNV PHB4
-> + *
-> + * Copyright (c) 2025, IBM Corporation.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "libqtest.h"
-> +#include "hw/pci-host/pnv_phb4_regs.h"
-> +#include "pnv-xscom.h"
-> +
-> +#define PPC_BIT(bit)            (0x8000000000000000ULL >> (bit))
-> +#define PPC_BITMASK(bs, be)     ((PPC_BIT(bs) - PPC_BIT(be)) | PPC_BIT(bs))
+Because of the abovementioned, the firmware would provide the ACPI support.
 
-Looks like we already have 2 files in tests/qtest folder which contains 
-these macros. Time to cleanup common code into a common header ?
-> +
-> +#define PHB3_PBCQ_SPCI_ASB_ADDR      0x0
-> +#define PHB3_PBCQ_SPCI_ASB_DATA      0x2
-> +
-> +/* Index of PNV_CHIP_POWER10 in pnv_chips[] within "pnv-xscom.h" */
-> +#define PNV_P10_CHIP_INDEX      3
+> >
+> > [1] https://github.com/riscv-non-isa/riscv-server-platform
+>
+> The first line of the README says:
+>
+> """
+> This document is capturing discussions at the Server Platform TG.
+> These are not official specifications and everything in this document
+> may change.
+> """
+>
+> So this machine needs to start out with version support (like the ARM
+> virt board)
 
-Where is this being used and do we really need it?
+We ended up not doing that for sbsa-ref, partially based on advice
+from Peter (added to cc),
+which I can't right now bring to mind in any great detail.
 
-> +#define PHB4_XSCOM              0x40084800ull
-> +
-> +/*
-> + * Indirect XSCOM read::
-> + * - Write 'Indirect Address Register' with register-offset to read.
-> + * - Read 'Indirect Data Register' to get the value.
-> + */
-> +static uint64_t pnv_phb_xscom_read(QTestState *qts, const PnvChip *chip,
-> +        uint64_t scom, uint32_t indirect_addr, uint32_t indirect_data,
-> +        uint64_t reg)
-> +{
-> +    qtest_writeq(qts, pnv_xscom_addr(chip, (scom >> 3) + indirect_addr), reg);
+I would expect the same argument holds here. Peter?
 
-What does bit shift 3 signify here, can we have a self explanatory macro 
-for this?
+But basically the development of this platform will be tracking
+developments in various
+specifications as they expand, as well as having hw features added to
+it over time, as opposed
+to providing a solid foundation to run virtual machines reliably
+across generations of QEMU.
 
-> +    return qtest_readq(qts, pnv_xscom_addr(chip, (scom >> 3) + indirect_data));
-> +}
-> +
-> +/* Assert that 'PHB - Version Register' bits[24:31] are as expected */
-> +static void phb_version_test(const void *data)
-> +{
-> +    const PnvChip *chip = (PnvChip *)data;
-> +    QTestState *qts;
-> +    const char *machine = "powernv8";
-> +    uint64_t phb_xscom = 0x4809e000;
-> +    uint64_t reg_phb_version = PHB_VERSION;
-> +    uint32_t indirect_addr = PHB3_PBCQ_SPCI_ASB_ADDR;
-> +    uint32_t indirect_data = PHB3_PBCQ_SPCI_ASB_DATA;
-> +    uint32_t expected_ver = 0xA3;
-> +    uint64_t ver;
-> +
-> +    if (chip->chip_type == PNV_CHIP_POWER9) {
-> +        machine = "powernv9";
-> +        phb_xscom = 0x68084800;
-> +        indirect_addr = PHB_SCOM_HV_IND_ADDR;
-> +        indirect_data = PHB_SCOM_HV_IND_DATA;
-> +        reg_phb_version |= PPC_BIT(0);
-> +        expected_ver = 0xA4;
-> +    } else if (chip->chip_type == PNV_CHIP_POWER10) {
-
-What about POWER11? Also, could the check be based on PHB type supported
-(need new attribute?) so that we dont need to add checks for every next
-PnvChip->chip_type which supports the existing PHB type?
-
-> +        machine = "powernv10";
-> +        phb_xscom = PHB4_XSCOM;
-> +        indirect_addr = PHB_SCOM_HV_IND_ADDR;
-> +        indirect_data = PHB_SCOM_HV_IND_DATA;
-> +        reg_phb_version |= PPC_BIT(0);
-> +        expected_ver = 0xA5;
-> +    }
-> +
-> +    qts = qtest_initf("-M %s -accel tcg -cpu %s", machine, chip->cpu_model);
-> +
-> +    ver = pnv_phb_xscom_read(qts, chip, phb_xscom,
-> +                                indirect_addr, indirect_data, reg_phb_version);
-> +
-> +    /* PHB Version register bits [24:31] */
-> +    ver = ver >> (63 - 31);
-
-It is always preferable to mask the remaining bits before extracting.
-
-> +    g_assert_cmpuint(ver, ==, expected_ver);
-> +
-> +    qtest_quit(qts);
-> +}
-> +
-> +/* Verify versions of all supported PHB's */
-> +static void add_phbX_version_test(void)
-> +{
-> +    for (int i = 0; i < ARRAY_SIZE(pnv_chips); i++) {
-> +        char *tname = g_strdup_printf("pnv-phb/%s",
-> +                                      pnv_chips[i].cpu_model);
-> +        qtest_add_data_func(tname, &pnv_chips[i], phb_version_test);
-> +        g_free(tname);
-> +    }
-> +}
-> +
-> +int main(int argc, char **argv)
-> +{
-> +    g_test_init(&argc, &argv, NULL);
-> +
-> +    /* PHB[345] tests */
-> +    add_phbX_version_test();
-> +
-> +    return g_test_run();
-> +}
-
+/
+    Leif
 
