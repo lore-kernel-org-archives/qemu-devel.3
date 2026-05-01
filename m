@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A92DCD3424
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 09:57:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CA54FF885A
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 09:59:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIkci-0004sn-Nk; Fri, 01 May 2026 05:57:28 -0400
+	id 1wIkeC-0005Lx-8I; Fri, 01 May 2026 05:59:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIkch-0004sY-0V
- for qemu-devel@nongnu.org; Fri, 01 May 2026 05:57:27 -0400
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1wIkeB-0005Lp-0G
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 05:58:59 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wIkcf-0001GT-2W
- for qemu-devel@nongnu.org; Fri, 01 May 2026 05:57:26 -0400
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-2b2429f98d0so10324085ad.2
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 02:57:24 -0700 (PDT)
+ id 1wIke9-0001g7-Dh
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 05:58:58 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-82f8b60e485so828041b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 02:58:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777629443; x=1778234243; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777629536; x=1778234336; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=M53zaaezspq9ZCsNV7lBKWBaZetG414KB3W2v7/BPbc=;
- b=zVaD4oEi5LiA2Syad2AYGRlvDxadF/yLWPgxUl253NsogjtloKkWVbItzSuiJBY1Co
- rTU6akBXFqJtW9VALdMDyZ3vG59CKyRkL8Y2yLi2WDj1DukGkbsxV681EiQ0fh/N6bf/
- dw2qS6HElnlqjPRlU6tHSyhNp84FiXjzpuNEz5l04B9i6Sv7CnvDNDasfQvLn0eTGQz9
- EnLHERlumgjqlA0+omSZ81cbyn4dmGTmX/Eg0RUYwt/gZZPs16fDZRxkROTy5bgYaAdO
- N+p9vFGSBev1JMm1zU41kyNd+3/tIBHa/Q0f1FnuJJlZA2y+t9bc0lce3AeVOJui9XwP
- rwTg==
+ bh=xDPxsq8N119yy/eNYgu4mP+B+isAwha07XK+pAm6YiQ=;
+ b=wK8ETEYuLD5rm5JFGhi+Hg4eFbFPBWSpiOrA13IYBT4/kieG0Rylt4Gi0w5Qew0VfL
+ rZ2DoSArGgukg3u81WrQ1Lkftaen0dx+3iCACaKoabc4IJ07nL1IofAJ8avohCSrijNi
+ ue+3emd/bQiG7jMTASvFulcdBLn6rK6fN9R9xSWWAY8Dk/WFMQYleBKo+Q4J7H2zHx5y
+ 4kAYyPefber9XK5jVWDU8cU3Dx8PHcPNJOs0iRMb3LB5SqwcHguLGlcy9Sv+aIsQ2ZbK
+ m+aYY/iZd9wTGLdnlOkMugdYOcrzvcqxvIS1nwcgBG9r+vL+ET4bN++CJEg7G12eXMRK
+ ndIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777629443; x=1778234243;
+ d=1e100.net; s=20251104; t=1777629536; x=1778234336;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=M53zaaezspq9ZCsNV7lBKWBaZetG414KB3W2v7/BPbc=;
- b=KaHu2AUD4POr3dozzSOTIvAh06chKYBAsn38/nVQf4GHuh9udLylU7+rXgj0tL0D17
- +frfwjNok8avgIBJpBYzI0CkEvFp2egxwA2KtpNlgym79gG4YF5N2GcPof33dv/7tA2E
- E4dztzCckObKlD11DAog5xMr7h2IEkAdMa0fyRyrqe+wwHWwA1bW9S8cbeX4GJpeNAai
- 91640yQNZFoFYP3fYdvSwiNyxaOpuBKjco9ATAq5muJLsnN/U21XTCGW4Xqs4H6jT9oG
- iYo4320rnk4PPQ1Fge30KkQNq8Yd47Nfim9ujOMT8i8sPknxgeWYLr+DP8SIIED+8UjW
- 13TA==
+ bh=xDPxsq8N119yy/eNYgu4mP+B+isAwha07XK+pAm6YiQ=;
+ b=HbFqlgaoYN9rPfc+Kre2eWsa7XKQEQoi8sZGMJKIksQstSLdWpkC6nQyfSIWC/2Hbr
+ f92IUHXfnkbKv+QxvSVOphhmBiqtDliyyFBnZPyvgwpGc09mKFnvlrQ02ZSqXGSZ05qU
+ 4XIkkfeTKKqPKfoua4dwxTvWJ/h/pypUDyhrjaXsf7zIQcFBCwQlTnwGTJ/hrmY5XM2X
+ 55p4HMiijTiXI0c5LggByILeL/Ns+VqzoE8k6UB+VWOhZRY+3lbfZqYmbi+iU8hDumEx
+ 3LF3BwVMD+bFRpDw121MU/ycBmZAprdgAdJvwChFrh6l5VccNs6jlRJc/tRNqH51y93T
+ 8CpQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+4NKtNQRcyr4DzNXNzsk5Mi5bG19keyC+PlbTvwMHiENjKsV7btprhthnz/ZBQ+/iTjTLSlsXYLZUQ@nongnu.org
-X-Gm-Message-State: AOJu0YywLFxEObGeZfjDThV4dLF24Ii6xOBB/SyCKJTRApYqv1oMzpAX
- pTyCAQxE7C/yzhAfhNvhIE7IZQWwYKtX/lBOXEmMWpeCzjkk/+0GHndYVLcRZYVZvrpwinapRYH
- 3a4IeJRQ=
-X-Gm-Gg: AeBDieu6faF0J/lqdW1xAak3K4D62pu9hRM4HTkSeMCzYdhzzyq2BftHuwpUYoFI+KF
- Zv2RG2z4KBjfL6fcMODXWii6z/9od/4Px9U8JzNzIuja7Niz9Gxpfp0BBDQrM6tst/+YfSILNTD
- rRHedPHGMJzpKKXcI/SoxEakX/BqysTQ0SnX1EqmKiniYbLCWEXUt6qLUNXq5x+9Ve++LHHRrW+
- wuqxoLu6rpRKHFsXIPgB7tmcJejOiS2Fr73DpIIy4rtohj+dNg1aVRIcpSWI+76MPXDAEBrsOxs
- NblSj9Mj3j4728NEOQ/jZeRNQqwHb2ulAZNtEF3EU1qvJ6j07hvi56rcFhpgR54n7cDaPc5iC9T
- a3zLaJauOE3+xWoHNM3CzIZJtBmcjqbolR71KbeU6YYMb8M8TpxPKrH4NaJ05xIkmKDoM4RcODb
- R2RAoThbGEJSFRWra1QCASwdzhpTdsPTP46eco990A3pMTAzH6jqqTADwuxL65ihg=
-X-Received: by 2002:a17:902:d50d:b0:2b0:7026:24c2 with SMTP id
- d9443c01a7336-2b9a2508467mr70834815ad.36.1777629442836; 
- Fri, 01 May 2026 02:57:22 -0700 (PDT)
+ AFNElJ80SA305u6vmFNMSFhNiSFYSqiJnVKi3yUu1ArRVs5lYHCU1YFZoJFFrsZvd2eZ/m6Tzhz3cnYjqAnE@nongnu.org
+X-Gm-Message-State: AOJu0YxItnhn65WIh9UyZp3fS+8JuaAsMdcEtJDDi/CMCLqUmB75VyRL
+ i1wpjyKFMMewsLkjoAcxQSGxsr8fmnMIF8f1EgMRz59BJ8M3hkPftbLDe2RF0gqpHQf3iGRY48j
+ AwMqBAuY=
+X-Gm-Gg: AeBDiesVLtDxJW19KIVP3QjoYbpq8+mMpoVRY79hz+QN6blETt6MnyE04Oh21egAw+P
+ CvHMpI1TVstS9Os8rb9u+/C8QYa6EvlIak8/0Wm7cTDCWLxqVwamKPWnn4vrKdbSMs/rA6mnPlM
+ dFWZnvxUfJoVE0Otov+YrV8gd641yolUCQFzDIDpj2WiUZGFkxi/4241CTudtWLplPl1TF7hch2
+ YwKLC6dYOq1Dgd5/QqNdSJQkLTG64P1Eiqi3459OwveA4mHtw6RQfhgrlEioNuqhz1ewR2wIIrt
+ HjL72tInuCornFeXimQSdQsY8127RI0Gck/BpL9oP0DJr5UunKfqihNYCT2CuWkIjUHyRBwl4AU
+ ec5yrXgP4NAOCaZuLnlU0xWaJsZhNiTu8w4QpjQNwZfyHQAmbMZ8aSPPPYEHk0+YuDnLIPnApmU
+ Mh/JoWG79qqgJbCUzWuZYUEJkk56qsJP5dD/9tAaQhfgyTShBYNqE3
+X-Received: by 2002:a05:6a00:1f14:b0:82f:4a53:a95b with SMTP id
+ d2e1a72fcca58-834fe233ebcmr6976808b3a.37.1777629535441; 
+ Fri, 01 May 2026 02:58:55 -0700 (PDT)
 Received: from [192.168.10.140] ([180.233.125.15])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b9cae4aae5sm19053595ad.66.2026.05.01.02.57.21
+ d2e1a72fcca58-83515b863eesm1953555b3a.60.2026.05.01.02.58.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 01 May 2026 02:57:22 -0700 (PDT)
-Message-ID: <570055d0-18a4-45a1-bfd2-c3af6b4d4e4b@linaro.org>
-Date: Fri, 1 May 2026 19:57:18 +1000
+ Fri, 01 May 2026 02:58:55 -0700 (PDT)
+Message-ID: <f917f568-db2e-49c3-bb82-3e7a2392251d@linaro.org>
+Date: Fri, 1 May 2026 19:58:50 +1000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 17/25] target/arm: Implement translate_for_debug
+Subject: Re: [PATCH v2 18/25] system/physmem: Use translate_for_debug() in
+ cpu_memory_rw_debug()
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
 References: <20260430093810.2762539-1-peter.maydell@linaro.org>
- <20260430093810.2762539-18-peter.maydell@linaro.org>
+ <20260430093810.2762539-19-peter.maydell@linaro.org>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260430093810.2762539-18-peter.maydell@linaro.org>
+In-Reply-To: <20260430093810.2762539-19-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62c.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,27 +107,28 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/30/26 19:38, Peter Maydell wrote:
-> Implement the translate_for_debug method instead of the
-> get_phys_addr_attrs_debug one.  This allows us to pass the caller the
-> lg_page_size from our internal GetPhysAddrResult struct.
+> Currently cpu_memory_rw_debug() assumes page-granularity for translations,
+> and it works in a loop where each iteration translates for the vaddr
+> rounded down to a page boundary and then copies up to the end of the
+> page boundary.
 > 
-> Awkwardly, translate_for_debug's "true on success" convention
-> is the opposite of the one we use internally in ptw.c, so
-> we have to be careful about the sense of the return values.
-> This corresponds to the way that arm_cpu_tlb_fill_align()
-> also has to return true when get_phys_addr() returns false.
+> Rewrite it to use the new cpu_translate_for_debug(): we no longer want
+> to round down the input address, and the boundary we copy up to is now
+> determined by the lg_page_size it returns rather than being assumed
+> to be page-sized.
 > 
+> This, together with the implementation of translate_for_debug for
+> Arm targets, fixes the bug where semihosting would incorrectly
+> fail to access parameter blocks that were in memory where the
+> start of the 4K region they were in was inaccessible due to MPU
+> region settings, even if the parameter block itself was readable.
+> 
+> Resolves:https://gitlab.com/qemu-project/qemu/-/work_items/3292
 > Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> Reviewed-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> Message-id:20260417173105.1648172-17-peter.maydell@linaro.org
+> Message-id:20260417173105.1648172-18-peter.maydell@linaro.org
 > ---
-> v1->v2: use 'fault' for the bool variable, not 'ret'
-> ---
->   target/arm/cpu.c       |  2 +-
->   target/arm/cpu.h       |  3 ---
->   target/arm/internals.h |  4 ++++
->   target/arm/ptw.c       | 39 +++++++++++++++++++++++----------------
->   4 files changed, 28 insertions(+), 20 deletions(-)
+>   system/physmem.c | 38 ++++++++++++++++++++++++--------------
+>   1 file changed, 24 insertions(+), 14 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
