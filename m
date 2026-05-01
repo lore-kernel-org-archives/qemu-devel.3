@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3FA6CD3425
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:18:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D89E7CD3424
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 10:18:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIkuP-00046N-F2; Fri, 01 May 2026 06:15:45 -0400
+	id 1wIkuI-00042d-Ud; Fri, 01 May 2026 06:15:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIkuH-00042Q-Ku
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:37 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1wIkuA-000403-9b
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:30 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wIkuF-0000D4-RA
- for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:37 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4891cd41959so15952085e9.3
- for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:15:35 -0700 (PDT)
+ id 1wIku8-0000AB-Dh
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 06:15:29 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-48984d29fe3so26211545e9.0
+ for <qemu-devel@nongnu.org>; Fri, 01 May 2026 03:15:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777630534; x=1778235334; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777630526; x=1778235326; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=OInFSah93JMGYAyEONqdnm1Dp5zsBSy9UAN4mJo6cQ8=;
- b=HFstDFX6ePSfZnPF1jMRRZxJNzvohwXluI+l4rLRBopJ6/lM4rxWK/iTP+8d3jC9v8
- 6mgRlx8MDJhdoqmyi0LVtaAuPe/RtQRloWnOMNsEDxiGSe7wuSGekUTypV5i+30UTncw
- p0RfnkyhWf2Bg+ixa61jGsftFtxzh7j0zAtJ2sckVmjJLWdgj1PNRqT5kFcG5BAPTXYx
- +9skUGAnkyakUS5Wd/nOjkRjFuSYbTFtG+zVeg7lV9d4ZyssJQrNkUXcLi0nJ0yEpZqV
- 6ueJpTDl8/e3rPjf6Rf0M2RhYv3M1P8vTmmx/Rlho9jzQ0MxAGrDWAbE3fLTqWK64tjz
- fRMg==
+ :reply-to; bh=2YjxkgDmODhzB8F97AzDnOR+tGT6XYFOQgHnOUXmosQ=;
+ b=oRXoGm9gk7R71IyQxNkHRQyGzFLOiB2vp5S6Ba3YLdZIh4Pe9X9T8jTjrkOWvj5vmS
+ ps9FAYw5mONzDIsGcWE8nr2YqpT+ubJIFc3aG2jgGdGi5H4LOnvTXwKX1d9Oh1h5ICzx
+ WpFuzt6rC0AT6/E6lepCyWnffvQYinCcYbrPA69CordLQ4GZ1jQvaIKGe7flDDGORRQl
+ klTDx+9/pKlHkR7KwlASUiOKk5wP8/fVEVFbYpmxO1iFJLOOnTQo9sDKpr2T2BCBPx60
+ 3Jzy1ldJYHhLV79KPf2t/6qgnBHUHQE1A9hNrRypCtmaDJegTqeXZNv1U9kNGGYX8qjQ
+ 5avA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777630534; x=1778235334;
+ d=1e100.net; s=20251104; t=1777630526; x=1778235326;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=OInFSah93JMGYAyEONqdnm1Dp5zsBSy9UAN4mJo6cQ8=;
- b=JVCbYVk+LJpZnVcK4yfeQ8GCQapT4Bh35N+ShCM0riZOkyAbkc5hhMxNB5ozY6PAvp
- zVEPUz2JAv9y0/9fYQdMThgxWHo1UwhQcSaijDpK+TIK77bSElLwMMuxLBN9LCIl16Mc
- J9IDMXBWfG0ZFBaXgnKKjvwekMXH/40cqRwlW28PEalFVFNa7xtzjq1voYLBKKZpxtW/
- hfbthshvGO+AicWbb/l197USDIhYYJnGHy46dfdoSCEz6ivXvDx6PMRPJf/pZ58QIvsb
- wKDx9lKGl7neHEtaKOnWPnrdNRtNPMk1Dd/jGB3gWHPBh/RksuYD2buFJ2+ykFTdUJkj
- ueZw==
-X-Gm-Message-State: AOJu0Yx3sfqB0/ZKDuG0NQswT2GOo08dZXMJLs9fqJATFOnEL3N7+un5
- F0tMzWNou1cuf9/UHjiDi4meCBwABEBlx2QmNnol/66Av11NkbpZp4ky1MA5lVNjkUNenivCK7O
- 0Yi5e
-X-Gm-Gg: AeBDiesT2UpHMA6pAkCOFElVaPDoRdUwkjFQjJeRVuPqpawlZO+RjC9P7eq2bkzVhJZ
- 5Lypw8QYRAAheli1leCSxm1Nwdong6mcIHjNsgfml1JWf7y1qq1NDouG6w4Kg5w+XAlPH8Q/X7l
- 6zWoH/bcsfaVla4AcV8itC3aeGchIQ38pE5GpMxOuKsIJRoD3xW+XwqdzNrNvj64JkST4/DkIlV
- ADsaF+Zf2uDJ0RxdjQeA4xb97T2vEEi6/pDiDswsUTE5+dXT89naOM/1eQu09lG8kb4sQi7Uxyn
- kTiYt6dtShfTGfNZK+IaWOo9/unkII2dGgvqPGynxKetHsSH4DLsjFEgxPrpzHiUAwlD7eW10Ll
- IBvDc/NSeY10rzXt2k/WmZ+ZtMXLixP3YXnBRdaXfbLgsQ2UXf9j13xOFsz5d/eZNlFUxqke3GS
- Yg2N9DXyIsp5AQ82Vd6QIVBiPXQbOeTfDXxxv9MrxW/uhZjgqzGdIGMnzR53k3zxcKDW4bQEJSf
- +pcBEb8QebWAXCtk5NYFMEY8bAPoNgoQnE63UaFAQ==
-X-Received: by 2002:a05:600c:3b16:b0:488:9439:880d with SMTP id
- 5b1f17b1804b1-48a8446406dmr108050065e9.29.1777630534438; 
- Fri, 01 May 2026 03:15:34 -0700 (PDT)
+ bh=2YjxkgDmODhzB8F97AzDnOR+tGT6XYFOQgHnOUXmosQ=;
+ b=aDv1rorr6OiB5jocuHs2KgYtWdWFHz1xYSY9ydhbsCIAs1lR2w2b/SkeVQXnCVBsuF
+ 3ZyxO5s/1u/PHcp492LdZYbWhL0TMv1XuVt6HxXOsya4pcEqvsF0PEQ590fCOhFM4PwT
+ Qw4QZreoV5yvg8guB49rHLtknp/uuUU+lWtghwfBceqa2O+bNdibA4ZcJRWQ1K3PrjUJ
+ KkZEibH75VL7wTYmwV/R3lwDTp9UVhOzwuupaG53zdrCrHfuzTIRQEqRrTFu4YJqcuHr
+ nty5GTJ5FkZcuex89Kr37tAd5VetDdxLSCstxbBpFD+tizEZB2Yk31R+JF0zcOXvo/9e
+ vadg==
+X-Gm-Message-State: AOJu0YwgPJ0enM35tDP8Ni4AtoAYhzJb+J6k8sBlekrubA/ddMGlJV31
+ a67CuG6VMlg1VsNb2ECC7XixZwZ8Kg1wXsOmwVxdjjqwrPJI49VK85EcMY/MdLW02jBtZv60EMT
+ mn3oi
+X-Gm-Gg: AeBDieuJSAUvPA5HFCUNUpjhyPuuEIZo77GjAHyOxU9AaeOHrTj0IE1wcG0CdK7IDi6
+ I7pGYMoKEnRZU8uQWYrczUDT4z4W0vCh5zRedEmHtvs8VLaE9JMRuqE/aCb199KtlbAQAbUFU31
+ L+cg2Z4Dv2L9+KMSpcKa2XXB03B9PKIYMIUouNPT3Z9HuD8O9X59u1Rrwbreu86Pe9C4mMldqIa
+ Z5f8PCg1thEIUAiOjmRBDZY+YhgljmLCvLDsZtOPuN8+jtptrvaIvwde+R10Pr6rtjmnjkN1DFm
+ BNqGHdU9cZGNpOSbh/BC9PPv72RL7U0HN4+nxZynMvPqijPNg4r58yC70KJIyraFqmPR7ssMchR
+ lAvkd0GVu1jTSjNmbgzvhdtGnEoUAOCIEJYq1quxdSzC29XgQuuGnhGO/LUzqMdic9MetjwOBCp
+ uecWzCjL6dULIcbh+dR+PGJULSaNLWR7WBhPxWUrGIAVfi17KcZMUCaxr26RzwRf9FOm0891Jdy
+ UE9SRYC5TruEBpHUFxgficQEYR7yXz9YfrjScpCe2uUlhqxruFg
+X-Received: by 2002:a05:600c:1d1a:b0:485:30d4:6b9e with SMTP id
+ 5b1f17b1804b1-48a84458d16mr114107105e9.21.1777630526469; 
+ Fri, 01 May 2026 03:15:26 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8fede418sm12863335e9.6.2026.05.01.03.15.33
+ 5b1f17b1804b1-48a8fede418sm12863335e9.6.2026.05.01.03.15.23
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 01 May 2026 03:15:33 -0700 (PDT)
+ Fri, 01 May 2026 03:15:24 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 22/28] target/arm: hvf: add asserts for code paths not
- leveraged when using the vGIC
-Date: Fri,  1 May 2026 11:14:59 +0100
-Message-ID: <20260501101505.3485916-23-peter.maydell@linaro.org>
+Subject: [PULL 13/28] target/arm/kvm: Cache host CPU probe failure
+Date: Fri,  1 May 2026 11:14:50 +0100
+Message-ID: <20260501101505.3485916-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260501101505.3485916-1-peter.maydell@linaro.org>
 References: <20260501101505.3485916-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,48 +100,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-When using the vGIC, timers are directly handled by the platform.
-No vmexits ought to happen in that case. Abort if reaching those code paths.
+kvm_arm_set_cpu_features_from_host() does not properly handle host CPU
+probe failure with caching. The current algorithm can be summarized as
+follows:
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Mads Ynddal <mads@ynddal.dk>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260429190532.26538-10-mohamed@unpredictable.fr
+    If dtb_compatible is not cached:
+        If kvm_arm_create_scratch_host_vcpu() fails:
+            Report failure
+
+        Cache dtb_compatible
+
+        If getting register values fails:
+            Report failure
+
+    Report success
+
+This algorithm has the following problems:
+
+- If kvm_arm_create_scratch_host_vcpu() fails, probing may be repeated.
+- If getting register values fails, later invocations incorrectly report
+  success.
+
+Make two changes to fix them:
+
+- Cache dtb_compatible whenever a probe is attempted.
+- Record probe failure by assigning QEMU_KVM_ARM_TARGET_NONE to
+  arm_host_cpu_features.target.
+
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260428-features-v1-1-1841b39da7e6@rsg.ci.i.u-tokyo.ac.jp
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/hvf/hvf.c | 3 +++
- 1 file changed, 3 insertions(+)
+ target/arm/kvm.c | 38 ++++++++++++++++++++++----------------
+ 1 file changed, 22 insertions(+), 16 deletions(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 390a3529ff..38f88c1a80 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1696,6 +1696,7 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
-     case SYSREG_ICC_SGI1R_EL1:
-     case SYSREG_ICC_SRE_EL1:
-     case SYSREG_ICC_CTLR_EL1:
-+        assert(!hvf_irqchip_in_kernel());
-         /* Call the TCG sysreg handler. This is only safe for GICv3 regs. */
-         if (hvf_sysreg_read_cp(cpu, "GICv3", reg, val)) {
-             return 0;
-@@ -1986,6 +1987,7 @@ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
-     case SYSREG_ICC_SGI0R_EL1:
-     case SYSREG_ICC_SGI1R_EL1:
-     case SYSREG_ICC_SRE_EL1:
-+        assert(!hvf_irqchip_in_kernel());
-         /* Call the TCG sysreg handler. This is only safe for GICv3 regs. */
-         if (hvf_sysreg_write_cp(cpu, "GICv3", reg, val)) {
-             return 0;
-@@ -2393,6 +2395,7 @@ static int hvf_handle_vmexit(CPUState *cpu, hv_vcpu_exit_t *exit)
-         ret = hvf_handle_exception(cpu, &exit->exception);
-         break;
-     case HV_EXIT_REASON_VTIMER_ACTIVATED:
-+        assert(!hvf_irqchip_in_kernel());
-         qemu_set_irq(arm_cpu->gt_timer_outputs[GTIMER_VIRT], 1);
-         cpu->accel->vtimer_masked = true;
-         break;
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index d4a68874b8..7d194ea112 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -273,7 +273,7 @@ static uint32_t kvm_arm_sve_get_vls(int fd)
+     return vls[0] & MAKE_64BIT_MASK(0, ARM_MAX_VQ);
+ }
+ 
+-static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
++static void kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+ {
+     /* Identify the feature bits corresponding to the host CPU, and
+      * fill out the ARMHostCPUClass fields accordingly. To do this
+@@ -287,6 +287,13 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     uint64_t features = 0;
+     int err;
+ 
++    ahcf->target = QEMU_KVM_ARM_TARGET_NONE;
++    ahcf->dtb_compatible = "arm,armv8";
++
++    if (!kvm_enabled()) {
++        return;
++    }
++
+     /*
+      * target = -1 informs kvm_arm_create_scratch_host_vcpu()
+      * to use the preferred target
+@@ -326,11 +333,9 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     }
+ 
+     if (!kvm_arm_create_scratch_host_vcpu(fdarray, &init)) {
+-        return false;
++        return;
+     }
+ 
+-    ahcf->target = init.target;
+-    ahcf->dtb_compatible = "arm,armv8";
+     int fd = fdarray[2];
+ 
+     err = get_host_cpu_reg(fd, ahcf, ID_AA64PFR0_EL1_IDX);
+@@ -454,7 +459,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     kvm_arm_destroy_scratch_host_vcpu(fdarray);
+ 
+     if (err < 0) {
+-        return false;
++        return;
+     }
+ 
+     /*
+@@ -471,9 +476,8 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+         features |= 1ULL << ARM_FEATURE_EL2;
+     }
+ 
++    ahcf->target = init.target;
+     ahcf->features = features;
+-
+-    return true;
+ }
+ 
+ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
+@@ -481,18 +485,20 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
+     CPUARMState *env = &cpu->env;
+ 
+     if (!arm_host_cpu_features.dtb_compatible) {
+-        if (!kvm_enabled() ||
+-            !kvm_arm_get_host_cpu_features(&arm_host_cpu_features)) {
+-            /* We can't report this error yet, so flag that we need to
+-             * in arm_cpu_realizefn().
+-             */
+-            cpu->kvm_target = QEMU_KVM_ARM_TARGET_NONE;
+-            cpu->host_cpu_probe_failed = true;
+-            return;
+-        }
++        kvm_arm_get_host_cpu_features(&arm_host_cpu_features);
+     }
+ 
+     cpu->kvm_target = arm_host_cpu_features.target;
++
++    if (cpu->kvm_target == QEMU_KVM_ARM_TARGET_NONE) {
++        /*
++         * We can't report this error yet, so flag that we need to
++         * in arm_cpu_realizefn().
++         */
++        cpu->host_cpu_probe_failed = true;
++        return;
++    }
++
+     cpu->dtb_compatible = arm_host_cpu_features.dtb_compatible;
+     cpu->isar = arm_host_cpu_features.isar;
+     cpu->sve_vq.supported = arm_host_cpu_features.sve_vq_supported;
 -- 
 2.43.0
 
