@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27D26FF8864
-	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 04:03:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 215EBFF885A
+	for <qemu-devel@archiver.kernel.org>; Fri,  1 May 2026 04:03:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wIf5I-0006X6-Db; Fri, 01 May 2026 00:02:36 -0400
+	id 1wIf5i-0006wp-3E; Fri, 01 May 2026 00:03:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wIf5H-0006TK-2V
- for qemu-devel@nongnu.org; Fri, 01 May 2026 00:02:35 -0400
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1wIf5d-0006tX-J3
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 00:02:58 -0400
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wIf5E-0005Qj-W0
- for qemu-devel@nongnu.org; Fri, 01 May 2026 00:02:34 -0400
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-ba51e69988aso264820866b.0
- for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 21:02:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777608151; cv=none;
+ id 1wIf5a-0005SH-Tp
+ for qemu-devel@nongnu.org; Fri, 01 May 2026 00:02:57 -0400
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-b9358bc9c50so237153766b.1
+ for <qemu-devel@nongnu.org>; Thu, 30 Apr 2026 21:02:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777608173; cv=none;
  d=google.com; s=arc-20240605;
- b=VxDEudIheS8Zm71RFnLlar7j5rPVSUjcRXIL3SFGHWj+45CPFj4JzKv/i14d5AOtN9
- 1YeV9VpoWyVIF9nQtf7y/9OwMq1iUKQK3yey3WGzjyGcRycC6Ysla4H2HbOZ84GL80fE
- JWTkmkwCmWNef62Fg8V93ktkOK7GbarubLCppGYT57p1uDTD+oU29WIPCi9ixaVSv2gR
- H2MtooXPaIkZxd/Kl7MjAEhEGmiGob/P+K/NeVPgFS9s7KWlI6tkeX6gzRqxufxdatOb
- MwRHpXCIsJJmxBVe/9LvsQVLsL2WXg0o1fOX8l/qJZcaCMUDw2Dg7rtSSwcBl2IOimJz
- gVEg==
+ b=a6LPHB9JUh48Tq+B4fapSjz94/Bjb+Mii9E6kwEE3k3finNodJ43U8WPW0z6jzWV2P
+ M6aWJ0isuFdwmDMsImJJvnlqF1vO1P9pl6ze1pQGhaTAJmjdIUkrr3oLXDWppg/vcusW
+ 3klQ8HbbvdJCPxWFVV7yly0B1ZX79p+qFjZasSqW6VisbangluO+3jdGw6vXalV97mxB
+ duXM8gtfTdmvAem6c4orH7Qkw8+hSySuy0FW6L/4TFoi7yp1jFoaldbAQXjhFq28eFbL
+ aRz89pN4qahBwqpGrxieOUXQzgTnA/ZKv/AOq8yEDjE1snWd+3hlUKKJwK1qMjqMg0f4
+ VZSg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=oSAPUnh+brlFly6jCWJieYL2zgNaNfnZI0wG5LhXnJY=;
- fh=mQuR0tWT+Rgl63KUpotfvTWBkNe40Y9gCTg1gHDVAeQ=;
- b=JJQjrnPyOKoZPraAnAYRfsyRHMK9tdOTxrq4xgYWOb+KLHFZzKmgOwHOI/zepn3uEU
- UQFS18pc1ZAu7fLRJUrarlZCL+D4POjliMDF7vQ0puqMWZk7b/yvRmU6t0d2YSjpq1ew
- 19vaTyXlQ1w0K8qVY1tvuGMXKJgrMYXovO9idufcGk5JBhR7OvRti64q4Cvy5xPJgEaU
- SgCeE98LdsVKdzvOKCOFtxfw7JenbyDFkDklUUvKh8HpeyKrO0HMNlQiLcA/eZPYNi/2
- TKdlf1SailOmmMNLbd9ytYo+r+5yMTLx6yMW4mYwBl/NKHb8MdgrN1If9JhYQl5A8RHS
- a4iQ==; darn=nongnu.org
+ bh=w3udHbp5sGzYNA3tVfG61j5Z/veoBxhG53xi2gQq55I=;
+ fh=lldk3GMzpVPWJTS+jwmtnayOKLiGEFdBZLRTrAMdDxk=;
+ b=BAykrB61MJjaCQG7q8se85tx52ng1Yuqxle9Xe143rujNsFCwlHGZ0HHb8PaeQM1UQ
+ F8/i7OAPobkXky4tFAYDdI/c0KHy5KvgA6mrp2uMBvj/QDKO1LDu6eDd6IkdkzUGtT/H
+ Ga7u0/Vgm1XO5zp9cHSVlMpxAKK0qxhanoZEOuBisi8w1ibrJn84BjlvG0mOqk6/zGrn
+ aOJM6hp/e0qPRQmE1z/UIgXsgNEVbq6ehe9yeH3SJOQFd+iEcJSU6lmD/gox6Vg2qdX3
+ A1HfdK5iyg258zzLB+ZrzcDX9AVT5nwTdamkVlaxK453YT1H/J0Z2HNVyedqvg9yQwQj
+ 7rwQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777608151; x=1778212951; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777608173; x=1778212973; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oSAPUnh+brlFly6jCWJieYL2zgNaNfnZI0wG5LhXnJY=;
- b=RSZkxhWnNs9T/gCl+ALtyzNW4XK/1L8x9GMBp5+Jy4abo2+JGcQwMwa2zG4oQjIq+u
- fXzr9EYlUEEVk57rBYhA+2e5J5k01mwh5VoTTwjUquecqA9bowYop2tGrSQGMEAxWNTC
- DUeN26ZxXPiBsbaSuItmEK6YYjXngxVq+9nEUhkMz4d3Bw4J05M9BLHhq1THGr/30YwK
- +rWUIFtrG0iCgk9bjWk4SMU1pwWXu/muZ+xWlFg9VG0H6yFwpa2Xrb1+g2ls74HediC2
- A0YlXYfeJtV6S8bPLjfe98b2lJBzr889i17THyT0rKyu8AKOuRmqfV2yXTLVx0OaqHL5
- w7bg==
+ bh=w3udHbp5sGzYNA3tVfG61j5Z/veoBxhG53xi2gQq55I=;
+ b=GUVVMxV9lP+o+5Y5PfbAWEqh4bWxOEbX6hN7qjS7yYpuIkLDVIwJcWlE2i0+DLMw0z
+ mhqB3/fb5Qdxpnmd0Tf3/1ahpv3DjknPyRDwRRWlgzcpXBDqj0ngzXpRozpC3PPo8sVb
+ jQS8/nMcJW36PkR6DGfa2f47jALHVsJP9CPTXi/W0NJlKJGHjLhGezqUN1OJwb7i8Cv6
+ uGsKbhswn4qvbTI4lEB6yFjoLZ3e6utahWnti3piOSYqlIBB7STDUeHfen2Oi/i+az2m
+ 7LVrwnb+tuAc9v0OvVnbEDr66rVVRApMKu76aX5haFXt47HyMEbogjFx20g3KoGTy0Si
+ Slww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777608151; x=1778212951;
+ d=1e100.net; s=20251104; t=1777608173; x=1778212973;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=oSAPUnh+brlFly6jCWJieYL2zgNaNfnZI0wG5LhXnJY=;
- b=LGLULKMtUMV1WLsOQ42ma7anr91bn2eM9IQH77SWCwSUTBWNKhS+kMhFu+Jddg3nPe
- OKo4dAp4vcNHnYTwhEOgVgrDW9vqfr7vvna3T7/9dhtV1czy/gc1UMCDnAuxy5CWl/OA
- +IVp6+akT0NVpCpWshdJQAivStMR9h808LtZYbj5tyt3Yciemoy3N/u97VkqpjR4GC1e
- Lqvhhh7qtGlLme5vjTBqCESHInKyaMaMe87mQpQqWeXx0OeChhijstFodXFGo/F8Y2o0
- IRob+NhCN1tbkmOFUwSt1ICQMDiwSV7zlv1Css+mMZw3j32qC6wJRmhwmXyCAl2kTv5x
- gKVQ==
+ bh=w3udHbp5sGzYNA3tVfG61j5Z/veoBxhG53xi2gQq55I=;
+ b=VvFkcKiTRzAsvpsBIcJGeQpWMb5EaROK0zIVzed0FneIv9ho2wMHHpETWIzCuqnPdP
+ Iz3mN8BFrdtIbc+MCHtmAf0M78QB598IPGJh5XhHbAQklftGGsGfUHzNAK5o/JTgYz7E
+ jSGZAdKG36rweg7m8jsNKS7OShYVylSJXFomB5UaVHmYQ0tsfnSBFIbAfQDxE9g6K8yG
+ DgeZ6i26NsWaDlftMYjAVBx6IVFrxTiwH8JpMD7TddD6ejaU9EAqRe16LOsZTyhdQfyx
+ V6KIPX2/BEwqIWKMTAG9YkxUXUq5IXNh7APhNEhaZRlm6TAmhCLyPnJlF13Qc5r0kHMo
+ yROw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9Hzf2mA04FSF9sJhIywZUcWiwvLaq7iHxvfNllz2aQIo9hhKStd0DOO1g+WH4bRqWBJ9cOgj/quoVb@nongnu.org
-X-Gm-Message-State: AOJu0YxziCOS9sVeafSM0IUNvt2rxG7Tz7wmOsZeWJJWEP77VLPUAZL6
- 7IYzyNbZAMYEBcrR3jfO09IQiYrljkWIvf2rG+lQpUn3gbOcFj6gBCedxvty+PZ68BMOyhIj3fn
- +0rKBiu1JhXpAD3MkiOg0m0lbMxgg5W8=
-X-Gm-Gg: AeBDievubEPIb3KuJEWu6PhI3oAfbVs/ZAebL4uPr9BxlomyTrENFuXwo8Sxa82rFQb
- 5ScrNRiZOYk2wfIjE+W2FlgqR8jvN9CekUDBGAKcsAif2TzU5VK/ZJZo1NVAie/JWwbhxd2O2Oz
- OLZmkyWwI8YHNBuLRNY91eWr/M2w9Ure4RC2OgGFujSAYONokfAgnBhj6JHvlqyJyQMO/RaF/iy
- 0y0ePfkevduHuGxhGpJQXOKfxdW48uCDl1S5rwSIBSKXhn9pbEJmuJfqBkih87w+e/TiaMTDArb
- Rmoi99Y04YCmnUMiv2ZLtFLMQFxseh/LBnHztXGVGKX62IQI
-X-Received: by 2002:a17:907:a45:b0:bab:182a:1ea4 with SMTP id
- a640c23a62f3a-bbec0dedec7mr61854966b.34.1777608150910; Thu, 30 Apr 2026
- 21:02:30 -0700 (PDT)
+ AFNElJ+poKZWChkt+OPWlUXyw/WaF6ff2tIjZHz9Ec5mHeb5ALOCA8OZyNv46kXgTDYb+yfQBqsqAXoojvz/@nongnu.org
+X-Gm-Message-State: AOJu0YwtmlSHWq4y3o/EfEORyNgSL4WJJNYs3mwRma0gveVNkvRoyIyf
+ Eom/JyD2gl/YxLeAJxydM+bjJGa0+WdcG3pvvAVWGj75MgcV/Yf3VViWJiS1RNipF8fZRXgpulE
+ p338u+FkMnPMX5c8vjG6Kte+OhuSEaFg=
+X-Gm-Gg: AeBDieuuSzfzaJ8WkAv8Mq1S3/Vy2vCEraebBPG6C1/ODjLHn2iKrI6gltduTbrJQY0
+ 2LszG764qak+cB0YyF655Lxa7F3CESHDLzR2ZASE2c+AGVw+iMeIZIwsQfEAIQW2QaiAZm75F+F
+ znODkdPY0TRBrRK7YwhvsJyVEjqEP68ZeFTphQ4WZ3xsJiocMJ/vJguHx2aPpq0dLIl1ehFUqlc
+ TzO7FY/tTFHqRiKwiAdfmjgAFuJomYt7ExpmfDIqDjoLMQ5iYoV/lepsho9mM9gb8BBpSUnRUGY
+ 999JJB5wVMwPIxssr1Xs1+McHJ2NR9Rd16OmVrKGBHAnmlhNtKjFYo4093g=
+X-Received: by 2002:a17:907:782:b0:b9c:2c55:3384 with SMTP id
+ a640c23a62f3a-bbac8181578mr387752066b.31.1777608173227; Thu, 30 Apr 2026
+ 21:02:53 -0700 (PDT)
 MIME-Version: 1.0
 References: <cover.1776438369.git.chao.liu.zevorn@gmail.com>
  <e1a977e38c934a7f383530067230a6201b8ccc60.1776438369.git.chao.liu.zevorn@gmail.com>
- <CAKmqyKMipoe-YHVo5VGekUGG4uFJ7CEktipsOCSrSx=6b9=REA@mail.gmail.com>
- <aeWJKa4edHt6Djv3@ZEVORN-PC.localdomain>
-In-Reply-To: <aeWJKa4edHt6Djv3@ZEVORN-PC.localdomain>
+In-Reply-To: <e1a977e38c934a7f383530067230a6201b8ccc60.1776438369.git.chao.liu.zevorn@gmail.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 1 May 2026 14:02:04 +1000
-X-Gm-Features: AVHnY4IHT_6p_h81b0S_J-9SAyxipk9kmN3fSxbo3_taImA9JbqdzEa9NNIerNo
-Message-ID: <CAKmqyKPWeYaELDhW7cBj_De10rN003ztGDHb0de3Jn=ef41wOw@mail.gmail.com>
+Date: Fri, 1 May 2026 14:02:26 +1000
+X-Gm-Features: AVHnY4JF9k5WiNMU1LNVj3WRmwproiwWwT__gmIRz3yxy-F8ZinddXixcSvRr1U
+Message-ID: <CAKmqyKP2xqEcvp6HMgu4ieV9vf1g1aaFQt_VSxBwD6vd=SAzuA@mail.gmail.com>
 Subject: Re: [PATCH v6 1/5] target/riscv: add thead-c908 cpu support
 To: Chao Liu <chao.liu.zevorn@gmail.com>
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -107,8 +105,8 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Conor Dooley <conor@kernel.org>, Peng Jiang <3160104094@zju.edu.cn>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -132,121 +130,547 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Apr 20, 2026 at 1:38=E2=80=AFPM Chao Liu <chao.liu.zevorn@gmail.com=
+On Sat, Apr 18, 2026 at 1:13=E2=80=AFAM Chao Liu <chao.liu.zevorn@gmail.com=
 > wrote:
 >
-> On Mon, Apr 20, 2026 at 09:49:50AM +1000, Alistair Francis wrote:
-> > On Sat, Apr 18, 2026 at 1:13=E2=80=AFAM Chao Liu <chao.liu.zevorn@gmail=
-.com> wrote:
-> > >
-> > > From: Chao Liu <chao.liu@zevorn.cn>
-> > >
-> > > The C908 processor is based on the RV64GCB[V] instruction
-> > > set, compatible to RVA22 Profile and implements the XIE
-> > > (XuanTie Instruction Extension) technology.
-> > >
-> > > Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> > > Suggested-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-> > > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> > > Reviewed-by: Conor Dooley <conor@kernel.org>
-> >
-> > As Connor pointed out, he didn't add his Reviewed-by, instead he
-> > commented about a missing extension [1]. On top of that I don't see
-> > any instances of `Reviewed-by: Conor Dooley <conor@kernel.org>` in the
-> > QEMU tree, so I assume there are none on the mailing list as well.
-> > Which makes a copy and paste error seem less likely.
-> >
-> > I do see that Connor's reply was sent from his conor@kernel.org address=
-,
-> > but manually stitching together a `Reviewed-by` and address seems
-> > unlikely to happen by accident. Although it does seem like the type of
-> > thing an LLM would do (see below).
-> >
-> Sorry, when I first started contributing to QEMU, I wasn't familiar with
-> mailing list conventions. I had been under the impression that whenever a
-> reviewer left comments, it was appropriate to carry a Reviewed-by tag int=
-o
-> the next revision. No one pointed this out at the time, but that was
-> clearly my oversight. My apologies to Alistair and Conor for the trouble
-> caused.
+> From: Chao Liu <chao.liu@zevorn.cn>
+>
+> The C908 processor is based on the RV64GCB[V] instruction
+> set, compatible to RVA22 Profile and implements the XIE
+> (XuanTie Instruction Extension) technology.
+>
+> Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> Suggested-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Conor Dooley <conor@kernel.org>
+> Reported-by: Peng Jiang <3160104094@zju.edu.cn>
 
-In future, only add tags that people specify. Please copy them
-directly or use b4, patchew or a similar tool to apply the tags.
-
->
-> I made the same mistake on earlier patches as well:
->
-> https://lore.kernel.org/qemu-devel/8b29b86a9af84edba54cc53aec017224478312=
-bf.1745894489.git.lc00631@tecorigin.com/
-> https://lore.kernel.org/qemu-devel/501e578a4ef28515ccdefcbc82defc04363855=
-ca.1746001489.git.lc00631@tecorigin.com/
->
-> There is also a slightly different case where I added a Reviewed-by tag:
->
-> https://lore.kernel.org/qemu-devel/07a97219e3f7e342c668d6772acc4c0a8eb4d4=
-f3.1744709888.git.lc00631@tecorigin.com/
->
-> There the R-b came from an internal colleague who reviewed the patch on
-> our side before it was sent upstream.
->
-> Is that also against community convention?
-
-No, internal colleagues are ok. Generally they provide little insight
-though. Your colleague would be better off engaging with the community
-as then the comments can be seen by everyone, that helps build trust
-between developers.
-
->
-> > > Reported-by: Peng Jiang <3160104094@zju.edu.cn>
-> >
-> > I'm not sure how this can be Reported-by, it's not a bug fix. What was
-> > reported? It seems like the Reported-by appeared in v3 [2] and wasn't
-> > in v2 [3], yet I don't see anything reported.
-> >
-> This patchset is the project-phase output of a non-profit QEMU open-sourc=
-e
-> training camp we run in China; so far the camp has trained about 2000
-> participants. Peng Jiang is one of the members, and his task was bringing
-> up OpenSBI/RustSBI + Linux on the QEMU k230 board. For the specific
-> details, see:
->
-> https://github.com/rustsbi/rustsbi/issues/160
->
-> The Reported-by in v3 was added as a form of encouragement, since he
-> found several bugs during that bring-up work.
-
-A Signed-off-by or Tested-by would probably be more appropriate then.
-Reported-by indicates that they found and reported a bug
-
->
-> Given this situation, should I also drop Peng Jiang's Reported-by tag?
->
-> After the camp concluded, I asked him to report any further issues to the
-> upstream list directly himself =E2=80=94 for example in v4:
->
-> https://lore.kernel.org/qemu-devel/651b1d38.63ab7.19be50b4721.Coremail.31=
-60104094@zju.edu.cn/
->
-> > The extra and unexplained `Reviewed-by` (especially using an odd
-> > address as mentioned above) really points to this being LLM generated.
-> > Especially considering that your reviews are LLM generated (those are
-> > fine). Unfortunately that means I will need to decline the commits
-> > according to the QEMU Code Provenance rules [4]. Note that it isn't
-> > just the Code Provenance policy, it is also now really difficult to
-> > trust these patches knowing that stray `Reviewed-by` tags could be
-> > hallucinated and not caught before being submitted.
-> >
-> That said, I should clarify that no LLM assistance was used in developing
-> this patchset.
-
-Ok, good to know :)
-
->
-> Finally, thanks to Alistair for the patient review. I'll be more careful
-> about these details in future contributions to avoid adding review burden
-> on maintainers/reviewers.
-
-Thank you
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
+
+> ---
+>  target/riscv/cpu-qom.h |   2 +
+>  target/riscv/cpu.c     |  51 ++++++
+>  target/riscv/th_csr.c  | 380 ++++++++++++++++++++++++++++++++++++++++-
+>  3 files changed, 432 insertions(+), 1 deletion(-)
+>
+> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+> index 30dcdcfaae..1a28f1369c 100644
+> --- a/target/riscv/cpu-qom.h
+> +++ b/target/riscv/cpu-qom.h
+> @@ -52,6 +52,8 @@
+>  #define TYPE_RISCV_CPU_SIFIVE_U34       RISCV_CPU_TYPE_NAME("sifive-u34"=
+)
+>  #define TYPE_RISCV_CPU_SIFIVE_U54       RISCV_CPU_TYPE_NAME("sifive-u54"=
+)
+>  #define TYPE_RISCV_CPU_THEAD_C906       RISCV_CPU_TYPE_NAME("thead-c906"=
+)
+> +#define TYPE_RISCV_CPU_THEAD_C908       RISCV_CPU_TYPE_NAME("thead-c908"=
+)
+> +#define TYPE_RISCV_CPU_THEAD_C908V      RISCV_CPU_TYPE_NAME("thead-c908v=
+")
+>  #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
+>  #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon"=
+)
+>  #define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-n=
+anhu")
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 72c6f4f0f1..870d0690fe 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -3150,6 +3150,57 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+>  #endif
+>      ),
+>
+> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C908, TYPE_RISCV_VENDOR_CPU,
+> +        .misa_mxl_max =3D MXL_RV64,
+> +        .misa_ext =3D RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU,
+> +        .priv_spec =3D PRIV_VERSION_1_12_0,
+> +
+> +        /* ISA extensions */
+> +        .cfg.ext_xtheadba =3D true,
+> +        .cfg.ext_xtheadbb =3D true,
+> +        .cfg.ext_xtheadbs =3D true,
+> +        .cfg.ext_xtheadcmo =3D true,
+> +        .cfg.ext_xtheadcondmov =3D true,
+> +        .cfg.ext_xtheadfmv =3D true,
+> +        .cfg.ext_xtheadfmemidx =3D true,
+> +        .cfg.ext_xtheadmac =3D true,
+> +        .cfg.ext_xtheadmemidx =3D true,
+> +        .cfg.ext_xtheadmempair =3D true,
+> +        .cfg.ext_xtheadsync =3D true,
+> +        .cfg.ext_smepmp =3D true,
+> +        .cfg.ext_sscofpmf =3D true,
+> +        .cfg.ext_sstc =3D true,
+> +        .cfg.ext_svpbmt =3D true,
+> +        .cfg.ext_svinval =3D true,
+> +        .cfg.ext_svnapot =3D true,
+> +        .cfg.ext_zba =3D true,
+> +        .cfg.ext_zbb =3D true,
+> +        .cfg.ext_zbc =3D true,
+> +        .cfg.ext_zbs =3D true,
+> +        .cfg.ext_zkt =3D true,
+> +        .cfg.ext_zbkc =3D true,
+> +        .cfg.ext_zicsr =3D true,
+> +        .cfg.ext_zifencei =3D true,
+> +        .cfg.ext_zihintpause =3D true,
+> +        .cfg.ext_zicbom =3D true,
+> +        .cfg.ext_zicboz =3D true,
+> +
+> +        .cfg.pmp =3D true,
+> +        .cfg.mmu =3D true,
+> +        .cfg.max_satp_mode =3D VM_1_10_SV48,
+> +
+> +        .cfg.marchid =3D 0x8d143000,
+> +        .cfg.mvendorid =3D THEAD_VENDOR_ID,
+> +#ifndef CONFIG_USER_ONLY
+> +        .custom_csrs =3D th_csr_list,
+> +#endif
+> +    ),
+> +
+> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_THEAD_C908V, TYPE_RISCV_CPU_THEAD_C9=
+08,
+> +        .misa_ext =3D RVI | RVM | RVA | RVF | RVD | RVC | RVS | RVU | RV=
+V,
+> +        .vext_spec =3D VEXT_VERSION_1_00_0,
+> +    ),
+> +
+>      DEFINE_RISCV_CPU(TYPE_RISCV_CPU_TT_ASCALON, TYPE_RISCV_VENDOR_CPU,
+>          .misa_mxl_max =3D MXL_RV64,
+>          .misa_ext =3D RVG | RVC | RVS | RVU | RVH | RVV,
+> diff --git a/target/riscv/th_csr.c b/target/riscv/th_csr.c
+> index 49eb7bbab5..e19cab5414 100644
+> --- a/target/riscv/th_csr.c
+> +++ b/target/riscv/th_csr.c
+> @@ -2,6 +2,9 @@
+>   * T-Head-specific CSRs.
+>   *
+>   * Copyright (c) 2024 VRULL GmbH
+> + * Copyright (c) 2025 Chao Liu <chao.liu.zevorn@gmail.com>
+> + *
+> + * For more information, see XuanTie-C908-UserManual_xrvm_20240530.pdf
+>   *
+>   * This program is free software; you can redistribute it and/or modify =
+it
+>   * under the terms and conditions of the GNU General Public License,
+> @@ -20,13 +23,88 @@
+>  #include "cpu.h"
+>  #include "cpu_vendorid.h"
+>
+> -#define CSR_TH_SXSTATUS 0x5c0
+> +/* Extended M-mode control registers of T-Head */
+> +#define CSR_TH_MXSTATUS        0x7c0
+> +#define CSR_TH_MHCR            0x7c1
+> +#define CSR_TH_MCOR            0x7c2
+> +#define CSR_TH_MCCR2           0x7c3
+> +#define CSR_TH_MHINT           0x7c5
+> +#define CSR_TH_MRVBR           0x7c7
+> +#define CSR_TH_MCOUNTERWEN     0x7c9
+> +#define CSR_TH_MCOUNTERINTEN   0x7ca
+> +#define CSR_TH_MCOUNTEROF      0x7cb
+> +#define CSR_TH_MCINS           0x7d2
+> +#define CSR_TH_MCINDEX         0x7d3
+> +#define CSR_TH_MCDATA0         0x7d4
+> +#define CSR_TH_MCDATA1         0x7d5
+> +#define CSR_TH_MSMPR           0x7f3
+> +#define CSR_TH_CPUID           0xfc0
+> +#define CSR_TH_MAPBADDR        0xfc1
+> +
+> +/* TH_MXSTATUS bits */
+> +#define TH_MXSTATUS_UCME        BIT(16)
+> +#define TH_MXSTATUS_MAEE        BIT(21)
+> +#define TH_MXSTATUS_THEADISAEE  BIT(22)
+> +
+> +/* Extended S-mode control registers of T-Head */
+> +#define CSR_TH_SXSTATUS        0x5c0
+> +#define CSR_TH_SHCR            0x5c1
+> +#define CSR_TH_SCER2           0x5c2
+> +#define CSR_TH_SCER            0x5c3
+> +#define CSR_TH_SCOUNTERINTEN   0x5c4
+> +#define CSR_TH_SCOUNTEROF      0x5c5
+> +#define CSR_TH_SCYCLE          0x5e0
+> +#define CSR_TH_SHPMCOUNTER3    0x5e3
+> +#define CSR_TH_SHPMCOUNTER4    0x5e4
+> +#define CSR_TH_SHPMCOUNTER5    0x5e5
+> +#define CSR_TH_SHPMCOUNTER6    0x5e6
+> +#define CSR_TH_SHPMCOUNTER7    0x5e7
+> +#define CSR_TH_SHPMCOUNTER8    0x5e8
+> +#define CSR_TH_SHPMCOUNTER9    0x5e9
+> +#define CSR_TH_SHPMCOUNTER10   0x5ea
+> +#define CSR_TH_SHPMCOUNTER11   0x5eb
+> +#define CSR_TH_SHPMCOUNTER12   0x5ec
+> +#define CSR_TH_SHPMCOUNTER13   0x5ed
+> +#define CSR_TH_SHPMCOUNTER14   0x5ee
+> +#define CSR_TH_SHPMCOUNTER15   0x5ef
+> +#define CSR_TH_SHPMCOUNTER16   0x5f0
+> +#define CSR_TH_SHPMCOUNTER17   0x5f1
+> +#define CSR_TH_SHPMCOUNTER18   0x5f2
+> +#define CSR_TH_SHPMCOUNTER19   0x5f3
+> +#define CSR_TH_SHPMCOUNTER20   0x5f4
+> +#define CSR_TH_SHPMCOUNTER21   0x5f5
+> +#define CSR_TH_SHPMCOUNTER22   0x5f6
+> +#define CSR_TH_SHPMCOUNTER23   0x5f7
+> +#define CSR_TH_SHPMCOUNTER24   0x5f8
+> +#define CSR_TH_SHPMCOUNTER25   0x5f9
+> +#define CSR_TH_SHPMCOUNTER26   0x5fa
+> +#define CSR_TH_SHPMCOUNTER27   0x5fb
+> +#define CSR_TH_SHPMCOUNTER28   0x5fc
+> +#define CSR_TH_SHPMCOUNTER29   0x5fd
+> +#define CSR_TH_SHPMCOUNTER30   0x5fe
+> +#define CSR_TH_SHPMCOUNTER31   0x5ff
+> +#define CSR_TH_SMIR            0x9c0
+> +#define CSR_TH_SMLO0           0x9c1
+> +#define CSR_TH_SMEH            0x9c2
+> +#define CSR_TH_SMCIR           0x9c3
+> +
+> +/* Extended U-mode control registers of T-Head */
+> +#define CSR_TH_FXCR            0x800
+>
+>  /* TH_SXSTATUS bits */
+>  #define TH_SXSTATUS_UCME        BIT(16)
+>  #define TH_SXSTATUS_MAEE        BIT(21)
+>  #define TH_SXSTATUS_THEADISAEE  BIT(22)
+>
+> +static RISCVException mmode(CPURISCVState *env, int csrno)
+> +{
+> +    if (riscv_has_ext(env, RVM)) {
+> +        return RISCV_EXCP_NONE;
+> +    }
+> +
+> +    return RISCV_EXCP_ILLEGAL_INST;
+> +}
+> +
+>  static RISCVException smode(CPURISCVState *env, int csrno)
+>  {
+>      if (riscv_has_ext(env, RVS)) {
+> @@ -36,11 +114,31 @@ static RISCVException smode(CPURISCVState *env, int =
+csrno)
+>      return RISCV_EXCP_ILLEGAL_INST;
+>  }
+>
+> +static RISCVException any(CPURISCVState *env, int csrno)
+> +{
+> +    return RISCV_EXCP_NONE;
+> +}
+> +
+>  static bool test_thead_mvendorid(RISCVCPU *cpu)
+>  {
+>      return cpu->cfg.mvendorid =3D=3D THEAD_VENDOR_ID;
+>  }
+>
+> +static RISCVException read_th_mxstatus(CPURISCVState *env, int csrno,
+> +                                       target_ulong *val)
+> +{
+> +    /* We don't set MAEE here, because QEMU does not implement MAEE. */
+> +    *val =3D TH_MXSTATUS_UCME | TH_MXSTATUS_THEADISAEE;
+> +    return RISCV_EXCP_NONE;
+> +}
+> +
+> +static RISCVException read_unimp_th_csr(CPURISCVState *env, int csrno,
+> +                                        target_ulong *val)
+> +{
+> +    *val =3D 0;
+> +    return RISCV_EXCP_NONE;
+> +}
+> +
+>  static RISCVException read_th_sxstatus(CPURISCVState *env, int csrno,
+>                                         target_ulong *val)
+>  {
+> @@ -50,10 +148,290 @@ static RISCVException read_th_sxstatus(CPURISCVStat=
+e *env, int csrno,
+>  }
+>
+>  const RISCVCSR th_csr_list[] =3D {
+> +    {
+> +        .csrno =3D CSR_TH_MXSTATUS,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.mxstatus", mmode, read_th_mxstatus }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_MHCR,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.mhcr", mmode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_MCOR,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.mcor", mmode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_MCCR2,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.mccr2", mmode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_MHINT,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.mhint", mmode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_MRVBR,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.mrvbr", mmode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_MCOUNTERWEN,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.mcounterwen", mmode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_MCOUNTERINTEN,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.mcounterinten", mmode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_MCOUNTEROF,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.mcounterof", mmode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_MCINS,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.mcins", mmode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_MCINDEX,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.mcindex", mmode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_MCDATA0,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.mcdata0", mmode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_MCDATA1,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.mcdata1", mmode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_MSMPR,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.msmpr", mmode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_CPUID,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.cpuid", mmode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_MAPBADDR,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.mapbaddr", mmode, read_unimp_th_csr }
+> +    },
+>      {
+>          .csrno =3D CSR_TH_SXSTATUS,
+>          .insertion_test =3D test_thead_mvendorid,
+>          .csr_ops =3D { "th.sxstatus", smode, read_th_sxstatus }
+>      },
+> +    {
+> +        .csrno =3D CSR_TH_SHCR,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shcr", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SCER2,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.scer2", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SCER,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.scer", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SCOUNTERINTEN,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.scounterinten", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SCOUNTEROF,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.scounterof", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SCYCLE,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.scycle", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER3,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter3", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER4,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter4", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER5,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter5", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER6,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter6", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER7,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter7", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER8,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter8", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER9,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter9", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER10,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter10", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER11,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter11", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER12,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter12", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER13,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter13", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER14,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter14", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER15,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter15", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER16,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter16", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER17,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter17", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER18,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter18", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER19,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter19", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER20,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter20", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER21,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter21", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER22,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter22", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER23,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter23", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER24,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter24", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER25,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter25", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER26,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter26", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER27,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter27", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER28,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter28", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER29,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter29", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER30,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter30", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SHPMCOUNTER31,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.shpmcounter31", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SMIR,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.smir", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SMLO0,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.smlo0", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SMEH,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.smeh", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_SMCIR,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.smcir", smode, read_unimp_th_csr }
+> +    },
+> +    {
+> +        .csrno =3D CSR_TH_FXCR,
+> +        .insertion_test =3D test_thead_mvendorid,
+> +        .csr_ops =3D { "th.fxcr", any, read_unimp_th_csr }
+> +    },
+>      { }
+>  };
+> --
+> 2.53.0
+>
+>
 
