@@ -4,98 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50DC6CD13DA
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 May 2026 17:12:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF82CCD3423
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 May 2026 17:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJDsF-0007oc-Mc; Sat, 02 May 2026 13:11:27 -0400
+	id 1wJDsB-0007nj-UT; Sat, 02 May 2026 13:11:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsB-0007no-Vp
- for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:23 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDs9-0007mx-Hr
+ for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:21 -0400
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDs9-00070G-Bu
- for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:23 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-7de431da8fbso2612246a34.1
- for <qemu-devel@nongnu.org>; Sat, 02 May 2026 10:11:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDs6-0006zr-62
+ for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:20 -0400
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-7d4be94eeacso3210156a34.2
+ for <qemu-devel@nongnu.org>; Sat, 02 May 2026 10:11:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777741879; x=1778346679;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777741876; x=1778346676;
  darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=GYYCWCPpIZwhI5J2gn16x+vPuAuWxPuVuHhWLDreRgA=;
- b=Lf27EX7ejB0QxEucD+t5eTIWb0pPocE3U+OcJYfM++F0bZ90dTnhMteSpyaCLgZsTF
- ed5efWzvw6PaQikEi/OX+W/3eGnlLg7oEt52ASyu5b+bn3AIAsh4dnQxUDewqrDxavAi
- 3cbnT/v+2ZjVXzcTBv3CTv+jfgRxyybIAf4066vfqCfwgDeh3qodSFZo885liEfsYoWL
- dlh3nUz9znKMGlYksqm1jdJlDM6aP00uZb6nZlLIHH+j5lXsCbIiCREM8nivWhsW5Q9j
- s/EHaxd3sv6G4IcNObz2K6djYXq3eC/XoeMj+tbBCDwx6YimBZrfDTy/L6AXB6fMz5wS
- 6UYw==
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=BHEeUiuTS20hAbJtrDrc8enylxgJOyJ6P4KcTKr5Suo=;
+ b=0IrgJyPNFMbgr0IrVDLEO3sP5EB17jsX420jRo65Pr1PofG3sS1SIv4D7jDBXDuMAe
+ TxQ0+uzF7Mqbbz4pwz6WBmnU2l4fcUIKhT7lSzZrqB7JNSHOTVOOnu2E6H+SOXE2MmJr
+ LZl1qkSBhkesPRyGDg5m/Jj5JpNx4L1royyQSrvJngajieYPX/PRop94ROCaiUI8RcFP
+ KOp/yOBlDb7YeHUjbum7fC/pHDaymObZKYDCUSmC4mTvNZMKmUJaTOFrVAuuQXztzk4n
+ 6wSa1YatfQjqHrjz/FU7crpGZLwKjlpODNNRTuDyx8135nyg2TFl0WLaOydLwkv12Djd
+ yBTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777741879; x=1778346679;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=GYYCWCPpIZwhI5J2gn16x+vPuAuWxPuVuHhWLDreRgA=;
- b=ctl9pgNg8hUIioQc7O3uLJHfWFEmG8mOQHTVMEaqQNRFk97wiW0gUVB6Md0PjdOSnD
- 5SmD3vcEHQ1Fdj5z9Ox6spvQPFF4QtZ8YnY3toyhHoQ55wjt8F4nh9jDrslgO6dJ8zac
- CZFN69zlNKA5DfFibyu65YCqrFPx6AIumP1Pe6qntZq6aq/UahCVe4kgyfXwOfkTbTVR
- c5gD6AbXoBiqE/fOhG9m+pwrYGHCxtfAC/VIi0wWx1JkOoARRdqJpgiyyYBaYG3/ELRM
- 6CuQHereYsIVvZJwbFXt9kzV5UgLwygH2KHVu+ko5GmXu8rlpKJkxiWXaYNu56stBIcR
- Ixcg==
-X-Gm-Message-State: AOJu0YwRW+pCy738+fw45rQHJZ4cT1h5fNyh/JzCSZgiYTXTEjCWzFkr
- SDJQXSEVAMCTYdlcgOez12cy9D2uq3+WAB+fw+Dugc3KoWGDehK58pxg17KzEMb8z/XTRn+aLTi
- 4Z/OIgv8=
-X-Gm-Gg: AeBDievYxpJA8bpjd0QF1CN0CgOLkbxmv+Uvzoet6Qb7cmBCDgZ7Jyjgra0RxIQHekH
- AgQM4IdaznR6/SouhIBSgAf9Le0K23Wox7s7U10lT1u0QMHzW5GUu5q3UH618a8qdk3z9ucpVpX
- LtNr2QgYMWgjV7k8O/mpgq+MT/aa7IgJcwP7b/y4JdiPG2iAdOQCBNlvNWq+JQwjIOVn/bYzNhi
- aXK3mGCZzdj8Ge9vivqZIDv7RSwj9lKC9P9dIaNqb/MPMj9jir9vENG2s+W3n9uPfD6IN/fxGW2
- yhL0VJGi0YKclTzut95ZDRVaNrhiPr7vw20SHQ0kUJDu52CiNeo/t8BeNuXZRVy7J8bDDYWF6Za
- J9m8XSHGa9LANi2pWwm7+mBBSYAaYfOWYpyCkbjV54NjxD0ty5Mkge6gknTQ5uTXiIzHDC4j91T
- 2lR+6aBVYoQEp8JUkw8V2Cnyrckjnr0FE=
-X-Received: by 2002:a05:6830:2a16:b0:7dc:da80:42c3 with SMTP id
- 46e09a7af769-7dee12af3fcmr2211921a34.1.1777741878775; 
- Sat, 02 May 2026 10:11:18 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777741876; x=1778346676;
+ h=cc:to:content-transfer-encoding:mime-version:message-id:date
+ :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BHEeUiuTS20hAbJtrDrc8enylxgJOyJ6P4KcTKr5Suo=;
+ b=kN50WHDbktGjjPCekrmkOJJu0NqMArPqTwhiPWiAv8Qqm9gW2wOKOgfg5cjq7nKOeC
+ iqZyfhRB84sLUezrvnOrEc5yC3Apo7TPKaZcu0w2bZ/dUHJbl1C5/NryQ03b3oKfsr/t
+ reIjli3Rd3LwVgwsoCw9K2y3z49B/+zkiDHNMUgERs3tJzCO5U8nj9HLLmuAoa9L4Igo
+ I2Ggu0FYjPo544oiPVeunR9JatPYSrB8GesG1exR93ihBF3JVfZ935f+FxlxEgTqCEAj
+ zfgHpfGyVnRTO0/kgcenQO8TjEVDJpwszWpjS5y/6lZ1qKCkFV8ZTX8ZmnJnn+sevNpT
+ wprA==
+X-Gm-Message-State: AOJu0YxdviEPEsyESY7HQPtpnjAycVYrZxENBZlaCBfLrknhSBFBT2I9
+ 1PyYpuMwOvsrAJj9YePmPXXm89IaiNHZa2O+Al0G+oN8itwnh3tpdu2RTar2LdK3d2BsAUhpH/E
+ 5e6ftxHY=
+X-Gm-Gg: AeBDieuu1nkofNgTJaBfGRi6ntbUBTv8YJmdRcRuyCqOwW9BXb7yxAr7RfQYLrST7+f
+ HreaWXzXLXizOu8nigVuSmhTbxXClGtsf2Zlj9wokF6UkItIFpdBCsmIX1tfmFi2ZJjlCLsYJCy
+ vT123TBQ1m6qQN5tpw7egzfJbVmENZI0HUEwI/G/1QfcB1irZF9bGrf5uW1Z/Uji/CPASkJ0Jhx
+ PCzLYUQMf+uDnh9wveOgVBUq1mHt10Wa5wh/PpttINwAeWb+5b2+E3Ng6YjToC+xTTajWVfIgoI
+ nCFp8+bomasxdpOOhOxsjdtvlVJBZXp5XHV698NwwLCgAQ/V+nymLUBu0pJhkYZ+iGokianNaFP
+ 8TWVdlxvu8QmAkw3nhuvlquGNDNV1a+WtuRdQlOH4nwCmmmwTC5P/dSnjBY8BW6028bZk3Ns/l0
+ q9XW33gOwTBKJnF1ToDXO2
+X-Received: by 2002:a05:6830:6d27:b0:7d9:7ea8:7a4f with SMTP id
+ 46e09a7af769-7dee13c171emr2193897a34.16.1777741875924; 
+ Sat, 02 May 2026 10:11:15 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7deca824746sm4334355a34.11.2026.05.02.10.11.17
+ 46e09a7af769-7deca824746sm4334355a34.11.2026.05.02.10.11.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 May 2026 10:11:17 -0700 (PDT)
+ Sat, 02 May 2026 10:11:15 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 02 May 2026 11:09:23 -0600
-Subject: [PATCH v3 02/19] bsd-user: Add FreeBSD tty ioctl definitions
+Subject: [PATCH v3 00/19] bsd-user: upstream ioctl
+Date: Sat, 02 May 2026 11:09:21 -0600
+Message-Id: <20260502-ioctl-v3-0-a05d4cb1bdff@bsdimp.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260502-ioctl-v3-2-a05d4cb1bdff@bsdimp.com>
-References: <20260502-ioctl-v3-0-a05d4cb1bdff@bsdimp.com>
-In-Reply-To: <20260502-ioctl-v3-0-a05d4cb1bdff@bsdimp.com>
+Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAMIv9mkC/1WPy27DIBBFf8ViXSoYMA+v+h9VFjwmNWptJ+BYq
+ SL/eylJFXV5R5xzuTdSMCcsZOhuJOOWSlrmGsRLR8Lo5g+kKdZMgIFiknOalrB+UWWCYU5rFwW
+ Q+vaU8ZiuzfN+uOeM50vVrffj0zZ0zSU40DK6jHQdL/MndZ73ppdaW2uHrUm9K0jDMk1pHTqPI
+ QIcYwDHNNdGRItMSuA9KCWE1uCFtyaQ3/oxlXXJ323Vxlv/YwA8BmycMsqjtcZJxXrF3nyJaTq
+ 91r6mqF94YmD/MKgYGKOE9QEk6H/Yvu8/S79LZVEBAAA=
+X-Change-ID: 20260411-ioctl-68c80a77ad32
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>, "Stacey D. Son" <sson@freebsd.org>
+ Warner Losh <imp@bsdimp.com>, Stacey Son <sson@FreeBSD.org>, 
+ "Stacey D. Son" <sson@freebsd.org>, Alexander Kabaev <kan@FreeBSD.org>, 
+ Sean Bruno <sbruno@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=12978; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=jeG0JiwBZQqTawEgfLsX1Vjt6hCsEjtcsrPHqCS+E68=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9i/PJiyaWlKKIjR4+MWaCQsKu88K3OhU9peE6
- QAIyZzMokuJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafYvzwAKCRBsHNEofbAR
- ABpAD/9pge4F/4iU/KlPp3cyCX3hSmvYggOEzbx1YpRwZ8s2ZOgNh6izaX2KfqioKuD7GAXpbr2
- ZwdiFEwjfFAHYtb64y/iH01/qykHvPOjed6aDSpyzpLcsg+e+8IIYtH1SyHccNFmLN14cCFRRSf
- hIusQXU4IpgmtF1nqjoViMFbpJQL3owVWZm6toB+vSRM2Jyf08DuDUg9cbuEJKlmA9ppkMHNsgj
- f20YBsdyHkoy83g75k8MRR0S90JQk0V7Em/wgVERI6uaF0jin5Q+2IsZITwxrMmbXxYYr7aG6Fu
- uSuVEnMRok7ziehMhy8F/l6RVKtJF29pkPACvYkyudEakvG/qLtxtJfzzBD1JCAAiGSH4o5Q0Xi
- j7Q/PZR6MVGEsfFRjgZM0dBOaxCfR1U3QTf5ICltwtBNf112/C2WYvPgGBgJ2S7sGffvs4P13RE
- rrn1YrOp0LypgyVZlvAoO87btMz26YIyEJOwUXNvc7Ty7nieS4pfh6DlpwmUsozMBtVs9OpBvVn
- rkxqcQE65/jhUJtzBs9ltuajXRzu3BRg8N/s5WBC26Z93RBG6vF7WZQdYxxPzz2djXzJmPRxnkD
- vklXaqr/OCQ8tdSP1iKRHcGr0c1Km8vHgQtFC2uFDIXkGKh8m/dFbLR+9Rjy9MHHw0se8gaRMhW
- N6+b4UstrPeidKA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4600; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=BihK/iYJ3f8DVUsc8c6CuVTli0R2ZFo/+UfIoYndxN4=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9i/Iv05dpjFwyVsCjLGEo+K/w74NuODSfX6zp
+ XljS0p2K9SJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafYvyAAKCRBsHNEofbAR
+ AOIOEACZ62nO/ItiQ6aKVof48P63NHEvbLdK6G89uKSpFYYhXHO8tkTy1MWZq4FPTWBHsJDP1D0
+ 4WkfUbMpUCGoNUc+BtRH80BVNZtBvDdmBQuSNjlHj/pvYdLgCCFZEZQaX04+yENr8VxL5gKsMmB
+ pjeDRv4Z84BogAGea+iGrb6N6doYndPsU47bm5tz05dtBG94XhNBNnivwrBl8zKR5tOFiGqdF/V
+ IajLK+2qFYqACxc5Q5Tto4HLVfxWIm6QO5QFGexgjx6Ox0TWD9yM2rkOY7Q2BemSbgtRVNtur5/
+ mQ20kNc5nRJVlmg3rEaguuwFew0z2Uv+eyRa5uipW+Aw0Xq6SkPblVk7oxXwvttrfS/VTD1mhkU
+ 2uh5BolWilKp5N0G99cCpuwdYHG9b9+d47Ikahp3SlKFQPXtEyhGljHcU5UtMIepc+k+c/7NXhV
+ IuWoIxSxqldqCgxc7i/j+0WE7x7gfSOXydHK6kjNXf1o4Nohg+Ctk7+dpaNDoh9+ZTbYHR0DbSO
+ +s/f2c+w1xTdETuaNGsM227SdrZ7j3+WnuvKpjFh0dLq2lylPVfvnq8hoqPhhzm4/RnAapsDIB+
+ 2POPhu8evGALjH0kgjoNMTM7P1ETFxga/GCh8fjWbMjzE3ZOon0DPG/wzU0tZ1kzVi4N+gvPfwb
+ E744eMRd7qv1Xsw==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::331;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x331.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32c.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,266 +123,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Stacey D. Son" <sson@freebsd.org>
+Again with the help of claude, harvest the ioctl changes from
+bsd-user blitz branch. These are a bit messy, since ioctls tend
+to be a bit messy. Ideally, all this would be generated, but
+that code isn't ready yet, so we go with what we have.
 
-Add os-ioctl-ttycom.h with terminal control ioctl definitions including
-TARGET_TIOCGETA, TARGET_TIOCSETA, window size ioctls, and the
-target_termios structure for terminal I/O control.
+Please note: All style complaints are false positives. The > 80
+character ones are fine: these files are semi-generated from upstream
+and fixing them makes syncing harder. Harder syncing in code that's
+basically boilerplate is worse than lines that are too long for
+definitions people are never going to read.
 
-Signed-off-by: Stacey D. Son <sson@freebsd.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+The two errors:
+● b64902a56387: bsd-user: Add bsd-ioctl.c infrastructure and termios conversion
+  ● checkpatch.pl: 197: ERROR: Macros with complex values should be enclosed in parenthesis
+  ● checkpatch.pl: 198: ERROR: Macros with complex values should be enclosed in parenthesis
+are impossible to fix: they are what they need to be for the macro
+tricks that are being used. One cannot add parenthesis and have correct
+code.
+
+This is largerly unchanged from v1, which didn't get any reviews.
+
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-ioctl-ttycom.h | 239 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 239 insertions(+)
+Changes in v3:
+- Fix numerous small errors in types found by claude code review:
+- remove duplicate net/ethernet.h include
+- remove duplicate TARGET_SIOCGVH definition
+- fix lock_user issue in do_ioctl_in6_ifreq_sockaddr_int to copy it
+- fix unlock_user issue in do_ioctl_in6_ifreq_sockaddr_int to use correct size
+- remove duplicate TARGET_IFNAMSIZ definition
+- Provide struct target_crypto_op
+- Use abi types not native in several places (same size though)
+- Fix logical error in ioctl encoding using TARGET_ forms if IF* constants
+- Fix ieee80211req definition for ioctls to use SHROT instead of INT for int16 types
+- fix lagg_reqport_lacp_opreq and lagg_reqall_lacp_opreq thunks to match structure def
+- sync to latest freebsd and delete obsolete crypto
+- Use abi_ types more consistently
+- sync to latest disk ioctls
+- Somehow foled all that into the same number of patches (since it just reflect
+  blitz fixes and we don't need that history in qemu-project master).
+- Link to v2: https://lore.kernel.org/qemu-devel/20260429-ioctl-v2-0-288639bc2427@bsdimp.com
 
-diff --git a/bsd-user/freebsd/os-ioctl-ttycom.h b/bsd-user/freebsd/os-ioctl-ttycom.h
-new file mode 100644
-index 0000000000..d4af9f2e4d
---- /dev/null
-+++ b/bsd-user/freebsd/os-ioctl-ttycom.h
-@@ -0,0 +1,239 @@
-+/*
-+ * FreeBSD ttycom definitions for ioctl(2) emulation
-+ *
-+ * Copyright (c) 2013 Stacey D. Son
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef BSD_USER_FREEBSD_OS_IOCTL_TTYCOM_H
-+#define BSD_USER_FREEBSD_OS_IOCTL_TTYCOM_H
-+
-+#include "os-ioctl-ioccom.h"
-+
-+/* From sys/ttycom.h and sys/_termios.h */
-+
-+#define TARGET_VEOF     0   /* ICANON */
-+#define TARGET_VEOL     1   /* ICANON */
-+#define TARGET_VEOL2    2   /* ICANON together with IEXTEN */
-+#define TARGET_VERASE   3   /* ICANON */
-+#define TARGET_VWERASE  4   /* ICANON together with IEXTEN */
-+#define TARGET_VKILL    5   /* ICANON */
-+#define TARGET_VREPRINT 6   /* ICANON together with IEXTEN */
-+#define TARGET_VERASE2  7   /* ICANON */
-+#define TARGET_VINTR    8   /* ISIG */
-+#define TARGET_VQUIT    9   /* ISIG */
-+#define TARGET_VSUSP    10  /* ISIG */
-+#define TARGET_VDSUSP   11  /* ISIG together with IEXTEN */
-+#define TARGET_VSTART   12  /* IXON, IXOFF */
-+#define TARGET_VSTOP    13  /* IXON, IXOFF */
-+#define TARGET_VLNEXT   14  /* IEXTEN */
-+#define TARGET_VDISCARD 15  /* IEXTEN */
-+#define TARGET_VMIN     16  /* !ICANON */
-+#define TARGET_VTIME    17  /* !ICANON */
-+#define TARGET_VSTATUS  18  /* ICANON together with IEXTEN */
-+/*                      19         spare 2 */
-+#define TARGET_NCCS     20
-+
-+/*
-+ * Input flags - software input processing
-+ */
-+#define TARGET_IGNBRK   0x00000001  /* ignore BREAK condition */
-+#define TARGET_BRKINT   0x00000002  /* map BREAK to SIGINTR */
-+#define TARGET_IGNPAR   0x00000004  /* ignore (discard) parity errors */
-+#define TARGET_PARMRK   0x00000008  /* mark parity and framing errors */
-+#define TARGET_INPCK    0x00000010  /* enable checking of parity errors */
-+#define TARGET_ISTRIP   0x00000020  /* strip 8th bit off chars */
-+#define TARGET_INLCR    0x00000040  /* map NL into CR */
-+#define TARGET_IGNCR    0x00000080  /* ignore CR */
-+#define TARGET_ICRNL    0x00000100  /* map CR to NL (ala CRMOD) */
-+#define TARGET_IXON     0x00000200  /* enable output flow control */
-+#define TARGET_IXOFF    0x00000400  /* enable input flow control */
-+#define TARGET_IXANY    0x00000800  /* any char will restart after stop */
-+#define TARGET_IMAXBEL  0x00002000  /* ring bell on input queue full */
-+#define TARGET_IUTF8    0x00004000  /* assume input is utf-8 encoded */
-+
-+/*
-+ * Output flags - software output processing
-+ */
-+#define TARGET_OPOST    0x00000001  /* enable following output processing */
-+#define TARGET_ONLCR    0x00000002  /* map NL to CR-NL (ala CRMOD) */
-+#define TARGET_TABDLY   0x00000004  /* tab delay mask */
-+#define TARGET_TAB0     0x00000000  /* no tab delay and expansion */
-+#define TARGET_TAB3     0x00000004  /* expand tabs to spaces */
-+#define TARGET_ONOEOT   0x00000008  /* discard EOT's (^D) on output) */
-+#define TARGET_OCRNL    0x00000010  /* map CR to NL on output */
-+#define TARGET_ONOCR    0x00000020  /* no CR output at column 0 */
-+#define TARGET_ONLRET   0x00000040  /* NL performs CR function */
-+
-+/*
-+ * Control flags - hardware control of terminal
-+ */
-+#define TARGET_CIGNORE      0x00000001  /* ignore control flags */
-+#define TARGET_CSIZE        0x00000300  /* character size mask */
-+#define     TARGET_CS5      0x00000000  /* 5 bits (pseudo) */
-+#define     TARGET_CS6      0x00000100  /* 6 bits */
-+#define     TARGET_CS7      0x00000200  /* 7 bits */
-+#define     TARGET_CS8      0x00000300  /* 8 bits */
-+#define TARGET_CSTOPB       0x00000400  /* send 2 stop bits */
-+#define TARGET_CREAD        0x00000800  /* enable receiver */
-+#define TARGET_PARENB       0x00001000  /* parity enable */
-+#define TARGET_PARODD       0x00002000  /* odd parity, else even */
-+#define TARGET_HUPCL        0x00004000  /* hang up on last close */
-+#define TARGET_CLOCAL       0x00008000  /* ignore modem status lines */
-+#define TARGET_CCTS_OFLOW   0x00010000  /* CTS flow control of output */
-+#define TARGET_CRTSCTS      (TARGET_CCTS_OFLOW | TARGET_CRTS_IFLOW)
-+#define TARGET_CRTS_IFLOW   0x00020000  /* RTS flow control of input */
-+#define TARGET_CDTR_IFLOW   0x00040000  /* DTR flow control of input */
-+#define TARGET_CDSR_OFLOW   0x00080000  /* DSR flow control of output */
-+#define TARGET_CCAR_OFLOW   0x00100000  /* DCD flow control of output */
-+#define TARGET_CNO_RTSDTR   0x00200000  /* Do not assert RTS or DTR automatically */
-+
-+/*
-+ * "Local" flags - dumping ground for other state
-+ */
-+#define TARGET_ECHOKE   0x00000001  /* visual erase for line kill */
-+#define TARGET_ECHOE    0x00000002  /* visually erase chars */
-+#define TARGET_ECHOK    0x00000004  /* echo NL after line kill */
-+#define TARGET_ECHO 0x00000008  /* enable echoing */
-+#define TARGET_ECHONL   0x00000010  /* echo NL even if ECHO is off */
-+#define TARGET_ECHOPRT  0x00000020  /* visual erase mode for hardcopy */
-+#define TARGET_ECHOCTL  0x00000040  /* echo control chars as ^(Char) */
-+#define TARGET_ISIG 0x00000080  /* enable signals INTR, QUIT, [D]SUSP */
-+#define TARGET_ICANON   0x00000100  /* canonicalize input lines */
-+#define TARGET_ALTWERASE 0x00000200 /* use alternate WERASE algorithm */
-+#define TARGET_IEXTEN   0x00000400  /* enable DISCARD and LNEXT */
-+#define TARGET_EXTPROC  0x00000800  /* external processing */
-+#define TARGET_TOSTOP   0x00400000  /* stop background jobs from output */
-+#define TARGET_FLUSHO   0x00800000  /* output being flushed (state) */
-+#define TARGET_NOKERNINFO 0x02000000    /* no kernel output from VSTATUS */
-+#define TARGET_PENDIN   0x20000000  /* XXX retype pending input (state) */
-+#define TARGET_NOFLSH   0x80000000  /* don't flush after interrupt */
-+
-+struct target_termios {
-+    uint32_t c_iflag;   /* input flags */
-+    uint32_t c_oflag;   /* output flags */
-+    uint32_t c_cflag;   /* control flags */
-+    uint32_t c_lflag;   /* local flags */
-+    uint8_t  c_cc[TARGET_NCCS]; /* control chars */
-+    uint32_t c_ispeed;  /* input speed */
-+    uint32_t c_ospeed;  /* output speed */
-+};
-+
-+
-+struct target_winsize {
-+    uint16_t ws_row;    /* rows, in characters */
-+    uint16_t ws_col;    /* columns, in characters */
-+    uint16_t ws_xpixel; /* horizontal size, pixels */
-+    uint16_t ws_ypixel; /* vertical size, pixels */
-+};
-+
-+                        /* 0-2 compat */
-+                        /* 3-7 unused */
-+                        /* 8-10 compat */
-+                        /* 11-12 unused */
-+#define TARGET_TIOCEXCL  TARGET_IO('t', 13) /* set exclusive use of tty */
-+#define TARGET_TIOCNXCL  TARGET_IO('t', 14) /* reset exclusive use of tty */
-+#define TARGET_TIOCGPTN  TARGET_IOR('t', 15, int) /* Get pts number. */
-+#define TARGET_TIOCFLUSH TARGET_IOW('t', 16, int) /* flush buffers */
-+                    /* 17-18 compat */
-+/* get termios struct */
-+#define TARGET_TIOCGETA TARGET_IOR('t', 19, struct target_termios)
-+/* set termios struct */
-+#define TARGET_TIOCSETA TARGET_IOW('t', 20, struct target_termios)
-+/* drain output, set */
-+#define TARGET_TIOCSETAW    TARGET_IOW('t', 21, struct target_termios)
-+/* drn out, fls in, set */
-+#define TARGET_TIOCSETAF    TARGET_IOW('t', 22, struct target_termios)
-+                        /* 23-25 unused */
-+#define TARGET_TIOCGETD TARGET_IOR('t', 26, int) /* get line discipline */
-+#define TARGET_TIOCSETD TARGET_IOW('t', 27, int) /* set line discipline */
-+#define TARGET_TIOCPTMASTER  TARGET_IO('t', 28) /* pts master validation */
-+                    /* 29-85 unused */
-+/* get ttywait timeout */
-+#define TARGET_TIOCGDRAINWAIT   TARGET_IOR('t', 86, int)
-+/* set ttywait timeout */
-+#define TARGET_TIOCSDRAINWAIT   TARGET_IOW('t', 87, int)
-+                    /* 88 unused */
-+                    /* 89-91 conflicts: tun and tap */
-+/* enable/get timestamp of last input event */
-+#define TARGET_TIOCTIMESTAMP    TARGET_IOR('t', 89, struct target_timeval)
-+/* modem: get wait on close */
-+#define TARGET_TIOCMGDTRWAIT    TARGET_IOR('t', 90, int)
-+/* modem: set wait on close */
-+#define TARGET_TIOCMSDTRWAIT    TARGET_IOW('t', 91, int)
-+                    /* 92-93 tun and tap */
-+                    /* 94-97 conflicts: tun and tap */
-+/* wait till output drained */
-+#define TARGET_TIOCDRAIN     TARGET_IO('t', 94)
-+ /* pty: generate signal */
-+#define TARGET_TIOCSIG      TARGET_IOWINT('t', 95)
-+/* pty: external processing */
-+#define TARGET_TIOCEXT      TARGET_IOW('t', 96, int)
-+/* become controlling tty */
-+#define TARGET_TIOCSCTTY     TARGET_IO('t', 97)
-+/* become virtual console */
-+#define TARGET_TIOCCONS TARGET_IOW('t', 98, int)
-+/* get session id */
-+#define TARGET_TIOCGSID TARGET_IOR('t', 99, int)
-+                        /* 100 unused */
-+/* simulate ^T status message */
-+#define TARGET_TIOCSTAT  TARGET_IO('t', 101)
-+ /* pty: set/clr usr cntl mode */
-+#define TARGET_TIOCUCNTL    TARGET_IOW('t', 102, int)
-+/* usr cntl op "n" */
-+#define TARGET_TIOCCMD(n)   TARGET_IO('u', n)
-+/* set window size */
-+#define TARGET_TIOCSWINSZ   TARGET_IOW('t', 103, struct target_winsize)
-+/* get window size */
-+#define TARGET_TIOCGWINSZ   TARGET_IOR('t', 104, struct target_winsize)
-+                        /* 105 unused */
-+/* get all modem bits */
-+#define TARGET_TIOCMGET TARGET_IOR('t', 106, int)
-+#define     TARGET_TIOCM_LE 0001        /* line enable */
-+#define     TARGET_TIOCM_DTR    0002    /* data terminal ready */
-+#define     TARGET_TIOCM_RTS    0004    /* request to send */
-+#define     TARGET_TIOCM_ST 0010        /* secondary transmit */
-+#define     TARGET_TIOCM_SR 0020        /* secondary receive */
-+#define     TARGET_TIOCM_CTS    0040    /* clear to send */
-+#define     TARGET_TIOCM_DCD    0100    /* data carrier detect */
-+#define     TARGET_TIOCM_RI     0200    /* ring indicate */
-+#define     TARGET_TIOCM_DSR    0400    /* data set ready */
-+#define     TARGET_TIOCM_CD TARGET_TIOCM_DCD
-+#define     TARGET_TIOCM_CAR    TARGET_TIOCM_DCD
-+#define     TARGET_TIOCM_RNG    TARGET_TIOCM_RI
-+#define TARGET_TIOCMBIC TARGET_IOW('t', 107, int) /* bic modem bits */
-+#define TARGET_TIOCMBIS TARGET_IOW('t', 108, int) /* bis modem bits */
-+#define TARGET_TIOCMSET TARGET_IOW('t', 109, int) /* set all modem bits */
-+/* start output, like ^Q */
-+#define TARGET_TIOCSTART     TARGET_IO('t', 110)
-+/* stop output, like ^S */
-+#define TARGET_TIOCSTOP  TARGET_IO('t', 111)
-+/* pty: set/clear packet mode */
-+#define TARGET_TIOCPKT      TARGET_IOW('t', 112, int)
-+#define     TARGET_TIOCPKT_DATA     0x00    /* data packet */
-+#define     TARGET_TIOCPKT_FLUSHREAD    0x01    /* flush packet */
-+#define     TARGET_TIOCPKT_FLUSHWRITE   0x02    /* flush packet */
-+#define     TARGET_TIOCPKT_STOP     0x04    /* stop output */
-+#define     TARGET_TIOCPKT_START        0x08    /* start output */
-+#define     TARGET_TIOCPKT_NOSTOP       0x10    /* no more ^S, ^Q */
-+#define     TARGET_TIOCPKT_DOSTOP       0x20    /* now do ^S ^Q */
-+#define     TARGET_TIOCPKT_IOCTL        0x40    /* state change of pty driver */
-+#define TARGET_TIOCNOTTY TARGET_IO('t', 113)    /* void tty association */
-+#define TARGET_TIOCSTI TARGET_IOW('t', 114, char)  /* simulate terminal input */
-+#define TARGET_TIOCOUTQ TARGET_IOR('t', 115, int)   /* output queue size */
-+                        /* 116-117 compat */
-+#define TARGET_TIOCSPGRP    TARGET_IOW('t', 118, int) /* set pgrp of tty */
-+#define TARGET_TIOCGPGRP    TARGET_IOR('t', 119, int) /* get pgrp of tty */
-+#define TARGET_TIOCCDTR  TARGET_IO('t', 120) /* clear data terminal ready */
-+#define TARGET_TIOCSDTR  TARGET_IO('t', 121) /* set data terminal ready */
-+#define TARGET_TIOCCBRK  TARGET_IO('t', 122)        /* clear break bit */
-+#define TARGET_TIOCSBRK  TARGET_IO('t', 123)        /* set break bit */
-+                        /* 124-127 compat */
-+
-+#define TARGET_TTYDISC      0       /* termios tty line discipline */
-+#define TARGET_SLIPDISC     4       /* serial IP discipline */
-+#define TARGET_PPPDISC      5       /* PPP discipline */
-+#define TARGET_NETGRAPHDISC 6       /* Netgraph tty node discipline */
-+#define TARGET_H4DISC       7       /* Netgraph Bluetooth H4 discipline */
-+
-+#endif /* BSD_USER_FREEBSD_OS_IOCTL_TTYCOM_H */
+Changes in v2:
+- rebase forward, minor tweaks for blitz branch evolution
+- Link to v1: https://lore.kernel.org/qemu-devel/20260412-ioctl-v1-0-1d998a460560@bsdimp.com
 
+---
+Stacey D. Son (10):
+      bsd-user: Add FreeBSD tty ioctl definitions
+      bsd-user: Add FreeBSD file I/O ioctl definitions
+      bsd-user: Add FreeBSD socket ioctl definitions
+      bsd-user: Add FreeBSD cryptodev ioctl definitions
+      bsd-user: Add FreeBSD disk ioctl definitions
+      bsd-user: Add FreeBSD IPv6 ioctl definitions
+      bsd-user: Add FreeBSD ioctl type definitions
+      bsd-user: Add FreeBSD ioctl command table
+      bsd-user: Add bsd-ioctl.h header
+      bsd-user: Add target_sockaddr and safe_ioctl to syscall_defs.h
+
+Stacey Son (1):
+      bsd-user: ioctl: add common definitions
+
+Warner Losh (8):
+      bsd-user: Add bsd-ioctl.c infrastructure and termios conversion
+      bsd-user: Add log_unsupported_ioctl function
+      bsd-user: Add do_ioctl_unsupported function
+      bsd-user: Add target_to_host_sockaddr_in6 function
+      bsd-user: Add do_ioctl_in6_ifreq_sockaddr_int function
+      bsd-user: Add do_bsd_ioctl main function
+      bsd-user: Add init_bsd_ioctl function
+      bsd-user: Add call to do_bsd_ioctl and add bsd-ioctl.c to the build
+
+ bsd-user/bsd-ioctl.c                  | 436 ++++++++++++++++++++++++++++++++++
+ bsd-user/bsd-ioctl.h                  |  14 ++
+ bsd-user/freebsd/os-ioctl-cmds.h      | 149 ++++++++++++
+ bsd-user/freebsd/os-ioctl-cryptodev.h |  84 +++++++
+ bsd-user/freebsd/os-ioctl-disk.h      |  52 ++++
+ bsd-user/freebsd/os-ioctl-filio.h     |  34 +++
+ bsd-user/freebsd/os-ioctl-in6_var.h   | 226 ++++++++++++++++++
+ bsd-user/freebsd/os-ioctl-ioccom.h    |  43 ++++
+ bsd-user/freebsd/os-ioctl-sockio.h    | 246 +++++++++++++++++++
+ bsd-user/freebsd/os-ioctl-ttycom.h    | 239 +++++++++++++++++++
+ bsd-user/freebsd/os-ioctl-types.h     | 109 +++++++++
+ bsd-user/freebsd/os-syscall.c         |   9 +
+ bsd-user/meson.build                  |   1 +
+ bsd-user/syscall_defs.h               |  14 ++
+ 14 files changed, 1656 insertions(+)
+---
+base-commit: becd22fdc2a071783d9e04421526633772b3b98c
+change-id: 20260411-ioctl-68c80a77ad32
+prerequisite-change-id: 20260312-share-thunk-ab1585477999:v2
+prerequisite-patch-id: a048e442d9dda7ee4ed1070ef5eb524e078b9a3b
+
+Best regards,
 -- 
-2.52.0
+Warner Losh <imp@bsdimp.com>
 
 
