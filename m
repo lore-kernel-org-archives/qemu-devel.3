@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7BB5CD3423
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2A4BCD13DA
 	for <qemu-devel@archiver.kernel.org>; Sat,  2 May 2026 17:12:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJDsJ-0007qO-En; Sat, 02 May 2026 13:11:31 -0400
+	id 1wJDsU-0007uB-Th; Sat, 02 May 2026 13:11:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsE-0007oT-66
- for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:27 -0400
-Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsQ-0007tN-LJ
+ for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:38 -0400
+Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsC-00073M-HS
- for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:25 -0400
-Received: by mail-ot1-x335.google.com with SMTP id
- 46e09a7af769-7dcdaf06498so2066150a34.2
- for <qemu-devel@nongnu.org>; Sat, 02 May 2026 10:11:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsO-0007E6-Nv
+ for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:38 -0400
+Received: by mail-ot1-x330.google.com with SMTP id
+ 46e09a7af769-7d4be94eeacso3210386a34.2
+ for <qemu-devel@nongnu.org>; Sat, 02 May 2026 10:11:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777741883; x=1778346683;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777741895; x=1778346695;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=A+mCXscX/ZXQdeivAZC6BeYLBLYIClDlWCGA7GSoYYI=;
- b=kB3oH8O8aaZWn+FzF28G1QN6odtCUJfbMfoI0xffJKFtj88JdHdfx/BYsknhR4BGqj
- FPxdHubc5o4Z5B4P1zpxJqqIMHRss5/TDfFN1DUtOTV//wZB5hnuJP/nO0rBcwTAGypR
- 1mt1GXaJDxWE4y5dXHGkd3dRfY5jnKTjghMPoUpwNwFUmulJUMBweJAItWrNSQu3Es5p
- jbcZj5G/2jk01qhU8OOzzmZiXUjARD8pxc6ElTMCd/xZTZ3n/36DecrWHqnF8OyODbKb
- NLB4Ahim8uFFzzZW9FPedz0t4JRaqEOgaF5xssdayyWu8alC4zlkraQc97StVvp4bIsk
- Ndlw==
+ :reply-to; bh=2QBmwjvaav499uBiNQkZ4uLoZRRkEdivASGuKNAftSo=;
+ b=p9e66/wzF1MZGMTVqMlEQ/l83fp4lnaiTsOCZuk4Vpwz3XBdDo0TA/fG2+PO4XOtHq
+ TFS1nDMqla2ysJdmaRtBaNdMpG/6SVECJAxd3QJ5vHvyKmtW4imbvMoquh0C7eohTW1d
+ tExpkpGAIExRN6DhXtO4Q0wCw0X+JmEKzzdXKq4Un4fjToWk6AhTXNmw5mG951VWTWgY
+ ArYGvrexJJbLTmFWdMUOjKO1k4OYg8A1RzR8/rO8LRLYEdLGBElbTmVc70PQkOUXAY9p
+ FlwbyMpLUtqid3BY0errwPPx/wEBcX6C0SsGruIjtRWrlQUBpgGIED6zAG0FmZwMDFsR
+ BOCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777741883; x=1778346683;
+ d=1e100.net; s=20251104; t=1777741895; x=1778346695;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=A+mCXscX/ZXQdeivAZC6BeYLBLYIClDlWCGA7GSoYYI=;
- b=ZZoQmMG6lHZcETIsPrzJ1rFXsn4lbqQcKu8AUWEE0yTfYlKyIjih+SFNzR11p2fVh3
- ktIIxYqU0bGI9TY0TJgjXewwxWRJfWEmpdgfpOPMrR6b+kSqIkTYGzSa0QNL9j//yv6b
- FoZPEXkpHDtJOcS3FmMm+RwvwiewxSmmC7eBaALC0y4OrIrvPI8ZKaWpXeyx57191i5C
- OkOz+joaLk29faiEAmRoqPfJCrp2BTkfjp9eJisk5Ui28floJHySWjm9+05egHQh/m8D
- hXR6h9m/0DlYryV4PP1POanS8fdC6FapIAWrIQJbtb/xTbyH9KN4Z4gsif7RSdt+ere3
- RxGg==
-X-Gm-Message-State: AOJu0YwZFpsDeKfJ/lMGq5c28rHl0X6uDmWLvccI6+k0sK/UeJpuV2j6
- /Hn9Gl7ISqzNn1rgfrr3dTGIdwATgasnEk/AsMkvllV88QXkv8xSxH+iayYWvAWsVVN110zMnc6
- 50l4Po68=
-X-Gm-Gg: AeBDieua9TzpqZuW95D5m4PocykjcoMqvykVTlbHknc3vOqv7Ojvqufj7FHRXnIL0qq
- V1T8WPGyod901AjLdlM9VKlNv8apz/UEi0IhBuM29vaWM8bfvxCUpWL/vANmBkxfWphEd3vawu2
- 9UW3oT4xvfag/Q/ec2F3hAGGklaYHDy1G8QemePO1n0aXv58C1moBWssnHvntGJy4U2Iesfhrbc
- l0zq7+WRv3G3HmDSqiOM1BcPV6FVmzO2DUadx7kSRGaGOc+/2ww+qqHmnl2PJgGpiZP/x8B/+7d
- X3wOr9pXUWwXoK3KTlOqbFoglHQr7xGgyYqo3zfYOtx1Jrrst+R3IWnHF9CIYgPpIwkhnQNr27V
- joWGQTipYfbM5CfMKIp0j3O1kPgVFDNH+2nNJODvJVEv5OuVLkQYRBlYYPhbCrpOQcXL2LWuemQ
- P6ri4r/CkGYg6tG+H/z/45
-X-Received: by 2002:a05:6830:4901:b0:7de:c6b8:2349 with SMTP id
- 46e09a7af769-7dee13e34a7mr2176028a34.14.1777741883094; 
- Sat, 02 May 2026 10:11:23 -0700 (PDT)
+ bh=2QBmwjvaav499uBiNQkZ4uLoZRRkEdivASGuKNAftSo=;
+ b=hSHu5HzW3XknlERQlrnqX/CyGAHLAxPW+VepETK7AxMO/AuPcHCOKlYaYYpyvKkk8k
+ mXmPtuKp3nuOFj2NQiRA+jXW4oOAQmwDQ8nZcc/9c5XlbVmsE0AOl9d6SM4FFSX0BtOk
+ Uo+poEP8CIL06gA2s5OhqxhUU1co4IKPv4M6WOGYA5UNjZnL2N1aI0r1sLgg5Kphro/m
+ dGgS7VTwxHnY4uOCh5w8JsDI6snZ27nYfjeKTOAD6MddEhTJPz2bnJ+6W/lx2mNnd41C
+ VTah6hbdyVt9Gc6lgPzhOdF7H5erpKlcDRx8nat48WqHauQPTj8fv1sHRl4ljo+gcica
+ u2wA==
+X-Gm-Message-State: AOJu0YyZByhmWamGZZEg2MDK4v85lB/j1IUyb+xhBhLbswic6N9ZPcm8
+ VmanQB5bvBH87xJ6n2O7EKF8LrdCw/h8mCkua2NJcPymOlkoqF/6vRwZrdIO0Xv7kF1qndmX8/y
+ /JYP3uSY=
+X-Gm-Gg: AeBDietByatSAhlz11zPp33sOS446QUgmATUjpR3rm2wKpKOLvHnOUFysIAZB5LFlDC
+ he/+/pJ32Uk/0tjU7YPOJYfxEKe24jB7F7oX9oZMcYaA9MEd8nxHel9zjYuG+15h4zoQM1YTKkh
+ UQgrWAuc3tWXWvnhppTZ6Gzs4FU33apfmFQpLHqLN6DyiG+aVRhXjCQ0gz4J3IzDRnWpPkmN+X9
+ KTleDvR5bxPGlXnMOFB38Jm8hRWUY5SjC1cApDKbNgVeg2WtvgRALBPp3j8XL2ScTjuls2jBlra
+ eUkib/LnLA+NsakMUt7vc+bWU2ngIdmyyPwvP/r2S4a2HOQPUZDVSW9x6yFOZMgaFiWH9gt378z
+ nFwiuo49fLNRiq0yf7Jr7BPHj1N5Dm6e5y7z0+7LGm7bXGEDIi/3eEtDV+5XFL3YySxs/qG79ZF
+ TQBIIxqtBAKMVVDHKV6Sw6
+X-Received: by 2002:a05:6830:81eb:b0:7d9:7209:4378 with SMTP id
+ 46e09a7af769-7dee13c17c5mr2396554a34.17.1777741895355; 
+ Sat, 02 May 2026 10:11:35 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7deca824746sm4334355a34.11.2026.05.02.10.11.22
+ 46e09a7af769-7deca824746sm4334355a34.11.2026.05.02.10.11.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 May 2026 10:11:22 -0700 (PDT)
+ Sat, 02 May 2026 10:11:34 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 02 May 2026 11:09:27 -0600
-Subject: [PATCH v3 06/19] bsd-user: Add FreeBSD disk ioctl definitions
+Date: Sat, 02 May 2026 11:09:38 -0600
+Subject: [PATCH v3 17/19] bsd-user: Add do_bsd_ioctl main function
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260502-ioctl-v3-6-a05d4cb1bdff@bsdimp.com>
+Message-Id: <20260502-ioctl-v3-17-a05d4cb1bdff@bsdimp.com>
 References: <20260502-ioctl-v3-0-a05d4cb1bdff@bsdimp.com>
 In-Reply-To: <20260502-ioctl-v3-0-a05d4cb1bdff@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -78,24 +78,24 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, "Stacey D. Son" <sson@freebsd.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2699; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=JIVYg58ib9lLk94KqYpsU7AJq+fP+Cd19JDWd7O58CU=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9i/PM/qxyMLLaHGlzWavXX8Mh9fipA0pPsoex
- 6v3CMYGiqaJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafYvzwAKCRBsHNEofbAR
- AHXcEADBnYa+IYSrpOELRWZgxzhcrW7yCiJWVLT2ladMvlkaGfytYuu0wBpGzm4w1nQvroED+HG
- MwkUDnZvwZvZt8nVjAn9dP29htBAnDoKLBY+sc6sYv3G0uaLcTBG0PzroFJN/Fle3ULN+0U8V0x
- RNc+Zn5BdIltdAfJSZuf5AuSBWa3sGrEER9/nqNTrTta0/rp35r6T/3M0jKI7Y8HvUaL0yCPl9R
- qEziG6J0S/gnk0/vM3O/R4Mf+RBJj9SipwSixyK2+1hIg1W/PTxqV1wJcO19WvcfBb3QlE4Gs3P
- pfRZPGzFHoEWCGteCHXaucOd205WcHcB48qpoQNYWQXV+42ePyEGxnajw12GgJiEZQJVm72uZfP
- LAipsxn+z26nl0R45OX2nt8odPJkrbZ7LF9qri3MiSYyBlJeq6h4Oe6NLfYqF7Jp3uqXB5scQXa
- S0xqtEpnvHYGp7nYYdjGpiK4mDBFMAJq2Pu3C5QulbwC4794sCvVjuu/HZ7PsO08xaiSsx7xSLn
- fUHOvbdqXVq/MxZMzAWI4dXNshLHP4bChrbV+p9tngf8dHcF7pPTeh0eQsimlZ9o/oi1UFcgg9U
- VPv9zjk7SbDZ8wwKzRZyZ0rYeYyPb8WhOXrNbrGevnrbI7UXjkIaaMYp3ukj8uWwdS2fOQGwQ+5
- /a6GRn0eIkBYzgw==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3931; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=xguMmeeOWqzWWh1TUfAOdmnx9WUC5A613/gvNUKKM1I=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9i/RXHs2r0ZF3gUUKBSzAtxA32QJZJ4oizlcu
+ GMWKPkcfceJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafYv0QAKCRBsHNEofbAR
+ AAuvD/0fmT1d/SKwYpHsG7ONoPBz8riszqyJDD/9R+7Vunj9HAxqqwNnlmv+KTuIX6s5eM4eDBn
+ yFixD/OH+Qr5HltHUAIRBPVV6PPSpqnyWrf49A3ShnCRoey+Zgica6vS9NxNZ9Fh6SDqWKXREN3
+ GmO0+Q9h4Q3Qi7ChIiPl9Nn4mA9FcpzeKxuAUqyaBgkRl/NuUKptDSxhcLPd11nxlqofZl9v8D8
+ 18KTs4SVrOcX0bHroDLxHaj5UaVfBB722r+drBzFHzI4CUmiW6sQXwTVhI4Mtv3QevShnfzfzJ/
+ AqmnR4XVk2EYVB6tUuxgzdMR9zDEEmn+UXmtPWsYiVCM4MXonbhsslonv28jqKBgPzuZAjGbyGt
+ IL/PRZ67mSMicgMzbS+GcMQyxAxkxB8+HKHl8ldGL0aWNva/pIVE+Pc29uaLzqwegIruGYSde9D
+ HgQrLKINfNPh8Lxwxelkh8carziGSkghLD3wb/S/eB5HB4OMOWQL0p37ADsrTQMBGoIbnNkXZqe
+ XT3k0VT/vo1UxMiYqz5iduOgh06xJmA3ajXUo69k3NUpRfCWKwoXQPhOF7NgFp4V3DQzg9fARwJ
+ pzpMPCzeZCH+wAc4eAMi+5X95O6/dhk2YgJmkinu175jDwyGr1wnA7tfR5+4RnNEZnuNuIP32Zq
+ QO8hkvAhIH3HS3Q==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::335;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x335.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::330;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x330.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,77 +117,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Stacey D. Son" <sson@freebsd.org>
-
-Add os-ioctl-disk.h with disk and storage device ioctl definitions
-including DIOCGMEDIASIZE, DIOCGSECTORSIZE, and related disk
-management ioctls.
+Add main ioctl emulation dispatcher that handles table-driven
+ioctl translation with thunk-based structure conversion. Supports
+TYPE_NULL, TYPE_INT, and TYPE_PTR argument types with read, write,
+and read-write access modes.
 
 Signed-off-by: Stacey D. Son <sson@freebsd.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-ioctl-disk.h | 52 ++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 52 insertions(+)
+ bsd-user/bsd-ioctl.c | 100 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 100 insertions(+)
 
-diff --git a/bsd-user/freebsd/os-ioctl-disk.h b/bsd-user/freebsd/os-ioctl-disk.h
-new file mode 100644
-index 0000000000..8f4dddc7eb
---- /dev/null
-+++ b/bsd-user/freebsd/os-ioctl-disk.h
-@@ -0,0 +1,52 @@
-+/*
-+ * FreeBSD disk.h definitions for ioctl(2) emulation
-+ *
-+ * Copyright (c) 2015 Stacey D. Son
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#ifndef OS_IOCTL_DISK_H
-+#define OS_IOCTL_DISK_H
+diff --git a/bsd-user/bsd-ioctl.c b/bsd-user/bsd-ioctl.c
+index 8d25d84dbe..3940a69260 100644
+--- a/bsd-user/bsd-ioctl.c
++++ b/bsd-user/bsd-ioctl.c
+@@ -292,3 +292,103 @@ static abi_long do_ioctl_in6_ifreq_sockaddr_int(const IOCTLEntry *ie,
+ 
+     return ret;
+ }
 +
-+/* See sys/disk.h */
++abi_long do_bsd_ioctl(int fd, abi_long cmd, abi_long arg)
++{
++    const IOCTLEntry *ie;
++    const argtype *arg_type;
++    abi_long ret;
++    uint8_t buf_temp[MAX_STRUCT_SIZE];
++    int target_size;
++    void *argptr;
 +
-+#define TARGET_MAXPATHLEN 1024
++    ie = ioctl_entries;
++    for (;;) {
++        if (ie->target_cmd == 0) {
++            gemu_log("QEMU unsupported ioctl: ");
++            log_unsupported_ioctl(cmd);
++            return -TARGET_ENOSYS;
++        }
++        if (ie->target_cmd == cmd) {
++            break;
++        }
++        ie++;
++    }
++    arg_type = ie->arg_type;
++#if defined(DEBUG)
++    gemu_log("ioctl: cmd=0x%04lx (%s)\n", (long)cmd, ie->name);
++#endif
++    if (ie->do_ioctl) {
++        return ie->do_ioctl(ie, buf_temp, fd, cmd, arg);
++    }
 +
-+#define TARGET_DIOCGSECTORSIZE      TARGET_IOR('d', 128, uint32_t)
-+#define TARGET_DIOCGMEDIASIZE       TARGET_IOR('d', 129, int64_t)
-+#define TARGET_DIOCGFWSECTORS       TARGET_IOR('d', 130, uint32_t)
-+#define TARGET_DIOCGFWHEADS         TARGET_IOR('d', 131, uint32_t)
-+#define TARGET_DIOCGFLUSH           TARGET_IO('d', 135)
-+#define TARGET_DIOCGDELETE          TARGET_IOW('d', 136, int64_t[2])
-+#define TARGET_DISK_IDENT_SIZE 256
-+#define TARGET_DIOCGIDENT           TARGET_IOR('d', 137, \
-+                                        char[TARGET_DISK_IDENT_SIZE])
-+#define TARGET_DIOCGPROVIDERNAME    TARGET_IOR('d', 138, \
-+                                        char[TARGET_MAXPATHLEN])
-+#define TARGET_DIOCGSTRIPESIZE      TARGET_IOR('d', 139, int64_t)
-+#define TARGET_DIOCGSTRIPEOFFSET    TARGET_IOR('d', 140, int64_t)
-+#define TARGET_DIOCGPHYSPATH        TARGET_IOR('d', 141, \
-+                                        char[TARGET_MAXPATHLEN])
++    switch (arg_type[0]) {
++    case TYPE_NULL:
++        /* no argument */
++        ret = get_errno(safe_ioctl(fd, ie->host_cmd));
++        break;
 +
-+struct target_diocgattr_arg {
-+    char name[64];
-+    abi_int len;
-+    union {
-+        char str[TARGET_DISK_IDENT_SIZE];
-+        int64_t off; /* Want abioff, but this will do */
-+        abi_int i;
-+        abi_short u16;
-+    } value;
-+};
++    case TYPE_PTRVOID:
++    case TYPE_INT:
++        /* int argument */
++        ret = get_errno(safe_ioctl(fd, ie->host_cmd, arg));
++        break;
 +
-+#define TARGET_DIOCGATTR    TARGET_IOWR('d', 142, struct target_diocgattr_arg)
++    case TYPE_PTR:
++        arg_type++;
++        target_size = thunk_type_size(arg_type, 0);
++        switch (ie->access) {
++        case IOC_R:
++            ret = get_errno(safe_ioctl(fd, ie->host_cmd, buf_temp));
++            if (!is_error(ret)) {
++                argptr = lock_user(VERIFY_WRITE, arg,
++                    target_size, 0);
++                if (!argptr) {
++                    return -TARGET_EFAULT;
++                }
++                thunk_convert(argptr, buf_temp, arg_type,
++                    THUNK_TARGET);
++                unlock_user(argptr, arg, target_size);
++            }
++            break;
 +
-+/* Unsupported, target_disk_zone_args is complicated */
-+/* #define DIOCZONECMD _IOWR('d', 143, struct target_disk_zone_args) */
++        case IOC_W:
++            argptr = lock_user(VERIFY_READ, arg, target_size, 1);
++            if (!argptr) {
++                return -TARGET_EFAULT;
++            }
++            thunk_convert(buf_temp, argptr, arg_type, THUNK_HOST);
++            unlock_user(argptr, arg, 0);
++            ret = get_errno(safe_ioctl(fd, ie->host_cmd, buf_temp));
++            break;
 +
-+/* Enable/Disable the device for kernel core dumps. */
-+/* #define DIOCSKERNELDUMP _IOW('d', 145, struct diocskerneldump_arg) */
-+/* Get current kernel netdump configuration details for a given index. */
-+/* #define DIOCGKERNELDUMP _IOWR('d', 146, struct diocskerneldump_arg) */
++        case IOC_RW:
++            /* fallthrough */
++        default:
++            argptr = lock_user(VERIFY_READ, arg, target_size, 1);
++            if (!argptr) {
++                return -TARGET_EFAULT;
++            }
++            thunk_convert(buf_temp, argptr, arg_type, THUNK_HOST);
++            unlock_user(argptr, arg, 0);
++            ret = get_errno(safe_ioctl(fd, ie->host_cmd, buf_temp));
++            if (!is_error(ret)) {
++                argptr = lock_user(VERIFY_WRITE, arg, target_size, 0);
++                if (!argptr) {
++                    return -TARGET_EFAULT;
++                }
++                thunk_convert(argptr, buf_temp, arg_type, THUNK_TARGET);
++                unlock_user(argptr, arg, target_size);
++            }
++            break;
++        }
++        break;
 +
-+#endif /* OS_IOCTL_DISK_H */
++    default:
++        gemu_log("QEMU unknown ioctl: type=%d ", arg_type[0]);
++        log_unsupported_ioctl(cmd);
++        ret = -TARGET_ENOSYS;
++        break;
++    }
++    return ret;
++}
 
 -- 
 2.52.0
