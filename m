@@ -4,97 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FDABCD13DA
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 May 2026 12:57:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD961CD3423
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 May 2026 14:02:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJ9tr-0001Rz-EJ; Sat, 02 May 2026 08:56:51 -0400
+	id 1wJAub-0004jn-Rr; Sat, 02 May 2026 10:01:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wJ9to-0001RX-Hc; Sat, 02 May 2026 08:56:48 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wJAu2-0004gu-RE; Sat, 02 May 2026 10:01:12 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wJ9tk-0007pB-UL; Sat, 02 May 2026 08:56:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777726508; bh=m0S+ed3GbqP9ek1Hj8bobpnX5FP4IltoMs190/xuRwk=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=q9ve9/ecAr1wq4VcDo7ywcyXqgN8yK04TgYx90icwuiu/Hbd3pvKpLzdQSZHAMKHV
- PdtsdljIf2oOBX3bqH2szay3QDNJ4tFerbCCvkMd3VRoJ3mwBQihEFgT8I9wMCOQla
- Q5r7ZvWTDqD4khx9qntUa6+oxx0lNsxXqqRV0gnNu0Hv+lowZ3k+54IIuYIyvIa+bg
- 3cY3lZy3MOKrLdj+2nY4cIAtp+ip3gADU7xF61ShbGeLdLcQgyPRBUbDtUMTZw+jH7
- Dh03+ccGLdZPtDJKAYL3wBrIw23/sRvfRpgOvk5s/VTeN5n6FjirOgdacfRDMa3/zt
- bHWHnsnCai4GA==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 935671A5AC2;
- Sat, 02 May 2026 15:55:07 +0300 (MSK)
-Message-ID: <72c94f9f-835f-42e5-9fa6-882df43c501b@tls.msk.ru>
-Date: Sat, 2 May 2026 15:56:40 +0300
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wJAty-0007XG-Gn; Sat, 02 May 2026 10:01:03 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 642DlT2F3118223; Sat, 2 May 2026 14:01:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=I1hsOJZQR2XGOk7WI
+ H8LLfPojJ5cB30a2SQsOUbn0oU=; b=B5/hIXYRIrRTAbaCOBNdaM47VUUXmu6U5
+ 9+driFADe+ZVQUM81Zjb0tAcz8hJLdua8rXjtpslZqKtnQ0oKIu2luFIsSoJuG1e
+ Zw6Zyth0IPVjMvyAhzrz9Adg+/LeutGrLhiplKYxzy2AmpkeH0hPGsRSIbz9zSPY
+ vxJJ1LhfNSa8rmcaKZKaSnHzGgecAkRx6JDGrgGqhr1sUDWR+WcgNHkWt2bC4gX1
+ V95fEERpBnZCRXQX2iI4B2hN0vynh3BP0QXthnBNrHYfFxvVQeSsLvlXYx1/TlWn
+ CCr2+zyZHF2W8s6aBPSYvoHJmiTkxYX2zTjuXvj4xO2ZnqzZAF4Rw==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9x494ub-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 02 May 2026 14:00:59 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 642Dshhx023830;
+ Sat, 2 May 2026 14:00:58 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dw9hd1ay0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 02 May 2026 14:00:58 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 642E0tpb15925758
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 2 May 2026 14:00:55 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0707C20043;
+ Sat,  2 May 2026 14:00:55 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6F77220040;
+ Sat,  2 May 2026 14:00:52 +0000 (GMT)
+Received: from localhost.localdomain (unknown [9.124.223.28])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Sat,  2 May 2026 14:00:52 +0000 (GMT)
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Amit Machhiwal <amachhiw@linux.ibm.com>,
+ Vaibhav Jain <vaibhav@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Subject: [PATCH v2 1/3] hw/ppc/spapr: Do not fallback to raw mode when KVM
+ rejects compat
+Date: Sat,  2 May 2026 19:30:19 +0530
+Message-ID: <20260502140021.69712-2-amachhiw@linux.ibm.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260502140021.69712-1-amachhiw@linux.ibm.com>
+References: <20260502140021.69712-1-amachhiw@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] linux-user: Use abi_int for imr_ifindex in ip_mreqn struct
-To: Helge Deller <deller@gmx.de>, qemu-devel@nongnu.org
-Cc: qemu-stable <qemu-stable@nongnu.org>
-References: <20260424153600.46116-1-deller@kernel.org>
- <8e0011c5-77b1-41ef-8c55-9ec5f21c3a9b@tls.msk.ru>
- <1a6ba003-8850-4996-9aaf-1177e761de51@gmx.de>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <1a6ba003-8850-4996-9aaf-1177e761de51@gmx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTAyMDEzNiBTYWx0ZWRfX3lnf4UuAQzZr
+ 88Zxu1CDrVJJc8rAVJNp5LhD2ddv+cQgbEiJQgCslYzoXSyF5GnSOYQluJiT4LRMkWSTrvMOcOD
+ qWKWtvz5Y+SFbAhBFTSvfuSzmmjINswW5zmh9stcjr62HYqlnsCcOBKfqld9wSatXUst7bZSmUP
+ q+ywFudsudGvxr0GQapkTxiXDldD8wuH6RlCafaCF/islu7NF/pe6aOM/Pu/gFJ4vhxoyCwy9qX
+ LLZ+AsATWwejTiZD3nu3GL+/KGkFco9CtSwcNPj9un2uXqosQYg3KP1O3BmTUwXYwiGqNahqjRm
+ fzt8drG2b9H4omznfz5HRZK8ZJKDRrnIrxbfk4RAKBLOieWK1mVO5oLfYMR5X/kPvfHLMADLPvO
+ CGRysTSMAo9/XWTSYQEpgAQxPEOUAcJYepqC5wWpS43rmDL/N9SGZMd27lvRx45HmeAS0EICEMK
+ 3UxuWVdfvPKx6XfYl7Q==
+X-Proofpoint-ORIG-GUID: uUi8ylP4Z510A5kW9Q4PHNb7NCl6diaF
+X-Proofpoint-GUID: 1ml0mEtvr53PGUzCKLaAPe_puiHAYX2B
+X-Authority-Analysis: v=2.4 cv=W7UIkxWk c=1 sm=1 tr=0 ts=69f6039b cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=i5GS84888sUNcPDMq4UA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-02_03,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 spamscore=0 clxscore=1015 phishscore=0 bulkscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2605020136
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -111,18 +120,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 01.05.2026 00:33, Helge Deller wrote:
-...
-> In general, please pick up all linux-user patches which I sent in two 
-> pull request
-> in the last few days, which are (the second pull request)
+During H_CLIENT_ARCHITECTURE_SUPPORT, QEMU attempts to set the requested
+CPU compatibility mode via ppc_set_compat_all(). If this fails, the
+existing code may fall back to raw mode when supported by the guest.
 
-This all makes sense.  I skipped some of them initially, now picked them
-all.  Thank you!
+The current logic treats all failures uniformly and tried to fall back
+to raw mode whenever possible. As a result, errors from KVM (e.g.
+kvmppc_set_compat() returning -EINVAL) are silently masked, making
+debugging difficult and allowing the guest to proceed with an
+unsupported or incompatible configuration.
 
-(For such cases, please Cc qemu-stable@ the pullreq itself (the cover
-message), so I know it's all for stable and not ask for each individual
-change).
+When running with KVM, such failures indicate that the requested
+compatibility level is not supported by the host. Do not fallback in
+this case; instead, report the error and fail the CAS negotiation.
 
-/mjt
+This makes the failure visible to the user and ensures that invalid
+compatibility requests are rejected early rather than being hidden by
+fallback behavior. For example, the following error is now reported:
+
+  qemu-system-ppc64: Unable to set CPU compatibility mode in KVM: Invalid argument
+
+Fixes: cc7b35b169e9 ("spapr: fallback to raw mode if best compat mode cannot be set during CAS")
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+---
+ hw/ppc/spapr_hcall.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+index 032805a8d0db..de2ea6f5e579 100644
+--- a/hw/ppc/spapr_hcall.c
++++ b/hw/ppc/spapr_hcall.c
+@@ -1204,6 +1204,15 @@ target_ulong do_client_architecture_support(PowerPCCPU *cpu,
+         Error *local_err = NULL;
+ 
+         if (ppc_set_compat_all(cas_pvr, &local_err) < 0) {
++            /*
++             * If KVM rejected the compat mode, do not fallback. This indicates
++             * the host cannot support the requested level.
++             */
++            if (kvm_enabled()) {
++                error_report_err(local_err);
++                return H_HARDWARE;
++            }
++
+             /* We fail to set compat mode (likely because running with KVM PR),
+              * but maybe we can fallback to raw mode if the guest supports it.
+              */
+-- 
+2.50.1 (Apple Git-155)
+
 
