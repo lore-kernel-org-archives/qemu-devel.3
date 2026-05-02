@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39E82CD3423
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1A49CD13DA
 	for <qemu-devel@archiver.kernel.org>; Sat,  2 May 2026 17:12:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJDsM-0007rr-Tr; Sat, 02 May 2026 13:11:34 -0400
+	id 1wJDsN-0007s8-Ab; Sat, 02 May 2026 13:11:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsJ-0007qP-Ju
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsJ-0007qQ-KT
  for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:31 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsI-0007Bw-5B
- for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:31 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-7dbe437b072so1829373a34.2
- for <qemu-devel@nongnu.org>; Sat, 02 May 2026 10:11:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsH-0007Bm-8r
+ for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:30 -0400
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-7dbec19732eso2355392a34.3
+ for <qemu-devel@nongnu.org>; Sat, 02 May 2026 10:11:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777741889; x=1778346689;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777741888; x=1778346688;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=FIy4SnqLUGIEyitTzv2znL28AAqKREY6FCzUomgrBVM=;
- b=M6mPKIGS+7XBlE6GsaZeAjL63hloQWEfVpj4sPmkKLeK4zD+m6uyDCcocWZqzt7B27
- 08ihGFuMJD1lHGskJjOjVe2L64qhHNHN3Ni+mq0uktB1/jbglfvvH77wudKkgw56vf0e
- /h4QluiWbwWYGbBBkwQHaye2eGIIRr6eRuEFMfzexfScOsAqcFEFUOJixU4Gxdgqo2jE
- ubxOQa4NEfjBebQIj0JV9jkjzS9XGj7PqcPOuZnqg9MkombK+oe7Ekg79XFuNuLOZjqY
- VIOh1zi1gCDFRWFCpYfArT7M3INYA/UKZ9ntbqLjEcmQZKgPOY/c/zLb8gMzaU7kQkYt
- 78HA==
+ :reply-to; bh=XiRXymXrkWv23qcdXgj3K3CF07+lwiWxAViASFYNdaQ=;
+ b=sAFblp2RbcjMAhDyYfirdmWHCAYjWTrIoYfAh1Q1m8Ly3qlSpHVQajxG4dgakgEvN3
+ MwFfU9UtOWoHMKFebiz4/9AkMZvwnHUC6khF7uyAzzNi7WStp878ZmkWxXIaPYQL9tiv
+ I6kstYhKfxkXS8CGDzGGOxaN1id+zN+kNqR3NVPZ1e3/TfkeK8+C+KIwLGDkDvz2SLqG
+ UzE71xTgynyKmkbMDi6It9oZJEFgz4e9NwRvGJX8pXoucMKRyyNacg470pb4klAnS0Ym
+ pYed+jY+XHwRjhwWC20nuIIYFrfD+x5phAbtT4c3iXkiQrJXmpOz3Eqm5bR5QOH6nHS0
+ Inkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777741889; x=1778346689;
+ d=1e100.net; s=20251104; t=1777741888; x=1778346688;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=FIy4SnqLUGIEyitTzv2znL28AAqKREY6FCzUomgrBVM=;
- b=guJ0wuEHDtIvjCvV9PKy+As/L6dCmIOW1tXkokOMNFnnB1qyLqF08GI023Pu/KYZYW
- +wV07N5gS8pykam+gsQsiVU7KhnKjVfNvzIK+347tsRlGJroI7pkYSVGmClMvscFfdM0
- LYyRBmhrsXfiixDhHEmHFObjwRj8ejYo7mFbmCXn9AexyfhglrKAVJ7DuyBnZiHC6WzK
- pCiU2woCJ2OHajAyzftAuuS3pNC5g6N6i6LJQq830sw5wAtIfNECcGMmuj0hAgAVcTEo
- k8cA80h1UBv9nyweWvtNCAjoWTHE+rGI2kCZi6w2nNdIvRgRCTOanL5q4Tp71XIIiePR
- ZDlw==
-X-Gm-Message-State: AOJu0Yy2pBXmGiXgOcO4PnI4qJytHmkHwRISWo7EUcbGeOCxJnFWKLAR
- vl3wKnGWm6Qa/Np74aFI/HZ4CHavBadWcJUjbTqaK4yOXnwtmxEJN4b9mlp+I5sVtRLkfyBzG/E
- liz0bvns=
-X-Gm-Gg: AeBDiesGM/BYdiNSzntns/w06XaFXk+oPh7txZ7lLVTQvXNciDPvFxhSJmcdYWeRV5M
- mJmFwqDCIOLKvDSdhxLs9N5XQwcsEqk5YT4/SnSKS/Q+R+VI1V/LGc7eJC+ga+m++cljN235Snd
- QRnoRnmfkMOnRTKLO5/IsO35393F134Ktfb5xDISVcl5wsR6+hLgrsdRoQqT0O0I6U7VihPaIjI
- byK9XkafOJ4HGOV8i3TCvR9EfhmAm+Y+sjY/ZgncX35O4EEaJlbGT9JvA0BGc26TOb5/J2qvein
- WZKb0F1BymEFBPiZgdjnm24tYtFJFy9N2uwxJfrafni7BbLxbuwT8hMiBKROtiHs+zBK+qBiGSm
- DkWWIY31zGOK3pS6MSn1MSPQljQQYEyTWZB4fujHoPwuhlpxLQvPUG4xQeCNpI77d3c7Kw7DkkI
- jmLlXKXZJydpp4bMc+oM8t
-X-Received: by 2002:a05:6830:4c04:b0:7d7:f623:680a with SMTP id
- 46e09a7af769-7dee122059fmr2225779a34.2.1777741888839; 
- Sat, 02 May 2026 10:11:28 -0700 (PDT)
+ bh=XiRXymXrkWv23qcdXgj3K3CF07+lwiWxAViASFYNdaQ=;
+ b=Lxrg06ot/pJ2jID55/7qKgJ8PvApFK0V6DaCGspjRieEBM3gGwTKDLh5n+FEMOuVsI
+ LjnfkicMVUujUEeLSnGuxb2qwO5DSr3EIiXoGPaOm5RIgJv4sxz942Vc/dgRjZRCXaTk
+ ySVjEiWPnUvlsnFsuk1SB8JKRKFz+Q/tSpKbXrFzHT1txyzWZiHjcd/41EfGP+rBs0n9
+ vCgpbvAWGcpSdd8qr/28bFNUOuL9nD15f4iztaVrRK98GK3JTc5KBh4U2t+KgXJlLaGj
+ Mj/7BRTkKoZty0Y1ZDF+ES5ut8IZPEeg8ZoJ6B7nnT7NeqQIG6JMJooIcjv+IfM1ZZ65
+ KZSQ==
+X-Gm-Message-State: AOJu0Yz+wERDETAh++kYi+TUlINSTsmMy3xqzAF2B2W0/IrWOJYOXnek
+ spaWdtWjqU1fmVhXcPauuYqPrbkFB+7GJ2Y9hV/5OZAzgLXt9EZx5L6UUFj3kAA17FgWXcnRPjn
+ YtI/bqVk=
+X-Gm-Gg: AeBDiesvSeUHUsThkbjGADfLGn84UhG2Z3zAvz9ui6t06w10EYhnkRMTvh4UAcK6D+s
+ eVnkRpiDiAijUU0dWz3vvMkR7Vxp+pnBXwDmZIRqQS/87wjOXSBkNmP2DKKyLPmAMyHG9sLBXe5
+ 1+o9zA8lwyfynFOVQJh0ebXtom/8brIySqWrhI2cvpCo4UaaOJBGce9G8YmZgVVeNKHlE/zZAQs
+ k97AWTLlCuNhE36MtQN8Z4Vd8o/A1NHWhJcUoLhU3AyM0FitZmqigoGsJbkbfY+qn2dlyqP93Yo
+ 9mF6DVp3BduVDUB8umxTAY7hDCOOO1qqvGGEptQmER5BQrkr9bQf7/6nR0F4iLkKOKSyT6IKQWP
+ Y/R6DwGZFb+AY08ljXxKKjBzcejwN7bmAkVQ5JVe5fqhveq5mC5FMJ0QX9GVUMYzsH1mqsPHIDA
+ q8P3uSd5NOEfll7K3kD4hLk+DulfNYgm0=
+X-Received: by 2002:a05:6830:4422:b0:7d7:eabb:2a5 with SMTP id
+ 46e09a7af769-7dee148a3a7mr2360399a34.24.1777741887882; 
+ Sat, 02 May 2026 10:11:27 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7deca824746sm4334355a34.11.2026.05.02.10.11.27
+ 46e09a7af769-7deca824746sm4334355a34.11.2026.05.02.10.11.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 May 2026 10:11:28 -0700 (PDT)
+ Sat, 02 May 2026 10:11:27 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 02 May 2026 11:09:32 -0600
-Subject: [PATCH v3 11/19] bsd-user: Add target_sockaddr and safe_ioctl to
- syscall_defs.h
+Date: Sat, 02 May 2026 11:09:31 -0600
+Subject: [PATCH v3 10/19] bsd-user: Add bsd-ioctl.h header
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260502-ioctl-v3-11-a05d4cb1bdff@bsdimp.com>
+Message-Id: <20260502-ioctl-v3-10-a05d4cb1bdff@bsdimp.com>
 References: <20260502-ioctl-v3-0-a05d4cb1bdff@bsdimp.com>
 In-Reply-To: <20260502-ioctl-v3-0-a05d4cb1bdff@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -79,24 +78,24 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, "Stacey D. Son" <sson@freebsd.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1150; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=xg/177J6QSN8YcD+cjog3d3ndgjHQvk6fuzDhXxQAcI=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9i/Qp7OAee6qOUIGj6txSV20ontD+qBeWHBbZ
- xk8ryHJB2yJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafYv0AAKCRBsHNEofbAR
- AEP3D/9NkGmLSwADME7uyjXzBvYCBJUWEWQgpKdCTxtKH39ixihgMJ56rUFALN2jCfZNug05XGy
- vGVlOjWgyLwfC3ElVLxjNEiz0p3kTv4rZmDn0ii99FxBha22kP+H5wsQwLUVi57psg+cCpClfyb
- 8dXhmHSmNIfgkWm/qKWtC2+OSPpmwy/5OHJ4K0nqKH6iorfxjKNEfFJdbVCbqbcqOhvVB6fZmyf
- c31viqP5QM98EceNjpp2iobtsiMNywhjw7cXbXx0C0Z97Tj/aGyaj5N6lXj2b6RMBVP4+t3W07F
- T2tk5cyPaUsoBLxBwWOOPv0I6i68gDRTaZlkn5Ht0yiuE9UmIO44zE5LKLNq1TbqUTaP29hWb9J
- K7JUERniZaSe3dbtUJ7kMvkp3Ar0dEYyATtVHnDo0MgNiP9TC8PFG+Kzb9SaEx7l/Rn45JRHS4I
- Xz6exfiH+DZP52RSHDSir7QWeCyxZ2jIuYt3os8/xw+OYxiBq8l43NyUc9wAf70cv9V2IQq4NPy
- VLueX+68wZfarAtw9t0X0FAhXUW8RAbbtafd9MwBt7h3HGkaRw7a3NB2OOPtJaI8WT/3Qju3BQf
- rRq7uXdThqIetoMKVJi2+x1LR9X5o3nVPfsbPSUzujFudv0j9zLi9zvEFdqEBtmjQUf0XnHKDy7
- uub01KtrvmK1/Sg==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=900; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=7krySvXGKAFQniXOZAf3gvwvHJtjuTrz7smA6FnxKN8=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9i/Q+XbvNJ1URBZTRpQ9DSy+bDLFfCF3PbMy7
+ JusAhz8ynaJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafYv0AAKCRBsHNEofbAR
+ ALRgD/9rNQvifCMgRQdkADiwx4kRDsCnvReVb6VQFJ0UcwjJ5DjlG3mm+G8PwfPVVohWHQNKYiY
+ vk3mnzCdHnETe3LC5ifF6taGuyvmggBTPAatuqvVBrPiskFfeZzPcfAJzqsPLHo8AXDqljncOnF
+ iquK5Bk+2xomiSmchTMo3UGsV8Ok6y6GGLPScTDYv9JMETRT2kTQJ87cSNlHJklfVTEf4CAGOjF
+ lN3sjjNCjcPd5WZAJzZiIw+a2CaNiQ5lAK3dt6RDexlKWmGA5Tm9hIZjkaKfRXZ/e38e8OL4l2H
+ 26yySwZwSDqkEGIeWdL1hnWfq9kXx+uCdbw8K+ebfM4ekbEr8aUyMgfq6Z6/X9/GbDq4/3/caLf
+ c1SHuV51azYdKGWKQx+wbODLZkS+lzP6GRJeI9hR/8GLu82TgvBDjRQw1HE+5An+sM52YVnn+Hk
+ VU4+ZHjkpqnKD0xqElGQb0hICfnFgXs2H/EEVXnUZp8s1E25IkJS3gA3wwYvbodJ1aKM3qElX0W
+ zIQ3BedbVw2nTpK/EYk8xP32lAizHaPyM/8CffSc/WgIEwR0Krsspf/13Y6WcLn+Xtf6Tkf9T/C
+ YG2b+v/mL4EnDsEDOGxOPcB5aRHbTtd4XyD2OEkDfCq7pbRrWsyel69H+fGG8tJIEe8YbVdyYYZ
+ m6LMu6FIAzAMd9A==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::331;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x331.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::333;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x333.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -120,41 +119,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Stacey D. Son" <sson@freebsd.org>
 
-Add struct target_sockaddr and target_in_addr definitions for socket
-address handling and safe_ioctl macro for safe ioctl system calls.
+Add bsd-ioctl.h header declaring the public ioctl emulation API:
+do_bsd_ioctl() for processing ioctl system calls and init_bsd_ioctl()
+for initialization.
 
 Signed-off-by: Stacey D. Son <sson@freebsd.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/syscall_defs.h | 14 ++++++++++++++
+ bsd-user/bsd-ioctl.h | 14 ++++++++++++++
  1 file changed, 14 insertions(+)
 
-diff --git a/bsd-user/syscall_defs.h b/bsd-user/syscall_defs.h
-index 4dbd90c2f1..34ea750bb2 100644
---- a/bsd-user/syscall_defs.h
-+++ b/bsd-user/syscall_defs.h
-@@ -565,6 +565,20 @@ type safe_##name(type1 arg1, type2 arg2, type3 arg3, type4 arg4, \
-     return safe_syscall(SYS_##name, arg1, arg2, arg3, arg4, arg5, arg6); \
- }
- 
+diff --git a/bsd-user/bsd-ioctl.h b/bsd-user/bsd-ioctl.h
+new file mode 100644
+index 0000000000..bf9bb72bc9
+--- /dev/null
++++ b/bsd-user/bsd-ioctl.h
+@@ -0,0 +1,14 @@
 +/*
-+ * sys/socket.h
++ * ioctl system call definitions
++ *
++ * Copyright (c) 2013 Stacey D. Son
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+struct target_sockaddr {
-+    uint8_t sa_len;
-+    uint8_t sa_family;
-+    uint8_t sa_data[14];
-+} QEMU_PACKED;
++#ifndef BSD_IOCTL_H
++#define BSD_IOCTL_H
 +
-+struct target_in_addr {
-+    uint32_t s_addr; /* big endian */
-+};
++abi_long do_bsd_ioctl(int fd, abi_long cmd, abi_long arg);
++void init_bsd_ioctl(void);
 +
-+#define safe_ioctl(...) safe_syscall(SYS_ioctl, __VA_ARGS__)
- #define safe_fcntl(...) safe_syscall(SYS_fcntl, __VA_ARGS__)
- 
- /* So far all target and host bitmasks are the same */
++#endif /* BSD_IOCTL_H */
 
 -- 
 2.52.0
