@@ -4,98 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20463CD13DA
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 May 2026 11:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E2DCD3423
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 May 2026 11:40:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJ8es-0003g1-Vw; Sat, 02 May 2026 07:37:19 -0400
+	id 1wJ8hX-0004OM-4Z; Sat, 02 May 2026 07:40:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wJ8eq-0003fF-9g; Sat, 02 May 2026 07:37:16 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1wJ8en-0007EE-K0; Sat, 02 May 2026 07:37:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1777721726; bh=k8fSNTK0Zq2nxeSu5eb0LFD7+CtM2Y+L01EszKP2Vuc=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=BZI+XmkB7mhV/faUKXlHPQrJCd0I6X9jNzv3e7S8DSRNZqFdihsL/YPJi1clvuLNe
- FEFviQ/7riBBGynGU7tgK1s2kXWNKevtzGa4am0CCnzRohkoaILaJe989tdbIzY7Gd
- IoeGJyzUjxt6CgYpFfqyUuwMghqnK+vDZh8GYR7oVeSHu9uHeVbIH0OxhRfIdDXlCZ
- VqgocqTx2E8xne8DCZLWr7+52TEAG3BaYsVJ26N5TgzdrYGvtCgMpBEHxYPxYtsV03
- KhlLKZzgao0O1gnuuMLBJQPS22t7BvJfQBFGz8NxJn4XO/2iviaIdFORYata2olXHY
- d9X3rkfJYb/4A==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 7441C1A5A8E;
- Sat, 02 May 2026 14:35:25 +0300 (MSK)
-Message-ID: <16a4ce5f-0ba7-41ac-8f78-b0699f10a5ab@tls.msk.ru>
-Date: Sat, 2 May 2026 14:36:58 +0300
+ (Exim 4.90_1) (envelope-from <harsh.prateek.bora@gmail.com>)
+ id 1wJ8hN-0004Me-67
+ for qemu-devel@nongnu.org; Sat, 02 May 2026 07:39:55 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <harsh.prateek.bora@gmail.com>)
+ id 1wJ8hJ-0000h3-UD
+ for qemu-devel@nongnu.org; Sat, 02 May 2026 07:39:51 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-671dad7cac8so3189936a12.0
+ for <qemu-devel@nongnu.org>; Sat, 02 May 2026 04:39:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777721987; cv=none;
+ d=google.com; s=arc-20240605;
+ b=HB0mRjejpPeZzlCMO1Y/nU6jVI+0H9nZ1kthEP6s/yo27kjXLHOqZtrr1kD33t3vLX
+ IDQNWcgNHxIHbYdle+DhnpYaL+jy0Ow3oBbB2o9FvrJq91Drb9om6K/cfQkdJpryPDcs
+ RsC4xvvWl9uPkYhoexHLuM3XBcxUjT4YAnf6/5pEo2rWJbkA+gVAq+Zgs4QOy4snhq7s
+ Y1LD+R0Hi7TqDmUH3E3tRblV1N/9pBeZ+xzSmkcjW53Cd4JAeE3y+OH8OcZfY+p87IEs
+ zMio8Sj+KQhFPV9sz0zE5ssO0dJkvcb1rWF38+XaOhcppuKyusiQvI8lDxoIt7gSRUR/
+ lzbg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=X3zO2k+rboycdoYRvCQ4v7991yHMREN7cAxyxP/o2PE=;
+ fh=8ALIOqkJiX1fWC6TSNGpKXJ3CsfIj9ZQtHINE3WZlR8=;
+ b=Prkc9eC1Bl06clbp7Ltt0LYeDVKaOTVcAiszRL9Uo7J7hviRfGRo68dzci+K+TQCYC
+ 1EJm/MmYkfozp6ihT1MDj6FQ+ojcVWNIiuaqHNCejPNcc8ggncTvbUe8gwCU6N8rNM5Y
+ DgZ9b9y/aZV5Y+XvmMOMb5fqjqVnGc1M4/Qe/T1OiBBR8uBO9AKCqhNSHoe/T2ScBInT
+ LjUwbCxFylTEX3EKJBe5uitqDPW1qMfoKHwRFwY6spNH8iva24eGyIMumGyYtzX9NBhi
+ nzsS9+iuhjQ0WDnqj3TnRF8GYOC34NGzpK9qmJJIhmGsXAahJL9VP5xj1fmbZUnSpLGM
+ RUOg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1777721987; x=1778326787; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=X3zO2k+rboycdoYRvCQ4v7991yHMREN7cAxyxP/o2PE=;
+ b=P2/X3+dIitsCKfiJDtYmFGCb6uXAZ3FxM9rG6QWBn/EOGvq5lPLZiz/Ud9pLcIXvH7
+ 5ScCaC7UagUoHBX2EUl/S+upoehM6Q8JMXr2Vbsy9g1z0G+OePQDL8xtHJ3zZF4vIETa
+ ZSCGgmq/pPnWTcOCdvGLYmh2p4XuKp1hJAe5LsbOi0tGOnCVYGYMJDBguDQPxV1anEYb
+ 4G1JWYVwo5wbQo9lu027Q5qthJgx/roeY6AoxrmtwSiZEKErNN9RIIsQ0gxjLhbEOzRq
+ 8GFZTUaCR43d5Ye4rTLC+POAfIs7bo62EUw+SDS7+hmfSmUB6pz3efWHqZzzaB1bvXgh
+ SLxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777721987; x=1778326787;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=X3zO2k+rboycdoYRvCQ4v7991yHMREN7cAxyxP/o2PE=;
+ b=NgF0SaotFgqH/I7+vySMlzWK8Sj9Do/3iGA4zFSU96DDkYW6AsU6K81ZJ3VqM/Fbpz
+ 7D5ox6rC15iu4PbeH0y83zoTbKmV4gH8AKZgyZsIdyVKNaOqEZedVVMoZlSkkSmDwDrg
+ QalCHfJ6JSWX2+qqOyMZsDhzjgWIKACyB+hlkth0Y43GHknA8sqOfho3Mh2bGSKIWbrn
+ l0Su8W124HSAdtlu8YpV8d7sdXhsdqdACUltWaN3AHXKRcSj0JcvuB0RuBeabn38wJ7h
+ sB8Jx51eIb5oZ6Di8lVtE8XC7wOVHQrpqTQrujvyuCzxUCDSdOKmkoOajPfbjKKvzN6L
+ kVlQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+9HIabXcl/aD4T1wla5sajvj+HgYXgwRHa2aUZxYJXP/10OCuCjL93brdGFa3G/aDsoHNJvqU4Xp/i@nongnu.org
+X-Gm-Message-State: AOJu0Yy465sU9KYj2wWDJX3oK8D8U8tmru3fLKJtOFQ3FyrJT2L2karM
+ lku+5dciEqjZz9b8cFJspfzXOvSGLlEjwdJVibtUNm8SiprG7POtcAGCHeszml4xvs+wlVNc/+J
+ bENhnCi8q9DMySCr7BtvqMJQGIpYF/mU=
+X-Gm-Gg: AeBDietfsuclmx17qV1tR2n+Y7iD4irnYD0+MalgqyMVoQOSQi2mP7Xkp9Xrp2b1GPP
+ oyfDiWlL2HezsENKxDiP9uTaQggH3PATXE2XrgT2tdKq02GG4wX1pXZzB0jEKlLslPs3Svune7r
+ oCbcLVCFUSqbeT/TM2lqGrqirg+L4GBusggrJ37dkYwbnqCNPv741yWA+aW+4YWIxMMpCVQ4wrc
+ 2KS0Ux/pALgVYY8l9UWJqKtf+82sV7PL4YmaBDmzPUIgmLkl+jRXXEpHzBTz3ZHqdkQl9lpstYp
+ G/YTKpmAisnyE8k54nh+CcLbYV3HbDkbqzktXh0e0sf4/8v0SKly
+X-Received: by 2002:a17:907:a02:b0:bae:656b:2953 with SMTP id
+ a640c23a62f3a-bbff950b331mr138414666b.11.1777721986364; Sat, 02 May 2026
+ 04:39:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/intc/xics: Add a check for an invalid server id
-To: Gautam Menghani <Gautam.Menghani@ibm.com>, npiggin@gmail.com,
- harshpb@linux.ibm.com, adityag@linux.ibm.com
-Cc: kiki <Chan9Yan9@gmail.com>, qemu-ppc@nongnu.org, qemu-devel@nongnu.org,
- Gautam Menghani <gautam@linux.ibm.com>, qemu-stable <qemu-stable@nongnu.org>
 References: <20260428103645.50617-1-Gautam.Menghani@ibm.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260428103645.50617-1-Gautam.Menghani@ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+ <16a4ce5f-0ba7-41ac-8f78-b0699f10a5ab@tls.msk.ru>
+In-Reply-To: <16a4ce5f-0ba7-41ac-8f78-b0699f10a5ab@tls.msk.ru>
+From: Harsh Prateek Bora <harsh.prateek.bora@gmail.com>
+Date: Sat, 2 May 2026 17:09:34 +0530
+X-Gm-Features: AVHnY4JAHk3rOduI7687iZIt8Mw1yIyWNaiBajq6cvtkfFQ3SKCzDIQsSRnmafc
+Message-ID: <CAEuJdmqkJgEMNnGHa6Doc=jCbjXERHDkdcnJGPwmhZ8PpjE-WQ@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/intc/xics: Add a check for an invalid server id
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Gautam Menghani <Gautam.Menghani@ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Aditya Gupta <adityag@linux.ibm.com>, 
+ kiki <Chan9Yan9@gmail.com>, qemu-ppc@nongnu.org, qemu-devel@nongnu.org, 
+ Gautam Menghani <gautam@linux.ibm.com>, qemu-stable <qemu-stable@nongnu.org>
+Content-Type: multipart/alternative; boundary="00000000000081b6f90650d4275c"
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=harsh.prateek.bora@gmail.com; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,27 +121,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.04.2026 13:36, Gautam Menghani wrote:
-> From: kiki <Chan9Yan9@gmail.com>
-> 
-> A malformed IVE value can result in an invalid server field being
-> passed to icp_irq(). The function assumes the server id is valid and
-> may access invalid state otherwise, potentially leading to a crash.
-> 
-> Fix this by validating the server id before using it and ignoring
-> invalid values.
-> 
-> Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
-> Signed-off-by: Zexiang Zhang <chan9yan9@gmail.com>
-> Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+--00000000000081b6f90650d4275c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-(https://gitlab.com/qemu-project/qemu/-/work_items/3324)
+Should be fine. Thanks Michael!
 
-I'm picking this small change to current qemu-stable series.
-The issue seem to be unimportant, but the fix is simple too.
-Please let me know if I shouldn't.
+On Sat, 2 May, 2026, 5:07=E2=80=AFpm Michael Tokarev, <mjt@tls.msk.ru> wrot=
+e:
 
-Thanks,
+> On 28.04.2026 13:36, Gautam Menghani wrote:
+> > From: kiki <Chan9Yan9@gmail.com>
+> >
+> > A malformed IVE value can result in an invalid server field being
+> > passed to icp_irq(). The function assumes the server id is valid and
+> > may access invalid state otherwise, potentially leading to a crash.
+> >
+> > Fix this by validating the server id before using it and ignoring
+> > invalid values.
+> >
+> > Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
+> > Signed-off-by: Zexiang Zhang <chan9yan9@gmail.com>
+> > Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
+>
+> (https://gitlab.com/qemu-project/qemu/-/work_items/3324)
+>
+> I'm picking this small change to current qemu-stable series.
+> The issue seem to be unimportant, but the fix is simple too.
+> Please let me know if I shouldn't.
+>
+> Thanks,
+>
+> /mjt
+>
+>
 
-/mjt
+--00000000000081b6f90650d4275c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div>Should be fine. Thanks Michael!<br><br><div class=3D=
+"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">O=
+n Sat, 2 May, 2026, 5:07=E2=80=AFpm Michael Tokarev, &lt;<a href=3D"mailto:=
+mjt@tls.msk.ru">mjt@tls.msk.ru</a>&gt; wrote:<br></div><blockquote class=3D=
+"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding=
+-left:1ex">On 28.04.2026 13:36, Gautam Menghani wrote:<br>
+&gt; From: kiki &lt;<a href=3D"mailto:Chan9Yan9@gmail.com" target=3D"_blank=
+" rel=3D"noreferrer">Chan9Yan9@gmail.com</a>&gt;<br>
+&gt; <br>
+&gt; A malformed IVE value can result in an invalid server field being<br>
+&gt; passed to icp_irq(). The function assumes the server id is valid and<b=
+r>
+&gt; may access invalid state otherwise, potentially leading to a crash.<br=
+>
+&gt; <br>
+&gt; Fix this by validating the server id before using it and ignoring<br>
+&gt; invalid values.<br>
+&gt; <br>
+&gt; Reported-by: Zexiang Zhang &lt;<a href=3D"mailto:chan9yan9@gmail.com" =
+target=3D"_blank" rel=3D"noreferrer">chan9yan9@gmail.com</a>&gt;<br>
+&gt; Signed-off-by: Zexiang Zhang &lt;<a href=3D"mailto:chan9yan9@gmail.com=
+" target=3D"_blank" rel=3D"noreferrer">chan9yan9@gmail.com</a>&gt;<br>
+&gt; Signed-off-by: Gautam Menghani &lt;<a href=3D"mailto:gautam@linux.ibm.=
+com" target=3D"_blank" rel=3D"noreferrer">gautam@linux.ibm.com</a>&gt;<br>
+<br>
+(<a href=3D"https://gitlab.com/qemu-project/qemu/-/work_items/3324" rel=3D"=
+noreferrer noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qe=
+mu/-/work_items/3324</a>)<br>
+<br>
+I&#39;m picking this small change to current qemu-stable series.<br>
+The issue seem to be unimportant, but the fix is simple too.<br>
+Please let me know if I shouldn&#39;t.<br>
+<br>
+Thanks,<br>
+<br>
+/mjt<br>
+<br>
+</blockquote></div></div></div>
+
+--00000000000081b6f90650d4275c--
 
