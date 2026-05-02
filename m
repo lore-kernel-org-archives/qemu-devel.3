@@ -4,108 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E2DCD3423
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 May 2026 11:40:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA7BCCD13DA
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 May 2026 12:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJ8hX-0004OM-4Z; Sat, 02 May 2026 07:40:03 -0400
+	id 1wJ9oP-0000Xx-QY; Sat, 02 May 2026 08:51:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harsh.prateek.bora@gmail.com>)
- id 1wJ8hN-0004Me-67
- for qemu-devel@nongnu.org; Sat, 02 May 2026 07:39:55 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <harsh.prateek.bora@gmail.com>)
- id 1wJ8hJ-0000h3-UD
- for qemu-devel@nongnu.org; Sat, 02 May 2026 07:39:51 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-671dad7cac8so3189936a12.0
- for <qemu-devel@nongnu.org>; Sat, 02 May 2026 04:39:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777721987; cv=none;
- d=google.com; s=arc-20240605;
- b=HB0mRjejpPeZzlCMO1Y/nU6jVI+0H9nZ1kthEP6s/yo27kjXLHOqZtrr1kD33t3vLX
- IDQNWcgNHxIHbYdle+DhnpYaL+jy0Ow3oBbB2o9FvrJq91Drb9om6K/cfQkdJpryPDcs
- RsC4xvvWl9uPkYhoexHLuM3XBcxUjT4YAnf6/5pEo2rWJbkA+gVAq+Zgs4QOy4snhq7s
- Y1LD+R0Hi7TqDmUH3E3tRblV1N/9pBeZ+xzSmkcjW53Cd4JAeE3y+OH8OcZfY+p87IEs
- zMio8Sj+KQhFPV9sz0zE5ssO0dJkvcb1rWF38+XaOhcppuKyusiQvI8lDxoIt7gSRUR/
- lzbg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=X3zO2k+rboycdoYRvCQ4v7991yHMREN7cAxyxP/o2PE=;
- fh=8ALIOqkJiX1fWC6TSNGpKXJ3CsfIj9ZQtHINE3WZlR8=;
- b=Prkc9eC1Bl06clbp7Ltt0LYeDVKaOTVcAiszRL9Uo7J7hviRfGRo68dzci+K+TQCYC
- 1EJm/MmYkfozp6ihT1MDj6FQ+ojcVWNIiuaqHNCejPNcc8ggncTvbUe8gwCU6N8rNM5Y
- DgZ9b9y/aZV5Y+XvmMOMb5fqjqVnGc1M4/Qe/T1OiBBR8uBO9AKCqhNSHoe/T2ScBInT
- LjUwbCxFylTEX3EKJBe5uitqDPW1qMfoKHwRFwY6spNH8iva24eGyIMumGyYtzX9NBhi
- nzsS9+iuhjQ0WDnqj3TnRF8GYOC34NGzpK9qmJJIhmGsXAahJL9VP5xj1fmbZUnSpLGM
- RUOg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777721987; x=1778326787; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=X3zO2k+rboycdoYRvCQ4v7991yHMREN7cAxyxP/o2PE=;
- b=P2/X3+dIitsCKfiJDtYmFGCb6uXAZ3FxM9rG6QWBn/EOGvq5lPLZiz/Ud9pLcIXvH7
- 5ScCaC7UagUoHBX2EUl/S+upoehM6Q8JMXr2Vbsy9g1z0G+OePQDL8xtHJ3zZF4vIETa
- ZSCGgmq/pPnWTcOCdvGLYmh2p4XuKp1hJAe5LsbOi0tGOnCVYGYMJDBguDQPxV1anEYb
- 4G1JWYVwo5wbQo9lu027Q5qthJgx/roeY6AoxrmtwSiZEKErNN9RIIsQ0gxjLhbEOzRq
- 8GFZTUaCR43d5Ye4rTLC+POAfIs7bo62EUw+SDS7+hmfSmUB6pz3efWHqZzzaB1bvXgh
- SLxw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777721987; x=1778326787;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=X3zO2k+rboycdoYRvCQ4v7991yHMREN7cAxyxP/o2PE=;
- b=NgF0SaotFgqH/I7+vySMlzWK8Sj9Do/3iGA4zFSU96DDkYW6AsU6K81ZJ3VqM/Fbpz
- 7D5ox6rC15iu4PbeH0y83zoTbKmV4gH8AKZgyZsIdyVKNaOqEZedVVMoZlSkkSmDwDrg
- QalCHfJ6JSWX2+qqOyMZsDhzjgWIKACyB+hlkth0Y43GHknA8sqOfho3Mh2bGSKIWbrn
- l0Su8W124HSAdtlu8YpV8d7sdXhsdqdACUltWaN3AHXKRcSj0JcvuB0RuBeabn38wJ7h
- sB8Jx51eIb5oZ6Di8lVtE8XC7wOVHQrpqTQrujvyuCzxUCDSdOKmkoOajPfbjKKvzN6L
- kVlQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+9HIabXcl/aD4T1wla5sajvj+HgYXgwRHa2aUZxYJXP/10OCuCjL93brdGFa3G/aDsoHNJvqU4Xp/i@nongnu.org
-X-Gm-Message-State: AOJu0Yy465sU9KYj2wWDJX3oK8D8U8tmru3fLKJtOFQ3FyrJT2L2karM
- lku+5dciEqjZz9b8cFJspfzXOvSGLlEjwdJVibtUNm8SiprG7POtcAGCHeszml4xvs+wlVNc/+J
- bENhnCi8q9DMySCr7BtvqMJQGIpYF/mU=
-X-Gm-Gg: AeBDietfsuclmx17qV1tR2n+Y7iD4irnYD0+MalgqyMVoQOSQi2mP7Xkp9Xrp2b1GPP
- oyfDiWlL2HezsENKxDiP9uTaQggH3PATXE2XrgT2tdKq02GG4wX1pXZzB0jEKlLslPs3Svune7r
- oCbcLVCFUSqbeT/TM2lqGrqirg+L4GBusggrJ37dkYwbnqCNPv741yWA+aW+4YWIxMMpCVQ4wrc
- 2KS0Ux/pALgVYY8l9UWJqKtf+82sV7PL4YmaBDmzPUIgmLkl+jRXXEpHzBTz3ZHqdkQl9lpstYp
- G/YTKpmAisnyE8k54nh+CcLbYV3HbDkbqzktXh0e0sf4/8v0SKly
-X-Received: by 2002:a17:907:a02:b0:bae:656b:2953 with SMTP id
- a640c23a62f3a-bbff950b331mr138414666b.11.1777721986364; Sat, 02 May 2026
- 04:39:46 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260428103645.50617-1-Gautam.Menghani@ibm.com>
- <16a4ce5f-0ba7-41ac-8f78-b0699f10a5ab@tls.msk.ru>
-In-Reply-To: <16a4ce5f-0ba7-41ac-8f78-b0699f10a5ab@tls.msk.ru>
-From: Harsh Prateek Bora <harsh.prateek.bora@gmail.com>
-Date: Sat, 2 May 2026 17:09:34 +0530
-X-Gm-Features: AVHnY4JAHk3rOduI7687iZIt8Mw1yIyWNaiBajq6cvtkfFQ3SKCzDIQsSRnmafc
-Message-ID: <CAEuJdmqkJgEMNnGHa6Doc=jCbjXERHDkdcnJGPwmhZ8PpjE-WQ@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/intc/xics: Add a check for an invalid server id
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Gautam Menghani <Gautam.Menghani@ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>, 
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wJ9oE-0000Xc-Cq; Sat, 02 May 2026 08:51:03 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wJ9oB-0005GF-P4; Sat, 02 May 2026 08:51:01 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 6425RH612144343; Sat, 2 May 2026 12:50:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=x8inS8aihfHD2bW0tMLe78/yb+aafg
+ CTu/knZGHe/5s=; b=HoTpmsb7LDnrCo/JhJ2VnP+tygmmUCCZfBgMkzDUoB71jP
+ 4b7O7FgpFGSRjrSQGfFQoWzrb8Czk694RqSgxOdC6EDBs8kWGmc4inKp849axboj
+ 6+6YE5BRBCGK1EYZFgJNhMGd7Muurv9wifnzsAb8Zf7bT+haikiWWbbzo9IsVQro
+ 0H+r35qCcLCLhCK8qd7CAuc3vT674bVlxo8w4/WVALI/3v6MaNeSccVmlHWX5huw
+ SQi9DgpgxRhRtdt6wjIgYMvmPhciaag6l/XOpQXPICmxBQEzdhdrTI7lbpbm5K8E
+ C4NGlPfq/wLhNhxUS8AarfTb9LmaKlKlQHOj/M/A==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9x490pc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 02 May 2026 12:50:54 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 642CdTf3025838;
+ Sat, 2 May 2026 12:50:53 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dw9gvh6gq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Sat, 02 May 2026 12:50:53 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 642Conmw30212836
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Sat, 2 May 2026 12:50:49 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C634B2004B;
+ Sat,  2 May 2026 12:50:49 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E733120040;
+ Sat,  2 May 2026 12:50:47 +0000 (GMT)
+Received: from fedora (unknown [9.5.7.39])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Sat,  2 May 2026 12:50:47 +0000 (GMT)
+Date: Sat, 2 May 2026 20:14:09 +0000
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: qemu-ppc@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Amit Machhiwal <amachhiw@linux.ibm.com>,
+ Vaibhav Jain <vaibhav@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH 2/2] target/ppc/kvm: Use host compatibility mode for
+ nested guests
+Message-ID: <20260502192312.57cadbe0-e5-amachhiw@linux.ibm.com>
+Mail-Followup-To: qemu-ppc@nongnu.org, 
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Aditya Gupta <adityag@linux.ibm.com>, 
- kiki <Chan9Yan9@gmail.com>, qemu-ppc@nongnu.org, qemu-devel@nongnu.org, 
- Gautam Menghani <gautam@linux.ibm.com>, qemu-stable <qemu-stable@nongnu.org>
-Content-Type: multipart/alternative; boundary="00000000000081b6f90650d4275c"
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=harsh.prateek.bora@gmail.com; helo=mail-ed1-x533.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ Vaibhav Jain <vaibhav@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org
+References: <20260430061333.37905-1-amachhiw@linux.ibm.com>
+ <20260430061333.37905-3-amachhiw@linux.ibm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260430061333.37905-3-amachhiw@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTAyMDEyNiBTYWx0ZWRfX/yAmF0/ptXDT
+ KnW7EEXXC8W5fSjG3vNFbOIE2lX3Ju5GffHDAAuGqakaa9Izps65LvOS4cvUoanRj0xHeM6TrCB
+ /mLc/PPwrYSkiNKXtDM/SaFl47VGzMBVbozwMO/bqHSAltt88Wq/mccb5UG2qBEgb45I//rJdNn
+ VXfm/TpWiFiZEzJTp5Nid2tp9KsBIzEl09f686rTP9Oc6vlfYxHLvRnfH60zrl02G6bfhcDasDT
+ yDasEGRzIKQEZMwt5/2I1ujw8v3E1EzI71H39t3/Np12AM9o3MRzELQ+fdmIr4/ufguUJVnyIJ2
+ GSpPY5xOSG1IXRxzRF7+bRD+81TS3bI4VMhT+K3zbRaaOI22FiLsAdY+1zDB9ATGB0c7x652ogK
+ rSF53tBrcVjHFeeDmorLxpFZ9NmfwvMehrQOMOHCb3Q+Tf5QrLK6l9yf6h5P7Ymb4ckF5upRbRQ
+ 8LYTESNhKkyUrlfMNBA==
+X-Proofpoint-ORIG-GUID: xgmT4qg-SonCS1evxNXf8bVgJ92ACqp6
+X-Proofpoint-GUID: n5zQn4l7lgKTwKP9IE0MJFFOuhES9Bm2
+X-Authority-Analysis: v=2.4 cv=W7UIkxWk c=1 sm=1 tr=0 ts=69f5f32e cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=kj9zAlcOel0A:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=EI8JAjJv2T8FAu73W3UA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-02_03,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 spamscore=0 clxscore=1015 phishscore=0 bulkscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2605020126
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DATE_IN_FUTURE_06_12=1.947,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,83 +130,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000081b6f90650d4275c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+I found a compilation issue with this patch when building for ppc32. The
+host PVR constants (CPU_POWERPC_POWER9_DD22, etc.) are only defined under
+TARGET_PPC64, and since POWER9/10/11 compatibility modes are 64-bit only,
+the code should be guarded with #if defined(TARGET_PPC64). I'll send v2
+shortly with this fix.
 
-Should be fine. Thanks Michael!
+~Amit
 
-On Sat, 2 May, 2026, 5:07=E2=80=AFpm Michael Tokarev, <mjt@tls.msk.ru> wrot=
-e:
-
-> On 28.04.2026 13:36, Gautam Menghani wrote:
-> > From: kiki <Chan9Yan9@gmail.com>
-> >
-> > A malformed IVE value can result in an invalid server field being
-> > passed to icp_irq(). The function assumes the server id is valid and
-> > may access invalid state otherwise, potentially leading to a crash.
-> >
-> > Fix this by validating the server id before using it and ignoring
-> > invalid values.
-> >
-> > Reported-by: Zexiang Zhang <chan9yan9@gmail.com>
-> > Signed-off-by: Zexiang Zhang <chan9yan9@gmail.com>
-> > Signed-off-by: Gautam Menghani <gautam@linux.ibm.com>
->
-> (https://gitlab.com/qemu-project/qemu/-/work_items/3324)
->
-> I'm picking this small change to current qemu-stable series.
-> The issue seem to be unimportant, but the fix is simple too.
-> Please let me know if I shouldn't.
->
-> Thanks,
->
-> /mjt
->
->
-
---00000000000081b6f90650d4275c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div>Should be fine. Thanks Michael!<br><br><div class=3D=
-"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">O=
-n Sat, 2 May, 2026, 5:07=E2=80=AFpm Michael Tokarev, &lt;<a href=3D"mailto:=
-mjt@tls.msk.ru">mjt@tls.msk.ru</a>&gt; wrote:<br></div><blockquote class=3D=
-"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding=
--left:1ex">On 28.04.2026 13:36, Gautam Menghani wrote:<br>
-&gt; From: kiki &lt;<a href=3D"mailto:Chan9Yan9@gmail.com" target=3D"_blank=
-" rel=3D"noreferrer">Chan9Yan9@gmail.com</a>&gt;<br>
-&gt; <br>
-&gt; A malformed IVE value can result in an invalid server field being<br>
-&gt; passed to icp_irq(). The function assumes the server id is valid and<b=
-r>
-&gt; may access invalid state otherwise, potentially leading to a crash.<br=
->
-&gt; <br>
-&gt; Fix this by validating the server id before using it and ignoring<br>
-&gt; invalid values.<br>
-&gt; <br>
-&gt; Reported-by: Zexiang Zhang &lt;<a href=3D"mailto:chan9yan9@gmail.com" =
-target=3D"_blank" rel=3D"noreferrer">chan9yan9@gmail.com</a>&gt;<br>
-&gt; Signed-off-by: Zexiang Zhang &lt;<a href=3D"mailto:chan9yan9@gmail.com=
-" target=3D"_blank" rel=3D"noreferrer">chan9yan9@gmail.com</a>&gt;<br>
-&gt; Signed-off-by: Gautam Menghani &lt;<a href=3D"mailto:gautam@linux.ibm.=
-com" target=3D"_blank" rel=3D"noreferrer">gautam@linux.ibm.com</a>&gt;<br>
-<br>
-(<a href=3D"https://gitlab.com/qemu-project/qemu/-/work_items/3324" rel=3D"=
-noreferrer noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qe=
-mu/-/work_items/3324</a>)<br>
-<br>
-I&#39;m picking this small change to current qemu-stable series.<br>
-The issue seem to be unimportant, but the fix is simple too.<br>
-Please let me know if I shouldn&#39;t.<br>
-<br>
-Thanks,<br>
-<br>
-/mjt<br>
-<br>
-</blockquote></div></div></div>
-
---00000000000081b6f90650d4275c--
+On 2026/04/30 11:43 AM, Amit Machhiwal wrote:
+> On POWER systems, the host CPU may run in a compatibility mode (e.g.,
+> a Power11 processor operating in Power10 compatibility mode). In such
+> cases, the effective CPU level exposed to guests differs from the
+> physical processor generation.
+> 
+> When running nested KVM guests, QEMU currently derives the host CPU type
+> using mfpvr(), which reflects the physical processor version. This can
+> result in a mismatch between the CPU model used by QEMU and the
+> compatibility mode enforced by the host, leading to guest boot failures.
+> 
+> In particular, booting a nested guest on a Power11 LPAR configured in
+> Power10 compatibility mode fails with errors such as:
+> 
+>   KVM-NESTEDv2: couldn't set guest wide elements
+> 
+> This occurs because QEMU selects a CPU model based on the physical
+> processor version, while the host operates in a lower compatibility
+> mode. As a result, KVM rejects the requested compatibility level during
+> guest initialization.
+> 
+> Add support for querying host compatibility capabilities via the
+> KVM_PPC_GET_COMPAT_CAPS ioctl and derive the effective PVR based on the
+> compatibility mode reported by KVM. When available, use this
+> compatibility PVR instead of the raw hardware PVR when selecting
+> the CPU model.
+> 
+> If the capability is not supported or the query fails, fall back to the
+> existing behavior.
+> 
+> This ensures that QEMU selects a CPU model consistent with the host
+> compatibility mode, allowing nested guests to boot correctly.
+> 
+> Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+> ---
+>  target/ppc/kvm.c | 52 ++++++++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 52 insertions(+)
+> 
+> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+> index 25c28ad089c6..d384161f780b 100644
+> --- a/target/ppc/kvm.c
+> +++ b/target/ppc/kvm.c
+> @@ -2602,11 +2602,63 @@ bool kvmppc_supports_ail_3(void)
+>      return cap_ail_mode_3;
+>  }
+>  
+> +static target_ulong kvmppc_get_compat_caps(void)
+> +{
+> +    struct kvm_ppc_compat_caps host_compat;
+> +    target_ulong host_caps;
+> +    int ret;
+> +
+> +    if (!kvm_check_extension(kvm_state, KVM_CAP_PPC_COMPAT_CAPS)) {
+> +        return 0;
+> +    }
+> +
+> +    ret = kvm_vm_ioctl(kvm_state, KVM_PPC_GET_COMPAT_CAPS, &host_compat);
+> +    if (ret < 0) {
+> +        fprintf(stderr, "KVM: failed to get host capabilities\n");
+> +        return 0;
+> +    }
+> +
+> +    host_caps = host_compat.compat_capabilities;
+> +    return host_caps;
+> +}
+> +
+> +static uint32_t kvm_ppc_host_compat_pvr(void)
+> +{
+> +    uint32_t compat_host_pvr = 0;
+> +    int cap_idx = 0;
+> +    target_ulong host_caps = kvmppc_get_compat_caps();
+> +
+> +    if (host_caps) {
+> +        cap_idx = 63 - __builtin_ctzll(host_caps);
+> +        switch (cap_idx) {
+> +        case H_GUEST_CAP_P9_MODE_BMAP:
+> +            compat_host_pvr = CPU_POWERPC_POWER9_DD22;
+> +            break;
+> +        case H_GUEST_CAP_P10_MODE_BMAP:
+> +            compat_host_pvr = CPU_POWERPC_POWER10_DD20;
+> +            break;
+> +        case H_GUEST_CAP_P11_MODE_BMAP:
+> +            compat_host_pvr = CPU_POWERPC_POWER11_DD20;
+> +            break;
+> +        default:
+> +            break;
+> +        }
+> +    }
+> +
+> +    return compat_host_pvr;
+> +}
+> +
+>  PowerPCCPUClass *kvm_ppc_get_host_cpu_class(void)
+>  {
+>      uint32_t host_pvr = mfpvr();
+> +    uint32_t compat_host_pvr;
+>      PowerPCCPUClass *pvr_pcc;
+>  
+> +    compat_host_pvr = kvm_ppc_host_compat_pvr();
+> +    if (compat_host_pvr) {
+> +        host_pvr = compat_host_pvr;
+> +    }
+> +
+>      pvr_pcc = ppc_cpu_class_by_pvr(host_pvr);
+>      if (pvr_pcc == NULL) {
+>          pvr_pcc = ppc_cpu_class_by_pvr_mask(host_pvr);
+> -- 
+> 2.50.1 (Apple Git-155)
+> 
 
