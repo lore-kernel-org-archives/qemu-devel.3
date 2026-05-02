@@ -4,100 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F6B5CD3423
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 May 2026 17:13:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47233CD13DA
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 May 2026 17:13:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJDsU-0007u7-QS; Sat, 02 May 2026 13:11:42 -0400
+	id 1wJDsI-0007q2-JO; Sat, 02 May 2026 13:11:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsL-0007qn-E4
- for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:33 -0400
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsF-0007od-PD
+ for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:27 -0400
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsJ-0007CM-J0
- for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:33 -0400
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-7de44ed7a11so2424846a34.1
- for <qemu-devel@nongnu.org>; Sat, 02 May 2026 10:11:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsD-00073b-TC
+ for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:27 -0400
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-7d55b97f358so2109097a34.3
+ for <qemu-devel@nongnu.org>; Sat, 02 May 2026 10:11:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777741890; x=1778346690;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777741884; x=1778346684;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=4MKf6De/lMm9M73N3EIAo5PrmTbOcp6IZR9GOSaoP9c=;
- b=ak3+YEoOCyaCz0nSaQCgk5Jl4machKkfrjpKVx4ZQ3nk1ySIngvI4lbVaZhragm25l
- EJklJ1Gngzk7iUZBSOXKXnQPB+UXCuBBY3FyUp/vgIWzrmbeMCRrysBFMDZoDoZ7cnYs
- XzUYMf66tDrUTedjDBE3x3xCW5af8atdc4b/lxbzrjYCJS3dJsY8hkGsDow1ejvwU4YJ
- YruWk3znYutbBjbv6uS05CiAN4/+sRPpGjPEPgHNNajcmg/i+yKH/yrmsfeA0wwFcYne
- ZlP1kT1oHyBt5nPeOSaaJH8I0a6SBDzaUVRbm/E5GBv7HN7shcjB8dCchasjUXqYkKci
- +zEQ==
+ :reply-to; bh=z6ybzUtaYWgMT9AvbGFtNBzZwiHN7QLjVm2tF+0PmRU=;
+ b=yfyNOCgRIcvBVcIVDhxFafurb6IGWl4EXivYRT+mJe65Coc3CRQGmlFDe4wLVWy+cq
+ noK6K5AiI76jDNOPfOtCiqmBX9zPuWzRm2h+p9hd+ZIKS9wf7fu3ipGSrqkjX4BwAmkG
+ pvjUx2xMraS0y3HGq2nyXCCRu4mLRAq56fshGycjsAtBIARrKdhA0Q51fdY4xdO0AnLJ
+ siZ/xH25qfLzY9F2g7tuRZRhJdW1vbqxw5Dv5KuVPHH+Q6kraibKEF+p4hymOiu+RMqe
+ nlXdKHPiknCnm3NoOZ3HcTW7PCOjJE0OG+dqK01NOkTOrS78/cy449n0tg2ucC+5nchA
+ 9PXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777741890; x=1778346690;
+ d=1e100.net; s=20251104; t=1777741884; x=1778346684;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=4MKf6De/lMm9M73N3EIAo5PrmTbOcp6IZR9GOSaoP9c=;
- b=YFJSK5nJnNvdHZH0HxZ1Lf5yIeE8qnT2bDUq3BG6y4LbmxXXlNdq96i2X+7Wga57uM
- fWzUIB4TbTWP+6DfKxUkQvHx4WEYSxSyH2jhuDGQnducUfnX811HLCQfIOPe94skzZxc
- +MXsvJu+Vo2xi43PwxVx+iuU9dMb48zd6nduuCPK+MEgTwXbKpXQtwFQAzqqYIAysUlr
- DB7lF9pkgnE1zOWwF8B3e0F/K5m6HSH6i8psERlDiT9o28hVrcc9mW+9nxDNqZjIS5+Y
- xgELWs/go6CHBwc1m4PscAbnxtZL83STUEp4UF1BBQlvAmfKXsnU4IQ9SvEQNuU6BUI2
- UjTg==
-X-Gm-Message-State: AOJu0YwomvR+W2vr4TMWjTDX14Vx/EbnhaclM5h5HYG8W54rcL6ZwQnF
- tNYeg15M3LpvjszWSrs7hwKEcsTVWfy8e78dsqYdAs4PcF0FVMfFnaWpXV2PpsbIWL+mj2u0wed
- /cjPD/cY=
-X-Gm-Gg: AeBDieufiRoWJs81ShQd3/oOv1N4GX2A/qBPGi83kZrCq1uxVr90pQZhSk5di6/21kP
- U8r1ZwPht5C+3bsK3yOoynHg9/OM4iWRiIZmpjjSFUujZFaturGcGmfTLMx3G1ky/j9+PjlH9EJ
- 8Gg2vUTOMM0GYtAki3I0bzCXq+7EaQuVoEqYagdRpu66RYYgyds1e4ZGKh3KXLJtrgAnTYskZ3o
- 1C+Ji5LdJ5YPQRBK6W8gWElQrBW6MCtwHmuMqnxFIj1BDKX/S3GicZT2n+yTDY0I5mWGsyI4/v5
- Q5lzYsPq7ep+rTfnXXzmkCFOTD6/87Rtt5htPaLrBC2RPRd9YYRYlsNIgF9gj0jI+RrqPT6DvAm
- jQqhGGkjaDs3ooMCfWpkL7ThQxUQBQaSN22pQ4KCv8znO5f1slrIkDomP3V/Z9Xy8mjbKDhCJBE
- BEko4CZd/sdiJPhfByCIJy
-X-Received: by 2002:a05:6830:6a87:b0:7d9:71fa:3079 with SMTP id
- 46e09a7af769-7dee1267007mr2445301a34.10.1777741890173; 
- Sat, 02 May 2026 10:11:30 -0700 (PDT)
+ bh=z6ybzUtaYWgMT9AvbGFtNBzZwiHN7QLjVm2tF+0PmRU=;
+ b=ZBzSr5Ktj2DCKMqZw7gEKqThTelPKde0j0W+6gRZM+KKKtwPN0M6YIsbxPg/gRtVMU
+ Y+fTxP18cgKT5LqlIeJ2W9YDAg18oXGlafKhJkBpIp1LePbctGnKC9fatmkVkkGIlJ+y
+ iDvpJxjhLiBTMq49ptwbDuzEWPSJjYiZCRAsFHFVIz4kJQqvORC7VVI2K5eolzQdDD0d
+ tOlChJIQQDTowD0HAEdH08kqajICNGqKKL5Ed9wuuO4CURZDeK36GGlNGTQ5DmWXkFu+
+ 3Ns/hje38Q7XaiFWggFomRFDtTpX359HKnZvRTzz4wZeXWhPVarShkm9QZtyc8Qd2bzf
+ v4Dg==
+X-Gm-Message-State: AOJu0Yyi2ysRRsKw06Hwb8a60uev5BZiP+FkhNLzauV7RsRd8D9ybNnx
+ QH3cDUlr7awQf+7t38El+S7CXZNJlJIpdj7rf2HJe11ToIGVx/uM6Iq+xDedkLwG4KcOso6G/r/
+ 4Bv6txO4=
+X-Gm-Gg: AeBDietn3JrAmIzAEhcVznChY2HzKnaHYxIPFdBER5XwOmf8Qbzuk8AJnzXerWFaQu3
+ BofnFPzeHbAWuFLiAyaJpzRhEYzCFlQd3oeRryb4mpkGvNRNe9AOOzQJYyK3HJcxliKp8D8n4PS
+ ndUbBSu2senkF95IZO0Nozis1u8iAykuYR39YZnmO21Y7ooWGMZN73Z90YYVa6m+Ho9qYhJuaEc
+ 7Dd9t9HUHbFdCoYUdixICYebLdDYtRILDUtVbt05Sm8e3dnj5pWlpk07aWsvYYWX4C9FuDTm31B
+ rlPw3f3SawT2SIMakiJ2Vj88MQGTXl5dldqVj1W3vni/E83+I1/ydgwoXutXry9PWB78ICQdsCI
+ kNB6XvRi4FPolp09gsozvaNms5rAx18tFhAn8XnxUJW+nfLePNIp8XKfKxNZ2w0eQ7jar6uY81d
+ 3GNMTev1O/C+KT2rbx+7dm2fqSCQVMunM=
+X-Received: by 2002:a05:6830:67c7:b0:7dc:c338:d23d with SMTP id
+ 46e09a7af769-7dee137ffcbmr2502053a34.14.1777741884295; 
+ Sat, 02 May 2026 10:11:24 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7deca824746sm4334355a34.11.2026.05.02.10.11.29
+ 46e09a7af769-7deca824746sm4334355a34.11.2026.05.02.10.11.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 May 2026 10:11:29 -0700 (PDT)
+ Sat, 02 May 2026 10:11:23 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 02 May 2026 11:09:33 -0600
-Subject: [PATCH v3 12/19] bsd-user: Add bsd-ioctl.c infrastructure and
- termios conversion
+Date: Sat, 02 May 2026 11:09:28 -0600
+Subject: [PATCH v3 07/19] bsd-user: Add FreeBSD IPv6 ioctl definitions
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260502-ioctl-v3-12-a05d4cb1bdff@bsdimp.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260502-ioctl-v3-7-a05d4cb1bdff@bsdimp.com>
 References: <20260502-ioctl-v3-0-a05d4cb1bdff@bsdimp.com>
 In-Reply-To: <20260502-ioctl-v3-0-a05d4cb1bdff@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Kyle Evans <kevans@freebsd.org>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>, "Stacey D. Son" <sson@freebsd.org>, 
- Sean Bruno <sbruno@FreeBSD.org>, Kyle Evans <kevans@FreeBSD.org>
+ Warner Losh <imp@bsdimp.com>, "Stacey D. Son" <sson@freebsd.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=8485; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=L5oWgaasv37SfpZktqhsjhO7ULMMl2LYv2E2ql7FUpQ=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9i/QzNnPiH1xBxFWnZ9Fp1Zus7C7GTc1xiyYW
- u7g9aGt3F2JAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafYv0AAKCRBsHNEofbAR
- AKxkEACoebCvRVaU7ZG0WfKtE9mj7TzI5TQCnG4Jy0XNRvY8S9jUEWeSL9akFKQ39pjbgRTSWXg
- 4ncQhWgdJde7pzEvpFQtddtMJFFKpo7I3MeQuWGs/3Db9/cARtLy9JA2TQ4qZf56Q8tDyA87WpX
- ImlKgdGdxLNPGGW8aFUZkqctXt2FEEXcwuyqPG7fS+N6ezajaYAobUmAaxkVAeubZratd3pNM6u
- OZBueNJyhwYnjCfE+55zOKFmM7NdWl9Kv/SZlcwpif+25iXSt8PfXOADwNwY9nK/ShhkosTHLW/
- aJgY7SFRuDJCQqqg/seR8oM3evE1n2vtPxHRGJ9Eb6WWJ4ZNeVXuzt7a84e44wD/egnhCnYlV8V
- Te6C5xhSzv2x5+lJV4LErkd+mSWA+2fTkkxIMRXxjegMYYs++2yVIY3WQ9XlfLCWftaUTy+XFBf
- w3NMphVeMz3tSVWqaPpEq1tS7AHANv3lVXL4/uD9XAmFlRcqtJR1v4Ud8/YqbR7auF9DimOe+N1
- 0MITHBTA9tM8rqzE7CwgnbC5M0sPsq/dLF/stD7b4ZXjM/NDwByQbYLNY1by3xwXv864Brr5UdH
- EvI2tY+ulojBPhjELGJoiAqa3fPzYbDzscOMRiwBRHcYrpYIn3vUpVPg5EKNVPAUvEYwzDODbTY
- 8cfUvQJWuRPydeA==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=8944; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=d/ijr+9hjS5rLAbqQ7xaWCdG7PSslSj/yLRuf+D9UJI=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9i/PfEg5KXbtBUN5o3cTuI30iqi4PuodHo5K5
+ WGqBJQB3H+JAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafYvzwAKCRBsHNEofbAR
+ AI5XD/9Y2jUW9ALdIs8K90wD22MQU6IjbJb2wVlC8Mm8frqgwQFceBQqmqHUl7lQq6w56MyA2dK
+ FQrj610gZ/oGexDkU5nYnVZFbq3dxuIu0/7NX4tFSXr7TsjHhvE4VW1KJ1olkRQo/N24M18DJ6n
+ sAhuneoo2muVIeaYhoNedVkH2S3ATxFg5PQnl8i4l3Iitai8ecURpZuYjxwcIiFaDNfY3zHf0a+
+ +DJndJKvF/KucaPqf09d48phYr12S6CSDfiuiJH/Q9KZ9B9Fy3SCfbrbq4NJBS9t7B7pmqsrs2V
+ DCLAQbz4OP0hT3ZTMLcYtC/8c6o6B3DSTJ5sA8PdxiLWHOhsLj4ZskCnmgOJN4VAWkssiM26eBU
+ WWgEObsP2v0TClBKzuv7ZAQSl4IirWfSrv6A3uOGaZz0mi8deWAQdT4+i2UP+/qmJWhXaoVJd5x
+ wL3Fk1u0iOwvzU4B0+D/c9VXYy4Xvc2kn80Va4gZq5KEMivqzvrgNA/TdN+sgaIu+M+vQw3CaG9
+ /a6BgWi+AyOZJ/+oiey7EisOsR9prm3s7ldENOaHeCc5MeXfiI/CnDSRB5k8CtP9iUzFUp07WoZ
+ LgRppSlIRAbpcOVihoPKZyravUx1C9ahpwJ24Et3cmRufkmmbjGsOYYNuhRYKMDiBd8HmOh2CCm
+ MN9mI0KaPIe/wag==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::334;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x334.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -119,253 +117,251 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add initial bsd-ioctl.c file with termios conversion functions,
-structure type definitions, and ioctl table infrastructure.
-Includes target_to_host_termios and host_to_target_termios for
-terminal I/O control conversion, along with the ioctl dispatch
-table framework.
+From: "Stacey D. Son" <sson@freebsd.org>
 
-Style complains about STRUCT and STRUCT_SPECIAL defines:
-  ● checkpatch.pl: 197: ERROR: Macros with complex values should be enclosed in parenthesis
-  ● checkpatch.pl: 198: ERROR: Macros with complex values should be enclosed in parenthesis
-but that's fine. We are doing weird things with macros, and it's fine.
-We can't put parens or do while (0) around these since they are table
-building macros for files that are included multiple times.
+Add os-ioctl-in6_var.h with IPv6 network interface ioctl definitions
+including SIOCAIFADDR_IN6, SIOCDIFADDR_IN6, and related IPv6
+configuration ioctls with target_in6_* structure definitions.
 
 Signed-off-by: Stacey D. Son <sson@freebsd.org>
-Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
-Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-ioctl.c | 219 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 219 insertions(+)
+ bsd-user/freebsd/os-ioctl-in6_var.h | 226 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 226 insertions(+)
 
-diff --git a/bsd-user/bsd-ioctl.c b/bsd-user/bsd-ioctl.c
+diff --git a/bsd-user/freebsd/os-ioctl-in6_var.h b/bsd-user/freebsd/os-ioctl-in6_var.h
 new file mode 100644
-index 0000000000..94110d4ad5
+index 0000000000..82f0514c7b
 --- /dev/null
-+++ b/bsd-user/bsd-ioctl.c
-@@ -0,0 +1,219 @@
++++ b/bsd-user/freebsd/os-ioctl-in6_var.h
+@@ -0,0 +1,226 @@
 +/*
-+ * BSD ioctl(2) emulation
++ * FreeBSD in6 definitions for ioctl(2) emulation
 + *
-+ * Copyright (c) 2013-2015 Stacey D. Son
++ * Copyright (c) 2014-2015 Stacey D. Son
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+#include "qemu/osdep.h"
++#ifndef BSD_USER_FREEBSD_OS_IOCTL_IN6_VAR_H
++#define BSD_USER_FREEBSD_OS_IOCTL_IN6_VAR_H
 +
-+#include <sys/types.h>
-+#include <sys/param.h>
-+#include <sys/disk.h>
-+#include <sys/ioccom.h>
-+#include <sys/ioctl.h>
-+#include <sys/sockio.h>
-+#include <sys/_termios.h>
-+#include <sys/ttycom.h>
-+#include <sys/filio.h>
-+
-+#include <crypto/cryptodev.h>
-+
-+#include <net/ethernet.h>
-+#include <net/if.h>
-+#include <net/if_var.h>
-+#include <net/if_types.h>
-+#include <net/route.h>
-+#include <net/if_dl.h>
-+#include <net/if_gif.h>
-+#include <net/if_gre.h>
-+#include <net/if_lagg.h>
-+#include <net/if_media.h>
-+#include <net/pfvar.h>
-+#include <net/if_pfsync.h>
-+#include <netinet/icmp6.h>
-+#include <netinet/in.h>
-+#include <netinet/ip_carp.h>
-+#include <netinet6/in6_var.h>
-+#include <netinet6/nd6.h>
-+#include <net80211/ieee80211_ioctl.h>
-+
-+#include <stdio.h>
-+
-+#include "qemu.h"
-+
-+#include "syscall_defs.h"
-+#include "bsd-ioctl.h"
-+#include "os-ioctl-cryptodev.h"
-+#include "os-ioctl-filio.h"
-+#include "os-ioctl-in6_var.h"
 +#include "os-ioctl-sockio.h"
-+#include "os-ioctl-ttycom.h"
-+#include "os-ioctl-disk.h"
 +
-+static void target_to_host_termios(void *dst, const void *src)
-+{
-+    struct termios *host = dst;
-+    const struct target_termios *target = src;
-+
-+    host->c_iflag = target_to_host_bitmask(tswap32(target->c_iflag), iflag_tbl);
-+    host->c_oflag = target_to_host_bitmask(tswap32(target->c_oflag), oflag_tbl);
-+    host->c_cflag = target_to_host_bitmask(tswap32(target->c_cflag), cflag_tbl);
-+    host->c_lflag = target_to_host_bitmask(tswap32(target->c_lflag), lflag_tbl);
-+
-+    memset(host->c_cc, 0, sizeof(host->c_cc));
-+    host->c_cc[VEOF] = target->c_cc[TARGET_VEOF];
-+    host->c_cc[VEOL] = target->c_cc[TARGET_VEOL];
-+#ifdef VEOL2
-+    host->c_cc[VEOL2] = target->c_cc[TARGET_VEOL2];
-+#endif
-+    host->c_cc[VERASE] = target->c_cc[TARGET_VERASE];
-+#ifdef VWERASE
-+    host->c_cc[VWERASE] = target->c_cc[TARGET_VWERASE];
-+#endif
-+    host->c_cc[VKILL] = target->c_cc[TARGET_VKILL];
-+#ifdef VREPRINT
-+    host->c_cc[VREPRINT] = target->c_cc[TARGET_VREPRINT];
-+#endif
-+#ifdef VERASE2
-+    host->c_cc[VERASE2] = target->c_cc[TARGET_VERASE2];
-+#endif
-+    host->c_cc[VINTR] = target->c_cc[TARGET_VINTR];
-+    host->c_cc[VQUIT] = target->c_cc[TARGET_VQUIT];
-+    host->c_cc[VSUSP] = target->c_cc[TARGET_VSUSP];
-+#ifdef VDSUSP
-+    host->c_cc[VDSUSP] = target->c_cc[TARGET_VDSUSP];
-+#endif
-+    host->c_cc[VSTART] = target->c_cc[TARGET_VSTART];
-+    host->c_cc[VSTOP] = target->c_cc[TARGET_VSTOP];
-+#ifdef VLNEXT
-+    host->c_cc[VLNEXT] = target->c_cc[TARGET_VLNEXT];
-+#endif
-+#ifdef VDISCARD
-+    host->c_cc[VDISCARD] = target->c_cc[TARGET_VDISCARD];
-+#endif
-+    host->c_cc[VMIN] = target->c_cc[TARGET_VMIN];
-+    host->c_cc[VTIME] = target->c_cc[TARGET_VTIME];
-+#ifdef VSTATUS
-+    host->c_cc[VSTATUS] = target->c_cc[TARGET_VSTATUS];
-+#endif
-+
-+    host->c_ispeed = tswap32(target->c_ispeed);
-+    host->c_ospeed = tswap32(target->c_ospeed);
-+}
-+
-+static void host_to_target_termios(void *dst, const void *src)
-+{
-+    struct target_termios *target = dst;
-+    const struct termios *host = src;
-+
-+    target->c_iflag = tswap32(host_to_target_bitmask(host->c_iflag, iflag_tbl));
-+    target->c_oflag = tswap32(host_to_target_bitmask(host->c_oflag, oflag_tbl));
-+    target->c_cflag = tswap32(host_to_target_bitmask(host->c_cflag, cflag_tbl));
-+    target->c_lflag = tswap32(host_to_target_bitmask(host->c_lflag, lflag_tbl));
-+
-+    memset(target->c_cc, 0, sizeof(target->c_cc));
-+    target->c_cc[TARGET_VEOF] = host->c_cc[VEOF];
-+    target->c_cc[TARGET_VEOL] = host->c_cc[VEOL];
-+#ifdef VEOL2
-+    target->c_cc[TARGET_VEOL2] = host->c_cc[VEOL2];
-+#endif
-+    target->c_cc[TARGET_VERASE] = host->c_cc[VERASE];
-+#ifdef VWERASE
-+    target->c_cc[TARGET_VWERASE] = host->c_cc[VWERASE];
-+#endif
-+    target->c_cc[TARGET_VKILL] = host->c_cc[VKILL];
-+#ifdef VREPRINT
-+    target->c_cc[TARGET_VREPRINT] = host->c_cc[VREPRINT];
-+#endif
-+#ifdef VERASE2
-+    target->c_cc[TARGET_VERASE2] = host->c_cc[VERASE2];
-+#endif
-+    target->c_cc[TARGET_VINTR] = host->c_cc[VINTR];
-+    target->c_cc[TARGET_VQUIT] = host->c_cc[VQUIT];
-+    target->c_cc[TARGET_VSUSP] = host->c_cc[VSUSP];
-+#ifdef VDSUSP
-+    target->c_cc[TARGET_VDSUSP] = host->c_cc[VDSUSP];
-+#endif
-+    target->c_cc[TARGET_VSTART] = host->c_cc[VSTART];
-+    target->c_cc[TARGET_VSTOP] = host->c_cc[VSTOP];
-+#ifdef VLNEXT
-+    target->c_cc[TARGET_VLNEXT] = host->c_cc[VLNEXT];
-+#endif
-+#ifdef VDISCARD
-+    target->c_cc[TARGET_VDISCARD] = host->c_cc[VDISCARD];
-+#endif
-+    target->c_cc[TARGET_VMIN] = host->c_cc[VMIN];
-+    target->c_cc[TARGET_VTIME] = host->c_cc[VTIME];
-+#ifdef VSTATUS
-+    target->c_cc[TARGET_VSTATUS] = host->c_cc[VSTATUS];
-+#endif
-+
-+    target->c_ispeed = tswap32(host->c_ispeed);
-+    target->c_ospeed = tswap32(host->c_ospeed);
-+}
-+
-+static const StructEntry struct_termios_def = {
-+    .convert = { host_to_target_termios, target_to_host_termios },
-+    .size = { sizeof(struct target_termios), sizeof(struct termios) },
-+    .align = { __alignof__(struct target_termios),
-+        __alignof__(struct termios) },
++/*
++ * see netinet6/in6_var.h
++ * and see netinet/in6.h
++ * XXX target_in6_addr and target_sockaddr_in6 should maybe go
++ * somewhere else.
++ */
++struct target_in6_addr {
++        union {
++                uint8_t         __u6_addr8[16];
++                uint16_t        __u6_addr16[8];
++                uint32_t        __u6_addr32[4];
++        } __u6_addr;
 +};
 +
-+/* ioctl structure type definitions */
-+#define STRUCT(name, ...) STRUCT_ ## name,
-+#define STRUCT_SPECIAL(name) STRUCT_ ## name,
-+enum {
-+#include "os-ioctl-types.h"
-+STRUCT_MAX
++struct target_sockaddr_in6 {
++        uint8_t         sin6_len;
++        uint8_t         sin6_family;
++        uint16_t        sin6_port;
++        uint32_t        sin6_flowinfo;
++        struct target_in6_addr sin6_addr;
++        uint32_t        sin6_scope_id;
 +};
-+#undef STRUCT
-+#undef STRUCT_SPECIAL
 +
-+#define STRUCT(name, ...) \
-+    static const argtype struct_ ## name ## _def[] = { __VA_ARGS__, TYPE_NULL };
-+#define STRUCT_SPECIAL(name)
-+#include "os-ioctl-types.h"
-+#undef STRUCT
-+#undef STRUCT_SPECIAL
-+
-+
-+struct IOCTLEntry;
-+
-+typedef abi_long do_ioctl_fn(const struct IOCTLEntry *ie, uint8_t *buf_temp,
-+                int fd, abi_long cmd, abi_long arg);
-+
-+struct IOCTLEntry {
-+    unsigned int target_cmd;
-+    unsigned int host_cmd;
-+    const char *name;
-+    int access;
-+    do_ioctl_fn *do_ioctl;
-+    const argtype arg_type[5];
++struct target_in6_addrlifetime {
++        target_time_t ia6t_expire;
++        target_time_t ia6t_preferred;
++        u_int32_t ia6t_vltime;
++        u_int32_t ia6t_pltime;
 +};
-+typedef struct IOCTLEntry IOCTLEntry;
 +
-+#define MAX_STRUCT_SIZE 4096
++struct target_in6_ifstat {
++        uint64_t ifs6_in_receive;
++        uint64_t ifs6_in_hdrerr;
++        uint64_t ifs6_in_toobig;
++        uint64_t ifs6_in_noroute;
++        uint64_t ifs6_in_addrerr;
++        uint64_t ifs6_in_protounknown;
 +
-+static abi_long do_ioctl_unsupported(__unused const IOCTLEntry *ie,
-+                                     __unused uint8_t *buf_temp,
-+                                     __unused int fd, __unused abi_long cmd,
-+                                     __unused abi_long arg);
++        uint64_t ifs6_in_truncated;
++        uint64_t ifs6_in_discard;
 +
-+static abi_long do_ioctl_in6_ifreq_sockaddr_int(const IOCTLEntry *ie,
-+        uint8_t *buf_temp, int fd, abi_long cmd, abi_long arg);
++        uint64_t ifs6_in_deliver;
 +
-+static IOCTLEntry ioctl_entries[] = {
-+#define IOC_    0x0000
-+#define IOC_R   0x0001
-+#define IOC_W   0x0002
-+#define IOC_RW  (IOC_R | IOC_W)
-+#define IOCTL(cmd, access, ...) \
-+    { TARGET_ ## cmd, cmd, #cmd, access, 0, { __VA_ARGS__ } },
-+#define IOCTL_SPECIAL(cmd, access, dofn, ...) \
-+    { TARGET_ ## cmd, cmd, #cmd, access, dofn, { __VA_ARGS__ } },
-+#define IOCTL_SPECIAL_UNIMPL(cmd, access, dofn, ...) \
-+    { TARGET_ ## cmd, 0, #cmd, access, dofn, { __VA_ARGS__ } },
-+#include "os-ioctl-cmds.h"
-+    { 0, 0 },
++        uint64_t ifs6_out_forward;
++
++        uint64_t ifs6_out_request;
++
++        uint64_t ifs6_out_discard;
++        uint64_t ifs6_out_fragok;
++        uint64_t ifs6_out_fragfail;
++        uint64_t ifs6_out_fragcreat;
++
++        uint64_t ifs6_reass_reqd;
++
++        uint64_t ifs6_reass_ok;
++
++        uint64_t ifs6_reass_fail;
++
++        uint64_t ifs6_in_mcast;
++        uint64_t ifs6_out_mcast;
 +};
++
++struct target_icmp6_ifstat {
++        uint64_t ifs6_in_msg;
++        uint64_t ifs6_in_error;
++        uint64_t ifs6_in_dstunreach;
++        uint64_t ifs6_in_adminprohib;
++        uint64_t ifs6_in_timeexceed;
++        uint64_t ifs6_in_paramprob;
++        uint64_t ifs6_in_pkttoobig;
++        uint64_t ifs6_in_echo;
++        uint64_t ifs6_in_echoreply;
++        uint64_t ifs6_in_routersolicit;
++        uint64_t ifs6_in_routeradvert;
++        uint64_t ifs6_in_neighborsolicit;
++        uint64_t ifs6_in_neighboradvert;
++        uint64_t ifs6_in_redirect;
++        uint64_t ifs6_in_mldquery;
++        uint64_t ifs6_in_mldreport;
++        uint64_t ifs6_in_mlddone;
++
++        uint64_t ifs6_out_msg;
++        uint64_t ifs6_out_error;
++        uint64_t ifs6_out_dstunreach;
++        uint64_t ifs6_out_adminprohib;
++        uint64_t ifs6_out_timeexceed;
++        uint64_t ifs6_out_paramprob;
++        uint64_t ifs6_out_pkttoobig;
++        uint64_t ifs6_out_echo;
++        uint64_t ifs6_out_echoreply;
++        uint64_t ifs6_out_routersolicit;
++        uint64_t ifs6_out_routeradvert;
++        uint64_t ifs6_out_neighborsolicit;
++        uint64_t ifs6_out_neighboradvert;
++        uint64_t ifs6_out_redirect;
++        uint64_t ifs6_out_mldquery;
++        uint64_t ifs6_out_mldreport;
++        uint64_t ifs6_out_mlddone;
++};
++
++struct target_in6_ifreq {
++        char ifr_name[TARGET_IFNAMSIZ];
++        union {
++                struct  target_sockaddr_in6 ifru_addr;
++                struct  target_sockaddr_in6 ifru_dstaddr;
++                abi_int     ifru_flags;
++                abi_int     ifru_flags6;
++                abi_int     ifru_metric;
++                abi_ulong       ifru_data;
++                struct target_in6_addrlifetime ifru_lifetime;
++                struct target_in6_ifstat ifru_stat;
++                struct target_icmp6_ifstat ifru_icmp6stat;
++                u_int32_t ifru_scope_id[16];
++        } ifr_ifru;
++};
++
++/* netinet6/nd6.h */
++struct target_nd_ifinfo {
++        uint32_t linkmtu;
++        uint32_t maxmtu;
++        uint32_t basereachable;
++        uint32_t reachable;
++        uint32_t retrans;
++        uint32_t flags;
++        int32_t  recalctm;
++        uint8_t  chlim;
++        uint8_t  initialized;
++        uint8_t  randomseed0[8];
++        uint8_t  randomseed1[8];
++        uint8_t  randomid[8];
++};
++
++/* netinet6/nd6.h */
++struct target_in6_ndireq {
++    char ifname[TARGET_IFNAMSIZ];
++    struct target_nd_ifinfo ndi;
++};
++
++struct  target_in6_ndifreq {
++    char ifname[TARGET_IFNAMSIZ];
++    abi_ulong ifindex;
++};
++
++
++#define TARGET_SIOCGIFDSTADDR_IN6 TARGET_IOWR('i', 34, struct target_in6_ifreq)
++#define TARGET_SIOCGIFNETMASK_IN6 TARGET_IOWR('i', 37, struct target_in6_ifreq)
++
++#define TARGET_SIOCDIFADDR_IN6 TARGET_IOW('i', 25, struct target_in6_ifreq)
++#ifdef notyet
++#define TARGET_OSIOCAIFADDR_IN6 TARGET_IOW('i', 26, struct target_oin6_aliasreq)
++#define TARGET_SIOCAIFADDR_IN6 TARGET_IOW('i', 27, struct target_in6_aliasreq)
++
++#define TARGET_SIOCSIFPHYADDR_IN6 TARGET_IOW('i', 70, \
++                                             struct target_in6_aliasreq)
++#endif
++#define TARGET_SIOCGIFPSRCADDR_IN6 TARGET_IOWR('i', 71, struct target_in6_ifreq)
++#define TARGET_SIOCGIFPDSTADDR_IN6 TARGET_IOWR('i', 72, struct target_in6_ifreq)
++
++#define TARGET_SIOCGIFAFLAG_IN6 TARGET_IOWR('i', 73, struct target_in6_ifreq)
++
++#ifdef notyet
++#define TARGET_SIOCGDRLST_IN6 TARGET_IOWR('i', 74, struct target_in6_drlist)
++#endif
++
++#define TARGET_SIOCGIFINFO_IN6 TARGET_IOWR('i', 108, struct target_in6_ndireq)
++#define TARGET_SIOCSIFINFO_IN6 TARGET_IOWR('i', 109, struct target_in6_ndireq)
++
++#define TARGET_SIOCSNDFLUSH_IN6 TARGET_IOWR('i', 77, struct target_in6_ifreq)
++#ifdef notyet
++#define TARGET_SIOCGNBRINFO_IN6 TARGET_IOWR('i', 78, struct target_in6_nbrinfo)
++#endif
++#define TARGET_SIOCSPFXFLUSH_IN6 TARGET_IOWR('i', 79, struct target_in6_ifreq)
++#define TARGET_SIOCSRTRFLUSH_IN6 TARGET_IOWR('i', 80, struct target_in6_ifreq)
++
++#define TARGET_SIOCGIFALIFETIME_IN6 TARGET_IOWR('i', 81, \
++                                                struct target_in6_ifreq)
++#define TARGET_SIOCGIFSTAT_IN6 TARGET_IOWR('i', 83, struct target_in6_ifreq)
++#define TARGET_SIOCGIFSTAT_ICMP6 TARGET_IOWR('i', 84, struct target_in6_ifreq)
++
++#define TARGET_SIOCSDEFIFACE_IN6 TARGET_IOWR('i', 85, struct target_in6_ndifreq)
++#define TARGET_SIOCGDEFIFACE_IN6 TARGET_IOWR('i', 86, struct target_in6_ndifreq)
++
++#define TARGET_SIOCSIFINFO_FLAGS TARGET_IOWR('i', 87, struct target_in6_ndireq)
++
++#define TARGET_SIOCSSCOPE6 TARGET_IOW('i', 88, struct target_in6_ifreq)
++#define TARGET_SIOCGSCOPE6 TARGET_IOWR('i', 89, struct target_in6_ifreq)
++#define TARGET_SIOCGSCOPE6DEF TARGET_IOWR('i', 90, struct target_in6_ifreq)
++
++#ifdef notyet
++#define TARGET_SIOCSIFPREFIX_IN6 TARGET_IOW('i', 100, \
++                                            struct target_in6_prefixreq)
++#define TARGET_SIOCGIFPREFIX_IN6 TARGET_IOWR('i', 101, \
++                                             struct target_in6_prefixreq)
++#define TARGET_SIOCDIFPREFIX_IN6 TARGET_IOW('i', 102, \
++                                            struct target_in6_prefixreq)
++#define TARGET_SIOCAIFPREFIX_IN6 TARGET_IOW('i', 103, \
++                                            struct target_in6_rrenumreq)
++#define TARGET_SIOCCIFPREFIX_IN6 TARGET_IOW('i', 104, \
++                                            struct target_in6_rrenumreq)
++#define TARGET_SIOCSGIFPREFIX_IN6 TARGET_IOW('i', 105, \
++                                             struct target_in6_rrenumreq)
++
++#define TARGET_SIOCGETSGCNT_IN6 TARGET_IOWR('u', 106, \
++                                            struct target_sioc_sg_req6)
++#define TARGET_SIOCGETMIFCNT_IN6 TARGET_IOWR('u', 107, \
++                                             struct target_sioc_mif_req6)
++
++#define TARGET_SIOCAADDRCTL_POLICY TARGET_IOW('u', 108, \
++                                              struct target_in6_addrpolicy)
++#define TARGET_SIOCDADDRCTL_POLICY TARGET_IOW('u', 109, \
++                                              struct target_in6_addrpolicy)
++#endif
++
++#endif /* BSD_USER_FREEBSD_OS_IOCTL_IN6_VAR_H */
 
 -- 
 2.52.0
