@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2A4BCD13DA
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 May 2026 17:12:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F23CD3427
+	for <qemu-devel@archiver.kernel.org>; Sat,  2 May 2026 17:12:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJDsU-0007uB-Th; Sat, 02 May 2026 13:11:42 -0400
+	id 1wJDsY-0007vC-4P; Sat, 02 May 2026 13:11:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsQ-0007tN-LJ
- for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:38 -0400
-Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsT-0007tk-0g
+ for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:41 -0400
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsO-0007E6-Nv
- for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:38 -0400
-Received: by mail-ot1-x330.google.com with SMTP id
- 46e09a7af769-7d4be94eeacso3210386a34.2
- for <qemu-devel@nongnu.org>; Sat, 02 May 2026 10:11:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsQ-0007G5-Ud
+ for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:40 -0400
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-7de46b8e432so2764955a34.1
+ for <qemu-devel@nongnu.org>; Sat, 02 May 2026 10:11:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777741895; x=1778346695;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777741897; x=1778346697;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2QBmwjvaav499uBiNQkZ4uLoZRRkEdivASGuKNAftSo=;
- b=p9e66/wzF1MZGMTVqMlEQ/l83fp4lnaiTsOCZuk4Vpwz3XBdDo0TA/fG2+PO4XOtHq
- TFS1nDMqla2ysJdmaRtBaNdMpG/6SVECJAxd3QJ5vHvyKmtW4imbvMoquh0C7eohTW1d
- tExpkpGAIExRN6DhXtO4Q0wCw0X+JmEKzzdXKq4Un4fjToWk6AhTXNmw5mG951VWTWgY
- ArYGvrexJJbLTmFWdMUOjKO1k4OYg8A1RzR8/rO8LRLYEdLGBElbTmVc70PQkOUXAY9p
- FlwbyMpLUtqid3BY0errwPPx/wEBcX6C0SsGruIjtRWrlQUBpgGIED6zAG0FmZwMDFsR
- BOCg==
+ :reply-to; bh=yOKFPgBMLiOQCpxJ/HoukPsjgqhmFBu/kKtVTLDxNuI=;
+ b=Pyq6tAUaaRgT2R7Icq5xepr/dBVvaLra1BFMmldA2NX8VxbfEfqdPJEs+TVmh0B9zG
+ yjhMF7s2uWoTdypfGxaDGHOx5nnTh6G9ZnWlikwDEUouAAaznzmJYIhR9aIwsN8hFtef
+ tJ/F34CpQ4lXZTli3NDHYuZt8Zfo1TA5+3air8iwA0QviemTKRdudfg8SA7F0tB4XdHj
+ co7FdIW8zVJylrvXBKcatmCZHwRaczbcFJKZcBGlNMzR2aYP9H/Tt6bx/7XoJNzLSyz6
+ Qwz+ZJ3DVVnJ/sdc8JkPNvKKrMgebldD73KX93bad/npEJVvlAoe4Adljh3UT+rQs53n
+ Vybw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777741895; x=1778346695;
+ d=1e100.net; s=20251104; t=1777741897; x=1778346697;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=2QBmwjvaav499uBiNQkZ4uLoZRRkEdivASGuKNAftSo=;
- b=hSHu5HzW3XknlERQlrnqX/CyGAHLAxPW+VepETK7AxMO/AuPcHCOKlYaYYpyvKkk8k
- mXmPtuKp3nuOFj2NQiRA+jXW4oOAQmwDQ8nZcc/9c5XlbVmsE0AOl9d6SM4FFSX0BtOk
- Uo+poEP8CIL06gA2s5OhqxhUU1co4IKPv4M6WOGYA5UNjZnL2N1aI0r1sLgg5Kphro/m
- dGgS7VTwxHnY4uOCh5w8JsDI6snZ27nYfjeKTOAD6MddEhTJPz2bnJ+6W/lx2mNnd41C
- VTah6hbdyVt9Gc6lgPzhOdF7H5erpKlcDRx8nat48WqHauQPTj8fv1sHRl4ljo+gcica
- u2wA==
-X-Gm-Message-State: AOJu0YyZByhmWamGZZEg2MDK4v85lB/j1IUyb+xhBhLbswic6N9ZPcm8
- VmanQB5bvBH87xJ6n2O7EKF8LrdCw/h8mCkua2NJcPymOlkoqF/6vRwZrdIO0Xv7kF1qndmX8/y
- /JYP3uSY=
-X-Gm-Gg: AeBDietByatSAhlz11zPp33sOS446QUgmATUjpR3rm2wKpKOLvHnOUFysIAZB5LFlDC
- he/+/pJ32Uk/0tjU7YPOJYfxEKe24jB7F7oX9oZMcYaA9MEd8nxHel9zjYuG+15h4zoQM1YTKkh
- UQgrWAuc3tWXWvnhppTZ6Gzs4FU33apfmFQpLHqLN6DyiG+aVRhXjCQ0gz4J3IzDRnWpPkmN+X9
- KTleDvR5bxPGlXnMOFB38Jm8hRWUY5SjC1cApDKbNgVeg2WtvgRALBPp3j8XL2ScTjuls2jBlra
- eUkib/LnLA+NsakMUt7vc+bWU2ngIdmyyPwvP/r2S4a2HOQPUZDVSW9x6yFOZMgaFiWH9gt378z
- nFwiuo49fLNRiq0yf7Jr7BPHj1N5Dm6e5y7z0+7LGm7bXGEDIi/3eEtDV+5XFL3YySxs/qG79ZF
- TQBIIxqtBAKMVVDHKV6Sw6
-X-Received: by 2002:a05:6830:81eb:b0:7d9:7209:4378 with SMTP id
- 46e09a7af769-7dee13c17c5mr2396554a34.17.1777741895355; 
- Sat, 02 May 2026 10:11:35 -0700 (PDT)
+ bh=yOKFPgBMLiOQCpxJ/HoukPsjgqhmFBu/kKtVTLDxNuI=;
+ b=nWXwBarNI8dOWQ+aGpmQs0r0rAoIwEeLF60ogVAO+5z8niO4KNMr6TrpsJnQVst8OB
+ gdTOtPwvG2Uft4qzoYJ0BZiHxa9+iMpDozvMXN5D61zoXFBviolN34JEsRz2EfcNje0r
+ LoCB8e8kPHtenYQBJQgneqCSuU+MdnaquP0SANkQPRWlkv+EheSwZuwOKGksqdbrBfMV
+ TIpccEvhTmWOKTF32axhv/kLFagLAlJjsxafRImopyB68Gs7d77TEtBCBkH4X099xBCw
+ 9ORqNqCIiMuQcnzCOiamNp+CC9hd94f4qtIefC8YtaBw0UtLNuIhQeeFEuYx81A1CARN
+ PwBg==
+X-Gm-Message-State: AOJu0YyjjMtYpH7exZZlzQgkCyBER6pjYtj1tFs+Y203SOTheOmRnER/
+ RdyFjJ3xDioIcj4teEMbwa9SM8RVTu2VK+W95G8+5h773guSJvJDvz4JAoRiB0sI1VcjYZdFj5T
+ WB0nwATw=
+X-Gm-Gg: AeBDiesYBgtoauZNx3QwA0rbLjYaX8iYLqAtRv9/I09IGyVvWxv8PIQhob6W59TDpQh
+ OZhJsULuSfpCeBdSNOiNfvBauFY9jm0xowxT6G91zFZBeTSKliu8QEr+38Vt48pZnzh5CBBC5rV
+ Xx/F7D2+n8dFVa/AcfFRcYshEWOS+4Rw0xtHpWKSQvkAhP8G9dJ3qZ2z1xdSr6kfwIaeobNK3r5
+ 2xCsujj/ult88wG89i0xF24ESUxO22rN3BN5MioU9HQs9bvjjUjGvlI1pmuo6CNgHDH8hvsqVnq
+ 69rFzrHEfK9CSjjnxi18kmZMHoWaHHZRnO2h7yMNgTDUYqXd5C+6All53xMyyUN25NFl6REw7ya
+ BeCfdOoaSU/1Ndu7qT+rDQXfENWF9/aYwJY71kMPThLl6C+a20vRCIyjp8mu6PT66OQQgJHByBt
+ BXKm+LoM4xNPH6jjvxXv4i
+X-Received: by 2002:a05:6830:2b0e:b0:7db:b7ae:ef0b with SMTP id
+ 46e09a7af769-7dee143c081mr2496632a34.24.1777741897590; 
+ Sat, 02 May 2026 10:11:37 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7deca824746sm4334355a34.11.2026.05.02.10.11.34
+ 46e09a7af769-7deca824746sm4334355a34.11.2026.05.02.10.11.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 May 2026 10:11:34 -0700 (PDT)
+ Sat, 02 May 2026 10:11:37 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 02 May 2026 11:09:38 -0600
-Subject: [PATCH v3 17/19] bsd-user: Add do_bsd_ioctl main function
+Date: Sat, 02 May 2026 11:09:40 -0600
+Subject: [PATCH v3 19/19] bsd-user: Add call to do_bsd_ioctl and add
+ bsd-ioctl.c to the build
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260502-ioctl-v3-17-a05d4cb1bdff@bsdimp.com>
+Message-Id: <20260502-ioctl-v3-19-a05d4cb1bdff@bsdimp.com>
 References: <20260502-ioctl-v3-0-a05d4cb1bdff@bsdimp.com>
 In-Reply-To: <20260502-ioctl-v3-0-a05d4cb1bdff@bsdimp.com>
 To: qemu-devel@nongnu.org
@@ -78,24 +79,24 @@ Cc: Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Warner Losh <imp@bsdimp.com>, "Stacey D. Son" <sson@freebsd.org>
 X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3931; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=xguMmeeOWqzWWh1TUfAOdmnx9WUC5A613/gvNUKKM1I=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9i/RXHs2r0ZF3gUUKBSzAtxA32QJZJ4oizlcu
- GMWKPkcfceJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafYv0QAKCRBsHNEofbAR
- AAuvD/0fmT1d/SKwYpHsG7ONoPBz8riszqyJDD/9R+7Vunj9HAxqqwNnlmv+KTuIX6s5eM4eDBn
- yFixD/OH+Qr5HltHUAIRBPVV6PPSpqnyWrf49A3ShnCRoey+Zgica6vS9NxNZ9Fh6SDqWKXREN3
- GmO0+Q9h4Q3Qi7ChIiPl9Nn4mA9FcpzeKxuAUqyaBgkRl/NuUKptDSxhcLPd11nxlqofZl9v8D8
- 18KTs4SVrOcX0bHroDLxHaj5UaVfBB722r+drBzFHzI4CUmiW6sQXwTVhI4Mtv3QevShnfzfzJ/
- AqmnR4XVk2EYVB6tUuxgzdMR9zDEEmn+UXmtPWsYiVCM4MXonbhsslonv28jqKBgPzuZAjGbyGt
- IL/PRZ67mSMicgMzbS+GcMQyxAxkxB8+HKHl8ldGL0aWNva/pIVE+Pc29uaLzqwegIruGYSde9D
- HgQrLKINfNPh8Lxwxelkh8carziGSkghLD3wb/S/eB5HB4OMOWQL0p37ADsrTQMBGoIbnNkXZqe
- XT3k0VT/vo1UxMiYqz5iduOgh06xJmA3ajXUo69k3NUpRfCWKwoXQPhOF7NgFp4V3DQzg9fARwJ
- pzpMPCzeZCH+wAc4eAMi+5X95O6/dhk2YgJmkinu175jDwyGr1wnA7tfR5+4RnNEZnuNuIP32Zq
- QO8hkvAhIH3HS3Q==
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1572; i=imp@bsdimp.com;
+ h=from:subject:message-id; bh=pgP0eEEHq6h/GuDoYbSsIZvY30awmIOGPBgt3Kks/ZQ=;
+ b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9i/RrO1Aq2gKVDrYvrQkuRyrZM6NABEWu0sPb
+ vXeHFLlHmCJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafYv0QAKCRBsHNEofbAR
+ AA20EADtdS+/hNHMsHm1Ce5JEnitj6AffWFQvLtj9O+G9hIszMpxQWng0WWhrqRPx/OmL+/eDpp
+ 2bbxBJnp5y+xkudovY/ETumrvyE1efNo537lw+tboTjWGsyg9Sow5gLm4aLoiIC3M8FGDrAFSBm
+ ec1cqYRuqf+UWKJ8iMr0sG4aBb98wLW2j+s6m6/AU0wqTkSPfTtA2tt8jWdd9gN3CQu00PC9Ocv
+ suptdKGT12+zViwZ/Ys7KpTMHjoZxBq7nzl/Dg8fYtC+uRkTmFFRVTQXcaN5412ry01Br3RzSM4
+ o58MGkf/4gquDwu8opC2l2NMld/KyJb0cInryzUGqnOORzBPx7YY6gUynfsLO0JWXPDWFyMEVz1
+ U/nArHkXrhK8oxb+6dbqAfG4Sy1U5KNObTFJCMY9NZc6HjjqefuiyWhHrpJ28cXIWJ/BuO/gCHZ
+ 1maTI3mYZUoER/QwKqM05eE+6Qa6c/Oy9hlbEkgS9ucMbdQq5a05b4BJ6QPVCkD/Foy27fXEqOD
+ ZW5qdIGKZTXUFQ8HOZ0+X2jrRZppOY1ywCvjlcwdqztD7octMnDuuIWvsirEFcKyCunXTibL7Qn
+ fIQhkmmpetGfddMMoDgaGxshs3sfNWV9cuVjbv7LhcVcWbhmy2eOhktzGihopA17PZm4Y98e9YE
+ xDEuuyNuRB/5hIw==
 X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
  fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::330;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x330.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32b.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -117,126 +118,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add main ioctl emulation dispatcher that handles table-driven
-ioctl translation with thunk-based structure conversion. Supports
-TYPE_NULL, TYPE_INT, and TYPE_PTR argument types with read, write,
-and read-write access modes.
+Finally, connect do_bsd_ioctl to the build. Call bsd_ioctl_init() from
+syscall_init()
 
 Signed-off-by: Stacey D. Son <sson@freebsd.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-ioctl.c | 100 +++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 100 insertions(+)
+ bsd-user/freebsd/os-syscall.c | 9 +++++++++
+ bsd-user/meson.build          | 1 +
+ 2 files changed, 10 insertions(+)
 
-diff --git a/bsd-user/bsd-ioctl.c b/bsd-user/bsd-ioctl.c
-index 8d25d84dbe..3940a69260 100644
---- a/bsd-user/bsd-ioctl.c
-+++ b/bsd-user/bsd-ioctl.c
-@@ -292,3 +292,103 @@ static abi_long do_ioctl_in6_ifreq_sockaddr_int(const IOCTLEntry *ie,
+diff --git a/bsd-user/freebsd/os-syscall.c b/bsd-user/freebsd/os-syscall.c
+index 85e5db19a3..07fca396bb 100644
+--- a/bsd-user/freebsd/os-syscall.c
++++ b/bsd-user/freebsd/os-syscall.c
+@@ -34,6 +34,7 @@
  
-     return ret;
+ /* BSD independent syscall shims */
+ #include "bsd-file.h"
++#include "bsd-ioctl.h"
+ #include "bsd-mem.h"
+ #include "bsd-proc.h"
+ #include "bsd-misc.h"
+@@ -689,6 +690,13 @@ static abi_long freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+         ret = do_bsd_undelete(arg1);
+         break;
+ 
++        /*
++         * ioctl(2)
++         */
++    case TARGET_FREEBSD_NR_ioctl: /* ioctl(2) */
++        ret = do_bsd_ioctl(arg1, arg2, arg3);
++        break;
++
+         /*
+          * stat system calls
+          */
+@@ -1001,4 +1009,5 @@ abi_long do_freebsd_syscall(void *cpu_env, int num, abi_long arg1,
+ 
+ void syscall_init(void)
+ {
++    init_bsd_ioctl();
  }
-+
-+abi_long do_bsd_ioctl(int fd, abi_long cmd, abi_long arg)
-+{
-+    const IOCTLEntry *ie;
-+    const argtype *arg_type;
-+    abi_long ret;
-+    uint8_t buf_temp[MAX_STRUCT_SIZE];
-+    int target_size;
-+    void *argptr;
-+
-+    ie = ioctl_entries;
-+    for (;;) {
-+        if (ie->target_cmd == 0) {
-+            gemu_log("QEMU unsupported ioctl: ");
-+            log_unsupported_ioctl(cmd);
-+            return -TARGET_ENOSYS;
-+        }
-+        if (ie->target_cmd == cmd) {
-+            break;
-+        }
-+        ie++;
-+    }
-+    arg_type = ie->arg_type;
-+#if defined(DEBUG)
-+    gemu_log("ioctl: cmd=0x%04lx (%s)\n", (long)cmd, ie->name);
-+#endif
-+    if (ie->do_ioctl) {
-+        return ie->do_ioctl(ie, buf_temp, fd, cmd, arg);
-+    }
-+
-+    switch (arg_type[0]) {
-+    case TYPE_NULL:
-+        /* no argument */
-+        ret = get_errno(safe_ioctl(fd, ie->host_cmd));
-+        break;
-+
-+    case TYPE_PTRVOID:
-+    case TYPE_INT:
-+        /* int argument */
-+        ret = get_errno(safe_ioctl(fd, ie->host_cmd, arg));
-+        break;
-+
-+    case TYPE_PTR:
-+        arg_type++;
-+        target_size = thunk_type_size(arg_type, 0);
-+        switch (ie->access) {
-+        case IOC_R:
-+            ret = get_errno(safe_ioctl(fd, ie->host_cmd, buf_temp));
-+            if (!is_error(ret)) {
-+                argptr = lock_user(VERIFY_WRITE, arg,
-+                    target_size, 0);
-+                if (!argptr) {
-+                    return -TARGET_EFAULT;
-+                }
-+                thunk_convert(argptr, buf_temp, arg_type,
-+                    THUNK_TARGET);
-+                unlock_user(argptr, arg, target_size);
-+            }
-+            break;
-+
-+        case IOC_W:
-+            argptr = lock_user(VERIFY_READ, arg, target_size, 1);
-+            if (!argptr) {
-+                return -TARGET_EFAULT;
-+            }
-+            thunk_convert(buf_temp, argptr, arg_type, THUNK_HOST);
-+            unlock_user(argptr, arg, 0);
-+            ret = get_errno(safe_ioctl(fd, ie->host_cmd, buf_temp));
-+            break;
-+
-+        case IOC_RW:
-+            /* fallthrough */
-+        default:
-+            argptr = lock_user(VERIFY_READ, arg, target_size, 1);
-+            if (!argptr) {
-+                return -TARGET_EFAULT;
-+            }
-+            thunk_convert(buf_temp, argptr, arg_type, THUNK_HOST);
-+            unlock_user(argptr, arg, 0);
-+            ret = get_errno(safe_ioctl(fd, ie->host_cmd, buf_temp));
-+            if (!is_error(ret)) {
-+                argptr = lock_user(VERIFY_WRITE, arg, target_size, 0);
-+                if (!argptr) {
-+                    return -TARGET_EFAULT;
-+                }
-+                thunk_convert(argptr, buf_temp, arg_type, THUNK_TARGET);
-+                unlock_user(argptr, arg, target_size);
-+            }
-+            break;
-+        }
-+        break;
-+
-+    default:
-+        gemu_log("QEMU unknown ioctl: type=%d ", arg_type[0]);
-+        log_unsupported_ioctl(cmd);
-+        ret = -TARGET_ENOSYS;
-+        break;
-+    }
-+    return ret;
-+}
+diff --git a/bsd-user/meson.build b/bsd-user/meson.build
+index 9cc5c6c459..2abcae5122 100644
+--- a/bsd-user/meson.build
++++ b/bsd-user/meson.build
+@@ -7,6 +7,7 @@ bsd_user_ss = ss.source_set()
+ common_user_inc += include_directories('include')
+ 
+ bsd_user_ss.add(files(
++  'bsd-ioctl.c',
+   'bsd-mem.c',
+   'bsd-misc.c',
+   'bsd-proc.c',
 
 -- 
 2.52.0
