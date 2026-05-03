@@ -4,106 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6A77CD13DA
-	for <qemu-devel@archiver.kernel.org>; Sat,  2 May 2026 17:13:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA482CD342F
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 05:59:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJDsW-0007ui-Dv; Sat, 02 May 2026 13:11:44 -0400
+	id 1wJPrJ-0001Fx-QB; Sun, 03 May 2026 01:59:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsP-0007tM-Fj
- for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:37 -0400
-Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
+ (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
+ id 1wJM6F-0004wp-MN
+ for qemu-devel@nongnu.org; Sat, 02 May 2026 21:58:27 -0400
+Received: from mail-dy1-x1331.google.com ([2607:f8b0:4864:20::1331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wJDsO-0007DJ-28
- for qemu-devel@nongnu.org; Sat, 02 May 2026 13:11:37 -0400
-Received: by mail-oi1-x230.google.com with SMTP id
- 5614622812f47-47c7b282e21so443198b6e.1
- for <qemu-devel@nongnu.org>; Sat, 02 May 2026 10:11:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
+ id 1wJM6D-0000Yq-AS
+ for qemu-devel@nongnu.org; Sat, 02 May 2026 21:58:26 -0400
+Received: by mail-dy1-x1331.google.com with SMTP id
+ 5a478bee46e88-2c156c4a9efso5331549eec.1
+ for <qemu-devel@nongnu.org>; Sat, 02 May 2026 18:58:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1777741894; x=1778346694;
- darn=nongnu.org; 
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=u/5WwmT1Nl2SLuj37J8q9Pa4m4CRjwDyjCSwrLxZuNc=;
- b=krrlwkIk+a3p6yWR7gimgVvMsFVIxsGA+gcOGGhKQihXerQoGw7y1YBKGpCgxXmrqQ
- i+0bxfkSRhozikOUn0xGaLrTPT8Jy5zZLO89Xlx8bRMDpByBQ2SEq0NRYULxtfYUCuvN
- idhqNSM8OCd76l8BcodjPJ7dsQCF5lh51FG+xtmz8+Z3cCFhO873+ApSZvQCvdvAF0eG
- av1wD77cbAJriXjpEd+ofCKph+NaL1J/i9xldDiL8k3CX8Cn4nY6J5CTcuBVBFZ0tZYc
- e5gLN+oPW4XPi9q1HKx76RylW4x+hKYRPTUupSS+dTkc75gj4Qpsd026WuMg1PL9eoEx
- Lyfg==
+ d=gmail.com; s=20251104; t=1777773503; x=1778378303; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Gcpjqh/XTVHiUj0x51nDVg2xWlGOek5lFSsj05b9g04=;
+ b=hVpR3a24Fj+MkB5c9344FlmbpP1EGO8rOBf1K8RXLZKkjb8AMLSklzU7EwLu+Nc4AC
+ /6mhF5OK1GqDVLQPsEZvZOE6C5yI73fcjh00o1KnA+bAtxlv8KKgynpXNHhXey+19suv
+ l8AUtPq/lpntqLtcgu5LK761qjdt1Q5wDZbuH4LioRtL+qOHxGF2ajpByFUeT62jNCVn
+ m7NsOrB0wlRkK8ez3VTraaSYx4ZKpTWlc0/2HKM6kJ8RHGbm4UUy5dhOjzCZ/B5636ZY
+ hywUEBkvIpcZr9oCXcJYzk4Jqxbo7QNixTguofBOIIQ5Ww5ja3z6TwwQV+kplnDgonCq
+ BmhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777741894; x=1778346694;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=u/5WwmT1Nl2SLuj37J8q9Pa4m4CRjwDyjCSwrLxZuNc=;
- b=M0QF7e+Tt8gKbw/468SLQUacEsgrIcRIeDECnv5gOPrrTh8+eRKDMxWd3C+hyAqwm/
- 39ixpRM5Dg1uONrRf1ZB1wYXY5U6KjVoUzLxLALGcaYUI7YK6X3s+lp8CEQG87JzbaQd
- ELGFU3k4faVNI9LicvlZlnl4b/TSw8G/l0k9Hhyi5oUcwstw8b/7PCt/S3dCuTT4of+y
- EtpTBMtyUp1mkEyEQ6Fyk8rpZ0aM78V/nHMyYt8j5gW0aAONjOHHiirQLpucDKi7tfWL
- LoO94n691taDxApW5dBu5FgRaycGqTF8aumHWhVwwFv9GznjybES1+I64G40Woaa94x2
- 7AjA==
-X-Gm-Message-State: AOJu0Ywq+X4ZLlCk2gTziEyFtz90du+Gs+Xy3WSdZZuajO+PR743JQGL
- avJmJoci3wAlTmtbZcCijOhJ0uLLZSy4WV7pDZ184/JfhWMsaG939AOVMbB+YgWRlQdy5iN4+2o
- 05uYfM6c=
-X-Gm-Gg: AeBDievIHNGI0DqwTM5rUxcbfB1fWWonmsUAgGnb1PFgXEi7SxLmLN4HLiw0dYHKqZy
- dmMUhzHmCk2QUYNV9EV92XEie8oqZAww1zp4OGvWFgmiM2FpYOXmDpn227B9owI3XnNl8070Owo
- fF33UlIzcDWDpAxB8ERHMKhvE4h/S8WXKxW9G/o2XonSDZjlZaad/KsruJrSKva71zjEOvrgbNR
- 4HftaWAGu4hNPNWR0ZKBIPOo9X7X3jfvU1grASEFkX81GL0bQdPR+VK7n2HPzjEGi8DG/i4Nxw8
- eO27lirOr75k6favb3957Av0dv0gvvhEpm5a/yh7fS5y9HTvyW79K5wJgrs2pzzDimnwYtnFrCM
- jgRzauR3oxQYWoeJbaUMPHvC2o6xY0lVGMBy5md+BNSIcfdBSM/bvM3RCEOglj+DP9trktktAWM
- njMoCoUnVmucQ1LtoeZmKc
-X-Received: by 2002:a05:6808:4fcf:b0:47c:34fd:d391 with SMTP id
- 5614622812f47-47c8931483dmr1855816b6e.46.1777741894102; 
- Sat, 02 May 2026 10:11:34 -0700 (PDT)
-Received: from rebo.bsdimp.com ([50.253.99.174])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7deca824746sm4334355a34.11.2026.05.02.10.11.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 02 May 2026 10:11:33 -0700 (PDT)
-From: Warner Losh <imp@bsdimp.com>
-Date: Sat, 02 May 2026 11:09:37 -0600
-Subject: [PATCH v3 16/19] bsd-user: Add do_ioctl_in6_ifreq_sockaddr_int
- function
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260502-ioctl-v3-16-a05d4cb1bdff@bsdimp.com>
-References: <20260502-ioctl-v3-0-a05d4cb1bdff@bsdimp.com>
-In-Reply-To: <20260502-ioctl-v3-0-a05d4cb1bdff@bsdimp.com>
+ d=1e100.net; s=20251104; t=1777773503; x=1778378303;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Gcpjqh/XTVHiUj0x51nDVg2xWlGOek5lFSsj05b9g04=;
+ b=mp+ZHqS/PJVcI1lsVbC+5bG7TVfiokm96Erf2NzG0EDlXy2zrTmNJIsGlyo1rBn+fE
+ oGIgXEDBplRgC98vsism6do3SS0nKz6VZZ9ieTBC2io57FneNZ5f16ZieBXsHkq3o9OI
+ oWlW+I8WSu5LBR0Yp05+H4FVISwFkTLqFUH4Ml4lwOG/QrvZaSHWeRHIjSN1UM+X1GC1
+ AM3l43sSupuVhmt3BexJ8NOLzU7htdJJtQisjz17aRxUiJ1wy5aVxXRkyy5JDNlgTdi3
+ TLIzWY5uMw3eexyW2z79YDnpG5tDabGJu/CAVX4ww0HpQ92ieSDzgVcmnqCPTzy/PlqJ
+ STMQ==
+X-Gm-Message-State: AOJu0YzpVleDubkoDprhh1GImd/GSC094m3qXcU4n74BiGfyqGbTHoWC
+ SvzsbFZGBICOh4XU8AcFMRqeT9RwRhTmrNgvf82JUehmTGCT6i32FHMMBn2Ogw==
+X-Gm-Gg: AeBDietV4ja3vp14c3z3x8CHJsxsgv44zz6G7jFoWCh7LEEj9lUOTzv3WQVU6XAcGRJ
+ 9aZ3NFsn8co/sIsl5GeIlmATUdE2TkSDoMTn+Dp+i5j9IcdlIFugyHVPmB/kzpCD4G8lL6kr2Bf
+ zvkDBtEqncTa7P+olD9NJtgpNzWSQt/RZTJ59QGR2Q/a5K9AZ4DC5igM0/kbv6acxoJeKae7L8T
+ ec7jgu0ETeT4e74M9S5RcdIZ5cbZ02Pq0oyWnxeZUwsbKAtsi8YPeiorpDrGyG4kTgQ83qsBvQu
+ TomN9w3r9oJYqkXexdQUXEHd9YYKQ3Lu1x20IDDtbP7DNuWeUxkB43WlBuAUrGJN4uwBD/cbRcb
+ X0mQ4f+z3e/4YuFPs1ZeFKi6rQ9RLE6zv4y865Aqr6yyS8qq2CMSJdq7kAUSG1fm773zwGUNlWU
+ vilEirJr9NbftFm+Jj7zhBoTH/othN8rbUoSGbxJiOVoZXRkSNyg==
+X-Received: by 2002:a05:7301:9f06:b0:2d8:df01:d9f6 with SMTP id
+ 5a478bee46e88-2efba17c714mr1929349eec.23.1777773503474; 
+ Sat, 02 May 2026 18:58:23 -0700 (PDT)
+Received: from newsled.lan ([76.133.142.170]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2ee38d79eb9sm14361735eec.8.2026.05.02.18.58.22
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Sat, 02 May 2026 18:58:23 -0700 (PDT)
+From: 54weasels <54weasels@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Kyle Evans <kevans@freebsd.org>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Warner Losh <imp@bsdimp.com>, "Stacey D. Son" <sson@freebsd.org>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1996; i=imp@bsdimp.com;
- h=from:subject:message-id; bh=0Px4FKlaWpUQPC6Iuv07IPtIHSjzI5LaoVqTdqZiEKE=;
- b=owEBbQKS/ZANAwAKAWwc0Sh9sBEAAcsmYgBp9i/RX/9KVzSpTREEhhpujFMOtrWPqz6/Nn8nD
- I1AfDydcjWJAjMEAAEKAB0WIQQgNfiUsAqjz3zN4bdsHNEofbARAAUCafYv0QAKCRBsHNEofbAR
- AMrMEADOzaVIfrnfQw8j2cw0Em3bdhq9X+BkCFv5K02uJYASaZIDvjkCsxPwNvruFgBNOmKzEMc
- DqDvkdJ4a5VU7p/BjwImjcvs/FFPOjklFdpW2H3v9pzRxxQGyDfv7Foive7EuICEjFx+Q8SARnj
- Fv/JicgSLJf3wlBbgOdfKMRg6Gsf6+3a6qy2OCBqx0jMuFo3ujXKNZLtyduV5cHlcFhCP72g2nc
- Bat4ZVj4MiKG+dLkxscw55hgPgeGJl0g7bLvlQ5Hk/1QLGiM5jhNoLS4w4W7R4dJvB3QMyRJPGT
- 8JPGKgPevIQiZg/LSOMvi+DR+YgD8FpuWwLbkSQKlrkT7DK+LAUajhjl3KNsDKg5K/7FOrsyFMx
- dk1TbWAHkiFy5T8+JrtcFbCAFULbvxfBK3jwJXhvgl0XP5uGXzmjPRhSzmIIdpK8nKTXV7KAZO8
- l1y2HGwl6krtZIUB2IDTxhUVpu2sGgBUSlFZXymBYao3ORpmvc7KK2r12Zsdh85vFp5nQdIQ/1N
- zq5b0lqc1LbGi9z1zjeJenNaLR9BqIH+AfaWE7cPvw2aOSUb/v32psPOdmggbdRWD8oFVSPakL3
- pqaeupRYm2Ymgsi01ynkMUjUboNpsgA5P6LUJbfCTRzwwn8F5UG99gfzhAgukdds0jVvlX4Kxox
- VJHslF6qklTJKXg==
-X-Developer-Key: i=imp@bsdimp.com; a=openpgp;
- fpr=2035F894B00AA3CF7CCDE1B76C1CD1287DB01100
-Received-SPF: none client-ip=2607:f8b0:4864:20::230;
- envelope-from=imp@bsdimp.com; helo=mail-oi1-x230.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Cc: laurent@vivier.eu,
+	thuth@redhat.com,
+	54weasels <54weasels@gmail.com>
+Subject: [PATCH 6/7] tests/qtest: Add Sun-3 hardware interaction tests
+Date: Sat,  2 May 2026 18:57:55 -0700
+Message-ID: <20260503015756.99176-7-54weasels@gmail.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260503015756.99176-1-54weasels@gmail.com>
+References: <20260503015756.99176-1-54weasels@gmail.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1331;
+ envelope-from=54weasels@gmail.com; helo=mail-dy1-x1331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 03 May 2026 01:59:14 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -118,59 +101,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add special handler for IPv6 interface request ioctls that take
-a sockaddr_in6 structure as input and return an integer flag value,
-such as SIOCGIFAFLAG_IN6 and SIOCGIFALIFETIME_IN6.
+This adds basic architectural and register validation for the newly assembled Sun-3 machine.
 
-Signed-off-by: Stacey D. Son <sson@freebsd.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Signed-off-by: Warner Losh <imp@bsdimp.com>
+Signed-off-by: 54weasels <54weasels@gmail.com>
 ---
- bsd-user/bsd-ioctl.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ tests/qtest/meson.build |  1 +
+ tests/qtest/sun3-test.c | 67 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 68 insertions(+)
+ create mode 100644 tests/qtest/sun3-test.c
 
-diff --git a/bsd-user/bsd-ioctl.c b/bsd-user/bsd-ioctl.c
-index d2eb9105fc..8d25d84dbe 100644
---- a/bsd-user/bsd-ioctl.c
-+++ b/bsd-user/bsd-ioctl.c
-@@ -260,3 +260,35 @@ static void target_to_host_sockaddr_in6(struct sockaddr_in6 *hsa_in6,
-     memcpy(&hsa_in6->sin6_addr, &tsa_in6->sin6_addr, 16);
-     __get_user(hsa_in6->sin6_scope_id, &tsa_in6->sin6_scope_id);
- }
-+
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index be4fa627b5..184d1a3f8c 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -154,6 +154,7 @@ qtests_loongarch64 = qtests_filter + \
+    'cpu-plug-test']
+ 
+ qtests_m68k = ['boot-serial-test'] + \
++  ['sun3-test'] + \
+   qtests_filter
+ 
+ qtests_microblaze = ['boot-serial-test'] + \
+diff --git a/tests/qtest/sun3-test.c b/tests/qtest/sun3-test.c
+new file mode 100644
+index 0000000000..50f6c166d1
+--- /dev/null
++++ b/tests/qtest/sun3-test.c
+@@ -0,0 +1,67 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/*
-+ * For ioctl()'s such as SIOCGIFAFLAG_IN6 and SIOCGIFALIFETIME_IN6 that
-+ * passes a struct sockaddr_in6 in and gets an int out using
-+ * struct in6_ifreq.
++ * QTest device validation for the Sun-3 Machine
++ *
++ * Copyright (c) 2026
 + */
-+static abi_long do_ioctl_in6_ifreq_sockaddr_int(const IOCTLEntry *ie,
-+        uint8_t *buf_temp, int fd, abi_long cmd, abi_long arg)
++
++#include "qemu/osdep.h"
++#include "libqtest.h"
++
++/* OBIO Memory Map Addresses */
++#define SUN3_INTREG_BASE 0x0FEA0000
++#define SUN3_MEMERR_BASE 0x0FE80000
++
++static void test_intreg(void)
 +{
-+    abi_long ret;
-+    struct target_in6_ifreq *tin6ifreq;
-+    struct target_sockaddr_in6 *tsa_in6;
-+    struct in6_ifreq hin6ifreq;
-+    struct sockaddr_in6 *hsa_in6 = &hin6ifreq.ifr_ifru.ifru_addr;
++    QTestState *s;
++    uint8_t val;
 +
-+    tin6ifreq = lock_user(VERIFY_WRITE, arg, sizeof(*tin6ifreq), 1);
-+    if (tin6ifreq == NULL) {
-+        return -TARGET_EFAULT;
-+    }
-+    memcpy(hin6ifreq.ifr_name, tin6ifreq->ifr_name, IFNAMSIZ);
-+    tsa_in6 = &tin6ifreq->ifr_ifru.ifru_addr;
-+    target_to_host_sockaddr_in6(hsa_in6, tsa_in6);
++    s = qtest_init("-machine sun3 -nographic");
 +
-+    ret = get_errno(safe_ioctl(fd, ie->host_cmd, &hin6ifreq));
-+    if (!is_error(ret)) {
-+        put_user_s32(hin6ifreq.ifr_ifru.ifru_flags6,
-+                arg + offsetof(struct target_in6_ifreq, ifr_ifru.ifru_flags6));
-+    }
-+    unlock_user(tin6ifreq, arg, sizeof(*tin6ifreq));
++    /* Default state should be 0 */
++    val = qtest_readb(s, SUN3_INTREG_BASE);
++    g_assert_cmphex(val, ==, 0x00);
 +
-+    return ret;
++    /* Write and verify */
++    qtest_writeb(s, SUN3_INTREG_BASE, 0x0f);
++    val = qtest_readb(s, SUN3_INTREG_BASE);
++    g_assert_cmphex(val, ==, 0x0f);
++
++    qtest_quit(s);
 +}
-
++
++static void test_memerr(void)
++{
++    QTestState *s;
++    uint8_t val;
++
++    s = qtest_init("-machine sun3 -nographic");
++
++    /* Default state should be 0x40 (default no-error) */
++    val = qtest_readb(s, SUN3_MEMERR_BASE);
++    g_assert_cmphex(val, ==, 0x40);
++
++    /* Test parity error spoof sequence */
++    qtest_writeb(s, SUN3_MEMERR_BASE, 0x20); /* Set test_parity_written */
++    qtest_writeb(s, SUN3_MEMERR_BASE, 0x50); /* Trigger spoof */
++    val = qtest_readb(s, SUN3_MEMERR_BASE);
++
++    /*
++     * Since we didn't clock enough parity lanes, high bit and lane 8 should
++     * be set (0x50 | 0x80 | 0x08 = 0xd8)
++     */
++    g_assert_cmphex(val, ==, 0xd8);
++
++    qtest_quit(s);
++}
++
++int main(int argc, char **argv)
++{
++    g_test_init(&argc, &argv, NULL);
++
++    qtest_add_func("/m68k/sun3/intreg", test_intreg);
++    qtest_add_func("/m68k/sun3/memerr", test_memerr);
++
++    return g_test_run();
++}
 -- 
-2.52.0
+2.50.1 (Apple Git-155)
 
 
