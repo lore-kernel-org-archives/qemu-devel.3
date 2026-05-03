@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 211FCCD3424
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BDD3FF886F
 	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 20:20:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJdHN-0001U3-6b; Sun, 03 May 2026 16:19:05 -0400
+	id 1wJdHJ-0001S9-FG; Sun, 03 May 2026 16:19:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wJdHL-0001T1-C7
- for qemu-devel@nongnu.org; Sun, 03 May 2026 16:19:03 -0400
-Received: from smtpout6.mo534.mail-out.ovh.net ([54.36.140.177])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wJdHH-0001PQ-9n
+ for qemu-devel@nongnu.org; Sun, 03 May 2026 16:18:59 -0400
+Received: from 12.mo533.mail-out.ovh.net ([178.33.248.79])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wJdHJ-00032j-Nl
- for qemu-devel@nongnu.org; Sun, 03 May 2026 16:19:03 -0400
-Received: from director1.derp.mail-out.ovh.net
- (director1.derp.mail-out.ovh.net [51.68.80.175])
- by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4g7x1k3c83z616K;
- Sun,  3 May 2026 20:18:49 +0000 (UTC)
-Received: from director1.derp.mail-out.ovh.net
- (director1.derp.mail-out.ovh.net. [127.0.0.1])
- by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Sun,  3 May 2026 20:18:49 +0000 (UTC)
-Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.118.126])
- by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4g7x1j2Y2fz5wpr; Sun,  3 May 2026 20:18:49 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wJdHD-000320-Lh
+ for qemu-devel@nongnu.org; Sun, 03 May 2026 16:18:59 -0400
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4g7x1b17g4z5vdC;
+ Sun,  3 May 2026 20:18:42 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Sun,  3 May 2026 20:18:42 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.168.27])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4g7x1Z2vm3z1xp6; Sun,  3 May 2026 20:18:42 +0000 (UTC)
 Received: from kaod.org (unknown [10.1.6.4])
  (Authenticated sender: clg@kaod.org)
- by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 44FE21B434EC;
- Sun,  3 May 2026 20:18:46 +0000 (UTC)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 1EE301B434EB;
+ Sun,  3 May 2026 20:18:38 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-106R006d5d9940d-8280-4992-8fc5-596baf96ae39,
+ (GARM-106R0068ca3893e-9cb4-472e-9a4f-378f2dbc8e7f,
  15A2E2FDD32F27586AD59E6AF3E683E8C1C94C55) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <bd53e2ce-ba25-4fb2-8b30-2ffaeed17876@kaod.org>
-Date: Sun, 3 May 2026 22:18:46 +0200
+Message-ID: <105f9a81-441b-4221-8c04-238780dacd26@kaod.org>
+Date: Sun, 3 May 2026 22:18:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 16/18] hw/arm/aspeed_ast27x0: Set EHCI
- ctrldssegment-default
+Subject: Re: [PATCH v5 10/18] hw/usb/hcd-ehci: Add property to advertise
+ 64-bit addressing capability
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  "peterx@redhat.com" <peterx@redhat.com>,
  "philmd@linaro.org" <philmd@linaro.org>,
@@ -52,24 +52,25 @@ To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, Halil Pasic
+ <pasic@linux.ibm.com>, Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
  Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>,
  "open list:sPAPR pseries" <qemu-ppc@nongnu.org>,
- "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
+ "open list:S390 Virtio-ccw" <qemu-s390x@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>, "farosas@suse.de" <farosas@suse.de>,
  "flwu@google.com" <flwu@google.com>,
  "nabihestefan@google.com" <nabihestefan@google.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 References: <20260424080508.53992-1-jamin_lin@aspeedtech.com>
- <20260424080508.53992-17-jamin_lin@aspeedtech.com>
+ <20260424080508.53992-11-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -114,30 +115,30 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260424080508.53992-17-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260424080508.53992-11-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 12513533040994659535
+x-ovh-tracer-id: 12511562717616188623
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTG4FK8cgzRzvl5GbOb1Gr1v3nH3+vZGVZ9i6Eofxk39mJeOmIF7WxULVXpBgLuq/Yc7ea+Ybd/E5Z5GfOJeEuASuX7EhgZ6FfT+fcXrhMB0pkbgA4+4RH0CUb6CbK1j1TLth/OXJ5y2E/tZKq1MQ6dAcUrhZI1mcwpx3GBe42u3rm1sOUoMWWbsY/DGB+bKYfDBYxQH98lkt1D/5+i2ntdDHwdrqbwEs0Fow/1vhH2lIG+VtLNjycx7V/ZLR7MWzSdMKUFppjVc0JrTYQxA+Ria6++Grpsd5qNs+UTxiAmp4fTjef+ZSmiqAsDGbMmcoxZ+Qyuv991cIInwMx7p4gP6W5qJTuutRF46EHqkYQuwYMv4xsQ6DWYBIDAPlKw4ZbeSjVuOHKzOFXaim5pmgnE1K7O2elImXXG7DTJ6UVVCcu3R0l+bovLiGA79e6SoeQ9oGVHL4fHUphMQl/E0u6Grsd26yEjmmT8kOpYiWBpww5fBu+7lPK2fpLxAf0qU47MzXCXpcd3tHomhObSVxqr1S00Goqp/EKydzc2rZELMLUJi0izPfbye5p31uMoWbYalc86ZlnmkmFeeECOvGvhDEdZ8He2bmCBFYGA0+eu+Vz4E1Isz9ezniyifbuC394BzPOap1InsXAifoPLIWo9QpU4qlpeE0Tx8zL+KjgkgPw
-DKIM-Signature: a=rsa-sha256; bh=G4cVRo1DuMqI57qWX6EfRyxO8Cq6muQlGtEK8VD+dnU=; 
+X-VR-SPAMCAUSE: dmFkZTG4FK8cgzRzvl5GbOb1Gr1v3nH3+vZGVZ9i6Eofxk39mJeOmIF7WxULVXpBgLuq/Yc7ea+Ybd/E5Z5GfOJeEuASuX7EhgZ6FfT+fcXrhMB0pkbgA4+4RH0CUb6CbK1j1TLth/OXJ5y2E/tZKq1MQ6dAcUrhZI1mcwpx3GBe42u3rm1sOUoMWWbsY/DGB+bKYfDBYxQH98lkt1D/5+i2ntdDHwdrqbwEs0Fow/1vhH2lIG+VtLNjycx7V/ZLR7MWzSdMKUFppjVc0JrTYQxA+Ria6++Grpsd5qNs+UTxiAmp4fTjef+ZSmiqAsDGbMmcoxZ+Qyuv991cIInwMx7p4gP6nqaOLmmW3N86g06IIa6eowNjt1xq3mAXmI1NM/njffGj4BMFzERS9V7ZhAtc3zWFMsNa2/QoYIePW/XIMC2paH6M9tXRnaPdB05p02gjkqwPzwExMR/pOU7QncDpDQuREsV0eAyuDkdyeMYECf/JPFK5E+2hHelD8MvH35nKgr+NMOYChGJzGDEs8N/2Iqf5sHu3yStrs9IqR1XSlsayQQW46xgJLvAoUvwHkyxpViC4BP9eJ6ok3nImyQw4L2/7QTO4/2u9YfCpcR8jgkn3nkmme6hCIFMAvvzoEAInUHacCwzo8KjexQ/IKQvnv8kgxT13EsBgOgMd2vu+onn36A
+DKIM-Signature: a=rsa-sha256; bh=1pxqGWSczXrd3IoJRGd94WjEpmW2C1R37PLWoeZz9gU=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1777839532; v=1;
- b=VOQUw0mcKVQJGqgY9DIBHkUlPkl7CdNf8+BDsej0xNVKCkD9FtDq1pFs2B9QfkyDJiHVloJN
- AgYmaAavlVwoBHncXPaGeM6cUZZwPsgvPqD+EhO/p7wn+fsrkJi5NRuTEHpn+60adm4MZGXnshP
- EHMJIpgTtBjjYjlys/oQSawPBAs2zgdheeu6Y7MIicLdi8PJRaLyhkITea2OuXTdOLmJs/FFezc
- FlWeeJy06uOX1PjPH5FUXpqQMmsJ1Y49shU8FMLHi7EFtr9j6AYed82PqBvfGgfenpmcyLeQ6YD
- IE7bkBzUblG30B3YuR/vCI85ID9fL5MNXG8XmVyaeN27w==
-Received-SPF: pass client-ip=54.36.140.177; envelope-from=clg@kaod.org;
- helo=smtpout6.mo534.mail-out.ovh.net
+ t=1777839524; v=1;
+ b=NAVClTv0Q+GtR88/zJ++S1164NrGPjJ8UqfVkosKoxcEyTJYFtOGcMqv31OjliKjjXlysac7
+ diOi3Px1BwLZ0QMsiqXLywGRxPdyGyPTIBNMkFF5Dn7iOEkNblIuyok1ve7xBV3tz0jSxliXxGh
+ 1kFfL/k41gpYtapZx1CyjlegqFfWTygLQYEByrGc2he3Cb/AC9yVojV8HEyBHUOOot9efn1pdXP
+ etMfz16iOKSuHnOSzoE9CMOADI4Sp1nPJTtKofNHls67yhoGmhVLI/4fm3NT68FuJBaeIaZlR0S
+ lZ3vDxXiCx4i0VWYwmK6hzrOw2CVwQhd0awNXvb3fUrBQ==
+Received-SPF: pass client-ip=178.33.248.79; envelope-from=clg@kaod.org;
+ helo=12.mo533.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,43 +155,73 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/24/26 10:05, Jamin Lin wrote:
-> On AST2700 platforms, system DRAM is mapped above 4GB with a base
-> address at 0x400000000.
+> Introduce a new boolean property, "caps-64bit-addr", to control
+> HCCPARAMS[0] (64-bit Addressing Capability).
 > 
-> The Linux EHCI driver programs the segment register to zero when
-> 64-bit addressing is supported. As a result, descriptor addresses
-> derived from the EHCI registers do not include the DRAM base
-> address.
+> When enabled, the EHCI controller advertises support for 64-bit
+> address memory pointers as defined in the EHCI specification
+> (Table 2-7, HCCPARAMS). This allows software to use the 64-bit
+> data structure formats described in Appendix B.
 > 
-> Descriptor memory is allocated through the DMA API with a 64-bit
-> DMA mask, allowing descriptors to reside in DRAM above 4GB. On
-> AST2700, EHCI queue heads (QH) and queue element transfer
-> descriptors (qTD) are therefore placed at addresses starting from
-> 0x400000000.
+> When disabled (default), the controller reports 32-bit addressing
+> capability and uses the standard 32-bit data structures.
 > 
-> Set the ctrldssegment-default property to 0x4 so the upper
-> 32 bits of descriptor addresses are adjusted accordingly. This
-> allows the emulated EHCI controller to construct correct system
-> addresses when accessing descriptors in DRAM above 4GB.
+> The EHCI CTRLDSSEGMENT register provides the upper 32 bits [63:32] used to
+> form 64-bit addresses for EHCI control data structures. Per EHCI 1.0
+> spec section 2.3.5, when the HCCPARAMS 64-bit Addressing Capability bit
+> is zero, CTRLDSSEGMENT is not used: software cannot write it and reads
+> must return zero.
+> 
+> Add a capability check in the operational register write handler and
+> reject guest writes to CTRLDSSEGMENT when 64-bit addressing is
+> not enabled.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/arm/aspeed_ast27x0.c | 2 ++
->   1 file changed, 2 insertions(+)
+>   hw/usb/hcd-ehci.h |  5 ++++-
+>   hw/usb/hcd-ehci.c | 14 +++++++++++++-
+>   2 files changed, 17 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
-> index 87dcb82e1b..0cb39dc191 100644
-> --- a/hw/arm/aspeed_ast27x0.c
-> +++ b/hw/arm/aspeed_ast27x0.c
-> @@ -856,6 +856,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+> diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h
+> index 3acbddfc5c..f1f2fde578 100644
+> --- a/hw/usb/hcd-ehci.h
+> +++ b/hw/usb/hcd-ehci.h
+> @@ -257,6 +257,7 @@ struct EHCIState {
+>       /* properties */
+>       uint32_t maxframes;
+>       bool migrate_fetch_addr_64bit;
+> +    bool caps_64bit_addr;
 >   
->       /* EHCI */
->       for (i = 0; i < sc->ehcis_num; i++) {
-> +        object_property_set_int(OBJECT(&s->ehci[i]), "ctrldssegment-default",
-> +                                0x4, &error_abort);
+>       /*
+>        *  EHCI spec version 1.0 Section 2.3
+> @@ -313,7 +314,9 @@ struct EHCIState {
+>   #define DEFINE_EHCI_COMMON_PROPERTIES(_state) \
+>       DEFINE_PROP_UINT32("maxframes", _state, ehci.maxframes, 128), \
+>       DEFINE_PROP_BOOL("x-migrate-fetch-addr-64bit", _state, \
+> -                     ehci.migrate_fetch_addr_64bit, true)
+> +                     ehci.migrate_fetch_addr_64bit, true), \
+> +    DEFINE_PROP_BOOL("caps-64bit-addr", _state, \
+> +                     ehci.caps_64bit_addr, false)
+>   
+>   extern const VMStateDescription vmstate_ehci;
+>   
+> diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
+> index 0c8bdb48ad..b23ff92e12 100644
+> --- a/hw/usb/hcd-ehci.c
+> +++ b/hw/usb/hcd-ehci.c
+> @@ -1109,6 +1109,15 @@ static void ehci_opreg_write(void *ptr, hwaddr addr,
+>           }
+>           break;
+>   
+> +    case CTRLDSSEGMENT:
+> +        if (!s->caps_64bit_addr) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                          "ehci: write to CTRLDSSEGMENT while "
+> +                          "      64-bit addressing capability is disabled\n");
 
-Please replace "0x4" with "sc->memmap[ASPEED_DEV_SDRAM] >> 32"
+Please remove the extra spaces at the beginning of line.
 
 Thanks,
 
@@ -198,8 +229,31 @@ C.
 
 
 
->           if (!sysbus_realize(SYS_BUS_DEVICE(&s->ehci[i]), errp)) {
->               return;
->           }
+> +            return;
+> +        }
+> +        break;
+> +
+>       case ASYNCLISTADDR:
+>           if (ehci_async_enabled(s)) {
+>               qemu_log_mask(LOG_GUEST_ERROR,
+> @@ -2554,6 +2563,9 @@ void usb_ehci_realize(EHCIState *s, DeviceState *dev, Error **errp)
+>                      s->maxframes);
+>           return;
+>       }
+> +    if (s->caps_64bit_addr) {
+> +        s->caps[0x08] |= BIT(0);
+> +    }
+>   
+>       memory_region_add_subregion(&s->mem, s->capsbase, &s->mem_caps);
+>       memory_region_add_subregion(&s->mem, s->opregbase, &s->mem_opreg);
+> @@ -2613,7 +2625,7 @@ void usb_ehci_init(EHCIState *s, DeviceState *dev)
+>       s->caps[0x05] = 0x00;        /* No companion ports at present */
+>       s->caps[0x06] = 0x00;
+>       s->caps[0x07] = 0x00;
+> -    s->caps[0x08] = 0x80;        /* We can cache whole frame, no 64-bit */
+> +    s->caps[0x08] = 0x80;        /* We can cache whole frame */
+>       s->caps[0x0a] = 0x00;
+>       s->caps[0x0b] = 0x00;
+>   
 
 
