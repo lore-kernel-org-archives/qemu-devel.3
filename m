@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC2BDFF885A
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 06:00:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46093FF886F
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 06:00:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJPr8-0001Aj-A6; Sun, 03 May 2026 01:59:06 -0400
+	id 1wJPrN-0001Gn-90; Sun, 03 May 2026 01:59:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1wJM69-0004vX-Ug
- for qemu-devel@nongnu.org; Sat, 02 May 2026 21:58:21 -0400
+ id 1wJM6H-0004xB-36
+ for qemu-devel@nongnu.org; Sat, 02 May 2026 21:58:29 -0400
 Received: from mail-dy1-x132f.google.com ([2607:f8b0:4864:20::132f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <54weasels@gmail.com>)
- id 1wJM68-0000T9-73
- for qemu-devel@nongnu.org; Sat, 02 May 2026 21:58:21 -0400
+ id 1wJM6F-0000Z3-F2
+ for qemu-devel@nongnu.org; Sat, 02 May 2026 21:58:28 -0400
 Received: by mail-dy1-x132f.google.com with SMTP id
- 5a478bee46e88-2ef38cf04f0so1238998eec.1
- for <qemu-devel@nongnu.org>; Sat, 02 May 2026 18:58:19 -0700 (PDT)
+ 5a478bee46e88-2dee127b3c5so7234327eec.1
+ for <qemu-devel@nongnu.org>; Sat, 02 May 2026 18:58:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777773498; x=1778378298; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777773505; x=1778378305; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=I2TKKB6U+GwReeGYv3aDJklJVz+rIvoLzCBt6yji+TY=;
- b=c+Xkx3SUPuXTGiPWc8Vy6wJ5wTTfizWEpl2Ui89X56k3dj0KF0ybSNUiKeigVQFDr0
- ODUZwU1rFh60eHXM/JL677yhhvr9AvHDYFhUsxOjUDGVSOXqZJtskipXjfQWpjirTKEp
- w4Moof7G6IeIZAhbhYnN3RXCbpeJ0VTBRpGA1j/m5q/8JoTUSNM8Olu74KcSNHp9WA2p
- zRVnmA7YZ0gSCSqDymwYJZB2X/cWpxw6t0fM1QmxYxnHiyGVP8faStuT8AmkIakHsZy8
- nzMuRtn46ChP83hRK0H/xkquIngAs7UbPRZSOWgMBbHMUV58ZPSUg05TLmhQzaAH6RZv
- 2Bbg==
+ bh=1QR6NDChDJEAzSKlkW2JjzGfYbC4Be2Ip1t74TmvjhY=;
+ b=Vz37szzR8bQ6naELtPV/XOkFeIUJo0n3mzZkwFIDoZjxsWgV17tZ3ES2aCzNcV2wbf
+ SrmhIgD8xYy4KJFUR17SrgZ7KvOnyh4caOyNHTypstU5v3sUfdcwDKu4nrDr5I+0VPSR
+ WC1egrFmYc+gygzdJH4D3neICq94cnmpTqN9Z9EAsE9ksBhmDnhwFCH254iz5y+Px7QC
+ WI5WtYT1sza6Glh3Rx8kTaOdL/yoQvMlp3bT+TwFCvqVGGtS9r8kA521Wm6p2EC+8tdp
+ sciTS/QJERzTQEPqrlw7/MDeclRXmE1oB+12QR3c9fC+c14eoTvkSt479DPodUvy6cGq
+ GEig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777773498; x=1778378298;
+ d=1e100.net; s=20251104; t=1777773505; x=1778378305;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=I2TKKB6U+GwReeGYv3aDJklJVz+rIvoLzCBt6yji+TY=;
- b=gBAbbioAJSpnB6Anb1YSmYl4CEeN/QSQGMH3YhsQ+GWuMlXGhoMiEzLCJ5lpeHZ/jO
- nlBnS8ADDC/qSYcfw9IDiiKo1DANYYpse0cPGSXN4kyGW/5zT2WJf6fR4NiHXtt/HRVb
- 5spMfX+3QgCI7BB+KsF+xV53Y2OCuW6MjFQXZd+zwiLOVAWJQNicPCB7NNkUsAFsKel/
- FJsqUp1UE/UFLWc3hE66SYTjOpQOTZLBds8/Cf/Tns89NcXrzKcjWruyBxpdtpcww6wH
- 7T1YsAg+NmQ8zUOwptTJBZQyALzR1tz5k/rYm0F+o/4QMZVH9u3/ZvndtdZBDP9qkWxW
- sjZQ==
-X-Gm-Message-State: AOJu0Yy2HUPOVbP7KbbNW50UPGZ597zL6onjiGay6jOtkXhzIi5nnGWF
- mcPyDfXOoh+UhzXD24bxU0L1o3af3Y9umnvwxP3ZEOXp7acCkGq63sn4/CM9Xg==
-X-Gm-Gg: AeBDieu1dXANmLtFP3b7GiIXNaF55tT0g1UXw5nRwvng8C0BswHrAplNXbMXAlQUzh+
- QdEHxkV9ue4nhun6P8MTpE2gxlKHe3bZou6Mbsr8R8DYEFaYd2LVzzvkfWegWePwuGOmXNoCoz+
- Db3TnLyOTaI5aNvuM3Nx7GkfvPeri/rSkGH1dEQVovCr454oNpGQxwxQRJcAH5nxMzrBpL1kD+9
- NdnkdxuWstC8WIhLDKG72XKFLcxYGdt89pv3VTjbsfLH6bGDSeOi56QmB7KH9VNKVmMhF2ZRaZ/
- q+874VIf0U0RSMELw/6KUhKOsKqxWEX4w4n3Okij/Ju2nI9+1MzaPsD4restRwnW3qMVAFoLZEk
- ImW4Nd/kRREq+GZ75uXA1En1uXUwGmDiItdzlIkYN2sq+u/E1PLJ+1BSAIwSySnnW1Xwxjl7sAO
- LEoAWbv6zJUHjDXmzm03uC7ls1oONVEaTy/56C+tuc5V/3DT1eKg==
-X-Received: by 2002:a05:7300:fd0a:b0:2dd:6937:79b8 with SMTP id
- 5a478bee46e88-2efb7dcacd4mr2400101eec.5.1777773498418; 
- Sat, 02 May 2026 18:58:18 -0700 (PDT)
+ bh=1QR6NDChDJEAzSKlkW2JjzGfYbC4Be2Ip1t74TmvjhY=;
+ b=fuJHemPjd89ZDRLZGOJZikxFiQWaoIHJIXoE/2IUF+n7WRbGF+NkhpHknzoDaaCFzt
+ jOGmVMubp2Qj4L/4H8beQ7SsbbeW66koipZuD6C5C6CGeSCbBjULe2ctzCHuH01VhTKg
+ zAFNGNxFXjMOx6mNU0l1F2arhLMsE7jsKZpZdz9vSZlcFXHAwIAaCcVS5A/PyQylOTuF
+ rJ8QupkkM9pADmLMJDb8d58K/t2M0VU7GHi27X5sHiA1/zNuWUAXOD7B6roLZsEE+RYz
+ QObwKNQI9i7lu0Sbclubbc7ju72FGQQ7Q4BYlnfDHLR7PTvdxBw3EJSOJaFIuHcZ76uA
+ Q70g==
+X-Gm-Message-State: AOJu0YzU6SOg1Qn7dJCYG2tVcgMSiMtMbrJrM/b0wdjBFgoSb4j690Xm
+ rliT36O1zUevmoDiGJ5vxxFX+wgDOJwdNoMNoOzu8bpUYZCmVGBftAyXKTZHDw==
+X-Gm-Gg: AeBDiesfeMVJmqQHTac2+I2VLkEzn7PYADQEbQX+S1Xi3qTtJ5H8fIcCfh939XEWEw2
+ GjXpbSf/49Hg6uhv40hzbIdQEPSbTTOmRVdAq39qJ+XPOGsp0qfKkDbzJB8iIqqFJq8mUBqjvFn
+ 8R2pwi0CUHBR8RLC0L6dU/ZOSIaSths/mgwJKBJPbYxdMoWeCcjpFqF9r49ipTC5R3/rr6+WjfG
+ zCfA93LHdj9mrKWb+roqN3rtRD3dajGmlKOz0D8zEGPiF2/IRdeiQIQAN4crA7R1e2V8yl+jRQP
+ yYAxI7G7vxGBbjLLbF6su5TS1rBSjYtsN0OFxhKHJwQnDNuEz1sJrwcoknWyrCG5wI0UXhqHhrb
+ Y68lVq9ibIv/9bCMi9RmIBeH/Vk0F2Aj+5wpg2ZSlERUdINUJpwPXaZ2GZc1rXoACs59mf0Pjow
+ rbpyjsTkgDJsOK8ZLTwkUBReRAeIX0grBA7cNP+k76+fBiYL15pw==
+X-Received: by 2002:a05:7300:a18a:b0:2c5:60d0:701e with SMTP id
+ 5a478bee46e88-2efb79cc45amr2300616eec.3.1777773505012; 
+ Sat, 02 May 2026 18:58:25 -0700 (PDT)
 Received: from newsled.lan ([76.133.142.170]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2ee38d79eb9sm14361735eec.8.2026.05.02.18.58.17
+ 5a478bee46e88-2ee38d79eb9sm14361735eec.8.2026.05.02.18.58.24
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sat, 02 May 2026 18:58:18 -0700 (PDT)
+ Sat, 02 May 2026 18:58:24 -0700 (PDT)
 From: 54weasels <54weasels@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: laurent@vivier.eu,
 	thuth@redhat.com,
 	54weasels <54weasels@gmail.com>
-Subject: [PATCH 3/7] hw/char/escc: Expose diagnostic RS232 I/O routing
-Date: Sat,  2 May 2026 18:57:52 -0700
-Message-ID: <20260503015756.99176-4-54weasels@gmail.com>
+Subject: [PATCH 7/7] tests/functional: Add Sun-3 firmware boot and diagnostic
+ test
+Date: Sat,  2 May 2026 18:57:56 -0700
+Message-ID: <20260503015756.99176-8-54weasels@gmail.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260503015756.99176-1-54weasels@gmail.com>
 References: <20260503015756.99176-1-54weasels@gmail.com>
@@ -86,7 +87,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 03 May 2026 01:59:00 -0400
+X-Mailman-Approved-At: Sun, 03 May 2026 01:59:20 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,121 +102,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This adds proper initialization and routing hooks for the ESCC serial controller to support the specific diagnostic RS232 UART mappings expected by the Sun-3 Boot PROM.
+This adds an integration test that downloads the Sun-3/60 Boot PROM, initializes the machine, and ensures the self-test successfully routes to TTY A.
 
 Signed-off-by: 54weasels <54weasels@gmail.com>
 ---
- hw/char/escc.c         | 33 ++++++++++++++++++++++++---------
- include/hw/char/escc.h |  3 +++
- 2 files changed, 27 insertions(+), 9 deletions(-)
+ tests/functional/m68k/meson.build   |  1 +
+ tests/functional/m68k/test_sun3.py  | 34 +++++++++++++++++++++++++++++
+ tests/functional/qemu_test/asset.py | 11 +++++-----
+ 3 files changed, 41 insertions(+), 5 deletions(-)
+ create mode 100755 tests/functional/m68k/test_sun3.py
 
-diff --git a/hw/char/escc.c b/hw/char/escc.c
-index 3b46818ecc..d870806a35 100644
---- a/hw/char/escc.c
-+++ b/hw/char/escc.c
-@@ -313,7 +313,8 @@ static void escc_soft_reset_chn(ESCCChannelState *s)
+diff --git a/tests/functional/m68k/meson.build b/tests/functional/m68k/meson.build
+index 679faaf86d..601c28d863 100644
+--- a/tests/functional/m68k/meson.build
++++ b/tests/functional/m68k/meson.build
+@@ -9,5 +9,6 @@ tests_m68k_system_thorough = [
+   'nextcube',
+   'replay',
+   'q800',
++  'sun3',
+   'tuxrun',
+ ]
+diff --git a/tests/functional/m68k/test_sun3.py b/tests/functional/m68k/test_sun3.py
+new file mode 100755
+index 0000000000..f441184616
+--- /dev/null
++++ b/tests/functional/m68k/test_sun3.py
+@@ -0,0 +1,34 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++#!/usr/bin/env python3
++#
++# Functional test that boots a Sun-3 machine and checks its serial console.
++#
++# Copyright (c) 2026
++#
++
++
++import os
++from qemu_test import QemuSystemTest, Asset
++from qemu_test import wait_for_console_pattern
++
++class Sun3Machine(QemuSystemTest):
++    timeout = 60
++
++    ASSET_PROM = Asset(
++        'https://github.com/54weasels/sun3_60/raw/main/bootprom/boot_1810_01.BIN',
++        '471bf34cc9313814726c2e3506d85a13291603e37b45aaffa71bc1154a2d4851'
++    )
++
++    def test_m68k_sun3_boot(self):
++        self.set_machine('sun3')
++        prom_path = self.ASSET_PROM.fetch()
++
++        # Sun-3 maps TTY A to serial_hd(3)
++        self.vm.set_console(console_index=3)
++        self.vm.add_args('-bios', prom_path)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, '>')
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+index 51a434b2b7..eac1e60536 100644
+--- a/tests/functional/qemu_test/asset.py
++++ b/tests/functional/qemu_test/asset.py
+@@ -223,11 +223,12 @@ def fetch(self):
+             raise AssetError(self, "Download retries exceeded", transient=True)
  
-     s->rregs[R_STATUS] &= STATUS_DCD | STATUS_SYNC | STATUS_CTS | STATUS_BRK;
-     s->rregs[R_STATUS] |= STATUS_TXEMPTY | STATUS_TXUNDRN;
--    if (s->disabled) {
-+    if (s->disabled || s->parent->force_hw_ready) {
-+        /* Force assert to satisfy Sun-3 PROM Flow Control */
-         s->rregs[R_STATUS] |= STATUS_DCD | STATUS_SYNC | STATUS_CTS;
-     }
-     s->rregs[R_SPEC] &= SPEC_ALLSENT;
-@@ -653,7 +654,8 @@ static void escc_mem_write(void *opaque, hwaddr addr,
-         s->txint = 0;
-         escc_update_irq(s);
-         s->tx = val;
--        if (s->wregs[W_TXCTRL2] & TXCTRL2_TXEN) { /* tx enabled */
-+        if (s->parent->force_hw_ready || (s->wregs[W_TXCTRL2] & TXCTRL2_TXEN)) {
-+            /* tx consistently forced enabled for Sun-3 boot PROM hooks */
-             if (s->wregs[W_MISC2] & MISC2_LCL_LOOP) {
-                 serial_receive_byte(s, s->tx);
-             } else if (qemu_chr_fe_backend_connected(&s->chr)) {
-@@ -691,6 +693,12 @@ static uint64_t escc_mem_read(void *opaque, hwaddr addr,
-     case SERIAL_CTRL:
-         trace_escc_mem_readb_ctrl(CHN_C(s), s->reg, s->rregs[s->reg]);
-         ret = s->rregs[s->reg];
-+        if (s->reg == R_STATUS) {
-+            if (serial->force_hw_ready) {
-+                ret |= STATUS_DCD | STATUS_SYNC | STATUS_CTS;
-+                /* Force Flow Control PINs */
-+            }
-+        }
-         s->reg = 0;
-         return ret;
-     case SERIAL_DATA:
-@@ -715,6 +723,10 @@ static const MemoryRegionOps escc_mem_ops = {
-     .write = escc_mem_write,
-     .endianness = DEVICE_NATIVE_ENDIAN,
-     .valid = {
-+            .min_access_size = 1,
-+            .max_access_size = 4,
-+        },
-+    .impl = {
-         .min_access_size = 1,
-         .max_access_size = 1,
-     },
-@@ -1067,16 +1079,17 @@ static void escc_realize(DeviceState *dev, Error **errp)
-     s->chn[0].disabled = s->disabled;
-     s->chn[1].disabled = s->disabled;
+         try:
+-            # Set these just for informational purposes
+-            os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
+-                        self.url.encode('utf8'))
+-            os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
+-                        self.hash.encode('utf8'))
++            if hasattr(os, 'setxattr'):
++                # Set these just for informational purposes
++                os.setxattr(str(tmp_cache_file), "user.qemu-asset-url",
++                            self.url.encode('utf8'))
++                os.setxattr(str(tmp_cache_file), "user.qemu-asset-hash",
++                            self.hash.encode('utf8'))
+         except OSError as e:
+             self.log.debug("Unable to set xattr on %s: %s", tmp_cache_file, e)
  
-+    uint32_t escc_size = s->mmio_size ? s->mmio_size :\
-+                         (ESCC_SIZE << s->it_shift);
-     memory_region_init_io(&s->mmio, OBJECT(dev), &escc_mem_ops, s, "escc",
--                          ESCC_SIZE << s->it_shift);
-+                        escc_size);
- 
-     for (i = 0; i < 2; i++) {
--        if (qemu_chr_fe_backend_connected(&s->chn[i].chr)) {
--            s->chn[i].clock = s->frequency / 2;
--            qemu_chr_fe_set_handlers(&s->chn[i].chr, serial_can_receive,
--                                     serial_receive1, serial_event, NULL,
--                                     &s->chn[i], NULL, true);
--        }
-+        s->chn[i].parent = s;
-+        s->chn[i].clock = s->frequency / 2;
-+        qemu_chr_fe_set_handlers(&s->chn[i].chr, serial_can_receive,
-+                                 serial_receive1, serial_event, NULL,
-+                                 &s->chn[i], NULL, true);
-     }
- 
-     if (s->chn[0].type == escc_mouse) {
-@@ -1093,7 +1106,9 @@ static const Property escc_properties[] = {
-     DEFINE_PROP_UINT32("frequency", ESCCState, frequency,   0),
-     DEFINE_PROP_UINT32("it_shift",  ESCCState, it_shift,    0),
-     DEFINE_PROP_BOOL("bit_swap",    ESCCState, bit_swap,    false),
-+    DEFINE_PROP_BOOL("force-hw-ready", ESCCState, force_hw_ready, false),
-     DEFINE_PROP_UINT32("disabled",  ESCCState, disabled,    0),
-+    DEFINE_PROP_UINT32("mmio_size", ESCCState, mmio_size,   0),
-     DEFINE_PROP_UINT32("chnBtype",  ESCCState, chn[0].type, 0),
-     DEFINE_PROP_UINT32("chnAtype",  ESCCState, chn[1].type, 0),
-     DEFINE_PROP_CHR("chrB", ESCCState, chn[0].chr),
-diff --git a/include/hw/char/escc.h b/include/hw/char/escc.h
-index 9e60175b77..db4700d8e4 100644
---- a/include/hw/char/escc.h
-+++ b/include/hw/char/escc.h
-@@ -49,6 +49,7 @@ typedef struct ESCCChannelState {
-     int sunmouse_dx;
-     int sunmouse_dy;
-     int sunmouse_buttons;
-+    ESCCState *parent;
- } ESCCChannelState;
- 
- struct ESCCState {
-@@ -57,9 +58,11 @@ struct ESCCState {
-     struct ESCCChannelState chn[2];
-     uint32_t it_shift;
-     bool bit_swap;
-+    bool force_hw_ready;
-     MemoryRegion mmio;
-     uint32_t disabled;
-     uint32_t frequency;
-+    uint32_t mmio_size;
- };
- 
- #endif
 -- 
 2.50.1 (Apple Git-155)
 
