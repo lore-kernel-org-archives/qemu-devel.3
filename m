@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE4C4FF886F
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 07:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC6A6FF885A
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 07:38:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJROX-0001eP-Dx; Sun, 03 May 2026 03:37:41 -0400
+	id 1wJROO-0000gd-MZ; Sun, 03 May 2026 03:37:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wJROV-0001Th-7E
- for qemu-devel@nongnu.org; Sun, 03 May 2026 03:37:39 -0400
+ id 1wJROH-0000IO-VY
+ for qemu-devel@nongnu.org; Sun, 03 May 2026 03:37:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wJROT-0003lS-Cl
- for qemu-devel@nongnu.org; Sun, 03 May 2026 03:37:38 -0400
+ id 1wJROG-0003jP-EH
+ for qemu-devel@nongnu.org; Sun, 03 May 2026 03:37:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777793856;
+ s=mimecast20190719; t=1777793843;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GV/kEiaZbeyeLmbz2zqvJvkinKvVn6H0CkxzmPwT7e4=;
- b=YW+KvS+M7CTe/UbTXH0UaZScJZDFM1QXGeov3hyyB8YYiN+pN6GcVUWrt+HT++YLt3SI6t
- hMkAAayfmSc42jgGlP7Jt5Rkb/ped7BrRO066alvUSkUzJFXAc41uc0B2N/EJseYPfWdL+
- +icqnVHeMocwCEkRhP1rJ/P1JeSPPJs=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=lo1xZC+bUky6RlKCN7yKN2S97GkmDXuYJWggWFfqIMk=;
+ b=dWz1q0xBW+BE8uANW0vNBeg4HZErMD7fucAFi7GAZur3TcFqm+YbcOGqoU6fiLs+LN3RNM
+ mWEHoeCFSC57hxfME+dRTv93fkU8eVMtRn2HlXkJyFxsUHyGtnXouAez6yfx3k7VzWG5Vz
+ 9xWWoQyYw28SSKYCuurQYC60NE2ARoQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-358-W3fZhLoaPxy9bL9ZH6BPEA-1; Sun,
- 03 May 2026 03:37:31 -0400
-X-MC-Unique: W3fZhLoaPxy9bL9ZH6BPEA-1
-X-Mimecast-MFC-AGG-ID: W3fZhLoaPxy9bL9ZH6BPEA_1777793850
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-678-f1QDHV5KOTicn_yLJnnKCA-1; Sun,
+ 03 May 2026 03:37:20 -0400
+X-MC-Unique: f1QDHV5KOTicn_yLJnnKCA-1
+X-Mimecast-MFC-AGG-ID: f1QDHV5KOTicn_yLJnnKCA_1777793839
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E6D1918002C5; Sun,  3 May 2026 07:37:29 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C29C195608E; Sun,  3 May 2026 07:37:19 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.48.25])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 109991800480; Sun,  3 May 2026 07:37:24 +0000 (UTC)
+ id 3D1A31800345; Sun,  3 May 2026 07:37:13 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -55,9 +55,10 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
  jdenemar@redhat.com
-Subject: [PATCH v4 17/17] arm/cpu-features: document ID reg properties
-Date: Sun,  3 May 2026 09:33:37 +0200
-Message-ID: <20260503073541.790215-18-eric.auger@redhat.com>
+Subject: [PATCH v4 15/17] arm/cpu: Expose writable ID reg field properties on
+ the kvm host vcpu model
+Date: Sun,  3 May 2026 09:33:35 +0200
+Message-ID: <20260503073541.790215-16-eric.auger@redhat.com>
 In-Reply-To: <20260503073541.790215-1-eric.auger@redhat.com>
 References: <20260503073541.790215-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -65,13 +66,14 @@ Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,159 +89,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cornelia Huck <cohuck@redhat.com>
+If the host supports KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES and
+KVM_ARM_GET_REG_WRITABLE_MASKS ioctl successfully retrieved the mask
+of writable fields for all ID regs, expose uint64 SYSREG properties
+for all the writable ID reg fields exposed by the host kernel which
+can be matched in target/arm/cpu-sysreg-properties.c.
 
-Add some documentation for how individual ID registers can be
-configured with the host cpu model.
+Properties are named  SYSREG_<REG>_<FIELD> with REG and FIELD
+being those used in linux arch/arm64/tools/sysreg or in the AARCHMRS
+Registers.json.
 
-[CH: adapt to removal of the 'custom' model, added some more
- explanations about using the ID register props]
+This is achieved by matching the writable fields retrieved from the
+host kernel against the generated description of ID regs and their
+fields in target/arm/cpu-sysreg-properties.c.
+
+An example of invocation is:
+-cpu host,SYSREG_ID_AA64ISAR0_EL1_DP=0x0
+which sets DP field of ID_AA64ISAR0_EL1 to 0.
+
+[CH: add properties to the host model instead of introducing a new
+"custom" model]
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 ---
- docs/system/arm/cpu-features.rst | 104 ++++++++++++++++++++++++++++---
- 1 file changed, 96 insertions(+), 8 deletions(-)
+ target/arm/cpu.c   | 12 ++++++++++++
+ target/arm/cpu64.c | 23 ++++++++++++++++++++++-
+ 2 files changed, 34 insertions(+), 1 deletion(-)
 
-diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
-index 10b0eff27e..22f671b15d 100644
---- a/docs/system/arm/cpu-features.rst
-+++ b/docs/system/arm/cpu-features.rst
-@@ -2,7 +2,10 @@ Arm CPU Features
- ================
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 10feb639c4..10ce4eb0cb 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1824,6 +1824,18 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+         return;
+     }
  
- CPU features are optional features that a CPU of supporting type may
--choose to implement or not.  In QEMU, optional CPU features have
-+choose to implement or not.  QEMU provides two different mechanisms
-+to configure those features:
++    /*
++     * If we failed to retrieve the set of writable ID registers for the "host"
++     * CPU model, report it here. No error if the interface for discovering
++     * writable ID registers is not available.
++     * In case we did get the set of writable ID registers, set the features to
++     * the configured values here and perform some sanity checks.
++     */
++    if (cpu->writable_id_regs_status == WRITABLE_ID_REGS_FAILED) {
++        error_setg(errp, "Failed to discover writable id registers");
++        return;
++    }
 +
-+1. For most CPU models, optional CPU features may have
- corresponding boolean CPU proprieties that, when enabled, indicate
- that the feature is implemented, and, conversely, when disabled,
- indicate that it is not implemented. An example of an Arm CPU feature
-@@ -31,6 +34,16 @@ running guests in AArch32.
- CPU features that are inherently specific to KVM are
- prefixed with "kvm-" and are described in "KVM VCPU Features".
+     if (!cpu->gt_cntfrq_hz) {
+         /*
+          * 0 means "the board didn't set a value, use the default". (We also
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index 1b3d3fb245..d66cb00a21 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -852,6 +852,8 @@ static void kvm_arm_set_cpreg_mig_tolerances(ARMCPU *cpu)
+ static void aarch64_host_initfn(Object *obj)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
++    bool expose_id_regs = true;
++    int ret;
  
-+2. Additionally, the ``host`` CPU model on KVM allows to configure optional
-+CPU features via the corresponding ID registers. The host kernel allows
-+to write a subset of ID register fields. The host model exposes
-+properties for each writable ID register field. Those options are named
-+SYSREG_<IDREG>_<FIELD>. IDREG and FIELD names are those used in the
-+ARM ARM Reference Manual. They can also be found in the Linux
-+arch/arm64/tool/sysreg file which is used to automatically generate the
-+description for those registers and fields. This currently only has been
-+implemented for KVM.
-+
- CPU Feature Probing
- ===================
+ #if defined(CONFIG_NITRO)
+     if (nitro_enabled()) {
+@@ -862,8 +864,27 @@ static void aarch64_host_initfn(Object *obj)
  
-@@ -126,13 +139,20 @@ A note about CPU models and KVM
- 
- Named CPU models generally do not work with KVM.  There are a few cases
- that do work, e.g. using the named CPU model ``cortex-a57`` with KVM on a
--seattle host, but mostly if KVM is enabled the ``host`` CPU type must be
--used.  This means the guest is provided all the same CPU features as the
--host CPU type has.  And, for this reason, the ``host`` CPU type should
--enable all CPU features that the host has by default.  Indeed it's even
--a bit strange to allow disabling CPU features that the host has when using
--the ``host`` CPU type, but in the absence of CPU models it's the best we can
--do if we want to launch guests without all the host's CPU features enabled.
-+seattle host, but mostly if KVM is enabled, the ``host`` CPU model must be
-+used.
+ #if defined(CONFIG_KVM)
+     kvm_arm_set_cpreg_mig_tolerances(cpu);
+-    kvm_arm_set_cpu_features_from_host(cpu, false);
 +
-+Using the ``host`` type means the guest is provided all the same CPU
-+features as the host CPU type has.  And, for this reason, the ``host``
-+CPU type should enable all CPU features that the host has by default.
++    cpu->writable_map = g_malloc(sizeof(IdRegMap));
 +
-+In case some features need to be hidden to the guest, and the host kernel
-+supports it, the ``host`` model can be instructed to disable individual
-+ID register values. This is especially useful for migration purposes.
-+However, this interface will not allow configuring an arbitrary set of
-+features; the ID registers must describe a subset of the host's features,
-+and all differences to the host's configuration must actually be supported
-+by the kernel to be deconfigured.
- 
- Enabling KVM also affects the ``query-cpu-model-expansion`` QMP command.  The
- affect is not only limited to specific features, as pointed out in example
-@@ -169,6 +189,13 @@ disabling many SVE vector lengths would be quite verbose, the ``sve<N>`` CPU
- properties have special semantics (see "SVE CPU Property Parsing
- Semantics").
- 
-+Additionally, if supported by KVM on the host kernel, the ``host`` CPU model
-+may be configured via individual ID register field properties, for example::
++    /* discover via KVM_ARM_GET_REG_WRITABLE_MASKS */
++    ret = kvm_arm_get_writable_id_regs(cpu, cpu->writable_map);
++    if (ret == -ENOSYS) {
++        /* legacy: continue without writable id regs */
++        expose_id_regs = false;
++    } else if (ret) {
++        /* function will have marked an error */
++        return;
++    }
 +
-+  $ qemu-system-aarch64 -M virt -cpu host,SYSREG_ID_AA64ISAR0_EL1_DP=0x0
++    kvm_arm_set_cpu_features_from_host(cpu, expose_id_regs);
+     aarch64_add_sve_properties(obj);
 +
-+This forces ID_AA64ISAR0_EL1 DP field to 0.
++    if (expose_id_regs) {
++        /* generate SYSREG properties according to writable masks */
++        kvm_arm_expose_idreg_properties(cpu, arm64_id_regs);
++    }
 +
- KVM VCPU Features
- =================
- 
-@@ -495,3 +522,64 @@ Legal values for ``S`` are 30, 34, 36, and 39; the default is 30.
- 
- As with ``x-rme``, the ``x-l0gptsz`` property may be renamed or
- removed in some future QEMU release.
-+
-+Configuring CPU features via ID register fields
-+===============================================
-+
-+Note that this is currently only supported under KVM, and with the
-+``host`` CPU model.
-+
-+Querying available ID register fields
-+-------------------------------------
-+
-+QEMU will create properties for all ID register fields that are
-+reported as being writable by the kernel, and that are known to the
-+QEMU instance. Therefore, the same QEMU binary may expose different
-+properties when run under a different kernel.
-+
-+To find out all available writable ID register fields, use the
-+``query-cpu-model-expansion`` QMP command::
-+
-+  (QEMU) query-cpu-model-expansion type=full model={"name":"host"}
-+  {"return": {
-+   "model": {"name": "host", "props": {
-+   "SYSREG_ID_AA64PFR0_EL1_EL3": 1, "SYSREG_ID_AA64ISAR2_EL1_CLRBHB": 0,
-+   "SYSREG_CTR_EL0_L1Ip": 3, "SYSREG_CTR_EL0_DminLine": 4,
-+   "SYSREG_ID_AA64MMFR0_EL1_BIGEND": 1, "SYSREG_ID_AA64MMFR1_EL1_ECBHB": 0,
-+   "SYSREG_ID_AA64MMFR2_EL1_CnP": 1, "SYSREG_ID_DFR0_EL1_PerfMon": 4,
-+   "SYSREG_ID_AA64PFR0_EL1_DIT": 0, "SYSREG_ID_AA64MMFR1_EL1_HAFDBS": 2,
-+   "SYSREG_ID_AA64ISAR0_EL1_FHM": 0, "SYSREG_ID_AA64ISAR2_EL1_CSSC": 0,
-+   "SYSREG_ID_AA64ISAR0_EL1_DP": 1, (...)
-+   }}}}
-+
-+If a certain field in an ID register does not show up in this list, it
-+is not writable with the specific host kernel.
-+
-+A note on compatibility
-+-----------------------
-+
-+A common use case for providing a defined set of ID register values is
-+to be able to present a fixed set of features to a guest, often referred
-+to as "stable guest ABI". This may take the form of ironing out differences
-+between two similar CPUs with the intention of being able to migrate
-+between machines with those CPUs, or providing the same CPU across Linux
-+kernel updates on the host.
-+
-+Over the course of time, the Linux kernel is changing the set of ID register
-+fields that are writable by userspace. Newly introduced writable ID
-+registers should be initialized to 0 to ensure compatibility. However, ID
-+registers that have already been introduced that undergo a change as to
-+which fields are writable may introduce incompatibities that need to be
-+addressed on a case-by-case basis for the systems that you wish to migrate
-+inbetween.
-+
-+A note on Arm CPU features (FEAT_xxx)
-+-------------------------------------
-+
-+Configuring CPUs is done on a feature level on other architectures, and this
-+would imply configuring FEAT_xxx values on Arm. However, differences between
-+CPUs may not map to FEAT_xxx, but to differences in other registers in the
-+ID register range; for example, differences in the cache architecture exposed
-+via ``CTR_EL0``. We therefore cannot rely on configuration via FEAT_xxx. A
-+feature-based interface more similar to other architectures may be implemented
-+on top of the ID register interface in the future.
+ #elif defined(CONFIG_HVF)
+     hvf_arm_set_cpu_features_from_host(cpu);
+ #elif defined(CONFIG_WHPX)
 -- 
 2.53.0
 
