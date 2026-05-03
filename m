@@ -4,110 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFAB0CD3426
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 14:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13AC1FF886F
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 18:04:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJY0h-0000rK-Ry; Sun, 03 May 2026 10:41:31 -0400
+	id 1wJb9t-0003mt-Eq; Sun, 03 May 2026 14:03:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wJY0f-0000rC-QL
- for qemu-devel@nongnu.org; Sun, 03 May 2026 10:41:29 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ (Exim 4.90_1) (envelope-from <mohamedaymanworkspace@gmail.com>)
+ id 1wJb9s-0003mZ-5O
+ for qemu-devel@nongnu.org; Sun, 03 May 2026 14:03:12 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wJY0e-0003lF-AO
- for qemu-devel@nongnu.org; Sun, 03 May 2026 10:41:29 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-651bf695701so3113849d50.2
- for <qemu-devel@nongnu.org>; Sun, 03 May 2026 07:41:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777819287; cv=none;
- d=google.com; s=arc-20240605;
- b=hts0k79c4tatXgxNOJyNSvs67JjsJlyC6OTLHpzBlm/9nACxsxm0v6O5fznbAbYEQI
- 3MgAO92OoANoB6qH2lN15wSK6oWUBqd8YKD7LQArKiDGk5jyg9GrPWcDFOWnoSjNyPC+
- 3ZMMPDdyo5O2PMd2rohcWYACpRDfxQCoBHNNfkL+OjE+TPqiqz91N6i+dQmPwiUCAdh+
- NxDIX/avQ9Up3bZP+JM2JIWxvJa0zE0SEBHx+TADviURBgHrqi+NNIB1uYao9831J+n7
- WX23m/k2s+KY+8YmIW2cGi5UfxU+IJoUeSnW8wkWCQ+Vsbae4ska2NWnWNVbJw1s2wSQ
- e76A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=7WOcIr+/gJWc/WRnMK7An29JDOsKuF4u/LgcR5DP+Vo=;
- fh=L0+NiO1dk2svgH8TdO1hLVvvgiN+SVSZdG3CsBcLNBc=;
- b=PlOassjGCHGi/sGq5JaAItD112upEaJNFpJp9kBkTG0fwtyes1ytg5iCn0UjIl7qOg
- EHxkY5Sm5YRiRqu/ffnu+22nGTCphYSTHp7gSfaXuGRx7xVRHoNU1uN5Z/EodwQJUt+T
- t0U6zD1pP8piYwJk6Cu6a5lEyaHt6jfcjRT0LX1IRI2rFL56Tw7u0M1ihSyD28UQt4QA
- fZywjahz2Kq2FleOGTA1HWSkwcEzbxwHpVdZzYS93TEQlrdYD/btSgXzM8WMoYWMg6uN
- E2kPKBZME3fUSU339YlyMgwxUpp3dam8PtuNC3z3hSIwd3aMrot/+ERx4K3pIgN0Ouam
- lnDQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <mohamedaymanworkspace@gmail.com>)
+ id 1wJb9q-0002xD-R1
+ for qemu-devel@nongnu.org; Sun, 03 May 2026 14:03:11 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-44e1860558fso155700f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 03 May 2026 11:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777819287; x=1778424087; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=7WOcIr+/gJWc/WRnMK7An29JDOsKuF4u/LgcR5DP+Vo=;
- b=hZBVptR1yIdUDbWHtCXjRkjAicAKsKt3wpw2FAxRh2hof3hlH02YHqjmbddC7Dyabg
- pcdXjj3JXSBDWdZKgfKw+ezRoBAgThqJiZbmhiCbqnzKgtyAlRjO6sNTxPWn0SibBV1w
- UuBrR0PfCb3hNoW6HaxvSlx/jnQK2viE/OxkxJIZISH6XIVVYFWkuIBEnguqXYnt1aR/
- z4IohoQWoCRss6YrNqP4/gyC0oJLzc9QY5DZzbyERc7FoOsHcWdvNG43PiUlP+Ii32Mh
- 2iTKRjksC+Ce50MCp16PrwSOkYkSewgBvlNVGXsFMslnrPVz1DAqj2GY0DmafLM0kYtQ
- qPeg==
+ d=gmail.com; s=20251104; t=1777831388; x=1778436188; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=yZaXjOogZAqKnBh2asvWhnyIUphHwzyu6TcOV3QYtYA=;
+ b=UC9OG2hvb6MbO+HnfyVc/UoVyj9aqLPnIqeiFP3AtVdS0vQvigYQ9zrgVTzwDHLD83
+ 8ilPw3goHwVYnO6cB6tBoZTyUIrHUSsfRGjdr8ZZwb/MfUfA0MycsAl/2gkT9YhNdH7c
+ Xo/QuokBLAP6jWInm4pubj8v/On78m7YYse5Zo/tiT8mhOvFo4hNlTY+CUy4JjSOYBhK
+ +Vt+8xG1EckEE6Aku4mxe9U1tRvmTBaKdjhZQUeN+HIkSv8bBLCAMUjtNOzjEpDbE0ZF
+ doaMbfrblU8kzkPretsbsCYRSBmroqGVXHUQJhwe/VClqiBXiePRa8VbDzku4hH5kMa7
+ IaSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777819287; x=1778424087;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=7WOcIr+/gJWc/WRnMK7An29JDOsKuF4u/LgcR5DP+Vo=;
- b=jJunEEJ5kT2mYgnLtkiuyU2Yd77Oo2SCd6ioak5w6WXuZENK8zkubXI4NJqa5GDD4h
- k6+bVHGGdWouecfN2YH2JaqjEbT/Dny/DWf1lgodJhUKxboZcSs3KsMSLrVwyfd2Ll/B
- iAwTN/WHfuaUbFAqC8q1oeOqQdMwbWlnPpRvEB65vcNz1ZFIVBQwEXAEmSRTAo4UtafN
- yZ2W4MvPtHxXLgHsanGDhAbjEFLN7QSEZTD9iQ/guOgaQIngvgjZx5DskxMN89GX9rWu
- EJCWQWPbFfJMi4UZc5YluYCRy0ck/EDvKR6I60GIxkiiCFuUcxNXqIKkYC0D6Dpyqx3d
- 3LaQ==
-X-Gm-Message-State: AOJu0YxVAtPxv29Y9OZYVoL5psoSseSIympRPp0+rdTjmk0uOBpJIuMR
- pARnJu6+NsDLySWmH4HTvN/SHASqflEEDMS2rYChk2MZ8djbz8mRqUI78JvcgmTVVcIZ58vnrgJ
- iUZHaAOBxa03ksAdlSM/FXqT1DP3NrYW9GGSzTyypdg==
-X-Gm-Gg: AeBDieubjvG53513GT9EbrqfY2/Ry5MzwU2oOpDe/YkE8NwZJLFiWtOCSHsIgCV7BRJ
- fI9oAJbaRPlyp9jup6SP23sn3KSZl10fd9UjIwTehYFrvCvHzm6NwqtYSCSjofkR8CpzLN/lQay
- dBmYsn8CLVOBdGgV/4jORq0QUVuK6q40SNwcbHWgnSGJfai9asEmEFSleGvTpjtdC0GxLTcKC1u
- hu3HPZhYfYNakMb7rgZgWunf/403IX2klehaefiuuSipPBTDzTHYbaiSyBhrPEi4Z8kBUTnR+3P
- RakHPYLxr6JJ2jgdsk4bvjhGtY+cBcpF6CykTkIU8IjysxGHTcqWujtay3tbAZD59zovd93mOrW
- 1/w==
-X-Received: by 2002:a05:690e:4349:b0:650:379f:3580 with SMTP id
- 956f58d0204a3-65c3da72fdbmr5376418d50.21.1777819286684; Sun, 03 May 2026
- 07:41:26 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777831388; x=1778436188;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yZaXjOogZAqKnBh2asvWhnyIUphHwzyu6TcOV3QYtYA=;
+ b=flG5zaiSx20QJlr8V3t3UUaV5aySI9+3UelZW+9I6htzRd4kLSFCz2pQNL1ctQ6XpJ
+ 1355QJbAHX3PhjnGYbsgxqc9O1y6d7IrChCzfVQ+genwyz2vpO06nlWLDbMKHAqUQZH3
+ gz06N8g8vkVPtDlBIQRUuY0WhzsXT2RGycOpQ5FOjoewzfQwNOdqmCvYiR5nOX08cxo/
+ uo4mGLyPwB+jMvNz+uiynUBeU9s6eXwLp4dIJUYfayQWVCtvXhjU8LI3K7mN9kMbmkDF
+ x+CAzjPRqRfsO7FHqO3QZTZi0UAbSoowWBhSAS8HWDq51QkDGGw7GFrlm+vMX9EdtoRq
+ sgiA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+aS3NS/3hMlH0kfEG/DFl5sbcG7QF2xTdo/3pKt+wyRHXg1zXxhf7SUyI8rmX2XtaA1tvFhw67p8Vj@nongnu.org
+X-Gm-Message-State: AOJu0YxIT8tR35jKjzKrdw8bhAhKhpWk+1U3ytqZdx0XFc6guIFF7h7n
+ GWHZp/XTj9hb5Z2K7zu3SO21jBInbO49eeWt8/GN1vsTVsImhFSdGzGt
+X-Gm-Gg: AeBDieu38d/K0mdMxcfQVSwqEIBmLxiuX3W+vtrm1O68EtyurwCBUQ2igGAy/j8N9k1
+ besfNs0E3WPuTE/oUO1DBsOz1Si49D8BAdzOwzIa/fhEZxphqT9KpiN8x0UTG25HxeH2KQUYvvb
+ 7jNIEpSuhOunG/iSjS4KT1st16gIeclRp0PH0xjEQC4G9RGJM5O80+KpytMNW8y5Z7ZiyG/iL31
+ 4LRckEyo35BJi1leo469O/+S/l0O3+u32RDmnCCQwfBgpT49htFJOPsxQcO9rxE0Zh8SGZ04W0/
+ 3BXzir8JHiHo+an1gWaU1P0PjlEciQJG0/7dM7zS3gdRCi8/vSGgQkzuvMsZoO7FHXOZq6Wxw4g
+ HlHTZ7qomMJiyTbl7OJy2lCI0z9Bp/POfm+cZC+gDJYpt+f7kxysNpE4G+7/JRvQXF2P8UFck2W
+ Q7KqeIKWoOwlNxHBwDbJQVLjY4WXzBEDORQA6gcpL7NCB0rSMe9WA6iB6mF3JS0GTXlbNiFWjF3
+ HxbOqeY3KM=
+X-Received: by 2002:a05:6000:1a89:b0:446:96b1:f51 with SMTP id
+ ffacd0b85a97d-44bb52abc94mr10839783f8f.22.1777831387662; 
+ Sun, 03 May 2026 11:03:07 -0700 (PDT)
+Received: from ST.. ([196.221.137.242]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-44a8ef52854sm20043078f8f.12.2026.05.03.11.03.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 03 May 2026 11:03:07 -0700 (PDT)
+From: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
+To: Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
+ qemu-devel@nongnu.org (open list:All patches CC here)
+Cc: Mohamed Ayman <mohamedaymanworkspace@gmail.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
+ qemu-devel@nongnu.org (open list:All patches CC here)
+Subject: [PATCH] riscv: virt: avoid RISCVCPU copy in PMU FDT setup
+Date: Sun,  3 May 2026 21:02:52 +0300
+Message-Id: <20260503180252.1122776-1-mohamedaymanworkspace@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20250802110549.23438-1-pali@kernel.org>
- <20250810130948.3yzymcxtkmfkgk67@pali>
- <20251109134141.ur2s3bk5e6dgquxv@pali>
- <CAFEAcA8+cycE_JvFDEtAmbJtXwRVwU026rOBYNV+cZaq5wZ+XQ@mail.gmail.com>
- <20260418012012.by2qdlkbryjf2ugv@pali>
- <CAFEAcA8VcTN1ANX0EpCqCiyBVDckCp-D99TxabAghxtLdnMkgA@mail.gmail.com>
- <20260502154649.yuf7j7224duwveje@pali>
-In-Reply-To: <20260502154649.yuf7j7224duwveje@pali>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Sun, 3 May 2026 15:41:15 +0100
-X-Gm-Features: AVHnY4KzmRTp6jr-93Vn4VkjGUaBL__e829pCBGaN2DOlrMte-GvGm1-aWDzCYg
-Message-ID: <CAFEAcA8KJ91_KyN6x9qhkdHPmHgEkLAxfqB5=c4c-Ts_y7gWnw@mail.gmail.com>
-Subject: Re: [PATCH] qemu-options: Improve description for -smb option
-To: =?UTF-8?Q?Pali_Roh=C3=A1r?= <pali@kernel.org>
-Cc: qemu-devel@nongnu.org, Samuel Thibault <samuel.thibault@ens-lyon.org>, 
- Jason Wang <jasowang@redhat.com>, Mohamed Mediouni <mohamed@unpredictable.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=mohamedaymanworkspace@gmail.com; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,35 +107,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 2 May 2026 at 16:46, Pali Roh=C3=A1r <pali@kernel.org> wrote:
+Use a pointer to the hart instead of copying RISCVCPU when
+passing pmu_avail_ctrs to riscv_pmu_generate_fdt_node().
 
-> I have one just question regarding the (English) wording:
->
-> "... to tell it not to send QEMU NBNS query packets that QEMU does not ha=
-ndle"
->
-> Should not be there word "send to" QEMU? Packet is "NBNS query", it is
-> not "QEMU NBNS packet", packet comes from Windows and is sent to QEMU.
->
-> E.g.:
-> "... to tell it not to send NBNS query packets to QEMU that QEMU does not=
- handle"
-> or just:
-> "... to tell it not to send NBNS query packets that QEMU does not handle"
->
-> Sorry if this is a stupid English question, I'm not native English
-> speaker and sometimes I write or understand English words in wrong order.
+Signed-off-by: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
+---
+ hw/riscv/virt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-No worries. It works both ways in English: you can say "I sent my
-friend a letter" or "I sent a letter to my friend", and they
-mean the same thing.
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index a1c323e66d..085971eedc 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -722,11 +722,11 @@ static void create_fdt_pmu(RISCVVirtState *s)
+ {
+     g_autofree char *pmu_name = g_strdup_printf("/pmu");
+     MachineState *ms = MACHINE(s);
+-    RISCVCPU hart = s->soc[0].harts[0];
++    RISCVCPU *hart = &s->soc[0].harts[0];
+ 
+     qemu_fdt_add_subnode(ms->fdt, pmu_name);
+     qemu_fdt_setprop_string(ms->fdt, pmu_name, "compatible", "riscv,pmu");
+-    riscv_pmu_generate_fdt_node(ms->fdt, hart.pmu_avail_ctrs, pmu_name);
++    riscv_pmu_generate_fdt_node(ms->fdt, hart->pmu_avail_ctrs, pmu_name);
+ }
+ 
+ static void create_fdt_sockets(RISCVVirtState *s,
+-- 
+2.34.1
 
-But I think I prefer "not to send NBNS query packets that QEMU does
-not handle" because it avoids awkwardly repeating "QEMU" and also
-it avoids the potential ambiguity in "QEMU NBNS query packets".
-So since I need to reroll this pull request anyway I've updated
-the phrasing.
-
-thanks
--- PMM
 
