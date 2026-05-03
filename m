@@ -4,94 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13AC1FF886F
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 18:04:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 211FCCD3424
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 20:20:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJb9t-0003mt-Eq; Sun, 03 May 2026 14:03:13 -0400
+	id 1wJdHN-0001U3-6b; Sun, 03 May 2026 16:19:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamedaymanworkspace@gmail.com>)
- id 1wJb9s-0003mZ-5O
- for qemu-devel@nongnu.org; Sun, 03 May 2026 14:03:12 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mohamedaymanworkspace@gmail.com>)
- id 1wJb9q-0002xD-R1
- for qemu-devel@nongnu.org; Sun, 03 May 2026 14:03:11 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-44e1860558fso155700f8f.0
- for <qemu-devel@nongnu.org>; Sun, 03 May 2026 11:03:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777831388; x=1778436188; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=yZaXjOogZAqKnBh2asvWhnyIUphHwzyu6TcOV3QYtYA=;
- b=UC9OG2hvb6MbO+HnfyVc/UoVyj9aqLPnIqeiFP3AtVdS0vQvigYQ9zrgVTzwDHLD83
- 8ilPw3goHwVYnO6cB6tBoZTyUIrHUSsfRGjdr8ZZwb/MfUfA0MycsAl/2gkT9YhNdH7c
- Xo/QuokBLAP6jWInm4pubj8v/On78m7YYse5Zo/tiT8mhOvFo4hNlTY+CUy4JjSOYBhK
- +Vt+8xG1EckEE6Aku4mxe9U1tRvmTBaKdjhZQUeN+HIkSv8bBLCAMUjtNOzjEpDbE0ZF
- doaMbfrblU8kzkPretsbsCYRSBmroqGVXHUQJhwe/VClqiBXiePRa8VbDzku4hH5kMa7
- IaSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777831388; x=1778436188;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yZaXjOogZAqKnBh2asvWhnyIUphHwzyu6TcOV3QYtYA=;
- b=flG5zaiSx20QJlr8V3t3UUaV5aySI9+3UelZW+9I6htzRd4kLSFCz2pQNL1ctQ6XpJ
- 1355QJbAHX3PhjnGYbsgxqc9O1y6d7IrChCzfVQ+genwyz2vpO06nlWLDbMKHAqUQZH3
- gz06N8g8vkVPtDlBIQRUuY0WhzsXT2RGycOpQ5FOjoewzfQwNOdqmCvYiR5nOX08cxo/
- uo4mGLyPwB+jMvNz+uiynUBeU9s6eXwLp4dIJUYfayQWVCtvXhjU8LI3K7mN9kMbmkDF
- x+CAzjPRqRfsO7FHqO3QZTZi0UAbSoowWBhSAS8HWDq51QkDGGw7GFrlm+vMX9EdtoRq
- sgiA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+aS3NS/3hMlH0kfEG/DFl5sbcG7QF2xTdo/3pKt+wyRHXg1zXxhf7SUyI8rmX2XtaA1tvFhw67p8Vj@nongnu.org
-X-Gm-Message-State: AOJu0YxIT8tR35jKjzKrdw8bhAhKhpWk+1U3ytqZdx0XFc6guIFF7h7n
- GWHZp/XTj9hb5Z2K7zu3SO21jBInbO49eeWt8/GN1vsTVsImhFSdGzGt
-X-Gm-Gg: AeBDieu38d/K0mdMxcfQVSwqEIBmLxiuX3W+vtrm1O68EtyurwCBUQ2igGAy/j8N9k1
- besfNs0E3WPuTE/oUO1DBsOz1Si49D8BAdzOwzIa/fhEZxphqT9KpiN8x0UTG25HxeH2KQUYvvb
- 7jNIEpSuhOunG/iSjS4KT1st16gIeclRp0PH0xjEQC4G9RGJM5O80+KpytMNW8y5Z7ZiyG/iL31
- 4LRckEyo35BJi1leo469O/+S/l0O3+u32RDmnCCQwfBgpT49htFJOPsxQcO9rxE0Zh8SGZ04W0/
- 3BXzir8JHiHo+an1gWaU1P0PjlEciQJG0/7dM7zS3gdRCi8/vSGgQkzuvMsZoO7FHXOZq6Wxw4g
- HlHTZ7qomMJiyTbl7OJy2lCI0z9Bp/POfm+cZC+gDJYpt+f7kxysNpE4G+7/JRvQXF2P8UFck2W
- Q7KqeIKWoOwlNxHBwDbJQVLjY4WXzBEDORQA6gcpL7NCB0rSMe9WA6iB6mF3JS0GTXlbNiFWjF3
- HxbOqeY3KM=
-X-Received: by 2002:a05:6000:1a89:b0:446:96b1:f51 with SMTP id
- ffacd0b85a97d-44bb52abc94mr10839783f8f.22.1777831387662; 
- Sun, 03 May 2026 11:03:07 -0700 (PDT)
-Received: from ST.. ([196.221.137.242]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-44a8ef52854sm20043078f8f.12.2026.05.03.11.03.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 03 May 2026 11:03:07 -0700 (PDT)
-From: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
-To: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
- qemu-devel@nongnu.org (open list:All patches CC here)
-Cc: Mohamed Ayman <mohamedaymanworkspace@gmail.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs),
- qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH] riscv: virt: avoid RISCVCPU copy in PMU FDT setup
-Date: Sun,  3 May 2026 21:02:52 +0300
-Message-Id: <20260503180252.1122776-1-mohamedaymanworkspace@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wJdHL-0001T1-C7
+ for qemu-devel@nongnu.org; Sun, 03 May 2026 16:19:03 -0400
+Received: from smtpout6.mo534.mail-out.ovh.net ([54.36.140.177])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wJdHJ-00032j-Nl
+ for qemu-devel@nongnu.org; Sun, 03 May 2026 16:19:03 -0400
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net [51.68.80.175])
+ by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4g7x1k3c83z616K;
+ Sun,  3 May 2026 20:18:49 +0000 (UTC)
+Received: from director1.derp.mail-out.ovh.net
+ (director1.derp.mail-out.ovh.net. [127.0.0.1])
+ by director1.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Sun,  3 May 2026 20:18:49 +0000 (UTC)
+Received: from mta6.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.118.126])
+ by director1.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4g7x1j2Y2fz5wpr; Sun,  3 May 2026 20:18:49 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.4])
+ (Authenticated sender: clg@kaod.org)
+ by mta6.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 44FE21B434EC;
+ Sun,  3 May 2026 20:18:46 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-106R006d5d9940d-8280-4992-8fc5-596baf96ae39,
+ 15A2E2FDD32F27586AD59E6AF3E683E8C1C94C55) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <bd53e2ce-ba25-4fb2-8b30-2ffaeed17876@kaod.org>
+Date: Sun, 3 May 2026 22:18:46 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 16/18] hw/arm/aspeed_ast27x0: Set EHCI
+ ctrldssegment-default
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ "peterx@redhat.com" <peterx@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, Nicholas Piggin <npiggin@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>,
+ "open list:sPAPR pseries" <qemu-ppc@nongnu.org>,
+ "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>, "farosas@suse.de" <farosas@suse.de>,
+ "flwu@google.com" <flwu@google.com>,
+ "nabihestefan@google.com" <nabihestefan@google.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <20260424080508.53992-1-jamin_lin@aspeedtech.com>
+ <20260424080508.53992-17-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260424080508.53992-17-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=mohamedaymanworkspace@gmail.com; helo=mail-wr1-x430.google.com
+x-ovh-tracer-id: 12513533040994659535
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTG4FK8cgzRzvl5GbOb1Gr1v3nH3+vZGVZ9i6Eofxk39mJeOmIF7WxULVXpBgLuq/Yc7ea+Ybd/E5Z5GfOJeEuASuX7EhgZ6FfT+fcXrhMB0pkbgA4+4RH0CUb6CbK1j1TLth/OXJ5y2E/tZKq1MQ6dAcUrhZI1mcwpx3GBe42u3rm1sOUoMWWbsY/DGB+bKYfDBYxQH98lkt1D/5+i2ntdDHwdrqbwEs0Fow/1vhH2lIG+VtLNjycx7V/ZLR7MWzSdMKUFppjVc0JrTYQxA+Ria6++Grpsd5qNs+UTxiAmp4fTjef+ZSmiqAsDGbMmcoxZ+Qyuv991cIInwMx7p4gP6W5qJTuutRF46EHqkYQuwYMv4xsQ6DWYBIDAPlKw4ZbeSjVuOHKzOFXaim5pmgnE1K7O2elImXXG7DTJ6UVVCcu3R0l+bovLiGA79e6SoeQ9oGVHL4fHUphMQl/E0u6Grsd26yEjmmT8kOpYiWBpww5fBu+7lPK2fpLxAf0qU47MzXCXpcd3tHomhObSVxqr1S00Goqp/EKydzc2rZELMLUJi0izPfbye5p31uMoWbYalc86ZlnmkmFeeECOvGvhDEdZ8He2bmCBFYGA0+eu+Vz4E1Isz9ezniyifbuC394BzPOap1InsXAifoPLIWo9QpU4qlpeE0Tx8zL+KjgkgPw
+DKIM-Signature: a=rsa-sha256; bh=G4cVRo1DuMqI57qWX6EfRyxO8Cq6muQlGtEK8VD+dnU=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1777839532; v=1;
+ b=VOQUw0mcKVQJGqgY9DIBHkUlPkl7CdNf8+BDsej0xNVKCkD9FtDq1pFs2B9QfkyDJiHVloJN
+ AgYmaAavlVwoBHncXPaGeM6cUZZwPsgvPqD+EhO/p7wn+fsrkJi5NRuTEHpn+60adm4MZGXnshP
+ EHMJIpgTtBjjYjlys/oQSawPBAs2zgdheeu6Y7MIicLdi8PJRaLyhkITea2OuXTdOLmJs/FFezc
+ FlWeeJy06uOX1PjPH5FUXpqQMmsJ1Y49shU8FMLHi7EFtr9j6AYed82PqBvfGgfenpmcyLeQ6YD
+ IE7bkBzUblG30B3YuR/vCI85ID9fL5MNXG8XmVyaeN27w==
+Received-SPF: pass client-ip=54.36.140.177; envelope-from=clg@kaod.org;
+ helo=smtpout6.mo534.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,33 +153,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use a pointer to the hart instead of copying RISCVCPU when
-passing pmu_avail_ctrs to riscv_pmu_generate_fdt_node().
+On 4/24/26 10:05, Jamin Lin wrote:
+> On AST2700 platforms, system DRAM is mapped above 4GB with a base
+> address at 0x400000000.
+> 
+> The Linux EHCI driver programs the segment register to zero when
+> 64-bit addressing is supported. As a result, descriptor addresses
+> derived from the EHCI registers do not include the DRAM base
+> address.
+> 
+> Descriptor memory is allocated through the DMA API with a 64-bit
+> DMA mask, allowing descriptors to reside in DRAM above 4GB. On
+> AST2700, EHCI queue heads (QH) and queue element transfer
+> descriptors (qTD) are therefore placed at addresses starting from
+> 0x400000000.
+> 
+> Set the ctrldssegment-default property to 0x4 so the upper
+> 32 bits of descriptor addresses are adjusted accordingly. This
+> allows the emulated EHCI controller to construct correct system
+> addresses when accessing descriptors in DRAM above 4GB.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   hw/arm/aspeed_ast27x0.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+> index 87dcb82e1b..0cb39dc191 100644
+> --- a/hw/arm/aspeed_ast27x0.c
+> +++ b/hw/arm/aspeed_ast27x0.c
+> @@ -856,6 +856,8 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+>   
+>       /* EHCI */
+>       for (i = 0; i < sc->ehcis_num; i++) {
+> +        object_property_set_int(OBJECT(&s->ehci[i]), "ctrldssegment-default",
+> +                                0x4, &error_abort);
 
-Signed-off-by: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
----
- hw/riscv/virt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Please replace "0x4" with "sc->memmap[ASPEED_DEV_SDRAM] >> 32"
 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index a1c323e66d..085971eedc 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -722,11 +722,11 @@ static void create_fdt_pmu(RISCVVirtState *s)
- {
-     g_autofree char *pmu_name = g_strdup_printf("/pmu");
-     MachineState *ms = MACHINE(s);
--    RISCVCPU hart = s->soc[0].harts[0];
-+    RISCVCPU *hart = &s->soc[0].harts[0];
- 
-     qemu_fdt_add_subnode(ms->fdt, pmu_name);
-     qemu_fdt_setprop_string(ms->fdt, pmu_name, "compatible", "riscv,pmu");
--    riscv_pmu_generate_fdt_node(ms->fdt, hart.pmu_avail_ctrs, pmu_name);
-+    riscv_pmu_generate_fdt_node(ms->fdt, hart->pmu_avail_ctrs, pmu_name);
- }
- 
- static void create_fdt_sockets(RISCVVirtState *s,
--- 
-2.34.1
+Thanks,
+
+C.
+
+
+
+>           if (!sysbus_realize(SYS_BUS_DEVICE(&s->ehci[i]), errp)) {
+>               return;
+>           }
 
 
