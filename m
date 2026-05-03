@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFCCCCD3427
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 07:38:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7C6FF886F
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 07:38:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJRN2-00082c-0H; Sun, 03 May 2026 03:36:08 -0400
+	id 1wJROP-0000iU-5g; Sun, 03 May 2026 03:37:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wJRMz-00081e-I9
- for qemu-devel@nongnu.org; Sun, 03 May 2026 03:36:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wJROE-0000C0-2l
+ for qemu-devel@nongnu.org; Sun, 03 May 2026 03:37:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wJRMx-0003VW-K5
- for qemu-devel@nongnu.org; Sun, 03 May 2026 03:36:05 -0400
+ id 1wJROA-0003hU-Qj
+ for qemu-devel@nongnu.org; Sun, 03 May 2026 03:37:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777793762;
+ s=mimecast20190719; t=1777793828;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=F71HBHl1W+M/uo5lCzlKVd+GPVdXLXIc1bRDPajNYkk=;
- b=It8ztmtIYkFFuy1Fu0yR0CxJC0pp8EyIxcSNs0DXmO2/btJHGp2igHeXNnjLDbjR7kikka
- 4X67x4/IKJvqe3I7E5GRGmBhhupT7krfgUrOf0A3dPcZfJPQ9gCoHG7nU+hp3zhLVrcy1U
- EzxTYiexQR11pAbWzqQQi8iUH1K3/IE=
+ bh=NMByKqJonEq0IJZY6i3tIkyiCV0a7+Hy3a32bJd22VU=;
+ b=KUlf8X6srT4cXHS4Ibbj0XE5C8/DciXocLIsgQJ+V8Q+Hb6+ySXzFoBGVIBZpd8EbBoent
+ I9KlfLq4PkibUFC4UA721/SRPnG16v5KMEIJ4AiCvyASSqC6L/2MRF15Eri9qAhdOWr3hO
+ ph2vQ3kTwOz6AmLp3haawvmlqB5jaEU=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-182-hNzsxw6-OZiAz4lXVnajhw-1; Sun,
- 03 May 2026 03:36:01 -0400
-X-MC-Unique: hNzsxw6-OZiAz4lXVnajhw-1
-X-Mimecast-MFC-AGG-ID: hNzsxw6-OZiAz4lXVnajhw_1777793759
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-509-SSroAWKOPKqMQhBsll6Qhg-1; Sun,
+ 03 May 2026 03:37:03 -0400
+X-MC-Unique: SSroAWKOPKqMQhBsll6Qhg-1
+X-Mimecast-MFC-AGG-ID: SSroAWKOPKqMQhBsll6Qhg_1777793822
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 334721800473; Sun,  3 May 2026 07:35:59 +0000 (UTC)
+ id 0982E18002D9; Sun,  3 May 2026 07:37:02 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.48.25])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E7D0D1800480; Sun,  3 May 2026 07:35:53 +0000 (UTC)
+ id 91C031800345; Sun,  3 May 2026 07:36:56 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -55,24 +55,24 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
  jdenemar@redhat.com
-Subject: [PATCH v4 01/17] scripts: introduce
- scripts/update-aarch64-cpu-sysregs-header.py
-Date: Sun,  3 May 2026 09:33:21 +0200
-Message-ID: <20260503073541.790215-2-eric.auger@redhat.com>
+Subject: [PATCH v4 12/17] target/arm/kvm: Introduce
+ kvm_arm_expose_idreg_properties
+Date: Sun,  3 May 2026 09:33:32 +0200
+Message-ID: <20260503073541.790215-13-eric.auger@redhat.com>
 In-Reply-To: <20260503073541.790215-1-eric.auger@redhat.com>
 References: <20260503073541.790215-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,165 +88,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce a script that takes as input the Registers.json file
-delivered in the AARCHMRS Features Model downloadable from the
-Arm Developer A-Profile Architecture Exploration Tools page:
-https://developer.arm.com/Architectures/A-Profile%20Architecture#Downloads
-and outputs the list of ID regs in target/arm/cpu-sysregs.h.inc
-under the form of DEF(<name>, <op0>, <op1>, <crn>, <crm>, <op2>).
-
-We only care about IDregs with opcodes satisfying:
-op0 = 3, op1 = {0,1,3}, crn = 0, crm within [0, 7], op2 within [0, 7]
+This helper decode the ID reg writable mask, matches it against
+ID reg fields defined in target/arm/cpu-sysreg-properties.c and
+for each writable named field, generates a uint64 property.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-[CH: note correct op1 range, don't skip CCSIDR]
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-Message-ID: <20251208163751.611186-2-eric.auger@redhat.com>
 ---
- scripts/update-aarch64-cpu-sysregs-header.py | 134 +++++++++++++++++++
- 1 file changed, 134 insertions(+)
- create mode 100755 scripts/update-aarch64-cpu-sysregs-header.py
+ target/arm/kvm.c        | 134 ++++++++++++++++++++++++++++++++++++++++
+ target/arm/kvm_arm.h    |  10 +++
+ target/arm/trace-events |   4 ++
+ 3 files changed, 148 insertions(+)
 
-diff --git a/scripts/update-aarch64-cpu-sysregs-header.py b/scripts/update-aarch64-cpu-sysregs-header.py
-new file mode 100755
-index 0000000000..8c337147dd
---- /dev/null
-+++ b/scripts/update-aarch64-cpu-sysregs-header.py
-@@ -0,0 +1,134 @@
-+#!/usr/bin/env python3
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index ca9a7d9439..d9bf1ec039 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -344,6 +344,140 @@ static int get_host_cpu_idregs(ARMCPU *cpu, int fd, ARMHostCPUFeatures *ahcf)
+     return err;
+ }
+ 
++static ARM64SysRegField *get_field(int i, ARM64SysReg *reg)
++{
++    GList *l;
 +
-+# This script takes as input the Registers.json file delivered in
-+# the AARCHMRS Features Model downloadable from the Arm Developer
-+# A-Profile Architecture Exploration Tools page:
-+# https://developer.arm.com/Architectures/A-Profile%20Architecture#Downloads
-+# and outputs the list of ID regs in target/arm/cpu-sysregs.h.inc
-+# under the form of DEF(<name>, <op0>, <op1>, <crn>, <crm>, <op2>)
-+#
-+# Copyright (C) 2026 Red Hat, Inc.
-+#
-+# Authors: Eric Auger <eric.auger@redhat.com>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
++    for (l = reg->fields; l; l = l->next) {
++        ARM64SysRegField *field = (ARM64SysRegField *)l->data;
 +
++        if (i >= field->lower && i <= field->upper) {
++            return field;
++        }
++    }
++    return NULL;
++}
 +
-+import json
-+import os
-+import sys
++static void set_sysreg_prop(Object *obj, Visitor *v,
++                            const char *name, void *opaque,
++                            Error **errp)
++{
++    ARM64SysRegField *field = (ARM64SysRegField *)opaque;
++    ARMCPU *cpu = ARM_CPU(obj);
++    uint64_t *idregs = cpu->isar.idregs;
++    uint64_t old, value, mask;
++    int lower = field->lower;
++    int upper = field->upper;
++    int length = upper - lower + 1;
++    int index = field->index;
 +
-+# Some regs have op code values like 000x, 001x. Anyway we don't need
-+# them. Besides some regs are undesired in the generated file such as
-+# VMPIDR_EL2 and VPIDR_EL2 which are outside of the IDreg scope we
-+# are interested in and are tricky to decode as their system accessor
-+# refer to MPIDR_EL1/MIDR_EL1 respectively
++    if (!visit_type_uint64(v, name, &value, errp)) {
++        return;
++    }
 +
-+skiplist = ['ALLINT', 'PM', 'S1_', 'S3_', 'SVCR', \
-+            'VMPIDR_EL2', 'VPIDR_EL2']
++    if (length < 64 && value > ((1 << length) - 1)) {
++        error_setg(errp,
++                   "idreg %s set value (0x%lx) exceeds length of field (%d)!",
++                   name, value, length);
++        return;
++    }
 +
-+# returns the int value of a given @opcode for a reg @encoding
-+def get_opcode(encoding, opcode):
-+    fvalue = encoding.get(opcode)
-+    if fvalue:
-+        value = fvalue.get('value')
-+        if isinstance(value, str):
-+            value = value.strip("'")
-+            value = int(value, 2)
-+            return value
-+    return -1
++    mask = MAKE_64BIT_MASK(lower, length);
++    value = value << lower;
++    old = idregs[index];
++    idregs[index] = old & ~mask;
++    idregs[index] |= value;
++    trace_set_sysreg_prop(name, old, mask, value, idregs[index]);
++}
 +
-+def extract_idregs_from_registers_json(filename):
-+    """
-+    Load a Registers.json file and extract all ID registers, decode their
-+    opcode and dump the information in target/arm/cpu-sysregs.h.inc
++static void get_sysreg_prop(Object *obj, Visitor *v,
++                            const char *name, void *opaque,
++                            Error **errp)
++{
++    ARM64SysRegField *field = (ARM64SysRegField *)opaque;
++    ARMCPU *cpu = ARM_CPU(obj);
++    uint64_t *idregs = cpu->isar.idregs;
++    uint64_t value, mask;
++    int lower = field->lower;
++    int upper = field->upper;
++    int length = upper - lower + 1;
++    int index = field->index;
 +
-+    Args:
-+        filename (str): The path to the Registers.json
-+    returns:
-+        idregs: list of ID regs and their encoding
-+    """
-+    if not os.path.exists(filename):
-+        print(f"Error: {filename} could not be found!")
-+        return {}
++    mask = MAKE_64BIT_MASK(lower, length);
++    value = (idregs[index] & mask) >> lower;
++    visit_type_uint64(v, name, &value, errp);
++    trace_get_sysreg_prop(name, value);
++}
 +
-+    try:
-+        with open(filename, 'r') as f:
-+            register_data = json.load(f)
++/*
++ * decode_idreg_writemap: Generate props for writable fields
++ *
++ * @obj: CPU object
++ * @index: index of the sysreg
++ * @map: writable map for the sysreg
++ * @reg: description of the sysreg
++ */
++static int
++decode_idreg_writemap(Object *obj, int index, uint64_t map, ARM64SysReg *reg)
++{
++    int i = ctz64(map);
++    int nb_sysreg_props = 0;
 +
-+    except json.JSONDecodeError:
-+        print(f"Could not decode json from '{filename}'!")
-+        return {}
-+    except Exception as e:
-+        print(f"Unexpected error while reading {filename}: {e}")
-+        return {}
++    while (map) {
++        ARM64SysRegField *field = get_field(i, reg);
++        int lower, upper;
++        uint64_t mask;
++        char *prop_name;
 +
-+    registers = [r for r in register_data if isinstance(r, dict) and \
-+                r.get('_type') == 'Register']
++        if (!field) {
++            warn_report("%s bit %d of %s is writable but no named field "
++                        "in target/arm/cpu-sysreg-properties.c",
++                        __func__, i, reg->name);
++            warn_report("%s is target/arm/cpu-sysreg-properties.c up to date?", __func__);
++            map =  map & ~BIT_ULL(i);
++            i = ctz64(map);
++            continue;
++        }
++        lower = field->lower;
++        upper = field->upper;
++        prop_name = g_strdup_printf("SYSREG_%s_%s", reg->name, field->name);
++        trace_decode_idreg_writemap(field->name, lower, upper, prop_name);
++        object_property_add(obj, prop_name, "uint64",
++                            get_sysreg_prop, set_sysreg_prop, NULL, field);
++        nb_sysreg_props++;
 +
-+    idregs = {}
++        mask = MAKE_64BIT_MASK(lower, upper - lower + 1);
++        map = map & ~mask;
++        i = ctz64(map);
++    }
++    trace_nb_sysreg_props(reg->name, nb_sysreg_props);
++    return 0;
++}
 +
-+    for register in registers:
-+        reg_name = register.get('name')
++/* analyze the writable mask and generate properties for writable fields */
++void kvm_arm_expose_idreg_properties(ARMCPU *cpu, ARM64SysReg *regs)
++{
++    int i, idx;
++    IdRegMap *map = cpu->writable_map;
++    Object *obj = OBJECT(cpu);
 +
-+        is_skipped = any(term in (reg_name or "").upper() for term in skiplist)
++    for (i = 0; i < NR_ID_REG_MASKS; i++) {
++        uint64_t mask = map->regs[i];
 +
-+        if reg_name and not is_skipped:
-+            accessors = register.get('accessors', [])
++        if (mask) {
++            /* reg @i has some writable fields, decode them */
++            idx = kvm_feature_idx_to_idregs_idx(i);
++            if (idx < 0) {
++                /* no matching reg? */
++                warn_report("%s: reg %d writable, but not in list of idregs?",
++                            __func__, i);
++            } else {
++                decode_idreg_writemap(obj, i, mask, &regs[idx]);
++            }
++        }
++    }
++}
 +
-+            for accessor in accessors:
-+                type = accessor.get('_type')
-+                if type in ['Accessors.SystemAccessor']:
-+                    encoding_list = accessor.get('encoding')
+ static bool
+ kvm_arm_get_host_cpu_features(ARMCPU *cpu, ARMHostCPUFeatures *ahcf,
+                               bool get_all_writable_id_regs)
+diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
+index 91a7d5cc4b..a3034f264b 100644
+--- a/target/arm/kvm_arm.h
++++ b/target/arm/kvm_arm.h
+@@ -146,6 +146,16 @@ void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu,
+  */
+ void kvm_arm_add_vcpu_properties(ARMCPU *cpu);
+ 
++typedef struct ARM64SysReg ARM64SysReg;
++/**
++ * kvm_arm_expose_idreg_properties:
++ * @cpu: The CPU object to generate the properties for
++ * @reg: registers from the host
++ *
++ * analyze the writable mask and generate properties for writable fields
++ */
++void kvm_arm_expose_idreg_properties(ARMCPU *cpu, ARM64SysReg *regs);
 +
-+                    if isinstance(encoding_list, list) and encoding_list and \
-+                       isinstance(encoding_list[0], dict):
-+                        encoding_wrapper = encoding_list[0]
-+                        encoding_source = encoding_wrapper.get('encodings', \
-+                                                               encoding_wrapper)
-+
-+                        if isinstance(encoding_source, dict):
-+                                op0 = get_opcode(encoding_source, 'op0')
-+                                op1 = get_opcode(encoding_source, 'op1')
-+                                op2 = get_opcode(encoding_source, 'op2')
-+                                crn = get_opcode(encoding_source, 'CRn')
-+                                crm = get_opcode(encoding_source, 'CRm')
-+                                encoding_str=f"{op0} {op1} {crn} {crm} {op2}"
-+
-+                # ID regs are assumed within this scope
-+                if op0 == 3 and (op1 == 0 or op1 == 1 or op1 == 3) and \
-+                   crn == 0 and (crm >= 0 and crm <= 7) and (op2 >= 0 and op2 <= 7):
-+                    idregs[reg_name] = encoding_str
-+
-+    return idregs
-+
-+if __name__ == "__main__":
-+    # Single arg expected: the path to the Registers.json file
-+    if len(sys.argv) < 2:
-+        print("Usage: python scripts/update-aarch64-cpu-sysregs-header.py "
-+              "<path_to_registers_json>")
-+        sys.exit(1)
-+    else:
-+        json_file_path = sys.argv[1]
-+
-+    extracted_registers = extract_idregs_from_registers_json(json_file_path)
-+
-+    if extracted_registers:
-+        output_list = extracted_registers.items()
-+
-+        # Sort by register name
-+        sorted_output = sorted(output_list, key=lambda item: item[0])
-+
-+        # format lines as DEF(<name>, <op0>, <op1>, <crn>, <crm>, <op2>)
-+        final_output = ""
-+        for reg_name, encoding in sorted_output:
-+            reformatted_encoding = encoding.replace(" ", ", ")
-+            final_output += f"DEF({reg_name}, {reformatted_encoding})\n"
-+
-+        with open("target/arm/cpu-sysregs.h.inc", 'w') as f:
-+            f.write("/* SPDX-License-Identifier: GPL-2.0-or-later */\n\n")
-+            f.write("/* This file is autogenerated by ")
-+            f.write("scripts/update-aarch64-cpu-sysregs-header.py */\n")
-+            f.write("/* DEF(<name>, <op0>, <op1>, <crn>, <crm>, <op2>) */\n\n")
-+            f.write(final_output)
-+        print("updated target/arm/cpu-sysregs.h.inc")
+ /**
+  * kvm_arm_steal_time_finalize:
+  * @cpu: ARMCPU for which to finalize kvm-steal-time
+diff --git a/target/arm/trace-events b/target/arm/trace-events
+index c25d2a1191..d72ad6b671 100644
+--- a/target/arm/trace-events
++++ b/target/arm/trace-events
+@@ -15,6 +15,10 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
+ kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
+ get_host_cpu_idregs(const char *name, uint64_t value) "scratch vcpu host value for %s is 0x%"PRIx64
+ kvm_arm_writable_idregs_to_cpreg_list(const char *name, uint64_t previous, uint64_t new) "%s overwrite default 0x%"PRIx64" with 0x%"PRIx64
++decode_idreg_writemap(const char* name, int lower, int upper, char *prop_name) "%s [%d:%d] is writable (prop %s)"
++get_sysreg_prop(const char *name, uint64_t value) "%s 0x%"PRIx64
++set_sysreg_prop(const char *name, uint64_t old, uint64_t mask, uint64_t field_value, uint64_t new) "%s old reg value=0x%"PRIx64" mask=0x%"PRIx64" new field value=0x%"PRIx64" new reg value=0x%"PRIx64
++nb_sysreg_props(const char *name, int count) "%s: %d SYSREG properties"
+ 
+ # cpu.c
+ arm_cpu_reset(uint64_t mp_aff) "cpu %" PRIu64
 -- 
 2.53.0
 
