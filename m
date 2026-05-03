@@ -4,73 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB79ECD3427
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 07:39:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CA7BFF885A
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 08:20:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJROS-00014n-05; Sun, 03 May 2026 03:37:36 -0400
+	id 1wJS3T-0002qm-L7; Sun, 03 May 2026 04:20:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wJROP-0000ok-Iq
- for qemu-devel@nongnu.org; Sun, 03 May 2026 03:37:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wJS3R-0002qa-Ez
+ for qemu-devel@nongnu.org; Sun, 03 May 2026 04:19:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wJRON-0003kO-W5
- for qemu-devel@nongnu.org; Sun, 03 May 2026 03:37:33 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wJS3P-0005tl-Lt
+ for qemu-devel@nongnu.org; Sun, 03 May 2026 04:19:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777793850;
+ s=mimecast20190719; t=1777796394;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=62oLUEjH9LSAL/SkXO11p8fSs2k2Esjx+HksDcmaSDQ=;
- b=GVHshQ/fDYuqToJaF+q87G+rYc+iXbZyIEO91PSzKYIZRf6PCJ8tzJS3vhBjxx/0TsRdtJ
- IVSi9CtoY5LB9Ziw/neg6YmteXVNr01X93wqOK4xKCN8HLHK2CgtHZ+/e1Hlu4zdm2KNCV
- M0EuRYYq/GXMOvuQEQ28AA/hXDWh+Fo=
+ bh=QBtVehoCthIoQhl8rD6scUBEIG2CbPbB6W8WeFQ7Xds=;
+ b=Qc5ZxYOsj6uVViopBWBfvN3B1w0SdPX4/ltAXfvN62vRwfc1CAWSlQKZa2ygJjHf6P1geI
+ Ep35o58hGi2Wm7DZUsv35pavUa4mXyOgUX+yGLaFlY04kRg8CTY6uGM7KARFzDJ92nDrYr
+ zhcOktRBiG1WjkDAb22T6wkvXTswijM=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-329-vmK00ZWrP5KUcksXaGW_rg-1; Sun,
- 03 May 2026 03:37:26 -0400
-X-MC-Unique: vmK00ZWrP5KUcksXaGW_rg-1
-X-Mimecast-MFC-AGG-ID: vmK00ZWrP5KUcksXaGW_rg_1777793844
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-128-HOjQnhe2Pu2KbtKjIG6pow-1; Sun,
+ 03 May 2026 04:19:52 -0400
+X-MC-Unique: HOjQnhe2Pu2KbtKjIG6pow-1
+X-Mimecast-MFC-AGG-ID: HOjQnhe2Pu2KbtKjIG6pow_1777796391
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 919B9195608A; Sun,  3 May 2026 07:37:24 +0000 (UTC)
-Received: from laptop.redhat.com (unknown [10.44.48.25])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AED771800480; Sun,  3 May 2026 07:37:19 +0000 (UTC)
-From: Eric Auger <eric.auger@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
- richard.henderson@linaro.org, cohuck@redhat.com, sebott@redhat.com,
- skolothumtho@nvidia.com, philmd@linaro.org
-Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
- armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
- jdenemar@redhat.com
-Subject: [PATCH v4 16/17] arm-qmp-cmds: introspection for ID register props
-Date: Sun,  3 May 2026 09:33:36 +0200
-Message-ID: <20260503073541.790215-17-eric.auger@redhat.com>
-In-Reply-To: <20260503073541.790215-1-eric.auger@redhat.com>
-References: <20260503073541.790215-1-eric.auger@redhat.com>
+ id 8D9DE1956080; Sun,  3 May 2026 08:19:51 +0000 (UTC)
+Received: from localhost (unknown [10.44.24.4])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E84F11800667; Sun,  3 May 2026 08:19:49 +0000 (UTC)
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Subject: Re: [PATCH 08/41] hw/intc/apic: guard against NULL cpu in set_id
+From: marcandre.lureau@redhat.com
+To: =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ qemu-devel@nongnu.org, armbru@redhat.com, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+In-Reply-To: <9a8407d1-ce20-48a5-9975-4b08075e3768@linaro.org>
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-8-c413f3605311@redhat.com>
+ <9a8407d1-ce20-48a5-9975-4b08075e3768@linaro.org>
+Date: Sun, 03 May 2026 12:19:45 +0400
+Message-Id: <177779638511.2741407.15312141135813146902.b4-reply@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1510;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=+JI2ml+nMAW056Fa9WPVi2xUo6bqI98RmCcQebIciR0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp9wUhZEMsKWAxA8dnuWQSK/VoegLqepEWc1ec4
+ ITu4Jd6MjyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafcFIQAKCRDa6OEJdZac
+ 5XmbD/4jU4TPV92G4jy2/k7SVA7AhLBKq3amjnI7ZYowdsFm0d3GEL3Uw55vpxx7Ufe+Di0RSd9
+ 3ncJ3vv/T1WCnY3xc5lIna42BtY3K37qQHHZ3v7X8vAUGIJ86xI+7VqtX+MII057S091pZpcUDn
+ VNdsoBBz4JVkBUBpXNdgBaD40pa89wNvC6GrXXdg2iackPqRxK1ybK7lmstPadgLdld3S6kDR8c
+ 6ESAk0iLaTyduqCk3vipdoL1kz9GSdxGYmNS/9Ra/o6ER3OpClsbrMHV9UiKOHKV6T18fzBH/kz
+ GjLYmJIB6B2rovnXaJdoy3ldOiSRJG7YtkYy+sOBBFIqxJ8XbRqsPNpL5Oyp1878U1IbaHbzqzN
+ 0tiBCSH88VWSpih1fQ/vA42P549H6uHasAKiz6XmqNsCrBSOCVZsRUwBXcDvy45j4OSSMWMmY0S
+ 4QIwt7PQmdJJqjZu35WHmYeG5N2cuKsKJfY9gzqGe7TIi7s8Pftg7S6cWdT1mfEEhJFfNDGTpfC
+ Z/EvYqxKmypizk5RThlUyjbSNPQiwESYE6bR5+ubttDSYAZutaYOJ+pysqYgB8MFkscL0ttycyR
+ FHpEn1NTvjfzvDMA8n0h67QPTH9cp2Tk1jcd5+mN7+/r6Vhapu3ZGCp9YSc8Mofkcl9lRonDlUR
+ PvhPIUUADooex8Q==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
 X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -88,74 +106,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cornelia Huck <cohuck@redhat.com>
+Hi,
 
-Implement the capability to query available ID register values by
-adding SYSREG_* options and values to the cpu model expansion for the
-host model, if available.
+On 2026-04-27 22:40:16+02:00, Philippe Mathieu-Daudé wrote:
+> On 27/4/26 21:42, Marc-André Lureau wrote:
+> 
+> > apic_common_set_id() dereferences s->cpu to check for x2APIC support
+> > when the APIC ID is >= 255. On a standalone APIC object that has not
+> > been attached to a CPU, s->cpu is NULL, causing a segfault.
+> > 
+> > Add a NULL check before dereferencing. When there is no CPU, the
+> > x2APIC feature cannot be verified, so reject the large APIC ID.
+> > 
+> > Fixes: b5ee0468e9d2 ("apic: add support for x2APIC mode")
+> > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >   hw/intc/apic_common.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> > 
+> > diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
+> > index bf4abc21d7b..874a05e529c 100644
+> > --- a/hw/intc/apic_common.c
+> > +++ b/hw/intc/apic_common.c
+> > @@ -421,7 +421,7 @@ static void apic_common_set_id(Object *obj, Visitor *v, const char *name,
+> >           return;
+> >       }
+> 
+> Could we check s->cpu earlier, i.e. on entry?
+>
 
-Excerpt:
-(QEMU) query-cpu-model-expansion type=full model={"name":"host"}
-{"return": {"model": {"name": "host", "props":
-{"SYSREG_ID_AA64PFR0_EL1_EL3": 1224979098931106066,
-"SYSREG_ID_AA64ISAR2_EL1_CLRBHB": 0,
-../..
+On entry of the function? how would that help?
 
-So this allows the upper stack to detect available writable ID
-regs and the "host passthrough model" values.
+> 
+> Or actually, why don't we use a link property checked once
+> in apic_common_realize()?
 
-[CH: moved SYSREG_* values to host model]
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+That's also what you asked on commit 63073574e8d5551. But a link
+property won't help (or how?).
 
----
-
-TODO: Add the moment there is no way to test changing a given
-ID reg field value. ie:
-
-(QEMU) query-cpu-model-expansion type=full model={"name":"host", "prop":{"SYSREG_ID_AA64ISAR0_EL1_DP":0x13}}
----
- target/arm/arm-qmp-cmds.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
-
-diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
-index 83ec95c290..ea8c541a00 100644
---- a/target/arm/arm-qmp-cmds.c
-+++ b/target/arm/arm-qmp-cmds.c
-@@ -21,6 +21,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
- #include "qemu/target-info.h"
- #include "hw/core/boards.h"
- #include "kvm_arm.h"
-@@ -190,6 +191,24 @@ CpuModelExpansionInfo *qmp_query_cpu_model_expansion(CpuModelExpansionType type,
-         }
-     }
- 
-+    /* If writable ID regs are supported, add them as well */
-+    if (ARM_CPU(obj)->writable_id_regs_status == WRITABLE_ID_REGS_AVAIL) {
-+        ObjectProperty *prop;
-+        ObjectPropertyIterator iter;
-+
-+        object_property_iter_init(&iter, obj);
-+
-+        while ((prop = object_property_iter_next(&iter))) {
-+            QObject *value;
-+
-+            if (!g_str_has_prefix(prop->name, "SYSREG_")) {
-+                continue;
-+            }
-+            value = object_property_get_qobject(obj, prop->name, &error_abort);
-+            qdict_put_obj(qdict_out, prop->name, value);
-+        }
-+    }
-+
-     if (!qdict_size(qdict_out)) {
-         qobject_unref(qdict_out);
-     } else {
--- 
-2.53.0
+I think to be more correct than this simple patch, we would need to move
+the checks to realize(). There it should check ->cpu != NULL and ->id
+validity. I'll update the fix.
 
 
