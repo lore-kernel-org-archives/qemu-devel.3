@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 095AEFF885A
-	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 07:36:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DD55CD3427
+	for <qemu-devel@archiver.kernel.org>; Sun,  3 May 2026 07:36:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJRN0-00081h-KZ; Sun, 03 May 2026 03:36:06 -0400
+	id 1wJRN9-00083O-RY; Sun, 03 May 2026 03:36:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wJRMx-000815-4P
- for qemu-devel@nongnu.org; Sun, 03 May 2026 03:36:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wJRN6-00082z-RZ
+ for qemu-devel@nongnu.org; Sun, 03 May 2026 03:36:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wJRMu-0003TK-Q7
- for qemu-devel@nongnu.org; Sun, 03 May 2026 03:36:02 -0400
+ id 1wJRN5-0003WR-BC
+ for qemu-devel@nongnu.org; Sun, 03 May 2026 03:36:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777793759;
+ s=mimecast20190719; t=1777793770;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=eJbqFxtHUzeCNhZy2Eqbtv3ldmKnEXIaIpe/lLouE+8=;
- b=gvJYnV/FXNlN0rHJYK1dJTyyCJqOC7Nd1LbCaZWd/QLYhg07zVjAc2WPtBh6QwsADfiAHe
- h31BgruT7JlU8ieHm28++uJ0zMJ/T22dblUpjkyjaNImNKeK/JDi2ySZUi+JKAbsgwnGq5
- Q36Ljl9Rz1xmoDPFXTKugdRaudcebGk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ol6jjCc0cvYMVJdnI2W+QVeN430AK+kQr2vrJR0Z0lQ=;
+ b=Fml+tSEosq96/STPvS/WDkiWTyhiSp19AgWaNRaOcw/lauSDgFeKC8GrxUaol1k35nZTSH
+ m6BKcfpKcFyDGy1WYrdMmDNp1Dcej84V9omCVBBGPHDd24f4TeZoy0aCKrobWvCkX+KB5x
+ UdZOUYdEnepzfg/afzhBqMWMqVW9n/I=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-p8La373fM-iT3TSbbUu7nw-1; Sun,
- 03 May 2026 03:35:55 -0400
-X-MC-Unique: p8La373fM-iT3TSbbUu7nw-1
-X-Mimecast-MFC-AGG-ID: p8La373fM-iT3TSbbUu7nw_1777793754
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-beDU38yWMFCltsFOYgz8Og-1; Sun,
+ 03 May 2026 03:36:06 -0400
+X-MC-Unique: beDU38yWMFCltsFOYgz8Og-1
+X-Mimecast-MFC-AGG-ID: beDU38yWMFCltsFOYgz8Og_1777793765
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76029195608B; Sun,  3 May 2026 07:35:53 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A339E1800364; Sun,  3 May 2026 07:36:04 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.44.48.25])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 047FA1801481; Sun,  3 May 2026 07:35:46 +0000 (UTC)
+ id A64661800480; Sun,  3 May 2026 07:35:59 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -54,23 +55,24 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
 Cc: maz@kernel.org, oliver.upton@linux.dev, pbonzini@redhat.com,
  armbru@redhat.com, berrange@redhat.com, abologna@redhat.com,
  jdenemar@redhat.com
-Subject: [PATCH v4 00/17] kvm/arm: Introduce a customizable aarch64 KVM host
- model
-Date: Sun,  3 May 2026 09:33:20 +0200
-Message-ID: <20260503073541.790215-1-eric.auger@redhat.com>
+Subject: [PATCH v4 02/17] target/arm/cpu-sysregs.h.inc: Sort by name
+ alphabetical order
+Date: Sun,  3 May 2026 09:33:22 +0200
+Message-ID: <20260503073541.790215-3-eric.auger@redhat.com>
+In-Reply-To: <20260503073541.790215-1-eric.auger@redhat.com>
+References: <20260503073541.790215-1-eric.auger@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,102 +88,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series enhances the current host KVM model with capability to
-set writable ID reg fields.
+target/arm/cpu-sysregs.h.inc: Sort by name alphabetical order
 
-Since v6.7 kernel, KVM/arm allows the userspace to overwrite the values
-of a subset of ID regs. The list of writable fields continues to grow.
-The feature ID range is defined as the AArch64 System register space
-with op0==3, op1=={0, 1, 3}, CRn==0, CRm=={0-7}, op2=={0-7}.
+Sort by register name alphabetical order. This will allow to
+easily diff with the future content, automatically generated.
 
-The end goal is to get more flexibility when migrating guests
-between different host hardware.
+No functional change intended.
 
-QEMU retrieves the writable ID fields from KVM UAPI [1] and
-match them against a generated description of ID regs and their
-named fields that stem from AARCHMRS Registers.json file.
-Current description is based on latest 2026-03 edition.
-The content of the generated files was compared against kernel
-linux/arch/arm64/tools/sysreg file [3] . It is not straightforward
-to have unit tests for python scripts as there are many cases for
-field extraction.
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+Message-ID: <20251208163751.611186-3-eric.auger@redhat.com>
+---
+ target/arm/cpu-sysregs.h.inc | 43 ++++++++++++++++++------------------
+ 1 file changed, 22 insertions(+), 21 deletions(-)
 
-For each writable named field a uint64 property is created
-following the "SYSREG_<REG>_<FIELD>" naming convention. REG and
-FIELD names are those described in ARM ARM Reference manual.
-
-The list of SYSREG_ID properties can be retrieved through the qmp
-monitor using query-cpu-model-expansion [2].
-
-Connie & Eric
-
-This series can be found at:
-https://github.com/eauger/qemu/tree/arm-cpu-model-v4
-
-References:
-
-[1]
-KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES
-KVM_ARM_GET_REG_WRITABLE_MASKS
-Documentation/virt/kvm/api.rst
-
-[2]
-qemu-system-aarch64 -qmp unix:/home/augere/TEST/QEMU/qmp-sock,server,nowait -M virt --enable-kvm -cpu custom
-sudo build/run qmp-shell /home/augere/TEST/QEMU/qmp-sock
-Welcome to the QMP low-level shell!
-Connected to QEMU 11.0.50
-(QEMU) query-cpu-model-expansion type=full model={"name":"host"}
-
-[3]
-linux/arch/arm64/tools/sysreg and gen-sysreg.awk
-./tools/include/generated/asm/sysreg-defs.h
-
-
-Cornelia Huck (4):
-  target/arm/kvm: Introduce kvm_get_writable_id_regs
-  arm/cpu: accessors for writable id registers
-  arm-qmp-cmds: introspection for ID register props
-  arm/cpu-features: document ID reg properties
-
-Eric Auger (13):
-  scripts: introduce scripts/update-aarch64-cpu-sysregs-header.py
-  target/arm/cpu-sysregs.h.inc: Sort by name alphabetical order
-  target/arm/cpu-sysregs.h.inc: Update with automatic generation
-  arm/cpu: Add infra to handle generated ID register definitions
-  scripts: Introduce scripts/aarch64_sysreg_helpers module
-  scripts: Introduce scripts/update-aarch64-cpu-sysreg-properties.py
-  target/arm/cpu-sysreg-properties.c: Generate code with new script
-  arm/kvm: Allow reading all the writable ID registers
-  arm/kvm: write back modified ID regs to KVM
-  target/arm/kvm: Introduce kvm_arm_expose_idreg_properties
-  target/arm/kvm: Special case REVIDR_EL1 and AIDR_EL1
-  target/arm/kvm: Special case ID_AA64ISAR0_EL1 RES0 [24, 27] bits
-  arm/cpu: Expose writable ID reg field properties on the kvm host vcpu
-    model
-
- docs/system/arm/cpu-features.rst              | 104 ++-
- scripts/aarch64_sysreg_helpers.py             | 109 +++
- .../update-aarch64-cpu-sysreg-properties.py   | 169 +++++
- scripts/update-aarch64-cpu-sysregs-header.py  |  51 ++
- target/arm/arm-qmp-cmds.c                     |  19 +
- target/arm/cpu-idregs.h                       |  59 ++
- target/arm/cpu-sysreg-properties.c            | 673 ++++++++++++++++++
- target/arm/cpu-sysregs.h.inc                  |  57 +-
- target/arm/cpu.c                              |  12 +
- target/arm/cpu.h                              |  36 +
- target/arm/cpu64.c                            |  26 +-
- target/arm/kvm-stub.c                         |   3 +-
- target/arm/kvm.c                              | 313 +++++++-
- target/arm/kvm_arm.h                          |  19 +-
- target/arm/meson.build                        |   3 +-
- target/arm/trace-events                       |   6 +
- 16 files changed, 1622 insertions(+), 37 deletions(-)
- create mode 100644 scripts/aarch64_sysreg_helpers.py
- create mode 100644 scripts/update-aarch64-cpu-sysreg-properties.py
- create mode 100755 scripts/update-aarch64-cpu-sysregs-header.py
- create mode 100644 target/arm/cpu-idregs.h
- create mode 100644 target/arm/cpu-sysreg-properties.c
-
+diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
+index 3d1ed40f04..d61f0d0a19 100644
+--- a/target/arm/cpu-sysregs.h.inc
++++ b/target/arm/cpu-sysregs.h.inc
+@@ -1,12 +1,12 @@
+ /* SPDX-License-Identifier: GPL-2.0-or-later */
+-DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
+-DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
+-DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
+-DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
+-DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
+-DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
++DEF(CCSIDR_EL1, 3, 1, 0, 0, 0)
++DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
++DEF(CTR_EL0, 3, 3, 0, 0, 1)
++DEF(DCZID_EL0, 3, 3, 0, 0, 7)
+ DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
+ DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
++DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
++DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
+ DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
+ DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
+ DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
+@@ -15,29 +15,30 @@ DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
+ DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
+ DEF(ID_AA64MMFR3_EL1, 3, 0, 0, 7, 3)
+ DEF(ID_AA64MMFR4_EL1, 3, 0, 0, 7, 4)
+-DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
+-DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
+-DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
++DEF(ID_AA64PFR0_EL1, 3, 0, 0, 4, 0)
++DEF(ID_AA64PFR1_EL1, 3, 0, 0, 4, 1)
++DEF(ID_AA64PFR2_EL1, 3, 0, 0, 4, 2)
++DEF(ID_AA64SMFR0_EL1, 3, 0, 0, 4, 5)
++DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
+ DEF(ID_AFR0_EL1, 3, 0, 0, 1, 3)
+-DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
+-DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
+-DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
+-DEF(ID_MMFR3_EL1, 3, 0, 0, 1, 7)
++DEF(ID_DFR0_EL1, 3, 0, 0, 1, 2)
++DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
+ DEF(ID_ISAR0_EL1, 3, 0, 0, 2, 0)
+ DEF(ID_ISAR1_EL1, 3, 0, 0, 2, 1)
+ DEF(ID_ISAR2_EL1, 3, 0, 0, 2, 2)
+ DEF(ID_ISAR3_EL1, 3, 0, 0, 2, 3)
+ DEF(ID_ISAR4_EL1, 3, 0, 0, 2, 4)
+ DEF(ID_ISAR5_EL1, 3, 0, 0, 2, 5)
+-DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
+ DEF(ID_ISAR6_EL1, 3, 0, 0, 2, 7)
++DEF(ID_MMFR0_EL1, 3, 0, 0, 1, 4)
++DEF(ID_MMFR1_EL1, 3, 0, 0, 1, 5)
++DEF(ID_MMFR2_EL1, 3, 0, 0, 1, 6)
++DEF(ID_MMFR3_EL1, 3, 0, 0, 1, 7)
++DEF(ID_MMFR4_EL1, 3, 0, 0, 2, 6)
++DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
++DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
++DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
++DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
+ DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
+ DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
+ DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
+-DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
+-DEF(ID_DFR1_EL1, 3, 0, 0, 3, 5)
+-DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
+-DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
+-DEF(ID_AA64ZFR0_EL1, 3, 0, 0, 4, 4)
+-DEF(CTR_EL0, 3, 3, 0, 0, 1)
+-DEF(DCZID_EL0, 3, 3, 0, 0, 7)
 -- 
 2.53.0
 
