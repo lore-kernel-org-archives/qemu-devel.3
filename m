@@ -4,78 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE731FF885A
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 15:51:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0104CD3427
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 15:51:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJvZi-0000sH-DZ; Mon, 04 May 2026 11:51:14 -0400
+	id 1wJvZn-0000uL-O6; Mon, 04 May 2026 11:51:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wJvZg-0000rj-MH
- for qemu-devel@nongnu.org; Mon, 04 May 2026 11:51:12 -0400
-Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
+ id 1wJvZk-0000tA-75
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 11:51:16 -0400
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wJvZe-0006Ac-Pd
- for qemu-devel@nongnu.org; Mon, 04 May 2026 11:51:12 -0400
-Received: by mail-qt1-x830.google.com with SMTP id
- d75a77b69052e-50fbd79350dso41870421cf.3
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 08:51:09 -0700 (PDT)
+ id 1wJvZi-0006BP-Fy
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 11:51:15 -0400
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-50fae4d1f85so57898181cf.3
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 08:51:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777909869; x=1778514669; darn=nongnu.org;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:from:to:cc:subject:date:message-id:reply-to;
- bh=1vHhLgOpSSecB+GLDLvGOAClEqIf11/Ypr94iVBHfL0=;
- b=a9CuE2IVITIIX8kG7PzU4j85e5qRLbw4zoJoGxxVylaA+40Wi8crFaIp1I6DNrIEXJ
- cQyldm1+KPA/my3MESivXnD9fE+EPN4ibqn2zkj0QdY8lFmoBcK90DxJydNpul+b/H+f
- 3nbh9LqdyowjbGdoxg/eH8rQj/Hsv5uPzZr/P9ZabIRLJTh1SgWwB5bNUKZC8sUQjjLH
- 0U6vDPdRBLcZ4w0zI1slEBPfLn0w08LVZqES/a2f6a8JqmKVjdQqp0AZfFL3UUrqtP51
- H1HzBAOs1Tq5TdpdDVFdg2Mnyt9UISndcdB0nbF8neiphVAYmUajbgffFdLKBltrXJeX
- zuew==
+ d=gmail.com; s=20251104; t=1777909873; x=1778514673; darn=nongnu.org;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=ZxjCJPWJInTrT5BdPOKvwh7m7sTcBF1+wr03EatH2gI=;
+ b=ZviQ+9JbVEC4iMM685z1ObBJVvEY7oHe+bi8KyP4vlgNXSNyKNu7zRVo2pC0AIWZnR
+ iMfC9j6fJTwAWjGp80xtFcx42acRh/n6heoxZYLWihllTeej4KJS13JStJS8WBBcmM7+
+ 2ZjcFyKnvbN9o/EQmeWMMDCEIZrNmLmkMeZ+3+nZHkb9WOcFu8fLcayED+MldhkzFyIf
+ y8DZHup7OlPvSqyxq3pmwamA/iN7dNgyMMuRsOTnmP+KxHlYKd+srbGugbTZDYuxLguI
+ fr68fIm1Ps+J4y3v4gd3AD6IKl+GwiBH6PFOtx6JqpxxcOCthSG9zmHHkyB+W1xmlAv2
+ PK5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777909869; x=1778514669;
- h=cc:to:content-transfer-encoding:mime-version:message-id:date
- :subject:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1vHhLgOpSSecB+GLDLvGOAClEqIf11/Ypr94iVBHfL0=;
- b=S8FaVsFZwBTF8MyGVGwAw1ANfTs0WnUOeg38Hk3gA/AavTcU0j/1AbtHw7cC5BHJvq
- kJNW2ixoNQrrtBI/TEV+0O6LwBMakDExsqoIPE7jq7qgGaqmniGoW232leoTlJHzhvbc
- QV2xYuH3TdrNPLyxe53X2jTg2tmDXHWtYT7YMWoarODFe08dlDYn/KNZ67yGGTKLyfG+
- ZCWI9ZIBpw5RB3Ud9QmIUVJ9b47xs+VqUdrGPR+0xU1p/1XhFzEAzYgZfPRPa+QYgRMX
- V//G98vaW2Ru3Ijsc1dY195NWcKVbiU9SaihVH8hSN0X61NGIq9E63xKFQo3tlcLVOEQ
- xN8A==
-X-Gm-Message-State: AOJu0Yyfs+ETdGr62FgC4mfdm6vcrNhKE52zyYdEhbod8Y+cMlsqO5SI
- u7XiHM0RyAesaj6GOCeL9qNfhZe7FStpiSCBZ+pb3MnypPlWiEyKorhk
-X-Gm-Gg: AeBDies5Cbv/579Vp5HkhgxN+i2YjyXj9D9JIkhC+yF2QZS8oswA6MBLA1yPZEvKe4S
- 7fEA1iTaBErHIBBefZ/uzuqXWo1mcXvHuS1NMBZ9HAwrDpm/GiPqA8XmcS0nga/Ugnear45KE6a
- EqBEMJzPYqpLYab7mxI9Go1Nv4BIH1tdXmYgvpyZovmdi65D6BHoZvWpqDk419GaAzVHVaZ6JCB
- 0WVTHT7pjAYk5escXDV52vI9AewIdvi7By7Ua8zeiCoVSMfuq22FlZRfWwczjeIOylyHfSqrtW2
- h/GxnZ9HsrFgtm2azJBwh4xTuogUl6KwJaqfup8/kjyYr+/WcT/rsBpuPd98I1JL7feW7X/qLKo
- CoQcGj7dpC73jEbBVopJEuh9/Ju7aN/KYcDqPFSeVsWRVd8nFaK0LA50QteoJ8wKubzmRkCwS5z
- eWchd067zCTE4PVHTq0+GiAduMyAU8Q1Eo9F1vJC+njeS3UZhHX2Q=
-X-Received: by 2002:a05:622a:4d4a:b0:50d:a6a0:8f04 with SMTP id
- d75a77b69052e-5104bf9a9d0mr156063051cf.42.1777909868520; 
- Mon, 04 May 2026 08:51:08 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777909873; x=1778514673;
+ h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+ :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=ZxjCJPWJInTrT5BdPOKvwh7m7sTcBF1+wr03EatH2gI=;
+ b=Zh1/wWAWtlrzSYRinUxA27BFqFaeWUH2CwMiC5p+NClFETF4tWs+JvRR4HWeaAEjDA
+ 2JaayBeupaeFjDT50aZrZvy0g+wjh88NmY5BUki+xD5R2OkBF/Msfhd+TZd9GzlLrbGg
+ i/+ngnwfsmm+zaNEnlE9tYIA4OhAd6WIF7IKM18Z5QPCbSQd8u04l3FVIoG3yIhc2eXe
+ RydOxXc3AcEErDoEXHdy4Y0smiFfkMOpa8r47Fs+aIsbLk45uwK4Tyfkilg3oJLMKyS6
+ N6DL0KKdmpWnPIVJtDer/nwl5/mINEHUh3rVEtA7iiAqFtM+2H7Ik00blCW9fapAXQEl
+ VolQ==
+X-Gm-Message-State: AOJu0Yxqv4eHL9LyUOWxy47vPU+XjFkI+9v5ap1h72jV2yxSgqS8HQTQ
+ Cx2NCiEW/fIHR/I8ZgO3+cT6zjzVqN6vvl7MhTb2wQz/7Dtvn4MHp3+ptDEB0fik
+X-Gm-Gg: AeBDiesTHDWHg9h4zk34EessHfb9uMmq9IjSEAa+OxOO+/versSg74BPb9ol+5QiYp8
+ lwZv0yi1Ox7Y4I6hxFu98AUP2eNa2+nAbbLnGPoFeL/FlWgx4OrTITWRrjZvz17z4+Hw2fEQtxK
+ +QyDEPVQs0h5LGB0I9bfspNvoULXxI8rTD/qOceMpFHkPcf3rwPZATNpfH0QI9V8x3Ig5U1DPzf
+ MfmFXlRaY1TSXb9dvUfeJMjdGuJUK5USB3ol6fYGSsA9sw/5OLR3eipQ+IE7b0FAZCy878q3E4U
+ u1ddO92dKUyOfpu6O9zv79+Axe9LqwFiYa899ivyxY0O5lH9UdYoWxBtiDbjg77Gllr7Xk1bRD2
+ OMtPcqLJTMASJhzkwtgw4xTN0Snx4IEoHa6JssDdm+l5cnQP8wa/Y+LJAxQOFCf+Kjf4HcnmhdE
+ Vg5aaBcEC82KrPuTAG2v3lTnVOw4//IK5hE/bs+ps8vPKGfulvcUw=
+X-Received: by 2002:a05:622a:1b15:b0:50d:7135:5631 with SMTP id
+ d75a77b69052e-5104be062fbmr158528921cf.6.1777909873266; 
+ Mon, 04 May 2026 08:51:13 -0700 (PDT)
 Received: from [192.168.1.164] ([2600:1009:a021:c665:5296:905f:3e4a:eb90])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51040931552sm99599011cf.12.2026.05.04.08.51.07
+ d75a77b69052e-51040931552sm99599011cf.12.2026.05.04.08.51.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 May 2026 08:51:07 -0700 (PDT)
+ Mon, 04 May 2026 08:51:12 -0700 (PDT)
 From: Gabriel Brookman <brookmangabriel@gmail.com>
-Subject: [PATCH v5 00/15] target/arm: add support for MTE4
-Date: Mon, 04 May 2026 11:50:33 -0400
-Message-Id: <20260504-feat-mte4-v5-0-232a648e63c6@gmail.com>
+Date: Mon, 04 May 2026 11:50:36 -0400
+Subject: [PATCH v5 03/15] target/arm: mte_check unemitted on STORE_ONLY
+ load
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/13P3W7CMAwF4FdBuV5Q4vwRrngPtAuvdUqklaK2i
- kBV330GDS3r5bH9HcmLmGjMNInjbhEjlTzl4crBfexEc8FrRzK3nAUocFqrKBPhLPuZrPTBKvS
- 8oIMRfH8bKeX7q+v8yfmSp3kYH6/qop/T3xatq5aipZIBKLkmQfApnroe8/e+GXrxbClQS19LY
- BkxaICvkDD4rTRv6ZVWrpaG5cGjamOkBGS30v5J8+/nYlm2iEmZ4Pj3tpbruv4AKRvEEFABAAA
- =
-X-Change-ID: 20251109-feat-mte4-6740a6202e83
+Message-Id: <20260504-feat-mte4-v5-3-232a648e63c6@gmail.com>
+References: <20260504-feat-mte4-v5-0-232a648e63c6@gmail.com>
+In-Reply-To: <20260504-feat-mte4-v5-0-232a648e63c6@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, 
  Gustavo Romero <gustavo.romero@linaro.org>, 
@@ -85,15 +82,15 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1777909867; l=5358;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1777909867; l=4552;
  i=brookmangabriel@gmail.com; s=20251009; h=from:subject:message-id;
- bh=vkM8MTwAC7Qh0VqBIvcRvwtzVXpQlBcOPy5g2DnK9Xk=;
- b=NdxR7soFVnAv2MRyhSNqm/QYxwg1zpS6z4pMbBt4sloJfICyX/UY3NAXrqM01xN0WquxruE3d
- eWW4NM7QnokAlV7tOddo0UkZX+xJER43lH7ukX0c+0wZgUAW4Ddd0ZR
+ bh=yYLwhnBFaPvQITdtme0stFkgyfXUhCnT3IJ2ErgYUVs=;
+ b=2EfF8uuWTh5e2J7Kby47OOAx9fZIdy/3AVZgcT6lIsN+4yiVOIy4lAdWvtV34sxRglSB7vtMO
+ 9okfSeCETpOAkleM5L8bes6esipF/y55bUadu8AJRqW0+taXA5y0AFs
 X-Developer-Key: i=brookmangabriel@gmail.com; a=ed25519;
  pk=m9TtPDal6WzoHNnQiHHKf8dTrv3DUCPUUTujuo8vNrw=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
- envelope-from=brookmangabriel@gmail.com; helo=mail-qt1-x830.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=brookmangabriel@gmail.com; helo=mail-qt1-x832.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,125 +113,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series implements ARM's Enhanced Memory Tagging Extension
-(MTE4). MTE4 implies the presence of several subfeatures:
-FEAT_MTE_CANONICAL_TAGS, FEAT_MTE_TAGGED_FAR, FEAT_MTE_STORE_ONLY,
-FEAT_MTE_NO_ADDRESS_TAGS, and FEAT_MTE_PERM, none of which are
-currently implemented in QEMU. This patch implements all five.
+This feature disables generation of the mte check helper on loads when
+STORE_ONLY tag checking mode is enabled.
 
-Testing:
-  - Included for FAR and STORE_ONLY.
-  - The MTE_CANONICAL/NAT test from v2, modified so MTE_CANONICAL is
-    enabled in user mode (removed from tree in v3).
-  - A bare-metal testsuite that sets up page tables for S1 and S2
-    translation, to test the Tagged NoTagAccess fault.
-  - The bare-metal testsuite also was used to test LDGM and similar
-    instructions not permitted in user-mode.
-  - The bare-metal testsuite also was used to test the mtx related
-    patches.
-
-Thanks,
-Gabriel Brookman
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3116
 Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
-Changes in v5:
-- MTX check feature split into three commits as per Richard's suggestion
-- MTX passed down to instruction helpers in a new argument
-- allocation_tag_mem_probe checks for probe in MTEPERM case
-- tbi helper combined into tbi_or_mtx_helper
-- MTX checks added to sme and sve functions
-- bug with type conversion in LDGM helper fixed
-- fixed multi-page tag-check bug and multi-page ST2G bug
-- removed erroneous changes to _stub functions
-- reorganized PAuth & MTX interactions to make them more readable
-- Link to v4: https://lore.kernel.org/qemu-devel/20260309-feat-mte4-v4-0-daaf0375620d@gmail.com
+ target/arm/cpu.h               |  2 ++
+ target/arm/tcg/hflags.c        | 12 ++++++++++++
+ target/arm/tcg/translate-a64.c |  8 ++++++--
+ target/arm/tcg/translate.h     |  2 ++
+ 4 files changed, 22 insertions(+), 2 deletions(-)
 
-Changes in v4:
-- MTX now interacts with PAuth.
-- Canonical tag checking only takes place in canonically tagged regions
-- MTX bits enable tag checking
-- MTX bits are placed in MTEDESC for access in mte_check helper
-- Separate feature bits are used to delineate each feature
-- PRCTL functions renamed and refactored as per Richard's suggestion
-- Link to v3: https://lore.kernel.org/qemu-devel/20260105-feat-mte4-v3-0-86a0d99ef2e4@gmail.com
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 9010491235..706ade5784 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -2527,6 +2527,8 @@ FIELD(TBFLAG_A64, ZT0EXC_EL, 39, 2)
+ FIELD(TBFLAG_A64, GCS_EN, 41, 1)
+ FIELD(TBFLAG_A64, GCS_RVCEN, 42, 1)
+ FIELD(TBFLAG_A64, GCSSTR_EL, 43, 2)
++FIELD(TBFLAG_A64, MTE_STORE_ONLY, 45, 1)
++FIELD(TBFLAG_A64, MTE0_STORE_ONLY, 46, 1)
+ 
+ /*
+  * Helpers for using the above. Note that only the A64 accessors use
+diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+index 7e6f8d3647..75c55b1a6d 100644
+--- a/target/arm/tcg/hflags.c
++++ b/target/arm/tcg/hflags.c
+@@ -423,6 +423,15 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
+                      */
+                     DP_TBFLAG_A64(flags, MTE0_ACTIVE, 1);
+                 }
++                /*
++                 * Repeat for MTE_STORE_ONLY
++                 */
++                if ((el == 0 ? SCTLR_TCSO0 : SCTLR_TCSO) & sctlr) {
++                    DP_TBFLAG_A64(flags, MTE_STORE_ONLY, 1);
++                    if (!EX_TBFLAG_A64(flags, UNPRIV)) {
++                        DP_TBFLAG_A64(flags, MTE0_STORE_ONLY, 1);
++                    }
++                }
+             }
+         }
+         /* And again for unprivileged accesses, if required.  */
+@@ -432,6 +441,9 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
+             && (sctlr & SCTLR_TCF0)
+             && allocation_tag_access_enabled(env, 0, sctlr)) {
+             DP_TBFLAG_A64(flags, MTE0_ACTIVE, 1);
++            if (SCTLR_TCSO0 & sctlr) {
++                DP_TBFLAG_A64(flags, MTE0_STORE_ONLY, 1);
++            }
+         }
+         /*
+          * For unpriv tag-setting accesses we also need ATA0. Again, in
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 9a27c4c6ec..ce6249649a 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -302,7 +302,8 @@ static TCGv_i64 gen_mte_check1_mmuidx(DisasContext *s, TCGv_i64 addr,
+                                       MemOp memop, bool is_unpriv,
+                                       int core_idx)
+ {
+-    if (tag_checked && s->mte_active[is_unpriv]) {
++    if (tag_checked && s->mte_active[is_unpriv] &&
++        (is_write || !s->mte_store_only[is_unpriv])) {
+         TCGv_i64 ret;
+         int desc = 0;
+ 
+@@ -334,7 +335,8 @@ TCGv_i64 gen_mte_check1(DisasContext *s, TCGv_i64 addr, bool is_write,
+ TCGv_i64 gen_mte_checkN(DisasContext *s, TCGv_i64 addr, bool is_write,
+                         bool tag_checked, int total_size, MemOp single_mop)
+ {
+-    if (tag_checked && s->mte_active[0]) {
++    if (tag_checked && s->mte_active[0] &&
++        (is_write || !s->mte_store_only[0])) {
+         TCGv_i64 ret;
+         int desc = 0;
+ 
+@@ -10697,6 +10699,8 @@ static void aarch64_tr_init_disas_context(DisasContextBase *dcbase,
+     dc->ata[1] = EX_TBFLAG_A64(tb_flags, ATA0);
+     dc->mte_active[0] = EX_TBFLAG_A64(tb_flags, MTE_ACTIVE);
+     dc->mte_active[1] = EX_TBFLAG_A64(tb_flags, MTE0_ACTIVE);
++    dc->mte_store_only[0] = EX_TBFLAG_A64(tb_flags, MTE_STORE_ONLY);
++    dc->mte_store_only[1] = EX_TBFLAG_A64(tb_flags, MTE0_STORE_ONLY);
+     dc->pstate_sm = EX_TBFLAG_A64(tb_flags, PSTATE_SM);
+     dc->pstate_za = EX_TBFLAG_A64(tb_flags, PSTATE_ZA);
+     dc->sme_trap_nonstreaming = EX_TBFLAG_A64(tb_flags, SME_TRAP_NONSTREAMING);
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 77fdc5f3a1..c74a4f6675 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -140,6 +140,8 @@ typedef struct DisasContext {
+     bool ata[2];
+     /* True if v8.5-MTE tag checks affect the PE; index with is_unpriv.  */
+     bool mte_active[2];
++    /* True if v8.5-MTE tag checks disabled for reads; index with is_unpriv. */
++    bool mte_store_only[2];
+     /* True with v8.5-BTI and SCTLR_ELx.BT* set.  */
+     bool bt;
+     /* True if any CP15 access is trapped by HSTR_EL2 */
 
-Changes in v3:
-- Added prctl for MTE_STORE_ONLY to linux-user
-- mte_check is no longer generated on read when STORE_ONLY enabled
-- Implemented LDGM instruction
-- Removed "long" datatype as per Richard's suggestion
-- Implemented masking for VA range checks when MTX bit enabled
-- Implemented MTE_PERM, with NoTagAccess attribute
-- Removed user-mode test for MTE_CANONICAL, since can't enable in
-  user-mode.
-- Removed TBI from mte_check generation logic
-- Link to v2: https://lore.kernel.org/qemu-devel/20251116-feat-mte4-v2-0-9a7122b7fa76@gmail.com
-
-Changes in v2:
-- Added tests for STORE_ONLY.
-- Refined commit messages.
-- Added FEAT_MTE_CANONICAL_TAGS and FEAT_MTE_NO_ADDRESS_TAGS + tests.
-- fixed TCSO bit macro names.
-- Link to v1: https://lore.kernel.org/qemu-devel/20251111-feat-mte4-v1-0-72ef5cf276f9@gmail.com
-
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>
-Cc: Helge Deller <deller@gmx.de>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-
----
-Gabriel Brookman (15):
-      target/arm: implement MTE_PERM
-      target/arm: add TCSO bitmasks to SCTLR
-      target/arm: mte_check unemitted on STORE_ONLY load
-      linux-user: add MTE_STORE_ONLY to prctl
-      target/arm: emit tag check when MTX without TBI
-      target/arm: add MTX to MTEDESC and DisasContext
-      target/arm: add canonical tag check, mtx helpers
-      target/arm: add canonical MTE check logic
-      target/arm: load on canonical tag loads ext bits
-      target/arm: fault on tag store to canonical tag
-      target/arm: skip tag bit bounds check if MTX is on
-      target/arm: tag is not a part of PAuth with MTX
-      docs: add MTE4 features to docs
-      tests/tcg: add test for MTE FAR
-      tests/tcg: add test for MTE_STORE_ONLY
-
- docs/system/arm/emulation.rst        |   5 +
- linux-user/aarch64/mte_user_helper.c |  11 ++-
- linux-user/aarch64/mte_user_helper.h |  14 ++-
- linux-user/aarch64/target_prctl.h    |   6 +-
- target/arm/cpu-features.h            |  15 +++
- target/arm/cpu.h                     |   5 +
- target/arm/gdbstub64.c               |   2 +-
- target/arm/helper.c                  |  36 +++++--
- target/arm/internals.h               |  40 ++++++--
- target/arm/ptw.c                     |  54 +++++++++--
- target/arm/tcg/cpu64.c               |   8 ++
- target/arm/tcg/helper-a64-defs.h     |  16 ++--
- target/arm/tcg/helper-a64.c          |   7 +-
- target/arm/tcg/hflags.c              |  25 ++++-
- target/arm/tcg/mte_helper.c          | 176 ++++++++++++++++++++++++++++++-----
- target/arm/tcg/pauth_helper.c        |  18 +++-
- target/arm/tcg/sme_helper.c          |   4 +-
- target/arm/tcg/sve_helper.c          |   6 +-
- target/arm/tcg/translate-a64.c       |  45 ++++++---
- target/arm/tcg/translate.h           |   3 +
- tests/tcg/aarch64/Makefile.target    |   2 +-
- tests/tcg/aarch64/mte-10.c           |  49 ++++++++++
- tests/tcg/aarch64/mte-9.c            |  48 ++++++++++
- tests/tcg/aarch64/mte.h              |   7 +-
- 24 files changed, 512 insertions(+), 90 deletions(-)
----
-base-commit: 3d626609ccae61a2e552bccd59c7a0931bab8261
-change-id: 20251109-feat-mte4-6740a6202e83
-
-Best regards,
---  
-Gabriel Brookman <brookmangabriel@gmail.com>
+-- 
+2.54.0
 
 
