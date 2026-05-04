@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C8FCFF885A
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 06:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DB49FF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 06:49:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJmnj-0000tW-Dv; Mon, 04 May 2026 02:29:08 -0400
+	id 1wJn7I-0002sM-EE; Mon, 04 May 2026 02:49:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJmna-0000tK-Qf
- for qemu-devel@nongnu.org; Mon, 04 May 2026 02:28:58 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJn7B-0002qf-It
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 02:49:13 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJmnV-0003g4-KR
- for qemu-devel@nongnu.org; Mon, 04 May 2026 02:28:55 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4891c00e7aeso29186335e9.2
- for <qemu-devel@nongnu.org>; Sun, 03 May 2026 23:28:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJn79-00009E-Rf
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 02:49:13 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4838c15e3cbso28273335e9.3
+ for <qemu-devel@nongnu.org>; Sun, 03 May 2026 23:49:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777876131; x=1778480931; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777877350; x=1778482150; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=EXwXyzuveJ6b4hwT82l7UBCs8i+zWxsE6JoeCxX3LZA=;
- b=LIznwWc8vzs4WaTRaj3FP9hpg7v9G5IyHU7eShFmikc3gEE4gl923IgDXgNZM3nFel
- y1ShZfrckOKlU1o6EdQjybDId7RUB+dn+wuYnnrWp7zx/XFAY+rQuutCB7g+mMnu50rS
- 01C290RsYCepxwG/yuhRaxeVqELlM8tpukf5r4HBnJzdNwgr5N60wzoMdDxLVNmkJrbz
- OvHbAi8gbCTogHMGiuLRFj0s3oyBH2XyQcHbh0ojVPG7sevUCkVEAzll+spOmCbztEio
- ep6SxgXYmE5jPBYOiC+nCh4sCn/lZXUog0wd8ouW4aofA6qoiPi07LI389lG6PNmf8mW
- AX8g==
+ bh=1k45xLpLHb0qdPbiKWgQOPZfUPhlvLzAYHcCXM1ad1g=;
+ b=P8Tq5pvqewwxxDY5EO8HRD7m8i5XZkF+Xtg1w3Md9j5+TaY9Y3U4yFWNelGY99jtrE
+ bFiuan21mnuWyjE0REKQ45ZXrRzCBsA77+AJp5N3Z62/OWEJPzJXLt7J7s1k3bX2wWj0
+ XMH2+ywDFCBDz9JhVK8TpADdG3+ebJ9hR/coQtKAUyRD1AK3P5bmVl6Qe5HjgHSuM+MC
+ x/GOer0ZmYGCokn9wqVA6NgJO1apQapiO+hQt5DcJc4FK4Ixcb2+y4FHa6d6FhRMt70V
+ tHgCS8sHb/8b7KW9fnPOTvvvlS5v9LFsK6ekeDgR+g8Hqz7Hal0QABQMtJKtzr1bLw7w
+ 9xBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777876131; x=1778480931;
+ d=1e100.net; s=20251104; t=1777877350; x=1778482150;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=EXwXyzuveJ6b4hwT82l7UBCs8i+zWxsE6JoeCxX3LZA=;
- b=s/jha1srJ6wb5k8UlyCtCyta50bxKJHzw0rUSB/ak2vA+ZBeGPZt4hUHFWwJsmrQct
- LBY4MEFoBG0zwx1N3xcTRMuL+IOSXwWb3tSnl+6YOdBsLlWEAk4jVFv43vfVEK2lTwQe
- F1fEFa7EIZIFvpN7o6v37ZehfhHnFLGF84MRXEDGeaD7CH8uIJ6QYRoLBIZP5lPqPT6s
- d8DaMP/6V93e6zML4mnOkRCQ3UeqDraaZtUreiP80AQhTq9oyA0jUlFFC8yQuNem80gi
- u73FTR6Y9qJ0DnCL0wbk+z5MrcyzBL0GFQn8xWZKpdInbmayo8OUUxdtIjolIv+9LIXt
- r/HA==
+ bh=1k45xLpLHb0qdPbiKWgQOPZfUPhlvLzAYHcCXM1ad1g=;
+ b=CXa3TjKqCDBee1sCrxgvMRGNYXgxg6TDmNAFgdNnqkuXdC+oxL/JXG4IkdLZa9cQa8
+ aK7HIPp/6HTa8A616gq/v8G5DaeAF1xXrx/X8qQvhfthAvQt22N0jiuYoWJ2dgyEdWt7
+ x4aHbVJKmD8TEHaL7kmj3m/HlQ56hz8N2aPTqlY1l+1LVnGQthQX+nSe8FxC5xvLfZa5
+ tx4Y1u7riF9xsnTAg6ntM/tY1Xpk9IapiC0qrH93PesNsfPLC6e7YfyiYwopW7+A4k0f
+ 4lRSuHuEZnBsAI/SF6eATKp2YjP+BB+D8SwIlGEK2i/+mczk7WO77Idxi+nOGtSf6da1
+ hWhA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/o1dSKJ06dV+l59rvbFeJgm+7jgjPH72NuL+mf6ABkWArc3J7lwnDrK2LXfrk8kshv0eH+b94NhLlW@nongnu.org
-X-Gm-Message-State: AOJu0YyTGIkqKIZpHuLCCyTi8w3jdQSsMXSbnIeBFw5OkeTJHuMHo8Q6
- YwKgiTsiDeszySbL8jbMm6+xBdKYnOJdDz8t+Di9wC5WDrhvS+uxH2J8oXnn+xmw5V8=
-X-Gm-Gg: AeBDiet77VYzWZAkzlsQdwlZgAlMZL9wNKVFoPHmW3B5zD/+0ThBI/+Vl+ab7OFRLhv
- 7lTBu7Od5QTZy58due2xsVLBg98D7XDnplal+CZ15LW0isp6lyJ4ExnANYIUY1GVjL69lOjXSMQ
- 9f5OCgMl6/P6I2K3yXAO394iK+Lsc1Bh2xbCFq7mreNg3sYX5saS8mZJq8rLOx4qkTPjLzrbdFg
- jyjm3vRDEIkvYoGETvAyUKX4lgofXvElAqyZ3uVCjP9orF0ELjX8xmLITrHe+0FvqTdk5X5QtK6
- bAs4uFcU+eIuTYWa2J9x3yZZrWLNsvGCrjTjr9quLFS5epPNHysFfoaJTe+cJVrvAOIDTXOnVCy
- Fydxpum90RnQl5T7XzHBYykx5J3RztnaJnETYQUyQDD0PEIrHoFBDrrvLFks1XaaZ9NoAxVrkAM
- gTyA+kcWQIejd6+Ah4Oh6MXQmzjywNEXCRUhYPhQsZF1V4KTBd6bnYW/js/HfsaXY/3TR6idOBH
- OVU
-X-Received: by 2002:a05:600c:c171:b0:487:55c:e0c1 with SMTP id
- 5b1f17b1804b1-48a9865d9b6mr152214035e9.14.1777876130688; 
- Sun, 03 May 2026 23:28:50 -0700 (PDT)
+ AFNElJ9SQVcngOx7FhseZhY881SzZczy7PvzONfp55pPLe7ggpuVrgGnFA5ZkH6mVlytbMU0Hoy47EFLKh4Z@nongnu.org
+X-Gm-Message-State: AOJu0YzXG4IhowvIkRIz2JtVk56TL9c2U0Rl9QLvfm9yKjsQVsh0xr9n
+ /yHwKxV/rQIDTC3NuNEf4qCQfC0bIyhHuz1N6GgHecR0UM381b3n+HuCRirUv2qNq34=
+X-Gm-Gg: AeBDiesMH+I2n/z/wdvGDek6piiWaiKNFHNJxPsgiw8U71iCa1GrKoxDFzjRDBJDZAt
+ zc3psjlZxwIWyIKtJcjzQXxgCN6zVJnL3Hp/ja9VBplBCzqNFAXKxffplCo3j2r01am65/G1HTf
+ n37fgpBDy67/5fIKvbsuze+qhfiK9zWx5k7pCUB9NXODz8muSCNh+RjjhphM+ojwK6LX7r5atr+
+ Pm4TYnO3h4dFuP5Y1+CaNxSa2TUNaHuSwtCCzDNkvpnFNXdq4GR3OHz4SlPfiJIv15Upm0ZoiF4
+ g7u/HCuAzBnZvlzswwCF2PZx5yCcyrku7k2DSa1zOqTkOWnFI18bUr/DOx3y7tG4Vfn7Dp6TdvX
+ ylBxjIsE5x2XVTmH/Ay/rWMIKQwnWbknurTh85WSpVw2gBs5a08FAqKAPWPtR/V/C34n4qzhsQw
+ 2A4oi7mUCQFodGICXkQYsRPuBsxlCr8vuFiGCFc3HVH1BKiA+SGRG80Yi26M/xMUqRE9womKnAP
+ At4
+X-Received: by 2002:a05:600c:3e05:b0:489:1ff1:74df with SMTP id
+ 5b1f17b1804b1-48a9852fbcfmr139519015e9.1.1777877349778; 
+ Sun, 03 May 2026 23:49:09 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a82307f7csm310896945e9.12.2026.05.03.23.28.49
+ 5b1f17b1804b1-48a9919fc3asm83929775e9.0.2026.05.03.23.49.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 03 May 2026 23:28:50 -0700 (PDT)
-Message-ID: <09b2ec62-4b67-41da-893d-aaccf011537c@linaro.org>
-Date: Mon, 4 May 2026 08:28:49 +0200
+ Sun, 03 May 2026 23:49:09 -0700 (PDT)
+Message-ID: <e36f1d1b-89db-443b-aa48-6247831a8247@linaro.org>
+Date: Mon, 4 May 2026 08:49:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 06/58] kconfig: remove duplicate declaration of
- CONFIG_MIPS_BOSTON_AIA
+Subject: Re: [PATCH] hvf: arm: override HV_SYS_REG_MDCR_EL2
 Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20260430172204.1006673-1-pbonzini@redhat.com>
- <20260430172204.1006673-7-pbonzini@redhat.com>
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20260501231353.63184-1-mohamed@unpredictable.fr>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260430172204.1006673-7-pbonzini@redhat.com>
+In-Reply-To: <20260501231353.63184-1-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,20 +106,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/4/26 19:21, Paolo Bonzini wrote:
-> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-
-This was not reviewed by Marc-André (at least not publically on
-the list) but by Alistair and myself:
-https://lore.kernel.org/qemu-devel/20260430090534.841894-3-pbonzini@redhat.com/
-Not a big deal, it just shows this email workflow limits, as
-reviewers might wonder what the point of doing public review if
-being ignored.
-
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+On 2/5/26 01:13, Mohamed Mediouni wrote:
+> In older SDKs, MDCR_EL2 was defined incorrectly.
+> 
+> As such, override it with a #define if compiling with an older macOS
+> SDK.
+> 
+> This is a workaround because the macOS CI setup we currently rely on
+> has not been kept up to date, to be able to land nested virtualization
+> support.
+> 
+> Once CI is updated, the SME stubs can be removed and this
+> commit can be reverted.
+> 
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
->   hw/misc/Kconfig  | 8 --------
->   hw/riscv/Kconfig | 4 ++++
->   2 files changed, 4 insertions(+), 8 deletions(-)
+>   target/arm/hvf/hvf.c | 9 +++++++++
+>   1 file changed, 9 insertions(+)
+> 
+> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> index 4f0f7ffba1..79209bc8e9 100644
+> --- a/target/arm/hvf/hvf.c
+> +++ b/target/arm/hvf/hvf.c
+> @@ -468,6 +468,15 @@ static const struct hvf_reg_match hvf_sme2_preg_match[] = {
+>   #define HVF_TO_KVMID(HVF)  \
+>       (CP_REG_ARM64 | CP_REG_SIZE_U64 | CP_REG_ARM64_SYSREG | (HVF))
+>   
+> +/*
+> + * In older SDKs, MDCR_EL2 was defined incorrectly.
+> + * As such, override it with a #define if compiling with an older macOS SDK.
+> + * https://lore.kernel.org/qemu-devel/BCCED674-EAEF-4755-9BE1-116FB36FB5C9@apple.com/
+> + */
+> +#if !defined(MAC_OS_VERSION_26_0)
+
+Not sure about this check, i.e. wouldn't it clash with 26.1 release?
+I'd expect a check such:
+
+    #if MAC_OS_X_VERSION_MAX_ALLOWED < 260000
+
+> +#define HV_SYS_REG_MDCR_EL2 0xe089
+> +#endif
+> +
+>   /*
+>    * Verify this at compile-time.
+>    *
 
 
