@@ -4,80 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04F0CCD342C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:21:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B753FF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:36:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJrMC-0004vh-VJ; Mon, 04 May 2026 07:21:00 -0400
+	id 1wJraC-0007Uq-FP; Mon, 04 May 2026 07:35:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wJrMB-0004ul-2H
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:20:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wJraA-0007UL-IJ
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:35:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wJrM9-0005BT-FC
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:20:58 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wJra8-0000m5-S8
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:35:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777893656;
+ s=mimecast20190719; t=1777894523;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DFlMesDBUHyHgVacbVFj6IdebfQoN6OzC82hNQ07U3w=;
- b=QsIdmwbuXzradx4g2pazSUMn+5G0PDGeVbVQdGH71ZPvuoG9ZNKeIguEjF0Ms4xDpHOESx
- TYUIdwB+Tob7dkjNapisklOcrDqPKZvjiUdW5mUnRZfHX+78jLforCHsrjJZR5jpK2KeG8
- NWdsPtP/Mp7muTMPySyGlKslHWm88iI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=3LnmPj2a/SZ2VXKAkFID+9JaaVLfJOAgO0sBcWpZJog=;
+ b=cuPyDpwqJBMWit5zpLWWebI6c2gcTL6jHuMknwwRgT3qkuXW7t4VnKGIKsHgRwJ3X4+eMo
+ HV3Ft7aO5jZ0QMPic0vJfvqn5qb0E9nzN4vgLd317GHoDF3E4MTXLUy/ORWVQCgMuxcTXw
+ mL9FV9pa6NrQBAQwUAL90ld4NjoxqWI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-583-Hsv8nZVmNaaMBJ1p6yPzzA-1; Mon,
- 04 May 2026 07:20:52 -0400
-X-MC-Unique: Hsv8nZVmNaaMBJ1p6yPzzA-1
-X-Mimecast-MFC-AGG-ID: Hsv8nZVmNaaMBJ1p6yPzzA_1777893651
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-280-xRcAc9CBOECCGvfAeZKgsg-1; Mon,
+ 04 May 2026 07:35:22 -0400
+X-MC-Unique: xRcAc9CBOECCGvfAeZKgsg-1
+X-Mimecast-MFC-AGG-ID: xRcAc9CBOECCGvfAeZKgsg_1777894521
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1F174180034A; Mon,  4 May 2026 11:20:51 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 831D01955D84; Mon,  4 May 2026 11:20:50 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 23D9621E6A01; Mon, 04 May 2026 13:20:48 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Eric Blake
- <eblake@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Igor Mammedov <imammedo@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,  Ani Sinha <anisinha@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2 05/13] qapi/docs: adjust stub member insertion algorithm
-In-Reply-To: <20260429192611.1581223-6-jsnow@redhat.com> (John Snow's message
- of "Wed, 29 Apr 2026 15:26:03 -0400")
-References: <20260429192611.1581223-1-jsnow@redhat.com>
- <20260429192611.1581223-6-jsnow@redhat.com>
-Date: Mon, 04 May 2026 13:20:48 +0200
-Message-ID: <87o6iva0a7.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 77640195608B
+ for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:35:21 +0000 (UTC)
+Received: from localhost (unknown [10.44.24.4])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 77CF71800347; Mon,  4 May 2026 11:35:20 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Mon, 04 May 2026 15:34:49 +0400
+Subject: [PATCH v2 01/46] hw/pci: handle missing bus in prop_pci_busnr_get
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260504-qom-tests-v2-1-ef7e3dc94f7a@redhat.com>
+References: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
+In-Reply-To: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: armbru@redhat.com, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1270;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=TNcMmHQOk/Cv/pMBfbzxmrySqL4hQAd92bEHD4UL6Q0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRr//8ubAy8v2Oj1r0e7dXjo+CRyChMgnZ/0
+ A1+EgTV1nSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEawAKCRDa6OEJdZac
+ 5VcCD/9gGFYwE91xP9RdLb6fSOV65ujihzeQ0i1npwXmXc86tDhxFSXcMa/JNFrvBB43HbpHmZW
+ ulj5WQFBerU7dJ9bx4kMNrz658dLKsIVOz96CF4vzBY35J5q0PukFG5FpeJEnPcclsNn3+ty47t
+ YjIGnhx1liyTj8+p6rldYalAFC1FOM6Z52QKcopN1XNQe+Rdc7juxh/Nz7RLCzUwMg/9taof+/9
+ 8Idmx0lPzuoh1l4D3IqB0LN1fm8ar450dDKJZz9PQcolWMHq+YZOk8/qG+COOvcD8bz2WgyjUsU
+ YNwkfJ9rJYhfZwPi5eQR8KeCpX5nMSlASvciFtdc0HuaWZQw8yuL1sMDt/D1r/YBeJ+SqX4CVya
+ Qlm2Bj/ccmmgT1eJMFUkVC1viBYz9R57r3+OkTjZAbROEoibo91BgS04j+69YPjXeGffH2UPkW6
+ 0zvqR8JtABLSQOU9jU5A03ceQfx09ab3Rm3mlzUiIPbK7rxm1R2G19GYfjxRUZjtssq3NdEozVn
+ syYGoahObkk7Cw/CDEgS6xNUHyGr68HKwR5jK4BkEBePAc//ZX2apFhfcLXjAjZ2nnE1XCiT52c
+ BGdck9m9qGr4TzHUxQCn61OShf6UUJN/DQAscQXCsgbPC7bUN4wyvUvZV4IPP96xXO/3rIBlj+E
+ pegFo4nZSU8x6TQ==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,63 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I'm feeling dense again.  Please be patient with me.
+When called on an unrealized device (e.g. from
+qmp_qom_list_properties), pci_get_bus() returns NULL since the device
+has no parent bus. Check for this to avoid a NULL dereference in
+pci_bus_num().
 
-John Snow <jsnow@redhat.com> writes:
+Fixes: df9ac7254fd9 ("hw/pci: Add a busnr property to pci_props and use for acpi/gi")
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ hw/pci/pci.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-> A forthcoming patch removes the implicit PLAIN section that always
-> starts a QAPIDoc section list. Further future changes begin converting
-> "PLAIN" sections to "INTRO" sections. To accommodate this, the insertion
-> algorithm that places stub and dummy members must be adjusted to cope.
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index a0dbb81fd90..bf13cabd174 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -64,10 +64,17 @@ static void pcibus_reset_hold(Object *obj, ResetType type);
+ static bool pcie_has_upstream_port(PCIDevice *dev);
+ 
+ static void prop_pci_busnr_get(Object *obj, Visitor *v, const char *name,
+-                             void *opaque, Error **errp)
++                               void *opaque, Error **errp)
+ {
+-    uint8_t busnr = pci_dev_bus_num(PCI_DEVICE(obj));
++    PCIDevice *dev = PCI_DEVICE(obj);
++    PCIBus *bus = pci_get_bus(dev);
++    uint8_t busnr;
+ 
++    if (!bus) {
++        error_setg(errp, "device not attached to a PCI bus");
++        return;
++    }
++    busnr = pci_bus_num(bus);
+     visit_type_uint8(v, name, &busnr, errp);
+ }
+ 
 
-What are the stub and dummy members?
-
-> This algorithm can handle zero-or-more PLAIN *or* INTRO sections at the
-> beginning of a QAPIDoc object.
-
-The revised algorithm, I presume.
-
-What's the structure of its valid input before and after this patch?
-
-> Since we have three places that need to insert stub members, take the
-> opportunity to unify and deduplicate this code.
-
-Three?  I can only see two: Transmogrifier.visit_sections() and
-QAPIDoc.connect_member().
-
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
-> ---
->  docs/sphinx/qapidoc.py | 36 ++++++++---------
->  scripts/qapi/parser.py | 90 +++++++++++++++++++++++++++---------------
->  2 files changed, 75 insertions(+), 51 deletions(-)
->
-> diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-> index 1f7c15b7075..70ab9cdc214 100644
-> --- a/docs/sphinx/qapidoc.py
-> +++ b/docs/sphinx/qapidoc.py
-> @@ -349,30 +349,32 @@ def _get_target(
->                  )
->  
->      def visit_sections(self, ent: QAPISchemaDefinition) -> None:
-> +        # Generate a placeholder right after the member section(s) which
-> +        # will be used to generate documentation for "The members of..."
-> +        # pointers in the rendered document.
-> +        # This is a temporary hack until the inliner is merged.
-> +        if ent.doc:
-> +            ent.doc.append_member_stub(
-> +                QAPIDoc.ArgSection(
-> +                    ent.doc.info, QAPIDoc.Kind.MEMBER, "q_dummy"
-> +                )
-> +            )
-> +
-
-This hack is of the nastier sort: passing a QAPISchema to the doc
-generator modifies it.
-
-Would it be possible to add this dummy always in QAPISchema?  Any
-drawbacks?
-
-[Remainder left for later...]
+-- 
+2.54.0
 
 
