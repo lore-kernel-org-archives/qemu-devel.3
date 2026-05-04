@@ -4,114 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D472CD342F
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 17:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8025FF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 17:43:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJxJu-00080G-9x; Mon, 04 May 2026 13:43:02 -0400
+	id 1wJxKM-00085O-6z; Mon, 04 May 2026 13:43:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wJxJr-000800-Ht
- for qemu-devel@nongnu.org; Mon, 04 May 2026 13:43:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wJxK9-00081b-1f
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 13:43:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wJxJp-0007bi-N4
- for qemu-devel@nongnu.org; Mon, 04 May 2026 13:42:59 -0400
+ id 1wJxK6-0007hN-1s
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 13:43:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777916576;
+ s=mimecast20190719; t=1777916593;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=v4pF4l9L+XhDbGXCnZWjvEQGjfAJPVkKy76gDH2nELI=;
- b=BGoyBHzJDRS8hTyz5DNori2YI+TRvoQcw3VLLNzvT4VSj5d5PzI95ST+5lLASFAL2A1Wij
- oGr9/AO4snVEljsTGdd8cfKiwMwSn/ZlV74uYQjUZD68pgFua1pXPN37EUNEqTAMNotJrx
- 0edm3Cb/tJAGaaFsuhQtYBoj6uy9byM=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bQb16KtLImMQCP+LqwJZLK0JGPjn/NTZu1uLjDjW1UY=;
+ b=EmkSlh7pLFKCniWTeWJ4jng/1LfXzd1Zn3HhWFmyZ5g1Hi1kC4ByhuCpmkBdM1yZPrzZvO
+ eenRxuYo+m41k8Gq4bn2/wcj1DMKItLXFEU90C7vCIpk1qqj3iT+2oge6+XNW4vegjgzKm
+ CmYMDAaeB8jacMVyx/oYgWlt40Tgy0M=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-385-Qf2xW1VyNCG-jZBiDlONAQ-1; Mon, 04 May 2026 13:42:55 -0400
-X-MC-Unique: Qf2xW1VyNCG-jZBiDlONAQ-1
-X-Mimecast-MFC-AGG-ID: Qf2xW1VyNCG-jZBiDlONAQ_1777916574
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2b465bf993cso45071375ad.1
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 10:42:55 -0700 (PDT)
+ us-mta-230-hlrzq0RKOBmsXNUliwwnVg-1; Mon, 04 May 2026 13:43:11 -0400
+X-MC-Unique: hlrzq0RKOBmsXNUliwwnVg-1
+X-Mimecast-MFC-AGG-ID: hlrzq0RKOBmsXNUliwwnVg_1777916591
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-36524e2c5dfso1730710a91.3
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 10:43:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777916574; x=1778521374; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=v4pF4l9L+XhDbGXCnZWjvEQGjfAJPVkKy76gDH2nELI=;
- b=cVHcA+eRrxxlx0gVVzpj34zKcFsMc/uz1Qig7dc2ghorjZBhIV0zna3Ck0LwSQBdsZ
- 3p75IQuYXZhSIFeF9Joa2hyjpYenT9Hc0gre/1Ch4u+te2SAse5P2kevwH6EMafFcd6m
- yYPW9k6DlO9b/vQ0hp6dqQdwk7owiy29JFiHs85r7JDkZCdiuO1oFHg0deUcAbRyRTIa
- KJ8FFGzxnnU6b69UUt8by2X7ppdcItqd/T3Eo8URaw+2Q4hagfuvZSWViDNbyBCvQRP0
- AwGLV99G4nK9R9mf7QvMsKP6g6JiN+fQigjBnvgTNqEIpF0OLrVb8StVTFuYBnH/W/4Q
- mNfg==
+ d=redhat.com; s=google; t=1777916590; x=1778521390; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=bQb16KtLImMQCP+LqwJZLK0JGPjn/NTZu1uLjDjW1UY=;
+ b=NFOlwDx2uEb0Hv3la/EwuoDuDSJLSLsLsoAK+HtodkjhSES692tQxl0t/DzRtodW8f
+ ggdx0FZTTeI1zJQFZZdnxAp+xk8v/5QbFk7HPptay5xXeOJoMsRPoCYFUb/zv9A5XlaG
+ HbnF0v/gLspKo6CfBtFgtHg1sufluKFfYVa9HpGoSLf+metwUpUxA8bAwaSa5pI5nfUg
+ B6uIZdAs+O2iFBE7xUGYM3vVYVWwRRadI8nXungBtI6ZKKtam7g2wCUhVmrkUEWee1oW
+ UFwg9Fg7HJ+OgSdddLAcf2PtcWD9Hds1BeIoknuV9/VPGc43sAKz+Orsod+2iOB/gemg
+ D6Uw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777916574; x=1778521374;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=v4pF4l9L+XhDbGXCnZWjvEQGjfAJPVkKy76gDH2nELI=;
- b=r3EDbmQAaTBGgZMMPL0mclbk335lBgSw11v4usX87kG49Dspoi79vLYOgPEqqKnnrT
- n0g0JKD/Yj+kDGI986MJKHjZWccu3Y9iq6rAMlU149SPw7VmK/XrJ8Se9YlUgYkSTh5R
- ea1rwwvQXeLrbbtf2z9UlxtF7k8hNRdsYH8LVIlVQYfHcuJDhsNseywSW39d7exPr6X3
- gVX6XalTRqQ2JdMpnp/at2YLq8upLWHkeT4Q+yNdXuWnh7wWJVHw3qv8KiA5FGegOZIk
- 2FRYZ7HuYVSIMzRJh2Yl4cuI5CRWf6JR1wCoJFCp7lhmAxOnWiRqorkq1mLfMP5FJWQs
- CRkw==
-X-Gm-Message-State: AOJu0Ywnj+2dRJ9/HFMg++1kta9ERu+1Z88amw1lttpLzjZ7gKssXcdZ
- zn4DqHifbYL67jJeKToApyz/SJ0X4S5auR8aocexFTtI5EE09jYE3onU9KTvn0KI2FSgjuf0MOc
- WH1Ygaf2LIEK73GyIf1FfvNfdOUiR0sDgL0gEomTbddP72Udyi2XaBaiDoKLzgh1FNhvFMjas8Z
- wH2uNqHacnAOCh7CY1LWMbsgG6IcB1fd4CVAGtqRI=
-X-Gm-Gg: AeBDievpzyPVqYkgpKOunzed14kiigWCJ0LpWYujbYtrHcXvzyEblzC1hqkSK4QU2i5
- oeksiWgwRw7KdTe/riMHLfdcsjfmIQLJrjHh9Nmu10oplJAz5L4m8d0Fz+/95sUwIHACNl1jbip
- hVW5fWsqmSHwb+2Ecgcr+3Rrb1NBSEwvfzS1ww4piJ840GuJ+2r6lBjWePykkqXSz/Z0WLRgohK
- Ad97lmww2LrB+EqHyZC22svi4H9crThLoObrXXcMISpJZUMQtIh0MdyD7VV9CCjibuBobAzJnLR
- wQ9XFveWU9cGa0HydY/DR2Zvd0hmU93xkNk0eUXYxrhNtXSB1+sBgUOiT48OyMnB0xiiYGyxHVl
- P04l6VfQVzRyaPrPSOJ55M9musMrPEvdXSFLbQc+VdzC2k8mczEOU/XflUjYYV689jMO0WGzG
-X-Received: by 2002:a17:902:c40e:b0:2b0:6e6a:8504 with SMTP id
- d9443c01a7336-2b9f2810604mr111287975ad.27.1777916573940; 
- Mon, 04 May 2026 10:42:53 -0700 (PDT)
-X-Received: by 2002:a17:902:c40e:b0:2b0:6e6a:8504 with SMTP id
- d9443c01a7336-2b9f2810604mr111287475ad.27.1777916573137; 
- Mon, 04 May 2026 10:42:53 -0700 (PDT)
-Received: from fedora.armenon-thinkpadp16vgen1.bengluru.csb ([49.36.108.92])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b9caaaec82sm112765315ad.24.2026.05.04.10.42.45
+ d=1e100.net; s=20251104; t=1777916590; x=1778521390;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bQb16KtLImMQCP+LqwJZLK0JGPjn/NTZu1uLjDjW1UY=;
+ b=Cqo/f/wr2vkw6HWsUtU6NHwKQyaYuC8UzGap7r37JN9+XbLa+0ZAPTitoACzB755IJ
+ DpcsW6qgzr8vANAMxWXRyvBzmxikEvDcF6v7Nm9LWZe6cuocxaQCL0s/dAKsWxE/0Gin
+ l4R8+DoRBrnsDzjyZhQ171d3AOrnJlhxN2ZUc3iBqHp1Ux0on/86h8Oo8vOCZVSiEDSb
+ C7+ixNohoK/Z6UhZPunDGoaBNH9k1wUSGaM0x3aYXRwhrqWLnV+iY5edTvK4AHvDkB4v
+ esJhDaCAF/7BaEzRZ7jNuw2TA8xsKabJqYREmPWFcaaCvEh5jhyH3KnKDc0HCjJCMATB
+ Nw3A==
+X-Gm-Message-State: AOJu0YyWkU9Awz/b2rgNqoAl1ZatfeGtYM/rplnbZXP72+p7AV+oPLLZ
+ ut5NhDk7pgA4x7h8ADUCacjmOADNkSrQ5A5QPpWvGIeDx3wZ3QMBJbgnPZFY4a6Y0SkS968Km/P
+ HYXMFuWhPKH7JHcWgkVFqB0NmC/9Vcpttu9doxOHKkiqidQSBdE4sHV1g
+X-Gm-Gg: AeBDietvPehcSXzEv/1+MFx9X41AZU5cuU8SzoFs8ppj/wj+Lu6GROAvYUwPobvP1w2
+ UwsPqlrn+XxzhAqOhHlns2PERTBygHtobCspfpD5PkiczlDOtprJfuIAvU4InvoAeqbnSkbrDdz
+ B5MSecMXrZGtco4FquOe9W58f+Enp8reeyPc6Bz0j0S8c/JIUgePdqfSOrTV52C81lTIsY1vQl4
+ Vv2Ks/V96Buz4ZBI1yI6Zd0MmYIFFfnAX5UO7fTaoEKcY/zIUXvHLTlAbbQbsdsCO7t/1XUQPGO
+ TRfDKcTX2/baWAg7q5gWWntD1Ok1jV0vJVaoo9qhHU68Art1FBoKOVPtc102gggi4yiyVyZvIXL
+ 1tFLYgYZeP8IWOGYVMlTXvw==
+X-Received: by 2002:a17:90b:5830:b0:359:f77f:8cff with SMTP id
+ 98e67ed59e1d1-3650ce6f2c7mr10988770a91.19.1777916590342; 
+ Mon, 04 May 2026 10:43:10 -0700 (PDT)
+X-Received: by 2002:a17:90b:5830:b0:359:f77f:8cff with SMTP id
+ 98e67ed59e1d1-3650ce6f2c7mr10988722a91.19.1777916589656; 
+ Mon, 04 May 2026 10:43:09 -0700 (PDT)
+Received: from fedora ([49.36.108.92]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-364ebec736dsm12082105a91.3.2026.05.04.10.43.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 May 2026 10:42:52 -0700 (PDT)
+ Mon, 04 May 2026 10:43:09 -0700 (PDT)
+Date: Mon, 4 May 2026 23:12:57 +0530
 From: Arun Menon <armenon@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, marcandre.lureau@redhat.com,
- Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+To: Stefan Berger <stefanb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
  Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Arun Menon <armenon@redhat.com>,
- Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH v6 1/6] hw/tpm: Add TPM CRB chunking fields
-Date: Mon,  4 May 2026 23:12:29 +0530
-Message-ID: <20260504174234.13556-2-armenon@redhat.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260504174234.13556-1-armenon@redhat.com>
-References: <20260504174234.13556-1-armenon@redhat.com>
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Igor Mammedov <imammedo@redhat.com>, marcandre.lureau@redhat.com,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v5 06/10] hw/tpm: Add support for VM migration with TPM
+ CRB chunking
+Message-ID: <afjaoQRkTEOu9Lki@fedora>
+References: <20260422103018.123608-1-armenon@redhat.com>
+ <20260422103018.123608-7-armenon@redhat.com>
+ <ef476984-6a55-4654-89e3-2703d8baca25@linux.ibm.com>
+ <afLkebmMTFPEyAuK@fedora>
+ <56667f7a-71c9-4280-90ab-1b356741d803@linux.ibm.com>
+ <afhGxAEyDWtofq_L@fedora>
+ <caf85297-8277-44b2-82ca-aee6cd8770ce@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <caf85297-8277-44b2-82ca-aee6cd8770ce@linux.ibm.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,105 +130,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Arun Menon <armenon@redhat.com>
+On Mon, May 04, 2026 at 10:33:38AM -0400, Stefan Berger wrote:
+> 
+> 
+> On 5/4/26 3:12 AM, Arun Menon wrote:
+> > On Thu, Apr 30, 2026 at 07:46:33AM -0400, Stefan Berger wrote:
+> > > 
+> > > 
+> > > On 4/30/26 1:11 AM, Arun Menon wrote:
+> > > > On Wed, Apr 29, 2026 at 07:14:38PM -0400, Stefan Berger wrote:
+> > > > > 
+> > > > > 
+> > > > > On 4/22/26 6:30 AM, Arun Menon wrote:
+> > > > > > From: Arun Menon <armenon@redhat.com>
+> > > > > > 
+> > > > > > - Add subsection in VMState for TPM CRB with the newly introduced
+> > > > > >      command and response buffer GByteArrays, along with a needed callback,
+> > > > > >      so that newer QEMU only sends the buffers if it is necessary.
+> > > > > > - Implement a migration blocker to prevent migration of the VM if the
+> > > > > >      user manually enables chunking capability, cap-chunk, but the machine
+> > > > > >      type does not support it, using a new hw_compat property called
+> > > > > >      allow_chunk_migration.
+> > > > > > - Add a post_load_errp hook so that during a migration, the buffers are
+> > > > > >      validated before destination VM is started.
+> > > > > > 
+> > > > > > Signed-off-by: Arun Menon <armenon@redhat.com>
+> > > > > > ---
+> > > > > >     hw/core/machine.c |  1 +
+> > > > > >     hw/tpm/tpm_crb.c  | 71 +++++++++++++++++++++++++++++++++++++++++++++++
+> > > > > >     2 files changed, 72 insertions(+)
+> > > > > > 
+> > > > > > diff --git a/hw/core/machine.c b/hw/core/machine.c
+> > > > > > index 6d27cf69a2..b590af0125 100644
+> > > > > > --- a/hw/core/machine.c
+> > > > > > +++ b/hw/core/machine.c
+> > > > > > @@ -40,6 +40,7 @@
+> > > > > > 
+> > > > > >     GlobalProperty hw_compat_11_0[] = {
+> > > > > >         { "tpm-crb", "cap-chunk", "off"},
+> > > > > > +    { "tpm-crb", "x-allow-chunk-migration", "off"},
+> > > > > >     };
+> > > > > >     const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
+> > > > > > 
+> > > > > > diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+> > > > > > index 29370d6f49..23e6948aee 100644
+> > > > > > --- a/hw/tpm/tpm_crb.c
+> > > > > > +++ b/hw/tpm/tpm_crb.c
+> > > > > > @@ -24,6 +24,7 @@
+> > > > > >     #include "hw/pci/pci_ids.h"
+> > > > > >     #include "hw/acpi/tpm.h"
+> > > > > >     #include "migration/vmstate.h"
+> > > > > > +#include "migration/blocker.h"
+> > > > > >     #include "system/tpm_backend.h"
+> > > > > >     #include "system/tpm_util.h"
+> > > > > >     #include "system/reset.h"
+> > > > > > @@ -51,6 +52,8 @@ struct CRBState {
+> > > > > >         TPMPPI ppi;
+> > > > > > 
+> > > > > >         bool cap_chunk;
+> > > > > > +    bool allow_chunk_migration;
+> > > > > > +    Error *migration_blocker;
+> > > > > >     };
+> > > > > >     typedef struct CRBState CRBState;
+> > > > > > 
+> > > > > > @@ -353,12 +356,63 @@ static int tpm_crb_pre_save(void *opaque)
+> > > > > >         return 0;
+> > > > > >     }
+> > > > > > 
+> > > > > > +static bool tpm_crb_chunk_needed(void *opaque)
+> > > > > > +{
+> > > > > > +    CRBState *s = opaque;
+> > > > > > +
+> > > > > > +    if (!s->allow_chunk_migration) {
+> > > > > > +        return false;
+> > > > > > +    }
+> > > > > > +
+> > > > > > +    return ((s->command_buffer && s->command_buffer->len > 0) ||
+> > > > > > +            (s->response_buffer && s->response_buffer->len > 0));
+> > > > > > +}
+> > > > > > +
+> > > > > > +static bool tpm_crb_chunk_post_load(void *opaque, int version_id, Error **errp)
+> > > > > > +{
+> > > > > > +    CRBState *s = opaque;
+> > > > > > +
+> > > > > > +    if (!s->response_buffer || !s->command_buffer) {
+> > > > > > +        error_setg(errp, "tpm-crb: Internal buffers are not allocated");
+> > > > > 
+> > > > > Could this happen that this state type is resumed but the buffers are not
+> > > > > allocated?
+> > > > 
+> > > > Yes, this is not required. Its just a defense. The tpm_realize()
+> > > > function should allocate the command and response buffers.
+> > > > 
+> > > > > 
+> > > > > > +        return false;
+> > > > > > +    }
+> > > > > > +    if (s->response_offset > s->response_buffer->len) {
+> > > > > > +        error_setg(errp, "tpm-crb: Invalid response "
+> > > > > > +                   "offset %" PRIu32 " in migration stream",
+> > > > > > +                   s->response_offset);
+> > > > > > +        return false;
+> > > > > > +    }
+> > > > > 
+> > > > > The check is correct but can this particular case occur other than through
+> > > > > crafted input?
+> > > > 
+> > > > Not that I can think of. The check is indeed added to address malicious
+> > > > migration stream / crafted input.
+> > > 
+> > > I think that devices are assuming trusted input for all devices resumed from
+> > > their previously stored state...
+> > 
+> > I see. Shall I remove these two checks at the beginning and keep only
+> > the last one?
+> 
+> I think so. For the last one I think you should write a description what
+> role the external emulator can play here.
 
-- Add new fields to the CRB Interface Identifier and the CRB
-  Control Start registers.
-- CRB_CTRL_START now has 2 new settings, that can be toggled using the
-  nextChunk and crbRspRetry bits.
-- CapCRBChunk bit (10) was Reserved1 previously. The field is reused in
-  this revision of the specification. Refer to section 6.4.2.2 of [1]
-- Add hw_compat global property called cap-chunk because the chunking
-  feature is only supported for machine type 11.1 and higher.
+Sure. I have updated it in v6. Thank you.
 
-[1] https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-Platform-TPM-Profile-for-TPM-2p0-v1p07_Pub.pdf
+> 
+> 
+> > 
+> > > 
+> > > > 
+> > > > > 
+> > > > > > +    if (s->response_buffer->len > s->be_buffer_size ||
+> > > > > > +        s->command_buffer->len > s->be_buffer_size) {
+> > > > > 
+> > > > > I suppose this could happen if I was running with a PQC-enable swtpm/libtpms
+> > > > > and suspended at the right moment that when a chunked command or response
+> > > > > was in the buffer and now I am trying to resume with a non-PQC-enabled swtpm
+> > > > > that only has 4kb buffer, while the newer PQC one had 8kb buffer.
+> > > > > 
+> > > > 
+> > > > Yes. This check is for safety. We do not want to migrate to a VM that
+> > > > has a tpm backend that does not support big buffers.
+> > > > 
+> > > > > > +        error_setg(errp, "tpm-crb: Buffer sizes exceed backend capacity");
+> > > > > > +        return false;
+> > > > > > +    }
+> > > > > > +    return true;
+> > > > > > +}
+> > > > > > +
+> > > > > > +static const VMStateDescription vmstate_tpm_crb_chunk = {
+> > > > > > +    .name = "tpm-crb/chunk",
+> > > > > > +    .version_id = 0,
+> > > > > > +    .needed = tpm_crb_chunk_needed,
+> > > > > > +    .post_load_errp = tpm_crb_chunk_post_load,
+> > > > > > +    .fields = (const VMStateField[]) {
+> > > > > > +        VMSTATE_GBYTEARRAY(command_buffer, CRBState, 0),
+> > > > > > +        VMSTATE_GBYTEARRAY(response_buffer, CRBState, 0),
+> > > > > > +        VMSTATE_UINT32(response_offset, CRBState),
+> > > > > > +        VMSTATE_END_OF_LIST()
+> > > > > > +    }
+> > > > > > +};
+> > > > > > +
+> > > > > >     static const VMStateDescription vmstate_tpm_crb = {
+> > > > > >         .name = "tpm-crb",
+> > > > > >         .pre_save = tpm_crb_pre_save,
+> > > > > >         .fields = (const VMStateField[]) {
+> > > > > >             VMSTATE_UINT32_ARRAY(regs, CRBState, TPM_CRB_R_MAX),
+> > > > > >             VMSTATE_END_OF_LIST(),
+> > > > > > +    },
+> > > > > > +    .subsections = (const VMStateDescription * const []) {
+> > > > > > +        &vmstate_tpm_crb_chunk,
+> > > > > > +        NULL,
+> > > > > >         }
+> > > > > >     };
+> > > > > > 
+> > > > > > @@ -366,6 +420,8 @@ static const Property tpm_crb_properties[] = {
+> > > > > >         DEFINE_PROP_TPMBE("tpmdev", CRBState, tpmbe),
+> > > > > >         DEFINE_PROP_BOOL("ppi", CRBState, ppi_enabled, true),
+> > > > > >         DEFINE_PROP_BOOL("cap-chunk", CRBState, cap_chunk, true),
+> > > > > > +    DEFINE_PROP_BOOL("x-allow-chunk-migration", CRBState,
+> > > > > > +                     allow_chunk_migration, true),
+> > > > > >     };
+> > > > > > 
+> > > > > >     static void tpm_crb_reset(void *dev)
+> > > > > > @@ -422,6 +478,7 @@ static void tpm_crb_reset(void *dev)
+> > > > > >     static void tpm_crb_realize(DeviceState *dev, Error **errp)
+> > > > > >     {
+> > > > > >         CRBState *s = CRB(dev);
+> > > > > > +    int ret;
+> > > > > > 
+> > > > > >         if (!tpm_find()) {
+> > > > > >             error_setg(errp, "at most one TPM device is permitted");
+> > > > > > @@ -431,6 +488,15 @@ static void tpm_crb_realize(DeviceState *dev, Error **errp)
+> > > > > >             error_setg(errp, "'tpmdev' property is required");
+> > > > > >             return;
+> > > > > >         }
+> > > > > > +    if (s->cap_chunk && !s->allow_chunk_migration) {
+> > > > > > +        error_setg(&s->migration_blocker,
+> > > > > > +                   "The tpm-crb device does not support chunk migration with "
+> > > > > > +                   "machine version less than 11.1");
+> > > > > > +        ret = migrate_add_blocker_normal(&s->migration_blocker, errp);
+> > > > > > +        if (ret < 0) {
+> > > > > > +            return;
+> > > > > > +        }
+> > > > > > +    }
+> > > > > > 
+> > > > > >         memory_region_init_io(&s->mmio, OBJECT(s), &tpm_crb_memory_ops, s,
+> > > > > >             "tpm-crb-mmio", sizeof(s->regs));
+> > > > > > @@ -463,6 +529,11 @@ static void tpm_crb_unrealize(DeviceState *dev)
+> > > > > > 
+> > > > > >         g_clear_pointer(&s->command_buffer, g_byte_array_unref);
+> > > > > >         g_clear_pointer(&s->response_buffer, g_byte_array_unref);
+> > > > > > +
+> > > > > > +    if (s->migration_blocker) {
+> > > > > > +        migrate_del_blocker(&s->migration_blocker);
+> > > > > > +        error_free(s->migration_blocker);
+> > > > > > +    }
+> > > > > >     }
+> > > > > > 
+> > > > > >     static void tpm_crb_class_init(ObjectClass *klass, const void *data)
+> > > > > 
+> > > > 
+> > > > Regards,
+> > > > Arun Menon
+> > > > 
+> > > 
+> > 
+> > Regards,
+> > Arun Menon
+> > 
+> 
 
-Signed-off-by: Arun Menon <armenon@redhat.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- hw/core/machine.c     | 4 +++-
- hw/tpm/tpm_crb.c      | 6 ++++++
- include/hw/acpi/tpm.h | 5 ++++-
- 3 files changed, 13 insertions(+), 2 deletions(-)
-
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index 1b661fd36a..4e0a93e231 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -39,7 +39,9 @@
- #include "hw/acpi/generic_event_device.h"
- #include "qemu/audio.h"
- 
--GlobalProperty hw_compat_11_0[] = {};
-+GlobalProperty hw_compat_11_0[] = {
-+    { "tpm-crb", "cap-chunk", "off" },
-+};
- const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
- 
- GlobalProperty hw_compat_10_2[] = {
-diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-index 02701ab948..bfa09c04cf 100644
---- a/hw/tpm/tpm_crb.c
-+++ b/hw/tpm/tpm_crb.c
-@@ -44,6 +44,8 @@ struct CRBState {
-     size_t be_buffer_size;
- 
-     TPMPPI ppi;
-+
-+    bool cap_chunk;
- };
- typedef struct CRBState CRBState;
- 
-@@ -58,6 +60,7 @@ DECLARE_INSTANCE_CHECKER(CRBState, CRB,
- #define CRB_INTF_CAP_FIFO_NOT_SUPPORTED 0b0
- #define CRB_INTF_CAP_CRB_SUPPORTED 0b1
- #define CRB_INTF_IF_SELECTOR_CRB 0b1
-+#define CRB_INTF_CAP_CRB_CHUNK 0b1
- 
- #define CRB_CTRL_CMD_SIZE (TPM_CRB_ADDR_SIZE - A_CRB_DATA_BUFFER)
- 
-@@ -227,6 +230,7 @@ static const VMStateDescription vmstate_tpm_crb = {
- 
- static const Property tpm_crb_properties[] = {
-     DEFINE_PROP_TPMBE("tpmdev", CRBState, tpmbe),
-+    DEFINE_PROP_BOOL("cap-chunk", CRBState, cap_chunk, true),
- };
- 
- static void tpm_crb_reset(void *dev)
-@@ -258,6 +262,8 @@ static void tpm_crb_reset(void *dev)
-                      CapCRB, CRB_INTF_CAP_CRB_SUPPORTED);
-     ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
-                      InterfaceSelector, CRB_INTF_IF_SELECTOR_CRB);
-+    ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
-+                     CapCRBChunk, s->cap_chunk ? CRB_INTF_CAP_CRB_CHUNK : 0);
-     ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
-                      RID, 0b0000);
-     ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID2,
-diff --git a/include/hw/acpi/tpm.h b/include/hw/acpi/tpm.h
-index 2ab186a745..782dc8212c 100644
---- a/include/hw/acpi/tpm.h
-+++ b/include/hw/acpi/tpm.h
-@@ -150,7 +150,7 @@ REG32(CRB_INTF_ID, 0x30)
-   FIELD(CRB_INTF_ID, InterfaceVersion, 4, 4)
-   FIELD(CRB_INTF_ID, CapLocality, 8, 1)
-   FIELD(CRB_INTF_ID, CapCRBIdleBypass, 9, 1)
--  FIELD(CRB_INTF_ID, Reserved1, 10, 1)
-+  FIELD(CRB_INTF_ID, CapCRBChunk, 10, 1)
-   FIELD(CRB_INTF_ID, CapDataXferSizeSupport, 11, 2)
-   FIELD(CRB_INTF_ID, CapFIFO, 13, 1)
-   FIELD(CRB_INTF_ID, CapCRB, 14, 1)
-@@ -169,6 +169,9 @@ REG32(CRB_CTRL_STS, 0x44)
-   FIELD(CRB_CTRL_STS, tpmIdle, 1, 1)
- REG32(CRB_CTRL_CANCEL, 0x48)
- REG32(CRB_CTRL_START, 0x4C)
-+  FIELD(CRB_CTRL_START, Start, 0, 1)
-+  FIELD(CRB_CTRL_START, crbRspRetry, 1, 1)
-+  FIELD(CRB_CTRL_START, nextChunk, 2, 1)
- REG32(CRB_INT_ENABLED, 0x50)
- REG32(CRB_INT_STS, 0x54)
- REG32(CRB_CTRL_CMD_SIZE, 0x58)
--- 
-2.54.0
+Regards,
+Arun Menon
 
 
