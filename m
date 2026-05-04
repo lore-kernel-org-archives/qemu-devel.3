@@ -4,92 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEEFECD342F
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 16:53:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EBB6FF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 16:57:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJwXR-0004DL-FO; Mon, 04 May 2026 12:52:57 -0400
+	id 1wJwbr-0006mR-QO; Mon, 04 May 2026 12:57:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1wJwXG-00047G-0p
- for qemu-devel@nongnu.org; Mon, 04 May 2026 12:52:49 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
- id 1wJwXC-0005Gp-5J
- for qemu-devel@nongnu.org; Mon, 04 May 2026 12:52:44 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-48a563e4ef7so41593085e9.0
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 09:52:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wJwbp-0006m5-QY
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 12:57:29 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wJwbo-0006Fc-34
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 12:57:29 -0400
+Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 644B42RY1151327
+ for <qemu-devel@nongnu.org>; Mon, 4 May 2026 16:57:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ H7+jpDELI9bjlBmKHGv3F95JJQYUPQ5Ay9LJDj/BrdA=; b=lARNlRLPfSgPIEzz
+ q0TAbdbtdAkhAHdHE0h6o/RTF9Ka7Vh1rdtg4dmAAQKY6M3v+KNz2mr86rgpq8Mj
+ iBLaWYDjlafA/imOnx9vvasuVAmgIV0yiDgeKnpH6wvXgodGZTYAOXbU4FEKzIRJ
+ QmzN8CvxFDWIWvjHILsGOGvxclVj67m3qW2xScjnV/aHm7/P4DxmD5U/1bLb1Lf6
+ I3RJSjyxwATiGqZGkU7Z5ZhOyvLac/1wcxc9l4WjPJkgw5L0EHzOQKcmnX5GyObi
+ HU+YACcZwjTLq0MC6lo8+S+jE2vG0xlN/KtYWqbTl4dy+4R5yBScw+W0mDTfCxHH
+ s59Tng==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dxscy9bt8-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 16:57:25 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-2da19227bc1so5117080eec.1
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 09:57:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=9elements.com; s=google; t=1777913560; x=1778518360; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zWQUqNSwA2bv0fLjmLLKqkScGEfrKAjNrGqcZ0LkMho=;
- b=CAsdRBWDJZEkcj0B73s/jqIxOfkQKoBAFKVc/v6RE34JT7/7xTgz1UfixTiOzC8Yer
- m+HRzF7PJIkilNVk94kOOrJYKWlc4WE8NCbOvwpCZJFt+ZjE6UaS4hbys4wozcWFkqi5
- 9/0UAo0py8ZxH+oj5TJlk41XWc1tRT9VEplyEwiHZcWZprxdPTns40D6mSfG1LWmDGiQ
- gfRnEwDRWLHSxzeiMyjWw0SbNR9BolI23RTx5Ih9yUXpFtUzfzNcSMJtvBIS9kTPMKHr
- NtOpZyE/IdOYHwXHtMifuZwtC7TD4QqxuH84WMz3LoPs46nhNgitnJ9lGzAFkDByDMkV
- jGSQ==
+ d=oss.qualcomm.com; s=google; t=1777913845; x=1778518645; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=H7+jpDELI9bjlBmKHGv3F95JJQYUPQ5Ay9LJDj/BrdA=;
+ b=gxuU1DS62EhB4f0mxq8LBb58m142W5nc2CPCmTl3TgVotrhs6VBLGq+sB2038ImAxO
+ Y+gaFAUlv9QDesQzKskUKSEkz/rl2iosRPGPsCqkyJO6KZ54LhxvEtRJ5juRCPjhFvA5
+ urLWFlgMnqe6xXNeCBqnd5DFgiBtzxXBAjpT1VOg966HUSWyU64iyBAuU3ka2MVKbMJs
+ nNxP+/XMDWcsF/fvK35ToquiGLlHaDWPG3SLhwhQBIld/HlfoHUYX6zZI60nTzPl8/jM
+ 2TtIbEj/erHo4chrKqdUVDJ5HFucdHi5hSUXDlhNAh/jkH5GmP+G6FHN90rWwQXXPit/
+ WSlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777913560; x=1778518360;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=zWQUqNSwA2bv0fLjmLLKqkScGEfrKAjNrGqcZ0LkMho=;
- b=OaU9wgL8eo+KdaZjfjzVcfxS+tBNSu0Rk4ac06VHI2Xq0dBDkqZtV8RgaTWOdnjWyb
- fEYqDWqYnjb7Ysm6owGnsweF9lCmxkMYAFySB5h23GnlX8Oqp0SRNLI3gkBwP3FvA8zY
- U5GnNtn6bUkA8pz/hSiFgw32UT1DbtHEC16VOXbQBzSiR+tOBOD9NUYn/3Svut0Q/dGZ
- ZZJUuLP8GBqSYfq4wmhmDRkP0EezyS7qTg/XXnrS6GKYdMmd+O0H76Clnf8imHPCJWYK
- TDvhh8nr/mLDyM2tjNDfD0uOMG2Dgl5Oh+GiBJcLgGVXwKjVCjdlQsmxK3RuNaNujp9i
- 7RUw==
-X-Gm-Message-State: AOJu0YxUUhyfrzNzRSKmsBkSNgZus+cCdGkJ8XINeP+qdoZ7nOewtQt5
- NK7ISw/XXqgQS4CymrKcZ09thORoYF18cmYvhkEc3xnqMvP5PyR6zno9a6J5PgpLxDXqm4hUokf
- rp/v/gdY=
-X-Gm-Gg: AeBDievDaw1ufU/R02Yk+x73XtzigHCmEN1DQkUwb/0nd06TKoIMGI0VcIUKHdNuzMy
- 3nZQJshwYXOFaYjPiqqZoxqdtcJ4aqSq7Phy759lntRa1mw3HTnhTwmAPg4NM3Y8CX0Vx2oupn2
- YKblvpDLZ81GscZCWKt++680rk21maz9A45z6WglGRLuH+iBxeKw05XuLLfVf5IrIdRy6W7Dd3p
- xSdljDiw5Zdi2WPRO9t/I4loQrsj8t2M4+PeOq1VgPkOIhMVVlSVk+Tqe2X6TtZzhkj9gYwYfD4
- yjx+u/TkPC+nhQSBb2vgkBzmaTX7KkZNOG0QqdgmDICVpRQ3anwUekyCjaA5mQO4kuk5gugzGqj
- VX50K2bOenwFijqz+w1/HMVgoYwoo6QhLbUQG/rMVfJjp2OelrAreZj5kjCkam4CF3rBkrA4vmH
- F8hJjnj3ztWfWJySFH9DVpw3UnQU6+mOVxraLQOyJ2TLfsucZbYsI+XLI=
-X-Received: by 2002:a05:600c:3549:b0:488:8bdd:cfcc with SMTP id
- 5b1f17b1804b1-48a980fc640mr165619485e9.0.1777913560197; 
- Mon, 04 May 2026 09:52:40 -0700 (PDT)
-Received: from alexanderarchlinux ([188.111.3.154])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-44a8ef50e59sm26482830f8f.10.2026.05.04.09.52.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 May 2026 09:52:39 -0700 (PDT)
-From: Alexander Hansen <alexander.hansen@9elements.com>
-To: qemu-devel@nongnu.org
-Cc: Alexander Hansen <alexander.hansen@9elements.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-arm@nongnu.org
-Subject: [PATCH 3/4] hw/sensor: support Texas Instruments ADC128D818
-Date: Mon,  4 May 2026 18:48:35 +0200
-Message-ID: <20260504165043.213704-5-alexander.hansen@9elements.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260504165043.213704-2-alexander.hansen@9elements.com>
-References: <20260504165043.213704-2-alexander.hansen@9elements.com>
+ d=1e100.net; s=20251104; t=1777913845; x=1778518645;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=H7+jpDELI9bjlBmKHGv3F95JJQYUPQ5Ay9LJDj/BrdA=;
+ b=Gh60NpJvdwtlyCgNPVw21odWFbg1uAuVnpiKsUh4xNFlZyz2b0afUxbiJFYeLNv+yu
+ rjKOlTx+dCuDWLIKAEngea7v5FyXElQw0a4NR0njgt4N8F0rAX9fAOG9YKK2zbnnfrRf
+ kIhH9p9JHMntPo8RVQSX9AtgjjM/18ce15QmjtaLE6mPHO5ByvC4x3FmehUOuDNsH13M
+ aVjZuKvLfanw3g5D0hrFEHXnMH8O1esnNZr9qNvxo4ThNGQz1IMB1KwBQKjOcZ8/ioSl
+ Mz8X7PkIz9XxjEgjRGj5cg2z+DgXlzPcA27oqy2U4m+T2CVWX349IpJrXwU+4QIAIJpX
+ zINQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9pBmpLRTPGB9plS6hSbUw9lnTbYFAgZOopxJGhLh+3BHRxODKvxRtMf65glgqxWDLsa2mzwUFWhEti@nongnu.org
+X-Gm-Message-State: AOJu0Yy8Zdz2YavIi52kHKgC29mIb9vewfvTAdvPY8U4V1Jej/Ozwu88
+ Ndf9OzRW2y0d8osGrWPmvkVEH6Rg1ylG5aohyr9FW2BPXcfOg3mk3DkrSdRtLmnkK7dVMyuPW2X
+ m17GqQ1Wm44L3TnJyNZ/FxOsisMNPQ5gdNdq+6VP6CABOVVvpVKD7GW4fjQ==
+X-Gm-Gg: AeBDievQ9JuowX/yfu4/fCTDh9foXiOlX1ju+KHD9t/nI7lrBm9ZGpWAfB1/Y8n9JDv
+ YiQ1pNvx8VevM9aAQMv0xs8UU6KnsqiT2MD1zlL40/F+OytQhqm5NEIzg5gMdjzwsIO9HKygi06
+ 8e3KgkwBLeILS+rRhSv+j6kL225twKRBEQS2jyT8S7q0kOv05xBBCLFdVtPbfSxONz5Z5Tsyj3h
+ ahMrwkkE8oboPRj8vSw2shJFA/qM0A77cbYNJ9EXaZWlMJElMWOK3iG3mOfMc4c62ptUcIi0iT6
+ KjlzFm5fGcFsNdeTcdZC0xP4J8IBN8N/BrCWq8tM0JboiDyuPLlrR4bs6TSOrRm0jI1BIHDoH1t
+ 4hpAJHGpPDHeBK/re5lEEvI04uTAPfOxRSBntze8DaacCWH0Vw7iEC9NW/Qu9jSSWAUAu1Km5Xh
+ 8Bko0lli8Ebx39h9/vQMGhLfqJ
+X-Received: by 2002:a05:7300:d509:b0:2f1:6252:f8fe with SMTP id
+ 5a478bee46e88-2f16252fe2dmr2967258eec.3.1777913845034; 
+ Mon, 04 May 2026 09:57:25 -0700 (PDT)
+X-Received: by 2002:a05:7300:d509:b0:2f1:6252:f8fe with SMTP id
+ 5a478bee46e88-2f16252fe2dmr2967216eec.3.1777913844343; 
+ Mon, 04 May 2026 09:57:24 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2ee3b783a95sm16963467eec.22.2026.05.04.09.57.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 May 2026 09:57:23 -0700 (PDT)
+Message-ID: <a1f481e2-a1ab-45a0-9c61-2e89801352cb@oss.qualcomm.com>
+Date: Mon, 4 May 2026 09:57:22 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] docs/devel/tcg-ops: Stop listing dup2_vec()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20260504125032.35465-1-philmd@linaro.org>
+ <20260504125032.35465-2-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260504125032.35465-2-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alexander.hansen@9elements.com; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA0MDE1MSBTYWx0ZWRfXyQx3XpMdUJJJ
+ cV91EH6VVnuibFYqVhLqp4Ilh1qetsUu/tS7hjEwjxf6o5oyCYlpyDVGNBQIRCtXsnsnOv5jD0/
+ CKOqu67d0fohbPPekR5SSz1yyzjuKnrU07iVM5QOTs/jjDZJe7XPl4yVQyA04SxKm9NZPdXH5aV
+ Z8z3Rx9oHoJmu+HfFIOAWfhK56kvzHQfq4570AVjb1VHdETzTI73PzyKcMGmORKVFkPj/1JOF13
+ dvrO0DixGtPa39qidhWQirXbLiFlWC0cHAJ6zAqxRuXPL5EZ0Tg6pnTTJz09wnfq0Y9URwXBRNt
+ tFQarnHzVSqstS7Ftjo20dYn6p6LjR/ff1RyM99SVr9HiNyjPmOSLM2lHtW2bWWM8dOWvR1TeU1
+ g+SPa/mCtHgJB1Fy/URlJ6Gp48knhFdlBWsziATlB1CAI5PRS5iKtpqogkyKr8UR89Y3dk0fYkx
+ y5d+svWU93+Ymd4QeSw==
+X-Proofpoint-ORIG-GUID: eWG4KzDs4FxEeHyyRn5Y69MdXFh2fWUd
+X-Proofpoint-GUID: eWG4KzDs4FxEeHyyRn5Y69MdXFh2fWUd
+X-Authority-Analysis: v=2.4 cv=C47ZDwP+ c=1 sm=1 tr=0 ts=69f8cff5 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=Um2Pa8k9VHT-vaBCBUpS:22
+ a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=lDF0YcFSIPAaTHKB7q0A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-04_05,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 phishscore=0 adultscore=0 suspectscore=0
+ bulkscore=0 impostorscore=0 lowpriorityscore=0 clxscore=1015 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605040151
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,597 +155,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Product: [1]
-Datasheet: [2]
+On 5/4/2026 5:50 AM, Philippe Mathieu-Daudé wrote:
+> dup2_vec() opcode was removed in commit 6e7b13936d4
+> ("tcg: Remove INDEX_op_dup2_vec").
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>  docs/devel/tcg-ops.rst | 5 -----
+>  1 file changed, 5 deletions(-)
+> 
 
-ADC128D818 Support:
-- channel readings from pre-set values
-- driver can read and write most configuration registers
-
-ADC128D818 currently unsupported:
-- slave address restriction
-- startup sequence and realistic busy register emulation
-- external VREF
-- conversion rate
-- interrupts
-- deep shutdown mode
-- individual channel shutdown
-- selection between Mode 0,1,2,3
-- pseudo-differential input
-
-Anyone could expand it in the future for more accurate emulation.
-
-The reason for adding this device is to support Yosemite V4 emulation.
-
-Tested: on yosemite v4 qemu
-
-initialize the device:
-```
-// ti,adc128d818 @ 0x1f    (adc)
-// the driver will throw away the last 4 bits, set them 0
-uint16_t adc_values1[8] = {
-    0b011110000000, 0b010100010000,
-    0b001000110000, 0b100000100000,
-    0b011110000000, 0b010100010000,
-    0b001000110000, 0b100000100000};
-adc128d818_init_with_values(bus, 0x1f, adc_values1, 8);
-```
-
-Trace outputs directly after initialization:
-```
-adc128d818_realize i2c_addr: 0x1f
-adc128d818_realize i2c_addr: 0x1f
-adc128d818_event i2c_addr: 0x1f, event: 0x01
-adc128d818_send i2c_addr: 0x1f, data: 0x00
-adc128d818_send i2c_addr: 0x1f, data: 0x80
-adc128d818_write i2c_addr: 0x1f, reg: 0x00 data: 0x80
-adc128d818_event i2c_addr: 0x1f, event: 0x03
-adc128d818_event i2c_addr: 0x1f, event: 0x01
-...
-```
-
-read the values
-```
-root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/in0_min
-0
-root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/in0_max
-0
-root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/in0_input
-75
-root@yosemite4:/sys/bus/i2c/devices/30-001f# cat hwmon/hwmon0/name
-adc128d818
-```
-
-We initially configured 0b011110000000 for the first channel.
-The driver throws away the last 4 bits and does calculation similar to
-below:
-```
-val = DIV_ROUND_CLOSEST(data->in[index][nr] * data->vref, 4095);
-```
-We can check that the calculation is as expected given our configured
-value.
-```
-((0b011110000000 >> 4) * 2560) / 4095
-75.01831501831502
-```
-
-References:
-[1] https://www.ti.com/product/ADC128D818
-[2] https://www.ti.com/lit/gpn/adc128d818
-
-Cc: Paolo Bonzini <pbonzini@redhat.com> (maintainer:Kconfig)
-Cc: Peter Maydell <peter.maydell@linaro.org> (supporter:ARM TCG CPUs)
-Cc: "Philippe Mathieu-Daudé" <philmd@linaro.org> (odd fixer:Overall sensors)
-Cc: qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Cc: qemu-devel@nongnu.org (open list:All patches CC here)
-Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
----
- hw/arm/Kconfig                 |   1 +
- hw/sensor/Kconfig              |   4 +
- hw/sensor/adc128d818.c         | 414 +++++++++++++++++++++++++++++++++
- hw/sensor/meson.build          |   1 +
- hw/sensor/trace-events         |   8 +
- include/hw/sensor/adc128d818.h |  20 ++
- 6 files changed, 448 insertions(+)
- create mode 100644 hw/sensor/adc128d818.c
- create mode 100644 include/hw/sensor/adc128d818.h
-
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index decbc8b0d8..c1693325a1 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -553,6 +553,7 @@ config ASPEED_SOC
-     select MAX31785
-     select MAX31790
-     select MAX11615
-+    select ADC128D818
-     select FSI_APB2OPB_ASPEED
-     select AT24C
-     select PCI_EXPRESS
-diff --git a/hw/sensor/Kconfig b/hw/sensor/Kconfig
-index 84eede9d84..c9190ff780 100644
---- a/hw/sensor/Kconfig
-+++ b/hw/sensor/Kconfig
-@@ -51,3 +51,7 @@ config MAX31790
- config MAX11615
-     bool
-     depends on I2C
-+
-+config ADC128D818
-+    bool
-+    depends on I2C
-diff --git a/hw/sensor/adc128d818.c b/hw/sensor/adc128d818.c
-new file mode 100644
-index 0000000000..d13a41c158
---- /dev/null
-+++ b/hw/sensor/adc128d818.c
-@@ -0,0 +1,414 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * Texas Instruments ADC128D818 12 bit ADC with temperature sensor
-+ * Models ADC128D818
-+ *
-+ * Product:
-+ * https://www.ti.com/product/ADC128D818
-+ * Datasheet:
-+ * https://www.ti.com/lit/gpn/adc128d818
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/i2c/i2c.h"
-+#include "migration/vmstate.h"
-+#include "qapi/error.h"
-+#include "qapi/visitor.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "trace.h"
-+#include "hw/sensor/adc128d818.h"
-+
-+/* 8 bit, r/w */
-+#define REG_CONFIG 0x00
-+
-+/* 8 bit, readonly */
-+#define REG_INTERRUPT_STATUS 0x01
-+
-+/* 8 bit, r/w */
-+#define REG_INTERRUPT_MASK 0x03
-+
-+/* 8 bit, r/w */
-+#define REG_CONVERSION_RATE 0x07
-+
-+/* 8 bit, r/w */
-+#define REG_CHANNEL_DISABLE 0x08
-+
-+/* 8 bit, write-only */
-+#define REG_ONE_SHOT 0x09
-+
-+/* 8 bit, r/w */
-+#define REG_DEEP_SHUTDOWN 0x0a
-+
-+/* 8 bit, r/w */
-+#define REG_ADVANCED_CONFIG 0x0b
-+
-+/* 8 bit, readonly */
-+#define REG_BUSY_STATUS 0x0c
-+
-+/* 16 bit registers, N = 0..7, readonly */
-+#define REG_CHANNEL_READING(N) (0x20 + N)
-+
-+/* 8 bit registers N = 0..15, r/w */
-+#define REG_LIMIT(N) (0x2a + N)
-+
-+/* 8 bit register, readonly */
-+#define REG_MANUFACTURER_ID 0x3e
-+
-+/* 8 bit register, readonly */
-+#define REG_REVISION_ID 0x3f
-+
-+#define ADC128D818_NUM_CHANNELS 8
-+
-+struct ADC128D818State {
-+    I2CSlave i2c;
-+
-+    uint8_t config;
-+    uint8_t interrupt_mask;
-+    uint8_t conversion_rate;
-+    uint8_t channel_disable;
-+    bool deep_shutdown;
-+    uint8_t advanced_config;
-+
-+    /* channel reading registers, 2 bytes each */
-+    uint16_t channels[ADC128D818_NUM_CHANNELS];
-+
-+    /* high and low limit registers 0x2a - 0x39, one byte each */
-+    uint8_t limit[ADC128D818_NUM_CHANNELS * 2];
-+
-+    /* input buffer */
-+    uint8_t len;
-+    uint8_t buf[2];
-+
-+    /* output buffer */
-+    uint8_t outlen;
-+    uint8_t outbuf[2];
-+
-+    /* selected channel for read/write operation */
-+    uint8_t pointer;
-+};
-+
-+struct ADC128D818Class {
-+    I2CSlaveClass parent_class;
-+};
-+
-+OBJECT_DECLARE_TYPE(ADC128D818State, ADC128D818Class, ADC128D818)
-+
-+static void adc128d818_read(ADC128D818State *s)
-+{
-+    uint8_t ch_num = 0;
-+    switch (s->pointer) {
-+    case REG_CONFIG:
-+        s->outbuf[0] = s->config;
-+        break;
-+    case REG_INTERRUPT_STATUS:
-+        s->outbuf[0] = 0x0; /* POR State */
-+        break;
-+    case REG_INTERRUPT_MASK:
-+        s->outbuf[0] = s->interrupt_mask;
-+        break;
-+    case REG_CONVERSION_RATE:
-+        s->outbuf[0] = s->conversion_rate;
-+        break;
-+    case REG_CHANNEL_DISABLE:
-+        s->outbuf[0] = s->channel_disable;
-+        break;
-+    case REG_ONE_SHOT:
-+        /* not marked as readable */
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: read of register 0x%02x\n",
-+            __func__, s->pointer);
-+        s->outbuf[0] = 0x0;
-+        break;
-+    case REG_DEEP_SHUTDOWN:
-+        s->outbuf[0] = s->deep_shutdown ? 0x1 : 0x0;
-+        break;
-+    case REG_ADVANCED_CONFIG:
-+        s->outbuf[0] = s->advanced_config & 0b111;
-+        break;
-+    case REG_BUSY_STATUS:
-+        /* not implemented */
-+        s->outbuf[0] = 0b00000010; /* POR State */
-+        break;
-+    case REG_CHANNEL_READING(0):
-+    case REG_CHANNEL_READING(1):
-+    case REG_CHANNEL_READING(2):
-+    case REG_CHANNEL_READING(3):
-+    case REG_CHANNEL_READING(4):
-+    case REG_CHANNEL_READING(5):
-+    case REG_CHANNEL_READING(6):
-+    case REG_CHANNEL_READING(7):
-+        ch_num = s->pointer - REG_CHANNEL_READING(0);
-+        /* high byte comes first, driver reads swapped */
-+        s->outbuf[0] = (s->channels[ch_num] >> 8) & 0xff;
-+        s->outbuf[1] = s->channels[ch_num] & 0xff;
-+        break;
-+    case REG_LIMIT(0):
-+    case REG_LIMIT(1):
-+    case REG_LIMIT(2):
-+    case REG_LIMIT(3):
-+    case REG_LIMIT(4):
-+    case REG_LIMIT(5):
-+    case REG_LIMIT(6):
-+    case REG_LIMIT(7):
-+    case REG_LIMIT(8):
-+    case REG_LIMIT(9):
-+    case REG_LIMIT(10):
-+    case REG_LIMIT(11):
-+    case REG_LIMIT(12):
-+    case REG_LIMIT(13):
-+    case REG_LIMIT(14):
-+    case REG_LIMIT(15):
-+        s->outbuf[0] = s->limit[s->pointer - REG_LIMIT(0)];
-+        break;
-+    case REG_MANUFACTURER_ID:
-+        s->outbuf[0] = 0x1; /* readonly */
-+        break;
-+    case REG_REVISION_ID:
-+        s->outbuf[0] = 0b00001001; /* readonly */
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: read of register 0x%02x\n",
-+            __func__, s->pointer);
-+        break;
-+    }
-+}
-+
-+static void adc128d818_write_advanced_config(ADC128D818State *s, uint8_t data)
-+{
-+    /*
-+     * Note: Whenever the Advanced Configuration Register is programmed,
-+     * all of the values in the Channel Reading Registers and
-+     * Interrupt Status Registers will return to their default values.
-+     */
-+
-+    s->advanced_config = (data & 0b111);
-+}
-+
-+static void adc128d818_write(ADC128D818State *s, uint8_t data)
-+{
-+    trace_adc128d818_write(s->i2c.address, s->pointer, data);
-+
-+    /* which bits in config register are writable */
-+    const uint8_t config_w_mask = 0b10001011;
-+    const uint8_t config_ro_mask = (uint8_t)~config_w_mask;
-+
-+    switch (s->pointer) {
-+    case REG_CONFIG:
-+        s->config = (s->config & config_ro_mask) | (data & config_w_mask);
-+        break;
-+    case REG_INTERRUPT_MASK:
-+        s->interrupt_mask = data;
-+        break;
-+    case REG_CONVERSION_RATE:
-+        s->conversion_rate = data;
-+        break;
-+    case REG_CHANNEL_DISABLE:
-+        s->channel_disable = data;
-+        break;
-+    case REG_ONE_SHOT:
-+        /*
-+         * Initiate a single conversion and comparison cycle when
-+         * the device is in shutdown mode or deep shutdown mode, after
-+         * which the device returns to the respective mode that it was in
-+         *
-+         */
-+        break;
-+    case REG_DEEP_SHUTDOWN:
-+        s->deep_shutdown = (data & 0x1) != 0;
-+        break;
-+    case REG_ADVANCED_CONFIG:
-+        adc128d818_write_advanced_config(s, data);
-+        break;
-+    case REG_LIMIT(0):
-+    case REG_LIMIT(1):
-+    case REG_LIMIT(2):
-+    case REG_LIMIT(3):
-+    case REG_LIMIT(4):
-+    case REG_LIMIT(5):
-+    case REG_LIMIT(6):
-+    case REG_LIMIT(7):
-+    case REG_LIMIT(8):
-+    case REG_LIMIT(9):
-+    case REG_LIMIT(10):
-+    case REG_LIMIT(11):
-+    case REG_LIMIT(12):
-+    case REG_LIMIT(13):
-+    case REG_LIMIT(14):
-+    case REG_LIMIT(15):
-+        s->limit[s->pointer - REG_LIMIT(0)] = data;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: write of register 0x%02x\n",
-+            __func__, s->pointer);
-+        break;
-+    }
-+}
-+
-+static int adc128d818_send(I2CSlave *i2c, uint8_t data)
-+{
-+    ADC128D818State *s = ADC128D818(i2c);
-+    trace_adc128d818_send(s->i2c.address, data);
-+
-+    s->outlen = 0;
-+    s->buf[s->len] = data;
-+
-+    if (s->len == 0) {
-+        s->pointer = data;
-+    } else if (s->len == 1) {
-+        adc128d818_write(s, data);
-+    }
-+
-+    s->len++;
-+    return 0;
-+}
-+
-+static uint8_t adc128d818_recv(I2CSlave *i2c)
-+{
-+    ADC128D818State *s = ADC128D818(i2c);
-+    trace_adc128d818_recv(s->i2c.address, s->pointer);
-+
-+    adc128d818_read(s);
-+
-+    if (s->outlen >= 2) {
-+        qemu_log_mask(LOG_GUEST_ERROR, "%s: too many bytes read\n", __func__);
-+        s->outlen = 0;
-+    }
-+
-+    const uint8_t data =  s->outbuf[s->outlen++];
-+
-+    trace_adc128d818_recv_return(s->i2c.address, data);
-+    return data;
-+}
-+
-+static int adc128d818_event(I2CSlave *i2c, enum i2c_event event)
-+{
-+    ADC128D818State *s = ADC128D818(i2c);
-+
-+    trace_adc128d818_event(s->i2c.address, event);
-+
-+    switch (event) {
-+    case I2C_START_RECV:
-+        s->outlen = 0;
-+        break;
-+    case I2C_START_SEND:
-+        s->len = 0;
-+        break;
-+    default:
-+        break;
-+    }
-+
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_adc128d818 = {
-+    .name = TYPE_ADC128D818,
-+    .version_id = 0,
-+    .minimum_version_id = 0,
-+    .fields = (const VMStateField[]){
-+        VMSTATE_UINT8(config, ADC128D818State),
-+        VMSTATE_UINT8(interrupt_mask, ADC128D818State),
-+        VMSTATE_UINT8(conversion_rate, ADC128D818State),
-+        VMSTATE_UINT8(channel_disable, ADC128D818State),
-+        VMSTATE_BOOL(deep_shutdown, ADC128D818State),
-+        VMSTATE_UINT8(advanced_config, ADC128D818State),
-+        VMSTATE_UINT16_ARRAY(channels, ADC128D818State,
-+            ADC128D818_NUM_CHANNELS),
-+        VMSTATE_UINT8_ARRAY(limit, ADC128D818State,
-+            ADC128D818_NUM_CHANNELS * 2),
-+        VMSTATE_UINT8(len, ADC128D818State),
-+        VMSTATE_UINT8_ARRAY(buf, ADC128D818State, 2),
-+        VMSTATE_UINT8(outlen, ADC128D818State),
-+        VMSTATE_UINT8_ARRAY(outbuf, ADC128D818State, 2),
-+        VMSTATE_UINT8(pointer, ADC128D818State),
-+        VMSTATE_I2C_SLAVE(i2c, ADC128D818State),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void adc128d818_init(Object *obj)
-+{
-+    /* Nothing to do */
-+}
-+
-+I2CSlave *adc128d818_init_with_values(I2CBus *bus, uint8_t address,
-+     const uint16_t *init_values, uint32_t init_values_size)
-+{
-+    ADC128D818State *s;
-+
-+    s = ADC128D818(i2c_slave_new(TYPE_ADC128D818, address));
-+
-+    for (int i = 0; i < ADC128D818_NUM_CHANNELS; i++) {
-+
-+        /* arbitrary value */
-+        uint16_t value = 0b0000101011010010;
-+
-+        if (i < init_values_size) {
-+            value = init_values[i];
-+        }
-+        s->channels[i] = value;
-+    }
-+
-+    i2c_slave_realize_and_unref(I2C_SLAVE(s), bus, &error_abort);
-+
-+    return I2C_SLAVE(s);
-+}
-+
-+static void adc128d818_reset(I2CSlave *i2c)
-+{
-+    ADC128D818State *s = ADC128D818(i2c);
-+
-+    s->pointer = 0;
-+    s->outlen = 0;
-+
-+    /* POR-State */
-+    s->config = 0b00001000;
-+    s->interrupt_mask = 0;
-+    s->conversion_rate = 0;
-+    s->channel_disable = 0;
-+    s->deep_shutdown = 0;
-+    s->advanced_config = 0;
-+
-+    /* No POR-State defined in datasheet */
-+    for (int i = 0; i < ADC128D818_NUM_CHANNELS * 2; i++) {
-+        s->limit[i] = 0;
-+    }
-+}
-+
-+static void adc128d818_realize(DeviceState *dev, Error **errp)
-+{
-+    ADC128D818State *s = ADC128D818(dev);
-+
-+    trace_adc128d818_realize(s->i2c.address);
-+
-+    adc128d818_reset(&s->i2c);
-+}
-+
-+static void adc128d818_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    I2CSlaveClass *k = I2C_SLAVE_CLASS(klass);
-+
-+    dc->realize = adc128d818_realize;
-+    dc->desc = "Texas Intstruments ADC128D818 12-bit ADC with temp sensor";
-+    dc->vmsd = &vmstate_adc128d818;
-+    k->event = adc128d818_event;
-+    k->recv = adc128d818_recv;
-+    k->send = adc128d818_send;
-+}
-+
-+static const TypeInfo adc128d818_info = {
-+    .name = TYPE_ADC128D818,
-+    .parent = TYPE_I2C_SLAVE,
-+    .instance_size = sizeof(ADC128D818State),
-+    .class_size = sizeof(ADC128D818Class),
-+    .instance_init = adc128d818_init,
-+    .class_init = adc128d818_class_init,
-+};
-+
-+static void adc128d818_register_types(void)
-+{
-+    type_register_static(&adc128d818_info);
-+}
-+
-+type_init(adc128d818_register_types)
-diff --git a/hw/sensor/meson.build b/hw/sensor/meson.build
-index a1e26604fa..defd7647e7 100644
---- a/hw/sensor/meson.build
-+++ b/hw/sensor/meson.build
-@@ -10,3 +10,4 @@ system_ss.add(when: 'CONFIG_ISL_PMBUS_VR', if_true: files('isl_pmbus_vr.c'))
- system_ss.add(when: 'CONFIG_MAX31785', if_true: files('max31785.c'))
- system_ss.add(when: 'CONFIG_MAX31790', if_true: files('max31790.c'))
- system_ss.add(when: 'CONFIG_MAX11615', if_true: files('max11615.c'))
-+system_ss.add(when: 'CONFIG_ADC128D818', if_true: files('adc128d818.c'))
-diff --git a/hw/sensor/trace-events b/hw/sensor/trace-events
-index 3fed979e85..4853f1944d 100644
---- a/hw/sensor/trace-events
-+++ b/hw/sensor/trace-events
-@@ -20,3 +20,11 @@ max11615_recv(uint8_t i2c_addr, uint8_t reg_addr) "i2c_addr: 0x%02x, reg_addr: 0
- max11615_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns: 0x%02x"
- max11615_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
- max11615_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
-+
-+# adc128d818.c
-+adc128d818_send(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, data: 0x%02x"
-+adc128d818_write(uint8_t i2c_addr, uint8_t reg, uint8_t data) "i2c_addr: 0x%02x, reg: 0x%02x data: 0x%02x"
-+adc128d818_recv(uint8_t i2c_addr, uint8_t reg) "i2c_addr: 0x%02x, reg: 0x%02x"
-+adc128d818_recv_return(uint8_t i2c_addr, uint8_t data) "i2c_addr: 0x%02x, returns: 0x%02x"
-+adc128d818_event(uint8_t i2c_addr, uint8_t event) "i2c_addr: 0x%02x, event: 0x%02x"
-+adc128d818_realize(uint8_t i2c_addr) "i2c_addr: 0x%02x"
-diff --git a/include/hw/sensor/adc128d818.h b/include/hw/sensor/adc128d818.h
-new file mode 100644
-index 0000000000..e2bdc47590
---- /dev/null
-+++ b/include/hw/sensor/adc128d818.h
-@@ -0,0 +1,20 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+#ifndef QEMU_ADC128D818_H
-+#define QEMU_ADC128D818_H
-+
-+#include <stdint.h>
-+#include "hw/i2c/i2c.h"
-+
-+#define TYPE_ADC128D818 "adc128d818"
-+
-+/*
-+ * Create and realize a adc128d818 ADC with constant caller-supplied readings
-+ * @bus: I2C bus to put it on
-+ * @address: I2C address
-+ * @init_values: array of readings for each ADC channel
-+ * @init_values_size: Size of @init_values, can be less than the number of channels
-+ */
-+I2CSlave *adc128d818_init_with_values(I2CBus *bus, uint8_t address,
-+                                    const uint16_t *init_values, uint32_t init_values_size);
-+
-+#endif
--- 
-2.54.0
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
