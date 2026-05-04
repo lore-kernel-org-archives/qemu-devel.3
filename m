@@ -4,53 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0618ECD3423
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 07:08:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61047CD3423
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 07:09:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJnPS-0007NY-N9; Mon, 04 May 2026 03:08:06 -0400
+	id 1wJnQ5-0007UG-1w; Mon, 04 May 2026 03:08:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wJnP8-0007N9-Gw
- for qemu-devel@nongnu.org; Mon, 04 May 2026 03:07:49 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <aastharawat@linux.microsoft.com>) id 1wJnP4-0006zz-Oa
- for qemu-devel@nongnu.org; Mon, 04 May 2026 03:07:46 -0400
-Received: by linux.microsoft.com (Postfix, from userid 1236)
- id 3E43220B7168; Mon,  4 May 2026 00:07:37 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3E43220B7168
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1777878457;
- bh=jpIXOgf3bpwfJAMYQzt4TFGDvUO3D3Hfc+ulSbQYQ80=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=hdK0z4PpqsyRjZAyO+MLuxAdU4qOASyHSow6iFPGINYNJuxz7ZFmreZjwvREUGya8
- b7LrYsIizvXqbhQ4i2hK9CB3vO7kfsdKrqvFdM3aUa/xxjduqHC7JtMC/vY9JXCRoN
- /mK2bLLu6Xg4f7qdqf4GkbvoMJYhdgKdEO22bvvw=
-Date: Mon, 4 May 2026 00:07:37 -0700
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 05/14] target/arm/mshv: implement -cpu host for MSHV
-Message-ID: <afhFuQrsr0CyosgY@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20260421-mshv_accel_arm64_supp-v3-0-469f544778ba@linux.microsoft.com>
- <20260421-mshv_accel_arm64_supp-v3-5-469f544778ba@linux.microsoft.com>
- <55515ca0-3185-4b5d-9bbb-5da1245b8cc3@linaro.org>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wJnQ3-0007Tx-WC
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 03:08:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wJnQ2-0007GE-6K
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 03:08:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777878519;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DLnMP+u7Qpvva5c4wSGN32Osa42hgV/+HcTc1frecvc=;
+ b=Zf+S3YbH88UBcsdF83/cgmqf44AeRYjEAuVkGXJ37gNEVGU3Im9a8gR/nGZmYZcEg1O6LQ
+ k4Oav61PLhIiDOWRyG3I3OrzqGF5xVT7+LjOsJBjd5jVAgTOK8SerjqTpS/k3MPg0BiMBl
+ u4pEq2k1ja+/wCAQAeBk66Cb+yb1LWA=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-439-riUQ2o94OBGgARjfwz8CVg-1; Mon, 04 May 2026 03:08:38 -0400
+X-MC-Unique: riUQ2o94OBGgARjfwz8CVg-1
+X-Mimecast-MFC-AGG-ID: riUQ2o94OBGgARjfwz8CVg_1777878517
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4891f97aef0so22481865e9.2
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 00:08:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777878517; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Ov6fHQPlevsuhjYAxjImUqjmJO5pk3tu7EMW8I49lDfY0WfxYmjSES6Nn/x4kjMj/l
+ niFZm6uiJ1mD/8AQ6B8IIf9T+J1ZOShMF0iij9zqWWkLLXp2LL81aNvf9RI1uklFdMtY
+ yXIJfAFzM2AZZHBKqapgxybMCuCtSZ4ishGYoxXlVUSBjCVywkJHVrlWbCqj0DZx/SFw
+ Ies2+5ZmUdnMF7QQVjAzyPvzZNZr8lE+gn26nwvGAouaQY0o3aeXeMr3nDL65dWyWuwn
+ QHweZrmuyexWTH8pxiQjS1EB5BngaIhFWwhKmDdQPtuOOmG7s5itt4C0LODpUXiUhLVy
+ U1rA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=DLnMP+u7Qpvva5c4wSGN32Osa42hgV/+HcTc1frecvc=;
+ fh=IAr358B+xlheH8+YMcgGApL1BpAm0jBEe8/MNK8gXYM=;
+ b=KnfPfBWzXoRR6P6/CnoxQKMSQiowvYY5tnUxhPihZ7q7TQx9d/z8i9q0P3ysoJD2zD
+ M3O8V7F5Algoj+F8twx+7iZbpxDLsLNy2qHoGfhJX+2BGQVQxjZYJTcXe+gHDaqwtgpR
+ BcQJTuuQbJaKSDnKlc7hnhvP039qgVDDftCpqmMhScD2l06AmH0QGRoVOWiglIHMO+5R
+ nOwmlwciOeAc1VN9RTsjiq5Y88+Qudu4/gBDcOYXCdxBxEb7EMcJjoaojwrXLfCc+coG
+ I22i/dYnWAxSaA5RjuYhGtyg1e9V2gMs6Yu7LNpd4vuC42pgkdxqmlR+hzoctarSYkGn
+ ZD2g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1777878517; x=1778483317; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=DLnMP+u7Qpvva5c4wSGN32Osa42hgV/+HcTc1frecvc=;
+ b=JIJVrOteXgqvgNFtYGyz+n9hyFv0TITH6DAN+CfvAgg/Av5Gouue1G3lX26ubgI8ma
+ /4Sb/8+DuUUcu+OFhnpvdk+SylEry3FRDj0YGcLJHpqNuUycYvmra2RqsM6HP7TsZdFi
+ yv6u3n2Hc54hOPlxrn5ErZlFzaSAAlUDVZpYc2uQ2aaYThiDVZHNJKEKI0KmJp6GLVBM
+ LUi6p+e2LfIav3JNMxibOZPjxpSlMnb+hKuu3w39vDyVSVsUK63bwMm1eu4NbIXhUoNW
+ 6zKuLO0nYlYdAZgaBRhoMtqAfIiqoHLGk1tjn0z9IYLdUnAMZAW0ABqO3oD/inEsKXLg
+ 6DGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777878517; x=1778483317;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DLnMP+u7Qpvva5c4wSGN32Osa42hgV/+HcTc1frecvc=;
+ b=fztXx5krDSWFnV8mNdoRqwdbKwZMHzcZvtm/PfsHLSa2xNHRJ3l3En8bwpzNFBVv1A
+ ZfFsxjeU1U0xuSdoOBJb4eFTzNo/YtF3ohwn+/sHIC2uJM5o4m7BUOGkDs8IZwfo+A7W
+ Ryu9RpwS0fBkp6rSgNEH/AYygRNpx5xLBn5HTSpPT+w1ZskYJty1zg6c22lmbE/7q6dr
+ hfsI18Rp1Z98yjrZt6Bgio3d9QC47GVgGNQ5paZIsW/K5p1ph3YAc6KxWzyg4D+ql8mM
+ AIh9kLPmvt0BF3eDfVKfLZD7AbDsY6QkAuFNOpsCUx/TYgT/JHg6IhNVBrIHEbMoiwxh
+ crdQ==
+X-Gm-Message-State: AOJu0Yx808oZJPMTho8NMlqqe6j/cgc+Pkc/Z5vGPphkoXYE4Zw4K8Ka
+ MqtXAcsknqeh/kDeCdnZeJ91xxWyOmXIBG2MvONhafuX9IHQoGNOH+dB2j2uvTf1ZcMFSydqKnZ
+ 2dWp3LdGfBxC+IWtp8a/YnTob8mSvlr7gXo6UuuMotIuExodVkvgk0QeCWFaT6W2mKagV7KlWFg
+ iK9aa5xvi6X8HlrtARJaGqytt2WiXaHJA=
+X-Gm-Gg: AeBDiev+B5++3o2nNWKr98DBbgWnw51NsL0JzGOfR7waeo1J1jgd4AXC/t5m1jkg59b
+ mcCBTKtEOQhDDxOUEu+Nb/fE7tp/28j7Cw2NwbHhLxdeIeZkdqAGDm+hGgmYCnTBfCUy+mdYMxl
+ NVsd2sHCxntqs5YlrX+qYynbYq5oE2784vDJ/KnwQABpq08XFdnG9DNXEl0XsUo2i+SbDF/sJVk
+ k8niWpt7CCoaIGAZLs5DqsLrutJqKxZ6IW3EC2aRi7ZMkAJ5DNkDKaZT2HxezMMfZKDawsEWBXR
+ /r2dzCu2mhEyvyo=
+X-Received: by 2002:a05:600c:1c15:b0:48a:554d:b9a2 with SMTP id
+ 5b1f17b1804b1-48a9852f593mr136858405e9.6.1777878516847; 
+ Mon, 04 May 2026 00:08:36 -0700 (PDT)
+X-Received: by 2002:a05:600c:1c15:b0:48a:554d:b9a2 with SMTP id
+ 5b1f17b1804b1-48a9852f593mr136857875e9.6.1777878516410; Mon, 04 May 2026
+ 00:08:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <55515ca0-3185-4b5d-9bbb-5da1245b8cc3@linaro.org>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260430172204.1006673-1-pbonzini@redhat.com>
+ <20260430172204.1006673-7-pbonzini@redhat.com>
+ <09b2ec62-4b67-41da-893d-aaccf011537c@linaro.org>
+In-Reply-To: <09b2ec62-4b67-41da-893d-aaccf011537c@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 4 May 2026 09:08:26 +0200
+X-Gm-Features: AVHnY4K5Wf1PSIi4NpEzDQoE3VsBFgsAaatz_QCz6FAFdV2SE3iAFNNFw56hy88
+Message-ID: <CABgObfZU_r-xF_iUR+DVA_GkcvzFv878CRAcBh5go864aD_Jqg@mail.gmail.com>
+Subject: Re: [PULL 06/58] kconfig: remove duplicate declaration of
+ CONFIG_MIPS_BOSTON_AIA
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel <qemu-devel@nongnu.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Alistair Francis <alistair.francis@wdc.com>
+Content-Type: multipart/alternative; boundary="0000000000006cbe530650f8992e"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=-0.01,
+ RCVD_IN_MSPIKE_WL=-0.01, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,203 +138,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 23, 2026 at 11:48:12AM +1000, Richard Henderson wrote:
-> On 4/21/26 15:21, Aastha Rawat wrote:
-> > This commit enables support for the `-cpu host` option with MSHV
-> > accelerator on ARM64. The implementation queries the partition's CPU's
-> > ID registers and features via hypervisor interface, allowing to pass all
-> > CPU capabilities for the host CPU to the guest.
-> > 
-> > Replace preprocessor config checks with runtime calls to mshv_enabled(),
-> > kvm_enabled(), etc. This ensures that the correct accelerator is
-> > selected at runtime when both MSHV and KVM are enabled.
-> > 
-> > Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+--0000000000006cbe530650f8992e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Il lun 4 mag 2026, 08:28 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> ha
+scritto:
+
+> On 30/4/26 19:21, Paolo Bonzini wrote:
+> > Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> This was not reviewed by Marc-Andr=C3=A9 (at least not publically on
+> the list) but by Alistair and myself:
+>
+> https://lore.kernel.org/qemu-devel/20260430090534.841894-3-pbonzini@redha=
+t.com/
+
+
+He did for the whole series, and then I sent out the pull request (having
+had reviews) before receiving the messages from you and Alistair.
+
+Paolo
+
+
+> Not a big deal, it just shows this email workflow limits, as
+> reviewers might wonder what the point of doing public review if
+> being ignored.
+>
+> > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > > ---
-> >   accel/mshv/mshv-all.c          |   3 +-
-> >   hw/arm/virt.c                  |   3 +-
-> >   include/hw/hyperv/hvgdk_mini.h |  17 ++++
-> >   include/hw/hyperv/hvhdk.h      |  10 ++
-> >   include/system/hw_accel.h      |   3 +-
-> >   target/arm/cpu.c               |   6 +-
-> >   target/arm/cpu64.c             |  24 +++--
-> >   target/arm/mshv/mshv-all.c     | 204 +++++++++++++++++++++++++++++++++++++++++
-> >   target/arm/mshv_arm.h          |  18 ++++
-> >   9 files changed, 273 insertions(+), 15 deletions(-)
-> > 
-> > diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> > index d4cc7f5371..44f35a1463 100644
-> > --- a/accel/mshv/mshv-all.c
-> > +++ b/accel/mshv/mshv-all.c
-> > @@ -400,13 +400,14 @@ static int mshv_init_vcpu(CPUState *cpu)
-> >       int ret;
-> >       cpu->accel = g_new0(AccelCPUState, 1);
-> > -    mshv_arch_init_vcpu(cpu);
-> >       ret = mshv_create_vcpu(vm_fd, vp_index, &cpu->accel->cpufd);
-> >       if (ret < 0) {
-> >           return -1;
-> >       }
-> > +    mshv_arch_init_vcpu(cpu);
-> > +
-> >       cpu->accel->dirty = true;
-> >       return 0;
-> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> > index 7456614d05..34eb5248a9 100644
-> > --- a/hw/arm/virt.c
-> > +++ b/hw/arm/virt.c
-> > @@ -50,6 +50,7 @@
-> >   #include "system/kvm.h"
-> >   #include "system/hvf.h"
-> >   #include "system/whpx.h"
-> > +#include "system/mshv.h"
-> >   #include "system/qtest.h"
-> >   #include "system/system.h"
-> >   #include "hw/core/loader.h"
-> > @@ -3450,7 +3451,7 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
-> >       if (target_aarch64()) {
-> >           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a53")));
-> >           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a57")));
-> > -        if (kvm_enabled() || hvf_enabled()) {
-> > +        if (kvm_enabled() || hvf_enabled() || mshv_enabled()) {
-> >               g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("host")));
-> >           }
-> >       }
-> > diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
-> > index dfe94050f4..d56be0d70f 100644
-> > --- a/include/hw/hyperv/hvgdk_mini.h
-> > +++ b/include/hw/hyperv/hvgdk_mini.h
-> > @@ -48,6 +48,20 @@ typedef enum hv_register_name {
-> >       HV_ARM64_REGISTER_LR    = 0x0002001E,
-> >       HV_ARM64_REGISTER_PC    = 0x00020022,
-> > +    /* AArch64 System Register Descriptions: ID Registers */
-> > +    HV_ARM64_REGISTER_ID_MIDR_EL1         = 0x00022000,
-> > +    HV_ARM64_REGISTER_ID_MPIDR_EL1        = 0x00022005,
-> > +    HV_ARM64_REGISTER_ID_AA64_PFR0_EL1    = 0x00022020,
-> > +    HV_ARM64_REGISTER_ID_AA64_PFR1_EL1    = 0x00022021,
-> > +    HV_ARM64_REGISTER_ID_AA64_ISAR0_EL1   = 0x00022030,
-> > +    HV_ARM64_REGISTER_ID_AA64_ISAR1_EL1   = 0x00022031,
-> > +    HV_ARM64_REGISTER_ID_AA64_ISAR2_EL1   = 0x00022032,
-> > +    HV_ARM64_REGISTER_ID_AA64_MMFR0_EL1   = 0x00022038,
-> > +    HV_ARM64_REGISTER_ID_AA64_MMFR1_EL1   = 0x00022039,
-> > +    HV_ARM64_REGISTER_ID_AA64_MMFR2_EL1   = 0x0002203a,
-> > +    HV_ARM64_REGISTER_ID_AA64_DFR0_EL1    = 0x00022028,
-> > +    HV_ARM64_REGISTER_ID_AA64_DFR1_EL1    = 0x00022029,
-> 
-> Please use the actual name of the register and not add the extra _ after AA64.
+> >   hw/misc/Kconfig  | 8 --------
+> >   hw/riscv/Kconfig | 4 ++++
+> >   2 files changed, 4 insertions(+), 8 deletions(-)
+>
+>
 
-These names are imported exactly as they’re defined in the hypervisor
-headers, so we want to keep them as-is.
+--0000000000006cbe530650f8992e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> > -#if defined(CONFIG_KVM)
-> > -    kvm_arm_set_cpu_features_from_host(cpu);
-> > -    aarch64_add_sve_properties(obj);
-> > -#elif defined(CONFIG_HVF)
-> > -    hvf_arm_set_cpu_features_from_host(cpu);
-> > -#elif defined(CONFIG_WHPX)
-> > -    whpx_arm_set_cpu_features_from_host(cpu);
-> > -#else
-> > -    g_assert_not_reached();
-> > -#endif
-> > +    if (mshv_enabled()) {
-> > +        mshv_arm_set_cpu_features_from_host(cpu);
-> > +    } else if (kvm_enabled()) {
-> > +        kvm_arm_set_cpu_features_from_host(cpu);
-> > +        aarch64_add_sve_properties(obj);
-> > +    } else if (hvf_enabled()) {
-> > +        hvf_arm_set_cpu_features_from_host(cpu);
-> > +    } else if (whpx_enabled()) {
-> > +        whpx_arm_set_cpu_features_from_host(cpu);
-> > +    } else {
-> > +        g_assert_not_reached();
-> > +    }
-> 
-> If this is because both mshv and kvm can be enabled simultaneously, then
-> this should be a separate patch to transform the ifdef ladder.
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il lun 4 mag 2026, 08:28 Philipp=
+e Mathieu-Daud=C3=A9 &lt;<a href=3D"mailto:philmd@linaro.org">philmd@linaro=
+.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
+-left:1ex">On 30/4/26 19:21, Paolo Bonzini wrote:<br>
+&gt; Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lu=
+reau@redhat.com" target=3D"_blank" rel=3D"noreferrer">marcandre.lureau@redh=
+at.com</a>&gt;<br>
+<br>
+This was not reviewed by Marc-Andr=C3=A9 (at least not publically on<br>
+the list) but by Alistair and myself:<br>
+<a href=3D"https://lore.kernel.org/qemu-devel/20260430090534.841894-3-pbonz=
+ini@redhat.com/" rel=3D"noreferrer noreferrer" target=3D"_blank">https://lo=
+re.kernel.org/qemu-devel/20260430090534.841894-3-pbonzini@redhat.com/</a></=
+blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">He did=
+ for the whole series, and then I sent out the pull request (having had rev=
+iews) before receiving the messages from you and Alistair.</div><div dir=3D=
+"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></div><=
+div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquo=
+te class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px =
+solid rgb(204,204,204);padding-left:1ex"><br>
+Not a big deal, it just shows this email workflow limits, as<br>
+reviewers might wonder what the point of doing public review if<br>
+being ignored.<br>
+<br>
+&gt; Signed-off-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com=
+" target=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0hw/misc/Kconfig=C2=A0 | 8 --------<br>
+&gt;=C2=A0 =C2=A0hw/riscv/Kconfig | 4 ++++<br>
+&gt;=C2=A0 =C2=A02 files changed, 4 insertions(+), 8 deletions(-)<br>
+<br>
+</blockquote></div></div></div>
 
-Right, sure.
- 
-> > +static void clamp_id_aa64mmfr0_parange_to_ipa_size(int mshv_fd,
-> > +                                                   ARMISARegisters *isar)
-> > +{
-> > +    uint32_t ipa_size = mshv_arm_get_ipa_bit_size(mshv_fd);
-> > +    uint64_t id_aa64mmfr0;
-> > +
-> > +    /* Clamp down the PARange to the IPA size the kernel supports. */
-> > +    uint8_t index = round_down_to_parange_index(ipa_size);
-> > +    id_aa64mmfr0 = GET_IDREG(isar, ID_AA64MMFR0);
-> > +    id_aa64mmfr0 = (id_aa64mmfr0 & ~R_ID_AA64MMFR0_PARANGE_MASK) | index;
-> 
-> id_aa64_mmfr0 = FIELD_DPREG64(id_aa64mmfr0, AA64MMFR0, PARANGE, index);
+--0000000000006cbe530650f8992e--
 
-Ack.
- 
-> > +    args.in_ptr = (uintptr_t)(in_buffer);
-> > +    args.out_sz = values_sz;
-> > +    args.out_ptr = (uintptr_t)(out_buffer);
-> 
-> Drop unnecessary ().
-
-Ack, will do.
-
-> > +    args.reps =  (uint16_t) n_regs;
-> 
-> Unnecessary cast.
-
-Ack, will remove.
-
-> > +static bool mshv_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-> > +{
-> > +    int mshv_fd = mshv_state->fd;
-> > +    int vm_fd = mshv_state->vm;
-> > +    int i, ret;
-> > +    bool success = true;
-> > +    uint64_t pfr0, pfr1;
-> > +    gchar *contents = NULL;
-> > +
-> > +    const struct {
-> 
-> static
-
-Ack.
-
-> > +        hv_register_name name;
-> > +        int isar_idx;
-> > +    } regs[] = {
-> > +        { HV_ARM64_REGISTER_ID_AA64_PFR0_EL1,  ID_AA64PFR0_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_PFR1_EL1,  ID_AA64PFR1_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_ISAR0_EL1, ID_AA64ISAR0_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_ISAR1_EL1, ID_AA64ISAR1_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_ISAR2_EL1, ID_AA64ISAR2_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_MMFR0_EL1, ID_AA64MMFR0_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_MMFR1_EL1, ID_AA64MMFR1_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_MMFR2_EL1, ID_AA64MMFR2_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_DFR0_EL1,  ID_AA64DFR0_EL1_IDX },
-> > +        { HV_ARM64_REGISTER_ID_AA64_DFR1_EL1,  ID_AA64DFR1_EL1_IDX },
-> 
-> Per above, if you use matching names, you can macroize to avoid typos:
-> 
-> #define R(X)  { HV_ARM64_REGISTER_##X, X##_IDX }
-> 
->     R(ID_AA64PFR0_EL1),
->     R(ID_AA64PFR1_EL1),
->     ...
-> 
-> #undef R
-
-The Hyper-V register names don’t match the ARM names exactly, so a
-simple R(x) macro won’t work without renaming. Since we have to maintain
-them as-is, we can’t do this.
- 
-> Also, there are a *lot* more id registers.
-> Any chance all, or at least more, are defined by MSHV?
-> 
-> 
-> r~
-
-Yes, MSHV defines many more ID registers, but for now I’ve only included
-the ones that are actually used. We can add more as needed in future
-patches.
-
-Thanks,
-Aastha
 
