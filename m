@@ -4,90 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56587FF886F
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 12:32:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 525CEFF886F
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 12:33:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJsSm-0003f5-Lu; Mon, 04 May 2026 08:31:52 -0400
+	id 1wJsTn-0006Jm-JY; Mon, 04 May 2026 08:32:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJsSk-0003UQ-H6
- for qemu-devel@nongnu.org; Mon, 04 May 2026 08:31:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJsSg-000748-2a
- for qemu-devel@nongnu.org; Mon, 04 May 2026 08:31:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777897905;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=koi1KP51vf/Ga4Ls+tWs7FtQt712xO7gXsJ5W6hoFOE=;
- b=ZvJtQeyj1hpJz/e9VJtedHod95tu9s4dDVzTVrHnnYGne0fvuTFQHB9A+nuAmtONEfMCeL
- ygb8MOHPMmEf6zHRISWHxEnZihCQtM542jJUlBEZf/2zKC71JSlprThYID+1Tv0G5l5am5
- 4JDf0AeYHsLe6ZfAGE7G+Kob1k/pqao=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-TdogUoPEN2qgHKEqtgp9SA-1; Mon,
- 04 May 2026 08:31:44 -0400
-X-MC-Unique: TdogUoPEN2qgHKEqtgp9SA-1
-X-Mimecast-MFC-AGG-ID: TdogUoPEN2qgHKEqtgp9SA_1777897903
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7783918005B0
- for <qemu-devel@nongnu.org>; Mon,  4 May 2026 12:31:43 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 798361800480; Mon,  4 May 2026 12:31:41 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 04 May 2026 16:30:19 +0400
-Subject: [PATCH v4 13/13] RFC: hw/virtio: start virtio-mem guest_memfd
- regions as shared
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJsTU-00064S-T7
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 08:32:39 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJsTP-0007GY-8L
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 08:32:36 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-488a8ca4aadso42684555e9.3
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 05:32:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777897949; x=1778502749; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=V4jYpYkE/9RSm0f79qfdUvw/YpXb7ygJmHHvmnXUo80=;
+ b=BR3wsAzcRjng8Lm+kqN/etK7EtuqCeFc3IjsfCmYv05/mNn1acHwiu4lkRj4WT39xu
+ MGU2q1V0mLTWvCjTTfMXUnIZgGkufLXRkuZ79NlkvwVgRXFPSLfEtxlTInSUjFCjl3Gz
+ 2+NEwdMj1QQCu43M9xKd7km5lW/2JOThhsFsJgGTDv/4JmlGRhebKyw9G/jBemD2IkkM
+ L5YIM2T8HU4WKIV6sOw6pMBXrEPd9ckdrubC6nfrQYqu4gPANWf/O92gQKcM76fJK9M8
+ DSAOj1L4D9Dt+0tnqX4tRQuoarGf+IN+t2lnNoc7o3Qk8hz00HJRlLuWBggtUfvDNCn9
+ XigQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777897949; x=1778502749;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=V4jYpYkE/9RSm0f79qfdUvw/YpXb7ygJmHHvmnXUo80=;
+ b=s7zOcVVcUVjtszdnJuZd1/gX+ZmE+3JIZZqQdcAc/hlXH0+vNObbcEn89Iqq1pxcNl
+ qi/DVHOzrnxn3vLpHiocUM57F+fdVlNMGPNU51nXUhndgYlYXNSpRUbvK0FblVhKsPFl
+ ucgPtAIXStC7WWI165KwZCoBF8NCwoXsZ5n8f1pC+M8HmMWp7SClVLKm21+Xp4hSV4Kq
+ Ill0i5TLCJ5jXhQVE1R4rk7RyZajaCfmnbDfoUGyBbWwTHZV37+iHizB9EdKtXGu50+9
+ GoysCKFjallI2OEuEmi6yGafyS3GwTrBVL3IwzQ3VIVE1kOkkP/rAZhvUTXAjMzf2+hu
+ E2Cw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/ZCh53WpWL0EgrvEj0hmgbgKys4FnqrvlL+lDDfH+z/rBuBbjGGf4RfYHmhALM1VU5HHmwlO0mrX6z@nongnu.org
+X-Gm-Message-State: AOJu0YxcZE5MdBQ2g8kBXHB6u3XTQZ4MZvFzOmOwRWVkmRL4u6N9NlaK
+ Y7ecOle7HW6i43op2TgyS+EoCS+FLYl5Pzce1P8wNrWw5C5ut6WxjujuShVnZk2/P20=
+X-Gm-Gg: AeBDietR1zUFFeEU3EiLprvfgF3uimme62SOV3tvH8maS7wxwj0ohor15+wDWKiDekT
+ VbGusE8J7EyfaZeSDoNUNz+Q2UCecmeWzyzRvP4oHwFO7DGS/lZTgZNsW8Z88N6ZXQEUNx4SnZ5
+ b98eHH+79yQXn/ic0e41QP5wHL5E9+pmLVmpzdQsh4DgPuVcRXX8c4exAt955q6JGXiUTkKp0Ro
+ PNwwlEDDNasVrUBqKfDhayGGJHbHWVicsHIyd/sDONRUHiQh3jQbOH/r163dveW/e9XKVaVpaWh
+ W1WHgRUGemqWRKmDAqiAtaxOoTnPB5YTjeH1r82KJ5RprtNOmSvBJts/GP/hd/vtdGgGd40589t
+ kX6AqcIKSr6WN3bBan6K1d4iWHjLrMgQ3PVk5YDaylC4FqvX05CLFpJsQQcE+oNvzt5YTZV2WkO
+ cTngrXMehgVOxJe04AI+Hxu+buyhA9xdCSuE5QsVcx68AZ+Hql44r8a99rVt2W+H0FvxAtBLPnj
+ Ek3
+X-Received: by 2002:a05:600c:1386:b0:488:9439:881a with SMTP id
+ 5b1f17b1804b1-48a9852f471mr152782855e9.2.1777897949350; 
+ Mon, 04 May 2026 05:32:29 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a81b99127sm317362735e9.0.2026.05.04.05.32.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 May 2026 05:32:28 -0700 (PDT)
+Message-ID: <06c5cd6f-46a3-453e-a0b5-30e2bd03a4d0@linaro.org>
+Date: Mon, 4 May 2026 14:32:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/9] ppc/ppc405: Remove CPU
+Content-Language: en-US
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, milesg@linux.ibm.com, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Laurent Vivier <laurent@vivier.eu>, Chinmay Rath <rathc@linux.ibm.com>
+References: <20250110141800.1587589-1-clg@redhat.com>
+ <20250110141800.1587589-4-clg@redhat.com>
+ <1c294e9e-8774-4e3c-874c-d64bcc0f7ce7@linaro.org>
+ <08932dd4-f4d2-4eae-b237-2975c820cec1@linaro.org>
+ <D71LX5ZNBHSB.9MP9IHEN5WLU@gmail.com>
+ <bd1941e9-bc24-4bed-9f27-3020ae6ab54d@redhat.com>
+ <52d11eed-751c-4272-b31c-c14f13a5c829@linaro.org>
+ <7629e08d-7d9e-496b-8310-27a075d52430@linux.ibm.com>
+ <06e2bccb-975e-418a-a3d8-210be3a337c0@linaro.org>
+ <4def4bcbfe241bcd8437a195757dd753ce09a32e.camel@linux.ibm.com>
+ <1bf864b8-0dcf-45d6-a2fc-fc34b1bafe97@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <1bf864b8-0dcf-45d6-a2fc-fc34b1bafe97@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260504-rdm5-v4-13-bdf61e57c1e1@redhat.com>
-References: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
-In-Reply-To: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5397;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=Sglwch19SlDhieIy7v8NKzFebPUh8jiaqmn97KAMqkA=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+JFZ7iSydRn4tnMpCKZx6qgL9HWw9EuAsHQg0
- HH10rJGqnGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiRWQAKCRDa6OEJdZac
- 5dk3EACjZPWwZC8B3cJMyKxMcUMmQy0YNx14stgrPvprUl4+cVEoxnswi5oWaOaT4fwbRjxsNAz
- PwUZRSLe7x5eIa7jWpiw4Y5mtBb8RbP/ewzY54GiHoNuOO3NuVkYyaO1EnG/twDuPlWr/2HiurP
- 3zTu//1zgS7tAoqRYpcyw14+36FMZsXgSrYY2W3vK9GtSF5UDMvFNIQ5iBEF4jGIIfeFIW00LRA
- vGGrFIZoHT0yBRHiomaqAELvanSAx6qsTEW4/EIsfMtsTYrVSp6mUBXb2LjUarwJjRyztHPzaz4
- +NsTvhihTTSJnQoY0q6wyQ5j2teI6BOPtEJ2GU81WeIOPeGj2B7fJskOVp9GjMxsPW+4n3APHpq
- JVbLR8wolmtuBY7PrRJvm4nb6K1POznnlRiRJ4zNu6lUsaD09si3qLgkRsHyUCLtZ7qkjdOni8Q
- yLc7pesz+N8GypKF5SaGRYuTh3on2Zy1BEogbxESSIXO/vHXcoeTj9FhB18iW8LS4nwp7aMLbzO
- oPNCW2MUTqZlCHIYAK48xX5ZWbK2lmoe1cXW82AmJtcuXsLTeMxCmyeJed6gNKUjjENgarm1yh7
- HHI+VqIN6Ce2Rhtja9zemEvUN3aQfLfo+N2AVh3vSEgz6UhZPf42UTeOd7hQaJ1OFUcBHS0SFJ9
- A2/ooSOkBOw7kEQ==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,137 +119,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In TDX guests, virtio-mem plug/unplug/re-plug fails because
-kvm_set_phys_mem() unconditionally sets KVM memory attributes to
-PRIVATE for all guest_memfd regions. On re-plug, the PRIVATE->PRIVATE
-transition is a no-op, so KVM doesn't re-AUG pages and the guest's
-TDG.MEM.PAGE.ACCEPT fails.
+Cc'ing Daniel and Thomas, our deprecation experts.
 
-Implement the "start-shared" approach: virtio-mem memory starts with
-shared KVM attributes. The guest converts shared->private on plug (via
-set_memory_encrypted -> MapGPA + ACCEPT), and back to shared on unplug
-(via set_memory_decrypted). This ensures every plug triggers a real
-SHARED->PRIVATE transition, causing KVM to AUG fresh pages.
+On 4/5/26 11:48, Cédric Le Goater wrote:
+> Hello Glenn,
+> 
+> 
+> On 4/30/26 17:43, Miles Glenn wrote:
+>> On Thu, 2026-04-30 at 17:15 +0200, Philippe Mathieu-Daudé wrote:
+>>> Hi Harsh,
+>>>
+>>> On 30/4/26 08:54, Harsh Prateek Bora wrote:
+>>>> Adding Glenn (since PPE42 seems to make use of CONFIG_PPC405)
+>>>>
+>>>> Glenn,
+>>>> Please take a look and let us know your thoughts.
+>>>
+>>> Glenn can have a look, but I think we are good to remove them now,
+>>> they have been deprecated for more than 1 year, enough time for
+>>> any reaction ;) Otherwise that'd defeat the point of deprecating
+>>> and the pain for us to schedule and wait for months.
+>>
+>> Philippe,
+>>
+>> Sorry, I thought it had been made clear back in August of last year
+>> that we would need the PPC405 CPU to hang around.  The topic was
+>> brought up by Cedric when I added support for the PPE42 processor.  Is
+>> there some formal process I need to go through to have it removed from
+>> the deprecated list?
+> 
+> I don't know of any un-deprecation process. I suggest sending a patch
+> to revert commit 52f0b59ec6b7 ("hw/ppc: Deprecate 405 CPUs"). The commit
+> log should mention the PPE42 processor which is a stripped down version
+> of the IBM PowerPC 405 processor.
 
-Add RAM_GUEST_MEMFD_START_SHARED flag and set it during virtio-mem
-realize for guest_memfd-backed regions. Use
-ram_block_attributes_state_change() to properly update the attributes
-bitmap through the API. Skip setting PRIVATE in kvm_set_phys_mem()
-when the flag is set. On unplug, explicitly reset KVM attributes to
-shared on the host side to handle the case where the guest skips
-set_memory_decrypted().
+That, and updating MAINTAINERS for these CPUs (likely adding a new entry
+including at least Glenn).
 
-See also virtio-comment "[PATCH RFC] virtio-mem: add shared/private memory property details".
-
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
----
- include/system/memory.h |  6 ++++++
- accel/kvm/kvm-all.c     |  3 ++-
- hw/virtio/virtio-mem.c  | 27 ++++++++++++++++++++++++++-
- 3 files changed, 34 insertions(+), 2 deletions(-)
-
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 28a75dac4ae..9dbf67efe50 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -277,6 +277,12 @@ typedef struct IOMMUTLBEvent {
-  */
- #define RAM_PRIVATE (1 << 13)
- 
-+/*
-+ * RAM with guest_memfd that should start with shared KVM memory
-+ * attributes. The guest converts to private on use.
-+ */
-+#define RAM_GUEST_MEMFD_START_SHARED (1 << 14)
-+
- static inline void iommu_notifier_init(IOMMUNotifier *n, IOMMUNotify fn,
-                                        IOMMUNotifierFlag flags,
-                                        hwaddr start, hwaddr end,
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 97463a683f4..c034e74c8e5 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -1737,7 +1737,8 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
-             abort();
-         }
- 
--        if (memory_region_has_guest_memfd(mr)) {
-+        if (memory_region_has_guest_memfd(mr) &&
-+            !(mr->ram_block->flags & RAM_GUEST_MEMFD_START_SHARED)) {
-             err = kvm_set_memory_attributes_private(start_addr, slot_size);
-             if (err) {
-                 error_report("%s: failed to set memory attribute private: %s",
-diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index 35e03ed7599..b46efe21126 100644
---- a/hw/virtio/virtio-mem.c
-+++ b/hw/virtio/virtio-mem.c
-@@ -19,6 +19,7 @@
- #include "system/memory.h"
- #include "system/numa.h"
- #include "system/system.h"
-+#include "system/kvm.h"
- #include "system/ramblock.h"
- #include "system/reset.h"
- #include "system/runstate.h"
-@@ -479,6 +480,11 @@ static int virtio_mem_set_block_state(VirtIOMEM *vmem, uint64_t start_gpa,
-         if (vmem->dynamic_memslots) {
-             virtio_mem_deactivate_unplugged_memslots(vmem, offset, size);
-         }
-+        if (rb->flags & RAM_GUEST_MEMFD_START_SHARED) {
-+            kvm_set_memory_attributes_shared(start_gpa, size);
-+            ram_block_attributes_state_change(rb->attributes,
-+                                              offset, size, false);
-+        }
-         return 0;
-     }
- 
-@@ -606,10 +612,12 @@ static int virtio_mem_unplug_all(VirtIOMEM *vmem)
-     RAMBlock *rb = vmem->memdev->mr.ram_block;
- 
-     if (vmem->size) {
-+        uint64_t used = qemu_ram_get_used_length(rb);
-+
-         if (virtio_mem_is_busy()) {
-             return -EBUSY;
-         }
--        if (ram_block_discard_range(rb, 0, qemu_ram_get_used_length(rb))) {
-+        if (ram_block_discard_range(rb, 0, used)) {
-             return -EBUSY;
-         }
-         virtio_mem_notify_unplug_all(vmem);
-@@ -622,6 +630,11 @@ static int virtio_mem_unplug_all(VirtIOMEM *vmem)
-         if (vmem->dynamic_memslots) {
-             virtio_mem_deactivate_unplugged_memslots(vmem, 0, region_size);
-         }
-+        if (rb->flags & RAM_GUEST_MEMFD_START_SHARED) {
-+            kvm_set_memory_attributes_shared(vmem->addr, used);
-+            ram_block_attributes_state_change(rb->attributes,
-+                                              0, used, false);
-+        }
-     }
- 
-     trace_virtio_mem_unplugged_all();
-@@ -859,6 +872,18 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
-     rb = vmem->memdev->mr.ram_block;
-     page_size = qemu_ram_pagesize(rb);
- 
-+    /*
-+     * For CoCo VMs with guest_memfd, use the "start-shared" model:
-+     * memory starts as shared and the guest converts to private on
-+     * plug.
-+     */
-+    if (rb->flags & RAM_GUEST_MEMFD) {
-+        rb->flags |= RAM_GUEST_MEMFD_START_SHARED;
-+        ram_block_attributes_state_change(rb->attributes, 0,
-+                                          qemu_ram_get_used_length(rb),
-+                                          false);
-+    }
-+
-     if (virtio_mem_has_legacy_guests()) {
-         switch (vmem->unplugged_inaccessible) {
-         case ON_OFF_AUTO_AUTO:
-
--- 
-2.54.0
+> 
+> Thanks,
+> 
+> C.
+> 
+> https://lore.kernel.org/all/20250925201758.652077-1-milesg@linux.ibm.com/
+> 
 
 
