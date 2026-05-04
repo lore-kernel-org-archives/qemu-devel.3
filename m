@@ -4,75 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E52CD3423
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 06:59:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0618ECD3423
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 07:08:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJnHF-0005hq-OY; Mon, 04 May 2026 02:59:37 -0400
+	id 1wJnPS-0007NY-N9; Mon, 04 May 2026 03:08:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wJnHD-0005h5-Gm
- for qemu-devel@nongnu.org; Mon, 04 May 2026 02:59:35 -0400
-Received: from p-east2-cluster5-host12-snip4-2.eps.apple.com ([57.103.79.75]
- helo=outbound.st.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1wJnHB-00053Y-Md
- for qemu-devel@nongnu.org; Mon, 04 May 2026 02:59:35 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-4 (Postfix) with ESMTPS id
- 3635D180012D; Mon, 04 May 2026 06:59:29 +0000 (UTC)
-X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwRPEwVSB11NVg1HD1geXBQXC0dDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTH1ABywDXHBIFEkGWAJGBjV9Th5UdSgHXXpMcFkEWHZFfU9yKXceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1777877970; x=1780469970;
- bh=SZZ4bD46fodlVuPnhZ5AQeC05oNsIViTKO4hoZMC2ug=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=dNbwqt5yQUmR0I4DBiGNPL9EK4uhtaFRXcpH3xxUk6iQYWn34itE7U3z6p1mHbekbeJwGEW4M6S5bwQQ3IpJOUVzIkrJz/8vxuycqYGeK+/cI/9agvqM4sibfIBEIuX56ZAVxvY5pAQ0JFTe223Aq09mwm829hN4nV3FgIcd15AzZuoiEyvvgNWrlNjcycW0p84xAxEkcTGh0v0sscPQQvXoXbGBe9L2fVtOjeC3JxosGe8ClrkkHGONA2fBenSu8lZxRoongBP/BoPlZXZhfcrMnvlG3S9D/I6wIqnovKxSArUOlWHK0BPZpw0owMdppwx+qjjHqnRhGtpl7CmowA==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-100-percent-4 (Postfix) with ESMTPSA id
- C56BD1800096; Mon, 04 May 2026 06:59:27 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH] hvf: arm: override HV_SYS_REG_MDCR_EL2
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <e36f1d1b-89db-443b-aa48-6247831a8247@linaro.org>
-Date: Mon, 4 May 2026 08:59:15 +0200
-Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <D84A47B8-1555-4ED6-9BC5-C4C433D5D7AD@unpredictable.fr>
-References: <20260501231353.63184-1-mohamed@unpredictable.fr>
- <e36f1d1b-89db-443b-aa48-6247831a8247@linaro.org>
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-X-Mailer: Apple Mail (2.3864.500.181)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA0MDA3NCBTYWx0ZWRfX50j64LuHqecN
- YIcHpO62soAvTBq8MJHwgegjcVYubLFuCqJ4ZFTjNh8NwD4lXF/cijuKtzzXs3mpPBqMu6kXbTV
- +EF2CdZ2NRr3HcMgylD0/u8QU4b+BECIsi6y54Zv/DFLjeKVTZQ/A4WzJaJyUjsQbKU1WtxkU3Q
- LAHjxPNYwRT9CpYAsitmqbdjUvUc2DTsi5wTjgnqIQ8BGNV84+3XYpXgpAuiaFtrJYzwZ5D0o67
- rYoRHym1B8cjWNfuFA14nNuuVV/fAy1OAUUxC+a47urud0Nm82rXwrNC9fiAYd1nsFV4wjfGxt7
- bMD268nM8RTJF//wd7en+oaih4Kqodn3tFwKwgOI7gX/mfBUiPJenlKI9CHE8k=
-X-Proofpoint-ORIG-GUID: 977kQRD9JuIrGFmTpOjcIDt4MIWGO4Ch
-X-Authority-Info-Out: v=2.4 cv=GbcaXAXL c=1 sm=1 tr=0 ts=69f843d1
- cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=t-IPkPogAAAA:8 a=KKAkSRfTAAAA:8
- a=uypWpLIWIABjCLFm2_QA:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: 977kQRD9JuIrGFmTpOjcIDt4MIWGO4Ch
-Received-SPF: pass client-ip=57.103.79.75;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
+ id 1wJnP8-0007N9-Gw
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 03:07:49 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <aastharawat@linux.microsoft.com>) id 1wJnP4-0006zz-Oa
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 03:07:46 -0400
+Received: by linux.microsoft.com (Postfix, from userid 1236)
+ id 3E43220B7168; Mon,  4 May 2026 00:07:37 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3E43220B7168
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1777878457;
+ bh=jpIXOgf3bpwfJAMYQzt4TFGDvUO3D3Hfc+ulSbQYQ80=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=hdK0z4PpqsyRjZAyO+MLuxAdU4qOASyHSow6iFPGINYNJuxz7ZFmreZjwvREUGya8
+ b7LrYsIizvXqbhQ4i2hK9CB3vO7kfsdKrqvFdM3aUa/xxjduqHC7JtMC/vY9JXCRoN
+ /mK2bLLu6Xg4f7qdqf4GkbvoMJYhdgKdEO22bvvw=
+Date: Mon, 4 May 2026 00:07:37 -0700
+From: Aastha Rawat <aastharawat@linux.microsoft.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 05/14] target/arm/mshv: implement -cpu host for MSHV
+Message-ID: <afhFuQrsr0CyosgY@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
+References: <20260421-mshv_accel_arm64_supp-v3-0-469f544778ba@linux.microsoft.com>
+ <20260421-mshv_accel_arm64_supp-v3-5-469f544778ba@linux.microsoft.com>
+ <55515ca0-3185-4b5d-9bbb-5da1245b8cc3@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <55515ca0-3185-4b5d-9bbb-5da1245b8cc3@linaro.org>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,61 +66,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Apr 23, 2026 at 11:48:12AM +1000, Richard Henderson wrote:
+> On 4/21/26 15:21, Aastha Rawat wrote:
+> > This commit enables support for the `-cpu host` option with MSHV
+> > accelerator on ARM64. The implementation queries the partition's CPU's
+> > ID registers and features via hypervisor interface, allowing to pass all
+> > CPU capabilities for the host CPU to the guest.
+> > 
+> > Replace preprocessor config checks with runtime calls to mshv_enabled(),
+> > kvm_enabled(), etc. This ensures that the correct accelerator is
+> > selected at runtime when both MSHV and KVM are enabled.
+> > 
+> > Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+> > ---
+> >   accel/mshv/mshv-all.c          |   3 +-
+> >   hw/arm/virt.c                  |   3 +-
+> >   include/hw/hyperv/hvgdk_mini.h |  17 ++++
+> >   include/hw/hyperv/hvhdk.h      |  10 ++
+> >   include/system/hw_accel.h      |   3 +-
+> >   target/arm/cpu.c               |   6 +-
+> >   target/arm/cpu64.c             |  24 +++--
+> >   target/arm/mshv/mshv-all.c     | 204 +++++++++++++++++++++++++++++++++++++++++
+> >   target/arm/mshv_arm.h          |  18 ++++
+> >   9 files changed, 273 insertions(+), 15 deletions(-)
+> > 
+> > diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> > index d4cc7f5371..44f35a1463 100644
+> > --- a/accel/mshv/mshv-all.c
+> > +++ b/accel/mshv/mshv-all.c
+> > @@ -400,13 +400,14 @@ static int mshv_init_vcpu(CPUState *cpu)
+> >       int ret;
+> >       cpu->accel = g_new0(AccelCPUState, 1);
+> > -    mshv_arch_init_vcpu(cpu);
+> >       ret = mshv_create_vcpu(vm_fd, vp_index, &cpu->accel->cpufd);
+> >       if (ret < 0) {
+> >           return -1;
+> >       }
+> > +    mshv_arch_init_vcpu(cpu);
+> > +
+> >       cpu->accel->dirty = true;
+> >       return 0;
+> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> > index 7456614d05..34eb5248a9 100644
+> > --- a/hw/arm/virt.c
+> > +++ b/hw/arm/virt.c
+> > @@ -50,6 +50,7 @@
+> >   #include "system/kvm.h"
+> >   #include "system/hvf.h"
+> >   #include "system/whpx.h"
+> > +#include "system/mshv.h"
+> >   #include "system/qtest.h"
+> >   #include "system/system.h"
+> >   #include "hw/core/loader.h"
+> > @@ -3450,7 +3451,7 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
+> >       if (target_aarch64()) {
+> >           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a53")));
+> >           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a57")));
+> > -        if (kvm_enabled() || hvf_enabled()) {
+> > +        if (kvm_enabled() || hvf_enabled() || mshv_enabled()) {
+> >               g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("host")));
+> >           }
+> >       }
+> > diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+> > index dfe94050f4..d56be0d70f 100644
+> > --- a/include/hw/hyperv/hvgdk_mini.h
+> > +++ b/include/hw/hyperv/hvgdk_mini.h
+> > @@ -48,6 +48,20 @@ typedef enum hv_register_name {
+> >       HV_ARM64_REGISTER_LR    = 0x0002001E,
+> >       HV_ARM64_REGISTER_PC    = 0x00020022,
+> > +    /* AArch64 System Register Descriptions: ID Registers */
+> > +    HV_ARM64_REGISTER_ID_MIDR_EL1         = 0x00022000,
+> > +    HV_ARM64_REGISTER_ID_MPIDR_EL1        = 0x00022005,
+> > +    HV_ARM64_REGISTER_ID_AA64_PFR0_EL1    = 0x00022020,
+> > +    HV_ARM64_REGISTER_ID_AA64_PFR1_EL1    = 0x00022021,
+> > +    HV_ARM64_REGISTER_ID_AA64_ISAR0_EL1   = 0x00022030,
+> > +    HV_ARM64_REGISTER_ID_AA64_ISAR1_EL1   = 0x00022031,
+> > +    HV_ARM64_REGISTER_ID_AA64_ISAR2_EL1   = 0x00022032,
+> > +    HV_ARM64_REGISTER_ID_AA64_MMFR0_EL1   = 0x00022038,
+> > +    HV_ARM64_REGISTER_ID_AA64_MMFR1_EL1   = 0x00022039,
+> > +    HV_ARM64_REGISTER_ID_AA64_MMFR2_EL1   = 0x0002203a,
+> > +    HV_ARM64_REGISTER_ID_AA64_DFR0_EL1    = 0x00022028,
+> > +    HV_ARM64_REGISTER_ID_AA64_DFR1_EL1    = 0x00022029,
+> 
+> Please use the actual name of the register and not add the extra _ after AA64.
 
+These names are imported exactly as they’re defined in the hypervisor
+headers, so we want to keep them as-is.
 
-> On 4. May 2026, at 08:49, Philippe Mathieu-Daud=C3=A9 =
-<philmd@linaro.org> wrote:
->=20
-> On 2/5/26 01:13, Mohamed Mediouni wrote:
->> In older SDKs, MDCR_EL2 was defined incorrectly.
->> As such, override it with a #define if compiling with an older macOS
->> SDK.
->> This is a workaround because the macOS CI setup we currently rely on
->> has not been kept up to date, to be able to land nested =
-virtualization
->> support.
->> Once CI is updated, the SME stubs can be removed and this
->> commit can be reverted.
->> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
->> ---
->>  target/arm/hvf/hvf.c | 9 +++++++++
->>  1 file changed, 9 insertions(+)
->> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
->> index 4f0f7ffba1..79209bc8e9 100644
->> --- a/target/arm/hvf/hvf.c
->> +++ b/target/arm/hvf/hvf.c
->> @@ -468,6 +468,15 @@ static const struct hvf_reg_match =
-hvf_sme2_preg_match[] =3D {
->>  #define HVF_TO_KVMID(HVF)  \
->>      (CP_REG_ARM64 | CP_REG_SIZE_U64 | CP_REG_ARM64_SYSREG | (HVF))
->>  +/*
->> + * In older SDKs, MDCR_EL2 was defined incorrectly.
->> + * As such, override it with a #define if compiling with an older =
-macOS SDK.
->> + * =
-https://lore.kernel.org/qemu-devel/BCCED674-EAEF-4755-9BE1-116FB36FB5C9@ap=
-ple.com/
->> + */
->> +#if !defined(MAC_OS_VERSION_26_0)
->=20
-> Not sure about this check, i.e. wouldn't it clash with 26.1 release?
-> I'd expect a check such:
->=20
->   #if MAC_OS_X_VERSION_MAX_ALLOWED < 260000
+> > -#if defined(CONFIG_KVM)
+> > -    kvm_arm_set_cpu_features_from_host(cpu);
+> > -    aarch64_add_sve_properties(obj);
+> > -#elif defined(CONFIG_HVF)
+> > -    hvf_arm_set_cpu_features_from_host(cpu);
+> > -#elif defined(CONFIG_WHPX)
+> > -    whpx_arm_set_cpu_features_from_host(cpu);
+> > -#else
+> > -    g_assert_not_reached();
+> > -#endif
+> > +    if (mshv_enabled()) {
+> > +        mshv_arm_set_cpu_features_from_host(cpu);
+> > +    } else if (kvm_enabled()) {
+> > +        kvm_arm_set_cpu_features_from_host(cpu);
+> > +        aarch64_add_sve_properties(obj);
+> > +    } else if (hvf_enabled()) {
+> > +        hvf_arm_set_cpu_features_from_host(cpu);
+> > +    } else if (whpx_enabled()) {
+> > +        whpx_arm_set_cpu_features_from_host(cpu);
+> > +    } else {
+> > +        g_assert_not_reached();
+> > +    }
+> 
+> If this is because both mshv and kvm can be enabled simultaneously, then
+> this should be a separate patch to transform the ifdef ladder.
 
-Hi,
+Right, sure.
+ 
+> > +static void clamp_id_aa64mmfr0_parange_to_ipa_size(int mshv_fd,
+> > +                                                   ARMISARegisters *isar)
+> > +{
+> > +    uint32_t ipa_size = mshv_arm_get_ipa_bit_size(mshv_fd);
+> > +    uint64_t id_aa64mmfr0;
+> > +
+> > +    /* Clamp down the PARange to the IPA size the kernel supports. */
+> > +    uint8_t index = round_down_to_parange_index(ipa_size);
+> > +    id_aa64mmfr0 = GET_IDREG(isar, ID_AA64MMFR0);
+> > +    id_aa64mmfr0 = (id_aa64mmfr0 & ~R_ID_AA64MMFR0_PARANGE_MASK) | index;
+> 
+> id_aa64_mmfr0 = FIELD_DPREG64(id_aa64mmfr0, AA64MMFR0, PARANGE, index);
 
-MAC_OS_VERSION_26_0 will be defined in all future SDKs.
+Ack.
+ 
+> > +    args.in_ptr = (uintptr_t)(in_buffer);
+> > +    args.out_sz = values_sz;
+> > +    args.out_ptr = (uintptr_t)(out_buffer);
+> 
+> Drop unnecessary ().
 
-See AvailabilityVersions.h in the macOS SDK, has all of them since 10.0
->=20
->> +#define HV_SYS_REG_MDCR_EL2 0xe089
->> +#endif
->> +
->>  /*
->>   * Verify this at compile-time.
->>   *
->=20
->=20
+Ack, will do.
 
+> > +    args.reps =  (uint16_t) n_regs;
+> 
+> Unnecessary cast.
+
+Ack, will remove.
+
+> > +static bool mshv_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+> > +{
+> > +    int mshv_fd = mshv_state->fd;
+> > +    int vm_fd = mshv_state->vm;
+> > +    int i, ret;
+> > +    bool success = true;
+> > +    uint64_t pfr0, pfr1;
+> > +    gchar *contents = NULL;
+> > +
+> > +    const struct {
+> 
+> static
+
+Ack.
+
+> > +        hv_register_name name;
+> > +        int isar_idx;
+> > +    } regs[] = {
+> > +        { HV_ARM64_REGISTER_ID_AA64_PFR0_EL1,  ID_AA64PFR0_EL1_IDX },
+> > +        { HV_ARM64_REGISTER_ID_AA64_PFR1_EL1,  ID_AA64PFR1_EL1_IDX },
+> > +        { HV_ARM64_REGISTER_ID_AA64_ISAR0_EL1, ID_AA64ISAR0_EL1_IDX },
+> > +        { HV_ARM64_REGISTER_ID_AA64_ISAR1_EL1, ID_AA64ISAR1_EL1_IDX },
+> > +        { HV_ARM64_REGISTER_ID_AA64_ISAR2_EL1, ID_AA64ISAR2_EL1_IDX },
+> > +        { HV_ARM64_REGISTER_ID_AA64_MMFR0_EL1, ID_AA64MMFR0_EL1_IDX },
+> > +        { HV_ARM64_REGISTER_ID_AA64_MMFR1_EL1, ID_AA64MMFR1_EL1_IDX },
+> > +        { HV_ARM64_REGISTER_ID_AA64_MMFR2_EL1, ID_AA64MMFR2_EL1_IDX },
+> > +        { HV_ARM64_REGISTER_ID_AA64_DFR0_EL1,  ID_AA64DFR0_EL1_IDX },
+> > +        { HV_ARM64_REGISTER_ID_AA64_DFR1_EL1,  ID_AA64DFR1_EL1_IDX },
+> 
+> Per above, if you use matching names, you can macroize to avoid typos:
+> 
+> #define R(X)  { HV_ARM64_REGISTER_##X, X##_IDX }
+> 
+>     R(ID_AA64PFR0_EL1),
+>     R(ID_AA64PFR1_EL1),
+>     ...
+> 
+> #undef R
+
+The Hyper-V register names don’t match the ARM names exactly, so a
+simple R(x) macro won’t work without renaming. Since we have to maintain
+them as-is, we can’t do this.
+ 
+> Also, there are a *lot* more id registers.
+> Any chance all, or at least more, are defined by MSHV?
+> 
+> 
+> r~
+
+Yes, MSHV defines many more ID registers, but for now I’ve only included
+the ones that are actually used. We can add more as needed in future
+patches.
+
+Thanks,
+Aastha
 
