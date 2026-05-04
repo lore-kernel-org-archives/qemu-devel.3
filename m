@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DC1BFF885A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AD7AFF886F
 	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 12:51:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJsl1-0003nq-7H; Mon, 04 May 2026 08:50:43 -0400
+	id 1wJslJ-0003qi-9Z; Mon, 04 May 2026 08:51:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJskz-0003nd-Fx
- for qemu-devel@nongnu.org; Mon, 04 May 2026 08:50:41 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJslG-0003q3-1h
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 08:50:58 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJsku-0005Dv-SW
- for qemu-devel@nongnu.org; Mon, 04 May 2026 08:50:40 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-488b3f8fa2bso46233685e9.1
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 05:50:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJslE-0005Jm-B9
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 08:50:57 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-43d73352cf2so3641886f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 05:50:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777899034; x=1778503834; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=fY920kdhfZ+BZ9v92ysED16RYhweeBYB4IHbg1q45og=;
- b=hpcLtme6+OuPCLHmb6WZSwKLTn0JOwtDVchBPmDqTl6QMm+51eJMsdG8maCVLcJj32
- LTDMN9CiIA2ikQLf9VD4/y4hJAWOs/cOmhToB2dVPfJXBJAGtzhQDkWMmMO5CgezHOT9
- GYOji9dVa1HTB++NT6AWB26N9ALXdm9jhq5vUtPBlQ80OiRQGdbIdzbQsPVbudkkVVHE
- Wk1S0C4wlXnuLjQt/ousyOqCdS11pzqsU/A/gw3Xt1tPpBpasdDl4h7+/RBgoEyuwwHr
- 7YOz3ZfhWLpsiABvcr6o378baEcFE2h26XEBqrbqm/2Vr5DaWCVlU6D0x4WZuVtxDEw/
- T7EA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777899034; x=1778503834;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1777899054; x=1778503854; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fY920kdhfZ+BZ9v92ysED16RYhweeBYB4IHbg1q45og=;
- b=AAEfqkw99V9tbvYWchn9LR2dJIIVDtARFoXgatKpkGt0NIiNjwXf/SEF5jXSkLkzwS
- zcTJqzOuyhipFGNmGzWquW3wQsTB6o1ayNY/XU4Qq9YOkuASC3asgMHOZcLFzCFgUZjY
- 4TQdZ+r7TBOmAOM0p1t7MYtvm1kPnZ83lG+qoUID/gXWIA0gutlLIvgcALMIdWJex9hb
- YIHZtHiDbr43yEdplndYfscdtgheM39JzXpPndAccUNvImMtLzPtspBWhNgKTjRkGXJb
- vZ7n9zxMTFdjAfLfQFgOjPSK+r47ODlyIY36JUV3qTWcUjdQB8s6WzHh7IUT58NFy14K
- 8mlQ==
-X-Gm-Message-State: AOJu0YxLMqvgS7/kQpBiZB0DWtvpw+J35PFkmpkktPRQryPljQsSnZHx
- wDbJxkBk4fho/Y0WPlFaS2UoAbJjFnPvFNcZLmmoljeFyXQ3OAUv0IVJ+yY7Xl4ToD2ZkOQwnUw
- WysApFog=
-X-Gm-Gg: AeBDietYzjzq0q7ddoM4VxosRzov4LHBD18EG1T35C2MVn/bW6xakm9/m87n/QMXjUF
- oLXYiIUrOtOQEq1SaWu3TLCsoXR8HYqjc6IW87ayJ0ML395/8bRN8lPoEZ1b/NB94/9JEWMQsGJ
- rxPYN5YngXWvb9Ze8iETmdUSKjiBdbyNIAED7fvgLdEgmxh/pPnk48Sxsya/dwWlX3fPV1MM5OA
- iN1vOys7l6Iy9m46jiKLI53exxSZ0KQQO13c0N7Wk8wwqT2J3rSjDR+cB6dt7/fG3yAD1hWoqK2
- YCGbl/ZCRs/DsttH0crlLTtvFZicDfQDB2DLxpfB+t8QX+1g2Pgh1Wre/10tiQEBEAcQc/TiCOh
- SBoalv5mdfOYC4qYO/Q508KgQas1dIva03fNj2wiShYgkk7mRR98k9sc0ut67w9/0sPQOaj3H3d
- sAH6U1NyugYPgOQMC6L39js/21mD86qIj9N3Q/ahULvPGspZUWyI7NHeOFtBexOp+urRH7/OF4e
- CFwtEZEgd4=
-X-Received: by 2002:a05:600c:a410:b0:48a:761:5816 with SMTP id
- 5b1f17b1804b1-48a970c1bc1mr120918855e9.8.1777899033941; 
- Mon, 04 May 2026 05:50:33 -0700 (PDT)
+ bh=N3hvOSst11XJn1fddizPqUlPM2aRnGtyZVd74gxDi58=;
+ b=NGtGQW3j6WjjJWOPZva0ilPvI27Tt1fE/oC0p1jZ76rD5/WJ0CPlMG8x4wgm6OJPUr
+ DP6XnP0NZ1RZGBa3+mi21pByiOFa6N3ZKkaZgTzixRCbd/dAC2cU7fCLLnmyKUdrnRWx
+ KAjWn3tKBi8/yBOiu1kayNPIrv3JATuTg0ZykkVi38fAKk+VA6/vMjoXdyaEoit2t0p4
+ 7alUdBJ33Btrlu2VfgcoL8Vc1V0JAVIKiHBMRyR8LMCKvwo2I2E+C2xBhl32+Uzh5d5m
+ bnyS4BBOVHZv+TnQv5KZq/Ks8El8x4BMDWL5j0vk2oMaQQ2DiH424ydcgv0ZJYSH3z5C
+ pDsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777899054; x=1778503854;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=N3hvOSst11XJn1fddizPqUlPM2aRnGtyZVd74gxDi58=;
+ b=VYCdr5OzOn1fq9JJm13YppW4x4vNDwGtKa0FLNEmqKovdPzKuw/Uk+UbxahCS8tfus
+ 2gkGXCZFOBJBtdGbchhyasVQm55B3zDT0TCK+KBWnC/YH6bCvi0XA29vcgX/z6RZXZqD
+ WRk5KsVvK2Dmc0SP1dCIRKgunHt/2bRo+3gc/aAsFFJVKIHatCJJ3ZPpQ6GdG9qre44q
+ MClrE3Eiv/wk49zBl2mCgBiax6bqRES18MqJJvnUhKq9YLu5Y0bThFZk6/Xs36o4E/hM
+ gFgaalsMA49Mk2ZpSg1L7brGwfhG9BpAJ/vKJT10mKr+s0NEG5LyM1CXk/XE3qkp7j+Z
+ 90xw==
+X-Gm-Message-State: AOJu0Yy6iLz5X0PBwMyDSmi+JKIrbUpEYbwPEdMYNXANXI6MruuIvBKl
+ tv7SVCEpz87Z/k47qdDo98hBbG20cxNzKn/PoaDg/EL2u98tKqSGWCv7qW83R5xVJKHexB0aHIr
+ fmG4iMzQ=
+X-Gm-Gg: AeBDieswy/lUfMvc/LhPLmH1PR88BtvPUDWjvNnq3C+hmPH9iKXW4ZD4WtoPM4UDlpD
+ 9D6eUTK9jOSH1Y1HmYedneiNuvc0qQ4J6LBZ9z5dzUXCstpl7JsMR0llQv5B1gMu1t3L8aGJA3c
+ 5VjrHZLxIEet4epo+8Df3sLCYLKuqc1DnzNlXUWIqm0Fy9hT57Si/lCU5HpsORH52Odu+aA10XW
+ BrFIc3D/P2qFL24Hj8l8LE4HLASYoLF67DYje0E2IHTYD5OPF1Ruw9Qb2pBoVPA4+RgMnyw9Af8
+ xAaVMuhpojibLqzvPGe9G5xZADwzx6wiCim8TFZNChTyD7W2PG3dG6Mvtgi0WNKIGLNVTKdpUVk
+ Bry2Eu4hxpJjkx24BTCvtOkcG4UWq357Kb/wEuUHnAn45zd+j+Gj80lTAWo1vV8qs86U0+Li9NS
+ C7Ibzmx/PLh36lwFmNgjzBdx+l2EPW64is7FxizQgAyP11Reji2m39CAZuNpY27W2Cb/o7G8qeu
+ TpNU7oMnrQ=
+X-Received: by 2002:a05:6000:228a:b0:43f:df1b:9e07 with SMTP id
+ ffacd0b85a97d-44bb6ab19c2mr15430579f8f.42.1777899054485; 
+ Mon, 04 May 2026 05:50:54 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8eb3427fsm448097925e9.0.2026.05.04.05.50.33
+ ffacd0b85a97d-44a98b76fd0sm27283204f8f.35.2026.05.04.05.50.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 04 May 2026 05:50:33 -0700 (PDT)
+ Mon, 04 May 2026 05:50:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 0/3] docs/devel/tcg-ops: Minor documentation updates
-Date: Mon,  4 May 2026 14:50:28 +0200
-Message-ID: <20260504125032.35465-1-philmd@linaro.org>
+Subject: [PATCH 3/3] docs/devel/tcg-ops: Slightly expand on discard() opcode
+Date: Mon,  4 May 2026 14:50:31 +0200
+Message-ID: <20260504125032.35465-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260504125032.35465-1-philmd@linaro.org>
+References: <20260504125032.35465-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,16 +103,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update TCG opcode list.
+No need to precise the argument size.
 
-Philippe Mathieu-Daudé (3):
-  docs/devel/tcg-ops: Stop listing dup2_vec()
-  docs/devel/tcg-ops: List more vector opcodes
-  docs/devel/tcg-ops: Slightly expand on discard() opcode
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ docs/devel/tcg-ops.rst | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
- docs/devel/tcg-ops.rst | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
-
+diff --git a/docs/devel/tcg-ops.rst b/docs/devel/tcg-ops.rst
+index 56c0b0bd3de..73d8bdcf942 100644
+--- a/docs/devel/tcg-ops.rst
++++ b/docs/devel/tcg-ops.rst
+@@ -437,10 +437,11 @@ Misc
+          for consistency with the other bswap opcodes. For future
+          compatibility, the flags should be zero.
+ 
+-   * - discard_i32/i64 *t0*
++   * - discard *t0*
+ 
+-     - | Indicate that the value of *t0* won't be used later. It is useful to
+-         force dead code elimination.
++     - | Indicate that the value of *t0* won't be used later. This is used to
++         force dead code elimination, particularly for condition code
++         optimizations where TCG might otherwise assume a global is still live.
+ 
+    * - deposit *dest*, *t1*, *t2*, *pos*, *len*
+ 
 -- 
 2.53.0
 
