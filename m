@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DFCAFF886F
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 12:32:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56587FF886F
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 12:32:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJsSA-0001Go-1b; Mon, 04 May 2026 08:31:14 -0400
+	id 1wJsSm-0003f5-Lu; Mon, 04 May 2026 08:31:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJsS0-000118-MI
- for qemu-devel@nongnu.org; Mon, 04 May 2026 08:31:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wJsSk-0003UQ-H6
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 08:31:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJsRu-0006hL-HR
- for qemu-devel@nongnu.org; Mon, 04 May 2026 08:31:04 -0400
+ id 1wJsSg-000748-2a
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 08:31:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777897857;
+ s=mimecast20190719; t=1777897905;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xtlZabLST8lNl/wDJFOwBotTW5IG8zo6tCq+SqIwRGs=;
- b=HgvggVoFVPsfE+e1bDU7upEHYv0FkZzngcBIbLU0aOmEYipOW/r9+FvhtSmjCfMxMCVuwm
- JzHoW6LVRE8RmbGUCe9XQgAHOOmDVRYbJAjIG5k1JCxOVhX6Nv/MOGRhw9R75SMFANPDmH
- 9a8fSU0crLlyVIN8I1KrFRJFf55sP2Y=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=koi1KP51vf/Ga4Ls+tWs7FtQt712xO7gXsJ5W6hoFOE=;
+ b=ZvJtQeyj1hpJz/e9VJtedHod95tu9s4dDVzTVrHnnYGne0fvuTFQHB9A+nuAmtONEfMCeL
+ ygb8MOHPMmEf6zHRISWHxEnZihCQtM542jJUlBEZf/2zKC71JSlprThYID+1Tv0G5l5am5
+ 4JDf0AeYHsLe6ZfAGE7G+Kob1k/pqao=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-391-EdMPcGovNQqgxEMm8iKINw-1; Mon,
- 04 May 2026 08:30:56 -0400
-X-MC-Unique: EdMPcGovNQqgxEMm8iKINw-1
-X-Mimecast-MFC-AGG-ID: EdMPcGovNQqgxEMm8iKINw_1777897855
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-TdogUoPEN2qgHKEqtgp9SA-1; Mon,
+ 04 May 2026 08:31:44 -0400
+X-MC-Unique: TdogUoPEN2qgHKEqtgp9SA-1
+X-Mimecast-MFC-AGG-ID: TdogUoPEN2qgHKEqtgp9SA_1777897903
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5982019560A1
- for <qemu-devel@nongnu.org>; Mon,  4 May 2026 12:30:55 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7783918005B0
+ for <qemu-devel@nongnu.org>; Mon,  4 May 2026 12:31:43 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DAD7C19560A6; Mon,  4 May 2026 12:30:53 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 798361800480; Mon,  4 May 2026 12:31:41 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 04 May 2026 16:30:11 +0400
-Subject: [PATCH v4 05/13] virtio-mem: remove
- replay_populated/replay_discarded implementation
+Date: Mon, 04 May 2026 16:30:19 +0400
+Subject: [PATCH v4 13/13] RFC: hw/virtio: start virtio-mem guest_memfd
+ regions as shared
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260504-rdm5-v4-5-bdf61e57c1e1@redhat.com>
+Message-Id: <20260504-rdm5-v4-13-bdf61e57c1e1@redhat.com>
 References: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
 In-Reply-To: <20260504-rdm5-v4-0-bdf61e57c1e1@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=5832;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5397;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=Fk6q7eaL67kx4BNHBxGVhKBYEH38ABcV4XzOgFboUaQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+JFZJd0U9O7SaNUKmopi2GiKdQ0OCQ4FUCsjc
- K88vnbVwL2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiRWQAKCRDa6OEJdZac
- 5ZdmEACxKpAGzFNbRa9GCUK0gfijga7KDuIPb/+eNYIvYFp7I5pIi5reJC+orNnobxtpLFOVYYi
- gZriO4WeG8sX9qlpLYYyKp6UjdEcRcHqghySc8lFezx6+mTnLxVteScJt7qmuZyglQoGlEhYMhe
- +YelY4oXt+K5TTAHLuVmSopMbcGOrCKRZMMG2HsdLAUDzd/iesfndsKQfzvjUrdnEAwGjcXuPmp
- 1G+5yXw4IEENQ3z8pOUv/s82jX1SpAMu9xU9PyRIjUkXEKn376XlCCh0CHYnnRPoFTrqq4j9xy3
- cj5MUMjT2hwUeOvNyp5RFCt6nV0IJJbN+Fmhtqgi/YEMcloUYyu54bmTn74RugDeZgE1nyngygd
- ZOdZyCzfvzlXqRxWakilNG7vnIOINW+iP0zc497+W4FrSy3Z3ZBFc4oo4QpcCIcoY0+b3scYIfO
- Xas0smVw1XKQV2K17CgBzCBdAOV9Zi6lgJICTRgD8wt+ws8Vzuygs7r8emtg6FbBOow4FnBydE6
- 07iA8U3Ezx4wHyE3j2D3G+ACZ0TjfsXtVEWJfrwoWxha0lWMQJ1QFzAvEPcrhV2NheGcHhTn269
- en/BEe+xmaDwThDmzYMqf617+hJ6yOUNb746AmOOmgXGrnUKJF2bR40wKdclv+7JVHFz6ECvvR1
- xkNQLVg+EcLNBQQ==
+ bh=Sglwch19SlDhieIy7v8NKzFebPUh8jiaqmn97KAMqkA=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+JFZ7iSydRn4tnMpCKZx6qgL9HWw9EuAsHQg0
+ HH10rJGqnGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiRWQAKCRDa6OEJdZac
+ 5dk3EACjZPWwZC8B3cJMyKxMcUMmQy0YNx14stgrPvprUl4+cVEoxnswi5oWaOaT4fwbRjxsNAz
+ PwUZRSLe7x5eIa7jWpiw4Y5mtBb8RbP/ewzY54GiHoNuOO3NuVkYyaO1EnG/twDuPlWr/2HiurP
+ 3zTu//1zgS7tAoqRYpcyw14+36FMZsXgSrYY2W3vK9GtSF5UDMvFNIQ5iBEF4jGIIfeFIW00LRA
+ vGGrFIZoHT0yBRHiomaqAELvanSAx6qsTEW4/EIsfMtsTYrVSp6mUBXb2LjUarwJjRyztHPzaz4
+ +NsTvhihTTSJnQoY0q6wyQ5j2teI6BOPtEJ2GU81WeIOPeGj2B7fJskOVp9GjMxsPW+4n3APHpq
+ JVbLR8wolmtuBY7PrRJvm4nb6K1POznnlRiRJ4zNu6lUsaD09si3qLgkRsHyUCLtZ7qkjdOni8Q
+ yLc7pesz+N8GypKF5SaGRYuTh3on2Zy1BEogbxESSIXO/vHXcoeTj9FhB18iW8LS4nwp7aMLbzO
+ oPNCW2MUTqZlCHIYAK48xX5ZWbK2lmoe1cXW82AmJtcuXsLTeMxCmyeJed6gNKUjjENgarm1yh7
+ HHI+VqIN6Ce2Rhtja9zemEvUN3aQfLfo+N2AVh3vSEgz6UhZPf42UTeOd7hQaJ1OFUcBHS0SFJ9
+ A2/ooSOkBOw7kEQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,157 +103,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The replay iteration logic has been moved into the RamDiscardManager,
-which now iterates at source granularity using is_populated(). The
-source-level replay_populated/replay_discarded methods and their
-helpers are no longer called.
+In TDX guests, virtio-mem plug/unplug/re-plug fails because
+kvm_set_phys_mem() unconditionally sets KVM memory attributes to
+PRIVATE for all guest_memfd regions. On re-plug, the PRIVATE->PRIVATE
+transition is a no-op, so KVM doesn't re-AUG pages and the guest's
+TDG.MEM.PAGE.ACCEPT fails.
 
-Remove the now-dead replay methods, the VirtIOMEMReplayData struct,
-the virtio_mem_for_each_plugged/unplugged_section() helpers (only used
-by the replay methods), and the virtio_mem_section_cb typedef.
+Implement the "start-shared" approach: virtio-mem memory starts with
+shared KVM attributes. The guest converts shared->private on plug (via
+set_memory_encrypted -> MapGPA + ACCEPT), and back to shared on unplug
+(via set_memory_decrypted). This ensures every plug triggers a real
+SHARED->PRIVATE transition, causing KVM to AUG fresh pages.
+
+Add RAM_GUEST_MEMFD_START_SHARED flag and set it during virtio-mem
+realize for guest_memfd-backed regions. Use
+ram_block_attributes_state_change() to properly update the attributes
+bitmap through the API. Skip setting PRIVATE in kvm_set_phys_mem()
+when the flag is set. On unplug, explicitly reset KVM attributes to
+shared on the host side to handle the case where the guest skips
+set_memory_decrypted().
+
+See also virtio-comment "[PATCH RFC] virtio-mem: add shared/private memory property details".
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/virtio/virtio-mem.c | 112 -------------------------------------------------
- 1 file changed, 112 deletions(-)
+ include/system/memory.h |  6 ++++++
+ accel/kvm/kvm-all.c     |  3 ++-
+ hw/virtio/virtio-mem.c  | 27 ++++++++++++++++++++++++++-
+ 3 files changed, 34 insertions(+), 2 deletions(-)
 
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 28a75dac4ae..9dbf67efe50 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -277,6 +277,12 @@ typedef struct IOMMUTLBEvent {
+  */
+ #define RAM_PRIVATE (1 << 13)
+ 
++/*
++ * RAM with guest_memfd that should start with shared KVM memory
++ * attributes. The guest converts to private on use.
++ */
++#define RAM_GUEST_MEMFD_START_SHARED (1 << 14)
++
+ static inline void iommu_notifier_init(IOMMUNotifier *n, IOMMUNotify fn,
+                                        IOMMUNotifierFlag flags,
+                                        hwaddr start, hwaddr end,
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 97463a683f4..c034e74c8e5 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -1737,7 +1737,8 @@ static void kvm_set_phys_mem(KVMMemoryListener *kml,
+             abort();
+         }
+ 
+-        if (memory_region_has_guest_memfd(mr)) {
++        if (memory_region_has_guest_memfd(mr) &&
++            !(mr->ram_block->flags & RAM_GUEST_MEMFD_START_SHARED)) {
+             err = kvm_set_memory_attributes_private(start_addr, slot_size);
+             if (err) {
+                 error_report("%s: failed to set memory attribute private: %s",
 diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index ec165503205..2b67b2882d2 100644
+index 35e03ed7599..b46efe21126 100644
 --- a/hw/virtio/virtio-mem.c
 +++ b/hw/virtio/virtio-mem.c
-@@ -259,72 +259,6 @@ static int virtio_mem_for_each_plugged_range(VirtIOMEM *vmem, void *arg,
-     return ret;
- }
+@@ -19,6 +19,7 @@
+ #include "system/memory.h"
+ #include "system/numa.h"
+ #include "system/system.h"
++#include "system/kvm.h"
+ #include "system/ramblock.h"
+ #include "system/reset.h"
+ #include "system/runstate.h"
+@@ -479,6 +480,11 @@ static int virtio_mem_set_block_state(VirtIOMEM *vmem, uint64_t start_gpa,
+         if (vmem->dynamic_memslots) {
+             virtio_mem_deactivate_unplugged_memslots(vmem, offset, size);
+         }
++        if (rb->flags & RAM_GUEST_MEMFD_START_SHARED) {
++            kvm_set_memory_attributes_shared(start_gpa, size);
++            ram_block_attributes_state_change(rb->attributes,
++                                              offset, size, false);
++        }
+         return 0;
+     }
  
--typedef int (*virtio_mem_section_cb)(MemoryRegionSection *s, void *arg);
--
--static int virtio_mem_for_each_plugged_section(const VirtIOMEM *vmem,
--                                               const MemoryRegionSection *s,
--                                               void *arg,
--                                               virtio_mem_section_cb cb)
--{
--    unsigned long first_bit, last_bit;
--    uint64_t offset, size;
--    int ret = 0;
--
--    first_bit = s->offset_within_region / vmem->block_size;
--    first_bit = find_next_bit(vmem->bitmap, vmem->bitmap_size, first_bit);
--    while (first_bit < vmem->bitmap_size) {
--        MemoryRegionSection tmp = *s;
--
--        offset = first_bit * vmem->block_size;
--        last_bit = find_next_zero_bit(vmem->bitmap, vmem->bitmap_size,
--                                      first_bit + 1) - 1;
--        size = (last_bit - first_bit + 1) * vmem->block_size;
--
--        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
--            break;
--        }
--        ret = cb(&tmp, arg);
--        if (ret) {
--            break;
--        }
--        first_bit = find_next_bit(vmem->bitmap, vmem->bitmap_size,
--                                  last_bit + 2);
--    }
--    return ret;
--}
--
--static int virtio_mem_for_each_unplugged_section(const VirtIOMEM *vmem,
--                                                 const MemoryRegionSection *s,
--                                                 void *arg,
--                                                 virtio_mem_section_cb cb)
--{
--    unsigned long first_bit, last_bit;
--    uint64_t offset, size;
--    int ret = 0;
--
--    first_bit = s->offset_within_region / vmem->block_size;
--    first_bit = find_next_zero_bit(vmem->bitmap, vmem->bitmap_size, first_bit);
--    while (first_bit < vmem->bitmap_size) {
--        MemoryRegionSection tmp = *s;
--
--        offset = first_bit * vmem->block_size;
--        last_bit = find_next_bit(vmem->bitmap, vmem->bitmap_size,
--                                 first_bit + 1) - 1;
--        size = (last_bit - first_bit + 1) * vmem->block_size;
--
--        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
--            break;
--        }
--        ret = cb(&tmp, arg);
--        if (ret) {
--            break;
--        }
--        first_bit = find_next_zero_bit(vmem->bitmap, vmem->bitmap_size,
--                                       last_bit + 2);
--    }
--    return ret;
--}
--
- static void virtio_mem_notify_unplug(VirtIOMEM *vmem, uint64_t offset,
-                                      uint64_t size)
- {
-@@ -1667,50 +1601,6 @@ static bool virtio_mem_rds_is_populated(const RamDiscardSource *rds,
-     return virtio_mem_is_range_plugged(vmem, start_gpa, end_gpa - start_gpa);
- }
+@@ -606,10 +612,12 @@ static int virtio_mem_unplug_all(VirtIOMEM *vmem)
+     RAMBlock *rb = vmem->memdev->mr.ram_block;
  
--struct VirtIOMEMReplayData {
--    ReplayRamDiscardState fn;
--    void *opaque;
--};
--
--static int virtio_mem_rds_replay_cb(MemoryRegionSection *s, void *arg)
--{
--    struct VirtIOMEMReplayData *data = arg;
--
--    return data->fn(s, data->opaque);
--}
--
--static int virtio_mem_rds_replay_populated(const RamDiscardSource *rds,
--                                           const MemoryRegionSection *s,
--                                           ReplayRamDiscardState replay_fn,
--                                           void *opaque)
--{
--    const VirtIOMEM *vmem = VIRTIO_MEM(rds);
--    struct VirtIOMEMReplayData data = {
--        .fn = replay_fn,
--        .opaque = opaque,
--    };
--
--    g_assert(s->mr == &vmem->memdev->mr);
--    return virtio_mem_for_each_plugged_section(vmem, s, &data,
--                                               virtio_mem_rds_replay_cb);
--}
--
--static int virtio_mem_rds_replay_discarded(const RamDiscardSource *rds,
--                                           const MemoryRegionSection *s,
--                                           ReplayRamDiscardState replay_fn,
--                                           void *opaque)
--{
--    const VirtIOMEM *vmem = VIRTIO_MEM(rds);
--    struct VirtIOMEMReplayData data = {
--        .fn = replay_fn,
--        .opaque = opaque,
--    };
--
--    g_assert(s->mr == &vmem->memdev->mr);
--    return virtio_mem_for_each_unplugged_section(vmem, s, &data,
--                                                 virtio_mem_rds_replay_cb);
--}
--
- static void virtio_mem_unplug_request_check(VirtIOMEM *vmem, Error **errp)
- {
-     if (vmem->unplugged_inaccessible == ON_OFF_AUTO_OFF) {
-@@ -1766,8 +1656,6 @@ static void virtio_mem_class_init(ObjectClass *klass, const void *data)
+     if (vmem->size) {
++        uint64_t used = qemu_ram_get_used_length(rb);
++
+         if (virtio_mem_is_busy()) {
+             return -EBUSY;
+         }
+-        if (ram_block_discard_range(rb, 0, qemu_ram_get_used_length(rb))) {
++        if (ram_block_discard_range(rb, 0, used)) {
+             return -EBUSY;
+         }
+         virtio_mem_notify_unplug_all(vmem);
+@@ -622,6 +630,11 @@ static int virtio_mem_unplug_all(VirtIOMEM *vmem)
+         if (vmem->dynamic_memslots) {
+             virtio_mem_deactivate_unplugged_memslots(vmem, 0, region_size);
+         }
++        if (rb->flags & RAM_GUEST_MEMFD_START_SHARED) {
++            kvm_set_memory_attributes_shared(vmem->addr, used);
++            ram_block_attributes_state_change(rb->attributes,
++                                              0, used, false);
++        }
+     }
  
-     rdsc->get_min_granularity = virtio_mem_rds_get_min_granularity;
-     rdsc->is_populated = virtio_mem_rds_is_populated;
--    rdsc->replay_populated = virtio_mem_rds_replay_populated;
--    rdsc->replay_discarded = virtio_mem_rds_replay_discarded;
- }
+     trace_virtio_mem_unplugged_all();
+@@ -859,6 +872,18 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
+     rb = vmem->memdev->mr.ram_block;
+     page_size = qemu_ram_pagesize(rb);
  
- static const TypeInfo virtio_mem_info = {
++    /*
++     * For CoCo VMs with guest_memfd, use the "start-shared" model:
++     * memory starts as shared and the guest converts to private on
++     * plug.
++     */
++    if (rb->flags & RAM_GUEST_MEMFD) {
++        rb->flags |= RAM_GUEST_MEMFD_START_SHARED;
++        ram_block_attributes_state_change(rb->attributes, 0,
++                                          qemu_ram_get_used_length(rb),
++                                          false);
++    }
++
+     if (virtio_mem_has_legacy_guests()) {
+         switch (vmem->unplugged_inaccessible) {
+         case ON_OFF_AUTO_AUTO:
 
 -- 
 2.54.0
