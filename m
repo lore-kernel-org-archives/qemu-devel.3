@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 470B6CD342C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:38:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8924CCD343A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:38:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJrba-0000KT-O7; Mon, 04 May 2026 07:36:55 -0400
+	id 1wJrcd-0002Kb-3n; Mon, 04 May 2026 07:37:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrbF-0008NG-GE
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:34 -0400
+ id 1wJrbt-00012t-2T
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:37:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrbE-0000w8-2E
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:33 -0400
+ id 1wJrbr-000132-Eb
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:37:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777894591;
+ s=mimecast20190719; t=1777894630;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=hawV2zHhsLP3IpBpGcaKS5nofkenBW3wvzF/cqta4OE=;
- b=KQSlUy0dVQunrN5cd3nIeC3qb+awXH2+DxLYSvL0F0fppOY+l9Vvu8eg6bfxOGkMWJZDCD
- N1/NzTuq9YVToreQnXdKiZaAy1KlGxqDJrjcZeTTStd09PXL07Tey0xGe9lsAthu5vnyx7
- 5Z5FDA6HPcMG6JyoXuurPQYX/HHozYE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=vZjGVhYb4QZLufbxawDaTzTncLfnO3BZmIoFwaaoY5k=;
+ b=J4RCXpdpAZ+SoLqcWwh4p186/9sTkRTr81BJNcpRcbcuhhCQGKnvbCycOe+BajE9gUSssQ
+ Y358owUIfXeDij7F97rPkSXnJHBk/ceGOTDW9Pm5O74RtJKMhcEzKR1QfSdlcJ2Vy+wCHB
+ Qv2JRU65O/HUhNEbQqdBu2XKmu+gaWA=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-577-4uwF6CMcMQ67mA6abelspg-1; Mon,
- 04 May 2026 07:36:29 -0400
-X-MC-Unique: 4uwF6CMcMQ67mA6abelspg-1
-X-Mimecast-MFC-AGG-ID: 4uwF6CMcMQ67mA6abelspg_1777894589
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-YTQjBe9qNzWIE5qtKCYItQ-1; Mon,
+ 04 May 2026 07:37:09 -0400
+X-MC-Unique: YTQjBe9qNzWIE5qtKCYItQ-1
+X-Mimecast-MFC-AGG-ID: YTQjBe9qNzWIE5qtKCYItQ_1777894628
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D8C021956094
- for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:36:28 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A08E9195605E; Mon,  4 May 2026 11:37:08 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id ACF621800480; Mon,  4 May 2026 11:36:26 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 953AD18001ED; Mon,  4 May 2026 11:37:07 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 04 May 2026 15:35:01 +0400
-Subject: [PATCH v2 13/46] io/net-listener: move mutex init to instance_init
+Date: Mon, 04 May 2026 15:35:08 +0400
+Subject: [PATCH v2 20/46] hw/core/resetcontainer: free children array on
+ finalization
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260504-qom-tests-v2-13-ef7e3dc94f7a@redhat.com>
+Message-Id: <20260504-qom-tests-v2-20-ef7e3dc94f7a@redhat.com>
 References: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 In-Reply-To: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- peterx@redhat.com, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Peter Xu <peterx@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2097;
+ Peter Maydell <peter.maydell@linaro.org>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=915;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=FO0JbNzdhqKOcr/H+UXjPEtyLHouJa/+KfqAHcSin8A=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRsXDsGstuJZzUMHFI049qftwUp6PKECYBUG
- W8ebphBuiWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbAAKCRDa6OEJdZac
- 5b90D/9igcAOdVBdS2aP/I9NuJ8WCrcCQrf6jeu2mZSQyRH9OYAutk2uhdrvAhhL/Ga5p/vt1ut
- XxmzmVvN+jLZcD68rn5o7z8/KwdpJwOSuVxlPKrt1kpIE4hLW2a3V4SSy4sBC4DtNZGiT8MUiF/
- 1ozq4f1vWu079roA0g4CMxdEBuJy8vJ9v1X14m052sCmrV6y4iDV7jN0W8UNrGcYMmtuZRWLCGe
- WWDfgTQ9BkAvhFo5zQcZOgSMJvYg+u3vQcVATkcRQvqFMriHLoWxzmxuktICHyaxKdEltL7maYy
- p9foo2Gnmnkb6MfHxzICON4zhErf/9cUfW6BsD5fsgnOwKQMdGhgpW/ror+uAyWJcY3OU7kO4Zk
- hNbOS5N3JdWNp7NnmVX4n1bD+gaz/aAHR46Owbm/74JAtwbKVsOxZAGOO+tbELSSMUT05NwEMuD
- UsOICv3/qkO8S+BvNyTefJ9ep2+OA+e5bvVs5plm/v8wvXd1Rs0f6JjvtLykReUV88Norl8AFIY
- ACeZHrUlXLdbYwSny0Q6WAwg6vWqdZ2SsUnF5CqO3x5EVTOLAIB+I0kEdJj/wFzR5vWcWgv8ZvG
- 6p/IcklxZjf4pxp0LHsabkv6uOwnu+dKyHSqDqkBwz2XVncU8SyXAYGZqotPPzAhpO0i39DById
- 7QZb5quy+yCQ/8A==
+ bh=ecp3xjUIPOFrGW3mQ6rq12qeT8hrpA6G57ukebTH0ew=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRsys3drwFThkmwqHtjXN8JdvOS0zp5hc5xj
+ GD1+knW/DaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbAAKCRDa6OEJdZac
+ 5V4mD/9UlRMmm4YAug/ZYGAtC1pjCVCyUW0Wla6ZebxF6KPQH/vDNxicMdI9oO0G/PJEg69kVjo
+ MiS7cUJVtmKvjV8wU4HG5b91SYQH3a6OHj0o5/vQ63Ewf8wL6CHhXky+BmFHLm6NwlexaitVtSY
+ tumBOVxG3AvcjjR72XguN+eoS7MZmi4XdCM0Aw3hZW+t75Mjr9ucFACIq1PBpLJTkdIx0OkkdRE
+ /Z4pJXHXNTDvnCEFF3DFDNj9ORyiFCeB5B7eaXTkBTKUbZEqYd5GwvapUe0h2hw/Ij5qkG759fp
+ 3wVYtN8c0hueZMMDod50IpKiZUE53pawUw8sGNauquAksiUF6cujHI6BLeJguozGa5pRh4OL2p5
+ runJ7w7viZ5elBzVFvA2hmgg/Ecvpq9Dmebsq28qB30PK/kiI6vj4QVuQV3WLGcz4CjkHo9ut53
+ uF2hcfgI+2LN4Fcz+LEyZQICALhzpscVumQr1d6QzQNaj7oYZgR+aRWs6bF5rz/TmKP0f0XxS7t
+ Q5+zmhocrctWXpyyxfAryOT7+W1AdU1mINub3oCF72OF8HBCjxpDeGkwjgmUnIOpHP0Ink18uuX
+ zSyterv8StUMbTDsKgNv/IN37+ya/3LVwdNyMxvrqb5BDtw56GLCVJ9vgCS0o+3vaELbn4631/z
+ rSDxipKAlb4PXLQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -107,63 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QIONetListener mutex is initialized in the convenience
-constructor qio_net_listener_new() rather than in an instance_init.
-This means a bare object_new(TYPE_QIO_NET_LISTENER) produces an
-object with an uninitialized mutex, but instance_finalize
-unconditionally calls qemu_mutex_destroy() on it, which aborts.
+resettable_container_init allocates a GPtrArray for children, but
+resettable_container_finalize was empty and never freed it.
 
-Move the mutex initialization to a proper instance_init so that init
-and finalize are always paired regardless of how the object is
-created.
-
-This patch is just added for completeness, but "qio: Fix
-qom-list-properties crash on net listener object" from Peter Xu is
-basically the same.
-
-Fixes: 9d86181874a ("qio: Protect NetListener callback with mutex")
-Cc: peterx@redhat.com
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Fixes: 4c046ce37af0 ("hw/core: Add ResetContainer which holds objects implementing Resettable")
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- io/net-listener.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ hw/core/resetcontainer.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/io/net-listener.c b/io/net-listener.c
-index 9410d72da9c..1fd0f6cb5ab 100644
---- a/io/net-listener.c
-+++ b/io/net-listener.c
-@@ -38,7 +38,6 @@ QIONetListener *qio_net_listener_new(void)
-     QIONetListener *listener;
+diff --git a/hw/core/resetcontainer.c b/hw/core/resetcontainer.c
+index ef84aa2374a..a4a6476a036 100644
+--- a/hw/core/resetcontainer.c
++++ b/hw/core/resetcontainer.c
+@@ -66,6 +66,9 @@ static void resettable_container_init(Object *obj)
  
-     listener = QIO_NET_LISTENER(object_new(TYPE_QIO_NET_LISTENER));
--    qemu_mutex_init(&listener->lock);
-     return listener;
- }
- 
-@@ -440,6 +439,13 @@ qio_net_listener_get_local_address(QIONetListener *listener, size_t n,
-     return qio_channel_socket_get_local_address(sioc, errp);
- }
- 
-+static void qio_net_listener_instance_init(Object *obj)
-+{
-+    QIONetListener *listener = QIO_NET_LISTENER(obj);
-+
-+    qemu_mutex_init(&listener->lock);
-+}
-+
- static void qio_net_listener_finalize(Object *obj)
+ static void resettable_container_finalize(Object *obj)
  {
-     QIONetListener *listener = QIO_NET_LISTENER(obj);
-@@ -463,6 +469,7 @@ static const TypeInfo qio_net_listener_info = {
-     .parent = TYPE_OBJECT,
-     .name = TYPE_QIO_NET_LISTENER,
-     .instance_size = sizeof(QIONetListener),
-+    .instance_init = qio_net_listener_instance_init,
-     .instance_finalize = qio_net_listener_finalize,
- };
++    ResettableContainer *rc = RESETTABLE_CONTAINER(obj);
++
++    g_ptr_array_unref(rc->children);
+ }
  
+ static void resettable_container_class_init(ObjectClass *klass,
 
 -- 
 2.54.0
