@@ -4,53 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01BA0FF885A
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 07:18:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 220C1FF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 07:24:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJnYh-0001Rm-Kg; Mon, 04 May 2026 03:17:41 -0400
+	id 1wJnf8-0002XJ-1o; Mon, 04 May 2026 03:24:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wJnYQ-0001RG-Bw
- for qemu-devel@nongnu.org; Mon, 04 May 2026 03:17:25 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <aastharawat@linux.microsoft.com>) id 1wJnYO-0001Jh-62
- for qemu-devel@nongnu.org; Mon, 04 May 2026 03:17:21 -0400
-Received: by linux.microsoft.com (Postfix, from userid 1236)
- id 8D86D20B7168; Mon,  4 May 2026 00:17:17 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 8D86D20B7168
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1777879037;
- bh=Itym/PmA/kss/uAMC3eG7egg0g2dGKMNPqj7XetWvWk=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=NKh5ik4iB6MWOVMcVGA0j1DdhHkDzXza1J7s65a51f5wZB5eSne+fWy/HIxEV66CG
- HfsflLHwPGR7nC6vVHCip183JzV60NpHD7wpGHAfILi14TJxK8NEmI2R03VWRpG74z
- e87TR9gntlOTH5fkBMndDHPJA5fK+WhuTvTG/cqw=
-Date: Mon, 4 May 2026 00:17:17 -0700
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 06/14] accel/mshv: add arch-specific accelerator init
- hook
-Message-ID: <afhH/Ztt+iPctWcY@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20260421-mshv_accel_arm64_supp-v3-0-469f544778ba@linux.microsoft.com>
- <20260421-mshv_accel_arm64_supp-v3-6-469f544778ba@linux.microsoft.com>
- <8e4483bb-852d-41aa-bcff-26a460d24762@linaro.org>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wJnf4-0002X7-OY
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 03:24:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wJnf1-0003L0-1X
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 03:24:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777879449;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EiI0SJbREZyq9IUI8pw0wwpx48RcV0kNF2anm77UC94=;
+ b=aEC+Ab8UP011oBkkcIA0VACicO4deNrt4QfiLrOpv9CFR04qv4KjLNP8xm363TIw+trYiy
+ oKssMC504u1T0zvmWHFZy4K9uXS9xDEriaElosIxcUcLhlJiH5JC//HCp2VUB/SSzWluCa
+ /Ih8x7kg+8cd/EyTEUcKk/IhkxyM26Y=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-448-Wl0BUVUtP0u0XS_jcuhnGA-1; Mon,
+ 04 May 2026 03:24:08 -0400
+X-MC-Unique: Wl0BUVUtP0u0XS_jcuhnGA-1
+X-Mimecast-MFC-AGG-ID: Wl0BUVUtP0u0XS_jcuhnGA_1777879447
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 62AFD19560AA; Mon,  4 May 2026 07:24:07 +0000 (UTC)
+Received: from localhost (unknown [10.44.24.4])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DD3BC1801481; Mon,  4 May 2026 07:24:05 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8e4483bb-852d-41aa-bcff-26a460d24762@linaro.org>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH 27/41] system/qtest: free log path on finalization
+From: marcandre.lureau@redhat.com
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ qemu-devel@nongnu.org, armbru@redhat.com, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+In-Reply-To: <CAFEAcA9HMUcY2kVXgwxjZTptAtyhbVfFq4rPSp5buQ-9jvS8mw@mail.gmail.com>
+References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
+ <20260427-qom-tests-v1-27-c413f3605311@redhat.com>
+ <CAFEAcA9HMUcY2kVXgwxjZTptAtyhbVfFq4rPSp5buQ-9jvS8mw@mail.gmail.com>
+Date: Mon, 04 May 2026 11:23:58 +0400
+Message-Id: <177787943831.2741407.13660021224985138242.b4-reply@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2039;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=rp/qawBfra7KHwxi88RWGhIylF0XKFC9LIiL4OmS6So=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+EmOLCPecn1ohxEDBiZlq+nbtQDU1FM+WhOVP
+ /PMz7yw+QeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafhJjgAKCRDa6OEJdZac
+ 5cafD/9RuCHfWiXUdU4xpVtoMPii2hHJhoKDscOUPcT0auXjwjsAjAY26KtGvWJX4qhZNrxs4do
+ 0h3VJNI1f2CSqhH9HF+ebyLzr14IIJovjwS2/0fyvv6FinRmBqHJBgx9gSxS/ewXg2NoBCfH6d9
+ Hi0s2ZfGEKY7aYWxxuQFdrjZLhJvjsUpyIb9i2ONipsz6olBdaGE0jdeeLxU2uOvIfeR1Ip+keH
+ 59vh9e8Gs2BWpO4d84LN1BfU/xLbVdTU6ku5sscRpJYaxDtPl3wrVXwe+AtUAI4JLmiw3BxQCUu
+ Wcp/3KcSYmtZQt96vQ3FUatIGl00PvPIEosUp1589OHjQ6XkHzLR1UaSpwNf0XaUS1APgidngg3
+ A60l+YWfhwpQJ4BYR9I7fwgEV3x7JN/J9EcW9Yu7kLBSEWUdCfYyR62Hm66BQwq+WOR184IiNBW
+ v2Fyz/TPVqFUMk6kzxYbU8E9k7W5SZSaeNzqJdpDoweXZ/MJBfvRj7BYQbUnYXCG/DQ3ih9AHlc
+ WUjNp0+LfgEEx7P408iKZI5+sZ308dIGCJlCqnqOZs9kuwC4ufhmstT7W/4LaD+m6/QIbY+N0xQ
+ xgYjTpUaqQJkiv1yPfOtUGpLyjcJe61WX+bscouJ9RZUIWUg8M553ckkzGL1INBwNDS+zurTvba
+ 4hFAhsxAEUu6FSg==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,91 +106,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 23, 2026 at 11:51:17AM +1000, Richard Henderson wrote:
-> On 4/21/26 15:21, Aastha Rawat wrote:
-> > From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
-> > 
-> > Introduce mshv_arch_accel_init() as an arch-specific hook called early
-> > in mshv_init(), before VM creation. This allows each architecture to
-> > perform platform-specific initialization at accelerator init time.
-> > 
-> > For arm64, the hook queries the hypervisor for the supported IPA bit
-> > size and validates it against the guest memory map via the machine's
-> > get_physical_address_range callback, following the same pattern used by
-> > HVF and WHPX. This also populates the memory map which comes in handy
-> > later when retreiving the vGIC layout.
-> > 
-> > For x86, the hook calls mshv_init_mmio_emu() which was previously called
-> > directly from the common init path. Also move set_unimplemented_msr_action()
-> > and mshv_arch_post_init_vm() from mshv-cpu.c to the new mshv-all.c, as
-> > they are not vCPU-specific.
-> > 
-> > Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+Hi
+
+On 2026-04-30 17:01:14+01:00, Peter Maydell wrote:
+> On Mon, 27 Apr 2026 at 20:46, Marc-André Lureau
+> <marcandre.lureau@redhat.com> wrote:
+> 
+> > qtest_set_log allocates log via g_strdup, but no instance_finalize
+> > existed for the qtest type.
+> >
+> > Fixes: 6ba7ada3559e ("qtest: add a QOM object for qtest")
+> > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > > ---
-> >   accel/mshv/mshv-all.c        |  5 ++-
-> >   include/system/mshv_int.h    |  1 +
-> >   target/arm/mshv/mshv-all.c   | 25 ++++++++++----
-> >   target/i386/mshv/meson.build |  1 +
-> >   target/i386/mshv/mshv-all.c  | 80 ++++++++++++++++++++++++++++++++++++++++++++
-> >   target/i386/mshv/mshv-cpu.c  | 40 ----------------------
-> >   6 files changed, 105 insertions(+), 47 deletions(-)
-> > 
-> > diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> > index 44f35a1463..6940ad9989 100644
-> > --- a/accel/mshv/mshv-all.c
-> > +++ b/accel/mshv/mshv-all.c
-> > @@ -434,7 +434,10 @@ static int mshv_init(AccelState *as, MachineState *ms)
-> >           return -1;
-> >       }
-> > -    mshv_init_mmio_emu();
-> > +    ret = mshv_arch_accel_init(as, ms, mshv_fd);
-> > +    if (ret < 0) {
-> > +        return -1;
-> > +    }
-> >       mshv_init_msicontrol();
-> > diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-> > index ff3ab957b5..c72c91cd23 100644
-> > --- a/include/system/mshv_int.h
-> > +++ b/include/system/mshv_int.h
-> > @@ -96,6 +96,7 @@ void mshv_arch_init_vcpu(CPUState *cpu);
-> >   void mshv_arch_destroy_vcpu(CPUState *cpu);
-> >   void mshv_arch_amend_proc_features(
-> >       union hv_partition_synthetic_processor_features *features);
-> > +int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd);
-> >   int mshv_arch_post_init_vm(int vm_fd);
-> >   void mshv_setup_hvcall_args(AccelCPUState *state);
-> > diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
-> > index db1174b444..8d16971c0d 100644
-> > --- a/target/arm/mshv/mshv-all.c
-> > +++ b/target/arm/mshv/mshv-all.c
-> > @@ -9,12 +9,13 @@
-> >    * SPDX-License-Identifier: GPL-2.0-or-later
-> >    */
-> > -
-> >   #include "qemu/osdep.h"
-> >   #include <sys/ioctl.h>
-> >   #include "qemu/error-report.h"
-> >   #include "qemu/memalign.h"
-> > +#include "hw/arm/bsa.h"
-> > +#include "hw/arm/virt.h"
-> >   #include "system/cpus.h"
-> >   #include "target/arm/cpu.h"
-> > @@ -188,11 +189,6 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
-> >       state->hvcall_args = (MshvHvCallArgs){0};
-> >   }
-> > -void mshv_init_mmio_emu(void)
-> > -{
-> > -
-> > -}
+> >  system/qtest.c | 8 ++++++++
+> >  1 file changed, 8 insertions(+)
+> >
+> > diff --git a/system/qtest.c b/system/qtest.c
+> > index cf90cd53adb..e9e5773341f 100644
+> > --- a/system/qtest.c
+> > +++ b/system/qtest.c
+> > @@ -1020,10 +1020,18 @@ static void qtest_class_init(ObjectClass *oc, const void *data)
+> >                                    qtest_get_log, qtest_set_log);
+> >  }
+> >
+> > +static void qtest_finalize(Object *obj)
+> > +{
+> > +    QTest *q = QTEST(obj);
+> > +
+> > +    g_free(q->log);
+> > +}
+> > +
+> >  static const TypeInfo qtest_info = {
+> >      .name = TYPE_QTEST,
+> >      .parent = TYPE_OBJECT,
+> >      .class_init = qtest_class_init,
+> > +    .instance_finalize = qtest_finalize,
+> >      .instance_size = sizeof(QTest),
+> >      .interfaces = (const InterfaceInfo[]) {
+> >          { TYPE_USER_CREATABLE },
 > 
-> It would be nice to introduce the mshv_arch_accel_init hook earlier in the
-> series, so that you don't have to add and then remove this function.
+> Doesn't the chr_name string have the same issue?
 > 
-> 
-> r~
 
-Makes sense, will reorder the series in v4.
+Indeed. It doesn't trigger in the test because a bare qtest object
+has NULL chardev. But we should fix the leak nonetheless.
 
-Thanks,
-Aastha 
+> This pattern of "the object has a string property, and the
+> char *field that backs it is allocated if we give the property
+> a default value, and the setter has to free the old value
+> and strdup a copy of the new value, and you have to remember
+> to free the string in finalize" seems to be very common.
+> I wonder if there's some way we could make this less
+> error-prone and boilerplatey?
+
+I don't have a good solution to propose but to have a new optional
+"free" callback + pointer and error-prone pointer arithmetics. I am not
+sure this would make things simpler.
+
 
