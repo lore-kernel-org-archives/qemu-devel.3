@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05B3DCD342C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A4BAFF885A
 	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJrcj-0002k4-9F; Mon, 04 May 2026 07:38:05 -0400
+	id 1wJrcm-0003EE-Gf; Mon, 04 May 2026 07:38:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrcD-0001r1-Kx
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:37:38 -0400
+ id 1wJrcL-0001yt-JR
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:37:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrcB-00014k-JJ
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:37:33 -0400
+ id 1wJrcH-00014v-Mh
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:37:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777894650;
+ s=mimecast20190719; t=1777894653;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5ENGPfGHgIxg5og8PJbEFyPyG4amh78c3jp6juMJV6s=;
- b=cC3NhggG6cMHvpthJqvUf1hfmOF0dYDpEYfy2DoFLzmFnH22oaC85TxgnRReiNTK3RRj7G
- 8O4h9VUHGY6KRny3arEiijnm6Jk+Tng+SnyINz3upZiagW+giS8kyg2swJigtEF+X/gvH8
- 08rdfMyD+D10Tlf8o1WGuS1quQb4w8M=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=Cm1yArhtz5sU59WBphWUAJT4oX4EP1pkrBrfy7DzZ4I=;
+ b=hxsfnZSw0DNvb11THHnFQ/n91eWSbER40CIvEPgJ0z6o0bBDvK5ypUpT5L7WZdfpwWvG2b
+ oNwa/C0dyKV5mU8SvOEOUh/jJLXJGBxrxKlINaeQIgckZXcfPm20JCXfsgkxxZ/IKdaryN
+ Is/KXgAGqkbCxV81nv5Ra1/bxKbyyG8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-5IfPf7sbMcyTG7_TmCahuw-1; Mon,
- 04 May 2026 07:37:26 -0400
-X-MC-Unique: 5IfPf7sbMcyTG7_TmCahuw-1
-X-Mimecast-MFC-AGG-ID: 5IfPf7sbMcyTG7_TmCahuw_1777894645
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-iVFG4InJNDqPsfsJ76hqwg-1; Mon,
+ 04 May 2026 07:37:32 -0400
+X-MC-Unique: iVFG4InJNDqPsfsJ76hqwg-1
+X-Mimecast-MFC-AGG-ID: iVFG4InJNDqPsfsJ76hqwg_1777894651
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A0799195609F
- for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:37:25 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9455619560A1
+ for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:37:31 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 488511800347; Mon,  4 May 2026 11:37:23 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 3A44F30001A1; Mon,  4 May 2026 11:37:29 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 04 May 2026 15:35:11 +0400
-Subject: [PATCH v2 23/46] target/i386/sev: add finalize functions and fix
- leaking setters
+Date: Mon, 04 May 2026 15:35:12 +0400
+Subject: [PATCH v2 24/46] target/i386/kvm/tdx: free strings in
+ tdx_guest_finalize
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260504-qom-tests-v2-23-ef7e3dc94f7a@redhat.com>
+Message-Id: <20260504-qom-tests-v2-24-ef7e3dc94f7a@redhat.com>
 References: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 In-Reply-To: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4011;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=837;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=zRlvvqdJmibrYhLu3KatjR2sweNhvE5A5QyCSWJFiSM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRtv9i4nWbqcSRh4XRHK8cZfB8BtohLyh2dW
- Q2OdWn1JpuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbQAKCRDa6OEJdZac
- 5TznEACzfdpLL3CuuNibAHzg2RXB6tM9cTDK18PV7xEVb839s32gfuKVr0GBt0d8LcJTEiyO/SA
- HtdxikEMzXQvDbqxMx42Hmdrdt7WXNO3JhB1ZFjrVhJSU8GFibF1558yZ1exoNDIPcsSoUb5eTu
- wP6kIr03cDzB++GUYh2naX9UGqywWPTcFOylHGKk3zUX+a7b+UowElxfWrQsvRYbs0kk8uyfsnu
- Yrds/p/HgRIDlwE4jfmh4SJlHOTb/SrCe42/7PO/Xuqrz79I465xfnCqf2RBoxn30KinaM/t63C
- 8VKx3wbUnqluehKMH8gycEsZbAa9PCosFmRC3xxbnDzeJhZ2aswvVKexlwvC/2iOYim8vK8IHpO
- NpBzTsUZ9zBpYl8F2+kag8n3a5EHNzZBZSnBjgbZRcJrzAXTM3IR/uChMl+sS7BemfcMFR5vDmD
- sYhJUp+3GeBJv10aLMQsnPn/DvMpnK4TDuh61Onx7GEsW9Gkg6dp2eIxXL8j49/FMy0DhadZxp3
- 7uLqPC2qDObfXJd7B42Pv6ZfW+MkQ6cP0LNCcPUdp0NOU8CJoD7NxS5J1c4F4o9gcz0WPYZg8Fu
- bXfS4oBGCCqLeXNO6oyESqROMwHJ924G6L8zxUuNTJcRNgcDm379u8syhqD4df3NaJ7v2rIfDp+
- 48L3bx8b6B2qN2A==
+ bh=MNRXqvTukQ+paxNe0QQZQxRe4jE5rhTlC8L20HzTXMs=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRtQtX9JxEv+O0kJbEHXz4bE2RWRVIZgpamM
+ tHpQOFLiqmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbQAKCRDa6OEJdZac
+ 5Yc0EAC43PcJp56qBFLKLkT2I1GTl3qEU5ehBc1lJRnhdk4ULP9WynqEA2kYWbC7AGgIRoUGXSV
+ FUjq+xoS249crsL6pWItXd2eFDVjhZOdY0WBFycDDXCFcJ4scysM1gbL5ifomVdplxRihhjDmih
+ TFoTGMiSqANzcQwCHNHb2tBtUQn1ZIedeiINrxkTPukO9eYikJpbtW0GGuZoXbn0IRtNqaejMVp
+ k/t74mUH0UzT1VP1nhf6pGLBHCopdyCOt1k0HpDnNfuQMbGQFtUiU3NQhX1dScyRRObEafqPzEy
+ GxBYpgf7BR8978MMD3ILUH7uc8noNZjhHlKEVSkPGLx3MTe2+H9lRSVJMi7ROTr5U9CgK3KKr9f
+ 38qhvox+bEcy4bsuzOrjnbKIS5JKcyYyquBTvAapKhEDpAcypA/PQ7uowJb5l/KHlbIE1N93tQX
+ WIXaiYWGcKgNC8UcyW43XkAB+riIJlE4V+x/gYHdzjxN0Ll/HWTuUBssWVp72X5nzLlAyoEMW2Z
+ paEDCua9+U2mnIqEtZq32Y7vt/+nDCzPhGIb8xmyCPl/yJOMoaPcgjlYypd23sHDiSMwDTBmECI
+ rASkVUg9ZO/tZ8FpMnHjN/5t3OorNRd9NwYfERzIFPgmjagjMZ3DIfYB8zgv7DDAK4jKPQ72aO8
+ pRfhPvQsv71rBFQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -105,125 +105,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-None of the three SEV types (sev-common, sev-guest, sev-snp-guest)
-had instance_finalize functions, so all string fields allocated
-during init or by property setters were leaked on object destruction.
+tdx_guest_finalize was empty, so mrconfigid, mrowner, and
+mrownerconfig set by property setters were never freed.
 
-Add sev_common_finalize, sev_guest_finalize, and
-sev_snp_guest_finalize to free the allocated fields.
-
-Also fix sev_common_set_sev_device, sev_guest_set_dh_cert_file,
-and sev_guest_set_session_file to free the old value before
-replacing it.
-
-Fixes: a9b4942f485b ("target/i386: add Secure Encrypted Virtualization (SEV) object")
+Fixes: d05a0858cf87 ("i386/tdx: Support user configurable mrconfigid/mrowner/mrownerconfig")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- target/i386/sev.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ target/i386/kvm/tdx.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 261b6aaa37b..3c2734ad83b 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -2527,6 +2527,7 @@ sev_common_get_sev_device(Object *obj, Error **errp)
- static void
- sev_common_set_sev_device(Object *obj, const char *value, Error **errp)
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 4714c9d514e..df46fce7693 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -1585,6 +1585,11 @@ static void tdx_guest_init(Object *obj)
+ 
+ static void tdx_guest_finalize(Object *obj)
  {
-+    g_free(SEV_COMMON(obj)->sev_device);
-     SEV_COMMON(obj)->sev_device = g_strdup(value);
++    TdxGuest *tdx = TDX_GUEST(obj);
++
++    g_free(tdx->mrconfigid);
++    g_free(tdx->mrowner);
++    g_free(tdx->mrownerconfig);
  }
  
-@@ -2831,12 +2832,21 @@ sev_common_instance_init(Object *obj)
-     QTAILQ_INIT(&sev_common->launch_vmsa);
- }
- 
-+static void
-+sev_common_finalize(Object *obj)
-+{
-+    SevCommonState *sev_common = SEV_COMMON(obj);
-+
-+    g_free(sev_common->sev_device);
-+}
-+
- /* sev guest info common to sev/sev-es/sev-snp */
- static const TypeInfo sev_common_info = {
-     .parent = TYPE_X86_CONFIDENTIAL_GUEST,
-     .name = TYPE_SEV_COMMON,
-     .instance_size = sizeof(SevCommonState),
-     .instance_init = sev_common_instance_init,
-+    .instance_finalize = sev_common_finalize,
-     .class_size = sizeof(SevCommonStateClass),
-     .class_init = sev_common_class_init,
-     .abstract = true,
-@@ -2856,6 +2866,7 @@ sev_guest_get_dh_cert_file(Object *obj, Error **errp)
- static void
- sev_guest_set_dh_cert_file(Object *obj, const char *value, Error **errp)
- {
-+    g_free(SEV_GUEST(obj)->dh_cert_file);
-     SEV_GUEST(obj)->dh_cert_file = g_strdup(value);
- }
- 
-@@ -2870,6 +2881,7 @@ sev_guest_get_session_file(Object *obj, Error **errp)
- static void
- sev_guest_set_session_file(Object *obj, const char *value, Error **errp)
- {
-+    g_free(SEV_GUEST(obj)->session_file);
-     SEV_GUEST(obj)->session_file = g_strdup(value);
- }
- 
-@@ -2937,12 +2949,23 @@ sev_guest_instance_init(Object *obj)
-     sev_guest->legacy_vm_type = ON_OFF_AUTO_AUTO;
- }
- 
-+static void
-+sev_guest_finalize(Object *obj)
-+{
-+    SevGuestState *sev_guest = SEV_GUEST(obj);
-+
-+    g_free(sev_guest->dh_cert_file);
-+    g_free(sev_guest->session_file);
-+    g_free(sev_guest->measurement);
-+}
-+
- /* guest info specific sev/sev-es */
- static const TypeInfo sev_guest_info = {
-     .parent = TYPE_SEV_COMMON,
-     .name = TYPE_SEV_GUEST,
-     .instance_size = sizeof(SevGuestState),
-     .instance_init = sev_guest_instance_init,
-+    .instance_finalize = sev_guest_finalize,
-     .class_init = sev_guest_class_init,
- };
- 
-@@ -3195,6 +3218,19 @@ sev_snp_guest_instance_init(Object *obj)
-     sev_snp_guest->kvm_start_conf.policy = DEFAULT_SEV_SNP_POLICY;
- }
- 
-+static void
-+sev_snp_guest_finalize(Object *obj)
-+{
-+    SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(obj);
-+
-+    g_free(sev_snp_guest->guest_visible_workarounds);
-+    g_free(sev_snp_guest->id_block_base64);
-+    g_free(sev_snp_guest->id_block);
-+    g_free(sev_snp_guest->id_auth_base64);
-+    g_free(sev_snp_guest->id_auth);
-+    g_free(sev_snp_guest->host_data);
-+}
-+
- /* guest info specific to sev-snp */
- static const TypeInfo sev_snp_guest_info = {
-     .parent = TYPE_SEV_COMMON,
-@@ -3202,6 +3238,7 @@ static const TypeInfo sev_snp_guest_info = {
-     .instance_size = sizeof(SevSnpGuestState),
-     .class_init = sev_snp_guest_class_init,
-     .instance_init = sev_snp_guest_instance_init,
-+    .instance_finalize = sev_snp_guest_finalize,
- };
- 
- static void
+ static ResettableState *tdx_reset_state(Object *obj)
 
 -- 
 2.54.0
