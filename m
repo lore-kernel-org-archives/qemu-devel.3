@@ -4,90 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB86CD342C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:38:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D550FF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:38:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJrcr-0003pG-O7; Mon, 04 May 2026 07:38:13 -0400
+	id 1wJrb6-0007qO-1f; Mon, 04 May 2026 07:36:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrcn-0003Rw-PY
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:38:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wJrao-0007o5-Rr
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrcm-00019E-6I
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:38:09 -0400
+ id 1wJram-0000tS-Tk
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777894687;
+ s=mimecast20190719; t=1777894563;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xc4SYT3UnDMGDLgyYV/qbHsyXvfJpgId4SJTPvnG1QY=;
- b=Voal91GO1/1uKbf3xrIUQ1A4fSwJDuLerhJugPkA3AFc5hNu/V+zgjlncAF1OzLSTgoySE
- TqK87WYyfijZToMG27Haq9wPMUPKCRaGgA+IURtUx0EiCEx7ZWaJzLbWi0JNX8j74WsvL2
- llH0rf6T/Kz1u8fdSZIy7fPNdJEYScI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=GpiJsQbA6N4lVaGQnZSXpb0IqEmM+X+KurXrRNwGnJc=;
+ b=KSDjufmyX983zfuvcCBkpOjptT0D4M0AczKQx16oOlk8+Dki9wxgSVjbXhbj7BmDXM8nKO
+ Jk0RIbKZwFFq0qV2rhsj8yBM4QNw2Qn5Cds7cYbIK0sBL/UV3lTV4AEu4VSPYEpGtK3nQy
+ Y+7DbHEr7s9EPgXAqGV7ExxPjCwa6D8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-294-J3WzS-EkPz6dGcGkuAukjA-1; Mon,
- 04 May 2026 07:38:04 -0400
-X-MC-Unique: J3WzS-EkPz6dGcGkuAukjA-1
-X-Mimecast-MFC-AGG-ID: J3WzS-EkPz6dGcGkuAukjA_1777894683
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-519-Oh4z6cupP7Wo2GmZbvOeVQ-1; Mon,
+ 04 May 2026 07:36:02 -0400
+X-MC-Unique: Oh4z6cupP7Wo2GmZbvOeVQ-1
+X-Mimecast-MFC-AGG-ID: Oh4z6cupP7Wo2GmZbvOeVQ_1777894561
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC9BE1800348; Mon,  4 May 2026 11:38:03 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 45B531956095
+ for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:36:01 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 55F951955D84; Mon,  4 May 2026 11:38:01 +0000 (UTC)
+ id 100861955D84; Mon,  4 May 2026 11:35:59 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 04 May 2026 15:35:17 +0400
-Subject: [PATCH v2 29/46] accel/kvm: free device path on finalization
+Date: Mon, 04 May 2026 15:34:56 +0400
+Subject: [PATCH v2 08/46] hw/xlnx_dp: reject NULL 'dpdma' property rather
+ than crash
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260504-qom-tests-v2-29-ef7e3dc94f7a@redhat.com>
+Message-Id: <20260504-qom-tests-v2-8-ef7e3dc94f7a@redhat.com>
 References: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 In-Reply-To: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1095;
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=819;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=+3VxTolW7meb5x/gWd6Oe4Wp6U24+GJpNUhUzxlJdXM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRtXo4gNvFN5HsiKYwHneoRWVXav8hTQaR9/
- EN2lVcNGwWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbQAKCRDa6OEJdZac
- 5ZBLD/sF0VqaziShcXG9xeWw77zl588M9pJcs/ZQYVWCQ/IlBXh6bm8n4cPzffKDtQ2gIiXl61L
- Jr4LMbhviar5ovhH2XAExwvFs9afnt8eUouzjp8SeXuyJP0YfBAFUv4TzVWf0ss3pNW/tAg7L8W
- 515m8v8/PJ5lesgjc1Nhq/J7iIWcaaCzU2cSY6SuwMcj3NQMcr6rW8UUfUvIoXBEpiH7c1ZW/ZV
- qnz6SzdjDGs7QObn4kfnCmbKSqPX21a7xHibrBfcJnzU6MkFoYGWQsTTHocJD3pzQQ1MaxZhLuY
- lSwdZ6V9u3Sl7Yu6Tdv67VU4m1pqlk97jsvqEkUwZA/PxllwpLko7g87kU8KQj0ty3epXf/XZ07
- /q5BUE9RucA/DClbHWmQ0Qkb7MfiN+Iauic9XmHlbZLW52mytAJGqT0ZUX2QmbAFJFFE2ADbhB7
- NLKx+SB1UHoMuYCMx4xW3+I7uFstuQQusPAsVWMRXxKtiFAbtwUvAFf1sIRI16rObmXGQ4GjTIn
- 2fVAj8PzTqeHVr9efIy8+uOeid87g/p26ioZJWvGAwBg7+Vk8IUxsDbdlUK3dqhRnoQCXSj/947
- gYhADucZ10I9ZlYiw2Vxkk3VdC0EHtwW89V339GzANaCA7dpi1DD1WBbgFos8tp93+aiSRvDxim
- IlRoC1M85MVVM9A==
+ bh=ust1ZuWfSfSA7Ib1bldNFkkVSryiOB6BQFu7ci9K6O4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRs3Jb7MzUVjAZgRkGU611y5HPz03rcxztzK
+ 2AZkNtYcy2JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbAAKCRDa6OEJdZac
+ 5Wy2D/9g9uRtQ/LxB9wNV5i/PjAmI0Sc+zFik27774askZDfN88v58vcudoq+neG5lMt6sfkD1U
+ +K2TK7l06ODi4Bl0s2eutAwnG3rO9h5eW3hSiIHxhynPcK7Ew9F6v39Huuy7Mi7yC00YjUX1AuH
+ lrtkOcptq+E9arfJ8v9bBS7+6Es8xQ7/zKdh7ybWI0kTu5glGXJLZpJzvfHVb1N15lJ5K0KHLEL
+ CgrgomikhRxWFeUWG/G4X6dCe1SPYkbxEPXhAFQ8dE6T50wdxODxLeMZZu9mya3nqkKCTYxFWr4
+ RHKZPVEKTcSOMLSWrbvznDbj5B02xJtefPeEgde9UobjS4GngrJr8/EjpXdmP1TnUzLUVqHjVuW
+ ghL9/IrYkCSSsfz7C+2Fl8O1S2WQs8cCHT2x2hJU+iWfTpUQbNSpIPICUFL9ahcdg6BOS7B/ZH2
+ mIjnDmhR1mAIH0JAzu7r5C6V2GtNsUJPVyHpus8+V6Xha+M4lEzwa5cgaRO5Wk4Oj+fzsr59L2n
+ JiHxWTdM5IITjBnfSxlrZQchG7Mh4Kg1we+fjjvkb7AVIt6IM5j3fhjjYh3yhQuqc5LmGlJNt6e
+ y491eX8YtJZuglanjF41coPvjfUyomAUSIYOJikKQ2wO/rC0K4fB7r9SuB5e1HMjBrjoScLi0GJ
+ 8EyGjdE2cMjAE6A==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,39 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-kvm_set_device allocates device via g_strdup, but no
-instance_finalize existed for the KVM accelerator type.
+The type-checking macros (XLNX_DPDMA(val)) which crash on NULL.
 
-Fixes: aef158b093b9 ("Add class property to configure KVM device node to use")
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- accel/kvm/kvm-all.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/display/xlnx_dp.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 92af42503b1..96f90ebb240 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -4342,10 +4342,18 @@ static void kvm_accel_class_init(ObjectClass *oc, const void *data)
-     kvm_arch_accel_class_init(oc);
- }
- 
-+static void kvm_accel_finalize(Object *obj)
-+{
-+    KVMState *s = KVM_STATE(obj);
+diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
+index 50e6ef10984..876cb3d6642 100644
+--- a/hw/display/xlnx_dp.c
++++ b/hw/display/xlnx_dp.c
+@@ -570,6 +570,12 @@ static void xlnx_dp_set_dpdma(const Object *obj, const char *name, Object *val,
+                               Error **errp)
+ {
+     XlnxDPState *s = XLNX_DP(obj);
 +
-+    g_free(s->device);
-+}
++    if (!val) {
++        error_setg(errp, "%s cannot be set to NULL", name);
++        return;
++    }
 +
- static const TypeInfo kvm_accel_type = {
-     .name = TYPE_KVM_ACCEL,
-     .parent = TYPE_ACCEL,
-     .instance_init = kvm_accel_instance_init,
-+    .instance_finalize = kvm_accel_finalize,
-     .class_init = kvm_accel_class_init,
-     .instance_size = sizeof(KVMState),
- };
+     if (s->console) {
+         DisplaySurface *surface = qemu_console_surface(s->console);
+         XlnxDPDMAState *dma = XLNX_DPDMA(val);
 
 -- 
 2.54.0
