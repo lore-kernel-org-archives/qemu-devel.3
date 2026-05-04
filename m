@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C817CD3423
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 06:22:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C8FCFF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 06:29:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJmgd-0008Su-N6; Mon, 04 May 2026 02:21:47 -0400
+	id 1wJmnj-0000tW-Dv; Mon, 04 May 2026 02:29:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJmgb-0008Sm-CC
- for qemu-devel@nongnu.org; Mon, 04 May 2026 02:21:45 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJmna-0000tK-Qf
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 02:28:58 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJmgX-0001nH-IG
- for qemu-devel@nongnu.org; Mon, 04 May 2026 02:21:43 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-449d6c68ed8so2716948f8f.0
- for <qemu-devel@nongnu.org>; Sun, 03 May 2026 23:21:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJmnV-0003g4-KR
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 02:28:55 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4891c00e7aeso29186335e9.2
+ for <qemu-devel@nongnu.org>; Sun, 03 May 2026 23:28:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777875698; x=1778480498; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=HDGUUlnL6RcXCnE/O5wTkYUC48nCEBKQO8xPXMV5mTw=;
- b=kjcoXeETQZ7SSA08A0eMaX6A1pSjSeCu30l2ufesc5CozbH08HoO2hHaWdDLbsv/Ma
- 7D+/+C6xvzUEOne+C5sDEdUzslo0fCnraDzimIElG/BanCT/R0Frc9zSA0n/9OjH5m+3
- qhXke4qdX/YYb9KMmaGG3defJN/y7mP3KHmEQ3kObahZKssp3cPpC8iYWOD8xieywX2t
- XOzNgCzeOJ6O6DcBo4o2cXpuRHBi63mYbBH3B5OeHfCA2D28EfzBboWz9wn0Ez9BCVcc
- tvsUoudNvkZlgOpCqyjw/lVeheu6BY6gCeSjdK8YXCZWpCaJzZ1MyIyYdybmQYEu4qsT
- ZWmw==
+ d=linaro.org; s=google; t=1777876131; x=1778480931; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=EXwXyzuveJ6b4hwT82l7UBCs8i+zWxsE6JoeCxX3LZA=;
+ b=LIznwWc8vzs4WaTRaj3FP9hpg7v9G5IyHU7eShFmikc3gEE4gl923IgDXgNZM3nFel
+ y1ShZfrckOKlU1o6EdQjybDId7RUB+dn+wuYnnrWp7zx/XFAY+rQuutCB7g+mMnu50rS
+ 01C290RsYCepxwG/yuhRaxeVqELlM8tpukf5r4HBnJzdNwgr5N60wzoMdDxLVNmkJrbz
+ OvHbAi8gbCTogHMGiuLRFj0s3oyBH2XyQcHbh0ojVPG7sevUCkVEAzll+spOmCbztEio
+ ep6SxgXYmE5jPBYOiC+nCh4sCn/lZXUog0wd8ouW4aofA6qoiPi07LI389lG6PNmf8mW
+ AX8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777875698; x=1778480498;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1777876131; x=1778480931;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=HDGUUlnL6RcXCnE/O5wTkYUC48nCEBKQO8xPXMV5mTw=;
- b=LGmdYrACr4fG2JQApO/yae/k592d0ttNJ2kXOKQ6TQXzvcTewgJXrNAAtXLyP47fd6
- TIBcXzzwwLCEN7oNFJB7clM4eThnWDhnp6lK4uMgXa0immC9gpU26DQ8SgWfZinTTIVe
- iVRmu8pIP/qxnzj4DChx5zZmV1e2pFNk2jA8tEJKKqDKr9bWB1VYDU4W57iFiCIdV5Xu
- 7AZ2wSy1lrYav6S/kpmYBomhuXgd4upK5fibLLbypx6+/Bu0HO+XyEfR8ZKyibQPdvNK
- NIssZB99s5yLUy6xqEqESBkI4dcZGKqLyHkqsXfQWLDgHd5w6TGEz3XxaNJHA6gof+9H
- kLOw==
+ bh=EXwXyzuveJ6b4hwT82l7UBCs8i+zWxsE6JoeCxX3LZA=;
+ b=s/jha1srJ6wb5k8UlyCtCyta50bxKJHzw0rUSB/ak2vA+ZBeGPZt4hUHFWwJsmrQct
+ LBY4MEFoBG0zwx1N3xcTRMuL+IOSXwWb3tSnl+6YOdBsLlWEAk4jVFv43vfVEK2lTwQe
+ F1fEFa7EIZIFvpN7o6v37ZehfhHnFLGF84MRXEDGeaD7CH8uIJ6QYRoLBIZP5lPqPT6s
+ d8DaMP/6V93e6zML4mnOkRCQ3UeqDraaZtUreiP80AQhTq9oyA0jUlFFC8yQuNem80gi
+ u73FTR6Y9qJ0DnCL0wbk+z5MrcyzBL0GFQn8xWZKpdInbmayo8OUUxdtIjolIv+9LIXt
+ r/HA==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/hO8Jflj2+OKA3K+KOjqYrg8b6Qb02YctFXCC+P+UMW4agdxXI+X8d2jvoTfsdxSP+rJeb46AgtEFO@nongnu.org
-X-Gm-Message-State: AOJu0YyNtEeXyajvlc7d5DSX7JNsXlkSr/JalN1YVPKLycX2TxoPGx6D
- KMGbtrJSQ7NuW1XL63nWTR8N5sdsqX3zSNtijIcafYY/teXYefWkQckXihRPU5i+A30=
-X-Gm-Gg: AeBDieuGBVJ5JLQ/3gRJiIfOIlx2IBsHcx9zuDYqaPoLARwybRy20WFQQguyj3bFolf
- VFg+AGyjOslWd0LLe/XTGpTR1F7n0VjWo6GfSB+9fX0mOp2FBuWb9/Ii/AXqaYtQUzjb9B4nQ1L
- DGYGokl8sQDAGPtRb1puLB8o33u3yCl8RnEwKUL5txM5iwyi+A/Q38KF8nAPbUW+ayKqJC7GmBr
- pkTN1nKP3ep2I4K9OTEvE/v+ftUSYTdPiHzZoCjkdrB88H9Oi3lN3b+6utVODvtrO5GDAWSOVVm
- siRTNQ/r7Wcuucb2ouBCeWB8zPjjX/sgpYaBp00XDyWrhfO4HIjMvlVR7vuVt8Cpc7/cIEXlXHW
- rleKiM2QdC+am9yx8mI+08Kcnuq0MfUH19gjR/gwCLF4q5msABdbLADTFrq+nsNAtHFFXtMDbfe
- nq0E84UB2qUFwJ6dRk7ly7f2y/vnT9kOqvhFA3dE4b5FIwDZmPQ+iE7ziHV0EVdT4I8RhyuBVZG
- MK9
-X-Received: by 2002:a05:6000:2081:b0:43d:77e1:6a69 with SMTP id
- ffacd0b85a97d-44bb6ab16fdmr14244737f8f.38.1777875698344; 
- Sun, 03 May 2026 23:21:38 -0700 (PDT)
+ AFNElJ/o1dSKJ06dV+l59rvbFeJgm+7jgjPH72NuL+mf6ABkWArc3J7lwnDrK2LXfrk8kshv0eH+b94NhLlW@nongnu.org
+X-Gm-Message-State: AOJu0YyTGIkqKIZpHuLCCyTi8w3jdQSsMXSbnIeBFw5OkeTJHuMHo8Q6
+ YwKgiTsiDeszySbL8jbMm6+xBdKYnOJdDz8t+Di9wC5WDrhvS+uxH2J8oXnn+xmw5V8=
+X-Gm-Gg: AeBDiet77VYzWZAkzlsQdwlZgAlMZL9wNKVFoPHmW3B5zD/+0ThBI/+Vl+ab7OFRLhv
+ 7lTBu7Od5QTZy58due2xsVLBg98D7XDnplal+CZ15LW0isp6lyJ4ExnANYIUY1GVjL69lOjXSMQ
+ 9f5OCgMl6/P6I2K3yXAO394iK+Lsc1Bh2xbCFq7mreNg3sYX5saS8mZJq8rLOx4qkTPjLzrbdFg
+ jyjm3vRDEIkvYoGETvAyUKX4lgofXvElAqyZ3uVCjP9orF0ELjX8xmLITrHe+0FvqTdk5X5QtK6
+ bAs4uFcU+eIuTYWa2J9x3yZZrWLNsvGCrjTjr9quLFS5epPNHysFfoaJTe+cJVrvAOIDTXOnVCy
+ Fydxpum90RnQl5T7XzHBYykx5J3RztnaJnETYQUyQDD0PEIrHoFBDrrvLFks1XaaZ9NoAxVrkAM
+ gTyA+kcWQIejd6+Ah4Oh6MXQmzjywNEXCRUhYPhQsZF1V4KTBd6bnYW/js/HfsaXY/3TR6idOBH
+ OVU
+X-Received: by 2002:a05:600c:c171:b0:487:55c:e0c1 with SMTP id
+ 5b1f17b1804b1-48a9865d9b6mr152214035e9.14.1777876130688; 
+ Sun, 03 May 2026 23:28:50 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-44a8ea7cf6asm23631610f8f.8.2026.05.03.23.21.37
+ 5b1f17b1804b1-48a82307f7csm310896945e9.12.2026.05.03.23.28.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 03 May 2026 23:21:37 -0700 (PDT)
-Message-ID: <e166fff7-c965-4bce-aa30-147dcc4ac4ff@linaro.org>
-Date: Mon, 4 May 2026 08:21:36 +0200
+ Sun, 03 May 2026 23:28:50 -0700 (PDT)
+Message-ID: <09b2ec62-4b67-41da-893d-aaccf011537c@linaro.org>
+Date: Mon, 4 May 2026 08:28:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 26/40] fpu: Return struct from parts{64,128}_muladd
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20260430000524.56046-1-richard.henderson@linaro.org>
- <20260430000524.56046-27-richard.henderson@linaro.org>
- <9796771d-4d8f-44f9-ba8c-49f0c39a5a51@linaro.org>
- <13b0fb09-c634-4cd6-8566-4142508cbd67@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PULL 06/58] kconfig: remove duplicate declaration of
+ CONFIG_MIPS_BOSTON_AIA
 Content-Language: en-US
-In-Reply-To: <13b0fb09-c634-4cd6-8566-4142508cbd67@linaro.org>
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20260430172204.1006673-1-pbonzini@redhat.com>
+ <20260430172204.1006673-7-pbonzini@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260430172204.1006673-7-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,65 +106,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/4/26 23:30, Richard Henderson wrote:
-> On 4/30/26 15:17, Philippe Mathieu-Daudé wrote:
->> Hi Richard,
->>
->> On 30/4/26 02:05, Richard Henderson wrote:
->>> At the same time, export.
->>>
->>> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->>> ---
->>>   include/fpu/softfloat-parts.h |  9 ++++
->>>   fpu/softfloat.c               | 83 +++++++++++++++++------------------
->>>   fpu/softfloat-parts.c.inc     | 38 ++++++++--------
->>>   3 files changed, 69 insertions(+), 61 deletions(-)
->>
->>
->>> diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
->>> index 77465cce6e..09b79f8d44 100644
->>> --- a/fpu/softfloat-parts.c.inc
->>> +++ b/fpu/softfloat-parts.c.inc
->>> @@ -679,9 +679,8 @@ static FloatPartsN *partsN(mul)(FloatPartsN *a, 
->>> FloatPartsN *b,
->>>    * Requires A and C extracted into a double-sized structure to 
->>> provide the
->>>    * extra space for the widening multiply.
->>>    */
->>> -static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
->>> -                                   FloatPartsN *c,
->>> -                                   int flags, float_status *s)
->>> +FloatPartsN partsN(muladd)(const FloatPartsN *a, const FloatPartsN *b,
->>> +                           const FloatPartsN *c, int flags, 
->>> float_status *s)
->>>   {
->>>       int ab_mask = float_cmask(a->cls) | float_cmask(b->cls);
->>>       int c_mask = float_cmask(c->cls);
->>> @@ -719,10 +718,13 @@ static FloatPartsN *partsN(muladd)(FloatPartsN 
->>> *a, FloatPartsN *b,
->>>           }
->>>           /* Narrow with sticky bit, for proper rounding later. */
->>> -        fracN(truncjam)(a, &p_widen);
->>> -        a->sign = p_widen.sign;
->>> -        a->exp = p_widen.exp;
->>> -        return a;
->>> +        FloatPartsN r = {
->>> +            .sign = p_widen.sign,
->>> +            .exp = p_widen.exp,
->>> +            .cls = float_class_normal,
->>
->> It would be clearer if the float_class_normal change start appearing
->> during previous reorganizative patch:
->>
->>             a->cls = float_class_normal;
-> 
-> Before, we proved that a->cls was anynorm, aka in { normal, denormal }, 
-> and we simply re-used that.  Here, we're initializing a new structure, 
-> so we have to put something, and I choose normal.  I really don't think 
-> it's clearer in the previous patch.
+On 30/4/26 19:21, Paolo Bonzini wrote:
+> Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-OK.
+This was not reviewed by Marc-André (at least not publically on
+the list) but by Alistair and myself:
+https://lore.kernel.org/qemu-devel/20260430090534.841894-3-pbonzini@redhat.com/
+Not a big deal, it just shows this email workflow limits, as
+reviewers might wonder what the point of doing public review if
+being ignored.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   hw/misc/Kconfig  | 8 --------
+>   hw/riscv/Kconfig | 4 ++++
+>   2 files changed, 4 insertions(+), 8 deletions(-)
 
 
