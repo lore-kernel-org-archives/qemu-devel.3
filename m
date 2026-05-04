@@ -4,94 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE7A7CD3439
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 15:04:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44527CD3430
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 15:05:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJuqF-0000MV-HI; Mon, 04 May 2026 11:04:19 -0400
+	id 1wJuqR-0000PO-3K; Mon, 04 May 2026 11:04:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wJuq0-0000KX-Gw
- for qemu-devel@nongnu.org; Mon, 04 May 2026 11:04:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wJuqN-0000OC-TO
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 11:04:24 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wJupy-0006TF-So
- for qemu-devel@nongnu.org; Mon, 04 May 2026 11:04:00 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wJuqM-0006WC-Aj
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 11:04:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777907035;
+ s=mimecast20190719; t=1777907061;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Lo1jFj/e68GEYR/+5Rq6RJMoW1fwP7Dsj1cnKx0iuM4=;
- b=HsAnvigpXvjCZTAzZHTjTd+7NapUy7qydpe4aR1SSSZw/f8MEdWXvhSo85aEtfpTIOf/sx
- vWs7LsAtTa7DgrYCDDiGNBWkuAPhNdLoKTkixy+40nzAzOta1TQB5r0yCmCqgZJ3lTeAno
- pRQZU0Vpfne/AQfgm+41YLpoJ1B7GWg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=pJs5cr2yIQaphtBiLYjzdHcvxooKxlss8miDOVEMrPs=;
+ b=AW7CNpG/D6MxExu5DbAztWxqQaqB80I+ZINb2w5qWqL89CK87L2G5SC7wgFMKQUsGotBHM
+ qFOvQza4B7/OJjybFFlYgBEe1k8OR54wWXFLPfYcuWe6aeghqh+Ka5rjMlVKsHJO5vm4YG
+ h9virqEWNit1jgwAbg9P9XSWbkL+hvk=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-126-YsZFGRkUNaGlzIxqFRZc_Q-1; Mon, 04 May 2026 11:03:54 -0400
-X-MC-Unique: YsZFGRkUNaGlzIxqFRZc_Q-1
-X-Mimecast-MFC-AGG-ID: YsZFGRkUNaGlzIxqFRZc_Q_1777907033
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-48a7994e8ddso41207435e9.0
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 08:03:54 -0700 (PDT)
+ us-mta-3-WFSEiyAVPYSytY0H2zGKBA-1; Mon, 04 May 2026 11:04:20 -0400
+X-MC-Unique: WFSEiyAVPYSytY0H2zGKBA-1
+X-Mimecast-MFC-AGG-ID: WFSEiyAVPYSytY0H2zGKBA_1777907058
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-488d56f87e8so34114095e9.0
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 08:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777907033; x=1778511833; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777907058; x=1778511858; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=Lo1jFj/e68GEYR/+5Rq6RJMoW1fwP7Dsj1cnKx0iuM4=;
- b=BK3cY625nt57UKGoeP0Y5rlkm5ORDrtSv/rcy072K0t1s83wYEp+w7Fre69bcJi7z4
- iXQFCGrx50WjAsY21WwyKMV2x9FALYeeUGuBmcf6CWuqo3j6j5uMImThE0fLH/EkmRj4
- wrcGHF0xdUWuvGsmOjeya3aQ1X/t/GuIqZRuTlmzAqD4WJCNJrY4OhFRiXjScvkoHfLs
- 3zRJdoNqDlqMc1shL/g47TGIRktIT2hxCZ0XrZ32r+9XtyzBoNFshKuSFSYowZQ6Ztm4
- ARzNcIqYj+MTjfW+762tCW+6e/uMz6B/bDwUrn4mPgMMOcRRLkNNFaFOth7NdnlCkTBs
- t8vg==
+ bh=pJs5cr2yIQaphtBiLYjzdHcvxooKxlss8miDOVEMrPs=;
+ b=E4NwDxNPfjWW6UoRSgRy7up+Ow4hJgL4k49Nyqon3I/I3NnPszU/m5bOw0xdA479OF
+ wOdtLrrRgW4c+inMwF4zsJobk4wjhBOJfaYYL+9X9q6LnQyMt++Gxwxpm+9PRYlNP5Jx
+ KMef+kfYrJV12P6YvPNNQEmzLOF16a8HBdrq9nsFVLb8PNUB5VsnA4mldlkECQO6PJd9
+ F31emyuv5V8jyTNRYaPAtHkDTmX9vnq0IqvfDsUmKcxsJX0dJokZBEQ0z9qdgnd3B2aA
+ TKiVGyjvrc4hFZqM/CSk/ujEYzsBaCVfy1GhDn2pvkY7cHzmxpUbBkt8YLkVtfzohipT
+ 2y9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777907033; x=1778511833;
+ d=1e100.net; s=20251104; t=1777907058; x=1778511858;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Lo1jFj/e68GEYR/+5Rq6RJMoW1fwP7Dsj1cnKx0iuM4=;
- b=oqJao8efDb6lUXNZIon0PzMdUBx2iMw9qudgpSO0060liRDkFuTVjbFwQWaF2Fvzrb
- oS7F7VUoscJyu60K0QxYcyfhlm/KH++qozepw+UfR0TfETSFOMtGT3FDpej92GL2CITQ
- w6xJ0JQ6FvFtiIyS2KWOluwdEjPKGuklSDyLDY3/mDtpKCY66YOYaGVv0SjxutyYBU2l
- 6GGC0JJ1+vDaGJfP9CZF5R6Q8mNZM63wpDjkjwUPKCvhzTqp/oBjL6u9+SSxldGpfb5z
- T8RfnRoiTu9Ey1YfcOQETxo7ea4JRX2LLdVyqoStbh2JckCMugyWN/fL6/Q3ZTqKhb60
- zigQ==
-X-Gm-Message-State: AOJu0Yw5/gljOK+zANBpVxaUJxJR0E0mIwNDWA5s6dzQYY/qBKJGoxBb
- zwiVzJJxhFgTr0XcDFZuFk03FQgkV7/+36AWVtPmxEYWgMiVUPkf9KFbbOd/sKOLLNewy3TPZ/y
- ns27o07M1cBRgmTBC5hQaoO2IED4cVJYAPdnZ+YTBMeJiVg39hR4eaPrT
-X-Gm-Gg: AeBDievYJbhSRj7kFQtKdaAGWypmrT5SNiRZvjezbUo6KQfjQ5PIatUaa2KRuYhMute
- ZN/Yddyk93ipgGtLbOC17cluK+5Z5NMn+wYAXw/s5er/NsIhXIkR//bttzRFO0fPSWEtO8BqsmE
- /3DAwL2bpErPv/vEtY6UwX9LDDg1J7R1wq4eNC9pAWXEAgvqkcQuIjn6LU/W7mM8idU8FIHKWOz
- qq1FaB/aFwcLx3DMPXGbTXTVJPtoVsSqyZMu8Z5dOHXFLeoOIX4pQAak5KGtGzlIz+e3g7XISd8
- 9R+hVK1bM0oViPhajHF9Pyw0jizGjpbNDdc+3WibnA6m6BOVwhSfVmwH2uhDoKsgpcD9HnvVvG8
- HaBR7YuPLfp/Yfjq2kV70iWbg1YlgUXLANkGO1e/R+5FV0wSf/5YXt0jjv3v/EmZfJDz7ws8=
-X-Received: by 2002:a05:600c:c0c5:b0:488:a977:8de with SMTP id
- 5b1f17b1804b1-48a9865e95bmr128862165e9.16.1777907032831; 
- Mon, 04 May 2026 08:03:52 -0700 (PDT)
-X-Received: by 2002:a05:600c:c0c5:b0:488:a977:8de with SMTP id
- 5b1f17b1804b1-48a9865e95bmr128861285e9.16.1777907032276; 
- Mon, 04 May 2026 08:03:52 -0700 (PDT)
+ bh=pJs5cr2yIQaphtBiLYjzdHcvxooKxlss8miDOVEMrPs=;
+ b=eSZQOxAdQBuP+MGjiY6uksJgap5CuPKgItPEFxaalf6qs10cZ5mmxdH/ezrSrXvXhw
+ 2RanFFqbKOUe0aqy+GQkUai08L+LzVzGuQ6dKUWUr5fGgynkcT3/m8H4QtKCFOvIPSjR
+ iUTOPQUpMB77klade67+73Gph8s5WS1Bjh4He0mCHA+FercoR2ISnZp8aU7keU+5Pt3B
+ fMDVkfxaj65ZzMnWXaC4hfEm9b08cOEAiwzX3kXponxDJIMnsdSu9EQ4eARsWTR8VjJN
+ KUZVGSuh2ehU14eUkTs1e4VSdgvzaV6O3ZK7Kqvni03OD6KrqMVSUcDsRMox80fwNKn5
+ hOgg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+HQ/m10f0iNc7wHueD/Rxlwx724APPNm9pZ7YDH0Q8yUxPptwcFH6RH4pSXhKSKYrD8m3isG9a2ghL@nongnu.org
+X-Gm-Message-State: AOJu0YyrY0HLwCH1NyV84jZaxXGlcm9lOnZ7nieVkqDce6PR2b77pa10
+ lV/fTnvug2jlemooLnKRbH/WMpu/33aLx0iNVllgooKvT5kJbs1cOgNzicHJu63qaNyO12446bL
+ 15VEgG+Au5ETpqdGAsSFL6B4shJELCb5SGK6xw34WR0DlI58pb7SD7YkN
+X-Gm-Gg: AeBDiet0n5GfIH+UYUtQpcuPmCALuR3eHMIWBYG4EWo8yqsBZfguujC6DQHzSJH2Oby
+ znlEyQbZzD6ZdDVfwZMKyZ5xxkXXZGUmFj3ZCA82+hUeUtVClL1HnZ96mjKVb1b5a93ug68dVI5
+ 1Ud+tBQfLLtVV+PuN032e5kJp0A+wKK9D0wDQaD7XsBrxB1bAaDFDnhzwZJ9hxNXKmkLhsPh57p
+ zEmz5iD0a5EBBAtcHB9zIYC89n3YreVHjXrFfpF4R1/1HUJvGb9dGe8Hy4/1Xw3QFVzlVPjYS/X
+ hVX3MyQkkD50pih0WDkHyjJYUXkz731C5V801j8Ev/8wJJABYsdfo9N+DTBrIw9BU02NUefJVt0
+ DgDHCkMA1dGhSfZW5KcH7IYpwLOjuySex1kg4PZ58Ul2THFBKDOVrL6zVaMAPQ7ry9hJkvdg=
+X-Received: by 2002:a05:600c:a30a:b0:486:d76c:fa57 with SMTP id
+ 5b1f17b1804b1-48a9865f34dmr122318415e9.17.1777907058094; 
+ Mon, 04 May 2026 08:04:18 -0700 (PDT)
+X-Received: by 2002:a05:600c:a30a:b0:486:d76c:fa57 with SMTP id
+ 5b1f17b1804b1-48a9865f34dmr122317895e9.17.1777907057560; 
+ Mon, 04 May 2026 08:04:17 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8ebb3dc1sm294140565e9.14.2026.05.04.08.03.50
+ 5b1f17b1804b1-48a8ebc4201sm445631915e9.15.2026.05.04.08.04.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 May 2026 08:03:51 -0700 (PDT)
-Message-ID: <3071257f-b447-4256-9d64-5d58045a9274@redhat.com>
-Date: Mon, 4 May 2026 17:03:50 +0200
+ Mon, 04 May 2026 08:04:16 -0700 (PDT)
+Message-ID: <e1b01043-048f-4345-94d8-6e87a75805e4@redhat.com>
+Date: Mon, 4 May 2026 17:04:15 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio-user: reject malformed migration capabilities
-To: zhaoguohan@kylinos.cn, John Levon <john.levon@nutanix.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>
-Cc: qemu-devel@nongnu.org
-References: <20260424031259.289211-1-zhaoguohan@kylinos.cn>
+Subject: Re: [PATCH] hw/remote: update libvfio-user subproject
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>
+References: <20260422140244.2147400-1-john.levon@nutanix.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -137,17 +140,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260424031259.289211-1-zhaoguohan@kylinos.cn>
+In-Reply-To: <20260422140244.2147400-1-john.levon@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -164,37 +167,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/24/26 05:12, zhaoguohan@kylinos.cn wrote:
-> From: GuoHan Zhao <zhaoguohan@kylinos.cn>
+On 4/22/26 16:02, John Levon wrote:
+> The currently wrapped version of libvfio-user has compilation issues on
+> newer compilers; bump the library version.
 > 
-> check_migr() sets an error when the migration capability is not an object,
-> but still returns true.  This lets version negotiation continue with an
-> Error set and reports the wrong capability name in the diagnostic.
-> 
-> Return false for the malformed capability, and report the migration
-> capability name.
-> 
-> Fixes: 36227628d824 ("vfio-user: implement message send infrastructure")
-> Signed-off-by: GuoHan Zhao <zhaoguohan@kylinos.cn>
+> Signed-off-by: John Levon <john.levon@nutanix.com>
 > ---
->   hw/vfio-user/proxy.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+>   hw/remote/vfio-user-obj.c     | 3 ++-
+>   subprojects/libvfio-user.wrap | 2 +-
+>   2 files changed, 3 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
-> index 314dfd23d8af..8b7cc36231ab 100644
-> --- a/hw/vfio-user/proxy.c
-> +++ b/hw/vfio-user/proxy.c
-> @@ -1190,8 +1190,8 @@ static bool check_migr(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
->       QDict *qdict = qobject_to(QDict, qobj);
->   
->       if (qdict == NULL) {
-> -        error_setg(errp, "malformed %s", VFIO_USER_CAP_MAX_FDS);
-> -        return true;
-> +        error_setg(errp, "malformed %s", VFIO_USER_CAP_MIGR);
-> +        return false;
+> diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+> index 12ecdab6de..3c89e7a741 100644
+> --- a/hw/remote/vfio-user-obj.c
+> +++ b/hw/remote/vfio-user-obj.c
+> @@ -798,7 +798,8 @@ static void vfu_object_init_ctx(VfuObject *o, Error **errp)
+>           goto fail;
 >       }
->       return caps_parse(proxy, qdict, caps_migr, errp);
->   }
+>   
+> -    ret = vfu_setup_device_dma(o->vfu_ctx, &dma_register, &dma_unregister);
+> +    ret = vfu_setup_device_dma(o->vfu_ctx, LIBVFIO_USER_MAX_DMA_REGIONS,
+> +                               &dma_register, &dma_unregister);
+>       if (ret < 0) {
+>           error_setg(errp, "vfu: Failed to setup DMA handlers for %s",
+>                      o->device);
+> diff --git a/subprojects/libvfio-user.wrap b/subprojects/libvfio-user.wrap
+> index 416955ca45..11db795f8a 100644
+> --- a/subprojects/libvfio-user.wrap
+> +++ b/subprojects/libvfio-user.wrap
+> @@ -1,4 +1,4 @@
+>   [wrap-git]
+>   url = https://gitlab.com/qemu-project/libvfio-user.git
+> -revision = 0b28d205572c80b568a1003db2c8f37ca333e4d7
+> +revision = 4d9f663450fa80ff375612dbbafe073700e3d3d8
+>   depth = 1
 
 
 Applied to
