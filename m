@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFD90CD342C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C395FF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:38:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJrc3-0001Ay-AH; Mon, 04 May 2026 07:37:25 -0400
+	id 1wJrcl-00039M-V5; Mon, 04 May 2026 07:38:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrbb-0000WV-QX
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:57 -0400
+ id 1wJrcY-0002Dh-Na
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:37:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrba-00011K-BR
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:55 -0400
+ id 1wJrcV-00016G-6l
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:37:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777894613;
+ s=mimecast20190719; t=1777894667;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tn0OCpP159HA+f6R+KQP0S44C9uWxut2R7clX9nuNXk=;
- b=SlHD6ZgtUZO2w6OoQnO/LScgHVhjPBWX2FZXFcLZmVabszpMYliTu9ybZp3ULa4lr4kY/B
- SGioiBXL8E4tLN4wxWZ4sm7iV8hCD2pf+WUZlc8s3ZGxmpL40o3b1A1BiWAD6TFoWCYKT0
- F9inb2bZDtaYEBk7anHGp58o29me7zU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=gVFopIo4aSSG9uooap2o+5uLHAWlxkdOp59XKcHx7rk=;
+ b=HZif3JeQ1zs3KM8uNLb0JrV3QX47kvc4Q0j9fQco3nbXduwx8DqEX+tYaHMeNKkGixxRyT
+ ADLBjudCvyIeM+QeZ5pCv4B6PYnlRBuzkKzWyG9pi8yP8MVdy4546d3Tdcd1h3sAKMuMVn
+ ghrU/ltKNaaGKK+/QZjvMIKz67bHEq4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-452-nCrX5OxGNl6fPPGtpfiS2Q-1; Mon,
- 04 May 2026 07:36:52 -0400
-X-MC-Unique: nCrX5OxGNl6fPPGtpfiS2Q-1
-X-Mimecast-MFC-AGG-ID: nCrX5OxGNl6fPPGtpfiS2Q_1777894611
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-652-HogCm4hkNRioY7Qz0HDcsQ-1; Mon,
+ 04 May 2026 07:37:44 -0400
+X-MC-Unique: HogCm4hkNRioY7Qz0HDcsQ-1
+X-Mimecast-MFC-AGG-ID: HogCm4hkNRioY7Qz0HDcsQ_1777894663
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D4821800578
- for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:36:51 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5BD5118004AD; Mon,  4 May 2026 11:37:43 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 127FE19560A6; Mon,  4 May 2026 11:36:49 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9843B180045E; Mon,  4 May 2026 11:37:41 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 04 May 2026 15:35:05 +0400
-Subject: [PATCH v2 17/46] ui/console: remove console from global list on
- finalization
+Date: Mon, 04 May 2026 15:35:14 +0400
+Subject: [PATCH v2 26/46] net/can: free ifname on socketcan finalization
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260504-qom-tests-v2-17-ef7e3dc94f7a@redhat.com>
+Message-Id: <20260504-qom-tests-v2-26-ef7e3dc94f7a@redhat.com>
 References: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 In-Reply-To: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1375;
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Pavel Pisa <pisa@fel.cvut.cz>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1201;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=mcTfYn3iaVcXEtf37PXP/OHeHd23/2dVTmMNCHATXSw=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRsDmam5idYskbVhqMU75Wwoe6oS5IUKeUog
- mZkSoIx+uOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbAAKCRDa6OEJdZac
- 5bnKD/9x/MtQkRHJYXCgDOYTS7fOYJiRYwH+KP75H0e4shXK5aLXrow7IhNuSIBYWWVXKDs2dAY
- jWZhZb8g7qjZs10t5yTySq4u1Fr+wYNLOWbUm4L+hPJiywCmqx/aDMVWqVIaghwKJ/lHANtGMpi
- acYkOsxOBi8jGdGOGjTYAmgI0Hi3+B1jL+252xtscdGY5mbcERwuWqQVLCiDSIGyN8fg8mWg2Gg
- ojdkjej7MwgKNWvh+yL8NvcHQkWf22KRecpTvWngCLnnZY3MyOWIl4AotAqhmrNtUv66+b8bn6g
- /myeuLhjV44qALUapHkY/5iMA9l50BJSrfcU7BqD1nj7TOxWS6wW0Vsqe29ARx1p7YGONSx1AZQ
- uYRMluAY/r39tcEasxVdeleTu/phQSNf+H8IG3lmySn0aCB5wlfiZ1POUeHLhL1WAGUd+c8muX6
- v2c4WYoa4uOGU2e0Hk0bgM5O7qFtl2ONQ/EXNykuqTK5MgXJNbZZq8zw9VlwXttrBryQN048dqU
- mu3a2REcVPl9ILq0p2q2GlsM7DFeEIO6hXRgR7OGxedvXI+jEr7OUTITzWoOj6J7jgNdBURAQHN
- IjE83gWjL6wvF7d+7p0pNP/g1Oiimm6SzsTl+4Qh9QVRCMImZ15ZI9L1zI4KFt11IvNcIvp4zgy
- 0BoS2NNwYfvJWMA==
+ bh=Zz6LxsmODDv3AxwQF3PTITI8cMLmWmAnaqtuQzNPavQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRtP/pxDCUA7gzmwBBgDaAXf2tPzWjir9CVN
+ mhXb5fLtfGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbQAKCRDa6OEJdZac
+ 5aqZEACoc+x0pzK3+Ha3fErGfb03Im66Oig27xFf5Y6akdleok27fjDwFwSky5yfDpTvsXt8mmC
+ LuwdwRs0mRqKovcPX7P/if68pxukbBPcx8GiRGoS6kryKapjh4ntRrn2D6r4Oe5AIsaPXpQgOk/
+ b6V0LcCIPLv2E4O9pllHl96NGtxoGitiiKajVpTllqAMB7suMMa/vBnnHY/V+THQP/o9hbWR7sA
+ 0AvBKfVKIJT1Wsb+I29yojnRR3aVDpdVLRorBGPF9+Q+aXiG3FBBaYweXyrF2R4iX0CXQptxlsn
+ cBzY0aW0O5Q6SHbo70sdAoZij+irCqKNOKzWnOB1/RuECQNoXkYwBHaCHkden7+3k3xEOO2FKVD
+ a/yaOTXRzlrRKfQLv1WgTVGPJVntBQ/zaS5PHQDcyTrc1HS16/uz8bt3Mx+H/LQX3evvGrhncdz
+ YFTSqUx88oKDJFT0ZH3jXd5jDy5F6DS/hx8FUax0n+wZWQFLkMMAZ3+1kHLMFDDBXpp/0FzcAHH
+ vYREhtL9SMqGVoLoEb73SH0e0hBChy1ChkZnYvFPUXlPW85J2Pugo2fkcNVEOuP0tlq716kzvQE
+ 3Soa/KvrD9oggdpX9Y6MSSOxmSdinqSXRxCkB88L8bh/DMmeDrUKF7HpqfkgCKNeykjQhAXZ5N9
+ onDFho4D8ihSSAA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,43 +103,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit removes the QemuConsole from the global "consoles" list when
-it is finalized, fixing use-after-free on throw-away objects.
+can_host_socketcan_set_if allocates ifname via g_strdup, but no
+instance_finalize existed to free it.
 
-Reproducer: QMP command qom-list-properties with typename
-"qemu-text-console", "qemu-fixed-text-console" or
-"qemu-graphic-console".
-
-The assertions added ensure that `dcls`, `gl_block`, and the
-`dump_queue` are empty before removal, confirming the console is in a
-clean state. This is left to handle correctly in a future series for
-hot-unplug case.
-
-Reported-by: Markus Armbruster <armbru@redhat.com>
+Fixes: ea15ea8a7c67 ("net/can: support for connecting to Linux host SocketCAN interface.")
+Acked-by: Pavel Pisa <pisa@fel.cvut.cz>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/console.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/can/can_socketcan.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/ui/console.c b/ui/console.c
-index 799d61ec1a5..2adffb6f04d 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -390,10 +390,13 @@ qemu_console_finalize(Object *obj)
- {
-     QemuConsole *c = QEMU_CONSOLE(obj);
- 
--    /* TODO: check this code path, and unregister from consoles */
-+    /* TODO: fix hot-unplug support of consoles */
-+    assert(c->gl_block == 0);
-+    assert(qemu_co_queue_empty(&c->dump_queue));
-     g_clear_pointer(&c->surface, qemu_free_displaysurface);
-     g_clear_pointer(&c->gl_unblock_timer, timer_free);
-     g_clear_pointer(&c->ui_timer, timer_free);
-+    QTAILQ_REMOVE(&consoles, c, next);
+diff --git a/net/can/can_socketcan.c b/net/can/can_socketcan.c
+index 8a57ae07178..be67ed7f5a9 100644
+--- a/net/can/can_socketcan.c
++++ b/net/can/can_socketcan.c
+@@ -319,11 +319,19 @@ static void can_host_socketcan_class_init(ObjectClass *klass,
+     chc->disconnect = can_host_socketcan_disconnect;
  }
  
- static void
++static void can_host_socketcan_finalize(Object *obj)
++{
++    CanHostSocketCAN *c = CAN_HOST_SOCKETCAN(obj);
++
++    g_free(c->ifname);
++}
++
+ static const TypeInfo can_host_socketcan_info = {
+     .parent = TYPE_CAN_HOST,
+     .name = TYPE_CAN_HOST_SOCKETCAN,
+     .instance_size = sizeof(CanHostSocketCAN),
+     .instance_init = can_host_socketcan_instance_init,
++    .instance_finalize = can_host_socketcan_finalize,
+     .class_init = can_host_socketcan_class_init,
+ };
+ 
 
 -- 
 2.54.0
