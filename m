@@ -4,72 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96442FF886F
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 12:44:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DC1BFF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 12:51:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJsed-00026O-5i; Mon, 04 May 2026 08:44:07 -0400
+	id 1wJsl1-0003nq-7H; Mon, 04 May 2026 08:50:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wJseb-00025l-Dl
- for qemu-devel@nongnu.org; Mon, 04 May 2026 08:44:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wJsea-0002XS-25
- for qemu-devel@nongnu.org; Mon, 04 May 2026 08:44:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777898643;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=heZTRlIEsYy6Sm7IaOT0gM/jfUTfKGmhBAVpCsLYzls=;
- b=OH0FlW1ExC6k72KPIjkPSDq2zGZt0uLH66wr6iFVc+1Dchvk5Yec/dJS8gfV3p/p0v8njL
- UUSDHj2BDZu7jWagNL8As0/cp+b1pL6DPdDYObEB+pLmjePt2fEWDbAx3Pz010+jd4mej2
- ZF/bo+YDyxcEGmnMp70zGlGgAP/CZXo=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-402-yCKhZ5WcPs-xX2_au3ERwA-1; Mon,
- 04 May 2026 08:44:00 -0400
-X-MC-Unique: yCKhZ5WcPs-xX2_au3ERwA-1
-X-Mimecast-MFC-AGG-ID: yCKhZ5WcPs-xX2_au3ERwA_1777898639
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 25D731956052; Mon,  4 May 2026 12:43:59 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.109])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7B77A19560A6; Mon,  4 May 2026 12:43:58 +0000 (UTC)
-Date: Sat, 2 May 2026 06:49:34 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>
-Subject: Re: [PULL v2 00/11] First batch of s390x updates for 11.1
-Message-ID: <20260502104934.GA81694@fedora>
-References: <20260430160307.634093-1-cohuck@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJskz-0003nd-Fx
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 08:50:41 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJsku-0005Dv-SW
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 08:50:40 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-488b3f8fa2bso46233685e9.1
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 05:50:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777899034; x=1778503834; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=fY920kdhfZ+BZ9v92ysED16RYhweeBYB4IHbg1q45og=;
+ b=hpcLtme6+OuPCLHmb6WZSwKLTn0JOwtDVchBPmDqTl6QMm+51eJMsdG8maCVLcJj32
+ LTDMN9CiIA2ikQLf9VD4/y4hJAWOs/cOmhToB2dVPfJXBJAGtzhQDkWMmMO5CgezHOT9
+ GYOji9dVa1HTB++NT6AWB26N9ALXdm9jhq5vUtPBlQ80OiRQGdbIdzbQsPVbudkkVVHE
+ Wk1S0C4wlXnuLjQt/ousyOqCdS11pzqsU/A/gw3Xt1tPpBpasdDl4h7+/RBgoEyuwwHr
+ 7YOz3ZfhWLpsiABvcr6o378baEcFE2h26XEBqrbqm/2Vr5DaWCVlU6D0x4WZuVtxDEw/
+ T7EA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777899034; x=1778503834;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fY920kdhfZ+BZ9v92ysED16RYhweeBYB4IHbg1q45og=;
+ b=AAEfqkw99V9tbvYWchn9LR2dJIIVDtARFoXgatKpkGt0NIiNjwXf/SEF5jXSkLkzwS
+ zcTJqzOuyhipFGNmGzWquW3wQsTB6o1ayNY/XU4Qq9YOkuASC3asgMHOZcLFzCFgUZjY
+ 4TQdZ+r7TBOmAOM0p1t7MYtvm1kPnZ83lG+qoUID/gXWIA0gutlLIvgcALMIdWJex9hb
+ YIHZtHiDbr43yEdplndYfscdtgheM39JzXpPndAccUNvImMtLzPtspBWhNgKTjRkGXJb
+ vZ7n9zxMTFdjAfLfQFgOjPSK+r47ODlyIY36JUV3qTWcUjdQB8s6WzHh7IUT58NFy14K
+ 8mlQ==
+X-Gm-Message-State: AOJu0YxLMqvgS7/kQpBiZB0DWtvpw+J35PFkmpkktPRQryPljQsSnZHx
+ wDbJxkBk4fho/Y0WPlFaS2UoAbJjFnPvFNcZLmmoljeFyXQ3OAUv0IVJ+yY7Xl4ToD2ZkOQwnUw
+ WysApFog=
+X-Gm-Gg: AeBDietYzjzq0q7ddoM4VxosRzov4LHBD18EG1T35C2MVn/bW6xakm9/m87n/QMXjUF
+ oLXYiIUrOtOQEq1SaWu3TLCsoXR8HYqjc6IW87ayJ0ML395/8bRN8lPoEZ1b/NB94/9JEWMQsGJ
+ rxPYN5YngXWvb9Ze8iETmdUSKjiBdbyNIAED7fvgLdEgmxh/pPnk48Sxsya/dwWlX3fPV1MM5OA
+ iN1vOys7l6Iy9m46jiKLI53exxSZ0KQQO13c0N7Wk8wwqT2J3rSjDR+cB6dt7/fG3yAD1hWoqK2
+ YCGbl/ZCRs/DsttH0crlLTtvFZicDfQDB2DLxpfB+t8QX+1g2Pgh1Wre/10tiQEBEAcQc/TiCOh
+ SBoalv5mdfOYC4qYO/Q508KgQas1dIva03fNj2wiShYgkk7mRR98k9sc0ut67w9/0sPQOaj3H3d
+ sAH6U1NyugYPgOQMC6L39js/21mD86qIj9N3Q/ahULvPGspZUWyI7NHeOFtBexOp+urRH7/OF4e
+ CFwtEZEgd4=
+X-Received: by 2002:a05:600c:a410:b0:48a:761:5816 with SMTP id
+ 5b1f17b1804b1-48a970c1bc1mr120918855e9.8.1777899033941; 
+ Mon, 04 May 2026 05:50:33 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a8eb3427fsm448097925e9.0.2026.05.04.05.50.33
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 04 May 2026 05:50:33 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/3] docs/devel/tcg-ops: Minor documentation updates
+Date: Mon,  4 May 2026 14:50:28 +0200
+Message-ID: <20260504125032.35465-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="YTsxuSGkakdjAgmk"
-Content-Disposition: inline
-In-Reply-To: <20260430160307.634093-1-cohuck@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,30 +100,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Update TCG opcode list.
 
---YTsxuSGkakdjAgmk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Philippe Mathieu-Daudé (3):
+  docs/devel/tcg-ops: Stop listing dup2_vec()
+  docs/devel/tcg-ops: List more vector opcodes
+  docs/devel/tcg-ops: Slightly expand on discard() opcode
 
-Applied, thanks.
+ docs/devel/tcg-ops.rst | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.1 for any user-visible changes.
-
---YTsxuSGkakdjAgmk
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmn11r4ACgkQnKSrs4Gr
-c8itcQgAnfuCkpZIMkMRY9iOojpRXplQNENCMhdZ3pZsxhB8PRol63hBRAO/wo9H
-onYBVHCA4JzMHIhukllHw8mD+5g4HSYUsE/jWUO7JKR0+om8eeG2V4T8kTi8/25e
-TzSgBMPdu8zU7JY3sXg//j1OBcKU/nB5QeSsGjYIhr1EFnDpYjrh2O5033zrv5GK
-nCxro1vIsckXaESd+gLF5jsTFk2NQrb/EEBPaB5l5GfFet8Zo2b6P4hqWVx0OATE
-enIbRpEY0cEwIBV7w+D1SLTkXjoIcmt3cTd4md1rfJOrNITvFAtagwvVgC3ygDmU
-lhBduBT3Ek7kRXGgm2WeIPDAzK0v9A==
-=zwXX
------END PGP SIGNATURE-----
-
---YTsxuSGkakdjAgmk--
+-- 
+2.53.0
 
 
