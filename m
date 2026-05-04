@@ -4,132 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4209FF885A
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 18:09:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A521FF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 18:10:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJxiT-0000Nn-3P; Mon, 04 May 2026 14:08:25 -0400
+	id 1wJxkI-0000w5-Iq; Mon, 04 May 2026 14:10:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wJxiN-0000NG-II
- for qemu-devel@nongnu.org; Mon, 04 May 2026 14:08:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1wJxkG-0000uW-8H
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 14:10:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1wJxiL-0004fZ-Ep
- for qemu-devel@nongnu.org; Mon, 04 May 2026 14:08:19 -0400
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1wJxkC-0005Ky-2T
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 14:10:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777918095;
+ s=mimecast20190719; t=1777918210;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ab7l9Ri7dt201+GRhfi/+Cr0Wm7dDMiaocNySR9RzHM=;
- b=RPN3Yu1N2+QAnq9d5Pik9rpT9kuagvirCmciyId7uMzdinSB0UVevL/XXk4VEau8u0O83I
- SRtOTwRQOqztfsOOiPTyNJvjjWevthQ7SlPpea4YwrvuIXa+IaJ9FbV1bATrJpmSbZaL5T
- iuZ6Nbf7iSZOcesVUALl6BQNrtAKkTM=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=h0YMk4IEbMpuMR+4cCG9yOshC4Pt1ZBfRno0c3rzRJQ=;
+ b=L9prAc3LLyryyf69Lh4kGH5X1DSq+hGBl6moiCzpxSln3+rvH1TQin+8no4nyJbQ8PAeYB
+ 1McVxN2J6Xn9dpyw1VjHJ3LHHcUe7ArRPSlCpVZcREMZRwllvZU0385aFPc5G3qOX779zR
+ bkrUJ2Rq48jgzgppjqJ7UrpFiO9tQnE=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-550-IH4ldJLVOOGUFHFgzr-g0Q-1; Mon, 04 May 2026 14:08:11 -0400
-X-MC-Unique: IH4ldJLVOOGUFHFgzr-g0Q-1
-X-Mimecast-MFC-AGG-ID: IH4ldJLVOOGUFHFgzr-g0Q_1777918091
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-7985951fa83so108463707b3.3
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 11:08:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777918091; cv=none;
- d=google.com; s=arc-20240605;
- b=XCl1jjkSA+UsKqawAy1xYviida0C0TfBPxTM4SK1raB+f5P8ffXpC+Qgb7i04aWjDu
- 05jyaOwKPJMKnOfFdwfJzAKl52/wYpV9MJhJ48I6GIEn24ftB3WORnadMa/zcWMoAdUp
- ztxswUOIHMyiu0UNSea/MmNz3iCwf8WOB25kSclQELPao+j9tRLMYmQmMz6U8DYjH1tt
- G8zt9/wIWO3XleNll58g7AS02R4hbjQS+BGelmBcaV/GyL4qRB7Kq2BMk/aFEb9aQQYt
- dG6PIJRUILaJhSHG75jvpNxz0TTzkh6dZQsOv0QcG+n8TgxQ1D90Vm235RVGSRDtujI/
- Mfyg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ab7l9Ri7dt201+GRhfi/+Cr0Wm7dDMiaocNySR9RzHM=;
- fh=+z5tikevQ4wHwwKyvgskl+NaTdhidt2oZwpxvMuW+6Y=;
- b=b2S7SS2itqDf3cJcDmS1HN/xXQ7GqYUaMbuKjF/AEqBYO/3/T16Gr2fzjwPKF6aXNY
- LqH2e/r8kB914eVDJ0YNa2IWJWJNY9f1sDDnu08/AZwYb4aQc2rJ9aRexNplFJ21tnGF
- oqAdZ/SK59IEVsXz0kHLhED6/JGJCI8HaP9JK+Pv4+MeB1CCBiHDoX1iygKSQgEqYS9g
- 2dL6sP1YkUpVmdGB4ehJmZwc9Ii79gcqtrE3vIIEfYm8oTya0ac7sM+r+ZU703OFHiGC
- phWXvWP1oqT4LoU8I995OXck1m7L+7nErMdbTQALiCbZ+WUtqHpoROZd81Jlru5375aM
- uA1A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ us-mta-49-GbovBqq1MviO0WNUi1rrUw-1; Mon, 04 May 2026 14:10:09 -0400
+X-MC-Unique: GbovBqq1MviO0WNUi1rrUw-1
+X-Mimecast-MFC-AGG-ID: GbovBqq1MviO0WNUi1rrUw_1777918208
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2ba224c3ffdso22167275ad.0
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 11:10:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777918091; x=1778522891; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ab7l9Ri7dt201+GRhfi/+Cr0Wm7dDMiaocNySR9RzHM=;
- b=t41po6uDeFDKJY3NW/YDh1PYuKtfqU6IA6zs8H96arE4/RuvDAIFfPefzoWEamrKqj
- 9uEOc+YXWQweS6hmOUw94niO/TujlQ3eml5EjtNzLPIHd3vpgHoLYeXkJlTVG2uqrZsr
- kDqWM0dJcXPZJ17+HN/0WKfRlH/YeJ6BW2XsL8t31V5g1dhPSfKPQfQ8Yw8C1C5Fs6N0
- Bt0mSoPL89AuZTZafLgE9e+8YWGlP9m/Pyt734/alDOGtiIAlo9B42rPDbYPsHGL0JSt
- wcD5Up7GLWa2TrtyQJ9zbQI7TTot+iGcxPrxRY2lN/N2052PcUwio6OKWyshhXu35k4n
- G3Lw==
+ d=redhat.com; s=google; t=1777918208; x=1778523008; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=h0YMk4IEbMpuMR+4cCG9yOshC4Pt1ZBfRno0c3rzRJQ=;
+ b=m2C901VULv/fXk82sjGtXTUeEgS6Sr9d2XwyQ4zW0/nkrhGA4WKoE+fCjCs/p3Fl2l
+ ZwM7i+zTiwgmKlrbp6h1ugnCs9eQLORj6eT9lGM6edDint9tRwlzWp0TKecHYWkFy0dp
+ O21SSRj4zwV2uVSGPpBwfEu9whjjafCeEOPDeKg/zDOu3sjXShp2unEZyVfPr4PjAncf
+ VV/uOYdhC0Dn49lKTk3JNNP6+OvslDrjth1bd6Ls8TPiqXfCGr9PFmobaUn60bgoNM4o
+ XnV+ya8V+MFPLkeYaF77sXSZmTz8KL/KUu38uYZehb9ANkvr0un8n3SVA0RvkrfW5laW
+ GtJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777918091; x=1778522891;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ab7l9Ri7dt201+GRhfi/+Cr0Wm7dDMiaocNySR9RzHM=;
- b=k7fv5VeBjUVxDWYlPelZHpBm+pz3MISNNpZrguT2nFkScQsLuiXSC0yzqNoAffYI79
- rGZ3ns++jcKojHTCeJkWaFMJH82ICmtiICRh0BjXYzmXBbk3fNpiyu19VTt+MYZH0fgk
- xf7PlpbP1nSvjQSXdjL3EKrYbkCDFkhErzMdc1yn3kZM8+Qd2OG+fgRs3JspfKgorGf+
- W8wJhv716W0J1q6ZOBZFN99SMZ9OVzAIL6AaWaVcYFC48TX0PM8YFw4Cin3lyjIf56OD
- brNtZAe56B5k03DPvvsOouwqumYidbwJwO8Sm8CS7s8l4vZxEzcFApmBhkQ1U+tS4n4e
- MiDQ==
-X-Gm-Message-State: AOJu0YykdK0Xct4biEgOcYxtxBQOPDevO8yH9jaGUJ2TnU9C6fZ3xP3G
- GR3lb49ei0Vm+qXjUEedCPKcBn5NKTVNa+FXQvZs6EYKTc1BAH4hoNaEYTWuygymHZQ9IkdGC8x
- dcYItgeuvcGtbBS7ORypq0WbiztXwxjf23rmGwANGIXfqmif5LWDtiFiosoFVmHt6MKghWP16OJ
- QJWJGBag34gQ40PpKe9MnRroFvKJcNaY0=
-X-Gm-Gg: AeBDiet4HibcfxAKAVJZQsw5rvLITUvnC27G8bve4c0LcO/ZRruK6JERCguP/ka76wM
- tTutvA8x0Sw7f047b+j/e4jkpn3u3mjhSWL3psinfuZur7V/j9i9BPqHOQYXdyyRjVh0xxTm/ju
- Crt+jwWplv5rED9N+FWYBUgAtFNlDtipKZAMlIQZh+MzxsyAn+Ya+GhtjSFFwQsqYzGZThmklND
- ULbIwLc7+Zoh4+a4dhzRHatNxqaGgyU00fMTz2biogQCvKx
-X-Received: by 2002:a05:690c:6d83:b0:7bd:9899:f916 with SMTP id
- 00721157ae682-7bd9899fdaamr40965537b3.49.1777918091032; 
- Mon, 04 May 2026 11:08:11 -0700 (PDT)
-X-Received: by 2002:a05:690c:6d83:b0:7bd:9899:f916 with SMTP id
- 00721157ae682-7bd9899fdaamr40965057b3.49.1777918090511; Mon, 04 May 2026
- 11:08:10 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777918208; x=1778523008;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=h0YMk4IEbMpuMR+4cCG9yOshC4Pt1ZBfRno0c3rzRJQ=;
+ b=PKtNjAAJYzP/fV17jbscwvFaaC7pXxS0GX3SPerM0MLGI3LOL/9/U6SyGnjwNXfaAq
+ rDoENK+v621CbEYVYIDrobsPCim2px+qSXbQpimAfk7f3CCblGMSvAZ0IJezsI1AqOVB
+ KXsQOGZngU58+0M8rWitw1D86xzDGqWKHGzloOqvHId8KsjIqt1neWkhwHDDTUHF8+op
+ AVUb0ICQQyHA6pKTf3oA8JNUdMf2sHqOTLJe6tkJ2qw7R2aoaJBYVNwFKkzHYX/nRsto
+ jwgZTV94UWX0QcOEXZQIqFR6RTDHtVAKGsixcq2jQlowle3S6BdiBqiGmyZXudmI7skY
+ 6BGw==
+X-Gm-Message-State: AOJu0YwmLe75kLZnrS2GpzfkljCYMgLE6PnliEQpqNwExEr4nC6bXwMY
+ b+ZIRZKgiJO1vDYg0gk1UqsRejHTHFv5RxiYmrWeTSRnzELG4Nfjy28/P2ocCY+P0iN2dH/bmha
+ 4crFE2p9Q5CIEsb9iE14SwmCWJhVRqZ1HVHX6wRHF695kn9mUpsCsmm5g
+X-Gm-Gg: AeBDiesSHDzyJ08qsCSsb1pzstoGtSufNhAsjTKsvLXgRFh0wv+X+uAiiiK9C4LCAOX
+ jyAs7cVIlJg4kBXwexGLVDSJodLw5WdO1uGzDyIGGd27MG4ZN5YXHDZSMNjsW6cxT2VThJmU5dA
+ oN12rfqhJrxSIQBuJlce/CIL5RNyL+PjLrv332MbNVYOXwjpsMMapgJXRtVuSzL+Yb9lsOdyRy4
+ bBrFn3fmEUiLftKdQJcjV4QclyU5PuOvt0UHVzOh4Tut+GpiaQmZZxNk/wI3+8X/nRSeQPqYR7d
+ 0BjJSydtCsI6JFLvQFc/tIoQnTAn/NmHw5YqFTs6honrTKH7Jm4Fc6rqqrMnkNDMC8NkDrlI4oF
+ XxnRZazcP8Sr2xLcwvrhpPA==
+X-Received: by 2002:a17:902:da84:b0:2b9:d647:5261 with SMTP id
+ d9443c01a7336-2b9f2565656mr109504695ad.13.1777918208053; 
+ Mon, 04 May 2026 11:10:08 -0700 (PDT)
+X-Received: by 2002:a17:902:da84:b0:2b9:d647:5261 with SMTP id
+ d9443c01a7336-2b9f2565656mr109504375ad.13.1777918207555; 
+ Mon, 04 May 2026 11:10:07 -0700 (PDT)
+Received: from fedora ([49.36.108.92]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b9caaba933sm108820405ad.28.2026.05.04.11.10.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 May 2026 11:10:07 -0700 (PDT)
+Date: Mon, 4 May 2026 23:40:02 +0530
+From: Arun Menon <armenon@redhat.com>
+To: Stefan Berger <stefanb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>
+Subject: Re: [PATCH] tpm: Dynamically allocate tpm-tis buffer
+Message-ID: <afjg-tqJ1zbkQNb6@fedora>
+References: <20260427200134.453022-1-armenon@redhat.com>
+ <765f0577-ee8f-4944-93fe-bb93e420668f@linux.ibm.com>
+ <afBbLDmdYFY5feJx@fedora>
+ <84607c2e-1da9-43d2-8a5b-e50e91c0f8ba@linux.ibm.com>
+ <4b5c983e-8bbb-4851-bb0f-f478ad14121b@linux.ibm.com>
+ <afJk9Lsn25UQOnwE@fedora>
+ <43171c3b-339c-4335-b79b-387442048b11@linux.ibm.com>
+ <0544d36a-89b4-4948-9fb5-8cb013842fc7@linux.ibm.com>
 MIME-Version: 1.0
-References: <20260429192611.1581223-1-jsnow@redhat.com>
- <20260429192611.1581223-4-jsnow@redhat.com>
- <87cxzbbitv.fsf@pond.sub.org>
-In-Reply-To: <87cxzbbitv.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Mon, 4 May 2026 14:07:59 -0400
-X-Gm-Features: AVHnY4I1f8ntl8PQXW_5VwnZm8wpbhdU38z39y4if77s2ANrQ7TVXVhffons-00
-Message-ID: <CAFn=p-bAHebSLQqWSOprj=Zah1WbQFFWoC2viBUrX=G1jjrhLg@mail.gmail.com>
-Subject: Re: [PATCH v2 03/13] qapi/docs: make remaining subsection members
- "private"
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
- Eric Blake <eblake@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, 
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Igor Mammedov <imammedo@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <0544d36a-89b4-4948-9fb5-8cb013842fc7@linux.ibm.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -146,191 +125,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 4, 2026 at 5:54=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
-> wrote:
->
-> John Snow <jsnow@redhat.com> writes:
->
-> > These fields are used to provide error checking and internal logistics
-> > and should not be used by a user of the library to directly access
-> > documentation sections, so make them private.
-> >
-> > The "since" field alone is left public, as the qapidoc generator does
-> > use this field to pull that section out of the regular flow of the
-> > document.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  scripts/qapi/parser.py | 54 +++++++++++++++++++++++-------------------
-> >  1 file changed, 29 insertions(+), 25 deletions(-)
-> >
-> > diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
-> > index b33edbba74f..da4756a7424 100644
-> > --- a/scripts/qapi/parser.py
-> > +++ b/scripts/qapi/parser.py
-> > @@ -555,7 +555,7 @@ def get_doc(self) -> 'QAPIDoc':
-> >                      break
-> >                  # Non-blank line, first of a section
-> >                  if line =3D=3D 'Features:':
-> > -                    if doc.features:
-> > +                    if doc.has_features:
-> >                          raise QAPIParseError(
-> >                              self, "duplicated 'Features:' line")
-> >                      self.accept(False)
-> > @@ -570,7 +570,7 @@ def get_doc(self) -> 'QAPIDoc':
-> >                          if text:
-> >                              doc.append_line(text)
-> >                          line =3D self.get_doc_indented(doc)
-> > -                    if not doc.features:
-> > +                    if not doc.has_features:
-> >                          raise QAPIParseError(
-> >                              self, 'feature descriptions expected')
-> >                      no_more_args =3D True
->
-> These two hunks along with the one adding .has_features() below make the
-> patch not purely mechanical.  Separate patch, please.
+On Thu, Apr 30, 2026 at 04:43:27PM -0400, Stefan Berger wrote:
+> 
+> 
+> On 4/29/26 11:40 PM, Stefan Berger wrote:
+> > 
+> > 
+> > On 4/29/26 4:07 PM, Arun Menon wrote:
+> > > Hi Stefan,
+> > > 
+> > > On Wed, Apr 29, 2026 at 02:15:16PM -0400, Stefan Berger wrote:
+> > > > 
+> > > > 
+> > > > On 4/28/26 8:57 AM, Stefan Berger wrote:
+> > > > > 
+> > > > > 
+> > > > > On 4/28/26 3:01 AM, Arun Menon wrote:
+> > > > 
+> > > > > > > 
+> > > > > > > With MAX() it can now be bigger than TPM_TIS_BUFFER_MAX if the
+> > > > > > > backend says
+> > > > > > > so -- hm...
+> > > > > > 
+> > > > > > TPM_TIS_BUFFER_MAX is still 4096.
+> > > > > 
+> > > > > Oh, I had still based my patches on your TPM_TIS_BUFFER_MAX increase to
+> > > > > 8192 bytes. Let me fixes this along with a few other things. I will let
+> > > > > you know.
+> > > > > 
+> > > > > I have another series that I will post now that can be applied to
+> > > > > master. It's adding a test for TIS over I2C but I will need to extend
+> > > > > that one also with the large transfer test case then.
+> > > > > 
+> > > > > 
+> > > > 
+> > > > So I have resolved this issue now along with a few other things.
+> > > > My branch
+> > > > is here: https://github.com/stefanberger/qemu-tpm/tree/work-tpm-for-11.1
+> > > > 
+> > > > - I have applied the i2c swtpm test case series first since it could be
+> > > > easily upstreamed first
+> > > > - Then your patch "migration/vmstate: Add VMState support for
+> > > > GByteArray"
+> > > > - Then the CRB chunk + TIS extended buffer support series. I modified my
+> > > > patches (last 4 in that series) to
+> > > >    - increased MAX_TIS_BUFFER_SIZE to 8192
+> > > >    - added migration blockers dynamically for TIS whenever >4096
+> > > > bytes are
+> > > > either in the request or response; remove them later on again
+> > > > when device
+> > > > goes into ready state for example
+> > > >    - added large transfer test also for i2c
+> > > > 
+> > > > Please pick up those patches for v6 posting, or otherwise you
+> > > > can split your
+> > > > v5 series up into CRB-only support for v6 and I post my (last 4) patches
+> > > > later on.
+> > > > 
+> > > 
+> > > Thank you. I agree. I will post v6 as CRB-only support. The GByteArray
+> > > patch is already accepted. The complex TIS changes can be posted
+> > > separately later.
+> > > 
+> > > Regarding the TIS buffer: I saw you implemented the migration blockers
+> > > and 8192-byte increase in your branch. Should I discard my
+> > 
+> > It's quite dynamic with the blocker being set when 4097 bytes of a TPM
+> > command were received or when a TPM response with > 4096 bytes is
+> > received. The blocker is removed when the device goes into ready state.
+> > The intention is to allow a user to choose an old machine type with a
+> > PQC-enabled swtpm+libtpms and be able to migrate to an older version of
+> > QEMU unless the blocker was set. Correct me if I am wrong in my
+> > thinking...
+> 
+> Another solution would be to limit the 8kb buffer to 4kb for 11.0 and older
+> machines.
 
-And here I thought I already split this all to the Nth degree. :)
+Yes, I have limited this using the post_load hook for the extended part.
 
->
-> Have you considered using a local bool variable instead?
++int tpm_tis_ext_buffer_post_load(TPMState *s)
++{
++    /*
++     * Calculate the maximum extension buffer size allowed, by comparing
++     * the destination VM's backend capacity with TPM_TIS_BUFFER_MAX.
++     */
++    uint32_t max_ext = s->be_buffer_size > TPM_TIS_BUFFER_MAX ?
++                       s->be_buffer_size - TPM_TIS_BUFFER_MAX : 0;
++
++    if (s->ext_size > max_ext) {
++        /*
++         * Source buffer size is greater than what the destination backend
++         * allows
++         */
++        g_clear_pointer(&s->ext_buffer, g_free);
++        return -EINVAL;
++    }
++    if (s->ext_size > 0) {
++        memcpy(s->buffer + TPM_TIS_BUFFER_MAX, s->ext_buffer, s->ext_size);
++        g_clear_pointer(&s->ext_buffer, g_free);
++    }
 
-I prefer having less state and more logic, to avoid having to keep
-related state synchronized.
+We may use this patch in future if we want to change static to dynamic
+buffer array allocation.
 
->
-> > @@ -733,14 +733,18 @@ def __init__(self, info: QAPISourceInfo, symbol: =
-Optional[str] =3D None):
-> >              QAPIDoc.Section(info, QAPIDoc.Kind.PLAIN)
-> >          ]
-> >          # dicts mapping parameter/feature names to their description
-> > -        self.args: Dict[str, QAPIDoc.ArgSection] =3D {}
-> > -        self.features: Dict[str, QAPIDoc.ArgSection] =3D {}
-> > +        self._args: Dict[str, QAPIDoc.ArgSection] =3D {}
-> > +        self._features: Dict[str, QAPIDoc.ArgSection] =3D {}
-> >          # a command's "Returns" and "Errors" section
-> > -        self.returns: Optional[QAPIDoc.Section] =3D None
-> > -        self.errors: Optional[QAPIDoc.Section] =3D None
-> > +        self._returns: Optional[QAPIDoc.Section] =3D None
-> > +        self._errors: Optional[QAPIDoc.Section] =3D None
-> >          # "Since" section
-> >          self.since: Optional[QAPIDoc.Section] =3D None
-> >
-> > +    @property
-> > +    def has_features(self) -> bool:
-> > +        return bool(self._features)
-> > +
-> >      def end(self) -> None:
-> >          for section in self.all_sections:
-> >              section.text =3D section.text.strip('\n')
-> > @@ -771,15 +775,15 @@ def new_tagged_section(
-> >      ) -> None:
-> >          section =3D self.Section(info, kind)
-> >          if kind =3D=3D QAPIDoc.Kind.RETURNS:
-> > -            if self.returns:
-> > +            if self._returns:
-> >                  raise QAPISemError(
-> >                      info, "duplicated '%s' section" % kind)
-> > -            self.returns =3D section
-> > +            self._returns =3D section
-> >          elif kind =3D=3D QAPIDoc.Kind.ERRORS:
-> > -            if self.errors:
-> > +            if self._errors:
-> >                  raise QAPISemError(
-> >                      info, "duplicated '%s' section" % kind)
-> > -            self.errors =3D section
-> > +            self._errors =3D section
-> >          elif kind =3D=3D QAPIDoc.Kind.SINCE:
-> >              if self.since:
-> >                  raise QAPISemError(
-> > @@ -803,16 +807,16 @@ def _new_description(
-> >          desc[name] =3D section
-> >
-> >      def new_argument(self, info: QAPISourceInfo, name: str) -> None:
-> > -        self._new_description(info, name, QAPIDoc.Kind.MEMBER, self.ar=
-gs)
-> > +        self._new_description(info, name, QAPIDoc.Kind.MEMBER, self._a=
-rgs)
-> >
-> >      def new_feature(self, info: QAPISourceInfo, name: str) -> None:
-> > -        self._new_description(info, name, QAPIDoc.Kind.FEATURE, self.f=
-eatures)
-> > +        self._new_description(info, name, QAPIDoc.Kind.FEATURE, self._=
-features)
-> >
-> >      def append_line(self, line: str) -> None:
-> >          self.all_sections[-1].append_line(line)
-> >
-> >      def connect_member(self, member: 'QAPISchemaMember') -> None:
-> > -        if member.name not in self.args:
-> > +        if member.name not in self._args:
-> >              assert member.info
-> >              if self.symbol not in member.info.pragma.documentation_exc=
-eptions:
-> >                  raise QAPISemError(member.info,
-> > @@ -823,7 +827,7 @@ def connect_member(self, member: 'QAPISchemaMember'=
-) -> None:
-> >
-> >              section =3D QAPIDoc.ArgSection(
-> >                  self.info, QAPIDoc.Kind.MEMBER, member.name)
-> > -            self.args[member.name] =3D section
-> > +            self._args[member.name] =3D section
-> >
-> >              # Determine where to insert stub doc - it should go at the
-> >              # end of the members section(s), if any. Note that index 0
-> > @@ -835,14 +839,14 @@ def connect_member(self, member: 'QAPISchemaMembe=
-r') -> None:
-> >                      index +=3D 1
-> >              self.all_sections.insert(index, section)
-> >
-> > -        self.args[member.name].connect(member)
-> > +        self._args[member.name].connect(member)
-> >
-> >      def connect_feature(self, feature: 'QAPISchemaFeature') -> None:
-> > -        if feature.name not in self.features:
-> > +        if feature.name not in self._features:
-> >              raise QAPISemError(feature.info,
-> >                                 "feature '%s' lacks documentation"
-> >                                 % feature.name)
-> > -        self.features[feature.name].connect(feature)
-> > +        self._features[feature.name].connect(feature)
-> >
-> >      def ensure_returns(self, info: QAPISourceInfo) -> None:
-> >
-> > @@ -883,18 +887,18 @@ def _insert_near_kind(
-> >
-> >      def check_expr(self, expr: QAPIExpression) -> None:
-> >          if 'command' in expr:
-> > -            if self.returns and 'returns' not in expr:
-> > +            if self._returns and 'returns' not in expr:
-> >                  raise QAPISemError(
-> > -                    self.returns.info,
-> > +                    self._returns.info,
-> >                      "'Returns' section, but command doesn't return any=
-thing")
-> >          else:
-> > -            if self.returns:
-> > +            if self._returns:
-> >                  raise QAPISemError(
-> > -                    self.returns.info,
-> > +                    self._returns.info,
-> >                      "'Returns' section is only valid for commands")
-> > -            if self.errors:
-> > +            if self._errors:
-> >                  raise QAPISemError(
-> > -                    self.errors.info,
-> > +                    self._errors.info,
-> >                      "'Errors' section is only valid for commands")
-> >
-> >      def check(self) -> None:
-> > @@ -914,5 +918,5 @@ def check_args_section(
-> >                          "do" if len(bogus) > 1 else "does"
-> >                      ))
-> >
-> > -        check_args_section(self.args, 'member')
-> > -        check_args_section(self.features, 'feature')
-> > +        check_args_section(self._args, 'member')
-> > +        check_args_section(self._features, 'feature')
->
+
+Regards,
+Arun Menon
 
 
