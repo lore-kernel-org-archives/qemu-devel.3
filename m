@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5809FF885A
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:36:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C75EBCD3436
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:36:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJrbI-0008NE-6k; Mon, 04 May 2026 07:36:37 -0400
+	id 1wJrbU-0000BQ-N9; Mon, 04 May 2026 07:36:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrb2-0007oz-8J
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:22 -0400
+ id 1wJrb9-00082u-K4
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJraz-0000v2-6x
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:19 -0400
+ id 1wJrb8-0000vc-3U
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777894576;
+ s=mimecast20190719; t=1777894585;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tzBsqml/dM6fWiSEjTcIGoL9jK84pwIUG7THdwR6FSc=;
- b=WBdzyYQSRpG4ZXVwjaDfQSXCHiAWJrd6SbkIGa0A92TO9jHFcHuE7jrZPKkiegAejKMWu6
- cFtlJ1kPGc7xwCZuvtwHS4jO7lYEVfFvkEm079fXd6YvJCmhSJPy7XHZbxKF8kBgmybpb4
- pEvTdmZmQiByEdQAANbU33ryl7up8GY=
+ bh=Feyzoi72st3BK6uw08MumeJ0heMFM0ajonX0WOp0f0U=;
+ b=K7tYd2Z4HGQPIIE1xRGRFRDCgGgU/2aEFLLhRDWysWlybHoNJZVEyX4jpeT1inK8LAhG6x
+ 7TrNfoC88RqBcqHarbKa3x99PlrA/9DGP0Z44fxVBMviV9XSiMiWV8lsj/sLUQZZyiT8zt
+ pXUpY5zbt3CQQYHg0e3Qg23gw68Z+CI=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-434-xDvQBCAQM1STPmBlb00yLw-1; Mon,
- 04 May 2026 07:36:13 -0400
-X-MC-Unique: xDvQBCAQM1STPmBlb00yLw-1
-X-Mimecast-MFC-AGG-ID: xDvQBCAQM1STPmBlb00yLw_1777894572
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-Pwc5-e1MNqSPd-zVpa3VCg-1; Mon,
+ 04 May 2026 07:36:23 -0400
+X-MC-Unique: Pwc5-e1MNqSPd-zVpa3VCg-1
+X-Mimecast-MFC-AGG-ID: Pwc5-e1MNqSPd-zVpa3VCg_1777894583
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8EB311800473
- for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:36:12 +0000 (UTC)
+ id EFF4E180034C
+ for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:36:22 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 458641955D84; Mon,  4 May 2026 11:36:10 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E9AE81800347; Mon,  4 May 2026 11:36:21 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 04 May 2026 15:34:58 +0400
-Subject: [PATCH v2 10/46] hw/intc/apic: move checks to realize()
+Date: Mon, 04 May 2026 15:35:00 +0400
+Subject: [PATCH v2 12/46] backends/cryptodev-lkcf: skip cleanup when not
+ initialized
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260504-qom-tests-v2-10-ef7e3dc94f7a@redhat.com>
+Message-Id: <20260504-qom-tests-v2-12-ef7e3dc94f7a@redhat.com>
 References: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 In-Reply-To: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2954;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1186;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=V/1REB7hPU3r4nVJQdLs+FCZBO0CucW41h7dOvCiAK8=;
- b=kA0DAAoB2ujhCXWWnOUByyZiAGn4hGzIPORZThbpGxpUr0ANHG0nhpVwWJ9c+X/SSwi4rpsGY
- YkCMwQAAQoAHRYhBIepvZM/h8YG0nb2Ldro4Ql1lpzlBQJp+IRsAAoJENro4Ql1lpzl7iIP/RpA
- Mj2HsuOXfqr66hJkiLvpWPwYVSC1Fiv3b5O7B43y2jtKkaU5OLNSvMo0bADgucmIkseS/g+1hbE
- WYnhjuTlsG07ckHNIFdoHHWHAuBa5bRmRmt/1Arp9EH0uKdmSSCyzO7EKWfyfgMWkmO5JT0eq9T
- lkyGfQ1hQS4HHwVfY1Ho02ne3dHPAhNtV+FEBkZXi46a0znR/pDFoVl/rEVCZSHY+G7WmBJDTC0
- l/pNOjtIr1Car0pvMENUVJ3hIr69ry3foYmqReEOlK8G1INf0JCIB+V1mJnCp5AZhMambCUIz8p
- eSGxQG912nqN5gjIiQ8EaFweGLbxytYddVkh7CHFq4VcT0gKFRIVw5did+X6H8RnlXR/tHrtFBP
- H6T5rXt65p7quO8hlRAERdZ/nHNmkL9CfD0TbC6tMhFfJKBO/hMveafm8h7rSc0wZ8CQwyhcyu1
- Sve8UDUQiqPuhLcuDWVFWadJFGL69lfGThcOuhHog3jZFbDKPihDl/iia8AYht1zm/71/kcrtJf
- NM2cDr2FIyXKkXG/vs/PEdANlSTA3p33Zkqz94UJWkLUzDNdhgMzkn8l9AOxd8RvgUjSOkuzT+j
- UzNEkF7a4ZN0Rhq9qVblC1A7S3uuXaLelpPPNAO0/mFqfjMWQFscRZFGPZDONtS1D7f1Tvlhzex
- 6xgRS
+ bh=XKESI/0DSqdUBTRFIDl2KEKlv25ZaJ+0o7RYfGRaK9M=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRsFkq5gFoGkhdtbX0XtTDFatKfr3ENADZrN
+ KHIfiztfiCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbAAKCRDa6OEJdZac
+ 5S6vD/0Qn/ePgQg1XfJ43ptN3E0NTKDPf8P2rc3lhhVr6HatnbxRMZyv3cckuT55Z5ls7sKtJSg
+ AowLOFQHMGAr0NhjTmtH9x4TO0GdLxiH8PBdXFN9fKvEJvmmF9ajzOpcmuojb6/qs6Z9yuO9iV3
+ SxOua5lZyXpQoMbWKZZsW+ooB+TzRqgk7D8WHFcYXbMVnPP/pcOraYRFBIcPQECoMYx6gffMeKF
+ Xa7f8q6SuIOLH9U9/kATD+TAsaL9eIqr1UEiGM1Nkd8qDbBDHhmsmpyzXVO+hePrbhBJilhwdCh
+ OFhWFz4zA9zRKwbCZMYWFRMaKi+/bPGUgvE5Uvlx3YtnmzuqCqhtVKSaM/RTl0I9HyqYSTNhCE9
+ maQDKMkPQ0JkjEzrqc8hfQQKqJvRVi0OPN6VMSVVwZM9WYzdVlaXJdlGC7UF7+7tNr63QVQlAF3
+ zn3bMPK0OYXv7qRiOovnfUchN8Y9M1b1h2zUuFXFTCsEDBZecBJnLZdGgHTOj4WvlJGrUdU1hqz
+ 3duQ9I5nUm2AiQBq0oMy/NwntzQxnoRADqdBX0lM1yRdTxDqYTvsoq3v91qFJL36z7Khl+l1xLv
+ Lu3z1KRTfDX+fIAFG9xoFKEp8xsiQMEooK/ZDJoRxqT8b70Ded8qf6drMh2rXAmmahN8gDKiGET
+ bgUFotrBHM1hj0g==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,84 +104,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-apic_common_set_id() dereferences s->cpu to check for x2APIC support
-when the APIC ID is >= 255. On a standalone APIC object that has not
-been attached to a CPU, s->cpu is NULL, causing a segfault.
+cryptodev_lkcf_cleanup() locks a mutex that is only initialized
+during the init vfunc (called at realize time). When the backend
+is destroyed without ever being realized, the mutex is uninitialized
+and the lock aborts.
 
-To solve this, move validation during realize().
+Return early from cleanup when the backend was never started.
 
-Fixes: b5ee0468e9d2 ("apic: add support for x2APIC mode")
+Note: it looks like cryptodev init/cleanup callbacks should rather be
+regular complete/finalize overrides (calling the parent method).
+
+Fixes: 39fff6f3e8b3 ("cryptodev: Add a lkcf-backend for cryptodev")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/intc/apic_common.c  | 23 +++++++++++++----------
- target/i386/cpu-apic.c |  6 +-----
- 2 files changed, 14 insertions(+), 15 deletions(-)
+ backends/cryptodev-lkcf.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
-index bf4abc21d7b..49c03a5bcee 100644
---- a/hw/intc/apic_common.c
-+++ b/hw/intc/apic_common.c
-@@ -257,6 +257,19 @@ static void apic_common_realize(DeviceState *dev, Error **errp)
-     static DeviceState *vapic;
-     uint32_t instance_id = s->initial_apic_id;
+diff --git a/backends/cryptodev-lkcf.c b/backends/cryptodev-lkcf.c
+index 40c7bd3c5a0..3fe29d3104c 100644
+--- a/backends/cryptodev-lkcf.c
++++ b/backends/cryptodev-lkcf.c
+@@ -255,6 +255,10 @@ static void cryptodev_lkcf_cleanup(CryptoDevBackend *backend, Error **errp)
+     CryptoDevBackendClient *cc;
+     CryptoDevLKCFTask *task, *next;
  
-+    if (!s->cpu) {
-+        error_setg(errp, "APIC is not attached to a CPU");
++    if (!cryptodev_backend_is_ready(backend)) {
 +        return;
 +    }
 +
-+    if (s->initial_apic_id >= 255 &&
-+        !cpu_has_x2apic_feature(&s->cpu->env)) {
-+        error_setg(errp, "APIC ID %d requires x2APIC feature in CPU",
-+                   s->initial_apic_id);
-+        error_append_hint(errp, "Try x2apic=on in -cpu.\n");
-+        return;
-+    }
-+
-     /* Normally initial APIC ID should be no more than hundreds */
-     assert(instance_id != VMSTATE_INSTANCE_ID_ANY);
- 
-@@ -410,7 +423,6 @@ static void apic_common_set_id(Object *obj, Visitor *v, const char *name,
-     APICCommonState *s = APIC_COMMON(obj);
-     DeviceState *dev = DEVICE(obj);
-     uint32_t value;
--    Error *local_err = NULL;
- 
-     if (dev->realized) {
-         qdev_prop_set_after_realize(dev, name, errp);
-@@ -421,15 +433,6 @@ static void apic_common_set_id(Object *obj, Visitor *v, const char *name,
-         return;
-     }
- 
--    if (value >= 255 && !cpu_has_x2apic_feature(&s->cpu->env)) {
--        error_setg(&local_err,
--                   "APIC ID %d requires x2APIC feature in CPU",
--                   value);
--        error_append_hint(&local_err, "Try x2apic=on in -cpu.\n");
--        error_propagate(errp, local_err);
--        return;
--    }
--
-     s->initial_apic_id = value;
-     s->id = (uint8_t)value;
- }
-diff --git a/target/i386/cpu-apic.c b/target/i386/cpu-apic.c
-index eaa10ad2a3d..f4f7f6b4d67 100644
---- a/target/i386/cpu-apic.c
-+++ b/target/i386/cpu-apic.c
-@@ -57,11 +57,7 @@ void x86_cpu_apic_create(X86CPU *cpu, Error **errp)
-     cpu->apic_state->cpu = cpu;
-     cpu->apic_state->apicbase = APIC_DEFAULT_ADDRESS | MSR_IA32_APICBASE_ENABLE;
- 
--    /*
--     * apic_common_set_id needs to check if the CPU has x2APIC
--     * feature in case APIC ID >= 255, so we need to set cpu->apic_state->cpu
--     * before setting APIC ID
--     */
-+    /* cpu must be set before realize, which validates the APIC ID */
-     qdev_prop_set_uint32(DEVICE(cpu->apic_state), "id", cpu->apic_id);
- }
- 
+     qemu_mutex_lock(&lkcf->mutex);
+     lkcf->running = false;
+     qemu_mutex_unlock(&lkcf->mutex);
 
 -- 
 2.54.0
