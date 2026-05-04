@@ -4,74 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57637CD342F
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 21:35:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71DE9FF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 22:17:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wK0w5-0006EQ-84; Mon, 04 May 2026 17:34:41 -0400
+	id 1wK1av-0001xa-QB; Mon, 04 May 2026 18:16:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wK0w4-0006Dx-0p
- for qemu-devel@nongnu.org; Mon, 04 May 2026 17:34:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wK1ag-0001vx-H4; Mon, 04 May 2026 18:16:40 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wK0w1-0003UQ-WF
- for qemu-devel@nongnu.org; Mon, 04 May 2026 17:34:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777930476;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KpNxqqbCaE16ObkPQbaDANH59VVhWzGebQaPpgbq4Ww=;
- b=b0YzT1ILp22FVgByNrk/fMKrqxVt18YCpkPfzWC6jMeXTJPADR3A3aPef5KqxETHQ+keS8
- RVApkCjSzL5jgcESvMDOjuWZ3x7spE0QQQ9dKUUX3d4USm1WPcaswX/YHKr1XhQCbgqXXd
- f5xf2kxC8Yv6K2vFHl7+R2guU3GCOCc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-147-QG-s2IS6NDStU2t1pv1Etw-1; Mon,
- 04 May 2026 17:34:33 -0400
-X-MC-Unique: QG-s2IS6NDStU2t1pv1Etw-1
-X-Mimecast-MFC-AGG-ID: QG-s2IS6NDStU2t1pv1Etw_1777930471
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AEBC51956095; Mon,  4 May 2026 21:34:30 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.44.49.208])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 322601944CED; Mon,  4 May 2026 21:34:26 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org,
-	qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>, qemu-stable@nongnu.org
-Subject: [PATCH 1/2] aspeed/hace: Fix out-of-bounds read in has_padding()
-Date: Mon,  4 May 2026 23:34:20 +0200
-Message-ID: <20260504213421.710035-2-clg@redhat.com>
-In-Reply-To: <20260504213421.710035-1-clg@redhat.com>
-References: <20260504213421.710035-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wK1ac-0002sm-7b; Mon, 04 May 2026 18:16:35 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 644AduFV2476923; Mon, 4 May 2026 22:16:29 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=tIKv9cAjaGUzdvSZi
+ tiD4ES7uaq5h/YoWDY0LPNlWyA=; b=lqU0wq5fOOFyq9z+QF/LAW0c4Lw61mAfw
+ D/WL50HZA4KFe+8mwc9w+aWAtNOAhdJrHxQHop9BNv49BJkcsDlMM+kqbmhu3gjJ
+ XZ1DPlkk8JzXILszao7NX9inUWVhmbsMKcoVmNiLHlONHTe9e5+af8dxnGkR1YSa
+ P2boUqELFaCVHqw8bVRm9CmU3Dhei/g9IU4ZMODC2o9QlAcLL9xmWOyOX1cNmgWK
+ I6ublX/pXdpXhLiNRTTtpiJ84Rly7X6xUQarWEs/MDycTIJb3Knqbm2jQxdkg97D
+ b6sNywipoAi6OOx3IA9oQ7xGEFe0rTeiGmMi1jLCjNraBf0j8E1KA==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9y4gvfn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 04 May 2026 22:16:29 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 644M9fXh012299;
+ Mon, 4 May 2026 22:16:28 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwwtg6w5k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 04 May 2026 22:16:28 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 644MGRJ215532732
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 4 May 2026 22:16:27 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5F9BC58055;
+ Mon,  4 May 2026 22:16:27 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A7FFB58043;
+ Mon,  4 May 2026 22:16:26 +0000 (GMT)
+Received: from t15.ibmuc.com (unknown [9.61.119.68])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  4 May 2026 22:16:26 +0000 (GMT)
+From: jrossi@linux.ibm.com
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, cohuck@redhat.com
+Cc: jjherne@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ jrossi@linux.ibm.com, zycai@linux.ibm.com
+Subject: [PATCH 6/6] tests/qtest: Add s390x PCI SCSI fallback test to
+ cdrom-test.c
+Date: Mon,  4 May 2026 18:16:13 -0400
+Message-ID: <20260504221613.826825-7-jrossi@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20260504221613.826825-1-jrossi@linux.ibm.com>
+References: <20260504221613.826825-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA0MDIwNSBTYWx0ZWRfX1QdPGjFGLXgW
+ FoTawqyS9ZQTkji+JPubh+E3MuKftU7yS7fWdowQsgRn2zKjepYdz+DHtxywNpW7o2Xwd5YtXMl
+ IRrCl+jcnoo3zL/Fyd/8Dlck2NdGry8AwCtT0k4QFtKGEJOSEGS8y5lDTSzbwa7SQOdyTEpTjXs
+ gn4WrUySr7tmH0WfKH4nrCqvHaUWyfV+t4qy/zX+z/ZpT4Z+pswrdPcOjiVHkivrRvRRqhpbNLl
+ klAKKo2ltp7p/y/LkvUJuB4hfcuq1JBN3vyl7D4hLATImhXslP5GtiiQDSNtRTiSmUljj3WFW+v
+ 5J7IF+NI8fzl9g1g2vtey7oRWsN1qffhzp2G5dXTKGEO9f2/Vrgs8RboeD+43urm26TUetdIz1b
+ iWWikDFb9/KeoOucqOCoBR5NouT287mNkHE8BR+hmWi1vPxG7rP8pGt47abMY6mUGkPA8wIm9Iq
+ HZ8DHIMmEXResuM0Knw==
+X-Authority-Analysis: v=2.4 cv=J4GaKgnS c=1 sm=1 tr=0 ts=69f91abd cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=MvDj_lKWWGcuVSP3geIA:9
+X-Proofpoint-GUID: c8lxLE2yJyQE6VEXRpNEMLUp_W5sVFup
+X-Proofpoint-ORIG-GUID: c8lxLE2yJyQE6VEXRpNEMLUp_W5sVFup
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-04_06,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0
+ priorityscore=1501 spamscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605040205
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,42 +117,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The has_padding() function reads the last 8 bytes of a DMA buffer
-without validating req_len. req_len is guest-controlled (via
-R_HASH_SRC_LEN register or scatter-gather entries) and values less
-than 8 cause integer underflow. This can result in an out-of-bounds
-read of QEMU process memory.
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-Add a check to ensure req_len >= 8 before accessing the buffer.
+Add a test to verify that a guest can use a PCI controlled CD as a fallback boot
+device after a failed CCW IPL.
 
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Cc: qemu-stable@nongnu.org
-Fixes: 5cd7d8564a8b ("aspeed/hace: Support AST2600 HACE")
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 ---
- hw/misc/aspeed_hace.c | 8 ++++++++
+ tests/qtest/cdrom-test.c | 8 ++++++++
  1 file changed, 8 insertions(+)
 
-diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c
-index 23e8030cd966..ef698b3ecb72 100644
---- a/hw/misc/aspeed_hace.c
-+++ b/hw/misc/aspeed_hace.c
-@@ -154,6 +154,14 @@ static bool has_padding(AspeedHACEState *s, struct iovec *iov,
-                         hwaddr req_len, uint32_t *total_msg_len,
-                         uint32_t *pad_offset)
- {
-+    /* Need at least 8 bytes to read the total message length field */
-+    if (req_len < 8) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: invalid request length=0x%" HWADDR_PRIx "\n",
-+                      __func__, req_len);
-+        return false;
+diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
+index a65854d2bc..50706b6f84 100644
+--- a/tests/qtest/cdrom-test.c
++++ b/tests/qtest/cdrom-test.c
+@@ -253,6 +253,14 @@ static void add_s390x_tests(void)
+                             "-drive if=none,id=d1,media=cdrom,file=",
+                             test_cdboot);
+     }
++    if (qtest_has_device("virtio-scsi-pci")) {
++        qtest_add_data_func("cdrom/boot/pci-scsi-fallback-from-blk-ccw",
++                            "-device virtio-scsi-pci -device virtio-serial "
++                            "-device virtio-blk-ccw,drive=d1,bootindex=1 "
++                            "-drive driver=null-co,read-zeroes=on,if=none,id=d1 "
++                            "-device scsi-cd,drive=d2,bootindex=2 "
++                            "-drive if=none,id=d2,media=cdrom,file=", test_cdboot);
 +    }
-+
-     *total_msg_len = (uint32_t)(ldq_be_p(iov->iov_base + req_len - 8) / 8);
-     /*
-      * SG_LIST_LEN_LAST asserted in the request length doesn't mean it is the
+ }
+ 
+ int main(int argc, char **argv)
 -- 
-2.54.0
+2.52.0
 
 
