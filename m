@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9006CD3430
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5809FF885A
 	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:36:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJraY-0007Y2-Ko; Mon, 04 May 2026 07:35:50 -0400
+	id 1wJrbI-0008NE-6k; Mon, 04 May 2026 07:36:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJraX-0007XT-TP
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:35:49 -0400
+ id 1wJrb2-0007oz-8J
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJraW-0000ny-Kd
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:35:49 -0400
+ id 1wJraz-0000v2-6x
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777894547;
+ s=mimecast20190719; t=1777894576;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CRg2XEz7g/q9Y9vnBcCYZpcSu3GsBjF6YOxJNwlUUiA=;
- b=adKFshqNToisbAbMGvgAiTxgCOIPJ4PbZbhbUM4tH7C69Ys36UpFMr0aG4UelWogAB5hny
- oRsFvQPfh2pYoBxpNJ6ab79YuqAyJiLL4XUeT/by8eHcb+6s03njmBx+8MQ5U/BFAPVWLM
- gQQpMV9bHdVpQz8fDeKVU2cMTB+G5ms=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=tzBsqml/dM6fWiSEjTcIGoL9jK84pwIUG7THdwR6FSc=;
+ b=WBdzyYQSRpG4ZXVwjaDfQSXCHiAWJrd6SbkIGa0A92TO9jHFcHuE7jrZPKkiegAejKMWu6
+ cFtlJ1kPGc7xwCZuvtwHS4jO7lYEVfFvkEm079fXd6YvJCmhSJPy7XHZbxKF8kBgmybpb4
+ pEvTdmZmQiByEdQAANbU33ryl7up8GY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-552-VbhkPFRcMu2o00hZ1s_NJg-1; Mon,
- 04 May 2026 07:35:44 -0400
-X-MC-Unique: VbhkPFRcMu2o00hZ1s_NJg-1
-X-Mimecast-MFC-AGG-ID: VbhkPFRcMu2o00hZ1s_NJg_1777894544
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-434-xDvQBCAQM1STPmBlb00yLw-1; Mon,
+ 04 May 2026 07:36:13 -0400
+X-MC-Unique: xDvQBCAQM1STPmBlb00yLw-1
+X-Mimecast-MFC-AGG-ID: xDvQBCAQM1STPmBlb00yLw_1777894572
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EC2C4195608F
- for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:35:43 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8EB311800473
+ for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:36:12 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A24ED1800347; Mon,  4 May 2026 11:35:42 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 458641955D84; Mon,  4 May 2026 11:36:10 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 04 May 2026 15:34:53 +0400
-Subject: [PATCH v2 05/46] hw/pci-host/q35: handle NULL bus in pci-hole64
- getters
+Date: Mon, 04 May 2026 15:34:58 +0400
+Subject: [PATCH v2 10/46] hw/intc/apic: move checks to realize()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260504-qom-tests-v2-5-ef7e3dc94f7a@redhat.com>
+Message-Id: <20260504-qom-tests-v2-10-ef7e3dc94f7a@redhat.com>
 References: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 In-Reply-To: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1851;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2954;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=/fxZ1GAbhmt7eqzcBY0CxzgAhlT5phl8zL1KjrOh2so=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRsFAEBdR6ZsQVMihkZL7NzJXuLVMS1oXf5G
- vcsV3wnZhaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbAAKCRDa6OEJdZac
- 5R77EACX8Tc21I9tc2XKTsnuryt3fSgO5EZKCd3wBC52QaydTFdj/MDT39BiJeyaPOa4ZAC/I1C
- rxQwUjN9gsR21ZhOpR9OHSUAc0sYQIrxzZqzic0v6We2DPx713dUFwOl1TVyHoWZ1UvCiTM2jLh
- HhHUExuB+P3Xw18ASWxHQG7AT5HO3aakoQqLXhzdb5STf4I1CkzIKfE7/q64hye6DlgSCXAwdcP
- kv2gmilbvixcMQ2/w74A4DDalwL9cLmZkIErw+MAEIkcQG1/kD0xVFmbch+AeePnhByZiwg4lJt
- 4dy3YEIqo29bk+T5/bxKKTB6S6CAPGEQBTgzmrGAqocr/G9BO/Psthhbhf1usgNLvpkm4zXOAsx
- CInIfLGbZSgBvgDpUxR5n38nDOpJpuvpuPifF9vgXc5535ARc5OZXnydYuQ1VSb/rmLPAgHub40
- 4WPsURpdsFtYxohNDjT3/eDtZ1Xt9XIISBbPBnfxCrZP/rVJxcVtO2hlGpaKbzCosxrLSp0Tp8f
- of9Ia1Yk6Cy1Y4eKCorK0v8GZHQHWlS+7E/s6+4O87pJ+bh3W9yC9coOSADkiCSqsyvJOfVazWZ
- pTZMqipZLC6KLWJqcWwLIlpoKmKInrEL/uMBGMLhH6pdfxqJpWj3kvl/PtOK+gOigN5nmV7EyPk
- 9neNP5linPspiBg==
+ bh=V/1REB7hPU3r4nVJQdLs+FCZBO0CucW41h7dOvCiAK8=;
+ b=kA0DAAoB2ujhCXWWnOUByyZiAGn4hGzIPORZThbpGxpUr0ANHG0nhpVwWJ9c+X/SSwi4rpsGY
+ YkCMwQAAQoAHRYhBIepvZM/h8YG0nb2Ldro4Ql1lpzlBQJp+IRsAAoJENro4Ql1lpzl7iIP/RpA
+ Mj2HsuOXfqr66hJkiLvpWPwYVSC1Fiv3b5O7B43y2jtKkaU5OLNSvMo0bADgucmIkseS/g+1hbE
+ WYnhjuTlsG07ckHNIFdoHHWHAuBa5bRmRmt/1Arp9EH0uKdmSSCyzO7EKWfyfgMWkmO5JT0eq9T
+ lkyGfQ1hQS4HHwVfY1Ho02ne3dHPAhNtV+FEBkZXi46a0znR/pDFoVl/rEVCZSHY+G7WmBJDTC0
+ l/pNOjtIr1Car0pvMENUVJ3hIr69ry3foYmqReEOlK8G1INf0JCIB+V1mJnCp5AZhMambCUIz8p
+ eSGxQG912nqN5gjIiQ8EaFweGLbxytYddVkh7CHFq4VcT0gKFRIVw5did+X6H8RnlXR/tHrtFBP
+ H6T5rXt65p7quO8hlRAERdZ/nHNmkL9CfD0TbC6tMhFfJKBO/hMveafm8h7rSc0wZ8CQwyhcyu1
+ Sve8UDUQiqPuhLcuDWVFWadJFGL69lfGThcOuhHog3jZFbDKPihDl/iia8AYht1zm/71/kcrtJf
+ NM2cDr2FIyXKkXG/vs/PEdANlSTA3p33Zkqz94UJWkLUzDNdhgMzkn8l9AOxd8RvgUjSOkuzT+j
+ UzNEkF7a4ZN0Rhq9qVblC1A7S3uuXaLelpPPNAO0/mFqfjMWQFscRZFGPZDONtS1D7f1Tvlhzex
+ 6xgRS
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,53 +103,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When called on an unrealized Q35 host bridge (e.g. from
-qmp_qom_list_properties), h->bus is NULL since the root bus is only
-created during realize. Guard against this in both the
-pci_hole64_start and pci_hole64_end getters.
+apic_common_set_id() dereferences s->cpu to check for x2APIC support
+when the APIC ID is >= 255. On a standalone APIC object that has not
+been attached to a CPU, s->cpu is NULL, causing a segfault.
 
+To solve this, move validation during realize().
+
+Fixes: b5ee0468e9d2 ("apic: add support for x2APIC mode")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/pci-host/q35.c | 15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ hw/intc/apic_common.c  | 23 +++++++++++++----------
+ target/i386/cpu-apic.c |  6 +-----
+ 2 files changed, 14 insertions(+), 15 deletions(-)
 
-diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
-index e85e4227b37..355e81bfa20 100644
---- a/hw/pci-host/q35.c
-+++ b/hw/pci-host/q35.c
-@@ -132,8 +132,14 @@ static void q35_host_get_pci_hole64_start(Object *obj, Visitor *v,
-                                           const char *name, void *opaque,
-                                           Error **errp)
- {
--    uint64_t hole64_start = q35_host_get_pci_hole64_start_value(obj);
-+    PCIHostState *h = PCI_HOST_BRIDGE(obj);
-+    uint64_t hole64_start;
+diff --git a/hw/intc/apic_common.c b/hw/intc/apic_common.c
+index bf4abc21d7b..49c03a5bcee 100644
+--- a/hw/intc/apic_common.c
++++ b/hw/intc/apic_common.c
+@@ -257,6 +257,19 @@ static void apic_common_realize(DeviceState *dev, Error **errp)
+     static DeviceState *vapic;
+     uint32_t instance_id = s->initial_apic_id;
  
-+    if (!h->bus) {
-+        error_setg(errp, "PCI host bridge not realized");
++    if (!s->cpu) {
++        error_setg(errp, "APIC is not attached to a CPU");
 +        return;
 +    }
-+    hole64_start = q35_host_get_pci_hole64_start_value(obj);
-     visit_type_uint64(v, name, &hole64_start, errp);
++
++    if (s->initial_apic_id >= 255 &&
++        !cpu_has_x2apic_feature(&s->cpu->env)) {
++        error_setg(errp, "APIC ID %d requires x2APIC feature in CPU",
++                   s->initial_apic_id);
++        error_append_hint(errp, "Try x2apic=on in -cpu.\n");
++        return;
++    }
++
+     /* Normally initial APIC ID should be no more than hundreds */
+     assert(instance_id != VMSTATE_INSTANCE_ID_ANY);
+ 
+@@ -410,7 +423,6 @@ static void apic_common_set_id(Object *obj, Visitor *v, const char *name,
+     APICCommonState *s = APIC_COMMON(obj);
+     DeviceState *dev = DEVICE(obj);
+     uint32_t value;
+-    Error *local_err = NULL;
+ 
+     if (dev->realized) {
+         qdev_prop_set_after_realize(dev, name, errp);
+@@ -421,15 +433,6 @@ static void apic_common_set_id(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    if (value >= 255 && !cpu_has_x2apic_feature(&s->cpu->env)) {
+-        error_setg(&local_err,
+-                   "APIC ID %d requires x2APIC feature in CPU",
+-                   value);
+-        error_append_hint(&local_err, "Try x2apic=on in -cpu.\n");
+-        error_propagate(errp, local_err);
+-        return;
+-    }
+-
+     s->initial_apic_id = value;
+     s->id = (uint8_t)value;
+ }
+diff --git a/target/i386/cpu-apic.c b/target/i386/cpu-apic.c
+index eaa10ad2a3d..f4f7f6b4d67 100644
+--- a/target/i386/cpu-apic.c
++++ b/target/i386/cpu-apic.c
+@@ -57,11 +57,7 @@ void x86_cpu_apic_create(X86CPU *cpu, Error **errp)
+     cpu->apic_state->cpu = cpu;
+     cpu->apic_state->apicbase = APIC_DEFAULT_ADDRESS | MSR_IA32_APICBASE_ENABLE;
+ 
+-    /*
+-     * apic_common_set_id needs to check if the CPU has x2APIC
+-     * feature in case APIC ID >= 255, so we need to set cpu->apic_state->cpu
+-     * before setting APIC ID
+-     */
++    /* cpu must be set before realize, which validates the APIC ID */
+     qdev_prop_set_uint32(DEVICE(cpu->apic_state), "id", cpu->apic_id);
  }
  
-@@ -149,10 +155,15 @@ static void q35_host_get_pci_hole64_end(Object *obj, Visitor *v,
- {
-     PCIHostState *h = PCI_HOST_BRIDGE(obj);
-     Q35PCIHost *s = Q35_HOST_DEVICE(obj);
--    uint64_t hole64_start = q35_host_get_pci_hole64_start_value(obj);
-+    uint64_t hole64_start;
-     Range w64;
-     uint64_t value, hole64_end;
- 
-+    if (!h->bus) {
-+        error_setg(errp, "PCI host bridge not realized");
-+        return;
-+    }
-+    hole64_start = q35_host_get_pci_hole64_start_value(obj);
-     pci_bus_get_w64_range(h->bus, &w64);
-     value = range_is_empty(&w64) ? 0 : range_upb(&w64) + 1;
-     hole64_end = ROUND_UP(hole64_start + s->mch.pci_hole64_size, 1ULL << 30);
 
 -- 
 2.54.0
