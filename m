@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 220C1FF885A
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 07:24:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B850CD3423
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 07:37:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJnf8-0002XJ-1o; Mon, 04 May 2026 03:24:18 -0400
+	id 1wJnr5-00050c-IV; Mon, 04 May 2026 03:36:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJnf4-0002X7-OY
- for qemu-devel@nongnu.org; Mon, 04 May 2026 03:24:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJnf1-0003L0-1X
- for qemu-devel@nongnu.org; Mon, 04 May 2026 03:24:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777879449;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EiI0SJbREZyq9IUI8pw0wwpx48RcV0kNF2anm77UC94=;
- b=aEC+Ab8UP011oBkkcIA0VACicO4deNrt4QfiLrOpv9CFR04qv4KjLNP8xm363TIw+trYiy
- oKssMC504u1T0zvmWHFZy4K9uXS9xDEriaElosIxcUcLhlJiH5JC//HCp2VUB/SSzWluCa
- /Ih8x7kg+8cd/EyTEUcKk/IhkxyM26Y=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-448-Wl0BUVUtP0u0XS_jcuhnGA-1; Mon,
- 04 May 2026 03:24:08 -0400
-X-MC-Unique: Wl0BUVUtP0u0XS_jcuhnGA-1
-X-Mimecast-MFC-AGG-ID: Wl0BUVUtP0u0XS_jcuhnGA_1777879447
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 62AFD19560AA; Mon,  4 May 2026 07:24:07 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DD3BC1801481; Mon,  4 May 2026 07:24:05 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJnr1-00050D-Jg
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 03:36:37 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJnqz-000763-MC
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 03:36:35 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-44985f4ab0fso1542713f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 00:36:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777880189; x=1778484989; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CRckL+sEPFBJZu+9AFfrXSqIP9GjmsTWxjyZ8SWU/s4=;
+ b=bKKRFr00LGAVRbPGwek2ItKuznJs5RjyYCI6eZ8HasD4W0HaLh1rlhD6560ZhFVS7J
+ HLDeF7Is76GkKv0AOQIFuhMxRbUld6Rj/ISD7y8ZfiQC2S8dLUFkX1sZkW30Kk9shzlx
+ dJTF9Of02RMm4Y+cIyOD5XsNVZBhTI9cTlWGS55u6Tpnv5rv40puBARq/n/fK3cUkrQd
+ pMSEuaxrsHw5jyZFgJ+dY5BQ+DI6AYBPPi4bdF19LNAjf5bO/Hu9ybKegW7jukrLGxYG
+ oOoFGyNoZvHELGaSKGUfA3B/r4S71WXVWsKwPzlLSEd4blRpICvogarxvZ/cg58O8fum
+ 36SA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777880189; x=1778484989;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CRckL+sEPFBJZu+9AFfrXSqIP9GjmsTWxjyZ8SWU/s4=;
+ b=HuDZqMZCBVEhTMEEHil2QS6sclPPn0WtSCvSAtPuEH6jGNuooutiDF7zAHHMszuLVo
+ i/ujk59Tu6s9HH+uUvrITlcYm4Z7P8hghOqodgMe4ZGsm9ZOqdMrutmbdCgVY9V6yNgX
+ uyM8Gl6hs0mxsyUhRDzDeIb8xTfjnBNLAVqIxvwla/jKi3fKQ+9qQ8zfAKCULVMxYWtA
+ Et+ohhtj2hNF2SY+OprHUn+RSY4ck6LjZblcmArv6ruhnSHQKITzQrU9Hbkg7T9Jnpor
+ Fa59EvaEPOS8Zx3v6pgSnQOX4GJgJ80gjZIDd9DTw8BgssXctEUqHZCy5ugKHvCWZI7d
+ hpuQ==
+X-Gm-Message-State: AOJu0Yzuol1YjuUPEwBuHKkL6hB9WZrrfyfOAsGAra7f3wsQxDPEKZC4
+ eQHoOFzxGc7KJmrfJFapDKcb6x9+VWI5YwuabLteHVoDvT4iqVPcd3wPDLdaQ5ZOmMI=
+X-Gm-Gg: AeBDietP/jmhFYo8uyR5dY7IGp2dvWLz2sekk4L5GP/EGYWR96TqEHvHwNUxRMh6+YX
+ qLQC11gNWttwRO46zt07yDggkqy6BGJ1K39tu8T3shaf7+7/ZTDoNl7zurBFSSCDw4fqdNa3R4l
+ KPuFjWrFDhU7Z8BWKVOYuj7/CISQfsvw06L94VrlyLaqVlQ8v1hiclr2MS0NlEpWpsaDxHVItwD
+ 2JbJNSCuyAD/u3fjNU+PXx4Y5jY+mCh/nLUctIxRXfG4H7X8wfdcqyD1Zqc8F6T8SQUDMG2sdmt
+ tjJ0EeWFkGzn9B7dvYYRh4NvaHir74b9zdncTkbWu+L2xGTRFEf/ZIxfxTmh/AgRKcD9fCKG72r
+ j7wqSICN1r4Kbmc7l+U6Y2eDxWzbTMghBkQdoTxBeRvLJK9gTRvQccHVsskkhTdylyqkJBHheMF
+ 96TE0YEKId69kmndFKPgjMADOEcaXSDYvMtEITlmA9Po3nREfm1LvJlhwi+WRJZpyFDXt0V8Ptl
+ Q49
+X-Received: by 2002:a05:6000:184e:b0:43d:762e:76c6 with SMTP id
+ ffacd0b85a97d-44bb3207ae6mr14347277f8f.7.1777880189298; 
+ Mon, 04 May 2026 00:36:29 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-44a981ded99sm24281599f8f.18.2026.05.04.00.36.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 May 2026 00:36:28 -0700 (PDT)
+Message-ID: <41b7b58e-3d58-4e48-9656-2b0cfc4659a4@linaro.org>
+Date: Mon, 4 May 2026 09:36:27 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 06/58] kconfig: remove duplicate declaration of
+ CONFIG_MIPS_BOSTON_AIA
+Content-Language: en-US
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20260430172204.1006673-1-pbonzini@redhat.com>
+ <20260430172204.1006673-7-pbonzini@redhat.com>
+ <09b2ec62-4b67-41da-893d-aaccf011537c@linaro.org>
+ <CABgObfZU_r-xF_iUR+DVA_GkcvzFv878CRAcBh5go864aD_Jqg@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CABgObfZU_r-xF_iUR+DVA_GkcvzFv878CRAcBh5go864aD_Jqg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 27/41] system/qtest: free log path on finalization
-From: marcandre.lureau@redhat.com
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- qemu-devel@nongnu.org, armbru@redhat.com, Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-In-Reply-To: <CAFEAcA9HMUcY2kVXgwxjZTptAtyhbVfFq4rPSp5buQ-9jvS8mw@mail.gmail.com>
-References: <20260427-qom-tests-v1-0-c413f3605311@redhat.com>
- <20260427-qom-tests-v1-27-c413f3605311@redhat.com>
- <CAFEAcA9HMUcY2kVXgwxjZTptAtyhbVfFq4rPSp5buQ-9jvS8mw@mail.gmail.com>
-Date: Mon, 04 May 2026 11:23:58 +0400
-Message-Id: <177787943831.2741407.13660021224985138242.b4-reply@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2039;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=rp/qawBfra7KHwxi88RWGhIylF0XKFC9LIiL4OmS6So=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+EmOLCPecn1ohxEDBiZlq+nbtQDU1FM+WhOVP
- /PMz7yw+QeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafhJjgAKCRDa6OEJdZac
- 5cafD/9RuCHfWiXUdU4xpVtoMPii2hHJhoKDscOUPcT0auXjwjsAjAY26KtGvWJX4qhZNrxs4do
- 0h3VJNI1f2CSqhH9HF+ebyLzr14IIJovjwS2/0fyvv6FinRmBqHJBgx9gSxS/ewXg2NoBCfH6d9
- Hi0s2ZfGEKY7aYWxxuQFdrjZLhJvjsUpyIb9i2ONipsz6olBdaGE0jdeeLxU2uOvIfeR1Ip+keH
- 59vh9e8Gs2BWpO4d84LN1BfU/xLbVdTU6ku5sscRpJYaxDtPl3wrVXwe+AtUAI4JLmiw3BxQCUu
- Wcp/3KcSYmtZQt96vQ3FUatIGl00PvPIEosUp1589OHjQ6XkHzLR1UaSpwNf0XaUS1APgidngg3
- A60l+YWfhwpQJ4BYR9I7fwgEV3x7JN/J9EcW9Yu7kLBSEWUdCfYyR62Hm66BQwq+WOR184IiNBW
- v2Fyz/TPVqFUMk6kzxYbU8E9k7W5SZSaeNzqJdpDoweXZ/MJBfvRj7BYQbUnYXCG/DQ3ih9AHlc
- WUjNp0+LfgEEx7P408iKZI5+sZ308dIGCJlCqnqOZs9kuwC4ufhmstT7W/4LaD+m6/QIbY+N0xQ
- xgYjTpUaqQJkiv1yPfOtUGpLyjcJe61WX+bscouJ9RZUIWUg8M553ckkzGL1INBwNDS+zurTvba
- 4hFAhsxAEUu6FSg==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,61 +107,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On 2026-04-30 17:01:14+01:00, Peter Maydell wrote:
-> On Mon, 27 Apr 2026 at 20:46, Marc-André Lureau
-> <marcandre.lureau@redhat.com> wrote:
+On 4/5/26 09:08, Paolo Bonzini wrote:
 > 
-> > qtest_set_log allocates log via g_strdup, but no instance_finalize
-> > existed for the qtest type.
-> >
-> > Fixes: 6ba7ada3559e ("qtest: add a QOM object for qtest")
-> > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  system/qtest.c | 8 ++++++++
-> >  1 file changed, 8 insertions(+)
-> >
-> > diff --git a/system/qtest.c b/system/qtest.c
-> > index cf90cd53adb..e9e5773341f 100644
-> > --- a/system/qtest.c
-> > +++ b/system/qtest.c
-> > @@ -1020,10 +1020,18 @@ static void qtest_class_init(ObjectClass *oc, const void *data)
-> >                                    qtest_get_log, qtest_set_log);
-> >  }
-> >
-> > +static void qtest_finalize(Object *obj)
-> > +{
-> > +    QTest *q = QTEST(obj);
-> > +
-> > +    g_free(q->log);
-> > +}
-> > +
-> >  static const TypeInfo qtest_info = {
-> >      .name = TYPE_QTEST,
-> >      .parent = TYPE_OBJECT,
-> >      .class_init = qtest_class_init,
-> > +    .instance_finalize = qtest_finalize,
-> >      .instance_size = sizeof(QTest),
-> >      .interfaces = (const InterfaceInfo[]) {
-> >          { TYPE_USER_CREATABLE },
 > 
-> Doesn't the chr_name string have the same issue?
+> Il lun 4 mag 2026, 08:28 Philippe Mathieu-Daudé <philmd@linaro.org 
+> <mailto:philmd@linaro.org>> ha scritto:
 > 
+>     On 30/4/26 19:21, Paolo Bonzini wrote:
+>      > Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com
+>     <mailto:marcandre.lureau@redhat.com>>
+> 
+>     This was not reviewed by Marc-André (at least not publically on
+>     the list) but by Alistair and myself:
+>     https://lore.kernel.org/qemu-devel/20260430090534.841894-3-
+>     pbonzini@redhat.com/ <https://lore.kernel.org/qemu-
+>     devel/20260430090534.841894-3-pbonzini@redhat.com/>
+> 
+> 
+> He did for the whole series, and then I sent out the pull request 
+> (having had reviews) before receiving the messages from you and Alistair.
 
-Indeed. It doesn't trigger in the test because a bare qtest object
-has NULL chardev. But we should fix the leak nonetheless.
+Indeed you are right, I missed whole-series review sent to the cover
+letter. I suppose the other my other hiccup is due to emails delivery
+delay, not seeing your PR was sent later the same day. Apologies.
 
-> This pattern of "the object has a string property, and the
-> char *field that backs it is allocated if we give the property
-> a default value, and the setter has to free the old value
-> and strdup a copy of the new value, and you have to remember
-> to free the string in finalize" seems to be very common.
-> I wonder if there's some way we could make this less
-> error-prone and boilerplatey?
-
-I don't have a good solution to propose but to have a new optional
-"free" callback + pointer and error-prone pointer arithmetics. I am not
-sure this would make things simpler.
+> 
+> Paolo
+> 
+> 
+>     Not a big deal, it just shows this email workflow limits, as
+>     reviewers might wonder what the point of doing public review if
+>     being ignored.
+> 
+>      > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com
+>     <mailto:pbonzini@redhat.com>>
+>      > ---
+>      >   hw/misc/Kconfig  | 8 --------
+>      >   hw/riscv/Kconfig | 4 ++++
+>      >   2 files changed, 4 insertions(+), 8 deletions(-)
+> 
 
 
