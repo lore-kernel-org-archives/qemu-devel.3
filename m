@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A06FCD343A
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:38:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D26FCD3430
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJrcu-0004Ek-Vu; Mon, 04 May 2026 07:38:17 -0400
+	id 1wJrcE-0001YY-Os; Mon, 04 May 2026 07:37:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrcs-0003vm-A5
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:38:14 -0400
+ id 1wJrbn-0000q3-Oe
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:37:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrcq-00019h-Qc
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:38:13 -0400
+ id 1wJrbl-00012L-Ox
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:37:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777894692;
+ s=mimecast20190719; t=1777894625;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=82+lAluaZQmwO0cbys/HebvHtb8nAYQwYC80HeZ2EvU=;
- b=YSlPYKf3KRhjh57+iTLR03f8qfd5vYCOe07eYSOju2l+BAFr5dRaeo2J5AWavgyxTHDtiJ
- 8UzN11r5LHh/wR6LNlguxVzGtK8hOwAQ6J/IoDGeLRa3kWmp548HqMIHaLUZV4gqk9p2dd
- aoRS/v/wK9jrPYlPdVqVN00GVP0fY4Q=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=8YvsVsIi/1TFcOv3yrrnCyz6XIRwOmOuXGjMWoQQNxM=;
+ b=BImmZ+gsjt0fdtjn/XsHeoo5FkgNUkb5yvjKLmdSqcpF7e6hBQi9U7pzB8SHPAksJjlZ0I
+ qJSAdXWAKT4NyvGV9VEET+a/j/keLkKZWWywneDILkfFr39ZbnwnG8Oco8BWW5jHHYcDwF
+ 1GkvYRCUIG7ZsHNm23Hj7NAUA3a8NTQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-uqYrgyp6NxiyfV6WVTYoUQ-1; Mon,
- 04 May 2026 07:38:09 -0400
-X-MC-Unique: uqYrgyp6NxiyfV6WVTYoUQ-1
-X-Mimecast-MFC-AGG-ID: uqYrgyp6NxiyfV6WVTYoUQ_1777894689
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-696-RyWBl1BlNaeLXqANzqKcgA-1; Mon,
+ 04 May 2026 07:37:04 -0400
+X-MC-Unique: RyWBl1BlNaeLXqANzqKcgA-1
+X-Mimecast-MFC-AGG-ID: RyWBl1BlNaeLXqANzqKcgA_1777894623
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D73D1955F1A
- for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:38:09 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2EC0E1800578
+ for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:37:03 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id F00B930001A1; Mon,  4 May 2026 11:38:07 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CB7051800669; Mon,  4 May 2026 11:37:01 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 04 May 2026 15:35:18 +0400
-Subject: [PATCH v2 30/46] system/qtest: add missing qtest_finalize()
+Date: Mon, 04 May 2026 15:35:07 +0400
+Subject: [PATCH v2 19/46] hw/core/machine: free shim_filename on finalization
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260504-qom-tests-v2-30-ef7e3dc94f7a@redhat.com>
+Message-Id: <20260504-qom-tests-v2-19-ef7e3dc94f7a@redhat.com>
 References: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 In-Reply-To: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1010;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=718;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=9AkKHVjOuoPxJmyGfw1IlVjKN2smzpd0Yrdw/2aWqhM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRt5jmaObgzU+ELnzZ/U2VrHYFUIjUD7qGuW
- VrwfVDGAKCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbQAKCRDa6OEJdZac
- 5UlMD/9Y7laAhkCD4IlrZ+9OIj253VKlPtvz8cnjIvsrGzN5OJwKYyObcyxvFmbNXnqpXHElPMk
- JU7ALdZiQCwihD5EmI3Ri71aK8MaEym7BTNh3jaFMrCqcTrKTpzocuC4hu+dRCLSzCPijD/aU3C
- +rsoem+frqG6hIzF3g4BcI/VpfUua6G3WjK46rGWslX0M21oWaYEx0r7FSdL0YvpPPbrsdeC9dp
- PhXKKN0EYgpoIxXOPL39G/jEhuGclQaPlQ9speX7PrqZlBXl2bBX1wHmPRU9J3gSvwsftdjvRLc
- LMA8J5gYyKNdBnvLqFjuWXKqr9wO6hDGj0CgilAGd4ktZvlu+vXfG8ki/+p016FXH/piYyFKJcQ
- Kf15FDoOdS1Kg8WYcohFIHeeYoUpb7IU2HNYXXgEPXR4h2n6MoG8gZclOR5774c2u92FQ6jOSzS
- iBbDWcSa6CiA1atSmruNqp02pueOCVB3QXZRbrSn8KrXvo67J/JbLlLIGNIUFEXk/FsvQOFwcaB
- tSrCFx+zCuiEzWi4jRI1PXCTp9834+LRriV9uC4jMNEM6mhEG+Tmcik6pJZlrCtFGo1K4urBy5m
- IwE+yTy9uvv+6nEBYiwEXgkTnKFeo+7B8TcC9c+YiYZSL3vGnC126FSAyjlf6PYH4V/WEQI5Whv
- 4wlG50M5cWRDmEg==
+ bh=HkzWuVnjpE18HvhyvwlZdG6XDtkdNuA+nhZi8wBpL2I=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRs4Hm9zgRLx2kuLaxEm4HhimPiCJDmOl71p
+ AzLhPQY/5yJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbAAKCRDa6OEJdZac
+ 5d9JD/4scmNdG+cc6cR0bPnR/rX6WWnaMXCjPe5Kxo8Rbv0FA0IlejLziuEb/ujsrrYnyknPfMq
+ Im3AIYiPRlQKVWh1V0BSDc8/k8EQm5kH9qrpQv7HYx5Uy+3bGrD0Xr9/8lnF0Hn0Of2UqEPd75n
+ StesVQj68Z/JVzN+AvGtPSttrrv84csAESI+2AGWeE230NqQyDg+XkguUbYXWICmmxOK7iKYGcz
+ A8wKPWUnlCFvgTMYVGa4o+gRUuUFbN6aXnaKSuJGapP4I7TOjsG1vo4U1gloFPPaMnUJiNb4YQg
+ sYMFeXG9lGczuOeLoXXs+71UEKknaRSEBnFaoQBW6shGumDDep2DuBjiM7FlgHyXZ6sr8HnM/hp
+ HGEMYgzsnCOYPgbpCViZsv5QgawkczFFsKGQEpjXtroAjErAzdJ1WbHuAH0BCsZ/rKQ7mEkB3Fy
+ V/1298RyvaDVYZewmlwG2ZN9/ucICOqlH93HoMYzoQFXQ3fj9M8HQ99zxkI7HOq/11bIwm2KhTc
+ /ihDfTCGt23TrB6h2KqDOC0InOQ201+zLrU1q9RqNlCIe2ymiUMH1CbBkA2lipt0KNWfG04KaGh
+ nSjglhZQsEo039U+idcVsUnbu/EpHV9H31wiqQVwhF96Iq0ZzCXRcI7dCQx42K4Me/B1cyuLUuJ
+ er88ryI+WFMX/+A==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,39 +103,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Free owned resources on object finalization.
+machine_set_shim allocates shim_filename via g_strdup, but
+machine_finalize did not free it.
 
-Fixes: 6ba7ada3559e ("qtest: add a QOM object for qtest")
+Fixes: a5bd044b1579 ("x86/loader: add -shim option")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- system/qtest.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ hw/core/machine.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/system/qtest.c b/system/qtest.c
-index cf90cd53adb..a79d10d1361 100644
---- a/system/qtest.c
-+++ b/system/qtest.c
-@@ -1020,10 +1020,20 @@ static void qtest_class_init(ObjectClass *oc, const void *data)
-                                   qtest_get_log, qtest_set_log);
- }
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 1b661fd36ae..6a7fb312eb6 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -1282,6 +1282,7 @@ static void machine_finalize(Object *obj)
+     MachineState *ms = MACHINE(obj);
  
-+static void qtest_finalize(Object *obj)
-+{
-+    QTest *q = QTEST(obj);
-+
-+    g_free(q->chr_name);
-+    g_free(q->log);
-+    object_unref(q->chr);
-+}
-+
- static const TypeInfo qtest_info = {
-     .name = TYPE_QTEST,
-     .parent = TYPE_OBJECT,
-     .class_init = qtest_class_init,
-+    .instance_finalize = qtest_finalize,
-     .instance_size = sizeof(QTest),
-     .interfaces = (const InterfaceInfo[]) {
-         { TYPE_USER_CREATABLE },
+     machine_free_boot_config(ms);
++    g_free(ms->shim_filename);
+     g_free(ms->kernel_filename);
+     g_free(ms->initrd_filename);
+     g_free(ms->kernel_cmdline);
 
 -- 
 2.54.0
