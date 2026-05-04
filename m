@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 046A5CD3427
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07923CD342F
 	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 17:50:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJxQU-0004dv-Mk; Mon, 04 May 2026 13:49:50 -0400
+	id 1wJxQP-0004cn-Ju; Mon, 04 May 2026 13:49:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1wJxQR-0004da-Kw
- for qemu-devel@nongnu.org; Mon, 04 May 2026 13:49:47 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1wJxQN-0004cA-0k
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 13:49:43 -0400
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1wJxQL-0000cn-Ot
- for qemu-devel@nongnu.org; Mon, 04 May 2026 13:49:43 -0400
+ (Exim 4.90_1) (envelope-from <dave@treblig.org>) id 1wJxQG-0000aE-Ha
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 13:49:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
- h=MIME-Version:Message-ID:Date:Subject:From:Content-Type:From
- :Subject; bh=jAtRdMdn+1DXmNxbMaB6LO2kTltRACebDia2do/rLS8=; b=S00RuLSoAT4eMCV4
- INMpiVFSJl+1kCdHnmLSHJ2g2DmU5S33SBy0hix7rGGtYQNpRH9G3eHrn8GhPgf14u6Jc+S7VUOc9
- WHoxXdc2F0lvfCGO5YmFS/GPoPhA+GbLnmL0GinIbqz0f+tlpIFez/zcInkGPNw84NZr/+I3dXbdz
- kwNMJreIzD0McTNQZnC7RWBsbNTBvOhHcyUbqUoUdUsvcUo5khnirX5ke+XXoYLQ+HZVdVUF8sYzp
- hkf+t4TvSFO7Ls6e68JkzjpvqMJ1Jvpa64csq9+wKkD3/7GfCpXeo+0qmytKj//X+0SeDw8IPn1SH
- rZyFy5cif9o3645hpQ==;
+ h=Content-Type:MIME-Version:Message-ID:Date:Subject:From:From
+ :Subject; bh=aqkAkBPa3HD/kPEa9LKSL8bPxlBYKg1gzh7jfFxIm0Q=; b=CnNgBe1/4ijMLf5D
+ pslSTxPb55QsGhf7hr3kwgsNUs0HGYuCx48Oj6QF9DDrv5VMWa7j1fAFYmDZpuGaoymGUzTNVEqo/
+ gNGo0R2odAVb6z9SMBi4FQoh2V8kq0fwZ23+CdXNfGa/b6X6JGOk/G3umI50q6+YH7m9ZSFS+CRDN
+ +dnq90Lin4mdUFjjvdCM/kfSyHe5nHWU/YfaYK4Um/OFomRYk6yRd5nF+9hDUGgIQ1K+TjCcnW/56
+ Mjl0EUv3qzLkAvTFSMcnfw4KbKAR0aHfA/EiWZp64Vnptg+vi+gosb5UNCGTsYJ/ZLPgd0gNyeZkp
+ d4S/SHvdpjQDEIGYIw==;
 Received: from localhost ([127.0.0.1] helo=dalek)
  by mx.treblig.org with esmtp (Exim 4.98.2)
- (envelope-from <dave@treblig.org>) id 1wJxQC-00000000ZQZ-05be;
- Mon, 04 May 2026 17:49:32 +0000
+ (envelope-from <dave@treblig.org>) id 1wJxQ7-00000000ZQZ-0Opr;
+ Mon, 04 May 2026 17:49:27 +0000
 From: dave@treblig.org
 To: qemu-devel@nongnu.org,
 	armbru@redhat.com
 Cc: AlanoSong@163.com,
 	"Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PATCH 4/4] monitor: Add `clear` command
-Date: Mon,  4 May 2026 18:49:14 +0100
-Message-ID: <20260504174914.122607-5-dave@treblig.org>
+Subject: [PATCH 0/4] HMP roll up
+Date: Mon,  4 May 2026 18:49:10 +0100
+Message-ID: <20260504174914.122607-1-dave@treblig.org>
 X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260504174914.122607-1-dave@treblig.org>
-References: <20260504174914.122607-1-dave@treblig.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dave@treblig.org;
  helo=mx.treblig.org
@@ -67,83 +66,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "AlanoSong@163.com" <AlanoSong@163.com>
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-The monitor screen can be cluttered after executing commands
-like `info qtree`. It is useful to have a command to clear
-current screen, just like linux `clear` command do.
+Hi Markus,
+  Can you merge this little set through your monitor set?
 
-This patch has been tested under monitors using stdio, vc,
-tcp socket, unix socket and serial interfaces.
+Dave
 
-Signed-off-by: Alano Song <AlanoSong@163.com>
-Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
-Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
----
- hmp-commands.hx       | 14 ++++++++++++++
+AlanoSong@163.com (1):
+  monitor: Add `clear` command
+
+Dr. David Alan Gilbert (3):
+  hmp*hx: Move info docs
+  hxtool: Split srst/erst add checks
+  hxtool: Error on missing docs
+
+ hmp-commands-info.hx  |  9 +--------
+ hmp-commands.hx       | 41 +++++++++++++++++++++++++++++++----------
  include/monitor/hmp.h |  1 +
  monitor/hmp-cmds.c    | 11 +++++++++++
- 3 files changed, 26 insertions(+)
+ scripts/hxtool        | 39 ++++++++++++++++++++++++++++++++++++---
+ 5 files changed, 80 insertions(+), 21 deletions(-)
 
-diff --git a/hmp-commands.hx b/hmp-commands.hx
-index f4a6eeda93..b806ec5635 100644
---- a/hmp-commands.hx
-+++ b/hmp-commands.hx
-@@ -20,6 +20,20 @@ SRST
-   Show the help for all commands or just for command *cmd*.
- ERST
- 
-+    {
-+        .name       = "clear",
-+        .args_type  = "",
-+        .params     = "",
-+        .help       = "clear the monitor screen",
-+        .cmd        = hmp_clear,
-+        .flags      = "p",
-+    },
-+
-+SRST
-+``clear``
-+  Clear the monitor screen.
-+ERST
-+
-     {
-         .name       = "commit",
-         .args_type  = "device:B",
-diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index e222bea60c..9b66458d21 100644
---- a/include/monitor/hmp.h
-+++ b/include/monitor/hmp.h
-@@ -165,6 +165,7 @@ void hmp_trace_event(Monitor *mon, const QDict *qdict);
- void hmp_trace_file(Monitor *mon, const QDict *qdict);
- void hmp_info_trace_events(Monitor *mon, const QDict *qdict);
- void hmp_help(Monitor *mon, const QDict *qdict);
-+void hmp_clear(Monitor *mon, const QDict *qdict);
- void hmp_info_help(Monitor *mon, const QDict *qdict);
- void hmp_info_sync_profile(Monitor *mon, const QDict *qdict);
- void hmp_info_history(Monitor *mon, const QDict *qdict);
-diff --git a/monitor/hmp-cmds.c b/monitor/hmp-cmds.c
-index afa7b709a6..1b44d07c18 100644
---- a/monitor/hmp-cmds.c
-+++ b/monitor/hmp-cmds.c
-@@ -219,6 +219,17 @@ void hmp_help(Monitor *mon, const QDict *qdict)
-     hmp_help_cmd(mon, qdict_get_try_str(qdict, "name"));
- }
- 
-+void hmp_clear(Monitor *mon, const QDict *qdict)
-+{
-+    /*
-+     * Send an ANSI escape sequence:
-+     * "\x1b[H" - move cursor to top-left
-+     * "\x1b[2J" - clear visible screen
-+     * "\x1b[3J" - clear scrollback
-+     */
-+    monitor_printf(mon, "\x1b[H\x1b[2J\x1b[3J");
-+}
-+
- void hmp_info_help(Monitor *mon, const QDict *qdict)
- {
-     hmp_help_cmd(mon, "info");
 -- 
 2.54.0
 
