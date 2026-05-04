@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 906F3CD342C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B55E2FF885A
 	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:37:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJrb7-0007t7-G8; Mon, 04 May 2026 07:36:25 -0400
+	id 1wJraM-0007W4-Qo; Mon, 04 May 2026 07:35:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrav-0007oW-TR
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wJraK-0007Vi-Uo
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:35:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJras-0000uk-8w
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:11 -0400
+ id 1wJraJ-0000n2-HW
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:35:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777894569;
+ s=mimecast20190719; t=1777894534;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jInBZ8zsBzMh+z9fHsz/7RZJ4fPUd1yGMbptU2nQSvs=;
- b=euvALjr/izh+mqxUR9T6TFJBOpjuKSUdAxZdaBbzUnEbyPCEsvi5lYGyzu+VGuePyUywfQ
- nwQtWbEaslCidQzJBzfyUpQJGHbgqrotwutAhCFdJi/xz4etRISzKd2j7t+j5OyXKSYG7G
- e3Ul+hXnsvpheuBpq4r4N/IsgS66+jY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=1bgLA9Zp+Jow51t/607ELa0KrzfqLyYWWcupN4GZiYQ=;
+ b=MhUWjgQ67+duDdvxRfRjraAn4vm4wLtemQDf4uAzhNXgfrk7tuJdBfwLIeBgEBtlXUIIat
+ c1SHQkeI9OH2V6BpPeOF8zHIB6A7be66INg1pz416G36G5HghKYQn6gZp23xW/VQtjdhZy
+ 5Hr1UxYtqoD971+h63Gxx/s/gAY/WNU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-488-lVM7APVWPWORN6DV0wgTnQ-1; Mon,
- 04 May 2026 07:36:07 -0400
-X-MC-Unique: lVM7APVWPWORN6DV0wgTnQ-1
-X-Mimecast-MFC-AGG-ID: lVM7APVWPWORN6DV0wgTnQ_1777894566
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-443-PbwEgQtUPgqRxd4yaUU3sg-1; Mon,
+ 04 May 2026 07:35:33 -0400
+X-MC-Unique: PbwEgQtUPgqRxd4yaUU3sg-1
+X-Mimecast-MFC-AGG-ID: PbwEgQtUPgqRxd4yaUU3sg_1777894533
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D06F919560B7
- for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:36:06 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AD3051956094
+ for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:35:32 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7CE2B18001ED; Mon,  4 May 2026 11:36:04 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9CC191955D84; Mon,  4 May 2026 11:35:31 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 04 May 2026 15:34:57 +0400
-Subject: [PATCH v2 09/46] qom/object: update doc about NULL values in link
- properties
+Date: Mon, 04 May 2026 15:34:51 +0400
+Subject: [PATCH v2 03/46] hw/pci-bridge: handle missing parent in
+ prop_pxb_uid_get
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260504-qom-tests-v2-9-ef7e3dc94f7a@redhat.com>
+Message-Id: <20260504-qom-tests-v2-3-ef7e3dc94f7a@redhat.com>
 References: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 In-Reply-To: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
  =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1094;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1195;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=bitStGXg9RVRje1l/XipUpcpuZbWjuaVXhuCCEDOM8o=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRs+nYJMaU0BzcQcAFfUJ7+z+Npmwpk/I27P
- jnDOb+lLRWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbAAKCRDa6OEJdZac
- 5f9ZD/9WXzwABR/dnstRi37QqjBlgvqEc6crYCU83gRZCPCJKM2FyFB4zDldpbMsbiJWeqlXsO0
- ANYJjamqsuDTJwzaRdUVLWAsHT29PipEjlvq5cmOdTtJxxJNF0vUn4qk3d/eR4xF8w/JCdu5ZF5
- oRgoJOsPa6Aa0OtxH8CDULQuAcjDcrGS2vcPom3Ub+8TZYOuEURS8xNioV90GYuDsdcQoB85EaC
- PJxP+ig4ZZ1vIGls/4XmeUHvKIbHGQX9meSsyeEATAXk4QDFOeZWrcJY+Nw5+GhVjOgstRVVA6b
- TxTqwKYr+7M7TVS8nj9fFV+2iLxxMGFYWlw/wPqgH17q6DxNtkCJeYn1t4Lgi0PTrE2e0QonJsM
- jWws/KyjMzovq0pRtBfs8PcdCxXofIWzn7tGwIo2cKqeA0kM305lSk/H9KTL/gym6IfF61OpcRb
- h+RjCukO5q40zvPbJ7U/LyWzRceM47DGtJuqy2VYUMsiNKdF3HC05fHD5LIG/MQU8WxogoQa/A9
- iHQPKz+Uln6to+S8n8T68wvZ9kbqkZEtjEPXwfECA0iVyrqpXezQTFkHrpXdMVREqTVnnRiLuNm
- t9H43GkJveh/OHilQHXYaPoGICDKnqJejFkyXNFth5ytjbk4BuCVhC2t7nAent1VYHvBwkIYJ5r
- bPYTOyO2yB90/LA==
+ bh=mzt68/PqLMn279UizfyFsnOjTDYKE+7gRPi+R9njaM4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRsckuSlnRVxucpGu4M0o1VGTtJdQeSBN24i
+ 0JKwN1ohfOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbAAKCRDa6OEJdZac
+ 5eaGEACcv47TTEn0QNkcSwsvf0I7AhjqGNBqwnrSqQpQa6H946t2+MD7BJ+v5vpxJYsS+f8l7JR
+ Ip7W7cxPJQyqW4k3Xx26e2f6oeDeL5bbopzf7HJgfHQP1IitVsTOZFWimOvMTc5rKqSdd527X0n
+ KGw9lBj+9ny2DNElw0Qaj8zAWeWUCSwvFuS/Imkivl3FpJPHrhyL8uNLDdbk2NPZeNmUu5HHq3l
+ jpFRBSESPulgrKPhNeNuSN6+EI5VIWa7Ycp05tmCDjh1OO13Y4Q87pJH1bHteQbsp2pQ/O5F6iR
+ /Jn+TeGIFSaK6ka8ZILlw0B4dVAMuENabn7vY2unPXMVPGm8mHR9M8cxHzwJG9/WBbwOUeKwTW5
+ ejXD3hUh+MKbm8wMRIissX6LIJ8DAmVbYXjEpCPY2LBDRykFf9VO0gt4AGTZ+ft1ifCMEe/u4eV
+ YGYF/ag+uUQlqqME6lGimHSN0NSXegxdyKybGtCkNX+EdNooPQE7LPacXIjAgPzUgewrMvIRdHj
+ IrZauSvO99khd5vR+wgaxMUP3V0i3VXE1VvPzKDdmd5/JLU24SNSrdza6eNKEviAw0TSW1oCyrB
+ As4yo5KckwFGH5/XEsUilQ3huA7t41W+3N7X1KuaS8pnybYyCj/Lw8mS+hUPvn1bjSIH4DGgBV9
+ I/aUwA1g5O/HUKA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -87,7 +87,7 @@ X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -105,30 +105,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+When called on an unrealized pxb bus (e.g. from
+qmp_qom_list_properties), bus->parent_dev is NULL. The pxb_bus_num()
+callback dereferences it unconditionally. Check for this to avoid a
+NULL dereference.
+
+Fixes: 97b9cb066e5f ("hw/pci-bridge: Add acpi_uid property to TYPE_PXB_BUS")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/qom/object.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/pci-bridge/pci_expander_bridge.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 510885218ba..0a82e160cd0 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -1714,10 +1714,10 @@ void object_property_allow_set_link(const Object *obj, const char *name,
-  *
-  * Links form the graph in the object model.
-  *
-- * The @check() callback is invoked when
-- * object_property_set_link() is called and can raise an error to prevent the
-- * link being set.  If @check is NULL, the property is read-only
-- * and cannot be set.
-+ * The @check() callback is invoked when object_property_set_link() is called
-+ * and can raise an error to prevent the link being set. If @check is NULL, the
-+ * property is read-only and cannot be set. Care must be taken to handle NULL
-+ * values for @val.
-  *
-  * Ownership of the pointer that @child points to is transferred to the
-  * link property.  The reference count for *@child is
+diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+index 11623a5666f..40ffbc4e082 100644
+--- a/hw/pci-bridge/pci_expander_bridge.c
++++ b/hw/pci-bridge/pci_expander_bridge.c
+@@ -85,8 +85,14 @@ static uint16_t pxb_bus_numa_node(PCIBus *bus)
+ static void prop_pxb_uid_get(Object *obj, Visitor *v, const char *name,
+                              void *opaque, Error **errp)
+ {
+-    uint32_t uid = pci_bus_num(PCI_BUS(obj));
++    PCIBus *bus = PCI_BUS(obj);
++    uint32_t uid;
+ 
++    if (!bus->parent_dev) {
++        error_setg(errp, "bus not attached to a device");
++        return;
++    }
++    uid = pci_bus_num(bus);
+     visit_type_uint32(v, name, &uid, errp);
+ }
+ 
 
 -- 
 2.54.0
