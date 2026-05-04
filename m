@@ -4,109 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36F0BCD3430
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 14:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B00DDFF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 14:34:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJuJy-0002cA-8r; Mon, 04 May 2026 10:30:54 -0400
+	id 1wJuN5-0003Wf-MW; Mon, 04 May 2026 10:34:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wJuJX-0002bZ-8z
- for qemu-devel@nongnu.org; Mon, 04 May 2026 10:30:28 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wJuJU-0000bO-Pu
- for qemu-devel@nongnu.org; Mon, 04 May 2026 10:30:27 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 5130F6B2EA;
- Mon,  4 May 2026 14:30:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1777905017; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CTNAnCDk+L0dItDu9DM3u9DyDKg5Bg3QW62k6iuKpXA=;
- b=N/aHz7hUeLwFqOe/0Z8V7XfU+JnVIffnRuA3csYleQadUwMmc1mDlVdnn6d6w3XwnR0caS
- p5Xe9tZW4RWakkeRQLqSKa3YzDN0F3UhC0rRRAjc9FbNBO8fcOvFUM92Zfw+LZEXukhqAI
- Mt5lA94SSol56C8VSCwrJ7fGeu7krMo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1777905017;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CTNAnCDk+L0dItDu9DM3u9DyDKg5Bg3QW62k6iuKpXA=;
- b=at3EVxCxO9T1DF1LrcA0EUMfZ8MZv5aVOSOpDZP9IhsGA1xoUOUH+/sfhzpx2/21fowsZk
- omyLzQ0E8kmKEECQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="N/aHz7hU";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=at3EVxCx
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1777905017; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CTNAnCDk+L0dItDu9DM3u9DyDKg5Bg3QW62k6iuKpXA=;
- b=N/aHz7hUeLwFqOe/0Z8V7XfU+JnVIffnRuA3csYleQadUwMmc1mDlVdnn6d6w3XwnR0caS
- p5Xe9tZW4RWakkeRQLqSKa3YzDN0F3UhC0rRRAjc9FbNBO8fcOvFUM92Zfw+LZEXukhqAI
- Mt5lA94SSol56C8VSCwrJ7fGeu7krMo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1777905017;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CTNAnCDk+L0dItDu9DM3u9DyDKg5Bg3QW62k6iuKpXA=;
- b=at3EVxCxO9T1DF1LrcA0EUMfZ8MZv5aVOSOpDZP9IhsGA1xoUOUH+/sfhzpx2/21fowsZk
- omyLzQ0E8kmKEECQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E14E3593A3;
- Mon,  4 May 2026 14:30:16 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id ecW9K3it+Gk2WAAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 04 May 2026 14:30:16 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v1 1/5] tests/qtest/dbus-vmstate: Bring the test up-to-date
-In-Reply-To: <afO9GsCVTZdh2x96@x1.local>
-References: <20260429190550.20122-1-farosas@suse.de>
- <20260429190550.20122-2-farosas@suse.de> <afO9GsCVTZdh2x96@x1.local>
-Date: Mon, 04 May 2026 11:30:10 -0300
-Message-ID: <87qznrp7rh.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1wJuMx-0003W0-4J
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 10:33:59 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1wJuMv-00013s-0B
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 10:33:58 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 643Ke6tS2807042; Mon, 4 May 2026 14:33:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=doiZ7o
+ L2Z8/RvOpD8ZpyR+O4sxmhIgVSWZaK36z+mXE=; b=l6DeMNI43L55OPe9gjEK3I
+ iy/0NTT5Bv1E5qCP4RVoU+SSgwU5y2CZcwG3sw+/sCjcdph36LwAQ4E9vLEQiJ0T
+ 6BvZNbauwV+CIQq7HNoxpAJH9PoxQqjnceHEu/eMeLPS+pz9FpMGLmGd3nxfnXw7
+ M0WES0a9V6HiY8JtZhikv32KnwvtWfZmDFKDCNKex+CUX9iRE8NxmDGWeYK9wxsn
+ v5Atfis7z0ekTmg1dQKAcmMBikOEZQA6cw1Cvbx1cvJFLrGWPrl7G/hkWMLEbV8i
+ r3eDR3TrwU1ZsNMiZ+OHxak+8wgErjicNklNzBWzW38fKuzxPlbDAYrv9GwABLQg
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9v77ewg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 04 May 2026 14:33:41 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 644EONRc028829;
+ Mon, 4 May 2026 14:33:40 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwx9y584h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 04 May 2026 14:33:40 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 644EXeQd65339710
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 4 May 2026 14:33:40 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1D0E35805C;
+ Mon,  4 May 2026 14:33:40 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0417B5805B;
+ Mon,  4 May 2026 14:33:39 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  4 May 2026 14:33:38 +0000 (GMT)
+Message-ID: <caf85297-8277-44b2-82ca-aee6cd8770ce@linux.ibm.com>
+Date: Mon, 4 May 2026 10:33:38 -0400
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- ARC_NA(0.00)[]; TO_DN_SOME(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 5130F6B2EA
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 06/10] hw/tpm: Add support for VM migration with TPM
+ CRB chunking
+To: Arun Menon <armenon@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Igor Mammedov <imammedo@redhat.com>, marcandre.lureau@redhat.com,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Ani Sinha <anisinha@redhat.com>
+References: <20260422103018.123608-1-armenon@redhat.com>
+ <20260422103018.123608-7-armenon@redhat.com>
+ <ef476984-6a55-4654-89e3-2703d8baca25@linux.ibm.com>
+ <afLkebmMTFPEyAuK@fedora>
+ <56667f7a-71c9-4280-90ab-1b356741d803@linux.ibm.com>
+ <afhGxAEyDWtofq_L@fedora>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <afhGxAEyDWtofq_L@fedora>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA0MDE0NyBTYWx0ZWRfX3WEpB1nwTywN
+ fw/mLrA0QgscI7NlUUqGyJwjzZgUZsClr+sMLPPusNjJfcOKTmzInXoaBXqwgHkKIz9sxnbM9jM
+ Io3Wyt6W+keRjqp4CAefLLYqHlutLfcYU5r8FXjZ8/sCB0HiC+9VqucV4eAf7RXiOPCUUH0A9vo
+ NAEc2/ariy7C1E6wSn98kX4ELa0+KRM+vCIAMWzH81wKiw+fCUzztxeUXejD4jSJRXGxnxznAfy
+ s947dLWD+9J8rZ9b3YqlI6zBEtoALY8aNTfruYnsiCPs755FvHBFTRmj/nlxaFtX/t38SVfMmVM
+ ZS4EPkhhLDYsGVxTKVzz0n+uDtGjcQ1JZ0o8zldF9rujC28xsbcy2oj1LjgK6rVYODjHiGD9ckI
+ Q3SdCz6u9n1lVyRY+CujCEiu23TidjEU3x0RJ0XEsODY9x3FvT0xcbxFt8c9qxOIdzkWYQBbMx+
+ tWWKfjH+iSaYhe4Ulhw==
+X-Proofpoint-GUID: kAaldl-nmL36rrqn2ivISKwfB2obUzTK
+X-Proofpoint-ORIG-GUID: gpmkbtHVf7nOCACriVlTL2XbML3KZ0je
+X-Authority-Analysis: v=2.4 cv=eu/vCIpX c=1 sm=1 tr=0 ts=69f8ae46 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=20KFwNOVAAAA:8
+ a=mSQoX_iHuy6Mfxy5AJYA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-04_04,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 phishscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0
+ suspectscore=0 malwarescore=0 bulkscore=0 impostorscore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605040147
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -123,275 +136,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
 
-> On Wed, Apr 29, 2026 at 04:05:46PM -0300, Fabiano Rosas wrote:
->> The dbus-vmstate-test has been disabled for years. Here's the things
->> that have changed in the meantime and how to update the test:
->> 
->> - Migration tests got new headers.
->> Update the includes.
->> 
->> - migrate_qmp got new parameters.
->> Update the caller.
->> 
->> - migrate_incoming_qmp is now used instead of -incoming URL.
->> Use -incoming defer.
->> 
->> - Tests expecting failure should not check non-zero return code.
->> Check for failed migration state instead.
->> 
->> - The test result enum was introduced.
->> Replace the migration_fail flag with the enum.
->> 
->> - The DEVICE state was added.
->> Replace wait_for_migration_complete with migration_event_wait, which
->> won't trip on intermediary states.
->> 
->> - Migration completion was reworked.
->> Explicitly wait for the RESUME event before asserting runstate is
->> RUNNING to avoid checking too quickly and seeing FINISH_MIGRATE
->> instead.
->> 
->> - The FAILING state was added.
->> Wait for it before waiting for the RESUME event.
->> 
->> - Sanity checks were added to migration_get_env().
->> Start calling that function in main.
->> 
->> - qtest_add_func now has a wrapper.
->> Replace qtest_add_func with migration_test_add. Update tests'
->> signatures to take MigrationCommon, although it's unused.
->> 
->> - meson now sets up G_TEST_DBUS_DAEMON.
->> Remove the logic around it.
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->
-> I don't think I'm confident reviewing the whole series, but you can take:
->
-> Acked-by: Peter Xu <peterx@redhat.com>
->
-> One trivial question below,
->
->> ---
->>  tests/qtest/dbus-vmstate-test.c | 71 +++++++++++++++++++--------------
->>  tests/qtest/meson.build         |  7 +++-
->>  2 files changed, 46 insertions(+), 32 deletions(-)
->> 
->> diff --git a/tests/qtest/dbus-vmstate-test.c b/tests/qtest/dbus-vmstate-test.c
->> index 0a82cc9f93..90c050b448 100644
->> --- a/tests/qtest/dbus-vmstate-test.c
->> +++ b/tests/qtest/dbus-vmstate-test.c
->> @@ -2,8 +2,8 @@
->>  #include <glib/gstdio.h>
->>  #include <gio/gio.h>
->>  #include "libqtest.h"
->> +#include "migration/migration-qmp.h"
->>  #include "dbus-vmstate1.h"
->> -#include "migration-helpers.h"
->>  
->>  static char *workdir;
->>  
->> @@ -29,7 +29,7 @@ typedef struct TestServer {
->>  
->>  typedef struct Test {
->>      const char *id_list;
->> -    bool migrate_fail;
->> +    int result;
->>      bool without_dst_b;
->>      TestServer srcA;
->>      TestServer dstA;
->> @@ -190,6 +190,7 @@ test_dbus_vmstate(Test *test)
->>      g_autofree char *uri = NULL;
->>      QTestState *src_qemu = NULL, *dst_qemu = NULL;
->>      guint ownsrcA, ownsrcB, owndstA, owndstB;
->> +    QTestMigrationState src_state = { };
->>  
->>      uri = g_strdup_printf("unix:%s/migsocket", workdir);
->>  
->> @@ -224,17 +225,33 @@ test_dbus_vmstate(Test *test)
->>  
->>      src_qemu = qtest_init(src_qemu_args);
->>      dst_qemu = qtest_init(dst_qemu_args);
->> +
->> +    migrate_set_capability(src_qemu, "events", true);
->> +    qtest_qmp_set_event_callback(src_qemu, migrate_watch_for_events,
->> +                                 &src_state);
->> +
->>      set_id_list(test, src_qemu);
->>      set_id_list(test, dst_qemu);
->>  
->>      thread = g_thread_new("dbus-vmstate-thread", dbus_vmstate_thread, loop);
->>  
->>      migrate_incoming_qmp(dst_qemu, uri, NULL, "{}");
->> -    migrate_qmp(src_qemu, uri, "{}");
->> +    migrate_ensure_converge(src_qemu);
->> +    migrate_qmp(src_qemu, NULL, uri, NULL, "{}");
->>      test->src_qemu = src_qemu;
->> -    if (test->migrate_fail) {
->> -        wait_for_migration_fail(src_qemu, true);
->> -        qtest_set_expected_status(dst_qemu, EXIT_FAILURE);
->> +
->> +    if (test->result != MIG_TEST_SUCCEED) {
->> +        QDict *rsp;
->> +
->> +        migration_event_wait(src_qemu, "failing");
->> +        wait_for_resume(src_qemu, &src_state);
->> +        migration_event_wait(src_qemu, "failed");
->
-> Not sure if we need such detailed checks over failing, resume, failed
-> events on this one, but it looks ok.
->
 
-I actually had a hang when not checking for failing.  I didn't give it
-much thought because I know we added a new state.
+On 5/4/26 3:12 AM, Arun Menon wrote:
+> On Thu, Apr 30, 2026 at 07:46:33AM -0400, Stefan Berger wrote:
+>>
+>>
+>> On 4/30/26 1:11 AM, Arun Menon wrote:
+>>> On Wed, Apr 29, 2026 at 07:14:38PM -0400, Stefan Berger wrote:
+>>>>
+>>>>
+>>>> On 4/22/26 6:30 AM, Arun Menon wrote:
+>>>>> From: Arun Menon <armenon@redhat.com>
+>>>>>
+>>>>> - Add subsection in VMState for TPM CRB with the newly introduced
+>>>>>      command and response buffer GByteArrays, along with a needed callback,
+>>>>>      so that newer QEMU only sends the buffers if it is necessary.
+>>>>> - Implement a migration blocker to prevent migration of the VM if the
+>>>>>      user manually enables chunking capability, cap-chunk, but the machine
+>>>>>      type does not support it, using a new hw_compat property called
+>>>>>      allow_chunk_migration.
+>>>>> - Add a post_load_errp hook so that during a migration, the buffers are
+>>>>>      validated before destination VM is started.
+>>>>>
+>>>>> Signed-off-by: Arun Menon <armenon@redhat.com>
+>>>>> ---
+>>>>>     hw/core/machine.c |  1 +
+>>>>>     hw/tpm/tpm_crb.c  | 71 +++++++++++++++++++++++++++++++++++++++++++++++
+>>>>>     2 files changed, 72 insertions(+)
+>>>>>
+>>>>> diff --git a/hw/core/machine.c b/hw/core/machine.c
+>>>>> index 6d27cf69a2..b590af0125 100644
+>>>>> --- a/hw/core/machine.c
+>>>>> +++ b/hw/core/machine.c
+>>>>> @@ -40,6 +40,7 @@
+>>>>>
+>>>>>     GlobalProperty hw_compat_11_0[] = {
+>>>>>         { "tpm-crb", "cap-chunk", "off"},
+>>>>> +    { "tpm-crb", "x-allow-chunk-migration", "off"},
+>>>>>     };
+>>>>>     const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
+>>>>>
+>>>>> diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+>>>>> index 29370d6f49..23e6948aee 100644
+>>>>> --- a/hw/tpm/tpm_crb.c
+>>>>> +++ b/hw/tpm/tpm_crb.c
+>>>>> @@ -24,6 +24,7 @@
+>>>>>     #include "hw/pci/pci_ids.h"
+>>>>>     #include "hw/acpi/tpm.h"
+>>>>>     #include "migration/vmstate.h"
+>>>>> +#include "migration/blocker.h"
+>>>>>     #include "system/tpm_backend.h"
+>>>>>     #include "system/tpm_util.h"
+>>>>>     #include "system/reset.h"
+>>>>> @@ -51,6 +52,8 @@ struct CRBState {
+>>>>>         TPMPPI ppi;
+>>>>>
+>>>>>         bool cap_chunk;
+>>>>> +    bool allow_chunk_migration;
+>>>>> +    Error *migration_blocker;
+>>>>>     };
+>>>>>     typedef struct CRBState CRBState;
+>>>>>
+>>>>> @@ -353,12 +356,63 @@ static int tpm_crb_pre_save(void *opaque)
+>>>>>         return 0;
+>>>>>     }
+>>>>>
+>>>>> +static bool tpm_crb_chunk_needed(void *opaque)
+>>>>> +{
+>>>>> +    CRBState *s = opaque;
+>>>>> +
+>>>>> +    if (!s->allow_chunk_migration) {
+>>>>> +        return false;
+>>>>> +    }
+>>>>> +
+>>>>> +    return ((s->command_buffer && s->command_buffer->len > 0) ||
+>>>>> +            (s->response_buffer && s->response_buffer->len > 0));
+>>>>> +}
+>>>>> +
+>>>>> +static bool tpm_crb_chunk_post_load(void *opaque, int version_id, Error **errp)
+>>>>> +{
+>>>>> +    CRBState *s = opaque;
+>>>>> +
+>>>>> +    if (!s->response_buffer || !s->command_buffer) {
+>>>>> +        error_setg(errp, "tpm-crb: Internal buffers are not allocated");
+>>>>
+>>>> Could this happen that this state type is resumed but the buffers are not
+>>>> allocated?
+>>>
+>>> Yes, this is not required. Its just a defense. The tpm_realize()
+>>> function should allocate the command and response buffers.
+>>>
+>>>>
+>>>>> +        return false;
+>>>>> +    }
+>>>>> +    if (s->response_offset > s->response_buffer->len) {
+>>>>> +        error_setg(errp, "tpm-crb: Invalid response "
+>>>>> +                   "offset %" PRIu32 " in migration stream",
+>>>>> +                   s->response_offset);
+>>>>> +        return false;
+>>>>> +    }
+>>>>
+>>>> The check is correct but can this particular case occur other than through
+>>>> crafted input?
+>>>
+>>> Not that I can think of. The check is indeed added to address malicious
+>>> migration stream / crafted input.
+>>
+>> I think that devices are assuming trusted input for all devices resumed from
+>> their previously stored state...
+> 
+> I see. Shall I remove these two checks at the beginning and keep only
+> the last one?
 
-> Do you plan to remove wait_for_migration_fail() finally?  We still have a
-> few other users.  IIUC, we could also switch to using events for
-> wait_for_migration_fail().
->
+I think so. For the last one I think you should write a description what 
+role the external emulator can play here.
 
-Seems like a good idea to not need so many query-migrate
-invocations. Except that we could hide some potential races with QMP
-commands. And we lose the timeout as well. I'll take a look at what can
-be done.
 
->> +
->> +        rsp = qtest_qmp_assert_success_ref(src_qemu,
->> +                                           "{ 'execute': 'query-status' }");
->> +        g_assert(qdict_haskey(rsp, "running"));
->> +        g_assert(qdict_get_bool(rsp, "running"));
->> +        qobject_unref(rsp);
->>      } else {
->>          wait_for_migration_complete(src_qemu);
->>      }
->> @@ -270,7 +287,7 @@ check_migrated(TestServer *s, TestServer *d)
->>  }
->>  
->>  static void
->> -test_dbus_vmstate_without_list(void)
->> +test_dbus_vmstate_without_list(char *name, MigrateCommon *args)
->>  {
->>      Test test = { 0, };
->>  
->> @@ -281,7 +298,7 @@ test_dbus_vmstate_without_list(void)
->>  }
->>  
->>  static void
->> -test_dbus_vmstate_with_list(void)
->> +test_dbus_vmstate_with_list(char *name, MigrateCommon *args)
->>  {
->>      Test test = { .id_list = "idA,idB" };
->>  
->> @@ -292,7 +309,7 @@ test_dbus_vmstate_with_list(void)
->>  }
->>  
->>  static void
->> -test_dbus_vmstate_only_a(void)
->> +test_dbus_vmstate_only_a(char *name, MigrateCommon *args)
->>  {
->>      Test test = { .id_list = "idA" };
->>  
->> @@ -303,9 +320,10 @@ test_dbus_vmstate_only_a(void)
->>  }
->>  
->>  static void
->> -test_dbus_vmstate_missing_src(void)
->> +test_dbus_vmstate_missing_src(char *name, MigrateCommon *args)
->>  {
->> -    Test test = { .id_list = "idA,idC", .migrate_fail = true };
->> +    Test test = { .id_list = "idA,idC",
->> +        .result = MIG_TEST_FAIL };
->>  
->>      /* run in subprocess to silence QEMU error reporting */
->>      if (g_test_subprocess()) {
->> @@ -320,11 +338,11 @@ test_dbus_vmstate_missing_src(void)
->>  }
->>  
->>  static void
->> -test_dbus_vmstate_missing_dst(void)
->> +test_dbus_vmstate_missing_dst(char *name, MigrateCommon *args)
->>  {
->>      Test test = { .id_list = "idA,idB",
->>                    .without_dst_b = true,
->> -                  .migrate_fail = true };
->> +                  .result = MIG_TEST_FAIL };
->>  
->>      /* run in subprocess to silence QEMU error reporting */
->>      if (g_test_subprocess()) {
->> @@ -343,15 +361,8 @@ int
->>  main(int argc, char **argv)
->>  {
->>      GError *err = NULL;
->> -    g_autofree char *dbus_daemon = NULL;
->>      int ret;
->>  
->> -    dbus_daemon = g_build_filename(G_STRINGIFY(SRCDIR),
->> -                                   "tests",
->> -                                   "dbus-vmstate-daemon.sh",
->> -                                   NULL);
->> -    g_setenv("G_TEST_DBUS_DAEMON", dbus_daemon, true);
->> -
->>      g_test_init(&argc, &argv, NULL);
->>  
->>      workdir = g_dir_make_tmp("dbus-vmstate-test-XXXXXX", &err);
->> @@ -362,16 +373,16 @@ main(int argc, char **argv)
->>  
->>      g_setenv("DBUS_VMSTATE_TEST_TMPDIR", workdir, true);
->>  
->> -    qtest_add_func("/dbus-vmstate/without-list",
->> -                   test_dbus_vmstate_without_list);
->> -    qtest_add_func("/dbus-vmstate/with-list",
->> -                   test_dbus_vmstate_with_list);
->> -    qtest_add_func("/dbus-vmstate/only-a",
->> -                   test_dbus_vmstate_only_a);
->> -    qtest_add_func("/dbus-vmstate/missing-src",
->> -                   test_dbus_vmstate_missing_src);
->> -    qtest_add_func("/dbus-vmstate/missing-dst",
->> -                   test_dbus_vmstate_missing_dst);
->> +    migration_test_add("/dbus-vmstate/without-list",
->> +                       test_dbus_vmstate_without_list);
->> +    migration_test_add("/dbus-vmstate/with-list",
->> +                       test_dbus_vmstate_with_list);
->> +    migration_test_add("/dbus-vmstate/only-a",
->> +                       test_dbus_vmstate_only_a);
->> +    migration_test_add("/dbus-vmstate/missing-src",
->> +                       test_dbus_vmstate_missing_src);
->> +    migration_test_add("/dbus-vmstate/missing-dst",
->> +                       test_dbus_vmstate_missing_dst);
->>  
->>      ret = g_test_run();
->>  
->> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
->> index b735f55fc4..0d04e2cbaa 100644
->> --- a/tests/qtest/meson.build
->> +++ b/tests/qtest/meson.build
->> @@ -126,10 +126,12 @@ if dbus_daemon.found() and gdbus_codegen.found()
->>    # Temporarily disabled due to Patchew failures:
->>    #qtests_i386 += ['dbus-vmstate-test']
->>    dbus_vmstate1 = custom_target('dbus-vmstate description',
->> -                                output: ['dbus-vmstate1.h', 'dbus-vmstate1.c'],
->> +                                build_by_default: true,
->> +                                output: [ 'dbus-vmstate1.h', 'dbus-vmstate1.c'],
->>                                  input: meson.project_source_root() / 'backends/dbus-vmstate1.xml',
->>                                  command: [gdbus_codegen, '@INPUT@',
->>                                            '--interface-prefix', 'org.qemu',
->> +                                          '--output-directory', meson.current_build_dir(),
->>                                            '--generate-c-code', '@BASENAME@']).to_list()
->>  else
->>    dbus_vmstate1 = []
->> @@ -385,7 +387,8 @@ qtests = {
->>    'bios-tables-test': [io, 'boot-sector.c', 'acpi-utils.c', 'tpm-emu.c'],
->>    'cdrom-test': files('boot-sector.c'),
->>    'dbus-vmstate-test': files('migration/migration-qmp.c',
->> -                             'migration/migration-util.c') + dbus_vmstate1,
->> +                             'migration/migration-util.c') + dbus_vmstate1 +
->> +                       [gio],
->>    'erst-test': files('erst-test.c'),
->>    'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
->>    'migration-test': test_migration_files + migration_tls_files + migration_colo_files,
->> -- 
->> 2.51.0
->> 
+> 
+>>
+>>>
+>>>>
+>>>>> +    if (s->response_buffer->len > s->be_buffer_size ||
+>>>>> +        s->command_buffer->len > s->be_buffer_size) {
+>>>>
+>>>> I suppose this could happen if I was running with a PQC-enable swtpm/libtpms
+>>>> and suspended at the right moment that when a chunked command or response
+>>>> was in the buffer and now I am trying to resume with a non-PQC-enabled swtpm
+>>>> that only has 4kb buffer, while the newer PQC one had 8kb buffer.
+>>>>
+>>>
+>>> Yes. This check is for safety. We do not want to migrate to a VM that
+>>> has a tpm backend that does not support big buffers.
+>>>
+>>>>> +        error_setg(errp, "tpm-crb: Buffer sizes exceed backend capacity");
+>>>>> +        return false;
+>>>>> +    }
+>>>>> +    return true;
+>>>>> +}
+>>>>> +
+>>>>> +static const VMStateDescription vmstate_tpm_crb_chunk = {
+>>>>> +    .name = "tpm-crb/chunk",
+>>>>> +    .version_id = 0,
+>>>>> +    .needed = tpm_crb_chunk_needed,
+>>>>> +    .post_load_errp = tpm_crb_chunk_post_load,
+>>>>> +    .fields = (const VMStateField[]) {
+>>>>> +        VMSTATE_GBYTEARRAY(command_buffer, CRBState, 0),
+>>>>> +        VMSTATE_GBYTEARRAY(response_buffer, CRBState, 0),
+>>>>> +        VMSTATE_UINT32(response_offset, CRBState),
+>>>>> +        VMSTATE_END_OF_LIST()
+>>>>> +    }
+>>>>> +};
+>>>>> +
+>>>>>     static const VMStateDescription vmstate_tpm_crb = {
+>>>>>         .name = "tpm-crb",
+>>>>>         .pre_save = tpm_crb_pre_save,
+>>>>>         .fields = (const VMStateField[]) {
+>>>>>             VMSTATE_UINT32_ARRAY(regs, CRBState, TPM_CRB_R_MAX),
+>>>>>             VMSTATE_END_OF_LIST(),
+>>>>> +    },
+>>>>> +    .subsections = (const VMStateDescription * const []) {
+>>>>> +        &vmstate_tpm_crb_chunk,
+>>>>> +        NULL,
+>>>>>         }
+>>>>>     };
+>>>>>
+>>>>> @@ -366,6 +420,8 @@ static const Property tpm_crb_properties[] = {
+>>>>>         DEFINE_PROP_TPMBE("tpmdev", CRBState, tpmbe),
+>>>>>         DEFINE_PROP_BOOL("ppi", CRBState, ppi_enabled, true),
+>>>>>         DEFINE_PROP_BOOL("cap-chunk", CRBState, cap_chunk, true),
+>>>>> +    DEFINE_PROP_BOOL("x-allow-chunk-migration", CRBState,
+>>>>> +                     allow_chunk_migration, true),
+>>>>>     };
+>>>>>
+>>>>>     static void tpm_crb_reset(void *dev)
+>>>>> @@ -422,6 +478,7 @@ static void tpm_crb_reset(void *dev)
+>>>>>     static void tpm_crb_realize(DeviceState *dev, Error **errp)
+>>>>>     {
+>>>>>         CRBState *s = CRB(dev);
+>>>>> +    int ret;
+>>>>>
+>>>>>         if (!tpm_find()) {
+>>>>>             error_setg(errp, "at most one TPM device is permitted");
+>>>>> @@ -431,6 +488,15 @@ static void tpm_crb_realize(DeviceState *dev, Error **errp)
+>>>>>             error_setg(errp, "'tpmdev' property is required");
+>>>>>             return;
+>>>>>         }
+>>>>> +    if (s->cap_chunk && !s->allow_chunk_migration) {
+>>>>> +        error_setg(&s->migration_blocker,
+>>>>> +                   "The tpm-crb device does not support chunk migration with "
+>>>>> +                   "machine version less than 11.1");
+>>>>> +        ret = migrate_add_blocker_normal(&s->migration_blocker, errp);
+>>>>> +        if (ret < 0) {
+>>>>> +            return;
+>>>>> +        }
+>>>>> +    }
+>>>>>
+>>>>>         memory_region_init_io(&s->mmio, OBJECT(s), &tpm_crb_memory_ops, s,
+>>>>>             "tpm-crb-mmio", sizeof(s->regs));
+>>>>> @@ -463,6 +529,11 @@ static void tpm_crb_unrealize(DeviceState *dev)
+>>>>>
+>>>>>         g_clear_pointer(&s->command_buffer, g_byte_array_unref);
+>>>>>         g_clear_pointer(&s->response_buffer, g_byte_array_unref);
+>>>>> +
+>>>>> +    if (s->migration_blocker) {
+>>>>> +        migrate_del_blocker(&s->migration_blocker);
+>>>>> +        error_free(s->migration_blocker);
+>>>>> +    }
+>>>>>     }
+>>>>>
+>>>>>     static void tpm_crb_class_init(ObjectClass *klass, const void *data)
+>>>>
+>>>
+>>> Regards,
+>>> Arun Menon
+>>>
+>>
+> 
+> Regards,
+> Arun Menon
+> 
+
 
