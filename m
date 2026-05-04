@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C75EBCD3436
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:36:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35F04CD342C
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:37:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJrbU-0000BQ-N9; Mon, 04 May 2026 07:36:49 -0400
+	id 1wJrbi-0000gO-U8; Mon, 04 May 2026 07:37:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrb9-00082u-K4
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:29 -0400
+ id 1wJrbN-0008VB-Ax
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrb8-0000vc-3U
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:27 -0400
+ id 1wJrbL-0000xB-HC
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777894585;
+ s=mimecast20190719; t=1777894596;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Feyzoi72st3BK6uw08MumeJ0heMFM0ajonX0WOp0f0U=;
- b=K7tYd2Z4HGQPIIE1xRGRFRDCgGgU/2aEFLLhRDWysWlybHoNJZVEyX4jpeT1inK8LAhG6x
- 7TrNfoC88RqBcqHarbKa3x99PlrA/9DGP0Z44fxVBMviV9XSiMiWV8lsj/sLUQZZyiT8zt
- pXUpY5zbt3CQQYHg0e3Qg23gw68Z+CI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=+iCE38jqlJCBLLcHpTqZ9+JVULDCpuuOY0DmjcBZNX0=;
+ b=BOEcFusAkH/VBPCTZyTn6XyY+uQ2jn5h9RFpbR63kbdCQqL6l1N7LXy/7jVyntL597skzM
+ /7Mv3L9KZuf1luHA0bAAxk6fgW7FHADHPr7a/evWSKvSPf9RtD79WBj/QZCVqkwWg+eEJq
+ XMsxxE8/CuGoL2Q3TG8b891hw7C1ccU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-654-Pwc5-e1MNqSPd-zVpa3VCg-1; Mon,
- 04 May 2026 07:36:23 -0400
-X-MC-Unique: Pwc5-e1MNqSPd-zVpa3VCg-1
-X-Mimecast-MFC-AGG-ID: Pwc5-e1MNqSPd-zVpa3VCg_1777894583
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-LlMReqR3NvK4PTAI2A0i8A-1; Mon,
+ 04 May 2026 07:36:35 -0400
+X-MC-Unique: LlMReqR3NvK4PTAI2A0i8A-1
+X-Mimecast-MFC-AGG-ID: LlMReqR3NvK4PTAI2A0i8A_1777894594
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EFF4E180034C
- for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:36:22 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B5E3C18002CA
+ for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:36:34 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E9AE81800347; Mon,  4 May 2026 11:36:21 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 58A7419560A6; Mon,  4 May 2026 11:36:32 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 04 May 2026 15:35:00 +0400
-Subject: [PATCH v2 12/46] backends/cryptodev-lkcf: skip cleanup when not
- initialized
+Date: Mon, 04 May 2026 15:35:02 +0400
+Subject: [PATCH v2 14/46] net/colo-compare: guard finalize against
+ uninitialized state
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260504-qom-tests-v2-12-ef7e3dc94f7a@redhat.com>
+Message-Id: <20260504-qom-tests-v2-14-ef7e3dc94f7a@redhat.com>
 References: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 In-Reply-To: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1186;
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ peterx@redhat.com, Peter Xu <peterx@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3019;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=XKESI/0DSqdUBTRFIDl2KEKlv25ZaJ+0o7RYfGRaK9M=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRsFkq5gFoGkhdtbX0XtTDFatKfr3ENADZrN
- KHIfiztfiCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbAAKCRDa6OEJdZac
- 5S6vD/0Qn/ePgQg1XfJ43ptN3E0NTKDPf8P2rc3lhhVr6HatnbxRMZyv3cckuT55Z5ls7sKtJSg
- AowLOFQHMGAr0NhjTmtH9x4TO0GdLxiH8PBdXFN9fKvEJvmmF9ajzOpcmuojb6/qs6Z9yuO9iV3
- SxOua5lZyXpQoMbWKZZsW+ooB+TzRqgk7D8WHFcYXbMVnPP/pcOraYRFBIcPQECoMYx6gffMeKF
- Xa7f8q6SuIOLH9U9/kATD+TAsaL9eIqr1UEiGM1Nkd8qDbBDHhmsmpyzXVO+hePrbhBJilhwdCh
- OFhWFz4zA9zRKwbCZMYWFRMaKi+/bPGUgvE5Uvlx3YtnmzuqCqhtVKSaM/RTl0I9HyqYSTNhCE9
- maQDKMkPQ0JkjEzrqc8hfQQKqJvRVi0OPN6VMSVVwZM9WYzdVlaXJdlGC7UF7+7tNr63QVQlAF3
- zn3bMPK0OYXv7qRiOovnfUchN8Y9M1b1h2zUuFXFTCsEDBZecBJnLZdGgHTOj4WvlJGrUdU1hqz
- 3duQ9I5nUm2AiQBq0oMy/NwntzQxnoRADqdBX0lM1yRdTxDqYTvsoq3v91qFJL36z7Khl+l1xLv
- Lu3z1KRTfDX+fIAFG9xoFKEp8xsiQMEooK/ZDJoRxqT8b70Ded8qf6drMh2rXAmmahN8gDKiGET
- bgUFotrBHM1hj0g==
+ bh=ZF3TTPjvQzahlqd48t2i0EXIpqN0l7MjdPJ+auYGt8Q=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRsZoHtXsl7/p/bMftfDtmG6o5dxrTlnuorF
+ 9Nn6p+gRZ+JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbAAKCRDa6OEJdZac
+ 5WhRD/9Io3z5CxnKgzdQzwLchLrExLXrbExVDg5J1QxcusG04SiVp3fdkomxEQqj78G8xIFzUXV
+ zOogkSONWpW//0HsAgV/i+VbslwhJ6npnQYgkHKt9Dy/ayTMbNjhJyI1lUFiMBq88kONbj6m0vB
+ qkBwfuyc0UCGQyyqhW0VCeUiYvgLXPuT3YH4rFDUkpP/QXuuM3BxZaMBzVkU9mySfxqesLgwj8k
+ scJGFg3VoKT6T+CybUJ0Q3aUsimnx2y4d6mK831AJAcnpcrvh87HXejELRYguQqjDQL7VSBWYHf
+ vb2zoRxUAxlwckF6AyyQT0zL5r6OFcQwYtqzOK5qhRfwQuRLcpRrK0QqA54R0ILvrc8InRg3SJz
+ btDivouHrXiMYVawVDgyOpVu4sbauT52YC7XxsFUr1mPaqf/5BbJqL8wCSv92vJErw/47o7LYf/
+ XnF5gLz4olifXRyDHZuzhzPpBEanI/Aqo3b1LiGwcBKIWUBQsRO8HYxQinj7yeyB5QRlx8nGsJH
+ WKa3PvICT98X5c7VSfcZQlEvhzQfE8SW7AVnaEJCAZJlO61g67njaSxze81SCLVTcmtA+EvTkQZ
+ do4BdXcPoVk+iX1Q8Q6oWYK037wrnhjnjVfAhd9zatCRtU+70TFmEumYZWLxdvL8Wcd2l3SM7Lb
+ yOIsCS1DGEZOZjw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,37 +105,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-cryptodev_lkcf_cleanup() locks a mutex that is only initialized
-during the init vfunc (called at realize time). When the backend
-is destroyed without ever being realized, the mutex is uninitialized
-and the lock aborts.
+colo_compare_finalize() assumes the object was fully set up by
+colo_compare_complete(), but a bare object_new() followed by
+object_unref() skips the complete callback entirely.
 
-Return early from cleanup when the backend was never started.
+This causes two crashes:
+- qemu_mutex_destroy on the static event_mtx which was never
+  initialized (colo_compare_active is false)
+- qemu_bh_delete(NULL) and iothread dereference when s->iothread
+  is NULL
 
-Note: it looks like cryptodev init/cleanup callbacks should rather be
-regular complete/finalize overrides (calling the parent method).
+Guard the event_mtx teardown with colo_compare_active, and the
+iothread-dependent cleanup with an s->iothread NULL check.
 
-Fixes: 39fff6f3e8b3 ("cryptodev: Add a lkcf-backend for cryptodev")
+This is an alternative to patch "colo-compare: Fix QMP
+qom-list-properties crashing", sent earlier, hence the RFC.
+
+Fixes: 45942b79b9f8 ("net/colo-compare.c: Check that colo-compare is active")
+Cc: peterx@redhat.com
+Acked-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- backends/cryptodev-lkcf.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/colo-compare.c | 31 +++++++++++++++----------------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
 
-diff --git a/backends/cryptodev-lkcf.c b/backends/cryptodev-lkcf.c
-index 40c7bd3c5a0..3fe29d3104c 100644
---- a/backends/cryptodev-lkcf.c
-+++ b/backends/cryptodev-lkcf.c
-@@ -255,6 +255,10 @@ static void cryptodev_lkcf_cleanup(CryptoDevBackend *backend, Error **errp)
-     CryptoDevBackendClient *cc;
-     CryptoDevLKCFTask *task, *next;
+diff --git a/net/colo-compare.c b/net/colo-compare.c
+index c356419d6a8..be819db06c9 100644
+--- a/net/colo-compare.c
++++ b/net/colo-compare.c
+@@ -1416,7 +1416,7 @@ static void colo_compare_finalize(Object *obj)
+             break;
+         }
+     }
+-    if (QTAILQ_EMPTY(&net_compares)) {
++    if (colo_compare_active && QTAILQ_EMPTY(&net_compares)) {
+         colo_compare_active = false;
+         qemu_mutex_destroy(&event_mtx);
+         qemu_cond_destroy(&event_complete_cond);
+@@ -1431,30 +1431,29 @@ static void colo_compare_finalize(Object *obj)
+     }
  
-+    if (!cryptodev_backend_is_ready(backend)) {
-+        return;
-+    }
+     colo_compare_timer_del(s);
++    g_clear_pointer(&s->event_bh, qemu_bh_delete);
+ 
+-    qemu_bh_delete(s->event_bh);
++    if (s->iothread) {
++        AioContext *ctx = iothread_get_aio_context(s->iothread);
+ 
+-    AioContext *ctx = iothread_get_aio_context(s->iothread);
+-    AIO_WAIT_WHILE(ctx, !s->out_sendco.done);
+-    if (s->notify_dev) {
+-        AIO_WAIT_WHILE(ctx, !s->notify_sendco.done);
+-    }
++        AIO_WAIT_WHILE(ctx, !s->out_sendco.done);
++        if (s->notify_dev) {
++            AIO_WAIT_WHILE(ctx, !s->notify_sendco.done);
++        }
 +
-     qemu_mutex_lock(&lkcf->mutex);
-     lkcf->running = false;
-     qemu_mutex_unlock(&lkcf->mutex);
++        /* Release all unhandled packets after compare thread exited */
++        g_queue_foreach(&s->conn_list, colo_flush_packets, s);
++        AIO_WAIT_WHILE(NULL, !s->out_sendco.done);
+ 
+-    /* Release all unhandled packets after compare thead exited */
+-    g_queue_foreach(&s->conn_list, colo_flush_packets, s);
+-    AIO_WAIT_WHILE(NULL, !s->out_sendco.done);
++        object_unref(OBJECT(s->iothread));
++    }
+ 
+     g_queue_clear(&s->conn_list);
+     g_queue_clear(&s->out_sendco.send_list);
+     if (s->notify_dev) {
+         g_queue_clear(&s->notify_sendco.send_list);
+     }
+-
+-    if (s->connection_track_table) {
+-        g_hash_table_destroy(s->connection_track_table);
+-    }
+-
+-    object_unref(OBJECT(s->iothread));
++    g_clear_pointer(&s->connection_track_table, g_hash_table_destroy);
+ 
+     g_free(s->pri_indev);
+     g_free(s->sec_indev);
 
 -- 
 2.54.0
