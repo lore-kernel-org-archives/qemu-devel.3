@@ -4,118 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8430EFF885A
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 18:51:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08139CD3427
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 18:56:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJyNk-0002t5-Jh; Mon, 04 May 2026 14:51:04 -0400
+	id 1wJyT3-0004Hm-KK; Mon, 04 May 2026 14:56:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wJyNd-0002pk-UB
- for qemu-devel@nongnu.org; Mon, 04 May 2026 14:50:58 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wJySx-0004HC-Gc
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 14:56:27 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wJyNa-00037g-43
- for qemu-devel@nongnu.org; Mon, 04 May 2026 14:50:57 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 644EcnJY2822130; Mon, 4 May 2026 18:50:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=prb3qB
- 5qBPMPGeKenofKV3JCZyQk2RKWrStDhCVFsoo=; b=KRGmhXvqMjIVMZDlAT/Bws
- LLjKPgeSLtBbhS68yrYjQET7aYCjLv+SA+s4JCsQhR2dKs9XtPim8kBIpdFP4ZQW
- gyqfzwimIzsUTm8QilpDXesRyuoKws1yFDN6KR5CQn/2vP5bqDtJqXSRZPkVTJGz
- 2uLiq+m5vlG6Fwz76zRis0Yyf1Pn0u0C9yVsacRfvtqt2R1M3ckqYg5G6Q2vbAqX
- J8H1J+Nle38AMHqaL20oNMM+XsWv2MBsVH5ovgJybuEMpJkUgr5KCIGp96ZhbHul
- UfV+f4Odlrtrt1acF9CGDyNdSjWWFNbWw4TeyN6mRH9uuQ3oACFC/XZ4nCVIyFNg
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9y4g98g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 May 2026 18:50:45 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 644IdX44020943;
- Mon, 4 May 2026 18:50:44 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwwtg68y3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 May 2026 18:50:44 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 644IohXP30015984
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 4 May 2026 18:50:43 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9B66558053;
- Mon,  4 May 2026 18:50:43 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 675C858043;
- Mon,  4 May 2026 18:50:42 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  4 May 2026 18:50:42 +0000 (GMT)
-Message-ID: <25fe5a1d-4963-464b-b49a-1cc5552b27ae@linux.ibm.com>
-Date: Mon, 4 May 2026 14:50:41 -0400
+ (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
+ id 1wJySs-0004eW-Vp
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 14:56:27 -0400
+Received: from pps.filterd (m0279862.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 644ELtcY1960770
+ for <qemu-devel@nongnu.org>; Mon, 4 May 2026 18:56:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ kmc6iAw6lWkE3XCM6X12corYn555HiQu0IfLFVkdXSk=; b=kRcTdKJvdS4gFOiK
+ 2/pzX8Hnm7kNGaL/1yB+i8Jmcfvrr6pXoMWo6ip/VB9aFVI7TTzXp5qMx6SZK2sc
+ PHOyQXeO7BhaasBHD20VbPvNmOZspX4+gLRfllCSJM73dkbcNO+5OEx/e18ckR0A
+ kP5RdwlqwCI1oG5Ht/7lSXKEF10AuNSdVf+vp59/3iw/RpJbIcl1BCUAJnoPZtKK
+ KJ0Ogz+lFNSPtFJ+P++Vq7GRaLo2nnQxXJjCnMxUzTW3WNItfVn1kXjPADNJplPz
+ mt/t2CvqySEIQVbBWtq3HBTUM0gbECI/oFgLRkRTe+D8u9dfFKepM0v1vckj44tV
+ 4iHn8Q==
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dxw5ds3rv-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 18:56:19 +0000 (GMT)
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-8b640ede74bso71356596d6.1
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 11:56:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1777920978; x=1778525778; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=kmc6iAw6lWkE3XCM6X12corYn555HiQu0IfLFVkdXSk=;
+ b=eQNiG/BF9JOtF+dDsbBkwqkmSG2JeoUIXF8macUSQO99Qn67YLCC9ZHJu9/zQnzcnK
+ CVoSytdgzXkWUMWd7FBROVvHqdQoouetX+j7XNUQR9Zll4Q6eWam4hWXqLPlD+ZPWmFx
+ qhoIYp4BTpmjuCzQRlgKcA1+9NoAS9ZJOj5PhzPjYTPyW5iMJBpU7JjBoRFBYeHRwnX0
+ cTCl3pSWKblqHl7xivKlxYnaNWKmI2voPumOBiSpc/lbB/YN2zY7WlvwzUc0l91ftqaX
+ uhUqk4ywjrn5BvkUR/RoALOnh5iZNJuiQT3fRnHTkC1iUPq95wm0tYe33WA/Oe/rqnHD
+ qiEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777920978; x=1778525778;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kmc6iAw6lWkE3XCM6X12corYn555HiQu0IfLFVkdXSk=;
+ b=I7dieTkkNvTxhMzS0S7bwkKShkElEf5Z9SZVL5PuXQdcvvmTaiF8J2g0S1KxXLc7xm
+ xgIwcwHXrPSIaSYOV2NfkAxdL1atUaiVeL4Oo16paW28YgtwDFLqfei/Ui++Ts/yZodw
+ APDL/FcOaANagkw02RH0PE6l5EFJzS0RR0Xkm8ZXEdzilHoqpoQJFlwCfFP2+M99x9B9
+ 0JVQuuEpBKrVT6tpXXGVMs0d3E8uAnq4vDowMJRCuW0B1WuCe5WmD//j4ve7DZf/nvsI
+ IHKIMy+yLjM2C0eUJAefftl+7t54HiZrooCPRrI61nzThA+4ta4bo+xnA/yoWar9T8YP
+ cF8A==
+X-Gm-Message-State: AOJu0Yzm+KIJayuEVfo6yHJ3jrER8Ba5/3oqk58PHV8zH+PeXjcyZA1q
+ 6HDOj+lyP64UY+qI9fNBPY8gUe17yfDapZjRRSzhP3bxE1SRz7mHPxzff+zCjpM/i2OI9iZnNKv
+ MCxrpu7sroZv18HC2qiye4wkta4g2glXOJAL0igw5hNHvqX5EJWPypNFoPg==
+X-Gm-Gg: AeBDies0WB1WRPq1v9Ee3aiNmqnIi82Avl5ArVIjnb4xe97frjXGhvEN1pmt8bgXeE0
+ th4s4cRGUNvlxp9XoWHLIxdQpxsDA5ij5g0iaumzWayQ8DanxZh1jY6LoGnAyykvIzcwp1zCsDW
+ ocCpBaR1Xm3l2Ca05XbIrbpb8bGMBXm8GHSiP2okvlzhPIT84CAh5OnjBSbiOXHYotbPM3qTkL6
+ FcbQIo0q1yuxkJjU6op9dQH8QIwXBr4uM7bgVJDeLP7lrsJJf/h4gn09cfE9wQ+H3UfPKjx6RYF
+ IYOqLg+F68RisqMwZbcjUxuWU410LBnZcS31lWZsCnG6QvoYp5bloGwl5YXJY9QkdVNzq+cJwKt
+ /dJ3NJ+riPKFZaEaS2drg/qb3wWqPK8BQxKEvtIgzx/95pdIP2iVvSGWsFKsHAy+KmRO34A==
+X-Received: by 2002:a05:6214:3a0a:b0:89c:8a0f:55a0 with SMTP id
+ 6a1803df08f44-8b6665f1f5dmr193340736d6.16.1777920978294; 
+ Mon, 04 May 2026 11:56:18 -0700 (PDT)
+X-Received: by 2002:a05:6214:3a0a:b0:89c:8a0f:55a0 with SMTP id
+ 6a1803df08f44-8b6665f1f5dmr193340146d6.16.1777920977747; 
+ Mon, 04 May 2026 11:56:17 -0700 (PDT)
+Received: from [192.168.68.106] ([191.202.237.136])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8b53cd827c5sm150182316d6.40.2026.05.04.11.56.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 04 May 2026 11:56:17 -0700 (PDT)
+Message-ID: <c4709186-97ec-4ecb-804e-ac96d527c569@oss.qualcomm.com>
+Date: Mon, 4 May 2026 15:56:14 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 6/6] hw/tpm: Add support for VM migration with TPM CRB
- chunking
-To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- marcandre.lureau@redhat.com, Zhao Liu <zhao1.liu@intel.com>,
- Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Yanan Wang <wangyanan55@huawei.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>
-References: <20260504174234.13556-1-armenon@redhat.com>
- <20260504174234.13556-7-armenon@redhat.com>
+Subject: Re: [PATCH v5 3/4] hw/riscv: server platform reference machine
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com, leif.lindholm@oss.qualcomm.com,
+ Fei Wu <wu.fei9@sanechips.com.cn>, andrew.jones@oss.qualcomm.com
+References: <20260424191129.1494381-1-daniel.barboza@oss.qualcomm.com>
+ <20260424191129.1494381-4-daniel.barboza@oss.qualcomm.com>
+ <CAKmqyKNZiA=rYVD6ighyFO+qmhdYVk=UgbaznBHrZ2yt1ZvOtA@mail.gmail.com>
+From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <20260504174234.13556-7-armenon@redhat.com>
+In-Reply-To: <CAKmqyKNZiA=rYVD6ighyFO+qmhdYVk=UgbaznBHrZ2yt1ZvOtA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA0MDE3MCBTYWx0ZWRfX+QGXdVntSVPA
- PW8KmAsraJ3RcAh5j5booWOhYxsDlqbjCPjHdDO1DOHr2vwNXL+U3RlNnOmCZzyy3coejfHqt+6
- zDBDI6Y0O3lO/P9tgcCS9WId6C0L4B/hjej74t3WGWE5CGl24YONjoyOMrbbUZ8jy7/bUPYlz4D
- creVXL+AHoXPTKpMhxf27422bjnDEeVbW8QbpfFCMZOD3E9T5/PJ06Hh8Xoq9aRrtvl6bzE/bGD
- 7Z1/zYqtrxV6aSvgG1Urg+WWlZAfNT3AOxL8O/WWbRmZ48lkSsK8q3AVtP/AmiyQiZGFtTwSi6L
- o8lFgl/r/oaselnSupR+sgajaF5GBXUD1WtZb3gBTfsJeABAdUKcykiom4wDYCtdW+IKofmo4cI
- ecWylBLV95ef3Z55l2nf96xSAuf7pEw6gsSz18G3bwT/xysscXDNyLU8gsiXnoJiP589MA6Rl2P
- Kqd1+uUVVCAFgY1fDQg==
-X-Authority-Analysis: v=2.4 cv=J4GaKgnS c=1 sm=1 tr=0 ts=69f8ea85 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=3xw4kwFLrFTyH_d8cREA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: dVDGC3vfQXFxM_COLcTBJ1LDOvRIiuWp
-X-Proofpoint-ORIG-GUID: jtlLSBPq4RZzvshkFgHhAkytSg4dRCse
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA0MDE3MiBTYWx0ZWRfX8dAAI/lyYoCM
+ ZMriMzVq565FUDNQbdvP7r18DskSglnKlkJlHF2RwNnNOZ3htJa3QhuYZJ7MvmiR4JATc8TpFjC
+ H1e10CuAAppT0OAARPJGgt9zuLhleY/ibKTWTpPlMEJ7bR2oPg0fKtrZR9MjhwUwiYMLBPsyars
+ 4enmPeXU4eJPKpotqRlfPW7D8meFbpjIbxv7gqxAFKTd4WufBcTMVLK7u8Q0s9LplZ0PTUn3QkU
+ P3LmOvxzR+DBP7zz9GASzSm1OBFIZshlppQv3dYm6D8nUPfXXcg7prwyqtE5j2S3+v727c0/h69
+ 19pmHVz+QXXmX1A9WbALxq/JPRqiVFfaXPAwp/EWc5F7yz/R9H49HHMDo+H2rVENxB/+UknR5nw
+ l/EWBttOL6+YjImOAuyDrDBSg6fQ+U8wVz3eXhKmJEKitEnuXLufAE8JhcLDL7YmwBZ+O2tt1Gp
+ x2sj246x1gcMTqrua2Q==
+X-Proofpoint-GUID: YHnDsxQa8QtmgqTB-7Sfj6JFu9DCmlbs
+X-Proofpoint-ORIG-GUID: YHnDsxQa8QtmgqTB-7Sfj6JFu9DCmlbs
+X-Authority-Analysis: v=2.4 cv=HpJG3UTS c=1 sm=1 tr=0 ts=69f8ebd3 cx=c_pps
+ a=UgVkIMxJMSkC9lv97toC5g==:117 a=IZaa5BNpKBTNMhuJoHisKw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_K5XuSEh1TEqbUxoQ0s3:22
+ a=NEAV23lmAAAA:8 a=EUspDBNiAAAA:8 a=uTRCLKPYAAAA:8 a=tCHF0U2z__NgwREtqDkA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=1HOtulTD9v-eNWfpl4qZ:22
+ a=T-agBWn15iSmxapsA1lH:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-04_05,2026-04-30_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0
- priorityscore=1501 spamscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ malwarescore=0 spamscore=0 priorityscore=1501 lowpriorityscore=0 bulkscore=0
+ impostorscore=0 adultscore=0 clxscore=1015 phishscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605040170
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605040172
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -132,165 +154,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/4/26 1:42 PM, Arun Menon wrote:
-> From: Arun Menon <armenon@redhat.com>
-> 
-> - Add subsection in VMState for TPM CRB with the newly introduced
->    command and response buffer GByteArrays, along with a needed callback,
->    so that newer QEMU only sends the buffers if it is necessary.
-> - Implement a migration blocker to prevent migration of the VM if the
->    user manually enables chunking capability, cap-chunk, but the machine
->    type does not support it, using a new hw_compat property called
->    allow_chunk_migration.
-> - Add a post_load_errp hook so that during a migration, the buffers are
->    validated before destination VM is started.
-> 
-> Signed-off-by: Arun Menon <armenon@redhat.com>
-> ---
->   hw/core/machine.c |  1 +
->   hw/tpm/tpm_crb.c  | 68 +++++++++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 69 insertions(+)
-> 
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index 4e0a93e231..30464b21ac 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -41,6 +41,7 @@
->   
->   GlobalProperty hw_compat_11_0[] = {
->       { "tpm-crb", "cap-chunk", "off" },
-> +    { "tpm-crb", "x-allow-chunk-migration", "off" },
->   };
->   const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
->   
-> diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-> index 5572d89268..98feb734d5 100644
-> --- a/hw/tpm/tpm_crb.c
-> +++ b/hw/tpm/tpm_crb.c
-> @@ -24,6 +24,7 @@
->   #include "hw/pci/pci_ids.h"
->   #include "hw/acpi/tpm.h"
->   #include "migration/vmstate.h"
-> +#include "migration/blocker.h"
->   #include "system/tpm_backend.h"
->   #include "system/tpm_util.h"
->   #include "system/reset.h"
-> @@ -50,6 +51,8 @@ struct CRBState {
->       TPMPPI ppi;
->   
->       bool cap_chunk;
-> +    bool allow_chunk_migration;
-> +    Error *migration_blocker;
->   };
->   typedef struct CRBState CRBState;
->   
-> @@ -352,18 +355,68 @@ static int tpm_crb_pre_save(void *opaque)
->       return 0;
->   }
->   
-> +static bool tpm_crb_chunk_needed(void *opaque)
-> +{
-> +    CRBState *s = opaque;
-> +
-> +    if (!s->allow_chunk_migration) {
-> +        return false;
-> +    }
-> +
-> +    return ((s->command_buffer && s->command_buffer->len > 0) ||
-> +            (s->response_buffer && s->response_buffer->len > 0));
-> +}
-> +
-> +static bool tpm_crb_chunk_post_load(void *opaque, int version_id, Error **errp)
-> +{
-> +    CRBState *s = opaque;
-> +
-> +    /*
-> +     * The external TPM emulator (example swtpm) determines the backend
-> +     * buffer capacity (s->be_bufer_size). This check ensures that if we
-> +     * migrate from a source with a PQC-enabled emulator that supports
-> +     * larger buffers to a destination with a non-PQC emulator, the
-> +     * migrated data does not exceed the destination's capacity.
-> +     */
-> +    if (s->response_buffer->len > s->be_buffer_size ||
-> +        s->command_buffer->len > s->be_buffer_size) {
-> +        error_setg(errp, "tpm-crb: Buffer sizes exceed backend capacity");
-> +        return false;
-> +    }
-> +    return true;
-> +}
-> +
-> +static const VMStateDescription vmstate_tpm_crb_chunk = {
-> +    .name = "tpm-crb/chunk",
-> +    .version_id = 0,
-> +    .needed = tpm_crb_chunk_needed,
-> +    .post_load_errp = tpm_crb_chunk_post_load,
-> +    .fields = (const VMStateField[]) {
-> +        VMSTATE_GBYTEARRAY(command_buffer, CRBState, 0),
-> +        VMSTATE_GBYTEARRAY(response_buffer, CRBState, 0),
-> +        VMSTATE_UINT32(response_offset, CRBState),
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->   static const VMStateDescription vmstate_tpm_crb = {
->       .name = "tpm-crb",
->       .pre_save = tpm_crb_pre_save,
->       .fields = (const VMStateField[]) {
->           VMSTATE_UINT32_ARRAY(regs, CRBState, TPM_CRB_R_MAX),
->           VMSTATE_END_OF_LIST(),
-> +    },
-> +    .subsections = (const VMStateDescription * const []) {
-> +        &vmstate_tpm_crb_chunk,
-> +        NULL,
->       }
->   };
->   
->   static const Property tpm_crb_properties[] = {
->       DEFINE_PROP_TPMBE("tpmdev", CRBState, tpmbe),
->       DEFINE_PROP_BOOL("cap-chunk", CRBState, cap_chunk, true),
-> +    DEFINE_PROP_BOOL("x-allow-chunk-migration", CRBState,
-> +                     allow_chunk_migration, true),
->   };
->   
->   static void tpm_crb_reset(void *dev)
-> @@ -418,6 +471,7 @@ static void tpm_crb_reset(void *dev)
->   static void tpm_crb_realize(DeviceState *dev, Error **errp)
->   {
->       CRBState *s = CRB(dev);
-> +    int ret;
->   
->       if (!tpm_find()) {
->           error_setg(errp, "at most one TPM device is permitted");
-> @@ -427,6 +481,15 @@ static void tpm_crb_realize(DeviceState *dev, Error **errp)
->           error_setg(errp, "'tpmdev' property is required");
->           return;
->       }
-> +    if (s->cap_chunk && !s->allow_chunk_migration) {
-> +        error_setg(&s->migration_blocker,
-> +                   "The tpm-crb device does not support chunk migration with "
-> +                   "machine version less than 11.1");
-> +        ret = migrate_add_blocker_normal(&s->migration_blocker, errp);
-> +        if (ret < 0) {
-> +            return;
-> +        }
-> +    }
->   
->       memory_region_init_io(&s->mmio, OBJECT(s), &tpm_crb_memory_ops, s,
->           "tpm-crb-mmio", sizeof(s->regs));
-> @@ -457,6 +520,11 @@ static void tpm_crb_unrealize(DeviceState *dev)
->   
->       g_clear_pointer(&s->command_buffer, g_byte_array_unref);
->       g_clear_pointer(&s->response_buffer, g_byte_array_unref);
-> +
-> +    if (s->migration_blocker) {
-> +        migrate_del_blocker(&s->migration_blocker);
-> +        error_free(s->migration_blocker);
-> +    }
->   }
->   
->   static void tpm_crb_class_init(ObjectClass *klass, const void *data)
 
 
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+On 5/1/2026 12:27 AM, Alistair Francis wrote:
+> On Sat, Apr 25, 2026 at 5:13 AM Daniel Henrique Barboza
+> <daniel.barboza@oss.qualcomm.com> wrote:
+>>
+>> From: Fei Wu <wu.fei9@sanechips.com.cn>
+>>
+>> The RISC-V Server Platform specification [1] defines a standardized set
+>> of hardware and software capabilities, that portable system software,
+>> such as OS and hypervisors can rely on being present in a RISC-V server
+>> platform.
+>>
+>> The main features included in this emulation are:
+>>
+>> - Based on riscv virt machine type;
+>> - A new memory map as close as virt machine as possible;
+>> - An always present IOMMU platform device (riscv-iommu-sys) that uses
+>>    IRQs 36 to 39, one IRQ for queue, similar to the 'virt' board;
+>> - AIA;
+>> - PCIe AHCI;
+>> - PCIe NIC;
+>> - No virtio device;
+>> - No fw_cfg device;
+>> - No ACPI table provided;
+>> - Only minimal device tree nodes.
+> 
+> Can you describe why we actually need/want this? The virt machine
+> already covers a lot of this and OSes and Hypervisors can pretty
+> easily target that. I'm not clear what this buys us in QEMU. Maintaing
+> a machine isn't that hard, but it would be nice to have a good reason
+> to support it.
+
+I'm late to the discussions but following up what Leif and Peter already
+commented: this is a similar use case as ARM's sbsa-ref machine.  It is a
+development focused board that adheres to a reference spec, it is not a
+board to be used for overall consumption - for that we have 'virt'.
+
+If the reference spec changes the emulation will follow suit, and existing
+software that was working previously can stop working.  The assumption made
+here is that, when a spec change happens, developers must strive to make
+the SW work on the updated spec/reference machine.
+
+Last but not the least, this design decision also spare us from dealing with
+machine versioning.
+
+
+> 
+> Also we need machine docs that describe why people should use this machine.
+
+I made an attempt of that in patch 4. I'll improve it to add more details
+about the machine being a developer focused reference board, not suitable for
+virtual machines for regular users because the board will follow spec changes
+that can make existing software misbehave.
+
+
+Thanks,
+Daniel
+
+> 
+> Also, why no ACPI and why device tree? The spec talks about ACPI
+> tables, but I don't see a mention of device tree
+> 
+>>
+>> [1] https://github.com/riscv-non-isa/riscv-server-platform
+> 
+> The first line of the README says:
+> 
+> """
+> This document is capturing discussions at the Server Platform TG.
+> These are not official specifications and everything in this document
+> may change.
+> """
+> 
+> So this machine needs to start out with version support (like the ARM
+> virt board)
+> 
+> Alistair
 
 
