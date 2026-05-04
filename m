@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26EF9FF885A
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 15:53:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 125D1CD3427
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 15:53:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJvZv-0000zV-7S; Mon, 04 May 2026 11:51:27 -0400
+	id 1wJvZs-0000xs-0o; Mon, 04 May 2026 11:51:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wJvZt-0000z4-NL
- for qemu-devel@nongnu.org; Mon, 04 May 2026 11:51:25 -0400
-Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
+ id 1wJvZp-0000wg-Vm
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 11:51:22 -0400
+Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wJvZr-0006E2-OQ
- for qemu-devel@nongnu.org; Mon, 04 May 2026 11:51:25 -0400
-Received: by mail-qt1-x830.google.com with SMTP id
- d75a77b69052e-50d7c12e48eso35475781cf.1
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 08:51:23 -0700 (PDT)
+ id 1wJvZo-0006DI-Es
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 11:51:21 -0400
+Received: by mail-qt1-x829.google.com with SMTP id
+ d75a77b69052e-50faf8ed9c5so20641341cf.2
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 08:51:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777909883; x=1778514683; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777909879; x=1778514679; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=MG1iwnko83uMuVMCUIM9KDLK/vF8JVyEE/TaS9GVUps=;
- b=ZvOQttqBpltWABpGJZWbBcp4yxDvrGNoCAsseCAiVLSYumqyZstWFo3Eais5hzZZcc
- WYz6EnMZSBiSmga62pZRSqDZP/CgW0xEJg6+lWKCE6Gn87AZJ9hmPwGJSxUkZndXuPjX
- ReXwbsKDLBOfZo31p9nSNXePR+UjyoP1MZJIGJh+7u0eh/ZqwHhNVCWy/UJz9r0cn2Wu
- 4EjXWY/H/SBIywjrO5+NvAa/o5uBuZTnr2L0avc9ltYuBoLLS1CbfQEo9QQe6HI3RKFj
- behE0h9vwHeYF9sw213zyquBM0tgAOrRoPQDu9wRxtEiJLRdej32akO74K5fzg3u0U1p
- Hd0g==
+ :reply-to; bh=0ay7sf63ql1pC4xkROjc2QEdokR4pUfgyF6xPuvXHyY=;
+ b=jpwFhAQA3H8TNCe2Lhuf0sYa58r8ZWVFwhKwdMSkFpKu3jBs7zo0jyyQwoSJJp66CY
+ MuIDp3IwkBjbDZgs7XzT/aiLis5tsWWtgctyk/5ZhxIBwCX8Xhdt+AZxgUVfyJv245d+
+ 1HW8dRGlXWpoU3JTveVyUeloF8AT4F8r6OAu5nAgYpeBN7/jYpiRf6wlcTKoY/q9MXXj
+ fMya8z4xfsjZMcJlZ9Z6ANW1f84CqHeK84mDJKOrKTPEATL1wgX7MU4gSGlWPPld3hQ8
+ o+FqlEaXhuxrUnDVal9q/pRAAieZwmP/4F9J29NEpYUEAjnVBFwIwh1F5YRROr+wt9nn
+ Tdyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777909883; x=1778514683;
+ d=1e100.net; s=20251104; t=1777909879; x=1778514679;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=MG1iwnko83uMuVMCUIM9KDLK/vF8JVyEE/TaS9GVUps=;
- b=JXK2mX6yoHWR8/bSr/uoVJ16eKFkNFPPZESka1U2whb/lYIFUDuNydQOAbKADjCYrV
- Krbe8BJ+rbcbz17RFP26P7xSolGDWbpBV1HZxXxz5X9Hgxu7mn3HNKZl5IEG7tk4j0yt
- tNxB6jYrtPD0BXIBFnmxDkznLPSeJHVRuKD02FurUuZyLEoPW9/DkHR+X7Qh2cFcdLVU
- pLt/YxIXzF6j6rCzcpm8pQWTCgi/T3ZUlX1h8H3w/WgWpw/38yT16jmk0EnphCbU1CYL
- jo5EWUPp11wFQZyZ8oPEqjbK7zwqcHAvwSE4Lu88/9KSJXycz27s/53SXU+MfXuyU2Ca
- d9uA==
-X-Gm-Message-State: AOJu0YzKowe3VeoIGrIIBhZGvGPkNKeQcyDyT6jaGuS7b9Pfjp1c2rnh
- fqayXj7RSegoU8/WGU9eQjpmI6ixEQDk+2Gt8b9V5czZ1njZjP26x6CqkG8jzRLe
-X-Gm-Gg: AeBDiest5Pps7+HF/cNs6uNwiGlEn8S7oCnSuZbM+usT2oZNm3yjUR57BOp8/m4osCO
- hL64Eo+aRYLCPCuqxsdNu6EY8P6WMrgZat5/Ox3os83NNVALFMipZmwjb3fl6q52zb5Q4/YWCfC
- 1xAgptJtytA3eulcN/rgG+SMRZkK+6IO8SCXK3L+N+fPH+pzfktoV7Nk4LY17o6i6nwvEASQMgN
- i7PkQ+VmuSAprjCRaOuB435F3Z1Eg/INfNE1Oh/ODq82Iux7hlpD7DPA8U1plUjaSsFS+PKDMzf
- mbVfvK3WKOSSKs0JEqLXIhyqrbl1hqoRRV7bPejfo04SCY78r/Y+QVcDbUTpi/EGCQNgvAGua6X
- NtgrXeKifCA3LVNh0EEwsZbBRq5++tuN3Y+0MnRRJgykA79Owsfyha4WaOmx2UCx5JLAm+CXPsL
- f7yAas7/IYX0QTS2W2rj3/1imjUg9t4AOy1nYAFTBJW3Hu/DitBqE=
-X-Received: by 2002:a05:622a:1f8c:b0:50f:b7b3:2ec4 with SMTP id
- d75a77b69052e-5130534b3bbmr803141cf.25.1777909881921; 
- Mon, 04 May 2026 08:51:21 -0700 (PDT)
+ bh=0ay7sf63ql1pC4xkROjc2QEdokR4pUfgyF6xPuvXHyY=;
+ b=sYXRgXXsQRqyz8EjWzYzdZU32zVyR1Mo9BzAeOl7OhUcafzFJOUawwc/ESMxeTLMHq
+ CLGGBxtZ24hHNBUXdLjZMT0RsnbEpi1EP72oAraleLapIZN2Ye1OCnx0nxnMxFexdq4K
+ 8prD8rV/SvfOAHfED7nGzPVh++ycxPXxdWUZ/zwiDlIKZzUPe2bHU+lI6xR1NppXpE9N
+ pGvr8XwSRYQzUF/FE5iYX2HBafJuKJruCmX9U+cAAEZ3apS34QRkacA3HMt0IPFt8BI8
+ 1fwRVUDFT2iTOx4j1NYhbqacc9y04CLx+38dafoCPJZDg5gE3puBgUnZiUxmUThJDPnf
+ csxQ==
+X-Gm-Message-State: AOJu0YyUmGFobzta5HGl2avZYtRvMxBpJuphUOHwfG3Pr0fWvYGFdJud
+ mkdNxFv/1IbztRgtJgqAKDbJ+ESnahkIAuILElig/VhANje8Wvh4z+hQ
+X-Gm-Gg: AeBDiesmY2clRMKZfXv114Pirl6T/CnXNoy5jnOuEDOHOWPFP0S8lK3zgfpxTxZo7HO
+ gPSvY5tCwYNjRBn88AzPZnCclff+sYQGXfH0IH7/fxgvJqCBmiRe2r6aYArZV65RDQmjU3jqfUP
+ ZWwSgHHt5qdtwbszewcDkpiLWr+SYpGgaliaKmOwnVlzzZn5B074PjYxBqZzYLQAdmZ4CljV35v
+ ABjtj+4330N8+LRqjGcwaAkMOBisf9gN0lXJ3KDRPwdbk0R8UZcFKZ9YDCFfv450SrXn8o0UEBc
+ qDAFYdFDUIF6TGHb3KP3WKZryergyFzB3f0g2ZRGw+vWFSPCxdxcwi6Mebixbx406zgdarTSJrX
+ ByDt/Kr1UM660QZRSzG1jVXPO7X96wIYZhICog5ZQByP3fchEr1hNTcTuj6JUqqMngtMbZ90P27
+ YI2Gw2yra53ik6cuW0YJlZdi0T9uhfp9NueCBrRnBYjZl2z+wj6us=
+X-Received: by 2002:ac8:6f1b:0:b0:50f:ec27:5d05 with SMTP id
+ d75a77b69052e-5104be42610mr172075511cf.10.1777909879198; 
+ Mon, 04 May 2026 08:51:19 -0700 (PDT)
 Received: from [192.168.1.164] ([2600:1009:a021:c665:5296:905f:3e4a:eb90])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51040931552sm99599011cf.12.2026.05.04.08.51.20
+ d75a77b69052e-51040931552sm99599011cf.12.2026.05.04.08.51.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 May 2026 08:51:21 -0700 (PDT)
+ Mon, 04 May 2026 08:51:18 -0700 (PDT)
 From: Gabriel Brookman <brookmangabriel@gmail.com>
-Date: Mon, 04 May 2026 11:50:42 -0400
-Subject: [PATCH v5 09/15] target/arm: load on canonical tag loads ext bits
+Date: Mon, 04 May 2026 11:50:40 -0400
+Subject: [PATCH v5 07/15] target/arm: add canonical tag check, mtx helpers
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260504-feat-mte4-v5-9-232a648e63c6@gmail.com>
+Message-Id: <20260504-feat-mte4-v5-7-232a648e63c6@gmail.com>
 References: <20260504-feat-mte4-v5-0-232a648e63c6@gmail.com>
 In-Reply-To: <20260504-feat-mte4-v5-0-232a648e63c6@gmail.com>
 To: qemu-devel@nongnu.org
@@ -81,22 +81,22 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1777909867; l=5681;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1777909867; l=1931;
  i=brookmangabriel@gmail.com; s=20251009; h=from:subject:message-id;
- bh=Ws2Tqe13fBijY+IHknD2CyebZv1in1ArUctH8Hio2sA=;
- b=oz8eYjE5Vhv9ZTARi40/Hp4hw9BTP367GpMsUgRMbeoVgKXesDUDsrV4q+eHUAoXCN10U4XKi
- TjEmXWkKoGZCOfw5lW6i1VHoDaYhtfJGVF+zbu/NgSZ3rybx9vBpuSW
+ bh=jN08kl5XFA9CgTscW9ExtHRwdhxwVdpjf5wqgUQUKtk=;
+ b=WqGzwxpPuHocytpfhoh8lD7CZ/MuIC67VGaB9ynLdUiRiOcFSfl5c2s3SCyWcOOaP9d1RpNl6
+ +ouCCAjjmCPAIHNCUBGvzQyPsLMalFgOshfYl3mACOX8DgU130ZPcsA
 X-Developer-Key: i=brookmangabriel@gmail.com; a=ed25519;
  pk=m9TtPDal6WzoHNnQiHHKf8dTrv3DUCPUUTujuo8vNrw=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
- envelope-from=brookmangabriel@gmail.com; helo=mail-qt1-x830.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
+ envelope-from=brookmangabriel@gmail.com; helo=mail-qt1-x829.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,142 +112,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Loading tags from canonically tagged regions should use the canonical
-tags (extension bits), not allocation tags. See AArch64_MemTagRead().
+Add a helper that checks whether mtx is active from MTEDESC and a
+helper that checks whether a tag matches the selector bit. These
+helpers will be used for the subsequent commits.
 
 Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
 ---
- target/arm/tcg/helper-a64-defs.h |  4 ++--
- target/arm/tcg/mte_helper.c      | 42 +++++++++++++++++++++++++++++++++++++---
- target/arm/tcg/translate-a64.c   |  4 ++--
- 3 files changed, 43 insertions(+), 7 deletions(-)
+ target/arm/internals.h | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/tcg/helper-a64-defs.h b/target/arm/tcg/helper-a64-defs.h
-index 3c3c5dddb7..c08c8c3991 100644
---- a/target/arm/tcg/helper-a64-defs.h
-+++ b/target/arm/tcg/helper-a64-defs.h
-@@ -102,14 +102,14 @@ DEF_HELPER_FLAGS_3(mte_check, TCG_CALL_NO_WG, i64, env, i32, i64)
- DEF_HELPER_FLAGS_3(mte_check_zva, TCG_CALL_NO_WG, i64, env, i32, i64)
- DEF_HELPER_FLAGS_3(irg, TCG_CALL_NO_RWG, i64, env, i64, i64)
- DEF_HELPER_FLAGS_4(addsubg, TCG_CALL_NO_RWG_SE, i64, env, i64, s32, i32)
--DEF_HELPER_FLAGS_3(ldg, TCG_CALL_NO_WG, i64, env, i64, i64)
-+DEF_HELPER_FLAGS_4(ldg, TCG_CALL_NO_WG, i64, env, i64, i64, i32)
- DEF_HELPER_FLAGS_3(stg, TCG_CALL_NO_WG, void, env, i64, i64)
- DEF_HELPER_FLAGS_3(stg_parallel, TCG_CALL_NO_WG, void, env, i64, i64)
- DEF_HELPER_FLAGS_2(stg_stub, TCG_CALL_NO_WG, void, env, i64)
- DEF_HELPER_FLAGS_3(st2g, TCG_CALL_NO_WG, void, env, i64, i64)
- DEF_HELPER_FLAGS_3(st2g_parallel, TCG_CALL_NO_WG, void, env, i64, i64)
- DEF_HELPER_FLAGS_2(st2g_stub, TCG_CALL_NO_WG, void, env, i64)
--DEF_HELPER_FLAGS_2(ldgm, TCG_CALL_NO_WG, i64, env, i64)
-+DEF_HELPER_FLAGS_3(ldgm, TCG_CALL_NO_WG, i64, env, i64, i32)
- DEF_HELPER_FLAGS_3(stgm, TCG_CALL_NO_WG, void, env, i64, i64)
- DEF_HELPER_FLAGS_3(stzgm_tags, TCG_CALL_NO_WG, void, env, i64, i64)
- 
-diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
-index d35e3ef04d..8ed31ca2d8 100644
---- a/target/arm/tcg/mte_helper.c
-+++ b/target/arm/tcg/mte_helper.c
-@@ -304,7 +304,7 @@ int load_tag1(uint64_t ptr, uint8_t *mem)
-     return extract32(*mem, ofs, 4);
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 6df2c547c5..779eafabc8 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1629,6 +1629,12 @@ static inline uint64_t address_with_allocation_tag(uint64_t ptr, int rtag)
+     return deposit64(ptr, 56, 4, rtag);
  }
  
--uint64_t HELPER(ldg)(CPUARMState *env, uint64_t ptr, uint64_t xt)
-+uint64_t HELPER(ldg)(CPUARMState *env, uint64_t ptr, uint64_t xt, uint32_t mtx)
++/* Return true if mtx bits mean that the access is canonically checked.  */
++static inline bool mtx_check(uint32_t desc, int bit55)
++{
++    return (desc >> (R_MTEDESC_MTX_SHIFT + bit55)) & 1;
++}
++
+ /* Return true if tbi or mtx bits mean that the access is tag checked.  */
+ static inline bool tbi_or_mtx_check(uint32_t desc, int bit55)
  {
-     int mmu_idx = arm_env_mmu_index(env);
-     uint8_t *mem;
-@@ -317,6 +317,11 @@ uint64_t HELPER(ldg)(CPUARMState *env, uint64_t ptr, uint64_t xt)
-     /* Load if page supports tags. */
-     if (mem) {
-         rtag = load_tag1(ptr, mem);
-+    } else {
-+        uint64_t bit55 = extract64(ptr, 55, 1);
-+        if (mtx) {
-+            rtag = 0xF * bit55;
-+        }
-     }
- 
-     return address_with_allocation_tag(xt, rtag);
-@@ -458,17 +463,19 @@ void HELPER(st2g_stub)(CPUARMState *env, uint64_t ptr)
-     }
+@@ -1636,6 +1642,12 @@ static inline bool tbi_or_mtx_check(uint32_t desc, int bit55)
+     return desc & (mask << bit55);
  }
  
--uint64_t HELPER(ldgm)(CPUARMState *env, uint64_t ptr)
-+uint64_t HELPER(ldgm)(CPUARMState *env, uint64_t ptr, uint32_t mtx)
++/* Return whether or not the second nibble of a VA matches bit 55.  */
++static inline bool tag_is_canonical(int ptr_tag, int bit55)
++{
++    return ((ptr_tag + bit55) & 0xf) == 0;
++}
++
+ /* Return true if tcma bits mean that the access is unchecked.  */
+ static inline bool tcma_check(uint32_t desc, int bit55, int ptr_tag)
  {
-     int mmu_idx = arm_env_mmu_index(env);
-     uintptr_t ra = GETPC();
-     int gm_bs = env_archcpu(env)->gm_blocksize;
-     int gm_bs_bytes = 4 << gm_bs;
-     void *tag_mem;
--    uint64_t ret;
-+    uint64_t ret, canonical_tag_val;
-     int shift;
-+    bool bit55;
- 
-     ptr = QEMU_ALIGN_DOWN(ptr, gm_bs_bytes);
-+    bit55 = extract64(ptr, 55, 1);
- 
-     /* Trap if accessing an invalid page.  */
-     tag_mem = allocation_tag_mem(env, mmu_idx, ptr, MMU_DATA_LOAD,
-@@ -476,6 +483,35 @@ uint64_t HELPER(ldgm)(CPUARMState *env, uint64_t ptr)
- 
-     /* The tag is squashed to zero if the page does not support tags.  */
-     if (!tag_mem) {
-+        /* Load canonical value if mtx is set (untagged memory region) */
-+        if (mtx) {
-+            canonical_tag_val = -(uint64_t)bit55;
-+            switch (gm_bs) {
-+            case 3:
-+                /* 32 bytes -> 2 tags -> 8 result bits */
-+                ret = (uint8_t)canonical_tag_val;
-+                break;
-+            case 4:
-+                /* 64 bytes -> 4 tags -> 16 result bits */
-+                ret = (uint16_t)canonical_tag_val;
-+                break;
-+            case 5:
-+                /* 128 bytes -> 8 tags -> 32 result bits */
-+                ret = (uint32_t)canonical_tag_val;
-+                break;
-+            case 6:
-+                /* 256 bytes -> 16 tags -> 64 result bits */
-+                return canonical_tag_val;
-+            default:
-+                /*
-+                 * CPU configured with unsupported/invalid gm blocksize.
-+                 * This is detected early in arm_cpu_realizefn.
-+                 */
-+                g_assert_not_reached();
-+            }
-+            shift = extract64(ptr, LOG2_TAG_GRANULE, 4) * 4;
-+            return ret << shift;
-+        }
-         return 0;
-     }
- 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index cd86178d56..5fbc54de4b 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -4711,7 +4711,7 @@ static bool trans_LDGM(DisasContext *s, arg_ldst_tag *a)
-     tcg_rt = cpu_reg(s, a->rt);
- 
-     if (s->ata[0]) {
--        gen_helper_ldgm(tcg_rt, tcg_env, addr);
-+        gen_helper_ldgm(tcg_rt, tcg_env, addr, tcg_constant_i32(s->mtx));
-     } else {
-         MMUAccessType acc = MMU_DATA_LOAD;
-         int size = 4 << s->gm_blocksize;
-@@ -4746,7 +4746,7 @@ static bool trans_LDG(DisasContext *s, arg_ldst_tag *a)
-     tcg_gen_andi_i64(addr, addr, -TAG_GRANULE);
-     tcg_rt = cpu_reg(s, a->rt);
-     if (s->ata[0]) {
--        gen_helper_ldg(tcg_rt, tcg_env, addr, tcg_rt);
-+        gen_helper_ldg(tcg_rt, tcg_env, addr, tcg_rt, tcg_constant_i32(s->mtx));
-     } else {
-         /*
-          * Tag access disabled: we must check for aborts on the load
+@@ -1643,7 +1655,7 @@ static inline bool tcma_check(uint32_t desc, int bit55, int ptr_tag)
+      * We had extracted bit55 and ptr_tag for other reasons, so fold
+      * (ptr<59:55> == 00000 || ptr<59:55> == 11111) into a single test.
+      */
+-    bool match = ((ptr_tag + bit55) & 0xf) == 0;
++    bool match = tag_is_canonical(ptr_tag, bit55);
+     bool tcma = (desc >> (R_MTEDESC_TCMA_SHIFT + bit55)) & 1;
+     return tcma && match;
+ }
 
 -- 
 2.54.0
