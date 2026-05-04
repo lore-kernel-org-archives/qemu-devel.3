@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61758CD342C
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:36:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9006CD3430
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 11:36:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJrbF-0008DB-Cm; Mon, 04 May 2026 07:36:34 -0400
+	id 1wJraY-0007Y2-Ko; Mon, 04 May 2026 07:35:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrb6-0007t2-Rf
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1wJraX-0007XT-TP
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:35:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wJrb4-0000vH-V4
- for qemu-devel@nongnu.org; Mon, 04 May 2026 07:36:24 -0400
+ id 1wJraW-0000ny-Kd
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 07:35:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777894582;
+ s=mimecast20190719; t=1777894547;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=V9+ErlHfhLuXXJDocSDtTnxTzm8IYph61vLIhuadgv4=;
- b=e40d0bgqZYGGl0yd0cH6qtpbHecQfpb07bEehZTZcygroUijeZGBfnGlAaUaPWYNzaEtrn
- jOMnaU5Gfe4JTYF9OfDQB7UBajDewIlclbMZmE+R/YUCn67KWgyVWoHk35xL8F7C6yXfln
- s6sSLBnilhAEioa+jICa+2soYSwe9Ho=
+ bh=CRg2XEz7g/q9Y9vnBcCYZpcSu3GsBjF6YOxJNwlUUiA=;
+ b=adKFshqNToisbAbMGvgAiTxgCOIPJ4PbZbhbUM4tH7C69Ys36UpFMr0aG4UelWogAB5hny
+ oRsFvQPfh2pYoBxpNJ6ab79YuqAyJiLL4XUeT/by8eHcb+6s03njmBx+8MQ5U/BFAPVWLM
+ gQQpMV9bHdVpQz8fDeKVU2cMTB+G5ms=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-39-uMSpoYnrNdifZxl2Vf2cXA-1; Mon,
- 04 May 2026 07:36:18 -0400
-X-MC-Unique: uMSpoYnrNdifZxl2Vf2cXA-1
-X-Mimecast-MFC-AGG-ID: uMSpoYnrNdifZxl2Vf2cXA_1777894577
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-552-VbhkPFRcMu2o00hZ1s_NJg-1; Mon,
+ 04 May 2026 07:35:44 -0400
+X-MC-Unique: VbhkPFRcMu2o00hZ1s_NJg-1
+X-Mimecast-MFC-AGG-ID: VbhkPFRcMu2o00hZ1s_NJg_1777894544
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ACA28195608B; Mon,  4 May 2026 11:36:17 +0000 (UTC)
+ id EC2C4195608F
+ for <qemu-devel@nongnu.org>; Mon,  4 May 2026 11:35:43 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B0A6F18001ED; Mon,  4 May 2026 11:36:16 +0000 (UTC)
+ id A24ED1800347; Mon,  4 May 2026 11:35:42 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Mon, 04 May 2026 15:34:59 +0400
-Subject: [PATCH v2 11/46] hw/remote: guard listener unregister in finalize
+Date: Mon, 04 May 2026 15:34:53 +0400
+Subject: [PATCH v2 05/46] hw/pci-host/q35: handle NULL bus in pci-hole64
+ getters
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260504-qom-tests-v2-11-ef7e3dc94f7a@redhat.com>
+Message-Id: <20260504-qom-tests-v2-5-ef7e3dc94f7a@redhat.com>
 References: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 In-Reply-To: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- jag.raman@oracle.com
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1108;
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1851;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=cDsvGetIC+t+iBzuuM/zUrAZ/YOiA8vpcWaT/aLjS2w=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRsHm81Ro8UxB2SLtloX7GzTzB2sutTEZhOf
- 6Xo1T/vbbeJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbAAKCRDa6OEJdZac
- 5YRZEAC0UprmduhQmKs2IhVE1Xw7i/4D2Izj1nu5UqC4I7Q71XF1J0vbU0g5YCu2YOtK3n2zZeV
- iwXjR1UV/YSGHllxZohyF0Begoli3oeBJ7SXhqfjEXnEuLm7zmujalQQPBnkgLQDPUA1v4+Kwa2
- R6ac72rq/rk7XQEGHu51atJ7IjYE1cFPWMWcs+ThpKdXZyrhszcH20GDngjtGhKJ6atQ89ynUsA
- 99REwWmi3q1TU3/oM5PEppV3nsgYs/W4cudCfsWTUPafDWVCXkkb7K9cuvU8HHSlpT6O8FIlr3M
- 54E1qcNjrePvxsdEH6jBbMmY/iHCBrb8rdKOvC/8Pxmw8jeKWEqEcXDA04VtdIrtykaeBFHk82Y
- ofAfkc/gz+inT2lJh3/2rO4lpAygAqy5KMc9ZLG/sbMAEn7uMdF4nqTAKx9ZEep+QRuBzkPC9gf
- pfGHTnBMc5khuZ22FdRIyWHXzelkE0XOe3gfqdiJgtSt3IhYs4rurymrjl6D+hsuVTLQiBjOgTW
- loUm6eTBXRYdLUZBGNacW6Z1gFbTzv9zSIMDfsX9KUDeJ62vMxJ1eK+bzIZ6vVHiuXrH4f1m+wW
- R/puMpOqUNU2tNgmgg68W4nPkmZV6ssaoqc7WirA/i9tfV/dB5oS+extr5xAc8TvxbOzy0EzqOE
- Lr0DIOj9gJDWZYg==
+ bh=/fxZ1GAbhmt7eqzcBY0CxzgAhlT5phl8zL1KjrOh2so=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+IRsFAEBdR6ZsQVMihkZL7NzJXuLVMS1oXf5G
+ vcsV3wnZhaJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafiEbAAKCRDa6OEJdZac
+ 5R77EACX8Tc21I9tc2XKTsnuryt3fSgO5EZKCd3wBC52QaydTFdj/MDT39BiJeyaPOa4ZAC/I1C
+ rxQwUjN9gsR21ZhOpR9OHSUAc0sYQIrxzZqzic0v6We2DPx713dUFwOl1TVyHoWZ1UvCiTM2jLh
+ HhHUExuB+P3Xw18ASWxHQG7AT5HO3aakoQqLXhzdb5STf4I1CkzIKfE7/q64hye6DlgSCXAwdcP
+ kv2gmilbvixcMQ2/w74A4DDalwL9cLmZkIErw+MAEIkcQG1/kD0xVFmbch+AeePnhByZiwg4lJt
+ 4dy3YEIqo29bk+T5/bxKKTB6S6CAPGEQBTgzmrGAqocr/G9BO/Psthhbhf1usgNLvpkm4zXOAsx
+ CInIfLGbZSgBvgDpUxR5n38nDOpJpuvpuPifF9vgXc5535ARc5OZXnydYuQ1VSb/rmLPAgHub40
+ 4WPsURpdsFtYxohNDjT3/eDtZ1Xt9XIISBbPBnfxCrZP/rVJxcVtO2hlGpaKbzCosxrLSp0Tp8f
+ of9Ia1Yk6Cy1Y4eKCorK0v8GZHQHWlS+7E/s6+4O87pJ+bh3W9yC9coOSADkiCSqsyvJOfVazWZ
+ pTZMqipZLC6KLWJqcWwLIlpoKmKInrEL/uMBGMLhH6pdfxqJpWj3kvl/PtOK+gOigN5nmV7EyPk
+ 9neNP5linPspiBg==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -86,7 +87,7 @@ X-Spam_score: 0.8
 X-Spam_bar: /
 X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -104,34 +105,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Guard the unregister by checking whether the listener callback was
-set, which only happens right before registration.
+When called on an unrealized Q35 host bridge (e.g. from
+qmp_qom_list_properties), h->bus is NULL since the root bus is only
+created during realize. Guard against this in both the
+pci_hole64_start and pci_hole64_end getters.
 
-This is probably better addressed by "[PATCH] qdev: test if DeviceListener
-is in use". Just adding this patch for completeness.
-
-Cc: jag.raman@oracle.com
-Fixes: c7d80c7c1d9 ("multi-process: Associate fd of a PCIDevice with its object")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/remote/remote-obj.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ hw/pci-host/q35.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/hw/remote/remote-obj.c b/hw/remote/remote-obj.c
-index 86192dc8dad..4e74ae76158 100644
---- a/hw/remote/remote-obj.c
-+++ b/hw/remote/remote-obj.c
-@@ -154,7 +154,9 @@ static void remote_object_finalize(Object *obj)
-     RemoteObjectClass *k = REMOTE_OBJECT_GET_CLASS(obj);
-     RemoteObject *o = REMOTE_OBJECT(obj);
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index e85e4227b37..355e81bfa20 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -132,8 +132,14 @@ static void q35_host_get_pci_hole64_start(Object *obj, Visitor *v,
+                                           const char *name, void *opaque,
+                                           Error **errp)
+ {
+-    uint64_t hole64_start = q35_host_get_pci_hole64_start_value(obj);
++    PCIHostState *h = PCI_HOST_BRIDGE(obj);
++    uint64_t hole64_start;
  
--    device_listener_unregister(&o->listener);
-+    if (o->listener.unrealize) {
-+        device_listener_unregister(&o->listener);
++    if (!h->bus) {
++        error_setg(errp, "PCI host bridge not realized");
++        return;
 +    }
++    hole64_start = q35_host_get_pci_hole64_start_value(obj);
+     visit_type_uint64(v, name, &hole64_start, errp);
+ }
  
-     if (o->ioc) {
-         qio_channel_shutdown(o->ioc, QIO_CHANNEL_SHUTDOWN_BOTH, NULL);
+@@ -149,10 +155,15 @@ static void q35_host_get_pci_hole64_end(Object *obj, Visitor *v,
+ {
+     PCIHostState *h = PCI_HOST_BRIDGE(obj);
+     Q35PCIHost *s = Q35_HOST_DEVICE(obj);
+-    uint64_t hole64_start = q35_host_get_pci_hole64_start_value(obj);
++    uint64_t hole64_start;
+     Range w64;
+     uint64_t value, hole64_end;
+ 
++    if (!h->bus) {
++        error_setg(errp, "PCI host bridge not realized");
++        return;
++    }
++    hole64_start = q35_host_get_pci_hole64_start_value(obj);
+     pci_bus_get_w64_range(h->bus, &w64);
+     value = range_is_empty(&w64) ? 0 : range_upb(&w64) + 1;
+     hole64_end = ROUND_UP(hole64_start + s->mch.pci_hole64_size, 1ULL << 30);
 
 -- 
 2.54.0
