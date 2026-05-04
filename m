@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 010D4CD3427
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 20:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21DB4CD3427
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 20:34:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJzyG-0004BW-Nz; Mon, 04 May 2026 16:32:52 -0400
+	id 1wJzyH-0004Bt-46; Mon, 04 May 2026 16:32:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wJzyB-0004AN-0G
- for qemu-devel@nongnu.org; Mon, 04 May 2026 16:32:48 -0400
+ id 1wJzyC-0004B0-UE
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 16:32:49 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1wJzy6-0000Oj-V4
- for qemu-devel@nongnu.org; Mon, 04 May 2026 16:32:46 -0400
+ id 1wJzy8-0000Ow-Mt
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 16:32:47 -0400
 Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 644EI8MK2210426; Mon, 4 May 2026 20:32:41 GMT
+ 644J7BUw815633; Mon, 4 May 2026 20:32:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Gf3NEw7xbKFeGNFT3
- uS/ALSicvlqpNec7vUBFKZSg4s=; b=nRhLUzkaHYpKyeLFnyQdAYgNubux4SKTF
- gz8tENWVRwGqiHUZhPIH+/TuoOtlMFAOHWCGPnLP8mEAXDmO5eEhK86PyxwVQhkt
- C3uah6x4Sg8dhOYdegDKuYHNE6QlRtrYNxoYTJa9m88HisgiISDmQrkC8EewddHR
- mffvXWJ09GB6buUlKRoIC0Pr1t2nOqWIKyTF1SUZ3ht7pfFNr41pMV2iNCjD61Wi
- 3YL/+yQF+bzIoCxV0EQEg3V+2pwvnJkqvtmtLfhR0Mk+SN/87F992Tqk2MyZwPl2
- VEVO86rcKguF1U5aW6JZshmrSwqSfki8giyAdVqt0yVBg9etxkI/A==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9y18t56-1
+ :mime-version:references:subject:to; s=pp1; bh=SWgQ+1oVwDXcnry3s
+ WIuIbQcPh+rrbqNDDdyBVyt2hw=; b=THcdwEgt6RKsLw8enRdsYBqkXujr7Qk5I
+ J2gr/nS4vEzFrDlN7dliSmUPFOEUOf7HW0dVt/FO2hdYWK+3kWHxdgzmQmo3hEKi
+ SszLo4aebpXXaffiueyfdanS9wZCxPoJlWGOxJ/Hp6Ahvsm0olP3+oozc9X3GtjT
+ ro9pe2ecqh/vS5Yvi2LJRlUMgEOmQaaWwQ0mAOfYT9HJO2dqrsMVwAA9n6Bbc5pD
+ YJkBmHPf1fq6tCOHimqmV5v3HeWtfaHXzvoxyHivOLcWOOD1+eXbtNRmFZMybfCV
+ SENTT1Yi8yoIzKuLT9ulwQqJ2+M9HjWe5nt6cMh1kFrq6L+IXQqgg==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9y18t57-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 May 2026 20:32:40 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 644KORFa021885;
- Mon, 4 May 2026 20:32:40 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwx9y6fp3-1
+ Mon, 04 May 2026 20:32:42 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 644KORLn000469;
+ Mon, 4 May 2026 20:32:41 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwwtg6jqv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 04 May 2026 20:32:40 +0000 (GMT)
+ Mon, 04 May 2026 20:32:41 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
  [10.241.53.105])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 644KWdkj29688494
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 644KWeXb25756316
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 4 May 2026 20:32:39 GMT
+ Mon, 4 May 2026 20:32:41 GMT
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 97D1258059;
- Mon,  4 May 2026 20:32:39 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D5B2E58059;
+ Mon,  4 May 2026 20:32:40 +0000 (GMT)
 Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 492AF58043;
- Mon,  4 May 2026 20:32:39 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 885B458043;
+ Mon,  4 May 2026 20:32:40 +0000 (GMT)
 Received: from mycroft-2.pok.ibm.com (unknown [9.47.158.222])
  by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  4 May 2026 20:32:39 +0000 (GMT)
+ Mon,  4 May 2026 20:32:40 +0000 (GMT)
 From: Stefan Berger <stefanb@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, armenon@redhat.com,
  Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH 2/5] tests: Use ML-DSA-87 operations to cause large TPM
- transfers with CRB
-Date: Mon,  4 May 2026 20:32:25 +0000
-Message-ID: <20260504203228.886578-3-stefanb@linux.ibm.com>
+Subject: [PATCH 5/5] tpm-spapr: Extend buffer size to 8kb for machines >= v11.1
+Date: Mon,  4 May 2026 20:32:28 +0000
+Message-ID: <20260504203228.886578-6-stefanb@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260504203228.886578-1-stefanb@linux.ibm.com>
 References: <20260504203228.886578-1-stefanb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 4SfGtnCi7wvvCxTHeoYVQyWP9ii6GFkd
-X-Proofpoint-GUID: 4SfGtnCi7wvvCxTHeoYVQyWP9ii6GFkd
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA0MDE4NSBTYWx0ZWRfX/N7i03CwVZIy
- 5zbDUV6zd5bxDi+yugd63FHgU3CoQHB73hZkrysmRF1zntr6rPPSrUdll29fiJARH324mJ1SD5o
- Ybck/A1R3R/zy0zA+B3eU2Od9GuA4YuALF55Cob9E9vIhiElBlnwjYvY2j5kkQ5PURT1IGOu25o
- HxlLj6q0LhVM73L75kPY+EtoVx8E+6ir0v7PVKRyxpubcwSK2AYS0kbfZp5QnrXArnMlhRW6UZL
- /8tGWJqIwXXzmFl0SxRE1UNuuI1voTUgNvV0MCoF0ACewpMva4SRmC4a9Vs7PlfBSsJv2a1qQCy
- ITQqBoMLZ4+q6/P4+FjOKjkq2obeVlXz6BvOBVF2bjd6cEvXNJOxSOn4Kk2nGcbPiZBQBJrWfVN
- wRbXdUp2pEmn4dAIyDlV2f7sX6an9tirArfYcolPKHB7JADOjD9P6d3qqy5iwX89/fejpMJQw6L
- JBgR0Z2LbAGFR6o+rgQ==
-X-Authority-Analysis: v=2.4 cv=UbFhjqSN c=1 sm=1 tr=0 ts=69f90268 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-ORIG-GUID: YpPXoZzkHdL8r-aHC_G5xMu3yqCOXsPz
+X-Proofpoint-GUID: YpPXoZzkHdL8r-aHC_G5xMu3yqCOXsPz
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA0MDE4NSBTYWx0ZWRfX4sA2vTVItAIp
+ FDFkxeL4Om3SDWq1RCjK7dPiUl8Hpk67KbTrSkEobRZZZrPJkGcIJxl5jEMLqtbgTl6YF8Q21GZ
+ UvPVMjD4O0QyyWjRtVsu7oK/WXW1ratTcC0worhzuQMogSqhWOK+ee30qJxJd3tZ6Y6YwnTeOwO
+ tePcl8cANNSwPXki2cUJu1fhjnPxpvy6gMbAFvA5pXigoChEEQukwogCWz58BgTppdfEb8OfSox
+ 3ZQPNbcY9HcydjJT6JAKkrZdTcej+eTNjGNrLYJCYz6edStZ/xXUipI2jOKLPphr+R5hnmrf+hO
+ 8JZzh5Z0SrDaUTK/IUPfUGAkZQwDw3ns9zyvyf7dktHZsEl+0rmZS8I5wraB7rckhN0DdUV6SHE
+ D2GSHFywjTCY7LDiQpRwUvgBHwy08Z+nsgOsqR9VPwr6O0uritWLtnoYQQyaGKdR3QM7pl1uC6Z
+ R4xBRFnaANPvsXixcCA==
+X-Authority-Analysis: v=2.4 cv=UbFhjqSN c=1 sm=1 tr=0 ts=69f9026a cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=-ob2jAnJSdXix_SXycsA:9
+ a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=eRoXzRw8BeJ126zY0s0A:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-04_05,2026-04-30_02,2025-10-01_01
@@ -120,244 +118,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To test large data transfers (receiving and sending) that make use of a CRB
-chunked transfer, create an ML-DSA-87 key and sign some data with it and
-receive the 4627 bytes signature. After this send the signature back to the
-TPM to have the TPM verify the signature.
+Extend the buffer size to 8kb. Also introduce the allow-ext-buffer
+property that is set to true for the 11.1 machine and to false for
+git older machine. If it is set to true, allow the 8kb buffer size
+and restrict the buffer to the previous 4kb otherwise.
 
 Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Arun Menon <armenon@redhat.com>
 ---
- tests/qtest/tpm-crb-swtpm-test.c |   5 +-
- tests/qtest/tpm-tests.c          | 113 +++++++++++++++++++++++++++++++
- tests/qtest/tpm-tests.h          |   4 ++
- tests/qtest/tpm-util.c           |  37 ++++++++++
- tests/qtest/tpm-util.h           |   2 +
- 5 files changed, 159 insertions(+), 2 deletions(-)
+ hw/core/machine.c  |  1 +
+ hw/tpm/tpm_spapr.c | 11 +++++++++--
+ 2 files changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/tests/qtest/tpm-crb-swtpm-test.c b/tests/qtest/tpm-crb-swtpm-test.c
-index 050c7b0c1f..541fd58133 100644
---- a/tests/qtest/tpm-crb-swtpm-test.c
-+++ b/tests/qtest/tpm-crb-swtpm-test.c
-@@ -37,8 +37,9 @@ static void tpm_crb_chunk_swtpm_test(const void *data)
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 42ea231b91..b07802c550 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -45,6 +45,7 @@ GlobalProperty hw_compat_11_0[] = {
+     { "tpm-tis", "x-allow-ext-buffer", "off" },
+     { "tpm-tis-i2c", "x-allow-ext-buffer", "off" },
+     { "tpm-tis-device", "x-allow-ext-buffer", "off" },
++    { "tpm-spapr", "x-allow-ext-buffer", "off" },
+ };
+ const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
+ 
+diff --git a/hw/tpm/tpm_spapr.c b/hw/tpm/tpm_spapr.c
+index 19075d1f01..91f1607dd9 100644
+--- a/hw/tpm/tpm_spapr.c
++++ b/hw/tpm/tpm_spapr.c
+@@ -64,7 +64,7 @@ typedef struct TpmCrq {
+ #define SPAPR_VTPM_ERR_COPY_IN_FAILED        0x3
+ #define SPAPR_VTPM_ERR_COPY_OUT_FAILED       0x4
+ 
+-#define TPM_SPAPR_BUFFER_MAX                 4096
++#define TPM_SPAPR_BUFFER_MAX                 8192
+ 
+ struct SpaprTpmState {
+     SpaprVioDevice vdev;
+@@ -86,6 +86,7 @@ struct SpaprTpmState {
+     TPMVersion be_tpm_version;
+ 
+     size_t be_buffer_size;
++    bool allow_ext_buffer;
+ };
+ 
+ /*
+@@ -293,14 +294,18 @@ static const char *tpm_spapr_get_dt_compatible(SpaprVioDevice *dev)
+ static void tpm_spapr_reset(SpaprVioDevice *dev)
  {
-     const TestState *ts = data;
+     SpaprTpmState *s = VIO_SPAPR_VTPM(dev);
++    size_t limit = TPM_SPAPR_BUFFER_MAX;
  
--    tpm_test_swtpm_test(ts->src_tpm_path, tpm_util_crb_chunk_transfer,
--                        "tpm-crb", NULL);
-+    tpm_test_swtpm_large_tx_test(ts->src_tpm_path,
-+                                 tpm_util_crb_chunk_transfer,
-+                                 "tpm-crb", NULL);
- }
+     s->state = SPAPR_VTPM_STATE_NONE;
+     s->numbytes = 0;
  
- static void tpm_crb_swtpm_migration_test(const void *data)
-diff --git a/tests/qtest/tpm-tests.c b/tests/qtest/tpm-tests.c
-index 9648e4902b..1c884c87c5 100644
---- a/tests/qtest/tpm-tests.c
-+++ b/tests/qtest/tpm-tests.c
-@@ -13,11 +13,14 @@
-  */
+     s->be_tpm_version = tpm_backend_get_tpm_version(s->be_driver);
  
- #include "qemu/osdep.h"
-+#include "system/tpm_util.h"
- #include <glib/gstdio.h>
- 
- #include "libqtest-single.h"
- #include "tpm-tests.h"
- 
-+#define ML_DSA_87_SIGNATURE_SIZE 4627
-+
- static bool
- tpm_test_swtpm_skip(void)
- {
-@@ -140,3 +143,113 @@ void tpm_test_swtpm_migration_test(const char *src_tpm_path,
-     g_unlink(src_tpm_addr->u.q_unix.path);
-     qapi_free_SocketAddress(src_tpm_addr);
- }
-+
-+void tpm_test_swtpm_large_tx_test(const char *src_tpm_path, tx_func *tx,
-+                                  const char *ifmodel,
-+                                  const char *machine_options)
-+{
-+    unsigned char signature[2 + 2 + ML_DSA_87_SIGNATURE_SIZE];/*TPMT_SIGNATURE*/
-+    unsigned char response[8192];
-+    unsigned char request[8192];
-+    SocketAddress *addr = NULL;
-+    GError *error = NULL;
-+    char *args = NULL;
-+    GPid swtpm_pid;
-+    QTestState *s;
-+    gboolean succ;
-+
-+    if (tpm_test_swtpm_skip()) {
-+        return;
++    if (!s->allow_ext_buffer) {
++        limit = 4096;
 +    }
-+
-+    /* Large transfers based on ML-DSA operations required default-v2 profile */
-+    if (!tpm_util_swtpm_has_profile("default-v2", "ml-dsa")) {
-+        return;
-+    }
-+
-+    succ = tpm_util_swtpm_start(src_tpm_path, &swtpm_pid, &addr, "default-v2",
-+                                &error);
-+    g_assert_true(succ);
-+
-+    args = g_strdup_printf(
-+        "%s "
-+        "-chardev socket,id=chr,path=%s "
-+        "-tpmdev emulator,id=tpm0,chardev=chr "
-+        "-device %s,tpmdev=tpm0",
-+        machine_options ? : "", addr->u.q_unix.path, ifmodel);
-+
-+    s = qtest_start(args);
-+    g_free(args);
-+
-+    tpm_util_startup(s, tx);
-+
-+    static const unsigned char tpm_createprimary_mldsa[] = {
-+        0x80, 0x02, 0x00, 0x00, 0x00, 0x38, 0x00, 0x00,
-+        0x01, 0x31, 0x40, 0x00, 0x00, 0x07, 0x00, 0x00,
-+        0x00, 0x09, 0x40, 0x00, 0x00, 0x09, 0x00, 0x00,
-+        0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x00,
-+        0x00, 0x00, 0x0f, 0x00, 0xa1, 0x00, 0x0b, 0x00,
-+        0x04, 0x04, 0x72, 0x00, 0x00, 0x00, 0x03, 0x00,
-+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
-+    };
-+    tx(s, tpm_createprimary_mldsa, sizeof(tpm_createprimary_mldsa),
-+       response, sizeof(response));
-+    g_assert_cmpint(tpm_cmd_get_errcode(response), ==, 0);
-+    g_assert_cmpint(tpm_cmd_get_size(response), ==, 2831);
-+
-+    static const unsigned char tpm_signsequencestart[] = {
-+        0x80, 0x01, 0x00, 0x00, 0x00, 0x12, 0x00, 0x00,
-+        0x01, 0xaa, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00,
-+        0x00, 0x00
-+    };
-+    tx(s, tpm_signsequencestart, sizeof(tpm_signsequencestart),
-+       response, sizeof(response));
-+    g_assert_cmpint(tpm_cmd_get_errcode(response), ==, 0);
-+    g_assert_cmpint(tpm_cmd_get_size(response), ==, 14);
-+
-+    /* Complete sequence and get signature */
-+    static const unsigned char tpm_signsequencecomplete[] = {
-+        0x80, 0x02, 0x00, 0x00, 0x00, 0x2a, 0x00, 0x00,
-+        0x01, 0xa4, 0x80, 0x00, 0x00, 0x01, 0x80, 0x00,
-+        0x00, 0x00, 0x00, 0x00, 0x00, 0x12, 0x40, 0x00,
-+        0x00, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x40,
-+        0x00, 0x00, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00,
-+        0x00, 0x00
-+    };
-+    tx(s, tpm_signsequencecomplete, sizeof(tpm_signsequencecomplete),
-+       response, sizeof(response));
-+    g_assert_cmpint(tpm_cmd_get_errcode(response), ==, 0);
-+    g_assert_cmpint(tpm_cmd_get_size(response), ==, 4655);
-+
-+    /* TPMT_SIGNATURE found at offset 14 */
-+    memcpy(signature, &response[14], sizeof(signature));
-+
-+    static const unsigned char tpm_verifysequencestart[] = {
-+        0x80, 0x01, 0x00, 0x00, 0x00, 0x14, 0x00, 0x00,
-+        0x01, 0xa9, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00,
-+        0x00, 0x00, 0x00, 0x00
-+    };
-+    tx(s, tpm_verifysequencestart, sizeof(tpm_verifysequencestart),
-+       response, sizeof(response));
-+    g_assert_cmpint(tpm_cmd_get_errcode(response), ==, 0);
-+    g_assert_cmpint(tpm_cmd_get_size(response), ==, 14);
-+
-+    /* TPM2_VerifySequenceComplete */
-+    memcpy(request,
-+           (unsigned char[]) {
-+               0x80, 0x02, 0x00, 0x00, 0x12, 0x36, 0x00, 0x00,
-+               0x01, 0xa3, 0x80, 0x00, 0x00, 0x01, 0x80, 0x00,
-+               0x00, 0x00, 0x00, 0x00, 0x00, 0x09, 0x40, 0x00,
-+               0x00, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00,
-+           }, 31);
-+    memcpy(&request[31], signature, sizeof(signature));
-+    tx(s, request, 31 + sizeof(signature), response, sizeof(response));
-+    g_assert_cmpint(tpm_cmd_get_errcode(response), ==, 0);
-+    g_assert_cmpint(tpm_cmd_get_size(response), ==, 27);
-+
-+    qtest_end();
-+    tpm_util_swtpm_kill(swtpm_pid);
-+
-+    g_unlink(addr->u.q_unix.path);
-+    qapi_free_SocketAddress(addr);
-+}
-diff --git a/tests/qtest/tpm-tests.h b/tests/qtest/tpm-tests.h
-index 07ba60d26e..6993ce40dc 100644
---- a/tests/qtest/tpm-tests.h
-+++ b/tests/qtest/tpm-tests.h
-@@ -24,4 +24,8 @@ void tpm_test_swtpm_migration_test(const char *src_tpm_path,
-                                    const char *ifmodel,
-                                    const char *machine_options);
+     s->be_buffer_size = MIN(tpm_backend_get_buffer_size(s->be_driver),
+-                            TPM_SPAPR_BUFFER_MAX);
++                            limit);
  
-+void tpm_test_swtpm_large_tx_test(const char *src_tpm_path, tx_func *tx,
-+                                  const char *ifmodel,
-+                                  const char *machine_options);
-+
- #endif /* TESTS_TPM_TESTS_H */
-diff --git a/tests/qtest/tpm-util.c b/tests/qtest/tpm-util.c
-index 1f3e8c93b5..19e49390db 100644
---- a/tests/qtest/tpm-util.c
-+++ b/tests/qtest/tpm-util.c
-@@ -224,6 +224,43 @@ bool tpm_util_swtpm_has_tpm2(void)
-     return has_tpm2;
- }
+     tpm_backend_reset(s->be_driver);
  
-+bool tpm_util_swtpm_has_profile(const char *profilename,
-+                                const char *content)
-+{
-+    bool has_profile = false;
-+    char *out = NULL;
-+    static const char *argv[] = {
-+        "swtpm", "socket", "--tpm2", "--print-profiles", NULL
-+    };
-+
-+    if (!tpm_util_swtpm_has_tpm2()) {
-+        return false;
-+    }
-+
-+    if (!g_spawn_sync(NULL /* working_dir */,
-+                      (char **)argv,
-+                      NULL /* envp */,
-+                      G_SPAWN_SEARCH_PATH,
-+                      NULL /* child_setup */,
-+                      NULL /* user_data */,
-+                      &out,
-+                      NULL /* err */,
-+                      NULL /* exit_status */,
-+                      NULL)) {
-+        return false;
-+    }
-+
-+    if (strstr(out, profilename)) {
-+        has_profile = true;
-+    }
-+    if (has_profile && content && strstr(out, content) == NULL) {
-+        has_profile = false;
-+    }
-+
-+    g_free(out);
-+    return has_profile;
-+}
-+
- gboolean tpm_util_swtpm_start(const char *path, GPid *pid,
-                               SocketAddress **addr, const char *profilename,
-                               GError **error)
-diff --git a/tests/qtest/tpm-util.h b/tests/qtest/tpm-util.h
-index ca2d7d173f..90790f30db 100644
---- a/tests/qtest/tpm-util.h
-+++ b/tests/qtest/tpm-util.h
-@@ -39,6 +39,8 @@ void tpm_util_pcrread(QTestState *s, tx_func *tx,
-                       const unsigned char *exp_resp, size_t exp_resp_size);
+@@ -367,6 +372,8 @@ static const VMStateDescription vmstate_spapr_vtpm = {
+ static const Property tpm_spapr_properties[] = {
+     DEFINE_SPAPR_PROPERTIES(SpaprTpmState, vdev),
+     DEFINE_PROP_TPMBE("tpmdev", SpaprTpmState, be_driver),
++    DEFINE_PROP_BOOL("x-allow-ext-buffer", SpaprTpmState,
++                     allow_ext_buffer, true),
+ };
  
- bool tpm_util_swtpm_has_tpm2(void);
-+bool tpm_util_swtpm_has_profile(const char *profilename,
-+                                const char *content);
- 
- gboolean tpm_util_swtpm_start(const char *path, GPid *pid,
-                               SocketAddress **addr, const char *profilename,
+ static void tpm_spapr_realizefn(SpaprVioDevice *dev, Error **errp)
 -- 
 2.53.0
 
