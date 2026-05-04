@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB5FBCD3427
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 15:52:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26EF9FF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 15:53:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJvZo-0000ve-MD; Mon, 04 May 2026 11:51:20 -0400
+	id 1wJvZv-0000zV-7S; Mon, 04 May 2026 11:51:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wJvZl-0000th-MK
- for qemu-devel@nongnu.org; Mon, 04 May 2026 11:51:17 -0400
-Received: from mail-qt1-x82c.google.com ([2607:f8b0:4864:20::82c])
+ id 1wJvZt-0000z4-NL
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 11:51:25 -0400
+Received: from mail-qt1-x830.google.com ([2607:f8b0:4864:20::830])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <brookmangabriel@gmail.com>)
- id 1wJvZj-0006Bt-QW
- for qemu-devel@nongnu.org; Mon, 04 May 2026 11:51:17 -0400
-Received: by mail-qt1-x82c.google.com with SMTP id
- d75a77b69052e-50e97863425so40559091cf.0
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 08:51:15 -0700 (PDT)
+ id 1wJvZr-0006E2-OQ
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 11:51:25 -0400
+Received: by mail-qt1-x830.google.com with SMTP id
+ d75a77b69052e-50d7c12e48eso35475781cf.1
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 08:51:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777909875; x=1778514675; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777909883; x=1778514683; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KO7Mq8JRuwohDcM/67cxG4Kl5R8QIg4FU/azGfOw7c8=;
- b=jtuyI9dxjFpAhNiqXWaBZaFGsLaHFLRL/69rUsniFzrDLp8QJpXc8WBhdpfvXlZn+l
- +7ej13xczyziLv/iuQCVaNLKyI8s0HeOXhB8Ish9ldP38zuMR7YRy4OCg4al6OtJyljf
- RxZV2BlImVoM037xiRQkWCkx7MiNVtc841Y8PfvWzrhK9uDFUYr2Kdhmpr3OaU5KMCGY
- dmaIaO8OjbD8D8J11BuiKHq7TBrY2BzVI7zCfy3pzYzYIfBuGkZememn5Mdfz8L8YjYI
- PBSdXfCSMoenCEwO57sG1WmVU624o2TdLABYfc7dRVk50BqWF2x9Bs+hdTAlqfs2QU2I
- 423A==
+ :reply-to; bh=MG1iwnko83uMuVMCUIM9KDLK/vF8JVyEE/TaS9GVUps=;
+ b=ZvOQttqBpltWABpGJZWbBcp4yxDvrGNoCAsseCAiVLSYumqyZstWFo3Eais5hzZZcc
+ WYz6EnMZSBiSmga62pZRSqDZP/CgW0xEJg6+lWKCE6Gn87AZJ9hmPwGJSxUkZndXuPjX
+ ReXwbsKDLBOfZo31p9nSNXePR+UjyoP1MZJIGJh+7u0eh/ZqwHhNVCWy/UJz9r0cn2Wu
+ 4EjXWY/H/SBIywjrO5+NvAa/o5uBuZTnr2L0avc9ltYuBoLLS1CbfQEo9QQe6HI3RKFj
+ behE0h9vwHeYF9sw213zyquBM0tgAOrRoPQDu9wRxtEiJLRdej32akO74K5fzg3u0U1p
+ Hd0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777909875; x=1778514675;
+ d=1e100.net; s=20251104; t=1777909883; x=1778514683;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=KO7Mq8JRuwohDcM/67cxG4Kl5R8QIg4FU/azGfOw7c8=;
- b=AoCvtfVLM0dG6SD7HV1jzTYpLzkS7nNco0Hu5IsC2y3adOCfe2Ue3WDYxpwh7dOEZr
- zZ3fmjaETp1VewYYmYka31urOdT0d9NHtYRDUX700gbwj5xTJitTXMbu8laNbBkOp1xO
- 6IHhEVgQPMTSJu2xPOQW7D0bzxL++l0AP/V3WDrXsaGEFRrRUbRCoTkcLaCJYoiaU2fz
- B8N48avsvk62foUQuR8WRsPni+mpt8LArqg1kwlYV7R/KGCmyJOZu5zejcvnxhIaWl6x
- 5HO+A6ZU93jdRY6WrOwlCjcLeRwCTbvjdC12/gJyIu2iv9pPLoNxYITZSqdBwxGtsWLY
- REdg==
-X-Gm-Message-State: AOJu0YxSGpYsLWjwspv/JTyWkc1F9NN2U4aiVMcH1zgbvrEGYQ7eXljg
- FguIBQYkp6dr0uTjCflggU8a312NT59W3y4v9fWI9ytJTUDIfOfnFL9n
-X-Gm-Gg: AeBDievxBkJft8jpUhcZvyzscC0C3jMsDRbd4GVZa9HR5waR3FjBj3pXR8ZYNocvNeh
- nuvslybxSpmg9TOPAM3eU3zASTKcoY4bG2PORILuqL2Yq75GKWefuGAuRxHf6t+AYls49IgLwAk
- fw6YTjtc8SsP3GUtIUVX3NEQSx0RjcywkiM3aBOA71vN5gmxqfgkWqnXnAa9NjGsAtEMNDCPQfj
- v8PPzpP5EbaNPdSgMZkLsagmEJdfzGrBdXbKw3YvA6wioVpdEfj+O06H093Sdz4VqOVy0U4GUbC
- J/J5rGbERQvlGBC2938oQmfKZtWSW8+ErreMTdj6d3dmRIZd6//WCrSk0R+XIvxcMJZIgRN6vTW
- iKlkZwA6/2FWCiP29il5ZZ0MD+YGjfbsWcniYRmQIrfoew58Trd1r0rm5azpILBCMg0n4Od8TPC
- E7mmR/rruGZzpc9mlGPl8o1jNCMJBGNMoNwTONhd0+w990pOzYR6c=
-X-Received: by 2002:a05:622a:54e:b0:50d:aae1:7070 with SMTP id
- d75a77b69052e-5104bf6c541mr142645831cf.48.1777909874649; 
- Mon, 04 May 2026 08:51:14 -0700 (PDT)
+ bh=MG1iwnko83uMuVMCUIM9KDLK/vF8JVyEE/TaS9GVUps=;
+ b=JXK2mX6yoHWR8/bSr/uoVJ16eKFkNFPPZESka1U2whb/lYIFUDuNydQOAbKADjCYrV
+ Krbe8BJ+rbcbz17RFP26P7xSolGDWbpBV1HZxXxz5X9Hgxu7mn3HNKZl5IEG7tk4j0yt
+ tNxB6jYrtPD0BXIBFnmxDkznLPSeJHVRuKD02FurUuZyLEoPW9/DkHR+X7Qh2cFcdLVU
+ pLt/YxIXzF6j6rCzcpm8pQWTCgi/T3ZUlX1h8H3w/WgWpw/38yT16jmk0EnphCbU1CYL
+ jo5EWUPp11wFQZyZ8oPEqjbK7zwqcHAvwSE4Lu88/9KSJXycz27s/53SXU+MfXuyU2Ca
+ d9uA==
+X-Gm-Message-State: AOJu0YzKowe3VeoIGrIIBhZGvGPkNKeQcyDyT6jaGuS7b9Pfjp1c2rnh
+ fqayXj7RSegoU8/WGU9eQjpmI6ixEQDk+2Gt8b9V5czZ1njZjP26x6CqkG8jzRLe
+X-Gm-Gg: AeBDiest5Pps7+HF/cNs6uNwiGlEn8S7oCnSuZbM+usT2oZNm3yjUR57BOp8/m4osCO
+ hL64Eo+aRYLCPCuqxsdNu6EY8P6WMrgZat5/Ox3os83NNVALFMipZmwjb3fl6q52zb5Q4/YWCfC
+ 1xAgptJtytA3eulcN/rgG+SMRZkK+6IO8SCXK3L+N+fPH+pzfktoV7Nk4LY17o6i6nwvEASQMgN
+ i7PkQ+VmuSAprjCRaOuB435F3Z1Eg/INfNE1Oh/ODq82Iux7hlpD7DPA8U1plUjaSsFS+PKDMzf
+ mbVfvK3WKOSSKs0JEqLXIhyqrbl1hqoRRV7bPejfo04SCY78r/Y+QVcDbUTpi/EGCQNgvAGua6X
+ NtgrXeKifCA3LVNh0EEwsZbBRq5++tuN3Y+0MnRRJgykA79Owsfyha4WaOmx2UCx5JLAm+CXPsL
+ f7yAas7/IYX0QTS2W2rj3/1imjUg9t4AOy1nYAFTBJW3Hu/DitBqE=
+X-Received: by 2002:a05:622a:1f8c:b0:50f:b7b3:2ec4 with SMTP id
+ d75a77b69052e-5130534b3bbmr803141cf.25.1777909881921; 
+ Mon, 04 May 2026 08:51:21 -0700 (PDT)
 Received: from [192.168.1.164] ([2600:1009:a021:c665:5296:905f:3e4a:eb90])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-51040931552sm99599011cf.12.2026.05.04.08.51.13
+ d75a77b69052e-51040931552sm99599011cf.12.2026.05.04.08.51.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 May 2026 08:51:14 -0700 (PDT)
+ Mon, 04 May 2026 08:51:21 -0700 (PDT)
 From: Gabriel Brookman <brookmangabriel@gmail.com>
-Date: Mon, 04 May 2026 11:50:37 -0400
-Subject: [PATCH v5 04/15] linux-user: add MTE_STORE_ONLY to prctl
+Date: Mon, 04 May 2026 11:50:42 -0400
+Subject: [PATCH v5 09/15] target/arm: load on canonical tag loads ext bits
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260504-feat-mte4-v5-4-232a648e63c6@gmail.com>
+Message-Id: <20260504-feat-mte4-v5-9-232a648e63c6@gmail.com>
 References: <20260504-feat-mte4-v5-0-232a648e63c6@gmail.com>
 In-Reply-To: <20260504-feat-mte4-v5-0-232a648e63c6@gmail.com>
 To: qemu-devel@nongnu.org
@@ -81,15 +81,15 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1777909867; l=4942;
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1777909867; l=5681;
  i=brookmangabriel@gmail.com; s=20251009; h=from:subject:message-id;
- bh=3NUHlDKCw8l8rqmAwbaWm0eM8fht4yd8LR/eAfpLXkM=;
- b=qaor9hF4vUH0Y5C2PSDNFkZo239y6H4EkDjtaT+bpxkAmJpegOR/RoWzOFUD//lvnAR06k1IT
- UOZq0fombvQCtuNPHUdjUQOLxo7Ah0nYTB/H+S1kA0CXy2N1Zox78yQ
+ bh=Ws2Tqe13fBijY+IHknD2CyebZv1in1ArUctH8Hio2sA=;
+ b=oz8eYjE5Vhv9ZTARi40/Hp4hw9BTP367GpMsUgRMbeoVgKXesDUDsrV4q+eHUAoXCN10U4XKi
+ TjEmXWkKoGZCOfw5lW6i1VHoDaYhtfJGVF+zbu/NgSZ3rybx9vBpuSW
 X-Developer-Key: i=brookmangabriel@gmail.com; a=ed25519;
  pk=m9TtPDal6WzoHNnQiHHKf8dTrv3DUCPUUTujuo8vNrw=
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82c;
- envelope-from=brookmangabriel@gmail.com; helo=mail-qt1-x82c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::830;
+ envelope-from=brookmangabriel@gmail.com; helo=mail-qt1-x830.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,133 +112,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Linux-user processes can now control whether MTE_STORE_ONLY is enabled
-using the prctl syscall.
+Loading tags from canonically tagged regions should use the canonical
+tags (extension bits), not allocation tags. See AArch64_MemTagRead().
 
 Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/aarch64/mte_user_helper.c | 11 ++++++++++-
- linux-user/aarch64/mte_user_helper.h | 14 +++++++++-----
- linux-user/aarch64/target_prctl.h    |  6 +++++-
- target/arm/gdbstub64.c               |  2 +-
- tests/tcg/aarch64/mte.h              |  3 +++
- 5 files changed, 28 insertions(+), 8 deletions(-)
+ target/arm/tcg/helper-a64-defs.h |  4 ++--
+ target/arm/tcg/mte_helper.c      | 42 +++++++++++++++++++++++++++++++++++++---
+ target/arm/tcg/translate-a64.c   |  4 ++--
+ 3 files changed, 43 insertions(+), 7 deletions(-)
 
-diff --git a/linux-user/aarch64/mte_user_helper.c b/linux-user/aarch64/mte_user_helper.c
-index a5b1c8503b..b5c4dafcda 100644
---- a/linux-user/aarch64/mte_user_helper.c
-+++ b/linux-user/aarch64/mte_user_helper.c
-@@ -10,7 +10,7 @@
- #include "qemu.h"
- #include "mte_user_helper.h"
+diff --git a/target/arm/tcg/helper-a64-defs.h b/target/arm/tcg/helper-a64-defs.h
+index 3c3c5dddb7..c08c8c3991 100644
+--- a/target/arm/tcg/helper-a64-defs.h
++++ b/target/arm/tcg/helper-a64-defs.h
+@@ -102,14 +102,14 @@ DEF_HELPER_FLAGS_3(mte_check, TCG_CALL_NO_WG, i64, env, i32, i64)
+ DEF_HELPER_FLAGS_3(mte_check_zva, TCG_CALL_NO_WG, i64, env, i32, i64)
+ DEF_HELPER_FLAGS_3(irg, TCG_CALL_NO_RWG, i64, env, i64, i64)
+ DEF_HELPER_FLAGS_4(addsubg, TCG_CALL_NO_RWG_SE, i64, env, i64, s32, i32)
+-DEF_HELPER_FLAGS_3(ldg, TCG_CALL_NO_WG, i64, env, i64, i64)
++DEF_HELPER_FLAGS_4(ldg, TCG_CALL_NO_WG, i64, env, i64, i64, i32)
+ DEF_HELPER_FLAGS_3(stg, TCG_CALL_NO_WG, void, env, i64, i64)
+ DEF_HELPER_FLAGS_3(stg_parallel, TCG_CALL_NO_WG, void, env, i64, i64)
+ DEF_HELPER_FLAGS_2(stg_stub, TCG_CALL_NO_WG, void, env, i64)
+ DEF_HELPER_FLAGS_3(st2g, TCG_CALL_NO_WG, void, env, i64, i64)
+ DEF_HELPER_FLAGS_3(st2g_parallel, TCG_CALL_NO_WG, void, env, i64, i64)
+ DEF_HELPER_FLAGS_2(st2g_stub, TCG_CALL_NO_WG, void, env, i64)
+-DEF_HELPER_FLAGS_2(ldgm, TCG_CALL_NO_WG, i64, env, i64)
++DEF_HELPER_FLAGS_3(ldgm, TCG_CALL_NO_WG, i64, env, i64, i32)
+ DEF_HELPER_FLAGS_3(stgm, TCG_CALL_NO_WG, void, env, i64, i64)
+ DEF_HELPER_FLAGS_3(stzgm_tags, TCG_CALL_NO_WG, void, env, i64, i64)
  
--void arm_set_mte_tcf0(CPUArchState *env, abi_long value)
-+void arm_set_tagged_addr_ctrl(CPUArchState *env, abi_long value)
- {
-     /*
-      * Write PR_MTE_TCF to SCTLR_EL1[TCF0].
-@@ -32,4 +32,13 @@ void arm_set_mte_tcf0(CPUArchState *env, abi_long value)
-         tcf = 2;
-     }
-     env->cp15.sctlr_el[1] = deposit64(env->cp15.sctlr_el[1], 38, 2, tcf);
-+
-+    /*
-+     * If MTE_STORE_ONLY is enabled, set the corresponding sctlr_el1 bit
-+     */
-+    if (value & PR_MTE_STORE_ONLY) {
-+        env->cp15.sctlr_el[1] |= SCTLR_TCSO0;
-+    } else {
-+        env->cp15.sctlr_el[1] &= ~SCTLR_TCSO0;
-+    }
+diff --git a/target/arm/tcg/mte_helper.c b/target/arm/tcg/mte_helper.c
+index d35e3ef04d..8ed31ca2d8 100644
+--- a/target/arm/tcg/mte_helper.c
++++ b/target/arm/tcg/mte_helper.c
+@@ -304,7 +304,7 @@ int load_tag1(uint64_t ptr, uint8_t *mem)
+     return extract32(*mem, ofs, 4);
  }
-diff --git a/linux-user/aarch64/mte_user_helper.h b/linux-user/aarch64/mte_user_helper.h
-index 0c53abda22..8a46f743f4 100644
---- a/linux-user/aarch64/mte_user_helper.h
-+++ b/linux-user/aarch64/mte_user_helper.h
-@@ -20,15 +20,19 @@
- # define PR_MTE_TAG_SHIFT       3
- # define PR_MTE_TAG_MASK        (0xffffUL << PR_MTE_TAG_SHIFT)
- #endif
-+#ifndef PR_MTE_STORE_ONLY
-+# define PR_MTE_STORE_ONLY      (1UL << 19)
-+#endif
  
- /**
-- * arm_set_mte_tcf0 - Set TCF0 field in SCTLR_EL1 register
-+ * arm_set_tagged_addr_ctrl - Set TCF0 and TCSO0 fields in SCTLR_EL1 register
-  * @env: The CPU environment
-- * @value: The value to be set for the Tag Check Fault in EL0 field.
-+ * @value: The value to be set for the Tag Check Fault and Tag Check Store Only
-+ * in EL0 field.
-  *
-- * Only SYNC and ASYNC modes can be selected. If ASYMM mode is given, the SYNC
-- * mode is selected instead. So, there is no way to set the ASYMM mode.
-+ * Only SYNC and ASYNC modes can be selected for TCF0. If ASYMM mode is given,
-+ * the SYNC mode is selected instead. So, there is no way to set the ASYMM mode.
-  */
--void arm_set_mte_tcf0(CPUArchState *env, abi_long value);
-+void arm_set_tagged_addr_ctrl(CPUArchState *env, abi_long value);
- 
- #endif /* AARCH64_MTE_USER_HELPER_H */
-diff --git a/linux-user/aarch64/target_prctl.h b/linux-user/aarch64/target_prctl.h
-index 621be5727f..d91e75d60d 100644
---- a/linux-user/aarch64/target_prctl.h
-+++ b/linux-user/aarch64/target_prctl.h
-@@ -168,6 +168,9 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
-     if (cpu_isar_feature(aa64_mte, cpu)) {
-         valid_mask |= PR_MTE_TCF_MASK;
-         valid_mask |= PR_MTE_TAG_MASK;
-+        if (cpu_isar_feature(aa64_mte_store_only, cpu)) {
-+            valid_mask |= PR_MTE_STORE_ONLY;
+-uint64_t HELPER(ldg)(CPUARMState *env, uint64_t ptr, uint64_t xt)
++uint64_t HELPER(ldg)(CPUARMState *env, uint64_t ptr, uint64_t xt, uint32_t mtx)
+ {
+     int mmu_idx = arm_env_mmu_index(env);
+     uint8_t *mem;
+@@ -317,6 +317,11 @@ uint64_t HELPER(ldg)(CPUARMState *env, uint64_t ptr, uint64_t xt)
+     /* Load if page supports tags. */
+     if (mem) {
+         rtag = load_tag1(ptr, mem);
++    } else {
++        uint64_t bit55 = extract64(ptr, 55, 1);
++        if (mtx) {
++            rtag = 0xF * bit55;
 +        }
      }
  
-     if (arg2 & ~valid_mask) {
-@@ -176,7 +179,7 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
-     env->tagged_addr_enable = arg2 & PR_TAGGED_ADDR_ENABLE;
- 
-     if (cpu_isar_feature(aa64_mte, cpu)) {
--        arm_set_mte_tcf0(env, arg2);
-+        arm_set_tagged_addr_ctrl(env, arg2);
- 
-         /*
-          * Write PR_MTE_TAG to GCR_EL1[Exclude].
-@@ -185,6 +188,7 @@ static abi_long do_prctl_set_tagged_addr_ctrl(CPUArchState *env, abi_long arg2)
-          */
-         env->cp15.gcr_el1 =
-             deposit64(env->cp15.gcr_el1, 0, 16, ~arg2 >> PR_MTE_TAG_SHIFT);
-+
-         arm_rebuild_hflags(env);
+     return address_with_allocation_tag(xt, rtag);
+@@ -458,17 +463,19 @@ void HELPER(st2g_stub)(CPUARMState *env, uint64_t ptr)
      }
-     return 0;
-diff --git a/target/arm/gdbstub64.c b/target/arm/gdbstub64.c
-index a4fa740caf..0c3e5b30bd 100644
---- a/target/arm/gdbstub64.c
-+++ b/target/arm/gdbstub64.c
-@@ -684,7 +684,7 @@ int aarch64_gdb_set_tag_ctl_reg(CPUState *cs, uint8_t *buf, int reg)
-      * expose options regarding the type of MTE fault that can be controlled at
-      * runtime.
-      */
--    arm_set_mte_tcf0(env, tcf);
-+    arm_set_tagged_addr_ctrl(env, tcf);
+ }
  
-     return 1;
- #else
-diff --git a/tests/tcg/aarch64/mte.h b/tests/tcg/aarch64/mte.h
-index 0805676b11..17b932f3f1 100644
---- a/tests/tcg/aarch64/mte.h
-+++ b/tests/tcg/aarch64/mte.h
-@@ -20,6 +20,9 @@
- #ifndef PR_TAGGED_ADDR_ENABLE
- # define PR_TAGGED_ADDR_ENABLE    (1UL << 0)
- #endif
-+#ifndef PR_MTE_STORE_ONLY
-+# define PR_MTE_STORE_ONLY        (1UL << 19)
-+#endif
- #ifndef PR_MTE_TCF_SHIFT
- # define PR_MTE_TCF_SHIFT         1
- # define PR_MTE_TCF_NONE          (0UL << PR_MTE_TCF_SHIFT)
+-uint64_t HELPER(ldgm)(CPUARMState *env, uint64_t ptr)
++uint64_t HELPER(ldgm)(CPUARMState *env, uint64_t ptr, uint32_t mtx)
+ {
+     int mmu_idx = arm_env_mmu_index(env);
+     uintptr_t ra = GETPC();
+     int gm_bs = env_archcpu(env)->gm_blocksize;
+     int gm_bs_bytes = 4 << gm_bs;
+     void *tag_mem;
+-    uint64_t ret;
++    uint64_t ret, canonical_tag_val;
+     int shift;
++    bool bit55;
+ 
+     ptr = QEMU_ALIGN_DOWN(ptr, gm_bs_bytes);
++    bit55 = extract64(ptr, 55, 1);
+ 
+     /* Trap if accessing an invalid page.  */
+     tag_mem = allocation_tag_mem(env, mmu_idx, ptr, MMU_DATA_LOAD,
+@@ -476,6 +483,35 @@ uint64_t HELPER(ldgm)(CPUARMState *env, uint64_t ptr)
+ 
+     /* The tag is squashed to zero if the page does not support tags.  */
+     if (!tag_mem) {
++        /* Load canonical value if mtx is set (untagged memory region) */
++        if (mtx) {
++            canonical_tag_val = -(uint64_t)bit55;
++            switch (gm_bs) {
++            case 3:
++                /* 32 bytes -> 2 tags -> 8 result bits */
++                ret = (uint8_t)canonical_tag_val;
++                break;
++            case 4:
++                /* 64 bytes -> 4 tags -> 16 result bits */
++                ret = (uint16_t)canonical_tag_val;
++                break;
++            case 5:
++                /* 128 bytes -> 8 tags -> 32 result bits */
++                ret = (uint32_t)canonical_tag_val;
++                break;
++            case 6:
++                /* 256 bytes -> 16 tags -> 64 result bits */
++                return canonical_tag_val;
++            default:
++                /*
++                 * CPU configured with unsupported/invalid gm blocksize.
++                 * This is detected early in arm_cpu_realizefn.
++                 */
++                g_assert_not_reached();
++            }
++            shift = extract64(ptr, LOG2_TAG_GRANULE, 4) * 4;
++            return ret << shift;
++        }
+         return 0;
+     }
+ 
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index cd86178d56..5fbc54de4b 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -4711,7 +4711,7 @@ static bool trans_LDGM(DisasContext *s, arg_ldst_tag *a)
+     tcg_rt = cpu_reg(s, a->rt);
+ 
+     if (s->ata[0]) {
+-        gen_helper_ldgm(tcg_rt, tcg_env, addr);
++        gen_helper_ldgm(tcg_rt, tcg_env, addr, tcg_constant_i32(s->mtx));
+     } else {
+         MMUAccessType acc = MMU_DATA_LOAD;
+         int size = 4 << s->gm_blocksize;
+@@ -4746,7 +4746,7 @@ static bool trans_LDG(DisasContext *s, arg_ldst_tag *a)
+     tcg_gen_andi_i64(addr, addr, -TAG_GRANULE);
+     tcg_rt = cpu_reg(s, a->rt);
+     if (s->ata[0]) {
+-        gen_helper_ldg(tcg_rt, tcg_env, addr, tcg_rt);
++        gen_helper_ldg(tcg_rt, tcg_env, addr, tcg_rt, tcg_constant_i32(s->mtx));
+     } else {
+         /*
+          * Tag access disabled: we must check for aborts on the load
 
 -- 
 2.54.0
