@@ -4,112 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A521FF885A
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 18:10:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF5CCD3427
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 18:17:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJxkI-0000w5-Iq; Mon, 04 May 2026 14:10:18 -0400
+	id 1wJxqu-0001ru-H0; Mon, 04 May 2026 14:17:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wJxkG-0000uW-8H
- for qemu-devel@nongnu.org; Mon, 04 May 2026 14:10:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wJxqo-0001rG-Jk; Mon, 04 May 2026 14:17:03 -0400
+Received: from mail-eastusazlp170120007.outbound.protection.outlook.com
+ ([2a01:111:f403:c101::7] helo=BL0PR03CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wJxkC-0005Ky-2T
- for qemu-devel@nongnu.org; Mon, 04 May 2026 14:10:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777918210;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=h0YMk4IEbMpuMR+4cCG9yOshC4Pt1ZBfRno0c3rzRJQ=;
- b=L9prAc3LLyryyf69Lh4kGH5X1DSq+hGBl6moiCzpxSln3+rvH1TQin+8no4nyJbQ8PAeYB
- 1McVxN2J6Xn9dpyw1VjHJ3LHHcUe7ArRPSlCpVZcREMZRwllvZU0385aFPc5G3qOX779zR
- bkrUJ2Rq48jgzgppjqJ7UrpFiO9tQnE=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-49-GbovBqq1MviO0WNUi1rrUw-1; Mon, 04 May 2026 14:10:09 -0400
-X-MC-Unique: GbovBqq1MviO0WNUi1rrUw-1
-X-Mimecast-MFC-AGG-ID: GbovBqq1MviO0WNUi1rrUw_1777918208
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2ba224c3ffdso22167275ad.0
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 11:10:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777918208; x=1778523008; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=h0YMk4IEbMpuMR+4cCG9yOshC4Pt1ZBfRno0c3rzRJQ=;
- b=m2C901VULv/fXk82sjGtXTUeEgS6Sr9d2XwyQ4zW0/nkrhGA4WKoE+fCjCs/p3Fl2l
- ZwM7i+zTiwgmKlrbp6h1ugnCs9eQLORj6eT9lGM6edDint9tRwlzWp0TKecHYWkFy0dp
- O21SSRj4zwV2uVSGPpBwfEu9whjjafCeEOPDeKg/zDOu3sjXShp2unEZyVfPr4PjAncf
- VV/uOYdhC0Dn49lKTk3JNNP6+OvslDrjth1bd6Ls8TPiqXfCGr9PFmobaUn60bgoNM4o
- XnV+ya8V+MFPLkeYaF77sXSZmTz8KL/KUu38uYZehb9ANkvr0un8n3SVA0RvkrfW5laW
- GtJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777918208; x=1778523008;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=h0YMk4IEbMpuMR+4cCG9yOshC4Pt1ZBfRno0c3rzRJQ=;
- b=PKtNjAAJYzP/fV17jbscwvFaaC7pXxS0GX3SPerM0MLGI3LOL/9/U6SyGnjwNXfaAq
- rDoENK+v621CbEYVYIDrobsPCim2px+qSXbQpimAfk7f3CCblGMSvAZ0IJezsI1AqOVB
- KXsQOGZngU58+0M8rWitw1D86xzDGqWKHGzloOqvHId8KsjIqt1neWkhwHDDTUHF8+op
- AVUb0ICQQyHA6pKTf3oA8JNUdMf2sHqOTLJe6tkJ2qw7R2aoaJBYVNwFKkzHYX/nRsto
- jwgZTV94UWX0QcOEXZQIqFR6RTDHtVAKGsixcq2jQlowle3S6BdiBqiGmyZXudmI7skY
- 6BGw==
-X-Gm-Message-State: AOJu0YwmLe75kLZnrS2GpzfkljCYMgLE6PnliEQpqNwExEr4nC6bXwMY
- b+ZIRZKgiJO1vDYg0gk1UqsRejHTHFv5RxiYmrWeTSRnzELG4Nfjy28/P2ocCY+P0iN2dH/bmha
- 4crFE2p9Q5CIEsb9iE14SwmCWJhVRqZ1HVHX6wRHF695kn9mUpsCsmm5g
-X-Gm-Gg: AeBDiesSHDzyJ08qsCSsb1pzstoGtSufNhAsjTKsvLXgRFh0wv+X+uAiiiK9C4LCAOX
- jyAs7cVIlJg4kBXwexGLVDSJodLw5WdO1uGzDyIGGd27MG4ZN5YXHDZSMNjsW6cxT2VThJmU5dA
- oN12rfqhJrxSIQBuJlce/CIL5RNyL+PjLrv332MbNVYOXwjpsMMapgJXRtVuSzL+Yb9lsOdyRy4
- bBrFn3fmEUiLftKdQJcjV4QclyU5PuOvt0UHVzOh4Tut+GpiaQmZZxNk/wI3+8X/nRSeQPqYR7d
- 0BjJSydtCsI6JFLvQFc/tIoQnTAn/NmHw5YqFTs6honrTKH7Jm4Fc6rqqrMnkNDMC8NkDrlI4oF
- XxnRZazcP8Sr2xLcwvrhpPA==
-X-Received: by 2002:a17:902:da84:b0:2b9:d647:5261 with SMTP id
- d9443c01a7336-2b9f2565656mr109504695ad.13.1777918208053; 
- Mon, 04 May 2026 11:10:08 -0700 (PDT)
-X-Received: by 2002:a17:902:da84:b0:2b9:d647:5261 with SMTP id
- d9443c01a7336-2b9f2565656mr109504375ad.13.1777918207555; 
- Mon, 04 May 2026 11:10:07 -0700 (PDT)
-Received: from fedora ([49.36.108.92]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b9caaba933sm108820405ad.28.2026.05.04.11.10.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 May 2026 11:10:07 -0700 (PDT)
-Date: Mon, 4 May 2026 23:40:02 +0530
-From: Arun Menon <armenon@redhat.com>
-To: Stefan Berger <stefanb@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>
-Subject: Re: [PATCH] tpm: Dynamically allocate tpm-tis buffer
-Message-ID: <afjg-tqJ1zbkQNb6@fedora>
-References: <20260427200134.453022-1-armenon@redhat.com>
- <765f0577-ee8f-4944-93fe-bb93e420668f@linux.ibm.com>
- <afBbLDmdYFY5feJx@fedora>
- <84607c2e-1da9-43d2-8a5b-e50e91c0f8ba@linux.ibm.com>
- <4b5c983e-8bbb-4851-bb0f-f478ad14121b@linux.ibm.com>
- <afJk9Lsn25UQOnwE@fedora>
- <43171c3b-339c-4335-b79b-387442048b11@linux.ibm.com>
- <0544d36a-89b4-4948-9fb5-8cb013842fc7@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wJxqm-0007X5-Th; Mon, 04 May 2026 14:17:02 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pzWoS0J36nk31R+L7EMUvab3Gdgu36svZrLXXOLVfIDbYFQeC768Bedp1YVK23BiFK/+LU0046s2zOgMp7X0RoXDu+cg5cmLnHHa1z+J89VCE5XSmES0VEerxTu2PQjFlv8emOxyx3DGx1nQmy2xMv4aUuolY8F1zIT48i/aCG2ZV+35e/EgTy+DxwsBA4yccAJiC/A/V9QfuCkO1DSvOrFbWzlfmz9y+ZvEZzb8eMQW9s+zJVPLhRF8pFZNeVXWln/Xqipozk6V7SYi+D8t60tkQXtmxhF3++LvCcYozyFm71J8VZVVE9zWVRlVz25dvobE9aqmKgeVicdAtwdUPw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Zep/MlTa5sdX6esa8DK8yXEyEj43ORBx4qo3nON+MrE=;
+ b=vEPisV3ZykE9c3lo9XMy9tXuB6GFp2rWSxSn+bxs4ppnAUvtCCILrA42IhHiXiTupdjrvH6QHY5CqyZX9pvAqsaQVHS4i4QUC1A8kjCLG29gyA8PHkyowR5SNc9leF9G0vGY4n9p2GAeYYpa9JhaSZDWNibjoiXgUTg0+1oxT22lWxLOul2bDC1BAIEUvF5+e8dZguKXbHDH4066qwmDe5Bl0uddraY5Yv4p0WBra0leuLQocxynv5WDSA4tktu2dPFWqhL8ruHiq3X4Yks+6BMkrBPfGaQLZpJ9OVRg3CbZd99iVYVzuovTmTCj/kxkLeSeyOvgKs7Px1FdVfGJlw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Zep/MlTa5sdX6esa8DK8yXEyEj43ORBx4qo3nON+MrE=;
+ b=A/ROGtTpm3jUxew5d8rE0RriZ3bxH6lHvR7FYFGY5KgdkLGHLAYo4+UUW46GGAX+8xHj2uHIMAQ8hxB7lrPdr3ZbRltC9K9qCd2Bpct3MBhMrjAC3fOiViAVD3o75dnfAIM+AN4O75txezrOclekVMGICnSno1KZBzk2kbNu4BEe8Hw1QhtRArLdgOC0TVPCvg9nh186SLPBkdoiAczVOkeH97ZQItSihYJIL8E7Zqtc8Z4EZCMsk5PDbMtWSLsP3JMVCfItDnXtdmMapaCvJbSEtbuz/WniaMxGeusI7ixz1GJRkYAOJ3LU9VQuNMtMHBQPZDJmmFggmHD59MO3Yw==
+Received: from SJ0PR03CA0123.namprd03.prod.outlook.com (2603:10b6:a03:33c::8)
+ by PH0PR12MB7789.namprd12.prod.outlook.com (2603:10b6:510:283::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.25; Mon, 4 May
+ 2026 18:16:52 +0000
+Received: from SJ1PEPF00002312.namprd03.prod.outlook.com
+ (2603:10b6:a03:33c:cafe::4) by SJ0PR03CA0123.outlook.office365.com
+ (2603:10b6:a03:33c::8) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9870.25 via Frontend Transport; Mon,
+ 4 May 2026 18:16:52 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ SJ1PEPF00002312.mail.protection.outlook.com (10.167.242.166) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9891.9 via Frontend Transport; Mon, 4 May 2026 18:16:51 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 4 May
+ 2026 11:16:29 -0700
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Mon, 4 May 2026 11:16:28 -0700
+Received: from nvidia.com (10.127.8.13) by mail.nvidia.com (10.126.190.181)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 4 May 2026 11:16:26 -0700
+Date: Mon, 4 May 2026 11:16:23 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <clg@redhat.com>, <alex@shazbot.org>,
+ <nathanc@nvidia.com>, <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>, 
+ <jonathan.cameron@huawei.com>, <zhenzhong.duan@intel.com>,
+ <kjaju@nvidia.com>, <phrdina@redhat.com>
+Subject: Re: [PATCH v4 05/31] system/iommufd: Remove unused viommu pointer
+ from IOMMUFDVeventq
+Message-ID: <afjid8vaqLJnsAQ4@nvidia.com>
+References: <20260415105552.622421-1-skolothumtho@nvidia.com>
+ <20260415105552.622421-6-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0544d36a-89b4-4948-9fb5-8cb013842fc7@linux.ibm.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+In-Reply-To: <20260415105552.622421-6-skolothumtho@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF00002312:EE_|PH0PR12MB7789:EE_
+X-MS-Office365-Filtering-Correlation-Id: a4d6fca1-d525-4a2a-1da9-08deaa095093
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|376014|82310400026|1800799024|18002099003|56012099003|22082099003;
+X-Microsoft-Antispam-Message-Info: GxKyw7QY2ZWyrS5ynIl3wt0sF8zEACu+TFiv2OFiKVLzlNqMjffN/rhszrvFF8lQ+ys+shvo1IDzoCiZ6gNUmQSwNJ30fv/4SFnXqMLos/ZfvO56+GRx0q+2G3Oc2LuTmy9B0veZUp7LwHi55H5zPs2aN/WxTgukrES0FyHSOfghzsks0IqAaTs2kbBdBjYeKaEBgkHSpLRqIyaSB/t9A+MKuTe/Q1TSPlvHKAxmb/eHx/hbYyRor5B+1uEK2s/nv1aBt0aCgnPppSi8ie9D9pdV7sHQl47SBtymghRvadH94va4ldQz6y/cpUUUFY9amQQa7ua0lmx4ESJI5coIh/J0aVgC7SR9fxxxLi6XntaIaKJYH1Z4ZVB+pE3GUIxAVCDXaGeynuPzOkrevuaiNh35jJ5393UY1+Nz0y+1Fn/oTHUhQcuw3DQniNxIEGs4de94EE+AbHqlXyLkd2pA04ICdV+z1hbljHcqwdmJ7c95u9PSICUPpMOX6Q7mVZChiLiuAh1oabE7ZmI3cg79Rhe5nlLsMVyyxOB69yWxbHglnIQKv3Mbgcz7CuygeDXi8DPhFXwXbWnKln4q+FWq1qR9Y2ZRGtE9kL4VEhr0KCVViG7W4vxloxBQFkpWiJmEHPbT6BoA5uDZAeT2HuA8J6/tTj59Ag4Pu8pFrTzBnrUgcZb7xa8fiHj0/tI2R6YDRchrG9mPnqrDp2mXJ4O5LMGYVZGfx9j0U/Vmw3xLmFo=
+X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(36860700016)(376014)(82310400026)(1800799024)(18002099003)(56012099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: HI42awplW+cyVkc1WmpTXkeBadZKaP6ZrU8o4IMbTR9cwHRKrEg2QkHWjw2t11gisQ+uNEuhTZh924GWPgCv9o1au+Y/xivwqXg7yxd0p6axcuMuZ7Q2F3SS9ihlmB5mIeqR9XdhpO2GLp6I5GlcCYN4g2mW8R/E6LBAXqhN8fxj67irna8bCRdRy9pzwwbr0z0xIPMWxuEC5iXfdwq7/MbOwQW8DFZVhpThCzETHUs63PA7GAW3baFiKkjSNKkCsaX+z/n/A1KNcHT1S9QF7MUQoNTJjxKMPxPsejQ0d0nwOANbsvbgpvPUpd4E4sRFSymyQAw8UCKtSq88cgVFmdZwBopM2fcPm4pmQQkfGa/0yRbwE6FbK1st65FfEW3o5klsAKyjY/B5KiJewtfe5EwTvPFz7TUpvI91a7SorTxWr+FFaM+XceYNOMeeeVUh
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 May 2026 18:16:51.6133 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a4d6fca1-d525-4a2a-1da9-08deaa095093
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00002312.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7789
+Received-SPF: permerror client-ip=2a01:111:f403:c101::7;
+ envelope-from=nicolinc@nvidia.com;
+ helo=BL0PR03CU003.outbound.protection.outlook.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,111 +136,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 30, 2026 at 04:43:27PM -0400, Stefan Berger wrote:
+On Wed, Apr 15, 2026 at 11:55:26AM +0100, Shameer Kolothum wrote:
+> The viommu field is assigned but never used. Callers freeing the
+> veventq already have access to the IOMMUFDViommu object through other
+> references, so this field is redundant.
 > 
+> Removing it also simplifies upcoming changes where veventq is
+> allocated based on the viommu id before the IOMMUFDViommu object is
+> created (e.g. vendor CMDQV-based veventq allocation).
 > 
-> On 4/29/26 11:40 PM, Stefan Berger wrote:
-> > 
-> > 
-> > On 4/29/26 4:07 PM, Arun Menon wrote:
-> > > Hi Stefan,
-> > > 
-> > > On Wed, Apr 29, 2026 at 02:15:16PM -0400, Stefan Berger wrote:
-> > > > 
-> > > > 
-> > > > On 4/28/26 8:57 AM, Stefan Berger wrote:
-> > > > > 
-> > > > > 
-> > > > > On 4/28/26 3:01 AM, Arun Menon wrote:
-> > > > 
-> > > > > > > 
-> > > > > > > With MAX() it can now be bigger than TPM_TIS_BUFFER_MAX if the
-> > > > > > > backend says
-> > > > > > > so -- hm...
-> > > > > > 
-> > > > > > TPM_TIS_BUFFER_MAX is still 4096.
-> > > > > 
-> > > > > Oh, I had still based my patches on your TPM_TIS_BUFFER_MAX increase to
-> > > > > 8192 bytes. Let me fixes this along with a few other things. I will let
-> > > > > you know.
-> > > > > 
-> > > > > I have another series that I will post now that can be applied to
-> > > > > master. It's adding a test for TIS over I2C but I will need to extend
-> > > > > that one also with the large transfer test case then.
-> > > > > 
-> > > > > 
-> > > > 
-> > > > So I have resolved this issue now along with a few other things.
-> > > > My branch
-> > > > is here: https://github.com/stefanberger/qemu-tpm/tree/work-tpm-for-11.1
-> > > > 
-> > > > - I have applied the i2c swtpm test case series first since it could be
-> > > > easily upstreamed first
-> > > > - Then your patch "migration/vmstate: Add VMState support for
-> > > > GByteArray"
-> > > > - Then the CRB chunk + TIS extended buffer support series. I modified my
-> > > > patches (last 4 in that series) to
-> > > >    - increased MAX_TIS_BUFFER_SIZE to 8192
-> > > >    - added migration blockers dynamically for TIS whenever >4096
-> > > > bytes are
-> > > > either in the request or response; remove them later on again
-> > > > when device
-> > > > goes into ready state for example
-> > > >    - added large transfer test also for i2c
-> > > > 
-> > > > Please pick up those patches for v6 posting, or otherwise you
-> > > > can split your
-> > > > v5 series up into CRB-only support for v6 and I post my (last 4) patches
-> > > > later on.
-> > > > 
-> > > 
-> > > Thank you. I agree. I will post v6 as CRB-only support. The GByteArray
-> > > patch is already accepted. The complex TIS changes can be posted
-> > > separately later.
-> > > 
-> > > Regarding the TIS buffer: I saw you implemented the migration blockers
-> > > and 8192-byte increase in your branch. Should I discard my
-> > 
-> > It's quite dynamic with the blocker being set when 4097 bytes of a TPM
-> > command were received or when a TPM response with > 4096 bytes is
-> > received. The blocker is removed when the device goes into ready state.
-> > The intention is to allow a user to choose an old machine type with a
-> > PQC-enabled swtpm+libtpms and be able to migrate to an older version of
-> > QEMU unless the blocker was set. Correct me if I am wrong in my
-> > thinking...
+> No functional change.
 > 
-> Another solution would be to limit the 8kb buffer to 4kb for 11.0 and older
-> machines.
-
-Yes, I have limited this using the post_load hook for the extended part.
-
-+int tpm_tis_ext_buffer_post_load(TPMState *s)
-+{
-+    /*
-+     * Calculate the maximum extension buffer size allowed, by comparing
-+     * the destination VM's backend capacity with TPM_TIS_BUFFER_MAX.
-+     */
-+    uint32_t max_ext = s->be_buffer_size > TPM_TIS_BUFFER_MAX ?
-+                       s->be_buffer_size - TPM_TIS_BUFFER_MAX : 0;
-+
-+    if (s->ext_size > max_ext) {
-+        /*
-+         * Source buffer size is greater than what the destination backend
-+         * allows
-+         */
-+        g_clear_pointer(&s->ext_buffer, g_free);
-+        return -EINVAL;
-+    }
-+    if (s->ext_size > 0) {
-+        memcpy(s->buffer + TPM_TIS_BUFFER_MAX, s->ext_buffer, s->ext_size);
-+        g_clear_pointer(&s->ext_buffer, g_free);
-+    }
-
-We may use this patch in future if we want to change static to dynamic
-buffer array allocation.
-
-
-Regards,
-Arun Menon
-
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+ 
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 
