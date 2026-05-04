@@ -4,123 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5887BFF885A
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 18:50:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8430EFF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 18:51:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJyNG-0002j6-64; Mon, 04 May 2026 14:50:34 -0400
+	id 1wJyNk-0002t5-Jh; Mon, 04 May 2026 14:51:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1wJyNC-0002iG-K9; Mon, 04 May 2026 14:50:30 -0400
-Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1wJyNd-0002pk-UB
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 14:50:58 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1wJyNB-0002zA-58; Mon, 04 May 2026 14:50:30 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ZOFDJb1tWHLDxY3RSwZdz2e3KKNtlNvX+HmTs3llDYyf3Iyotww23Y0fHhBmXYNt9wEPF0TNJO7/9X/NLQ0iGAyqED5NzHAhzTKu19YPBNtkujgScsgEwlGtD4ADs7HOVdp0PVwk+isiMhmvKMvGG9RRikSUbcTcBjMja2Yo0CsEOBTpWQjwz0VlWw6qBQslOm2gAcyIZ23ex7xA5x+pfitB1D67mOLvRyuvqHGeYMYCbJHoGW0mrVdXysh2gIzuvajv02TrL9QCPh5+msaeuySfcHMLpNa4mfxjF6ALLAkAnUXrkOOSAsOT+FVwYS0n/SsTlIKw4kFPmiNOWYRnIQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GCxZehbTKX4zq74oJKDudCJAg60Xz8B0pNLzdLVD6Vg=;
- b=owqZVe1vIPq3q6h6Qk0Mfl6rSFQG7Gjz8wzYfvKJV84VyUIX2h85FG3laQ7a9NgoCl/Jh3QoKzXzYvjDxEOrMwKg3QKn8GclKQAKw/Zq8kESZ8YVfIBU50YjRVYiDXZtp9JgpZzJydcy4BXMO/EcYMTieDe4qIGEBazsoczhkbag6NPpjEuFtB76ACcEYkHtTall7bbPZBb3DCWKBMdvEQ6vDP5lBtF5TbXAPHeHTA0LEzTY7krf+HR8duxN+T/fxvCtvR5uBP6Z+EY/SeVrqANiuxfeR3PtBalYV7nWb9HHNpDgzDzBwWaG4rdH+ulBJpOd7uA+xYX1f1ULrJYbYQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GCxZehbTKX4zq74oJKDudCJAg60Xz8B0pNLzdLVD6Vg=;
- b=bqXr4A/NzVgRtFxIDvbCAWvY36DuoeVT+myB04hHARcH/Xjh8o5q4zyi0GrXlJNv0zLrp7SPobSf6iMOc4dxYLKrvwN/eXU8ImkDApjkzfAHTpuU2gfoW0dh/TVKmRN7UQ2+mvS0v1iDQQQjhsdWIa9V5Io1Ws0RnbTeIbqeyl5T1tGvYKWYtjz6JK0O8jofBDHKWRrHIv+5QFTqsgVKCnzMBTCLluZD1AjXGiuBI+7R5b52zNQUTlzzfZ0vnrwTpfAUZcbMU3Y+uyQkBVvL5Bh3ADmJv578WtOUmU92V1pyGhcV7EOHDVX4fJs1agB1kkfN1lSIHwiVVYzl1Hn65A==
-Received: from SJ0PR05CA0024.namprd05.prod.outlook.com (2603:10b6:a03:33b::29)
- by IA1PR12MB6628.namprd12.prod.outlook.com (2603:10b6:208:3a0::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.25; Mon, 4 May
- 2026 18:50:16 +0000
-Received: from SJ1PEPF000023D1.namprd02.prod.outlook.com
- (2603:10b6:a03:33b:cafe::d) by SJ0PR05CA0024.outlook.office365.com
- (2603:10b6:a03:33b::29) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9891.14 via Frontend Transport; Mon,
- 4 May 2026 18:50:16 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- SJ1PEPF000023D1.mail.protection.outlook.com (10.167.244.7) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9891.9 via Frontend Transport; Mon, 4 May 2026 18:50:16 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 4 May
- 2026 11:49:51 -0700
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 4 May
- 2026 11:49:51 -0700
-Received: from nvidia.com (10.127.8.13) by mail.nvidia.com (10.129.68.6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Mon, 4 May 2026 11:49:48 -0700
-Date: Mon, 4 May 2026 11:49:46 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <clg@redhat.com>, <alex@shazbot.org>,
- <nathanc@nvidia.com>, <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>, 
- <jonathan.cameron@huawei.com>, <zhenzhong.duan@intel.com>,
- <kjaju@nvidia.com>, <phrdina@redhat.com>
-Subject: Re: [PATCH v4 10/31] hw/arm/tegra241-cmdqv: Probe host Tegra241
- CMDQV support
-Message-ID: <afjqSppsO8uscVVw@nvidia.com>
-References: <20260415105552.622421-1-skolothumtho@nvidia.com>
- <20260415105552.622421-11-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1wJyNa-00037g-43
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 14:50:57 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 644EcnJY2822130; Mon, 4 May 2026 18:50:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=prb3qB
+ 5qBPMPGeKenofKV3JCZyQk2RKWrStDhCVFsoo=; b=KRGmhXvqMjIVMZDlAT/Bws
+ LLjKPgeSLtBbhS68yrYjQET7aYCjLv+SA+s4JCsQhR2dKs9XtPim8kBIpdFP4ZQW
+ gyqfzwimIzsUTm8QilpDXesRyuoKws1yFDN6KR5CQn/2vP5bqDtJqXSRZPkVTJGz
+ 2uLiq+m5vlG6Fwz76zRis0Yyf1Pn0u0C9yVsacRfvtqt2R1M3ckqYg5G6Q2vbAqX
+ J8H1J+Nle38AMHqaL20oNMM+XsWv2MBsVH5ovgJybuEMpJkUgr5KCIGp96ZhbHul
+ UfV+f4Odlrtrt1acF9CGDyNdSjWWFNbWw4TeyN6mRH9uuQ3oACFC/XZ4nCVIyFNg
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9y4g98g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 04 May 2026 18:50:45 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 644IdX44020943;
+ Mon, 4 May 2026 18:50:44 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwwtg68y3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 04 May 2026 18:50:44 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 644IohXP30015984
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 4 May 2026 18:50:43 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9B66558053;
+ Mon,  4 May 2026 18:50:43 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 675C858043;
+ Mon,  4 May 2026 18:50:42 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  4 May 2026 18:50:42 +0000 (GMT)
+Message-ID: <25fe5a1d-4963-464b-b49a-1cc5552b27ae@linux.ibm.com>
+Date: Mon, 4 May 2026 14:50:41 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20260415105552.622421-11-skolothumtho@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ1PEPF000023D1:EE_|IA1PR12MB6628:EE_
-X-MS-Office365-Filtering-Correlation-Id: bf65aece-c517-4f9e-3642-08deaa0dfb6f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|36860700016|82310400026|18002099003|22082099003|56012099003;
-X-Microsoft-Antispam-Message-Info: utjlXW9hp0pRy8L87Z9AWXwfJ//TwakTHyu+yUNfKoA5852ruwSybYfr3vltakto4p4zVeJNTJjW/AGud6yWA+zxWLA7kwgoHtQ+jNZEmdV2GBwNsqL3uvxlxUGAPuFFpc8uMMthsavj7+hsS8jbKlV8OB+IdrArHaPksQRJvpKigYu221q8kRmnlvsronnzAxLrAGDH3SurccEdk2UP5A+vkwmrZ4f6+Yx+v8dhHsDKkZOE7NqmCf6ZyZc/qR94+rQJ1JNjF6PBwJATN5cQdJ49KD8EPxgI1fl18cgktE1JmJoWVf8+an6bMVyEJr9cG20nP3fKBvs9yDemolWEjOpxAasJ2q7avoAON3sKIfMGpFd6aNifBniuZYM8TtGwb+eRq9G0FOjOS7N3n3hg2dPkg3fwgfC2TKVxo3M43ZwDJ6kiSSWL74ngqbTU/xR53IylSiN68nktfqdVVjY+LDqjlj2MKIZCgO3oOa2eh5eCOvd1nHLP1oU78/UQP+3j9wFH2Xt+F3hVHSh20YebgQiMTLaQnFuXyXtzGcw6mbqIm9DJ4dFwgDQ6Sh2KcCbhA+SGMU5AvFTmWT6R/Bv10+DS4X1Wi/HE7BeUQiXNmazd35a1StOdKzfypWSjW5hT5vBgxLUwx5laaeQnOZCTkg6CaE4D59ciPY8Lmdy4Mw/Xngn/Uuo0Yga61knt4A9PBIfsYG+ATjdQNnQqVWxGtGaaFjH5/lO9cE2z59YSUY8=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(36860700016)(82310400026)(18002099003)(22082099003)(56012099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: zWLE36Gr7XQGN3lKbRCAqOpIUDczDyil4riwUOrNrRsfIoSW4IOqwPheG0KJ5ryNocA5SztzhGtvKdFt5YrSuWE5pBTX/KzpTNIoMHJ/9u50NwuvmGIiRVPqOgMD3yY5ui3ognaM3zVD73/IXFnFYCgp8z86qQHujrpeK4dLEijuH3CtxnjufuTEhq3iOpcZZ+obYFCNgMox4v1SjYsbY761xyRXbcLHPcO034sg+JcHf2HtyP8V/ugD2mGXiRZLVQsdqqrWgpJwamEVQ5yQGg5idE1MojKRHmzyev85ik0aYJ6J1kSMbnsIXsUUD74n0+noMeeHvMcnwoKdZs2Ai/jIQbpnylmrmbZpfKrZZoKk4hTEBLO/97nnzSBTHz4EP9Bp2DH5dHjh/P0paH3Ag9noyIHAFawAeqS/fZN6YVhoRhzER2Kn5J5l30nuN9F8
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 May 2026 18:50:16.1347 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: bf65aece-c517-4f9e-3642-08deaa0dfb6f
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000023D1.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6628
-Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
- envelope-from=nicolinc@nvidia.com;
- helo=DM1PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 6/6] hw/tpm: Add support for VM migration with TPM CRB
+ chunking
+To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
+Cc: Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ marcandre.lureau@redhat.com, Zhao Liu <zhao1.liu@intel.com>,
+ Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>
+References: <20260504174234.13556-1-armenon@redhat.com>
+ <20260504174234.13556-7-armenon@redhat.com>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <20260504174234.13556-7-armenon@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA0MDE3MCBTYWx0ZWRfX+QGXdVntSVPA
+ PW8KmAsraJ3RcAh5j5booWOhYxsDlqbjCPjHdDO1DOHr2vwNXL+U3RlNnOmCZzyy3coejfHqt+6
+ zDBDI6Y0O3lO/P9tgcCS9WId6C0L4B/hjej74t3WGWE5CGl24YONjoyOMrbbUZ8jy7/bUPYlz4D
+ creVXL+AHoXPTKpMhxf27422bjnDEeVbW8QbpfFCMZOD3E9T5/PJ06Hh8Xoq9aRrtvl6bzE/bGD
+ 7Z1/zYqtrxV6aSvgG1Urg+WWlZAfNT3AOxL8O/WWbRmZ48lkSsK8q3AVtP/AmiyQiZGFtTwSi6L
+ o8lFgl/r/oaselnSupR+sgajaF5GBXUD1WtZb3gBTfsJeABAdUKcykiom4wDYCtdW+IKofmo4cI
+ ecWylBLV95ef3Z55l2nf96xSAuf7pEw6gsSz18G3bwT/xysscXDNyLU8gsiXnoJiP589MA6Rl2P
+ Kqd1+uUVVCAFgY1fDQg==
+X-Authority-Analysis: v=2.4 cv=J4GaKgnS c=1 sm=1 tr=0 ts=69f8ea85 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=3xw4kwFLrFTyH_d8cREA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: dVDGC3vfQXFxM_COLcTBJ1LDOvRIiuWp
+X-Proofpoint-ORIG-GUID: jtlLSBPq4RZzvshkFgHhAkytSg4dRCse
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-04_05,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0
+ priorityscore=1501 spamscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605040170
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,19 +132,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 15, 2026 at 11:55:31AM +0100, Shameer Kolothum wrote:
-> Use IOMMU_GET_HW_INFO to query host support for Tegra241 CMDQV.
+On 5/4/26 1:42 PM, Arun Menon wrote:
+> From: Arun Menon <armenon@redhat.com>
 > 
-> Validate the returned data type, version, and minimum number of vCMDQs and
-> SIDs per Tegra241 CMDQ Virtual Interface(VI). Fail the probe if the host
-> does not meet these requirements.
+> - Add subsection in VMState for TPM CRB with the newly introduced
+>    command and response buffer GByteArrays, along with a needed callback,
+>    so that newer QEMU only sends the buffers if it is necessary.
+> - Implement a migration blocker to prevent migration of the VM if the
+>    user manually enables chunking capability, cap-chunk, but the machine
+>    type does not support it, using a new hw_compat property called
+>    allow_chunk_migration.
+> - Add a post_load_errp hook so that during a migration, the buffers are
+>    validated before destination VM is started.
 > 
-> The QEMU model supports one Virtual Interface(VI) per VM with 2 vCMDQs and
-> 16 SIDs per VI, so the probe ensures the host implementation is compatible
-> with these limits.
+> Signed-off-by: Arun Menon <armenon@redhat.com>
+> ---
+>   hw/core/machine.c |  1 +
+>   hw/tpm/tpm_crb.c  | 68 +++++++++++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 69 insertions(+)
 > 
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> diff --git a/hw/core/machine.c b/hw/core/machine.c
+> index 4e0a93e231..30464b21ac 100644
+> --- a/hw/core/machine.c
+> +++ b/hw/core/machine.c
+> @@ -41,6 +41,7 @@
+>   
+>   GlobalProperty hw_compat_11_0[] = {
+>       { "tpm-crb", "cap-chunk", "off" },
+> +    { "tpm-crb", "x-allow-chunk-migration", "off" },
+>   };
+>   const size_t hw_compat_11_0_len = G_N_ELEMENTS(hw_compat_11_0);
+>   
+> diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+> index 5572d89268..98feb734d5 100644
+> --- a/hw/tpm/tpm_crb.c
+> +++ b/hw/tpm/tpm_crb.c
+> @@ -24,6 +24,7 @@
+>   #include "hw/pci/pci_ids.h"
+>   #include "hw/acpi/tpm.h"
+>   #include "migration/vmstate.h"
+> +#include "migration/blocker.h"
+>   #include "system/tpm_backend.h"
+>   #include "system/tpm_util.h"
+>   #include "system/reset.h"
+> @@ -50,6 +51,8 @@ struct CRBState {
+>       TPMPPI ppi;
+>   
+>       bool cap_chunk;
+> +    bool allow_chunk_migration;
+> +    Error *migration_blocker;
+>   };
+>   typedef struct CRBState CRBState;
+>   
+> @@ -352,18 +355,68 @@ static int tpm_crb_pre_save(void *opaque)
+>       return 0;
+>   }
+>   
+> +static bool tpm_crb_chunk_needed(void *opaque)
+> +{
+> +    CRBState *s = opaque;
+> +
+> +    if (!s->allow_chunk_migration) {
+> +        return false;
+> +    }
+> +
+> +    return ((s->command_buffer && s->command_buffer->len > 0) ||
+> +            (s->response_buffer && s->response_buffer->len > 0));
+> +}
+> +
+> +static bool tpm_crb_chunk_post_load(void *opaque, int version_id, Error **errp)
+> +{
+> +    CRBState *s = opaque;
+> +
+> +    /*
+> +     * The external TPM emulator (example swtpm) determines the backend
+> +     * buffer capacity (s->be_bufer_size). This check ensures that if we
+> +     * migrate from a source with a PQC-enabled emulator that supports
+> +     * larger buffers to a destination with a non-PQC emulator, the
+> +     * migrated data does not exceed the destination's capacity.
+> +     */
+> +    if (s->response_buffer->len > s->be_buffer_size ||
+> +        s->command_buffer->len > s->be_buffer_size) {
+> +        error_setg(errp, "tpm-crb: Buffer sizes exceed backend capacity");
+> +        return false;
+> +    }
+> +    return true;
+> +}
+> +
+> +static const VMStateDescription vmstate_tpm_crb_chunk = {
+> +    .name = "tpm-crb/chunk",
+> +    .version_id = 0,
+> +    .needed = tpm_crb_chunk_needed,
+> +    .post_load_errp = tpm_crb_chunk_post_load,
+> +    .fields = (const VMStateField[]) {
+> +        VMSTATE_GBYTEARRAY(command_buffer, CRBState, 0),
+> +        VMSTATE_GBYTEARRAY(response_buffer, CRBState, 0),
+> +        VMSTATE_UINT32(response_offset, CRBState),
+> +        VMSTATE_END_OF_LIST()
+> +    }
+> +};
+> +
+>   static const VMStateDescription vmstate_tpm_crb = {
+>       .name = "tpm-crb",
+>       .pre_save = tpm_crb_pre_save,
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_UINT32_ARRAY(regs, CRBState, TPM_CRB_R_MAX),
+>           VMSTATE_END_OF_LIST(),
+> +    },
+> +    .subsections = (const VMStateDescription * const []) {
+> +        &vmstate_tpm_crb_chunk,
+> +        NULL,
+>       }
+>   };
+>   
+>   static const Property tpm_crb_properties[] = {
+>       DEFINE_PROP_TPMBE("tpmdev", CRBState, tpmbe),
+>       DEFINE_PROP_BOOL("cap-chunk", CRBState, cap_chunk, true),
+> +    DEFINE_PROP_BOOL("x-allow-chunk-migration", CRBState,
+> +                     allow_chunk_migration, true),
+>   };
+>   
+>   static void tpm_crb_reset(void *dev)
+> @@ -418,6 +471,7 @@ static void tpm_crb_reset(void *dev)
+>   static void tpm_crb_realize(DeviceState *dev, Error **errp)
+>   {
+>       CRBState *s = CRB(dev);
+> +    int ret;
+>   
+>       if (!tpm_find()) {
+>           error_setg(errp, "at most one TPM device is permitted");
+> @@ -427,6 +481,15 @@ static void tpm_crb_realize(DeviceState *dev, Error **errp)
+>           error_setg(errp, "'tpmdev' property is required");
+>           return;
+>       }
+> +    if (s->cap_chunk && !s->allow_chunk_migration) {
+> +        error_setg(&s->migration_blocker,
+> +                   "The tpm-crb device does not support chunk migration with "
+> +                   "machine version less than 11.1");
+> +        ret = migrate_add_blocker_normal(&s->migration_blocker, errp);
+> +        if (ret < 0) {
+> +            return;
+> +        }
+> +    }
+>   
+>       memory_region_init_io(&s->mmio, OBJECT(s), &tpm_crb_memory_ops, s,
+>           "tpm-crb-mmio", sizeof(s->regs));
+> @@ -457,6 +520,11 @@ static void tpm_crb_unrealize(DeviceState *dev)
+>   
+>       g_clear_pointer(&s->command_buffer, g_byte_array_unref);
+>       g_clear_pointer(&s->response_buffer, g_byte_array_unref);
+> +
+> +    if (s->migration_blocker) {
+> +        migrate_del_blocker(&s->migration_blocker);
+> +        error_free(s->migration_blocker);
+> +    }
+>   }
+>   
+>   static void tpm_crb_class_init(ObjectClass *klass, const void *data)
 
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+
 
