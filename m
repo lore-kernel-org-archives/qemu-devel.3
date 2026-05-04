@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B850CD3423
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 07:37:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E74DEFF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 07:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJnr5-00050c-IV; Mon, 04 May 2026 03:36:41 -0400
+	id 1wJnsX-0005PV-7j; Mon, 04 May 2026 03:38:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJnr1-00050D-Jg
- for qemu-devel@nongnu.org; Mon, 04 May 2026 03:36:37 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJnsV-0005MW-If
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 03:38:07 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJnqz-000763-MC
- for qemu-devel@nongnu.org; Mon, 04 May 2026 03:36:35 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-44985f4ab0fso1542713f8f.0
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 00:36:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wJnsT-0007U0-SY
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 03:38:07 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso26108825e9.1
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 00:38:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777880189; x=1778484989; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777880284; x=1778485084; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CRckL+sEPFBJZu+9AFfrXSqIP9GjmsTWxjyZ8SWU/s4=;
- b=bKKRFr00LGAVRbPGwek2ItKuznJs5RjyYCI6eZ8HasD4W0HaLh1rlhD6560ZhFVS7J
- HLDeF7Is76GkKv0AOQIFuhMxRbUld6Rj/ISD7y8ZfiQC2S8dLUFkX1sZkW30Kk9shzlx
- dJTF9Of02RMm4Y+cIyOD5XsNVZBhTI9cTlWGS55u6Tpnv5rv40puBARq/n/fK3cUkrQd
- pMSEuaxrsHw5jyZFgJ+dY5BQ+DI6AYBPPi4bdF19LNAjf5bO/Hu9ybKegW7jukrLGxYG
- oOoFGyNoZvHELGaSKGUfA3B/r4S71WXVWsKwPzlLSEd4blRpICvogarxvZ/cg58O8fum
- 36SA==
+ bh=xa+CGLnrL+V4mfXhcp5ZkTFXOdRkvFFxI9x4qHtyRqU=;
+ b=XO3PIn4WKHhLQ1nDVgHIhGDkAcTxxVJl5U5YIHzj/P/9MrjiHDa1f0ef5fd9x5Ggkg
+ jA/xgqg2Ot0v1u+OoO5s7+5U9Hsz5+iBiU/ugfXL4ahBnezq3e1mi/LWxuYRGovZ/F4j
+ pnkfC7+gxBD04lTIVGcj7eu9/u6mZdPqyoIe+MsoPIAsFl7gZLxRvdXT/0bqiCLpc0tz
+ uEkqIQwMAq7dMSFQHGTHpmxTiV+l+qcx5iA6RjXAXUT3Nh+aFOQNkYo8J9DiGoJ1cC7f
+ mPKOFSBG4hFAS9SVyccndLL5knaS5GlhMH4s49U/57wQZjzWlXYWsIQkq5pe1B/ZjY3T
+ 2PUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777880189; x=1778484989;
+ d=1e100.net; s=20251104; t=1777880284; x=1778485084;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CRckL+sEPFBJZu+9AFfrXSqIP9GjmsTWxjyZ8SWU/s4=;
- b=HuDZqMZCBVEhTMEEHil2QS6sclPPn0WtSCvSAtPuEH6jGNuooutiDF7zAHHMszuLVo
- i/ujk59Tu6s9HH+uUvrITlcYm4Z7P8hghOqodgMe4ZGsm9ZOqdMrutmbdCgVY9V6yNgX
- uyM8Gl6hs0mxsyUhRDzDeIb8xTfjnBNLAVqIxvwla/jKi3fKQ+9qQ8zfAKCULVMxYWtA
- Et+ohhtj2hNF2SY+OprHUn+RSY4ck6LjZblcmArv6ruhnSHQKITzQrU9Hbkg7T9Jnpor
- Fa59EvaEPOS8Zx3v6pgSnQOX4GJgJ80gjZIDd9DTw8BgssXctEUqHZCy5ugKHvCWZI7d
- hpuQ==
-X-Gm-Message-State: AOJu0Yzuol1YjuUPEwBuHKkL6hB9WZrrfyfOAsGAra7f3wsQxDPEKZC4
- eQHoOFzxGc7KJmrfJFapDKcb6x9+VWI5YwuabLteHVoDvT4iqVPcd3wPDLdaQ5ZOmMI=
-X-Gm-Gg: AeBDietP/jmhFYo8uyR5dY7IGp2dvWLz2sekk4L5GP/EGYWR96TqEHvHwNUxRMh6+YX
- qLQC11gNWttwRO46zt07yDggkqy6BGJ1K39tu8T3shaf7+7/ZTDoNl7zurBFSSCDw4fqdNa3R4l
- KPuFjWrFDhU7Z8BWKVOYuj7/CISQfsvw06L94VrlyLaqVlQ8v1hiclr2MS0NlEpWpsaDxHVItwD
- 2JbJNSCuyAD/u3fjNU+PXx4Y5jY+mCh/nLUctIxRXfG4H7X8wfdcqyD1Zqc8F6T8SQUDMG2sdmt
- tjJ0EeWFkGzn9B7dvYYRh4NvaHir74b9zdncTkbWu+L2xGTRFEf/ZIxfxTmh/AgRKcD9fCKG72r
- j7wqSICN1r4Kbmc7l+U6Y2eDxWzbTMghBkQdoTxBeRvLJK9gTRvQccHVsskkhTdylyqkJBHheMF
- 96TE0YEKId69kmndFKPgjMADOEcaXSDYvMtEITlmA9Po3nREfm1LvJlhwi+WRJZpyFDXt0V8Ptl
- Q49
-X-Received: by 2002:a05:6000:184e:b0:43d:762e:76c6 with SMTP id
- ffacd0b85a97d-44bb3207ae6mr14347277f8f.7.1777880189298; 
- Mon, 04 May 2026 00:36:29 -0700 (PDT)
+ bh=xa+CGLnrL+V4mfXhcp5ZkTFXOdRkvFFxI9x4qHtyRqU=;
+ b=Py+nVoDopcFgVguKuxA+UmgfpGerNQLIqDVeGlVs99qewJ6tO1PoqA5U24f7sybkTd
+ UyEDWAb3xW/ztUe+PaTsZGWqbyri43SWaWf7h0b3fXY+ggDGR1R0cUG5lD0cnY/Q/Nhf
+ R8p+NFLfQ6rLmyQBgdARAmx88RGl+DesqKey38SNrV0OoMlFNfqRBg0lmZnTGl+YpyTR
+ /irkgM3uEv/PERQga6jM3E+ukh45/By3LWxOlaYRCOfTr/2vw2IIkUVmDjmRO3Dg2mtl
+ vE+ANcqyQZE7XCJ0W7J1NfPg1KU60OqxsJdITJx9J8ICDaSKJNlCKNkj1VXJwoXgqD9B
+ Dy9w==
+X-Gm-Message-State: AOJu0YzQma/GfK0T00z1F21sCyaSQt/vKBdLwkEz7LS7K5qNbPNFfXi3
+ G26JgxXNLIoHsVQDBinRoU9oIk34x93j/D3157Tm1NQnXVfz0rTPByFjYWETyf/nDjQ=
+X-Gm-Gg: AeBDieuOIPE993oynBZd6lD5lVTJ7WSj1JijBQV2mky2PVE0WYYqKC0VqMwgkX26ntC
+ 4FL22ZCUXSJt53vtoFtj/uwjNoaPfwJo+DalUKKW23+GLEkBvLxLKRFVOtREvNs17iBQT660qDX
+ lGYNf+PmQlsGbOo3ZU1yotUfUdH+c93kav4c1TEFBG1zUw170F25fvHhL54rAL3HQ/6ovxlZULZ
+ HEB3E+8H/AJI+6pnNOBBhObvfgU+8oez4blSDZO/o3wpkHNCQtaQKfZbd92a6d20g1W3LEbkwQ9
+ HhOFgebW3x7nx5Iq8thH4AH+pCTntV5q0W/zdqBybmevUayd4H9Gz1IV9UrTj3uWAdyurgS/t0P
+ 7Mi0UHgwRvFV2ZWpYwPWN1mTjf92865HyJafnclgwmRpthaiIIvzH76+RMVwcQ55QbTzVlCoij1
+ J9lBQfMlcnFYTjNI2QZkwCGmhr91UxlBj3f8ERIFBSJgLkFz7g6Hnb3R/gI1z9++VNAf87f+UNX
+ pTx/V8if4IvCY4=
+X-Received: by 2002:a05:600c:540e:b0:48a:5574:3a5d with SMTP id
+ 5b1f17b1804b1-48a98874ab4mr125264155e9.7.1777880283870; 
+ Mon, 04 May 2026 00:38:03 -0700 (PDT)
 Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-44a981ded99sm24281599f8f.18.2026.05.04.00.36.28
+ 5b1f17b1804b1-48a8feec1easm74216055e9.24.2026.05.04.00.38.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 04 May 2026 00:36:28 -0700 (PDT)
-Message-ID: <41b7b58e-3d58-4e48-9656-2b0cfc4659a4@linaro.org>
-Date: Mon, 4 May 2026 09:36:27 +0200
+ Mon, 04 May 2026 00:38:03 -0700 (PDT)
+Message-ID: <77227abc-9ea3-41a3-9407-5a00555a4718@linaro.org>
+Date: Mon, 4 May 2026 09:38:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 06/58] kconfig: remove duplicate declaration of
- CONFIG_MIPS_BOSTON_AIA
+Subject: Re: [PATCH] hvf: arm: override HV_SYS_REG_MDCR_EL2
 Content-Language: en-US
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20260430172204.1006673-1-pbonzini@redhat.com>
- <20260430172204.1006673-7-pbonzini@redhat.com>
- <09b2ec62-4b67-41da-893d-aaccf011537c@linaro.org>
- <CABgObfZU_r-xF_iUR+DVA_GkcvzFv878CRAcBh5go864aD_Jqg@mail.gmail.com>
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+References: <20260501231353.63184-1-mohamed@unpredictable.fr>
+ <e36f1d1b-89db-443b-aa48-6247831a8247@linaro.org>
+ <D84A47B8-1555-4ED6-9BC5-C4C433D5D7AD@unpredictable.fr>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CABgObfZU_r-xF_iUR+DVA_GkcvzFv878CRAcBh5go864aD_Jqg@mail.gmail.com>
+In-Reply-To: <D84A47B8-1555-4ED6-9BC5-C4C433D5D7AD@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,44 +106,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/5/26 09:08, Paolo Bonzini wrote:
+On 4/5/26 08:59, Mohamed Mediouni wrote:
 > 
 > 
-> Il lun 4 mag 2026, 08:28 Philippe Mathieu-Daudé <philmd@linaro.org 
-> <mailto:philmd@linaro.org>> ha scritto:
+>> On 4. May 2026, at 08:49, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> On 2/5/26 01:13, Mohamed Mediouni wrote:
+>>> In older SDKs, MDCR_EL2 was defined incorrectly.
+>>> As such, override it with a #define if compiling with an older macOS
+>>> SDK.
+>>> This is a workaround because the macOS CI setup we currently rely on
+>>> has not been kept up to date, to be able to land nested virtualization
+>>> support.
+>>> Once CI is updated, the SME stubs can be removed and this
+>>> commit can be reverted.
+>>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>>> ---
+>>>   target/arm/hvf/hvf.c | 9 +++++++++
+>>>   1 file changed, 9 insertions(+)
+>>> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+>>> index 4f0f7ffba1..79209bc8e9 100644
+>>> --- a/target/arm/hvf/hvf.c
+>>> +++ b/target/arm/hvf/hvf.c
+>>> @@ -468,6 +468,15 @@ static const struct hvf_reg_match hvf_sme2_preg_match[] = {
+>>>   #define HVF_TO_KVMID(HVF)  \
+>>>       (CP_REG_ARM64 | CP_REG_SIZE_U64 | CP_REG_ARM64_SYSREG | (HVF))
+>>>   +/*
+>>> + * In older SDKs, MDCR_EL2 was defined incorrectly.
+>>> + * As such, override it with a #define if compiling with an older macOS SDK.
+>>> + * https://lore.kernel.org/qemu-devel/BCCED674-EAEF-4755-9BE1-116FB36FB5C9@apple.com/
+>>> + */
+>>> +#if !defined(MAC_OS_VERSION_26_0)
+>>
+>> Not sure about this check, i.e. wouldn't it clash with 26.1 release?
+>> I'd expect a check such:
+>>
+>>    #if MAC_OS_X_VERSION_MAX_ALLOWED < 260000
 > 
->     On 30/4/26 19:21, Paolo Bonzini wrote:
->      > Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com
->     <mailto:marcandre.lureau@redhat.com>>
+> Hi,
 > 
->     This was not reviewed by Marc-André (at least not publically on
->     the list) but by Alistair and myself:
->     https://lore.kernel.org/qemu-devel/20260430090534.841894-3-
->     pbonzini@redhat.com/ <https://lore.kernel.org/qemu-
->     devel/20260430090534.841894-3-pbonzini@redhat.com/>
+> MAC_OS_VERSION_26_0 will be defined in all future SDKs.
 > 
-> 
-> He did for the whole series, and then I sent out the pull request 
-> (having had reviews) before receiving the messages from you and Alistair.
+> See AvailabilityVersions.h in the macOS SDK, has all of them since 10.0
 
-Indeed you are right, I missed whole-series review sent to the cover
-letter. I suppose the other my other hiccup is due to emails delivery
-delay, not seeing your PR was sent later the same day. Apologies.
+Right.
 
-> 
-> Paolo
-> 
-> 
->     Not a big deal, it just shows this email workflow limits, as
->     reviewers might wonder what the point of doing public review if
->     being ignored.
-> 
->      > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com
->     <mailto:pbonzini@redhat.com>>
->      > ---
->      >   hw/misc/Kconfig  | 8 --------
->      >   hw/riscv/Kconfig | 4 ++++
->      >   2 files changed, 4 insertions(+), 8 deletions(-)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+>>
+>>> +#define HV_SYS_REG_MDCR_EL2 0xe089
+>>> +#endif
+>>> +
+>>>   /*
+>>>    * Verify this at compile-time.
+>>>    *
+>>
+>>
 > 
 
 
