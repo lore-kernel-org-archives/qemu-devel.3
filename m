@@ -4,56 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37CDDFF885A
-	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 06:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 505B6FF885A
+	for <qemu-devel@archiver.kernel.org>; Mon,  4 May 2026 06:57:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wJn7f-0002vF-Q7; Mon, 04 May 2026 02:49:43 -0400
+	id 1wJnEF-0005Bo-IY; Mon, 04 May 2026 02:56:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aastharawat@linux.microsoft.com>)
- id 1wJn7b-0002ur-V0
- for qemu-devel@nongnu.org; Mon, 04 May 2026 02:49:40 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <aastharawat@linux.microsoft.com>) id 1wJn7a-0000GR-Ez
- for qemu-devel@nongnu.org; Mon, 04 May 2026 02:49:39 -0400
-Received: by linux.microsoft.com (Postfix, from userid 1236)
- id AD13C20B7168; Sun,  3 May 2026 23:49:34 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com AD13C20B7168
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1777877374;
- bh=5pyTPpkI7AHLV5BxlEg6i5StaLO80oCMag+o9rcRVX8=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=SrHvNZkWxlTcerTbOO6DqH4bWm7vPhrB7theB55TkNBcVJa+kSTm6QlwLSQgfHAWU
- JwJ4PzrGh26kW9pB6xN7QxtlCLKcloYUflietW/hqu8a7zkXpCpDl+0nyFOdrgzHx/
- d/O2dwaaL2QP7YdTK47OyUZMdCqducU5W1p2W46E=
-Date: Sun, 3 May 2026 23:49:34 -0700
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 09/14] accel/mshv: implement cpu_thread_is_idle() hook
-Message-ID: <afhBfqw9KJe6RQiO@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20260421-mshv_accel_arm64_supp-v3-0-469f544778ba@linux.microsoft.com>
- <20260421-mshv_accel_arm64_supp-v3-9-469f544778ba@linux.microsoft.com>
- <66ebbc64-7509-47bc-b7cf-27c0b5fd0eee@linaro.org>
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1wJnE5-0005Ak-Kp; Mon, 04 May 2026 02:56:22 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1wJnE3-0004IX-GW; Mon, 04 May 2026 02:56:21 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 970678065B;
+ Mon, 04 May 2026 09:56:11 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:803e:400:d600:d90c:cd5e:5e86] (unknown
+ [2a02:6bf:803e:400:d600:d90c:cd5e:5e86])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp) with ESMTPSA
+ id 7uYwjA1MACg0-AVBqHM9I; Mon, 04 May 2026 09:56:10 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1777877770;
+ bh=jkgu9N0mNLW6MJdDs8iN0awIQ6XcKC2pPGX9+4cPcZI=;
+ h=In-Reply-To:Cc:Date:References:To:From:Subject:Message-ID;
+ b=FB6IQ/EejOLDggc+IyTW8qeuCyK8beb+S/ruVNIa4jVOEZK78ZSazXxZ21raBgOdY
+ Tz00YnCpB+m5FnvE8gwjb5OBLYH0uydH2cs/GBTX9tx1aNSlhcZqeA6flL54rUcONG
+ k3NP6dTPn6uRh1btrvegq9F1DhFb1jksmwjuuaQI=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <165fbcde-75ac-47d8-a2d8-5abb75f71478@yandex-team.ru>
+Date: Mon, 4 May 2026 11:56:07 +0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <66ebbc64-7509-47bc-b7cf-27c0b5fd0eee@linaro.org>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=aastharawat@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/5] vhost-user-blk: fix compatibility with older qemu
+ versions
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+To: qemu-devel@nongnu.org
+Cc: "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Milan Zamazal <mzamazal@redhat.com>, Raphael Norwitz <rnorwitz@nvidia.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ qemu-block@nongnu.org, Fam Zheng <fam@euphon.net>,
+ zhenwei pi <zhenwei.pi@linux.dev>, Hanna Reitz <hreitz@redhat.com>,
+ virtio-fs@lists.linux.dev, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Stefano Garzarella <sgarzare@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>
+References: <20260330095226.158386-1-dtalexundeer@yandex-team.ru>
+ <250aad49-9494-47d3-b0e1-2e4eec490ca3@yandex-team.ru>
+ <6b959317-6690-4978-87e6-e959dca6649b@yandex-team.ru>
+Content-Language: en-US
+In-Reply-To: <6b959317-6690-4978-87e6-e959dca6649b@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -65,46 +85,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 23, 2026 at 11:55:43AM +1000, Richard Henderson wrote:
-> On 4/21/26 15:21, Aastha Rawat wrote:
-> > From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> > 
-> > In MSHV the hypervisor APIC is always used, so we to implement this hook
-> > to make sure the AP's vcpu thread is not blocked waiting for an INIT SIPI
-> > by the BSP. Without this change soft reboots with -smp cpus>=2 will
-> > hang.
-> > 
-> > Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> > Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> > ---
-> >   accel/mshv/mshv-all.c | 12 ++++++++++++
-> >   1 file changed, 12 insertions(+)
-> > 
-> > diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> > index 5ce76e86db..6c0ddbf3ca 100644
-> > --- a/accel/mshv/mshv-all.c
-> > +++ b/accel/mshv/mshv-all.c
-> > @@ -704,11 +704,23 @@ static const TypeInfo mshv_accel_type = {
-> >       .instance_size = sizeof(MshvState),
-> >   };
-> > +/*
-> > + * MSHV manages the LAPIC in the hypervisor. SIPI for APs are handled
-> > + * internally. Halted vCPUs must still enter mshv_cpu_exec() so that
-> > + * MSHV_RUN_VP is called and the hypervisor will deliver SIPI to wake APs.
-> > + */
-> > +
-> > +static bool mshv_vcpu_thread_is_idle(CPUState *cpu)
-> > +{
-> > +    return false;
-> > +}
-> 
-> The comment, at least, is x86 specific.
+Ping :)
 
-The function itself is correct for both architectures (returns false).
-The logic applies to x86 (SIPI) and ARM64 (PSCI), haulted vCPUs must
-still enter MSHV_RUN_VP so that hypervisor can wake them. I can update
-the comment.
-
-Thanks,
-Aastha
+On 4/20/26 16:11, Alexandr Moshkov wrote:
+> Hello! Another gentle ping :)
+>
+> On 4/6/26 14:51, Alexandr Moshkov wrote:
+>> Ping :)
+>>
+>> On 3/30/26 14:52, Alexandr Moshkov wrote:
+>>> v2 -> v3:
+>>> - fix complile problems
+>>> - add assert check in do_vhost_virtio_stop
+>>> - make inflight-migration property mutable
+>>>
+>>> v1 -> v2:
+>>> - reorganize commits: make refactor commits first, then core 
+>>> semantic change
+>>> - add additional pre_save check for inflight migration possibility
+>>>
+>>> ---
+>>>
+>>> This is a small continuation of my series about inflight migration 
+>>> for vhost-user-blk.
+>>>
+>>> This series is designed to solve the problem of compatibility with 
+>>> older versions of qemu, where this feature has not yet been 
+>>> introduced (for example, if we want to downgrade versions due to 
+>>> some problems).
+>>>
+>>> In the current version for vhost-user-blk, this feature is enabled 
+>>> using the parameter and further migration of the inflight region 
+>>> will depend on whether the vhost-user has accepted the new protocol 
+>>> feature or not. This creates an inconvenient dependency, because 
+>>> there is no way to disable this feature without reconnecting to the 
+>>> backend.
+>>> This series slightly changes the semantics of the introduced 
+>>> protocol feature VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. 
+>>> Enabling this feature adds a new parameter for GET_VRING_BASE 
+>>> message - skip_drain, which allows to control drain in-flight 
+>>> requests on the backend.
+>>>
+>>> Thus, user can enable or disable inflight-migration param for 
+>>> vhost-user-blk to maintain compatibility with older versions of QEMU.
+>>>
+>>> Alexandr Moshkov (5):
+>>>    vhost-user.rst: fix typo
+>>>    vhost-user-blk: make inflight-migration prop mutable
+>>>    vhost-user: add skip_drain param to do_vhost_virtqueue_stop
+>>>    vhost-user-blk: move inflight_needed higher
+>>>    vhost-user: add skip_drain param to GET_VRING_BASE
+>>>
+>>>   backends/cryptodev-vhost.c     |  2 +-
+>>>   backends/vhost-user.c          |  2 +-
+>>>   docs/interop/vhost-user.rst    |  8 +++----
+>>>   hw/block/vhost-user-blk.c      | 43 
+>>> +++++++++++++++++++++++++++-------
+>>>   hw/net/vhost_net.c             |  9 +++----
+>>>   hw/scsi/vhost-scsi-common.c    |  2 +-
+>>>   hw/virtio/vdpa-dev.c           |  2 +-
+>>>   hw/virtio/vhost-user-base.c    |  2 +-
+>>>   hw/virtio/vhost-user-fs.c      |  2 +-
+>>>   hw/virtio/vhost-user-scmi.c    |  2 +-
+>>>   hw/virtio/vhost-user.c         |  3 +--
+>>>   hw/virtio/vhost-vsock-common.c |  2 +-
+>>>   hw/virtio/vhost.c              | 29 ++++++++++++++++-------
+>>>   include/hw/virtio/vhost-user.h |  1 -
+>>>   include/hw/virtio/vhost.h      |  7 ++++--
+>>>   15 files changed, 76 insertions(+), 40 deletions(-)
+>>>
 
