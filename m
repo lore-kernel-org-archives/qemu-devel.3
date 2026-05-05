@@ -4,91 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9A30CD3427
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 16:26:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19A3FCD3427
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 16:33:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKIao-0000j2-9e; Tue, 05 May 2026 12:25:56 -0400
+	id 1wKIhq-00021v-KI; Tue, 05 May 2026 12:33:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKIah-0000iY-Hv
- for qemu-devel@nongnu.org; Tue, 05 May 2026 12:25:47 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKIhj-00020z-Ly
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 12:33:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKIaf-0000tf-4b
- for qemu-devel@nongnu.org; Tue, 05 May 2026 12:25:47 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKIha-00053v-1C
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 12:33:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777998342;
+ s=mimecast20190719; t=1777998760;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=P4QtZAZI+jIkdJqM/LzjK65gSHXQ1CKWOJUvkq5VEcU=;
- b=SKZHCEDNHDTsNiJpt7AvKQg6qz3H8huvmrWeorG9eQykdV6q6F/SZhBABFQ/pcwEnfncVN
- lagcbBN1KTpdwuOCVaj3MkegORhtkjuZsB3iSKHegL9ByIAsFgvigVRiCLYl8IoVd33hIJ
- GWL0WJoHyrfiUd0uVrPmhOXJVFKYgcM=
-Received: from mail-yw1-f198.google.com (mail-yw1-f198.google.com
- [209.85.128.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tprvENamPh4m1tDtsOs7ttix38gqVQeUM63jn9Wac0Q=;
+ b=UnHHZZXbZhxXjwvsHXk6NbuEdtLBTBa/dLUGzZPbfYa2TCIWozIXPDX3kXcGkAitLIDeZY
+ w+ahfmyZhJoMEHwBP2meLjgMAqQKGsmPanJPWBKgfnWOigIQ7OtHs/ISNASDvwn81x+RE/
+ r26Wa8HkUD2KmWZFTaxo+ekMphutZOM=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-383-7pdGge6YPrKQ0GNicm6g5g-1; Tue, 05 May 2026 12:25:41 -0400
-X-MC-Unique: 7pdGge6YPrKQ0GNicm6g5g-1
-X-Mimecast-MFC-AGG-ID: 7pdGge6YPrKQ0GNicm6g5g_1777998340
-Received: by mail-yw1-f198.google.com with SMTP id
- 00721157ae682-7bd6f72e5aeso85173727b3.1
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 09:25:41 -0700 (PDT)
+ us-mta-153-vsLvpXxpPUOX67sq6QR4-w-1; Tue, 05 May 2026 12:32:39 -0400
+X-MC-Unique: vsLvpXxpPUOX67sq6QR4-w-1
+X-Mimecast-MFC-AGG-ID: vsLvpXxpPUOX67sq6QR4-w_1777998759
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8b552610488so74334376d6.0
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 09:32:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777998340; x=1778603140; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=P4QtZAZI+jIkdJqM/LzjK65gSHXQ1CKWOJUvkq5VEcU=;
- b=httsuOUObhVWmJx+lZgdtJmohJeLpGwn58K6KodYwoUP1lH7RDCF9QYvEjAcG3bqb5
- JkPbNewHnKYepP+CSJPpA1KfuSJPLWZyhsBMsuXv+dbinj382ThlaQ2UXAq05DpvEFo0
- luiaQAY1QTfOg6WVaCZGNOeOJGK12dw3ifnLFqB1BcH7S6qcnUrazZA5Az48G2D10Vo6
- //WI6bOXwshWoDf4qcljyNgtfmT1D6NkDXsVYLOXQoRq56Sqo1RCZHFJzWnBazQxPt3C
- R2Em460oXcMUa4zsGcSpB8qmdrcKHGbx7ahDK/P2AAJFNKYJ/Coe0NJU09DcUFrmPLXS
- RXRg==
+ d=redhat.com; s=google; t=1777998758; x=1778603558; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=tprvENamPh4m1tDtsOs7ttix38gqVQeUM63jn9Wac0Q=;
+ b=ouKE3Zp3T600axf6gEeg211tJb563QlT7EM7vOgceHwc3t7CP72S0CH2oj+UUL/m7L
+ ObtBgpDoou17FLr1if2HPSBZPwx2LbMnDfGQOrAKoGfDs3SCuoxWk493WtbfOmRqDAVo
+ RgYz+EjW88iZJqtO37+LJ6A7xuEwR6WtVIXLNTgX8Uzy4OISqLND6NsY7a9I8ojanjn2
+ t5HPdsw+2sWiAptVkb1GddZRVzVDcwP2ps6kktibVPgFssPjfiQW5d4xR7rDj8wZ/i9c
+ 8deYWIlYeg4OsmgZfR+Zz/doyWo0Be3jzgwDsjiV8d0u9Qth0Uf3wisvvbx9yz0EFI5F
+ cLOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777998340; x=1778603140;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=P4QtZAZI+jIkdJqM/LzjK65gSHXQ1CKWOJUvkq5VEcU=;
- b=gU1DoPy1lWtA2FFwzbfYVqaop0/7gqbKdio2HWVoKsL6YxbwaruwQWZmPvD+s8bcJx
- Q09kLoQQ2V78P3dbn+q5qGvCUtDXg3c4z6nKXXV9mBiAqTYN06L15tWDrkUBR0YNBnqd
- bUR+iwBA/6h/6PHsHTXQpNCukieVhgV2xTIYXGQyLKvfvptrYjgrlV0ZSj1d8nG1VkTd
- aJMdeBKpwNyJhuSle6d0gVIAmXL7ZVDZwzNf4cJVD+Oso1gCeASZNBKherGHvffp+B4J
- y9z9U0U31tJGrY9PO9DHFg69r9Z7WF/v62X6G2y4NMWOZteFbqMkezbfI4eEdFvlmafK
- yLLw==
-X-Gm-Message-State: AOJu0YypRhJRTqI/OhJzr2Dm+d17w/7GmgUWesAijJdyRQIB3uLfAMR6
- fqqyes+12du7QaTWOGOW7MFAbrWKtpHU0iSPHyspGQJivmJhVKu3bSN2BHZwP7zx3BtvsSl/A/y
- EqpL0Eq+8r6L97ZYQsncIsOLxO7d1VTdqFuj1JAl1P8DKs00Mr/Xt5S3H8CH74eE/
-X-Gm-Gg: AeBDies+nQjt5WoiDfr8EtBmsqy4gnKms5qgC7A6NxiYy5sJHlqKSXamRCzteR/j0Ok
- hx+3a4joMbznzNc1GjWJZg7m/9aYznhYATKnUfENkJte1VGstkVmwTvbRr74UOzT3CTIVlJQFpK
- G2MS9uRLg3HF9rIGmhUaSQ1uQLj+Sw5SIiq+6p4u4snEBGcKvzm7dAyZvoxNRbJbwCstOBBZmYK
- J2Bhppex96JNRSTInIpbPwmF4sfrOl61/CJz1+0WFSPCTwHf2IyvUyocXVydm8BsvCIMFTEaWIU
- u9cdB8Pts7fxHeCvW+AuPcR+2dGjjxPnviKt9Si8QFKz9slNxTiH2zDrGzxkrg3BWW49iRXfHG3
- rWnPZBn1/eAuAJWymZll04gresdIRgNe7ALRKCyuufwdyJbSdtMPIeItTtg==
-X-Received: by 2002:a05:690c:dc2:b0:7b2:136d:240a with SMTP id
- 00721157ae682-7bd76f57a5amr150697487b3.9.1777998340311; 
- Tue, 05 May 2026 09:25:40 -0700 (PDT)
-X-Received: by 2002:a05:690c:dc2:b0:7b2:136d:240a with SMTP id
- 00721157ae682-7bd76f57a5amr150696987b3.9.1777998339690; 
- Tue, 05 May 2026 09:25:39 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777998759; x=1778603559;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=tprvENamPh4m1tDtsOs7ttix38gqVQeUM63jn9Wac0Q=;
+ b=CPbK5h/7UP8GPk1BtFm6UDFNzwv2PW7EOJ00ynYhuksVdGNVE31QnnRN0wlaC3IjbY
+ KJ3Sp+JxA85ndntGDAmh2XwwXldL81NI0uMEoZQFQub+mXgHa4yP2Ailp5O+7QtfP9UN
+ pew4Xa+oDWZFzLRMIXCYHLHgWNLAp3W9uO2AtG/q4koCM79/rKe+08NbeKImwTEsrel/
+ +3BnugAVssERUUm4u7+W3nX0kZxFQfZ71nYQ3LgSA1YsKh6uRnrlGEPQ/icQX0NL//ev
+ wvqJaBD2vqZ3EPqoY1pP3YLFVLRO/fIWSD13Brwixowrehk6USx0d7HUwLBk2VEkEGkm
+ 0TAA==
+X-Gm-Message-State: AOJu0Ywnqa3BY/lSyojAOciUgBfA+RIDoIqzOZEA8aOA0rHC4RkHT9Fg
+ /lJerjupiqr7YgC27kOUa8Bn298y7Oess9VKrJHN00ihSkpLtf9/zPRnBt+CWdsWduUYgIPJJgN
+ Dod8FT10gknefO33PrCEEqXNQ241y7ypV69rIGiWb3IDuZ3TIxZs5am+V
+X-Gm-Gg: AeBDievNXlX0VY1oSUzcIVY6wkxelW/kDX6g6dbH8y5AvLbXB8+2cjpb+eX4aPUyJFZ
+ bifqMqG92Mkm5g12FV9Vp0AUlUJyg5XZ209NuvCZQqHofXdITHpy23g7XLh0USPDINjSAOU9duu
+ Mbd9Nt47UIsTwDlrAhuCkt+byK4a8gJRGDr13ijtiuAlJVq9zoUGM+M7WziFl0pp9KGl/xa5Phm
+ keF1OrF7vKkJngHHROfk/Ub/7y10vgrlRZPvSx1bMm+SQpHYCRWiqjJyiLCJLc/N9jCfMIezFs0
+ qo2B+M25m1dM5EPvNAixgAkEYpNKA9hCHu2vwHWRGAt1FYPZUc4roJgKL2MADYsYn5VTAN9vgx4
+ A/cerW7FdBrw/4IGpc9M70nQePGyUaE20UMeRaAva6nouKgCYpT2SirbRqA==
+X-Received: by 2002:a05:6214:5888:b0:899:fb4e:47aa with SMTP id
+ 6a1803df08f44-8b668c12cfbmr231640796d6.39.1777998758417; 
+ Tue, 05 May 2026 09:32:38 -0700 (PDT)
+X-Received: by 2002:a05:6214:5888:b0:899:fb4e:47aa with SMTP id
+ 6a1803df08f44-8b668c12cfbmr231639406d6.39.1777998757107; 
+ Tue, 05 May 2026 09:32:37 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-7bd6685d0cbsm65320507b3.35.2026.05.05.09.25.38
+ 6a1803df08f44-8b5391e3636sm160014436d6.13.2026.05.05.09.32.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 May 2026 09:25:39 -0700 (PDT)
-Date: Tue, 5 May 2026 12:25:38 -0400
+ Tue, 05 May 2026 09:32:36 -0700 (PDT)
+Date: Tue, 5 May 2026 12:32:35 -0400
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v1 00/15] tests/qtest/migration: Always defer
-Message-ID: <afoaAsY1u8XB6nHb@x1.local>
-References: <20260505160915.25558-1-farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Jared Rossi <jrossi@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: Re: [PATCH v1] tests/qtest/migration: Fix A-B file build
+Message-ID: <afobo6vVUd2Pga76@x1.local>
+References: <20260429231025.30818-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260505160915.25558-1-farosas@suse.de>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20260429231025.30818-1-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
@@ -113,16 +119,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 05, 2026 at 01:08:59PM -0300, Fabiano Rosas wrote:
-> As discussed before, change the tests to always use -incoming
-> defer. Also remove one of the uris from MigrateCommon, a single uri is
-> enough.
+On Wed, Apr 29, 2026 at 08:10:25PM -0300, Fabiano Rosas wrote:
+> The generation of the guest workloads for migration-test is all
+> broken:
+>=20
+> 1) We moved code around and forgot to update the includes from the guest
+> workloads at qtest/migration/<ARCH>/.
+>=20
+> 2) Since this code doesn't build by default due to the need for cross
+> compilation, we also broke the s390x code entirely by removing the
+> libc implementation from sclp.c.
+>=20
+> 3) The build adds a blank line at the end of the header files due to
+> how the sed command used to remove extra variable declarations is
+> written.
+>=20
+> 4) Must be too long since we last built this thing that powerpc
+> compilers would output BE by default. Nowadays we need -mbig-endian to
+> force it.
+>=20
+> 5) Format of comments needs fixing to please checkpatch.
+>=20
+> Fix everything. Most changes are trivial, except for s390x where I had
+> to reimplement some of the routines from sclp.c. Compiling that object
+> file in doesn't work because of its various includes that this
+> standalone code can't provide.
+>=20
+> Testing this change (assuming x86 host):
+> $ cd build
+> $ pushd tests/qtest/migration
+> $ make clean
+> $ make i386
+> $ make CROSS_PREFIX=3Dyour-favorite-cross-compiler- s390x
+> $ make CROSS_PREFIX=3Dyour-favorite-cross-compiler- aarch64
+> $ make CROSS_PREFIX=3Dyour-favorite-cross-compiler- ppc64
+> $ popd
+> $ make -j$(nproc) # must build the tests again
+> $ QTEST_QEMU_BINARY=3D./qemu-system-<ARCH> migration-test
+>=20
+> Fixes: 9f4278837d ("pc-bios/s390-ccw: Use the libc from SLOF and remove s=
+clp prints")
+> Fixes: e1803dabdc ("tests/qtest/migration: Move common test code")
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-A quick question before reading into details: do we want to still keep
--incoming URI to work for QEMU?  If yes, do we still want still a tiny bit
-of test coverage for them?
+Since things are essentially broken, I queued this one directly.  However I
+don't have any knowledge to review the s390 changes, please s390x
+developers do so and if things need change we can do follow ups.
 
--- 
+I did test all these and they work.  One thing to mention below,
+
+> ---
+>  tests/qtest/migration/Makefile             |  11 +-
+>  tests/qtest/migration/aarch64/Makefile     |   4 +-
+>  tests/qtest/migration/aarch64/a-b-kernel.S |   2 +-
+>  tests/qtest/migration/aarch64/a-b-kernel.h |   7 +-
+>  tests/qtest/migration/bootfile.h           |  11 +
+>  tests/qtest/migration/i386/Makefile        |   4 +-
+>  tests/qtest/migration/i386/a-b-bootblock.S |   2 +-
+>  tests/qtest/migration/i386/a-b-bootblock.h |   8 +-
+>  tests/qtest/migration/ppc64/Makefile       |   6 +-
+>  tests/qtest/migration/ppc64/a-b-kernel.S   |   2 +-
+>  tests/qtest/migration/ppc64/a-b-kernel.h   |   8 +-
+>  tests/qtest/migration/s390x/Makefile       |   8 +-
+>  tests/qtest/migration/s390x/a-b-bios.c     |  66 ++-
+>  tests/qtest/migration/s390x/a-b-bios.h     | 609 +++++++++++++--------
+
+I somehow generated different a-b-bios.h for s390x after cross-make.  But I
+verified both versions of s390x_elf[] work here.
+
+My gut feeling is it is a compiler difference causing different code
+generated, even if there's no real functional difference.
+
+My "your-favorite-cross-compiler-" dumps this:
+
+$ s390x-linux-gnu-gcc -v
+Using built-in specs.
+COLLECT_GCC=3D/usr/bin/s390x-linux-gnu-gcc
+COLLECT_LTO_WRAPPER=3D/usr/libexec/gcc/s390x-linux-gnu/15/lto-wrapper
+Target: s390x-linux-gnu
+Configured with: ../gcc-15.2.1-20250808/configure --bindir=3D/usr/bin --bui=
+ld=3Dx86_64-redhat-linux-gnu --datadir=3D/usr/share --disable-decimal-float=
+ --disable-dependency-tracking --disable-gold --disable-libgcj --disable-li=
+bgomp --disable-libmpx --disable-libquadmath --disable-libssp --disable-lib=
+unwind-exceptions --disable-shared --disable-silent-rules --disable-sjlj-ex=
+ceptions --disable-threads --with-ld=3D/usr/bin/s390x-linux-gnu-ld --enable=
+-__cxa_atexit --enable-checking=3Drelease --enable-gnu-unique-object --enab=
+le-initfini-array --enable-languages=3Dc,c++ --enable-linker-build-id --ena=
+ble-lto --enable-nls --enable-obsolete --enable-plugin --enable-targets=3Da=
+ll --exec-prefix=3D/usr --host=3Dx86_64-redhat-linux-gnu --includedir=3D/us=
+r/include --infodir=3D/usr/share/info --libexecdir=3D/usr/libexec --localst=
+atedir=3D/var --mandir=3D/usr/share/man --prefix=3D/usr --program-prefix=3D=
+s390x-linux-gnu- --sbindir=3D/usr/bin --sharedstatedir=3D/var/lib --sysconf=
+dir=3D/etc --target=3Ds390x-linux-gnu --with-bugurl=3Dhttp://bugzilla.redha=
+t.com/bugzilla/ --with-gcc-major-version-only --with-isl --with-newlib --wi=
+th-plugin-ld=3D/usr/bin/s390x-linux-gnu-ld --with-sysroot=3D/usr/s390x-linu=
+x-gnu/sys-root --with-system-libunwind --with-system-zlib --without-headers=
+ --with-arch=3DzEC12 --with-tune=3Dz13 --enable-decimal-float --with-long-d=
+ouble-128 --enable-gnu-indirect-function --with-linker-hash-style=3Dgnu
+Thread model: single
+Supported LTO compression algorithms: zlib zstd
+gcc version 15.2.1 20250808 (Red Hat Cross 15.2.1-1) (GCC)=20
+
+--=20
 Peter Xu
 
 
