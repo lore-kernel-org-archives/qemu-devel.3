@@ -4,107 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E76C2FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 06:02:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16428FF885A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 06:02:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wK8rE-000645-UQ; Tue, 05 May 2026 02:02:14 -0400
+	id 1wK8rS-0006KO-Up; Tue, 05 May 2026 02:02:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamedaymanworkspace@gmail.com>)
- id 1wK8qO-0005xF-GD
- for qemu-devel@nongnu.org; Tue, 05 May 2026 02:01:23 -0400
-Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wK8qr-00063g-PJ
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 02:01:50 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <mohamedaymanworkspace@gmail.com>)
- id 1wK8qK-0003gf-30
- for qemu-devel@nongnu.org; Tue, 05 May 2026 02:01:20 -0400
-Received: by mail-ot1-x32b.google.com with SMTP id
- 46e09a7af769-7de4ed0593fso2937300a34.1
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 23:01:14 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777960874; cv=none;
- d=google.com; s=arc-20240605;
- b=SHDl/fHTK6u9unPif2ZgMoouI4A3azX0GlQw8V+kq/NFAMgUVN+0shpzYrhlOZCFrp
- y2OyKSOkG7x18oEn1koQDoLu72jihSScdmoxqXYEa2BP3C685agLSnOYVbN3nE68icE9
- yV22ZvNYvHiu1pjn2z9ZGIdxjWQXK4fRMngKw+8L4MDiD5IZ+JL1d/r9eKKv5gPXlcVn
- qMjKBEpz3Vt6xW+jdWlqFeSAaKQX6o/x4sDhDme2ZEn34vCG0gRB4vfIeQ5YFfnwnupu
- X2wrTVsswwzNUy9aJePJzg908p/bvUwJVhYFPMwGZbeXdN0lTCeg88PpzKUQfaTfFnJ4
- DnbA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=6k85hXb0yo9mgROm4v9a0W1QlKfb7GWWIZNfbPDFt3w=;
- fh=1UhwBlTcHXGLXnF8RJKWl/YQrzdikuzUzlVZCgKS8vE=;
- b=OcdSlKQHTbNXSJNvohUjUuq3N4LZ+Cd82oXncgqhA3LRnN/MNhBME8kZ3D4FFQZkga
- hMqh5WBBnhjAHjzDJPZbTJj6+gf7w2Ko8vEGOgiye2vF5FGDxKLa4LAvRVWyNH+mUzi7
- +EIeImCrYGwd72pYA1HDp4BnjUQ8mu3sTHqKfOSSs6frVbCAEIdgoPQgP2qM6WTQefdj
- cart3EfGR2VQKExfg9lI357jf+wuuuxkK6dNsan+HNPt0KX8MWrs2EdQqg4MzEVXweLv
- qwIuOK9BpsHrUyuiwu2+INt82ZR95TF0hLb019tUk+aYPY0Y9xtzqwDR+u6grpfu3yx5
- A3Kw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wK8qp-0003pJ-6T
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 02:01:48 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-362bb3260f1so3513445a91.2
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 23:01:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777960874; x=1778565674; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=6k85hXb0yo9mgROm4v9a0W1QlKfb7GWWIZNfbPDFt3w=;
- b=r9GeaiqTXt6W9J5sG1UcE4igYcBg33c7O7cLO6r3Jn/hvO55dOaI/+Un0WHPkZSSIM
- IrvN6annVZUvvDTIl3iktQs+pBwUUMn0GwohU1LwvA8uYaiG7I6XEQAEiZ503jR6+ot5
- dF8Li2kjPNFJ3lDDl1FoK9FRw5Um4tlf4USpOD4NQ6bZ0FJ55j/M2US/kr03fRVl+sMn
- kEy8zUR53DO5/I0s2QaS/atrdOnx87ACvV0pIdmUMecEY6q5DccH3m4Z4abICROJCFTN
- fK3dgzAIHs4mOqGPbsRk8CLvzvR16ztxqsOTHof9daWy8e8vYn8D5uvUFeaoyEYlLTgA
- Nr6w==
+ d=gmail.com; s=20251104; t=1777960904; x=1778565704; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=wa8D4xOsgM/ItWD3mVZFZu8VyrUya/ZgmaHk2QiMr8g=;
+ b=comZx68tAHv8M2pEgsfS/IQ5x6eqLLmbAsDEa25cPFN2zldp/pBx6d9mOxFmvUY+6g
+ 2B9r3vMI91aoGbKisHM1lB9Ndxb8T6fAUgT7PHJHvydMKev7Ih1hHv0dv3qtYVa8AQJ1
+ FA1VBWseQnPUHt0hGzNZq6Z3BETvDEqIhNJs7jznTI0rWuHpzMxtu/n2iaPl5zNjxRni
+ JUxqLqQy9GoRy4pKwkvThUnoLqaponP/vu4AzUuhW+ckUFnMD4TsWNOzYTNNL2/7xCHm
+ 14g/+9/d/mMome3o2fTOX+ni9uYYis+/u4aBoSb5ozTqWpusC/UnEpejSz+sfX8jCp9o
+ TDPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777960874; x=1778565674;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6k85hXb0yo9mgROm4v9a0W1QlKfb7GWWIZNfbPDFt3w=;
- b=WA8U6qsqYH4RtWnUVLCRl9UiCkpZtQCQZopb0QrsdX24VDd01RRzqclluih6VTpQj9
- Z+P/vMjHAvLfwRt40Ev9BoHRXFU2+BNm1ZP3fGm4BV/bjjHPZzw6zeVeEju9l0Qn08Ip
- 6/rsP2S5brOriUDp14KqrOMsMZGK7uSjVY3Rouc+5KcqymeglgJly7GyeapXEPBKcTMx
- tHKJ2uTajpURe6rGj85zPYsLzPcycOm+hq7nK9yWqiE2/emfwELbOYs9si7ZON9sAGa7
- A+Yz4inv6eeQIKkTmrcNcmGqy/EMRxmqieHw2ATqNRlPhu3HbQroK9btjONu4eMw7VZ6
- mQdA==
+ d=1e100.net; s=20251104; t=1777960904; x=1778565704;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=wa8D4xOsgM/ItWD3mVZFZu8VyrUya/ZgmaHk2QiMr8g=;
+ b=QPPkufE9n5I6p9/USYVqordr4rLmJsYrbHWQNXm3rGaV5R3R3MXuuFzK9u5T7RiczZ
+ r9jQVmsyjIUp+EJ+g1qUvWBXVteOE/o3YQScwwQFn54vbv5Pzxu+J+VtfbnHL3cw30bF
+ jy5i1r6/k6R/6nsBdQe/kLhXE9l3cbsreiX93d2D5FU/A6A163r8DOrZBS2GkNhZg6Yy
+ mqkdmHoAamZFs2t6wm/SIaheTo8jduvISZxF2a+4PrJ6P/3uuz9qMTGfJ421A98kzfwR
+ vHFds3Ltekn0EEvBIhQiJ3LcaOkLQHQP5frxu8xDH4Z2UtKtDYqoDmzGPOk9VoohBljN
+ pW8Q==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8Ht4k+2oZefQsKlBdaamHK4fy+qjrIbdYIyX76bW5z53rpnZV2JjcSnSlSfhmmWnBnN9HWMiwImMAb@nongnu.org
-X-Gm-Message-State: AOJu0YydZHZCC029BZAZh2XNWhewKY6YEqEiPC2NRhDiYkn+yPltWezN
- 9nlP9oUYuIzDhwQ9Qy2S8/3fPPKwPWvG83tXDtMM8MHPiJSRqGESR6hozbizcvyzG/zJSQHuclG
- kiffQgWkdSYlBWDxoNGs66eNVtA66uzc=
-X-Gm-Gg: AeBDievwoMfDLYfPnHJs/oODpQ9IjKAeFzRpSfOupk7bsjolS0/JE6I+JvDZVbWoFqz
- UwvwM6zUVkq3qkt3c8OI805G1SfFBemeetqyTVmtWmfr4cSL2HmF00uaZenYtg0skYtS+we4+2P
- +iL6IMCOqofjPpdNDRhSTFWPbXRdlMauCMcMh/XIaah5XbeSdTq7EYl6ReByRGTfhnHJBpDJE6G
- O0403X7/SdhICwgRpbi+5ArRDax6A2cxMhmr2NvVZzPfu+SZ1MrP2ELZHAUSVWkrLTcednIoluF
- cFkNFMt0ZnjKBNPsvlGb8AxTQJnuE1X0Xs3O1Za173kq4AnNWYJN
-X-Received: by 2002:a05:6820:16a5:b0:696:8240:be35 with SMTP id
- 006d021491bc7-6998d2482b3mr652136eaf.31.1777960873529; Mon, 04 May 2026
- 23:01:13 -0700 (PDT)
+ AFNElJ9XGaTeOOgqnaoAS3JiE/BansVDcGJztP+YB2R68qN4Q9ilgnVuy2dgWlv/Aaye2tK3P6SLNYwI3fHN@nongnu.org
+X-Gm-Message-State: AOJu0YzoPDp3isX3tSCXPOtfT/smBIuJH9bndP+fMDaHjc7Geh12pL7C
+ hVZ3aRQwJ8Pljd04fyU45lL9IAPpSpNI8qTeumpzyXEzj1VMP0Q4ayex
+X-Gm-Gg: AeBDietP1XlnQnenoCcEf0y3CGTh6xq2lno7BEhx3Pbf/Pg2fCW6aPyKMbCfD1UaYyN
+ qyT6IVkbwfadEBkYzT2PhAOxTpPliur2uNfLlus4DNLZQMeS2URWPXOAbWz/erHFUlMxbNRn9h6
+ lKFbi+IIa9RkZ01Zg65twCHgF7tEMC6OBrU+xaqswh7katTkVG9mNMqnYFz25xrR87UezHJWkEm
+ Ef18g1omTwlktL6Ql/9DEkEiHMkCf8KnIlSu5cF5viGW8NaQa5XYwNvwx4uzUC15t0CmWJ9q8aa
+ zHZcxVCL4G0hRgrWo2m2OsSW0oMTxEd/7AgIaOaYnTLPlQDXgda3C9EuGmrw9DX/AKGHAd9k33a
+ Gczb2IAVQyvZFTAaFb0Y/udsLJueuZaKfTVCYwlsXB12tvHWhE5vUpv6nI3OzjgSHF3dSHyN3TK
+ 8yKdQpOhzJTWFB9OcoEuT0r5cKze/YShn9shWHnvxvaEk=
+X-Received: by 2002:a17:90b:5830:b0:354:a57c:65db with SMTP id
+ 98e67ed59e1d1-3650ce71f60mr13531346a91.20.1777960904556; 
+ Mon, 04 May 2026 23:01:44 -0700 (PDT)
+Received: from localhost ([124.158.97.178]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-364bdf2aa41sm22104297a91.4.2026.05.04.23.01.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 04 May 2026 23:01:43 -0700 (PDT)
+Date: Tue, 5 May 2026 16:01:40 +1000
+From: Nicholas Piggin <npiggin@gmail.com>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Joel Stanley <joel@jms.id.au>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, Michael Ellerman <mpe@kernel.org>, 
+ Joel Stanley <jms@oss.tenstorrent.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v4 09/13] hw/riscv: Add Tenstorrent Atlantis machine
+Message-ID: <afmHm536v_gM9FL-@lima-default>
+References: <20260425131721.932250-1-joel@jms.id.au>
+ <20260425131721.932250-10-joel@jms.id.au>
+ <CAKmqyKMLwO2uRnzrke+RkCZmdOJPs3Ouyoe=UeuAWnRgitAD8A@mail.gmail.com>
+ <aflOIW3v5FQMwfGA@lima-default>
+ <CAKmqyKNUJMOuq5jujJQrSvnrvCYfxuB_jUrxFcFAQie6PosgAg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20260430162941.584960-1-mohamedaymanworkspace@gmail.com>
- <20260501161106.818373-1-mohamedaymanworkspace@gmail.com>
- <CABWZVhocw-5+RmijZVdOvfCJQfLw3pe+Td+wbgoT48yUQh69QQ@mail.gmail.com>
- <CANCZdfo9=eX6ga-i6a8L_AT5cJaU+aUXNN9sWVeV9VdmEyqZKQ@mail.gmail.com>
-In-Reply-To: <CANCZdfo9=eX6ga-i6a8L_AT5cJaU+aUXNN9sWVeV9VdmEyqZKQ@mail.gmail.com>
-From: MOHAMED AYMAN <mohamedaymanworkspace@gmail.com>
-Date: Tue, 5 May 2026 09:01:02 +0300
-X-Gm-Features: AVHnY4IY2Joi_87APD3vwSAr2yxc8quKHq2wIwMtU9KMY8bYkw1Gntv1gTHFA1A
-Message-ID: <CABWZVhp21GfcK8FKEGVtY=JgiSjNVc5ACO9v9gdmEmbMqiVy3A@mail.gmail.com>
-Subject: Re: [PATCH v2] bsd-user: remove cached host page size and rely on
- qemu_real_host_page_size()
-To: Warner Losh <imp@bsdimp.com>
-Cc: Kyle Evans <kevans@freebsd.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
- envelope-from=mohamedaymanworkspace@gmail.com; helo=mail-ot1-x32b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKmqyKNUJMOuq5jujJQrSvnrvCYfxuB_jUrxFcFAQie6PosgAg@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,452 +111,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Warner,
-Apologies for the missing patch, This is v2 of the patch.
+On Tue, May 05, 2026 at 02:36:23PM +1000, Alistair Francis wrote:
+> On Tue, May 5, 2026 at 12:00 PM Nicholas Piggin <npiggin@gmail.com> wrote:
+> >
+> > On Thu, Apr 30, 2026 at 09:57:34AM +1000, Alistair Francis wrote:
+> > > On Sat, Apr 25, 2026 at 11:20 PM Joel Stanley <joel@jms.id.au> wrote:
+> >
+> > > > diff --git a/MAINTAINERS b/MAINTAINERS
+> > > > index e1942a86eba5..635a380945fd 100644
+> > > > --- a/MAINTAINERS
+> > > > +++ b/MAINTAINERS
+> > > > @@ -1760,6 +1760,17 @@ F: hw/*/*sifive*.c
+> > > >  F: include/hw/*/*sifive*.h
+> > > >  F: tests/functional/test_riscv64_sifive_u.py
+> > > >
+> > > > +Tenstorrent Machines
+> > > > +M: Joel Stanley <joel@jms.id.au>
+> > > > +R: Nicholas Piggin <npiggin@gmail.com>
+> > > > +R: Michael Ellerman <mpe@kernel.org>
+> > > > +L: qemu-riscv@nongnu.org
+> > > > +S: Supported
+> > > > +F: docs/system/riscv/tt_*.rst
+> > > > +F: hw/riscv/tt_*.c
+> > > > +F: hw/riscv/aia.[ch]
+> > >
+> > > AIA?
+> >
+> > Oh it must be because checkpatch complained about patch 5.
+> >
+> > It is covered by RISC-V TCG CPUs though, so no change needed to
+> > MAINTAINERS for AIA AFAIKS?
+> 
+> If it's already covered then that should be fine. Also, if you are
+> covering it, MAINTAINERS should be updated with patch 5 and not here
 
-Signed-off-by: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
----
- bsd-user/elfload.c |  25 ++---------
- bsd-user/main.c    |  14 ++-----
- bsd-user/mmap.c    | 102 ++++++++++++++++-----------------------------
- bsd-user/qemu.h    |  10 ++---
- 4 files changed, 46 insertions(+), 105 deletions(-)
+Agree on both counts. I think it was in the wrong patch, but also
+unnecessary. I've just dropped it.
 
-diff --git a/bsd-user/elfload.c b/bsd-user/elfload.c
-index 3bca0cc9ed..00250fc3c1 100644
---- a/bsd-user/elfload.c
-+++ b/bsd-user/elfload.c
-@@ -192,14 +192,14 @@ static void setup_arg_pages(struct bsd_binprm
-*bprm, struct image_info *info,
-      */
-     size = target_dflssiz;
-     stack_base = TARGET_USRSTACK - size;
--    addr = target_mmap(stack_base , size + qemu_host_page_size,
-+    addr = target_mmap(stack_base , size + HOST_PAGE_SIZE,
-             PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
-     if (addr == -1) {
-         perror("stk mmap");
-         exit(-1);
-     }
-     /* we reserve one extra page at the top of the stack as guard */
--    target_mprotect(addr + size, qemu_host_page_size, PROT_NONE);
-+    target_mprotect(addr + size, HOST_PAGE_SIZE, PROT_NONE);
-
-     target_stksiz = size;
-     target_stkbas = addr;
-@@ -239,27 +239,10 @@ static void padzero(abi_ulong elf_bss, abi_ulong last_bss)
-         return;
-     }
-
--    /*
--     * XXX: this is really a hack : if the real host page size is
--     * smaller than the target page size, some pages after the end
--     * of the file may not be mapped. A better fix would be to
--     * patch target_mmap(), but it is more complicated as the file
--     * size must be known.
--     */
--    if (qemu_real_host_page_size() < qemu_host_page_size) {
--        abi_ulong end_addr, end_addr1;
--        end_addr1 = REAL_HOST_PAGE_ALIGN(elf_bss);
--        end_addr = HOST_PAGE_ALIGN(elf_bss);
--        if (end_addr1 < end_addr) {
--            mmap((void *)g2h_untagged(end_addr1), end_addr - end_addr1,
--                 PROT_READ | PROT_WRITE | PROT_EXEC,
--                 MAP_FIXED | MAP_PRIVATE | MAP_ANON, -1, 0);
--        }
--    }
-
--    nbyte = elf_bss & (qemu_host_page_size - 1);
-+    nbyte = elf_bss & (HOST_PAGE_SIZE - 1);
-     if (nbyte) {
--        nbyte = qemu_host_page_size - nbyte;
-+        nbyte = HOST_PAGE_SIZE - nbyte;
-         do {
-             /* FIXME - what to do if put_user() fails? */
-             put_user_u8(0, elf_bss);
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 73aae8c327..3f5141e794 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -54,11 +54,6 @@
- #include "target_arch_cpu.h"
-
-
--/*
-- * TODO: Remove these and rely only on qemu_real_host_page_size().
-- */
--uintptr_t qemu_host_page_size;
--intptr_t qemu_host_page_mask;
-
- static bool opt_one_insn_per_tb;
- static unsigned long opt_tb_size;
-@@ -302,8 +297,6 @@ int main(int argc, char **argv)
-         (void) envlist_setenv(envlist, *wrk);
-     }
-
--    qemu_host_page_size = getpagesize();
--    qemu_host_page_size = MAX(qemu_host_page_size, TARGET_PAGE_SIZE);
-
-     cpu_model = NULL;
-
-@@ -405,7 +398,6 @@ int main(int argc, char **argv)
-         }
-     }
-
--    qemu_host_page_mask = -qemu_host_page_size;
-
-     /* init debug */
-     {
-@@ -452,7 +444,7 @@ int main(int argc, char **argv)
-
-     cpu_type = parse_cpu_option(cpu_model);
-
--    /* init tcg before creating CPUs and to get qemu_host_page_size */
-+    /* init tcg before creating CPUs */
-     {
-         AccelState *accel = current_accel();
-         AccelClass *ac = ACCEL_GET_CLASS(accel);
-@@ -534,7 +526,7 @@ int main(int argc, char **argv)
-      * proper page alignment for guest_base.
-      */
-     if (have_guest_base) {
--        if (guest_base & ~qemu_host_page_mask) {
-+        if (guest_base & ~HOST_PAGE_MASK) {
-             error_report("Selected guest base not host page aligned");
-             exit(1);
-         }
-@@ -573,7 +565,7 @@ int main(int argc, char **argv)
-         /* Ensure that mmap_next_start is within range. */
-         if (reserved_va <= mmap_next_start) {
-             mmap_next_start = (reserved_va / 4 * 3)
--                              & TARGET_PAGE_MASK & qemu_host_page_mask;
-+                              & TARGET_PAGE_MASK & HOST_PAGE_MASK;
-         }
-     }
-
-diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
-index fe77eceb48..59c70083a4 100644
---- a/bsd-user/mmap.c
-+++ b/bsd-user/mmap.c
-@@ -84,7 +84,7 @@ int target_mprotect(abi_ulong start, abi_ulong len, int prot)
-         return 0;
-
-     mmap_lock();
--    host_start = start & qemu_host_page_mask;
-+    host_start = start & HOST_PAGE_MASK;
-     host_end = HOST_PAGE_ALIGN(end);
-     if (start > host_start) {
-         /* handle host page containing start */
-@@ -92,28 +92,28 @@ int target_mprotect(abi_ulong start, abi_ulong
-len, int prot)
-         for (addr = host_start; addr < start; addr += TARGET_PAGE_SIZE) {
-             prot1 |= page_get_flags(addr);
-         }
--        if (host_end == host_start + qemu_host_page_size) {
-+        if (host_end == host_start + HOST_PAGE_SIZE) {
-             for (addr = end; addr < host_end; addr += TARGET_PAGE_SIZE) {
-                 prot1 |= page_get_flags(addr);
-             }
-             end = host_end;
-         }
-         ret = mprotect(g2h_untagged(host_start),
--                       qemu_host_page_size, prot1 & PAGE_RWX);
-+                       HOST_PAGE_SIZE, prot1 & PAGE_RWX);
-         if (ret != 0)
-             goto error;
--        host_start += qemu_host_page_size;
-+        host_start += HOST_PAGE_SIZE;
-     }
-     if (end < host_end) {
-         prot1 = prot;
-         for (addr = end; addr < host_end; addr += TARGET_PAGE_SIZE) {
-             prot1 |= page_get_flags(addr);
-         }
--        ret = mprotect(g2h_untagged(host_end - qemu_host_page_size),
--                       qemu_host_page_size, prot1 & PAGE_RWX);
-+        ret = mprotect(g2h_untagged(host_end - HOST_PAGE_SIZE),
-+                       HOST_PAGE_SIZE, prot1 & PAGE_RWX);
-         if (ret != 0)
-             goto error;
--        host_end -= qemu_host_page_size;
-+        host_end -= HOST_PAGE_SIZE;
-     }
-
-     /* handle the pages in the middle */
-@@ -193,7 +193,7 @@ static int mmap_frag(abi_ulong real_start,
-     void *host_start;
-     int prot1, prot_new;
-
--    real_end = real_start + qemu_host_page_size;
-+    real_end = real_start + HOST_PAGE_SIZE;
-     host_start = g2h_untagged(real_start);
-
-     /* get the protection of the target pages outside the mapping */
-@@ -205,7 +205,7 @@ static int mmap_frag(abi_ulong real_start,
-
-     if (prot1 == 0) {
-         /* no page was there, so we allocate one. See also above. */
--        void *p = mmap(host_start, qemu_host_page_size, prot,
-+        void *p = mmap(host_start, HOST_PAGE_SIZE, prot,
-                        flags | ((fd != -1) ? MAP_ANON : 0), -1, 0);
-         if (p == MAP_FAILED)
-             return -1;
-@@ -223,7 +223,7 @@ static int mmap_frag(abi_ulong real_start,
-
-         /* adjust protection to be able to read */
-         if (!(prot1 & PROT_WRITE))
--            mprotect(host_start, qemu_host_page_size, prot1 | PROT_WRITE);
-+            mprotect(host_start, HOST_PAGE_SIZE, prot1 | PROT_WRITE);
-
-         /* read the corresponding file data */
-         if (!mmap_pread(fd, g2h_untagged(start), end - start, offset, true)) {
-@@ -232,10 +232,10 @@ static int mmap_frag(abi_ulong real_start,
-
-         /* put final protection */
-         if (prot_new != (prot1 | PROT_WRITE))
--            mprotect(host_start, qemu_host_page_size, prot_new);
-+            mprotect(host_start, HOST_PAGE_SIZE, prot_new);
-     } else {
-         if (prot_new != prot1) {
--            mprotect(host_start, qemu_host_page_size, prot_new);
-+            mprotect(host_start, HOST_PAGE_SIZE, prot_new);
-         }
-         if (prot_new & PROT_WRITE) {
-             memset(g2h_untagged(start), 0, end - start);
-@@ -289,7 +289,7 @@ abi_ulong mmap_find_vma(abi_ulong start, abi_ulong
-size, abi_ulong alignment)
-     if (start == 0) {
-         start = mmap_next_start;
-     } else {
--        start &= qemu_host_page_mask;
-+        start &= HOST_PAGE_MASK;
-     }
-
-     size = HOST_PAGE_ALIGN(size);
-@@ -297,7 +297,7 @@ abi_ulong mmap_find_vma(abi_ulong start, abi_ulong
-size, abi_ulong alignment)
-     if (reserved_va) {
-         return mmap_find_vma_reserved(start, size,
-             (alignment != 0 ? 1 << alignment :
--             MAX(qemu_host_page_size, TARGET_PAGE_SIZE)));
-+             MAX(HOST_PAGE_SIZE, TARGET_PAGE_SIZE)));
-     }
-
-     addr = start;
-@@ -478,8 +478,8 @@ abi_long target_mmap(abi_ulong start, abi_ulong
-len, int prot,
-         goto fail;
-     }
-
--    real_start = start & qemu_host_page_mask;
--    host_offset = offset & qemu_host_page_mask;
-+    real_start = start & HOST_PAGE_MASK;
-+    host_offset = offset & HOST_PAGE_MASK;
-
-     /*
-      * If the user is asking for the kernel to find a location, do that
-@@ -498,38 +498,6 @@ abi_long target_mmap(abi_ulong start, abi_ulong
-len, int prot,
-         }
-     }
-
--    /*
--     * When mapping files into a memory area larger than the file, accesses
--     * to pages beyond the file size will cause a SIGBUS.
--     *
--     * For example, if mmaping a file of 100 bytes on a host with 4K pages
--     * emulating a target with 8K pages, the target expects to be able to
--     * access the first 8K. But the host will trap us on any access beyond
--     * 4K.
--     *
--     * When emulating a target with a larger page-size than the hosts, we
--     * may need to truncate file maps at EOF and add extra anonymous pages
--     * up to the targets page boundary.
--     */
--
--    if ((qemu_real_host_page_size() < qemu_host_page_size) && fd != -1) {
--        struct stat sb;
--
--        if (fstat(fd, &sb) == -1) {
--            goto fail;
--        }
--
--        /* Are we trying to create a map beyond EOF?.  */
--        if (offset + len > sb.st_size) {
--            /*
--             * If so, truncate the file map at eof aligned with
--             * the hosts real pagesize. Additional anonymous maps
--             * will be created beyond EOF.
--             */
--            len = REAL_HOST_PAGE_ALIGN(sb.st_size - offset);
--        }
--    }
--
-     if (!(flags & MAP_FIXED)) {
-         unsigned long host_start;
-         void *p;
-@@ -539,8 +507,8 @@ abi_long target_mmap(abi_ulong start, abi_ulong
-len, int prot,
-
-         /*
-          * Note: we prefer to control the mapping address. It is
--         * especially important if qemu_host_page_size >
--         * qemu_real_host_page_size
-+         * especially important if HOST_PAGE_SIZE >
-+         * TARGET_PAGE_SIZE
-          */
-         p = mmap(g2h_untagged(start), host_len, prot,
-                  flags | MAP_FIXED | ((fd != -1) ? MAP_ANON : 0), -1, 0);
-@@ -581,7 +549,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong
-len, int prot,
-          * aligned, so we read it
-          */
-         if (fd != -1 &&
--            (offset & ~qemu_host_page_mask) != (start &
-~qemu_host_page_mask)) {
-+            (offset & ~HOST_PAGE_MASK) != (start & ~HOST_PAGE_MASK)) {
-             /*
-              * msync() won't work here, so we return an error if write is
-              * possible while it is a shared mapping
-@@ -614,7 +582,7 @@ abi_long target_mmap(abi_ulong start, abi_ulong
-len, int prot,
-
-         /* handle the start of the mapping */
-         if (start > real_start) {
--            if (real_end == real_start + qemu_host_page_size) {
-+            if (real_end == real_start + HOST_PAGE_SIZE) {
-                 /* one single host page */
-                 ret = mmap_frag(real_start, start, end,
-                                 prot, flags, fd, offset);
-@@ -622,21 +590,21 @@ abi_long target_mmap(abi_ulong start, abi_ulong
-len, int prot,
-                     goto fail;
-                 goto the_end1;
-             }
--            ret = mmap_frag(real_start, start, real_start +
-qemu_host_page_size,
-+            ret = mmap_frag(real_start, start, real_start + HOST_PAGE_SIZE,
-                             prot, flags, fd, offset);
-             if (ret == -1)
-                 goto fail;
--            real_start += qemu_host_page_size;
-+            real_start += HOST_PAGE_SIZE;
-         }
-         /* handle the end of the mapping */
-         if (end < real_end) {
--            ret = mmap_frag(real_end - qemu_host_page_size,
--                            real_end - qemu_host_page_size, end,
-+            ret = mmap_frag(real_end - HOST_PAGE_SIZE,
-+                            real_end - HOST_PAGE_SIZE, end,
-                             prot, flags, fd,
--                            offset + real_end - qemu_host_page_size - start);
-+                            offset + real_end - HOST_PAGE_SIZE - start);
-             if (ret == -1)
-                 goto fail;
--            real_end -= qemu_host_page_size;
-+            real_end -= HOST_PAGE_SIZE;
-         }
-
-         /* map the middle (easier) */
-@@ -676,7 +644,7 @@ void mmap_reserve(abi_ulong start, abi_ulong size)
-     abi_ulong end;
-     int prot;
-
--    real_start = start & qemu_host_page_mask;
-+    real_start = start & HOST_PAGE_MASK;
-     real_end = HOST_PAGE_ALIGN(start + size);
-     end = start + size;
-     if (start > real_start) {
-@@ -685,14 +653,14 @@ void mmap_reserve(abi_ulong start, abi_ulong size)
-         for (addr = real_start; addr < start; addr += TARGET_PAGE_SIZE) {
-             prot |= page_get_flags(addr);
-         }
--        if (real_end == real_start + qemu_host_page_size) {
-+        if (real_end == real_start + HOST_PAGE_SIZE) {
-             for (addr = end; addr < real_end; addr += TARGET_PAGE_SIZE) {
-                 prot |= page_get_flags(addr);
-             }
-             end = real_end;
-         }
-         if (prot != 0) {
--            real_start += qemu_host_page_size;
-+            real_start += HOST_PAGE_SIZE;
-         }
-     }
-     if (end < real_end) {
-@@ -701,7 +669,7 @@ void mmap_reserve(abi_ulong start, abi_ulong size)
-             prot |= page_get_flags(addr);
-         }
-         if (prot != 0) {
--            real_end -= qemu_host_page_size;
-+            real_end -= HOST_PAGE_SIZE;
-         }
-     }
-     if (real_start != real_end) {
-@@ -727,7 +695,7 @@ int target_munmap(abi_ulong start, abi_ulong len)
-         return -EINVAL;
-     mmap_lock();
-     end = start + len;
--    real_start = start & qemu_host_page_mask;
-+    real_start = start & HOST_PAGE_MASK;
-     real_end = HOST_PAGE_ALIGN(end);
-
-     if (start > real_start) {
-@@ -736,14 +704,14 @@ int target_munmap(abi_ulong start, abi_ulong len)
-         for (addr = real_start; addr < start; addr += TARGET_PAGE_SIZE) {
-             prot |= page_get_flags(addr);
-         }
--        if (real_end == real_start + qemu_host_page_size) {
-+        if (real_end == real_start + HOST_PAGE_SIZE) {
-             for (addr = end; addr < real_end; addr += TARGET_PAGE_SIZE) {
-                 prot |= page_get_flags(addr);
-             }
-             end = real_end;
-         }
-         if (prot != 0)
--            real_start += qemu_host_page_size;
-+            real_start += HOST_PAGE_SIZE;
-     }
-     if (end < real_end) {
-         prot = 0;
-@@ -751,7 +719,7 @@ int target_munmap(abi_ulong start, abi_ulong len)
-             prot |= page_get_flags(addr);
-         }
-         if (prot != 0)
--            real_end -= qemu_host_page_size;
-+            real_end -= HOST_PAGE_SIZE;
-     }
-
-     ret = 0;
-@@ -784,6 +752,6 @@ int target_msync(abi_ulong start, abi_ulong len, int flags)
-     if (end == start)
-         return 0;
-
--    start &= qemu_host_page_mask;
-+    start &= HOST_PAGE_MASK;
-     return msync(g2h_untagged(start), end - start, flags);
- }
-diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
-index b0b2c249fb..7553ac154c 100644
---- a/bsd-user/qemu.h
-+++ b/bsd-user/qemu.h
-@@ -44,12 +44,10 @@ extern char **environ;
- #include "accel/tcg/vcpu-state.h"
-
- #include "qemu-os.h"
--/*
-- * TODO: Remove these and rely only on qemu_real_host_page_size().
-- */
--extern uintptr_t qemu_host_page_size;
--extern intptr_t qemu_host_page_mask;
--#define HOST_PAGE_ALIGN(addr) ROUND_UP((addr), qemu_host_page_size)
-+
-+#define HOST_PAGE_SIZE        MAX(qemu_real_host_page_size(), TARGET_PAGE_SIZE)
-+#define HOST_PAGE_MASK        ((intptr_t)~(HOST_PAGE_SIZE - 1))
-+#define HOST_PAGE_ALIGN(addr) ROUND_UP((addr), HOST_PAGE_SIZE)
-
- /*
-  * This struct is used to hold certain information about the image.  Basically,
--- 
-2.34.1
+Thanks,
+Nick
 
