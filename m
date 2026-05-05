@@ -4,97 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 070F4FF8855
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 20:29:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5838BCD3427
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 20:29:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKMM4-0004OX-9I; Tue, 05 May 2026 16:26:56 -0400
+	id 1wKMM7-0004QE-Lg; Tue, 05 May 2026 16:26:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKMM0-0004MT-VQ
- for qemu-devel@nongnu.org; Tue, 05 May 2026 16:26:53 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKMM3-0004Nm-4o
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 16:26:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKMLy-0002Zd-E0
- for qemu-devel@nongnu.org; Tue, 05 May 2026 16:26:52 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKMM1-0002ak-7J
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 16:26:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778012809;
+ s=mimecast20190719; t=1778012812;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZaNTaQWHkBdL/8GhbYMD+GsaQBu6eMR27XHz1q7MUT8=;
- b=eNwVy2wp8CzgfaIVEOS5BFCp7uEwSIrWTsmFdmapziu32ATipl6JPhIlsAhKEXyqr9qaB0
- y8OQdeiIvjKr/tsvVo3rOcW+c+Wy/Eq5GxZihUTQl00aT60LHcqzZ9TZlJsGr3LveatklN
- E3Z8zXBvBGJQCN4YkbfHo/2tqRxWPig=
+ bh=CmjHBJ8XbN1QfelMZFqFN+lYGBuxnVmoSMYFNc5rg38=;
+ b=gDRB13V2MOs1Z1tqyDfFttU38GGHLGH7euRxNZEHRELkE1OZHCZr4jnaRIEJC7b3aAHmbY
+ NsyuWRIkqor4eRjBbsVTtKuPCCWUrlz9l79ZxC8ALZhmObjiN0oubdhc7CBwmL3VdhYbjK
+ ztxTEb5A3/sE15RBjZszrvIC0Kz2dRs=
 Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
  [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-whxsDk6AM7CuCQYz2ge-jw-1; Tue, 05 May 2026 16:26:47 -0400
-X-MC-Unique: whxsDk6AM7CuCQYz2ge-jw-1
-X-Mimecast-MFC-AGG-ID: whxsDk6AM7CuCQYz2ge-jw_1778012807
+ us-mta-628-HqivzLA_Pcy_nt-7xQ6muw-1; Tue, 05 May 2026 16:26:51 -0400
+X-MC-Unique: HqivzLA_Pcy_nt-7xQ6muw-1
+X-Mimecast-MFC-AGG-ID: HqivzLA_Pcy_nt-7xQ6muw_1778012811
 Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-8ba9baef44cso27199556d6.0
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 13:26:47 -0700 (PDT)
+ 6a1803df08f44-8acaea1ffe7so142713396d6.2
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 13:26:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778012807; x=1778617607; darn=nongnu.org;
+ d=redhat.com; s=google; t=1778012811; x=1778617611; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZaNTaQWHkBdL/8GhbYMD+GsaQBu6eMR27XHz1q7MUT8=;
- b=VY+yi6wnetvgT62Ybresc4YpWVqoGr2wLWCInYF8G2BZj6g+uzf5OtNG0DAD9KG7Sm
- Bcu193XAS3Ot/EIxovnqY2JMBNiBCwmsLNqrRLCK6p9RZ99HYrAuiue2F/QR6J3CvcJG
- EtC6lb11fBIP7lR4OmmNpjy8vuBFefrxqMS07+Ah0DSHJnXhObLiGM/j7DlCWZmuoc8j
- IC0bCpDRqPqP95BUJKCg8O2x9HyTd704jbMwhpMoojMgFaGj8Q3VXHWNeOYRZTQ1Zbab
- xeQYRLnCSDAsB+qbhcgwrG3yxszbW37nKFpPGKxur4lNJ66VVqO75fAcvBvlqoIW2xMX
- V8fg==
+ bh=CmjHBJ8XbN1QfelMZFqFN+lYGBuxnVmoSMYFNc5rg38=;
+ b=k+jlNbvUx4UyBHFw0aeUBdgp0tLuaF2eFdDJJ3fh8jt+sM+715Rcs2ZkpBz6zUCGrj
+ xMALEKskjcw4yhlCDib/kIZKS+IJ3FH0DtQYLLWVGvUErFE28d9RJkB5HbFfSHFyKgKC
+ 87R4xPnsZ0zA1oQ58T7iqLFV3ubdO4XTadnk1vBvoXIR9zeD3N1RhYbEIFxmq2CutQVk
+ t6017VcWZknUh2mi0ah/C2sxCSLTFwPrGxEI/CdkQCEJgTzG2uVeRWeNxxtUQCm7Vwxj
+ geF6BV50x0S4qHb1ZWiXg4rYSnSd6oCmlPN/WTUqtJBO/ICzRhETuadGJYtVJaQcjAyj
+ 2rOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778012807; x=1778617607;
+ d=1e100.net; s=20251104; t=1778012811; x=1778617611;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZaNTaQWHkBdL/8GhbYMD+GsaQBu6eMR27XHz1q7MUT8=;
- b=mwk9CLUs+Oo5oOmOH5zzzLGX0tZsSUyKHGTyc+paffa23PVvL5PoSoUcX+r44jcpPr
- C9uVoB5IfbPwyzLsAfOcnpcOxr2CISguHZCJw4uLRPeoqlq37os+Zkm7onpX28YLIg9u
- v+E3zDCPEYPonnS3IgJJzJ+L7IGUw6salpWzV7VAN0e4UmrljCiM5ApNNIxnrevjoj4v
- 53HM+VukMKf9+VuojMqj+wZfm7GHTQ/0N2PkbHEo3euOXHeLw8C99NV0Mtx77eLDz6XI
- CxbwkmEsLU3pQ5DpbLrJfXmPOKPq8X0CuDXRQSToFkjD36xhju37OpWsVcinjsOX3IIw
- M58Q==
-X-Gm-Message-State: AOJu0Yza75FkweqLJOSu/KQXj+8v4cW1jpp+kZnVZrg2vj+JeAVB/5ax
- 8Sm0fiyR8P9YNCFD0gV1IWNzLd/rZYtdSRGiIFnH/R3opk2BDxfNdwsAAlEl7s7G8jbzoY90nDe
- /yXxm94ZsZ5zmMip/d4uC/Y17nr6JTMkSVZAXylgT5/j7CWM/0t7j54mGnNX0DznbIc9bfRsSle
- TZVbRWKPpXiRgAMU1JNe0FXKrxS/N8seItdNay7g==
-X-Gm-Gg: AeBDietbPAq6dixo/Z1q+NUIa15xpCdRERjig9uu2HgECMFZ5HM/s2//uewyMDzqYbG
- emWZvQ6Nsvvn8Fgd3DemVnGdkQHMA+7Znx+Eu1LcvNYKuoJPXGYSEhxhpOfU6yQ2ybrVmVV3d7J
- DI8Y8pc16gDzs8z6fSV+tcbXuLzsaymwgfa91B6taM3GZKboRk0GLS395tgrvTkwRwqFxZ3khWt
- wSrRct3KEHQhK8SJmLdQFTcINspoMMkgOXmk2wvBKruC3GwCfPj6fdLym18AQ75lNTFMsyu18XO
- bkPalJcmAmDwmXeQ5LLQs87C+1iVa3664WJh4iCd2JN3WNq9LGV/IiQIozOuOW+cAhw8/NHMbEm
- yQIidIf/8sAK3hUu70fEEXkvIOsUuTFvj4ISnfD9GmSE/RFuKjdu9Kdc=
-X-Received: by 2002:a05:6214:c4f:b0:8a1:8f74:3eab with SMTP id
- 6a1803df08f44-8bc4249d7a3mr5203196d6.9.1778012806773; 
- Tue, 05 May 2026 13:26:46 -0700 (PDT)
-X-Received: by 2002:a05:6214:c4f:b0:8a1:8f74:3eab with SMTP id
- 6a1803df08f44-8bc4249d7a3mr5202436d6.9.1778012806119; 
- Tue, 05 May 2026 13:26:46 -0700 (PDT)
+ bh=CmjHBJ8XbN1QfelMZFqFN+lYGBuxnVmoSMYFNc5rg38=;
+ b=Penf8UThmY7DXW8cbBajXiP0CllY+7FLmaCicMe+64Q1SGv0cM3TdyfAIVzpfGkKHM
+ paeNmoywK269I/Gtol5RPtQbTwGD9oNn/84yMzuAw37u4ttheF2HO7tu6TO6FDV1BljB
+ /4PZ5xYNVQjExh3V4BRHKKPoqvQ0BuvDFSeUVeg9RFqfApzdho9Aj39hAQicocpbXaRb
+ dqiW+px3EwYCn+g8ivWGUEsqRNIqKKi54tvjLKWOjT1eWsGoEmoNUuYn+G6vhQqlh5LK
+ ocEDFC4gO0nx76l1uVkNlz3mbpQ7AD4l0hqczIUoDouOn0RFaFYQyZu34K6HKeZKvC8l
+ EGDg==
+X-Gm-Message-State: AOJu0YwDMlUzd/gjjOQsPiW9d5z0KWaV1BvCL0yFmVpaEqlEAb7RQYQn
+ Oi02FOzzzUSF3Ynzo2SWVrzKxbWApNPC7HP5lHFveS8CqzxRmDcWvVXQOIBAukbSpF190XRldcr
+ ug3AQVL1CBnSOv2/3GQOtHeiqPtSp5W7baA8jCan5Oyu1JfqKpN6ruW2Zqnj/v4IiPU3tdHfayL
+ UlFedCxQ/D7tI4EGf6Ayr9NcuNKern6okBpOuN1Q==
+X-Gm-Gg: AeBDieuO4ARDlsyYkemkGFxiLRnQtdX4KS3elHBXMZylXYzlEmGOfAzXeToqjl3jEBo
+ tNNkuw8M7Z1/FVPlwoTzLATcfNUwP9kif3mZxSTE3OyvQMOD83xHQozWgawT3bNyhMcDYRfGcOx
+ xXg6njCCmGAikhAPdgp5tVsYLY7n3pH9zYIm3ie80rb0TXYa89VmAGoyvXSqbdPODSlYCsn4i0g
+ NlyRZQO9blbPmo/gZqB5W/2QEw5drHOtg1C+uSBWWlwW/gwfqNt/r/B8GLrAOw5d+f89IEHR/9I
+ J2P8o/BMSYNz+sryb4CkcMKecl9XPl8HnLgTHBNmUIkIObBJivWc7TKIV4p7xKmGc5/AuHpS1JU
+ z0Lja7LUo1RgRxp3TOA4v59Fw3RBwoWndLYMvKG9kRhEVVffcEf6tyzg=
+X-Received: by 2002:ad4:5de4:0:b0:8b8:726a:74d4 with SMTP id
+ 6a1803df08f44-8bc42b6c5d7mr4961986d6.16.1778012810535; 
+ Tue, 05 May 2026 13:26:50 -0700 (PDT)
+X-Received: by 2002:ad4:5de4:0:b0:8b8:726a:74d4 with SMTP id
+ 6a1803df08f44-8bc42b6c5d7mr4961096d6.16.1778012809818; 
+ Tue, 05 May 2026 13:26:49 -0700 (PDT)
 Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b53c6b8123sm155283806d6.35.2026.05.05.13.26.45
+ 6a1803df08f44-8b53c6b8123sm155283806d6.35.2026.05.05.13.26.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 May 2026 13:26:45 -0700 (PDT)
+ Tue, 05 May 2026 13:26:49 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, qemu-stable <qemu-stable@nongnu.org>,
- "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-Subject: [PULL 02/23] migration: Use QAPI_CLONE_MEMBERS in
- migrate_params_test_apply
-Date: Tue,  5 May 2026 16:26:19 -0400
-Message-ID: <20260505202640.1011006-3-peterx@redhat.com>
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ devel@lists.libvirt.org, Markus Armbruster <armbru@redhat.com>,
+ Juraj Marcin <jmarcin@redhat.com>, Michal Privoznik <mprivozn@redhat.com>
+Subject: [PULL 05/23] migration/qapi: Rename MigrationStats to
+ MigrationRAMStats
+Date: Tue,  5 May 2026 16:26:22 -0400
+Message-ID: <20260505202640.1011006-6-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260505202640.1011006-1-peterx@redhat.com>
 References: <20260505202640.1011006-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,7 +106,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,122 +122,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+This stats is only about RAM, make it accurate.  This paves way for
+statistics for all devices.
 
-Use QAPI_CLONE_MEMBERS instead of making an assignment. The QAPI
-method makes the handling of the TLS strings more intuitive because it
-clones them as well.
+Thanks to Markus, who pointed out that docs/devel/qapi-code-gen.rst has a
+section "Compatibility considerations" stated:
 
-This also fixes a segfault when a NULL TLS option is accessed as part
-of a validation check for another option (e.g. in the zero-copy +
-multifd compression case). Details follow:
+    Since type names are not visible in the Client JSON Protocol, types
+    may be freely renamed.  Even certain refactorings are invisible, such
+    as splitting members from one type into a common base type.
 
-Currently, after copying s->parameters to the temporary
-MigrationParameters object before migrate_params_check(), the
-references in temporary object to the TLS options are dropped, either
-because:
+Hence this change is not ABI violation according to the document.
 
-a) the user set a new option, in which case that's fine as
-   s->parameters still holds the reference to the old memory or,
+While at it, touch up the lines to make it read better, correct the
+restriction on migration status being 'active' or 'completed': over time we
+grew too many new status that will also report "ram" section.
 
-b) the user did not set a new option, in which case keeping the
-   references in the temporary object would later cause them to be
-   freed along with it, leading to double-free when s->parameters is
-   also freed later on.
-
-In this second case, it was overlooked that the TLS options can be
-accessed already during migrate_params_check() as part of validation
-of another option. Those pointers should not have been cleared.
-
-Using QAPI_CLONE_MEMBERS fixes the issue because the temporary object
-is not stealing a reference from s->parameters anymore.
-
-Cc: qemu-stable <qemu-stable@nongnu.org>
-Fixes: aed97f0563 ("migration: Normalize tls arguments")
-Reported-by: Maciej S. Szmigiero <mail@maciej.szmigiero.name>
-Link: https://lore.kernel.org/r/a65a1049-9f19-460a-8e27-a62bb30d2727@maciej.szmigiero.name
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Tested-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Link: https://lore.kernel.org/r/20260414223718.23965-1-farosas@suse.de
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Cc: devel@lists.libvirt.org
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Reviewed-by: Michal Privoznik <mprivozn@redhat.com>
+Link: https://lore.kernel.org/r/20260421202110.306051-4-peterx@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/options.c | 26 ++++++++++++--------------
- 1 file changed, 12 insertions(+), 14 deletions(-)
+ docs/about/removed-features.rst |  2 +-
+ qapi/migration.json             | 10 +++++-----
+ migration/migration-stats.h     |  2 +-
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/migration/options.c b/migration/options.c
-index 7556fbc06b..68441f0276 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -1279,9 +1279,9 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
- static void migrate_params_test_apply(MigrationParameters *params,
-                                       MigrationParameters *dest)
- {
--    *dest = migrate_get_current()->parameters;
-+    MigrationState *s = migrate_get_current();
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index e75db08410..626162022a 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -699,7 +699,7 @@ was superseded by ``sections``.
+ ``query-migrate`` return value member ``skipped`` (removed in 9.1)
+ ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
  
--    /* TODO use QAPI_CLONE() instead of duplicating it inline */
-+    QAPI_CLONE_MEMBERS(MigrationParameters, dest, &s->parameters);
+-Member ``skipped`` of the ``MigrationStats`` struct hasn't been used
++Member ``skipped`` of the ``MigrationRAMStats`` struct hasn't been used
+ for more than 10 years. Removed with no replacement.
  
-     if (params->has_throttle_trigger_threshold) {
-         dest->throttle_trigger_threshold = params->throttle_trigger_threshold;
-@@ -1300,24 +1300,18 @@ static void migrate_params_test_apply(MigrationParameters *params,
-     }
+ ``migrate`` command option ``inc`` (removed in 9.1)
+diff --git a/qapi/migration.json b/qapi/migration.json
+index 0db115ec5e..ed475e4261 100644
+--- a/qapi/migration.json
++++ b/qapi/migration.json
+@@ -12,7 +12,7 @@
+ { 'include': 'sockets.json' }
  
-     if (params->tls_creds) {
-+        qapi_free_StrOrNull(dest->tls_creds);
-         dest->tls_creds = QAPI_CLONE(StrOrNull, params->tls_creds);
--    } else {
--        /* clear the reference, it's owned by s->parameters */
--        dest->tls_creds = NULL;
-     }
+ ##
+-# @MigrationStats:
++# @MigrationRAMStats:
+ #
+ # Detailed migration status.
+ #
+@@ -64,7 +64,7 @@
+ #
+ # Since: 0.14
+ ##
+-{ 'struct': 'MigrationStats',
++{ 'struct': 'MigrationRAMStats',
+   'data': {'transferred': 'int', 'remaining': 'int', 'total': 'int' ,
+            'duplicate': 'int',
+            'normal': 'int',
+@@ -209,8 +209,8 @@
+ #     If this field is not returned, no migration process has been
+ #     initiated
+ #
+-# @ram: `MigrationStats` containing detailed migration status, only
+-#     returned if status is 'active' or 'completed'(since 1.2)
++# @ram: Detailed migration RAM statistics, only returned if migration
++#     is in progress or completed (since 1.2)
+ #
+ # @xbzrle-cache: `XBZRLECacheStats` containing detailed XBZRLE
+ #     migration statistics, only returned if XBZRLE feature is on and
+@@ -309,7 +309,7 @@
+ # Since: 0.14
+ ##
+ { 'struct': 'MigrationInfo',
+-  'data': {'*status': 'MigrationStatus', '*ram': 'MigrationStats',
++  'data': {'*status': 'MigrationStatus', '*ram': 'MigrationRAMStats',
+            '*vfio': 'VfioStats',
+            '*xbzrle-cache': 'XBZRLECacheStats',
+            '*total-time': 'int',
+diff --git a/migration/migration-stats.h b/migration/migration-stats.h
+index c0f50144c9..1153520f7a 100644
+--- a/migration/migration-stats.h
++++ b/migration/migration-stats.h
+@@ -27,7 +27,7 @@
  
-     if (params->tls_hostname) {
-+        qapi_free_StrOrNull(dest->tls_hostname);
-         dest->tls_hostname = QAPI_CLONE(StrOrNull, params->tls_hostname);
--    } else {
--        /* clear the reference, it's owned by s->parameters */
--        dest->tls_hostname = NULL;
-     }
- 
-     if (params->tls_authz) {
-+        qapi_free_StrOrNull(dest->tls_authz);
-         dest->tls_authz = QAPI_CLONE(StrOrNull, params->tls_authz);
--    } else {
--        /* clear the reference, it's owned by s->parameters */
--        dest->tls_authz = NULL;
-     }
- 
-     if (params->has_max_bandwidth) {
-@@ -1374,8 +1368,9 @@ static void migrate_params_test_apply(MigrationParameters *params,
-     }
- 
-     if (params->has_block_bitmap_mapping) {
--        dest->has_block_bitmap_mapping = true;
--        dest->block_bitmap_mapping = params->block_bitmap_mapping;
-+        qapi_free_BitmapMigrationNodeAliasList(dest->block_bitmap_mapping);
-+        dest->block_bitmap_mapping = QAPI_CLONE(BitmapMigrationNodeAliasList,
-+                                                params->block_bitmap_mapping);
-     }
- 
-     if (params->has_x_vcpu_dirty_limit_period) {
-@@ -1399,7 +1394,8 @@ static void migrate_params_test_apply(MigrationParameters *params,
-     }
- 
-     if (params->has_cpr_exec_command) {
--        dest->cpr_exec_command = params->cpr_exec_command;
-+        qapi_free_strList(dest->cpr_exec_command);
-+        dest->cpr_exec_command = QAPI_CLONE(strList, params->cpr_exec_command);
-     }
- }
- 
-@@ -1555,4 +1551,6 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
-     }
- 
-     migrate_tls_opts_free(&tmp);
-+    qapi_free_BitmapMigrationNodeAliasList(tmp.block_bitmap_mapping);
-+    qapi_free_strList(tmp.cpr_exec_command);
- }
+ /*
+  * These are the ram migration statistic counters.  It is loosely
+- * based on MigrationStats.
++ * based on MigrationRAMStats.
+  */
+ typedef struct {
+     /*
 -- 
 2.53.0
 
