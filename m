@@ -4,100 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0379BFF8855
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 16:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B09CD343B
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 16:11:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKILT-00086G-4M; Tue, 05 May 2026 12:10:03 -0400
+	id 1wKIMG-00004w-Gh; Tue, 05 May 2026 12:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKIKx-0007oF-FD
- for qemu-devel@nongnu.org; Tue, 05 May 2026 12:09:36 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKIM0-0008GP-FD
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 12:10:37 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKIKu-0007IC-OS
- for qemu-devel@nongnu.org; Tue, 05 May 2026 12:09:31 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKILv-0000ZE-Q1
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 12:10:36 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 75CFF5CAF0;
- Tue,  5 May 2026 16:09:26 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id EA4B66B767;
+ Tue,  5 May 2026 16:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1777997366; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1777997376; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6X3ByejEazZO/IkJ6RU0S63fNUcklMp24fSVi0bmCsk=;
- b=vcBZUgYPOU0S4z02ZV02P7FKukVQUv9tjEHwGdabqyA2x4/1xuFlQn19VGaA7BLmnuffUD
- oXyjtgqfLNDnu+eA6W9C8Ou+AAYpkmWfBpm9uB/+prCYqjxyM6pMjNpIpRtzWx0qOneFGw
- tcjXtw+XeG24SsUjiZHslDcuT1X3Vvo=
+ bh=oOXl+Kg4Ekn8eRhNqDeLTfbVre71RRbBJww/DujlEyo=;
+ b=wNFLsscelt0/z5quOYMs2eiDNKSVaun+tvxiNnnnAnMKnN60N1gRytA4BGTg/khbIWHld4
+ CDepdQjoSr9JtdoKCwIaTjf1yYCjem6x9mTSrmYYaiywLzDm7EUvVVRta7n8i97nEyt4i6
+ xLsRggUTFouo+ZXX++gfR4trCQbM6Zg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1777997366;
+ s=susede2_ed25519; t=1777997376;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6X3ByejEazZO/IkJ6RU0S63fNUcklMp24fSVi0bmCsk=;
- b=ojyGKt2eT1Wi8AASiB0METQsDmIC/jXxI8fPP3C8sb492yfQjdeJ1wOKouUWICC4suZigC
- 6EEZ9g3C3pHpuCAw==
-Authentication-Results: smtp-out2.suse.de;
-	none
+ bh=oOXl+Kg4Ekn8eRhNqDeLTfbVre71RRbBJww/DujlEyo=;
+ b=xJ6u2P742M/joxUWfi0TiWhMZ9EzKxem/b1pfKa8uwdKm+jwAgvbPWThJeYnaoOlRipBR9
+ pUtMHyYE5YkIREAA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=k7l+D8pF;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="w5m/Yzqq"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1777997366; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1777997375; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6X3ByejEazZO/IkJ6RU0S63fNUcklMp24fSVi0bmCsk=;
- b=vcBZUgYPOU0S4z02ZV02P7FKukVQUv9tjEHwGdabqyA2x4/1xuFlQn19VGaA7BLmnuffUD
- oXyjtgqfLNDnu+eA6W9C8Ou+AAYpkmWfBpm9uB/+prCYqjxyM6pMjNpIpRtzWx0qOneFGw
- tcjXtw+XeG24SsUjiZHslDcuT1X3Vvo=
+ bh=oOXl+Kg4Ekn8eRhNqDeLTfbVre71RRbBJww/DujlEyo=;
+ b=k7l+D8pFf4CYcVR6ok27xnEZ9vJJOopa0mkQYt6oLR6VYb0hrSp7M8qTFJzCtfO/NnAg2q
+ uZiSV02Bq53wzG3DNK0YM72D7HbLe34kUJhDJNy9SIVCQnqjQ/FzoxTN05NQKdmMcx0jIi
+ aLMDSfOl+ucMlIri2MQMor9AiurIWY0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1777997366;
+ s=susede2_ed25519; t=1777997375;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6X3ByejEazZO/IkJ6RU0S63fNUcklMp24fSVi0bmCsk=;
- b=ojyGKt2eT1Wi8AASiB0METQsDmIC/jXxI8fPP3C8sb492yfQjdeJ1wOKouUWICC4suZigC
- 6EEZ9g3C3pHpuCAw==
+ bh=oOXl+Kg4Ekn8eRhNqDeLTfbVre71RRbBJww/DujlEyo=;
+ b=w5m/YzqqPu1ktmIO+1tCTwePhdQEjrYHotPUGQ/VNhrW0xyN7lap1WvIuVIb7rUpo7lRbS
+ YabHz6RtksXMVEBg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EB464593A3;
- Tue,  5 May 2026 16:09:24 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C79C5593A3;
+ Tue,  5 May 2026 16:09:34 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id OHVHLjQW+mmNcgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 05 May 2026 16:09:24 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id iDGUJT4W+mmNcgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 05 May 2026 16:09:34 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Mark Kanda <mark.kanda@oracle.com>,
- Ben Chaney <bchaney@akamai.com>, Laurent Vivier <lvivier@redhat.com>,
+Cc: Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v1 02/15] tests/qtest/migration: Make file-tests defer by
- default
-Date: Tue,  5 May 2026 13:09:01 -0300
-Message-ID: <20260505160915.25558-3-farosas@suse.de>
+Subject: [PATCH v1 08/15] tests/qtest/migration: Set compression method in
+ compression-tests
+Date: Tue,  5 May 2026 13:09:07 -0300
+Message-ID: <20260505160915.25558-9-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260505160915.25558-1-farosas@suse.de>
 References: <20260505160915.25558-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: EA4B66B767
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,143 +128,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All file: tests use listen_uri="defer". Make this the default in the
-common function.
+Stop calling a common function to set the multifd compression
+method. The default method is "none", so the common function is not
+necessary for tests that don't set compression and will be removed.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration/cpr-tests.c  |  1 -
- tests/qtest/migration/file-tests.c | 14 --------------
- tests/qtest/migration/framework.c  |  2 +-
- 3 files changed, 1 insertion(+), 16 deletions(-)
+ tests/qtest/migration/compression-tests.c | 22 +++++++++++++++++-----
+ 1 file changed, 17 insertions(+), 5 deletions(-)
 
-diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
-index 48c98f0089..18217f0460 100644
---- a/tests/qtest/migration/cpr-tests.c
-+++ b/tests/qtest/migration/cpr-tests.c
-@@ -36,7 +36,6 @@ static void test_mode_reboot(char *name, MigrateCommon *args)
-                                            FILE_TEST_FILENAME);
+diff --git a/tests/qtest/migration/compression-tests.c b/tests/qtest/migration/compression-tests.c
+index 134bf44db6..848576054f 100644
+--- a/tests/qtest/migration/compression-tests.c
++++ b/tests/qtest/migration/compression-tests.c
+@@ -20,6 +20,13 @@
  
-     args->connect_uri = uri;
--    args->listen_uri = "defer";
-     args->start_hook = migrate_hook_start_mode_reboot;
+ static char *tmpfs;
  
-     args->start.mem_type = MEM_TYPE_SHMEM;
-diff --git a/tests/qtest/migration/file-tests.c b/tests/qtest/migration/file-tests.c
-index fef172068f..75135447f8 100644
---- a/tests/qtest/migration/file-tests.c
-+++ b/tests/qtest/migration/file-tests.c
-@@ -70,8 +70,6 @@ static void test_precopy_file(char *name, MigrateCommon *args)
-     g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
-                                            FILE_TEST_FILENAME);
-     args->connect_uri = uri;
--    args->listen_uri = "defer";
--
-     test_file_common(args, true);
++static void set_multifd_compression(QTestState *from, QTestState *to,
++                                    const char *method)
++{
++    migrate_set_parameter_str(from, "multifd-compression", method);
++    migrate_set_parameter_str(to, "multifd-compression", method);
++}
++
+ #ifdef CONFIG_ZSTD
+ static void *
+ migrate_hook_start_precopy_tcp_multifd_zstd(QTestState *from,
+@@ -27,8 +34,9 @@ migrate_hook_start_precopy_tcp_multifd_zstd(QTestState *from,
+ {
+     migrate_set_parameter_int(from, "multifd-zstd-level", 2);
+     migrate_set_parameter_int(to, "multifd-zstd-level", 2);
++    set_multifd_compression(from, to, "zstd");
+ 
+-    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "zstd");
++    return NULL;
  }
  
-@@ -114,7 +112,6 @@ static void test_precopy_file_offset_fdset(char *name, MigrateCommon *args)
-     g_autofree char *uri = g_strdup_printf("file:/dev/fdset/1,offset=%d",
-                                            FILE_TEST_OFFSET);
-     args->connect_uri = uri;
--    args->listen_uri = "defer";
-     args->start_hook = migrate_hook_start_file_offset_fdset;
+ static void test_multifd_tcp_zstd(char *name, MigrateCommon *args)
+@@ -58,8 +66,9 @@ migrate_hook_start_precopy_tcp_multifd_qatzip(QTestState *from,
+ {
+     migrate_set_parameter_int(from, "multifd-qatzip-level", 2);
+     migrate_set_parameter_int(to, "multifd-qatzip-level", 2);
++    set_multifd_compression(from, to, "qatzip");
  
-     test_file_common(args, false);
-@@ -128,8 +125,6 @@ static void test_precopy_file_offset(char *name, MigrateCommon *args)
-                                            FILE_TEST_OFFSET);
- 
-     args->connect_uri = uri;
--    args->listen_uri = "defer";
--
-     test_file_common(args, false);
+-    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "qatzip");
++    return NULL;
  }
  
-@@ -140,7 +135,6 @@ static void test_precopy_file_offset_bad(char *name, MigrateCommon *args)
-                                            tmpfs, FILE_TEST_FILENAME);
+ static void test_multifd_tcp_qatzip(char *name, MigrateCommon *args)
+@@ -77,7 +86,8 @@ static void *
+ migrate_hook_start_precopy_tcp_multifd_qpl(QTestState *from,
+                                            QTestState *to)
+ {
+-    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "qpl");
++    set_multifd_compression(from, to, "qpl");
++    return NULL;
+ }
  
-     args->connect_uri = uri;
--    args->listen_uri = "defer";
-     args->result = MIG_TEST_QMP_ERROR;
+ static void test_multifd_tcp_qpl(char *name, MigrateCommon *args)
+@@ -95,7 +105,8 @@ static void *
+ migrate_hook_start_precopy_tcp_multifd_uadk(QTestState *from,
+                                             QTestState *to)
+ {
+-    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "uadk");
++    set_multifd_compression(from, to, "uadk");
++    return NULL;
+ }
  
-     test_file_common(args, false);
-@@ -152,7 +146,6 @@ static void test_precopy_file_mapped_ram_live(char *name, MigrateCommon *args)
-                                            FILE_TEST_FILENAME);
+ static void test_multifd_tcp_uadk(char *name, MigrateCommon *args)
+@@ -141,8 +152,9 @@ migrate_hook_start_precopy_tcp_multifd_zlib(QTestState *from,
+      */
+     migrate_set_parameter_int(from, "multifd-zlib-level", 2);
+     migrate_set_parameter_int(to, "multifd-zlib-level", 2);
++    set_multifd_compression(from, to, "zlib");
  
-     args->connect_uri = uri;
--    args->listen_uri = "defer";
+-    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "zlib");
++    return NULL;
+ }
  
-     args->start.caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true;
- 
-@@ -165,7 +158,6 @@ static void test_precopy_file_mapped_ram(char *name, MigrateCommon *args)
-                                            FILE_TEST_FILENAME);
- 
-     args->connect_uri = uri;
--    args->listen_uri = "defer";
- 
-     args->start.caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true;
- 
-@@ -177,7 +169,6 @@ static void test_multifd_file_mapped_ram_live(char *name, MigrateCommon *args)
-     g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
-                                            FILE_TEST_FILENAME);
-     args->connect_uri = uri;
--    args->listen_uri = "defer";
- 
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-     args->start.caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true;
-@@ -191,7 +182,6 @@ static void test_multifd_file_mapped_ram(char *name, MigrateCommon *args)
-                                            FILE_TEST_FILENAME);
- 
-     args->connect_uri = uri;
--    args->listen_uri = "defer";
- 
-     args->start.caps[MIGRATION_CAPABILITY_MULTIFD] = true;
-     args->start.caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true;
-@@ -213,7 +203,6 @@ static void test_multifd_file_mapped_ram_dio(char *name, MigrateCommon *args)
-     g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
-                                            FILE_TEST_FILENAME);
-     args->connect_uri = uri;
--    args->listen_uri = "defer";
-     args->start_hook = migrate_hook_start_multifd_mapped_ram_dio;
- 
-     args->start.caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true;
-@@ -285,7 +274,6 @@ static void test_multifd_file_mapped_ram_fdset(char *name, MigrateCommon *args)
-                                            FILE_TEST_OFFSET);
- 
-     args->connect_uri = uri;
--    args->listen_uri = "defer";
-     args->start_hook = migrate_hook_start_multifd_mapped_ram_fdset;
-     args->end_hook = migrate_hook_end_multifd_mapped_ram_fdset;
- 
-@@ -301,7 +289,6 @@ static void test_multifd_file_mapped_ram_fdset_dio(char *name,
-     g_autofree char *uri = g_strdup_printf("file:/dev/fdset/1,offset=%d",
-                                            FILE_TEST_OFFSET);
-     args->connect_uri = uri;
--    args->listen_uri = "defer";
-     args->start_hook = migrate_hook_start_multifd_mapped_ram_fdset_dio;
-     args->end_hook = migrate_hook_end_multifd_mapped_ram_fdset;
- 
-@@ -332,7 +319,6 @@ test_precopy_file_mapped_ram_ignore_shared(char *name, MigrateCommon *args)
-     g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
-                                            FILE_TEST_FILENAME);
-     args->connect_uri = uri;
--    args->listen_uri = "defer";
- 
-     args->start.caps[MIGRATION_CAPABILITY_MAPPED_RAM] = true;
-     args->start.caps[MIGRATION_CAPABILITY_X_IGNORE_SHARED] = true;
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index 4ef5e1de83..edd3d0b165 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -972,7 +972,7 @@ void test_file_common(MigrateCommon *args, bool stop_src)
-     void *data_hook = NULL;
-     bool check_offset = false;
- 
--    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
-+    if (migrate_start(&from, &to, "defer", &args->start)) {
-         return;
-     }
- 
+ static void test_multifd_tcp_zlib(char *name, MigrateCommon *args)
 -- 
 2.51.0
 
