@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72025CD3439
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F9D2FF8855
 	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 20:21:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKMF2-0007gZ-7D; Tue, 05 May 2026 16:19:40 -0400
+	id 1wKMFw-0001dH-7E; Tue, 05 May 2026 16:20:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wKMEv-0007d2-J8; Tue, 05 May 2026 16:19:33 -0400
+ id 1wKMFt-0001TU-LO; Tue, 05 May 2026 16:20:33 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wKMEt-0000Dp-NU; Tue, 05 May 2026 16:19:33 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1wKMFr-0000fI-P6; Tue, 05 May 2026 16:20:33 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 645GQor42269289; Tue, 5 May 2026 20:19:28 GMT
+ 645Adpul1590574; Tue, 5 May 2026 20:20:07 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=FOo4Z3llJv7TuAf19
- ikt7Nbygl/fu/XQK/Vkc32Qpbg=; b=kxcAi/i8iw2ktE35kN7alvMwbvEemKDzB
- 2zCzk+g7cgtIkoisvq8M4npQMGpTqUioLwpwVK/2lftri/675YKwB0ynSuthR+ch
- mTNuT/3LmRTnWprk3ZxT6sz2H4PKoAcDJE+fJxJcpWsQoFN1jH2yXsghwW//MqNc
- 66qgfGTbPeDmYbC7QXD8W+eT49sQ3jLe+tKAVOBxYkSewbcIUTyb2mtyCSQ8BiUH
- MzTn7PL08H2H8ywmcfpuIadsYWltqjnIsxa1SdepQcL2WbhW5yXzaFhDIyfw5T4g
- QBwAPCzUqFXm0oIrRQsPu/SwIQRXbsLKt6nG15kEMqmyXjFm7LEEQ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9y4n71j-1
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=r6xmiT
+ 0ccSvkG5afSK6wU6kM02EflUZKe6oYaWMcyIk=; b=bhx5B9zfPnN/wMIlmleQu+
+ DDps8/PaFEIaRfcMgWHM0H/ZEi5SvwJH4LL+Oj4RpQSBJpYfDh/jvlUUqZeWTQ6x
+ nILVbjysloet8ZtrstPDc/onDmZzENeMNf+94voqBE4gCRWrtfnrVnxSSOCk8PxM
+ tZAdXQLC2/Sv1Om5vMkRDKFHaTCeAg8pQULHavlaHT/AATJU/4jIpCFiEewuA1sy
+ IOPXPhON5S6qFutmEQQeXtJieemg3vDboXZwymZBtDq0T3TK7DYzaU1m0Awww6tX
+ kiaE7iyKnbrSrsnKXaqAdgr7GJVbgecVmeZztNhQkg4FNdO9UOQOgHaSX+Za89FQ
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9xxn549-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 May 2026 20:19:28 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 645K9RNk002871;
- Tue, 5 May 2026 20:19:27 GMT
+ Tue, 05 May 2026 20:20:07 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 645K9RJ1015575;
+ Tue, 5 May 2026 20:20:06 GMT
 Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dwvkju9vh-1
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwx9yb27t-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 May 2026 20:19:27 +0000 (GMT)
+ Tue, 05 May 2026 20:20:06 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
  [10.39.53.229])
  by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 645KJQ2U31130318
+ 645KK57027329208
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 May 2026 20:19:26 GMT
+ Tue, 5 May 2026 20:20:05 GMT
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 53FD358059;
- Tue,  5 May 2026 20:19:26 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6703F58059;
+ Tue,  5 May 2026 20:20:05 +0000 (GMT)
 Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B5A5B5805B;
- Tue,  5 May 2026 20:19:24 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CA6815805D;
+ Tue,  5 May 2026 20:20:03 +0000 (GMT)
 Received: from fedora-workstation.pok.ibm.com (unknown [9.12.79.241])
  by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  5 May 2026 20:19:24 +0000 (GMT)
+ Tue,  5 May 2026 20:20:03 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
 Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
@@ -66,38 +67,41 @@ Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
  eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
  alifm@linux.ibm.com, brueckner@linux.ibm.com,
  pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-Subject: [PATCH v11 10/32] hw/s390x: Define finite size for single entry
- VCEntry
-Date: Tue,  5 May 2026 16:18:42 -0400
-Message-ID: <20260505201905.997996-11-zycai@linux.ibm.com>
+Subject: [PATCH v11 32/32] docs/system/s390x: Add secure IPL documentation
+Date: Tue,  5 May 2026 16:19:04 -0400
+Message-ID: <20260505201905.997996-33-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260505201905.997996-1-zycai@linux.ibm.com>
 References: <20260505201905.997996-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA1MDE5NSBTYWx0ZWRfX5j7BJYKxDem4
- C5CJyHkeUrIVltHBWj/xz7uNjrHI1gTQ2SC80blIdY689cdvHNdI2sPpCvSbnD47/icov5JYV8y
- 7hvclfhyN9u3qQA3R/j2ZnEMeQCeLnqtRoyzfQ2m5DMB//9h6Nxga0TinORJ5uwASY7tYDOa9Ue
- uxwF/t1RN4PNoJ8AuKWDJ8x92vXpHOk3p4wq5RGd/S61qxu2Uml/85aGxcUMPx4myoyHAfuslhc
- XqmmDfKK03kfcu6246arQSE57KAcVRzVeh8GLUAjbRQuOGEluJ4A7YUDN/aQBBiL9sDfDTqCOIg
- bRH9XusSHP4QYje9aEZTU1JeS3VpvLtWmrwZUVmrZIkfjXN7jIP4Bpp/kTgH8wy2Uy0+VSvo3ft
- lQD11cggqOVsJsZFZHT+go4U0Cm5t25ga2kA0B9UeqgiSUywNt/OdDgsf+f7yrHxQumCKcn+S4r
- MRlfHWPkqrXK7NtD7HQ==
-X-Authority-Analysis: v=2.4 cv=J4GaKgnS c=1 sm=1 tr=0 ts=69fa50d0 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=b9XrvJAKYeRg4TRbuU0A:9
-X-Proofpoint-GUID: WVkSFdY3QNjXwQ4Mpt2VHagVYbSIUWiv
-X-Proofpoint-ORIG-GUID: WVkSFdY3QNjXwQ4Mpt2VHagVYbSIUWiv
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA1MDE5NSBTYWx0ZWRfX5Wx5TifY54rQ
+ QxhbhDwWh6XzvwKucd0hGbVilRWx6U9wFzpNWIOGMRiRJtCfOPNEKj1w/kRhBdRLlPj/eydill2
+ jJgate5pz0wIeoRkvntbsF8rFcIWWVlO6tMpaF+gQdZyVZNxN5uba+0ZYvXXUy2EB8OVbLMw0gj
+ vPYnh4JUPbSfUqPhP9Lk7eFRLSuZEBoOe3PCir0a8YIh2RYljx3W8pbwtNZKkIwUdKL8rcrcj59
+ 7VpTwfkJdSazQqnhB+3TZIAuiGVcTL/8cGj45hXcAzA9Vn2C7F+231z0Ywg6rgdjuHG9y3m4sf8
+ YplNG1BovbwgtU4n8nSj5GHDr1+wwOpJzRlEkjirAb4KXsutg5OBrbimYmOoBsJrmoyA57ARB0z
+ r3mcDebZVKxhRTd0jEBnfzsB61YouwL0z0APKjP4pg23WBiyego2W7EBbNHugOuO/7qXpUwuDdA
+ cICM4B6IzcxTCFnlCTg==
+X-Proofpoint-ORIG-GUID: ctlU46yDGFeuk4n_7L_TWOxtmjYufUZ8
+X-Proofpoint-GUID: ctlU46yDGFeuk4n_7L_TWOxtmjYufUZ8
+X-Authority-Analysis: v=2.4 cv=ctWrVV4i c=1 sm=1 tr=0 ts=69fa50f7 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=q5T4S90kAAAA:8 a=xOmL8MRHFtDrr2fuNQ0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=LnBBZQxPVJ0Z7KJyRdxh:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-05_02,2026-04-30_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1015 malwarescore=0 bulkscore=0 suspectscore=0
- priorityscore=1501 spamscore=0 phishscore=0 adultscore=0 lowpriorityscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605050195
+ priorityscore=1501 lowpriorityscore=0 adultscore=0 clxscore=1015
+ suspectscore=0 impostorscore=0 spamscore=0 malwarescore=0 phishscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2605050195
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -122,81 +126,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define MAX_ENTRY_SIZE (8KB) and CERT_BUF_MAX_LEN to establish a finite
-size for a single entry VCEntry. Add validation in update_cert_store() to
-ensure certificate data does not exceed this limit.
+Add documentation for secure IPL
 
-This finite size definition is needed for proper memory allocation and
-will be used in a later commit to handle VCEntry structures with known
-size constraints.
-
+Signed-off-by: Collin Walling <walling@linux.ibm.com>
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 ---
- hw/s390x/cert-store.c          | 15 +++++++++++++--
- include/hw/s390x/ipl/diag320.h |  3 +++
- 2 files changed, 16 insertions(+), 2 deletions(-)
+ docs/system/s390x/secure-ipl.rst | 100 +++++++++++++++++++++++++++++++
+ 1 file changed, 100 insertions(+)
 
-diff --git a/hw/s390x/cert-store.c b/hw/s390x/cert-store.c
-index a4f15627e9..221267781b 100644
---- a/hw/s390x/cert-store.c
-+++ b/hw/s390x/cert-store.c
-@@ -73,7 +73,7 @@ static S390IPLCertificate *init_cert(char *path, Error **errp)
-     return cert;
- }
+diff --git a/docs/system/s390x/secure-ipl.rst b/docs/system/s390x/secure-ipl.rst
+index c8fb887ac0..b9123a72a0 100644
+--- a/docs/system/s390x/secure-ipl.rst
++++ b/docs/system/s390x/secure-ipl.rst
+@@ -1,5 +1,22 @@
+ .. SPDX-License-Identifier: GPL-2.0-or-later
  
--static void update_cert_store(S390IPLCertificateStore *cert_store,
-+static int update_cert_store(S390IPLCertificateStore *cert_store,
-                               S390IPLCertificate *cert)
- {
-     size_t data_buf_size;
-@@ -87,6 +87,12 @@ static void update_cert_store(S390IPLCertificateStore *cert_store,
-     cert_buf_size = ROUND_UP(cert->der_size, 4);
-     data_buf_size = keyid_buf_size + hash_buf_size + cert_buf_size;
- 
-+    if (data_buf_size > CERT_BUF_MAX_LEN) {
-+        error_report("Certificate data size %zu exceeds maximum buffer size %ld",
-+                     data_buf_size, CERT_BUF_MAX_LEN);
-+        return -1;
-+    }
++s390 Secure IPL
++===============
 +
-     if (cert_store->largest_cert_size < data_buf_size) {
-         cert_store->largest_cert_size = data_buf_size;
-     }
-@@ -96,6 +102,8 @@ static void update_cert_store(S390IPLCertificateStore *cert_store,
-     cert_store->certs[cert_store->count] = *cert;
-     cert_store->total_bytes += data_buf_size;
-     cert_store->count++;
++Secure IPL, also known as secure boot, enables s390-ccw virtual machines to
++verify the integrity of guest kernels.
 +
-+    return 0;
- }
- 
- static GPtrArray *get_cert_paths(Error **errp)
-@@ -214,7 +222,10 @@ void s390_ipl_create_cert_store(S390IPLCertificateStore *cert_store)
-             exit(1);
-         }
- 
--        update_cert_store(cert_store, cert);
-+        if (update_cert_store(cert_store, cert)) {
-+            g_ptr_array_free(cert_path_builder, TRUE);
-+            exit(1);
-+        }
-     }
- 
-     g_ptr_array_free(cert_path_builder, TRUE);
-diff --git a/include/hw/s390x/ipl/diag320.h b/include/hw/s390x/ipl/diag320.h
-index 35c652ff56..75065d2fe4 100644
---- a/include/hw/s390x/ipl/diag320.h
-+++ b/include/hw/s390x/ipl/diag320.h
-@@ -83,6 +83,9 @@ struct VCEntry {
- };
- typedef struct VCEntry VCEntry;
- 
-+#define MAX_ENTRY_SIZE      (8 * 1024)
-+#define CERT_BUF_MAX_LEN    (MAX_ENTRY_SIZE - sizeof(VCEntryHeader))
++For technical details of this feature, see the
++:doc:`specs document </specs/s390x-secure-ipl>`.
 +
- struct VCBlockHeader {
-     uint32_t in_len;
-     uint32_t reserved0;
++This document explains how to use secure IPL with s390x in QEMU. It covers
++the command line options for providing certificates and enabling secure IPL,
++the different IPL modes (Normal, Audit, and Secure), and system requirements.
++
++A quickstart guide is provided to demonstrate how to generate certificates,
++sign images, and start a guest in Secure Mode.
++
++
+ Secure IPL Command Line Options
+ -------------------------------
+ 
+@@ -79,3 +96,86 @@ Configuration:
+ .. code-block:: shell
+ 
+     qemu-system-s390x -machine s390-ccw-virtio,secure-boot=on,boot-certs.0.path=/.../qemu/certs,boot-certs.1.path=/another/path/cert.pem ...
++
++
++Constraints
++-----------
++
++The following constraints apply when attempting to boot an s390x guest in secure
++mode:
++
++- z16 or "qemu" CPU model
++- certificates must be in X.509 PEM format
++- only support for SCSI scheme of virtio-blk/virtio-scsi devices
++- a boot device must be specified
++- any unsupported devices (e.g., ECKD and VFIO) or non-eligible devices (e.g.,
++  network) will cause the entire boot process terminating early with an error
++  logged to the console.
++
++
++Secure IPL Quickstart
++---------------------
++
++Build QEMU with gnutls enabled
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++.. code-block:: shell
++
++    ./configure … --enable-gnutls
++
++Generate certificate (e.g. via certtool)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++A private key is required before generating a certificate. This key must be kept
++secure and confidential.
++
++Use an RSA private key for signing.
++
++.. code-block:: shell
++
++    certtool --generate-privkey > key.pem
++
++A self-signed certificate requires the organization name. Use the ``cert.info``
++template to pre-fill values and avoid interactive prompts from certtool.
++
++.. code-block:: shell
++
++    cat > cert.info <<EOF
++    cn = "My Name"
++    expiration_days = 36500
++    cert_signing_key
++    EOF
++
++    certtool --generate-self-signed \
++             --load-privkey key.pem \
++             --template cert.info \
++             --hash=SHA256 \
++             --outfile cert.pem
++
++Sign Images (e.g. via sign-file)
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++- signing must be performed on a guest filesystem
++- sign-file script used in the example below is located within the kernel source
++  repo
++
++.. code-block:: shell
++
++    ./sign-file sha256 key.pem cert.pem /boot/vmlinuz-…
++    ./sign-file sha256 key.pem cert.pem /usr/lib/s390-tools/stage3.bin
++
++Run zipl with secure boot enabled
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++- zipl must be performed on a guest filesystem
++
++.. code-block:: shell
++
++    zipl --secure 1 -V
++
++Command line options for starting the guest
++^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
++
++.. code-block:: shell
++
++    qemu-system-s390x -machine s390-ccw-virtio,secure-boot=on,boot-certs.0.path=cert.pem ...
 -- 
 2.54.0
 
