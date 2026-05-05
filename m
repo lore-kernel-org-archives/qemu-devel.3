@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1D7BFF885A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 10:37:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D1BECD342F
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 10:38:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKD9Y-0001SE-HA; Tue, 05 May 2026 06:37:24 -0400
+	id 1wKD9T-0001OF-FB; Tue, 05 May 2026 06:37:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKD99-0001KN-5N
+ id 1wKD99-0001KO-6S
  for qemu-devel@nongnu.org; Tue, 05 May 2026 06:37:00 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKD94-0007wJ-7w
+ id 1wKD93-0007w9-UO
  for qemu-devel@nongnu.org; Tue, 05 May 2026 06:36:58 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-48a3e9862f0so34074015e9.1
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-488ad135063so48066985e9.0
  for <qemu-devel@nongnu.org>; Tue, 05 May 2026 03:36:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777977412; x=1778582212; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NyZKew4HYVFYSLa3t/vamd7rM3LzAyISeCAdtoKuGXA=;
- b=Ekp2u3j2fLLQtCo5/Yjk3A4L7mqf/JPOurH3RPdkyhBbJWqJ2F1R7t9+gx4yFIpSxs
- eoPLxfVOlIaF6KM/d5ixCqB+lhZ0+7P748Of2Xwcreya+pQzAToxy3Rv3tXzRePlm+V8
- PKNcdGtz6qPdsdHJgxzBVig80wA0sUiHwVmhW8EvM3bEqHE9b35d5OrkvUej6sNUFZlP
- GTqwsBaNKYv4GG+YCutP77/OvuYU+4mlOM2pvrpRFuTkjonbfJh+52yUGxBuUlg2FJy3
- z7sTt7VPbdHBaRSEhsYaGOQcjW9cI10tri/Bn0XgXb4kp5WYWviitx6kj1aT7C9a2raK
- b1LA==
+ d=linaro.org; s=google; t=1777977411; x=1778582211; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=5UXBDY8yrjs3dkgDO4K02KeOZmUzFqyOiL74/iE0JSc=;
+ b=cCYscRQVAHVu+Ec2QXOyB9Q6kZutw4CRFpDjapNpMDDOX2aeRwLpbxnFyVgRAWwxo6
+ MgW0bfWNd/cnIOOXJflQo6EkScziBGh8eLVjS5ALEd4ezZiKx0xeRBNf2p3ad3LLrVuE
+ CsYUR9/lQOqmeYwTcvY8p9RoohwhPxMddrghjLXGV2OGI2QSwd7SWkqklbiNPFZiC7i3
+ 8xC1my9WWwlRkL0Qm/StuucP7qoJEYPmlGfImvyfnu/GdsTRVxiMD2OwDbBTLseYAPQH
+ nAFKmIElPF1LlWzbScWeItSVZW1EnOUI95OGt++7m4XTd4JROa1VYS71329xTdNXPBTy
+ 1IYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777977412; x=1778582212;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=NyZKew4HYVFYSLa3t/vamd7rM3LzAyISeCAdtoKuGXA=;
- b=XqK4bkwHN7761ok64MWzuZqAVVbv78+ZpsqPpZNz/c17+v50iHCmAnYkSSTe+Tg/oE
- q+pH1PH6VJRs4rdt+Yiuyq6lVu16yUlRKqBf9MumI5UXxSwOxlezLny5BaXUyF29yMA4
- PWu022CIDagzmEAN5amAjzpyoxxQXowjuosQIWqT9hm/6wN/sLtkGIT0yU1x7kdvHEnu
- h4ul3PkJ3ULxes2tSu1tEmMDKKTqpLqZUlsosofec5xuoj4zTgiJjYCk5hTi1iyPZvCR
- Zp4O8PlnhUKUYnzHSNVUXmJ8ZYI67YZtn6mxhWxUyS4ktNSySp4TmZ3Nsh2zqxJon87X
- GODw==
-X-Gm-Message-State: AOJu0YyHrWyWq2L7UHQN829a++zF6un0CRtxKaRT3+AtxOUNdMfAlLZR
- dVk9FxBifmfiLFLvxJm4CZ1sFAJe6DAjS7PDyYEGRNfSSPqLGJA90z2VevEgVylituM=
-X-Gm-Gg: AeBDiev7eveRkykEejO4NyC0xi8cNn9iJCvvg2uhMkWPkrTTg8P0hgWc0hZrsYN9FOv
- 0gthoPfDIBwdN9nqidr/00tLypRERzSSQMwCpfcB0QDfk98R65kQC7fb7aPQX57IOOPzLkiYpEq
- +6xJjXreahk/uyppXluW4LbdYcqlJ7CuGFp9+8bcAW0iESL0LI8fg7OXiCHnL4z5A/ZJ24c1Zcu
- O8gcBAvdxiaooR/81TUrQTi6GswR24/n0fLfP0+x1T4b3HHGxel2o9Rcg3gp5Litc9dwLE8i0Z1
- LLbQqtd78XeQ3i74FgJ3WfgyzrsjbLX9cr8SxxLFFxMvP+Kkgw3DmmBIJo4ckxZm67NuvNZ8wV8
- vRxC3N6q1omKbTbcjOzaoAnXfunz41E+kSQRAh56K7yAS9274UQ/MlUmG5vrvXz7w53icMZ72oS
- kijGC1QRy6myHd4rFbnd6LvY4DXdVIRkgCMw==
-X-Received: by 2002:a05:600d:a:b0:489:1abb:5559 with SMTP id
- 5b1f17b1804b1-48d142331f5mr41076895e9.5.1777977412167; 
- Tue, 05 May 2026 03:36:52 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777977411; x=1778582211;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5UXBDY8yrjs3dkgDO4K02KeOZmUzFqyOiL74/iE0JSc=;
+ b=lwuUw1cA3WcKetKWD9zg80gq9c8i20Uo9QOShmPpD/+vBdgFoPTyOhyoU4t+CfYEU3
+ Y43/gq9iepIaNBAZtwPsHsZEQZx1jJHVAipZPhSpNc5gvmdZlFw/JaKcB7y1/EqVUtyM
+ y42kcfQOMLX/Jrk6hUCi52xQ6VaEt0AQrtq2MyOPWul6hFYX0lxD0pEFyd+/VY1Qq9mu
+ OM38O4XFrBL/FcVEp9azswZWkqtb2ZYkrnv7irlxUcd8h2sve3+mIYYF7dcs9IErImuR
+ O4dLeT+5DsmHBm7eMqMAQ9e1BIbfBlhW/CT0bRmtKXezuUNQJV0nXXWa1ecwB1QceQPB
+ Jw/w==
+X-Gm-Message-State: AOJu0YwmbksCVVmX9nqtFhBAcQ/SZ4Rb+eNnoq5uCYlR3YdX+0koIg8I
+ DCgEmtMku9gUUC9RoWjZ5p4+67mAwtapOEw2o9BjXwOImK+dboD+FdosW6gBMKn/0ZM=
+X-Gm-Gg: AeBDieu06A+mfXV/jDNTOdfV9J0ILRSxPymgCxWYwu+9Ifipx7Xe4q4We0Bcj6p/2AV
+ /tgwqNSeTAszqv7+OICRSvF7pFcfP9hLDtn2AqGQPgjtUKvSskOTK5OKTdk+IIF/EKHVUMN18cB
+ nwzgZyF4uTJJnR9ZH/TFuDx9QkZmWEd3ns4Gp/1kPEJGQvhN3kC9DFH51hYHxcsof5snWFTF6WZ
+ vVRvDrxmIg0/GLTw1SkhVpdBAHPTlUWiraFr5Hj53GZMTkZqKKdUXq4psYE9Q33h2Cs9vVbDCku
+ VOWQlxs1t9iqJlJQo0+S9+oqlf4Cx5+6gv2KZXlAOTsr+okBDsf6TtZRQKlYYJyYNbZHhlkHwHS
+ 7NzyDQWl9diU3mNSf1v4gDIXDD0HMr/zwkSzUDx/MwxvZv1Zejd7mwpQHdmAglDv2KH98uVOYmu
+ mcxFwU+1tX5zE+HRHmefZKP9PuRAlzRjT5rmA8mI0DJJB5
+X-Received: by 2002:a05:600c:4f48:b0:487:59c:2bb8 with SMTP id
+ 5b1f17b1804b1-48a988ccc94mr246836815e9.27.1777977411509; 
+ Tue, 05 May 2026 03:36:51 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8eb3427fsm560770615e9.0.2026.05.05.03.36.50
+ 5b1f17b1804b1-48a8eba865fsm307426235e9.10.2026.05.05.03.36.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 05 May 2026 03:36:50 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id CF4DE5F94B;
+ by draig.lan (Postfix) with ESMTP id A0B715F8E7;
  Tue, 05 May 2026 11:36:49 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -80,18 +79,15 @@ Cc: Thomas Huth <th.huth+qemu@posteo.eu>, Thomas Huth <thuth@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Warner Losh <imp@bsdimp.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/5] accel/tcg: move jit thread manipulation into
- do_tb_phys_invalidate
-Date: Tue,  5 May 2026 11:36:46 +0100
-Message-ID: <20260505103649.68361-3-alex.bennee@linaro.org>
+Subject: [PATCH 0/5] testing/next: macos updates
+Date: Tue,  5 May 2026 11:36:44 +0100
+Message-ID: <20260505103649.68361-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260505103649.68361-1-alex.bennee@linaro.org>
-References: <20260505103649.68361-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,49 +110,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To invalidate a TB on MacOS we need to enable write access to the JIT
-buffer. We were doing this for tb_phys_invalidate__locked but that is
-not the only path into do_tb_phys_invalidate. Move the manipulation
-into the shared function that does the work.
+These patches are mostly dealing with the loss of the CirrusCI MacOS
+images by porting to gitlab. So far only one of the images works but I
+thought it was worth posting in case anyone else has any ideas.
 
-This enables watchpoints to work in MacOS TCG guests.
+There is also a fix for getting watchpoints working so we can have the
+basic TCG gdb tests.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3444
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- accel/tcg/tb-maint.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Alex.
 
-diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
-index cd7c32361bb..9a648f97865 100644
---- a/accel/tcg/tb-maint.c
-+++ b/accel/tcg/tb-maint.c
-@@ -925,6 +925,7 @@ static void do_tb_phys_invalidate(TranslationBlock *tb, bool rm_from_page_list)
-     uint32_t orig_cflags = tb_cflags(tb);
- 
-     assert_memory_lock();
-+    qemu_thread_jit_write();
- 
-     /* make sure no further incoming jumps will be chained to this TB */
-     qemu_spin_lock(&tb->jmp_lock);
-@@ -954,15 +955,15 @@ static void do_tb_phys_invalidate(TranslationBlock *tb, bool rm_from_page_list)
-     /* suppress any remaining jumps to this TB */
-     tb_jmp_unlink(tb);
- 
-+    qemu_thread_jit_execute();
-+
-     qatomic_set(&tb_ctx.tb_phys_invalidate_count,
-                 tb_ctx.tb_phys_invalidate_count + 1);
- }
- 
- static void tb_phys_invalidate__locked(TranslationBlock *tb)
- {
--    qemu_thread_jit_write();
-     do_tb_phys_invalidate(tb, true);
--    qemu_thread_jit_execute();
- }
- 
- /*
+Alex Bennée (5):
+  configure: report unsigned qemu binaries for check-tcg
+  accel/tcg: move jit thread manipulation into do_tb_phys_invalidate
+  ci: drop cirrus MacOS build
+  gitlab: add initial MacOS 15 on gitlab runner
+  gitlab: add MacOS 26 job on gitlab runner (!broken)
+
+ configure                               |  6 ++-
+ accel/tcg/tb-maint.c                    |  5 +-
+ .gitlab-ci.d/cirrus.yml                 | 14 ------
+ .gitlab-ci.d/{cirrus => }/macos-14.vars |  0
+ .gitlab-ci.d/macos.yml                  | 65 +++++++++++++++++++++++++
+ .gitlab-ci.d/qemu-project.yml           |  1 +
+ tests/lcitool/refresh                   | 12 ++++-
+ 7 files changed, 85 insertions(+), 18 deletions(-)
+ rename .gitlab-ci.d/{cirrus => }/macos-14.vars (100%)
+ create mode 100644 .gitlab-ci.d/macos.yml
+
 -- 
 2.47.3
 
