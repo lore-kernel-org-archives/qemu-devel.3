@@ -4,181 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5160FF8855
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 15:58:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D84FFF8855
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 15:59:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKIA3-0003WZ-0a; Tue, 05 May 2026 11:58:15 -0400
+	id 1wKIAR-0003Yd-TS; Tue, 05 May 2026 11:58:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <flosch@nutanix.com>)
- id 1wKI9z-0003WL-Lh
- for qemu-devel@nongnu.org; Tue, 05 May 2026 11:58:12 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <flosch@nutanix.com>)
- id 1wKI9w-0008Iv-LS
- for qemu-devel@nongnu.org; Tue, 05 May 2026 11:58:11 -0400
-Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 645EDFmY3184288; Tue, 5 May 2026 08:58:03 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=dT185VDf+lGaovpvemlZa7ni9LwdbZUsq5r9qCXMA
- Ww=; b=LAs97lNNYzl8Q4LH6fPBkP9E/Lc3J11DGwSxDsKZu1DjYlURsr/t059Hq
- f9KY3YU8t51nCk6NEBGHcnesOI/eSQgpSEN2WyKzWmR4OM3ho+AQn+SELHp9/Tj5
- qStzCSOx78zJF7jABqIh3ygOQliSEF99EapKVYKRWsnFJvCpGWSvK3iqL6VNk3rP
- hptJI0+7YwA1u3+mQjaX15SuJKTKz355ovyIp+yfjtPLg1PRFPheoOjd0UoVwddw
- CCn/Tigk/sAZ+YDlXiawCKP6xQ/bRaNXS8GYB4kqTJz+tNLQDRzlcaXQkReSf4C8
- XPbA75Vn1xqIs9ODXOcr44trytBZQ==
-Received: from co1pr03cu002.outbound.protection.outlook.com
- (mail-westus2azon11020123.outbound.protection.outlook.com [52.101.46.123])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4dwfch6wrd-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Tue, 05 May 2026 08:58:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yaphzwdalh+2+mD0DLPsXHqMrkt/wL1Hmtmf234NeMvc0OMhShDdppNhzf4n5FC/PPue9Y+nVYMuf0eH1ckCwrYvoHNiA4X63wnK8QmHV4f2lR/0Hl94v6YW2EmL0cRDUDjRKePAMEgmv/htblNEl6vtFMrysNxAf0mL5WVUPidu/5kzY3OitQzvU/kc4TJ2jOnbXFXUL/QHKqzfVz6dUi0759ngQlkTivv20TObb2vh0qukRT0Z3rRJSJWUoY2/ep1wbe/fHnt9XEQ6+HyOrIHb/iQF/w1CrTCUdn/+xq33O602yd/lfIoSs4I2dnAL1BOUUzEt/rsBChYv42z4vg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dT185VDf+lGaovpvemlZa7ni9LwdbZUsq5r9qCXMAWw=;
- b=oZ/eIkKDG4Dg7c6gPHRm/Sk7cqKSNlWKgpShof0edNpb/SdXxceONxcaG4O4GbylvfLDA+8VQOAk+56ZtIQ2uQfMaE6OLc491k7mOeAFE+BImuDg5cciN9noTrFITjP0nFJGtD6l0LWjbRl2V+6pLERhxQzMhFH8nC2z3DCwrjiYWUBVnSRJF5z7Li3RHiSd6jr6FOmmEsAL/7iLm+zmxRXbSshxdaX0E2hg61pmAtOz5on2teeIzY808jXo4kqPaecCsHqVthnwt8mED1yTV6YtE9sfQ0jsxwQWMwFN2bBBDSGj/fx8A0sBd6xkGQV3dWZYI5ecmTF3A8V5MbscPg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dT185VDf+lGaovpvemlZa7ni9LwdbZUsq5r9qCXMAWw=;
- b=NjOFVH4CUfZj3fAweui4wUUWUmZjGODu7Ime6DGsYLL1eTQXP0H3GMjUo4Q4q+60A5IZpp/Caxq8pIQJ432+x/hESDNAFbKh9G9dRoQW3laOOC2LHM2HQX5k2yb3tmqmrSvip5La+zT3PNPV+4Dnq4FRMZ3lTjbXVjeh8Pb6tWuYboZzNixkm2m1dADg+NTqjec/xUVoFHtI1aFmn4M4JjB2p+h5QWJoaVgGuNOZ+SmxRbmRaWA/IJMakjQMY6Puf8av6otZXdjuIYk+DEiouP8emgyKuDnJr363myUmANeAkBSP13vtvgsgQ+QF1Q1KxKWjriu2viTUHrYkFjvGDg==
-Received: from CH2PR02MB6197.namprd02.prod.outlook.com (2603:10b6:610:4::25)
- by SJ0PR02MB7134.namprd02.prod.outlook.com (2603:10b6:a03:2a3::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.27; Tue, 5 May
- 2026 15:58:00 +0000
-Received: from CH2PR02MB6197.namprd02.prod.outlook.com
- ([fe80::90e9:29cb:631d:9ab]) by CH2PR02MB6197.namprd02.prod.outlook.com
- ([fe80::90e9:29cb:631d:9ab%6]) with mapi id 15.20.9870.023; Tue, 5 May 2026
- 15:58:00 +0000
-Message-ID: <288c9ea2-6299-4a9b-83df-bb43c957eed2@nutanix.com>
-Date: Tue, 5 May 2026 16:57:55 +0100
+ (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
+ id 1wKIAN-0003Xb-Ro
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 11:58:35 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander.hansen@9elements.com>)
+ id 1wKIAK-0000Si-1n
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 11:58:35 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-44c350a5b87so1678617f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 08:58:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=9elements.com; s=google; t=1777996710; x=1778601510; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gxMPOwc1DrwlEUOVXlwTx8H5S+DnZZzRQ1hsNsMwY3o=;
+ b=BtwbAWUxAnIatE4bR+EkHSvkVtNKPwBWXQGX5Pkvf0JmA2ChYmw0t6Pa1m8pX5aZBT
+ ZKEQJyHraS4I+RPNRzoTZQ3resa7pmykED4uTFc/fKRv8+XFlLQarGSpsBRZ5bpyNcMK
+ 8amn1xE7dyekKYW7fFlc2AS8S7W8XhwajpMUAyrCYYDr9u89Kgga8rWiEq3D1XHp2LqS
+ yAMoAo97pMFDOlpvm388VgzRfeg9XvPA1XvGlwX/V+eVirFLmnKMZ4uWKOLUcO+1ytfN
+ +x2SywynCIiUEZLOr9GTdi/0nqzbzNf1nDZqkpO1HBPrQd1zbnwsDBbzQjbfhfuwXw64
+ icbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777996710; x=1778601510;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gxMPOwc1DrwlEUOVXlwTx8H5S+DnZZzRQ1hsNsMwY3o=;
+ b=OfGe0pvdefa+7SmeVyPB/oy44fNLiKacFGzJx6aRXL95mDb7S2Zhyo59fi1rNnQddO
+ DD9UPwykv2YHcxNMnZWaIN4IbZ2Qc+Pb3fk82jPPIOUHKv+6A7TSm4ZYYgRu1/84n0kd
+ po1z9Yv61m66VJQLImquULCoAdqRUIW5R3vgkwaqMA6r+T7nNzMTIlCAyiEyj3G2RTN/
+ ndYrg44ZrlPR07yYmklMWTcLARXUbUxvt2ss2HC0yJ9jgI7DgDIWmxuM/FGoLuUg8wT1
+ l6xcHRJN39T7iUfruWbxjCjO0Sz7WXGZZ0qRdfkGfKn86FqGocazf3spNmc3MTgIYhUj
+ fi8Q==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8IBL+wCa/n2j9HrwuYRosW2TObfVS38CxplO8NUZgtnGSoxa478Oe08TxS64kg109u3g2mtg77YFoN@nongnu.org
+X-Gm-Message-State: AOJu0YweUwgvvl6ctAwVeGwV6ioenfTYuKzl6MIDcRGSTEldd3t2D0CX
+ I6+4uMocF9znheyEMQTLe2veNBEbRlS84TVbXf0W4JSOfjLx1U9n1mXEA/cBngcMhVs=
+X-Gm-Gg: AeBDiet6+wUIgUrvVUUnr6PQ65+yRLIgoKupIUSNhvlRCeACXjKjmJ4umAQaXAci+XD
+ 7O0kD4wpUQNZbLbouhUpwCjXYk+yozguu7PMEBynMTE1iCp4LAmjxpDtWiEVckVR1E2pmb1v8LL
+ FexjdtVC45xDveEEs5qXbmV9CVcv3xbZ+qiCYysu8h+rctSyzCZ/TRo+v8cO0rQ3dMa2UrH3Vaw
+ /10u0FkXPKpq796rPbIHbUk22I7526DiLiQMkSnCTfYoi8DNXb67S85ZP7X/BnUM9YntyHPXXSq
+ 5QLQlS6h+Qxw2NSYqUtsydKCI6mvVWTzjchAIhNebh/qAMcYOKCwBX5EjpCUxV9aP0KbkM0tv8x
+ fxVm5mnixNBj/WeHJoahI0SqeiA9vzVT5Ay9sYQ+Fx7KYBV0XciKKvEVhdwweNTcUrbS8HfCi0V
+ JmdiNbU7/5gGilQKegrG2IErXSzqNAZhODY4xPVRtW4XTFddqtdiAC
+X-Received: by 2002:a05:6000:40df:b0:43d:7dc2:b655 with SMTP id
+ ffacd0b85a97d-450041b076fmr6850578f8f.15.1777996709569; 
+ Tue, 05 May 2026 08:58:29 -0700 (PDT)
+Received: from [10.93.128.145] ([188.111.3.154])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-450524831cdsm6085249f8f.5.2026.05.05.08.58.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 May 2026 08:58:29 -0700 (PDT)
+Message-ID: <7437bd8e-e938-4a36-9678-cabde10a5d17@9elements.com>
+Date: Tue, 5 May 2026 17:56:13 +0200
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/2] Add HvExtCallGetBootZeroedMemory
-Content-Language: en-GB
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>
-References: <20260112113139.3762156-1-flosch@nutanix.com>
- <20260112113139.3762156-3-flosch@nutanix.com>
- <a28bd807-6e98-4393-a354-b7ed1f7a08ae@redhat.com>
- <f878fd12-17bc-4249-beca-cd134bb93d2c@nutanix.com>
- <CABgObfYYt0CuLzj4kdD13J3+bUqAxNpmKTc4g=LtbojvKAatyQ@mail.gmail.com>
- <0ec397c4-5ec9-46c5-a081-a6b380320755@nutanix.com>
- <CABgObfbwVAgai6cKfxoFFXBfPJcR8riZmWCNi6k+ckzTcjuh_A@mail.gmail.com>
-From: Florian Schmidt <flosch@nutanix.com>
-In-Reply-To: <CABgObfbwVAgai6cKfxoFFXBfPJcR8riZmWCNi6k+ckzTcjuh_A@mail.gmail.com>
+Subject: Re: [PATCH 4/4] ast2600: yosemite4 initial support
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org, Patrick Williams <patrickw3@meta.com>
+References: <20260504165043.213704-2-alexander.hansen@9elements.com>
+ <20260504165043.213704-6-alexander.hansen@9elements.com>
+ <7184f945-7e92-4394-b484-1eb336aa4161@kaod.org>
+Content-Language: en-US
+From: Alexander Hansen <alexander.hansen@9elements.com>
+In-Reply-To: <7184f945-7e92-4394-b484-1eb336aa4161@kaod.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: AS4PR09CA0018.eurprd09.prod.outlook.com
- (2603:10a6:20b:5d4::6) To CH2PR02MB6197.namprd02.prod.outlook.com
- (2603:10b6:610:4::25)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR02MB6197:EE_|SJ0PR02MB7134:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5923d8ae-c5e6-411b-07c1-08deaabf14f3
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|22082099003|18002099003|56012099003; 
-X-Microsoft-Antispam-Message-Info: 7zoEPQRiwR21Tof0JuJ90BM1Hh2mWOlCSX7TfltZEHrus7+H15VV4/7x/1vfIZMQ8JqFExwxgE2OEvURxcbjIzFy4Um1xaUbb5dQNOcSljtkwwFUaIMo3VYAaNNPjigsMAUFzfgCYhb4EQToU8T3keyWs68e2PdTB6yD4McDpWzUw/WS8qGyI+CiaIOWsLovlPSv9azwTlElYgPr2DIgtUm1uRjEvQeKFq/IDgN9YmnvYSSEuaOXyEuqjopRrEq5wkP5ZJlLW2bet6L4aRtw3fDDLQ+m5WY6vtBUlmua+4DYJW9Ot16679Ov4TVXer6ABxkQMCDuC7Ar+OejRO98g7nZLTK2NGLERi1UTQ1V6LEUh35xe3H08MBtHgzMLoMX/j/fVQgFugjODzfu9RDIitL40j9VhyJ/N1kIMraaKbuMcWgnbmKSLR5/BciziGkdJEOZLWptlapquOebqPI/9/bO9OOwPo+fk7xIPw2atQoJAn7YiSt2oANbQ55TxMKl6ryMz3l5EZEbUeya6LzPKO/GJWzbt1LG9KY+7tWSt/A1TOA9MUG+GB9IO4Mm0svNojV6Ptl/snSUlyzV4FiSPjnaBfHdglO2QrjpjFh/HtdgssHo+UsPZ1OsBIMHx4iBPBDQfCSIt7JrC3jTWtunKmftZ2eG4Eg4WBCLYIgqgskn4mY1FVDiPVl5JQD9vKju
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH2PR02MB6197.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(22082099003)(18002099003)(56012099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SjcvRXJHYXM4OXFHalgzb2NiUkdWV21FMWhxMnMwNGg1NkptUjAxQ0V5VCtF?=
- =?utf-8?B?VjdHdzZHMDRTd08zUzB0bksvZU9BRjNqUU9rdkdaV21LV2ovZkRPc0dFVXlZ?=
- =?utf-8?B?NjNmdG0xQXMxbXZSMjdFaE5jM0R4T0UwQ3VaRzcxM0NvRTZmU0FGUkJkb1NV?=
- =?utf-8?B?UzhONW1JaE5CWFZMT1pqZWxWK2VEcHk3b3d4M3RFVW03K3dGd2NKNXgwak9a?=
- =?utf-8?B?NE1LUEx4RmhUYWxMYmYrTDF2R2RuckNLanA3cnVBYTFYY0hZTWtpZFdaY1pK?=
- =?utf-8?B?RkZSeDBzZnFydE1rNXpVdTlMcGUwbE9ORTU2eGtMYlhNZW43c0lPN3IzNndZ?=
- =?utf-8?B?cXp2RmtPdmppQXd5SS9rSXAyOXlGVFUwdXU5T0NVb0xKMmROdS9GRkhhZlNx?=
- =?utf-8?B?L0J0ekpGVGdsZ2FXUWVHZXpiZDh6cllYa3JZVmFmZVUydFNoMW5FUkhCTHpT?=
- =?utf-8?B?cEV5MDNrMHFIUEdkNjVtMU1TbWpXbHFRV2kyQlZYUHB6VmgyREJFSFNmamJ0?=
- =?utf-8?B?b0xCYy9Zb2JocWVnRGNJRk9QL0p6N0hkczJjZWE3dUNST1FsNjRtT1JTRjZu?=
- =?utf-8?B?QnFKcTdKN1BxRUVHWWVBQzQ3VHBmRGZMTzJWT2dvN213Y1luT2kvelBqS3Zs?=
- =?utf-8?B?R1gweCtOODAzTFpzRGUrYWU4R0xRV1U2SGVpdE42elVvcDg3ZGRHTVJrQ1dt?=
- =?utf-8?B?dmplQnI4N01WU3RaQ0FOOWM5Ri85MEhSM2xvUkdYNFRYQ3I5Z3lpcmlmeXRo?=
- =?utf-8?B?SEdQYUFsVytNNmJEOWlDMlZWR3hyRmFLRFAzMkxseFBHL2hrWDV5VllIamMr?=
- =?utf-8?B?MWc2U3h2MUVjYzdObEpDSERlc3JsZHY3clliVngvR3dxOEZzYmV6eHFIeHUy?=
- =?utf-8?B?QTNWUG0wSnZ1bTFwakVOdXkwNG5qS3dhcDlESGFXcytQSUFnN0U2dlg5YURh?=
- =?utf-8?B?WHNwcXViK09mSjU1MlBrWmNhU1VaWm54MVU5Z0VuNFZybmJiUzRlZCtvR21S?=
- =?utf-8?B?aEpkVEFIc1ZYRTBUcmlKZElNOFViZS9yd3N0b1VTMHkvREoxNUZxVlYxU3BS?=
- =?utf-8?B?TVFTbjBGSUtIQnBNTGI2T1VwMHpWcTZvS2tESEo0Y0NtWDcxWWpCUlBuUnhL?=
- =?utf-8?B?NFR2NDJxYkNJcE1ST0hJRUp1clpycjcxUXFBWisxQUIyRjNnRDBjcDZSazlN?=
- =?utf-8?B?UzA0VzMyc3RMbkJaNjNDdVdCeTZqZkQ5bmozbnhMZGwzWDZFaU5qaVdhN1Mx?=
- =?utf-8?B?SEg2Vkk4eGVRelVvdTBIbEFZcXhMZmRZdzl2QlNOV3poMVhMRXRqa3I5STVi?=
- =?utf-8?B?bmxvbUJyVThtbk1OTlo1YWhoemlJakRndEZMdkJRelVsaUxvNHJDSzZpZWNV?=
- =?utf-8?B?UFB5T01yaE50UjNuRTgrWXZGRFI2RzlueE9hYjVEYWRhK01oL1BlWldic2Nr?=
- =?utf-8?B?cWwxdXgxMlBXanJRekRtWUtxUERUN0V0OHI1eE9kWXNmWWtpV3dlUktvS3g4?=
- =?utf-8?B?VW9sVjQ2aWZ6cjBMcG9DZlQ0M05zaWdCaGhtZUtRVnF4NjVwU0RkRm1jMnFP?=
- =?utf-8?B?NzBTOVlHRFMrMUxNeS83TWp0clQvK0Noa29xajhTSHUrS2tSUEQ5NHpBdnIz?=
- =?utf-8?B?OXBqR1JYWG41NEtiSWx6Z1ZUL0ErR2lyRW0wdVZPVTZPaitvWDA1TG1NWG9Z?=
- =?utf-8?B?b2ROaUNzNDc5WHM4WjBwWHpTWnlqK01NUFhvU3VOTGtOanl4clpJc1NNTXZZ?=
- =?utf-8?B?b3RSRGl0V3hEQStKZk1qRllXUzB0THJhZS9ZOVdoYi93RXVvR1hDTDAyakpX?=
- =?utf-8?B?TTJ5RHJ0SzNBcy9kQVVFYUxNSUNWZEVLVlFpc00weE1rOG1pREhRMUFvR3g1?=
- =?utf-8?B?UlZRYm1BZjQ0OVNIZHh2VVBYVTl3bGRMSXNueUZpVW5CeTFiZ2lxKzRyZWdx?=
- =?utf-8?B?VE1QMDNkV2NKelFRZ3oxK1JIdlRPMnkwUlQvMVozUmdTUnFhejJmYWVTOHRN?=
- =?utf-8?B?MkVVbm0yMGlEbHZ2S3pqdTluMWZWQ0VwdG9mMHAxWUs0a053ekErRGs5TDVX?=
- =?utf-8?B?WjI2TEE1U1g5MDEvQlErVVNpMzdPVytYc1hLTXdqb1FNRzBiZk05dGZyY0FY?=
- =?utf-8?B?aU9rR2ljMFVhd2pIYlFqbHltRVZPNmdPNW5HTWEydmVPUkg4L2d6cW9GSS9F?=
- =?utf-8?B?OTlvdTNkWWJTRG1NK3dnTGVWSEhMeHhMSnhpajdWNXBzY1pKRTRtVjhKTFJu?=
- =?utf-8?B?Q0lIWjgrMG0ybXBwS0x0aHg5N01iN3JBaVNoalR4RUhjY1JkeHJ3OHNsTGFT?=
- =?utf-8?B?Mm95aTI5MnBCTEpBclh1VFF3cWdFSW9MUlhVazA4aUhPaW1sNXp5aFdlSU9J?=
- =?utf-8?Q?2uJHHadXlbwMn0ew=3D?=
-X-Exchange-RoutingPolicyChecked: sXLD5vGtk8FEu5t9O5Vbj1uVfZ69Dnwk2Z/HUJUsfo4SY54xoTWRRkKNubOKkkrRufcmVmn4LDbD1voInV79bo/cw70GhGf/SQYPlIO4axqHc/U0Fw6YAw7kgt778RdkTbugbefA0oGV9kSRG8nnymCvW/YoYOTZrR9Rxq36+KxiNzY4ntHhZjeNQHy0df2Xm5MeNZSo0SJhjMoExIzd68DKm6yFUXp9x8laVGXMREfaSSLb87ct6uED1t6PnLeuHiU9wyw2RZCnv4Afjtumn2kW7UbcLSgyQgRyC0KYf93gMwuv7bmYAYuUp84veK18oOcA3dscETg9jYyg/IfkvQ==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5923d8ae-c5e6-411b-07c1-08deaabf14f3
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6197.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2026 15:58:00.3181 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 1yHsT+2lF+OUdB1QPUjHlQ0dc3NOvXkRz+eckadouOeEoB268WB9mdTOQMU5EF2IPiUH4gml8H9oDk5CkXZ9ZjNg1I18GUfILG9bisf1WZE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR02MB7134
-X-Authority-Analysis: v=2.4 cv=IrMutr/g c=1 sm=1 tr=0 ts=69fa138b cx=c_pps
- a=n2zBTagloklpXwQiE9xBQQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=dEe9Ve2bX-KnNSUMM2s9:22
- a=64Cc0HZtAAAA:8 a=EqmJ7DWz-kYQF2itRRsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: vCTx5NrFturVzjKB_nbJ0wJqbi3Huuzn
-X-Proofpoint-ORIG-GUID: vCTx5NrFturVzjKB_nbJ0wJqbi3Huuzn
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA1MDE1NCBTYWx0ZWRfXzYb0UVRsU+8U
- mzTKsA7WCrul0P426f+I4D+FJ9xkSpCeOwkndQUcSClzjSnR46bh6CU4KsfL9xcvEUl1b8szS6J
- RRJjwwPjdLvjj7YEEDZtwog/Pu8qV61YgcTdwxSf8Em+9H8wxu9kw6dFzZ2DUogbBX6Z3U+hW53
- d3LYfXeN6otj7cXmGgBTBYcQ4NR5Bx2OIcXCZGGmlCbDbAi+F5iQiNgDg5HG3kFpaFoGG5YIQcr
- Vopb9ewa8UBXu6m+9WVsFeVl7G2xtSIHAT8vaiCY73faUpWuwPdPH9/JzGp6Yy94AI5HHARjc5a
- tjP8hlCuoH7ATcddNwaeUpb/QXM1mbyTimPv9FTzZvTGzsPjstFSNvfVPVI/A9ruBBtFbBj2Ni1
- 1nETBbgjDIxJ/O6YsXh1YWOVQK72/WZDw8mSsSO1drDO4xSPUahTchPIsVZF8/4ClhnNdutMzz8
- rMb8sY02Fov2ZmHuecQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-05_02,2026-04-30_02,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12; envelope-from=flosch@nutanix.com;
- helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=alexander.hansen@9elements.com; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -194,64 +110,492 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Cedric, thanks for taking a look so quickly!
 
+ > A functional test would be greatly appreciated. This is especially  
+true since the other patches add new sensors.
 
-On 2026-04-21 23:46, Paolo Bonzini wrote:
-> On Mon, Apr 20, 2026 at 11:52 AM Florian Schmidt <flosch@nutanix.com> wrote:
->> Here's another option, though I'm not sure you'll like it: We can get
->> the same information from /proc/<pid>/pagemap, right? We just have to
->> check whether bits 62 and 63 are both 0 or not for every page.
->> It's less efficient, because we have to read 8 bytes per page
-> 
-> It's also completely useless for the very common case of pre-allocated
-> hugepages. That's the case where you can get the largest benefit,
-> because when pre-allocating you use threads on the host and do the
-> zeroing before the VM starts. For non-pre-allocated pages you still
-> pay the price of double zeroing, but guest and host do it one after
-> another while the VM is already running.
+I sent a v2 which includes a functional test, i agree that would be 
+quite helpful to confirm that the new sensors do not crash anything :)
+The functional test is currently pointing to my fork of qemu-aspeed-boot 
+(so you can run it already) but a PR to your tree has been opened.
 
-Yes, that's fair. There's another reason this is dodgy that I had 
-totally forgotten about and only remembered the other week: shared 
-memory's swap state is not tracked properly in /proc/<pid>/pagemap at 
-all, so that's another situation where this won't work correctly. So I 
-agree, that approach is useless.
+The new functional test has a single issue which is that one line from 
+the expected logs (hostname) is not emitted.
+I am not sure if it's due to differences in the image or simply due to 
+timeouts being hit on userspace services.
 
+Networking however is functional and i can ssh into the qemu machine. 
+For now i simply dropped that assertion from the function test
+and instead asserted on the login prompt.
 
-> So I don't think there is any option other than the ioctl. I would
-> suggest experimenting to understand how Windows uses the hypercall;
-> and possibly looking at the QEMU write tracking part. The KVM changes
-> are relatively simple and for quick experimentation you can operate as
-> if the KVM bitmap is always entirely zero, not unlike this patch.
+I hope to have addressed all your comments,  looking forward to your 
+next review :p
 
-I will look a bit more at Windows, but I think generally speaking, we 
-can probably not make final and never-changing assertions about when or 
-how often a guest would use this hypercall.
+Thank you,
+Alexander
 
-
-Regarding the QEMU write tracking: I'm not very familiar with this code, 
-so I'm still working my way through it wrapping my mind around it all. 
-But at this point, I wonder whether there are advantages to not using 
-the current dirty tracking wholesale by adding a fourth option (vs 
-implementing something separate). What we care about is slightly 
-different from dirty tracking: we only care about memory that QEMU 
-touched, not about dirty-tracking guest pages via KVM, which is quite 
-tightly coupled with the other dirty tracking approaches.
-
-It means we have to support another tracking mode outside the existing 
-DIRTY_MEMORY_* ones, but on the plus side: it allows us to easily set a 
-different granularity; to not allocate that memory unconditionally at 
-start even if the feature isn't enabled (though once we have the 
-different granularity, the overhead is much smaller); and we could skip 
-any hotplug support logic (having to extend the bitmap) since Windows 
-never enquires for hotplugged memory anyway (though maybe that will 
-change at some point in the future and could be neat to have eventually).
-
-For migration, I'm still thinking through the implications, but one 
-option would be to just say "after a migration, nothing is pre-zeroed 
-anymore".
-
-I'd be interested to hear your opinions on that.
-
-Cheers,
-Florian
+On 5/4/26 19:34, Cédric Le Goater wrote:
+> Hello,
+>
+> On 5/4/26 18:48, Alexander Hansen wrote:
+>> Initial patch based on [1] to support yosemite v4 bmc emulation.
+>>
+>> The goal of this machine support is to support OpenBMC development.
+>>
+>> Reference linux devicetree from openbmc linux is [2].
+>>
+>> Status:
+>> - Enclosure FRU:         showing up
+>> - Management Board FRU:  showing up
+>> - Blade Board FRU:       showing up
+>> - Blade Board sensors:   not implemented
+>> - Blade Chassis FRU:     showing up
+>> - Fan Board FRU:         both showing up
+>> - Fan Board sensors:     supported
+>>
+>> Overall the emulation is incomplete but already helpful in development
+>> and testing.
+>>
+>> The focus of this initial support is on the FRU eeproms and fanboard
+>> sensors.
+>>
+>> Tested: booted an OpenBMC image for yosemite4 target.
+>
+> A functional test would be greatly appreciated. This is especially
+> true since the other patches add new sensors.
+>
+>
+>> References:
+>> [1] 
+>> https://github.com/9elements/qemu/commit/32139f913c2bd0ebe4bd26c46765861f6f9f2d49
+>> [2] arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts
+>>
+>> Cc: "Cédric Le Goater" <clg@kaod.org> (maintainer:ASPEED BMCs)
+>> Cc: Peter Maydell <peter.maydell@linaro.org> (maintainer:ASPEED BMCs)
+>> Cc: Steven Lee <steven_lee@aspeedtech.com> (reviewer:ASPEED BMCs)
+>> Cc: Troy Lee <leetroy@gmail.com> (reviewer:ASPEED BMCs)
+>> Cc: Jamin Lin <jamin_lin@aspeedtech.com> (reviewer:ASPEED BMCs)
+>> Cc: Kane Chen <kane_chen@aspeedtech.com> (reviewer:ASPEED BMCs)
+>> Cc: Andrew Jeffery <andrew@codeconstruct.com.au> (reviewer:ASPEED BMCs)
+>> Cc: Joel Stanley <joel@jms.id.au> (reviewer:ASPEED BMCs)
+>> Cc: qemu-arm@nongnu.org (open list:ASPEED BMCs)
+>> Cc: qemu-devel@nongnu.org (open list:All patches CC here)
+>> Signed-off-by: Alexander Hansen <alexander.hansen@9elements.com>
+>> ---
+>>   hw/arm/aspeed_ast2600_fby4.c | 298 +++++++++++++++++++++++++++++++++++
+>>   hw/arm/meson.build           |   1 +
+>>   2 files changed, 299 insertions(+)
+>>   create mode 100644 hw/arm/aspeed_ast2600_fby4.c
+>>
+>> diff --git a/hw/arm/aspeed_ast2600_fby4.c b/hw/arm/aspeed_ast2600_fby4.c
+>> new file mode 100644
+>> index 0000000000..84cd372838
+>> --- /dev/null
+>> +++ b/hw/arm/aspeed_ast2600_fby4.c
+>> @@ -0,0 +1,298 @@
+>
+> This lacks a SPDX-License-Identifier and Copyright.
+>
+> Did you run './scripts/checkpatch.pl' ?
+>
+>
+>> +#include <inttypes.h>
+>> +#include <stdbool.h>
+>
+> Please remove
+>
+>> +#include "qemu/osdep.h"
+>> +#include "qapi/error.h"
+>> +#include "hw/arm/machines-qom.h"
+>> +#include "hw/arm/aspeed.h"
+>> +#include "hw/arm/aspeed_soc.h"
+>> +#include "hw/nvram/eeprom_at24c.h"
+>> +#include "hw/sensor/tmp105.h"
+>> +#include "hw/sensor/max31790.h"
+>> +#include "hw/sensor/max11615.h"
+>> +#include "hw/sensor/adc128d818.h"
+>> +#include "hw/i2c/i2c_mux_pca954x.h"
+>> +#include "hw/gpio/pca9552.h"
+>> +#include "system/reset.h"
+>> +
+>> +#define FBY4_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+>> +
+>> +/* START OF EEPROM CONTENTS */
+>> +
+>> +/*
+>> +./frugen -s board.mfg="Wiwynn" \
+>> +  --set board.pname="Fan Board FSC-MAX ADC-TI LED-NXP EFUSE-MAX" \
+>> +  --set text:board.pn="BRD-PN-345" \
+>> +  --board-date "10/1/2017 12:58:00" \
+>> +  --set board.serial="123456" \
+>> +  --set product.pname="Yosemite V4" \
+>> +  --set product.mfg="Wiwynn" \
+>> +  --set product.ver="v1.1" \
+>> +  --set product.serial="123456" \
+>> +  --set product.atag="PLACEHOLDER" \
+>> +  --set product.custom="Fanboard Custom1" \
+>> +  --set product.custom.1="Fanboard Custom2" \
+>> +  --set text:product.pn="PN-345" \
+>> +  fru-yv4-fanboard.bin
+>> +*/
+>> +/* EM Config: 
+>> yosemite4_fanboard_fsc_max_adc_ti_led_nxp_ons_efuse_max.json */
+>> +/* Yosemite4 fan board */
+>> +unsigned char fru_yv4_fanboard_bin[] = {
+>
+> this should be a "static const uint8_t'
+>
+>> +  0x01, 0x00, 0x00, 0x01, 0x0b, 0x00, 0x00, 0xf3, 0x01, 0x0a, 0x19, 
+>> 0xce,
+>> +  0xc2, 0xa8, 0xc6, 0x57, 0x69, 0x77, 0x79, 0x6e, 0x6e, 0xea, 0x46, 
+>> 0x61,
+>> +  0x6e, 0x20, 0x42, 0x6f, 0x61, 0x72, 0x64, 0x20, 0x46, 0x53, 0x43, 
+>> 0x2d,
+>> +  0x4d, 0x41, 0x58, 0x20, 0x41, 0x44, 0x43, 0x2d, 0x54, 0x49, 0x20, 
+>> 0x4c,
+>> +  0x45, 0x44, 0x2d, 0x4e, 0x58, 0x50, 0x20, 0x45, 0x46, 0x55, 0x53, 
+>> 0x45,
+>> +  0x2d, 0x4d, 0x41, 0x58, 0x85, 0x91, 0x34, 0x51, 0x95, 0x05, 0xca, 
+>> 0x42,
+>> +  0x52, 0x44, 0x2d, 0x50, 0x4e, 0x2d, 0x33, 0x34, 0x35, 0xc0, 0xc1, 
+>> 0x00,
+>> +  0x00, 0x00, 0x00, 0xdb, 0x01, 0x09, 0x19, 0xc6, 0x57, 0x69, 0x77, 
+>> 0x79,
+>> +  0x6e, 0x6e, 0xcb, 0x59, 0x6f, 0x73, 0x65, 0x6d, 0x69, 0x74, 0x65, 
+>> 0x20,
+>> +  0x56, 0x34, 0xc6, 0x50, 0x4e, 0x2d, 0x33, 0x34, 0x35, 0xc4, 0x76, 
+>> 0x31,
+>> +  0x2e, 0x31, 0x85, 0x91, 0x34, 0x51, 0x95, 0x05, 0x89, 0x30, 0x1b, 
+>> 0x8e,
+>> +  0x25, 0xfa, 0xb2, 0x64, 0x29, 0x03, 0xc0, 0xd0, 0x46, 0x61, 0x6e, 
+>> 0x62,
+>> +  0x6f, 0x61, 0x72, 0x64, 0x20, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 
+>> 0x32,
+>> +  0xc1, 0x00, 0x00, 0x9d
+>> +};
+>> +unsigned int fru_yv4_fanboard_bin_len = 160;
+>
+> static const size_t fru_yv4_fanboard_bin_len = 
+> sizeof(fru_yv4_fanboard_bin);
+>
+>> +
+>> +/*
+>> +./frugen -s board.mfg="Wiwynn" \
+>> +  --set board.pname="Sentinel Dome without Retimer" \
+>> +  --set text:board.pn="BRD-PN-345" \
+>> +  --board-date "10/1/2017 12:58:00" \
+>> +  --set board.serial="123456" \
+>> +  --set product.pname="Yosemite V4" \
+>> +  --set product.mfg="Wiwynn" \
+>> +  --set product.ver="v1.1" \
+>> +  --set product.serial="123456" \
+>> +  --set product.atag="PLACEHOLDER" \
+>> +  --set product.custom="Yosemite V4 T1" \
+>> +  --set product.custom.1="Yosemite V4 T1" \
+>> +  --set text:product.pn="PN-345" \
+>> +  fru-yv4-sentineldome-board.bin
+>> +*/
+>> +/* product.cust maps to PRODUCT_INFO_AM2 */
+>> +/* EM Config: yosemite4_sentineldome_t1.json */
+>> +/* Yosemite4 Sentinel Dome without Retimer Boards */
+>> +unsigned char fru_yv4_sentineldome_board_bin[] = {
+>> +  0x01, 0x00, 0x00, 0x01, 0x09, 0x00, 0x00, 0xf5, 0x01, 0x08, 0x19, 
+>> 0xce,
+>> +  0xc2, 0xa8, 0xc6, 0x57, 0x69, 0x77, 0x79, 0x6e, 0x6e, 0xdd, 0x53, 
+>> 0x65,
+>> +  0x6e, 0x74, 0x69, 0x6e, 0x65, 0x6c, 0x20, 0x44, 0x6f, 0x6d, 0x65, 
+>> 0x20,
+>> +  0x77, 0x69, 0x74, 0x68, 0x6f, 0x75, 0x74, 0x20, 0x52, 0x65, 0x74, 
+>> 0x69,
+>> +  0x6d, 0x65, 0x72, 0x85, 0x91, 0x34, 0x51, 0x95, 0x05, 0xca, 0x42, 
+>> 0x52,
+>> +  0x44, 0x2d, 0x50, 0x4e, 0x2d, 0x33, 0x34, 0x35, 0xc0, 0xc1, 0x00, 
+>> 0x78,
+>> +  0x01, 0x09, 0x19, 0xc6, 0x57, 0x69, 0x77, 0x79, 0x6e, 0x6e, 0xcb, 
+>> 0x59,
+>> +  0x6f, 0x73, 0x65, 0x6d, 0x69, 0x74, 0x65, 0x20, 0x56, 0x34, 0xc6, 
+>> 0x50,
+>> +  0x4e, 0x2d, 0x33, 0x34, 0x35, 0xc4, 0x76, 0x31, 0x2e, 0x31, 0x85, 
+>> 0x91,
+>> +  0x34, 0x51, 0x95, 0x05, 0x89, 0x30, 0x1b, 0x8e, 0x25, 0xfa, 0xb2, 
+>> 0x64,
+>> +  0x29, 0x03, 0xc0, 0xce, 0x59, 0x6f, 0x73, 0x65, 0x6d, 0x69, 0x74, 
+>> 0x65,
+>> +  0x20, 0x56, 0x34, 0x20, 0x54, 0x31, 0xc1, 0x00, 0x00, 0x00, 0x00, 
+>> 0xeb
+>> +};
+>> +unsigned int fru_yv4_sentineldome_board_bin_len = 144;
+>> +
+>> +/*
+>> +./frugen -s board.mfg="Wiwynn" \
+>> +        --set board.pname="Sentinel Dome" \
+>> +        --set text:board.pn="BRD-PN-345" \
+>> +        --board-date "10/1/2017 12:58:00" \
+>> +        --set board.serial="123456" \
+>> +        --set product.pname="Yosemite V4" \
+>> +        --set product.mfg="Wiwynn" \
+>> +        --set product.ver="v1.1" \
+>> +        --set product.serial="123456" \
+>> +        --set product.atag="PLACEHOLDER" \
+>> +        --set text:product.pn="PN-345" \
+>> +        fru-yv4-sentineldome-chassis.bin
+>> +*/
+>> +/* EM Config: yosemite4_sentineldome_chassis.json */
+>> +/* Yosemite 4 Sentinel Dome Chassis FRU */
+>> +unsigned char fru_yv4_sentineldome_chassis_bin[] = {
+>> +  0x01, 0x00, 0x00, 0x01, 0x07, 0x00, 0x00, 0xf7, 0x01, 0x06, 0x19, 
+>> 0xce,
+>> +  0xc2, 0xa8, 0xc6, 0x57, 0x69, 0x77, 0x79, 0x6e, 0x6e, 0xcd, 0x53, 
+>> 0x65,
+>> +  0x6e, 0x74, 0x69, 0x6e, 0x65, 0x6c, 0x20, 0x44, 0x6f, 0x6d, 0x65, 
+>> 0x85,
+>> +  0x91, 0x34, 0x51, 0x95, 0x05, 0xca, 0x42, 0x52, 0x44, 0x2d, 0x50, 
+>> 0x4e,
+>> +  0x2d, 0x33, 0x34, 0x35, 0xc0, 0xc1, 0x00, 0xb6, 0x01, 0x07, 0x19, 
+>> 0xc6,
+>> +  0x57, 0x69, 0x77, 0x79, 0x6e, 0x6e, 0xcb, 0x59, 0x6f, 0x73, 0x65, 
+>> 0x6d,
+>> +  0x69, 0x74, 0x65, 0x20, 0x56, 0x34, 0xc6, 0x50, 0x4e, 0x2d, 0x33, 
+>> 0x34,
+>> +  0x35, 0xc4, 0x76, 0x31, 0x2e, 0x31, 0x85, 0x91, 0x34, 0x51, 0x95, 
+>> 0x05,
+>> +  0x89, 0x30, 0x1b, 0x8e, 0x25, 0xfa, 0xb2, 0x64, 0x29, 0x03, 0xc0, 
+>> 0xc1,
+>> +  0x00, 0x00, 0x00, 0x59
+>> +};
+>> +unsigned int fru_yv4_sentineldome_chassis_bin_len = 112;
+>> +
+>> +/*
+>> +./frugen -s board.mfg="Wiwynn" \
+>> +      --set board.pname="Management Board wBMC" \
+>> +      --set text:board.pn="BRD-PN-345" \
+>> +      --board-date "10/1/2017 12:58:00" \
+>> +      --set board.serial="123456" \
+>> +      --set product.pname="Yosemite V4" \
+>> +      --set product.mfg="Wiwynn" \
+>> +      --set product.ver="v1.1" \
+>> +      --set product.serial="123456" \
+>> +      --set product.atag="PLACEHOLDER" \
+>> +      --set text:product.pn="PN-345" \
+>> +      fru-yv4-eclosure.bin
+>> +*/
+>> +/* EM Config: yosemite4_chassis.json, yosemite4.json */
+>> +/* Yosemite 4 Sentinel Dome Enclosure FRU */
+>> +unsigned char fru_yv4_eclosure_bin[] = {
+>> +  0x01, 0x00, 0x00, 0x01, 0x08, 0x00, 0x00, 0xf6, 0x01, 0x07, 0x19, 
+>> 0xce,
+>> +  0xc2, 0xa8, 0xc6, 0x57, 0x69, 0x77, 0x79, 0x6e, 0x6e, 0xd5, 0x4d, 
+>> 0x61,
+>> +  0x6e, 0x61, 0x67, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x20, 0x42, 0x6f, 
+>> 0x61,
+>> +  0x72, 0x64, 0x20, 0x77, 0x42, 0x4d, 0x43, 0x85, 0x91, 0x34, 0x51, 
+>> 0x95,
+>> +  0x05, 0xca, 0x42, 0x52, 0x44, 0x2d, 0x50, 0x4e, 0x2d, 0x33, 0x34, 
+>> 0x35,
+>> +  0xc0, 0xc1, 0x00, 0x26, 0x01, 0x07, 0x19, 0xc6, 0x57, 0x69, 0x77, 
+>> 0x79,
+>> +  0x6e, 0x6e, 0xcb, 0x59, 0x6f, 0x73, 0x65, 0x6d, 0x69, 0x74, 0x65, 
+>> 0x20,
+>> +  0x56, 0x34, 0xc6, 0x50, 0x4e, 0x2d, 0x33, 0x34, 0x35, 0xc4, 0x76, 
+>> 0x31,
+>> +  0x2e, 0x31, 0x85, 0x91, 0x34, 0x51, 0x95, 0x05, 0x89, 0x30, 0x1b, 
+>> 0x8e,
+>> +  0x25, 0xfa, 0xb2, 0x64, 0x29, 0x03, 0xc0, 0xc1, 0x00, 0x00, 0x00, 
+>> 0x59
+>> +};
+>> +unsigned int fru_yv4_eclosure_bin_len = 120;
+>> +
+>> +/* END OF EEPROM CONTENTS */
+>> +
+>> +static void fby4_i2c_init_fanboard(I2CSlave *fan_mux, size_t 
+>> eepromSize)
+>> +{
+>> +
+>
+> extra white line
+>
+>> +    /* 2 fan boards */
+>> +    for (int i = 0; i <= 1; i++) {
+>> +        /* downstream bus */
+>> +        I2CBus *bus = pca954x_i2c_get_bus(fan_mux, i);
+>> +
+>> +        /* ti,adc128d818 @ 0x1f    (adc) */
+>> +        /* the driver will throw away the last 4 bits, set them 0 */
+>> +        uint16_t adc_values1[8] = {
+>
+> I would define these arrays as read only data.
+>
+>> +            0b011110000000, 0b010100010000,
+>> +            0b001000110000, 0b100000100000,
+>> +            0b011110000000, 0b010100010000,
+>> +            0b001000110000, 0b100000100000};
+>> +        adc128d818_init_with_values(bus,
+>> +                              0x1f, adc_values1, 8);
+>
+> This could be on one line.
+>
+>> +
+>> +        /* maxim,max31790 @ 0x20   (pwm) */
+>> +        i2c_slave_create_simple(bus,
+>> +                              TYPE_MAX31790, 0x20);
+>
+> same here.
+>
+>> +
+>> +        /*
+>> +         * ti,tca6424 @ 0x22       (gpio)
+>> +         * linux handles tca6424 with PCA953X_TYPE, same as pca9535
+>> +         * { "pca9535", 16 | PCA953X_TYPE | PCA_INT, },
+>> +         * { "tca6424", 24 | PCA953X_TYPE | PCA_INT, },
+>> +         * so we _could_ be fine here unless more than 16 gpios are 
+>> used
+>> +         */
+>> +        i2c_slave_create_simple(bus,
+>> +                              TYPE_PCA9535, 0x22);
+>> +        /*
+>> +         * NOTE: above works and could use for gpio presence:
+>> +         * $ gpioget gpiochip2 2
+>> +         * 1
+>> +         */
+>> +
+>> +        /* maxim,max31790 @ 0x2f   (pwm) */
+>> +        i2c_slave_create_simple(bus,
+>> +                              TYPE_MAX31790, 0x2f);
+>> +
+>> +        /* maxim,max11615 @ 0x33   (adc) */
+>> +        uint16_t adc_values[8] = {
+>> +            0b011110000010, 0b010100011000,
+>> +            0b001000110100, 0b100000101001,
+>> +            0b011110000010, 0b010100011000,
+>> +            0b001000110100, 0b100000101001};
+>> +        max11615_init_with_values(bus,
+>> +                              0x33, adc_values, 8);
+>> +> +        at24c_eeprom_init_rom(
+>> +            bus, 0x52, eepromSize,
+>> +            fru_yv4_fanboard_bin,
+>> +            fru_yv4_fanboard_bin_len);
+>> +
+>> +        /* LED blink driver / gpio expander */
+>> +        /* nxp,pca9552 @ 0x61   (gpio) */
+>> +        i2c_slave_create_simple(bus,
+>> +                              TYPE_PCA9552, 0x61);
+>> +    }
+>> +}
+>> +
+>> +static void fby4_i2c_init_blade_chassis(I2CBus *bus, size_t eepromSize)
+>> +{
+>> +
+>
+> Extra white line.
+>
+>> +    /* Sentinel Dome Board EEPROMS */
+>> +    const uint8_t board_addr = 0x54;
+>> +    const uint8_t chassis_addr = 0x55;
+>
+> These variables look unnecessary.
+>
+>> +
+>> +    /* Board */
+>> +    at24c_eeprom_init_rom(bus, board_addr, eepromSize,
+>> +        fru_yv4_sentineldome_board_bin, 
+>> fru_yv4_sentineldome_board_bin_len);
+>> +
+>> +    /* Chassis */
+>> +   at24c_eeprom_init_rom(bus, chassis_addr, eepromSize,
+>> +       fru_yv4_sentineldome_chassis_bin, 
+>> fru_yv4_sentineldome_chassis_bin_len);
+>> +}
+>> +
+>> +static void fby4_i2c_init_multiple_blade_chassis(I2CBus **i2c,
+>> +    size_t eepromSize)
+>> +{
+>> +
+>
+> Extra white line.
+>
+>
+>> +    /* there is 8 blade chassis, but we only emulate 2 for 
+>> performance reason */
+>> +    for (int bus = 1; bus <= (8 / 4); bus++) {
+>> +
+>> +        fby4_i2c_init_blade_chassis(i2c[bus], eepromSize);
+>> +    }
+>> +}
+>> +
+>> +static void fby4_i2c_init(AspeedMachineState *bmc)
+>> +{
+>> +    AspeedSoCState *soc = bmc->soc;
+>> +    I2CBus *i2c[16];
+>> +
+>> +    for (int i = 0; i < 16; i++) {
+>> +        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
+>> +    }
+>> +
+>> +    const size_t eepromSize = 128 * KiB;
+>> +
+>> +    const uint8_t enclosure_addr = 0x51;
+>> +
+>> +    /* Enclosure (EM Config: yosemite4_chassis.json, yosemite4.json) */
+>> +    at24c_eeprom_init_rom(i2c[1], enclosure_addr, eepromSize,
+>> +        fru_yv4_eclosure_bin, fru_yv4_eclosure_bin_len);
+>> +
+>> +    fby4_i2c_init_multiple_blade_chassis(i2c, eepromSize);
+>> +
+>> +    /* Yv4 fanboard connection */
+>> +    I2CSlave *fan_mux = i2c_slave_create_simple(i2c[14], 
+>> TYPE_PCA9546, 0x74);
+>> +
+>> +    fby4_i2c_init_fanboard(fan_mux, eepromSize);
+>> +}
+>> +
+>> +static void fby4_reset(MachineState *state, ResetType type)
+>> +{
+>> +    qemu_devices_reset(type);
+>> +}
+>
+>
+> not needed
+>
+>> +static void aspeed_machine_fby4_class_init(ObjectClass *oc, const 
+>> void *data)
+>> +{
+>> +    MachineClass *mc = MACHINE_CLASS(oc);
+>> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+>> +
+>> +    mc->desc       = "Facebook fby4 BMC (Cortex-A7)";
+>> +    mc->reset      = fby4_reset;
+>> +    amc->fmc_model = "mx66l1g45g";
+>> +    amc->num_cs    = 2;
+>> +    amc->macs_mask = ASPEED_MAC3_ON;
+>> +    amc->i2c_init  = fby4_i2c_init;
+>> +    mc->default_ram_size = FBY4_BMC_RAM_SIZE;
+>> +    aspeed_machine_class_init_cpus_defaults(mc);
+>> +}> +
+>> +static const TypeInfo aspeed_ast2600_fby4_types[] = {
+>> +    {
+>> +        .name          = MACHINE_TYPE_NAME("fby4-bmc"),
+>> +        .parent        = MACHINE_TYPE_NAME("ast2600-evb"),
+>> +        .class_init    = aspeed_machine_fby4_class_init,
+>> +        .interfaces    = arm_machine_interfaces,
+>> +    }
+>> +};
+>> +
+>> +DEFINE_TYPES(aspeed_ast2600_fby4_types)
+>> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+>> index 84b8ec5fb5..ccbc23e549 100644
+>> --- a/hw/arm/meson.build
+>> +++ b/hw/arm/meson.build
+>> @@ -60,6 +60,7 @@ arm_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files(
+>>     'aspeed_ast2600_catalina.c',
+>>     'aspeed_ast2600_evb.c',
+>>     'aspeed_ast2600_fby35.c',
+>> +  'aspeed_ast2600_fby4.c',
+>>     'aspeed_ast2600_fuji.c',
+>>     'aspeed_ast2600_gb200nvl.c',
+>>     'aspeed_ast2600_qcom-dc-scm-v1.c',
+>
+> Thanks,
+>
+> C.
 
