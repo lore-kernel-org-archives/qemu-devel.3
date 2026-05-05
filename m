@@ -4,45 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B721EFF8855
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 18:51:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BB68FF8855
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 18:51:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKKr3-0000fD-FE; Tue, 05 May 2026 14:50:49 -0400
+	id 1wKKr3-0000fJ-Ig; Tue, 05 May 2026 14:50:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1wKKqx-0000eH-Fj
- for qemu-devel@nongnu.org; Tue, 05 May 2026 14:50:44 -0400
+ id 1wKKr2-0000ef-55
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 14:50:48 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wKKqt-0006hu-Bw
- for qemu-devel@nongnu.org; Tue, 05 May 2026 14:50:42 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wKKqv-0006iS-JV
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 14:50:44 -0400
 Received: from laptop.localdomain (unknown [86.121.140.248])
- by linux.microsoft.com (Postfix) with ESMTPSA id 4113720B7168;
- Tue,  5 May 2026 11:50:31 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 4113720B7168
+ by linux.microsoft.com (Postfix) with ESMTPSA id D0AC620B716A;
+ Tue,  5 May 2026 11:50:35 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D0AC620B716A
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1778007032;
- bh=b37i2jET6adCQZoP/iNN347Vum8ztxt1bYOIGzHMUGM=;
- h=From:To:Cc:Subject:Date:From;
- b=AXMezBjpdS8XW/hK+VN4NBaykNMHDW9bvfGzlr+hiU/5iFEMPSpRtiW/f/MJnDGQR
- gAXLpY9GqjbXJ6ErFf/iuf44Ls8aqmWWo88Qz9XLM9int94cvIX4XXMFUeONSW9TKG
- vumtYiI2a2gi4XOWRsBX2t95K5101yO089/yqtXY=
+ s=default; t=1778007037;
+ bh=cCzS8CmGlshnbYniLVjptcNLUpofdOr25KSIqYcvxcE=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=CafmGID+lEJAoJcB/k/z/YiNObCwgaWkcw4KRAL+NwiJjk/WHM4/Gz7O3KO/nj2l0
+ +o8AKjdLi4xu2Tiyrt7kotcUNizypQoUNiF7zODEhtG4pjPznxYn73uRS2jVzBMshM
+ PwRX+zgoeWLP4yzxA8gvWaiw85O8dh74grmljEcA=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Zhao Liu <zhao1.liu@intel.com>, Wei Liu <wei.liu@kernel.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 0/7] target/i386/mshv: use hv_vp_register_page for fast
- register access
-Date: Tue,  5 May 2026 21:50:21 +0300
-Message-ID: <20260505185028.237207-1-dblanzeanu@linux.microsoft.com>
+Subject: [PATCH v2 2/7] accel/mshv: move vcpu arch specific initialization
+ after vcpu creation
+Date: Tue,  5 May 2026 21:50:23 +0300
+Message-ID: <20260505185028.237207-3-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260505185028.237207-1-dblanzeanu@linux.microsoft.com>
+References: <20260505185028.237207-1-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=dblanzeanu@linux.microsoft.com; helo=linux.microsoft.com
@@ -67,73 +69,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds support for using the hypervisor's vp register page
-in the mshv accelerator to optimize vcpu register access on mmio and pio
-exits.
+Call mshv_arch_init_vcpu after the vcpu is created to ensure a valid
+vcpu fd.
 
-Currently, all register reads and write go through hypercalls (ioctls),
-which adds overhead on every VM exit. The VP register page is a shared
-memory page that the hypervisor populates with vcpu register state,
-allowing Qemu to read and write registers directly without hypercalls.
+Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
+---
+ accel/mshv/mshv-all.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-The series is structured as follows:
-1. Remove the duplicate `fetch_guest_state` function, consolidating
-  register loading into `mshv_load_regs`.
-2. Move `mshv_arch_init_vcpu` after vcpu creation so the vcpu fd is
-  valid when we need it for mmap.
-3. Define the `hv_vp_register_page` structure in `hvgdk_mini.h`, matching
-  the layout used by the Linux kernel's mshv driver.
-4. Set up the register page by mmapping the vcpu fd at init time. If the
-  mmap fails, we fall back gracefully to the existing hypercall path.
-5. Use the register page to read registers on VM exit. General purpose
-  registers, RIP, RFLAGS, segment registers, and control registers
-  (CR0, CR4, CR4, CR8, EFER) are read directly from the page. Registers
-  not present on the page (TR, LDTR, GDTR, IDTR, CR2, APIC_BASE) are still
-  fetched via hypercall.
-6. Use register page to write registers on vmentry. GP registers,
-  RIP, and RFLAGS are written to the page with the appropriate dirty
-  bits set, avoiding the hypercall for the standard register store.
-
-The register page is only used when it has been successfully mmapped and
-the hypervisor has marked it as valid (`isvalid != 0`). Otherwise, the
-existing hypercall-based path is used as a fallback.
-
-Changes since v1:
-- move hv_register_page struct definition to hvhdk.h
-- add a compile time guard around regs_page in CPUArchState
-- modify mshv_get_special_regs_vp_page to only retrieve the special
-  registers present in the register page (removed TR, LDTR, GDTR, IDTR,
-  CR2, APIC_BASE)
-  In local testing this hasn't created any regressions, and it is unlikely
-  that the mmio operations need this registers.
-  We'll want to keep an eye on this in case there are decoded operations
-  that rely on fetching these registers on every VM exit.
-- add commit to fix handle_pio_non_str and handle_pio_str to correctly
-  store modified registers back to the register page after the pio
-  operation, and clear the cpu->accel->dirty flag to avoid the
-  mshv_arch_put_registers from resetting some registers state (fpu).
-- modified register page setup to signal an error instead of a warning
-  in case mmap fails.
-  I am not sure aborting here is fine because it would make some of the
-  fallback logic redundant, and I think that's a bigger refactoring.
-
-Doru Blânzeanu (7):
-  target/i386/mshv: remove duplicate function for reading vcpu registers
-  accel/mshv: move vcpu arch specific initialization after vcpu creation
-  include/hw/hyperv: add hv_vp_register_page struct definition
-  target/i386/mshv: hv_vp_register_page setup for the vcpu
-  target/i386/mshv: use the register page to get registers
-  target/i386/mshv: use the register page to set registers
-  target/i386/mshv: fix pio handlers clobbering device-modified
-    registers
-
- accel/mshv/mshv-all.c       |   3 +-
- include/hw/hyperv/hvgdk.h   |   2 +
- include/hw/hyperv/hvhdk.h   | 105 ++++++++++++++
- target/i386/cpu.h           |   5 +
- target/i386/mshv/mshv-cpu.c | 269 ++++++++++++++++++++++++++++--------
- 5 files changed, 327 insertions(+), 57 deletions(-)
-
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index 58af674bd9..e3da583f21 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -415,13 +415,14 @@ static int mshv_init_vcpu(CPUState *cpu)
+     int ret;
+ 
+     cpu->accel = g_new0(AccelCPUState, 1);
+-    mshv_arch_init_vcpu(cpu);
+ 
+     ret = mshv_create_vcpu(vm_fd, vp_index, &cpu->accel->cpufd);
+     if (ret < 0) {
+         return -1;
+     }
+ 
++    mshv_arch_init_vcpu(cpu);
++
+     cpu->accel->dirty = true;
+ 
+     return 0;
 -- 
 2.53.0
 
