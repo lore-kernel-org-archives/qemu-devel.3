@@ -4,84 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A29D1FF8855
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 13:55:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04B5ACD3427
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 14:02:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKGF4-0000Do-4C; Tue, 05 May 2026 09:55:18 -0400
+	id 1wKGL9-0001xB-6N; Tue, 05 May 2026 10:01:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wKGEk-0000Bt-Ju
- for qemu-devel@nongnu.org; Tue, 05 May 2026 09:54:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wKGEi-0000Um-GV
- for qemu-devel@nongnu.org; Tue, 05 May 2026 09:54:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777989294;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jwYZ7isk5BhtuugdO7owTHkcWIj49lXDVxvetLvii58=;
- b=dCHKwPUVwEMkrxQC53roGuBeZGvLFGG5fqvCwqv0qjS1ppAem0215w6o+v8gShmo58Jqd6
- b6o/7vGfm3ZPU5SKtQeSO1oJC0w9QD51bWe8AE05HF4JesLKe8Xgi1o/v5f7Q5MWLKtWhi
- HI/xp8I9V0HGse4qQb2Nymi3lVbMSrs=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-63-ig86TiRIPT6Ocl8SgPKAjQ-1; Tue,
- 05 May 2026 09:54:51 -0400
-X-MC-Unique: ig86TiRIPT6Ocl8SgPKAjQ-1
-X-Mimecast-MFC-AGG-ID: ig86TiRIPT6Ocl8SgPKAjQ_1777989289
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A13DF1956096; Tue,  5 May 2026 13:54:49 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E36431944CED; Tue,  5 May 2026 13:54:48 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 8505D21E6A01; Tue, 05 May 2026 15:54:46 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Eric Blake
- <eblake@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Igor Mammedov <imammedo@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,  Ani Sinha <anisinha@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2 05/13] qapi/docs: adjust stub member insertion algorithm
-In-Reply-To: <CAFn=p-btJTG9NPzRi3ai+Ac1v1bMqeiYX0HZKKGGX8m3wo+cUg@mail.gmail.com>
- (John Snow's message of "Mon, 4 May 2026 14:30:10 -0400")
-References: <20260429192611.1581223-1-jsnow@redhat.com>
- <20260429192611.1581223-6-jsnow@redhat.com>
- <87o6iva0a7.fsf@pond.sub.org>
- <CAFn=p-btJTG9NPzRi3ai+Ac1v1bMqeiYX0HZKKGGX8m3wo+cUg@mail.gmail.com>
-Date: Tue, 05 May 2026 15:54:46 +0200
-Message-ID: <87o6iu2c7t.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wKGKx-0001v8-HY
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 10:01:31 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wKGKq-0002lb-B8
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 10:01:18 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-67b32c695efso8245727a12.1
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 07:01:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777989672; cv=none;
+ d=google.com; s=arc-20240605;
+ b=IhWHXv6IXKT8VkPE57llG91Bh81rIqJTbbqmRezJMHYAp1GiAM4j9EaztYDP9hRLni
+ x+cgD36ii02UdCeoe5r4lOgmfM4OSvrZjyuJ9Cmkp+bVV8WATKZAgFg22AhFNaUeeBrn
+ bZDe6jRhlDSAUPy1ubuHHBbFr0nSkGiTKKu0tBhZe/5SxpZdQsRrCTq2O7DgAZExTu6R
+ ALC9Tn3fatJhidlVF16IQ+8oNP64+ZhH2gADpfdfvxqKJvkrWTCB40h0OuaC1xCxB+q6
+ g/NufgR2bTsR6GT0s33aBvkwQ3tkhnCyip3J9bsre8BkS355BD2HvYDVkyg9QztYw+1u
+ 93yA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=TusxZum7fHOq7YOcoycgz/1GaDUn5NnYfl2ONeiIImM=;
+ fh=nuETIhhrjDx3zGe6bCzSe94wBdKnqdNcr14yViqMafs=;
+ b=MBoCTefGFb90UPsODH9fUtLyMgg7k3+4zSQySUyeeObpyg7qM/A0Dwdl3+xNDunFaC
+ c+Ssx5ECOyxW60GlwUerndgZ8YFiJSSQMW3CwnnDarxR5SF8gnLvT/Ao+6vWsgIZQC8D
+ lok56/v7FVI+bOT5LxgPe4H0GYlu83z03LQJV42tVYdQtICyYM/HkVxJbgNbAtDMnuSW
+ M7hyxicdBYd9oUk9wbdcJd99X+u4pzGLxWbb5z61bKjUUZ29ky80EvUxb1V29EkaxGLE
+ S2Z16aZ8ktzsyE3PwR+9zu75HeTWIUrFLs9bgGO3qPh6XJwxVfzSgDzXidBHf7CxSfyS
+ GNWQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1777989672; x=1778594472; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TusxZum7fHOq7YOcoycgz/1GaDUn5NnYfl2ONeiIImM=;
+ b=tF29nN+XsuCFFHW6wHRRzDMz+Fkh/IMOaD4pqvq2jlGsZlIyJ1YZRqSWnYze0zG8B4
+ xEwcEX6k6vRDiDLQFjU+R22CD4L2gly98DRXJKuemSOIuu+zOci2SAEXAcacnmX44STH
+ 2nvOH69owtRwNYZ7UI/BTx7xiEeL8P83AnhdiBcGll3J6RkQFZRBUqlFuwro9JjDswXH
+ jSrVrLErX/O3CxkCk1meymw8vMWTTXpf1SDhlePrYOj2vzhlLYEjZW8r+03Uo9buMQpt
+ uYH4Kt36vcPB1liz5ifAMynzsiPl4N/rEhCKspbqryrZXFp9By8sRcgZOdyQ0gWhVyBh
+ aMrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777989672; x=1778594472;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=TusxZum7fHOq7YOcoycgz/1GaDUn5NnYfl2ONeiIImM=;
+ b=lrqF+qCzlM7JfNvwQyH4QaIVHN4nsrbVWPtUtIuu/KXT858Pz+xlWvPmWeAtDvvzg5
+ 8v/qG/fyqdM1IKEh7M3KKQUo91FadaLvNNnZ87PYKq5jBDtfHrD/KiMfnhIzHuQ+bBs4
+ JBv1vE8RTNFgWVMrjbQL6bnr5DyM9bJXkA4MdebmAdhH/dY0OeSjHlZ5y2Ttjvz9QfpM
+ YRdXdzNJ2yBkCXVo5GHhqSdwyqLnfiPPUoFm+OC8eMLNBoF7+q5UFkFevAxEKx9234Za
+ TeSIsM5OR/NV1hBEPi272BPENVU9ofe7qU0xBJ/W5MjEO/FW/dKXSCUl9AaF0pEr9yuc
+ EhFQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8jpIHN3h96LO/BzkD2auMb9F+w38ahegvJs5En89bZQOQF2d8qaFziaCOHJlx7uadi0HaSgcZ/7lw4@nongnu.org
+X-Gm-Message-State: AOJu0Yz7R3QfOdZiTV1+elWvGLGScZdgUIk3ucTQ3Tz4mt9XBMjEmvgb
+ 79DsiUpUxj5hGZclkrp5Cf6FiCCVs3axCGW4F+z11/UUYzZce+WxTGCvn6otK/ZCVqlr1bHqE+7
+ o0zE9900WulxYj9RclCrjOsUNKcl831c=
+X-Gm-Gg: AeBDiesa61uofaVbxJsEFnz0CKIQztc36o/IupI6QjfUBlWV9Wzz3Zqr9lUS2yTDOZI
+ TnKHi15NgOIpa1FHui7ZeDV+WAYhg1Pk5eD4Rcy3pxOuKKooItF++FTwYJu/suJ5VOdjzrkPgie
+ LuB9LAh/R8bUqm2SfFDMmKwGykbrJvPPwXUcjT2wJ8zDDip/xRHWD9Hg9FZ7vjaLW3ZulRAULp9
+ Z7JEw0OJ+3eKTg0ajBlXezhMyd0tloPfklf+qg7rpEDzltOickVa28IAsA4ldKwtitQ+ouSqIdo
+ osmHPvmZf72umjXG3h9v3bXLGDmfAPmMdutewzljssRaZSKT
+X-Received: by 2002:a50:ed13:0:b0:676:d851:447e with SMTP id
+ 4fb4d7f45d1cf-67cc37acf74mr1318916a12.4.1777989672014; Tue, 05 May 2026
+ 07:01:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20260505123502.1316554-1-armbru@redhat.com>
+ <0f68fa39-f190-420c-a55a-f31a7b95663c@linaro.org>
+In-Reply-To: <0f68fa39-f190-420c-a55a-f31a7b95663c@linaro.org>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Tue, 5 May 2026 10:00:57 -0400
+X-Gm-Features: AVHnY4I_FhjtFRHrNdmaqLBYjgZXOrtGC9tkVOvEJhGn_v5OocsmG1BZJ20BAl0
+Message-ID: <CAJSP0QWVdSHvK2g8jncEL40nR=yp65LGZJ6z5NnsKM8ey2Oh_w@mail.gmail.com>
+Subject: Re: [PULL 0/4] Monitor patches for 2026-05-05
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ stefanha@redhat.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ FREEMAIL_REPLY=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,169 +119,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+On Tue, May 5, 2026 at 8:59=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd@=
+linaro.org> wrote:
+>
+> On 5/5/26 14:34, Markus Armbruster wrote:
+> > The following changes since commit ac0cc20ad2fe0b8df2e5d9458e90a095ac71=
+1ab1:
+> >
+> >    Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into sta=
+ging (2026-05-01 14:41:49 -0400)
+> >
+> > are available in the Git repository at:
+> >
+> >    https://repo.or.cz/qemu/armbru.git tags/pull-monitor-2026-05-05
+> >
+> > for you to fetch changes up to ea017f67ce1ca34c7503b6f23f48b433585d37ac=
+:
+> >
+> >    monitor: Add `clear` command (2026-05-05 13:53:03 +0200)
+> >
+> > ----------------------------------------------------------------
+> > Monitor patches for 2026-05-05
+> >
+> > ----------------------------------------------------------------
+> > AlanoSong@163.com (1):
+> >        monitor: Add `clear` command
+> >
+> > Dr. David Alan Gilbert (3):
+> >        hmp*hx: Move info docs
+> >        hxtool: Split srst/erst add checks
+> >        hxtool: Error on missing docs
+> >
+> >   include/monitor/hmp.h |  1 +
+> >   monitor/hmp-cmds.c    | 11 +++++++++++
+> >   hmp-commands-info.hx  |  9 +--------
+> >   hmp-commands.hx       | 41 +++++++++++++++++++++++++++++++----------
+> >   scripts/hxtool        | 39 ++++++++++++++++++++++++++++++++++++---
+> >   5 files changed, 80 insertions(+), 21 deletions(-)
+> >
+>
+> Obviously this conflicts with the PR I'm waiting since 10 days to post:
+>
+> $ git merge pull-monitor-2026-05-05
+> Auto-merging hmp-commands-info.hx
+> Auto-merging hmp-commands.hx
+> CONFLICT (content): Merge conflict in hmp-commands.hx
+> Auto-merging include/monitor/hmp.h
+> Auto-merging monitor/hmp-cmds.c
+> Automatic merge failed; fix conflicts and then commit the result.
+>
+> Sigh.
 
-> On Mon, May 4, 2026 at 7:20=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
-om> wrote:
->>
->> I'm feeling dense again.  Please be patient with me.
->
-> It's okay, this is a complex one. This is part of the reason for
-> pursuing strict ordering to begin with: the insertion algorithm is
-> complex and ugly.
->
->>
->> John Snow <jsnow@redhat.com> writes:
->>
->> > A forthcoming patch removes the implicit PLAIN section that always
->> > starts a QAPIDoc section list. Further future changes begin converting
->> > "PLAIN" sections to "INTRO" sections. To accommodate this, the inserti=
-on
->> > algorithm that places stub and dummy members must be adjusted to cope.
->>
->> What are the stub and dummy members?
->
-> "stub" - undocumented members.
-> "dummy" - placeholder section named q_dummy that causes "The members
-> of ..." references to be printed in the rendered documentation.
+Hi,
+What is blocking you from sending your PR and who can do something about it=
+?
 
-Got it, thanks.
-
-I figure synthesized "Returns:" can also be effected.
-
->> > This algorithm can handle zero-or-more PLAIN *or* INTRO sections at the
->> > beginning of a QAPIDoc object.
->>
->> The revised algorithm, I presume.
->>
->> What's the structure of its valid input before and after this patch?
->
-> Before: Plain EverythingElse?
-> After: (Plain* | Intro*) EverythingElse?
->
-> Where EverythingElse may never start with "Intro", and may contain
-> "Plain" but not as the first token when following a Plain section from
-> the prior production. (Because contiguous plain sections are merged by
-> the parser into one section.)
->
-> This is to allow a gradual conversion. Once everything is fully
-> converted, and especially after "details" is introduced and the strict
-> ordering is enforced, this is tightened down considerably to: Intro?
-> EverythingElse?
->
-> where EverythingElse may no longer contain Plain (It is removed), may
-> never contain Intro, and may only contain one Details section in the
-> appropriate position (Near the end, before Since.)
->
-> More or less: this patch removes the assumption that every QAPIDoc
-> starts with exactly one Plain section and allows it to cope with any
-> number of Intro/Plain sections at the beginning, but makes no change
-> to what the parser actually produces or accepts. In effect, we go
-> from:
->
-> Plain EverythingElse
->
-> to, in the next patch:
->
-> Plain? EverythingElse
->
-> then as the conversion continues, one of these two:
->
-> Intro Plain? EverythingElse? (Without converted intro)
-> Intro EverythingElse? (With converted intro)
->
-> ... This entire insertion algorithm gets to be removed once we enforce
-> strict ordering, because we can insert directly to the correct
-> position in the list thereafter. So, it is only a temporary complexity
-> that exists for the sake of gradual conversion and piecemeal list
-> review of each QAPI module.
-
-Would working this into the commit message make sense?
-
->> > Since we have three places that need to insert stub members, take the
->> > opportunity to unify and deduplicate this code.
->>
->> Three?  I can only see two: Transmogrifier.visit_sections() and
->> QAPIDoc.connect_member().
->
-> Bad wording on my part again. ensure_returns also inserts stub
-> *sections*, not "members", sorry.
->
->>
->> >
->> > Signed-off-by: John Snow <jsnow@redhat.com>
->> > ---
->> >  docs/sphinx/qapidoc.py | 36 ++++++++---------
->> >  scripts/qapi/parser.py | 90 +++++++++++++++++++++++++++---------------
->> >  2 files changed, 75 insertions(+), 51 deletions(-)
->> >
->> > diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
->> > index 1f7c15b7075..70ab9cdc214 100644
->> > --- a/docs/sphinx/qapidoc.py
->> > +++ b/docs/sphinx/qapidoc.py
->> > @@ -349,30 +349,32 @@ def _get_target(
->> >                  )
->> >
->> >      def visit_sections(self, ent: QAPISchemaDefinition) -> None:
->> > +        # Generate a placeholder right after the member section(s) wh=
-ich
->> > +        # will be used to generate documentation for "The members of.=
-.."
->> > +        # pointers in the rendered document.
->> > +        # This is a temporary hack until the inliner is merged.
->> > +        if ent.doc:
->> > +            ent.doc.append_member_stub(
->> > +                QAPIDoc.ArgSection(
->> > +                    ent.doc.info, QAPIDoc.Kind.MEMBER, "q_dummy"
->> > +                )
->> > +            )
->> > +
->>
->> This hack is of the nastier sort: passing a QAPISchema to the doc
->> generator modifies it.
->>
->> Would it be possible to add this dummy always in QAPISchema?  Any
->> drawbacks?
->
-> Well...
->
-> I didn't like the idea of generating "q_dummy" stubs inside the
-> parser, as it is an implementation detail of qapidoc. Though as you
-> note, this leaks it back out anyway.
->
-> Here's my argument: the entire "q_dummy" thing goes away with the
-> inliner anyway, which is what I am actively working towards, and this
-> ugliness goes away entirely either way: we do not need q_dummy, we do
-> not need member pointer stubs, we will not need to modify the caller's
-> section list.
->
-> I found this easier to do, despite the ugliness. Also consider that in
-> this case, we are building an isolated schema directly inside of the
-> Sphinx process anyway, so we are spiritually already "modifying our
-> own copy" - i.e. there's no chance that this stuff leaks out into
-> other users of the Schema. I think that's actually quite appropriate
-> and unlikely to cause unintended consequences.
-
-I think this is really a QAPIDoc defect.
-
-The doc parser knows where the (empty) arguments are.
-
-QAPIDoc also knows, but makes it hard to retrieve.
-
-The old code searches QAPIDoc.all_sections to rediscover the spot.
-Moderately ugly, relies on the well-known possible sequence of sections
-in all_sections.
-
-Your patch factors out the search, runs it once, and hacks up
-.all_sections to store the result.
-
-If we want the result stored in .all_sections (or anywhere in QAPIDoc,
-really), why not simply store it when we know it?
-
-Sometimes I wish QAPIDoc had a structure more useful than flat list of
-sections...
-
->> [Remainder left for later...]
->>
-
+Stefan
 
