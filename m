@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79E45CD3427
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 17:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 871E4FF8855
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 17:03:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKJ9G-00080F-Ro; Tue, 05 May 2026 13:01:30 -0400
+	id 1wKJ9E-0007zM-P3; Tue, 05 May 2026 13:01:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKJ94-0007ww-Ks
- for qemu-devel@nongnu.org; Tue, 05 May 2026 13:01:20 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1wKJ98-0007xh-FV
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 13:01:24 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKJ90-0003TF-UB
- for qemu-devel@nongnu.org; Tue, 05 May 2026 13:01:17 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-44e5624c053so1416726f8f.2
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 10:01:11 -0700 (PDT)
+ id 1wKJ92-0003UB-Pt
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 13:01:20 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-48d146705b4so14312685e9.3
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 10:01:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778000471; x=1778605271; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778000475; x=1778605275; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+Isl8JoOFL9hjxCtszajUoeGsLUfaDIk2xEQacXFMD8=;
- b=zHtLSw212pyv2lbhwbvXO1nhixSU+md07Box/MwilF7TqPadXoidiQDmnTFc5b6DmY
- ImV5Z5tuWG+JtTiD5Gloaszb7br6c22oA9HL2Q1j8P4c5rKvBAV2nijSA5P5rZVRM5IP
- iSgqBb9Ze4QYacz41sA3asGmnilu5b4k99Q9PEk4XEoL3SswMgRgGYjIQUTp9srxZhWt
- kReiThaVVyInLcmp7PDGv1zo3kNR9DG6yKATWrTM1vRS9RJjil+POVViXPrV41gqNvtm
- LQut7rB9Vm976WWUJvpMTshloaql7CANoKFxnfPR8qcVu21Rm7o9SpHx7LLF73XzxF22
- HY+g==
+ bh=Yuj1wCqPfzb6QgRsDxN2Y1D9IqsqgMMhFjFqQNSMWYw=;
+ b=NxQ7/bbxZ9G/cBApkR6GYZoy5n1Mz4VPBO1Wa/gkg/o3S0ciKO66XdRQKU6kpRNpSV
+ 7ZQ/mWM9/rbStDRRdNaziLEeGgziplRr+NWkLMmcsDI7JeCp8TupbZvJ7OLhKd51nRpY
+ 7gQnFbbiumEQICfXIKXBSBjQrGipSsJaKE/YWhhMy9/KJL0SXan2hQuY1ZALRc9Hp+bn
+ JEd71Pv1iba0I1dpA5jhlPNFhm1n6AyJEzHiffYPBuGCDP158u+3GWeYFycWkCySoLjw
+ LpCYJvsjBsuLv8Ve4Zvd6um7jWSBEv+INDHSsYgadxFkFbgqZ3xBsVChe4Bk+ixqiNpp
+ Ht5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778000471; x=1778605271;
+ d=1e100.net; s=20251104; t=1778000475; x=1778605275;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+Isl8JoOFL9hjxCtszajUoeGsLUfaDIk2xEQacXFMD8=;
- b=bCo1azGWk43GXFmMHZAI6zGLnDuwRnvDi9VMGHsKPjb2KQC7Y2B0gpcuAYD6PzMxsx
- ojZQ9x33BhP/pvCGZPCVb1GeaLEHvfsYOEsfIs+8n8Vz/ZvOzQjkoSnRGHhdSpLjU+rO
- EmAqRQ5hnIxrGSFAdRPNICJVwLGJ6RBMRrpkM+kmFRdloZqliZyigEPzMiBCemM+0zoT
- qMC/1qylaPT1Oq/lur5A3lIGB8qoj3GoPqYlGjwoUXsLDtuMjN+hxr0FyCsJ5Hv3NBHV
- 2vDiHBs9rlRr5dKCsT/IcDIOMQXof19wEZqSOz+KWb/yWIusU3JUBENOAra8c/j4RoLh
- QkOw==
-X-Gm-Message-State: AOJu0YyG1n/kPRFXBCpZIHE4dyQ0Yxj7upylikCkegEasvzLju6ZMwkD
- ZpXgdsZtigdookRVfiSYM3lzBF8A63rE0gx2U0hDv6VW4y3n2ALeIVabfJj1fWdOUTuZ5iuVKbh
- VbYIi0XU=
-X-Gm-Gg: AeBDievnh98HVqOlj1H0XKWaHJ53LZE9bZWG9LqCex2JpDxTWxbFRuXumbF63d99aUN
- g/YZa+A1hsoquvBeo+QOLCuRZM+MTczIlunlhp1FDtudtqah79tyPvgQ2CRPgnWYtOe+GIYmffD
- e3yOwuEGPBVl14wo9czG2rEmz7rUDUGLSoXomWwsg9B/4rM3yPWcTzSMwLY3SXvQ0CQmzTd2/4P
- TwAdxfvINe/fX0rqife/GmpV7ASu1+QIXZRDdE/PoQXfXlCBJEbPEHr6ZrmWgUgM0Hd7Pcp/O6I
- mTfuGpLPmlo90vzKnnAxFMOIMpHmqhjQ7YlZzOX8gh8bQRCmN2PM+npSuCGlsy8OXi/bwa1ZM7z
- jO+GKONXkEj9xLZsp17VLkVyMz9iDOWiB04M60Iou8j0O3RPM4ITcCgFwYgt+n0xwiRta28IYuI
- mz4Q3or5t7VVfQMF/rCbNHEbkm+Vdc9OOdEg==
-X-Received: by 2002:a05:6000:2dc6:b0:43e:a81d:c475 with SMTP id
- ffacd0b85a97d-44bb2f28211mr25741916f8f.6.1778000470544; 
- Tue, 05 May 2026 10:01:10 -0700 (PDT)
+ bh=Yuj1wCqPfzb6QgRsDxN2Y1D9IqsqgMMhFjFqQNSMWYw=;
+ b=mr6VB4Ct5t0bGMEopEJT26eYhJ0IWg+y4YzFpyLClMJVq1JGswcCdC24f2sN5VsAKl
+ +acFwrsNDvKWDlJrOPAiHUFWglCP0nvIFRbkE9iVqrc0flDWA43/MEDvDN3JcWISKGvU
+ P5RF2Nqyu5jNeHLWZhFa874a6dohCuQBJhpHihYp4FujHgzeLhA5V9zMxz0wxhaOOoGj
+ YS2aAM/bXYoFGJhYLC9waJvALS2ov2+HY63cS4o20CPFGu1QGtKHmL8HQUQs7oxqqu5N
+ 8zcH/JXrGkcUxY/Zj8KLA1ePASldp3MP4FOSK1w21noCrxFsQiAjxJtrUVOpuA+1KCpy
+ UcBQ==
+X-Gm-Message-State: AOJu0YzF7fBWwCq0Hz7lntPo/f5kDVftv9X2q7LGfPfZ7eHt6jQn52zD
+ /vcHZ+nJ3tR4VMMRWP9zFql+MLsh1fBYVrq4guW3Jtb0wLh1wtc7Vl8+bIT6W4VCx2Hg69Q32tk
+ bfRCGkvk=
+X-Gm-Gg: AeBDiescGuLQewiuGbXFrALT5RE7NicgvDjyFWkDqj2X2/RmDlHyqZXWNYHKJZ8a36T
+ MZiGL1NH8yxsm79Ei/FViML3TyuJQZqgppmKBArcuvaQT7HGOklP7L8LGgcQ+12sIpF3dSTaTYp
+ Aa8/8DyN4p5ipzUZopXbfnp9EH8yvwKuPWZkVxB9gPydyoADHFnlEZm9E7L3plIcVTV+bDZ+7VI
+ YiSoL6WKkEbgZeHzatx/MGC1/2Y78aKj0xLlPrCPe8wIy7YPkStG1VlFjWr9thmQcC4ULnbJAj/
+ ofQ6wNorykUvYrg+/yF/DrYnG0gyFrAUPB7DoQ0gCKw9TB7rzmOERBrxSotBdzsgshY7OvH+p6e
+ dOZ+gpXscX9EHyfyzF/3P1sJ/mHl3zamAXk5jG0KBfb1m+kTs0B6rKDErAnAfimP6218Bun6f+h
+ 3mn5ZSdmSxc70KpxzhD9mRFCST8JPKbG/TMYK4AxLaa2YU
+X-Received: by 2002:a05:600c:8906:b0:488:ffad:6728 with SMTP id
+ 5b1f17b1804b1-48e51f46d7bmr450455e9.19.1778000474701; 
+ Tue, 05 May 2026 10:01:14 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45054b03d4csm6270484f8f.22.2026.05.05.10.01.06
+ 5b1f17b1804b1-48e51f34779sm421315e9.5.2026.05.05.10.01.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 May 2026 10:01:07 -0700 (PDT)
+ Tue, 05 May 2026 10:01:10 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 5E90A6016A;
+ by draig.lan (Postfix) with ESMTP id A143D604F0;
  Tue, 05 May 2026 18:01:06 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 04/10] .agents/skills: add qemu-issue-helper skill
-Date: Tue,  5 May 2026 18:00:59 +0100
-Message-ID: <20260505170105.228162-5-alex.bennee@linaro.org>
+Subject: [RFC PATCH 07/10] .agents/skills: add skill to distil mail threads
+Date: Tue,  5 May 2026 18:01:02 +0100
+Message-ID: <20260505170105.228162-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260505170105.228162-1-alex.bennee@linaro.org>
 References: <20260505170105.228162-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,68 +103,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This provides basic instructions for fetching issue details and
-summarising details about the issue for other agents.
+Just YOLO'ing the entire mail thread into an LLM context is quite
+expensive especially if reviewing a thread against your current tree
+state. This skill allows the agent to extract just the comments and
+tags saving tokens.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- .agents/skills/qemu-issue-helper/SKILL.md | 47 +++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
- create mode 100644 .agents/skills/qemu-issue-helper/SKILL.md
+ .agents/skills/distil-mail-thread/SKILL.md    | 33 ++++++++++
+ .../distil-mail-thread/scripts/parse_mail.py  | 64 +++++++++++++++++++
+ 2 files changed, 97 insertions(+)
+ create mode 100644 .agents/skills/distil-mail-thread/SKILL.md
+ create mode 100644 .agents/skills/distil-mail-thread/scripts/parse_mail.py
 
-diff --git a/.agents/skills/qemu-issue-helper/SKILL.md b/.agents/skills/qemu-issue-helper/SKILL.md
+diff --git a/.agents/skills/distil-mail-thread/SKILL.md b/.agents/skills/distil-mail-thread/SKILL.md
 new file mode 100644
-index 00000000000..725097bac36
+index 00000000000..3c083ec5aa1
 --- /dev/null
-+++ b/.agents/skills/qemu-issue-helper/SKILL.md
-@@ -0,0 +1,47 @@
++++ b/.agents/skills/distil-mail-thread/SKILL.md
+@@ -0,0 +1,33 @@
 +---
-+name: qemu-issue-helper
-+description: Summarize QEMU issue analysis for main agent. Helps sub-agents report findings including build config, CLI, tests, and GitLab issue data. Trigger when analyzing QEMU bugs or issues reported on GitLab.
++name: distil-mail-thread
++description: Extract and summarize reviewer comments from a QEMU or kernel mailing list thread dump (like a b4 mbox or text export). Use this when the user asks to "distil", "parse", or "extract feedback" from a mail thread file.
 +license: GPL-2.0-or-later
 +---
 +
-+# QEMU Issue Helper
++# Distil Mail Thread
 +
-+Assist sub-agent in summarizing issue analysis for main agent.
++This skill helps you extract reviewer comments and feedback from a long mailing list thread file, filtering out quoted text, patch diffs, and headers. It relies on a Python script included in this skill's `scripts/` directory.
 +
-+## Fetching Issue Data
++## How to use this skill
 +
-+Use `glab` to retrieve issue details from GitLab. QEMU primary repo: `qemu-project/qemu`.
++1. **Locate the target file**: Identify the mail thread file the user wants to parse (e.g., `wxft-rfc-mail-thread.txt`).
++2. **Execute the script**: Run the included Python script against the file. The script is located in the `scripts/` directory of this skill.
 +
-+### Commands
-+- **View issue**: `glab issue view <ID_OR_URL> -R qemu-project/qemu`
-+- **View comments**: `glab issue view <ID_OR_URL> -R qemu-project/qemu --comments`
-+- **Search issues**: `glab issue list -R qemu-project/qemu --search "<KEYWORDS>"`
++   ```bash
++   python /path/to/distil-mail-thread/scripts/parse_mail.py <path_to_mail_thread_file.txt>
++   ```
++   *(Note: Adjust the path to the script based on where this skill is installed. You can use your filesystem tools to locate `distil-mail-thread/scripts/parse_mail.py`.)*
 +
-+## Report Format
++3. **Read the output**: The script will generate a file named `parsed_comments.txt` in the current working directory. Use your file reading tools to examine its contents.
++4. **Analyze and Summarize**: Read through the extracted comments and provide a structured summary to the user, correlating feedback to specific patches if necessary.
 +
-+Sub-agent MUST provide a summary of the GitLab issue discussion and findings in this format:
++## Expected Output
++The `parsed_comments.txt` will look like this:
++```
++--- REPLY FROM Reviewer Name <email@example.com> ---
++Subject: Re: [PATCH 01/10] ...
++Comment text here...
++============================================================
++```
 +
-+### 1. Issue Context
-+- **Source**: GitLab URL/ID.
-+- **Title**: Short issue description.
-+- **Reporter**: User who found it.
-+- **Relevant Commits**: List any commits mentioned in the issue that are related to the bug or previous attempts to fix it.
++Use this structured text to efficiently analyze the feedback.
+diff --git a/.agents/skills/distil-mail-thread/scripts/parse_mail.py b/.agents/skills/distil-mail-thread/scripts/parse_mail.py
+new file mode 100644
+index 00000000000..2924d07dc56
+--- /dev/null
++++ b/.agents/skills/distil-mail-thread/scripts/parse_mail.py
+@@ -0,0 +1,64 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++import sys
++import os
 +
-+### 2. Build & Reproduction (from issue)
-+- **Reported Environment**: Host OS, CPU, QEMU version.
-+- **Build Configuration**: Required `configure` flags mentioned in the issue.
-+- **Reproduction CLI**: Exact QEMU command used to reproduce.
++if len(sys.argv) < 2:
++    print("Usage: python parse_mail.py <mail_thread_file.txt>")
++    sys.exit(1)
 +
-+### 3. Proposed Fixes & Series
-+- **Proposed Fixes**: Flag any specific code snippets or logic fixes suggested in the comments.
-+- **Patch Series**: Note if any patch series or Merge Requests have been linked.
++input_file = sys.argv[1]
++output_file = "parsed_comments.txt"
 +
-+### 4. Discussion Summary
-+- **Current Consensus**: What is the community's current understanding of the bug?
-+- **Key Constraints**: Note any blockers, requirements, or specific feedback from maintainers.
-+- **Next Steps**: What is needed to move the issue forward?
++try:
++    with open(input_file, "r", encoding="utf-8") as f:
++        text = f.read()
++except FileNotFoundError:
++    print(f"Error: File not found - {input_file}")
++    sys.exit(1)
 +
-+## Rules
-+- **No Independent Analysis**: Do not perform your own root cause analysis. Summarize ONLY what is present in the issue tracker.
-+- **Terse**: Use brief technical English.
-+- **Links**: Provide direct links to relevant comments or patches if available.
++# Split by the separator used in lore.kernel.org / b4 dumps
++messages = text.split("----------------------------------------")
++
++with open(output_file, "w", encoding="utf-8") as f:
++    for msg in messages:
++        if not msg.strip(): continue
++
++        lines = msg.strip().split('\n')
++        author = ""
++        subject = ""
++        body_start = 0
++        for i, line in enumerate(lines):
++            if line.startswith("From: "): author = line[6:]
++            if line.startswith("Subject: "): subject = line[9:]
++            if not line.strip() and body_start == 0:
++                body_start = i + 1
++                break
++
++        # Filter out the original patch author (assuming they are Alex
++        # Bennée in this specific context, but for a general tool, we
++        # should probably just look for non-patch emails or specific
++        # reviewers).
++        # We will keep it general: exclude the main author if we can guess it,
++        # or just extract everything that doesn't look like code or a patch
++        # description.
++        # Actually, let's keep all comments that are replies (indicated by >
++        # quoting or Re: in subject).
++
++        is_reply = "Re: " in subject or subject.startswith("Re:")
++
++        if is_reply and author != "" and not author.startswith("qemu-devel"):
++            f.write(f"--- REPLY FROM {author} ---\nSubject: {subject}\n")
++
++            # extract comments
++            comments_extracted = False
++            for line in lines[body_start:]:
++                is_metadata = (line.startswith(">") or
++                               line.startswith("---") or
++                               line.startswith("diff "))
++                if not is_metadata:
++                    if line.strip():
++                        comments_extracted = True
++                    f.write(line + "\n")
++            f.write("="*60 + "\n\n")
++
++print(f"Done. Extracted comments saved to {output_file}")
 -- 
 2.47.3
 
