@@ -4,106 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D665BCD3427
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 14:49:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBBEAFF8855
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 14:51:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKH5g-0007lq-VJ; Tue, 05 May 2026 10:49:41 -0400
+	id 1wKH7E-0008KH-GG; Tue, 05 May 2026 10:51:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wKH5e-0007jy-HK
- for qemu-devel@nongnu.org; Tue, 05 May 2026 10:49:38 -0400
-Received: from mail-dy1-x132a.google.com ([2607:f8b0:4864:20::132a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wKH7D-0008K1-1C
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 10:51:15 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1wKH5b-0000tR-T9
- for qemu-devel@nongnu.org; Tue, 05 May 2026 10:49:37 -0400
-Received: by mail-dy1-x132a.google.com with SMTP id
- 5a478bee46e88-2bdd40d3c61so6776084eec.1
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 07:49:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777992573; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wKH7B-0001g2-ID
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 10:51:14 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-65890a6ca20so4832126d50.0
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 07:51:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777992672; cv=none;
  d=google.com; s=arc-20240605;
- b=MOJ5tf4aHMZLpJ/Q8Wxmd3L/dPZagqyrY9AsVNjphE1K2QM44/xbg0y/FZDugsXExc
- FOgYXHv7zbTWJ63QIe2GpNOJDL2U+PdRECwgl+9OwwcPS362pb99wyQ1VFltHh6VwxdJ
- 1mFpisPr71Hhph82Yls9qS0hcFP86xNwX78F8hc11DZNX2U9n+f1l264P2NLptVdxkDM
- pj81tVsWMwZygukzoWD0bIVw570EY5KpGVog8Rr7czSugA8VYlJRllqwnYG67NuDAJR9
- p6JQ1vtcOaCwMOu7KV5LEG5lANBXrUhRn67aZXwoIc+FHugWz/kgw79UV7ZZXkgHWm59
- lzCg==
+ b=TpCtvt5TnBJvMoAXM58dNWTDNpIpKKiaHbRNSgwIyYptWbq2/WOVYiJWapC7Ndqz8Q
+ OvTh4o08x8ZEOE2Wa1OQ23EluZ26NLHu46p/dxGvjYi/x4JnHW6N10LkEK5/GgxgfbJM
+ WCWzYFr9WYOXghfeAiPfMeCChwNDdUDyL20ldfmv1h9vBatQamfGSVlxo4EFLXBAbWgV
+ UXxrGjUoACEUrxA00TxXKRLOxEuE4DS/AFJUEIheeCO646/zXXtD9WMAL1/JKGPwQLSu
+ moYhfIQslwCIZr9OSnnOTUqx/BOrahLggP5H/oeV3QDyiHMpZ8jt4FpYkVwzn7qu9+Ro
+ Mrcg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=ffLEURxJLUDCP+jGetay6D1/gTP4RY+dTCMHslCt8GY=;
- fh=IIVq14YtGeHsqR1qXM8TWLElWWlW0t0XUfvIwOGX8mQ=;
- b=FsrNAop4qpB92LKa85412jxst3ToiyLr+fjkinS8vAaOmARprz/U/7sXJgpCrYb9v/
- 4qL4a1amNBbOHf7JAWzHaLRRTBStw5muYUpsVCjHTux4aL1x/zW/eYIpcdn1W+aFRf2+
- DT92m8cNOkbMf24E+UbUJJVGyNZpBb96HnuNRTZ0aU0p84fUSmZDYy8apsLs2Bnaj9p4
- yfufSRuPb3WqCBN5hngKUDoLlJSgnd3y6xXwN5J6xFf3ocyqZt75BkQaIowwxdWcH9eV
- EV/R84dDtKxdGKa5MzgEllGvneHg2eW6R3ZMNPR5V8h8Rrk+TuAcZTfRx8WGVz7OZYZs
- H97Q==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=rVoDHb9pCK8ndmf3WABbxQ0WhWHxckb5sBv3pxN+5Gs=;
+ fh=GOP80JPN2l2ZporM1TCZUZhADnVpgyZ7R005tMMGOXk=;
+ b=EbNzkW+m+Qwkv036TgBiaVWnVY+CAvS6+Xc1ZXu07tyhS+gUQHTzManjPIUbGIISV9
+ FCDqTv0iiv6l4b6Wg6gfGKdmO+y7S+/Apn+Er09m67TKfg7MG9lgKQmwhbkI6Fvxwt5y
+ H122jvXai5UtlyZ0YAMYTpznc6xC5Mt99SUN7uMiJTu7VEzqrJj2mE7iwZ5SUYsh9uyG
+ SLHhpBW/d46UCXocDFX/k1pg7PPWhZ+9lFKh17DaHKRFRUw6XZU3XFt7L9uVq9ACcefr
+ KaDXBU8qropoAc68Z7/CCDEUnLzcF9/ebfOZq0dh88jVt0GStY//d3f186a+EtHmAQby
+ nl7g==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777992573; x=1778597373; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ffLEURxJLUDCP+jGetay6D1/gTP4RY+dTCMHslCt8GY=;
- b=ibs/IfMFuL+IguzQMyiY/iNYtcX1Pm/twzxpsmyPQzuXb13ZJzyhgExiXiFhsNRT7P
- D7GlwGM2CvgXyux2JYQ22yVW04kyki+tbI08vc3d/kE2RnahKcxCTYM10g7SSXLZnakd
- Mt9T25Tch6ox1qzUhQdweM1RInidaKxn8NFNUkeSGiY/x+jc6hCXdtHXaqZ+CzuSZU+Q
- e4U2kL38+J2xTh45tY96X0bxTN8vkWgikqL3cOF0e+BfMlASHUiGIQhz/JcxNRpxhCw6
- rOLgwwM4kpuwqzSlKD7vfc85VkMrYKHCaa3PrcDTivCM/95pcbpTTCVaY5KJ7Gkqu0Pl
- kS3A==
+ d=linaro.org; s=google; t=1777992672; x=1778597472; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=rVoDHb9pCK8ndmf3WABbxQ0WhWHxckb5sBv3pxN+5Gs=;
+ b=dzsQMcop+Td3XZhcf+CyOBvHVnekxJrMm/xsK69xH+navaL2MC1/0MbPiaZvKQq45c
+ 7OyycZLzsjv7uQYubEeffE1u/omhVo4gXfKyM+FtK1nvrWOp6kdTqwbtwY35KiUj+rNK
+ ZcllISq6AS4ursbQ6BaDl7uoTfU5WdQ68Lb+HVeQD3wdMmbgE9PwCs8SJcA0vQthElRY
+ 6n8rF2YQGcLZXfx3EA3/fgwsn4NIlXagoHrHdbHFxF35dv9sfBQsAjTxbYoTLgfO9bla
+ x1PLj3OTt3wvfIzd8J0Znspe/MIs6hzSOQJ1Jef9XuTSEaE6NU64bAVnA4u4AvXLUcld
+ wsnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777992573; x=1778597373;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ffLEURxJLUDCP+jGetay6D1/gTP4RY+dTCMHslCt8GY=;
- b=VzQ2s1EKJCHtlb542MF+11ZLB8nu12wzpBZ1YFKFts1NEarhzA+mqMvmPSBJML6XaM
- VXmH8L/0r7Fifj4AGJijUY0Ql+Dx5eUJSzxVKyvNk6arYtOyYXN2ggbqg6nfIqc1vLqc
- xbcJBYo9xov7JKy8dzcTpwFu2XP//0Y03OKvFkKAnjwT24EIn8Dv7C2YWhF3qdG6lKtq
- qDwKQjbCdcrUUa3SrNi/FMeLXdOVfjfo7yW2+yLzVNHk9Zglf+jWcz3NbxTbsjKWLOty
- iLdf55/U/xB7zVDex3n+KQMvOLaMbuf944mpvGD6Yipg/Jfc23OJwS2xyZY7C/ZMLAgr
- PBEg==
-X-Gm-Message-State: AOJu0Yyl+aXhlCKqDSsB5u7MJ/T9NvcEANgjKl+5ypxiUNJFvmIvSGbY
- nH6K1IZ1HelMJsifdgvZA66ynAAFSDQmLq0lcZsbhwy1FDUQQOmSvEOdMERbJZewrBkFU8Wa57F
- bwR1Ubb4W/WkKJxwzkUjNK8FSU7zNfw8=
-X-Gm-Gg: AeBDiesTkfx/sGJzZtAQedx1dN5oh3oscEkr0f/hRCeop23BH7PmPzGFeTePxx2r+lR
- +XsZc7UTQQ5I2gwDwbLMLWWBn/Npogzc6guiktZpSDUNw/UmG6+GzOyKWQtTX5d1bGB8WZ0Darm
- +o7EFzef5ll4fDqgK8ReyrPNonkWuYdsEQ/Uz0fbWcMM/nBhR4O5QXApDSXHqPygMkmyHAEbvl7
- mA07FFA9t0YE+c03t/ZR6UBfPRv+jruILU6K+2pMOJquldEybIZAeweke639Uj93vL4plMgsi+5
- 4kH7n2mnqjanGpjG3Bq04GdCMyI=
-X-Received: by 2002:a05:7300:dc98:b0:2ee:f85:ec3c with SMTP id
- 5a478bee46e88-2f40a18f78dmr1502313eec.30.1777992572955; Tue, 05 May 2026
- 07:49:32 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777992672; x=1778597472;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rVoDHb9pCK8ndmf3WABbxQ0WhWHxckb5sBv3pxN+5Gs=;
+ b=HC9IzE+QswSBe5hMDR5Bw0xZKWJi0BNxBk2bVvFZ97AYCM0ByLmMUQLPB5x0zLh3af
+ 5+FmL5YiWl+mlQnI/y1KEwItrST94PBiwsFEYLOATYSPPqp+96f3Rg69pmp9cgKhY3ez
+ FfEGe1cr6N9OSsp78hLoxjpNl/wrHPDl0nNX/QLojKuHXBiEmpgBiacakYojOaxUMDtK
+ 8OYUUC8ZxiEuKYUUShChGDbZsNd30IWTqMY+XiwjT8D46IL581+A/9NKfiuNggn872m+
+ 5BPnsgrmYB0sZF3vAvwdtz4P3ZmXr0cXdN+dANblSXJDUlUJNiD7YfGY0qIS76hWTk1Y
+ Gnhw==
+X-Gm-Message-State: AOJu0YwqQNyULchUyRG9m1l6NKpdXGX4yqgPJBsIK66SK7MBx1xWUGgl
+ uwfPa/A+n2iRl/BJ+/JcDycI/sp/zfj5LaKTXNuH48vnSShqVNpOPOpOWbCdV7+PVV9HQwEKQOl
+ RhXYM91KFHXhbAKWFN3DfVw6mfjUF8qvnwU31QzmgHg==
+X-Gm-Gg: AeBDiev7cJL6EZKGexFLvzF9Y0tusM6/CGvjlFsFyIEgGK9eh4sqFepMrNEbOLTqxWS
+ 3jnIMoWvjzTxWEWE76D5foBdOrIcTbKqiE9Kag5xmd8OE7BTmlGzRGatk7vJ2beDNKUYmHDaQSe
+ 9VPZ29o6yCSSXa3oYJHwJmqFT0yI23do/Tjc9GVIdNWrkUEKFU0DHWNWKHuje/CYW31LazVjT1M
+ +EUeoeOvlKDP7KXhbnJvKqkj+JJaQ683inKhKli9Y94WXscv9e4d0O1nkw1y/avmUzjMM9fr4vM
+ dH6aU0d5NhVMrZzwsFsEf4QLKPX27TXZOXHSynWjjNbDhNadxvBCSOy9l+G0pv6vuluuJqowYp5
+ 3rg==
+X-Received: by 2002:a05:690e:11c7:b0:657:4633:b67e with SMTP id
+ 956f58d0204a3-65c3db7a8bemr14099133d50.46.1777992671738; Tue, 05 May 2026
+ 07:51:11 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
- <20260504-qom-tests-v2-8-ef7e3dc94f7a@redhat.com>
- <CAFEAcA9PWJOtiw4-iJ0GZs7=3ZnbH1RdH-GWXi2hFA1jetcOpw@mail.gmail.com>
-In-Reply-To: <CAFEAcA9PWJOtiw4-iJ0GZs7=3ZnbH1RdH-GWXi2hFA1jetcOpw@mail.gmail.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Tue, 5 May 2026 18:49:19 +0400
-X-Gm-Features: AVHnY4K5-VzbbU10jT1Qqi-2OUU6m8CX8XKx3aA8wewQtLRR_Abxg9RTQS78mjo
-Message-ID: <CAJ+F1CKOjP65rO2_gXJ-yuXZ2N_gUy9ez5er4ZJofHmXekwZeg@mail.gmail.com>
-Subject: Re: [PATCH v2 08/46] hw/xlnx_dp: reject NULL 'dpdma' property rather
- than crash
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, armbru@redhat.com
+References: <CAM5Ud7OgnsygAHxjGEO-qo5+3zYiAQFN85D2bx1Wb62vK2hzRw@mail.gmail.com>
+In-Reply-To: <CAM5Ud7OgnsygAHxjGEO-qo5+3zYiAQFN85D2bx1Wb62vK2hzRw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 5 May 2026 15:50:59 +0100
+X-Gm-Features: AVHnY4IUoNqDNi9brW4GfPIVpXpGcnLMb6knq5CLpv2vAfNob6H_EJZ9f9vDbt0
+Message-ID: <CAFEAcA-SAvi7uXOqS06Ai2cKXJ8pUeZYzWxi3WbhUsKMbhKi0Q@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] raspi4b: Disable L2 cache
+To: Alec Ari <neotheuser@gmail.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132a;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132a.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,48 +114,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Tue, May 5, 2026 at 6:44=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
-org> wrote:
+On Fri, 24 Apr 2026 at 01:44, Alec Ari <neotheuser@gmail.com> wrote:
 >
-> On Mon, 4 May 2026 at 12:38, Marc-Andr=C3=A9 Lureau
-> <marcandre.lureau@redhat.com> wrote:
-> >
-> > The type-checking macros (XLNX_DPDMA(val)) which crash on NULL.
-> >
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  hw/display/xlnx_dp.c | 6 ++++++
-> >  1 file changed, 6 insertions(+)
-> >
-> > diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
-> > index 50e6ef10984..876cb3d6642 100644
-> > --- a/hw/display/xlnx_dp.c
-> > +++ b/hw/display/xlnx_dp.c
-> > @@ -570,6 +570,12 @@ static void xlnx_dp_set_dpdma(const Object *obj, c=
-onst char *name, Object *val,
-> >                                Error **errp)
-> >  {
-> >      XlnxDPState *s =3D XLNX_DP(obj);
-> > +
-> > +    if (!val) {
-> > +        error_setg(errp, "%s cannot be set to NULL", name);
-> > +        return;
-> > +    }
-> > +
-> >      if (s->console) {
-> >          DisplaySurface *surface =3D qemu_console_surface(s->console);
-> >          XlnxDPDMAState *dma =3D XLNX_DPDMA(val);
+> From c5eabff997cf2231326c532c2cbc51fa1334fb9b Mon Sep 17 00:00:00 2001
+> From: Alec Ari <neotheuser@ymail.com>
+> Date: Thu, 23 Apr 2026 16:42:06 -0500
+> Subject: raspi4b: Disable L2 cache
 >
-> What fails here? XLNX_DPDMA(val) should handle NULL, as mentioned
-> on the other patch. And xlnx_dpdma_set_host_data_location() checks
-> for a NULL argument.
+> L2 cache is not implemented yet, this patch requires
+> `clk_ignore_unused` to be set in the kernel cli.
 >
+> Now able to boot a 7.0 mainline kernel.
 
-Right, it doesn't crash. I did it mechanically because you reported it
-as one of the custom add_link setters.
-I'll drop it.
+To check I understand correctly, to boot a 7.0 kernel you
+need both of:
+ (1) this patch applied
+ (2) the "clk_ignore_unused" argument to be added to
+     the kernel command line
 
-Thanks
+and it won't boot with just this patch alone?
+
+thanks
+-- PMM
 
