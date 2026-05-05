@@ -4,114 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B09CD343B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B50CD3441
 	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 16:11:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKIMG-00004w-Gh; Tue, 05 May 2026 12:10:52 -0400
+	id 1wKIM2-0008Ip-38; Tue, 05 May 2026 12:10:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKIM0-0008GP-FD
- for qemu-devel@nongnu.org; Tue, 05 May 2026 12:10:37 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKILC-0007w4-Mt
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 12:09:47 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKILv-0000ZE-Q1
- for qemu-devel@nongnu.org; Tue, 05 May 2026 12:10:36 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKIL9-0007RJ-8e
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 12:09:46 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id EA4B66B767;
- Tue,  5 May 2026 16:09:35 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 884ED6B75F;
+ Tue,  5 May 2026 16:09:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1777997376; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1777997364; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oOXl+Kg4Ekn8eRhNqDeLTfbVre71RRbBJww/DujlEyo=;
- b=wNFLsscelt0/z5quOYMs2eiDNKSVaun+tvxiNnnnAnMKnN60N1gRytA4BGTg/khbIWHld4
- CDepdQjoSr9JtdoKCwIaTjf1yYCjem6x9mTSrmYYaiywLzDm7EUvVVRta7n8i97nEyt4i6
- xLsRggUTFouo+ZXX++gfR4trCQbM6Zg=
+ bh=j+tsdWsqYD+15JXRDE2F+ieq7bq30O01GxrwVF0GSkI=;
+ b=GGDlS1y5r0aYMCh9p2Pg77suxS5OVBfH1HS4c/g4Vwejg3UTdwCj+H4KaylEGwaZG+hmLx
+ vs4u9O8oe2o9R/AiVLk+gOUSileViakUNK0/MBEd0tHMgVpw0kP+on6qVkTqNujmc6UK3q
+ 159opHCLFFm1stimpvIFDju/+3/3E7U=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1777997376;
+ s=susede2_ed25519; t=1777997364;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oOXl+Kg4Ekn8eRhNqDeLTfbVre71RRbBJww/DujlEyo=;
- b=xJ6u2P742M/joxUWfi0TiWhMZ9EzKxem/b1pfKa8uwdKm+jwAgvbPWThJeYnaoOlRipBR9
- pUtMHyYE5YkIREAA==
+ bh=j+tsdWsqYD+15JXRDE2F+ieq7bq30O01GxrwVF0GSkI=;
+ b=dBhH98HRaOpUQ3NGzO8Du3Z7UsuvKG6lLi24muv7N6Li6gHUIlsuUSiYk4gtySYAfOncm1
+ 2EjPRE0jSKHTvwAA==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=k7l+D8pF;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="w5m/Yzqq"
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1777997375; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1777997364; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oOXl+Kg4Ekn8eRhNqDeLTfbVre71RRbBJww/DujlEyo=;
- b=k7l+D8pFf4CYcVR6ok27xnEZ9vJJOopa0mkQYt6oLR6VYb0hrSp7M8qTFJzCtfO/NnAg2q
- uZiSV02Bq53wzG3DNK0YM72D7HbLe34kUJhDJNy9SIVCQnqjQ/FzoxTN05NQKdmMcx0jIi
- aLMDSfOl+ucMlIri2MQMor9AiurIWY0=
+ bh=j+tsdWsqYD+15JXRDE2F+ieq7bq30O01GxrwVF0GSkI=;
+ b=GGDlS1y5r0aYMCh9p2Pg77suxS5OVBfH1HS4c/g4Vwejg3UTdwCj+H4KaylEGwaZG+hmLx
+ vs4u9O8oe2o9R/AiVLk+gOUSileViakUNK0/MBEd0tHMgVpw0kP+on6qVkTqNujmc6UK3q
+ 159opHCLFFm1stimpvIFDju/+3/3E7U=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1777997375;
+ s=susede2_ed25519; t=1777997364;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=oOXl+Kg4Ekn8eRhNqDeLTfbVre71RRbBJww/DujlEyo=;
- b=w5m/YzqqPu1ktmIO+1tCTwePhdQEjrYHotPUGQ/VNhrW0xyN7lap1WvIuVIb7rUpo7lRbS
- YabHz6RtksXMVEBg==
+ bh=j+tsdWsqYD+15JXRDE2F+ieq7bq30O01GxrwVF0GSkI=;
+ b=dBhH98HRaOpUQ3NGzO8Du3Z7UsuvKG6lLi24muv7N6Li6gHUIlsuUSiYk4gtySYAfOncm1
+ 2EjPRE0jSKHTvwAA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C79C5593A3;
- Tue,  5 May 2026 16:09:34 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 09489593A3;
+ Tue,  5 May 2026 16:09:22 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iDGUJT4W+mmNcgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 05 May 2026 16:09:34 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 4LKyMjIW+mmNcgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 05 May 2026 16:09:22 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+Cc: Peter Xu <peterx@redhat.com>, Mark Kanda <mark.kanda@oracle.com>,
+ Ben Chaney <bchaney@akamai.com>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v1 08/15] tests/qtest/migration: Set compression method in
- compression-tests
-Date: Tue,  5 May 2026 13:09:07 -0300
-Message-ID: <20260505160915.25558-9-farosas@suse.de>
+Subject: [PATCH v1 01/15] tests/qtest/migration: Move cpr transfer logic into
+ cpr-tests.c
+Date: Tue,  5 May 2026 13:09:00 -0300
+Message-ID: <20260505160915.25558-2-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260505160915.25558-1-farosas@suse.de>
 References: <20260505160915.25558-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: EA4B66B767
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ RCPT_COUNT_FIVE(0.00)[6]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,86 +120,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stop calling a common function to set the multifd compression
-method. The default method is "none", so the common function is not
-necessary for tests that don't set compression and will be removed.
+There's some amount of cpr-transfer logic at precopy_common, which in
+retrospect was a bad idea. For just two tests, that's too much code to
+be in the common function. Move it to the cpr file. We'll need this
+cleanup for subsequent improvements.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration/compression-tests.c | 22 +++++++++++++++++-----
- 1 file changed, 17 insertions(+), 5 deletions(-)
+ tests/qtest/migration/cpr-tests.c | 57 ++++++++++++++++++++++++++++---
+ tests/qtest/migration/framework.c | 36 +++----------------
+ tests/qtest/migration/framework.h |  3 --
+ 3 files changed, 56 insertions(+), 40 deletions(-)
 
-diff --git a/tests/qtest/migration/compression-tests.c b/tests/qtest/migration/compression-tests.c
-index 134bf44db6..848576054f 100644
---- a/tests/qtest/migration/compression-tests.c
-+++ b/tests/qtest/migration/compression-tests.c
-@@ -20,6 +20,13 @@
+diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
+index 63ca5f3996..48c98f0089 100644
+--- a/tests/qtest/migration/cpr-tests.c
++++ b/tests/qtest/migration/cpr-tests.c
+@@ -15,6 +15,9 @@
+ #include "migration/framework.h"
+ #include "migration/migration-qmp.h"
+ #include "migration/migration-util.h"
++#include "qapi/error.h"
++#include "qobject/qjson.h"
++#include "qobject/qlist.h"
+ 
  
  static char *tmpfs;
+@@ -42,10 +45,56 @@ static void test_mode_reboot(char *name, MigrateCommon *args)
+     test_file_common(args, true);
+ }
  
-+static void set_multifd_compression(QTestState *from, QTestState *to,
-+                                    const char *method)
-+{
-+    migrate_set_parameter_str(from, "multifd-compression", method);
-+    migrate_set_parameter_str(to, "multifd-compression", method);
-+}
+-static void *test_mode_transfer_start(QTestState *from, QTestState *to)
++static int test_transfer(MigrateCommon *args, const char *cpr_channel,
++                         bool incoming_defer)
+ {
++    QTestState *from, *to;
++    QObject *obj, *out_channels = qobject_from_json(args->connect_channels,
++                                                    &error_abort);
++    QList *channels_list;
 +
- #ifdef CONFIG_ZSTD
- static void *
- migrate_hook_start_precopy_tcp_multifd_zstd(QTestState *from,
-@@ -27,8 +34,9 @@ migrate_hook_start_precopy_tcp_multifd_zstd(QTestState *from,
- {
-     migrate_set_parameter_int(from, "multifd-zstd-level", 2);
-     migrate_set_parameter_int(to, "multifd-zstd-level", 2);
-+    set_multifd_compression(from, to, "zstd");
- 
--    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "zstd");
-+    return NULL;
++    /*
++     * The cpr channel must be included in outgoing channels, but not in
++     * migrate-incoming channels.
++     */
++    channels_list = qobject_to(QList, out_channels);
++    obj = migrate_str_to_channel(cpr_channel);
++    qlist_append(channels_list, obj);
++
++    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
++        return -1;
++    }
++
+     migrate_set_parameter_str(from, "mode", "cpr-transfer");
+-    return NULL;
++
++    wait_for_serial("src_serial");
++
++    qtest_qmp_assert_success(from, "{ 'execute' : 'stop'}");
++    wait_for_stop(from, get_src());
++    migrate_ensure_converge(from);
++
++    migrate_qmp(from, to, NULL, out_channels, "{}");
++
++    qtest_connect(to);
++    qtest_qmp_handshake(to, NULL);
++    if (incoming_defer) {
++        QObject *in_channels = qobject_from_json(args->connect_channels,
++                                                 &error_abort);
++
++        migrate_incoming_qmp(to, NULL, in_channels, "{}");
++    }
++
++    wait_for_migration_complete(from);
++    wait_for_migration_complete(to);
++
++    qtest_qmp_assert_success(to, "{ 'execute' : 'cont'}");
++
++    wait_for_resume(to, get_dst());
++    wait_for_serial("dest_serial");
++
++    migrate_end(from, to, true);
++
++    return 0;
  }
  
- static void test_multifd_tcp_zstd(char *name, MigrateCommon *args)
-@@ -58,8 +66,9 @@ migrate_hook_start_precopy_tcp_multifd_qatzip(QTestState *from,
+ /*
+@@ -86,15 +135,13 @@ static void test_mode_transfer_common(MigrateCommon *args, bool incoming_defer)
+ 
+     args->listen_uri = incoming_defer ? "defer" : uri;
+     args->connect_channels = connect_channels;
+-    args->cpr_channel = cpr_channel;
+-    args->start_hook = test_mode_transfer_start;
+ 
+     args->start.opts_source = opts;
+     args->start.opts_target = opts_target;
+     args->start.defer_target_connect = true;
+     args->start.mem_type = MEM_TYPE_MEMFD;
+ 
+-    if (test_precopy_common(args) < 0) {
++    if (test_transfer(args, cpr_channel, incoming_defer) < 0) {
+         close(cpr_sockfd);
+         unlink(cpr_path);
+     }
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index 9f71d51f1e..4ef5e1de83 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -20,7 +20,6 @@
+ #include "ppc-util.h"
+ #include "qapi/error.h"
+ #include "qobject/qjson.h"
+-#include "qobject/qlist.h"
+ #include "qemu/bswap.h"
+ #include "qemu/module.h"
+ #include "qemu/option.h"
+@@ -833,10 +832,7 @@ int test_precopy_common(MigrateCommon *args)
  {
-     migrate_set_parameter_int(from, "multifd-qatzip-level", 2);
-     migrate_set_parameter_int(to, "multifd-qatzip-level", 2);
-+    set_multifd_compression(from, to, "qatzip");
+     QTestState *from, *to;
+     void *data_hook = NULL;
+-    QObject *in_channels = NULL;
+-    QObject *out_channels = NULL;
+-
+-    g_assert(!args->cpr_channel || args->connect_channels);
++    QObject *channels = NULL;
  
--    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "qatzip");
-+    return NULL;
- }
+     if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
+         return -1;
+@@ -869,40 +865,16 @@ int test_precopy_common(MigrateCommon *args)
+         }
+     }
  
- static void test_multifd_tcp_qatzip(char *name, MigrateCommon *args)
-@@ -77,7 +86,8 @@ static void *
- migrate_hook_start_precopy_tcp_multifd_qpl(QTestState *from,
-                                            QTestState *to)
- {
--    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "qpl");
-+    set_multifd_compression(from, to, "qpl");
-+    return NULL;
- }
+-    /*
+-     * The cpr channel must be included in outgoing channels, but not in
+-     * migrate-incoming channels.
+-     */
+     if (args->connect_channels) {
+-        if (args->start.defer_target_connect &&
+-            !strcmp(args->listen_uri, "defer")) {
+-            in_channels = qobject_from_json(args->connect_channels,
+-                                            &error_abort);
+-        }
+-        out_channels = qobject_from_json(args->connect_channels, &error_abort);
+-
+-        if (args->cpr_channel) {
+-            QList *channels_list = qobject_to(QList, out_channels);
+-            QObject *obj = migrate_str_to_channel(args->cpr_channel);
+-
+-            qlist_append(channels_list, obj);
+-        }
++        channels = qobject_from_json(args->connect_channels, &error_abort);
+     }
  
- static void test_multifd_tcp_qpl(char *name, MigrateCommon *args)
-@@ -95,7 +105,8 @@ static void *
- migrate_hook_start_precopy_tcp_multifd_uadk(QTestState *from,
-                                             QTestState *to)
- {
--    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "uadk");
-+    set_multifd_compression(from, to, "uadk");
-+    return NULL;
- }
+     if (args->result == MIG_TEST_QMP_ERROR) {
+-        migrate_qmp_fail(from, args->connect_uri, out_channels, "{}");
++        migrate_qmp_fail(from, args->connect_uri, channels, "{}");
+         goto finish;
+     }
  
- static void test_multifd_tcp_uadk(char *name, MigrateCommon *args)
-@@ -141,8 +152,9 @@ migrate_hook_start_precopy_tcp_multifd_zlib(QTestState *from,
+-    migrate_qmp(from, to, args->connect_uri, out_channels, "{}");
+-
+-    if (args->start.defer_target_connect) {
+-        qtest_connect(to);
+-        qtest_qmp_handshake(to, NULL);
+-        if (!strcmp(args->listen_uri, "defer")) {
+-            migrate_incoming_qmp(to, args->connect_uri, in_channels, "{}");
+-        }
+-    }
++    migrate_qmp(from, to, args->connect_uri, channels, "{}");
+ 
+     if (args->result != MIG_TEST_SUCCEED) {
+         bool allow_active = args->result == MIG_TEST_FAIL;
+diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+index 79604c60f5..13ce84b49e 100644
+--- a/tests/qtest/migration/framework.h
++++ b/tests/qtest/migration/framework.h
+@@ -180,9 +180,6 @@ typedef struct {
       */
-     migrate_set_parameter_int(from, "multifd-zlib-level", 2);
-     migrate_set_parameter_int(to, "multifd-zlib-level", 2);
-+    set_multifd_compression(from, to, "zlib");
+     const char *connect_channels;
  
--    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "zlib");
-+    return NULL;
- }
- 
- static void test_multifd_tcp_zlib(char *name, MigrateCommon *args)
+-    /* Optional: the cpr migration channel, in JSON or dotted keys format */
+-    const char *cpr_channel;
+-
+     /* Optional: callback to run at start to set migration parameters */
+     TestMigrateStartHook start_hook;
+     /* Optional: callback to run at finish to cleanup */
 -- 
 2.51.0
 
