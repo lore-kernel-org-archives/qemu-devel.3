@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B527CD3436
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 11:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38855FF885A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 11:20:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKDp8-0007F8-6X; Tue, 05 May 2026 07:20:22 -0400
+	id 1wKDpD-0007Hi-Qc; Tue, 05 May 2026 07:20:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKDp6-0007Du-EX
- for qemu-devel@nongnu.org; Tue, 05 May 2026 07:20:20 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1wKDp8-0007FO-EW
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 07:20:22 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKDp4-0005oo-9H
- for qemu-devel@nongnu.org; Tue, 05 May 2026 07:20:20 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4893940bb5eso27525895e9.3
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 04:20:17 -0700 (PDT)
+ id 1wKDp5-0005pO-IW
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 07:20:22 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48984d29fe3so74692705e9.0
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 04:20:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777980016; x=1778584816; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777980017; x=1778584817; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RsPS9jH4wqzZMo8K63vD2xS0qPk68eIqWMM62PQ4Kyc=;
- b=zdRSeKTdP8UvICeFCnwjcAfkL+LdkwoqeWMorlp+VYWQ63NV43fbMAhY4SuEJv5mVq
- ezsFqK2GrkodvnueGcUdc/vOhStVHmKzov4FAg6+Ow35ZQbqmtVJG+2a0erkDW2F2a1C
- 7/ym0OXhPzcvEzYi3Xd2XZSNknibucvyPp0VKUij4GAnomn+Rx70/TL2vtDWNFmyH6Rw
- rFu+08a6vReJd0ZaePO+mdVlAoyzKDbA/pSI4dGmVxsqtXwinX6+1Fs3Y2Y7ZqERQa+B
- ZabYC5aVGVIKjWcZxYSQgkKhHgqLAP9ovbvlwrvGjGVHrZf7gYLoAk4UwaQPkTEgYIUJ
- oggQ==
+ bh=DJazhEDPgKRcDHmZKYIM+jso6J9Jwwost9U+BImJW8o=;
+ b=NNFuSSmgH7/QoY7nR8yfc4GTshwVziLD1+WmtP7051FcokLAmpcUwB5hAtmtuIX2kL
+ D8/YS1OzS6Ww/IWKDzOl120TWYlCtnl3UYYu0rcBnGUysAe3+WMzjaNax1a+GNeknvHN
+ zDMZNYBzKxZ66TZHjy14sVbo07DsAes2Ebf19fjjQg1rRMXTnqcWJ1wh3OIleixRnyOW
+ MNK7M0pzlFGklHvAKvHtBF5lmKKaFoyf6pl9fo6OkzeY0oNE/2PxVxdvwuERdmFFdBKk
+ OwRY/URdPooJtYM1JkV1jhaVjyReXuaNi2+P9hU00fBzXDSTFVdEDyv3nBLVFk08cH5p
+ 8rig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777980016; x=1778584816;
+ d=1e100.net; s=20251104; t=1777980017; x=1778584817;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=RsPS9jH4wqzZMo8K63vD2xS0qPk68eIqWMM62PQ4Kyc=;
- b=PRnW7elCkqo25c1bdEB5K7caljfpWu+dwF7BG6mQgQb+gTaxeYtxU/3I6IRGSwtULM
- bPjgN9qGskhhYrRcNiSQbBFFcpN5K69hvZmmdzKhSkySZajceRjndF9Y3blRrstgFxqW
- HucKXstg2CZAaYa5r3F5SLa8qPENzYkgTsqxM1kd5mfoC5MFUJSzfAiOe8ActJg5/JRL
- sITxwPv5eQiGeCudlbJEU1MXqihYXmDNuY2iMaLOiH+GWrII5fb8q+UmVL8Fuo5OmsWR
- KWeRJRQtVan7zlKD34QcQ9+XoWOnv4/l8DyfFdm5gbF2wlvdllsMhwa1OyqWNTwv+BeD
- VnpA==
-X-Gm-Message-State: AOJu0YzwDjweaUGwb4zOR9K4UIsEPd+oZQxArC6vMZzTJp1eCMSWq+FK
- Wc+vHNwt8qED43uSchs+EMbsKfeHQ04STRuciiH0UBHfLS4Po1xuLgjmq5LvXkQz+UA=
-X-Gm-Gg: AeBDiesEopIUGCuTdve9pwbVC4WVmMPnsxR4MC7ZG/mQN6BzifDfhB+T0HKYh/VySQS
- 0vb2YBS21nY/9d3zodrdWU3W0PgEn3ilwzOkOp9TXHgbCu5IUZLfDBd4qBbx958xttjOTRULkyI
- trBss4RKtmxeuMRHu/pZ45oHO68brickbqjaZ4edfEwL+NDsBpjyTapoXdmZQ0k+pDuT4V/SnfW
- 2z/L/Z+lU1GUZy3pGK4Qg+0nw+8yU/2qW5UuhPK8KoBJF4n0e/sMv3bU8m6VHW6/Ff9P4XkNIN/
- 3VDWJmrasphCRHioPRGvV8f5uqXPhsbLtvu3HFDEMjQami/TrUQepMNDCUFrFaKIG9xaMBHQyDE
- rgZWv8q0GFdkDT7xHX48tkxRTULEg1gh9lewDWSdgrFpApipcTuZMikDnc9M4yg2nKZQX7TUBMe
- U+nYWMKguSnD+oOczINWOb3Mz5+ftEde50pQ==
-X-Received: by 2002:a05:600c:8710:b0:489:1cd2:610a with SMTP id
- 5b1f17b1804b1-48a9887194dmr215435815e9.9.1777980016036; 
+ bh=DJazhEDPgKRcDHmZKYIM+jso6J9Jwwost9U+BImJW8o=;
+ b=YzKJnyS7feQ1+L5yqm0gJiSFaHTXj30BUR8coYF15mjQbPpTYNY4xsEiVijx8lQrKC
+ S0QDpErUgnX8c1wiRu448EDJEC82H+GHpYWdKT1MdovcHKcpUjHd3zJrh+DKQZPWbEct
+ BCQl1z0i6rfZLiIQRHGI5I+Gh+cKLoXxXt4/JZFGIxlT4mPGe0IplaQuhQGoQ2e/lOvC
+ O2ZISItjanljFdh40fzBHUuoXw/A95vy7RpbzFg1i60CX3EtqOQG59KKjOke1qsug3hg
+ jbaoe5UHylJKj+WFt6dW3rPPf7NjNfqPiccncovLWaJzaUPpXIWYiZqUvYje3zscPDtg
+ B9Dw==
+X-Gm-Message-State: AOJu0Yyq90FLsMZMh45KxRnPvOpjoCnXRLS2mR9pu2/DDXI0B8JY01et
+ LaJPRahylV52WNNC5LXOUv8PxfRsANktOYgl11Ctn45KdgjN1+37iQ0+Cp5hs5Hm4bU=
+X-Gm-Gg: AeBDieu/xehDhh56KdfnZXJ5dsD/Iv0Ft9hTt65+YWQVK8NFBF18DeUJSi/OgWv+x6W
+ dfKLggvsHJ7VMN9tqDDy/J83En357YNymw5q+b1K7HBw8tfhKy5r2JcqxqMmbt5YDU9ECKX48ey
+ l0jUWp2MMtw0Egc2gOHlTfzvHvSTEIa7j2VOR4kgOSqZOCB5I2nc/aU0aiCR4/mvvI1U91X3tnl
+ E6CyCyd4KrAf1wPhDE/WtEZtBCQ9xmtk/WQebQ9c8nMZccbYj68Aw2IhRC5g4C/OhI5GY0M9uBw
+ 4aW80VtyAIT24lF047lvrken4cnicmFLe4RdTHuBm1YBm/QGbslIGbT/uOIpnTd3amUFJ8Avb4r
+ Ubk5+AveejN9LCFsZvOW+S9SPTdj4R/H/tdoJ+OWDfid38J4zG914FGvpX6uPVaPocA8SBfMrDX
+ BiCbSkD+d+MG2RLd/AnFI2PW4vkE89dF5vlg==
+X-Received: by 2002:a05:600c:810a:b0:48a:592c:e655 with SMTP id
+ 5b1f17b1804b1-48d18be5ab5mr41738105e9.17.1777980016924; 
  Tue, 05 May 2026 04:20:16 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48d17ff628esm39906375e9.1.2026.05.05.04.20.15
+ 5b1f17b1804b1-48d17ff41a0sm15578735e9.20.2026.05.05.04.20.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 05 May 2026 04:20:15 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7F83E5F94B;
+ by draig.lan (Postfix) with ESMTP id 6856F5F913;
  Tue, 05 May 2026 12:20:14 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -75,17 +75,18 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
  Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v5 2/7] target/arm: redefine event stream fields
-Date: Tue,  5 May 2026 12:20:08 +0100
-Message-ID: <20260505112014.102993-3-alex.bennee@linaro.org>
+Subject: [PATCH v5 1/7] target/arm: teach arm_cpu_has_work about halting
+ reasons
+Date: Tue,  5 May 2026 12:20:07 +0100
+Message-ID: <20260505112014.102993-2-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260505112014.102993-1-alex.bennee@linaro.org>
 References: <20260505112014.102993-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,80 +109,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The event stream control bits are the same for both CNTHCTL and
-CNTKCTL so rather than duplicating the definitions rename them to be
-useful in both cases.
+With the advent of WFE and WFI we need to pay closer attention to the
+reason why the vCPU may be sleeping to figure out if we should wake
+it up.
 
-We will need these in a later commit when we start implementing event
-streams.
+Create env->halt_reason to track this and then re-order the tests so
+we:
+
+  - ignore everything is the vCPU is powered off
+  - wake up if the event_register is set and we were in a WFE
+  - otherwise any IRQ event does wake the vCPU up.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- target/arm/internals.h | 11 +++++++----
- target/arm/helper.c    |  8 ++++----
- 2 files changed, 11 insertions(+), 8 deletions(-)
 
+---
+v3
+  - move arm_set_cpu_power_state to internals.h
+  - drop excess brackets
+v5
+  - more arm_set_cpu_power_state cases
+---
+ target/arm/cpu.h           | 16 +++++++++++++++
+ target/arm/internals.h     | 11 +++++++++++
+ target/arm/arm-powerctl.c  |  6 +++---
+ target/arm/cpu.c           | 40 +++++++++++++++++++++++++++-----------
+ target/arm/kvm.c           |  5 +++--
+ target/arm/machine.c       |  2 +-
+ target/arm/tcg/op_helper.c |  3 +++
+ 7 files changed, 66 insertions(+), 17 deletions(-)
+
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index be14a47c357..357359011cb 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -257,6 +257,19 @@ typedef enum ARMFPStatusFlavour {
+ } ARMFPStatusFlavour;
+ #define FPST_COUNT  10
+ 
++/**
++ * ARMHaltReason - the reason we have entered halt state
++ *
++ * To be able to correctly wake up via arm_cpu_has_work() we need to
++ * track the reason we went to sleep.
++ */
++typedef enum {
++    NOT_HALTED = 0,
++    HALT_PSCI,
++    HALT_WFI,
++    HALT_WFE
++} ARMHaltReason;
++
+ typedef struct CPUArchState {
+     /* Regs for current mode.  */
+     uint32_t regs[16];
+@@ -760,6 +773,9 @@ typedef struct CPUArchState {
+     /* Optional fault info across tlb lookup. */
+     ARMMMUFaultInfo *tlb_fi;
+ 
++    /* Reason the CPU is halted */
++    ARMHaltReason halt_reason;
++
+     /*
+      * The event register is shared by all ARM profiles (A/R/M),
+      * so it is stored in the top-level CPU state.
 diff --git a/target/arm/internals.h b/target/arm/internals.h
-index 4a1ea5465d7..24423a200ff 100644
+index a632584a4e0..4a1ea5465d7 100644
 --- a/target/arm/internals.h
 +++ b/target/arm/internals.h
-@@ -269,14 +269,17 @@ FIELD(VSTCR, SA, 30, 1)
-  * have different bit definitions, and EL1PCTEN might be
-  * bit 0 or bit 10. We use _E2H1 and _E2H0 suffixes to
-  * disambiguate if necessary.
-+ *
-+ * The event stream bits (EVN*) are in the same position for
-+ * CNTKCTL_EL1/CTNKCTL.
-  */
- FIELD(CNTHCTL, EL0PCTEN_E2H1, 0, 1)
- FIELD(CNTHCTL, EL0VCTEN_E2H1, 1, 1)
- FIELD(CNTHCTL, EL1PCTEN_E2H0, 0, 1)
- FIELD(CNTHCTL, EL1PCEN_E2H0, 1, 1)
--FIELD(CNTHCTL, EVNTEN, 2, 1)
--FIELD(CNTHCTL, EVNTDIR, 3, 1)
--FIELD(CNTHCTL, EVNTI, 4, 4)
-+FIELD(CNTxCTL, EVNTEN, 2, 1)
-+FIELD(CNTxCTL, EVNTDIR, 3, 1)
-+FIELD(CNTxCTL, EVNTI, 4, 4)
- FIELD(CNTHCTL, EL0VTEN, 8, 1)
- FIELD(CNTHCTL, EL0PTEN, 9, 1)
- FIELD(CNTHCTL, EL1PCTEN_E2H1, 10, 1)
-@@ -286,7 +289,7 @@ FIELD(CNTHCTL, EL1TVT, 13, 1)
- FIELD(CNTHCTL, EL1TVCT, 14, 1)
- FIELD(CNTHCTL, EL1NVPCT, 15, 1)
- FIELD(CNTHCTL, EL1NVVCT, 16, 1)
--FIELD(CNTHCTL, EVNTIS, 17, 1)
-+FIELD(CNTxCTL, EVNTIS, 17, 1)
- FIELD(CNTHCTL, CNTVMASK, 18, 1)
- FIELD(CNTHCTL, CNTPMASK, 19, 1)
+@@ -1997,4 +1997,15 @@ bool arm_cpu_match_cpreg_mig_tolerance(ARMCPU *cpu, uint64_t kvmidx,
+                                        ARMCPRegMigToleranceType type);
  
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 7e7677a584d..dfdb77a9fe2 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -1746,9 +1746,9 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     uint32_t valid_mask =
-         R_CNTHCTL_EL0PCTEN_E2H1_MASK |
-         R_CNTHCTL_EL0VCTEN_E2H1_MASK |
--        R_CNTHCTL_EVNTEN_MASK |
--        R_CNTHCTL_EVNTDIR_MASK |
--        R_CNTHCTL_EVNTI_MASK |
-+        R_CNTxCTL_EVNTEN_MASK |
-+        R_CNTxCTL_EVNTDIR_MASK |
-+        R_CNTxCTL_EVNTI_MASK |
-         R_CNTHCTL_EL0VTEN_MASK |
-         R_CNTHCTL_EL0PTEN_MASK |
-         R_CNTHCTL_EL1PCTEN_E2H1_MASK |
-@@ -1763,7 +1763,7 @@ static void gt_cnthctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
-             R_CNTHCTL_EL1TVCT_MASK |
-             R_CNTHCTL_EL1NVPCT_MASK |
-             R_CNTHCTL_EL1NVVCT_MASK |
--            R_CNTHCTL_EVNTIS_MASK;
-+            R_CNTxCTL_EVNTIS_MASK;
+ 
++/**
++ * arm_set_cpu_power_state() - set power state synced with halt_reason
++ */
++static inline void arm_set_cpu_power_state(ARMCPU *cpu, ARMPSCIState state)
++{
++    CPUARMState *env = &cpu->env;
++
++    cpu->power_state = state;
++    env->halt_reason = state == PSCI_OFF ? HALT_PSCI : NOT_HALTED;
++}
++
+ #endif
+diff --git a/target/arm/arm-powerctl.c b/target/arm/arm-powerctl.c
+index a788376d1d3..a06be5cc997 100644
+--- a/target/arm/arm-powerctl.c
++++ b/target/arm/arm-powerctl.c
+@@ -78,7 +78,7 @@ static void arm_set_cpu_on_async_work(CPUState *target_cpu_state,
+ 
+     /* Finally set the power status */
+     assert(bql_locked());
+-    target_cpu->power_state = PSCI_ON;
++    arm_set_cpu_power_state(target_cpu, PSCI_ON);
+ }
+ 
+ int arm_set_cpu_on(uint64_t cpuid, uint64_t entry, uint64_t context_id,
+@@ -186,7 +186,7 @@ static void arm_set_cpu_on_and_reset_async_work(CPUState *target_cpu_state,
+ 
+     /* Finally set the power status */
+     assert(bql_locked());
+-    target_cpu->power_state = PSCI_ON;
++    arm_set_cpu_power_state(target_cpu, PSCI_ON);
+ }
+ 
+ int arm_set_cpu_on_and_reset(uint64_t cpuid)
+@@ -239,7 +239,7 @@ static void arm_set_cpu_off_async_work(CPUState *target_cpu_state,
+     ARMCPU *target_cpu = ARM_CPU(target_cpu_state);
+ 
+     assert(bql_locked());
+-    target_cpu->power_state = PSCI_OFF;
++    arm_set_cpu_power_state(target_cpu, PSCI_OFF);
+     target_cpu_state->halted = 1;
+     target_cpu_state->exception_index = EXCP_HLT;
+ }
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 10feb639c4d..fb79981338c 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -144,18 +144,36 @@ static bool arm_cpu_has_work(CPUState *cs)
+ {
+     ARMCPU *cpu = ARM_CPU(cs);
+ 
+-    if (arm_feature(&cpu->env, ARM_FEATURE_M)) {
+-        if (cpu->env.event_register) {
+-            return true;
+-        }
++    /*
++     * Only another PSCI call can wake the CPU up in which case the
++     * power_state would be set by arm_set_cpu_on_and_reset_async_work()
++     */
++    if (cpu->power_state == PSCI_OFF) {
++        g_assert(cpu->env.halt_reason == HALT_PSCI);
++        return false;
++    }
++
++    /*
++     * A wake-up event should only wake us if we are halted on a WFE
++     */
++    if (cpu->env.halt_reason == HALT_WFE && cpu->env.event_register) {
++        cpu->env.halt_reason = NOT_HALTED;
++        return true;
++    }
++
++    /*
++     * Otherwise pretty much any IRQ would wake us up
++     */
++    if (cpu_test_interrupt(cs,
++                           CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD
++                           | CPU_INTERRUPT_NMI | CPU_INTERRUPT_VINMI | CPU_INTERRUPT_VFNMI
++                           | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ | CPU_INTERRUPT_VSERR
++                           | CPU_INTERRUPT_EXITTB)) {
++        cpu->env.halt_reason = NOT_HALTED;
++        return true;
      }
-     if (cpu_isar_feature(aa64_ecv, cpu)) {
-         valid_mask |= R_CNTHCTL_ECV_MASK;
+ 
+-    return (cpu->power_state != PSCI_OFF)
+-        && cpu_test_interrupt(cs,
+-               CPU_INTERRUPT_FIQ | CPU_INTERRUPT_HARD
+-               | CPU_INTERRUPT_NMI | CPU_INTERRUPT_VINMI | CPU_INTERRUPT_VFNMI
+-               | CPU_INTERRUPT_VFIQ | CPU_INTERRUPT_VIRQ | CPU_INTERRUPT_VSERR
+-               | CPU_INTERRUPT_EXITTB);
++    return false;
+ }
+ #endif /* !CONFIG_USER_ONLY */
+ 
+@@ -326,7 +344,7 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
+     env->vfp.xregs[ARM_VFP_MVFR1] = cpu->isar.mvfr1;
+     env->vfp.xregs[ARM_VFP_MVFR2] = cpu->isar.mvfr2;
+ 
+-    cpu->power_state = cs->start_powered_off ? PSCI_OFF : PSCI_ON;
++    arm_set_cpu_power_state(cpu, cs->start_powered_off ? PSCI_OFF : PSCI_ON);
+ 
+     if (arm_feature(env, ARM_FEATURE_AARCH64)) {
+         /* 64 bit CPUs always start in 64 bit mode */
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index d4a68874b88..c08e4797b32 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -1143,11 +1143,12 @@ static int kvm_arm_sync_mpstate_to_qemu(ARMCPU *cpu)
+     if (cap_has_mp_state) {
+         struct kvm_mp_state mp_state;
+         int ret = kvm_vcpu_ioctl(CPU(cpu), KVM_GET_MP_STATE, &mp_state);
++        ARMPSCIState state;
+         if (ret) {
+             return ret;
+         }
+-        cpu->power_state = (mp_state.mp_state == KVM_MP_STATE_STOPPED) ?
+-            PSCI_OFF : PSCI_ON;
++        state = (mp_state.mp_state == KVM_MP_STATE_STOPPED) ? PSCI_OFF : PSCI_ON;
++        arm_set_cpu_power_state(cpu, state);
+     }
+     return 0;
+ }
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 8dc766d3225..dbd39e7ba76 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -916,7 +916,7 @@ static int get_power(QEMUFile *f, void *opaque, size_t size,
+ {
+     ARMCPU *cpu = opaque;
+     bool powered_off = qemu_get_byte(f);
+-    cpu->power_state = powered_off ? PSCI_OFF : PSCI_ON;
++    arm_set_cpu_power_state(cpu, powered_off ? PSCI_OFF : PSCI_ON);
+     return 0;
+ }
+ 
+diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+index e8f0996ed39..504526153a6 100644
+--- a/target/arm/tcg/op_helper.c
++++ b/target/arm/tcg/op_helper.c
+@@ -402,6 +402,7 @@ void HELPER(wfi)(CPUARMState *env, uint32_t insn_len)
+                         target_el);
+     }
+ 
++    env->halt_reason = HALT_WFI;
+     cs->exception_index = EXCP_HLT;
+     cs->halted = 1;
+     cpu_loop_exit(cs);
+@@ -463,6 +464,7 @@ void HELPER(wfit)(CPUARMState *env, uint32_t rd)
+     } else {
+         timer_mod(cpu->wfxt_timer, nexttick);
+     }
++    env->halt_reason = HALT_WFI;
+     cs->exception_index = EXCP_HLT;
+     cs->halted = 1;
+     cpu_loop_exit(cs);
+@@ -507,6 +509,7 @@ void HELPER(wfe)(CPUARMState *env)
+             return;
+         }
+ 
++        env->halt_reason = HALT_WFE;
+         cs->exception_index = EXCP_HLT;
+         cs->halted = 1;
+         cpu_loop_exit(cs);
 -- 
 2.47.3
 
