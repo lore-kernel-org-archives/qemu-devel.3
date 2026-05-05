@@ -4,103 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A33F8FF8855
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 16:45:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E98C5CD3427
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 17:02:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKIsw-0004Ur-Q0; Tue, 05 May 2026 12:44:38 -0400
+	id 1wKJ9C-0007yk-9R; Tue, 05 May 2026 13:01:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKIss-0004Ty-VG
- for qemu-devel@nongnu.org; Tue, 05 May 2026 12:44:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKIsq-0001Pv-K7
- for qemu-devel@nongnu.org; Tue, 05 May 2026 12:44:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777999471;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=MnCw9cVFVMuMTZxCeS+JTdl2scEdPhiAHSuNO0ASkLA=;
- b=O00RHYZAS9NfUT0Hn/dodtsThZl9tHfknlFe1tNgd4JLifxHSS1GZzJphuJfgXREiVUvIL
- 9jvZ5S+ZEwfDyKR8SUsoBncCwIJZP/ld7sLVg3yy0hgFHAWDSAsuA0Ul0C2Gw/fMO9960Q
- 4LjoDmY+X2g2Lw2vLo606vcBnjrTCMQ=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-158-pcqHVjBUNay6LD54ctdVhw-1; Tue, 05 May 2026 12:44:28 -0400
-X-MC-Unique: pcqHVjBUNay6LD54ctdVhw-1
-X-Mimecast-MFC-AGG-ID: pcqHVjBUNay6LD54ctdVhw_1777999468
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-514551d5f2aso10479021cf.2
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 09:44:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wKJ96-0007xB-Fv
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 13:01:21 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wKJ92-0003TL-DX
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 13:01:19 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-488e1a8ac40so53515125e9.2
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 10:01:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777999468; x=1778604268; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=MnCw9cVFVMuMTZxCeS+JTdl2scEdPhiAHSuNO0ASkLA=;
- b=GRsFszipcroyyTNrxBB7EJM5UR496Y1e9WPzY24EQqVSvWmuno7gjSElyfDhCZluZI
- +LymUmqw0SCK4sNVddjNCW1xobPMDsEl98lqGm5RHw/vePq3Mt/ld7Vr9Ar92SElfDhE
- +ICaxDhXZzzFnbFINh6hK2iZDdzascMMS7YK3Ysk9IJ/F9/CiVzYQNKSlYNhLcMv4kgP
- cNgleLJQl/0LZ4CTd5K/41N2+yo2LXHZWBCFxpjPTBEAdY5GzK+iOStRBHrn92U5BTXg
- M6n9+/PhXoRwc9m5BJiMHqTjYGLOrMDC9fyMY79m4/0e1ScKVZOUEJXXc4U/tOyaRjGL
- X7CQ==
+ d=linaro.org; s=google; t=1778000471; x=1778605271; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JD3YO6kL2cJ5U6rd4ov7BMMOq4YRoEaGP/uPsPkdEWA=;
+ b=wpZIysz1Ig2sTeZpkksPGvSNjHTEcw3nbeaGybGBXe9OB9nM8CXJoLLcK0/qfOmwyZ
+ Ds91SUWW7cHp/ya5hg/jbWBNyYOz8atF38Wcs/ZoOqjs/3orEaVbnE37GX1LAWU7YlSl
+ DiM+TM8v/XUQfDIw1DS9/sNnk7p0LdgVic3XPOD8Dl756xK20mtxOcHeTfIGev57wqMk
+ zxSavASZXgaJ1LbgtJoIetyl6m7io5eZdtndA3FpNWR9taNgvjSyaLnfaSI+Mt1YR2Av
+ plp6uxSMoU3tUwBbiJpsWE/nJGVmake3u5tYB9wmxlFf1aPLX4OzUSdgIZ9IxtxZ5FWd
+ pblA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777999468; x=1778604268;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MnCw9cVFVMuMTZxCeS+JTdl2scEdPhiAHSuNO0ASkLA=;
- b=hCUJN1nNKS2YoVzyapAXRa3CJT2nDKeSVucryJAA4txfTLB/e6FMYU+GFazOTuQMKV
- kNYOE6ed82EBwh86ey/N8LE18AuJZGD+C1p32SfcZpZ/4+R8DDA+Fc/MAVjmO6S8D+mg
- geFVRoNSOGB5MefpXyVUsBHfgS+KllIBIBoEPYyj2fg2YBGgggKYVHTmUVC3JH7pO1ZQ
- PwWGoPmS1dJ2+lNYHC4f8f3YWZmUn1AOrBHWG03+RIIRf0DJ8UChyWLWgyErnNkfgCi/
- 7bmx0X4gswe81uWJmbwObfDGsrh3yn2B9plBNHzkiQl+nVAVdQ77/lVPD/8xX1Q/vDlG
- ubYg==
-X-Gm-Message-State: AOJu0YxoJjbHwuluYdYHnv3xK7J1CXlga6c/CwZ6vAQXP5vr2jBB3Vrw
- YiYX+JZL6oM9CARhKvKG1nNnGS/k2r0Q/ow3KNSb3ri3OHQq4eVwbz2JpWhoUIOORFYxSYj+O83
- DEIW5sTJrgZpMi7zRY0S7eg3aTZvy2Qaz6DT69i8mOn9Ky2+hzc4q2D0A
-X-Gm-Gg: AeBDiesxFs+czpqgNYrZVpdJSd80zRxXql58cJmSoGuP+jhxgVu/bx+P1144k9POj8I
- XHPdIXxzTMNRsVso+Q8Kf0IDo6gDROf+28M7walt0dIxEQkV5eZzGsHQ+edlNLADEnGN6ZtxwzO
- XOSJI3PKRSZs6Iz9k8nGXHd/dQyIZUU/ipTdNwEd0DTLYrDaJcYP2KbBp1XSSC06zQHhlNEfgKX
- xa4Tgn2XNS2ffLGFTW3ScbQkjVac+1A66kVhUP0XW214581mVw+CQbh3tn7UCBYQdbCzCi2KZ2d
- Q11fcxdHpaY71+puUr7DIQgmCTv4xh89OISDFSBsolkYFgRRC+q7CbOlkRoXgbNhInHnRsMxwTL
- GOvsD001XwWD9UoWn7Jq1ZZT9bJlDZmHqTCnG3awUKjIw2AhamcDrdSlXTA==
-X-Received: by 2002:a05:622a:c:b0:509:1dc8:e9e5 with SMTP id
- d75a77b69052e-51306a53c38mr56395021cf.34.1777999467491; 
- Tue, 05 May 2026 09:44:27 -0700 (PDT)
-X-Received: by 2002:a05:622a:c:b0:509:1dc8:e9e5 with SMTP id
- d75a77b69052e-51306a53c38mr56394391cf.34.1777999466897; 
- Tue, 05 May 2026 09:44:26 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b538b1d761sm155320566d6.9.2026.05.05.09.44.26
+ d=1e100.net; s=20251104; t=1778000471; x=1778605271;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=JD3YO6kL2cJ5U6rd4ov7BMMOq4YRoEaGP/uPsPkdEWA=;
+ b=RwD/4AbM0TXxS2tU0ZZEpBqrBGUZ1IpLzA7jMjzEhnm/hxf5D6Ii0k/4sqj/zSXk/T
+ rayRTEZ0P/IXzH5h8DgHV9j5mreWjtKSU+K6aqFEzFWYXrgI+h4DaJGBSPZ3G1eNXEhD
+ 5wPu1MkvvPOVuJrZAF0SkEHB3qK+7vAi5rmSGaUghbhLAQNM9bU1RigL58ONQw/U55Eb
+ 45mY4vRNpnjCOi7dFUzCvHssN7eufVjtq7tyhPF5eVilTzOZKP7HU8xwBkYmM7pkl3rw
+ xOBkPp3GSkXsEpEa5pVJL6Zhhgb0YlNuS6Ka/87WGhYXb9WoQFhMyqzUVz2rq3NvuReb
+ pPyA==
+X-Gm-Message-State: AOJu0YygNh/rZXP+AKfaIycECehKPDc0GAe7H+c4GBcH9g+BwhYLmiA2
+ MoKKYtvGVbmgJAC5O0ExfMYNCm6+GpsbWxhQpX3gsX0tFigR/LUfKMTnHexdOnUPVisB2RLBkSY
+ DV389YdQ=
+X-Gm-Gg: AeBDievYAa/cmFneDF347r9zka7chg3/n0URjAXyiG1li+mYkfPW5gQa62/L4oCxY8g
+ 8g1SW+T/QolaVCBnRJPMRw6JNlTKg+dsY8HtSUcVnncJcAaHFv4+ZCIsMGKMykIjjSiczT1l3h/
+ wbLnBH3PrftmeqnHq7Ef9x8zpVZKLCQzbrgXnBo8Ltfg/rm38QXoDaTEZzmzFhlA8GxGmiZXKO6
+ ObOg3ZuhMw+lm5+7kBu1NFe28zwKpj85WUYkBwWu+AE7lrxUo2ZkGNAIrRHzJgn0rsq8yjpOjBj
+ ML3/XGZKHBmICYy1kMT22l5FeinN5Nde9kcgrzERAP6wDJjVy3/uYWNMtj5L99KqSqLI8tqKG8h
+ DuTZAJbC70WUACTDjvW7Q2Hk9ijdLtVWHbtgrCrLgJb95oNU5SONnAHdKbDPk24DduWN8HysMdi
+ 5qyvW9ffXzXNczrnwjcTu99iPAzbLuaXGXDg==
+X-Received: by 2002:a05:600c:4449:b0:48a:89d9:a419 with SMTP id
+ 5b1f17b1804b1-48e51f2e67fmr1143785e9.11.1778000471044; 
+ Tue, 05 May 2026 10:01:11 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48a82301ad1sm651690355e9.9.2026.05.05.10.01.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 May 2026 09:44:26 -0700 (PDT)
-Date: Tue, 5 May 2026 12:44:25 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
- Jared Rossi <jrossi@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: Re: [PATCH v1] tests/qtest/migration: Fix A-B file build
-Message-ID: <afoeaRAxWSMO_gK5@x1.local>
-References: <20260429231025.30818-1-farosas@suse.de>
+ Tue, 05 May 2026 10:01:10 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 72ABA60223;
+ Tue, 05 May 2026 18:01:06 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [RFC PATCH 05/10] .agents/skills: add qemu-build skill
+Date: Tue,  5 May 2026 18:01:00 +0100
+Message-ID: <20260505170105.228162-6-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260505170105.228162-1-alex.bennee@linaro.org>
+References: <20260505170105.228162-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260429231025.30818-1-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,49 +103,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 29, 2026 at 08:10:25PM -0300, Fabiano Rosas wrote:
-> diff --git a/tests/qtest/migration/bootfile.h b/tests/qtest/migration/bootfile.h
-> index 96e784b163..0ce5b34433 100644
-> --- a/tests/qtest/migration/bootfile.h
-> +++ b/tests/qtest/migration/bootfile.h
-> @@ -8,6 +8,15 @@
->  #ifndef BOOTFILE_H
->  #define BOOTFILE_H
->  
-> +/*
-> + * This file is included from qtest, but also from the assembly code
-> + * that generates the header file containing the guest workload. Don't
-> + * expose the function declarations and non-standard types to it.
-> + */
-> +#ifdef __ASSEMBLER__
-> +#define MIGRATION_GUEST_CODE
-> +#endif
+This provides basic instructions for building QEMU.
 
-Just to mention: this triggers a checkpatch warning (I only notice this
-when running checkpatch locally; CI is fine with warnings), which seems to
-be false positive.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ .agents/skills/qemu-build/SKILL.md | 50 ++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
+ create mode 100644 .agents/skills/qemu-build/SKILL.md
 
-But still, I wonder whether we need this at all. IIUC we can also put those
-into a separate smaller header and include that here, then use that one for
-arch a-b-bios builds.
-
-Even if it will work, we can leave it for later.
-
-> +
->  /* Common */
->  #define TEST_MEM_PAGE_SIZE 4096
->  
-> @@ -33,8 +42,10 @@
->   */
->  #define ARM_TEST_MAX_KERNEL_SIZE (512 * 1024)
->  
-> +#ifndef MIGRATION_GUEST_CODE
->  void bootfile_delete(void);
->  char *bootfile_create(const char *arch, const char *dir, bool suspend_me);
->  char *bootfile_get(void);
-> +#endif
-
+diff --git a/.agents/skills/qemu-build/SKILL.md b/.agents/skills/qemu-build/SKILL.md
+new file mode 100644
+index 00000000000..a78678ff632
+--- /dev/null
++++ b/.agents/skills/qemu-build/SKILL.md
+@@ -0,0 +1,50 @@
++---
++name: qemu-build
++description: Provides step-by-step instructions on configuring and building QEMU. You MUST trigger this skill whenever the user asks to build QEMU or debug build failures. It includes critical details on build directory reuse and spawning sub-agents.
++license: GPL-2.0-or-later
++---
++
++# Instructions
++
++## Examining and Re-using Build Directories
++Before creating a new build directory, check if an existing one can be re-used. QEMU uses out-of-tree builds, typically in `build` or `builds/` sub-directories.
++
++1. **Check existing configs**: You can examine how an existing build directory was configured by checking its `config.log`. Run `head -n 2 builds/<dir>/config.log`. The second line typically contains the full `../configure` command line used.
++2. **Re-use and Reconfigure**: You have latitude to re-use existing directories when appropriate (e.g., `builds/debug` which is a general-purpose debug directory for whatever is currently going on). If an existing directory has the right flags (like debug/sanitizers) but the wrong target list, you can reconfigure it to keep the same config but change the `--target-list`:
++   ```bash
++   cd builds/debug
++   # Check the old config.log, then re-run configure with the new target-list
++   ../../configure <old-flags> --target-list=<new-targets>
++   ```
++
++## Launching Builds
++**Crucial**: You MUST NEVER run builds directly in the main agent context. You MUST ALWAYS launch them by spawning a sub-agent using the `eca__spawn_agent` tool.
++Always use the `qemu-helper-agent` for these tasks.
++Pass the specific build commands, along with the required working directory, in the `task` argument. Give the subagent explicit instructions on what to verify and what to report back to you.
++For example: `task: "Navigate to builds/debug and run ninja. If it fails, report the exact compiler errors."`
++
++## Configuring a New Build
++If no suitable build directory exists, create a new one.
++
++1. **Create build directory**: `mkdir -p builds/test-target; cd builds/test-target`
++2. **Basic Configure**: `../../configure --target-list=[list of targets]`
++   - Common targets: `x86_64-softmmu`, `aarch64-softmmu`, `riscv64-softmmu`, `x86_64-linux-user`.
++3. **Common Options**:
++   - `--enable-debug-info`: Include symbols.
++   - `--enable-debug`: Enable assertions.
++4. **Sanitizers**:
++   - `--enable-asan`: Address Sanitizer.
++   - `--enable-tsan`: Thread Sanitizer.
++   - `--enable-ubsan`: Undefined Behavior Sanitizer.
++
++## Building
++**Important**: Always re-run the build after making changes to the source code.
++
++## Reporting Results
++**Crucial**: After completing the build task, provide a concise summary of the results to the calling agent.
++1. **Summary**: State whether the build passed or failed.
++2. **Failure Excerpts**: If the build fails, include relevant excerpts from the logs (e.g., compiler errors).
++3. **Full Paths**: Always provide the **absolute file paths** to the full logs for further inspection.
++
++## Debugging and Environment
++- **Verbose**: `V=1` for detailed output.
 -- 
-Peter Xu
+2.47.3
 
 
