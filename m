@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17D4BFF885A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 01:39:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 812BECD342C
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 02:01:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wK4ki-0005QL-CJ; Mon, 04 May 2026 21:39:12 -0400
+	id 1wK566-0007xT-Sd; Mon, 04 May 2026 22:01:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wK4kY-0005P9-Pc
- for qemu-devel@nongnu.org; Mon, 04 May 2026 21:39:05 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wK55q-0007ty-2t
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 22:01:03 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wK4kU-0003sZ-IA
- for qemu-devel@nongnu.org; Mon, 04 May 2026 21:39:00 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-c8026aa4d53so1259509a12.3
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 18:38:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wK55l-0004T0-Vc
+ for qemu-devel@nongnu.org; Mon, 04 May 2026 22:00:59 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2b9ea536877so17384945ad.1
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 19:00:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777945137; x=1778549937; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1777946456; x=1778551256; darn=nongnu.org;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:from:to
  :cc:subject:date:message-id:reply-to;
- bh=R9fzSS/mZ6X5epkhdzAxQFiioXNyPDiL4MFDldFdpUg=;
- b=bUb0sFhY8ZGoF7DkUckajPTUDEqPC3TxU1s+9WL7Uh/OUb/tJbbmENc90k8CJF5ii9
- wif5S7mK4fZwrS3cwLwDNBHwOFlf89T9wuOfxpWpS9YIvekV4Lh8f4d3HEOJX70jktDl
- pfD4UTDm0HfClx3eeJ8scDRWW13twS/x3Fsk2nNAEM0DSeIr6HK8sn3k1PdJN1OqdXOj
- qMzrXDQHADqMcZ90er40JCK4f13+rTMhSKDG91Ry/Tk8IoKcqAQZkWc+T501F13VFGqC
- fkDkkhckAIgvXrthg9p8yJreeU8LsogoZEcd8wAw5duf1mkYymzugtXn9/eBt7Q9O/OM
- 2HYw==
+ bh=NoiNadYVmI8J/NztZI1ukZWpwrODVQ4vGWgRiTK8EzY=;
+ b=W897xvpNnS//Bu72SJsSOF0Kz9HZSkSlLsq2QYMfP5hmskIAorMy5yWewownaytBMW
+ XwCm89+Ngd1Okp+Ea+Bn+d/eEn0eY6qwoKzismICLIK4SGu/9p4KeQ4OQsTik4vEj0Xv
+ tXdgJXDzR4JhGJ9Xpjq3bqNAYuDnNkUL+YRr+HV6ETMmWGMHY2CnXBbXt3baVqXAFZ2t
+ hvXz+M2sHxWYDjHDTmwqAtyhB2AonybHG9rGtkeFhwH11dfjh5MxzKp3xD0y4Di8iXmB
+ wDt6LMzUkFZVTYzmo/e1OJMl01PSO955a2dFlnohtU17KTPmV0/6eHH+fVU/3uNmWWDK
+ CXJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777945137; x=1778549937;
+ d=1e100.net; s=20251104; t=1777946456; x=1778551256;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R9fzSS/mZ6X5epkhdzAxQFiioXNyPDiL4MFDldFdpUg=;
- b=TND4HyC32azLhiBWjQuAlWCLdvXK9f4VvW+Kjuup4OfRFBpo+C0qKqIkrEN31vOtei
- W+019P9+YuwNZ5eEww5/kJV9PhRkQxBdt7LgQdFTC+F4dt5N0b3qoZujixaVgwflj91i
- k9OrMzRiNWSn3gB1+rehXhYAxyu1zmaypEBrVC1jq6dlLNNRHKeIFBylPdxusUxm5M/R
- 6dwxxkKIIUgCALbwmEmSmdR/ww1PWco5N+o3Z23qvUfDBwGiSk15dtcG749FbVLwjIlk
- kvH0QNYPVvRDrfkCpwjY8lySAuLp3TK34RyHlb3sGeT0FMg33w73ROxA6On0xWoTFgOY
- 6E4A==
+ bh=NoiNadYVmI8J/NztZI1ukZWpwrODVQ4vGWgRiTK8EzY=;
+ b=qqJBd4OPzursWAdls1J1bh5fl3o7zi9Z5YOn6pmvN9zABjVrGTxzEPqYSyuea/by2n
+ UbzSOOxp0aw5pw3y3SrmGjyalAFwNDUEP4qyGh1XydWlQeagaEHsj9O0Ca7xrFFhjkwR
+ +VlSbyLFS6TupjqIFGeWpg98Y6qa6nW9fOa7frpE29h66fV+1zdMRtZdRgUIRHfMpV85
+ xAMQHAZVZd4ZSf7KAInv4dYxI6ci4mg0wrstmS2u8BmrUAhDy4PagFoGP/xSeJer7Qz2
+ Km2GOqeVhMqbnLO2ZDvqHiHgb9KjJfp0zE8VnOgSVXPzzsIGH8ZmYxyLrv9Kq8V07kRx
+ K59w==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9xEbBMtUXiRVF/M4AIfGkmxWMJM09D0nyXvgJcUqbuDlZE1D5KHG+qO9kZOe3vvL2a+wHGCkV88AKh@nongnu.org
-X-Gm-Message-State: AOJu0YycYEFOKY1hI0hDpqKkLenzYWj8m1eNA1wiAXXRf3vGUvZjBRQk
- mdjXf6C586KNXCXL25ZTWTtI2sPY72PNPMfY2Fq8P04x91BTJTfKhrVs
-X-Gm-Gg: AeBDievpt9VVxRSzu0eyj8ShHK4wLRLi8bjC37gXA9EulNiasvZtl7xXQKUWBhVoP5s
- n/+bW9FreG+CGoDBFDY8lAhvfPJdI3/2FbIvsadvpg4EKBulZGs2Y6iXenCMMZyV6VTR0v3QTPT
- xcNQ/fwnBiT5am3bEMLR4kVxhh5V1V9kbe/sPzqGE7S4L8e4DBDLkjdRXtpag958zjdnfwu3zov
- Ibtdn09rE5hCLZcZCK3N0a4VUUD5nCCoMOL85w2DqDw9lKo7QzE7K4M1U+y3K3K6xTIeziSJmGP
- 34okTu/hHUuLxxBmBsuVaSSvsqmYpCxMITPkMYdB1xYsu8KijJvnY2v0inoWqz/52qOdFAlpPdT
- ycn/ofPH5IJJb7jNAE/Ea4m5D0MTZRv7h8lSaqOu8e4QsB5iCfFqx668EdhYlo+fp056gII49Jo
- OOG84wq/76pNcCXBJBXKvVTjyJguKWG9KAAGAQrvAcmcw=
-X-Received: by 2002:a05:6a00:2d17:b0:82f:a6bf:bee7 with SMTP id
- d2e1a72fcca58-83924cb477emr1016446b3a.49.1777945136893; 
- Mon, 04 May 2026 18:38:56 -0700 (PDT)
+ AFNElJ/8/kL1HmvUE+sH6bZDgsXUbOArYbbi7b8YpYXc7Kl7HK0UAz96eqvGe8YRLXVRM3/fsC7FtzCl0YI5@nongnu.org
+X-Gm-Message-State: AOJu0YxszvUw3Mrt6+YfxUaXRqirgPhzu2exaY0bD4DBfNHYah1RVjuY
+ l9sKA7cyWVLbRgn3Yh2+1klbaJFWBp7bpGUQ7C911eQFIBfWZiOExQ6X
+X-Gm-Gg: AeBDievDea+u8hYsNopzxDmBT2HPipL50u4d2lTBtDogOfM5RNDFt+XzhAQt3xxbSGg
+ GweIbMhr9mYpYU5/bUARKAgaXMjxzaHsCOFJD9AfvWf+Wlt8GQfHdFl5YLdfcws/FV/bc885Q8+
+ ak4enQR1A5Lso5CJhpvbp+tDYm/1bSqFeqUoLFqoJzzL28/KUMmru06I4xO+MZyw+XbzFvvxOZ3
+ JYsOio/+oIQaTWMhP1PZME35Dc+stF4y80zs6NazfWsNV0Lq7tCwkuBJT07WRB7x6rwFMSQotTa
+ RgrnzL9hxkA6Ov765suK7Qeq1bJTx/n5h2aYuaF7ra5twwxWh4pfu4DJtj5NLHAlINN0VpoY9pA
+ XK0NLACHw7buJfF8ALMfAT3AV7s36/KU3oaC4pyzyjilhSBYh/aqzH8uoceSIRDnsTo7n1ujD/V
+ XWFgZ4kZPXmvWuymGRdRb0hmYwPUKq4QK07egPiyg/V9V2iC2/2L/Q2Q==
+X-Received: by 2002:a17:903:1acf:b0:2b2:5168:2f82 with SMTP id
+ d9443c01a7336-2ba4e4d4497mr14043295ad.24.1777946456314; 
+ Mon, 04 May 2026 19:00:56 -0700 (PDT)
 Received: from localhost ([124.158.97.178]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-839679c9293sm194413b3a.33.2026.05.04.18.38.55
+ d9443c01a7336-2b9cae54860sm113682305ad.72.2026.05.04.19.00.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 May 2026 18:38:56 -0700 (PDT)
-Date: Tue, 5 May 2026 11:38:52 +1000
+ Mon, 04 May 2026 19:00:55 -0700 (PDT)
+Date: Tue, 5 May 2026 12:00:51 +1000
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Alistair Francis <alistair23@gmail.com>
 Cc: Joel Stanley <joel@jms.id.au>, 
@@ -73,26 +73,27 @@ Cc: Joel Stanley <joel@jms.id.au>,
  Joel Stanley <jms@oss.tenstorrent.com>,
  Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
  Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v4 10/13] hw/riscv/atlantis: Add PCIe controller
-Message-ID: <aflCM09tnv1YORKL@lima-default>
+ qemu-devel@nongnu.org, 
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v4 09/13] hw/riscv: Add Tenstorrent Atlantis machine
+Message-ID: <aflOIW3v5FQMwfGA@lima-default>
 References: <20260425131721.932250-1-joel@jms.id.au>
- <20260425131721.932250-11-joel@jms.id.au>
- <CAKmqyKOV07ANs0i1yj6bMJWkWgn7DcME7B0_ZO0LPb0qVnfsew@mail.gmail.com>
+ <20260425131721.932250-10-joel@jms.id.au>
+ <CAKmqyKMLwO2uRnzrke+RkCZmdOJPs3Ouyoe=UeuAWnRgitAD8A@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKOV07ANs0i1yj6bMJWkWgn7DcME7B0_ZO0LPb0qVnfsew@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x529.google.com
+In-Reply-To: <CAKmqyKMLwO2uRnzrke+RkCZmdOJPs3Ouyoe=UeuAWnRgitAD8A@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,36 +109,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 30, 2026 at 10:04:16AM +1000, Alistair Francis wrote:
-> On Sat, Apr 25, 2026 at 11:21 PM Joel Stanley <joel@jms.id.au> wrote:
+On Thu, Apr 30, 2026 at 09:57:34AM +1000, Alistair Francis wrote:
+> On Sat, Apr 25, 2026 at 11:20 PM Joel Stanley <joel@jms.id.au> wrote:
+
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index e1942a86eba5..635a380945fd 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -1760,6 +1760,17 @@ F: hw/*/*sifive*.c
+> >  F: include/hw/*/*sifive*.h
+> >  F: tests/functional/test_riscv64_sifive_u.py
 > >
-> > From: Nicholas Piggin <npiggin@gmail.com>
-> >
-> > Atlantis has 3 DesignWare PCIe host controllers, however the boot firmware
-> > has not been tested with the QEMU DesignWare model so a generic ECAM
-> > controller is used for the interim. The system bus aperture and PCIe IO
+> > +Tenstorrent Machines
+> > +M: Joel Stanley <joel@jms.id.au>
+> > +R: Nicholas Piggin <npiggin@gmail.com>
+> > +R: Michael Ellerman <mpe@kernel.org>
+> > +L: qemu-riscv@nongnu.org
+> > +S: Supported
+> > +F: docs/system/riscv/tt_*.rst
+> > +F: hw/riscv/tt_*.c
+> > +F: hw/riscv/aia.[ch]
 > 
-> I don't follow.
-> 
-> The actual hardware has a different PCIe controller? This is user
-> visible so you can't easily change it once it's merged. Generally user
-> visible changes go through a deprecation process, we have some
-> exceptions for soft cores which change all the time. But ideally this
-> should model the hardware from the start.
-> 
-> Also if it isn't that should be noted in the board documentation.
+> AIA?
 
-Yeah, this was me punting on doing the designware host to get some IOMMU
-modeling and driver code tested. And generally being easier to test
-other things if we have PCI up.
+Oh it must be because checkpatch complained about patch 5.
 
-I hadn't really considered the stability / deprecation issue with
-upstreaming it.
-
-> A quick grep shows support for a DesignWare PCIe Host, why not use that?
-
-We should be, I'll take another look at it. We could drop this and the
-functional test that uses disk, for now.
+It is covered by RISC-V TCG CPUs though, so no change needed to
+MAINTAINERS for AIA AFAIKS?
 
 Thanks,
 Nick
