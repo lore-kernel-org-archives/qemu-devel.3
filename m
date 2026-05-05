@@ -4,98 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E293FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 11:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70354FF885A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 11:01:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKDVp-0002qN-Dq; Tue, 05 May 2026 07:00:25 -0400
+	id 1wKDWK-00034N-6s; Tue, 05 May 2026 07:00:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKDVn-0002pz-2h
- for qemu-devel@nongnu.org; Tue, 05 May 2026 07:00:23 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <munkhuu0825@gmail.com>)
+ id 1wKDWF-0002zr-FA
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 07:00:53 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKDVf-0004cQ-BU
- for qemu-devel@nongnu.org; Tue, 05 May 2026 07:00:16 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4891f625344so54853875e9.0
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 04:00:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <munkhuu0825@gmail.com>)
+ id 1wKDWD-0004lE-Hq
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 07:00:51 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2b458ca2296so28935695ad.0
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 04:00:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777978813; x=1778583613; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bsDTUqj2zX/6REcWVqYEDDMZA+WrT6bCoLyt03GXGdc=;
- b=wFg6LQba7bKrs9fdTNQ9v4PqjP1r2SCTD4EVq+94yOeyWWoei67w0VDMRSD8qNrd5q
- NhniHkysNQ0i3QuOuKkz6E9qY7LebBkfSafO52GO8j/SomCy2vRfBktcTh+hceRlB1+6
- 9/kZ+13OBBHg8us8m8Z7FdB5IpWUypoRuo+JFXH9plKL3LDmrx/4ILXsQ23MEA29kUJE
- Fs7KnrVR6/hEEN4O0LbvqyXudVuvOsWCXGpaHUdaxW6i1r3r8uNGK0IukQ/peDSqJlIR
- qiCdmEcR2W8hQNFMUaDsDvkiLMRXvefVYUHJImi87c97BwiURQ1sWgvIUFBTz6qzg3WI
- SiXw==
+ d=gmail.com; s=20251104; t=1777978847; x=1778583647; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=wpG61Sm+VTsYPNIBqYulcbNVCgfeGjPbFP1lPVoJ4/Q=;
+ b=qQ9Gc4uTZ871wIjMKCZIGn80YjjmeJ6TjUYqhp1Qs0AdB1gAkeEsr4vifhSNtkFluz
+ qjUCx+511D4u5+KNqPTTHBljryfvkK9iPQP1NnTryNi3NqexsM5DrBWJ5DX6f4mi46iv
+ A9PHwtxcYp7NWBCEph5eez+l9pbJhHdvE3bg16ZXgrXJFd4uCYFtAT2zykoP1aZRBtIq
+ UVxvqNarNnSRvkp2D4OtGe3bXe8/53mx5/8Jbi0gZ75jgx5HOEsQILPQLTYuiJrGFjju
+ sb/p/07c2inb1iItsXGfQU5IO+ekBzfQwdCuYhjZceJ+5hTdWkEz66b46KPPYPkO+uA1
+ BNcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777978813; x=1778583613;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bsDTUqj2zX/6REcWVqYEDDMZA+WrT6bCoLyt03GXGdc=;
- b=NmveO01ITyKDcgAi8LcjCrOm022Lja94yupefGDNIpzbTjjSirfuTyG3z1zQSP3Om1
- fn9wEYQMZs/kmehk00yiMjPgTDNcKQblBv6k4YPSRN4QV2cE3BAW1GaBYhKu9QyNi6ww
- MeESrsO5qYg+wnGjP22G8OxPWg153fM3PvVI9uLJyGWgnVb5q0TuJQEIB3ySZov0LUwf
- uIwKHC3RyV61UhDP5ZZoCgwotW4IXbU7H9L+KCRLuj8ZpCW9KEy83+f3NrZ+6h4yFNL4
- K7JZLADqaxcjdDtHyGSMmk2RZ/Ntlo1bNwZax7Vz04BYmyPius9OBSoZhPCPB0t91csx
- JJqw==
-X-Gm-Message-State: AOJu0YxSK4R58iSfuWv2Ngdi3uZMMG+6Lgq5idfggmY4Nfd5N/abDvEZ
- bdyUXb2glxefYoMa+bMvZ3ReBUltdEGbISuKm2bULs6KFPvQtqUiTbeg+OGLkB+TByw=
-X-Gm-Gg: AeBDietw7+AukC98ijacAaDT2/YgNH5yCATRXcHshGJwTKWiFIgUM+w6ircydlni/8V
- Dm15/R6dcmYRpsX/IAJXEnhL2+I5JlxBwXfAnzQlwdDraoF2LpsHOqzQtg10YqanLI5jaPDgBQk
- 4ELJ2l2KUsvDzUkyhrIImnOsU0Jlt+42P6gNbKgmd9apUzAMYPJbyBbneLaTcyJUm3+5Lr9I+wQ
- xIuu/Klf9TWCXpbklbi6vUBLtR2USfP8kCCmJOLX/8os7od1ceWx45hMh9l9RxuNbdhGR2fnCbY
- q9BWOBWvrPYLpSnssDtkiFpo41GnCEEluvTMoH7mX7+rQyPfnafJT7cS8q3woAogt39C+wXfnh4
- 2upqB3DRjrjhtENHnuZkjCzaA0d3hS5KUFrAQWDyXm9hRC+ZpeD/D7ugnvfxx4iktP3GBlvI/tE
- MNW0J93EaJhLlQYUmkEyM19PqBM9m73ywzhSU2un8mrp12
-X-Received: by 2002:a05:600c:c096:b0:48a:5821:6006 with SMTP id
- 5b1f17b1804b1-48d142331dcmr35997945e9.4.1777978812830; 
- Tue, 05 May 2026 04:00:12 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48d17710bfbsm18626915e9.7.2026.05.05.04.00.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 May 2026 04:00:11 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B74365F8E7;
- Tue, 05 May 2026 12:00:10 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  Thomas Huth <th.huth+qemu@posteo.eu>,  Thomas
- Huth <thuth@redhat.com>,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- qemu-arm@nongnu.org,  Peter Xu <peterx@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Pierrick Bouvier
- <pierrick.bouvier@oss.qualcomm.com>,  Brad Smith <brad@comstyle.com>,
- Fabiano Rosas <farosas@suse.de>,  Kyle Evans <kevans@freebsd.org>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Warner Losh <imp@bsdimp.com>,  Richard
- Henderson <richard.henderson@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Dau?=
- =?utf-8?Q?d=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 1/5] configure: report unsigned qemu binaries for check-tcg
-In-Reply-To: <CAFEAcA-rFhHmS2+ToEZkr1+HE_e710-ZyyPESHLzCeW0QopY_A@mail.gmail.com>
- (Peter Maydell's message of "Tue, 5 May 2026 11:43:08 +0100")
-References: <20260505103649.68361-1-alex.bennee@linaro.org>
- <20260505103649.68361-2-alex.bennee@linaro.org>
- <CAFEAcA-rFhHmS2+ToEZkr1+HE_e710-ZyyPESHLzCeW0QopY_A@mail.gmail.com>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Tue, 05 May 2026 12:00:10 +0100
-Message-ID: <87bjeunmth.fsf@draig.linaro.org>
+ d=1e100.net; s=20251104; t=1777978847; x=1778583647;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wpG61Sm+VTsYPNIBqYulcbNVCgfeGjPbFP1lPVoJ4/Q=;
+ b=Ovo/YZnMNfnymgwlttYEYtMjeP5Abocv8MJp5JmO4JuCD+QmrZw3PNRSKgBNjxGNwM
+ KXhZZq6DsevBWyXPnvWbU+OHLW9W5HTjnbYXOZz2rOo8CE2Sj2ZYvtO6T3MPbLPZKSxl
+ +O0Bx1a82fRYhE2cKluCaZmMb8GmBDAcHDplnomjLQZEf1VQMb8zeHgPK/laa8MofeQ1
+ LYOgtSyiW5Y/DTBYAbk6jVJIK4cMIGo4K7iQDXZE4xpo95LnokxH/cAlgvZENxF3YnnN
+ 9GqtFglYTj+Vn0zbi26IwosyiLCmZ7FbcvYyv+U4V2Y3Cp743Ho5tdW9sPLO+4DrJPu4
+ l0Aw==
+X-Gm-Message-State: AOJu0YwBOBYLVoDd1fZsiAK/vIeVbUSoFOZLsL/RVKJG/0jzPvnhJDcX
+ HV4NcqjHMAFMZWQZ61D8uyVYKe5Jf0IuJqrGS+IMxeV00xEwbJ9v/M7vXv5/XWoP
+X-Gm-Gg: AeBDiet3p2Lg9ylV56JL7RJptblri05BvG0pcU+NI3snik2+UxkiQQ7N74mEmTMv84s
+ W3rRlfPysfhbfVHO8EbanX63w+lmm4nhBbnTjHBmOeepZn8BExk62zp+om+vWHYqUUJM0vL4Ueb
+ OEdnbIj6tdq45Xl9YH7QFBp0c5UZNLWodYxrx2VRXsbaNFxT0BkLMB2suujwgqSHgBd5pSRRbMm
+ eD1uazDGhq1Ttv7Aoyhddo+gWK7AQVAuCiKZDEtr3zMwRom73qLvFrdyINJW3dx6kKF7AwlhqUc
+ dsQM6CPSjqc92Bywh0/jgy1AVzs6TEOdDWUMw4qxuLtRfPrYgzy67QqEnxJhODFIgNpJvgXtFQl
+ O1Gzk9YjffghuL9SfMUB0uJVOrhRW+W2ECEAlE0rq0HJJ5vjIFKzN0tbiqRp4tpnKRA7bc1Uw7T
+ ci96z/dhaAJC0moOfqtBlWJYjYEvHJeehfHItbWei/gHK3kGK0unHaMKElitDXqPZK
+X-Received: by 2002:a17:903:1b4c:b0:2b9:ff02:a154 with SMTP id
+ d9443c01a7336-2b9ff02a9f5mr117372635ad.15.1777978846621; 
+ Tue, 05 May 2026 04:00:46 -0700 (PDT)
+Received: from localhost.localdomain ([202.55.186.124])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b9cae0f6d8sm135690485ad.39.2026.05.05.04.00.44
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 05 May 2026 04:00:45 -0700 (PDT)
+From: munkhuu0825@gmail.com
+To: qemu-devel@nongnu.org
+Cc: heropd <munkhuu0825@gmail.com>
+Subject: [PATCH] hw/usb/hcd-ohci: Fix memory leak in ohci_service_iso_td()
+Date: Tue,  5 May 2026 19:00:36 +0800
+Message-ID: <20260505110036.47574-1-munkhuu0825@gmail.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=munkhuu0825@gmail.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -113,41 +97,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+From: heropd <munkhuu0825@gmail.com>
 
-> On Tue, 5 May 2026 at 11:36, Alex Benn=C3=A9e <alex.bennee@linaro.org> wr=
-ote:
->>
->> On MacOS the initial binaries are created with the unsigned suffix.
->> The user is expected to sign them before they can access the
->> hypervisor APIs. However for TCG testing we can run the unsigned
->> binaries so lets make sure the make variable is correctly set so we
->> can run the TCG tests.
->
-> We have a scripts/entitlement.sh, and this seems to have
-> at least some plumbing into meson.build. What stops us from
-> running this at build time so that macos users, like everybody
-> else, have a working "qemu-system-foo" in the build tree ?
-> Having to work around this by knowing that you have an
-> "-unsigned" suffix until install is awkward for our own
-> scripts and for humans.
+Fix a memory leak in ohci_service_iso_td() by calling
+usb_packet_cleanup() before freeing USBPacket.
 
-Hmm it gets built if you do:
+Signed-off-by: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
+---
+ hw/usb/hcd-ohci.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-  =E2=9E=9C  make qemu-system-aarch64
-  [1/6] Generating qemu-version.h with a custom command (wrapped by meson t=
-o capture output)
+diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+index 6ed8046fc2..43c49a42ec 100644
+--- a/hw/usb/hcd-ohci.c
++++ b/hw/usb/hcd-ohci.c
+@@ -748,6 +748,7 @@ static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed *ed)
+     usb_handle_packet(dev, pkt);
+     if (pkt->status == USB_RET_ASYNC) {
+         usb_device_flush_ep_queue(dev, ep);
++        usb_packet_cleanup(pkt);
+         g_free(pkt);
+         return 1;
+     }
+@@ -756,6 +757,7 @@ static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed *ed)
+     } else {
+         ret = pkt->status;
+     }
++    usb_packet_cleanup(pkt);
+     g_free(pkt);
+ 
+     trace_usb_ohci_iso_td_so(start_offset, end_offset, start_addr, end_addr,
+-- 
+2.50.1 (Apple Git-155)
 
-and there seems to be logic in that refers to test_emulator =3D
-emulators['qemu-system-' + target_base] which ensures the other targets
-have it built. I'll see if there is a good place to hook that
-requirement in for check-tcg.
-
->
-> thanks
-> -- PMM
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
