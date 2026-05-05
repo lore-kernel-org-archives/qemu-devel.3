@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85C7FCD342F
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 12:14:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 584B7CD3427
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 12:28:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKEez-0005r4-E3; Tue, 05 May 2026 08:13:57 -0400
+	id 1wKEs4-0001cW-WF; Tue, 05 May 2026 08:27:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKEex-0005qR-Oz
- for qemu-devel@nongnu.org; Tue, 05 May 2026 08:13:55 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wKEs2-0001bu-KP
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 08:27:26 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKEeu-0002v0-Dv
- for qemu-devel@nongnu.org; Tue, 05 May 2026 08:13:55 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48a563e4ef7so50029025e9.0
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 05:13:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wKEs0-0002WN-Q1
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 08:27:26 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-44509921fbcso2682327f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 05:27:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777983230; x=1778588030; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GktE6iKByJ63u11NbLxGQ3p0GJSW59bp8WOZW8wHKEg=;
- b=ebq2CWXz8gNV8KcVsZcCAJbwVJ37frmAPhw7nOqF5hBstdB3hmsS/KDmQZrZwZPMEx
- g2jScpDB9iS90vCIOEkDoqgwo6vQM8u1nRaOPrBjQWlIzDPOIf9RgeoHId+fmU+0K8zk
- igKl/ieznd7U1KgMSTso/2RHnNmdeM0RBpR64sh/4JwfLHhT0vq6RzWTDbxhxWq35y3V
- gwIcSo7aTq211d5bywW7fOPK4zq9/1GlsK0fo7W0dnMM4LUxayArM/qAXoRv8sV5KgEI
- Y2eQe4DxydwBI94kAMHYtOuTV9CgoUN5bhiPvM0JKdZHksh1DNPGiKlWM/FR5SVf/ezR
- 7w8Q==
+ d=linaro.org; s=google; t=1777984043; x=1778588843; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=wJLx2Bpa6UvFBRYbopR5yB3HJjv1ofwchdbZfTiBWOk=;
+ b=mkBLS8g9EUQOLjLWPRBxcfKQwDDW3NC+FBNrlMvOF51jGA/GsrQL5f/RFn8jNUZ3h0
+ Ada9q0u7ppzOU2SpUhuWJVgElqQCur/oz6Lr5cuSu/aHg0euL1HLJ4AZF9oF7N/EEPpu
+ bkTN68bCG5UF7CpgdEDem9SUe6i5ksq+i7H9hUr5IwWQtIfjlByJJMBIBq9vBVjqgjwX
+ wE/vuDDxWzbwf+iCaYyAUcF20fvDDOTOiFMKMAoxwMibQHONaASbJjkLzXSNTGfULqwn
+ TtQVOw3TC5PVdSeC56ZIjCs7VzzFv98e34YobgbJW5E8Tcg55ACZkPU0M1B9jt4mWyk7
+ E5tA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777983230; x=1778588030;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=GktE6iKByJ63u11NbLxGQ3p0GJSW59bp8WOZW8wHKEg=;
- b=rs3EMjFltTyLUopR6BhAwG96zKc0EJ2UNSm4bqX7+zw5ev8RyUbO0TB2Y6ArBvPrh3
- hXvU1ah8wiDZcmr/vIvrU0QHoRUfdJBZEFoqWithien9l1eHjMgFIcwouVicdLCY+SXm
- 9cWumZYDPsvtxLO7FlTBNYRUEyPYmQ1vFsXFKxAJhanMwWRPrP807QoQVX28StPnxiik
- +Dn1uvfu9NLvAA6JHWSoRMWMhMxqnFruk9VloFMOBEQoU/CstosycRI0m3Sz6neryF3p
- 132OiuALdbpM1EUnO1GPdjGl9ueuNQfzWdImTfMtFQZnr0X6vd0mUl4dOrQPT5Ywoze6
- NzJQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/2Se489J3LrO05dkQQE8xO9XlzyJD3jPbWyLPsN6AmDqgvPBRtHn80k7jAYj3n2UIoSyCN80L5u0g6@nongnu.org
-X-Gm-Message-State: AOJu0YzPncQqs93KsZFUnN5fggGTIOQYuUFo/bH53uzYaRhpEdxpg5fQ
- /qHkZ1GXHnwXIB1L7P6TVNva02m2u7cIX1BcBoukYNQbaqNlYvneyoOT8GZDnZ9fMXU=
-X-Gm-Gg: AeBDievCf2+TAxd2UpFQkdOXFSPzLhOgLQF7zh2gsI2l+7LkIqZCZi4kZrA3x/kR8Jv
- PmKXeRkOeGMDFI1+GY3QJ+OBc9/ZtcW7LWy5/aeEyu/pFjbgD2gukNpCHoenqhu11O+YzOMsyrP
- IYRmXe68STnan/fv50FQjNpqJtqrIstynknXffsHl31lsLFNSfkKP6YiVUuZRaAGlDIoNB3t7+C
- 3DAgbymmO5QPub1EMzRXZQm13gZnwnw80iJQ8GeRE20uH/ycZLSCjRxRZ3JJZi3NqFxfYSllEux
- LhN+JEtXKHLtse2JRfKozEYtnwEIubnnJf1lZrNcFvCfXYOROqAcWGUtW6tYNewqMys58NPOXmM
- /DZH1oT5QZ84Tt7W6914PRXsym6cupudvPZEGeX6wfQ4NMt+9ci3ALD7WJc/zJI082ZP+Gx8/Oj
- XSVJMJXxznWOIH9voixUsOS4ukKL5t/5HBTRbKK2AEIGxgApdtufb1kKudvziR3UW4A4VTuk2E3
- TEi
-X-Received: by 2002:a05:600c:a11:b0:487:12c:e7e1 with SMTP id
- 5b1f17b1804b1-48d187d95d2mr48042535e9.11.1777983230319; 
- Tue, 05 May 2026 05:13:50 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48d149d49acsm27297795e9.1.2026.05.05.05.13.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 May 2026 05:13:49 -0700 (PDT)
-Message-ID: <dc540970-bad4-4883-b4d1-9e206de8a73c@linaro.org>
-Date: Tue, 5 May 2026 14:13:48 +0200
+ d=1e100.net; s=20251104; t=1777984043; x=1778588843;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wJLx2Bpa6UvFBRYbopR5yB3HJjv1ofwchdbZfTiBWOk=;
+ b=GE10Iqe38YVx3mGgWyUcHaA9B1DA65tVIWdw9Efb/09f9r68AkHPY3j7OslsxgLHLI
+ mfmigmGj43bVyuSPb+uL4chCjtFYZ7v7wVB3FUVPaDq+5dnrNl5z4LV7F2NLZBoD/mNM
+ Gm0y5DQmIqpmtsBkDmsMHKnV3zSDbFLVD92CqkB2zMvnq37+NhpLINr7cNHdi6cowE2K
+ IRuFeZRyZrwS9FbBPN8/RHVQW9VQXlE2wlgviyf+10DcfoK63gWb0H1jopyMo/SUzEK0
+ irh6Z7gfmBj8ItTLjPccnpOVTF5lOXn02UOKJe4z05LRVL7eGlamAKwkmM6RR0MQHYyk
+ 1UpQ==
+X-Gm-Message-State: AOJu0YxyZsv/xn/jkoVin1adA61A47AS74BABF+HDC0jbtUKWbmUDYii
+ tMu5wcz1VxLh4LBjAvFSjo5n2ytbBjUx8hCxsW+yfsggHsRtOfwX5CXNus+S2r4ubtf5i/nNR56
+ Gmv1L
+X-Gm-Gg: AeBDievz1f539krFd74gTY7HKBcNaW/itrf0AiS4zhNtsITaGNVMvCElW9guyoGnQLv
+ /gSFxnlbSl3kBrIbhXKMe1CCVbBuQROqLRoEYQpUQPB4e3Yay5ieNl6+qazPLiI/EJNC4Yr3Suj
+ mioLIqEtsKLyp/i145s+x+tenHK8cH1GLbY/Oq3hQ083+ZGSD9B5G1ceevAiqaFMYWuJH2J7HOB
+ WEN+63XSwqBlhHFOwYvL1J/tbzeXhP9PYZl5T2mx5qYEZ2BSZxw29giy9BjtJM1Xtf8A7UNHlbv
+ kJwJEZIcQTyLMZ7wgt6yjs2ZuyBETei4CdgVP7zX9d4ADcb/W7ihTXky7SQJkYQeObYD9+8Os54
+ MSXQqum4fR+z01pFKYsNtEeZMD7nGy8hfGAimrf+3yupSH15X8uIKCss/X35p6RBBX3NUy9lRP2
+ XClzw9OxooLFFyl35MsYmy51RImn81IQoZV0lwzvZEQ+hh4rxxrDKrAYKNh9a2InFQmbTnqQIts
+ 2JNRBUCylvXNyRyKTLu34bibbSqqhDtm7EiM+2h7w==
+X-Received: by 2002:a05:6000:26c4:b0:43c:ffee:ee94 with SMTP id
+ ffacd0b85a97d-44bb34e6f03mr24536877f8f.11.1777984042831; 
+ Tue, 05 May 2026 05:27:22 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45055960973sm4220017f8f.30.2026.05.05.05.27.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 May 2026 05:27:22 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Subject: [RFC PATCH] .gitlab-ci.d: Define new clang sanitizer CI jobs
+Date: Tue,  5 May 2026 13:27:21 +0100
+Message-ID: <20260505122721.429174-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2] .eca: add an issue triager agent skill
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: berrange@redhat.com, Peter Maydell <peter.maydell@linaro.org>
-References: <20260501165812.2212713-1-alex.bennee@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260501165812.2212713-1-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,106 +100,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/5/26 18:58, Alex Bennée wrote:
-> While triaging the issue tracker I wondered if this would be a
-> suitable job for an AI agent. Unfortunately the OSS program doesn't
-> give any credits to run agents in gitlab. However I do have access to
-> models from my editor and ECA so I built one and tested it on a few
-> issues.
-> 
-> Obviously this can't apply as is because it probably encodes too much
-> of my local setup (using pass for API keys) and uses the ECA as my
-> preferred coding agent. I assume at some point there will be agreement
-> between all the agents where skill live.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
-> ---
+Define new CI jobs to build QEMU with all the clang sanitizers
+enabled and run "make check".  The split jobs are patterned on
+the existing build-cfi-aarch64 / check-cfi-aarch64 ones.
 
+This patch is RFC because the resulting test job times out.  I'm
+posting it for suggestions on how we want to try to do this, because
+I do think that now we're very nearly at "clean pass on sanitizers"
+that's worth defending in CI. (We ought also to be able to do
+similar for "make check-functional", but that has an even longer
+running and also in my local testing it seems to be flaky for
+reasons unrelated to sanitizer fails and which I haven't tried
+to track down.)
 
-> +accel: HAX                 Intel's Hardware Accelerated Execution Manager (HAXM)
-> +accel: HVF                 Apple Hypervisor Framework
-> +accel: KVM                 Linux Kernel-based Virtual Machine
-> +accel: TCG                 QEMU Tiny Code Generator
-> +accel: WHPX                Microsoft Windows Hypervisor Platform (WHPX)
-> +accel: Xen                 Xen Hypervisor
-> +block:9p                   The 9p network file system
-> +block:NVMe
-> +block:curl
-> +block:nbd
-> +block:nfs                  Issues related to the NFS backend
-> +block:qcow2
-> +block:ssh
-> +block:vmdk
-> +bsd-user
-> +device: PCI
-> +device: TPM                Trusted Platform Module (TPM) devices
-> +device:graphics            Issues relating to display device emulation, or rendering in general. See also "GUI".
-> +device:input               Keyboards, Mice, Touchscreens, HIDs, etc.
-> +device:iommu               IOMMU and SMMU
-> +device:pflash              Parallel NOR flashes emulation
-> +device:sdmmc               SD or (e)MMC cards emulation
-> +device:virtio              virtio-related issues. https://www.linux-kvm.org/page/Virtio
-> +device:watchdog
-> +efi                        EFI firmware related issues
-> +flaky-ci                   For test cases that are flaky when run under our CI
-> +gitlab
-> +guest: AIX
-> +guest: BSD                 Guest OS is BSD (NetBSD/FreeBSD/OpenBSD/etc)
-> +guest: Linux               Guest OS is Linux/Linux-based
-> +guest: Windows             Microsoft Windows guest
-> +guest: macOS               Apple macOS / Darwin as  guest OS
-> +guest: os2
-> +host: aarch64              Bugs reproducible on AArch64 hosts
-> +host: arm                  Bugs reproducible on ARM hosts
-> +host: loongarch64          Bugs reproducible on LoongArch64 hosts.
-> +host: mips                 Bugs reproducible on MIPS hosts
-> +host: ppc                  Bugs reproducible on Power hosts
-> +host: riscv                Bugs reproducible on RISC-V hosts
-> +host: s390                 Bugs reproducible on s390 hosts
-> +host: sparc64              Bugs specific to Sparc64 hosts
-> +host: x86                  Bugs reproducible on x86 hosts
-> +host:32bit                 These are mostly TCG related bugs where we sometimes struggle with emulating larger guests, especially atomic and address space issues.
-> +hostos: BSD                FreeBSD, OpenBSD, NetBSD, and derivatives as host OSes
-> +hostos: Linux              Linux-based host operating systems (Fedora, RHEL/CentOS, Debian, Ubuntu, openSuSE et al)
-> +hostos: Windows            Microsoft Windows host OS
-> +hostos: macOS              Apple macOS / Darwin as a host OS
-> +icount                     issues relating to icount, deterministic execution and record/replay functionality
-> +kind: Not user visible
-> +kind::Bug                  Bug or defect in functionality.
-> +kind::Feature Request      Feature request or new functionality.
-> +kind::Task                 Research, investigations, and miscellaneous issues.
-> +libvfio-user
-> +linux-user
-> +qemu-img
-> +spice
-> +sysadmin
-> +target: alpha              DEC Alpha [alpha]
-> +target: arm                Arm AArch32 or AArch64 [arm, aarch64]
-> +target: avr                Atmel AVR [avr]
-> +target: hexagon            Qualcomm Hexagon [hexagon]
-> +target: hppa               Hewlett-Packard Precision Architecture; HP/HP, PA-RISC [hppa]
-> +target: i386               Intel/AMD x86 [i386, x86_64]
-> +target: loongarch          loongarch64 target architecture
-> +target: m68k               Motorola 68000 [m68k]
-> +target: microblaze         Xilinx MicroBlaze [microblaze, microblazeel]
-> +target: mips               MIPS [mips, mipsel, mips64, mips64el]
-> +target: nios2              Altera Nios II [nios2]
-> +target: openrisc           OpenRISC [or1k]
-> +target: ppc                IBM Power Architecture, PowerPC [ppc, ppc64, ppc64le]
-> +target: riscv              RISC-V [riscv32, riscv64]
-> +target: rx                 Renesas RX [rx]
-> +target: s390x              IBM Z, SystemZ, zSeries [s390x]
-> +target: sh4                Renesas SuperH [sh4, sh4eb]
-> +target: sparc              Sun Microsystems SPARC [sparc, sparc64]
-> +target: tricore            Infineon TriCore [tricore]
-> +target: xtensa             Tensilica Xtensa [xtensa, xtensaeb]
-> +workflow::Confirmed        Bugs that have been confirmed and reproduced.
-> +workflow::In Progress      Someone is working on this issue.
-> +workflow::Needs Info       Issue has insufficient information to verify.
-> +workflow::Patch available  A patch is available
-> +workflow::Triaged          Issue has been triaged and given a topic label.
+The build job is fine, but the "make check" job times out long before
+it finishes: on the general gitlab runners that my personal QEMU
+gitlab repo gets access to, it completed only 102/591 tests within
+the hour:
+    https://gitlab.com/pm215/qemu/-/jobs/14179464576
 
-Some of these labels do not match the case of GitLab ones,
-resulting in new (duplicated) labels being created there.
+We could have multiple versions that split up the targets, but it
+would be nice if we could build once and have multiple test jobs;
+especially as we move more files into "build-once" having multiple
+build jobs split by target means we're building those common files
+more often than we need to.  But I don't think "make check" has a way
+to say "limit by target".
+
+Note: to get all the tests to pass you'll need a few patches that are
+on list but still awaiting review/commit (one sparc patch, three mips
+patches, Marc-André's fix for tpm), plus a patch to
+lsan_suppressions.txt that silences warnings about target/riscv
+leaking of hashtables.  You can find those (plus this patch) in
+ https://gitlab.com/pm215/qemu/-/commits/asan-fails
+(the branch as of commit a987eab2ed is what I tested with).
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ .gitlab-ci.d/buildtest.yml | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
+
+diff --git a/.gitlab-ci.d/buildtest.yml b/.gitlab-ci.d/buildtest.yml
+index 4b1949a3a5..9c73b1a646 100644
+--- a/.gitlab-ci.d/buildtest.yml
++++ b/.gitlab-ci.d/buildtest.yml
+@@ -434,6 +434,32 @@ clang-system:
+     TARGETS: alpha-softmmu arm-softmmu m68k-softmmu mips64-softmmu s390x-softmmu
+     MAKE_CHECK_ARGS: check-qtest check-tcg
+ 
++# We split "build" and "check" here to keep the job times down
++# below the timeout
++build-clang-sanitizer:
++  extends:
++    - .native_build_job_template
++    - .native_build_artifact_template
++  needs:
++    - job: amd64-fedora-container
++  variables:
++    IMAGE: fedora
++    CONFIGURE_ARGS: --cc=clang --cxx=clang++ --enable-ubsan --enable-asan
++      --extra-cflags=-fno-sanitize-recover=undefined
++    MAKE_CHECK_ARGS: check-build
++
++check-clang-sanitizer:
++  extends: .native_test_job_template
++  needs:
++    - job: build-clang-sanitizer
++      artifacts: true
++  variables:
++    IMAGE: fedora
++    MAKE_CHECK_ARGS: check-qtest check-tcg
++    LSAN_OPTIONS: suppressions=../scripts/lsan_suppressions.txt
++    ASAN_OPTIONS: fast_unwind_on_malloc=0
++    TIMEOUT_MULTIPLIER: 3
++
+ clang-user:
+   extends: .native_build_job_template
+   needs:
+-- 
+2.43.0
+
 
