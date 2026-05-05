@@ -4,96 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 138EFFF885A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 07:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BCF5CD342F
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 07:59:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKAer-0005nU-N7; Tue, 05 May 2026 03:57:33 -0400
+	id 1wKAge-0006Uu-Rb; Tue, 05 May 2026 03:59:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKAem-0005mt-KS
- for qemu-devel@nongnu.org; Tue, 05 May 2026 03:57:29 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKAek-000603-2k
- for qemu-devel@nongnu.org; Tue, 05 May 2026 03:57:28 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4852b81c73aso36710925e9.3
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 00:57:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777967844; x=1778572644; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PWQ5sqXfuI7IaCZ7L9BfQyKyaRqZ4DEsEDqyslmJDKA=;
- b=CMFOoaB4TPMf5Y9ZzwqWZVFASJAMadGOzF9OvTRfM4tlhSrxpPvAFdMRSlIX5ZkeBt
- 5dqwNF0r8Yoa54SPmB8r0bcABOa5WuTNOUs2eVfVEy1rbtj2Mi+K/fvAImugdN8ZEy4d
- X7Z3fJ84IcgfeNqHOACWxIxO/8dJH13l9Aj12yVmjlgNu8u2eQS6mRxomiqrqpJNxnAS
- GTbqtwfIY1pCS+obhog+YnIFz4ySHiz+3/STLOgVjTX2KbpWPpPRCvgwV/2wA//BytLa
- PtzgYbutpxiFkuSWItpxByAR4sVZbgi4ERZZSlBkh5VZc2fkre0yun+hiJBWR2F/NWm+
- mQ6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777967844; x=1778572644;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PWQ5sqXfuI7IaCZ7L9BfQyKyaRqZ4DEsEDqyslmJDKA=;
- b=SwwuAxpP8sd8mW23L/+cb41tAGcwOBiE9w5F4klcTnFu44vjiX6T8lBtODQAmgFmOP
- vQiHxShzy14CWK5XGoCIR5Q8MtQorvQItVfsnrQZjIxYYdiM9TccXuA3b2Z8yU0HdKWi
- 34lywywNAEg74+jyvPum42h5Vr66is4q4gvKTkDvOu8Z3EfDq6Mw7oJ+PmxqoV3xZ5qM
- DF3ze19pHDw8VvcgK7b9AGQlAFrjPWe9AYhG9D3YhYAht6m8v07yXr8lQ5KBTxP9GtJc
- COvSLrqtp03LRAFjzZ4JasQGQATX/dWjxhJkzWRQXEkCk8+yBYTtKEltK/AhL4wZAipE
- kkVQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/uJGIRS+AK/nUJSugtb7WSpkzr6hJTICEt71tdxyFa/FM388lv7eelpFzko3ym0i7+5/6DqHrKlkzW@nongnu.org
-X-Gm-Message-State: AOJu0Yw/5HexF3CbYnh1IElXtpTngfwBxFpa3RyDyuuDlX3bf2+yY283
- NKP+0qd5W+wP/Lb9x4Qo5N0THvDZPtI5l6hxBA6lqn2hOv57t1tAjjKiRwvdndLUu0g=
-X-Gm-Gg: AeBDies0Yhx6b1ZpMytXg/VjRWiXd2TwFGU0yKMFde6Wgwy/EJRlYk64Q27GUouYdxz
- Eb5gDPt2rRZSJBM89seLFS7+xf1DJXDuQpmBHYs93QKmW/xasrIZKfFQt0ue/L3ClgoasEgWvJk
- lD9apJLC8p0wzgkRzhmbcPV650t3HItgarpaQDtE5V8zgeUeLVjmvwGrMM7jgfrA6+PzFjlK97O
- 6WQ6zuwC+cDfOU7Zx3DjkFdHkBractn1U5LLUuII5k2UpOlJ2BwocmV5QJEcLKgFiC5mRa0PPbS
- USit7C2nQWT71SCtrPF6XouV8h5VGrN/1jhch3XaDze1cZNprnX8I2htrLfLrmXaltqRJpoLCl2
- SN4VoY+wigHfBhxKC+sChu7/bDbh3lvF7YZ0RsOYK73/AKYM196b0+n9uCkP1i9BWpBMWZ4gg7B
- DXCgqgZIqJY/xhim94DY0l+f5kQtk2Swu13EOUxx6HgKRCdafb2OcJJAw3GsRMH01Z0w==
-X-Received: by 2002:a05:600c:4506:b0:488:9e43:9690 with SMTP id
- 5b1f17b1804b1-48d187daac6mr28077645e9.10.1777967844035; 
- Tue, 05 May 2026 00:57:24 -0700 (PDT)
-Received: from [10.115.35.66] (95.170.88.92.rev.sfr.net. [92.88.170.95])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a82307f28sm645837565e9.13.2026.05.05.00.57.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 May 2026 00:57:23 -0700 (PDT)
-Message-ID: <972d8ddd-8ef9-4cd3-a7e5-90f00ec625ad@linaro.org>
-Date: Tue, 5 May 2026 09:57:20 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/13] hw/i2c: Add designware i2c controller
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wKAgd-0006UP-At; Tue, 05 May 2026 03:59:23 -0400
+Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wKAgb-0006pU-Ca; Tue, 05 May 2026 03:59:23 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=bynDZSlo8QCcaHvgu+jbTjrikVx+26WG//ujVZOP1CWcKUdScpCBICeYqtPoWNO357BILP256wTxUfMpNd/+0mXx91Wvb9yucJyp43UpWSW5S3VEJVpTqjYq/ZNxEiuKYV8y0FnhcSKPgdh6IPV8LKcfus6yfK7H/vrCRMLTQxn8nDgYOC2F12IZM7PaVm4W6FkeThURz1vTx39Z3A64nesFFi4zGg5a+88ALSoCLHSzDHfji2cyxOQkVoO2cljIrSOe1+eYZlSARHFOsdHu/oVIRzeRu1ClGN7RG2I4gSHwasUybY6us9hkf8mgVQW/jH7gwgzpi2WgzaImPKGLFQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pBumK/V8+xkTf3o4vbGrmUDUG2FbOFq8E/3TthgRszM=;
+ b=H/aMnGnBrDp4QYdFCIYmPvI38Nc6/ZlT0stqCd9ccOOrZQo0dbqNPQ5gIECSCKcX6uBD2SzM4mvoN1Aja3eJcxHZ4Vv8ijRNK+L8oVAn4nrSYUcGiptETeru9g4l/QAS/w59V1Wx1VOZVW/gsMjSfJ/xrGX6Q7Sf6nQ1A/CkpgVTZB2AZE5jz0IQwjMxBANVKgvKZ76Z1khTpq9RFMbNSDecs/xCDn018yOo6RdRvGKwH4KY2nASfKwixV2K/CfP0gjF9akgFLz/dYkmNje8WL4q1qguRaj78PXJgbOoK785kY4xlFXCTMcBgCFL5wLcShSiL/zltAiuSOD2YzhFIA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pBumK/V8+xkTf3o4vbGrmUDUG2FbOFq8E/3TthgRszM=;
+ b=hCARXHScGl8OGbDnVmsL/TXJFrfvw9R7Fiu4e7rlcAr5Zhxc9S7KFgcRcwDhA7cGOpAwab2+YP7KlxzJ07U+ZSIvmZ3BUx0GevCpp+jtR69PHd8f98rWdm1MvFg3ut3dY7zwWi5wd7bRw1Qquumag1EXOwxjWCshQaBB/9rN50C8obkhpg5MGrOu2HiRro09AZI6eYeVUcxjzcovlQjPHkem7b9mhh4OK1vSRrbuWzCMIxylj9LtXBAb9pPxS8IcFdL7d730+XYjkjeZ0gqQixqaYjbVtHYtkxE5F4UtA+W3Q7fYC2De116MZYr3ZwcEl/hDk1CfS39Lz8cOL7b7EA==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by SJ2PR12MB8884.namprd12.prod.outlook.com (2603:10b6:a03:547::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.25; Tue, 5 May
+ 2026 07:59:14 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.20.9870.023; Tue, 5 May 2026
+ 07:59:14 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>, Nathan Chen
+ <nathanc@nvidia.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: Eric Auger <eric.auger@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>, Yanan Wang
+ <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, Matt Ochs
+ <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
+Subject: RE: [PATCH v2 0/7] hw/arm/smmuv3-accel: Resolve AUTO properties
+Thread-Topic: [PATCH v2 0/7] hw/arm/smmuv3-accel: Resolve AUTO properties
+Thread-Index: AQHc0pi5yB156JjTxU6Z/JymncwRc7X+B6+AgAEbGsA=
+Date: Tue, 5 May 2026 07:59:14 +0000
+Message-ID: <CH3PR12MB754856D3DB7C0DC18EA2224AAB3E2@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260422204335.23116-1-nathanc@nvidia.com>
+ <9ed5337c-abaf-4f5b-b17e-04dc87165ffa@redhat.com>
+In-Reply-To: <9ed5337c-abaf-4f5b-b17e-04dc87165ffa@redhat.com>
+Accept-Language: en-US, en-GB
 Content-Language: en-US
-To: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Chao Liu <chao.liu.zevorn@gmail.com>, Chris Rauer <crauer@google.com>,
- Michael Ellerman <mpe@kernel.org>, Nicholas Piggin <npiggin@gmail.com>,
- Joel Stanley <jms@oss.tenstorrent.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, Hao Wu <wuhaotsh@google.com>
-References: <20260425131721.932250-1-joel@jms.id.au>
- <20260425131721.932250-2-joel@jms.id.au>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260425131721.932250-2-joel@jms.id.au>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|SJ2PR12MB8884:EE_
+x-ms-office365-filtering-correlation-id: 07866c86-1a88-4086-c234-08deaa7c3329
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|1800799024|366016|38070700021|18002099003|22082099003|56012099003;
+x-microsoft-antispam-message-info: WIvsrkng8swEhNYIZcnMb6fdI7x134GJLb+Ua8T9es4jomqo+9PUk+/O9p7lBlRQD32nn3ESX2C9FVvBlQOGAtkUEAWGm3sj6DBOvh3kMTJaDS8IAe1oHMw9JUrff8JrzA73hibVvXcz119m7cJZzU4BFw7YO5sn8eAwl5pda/HXWFYyouIt3sszpHfqM9/WC41L7POOrjkDsVlLpPmdr05E63pobeKCEV23TKEk3HJfACMAkFCp4fv4KEf6a5uzmXFt/0FHDfQt/8n4YEuNHnGK/IEH+qzP+sCtBNFq9D35EHNouUeye72hx/oAu/AMO0yG6JAk0Cj4VPUEkCg5nHMzWiu1AHBvgDfsjTT5d0ekmiz1FtVvV8qP9lRkRSlBQuTCMq8r8fv6+mLOmLQ5bEryLVXthQB8OAM7wfBjiUG8V8/uWyJpkPWge+uCEeTcKaA8LyxmhMQ9zlCJhxz09HO92Wwtdrd7V5qvmu2sYyqEsTa6W0xFW0SrBnGBKjt3gaYmQkWhVY8OmgZwuBn8/vbEBIxPwoCWXm0bzR6w9kOxwPQwIeG8rRYZ+mqZDxI2/kDeIxJs92XfQTTmfJY16X0oS53FBs4hRYJ97C4GcNJUas/A4DYPmdKAjPy7GJ3aT/vmFc8a5zy12I0YM8XQ8JCAPojTHV+35zSs1k1m1mF5uqJa5ktSUI73BrQbIPX7sYtj1rMQPWIiSTLBBApaYmZSWiF6RTqX9/0XQn7HIeOYUjw0uCIUrijIjtmpD4+0
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(38070700021)(18002099003)(22082099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?NnZjNVBMV0dxaUF6amlWc1VjaGNhYUJWWGVYbEpQNGlqZ1hnZDQ0YUxRWnEy?=
+ =?utf-8?B?ZkU2TUtvaUtpUWg3SHkyS1VrOGFmbUMzSjd1NmpCVzhxaElCNENJZ2tqS1A0?=
+ =?utf-8?B?VTROVXdSckFTcVZpb1NZcXNidE1ZY2NCM0RMd2VyMFdwamErUkZlWXI0dmxt?=
+ =?utf-8?B?WlJYWDhZQnhwTk91UkZtRzI3RUVhVlhEMDFxdk15cVlpRkhFME9NVnBqVE1y?=
+ =?utf-8?B?QUVVRnJYSzlLVDBoM3BwRjQvUFA0RkNod2FCZjdYNVNLUW5Kd1VqMUVtNXdh?=
+ =?utf-8?B?aUYrQitHUStWc0s5eFJOUTcxMlFUcUpvaktZUGRQRFArM01sLytFVTNXNG5t?=
+ =?utf-8?B?K1JWTm41ZGN1eUt6WHcwR2cydjhSUFc5TEx2M1lGbTlCV3lZZlp6NG12VENt?=
+ =?utf-8?B?R2NDYitUa29jZ1lMVzFFYk1YTWV5cmNvZkN2eC9wYWpNVjZqd1lSVnB5UG5G?=
+ =?utf-8?B?MzRsejFjTFVpdnBmNkd4Q2oyUTJ3ZXp3ald4cVU1VStaK3RTYUdOUFh2Ulg1?=
+ =?utf-8?B?aDRXZlJnRFhEUDI3bklXTUVrL2x4bHA3V0FNT3JMSjZiOWpsblgxandjcDJx?=
+ =?utf-8?B?cEdETStVcWE4ckk3bDh0bHR5OWhyQmMvZmgvTW9hYWRudWZhT2w4SmZJT0Mz?=
+ =?utf-8?B?UlpFbFl6OVpVb2ZTV3dvdUVJSDdza3FqN2pGT2F4aWp5UjVMWVQ2RUFIN0g1?=
+ =?utf-8?B?QU4zQWExTHQwaEh3cUt1M1dQZDZqNTJ1T0FDSTNwbVBobHZkTHVIRFU4WE1I?=
+ =?utf-8?B?NitUNXg4UTF3d3h6N1hxMDdSUUpOUVhtMzNlek8xeEZxY0dZQXNNaDNXeThi?=
+ =?utf-8?B?VUpaSWZvYkRQZlBYMDlZTFRxenQ0RlVJNHJOeVNGakZIMXpEUUlOdUE2UnFx?=
+ =?utf-8?B?RVJCVTVVdzEvNVFpbGNOVG1ieVJhemE2UktKZTliSTlmTjJkZDhqcm04U1Na?=
+ =?utf-8?B?ckRQMzdGL1cvQyt6SkkxSUVMVlpLM05xSHVUZkpocUgzSFNwTkw3NitmNVZR?=
+ =?utf-8?B?TDFsVjYydmxFVmNOc1Fya01XSmVDaEczMW9pZDRRZ3IzamRuUm50SStjOGRz?=
+ =?utf-8?B?WUhtZ0dNQ3NtL3RxNGtEMmRkaEtZZi9xcEN6QnhUMHUvQWhqZlJuNWp6cFFQ?=
+ =?utf-8?B?MHVHemlzVE84Ry9TMHVIRERxMEFuaHNRUUhVR1ZGaFVUczc2N0ZNdjlYWWFy?=
+ =?utf-8?B?Y1NnYUFoL1RmamhNWlk2OHBMRjBCWHEzclVWTWU5VVN6RHlCdmpMMHQ1T0V5?=
+ =?utf-8?B?OHB5SjBpMDBtdEV1MXFkY0IvNHp5ZnUyZjM4NHZ1UUxTRzYwczFMQWFrcDVw?=
+ =?utf-8?B?ejJzbUdScmw3ZktOS0pPbTNGdkFGQ0xKa2JPeHgzMkRXemM0MkozNzFGZmxJ?=
+ =?utf-8?B?cmlvRWpaT1dnWjRYRHRzOUNQQnRvMDFraGtkWVc5dGg1SmdSM3QwY2xLbzRV?=
+ =?utf-8?B?RS9SSmlvNVhTTDZKeHkrajd4WkJlalI4ZGxVRk9ScWxnOVlIOXlRTjdwcEFT?=
+ =?utf-8?B?SVROcEVqZGgyZHpqWWxBWVRGbGI1REJtaFVqeC9JSEdlMEErY01VK01wZVFa?=
+ =?utf-8?B?OWMzZDdrb0lVakM4MHdrV2FmRGtsazdSS2MrL3FiR0xKc0c0L1RNZGZtZE1i?=
+ =?utf-8?B?UWZvWEFkRXRiMHdHTm1BZ1pTL3oxcjl5Q0FmaHExODVabjFBZSs3Y2crMXhY?=
+ =?utf-8?B?aDFMVUlDRy9paFRvd295V0pCaldKZWJ6L0ovM0d0SktWWmZxQ2hzaDJvYlFD?=
+ =?utf-8?B?bHdXQXlpa01LYnhiTnZYN3BUYmo0Ym1CdDY3Q20xakRYUTVZcU9mZkxQeTRu?=
+ =?utf-8?B?dlh2K0UzUDJNZVpERU5UQUVFY2FjeXA0LzlLL3IrZmMyMmpreWVFM2pFZm5G?=
+ =?utf-8?B?dHhkRVVxTzJPdHBXM3VOcG1sajFlNE9xOHhsSUJHMUx3UFZrR3BYaFF1M1BY?=
+ =?utf-8?B?azljZS9tZldHOFU4L2crenlXcDl0Q3Jud0JFbEwwQjNvZnpqZEg3Nnkzbzhz?=
+ =?utf-8?B?YVNQcDVKQnVVc3NScXpzaEZ0U2RXcTVHaTE3T2wrYnRZNVNOM0J0Y0t2WnRB?=
+ =?utf-8?B?SnFFemVybVM4NEt5OVp0VWZ5ZU5hWkVJaGNQeWtmczhHR0NydlFRTzZ3WHRp?=
+ =?utf-8?B?ejEwdVo1a25SRWd2QUdEbDlPS0tJNUx4YUFXa1dYZUU0dUJmZWhyN1ArNTVE?=
+ =?utf-8?B?VTVCbkZmY3ZUVWpGY2dWbWdFUUYydXBPUTNEWkNjL2dCRVlJaWNiR2d6RDFF?=
+ =?utf-8?B?ZU4yT0dDTGFTTUpZYVJoZkQ1bVNVM0NieHY5UW83NjVJaWIwbk1ZTnVoS3gw?=
+ =?utf-8?B?bmZmWCtuckhHRTlJV2xlbTZzZXVKM1hNa0lha2x3eHN3aGxSUDlodz09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 07866c86-1a88-4086-c234-08deaa7c3329
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 May 2026 07:59:14.3010 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: fFjVvLiMKevTA66GfBnSaj5fJeFPeYgYYT4aaAuD0A21DpliOq+qvepWfDVaP2lrpGBiuYhnYLy1HaghJ2qTOg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8884
+Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=CY3PR05CU001.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,345 +156,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 25/4/26 15:17, Joel Stanley wrote:
-> From: Chris Rauer <crauer@google.com>
-> 
-> In the past this model has been submitted for use with the arm virt
-> machine, however in this case it will be used by the upcoming
-> Tenstorrent Atlantis RISC-V machine.
-> 
-> This is a re-submission of the model with Chris' permission, with a
-> light touch of updates to make it build with qemu master.
-> 
-> Reviewed-by: Hao Wu <wuhaotsh@google.com>
-> Signed-off-by: Chris Rauer <crauer@google.com>
-> Link: https://lore.kernel.org/qemu-devel/20220110214755.810343-2-venture@google.com
-> [jms: rebase and minor build fixes for class_init and reset callback]
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
-> v4: Remove unused random header
-> v2: Add trace event for read and write, document Alano and myself as
-> reviewers.
-> ---
->   MAINTAINERS                     |   8 +
->   include/hw/i2c/designware_i2c.h | 101 ++++
->   hw/i2c/designware_i2c.c         | 817 ++++++++++++++++++++++++++++++++
->   hw/i2c/Kconfig                  |   4 +
->   hw/i2c/meson.build              |   1 +
->   hw/i2c/trace-events             |   4 +
->   6 files changed, 935 insertions(+)
->   create mode 100644 include/hw/i2c/designware_i2c.h
->   create mode 100644 hw/i2c/designware_i2c.c
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index aa4267b15806..e1942a86eba5 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2716,6 +2716,14 @@ S: Orphan
->   F: hw/gpio/pcf8574.c
->   F: include/gpio/pcf8574.h
->   
-> +DesignWare I2C
-> +M: Chris Rauer <crauer@google.com>
-
-This was 4 years ago. Is Chris still up to this?
-
-> +R: Alano Song <alanosong@163.com>
-> +R: Joel Stanley <joel@jms.id.au>
-> +S: Maintained
-> +F: hw/i2c/designware_i2c.c
-> +F: include/hw/i2c/designware_i2c.h
-> +
->   Generic Loader
->   M: Alistair Francis <alistair@alistair23.me>
->   S: Maintained
-> diff --git a/include/hw/i2c/designware_i2c.h b/include/hw/i2c/designware_i2c.h
-> new file mode 100644
-> index 000000000000..0d8f904f51b7
-> --- /dev/null
-> +++ b/include/hw/i2c/designware_i2c.h
-
-
-> +typedef struct DesignWareI2CState {
-> +    SysBusDevice parent;
-
-s/parent/parent_obj/
-
-> +
-> +    MemoryRegion iomem;
-> +
-> +    I2CBus      *bus;
-> +    qemu_irq     irq;
-> +
-> +    uint32_t ic_con;
-> +    uint32_t ic_tar;
-> +    uint32_t ic_sar;
-> +    uint32_t ic_ss_scl_hcnt;
-> +    uint32_t ic_ss_scl_lcnt;
-> +    uint32_t ic_fs_scl_hcnt;
-> +    uint32_t ic_fs_scl_lcnt;
-> +    uint32_t ic_intr_mask;
-> +    uint32_t ic_raw_intr_stat;
-> +    uint32_t ic_rx_tl;
-> +    uint32_t ic_tx_tl;
-> +    uint32_t ic_enable;
-> +    uint32_t ic_status;
-> +    uint32_t ic_txflr;
-> +    uint32_t ic_rxflr;
-> +    uint32_t ic_sda_hold;
-> +    uint32_t ic_tx_abrt_source;
-> +    uint32_t ic_sda_setup;
-> +    uint32_t ic_enable_status;
-> +    uint32_t ic_fs_spklen;
-> +    uint32_t ic_comp_param_1;
-> +    uint32_t ic_comp_version;
-> +    uint32_t ic_comp_type;
-> +
-> +    uint8_t      rx_fifo[DESIGNWARE_I2C_RX_FIFO_SIZE];
-> +    uint8_t      rx_cur;
-> +
-> +    DesignWareI2CStatus status;
-> +} DesignWareI2CState;
-
-
-> +#endif /* DESIGNWARE_I2C_H */
-> diff --git a/hw/i2c/designware_i2c.c b/hw/i2c/designware_i2c.c
-
-
-> +enum DesignWareI2CRegister {
-> +    DW_IC_CON                   = 0x00,
-> +    DW_IC_TAR                   = 0x04,
-
-> +    DW_IC_ACK_GENERAL_CALL      = 0x98,
-> +    DW_IC_ENABLE_STATUS         = 0x9c,
-> +    DW_IC_FS_SPKLEN             = 0xa0,
-> +    DW_IC_CLR_RESTART_DET       = 0xa8,
-> +    DW_IC_COMP_PARAM_1          = 0xf4,
-> +    DW_IC_COMP_VERSION          = 0xf8,
-> +    DW_IC_COMP_TYPE             = 0xfc,
-> +};
-
-
-> +static void dw_i2c_write(void *opaque, hwaddr offset, uint64_t value,
-> +                              unsigned size)
-> +{
-> +    DesignWareI2CState *s = opaque;
-> +
-> +    trace_dw_i2c_write(DEVICE(s)->canonical_path, offset, value);
-> +
-> +    /* The order of the registers are their order in memory. */
-> +    switch (offset) {
-> +    case DW_IC_CON:
-> +        dw_i2c_write_ic_con(s, value);
-> +        break;
-> +    case DW_IC_TAR:
-> +        s->ic_tar = value & DW_IC_TAR_MASK;
-> +        break;
-> +    case DW_IC_SAR:
-> +        qemu_log_mask(LOG_UNIMP, "%s: unsupported write - ic_sar\n",
-> +                      DEVICE(s)->canonical_path);
-> +        s->ic_sar = value & DW_IC_SAR_MASK;
-
-Unsupported but updated...
-
-> +        break;
-> +    case DW_IC_DATA_CMD:
-> +        dw_i2c_write_ic_data_cmd(s, value);
-> +        break;
-> +    case DW_IC_SS_SCL_HCNT:
-> +        s->ic_ss_scl_hcnt = value & DW_IC_SS_SCL_HCNT_MASK;
-> +        break;
-> +    case DW_IC_SS_SCL_LCNT:
-> +        s->ic_ss_scl_lcnt = value & DW_IC_SS_SCL_LCNT_MASK;
-> +        break;
-> +    case DW_IC_FS_SCL_HCNT:
-> +        s->ic_fs_scl_hcnt = value & DW_IC_FS_SCL_HCNT_MASK;
-> +        break;
-> +    case DW_IC_FS_SCL_LCNT:
-> +        s->ic_fs_scl_lcnt = value & DW_IC_FS_SCL_LCNT_MASK;
-> +        break;
-> +    case DW_IC_INTR_MASK:
-> +        s->ic_intr_mask = value & DW_IC_INTR_MASK_MASK;
-> +        dw_i2c_update_irq(s);
-> +        break;
-> +    case DW_IC_RX_TL:
-> +        dw_i2c_write_ic_rx_tl(s, value);
-> +        break;
-> +    case DW_IC_TX_TL:
-> +        dw_i2c_write_ic_tx_tl(s, value);
-> +        break;
-> +    case DW_IC_ENABLE:
-> +        dw_i2c_write_ic_enable(s, value);
-> +        break;
-> +    case DW_IC_SDA_HOLD:
-> +        s->ic_sda_hold = value & DW_IC_SDA_HOLD_MASK;
-> +        break;
-> +    case DW_IC_SLV_DATA_NACK_ONLY:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "%s: unsupported write - ic_slv_data_nack_only\n",
-> +                      DEVICE(s)->canonical_path);
-> +        break;
-> +    case DW_IC_DMA_CR:
-> +        qemu_log_mask(LOG_UNIMP, "%s: unsupported write - ic_dma_cr\n",
-> +                      DEVICE(s)->canonical_path);
-> +        break;
-> +    case DW_IC_DMA_TDLR:
-> +        qemu_log_mask(LOG_UNIMP, "%s: unsupported write - ic_dma_tdlr\n",
-> +                      DEVICE(s)->canonical_path);
-> +        break;
-> +    case DW_IC_DMA_RDLR:
-> +        qemu_log_mask(LOG_UNIMP, "%s: unsupported write - ic_dma_rdlr\n",
-> +                      DEVICE(s)->canonical_path);
-> +        break;
-> +    case DW_IC_SDA_SETUP:
-> +        s->ic_sda_setup = value & DW_IC_SDA_SETUP_MASK;
-> +        break;
-> +    case DW_IC_ACK_GENERAL_CALL:
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "%s: unsupported write - ic_ack_general_call\n",
-> +                      DEVICE(s)->canonical_path);
-> +        break;
-> +    case DW_IC_FS_SPKLEN:
-> +        s->ic_fs_spklen = value & DW_IC_FS_SPKLEN_MASK;
-> +        break;
-> +
-> +    /* This register is invalid at this point. */
-> +    default:
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "%s: write to invalid offset or readonly register 0x%"
-> +                      HWADDR_PRIx "\n",
-> +                      DEVICE(s)->canonical_path, offset);
-> +        break;
-> +    }
-> +}
-> +
-> +static const MemoryRegionOps designware_i2c_ops = {
-> +    .read = dw_i2c_read,
-> +    .write = dw_i2c_write,
-> +    .endianness = DEVICE_LITTLE_ENDIAN,
-
-.impl = { 4, 4 }
-
-> +    .valid = {
-> +        .min_access_size = 4,
-> +        .max_access_size = 4,
-> +        .unaligned = false,
-> +    },
-> +};
-> +
-> +static void designware_i2c_enter_reset(Object *obj, ResetType type)
-> +{
-> +    DesignWareI2CState *s = DESIGNWARE_I2C(obj);
-> +
-> +    s->ic_con = DW_IC_CON_INIT_VAL;
-> +    s->ic_tar = DW_IC_TAR_INIT_VAL;
-> +    s->ic_sar = DW_IC_SAR_INIT_VAL;
-> +    s->ic_ss_scl_hcnt = DW_IC_SS_SCL_HCNT_INIT_VAL;
-> +    s->ic_ss_scl_lcnt = DW_IC_SS_SCL_LCNT_INIT_VAL;
-> +    s->ic_fs_scl_hcnt = DW_IC_FS_SCL_HCNT_INIT_VAL;
-> +    s->ic_fs_scl_lcnt = DW_IC_FS_SCL_LCNT_INIT_VAL;
-> +    s->ic_intr_mask = DW_IC_INTR_MASK_INIT_VAL;
-> +    s->ic_raw_intr_stat = 0;
-> +    s->ic_rx_tl = 0;
-> +    s->ic_tx_tl = 0;
-> +    s->ic_enable = 0;
-> +    s->ic_status = DW_IC_STATUS_INIT_VAL;
-> +    s->ic_txflr = 0;
-> +    s->ic_rxflr = 0;
-> +    s->ic_sda_hold = DW_IC_SDA_HOLD_INIT_VAL;
-> +    s->ic_tx_abrt_source = 0;
-> +    s->ic_sda_setup = DW_IC_SDA_SETUP_INIT_VAL;
-> +    s->ic_enable_status = 0;
-> +    s->ic_fs_spklen = DW_IC_FS_SPKLEN_INIT_VAL;
-
-> +    s->ic_comp_param_1 = DW_IC_COMP_PARAM_1_INIT_VAL;
-> +    s->ic_comp_version = DW_IC_COMP_VERSION_INIT_VAL;
-> +    s->ic_comp_type = DW_IC_COMP_TYPE_INIT_VAL;
-
-Preferably initialize the IC_COMP registers once in the
-designware_i2c_realize() handler.
-
-> +    s->rx_cur = 0;
-> +    s->status = DW_I2C_STATUS_IDLE;
-> +}
-> +
-> +static void designware_i2c_hold_reset(Object *obj, ResetType type)
-> +{
-> +    DesignWareI2CState *s = DESIGNWARE_I2C(obj);
-> +
-> +    qemu_irq_lower(s->irq);
-> +}
-> +
-> +static const VMStateDescription vmstate_designware_i2c = {
-> +    .name = TYPE_DESIGNWARE_I2C,
-> +    .version_id = 0,
-> +    .minimum_version_id = 0,
-> +    .fields = (VMStateField[]) {
-
-const!
-
-> +        VMSTATE_UINT32(ic_con, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_tar, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_sar, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_ss_scl_hcnt, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_ss_scl_lcnt, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_fs_scl_hcnt, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_fs_scl_lcnt, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_intr_mask, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_raw_intr_stat, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_rx_tl, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_tx_tl, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_enable, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_status, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_txflr, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_rxflr, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_sda_hold, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_tx_abrt_source, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_sda_setup, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_enable_status, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_fs_spklen, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_comp_param_1, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_comp_version, DesignWareI2CState),
-> +        VMSTATE_UINT32(ic_comp_type, DesignWareI2CState),
-> +        VMSTATE_UINT32(status, DesignWareI2CState),
-> +        VMSTATE_UINT8_ARRAY(rx_fifo, DesignWareI2CState,
-> +                        DESIGNWARE_I2C_RX_FIFO_SIZE),
-> +        VMSTATE_UINT8(rx_cur, DesignWareI2CState),
-> +        VMSTATE_END_OF_LIST(),
-> +    },
-> +};
-> +
- > +static void designware_i2c_smbus_init(Object *obj)
- > +{
- > +    DesignWareI2CState *s = DESIGNWARE_I2C(obj);
- > +    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
- > +
- > +    sysbus_init_irq(sbd, &s->irq);
- > +
- > +    memory_region_init_io(&s->iomem, obj, &designware_i2c_ops, s,
- > +                          "regs", 4 * KiB);
-
-I note the current registers only describe a 1KiB region.
-
- > +    sysbus_init_mmio(sbd, &s->iomem);
- > +
- > +    s->bus = i2c_init_bus(DEVICE(s), "i2c-bus");
- > +}
- > +
-> +static void designware_i2c_class_init(ObjectClass *klass, const void *data)
-> +{
-> +    ResettableClass *rc = RESETTABLE_CLASS(klass);
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    dc->desc = "Designware I2C";
-> +    dc->vmsd = &vmstate_designware_i2c;
-> +    rc->phases.enter = designware_i2c_enter_reset;
-> +    rc->phases.hold = designware_i2c_hold_reset;
-
-        set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-
-> +}
-Since I couldn't look at the datasheet values, for overall modelling:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
+SGkgQ8OpZHJpYywNCg0KPiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBDw6lk
+cmljIExlIEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+DQo+IFNlbnQ6IDA0IE1heSAyMDI2IDE1OjU4
+DQo+IFRvOiBOYXRoYW4gQ2hlbiA8bmF0aGFuY0BudmlkaWEuY29tPjsgcWVtdS1hcm1Abm9uZ251
+Lm9yZzsgcWVtdS0NCj4gZGV2ZWxAbm9uZ251Lm9yZw0KPiBDYzogRXJpYyBBdWdlciA8ZXJpYy5h
+dWdlckByZWRoYXQuY29tPjsgUGV0ZXIgTWF5ZGVsbA0KPiA8cGV0ZXIubWF5ZGVsbEBsaW5hcm8u
+b3JnPjsgTWFyY2VsIEFwZmVsYmF1bQ0KPiA8bWFyY2VsLmFwZmVsYmF1bUBnbWFpbC5jb20+OyBQ
+aGlsaXBwZSBNYXRoaWV1LURhdWTDqQ0KPiA8cGhpbG1kQGxpbmFyby5vcmc+OyBZYW5hbiBXYW5n
+IDx3YW5neWFuYW41NUBodWF3ZWkuY29tPjsgWmhhbyBMaXUNCj4gPHpoYW8xLmxpdUBpbnRlbC5j
+b20+OyBTaGFtZWVyIEtvbG90aHVtIFRob2RpDQo+IDxza29sb3RodW10aG9AbnZpZGlhLmNvbT47
+IE1hdHQgT2NocyA8bW9jaHNAbnZpZGlhLmNvbT47IE5pY29saW4gQ2hlbg0KPiA8bmljb2xpbmNA
+bnZpZGlhLmNvbT4NCj4gU3ViamVjdDogUmU6IFtQQVRDSCB2MiAwLzddIGh3L2FybS9zbW11djMt
+YWNjZWw6IFJlc29sdmUgQVVUTyBwcm9wZXJ0aWVzDQo+IA0KPiBFeHRlcm5hbCBlbWFpbDogVXNl
+IGNhdXRpb24gb3BlbmluZyBsaW5rcyBvciBhdHRhY2htZW50cw0KPiANCj4gDQo+IEhlbGxvIE5h
+dGhhbiwNCj4gDQo+IE9uIDQvMjIvMjYgMjI6NDMsIE5hdGhhbiBDaGVuIHdyb3RlOg0KPiA+IEhp
+LA0KPiA+DQo+ID4gVGhpcyBzZXJpZXMgaW50cm9kdWNlcyBzdXBwb3J0IGZvciByZXNvbHZpbmcg
+J2F1dG8nIGZvciBhcm0tc21tdXYzDQo+ID4gYWNjZWxlcmF0ZWQgbW9kZSdzIEFUUywgUklMLCBT
+U0lEU0laRSwgYW5kIE9BUyBmZWF0dXJlIHByb3BlcnRpZXMNCj4gPiBiYXNlZCBvbiBob3N0IElP
+TU1VIGNhcGFiaWxpdGllcy4gVGhpcyBpcyBkZXBlbmRlbnQgb24gdGhlIHNlcmllcyBbMF0NCj4g
+PiBmb3IgY2hhbmdpbmcgdGhlc2UgcHJvcGVydHkgdHlwZXMgdG8gYWNjZXB0ICdhdXRvJyB2YWx1
+ZXMuDQo+ID4NCj4gPiBBY2NlbGVyYXRlZCBTTU1VdjMgQWRkcmVzcyBUcmFuc2xhdGlvbiBTZXJ2
+aWNlcyBzdXBwb3J0IGlzIGRlcml2ZWQNCj4gPiBmcm9tIElEUjAsIFJhbmdlIEludmFsaWRhdGlv
+biBzdXBwb3J0IGlzIGRlcml2ZWQgZnJvbSBJRFIzLCBTdWJzdHJlYW0NCj4gPiBJRCBzaXplIGlz
+IGRlcml2ZWQgZnJvbSBJRFIxLCBhbmQgb3V0cHV0IGFkZHJlc3Mgc3BhY2UgaXMgZGVyaXZlZCBm
+cm9tDQo+ID4gSURSNS4NCj4gPg0KPiA+IFRoZSBkZWZhdWx0IHZhbHVlcyBhcmUgc2V0IHRvICdh
+dXRvJyBmb3IgYWxsIHByb3BlcnRpZXMuIElmIGFjY2VsPW9mZg0KPiA+IGFuZCB0aGUgdmFsdWVz
+IGFyZSBzZXQgdG8gJ2F1dG8nIG9yIGFyZSBvbWl0dGVkIGFuZCByZXNvbHZlIHRvICdhdXRvJywN
+Cj4gPiB0aGUgZGVmYXVsdCBwcm9wZXJ0eSB2YWx1ZXMgZGVmaW5lZCBpbiBzbW11djNfaW5pdF9p
+ZF9yZWdzKCkgZm9yIE9BUw0KPiA+IGFuZCBSSUwgd2lsbCByZW1haW4gdW5jaGFuZ2VkLCB3aGls
+ZSBTU0lEU0laRSBhbmQgQVRTIHZhbHVlcyB3aWxsDQo+ID4gcmVtYWluIGluaXRpYWxpemVkIGF0
+IDAuDQo+ID4NCj4gPiBBIGNvbXBsZXRlIGJyYW5jaCBjYW4gYmUgZm91bmQgaGVyZToNCj4gPiBo
+dHRwczovL2dpdGh1Yi5jb20vTmF0aGFuQ2hlbk5WSURJQS9xZW11L3RyZWUvc21tdXYzLWFjY2Vs
+LWF1dG8tDQo+IHJlc29sdg0KPiA+IGUtdjINCj4gPg0KPiA+IFBsZWFzZSB0YWtlIGEgbG9vayBh
+bmQgbGV0IG1lIGtub3cgeW91ciBmZWVkYmFjay4NCj4gPg0KPiA+IFRoYW5rcywNCj4gPiBOYXRo
+YW4NCj4gPg0KPiA+IFswXQ0KPiA+IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtYXJtLzIw
+MjYwMzIzMTgyNDU0LjE0MTYxMTAtMS0NCj4gbmF0aGFuY0BudmlkDQo+ID4gaWEuY29tLw0KPiA+
+DQo+ID4gRXhhbXBsZSB1c2FnZToNCj4gPiBxZW11LXN5c3RlbS1hYXJjaDY0IFwNCj4gPiAgICAt
+b2JqZWN0IGlvbW11ZmQsaWQ9aW9tbXVmZDAgXA0KPiA+ICAgIC1tYWNoaW5lIHZpcnQsYWNjZWw9
+a3ZtLGdpYy12ZXJzaW9uPTMscmFzPW9uLGhpZ2htZW0tbW1pby1zaXplPTRUIFwNCj4gPiAgICAt
+Y3B1IGhvc3QgLXNtcCBjcHVzPTQgLW0gc2l6ZT0xNkcgLW5vZ3JhcGhpYyBcDQo+ID4gICAgLW9i
+amVjdCBtZW1vcnktYmFja2VuZC1yYW0sc2l6ZT0xNkcsaWQ9bTAgXA0KPiA+ICAgIC1udW1hIG5v
+ZGUsbWVtZGV2PW0wLGNwdXM9MC0zLG5vZGVpZD0wIFwNCj4gPiAgICAtbnVtYSBub2RlLG5vZGVp
+ZD0xIC1udW1hIG5vZGUsbm9kZWlkPTIgLW51bWEgbm9kZSxub2RlaWQ9MyAtDQo+IG51bWEgbm9k
+ZSxub2RlaWQ9NCBcDQo+ID4gICAgLW51bWEgbm9kZSxub2RlaWQ9NSAtbnVtYSBub2RlLG5vZGVp
+ZD02IC1udW1hIG5vZGUsbm9kZWlkPTcgLQ0KPiBudW1hIG5vZGUsbm9kZWlkPTggXA0KPiA+ICAg
+IC1kZXZpY2UgcHhiLXBjaWUsaWQ9cGNpZS4xLGJ1c19ucj0xLGJ1cz1wY2llLjAsbnVtYV9ub2Rl
+PTAgXA0KPiA+ICAgIC1kZXZpY2UgYXJtLXNtbXV2MyxwcmltYXJ5LQ0KPiBidXM9cGNpZS4xLGlk
+PXNtbXV2My4xLGFjY2VsPW9uLGF0cz1hdXRvLHNzaWRzaXplPWF1dG8scmlsPWF1dG8sb2FzPWF1
+dG8gXA0KPiA+ICAgIC1kZXZpY2UgcGNpZS1yb290LXBvcnQsaWQ9cGNpZS5wb3J0MSxidXM9cGNp
+ZS4xLGNoYXNzaXM9MSxpby1yZXNlcnZlPTAgXA0KPiA+ICAgIC1kZXZpY2UgdmZpby1wY2ktDQo+
+IG5vaG90cGx1Zyxob3N0PTAwMDk6MDY6MDAuMCxidXM9cGNpZS5wb3J0MSxyb21iYXI9MCxpZD1k
+ZXYwLGlvbW11ZmQ9aQ0KPiBvbW11ZmQwLGF0cz1hdXRvIFwNCj4gPiAgICAtb2JqZWN0IGFjcGkt
+Z2VuZXJpYy1pbml0aWF0b3IsaWQ9Z2kwLHBjaS1kZXY9ZGV2MCxub2RlPTEgXA0KPiA+ICAgIC1v
+YmplY3QgYWNwaS1nZW5lcmljLWluaXRpYXRvcixpZD1naTEscGNpLWRldj1kZXYwLG5vZGU9MiBc
+DQo+ID4gICAgLW9iamVjdCBhY3BpLWdlbmVyaWMtaW5pdGlhdG9yLGlkPWdpMixwY2ktZGV2PWRl
+djAsbm9kZT0zIFwNCj4gPiAgICAtb2JqZWN0IGFjcGktZ2VuZXJpYy1pbml0aWF0b3IsaWQ9Z2kz
+LHBjaS1kZXY9ZGV2MCxub2RlPTQgXA0KPiA+ICAgIC1vYmplY3QgYWNwaS1nZW5lcmljLWluaXRp
+YXRvcixpZD1naTQscGNpLWRldj1kZXYwLG5vZGU9NSBcDQo+ID4gICAgLW9iamVjdCBhY3BpLWdl
+bmVyaWMtaW5pdGlhdG9yLGlkPWdpNSxwY2ktZGV2PWRldjAsbm9kZT02IFwNCj4gPiAgICAtb2Jq
+ZWN0IGFjcGktZ2VuZXJpYy1pbml0aWF0b3IsaWQ9Z2k2LHBjaS1kZXY9ZGV2MCxub2RlPTcgXA0K
+PiA+ICAgIC1vYmplY3QgYWNwaS1nZW5lcmljLWluaXRpYXRvcixpZD1naTcscGNpLWRldj1kZXYw
+LG5vZGU9OCBcDQo+ID4gICAgLWJpb3MgL3Vzci9zaGFyZS9BQVZNRi9BQVZNRl9DT0RFLmZkIFwN
+Cj4gPiAgICAtZGV2aWNlIG52bWUsZHJpdmU9bnZtZTAsc2VyaWFsPWRlYWRiZWFmMSxidXM9cGNp
+ZS4wIFwNCj4gPiAgICAtZHJpdmUNCj4gZmlsZT0vdmFyL2xpYi9saWJ2aXJ0L2ltYWdlcy9ndWVz
+dC5xY293MixpbmRleD0wLG1lZGlhPWRpc2ssZm9ybWF0PXFjb3cyLGlmDQo+ID1ub25lLGlkPW52
+bWUwIFwNCj4gPiAgICAtZGV2aWNlIGUxMDAwLHJvbWZpbGU9L3Vzci9sb2NhbC9zaGFyZS9xZW11
+L2VmaS0NCj4gZTEwMDAucm9tLG5ldGRldj1uZXQwLGJ1cz1wY2llLjAgXA0KPiA+ICAgIC1uZXRk
+ZXYgdXNlcixpZD1uZXQwLGhvc3Rmd2Q9dGNwOjo1NTU4LToyMixob3N0ZndkPXRjcDo6NTU4Ni06
+NTU4Ng0KPiA+DQo+ID4gVGVzdGluZzoNCj4gPiBCYXNpYyBzYW5pdHkgdGVzdGluZyB3YXMgcGVy
+Zm9ybWVkIG9uIGFuIE5WSURJQSBHcmFjZSBwbGF0Zm9ybSB3aXRoDQo+ID4gR1BVIGRldmljZSBh
+c3NpZ25tZW50IGFuZCBydW5uaW5nIENVREEgdGVzdCBhcHBzIG9uIHRoZSBndWVzdC4NCj4gPiBP
+YnNlcnZlZCB0aGUgZmVhdHVyZSBwcm9wZXJ0aWVzIGJlaW5nIHNldCBiYXNlZCBvbiBob3N0IElP
+TU1VDQo+IGNhcGFiaWxpdGllcy4NCj4gPiBWZXJpZmllZCB0aGF0IHRoZSBWTSBib290IHdpbGwg
+ZmFpbCB3aXRob3V0IGEgY29sZC1wbHVnZ2VkIGRldmljZSwgYW5kDQo+ID4gdGhhdCBhIGhvdC1w
+bHVnZ2VkIGRldmljZSByZS11c2VzIHRoZSByZXNvbHZlZCB2YWx1ZXMgZnJvbSB0aGUgaW5pdGlh
+bA0KPiA+IGNvbGQtcGx1Zy4gQWRkaXRpb25hbCB0ZXN0aW5nIGFuZCBmZWVkYmFjayBhcmUgd2Vs
+Y29tZS4NCj4gDQo+IEl0IGlzIGhlbHBmdWwgdG8gaGF2ZSBhIGNoYW5nZWxvZyBiZXR3ZWVuIGRp
+ZmZlcmVudCB2ZXJzaW9ucyBvZiB0aGUgc2FtZSBzZXJpZXMNCj4gb2YgcGF0Y2hlcy4NCj4gDQo+
+IFNvLCB0aGUgbGludXggaGVhZGVycyBhbmQgdmZpbyB1cGRhdGUgYXJlIG5vdCByZXF1aXJlZCBh
+bnltb3JlID8NCg0KSnVzdCBqdW1waW5nIGluIGFzIE5hdGhhbiBpcyBvbiBQVE8uDQoNCk15IHVu
+ZGVyc3RhbmRpbmcgaXMgdGhhdCB0aGUgTGludXggaGVhZGVycyBhbmQgVkZJTyB1cGRhdGVzIGFy
+ZSBub3QNCmluY2x1ZGVkIGluIHRoaXMgc2VyaWVzIGJlY2F1c2UsIGJhc2VkIG9uIHByZXZpb3Vz
+IGZlZWRiYWNrLCB0aGUNCkFUUyByZWxhdGVkIFZGSU8gY2hhbmdlcyB3aWxsIGJlIHNlbnQgYXMg
+YW4gaW5kZXBlbmRlbnQgc2VyaWVzLg0KDQpUaGFua3MsDQpTaGFtZWVyDQo=
 
