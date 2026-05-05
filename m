@@ -4,83 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70354FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 11:01:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C79CD342F
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 11:01:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKDWK-00034N-6s; Tue, 05 May 2026 07:00:56 -0400
+	id 1wKDWy-0003kU-6k; Tue, 05 May 2026 07:01:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <munkhuu0825@gmail.com>)
- id 1wKDWF-0002zr-FA
- for qemu-devel@nongnu.org; Tue, 05 May 2026 07:00:53 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <munkhuu0825@gmail.com>)
- id 1wKDWD-0004lE-Hq
- for qemu-devel@nongnu.org; Tue, 05 May 2026 07:00:51 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2b458ca2296so28935695ad.0
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 04:00:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777978847; x=1778583647; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wpG61Sm+VTsYPNIBqYulcbNVCgfeGjPbFP1lPVoJ4/Q=;
- b=qQ9Gc4uTZ871wIjMKCZIGn80YjjmeJ6TjUYqhp1Qs0AdB1gAkeEsr4vifhSNtkFluz
- qjUCx+511D4u5+KNqPTTHBljryfvkK9iPQP1NnTryNi3NqexsM5DrBWJ5DX6f4mi46iv
- A9PHwtxcYp7NWBCEph5eez+l9pbJhHdvE3bg16ZXgrXJFd4uCYFtAT2zykoP1aZRBtIq
- UVxvqNarNnSRvkp2D4OtGe3bXe8/53mx5/8Jbi0gZ75jgx5HOEsQILPQLTYuiJrGFjju
- sb/p/07c2inb1iItsXGfQU5IO+ekBzfQwdCuYhjZceJ+5hTdWkEz66b46KPPYPkO+uA1
- BNcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777978847; x=1778583647;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wpG61Sm+VTsYPNIBqYulcbNVCgfeGjPbFP1lPVoJ4/Q=;
- b=Ovo/YZnMNfnymgwlttYEYtMjeP5Abocv8MJp5JmO4JuCD+QmrZw3PNRSKgBNjxGNwM
- KXhZZq6DsevBWyXPnvWbU+OHLW9W5HTjnbYXOZz2rOo8CE2Sj2ZYvtO6T3MPbLPZKSxl
- +O0Bx1a82fRYhE2cKluCaZmMb8GmBDAcHDplnomjLQZEf1VQMb8zeHgPK/laa8MofeQ1
- LYOgtSyiW5Y/DTBYAbk6jVJIK4cMIGo4K7iQDXZE4xpo95LnokxH/cAlgvZENxF3YnnN
- 9GqtFglYTj+Vn0zbi26IwosyiLCmZ7FbcvYyv+U4V2Y3Cp743Ho5tdW9sPLO+4DrJPu4
- l0Aw==
-X-Gm-Message-State: AOJu0YwBOBYLVoDd1fZsiAK/vIeVbUSoFOZLsL/RVKJG/0jzPvnhJDcX
- HV4NcqjHMAFMZWQZ61D8uyVYKe5Jf0IuJqrGS+IMxeV00xEwbJ9v/M7vXv5/XWoP
-X-Gm-Gg: AeBDiet3p2Lg9ylV56JL7RJptblri05BvG0pcU+NI3snik2+UxkiQQ7N74mEmTMv84s
- W3rRlfPysfhbfVHO8EbanX63w+lmm4nhBbnTjHBmOeepZn8BExk62zp+om+vWHYqUUJM0vL4Ueb
- OEdnbIj6tdq45Xl9YH7QFBp0c5UZNLWodYxrx2VRXsbaNFxT0BkLMB2suujwgqSHgBd5pSRRbMm
- eD1uazDGhq1Ttv7Aoyhddo+gWK7AQVAuCiKZDEtr3zMwRom73qLvFrdyINJW3dx6kKF7AwlhqUc
- dsQM6CPSjqc92Bywh0/jgy1AVzs6TEOdDWUMw4qxuLtRfPrYgzy67QqEnxJhODFIgNpJvgXtFQl
- O1Gzk9YjffghuL9SfMUB0uJVOrhRW+W2ECEAlE0rq0HJJ5vjIFKzN0tbiqRp4tpnKRA7bc1Uw7T
- ci96z/dhaAJC0moOfqtBlWJYjYEvHJeehfHItbWei/gHK3kGK0unHaMKElitDXqPZK
-X-Received: by 2002:a17:903:1b4c:b0:2b9:ff02:a154 with SMTP id
- d9443c01a7336-2b9ff02a9f5mr117372635ad.15.1777978846621; 
- Tue, 05 May 2026 04:00:46 -0700 (PDT)
-Received: from localhost.localdomain ([202.55.186.124])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b9cae0f6d8sm135690485ad.39.2026.05.05.04.00.44
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 05 May 2026 04:00:45 -0700 (PDT)
-From: munkhuu0825@gmail.com
-To: qemu-devel@nongnu.org
-Cc: heropd <munkhuu0825@gmail.com>
-Subject: [PATCH] hw/usb/hcd-ohci: Fix memory leak in ohci_service_iso_td()
-Date: Tue,  5 May 2026 19:00:36 +0800
-Message-ID: <20260505110036.47574-1-munkhuu0825@gmail.com>
-X-Mailer: git-send-email 2.50.1
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wKDWw-0003gp-14; Tue, 05 May 2026 07:01:34 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1wKDWt-0005QI-Fg; Tue, 05 May 2026 07:01:33 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 59CA9408C4;
+ Tue, 05 May 2026 13:01:28 +0200 (CEST)
+Message-ID: <e86b82e4-a85d-46d2-bb8f-4e0f59e49a44@proxmox.com>
+Date: Tue, 5 May 2026 13:01:26 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=munkhuu0825@gmail.com; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 08/28] fuse: Set direct_io and parallel_direct_writes
+From: Fiona Ebner <f.ebner@proxmox.com>
+To: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20260310162622.333137-1-kwolf@redhat.com>
+ <20260310162622.333137-9-kwolf@redhat.com>
+ <72090fa4-2f4e-483d-9ceb-c19b8119a25d@proxmox.com>
+ <17fe584f-6c64-4ccf-8253-c813665e0070@proxmox.com>
+Content-Language: en-US
+In-Reply-To: <17fe584f-6c64-4ccf-8253-c813665e0070@proxmox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1777978780989
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,37 +62,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: heropd <munkhuu0825@gmail.com>
+Am 05.05.26 um 11:03 AM schrieb Fiona Ebner:
+> Am 30.04.26 um 4:20 PM schrieb Fiona Ebner:
+>> Dear Maintainers,
+>>
+>> Am 10.03.26 um 6:33 PM schrieb Kevin Wolf:
+>>> From: Hanna Czenczek <hreitz@redhat.com>
+>>>
+>>> In fuse_open(), set these flags:
+>>> - direct_io: We probably actually don't want to have the host page cache
+>>>   be used for our exports.  QEMU block exports are supposed to represent
+>>>   the image as-is (and thus potentially changing).
+>>>   This causes a change in iotest 308's reference output.
+>>>
+>>> - parallel_direct_writes: We can (now) cope with parallel writes, so we
+>>>   should set this flag.  For some reason, it doesn't seem to make an
+>>>   actual performance difference with libfuse, but it does make a
+>>>   difference without it, so let's set it.
+>>>   (See "fuse: Copy write buffer content before polling" for further
+>>>   discussion.)
+>>>
+>>> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+>>> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+>>> Message-ID: <20260309150856.26800-9-hreitz@redhat.com>
+>>> Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+>>> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+>>> ---
+>>>  block/export/fuse.c        | 2 ++
+>>>  tests/qemu-iotests/308.out | 2 +-
+>>>  2 files changed, 3 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/block/export/fuse.c b/block/export/fuse.c
+>>> index 0422cf4b8af..d0e3c6bf61f 100644
+>>> --- a/block/export/fuse.c
+>>> +++ b/block/export/fuse.c
+>>> @@ -582,6 +582,8 @@ static void fuse_setattr(fuse_req_t req, fuse_ino_t inode, struct stat *statbuf,
+>>>  static void fuse_open(fuse_req_t req, fuse_ino_t inode,
+>>>                        struct fuse_file_info *fi)
+>>>  {
+>>> +    fi->direct_io = true;
+>>
+>> unfortunately, turning on direct IO here breaks a use case with swtpm.
+>> Reproducer below [0], which fails with an error message
+>>   /usr/bin/swtpm exit with status 256:
+>> after this commit.
+>>
+>> Dropping the FOPEN_DIRECT_IO flag in current master makes the reproducer
+>> work again.
+>>
+>> Should there be a BlockExportOptionsFuse property to control the direct
+>> IO flag and have it be opt-in to avoid this breakage (and potentially
+>> others)?
+>>
+>> Best Regards,
+>> Fiona
+>>
+>> [0]:
+>>
+>>> #!/bin/bash
+>>> rm /tmp/disk.qcow2
+>>> rm /tmp/export.fuse
+>>> ./qemu-img create -f qcow2 /tmp/disk.qcow2 4M
+>>> touch /tmp/export.fuse
+>>> (
+>>> ./storage-daemon/qemu-storage-daemon \
+>>>     --blockdev qcow2,node-name=node0,file.driver=file,file.filename=/tmp/disk.qcow2 \
+>>>     --export fuse,id=exp0,mountpoint=/tmp/export.fuse,node-name=node0,writable=true \
+>>>     --chardev socket,id=qmp,path=/run/qsd.qmp,server=on,wait=off \
+>>>     --monitor chardev=qmp,mode=control
+>>> ) &
+>>> sleep 1 # too lazy to do proper synchronization for the reproducer here
+>>> swtpm_setup --tpmstate file:///tmp/export.fuse --createek
+>>> echo '{"execute": "qmp_capabilities"}{"execute": "quit"}' | socat - /run/qsd.qmp
+> 
+> Self-contained version modeling the relevant part of swtpm_setup:
+> 
+>> #!/bin/bash
+>>
+>> cat - > /tmp/mmap.c <<EOF
+>> #include <assert.h>
+>> #include <fcntl.h>
+>> #include <stddef.h>
+>> #include <sys/stat.h>
+>> #include <sys/mman.h>
+>>
+>> int main(int argc, char **argv)
+>> {
+>>     struct stat st;
+>>     int fd;
+>>     void *ptr;
+>>
+>>     assert(argc == 2);
+>>     fd = open(argv[1], O_RDWR|O_CREAT, 0x640);
+>>     assert(fd > 0);
+>>     fstat(fd, &st);
+>>     ptr = mmap(NULL, st.st_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+>>     assert(ptr != MAP_FAILED);
+>>     return 0;
+>> }
+>> EOF
+>> gcc /tmp/mmap.c -o /tmp/mmap
+>>
+>> rm /tmp/disk.qcow2
+>> rm /tmp/export.fuse
+>> ./qemu-img create -f qcow2 /tmp/disk.qcow2 4M
+>> touch /tmp/export.fuse
+>>
+>> (
+>> ./storage-daemon/qemu-storage-daemon \
+>>     --blockdev qcow2,node-name=node0,file.driver=file,file.filename=/tmp/disk.qcow2 \
+>>     --export fuse,id=exp0,mountpoint=/tmp/export.fuse,node-name=node0,writable=true \
+>>     --chardev socket,id=qmp,path=/run/qsd.qmp,server=on,wait=off \
+>>     --monitor chardev=qmp,mode=control
+>> ) &
+>>
+>> sleep 1 # too lazy to do proper synchronization for the reproducer here
+>> /tmp/mmap /tmp/export.fuse
+>> echo '{"execute": "qmp_capabilities"}{"execute": "quit"}' | socat - /run/qsd.qmp
 
-Fix a memory leak in ohci_service_iso_td() by calling
-usb_packet_cleanup() before freeing USBPacket.
+The kernel docs [0] mention:
 
-Signed-off-by: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
----
- hw/usb/hcd-ohci.c | 2 ++
- 1 file changed, 2 insertions(+)
+"In direct-io mode the page cache is completely bypassed for reads and
+writes. No read-ahead takes place. Shared mmap is disabled by default.
+To allow shared mmap, the FUSE_DIRECT_IO_ALLOW_MMAP flag may be enabled
+in the FUSE_INIT reply."
 
-diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-index 6ed8046fc2..43c49a42ec 100644
---- a/hw/usb/hcd-ohci.c
-+++ b/hw/usb/hcd-ohci.c
-@@ -748,6 +748,7 @@ static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed *ed)
-     usb_handle_packet(dev, pkt);
-     if (pkt->status == USB_RET_ASYNC) {
-         usb_device_flush_ep_queue(dev, ep);
-+        usb_packet_cleanup(pkt);
-         g_free(pkt);
-         return 1;
-     }
-@@ -756,6 +757,7 @@ static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed *ed)
-     } else {
-         ret = pkt->status;
-     }
-+    usb_packet_cleanup(pkt);
-     g_free(pkt);
- 
-     trace_usb_ohci_iso_td_so(start_offset, end_offset, start_addr, end_addr,
--- 
-2.50.1 (Apple Git-155)
+I quickly tested with setting FUSE_DIRECT_IO_ALLOW_MMAP in
+fuse_co_init() (it's part of the flags2 ones, so also requires
+FUSE_INIT_EXT to be set in the flags) and this makes the swtpm use case
+work again :)
+
+So, should that flag be set by default (if supported by the kernel) for
+backwards compatibility? Or what should we do about the issue?
+
+Best Regards,
+Fiona
+
+[0]: https://www.kernel.org/doc/html/next/filesystems/fuse/fuse-io.html
 
 
