@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 108EDCD3427
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 20:56:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D96CD3427
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 22:40:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKMmR-0002wm-GK; Tue, 05 May 2026 16:54:11 -0400
+	id 1wKOQh-0004Zl-RO; Tue, 05 May 2026 18:39:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wKMmM-0002vs-OE
- for qemu-devel@nongnu.org; Tue, 05 May 2026 16:54:07 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wKOQg-0004ZO-43
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 18:39:50 -0400
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wKMmL-0001Q3-36
- for qemu-devel@nongnu.org; Tue, 05 May 2026 16:54:06 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-48984d29fe3so82093705e9.0
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 13:54:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wKOQe-00063B-A8
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 18:39:49 -0400
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-7dccb8644c4so3040101a34.0
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 15:39:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778014443; x=1778619243; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3OlMkUnK67P6OiqTbgbKmspu7e+U7zl/NOy2A2SBzKk=;
- b=KiLCzHTkuP8bcvK83ASSS/8SCb7V+j6GCnWs1wwImxheiHN+iIeTF8SpA2/zvsHQx+
- okkjR73RYkg6PuMPnFWeuzmwzQpnDVajRGhR9nnMSkF2gKuGo8luZkvOo5YeKOdAmtVu
- ZOBoaN1ojKxayJ6b5aUKwi2HBrU1rAeBL6AxkVCqxcOBNSK/VD9nX3XrMkvIE649ODl0
- Ue2ImL+3deGWVlBwvpv/A3krOXhx3Ru5PC8evXxjApfdaWAETUZu+TqixhcmyhlNufeq
- ew03cEWph0+CWsCWPVDmj0ZVx3NnCAhZv7cxisYFsfgD0Tro0m6dSvABc3cA9/j23ycn
- 3G/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778014443; x=1778619243;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ d=linaro.org; s=google; t=1778020786; x=1778625586; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=3OlMkUnK67P6OiqTbgbKmspu7e+U7zl/NOy2A2SBzKk=;
- b=dThwkyN70lx5/nX+h2+EIUM6/1VE+XBCNgj5R8E4m8civetNFl656oXEOE5LvCyz65
- IMNNw1XJXoxwdBSaXhXQNAJ2MjVsdzb2O51kNv9vogbsBQSANPTCNa8WlG0N8GopH31j
- zcV/527BQo/EKpq4z9vfoJuGV7rYotgvA8YSh2s6cbBLV06GysI+OniHIJ8DRVq4GcWK
- SrINPiLzTX4FQOqL1nglIK+em04ZcFIA2VYgBLKYvHVLNVdCjtA2z1YaI2toGROX7Qyw
- iayPYp09BhEYBd6UtT/iZ+d/71lMDB71wAS/VBVM5w7OMVDEnboquERgYqF+SjCf55nX
- Gm8Q==
-X-Gm-Message-State: AOJu0YyhEo0YJXPPuoRT3h2iD9HAOyxxNHxHBY0BcdktURpSi/AVumNL
- YV2mS7jOH/tFSO5XKBHv1fNfV17DP0+txiyHjbwtrP/kEl1dG8O/tQb9
-X-Gm-Gg: AeBDiesJC6WEmPveKn3VQowHL0wBwv+J+O5q6puXgjFB5Me6UCJFOhtBzyCHgh4l0ct
- aErsMsk4s4o/Xi4N5NJDLLLyHVzYiujcTt5W00yU/yxaNWpivqTst/WhMVvLKkzmYrclNs0Jfdi
- nrLvO7GPPgCtkjeDvxOxoctJUF4D1WVhc5/VDJM5GumfTR346+igauIJyGbRh8qAd/WA9p/f4z0
- jw0A1Mf84w5ru0dXsxFrEtM04GUsz5RRrslxe9wt4jPgN/4RqS4hdO7drucumqFDKmpezvaMrZQ
- vGjAaU2HMoANzZiyuVpdl4gy7+kvoCI7wmQHcv0+AwgeGU60peogFKdU9puTkK0NAH2urWRZHCA
- 20Lpdfo07ajdms3aT/cV2KvxcmjGr2EjYBoFUi8SWULeGW3L7AoYmFTFYHukP25aBuNuuNneVZb
- v0ORFy2UMsmDY3GW5EFQJ2gJra2mfkQgIqZSxJ4yb+As0ZlD8XkCNS8DeUlqN63Yo7YT7K27VvS
- SQCk128NUqx3pdlVWIFuNaxQfsoo9XSPLtQJpIUEccqIGdoZv5inipB
-X-Received: by 2002:a05:6000:61e:b0:441:2335:ac3f with SMTP id
- ffacd0b85a97d-4515d4d114fmr1157861f8f.31.1778014443322; 
- Tue, 05 May 2026 13:54:03 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (dynamic-2a02-3100-2288-5100-c87f-e1c3-d3c0-0c97.310.pool.telefonica.de.
- [2a02:3100:2288:5100:c87f:e1c3:d3c0:c97])
+ bh=nNdgCTdGWg+T/Fc/y6uGvKfPabIGsrUgHTvDSW4nOI0=;
+ b=lpERvfxGZ42nHN1VmU2012TTi6YAw/8Ibkd4I5Xo1XgGygsr5CAx1e6VKpH7/JLnf5
+ jWPpDZ2+qLNp02R9+rS6xMpmE0YQAoq1joKpKDFis1tnumajto3PBsAfn+WeiL74RD1U
+ PNi0WSVfHGr2MbLM2KAWNs3J+Xb4igwNH9kovXFuFJUArBr73whk3L7zoZxF4/dd9XP7
+ yK4rutrw4nWTjXOzz8JVFlQpd/Kssecdnu05iAQCewdyMJts9eFiLb1FLdWgtwIr63Bt
+ fn9URnJZi27yzNdful18KY6CA8AaOaSOp4NGaEaD2JE3BTAbSz5oP5bwTZD+DMFxVGD7
+ dXdQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778020786; x=1778625586;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nNdgCTdGWg+T/Fc/y6uGvKfPabIGsrUgHTvDSW4nOI0=;
+ b=eEubFu7eWMney7EanRTGUf5/ihJ1DsQDkyJIM1aZHMF321nd0KKVpG961OimLgfFm9
+ KizIE7h0MGtGAqs8xQ4wZB87R+01jKltiPytKj7tr1Abjw6NFBqaaxX5oosFY0/Ti6PO
+ USDJbwaHD+rKxGnc0c98ngP3/TuZUGiBG5PREIwVYM5y6Y4qMnQBouGY2zI0W4Gu4w3n
+ XfiYln8yE9hxJtQRbnRwh0JhQxlODq3CEXLDkbpvLmvLcr64rvGluJt2gSplOuXfQYEo
+ iPzaiBrAxU0L+jyF1agM1HqjPpRdc7vfQNhTdxAmAk1W6kxa8FYd5afXzP/QfYIadvdE
+ GN2A==
+X-Gm-Message-State: AOJu0Yz2A4RQLvPU5wQlcRqb6Ajeu4jbSa8GnlaMl15i76OXxwIoccPU
+ QUsKSk0mcpPfKW2j8Fbtz1dEtLePNs0LUE3AOGNmyoaHAACiUDM4c6aTo16r6O7pNl0qODMbquT
+ 7/rr7
+X-Gm-Gg: AeBDievJPlX1Ut+1ogK63e5yEEdm/Zw7XEDH/OUKVVx64ZXOmfO7YWAgjhBMAC6hKeA
+ y/OC62u1msQZcORk+jqE9DvsvSxoNoaZP56uLNYv5JDoquH5B61SEn+kJCD6vp4MvOAHxqT5OQM
+ jWCqpFx4NYrPdV+ZRungmvSZNjsO/RHUln0IRY6KMAt3NeRGMmGEjQMrwVfkFe4eF738YbnbEsz
+ BRQSODDkU8mMa5SK+ziC+9rDE82nT1xoq49r6ZBN+T2UQ3KzHK9ZlczuCqgG2Clisan1OmIUYaH
+ XEW3IN9e7N9MhSwS9c+K4sdcEyHf5qv2Z3t7Mr5dtQ625Ue4AO3RmSBKslO4BIl6rnSaQWkPdUO
+ 4yk2rIyvekickkEyhxuvBklQ3K4jEBRHESvDdx1CqX6eF+N9GVR00/gVaZpNQHA/BLddKVs1WAw
+ onYpNIl9uxllqnn5ci2xGMKLU9MtB/YHGogfVl6rdP4Oc+k/hsSs85e6c6fSCgU/QwK5+EPjK9Z
+ qmkts6JOw8S3C/4QPgMOI0upQ==
+X-Received: by 2002:a05:6830:6ad3:b0:7e1:cba6:9837 with SMTP id
+ 46e09a7af769-7e1deefaccemr496676a34.6.1778020786344; 
+ Tue, 05 May 2026 15:39:46 -0700 (PDT)
+Received: from ?IPV6:2600:381:c938:6375:8e44:9fa:a15c:eb9?
+ ([2600:381:c938:6375:8e44:9fa:a15c:eb9])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4505238e7c0sm6410810f8f.3.2026.05.05.13.54.01
+ 46e09a7af769-7deced80854sm10559724a34.18.2026.05.05.15.39.45
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 May 2026 13:54:01 -0700 (PDT)
-Date: Tue, 05 May 2026 20:53:57 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- qemu-trivial@nongnu.org, qemu-arm@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>,
- =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
- Gaurav Sharma <gaurav.sharma_7@nxp.com>
-Subject: Re: [PATCH 3/5] hw/arm/imx8mp-evk: Fix reference count of SoC object
-In-Reply-To: <CAFEAcA_cYDwOFP_h_pKyUQ0kKmT671iZiNntzMC5O5tF=1cC=A@mail.gmail.com>
-References: <20260308203516.160103-1-shentey@gmail.com>
- <20260308203516.160103-4-shentey@gmail.com>
- <CAFEAcA_cYDwOFP_h_pKyUQ0kKmT671iZiNntzMC5O5tF=1cC=A@mail.gmail.com>
-Message-ID: <842AA964-4C27-47B7-85AB-A26BC607BD5D@gmail.com>
+ Tue, 05 May 2026 15:39:46 -0700 (PDT)
+Message-ID: <c7a83814-1ce7-4092-8df5-0a845bdf5b41@linaro.org>
+Date: Tue, 5 May 2026 17:39:43 -0500
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x32f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] bsd-user: remove cached host page size and rely on
+ qemu_real_host_page_size()
+To: qemu-devel@nongnu.org
+References: <20260430162941.584960-1-mohamedaymanworkspace@gmail.com>
+ <20260501161106.818373-1-mohamedaymanworkspace@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260501161106.818373-1-mohamedaymanworkspace@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,74 +107,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 5/1/26 11:11, Mohamed Ayman wrote:
+> +++ b/bsd-user/qemu.h
+> @@ -44,12 +44,10 @@ extern char **environ;
+>   #include "accel/tcg/vcpu-state.h"
+>   
+>   #include "qemu-os.h"
+> -/*
+> - * TODO: Remove these and rely only on qemu_real_host_page_size().
+> - */
+> -extern uintptr_t qemu_host_page_size;
+> -extern intptr_t qemu_host_page_mask;
+> -#define HOST_PAGE_ALIGN(addr) ROUND_UP((addr), qemu_host_page_size)
+> +
+> +#define HOST_PAGE_SIZE        MAX(qemu_real_host_page_size(), TARGET_PAGE_SIZE)
+> +#define HOST_PAGE_MASK        ((intptr_t)~(HOST_PAGE_SIZE - 1))
+> +#define HOST_PAGE_ALIGN(addr) ROUND_UP((addr), HOST_PAGE_SIZE)
+
+This is a bad idea, hiding the true size of the host page.
+
+There are oodles of corner cases that require the exact size of the host page.  If you 
+hide this in a macro, you are going to stumble over them all of the time.
 
 
-Am 30=2E April 2026 15:39:48 UTC schrieb Peter Maydell <peter=2Emaydell@li=
-naro=2Eorg>:
->On Sun, 8 Mar 2026 at 20:35, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
-:
->>
->> object_new() leaves a reference count of one, and object_property_add_c=
-hild()
->> then leaves it at two=2E This would leak the SoC object if the machine =
-object was
->> destroyed since the machine is the SoC's sole owner=2E Fix this by conv=
-erting to
->> object_new_with_props() which gets the parenting and reference count ri=
-ght in
->> one go=2E
->>
->> Fixes: a4eefc69b237 ("hw/arm: Add i=2EMX 8M Plus EVK board")
->> cc: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
->> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
->> ---
->>  hw/arm/imx8mp-evk=2Ec | 4 ++--
->>  1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/arm/imx8mp-evk=2Ec b/hw/arm/imx8mp-evk=2Ec
->> index b84ac91a17=2E=2Ecfc3038c36 100644
->> --- a/hw/arm/imx8mp-evk=2Ec
->> +++ b/hw/arm/imx8mp-evk=2Ec
->> @@ -74,8 +74,8 @@ static void imx8mp_evk_init(MachineState *machine)
->>          =2Emodify_dtb =3D imx8mp_evk_modify_dtb,
->>      };
->>
->> -    s =3D FSL_IMX8MP(object_new(TYPE_FSL_IMX8MP));
->> -    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
->> +    s =3D FSL_IMX8MP(object_new_with_props(TYPE_FSL_IMX8MP, OBJECT(mac=
-hine),
->> +                                         "soc", &error_fatal, NULL));
->>      object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fata=
-l);
->>      sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
->
->Looking again at this, is this really right?
->object_property_add_child(=2E=2E=2E) creates the object (refcount 1),
->adds it as a child of the specified parent (refcount 2), then
->does object_unref() (refcount 1)=2E Then in this code we call
->sysbus_realize_and_unref(), which calls qdev_realize_and_unref()=2E
->That function:
-> * (indirectly) calls bus_add_child(), which takes a reference and
->   hands it to the link property on the parent (refcount 2)
-> * calls object_unref(), as its name suggests (refcount 1)
->
->So now we have the object with refcount 1, so it doesn't just
->vanish, but on the other hand both the QOM tree parent and the
->qbus tree parent think they own a reference to the object,
->so our refcount is wrong=2E
->
->I think the existing code here was correct: we get a reference
->because we call object_new(), and then we drop it by calling
->the realize_and_unref function=2E
->
->I'm going to drop this patch from target-arm=2Enext=2E
-
-Yeah, makes sense=2E Thanks foe the clarification=2E
-
-We'll need to fix imx8mm-evk now since it uses the same broken pattern (I =
-cc'd Gurav who incorporated this patch into his series)=2E I'll send a fix=
-=2E
-
-Best regards,
-Bernhard
+r~
 
