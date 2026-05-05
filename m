@@ -4,114 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3390BCD3427
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 14:56:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45312CD3427
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 14:59:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKHBn-0000ku-2d; Tue, 05 May 2026 10:55:59 -0400
+	id 1wKHEX-0001QA-Cd; Tue, 05 May 2026 10:58:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wKHBd-0000kC-BC; Tue, 05 May 2026 10:55:50 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1wKHBa-0003Ke-Rq; Tue, 05 May 2026 10:55:48 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6456vE8l3189768; Tue, 5 May 2026 14:55:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Jv8L4W
- 4wToDOP+sP4QST+lleD5k6Pbf5BJjYH3oPUJE=; b=dF3GxItspN0uP3j8d0ctcM
- 1vZc6rU8sL3mPFj1PjmSKRbtAHn3+o78wPd0BvowKuxlkiIa/NOQI4+HO3shRxYK
- yhmnYPaNxdTEdemgdTVhhhRcD8PM/lHDejSFH2BoXJ+jkS9HdvW/WcEChsOIcvQ+
- 6NXy4pOenJ4QM5lGZ0Vfhua7fZnVlCM9LxYJ1uj9LSer/SiR3MHYGDVpS5ooFE4k
- eLhc+z6LDktU5csGQRlx8ioShhk4+njqjw7DQUQfKkai4R1FqfPCTJbA15MwfMhz
- pnPFq5iz1oBAZvwyGIWrTMrK2OPqnE8t//3htu1dzLDc4lKhSC4CQmOofH8uBS/g
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9xxkuw6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 May 2026 14:55:36 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 645EObfW016971;
- Tue, 5 May 2026 14:55:35 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dwvkjt2s6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 May 2026 14:55:35 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 645EtZUs30802542
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 May 2026 14:55:35 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E058E58052;
- Tue,  5 May 2026 14:55:34 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1339758045;
- Tue,  5 May 2026 14:55:29 +0000 (GMT)
-Received: from [9.124.208.117] (unknown [9.124.208.117])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  5 May 2026 14:55:28 +0000 (GMT)
-Message-ID: <a82978fb-98d6-4538-abac-db6c9212d396@linux.ibm.com>
-Date: Tue, 5 May 2026 20:25:27 +0530
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wKHED-0001KP-JW
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 10:58:36 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wKHE7-000479-Uc
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 10:58:28 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-65c396d3b36so3548631d50.0
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 07:58:22 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777993101; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ihcPhCrp402IxL1iDoz5MROyBCRAiIBm73n6ut6I6OB0WMWioCLVP9HXfrm73Ny8Ig
+ Wc5oIzpoAvfDXoTnAMQ1MKLfwzNO15KxIODjYO/yMve/Wzuyzn5yXD9m8fef5906lp6i
+ vBBBvZT6CNx/tUZlS3OMo3wo7M5W1YybWoVUtpZQp600PFvjbdlgu4A59hg+/lIywMYR
+ 23J3EuauPndMK3i1uNa8AEQK5KoWUA0pLJ1yw0ViJfaNi4ujoBipRwisMGeb2y58GDyp
+ F0gLiXkBWbj2Gazg3nXw49OsUYyB8xofgZ6gFclB/hvWYLNBgzeGFACIRqNHVe+HHYvw
+ hxGg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=rNzsOHwukFP9Klru5SwEhYlCs7rmLk1wL9R/sX4SOT8=;
+ fh=Ooov+i9AeS1BcC1vonK1zlp0+cy8hPMIIb5HY6/nc/g=;
+ b=XPk8jQ9tlr3LnPpZOMtEmVVBcmuOxKNlZ33gDFxvV4zH+mMO6R4Ev9te6k6z5xpTZJ
+ EoST2I75IJgTVRft92RkXohCS6JXbelKNkDcJ1TQ2IlagRXQfB0cjMsfeHUtOnfSS+ho
+ 2HbaTJMQPcWQGs+g/8jWLrTDlDZ90yguGq4dTaGHfFNOVtg1yx1jrqzsw+LqsmbLPzMQ
+ sPwHUabh3iswyEJzxfkwVMwLT9Bsl+Or9Ntoc7Vpvxz8ZPmLOEErzLbvPR6B2Un7JPmE
+ nbbJYrTJteLEbLF3J9a0a6gddqF+uegXzc7NtJXT2Np+yqo0AHP45mWkaK1CyFKyArxr
+ hJBw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1777993101; x=1778597901; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=rNzsOHwukFP9Klru5SwEhYlCs7rmLk1wL9R/sX4SOT8=;
+ b=OrAzl+3EFOKAq89zZkv61fKXDe9NveYdV47AQKUMgIq1WXLsErLlrll5891kCxeJ0H
+ TVP3FXqoiWecDpLldzhyt/iQHw+/2rC9/0ORTKfdbZHO5dwZnkhi+R3m9bRrnwvvBLry
+ msS3T6mumbXgX18IFf+Kso9RKNaZqC0Ms7OVTzn4M1mnKwDDKLzHv//2aIt6RnV+geB9
+ OuOmAif8E/Zy/GZXqKCYiGhuXOOK2tvRyKdT6LP9gNJ+POO4JgrBB7tAruOQr0gddPCC
+ CTM5ldh/X6HysdPKsyKwG9IKzjJCr+0ZR+iGuNbnE8bQ7efSM+8lOA6RaL4cjjSyiebb
+ vZ7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777993101; x=1778597901;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rNzsOHwukFP9Klru5SwEhYlCs7rmLk1wL9R/sX4SOT8=;
+ b=JOrDBXE70a3SYiXkmnxEXkeJE8gv+507M8vOq3BtTgF8HjNcQ1nwd6NO0xIh8NAn7C
+ A3VEApg9ng4kyNxItEoSLmuycC7Svn/pobWkAgRI4rn3IJuJbBkN8oWiRfGXEawZBEUi
+ M+pzbms9u1AS0UCbNC9ohQIMZBusWbD6k0jI1sMliQnWtX5+bYcIJsVFfnTUdAx4xMG1
+ sKl/8gi0pomKHFwcfetk7M4ebci0zrMXjuVQ5tT3gkpwOmeX6/Hua1RavyzDPKkQyDBW
+ kOus42+NTsESrK2xYF9nXUfimbrfgGyI9Wxuphg/GAUqnlJomiYx+c8hYvJVvPncaD1w
+ ylMA==
+X-Gm-Message-State: AOJu0YxuRLqf8oC5dVdpLvOoRHpPSb65b1l36PJ7M8lGyGhEsjtMy7AS
+ jXhjnGkZCNpqDu0XCbU3MQB82KqGjkHwaIHwJ2cR4u+BsrA5mplsq7dJRt/1wkAYv8al/VU1NiB
+ kjOSgqaSkdbIgXrpXYm3LNybyqR9heRORn5xJnS6YLQ==
+X-Gm-Gg: AeBDieunOyrj4ZIux1PJtHT/DS5AmYPGavaJglOO2jWoVV3ZOVwWAkM08TS2w9QzoYp
+ oIsd9hs8Z4ANZ5Ug4keGbu8bqYDN+UPY3XurgXbytKB32QAHSjz4XqVFaYUYzrMeJVmZiENFDQg
+ C9VOgQX0Pd/t641/O8be6ocE3bTLKVERG2thoQC1qYZ/qzPtuIznP9gpKcgT0XCYh5jO4+f6z+c
+ 2PGQlNcHIKRtN5wiuU/FEYI3LKpknoaI5WiWDN57oQy0+x3wU3lc1LcjNcJWpNscP89gAFDpFZ4
+ qM7d2GBYAsFq84p2jyZYArd9Jaix78jUePaWjIz1Ncetimxrmhk1JkFWW7b2VbiJaFl6lqeTsUZ
+ roQ==
+X-Received: by 2002:a53:d0d1:0:b0:650:2257:e085 with SMTP id
+ 956f58d0204a3-65c69ed055fmr2765124d50.30.1777993101225; Tue, 05 May 2026
+ 07:58:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 4/9] pnv/phb4: Implement read-only and write-only bits
- of registers
-Content-Language: en-GB
-To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: clg@kaod.org, npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com
-References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
- <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
- <20260305060923.3753402-5-saif.abrar@linux.vnet.ibm.com>
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-In-Reply-To: <20260305060923.3753402-5-saif.abrar@linux.vnet.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA1MDE0MCBTYWx0ZWRfXxZs2SG6mKsiM
- gocTG1HVlVxMauH6IuDQYPe11/P8RqEEGjAWfs2p3w5DdvyvQNcfCIT46EITaKVrYpzzqN+uCc9
- YfXDVncUDY5VqHRel1Q8I+x7xR+5/5mwxsjOMDRVRIw4jx7+i9rJ0AdH146/EtGkipf7sZx3A5p
- s2PiaaEPogRxih5xWjH11fgv8lYbHAmrG4Yo3k2ajJyt5vy4AG7+r+fT+ZgF8Q0oM1o3YaemPup
- bvNnSlxtXYedrdzdj5sKZprGjrVE7d14bjJ9ckMlEQf11o/Ik0+aRXsRgRvqRkBQznpl2cNarbk
- rFkow/bP+94VifZ0SbnT+a4DgeXTRlZ4rt2mQUBaMFgTroBdvgLTs7kyt5fE+Q2tBFHFuHwH0bF
- VdSt5u5vBnbnGWcpi2Mkx8FPUrJHbKHLXn4xSGOWxcvIvsQ0Xxkg0zao4ioeTlF/ZjyARD5Ds51
- SkqAU7r7lhQbqYLFwZw==
-X-Proofpoint-ORIG-GUID: LPnSkg74FdvkEe2NzSgJrNFfrb0mkYgB
-X-Proofpoint-GUID: dGCQHKZk-hz5uHpVj3_slxb5DuzIc2N1
-X-Authority-Analysis: v=2.4 cv=ctWrVV4i c=1 sm=1 tr=0 ts=69fa04e8 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22
- a=4ttVWu--HP89ghpr01wA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-05_02,2026-04-30_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 adultscore=0 clxscore=1015
- suspectscore=0 impostorscore=0 spamscore=0 malwarescore=0 phishscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2605050140
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260501231353.63184-1-mohamed@unpredictable.fr>
+In-Reply-To: <20260501231353.63184-1-mohamed@unpredictable.fr>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 5 May 2026 15:58:08 +0100
+X-Gm-Features: AVHnY4J0kvIwZxi4pjf5VtQKVktAeLFZS329s6lNkKZtm9teJkrJH4B8IHKZ8Q4
+Message-ID: <CAFEAcA-xJcSq8XcWeZh3SnOjbWiZ8G4RQ+MyE_jGhJa1k5kvfQ@mail.gmail.com>
+Subject: Re: [PATCH] hvf: arm: override HV_SYS_REG_MDCR_EL2
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, Alexander Graf <agraf@csgraf.de>,
+ qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,28 +115,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Sat, 2 May 2026 at 00:13, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
+>
+> In older SDKs, MDCR_EL2 was defined incorrectly.
+>
+> As such, override it with a #define if compiling with an older macOS
+> SDK.
+>
+> This is a workaround because the macOS CI setup we currently rely on
+> has not been kept up to date, to be able to land nested virtualization
+> support.
+>
+> Once CI is updated, the SME stubs can be removed and this
+> commit can be reverted.
+>
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
+I put this patch into my v2 pullreq; hopefully it will get through
+the CI gauntlet this time :-)
 
-On 05/03/26 11:39 am, Saif Abrar wrote:
-> @@ -1755,6 +1819,9 @@ static void pnv_phb4_instance_init(Object *obj)
->   
->       /* XIVE interrupt source object */
->       object_initialize_child(obj, "source", &phb->xsrc, TYPE_XIVE_SOURCE);
-> +
-> +    /* Initialize RO-mask of registers */
-> +    pnv_phb4_ro_mask_init(phb);
->   }
->   
->   void pnv_phb4_bus_init(DeviceState *dev, PnvPHB4 *phb)
-> @@ -1934,6 +2001,7 @@ static const TypeInfo pnv_phb4_type_info = {
->       .parent        = TYPE_DEVICE,
->       .instance_init = pnv_phb4_instance_init,
->       .instance_size = sizeof(PnvPHB4),
-> +    .class_size    = sizeof(PnvPHB4Class),
->       .class_init    = pnv_phb4_class_init,
-
-PnvPHB4Class is introducing per-register RO masks which is supposed to 
-be a class data, but this is being initialized in instance_init which is 
-odd. Shouldn't this be taken care via class_init ?
-I am not a QOM expert, but this looks like a design issue.
+-- PMM
 
