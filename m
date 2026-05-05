@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 602B1CD343A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 11:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2F4DFF885A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 11:21:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKDpI-0007KX-R2; Tue, 05 May 2026 07:20:32 -0400
+	id 1wKDp9-0007G0-FB; Tue, 05 May 2026 07:20:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKDpA-0007Hf-Sw
- for qemu-devel@nongnu.org; Tue, 05 May 2026 07:20:25 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1wKDp7-0007Ej-KP
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 07:20:21 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKDp7-0005qP-Tw
- for qemu-devel@nongnu.org; Tue, 05 May 2026 07:20:24 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-488a8ca4aadso54217845e9.3
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 04:20:21 -0700 (PDT)
+ id 1wKDp5-0005pJ-ER
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 07:20:21 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-449de065cb3so2754460f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 04:20:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777980020; x=1778584820; darn=nongnu.org;
+ d=linaro.org; s=google; t=1777980018; x=1778584818; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qtXqU1v3S6F08KlnlXStnvY5Za2Hngy695ogoXb86Wc=;
- b=kv/UuOD5OzmuMRRNsE4R8nM/aTlHRfBamolRmWSaDXKKAfAwpsi26mJPIYg3rAoS0+
- ivsNa3P3PCuvdx+ndHkh8pS+F0nsGI+SDFefmCOC7B8mmnNP8irUr9wMDb7PPB97ugJX
- Uefd4vPUU/9jfgsf29/z8eIbpg7gn8r2hjxceLaNIIyRk7oMOoQkqSh4YfQharnRjBsg
- +5VJ0PgNX66YHaCeBbmjWDhGRJFkY19bRWDBLGK4IfUtPTgpt7q1zFrk975IZ63DT6eC
- QPJdXD6i6f3vyfJqRHyTGRU8EgUt0FPVK/6PuvkJjivh92WC/5Yvk5YJxMrQ0m+R9gEF
- ccGA==
+ bh=SJ3nvH0CdgnQGuiZq72mX6EJh1rauF0iDM3crLBhnzQ=;
+ b=VcEbhw/t7kKXz1zdaXb8ZiTotxl5PlrjAet853UXSBa3SxJTnFZelbv2uwB0TC9cQE
+ bj/PenbWoV0OHMKlKuEhX0L2H/dD0jkFYl2HCm/DSa10ZatrRPkF/jOm9XXQdhnKKleJ
+ 5eb9XXBeadOxGVTaMDfdyJDCJLoaWOQ4up+ZI1KM10V6+/ScYubuZKrIaIHenVpRAF08
+ RhwjiRVm8b2zPvY/vHVFP1H7V949x/XCDdh7hWX3/5hrdhC2SeUYKKyBV5N02mfTjLJt
+ ATHrJkvRnGkzRcK3BQbdB4to+D6AFTbRnl/X70WCysOrcdLp1CCg0Lf6+mZL6/4/zebg
+ cQTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777980020; x=1778584820;
+ d=1e100.net; s=20251104; t=1777980018; x=1778584818;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=qtXqU1v3S6F08KlnlXStnvY5Za2Hngy695ogoXb86Wc=;
- b=nIIzv7ts1erEDdfg3XnK7407L6btNFMJ1Qxl779ToppI8Iwfxy4AifXEMe5YslHDT2
- KQWs3fPe/XRW1vZwCMt2e/ofwD+GdLeSkvNOGTciOuLrbxXqw7VfT89+C1Nkwb7G/naY
- MT4FLTcd4tsET/hrSQKcl9MQPnW5hHPsno7MhXwFfWjEc6XA9lQA4ycAmlDDFyo0v6Pc
- 3m1OgcGa6PCLQc/Abxh66QPmOcJ93ZK3MaIcDb4+LfMKsjnEkFTU7mmPR+YkkVG12IYW
- kIiMRbcCfNmMgsceHbheFlgtctCbkeqJezIpECU/m/MQSnbqorZilNj+lQnLiKLyMzSz
- WzcQ==
-X-Gm-Message-State: AOJu0YwAFSe9Yo5NdO+ZAEeOoN3DCbDlo4xE0geV6uWUOD2+1H291Mug
- e41mEsZnENnZ0lCdyXKVqcdEedoMfTNL6QR5yhK4ExizyfNObKb9H9dm9MBnLV29LLk=
-X-Gm-Gg: AeBDiev4HgwEutJgl2qLUrgRKjmL3stb68swhqxOO8odphBInAAWlDukWZzXOr3EuCa
- 7U+LOVUZWTj3GxzyVvAkiL6OM8UxTUJkb+2EzQ3W9s7tVMqFNv9hCK1ty9yEVTCUgwMOqtbQhUK
- yLeMMC8jPF/J1Em7fK6b0RUXNfYXuTivI7I/iYqKwx/MntY9iVamyytJX79opI/VZxZRvuQFc5r
- GCC06NUmSKODIGU/wTHF9lkxSgpbuukAgXgMmNUWLJA/DA4ymMOu34Im6mrbKio5uLxol4CUV+P
- dxOD99S9q9WT2QdFYvCmnetpGF/o/neqhXG+NeZhp34fd6XYCRADqA6Ps9vpXBRtVXSNrbR/6Yb
- Xmgr5Ix4wf2keJ1AqicXmHIwBXz7uE6huLFEx/GHIn+Smg5w4TO4fz8LcUumXLQGncARQ1GfSk8
- mUoT1kHlAQEnuHh6WY21mymCPteBVV2D6d4g==
-X-Received: by 2002:a05:600c:c089:b0:48a:7965:b943 with SMTP id
- 5b1f17b1804b1-48a98676d56mr196011525e9.29.1777980020274; 
- Tue, 05 May 2026 04:20:20 -0700 (PDT)
+ bh=SJ3nvH0CdgnQGuiZq72mX6EJh1rauF0iDM3crLBhnzQ=;
+ b=p1oTX0usPXLO2cKHxfjk8eKnj8t+fDole5ln3xHc0RBTz3T/dR00RnEXJR89NyvdBW
+ xMKRNEXIu0acghTAPgEyGNVMcSLL5LkkdVyuY0q7LnEPPH1Kh89pGt0ht18R1hX0YLV0
+ lLSAim2p1BOQlypybfGpwStxkfFkhJ4VTrBE18OAWU+JE/EobD9iG1rT9zveyxhjikuu
+ V779f+7npcLXoS8LrVw/Rtdx/m9k6ZuDlUg+4vInr1MalKuX2rY+bG9hD7vdRcu/niN5
+ OmHk78PgYo2Hq0Z42/tlIZguGWYOfcH9dTjw4N4vdh1Yep7Cjp3Jw4edYeneEseX1biE
+ 4Wug==
+X-Gm-Message-State: AOJu0YwIm5uBaQfP0s6DWTZ0/5h3QItizuyyUisyUrS4XJ4t45Qz+UHB
+ kY6qaPyFELkPOq1Oua4qsH3f5cbexwnm4iwh0ykqHGmz7UCQ+MB7K3sG4x/Gm7fEFQg=
+X-Gm-Gg: AeBDieu4/n6AbCUyBq4jvmCW6X68W6Cak+L4vCO72Nebsh47n0PavwQpMcS8ZyBqUSN
+ WtGSxw2v+x9Lzv+lwhktWsmsPDxrtIXC7wjZY7CglDeMyYhz+ZM+QoSgyEXDz0vQyvZCZxjkD86
+ AvUp5IMD8FciMGmBZjk6XQR7ljolYBJWCyo7hm10nyit8yleJsQmSA/49dsM/X60qAvettx/kY4
+ DUCJshqG32UQmOZ49+23TyZCRo5ALVs9bW4qdC6WzRTrt0l4XegbquA4C1w0+V5+5nb08TMNH4L
+ Genak/74O8cXlspn+DS2F2GtJqCuDQPMihKm9CD1SjwdHaU6IpHl3NBJFJG2tcegBCrMDwUl+sB
+ /Izzuq7yBE615TcThMWimY15dIqIsSDoYK21GtUJqQLqQM7udJkwOf6/H/17bcW9ZfGRTMrae1P
+ gIGTrI6dmx84+YndSfTpw3f/F2OHTUhWOU9Q==
+X-Received: by 2002:a5d:5f87:0:b0:44f:f8f2:665a with SMTP id
+ ffacd0b85a97d-44ff8f26672mr5117226f8f.10.1777980017867; 
+ Tue, 05 May 2026 04:20:17 -0700 (PDT)
 Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48d17ff35eesm15818675e9.14.2026.05.05.04.20.16
+ ffacd0b85a97d-45054b03d59sm3787813f8f.20.2026.05.05.04.20.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 May 2026 04:20:18 -0700 (PDT)
+ Tue, 05 May 2026 04:20:15 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E06465FAF9;
+ by draig.lan (Postfix) with ESMTP id 92A0C5F9CD;
  Tue, 05 May 2026 12:20:14 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -75,24 +75,24 @@ Cc: Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
  Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v5 6/7] target/arm: handle the WFE trap case
-Date: Tue,  5 May 2026 12:20:12 +0100
-Message-ID: <20260505112014.102993-7-alex.bennee@linaro.org>
+Subject: [PATCH v5 3/7] target/arm: ensure aarch64 DISAS_WFE will exit
+Date: Tue,  5 May 2026 12:20:09 +0100
+Message-ID: <20260505112014.102993-4-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260505112014.102993-1-alex.bennee@linaro.org>
 References: <20260505112014.102993-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,89 +108,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now WFE can actually suspend on A-profile we also need to handle when
-its trapped. To do this we need to pass the instruction size so we can
-deal with the is_16bit syndrome encoding.
+This mirrors the logic for DISAS_WFE in 32 bit world. As the WFE/WFI
+have similar behaviours shuffle the case statements around a little
+and update the commentary to cover both.
 
+Fixes: 252ec405768 (target-arm: implement WFE/YIELD as a yield for AArch64)
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- target/arm/tcg/helper-defs.h   |  2 +-
- target/arm/tcg/op_helper.c     | 13 ++++++++++++-
- target/arm/tcg/translate-a64.c |  2 +-
- target/arm/tcg/translate.c     |  2 +-
- 4 files changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/tcg/helper-defs.h b/target/arm/tcg/helper-defs.h
-index a05f2258f29..ebdf09be38a 100644
---- a/target/arm/tcg/helper-defs.h
-+++ b/target/arm/tcg/helper-defs.h
-@@ -54,7 +54,7 @@ DEF_HELPER_2(exception_swstep, noreturn, env, i32)
- DEF_HELPER_2(exception_pc_alignment, noreturn, env, vaddr)
- DEF_HELPER_1(setend, void, env)
- DEF_HELPER_2(wfi, void, env, i32)
--DEF_HELPER_1(wfe, void, env)
-+DEF_HELPER_2(wfe, void, env, i32)
- DEF_HELPER_2(wfit, void, env, i32)
- DEF_HELPER_1(yield, void, env)
- DEF_HELPER_1(pre_hvc, void, env)
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 8284dacbdf6..1349bcc7929 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -574,7 +574,7 @@ static int64_t gt_calc_next_event_stream(CPUARMState *env)
- }
- #endif
- 
--void HELPER(wfe)(CPUARMState *env)
-+void HELPER(wfe)(CPUARMState *env, uint32_t insn_len)
- {
- #ifdef CONFIG_USER_ONLY
-     /*
-@@ -600,6 +600,17 @@ void HELPER(wfe)(CPUARMState *env)
-         return;
-     }
- 
-+    /* We might sleep, so now we check to see if we should trap */
-+    if (target_el) {
-+        if (env->aarch64) {
-+            env->pc -= insn_len;
-+        } else {
-+            env->regs[15] -= insn_len;
-+        }
-+        raise_exception(env, excp, syn_wfx(1, 0xe, 0, false, WFE, insn_len == 2),
-+                        target_el);
-+    }
-+
-     /*
-      * If the CPU has entered the exclusive region we could sleep
-      * until the global monitor moves from Exclusive to Open Access.
+---
+v4
+  - shuffle case statements, unify the comments.
+---
+ target/arm/tcg/translate-a64.c | 24 ++++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
+
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 8b97136e78b..a6f392a28f8 100644
+index 9a27c4c6ec7..25f0a806512 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -10938,7 +10938,7 @@ static void aarch64_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
-          */
-         case DISAS_WFE:
+@@ -10916,25 +10916,25 @@ static void aarch64_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
+         case DISAS_NORETURN:
+         case DISAS_SWI:
+             break;
+-        case DISAS_WFE:
+-            gen_a64_update_pc(dc, 4);
+-            gen_helper_wfe(tcg_env);
+-            break;
+         case DISAS_YIELD:
              gen_a64_update_pc(dc, 4);
--            gen_helper_wfe(tcg_env);
-+            gen_helper_wfe(tcg_env, tcg_constant_i32(4));
-             tcg_gen_exit_tb(NULL, 0);
+             gen_helper_yield(tcg_env);
              break;
++        /*
++         * Both WFE/WFI can cause exceptions or exit the loop to
++         * halt so we have to make sure we have rectified the PC.
++         * However they can also return directly if they don't
++         * enter a wait state so we must add an exit block so we exit
++         * the loop and check for interrupts.
++         */
++        case DISAS_WFE:
++            gen_a64_update_pc(dc, 4);
++            gen_helper_wfe(tcg_env);
++            tcg_gen_exit_tb(NULL, 0);
++            break;
          case DISAS_WFI:
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index 3ab49887ce6..686980b58e3 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -6836,7 +6836,7 @@ static void arm_tr_tb_stop(DisasContextBase *dcbase, CPUState *cpu)
+-            /*
+-             * This is a special case because we don't want to just halt
+-             * the CPU if trying to debug across a WFI.
+-             */
+             gen_a64_update_pc(dc, 4);
+             gen_helper_wfi(tcg_env, tcg_constant_i32(4));
+-            /*
+-             * The helper doesn't necessarily throw an exception, but we
+-             * must go back to the main loop to check for interrupts anyway.
+-             */
              tcg_gen_exit_tb(NULL, 0);
              break;
-         case DISAS_WFE:
--            gen_helper_wfe(tcg_env);
-+            gen_helper_wfe(tcg_env, tcg_constant_i32(curr_insn_len(dc)));
-             /*
-              * The helper can return if the event register is set, so we
-              * must go back to the main loop to check for events.
+         }
 -- 
 2.47.3
 
