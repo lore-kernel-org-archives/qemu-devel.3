@@ -4,112 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 383C6FF8855
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 19:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B65FFFF8855
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 19:20:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKLAx-0000wm-AA; Tue, 05 May 2026 15:11:23 -0400
+	id 1wKLIx-0002i7-Ap; Tue, 05 May 2026 15:19:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKLAt-0000wE-DJ
- for qemu-devel@nongnu.org; Tue, 05 May 2026 15:11:19 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wKLIw-0002hx-Lz
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 15:19:38 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKLAq-0005sH-RR
- for qemu-devel@nongnu.org; Tue, 05 May 2026 15:11:18 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id F37975BCF9;
- Tue,  5 May 2026 19:11:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1778008273; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fgM+W49P1ntEyf1ZvxJd1pDpcn5MHLwIOANPkdQjjlw=;
- b=mOVCVCFBOvyzCs+v53kFXJMhBs4r6CPBL8an5NGH3ObNW+kr1pxRRKFiMHLua1hiVydBts
- DEBZqV2VzL49sxoyB7DcigyIFpvgNbReBkMJixaroI3Kx7DH+DQ3lzF/mgpEoxPRaTvawE
- HTTy2EWFRgQS4fRG3QOpdV4bywJWKZc=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1778008273;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fgM+W49P1ntEyf1ZvxJd1pDpcn5MHLwIOANPkdQjjlw=;
- b=usnk47Exb8HNcfxohuluzUnIWIniU+cLJXDrtXoEDcNNSqGG68GCJh4+BtAhXA1pvdmYQG
- w6mVi6MkgKRUWQAA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ssm++RlX;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=k6X6rKbm
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1778008272; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fgM+W49P1ntEyf1ZvxJd1pDpcn5MHLwIOANPkdQjjlw=;
- b=ssm++RlX5HAq9K15lPHibNeu5rRe+PmaZsD4Dm7d/5azTq1SQncsMUXeyAc+1nfpL432nh
- /JPRVLiwpfFDUtByii1piy8urgU15ttbORPKCa7csHAwV4Plbr6iYU0MdgyHFn8rJEVSvf
- ZAXpG81bBQMvjZywU7sltQh+LZ79j7U=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1778008272;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=fgM+W49P1ntEyf1ZvxJd1pDpcn5MHLwIOANPkdQjjlw=;
- b=k6X6rKbmzDuH8mwbvWpuAWMrD05OVR2VV63ltneLOqwT25fnHLE2/sSt1xV6NPelN2txQx
- sXLr1CjxRiiWQqDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 927C5593A3;
- Tue,  5 May 2026 19:11:11 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id I3PgGM9A+mncJQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 05 May 2026 19:11:11 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, Jared Rossi
- <jrossi@linux.ibm.com>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>, Eric Farman
- <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: Re: [PATCH v1] tests/qtest/migration: Fix A-B file build
-In-Reply-To: <afoeaRAxWSMO_gK5@x1.local>
-References: <20260429231025.30818-1-farosas@suse.de>
- <afoeaRAxWSMO_gK5@x1.local>
-Date: Tue, 05 May 2026 16:11:09 -0300
-Message-ID: <87se85y8mq.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wKLIr-0001IB-GE
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 15:19:38 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-44a5174670eso2379798f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 12:19:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1778008772; x=1778613572; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=k3qH7igyxx/OIgrHqtsgLKHywtENrA308xZ4BEN3PuI=;
+ b=prnjMy+hnnzfpc8JmU9zgvYtUOifkXF9Yfv37nlf0hiEkGGZEyqvVXHE/CTAeGw3vy
+ 0pZ/AvY10igFh6RrZeWw0uXPJiGkak+WhCaT+bFrxUsKKDAk1XHd1QjQwXTBNEXhwGoZ
+ wyszVqFPutWBOPvszCqpR4hV0rgJbK4IYx7/wvCFxMyHFY0CJjIzduDylyxGMgTN7x7+
+ KCya0PtUuMUd6xi716KbXq03wBZa46vj1EA0NRvsyX3v+BFmQQE6eCzQRnSaLYfb2O+B
+ VJ12cFQqgGfGxs/bnXZKIo6fa6jjgvAbXsEOEmNPMA6MCRRpAPAd1nxq5JW3pdRxR9Qg
+ gW7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778008772; x=1778613572;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=k3qH7igyxx/OIgrHqtsgLKHywtENrA308xZ4BEN3PuI=;
+ b=tStTzW2kkClt2aU7bDvhlmTjHErYlj5+BXcxjDpaGAYxqkcynoIcm6Tm/KPZtXDybD
+ 4FjNmIPt0duObXlR3YFB3FU+uKcG6c+ufsYhy5gkW4wqmgTqjj9DzUQ5Px3sx26BlOpC
+ 4nIIBinZFqhYqG2O7dbuXQeiUIE5J3d5cWU6JX6zk/NMmu1p1bUdPR+/TXFdC4ZZtETq
+ TGBTCdTLVcoWUtBQSifmXHE/Ar9FKAojmmeI2ISZqUrIrN72bzZj4+UnZVXsvWFBqG/U
+ Yuf6VTPgsTJyTISpAMJdHbVXUWamMf/e58BmAL7ZXZhLjXCcYiJYmc45i/8HVBo7OO7D
+ /aHw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8TMMsDI34kRzDklo+6ejfUY+Hl6m4XFAQZHLtywT6Rq7aqZE3ld4tIkQp/Hfw8BCcI2LZvHWdimibE@nongnu.org
+X-Gm-Message-State: AOJu0YyqSLQOl4F2A7W4wx24TrZhxcLiULsLrnLJbAiERKRS1kBAsK6L
+ cKsoP/cEKAU6sUhXoZCL4vEclBKGP4kU0X9mGJXwdjSRuDOjfJmQr5AO
+X-Gm-Gg: AeBDieswU97x4mN1tuqe/Y6SEjZsSXY3nerEUd8gKhhf1NTXDOV19c/RDCRTrb++Wfk
+ A+xPmptZHImC7RBZxBWoyU6N7dxwaQJCaHQTmrLJcbmTtxjH2OjdgK0yYiom1/N9xD95Q+h32+V
+ 7360KP7vx810cd3smBY5THr+kBSSova/Xz8hp281MkuA8xvjCsNCd3J+rdt6Kpo4ZyUF1LZqZ3m
+ hqd0CJoy1ohO2sAoB8DMK0WbL5CZz3Ijezx67Quozzo9cDI5IiH4D79yGmAKRzdb0KzlrwOo3JL
+ xWQMmus69+z2IdwWBdA88IO6ieHPXCFR4lGn17JPjoxwGcia9K1SDt3ELpk6YtLRWzwszPFmGzV
+ MT11HiDN/w7EvdZYU5vRwfu+uYxI0yo6L6EKKSY4z3nK+WPf3h2g0t4b370bqxmRSQJ99O3OeI2
+ Ek+qkBtULAmTdMr+CKphcVqsJTwkmwgUo1t0wYa62ZCvtOlfZXF/nLCB32UFRwZ3mFPy2poyHge
+ UmnW4wAS+79HogU9zITUe1kn2WfX+xKmSWcJSrPiNz+Q0vjqPAdsc3L
+X-Received: by 2002:a05:6000:1ac6:b0:43e:a9ba:b194 with SMTP id
+ ffacd0b85a97d-4515d5c6b69mr689827f8f.34.1778008771550; 
+ Tue, 05 May 2026 12:19:31 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (dynamic-2a02-3100-2288-5100-c87f-e1c3-d3c0-0c97.310.pool.telefonica.de.
+ [2a02:3100:2288:5100:c87f:e1c3:d3c0:c97])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4505238e6e0sm6237878f8f.6.2026.05.05.12.19.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 May 2026 12:19:30 -0700 (PDT)
+Date: Tue, 05 May 2026 18:17:38 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+CC: Eduardo Habkost <eduardo@habkost.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-trivial@nongnu.org,
+ qemu-arm@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>,
+ =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 5/5] Revert "sysbus: add irq_routing_notifier"
+In-Reply-To: <16c03bd7-5db7-43c0-a1ca-0bf904cba03d@redhat.com>
+References: <20260308203516.160103-1-shentey@gmail.com>
+ <20260308203516.160103-6-shentey@gmail.com>
+ <af77b92d-9303-4ed0-942d-6188e00ccdde@redhat.com>
+ <DF79ACA2-21B7-47B9-B9C1-0C08E9E50F16@gmail.com>
+ <16c03bd7-5db7-43c0-a1ca-0bf904cba03d@redhat.com>
+Message-ID: <FE414151-6BE8-4F50-8934-BD6C130B1D14@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; DWL_DNSWL_BLOCKED(0.00)[suse.de:dkim];
- MID_RHS_MATCH_FROM(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[9]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:dkim];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: F37975BCF9
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,52 +111,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
 
-> On Wed, Apr 29, 2026 at 08:10:25PM -0300, Fabiano Rosas wrote:
->> diff --git a/tests/qtest/migration/bootfile.h b/tests/qtest/migration/bootfile.h
->> index 96e784b163..0ce5b34433 100644
->> --- a/tests/qtest/migration/bootfile.h
->> +++ b/tests/qtest/migration/bootfile.h
->> @@ -8,6 +8,15 @@
->>  #ifndef BOOTFILE_H
->>  #define BOOTFILE_H
->>  
->> +/*
->> + * This file is included from qtest, but also from the assembly code
->> + * that generates the header file containing the guest workload. Don't
->> + * expose the function declarations and non-standard types to it.
->> + */
->> +#ifdef __ASSEMBLER__
->> +#define MIGRATION_GUEST_CODE
->> +#endif
->
-> Just to mention: this triggers a checkpatch warning (I only notice this
-> when running checkpatch locally; CI is fine with warnings), which seems to
-> be false positive.
->
-> But still, I wonder whether we need this at all. IIUC we can also put those
-> into a separate smaller header and include that here, then use that one for
-> arch a-b-bios builds.
->
-> Even if it will work, we can leave it for later.
->
 
-I have a bunch of patches adding code into bootfile.c and consequently
-bootfile.h for the stress.c and hugepages work I told you about. We can
-discuss the header structure when I send them, if you don't mind.
+Am 4=2E Mai 2026 09:51:05 UTC schrieb "C=C3=A9dric Le Goater" <clg@redhat=
+=2Ecom>:
+>On 4/27/26 12:30, Bernhard Beschow wrote:
+>>=20
+>>=20
+>> Am 9=2E M=C3=A4rz 2026 09:19:10 UTC schrieb "C=C3=A9dric Le Goater" <cl=
+g@redhat=2Ecom>:
+>>> On 3/8/26 21:35, Bernhard Beschow wrote:
+>>>> The callback has been introduced in commit 715ca691daca ("sysbus: add
+>>>> irq_routing_notifier") for use in VFIO platform=2E Meanwhile, VFIO
+>>>> platform has been removed via commit 762c85543948 ("vfio: Remove 'vfi=
+o-
+>>>> platform'") which was its only user=2E Remove this unused code=2E
+>>>>=20
+>>>> This reverts commit 715ca691daca081108b33306faa6fa102f0df8d8=2E
+>>>>=20
+>>>> cc: C=C3=A9dric Le Goater <clg@redhat=2Ecom>
+>>>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>>>> ---
+>>>>    include/hw/core/sysbus=2Eh | 1 -
+>>>>    hw/core/sysbus=2Ec         | 6 ------
+>>>>    2 files changed, 7 deletions(-)
+>>>>=20
+>>>> diff --git a/include/hw/core/sysbus=2Eh b/include/hw/core/sysbus=2Eh
+>>>> index c0d18d9e00=2E=2Ef3c4259d29 100644
+>>>> --- a/include/hw/core/sysbus=2Eh
+>>>> +++ b/include/hw/core/sysbus=2Eh
+>>>> @@ -50,7 +50,6 @@ struct SysBusDeviceClass {
+>>>>         * omitted then=2E (This is not considered a fatal error=2E)
+>>>>         */
+>>>>        char *(*explicit_ofw_unit_address)(const SysBusDevice *dev);
+>>>> -    void (*connect_irq_notifier)(SysBusDevice *dev, qemu_irq irq);
+>>>>    };
+>>>>      struct SysBusDevice {
+>>>> diff --git a/hw/core/sysbus=2Ec b/hw/core/sysbus=2Ec
+>>>> index 3adf2f2faf=2E=2E3e1160ee92 100644
+>>>> --- a/hw/core/sysbus=2Ec
+>>>> +++ b/hw/core/sysbus=2Ec
+>>>> @@ -104,13 +104,7 @@ qemu_irq sysbus_get_connected_irq(const SysBusDe=
+vice *dev, int n)
+>>>>      void sysbus_connect_irq(SysBusDevice *dev, int n, qemu_irq irq)
+>>>>    {
+>>>> -    SysBusDeviceClass *sbd =3D SYS_BUS_DEVICE_GET_CLASS(dev);
+>>>> -
+>>>>        qdev_connect_gpio_out_named(DEVICE(dev), SYSBUS_DEVICE_GPIO_IR=
+Q, n, irq);
+>>>> -
+>>>> -    if (sbd->connect_irq_notifier) {
+>>>> -        sbd->connect_irq_notifier(dev, irq);
+>>>> -    }
+>>>>    }
+>>>>      /* Check whether an MMIO region exists */
+>>>=20
+>>> Reviewed-by: C=C3=A9dric Le Goater <clg@redhat=2Ecom>
+>>>=20
+>>> Thanks,
+>>>=20
+>>> C=2E
+>>=20
+>> Who will pick up this patch?
+>I would say this is a qdev related matter, so Paolo ?
 
->> +
->>  /* Common */
->>  #define TEST_MEM_PAGE_SIZE 4096
->>  
->> @@ -33,8 +42,10 @@
->>   */
->>  #define ARM_TEST_MAX_KERNEL_SIZE (512 * 1024)
->>  
->> +#ifndef MIGRATION_GUEST_CODE
->>  void bootfile_delete(void);
->>  char *bootfile_create(const char *arch, const char *dir, bool suspend_me);
->>  char *bootfile_get(void);
->> +#endif
+Meanwhile, Peter took already care of it by applying the patch to target-a=
+rm=2Enext and issuing a pull request -- thanks, Peter!
+
+Best regards,
+Bernhard
+
+>
+>Thanks,
+>
+>C=2E
+>
 
