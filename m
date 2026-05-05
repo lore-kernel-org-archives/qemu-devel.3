@@ -4,115 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0116CD342F
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 12:04:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85C7FCD342F
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 12:14:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKEVR-0004R2-4h; Tue, 05 May 2026 08:04:05 -0400
+	id 1wKEez-0005r4-E3; Tue, 05 May 2026 08:13:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wKEVP-0004Qr-HW
- for qemu-devel@nongnu.org; Tue, 05 May 2026 08:04:03 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKEex-0005qR-Oz
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 08:13:55 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wKEVN-0006Ue-PA
- for qemu-devel@nongnu.org; Tue, 05 May 2026 08:04:03 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-651bc83e74aso4529039d50.2
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 05:04:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777982640; cv=none;
- d=google.com; s=arc-20240605;
- b=eAXQz7FopJgewt8VHhP1b7OTulwbgUKCO6oJnOq70q0xU2ojNto83D2Yq0/hhT3a3U
- UCEG1HpVQwMvDF21P6+HBuuLpu02WBzWS5PRPWtaQ4kb3WWP3KucLkdvtHi9AhFk/GVQ
- iguZBYE/jjYP8/t4vjD5nY8q3PwwCcoGKBkdMVZgK6T+CeJCk5IIHts0ltGSPnu15gJE
- LsYRFOn2vbfOjWYbPji9kR20o4GZxaQi+Vrt0OSx3QEE59isanx2g5benFRDcztjXtUC
- QgBnDpw/ldtdBu6scey66LrTlEOfWyFubJA6v8NKy2icAh4Dmm924JaUjDPj6L+8NnBx
- 8YQQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=QrGEKfVpRmzresmJVy4+pkzdvR+wIkSwhjy32Z36cJU=;
- fh=5Wv4duMH+rgimKaOVxwvVVg74khZ6ldBwL5uRPFajh8=;
- b=fPkUQ/J3Zj0tjLaRivzUihvWUovKyS0KEb/EJz8v0yTIO+uPcHH0zczsQCO5ri305R
- RB1U87FcWTqmgxv839gsrX2GGRYbkOMYs9bssBoy3Mv1Qhh82y+lxGMx/E+mUkZ9H9or
- lnEcsbg6ih9P+rZnTWTMEz2WqWZqpODYOMozNAgf4cylJ//MxNf6V7lCfJa3V4zayw0Y
- qmhL/IvrRiDqx5fS2Kw0e0iAxQmB64H3As9w7D4V0kk4OaLJzGOquuruvNpb60TIeIHQ
- 1hX4wuQSGonguf5XOHhDEbT9KJqEqZt9byScoSshOcLTbvWub32xRHtEMtUDAp0CYOvU
- Lp6Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKEeu-0002v0-Dv
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 08:13:55 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48a563e4ef7so50029025e9.0
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 05:13:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777982640; x=1778587440; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QrGEKfVpRmzresmJVy4+pkzdvR+wIkSwhjy32Z36cJU=;
- b=uSFakWNnEdQfnXc+/0q+tGZz3PgCu5AC6T6yBAfPcgHjDpgD/LcvYsfl2vou/uAqzr
- 552j0SYU7U9uzXmdPdO3+qJNOrW9K5O9c6jS0p69UExM2sx0i3FGbQ1aoeFUpWsC6UBt
- q8wFzjP77VcmOq2KeKPu4s9kq6Jm7k4RF9VnUkYUABHdIyYJVbAa7Ncfyv+sm1jK4W6G
- bYWiVR4mrW5WQ9MSAbGjyn+5j3pqLaFC2lPIPfXpb7f8ECXFrULTv4Bmt0NV4Bl/1i7P
- qGN8e5rJ40Efa/fX2/fVbLpptyAZj+zlZQAgzQAbvT9VobkqftV7uFd1g7Tcb/RHUN5F
- LjMA==
+ d=linaro.org; s=google; t=1777983230; x=1778588030; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GktE6iKByJ63u11NbLxGQ3p0GJSW59bp8WOZW8wHKEg=;
+ b=ebq2CWXz8gNV8KcVsZcCAJbwVJ37frmAPhw7nOqF5hBstdB3hmsS/KDmQZrZwZPMEx
+ g2jScpDB9iS90vCIOEkDoqgwo6vQM8u1nRaOPrBjQWlIzDPOIf9RgeoHId+fmU+0K8zk
+ igKl/ieznd7U1KgMSTso/2RHnNmdeM0RBpR64sh/4JwfLHhT0vq6RzWTDbxhxWq35y3V
+ gwIcSo7aTq211d5bywW7fOPK4zq9/1GlsK0fo7W0dnMM4LUxayArM/qAXoRv8sV5KgEI
+ Y2eQe4DxydwBI94kAMHYtOuTV9CgoUN5bhiPvM0JKdZHksh1DNPGiKlWM/FR5SVf/ezR
+ 7w8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777982640; x=1778587440;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=QrGEKfVpRmzresmJVy4+pkzdvR+wIkSwhjy32Z36cJU=;
- b=p5DYNooVy0Dgh1otWeyq3k0IXJnzAWdIHZ80R1l7fa5TtnqEUQqHuZkDwuh08bWQgY
- o5R9r9KbZkAMB3097YkJpM7hpimS+ZFh7pXL4yK9fGGUv5cUk4qs9Irajpq0kGNi7x+N
- tpBdQZeiRcJPk/2cyxJZeUWfiTvdI79bCvLSU+SeqJBtFVIH0md+7WHikTX/97jsgcAe
- kYx1+b5jiD94ZIqyXKrKvp/aMueg04X5c+sCPadMjGF+aylLOov4X7nmsj5J2net8nYX
- PSOrepGlC9bXsu9bWQ13oYbRpHS7ysB38Q6RR0vVTaRr+4ssLZ6MRqdTzhwQetKZxF+v
- GioA==
-X-Gm-Message-State: AOJu0Yy9+pzCIlWtp83iCDAH5UwHhNHIAmr55y+uoKQT7243t2qpHkl2
- b9siWBFHj2lm4JKMkYMcUtVPLXuWYw0b4KJbmmjEHb/ZxPjI1XvM6zfp4ZVQ4OjInRzBOl7NY1E
- fKw1DRSY2PBcZRjjRpkgNMGESP2wtF11y+ukICS5O+g==
-X-Gm-Gg: AeBDietURr9b8V+8xDU/ox6rWOTxI965Vgwal2xW3OVUqQ3V37CyZGZqRdUWDs48jbh
- XIeZUkDh96DzrZtaaAEQPz2I7Xx9mGrZDcBaa3XwUhXIAPGKOUA1Tw5g487PKImNDqkxUnrmRmp
- wUAK60mT4ORrdIV7qzsClv9s84kPJK80PcjnE1SeMcoCyfw/X80YvCaWlsD54qOT71XXi6DMoAL
- wneSD5jiLVI8nVYNro2pPX/wDfgHw9s3noBwI9SPsq4WHet6A/r9jd4gJ6aVfKiK4yd7aJB22TD
- 3IZ7/jBvPnCWMuMfX6AkN77lusROMXLZLN/443BUBhbbbOZWzGihIHp12wpFFqUSfbTHixV9h+S
- LgQ==
-X-Received: by 2002:a05:690e:43c7:b0:65c:468:7b6f with SMTP id
- 956f58d0204a3-65c3da37c17mr9452600d50.25.1777982640401; Tue, 05 May 2026
- 05:04:00 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1777983230; x=1778588030;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=GktE6iKByJ63u11NbLxGQ3p0GJSW59bp8WOZW8wHKEg=;
+ b=rs3EMjFltTyLUopR6BhAwG96zKc0EJ2UNSm4bqX7+zw5ev8RyUbO0TB2Y6ArBvPrh3
+ hXvU1ah8wiDZcmr/vIvrU0QHoRUfdJBZEFoqWithien9l1eHjMgFIcwouVicdLCY+SXm
+ 9cWumZYDPsvtxLO7FlTBNYRUEyPYmQ1vFsXFKxAJhanMwWRPrP807QoQVX28StPnxiik
+ +Dn1uvfu9NLvAA6JHWSoRMWMhMxqnFruk9VloFMOBEQoU/CstosycRI0m3Sz6neryF3p
+ 132OiuALdbpM1EUnO1GPdjGl9ueuNQfzWdImTfMtFQZnr0X6vd0mUl4dOrQPT5Ywoze6
+ NzJQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/2Se489J3LrO05dkQQE8xO9XlzyJD3jPbWyLPsN6AmDqgvPBRtHn80k7jAYj3n2UIoSyCN80L5u0g6@nongnu.org
+X-Gm-Message-State: AOJu0YzPncQqs93KsZFUnN5fggGTIOQYuUFo/bH53uzYaRhpEdxpg5fQ
+ /qHkZ1GXHnwXIB1L7P6TVNva02m2u7cIX1BcBoukYNQbaqNlYvneyoOT8GZDnZ9fMXU=
+X-Gm-Gg: AeBDievCf2+TAxd2UpFQkdOXFSPzLhOgLQF7zh2gsI2l+7LkIqZCZi4kZrA3x/kR8Jv
+ PmKXeRkOeGMDFI1+GY3QJ+OBc9/ZtcW7LWy5/aeEyu/pFjbgD2gukNpCHoenqhu11O+YzOMsyrP
+ IYRmXe68STnan/fv50FQjNpqJtqrIstynknXffsHl31lsLFNSfkKP6YiVUuZRaAGlDIoNB3t7+C
+ 3DAgbymmO5QPub1EMzRXZQm13gZnwnw80iJQ8GeRE20uH/ycZLSCjRxRZ3JJZi3NqFxfYSllEux
+ LhN+JEtXKHLtse2JRfKozEYtnwEIubnnJf1lZrNcFvCfXYOROqAcWGUtW6tYNewqMys58NPOXmM
+ /DZH1oT5QZ84Tt7W6914PRXsym6cupudvPZEGeX6wfQ4NMt+9ci3ALD7WJc/zJI082ZP+Gx8/Oj
+ XSVJMJXxznWOIH9voixUsOS4ukKL5t/5HBTRbKK2AEIGxgApdtufb1kKudvziR3UW4A4VTuk2E3
+ TEi
+X-Received: by 2002:a05:600c:a11:b0:487:12c:e7e1 with SMTP id
+ 5b1f17b1804b1-48d187d95d2mr48042535e9.11.1777983230319; 
+ Tue, 05 May 2026 05:13:50 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48d149d49acsm27297795e9.1.2026.05.05.05.13.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 May 2026 05:13:49 -0700 (PDT)
+Message-ID: <dc540970-bad4-4883-b4d1-9e206de8a73c@linaro.org>
+Date: Tue, 5 May 2026 14:13:48 +0200
 MIME-Version: 1.0
-References: <20260505103649.68361-1-alex.bennee@linaro.org>
- <20260505103649.68361-2-alex.bennee@linaro.org>
- <CAFEAcA-rFhHmS2+ToEZkr1+HE_e710-ZyyPESHLzCeW0QopY_A@mail.gmail.com>
- <87bjeunmth.fsf@draig.linaro.org>
-In-Reply-To: <87bjeunmth.fsf@draig.linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 May 2026 13:03:47 +0100
-X-Gm-Features: AVHnY4IuCK5keaiByhhJOVrbHq3FzU5QtBRyYqah58nhqdA9D9RJ-Z6oVpqzwz0
-Message-ID: <CAFEAcA_txOHPLK+J546yjCmOEv0-ptaVkCEk5GfeL13DdqQd-w@mail.gmail.com>
-Subject: Re: [PATCH 1/5] configure: report unsigned qemu binaries for check-tcg
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Thomas Huth <th.huth+qemu@posteo.eu>, 
- Thomas Huth <thuth@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- qemu-arm@nongnu.org, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Brad Smith <brad@comstyle.com>, 
- Fabiano Rosas <farosas@suse.de>, Kyle Evans <kevans@freebsd.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Warner Losh <imp@bsdimp.com>, 
- Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2] .eca: add an issue triager agent skill
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: berrange@redhat.com, Peter Maydell <peter.maydell@linaro.org>
+References: <20260501165812.2212713-1-alex.bennee@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260501165812.2212713-1-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,42 +104,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 May 2026 at 12:00, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
-e:
->
-> Peter Maydell <peter.maydell@linaro.org> writes:
->
-> > On Tue, 5 May 2026 at 11:36, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
-wrote:
-> >>
-> >> On MacOS the initial binaries are created with the unsigned suffix.
-> >> The user is expected to sign them before they can access the
-> >> hypervisor APIs. However for TCG testing we can run the unsigned
-> >> binaries so lets make sure the make variable is correctly set so we
-> >> can run the TCG tests.
-> >
-> > We have a scripts/entitlement.sh, and this seems to have
-> > at least some plumbing into meson.build. What stops us from
-> > running this at build time so that macos users, like everybody
-> > else, have a working "qemu-system-foo" in the build tree ?
-> > Having to work around this by knowing that you have an
-> > "-unsigned" suffix until install is awkward for our own
-> > scripts and for humans.
->
-> Hmm it gets built if you do:
->
->   =E2=9E=9C  make qemu-system-aarch64
->   [1/6] Generating qemu-version.h with a custom command (wrapped by meson=
- to capture output)
->
-> and there seems to be logic in that refers to test_emulator =3D
-> emulators['qemu-system-' + target_base] which ensures the other targets
-> have it built. I'll see if there is a good place to hook that
-> requirement in for check-tcg.
+On 1/5/26 18:58, Alex Bennée wrote:
+> While triaging the issue tracker I wondered if this would be a
+> suitable job for an AI agent. Unfortunately the OSS program doesn't
+> give any credits to run agents in gitlab. However I do have access to
+> models from my editor and ECA so I built one and tested it on a few
+> issues.
+> 
+> Obviously this can't apply as is because it probably encodes too much
+> of my local setup (using pass for API keys) and uses the ECA as my
+> preferred coding agent. I assume at some point there will be agreement
+> between all the agents where skill live.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> 
+> ---
 
-We should build it on just "make". Neither check-tcg nor the
-user ought to have to do anything special here. This seems
-like a bug in the meson.build file handling to me.
 
--- PMM
+> +accel: HAX                 Intel's Hardware Accelerated Execution Manager (HAXM)
+> +accel: HVF                 Apple Hypervisor Framework
+> +accel: KVM                 Linux Kernel-based Virtual Machine
+> +accel: TCG                 QEMU Tiny Code Generator
+> +accel: WHPX                Microsoft Windows Hypervisor Platform (WHPX)
+> +accel: Xen                 Xen Hypervisor
+> +block:9p                   The 9p network file system
+> +block:NVMe
+> +block:curl
+> +block:nbd
+> +block:nfs                  Issues related to the NFS backend
+> +block:qcow2
+> +block:ssh
+> +block:vmdk
+> +bsd-user
+> +device: PCI
+> +device: TPM                Trusted Platform Module (TPM) devices
+> +device:graphics            Issues relating to display device emulation, or rendering in general. See also "GUI".
+> +device:input               Keyboards, Mice, Touchscreens, HIDs, etc.
+> +device:iommu               IOMMU and SMMU
+> +device:pflash              Parallel NOR flashes emulation
+> +device:sdmmc               SD or (e)MMC cards emulation
+> +device:virtio              virtio-related issues. https://www.linux-kvm.org/page/Virtio
+> +device:watchdog
+> +efi                        EFI firmware related issues
+> +flaky-ci                   For test cases that are flaky when run under our CI
+> +gitlab
+> +guest: AIX
+> +guest: BSD                 Guest OS is BSD (NetBSD/FreeBSD/OpenBSD/etc)
+> +guest: Linux               Guest OS is Linux/Linux-based
+> +guest: Windows             Microsoft Windows guest
+> +guest: macOS               Apple macOS / Darwin as  guest OS
+> +guest: os2
+> +host: aarch64              Bugs reproducible on AArch64 hosts
+> +host: arm                  Bugs reproducible on ARM hosts
+> +host: loongarch64          Bugs reproducible on LoongArch64 hosts.
+> +host: mips                 Bugs reproducible on MIPS hosts
+> +host: ppc                  Bugs reproducible on Power hosts
+> +host: riscv                Bugs reproducible on RISC-V hosts
+> +host: s390                 Bugs reproducible on s390 hosts
+> +host: sparc64              Bugs specific to Sparc64 hosts
+> +host: x86                  Bugs reproducible on x86 hosts
+> +host:32bit                 These are mostly TCG related bugs where we sometimes struggle with emulating larger guests, especially atomic and address space issues.
+> +hostos: BSD                FreeBSD, OpenBSD, NetBSD, and derivatives as host OSes
+> +hostos: Linux              Linux-based host operating systems (Fedora, RHEL/CentOS, Debian, Ubuntu, openSuSE et al)
+> +hostos: Windows            Microsoft Windows host OS
+> +hostos: macOS              Apple macOS / Darwin as a host OS
+> +icount                     issues relating to icount, deterministic execution and record/replay functionality
+> +kind: Not user visible
+> +kind::Bug                  Bug or defect in functionality.
+> +kind::Feature Request      Feature request or new functionality.
+> +kind::Task                 Research, investigations, and miscellaneous issues.
+> +libvfio-user
+> +linux-user
+> +qemu-img
+> +spice
+> +sysadmin
+> +target: alpha              DEC Alpha [alpha]
+> +target: arm                Arm AArch32 or AArch64 [arm, aarch64]
+> +target: avr                Atmel AVR [avr]
+> +target: hexagon            Qualcomm Hexagon [hexagon]
+> +target: hppa               Hewlett-Packard Precision Architecture; HP/HP, PA-RISC [hppa]
+> +target: i386               Intel/AMD x86 [i386, x86_64]
+> +target: loongarch          loongarch64 target architecture
+> +target: m68k               Motorola 68000 [m68k]
+> +target: microblaze         Xilinx MicroBlaze [microblaze, microblazeel]
+> +target: mips               MIPS [mips, mipsel, mips64, mips64el]
+> +target: nios2              Altera Nios II [nios2]
+> +target: openrisc           OpenRISC [or1k]
+> +target: ppc                IBM Power Architecture, PowerPC [ppc, ppc64, ppc64le]
+> +target: riscv              RISC-V [riscv32, riscv64]
+> +target: rx                 Renesas RX [rx]
+> +target: s390x              IBM Z, SystemZ, zSeries [s390x]
+> +target: sh4                Renesas SuperH [sh4, sh4eb]
+> +target: sparc              Sun Microsystems SPARC [sparc, sparc64]
+> +target: tricore            Infineon TriCore [tricore]
+> +target: xtensa             Tensilica Xtensa [xtensa, xtensaeb]
+> +workflow::Confirmed        Bugs that have been confirmed and reproduced.
+> +workflow::In Progress      Someone is working on this issue.
+> +workflow::Needs Info       Issue has insufficient information to verify.
+> +workflow::Patch available  A patch is available
+> +workflow::Triaged          Issue has been triaged and given a topic label.
+
+Some of these labels do not match the case of GitLab ones,
+resulting in new (duplicated) labels being created there.
 
