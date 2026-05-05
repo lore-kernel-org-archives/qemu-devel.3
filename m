@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33336CD342F
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 08:16:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17596CD342F
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 08:16:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKAx9-0002IW-Mw; Tue, 05 May 2026 04:16:30 -0400
+	id 1wKAx9-0002IS-My; Tue, 05 May 2026 04:16:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wKAwa-0001kr-Gd
- for qemu-devel@nongnu.org; Tue, 05 May 2026 04:16:00 -0400
-Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
+ id 1wKAwi-0001wz-A5
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 04:16:05 -0400
+Received: from mail-westusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c000::1] helo=BYAPR05CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wKAwU-0006lE-A2
- for qemu-devel@nongnu.org; Tue, 05 May 2026 04:15:49 -0400
+ id 1wKAwc-0006lg-77
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 04:15:58 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uY0V4LmuuG1LlEKLZTj7h5NigpLiJm3SBSNsAtnHkYsvKKBsjrTLfmwVVHmWOydqlQFbRtwOYk84UX/S5adwqhaAfDOyCz4+IPDydGQ5OAv4t14TCbUyk8AVRUVVYIgK4tMF19DCWSjZt0LhoIPFQg899xmgs9FrQ0dfWPVh1ZB1yeOC6a8bpT7XT4kLjTDjWMlagdlmkdiVXT2+3Je+Pz7zcPkk9KhWOcG+VGWlGAVl32+vk856egaMzbefRcaavKBG8h3PbU32z1UplytcxwWcxj0ELWO6TOvoOJLt1MRLHt5zwyZD7LztIZXP55r3cwL6Z0ZSsv9CSY8iJbAzzg==
+ b=v9BEKxyNTzw6tmwzIvvoi3Bd7dqbLhn08a0PaehQYNs6sRSM0gIsiaGNyVrVLlwmEZa7hvZSITEEdSyOVZhanBFgmz6aHTgvEuMERLHbadPTEO01qx+Edi217DnWX8E/PmnDXpZhpYKMFs9y9yUh0Gjzbg/Ip1bZ2qW2zcMlMtWoxaVKmWV5JHaZ1xlHUEfJwnJesZTNLnk1jf4gJS/WmTbf8XFIGfxgxT2s9AhuUHFffWSWhgo8YYfIzWNpPgDFftPIfKIxtkapboOgdNuqXn5FiSpsifQMYm4/tZCjVqD5csdXkLSveIVVTfSAlUfQQhd7j02nwLodGsFREOqhNA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0AAs64w412hwEauOreCCjTrPPPHc9j1OZ9YHIjRtvig=;
- b=AJMDC3by0TBs3PKcQmQ1jSprBcFlxffRZ4dsi74oY7w7zfTdBrlmaSSz5H5bbAXVSU+Vh5vcqT9LDtuUffQKijSY9I+rha78HGgG9R6NbUl4GcwqQ7ZoRp7aVZkjhuMqTEL3sc2BtHDuA11rhhAA/MXnxosLoEO5wgg54exu7TbvhOJAcfV9rbr/1mvdDVB7g4a9j2PN4V5qRdYfWWtl8quFEZjVdlZ8A0pc49sAOQoP7HdMyzqTLgDe/viEnVkxnZpojSUmPCF+SDYMEfJW00WcZ4CEktYd8JR5s3tJBFuOEm4PErSOKw+wRmHR2AoOD/1GFjmH4D0fa40aYytmqg==
+ bh=wObNtDY1dWd9SbzTWOw1VWJ32qiUUAts4XSDSfNhIEY=;
+ b=XqOu6xHEWah7o/PFXh9c+bp2Du8G6FiSWXNDFPLi0nQfPVj95zydwlBU0lNdcin2+t9oknglVPSaq+Omx7cyYDA7WvY5W7HaoAUXYcH8WGBDK3jnspZH8Aa+5bY41dLRPpGPCaRGnQdWhU3ZKoPiME53nLZJVGrWEXVVKY5QD9+x+T3letuMNm93/Fa88hJ2mfJosq1gJDzO8JVUVhzE1LXYCKdZHSGlF0PIih3Y9lj6rQ7FV2TlEy9RY8Vmwqlgr8XPaJweDJKKbnbATKgYZ/DYz7h/DWNbxPqZQURQOwwI2PLmZMV5bYm0WaoY6OxfJP7WZ7roRsuh+RCq7+wvlw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
@@ -35,18 +35,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0AAs64w412hwEauOreCCjTrPPPHc9j1OZ9YHIjRtvig=;
- b=slvhgIZ1TR4bK41zTLcQGe39F6PHq+5qxbbeBUQEeli7lN1LFV1L2ll+GCs5Vd8waV4vslfB8OlZXsWK8mdr8kkFzXE4YKEJqWAroL+4YqFwCUnQ3oKhePQIi9VzCywUWPOr/rKtGCAhq2eHBFxQ7faLeRwXlWQumpvmmecnT9Ycotc190RaFN3tMXRZIXzojhU1moCFtCE/LJCwv6DyF4GTBD0DONkCmT+KWuvnc8dwTtIFZIQRxO2OEwAblH37pVPH7Nc6+soitRV1EicFYj71cSgnpntAv43Q3LvtYapmVsM8T/MmXOWzHFXvinl5u7UV98ZL3qXo6+qJ1vOfwA==
-Received: from BN9PR03CA0448.namprd03.prod.outlook.com (2603:10b6:408:113::33)
- by CH1PPFF5B95D789.namprd12.prod.outlook.com
- (2603:10b6:61f:fc00::62a) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.26; Tue, 5 May
- 2026 08:15:38 +0000
-Received: from BN1PEPF00004684.namprd03.prod.outlook.com
- (2603:10b6:408:113:cafe::93) by BN9PR03CA0448.outlook.office365.com
- (2603:10b6:408:113::33) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9870.25 via Frontend Transport; Tue,
- 5 May 2026 08:15:38 +0000
+ bh=wObNtDY1dWd9SbzTWOw1VWJ32qiUUAts4XSDSfNhIEY=;
+ b=l1MQPKjSc8+V6QrLJsk9H0W4xRxCGDHLe9s93i1OtFGKU115vlXtmjmOXKRs3oLc3pBktPazNNSNUXA3Ro/JPYJu3KWCbgPB4EZNd1GYgK3THmJP1aUjah+HZn6K5id8W/5hHYu20V+w+rKPvbJ/LS6ynmKZJN97ZSaLzV5jGhLawOW3x3XEzcJ+D2kdyHaYl223rE3nTPqGSCdvcKI9FC2wfLx2XTejmMF58c2cbrERMbtVW/95a5CR9bNJRnmFzTw0OW00lgLgkqYcciyZzx1im1rZ2n+/002kDlq9n+N079FNRX6fBZY8rEtzGALcuOxWaIklDe22/ZKdUFdXpw==
+Received: from SJ0PR13CA0200.namprd13.prod.outlook.com (2603:10b6:a03:2c3::25)
+ by DS0PR12MB8788.namprd12.prod.outlook.com (2603:10b6:8:14f::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.27; Tue, 5 May
+ 2026 08:15:45 +0000
+Received: from SJ1PEPF000023D3.namprd21.prod.outlook.com
+ (2603:10b6:a03:2c3:cafe::3c) by SJ0PR13CA0200.outlook.office365.com
+ (2603:10b6:a03:2c3::25) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9891.15 via Frontend Transport; Tue,
+ 5 May 2026 08:15:45 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
@@ -55,20 +55,20 @@ Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
  216.228.117.160 as permitted sender) receiver=protection.outlook.com;
  client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
 Received: from mail.nvidia.com (216.228.117.160) by
- BN1PEPF00004684.mail.protection.outlook.com (10.167.243.90) with Microsoft
+ SJ1PEPF000023D3.mail.protection.outlook.com (10.167.244.68) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9891.9 via Frontend Transport; Tue, 5 May 2026 08:15:37 +0000
+ 15.21.25.1 via Frontend Transport; Tue, 5 May 2026 08:15:44 +0000
 Received: from rnnvmail202.nvidia.com (10.129.68.7) by mail.nvidia.com
  (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 5 May
- 2026 01:15:12 -0700
+ 2026 01:15:21 -0700
 Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail202.nvidia.com
  (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 5 May
- 2026 01:15:12 -0700
+ 2026 01:15:20 -0700
 Received: from vdi.nvidia.com (10.127.8.9) by mail.nvidia.com (10.129.68.9)
  with Microsoft SMTP Server id 15.2.2562.20 via Frontend Transport; Tue, 5 May
- 2026 01:15:08 -0700
+ 2026 01:15:17 -0700
 From: Avihai Horon <avihaih@nvidia.com>
 To: <qemu-devel@nongnu.org>
 CC: Alex Williamson <alex@shazbot.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
@@ -78,9 +78,10 @@ CC: Alex Williamson <alex@shazbot.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
  <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck
  <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Maor Gottlieb
  <maorg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
-Subject: [PATCH 11/14] vfio/migration: Add new switchover-ack mechanism
-Date: Tue, 5 May 2026 11:14:20 +0300
-Message-ID: <20260505081423.28326-12-avihaih@nvidia.com>
+Subject: [PATCH 13/14] vfio/migration: Check VFIO_PRECOPY_INFO_REINIT during
+ switchover
+Date: Tue, 5 May 2026 11:14:22 +0300
+Message-ID: <20260505081423.28326-14-avihaih@nvidia.com>
 X-Mailer: git-send-email 2.21.3
 In-Reply-To: <20260505081423.28326-1-avihaih@nvidia.com>
 References: <20260505081423.28326-1-avihaih@nvidia.com>
@@ -90,38 +91,39 @@ Content-Type: text/plain
 X-NV-OnPremToCloud: ExternallySecured
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00004684:EE_|CH1PPFF5B95D789:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7d1b363f-b1c3-461b-8e2d-08deaa7e7d6a
+X-MS-TrafficTypeDiagnostic: SJ1PEPF000023D3:EE_|DS0PR12MB8788:EE_
+X-MS-Office365-Filtering-Correlation-Id: b6a7e338-2eed-4d04-3cf4-08deaa7e819a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|82310400026|36860700016|18002099003|22082099003|56012099003;
-X-Microsoft-Antispam-Message-Info: XYKN7L6cCGP3R4DSNNmnSEBa8ny5uUXYxN2JYbCqUOaUH8wCVYvJzubICRx1fTHFurLnOk7SAHw4ccTOcr1eyJMqAwfXUw/LJB+2WOT5suEwFtpKDwic4abxEQl8XD4MzXNtDQ5y9H4yyDBkaP4QgZvGfcqWtFQOHbA3Egl5P9UcYYIBJmwKcT9kT0ZsEuk9BOV6DAfKvhyDhGKx3pmZpbaoJYbUD+11APwWq8Rcsv7c1+HYGWV974rH3ElOhlMQ7w8ywitO6fZ6q0RD1/AId8YopOGdETtQo+Zi7quGSzbRpe37WoI8ZwKbP3n8DSEzUgqelhzDX+pz9d4DTZFeZaDJFNio6MWLg6AW7ulJx+gS5FdXnahTlUsR0j/vphZjBdMtWkTeIYPQXwFcEPCkus6uFw0yGYIqwk3BDRRrLZVroM+crc6IDQrddOEn2PYFBgZAWxvCqn9hX3TBqYD4vvzZFHiRilMoZnV5DezUUCcqLoeEAQYAd9h8yc/f7T5+qyOuqU7W8OtlQCSlbYwvvMCA2jzTBfSDrRLyIsZBjq/dfIc8TUBs/x3CDWS0GMF1VmffwutYhGSepjxLh5mCanhBhe167MbtOwYKui3VdIWKCOrovuUCzqgveGnHxpI3XteAmcd7dKBoTXU7/tTbcAmiPq31UOECvDQDtxytX58+2xI7a2UjgVux63+SfiZ65WS+k47c5u8V9CVFjief6QzqDxLYCm+r4TVCbJOFzcc=
+ ARA:13230040|1800799024|7416014|82310400026|376014|36860700016|56012099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: pmHZEpSI8zfwa7RDuwZKz/7mjNKN2+VksTwv7vo1apDNybyRXKh1wa7XRW42ZX+ralBgtX88ybui2hgBssiAR8xCHlECEKl1Ec77CgtiB4K/aUzRYV2y/JC9K6dTst9aTC4sFXizgO1BxTVdDkZtWmgIvGoS01j9yQ8oxLSc4pyGT7u+wE5e8cPziiAqIyfrXh4/sPaV6hB0QIvDKDNFgFJGaWzmBQt3avmI2+8sWzRLZshH2dWbI7h1WDTx9C3DZnUESex3LhSIn/ZAWrInb8Rs+h6PN5YxmKAii4Htyc7Y8mDufegCgfBftYaKzoMnqFDf2NOHl2OChwpYW20W/IZ4moNxHdHl8G8xNbvheeZSiggxGdK9WEM9b14yoULLjg8GTKKa0d8MpbyiBxIu/5T0P5qCdPfNcj/DqJkUQnqTKVk3E/2IV/dgp59S9S2abohqoKISMXKT/TB0O3kXHTGALnQTvfEe9OLz0AY3RWI/Zmj/EowsPyKDAitNKyUCFvAtbuMBO0eZ9vR/NL8WEWLVKUydHx43PW9a1Dt+tnfwQJzrPGnnkGHKilpuqNWKqvuKUioobEGe17wykGX2wuKR/Dsn9laPYYCdz9lUhx02r5+vej4JmnoRZrP6nu0Kpu+yKi/uQ29CMhvRxuGRUyCzydKaYBoPKeThEsYXodvnBdlFKA0adAgFJKvLCadzlgHiLUKlXEwAfEoMQgm0nn96uwULsgeO23VjmG9CUnc=
 X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(82310400026)(36860700016)(18002099003)(22082099003)(56012099003);
+ SFS:(13230040)(1800799024)(7416014)(82310400026)(376014)(36860700016)(56012099003)(18002099003)(22082099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: F+/8abUs29mP/LBZO0zwwWE9S3Y3+sY8qKjMVOJScx3XtKj63akN6MldDjNBclceT0KzpOGZV1oqkxJueziwQLSFApXrAPvO7Tb00Nrfmy9J/4e5YQRGsx2VPKpeVMuPYQsL9XpMndjUyA/QLybjLAFNj9wwZ2CJKCtIuj7t5AMIw5J914HJha95mslHbEgQQ7Rl2M04J1RoFD77jZQyylZ8Is/q7Q1F3jCAo1PA1WEXEhQNjhuqE219VABJzAvME2EFU28E8c0DBIIj+mXxAqPLdCYWI+305FuIx0Gp7f9pOXo1Yah1advOrM52SknP3pgld+qjwe7vBRZYo92/SF68VZVB1/FYJ/do19T8SzT4ZVTz6ZSrq9k41kKtkXMtJwxq9IdcL2W8uBuGl+hPAumYkhRDGYY0hX+BRLY43sYKyTRO1bNR/pFLeagyjOe3
+X-MS-Exchange-AntiSpam-MessageData-0: 6do3VIFA09yOdSu/nxeGR6yJCsYBM3E3BoQcYfbAqqjBeeo8gsu+m19Bn9VL4dcbXGC8B0jvnriWByuv9TmhqQO4Nf9iXgSYEPkcvE2byksTLIKxhYcTgaGsSqBeHSUMHPa9sQ4AGlMj1hmbQxoPNx9Le7QoESGRVKByX2+EJscu8ImSVW/bQ6We8JhvjgmkUZMJrGPXKK26MLHN+NC4qWrv6eSiXyd2ni1MnKSzinHBBaUwaV5QHq1dWKpygjco1Ec9xkOP+I4GgEuZjYz4qtHXO0RP7nofdmPVWqntFP7sv3GnZyjJfn+NXQTxDOgvcQkU1IxS/VUam/DZ7y+R8GXiUqLCSzhY/P3UJn0uCQd/kpvOM5SGNbqe7+Okb4dcVVZhS4aJEzyBkAm9SAh4FAYsUU0UfKkIpRVjAQCL20lNZBxkZU+adqEDxJMPYTgq
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2026 08:15:37.7988 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7d1b363f-b1c3-461b-8e2d-08deaa7e7d6a
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2026 08:15:44.8697 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b6a7e338-2eed-4d04-3cf4-08deaa7e819a
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00004684.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000023D3.namprd21.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH1PPFF5B95D789
-Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8788
+Received-SPF: permerror client-ip=2a01:111:f403:c000::1;
  envelope-from=avihaih@nvidia.com;
- helo=SN4PR0501CU005.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+ helo=BYAPR05CU005.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,66 +139,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for the new switchover-ack mechanism. This includes
-implementing a request_switchover_ack handler that requests a switchover
-ACK on setup.
+VFIO_REPCOPY_INFO_REINIT is checked only during precopy, while the guest
+is running. However, the switchover decision and guest stop are not
+atomic, so a VFIO device may want to set VFIO_PRECOPY_INFO_REINIT and
+request another switchover ACK in the gap after switchover decision has
+been made but before the guest is stopped. This would be missed and may
+increase downtime.
 
-Keep legacy switchover-ack functionality for backward compatibility.
+Solve this by checking if VFIO_PRECOPY_INFO_REINIT was set during that
+gap, and request a new switchover-ack in the COMPLETE stage. Query
+precopy info after vCPUs are stopped but before transitioning from
+PRE_COPY state, when its valid to call the ioctl.
 
 Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 ---
- docs/devel/migration/vfio.rst |  3 +++
- hw/vfio/migration.c           | 16 ++++++++++++++++
- 2 files changed, 19 insertions(+)
+ hw/vfio/migration.c | 32 +++++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/docs/devel/migration/vfio.rst b/docs/devel/migration/vfio.rst
-index 854277b11c..7f4e065506 100644
---- a/docs/devel/migration/vfio.rst
-+++ b/docs/devel/migration/vfio.rst
-@@ -59,6 +59,9 @@ VFIO implements the device hooks for the iterative approach as follows:
- * A ``save_live_iterate`` function that reads the VFIO device's data from the
-   vendor driver during iterative pre-copy phase.
- 
-+* A ``request_switchover_ack`` function that requests switchover ACKs when
-+  needed.
-+
- * A ``switchover_start`` function that in the multifd mode starts a thread that
-   reassembles the multifd received data and loads it in-order into the device.
-   In the non-multifd mode this function is a NOP.
 diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index b7e929274a..2607ce4cec 100644
+index 6eb363d3f3..675560f1e0 100644
 --- a/hw/vfio/migration.c
 +++ b/hw/vfio/migration.c
-@@ -882,6 +882,21 @@ static int vfio_load_state(QEMUFile *f, void *opaque, int version_id)
-     return ret;
- }
+@@ -915,7 +915,8 @@ static bool vfio_request_switchover_ack(enum MigSwitchoverAckRequestStage stage,
+     if (stage == MIG_SWITCHOVER_ACK_REQUEST_STAGE_SETUP) {
+         /* Precopy support implies switchover-ack is needed */
+         return vfio_precopy_supported(vbasedev);
+-    } else if (stage == MIG_SWITCHOVER_ACK_REQUEST_STAGE_PENDING_EXACT) {
++    } else if (stage == MIG_SWITCHOVER_ACK_REQUEST_STAGE_PENDING_EXACT ||
++               stage == MIG_SWITCHOVER_ACK_REQUEST_STAGE_COMPLETE) {
+         request = migration->request_switchover_ack;
+         migration->request_switchover_ack = false;
  
-+static bool vfio_request_switchover_ack(enum MigSwitchoverAckRequestStage stage,
-+                                        void *opaque, const char **requester)
+@@ -959,6 +960,26 @@ static const SaveVMHandlers savevm_vfio_handlers = {
+ 
+ /* ---------------------------------------------------------------------- */
+ 
++static void vfio_final_precopy_reinit_check(VFIODevice *vbasedev)
 +{
-+    VFIODevice *vbasedev = opaque;
++    VFIOMigration *migration = vbasedev->migration;
++    int ret;
 +
-+    *requester = vbasedev->name;
-+
-+    if (stage == MIG_SWITCHOVER_ACK_REQUEST_STAGE_SETUP) {
-+        /* Precopy support implies switchover-ack is needed */
-+        return vfio_precopy_supported(vbasedev);
++    if (!migration->precopy_info_v2_used || !migrate_switchover_ack() ||
++        migrate_switchover_ack_legacy()) {
++        return;
 +    }
 +
-+    return false;
++    ret = vfio_query_precopy_size(migration);
++    if (ret) {
++        error_report("%s: Final precopy reinit check failed (err: %d)",
++                     vbasedev->name, ret);
++        /* If query failed, assume reinit and request switchover-ack */
++        migration->request_switchover_ack = true;
++        migration->initial_data_sent = false;
++    }
 +}
 +
- static int vfio_switchover_start(void *opaque)
+ static void vfio_vmstate_change_prepare(void *opaque, bool running,
+                                         RunState state)
  {
-     VFIODevice *vbasedev = opaque;
-@@ -905,6 +920,7 @@ static const SaveVMHandlers savevm_vfio_handlers = {
-     .load_setup = vfio_load_setup,
-     .load_cleanup = vfio_load_cleanup,
-     .load_state = vfio_load_state,
-+    .request_switchover_ack = vfio_request_switchover_ack,
-     /*
-      * Multifd support
-      */
+@@ -972,6 +993,15 @@ static void vfio_vmstate_change_prepare(void *opaque, bool running,
+                     VFIO_DEVICE_STATE_PRE_COPY_P2P :
+                     VFIO_DEVICE_STATE_RUNNING_P2P;
+ 
++    if (migration->device_state == VFIO_DEVICE_STATE_PRE_COPY) {
++        /*
++         * Now that vCPUs are stopped, check if new init_bytes are available
++         * since switchover decision, to be reported in switchover-ack COMPLETE
++         * stage.
++         */
++        vfio_final_precopy_reinit_check(vbasedev);
++    }
++
+     ret = vfio_migration_set_state_or_reset(vbasedev, new_state, &local_err);
+     if (ret) {
+         /*
 -- 
 2.40.1
 
