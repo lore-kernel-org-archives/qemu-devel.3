@@ -4,109 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 085E9CD343F
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 14:48:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D665BCD3427
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 14:49:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKH3M-0006fi-IL; Tue, 05 May 2026 10:47:16 -0400
+	id 1wKH5g-0007lq-VJ; Tue, 05 May 2026 10:49:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wKH30-0006eB-5R; Tue, 05 May 2026 10:47:01 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wKH2r-00080N-8Z; Tue, 05 May 2026 10:46:47 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 645Ej30E1386183; Tue, 5 May 2026 14:46:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=5FzSjXlWueYWg+gK1GZP6IRbnOLLqFrZNq9WXJZ9P
- fg=; b=qWydAD0A3lKCtWdNAHZ2LkpT1ugi4Oe77cS/evjM5cJR6S7buoM6kNt23
- 15OCjQyaoIgXZVtf/BvaNlgemm2AVvdtIre4dE/HpBXzLvKkGMkUhM2qYjJKTqh3
- gpHq80YNtnjrEn5j0JCZ5xXfrGb/nI6oloEhz47k0K+4bO/CbsmKe9OMRcpIiDgY
- PyqgljXhCqHV3AC7884nuEdqnvVOBlwythbj6ns+ttlthVA6q/PWlqruXaHITtC/
- CH/Ln1740z9ZGtHTI4ijo5Aio5OR0OYc/muJ2taX1xpdTr7y74P7H46ExkWjwiq/
- jns/yIhMTboUT9LyFuzSKsWovGpDQ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9y1c72u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 May 2026 14:46:39 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 645EdXBT028047;
- Tue, 5 May 2026 14:46:38 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dwuyw25gq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 May 2026 14:46:38 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 645EkbQ827329268
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 May 2026 14:46:37 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E92F058067;
- Tue,  5 May 2026 14:46:36 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 50A8658052;
- Tue,  5 May 2026 14:46:36 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  5 May 2026 14:46:36 +0000 (GMT)
-From: Glenn Miles <milesg@linux.ibm.com>
-To: qemu-ppc@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-devel@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- "Harsh Prateek Bora" <harshpb@linux.ibm.com>,
- "Nicholas Piggin" <npiggin@gmail.com>,
- "Richard Henderson" <richard.henderson@linaro.org>,
- "Daniel Henrique Barboza" <danielhb413@gmail.com>,
- "Laurent Vivier" <laurent@vivier.eu>, "Chinmay Rath" <rathc@linux.ibm.com>
-Subject: [PATCH] Revert "hw/ppc: Deprecate 405 CPUs"
-Date: Tue,  5 May 2026 09:46:10 -0500
-Message-ID: <20260505144621.1308457-1-milesg@linux.ibm.com>
-X-Mailer: git-send-email 2.43.7
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wKH5e-0007jy-HK
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 10:49:38 -0400
+Received: from mail-dy1-x132a.google.com ([2607:f8b0:4864:20::132a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1wKH5b-0000tR-T9
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 10:49:37 -0400
+Received: by mail-dy1-x132a.google.com with SMTP id
+ 5a478bee46e88-2bdd40d3c61so6776084eec.1
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 07:49:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777992573; cv=none;
+ d=google.com; s=arc-20240605;
+ b=MOJ5tf4aHMZLpJ/Q8Wxmd3L/dPZagqyrY9AsVNjphE1K2QM44/xbg0y/FZDugsXExc
+ FOgYXHv7zbTWJ63QIe2GpNOJDL2U+PdRECwgl+9OwwcPS362pb99wyQ1VFltHh6VwxdJ
+ 1mFpisPr71Hhph82Yls9qS0hcFP86xNwX78F8hc11DZNX2U9n+f1l264P2NLptVdxkDM
+ pj81tVsWMwZygukzoWD0bIVw570EY5KpGVog8Rr7czSugA8VYlJRllqwnYG67NuDAJR9
+ p6JQ1vtcOaCwMOu7KV5LEG5lANBXrUhRn67aZXwoIc+FHugWz/kgw79UV7ZZXkgHWm59
+ lzCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ffLEURxJLUDCP+jGetay6D1/gTP4RY+dTCMHslCt8GY=;
+ fh=IIVq14YtGeHsqR1qXM8TWLElWWlW0t0XUfvIwOGX8mQ=;
+ b=FsrNAop4qpB92LKa85412jxst3ToiyLr+fjkinS8vAaOmARprz/U/7sXJgpCrYb9v/
+ 4qL4a1amNBbOHf7JAWzHaLRRTBStw5muYUpsVCjHTux4aL1x/zW/eYIpcdn1W+aFRf2+
+ DT92m8cNOkbMf24E+UbUJJVGyNZpBb96HnuNRTZ0aU0p84fUSmZDYy8apsLs2Bnaj9p4
+ yfufSRuPb3WqCBN5hngKUDoLlJSgnd3y6xXwN5J6xFf3ocyqZt75BkQaIowwxdWcH9eV
+ EV/R84dDtKxdGKa5MzgEllGvneHg2eW6R3ZMNPR5V8h8Rrk+TuAcZTfRx8WGVz7OZYZs
+ H97Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1777992573; x=1778597373; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ffLEURxJLUDCP+jGetay6D1/gTP4RY+dTCMHslCt8GY=;
+ b=ibs/IfMFuL+IguzQMyiY/iNYtcX1Pm/twzxpsmyPQzuXb13ZJzyhgExiXiFhsNRT7P
+ D7GlwGM2CvgXyux2JYQ22yVW04kyki+tbI08vc3d/kE2RnahKcxCTYM10g7SSXLZnakd
+ Mt9T25Tch6ox1qzUhQdweM1RInidaKxn8NFNUkeSGiY/x+jc6hCXdtHXaqZ+CzuSZU+Q
+ e4U2kL38+J2xTh45tY96X0bxTN8vkWgikqL3cOF0e+BfMlASHUiGIQhz/JcxNRpxhCw6
+ rOLgwwM4kpuwqzSlKD7vfc85VkMrYKHCaa3PrcDTivCM/95pcbpTTCVaY5KJ7Gkqu0Pl
+ kS3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1777992573; x=1778597373;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ffLEURxJLUDCP+jGetay6D1/gTP4RY+dTCMHslCt8GY=;
+ b=VzQ2s1EKJCHtlb542MF+11ZLB8nu12wzpBZ1YFKFts1NEarhzA+mqMvmPSBJML6XaM
+ VXmH8L/0r7Fifj4AGJijUY0Ql+Dx5eUJSzxVKyvNk6arYtOyYXN2ggbqg6nfIqc1vLqc
+ xbcJBYo9xov7JKy8dzcTpwFu2XP//0Y03OKvFkKAnjwT24EIn8Dv7C2YWhF3qdG6lKtq
+ qDwKQjbCdcrUUa3SrNi/FMeLXdOVfjfo7yW2+yLzVNHk9Zglf+jWcz3NbxTbsjKWLOty
+ iLdf55/U/xB7zVDex3n+KQMvOLaMbuf944mpvGD6Yipg/Jfc23OJwS2xyZY7C/ZMLAgr
+ PBEg==
+X-Gm-Message-State: AOJu0Yyl+aXhlCKqDSsB5u7MJ/T9NvcEANgjKl+5ypxiUNJFvmIvSGbY
+ nH6K1IZ1HelMJsifdgvZA66ynAAFSDQmLq0lcZsbhwy1FDUQQOmSvEOdMERbJZewrBkFU8Wa57F
+ bwR1Ubb4W/WkKJxwzkUjNK8FSU7zNfw8=
+X-Gm-Gg: AeBDiesTkfx/sGJzZtAQedx1dN5oh3oscEkr0f/hRCeop23BH7PmPzGFeTePxx2r+lR
+ +XsZc7UTQQ5I2gwDwbLMLWWBn/Npogzc6guiktZpSDUNw/UmG6+GzOyKWQtTX5d1bGB8WZ0Darm
+ +o7EFzef5ll4fDqgK8ReyrPNonkWuYdsEQ/Uz0fbWcMM/nBhR4O5QXApDSXHqPygMkmyHAEbvl7
+ mA07FFA9t0YE+c03t/ZR6UBfPRv+jruILU6K+2pMOJquldEybIZAeweke639Uj93vL4plMgsi+5
+ 4kH7n2mnqjanGpjG3Bq04GdCMyI=
+X-Received: by 2002:a05:7300:dc98:b0:2ee:f85:ec3c with SMTP id
+ 5a478bee46e88-2f40a18f78dmr1502313eec.30.1777992572955; Tue, 05 May 2026
+ 07:49:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: k_T1NN7340aFyCXsE4wuSAHRKsY0AgVK
-X-Proofpoint-GUID: 6eVIodOhHvptOT-Htt42UBH08r-2F-mk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA1MDE0MCBTYWx0ZWRfX2FRtjeDaZOEl
- xyw9oIWBBTUysj68vylEA/nqUcZqU+qxaKV7RS/br97LlPFPxR37jXW1uCsIpdaeMiPwA3X6+8j
- emktk9CH9CKNXHhnBwnyyaCG0SYIAFfChS+nYLnuSMsjDtfIMRZR+KjHKOx/f/RfXGpLpuXmwoB
- yULD7aX8tkrjIQW2LY/hsnEnLDNb8FhV/tGtIsqC6hQ8dqOmcvrhAJYe1HAKAQzgMkmNQxg55ww
- skFYT93ijy54fQfkJcv3bUh8C1vAHTyUHw+CIZkrOxZy7gl3w56CbSzTnp5VnIWxA2wmaFFy5ty
- 9x+2je3P40omK11AGcBeCkltMDg7BqjypwJtDs12Ytxkzgu52pyLMYf/XguqkB5v2jgNqIBW0vL
- 4zlE450yXmgsnfgQlGApDOTlsUa9oBhzW9/xKk3f4475hLklcjo4QDFMjn9m47tD/OlOFr9T8Ey
- 5uSx2CewqGWkj//WuWg==
-X-Authority-Analysis: v=2.4 cv=UbFhjqSN c=1 sm=1 tr=0 ts=69fa02cf cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8 a=kzH-N7ndX5ZrohmAGq0A:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-05_02,2026-04-30_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 spamscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0
- adultscore=0 priorityscore=1501 bulkscore=0 phishscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605050140
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
+ <20260504-qom-tests-v2-8-ef7e3dc94f7a@redhat.com>
+ <CAFEAcA9PWJOtiw4-iJ0GZs7=3ZnbH1RdH-GWXi2hFA1jetcOpw@mail.gmail.com>
+In-Reply-To: <CAFEAcA9PWJOtiw4-iJ0GZs7=3ZnbH1RdH-GWXi2hFA1jetcOpw@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 5 May 2026 18:49:19 +0400
+X-Gm-Features: AVHnY4K5-VzbbU10jT1Qqi-2OUU6m8CX8XKx3aA8wewQtLRR_Abxg9RTQS78mjo
+Message-ID: <CAJ+F1CKOjP65rO2_gXJ-yuXZ2N_gUy9ez5er4ZJofHmXekwZeg@mail.gmail.com>
+Subject: Re: [PATCH v2 08/46] hw/xlnx_dp: reject NULL 'dpdma' property rather
+ than crash
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132a;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-dy1-x132a.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
+ FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.25,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,44 +119,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This reverts commit 52f0b59ec6b780f2a3e162d5862b90b406fa4697.
+Hi
 
-The PowerPC 405 CPU is used by the PPE42 CPU which was added to
-QEMU v10.2.  The PPE42 CPU is basically a stripped down version
-of the PowerPC 405 CPU and is used by the Power9, Power10, and
-Power11 CPUs as an embedded processor to handle various tasks.
-Also, IBM has plans to use the PowerPC 405 CPU model within a
-year to model the On Chip Controller (OCC), which has an embedded
-PPC405 CPU.  Therefore, this patch removes the PowerPC 405 CPU
-from the deprecated list.
+On Tue, May 5, 2026 at 6:44=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
+org> wrote:
+>
+> On Mon, 4 May 2026 at 12:38, Marc-Andr=C3=A9 Lureau
+> <marcandre.lureau@redhat.com> wrote:
+> >
+> > The type-checking macros (XLNX_DPDMA(val)) which crash on NULL.
+> >
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >  hw/display/xlnx_dp.c | 6 ++++++
+> >  1 file changed, 6 insertions(+)
+> >
+> > diff --git a/hw/display/xlnx_dp.c b/hw/display/xlnx_dp.c
+> > index 50e6ef10984..876cb3d6642 100644
+> > --- a/hw/display/xlnx_dp.c
+> > +++ b/hw/display/xlnx_dp.c
+> > @@ -570,6 +570,12 @@ static void xlnx_dp_set_dpdma(const Object *obj, c=
+onst char *name, Object *val,
+> >                                Error **errp)
+> >  {
+> >      XlnxDPState *s =3D XLNX_DP(obj);
+> > +
+> > +    if (!val) {
+> > +        error_setg(errp, "%s cannot be set to NULL", name);
+> > +        return;
+> > +    }
+> > +
+> >      if (s->console) {
+> >          DisplaySurface *surface =3D qemu_console_surface(s->console);
+> >          XlnxDPDMAState *dma =3D XLNX_DPDMA(val);
+>
+> What fails here? XLNX_DPDMA(val) should handle NULL, as mentioned
+> on the other patch. And xlnx_dpdma_set_host_data_location() checks
+> for a NULL argument.
+>
 
-Signed-off-by: Glenn Miles <milesg@linux.ibm.com>
+Right, it doesn't crash. I did it mechanically because you reported it
+as one of the custom add_link setters.
+I'll drop it.
 
----
- docs/about/deprecated.rst | 9 ---------
- 1 file changed, 9 deletions(-)
-
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 10de10dc23..3639000af2 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -209,15 +209,6 @@ in the QEMU object model anymore. ``Sun-UltraSparc-IIIi+`` and
- but for consistency these will get removed in a future release, too.
- Use ``Sun-UltraSparc-IIIi-plus`` and ``Sun-UltraSparc-IV-plus`` instead.
- 
--PPC 405 CPUs (since 10.0)
--'''''''''''''''''''''''''
--
--The PPC 405 CPU has no known users and the ``ref405ep`` machine was
--removed in QEMU 10.0. Since the IBM POWER [8-11] processors uses an
--embedded 405 for power management (OCC) and other internal tasks, it
--is theoretically possible to use QEMU to model them. Let's keep the
--CPU implementation for a while before removing all support.
--
- Power8E and Power8NVL CPUs and corresponding Pnv chips (since 10.1)
- '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
- 
--- 
-2.43.7
-
+Thanks
 
