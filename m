@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43643FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 06:50:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2723DFF885A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 06:50:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wK9b7-0000Bb-Fb; Tue, 05 May 2026 02:49:37 -0400
+	id 1wK9bT-0000EX-4F; Tue, 05 May 2026 02:49:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wK9b6-0000B8-C6
- for qemu-devel@nongnu.org; Tue, 05 May 2026 02:49:36 -0400
+ id 1wK9bH-0000Dm-Re
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 02:49:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wK9b3-0005rs-9l
- for qemu-devel@nongnu.org; Tue, 05 May 2026 02:49:35 -0400
+ id 1wK9bD-00063d-7s
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 02:49:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777963772;
+ s=mimecast20190719; t=1777963782;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/ERjXe+UF5yfB73iQjlHQiSxNM/6kyfITxFBZNn5OvM=;
- b=A19d+HTvyZ7LhEc5nsAY7hWtBya+Aw9j/eGtxKzSU1f/8Q9ROdvpxgi5xVf6KKd0aDRkh6
- gVGvIekbGhlXcQ4MCmlWKNEx30gANXQfBhHgmqcmexIeT0IwdfMKRfTpf8xm4B7pST6Ko/
- 2v0DNs6ODrMjVtVCjVPr00R1NFTAo/Y=
+ bh=RVT0tnJmjgmnhqKsD8dcnUu8DxkM2B1RNvvxkw4xAcU=;
+ b=DgGKbZAnM/hR1YpZuAbwE3W9BOSgO5q6FHi6kEWD0cSIRRPZ+Hyk5fyqyrC6ax4/eZC0SJ
+ n8ESWUEjreY3vuysBrEfT116NI9eO+D+Vr/FGsu2e1ctGg9FS8qKqAEV5YTLm7IgdQ1NfM
+ WSX9+X7bTrQPZne0znVBBeqmHwtcyJ8=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-w9dtPyHdMJmPnI1ZZKxrIg-1; Tue, 05 May 2026 02:49:31 -0400
-X-MC-Unique: w9dtPyHdMJmPnI1ZZKxrIg-1
-X-Mimecast-MFC-AGG-ID: w9dtPyHdMJmPnI1ZZKxrIg_1777963770
+ us-mta-547-05y1N-hUMoaEdxF6h_msZg-1; Tue, 05 May 2026 02:49:41 -0400
+X-MC-Unique: 05y1N-hUMoaEdxF6h_msZg-1
+X-Mimecast-MFC-AGG-ID: 05y1N-hUMoaEdxF6h_msZg_1777963780
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-44696b11265so5217347f8f.0
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 23:49:30 -0700 (PDT)
+ ffacd0b85a97d-43efc93e4f6so3718634f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 04 May 2026 23:49:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1777963769; x=1778568569; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777963779; x=1778568579; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/ERjXe+UF5yfB73iQjlHQiSxNM/6kyfITxFBZNn5OvM=;
- b=gnA9L6PEueeXEqb7nIrcsqk2XjtBnX6rR8s4ZuTJm8/P6oYATuEuBdVx8dqkGX4tQo
- Ju4DNx6YxpBKXmJNZMZ5KUlIDU5Yyn2MIq5RhszcyWbGzGCTB4orCapcC/lr4fnjMjIB
- PT4FTOcUokaO99Wx6s7b9z7dSWW0WE3Am7jXakTxDOJpyt6GdAKmqI1SY+SRIi0g+vwG
- WlfQwbKccpgzNmyOEpxsNF9HlBaLS93cq4Wc7M/D3HPDITNPdQvMV5yUYiuNDj1UNKgV
- O36I+Nk8r4ZybkZI/r29Azd1Kt4xGj/ntpmNKR6Jl8P5q4srzydZFbAgC7Y814DAB+eh
- OgmA==
+ bh=RVT0tnJmjgmnhqKsD8dcnUu8DxkM2B1RNvvxkw4xAcU=;
+ b=PjfATBcAzVo1GVmeEhWOMn/N69267OVaexrxU/2gHo6GM2nhNi4Wxf3jLIES4UMHht
+ 24xLe6JnWtU8i2xTRPdoiop41ITUJqi/74NKPe4gdS+vIx2orEXovWVsc/0apjG96r1X
+ xZUy01Wz+3x0gnBw/ra0alZuCnlfEIH6v0vfi6J/tb//WFolwL2xQ4H+9DXNtrnngD2b
+ cghoaxztDu5UlWr5/hu+Dq1kHGIL4GcIg+aHPnPG718m6rRqbdadWzIj5pNdpjnFcSe1
+ 5vGfjutWH7ewvaneQWd9tAtL5fNiuBxix3VOeWPGvEpkooQPHvzFo9bNhsUOttnkl+oa
+ ZCGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777963769; x=1778568569;
+ d=1e100.net; s=20251104; t=1777963779; x=1778568579;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=/ERjXe+UF5yfB73iQjlHQiSxNM/6kyfITxFBZNn5OvM=;
- b=Bji04DX6+hH7U44Cx2xshP1XDQ4tqGdnEVBeLptYnE8AInJNHVrGGChLYIm9TJ5Y1y
- gkpd1ymSLD6rehKGJ2Wlr06eXd/+ssa4R3cBb5fRXgJwp8a83UCVwZOfB7o5YpgG4WiQ
- 0FwYlO5hNNmHmGbHda7ZynHT9P4jKir9svgLCmwp2r6J+/E5MeOLA308Hw/yL1UpaaOn
- /s/ky8QPhmuPgZdWkchJcrdEhbSYVucjMvvt+jL4miPBIC4XS6MUh0ZczfzHjng0tJb4
- 5rz+xq7FpN8Y87xGfmHYZPx2uDmowdB67NtieTyLubI6zYN2MqTsHM5lcTLB+0ffcpdA
- IUEw==
-X-Gm-Message-State: AOJu0Yykw1Brm4+SiGgAihhebow+AGfadwhlnyXQ8D/DDA3q6Lm1c8zo
- 82e2PdR/1XzccWgkRuJwiL8SC0Z46dKvqj2ZS5M8V+zpA8CW/c38C28xvd9O/5oHoTs14/HRGKa
- M03BaqXd8viXE+VyoTuzUVM1lc+P6qap6513NmISTApr2Squ2816TM1NQQxRKwo2k3+t/qGRx4F
- Ds+vxbWhGLHBti1js+QF9faitK+aulwDXuqRCgh1yA
-X-Gm-Gg: AeBDies4BIqX9DcZeImKbn0RKgd4jwHVyqRUM4h35IYzTQ250pDSOQP17lRgRxT8Wcq
- DgiYbP79Bq37B0VFFRnrDNCuuCJCl7XFMVH0eYhy/Tvlry0+82c9R/ud9WHvPbOh8qOMXf1uwGy
- rJdIEAdUiSLBx8KsZ3XqS8uE52IZDzt+mJN3QUvTQNfOK0U9Qwkvbrpo4zp4Urpyskilzy8QtXa
- 9fqD/+5RINs35MkNCaSkQ3L8dHhyK/E6E5nH+/tiOnjVu9cv7blcjG72a1ndNPYflm5fbzJThF9
- UJNpB7NG6rPlmi1y8H+scyhnePXs2QexOdKWy13V0tUmlUsBxTIi0+c090RRShjAzNvDw1FqJuG
- SUTvQ4e0BMQa7BDZ5LCs77qgSLvmp/iZpBZi32dR064qyRZ0bibK8Wr8RN0cvhRxM2Xs1sD4RSB
- 0vnmz9q8ogSO6x+pBMMuYBdh0X8ZapjFZ43i7Hj7M=
-X-Received: by 2002:a05:6000:18a5:b0:449:c5e2:a8b7 with SMTP id
- ffacd0b85a97d-450060571bemr3031263f8f.30.1777963768996; 
- Mon, 04 May 2026 23:49:28 -0700 (PDT)
-X-Received: by 2002:a05:6000:18a5:b0:449:c5e2:a8b7 with SMTP id
- ffacd0b85a97d-450060571bemr3031230f8f.30.1777963768482; 
- Mon, 04 May 2026 23:49:28 -0700 (PDT)
+ bh=RVT0tnJmjgmnhqKsD8dcnUu8DxkM2B1RNvvxkw4xAcU=;
+ b=MX0gNw/IROZceQwpZxbwt1cx5ABWhy8DbrYPyk/zfz8zrYq1VpgJSZr1K34nmA1RxK
+ F46kH+JRK9jLwM8FICwOSXQMTWq9E5QWSP7ASuCAA1mbCVdK3FFWItQkIUJedQXXWPQF
+ GvQ0R2+X0nMwXIWgYI2S8/FL08SGrdPPk5I+mpxBptUyEpQz0z/dAdf5fnrJz1p48Dd2
+ /4Xv+wOVwUX9PGbGnlPKtUbDhu8IeAYr0JfihyssGA4F9Uh7aMl1Z+iqWtDIbNkfIeF+
+ wsbLy2zHq1YYy6J+Oj5o1DWjblwnQDKU1dydQACrsqKnXnmAF/L98nwEWkH2Vr6tz9q6
+ l8dg==
+X-Gm-Message-State: AOJu0YyhvYYNcuVwPulRPZCVWP602iZFKfESqnU+acsNg+/9mJaX4ks/
+ RGCFxJJLE1qdL+2pRKkCqe1sr0FOq21RTwe4HNsle3HgNZ4qm9hAW5OCqVKnmvhAeiLzKviCA6+
+ igJ1VBWFy97zeUbH3JvxVYkC/ZsRq0yOrxbQBUhs/mF8YxW3Inn6hnS4jnzSDM8zAGnzyQJhcqF
+ 4vK2xCjsYBP1YHZZy0BEU49uVJRejknQSJxpusY7BO
+X-Gm-Gg: AeBDieuqzWrJQwUUAQl9KemHLGjdk3P6ak0wSRfm2yLDNw+9liJEzfoAv/ilhl7uY2W
+ qnpQhErd1q2dLiTKGS6uyuNb4jsSxdXcuCUICVQ5S3mjxhzEbgToJD1TCAiGZQrOTqTX+BE0SpH
+ +D0NX0fKyajlLLXLb5oDGMRSVQo2XCKykDUOiQXpRKjIIrw5cqDwEMdW6SJ/FU7+7GAI83xxxWY
+ lvARhuifmd0KhAN5xhLLd2ryxs+jiC6kNz7mnb4A2D9gc5j3X2wVeWwtNP1ALKDdzQSU2lO9Uyp
+ b4M8jBkVy6PMOtzRUMTjmveFsyE1uDXU15aswgAUOb84KVWdJmdVBT9a8QYnB8nY5HjlUdSLMuS
+ 7wXuoqIe4a6rT3NtYz6szP25WZr7u0w4PWme2owUWqHBu5uzK6SZ2jtHcllEdaBrp38bAEaKcDk
+ hHHC2KJj3NbmPD1Bvj4QWTZ3GHRB0imUn3J/IDyAw=
+X-Received: by 2002:a05:600c:4e04:b0:48a:906a:9050 with SMTP id
+ 5b1f17b1804b1-48a98638cebmr218946325e9.10.1777963779296; 
+ Mon, 04 May 2026 23:49:39 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e04:b0:48a:906a:9050 with SMTP id
+ 5b1f17b1804b1-48a98638cebmr218945795e9.10.1777963778688; 
+ Mon, 04 May 2026 23:49:38 -0700 (PDT)
 Received: from [192.168.10.48] ([176.206.106.181])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45054b02f76sm2059488f8f.23.2026.05.04.23.49.26
+ 5b1f17b1804b1-48d14d1b4f6sm11598395e9.12.2026.05.04.23.49.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 May 2026 23:49:26 -0700 (PDT)
+ Mon, 04 May 2026 23:49:37 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: armbru@redhat.com
-Subject: [PATCH v2 3/7] json-streamer: reuse parser
-Date: Tue,  5 May 2026 08:49:15 +0200
-Message-ID: <20260505064919.177855-4-pbonzini@redhat.com>
+Subject: [PATCH v2 7/7] json-parser: add location to JSON parsing errors
+Date: Tue,  5 May 2026 08:49:19 +0200
+Message-ID: <20260505064919.177855-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260505064919.177855-1-pbonzini@redhat.com>
 References: <20260505064919.177855-1-pbonzini@redhat.com>
@@ -120,90 +120,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The push parser can be reset, so reuse it when the json-streamer
-detects a completed toplevel object.
+Now that all calls to parse_error have a token, add the line and column
+to the message.  As far as I can see the two important TODOs (better
+errors and better EOI handling) are done, and the others (token range
+information and "parsed size"?) do not really matter or are handled
+better by json-streamer.c.  So remove the list, which had sat unchanged
+since 2009.
+
+This needs some adjustments to provide a good x and y for error messages.
+First of all, they switch from zero-based to one-based, which is safe
+because they were both sitting unused.  Second, right now the x and y
+are those of the *last* character in the token.  Modify json-lexer.c to
+freeze tok->x and tok->y at the first character added to the GString.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/qobject/json-parser.h |  2 +-
- qobject/json-streamer.c       | 11 ++++-------
- 2 files changed, 5 insertions(+), 8 deletions(-)
+ include/qobject/json-parser.h |  1 +
+ qobject/json-lexer.c          | 11 +++++++----
+ qobject/json-parser.c         | 12 ++----------
+ 3 files changed, 10 insertions(+), 14 deletions(-)
 
 diff --git a/include/qobject/json-parser.h b/include/qobject/json-parser.h
-index 05346fa816b..4c3d89f751f 100644
+index 3479e637588..e078b36b2d5 100644
 --- a/include/qobject/json-parser.h
 +++ b/include/qobject/json-parser.h
-@@ -29,8 +29,8 @@ typedef struct JSONParserContext {
- typedef struct JSONMessageParser {
-     void (*emit)(void *opaque, QObject *json, Error *err);
-     void *opaque;
--    va_list *ap;
-     JSONLexer lexer;
-+    JSONParserContext parser;
-     int brace_count;
-     int bracket_count;
-     GQueue tokens;
-diff --git a/qobject/json-streamer.c b/qobject/json-streamer.c
-index 6c93e6fd78d..f3dfdcaea12 100644
---- a/qobject/json-streamer.c
-+++ b/qobject/json-streamer.c
-@@ -32,7 +32,6 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
-                                 JSONTokenType type, int x, int y)
- {
-     JSONMessageParser *parser = container_of(lexer, JSONMessageParser, lexer);
--    JSONParserContext ctxt;
-     QObject *json = NULL;
-     Error *err = NULL;
-     JSONToken *token;
-@@ -90,26 +89,23 @@ void json_message_process_token(JSONLexer *lexer, GString *input,
-         return;
+@@ -17,6 +17,7 @@
+ typedef struct JSONLexer {
+     int start_state, state;
+     GString *token;
++    int cur_x, cur_y;
+     int x, y;
+ } JSONLexer;
+ 
+diff --git a/qobject/json-lexer.c b/qobject/json-lexer.c
+index 51341d96e49..7753ba6c092 100644
+--- a/qobject/json-lexer.c
++++ b/qobject/json-lexer.c
+@@ -277,7 +277,8 @@ void json_lexer_init(JSONLexer *lexer, bool enable_interpolation)
+     lexer->start_state = lexer->state = enable_interpolation
+         ? IN_START_INTERP : IN_START;
+     lexer->token = g_string_sized_new(3);
+-    lexer->x = lexer->y = 0;
++    lexer->cur_x = lexer->cur_y = 1;
++    lexer->x = lexer->y = 1;
+ }
+ 
+ static void json_lexer_feed_char(JSONLexer *lexer, char ch, bool flush)
+@@ -285,10 +286,10 @@ static void json_lexer_feed_char(JSONLexer *lexer, char ch, bool flush)
+     int new_state;
+     bool char_consumed = false;
+ 
+-    lexer->x++;
++    lexer->cur_x++;
+     if (ch == '\n') {
+-        lexer->x = 0;
+-        lexer->y++;
++        lexer->cur_x = 1;
++        lexer->cur_y++;
      }
  
--    json_parser_init(&ctxt, parser->ap);
--
-     /* Process all tokens in the queue */
-     while (!g_queue_is_empty(&parser->tokens)) {
-         token = g_queue_pop_head(&parser->tokens);
--        json = json_parser_feed(&ctxt, token, &err);
-+        json = json_parser_feed(&parser->parser, token, &err);
-         g_free(token);
-         if (json || err) {
+     while (flush ? lexer->state != lexer->start_state : !char_consumed) {
+@@ -316,6 +317,8 @@ static void json_lexer_feed_char(JSONLexer *lexer, char ch, bool flush)
+         case IN_START:
+             g_string_truncate(lexer->token, 0);
+             new_state = lexer->start_state;
++            lexer->x = lexer->cur_x;
++            lexer->y = lexer->cur_y;
              break;
-         }
-     }
+         case JSON_ERROR:
+             json_message_process_token(lexer, lexer->token, JSON_ERROR,
+diff --git a/qobject/json-parser.c b/qobject/json-parser.c
+index 7bf1a81af86..1ae90434c97 100644
+--- a/qobject/json-parser.c
++++ b/qobject/json-parser.c
+@@ -126,15 +126,6 @@ typedef struct JSONParserStackEntry {
  
--    json_parser_destroy(&ctxt);
+ #define BUG_ON(cond) assert(!(cond))
+ 
+-/**
+- * TODO
+- *
+- * 0) make errors meaningful again
+- * 1) add geometry information to tokens
+- * 3) should we return a parsed size?
+- * 4) deal with premature EOI
+- */
 -
- out_emit:
-     parser->brace_count = 0;
-     parser->bracket_count = 0;
-     json_message_free_tokens(parser);
-     parser->token_size = 0;
-     parser->emit(parser->opaque, json, err);
-+    json_parser_reset(&parser->parser);
- }
- 
- void json_message_parser_init(JSONMessageParser *parser,
-@@ -119,12 +115,12 @@ void json_message_parser_init(JSONMessageParser *parser,
+ static inline JSONParserStackEntry *current_entry(JSONParserContext *ctxt)
  {
-     parser->emit = emit;
-     parser->opaque = opaque;
--    parser->ap = ap;
-     parser->brace_count = 0;
-     parser->bracket_count = 0;
-     g_queue_init(&parser->tokens);
-     parser->token_size = 0;
- 
-+    json_parser_init(&parser->parser, ap);
-     json_lexer_init(&parser->lexer, !!ap);
+     return g_queue_peek_tail(ctxt->stack);
+@@ -172,7 +163,8 @@ static void G_GNUC_PRINTF(3, 4) parse_error(JSONParserContext *ctxt,
+     va_start(ap, msg);
+     vsnprintf(message, sizeof(message), msg, ap);
+     va_end(ap);
+-    error_setg(&ctxt->err, "JSON parse error, %s", message);
++    error_setg(&ctxt->err, "JSON parse error at line %d, column %d, %s",
++               token->y, token->x, message);
  }
  
-@@ -144,4 +140,5 @@ void json_message_parser_destroy(JSONMessageParser *parser)
- {
-     json_lexer_destroy(&parser->lexer);
-     json_message_free_tokens(parser);
-+    json_parser_destroy(&parser->parser);
- }
+ static int cvt4hex(const char *s)
 -- 
 2.54.0
 
