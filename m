@@ -4,105 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7B23FF8855
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 20:29:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69429CD3427
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 20:29:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKMM1-0004Mh-Cn; Tue, 05 May 2026 16:26:53 -0400
+	id 1wKMMP-0004dL-5d; Tue, 05 May 2026 16:27:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKMLz-0004MG-Oz
- for qemu-devel@nongnu.org; Tue, 05 May 2026 16:26:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKMML-0004ZD-Hq
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 16:27:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKMLx-0002ZV-9e
- for qemu-devel@nongnu.org; Tue, 05 May 2026 16:26:51 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKMMJ-0002fS-3d
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 16:27:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778012808;
+ s=mimecast20190719; t=1778012830;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cuOw5wi626TK+F1PhtvnlgO8EB6xWCZ2vQsoxWAJJRo=;
- b=RY2cdt8G37nzNk4U+kKXf7kRWmpz5eV3026N2D/Ed8kyYbgG5vKdmCLpHQulTXmdfPApNs
- DOYvpYftSO43WBQOS9UuV5keth+sNoJ+qAxwuHU/izzJhvAK3VA2QVGw8xYelgUEccejEc
- TtMhA/jWyEut2A+uhEKPcb2GwaNMa2U=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UrdJvZlwcHz7aiZ2PAnafLIUZGKxAgtWgdAZUAhTr6E=;
+ b=RqzPbWI4+yvYqBeV1CCNFh7sAGO3h/Dy5EUljN9JD2GrZ5u6O5kCiRtc5U48xotNWg26Wa
+ BNhrmL5JeKUtm3JXTBV5gSHxo8RZ5V5BAtysQavSGowwC/cWfevkRDgY6EZ8rYo1H348XR
+ 7M5c7mXf6s/05XPRiXzvZxtbWjePf1E=
+Received: from mail-vs1-f71.google.com (mail-vs1-f71.google.com
+ [209.85.217.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-xlykXANvMiWEnLvXX42xqA-1; Tue, 05 May 2026 16:26:46 -0400
-X-MC-Unique: xlykXANvMiWEnLvXX42xqA-1
-X-Mimecast-MFC-AGG-ID: xlykXANvMiWEnLvXX42xqA_1778012806
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-8b552610488so80551246d6.0
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 13:26:46 -0700 (PDT)
+ us-mta-280-ax-VDKlwMP-XHDhM3CqKTg-1; Tue, 05 May 2026 16:27:08 -0400
+X-MC-Unique: ax-VDKlwMP-XHDhM3CqKTg-1
+X-Mimecast-MFC-AGG-ID: ax-VDKlwMP-XHDhM3CqKTg_1778012828
+Received: by mail-vs1-f71.google.com with SMTP id
+ ada2fe7eead31-62f30279e90so2381900137.0
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 13:27:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778012806; x=1778617606; darn=nongnu.org;
+ d=redhat.com; s=google; t=1778012828; x=1778617628; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cuOw5wi626TK+F1PhtvnlgO8EB6xWCZ2vQsoxWAJJRo=;
- b=mG2GN8G6WX9raPPUTRsh5YP+Cov9NaUiZoufpWhFXcLN8quN/RM4jwSv58GTv6iCTW
- WZe929D0852XLWDo7ZC+BuwkMZHHBKrqFkCgdT0zPo9L5ASJuGpc1RC6a7fsoGQG8IQZ
- 0QVDmL4kPtt+LmK6uUJVtat0YVl0mbKnPP1X+9O+TQ/udqJD/3Ympg6+jWjEwA7mfbt+
- U3iB9rwhX3TL2bjGxTTXGMGiNYtx6ZNXsXbt4hGrVcCJXKOJSifmCyLlvx1Lk0rdTtfq
- 2DhIJFCqnH/yjH81gQZ6sg76gaGDBQ24sSFRaLj5xhIOUeHmp7Iy2YzutibZY8zUxIv5
- jH3g==
+ bh=UrdJvZlwcHz7aiZ2PAnafLIUZGKxAgtWgdAZUAhTr6E=;
+ b=MURegrAvqCmj9MQn8VXohb2TiCgXTacphvWGB0r9ADB7UJE7q5PlwYeectXZLrX0cg
+ kh5KoXwz+YWfZU3gcw6QYAKT/JLyiXl18JpzPrJ4Ijua8Epy8ZRZFrXE/gNAejWXT/7a
+ 9IvDP92sgOKwzrVkf17owlkxQC6CfX0Et1EANWw+wUTbsKcNA0aQ8zb0Xx8OitsXYkZL
+ wz8TDerFdN9Y5UCZLGqhgeLrjOaYA7u/gvQ0lv6jGYYFUFB9y1cHNQhjIWterkKnOJUw
+ o7/Fj2HEqYqyy7qxgF6TBpbCOZ6SA7WK2RKGR25gOlXDd0witzYJTVxf7gyOR5VuCjci
+ Xe6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778012806; x=1778617606;
+ d=1e100.net; s=20251104; t=1778012828; x=1778617628;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cuOw5wi626TK+F1PhtvnlgO8EB6xWCZ2vQsoxWAJJRo=;
- b=HNTmnXpQWJn3UgiesMqEg8N+sF95ZoNYTaZ3rgZ0OKAZRJfe2gm8YkIX8zK+NMrciQ
- 1imDLa9a3DoK93Vm4oV+ZnYO0S4iYpmSaIlOSU3SKCxLmzN/CXbrZFpmaPxz2/fex+m4
- 5xXDKk6jb+/9RM4+g8D5+fRdXhFgItMQiPXJPEnEA9AVgta4wz48qnOO3m67oZ/LDK+/
- 2VPMoq0oiedbIzXq6cRxClkc5I9u1RCMORjfWYSloE6jLNezTB4S9kzrIlbRVfkw543T
- JZEdG79YqusUCa1cwPAnLu5uaymNnQfE+F4++ZNLRJcrk8p3V9Ws5pXDT3OlADn7y6wG
- MhhQ==
-X-Gm-Message-State: AOJu0Yw0da5O33hlR9T6mdYcqOckZ/6kdA7sziz7rVq4Z8XTbnv+OBph
- M2xB3DpHBnkkTiXuJoPZMp8CIiqRyJfi9BPoLKQtcP+jpGMDUxp0Z61jPHs9Sj2EBOAZKTPBOCO
- eO2XelpjLR5gjgsjxvrVlMDCvrrkQKDcpdpgbqSQo/RRkC+yBbTjzFegDPcoWJBSFzldYf3utfU
- HlmQugHg8+kD3B2a1PodUbi0YRytv98V6FSjmzPw==
-X-Gm-Gg: AeBDiesiXnZEmA2w0V0IcRhIl7g5ZDuSTTo24QvIO2THcaIHspqRshdnh58vT/fDBpp
- pJx356LYnMWi5k2Tct4xbDC7mwE8e7q9H1J4mTR0q0aMvVBbiddQ5tsMiMkoTbJCFNQWETvInFD
- /lyGU1F0syUu+s7cWXjFFgxobEc5j78mtgiagupVzTP5NIS+kqNJ/cyxDk9uG0AqUkrat8rf0O4
- jeQ7JBOpxEthercy+ub4vb0P+tp020KAL3vo2tUOGPxItr4fjh0y/esJBO6mVZQxRif7zGWI7/L
- GhZEkeb8u1sY4U7ddesY7hVk0PMVALMhXc335bfIQVUabPm0AcK/vNe3YENsIPCwM9MmwnCWXwS
- 6MTDW6qy27OynJYvYDCgMJ6tRjXgXYY34ewg+5/pPo83Mtw5rmov7gUA=
-X-Received: by 2002:a05:6214:19c6:b0:8ae:62aa:665a with SMTP id
- 6a1803df08f44-8bc442dbca6mr4401546d6.28.1778012805746; 
- Tue, 05 May 2026 13:26:45 -0700 (PDT)
-X-Received: by 2002:a05:6214:19c6:b0:8ae:62aa:665a with SMTP id
- 6a1803df08f44-8bc442dbca6mr4400786d6.28.1778012805050; 
- Tue, 05 May 2026 13:26:45 -0700 (PDT)
+ bh=UrdJvZlwcHz7aiZ2PAnafLIUZGKxAgtWgdAZUAhTr6E=;
+ b=UNaxbrRKLkINoPUcAaEWU0rQBlwSWgQrIpzi+107LvpY083n9nKHc1JdjhQfZz9L5A
+ tDCd+ZkT/pLlrGmciRToOSaIVsk+1BVS7hpJtei/j5pn4tfflFFcJh5AAYZVb9IU2tzc
+ BHda/+8w6O/NK5K2ZAORYwk0P3Q04l6aWJNPYcHIwL4EuH0D2LkJZ2til14axeRxSLCz
+ fhcT4L18ajWDwfam3fBBH6hU3vuE0/DDM5YgQy0k0VqeEAZT5eLm27di9EkpxhU8D45U
+ C4JLe4pyQT2IkH+uqhlG8CbKovAP8XZmX6Y5yONDzzeRNkRW2I+0fBmtd9yrvwkSATKd
+ jdaw==
+X-Gm-Message-State: AOJu0YxhbBcLa9HrluHNxrKHZg2G0Q8nVQzIqFc54k2haHa0bH188nTO
+ zjYT3LNaYdHmXI2gNvf8whJ19UnSGzHvYAV7e/1TbMSJ5apXIju23VI/VDEWPlIVXF20DNb9zS1
+ N4XKlSygY1n4by68iFpxOw2CGvo2k9ofMKVOhOA0q76/1Cj4JxuDOVxBjicAuG4uOT7L6B5a4BC
+ 8DqT1GyiwEl9DSV4fyUobywAR45tNs7pHTFyXbFA==
+X-Gm-Gg: AeBDietFUuHHi1EP9VEAA2eoBWRcXRAsvxAX2+MNZpMS9gPmvgYf/RnSHP2sbvEioiZ
+ FIymJicA+1npq/JCFhW0rg/331V6ojYOz2sNv3zP2MOPKuUhUFDSECsoJFujFKVeC+RprbWqxSi
+ FT41iMZUDOBbcmDX11GvSMSUpA92aaoruTsP05OUL8I3ieaUL+k00H2emvFw5vhF3rGrjgJPNUw
+ 9KodJ8O5WR9fdvkeHHYVjM30BmkYs7mEgvdbbTyYbB3dqS7X4D3Ta9auEdF/IwRzGOTz16yzsUT
+ U9KPTNbxQEYp4IJdpgB/Bs2krMGcwseIpmgNvGTMOPQRvunb5eD4g3IBzMnahdYrWpqvXmuI93i
+ TLRjl84itVPm2oBgieyXLmHWduLVQDD66cNWGUwPW2Buf/3sqyIPrpPo=
+X-Received: by 2002:a05:6102:374d:b0:611:e0c2:1604 with SMTP id
+ ada2fe7eead31-630f8fcf085mr136593137.19.1778012827446; 
+ Tue, 05 May 2026 13:27:07 -0700 (PDT)
+X-Received: by 2002:a05:6102:374d:b0:611:e0c2:1604 with SMTP id
+ ada2fe7eead31-630f8fcf085mr136396137.19.1778012825823; 
+ Tue, 05 May 2026 13:27:05 -0700 (PDT)
 Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b53c6b8123sm155283806d6.35.2026.05.05.13.26.44
+ 6a1803df08f44-8b53c6b8123sm155283806d6.35.2026.05.05.13.27.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 May 2026 13:26:44 -0700 (PDT)
+ Tue, 05 May 2026 13:27:05 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, Pranav Tyagi <prtyagi@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>
-Subject: [PULL 01/23] migration: Fix blocking in POSTCOPY_DEVICE during
- package load
-Date: Tue,  5 May 2026 16:26:18 -0400
-Message-ID: <20260505202640.1011006-2-peterx@redhat.com>
+ Peter Xu <peterx@redhat.com>, CJ Chen <cjchen@igel.co.jp>,
+ Tomoyuki Hirose <hrstmyk811m@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 19/23] hw/riscv: iommu-trap: remove .impl.unaligned = true
+Date: Tue,  5 May 2026 16:26:36 -0400
+Message-ID: <20260505202640.1011006-20-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260505202640.1011006-1-peterx@redhat.com>
 References: <20260505202640.1011006-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,144 +123,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pranav Tyagi <prtyagi@redhat.com>
+From: CJ Chen <cjchen@igel.co.jp>
 
-The package_loaded event is not set in case MIG_RP_MSG_PONG does not
-arrive on the source from the destination in the return path thread. The
-migration thread would then be blocked waiting for package_loaded event
-indefinitely in POSTCOPY_DEVICE state. Where as, in such a condition the
-source VM can safely resume as the destination has not yet started. The
-pong message can get lost in case of a network failure or destination
-crash before sending the pong.
+The riscv_iommu_trap_ops MemoryRegionOps specifies that
+unaligned accesses are not valid for this device but that
+it does implement them. This doesn't make much sense, and
+we want to add an assertion that registered MRs don't specify
+this invalid combination of settings.
 
-This patch removes the package_loaded event and uses rp_sem, instead of
-kicking multiple events. The error is detected in case of network
-failure or destination crash and rp_sem is set in the out path of the
-return path thread. This will kick the migration thread out from a
-condition of indefinitely waiting for rp_sem. The migration thread then
-fails early and breaks from the migration loop to resume the vm on the
-source side.
+Drop .impl.unaligned = true, with no behaviour change.
 
-Fixes: 7b842fe354c6 ("migration: Introduce POSTCOPY_DEVICE state")
-Signed-off-by: Pranav Tyagi <prtyagi@redhat.com>
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Link: https://lore.kernel.org/r/20260423094438.43556-1-prtyagi@redhat.com
+Signed-off-by: CJ Chen <cjchen@igel.co.jp>
+Acked-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
+Reported-by: Tomoyuki Hirose <hrstmyk811m@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+[PMM: reworded commit message]
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/r/20260428093339.2087081-2-peter.maydell@linaro.org
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.h |  1 -
- migration/migration.c | 48 ++++++++++++++++++++++++++++---------------
- 2 files changed, 31 insertions(+), 18 deletions(-)
+ hw/riscv/riscv-iommu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/migration/migration.h b/migration/migration.h
-index b6888daced..9081e6a612 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -512,7 +512,6 @@ struct MigrationState {
-     bool rdma_migration;
- 
-     bool postcopy_package_loaded;
--    QemuEvent postcopy_package_loaded_event;
- 
-     GSource *hup_source;
- 
-diff --git a/migration/migration.c b/migration/migration.c
-index 5c9aaa6e58..6e4988a590 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1661,7 +1661,6 @@ int migrate_init(MigrationState *s, Error **errp)
-     migration_reset_vfio_bytes_transferred();
- 
-     s->postcopy_package_loaded = false;
--    qemu_event_reset(&s->postcopy_package_loaded_event);
- 
-     return 0;
- }
-@@ -2317,7 +2316,7 @@ static void *source_return_path_thread(void *opaque)
-             if (tmp32 == QEMU_VM_PING_PACKAGED_LOADED) {
-                 trace_source_return_path_thread_postcopy_package_loaded();
-                 ms->postcopy_package_loaded = true;
--                qemu_event_set(&ms->postcopy_package_loaded_event);
-+                migration_rp_kick(ms);
-             }
-             break;
- 
-@@ -2388,16 +2387,21 @@ out:
-         trace_source_return_path_thread_bad_end();
-     }
- 
--    if (ms->state == MIGRATION_STATUS_POSTCOPY_RECOVER) {
-+    if (ms->state == MIGRATION_STATUS_POSTCOPY_RECOVER ||
-+        ms->state == MIGRATION_STATUS_POSTCOPY_DEVICE) {
-         /*
--         * this will be extremely unlikely: that we got yet another network
--         * issue during recovering of the 1st network failure.. during this
--         * period the main migration thread can be waiting on rp_sem for
--         * this thread to sync with the other side.
-+         * The migration thread can get stuck waiting for rp_sem if the
-+         * return path fails to sync with the destination. This handles
-+         * two specific cases:
-          *
--         * When this happens, explicitly kick the migration thread out of
--         * RECOVER stage and back to PAUSED, so the admin can try
--         * everything again.
-+         * POSTCOPY_RECOVER: A failure occurs during a recovery attempt.
-+         * We kick the migration thread back to PAUSED so the admin can
-+         * retry.
-+         *
-+         * POSTCOPY_DEVICE: The MIG_RP_MSG_PONG is lost due to a
-+         * network failure or destination crash. We kick the migration
-+         * thread out of its wait so it can fail the migration and safely
-+         * resume the VM on the source.
-          */
-         migration_rp_kick(ms);
-     }
-@@ -3226,12 +3230,24 @@ static MigIterateState migration_iteration_run(MigrationState *s)
-         if (s->state == MIGRATION_STATUS_POSTCOPY_DEVICE &&
-             (s->postcopy_package_loaded || complete_ready)) {
-             /*
--             * If package has been loaded, the event is set and we will
--             * immediatelly transition to POSTCOPY_ACTIVE. If we are ready for
--             * completion, we need to wait for destination to load the postcopy
--             * package before actually completing.
-+             * We will immediately transition to POSTCOPY_ACTIVE.
-+             * If we are ready for completion, we need to wait for
-+             * destination to load the postcopy package before actually
-+             * completing.
-              */
--            qemu_event_wait(&s->postcopy_package_loaded_event);
-+            while (!s->postcopy_package_loaded) {
-+                if (migration_rp_wait(s)) {
-+                    /*
-+                     * Error happened. Migration thread was stuck waiting in
-+                     * POSTCOPY_DEVICE for rp_sem which was never set.
-+                     */
-+                    migrate_set_state(&s->state,
-+                                    MIGRATION_STATUS_POSTCOPY_DEVICE,
-+                                    MIGRATION_STATUS_FAILING);
-+                    return MIG_ITERATE_BREAK;
-+                }
-+            }
-+            /* Acknowledgement received from the destination */
-             migrate_set_state(&s->state, MIGRATION_STATUS_POSTCOPY_DEVICE,
-                               MIGRATION_STATUS_POSTCOPY_ACTIVE);
-         }
-@@ -3863,7 +3879,6 @@ static void migration_instance_finalize(Object *obj)
-     qemu_sem_destroy(&ms->rp_state.rp_pong_acks);
-     qemu_sem_destroy(&ms->postcopy_qemufile_src_sem);
-     error_free(ms->error);
--    qemu_event_destroy(&ms->postcopy_package_loaded_event);
- }
- 
- static void migration_instance_init(Object *obj)
-@@ -3885,7 +3900,6 @@ static void migration_instance_init(Object *obj)
-     qemu_sem_init(&ms->wait_unplug_sem, 0);
-     qemu_sem_init(&ms->postcopy_qemufile_src_sem, 0);
-     qemu_mutex_init(&ms->qemu_file_lock);
--    qemu_event_init(&ms->postcopy_package_loaded_event, 0);
- }
- 
- /*
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 7ba3240552..2b40ab2ce0 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -2434,7 +2434,6 @@ static const MemoryRegionOps riscv_iommu_trap_ops = {
+     .impl = {
+         .min_access_size = 4,
+         .max_access_size = 8,
+-        .unaligned = true,
+     },
+     .valid = {
+         .min_access_size = 4,
 -- 
 2.53.0
 
