@@ -4,99 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F576FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 08:06:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59514CD342F
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 08:15:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKAnL-0008Ir-1s; Tue, 05 May 2026 04:06:19 -0400
+	id 1wKAvg-0001GB-Ub; Tue, 05 May 2026 04:14:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKAnJ-0008I3-Ab
- for qemu-devel@nongnu.org; Tue, 05 May 2026 04:06:17 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKAnH-00025g-Os
- for qemu-devel@nongnu.org; Tue, 05 May 2026 04:06:17 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-488b0046078so41679115e9.1
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 01:06:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777968373; x=1778573173; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=43D0rSs772N28MZUYjSQoo7KjBWj5Qvya9gKSJ3ZpcY=;
- b=oAI3mXNBWbah2gT0Gbc0buoWyPZuSWFxJ01MmZWxTRX9YCkP57yihrx+no8xJsJS4r
- 0KGoZ5y4FAnlgl96a0KLNrNFh/NN+xZKRdg79gBk11efXs56P71mQupir4hcWFOZ+0hm
- sTEkCuyLEZf1ynLlryrh4iZ9qe+TwE+rovOixxQ1+0SCiPnlic1b6IBZhX+8/rWrj4B7
- EAiy4AxkrhcRaGahmVBbgX51Xcl+kNKSMSywbqJ2KnF/9hKPxIgAkCwauSALQx1IVUCF
- okKsK9wPcgmReto5JT5ZTFUU8TdCpBCEg0jDcF2BFBGj86YgtXwbbJ8uZS1/TeMzEeWy
- wz5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777968373; x=1778573173;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=43D0rSs772N28MZUYjSQoo7KjBWj5Qvya9gKSJ3ZpcY=;
- b=q13NgjfWZSdtLEhZZ/qS33BGQkMRhII/vb7sxHA5j83VB/ZjR1+Rrp49+GwoahUblg
- bhmjXxL2knZ1R1EfRtnVFdNbJHpJNM2qSOZ8snKLhzMEirhoZq2wV1kPTKkbRVB6n0m6
- dC9U4lrIqOiKBx4GYsi2Lw6DfM6JMGW6D7Rv1MkTenlrH3xDMwV3OBAPrG+t3VjpA67y
- eyoVqujQ5RJf1JwOD/5XQ3n6o1uNxpBU3zW/PlsgkdLzHZ7K66JAQ9iLP8AkK46kYhEy
- JgDi0dqcZbUSYO/ZTGNP7eQyEOBhWjOPXo4B5NmJNEuaTCV6QGiuz0hg5D5NgYVjOpWq
- LfAA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9HBFUAVcIv8vU/fWFQESa2i4FkH0rDaZaoTzGtngptRd11kofx+cldIgEo7ILV2idf6EjCbfM8yvdz@nongnu.org
-X-Gm-Message-State: AOJu0YwdUz3IeemtbLBC4XziXFHfAdms4HsYQZSx8iKh0vxOZUHdKAWt
- beoNVBBPUvgnwaUGe1V2u31W2hlFYED09arg0BW+ZU4YXN6jTE/b1DRsco0A+7KTAaI=
-X-Gm-Gg: AeBDievz7bQZYvQDxyTDubvi0sj4MeActlyxGuht0Zti46fFW4FbcKoxSrnVj154PCf
- 89MlOsAEfRSoe+AdGAQ4ZLHfzjQXV35DFl711St1aJoeqaGnV2bvnEbQZ9fuhyHYRYdkn1esACO
- 89tL0gY6jyOiFFrfYT8MlvMnUU1Rl4wybxRETarlmzr3Z9o3zfq+Mu1BrrzLiMTZFUBpohrt0Qg
- Hx1laIR0NwA3joz6BvvwC9mbN82EFyBGB28LeAu5ohjodi4UkzDw6iYHk1k4cZOzN1a6lJtn8iy
- afMxCz4+FmQ0TEzSEIgM9tJpPdRMXYxExUslzvkfT38BKeIbwcPGPF3+ugGIYONNFfFQVmKRpkg
- U3YDQVEuYKGR1lG9uxD8ksaonPq0H+J678yCY+qzT9Gi0xp5pJ5yR7IIhw18DirnqwYpLXLaqat
- bKQQUK+hWGEACRkq2CYwhb7S06GVL3TNgoSdXoxrqQI9urh8KWCH4oyvD5HHpIO+RrpA==
-X-Received: by 2002:a05:600c:3549:b0:48a:93d2:60d2 with SMTP id
- 5b1f17b1804b1-48a980fd5d4mr199443355e9.0.1777968373146; 
- Tue, 05 May 2026 01:06:13 -0700 (PDT)
-Received: from [10.115.35.66] (95.170.88.92.rev.sfr.net. [92.88.170.95])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8eb69698sm593535185e9.1.2026.05.05.01.06.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 May 2026 01:06:12 -0700 (PDT)
-Message-ID: <c20e1c76-a9aa-400b-8ad7-129347c1b9c0@linaro.org>
-Date: Tue, 5 May 2026 10:06:08 +0200
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1wKAve-0001FR-NK
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 04:14:54 -0400
+Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
+ ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1wKAvd-0006HE-5y
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 04:14:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=sWrEQ0mN4GGAB+AlucBZgcz2UHrFsT7Ep2YOPyPdXYOPyKcVzPLPwp/aru81isIs1NevI91otFYXeDh8gMlxZGJSr1QIiardcMALo7VLAtPPokx0SrDWBP0GpSurXxcSnYkKt9vHf8sHeDhWaEW6UWrWvUA9WK8Z/LBwC2i+LUZL9Su2wl4gUl7m2a0XK1z0jvmheSt36Jzznwha6dushXgBLkpEwlqDbdoEEN7cX1orkwIYOxDXoA4SHJUxn+C8s9Cjm/zfgFxQ94OPkLRkmymQDahijPRUPY7VSgnGrH70RI5Ga/pdDpZ4pzGr6ot01iyBMWsN38Ag4LNTEDB2JQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=CovMgv6/zzbKydeU86gWST+1tD7jwhDGYRj6zfO5ugc=;
+ b=U0SPB7WVQG1/6CpW2ZA70aDsJJyXb/iArM9B7HcaV0UQvMW6U3hnCCNG6HbltNtLeylzRciot2KsMmXz0Y3AW+8c6nRLe9eLm0mq02ffkG7vrYXBXyOBtqWlKbqcrdppDia3z+Ra7tnTeY/C/Egse5bIuWrBnrt2p57uKQC1Srm/fyojZQRj1Kp5LToIRzxXyIVM/DBiTMdmOe/5v5nUOtP51b7m+tQp5DbM6FOhIsKBGiW6Iez0rq3b3VgVuC1aEi8obIgcW5K8VlVAOhI3NgQxrvsE/S13AIfQTu2TeTdEwfOqh714XD5RkSiRusXmvRGg5fOiM7czACXCwMJiWg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CovMgv6/zzbKydeU86gWST+1tD7jwhDGYRj6zfO5ugc=;
+ b=GaxRKHfLVnxkDVtRwIPTyt5KPfyNBWaQNog8wUL2E9wEgW0hzYi6jVGXoYXK+SmscZbPvVJpEBGkZuuSJZBIlB48vfcDs0Sx6w860WJ4hP+pfnco/+xUUnZrpdDwWjuAvZIgaWQdYRmsbvDwrFGKlGb8LFGzIos3FgJQbYCZwdJ4oOxfO9g2nEMK3XjHoa/e7Vz2/wYkKmYuBDjKaeD8Gc4UExy/nT6dSF1vQDfQ0ZifjWsW0F7lFyLymXv5CH+YhNdFZ21My3SwxDLU/FbkpLJP7k1pVql+CskmU2Gk0Z3xAxWaaoEQT0q1b6XuoogDRDyn9WLlFi9OBEvbWC1CFA==
+Received: from LV3P220CA0002.NAMP220.PROD.OUTLOOK.COM (2603:10b6:408:234::15)
+ by DS7PR12MB9474.namprd12.prod.outlook.com (2603:10b6:8:252::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.25; Tue, 5 May
+ 2026 08:14:46 +0000
+Received: from BN1PEPF00004685.namprd03.prod.outlook.com
+ (2603:10b6:408:234:cafe::1e) by LV3P220CA0002.outlook.office365.com
+ (2603:10b6:408:234::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9870.25 via Frontend Transport; Tue,
+ 5 May 2026 08:14:46 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BN1PEPF00004685.mail.protection.outlook.com (10.167.243.86) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9891.9 via Frontend Transport; Tue, 5 May 2026 08:14:45 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 5 May
+ 2026 01:14:32 -0700
+Received: from rnnvmail203.nvidia.com (10.129.68.9) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Tue, 5 May
+ 2026 01:14:31 -0700
+Received: from vdi.nvidia.com (10.127.8.9) by mail.nvidia.com (10.129.68.9)
+ with Microsoft SMTP Server id 15.2.2562.20 via Frontend Transport; Tue, 5 May
+ 2026 01:14:28 -0700
+From: Avihai Horon <avihaih@nvidia.com>
+To: <qemu-devel@nongnu.org>
+CC: Alex Williamson <alex@shazbot.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?=
+ <clg@redhat.com>, Peter Xu <peterx@redhat.com>, Fabiano Rosas
+ <farosas@suse.de>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Zhao Liu
+ <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck
+ <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Maor Gottlieb
+ <maorg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
+Subject: [PATCH 01/14] scripts/update-linux-headers: Add typelimits.h
+Date: Tue, 5 May 2026 11:14:10 +0300
+Message-ID: <20260505081423.28326-2-avihaih@nvidia.com>
+X-Mailer: git-send-email 2.21.3
+In-Reply-To: <20260505081423.28326-1-avihaih@nvidia.com>
+References: <20260505081423.28326-1-avihaih@nvidia.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 04/13] hw/riscv/boot: Provide a simple halting payload
-Content-Language: en-US
-To: Nicholas Piggin <npiggin@gmail.com>,
- Alistair Francis <alistair23@gmail.com>
-Cc: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Chao Liu <chao.liu.zevorn@gmail.com>, Michael Ellerman <mpe@kernel.org>,
- Joel Stanley <jms@oss.tenstorrent.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
-References: <20260425131721.932250-1-joel@jms.id.au>
- <20260425131721.932250-5-joel@jms.id.au>
- <CAKmqyKNiJ9hGQVPsq8pEz8ydEWydW=umT4XwWanwk-etADgf_Q@mail.gmail.com>
- <afkvnrQveMGC1lcE@lima-default>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <afkvnrQveMGC1lcE@lima-default>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN1PEPF00004685:EE_|DS7PR12MB9474:EE_
+X-MS-Office365-Filtering-Correlation-Id: 16502d46-fd87-46b4-9931-08deaa7e5e80
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|36860700016|7416014|82310400026|18002099003|22082099003|56012099003;
+X-Microsoft-Antispam-Message-Info: M5nwT/rJCtbvjMVFznJHDT+owRkIrk5h+aCA/fWz4YLk6mRspJNck4DZ57N/2Uutk4Knt8Ca5NHdvRFjzyrNEP+FtIqSyMC9ylncbftzAzbw9p55bMX9InZM/KgDQ8iYGstNLqPBGFFCIf3pDUgzClmx9Ts5JkidMUNJs9Nr5/Pp8b5rupxRiKfP/FIgcMxDxMshB1eKQJMHGg7omIg10uxJe8V/W8Cna2L0ZUe2Nb1YxDcBKBqwOh9KIfbUziSpHIKl8/iS78g0bDGCKibwjBLZZgW+kBcylbezxvozGApApas3gMpDLlzMR7YEVYEE9AVJz8TqGMmouyG2d0SJm0pZnpMWmLdFRYrJMYkKaxkW3/lr9d8KBOvQdZW2lofn//7K/lV70q3XAlmymJFTmBQzvkHo/gyGKeE69K4h1RX2+eJlwRpGSAw/tWM08yQkIi2K0p0U+oapP9gsju4B5GQP3je0fVAHm3qwrHpfODTRmQMGHhlGvLQAcxGBn+3oSCohbnl0dpJWr6PCtiIAG1BOF9xmkqi2mjCDWX7dvl8zQt0E0cgKFCh3AtgSiSGAD7dF9+EVmeFj5myp1m00NDHKQOtdK/SiVxSNjcWS4QKO/+nQADUSbby4fcLiSlmDKfDqMIn/7b3CDhF5u6WskbKrp4IyJgGbD9fP0Gf9APihjVlytNZu2siMnrv1Jnm40MkB4w3xqSqJHy1n8DF4qC3HNYUFmuFkBICb9JGe0R4=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(36860700016)(7416014)(82310400026)(18002099003)(22082099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: TFBDteq6/gy8juS6SjBoMJtkG/qjubEF3Wv58Z8jNYIlqNEpts91VsGd3fkYB9I5ZL6l39fn4Zs2fmumcIxUyT4IZbIgwEOLhwK2xRF+/x/zg3VtUfuEdkEaClwZcAGIloPBuwkZ42UEqJBOGldTVc5nFcXyOiHDaq2uoSaukxwOQmWJFBEe/IrVr3kYOPZ51LOfHQkv1NAtDcp0KkyCQzvDAcBv040NJXkEuL2Y/Pl8eC2GZu9Gxhoft6Cjn3dcmvZ7nIp9Fpvg59Y3HwPYMibv9FdpX9bdgTgaWTd2das+osnNtlVdQXVXM6OYzahePGrqJd8tAadwyjywjkheXo35DAogpVajXpAOe5uT8DX3+5v6xbVpi12qn7Uev4FB8eJnpF8mhtl+lFtVFkJgj7blOrjxgrTPZZ0BpJ9uC2vxKHvZuqCP1zJwesCVp32Z
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2026 08:14:45.9099 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 16502d46-fd87-46b4-9931-08deaa7e5e80
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00004685.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB9474
+Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+ envelope-from=avihaih@nvidia.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,33 +138,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/26 01:52, Nicholas Piggin wrote:
-> On Thu, Apr 30, 2026 at 09:35:33AM +1000, Alistair Francis wrote:
->> On Sat, Apr 25, 2026 at 11:21 PM Joel Stanley <joel@jms.id.au> wrote:
->>>
->>> From: Nicholas Piggin <npiggin@gmail.com>
->>>
->>> OpenSBI hangs before any console output if the domain init code sees the
->>> next stage is not in an executable region.
->>
->> That's an OpenSBI bug though and needs to be fixed there and not just
->> hacked around in QEMU.
-> 
-> You're right of course. OpenSBI has other no-output crash cases in early
-> boot code (not just this), so it would be nice to fix properly. It wasn't
-> trivial to fix (IIRC because serial device is not detected before a
-> bunch of the early failures), I have some hacks, but I need to go back
-> and come up with something nicer.
-> 
-> This is only related to Atlantis by coincidence of the physical address
-> map. It can be dropped out of the series.
+Upstream Linux added include/uapi/linux/typelimits.h and includes it
+from ethtool.h [1][2].
 
-Meanwhile add it in hw/riscv/tt_atlantis.c:
+Teach update-linux-headers.sh to install that header into
+standard-headers to be able to update kernel headers to versions that
+include the above changes.
 
-   static void
-   tt_atlantis_setup_opensbi_halting_payload_fixup(RISCVBootInfo *info,
-                                                   hwaddr addr)
-   { ... }
+[1] ca9d74eb5f6a ("uapi: add INT_MAX and INT_MIN constants")
+[2] a8a11e5237ae ("ethtool: uapi: Use UAPI definition of INT_MAX")
 
-and call in tt_atlantis_machine_init()!
+Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+---
+ scripts/update-linux-headers.sh | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
+index 386d7a38e7..da367acee7 100755
+--- a/scripts/update-linux-headers.sh
++++ b/scripts/update-linux-headers.sh
+@@ -60,6 +60,7 @@ cp_portable() {
+                                      -e 'drm.h' \
+                                      -e 'limits' \
+                                      -e 'linux/const' \
++                                     -e 'linux/typelimits' \
+                                      -e 'linux/kernel' \
+                                      -e 'linux/sysinfo' \
+                                      -e 'asm/setup_data.h' \
+@@ -250,6 +251,7 @@ for i in "$hdrdir"/include/linux/*virtio*.h \
+          "$hdrdir/include/linux/pci_regs.h" \
+          "$hdrdir/include/linux/ethtool.h" \
+          "$hdrdir/include/linux/const.h" \
++         "$hdrdir/include/linux/typelimits.h" \
+          "$hdrdir/include/linux/kernel.h" \
+          "$hdrdir/include/linux/kvm_para.h" \
+          "$hdrdir/include/linux/vhost_types.h" \
+-- 
+2.40.1
+
 
