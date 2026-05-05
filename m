@@ -4,108 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6BD1CD3427
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 20:23:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DB9ECD3427
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 20:23:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKMFr-0001Fl-1y; Tue, 05 May 2026 16:20:31 -0400
+	id 1wKMH9-0004vF-Oy; Tue, 05 May 2026 16:21:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wKMFh-00010f-WF; Tue, 05 May 2026 16:20:22 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wKMFg-0000Kt-CR; Tue, 05 May 2026 16:20:21 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 645F4lOO2204349; Tue, 5 May 2026 20:19:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=Bgyq104mrphet7nAN
- WLHEuSdqvbcalxtebGqiXGB5Qk=; b=bpNP4kTdLvPNun6nfArXSc9n11FlpCjN5
- 3Gn4v0uGZ98u5cVKW0xhD0CIZrX2xS1GU0+pHt3VtYpSGKReZu5VSTjh2Fo3oUpZ
- dvRaa2UWQ0KZxJM5BBNWbm8p2zHQHz8zIt7tigTpqwQX2m/EQKA2kZpaoU51Sqve
- ZE1nxI/Cxw7bxJcW+c/b9poR852uxm+GHYEpKjeRwVPwlybuHsoMDxbYRaVKN4KA
- TuWKmpADYzTQ2fdt2mP3kfTBB18iKaIUdU67Cm+Tlny85A8qiKhVvx6/QFUKtkNq
- xS2o3rGMrqcN9vxa8Vvq/4Uns/1Sd6bSx8GyqQI86DH2NKADx2vcQ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9w6d6rp-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 May 2026 20:19:56 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 645K9Qra015552;
- Tue, 5 May 2026 20:19:55 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwx9yb272-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 05 May 2026 20:19:55 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 645KJsA327132646
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 5 May 2026 20:19:55 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A1A9C58059;
- Tue,  5 May 2026 20:19:54 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0F3A05805C;
- Tue,  5 May 2026 20:19:53 +0000 (GMT)
-Received: from fedora-workstation.pok.ibm.com (unknown [9.12.79.241])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue,  5 May 2026 20:19:52 +0000 (GMT)
-From: Zhuoying Cai <zycai@linux.ibm.com>
-To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
- richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
- jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
- alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-Subject: [PATCH v11 26/32] hw/s390x/ipl: Set IPIB flags for secure IPL
-Date: Tue,  5 May 2026 16:18:58 -0400
-Message-ID: <20260505201905.997996-27-zycai@linux.ibm.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260505201905.997996-1-zycai@linux.ibm.com>
-References: <20260505201905.997996-1-zycai@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wKMGw-0004mU-9Q
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 16:21:38 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wKMGu-0001BR-7j
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 16:21:37 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488a9033b2cso50402685e9.2
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 13:21:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1778012494; x=1778617294; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZZFpayBCF23pbHHomjkeBRNYj0p8hYI8pLcOn17qbvs=;
+ b=HGmo5MYmRoI5n3SpTWSiD6nr6FNtqiaWq4SAaFyUfAKHnzJeOS41GgL7R0m9hJkxbd
+ vB9+xP8XreH+UO6DOqLZrR/xeiL0nhkn8ZyCW3yGciKR7IeO66Hw+astGznbFhuo5ysS
+ lMkCTPwEcWdruyDnX69wbFDg3qn53CeEJMzoZDApjoFhmKy7uTGxvtDLrwkxujkKGDuH
+ zjMYn4AP8HxG5aH33x80H+WvORItuyQHSyf4vzHkEhiTKvcX4Uq8SQjdi0ApJPSLdQbC
+ J1087+Ohs4p8tjyBgJIdCf8iTDwQ6hUnsmiOQLaSbjV8TI/7B9bR3zdVdqjXx752KREF
+ gi7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778012494; x=1778617294;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ZZFpayBCF23pbHHomjkeBRNYj0p8hYI8pLcOn17qbvs=;
+ b=iDmyr9qcGk4ZzdLt16cMmAn3AiGs/rFBPtKvDT4GiY3DD+NrA4ZX6u3mm1SGjUpaeN
+ WtkuzyfrYtHRtW5GhnRRMeK69R6Gk/M/j6ambCWXDQwfOcsojBKyARN112kk3Q16Pkbw
+ dOskMB21/k5VcDaJYUHMaz53lvlxkHbMaAQwB8eOl4y5pICHkufwkEQMVXEEz1K5G4t+
+ gWEiGdwmE8VWNecYVqvCl9Ml9yCrDTajj5WwNu7pylXYR4ERs1B5TeZ5r8lHVAtcSwY4
+ Xe55Utb3Wf2nwHNFVd1Q4QGZf+FaFtaRp1cpELC3jpqqgrChP5qJc7QzjNZqxkX6vhRl
+ iwTA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/Y+SEDtW2yN5Nt6bjzcnwCfAq4aqtpRRVFWveKyCaCezbNMuabPWKUFihdtri1PJ/HST8IftEvsTCL@nongnu.org
+X-Gm-Message-State: AOJu0Yw1awrYU0Wc5hA+QeHzh0Gmimv5QpmP2gqhpXUJOOOPdEb5A0OT
+ iVNHaG2AQG08IdUNlybQXDOBXYvqHNLenQ7WfHH/A4me3SYjlqScL4Sk
+X-Gm-Gg: AeBDiesFU5JuCG6CGpRX9zhv3iePeApS7wUR6tEhA5Dxb6byqAXDJBJR65UbdWsNYQj
+ j8y38ii1cSCCZ9JvWG862jVj2TsHlLuDcddiFgeLrvwPeNq1uHUAI5gju2LoBxFpynix1ioFSya
+ oWm6zbEaosuWWIXREvTRGEJPNX/bGebB8rYplDWrWlj955GSGnV1GcUoZRTuE6OzLTiHpwd/bgi
+ QBEbI+iN7LkW5SsCMWgNw9zIFmh4F1kCmEsXrXwU2KiBb2kUgD7iKrkvfBto0ywijIe6a9icZVc
+ R/Atc5305UVB9rLMMexDleq/QRt1d954WtycETCO08Gw0Kr15Izoc3XNBrU1XrlzzwhOUk/QKRd
+ sIV5ZbKxIHPi31ViKpjbrXY7BQ7NHfSkL71JVnpstAeF5KwHZ79Mks26pPHEgxHstFJ4x6TLJ3t
+ ybsymHkFGSOtljH1Y/jdbjiLetxkFyIT6ZutmA1guAZ2FHRbEVPxFZSs8+eXiMAACmi44mZWHa/
+ Du4MQj9eXWcMat3U7dTI59lQ4c7PnvjVjzGeszOAhW8HQCe0gUz3YRrahVf/kC7CNE=
+X-Received: by 2002:a05:600c:8b08:b0:488:a977:8de with SMTP id
+ 5b1f17b1804b1-48e51f32757mr13011285e9.16.1778012493678; 
+ Tue, 05 May 2026 13:21:33 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (dynamic-2a02-3100-2288-5100-c87f-e1c3-d3c0-0c97.310.pool.telefonica.de.
+ [2a02:3100:2288:5100:c87f:e1c3:d3c0:c97])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48e530cf964sm94545e9.1.2026.05.05.13.21.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 May 2026 13:21:33 -0700 (PDT)
+Date: Tue, 05 May 2026 20:21:29 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: =?UTF-8?Q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>,
+ qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
+ Pavel Pisa <pisa@fel.cvut.cz>, qemu-arm@nongnu.org,
+ Marc Kleine-Budde <mkl@pengutronix.de>,
+ Oliver Hartkopp <socketcan@hartkopp.net>,
+ Nikita Ostrenkov <n.ostrenkov@gmail.com>
+Subject: Re: [PATCH v3 0/7] hw/arm/sabrelite: Add FlexCAN support
+In-Reply-To: <CAFEAcA9kQNdx=gwSd_Ec=R2nwegT1R-BEiC9yXvfr23VJHDZiA@mail.gmail.com>
+References: <cover.1777571962.git.matyas.bobek@gmail.com>
+ <1B6ED5DC-6808-4A41-B8FA-B2C97C5C8933@gmail.com>
+ <CAFEAcA9kQNdx=gwSd_Ec=R2nwegT1R-BEiC9yXvfr23VJHDZiA@mail.gmail.com>
+Message-ID: <936E6AF6-32BA-4236-B8A2-0A8E8748D9C1@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=XPQAjwhE c=1 sm=1 tr=0 ts=69fa50ec cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=MUQpW0jNMHjpGy_Q9scA:9
-X-Proofpoint-ORIG-GUID: Ywa-zkVj39GO9M8X6BuUWukAYiJYHEId
-X-Proofpoint-GUID: Ywa-zkVj39GO9M8X6BuUWukAYiJYHEId
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA1MDE5NSBTYWx0ZWRfX1YYR47QrZq/R
- DfO6bHDp+gOw5scE7ZF3Onlu6z3+hyCgAU6HNA0u2i5bziQ4ls+9uLaJyiV0NGPIlLKWbqlki8S
- eLsquXKSe0QEzlK//A0bUmOAkCRTPNqP18U0QM+MGZt2sYCu1lSjxTwxOveg0UEQrQiKfuS/Pc6
- H+UgfiejpahD4/16xWNB2YaTM5jGPLUzOZk1pFh4ISjVg2RVKW5W86ORpIE54uKNNsO3exPqveh
- 4g6+Y9XdBLcSl/jlJk3gSNzdjq1gzBH9LPq2ZsVIszj+OJeGXzTiM8a2JoxbqBYfDkkxwW2qyp9
- OYby29KkCbRoISpAuVWCqdfQVum09ajkkD2ePckNbyqS+fE5QPb+MwAkm/0gQ5F0hrxw2Ue2AAV
- Z92ytX/c6BkmISCSFDltkve5lA+bFooZt2OoUlkJUz+R6j3Z/a5n0xlnjObLt0GBcY2wIIwiK2Z
- 1ZQaOsN1R6PH9wWYEag==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-05_02,2026-04-30_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 spamscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 malwarescore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605050195
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,65 +110,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If `-M secure-boot=on` is specified on the command line option, indicating
-true secure IPL enabled, set Secure-IPL bit and IPL-Information-Report
-bit on in IPIB Flags field, and trigger true secure IPL in the S390 BIOS.
 
-Any error that occurs during true secure IPL will cause the IPL to
-terminate.
 
-Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Collin Walling <walling@linux.ibm.com>
----
- hw/s390x/ipl.c | 19 ++++++++++++++++++-
- 1 file changed, 18 insertions(+), 1 deletion(-)
+Am 5=2E Mai 2026 18:41:52 UTC schrieb Peter Maydell <peter=2Emaydell@linar=
+o=2Eorg>:
+>On Tue, 5 May 2026 at 19:03, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
+:
+>>
+>>
+>>
+>> Am 30=2E April 2026 18:26:02 UTC schrieb "Maty=C3=A1=C5=A1 Bobek" <maty=
+as=2Ebobek@gmail=2Ecom>:
+>> >This series adds emulation of the FlexCAN CAN controller, version 2,
+>> >found in NXP i=2EMX6 series SoCs=2E The controller is integrated into
+>> >fsl-imx6 and the Sabrelite ARM board=2E
+>> >
+>> >The chip has two FlexCAN controllers, but the Linux Sabrelite
+>> >device tree enables only one by default=2E Linux kernel with both
+>> >controllers enabled has been tested to work properly (using a custom
+>> >device tree)=2E
+>> >See docs/system/devices/can=2Erst for an example of QEMU command line
+>> >invocation=2E
+>> >
+>> >More information about the implementation can be found in my bachelor
+>> >thesis [1]=2E
+>> >
+>> >The headers (struct FlexcanRegs and flexcan_regs=2Eh macros) were copi=
+ed
+>> >from the Linux kernel=2E Marc Kleine-Budde is the copyright holder=2E =
+He
+>> >has been kindly asked to provide consent, to confirm his approval for
+>> >the inclusion of said header fragments into QEMU=2E The approval is st=
+ill
+>> >pending, hopefully it will be resolved soon=2E I will update the patch=
+set
+>> >on request if another wording/solution for the copyright statement is
+>> >proposed/requested=2E
+>>
+>> Tested with imx8mp-evk: https://github=2Ecom/shentok/qemu/commits/imx8m=
+p-flexcan/ which works excellent=2E Next step after this series is merged w=
+ould be upstreaming that branch=2E
+>>
+>> I guess the only open issue is the licensing of struct FlexcanRegs [1] =
+which originates from Linux? How do we proceed here?
+>>
+>> Best regards,
+>> Bernhard
+>>
+>> [1] https://lore=2Ekernel=2Eorg/qemu-devel/202603211316=2E18181=2Episa@=
+fel=2Ecvut=2Ecz/
+>
+>Could you say what the problem is? In general there is no problem
+>with taking header structs from the Linux kernel, as they are
+>GPL-2-only and that is a QEMU-compatible license=2E The relevant
+>source files or pieces of source files would need to be noted
+>as 2-only rather than our default of 2-or-later, but that is
+>doable -- we already do that for other things we have borrowed
+>from the kernel=2E
 
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index f4311f6d62..67e8231c76 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -468,6 +468,11 @@ static bool s390_has_certificate(void)
-     return ipl->cert_store.count > 0;
- }
- 
-+static bool s390_secure_boot_enabled(void)
-+{
-+    return S390_CCW_MACHINE(qdev_get_machine())->secure_boot;
-+}
-+
- static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
- {
-     CcwDevice *ccw_dev = NULL;
-@@ -524,6 +529,18 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-         s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
-         iplb->flags |= DIAG308_FLAGS_LP_VALID;
- 
-+        /*
-+         * If secure-boot is enabled, then toggle the secure IPL flags to
-+         * trigger secure boot in the s390 BIOS.
-+         *
-+         * Boot process will terminate if any error occurs during secure boot.
-+         *
-+         * If SIPL is on, IPLIR must also be on.
-+         */
-+        if (s390_secure_boot_enabled()) {
-+            iplb->hdr_flags |= (DIAG308_IPIB_FLAGS_SIPL | DIAG308_IPIB_FLAGS_IPLIR);
-+            iplb->len = cpu_to_be32(S390_IPLB_MAX_LEN);
-+        }
-         /*
-          * Secure boot in audit mode will perform
-          * if certificate(s) exist in the key store.
-@@ -533,7 +550,7 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-          *
-          * Results of secure boot will be stored in IIRB.
-          */
--        if (s390_has_certificate()) {
-+        else if (s390_has_certificate()) {
-             iplb->hdr_flags |= DIAG308_IPIB_FLAGS_IPLIR;
-             iplb->len = cpu_to_be32(S390_IPLB_MAX_LEN);
-         }
--- 
-2.54.0
+In https://lore=2Ekernel=2Eorg/qemu-devel/f3cb3166-c3f8-4ed8-8c9a-cbf48b07=
+1d1e@gmail=2Ecom/ I raised this review question: "The following structure l=
+ooks like being based on Linux=2E Does this affect the copyright of this fi=
+le?" I was just asking for advice and I'm glad the solution is that easy=2E
+
+Best regards,
+Bernhard
 
 
