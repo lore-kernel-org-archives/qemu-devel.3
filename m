@@ -4,95 +4,160 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D350CFF885A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 11:21:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A70B1FF885A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 11:45:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKDpI-0007KG-Kk; Tue, 05 May 2026 07:20:32 -0400
+	id 1wKECU-0006NW-KN; Tue, 05 May 2026 07:44:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKDpA-0007HL-6R
- for qemu-devel@nongnu.org; Tue, 05 May 2026 07:20:24 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKDp7-0005qE-Hf
- for qemu-devel@nongnu.org; Tue, 05 May 2026 07:20:23 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48909558b3aso56002815e9.0
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 04:20:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wKECQ-0006MS-4u
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 07:44:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wKECI-0007NY-KU
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 07:44:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777981453;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=rc+3Bksb6HZaTZMt5ERtfmcshhuI4z6FJKgovDQd9m8=;
+ b=houLFT8cbsi1zl0aq+KevMooBa23eKDtB6UJrXSwuTvAznebPrVlBhMx0ERDZKLPWodOeE
+ vO5fqmN3Ol+9gs3y9btqKoHvraL3pA9WH6GRsVbWP147qdwHRUtUqpIVsbhQDfjOp7vfrZ
+ ZYQ5Me3uBNScgVWg7WH0uq+e7QFw8Ds=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-695-5ABh_u1dNU62v5ttJOanZA-1; Tue, 05 May 2026 07:44:11 -0400
+X-MC-Unique: 5ABh_u1dNU62v5ttJOanZA-1
+X-Mimecast-MFC-AGG-ID: 5ABh_u1dNU62v5ttJOanZA_1777981451
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-488d8deb75fso43790355e9.3
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 04:44:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777980020; x=1778584820; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6sMi0kUGzt6eghb/XXUV9xCjggNDxEZ3+ioLqRmvCVE=;
- b=ksx41mhU/NPyMFA4KnzDoqj0naFbgPdBsEaSYqfxLZtvQHWRdgZbbrUnpCk6BHZZLU
- jZLPASyRU+MGV6zp91m8UPyo2vz6K4QGncRI8SFCJW+swBWGIXZhL3Q3716Wpi9YVpyZ
- nwFiWmkw8KOfivgWMZ/nZ+75IfhLehWjXrZA3z4BLapRWqoebd5C8U13NV1Gzags2+FJ
- 4gC1neRqsenZECn4Jc2S0tYkBVaOQiZ+uOL1nVmTVwBxcKSCo/90zkZSTL0JSUzfQXj3
- 64Oe8BXWV/dt7nLPdVAqvHXvktGfKtaf2a6lyV3kS72h/pQ7ciX5OorHtGvW0AfEn1L3
- OP8A==
+ d=redhat.com; s=google; t=1777981450; x=1778586250; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=rc+3Bksb6HZaTZMt5ERtfmcshhuI4z6FJKgovDQd9m8=;
+ b=o5ASDIAOO+hS5TxuXY9hsS+q460PxUWneFz7PvW5QnIX3s1d69lxNORIBB93hX0cf7
+ hCGE5VrpOLTXO7P6xQetCFRzEBskySfTIzFwrOGmuGDlgrI3IO3yFWZJ89FipOv9tWxd
+ fKu/7bW/W7d8TCWY4VSOGoXz7lH7oiWqQQcEiLguemrzegnZhqWdzyvEDl0IQnhs37BA
+ bA0jzMHykCiImaV9bo9U5JMX6LXlYHe/caSqid6o5AGy/4PaGzpnHmNOlS8XXIP5KoW4
+ m7Uzd5tktTj+6YzwjZQIdNc/Ct4g26piYBcRQIixlVQIpi7FrHt0GSJv9NJtdxGkSA/o
+ PI7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777980020; x=1778584820;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=6sMi0kUGzt6eghb/XXUV9xCjggNDxEZ3+ioLqRmvCVE=;
- b=V0af7YSXUbHFRidowTcFuPpY3ma5neDoMHKRw/xfz2bY24rZ2K5eAGDyE0N1KNACch
- A8yZJm9o2g33iFfnlRLBX1bUkosJi39fQZFu28FGteUPwlk3hvlTE1nRWwQ3koZkWBFb
- N6+SvdilxjcygNUVVNgHZYyZey1vN1RjtiSKf0gTA0Q0MT78lHaEewda5JhPe04shYfs
- MziOY9j5tzRkPuw6jq/ddXxO1HIboYBhVFqpDCi6qWHxdcUskxeAmvWPZiAsaCN+BpjN
- 7ldVDBBQHJNk5zDza7yuddYkUxeOwhBS0aEZCholWxuQ107d2/clC0VQrqw88SzJTtX3
- Jxtw==
-X-Gm-Message-State: AOJu0YwOTOEhdP2KfNJGWsnv5mzM7JE5jYoJyq6vvNnWR90KDal+Foj5
- uf0Ib3VXWDFpieKgd1imVmsIkImzV3H1SXE+YKDwHwfybPF7rsGZK60QVgFEseytEoM=
-X-Gm-Gg: AeBDiesMaxNrAwfVVnt546Hg1cQueZct9mMepC9UtCZFYh7KrwkMM/JY3sa+VTl78Zq
- yAAuIL4uNYlJE5wx1lNY4Xlq4TL01nDCK6HHKLvFAUJ0m4FAUoRnTi2HJA+q7Fd1zXm8Ynd+wqE
- LDR2903oMyuWo1+3ul+C86umpciH7MEN4AnnZpvaqiMFOIYVuPPrM2JPhU3jXI8F9l/AkDBy8Ye
- lgetLCmU5h2A/FtTH1twqb52ShnEgBLH4Pa9TMuAX8OHt3oBVD0pP9T7Eu82gb126gC8AG/Wzze
- 5Y4oCwjY28SSZfd5+x9SPEu11MEv6IbSoTcd+uZvk0ni+r7/2hNdyyft36W1N5ylHLvPwVMvnC/
- Uev5BdzMPggz8f0Ih+sMJILjIduWcQ3oDRsyxD8QoBnzWWpHQiiNh+oGdeODmzxkoMSsH6v/ZN+
- fhqIqLZJBRl8K4Ach1jRnItz3Y11cmWyLYxw==
-X-Received: by 2002:a05:600c:4ed2:b0:488:a882:c7 with SMTP id
- 5b1f17b1804b1-48a98671da2mr235172445e9.25.1777980019858; 
- Tue, 05 May 2026 04:20:19 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8eb6fffcsm365107245e9.4.2026.05.05.04.20.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 May 2026 04:20:18 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 03C035FB54;
- Tue, 05 May 2026 12:20:15 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
- Alexander Graf <agraf@csgraf.de>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v5 7/7] target/arm: implement WFET
-Date: Tue,  5 May 2026 12:20:13 +0100
-Message-ID: <20260505112014.102993-8-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260505112014.102993-1-alex.bennee@linaro.org>
-References: <20260505112014.102993-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20251104; t=1777981450; x=1778586250;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rc+3Bksb6HZaTZMt5ERtfmcshhuI4z6FJKgovDQd9m8=;
+ b=DHrVfK6EOcfiO8WthQoBuPyzo8+5QjZ3WTG4RA0RlvTj3lWesaoeJ+43knhpBBWBH3
+ l3bgkFhAYpTG8QNvGlnYtotCB2tgLjLPXxjHsvUl9f5FyDWfGiPLgqtMDULHQaemyxMr
+ aEtrzD+E2CNxw/gjEkfFCSerkNC4H7EfsLvG/DaKnAuRvCKje8qa42r7Qohtox5HBth3
+ 85P4XSZLZFVCSSaC8Wtidjfhm+/uRf0V4xeDAD4wjMLJF/cBjWUu9KaLI/tET4HJVpic
+ bd5JbzAfmcB9d3M19sGeAB2VcQByT5PmSPMdPIr1T+r+OR11SQuk5/WshJOefLphrKrl
+ SPMg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8+fVCkjAoSXfGiqrcf2tBIE3mQE3MuCTPTGMuGm9IES1toWVoGHt/I/cJF6nA7CRu3kQRcKvKzExu4@nongnu.org
+X-Gm-Message-State: AOJu0YwdUVCiHl8/z8jL8p2GN43QtiINNx9rjvyWh/SGXMDlyPLhn/Jl
+ sCedtn/ywxjjkzgWWQ9ydOuw7PN8r2QW8kticgf12fQ4yIO9YmDCzDQluWRByeSryaY5Cx9LZg6
+ 47TaY8VZ1RlXBrYaPNFIiwTTFjn1y4tdWFNrGv77mL7QTXg3U1f1OhBum
+X-Gm-Gg: AeBDietbIiN9LIH17+A7nwfJIsT1XPRN5/pMiCJPb2HwSKYWKSZxtjqcvSaUHyRUsvL
+ 5Lg8ONLnszYrtDC5MT4U5orpD+KWsjA+8ZEMGTihOCTgY76H08fKo5swGgleciK2gXk5dld1GhW
+ Tg351TNpvjeQmu3lylv2ZiMQMCanYP7Sindmwb4j3MkEJcwdgW+vn+sMpwhxAZbho2lnTcLYaNd
+ 9eUt925LqyUQik1HUgcjGPLPtmdvTNKcTbzS7yhdKM0e6T2lF0wfxvANt3CO7bbi2Iv9dRzMg4Q
+ y0SdBi8TpRBy8sXTelT1e2vT8hqcf2y8mlFaj05Esm3QJsnsTHuZS6Ao2WUyeKncK59Lm64nXIe
+ wabLoEbb+Rxc3wHP2E4ApnJprqX11sw==
+X-Received: by 2002:a05:600c:c082:b0:488:af7f:775f with SMTP id
+ 5b1f17b1804b1-48a988a2211mr156763945e9.18.1777981450001; 
+ Tue, 05 May 2026 04:44:10 -0700 (PDT)
+X-Received: by 2002:a05:600c:c082:b0:488:af7f:775f with SMTP id
+ 5b1f17b1804b1-48a988a2211mr156763545e9.18.1777981449586; 
+ Tue, 05 May 2026 04:44:09 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.115.164])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48d1a98247fsm26729675e9.0.2026.05.05.04.44.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 May 2026 04:44:09 -0700 (PDT)
+Message-ID: <1993d589-5e6c-4b60-a2f0-c5e61f88b961@redhat.com>
+Date: Tue, 5 May 2026 13:44:07 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 4/5] gitlab: add initial MacOS 15 on gitlab runner
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <th.huth+qemu@posteo.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Brad Smith <brad@comstyle.com>, Fabiano Rosas <farosas@suse.de>,
+ Kyle Evans <kevans@freebsd.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260505103649.68361-1-alex.bennee@linaro.org>
+ <20260505103649.68361-5-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260505103649.68361-5-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,179 +173,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now we have the event stream and SEV/SEVL implemented we can finally
-enable WFET for Aarch64.
+On 05/05/2026 12.36, Alex Bennée wrote:
+> The gitlab runners are currently in beta but available to projects on
+> the Premium and Ultimate plans (which QEMU is via the Open Source
+> program).
+> 
+> We install some compilers via brew so we can run some of the check-tcg
+> softmmu test cases.
+> 
+> We disable rust as the version is too old.
+> 
+> We disable plugins because we haven't taught the test harness about
+> .dynlib vs .so yet.
+> 
+> There is a discrepancy between the vars and version of MacOS because
+> lcitool needs teaching about other versions (although I don't think it
+> matters as brew is shared across versions).
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   .gitlab-ci.d/macos-14.vars    | 16 ++++++++++++
+>   .gitlab-ci.d/macos.yml        | 49 +++++++++++++++++++++++++++++++++++
+>   .gitlab-ci.d/qemu-project.yml |  1 +
+>   tests/lcitool/refresh         | 11 ++++++++
+>   4 files changed, 77 insertions(+)
+>   create mode 100644 .gitlab-ci.d/macos-14.vars
+>   create mode 100644 .gitlab-ci.d/macos.yml
+> 
+> diff --git a/.gitlab-ci.d/macos-14.vars b/.gitlab-ci.d/macos-14.vars
+> new file mode 100644
+> index 00000000000..def77cfdea5
+> --- /dev/null
+> +++ b/.gitlab-ci.d/macos-14.vars
+> @@ -0,0 +1,16 @@
+> +# THIS FILE WAS AUTO-GENERATED
+> +#
+> +#  $ lcitool variables macos-14 qemu
+> +#
+> +# https://gitlab.com/libvirt/libvirt-ci
+> +
+> +CCACHE='/opt/homebrew/bin/ccache'
+> +CPAN_PKGS=''
+> +CROSS_PKGS=''
+> +MAKE='/opt/homebrew/bin/gmake'
+> +NINJA='/opt/homebrew/bin/ninja'
+> +PACKAGING_COMMAND='brew'
+> +PIP3='/opt/homebrew/bin/pip3'
+> +PKGS='bash bc bindgen bison bzip2 capstone ccache cmocka coreutils ctags curl dbus diffutils dtc flex gcovr gettext git glib gnu-sed gnutls gtk+3 gtk-vnc jemalloc jpeg-turbo json-c libcbor libepoxy libffi libgcrypt libiscsi libnfs libpng libslirp libssh libtasn1 libusb llvm lzo make meson mtools ncurses nettle ninja pixman pkg-config python-setuptools python3 rpm2cpio rust sdl2 sdl2_image snappy socat sparse spice-protocol swtpm tesseract usbredir vde vte3 vulkan-tools xorriso zlib zstd'
+> +PYPI_PKGS='PyYAML numpy pillow sphinx sphinx-rtd-theme tomli'
+> +PYTHON='/opt/homebrew/bin/python3'
+> diff --git a/.gitlab-ci.d/macos.yml b/.gitlab-ci.d/macos.yml
+> new file mode 100644
+> index 00000000000..edb500e937b
+> --- /dev/null
+> +++ b/.gitlab-ci.d/macos.yml
+> @@ -0,0 +1,49 @@
+> +.macos_job_template:
+> +  extends: .base_job_template
+> +  stage: build
+> +  tags:
+> +    - saas-macos-large-m2pro
+> +  needs: []
+> +  timeout: 80m
+> +  artifacts:
+> +    name: "$CI_JOB_NAME-$CI_COMMIT_REF_SLUG"
+> +    expire_in: 7 days
+> +    paths:
+> +      - build/meson-logs/
+> +      - build/tests/tcg/
+> +    reports:
+> +      junit: build/meson-logs/*.junit.xml
+> +    when: always
+> +  before_script:
+> +    - set -o allexport
+> +    - source .gitlab-ci.d/macos-14.vars
+> +    - set +o allexport
+> +    - export PATH="$PATH_EXTRA:$PATH"
+> +    - export PKG_CONFIG_PATH="$PKG_CONFIG_PATH"
+> +    - brew update
+> +    - brew install $PKGS
+> +    - brew install gdb aarch64-elf-gcc i686-elf-gcc x86_64-elf-gcc
+> +    - python3 ./scripts/probe-gdb-support.py $(which gdb)
 
-To avoid issues with QEMU's incomplete ldst exclusive handling causing
-potential deadlocks in common WFE enabled locking patterns we take
-advantage of the architectures flexibility and treat being in the
-exclusive region as a reason to exit.
+Is the probe-gdb-support.py required here? If not, I'd rather remove that 
+line again.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> +    - if test -n "$PYPI_PKGS" ; then PYLIB=$($PYTHON -c 'import sysconfig; print(sysconfig.get_path("stdlib"))'); rm -f $PYLIB/EXTERNALLY-MANAGED; $PIP3 install --break-system-packages $PYPI_PKGS ; fi
+> +  script:
+> +    - mkdir build
+> +    - cd build
+> +    - env
 
----
-v2
-  - fix exception syndrome by using enum value
-  - use env->halt_reason
-v3
-  - fix check_wfx_trap(s/false/true/) as it is a WFE
-v4
-  - defer expensive calculations until needed
-  - treat cs->exclusive_addr as a IMPDEF WFE exit
-  - update commit message
----
- target/arm/tcg/helper-defs.h   |  1 +
- target/arm/tcg/op_helper.c     | 95 ++++++++++++++++++++++++++++++++++
- target/arm/tcg/translate-a64.c | 15 +++---
- 3 files changed, 104 insertions(+), 7 deletions(-)
+dito, the "env" looks like debugging leftovers ... I'd rather drop it.
 
-diff --git a/target/arm/tcg/helper-defs.h b/target/arm/tcg/helper-defs.h
-index ebdf09be38a..5e4d828dd55 100644
---- a/target/arm/tcg/helper-defs.h
-+++ b/target/arm/tcg/helper-defs.h
-@@ -56,6 +56,7 @@ DEF_HELPER_1(setend, void, env)
- DEF_HELPER_2(wfi, void, env, i32)
- DEF_HELPER_2(wfe, void, env, i32)
- DEF_HELPER_2(wfit, void, env, i32)
-+DEF_HELPER_2(wfet, void, env, i32)
- DEF_HELPER_1(yield, void, env)
- DEF_HELPER_1(pre_hvc, void, env)
- DEF_HELPER_2(pre_smc, void, env, i32)
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 1349bcc7929..d8d7557b880 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -640,6 +640,101 @@ void HELPER(wfe)(CPUARMState *env, uint32_t insn_len)
- #endif
- }
- 
-+void HELPER(wfet)(CPUARMState *env, uint32_t rd)
-+{
-+#ifdef CONFIG_USER_ONLY
-+    /*
-+     * As for WFIT make it NOP here, because trying to raise EXCP_HLT
-+     * would trigger an abort.
-+     */
-+    return;
-+#else
-+    CPUState *cs = env_cpu(env);
-+    uint32_t excp;
-+    int target_el;
-+    ARMCPU *cpu;
-+    uint64_t cntval, timeout, offset, cntvct, nexttick;
-+    int64_t next_event;
-+
-+    /*
-+     * As for WFE if the event register is already set we can consume
-+     * the event and return immediately.
-+     */
-+    if (env->event_register) {
-+        env->event_register = false;
-+        return;
-+    }
-+
-+    /*
-+     * Don't bother to go into our "low power state" if
-+     * we would just wake up immediately.
-+     *
-+     * We want the value that we would get if we read CNTVCT_EL0 from
-+     * the current exception level, so the direct_access offset, not
-+     * the indirect_access one. Compare the pseudocode LocalTimeoutEvent(),
-+     * which calls VirtualCounterTimer().
-+     */
-+    cntval = gt_get_countervalue(env);
-+    offset = gt_direct_access_timer_offset(env, GTIMER_VIRT);
-+    cntvct = cntval - offset;
-+    timeout = env->xregs[rd];
-+    if (cpu_has_work(cs) || cntvct >= timeout) {
-+        return;
-+    }
-+
-+    /* We might sleep, so now we check to see if we should trap */
-+    target_el = check_wfx_trap(env, true, &excp);
-+    if (target_el) {
-+        env->pc -= 4;
-+        raise_exception(env, excp, syn_wfx(1, 0xe, rd, true, WFET, false), target_el);
-+    }
-+
-+    /*
-+     * If the CPU has entered the exclusive region we could sleep
-+     * until the global monitor moves from Exclusive to Open Access.
-+     * However it would be expensive for QEMU to fully model the
-+     * global monitor and not doing so would potentially trigger
-+     * deadlocks in WFE enabled locking code. However as WFE is a hint
-+     * instruction the architecture allows for the PE to leave
-+     * low-power state for any reason. QEMU chooses to treat being in
-+     * an exclusive region as such and return directly.
-+     */
-+    if (env->exclusive_addr != -1) {
-+        return;
-+    }
-+
-+    /*
-+     * Finally work out if the timeout or event stream will kick in
-+     * earlier.
-+     *
-+     * The WFET should time out when CNTVCT_EL0 >= the specified value.
-+     */
-+    cpu = env_archcpu(env);
-+    if (uadd64_overflow(timeout, offset, &nexttick)) {
-+        nexttick = UINT64_MAX;
-+    }
-+    if (nexttick > INT64_MAX / gt_cntfrq_period_ns(cpu)) {
-+        nexttick = INT64_MAX;
-+    }
-+
-+    next_event = gt_calc_next_event_stream(env);
-+    if (next_event > 0 && next_event < nexttick) {
-+        timer_mod(cpu->wfxt_timer, next_event);
-+    } else {
-+        if (nexttick == INT64_MAX) {
-+            timer_mod_ns(cpu->wfxt_timer, INT64_MAX);
-+        } else {
-+            timer_mod(cpu->wfxt_timer, nexttick);
-+        }
-+    }
-+
-+    env->halt_reason = HALT_WFE;
-+    cs->exception_index = EXCP_HLT;
-+    cs->halted = 1;
-+    cpu_loop_exit(cs);
-+#endif
-+}
-+
- void HELPER(yield)(CPUARMState *env)
- {
-     CPUState *cs = env_cpu(env);
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index a6f392a28f8..ead2a7ff81f 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -2086,14 +2086,15 @@ static bool trans_WFET(DisasContext *s, arg_WFET *a)
-         return false;
-     }
- 
--    /*
--     * We rely here on our WFE implementation being a NOP, so we
--     * don't need to do anything different to handle the WFET timeout
--     * from what trans_WFE does.
--     */
--    if (!(tb_cflags(s->base.tb) & CF_PARALLEL)) {
--        s->base.is_jmp = DISAS_WFE;
-+    if (s->ss_active) {
-+        /* Act like a NOP under architectural singlestep */
-+        return true;
-     }
-+
-+    gen_a64_update_pc(s, 4);
-+    gen_helper_wfet(tcg_env, tcg_constant_i32(a->rd));
-+    /* Go back to the main loop to check for interrupts */
-+    s->base.is_jmp = DISAS_EXIT;
-     return true;
- }
- 
--- 
-2.47.3
+> +    - ../configure --enable-werror $CONFIGURE_ARGS || { cat config.log meson-logs/meson-log.txt; exit 1; }
+> +    - $MAKE -j$(sysctl -n hw.ncpu)
+> +    - for TARGET in $TEST_TARGETS ; do $MAKE $TARGET ; done
+> +
+> +aarch64-macos-15-build:
+> +  extends: .macos_job_template
+> +  image: macos-15-xcode-16
+> +  variables:
+> +    NAME: macos-15
+> +    PATH_EXTRA: /opt/homebrew/ccache/libexec:/opt/homebrew/gettext/bin
+
+As far as I can see, there is no cache configured for this runner ... so 
+could you please drop the ccache stuff from this patch? It will only slow 
+down compilation if the results get thrown away afterwards.
+
+  Thomas
+
+> +    PKG_CONFIG_PATH: /opt/homebrew/curl/lib/pkgconfig:/opt/homebrew/ncurses/lib/pkgconfig:/opt/homebrew/readline/lib/pkgconfig
+> +    CONFIGURE_ARGS:
+> +        --target-list=aarch64-softmmu,i386-softmmu,x86_64-softmmu
+> +        --cross-prefix-aarch64=aarch64-elf-
+> +        --cross-prefix-i386=i686-elf-
+> +        --cross-prefix-x86_64=x86_64-elf-
+> +        --disable-plugins
+> +    TEST_TARGETS: check-unit check-tcg
+> diff --git a/.gitlab-ci.d/qemu-project.yml b/.gitlab-ci.d/qemu-project.yml
+> index 4d914c4897b..9cbb5fe787f 100644
+> --- a/.gitlab-ci.d/qemu-project.yml
+> +++ b/.gitlab-ci.d/qemu-project.yml
+> @@ -19,3 +19,4 @@ include:
+>     - local: '/.gitlab-ci.d/custom-runners.yml'
+>     - local: '/.gitlab-ci.d/cirrus.yml'
+>     - local: '/.gitlab-ci.d/windows.yml'
+> +  - local: '/.gitlab-ci.d/macos.yml'
+> diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+> index fa4a16e3583..4289cc381a6 100755
+> --- a/tests/lcitool/refresh
+> +++ b/tests/lcitool/refresh
+> @@ -87,6 +87,12 @@ def generate_cirrus(target, trailer=None):
+>       generate(filename, cmd, trailer)
+>   
+>   
+> +def generate_vars(target, trailer=None):
+> +    filename = Path(src_dir, ".gitlab-ci.d", target + ".vars")
+> +    cmd = lcitool_cmd + ["variables", "--format", "shell", target, "qemu"]
+> +    generate(filename, cmd, trailer)
+> +
+> +
+>   def generate_pkglist(vm, target, project="qemu"):
+>       filename = Path(src_dir, "tests", "vm", "generated", vm + ".json")
+>       cmd = lcitool_cmd + ["variables", "--format", "json", target, project]
+> @@ -312,6 +318,11 @@ try:
+>       #
+>       generate_cirrus("freebsd-14")
+>   
+> +    #
+> +    # GitLab packages lists
+> +    #
+> +    generate_vars("macos-14")
+> +
+>       #
+>       # VM packages lists
+>       #
 
 
