@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 595C2FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 12:35:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0170CD3427
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 12:36:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKEzj-0002o3-M6; Tue, 05 May 2026 08:35:23 -0400
+	id 1wKEzk-0002pD-54; Tue, 05 May 2026 08:35:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wKEzZ-0002fa-6T
- for qemu-devel@nongnu.org; Tue, 05 May 2026 08:35:13 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wKEza-0002fv-Fj
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 08:35:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wKEzV-0006xJ-DV
- for qemu-devel@nongnu.org; Tue, 05 May 2026 08:35:12 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wKEzX-0006xV-Ki
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 08:35:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1777984507;
+ s=mimecast20190719; t=1777984509;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YN96wE0xMfP184+ExrjUxV1C0+PzpEZRnQ6zKTfwyP0=;
- b=h4JG4Yqq0LdM/urVQMmFVaFo9a/iok84pAXuUFDD5rCvA6WAZ1PW4Txtzgay5qQcJhuutX
- EL1yZkOSv8SlUO/+QXfXA2RXmsiCUJaXt3l+VY3xqdopQSn8LVm50DX1F4LknFWRqYLbdS
- rH4GJdevjIX6JnUrfuWcu0F1yKtgEe8=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=5mKi/48bzyRVpnUGJc6MY3SnY4zBGlsfHELb3LFJeF8=;
+ b=cvuiGskRgnKd3bx9xHxLAAO7a1mvdxpRmK20QWlToDFNZUeiERs71sbDovwu1K7rUtPm4y
+ rKeNS73+XH0LeVCPTsGkEOkQUxRkSOoIIDIauQ1CsiKXmdxpToRaTiYfR4UmolxpFSydo7
+ Bf1MOhb4ROtHB4aNDoBo0JpmJfdn8Eo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-199-yPifRvY3P4S086xChJqicQ-1; Tue,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-cMrsPw5mOr-ZLk_Dr15btA-1; Tue,
  05 May 2026 08:35:06 -0400
-X-MC-Unique: yPifRvY3P4S086xChJqicQ-1
-X-Mimecast-MFC-AGG-ID: yPifRvY3P4S086xChJqicQ_1777984505
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+X-MC-Unique: cMrsPw5mOr-ZLk_Dr15btA-1
+X-Mimecast-MFC-AGG-ID: cMrsPw5mOr-ZLk_Dr15btA_1777984505
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 75D7A1956095; Tue,  5 May 2026 12:35:05 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6FD4F1800451; Tue,  5 May 2026 12:35:05 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 24A0B1800347; Tue,  5 May 2026 12:35:04 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 16D511800446; Tue,  5 May 2026 12:35:04 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7448B21E6A05; Tue, 05 May 2026 14:35:02 +0200 (CEST)
+ id 7072C21E6A03; Tue, 05 May 2026 14:35:02 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
-	"Dr. David Alan Gilbert" <dave@treblig.org>
-Subject: [PULL 3/4] hxtool: Error on missing docs
-Date: Tue,  5 May 2026 14:35:01 +0200
-Message-ID: <20260505123502.1316554-4-armbru@redhat.com>
+Cc: stefanha@redhat.com, "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PULL 2/4] hxtool: Split srst/erst add checks
+Date: Tue,  5 May 2026 14:35:00 +0200
+Message-ID: <20260505123502.1316554-3-armbru@redhat.com>
 In-Reply-To: <20260505123502.1316554-1-armbru@redhat.com>
 References: <20260505123502.1316554-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,67 +85,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 
-Error if a '.name' is seen after another '.name' without an intervening
-SRST, this normally indicates missing or misplaced docs.
-
-We can't check DEF (as used in command line options) because those
-often have multiple DEF per doc.
+Split the SRST/ERST case and add some checks.
+This is mainly to make it easier to add some checks in following
+patches.
 
 Signed-off-by: Dr. David Alan Gilbert <dave@treblig.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Markus Armbruster <armbru@redhat.com>
-  With the two minor tidy ups from Thomas's review
-Message-ID: <20260504174914.122607-4-dave@treblig.org>
+Message-ID: <20260504174914.122607-3-dave@treblig.org>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- scripts/hxtool | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ scripts/hxtool | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/scripts/hxtool b/scripts/hxtool
-index 51dc841479..617a694eaf 100755
+index 80516b9437..51dc841479 100755
 --- a/scripts/hxtool
 +++ b/scripts/hxtool
-@@ -1,8 +1,15 @@
- #!/bin/sh
+@@ -2,15 +2,29 @@
  
-+print_if_not_rst()
-+{
-+    test $in_rst -eq 0 && printf "%s\n" "$str"
-+}
-+
  hxtoh()
  {
-     in_rst=0
-+    # .name for HMP
-+    seen_name=0
+-    flag=1
++    in_rst=0
      while read -r str; do
          case $str in
              HXCOMM*)
-@@ -13,6 +20,8 @@ hxtoh()
-                 echo "Error: SRST inside another RST" >&2
-                 exit 1
-               fi
-+              # consume the name
-+              seen_name=0
-               in_rst=1
              ;;
-             ERST*)
-@@ -23,8 +32,18 @@ hxtoh()
-               fi
-               in_rst=0
-             ;;
-+            # Note the space at the start - we need to exclude something.name
-+            ( .name*)
-+              if [ $seen_name -eq 1 ]
+-            SRST*|ERST*) flag=$(($flag^1))
++            SRST*)
++              if [ $in_rst -eq 1 ]
 +              then
-+                echo "Error: Seen another .name, maybe missing docs?" >&2
++                echo "Error: SRST inside another RST" >&2
 +                exit 1
 +              fi
-+              seen_name=1
-+              print_if_not_rst
++              in_rst=1
 +            ;;
++            ERST*)
++              if [ $in_rst -eq 0 ]
++              then
++                echo "Error: ERST already outside RST" >&2
++                exit 1
++              fi
++              in_rst=0
+             ;;
              *)
--            test $in_rst -eq 0 && printf "%s\n" "$str"
-+            print_if_not_rst
+-            test $flag -eq 1 && printf "%s\n" "$str"
++            test $in_rst -eq 0 && printf "%s\n" "$str"
              ;;
          esac
      done
