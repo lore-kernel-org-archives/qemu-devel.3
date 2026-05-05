@@ -4,115 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 575B9CD343B
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 16:12:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C5DCCD3439
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 16:12:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKIMG-0008WS-G6; Tue, 05 May 2026 12:10:52 -0400
+	id 1wKIM7-0008SV-Ko; Tue, 05 May 2026 12:10:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKILW-00087R-0H
- for qemu-devel@nongnu.org; Tue, 05 May 2026 12:10:06 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKILP-00084I-43
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 12:09:59 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKILT-0000Fs-1x
- for qemu-devel@nongnu.org; Tue, 05 May 2026 12:10:04 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKILM-0008IX-UZ
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 12:09:58 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id A539D6B765;
- Tue,  5 May 2026 16:09:32 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 1F6716B75E;
+ Tue,  5 May 2026 16:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1777997372; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1777997371; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RvQCMVyCnjQXWQYttKYnop1DT8sWT0Mzcw0AThqmErA=;
- b=CYO1tLJW+iwUtI0QfY1LU5Jr8mrE0+K1qjksPHJQDJdae4MLXNVq0aaoQ3M4WL2NezOv2z
- PZcteI4LSvD1wgcD6IOXaYBNEGFIS/a9LgsGkoWD4NmP8po6tVVTn3vUIgfb4+4INlTeJM
- FyNxDjeXzspzg4C+eZp69ubfvdWEVr0=
+ bh=zlACn550C2kY5jRmhCHCPEFoNUu1oljVf9BIVf0CMq8=;
+ b=AWPgHRFBYrJxxyXdsVDeCzrXqBtMu78IJFgwhiBGeJDrCNwdhSOuazbR/un+Fa3UPrgmyC
+ iauuDoM271/zxOp1bZCnzQI3H0Ix5a/oTMcgLmLD/USyrV9F0uey0VXy2z8xseReenOi4z
+ 1pSrcxXt7ESgTXWPkXBXzP5dXvNXYto=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1777997372;
+ s=susede2_ed25519; t=1777997371;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RvQCMVyCnjQXWQYttKYnop1DT8sWT0Mzcw0AThqmErA=;
- b=MYrHhsBJ24iPcMvuiFs6ORfu2/QBTcAv4tdtIR52VHD5LvNh15ZZSPXa9A1ay58umGx/OM
- +altg7PmgGtu8GCQ==
+ bh=zlACn550C2kY5jRmhCHCPEFoNUu1oljVf9BIVf0CMq8=;
+ b=U7Rt7JKjXp3r0QRi/0wJwNDFmuEQBW+AzhkDo42NN4ory2S//hSXObrn8NuUu0bkwLifPB
+ JQEw26nI5b9xgDDA==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=CYO1tLJW;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=MYrHhsBJ
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1777997372; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1777997371; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RvQCMVyCnjQXWQYttKYnop1DT8sWT0Mzcw0AThqmErA=;
- b=CYO1tLJW+iwUtI0QfY1LU5Jr8mrE0+K1qjksPHJQDJdae4MLXNVq0aaoQ3M4WL2NezOv2z
- PZcteI4LSvD1wgcD6IOXaYBNEGFIS/a9LgsGkoWD4NmP8po6tVVTn3vUIgfb4+4INlTeJM
- FyNxDjeXzspzg4C+eZp69ubfvdWEVr0=
+ bh=zlACn550C2kY5jRmhCHCPEFoNUu1oljVf9BIVf0CMq8=;
+ b=AWPgHRFBYrJxxyXdsVDeCzrXqBtMu78IJFgwhiBGeJDrCNwdhSOuazbR/un+Fa3UPrgmyC
+ iauuDoM271/zxOp1bZCnzQI3H0Ix5a/oTMcgLmLD/USyrV9F0uey0VXy2z8xseReenOi4z
+ 1pSrcxXt7ESgTXWPkXBXzP5dXvNXYto=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1777997372;
+ s=susede2_ed25519; t=1777997371;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=RvQCMVyCnjQXWQYttKYnop1DT8sWT0Mzcw0AThqmErA=;
- b=MYrHhsBJ24iPcMvuiFs6ORfu2/QBTcAv4tdtIR52VHD5LvNh15ZZSPXa9A1ay58umGx/OM
- +altg7PmgGtu8GCQ==
+ bh=zlACn550C2kY5jRmhCHCPEFoNUu1oljVf9BIVf0CMq8=;
+ b=U7Rt7JKjXp3r0QRi/0wJwNDFmuEQBW+AzhkDo42NN4ory2S//hSXObrn8NuUu0bkwLifPB
+ JQEw26nI5b9xgDDA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 812A2593A3;
- Tue,  5 May 2026 16:09:31 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EEF6E593A3;
+ Tue,  5 May 2026 16:09:29 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id MKFRFDsW+mmNcgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 05 May 2026 16:09:31 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id OMkzLzkW+mmNcgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 05 May 2026 16:09:29 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v1 06/15] tests/qtest/migration: Use a default TCP URI for
- precopy
-Date: Tue,  5 May 2026 13:09:05 -0300
-Message-ID: <20260505160915.25558-7-farosas@suse.de>
+Subject: [PATCH v1 05/15] tests/qtest/migration: Use precopy_unix_common for
+ ignore-shared test
+Date: Tue,  5 May 2026 13:09:04 -0300
+Message-ID: <20260505160915.25558-6-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260505160915.25558-1-farosas@suse.de>
 References: <20260505160915.25558-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; TO_DN_SOME(0.00)[]; ARC_NA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:email,suse.de:dkim,suse.de:mid];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: A539D6B765
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -129,126 +118,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Using a localhost TCP URI for testing is quite common. Set it as a
-default for precopy tests that don't provide an URI.
+The ignore-shared test has the same code as the precopy_common test
+but inverting (probably incorrectly) the order of a few event
+waits. Change it to use the common code instead.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration/framework.c     | 4 ++++
- tests/qtest/migration/precopy-tests.c | 3 ---
- tests/qtest/migration/tls-tests.c     | 9 ---------
- 3 files changed, 4 insertions(+), 12 deletions(-)
+ tests/qtest/migration/misc-tests.c | 40 ++++++++----------------------
+ 1 file changed, 11 insertions(+), 29 deletions(-)
 
-diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-index 73bb015f64..b77889de7f 100644
---- a/tests/qtest/migration/framework.c
-+++ b/tests/qtest/migration/framework.c
-@@ -834,6 +834,10 @@ int test_precopy_common(MigrateCommon *args)
-     void *data_hook = NULL;
-     QObject *channels = NULL;
+diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
+index e114ac5972..8d1cd44183 100644
+--- a/tests/qtest/migration/misc-tests.c
++++ b/tests/qtest/migration/misc-tests.c
+@@ -90,40 +90,22 @@ static void test_analyze_script(char *name, MigrateCommon *args)
+ }
+ #endif
  
-+    if (!args->listen_uri) {
-+        args->listen_uri = "tcp:127.0.0.1:0";
-+    }
-+
-     if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
-         return -1;
-     }
-diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-index 54e45e2a02..0d538bcd1a 100644
---- a/tests/qtest/migration/precopy-tests.c
-+++ b/tests/qtest/migration/precopy-tests.c
-@@ -180,14 +180,11 @@ static void test_precopy_rdma_plain_ipv6(char *name, MigrateCommon *args)
- 
- static void test_precopy_tcp_plain(char *name, MigrateCommon *args)
+-static void test_ignore_shared(char *name, MigrateCommon *args)
++static void ignore_shared_assert_skipped(QTestState *from, QTestState *to,
++                                         void *data)
  {
--    args->listen_uri = "tcp:127.0.0.1:0";
+-    g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+-    QTestState *from, *to;
 -
-     test_precopy_common(args);
+-    args->start.mem_type = MEM_TYPE_SHMEM;
+-    args->start.caps[MIGRATION_CAPABILITY_X_IGNORE_SHARED] = true;
+-
+-    if (migrate_start(&from, &to, uri, &args->start)) {
+-        return;
+-    }
+-
+-    migrate_ensure_non_converge(from);
+-    migrate_prepare_for_dirty_mem(from);
+-
+-    /* Wait for the first serial output from the source */
+-    wait_for_serial("src_serial");
+-
+-    migrate_qmp(from, to, uri, NULL, "{}");
+-
+-    migrate_wait_for_dirty_mem(from, to);
+-
+-    wait_for_stop(from, get_src());
+-
+-    qtest_qmp_eventwait(to, "RESUME");
+-
+-    wait_for_serial("dest_serial");
+-    wait_for_migration_complete(from);
+-
+     /* Check whether shared RAM has been really skipped */
+     g_assert_cmpint(
+         read_ram_property_int(from, "transferred"), <, 4 * 1024 * 1024);
++}
+ 
+-    migrate_end(from, to, true);
++static void test_ignore_shared(char *name, MigrateCommon *args)
++{
++    args->live = true;
++    args->start.mem_type = MEM_TYPE_SHMEM;
++    args->start.caps[MIGRATION_CAPABILITY_X_IGNORE_SHARED] = true;
++    args->end_hook = ignore_shared_assert_skipped;
++
++    test_precopy_unix_common(args);
  }
  
- static void test_precopy_tcp_switchover_ack(char *name, MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     /*
-      * Source VM must be running in order to consider the switchover ACK
-      * when deciding to do switchover or not.
-diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
-index 0677ca661e..4a3c404349 100644
---- a/tests/qtest/migration/tls-tests.c
-+++ b/tests/qtest/migration/tls-tests.c
-@@ -459,7 +459,6 @@ static void test_precopy_unix_tls_x509_override_host(char *name,
- 
- static void test_precopy_tcp_tls_psk_match(char *name, MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_psk_match;
-     args->end_hook = migrate_hook_end_tls_psk;
- 
-@@ -468,7 +467,6 @@ static void test_precopy_tcp_tls_psk_match(char *name, MigrateCommon *args)
- 
- static void test_precopy_tcp_tls_psk_mismatch(char *name, MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_psk_mismatch;
-     args->end_hook = migrate_hook_end_tls_psk;
-     args->result = MIG_TEST_FAIL;
-@@ -488,7 +486,6 @@ static void *migrate_hook_start_no_tls(QTestState *from, QTestState *to)
- 
- static void test_precopy_tcp_no_tls(char *name, MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_no_tls;
-     /* the no_tls start hook requires no cleanup actions */
-     args->end_hook = NULL;
-@@ -529,7 +526,6 @@ static void test_precopy_tcp_tls_no_hostname(char *name, MigrateCommon *args)
- static void test_precopy_tcp_tls_x509_default_host(char *name,
-                                                    MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_x509_default_host;
-     args->end_hook = migrate_hook_end_tls_x509;
- 
-@@ -539,7 +535,6 @@ static void test_precopy_tcp_tls_x509_default_host(char *name,
- static void test_precopy_tcp_tls_x509_override_host(char *name,
-                                                     MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_x509_override_host;
-     args->end_hook = migrate_hook_end_tls_x509;
- 
-@@ -563,7 +558,6 @@ static void test_precopy_tcp_tls_x509_mismatch_host(char *name,
- static void test_precopy_tcp_tls_x509_friendly_client(char *name,
-                                                       MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_x509_friendly_client;
-     args->end_hook = migrate_hook_end_tls_x509;
- 
-@@ -573,7 +567,6 @@ static void test_precopy_tcp_tls_x509_friendly_client(char *name,
- static void test_precopy_tcp_tls_x509_hostile_client(char *name,
-                                                      MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_x509_hostile_client;
-     args->end_hook = migrate_hook_end_tls_x509;
-     args->result = MIG_TEST_FAIL;
-@@ -586,7 +579,6 @@ static void test_precopy_tcp_tls_x509_hostile_client(char *name,
- static void test_precopy_tcp_tls_x509_allow_anon_client(char *name,
-                                                         MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_x509_allow_anon_client;
-     args->end_hook = migrate_hook_end_tls_x509;
- 
-@@ -596,7 +588,6 @@ static void test_precopy_tcp_tls_x509_allow_anon_client(char *name,
- static void test_precopy_tcp_tls_x509_reject_anon_client(char *name,
-                                                          MigrateCommon *args)
- {
--    args->listen_uri = "tcp:127.0.0.1:0";
-     args->start_hook = migrate_hook_start_tls_x509_reject_anon_client;
-     args->end_hook = migrate_hook_end_tls_x509;
-     args->result = MIG_TEST_FAIL;
+ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
 -- 
 2.51.0
 
