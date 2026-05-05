@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 060D7CD343B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 190F1CD3441
 	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 20:29:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKMMN-0004bC-2G; Tue, 05 May 2026 16:27:15 -0400
+	id 1wKMMO-0004cZ-JP; Tue, 05 May 2026 16:27:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKMMB-0004Sa-Mb
- for qemu-devel@nongnu.org; Tue, 05 May 2026 16:27:05 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKMML-0004Z0-Dd
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 16:27:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKMM8-0002co-KO
- for qemu-devel@nongnu.org; Tue, 05 May 2026 16:27:03 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKMMI-0002fP-D2
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 16:27:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778012819;
+ s=mimecast20190719; t=1778012829;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MloABw5GE3WIOEB46lkCJz/DCq9G15tQHSXMQreAC9I=;
- b=W2OJLdqCd1+8gEaUf3X59eumjz3vK8+ZFgvaravse+lwtQGw32+4K8fKubStQXIWJOfiXr
- l+gsCizO1GQDbOCcqTiwi3d3VaZQmWfMh+nRiYWwQcftc2gJI91XjWE8oYcTN55Eu/vtiU
- 0lhpnGYN9pp9zHmaKjebLkOU1xJ2pHc=
+ bh=JccatWTm97VV50DRacC5l35//16UROxbyfZ0bobIw3M=;
+ b=S/JkmYycS5WB+85yZ9qEyaT1dH1dYyqAbAKOjl4IrJMX9ve4GRgunNRWDkfPf7KCWHgfy3
+ 96hTwk3oN/E0rQ7LSvk8lrptoklDoLpOHoyQIwydn47oveNV0lT1LjF9qUw9KDD1sGgKy8
+ VEFr3XJ0JcXOrbtDymXMVgov913Srfs=
 Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
  [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-493-UTfb5-BHNqGE6y2Syc4JWA-1; Tue, 05 May 2026 16:26:58 -0400
-X-MC-Unique: UTfb5-BHNqGE6y2Syc4JWA-1
-X-Mimecast-MFC-AGG-ID: UTfb5-BHNqGE6y2Syc4JWA_1778012818
+ us-mta-507-H_E3Q3HKMW2gMp-KGqmKkA-1; Tue, 05 May 2026 16:27:08 -0400
+X-MC-Unique: H_E3Q3HKMW2gMp-KGqmKkA-1
+X-Mimecast-MFC-AGG-ID: H_E3Q3HKMW2gMp-KGqmKkA_1778012828
 Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-8acaea1ffe7so142717196d6.2
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 13:26:58 -0700 (PDT)
+ 6a1803df08f44-8acb85a973cso83859056d6.3
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 13:27:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778012818; x=1778617618; darn=nongnu.org;
+ d=redhat.com; s=google; t=1778012828; x=1778617628; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MloABw5GE3WIOEB46lkCJz/DCq9G15tQHSXMQreAC9I=;
- b=iFQtbsIv3pLopwKjSYa1ri9MA9S8wfvFDe5Vjd2RGHxLFFtnuJ5KilyRN6td5yvWoT
- SEhessTL6fRDEZfjVHc1mpLPa2YBPL8FXVMnxFAdTu4ngYX3/MNWkeSsn0dykwc1Kd74
- QXnuq11UIQe9vfLe3uzAQnFn/t0q1EIxkjQ7GkScoCh38THOxzQ/BcV3mUZ5zjpxDMaV
- xMP12P3kotfAb/bmk/t2Sq/zSwwwN2j8iA8z5u6ncNesTNX5gjrmwIJ463G1/d9GqVxE
- EYjSn75j77y4t6OmNyDQRR5WBxLtBSyvmRjetn4XWyDNp02fl4sm36HUX419AtYWrqUG
- VIiw==
+ bh=JccatWTm97VV50DRacC5l35//16UROxbyfZ0bobIw3M=;
+ b=L6OXOoWJ5jx6AYkEQfWGDyf13QtT1VSgF37LVPw36z0jN/35a5KhL3yJa8lQRbt+Fz
+ XMLCeFezdx3Ic5iHT/sGRr8HWWPtY3k2V51O2EQ0patMzOA6rFVG5C4dtWkCVwJNxkt0
+ QlwHtJffrW0AaTcWNYSVl5QsyfCuRsSc1N6/NmHYNs/4CT7ihR5WjcvOeZiP1YR/dQ2q
+ u+iqNBJqtLX9k3TGlXZOtjbcrqO8Fj4W2hzFnQt90sSeVL6N+BMFMtWWPUlHQS0uyMiW
+ Y05MdIgSEhfI8MV6JRPPQdI/yTDTACZT93ghfQIwqS5NGhuPHZuRjTX388u7HShMUD9m
+ rSkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778012818; x=1778617618;
+ d=1e100.net; s=20251104; t=1778012828; x=1778617628;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=MloABw5GE3WIOEB46lkCJz/DCq9G15tQHSXMQreAC9I=;
- b=CrHMeYbpKU21t6hFAa8W+SzHlCtbnbjJqGbOE2cyCa5zdpvC9pNVCjbIMBTPIVzqUD
- xstzZFO8XwojiAjM/KNsNrnCeJox5Smo1S6XVeKps4oqBKRQnVOJ4363K1ReDBV/a6la
- XxklWY2rhnZO5Z2oOfGsOIWAUkc4VMzC18YbK5ydMJCKNIumwWnF7NVe4dnJc0MDlvSz
- eR9pu7w4ZNxUUim+LjZasN1Qhpyoc3nui1fXU5rzAabpS+PuRsOTbg1J0MFvUyHlxHQb
- gV6XRdEFJZUD8fhJ+vOoxGuzGtY3eTZg6dsJ2hbkPJOaRQCKXZpkVzgI4P8K7NsaAj09
- qIdQ==
-X-Gm-Message-State: AOJu0YyBtG1bes8j5IFUTWGeA0Y5QSHwJ02W/xWXJXA8PL2qAglemh6A
- Zi+I6pQEQVvH1pvwPDAsK+EmgJb+gL1aq/06vIDP/rgt7Ikv1Fqj94iU0Yt0sTQGCa62jNv4ryC
- 1aqUPdWO9/NWRKpea66jPBf/6xCn0XkZ+4W2R17q9QtGAQ+XG5VGRfDV9MVnSy/OMwtGR6HGVX0
- cUldua0u9aAejemk/5mh0fBBPk5lIwY6Krs01Z4Q==
-X-Gm-Gg: AeBDievyq8iAG4oMsT//1pjYNsZ4MZlEmmz4tVn4qokqjGoyD5WvYbaikcesNeenqTR
- /DIHJawzHzPWmPSdDi9yN5HiOcyskMVK1w20dcZR2FLCsLZJF57ZtWiVxsaJdsPd+ijcatRAxJn
- Y6VSLcw0buKf8yYOovU61y701YuECO+bz1QY9jbLWTIXSzOmG4vJWhPPy48NiZlt96h2C//vP5E
- 8eTOI/n/kK2xVn2BAvvS6OMZg3/uCWOb4Fy18cKJCNgW+QGUtZE5OlY8HiJMp9olVURWPChqsz/
- 9c2JQ8wc9ZNlwtxhK4h8WLVwT6Ofj9kXAR7Giwq4sn0sMIr/eX6L6ep1tECP1McCTizTi+hgPBT
- z5tR0IgArUgrHCZwECrcubchAIvyxySB6xQHBW6Agg9yL01L3/U7or3Q=
-X-Received: by 2002:a0c:e089:0:b0:8ac:acd6:c988 with SMTP id
- 6a1803df08f44-8bc422a67f3mr5318746d6.1.1778012817573; 
- Tue, 05 May 2026 13:26:57 -0700 (PDT)
-X-Received: by 2002:a0c:e089:0:b0:8ac:acd6:c988 with SMTP id
- 6a1803df08f44-8bc422a67f3mr5318116d6.1.1778012816962; 
- Tue, 05 May 2026 13:26:56 -0700 (PDT)
+ bh=JccatWTm97VV50DRacC5l35//16UROxbyfZ0bobIw3M=;
+ b=rgeTJEHXmlTzLYkNgr0lh1D4siD1rieLcbGPTTDTTFVaxVEJALrSYnwq0wWjPtc8ub
+ ZFq2V6DvDCJhmsp3cz9/X/J56TQQy1OxMX3wS30f1iEhbujNV73ny27DJIQSJpiN98eN
+ mBqPMgySss0uhkgFP496uaRliJdSLbZQAR3t1SQr390byX+Rx8a+vZGFhQ/lDuJG8bN2
+ XBN/dYkO4x7uFA9Wz6d7OyfANTb+dGxtOpCp4KhAE371Zf0tnsPMoEhoc1ZmbLA0GyL5
+ GKE52vb0gCjTw/3cFEHQj1/MvaFEOjpmojd84/L1lX22W6T9yI/7raglK0dflVOGBp0M
+ da8w==
+X-Gm-Message-State: AOJu0YynuieYRhyX72ED1poiRYgtf8AVgDza+gFh2BmgJJvzFi0yZ30g
+ Wud2n8RYjt1vpj2xeeIh3U3CdAvGNxKm2vTpvI92d5ZeJGhJPybxPYiWydC2CHcmPuk91jw0ylD
+ NbzboS5zGPkBKrY3pMBor7tHYPV1/RX5hmrxOTc5cZihNtozVdpaHb9/aLHc6pnWu1fB8B9LUar
+ 6kSs7PoXOBjOeLozLK+dqSwb3pCysySjmdurcY7Q==
+X-Gm-Gg: AeBDietBZhg/bo0G/y+Dss1PEIB6g+4gU0u1taf3jV9mN4DqNBgvjNTp9OZvdzmVfnZ
+ 2lDeopOAtJmLKg2EV90qfalKGIg4h1V0dG46JyJxMAvIhpTumiQGLHD2DIk23NEv9xc6Z1yAItK
+ MAISsUFmgrEP99wXW8kQhSkmXMk2X3nVif2TNypE5hkmh8P+vGlTYoYP1Tx5wOZ3iirgB6UC+wE
+ yAmIbEvglm85IGsc38FCT8GopCIjgReZnPoFCmDWp0B6fuDD4DY/AaLFhkxf4Z9SJk7kTP0MG3D
+ niNFRWbefm+4PesApNJehPQVDYwh4cram9F3MTggkN8pXMoIJk+fx5WKFRK0Jpv/kFbD3WV5J4U
+ OLpCkACiNybHJoO8LKuWfMtvsKms55klefJNeLJfPnb/gIdyWKd5tekk=
+X-Received: by 2002:a05:6214:19ea:b0:8ac:a553:528c with SMTP id
+ 6a1803df08f44-8bc45f1aee3mr3796726d6.42.1778012827587; 
+ Tue, 05 May 2026 13:27:07 -0700 (PDT)
+X-Received: by 2002:a05:6214:19ea:b0:8ac:a553:528c with SMTP id
+ 6a1803df08f44-8bc45f1aee3mr3795886d6.42.1778012826872; 
+ Tue, 05 May 2026 13:27:06 -0700 (PDT)
 Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b53c6b8123sm155283806d6.35.2026.05.05.13.26.56
+ 6a1803df08f44-8b53c6b8123sm155283806d6.35.2026.05.05.13.27.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 May 2026 13:26:56 -0700 (PDT)
+ Tue, 05 May 2026 13:27:06 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, Hyman Huang <yong.huang@smartx.com>,
- Prasad Pandit <pjp@fedoraproject.org>, Juraj Marcin <jmarcin@redhat.com>
-Subject: [PULL 11/23] migration: Move iteration counter out of RAM
-Date: Tue,  5 May 2026 16:26:28 -0400
-Message-ID: <20260505202640.1011006-12-peterx@redhat.com>
+ Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ CJ Chen <cjchen@igel.co.jp>
+Subject: [PULL 20/23] hw/npcm7xx_fiu: Specify .impl for npcm7xx_fiu_flash_ops
+Date: Tue,  5 May 2026 16:26:37 -0400
+Message-ID: <20260505202640.1011006-21-peterx@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260505202640.1011006-1-peterx@redhat.com>
 References: <20260505202640.1011006-1-peterx@redhat.com>
@@ -118,132 +118,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It used to hide in RAM dirty sync path.  Now with more modules being able
-to slow sync on dirty information, keeping it there may not be good anymore
-because it's not RAM's own concept for iterations: all modules should
-follow.
+From: Peter Maydell <peter.maydell@linaro.org>
 
-More importantly, mgmt may try to query dirty info (to make policy
-decisions like adjusting downtime) by listening to iteration count changes
-via QMP events.  So we must make sure the boost of iterations only happens
-_after_ the dirty sync operations with whatever form (RAM's dirty bitmap
-sync, or VFIO's different ioctls to fetch latest dirty info from kernel).
+Currently npcm7xx_fiu_flash_ops provides no .impl substruct; this
+means that it gets the default of "implements 1, 2 and 4 byte aligned
+accesses".  This is more constrained than the device permits in its
+.valid substruct, and also narrower than the functions are written to
+handle.
 
-Move this to core migration path to manage, together with the event
-generation, so that it can be well ordered with the sync operations for all
-modules.
+Add a .impl substruct matching the .valid substruct; this means that
+all guest accesses are handled directly by the read and write
+functions, and are never synthesized by the memory subsystem
+performing multiple accesses to the device (which would not behave
+correctly, as these read and write fucntions have side effects).
 
-This brings a good side effect that we should have an old issue regarding
-to cpu_throttle_dirty_sync_timer_tick() which can randomly boost iteration
-counts (because it invokes sync ops).  Now it won't, which is actually the
-right behavior.
-
-Said that, we have code (not only QEMU, but likely mgmt too) assuming the
-1st iteration will always shows dirty count to 1.  Make it initialized with
-1 this time, because we'll miss the dirty sync for setup() on boosting this
-counter now.
-
-Reviewed-by: Hyman Huang <yong.huang@smartx.com>
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
-Link: https://lore.kernel.org/r/20260421202110.306051-10-peterx@redhat.com
+Based-on-a-patch-by: CJ Chen <cjchen@igel.co.jp>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Link: https://lore.kernel.org/r/20260428093339.2087081-3-peter.maydell@linaro.org
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration-stats.h |  3 ++-
- migration/migration.c       | 29 ++++++++++++++++++++++++++---
- migration/ram.c             |  6 ------
- 3 files changed, 28 insertions(+), 10 deletions(-)
+ hw/ssi/npcm7xx_fiu.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/migration/migration-stats.h b/migration/migration-stats.h
-index 1153520f7a..326ddb0088 100644
---- a/migration/migration-stats.h
-+++ b/migration/migration-stats.h
-@@ -43,7 +43,8 @@ typedef struct {
-      */
-     uint64_t dirty_pages_rate;
-     /*
--     * Number of times we have synchronized guest bitmaps.
-+     * Number of times we have synchronized guest bitmaps.  This always
-+     * starts from 1 for the 1st iteration.
-      */
-     uint64_t dirty_sync_count;
-     /*
-diff --git a/migration/migration.c b/migration/migration.c
-index 049b69fbe7..8abc7e0327 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -1654,10 +1654,15 @@ int migrate_init(MigrationState *s, Error **errp)
-     s->threshold_size = 0;
-     s->switchover_acked = false;
-     s->rdma_migration = false;
-+
-     /*
--     * set mig_stats memory to zero for a new migration
-+     * set mig_stats memory to zero for a new migration.. except the
-+     * iteration counter, which we want to make sure it returns 1 for the
-+     * first iteration.
-      */
-     memset(&mig_stats, 0, sizeof(mig_stats));
-+    mig_stats.dirty_sync_count = 1;
-+
-     migration_reset_vfio_bytes_transferred();
- 
-     s->postcopy_package_loaded = false;
-@@ -3234,10 +3239,28 @@ static bool migration_iteration_next_ready(MigrationState *s,
- static void migration_iteration_go_next(MigPendingData *pending)
- {
-     /*
--     * Do a slow sync will achieve this.  TODO: move RAM iteration code
--     * into the core layer.
-+     * Do a slow sync first before boosting the iteration count.
-      */
-     qemu_savevm_query_pending(pending, true);
-+
-+    /*
-+     * Boost dirty sync count to reflect we finished one iteration.
-+     *
-+     * NOTE: we need to make sure when this happens (together with the
-+     * event sent below) all modules have slow-synced the pending data
-+     * above.  That means a write mem barrier, but qatomic_add() should be
-+     * enough.
-+     *
-+     * It's because a mgmt could wait on the iteration event to query again
-+     * on pending data for policy changes (e.g. downtime adjustments).  The
-+     * ordering will make sure the query will fetch the latest results from
-+     * all the modules.
-+     */
-+    qatomic_add(&mig_stats.dirty_sync_count, 1);
-+
-+    if (migrate_events()) {
-+        qapi_event_send_migration_pass(mig_stats.dirty_sync_count);
-+    }
- }
- 
- static bool postcopy_should_start(MigrationState *s, MigPendingData *pending)
-diff --git a/migration/ram.c b/migration/ram.c
-index 44503bf3f7..ecd4b6165c 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -1136,8 +1136,6 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
-     RAMBlock *block;
-     int64_t end_time;
- 
--    qatomic_add(&mig_stats.dirty_sync_count, 1);
--
-     if (!rs->time_last_bitmap_sync) {
-         rs->time_last_bitmap_sync = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
-     }
-@@ -1172,10 +1170,6 @@ static void migration_bitmap_sync(RAMState *rs, bool last_stage)
-         rs->num_dirty_pages_period = 0;
-         rs->bytes_xfer_prev = migration_transferred_bytes();
-     }
--    if (migrate_events()) {
--        uint64_t generation = qatomic_read(&mig_stats.dirty_sync_count);
--        qapi_event_send_migration_pass(generation);
--    }
- }
- 
- void migration_bitmap_sync_precopy(bool last_stage)
+diff --git a/hw/ssi/npcm7xx_fiu.c b/hw/ssi/npcm7xx_fiu.c
+index 02707de350..2d5bed005a 100644
+--- a/hw/ssi/npcm7xx_fiu.c
++++ b/hw/ssi/npcm7xx_fiu.c
+@@ -250,6 +250,11 @@ static const MemoryRegionOps npcm7xx_fiu_flash_ops = {
+     .read = npcm7xx_fiu_flash_read,
+     .write = npcm7xx_fiu_flash_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
++    .impl = {
++        .min_access_size = 1,
++        .max_access_size = 8,
++        .unaligned = true,
++    },
+     .valid = {
+         .min_access_size = 1,
+         .max_access_size = 8,
 -- 
 2.53.0
 
