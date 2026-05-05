@@ -4,148 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 830EFCD3427
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 13:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A29D1FF8855
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 13:55:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKG9t-0007cw-M4; Tue, 05 May 2026 09:49:57 -0400
+	id 1wKGF4-0000Do-4C; Tue, 05 May 2026 09:55:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wKG9r-0007cT-1U; Tue, 05 May 2026 09:49:55 -0400
-Received: from mail-eastusazlp170120007.outbound.protection.outlook.com
- ([2a01:111:f403:c101::7] helo=BL0PR03CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wKGEk-0000Bt-Ju
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 09:54:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wKG9p-0007VI-1g; Tue, 05 May 2026 09:49:54 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Jiq/wonAOJetecjU8MKyGUq1GuwREI6zWokJ0BM5oH+qUzpTVKPuyFCAcJ72Iq3Map6IJFBbLnOotEW5HCwPwj293hwjZ8PDh4XmPWbwMc3r1EVH1tZL567DyNxV5ioFGQXDDEz4XS11mXEly40mpbWXCL7ZoG306iKI39hlBvJALhAv2HgWo0tWLOI7GsgVVsQRmGjpP7JUDmWGJDdoe223KCMtok+UcJv6ZZK230PdGeG/UIpOg82U71cTM3IB/XoTylfspQfjMGigSt6DNS0tVGHhhPDETl2FUFJHFllnDlnau1GZELfTSy7F746W4rHrvywOkPyEFJ9uZ5kmtQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=YzOFCeHpz8vYaY9TC4SW2MFvIzzj0Ur5cnEN+gnAv/E=;
- b=pbcqjkmoHI0yBL1OI6Mo1+K+UqH+hwOk5Rb+CZ334evfyU7svaOEot9J4aJAuK8OKoUCFZrnhMho701Fsl/AzvAdaSP1RMh0VLVWdEM6PFcGKLY23wVT5rUITqzDvMHtfE6AWN0dcNEPRdSXsfvqu7x14Uj5dszIVjqcw0Dz7bIvIGfvoSuV/nJAq5DYryft0er526Iz+Zf5UKBzIzK2AZvPKSD0TuQYOhkXhtfbBeqEg70lH0v/KHfBUNY+XD1LsoiknllVpxttVeelaRcAgZ2Lj1JthR3PEkBAPtpTM77i3QY8XDtS1dcjKmZI3ZQprFjg9YEFgBx397mjgn8Z4g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=YzOFCeHpz8vYaY9TC4SW2MFvIzzj0Ur5cnEN+gnAv/E=;
- b=rgmHCdnJXIadn9xPrXwrD9w8fcFRWJKndpp6nvp4kt3vqr+qmpeWAg0NzPbMsvCWEiAg+9qQ2S91ZBw2xuFxDdEO3XmdQYyBkWhkxZSvgTu8N5Z9TXENOU4baaDIhQsKA0qN1Yk/WoI7Yc2YKcVZdywonJL/WmEUNVDhpvG9rEh08FqdCPAGqULeHtTcA+YfgIJzoFnwmyGyRlqz8hr/1O5dIjRFmQeoBQVrb0DVVhEah5NbwY7hot+RcymXj2jubKdOkC65sRHAhjbvdbG2QBeeCXMHypcvCJKY0/Gzlb+qYQDRgR0neAVnSU5Kd5cA9v0HT7fnojr4CFK9k+C4PQ==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by BN7PPFD91879A44.namprd12.prod.outlook.com
- (2603:10b6:40f:fc02::6e5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.25; Tue, 5 May
- 2026 13:49:45 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.20.9870.023; Tue, 5 May 2026
- 13:49:45 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
- <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nicolin Chen
- <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>, Matt Ochs
- <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>, Jason Gunthorpe
- <jgg@nvidia.com>, "jonathan.cameron@huawei.com"
- <jonathan.cameron@huawei.com>, "zhenzhong.duan@intel.com"
- <zhenzhong.duan@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>,
- "phrdina@redhat.com" <phrdina@redhat.com>
-Subject: RE: [PATCH v4 16/31] hw/arm/tegra241-cmdqv: Emulate VCMDQ register
- writes
-Thread-Topic: [PATCH v4 16/31] hw/arm/tegra241-cmdqv: Emulate VCMDQ register
- writes
-Thread-Index: AQHczMa2FmOcjS77tkaQEDo91xKCpLX/XlOAgAAzyoA=
-Date: Tue, 5 May 2026 13:49:45 +0000
-Message-ID: <CH3PR12MB7548E9F5656F1338F77BAACEAB3E2@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260415105552.622421-1-skolothumtho@nvidia.com>
- <20260415105552.622421-17-skolothumtho@nvidia.com>
- <abd9298d-1c3c-4f0c-8aab-ca03edb6b230@redhat.com>
-In-Reply-To: <abd9298d-1c3c-4f0c-8aab-ca03edb6b230@redhat.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|BN7PPFD91879A44:EE_
-x-ms-office365-filtering-correlation-id: 0077de2d-c208-4d5b-5b50-08deaaad2a6b
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|22082099003|56012099003|18002099003|38070700021;
-x-microsoft-antispam-message-info: XN4OlSkFJU7xVgrjPvkUCvEcaFay/tpOpRpJqAli/3ua/m2sw+EshuALTCnHD2aBh+2aFnNHeJBFFyp+C8duVz/GFNbQiT6zu3h2Gk/xpqQuSdekYJp6bFMWpGTmJyKfi4ZVuMUHEIuiNkZ2Gks2WqWGIK8Fjet561aAaftNfr58DvsCPDFdjUfN77Tx2tDdNNIY1xGy6Hrp1uJ063HqgAR3+4rz9rWZqjO59rtfcAXuy+aL8jes/HvD7WY8ocG/LprYoLh8LM9tCsq5Mko9Zxzte3XQAYrlr7V5297CXSSeLB23TR/+6SkE1/ldrSYoSOql9cAfjXlkaY7h8dzvPd4ysz1WJoS/DrqaeVyiJ9YLwuwHns79M363dO5EIeQ8gxSrzUcWV0iNFH4tOqv3xuFssdSZoNr0tF7ehxqu2/BczcNBWBmnjKv0LYtcBxCIYu9l/7U2GfgceQJ8+4bnZPhwNP73JqYzWL0oy8o3AhZ13R7ruvfuuS1E8ZOoYz+fMkQQXiF9JR5aAelig+DflEMUIRutnfCIDLfK89B7HFNdwiCLAQ3LKdtXHbxqkWJLReIn+Klf35CJXtmQ/kBMynCxhTrM2S08bSJSKaoFq2JGZY7FQ0BJI1/RxcGKB6MjtP/1joGefUE5TYhgAfIw0MtWfn3F0DDvR9ZSIvDRIpZoo9ZWjCi629qTfvjDXU8Z0KYDY+6WkuyylsyGCQFTiKwyADjxi4G7rwRMuAYs0qnNYoI4V5d+3l/wHdz9uNEk
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(22082099003)(56012099003)(18002099003)(38070700021);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?RmEyQUZSTXpmOFlpZHVGRXlJQWd6dnpyWWZvSGFKL2YrWDlaWkFpbnhZWEdz?=
- =?utf-8?B?bnZSRytxR2NhNysrVGxGUWkvVTIzM2U4RHJwVzJtb2xLeHI3VWs3Ly85TDUx?=
- =?utf-8?B?cmgzSnZMdjlPa3FuaThsaXlaTkg1RUhBcEd6WGFTUExUdHN5YmN1NnZVLzZa?=
- =?utf-8?B?bS80MWQ5MWU3aTUzMjFvZU9MQU1KY3B4aEcvWGhnOU5PcEU1NzliTWFhWGFk?=
- =?utf-8?B?NzV4MFVoMFYwbDU5RVBPV0Z3V2hzNnp2b3BqZkR1T0luQnZJS3U1WE1uRFRt?=
- =?utf-8?B?Yk8vUHJBT08vRG5zcFBFSGVTT1gvWDVrY0ZMc3RtYWxXUWJMMjJpMHdid09T?=
- =?utf-8?B?aFFxalE1QVprZlNOTXVQVEcxUTkvb1B4QjJ5SDlkcjk2NGpVQWMzQnlFNW9l?=
- =?utf-8?B?ZjBNSFlWTE5hbXFaenhkV2IrY2xoQXM3U0hHOWEraWJrUlpjQ256aVFRd0M4?=
- =?utf-8?B?dXl5SXJ4bHVoSHZydXJQTGs1aDJkNkVWYUxySzQxcEdsbHhTa1BHL1J6SGRn?=
- =?utf-8?B?WDlYM1dyNUUydS9QZ24wUnphVkF3NWxnODR3QURmN2JOdGJxMVdiUGRHbE9M?=
- =?utf-8?B?b01IbVE1T3g4bEpoVTlNVnc1WlM3VVZaNEVpTjdnUkxaNFRLVXZrbmlScVZE?=
- =?utf-8?B?aWMxMUxxMWZPTmtyZGR6aUlSeFoxVlFqRHZnQWJ1R0I1MHNwVXNEZ1hBanpj?=
- =?utf-8?B?SU5vSlhGU2dsdTQ4cDZmWmU1eXRGNHJKaHN1bzYvdEVJM09yc3pQTUpVaUQ2?=
- =?utf-8?B?OWZTR24vaWJSQnhqVmtFS1N1NUNLMlVmblhuRUQwV1dPR1RXelZpRXdpVnJ2?=
- =?utf-8?B?WUc3Vy9FcnNlQ2M0bVJjU013WkNmOVJrQWs4NmZwZ0dIZUNzOE54eGNkZ0JC?=
- =?utf-8?B?QmVQZXZBdmV2MHVIclA0YU96aVo0cVF5RjEzS1FXeFZjQjRsbXhGVFo0cnlv?=
- =?utf-8?B?b2ViengzTWM0bHp3enlYVXc2NTV2TjdldHBnOXhycG9ubkIxVXEzT3Nsbmpt?=
- =?utf-8?B?a0h5RXkyeWZQTGZPbnNvQlRQVnF6cVJVbzZsV3B2b1R5L2NEZkhMSWZRamZV?=
- =?utf-8?B?RXc3UWlQTFZHbm40UmZKY3REOUxWWVZEWUlDdVhreXM4UWpMcHB0WTUvMklU?=
- =?utf-8?B?L29XMUxkNktnSEZYNXE4ZnZrR3N6L043TXRLV0V0a21PSnFicWlsN0tBQ3BC?=
- =?utf-8?B?aDQ4SGFqeCtocGRkdUdzU2xjT1J0UHFDQmtqNHBKMmNTNi9QYlFRdTBtK2M1?=
- =?utf-8?B?bk42bVg4RjZhQ2V2M2E5VHEyMGZJUGVNd2w1TVJwM20wK1g0YWhBaHJUZ1R0?=
- =?utf-8?B?ZG53azFIU29neThZK2hMZGJoZ1BPcjVqZkR5UGJvVmpMTnFpTW96SmJCSmdI?=
- =?utf-8?B?Q2FuUjMwbWlmeVVKT0VRZ1NmZG5TZHF6eXhDV3NpTTlPcEtaOHRCdFArNVdj?=
- =?utf-8?B?YVFmdGtEU2VqeWJETldtbTV5OVZXdTJFajF3NHdwczBvRDZmZk9iSlJQeDdK?=
- =?utf-8?B?WHExMFkzOWdEY0xvTFprUXRIYlhnRGY0QklYdmpRbHE2TnVCTi9mT0ZqVm1h?=
- =?utf-8?B?WExrTkdhZy80MTZLcDJ4RFllMzU0SzFmeHdjTVBCZE9GVDAvTEdKTXJnbk5t?=
- =?utf-8?B?aE9IaHN3NWlka3p5ZkphNzA2ekRoMXhESytzeGNCY1lVcmQ4MFhXbnNHUEVN?=
- =?utf-8?B?RXRWdlowU0J4M1B6T3JDS3ZLcnZLZmJ6Y3Z1TlcwK29ibTFneWhERk0rKzh4?=
- =?utf-8?B?eVZXNGx0em5saExCaUJxenF5VFdHd0ZoV0JMTWFBOUFadlJCQ25YV0krbHFQ?=
- =?utf-8?B?ekRBeS82T2k3d1gyRTdsZHBHSWVEMzd5cDJpRnhwUzZWN2hJOFBWRXE1eFVZ?=
- =?utf-8?B?b3kzUjBicXZkM2RIZW5YcU92dEZLTFN4ZHhLbzRGNGJjamozUFJ2dUUvUDh4?=
- =?utf-8?B?aW91TklmblV3K1Y0b2tYS1lQb1JxdWtObllxYzJ3YWQrRGpwQUJvb2QvZ3Mr?=
- =?utf-8?B?YVZHbkVHRUUvVE42NHZlb3QrMFFhczBHS1J3WStRaTA4S1dQRFdiaHh3T1M0?=
- =?utf-8?B?Z0tvdUlueFJaY2FkTUIxaVZHREF2aW5KVDJEUnJCbVlOOVg2dVJFOGY3cUlH?=
- =?utf-8?B?dTBkT1JHQ1BWYVhIL0h0NVNkc3owVDQ1eEM5b1RNUXVTeVo3YjhTdTJKaHZN?=
- =?utf-8?B?eFpHRjlYVC9BY1V3eDR3MmVoR1pzV3NSeTZxbG1xZkdOaEdJQjVTYlZ3SHBz?=
- =?utf-8?B?ZzdNNlMxMk8vZy9YVXNRajFPcVJsKzRRZ3JPSStKYmNOclM4NExLcW9IQ2hU?=
- =?utf-8?B?U1VZUjNiS0QxM0VEeTJyTmVnbnNtdFZDNDN3emk4R0Zab21aamcydz09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wKGEi-0000Um-GV
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 09:54:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777989294;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jwYZ7isk5BhtuugdO7owTHkcWIj49lXDVxvetLvii58=;
+ b=dCHKwPUVwEMkrxQC53roGuBeZGvLFGG5fqvCwqv0qjS1ppAem0215w6o+v8gShmo58Jqd6
+ b6o/7vGfm3ZPU5SKtQeSO1oJC0w9QD51bWe8AE05HF4JesLKe8Xgi1o/v5f7Q5MWLKtWhi
+ HI/xp8I9V0HGse4qQb2Nymi3lVbMSrs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-63-ig86TiRIPT6Ocl8SgPKAjQ-1; Tue,
+ 05 May 2026 09:54:51 -0400
+X-MC-Unique: ig86TiRIPT6Ocl8SgPKAjQ-1
+X-Mimecast-MFC-AGG-ID: ig86TiRIPT6Ocl8SgPKAjQ_1777989289
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A13DF1956096; Tue,  5 May 2026 13:54:49 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E36431944CED; Tue,  5 May 2026 13:54:48 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8505D21E6A01; Tue, 05 May 2026 15:54:46 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Michael Roth <michael.roth@amd.com>,  Eric Blake
+ <eblake@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,  Peter Maydell
+ <peter.maydell@linaro.org>,  Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>,  Igor Mammedov <imammedo@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,  Ani Sinha <anisinha@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 05/13] qapi/docs: adjust stub member insertion algorithm
+In-Reply-To: <CAFn=p-btJTG9NPzRi3ai+Ac1v1bMqeiYX0HZKKGGX8m3wo+cUg@mail.gmail.com>
+ (John Snow's message of "Mon, 4 May 2026 14:30:10 -0400")
+References: <20260429192611.1581223-1-jsnow@redhat.com>
+ <20260429192611.1581223-6-jsnow@redhat.com>
+ <87o6iva0a7.fsf@pond.sub.org>
+ <CAFn=p-btJTG9NPzRi3ai+Ac1v1bMqeiYX0HZKKGGX8m3wo+cUg@mail.gmail.com>
+Date: Tue, 05 May 2026 15:54:46 +0200
+Message-ID: <87o6iu2c7t.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0077de2d-c208-4d5b-5b50-08deaaad2a6b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 May 2026 13:49:45.0520 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 2KyRlGjt0uTDme2GvN7TUGp6B1/ACNhJYEno8k1lPDoHcDXOaaWtzvENumeUVkVaABWgcqY2Ymt8P1YJkGv28w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN7PPFD91879A44
-Received-SPF: permerror client-ip=2a01:111:f403:c101::7;
- envelope-from=skolothumtho@nvidia.com;
- helo=BL0PR03CU003.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,75 +98,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogRXJpYyBBdWdlciA8ZXJp
-Yy5hdWdlckByZWRoYXQuY29tPg0KPiBTZW50OiAwNSBNYXkgMjAyNiAxMTo0Mw0KPiBUbzogU2hh
-bWVlciBLb2xvdGh1bSBUaG9kaSA8c2tvbG90aHVtdGhvQG52aWRpYS5jb20+OyBxZW11LQ0KPiBh
-cm1Abm9uZ251Lm9yZzsgcWVtdS1kZXZlbEBub25nbnUub3JnDQo+IENjOiBwZXRlci5tYXlkZWxs
-QGxpbmFyby5vcmc7IGNsZ0ByZWRoYXQuY29tOyBhbGV4QHNoYXpib3Qub3JnOyBOaWNvbGluDQo+
-IENoZW4gPG5pY29saW5jQG52aWRpYS5jb20+OyBOYXRoYW4gQ2hlbiA8bmF0aGFuY0BudmlkaWEu
-Y29tPjsgTWF0dA0KPiBPY2hzIDxtb2Noc0BudmlkaWEuY29tPjsgSmlhbmRpIEFuIDxqYW5AbnZp
-ZGlhLmNvbT47IEphc29uIEd1bnRob3JwZQ0KPiA8amdnQG52aWRpYS5jb20+OyBqb25hdGhhbi5j
-YW1lcm9uQGh1YXdlaS5jb207DQo+IHpoZW56aG9uZy5kdWFuQGludGVsLmNvbTsgS3Jpc2huYWth
-bnQgSmFqdSA8a2phanVAbnZpZGlhLmNvbT47DQo+IHBocmRpbmFAcmVkaGF0LmNvbQ0KPiBTdWJq
-ZWN0OiBSZTogW1BBVENIIHY0IDE2LzMxXSBody9hcm0vdGVncmEyNDEtY21kcXY6IEVtdWxhdGUg
-VkNNRFENCj4gcmVnaXN0ZXIgd3JpdGVzDQo+IA0KPiBFeHRlcm5hbCBlbWFpbDogVXNlIGNhdXRp
-b24gb3BlbmluZyBsaW5rcyBvciBhdHRhY2htZW50cw0KPiANCj4gDQo+IEhpLA0KPiBPbiA0LzE1
-LzI2IDEyOjU1IFBNLCBTaGFtZWVyIEtvbG90aHVtIHdyb3RlOg0KPiA+IEZyb206IE5pY29saW4g
-Q2hlbiA8bmljb2xpbmNAbnZpZGlhLmNvbT4NCj4gPg0KPiA+IFRoaXMgaXMgdGhlIHdyaXRlIHNp
-ZGUgY291bnRlcnBhcnQgb2YgdGhlIFZDTURRIHJlYWQgZW11bGF0aW9uLiBBZGQNCj4gPiB3cml0
-ZSBoYW5kbGluZyBmb3IgYm90aCBDTURRVl9DTURRX0JBU0UgYW5kIENNRFFWX1ZJX0NNRFFfQkFT
-RQ0KPiA+IGFwZXJ0dXJlcyB1c2luZyB0aGUgc2FtZSBpbmRleCBkZWNvZGluZyBhbmQgVklOVEYt
-dG8tVkNNRFEgdHJhbnNsYXRpb24NCj4gPiBsb2dpYyBhcyB0aGUgcmVhZCBwYXRoLg0KPiA+DQo+
-ID4gVklOVEYgYXBlcnR1cmUgd3JpdGVzIGFyZSB0cmFuc2xhdGVkIHRvIHRoZWlyIENNRFFWX0NN
-RFFfQkFTRQ0KPiA+IGVxdWl2YWxlbnQgYW5kIHVwZGF0ZSB0aGUgc2FtZSBjYWNoZWQgc3RhdGUu
-IFBhZ2UxIHJlZ2lzdGVycyAoQkFTRSwNCj4gPiBDT05TX0lORFhfQkFTRSkgYWx3YXlzIHVwZGF0
-ZSB0aGUgY2FjaGUuIE9uY2UNCj4gSU9NTVVfSFdfUVVFVUVfQUxMT0MgYW5kDQo+ID4gdmlvbW11
-X21tYXAgYXJlIHdpcmVkIHVwIGluIGEgc3Vic2VxdWVudCBwYXRjaCwgUGFnZTAgcmVnaXN0ZXIg
-d3JpdGVzDQo+ID4gd2lsbCBiZSBmb3J3YXJkZWQgdG8gdGhlIGhhcmR3YXJlLWJhY2tlZCBtbWFw
-J2QgcGFnZS4NCj4gPg0KPiA+IFNpZ25lZC1vZmYtYnk6IE5pY29saW4gQ2hlbiA8bmljb2xpbmNA
-bnZpZGlhLmNvbT4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBTaGFtZWVyIEtvbG90aHVtIDxza29sb3Ro
-dW10aG9AbnZpZGlhLmNvbT4NCj4gPiAtLS0NCj4gPiAgaHcvYXJtL3RlZ3JhMjQxLWNtZHF2LmMg
-fCA5OQ0KPiA+ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrDQo+ID4g
-IDEgZmlsZSBjaGFuZ2VkLCA5OSBpbnNlcnRpb25zKCspDQo+ID4NCj4gPiBkaWZmIC0tZ2l0IGEv
-aHcvYXJtL3RlZ3JhMjQxLWNtZHF2LmMgYi9ody9hcm0vdGVncmEyNDEtY21kcXYuYyBpbmRleA0K
-PiA+IDM1ZTZmMGJiZDYuLmQ0YmEyYWRhOTIgMTAwNjQ0DQo+ID4gLS0tIGEvaHcvYXJtL3RlZ3Jh
-MjQxLWNtZHF2LmMNCj4gPiArKysgYi9ody9hcm0vdGVncmEyNDEtY21kcXYuYw0KPiA+IEBAIC01
-NSw2ICs1NSw3MCBAQCBzdGF0aWMgdWludDY0X3QNCj4gdGVncmEyNDFfY21kcXZfcmVhZF92Y21k
-cShUZWdyYTI0MUNNRFFWICpjbWRxdiwgaHdhZGRyIG9mZnNldDAsDQo+ID4gICAgICB9DQo+ID4g
-IH0NCj4gPg0KPiA+ICsvKg0KPiA+ICsgKiBXcml0ZSBhIFZDTURRIHJlZ2lzdGVyIHVzaW5nIFZD
-TURRMF8qIG9mZnNldHMuDQo+ID4gKyAqDQo+ID4gKyAqIFRoZSBjYWxsZXIgbm9ybWFsaXplcyB0
-aGUgTU1JTyBvZmZzZXQgc3VjaCB0aGF0IEBvZmZzZXQwIGFsd2F5cw0KPiA+ICtyZWZlcnMNCj4g
-PiArICogdG8gYSBWQ01EUTBfKiByZWdpc3Rlciwgd2hpbGUgQGluZGV4IHNlbGVjdHMgdGhlIFZD
-TURRIGluc3RhbmNlLg0KPiA+ICsgKi8NCj4gPiArc3RhdGljIHZvaWQgdGVncmEyNDFfY21kcXZf
-d3JpdGVfdmNtZHEoVGVncmEyNDFDTURRViAqY21kcXYsDQo+IGh3YWRkciBvZmZzZXQwLA0KPiA+
-ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBpbnQgaW5kZXgsIHVpbnQ2
-NF90IHZhbHVlLA0KPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB1
-bnNpZ25lZCBzaXplKSB7DQo+ID4gKyAgICBzd2l0Y2ggKG9mZnNldDApIHsNCj4gPiArICAgIGNh
-c2UgQV9WQ01EUTBfQ09OU19JTkRYOg0KPiA+ICsgICAgICAgIGNtZHF2LT52Y21kcV9jb25zX2lu
-ZHhbaW5kZXhdID0gKHVpbnQzMl90KXZhbHVlOw0KPiA+ICsgICAgICAgIHJldHVybjsNCj4gPiAr
-ICAgIGNhc2UgQV9WQ01EUTBfUFJPRF9JTkRYOg0KPiA+ICsgICAgICAgIGNtZHF2LT52Y21kcV9w
-cm9kX2luZHhbaW5kZXhdID0gKHVpbnQzMl90KXZhbHVlOw0KPiA+ICsgICAgICAgIHJldHVybjsN
-Cj4gPiArICAgIGNhc2UgQV9WQ01EUTBfQ09ORklHOg0KPiA+ICsgICAgICAgIGlmICh2YWx1ZSAm
-IFJfVkNNRFEwX0NPTkZJR19DTURRX0VOX01BU0spIHsNCj4gPiArICAgICAgICAgICAgY21kcXYt
-PnZjbWRxX3N0YXR1c1tpbmRleF0gfD0NCj4gUl9WQ01EUTBfU1RBVFVTX0NNRFFfRU5fT0tfTUFT
-SzsNCj4gPiArICAgICAgICB9IGVsc2Ugew0KPiA+ICsgICAgICAgICAgICBjbWRxdi0+dmNtZHFf
-c3RhdHVzW2luZGV4XSAmPQ0KPiB+Ul9WQ01EUTBfU1RBVFVTX0NNRFFfRU5fT0tfTUFTSzsNCj4g
-PiArICAgICAgICB9DQo+ID4gKyAgICAgICAgY21kcXYtPnZjbWRxX2NvbmZpZ1tpbmRleF0gPSAo
-dWludDMyX3QpdmFsdWU7DQo+ID4gKyAgICAgICAgcmV0dXJuOw0KPiA+ICsgICAgY2FzZSBBX1ZD
-TURRMF9HRVJST1JOOg0KPiA+ICsgICAgICAgIGNtZHF2LT52Y21kcV9nZXJyb3JuW2luZGV4XSA9
-ICh1aW50MzJfdCl2YWx1ZTsNCj4gPiArICAgICAgICByZXR1cm47DQo+ID4gKyAgICBjYXNlIEFf
-VkNNRFEwX0JBU0VfTDoNCj4gPiArICAgICAgICBpZiAoc2l6ZSA9PSA4KSB7DQo+ID4gKyAgICAg
-ICAgICAgIGNtZHF2LT52Y21kcV9iYXNlW2luZGV4XSA9IHZhbHVlOw0KPiA+ICsgICAgICAgIH0g
-ZWxzZSB7DQo+ID4gKyAgICAgICAgICAgIGNtZHF2LT52Y21kcV9iYXNlW2luZGV4XSA9DQo+ID4g
-KyAgICAgICAgICAgICAgICAoY21kcXYtPnZjbWRxX2Jhc2VbaW5kZXhdICYgMHhmZmZmZmZmZjAw
-MDAwMDAwVUxMKSB8DQo+ID4gKyAgICAgICAgICAgICAgICAodmFsdWUgJiAweGZmZmZmZmZmVUxM
-KTsNCj4gY2FuIHlvdSBleHBsYWluIHRoZSBhY2Nlc3MgcGF0dGVybj8NCj4gdGhpcyBkb2VzIG5v
-dCBsb29rIGxpa2UgQV9TVFJUQUJfQkFTRSBzbW11djMgd3JpdGVzL3JlYWQNCg0KVGhlIHNpemUg
-PT0gOCBicmFuY2ggd2FzIGFkZGVkIHRvIGhhbmRsZSBhIHBvdGVudGlhbCBzaW5nbGUgNjQtYml0
-IHdyaXRlDQp0byBCQVNFLCBidXQgeW91J3JlIHJpZ2h0IHRoaXMgaXMgaW5jb25zaXN0ZW50IHdp
-dGggdGhlIFNNTVV2MyBwYXR0ZXJuDQp3aGVyZSBzaXplIGRpc3BhdGNoIGhhcHBlbnMgYmVmb3Jl
-IHRoZSBwZXIgcmVnaXN0ZXIgc3dpdGNoLCBub3QgaW5zaWRlIGl0Lg0KDQpBbHNvLCBtbWlvX2Nt
-ZHF2X29wcyBpcyBtaXNzaW5nIC52YWxpZC8uaW1wbCBzaXplIGNvbnN0cmFpbnRzLiBJIHdpbGwg
-dGFrZQ0KYSBsb29rIG9uIG5leHQgcmVzcGluIGFuZCB1cGRhdGUuDQoNClRoYW5rcywNClNoYW1l
-ZXINCg==
+John Snow <jsnow@redhat.com> writes:
+
+> On Mon, May 4, 2026 at 7:20=E2=80=AFAM Markus Armbruster <armbru@redhat.c=
+om> wrote:
+>>
+>> I'm feeling dense again.  Please be patient with me.
+>
+> It's okay, this is a complex one. This is part of the reason for
+> pursuing strict ordering to begin with: the insertion algorithm is
+> complex and ugly.
+>
+>>
+>> John Snow <jsnow@redhat.com> writes:
+>>
+>> > A forthcoming patch removes the implicit PLAIN section that always
+>> > starts a QAPIDoc section list. Further future changes begin converting
+>> > "PLAIN" sections to "INTRO" sections. To accommodate this, the inserti=
+on
+>> > algorithm that places stub and dummy members must be adjusted to cope.
+>>
+>> What are the stub and dummy members?
+>
+> "stub" - undocumented members.
+> "dummy" - placeholder section named q_dummy that causes "The members
+> of ..." references to be printed in the rendered documentation.
+
+Got it, thanks.
+
+I figure synthesized "Returns:" can also be effected.
+
+>> > This algorithm can handle zero-or-more PLAIN *or* INTRO sections at the
+>> > beginning of a QAPIDoc object.
+>>
+>> The revised algorithm, I presume.
+>>
+>> What's the structure of its valid input before and after this patch?
+>
+> Before: Plain EverythingElse?
+> After: (Plain* | Intro*) EverythingElse?
+>
+> Where EverythingElse may never start with "Intro", and may contain
+> "Plain" but not as the first token when following a Plain section from
+> the prior production. (Because contiguous plain sections are merged by
+> the parser into one section.)
+>
+> This is to allow a gradual conversion. Once everything is fully
+> converted, and especially after "details" is introduced and the strict
+> ordering is enforced, this is tightened down considerably to: Intro?
+> EverythingElse?
+>
+> where EverythingElse may no longer contain Plain (It is removed), may
+> never contain Intro, and may only contain one Details section in the
+> appropriate position (Near the end, before Since.)
+>
+> More or less: this patch removes the assumption that every QAPIDoc
+> starts with exactly one Plain section and allows it to cope with any
+> number of Intro/Plain sections at the beginning, but makes no change
+> to what the parser actually produces or accepts. In effect, we go
+> from:
+>
+> Plain EverythingElse
+>
+> to, in the next patch:
+>
+> Plain? EverythingElse
+>
+> then as the conversion continues, one of these two:
+>
+> Intro Plain? EverythingElse? (Without converted intro)
+> Intro EverythingElse? (With converted intro)
+>
+> ... This entire insertion algorithm gets to be removed once we enforce
+> strict ordering, because we can insert directly to the correct
+> position in the list thereafter. So, it is only a temporary complexity
+> that exists for the sake of gradual conversion and piecemeal list
+> review of each QAPI module.
+
+Would working this into the commit message make sense?
+
+>> > Since we have three places that need to insert stub members, take the
+>> > opportunity to unify and deduplicate this code.
+>>
+>> Three?  I can only see two: Transmogrifier.visit_sections() and
+>> QAPIDoc.connect_member().
+>
+> Bad wording on my part again. ensure_returns also inserts stub
+> *sections*, not "members", sorry.
+>
+>>
+>> >
+>> > Signed-off-by: John Snow <jsnow@redhat.com>
+>> > ---
+>> >  docs/sphinx/qapidoc.py | 36 ++++++++---------
+>> >  scripts/qapi/parser.py | 90 +++++++++++++++++++++++++++---------------
+>> >  2 files changed, 75 insertions(+), 51 deletions(-)
+>> >
+>> > diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+>> > index 1f7c15b7075..70ab9cdc214 100644
+>> > --- a/docs/sphinx/qapidoc.py
+>> > +++ b/docs/sphinx/qapidoc.py
+>> > @@ -349,30 +349,32 @@ def _get_target(
+>> >                  )
+>> >
+>> >      def visit_sections(self, ent: QAPISchemaDefinition) -> None:
+>> > +        # Generate a placeholder right after the member section(s) wh=
+ich
+>> > +        # will be used to generate documentation for "The members of.=
+.."
+>> > +        # pointers in the rendered document.
+>> > +        # This is a temporary hack until the inliner is merged.
+>> > +        if ent.doc:
+>> > +            ent.doc.append_member_stub(
+>> > +                QAPIDoc.ArgSection(
+>> > +                    ent.doc.info, QAPIDoc.Kind.MEMBER, "q_dummy"
+>> > +                )
+>> > +            )
+>> > +
+>>
+>> This hack is of the nastier sort: passing a QAPISchema to the doc
+>> generator modifies it.
+>>
+>> Would it be possible to add this dummy always in QAPISchema?  Any
+>> drawbacks?
+>
+> Well...
+>
+> I didn't like the idea of generating "q_dummy" stubs inside the
+> parser, as it is an implementation detail of qapidoc. Though as you
+> note, this leaks it back out anyway.
+>
+> Here's my argument: the entire "q_dummy" thing goes away with the
+> inliner anyway, which is what I am actively working towards, and this
+> ugliness goes away entirely either way: we do not need q_dummy, we do
+> not need member pointer stubs, we will not need to modify the caller's
+> section list.
+>
+> I found this easier to do, despite the ugliness. Also consider that in
+> this case, we are building an isolated schema directly inside of the
+> Sphinx process anyway, so we are spiritually already "modifying our
+> own copy" - i.e. there's no chance that this stuff leaks out into
+> other users of the Schema. I think that's actually quite appropriate
+> and unlikely to cause unintended consequences.
+
+I think this is really a QAPIDoc defect.
+
+The doc parser knows where the (empty) arguments are.
+
+QAPIDoc also knows, but makes it hard to retrieve.
+
+The old code searches QAPIDoc.all_sections to rediscover the spot.
+Moderately ugly, relies on the well-known possible sequence of sections
+in all_sections.
+
+Your patch factors out the search, runs it once, and hacks up
+.all_sections to store the result.
+
+If we want the result stored in .all_sections (or anywhere in QAPIDoc,
+really), why not simply store it when we know it?
+
+Sometimes I wish QAPIDoc had a structure more useful than flat list of
+sections...
+
+>> [Remainder left for later...]
+>>
+
 
