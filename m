@@ -4,105 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04B5ACD3427
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 14:02:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEED6CD3427
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 14:14:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKGL9-0001xB-6N; Tue, 05 May 2026 10:01:36 -0400
+	id 1wKGWy-0003vS-0e; Tue, 05 May 2026 10:13:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wKGKx-0001v8-HY
- for qemu-devel@nongnu.org; Tue, 05 May 2026 10:01:31 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1wKGKq-0002lb-B8
- for qemu-devel@nongnu.org; Tue, 05 May 2026 10:01:18 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-67b32c695efso8245727a12.1
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 07:01:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777989672; cv=none;
- d=google.com; s=arc-20240605;
- b=IhWHXv6IXKT8VkPE57llG91Bh81rIqJTbbqmRezJMHYAp1GiAM4j9EaztYDP9hRLni
- x+cgD36ii02UdCeoe5r4lOgmfM4OSvrZjyuJ9Cmkp+bVV8WATKZAgFg22AhFNaUeeBrn
- bZDe6jRhlDSAUPy1ubuHHBbFr0nSkGiTKKu0tBhZe/5SxpZdQsRrCTq2O7DgAZExTu6R
- ALC9Tn3fatJhidlVF16IQ+8oNP64+ZhH2gADpfdfvxqKJvkrWTCB40h0OuaC1xCxB+q6
- g/NufgR2bTsR6GT0s33aBvkwQ3tkhnCyip3J9bsre8BkS355BD2HvYDVkyg9QztYw+1u
- 93yA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=TusxZum7fHOq7YOcoycgz/1GaDUn5NnYfl2ONeiIImM=;
- fh=nuETIhhrjDx3zGe6bCzSe94wBdKnqdNcr14yViqMafs=;
- b=MBoCTefGFb90UPsODH9fUtLyMgg7k3+4zSQySUyeeObpyg7qM/A0Dwdl3+xNDunFaC
- c+Ssx5ECOyxW60GlwUerndgZ8YFiJSSQMW3CwnnDarxR5SF8gnLvT/Ao+6vWsgIZQC8D
- lok56/v7FVI+bOT5LxgPe4H0GYlu83z03LQJV42tVYdQtICyYM/HkVxJbgNbAtDMnuSW
- M7hyxicdBYd9oUk9wbdcJd99X+u4pzGLxWbb5z61bKjUUZ29ky80EvUxb1V29EkaxGLE
- S2Z16aZ8ktzsyE3PwR+9zu75HeTWIUrFLs9bgGO3qPh6XJwxVfzSgDzXidBHf7CxSfyS
- GNWQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777989672; x=1778594472; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TusxZum7fHOq7YOcoycgz/1GaDUn5NnYfl2ONeiIImM=;
- b=tF29nN+XsuCFFHW6wHRRzDMz+Fkh/IMOaD4pqvq2jlGsZlIyJ1YZRqSWnYze0zG8B4
- xEwcEX6k6vRDiDLQFjU+R22CD4L2gly98DRXJKuemSOIuu+zOci2SAEXAcacnmX44STH
- 2nvOH69owtRwNYZ7UI/BTx7xiEeL8P83AnhdiBcGll3J6RkQFZRBUqlFuwro9JjDswXH
- jSrVrLErX/O3CxkCk1meymw8vMWTTXpf1SDhlePrYOj2vzhlLYEjZW8r+03Uo9buMQpt
- uYH4Kt36vcPB1liz5ifAMynzsiPl4N/rEhCKspbqryrZXFp9By8sRcgZOdyQ0gWhVyBh
- aMrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777989672; x=1778594472;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=TusxZum7fHOq7YOcoycgz/1GaDUn5NnYfl2ONeiIImM=;
- b=lrqF+qCzlM7JfNvwQyH4QaIVHN4nsrbVWPtUtIuu/KXT858Pz+xlWvPmWeAtDvvzg5
- 8v/qG/fyqdM1IKEh7M3KKQUo91FadaLvNNnZ87PYKq5jBDtfHrD/KiMfnhIzHuQ+bBs4
- JBv1vE8RTNFgWVMrjbQL6bnr5DyM9bJXkA4MdebmAdhH/dY0OeSjHlZ5y2Ttjvz9QfpM
- YRdXdzNJ2yBkCXVo5GHhqSdwyqLnfiPPUoFm+OC8eMLNBoF7+q5UFkFevAxEKx9234Za
- TeSIsM5OR/NV1hBEPi272BPENVU9ofe7qU0xBJ/W5MjEO/FW/dKXSCUl9AaF0pEr9yuc
- EhFQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8jpIHN3h96LO/BzkD2auMb9F+w38ahegvJs5En89bZQOQF2d8qaFziaCOHJlx7uadi0HaSgcZ/7lw4@nongnu.org
-X-Gm-Message-State: AOJu0Yz7R3QfOdZiTV1+elWvGLGScZdgUIk3ucTQ3Tz4mt9XBMjEmvgb
- 79DsiUpUxj5hGZclkrp5Cf6FiCCVs3axCGW4F+z11/UUYzZce+WxTGCvn6otK/ZCVqlr1bHqE+7
- o0zE9900WulxYj9RclCrjOsUNKcl831c=
-X-Gm-Gg: AeBDiesa61uofaVbxJsEFnz0CKIQztc36o/IupI6QjfUBlWV9Wzz3Zqr9lUS2yTDOZI
- TnKHi15NgOIpa1FHui7ZeDV+WAYhg1Pk5eD4Rcy3pxOuKKooItF++FTwYJu/suJ5VOdjzrkPgie
- LuB9LAh/R8bUqm2SfFDMmKwGykbrJvPPwXUcjT2wJ8zDDip/xRHWD9Hg9FZ7vjaLW3ZulRAULp9
- Z7JEw0OJ+3eKTg0ajBlXezhMyd0tloPfklf+qg7rpEDzltOickVa28IAsA4ldKwtitQ+ouSqIdo
- osmHPvmZf72umjXG3h9v3bXLGDmfAPmMdutewzljssRaZSKT
-X-Received: by 2002:a50:ed13:0:b0:676:d851:447e with SMTP id
- 4fb4d7f45d1cf-67cc37acf74mr1318916a12.4.1777989672014; Tue, 05 May 2026
- 07:01:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wKGWm-0003v7-Bn
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 10:13:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1wKGWj-0000Jt-NY
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 10:13:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777990411;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=9XsdMYKe/eL0q3Ru3223Cu8UJDn440X9m2nrEryeXAU=;
+ b=SF4IxrGrqnKoSGSevhrbYfAknxClpy8x1XjaR+AzO0qQXIg6jf+8eQRZb5bxFFhWjeBiws
+ /ICDuYDONsCp8707iygtiApZMIP3shTDNSnsLka9jrtQVvo0ChiZwJpmbYWUI1UR/tQG4u
+ bSYlz3GlkNWAGu4Jwg9b3KDPZl1SWts=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-116-rgXoHxZUOSGP5QOIxtCXgQ-1; Tue,
+ 05 May 2026 10:13:28 -0400
+X-MC-Unique: rgXoHxZUOSGP5QOIxtCXgQ-1
+X-Mimecast-MFC-AGG-ID: rgXoHxZUOSGP5QOIxtCXgQ_1777990406
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F30721956094; Tue,  5 May 2026 14:13:25 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.44.22.2])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 70F1E1800348; Tue,  5 May 2026 14:13:25 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 1578121E6A01; Tue, 05 May 2026 16:13:23 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: dave@treblig.org
+Cc: qemu-devel@nongnu.org,  AlanoSong@163.com
+Subject: Re: [PATCH 0/4] HMP roll up
+In-Reply-To: <20260504174914.122607-1-dave@treblig.org> (dave@treblig.org's
+ message of "Mon, 4 May 2026 18:49:10 +0100")
+References: <20260504174914.122607-1-dave@treblig.org>
+Date: Tue, 05 May 2026 16:13:23 +0200
+Message-ID: <87wlxi0wsc.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260505123502.1316554-1-armbru@redhat.com>
- <0f68fa39-f190-420c-a55a-f31a7b95663c@linaro.org>
-In-Reply-To: <0f68fa39-f190-420c-a55a-f31a7b95663c@linaro.org>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 5 May 2026 10:00:57 -0400
-X-Gm-Features: AVHnY4I_FhjtFRHrNdmaqLBYjgZXOrtGC9tkVOvEJhGn_v5OocsmG1BZJ20BAl0
-Message-ID: <CAJSP0QWVdSHvK2g8jncEL40nR=yp65LGZJ6z5NnsKM8ey2Oh_w@mail.gmail.com>
-Subject: Re: [PULL 0/4] Monitor patches for 2026-05-05
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
- stefanha@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FREEMAIL_REPLY=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,60 +84,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 5, 2026 at 8:59=E2=80=AFAM Philippe Mathieu-Daud=C3=A9 <philmd@=
-linaro.org> wrote:
->
-> On 5/5/26 14:34, Markus Armbruster wrote:
-> > The following changes since commit ac0cc20ad2fe0b8df2e5d9458e90a095ac71=
-1ab1:
-> >
-> >    Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into sta=
-ging (2026-05-01 14:41:49 -0400)
-> >
-> > are available in the Git repository at:
-> >
-> >    https://repo.or.cz/qemu/armbru.git tags/pull-monitor-2026-05-05
-> >
-> > for you to fetch changes up to ea017f67ce1ca34c7503b6f23f48b433585d37ac=
-:
-> >
-> >    monitor: Add `clear` command (2026-05-05 13:53:03 +0200)
-> >
-> > ----------------------------------------------------------------
-> > Monitor patches for 2026-05-05
-> >
-> > ----------------------------------------------------------------
-> > AlanoSong@163.com (1):
-> >        monitor: Add `clear` command
-> >
-> > Dr. David Alan Gilbert (3):
-> >        hmp*hx: Move info docs
-> >        hxtool: Split srst/erst add checks
-> >        hxtool: Error on missing docs
-> >
-> >   include/monitor/hmp.h |  1 +
-> >   monitor/hmp-cmds.c    | 11 +++++++++++
-> >   hmp-commands-info.hx  |  9 +--------
-> >   hmp-commands.hx       | 41 +++++++++++++++++++++++++++++++----------
-> >   scripts/hxtool        | 39 ++++++++++++++++++++++++++++++++++++---
-> >   5 files changed, 80 insertions(+), 21 deletions(-)
-> >
->
-> Obviously this conflicts with the PR I'm waiting since 10 days to post:
->
-> $ git merge pull-monitor-2026-05-05
-> Auto-merging hmp-commands-info.hx
-> Auto-merging hmp-commands.hx
-> CONFLICT (content): Merge conflict in hmp-commands.hx
-> Auto-merging include/monitor/hmp.h
-> Auto-merging monitor/hmp-cmds.c
-> Automatic merge failed; fix conflicts and then commit the result.
->
-> Sigh.
+dave@treblig.org writes:
 
-Hi,
-What is blocking you from sending your PR and who can do something about it=
-?
+> From: "Dr. David Alan Gilbert" <dave@treblig.org>
+>
+> Hi Markus,
+>   Can you merge this little set through your monitor set?
 
-Stefan
+Sure!  PR sent: "[PULL 0/4] Monitor patches for 2026-05-05".
+
 
