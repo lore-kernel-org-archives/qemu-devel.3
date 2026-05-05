@@ -4,90 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D1D2CD342F
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 12:01:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0116CD342F
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 12:04:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKES4-0003Zd-Ml; Tue, 05 May 2026 08:00:36 -0400
+	id 1wKEVR-0004R2-4h; Tue, 05 May 2026 08:04:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKERz-0003XO-1q
- for qemu-devel@nongnu.org; Tue, 05 May 2026 08:00:31 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wKEVP-0004Qr-HW
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 08:04:03 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKERv-0004kX-Tl
- for qemu-devel@nongnu.org; Tue, 05 May 2026 08:00:29 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-48374014a77so61220855e9.3
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 05:00:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wKEVN-0006Ue-PA
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 08:04:03 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-651bc83e74aso4529039d50.2
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 05:04:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777982640; cv=none;
+ d=google.com; s=arc-20240605;
+ b=eAXQz7FopJgewt8VHhP1b7OTulwbgUKCO6oJnOq70q0xU2ojNto83D2Yq0/hhT3a3U
+ UCEG1HpVQwMvDF21P6+HBuuLpu02WBzWS5PRPWtaQ4kb3WWP3KucLkdvtHi9AhFk/GVQ
+ iguZBYE/jjYP8/t4vjD5nY8q3PwwCcoGKBkdMVZgK6T+CeJCk5IIHts0ltGSPnu15gJE
+ LsYRFOn2vbfOjWYbPji9kR20o4GZxaQi+Vrt0OSx3QEE59isanx2g5benFRDcztjXtUC
+ QgBnDpw/ldtdBu6scey66LrTlEOfWyFubJA6v8NKy2icAh4Dmm924JaUjDPj6L+8NnBx
+ 8YQQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=QrGEKfVpRmzresmJVy4+pkzdvR+wIkSwhjy32Z36cJU=;
+ fh=5Wv4duMH+rgimKaOVxwvVVg74khZ6ldBwL5uRPFajh8=;
+ b=fPkUQ/J3Zj0tjLaRivzUihvWUovKyS0KEb/EJz8v0yTIO+uPcHH0zczsQCO5ri305R
+ RB1U87FcWTqmgxv839gsrX2GGRYbkOMYs9bssBoy3Mv1Qhh82y+lxGMx/E+mUkZ9H9or
+ lnEcsbg6ih9P+rZnTWTMEz2WqWZqpODYOMozNAgf4cylJ//MxNf6V7lCfJa3V4zayw0Y
+ qmhL/IvrRiDqx5fS2Kw0e0iAxQmB64H3As9w7D4V0kk4OaLJzGOquuruvNpb60TIeIHQ
+ 1hX4wuQSGonguf5XOHhDEbT9KJqEqZt9byScoSshOcLTbvWub32xRHtEMtUDAp0CYOvU
+ Lp6Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777982425; x=1778587225; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Vp6/FR2Q7DFGQ2lXC5WW++HB0DUM0tirO3EEdRzEicc=;
- b=gbgQHVY3OA40k0KE7v3hexaFT/Lb8R3CwBS2CilurZsBo/W9VYUdnE8x6Le1LMQ2xl
- /QGX8KlUeYNoZgRChyHzq3qHSHHB3m9Ae4zkMF/lk/mhjbs4IRshe3YAmoOQvM9o7e46
- lATBsR50T1xxoJww2gnyKfhb6r566kK4nrhLEU/pdBRr4yCNFVQCs+YzO/jGSCOraLoD
- C9jZ6eURDJ5kYPq0OtsLKP4OZAiM3LEGt138VCQXEgNEWJlV9ziZUBAxlcRKguC5rHFN
- ZtZcmuYlP+EG32oM5Rus39dATWHkfQ+iaXSKJ79bHV+lTZM6jhYw2NIKAHA64fAJbc3R
- pevw==
+ d=linaro.org; s=google; t=1777982640; x=1778587440; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QrGEKfVpRmzresmJVy4+pkzdvR+wIkSwhjy32Z36cJU=;
+ b=uSFakWNnEdQfnXc+/0q+tGZz3PgCu5AC6T6yBAfPcgHjDpgD/LcvYsfl2vou/uAqzr
+ 552j0SYU7U9uzXmdPdO3+qJNOrW9K5O9c6jS0p69UExM2sx0i3FGbQ1aoeFUpWsC6UBt
+ q8wFzjP77VcmOq2KeKPu4s9kq6Jm7k4RF9VnUkYUABHdIyYJVbAa7Ncfyv+sm1jK4W6G
+ bYWiVR4mrW5WQ9MSAbGjyn+5j3pqLaFC2lPIPfXpb7f8ECXFrULTv4Bmt0NV4Bl/1i7P
+ qGN8e5rJ40Efa/fX2/fVbLpptyAZj+zlZQAgzQAbvT9VobkqftV7uFd1g7Tcb/RHUN5F
+ LjMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777982425; x=1778587225;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Vp6/FR2Q7DFGQ2lXC5WW++HB0DUM0tirO3EEdRzEicc=;
- b=P3XAtA8sG7KCJ9/q/uITVdizafWLb3Tkma81q28x9H2rdLmy9huVPfS02qoI32twOX
- PDFtWEVJGBFlygTHDQ6x5bUTtBGPbeEKUqBljNJNaKl+OfTFc+ZSmvrblVI7B1NB0n4c
- 2qQtp1oKxK9BtXDZlQlBMgbYJTix/rBqtU5gr2MmYvUvjgJXRyY9kcci4YyxaQ50D32Y
- G5WavLcMHoiOZ2dyXHAWiySvMkjEkgigvJMWYx9VimmgKVNTp2FaBglUK9Z/mgXVGo6/
- LD25ppsjZmod0/YPUePkPoRJfF5xHnye/PY5TMjcgvSIARuDYUU4kwciTxxq+UsF5yy9
- R4AA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9LG3qUKoFCNJvjbrDxbOkX4//vr4x9uzrg/Edo3bGE+Y6t32ynw2NOca5ksi+O0BUtYxZMyhyZbVGy@nongnu.org
-X-Gm-Message-State: AOJu0YyVOE7Yh+mY0UKZ/HNA41EpUp/QOkthNG+Yt7o2Dfln996C2cj6
- OOqWqJSDvfn3/4mLHZcer0cDQdEnW8s/C7AcbaKXlSEJ9OdxPlvsAuL+8qFRQuMEYZ4=
-X-Gm-Gg: AeBDiesARE5egpipRA21X6XxUr6RH4ZhKY3SvDjkC9F7n/iAWNcEmWD4VUgJRN+DqtZ
- qqYKqStxEeXf7bO5NOhz1MfMptLYqwQuG5dUslPlew+ZG5vc0Pf5LDSpkuWmwLYCjsatml/Z988
- oKRZ+oz5D4LHYGUJK0RGBofP2B3Of6dBAJGYkQZvsUX9JO9AzokoKDwBX8XKTfDF60P9UCP+Y5D
- YutvwsVEtAD75JpLBmq1Z1HXJKCm0YEFW5GnpoRCzEHUq8OngP915LQoXIA60/CNpkJCNPY1Wx6
- GNhhOd2T+rC3B+PUntIWWDHJuKK2LztxcltOIfdwfH0ibexUAULKcFjUp6PnHO1tnTlUZzUM7yM
- 3eo/9dSeFJf/GbiYYp0S4V1+wUMP1GGVxTdTjkNiIUyJ8kPoc7OvnWkV2FaBOkukOedfAnVyrVC
- eQ8OeL5wLVMvYCAleVuwLqhmknfIUK5sYIwy4919TIKJrt50os9hPsRdH62UViQg7DZUg5FqpvS
- co5
-X-Received: by 2002:a05:600d:11:b0:48a:97b6:7420 with SMTP id
- 5b1f17b1804b1-48d1271fc9bmr73322455e9.24.1777982424134; 
- Tue, 05 May 2026 05:00:24 -0700 (PDT)
-Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a822bf3ffsm429243655e9.7.2026.05.05.05.00.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 May 2026 05:00:23 -0700 (PDT)
-Message-ID: <dcce1185-642a-4e34-8856-2401eefc2011@linaro.org>
-Date: Tue, 5 May 2026 14:00:22 +0200
+ d=1e100.net; s=20251104; t=1777982640; x=1778587440;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=QrGEKfVpRmzresmJVy4+pkzdvR+wIkSwhjy32Z36cJU=;
+ b=p5DYNooVy0Dgh1otWeyq3k0IXJnzAWdIHZ80R1l7fa5TtnqEUQqHuZkDwuh08bWQgY
+ o5R9r9KbZkAMB3097YkJpM7hpimS+ZFh7pXL4yK9fGGUv5cUk4qs9Irajpq0kGNi7x+N
+ tpBdQZeiRcJPk/2cyxJZeUWfiTvdI79bCvLSU+SeqJBtFVIH0md+7WHikTX/97jsgcAe
+ kYx1+b5jiD94ZIqyXKrKvp/aMueg04X5c+sCPadMjGF+aylLOov4X7nmsj5J2net8nYX
+ PSOrepGlC9bXsu9bWQ13oYbRpHS7ysB38Q6RR0vVTaRr+4ssLZ6MRqdTzhwQetKZxF+v
+ GioA==
+X-Gm-Message-State: AOJu0Yy9+pzCIlWtp83iCDAH5UwHhNHIAmr55y+uoKQT7243t2qpHkl2
+ b9siWBFHj2lm4JKMkYMcUtVPLXuWYw0b4KJbmmjEHb/ZxPjI1XvM6zfp4ZVQ4OjInRzBOl7NY1E
+ fKw1DRSY2PBcZRjjRpkgNMGESP2wtF11y+ukICS5O+g==
+X-Gm-Gg: AeBDietURr9b8V+8xDU/ox6rWOTxI965Vgwal2xW3OVUqQ3V37CyZGZqRdUWDs48jbh
+ XIeZUkDh96DzrZtaaAEQPz2I7Xx9mGrZDcBaa3XwUhXIAPGKOUA1Tw5g487PKImNDqkxUnrmRmp
+ wUAK60mT4ORrdIV7qzsClv9s84kPJK80PcjnE1SeMcoCyfw/X80YvCaWlsD54qOT71XXi6DMoAL
+ wneSD5jiLVI8nVYNro2pPX/wDfgHw9s3noBwI9SPsq4WHet6A/r9jd4gJ6aVfKiK4yd7aJB22TD
+ 3IZ7/jBvPnCWMuMfX6AkN77lusROMXLZLN/443BUBhbbbOZWzGihIHp12wpFFqUSfbTHixV9h+S
+ LgQ==
+X-Received: by 2002:a05:690e:43c7:b0:65c:468:7b6f with SMTP id
+ 956f58d0204a3-65c3da37c17mr9452600d50.25.1777982640401; Tue, 05 May 2026
+ 05:04:00 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/5] Miscellaneous patches for 2026-05-05
-Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: stefanha@redhat.com
-References: <20260505115036.1170186-1-armbru@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260505115036.1170186-1-armbru@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+References: <20260505103649.68361-1-alex.bennee@linaro.org>
+ <20260505103649.68361-2-alex.bennee@linaro.org>
+ <CAFEAcA-rFhHmS2+ToEZkr1+HE_e710-ZyyPESHLzCeW0QopY_A@mail.gmail.com>
+ <87bjeunmth.fsf@draig.linaro.org>
+In-Reply-To: <87bjeunmth.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 5 May 2026 13:03:47 +0100
+X-Gm-Features: AVHnY4IuCK5keaiByhhJOVrbHq3FzU5QtBRyYqah58nhqdA9D9RJ-Z6oVpqzwz0
+Message-ID: <CAFEAcA_txOHPLK+J546yjCmOEv0-ptaVkCEk5GfeL13DdqQd-w@mail.gmail.com>
+Subject: Re: [PATCH 1/5] configure: report unsigned qemu binaries for check-tcg
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <th.huth+qemu@posteo.eu>, 
+ Thomas Huth <thuth@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ qemu-arm@nongnu.org, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Brad Smith <brad@comstyle.com>, 
+ Fabiano Rosas <farosas@suse.de>, Kyle Evans <kevans@freebsd.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Warner Losh <imp@bsdimp.com>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,34 +128,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Markus,
+On Tue, 5 May 2026 at 12:00, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
+>
+> Peter Maydell <peter.maydell@linaro.org> writes:
+>
+> > On Tue, 5 May 2026 at 11:36, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
+wrote:
+> >>
+> >> On MacOS the initial binaries are created with the unsigned suffix.
+> >> The user is expected to sign them before they can access the
+> >> hypervisor APIs. However for TCG testing we can run the unsigned
+> >> binaries so lets make sure the make variable is correctly set so we
+> >> can run the TCG tests.
+> >
+> > We have a scripts/entitlement.sh, and this seems to have
+> > at least some plumbing into meson.build. What stops us from
+> > running this at build time so that macos users, like everybody
+> > else, have a working "qemu-system-foo" in the build tree ?
+> > Having to work around this by knowing that you have an
+> > "-unsigned" suffix until install is awkward for our own
+> > scripts and for humans.
+>
+> Hmm it gets built if you do:
+>
+>   =E2=9E=9C  make qemu-system-aarch64
+>   [1/6] Generating qemu-version.h with a custom command (wrapped by meson=
+ to capture output)
+>
+> and there seems to be logic in that refers to test_emulator =3D
+> emulators['qemu-system-' + target_base] which ensures the other targets
+> have it built. I'll see if there is a good place to hook that
+> requirement in for check-tcg.
 
-On 5/5/26 13:50, Markus Armbruster wrote:
-> The following changes since commit ac0cc20ad2fe0b8df2e5d9458e90a095ac711ab1:
-> 
->    Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-05-01 14:41:49 -0400)
-> 
-> are available in the Git repository at:
-> 
->    https://repo.or.cz/qemu/armbru.git tags/pull-misc-2026-05-05
-> 
-> for you to fetch changes up to 8dc8f7b5bc755227c72eb74aa332e7a6bbb90066:
-> 
->    qdev-monitor: Fix qdev ID validation regression (2026-05-05 12:52:26 +0200)
-> 
-> ----------------------------------------------------------------
-> Miscellaneous patches for 2026-05-05
-> 
-> ----------------------------------------------------------------
-> Markus Armbruster (5):
->        hw/core: Deprecate query-kvm
->        error: Fix "to current monitor if we have one" comments
->        error: Restore error_printf()'s function comment
->        qemu-print: Document qemu_fprintf(), qemu_vfprintf() failure
->        qdev-monitor: Fix qdev ID validation regression
+We should build it on just "make". Neither check-tcg nor the
+user ought to have to do anything special here. This seems
+like a bug in the meson.build file handling to me.
 
-My single-binary pull request is blocked since you said you wanted to
-have a look at this series:
-https://lore.kernel.org/qemu-devel/20260427080738.77138-1-philmd@linaro.org/
-
+-- PMM
 
