@@ -4,90 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CEDECD3439
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 17:04:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FEB3FF8855
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 17:17:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKJ9I-00080c-15; Tue, 05 May 2026 13:01:32 -0400
+	id 1wKJNj-0006Pz-PZ; Tue, 05 May 2026 13:16:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKJ96-0007xA-F0
- for qemu-devel@nongnu.org; Tue, 05 May 2026 13:01:21 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <zuraxt@gmail.com>) id 1wKGIg-0001JI-EF
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 09:59:19 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKJ92-0003Tv-Fb
- for qemu-devel@nongnu.org; Tue, 05 May 2026 13:01:19 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-48a563e4ef7so53184495e9.0
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 10:01:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zuraxt@gmail.com>) id 1wKGIe-0001rd-BQ
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 09:59:01 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4891e86fabeso65335655e9.1
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 06:58:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778000473; x=1778605273; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zgN89KaSyxSAefXPH8ZQnVFNA6F32d/CG9VXqM5uJNg=;
- b=HGQg9S2A4/0A1u3qkRbeRJgWkeKkHr7ag74WcvpzYspp2sr4ohTLjNdA+xg/Djp9k/
- 9zStc/aYFC0Ewip0I4FVRVTGgbGBP5G8qsuHtTYkPDlJBTujh2221d1Rx7dtFcPmUtPG
- QfeFZkeBCWRAEQ5EBNYV+Vltk9KI0ZdAUoE334GE4BxTpe400Jjg0lMkDIKajoGlvBcJ
- 9yKquIE2Qn5Udv4f3JpstmLg1FiUB9c7rp/cOEgqQAQ9aywBrQWZbDTh5Y6Dgs7STJbI
- iev69z08aOMBPLc3QpCJ7cUC6wtznTFm2cDWPdnU8rKO1FD3XDgIFKHYiKj6L9NzHoEL
- xsRw==
+ d=gmail.com; s=20251104; t=1777989537; x=1778594337; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=FjfKyzqKo8dYsreja2pN/NQNwtFTmkUUNBMDn1BMkrY=;
+ b=gQk/oMghd2WbEguQNWeknY5cg9H6kzbPyTct3TDz4LlOJOL8H9fBrrVglW06B3PrWJ
+ BUbamgN/1ABX0DKQKuKsyvQPD7PIglehmBejNB/5+blt4NFUxA2Nad83kTAPWCHBkJeR
+ DBNHuPRVUXnNeyHbzTf7fYi5SyXWEIm7LRasENINWEpgqXl81CNQK8S88KJeQyAVhdx8
+ RYkDGnYQo7rbxJ6RmQJMaI5hKYaSqaDHi2Pa1ggMNo5IBEsrMywgnqRufdImiE8AhcMy
+ Fl+pZRR34P+2YuGItcMyoVeZoLD0DbTkoPbFClqjWWVuDInteXbp3P7pVmbzt047jSsX
+ mA5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778000473; x=1778605273;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=zgN89KaSyxSAefXPH8ZQnVFNA6F32d/CG9VXqM5uJNg=;
- b=qyXRbOqf1wt32C5y1zke2aFqqR/kBFFl4PorBh3UJqKZUpw9xzBskq9r7uvAbalQ8q
- UftRhqhcmxC1UagJZ7vvRnIAvl4eDrXZ4HbU5kLTEA/P+9ep/Zj2wTIDZEGbtkkbDdBd
- aWQsOVDUn/egLpLhDvYAgSYM6TbpvWZVDBwwIAZkIyp3ab1g+rfimMWTAzYxCmH75Irb
- xOkOHMxeNPBrfGvKe0LU69iO43ld9M2GrxqMHHAkTPdVYWINgm1adTo0dQPOXmVVHxPR
- /sbZ68sB9823i9hMAIPbGuqD3RIgoxHXkL/vyL6BYVpvds8+gXnWlc3xTFytdUBixikx
- ISvQ==
-X-Gm-Message-State: AOJu0Yy+KuINgkp57ES/zJHbrEbdrzg19n5MQ8bnV1huQy2cxFrw2ioT
- lLNLsOkoYNHLYE7xlrBd6MlSJjI3GhDkXNe8caOoOSf74Vjj0LDEMtb+eVso21d10Iw=
-X-Gm-Gg: AeBDieutPAH0R2Rq1oOJuTvCYL7uHVTLOiTgkyvfz1eBq6lCC/HhS8FCnESjoIspL/y
- SsRR6JIsz/IYlb+RMxRHq4MX3lZUheYYyRut24VvNfRaBCtSeS3zaIvQwRU19ZQufa23fmb+PLw
- Lm7xijs/lq2XhGT2sZwmBlXmVm9UIVbn+S3Cnsx5yQ6/jgLtmgRkfSxFi9znsuobD1Av71tEKTT
- /ZqH1mVqepvZY/VCth5WU2BssYKfu6kh8ibOLamYtURmB8Zs2nslB1FtgsdHdNB6HdKQIbMBaWq
- AB8Puo9sIE7oBqkgMShRng/XQ1epl8fos6vqVM1Ee44AB31sLFcHqOuyysosCEO2tQ0+sue2fDT
- k0nv8l5zocrIfmF8gALHO6/v939XnxvaMeob+QT/faJgfyj0T/qIEb/VU3TZXz6fMygoxRHxdEk
- b2CJCS2FVaUtn6/FB4gDQCeXGiU8yXLVBjMsGFnVZ8sCAk
-X-Received: by 2002:a05:600c:2d43:b0:48a:563c:c8c0 with SMTP id
- 5b1f17b1804b1-48e51e166a3mr1027025e9.7.1778000473294; 
- Tue, 05 May 2026 10:01:13 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48a8eb69800sm356218795e9.2.2026.05.05.10.01.09
+ d=1e100.net; s=20251104; t=1777989537; x=1778594337;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FjfKyzqKo8dYsreja2pN/NQNwtFTmkUUNBMDn1BMkrY=;
+ b=seE4vdNJFo5oqCfhVU2YlpRcVHIjg20GyfsAKJV8l9rETQwTEOfMfpWSPM7iIeJUz8
+ NtMcEeW83StEju6UMIOx9u6y36BXqnocSPY4PgaP+P0KtyJDDFuei7ePakZMGDxs+9dV
+ fHr3COfPOnMN9nF4vv5H96j1KZR+3zta4mIDV3i5uEea7Yd2aCAzye/eEJZuQS3RI48z
+ P4GXrVFsdOK3C717F75538BL9K7nuz6r94X+yJR9OQin2ucm8Opj38QVDkaxGZSzIc1L
+ 8kJDEm8OF6pK0BnW+em15F0NJ8iO5KkMLOBZdj0Nv43lo7hd6lbzsy+kX8YrQuWlU+Cz
+ IKcA==
+X-Gm-Message-State: AOJu0Yw1Loppu1QHTbheuLDrUPwEfPxiK61iDhNdwOrqLgD9s4qm24O1
+ gm11uYnOaOAu55sw+Ok00MUJiwzMjZdWriSrNAq7OzqqD5kLsc9ofGQPGOli9MUA0Pc=
+X-Gm-Gg: AeBDiesgRYgZt8E8UkpPKcFbD+BrCuUBgJnRmRJ7fr2Q4UfNtpsWfaYITcOfotZ1Dd4
+ lFPMBbHeMaISgwhDg87qrNVFX7ujZZeSA239On7G35UKUCjnPTXqPGRftj7XuRH1WUVJPBUGEDW
+ el6R3q6XNIXBdIjK7hhAuv2DX/Or4XGuLOJ84mzgDmWEnzcfKuR4kfeQ3t36Z75RQsMl8RgDt6k
+ pIo4AOLGr1vnfdrA8d4mqj+lbUj1td5ef0Fxd6LCfiyGbItXie0n6/Wdq4U8xsSGZ5asxJVs/yr
+ ZBlOuAyXOFJptWgUoESsFWqnNGcgDeIVRuT7v/u+AZEBcl9bKUu05cRiCxK9bXijz/ALSr4UBtd
+ msB2zn/f1EeF30Kd1lEOip9JyOrrKfi0UQilKVk+wPfVOgV4pAdHl8W0G8Wr6FFJXnlPkq+8f7E
+ SceyOlujYU8b2UIX4X0qz6T9H3BbmE9jgx7a8=
+X-Received: by 2002:a05:600c:797:b0:48d:35e:82cb with SMTP id
+ 5b1f17b1804b1-48d035e8304mr111971115e9.28.1777989536737; 
+ Tue, 05 May 2026 06:58:56 -0700 (PDT)
+Received: from fedora ([109.172.173.254]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48d184ed090sm17620935e9.33.2026.05.05.06.58.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 May 2026 10:01:10 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D36806095D;
- Tue, 05 May 2026 18:01:06 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ Tue, 05 May 2026 06:58:55 -0700 (PDT)
+From: Zurab Kargareteli <zuraxt@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 09/10] .agents/skills: add checkpatch agent skill
-Date: Tue,  5 May 2026 18:01:04 +0100
-Message-ID: <20260505170105.228162-10-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260505170105.228162-1-alex.bennee@linaro.org>
-References: <20260505170105.228162-1-alex.bennee@linaro.org>
+Cc: Zurab Kargareteli <zuraxt@gmail.com>
+Subject: [PATCH] po: Add Georgian (ka) translation
+Date: Tue,  5 May 2026 17:58:37 +0400
+Message-ID: <20260505135838.562522-1-zuraxt@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=zuraxt@gmail.com; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 05 May 2026 13:16:15 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,32 +95,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a very simple skill that tells the agent how to run
-checkpatch.
-
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Zurab Kargareteli <zuraxt@gmail.com>
 ---
- .agents/skills/checkpatch/SKILL.md | 10 ++++++++++
- 1 file changed, 10 insertions(+)
- create mode 100644 .agents/skills/checkpatch/SKILL.md
+ po/LINGUAS |  1 +
+ po/ka.po   | 94 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 95 insertions(+)
+ create mode 100644 po/ka.po
 
-diff --git a/.agents/skills/checkpatch/SKILL.md b/.agents/skills/checkpatch/SKILL.md
+diff --git a/po/LINGUAS b/po/LINGUAS
+index 9b33a36..2769edc 100644
+--- a/po/LINGUAS
++++ b/po/LINGUAS
+@@ -2,6 +2,7 @@ bg
+ de_DE
+ fr_FR
+ hu
++ka
+ it
+ sv
+ tr
+diff --git a/po/ka.po b/po/ka.po
 new file mode 100644
-index 00000000000..1f0f84fe6b7
+index 0000000..6c3110d
 --- /dev/null
-+++ b/.agents/skills/checkpatch/SKILL.md
-@@ -0,0 +1,10 @@
-+---
-+name: checkpatch
-+description: run checkpatch on a file or patch to validate style issues
-+license: GPL-2.0-or-later
-+---
++++ b/po/ka.po
+@@ -0,0 +1,94 @@
++# Georgian translation for qemu.
++# Copyright (C) 2026 qemu's authors
++# This file is distributed under the same license as the qemu package.
++# Zurab Kargareteli<zuraxt@gmail.com, 2026.
++#
++msgid ""
++msgstr ""
++"Project-Id-Version: qemu\n"
++"Report-Msgid-Bugs-To: qemu-devel@nongnu.org\n"
++"POT-Creation-Date: 2026-04-28 16:53+0200\n"
++"PO-Revision-Date: 2026-05-05 13:16+0200\n"
++"Last-Translator: Zurab Kargareteli <zuraxt@gmail.com>\n"
++"Language-Team: Georgian <(nothing)>\n"
++"Language: ka\n"
++"MIME-Version: 1.0\n"
++"Content-Type: text/plain; charset=UTF-8\n"
++"Content-Transfer-Encoding: 8bit\n"
++"X-Generator: Poedit 3.9\n"
 +
-+# Instructions
-+Run `./scripts/checkpatch.pl [FILE]` to check a file for style issues.
++#: ui/gtk.c:233
++msgid " - Press Ctrl+Alt+G to release grab"
++msgstr " - ჩაჭიდების მოსახსნელად დააწექით: Ctrl+Alt+G"
 +
-+You can also use a GIT-REV-LIST to check against git, e.g. run `./scripts/checkpatch.pl HEAD^..` to run checkpatch on the last commit.
++#: ui/gtk.c:237
++msgid " [Paused]"
++msgstr " [შეჩერებულია]"
++
++#: ui/gtk.c:2208
++msgid "_Pause"
++msgstr "_შეჩერება"
++
++#: ui/gtk.c:2214
++msgid "_Reset"
++msgstr "ჩამოყ_რა"
++
++#: ui/gtk.c:2217
++msgid "Power _Down"
++msgstr "_გამორთვა"
++
++#: ui/gtk.c:2223
++msgid "_Quit"
++msgstr "გასვ_ლა"
++
++#: ui/gtk.c:2372
++msgid "_Fullscreen"
++msgstr "სრული ეკრა_ნზე"
++
++#: ui/gtk.c:2375
++msgid "_Copy"
++msgstr "_კოპირება"
++
++#: ui/gtk.c:2389
++msgid "Zoom _In"
++msgstr "_გადიდება"
++
++#: ui/gtk.c:2398
++msgid "Zoom _Out"
++msgstr "და_პატარავება"
++
++#: ui/gtk.c:2405
++msgid "Best _Fit"
++msgstr "საუკეთესოდ _ჩატევა"
++
++#: ui/gtk.c:2412
++msgid "Zoom To _Fit"
++msgstr "გადიდება დაპა_ტარავებაზე"
++
++#: ui/gtk.c:2418
++msgid "Grab On _Hover"
++msgstr "ჩაჭიდება _გადატარებისას"
++
++#: ui/gtk.c:2421
++msgid "_Grab Input"
++msgstr "შეტანის _ჩაჭიდება"
++
++#: ui/gtk.c:2450
++msgid "Show _Tabs"
++msgstr "_ჩანართების ჩვენება"
++
++#: ui/gtk.c:2453
++msgid "Detach Tab"
++msgstr "ჩანართის მოხსნა"
++
++#: ui/gtk.c:2457
++msgid "Show Menubar"
++msgstr "მენიუს ზოლის ჩვნება"
++
++#: ui/gtk.c:2479
++msgid "_Machine"
++msgstr "_მანქანა"
++
++#: ui/gtk.c:2484
++msgid "_View"
++msgstr "_ხედი"
 -- 
-2.47.3
+2.53.0
 
 
