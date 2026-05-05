@@ -4,96 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 812BECD342C
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 02:01:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87D26FF885A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 03:48:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wK566-0007xT-Sd; Mon, 04 May 2026 22:01:19 -0400
+	id 1wK6ka-0003ye-0Z; Mon, 04 May 2026 23:47:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wK55q-0007ty-2t
- for qemu-devel@nongnu.org; Mon, 04 May 2026 22:01:03 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wK55l-0004T0-Vc
- for qemu-devel@nongnu.org; Mon, 04 May 2026 22:00:59 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2b9ea536877so17384945ad.1
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 19:00:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777946456; x=1778551256; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=NoiNadYVmI8J/NztZI1ukZWpwrODVQ4vGWgRiTK8EzY=;
- b=W897xvpNnS//Bu72SJsSOF0Kz9HZSkSlLsq2QYMfP5hmskIAorMy5yWewownaytBMW
- XwCm89+Ngd1Okp+Ea+Bn+d/eEn0eY6qwoKzismICLIK4SGu/9p4KeQ4OQsTik4vEj0Xv
- tXdgJXDzR4JhGJ9Xpjq3bqNAYuDnNkUL+YRr+HV6ETMmWGMHY2CnXBbXt3baVqXAFZ2t
- hvXz+M2sHxWYDjHDTmwqAtyhB2AonybHG9rGtkeFhwH11dfjh5MxzKp3xD0y4Di8iXmB
- wDt6LMzUkFZVTYzmo/e1OJMl01PSO955a2dFlnohtU17KTPmV0/6eHH+fVU/3uNmWWDK
- CXJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777946456; x=1778551256;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NoiNadYVmI8J/NztZI1ukZWpwrODVQ4vGWgRiTK8EzY=;
- b=qqJBd4OPzursWAdls1J1bh5fl3o7zi9Z5YOn6pmvN9zABjVrGTxzEPqYSyuea/by2n
- UbzSOOxp0aw5pw3y3SrmGjyalAFwNDUEP4qyGh1XydWlQeagaEHsj9O0Ca7xrFFhjkwR
- +VlSbyLFS6TupjqIFGeWpg98Y6qa6nW9fOa7frpE29h66fV+1zdMRtZdRgUIRHfMpV85
- xAMQHAZVZd4ZSf7KAInv4dYxI6ci4mg0wrstmS2u8BmrUAhDy4PagFoGP/xSeJer7Qz2
- Km2GOqeVhMqbnLO2ZDvqHiHgb9KjJfp0zE8VnOgSVXPzzsIGH8ZmYxyLrv9Kq8V07kRx
- K59w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/8/kL1HmvUE+sH6bZDgsXUbOArYbbi7b8YpYXc7Kl7HK0UAz96eqvGe8YRLXVRM3/fsC7FtzCl0YI5@nongnu.org
-X-Gm-Message-State: AOJu0YxszvUw3Mrt6+YfxUaXRqirgPhzu2exaY0bD4DBfNHYah1RVjuY
- l9sKA7cyWVLbRgn3Yh2+1klbaJFWBp7bpGUQ7C911eQFIBfWZiOExQ6X
-X-Gm-Gg: AeBDievDea+u8hYsNopzxDmBT2HPipL50u4d2lTBtDogOfM5RNDFt+XzhAQt3xxbSGg
- GweIbMhr9mYpYU5/bUARKAgaXMjxzaHsCOFJD9AfvWf+Wlt8GQfHdFl5YLdfcws/FV/bc885Q8+
- ak4enQR1A5Lso5CJhpvbp+tDYm/1bSqFeqUoLFqoJzzL28/KUMmru06I4xO+MZyw+XbzFvvxOZ3
- JYsOio/+oIQaTWMhP1PZME35Dc+stF4y80zs6NazfWsNV0Lq7tCwkuBJT07WRB7x6rwFMSQotTa
- RgrnzL9hxkA6Ov765suK7Qeq1bJTx/n5h2aYuaF7ra5twwxWh4pfu4DJtj5NLHAlINN0VpoY9pA
- XK0NLACHw7buJfF8ALMfAT3AV7s36/KU3oaC4pyzyjilhSBYh/aqzH8uoceSIRDnsTo7n1ujD/V
- XWFgZ4kZPXmvWuymGRdRb0hmYwPUKq4QK07egPiyg/V9V2iC2/2L/Q2Q==
-X-Received: by 2002:a17:903:1acf:b0:2b2:5168:2f82 with SMTP id
- d9443c01a7336-2ba4e4d4497mr14043295ad.24.1777946456314; 
- Mon, 04 May 2026 19:00:56 -0700 (PDT)
-Received: from localhost ([124.158.97.178]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b9cae54860sm113682305ad.72.2026.05.04.19.00.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 May 2026 19:00:55 -0700 (PDT)
-Date: Tue, 5 May 2026 12:00:51 +1000
-From: Nicholas Piggin <npiggin@gmail.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Joel Stanley <joel@jms.id.au>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, Michael Ellerman <mpe@kernel.org>, 
- Joel Stanley <jms@oss.tenstorrent.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v4 09/13] hw/riscv: Add Tenstorrent Atlantis machine
-Message-ID: <aflOIW3v5FQMwfGA@lima-default>
-References: <20260425131721.932250-1-joel@jms.id.au>
- <20260425131721.932250-10-joel@jms.id.au>
- <CAKmqyKMLwO2uRnzrke+RkCZmdOJPs3Ouyoe=UeuAWnRgitAD8A@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1wK6kW-0003yN-TP; Mon, 04 May 2026 23:47:08 -0400
+Received: from mail.aspeedtech.com ([211.20.114.72]
+ helo=twmbx01.aspeedtech.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven_lee@aspeedtech.com>)
+ id 1wK6kT-00029X-9y; Mon, 04 May 2026 23:47:07 -0400
+Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Tue, 5 May
+ 2026 11:46:55 +0800
+Received: from mail.aspeedtech.com (192.168.10.10) by TWMBX01.aspeed.com
+ (192.168.0.62) with Microsoft SMTP Server id 15.2.1748.10 via Frontend
+ Transport; Tue, 5 May 2026 11:46:55 +0800
+To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
+ <peter.maydell@linaro.org>, Troy Lee <leetroy@gmail.com>, Jamin Lin
+ <jamin_lin@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>, "Andrew
+ Jeffery" <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, "open list:All patches
+ CC here" <qemu-devel@nongnu.org>, "open list:ASPEED BMCs"
+ <qemu-arm@nongnu.org>
+CC: <troy_lee@aspeedtech.com>, <longzl2@lenovo.com>,
+ <yunlin.tang@aspeedtech.com>, <steven_lee@aspeedtech.com>
+Subject: [RFC PATCH v2 0/1] hw/arm: aspeed: PoC integration for Caliptra Root
+ of Trust
+Date: Tue, 5 May 2026 11:46:53 +0800
+Message-ID: <20260505034654.815746-1-steven_lee@aspeedtech.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKMLwO2uRnzrke+RkCZmdOJPs3Ouyoe=UeuAWnRgitAD8A@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain
+Received-SPF: pass client-ip=211.20.114.72;
+ envelope-from=steven_lee@aspeedtech.com; helo=twmbx01.aspeedtech.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,37 +62,144 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Steven Lee <steven_lee@aspeedtech.com>
+From:  Steven Lee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 30, 2026 at 09:57:34AM +1000, Alistair Francis wrote:
-> On Sat, Apr 25, 2026 at 11:20 PM Joel Stanley <joel@jms.id.au> wrote:
+Hi,
 
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index e1942a86eba5..635a380945fd 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -1760,6 +1760,17 @@ F: hw/*/*sifive*.c
-> >  F: include/hw/*/*sifive*.h
-> >  F: tests/functional/test_riscv64_sifive_u.py
-> >
-> > +Tenstorrent Machines
-> > +M: Joel Stanley <joel@jms.id.au>
-> > +R: Nicholas Piggin <npiggin@gmail.com>
-> > +R: Michael Ellerman <mpe@kernel.org>
-> > +L: qemu-riscv@nongnu.org
-> > +S: Supported
-> > +F: docs/system/riscv/tt_*.rst
-> > +F: hw/riscv/tt_*.c
-> > +F: hw/riscv/aia.[ch]
-> 
-> AIA?
+This series is an RFC for modelling the Caliptra Root of Trust found
+in the ASPEED ast27x0 family.
 
-Oh it must be because checkpatch complained about patch 5.
+ast27x0 integrates a Caliptra 1.2 core as an on-die RoT block.
+From the host side, the visible interface is a Caliptra APB register
+window rather than a standardized external command protocol. QEMU does
+not currently have a Caliptra emulator, and there is not yet an agreed
+upstream model for how ASPEED Caliptra support should be structured.
 
-It is covered by RISC-V TCG CPUs though, so no change needed to
-MAINTAINERS for AIA AFAIKS?
+On the real ast27x0, Caliptra bring-up and secure-boot
+orchestration are handled by bootmcu rather than by the CA35 host CPUs.
+In particular, bootmcu is expected to own the mailbox-driven
+interaction with the Caliptra core during firmware loading and
+verification. At a high level:
+
+- bootmcu releases the Caliptra core from reset
+- bootmcu loads the Caliptra FMC/runtime firmware through the mailbox path
+- Caliptra verifies the images and boots to runtime-ready
+- bootmcu then relies on Caliptra services as part of the platform
+  secure-boot flow before CA35 firmware starts
+
+QEMU does not currently model bootmcu or that orchestration flow.
+Accordingly, this RFC does not attempt to model the final ast27x0
+boot architecture. Instead, it uses the CA35-visible Caliptra MMIO/APB
+window as an initial integration point to validate the
+transport/backend split. A subsequent revision would wire this into
+the proper bootmcu-owned boot path.
+
+Changes since RFC v1:
+- reworked the PoC to remove the direct `caliptra-sw` C-binding
+  dependency from the QEMU build.
+- dropped the sibling-tree auto-detection of external headers and
+  libraries.
+- replaced the in-process Caliptra model with an external
+  `caliptra-server` backend reached over a Unix socket.
+- replaced the v1 worker-thread-based boot sequencing with a model
+  where the backend is started independently and is already
+  runtime-ready when QEMU connects.
+- removed the use of `vm_stop_force_state()` to hold the CA35 until
+  Caliptra boot completion.
+- narrowed the QEMU-side PoC to the CA35-visible Caliptra MMIO/APB
+  window on ast2700fc machine.
+
+The patch in this RFC:
+- adds an ASPEED-specific sysbus device for Caliptra emulation.
+- exposes a 128 KiB MMIO window at 0x14c60000 on ast2700fc machine.
+- forwards guest MMIO accesses to an external backend as APB
+  read/write transactions over a Unix socket.
+- assumes the backend is already running and ready before QEMU starts.
+
+Current limitations of the PoC:
+- no boot handshake between QEMU and the backend.
+- synchronous socket round-trips on guest register access.
+- no reset/migration/lifecycle integration.
+- minimal wire protocol, designed to be replaced with a standardized
+  IPC scheme.
+- no modeling of bootmcu or the full secure-boot orchestration flow.
+
+Testing:
+
+  # Terminal 1: start the external backend and wait for runtime-ready.
+  caliptra-server \
+      --socket /tmp/caliptra.sock \
+      --rom images/caliptra-rom.bin \
+      --firmware images/caliptra-fw.bundle
+
+  # The server boots caliptra-sw independently, then prints that it is
+  # listening on the socket after boot_status reaches runtime-ready.
+
+  # Terminal 2: launch QEMU after the socket is ready.
+  qemu-system-aarch64 \
+      -M ast2700fc,caliptra-socket=/tmp/caliptra.sock \
+      ...
+
+  # In the guest, exercise the Caliptra MMIO window and confirm the
+  # APB transactions are forwarded to caliptra-server.
+  #
+  # The sequence below drives the mailbox CSR block at 0x30020000
+  # through the AST2700fc window:
+  #   0x00  LOCK     - confirm the mailbox CSR block is reachable
+  #   0x08  CMD      - program the mailbox command opcode
+  #   0x0c  DLEN     - declare the payload length
+  #   0x10  DATAIN   - provide the checksum word required by CAPS
+  #   0x18  EXECUTE  - doorbell to start command processing
+  #   0x1c  STATUS   - read back the command result
+
+md 0x14c60000 1        # Read LOCK to confirm the Caliptra mailbox CSR window is accessible.
+mw 0x14c60008 0x43415053  # Write CMD = OP_CAPABILITIES ("CAPS").
+mw 0x14c6000c 4        # Write DLEN = 4 bytes; CAPABILITIES carries only the checksum word.
+mw 0x14c60010 0xFFFFFED9  # Write the checksum word expected by caliptra-sw for this CAPS request.
+mw 0x14c60018 1        # Write EXECUTE = 1 to kick off mailbox command processing.
+md 0x14c6001c 1        # Read STATUS to verify the command completed successfully.
+
+The backend used for evaluation is currently based on the
+`caliptra-1.2` branch of:
+  https://github.com/chipsalliance/caliptra-sw
+
+The reference `caliptra-server` implementation used in this RFC is
+available at:
+  https://github.com/stevenlee7189/caliptra-server
+
+The intent here is not to propose this PoC as merge-ready. The goal is
+to get feedback on whether this general direction makes sense for
+ASPEED.
+
+In particular, feedback is welcome on the following:
+
+- Is a socket-connected external backend an acceptable direction for
+  supporting a Caliptra core on ASPEED platforms, or should we pursue
+  an alternative approach such as an in-process model or a different
+  IPC mechanism?
+
+Other comments on the design are also welcome.
 
 Thanks,
-Nick
+Steven Lee
+
+Steven Lee (1):
+  hw/arm: aspeed: PoC integration for Caliptra Root of Trust
+
+ MAINTAINERS                          |   2 +
+ docs/system/arm/aspeed.rst           |  35 +++
+ include/hw/arm/aspeed_caliptra_emu.h |  29 +++
+ hw/arm/aspeed_ast27x0-fc.c           |  55 +++++
+ hw/arm/aspeed_caliptra_emu.c         | 338 +++++++++++++++++++++++++++
+ hw/arm/meson.build                   |   1 +
+ 6 files changed, 460 insertions(+)
+ create mode 100644 include/hw/arm/aspeed_caliptra_emu.h
+ create mode 100644 hw/arm/aspeed_caliptra_emu.c
+
+-- 
+2.43.0
+
 
