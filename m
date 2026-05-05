@@ -4,96 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF4CDFF885A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 01:05:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59FB1FF885A
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 01:08:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wK4Dd-00089h-Nc; Mon, 04 May 2026 21:05:01 -0400
+	id 1wK4GC-0000P9-3S; Mon, 04 May 2026 21:07:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wK4DG-00088D-JZ
- for qemu-devel@nongnu.org; Mon, 04 May 2026 21:04:43 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wK4DD-0007CD-On
- for qemu-devel@nongnu.org; Mon, 04 May 2026 21:04:37 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-8353dfdad62so1399493b3a.1
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 18:04:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777943074; x=1778547874; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Pig25E8yo04twK5Yr9qmW2oohe/88B5Uri3IMaFL++w=;
- b=jjbB0/r7SUGwUVlhVc+vBzbvd40sGSXW6/Ot3K4XOeHR4h63cENqbIIR9yYctjdkHS
- leeL1JmTJlWEd90kRrwTWWICr4YXHGZcCv1XqBizKJCCpyxoHa+aUgNkHJNsITF4okRN
- h3SHEGBBJfsEKO/KF4v91e3TVnPV2NorS51+90TkBhAkuR5bsZxe/dmM4YtyvQ1J7O0n
- q0rwuzOuaTuccYGlIwHLPmEy01+d4CFg/QnEndpB/ORBWYl+GdDZRX3qtaqUijkOdAOJ
- hHpzcI9CFk6pTKG/vBWA73cP7I6x+wLuEDrbCa9eonQcwICbn2VwpIzWXusE6V9cw9ZT
- Y6Fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777943074; x=1778547874;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Pig25E8yo04twK5Yr9qmW2oohe/88B5Uri3IMaFL++w=;
- b=poBB8vJ/oab3b2CDhVgt132ebRZPIFAnMG4oAr8ldvwFcTpnlOBvjkGGOEVpX0Fga1
- sfQKhrJF36DFYdRXAA+zCso2H8bm2ch8tjhl30xl1dEoVHMjeEAsW+gfH7p1YoQ0sOQ6
- xp00b7GjavcohHz8TqkyQHj36+BM4q5QsnJkbg0M13veWeShFFLFM9tM5Wkx9YKKYUEb
- 4dK4KmQ5xH5gHsibruutJAmQvQoiOLQUY6a6XFqkLtVYoegmso0k8yhs/E7aTsHZx0sf
- tEg48N9Z1ycUSMgY2G5ibpw8j1wBjC4xSWzjr8zYGF4iyBiuq5lgVb0mb+A2zCD0McPG
- XsKQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+h+T0lSTbKepeT31TLOkp+er4dYYd+Kbo6kJ03LI1YtaA9AaHE1SZW/G/J4X7YbcjtyiMRtiSRzrPY@nongnu.org
-X-Gm-Message-State: AOJu0YzkCGhHGLewUgsXe5qgVK16uf3yqssoS3SWKN0MVHpKMlvSDjTi
- 8YVpXyJVoC51zsoene4Fl/k443wRv86YvLDH+NeUtE4moR8UTzMAZeMf
-X-Gm-Gg: AeBDietFWQxM1EXr2F868qZvMTvJWoqn1NBB0XYLh7q183pku3YuQnk1zwfa+VK8ZC5
- fkkqt/5m03BoFwMDJ7prtRDqdV3zNafwig0XujKPF2wVJT1mB7RH6pUTeOr/E8++uwUn+FDYB4c
- BgazWcMQbOczGarh0OZFPJp/+4Ms6nvGMxOSw+a32ts7MZtuv7PfjIpxtXhM+jiH5nNRyTW/Q8Y
- aqerJ1zyhBWlbvSD3nH7lh08qsOt1I0W1UJVHzBHNHHZ8hJetZ12Qkgg6R5CDfsjZk3tAEPRsCG
- q5abN92kUprM2rNsFO5FbMLGMtVY43Jv/piKJg5NQiHnBDI6U0xYy8Lt0mu/esedTDkW/rE1zPu
- FefJqqwULgwS2YoWH7m7ld12+PozxagOQl7iaTeieAVI2ChKMdHNyVXgv5oB4WdtgUudMsQlPTJ
- B5lEZz5ame7S8ABLPbOPKC5RkYJ9P1+YyXnrpMBODSfnI=
-X-Received: by 2002:a05:6a00:aa8c:b0:82a:6461:6d15 with SMTP id
- d2e1a72fcca58-8352d2b39d0mr11567864b3a.46.1777943074108; 
- Mon, 04 May 2026 18:04:34 -0700 (PDT)
-Received: from localhost ([124.158.97.178]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-839682a272asm131984b3a.54.2026.05.04.18.04.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 May 2026 18:04:33 -0700 (PDT)
-Date: Tue, 5 May 2026 11:04:30 +1000
-From: Nicholas Piggin <npiggin@gmail.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Joel Stanley <joel@jms.id.au>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, Michael Ellerman <mpe@kernel.org>, 
- Joel Stanley <jms@oss.tenstorrent.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v4 09/13] hw/riscv: Add Tenstorrent Atlantis machine
-Message-ID: <afk0kVtQGz7OZ65_@lima-default>
-References: <20260425131721.932250-1-joel@jms.id.au>
- <20260425131721.932250-10-joel@jms.id.au>
- <CAKmqyKMLwO2uRnzrke+RkCZmdOJPs3Ouyoe=UeuAWnRgitAD8A@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wK4G9-0000Og-5L; Mon, 04 May 2026 21:07:37 -0400
+Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wK4G7-0007zH-EV; Mon, 04 May 2026 21:07:36 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XZI5ZqKr1FY0bpnI3Pi+f3NRUpOySPMwQsV/11cBjn/fuXQmM5M9MPmVuhB8tuGNRSoed9Deqcttj23dZtUEqaWsE2QQ1XonyKMuu3d2BWl0KWAzsQvQQJjDHcrE2MUrBGMX7M+asWnNiIBtJVyHgZJyWGRIesE6Gp8TKuyZ0BijwV8CGyjXBGhP6sej/6B078t6/zGpN8UXxFTY8edNIawME7BSt4o7NRJKJUz83X9YymBvYkFcpMK9bQ9QmlRpIb6rmKFaf3Y9oyIhPYb8O6nwG4qdidmbozZX7psk5OIWvUIKHJ77670alEsMljeRanQxua8ohppW+IZ3bhaF9w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uAD4OqKaPSBjMFeLQ+USmsZD+3Le9mFznqv/PvcZPC8=;
+ b=aciFX+aD3Tl4IRjHPNuV2D1erqLGa2HvdqkTJUqgJmxjd9YFL0L3wicuR1XCb2jf4LE3v42GA/kSHIw3bByH8exNtKNKUX+LAl4Jg94+XYuzN0AvLSPwFoBw8KVDGiSRvx53jlxQ4ivHG4tiqr1YO9rwi0Z5/KfL12facRsziyail7vvae6F+mEnPxzeSL9UCug2d3XBGE5lPMvJKD/6vNhXeuAcqWHAjCK2giHmv1drMGVlCLRoBho0dHIzTJlGssj+FnB2b77aNQzMLJTdh33zLUgHGl2t+7i1gNooWJDHAMfIbzb048sbK8FIEWt77H6O8KNoDjfV7au6Uj7iPA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uAD4OqKaPSBjMFeLQ+USmsZD+3Le9mFznqv/PvcZPC8=;
+ b=ptwI4Iy6JBQFtZi1ZlzqdAKPXzmz64qHKaxIDFt7Is3Upw6BwNhxZms5ppaPYvUDzwE5ujqWYkdPLBQtGYn+UjFh/5itSeySLU9wGDEBGbmOWD+bCO+5AoYKIdlWLn47KQXySH/55XzPiah11WWOv2Zdit6TMD8JmTjXoAXgF4edhi+4sQ9XYXJW8f5OAuZPBazFxcrcqcyNl/LEN1Z5M0aAqSkajEDExzkmuusKeDVRAASxnvLlbr1N7lH9DToR7nqLAwZKMLzeQHYp7nwrIdNEjNJYFSI3LsKgBRGnw8UJkdSRRIQ1w3PJIBIYSdRjoNzUf0lOSQOR89Gcghrb6g==
+Received: from SJ0PR03CA0151.namprd03.prod.outlook.com (2603:10b6:a03:338::6)
+ by CYYPR12MB8963.namprd12.prod.outlook.com (2603:10b6:930:c3::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.25; Tue, 5 May
+ 2026 01:07:23 +0000
+Received: from BY1PEPF0001AE1D.namprd04.prod.outlook.com
+ (2603:10b6:a03:338:cafe::70) by SJ0PR03CA0151.outlook.office365.com
+ (2603:10b6:a03:338::6) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9870.25 via Frontend Transport; Tue,
+ 5 May 2026 01:07:23 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ BY1PEPF0001AE1D.mail.protection.outlook.com (10.167.242.106) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9891.9 via Frontend Transport; Tue, 5 May 2026 01:07:23 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 4 May
+ 2026 18:07:11 -0700
+Received: from drhqmail202.nvidia.com (10.126.190.181) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Mon, 4 May 2026 18:07:11 -0700
+Received: from nvidia.com (10.127.8.14) by mail.nvidia.com (10.126.190.181)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 4 May 2026 18:07:09 -0700
+Date: Mon, 4 May 2026 18:07:06 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum <skolothumtho@nvidia.com>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
+ <peter.maydell@linaro.org>, <clg@redhat.com>, <alex@shazbot.org>,
+ <nathanc@nvidia.com>, <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>, 
+ <jonathan.cameron@huawei.com>, <zhenzhong.duan@intel.com>,
+ <kjaju@nvidia.com>, <phrdina@redhat.com>
+Subject: Re: [PATCH v4 23/31] hw/arm/smmuv3-accel: Introduce common helper
+ for veventq read
+Message-ID: <aflCuvleKMiVsvY2@nvidia.com>
+References: <20260415105552.622421-1-skolothumtho@nvidia.com>
+ <20260415105552.622421-24-skolothumtho@nvidia.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKMLwO2uRnzrke+RkCZmdOJPs3Ouyoe=UeuAWnRgitAD8A@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20260415105552.622421-24-skolothumtho@nvidia.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BY1PEPF0001AE1D:EE_|CYYPR12MB8963:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3e867cb9-3ca1-4b06-788c-08deaa42aa27
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|376014|36860700016|1800799024|18002099003|56012099003|22082099003;
+X-Microsoft-Antispam-Message-Info: gxqDTZvtwSRB/qzq1vFF6MwbbsYfwyVMbLLgGjWdchlVFCJQ2zVucOZWJlBuxCWtTIvkJIKVlrQH/J0j5F5nrla57qary+JIaRTv08Jsv55/71S4GCvT9jufdW1br1RBZQcJ8RPxT9SUBOAmPJqdIPdE+6VTHQy8oe/Rwlcy7cXlQ+rDXlCKk5TRR7FyOjyPElN9t77Ap5c7JbPepvFbcQ3nv+auGfMfRZ/T1qqT72evAcuOKVhLNdGAGjvatfzg4wqvdqekt3mc0KjRKEGkaWACbu42AAR8XfVqAvY1PD/Yhfg0ifxnsuXIEnNFpR0rBVLUoh5OosQ56azbFQzwFQ5iThGorv9CCedfghJcpQyCBb/zdDhErmqUN+MvxOZVQmiCrRowgsLzMjERR+L+mGP8hjnYnasatl3B9BdJmyDneLRJ2Krrk5gA8OlknNLsWbQv3vXJk/RE3O8zzKTv1ERAontnhuY8jwISzcm0k/QiolhTpcHwjl/OHrU7TkVuopPeAf5RFyAEnqD61mbbHGdll2tIvPFZ+96kBgOEMT0vnLbD7cGgGm3jrGOe2EBQLo/8HFW+EZjSHCRPYQ0NLbEJ601m1MIwY/VC/0cPtz84DelBO/F0jIzxpk11sXbE5GlfnWbW0P2Fh9k8dLQta10k7OSttEaXaUL4SEGK6gZbAtGkCE6MhNaIhFPiEkJQwTS0jx3aEZbml+Jg1+oDg+IjJ1kB3hE9sx1WScwKpT8=
+X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(36860700016)(1800799024)(18002099003)(56012099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 3ZareDLKg0E7O7HecuNVn9+Qve3Xivfi8TdD4D+ExWq05zwBKVKNrsKTwVuD4hDKXsOtBz9S9nkWSuL8xu6p3zxcswCKgsxTsWtNLdrpEOjrfFdWKW1dTXh7gmNamDaM/v5UMmB3aKuFGrm5Q31dNq0wE7SMGEwLTelKxIQ9Kv0Jl5KHRHR+LUThb+SXTDbREbjtYBudAdDqG5cKM1aEUqLAm5YPTQfxCrL66R80/DuroYJanXFJ7eTPG/B5hLklgeFcBMFdFxSmiZhCM43nSR5LNlAJlLVAv/cyy37uELEbTFMNcpleEdqNF7w6PbbmICD674oYx3RllMJg3Hy5pQZdk9MC7Q+Uw5KgLesWJtPe6ZnJGZR+nycJ4jkbO0r/T+/10a4UMnNUnLmeYgDAv7SKLDMUa1nh2ABqefdRaw6SAdh/y2hcNtpuUhZz6Dk8
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2026 01:07:23.2316 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3e867cb9-3ca1-4b06-788c-08deaa42aa27
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BY1PEPF0001AE1D.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR12MB8963
+Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
+ envelope-from=nicolinc@nvidia.com;
+ helo=CH4PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,160 +136,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 30, 2026 at 09:57:34AM +1000, Alistair Francis wrote:
-> On Sat, Apr 25, 2026 at 11:20 PM Joel Stanley <joel@jms.id.au> wrote:
-> >
-> > The Tenstorrent Atlantis platform is a collaboration between Tenstorrent
-> > and CoreLab Technology. It is based on the Atlantis SoC, which includes
-> > the Ascalon-X CPU and other IP from Tenstorrent and CoreLab Technology.
+On Wed, Apr 15, 2026 at 11:55:44AM +0100, Shameer Kolothum wrote:
+> Move the vEVENTQ read and validation logic into a common helper
+> smmuv3_accel_event_read_validate(). The helper performs the read(),
+> checks for overflow and short reads, validates the sequence number,
+> and updates the sequence state.
 > 
-> Can you provide a link to documentation
-
-Also not presently.
-
-[...]
-
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index e1942a86eba5..635a380945fd 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -1760,6 +1760,17 @@ F: hw/*/*sifive*.c
-> >  F: include/hw/*/*sifive*.h
-> >  F: tests/functional/test_riscv64_sifive_u.py
-> >
-> > +Tenstorrent Machines
-> > +M: Joel Stanley <joel@jms.id.au>
-> > +R: Nicholas Piggin <npiggin@gmail.com>
-> > +R: Michael Ellerman <mpe@kernel.org>
-> > +L: qemu-riscv@nongnu.org
-> > +S: Supported
-> > +F: docs/system/riscv/tt_*.rst
-> > +F: hw/riscv/tt_*.c
-> > +F: hw/riscv/aia.[ch]
+> This helper can be reused for Tegra241 CMDQV vEVENTQ support in a
+> subsequent patch.
 > 
-> AIA?
-
-Not sure why that is there, there's no Tenstorrent implementation detail
-in there AFAIKS. Let's remove that line.
-
+> Error handling is slightly adjusted: instead of reporting errors
+> directly in the read handler, the helper now returns errors via
+> Error **. Sequence gaps are reported as warnings.
 > 
-> > +F: include/hw/riscv/tt_*.h
-> > +
-> >  AMD Microblaze-V Generic Board
-> >  M: Sai Pavan Boddu <sai.pavan.boddu@amd.com>
-> >  S: Maintained
-> > diff --git a/docs/system/riscv/tt_atlantis.rst b/docs/system/riscv/tt_atlantis.rst
-> > new file mode 100644
-> > index 000000000000..640cabf7b046
-> > --- /dev/null
-> > +++ b/docs/system/riscv/tt_atlantis.rst
-> > @@ -0,0 +1,38 @@
-> > +Tenstorrent Atlantis (``tt-atlantis``)
-> > +======================================
-> > +
-> > +The Tenstorrent Atlantis platform is a collaboration between Tenstorrent
-> > +and CoreLab Technology. It is based on the Atlantis SoC, which includes
-> > +the Ascalon-X CPU and other IP from Tenstorrent and CoreLab Technology.
-> > +
-> > +The Tenstorrent Ascalon-X is a high performance 64-bit RVA23 compliant
-> > +RISC-V CPU.
-> > +
-> > +Features
-> > +--------
-> > +
-> > +* 8-core Ascalon-X CPU Cluster
-> > +* Dual x32 LPDDR5 @ 6400 MT/s
-> > +* RISC-V compliant Advanced Interrupt Architecture
-> > +* PCIe Gen4
-> > +* RISC-V compliant IOMMU
-> 
-> IOMMU isn't supported (at least not in this patch), maybe this should
-> list things that are supported in QEMU (and can then be expanded).
-> Leave the features list to your official documentation (which is
-> missing a link here)
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 
-Sounds reasonable.
-
-[...]
-
-> > +
-> > +static void create_fdt_cpus(TTAtlantisState *s, uint32_t *intc_phandles)
-> 
-> So generally we only create a device tree for virtual boards, that is
-> boards that don't really exist and are just QEMU constructs.
-> 
-> You said that this is based on the "Atlantis SoC" so I assume it's
-> real hardware. In the real hardware do you expect the device tree to
-> be provided by the ROM? Usually for boards users supply the device
-> tree as part of the boot flow (via u-boot or something similar). In
-> which case should QEMU actually generate this or can users just supply
-> their own?
-> 
-> Basically the question is, if you are trying to model the hardware, is
-> generating the device tree here correct?
-> 
-> Obviously the advantage of doing it here is then the device tree
-> describes what QEMU supports, which is great. But that can be harder
-> to manage when the hardware doesn't do that, as then you have
-> divergence.
-
-We went around this same discussion internally and yeah it's a valid
-question, we could have explained this a bit better.
-
-In the real (unreleased) hardware and the DT will be loaded from ROM.
-I think we should do that when the model and firmware and dt is more
-complete. At the moment it has been easier for development to use QEMU
-generated fdt.
-
-Is that acceptable to do that now and switch to a fdt ROM later...
-
-[...]
-
-> > +static void finalize_fdt(TTAtlantisState *s)
-> > +{
-> > +    uint32_t aplic_s_phandle = next_phandle();
-> > +    uint32_t imsic_s_phandle = next_phandle();
-> > +    void *fdt = MACHINE(s)->fdt;
-> > +
-> > +    create_fdt_cpu(s, s->memmap, aplic_s_phandle, imsic_s_phandle);
-> > +
-> > +    /*
-> > +     * We want to do this, but the Linux aplic driver was broken before v6.16
-> > +     *
-> > +     * qemu_fdt_setprop_cell(MACHINE(s)->fdt, "/soc", "interrupt-parent",
-> > +     *                       aplic_s_phandle);
-> > +     */
-> 
-> And now we are stuck with hacks like this, which we really don't want
-> to be dealing with. Maybe it's best to leave the device tree to the
-> kernel.
-
-... Despite issues like this?
-
-[...]
-
-> > diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-> > index 0222c93f878b..0601ae1a7494 100644
-> > --- a/hw/riscv/Kconfig
-> > +++ b/hw/riscv/Kconfig
-> > @@ -120,6 +120,21 @@ config SPIKE
-> >      select RISCV_ACLINT
-> >      select SIFIVE_PLIC
-> >
-> > +config TENSTORRENT
-> > +    bool
-> > +    default y
-> > +    depends on RISCV64
-> > +    imply PCI_DEVICES
-> > +    imply TEST_DEVICES
-> > +    select DEVICE_TREE
-> > +    select RISCV_NUMA
-> 
-> Do you actually need NUMA? You have a numa include as well which I
-> don't think is required.
-
-Hardware is not NUMA. It was probably just copied from the VIRT config.
-
-Thanks,
-Nick
+Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
 
