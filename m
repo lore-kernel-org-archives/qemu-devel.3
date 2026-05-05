@@ -4,106 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BBEFF885A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 10:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34DA8CD342F
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 10:02:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKCZe-0008Ax-Po; Tue, 05 May 2026 06:00:18 -0400
+	id 1wKCbS-0000eC-7u; Tue, 05 May 2026 06:02:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wKCZc-000895-5T
- for qemu-devel@nongnu.org; Tue, 05 May 2026 06:00:16 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wKCZY-0007JX-Ho
- for qemu-devel@nongnu.org; Tue, 05 May 2026 06:00:15 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-651c366f7efso4814700d50.1
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 03:00:11 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1777975210; cv=none;
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wKCbO-0000br-Lj
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 06:02:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1wKCbN-00088U-1O
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 06:02:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777975322;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=weTLYI+YyN3nPUFT7CWcoaWdKKQJSIlqBo9WtVqyjSo=;
+ b=Rk+/jWsTC89kegBLZLY+7aPYJ63vpQVBp6NitlF8wPi2Io9o07tnaCievkSZt7h7j8LWRw
+ Wyxf8GCwEivZi7UW4miDLO+o1bvBPVIkDDBZHA1IpIc3Iht8p+Tdsc7TOrAUMqG6/rrx/c
+ Jd7tW/OXtEGETpNjU/10rx/2BKfhR0k=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-164-TEc86z_3OP2A_qoStibWgw-1; Tue, 05 May 2026 06:02:01 -0400
+X-MC-Unique: TEc86z_3OP2A_qoStibWgw-1
+X-Mimecast-MFC-AGG-ID: TEc86z_3OP2A_qoStibWgw_1777975320
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-35fb969a4c0so6045839a91.3
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 03:02:00 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1777975320; cv=none;
  d=google.com; s=arc-20240605;
- b=fqlgqUUmRCCJTun4278GquthCz0VTbeEoQNB/H+WGGScbZsDRie8oWwT6WCGjdw+p7
- h5Oa6Nyh00rno8EYlu3RTt9c/99/bO9jA1j9AyV2DwpMghT4OtSY8Fr8Xn8BfdKq0cwY
- ccWl+v17kkPCXnixU3rA8Ahi1/dDsqdQhZ34XX9i4lPNpxtzx1WrbI0xo8BVv/3r2t0p
- cgMi51snZClZEjIQOecSBrYFLI1c5krJZsRgtMHmh85n7GmOjqlsOrwFTCSZliIkPLcN
- IcmguM2PtdnV01GDCrJIxbvBoSptqi5RW7S/5nGfBTEa+UGw7+tajf7OkcNcT+VOICGP
- RZvQ==
+ b=cVEbYAlejoPWNBCD4WuRo9PLGmk69tqFqB6IVC2taazW7N8iYR9fpwgaMyWJ7thQoJ
+ 6+V9Fs+dr23ykbpZFPM/PwpAwzoxM0Z9wnEutu89TRQv9pZMh3rUvAtEOF/O5U2SpYdK
+ ypaJP1L9k8PDeSsPmw89lFd0MLv6YWFOpOTOotLvvfDui8fhGVp/9D/ZdHflMVLgPZK/
+ ZwxKMef+hFynTEoQNFtAArBq5f5lBQHI7k6PmiNrdZ4KR/X1D0t0Ovk6KL3KprSDP3UR
+ CmL9wna7fR2QkTRzlMPEbv51dQNNLjjwHngj9q8nGpbLFUTQHels7XynM+l5uiQz3KDR
+ AonQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=KIFqDUO44WzNVPm5T2GxqemIW0fqI5WHUx4DTYFfzjY=;
- fh=+1firF9KONN4Yc1L4UE+f7hjZIqv5yKMPW+CbJoXUyw=;
- b=dOUXB0MU0Q7kSeEHFXbGKn0JTpCprsMNWyG/GFN/1MuMrTGLpanl6/gE/aRKq/twgj
- 94nLL8PeUPmeFOZlfOLzI9wlAVWmJDCGWahq6IusST3VK4z1ZkMx9zG9NNcDRz5R0iCt
- Ohzx3QRjGSi+0VSnAfYI3v/mmRxtaaWNStRFupvqJS1DBPyY92I95phCAE/a3IONGqw1
- pndeGwx5H4aMfTur4QROf+wpdZx7E3o/fIDzoE15DOVr+G1Up/iZncg/wh3AzZSiOAHp
- PQEhxDbdDDfVSMmUphRQ+AEXjojROb9fFWlBpyRdO+vFDkaOKz1rEX7Ee5xoZwvMvp0K
- sdig==; darn=nongnu.org
+ bh=weTLYI+YyN3nPUFT7CWcoaWdKKQJSIlqBo9WtVqyjSo=;
+ fh=IIVq14YtGeHsqR1qXM8TWLElWWlW0t0XUfvIwOGX8mQ=;
+ b=Whma/JhidRYFhvj6waqpvw4qkP1B6WUPQhhdLFKycYQdAkezZzFLt+z4nszcSBW69b
+ FKyUkDzBjrAY/xl9lOBilQT9kRXeh2XaUr3hSFhesxm9Fs1BpWQc1s1u96Mfn7CgGiCN
+ GrIgYqOcJZggz5ulkIif0fe2AmforK1NWwSYO8+7Ow8o0SOzk553qAAllbh5hFiQnKGH
+ J2rtd7cjCMD/q+vSbgloJJFfE73PCwtnjppKJMx18L0/dt0oW32lsKOP69KEll0bGXYC
+ jMTV5DDnP7vcg8fP69rchgqbMLMlIt/SgTXYIjYw+uRJZTEB39SBUPv4LDlRisOLwgPc
+ oazg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1777975210; x=1778580010; darn=nongnu.org;
+ d=redhat.com; s=google; t=1777975320; x=1778580120; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KIFqDUO44WzNVPm5T2GxqemIW0fqI5WHUx4DTYFfzjY=;
- b=gsgtqR7UbBhQbylmRbdTPNowSFibsV3sqVE6GKScfjUzRPono6STRNLRxOPJ34raPc
- DdFN4Egx8NDxhuWYWCwmZEfQvWFdLpavm/Yym1P4o5WKREnds/PP5L54AkIEQpleCtTP
- n7zkyG6WRl7Tdfa5/q8UwZKMQvIyvP8oV6nr4JXiQeud403ibwxbPSyDaspBU4AUpM0t
- Vk6ZSCMG8stkSs8rHriWu5PJEOYIuG/zoshCo767YXCmFbVjY8e6o8GO/wZfykj1dOoT
- 3ZeY7ze+uapf2ZT8R0Q8PB9d6/cwsb0Q+G1SENmAITwzgFDV1uQ7teQ0Y+dKR/mO2X56
- STmQ==
+ bh=weTLYI+YyN3nPUFT7CWcoaWdKKQJSIlqBo9WtVqyjSo=;
+ b=U2RjWtMDkj/Bb45ooOqrKDmo7ySj2G3znZhLCgftO2cNssPglUP2aDL940sSDViotk
+ 7RUjOsNxas0hQMuYKP0fOKuu/dbzfkcUlrT64KE+/yanBvTLff46Uo5R1cNErGuS6u2l
+ OqT4Bb4N5rY7HWkZQd/qaC+yVw9a/Mv/fA40h12FVxJZoE2XTtvMssuUmXmlwwi2E/bT
+ /niwPkOxeVeJNfRSCA257S9TqivCY+2TAqQSwMgp1wxYwdMjZKVoTSBYr8qtuk5nHrEo
+ UlU/RE1cl+XtLlQm3VemAj25BRzNT49914c11C96V+GyZ4f+ICXWt7ZMYsPubZkB0C4X
+ p8rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777975210; x=1778580010;
+ d=1e100.net; s=20251104; t=1777975320; x=1778580120;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=KIFqDUO44WzNVPm5T2GxqemIW0fqI5WHUx4DTYFfzjY=;
- b=gw8hCkDtt56YUx0IYKuGGy8m0Ckwhdq2DxGON/zNeFuWemhv/Mnvk/NzdmwfkJscrY
- 4kQFr2hlu4HDGmRGsC+aJodXS19g0REKiDAd9C01YtaKcpM7i94tNsRlDL1gL026i015
- JvUbLUJKVE0cV6Iw9Bx5qWH6gXldlGdDZldC5joPDmRlCn1hvMbeluqVZ3jn8MnT/LEd
- ijFsmp5taJF0ceV9oJRM6moHXPhOVOA021NCX8tPI6BUt6XtR3/OXQLz2s/nI5555Ssl
- i/mSA+er5q7Sn40FLWQLGhIlifd1Ftn4FRSfjhsmoRuI5sfQQmyvfUEHoWpT/iiT1dcM
- yAjg==
-X-Gm-Message-State: AOJu0YxpJPIsGJQlRUvBYeeD4z/ydjBtAHLvmQ4hqX1LxMe1L6CBk8n3
- 0ppuSRG6wd37bDJ4SGYG73LGiI8kEsoPRwl+g+VJgD17zqY8qf2Pu6jGlUSyTOIBLPmaPuR/y3n
- vwdnPtMgRkDeMKahSxaTfu8LWdzfuWk3wS1tqLPNxZbKnfna/Q4J2
-X-Gm-Gg: AeBDieuwBFHP3obBk0V3JnI9RTLtKmcTx981CwZdwm8MuQD0Y7fku+ofMAevn0sLsAA
- y+v0Z8Z/RvtVWjvl7bZL+hkcKH0hEbIfOUq/ndwCL9Alm0T7cqqO4/6SQZR5tESSc5yKaHN7F+N
- UomEliRalV0OZ2jix5OMjVesg7p8zMPyD8YG/KIMkOAVVa0v/mmZmQeuvrH/QQ+LoxrDPo7h89s
- z2COPUWHYCsZ6hkqJXifVfDTXaVEMCFS3gbjfKmVPlkXe57KMzMH/GDz4XpduNGbraPE3BjZ0O0
- PkAG+rex0gUOmIs4CGqrdtlxPiU14XU3Nz63mZbE8f5wPnAc3KGAOcFZ5n29kM4K/4Iph+iCFqR
- 8jQ==
-X-Received: by 2002:a53:d789:0:b0:65c:391:571c with SMTP id
- 956f58d0204a3-65c3db4fd58mr10015628d50.49.1777975210208; Tue, 05 May 2026
- 03:00:10 -0700 (PDT)
+ bh=weTLYI+YyN3nPUFT7CWcoaWdKKQJSIlqBo9WtVqyjSo=;
+ b=b4DA6jyBxwrwVRxqx5koYbX/By3+4BiE9BSFvhU9luLHMbNJcS//et2FUYawQ9iYH3
+ ZqEsFLfpgWD2q1Lw03jFXuxnG9sPoOBJwb94QKrB/xohzW/chU6Q0w9o9E73YccCLrN5
+ 1OT/B7SluUn+kbMm+K9/jigpmAOgLr+xK6fC/XuBBfOpY2kcNQAlYma1DRmHXffPJp0b
+ iaz7+ZUJwgqGv5dZPXRFoqE5KrokSEb6yifdQkS3wwgjq8HQuubXkewFUUgb09b64jkS
+ mDezKH64t/vMb24SKmbKUS/8iD4Pr0LjhjcuP6nJaq3akqCbxBNn8OtJm/rdb7g4aCVz
+ miMA==
+X-Gm-Message-State: AOJu0YwBtQmmkWd6xzQ+nRiopsFMH/r4+ufgYI+ClDEc4xfgsowVgSjo
+ EWeAgNsPGvCBV9C5ogp9/LVddF8AvfZuzccXbTtWxE8mRYkjsr60oUITG1V/kzHJo4S9YZADXhq
+ Hlnadj1UeyneVZAFz4NbgbpjOyl+8jVdRNAObdA5RHt3KXPWX57FAmUCq3Pj/mJxwA5R5arbcuR
+ Ix/kn844veEmQDLErzaHCerTLfRVkB0XM=
+X-Gm-Gg: AeBDietSxtfyOyB6gj9bAMBo6X6asWaz96GODEytxe2pkoN8UpqVM+xa1dLBtmT3bzi
+ 2ReUcehThsnxEFSH4iUg4hjwLvuokd2SfiK3M53LJvdcu8lSuhWHWJQA1gJwcc2xQy9L9cvGjz3
+ P4uqc8Cqf5vZ5GaQXVF85hL7beVk/YPcMmX1bE69IizyOdqWJjcmaj+s+exrOH+7ykT2zvCLa0t
+ jhsBcn5yu8u38ahnkaVgM1xpivY0AZKn2gYbMVJTUsiBd/Q8vRvTar2uv6S5nFhOHLkNUH7msig
+X-Received: by 2002:a17:90a:da8e:b0:364:87dd:b2c5 with SMTP id
+ 98e67ed59e1d1-3650cd70722mr12243207a91.3.1777975319731; 
+ Tue, 05 May 2026 03:01:59 -0700 (PDT)
+X-Received: by 2002:a17:90a:da8e:b0:364:87dd:b2c5 with SMTP id
+ 98e67ed59e1d1-3650cd70722mr12243171a91.3.1777975319177; Tue, 05 May 2026
+ 03:01:59 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260504-qom-tests-v2-0-ef7e3dc94f7a@redhat.com>
- <20260504-qom-tests-v2-9-ef7e3dc94f7a@redhat.com>
- <CAFEAcA_JV6n=QwBRCGD2wVVkG9V8GMz9Es8sik9gTcf=NOxDPA@mail.gmail.com>
-In-Reply-To: <CAFEAcA_JV6n=QwBRCGD2wVVkG9V8GMz9Es8sik9gTcf=NOxDPA@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 5 May 2026 10:59:59 +0100
-X-Gm-Features: AVHnY4KP4DLFPHRabIPYSlyUGg2xAAJdsDVs_DGU8lxlOEFP6k177Q7GjMMCh7M
-Message-ID: <CAFEAcA8B+Ma0p6Ws=ZBYJX4xvQq9jLHXC6WKKeMVQw0h8FcjRA@mail.gmail.com>
-Subject: Re: [PATCH v2 09/46] qom/object: update doc about NULL values in link
- properties
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+ <20260504-qom-tests-v2-7-ef7e3dc94f7a@redhat.com>
+ <CAFEAcA8BAOvSKUxvE_yn0psM10v+WPZy=9=DLeneXGKeiWSrHg@mail.gmail.com>
+In-Reply-To: <CAFEAcA8BAOvSKUxvE_yn0psM10v+WPZy=9=DLeneXGKeiWSrHg@mail.gmail.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 5 May 2026 14:01:47 +0400
+X-Gm-Features: AVHnY4Kmk7L-74HfUZwQwAdkO_KJekDcyRsKZCr_xSrM5oS4ZMCLkaOhnGOB1iY
+Message-ID: <CAMxuvawmHjz31dUBeiuHaVy5cgq_vhJe+8Nz8S1iKE8wcGubCQ@mail.gmail.com>
+Subject: Re: [PATCH v2 07/46] hw/ipmi: reject NULL 'bmc' property rather than
+ crash
+To: Peter Maydell <peter.maydell@linaro.org>
 Cc: qemu-devel@nongnu.org, armbru@redhat.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,47 +137,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 May 2026 at 10:42, Peter Maydell <peter.maydell@linaro.org> wrote=
-:
+Hi
+
+On Tue, May 5, 2026 at 1:57=E2=80=AFPM Peter Maydell <peter.maydell@linaro.=
+org> wrote:
 >
-> On Mon, 4 May 2026 at 12:37, Marc-Andr=C3=A9 Lureau
+> On Mon, 4 May 2026 at 12:36, Marc-Andr=C3=A9 Lureau
 > <marcandre.lureau@redhat.com> wrote:
+> >
+> > The type-checking macros (IPMI_BMC(val)) which crash on NULL.
 > >
 > > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
 > > ---
-> >  include/qom/object.h | 8 ++++----
-> >  1 file changed, 4 insertions(+), 4 deletions(-)
+> >  hw/ipmi/ipmi.c | 9 ++++++++-
+> >  1 file changed, 8 insertions(+), 1 deletion(-)
 > >
-> > diff --git a/include/qom/object.h b/include/qom/object.h
-> > index 510885218ba..0a82e160cd0 100644
-> > --- a/include/qom/object.h
-> > +++ b/include/qom/object.h
-> > @@ -1714,10 +1714,10 @@ void object_property_allow_set_link(const Objec=
-t *obj, const char *name,
-> >   *
-> >   * Links form the graph in the object model.
-> >   *
-> > - * The @check() callback is invoked when
-> > - * object_property_set_link() is called and can raise an error to prev=
-ent the
-> > - * link being set.  If @check is NULL, the property is read-only
-> > - * and cannot be set.
-> > + * The @check() callback is invoked when object_property_set_link() is=
- called
-> > + * and can raise an error to prevent the link being set. If @check is =
-NULL, the
-> > + * property is read-only and cannot be set. Care must be taken to hand=
-le NULL
-> > + * values for @val.
+> > diff --git a/hw/ipmi/ipmi.c b/hw/ipmi/ipmi.c
+> > index b49affaccec..d532d38e556 100644
+> > --- a/hw/ipmi/ipmi.c
+> > +++ b/hw/ipmi/ipmi.c
+> > @@ -95,7 +95,14 @@ static const TypeInfo ipmi_interface_type_info =3D {
+> >  static void isa_ipmi_bmc_check(const Object *obj, const char *name,
+> >                                 Object *val, Error **errp)
+> >  {
+> > -    IPMIBmc *bmc =3D IPMI_BMC(val);
+> > +    IPMIBmc *bmc;
+> > +
+> > +    if (!val) {
+> > +        error_setg(errp, "%s cannot be set to NULL", name);
+> > +        return;
+> > +    }
+> > +
+> > +    bmc =3D IPMI_BMC(val);
+> >
+> >      if (bmc->intf)
+> >          error_setg(errp, "BMC object is already in use");
 >
-> I think we could perhaps expand this a bit to be more explicit about
-> the lurking bug potential here:
+> I was looking through the code to check where the type macros fall over
+> on NULL pointers, and I couldn't find it, so I did this little test,
+> and as far as I can tell they don't assert, they just return NULL:
 >
->  Remember that the usual QOM type-casting macros will assert on NULL, so
->  you need to either explicitly NULL check before using the cast macro, or
->  use object_dynamic_cast() instead.
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 2ecad3c503..32569c1f09 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -66,6 +66,7 @@
+>  #include "e820_memory_layout.h"
+>  #include "trace.h"
+>  #include "sev.h"
+> +#include "hw/ipmi/ipmi.h"
+>  #include CONFIG_DEVICES
+>
+>  #ifdef CONFIG_XEN_EMU
+> @@ -1580,6 +1581,9 @@ static void pc_machine_initfn(Object *obj)
+>      PCMachineState *pcms =3D PC_MACHINE(obj);
+>      PCMachineClass *pcmc =3D PC_MACHINE_GET_CLASS(pcms);
+>
+> +    void *foo =3D IPMI_BMC(NULL);
+> +    printf("foo =3D %p\n", foo);
+> +
+>  #ifdef CONFIG_VMPORT
+>      pcms->vmport =3D ON_OFF_AUTO_AUTO;
+>  #else
+>
+> This code runs on the pc machine startup and prints "foo =3D (nil)"
+> without problems, even on a debug build (which enables
+> CONFIG_QOM_CAST_DEBUG).
+>
+> Is the problem you saw really with the cast macro, and not with
+> this function's explicit dereference of bmc in "bmc->intf" ?
 
-Actually I think this is wrong, see my comment on patch 7.
 
--- PMM
+You're right; it's with the "bmc->intf", I'll update the commit message.
+
 
