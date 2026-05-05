@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16428FF885A
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 06:02:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A912CD13DA
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 06:16:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wK8rS-0006KO-Up; Tue, 05 May 2026 02:02:27 -0400
+	id 1wK94r-0002Dh-90; Tue, 05 May 2026 02:16:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wK8qr-00063g-PJ
- for qemu-devel@nongnu.org; Tue, 05 May 2026 02:01:50 -0400
-Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wK8qp-0003pJ-6T
- for qemu-devel@nongnu.org; Tue, 05 May 2026 02:01:48 -0400
-Received: by mail-pj1-x102d.google.com with SMTP id
- 98e67ed59e1d1-362bb3260f1so3513445a91.2
- for <qemu-devel@nongnu.org>; Mon, 04 May 2026 23:01:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1777960904; x=1778565704; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=wa8D4xOsgM/ItWD3mVZFZu8VyrUya/ZgmaHk2QiMr8g=;
- b=comZx68tAHv8M2pEgsfS/IQ5x6eqLLmbAsDEa25cPFN2zldp/pBx6d9mOxFmvUY+6g
- 2B9r3vMI91aoGbKisHM1lB9Ndxb8T6fAUgT7PHJHvydMKev7Ih1hHv0dv3qtYVa8AQJ1
- FA1VBWseQnPUHt0hGzNZq6Z3BETvDEqIhNJs7jznTI0rWuHpzMxtu/n2iaPl5zNjxRni
- JUxqLqQy9GoRy4pKwkvThUnoLqaponP/vu4AzUuhW+ckUFnMD4TsWNOzYTNNL2/7xCHm
- 14g/+9/d/mMome3o2fTOX+ni9uYYis+/u4aBoSb5ozTqWpusC/UnEpejSz+sfX8jCp9o
- TDPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1777960904; x=1778565704;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wa8D4xOsgM/ItWD3mVZFZu8VyrUya/ZgmaHk2QiMr8g=;
- b=QPPkufE9n5I6p9/USYVqordr4rLmJsYrbHWQNXm3rGaV5R3R3MXuuFzK9u5T7RiczZ
- r9jQVmsyjIUp+EJ+g1qUvWBXVteOE/o3YQScwwQFn54vbv5Pzxu+J+VtfbnHL3cw30bF
- jy5i1r6/k6R/6nsBdQe/kLhXE9l3cbsreiX93d2D5FU/A6A163r8DOrZBS2GkNhZg6Yy
- mqkdmHoAamZFs2t6wm/SIaheTo8jduvISZxF2a+4PrJ6P/3uuz9qMTGfJ421A98kzfwR
- vHFds3Ltekn0EEvBIhQiJ3LcaOkLQHQP5frxu8xDH4Z2UtKtDYqoDmzGPOk9VoohBljN
- pW8Q==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9XGaTeOOgqnaoAS3JiE/BansVDcGJztP+YB2R68qN4Q9ilgnVuy2dgWlv/Aaye2tK3P6SLNYwI3fHN@nongnu.org
-X-Gm-Message-State: AOJu0YzoPDp3isX3tSCXPOtfT/smBIuJH9bndP+fMDaHjc7Geh12pL7C
- hVZ3aRQwJ8Pljd04fyU45lL9IAPpSpNI8qTeumpzyXEzj1VMP0Q4ayex
-X-Gm-Gg: AeBDietP1XlnQnenoCcEf0y3CGTh6xq2lno7BEhx3Pbf/Pg2fCW6aPyKMbCfD1UaYyN
- qyT6IVkbwfadEBkYzT2PhAOxTpPliur2uNfLlus4DNLZQMeS2URWPXOAbWz/erHFUlMxbNRn9h6
- lKFbi+IIa9RkZ01Zg65twCHgF7tEMC6OBrU+xaqswh7katTkVG9mNMqnYFz25xrR87UezHJWkEm
- Ef18g1omTwlktL6Ql/9DEkEiHMkCf8KnIlSu5cF5viGW8NaQa5XYwNvwx4uzUC15t0CmWJ9q8aa
- zHZcxVCL4G0hRgrWo2m2OsSW0oMTxEd/7AgIaOaYnTLPlQDXgda3C9EuGmrw9DX/AKGHAd9k33a
- Gczb2IAVQyvZFTAaFb0Y/udsLJueuZaKfTVCYwlsXB12tvHWhE5vUpv6nI3OzjgSHF3dSHyN3TK
- 8yKdQpOhzJTWFB9OcoEuT0r5cKze/YShn9shWHnvxvaEk=
-X-Received: by 2002:a17:90b:5830:b0:354:a57c:65db with SMTP id
- 98e67ed59e1d1-3650ce71f60mr13531346a91.20.1777960904556; 
- Mon, 04 May 2026 23:01:44 -0700 (PDT)
-Received: from localhost ([124.158.97.178]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-364bdf2aa41sm22104297a91.4.2026.05.04.23.01.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 04 May 2026 23:01:43 -0700 (PDT)
-Date: Tue, 5 May 2026 16:01:40 +1000
-From: Nicholas Piggin <npiggin@gmail.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Joel Stanley <joel@jms.id.au>, 
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, Michael Ellerman <mpe@kernel.org>, 
- Joel Stanley <jms@oss.tenstorrent.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>, 
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, 
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v4 09/13] hw/riscv: Add Tenstorrent Atlantis machine
-Message-ID: <afmHm536v_gM9FL-@lima-default>
-References: <20260425131721.932250-1-joel@jms.id.au>
- <20260425131721.932250-10-joel@jms.id.au>
- <CAKmqyKMLwO2uRnzrke+RkCZmdOJPs3Ouyoe=UeuAWnRgitAD8A@mail.gmail.com>
- <aflOIW3v5FQMwfGA@lima-default>
- <CAKmqyKNUJMOuq5jujJQrSvnrvCYfxuB_jUrxFcFAQie6PosgAg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wK94i-0002AC-A8
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 02:16:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wK94g-0001wN-I2
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 02:16:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1777961765;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=znPEUA4eUm4VBJWFHc8rFGXpcOdNj+vW+vCs3gu9GV0=;
+ b=ZvhA9lUrO397oT+Oy2mRC1TOZljxBISVHmnLJ4O8aWZv8ZejBjWSfkAfkY6o2B7qpm5H15
+ 94AmM6ECbfaAb06qEdBEGVxGGHtY8BDRSxGeN8R78CPcedJzHxw2HA7j+HZs9SDINYmmKD
+ 59Mr/O7jfYHoM+HShd80J2jOKoghgTM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-315-8wrtU7bQP62nggBVSPiQKQ-1; Tue,
+ 05 May 2026 02:16:03 -0400
+X-MC-Unique: 8wrtU7bQP62nggBVSPiQKQ-1
+X-Mimecast-MFC-AGG-ID: 8wrtU7bQP62nggBVSPiQKQ_1777961762
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7B5991800348; Tue,  5 May 2026 06:16:01 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.4])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0D31330001A1; Tue,  5 May 2026 06:15:59 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKNUJMOuq5jujJQrSvnrvCYfxuB_jUrxFcFAQie6PosgAg@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Subject: Re: [PATCH v6 6/6] hw/tpm: Add support for VM migration with TPM
+ CRB chunking
+From: marcandre.lureau@redhat.com
+To: Arun Menon <armenon@redhat.com>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, marcandre.lureau@redhat.com, 
+ Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>, 
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>, 
+ Laurent Vivier <lvivier@redhat.com>
+In-Reply-To: <20260504174234.13556-7-armenon@redhat.com>
+References: <20260504174234.13556-1-armenon@redhat.com>
+ <20260504174234.13556-7-armenon@redhat.com>
+Date: Tue, 05 May 2026 10:15:40 +0400
+Message-Id: <177796174024.65777.16091797420862658987.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=832;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=4IDnlcxVk1lMpvaM3EqrC0SR9wa6qjqL/re+oJLxDI0=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp+YsOv1ABMHlXi7+5KZk3N+gN363x0CBE2uv5h
+ KQYoPoaq7yJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafmLDgAKCRDa6OEJdZac
+ 5aDrEAC1tzjauOwiu3h14O+FBcPzBUlHPYtpEnVacgGR9bGvxjP+itvazm9Fz7NpGuDhku/ve8P
+ maRE/XmWL95p46U1R7nQW4uR4HtuLVly3Aw8s+IkKPOGXgL4ZQcVIZmpp+Q0ge4fR/D+WvjgtJq
+ SAg73QCF2bM2x/vp+eFZmRi8TM2phWxxHt40YlQ1hhqSk9J15eitcGeyj3r6lH7gyqZAqVgWGT+
+ QNB8Cdmv7NxLmPYQwbxjUC0CE52YUClgedNCcPGOF+elo282in03n5uxMWK4cVHFVfev/yXxTJJ
+ l2y3y+CsJ3L40Nn5ztUWGShp/VIBIX8072dYqmctIUzVGbXbfzp2zRrUGqeHwI4zQMqKJiBF8FW
+ p7hEut3wDE/CYbstWjwhdyVNiGuFEXS3vmE9amlCRmBVT+EP20gaksCSJIG7btB/DoktHY45zDj
+ IgEyz7hq5PX8CU4ZjTuQGSlWrzgDOlPzzh7amsnFM3ZBjlJR0Vu35XNy5VwRDxeKuOdjS+Ec94h
+ HwVsINI9CDJv0/wixfo2cxZzy3GZLsZ2b7gU4i43UM04cUle3uOaVtWO02mRA2xJGTWtMl30hsJ
+ EvjMm1d579pMG3wLyBvxhnoE2TWbXa6+2T1oZXKuGPXoqYOkP6gvCaMoyFrGyRj0440LKlSgsbc
+ jcWgS0T+CVOOEGQ==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.444,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,43 +110,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 05, 2026 at 02:36:23PM +1000, Alistair Francis wrote:
-> On Tue, May 5, 2026 at 12:00 PM Nicholas Piggin <npiggin@gmail.com> wrote:
-> >
-> > On Thu, Apr 30, 2026 at 09:57:34AM +1000, Alistair Francis wrote:
-> > > On Sat, Apr 25, 2026 at 11:20 PM Joel Stanley <joel@jms.id.au> wrote:
-> >
-> > > > diff --git a/MAINTAINERS b/MAINTAINERS
-> > > > index e1942a86eba5..635a380945fd 100644
-> > > > --- a/MAINTAINERS
-> > > > +++ b/MAINTAINERS
-> > > > @@ -1760,6 +1760,17 @@ F: hw/*/*sifive*.c
-> > > >  F: include/hw/*/*sifive*.h
-> > > >  F: tests/functional/test_riscv64_sifive_u.py
-> > > >
-> > > > +Tenstorrent Machines
-> > > > +M: Joel Stanley <joel@jms.id.au>
-> > > > +R: Nicholas Piggin <npiggin@gmail.com>
-> > > > +R: Michael Ellerman <mpe@kernel.org>
-> > > > +L: qemu-riscv@nongnu.org
-> > > > +S: Supported
-> > > > +F: docs/system/riscv/tt_*.rst
-> > > > +F: hw/riscv/tt_*.c
-> > > > +F: hw/riscv/aia.[ch]
-> > >
-> > > AIA?
-> >
-> > Oh it must be because checkpatch complained about patch 5.
-> >
-> > It is covered by RISC-V TCG CPUs though, so no change needed to
-> > MAINTAINERS for AIA AFAIKS?
-> 
-> If it's already covered then that should be fine. Also, if you are
-> covering it, MAINTAINERS should be updated with patch 5 and not here
+On Mon, 04 May 2026 23:12:34 +0530, Arun Menon <armenon@redhat.com> wrote:
+> diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+> index 5572d892686..98feb734d54 100644
+> --- a/hw/tpm/tpm_crb.c
+> +++ b/hw/tpm/tpm_crb.c
+> @@ -457,6 +520,11 @@ static void tpm_crb_unrealize(DeviceState *dev)
+>  
+>      g_clear_pointer(&s->command_buffer, g_byte_array_unref);
+>      g_clear_pointer(&s->response_buffer, g_byte_array_unref);
+> +
+> +    if (s->migration_blocker) {
+> +        migrate_del_blocker(&s->migration_blocker);
+> +        error_free(s->migration_blocker);
 
-Agree on both counts. I think it was in the wrong patch, but also
-unnecessary. I've just dropped it.
+migrate_del_blocker() already calls error_free(*reasonp) and sets
+*reasonp to NULL. Drop it.
 
-Thanks,
-Nick
+Typo: "be_bufer_size" should be "be_buffer_size".
+
+Typo: "be_bufer_size" should be "be_buffer_size".
+
+-- 
+Marc-André Lureau <marcandre.lureau@redhat.com>
+
 
