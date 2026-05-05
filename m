@@ -4,107 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AB8ACD3427
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 20:30:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 108EDCD3427
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 20:56:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKMMO-0004c3-2W; Tue, 05 May 2026 16:27:16 -0400
+	id 1wKMmR-0002wm-GK; Tue, 05 May 2026 16:54:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKMMK-0004X0-3n
- for qemu-devel@nongnu.org; Tue, 05 May 2026 16:27:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wKMMH-0002f6-7C
- for qemu-devel@nongnu.org; Tue, 05 May 2026 16:27:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778012827;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ZOv4dkPxbigP2amkOsD1OyD2ureHpWxPWa9Eo8OsVWA=;
- b=c732tGR74BukJZx/YQhdkp/BCRGM60DbD5zLPH0hbWmoKQFtk8lAWNb/j8mn1f7FFgiyZ2
- JWuVRpAJH80IKUJrd6eRdePt0Vdgi7kBRBFq1x6c11gEa9yIycUiP9HOeDii9bTPAfPR/1
- Kj7l45UZtc5iLGHIQSLdBsmw7jrN5Cg=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-457-pjZ11YRgOFGhEb71RgYl_A-1; Tue, 05 May 2026 16:27:06 -0400
-X-MC-Unique: pjZ11YRgOFGhEb71RgYl_A-1
-X-Mimecast-MFC-AGG-ID: pjZ11YRgOFGhEb71RgYl_A_1778012826
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-902e1e4f8ccso341009185a.0
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 13:27:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wKMmM-0002vs-OE
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 16:54:07 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wKMmL-0001Q3-36
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 16:54:06 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-48984d29fe3so82093705e9.0
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 13:54:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778012825; x=1778617625; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20251104; t=1778014443; x=1778619243; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZOv4dkPxbigP2amkOsD1OyD2ureHpWxPWa9Eo8OsVWA=;
- b=BfCcGKoPXrI/ouYOhelUYpBg+Wf+k1EbRIQgJF/gQXRYyRnmQRG0oA6AdwAee/F6By
- xoExRXSp9Ash5eR/Ww9SlQUNtSUa8Qfoyidoobx10f30zy2LvLRu1WLGcOD6wLLWUobd
- 6k/lB5EzPKg1x4FRMcPX80ZrcjK8/osUsM0Z7QGX6uuVS45U13ikGaLYvfd+/GbodBcp
- kwlXt3an085yOxr1jsFdSiRWZGEg/dnTQhVXEl82IJ0kuVGJMscAMlQQp1nK/pwkFI5X
- 6et0lheNVdwwTsIvxpGnT5KTIKEqoAxDQz/9mw9R4yiNndYzGT3sdigWSs8xRhkyzsN0
- e7MA==
+ bh=3OlMkUnK67P6OiqTbgbKmspu7e+U7zl/NOy2A2SBzKk=;
+ b=KiLCzHTkuP8bcvK83ASSS/8SCb7V+j6GCnWs1wwImxheiHN+iIeTF8SpA2/zvsHQx+
+ okkjR73RYkg6PuMPnFWeuzmwzQpnDVajRGhR9nnMSkF2gKuGo8luZkvOo5YeKOdAmtVu
+ ZOBoaN1ojKxayJ6b5aUKwi2HBrU1rAeBL6AxkVCqxcOBNSK/VD9nX3XrMkvIE649ODl0
+ Ue2ImL+3deGWVlBwvpv/A3krOXhx3Ru5PC8evXxjApfdaWAETUZu+TqixhcmyhlNufeq
+ ew03cEWph0+CWsCWPVDmj0ZVx3NnCAhZv7cxisYFsfgD0Tro0m6dSvABc3cA9/j23ycn
+ 3G/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778012825; x=1778617625;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=1e100.net; s=20251104; t=1778014443; x=1778619243;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZOv4dkPxbigP2amkOsD1OyD2ureHpWxPWa9Eo8OsVWA=;
- b=dxQfmEEyS4YLpH3LwbHFZ2y2LJqhFmf5gkFwVQ/pi/HjL60/ZXWz8+kum9imWSouu5
- 7xcysXZdbchGSFkOrFSoQCE/0iWuxoDi1+22ddh8jwmEyPk0Iemxh/rJSxYPYhqmFHw0
- qj+HvFp0Ac7F2kBJ2fSuM/FrTEXM+WbCyeNTVdZJHt6KdWM9RN0MtMVAWfHeMrSJ3LRG
- Me3Uw0lHp3wG3+ms8ss7EXqtpWIZzKYTPdCiGLk3sgJF+sfXoJVDBjDyU8wxFztQ8EXx
- Z0oX1ZA1Ke0RCLj/FUyBuChMboJMLtyB0p1/Q7tQ4aAu7oSftLtp7gdeuAnAhPYpI917
- xLtg==
-X-Gm-Message-State: AOJu0Yzs8sTpMPpYYFiVQ2+3nn2vUICBQHYQT10RhTk6FZr4uPY/zgsJ
- DMsFJLBs0ICh8kg1Q1XGjopsi/t4mvDjPyXGinyfhM22guIj324HVUL6k0Jm/r3TKJ1cjoggO/1
- 8XUv2r8P8KD3Ah2o5ohO0KrZi3iFbaw1K4bezU0tT8Bs20bYFQqsMd9S9HTNzfot7YRK7iK9h4T
- Ja0GArs3EykPv+sNMUSn7/bFy6JKWOexy3HqHuSA==
-X-Gm-Gg: AeBDievwjsBvO17oJlxVMX7OpQEkGP4SbWLUnri3XqzZbVA0zoKrUkJyiTnXreFwrhW
- IqkEjemZV9qlsZtikrOS1f21Ih+3h4lcNCuQSmO/5k9rzAOQUvRarjxtr+4IKmpHV7n8zumEJya
- fbQIy0mTg7A+xSZm2H5koE9KaC79B9E1v8gXm++tndjAgULryjxLtCHY/y4JRSrM0OX1W+j7MXn
- b4d5wqIpY1cLB2KUJFIGb4P6M9kUIEnpBGYlkrfg6uiTnEkOMwNvgLgpaYs4SI9eKzx0JHrdWMw
- qOPdUiVj6RyYJPZu6sfgd02LduhOTiDQ5UFENOj8GUwL5D1oOPX9IoaJYRj8t/kEa4f3oaQxooj
- jbm/Lyypl9JcnJy6cnYNflYYaLuR+89hIZLnHsQt/0H5qMWG4bHNXReo=
-X-Received: by 2002:a05:620a:280e:b0:8f0:10b0:9e4a with SMTP id
- af79cd13be357-904d6fcc196mr91062185a.57.1778012825154; 
- Tue, 05 May 2026 13:27:05 -0700 (PDT)
-X-Received: by 2002:a05:620a:280e:b0:8f0:10b0:9e4a with SMTP id
- af79cd13be357-904d6fcc196mr91057385a.57.1778012824538; 
- Tue, 05 May 2026 13:27:04 -0700 (PDT)
-Received: from x1.com ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b53c6b8123sm155283806d6.35.2026.05.05.13.27.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 May 2026 13:27:04 -0700 (PDT)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, Avihai Horon <avihaih@nvidia.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 18/23] vfio/migration: Add tracepoints for precopy/stopcopy
- query ioctls
-Date: Tue,  5 May 2026 16:26:35 -0400
-Message-ID: <20260505202640.1011006-19-peterx@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260505202640.1011006-1-peterx@redhat.com>
-References: <20260505202640.1011006-1-peterx@redhat.com>
+ bh=3OlMkUnK67P6OiqTbgbKmspu7e+U7zl/NOy2A2SBzKk=;
+ b=dThwkyN70lx5/nX+h2+EIUM6/1VE+XBCNgj5R8E4m8civetNFl656oXEOE5LvCyz65
+ IMNNw1XJXoxwdBSaXhXQNAJ2MjVsdzb2O51kNv9vogbsBQSANPTCNa8WlG0N8GopH31j
+ zcV/527BQo/EKpq4z9vfoJuGV7rYotgvA8YSh2s6cbBLV06GysI+OniHIJ8DRVq4GcWK
+ SrINPiLzTX4FQOqL1nglIK+em04ZcFIA2VYgBLKYvHVLNVdCjtA2z1YaI2toGROX7Qyw
+ iayPYp09BhEYBd6UtT/iZ+d/71lMDB71wAS/VBVM5w7OMVDEnboquERgYqF+SjCf55nX
+ Gm8Q==
+X-Gm-Message-State: AOJu0YyhEo0YJXPPuoRT3h2iD9HAOyxxNHxHBY0BcdktURpSi/AVumNL
+ YV2mS7jOH/tFSO5XKBHv1fNfV17DP0+txiyHjbwtrP/kEl1dG8O/tQb9
+X-Gm-Gg: AeBDiesJC6WEmPveKn3VQowHL0wBwv+J+O5q6puXgjFB5Me6UCJFOhtBzyCHgh4l0ct
+ aErsMsk4s4o/Xi4N5NJDLLLyHVzYiujcTt5W00yU/yxaNWpivqTst/WhMVvLKkzmYrclNs0Jfdi
+ nrLvO7GPPgCtkjeDvxOxoctJUF4D1WVhc5/VDJM5GumfTR346+igauIJyGbRh8qAd/WA9p/f4z0
+ jw0A1Mf84w5ru0dXsxFrEtM04GUsz5RRrslxe9wt4jPgN/4RqS4hdO7drucumqFDKmpezvaMrZQ
+ vGjAaU2HMoANzZiyuVpdl4gy7+kvoCI7wmQHcv0+AwgeGU60peogFKdU9puTkK0NAH2urWRZHCA
+ 20Lpdfo07ajdms3aT/cV2KvxcmjGr2EjYBoFUi8SWULeGW3L7AoYmFTFYHukP25aBuNuuNneVZb
+ v0ORFy2UMsmDY3GW5EFQJ2gJra2mfkQgIqZSxJ4yb+As0ZlD8XkCNS8DeUlqN63Yo7YT7K27VvS
+ SQCk128NUqx3pdlVWIFuNaxQfsoo9XSPLtQJpIUEccqIGdoZv5inipB
+X-Received: by 2002:a05:6000:61e:b0:441:2335:ac3f with SMTP id
+ ffacd0b85a97d-4515d4d114fmr1157861f8f.31.1778014443322; 
+ Tue, 05 May 2026 13:54:03 -0700 (PDT)
+Received: from ehlo.thunderbird.net
+ (dynamic-2a02-3100-2288-5100-c87f-e1c3-d3c0-0c97.310.pool.telefonica.de.
+ [2a02:3100:2288:5100:c87f:e1c3:d3c0:c97])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4505238e7c0sm6410810f8f.3.2026.05.05.13.54.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 05 May 2026 13:54:01 -0700 (PDT)
+Date: Tue, 05 May 2026 20:53:57 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>,
+ Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-trivial@nongnu.org, qemu-arm@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>,
+ =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Gaurav Sharma <gaurav.sharma_7@nxp.com>
+Subject: Re: [PATCH 3/5] hw/arm/imx8mp-evk: Fix reference count of SoC object
+In-Reply-To: <CAFEAcA_cYDwOFP_h_pKyUQ0kKmT671iZiNntzMC5O5tF=1cC=A@mail.gmail.com>
+References: <20260308203516.160103-1-shentey@gmail.com>
+ <20260308203516.160103-4-shentey@gmail.com>
+ <CAFEAcA_cYDwOFP_h_pKyUQ0kKmT671iZiNntzMC5O5tF=1cC=A@mail.gmail.com>
+Message-ID: <842AA964-4C27-47B7-85AB-A26BC607BD5D@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,101 +108,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add two tracepoints for both precopy and stopcopy query ioctls.  When at
-it, add one warn_report_once() for each of them when it fails.
 
-Reviewed-by: Avihai Horon <avihaih@nvidia.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/r/20260421202110.306051-17-peterx@redhat.com
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- hw/vfio/migration.c  | 35 +++++++++++++++++++++++++----------
- hw/vfio/trace-events |  2 ++
- 2 files changed, 27 insertions(+), 10 deletions(-)
 
-diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-index e6e6a0d53d..150e28656e 100644
---- a/hw/vfio/migration.c
-+++ b/hw/vfio/migration.c
-@@ -329,6 +329,7 @@ static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
-     struct vfio_device_feature_mig_data_size *mig_data_size =
-         (struct vfio_device_feature_mig_data_size *)feature->data;
-     VFIOMigration *migration = vbasedev->migration;
-+    int ret;
- 
-     feature->argsz = sizeof(buf);
-     feature->flags =
-@@ -340,12 +341,19 @@ static int vfio_query_stop_copy_size(VFIODevice *vbasedev)
-          * is reported so downtime limit won't be violated.
-          */
-         migration->stopcopy_size = VFIO_MIG_STOP_COPY_SIZE;
--        return -errno;
-+        ret = -errno;
-+        warn_report_once("VFIO device %s ioctl(VFIO_DEVICE_FEATURE) on "
-+                         "VFIO_DEVICE_FEATURE_MIG_DATA_SIZE failed (%d)",
-+                         vbasedev->name, ret);
-+    } else {
-+        migration->stopcopy_size = mig_data_size->stop_copy_length;
-+        ret = 0;
-     }
- 
--    migration->stopcopy_size = mig_data_size->stop_copy_length;
-+    trace_vfio_query_stop_copy_size(vbasedev->name,
-+                                    migration->stopcopy_size, ret);
- 
--    return 0;
-+    return ret;
- }
- 
- static int vfio_query_precopy_size(VFIOMigration *migration)
-@@ -353,18 +361,25 @@ static int vfio_query_precopy_size(VFIOMigration *migration)
-     struct vfio_precopy_info precopy = {
-         .argsz = sizeof(precopy),
-     };
--
--    migration->precopy_init_size = 0;
--    migration->precopy_dirty_size = 0;
-+    int ret;
- 
-     if (ioctl(migration->data_fd, VFIO_MIG_GET_PRECOPY_INFO, &precopy)) {
--        return -errno;
-+        migration->precopy_init_size = 0;
-+        migration->precopy_dirty_size = 0;
-+        ret = -errno;
-+        warn_report_once("VFIO device %s ioctl(VFIO_MIG_GET_PRECOPY_INFO) "
-+                         "failed (%d)", migration->vbasedev->name, ret);
-+    } else {
-+        migration->precopy_init_size = precopy.initial_bytes;
-+        migration->precopy_dirty_size = precopy.dirty_bytes;
-+        ret = 0;
-     }
- 
--    migration->precopy_init_size = precopy.initial_bytes;
--    migration->precopy_dirty_size = precopy.dirty_bytes;
-+    trace_vfio_query_precopy_size(migration->vbasedev->name,
-+                                  migration->precopy_init_size,
-+                                  migration->precopy_dirty_size, ret);
- 
--    return 0;
-+    return ret;
- }
- 
- /* Returns the size of saved data on success and -errno on error */
-diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-index 287df0b8cb..2049159015 100644
---- a/hw/vfio/trace-events
-+++ b/hw/vfio/trace-events
-@@ -162,6 +162,8 @@ vfio_migration_realize(const char *name) " (%s)"
- vfio_migration_set_device_state(const char *name, const char *state) " (%s) state %s"
- vfio_migration_set_state(const char *name, const char *new_state, const char *recover_state) " (%s) new state %s, recover state %s"
- vfio_migration_state_notifier(const char *name, int state) " (%s) state %d"
-+vfio_query_precopy_size(const char *name, uint64_t init_size, uint64_t dirty_size, int ret) " (%s) init %"PRIu64" dirty %"PRIu64" ret %d"
-+vfio_query_stop_copy_size(const char *name, uint64_t size, int ret) " (%s) stopcopy size %"PRIu64" ret %d"
- vfio_save_block(const char *name, int data_size) " (%s) data_size %d"
- vfio_save_block_precopy_empty_hit(const char *name) " (%s)"
- vfio_save_cleanup(const char *name) " (%s)"
--- 
-2.53.0
+Am 30=2E April 2026 15:39:48 UTC schrieb Peter Maydell <peter=2Emaydell@li=
+naro=2Eorg>:
+>On Sun, 8 Mar 2026 at 20:35, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
+:
+>>
+>> object_new() leaves a reference count of one, and object_property_add_c=
+hild()
+>> then leaves it at two=2E This would leak the SoC object if the machine =
+object was
+>> destroyed since the machine is the SoC's sole owner=2E Fix this by conv=
+erting to
+>> object_new_with_props() which gets the parenting and reference count ri=
+ght in
+>> one go=2E
+>>
+>> Fixes: a4eefc69b237 ("hw/arm: Add i=2EMX 8M Plus EVK board")
+>> cc: Gaurav Sharma <gaurav=2Esharma_7@nxp=2Ecom>
+>> Signed-off-by: Bernhard Beschow <shentey@gmail=2Ecom>
+>> ---
+>>  hw/arm/imx8mp-evk=2Ec | 4 ++--
+>>  1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/arm/imx8mp-evk=2Ec b/hw/arm/imx8mp-evk=2Ec
+>> index b84ac91a17=2E=2Ecfc3038c36 100644
+>> --- a/hw/arm/imx8mp-evk=2Ec
+>> +++ b/hw/arm/imx8mp-evk=2Ec
+>> @@ -74,8 +74,8 @@ static void imx8mp_evk_init(MachineState *machine)
+>>          =2Emodify_dtb =3D imx8mp_evk_modify_dtb,
+>>      };
+>>
+>> -    s =3D FSL_IMX8MP(object_new(TYPE_FSL_IMX8MP));
+>> -    object_property_add_child(OBJECT(machine), "soc", OBJECT(s));
+>> +    s =3D FSL_IMX8MP(object_new_with_props(TYPE_FSL_IMX8MP, OBJECT(mac=
+hine),
+>> +                                         "soc", &error_fatal, NULL));
+>>      object_property_set_uint(OBJECT(s), "fec1-phy-num", 1, &error_fata=
+l);
+>>      sysbus_realize_and_unref(SYS_BUS_DEVICE(s), &error_fatal);
+>
+>Looking again at this, is this really right?
+>object_property_add_child(=2E=2E=2E) creates the object (refcount 1),
+>adds it as a child of the specified parent (refcount 2), then
+>does object_unref() (refcount 1)=2E Then in this code we call
+>sysbus_realize_and_unref(), which calls qdev_realize_and_unref()=2E
+>That function:
+> * (indirectly) calls bus_add_child(), which takes a reference and
+>   hands it to the link property on the parent (refcount 2)
+> * calls object_unref(), as its name suggests (refcount 1)
+>
+>So now we have the object with refcount 1, so it doesn't just
+>vanish, but on the other hand both the QOM tree parent and the
+>qbus tree parent think they own a reference to the object,
+>so our refcount is wrong=2E
+>
+>I think the existing code here was correct: we get a reference
+>because we call object_new(), and then we drop it by calling
+>the realize_and_unref function=2E
+>
+>I'm going to drop this patch from target-arm=2Enext=2E
 
+Yeah, makes sense=2E Thanks foe the clarification=2E
+
+We'll need to fix imx8mm-evk now since it uses the same broken pattern (I =
+cc'd Gurav who incorporated this patch into his series)=2E I'll send a fix=
+=2E
+
+Best regards,
+Bernhard
 
