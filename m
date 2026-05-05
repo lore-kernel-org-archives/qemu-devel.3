@@ -4,93 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7D96CD3427
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 22:40:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89B87CD3427
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 22:49:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKOQh-0004Zl-RO; Tue, 05 May 2026 18:39:51 -0400
+	id 1wKOZB-0006PO-VM; Tue, 05 May 2026 18:48:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wKOQg-0004ZO-43
- for qemu-devel@nongnu.org; Tue, 05 May 2026 18:39:50 -0400
-Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wKOQe-00063B-A8
- for qemu-devel@nongnu.org; Tue, 05 May 2026 18:39:49 -0400
-Received: by mail-ot1-x32f.google.com with SMTP id
- 46e09a7af769-7dccb8644c4so3040101a34.0
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 15:39:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wKOZA-0006Oe-Kk
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 18:48:36 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wKOZ8-00069v-RA
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 18:48:36 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 645LYYxS3475707
+ for <qemu-devel@nongnu.org>; Tue, 5 May 2026 22:48:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 54T5hcINubNCcwaMGkVx4ajHGLNd1sHSAIGwNUp8J0A=; b=YIeMZ/sRCuMkfO8T
+ TRcmh2KWCJZE3qOQBniMKFMSmPcmiA/MSCFO0CX3rokgxIYES1cSnZsBLR2EWlM4
+ hZiy4cmSZziYanl7FE2nJKfDUxCjA9qFIHsszZbq1ttisjtv5MK6Z4cc7SZcy37g
+ ju7APdETSc7HLO37gkLQFM0OazA4N7+1GTbOdP213CB/xdrxOag3vWyAy1+qMhHZ
+ NptTvklM2UILmSrJH7xB0qiXttkFX7c+JLt3uCLfVytv4UG32C/sKNmRLnTE5pkx
+ pKfo2AeKdrLsUidcDstVhnKxEFdrU2OdOv+MjXxowndQaU7fiXIWx+iq3nL+BhUm
+ EzxNIA==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4dyhsgt33p-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 22:48:33 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-2c0f6593ef5so8233357eec.1
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 15:48:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778020786; x=1778625586; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=nNdgCTdGWg+T/Fc/y6uGvKfPabIGsrUgHTvDSW4nOI0=;
- b=lpERvfxGZ42nHN1VmU2012TTi6YAw/8Ibkd4I5Xo1XgGygsr5CAx1e6VKpH7/JLnf5
- jWPpDZ2+qLNp02R9+rS6xMpmE0YQAoq1joKpKDFis1tnumajto3PBsAfn+WeiL74RD1U
- PNi0WSVfHGr2MbLM2KAWNs3J+Xb4igwNH9kovXFuFJUArBr73whk3L7zoZxF4/dd9XP7
- yK4rutrw4nWTjXOzz8JVFlQpd/Kssecdnu05iAQCewdyMJts9eFiLb1FLdWgtwIr63Bt
- fn9URnJZi27yzNdful18KY6CA8AaOaSOp4NGaEaD2JE3BTAbSz5oP5bwTZD+DMFxVGD7
- dXdQ==
+ d=oss.qualcomm.com; s=google; t=1778021312; x=1778626112; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=54T5hcINubNCcwaMGkVx4ajHGLNd1sHSAIGwNUp8J0A=;
+ b=TZSQG19xgnH4r3tTCX9EYvQMsluSEkjdwircKR9pC2NqQhrRjHN58gljnb8Ol4PI8P
+ wfKRDPvl5ulNQ/RB1wxN6Wtd9bB4pAg+sg52hOQ1SSsZuyP/R7FthdFd3aIiDXUJsMEP
+ T4YzqyaYOW/A63Zr5P9R/9M809cLHqO5YErxwtIuhHj7ZEGTbf83MkYdl1THTy0+RRlG
+ tbrmvh9rhu6O8vq0gYaqhEpbmyUYiXWXiDz6FJLPNBoMorwVrw7JPqYYrkbVhVmJbD1a
+ T41Gkg1e6nTFODewLfMo0T/z/ACDmyVV1qr812IKhSWVcm5nkEQ00f5cWOWFSuIwg3vb
+ RsFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778020786; x=1778625586;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nNdgCTdGWg+T/Fc/y6uGvKfPabIGsrUgHTvDSW4nOI0=;
- b=eEubFu7eWMney7EanRTGUf5/ihJ1DsQDkyJIM1aZHMF321nd0KKVpG961OimLgfFm9
- KizIE7h0MGtGAqs8xQ4wZB87R+01jKltiPytKj7tr1Abjw6NFBqaaxX5oosFY0/Ti6PO
- USDJbwaHD+rKxGnc0c98ngP3/TuZUGiBG5PREIwVYM5y6Y4qMnQBouGY2zI0W4Gu4w3n
- XfiYln8yE9hxJtQRbnRwh0JhQxlODq3CEXLDkbpvLmvLcr64rvGluJt2gSplOuXfQYEo
- iPzaiBrAxU0L+jyF1agM1HqjPpRdc7vfQNhTdxAmAk1W6kxa8FYd5afXzP/QfYIadvdE
- GN2A==
-X-Gm-Message-State: AOJu0Yz2A4RQLvPU5wQlcRqb6Ajeu4jbSa8GnlaMl15i76OXxwIoccPU
- QUsKSk0mcpPfKW2j8Fbtz1dEtLePNs0LUE3AOGNmyoaHAACiUDM4c6aTo16r6O7pNl0qODMbquT
- 7/rr7
-X-Gm-Gg: AeBDievJPlX1Ut+1ogK63e5yEEdm/Zw7XEDH/OUKVVx64ZXOmfO7YWAgjhBMAC6hKeA
- y/OC62u1msQZcORk+jqE9DvsvSxoNoaZP56uLNYv5JDoquH5B61SEn+kJCD6vp4MvOAHxqT5OQM
- jWCqpFx4NYrPdV+ZRungmvSZNjsO/RHUln0IRY6KMAt3NeRGMmGEjQMrwVfkFe4eF738YbnbEsz
- BRQSODDkU8mMa5SK+ziC+9rDE82nT1xoq49r6ZBN+T2UQ3KzHK9ZlczuCqgG2Clisan1OmIUYaH
- XEW3IN9e7N9MhSwS9c+K4sdcEyHf5qv2Z3t7Mr5dtQ625Ue4AO3RmSBKslO4BIl6rnSaQWkPdUO
- 4yk2rIyvekickkEyhxuvBklQ3K4jEBRHESvDdx1CqX6eF+N9GVR00/gVaZpNQHA/BLddKVs1WAw
- onYpNIl9uxllqnn5ci2xGMKLU9MtB/YHGogfVl6rdP4Oc+k/hsSs85e6c6fSCgU/QwK5+EPjK9Z
- qmkts6JOw8S3C/4QPgMOI0upQ==
-X-Received: by 2002:a05:6830:6ad3:b0:7e1:cba6:9837 with SMTP id
- 46e09a7af769-7e1deefaccemr496676a34.6.1778020786344; 
- Tue, 05 May 2026 15:39:46 -0700 (PDT)
-Received: from ?IPV6:2600:381:c938:6375:8e44:9fa:a15c:eb9?
- ([2600:381:c938:6375:8e44:9fa:a15c:eb9])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7deced80854sm10559724a34.18.2026.05.05.15.39.45
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 May 2026 15:39:46 -0700 (PDT)
-Message-ID: <c7a83814-1ce7-4092-8df5-0a845bdf5b41@linaro.org>
-Date: Tue, 5 May 2026 17:39:43 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] bsd-user: remove cached host page size and rely on
- qemu_real_host_page_size()
+ d=1e100.net; s=20251104; t=1778021312; x=1778626112;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=54T5hcINubNCcwaMGkVx4ajHGLNd1sHSAIGwNUp8J0A=;
+ b=NpGKzqJXnCWp6UCWcfQobpAF8MwSVFauaxqgxWM7/Ulj4D43+z9fEFkWpvotInG5Vc
+ mKm/w6r8tNlvrl7x4wWmU/DaTWQTc3DFjTyzgWVIFx8SHDsT+j86lpJrTkmfRSmTQTRd
+ KEXV6P4AaVntFQoiKG1LXfjLLLPtyzwIPJyUI1Cc1b4BGWHfD6U86BWzf/PnPr7U8Yom
+ CcXXwxgaY4X9hUuUXAT7dUnioXsR0j3eCUMq2VgfdFUMyb85ecCYscTUCLGhMV0xD3XG
+ +u+oogAiYz22XXzN/YXJaRS5DuxUw9yi69FBtHqpPlMSqneVGsvphri5g6FiF10Ej6N9
+ 5omA==
+X-Gm-Message-State: AOJu0YyNkUZXEBhvQg5E5M5WgwyuuFqgHYy0qq72olzIoUXaedk7nKFU
+ AqI+9nNvcPTtmXEHBeDq5oIOt/Ur9ihwNbhOaNBcTvHiyXJBH8NG+GeBbuj/aq6tBdEFYdddeji
+ 9VrHaaJF03V99iRFiJ/qevuyl6i5wqFf1DOOe5IjPP1a2X4jGTWI82KiwpOyuQZ+6DN2n
+X-Gm-Gg: AeBDiev1DGMHlnK7f8SeeULZOWAp45M9wwDDzUxJvgXiTbHfjIq+/904uDrtcmVjma8
+ +uOgaYiU1nHLQTvU2UD1Rkwtt3LnMAbLBasR76WJ4ukj5cefHHfekghW0l/yIuTvtXv7yAplr9u
+ UdoSvcApYQE5IQ3xmYOLbUuoc6TnAO3N9ltGUo2yGamjg5b89zMGwYnZ8CqILtjXuZ+84thBedc
+ PSa/1BvH/kec6SuPU20uac/n9sNdGoZAEy7afjjuLGwtqHIXGTX5aJbXQxXrsr90oXuhdMDJjNr
+ pxlM3WnTcD58OQKak6Q/fHj9WKBuN/22y0r0g2PGZfvVAsEzndFUCCFnX6iMC8dlBXZjXBh3wZX
+ q10jlVsi6gyEi1XELdCT6BKtL3AZOw7seGYXgkFExfaHUbutKgAfxk8cUKXZYCT1SdQWVBT54gx
+ gVPqp85aR65OR5tb9b
+X-Received: by 2002:a05:7300:72d1:b0:2ed:2942:34ab with SMTP id
+ 5a478bee46e88-2f548897087mr652867eec.3.1778021312404; 
+ Tue, 05 May 2026 15:48:32 -0700 (PDT)
+X-Received: by 2002:a05:7300:72d1:b0:2ed:2942:34ab with SMTP id
+ 5a478bee46e88-2f548897087mr652853eec.3.1778021311868; 
+ Tue, 05 May 2026 15:48:31 -0700 (PDT)
+Received: from hu-pbouvier-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2f56d4cf2fdsm898953eec.8.2026.05.05.15.48.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 May 2026 15:48:31 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-References: <20260430162941.584960-1-mohamedaymanworkspace@gmail.com>
- <20260501161106.818373-1-mohamedaymanworkspace@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260501161106.818373-1-mohamedaymanworkspace@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Cc: Anton Johansson <anjo@rev.ng>, marcandre.lureau@redhat.com,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Max Filippov <jcmvbkbc@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v4 3/6] target-info: extract target_info() definition in
+ target-info-init.h
+Date: Tue,  5 May 2026 15:48:23 -0700
+Message-ID: <20260505224826.2698753-4-pierrick.bouvier@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260505224826.2698753-1-pierrick.bouvier@oss.qualcomm.com>
+References: <20260505224826.2698753-1-pierrick.bouvier@oss.qualcomm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: yciioyWDmJHi5Wmu-6ygbYOOlv37Pg0Z
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA1MDIyMiBTYWx0ZWRfX2DyOlFMUQwrL
+ x4O6fM7NCJrCKzN3ecD4yKoV8wDOd3kgIVGi0pWARptruiB7hRf2FZtuaEJeWPpPB7rWbqbMi+n
+ LHRm7X5sgF940piJ0uf3ZvEXe6FecIWuDKewqhlBcNPCbsaMeZ80jmknXI9MTfdLoY7XMWgLYDn
+ WJus41+QvjlMYgU22lHmO933g+R1CNEY6nf5B/uw9Y9zz5Q8egLu8YhfsPQDdvg56tq8KRqaOEu
+ EPpKnQb2XWXe6NCkV4OU5BJSxhkFJqWu0th1uuAOKxSXMSOFvt46k3UKq+a6ZuAQHwpy+eZxA8D
+ diOvbgK7tXU4GyhHMItjIPoVQMv4e8QHTOMNTakvUz4/k1ju2OZ1z2j6GlL5rAbhn4+4GZEJof2
+ G0SemFNFv+wquKXbIbfGab2wtUXE7Nr4dWgkQMMakZRxj9dH7192KKC/aFpo1FZFrCQtP4L8OTK
+ cAk/6LEbaujq1ncD9GQ==
+X-Authority-Analysis: v=2.4 cv=EPU2FVZC c=1 sm=1 tr=0 ts=69fa73c1 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=20KFwNOVAAAA:8 a=EUspDBNiAAAA:8 a=090slgBn3MrHMI8nANcA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-GUID: yciioyWDmJHi5Wmu-6ygbYOOlv37Pg0Z
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-05_02,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 malwarescore=0 impostorscore=0 clxscore=1015 bulkscore=0
+ phishscore=0 suspectscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605050222
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,28 +155,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/1/26 11:11, Mohamed Ayman wrote:
-> +++ b/bsd-user/qemu.h
-> @@ -44,12 +44,10 @@ extern char **environ;
->   #include "accel/tcg/vcpu-state.h"
->   
->   #include "qemu-os.h"
-> -/*
-> - * TODO: Remove these and rely only on qemu_real_host_page_size().
-> - */
-> -extern uintptr_t qemu_host_page_size;
-> -extern intptr_t qemu_host_page_mask;
-> -#define HOST_PAGE_ALIGN(addr) ROUND_UP((addr), qemu_host_page_size)
-> +
-> +#define HOST_PAGE_SIZE        MAX(qemu_real_host_page_size(), TARGET_PAGE_SIZE)
-> +#define HOST_PAGE_MASK        ((intptr_t)~(HOST_PAGE_SIZE - 1))
-> +#define HOST_PAGE_ALIGN(addr) ROUND_UP((addr), HOST_PAGE_SIZE)
+This allows us to prepare next commits, which will introduce qom
+registration for system mode.
 
-This is a bad idea, hiding the true size of the host page.
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+---
+ configs/targets/aarch64-softmmu.c |  6 ++----
+ configs/targets/arm-softmmu.c     |  6 ++----
+ include/qemu/target-info-init.h   | 21 +++++++++++++++++++++
+ target-info-stub.c                |  6 ++----
+ 4 files changed, 27 insertions(+), 12 deletions(-)
+ create mode 100644 include/qemu/target-info-init.h
 
-There are oodles of corner cases that require the exact size of the host page.  If you 
-hide this in a macro, you are going to stumble over them all of the time.
+diff --git a/configs/targets/aarch64-softmmu.c b/configs/targets/aarch64-softmmu.c
+index 82ccb575759..75d95b0e743 100644
+--- a/configs/targets/aarch64-softmmu.c
++++ b/configs/targets/aarch64-softmmu.c
+@@ -8,6 +8,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/target-info-impl.h"
++#include "qemu/target-info-init.h"
+ #include "hw/arm/machines-qom.h"
+ #include "target/arm/cpu-qom.h"
+ #include "target/arm/cpu-param.h"
+@@ -23,7 +24,4 @@ static const TargetInfo target_info_aarch64_system = {
+     .page_bits_init = TARGET_PAGE_BITS_LEGACY,
+ };
+ 
+-const TargetInfo *target_info(void)
+-{
+-    return &target_info_aarch64_system;
+-}
++target_info_init(target_info_aarch64_system)
+diff --git a/configs/targets/arm-softmmu.c b/configs/targets/arm-softmmu.c
+index 18940e51e55..73546fa5737 100644
+--- a/configs/targets/arm-softmmu.c
++++ b/configs/targets/arm-softmmu.c
+@@ -8,6 +8,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/target-info-impl.h"
++#include "qemu/target-info-init.h"
+ #include "hw/arm/machines-qom.h"
+ #include "target/arm/cpu-qom.h"
+ #include "target/arm/cpu-param.h"
+@@ -23,7 +24,4 @@ static const TargetInfo target_info_arm_system = {
+     .page_bits_init = TARGET_PAGE_BITS_LEGACY,
+ };
+ 
+-const TargetInfo *target_info(void)
+-{
+-    return &target_info_arm_system;
+-}
++target_info_init(target_info_arm_system)
+diff --git a/include/qemu/target-info-init.h b/include/qemu/target-info-init.h
+new file mode 100644
+index 00000000000..c781cfc0590
+--- /dev/null
++++ b/include/qemu/target-info-init.h
+@@ -0,0 +1,21 @@
++/*
++ * QEMU target info initialization
++ *
++ * Copyright (c) Qualcomm
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This file is included by each file defining a TargetInfo structure and is
++ * responsible for registering it.
++ */
++
++#ifndef TARGET_INFO_DEF_H
++#define TARGET_INFO_DEF_H
++
++#define target_info_init(ti_var)        \
++const TargetInfo *target_info(void)     \
++{                                       \
++    return &ti_var;                     \
++}
++
++#endif /* TARGET_INFO_DEF_H */
+diff --git a/target-info-stub.c b/target-info-stub.c
+index f5896a72621..af7cdc5e67a 100644
+--- a/target-info-stub.c
++++ b/target-info-stub.c
+@@ -9,6 +9,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/target-info.h"
+ #include "qemu/target-info-impl.h"
++#include "qemu/target-info-init.h"
+ #include "hw/core/boards.h"
+ #include "cpu.h"
+ #include "exec/page-vary.h"
+@@ -40,7 +41,4 @@ static const TargetInfo target_info_stub = {
+ #endif
+ };
+ 
+-const TargetInfo *target_info(void)
+-{
+-    return &target_info_stub;
+-}
++target_info_init(target_info_stub)
+-- 
+2.43.0
 
-
-r~
 
