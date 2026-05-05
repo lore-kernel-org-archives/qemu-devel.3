@@ -4,96 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DB9ECD3427
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67256CD3439
 	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 20:23:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKMH9-0004vF-Oy; Tue, 05 May 2026 16:21:51 -0400
+	id 1wKMFX-0008RJ-FS; Tue, 05 May 2026 16:20:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wKMGw-0004mU-9Q
- for qemu-devel@nongnu.org; Tue, 05 May 2026 16:21:38 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1wKMGu-0001BR-7j
- for qemu-devel@nongnu.org; Tue, 05 May 2026 16:21:37 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-488a9033b2cso50402685e9.2
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 13:21:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778012494; x=1778617294; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZZFpayBCF23pbHHomjkeBRNYj0p8hYI8pLcOn17qbvs=;
- b=HGmo5MYmRoI5n3SpTWSiD6nr6FNtqiaWq4SAaFyUfAKHnzJeOS41GgL7R0m9hJkxbd
- vB9+xP8XreH+UO6DOqLZrR/xeiL0nhkn8ZyCW3yGciKR7IeO66Hw+astGznbFhuo5ysS
- lMkCTPwEcWdruyDnX69wbFDg3qn53CeEJMzoZDApjoFhmKy7uTGxvtDLrwkxujkKGDuH
- zjMYn4AP8HxG5aH33x80H+WvORItuyQHSyf4vzHkEhiTKvcX4Uq8SQjdi0ApJPSLdQbC
- J1087+Ohs4p8tjyBgJIdCf8iTDwQ6hUnsmiOQLaSbjV8TI/7B9bR3zdVdqjXx752KREF
- gi7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778012494; x=1778617294;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ZZFpayBCF23pbHHomjkeBRNYj0p8hYI8pLcOn17qbvs=;
- b=iDmyr9qcGk4ZzdLt16cMmAn3AiGs/rFBPtKvDT4GiY3DD+NrA4ZX6u3mm1SGjUpaeN
- WtkuzyfrYtHRtW5GhnRRMeK69R6Gk/M/j6ambCWXDQwfOcsojBKyARN112kk3Q16Pkbw
- dOskMB21/k5VcDaJYUHMaz53lvlxkHbMaAQwB8eOl4y5pICHkufwkEQMVXEEz1K5G4t+
- gWEiGdwmE8VWNecYVqvCl9Ml9yCrDTajj5WwNu7pylXYR4ERs1B5TeZ5r8lHVAtcSwY4
- Xe55Utb3Wf2nwHNFVd1Q4QGZf+FaFtaRp1cpELC3jpqqgrChP5qJc7QzjNZqxkX6vhRl
- iwTA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/Y+SEDtW2yN5Nt6bjzcnwCfAq4aqtpRRVFWveKyCaCezbNMuabPWKUFihdtri1PJ/HST8IftEvsTCL@nongnu.org
-X-Gm-Message-State: AOJu0Yw1awrYU0Wc5hA+QeHzh0Gmimv5QpmP2gqhpXUJOOOPdEb5A0OT
- iVNHaG2AQG08IdUNlybQXDOBXYvqHNLenQ7WfHH/A4me3SYjlqScL4Sk
-X-Gm-Gg: AeBDiesFU5JuCG6CGpRX9zhv3iePeApS7wUR6tEhA5Dxb6byqAXDJBJR65UbdWsNYQj
- j8y38ii1cSCCZ9JvWG862jVj2TsHlLuDcddiFgeLrvwPeNq1uHUAI5gju2LoBxFpynix1ioFSya
- oWm6zbEaosuWWIXREvTRGEJPNX/bGebB8rYplDWrWlj955GSGnV1GcUoZRTuE6OzLTiHpwd/bgi
- QBEbI+iN7LkW5SsCMWgNw9zIFmh4F1kCmEsXrXwU2KiBb2kUgD7iKrkvfBto0ywijIe6a9icZVc
- R/Atc5305UVB9rLMMexDleq/QRt1d954WtycETCO08Gw0Kr15Izoc3XNBrU1XrlzzwhOUk/QKRd
- sIV5ZbKxIHPi31ViKpjbrXY7BQ7NHfSkL71JVnpstAeF5KwHZ79Mks26pPHEgxHstFJ4x6TLJ3t
- ybsymHkFGSOtljH1Y/jdbjiLetxkFyIT6ZutmA1guAZ2FHRbEVPxFZSs8+eXiMAACmi44mZWHa/
- Du4MQj9eXWcMat3U7dTI59lQ4c7PnvjVjzGeszOAhW8HQCe0gUz3YRrahVf/kC7CNE=
-X-Received: by 2002:a05:600c:8b08:b0:488:a977:8de with SMTP id
- 5b1f17b1804b1-48e51f32757mr13011285e9.16.1778012493678; 
- Tue, 05 May 2026 13:21:33 -0700 (PDT)
-Received: from ehlo.thunderbird.net
- (dynamic-2a02-3100-2288-5100-c87f-e1c3-d3c0-0c97.310.pool.telefonica.de.
- [2a02:3100:2288:5100:c87f:e1c3:d3c0:c97])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e530cf964sm94545e9.1.2026.05.05.13.21.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 05 May 2026 13:21:33 -0700 (PDT)
-Date: Tue, 05 May 2026 20:21:29 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: =?UTF-8?Q?Maty=C3=A1=C5=A1_Bobek?= <matyas.bobek@gmail.com>,
- qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
- Pavel Pisa <pisa@fel.cvut.cz>, qemu-arm@nongnu.org,
- Marc Kleine-Budde <mkl@pengutronix.de>,
- Oliver Hartkopp <socketcan@hartkopp.net>,
- Nikita Ostrenkov <n.ostrenkov@gmail.com>
-Subject: Re: [PATCH v3 0/7] hw/arm/sabrelite: Add FlexCAN support
-In-Reply-To: <CAFEAcA9kQNdx=gwSd_Ec=R2nwegT1R-BEiC9yXvfr23VJHDZiA@mail.gmail.com>
-References: <cover.1777571962.git.matyas.bobek@gmail.com>
- <1B6ED5DC-6808-4A41-B8FA-B2C97C5C8933@gmail.com>
- <CAFEAcA9kQNdx=gwSd_Ec=R2nwegT1R-BEiC9yXvfr23VJHDZiA@mail.gmail.com>
-Message-ID: <936E6AF6-32BA-4236-B8A2-0A8E8748D9C1@gmail.com>
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wKMFC-0007yB-8A; Tue, 05 May 2026 16:19:50 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1wKMFA-0000IN-CG; Tue, 05 May 2026 16:19:49 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 645H4cMS2217751; Tue, 5 May 2026 20:19:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=JD9U2mJnMjZx75H2b
+ b5F56hmODq/EHbwq+ESAYx1DW4=; b=KFjZr/L/R838cqMF8v/i3ndmeB8y5jgJ4
+ 2X6v31GqaluX1lufHNTKh01qjSKilwBWha+vpUaqE64kb+YoizkXApMZzhtqm2Aa
+ +ezBOhgjiaHztnURxptZuf66WXTnNv33V7HEvsqeL63s/07h8uIYbA4u/80HRteQ
+ 4rybBbhRTPdwMyc7fzPbC1EYprp83DLRQWNYg0ymx08WOOsjLdk6rBzRcXlx8bIF
+ HxzXFIdVOKLEXKABNL2JNuy4XZXjJpGDL4YxGqK5s6C2NKhdqQmKw1pF/vlUgFFM
+ rXWVLCIqCR5y4FzYamTaBjArYfRRQYS4DM3eiNgyRUupntstTLrLw==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9x4njtw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 May 2026 20:19:44 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 645K9WDR015588;
+ Tue, 5 May 2026 20:19:43 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwx9yb25w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 05 May 2026 20:19:43 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 645KJgdA30540330
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 5 May 2026 20:19:42 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4D0D25805B;
+ Tue,  5 May 2026 20:19:42 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AB57258059;
+ Tue,  5 May 2026 20:19:40 +0000 (GMT)
+Received: from fedora-workstation.pok.ibm.com (unknown [9.12.79.241])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Tue,  5 May 2026 20:19:40 +0000 (GMT)
+From: Zhuoying Cai <zycai@linux.ibm.com>
+To: qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@kernel.org, walling@linux.ibm.com,
+ jjherne@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, mjrosato@linux.ibm.com, iii@linux.ibm.com,
+ eblake@redhat.com, armbru@redhat.com, zycai@linux.ibm.com,
+ alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+Subject: [PATCH v11 19/32] pc-bios/s390-ccw: Rework zipl_load_segment function
+Date: Tue,  5 May 2026 16:18:51 -0400
+Message-ID: <20260505201905.997996-20-zycai@linux.ibm.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260505201905.997996-1-zycai@linux.ibm.com>
+References: <20260505201905.997996-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA1MDE5NSBTYWx0ZWRfX1p0du8F4DKOS
+ /Io1Anl8sq8Vg8eozI79pwJQazSMGypUgIdyhhLRP2RDvlXPR0SoUU1WyrCBPh4b8YgVSTRk+iD
+ 5VN1/b30lVsygPoI9CtfJZXPVIrdDavmEj7GSSk8jTQqLPDjAjYH9dm0bjreTKewOX/tJNYi8tB
+ LzUenfwYu9TnXSzhWavp0d91hT2K8M46dNaKejEOEOBrQrBbTXzGqVv8gclOgo9pLPO1VJaf/IM
+ dAtPg/yPmbbLM5erSJm6NCGWTVijft685Gi9eH9JT3iiwyEyhK1nSH+nCfoOlXF/P7uMzHHp0Fp
+ dfF+jWJzF7m2bj+2DTdQWQ4D8xCIsoncfNDewotTegmHW3o2MgXl7iTrt9W3lo0AeuSdhyI1fnr
+ htiNRtSnGXVbYMkW4svJhA6z/lYG5yw+uVov5Rx5M2eSyquZkNVM1OaCo11V3BuZ9xqYCsBOuWV
+ w3hZOUj5M4QTQRbbalg==
+X-Proofpoint-ORIG-GUID: mSuADmtexPORRGJzUZdv9iDdGKkmha6F
+X-Proofpoint-GUID: mSuADmtexPORRGJzUZdv9iDdGKkmha6F
+X-Authority-Analysis: v=2.4 cv=W7UIkxWk c=1 sm=1 tr=0 ts=69fa50e0 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=uL_FI9FW9AP7juJAwn4A:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-05_02,2026-04-30_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 adultscore=0 lowpriorityscore=0 malwarescore=0
+ suspectscore=0 spamscore=0 clxscore=1015 phishscore=0 bulkscore=0
+ impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2605050195
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,70 +123,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Change zipl_load_segment() to accept explicit blockno and address
+parameters instead of ComponentEntry pointer and return segment length.
 
+Modify this function to allow the caller to specify a memory address
+where segment data should be loaded into.
 
-Am 5=2E Mai 2026 18:41:52 UTC schrieb Peter Maydell <peter=2Emaydell@linar=
-o=2Eorg>:
->On Tue, 5 May 2026 at 19:03, Bernhard Beschow <shentey@gmail=2Ecom> wrote=
-:
->>
->>
->>
->> Am 30=2E April 2026 18:26:02 UTC schrieb "Maty=C3=A1=C5=A1 Bobek" <maty=
-as=2Ebobek@gmail=2Ecom>:
->> >This series adds emulation of the FlexCAN CAN controller, version 2,
->> >found in NXP i=2EMX6 series SoCs=2E The controller is integrated into
->> >fsl-imx6 and the Sabrelite ARM board=2E
->> >
->> >The chip has two FlexCAN controllers, but the Linux Sabrelite
->> >device tree enables only one by default=2E Linux kernel with both
->> >controllers enabled has been tested to work properly (using a custom
->> >device tree)=2E
->> >See docs/system/devices/can=2Erst for an example of QEMU command line
->> >invocation=2E
->> >
->> >More information about the implementation can be found in my bachelor
->> >thesis [1]=2E
->> >
->> >The headers (struct FlexcanRegs and flexcan_regs=2Eh macros) were copi=
-ed
->> >from the Linux kernel=2E Marc Kleine-Budde is the copyright holder=2E =
-He
->> >has been kindly asked to provide consent, to confirm his approval for
->> >the inclusion of said header fragments into QEMU=2E The approval is st=
-ill
->> >pending, hopefully it will be resolved soon=2E I will update the patch=
-set
->> >on request if another wording/solution for the copyright statement is
->> >proposed/requested=2E
->>
->> Tested with imx8mp-evk: https://github=2Ecom/shentok/qemu/commits/imx8m=
-p-flexcan/ which works excellent=2E Next step after this series is merged w=
-ould be upstreaming that branch=2E
->>
->> I guess the only open issue is the licensing of struct FlexcanRegs [1] =
-which originates from Linux? How do we proceed here?
->>
->> Best regards,
->> Bernhard
->>
->> [1] https://lore=2Ekernel=2Eorg/qemu-devel/202603211316=2E18181=2Episa@=
-fel=2Ecvut=2Ecz/
->
->Could you say what the problem is? In general there is no problem
->with taking header structs from the Linux kernel, as they are
->GPL-2-only and that is a QEMU-compatible license=2E The relevant
->source files or pieces of source files would need to be noted
->as 2-only rather than our default of 2-or-later, but that is
->doable -- we already do that for other things we have borrowed
->from the kernel=2E
+seg_len variable is necessary to store the calculated segment length and
+is used during signature verification. Return the length on success, or
+a negative return code on failure.
 
-In https://lore=2Ekernel=2Eorg/qemu-devel/f3cb3166-c3f8-4ed8-8c9a-cbf48b07=
-1d1e@gmail=2Ecom/ I raised this review question: "The following structure l=
-ooks like being based on Linux=2E Does this affect the copyright of this fi=
-le?" I was just asking for advice and I'm glad the solution is that easy=2E
+Remove static qualifier and add function declaration to bootmap.h to
+make it accessible to other modules.
 
-Best regards,
-Bernhard
+Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+---
+ pc-bios/s390-ccw/bootmap.c | 18 ++++++++++--------
+ pc-bios/s390-ccw/bootmap.h |  2 ++
+ 2 files changed, 12 insertions(+), 8 deletions(-)
+
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index b9ba004cfc..b19981feb1 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -613,19 +613,19 @@ static int ipl_eckd(void)
+  * IPL a SCSI disk
+  */
+ 
+-static int zipl_load_segment(ComponentEntry *entry)
++/*
++ * Returns: length of the segment on success,
++ *          negative value on error.
++ */
++int zipl_load_segment(block_number_t blockno, uint64_t address)
+ {
+     const int max_entries = (MAX_SECTOR_SIZE / sizeof(ScsiBlockPtr));
+     ScsiBlockPtr *bprs = (void *)sec;
+     const int bprs_size = sizeof(sec);
+-    block_number_t blockno;
+-    uint64_t address;
+     int i;
+     char err_msg[] = "zIPL failed to read BPRS at 0xZZZZZZZZZZZZZZZZ";
+     char *blk_no = &err_msg[30]; /* where to print blockno in (those ZZs) */
+-
+-    blockno = entry->data.blockno;
+-    address = entry->compdat.load_addr;
++    int seg_len = 0;
+ 
+     debug_print_int("loading segment at block", blockno);
+     debug_print_int("addr", address);
+@@ -668,10 +668,12 @@ static int zipl_load_segment(ComponentEntry *entry)
+                 puts("zIPL load segment failed");
+                 return -EIO;
+             }
++
++            seg_len += bprs->size * (bprs[i].blockct + 1);
+         }
+     } while (blockno);
+ 
+-    return 0;
++    return seg_len;
+ }
+ 
+ static int zipl_run_normal(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
+@@ -687,7 +689,7 @@ static int zipl_run_normal(ComponentEntry **entry_ptr, uint8_t *tmp_sec)
+             continue;
+         }
+ 
+-        if (zipl_load_segment(entry)) {
++        if (zipl_load_segment(entry->data.blockno, entry->compdat.load_addr) < 0) {
+             return -1;
+         }
+ 
+diff --git a/pc-bios/s390-ccw/bootmap.h b/pc-bios/s390-ccw/bootmap.h
+index 95943441d3..8d61ac383c 100644
+--- a/pc-bios/s390-ccw/bootmap.h
++++ b/pc-bios/s390-ccw/bootmap.h
+@@ -113,6 +113,8 @@ typedef struct ScsiMbr {
+     ScsiBlockPtr pt;   /* block pointer to program table */
+ } __attribute__ ((packed)) ScsiMbr;
+ 
++int zipl_load_segment(block_number_t blockno, uint64_t address);
++
+ #define ZIPL_MAGIC              "zIPL"
+ #define ZIPL_MAGIC_EBCDIC       "\xa9\xc9\xd7\xd3"
+ #define IPL1_MAGIC "\xc9\xd7\xd3\xf1" /* == "IPL1" in EBCDIC */
+-- 
+2.54.0
 
 
