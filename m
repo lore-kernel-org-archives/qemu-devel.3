@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15325CD3427
-	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 18:52:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EBE8CD3439
+	for <qemu-devel@archiver.kernel.org>; Tue,  5 May 2026 18:52:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKKr6-0000g0-FI; Tue, 05 May 2026 14:50:52 -0400
+	id 1wKKr6-0000g1-F2; Tue, 05 May 2026 14:50:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dblanzeanu@linux.microsoft.com>)
- id 1wKKr2-0000eg-5C
- for qemu-devel@nongnu.org; Tue, 05 May 2026 14:50:48 -0400
+ id 1wKKr4-0000fg-6K
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 14:50:50 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wKKqx-0006in-57
- for qemu-devel@nongnu.org; Tue, 05 May 2026 14:50:44 -0400
+ (envelope-from <dblanzeanu@linux.microsoft.com>) id 1wKKr1-0006jG-Tf
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 14:50:49 -0400
 Received: from laptop.localdomain (unknown [86.121.140.248])
- by linux.microsoft.com (Postfix) with ESMTPSA id 745AB20B716B;
- Tue,  5 May 2026 11:50:38 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 745AB20B716B
+ by linux.microsoft.com (Postfix) with ESMTPSA id AD4BD20B716C;
+ Tue,  5 May 2026 11:50:40 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com AD4BD20B716C
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1778007040;
- bh=JoVfvivCSpq5Fgy432g9+gtjWSn5QfgpvK1DLQ5a2J0=;
+ s=default; t=1778007042;
+ bh=0BKwOecAhGjoVx5AIvhBMINDtDxE83/qd2X5k8o4a3M=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=UgCal4l4oMIEHjyQpS4F4dwsq45xDLz65BLBqzsJkKqrB0K1GABQh1rAnPRgcO7xh
- oEHm5CXovPBSDjYgSJR+FDFdH/X/dhs0xoZK8NHxYQn/tfYC+qYjOT6BGiOdWEJiVj
- 4pxtYQJ7Y62PhJLG2JTtnqRTFZx8rR/nhf5az1ZU=
+ b=b79crTMftNC+TelxPmY49Gsnezfg5vHhvkJapjNewH3I83BVriVlIgLzkKauWqL7x
+ pc7pbmE9+sLvx94I6zjzZHZ7KdWUDQc5jofu0cpWBsxnct0EQ5B/1G/ESmtpV5QHOX
+ TRBs3YiCaSP47FF2I3C6xNiaGfyy7ayfYgsGUo9Y=
 From: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Doru=20Bl=C3=A2nzeanu?= <dblanzeanu@linux.microsoft.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Zhao Liu <zhao1.liu@intel.com>, Wei Liu <wei.liu@kernel.org>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v2 3/7] include/hw/hyperv: add hv_vp_register_page struct
- definition
-Date: Tue,  5 May 2026 21:50:24 +0300
-Message-ID: <20260505185028.237207-4-dblanzeanu@linux.microsoft.com>
+Subject: [PATCH v2 4/7] target/i386/mshv: hv_vp_register_page setup for the
+ vcpu
+Date: Tue,  5 May 2026 21:50:25 +0300
+Message-ID: <20260505185028.237207-5-dblanzeanu@linux.microsoft.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260505185028.237207-1-dblanzeanu@linux.microsoft.com>
 References: <20260505185028.237207-1-dblanzeanu@linux.microsoft.com>
@@ -69,153 +69,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define the `hv_vp_register_page` structure that the linux kernel uses
-to allow access to vcpu registers.
+When the vcpu is created, call mmap to configure access to the register page.
+In case the call to mmap fails, we log an error and continue with the
+previous logic (using hypercalls).
 
-This structure is going to be used in later patches to access vcpu
-registers.
+Update CPUArchState to store a pointer to the mmapped hv_vp_register_page.
 
 Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 ---
- include/hw/hyperv/hvgdk.h |   2 +
- include/hw/hyperv/hvhdk.h | 105 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 107 insertions(+)
+ target/i386/cpu.h           |  5 +++++
+ target/i386/mshv/mshv-cpu.c | 22 ++++++++++++++++++++++
+ 2 files changed, 27 insertions(+)
 
-diff --git a/include/hw/hyperv/hvgdk.h b/include/hw/hyperv/hvgdk.h
-index 71161f477c..e4be861716 100644
---- a/include/hw/hyperv/hvgdk.h
-+++ b/include/hw/hyperv/hvgdk.h
-@@ -9,6 +9,8 @@
- #ifndef HW_HYPERV_HVGDK_H
- #define HW_HYPERV_HVGDK_H
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 16de67e546..fd4c3712b1 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2019,6 +2019,11 @@ typedef struct CPUArchState {
+     uint64_t msr_bndcfgs;
+     uint64_t efer;
  
-+#include "hvgdk_mini.h"
++#ifdef CONFIG_MSHV
++    /* Shared register page */
++    struct hv_vp_register_page *regs_page;
++#endif
 +
- #define HVGDK_H_VERSION         (25125)
+     /* Beginning of state preserved by INIT (dummy marker).  */
+     struct {} start_init_save;
  
- enum hv_unimplemented_msr_action {
-diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
-index 41af743847..4a3b543893 100644
---- a/include/hw/hyperv/hvhdk.h
-+++ b/include/hw/hyperv/hvhdk.h
-@@ -9,7 +9,11 @@
- #ifndef HW_HYPERV_HVHDK_H
- #define HW_HYPERV_HVHDK_H
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 9defd05db6..3a3c269c33 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -1587,6 +1587,7 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+     CPUX86State *env = &x86_cpu->env;
+     AccelCPUState *state = cpu->accel;
+     size_t page = HV_HYP_PAGE_SIZE;
++    void *regs_page;
+     void *mem = qemu_memalign(page, 2 * page);
  
-+#include "hvgdk.h"
-+#include "hvhdk_mini.h"
-+
- #define HV_PARTITION_SYNTHETIC_PROCESSOR_FEATURES_BANKS 1
-+#define HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT  7
+     /* sanity check, to make sure we don't overflow the page */
+@@ -1595,6 +1596,22 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+                       + sizeof(hv_input_get_vp_registers)
+                       > HV_HYP_PAGE_SIZE));
  
- struct hv_input_set_partition_property {
-     uint64_t partition_id;
-@@ -246,4 +250,105 @@ typedef struct hv_input_register_intercept_result {
-     union hv_register_intercept_result_parameters parameters;
- } QEMU_PACKED hv_input_register_intercept_result;
++
++    /* mmap the registers page */
++    regs_page = mmap(NULL, page, PROT_READ | PROT_WRITE,
++                    MAP_SHARED, mshv_vcpufd(cpu),
++                    MSHV_VP_MMAP_OFFSET_REGISTERS * page);
++    if (regs_page == MAP_FAILED) {
++        /*
++         * Error is not fatal, but we won't be able to use the
++         * fast path for register access
++         */
++        error_report("register page mmap failed: %s", strerror(errno));
++        env->regs_page = NULL;
++    } else {
++        env->regs_page = (struct hv_vp_register_page *) regs_page;
++    }
++
+     state->hvcall_args.base = mem;
+     state->hvcall_args.input_page = mem;
+     state->hvcall_args.output_page = (uint8_t *)mem + page;
+@@ -1608,6 +1625,11 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+     CPUX86State *env = &x86_cpu->env;
+     AccelCPUState *state = cpu->accel;
  
-+/* Flags for dirty mask of hv_vp_register_page */
-+enum hv_x64_register_class_type {
-+    HV_X64_REGISTER_CLASS_GENERAL = 0,
-+    HV_X64_REGISTER_CLASS_IP = 1,
-+    HV_X64_REGISTER_CLASS_XMM = 2,
-+    HV_X64_REGISTER_CLASS_SEGMENT = 3,
-+    HV_X64_REGISTER_CLASS_FLAGS = 4,
-+};
-+
-+union hv_vp_register_page_interrupt_vectors {
-+    uint64_t as_uint64;
-+    struct {
-+        uint8_t vector_count;
-+        uint8_t vector[HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT];
-+    };
-+};
-+
-+struct hv_vp_register_page {
-+    uint16_t version;
-+    uint8_t isvalid;
-+    uint8_t rsvdz;
-+    uint32_t dirty;
-+
-+    union {
-+        struct {
-+            /* General purpose registers (HV_X64_REGISTER_CLASS_GENERAL) */
-+            union {
-+                struct {
-+                    uint64_t rax;
-+                    uint64_t rcx;
-+                    uint64_t rdx;
-+                    uint64_t rbx;
-+                    uint64_t rsp;
-+                    uint64_t rbp;
-+                    uint64_t rsi;
-+                    uint64_t rdi;
-+                    uint64_t r8;
-+                    uint64_t r9;
-+                    uint64_t r10;
-+                    uint64_t r11;
-+                    uint64_t r12;
-+                    uint64_t r13;
-+                    uint64_t r14;
-+                    uint64_t r15;
-+                } QEMU_PACKED;
-+
-+                uint64_t gp_registers[16];
-+            };
-+            /* Instruction pointer (HV_X64_REGISTER_CLASS_IP) */
-+            uint64_t rip;
-+            /* Flags (HV_X64_REGISTER_CLASS_FLAGS) */
-+            uint64_t rflags;
-+        } QEMU_PACKED;
-+
-+        uint64_t registers[18];
-+    };
-+    uint8_t reserved[8];
-+    /* Volatile XMM registers (HV_X64_REGISTER_CLASS_XMM) */
-+    union {
-+        struct {
-+            struct hv_u128 xmm0;
-+            struct hv_u128 xmm1;
-+            struct hv_u128 xmm2;
-+            struct hv_u128 xmm3;
-+            struct hv_u128 xmm4;
-+            struct hv_u128 xmm5;
-+        } QEMU_PACKED;
-+
-+        struct hv_u128 xmm_registers[6];
-+    };
-+    /* Segment registers (HV_X64_REGISTER_CLASS_SEGMENT) */
-+    union {
-+        struct {
-+            struct hv_x64_segment_register es;
-+            struct hv_x64_segment_register cs;
-+            struct hv_x64_segment_register ss;
-+            struct hv_x64_segment_register ds;
-+            struct hv_x64_segment_register fs;
-+            struct hv_x64_segment_register gs;
-+        } QEMU_PACKED;
-+
-+        struct hv_x64_segment_register segment_registers[6];
-+    };
-+    /* Misc. control registers (cannot be set via this interface) */
-+    uint64_t cr0;
-+    uint64_t cr3;
-+    uint64_t cr4;
-+    uint64_t cr8;
-+    uint64_t efer;
-+    uint64_t dr7;
-+    union hv_x64_pending_interruption_register pending_interruption;
-+    union hv_x64_interrupt_state_register interrupt_state;
-+    uint64_t instruction_emulation_hints;
-+    uint64_t xfem;
-+
-+    uint8_t reserved1[0x100];
-+
-+    /* Interrupts injected as part of HvCallDispatchVp. */
-+    union hv_vp_register_page_interrupt_vectors interrupt_vectors;
-+} QEMU_PACKED;
-+
- #endif /* HW_HYPERV_HVHDK_H */
++    /* Unmap the register page */
++    if (env->regs_page) {
++        munmap(env->regs_page, HV_HYP_PAGE_SIZE);
++        env->regs_page = NULL;
++    }
+     g_free(state->hvcall_args.base);
+     state->hvcall_args = (MshvHvCallArgs){0};
+     g_clear_pointer(&env->emu_mmio_buf, g_free);
 -- 
 2.53.0
 
