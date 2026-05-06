@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D8B4FF8855
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:01:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF84FF8855
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:01:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcnK-000441-89; Wed, 06 May 2026 10:00:10 -0400
+	id 1wKcn1-0003TG-7D; Wed, 06 May 2026 09:59:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcnD-0003rH-EF
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:00:03 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcmz-0003Pz-T0
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:50 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcnB-0000Gi-OR
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:00:03 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-488a8ca4aadso68550915e9.3
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:00:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcmw-0000EH-HQ
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:48 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-488b150559bso44890855e9.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:59:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778075999; x=1778680799; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778075984; x=1778680784; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=SQwTsh+iAyv/zCSx0/p3+pxdOCF3BHdT8oB8gjVmgyk=;
- b=NKTvDZvordaf1wv2rvfhplIh85/edhFtfuf3Qr0uroFoy5quda8iOm2Q5SDqyk7ROz
- xifqjvarjeTDmSlx2V8U7JmiUvtFuBWvXeyqVI8OXi3GqyB0pn5xoc/6dbRPuMKVTDag
- U7o2B4L/880Bc7g1tjgAEtwJ8+WFSpXOc97dPuwEjjfBfLThcK0zC4gCGnbRJxCLE+1t
- Bk+4MpoFXE/h4leJK7oxB9RDr2OItFLzMOEAdtmZhpgAy4hwckPTHocNtqB2LXJm1yN0
- pe59KW2LNwdUr2khaIey8hqXZtSXvWm/S3ttajp0mcu4vmItCvEEbxBo+dEQqIa80a7Q
- +SDw==
+ :reply-to; bh=rnr910XkDufERe9XVu800E0bqoN1SBghJFJ3GMyOOWQ=;
+ b=KNnMDfQbZO37UobELfJM659j60/UM26LalfwpOJfEWUW8kuHLlRS/5phNO772xpTiL
+ /eSqSrjqDO9t0rJ9wk+f6fg6X+0xuZPsno0380mHGIb/zLQJZ6AoVWBUXmm9xDqB8uXX
+ wwCMiNsu6yWSTXFT+bx6weIWS6ZJM5NZNVzYv45s1BfIS7kXm91wGI4n3JrUCsSK1iQA
+ xDCwsMUOh0wDclPBhwymGWKi5IvzCaDvyuGIvoxoOO9uQMBNY9Rnhkp9QC8825l/mYVG
+ x+8OtQMIEGxFFi9qoqpRz+K4Kj9AOksDMKU62o6tciOqZp/E5BKdBBQYxqaz4Lp5AJyl
+ tTLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778075999; x=1778680799;
+ d=1e100.net; s=20251104; t=1778075984; x=1778680784;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=SQwTsh+iAyv/zCSx0/p3+pxdOCF3BHdT8oB8gjVmgyk=;
- b=IXBU5bAYILO0JuptJBp+hHj6bHM77mHv5DjfIutixvCcOWBWOkGwh/EiSW3XBxwpdy
- Gg4YGCzlAF9InR3Ay3wBXZbfd0vxOdpQhNq9Rg9IdiXghT8AqeY4DQRCMKg4YccjIflc
- szVB1bEliwA1zVdh7BEASYSeu1WIdfOJq8ZE+zxJF1z4nVTmWV6+yBClc6hAWN2cuuej
- OhLT5B8MhTZSqAMgRKh3OhUQ2Pe++6hWsAzr3bABa0uyUQycBVO3/L1UpquzzRfwh4eY
- 8NzTJ32DdhRq28Fr6A70/xXhu+BAesuCDVrXT1oQW8g0kYNCkB3Jlp0TR9fm8VtdNHXt
- wteA==
-X-Gm-Message-State: AOJu0Yz02N6NsJv/XEInL/FndpGUivxiXNZ9DZDPnstCVz1VxrFWMcfn
- 4rrXw+LtMStqQ+LQBMk06LUlAWy4SmCmldRLkpXNdY9P7rhNGMBbjue8ldpniwEtx6b9CP22V73
- Accf7sXs=
-X-Gm-Gg: AeBDietBewb9K8uBuzZMZTA9w7awFLDpJxmdlA4yDfCkg6K/Ha18oEVHPElfiRkewkf
- 9UIeG4T5gSyL6Rjk3tmOacqXCvj2F0vxWPOvRlxy5JRuX79YBpF3U6WSDqG2fNunJYAlbC7Gfhi
- grs/cY/diZTmS5XYkRO0OtT8El1JnrHOSu+lEhgJ502ZDYz5iB7Wjf953+hZFX/PFeZFLpBPlJl
- qL5gMDR3kdMvppXR8J/tBdoJe6XX0tmF3ncq9LX4dKzPXTBxbcyQTwhf8Kkv8TlHKhw0COqNKwT
- 5BybNnTII2ozqy6998A3XXvnj/TF0sJLdPFEWatJI+Y7n2QLAgZVJSEaHRPCyY36erT8Ia9vgcd
- dBJ3fQsLindNR7x+7rfizebW/y8QDIdrOyafdLHQedXeYtHc9maRtdy2Lk57hiOfRmrq6liYbhZ
- WRzSuC2TFOC2DDNKQQ8+89ZRIz9fMW1HyvoqQHHZkGoKzzjq1wUI6DNiROLOUJV4zAWf7PEh7Rr
- mQZdvonGPJUeyouQ482rg==
-X-Received: by 2002:a05:600c:b8a:b0:48a:5574:3a48 with SMTP id
- 5b1f17b1804b1-48e51f32bf7mr64002555e9.16.1778075999186; 
- Wed, 06 May 2026 06:59:59 -0700 (PDT)
+ bh=rnr910XkDufERe9XVu800E0bqoN1SBghJFJ3GMyOOWQ=;
+ b=tCi4pEEhoP+O2xXgbCwbmvpKA5ik6RVNICO7p9Hs8BonNVosUH8GcMf62dgECxKn4P
+ 0ekEIxnHYMwgYpONN68b0pr5B0dDLRLhwONPCMqbiXukbaYX7oW8/JPi6BiMf983MsrT
+ WC5bmt1T1K4g86rixuTFnQAlaqy2h1G4RUIVukzozDDgW/aL1N3CI4WVnCOzVCBWcrPJ
+ WBJsZyL8Q9BjXvAneOeNiyCbd0dTrElVRfRu1Mf5IydQhhVlCsH1Xox0Ra1kZfntnoGD
+ jsdxdkOw1+tqvEsq0FLYrMkLPJp/Qz6nxiAhQz56bq6gVECgthAKXCbOBT18pdj7Gblp
+ QZ1Q==
+X-Gm-Message-State: AOJu0YybeX1t3Yt639M9NHZA0eqnYaybhK4oXn1bsMWU0AWtGvKDX8UP
+ KCjHC6tFObAz0uJpg3AjZVcZa8Imnh8cwa6fZBSimfIt3GDk0GxU/GIwAfVoCbo231LtjL7SNj1
+ 2mVLOIno=
+X-Gm-Gg: AeBDiescV0czt9FutXzG5hocOLiRxs2A0qurQI8t+FuyBnTGcv/M3K5vvJ35+EtPC8P
+ LDZ7F/Wtv+aO0/U4hhC973Wz9pe7qVscsE+cyA9Es4r0TsnRfQK7D+VuJ+oM/XZM+vZ2Mcb6uMs
+ d8mUXW3BZ1OsxH2GCPaH2RMfQ3cgas8lIf4aUibNgEvdGUlcXhi0Y8RtpsNl5ZC0JmAt3av4Aug
+ Fbc2kXrY0E6lrwpQ6mU9di3Aeh3C9aX682w8fn1ApN4E+QQeIJpf8C1K2hmz59yoJp1Tzr9fdL4
+ AimQerxvyp0kf+omxGgBPGaLERXkWK0kgxlO3sZrKX4/RkjnNIBInLz1+mfHGjubTedJqSD2Vzo
+ 7HB2wkSIq+HtjkmBCFG+NE8HNChJNN/hqkR6L5GIMpT+oiup5VXVSjlUNRcPVI/IygVbhazh+Gf
+ qNxx2kBbnycJbAE95PKdUNLCr1Ec0caSKMIbeMJhJ8Pn5yhExYSJ4ilVxP3fR2bPffAaRsC2JKC
+ gxE1lYvf1A=
+X-Received: by 2002:a05:600c:4f92:b0:486:ff92:63e5 with SMTP id
+ 5b1f17b1804b1-48e51e09711mr64830865e9.6.1778075983517; 
+ Wed, 06 May 2026 06:59:43 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45055f249bbsm11330980f8f.36.2026.05.06.06.59.57
+ ffacd0b85a97d-45055f249bbsm11329939f8f.36.2026.05.06.06.59.41
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 06:59:57 -0700 (PDT)
+ Wed, 06 May 2026 06:59:42 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 036/110] target/i386: Replace target_ulong -> uint64_t for
- TARGET_X86_64
-Date: Wed,  6 May 2026 15:54:08 +0200
-Message-ID: <20260506135524.20617-37-philmd@linaro.org>
+Subject: [PULL 034/110] target/sparc: Replace VMSTATE_VARRAY_MULTIPLY ->
+ VMSTATE_UINTTL_ARRAY
+Date: Wed,  6 May 2026 15:54:06 +0200
+Message-ID: <20260506135524.20617-35-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,37 +100,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These registers are only available on 64-bit builds, thus
-always handled as 64-bit. This isn't even a migration break
-because they are migrated as 64-bit since the beginning
-(see commit 02536f8b1f9 "x86_64 save/restore").
+VMSTATE_VARRAY_MULTIPLY() seems to be an "optimized" version
+of VMSTATE_UINTTL_ARRAY(), and is only used once. Prefer the
+generic macro. Bump the SPARC CPU migration stream version.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Anton Johansson <anjo@rev.ng>
-Message-Id: <20260315165319.39727-1-philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20260325211728.89204-10-philmd@linaro.org>
 ---
- target/i386/cpu.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/migration/cpu.h | 2 --
+ target/sparc/machine.c  | 7 +++----
+ 2 files changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index f57c99e8b4e..a836efd45ee 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2061,10 +2061,10 @@ typedef struct CPUArchState {
-     uint64_t vm_hsave;
+diff --git a/include/migration/cpu.h b/include/migration/cpu.h
+index 8260ce0a3b7..8d15783b8c1 100644
+--- a/include/migration/cpu.h
++++ b/include/migration/cpu.h
+@@ -13,7 +13,6 @@
+     VMSTATE_UINT64_ARRAY_V(_f, _s, _n, _v)
+ #define VMSTATE_UINTTL_SUB_ARRAY(_f, _s, _start, _num)                \
+     VMSTATE_UINT64_SUB_ARRAY(_f, _s, _start, _num)
+-#define vmstate_info_uinttl vmstate_info_uint64
+ #else
+ #define VMSTATE_UINTTL_V(_f, _s, _v)                                  \
+     VMSTATE_UINT32_V(_f, _s, _v)
+@@ -21,7 +20,6 @@
+     VMSTATE_UINT32_ARRAY_V(_f, _s, _n, _v)
+ #define VMSTATE_UINTTL_SUB_ARRAY(_f, _s, _start, _num)                \
+     VMSTATE_UINT32_SUB_ARRAY(_f, _s, _start, _num)
+-#define vmstate_info_uinttl vmstate_info_uint32
+ #endif
  
- #ifdef TARGET_X86_64
--    target_ulong lstar;
--    target_ulong cstar;
--    target_ulong fmask;
--    target_ulong kernelgsbase;
-+    uint64_t lstar;
-+    uint64_t cstar;
-+    uint64_t fmask;
-+    uint64_t kernelgsbase;
+ #define VMSTATE_UINTTL(_f, _s)                                        \
+diff --git a/target/sparc/machine.c b/target/sparc/machine.c
+index 0a449f2f8c6..5f402e098cf 100644
+--- a/target/sparc/machine.c
++++ b/target/sparc/machine.c
+@@ -189,9 +189,9 @@ static int cpu_pre_save(void *opaque)
+  * versions are different.
+  */
+ #ifndef TARGET_SPARC64
+-#define SPARC_VMSTATE_VER 7
++#define SPARC_VMSTATE_VER 8
+ #else
+-#define SPARC_VMSTATE_VER 9
++#define SPARC_VMSTATE_VER 10
+ #endif
  
-     /* FRED MSRs */
-     uint64_t fred_rsp0;
+ const VMStateDescription vmstate_sparc_cpu = {
+@@ -202,8 +202,7 @@ const VMStateDescription vmstate_sparc_cpu = {
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINTTL_ARRAY(env.gregs, SPARCCPU, 8),
+         VMSTATE_UINT32(env.nwindows, SPARCCPU),
+-        VMSTATE_VARRAY_MULTIPLY(env.regbase, SPARCCPU, env.nwindows, 16,
+-                                vmstate_info_uinttl, target_ulong),
++        VMSTATE_UINTTL_ARRAY(env.regbase, SPARCCPU, MAX_NWINDOWS * 16 + 8),
+         VMSTATE_CPUDOUBLE_ARRAY(env.fpr, SPARCCPU, TARGET_DPREGS),
+         VMSTATE_UINTTL(env.pc, SPARCCPU),
+         VMSTATE_UINTTL(env.npc, SPARCCPU),
 -- 
 2.53.0
 
