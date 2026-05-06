@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2D5CD343B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:11:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72C01CD3440
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:11:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcvm-0003zi-Qs; Wed, 06 May 2026 10:08:55 -0400
+	id 1wKcwQ-0005mg-0K; Wed, 06 May 2026 10:09:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcvc-0003vY-Gx
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:08:48 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcwJ-0005bB-FH
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:09:27 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcvZ-00029k-Kz
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:08:43 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4896c22fcbaso50231815e9.0
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:08:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcwH-0002Dx-Q0
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:09:27 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4891e86fabeso77652625e9.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:09:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076518; x=1778681318; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076563; x=1778681363; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=+Cpu8qLZGCubO9MhUb+BAJDaMSuLsGH2ENsBOZgkNkg=;
- b=NzuXFMHcqEO4EPKmIezQZ4QBLjxUW6DFPSzVcg1yHUbgBaULNqIGVW3iBDAB85g7H/
- 3D4lRy2EeEvo1HU00JDjBTYLGI332aq8r5oT6SMomipiggOCxgIDUEvzVaJTAYMy13O8
- gxdaKfcGHZDlEGef6Shdh532qEbOgEQVFLWIK/gPSZjCdgvyiGHyUPxd8GDFFIjbLnUn
- GOoUUxCf1/DRtIbPLhpOMdjLFjdSv+48GeRxw/Qss4yuQllVp9iew3HauUdoUFki93TV
- 2lkC9fiu33sdmh7PDQ0DiBao+90m1t21Hz/Toc/92MGJ3S/xIiGvOOVoqN6EbSRSD9H1
- XtpA==
+ :reply-to; bh=HJ0OWL8WJExfKsdO5nO8p6D5eIKwLGM2sS6DWKi+43g=;
+ b=r9IK6XUnZtB9NuYeayxRu4wk+MH3mcOEnpwPS8POXiF02N6gS647kHTRXjKQaLFlV7
+ 5X57rocJFd1dlevWNYd03S1BwQY2w7Ag0kOIMh3fEsF6tLAs6Zxnp6gL6SiO/f/Q/uLK
+ tu9WxLSKoIK0YAS5ew64fhygWxJCXz9JQxMwcrPra4IoJsd14aysEBk8L7/o12bH7SRh
+ AbBxMqKSMXc+4NYnZg6g+I5DXMc6SNsfCl+IzzU8GwwFvvnk/Ad4O+AryyIkyAcUeZBr
+ 1GXNsJRO6oa1DSjiqhuGRUFxnHfdiNMDQ9rUelbZlE7XhBBymtriaSlCU0PIckLR+EZB
+ pTkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076518; x=1778681318;
+ d=1e100.net; s=20251104; t=1778076563; x=1778681363;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=+Cpu8qLZGCubO9MhUb+BAJDaMSuLsGH2ENsBOZgkNkg=;
- b=aZKWHu5mnhPEtQ30Ss2rZdNkck1rwxJqvSu2VHk/6kOXDasuRvUYHLY0jPb5pgvyyn
- VDBm+/Ap0pq4xsWVF/oQ12mSq2Bj2X0ktwcQ5J8NbCheFgY8FC7A8r98ME1lnxSO7hOu
- nVAHgmbLwPwwCE3EdLk6cxgqnHtLX4dmK7N6xwMI1ltdBAOuqQ8dLic5PTbHg4kMont2
- jBoE7ewDn9dNM6vzZAzaY0i9nfTSd+oT/c7q34epf+tJgH2EUc30PZgIqAvY/RM3OmPV
- apSKgBr48QetH0CowD9gmT2GSB/o+6oe7j5I+iBgw4fiPDDP0pFV5IG9u/tRgEctoOQ8
- BsBw==
-X-Gm-Message-State: AOJu0YxhiprBzDQ32rW37i2afvS8xfszF7F7AmuHxGJkOHtUuQytGS4n
- NY//bMdNwbToJuxg/sK3KWxUUbSrOJ5YtMJW6qdIKOp1rJgNJHTrtIh/FI5bEHxYfeXPjGxxpAk
- 9vEm9NNw=
-X-Gm-Gg: AeBDiev92jAyca2EdrcJUVjM2UaUpZfjTuXW/UoBqoETQ0CfkjLShtToVcT4FF/VooB
- xWhgStYwgdODExrELOnPCSE9jCOkRi/N1FSwX6DA9owYZQilhSMm0tWr1uOYjTRDRAlbSTSIAQs
- oU3gvWH2ekY2QzHb/72tfCbkAWbwEIEEDDELecOyELse15bS8ut6s6PhU9ogNKzXjUralz/9P5A
- usSOkKHi5pquaG8U9XrIo82KoLc4E0myIVRinefFqA1V0lOS5VGcaaSjBoFYWHfumKFhr44Iv5Q
- fmmMe6wvwbX+B6bzJA/p+1IyGMDB0CsWB2vUjIiy1edkbTvfKDj5JkYV4DfH2x52LXQBasRXf03
- 6G9Xr2vfwOvBdOBdTBZ2w9t3nzp5qYk/jLpaMCy/EYLCiX99gaRk5itnsERx6t8zQhcb841FZ/H
- J/bnUCQsDC8YL61qyPMHZfdt2wgoLQ1R3pDnittEaRjEMfiqk8KDQDdXxyhWE2/MMHdCMx8y9pg
- SX3EnUzFLM=
-X-Received: by 2002:a05:600c:26c8:b0:489:1f04:96c3 with SMTP id
- 5b1f17b1804b1-48e51e0c80dmr38823955e9.2.1778076515630; 
- Wed, 06 May 2026 07:08:35 -0700 (PDT)
+ bh=HJ0OWL8WJExfKsdO5nO8p6D5eIKwLGM2sS6DWKi+43g=;
+ b=cFfO7xAJCTSmpShncq8m8zHntBvlhVpyjJ+mrp2vmnOtYIWcxtSIG92draQMm72WVU
+ fjt/4XJ3sbWfJ876f6O4BJ6y2uoyd2qXzgBqSk+ma+kyjkPgdJn3CjX0aPOF0AT9E8IN
+ NeQV3wRDdEeEcWuyjYq+RiLtAQmC+rNug+UWvgWbNO8JL+9flowMwiNThf4BR7LtfVlZ
+ 5dmneVXZYOsD5CxFRgcVejKPpxDn3rhVUxkpHEFRRl6CGrO40Qpy9ipSDpTKrvtX5SU9
+ GfwcH6T8e83l3EM25ttOsnP9h4Gaz0AM3B+zoK4NZyEp81+j4bPE8A5mmbxb0FCQ4dR8
+ VkFA==
+X-Gm-Message-State: AOJu0YwYlfIneHodcvQm1rdI+6vmJ+oqDLqYaQSbnzYFkr6xxjQT6EOz
+ E1l6LwR60o57td9DFek38OcV8he7vEYWcrG3R7qpRPVk1aVsJTQqabSv8OtcnbgTGuLlC2jgU3U
+ Jsk2aA9o=
+X-Gm-Gg: AeBDievoo0BVKBK1OIbS6CvjTkMiv4D0NWVUClSkXF7eEDQj1htoYCgsfmculr/sIT5
+ 5r0frezwgNLHqKP/GuK/Nezd9ElLsRGmiwx8db75zm+RaMWoyEmmAQECLMtJvJ31EyOrz4TXD55
+ PpEzyQnRstbdWhTMdGzDczPskoi/DpKDOrmFJK7kyYDyzBXTh44mMtQro3mqcwva7CgcWcPHRCY
+ rjMeXDiP9SwJMEbmS0RKD+A3WvhilHryEGkPcCNyO1D0Fv6CCBBbZ17yBQYLLzHruEzY8j8yPAG
+ CqBHkS5RUgJ5VcyI5D1uKiLcHnBhixsYDrY5SfJXQhPQrmYUQYRshRtPKbJcFKaHpaZJrGkT6Ef
+ f2lk/ChfZySWPoIfN9hOW8HYrjnGDuqEc4zonj5rPGAd7AQGb6upFiP4lBVJzfhO2xY+0/YDVCo
+ PQPmcIXy8YNr4CaFz4wmW/n+3joRKMA1nwMEUJg6C2A4vw4qNx6IrKrl12QsuL/IPCFunwSVRBD
+ pNJznXoBds=
+X-Received: by 2002:a05:600c:a30d:b0:488:a2ac:a334 with SMTP id
+ 5b1f17b1804b1-48e51e08228mr42688095e9.3.1778076562792; 
+ Wed, 06 May 2026 07:09:22 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e5313b023sm28461295e9.5.2026.05.06.07.08.33
+ ffacd0b85a97d-45054b02c5asm12763743f8f.19.2026.05.06.07.09.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:08:33 -0700 (PDT)
+ Wed, 06 May 2026 07:09:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 100/110] target/xtensa/core: register types using type_init
-Date: Wed,  6 May 2026 15:55:12 +0200
-Message-ID: <20260506135524.20617-101-philmd@linaro.org>
+Subject: [PULL 106/110] cocci: Do not initialize variable used by
+ QSIMPLEQ_FOREACH macro
+Date: Wed,  6 May 2026 15:55:18 +0200
+Message-ID: <20260506135524.20617-107-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,45 +100,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+The QSIMPLEQ_FOREACH() macro, defined in "qemu/queue.h",
+always assigns its iterator variable when entering the
+loop. Remove the pointless and possibly misleading
+assignment.
 
-Instead of using a static constructor, delay registering those types
-until we call module_init(MODULE_INIT_QOM).
+Mechanical patch using the following coccinelle spatch:
 
-This is not yet a problem, but since we will start initializing
-target-info types before any other, without this patch
-qemu-system-xtensa* fails with:
-Type 'dsp3400-xtensa-cpu' is missing its parent 'xtensa-cpu'
+  @@
+  type T;
+  identifier e;
+  iterator FOREACH_MACRO =~ ".*_FOREACH.*";
+  statement S;
+  @@
+  -    T *e = ...;
+  +    T *e;
+       ... when != e
+       FOREACH_MACRO(e, ...) S
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-ID: <20260430203842.29156-4-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-Id: <20260415215539.92629-4-philmd@linaro.org>
 ---
- target/xtensa/overlay_tool.h | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ block/blkdebug.c               | 2 +-
+ migration/block-dirty-bitmap.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/xtensa/overlay_tool.h b/target/xtensa/overlay_tool.h
-index 701c00eed20..b9eaffa4871 100644
---- a/target/xtensa/overlay_tool.h
-+++ b/target/xtensa/overlay_tool.h
-@@ -451,13 +451,14 @@
+diff --git a/block/blkdebug.c b/block/blkdebug.c
+index 8a4a8cb85ea..fdc96d1f45d 100644
+--- a/block/blkdebug.c
++++ b/block/blkdebug.c
+@@ -591,7 +591,7 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
+                                    uint64_t bytes, BlkdebugIOType iotype)
+ {
+     BDRVBlkdebugState *s = bs->opaque;
+-    BlkdebugRule *rule = NULL;
++    BlkdebugRule *rule;
+     int error;
+     bool immediately;
  
- #if TARGET_BIG_ENDIAN == (XCHAL_HAVE_BE != 0)
- #define REGISTER_CORE(core) \
--    static void __attribute__((constructor)) register_core(void) \
-+    static void register_core(void) \
-     { \
-         static XtensaConfigList node = { \
-             .config = &core, \
-         }; \
-         xtensa_register_core(&node); \
--    }
-+    } \
-+    type_init(register_core)
- #else
- #define REGISTER_CORE(core)
- #endif
+diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
+index a061aad8177..87009c45182 100644
+--- a/migration/block-dirty-bitmap.c
++++ b/migration/block-dirty-bitmap.c
+@@ -1216,7 +1216,7 @@ fail:
+ static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque, Error **errp)
+ {
+     DBMSaveState *s = &((DBMState *)opaque)->save;
+-    SaveBitmapState *dbms = NULL;
++    SaveBitmapState *dbms;
+ 
+     if (init_dirty_bitmap_migration(s, errp) < 0) {
+         return -1;
 -- 
 2.53.0
 
