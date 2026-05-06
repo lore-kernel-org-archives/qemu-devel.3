@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A90ECD343B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:32:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53389CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:36:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKdIG-0007MZ-0N; Wed, 06 May 2026 10:32:08 -0400
+	id 1wKdMR-0008Ri-5b; Wed, 06 May 2026 10:36:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wKdIE-0007MR-MG
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:32:06 -0400
+ id 1wKdML-0008RG-9a
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:36:21 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wKdID-000755-7l
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:32:06 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wKdMJ-0008Bp-Br
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:36:20 -0400
 Received: from example.com (unknown [167.220.208.68])
- by linux.microsoft.com (Postfix) with ESMTPSA id CF18020B7165;
- Wed,  6 May 2026 07:31:59 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com CF18020B7165
+ by linux.microsoft.com (Postfix) with ESMTPSA id 0295120B7165;
+ Wed,  6 May 2026 07:36:13 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 0295120B7165
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1778077921;
- bh=fyq/JxdQvoF3z9WV8cI9DpjY5SUAMnRCXMqXKlQIc8Q=;
+ s=default; t=1778078175;
+ bh=FKUfSDsIXOoZFWgGKOL6KFKf7v4gDq85YHXef0xMwsw=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=Vg4q+ZMuI5z2thq7m5VfkOpQ26KjXJIPRntArZn8mEQPDiQ1qcClTExuv3KWLr/VD
- 6fQ7C9YTzegP7E6PpFH70PVuFv6NP4ejaxavI7fpK5/I0r7ts+GEssPgYRncy79sw9
- BVo+XgsstGHv8TeViPbnshCHbKVWN7nZBIoDalig=
-Date: Wed, 6 May 2026 16:31:59 +0200
+ b=M7SI55G/WcRHfMYvgmBXam9yrGusXPCojVPY6LZwGshuEmLlhfJo5V8HOqpRA0GcU
+ 3c2AQnyAkQ71cjDwVlk9EAG/OU0qMFew5Htvc8TkoeRjRENMGmz7KzFaJknsN+npS9
+ SlOACibC0/dffJNGsFSVkp+2nme8jCTfAKUjx1p0=
+Date: Wed, 6 May 2026 16:36:13 +0200
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
 Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
  Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 2/7] accel/mshv: move vcpu arch specific
- initialization after vcpu creation
-Message-ID: <aftQ319ZmhE2AmcE@example.com>
+Subject: Re: [PATCH v2 4/7] target/i386/mshv: hv_vp_register_page setup for
+ the vcpu
+Message-ID: <aftR3eiNjbwCoqS/@example.com>
 References: <20260505185028.237207-1-dblanzeanu@linux.microsoft.com>
- <20260505185028.237207-3-dblanzeanu@linux.microsoft.com>
+ <20260505185028.237207-5-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260505185028.237207-3-dblanzeanu@linux.microsoft.com>
+In-Reply-To: <20260505185028.237207-5-dblanzeanu@linux.microsoft.com>
 Received-SPF: pass client-ip=13.77.154.182;
  envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
 X-Spam_score_int: -19
@@ -68,37 +68,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 05, 2026 at 09:50:23PM +0300, Doru Blânzeanu wrote:
-> Call mshv_arch_init_vcpu after the vcpu is created to ensure a valid
-> vcpu fd.
+On Tue, May 05, 2026 at 09:50:25PM +0300, Doru Blânzeanu wrote:
+> When the vcpu is created, call mmap to configure access to the register page.
+> In case the call to mmap fails, we log an error and continue with the
+> previous logic (using hypercalls).
+> 
+> Update CPUArchState to store a pointer to the mmapped hv_vp_register_page.
 > 
 > Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 > ---
->  accel/mshv/mshv-all.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
+>  target/i386/cpu.h           |  5 +++++
+>  target/i386/mshv/mshv-cpu.c | 22 ++++++++++++++++++++++
+>  2 files changed, 27 insertions(+)
 > 
-> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> index 58af674bd9..e3da583f21 100644
-> --- a/accel/mshv/mshv-all.c
-> +++ b/accel/mshv/mshv-all.c
-> @@ -415,13 +415,14 @@ static int mshv_init_vcpu(CPUState *cpu)
->      int ret;
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 16de67e546..fd4c3712b1 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -2019,6 +2019,11 @@ typedef struct CPUArchState {
+>      uint64_t msr_bndcfgs;
+>      uint64_t efer;
 >  
->      cpu->accel = g_new0(AccelCPUState, 1);
-> -    mshv_arch_init_vcpu(cpu);
->  
->      ret = mshv_create_vcpu(vm_fd, vp_index, &cpu->accel->cpufd);
->      if (ret < 0) {
->          return -1;
->      }
->  
-> +    mshv_arch_init_vcpu(cpu);
+> +#ifdef CONFIG_MSHV
+> +    /* Shared register page */
+> +    struct hv_vp_register_page *regs_page;
+> +#endif
+
+since this is declared before this marker
+
+    /* Fields up to this point are cleared by a CPU reset */
+    struct {} end_reset_fields;
+
+the pointer will be zeroed out on init, best move it after the
+emu_mmio_buf field.
+
 > +
->      cpu->accel->dirty = true;
+>      /* Beginning of state preserved by INIT (dummy marker).  */
+>      struct {} start_init_save;
 >  
->      return 0;
+> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+> index 9defd05db6..3a3c269c33 100644
+> --- a/target/i386/mshv/mshv-cpu.c
+> +++ b/target/i386/mshv/mshv-cpu.c
+> @@ -1587,6 +1587,7 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+>      CPUX86State *env = &x86_cpu->env;
+>      AccelCPUState *state = cpu->accel;
+>      size_t page = HV_HYP_PAGE_SIZE;
+> +    void *regs_page;
+>      void *mem = qemu_memalign(page, 2 * page);
+>  
+>      /* sanity check, to make sure we don't overflow the page */
+> @@ -1595,6 +1596,22 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+>                        + sizeof(hv_input_get_vp_registers)
+>                        > HV_HYP_PAGE_SIZE));
+>  
+> +
+> +    /* mmap the registers page */
+> +    regs_page = mmap(NULL, page, PROT_READ | PROT_WRITE,
+> +                    MAP_SHARED, mshv_vcpufd(cpu),
+> +                    MSHV_VP_MMAP_OFFSET_REGISTERS * page);
+> +    if (regs_page == MAP_FAILED) {
+> +        /*
+> +         * Error is not fatal, but we won't be able to use the
+> +         * fast path for register access
+> +         */
+> +        error_report("register page mmap failed: %s", strerror(errno));
+> +        env->regs_page = NULL;
+> +    } else {
+> +        env->regs_page = (struct hv_vp_register_page *) regs_page;
+> +    }
+> +
+>      state->hvcall_args.base = mem;
+>      state->hvcall_args.input_page = mem;
+>      state->hvcall_args.output_page = (uint8_t *)mem + page;
+> @@ -1608,6 +1625,11 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+>      CPUX86State *env = &x86_cpu->env;
+>      AccelCPUState *state = cpu->accel;
+>  
+> +    /* Unmap the register page */
+> +    if (env->regs_page) {
+> +        munmap(env->regs_page, HV_HYP_PAGE_SIZE);
+> +        env->regs_page = NULL;
+> +    }
+>      g_free(state->hvcall_args.base);
+>      state->hvcall_args = (MshvHvCallArgs){0};
+>      g_clear_pointer(&env->emu_mmio_buf, g_free);
 > -- 
 > 2.53.0
-
-Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
