@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6930CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:04:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71635CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:04:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcnv-00056u-O3; Wed, 06 May 2026 10:00:48 -0400
+	id 1wKcr3-0000On-Da; Wed, 06 May 2026 10:04:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcnc-0004ni-Ev
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:00:29 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcpC-00073E-WE
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:02:12 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcna-0000Xs-HA
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:00:28 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-448528f4e69so3879387f8f.3
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:00:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcpB-0000rz-7S
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:02:06 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-67179ed133dso7331412a12.2
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:02:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076024; x=1778680824; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076122; x=1778680922; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=j73ul5aEd9R7sSndl2WuEnX7dofgQLl6AbC/gXzl4y8=;
- b=PZbBhOPb4AaiCXGuyBFgXR3MBDlZOcC4tt0tH6jdd2i6s20LK1EAl3NlehtDXwgRE4
- p2AwdGLa9NYE9QqOGQ9K7pkphWtopgTT+gSe9xeIFUr9yQYX3EN8YFx6oitHmN3PfZDu
- 2AxuT1gvc2J2LhQkyAurmY9QbdpvLjbPh5yjkhF8W7KbzSy9qQMtK38b306/0hYxXV+C
- Pnqbc93wNQUyQOFY7JC4hNM6wn6dvwQKtj5b1PvZYwZZ8X8gGilxkJ+vwPmAxgtPsYVf
- sYrFSVNRC7vbqm4gHop28rzVhjd6m+HHCiJFTUzKgJJIVo0PLLVMG0kuDURWqdoE7w2g
- GKEw==
+ :reply-to; bh=G4zI5ovDvmRWdupFowupRxfgjLmaPfxDAhIri/4i3pw=;
+ b=yLVhpQNZkPlYysoiqeqePjBiuY0maedPZ96awyno0Nx/XeabJjg2r4nUxYtgCg57If
+ 7KHpqEFB9ubUMGqmANTjoQTYBYMd0z+U84pvlg9g2z6hVewEvNf3UDAxb7+1aQiGPpwE
+ 02ro8DuiBbvausfz8KOcj4nGYWnsbk1tHxjCAqfrCEKk0cpDbCRNuzWMotQiyxxRKzvl
+ 3Mq5byBV9g+bpsymuzOk4V3BaSMdzw7mZaa2K37Nizvo5NZtXxIbnvljkHe/Kp7jJq6G
+ qhRHvmb3YYGlEXoAgbCI1E0t8HXkkXO+wyU0KL1pljTgCpDYFu56PwSZPS1MegkLEX2c
+ nZqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076024; x=1778680824;
+ d=1e100.net; s=20251104; t=1778076122; x=1778680922;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=j73ul5aEd9R7sSndl2WuEnX7dofgQLl6AbC/gXzl4y8=;
- b=Oo8jB99v4pBaXPvZzBHG1R4YCuwL0Ur4JOTBkdB11go3gupIZDlBPbF2t7zmO7UuET
- OApcV8/FsoUJK7RU2DiSkdjR2fZXunpOgkO3lnRz2mT0ppTzvTIXFG1aQQAJcTZl0EiC
- aTV5hoxIWX6SarGpiITyROjpj0SVpOdIoddBSmpZAe5tImnNG1430SY8EQEv8HPnNKzo
- d5Q3eiIA+KUkB72wdyAb2QawcokD8g6g2L040htuh/Kf1uboRa+0kp7COqEufakZho3O
- WtW1x7LnGtr9eSCR2CUKo6BfE2DFjJdCWKGkD3XXY66ymUPDY+LtaaVY6lq+oV46DjTF
- sjbA==
-X-Gm-Message-State: AOJu0Yws0zQy98MYm6Csyf2XHGUAoEGLtk9rwWQpSXzD5qnVeAF4yIl1
- cwIjuCdTWcnnCe68NXGZYbvFwafLu0mNGHvfFKfJhrD6Du51KIKUEvPThGsn5RB2l9eYY9Tf3AO
- +Zic6bPk=
-X-Gm-Gg: AeBDieuTRlalIeCjuaoPEsTEZRAT3jGXpKM5/3beCNCh1s3fEHfQl55Ly5P+DESfJB/
- tz5M9lF54Xh7TRm+OQonk2zPkNiOOqPV/LGoiNvA6oFefYE3OHMQBaww6kUNWfEJgyT1vRnUfpv
- 811hodRma7rBm1oNIdTnYapwCbfv4wfwZ43+xtK7S7VciVOzxiRDgMa2UXJwIbKjmGqUziGJbk2
- ugtkrurQV9dT0G26XLC3uWO7VzVeV8Cib7NOIOBl4638uunMS6S7T8tyyNqz4e7fe0Arb3SPzPW
- LW1Nnk9+rHdV+oob/XwpeoVyUtgkP6/Lrxhj907QSeNuYmOGNT00BufAkflDD84Pc9Y1JdNCCrM
- JHCFjO+5myZztd4V+67STaJjopgGZQEpmA0ieqzJL1IZke0zE58gaLxStfBsQI3movGSRXcbS71
- KFsQaWO+puwG0x4iTtgAN2nazB8pSkgMoXCk9yrcZq98usqWh3aT9hzNk3iX0Q0UUqewM118JmQ
- RnWXQg=
-X-Received: by 2002:a05:600c:6095:b0:485:39b2:a47c with SMTP id
- 5b1f17b1804b1-48e51f48352mr61827585e9.25.1778076023404; 
- Wed, 06 May 2026 07:00:23 -0700 (PDT)
+ bh=G4zI5ovDvmRWdupFowupRxfgjLmaPfxDAhIri/4i3pw=;
+ b=psXUWJsnnSD8WNZKWiu/OQxJjMCadounBAwJ3uu/3siJKwgtLdgGvhOfxsOoJsNZsL
+ mXiU12VMs7ERJIes+gNc1B17eDT+M+WzVd1Q2etR5q+rqkNvESQRNOvludfzJAas7jOJ
+ CsxkoEQiOSvy/EsHOnEYQdSVMMFbYxzrY/G88g+A0sQ/06s85KQCGQZqo9iOScQEUhIe
+ 9oAXQ0g83Z9fk3QsizXqexLT2qgkPr5GuvNu9DeMD+XqM2ryu9K9DikrV6B3WSvoXdDL
+ Lu3ysq4ust+d5oc/kPyIqGYeaLZ6gol6mUcAWpLhS1CwPoaHqaZ1QCvkFOMr23gS8hZJ
+ N3gw==
+X-Gm-Message-State: AOJu0YyiHmonPyihpEET5WptOy1AWHY3mbqhWZIT2woz8I0i0mi6uMX4
+ t0GPapMOJdi11yAAyCC3Co/9z+K7PDoC06QleqXHj/O3dGtPjk/3d3H0yOYkX8VT6QbUNpZg49I
+ FzB3gcWw=
+X-Gm-Gg: AeBDietR02Vxa3z2z+ZxL9CA34sHU7Wb7ZVht5P7nMGDJFeIPG+K0xRW53XbwvedYT4
+ P1geDwbiU4NNzw97jmE78PR86ewXyfnHP0FJngJTs/0rB82gNNDyiyqsppFo4EmSSCXL4WTZVzG
+ 5sLaeFbzZVqEdckrxnmrfg28Qg3V1GCMUErxXTklRki2rUxIiirjVR00y1uM1m/NEB1dg24kxKn
+ ajYO0WsP7XFSWMB5ppdXJMI62zoX7xEkWljALq0aqRny/wsXHEPiCGtKEWZAhfl/DpfI9+/hiGA
+ SYCKI/XYTGNslOIBRZtPSLtAG6nVyvYxGHFADSlnzWK/eY65a6KMwJk1QmsLRXjw2kLJkgFak54
+ eI0CU6okM9v1SsrzY71MRF/gknBMmSKf1N7CPk6V2OGnHVkviFTDMrhpWlx6Yd6vbbnn/pAClXH
+ tGqCNags4gFBKiltyDRKTLBQugj1D7MVrjDo3sYEoP4Y9yAOBub3v+ZT26tXR+5Gn7Sr8b+FSah
+ sFtlKai0No=
+X-Received: by 2002:a05:6402:380f:b0:671:dffb:f450 with SMTP id
+ 4fb4d7f45d1cf-67d63d9843cmr1693929a12.11.1778076121719; 
+ Wed, 06 May 2026 07:02:01 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e53907a00sm45742865e9.12.2026.05.06.07.00.21
+ ffacd0b85a97d-45052a48f63sm12472535f8f.16.2026.05.06.07.01.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:00:21 -0700 (PDT)
+ Wed, 06 May 2026 07:01:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 039/110] target/mips: Inline cpu_ld/st_mmuidx_ra() calls in
- LD/ST Multiple
-Date: Wed,  6 May 2026 15:54:11 +0200
-Message-ID: <20260506135524.20617-40-philmd@linaro.org>
+Subject: [PULL 051/110] monitor: Do not check TARGET_I386 to build 'info sgx'
+ command
+Date: Wed,  6 May 2026 15:54:23 +0200
+Message-ID: <20260506135524.20617-52-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,137 +100,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation of removing the cpu_ld*_mmuidx_ra() and
-cpu_st*_mmuidx_ra() calls, inline them. Expand MO_TE to
-mo_endian_env(env) in gen_ldst_multiple().
+This command is filtered at build-time for i386/x86_64 binaries.
+By using the recently introduced HMPCommand::arch_bitmask flag
+we can filter it at runtime, making it possible to compile
+hmp-commands-info.hx once.
+
+Since the method depends on the CONFIG_SGX definition, define it
+in its own stub file.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260417035734.32334-4-philmd@linaro.org>
+Message-Id: <20260427080738.77138-16-philmd@linaro.org>
 ---
- target/mips/tcg/ldst_helper.c             | 34 +++++++++++------------
- target/mips/tcg/micromips_translate.c.inc |  2 ++
- 2 files changed, 18 insertions(+), 18 deletions(-)
+ MAINTAINERS            |  1 +
+ hw/i386/sgx-hmp-stub.c | 16 ++++++++++++++++
+ hw/i386/sgx-stub.c     |  5 -----
+ hmp-commands-info.hx   |  3 +--
+ hw/i386/meson.build    |  1 +
+ 5 files changed, 19 insertions(+), 7 deletions(-)
+ create mode 100644 hw/i386/sgx-hmp-stub.c
 
-diff --git a/target/mips/tcg/ldst_helper.c b/target/mips/tcg/ldst_helper.c
-index 0def1f296ae..537f3e87bc0 100644
---- a/target/mips/tcg/ldst_helper.c
-+++ b/target/mips/tcg/ldst_helper.c
-@@ -215,21 +215,20 @@ void helper_lwm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
-                 uint32_t memop_idx)
- {
-     MemOpIdx oi = memop_idx;
--    unsigned mem_idx = get_mmuidx(oi);
-     unsigned base_reglist = reglist & 0xf;
-     bool do_r31 = reglist & 0x10;
-+    target_ulong *gpr = env->active_tc.gpr;
-+    uintptr_t ra = GETPC();
- 
-     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
-         for (unsigned i = 0; i < base_reglist; i++) {
--            env->active_tc.gpr[multiple_regs[i]] =
--                (target_long)cpu_ldl_mmuidx_ra(env, addr, mem_idx, GETPC());
-+            gpr[multiple_regs[i]] = (target_long)cpu_ldl_mmu(env, addr, oi, ra);
-             addr += 4;
-         }
-     }
- 
-     if (do_r31) {
--        env->active_tc.gpr[31] =
--            (target_long)cpu_ldl_mmuidx_ra(env, addr, mem_idx, GETPC());
-+        gpr[31] = (target_long)cpu_ldl_mmu(env, addr, oi, ra);
-     }
- }
- 
-@@ -237,20 +236,20 @@ void helper_swm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
-                 uint32_t memop_idx)
- {
-     MemOpIdx oi = memop_idx;
--    unsigned mem_idx = get_mmuidx(oi);
-     unsigned base_reglist = reglist & 0xf;
-     bool do_r31 = reglist & 0x10;
-+    target_ulong *gpr = env->active_tc.gpr;
-+    uintptr_t ra = GETPC();
- 
-     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
-         for (unsigned i = 0; i < base_reglist; i++) {
--            cpu_stl_mmuidx_ra(env, addr, env->active_tc.gpr[multiple_regs[i]],
--                              mem_idx, GETPC());
-+            cpu_stl_mmu(env, addr, gpr[multiple_regs[i]], oi, ra);
-             addr += 4;
-         }
-     }
- 
-     if (do_r31) {
--        cpu_stl_mmuidx_ra(env, addr, env->active_tc.gpr[31], mem_idx, GETPC());
-+        cpu_stl_mmu(env, addr, gpr[31], oi, ra);
-     }
- }
- 
-@@ -259,21 +258,20 @@ void helper_ldm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
-                 uint32_t memop_idx)
- {
-     MemOpIdx oi = memop_idx;
--    unsigned mem_idx = get_mmuidx(oi);
-     unsigned base_reglist = reglist & 0xf;
-     bool do_r31 = reglist & 0x10;
-+    target_ulong *gpr = env->active_tc.gpr;
-+    uintptr_t ra = GETPC();
- 
-     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
-         for (unsigned i = 0; i < base_reglist; i++) {
--            env->active_tc.gpr[multiple_regs[i]] =
--                cpu_ldq_mmuidx_ra(env, addr, mem_idx, GETPC());
-+            gpr[multiple_regs[i]] = cpu_ldq_mmu(env, addr, oi, ra);
-             addr += 8;
-         }
-     }
- 
-     if (do_r31) {
--        env->active_tc.gpr[31] =
--            cpu_ldq_mmuidx_ra(env, addr, mem_idx, GETPC());
-+        gpr[31] = cpu_ldq_mmu(env, addr, oi, ra);
-     }
- }
- 
-@@ -281,20 +279,20 @@ void helper_sdm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
-                 uint32_t memop_idx)
- {
-     MemOpIdx oi = memop_idx;
--    unsigned mem_idx = get_mmuidx(oi);
-     unsigned base_reglist = reglist & 0xf;
-     bool do_r31 = reglist & 0x10;
-+    target_ulong *gpr = env->active_tc.gpr;
-+    uintptr_t ra = GETPC();
- 
-     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
-         for (unsigned i = 0; i < base_reglist; i++) {
--            cpu_stq_mmuidx_ra(env, addr, env->active_tc.gpr[multiple_regs[i]],
--                              mem_idx, GETPC());
-+            cpu_stq_mmu(env, addr, gpr[multiple_regs[i]], oi, ra);
-             addr += 8;
-         }
-     }
- 
-     if (do_r31) {
--        cpu_stq_mmuidx_ra(env, addr, env->active_tc.gpr[31], mem_idx, GETPC());
-+        cpu_stq_mmu(env, addr, gpr[31], oi, ra);
-     }
- }
- 
-diff --git a/target/mips/tcg/micromips_translate.c.inc b/target/mips/tcg/micromips_translate.c.inc
-index 4dca11b84b4..fb107eb91fe 100644
---- a/target/mips/tcg/micromips_translate.c.inc
-+++ b/target/mips/tcg/micromips_translate.c.inc
-@@ -701,6 +701,8 @@ static void gen_ldst_multiple(DisasContext *ctx, uint32_t opc, int reglist,
-         return;
-     }
- 
-+    mop |= mo_endian(ctx);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index d022070a74c..7515025e09b 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -514,6 +514,7 @@ L: kvm@vger.kernel.org
+ S: Supported
+ F: docs/system/i386/amd-memory-encryption.rst
+ F: docs/system/i386/sgx.rst
++F: hw/i386/sgx*
+ F: stubs/qmp-i386-sev.c
+ F: stubs/qmp-i386-sgx.c
+ F: target/i386/kvm/
+diff --git a/hw/i386/sgx-hmp-stub.c b/hw/i386/sgx-hmp-stub.c
+new file mode 100644
+index 00000000000..cf1d9a6344b
+--- /dev/null
++++ b/hw/i386/sgx-hmp-stub.c
+@@ -0,0 +1,16 @@
++/*
++ * Human Monitor 'info sgx' stub (CONFIG_SGX)
++ *
++ * Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-     t0 = tcg_temp_new();
++#include "qemu/osdep.h"
++#include "monitor/hmp.h"
++#include "monitor/monitor.h"
++
++void hmp_info_sgx(Monitor *mon, const QDict *qdict)
++{
++    monitor_printf(mon, "SGX is not available in this QEMU\n");
++}
+diff --git a/hw/i386/sgx-stub.c b/hw/i386/sgx-stub.c
+index 1dd8d9afbfa..2b083c77bc1 100644
+--- a/hw/i386/sgx-stub.c
++++ b/hw/i386/sgx-stub.c
+@@ -23,11 +23,6 @@ SgxInfo *qmp_query_sgx_capabilities(Error **errp)
+     return NULL;
+ }
  
-     gen_base_offset_addr(ctx, t0, base, offset);
+-void hmp_info_sgx(Monitor *mon, const QDict *qdict)
+-{
+-    monitor_printf(mon, "SGX is not available in this QEMU\n");
+-}
+-
+ void pc_machine_init_sgx_epc(PCMachineState *pcms)
+ {
+     memset(&pcms->sgx_epc, 0, sizeof(SGXEPCState));
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index 65af86278b4..576adbbf5a6 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -859,15 +859,14 @@ SRST
+     Display the vcpu dirty page limit information.
+ ERST
+ 
+-#if defined(TARGET_I386)
+     {
+         .name       = "sgx",
+         .args_type  = "",
+         .params     = "",
+         .help       = "show intel SGX information",
+         .cmd        = hmp_info_sgx,
++        .arch_bitmask = QEMU_ARCH_I386,
+     },
+-#endif
+ 
+ SRST
+   ``info sgx``
+diff --git a/hw/i386/meson.build b/hw/i386/meson.build
+index 63ae57baa51..b611fbb5a7f 100644
+--- a/hw/i386/meson.build
++++ b/hw/i386/meson.build
+@@ -24,6 +24,7 @@ i386_ss.add(when: 'CONFIG_VTD', if_true: files('intel_iommu.c'))
+ i386_ss.add(when: 'CONFIG_VTD_ACCEL', if_true: files('intel_iommu_accel.c'))
+ i386_ss.add(when: 'CONFIG_SGX', if_true: files('sgx-epc.c','sgx.c'),
+                                 if_false: files('sgx-stub.c'))
++stub_ss.add(files('sgx-hmp-stub.c'))
+ 
+ i386_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-common.c'))
+ i386_ss.add(when: 'CONFIG_PC', if_true: files(
 -- 
 2.53.0
 
