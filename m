@@ -4,75 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6236CD3424
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 08:56:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2FCCCD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 09:00:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKY2V-0000oi-JW; Wed, 06 May 2026 04:55:31 -0400
+	id 1wKY6o-0001kN-1Q; Wed, 06 May 2026 04:59:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKY2U-0000oC-2k
- for qemu-devel@nongnu.org; Wed, 06 May 2026 04:55:30 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKY6n-0001jh-BU
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 04:59:57 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKY2R-0006lo-Sq
- for qemu-devel@nongnu.org; Wed, 06 May 2026 04:55:29 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-44da2de25f3so2120319f8f.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 01:55:27 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKY6l-0007Kx-FP
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 04:59:57 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-488af96f6b2so77899775e9.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 01:59:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778057726; x=1778662526; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778057993; x=1778662793; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Aa//v3LX4mJz0k9Gr12pp4wvMv9PFFWJt/t/4VmkHo8=;
- b=nSAVLIN/p3nW3XO+qeu4olvKUYhcuWA6//45uyTcpbjRaKYbZPXAKf804z12uMCp8K
- /THJ86mEl16hrrH+s7+gSxzG3700Ldk4LybrRrZ3VYZtOgOHwJZUIpe3v4XktxEJOqzx
- 5VApuEHqlJKjKb6Fk68Pg3VDk2wwQ1CmIxwVF/4ihhW2WA0df3m0dE90DFgVYF+KDn9U
- oaEgTj8TQqGUQBvuDFIs/RqS2LYrFT7vUKwg9LzoJICdnNqx2j7+dMcEZWd3E++j4Bpr
- 6D3u7RGsJSBF7F0DGmHkHYLrBfvG9y/2uqHpPidsufDXgCBs7BerLxmuZp3ji5hrqBO2
- n1JA==
+ bh=pNC7E6IrBW7vIw4bZ3B4X4qRO4Qdnr0erjrpnILwPvY=;
+ b=sQeV7S8PlGeIWBunoo2BasyhcAJXSsXro6y/nkeMDKsl19fN9u3g86hTZsjs4UAePm
+ VEwk2r76yxFnl6rvi2Ej4RwNHkpoFtoTvzV65Zq+9drR82+5nL76KLP6FZiPjS/JSMxL
+ AHW7g42EiKQI0sShtSI/3Jnf0Ei53p6PddoTda8yGWVh8uEmJwPwJ2sag9Bx5soD375K
+ ilTUufHKUs2Vo3tWH/kmJiZvsBGSa4kHkY7ieFkSrFQg7iAn65sPcQv5nwrhmARIbzE0
+ VCMYJ0zNZP/cQBoY5VzfIlJ+ewlEZm3OLHNWdcbOuLMvj4szFUc2+iG0CEJQGM5jUZFE
+ yEmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778057726; x=1778662526;
+ d=1e100.net; s=20251104; t=1778057993; x=1778662793;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Aa//v3LX4mJz0k9Gr12pp4wvMv9PFFWJt/t/4VmkHo8=;
- b=A2M8ENfdARYmmwX5T0cdp+/zsCS9xG5RjTDVFaId4UjpQxeQJ3AZ6z/X7ND6JizZPR
- jfZai9opRoDCA4iGCTVOwJe6rZN20U6fbEGeJcemEbyxePk3Gsc6I7VBmWE3dbI0wyt5
- /QkkIrt2z6MIP1Gqt6PWo8tkDEzVQq1KYhj/2uHBhf2kN/pC3cGYPVROb0QPEzhSX7Dn
- pKN4yt6WiIsJVVRpJHAXv4pin/EWYkSBN663FzM5a+LIlMHtqsJ5nLdoc7zNrmfKFFko
- yXG0lxRLTbkQ2mVaR6R824nChStEnbZO8QTluMLUQ3e8aC2722jn/VUqzpdoj609l8ur
- 86uA==
+ bh=pNC7E6IrBW7vIw4bZ3B4X4qRO4Qdnr0erjrpnILwPvY=;
+ b=r4FR4m5r3bD+SNyASOODxDldmUdUoOq7PnnobGW34NTddf0YjCXoeWEg6qB9BO5Kj7
+ rP5RSOuMg9ZQAcW1SYNw6f/7l8WIIQe89aJWpk46AWNd9Br3j4+qBeZNHd2RGEK75rB1
+ AaNeIZKBvM+cKEwIFlVo/ekxzJT+NaoBzNoQubVwS1TyWa9RttjKv+2yo3Xn761pbTnq
+ epYlBZ/RLj31uiaJcyekG45HHC92F/ASouRxmtn6J2YsviDJtj6lF8+auFqWXrleKNdE
+ L4SXe1RVOICwvfTAm3KpfWb9n3jZKeFFmQBTnSbsOkxmEkGTs9mNqWfMe5WOqJeD35j/
+ CKEQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8KLP9rmgXIGDKwZMJ7KbUwLd5xbJ/um3vJYyrY1uxCjHNzTxSvcGPRhWDgF4dc6HoSynViov9IXj8S@nongnu.org
-X-Gm-Message-State: AOJu0YwEAncxaRDt0fjGtge07x5WXoTJUOgUvWW3MvEim7wf4KOyDBAv
- kXhPKJHznb5aMHroynh/NXu8asc/1Hat7djUnFOZgFe0B95t3xSQT1DVSLhlxt40Vqk=
-X-Gm-Gg: AeBDieucAPrbAgtADfILQJwhTWAk13CORVWFIkX2y0jB/E5G1UnBCNrok02y/lX3J1U
- 0CVzPZb258mp2eA9sPvmtxpS+oqJfjFS54iitbKCy9UDeo7sHSuRojzj+Kx8pVyYo7JOGTdWycF
- ZrigbZdVDY/t4cKRdi6KHc0ZML1pdEJPktEM0mn1DRrQ9A87hym81m5/p7fgjbNGgORD3/HgFBS
- 5P4dmybOa6g3V1SqkABXZQcZeWaHMYNLrSBZ0mGaGpa5ASHc3aaBJC39kPSQocKpzH7gymSlbbQ
- /Hly0t6Gx8jIePLQslIvp/rxGy1gnoRB2u9qt/T2NJsw1eSsIK4fhPoq3eCbbSNged31qQpubux
- 2tsrjawHQVQ/Pad0xoOpB3om3R/PriU7RvKm/A4esXfGeLQ6PVChKVncMLOy/2X9IN2YM0y1QsW
- Lkpm6/KK8hdJU9yUzZQViww4cyK7B7kfTBDFzthVdI3oF7qw==
-X-Received: by 2002:a05:6000:2082:b0:44f:da83:2030 with SMTP id
- ffacd0b85a97d-4515da961bcmr3970953f8f.41.1778057725579; 
- Wed, 06 May 2026 01:55:25 -0700 (PDT)
-Received: from [192.168.69.210] ([88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45052a48c04sm11277896f8f.15.2026.05.06.01.55.24
+ AFNElJ+P0Fw/3GCMExq52nsb0UuEdblMy9Te/XvsRQ8Z9QdVKTT+cOpmSqaVcxTCOpQ0vFlPLTI+ZLkG20yl@nongnu.org
+X-Gm-Message-State: AOJu0YyPimj64z1nomnKlnIF72e/1qQbaFUA/OLsTmCry62efFWLE0KW
+ YYIRFw971SlM1nL9C8AGhbn9UgHFk+PHe8P/ioadEEsZVwMlEUtwWtAJbGmNXk7c/2M=
+X-Gm-Gg: AeBDiesxk2rAVRkC79sa2bBZaX4rUdBA6FGww+k/lofKqJY8OXV2KG0bu8UhuJxUV2p
+ slcOdbb2u0NfVyiU+luUKikhwxOCH7N6ITcDhGGFU65lqIYUVTkOeyKRtr2i701MuLBO6nruXoz
+ F8yJT/y3Bdr5Xj3FSShqs+1egH0DpeYYt3O39dqRw64DYfTaW2wxcwM3SPLsAPvta6T4RUag3lu
+ QTs8lLS/6nQvoKZOGG4Ax1vfSIpz2kVvEN/BkqG4ZIrlZ3V5sQP5hBk4K9lGc0hyQBSqDeNXwhl
+ ++nBFyV4FGyYCidAFGL0Gj4bcIabxIDQ1Th1j6ZLuTCumyjpQVQ6DtIIVpWaVr1bCXGdGPyXnHb
+ l4Cc1azIHFmcEQkuSUIk3t/hqb0XnLmWCyHs+FyPQhrz6jAg8QPbaDM2jMrHB0Xk2EU7OHmbpjA
+ k92qH+I+zETMoRY5dNKi+wSe03s2j3niUFAfWn/CV6aiw7cYYCr2KwKdNcQyaTatZ05ZDd9f+E2
+ UVU
+X-Received: by 2002:a05:600c:2d51:b0:48a:6315:da26 with SMTP id
+ 5b1f17b1804b1-48e51f41bf4mr23679375e9.26.1778057993190; 
+ Wed, 06 May 2026 01:59:53 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48e5312dc04sm14352195e9.19.2026.05.06.01.59.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 May 2026 01:55:25 -0700 (PDT)
-Message-ID: <34aac4dc-2113-47ca-9147-6d0db3a4890b@linaro.org>
-Date: Wed, 6 May 2026 10:55:21 +0200
+ Wed, 06 May 2026 01:59:52 -0700 (PDT)
+Message-ID: <f259ce5e-9000-40a2-8a0a-8d4724d9082b@linaro.org>
+Date: Wed, 6 May 2026 10:59:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 01/13] hw/i2c: Add designware i2c controller
 Content-Language: en-US
 To: Nicholas Piggin <npiggin@gmail.com>
-Cc: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>,
+Cc: Alistair Francis <alistair23@gmail.com>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Chao Liu <chao.liu.zevorn@gmail.com>, Chris Rauer <crauer@google.com>,
  Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>,
@@ -81,14 +83,16 @@ Cc: Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair.francis@wdc.com>,
  qemu-devel@nongnu.org, Hao Wu <wuhaotsh@google.com>
 References: <20260425131721.932250-1-joel@jms.id.au>
  <20260425131721.932250-2-joel@jms.id.au>
- <972d8ddd-8ef9-4cd3-a7e5-90f00ec625ad@linaro.org>
- <afrVHbIeet5tqCA-@lima-default>
+ <CAKmqyKPyUYfnS3BsHT31hp_P5ufDOZHmr3VW8aUyeTTSTS-Rcw@mail.gmail.com>
+ <afmKctliUOEgQrmN@lima-default>
+ <1476b7df-b8b7-492a-b46c-81d0bf9cb66e@linaro.org>
+ <afrXTtGrUClrUWMb@lima-default>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <afrVHbIeet5tqCA-@lima-default>
+In-Reply-To: <afrXTtGrUClrUWMb@lima-default>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,178 +115,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/26 07:53, Nicholas Piggin wrote:
-> On Tue, May 05, 2026 at 09:57:20AM +0200, Philippe Mathieu-Daudé wrote:
->> On 25/4/26 15:17, Joel Stanley wrote:
->>> From: Chris Rauer <crauer@google.com>
->>>
->>> In the past this model has been submitted for use with the arm virt
->>> machine, however in this case it will be used by the upcoming
->>> Tenstorrent Atlantis RISC-V machine.
->>>
->>> This is a re-submission of the model with Chris' permission, with a
->>> light touch of updates to make it build with qemu master.
->>>
->>> Reviewed-by: Hao Wu <wuhaotsh@google.com>
->>> Signed-off-by: Chris Rauer <crauer@google.com>
->>> Link: https://lore.kernel.org/qemu-devel/20220110214755.810343-2-venture@google.com
->>> [jms: rebase and minor build fixes for class_init and reset callback]
->>> Signed-off-by: Joel Stanley <joel@jms.id.au>
->>> ---
->>> v4: Remove unused random header
->>> v2: Add trace event for read and write, document Alano and myself as
->>> reviewers.
->>> ---
->>>    MAINTAINERS                     |   8 +
->>>    include/hw/i2c/designware_i2c.h | 101 ++++
->>>    hw/i2c/designware_i2c.c         | 817 ++++++++++++++++++++++++++++++++
->>>    hw/i2c/Kconfig                  |   4 +
->>>    hw/i2c/meson.build              |   1 +
->>>    hw/i2c/trace-events             |   4 +
->>>    6 files changed, 935 insertions(+)
->>>    create mode 100644 include/hw/i2c/designware_i2c.h
->>>    create mode 100644 hw/i2c/designware_i2c.c
->>>
->>> diff --git a/MAINTAINERS b/MAINTAINERS
->>> index aa4267b15806..e1942a86eba5 100644
->>> --- a/MAINTAINERS
->>> +++ b/MAINTAINERS
->>> @@ -2716,6 +2716,14 @@ S: Orphan
->>>    F: hw/gpio/pcf8574.c
->>>    F: include/gpio/pcf8574.h
->>> +DesignWare I2C
->>> +M: Chris Rauer <crauer@google.com>
+On 6/5/26 07:58, Nicholas Piggin wrote:
+> On Tue, May 05, 2026 at 09:36:57AM +0200, Philippe Mathieu-Daudé wrote:
+>> On 5/5/26 08:20, Nicholas Piggin wrote:
+>>> On Thu, Apr 30, 2026 at 01:53:21PM +1000, Alistair Francis wrote:
+>>>> On Sat, Apr 25, 2026 at 11:20 PM Joel Stanley <joel@jms.id.au> wrote:
+>>>>>
+>>>>> From: Chris Rauer <crauer@google.com>
+>>>>>
+>>>>> In the past this model has been submitted for use with the arm virt
+>>>>> machine, however in this case it will be used by the upcoming
+>>>>> Tenstorrent Atlantis RISC-V machine.
+>>>>>
+>>>>> This is a re-submission of the model with Chris' permission, with a
+>>>>> light touch of updates to make it build with qemu master.
+>>>>>
+>>>>> Reviewed-by: Hao Wu <wuhaotsh@google.com>
+>>>>> Signed-off-by: Chris Rauer <crauer@google.com>
+>>>>> Link: https://lore.kernel.org/qemu-devel/20220110214755.810343-2-venture@google.com
+>>>>> [jms: rebase and minor build fixes for class_init and reset callback]
+>>>>> Signed-off-by: Joel Stanley <joel@jms.id.au>
+>>>>> ---
 >>
->> This was 4 years ago. Is Chris still up to this?
-> 
-> Joel is away for a few weeks, but AFAIK he did ping Chris and got
-> ack to upstream his patch.
-> 
->>> +    case DW_IC_SAR:
->>> +        qemu_log_mask(LOG_UNIMP, "%s: unsupported write - ic_sar\n",
->>> +                      DEVICE(s)->canonical_path);
->>> +        s->ic_sar = value & DW_IC_SAR_MASK;
 >>
->> Unsupported but updated...
-> 
-> Yeah, not sure what the best course of action is, maybe device driver
-> was working better if the value got saved?
-> 
->>> +    s->ic_comp_param_1 = DW_IC_COMP_PARAM_1_INIT_VAL;
->>> +    s->ic_comp_version = DW_IC_COMP_VERSION_INIT_VAL;
->>> +    s->ic_comp_type = DW_IC_COMP_TYPE_INIT_VAL;
+>>>>> +#define DW_IC_COMP_PARAM_1_HAS_ENCODED_PARAMS   BIT(7)
+>>>>> +#define DW_IC_COMP_PARAM_1_HAS_DMA              0 /* bit 6 - DMA disabled. */
+>>>>> +#define DW_IC_COMP_PARAM_1_INTR_IO              BIT(5)
+>>>>> +#define DW_IC_COMP_PARAM_1_HC_COUNT_VAL         0 /* bit 4 - disabled */
+>>>>> +#define DW_IC_COMP_PARAM_1_HIGH_SPEED_MODE      (BIT(2) | BIT(3))
+>>>>> +#define DW_IC_COMP_PARAM_1_APB_DATA_WIDTH_32    BIT(1) /* bits 0, 1 */
+>>>>> +#define DW_IC_COMP_PARAM_1_INIT_VAL             \
+>>>>> +    (DW_IC_COMP_PARAM_1_APB_DATA_WIDTH_32 | \
+>>>>> +    DW_IC_COMP_PARAM_1_HIGH_SPEED_MODE | \
+>>>>> +    DW_IC_COMP_PARAM_1_HC_COUNT_VAL | \
+>>>>> +    DW_IC_COMP_PARAM_1_INTR_IO | \
+>>>>> +    DW_IC_COMP_PARAM_1_HAS_DMA | \
+>>>>> +    DW_IC_COMP_PARAM_1_HAS_ENCODED_PARAMS | \
+>>>>> +    ((DESIGNWARE_I2C_RX_FIFO_SIZE - 1) << 8) | \
+>>>>> +    ((DESIGNWARE_I2C_TX_FIFO_SIZE - 1) << 16))
+>>>>> +#define DW_IC_COMP_VERSION_INIT_VAL             0x3132302a
+>>>>> +#define DW_IC_COMP_TYPE_INIT_VAL                0x44570140
+>>>>
+>>>> I would prefer these to sue the QEMU register API
+>>>
+>>> That's probably a good idea. It's a lot of churn to change it, but
+>>> I'm having a try. Might do it as a follow on patch.
 >>
->> Preferably initialize the IC_COMP registers once in the
->> designware_i2c_realize() handler.
+>> Good suggestion but please as a follow up, this patch is already
+>> big enough, is reviewed and tested.
 > 
-> This I didn't change yet because I started register API converstion and
-> that all changes.
-> 
->>> +static void designware_i2c_smbus_init(Object *obj)
->>> +{
->>> +    DesignWareI2CState *s = DESIGNWARE_I2C(obj);
->>> +    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
->>> +
->>> +    sysbus_init_irq(sbd, &s->irq);
->>> +
->>> +    memory_region_init_io(&s->iomem, obj, &designware_i2c_ops, s,
->>> +                          "regs", 4 * KiB);
->>
->> I note the current registers only describe a 1KiB region.
-> 
-> 256 bytes even. It might have 4K alignment in data sheet.
-> 
->>> +}
->> Since I couldn't look at the datasheet values, for overall modelling:
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
-> Thanks!
-> 
-> I have an incremental patch here that incorporates review comments and
-> also a couple of possible issues I found - RX underflow bit was never
-> being set AFAIKS it should be set here, and one of the INTR bit clear
-> registers was not recalculating irqs.
-> 
-> I will fold this in before next repost if there are no objections.
+> I agree... however I implemented it and it is a large amount of chrun
+> which is also not easy to review. Also it breaks migration
+> compatibility. So I don't want to get this patch bogged down but if we
+> agree to take the register API conversion then maybe we should squash
+> before upstreaming?
 
-Fine by me!
+OK.
 
-> 
-> Thanks,
-> Nick
-> 
-> ---
-> diff --git a/hw/i2c/designware_i2c.c b/hw/i2c/designware_i2c.c
-> index 7d8b1c1353..1e5505f571 100644
-> --- a/hw/i2c/designware_i2c.c
-> +++ b/hw/i2c/designware_i2c.c
-> @@ -217,7 +217,7 @@ static uint32_t dw_i2c_read_ic_data_cmd(DesignWareI2CState *s)
->                         "%s: Attempted to read from RX fifo when not in receive "
->                         "state.\n", DEVICE(s)->canonical_path);
->           if (s->status != DW_I2C_STATUS_IDLE) {
-> -            s->ic_raw_intr_stat &= ~DW_IC_INTR_RX_UNDER;
-> +            s->ic_raw_intr_stat |= DW_IC_INTR_RX_UNDER;
->               dw_i2c_update_irq(s);
->           }
->           return 0;
-> @@ -228,7 +228,7 @@ static uint32_t dw_i2c_read_ic_data_cmd(DesignWareI2CState *s)
->       if (s->ic_rxflr > 0) {
->           s->ic_rxflr--;
->       } else {
-> -        s->ic_raw_intr_stat &= ~DW_IC_INTR_RX_UNDER;
-> +        s->ic_raw_intr_stat |= DW_IC_INTR_RX_UNDER;
->           dw_i2c_update_irq(s);
->           return 0;
->       }
-> @@ -395,6 +395,7 @@ static uint64_t dw_i2c_read(void *opaque, hwaddr offset, unsigned size)
->           break;
->       case DW_IC_CLR_RESTART_DET:
->           s->ic_raw_intr_stat &= ~(DW_IC_INTR_RESTART_DET);
-> +        dw_i2c_update_irq(s);
->           break;
->       case DW_IC_COMP_PARAM_1:
->           value = s->ic_comp_param_1;
-> @@ -698,6 +699,10 @@ static const MemoryRegionOps designware_i2c_ops = {
->       .read = dw_i2c_read,
->       .write = dw_i2c_write,
->       .endianness = DEVICE_LITTLE_ENDIAN,
-> +    .impl = {
-> +        .min_access_size = 4,
-> +        .max_access_size = 4,
-> +    },
->       .valid = {
->           .min_access_size = 4,
->           .max_access_size = 4,
-> @@ -748,7 +753,7 @@ static const VMStateDescription vmstate_designware_i2c = {
->       .name = TYPE_DESIGNWARE_I2C,
->       .version_id = 0,
->       .minimum_version_id = 0,
-> -    .fields = (VMStateField[]) {
-> +    .fields = (const VMStateField[]) {
->           VMSTATE_UINT32(ic_con, DesignWareI2CState),
->           VMSTATE_UINT32(ic_tar, DesignWareI2CState),
->           VMSTATE_UINT32(ic_sar, DesignWareI2CState),
-> @@ -803,6 +808,8 @@ static void designware_i2c_class_init(ObjectClass *klass, const void *data)
->       dc->vmsd = &vmstate_designware_i2c;
->       rc->phases.enter = designware_i2c_enter_reset;
->       rc->phases.hold = designware_i2c_hold_reset;
-> +
-> +    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
->   }
->   
->   static const TypeInfo designware_i2c_types[] = {
-> diff --git a/include/hw/i2c/designware_i2c.h b/include/hw/i2c/designware_i2c.h
-> index 0d8f904f51..71d74c9141 100644
-> --- a/include/hw/i2c/designware_i2c.h
-> +++ b/include/hw/i2c/designware_i2c.h
-> @@ -57,7 +57,7 @@ typedef enum DesignWareI2CStatus {
->    * @status: The current status of the SMBus.
->    */
->   typedef struct DesignWareI2CState {
-> -    SysBusDevice parent;
-> +    SysBusDevice parent_obj;
->   
->       MemoryRegion iomem;
->   
+> Not sure. I will post the patch as a separate optional addition to the
+> series to begin with.
+
+Yeah, you can respin this series without i2c at all, then follow up
+with this patch, #12 and #13 (integrate i2c bus & few peripherals to
+the Atlantis machine).
 
 
