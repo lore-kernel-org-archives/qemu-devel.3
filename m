@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A217CD3424
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 07:56:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A046CD3441
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 07:56:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKX6R-0002ii-Bo; Wed, 06 May 2026 03:55:31 -0400
+	id 1wKX6N-0002gq-2U; Wed, 06 May 2026 03:55:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wKX6B-0002eX-Dz
- for qemu-devel@nongnu.org; Wed, 06 May 2026 03:55:20 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1wKX66-0002ca-65
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 03:55:11 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wKX68-00082z-Hi
- for qemu-devel@nongnu.org; Wed, 06 May 2026 03:55:14 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-36534668247so3330979a91.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 00:55:12 -0700 (PDT)
+ id 1wKX63-00080P-MO
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 03:55:09 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-36528851d7dso1684951a91.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 00:55:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778054111; x=1778658911; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZPf1WJ1+U+u46IYFp/g9GCUhxcS1hDN0tG9RbQh1S9c=;
- b=YXaBINPOmPnoWIf7qAQnXJBRf0UnUgNmUV0PtKRAMU9DghZ5rg3cezr3QD5sUiUnzJ
- M2XnHEk0mT1yxGkXGIC5hxKH9HSCVahr7m3+IS2Z50jA+8H96Hxt+6WTXfrxLE/Ey/0p
- oqL2chmEPcIpbe9gKG4Scj+U5ExAm4lLOE55cVSly6w9PiEdBuIlWEJDIdiiIz1QFy/S
- wD4g0OvlRTKlL9MhgZvHcfXHs+TOWLelnFTr5mCmK7NBYa1ZMeqmA8x5l9uFOrjKQ8bN
- 50VYq/Opq195j5UwpA+aebMP05g6GK6zaQz+T+VVsxIZ+2+f2ldpssMR5xdqN/LwHqMy
- pY9g==
+ d=gmail.com; s=20251104; t=1778054105; x=1778658905; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Asx/ohujR/GO4GjyTC7aX5UXRfMNDErHMFNUp4fn1WI=;
+ b=fEx7Wuy8d2yfFZEMCVjtptr82+rPS3R7jsFevWd33ppHRpZbIhE1cv+xkPvEfil6Nw
+ P8kWLfBiQ4PcUaXBjIY7ZikwFFb3sKPSOI6wzp13jj5nI94rMf5JNPCy6GfPmrmQSrU5
+ HaBXTlkRoEys2hsLqrc2vFvsus3ZDpGn7sUqVZKEJGRreWMDppCdQs2MzGGWU9ocZn1H
+ DOPfV9n3tPQQ+qWC4Fj55BxkdAlWcNNOnsAXjJTzLCG9aWydcaZI0vQZgH6dM3QS4ku9
+ CEroL4xCmJXVDLc0s3aSfPyEQA6Y3W3e/VDRJJHwF+FAronLleulB5YUEhaqFJy+ZQIq
+ jaBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778054111; x=1778658911;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ZPf1WJ1+U+u46IYFp/g9GCUhxcS1hDN0tG9RbQh1S9c=;
- b=niUtWfvwhdiRoYl6S5jm8ZvfM7VnIoixvz5d2CkarWsXtpucWLNW3ANTnwOWX8FTV4
- QfMEOAKAfSGGYYFM2AOhXk+VvypDB/hmNu2GvWbF3kaBrFK4ZIllcMm+NqW/lD/ezHy4
- 83LTfAmQXrbWUqFYrvFbahUkGfAiPaNnyscWJCcBmA7Aa7KXILWN658CB2apFleXWJea
- 2Fb0QQ2oSn1ivhnmt2fT9kg2dxmvaD1PBgkoKzWaBE5B8pBzIco1YxcwEl6rDfY3z9JG
- wV64T3QJzMzY/5pggYti5avj8y/cbOBZodgMCC2JBcmbkwN3mUK7kiAwMqmwn3fVFYyJ
- EXrw==
-X-Gm-Message-State: AOJu0YxPbMjevIJAXYPo0i3C60BbMGd2GLgIo8evMojv7xk/tygCcR79
- yfntHHJY2SEmiA5dv+NtZFB/rowypX8+5UiDhpM1cQt/98p0Hb4YtR/e+r3SVQ==
-X-Gm-Gg: AeBDieuBhew26RWcFGumgaRhEQiLvcagY4GWWeKK7rmgbqRZSXMkurFVsFwpGQOwZoL
- MN1uoDE105dwX7Ch9eUv4izBAwDNYpmuoxKkMS1SoVMFSYFIcwwgHmiYARSQ128Q4InI2FAflQc
- /y3t6l4K9RNUknMTz2m/QZw2CJWmV6AzcjMKv+wbhmChq6LkWl/vgLiN4jITPFQquCUyQ+lMGSo
- qZavhIDe3Ngv3ygLdjOGqEhYkku75P2hpL3q6byb+fv3Hm4AOk6fwJpHi3LXmwwf10x+E/b/4Vk
- KoFJ0NSKL4G2YO8fhiSzVu7DxDLXSuNLusvj0MvpQAWPnNEtb7rkgJpLSQXeca17kqvNHKSxjp5
- p7o0hnJMvlsfhYCn61rIqAt0E/1eWOd9YsqVYFv1ykZW/gtf57k3eVfDk/rTPYc06OiQYVLjvRo
- hFbdzNMdoZoDDJj6Towwpa6Di9W2MWmg4oFhrcKlXblUx4Cj0KvT24
-X-Received: by 2002:a17:90b:33d1:b0:359:f43d:4a6e with SMTP id
- 98e67ed59e1d1-365aa93c123mr2307983a91.0.1778054110764; 
- Wed, 06 May 2026 00:55:10 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778054105; x=1778658905;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Asx/ohujR/GO4GjyTC7aX5UXRfMNDErHMFNUp4fn1WI=;
+ b=pwL8LiW+nwemdqbvXl8N/uNs1NyUFMKgvBlB/ySf36UX/eBs7HXKwyPpBF1n2QWtD6
+ /S1ZccxnP2vg9zTjcchdyb7T6UQ9Unz/jblP4Vj93opkcjb6q69X44fXvdKqKJeQ2Uw2
+ rW3O9xDuoTOj+PHDle67mi5Mcl4CzrfqsWibZrPuuzPRSVZa5L+uBFS2lGUjFYwganWk
+ s+Wa4N8yoYKd0ZtpHHtbZKRq4wcylrtyuzxwoIkf29qW2K6hh0PCh63WvelpvKxxFSxw
+ rPXM67Jd6eGp/QtwkIld9VYyiL9AJIywqf/ahUXy0LiZMFDuHwQzlnf+BsEJyakKDIqM
+ SH4A==
+X-Gm-Message-State: AOJu0YxMb31CPjTzsNfHPHmIx2AJHnvt6iYZQmlSB6AK9QbmDYuesi7A
+ Ei0iUIOoOx3LUK2TyVMcUr35lLBTGu6ZgQ3PgmkFwmNR9nDWM9M5hxeCBwXZNg==
+X-Gm-Gg: AeBDievxTWwvtI+FUT0KlfEFQWol0ADJI9WTsky6VolRALfR9DlnwA5gqLUWsZdGqPZ
+ iraBY/KsaLbLr1r5/MJ5nD4KQGrdS0lkJphmYAoJ6sRCeNvx+7xpBQlKBSeyQvjl5wwDqTUf3UF
+ ey8Bqk6L0ba/Yd7N/UYVrL3pUXyVFIR7dU32CfUmVWFXWNA3ATQqi5vvooOwM17dg35VtNppbdQ
+ nyq/K96O15rcOvyPg8xzo4DpTsCLWY3t2J+X+5eTIpC9tsJpVGqtjx+q5KV5Nhi0s3U+/N3ISXo
+ TluSX3WcQAAEsCq5dS/KPg2M6jDLDLuv1b3DDSWYUOSjFWCTxxz5xRFgd0AtnR0VQCeEpbNYh3Z
+ L8/TEZaLSQY3FlXNVkY3OTqGzqUEVB4bihSJ+JaGKxWAlJ5exsIjP1LsR04fBqsIV3hpI3l6iHD
+ 2ylGxRQUuGM0Ezl4VbSYSmitT7GrcWvmLbysDpKsweZQ==
+X-Received: by 2002:a17:90b:5683:b0:35e:576e:5bc with SMTP id
+ 98e67ed59e1d1-365ac79c531mr2199710a91.25.1778054105037; 
+ Wed, 06 May 2026 00:55:05 -0700 (PDT)
 Received: from jeuk-MS-7D42.. ([211.226.54.223])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-365b4bcaa49sm1380997a91.1.2026.05.06.00.55.09
+ 98e67ed59e1d1-365b4bcaa49sm1380997a91.1.2026.05.06.00.55.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 May 2026 00:55:10 -0700 (PDT)
+ Wed, 06 May 2026 00:55:04 -0700 (PDT)
 From: Jeuk Kim <jeuk20.kim@gmail.com>
 X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
 To: qemu-devel@nongnu.org
 Cc: jeuk20.kim@samsung.com, qemu-block@nongnu.org, qemu-stable@nongnu.org,
  j-young.choi@samsung.com
-Subject: [PATCH 3/4] hw/ufs: Reject zero-depth MCQ queues
-Date: Wed,  6 May 2026 16:54:30 +0900
-Message-ID: <8d3bc0e97de971ec10727f5bc2b5f9183eb62976.1778053560.git.jeuk20.kim@samsung.com>
+Subject: [PATCH 0/4] hw/ufs: Fix guest-triggerable MCQ crashes
+Date: Wed,  6 May 2026 16:54:27 +0900
+Message-ID: <cover.1778053560.git.jeuk20.kim@samsung.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1778053560.git.jeuk20.kim@samsung.com>
-References: <cover.1778053560.git.jeuk20.kim@samsung.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,94 +98,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reject SQATTR.SIZE and CQATTR.SIZE values that produce zero-entry MCQ
-queues. Such queues can later trigger a divide-by-zero while advancing
-queue pointers.
+This series fixes four guest-triggerable bugs in the UFS MCQ emulation,
+all reachable via MMIO writes to the UFS PCI BAR with mcq=on.
 
-Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
----
- hw/ufs/trace-events |  2 ++
- hw/ufs/ufs.c        | 18 ++++++++++++++++--
- 2 files changed, 18 insertions(+), 2 deletions(-)
+Patches 1-2 fix bugs reported by Rayhan Ramdhany Hanaputra:
 
-diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
-index 531dcfc686..7734b35f08 100644
---- a/hw/ufs/trace-events
-+++ b/hw/ufs/trace-events
-@@ -40,10 +40,12 @@ ufs_err_mcq_db_wr_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
- ufs_err_mcq_db_wr_invalid_db(uint8_t qid, uint32_t db) "invalid mcq doorbell sqid %"PRIu8", db %"PRIu32""
- ufs_err_mcq_create_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
- ufs_err_mcq_create_sq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
-+ufs_err_mcq_create_sq_invalid_size(uint8_t qid) "invalid mcq sq size for sqid %"PRIu8""
- ufs_err_mcq_create_sq_already_exists(uint8_t qid) "mcq sqid %"PRIu8 "already exists"
- ufs_err_mcq_delete_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
- ufs_err_mcq_delete_sq_not_exists(uint8_t qid) "mcq sqid %"PRIu8 "not exists"
- ufs_err_mcq_create_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
-+ufs_err_mcq_create_cq_invalid_size(uint8_t qid) "invalid mcq cq size for cqid %"PRIu8""
- ufs_err_mcq_create_cq_already_exists(uint8_t qid) "mcq cqid %"PRIu8 "already exists"
- ufs_err_mcq_delete_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
- ufs_err_mcq_delete_cq_not_exists(uint8_t qid) "mcq cqid %"PRIu8 "not exists"
-diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index 1819ba2e8a..4ccd7aa64d 100644
---- a/hw/ufs/ufs.c
-+++ b/hw/ufs/ufs.c
-@@ -506,6 +506,8 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
-     UfsMcqReg *reg = &u->mcq_reg[qid];
-     UfsSq *sq;
-     uint8_t cqid = FIELD_EX32(attr, SQATTR, CQID);
-+    uint16_t qsize =
-+        ((FIELD_EX32(attr, SQATTR, SIZE) + 1) << 2) / sizeof(UfsSqEntry);
- 
-     if (qid >= u->params.mcq_maxq) {
-         trace_ufs_err_mcq_create_sq_invalid_sqid(qid);
-@@ -527,12 +529,17 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
-         return false;
-     }
- 
-+    if (!qsize) {
-+        trace_ufs_err_mcq_create_sq_invalid_size(qid);
-+        return false;
-+    }
-+
-     sq = g_malloc0(sizeof(*sq));
-     sq->u = u;
-     sq->sqid = qid;
-     sq->cq = u->cq[cqid];
-     sq->addr = ((uint64_t)reg->squba << 32) | reg->sqlba;
--    sq->size = ((FIELD_EX32(attr, SQATTR, SIZE) + 1) << 2) / sizeof(UfsSqEntry);
-+    sq->size = qsize;
- 
-     sq->bh = qemu_bh_new_guarded(ufs_mcq_process_sq, sq,
-                                  &DEVICE(u)->mem_reentrancy_guard);
-@@ -576,6 +583,8 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
- {
-     UfsMcqReg *reg = &u->mcq_reg[qid];
-     UfsCq *cq;
-+    uint16_t qsize =
-+        ((FIELD_EX32(attr, CQATTR, SIZE) + 1) << 2) / sizeof(UfsCqEntry);
- 
-     if (qid >= u->params.mcq_maxq) {
-         trace_ufs_err_mcq_create_cq_invalid_cqid(qid);
-@@ -587,11 +596,16 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
-         return false;
-     }
- 
-+    if (!qsize) {
-+        trace_ufs_err_mcq_create_cq_invalid_size(qid);
-+        return false;
-+    }
-+
-     cq = g_malloc0(sizeof(*cq));
-     cq->u = u;
-     cq->cqid = qid;
-     cq->addr = ((uint64_t)reg->cquba << 32) | reg->cqlba;
--    cq->size = ((FIELD_EX32(attr, CQATTR, SIZE) + 1) << 2) / sizeof(UfsCqEntry);
-+    cq->size = qsize;
- 
-     cq->bh = qemu_bh_new_guarded(ufs_mcq_process_cq, cq,
-                                  &DEVICE(u)->mem_reentrancy_guard);
+  - Out-of-bounds array read: SQATTR.CQID is not checked against
+    mcq_maxq before indexing u->cq[].
+  - NULL dereference: SQ doorbell is processed without checking whether
+    the SQ exists.
+  - NULL dereference: CQ head doorbell is processed without checking
+    whether the CQ exists.
+
+Patches 3-4 fix additional bugs found during review:
+
+  - Divide-by-zero: a small SQATTR.SIZE or CQATTR.SIZE produces a
+    zero-depth queue that crashes when its pointers are advanced.
+  - Use-after-free: disabling an SQ while requests are still in flight
+    on the CQ list or in the SCSI layer frees memory that is still
+    referenced by the completion paths.
+
+Jeuk Kim (4):
+  hw/ufs: Validate MCQ SQ references before use
+  hw/ufs: Guard MCQ CQ accesses against missing queues
+  hw/ufs: Reject zero-depth MCQ queues
+  hw/ufs: Keep MCQ SQs alive while requests are outstanding
+
+ hw/ufs/trace-events |  3 ++
+ hw/ufs/ufs.c        | 92 +++++++++++++++++++++++++++++++++++++++------
+ hw/ufs/ufs.h        |  9 ++++-
+ 3 files changed, 92 insertions(+), 12 deletions(-)
+
 -- 
 2.43.0
 
