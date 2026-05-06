@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D3DACD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 13:57:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A4D7FF8855
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 13:57:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKckR-0002e0-Km; Wed, 06 May 2026 09:57:11 -0400
+	id 1wKckQ-0002Vd-Ny; Wed, 06 May 2026 09:57:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKckM-0002Gr-Pe
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:57:06 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKckD-000249-4L
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:56:57 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKckF-00085D-9A
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:57:04 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4890d945eb4so6171545e9.0
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:56:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKck8-000839-09
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:56:55 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-43d77f6092eso4066337f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:56:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778075817; x=1778680617; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778075809; x=1778680609; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=X0ChLyLrnnWxFhFlsorIZFcSiHRTf4Wb3PMdP74ILOM=;
- b=HpUx71KirWsJAcf4pb36ndXLN/j0F1XXi6pGHJ733kP1wlBCDuBM82L9p17Dgo1ec/
- YgU4lJZDgQjqFOJAS77HsHufdBsi2GcUzJVCSC8NfHz29OmnAUNnM/bwfPd3Kuw3qEvn
- CPyneVNve3VBi9g5fRdDVlUQkW2zXo+U6PYI8OdDMwvGM69x7HCZO0h8u9piFpVzd+l/
- Tf8tIalGsmOt+/r2XG0v0Ai6KiDYJ2yGpAAc97YUDQCYSZbZOvmjcTeOMd7jlSdgOUog
- di53EWmIovf2zT93xQ23lddsXjwQMFeccs+S8kOVE2gIqHmPk8S3w806JqDYIRfqN/v1
- opiQ==
+ :reply-to; bh=bcwpOmxDI9s9xmjmr5qH53DsN9jYAX4P5W66NxwpuT0=;
+ b=ykOV1JX25vPgrrZakSh+OT66NPA6QFPLqi2k65gjYxeDShZwkY7g2dgHU0PXTzfoQM
+ uc5VJUjC2OfkY/JOMnuUm4QIH8hb3Gj/AfzSlehmFAVwzYcWuNG7uGX78qtyLD3GUKHQ
+ MSZOsX1CijhofSILSnRIkOtA50lZDPcNyJZDzL52EhZqJ9O7+Wy7NNH+GOrNXHI/zIj8
+ R3uxUY+jpvGJ/NLbxLSZVWC+GNuaS5JP+xbVlg9yXa1usXOkLPqnyKbHF4rKxPNMYtCr
+ WhsBpkXKZXE1Y1XpqUK79muYFRGnEfqSluiZFCEUYD1Dtp9ZckT2HRI9Xue+uSaqPfyL
+ /slQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778075817; x=1778680617;
+ d=1e100.net; s=20251104; t=1778075809; x=1778680609;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=X0ChLyLrnnWxFhFlsorIZFcSiHRTf4Wb3PMdP74ILOM=;
- b=m0tKJBh4y3wR9qytNIDSQ1o/a2AZPcXE/Oki7UOuCC5dioTxsDm/LwcZYEgyiCNjWK
- hIp54B0ideug7xFR/AIy1TYiCZkCHh6ag2qCKfgM/vKTMOWMnE29LEPcmlr/BKOJokqt
- ajjKycgROZFuIDvAUe/2o2qFgdZTU/P4BV3Vcziy0jeZACw+6kTF0Hl8qlFLsS79YXzI
- 6eZxnBZX8zPlow9hgtlRzlPQHSr5Riy405NwG6pgNu2/ePMMCHO14+SC5hBQqTcLThTc
- 9WC0Vv5cpo4Pkm6dtx+3u0Ar+m1c5Tx5zxCvIw2kZ5C8yoNn1tz7fawfVP6SzWi/TqlF
- 7v4w==
-X-Gm-Message-State: AOJu0YxxoYcJyqqo950TIR6OeCKY9qQASTNmc6DsQlXlhCgDLyLFcl+8
- q0W9URyUWPmgAP+jOKUhVWm8Ni85XVgMg+YOXuBIP+eHX6AbxMf2rdB1N4JcwQP3ZNJbtgUdEp9
- GZPmPZ+Q=
-X-Gm-Gg: AeBDiesvqLeeboPhb+3yhoTpBgbiJlNXymAhrm3Ac8oV8HM0lnUOVAjdvsDZLN/XkXL
- h0jLk7f+uyXJ2MF6SUPcUIdC9BK6v+WBZDbet5TJ7xVpEVKp2GFKd/VHGs0FiEtCYLhWIW7wMmn
- WznJZhqRNp9ZwCViMq+7fzSOPl/PHP29MOAWT9lNSs6sInfhFbW+h3JtckuAIff70RCu7GkhEKJ
- MihKyEaSfQYQyAuL9wEPvu+02lDa3F51PD2R64+0ZodJ702KtEz7/eeGHD+007/sxznruRE6zNd
- yzcl1rML41pcauhEH2IXPZwMcR4zBUgiA2toYUsoqsTo914VL2GPn5xrwEz2t8ZakV85LhE5zDd
- ffBXeOjCyf9lCCTM4K088PkQ6S+fWUJ7wGjhl6u+OAaqmhWU0LxJzZ8S+oeiQTYvTE2C7Gxr1Y1
- NJpqLThPJMqtsEfskOwpi53INW/35n321x7NZotPn9sQCsz9HktB5+sd4CloHQGxY+rtNPgQWmL
- OVeMzNVEAU=
-X-Received: by 2002:a05:600d:644f:20b0:488:c21a:4754 with SMTP id
- 5b1f17b1804b1-48d143a4c1emr102969145e9.18.1778075816735; 
- Wed, 06 May 2026 06:56:56 -0700 (PDT)
+ bh=bcwpOmxDI9s9xmjmr5qH53DsN9jYAX4P5W66NxwpuT0=;
+ b=l34hRStpMY8Ct5M4eebYZY0MCBIujAEwkDrbRKkmNJQ4EkvjxgYdWCYacrI/FV1di9
+ ds2kZJvn6JtyXrUs2gUHgAn2iU17vVsCOavOStyMUPB+AHrWL0Sdzsl0ZoZUOVdejitH
+ zWiqB6IdCz3OMcjgFSrblOPuRy9SKN1QO8PbPnCDoIMnAo/jgVbfaLtXTrIAXkfLuffQ
+ C/obw/j7IW17fXoINiqEI33JjqrsbYmW5pcNsjUUJlQ3u9E5Dd/Snu34ZcSu2dA/yrOZ
+ rrdvcrWDfcKJFIRoyPmxrYW0Ec34L8Rdqf02wdpnYaoZu1twfUyPgMeoTKjkNa5mMaRH
+ i8Mw==
+X-Gm-Message-State: AOJu0YwM1l1bBtjvQnXLH7VE6pdNcODLh8YLHn796WNLQdRjO8Jw4OKm
+ CdwFjdXhujT6RtLhJQv9S42az9ZxaYtUop19u+a7Sfi4OkgWL88hvJEi7I9YI6/DPZl8JYpi4Z6
+ I1e405HM=
+X-Gm-Gg: AeBDiev8D0VVj/rbN09Knr2h9Et8KTnPpU7jHAjaQ3hpxDLInog5pkAM5J+fQfwpSrc
+ Zj/MOYtgJsezk+gsbEcaP8bCP3zZqXBdxs7+dSLCBMXM9K+tsTXKT1zHOSqwMkLJZqLxIoD1eer
+ QbYbpSDSrvgJgkelEckm8/DM+pun8zHuNrFtMoEV9Uj0ZoTnm489KDAZVTFVvF+rnn2Y501AxK3
+ dtnXOW/c4z93lhbRBGKxlaXjfYTnLJpUhRAmFLktydPLqvcpz3TyC55Av2c8+GWR2stUQwFkQg+
+ z/Ah31pzafqUjBZEcISJ5zF5Q6q40hkJy8gnrKQh9mMN26ZFYxgzr07vRImBuWitAksz3GZ/7FZ
+ 2rKUr9onFRS9RbB7GiQjwna7dScOXXOMDVuK6E8e+IxyQq6PtNIQDUjUcjxb6SY9nJCJ4gIzZrn
+ 2pDnMUFznu0BdhBC9PL4vGAuLVkXEbfvzeudBJ520/pF15WKgtrKHvYz0CfU8JsxzWiBOFvPp0M
+ LEL1tT7HxU=
+X-Received: by 2002:a05:600c:3548:b0:488:c40b:c8a4 with SMTP id
+ 5b1f17b1804b1-48e51e097a2mr63284135e9.1.1778075809387; 
+ Wed, 06 May 2026 06:56:49 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45054b02802sm12815109f8f.17.2026.05.06.06.56.55
+ 5b1f17b1804b1-48e538a8159sm56395805e9.6.2026.05.06.06.56.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 06:56:55 -0700 (PDT)
+ Wed, 06 May 2026 06:56:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 012/110] system/kvm_xen: Include missing 'exec/target_page.h'
+Subject: [PULL 011/110] target/sparc: Include missing 'exec/target_long.h'
  header
-Date: Wed,  6 May 2026 15:53:44 +0200
-Message-ID: <20260506135524.20617-13-philmd@linaro.org>
+Date: Wed,  6 May 2026 15:53:43 +0200
+Message-ID: <20260506135524.20617-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,33 +100,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "exec/target_page.h" header is indirectly included. Include
-it explicitly otherwise we get when refactoring unrelated headers:
+The "exec/target_long.h" header is indirectly included, pulled
+via "exec/cpu-defs.h". Include it explicitly otherwise we'd get
+when removing the latter:
 
-  include/system/kvm_xen.h:41:55: error: ‘TARGET_PAGE_BITS’ undeclared (first use in this function)
-     41 | #define XEN_SPECIAL_PFN(x) ((XEN_SPECIAL_AREA_ADDR >> TARGET_PAGE_BITS) + \
-        |                                                       ^~~~~~~~~~~~~~~~
+  ../target/sparc/cpu.h:615:1: error: unknown type name 'target_ulong'
+    615 | target_ulong cpu_get_fsr(CPUSPARCState *);
+        | ^
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20260313062055.2188-16-philmd@linaro.org>
+Message-Id: <20260313062055.2188-15-philmd@linaro.org>
 ---
- include/system/kvm_xen.h | 2 ++
- 1 file changed, 2 insertions(+)
+ target/sparc/cpu.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/system/kvm_xen.h b/include/system/kvm_xen.h
-index 7d0e69f1334..ed8c357193c 100644
---- a/include/system/kvm_xen.h
-+++ b/include/system/kvm_xen.h
-@@ -12,6 +12,8 @@
- #ifndef QEMU_SYSTEM_KVM_XEN_H
- #define QEMU_SYSTEM_KVM_XEN_H
+diff --git a/target/sparc/cpu.h b/target/sparc/cpu.h
+index 0139732e4cc..155aa8ec637 100644
+--- a/target/sparc/cpu.h
++++ b/target/sparc/cpu.h
+@@ -5,6 +5,7 @@
+ #include "cpu-qom.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
++#include "exec/target_long.h"
+ #include "qemu/cpu-float.h"
  
-+#include "exec/target_page.h"
-+
- /* The KVM API uses these to indicate "no GPA" or "no GFN" */
- #define INVALID_GPA UINT64_MAX
- #define INVALID_GFN UINT64_MAX
+ #if !defined(TARGET_SPARC64)
 -- 
 2.53.0
 
