@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 786E2CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 13:59:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55FB4CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:00:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcmP-0001R5-M1; Wed, 06 May 2026 09:59:13 -0400
+	id 1wKcmd-0002MU-OL; Wed, 06 May 2026 09:59:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcmF-0001IO-N3
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:07 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcmb-0002E6-Tp
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:26 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcmC-00007z-TY
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:03 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-488a88aeec9so72867475e9.2
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:59:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcma-0000Ac-1G
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:25 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-48d102471a4so32478325e9.2
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:59:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778075938; x=1778680738; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778075961; x=1778680761; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=C+XEiL09lfmgyHO2Y4EFhGtAKLkwWNf3J69g+kf0h9M=;
- b=kYj8nnrfkZGwR880+Bcv76pvxyl4JLdzjN5mixbCx3Ae8zkAva4bKmnteAPA5E8PWn
- QH42pPHiyNDZntfv2zKKMFEa0+8QZ8Sycmyuj391Y0zxEZCQdk+JKLNFh9+Tdi4qhDQE
- Ef7LasBv1oCvDeo61XZGWB/uoTl3bUkCY3mcfxNa2uRtH/TF7QYR9GhYNuRyVzua9btZ
- QSCi+gPhVKn9zpNpvO6SzRLkTZtngIFMIogtS99h+wqOvyA05JgwLvntKaRXfAAFkLIJ
- a//a7R+afH2s4asgj65YIzOBew4hMKz+Pc9XS71D/a20O3tdY+UzfyyeTz/tTJNA2Erp
- aLjA==
+ :reply-to; bh=FprVQ5wR1d4Vf79cPTC1JLTTgXx+APXAerAyuJrHnZE=;
+ b=Of+t8LVk7glJv9xWVnWX2/LxXT0k9izf7E6CjdcBuczIqz8xKL+Y6HaYuh7vUZpsKD
+ Axb6d7JfoyXLNv3S54+0tPBisFiRLkf+0ZV98nR/x9cxkKMK3YoAaPoH4yO+SQXOQ2o6
+ tZ0x2h8PjAhxptDZyNvMQUHbYgYawWzIPSzy8XgeGGeIbSHnK8HFAbCENAqcX2OJrEDh
+ ochQ56t9LmZus1+8MA4BgCO1bOo6M2dYJX7nw2PgOVBf4o2DUi1dr9DeVzj5wT0AQOB/
+ 4cqJnkoPswWVbzJenkDdL8EIVhRg74odhCkRamknlOdbb+BQlVYxAEW9N3/aJiSpNvWG
+ jWsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778075938; x=1778680738;
+ d=1e100.net; s=20251104; t=1778075961; x=1778680761;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=C+XEiL09lfmgyHO2Y4EFhGtAKLkwWNf3J69g+kf0h9M=;
- b=kR9xbMt/5zlLBt0MBbC2Sa/yY884+zgKoVoFjFYS/3N/HPDCl16pEGGtUNBWx4m2rg
- tkKDDSv3jaV/DK3sjiUpe/IHA0Ep5zuH4Ry4i7/4VVFPl1QnvCEkaEi4Nrxao3UwHm0q
- pOtnTjztKt0oEVDItsqIxQ493pSKd0mxvxn1Lmzyedhs4ImcGIv2z/UUaGZ8YsgYBfZ3
- DorcjgCP0gyPvUiBOmQr2l2ZMPENFU/3DNHFGFllJobu2572d8fxSW2vuRY3ZXfPMYMl
- O1u6KvpOzO52kXTqCURb/rFhvPsBBer5Dd4k8/ux9QvYSsGlhwt3PsvMjBmYW4wIdJYg
- 1tWw==
-X-Gm-Message-State: AOJu0YwDIl5r9fCtOwfH8gzE7cmxeudKcrjZn5y/3y3JGZOnFR04xxsi
- Rh08iBJ52A9TRtgMyMisafjfceVnO2rUZ6nQVG5HyWNvUFhln8DNf8y2qzUEPcQh5bntVcu17rP
- auSOL1oI=
-X-Gm-Gg: AeBDieu97Aqgeiu91eC/7OtDTB+hJ6P0NFV3y+ooaec8BJXMGYPcDXV3WvrpRup16x4
- JSNRToln4B0N92P6swfusKG+G4dtTduLDTcT3muLcfUPmbaRlFyiXu1Fh0v9gtKFxOZacUJ269f
- wtGPyeiX3wPcUrEFdImaMe3jY+gR+zrxBk5p5CAe9c001xVc2rbvFNNwG5kz5plYCdMnDxhWM8Z
- vihwbnsTuriy73DKOLJG55N6xYv+nCkFBSDvMSHJQUPkPMNk+HmSqchLY3Nys175zQ3ApDPmApD
- /6bV2bZUW1ElWuPBo6Zd+prgeiMqZT9n/0fzDmKV1J9wJs3dV23KBuf4qjGEELJ9BW6DBupOcXy
- rJudxW/EURNPB9VXaAKtJP3e+TxKbwcxj1kDMBg7tfOqfLEtaUgbFNK5eSQ6QHmZzHAbE8tra6C
- vh8Xq5+eJlCQT0uTavpF5Wk6XVchmsGE7v2XvpCYyG6Hl2eznfM1zsHqsv+Kz4cpiTkKy2lp2tY
- KOyMgk7UF8=
-X-Received: by 2002:a05:600c:a305:b0:48d:364:6c54 with SMTP id
- 5b1f17b1804b1-48e51f4144amr44601345e9.23.1778075938388; 
- Wed, 06 May 2026 06:58:58 -0700 (PDT)
+ bh=FprVQ5wR1d4Vf79cPTC1JLTTgXx+APXAerAyuJrHnZE=;
+ b=VeRQtvqU5uEzdW/qXYhMCjTqSyDvwoTha/UdV7K2PChXaFt3Q2wPJrGQ8h4Ahy8vVY
+ iNqCBlZ+1akDylWaJazn/7Ss3nsZl+a3a2Q4LMEP7dO0TBJZpTrK3gIolxtQXZ/fs29j
+ BDZ/ls3yyV1JFloTw9YZPMSRmuGuzxAsmlZAmjpnYrqZINlIyN41AvPDUsNxYdVCMW78
+ A25WBdDk4ZUCetaPrqdJabkbXqqSMeIaUj/Qy6nKFwKLvtcB7zFMobgX2GHaepBvx+oO
+ oKe0jdhF4yBxJlz4ZEkHByOtfWZHlemjHPHOu05Bw2McLLBtb2zOgn1sWFm4WGD52OgO
+ WzLA==
+X-Gm-Message-State: AOJu0Yy5xdXIU+JUKD4gBRfvsOeSIT+tIoptbGXo4Pgms8fafopgwqgf
+ DX4kbORP0uULyYlavZzKlDSJHgR6H80iM2qF04a4D1jpHZquZoe4clkHKnjoEX8MbW4flqUJnj3
+ 6hW0MiFM=
+X-Gm-Gg: AeBDies0XZPtIk4ZVSZGKq9cuzmaOMKP2iwnsMeyr6yvVYQuRxo4l6NkY8pBb5AApSy
+ v53RBAkY7GeO9nWZuP50RTLxORBV3oTFDiRjqR1UcZQZAp3MLYDDWkR6O7CDkbhA7JFLRZZvHR0
+ oHi5+SkUSGYh0SYrkwysGTvoGul1GN5Ui8k5EEDRZ1wKAE/czKmXy9dt9/dJ11j//jSFtbZUd5y
+ zjXtwEUNPvnzeKvSrlCmxvRjgs5/ojNHiaGxHeqOcJVzYbDLzfNQ1ru2UPV52AXcEGLLZs+uwBH
+ DKUuo8UtkElGYAgAYnEp/JWdRjlg7KJulLxNFuRK1tJGX5ujOLu8KWIDNDBrqMMHQmOmzwQLrI/
+ r5uXldd7aF7kli3af8OueaC5Y16kYWyKsIbWCesD406L2K8pIYD7+GcafT4gIzetMbeWYOuSqsP
+ 7SDE5iliLBhmjDGhG9tn7QfO3TbdULUCBBgAy9OyZ+jGHOMYxSlup/1gdZyMs3BrXB9/CuwqhiP
+ 67qn7NFj9k=
+X-Received: by 2002:a05:600c:1d11:b0:488:a916:14a8 with SMTP id
+ 5b1f17b1804b1-48e51f2c7eemr62085325e9.10.1778075960896; 
+ Wed, 06 May 2026 06:59:20 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e53895effsm47957805e9.3.2026.05.06.06.58.56
+ 5b1f17b1804b1-48e538c4ae1sm47137335e9.12.2026.05.06.06.59.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 06:58:56 -0700 (PDT)
+ Wed, 06 May 2026 06:59:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 028/110] target/avr: Avoid target-specific migration headers in
- machine.c
-Date: Wed,  6 May 2026 15:54:00 +0200
-Message-ID: <20260506135524.20617-29-philmd@linaro.org>
+Subject: [PULL 031/110] target/sparc: Inline qemu_get/put_betl()
+Date: Wed,  6 May 2026 15:54:03 +0200
+Message-ID: <20260506135524.20617-32-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,48 +99,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-machine.c doesn't use any target-specific macro defined by
-the "migration/cpu.h" header. Use the minimum headers required:
-"migration/qemu-file-types.h" and "migration/vmstate.h", which
-are not target-specific. This allows to build this file as
-common object.
+Use TargetInfo target_long_bits() helper at runtime to migrate
+the FSR register as 32 or 64-bits.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20260325211728.89204-2-philmd@linaro.org>
+Message-Id: <20260325211728.89204-6-philmd@linaro.org>
 ---
- target/avr/machine.c   | 3 ++-
- target/avr/meson.build | 3 +--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ include/migration/cpu.h |  4 ----
+ target/sparc/machine.c  | 17 +++++++++++++----
+ 2 files changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/target/avr/machine.c b/target/avr/machine.c
-index 4402862fb96..8064a7214a3 100644
---- a/target/avr/machine.c
-+++ b/target/avr/machine.c
-@@ -20,7 +20,8 @@
+diff --git a/include/migration/cpu.h b/include/migration/cpu.h
+index bb8ecfbeea5..87ca977a3fd 100644
+--- a/include/migration/cpu.h
++++ b/include/migration/cpu.h
+@@ -8,8 +8,6 @@
+ #include "migration/vmstate.h"
  
+ #if TARGET_LONG_BITS == 64
+-#define qemu_put_betl qemu_put_be64
+-#define qemu_get_betl qemu_get_be64
+ #define qemu_put_betls qemu_put_be64s
+ #define qemu_get_betls qemu_get_be64s
+ 
+@@ -21,8 +19,6 @@
+     VMSTATE_UINT64_SUB_ARRAY(_f, _s, _start, _num)
+ #define vmstate_info_uinttl vmstate_info_uint64
+ #else
+-#define qemu_put_betl qemu_put_be32
+-#define qemu_get_betl qemu_get_be32
+ #define qemu_put_betls qemu_put_be32s
+ #define qemu_get_betls qemu_get_be32s
+ 
+diff --git a/target/sparc/machine.c b/target/sparc/machine.c
+index 4dd75aff74a..0a449f2f8c6 100644
+--- a/target/sparc/machine.c
++++ b/target/sparc/machine.c
+@@ -1,8 +1,10 @@
  #include "qemu/osdep.h"
  #include "cpu.h"
--#include "migration/cpu.h"
++#include "qemu/target-info.h"
+ #include "qemu/timer.h"
+ 
+ #include "migration/cpu.h"
 +#include "migration/qemu-file-types.h"
-+#include "migration/vmstate.h"
  
- static int get_sreg(QEMUFile *f, void *opaque, size_t size,
-                     const VMStateField *field)
-diff --git a/target/avr/meson.build b/target/avr/meson.build
-index af5e7d63741..39e5eb02c2b 100644
---- a/target/avr/meson.build
-+++ b/target/avr/meson.build
-@@ -15,8 +15,7 @@ avr_ss.add(files(
+ #ifdef TARGET_SPARC64
+ static const VMStateDescription vmstate_cpu_timer = {
+@@ -86,9 +88,13 @@ static int get_fsr(QEMUFile *f, void *opaque, size_t size,
+                    const VMStateField *field)
+ {
+     SPARCCPU *cpu = opaque;
+-    target_ulong val = qemu_get_betl(f);
  
- avr_common_system_ss = ss.source_set()
- avr_common_system_ss.add(files('gdbstub.c'))
--
--avr_system_ss.add(files('machine.c'))
-+avr_common_system_ss.add(files('machine.c'))
+-    cpu_put_fsr(&cpu->env, val);
++    if (target_long_bits() == 64) {
++        cpu_put_fsr(&cpu->env, qemu_get_be64(f));
++    } else {
++        cpu_put_fsr(&cpu->env, qemu_get_be32(f));
++    }
++
+     return 0;
+ }
  
- target_arch += {'avr': avr_ss}
- target_system_arch += {'avr': avr_system_ss}
+@@ -96,9 +102,12 @@ static int put_fsr(QEMUFile *f, void *opaque, size_t size,
+                    const VMStateField *field, JSONWriter *vmdesc)
+ {
+     SPARCCPU *cpu = opaque;
+-    target_ulong val = cpu_get_fsr(&cpu->env);
+ 
+-    qemu_put_betl(f, val);
++    if (target_long_bits() == 64) {
++        qemu_put_be64(f, cpu_get_fsr(&cpu->env));
++    } else {
++        qemu_put_be32(f, cpu_get_fsr(&cpu->env));
++    }
+     return 0;
+ }
+ 
 -- 
 2.53.0
 
