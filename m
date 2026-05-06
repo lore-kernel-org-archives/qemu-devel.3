@@ -4,129 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E8FDCD3439
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 17:50:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7DEFCD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 18:03:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKgNa-0000Bp-Jo; Wed, 06 May 2026 13:49:50 -0400
+	id 1wKgaE-0003H9-I4; Wed, 06 May 2026 14:02:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1wKgNY-0000B6-Dg; Wed, 06 May 2026 13:49:48 -0400
-Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
- ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1wKgaC-0003GO-Or; Wed, 06 May 2026 14:02:52 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1wKgNW-0005He-GI; Wed, 06 May 2026 13:49:48 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=E9IrjphW/WMZje8bUwCsvKiOOtvcOAL1xh/70wfCtbOG5PJRtcUM/7kRMglH1Dt66zTjjENVUd40WxrznTydk763DdsjxP5djWFjrCRqQEPcO0RBPvKnxY8Eto/+JoW7H6qmfYd8hDE8hHH9T6D+p/SG0PME2r+Kq9vSVyq9BdkfLnm7GndjObGzMHnUTC9nGorzFuEO5hmlu+Nzi7Z1Ci1/2UuA9JjibI1aFUsTbtiYPfT2hKnFgjwxUV1kF7rfJbd40jf4YHD8qpBAcdfwaLvuqU7/+tWLrsA6A5p8PIgEm6DNkAuycNJXjx8cxScqCwdV7Tf4WD8RdkOKQRWruw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uiAciXGSbXgjZAs6EDyFaNZryqZ+u/hnLYHee5QK5m0=;
- b=ONmGY+clkGRAqpzz50xLYTNDd4ZSSdDFgCgw8JYKbqNWeQH86bZU2kY+Nz9x/bRfyUk96ZQiSDVz7A5brP0UvgGCDx69ezie4m0wbbsWWLC/odviLmFpXGvj+BFQami8oTmeLQMlyg1/MbWBad+rBNg7nxg5FtcHZ4/vvsmjel2MqEaoBbqxw5d1TGYtL56FR/4KIj2Gfrb1PGzPz7odNnGJ9cZNYe5Srwf7j7O//3FrVuLSUeLaK7c5C9Q4il0K4sJiQ9Kbd+EcOLz5vdqLdtJ7Jh/bdBieZTAz4fZr6y/QUg2xT5Og2zdyh170pb6lYrsbNfDG+7e2byrUF5PJGA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uiAciXGSbXgjZAs6EDyFaNZryqZ+u/hnLYHee5QK5m0=;
- b=YcEk8zOPjr5WCyKU8EqqXy4UQ3jKE9Tj71hQ3LU4cPIoBfDFlsRKoFBHwCI65Z0NlW8bp4F+nU7+fdG5FiVVJ1Ba6J5gSzXOv1b2pHlTtGcWcq/lWMxgw2CppQPIh5KkgjPnEZm5/AzN95QyhmmP89mwgUyipwZkXwN4EiRAF2G9Ly/iRmicviR/njIrq33ljwswuI3qYIFJaColwnam2lf91ElXrPcvyDWaaNL5XoSJT0usE0Xxo44lCxz3opVko9xmUJNveA480i16IwRD+EXKNRfNjupoRlG5e5IB3kzNdCJyUoLFiDstNTtl7uGt8Dvb6Rnrta7+yEHL2SjxlA==
-Received: from PH7PR17CA0010.namprd17.prod.outlook.com (2603:10b6:510:324::10)
- by MW4PR12MB7143.namprd12.prod.outlook.com (2603:10b6:303:222::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Wed, 6 May
- 2026 17:49:29 +0000
-Received: from CY4PEPF0000EE3B.namprd03.prod.outlook.com
- (2603:10b6:510:324:cafe::ec) by PH7PR17CA0010.outlook.office365.com
- (2603:10b6:510:324::10) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9891.16 via Frontend Transport; Wed,
- 6 May 2026 17:49:28 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- CY4PEPF0000EE3B.mail.protection.outlook.com (10.167.242.14) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9891.9 via Frontend Transport; Wed, 6 May 2026 17:49:28 +0000
-Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 6 May
- 2026 10:49:07 -0700
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail201.nvidia.com
- (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 6 May
- 2026 10:49:07 -0700
-Received: from nvidia.com (10.127.8.13) by mail.nvidia.com (10.129.68.7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Wed, 6 May 2026 10:49:03 -0700
-Date: Wed, 6 May 2026 10:49:01 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
- <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Jiandi An
- <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, Krishnakant Jaju
- <kjaju@nvidia.com>, "phrdina@redhat.com" <phrdina@redhat.com>
-Subject: Re: [PATCH v4 19/31] hw/arm/tegra241-cmdqv: Allocate HW VCMDQs on
- base register programming
-Message-ID: <aft/DTFLqQnufzWl@nvidia.com>
-References: <20260415105552.622421-1-skolothumtho@nvidia.com>
- <20260415105552.622421-20-skolothumtho@nvidia.com>
- <103d06a5-3203-4545-b617-517f695eb751@redhat.com>
- <CH3PR12MB7548F9BC9DCCE1D5899EA168AB3E2@CH3PR12MB7548.namprd12.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
+ id 1wKgaB-0001lF-3H; Wed, 06 May 2026 14:02:52 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 646BshTD3452190; Wed, 6 May 2026 18:02:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=y4i3qu
+ pdjqWqk6Yls+147aRFqJMNa57oWFLsO5Ebwd4=; b=CVPX0TIWcGUXHLqDnywEQr
+ KbFIImvNlLoIeAfgZGunReL4OXQ9O1Cs4xCzdJ4UAXmfo26oGHjxeduy3xnnUa32
+ 36XFgn/eZKewPKjcEzanKqxBXnmhLHeA4jw66WnvZ/ZY/DhAJv2lo1fCvWHu7CjW
+ zxVfsd9PpFvlJKomS6Ffe3b1SBKhe4a9H4GLEnuil9Qv6EUNGVCVOVln/uKEouxS
+ 3xYBjrUg2mD29nd1nQElYwm0kR+Iu6P18MNxzF9iZbP3erWAmij+NfZ0LkXOx7DY
+ WEB2ZVTHz0itPSip+MJK+6APohM32E7o7EhNyB9GSTj+fPhGUZSCU8/toUlpg+vA
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9xxsajt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 06 May 2026 18:02:44 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 646Hscmm009508;
+ Wed, 6 May 2026 18:02:44 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwx9yf550-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 06 May 2026 18:02:44 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 646I2hNT22414004
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 6 May 2026 18:02:43 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E28165805D;
+ Wed,  6 May 2026 18:02:42 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4276758053;
+ Wed,  6 May 2026 18:02:41 +0000 (GMT)
+Received: from [9.12.68.85] (unknown [9.12.68.85])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed,  6 May 2026 18:02:41 +0000 (GMT)
+Message-ID: <89822c40-a0c9-4272-80f4-edbcf770dcbc@linux.ibm.com>
+Date: Wed, 6 May 2026 14:02:40 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <CH3PR12MB7548F9BC9DCCE1D5899EA168AB3E2@CH3PR12MB7548.namprd12.prod.outlook.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE3B:EE_|MW4PR12MB7143:EE_
-X-MS-Office365-Filtering-Correlation-Id: a8bae589-38ad-4c1e-a71f-08deab97d240
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|1800799024|36860700016|56012099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: q8MSOSNLNkLTsnGPxd/D5MPkumDI7Q5zM0g5aCaWwAkzq49gb30ThX5qAF4JbxDf0XxItGFE4VNRc1ydUTWX5D2Rl/UvsXR0cdsgc6bnXeKkmdtS03bhaHD43+TdZuZDrAJgLb2t9csKe2D0MwNJzQRASJWm1+utxd4nsSl+cXjC85lROa3fA5eoOXRV/yTIrVlw2jpWpe+u12p3NglwFm6Ko7NXUXxc5kaJM8O9gfnp9aImsoUccX1UiHumZdXnnYpxMWFi878YAeWsNgEQS7OyZ8xaVQzcBwrlXeZevk5EGKhjWrWwwJZZn7Xeg5+QWrG6O9ub701NKnVgepKV70CXUCKyqb2eh05VSG7SuDK35FoKx9wJDeZWPzI6U+lmL9nasVoaUrMczHGELxEyo0queH78Etn8BJ1ekEH2jS1DG58ndG4XLXb3nkBCezePwtJQvplI9BNoOmdafcIFOidjFw8IQpjjuaJIMp3sqFuLmIHJkNYzRK4Ot9LkwyFeZaRGiAugL9LAPdYSMR4hki/y7z9ERjAYNTqy0e2VU+IC6iM6QCE/ZDxYiL+p657U1wSdGs4nVnBNMKnMsOr8y6dh8YJ1zamhKJ1dDNA16NNhmN9NNoLK6Fx7eJofn7ghtmNUbWEndIuU15JFZ0oy0cEOPCI2bnQ15kcv2MjnmGF7GHrweMFepkJpTFX/G2TqtszmmCTA1Uys36Bo3QrI2J1lbPcJUq4Cw+r3kR2WYCU=
-X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(1800799024)(36860700016)(56012099003)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: LAdQ8ahaIjPDBRpQD5jcUtj/NPiZUBf3/Ovlj8TViNgsczcmD7VoMj5cZ8aSFPgaIsAMmxusWm5/Ak2mB6HBx9P1DXNSxZOpezdDwUHtBEJ/20Kv/gIJZbOlDwkUJ6CnOprIUF6VNDJ+PNH/AGOd/QYxeZtautgfsgxR3+2LIkku5ua1XTiibSFStUICRZYqX52XrKt8asqSStxVd2S+Gddmf6LNy8xK3fP7CunvsaYfVTw08kW1c1lhd3Se9NlbQaQg7BjC/iR7KLJOY/X7lJjjT6T3DpdiT9MtZ2jYsdFUXtMhdwYeZX7Pj2OgBZHVa/WzMrEouAePUBpSjD1lRakWj3sbdi4us63tUP1f8FEuruaqAPhJCAq2Ehx9/aifCt44YNKpEkkLznmdVF9fQkj4oUMqfeK+TQYX629eGQ6/Jmqhn0UmoTsTjn6OUMqd
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 May 2026 17:49:28.7847 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: a8bae589-38ad-4c1e-a71f-08deab97d240
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE3B.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7143
-Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
- envelope-from=nicolinc@nvidia.com;
- helo=BL2PR02CU003.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 31/32] docs/specs: Add secure IPL documentation
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
+ richard.henderson@linaro.org, david@kernel.org, jjherne@linux.ibm.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
+ armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
+ pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
+References: <20260505201905.997996-1-zycai@linux.ibm.com>
+ <20260505201905.997996-32-zycai@linux.ibm.com>
+Content-Language: en-US
+From: Collin Walling <walling@linux.ibm.com>
+In-Reply-To: <20260505201905.997996-32-zycai@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA2MDE3MiBTYWx0ZWRfX5zJctkkAcO/9
+ yJ2r2hblGExEYfMzHUNEk8QIIr9oFq8Rb4k2mQoKCWWzIOMDMOlavJPudlt74O92pEmtlrvkOYs
+ nVRfl9kyndY6oyZDc7Y1GxXvBZEHwuoUh2XCfsWKxzsdOk3fvqSOvkorLwMviKr5cjZxn7vF3Vg
+ dXAQL2LvadWve+WtqPMMuRctUF+SAWyZ1PCPq0Tt24kisoJ+Tx03FiA1i6J09znvAm74aS7Gc5d
+ nlOgdQiXKUYzhRbIHTNTNC86xcvz7uxYycwXMi9HPYVsnoaLYnKK4UJMhoJqZfQvOTjTMedb3Tz
+ cm50fcC3YK9IA0Ta/QwzYAbBizCWr0b8N5P7mtv9WUZ5B1g/nifpJhWFFFisfR+YgYpUlBEXHxW
+ uXZheNTW3id1VaNNv1z98S48l01aSizTBUFdRMGFgIBhaGWUDlxL89slLfBSb4bQjBdr08Gg1Zr
+ CJxShYfx6SDKeKdtNMw==
+X-Proofpoint-ORIG-GUID: QdJrqgBlworYICh2FHkka1HFQ6avEj1u
+X-Proofpoint-GUID: QdJrqgBlworYICh2FHkka1HFQ6avEj1u
+X-Authority-Analysis: v=2.4 cv=ctWrVV4i c=1 sm=1 tr=0 ts=69fb8244 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=yb4vVsI9Fz0jfGMqQ6cA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-06_01,2026-05-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 lowpriorityscore=0 adultscore=0 clxscore=1011
+ suspectscore=0 impostorscore=0 spamscore=0 malwarescore=0 phishscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
+ definitions=main-2605060172
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,58 +127,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 05, 2026 at 07:26:29AM -0700, Shameer Kolothum Thodi wrote:
-> > > +static void tegra241_cmdqv_free_all_vcmdq(Tegra241CMDQV *cmdqv)
-> > > +{
-> > > +    /* Free in reverse order to avoid "resource busy" error */
-> > can you provide additional details about the above problematic. Is it
-> > documented in the spec?
+On 5/5/26 16:19, Zhuoying Cai wrote:
+> Add documentation for secure IPL
 > 
-> See p.176:
+> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+> ---
+>  docs/specs/s390x-secure-ipl.rst | 55 +++++++++++++++++++++++++++++++++
+>  1 file changed, 55 insertions(+)
 > 
-> Deallocate a VCMDQ from a Virtual Interface 
->     Logical CMDQ being deallocated for a Guest must be in decreasing order
->     starting from the highest numbered LVCMDQ.
+> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
+> index 5fc15be99c..f4602fe19d 100644
+> --- a/docs/specs/s390x-secure-ipl.rst
+> +++ b/docs/specs/s390x-secure-ipl.rst
+> @@ -1,5 +1,60 @@
+>  .. SPDX-License-Identifier: GPL-2.0-or-later
+>  
 
-Maybe add "Spec demands" to things like this.
+If you feel comfortable doing so, please add your Signed-off-by to this
+patch as well.  The code in these patches are 99% of yours at this
+point, and if you feel that this documentation accurately reflects your
+work then I'd say you should take ownership of it as well.
 
-> > > +    for (int i = (TEGRA241_CMDQV_MAX_CMDQ - 1); i >= 0; i--) {
-> > > +        tegra241_cmdqv_free_vcmdq(cmdqv, i);
-> > > +    }
-> > > +}
-> > > +
-> > > +static bool tegra241_cmdqv_setup_vcmdq(Tegra241CMDQV *cmdqv, int
-> > index,
-> > > +                                       Error **errp)
-> > > +{
-> > > +    SMMUv3AccelState *accel = cmdqv->s_accel;
-> > > +    uint64_t base_mask = (uint64_t)R_VCMDQ0_BASE_L_ADDR_MASK |
-> > > +                         (uint64_t)R_VCMDQ0_BASE_H_ADDR_MASK << 32;
-> > > +    uint64_t addr = cmdqv->vcmdq_base[index] & base_mask;
-> > > +    uint64_t log2 = cmdqv->vcmdq_base[index] &
-> > R_VCMDQ0_BASE_L_LOG2SIZE_MASK;
-> > > +    uint64_t size = 1ULL << (log2 + 4);
-> > > +    IOMMUFDViommu *viommu = accel->viommu;
-> > > +    IOMMUFDHWqueue *hw_queue;
-> > > +    uint32_t hw_queue_id;
-> > > +
-> > > +    /* Ignore any invalid address. This may come as part of reset etc. */
-> > > +    if (!address_space_is_ram(&address_space_memory, addr) ||
-> > > +        !address_space_is_ram(&address_space_memory, addr + size - 1)) {
-> > this check looks a little bit risky, no? Don't we have a better way to
-> > test the address has been properly set?
-> 
-> I think eventually kernel will handle any attempt to use an invalid address
-> through IOMMU_HW_QUEUE_ALLOC IOCTL:
->      iommufd_hw_queue_alloc_phys()/iommufd_access_pin_pages() etc.
-> 
-> Any attempt to pass an invalid address will return error, I think.
-> 
-> @Nicolin, is that a safe assumption to make?
-
-Kernel validates if the gPA range is in the stage-2 page table and
-physically contiguous. It might be nicer if QEMU has a way to make
-sure that is the range is in RAM.
-
-Nicolin
+-- 
+Regards,
+  Collin
 
