@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBBFBFF8855
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:05:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6B65CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:05:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcoK-00060M-HS; Wed, 06 May 2026 10:01:12 -0400
+	id 1wKcrb-0001oD-Vc; Wed, 06 May 2026 10:04:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcoG-0005pD-9a
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:01:08 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcqW-0008Bj-Pr
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:03:28 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcoE-0000hY-HL
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:01:07 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-b93698bb57aso160381066b.0
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:01:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcqS-00010z-Tk
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:03:28 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4891c00e7aeso55426585e9.2
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:03:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076064; x=1778680864; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076201; x=1778681001; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=TIc9UfgUwKaCrlx/OZB1YgMDt8qDxahOFd4p2608LcQ=;
- b=iJ5ipC81os5P9rvwF7RMsSirENFm6Xmx/dJ/QvdLskWpkoV+G86GdIkpV0lhwG7+B2
- 7QlE5Yjc67uz2a4cMRy/GUCQcGdACHSu9NcG6pgtLPS0/LQQTBAIx+36uz32ZYm8iNsl
- 2wK/alUxYn4kKE9gwiUzqkOq2bCBSQEploCn1cv42k25l2u2V21STEthEhbbkLn5FYy5
- JijEyuEXb0X80/waARX8uuNEY3zojRtrUTjLQdLRJs2M0+4yFdL/1uYKoU3T4KkZNkOx
- f3nS/eLqVE4fYUn7UU4uq0+5fvd0FX9EpeZSlKzZArdweBFZpR5T+9DHqN0smIRB8eJf
- 7djw==
+ :reply-to; bh=dgC99C4QHuUTSka7Jdb/jzkeq+ba0Okc1oUiPSrq668=;
+ b=PZejho8OC/gwUjv35N4UwznsCPOvwyrSrPmNF2Cc2Fer1oPPqNNQYLMw7dEsLefckm
+ Glr0HyQ5opzN8W5wOZi2U/9O3uQ1+Bn+usuUXzCS+aXb1WwGeoEtlcGISxdbWSja7MN1
+ mQqWWbF33NQQic9bGoAoqP/6F6ZUkG7D+z1LRP06rCgtrHpJXhwdnXkyyuCMQNNI/vkq
+ xUL+LUIJZ2ZMucTDHg1g2/hDe6mJyXXp/AfeyywdFN83oVWjyvg2bhh9voWrxQXxVhLS
+ HQQFXa35XRIYFB/dKWK+S1KbSQqwJvtlesg6Q8lVD5X88qsE901udId9Q7ntfPIm5iyQ
+ BFag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076064; x=1778680864;
+ d=1e100.net; s=20251104; t=1778076201; x=1778681001;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=TIc9UfgUwKaCrlx/OZB1YgMDt8qDxahOFd4p2608LcQ=;
- b=ksNaa9VuezrH6/lfb1jvgPG/D57UvRb4qFQU7j+nUl+hwd0i1U3O5aJis8wmDaMptT
- X6j9StcmddmtHJKrV0UNQ+FDWNUQsT6B5x8uV1mgL25xiwcrQPLJk+vM+IiSUgcXeEjA
- Fog7t4uAHUvJfWfshuG2dthEjWcBzS5pmNN3uhqkp1U0pNvwIEHxRNR9GH1AZ2b9IJjP
- jyCVCngYGhH1W5BNvfxvRJFTSCn+rMeqj6n0imXb0eURaxd3G+egjDfqg/X0/hD86ttn
- x3QbGhZ3SFy917NwmQMeZzPywBvtUYaj7Y04R0y9SRvHr4YwHU5PIPQA6qjUR6TqtA60
- n+Kw==
-X-Gm-Message-State: AOJu0YxI5t5QZSUEfGcZ3/bAKPBHt820x3QYYu8kb4vTWnyTLzYss7J5
- 16xhoeUroB0Wyl+jXxmF8f89OFwzjO33e3EfbnjDUDYSEFMaIl4o04oXQEHXRiemMJTNukmegNw
- HH14M+dQ=
-X-Gm-Gg: AeBDiete7nbVhqY47iGmrRoFRytVTfvtSxNdofbi5zklHC7WaYZAReQfTEhsRHKYj9B
- goTwhzI9QC7vM+/2U7F/myM7mGdVBBcF8hNZIygeHRrkcWwDAQqa5t8IrbnQSJSIDRP+IjTdeTr
- UjOduVDDLbveX3Bbahb5xWm1AnT2Wu5WO5rbx55/uYAoT2YqXj0o+dKKN17RKgxyfhAD3CrUXkU
- vSt+9/OE5oTfzz2zcqwaXHbyfPQy9vcPZ7+1HA5sZDZT8XtDReN53QAegFOWmZMFeuwXa6XjoSC
- kge+mUhlxxJ/6HBwWLO3l14LiMuYVAbwu2pJhPLByM29cxEbALopkWVqB4lTwygRIKmII++3Pe2
- eCrmeopU8/S23ivaNGnORzDK2gplDkjdLJISt2RgQ6gYAY4OYM0cVTYTPJfpZP20TLmu2W/iEB8
- uZ2sxzWOcRjqFkCtnvjtxaN2QADA3K41RTsPIYHuo3Y5upMz8qnQKPak4vUDIfvIMHufB5CiqrS
- 3N4O+wh/JE=
-X-Received: by 2002:a17:907:7244:b0:bc3:a0aa:1a04 with SMTP id
- a640c23a62f3a-bc3cfd336camr485447966b.13.1778076063232; 
- Wed, 06 May 2026 07:01:03 -0700 (PDT)
+ bh=dgC99C4QHuUTSka7Jdb/jzkeq+ba0Okc1oUiPSrq668=;
+ b=kvKvPbTIEwjv7dfdGJl9woolIUMJYXuK4CxwM7x/J75QPKWUDOGaJfclUItTcpS5in
+ CubXCJPxwei/sD9K0INMhLvcnsMyR+6uzTodKauF0D65Pz2um/laiFiS0sPr7LAuNxrK
+ 4q2ywwbht6xxpEUdiG0HhkHzD4BFu9xuZqxSzZ6rG0JIiWBr/wcpt2KDBlFUYc4mWem6
+ HEtAzIxnZ5LlXU1tqFhrdWetDT2bHBl3wpjhmn7OBYKPyKkzAt1q9nYqnQ35qREHAxaf
+ pxXE1sjPKxGRj6MIwShgKQeou53lRzOebT2KEWBgxYWVqKgv8ISDhwk3N/jM6BjnlgCM
+ iOmQ==
+X-Gm-Message-State: AOJu0YwiohlWdOw9weeD+hkRhUz2azxUWbkgnDsyxnEuDhVLqprn+c+T
+ 7HE+EHPoOXwDbeSQluGF6r6oaJANhhPA7Egy+xvF1W4si9S4bJW18QssTCa7Igg5/vwYk3b8FL/
+ wVKjgL0g=
+X-Gm-Gg: AeBDieugfxWuEWUsqOGtJHc5sjJ4kGEyc46m/dXS39CCuBpuYNoGVUEJSekv7t61xmU
+ xj9S7reXQ9blDgmd1Evf31L8uLxIjGainYbLcraH/wclWwC7RiP9S6P39+/zFO9Sea+Pf3BVwfU
+ FmmFLYSWl1yQkQMekjfLmb2jUcGwdCyYhqOmmIsYFl5cYBKh0T/4rN1mCePNCUw/rZpcG4ly8pC
+ 35x1jM1gC+zuHc+DX7xCsRutg9S1T3ILBpR46+3Lwd/zROR37aRYXoA5McrPj9SNLWmjddyTguQ
+ hJwqAR0xHBV7QpiIm8cVrwDJRuaG7kdDzcGAO82X4tT8FsQgyv43tVMvSecKJsMYq2M1X7AGEqE
+ uzlr6YVX1rPxHm4JQS3ZuMLXpcRVyhN12e9bI9iUIHCNLqZkiJEvUs2X22MIdASmwxFY4JG91Yv
+ R7+yGsSWrVApRu1mUxiEm1s5DO9+4Fz6+wM5j8NKNyATDKTwR7razG8GB0vOcGfBEX/bQvctDuj
+ fwhp4hhUvM=
+X-Received: by 2002:a05:600c:8115:b0:48a:53ea:1408 with SMTP id
+ 5b1f17b1804b1-48e51e1804amr57241575e9.8.1778076201271; 
+ Wed, 06 May 2026 07:03:21 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45055960fd6sm13483447f8f.31.2026.05.06.07.01.01
+ 5b1f17b1804b1-48e59b74277sm12014325e9.3.2026.05.06.07.03.19
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:01:01 -0700 (PDT)
+ Wed, 06 May 2026 07:03:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 044/110] monitor: Make 'info via' a generic command
-Date: Wed,  6 May 2026 15:54:16 +0200
-Message-ID: <20260506135524.20617-45-philmd@linaro.org>
+Subject: [PULL 061/110] monitor: Forward-declare the MonitorDef type
+Date: Wed,  6 May 2026 15:54:33 +0200
+Message-ID: <20260506135524.20617-62-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,89 +99,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to build hmp-commands-info.hx once we need to stop
-using device target-specific check. Use the generic pattern
-to make the command available on all targets, providing a
-stub with kind error message when the device is not available.
+Rather than having core header forced to include "monitor/hmp.h"
+to get the MonitorDef type declaration, forward-declare it in
+"qemu/typedefs.h".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260427080738.77138-9-philmd@linaro.org>
+Message-Id: <20260427080738.77138-26-philmd@linaro.org>
 ---
- MAINTAINERS            |  2 +-
- hw/misc/mos6522-stub.c | 16 ++++++++++++++++
- hmp-commands-info.hx   |  2 --
- hw/misc/meson.build    |  1 +
- 4 files changed, 18 insertions(+), 3 deletions(-)
- create mode 100644 hw/misc/mos6522-stub.c
+ include/monitor/hmp.h   | 6 +++---
+ include/qemu/typedefs.h | 1 +
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index f560853ea41..b05e4d2097e 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1566,7 +1566,7 @@ F: hw/ppc/mac_newworld.c
- F: hw/pci-host/uninorth.c
- F: hw/pci-bridge/dec.[hc]
- F: hw/misc/macio/
--F: hw/misc/mos6522.c
-+F: hw/misc/mos6522*.c
- F: hw/nvram/mac_nvram.c
- F: hw/ppc/fw_cfg.c
- F: hw/input/adb*
-diff --git a/hw/misc/mos6522-stub.c b/hw/misc/mos6522-stub.c
-new file mode 100644
-index 00000000000..85eb0ee36ee
---- /dev/null
-+++ b/hw/misc/mos6522-stub.c
-@@ -0,0 +1,16 @@
-+/*
-+ * QEMU MOS6522 VIA stubs
-+ *
-+ * Copyright (c) Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "monitor/monitor.h"
-+#include "monitor/hmp.h"
-+
-+void hmp_info_via(Monitor *mon, const QDict *qdict)
-+{
-+    monitor_printf(mon, "MOS6522 VIA is not available in this QEMU\n");
-+}
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index 964eed004c0..0138c7ec4e7 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -878,7 +878,6 @@ SRST
-     Show intel SGX information.
- ERST
+diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
+index 357fc972885..d423f54f904 100644
+--- a/include/monitor/hmp.h
++++ b/include/monitor/hmp.h
+@@ -24,11 +24,11 @@
+         g_assert_not_reached(); \
+     }
  
--#if defined(CONFIG_MOS6522)
-     {
-         .name         = "via",
-         .args_type    = "",
-@@ -886,7 +885,6 @@ ERST
-         .help         = "show guest mos6522 VIA devices",
-         .cmd          = hmp_info_via,
-     },
--#endif
+-typedef struct MonitorDef {
++struct MonitorDef {
+     const char *name;
+     int offset;
+-    int64_t (*get_value)(Monitor *mon, const struct MonitorDef *md, int offset);
+-} MonitorDef;
++    int64_t (*get_value)(Monitor *mon, const MonitorDef *md, int offset);
++};
  
- SRST
-   ``info via``
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index cd084a19363..fa6a961ac9a 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -20,6 +20,7 @@ system_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_ras.c'))
+ const MonitorDef *target_monitor_defs(void);
  
- # Mac devices
- system_ss.add(when: 'CONFIG_MOS6522', if_true: files('mos6522.c'))
-+stub_ss.add(files('mos6522-stub.c'))
- system_ss.add(when: 'CONFIG_DJMEMC', if_true: files('djmemc.c'))
- system_ss.add(when: 'CONFIG_IOSB', if_true: files('iosb.c'))
- 
+diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
+index 416a8c9acea..07f2ae7c9f1 100644
+--- a/include/qemu/typedefs.h
++++ b/include/qemu/typedefs.h
+@@ -72,6 +72,7 @@ typedef struct MemoryRegionSection MemoryRegionSection;
+ typedef struct MigrationIncomingState MigrationIncomingState;
+ typedef struct MigrationState MigrationState;
+ typedef struct Monitor Monitor;
++typedef struct MonitorDef MonitorDef;
+ typedef struct MSIMessage MSIMessage;
+ typedef struct NetClientState NetClientState;
+ typedef struct NetFilterState NetFilterState;
 -- 
 2.53.0
 
