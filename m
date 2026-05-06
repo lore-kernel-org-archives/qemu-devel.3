@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16CABCD3440
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 03:38:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6EDECD342F
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 03:38:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKT4z-00023V-KF; Tue, 05 May 2026 23:37:45 -0400
+	id 1wKT4e-0001tP-RF; Tue, 05 May 2026 23:37:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1wKT4o-0001y0-AX
- for qemu-devel@nongnu.org; Tue, 05 May 2026 23:37:35 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1wKT4a-0001r4-Dl
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 23:37:20 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1wKT4l-0006WD-Ab
- for qemu-devel@nongnu.org; Tue, 05 May 2026 23:37:33 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2addb31945aso34709375ad.1
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 20:37:30 -0700 (PDT)
+ id 1wKT4X-0006SC-Dt
+ for qemu-devel@nongnu.org; Tue, 05 May 2026 23:37:20 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2b24fcc2b5dso34836285ad.1
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 20:37:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1778038650; x=1778643450; darn=nongnu.org;
+ d=sifive.com; s=google; t=1778038635; x=1778643435; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qCE1rmUyv2obu5/xMHQbs2caqICn55jp/cPYxrAOFH4=;
- b=L1hXQnAg6HDOaFmb9iQe6A/Y7s3GrMzT07UYmt2lKkzgSj8cAgyL41CgTUpKaAF42B
- KE9ONkUKCaJpGFWqf66WMmy2NVRNJ27V2t4FNASIK7/PrxMrV7/BQF7IH2UD1gbuDtWo
- r9Yb3OmPr7LMEzzyw9y8oB+I8KtuHqqwoG2zEXfIvQiJyIvdn4OVCBNCQ1TN2Jvw8cFH
- rc31+nwmi0mhFo3MjHOAWCszYMX3u6a5/8mW62EBDr0stz6O0tJ/3HxGxMtMrg4un/XW
- Cgcyz2XQJ69ibGqDmoZnkUXsDLXUbyMBcx2pn3vIX+yyxntCf3osx6yta8CAWt9lNwvI
- EaDQ==
+ bh=79rPXiP3/6QDU0TrDtJD4kbRuSJaUuXqGAi28uS9FeI=;
+ b=LcS/rs5FCbATr1nXxCOl+UhzIpPbQw0gn7W0h1uyIzR1fgUiEcsvJtccOh/iqKFHa0
+ xr3alo7q7ne9dAxGO347YmR98xrenPgwfUt1SOYSCzqpHEnw3J0X4O/yr6tS07pf/D4k
+ KO+sIXPIDdiYq74dNrb4cgEf7+OYy/M8+TS6DoMQ15VvZhZwxgXMv6FK8LLjJmSnQJQZ
+ xGV/eAuw4htOq1+SVxMO17gxJe4sbGqM/NIWqB5p9Vq+rf1h90ENvEEvnKVLBCrtW6m/
+ /BSGx9G6SH2BvsSW4fRYt7kQYIiliKzDP6unT/q0WjGQvJYCj0TzojUcVT02utoA46Sj
+ tqvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778038650; x=1778643450;
+ d=1e100.net; s=20251104; t=1778038635; x=1778643435;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=qCE1rmUyv2obu5/xMHQbs2caqICn55jp/cPYxrAOFH4=;
- b=SuRKdyisQ5zddx9NYrSnmzh9HIWjgNmLbNCDEuzdfbvaTDqKjCIzv6mw/pxX4G8C6t
- rxpgcEHj3BdrEzsnVnoVNtFKrguxh66HCy2xo6n2cI9fEeNdZWQ77eSmt6vDHGLD8uIt
- eDvFXPb+mkbXXvFeqZm3aFh686/TFgQeRHN8iCqu2HHN7PoUsMUWjGxO8590dip1SD6P
- Ba85Ei1h24g4zDvU2wFKl90gIXURLzyxgvfsqswqt2GuzfNy1/ujPermxVWwsQm0WEky
- rW9kcsBfMSpD1l1HDYDLyZk9VU6Gl/yOJdMH09zM95SdkUraWY2OCG+x6Sz+3+3ZLSik
- Q2zg==
-X-Gm-Message-State: AOJu0YzsTjJZfo5xOgS/C4Ag7oHEe6Dvgu43lyh8fokNLqsI9WVlFAAv
- a3K6YR3ChINmiJHkv8+Dh3jRY3eVHAOgHayzDcm084kRbH0DHHS3K71VScxaHaFpcACf0tU7sku
- zI0OwhrcoelxbEgT37bBQECMAUHqvSVbcNbfHg8ZwMWEGML3FdPgV1ezhxmvh9bMebpAGmuqlpb
- evvqGuGwNZrBrElIpDkIKT/OxPSCYBHsvOULDhCNeN
-X-Gm-Gg: AeBDietJq98EVp7IEHlfQjT1WeaiQBHZBbaa1H1z31suRnS/Vw9ln5+pdOGzev6J8WA
- AC1IhVVkzZf3FEDixkWleD8IsznvM9/3uobGgUlqcQanhZm1Z7xYglHifm+KZ7yzRDmbtDXTebI
- W4n5tCqgNqFogSJf3ms70eMhYT9zEgZ2O2tOKMZfRBmliL2wjt3tmRyps1Q3oagS35JUI02l8CA
- //Q1uUAFBnYsOaMzeu3OClocVqOP7/+0sjAgAqQD4FFv17LGPKVNiA1u7KYg00k5GlyYECFNDUT
- Qr2Fpr/65i+GlLmCyiOgyBsTvRayEbuLRUc5NzI7F4YrQuGe3fz8RWGl8m1DqZYRTT+OiUW//Pg
- ytvxLJ6YU3Jt55h556x4tM+ViF6EPShgjQ99Jcsimfrul17jd2X5+Gwp+pB5Ds6fhAsrRPCOtu0
- PwmunEJsPHycRx+Q12ghSaKDiKNTaeQ9LmJ1kC4Frzvahq8GY5qCQNI5c=
-X-Received: by 2002:a17:903:4304:b0:2b2:6b58:9317 with SMTP id
- d9443c01a7336-2ba799d6c69mr9284815ad.39.1778038649428; 
- Tue, 05 May 2026 20:37:29 -0700 (PDT)
+ bh=79rPXiP3/6QDU0TrDtJD4kbRuSJaUuXqGAi28uS9FeI=;
+ b=XMIPJSe3PVmUE5BYl7Qoo326oN0HFsVOGRf3dFFs4y8FJ3gK70jtip+1PaiL17aGW8
+ 1cpR1bMiOp/CeUBvKFpErPWSqffjrGc7nmoU2RVJ6y6/OTYePALsR3fGTAxvDrAaH0rI
+ dGqmylNIsF0nqEaxNxdbgHeldk62oJQBNMGLmhUx0z+PFWQ+dsRcG2+v2by2N/E7k/ln
+ jeRMfI78SdZSFdnhglkjahPrhf8sHRre7tCS++KiuWdhLV+5lNr9iFwF9T/Cjqu8VPjR
+ AxXeUhtxurs2+rGbSJ/AHsMfxcIni27tK9oIlTwImavjPqWKYiLc3BGH0WG64W3d90lk
+ XD3w==
+X-Gm-Message-State: AOJu0YwW1XQdnS0rMwT/VJolkMo+9h316qcctTcFVjAQkUAKkzUSAuSF
+ 3SQ8TBpDQVFCWGDwKoiHtvNUvJT8kUQ13M1mFFNzn1PT32LxUPT++qoa66A941hTtG7e8yGmniq
+ xLjQ+jW4Ub6KCvaqhhcKpgUuwjMZTVmIIdxNBpXbDXTrDVNG5K1tfCd6bDzMEre7jtG8Hl5ck7b
+ w1fH3g+mFyUkfo2fnXOHjcIEN/BaVOA/NZ8JCfuzDD
+X-Gm-Gg: AeBDies/gIIsdsEDpMYz/WIZIsgaXWnxDnDmnQJleQRh0dBv4H0eTeu9RdCCtm1OjVh
+ /g3Aff6Oq4Ln8lEaZJ6f5HM3FZV+ptAnJf9tv9Xc6PiEHS+6p3BEO7ljSfllfICBy0iP4MDfci8
+ nT/xzKKVyoV14t0wzSaFT4Xf7dvc/dPx1LyQnCs7dih6MKwFAooXP1WDoFFhNi3qxY5YUtPxZc9
+ kWXgbOpHZslbbcI8UpHuj5uyHMhOFICzd8hB6BJuE+CUsvdrq69kIZhNwfZOeheOA4wolShrupt
+ bErCrMJ2sOVHvqSTd1UNISudkxyoORWM8YR/qWi3L0AEMMlhNXFXIYn60xXiAxLwRi+7pZJDnEJ
+ FC5WweBAFympVo10Qx3JjiUJKYng1ZA4MSH/Bvclk9QZmedlN1HrJjNcMRofQuQ2vayhWwU1s9Q
+ 4a/HBW5HqSIZ1Gmkd0Y0PwQh3wpN0FBJfRhkmdZStgF84rsKJEatCrGtE=
+X-Received: by 2002:a17:903:17cb:b0:2b9:59ea:7eba with SMTP id
+ d9443c01a7336-2ba78f54626mr14967615ad.13.1778038635050; 
+ Tue, 05 May 2026 20:37:15 -0700 (PDT)
 Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ba7ca34cfdsm7666265ad.79.2026.05.05.20.37.22
+ d9443c01a7336-2ba7ca34cfdsm7666265ad.79.2026.05.05.20.37.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 05 May 2026 20:37:28 -0700 (PDT)
+ Tue, 05 May 2026 20:37:14 -0700 (PDT)
 From: Jim Shu <jim.shu@sifive.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -97,16 +97,16 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
  Mark Burton <mburton@qti.qualcomm.com>,
  Peter Maydell <peter.maydell@linaro.org>, Jim Shu <jim.shu@sifive.com>
-Subject: [PATCH v3 5/5] accel/tcg: Support IOMMU lazy translation in CPU TLB
-Date: Wed,  6 May 2026 11:36:42 +0800
-Message-ID: <20260506033642.3641390-6-jim.shu@sifive.com>
+Subject: [PATCH v3 3/5] accel/tcg: Provide early AS translate function
+Date: Wed,  6 May 2026 11:36:40 +0800
+Message-ID: <20260506033642.3641390-4-jim.shu@sifive.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260506033642.3641390-1-jim.shu@sifive.com>
 References: <20260506033642.3641390-1-jim.shu@sifive.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=jim.shu@sifive.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=jim.shu@sifive.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,192 +129,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-tlb_set_page_full() no longer translates IOMMU region, but only stores
-untranslated IOMMU region in the CPUTLBEntryFull. Then, when CPU uses
-CPUTLBEntryFull in the slow path. it should perform the lazy translation
-via tlb_translate_iommu().
+New early AS translate function will skip IOMMU translation. It will
+return IOMMU region if finding it. Original function is renamed to the
+late translate function.
 
-The untranslated IOMMU region in TLB always requires to run in the slow
-path to trigger the lazy translation, so the IOMMU region will contain a
-new TLB flag, TLB_IOMMU, to force the slow path. Lazy translation will
-overwrite the TLB flags to the flags of the translated region. The host
-memory region from IOMMU region can still run in the fast path to
-accelerate the performance.
+It is preparation commit of IOMMU lazy translation.
 
 Signed-off-by: Jim Shu <jim.shu@sifive.com>
 Acked-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 ---
- accel/tcg/cputlb.c       | 66 ++++++++++++++++++++++++++++++++++------
- include/exec/tlb-flags.h |  4 ++-
- 2 files changed, 60 insertions(+), 10 deletions(-)
+ accel/tcg/cputlb.c        |  6 ++---
+ include/accel/tcg/iommu.h | 13 +++++++----
+ system/physmem.c          | 46 ++++++++++++++++++++++++++++++++++++---
+ 3 files changed, 55 insertions(+), 10 deletions(-)
 
 diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
-index 5735f632896..7a44ae8238b 100644
+index 4ca4152579b..f0c049e1551 100644
 --- a/accel/tcg/cputlb.c
 +++ b/accel/tcg/cputlb.c
-@@ -1034,7 +1034,7 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
-     hwaddr iotlb, xlat, sz, paddr_page;
-     vaddr addr_page;
-     int asidx, wp_flags, prot;
--    bool is_ram, is_romd;
-+    bool is_ram, is_romd, is_iommu;
- 
-     assert_cpu_is_self(cpu);
- 
-@@ -1049,29 +1049,38 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+@@ -1049,9 +1049,9 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
  
      prot = full->prot;
      asidx = cpu_asidx_from_attrs(cpu, full->attrs);
--    section = address_space_translate_for_iotlb_late(cpu, asidx, paddr_page,
--                                                     &xlat, &sz, full->attrs,
--                                                     &prot);
-+
-+    /*
-+     * Use the early translation to check if it is an IOMMU region.
-+     * This function stops at IOMMU regions without translating through them.
-+     */
-+    section = address_space_translate_for_iotlb_early(cpu, asidx, paddr_page,
-+                                                      &xlat, &sz, full->attrs,
-+                                                      &prot);
+-    section = address_space_translate_for_iotlb(cpu, asidx, paddr_page,
+-                                                &xlat, &sz, full->attrs, &prot,
+-                                                access_type);
++    section = address_space_translate_for_iotlb_late(cpu, asidx, paddr_page,
++                                                     &xlat, &sz, full->attrs,
++                                                     &prot);
      assert(sz >= TARGET_PAGE_SIZE);
  
      tlb_debug("vaddr=%016" VADDR_PRIx " paddr=0x" HWADDR_FMT_plx
-               " prot=%x idx=%d\n",
-               addr, full->phys_addr, prot, mmu_idx);
+diff --git a/include/accel/tcg/iommu.h b/include/accel/tcg/iommu.h
+index 30655aab4ba..11e3d63d798 100644
+--- a/include/accel/tcg/iommu.h
++++ b/include/accel/tcg/iommu.h
+@@ -15,10 +15,15 @@
+ #include "exec/memattrs.h"
  
-+    is_iommu = memory_region_is_iommu(section->mr);
-+    is_ram = memory_region_is_ram(section->mr);
-+    is_romd = memory_region_is_romd(section->mr);
+ MemoryRegionSection *
+-address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr addr,
+-                                  hwaddr *xlat, hwaddr *plen,
+-                                  MemTxAttrs attrs, int *prot,
+-                                  MMUAccessType access_type);
++address_space_translate_for_iotlb_early(CPUState *cpu, int asidx, hwaddr addr,
++                                        hwaddr *xlat, hwaddr *plen,
++                                        MemTxAttrs attrs, int *prot);
 +
-+    full->is_iommu = is_iommu;
-+    full->iommu_last_at = MMU_ACCESS_COUNT;
++MemoryRegionSection *
++address_space_translate_for_iotlb_late(CPUState *cpu, int asidx, hwaddr addr,
++                                       hwaddr *xlat, hwaddr *plen,
++                                       MemTxAttrs attrs, int *prot,
++                                       MMUAccessType access_type);
+ 
+ #endif
+ 
+diff --git a/system/physmem.c b/system/physmem.c
+index 564d2c6a648..6e2d43e850f 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -682,11 +682,11 @@ void tcg_iommu_init_notifier_list(CPUState *cpu)
+ }
+ 
+ /* Called from RCU critical section */
+-MemoryRegionSection *
++static MemoryRegionSection *
+ address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr orig_addr,
+                                   hwaddr *xlat, hwaddr *plen,
+                                   MemTxAttrs attrs, int *prot,
+-                                  MMUAccessType access_type)
++                                  MMUAccessType access_type, bool early_trans)
+ {
+     MemoryRegionSection *section;
+     IOMMUMemoryRegion *iommu_mr;
+@@ -710,6 +710,11 @@ address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr orig_addr,
+         iommu_idx = imrc->attrs_to_index(iommu_mr, attrs);
+         tcg_register_iommu_notifier(cpu, iommu_mr, iommu_idx);
+ 
++        /* Defer the iommu translation */
++        if (early_trans) {
++            break;
++        }
 +
-     read_flags = full->tlb_fill_flags;
-     if (full->lg_page_size < TARGET_PAGE_BITS) {
-         /* Repeat the MMU check and TLB fill on every access.  */
-         read_flags |= TLB_INVALID_MASK;
+         if (access_type == MMU_DATA_STORE) {
+             iommu_flags = IOMMU_WO;
+         } else {
+@@ -737,7 +742,8 @@ address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr orig_addr,
+         d = flatview_to_dispatch(address_space_to_flatview(iotlb.target_as));
      }
  
--    is_ram = memory_region_is_ram(section->mr);
--    is_romd = memory_region_is_romd(section->mr);
--
-     if (is_ram || is_romd) {
-         /* RAM and ROMD both have associated host memory. */
-         addend = (uintptr_t)memory_region_get_ram_ptr(section->mr) + xlat;
-     } else {
--        /* I/O does not; force the host address to NULL. */
-+        /* I/O and IOMMU does not; force the host address to NULL. */
-         addend = 0;
-     }
+-    assert(!memory_region_is_iommu(section->mr));
++    /* For late translation, IOMMU region translation should be finished */
++    assert(early_trans || !memory_region_is_iommu(section->mr));
+     *xlat = addr;
+     return section;
  
-@@ -1090,6 +1099,15 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
-                 write_flags |= TLB_NOTDIRTY;
-             }
-         }
-+    } else if (is_iommu) {
-+        /* IOMMU */
-+        iotlb = xlat;
-+        /*
-+         * If IOMMU region is not translated, any access will go to
-+         * the slow path and do the lazy IOMMU translation.
-+         */
-+        read_flags |= TLB_IOMMU;
-+        write_flags |= TLB_IOMMU;
-     } else {
-         /* I/O or ROMD */
-         iotlb = xlat;
-@@ -1568,6 +1586,11 @@ static int probe_access_internal(CPUState *cpu, vaddr addr,
-     flags &= tlb_addr;
+@@ -755,6 +761,40 @@ translate_fail:
+     return &d->map.sections[PHYS_SECTION_UNASSIGNED];
+ }
  
-     *pfull = full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
++/*
++ * address_space_translate_for_iotlb_early: translate address without
++ * performing IOMMU translation. This is used for CPU TLB setup.
++ *
++ * Called from RCU critical section.
++ */
++MemoryRegionSection *
++address_space_translate_for_iotlb_early(CPUState *cpu, int asidx,
++                                        hwaddr orig_addr,
++                                        hwaddr *xlat, hwaddr *plen,
++                                        MemTxAttrs attrs, int *prot)
++{
++    /* access_type doesn't matter for early translation */
++    return address_space_translate_for_iotlb(cpu, asidx, orig_addr, xlat, plen,
++                                             attrs, prot, MMU_DATA_LOAD, true);
++}
 +
-+    if (full->is_iommu) {
-+        tlb_translate_iommu(cpu, mmu_idx, addr, access_type, full);
-+    }
++/*
++ * address_space_translate_for_iotlb_late: translate address with
++ * performing IOMMU translation. This is used for lazy IOMMU translation.
++ *
++ * Called from RCU critical section.
++ */
++MemoryRegionSection *
++address_space_translate_for_iotlb_late(CPUState *cpu, int asidx,
++                                       hwaddr orig_addr,
++                                       hwaddr *xlat, hwaddr *plen,
++                                       MemTxAttrs attrs, int *prot,
++                                       MMUAccessType access_type)
++{
++    return address_space_translate_for_iotlb(cpu, asidx, orig_addr, xlat, plen,
++                                             attrs, prot, access_type, false);
++}
 +
-     flags |= full->slow_flags[access_type];
+ #endif /* CONFIG_TCG */
  
-     /* Fold all "mmio-like" bits into TLB_MMIO.  This is not RAM.  */
-@@ -1760,6 +1783,11 @@ bool tlb_plugin_lookup(CPUState *cpu, vaddr addr, int mmu_idx,
-     }
- 
-     full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
-+
-+    if (full->is_iommu) {
-+        tlb_translate_iommu(cpu, mmu_idx, addr, access_type, full);
-+    }
-+
-     data->phys_addr = full->phys_addr | (addr & ~TARGET_PAGE_MASK);
- 
-     /* We must have an iotlb entry for MMIO */
-@@ -1833,6 +1861,11 @@ static bool mmu_lookup1(CPUState *cpu, MMULookupPageData *data, MemOp memop,
-     }
- 
-     full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
-+
-+    if (full->is_iommu) {
-+        tlb_translate_iommu(cpu, mmu_idx, addr, access_type, full);
-+    }
-+
-     flags = tlb_addr & (TLB_FLAGS_MASK & ~TLB_FORCE_SLOW);
-     flags |= full->slow_flags[access_type];
- 
-@@ -1944,6 +1977,11 @@ static bool mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-         if (mmu_lookup1(cpu, &l->page[1], 0, l->mmu_idx, type, ra)) {
-             uintptr_t index = tlb_index(cpu, l->mmu_idx, addr);
-             l->page[0].full = &cpu->neg.tlb.d[l->mmu_idx].fulltlb[index];
-+
-+            if (l->page[0].full->is_iommu) {
-+                tlb_translate_iommu(cpu, l->mmu_idx, addr, type,
-+                                    l->page[0].full);
-+            }
-         }
- 
-         flags = l->page[0].flags | l->page[1].flags;
-@@ -2001,6 +2039,17 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-         tlb_addr = tlb_addr_write(tlbe) & ~TLB_INVALID_MASK;
-     }
- 
-+    full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
-+
-+    if (full->is_iommu) {
-+        /*
-+         * Do IOMMU lazy translation before accessing addr_idx and TLB flags.
-+         * Generate TLB flags for both read and write.
-+         */
-+        tlb_translate_iommu(cpu, mmu_idx, addr, MMU_DATA_LOAD, full);
-+        tlb_translate_iommu(cpu, mmu_idx, addr, MMU_DATA_STORE, full);
-+    }
-+
-     /*
-      * Let the guest notice RMW on a write-only page.
-      * We have just verified that the page is writable.
-@@ -2035,7 +2084,6 @@ static void *atomic_mmu_lookup(CPUState *cpu, vaddr addr, MemOpIdx oi,
-     }
- 
-     /* Finish collecting tlb flags for both read and write. */
--    full = &cpu->neg.tlb.d[mmu_idx].fulltlb[index];
-     tlb_addr |= tlbe->addr_read;
-     tlb_addr &= TLB_FLAGS_MASK & ~TLB_FORCE_SLOW;
-     tlb_addr |= full->slow_flags[MMU_DATA_STORE];
-diff --git a/include/exec/tlb-flags.h b/include/exec/tlb-flags.h
-index 357e79095c9..d78f1c3dc64 100644
---- a/include/exec/tlb-flags.h
-+++ b/include/exec/tlb-flags.h
-@@ -52,10 +52,12 @@
- #define TLB_DISCARD_WRITE    (1 << 3)
- /* Set if TLB entry is an IO callback.  */
- #define TLB_MMIO             (1 << 4)
-+/* Set if TLB entry is a IOMMU region which requires lazy translation. */
-+#define TLB_IOMMU            (1 << 5)
- 
- #define TLB_SLOW_FLAGS_MASK \
-     (TLB_BSWAP | TLB_WATCHPOINT | TLB_CHECK_ALIGNED | \
--     TLB_DISCARD_WRITE | TLB_MMIO)
-+     TLB_DISCARD_WRITE | TLB_MMIO | TLB_IOMMU)
- 
- /*
-  * Flags stored in CPUTLBEntry.addr_idx[x].
+ void cpu_address_space_init(CPUState *cpu, int asidx,
 -- 
 2.43.0
 
