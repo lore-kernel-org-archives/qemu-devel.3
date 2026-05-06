@@ -4,91 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36F4FCD3442
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 15:23:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65B2ACD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 15:24:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKe5j-0008Gc-1m; Wed, 06 May 2026 11:23:15 -0400
+	id 1wKe6l-0000uI-Kj; Wed, 06 May 2026 11:24:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <munkhuu0825@gmail.com>)
- id 1wKe5h-0008GK-EB
- for qemu-devel@nongnu.org; Wed, 06 May 2026 11:23:13 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <munkhuu0825@gmail.com>)
- id 1wKe5f-0006yi-6U
- for qemu-devel@nongnu.org; Wed, 06 May 2026 11:23:13 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-36505450d0dso5086789a91.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 08:23:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778080989; x=1778685789; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RW1nafJmwXfg+AxhDXN24jZEiFjt3xSnoItD1s8MvLY=;
- b=lQoKv+AIh1xUrbHwQeSlwEjsqnskD8OdBQTQ73cJIKywga3d1sj0Ue1est8WxhGzzN
- TtbdmBwp23u+LKcm4l/lW2/C/hHexuBPwp5k4iD4YAJZk/1hoZYOMugGQTRsWJmj3+iJ
- LUUzg1MZ4jywG1uLzbb4wjq6aOjsPGLhRmE0EGotsOSsP+rfs7V/zWAAVr+Oofjq+F+l
- 0neANPgus6HOSPYzL+dyNEO+l/MrTfgmeyFxx6aR4h1vD3HUlcV/YXw5+vtt4WB3lGaY
- 2JOCzoQ2KAOJbJkVPaoNDG0wSQ29jbdjVmQu1TxPsZmhtqQNDyzQefyIBTQMWbV+Hf0A
- mQqw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778080989; x=1778685789;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RW1nafJmwXfg+AxhDXN24jZEiFjt3xSnoItD1s8MvLY=;
- b=lVcNRP0mOGi+lpFJqOly8xJ9AoWg8wa7wHJLNfc4N6jkt8hcQ4mrx55LA6AN3PS2Lf
- iaystRu0+vlDlaGtFG2RINFDSI/hf8gi1SL46DkfIbzDZqtpZn5DXWt+QPWmfiPrCL7b
- xJpNhLY1Uwp9gMkstGU4kZkSfhp8tMS8J5d5JABH90r9+78xhE689t2nH/hwwh2toN6U
- nsNOxemnh7HHVoxtEfNOlTOx9hKqF3qN4lv0dkb8un2I9Uq0s70xs8C8ckINCRZBALoz
- p6yjAp/TpT5/qNN4LSPVN9b4jhHiEOWT/GR9c6ounGEOh7+87vu3Pq8woXXPeRvgW5PW
- IBAg==
-X-Gm-Message-State: AOJu0YxUcBHrNAux+01Bl81EefcumupVFoVMVocBqtQpW8XunglLiWDq
- Wpp+9cXji4sqhV3OBt2qaD//KVnCJAOfO32iylS8+DwN8QPL7re220CkR8ofAOfzYE4=
-X-Gm-Gg: AeBDiesUpgv5scWrkDG4j5CWUpYYow6XpISiYIThjWzqAnmxWjyttNSVT0O9zrQTE9D
- YZYt55aEBGAVzrGQY3PPznpDUIyfZZZYLeB7PR1OznJB1Uouo7rN0LJdM3dlRq+o4u2QwEbHEv1
- LhETyRWSGRKJlyoaiZAjVRGF7NaoJQVCrAkFsnfQa8RLOHqmljd0J6cq5uvlVoTo0Ua41UBmXNg
- aAB4+b/K/4O7Qt0+3a35sEn5ddZPLxPx2rcBDamOID4w3jxoZQ35jA1CbOoqp6Z66S/3ayEO5G0
- ppdYcBfvzIPe5kIhS6M04/M3GVNY9s6P7q1FQfTK3498gwDu3o5yoWcxB3V0o6FmkUBCWYMkvRp
- AjqupzHuLeqLKjXWi9mGAC056BN2FhBCrE4e+ioKSCHM/lT2KoaSKwQ3TNQmcKmXIoHJ+gYH+Kz
- i3rs6aOxGje2QFl9vL3TrT1/V1skuiAlAfBNzq7HQkx+3wvsxABI62f1TNoSqvTjPP+aVFArp1a
- w==
-X-Received: by 2002:a17:90b:4fcd:b0:35f:b6d3:da7a with SMTP id
- 98e67ed59e1d1-365abe8a3f2mr4037221a91.15.1778080988857; 
- Wed, 06 May 2026 08:23:08 -0700 (PDT)
-Received: from localhost.localdomain ([2407:6400:c000:f1c:edf4:b0bc:edd7:a9ab])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-365b4c8a8e7sm3800052a91.13.2026.05.06.08.23.07
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 08:23:08 -0700 (PDT)
-From: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wKe6j-0000u5-Vi
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 11:24:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wKe6i-0007B0-15
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 11:24:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778081054;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=FBydjj9GPYbsUCjP79dQyaU/Ihw4FmFx/AlJNgbV18A=;
+ b=K/UcgkrZLW5cy33xHB5X8XlnbSO07kQsoHkjjaWwFwe6NHBWhT3CTM2XfrfajU7Mi04+35
+ T8YLN1Uc2XeV965KAHPZXqUQimu1YE/q7E6OR6/qyd/5Dzr6cNk6j4NCFcuSXOQzmJcc/n
+ OpITrjHBIp9UKSkJEKEK2LvTKefemLM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-90-R0t3ZNCKMCC7-NJB3qBApw-1; Wed,
+ 06 May 2026 11:24:10 -0400
+X-MC-Unique: R0t3ZNCKMCC7-NJB3qBApw-1
+X-Mimecast-MFC-AGG-ID: R0t3ZNCKMCC7-NJB3qBApw_1778081050
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B92E918002F1; Wed,  6 May 2026 15:24:09 +0000 (UTC)
+Received: from corto.redhat.com (unknown [10.44.49.156])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 35D4519560A3; Wed,  6 May 2026 15:24:07 +0000 (UTC)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 1/2] hw/usb/hcd-ohci: Assert isochronous TDs are never
- deferred
-Date: Wed,  6 May 2026 23:22:46 +0800
-Message-ID: <20260506152247.82336-2-munkhuu0825@gmail.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260506152247.82336-1-munkhuu0825@gmail.com>
-References: <CAFEAcA93342r1oKDBDv=7LRoAqT4WpVEqRpb-ThM=OjJUZm=BQ@mail.gmail.com>
- <20260506152247.82336-1-munkhuu0825@gmail.com>
+Cc: Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH] vfio/pci: Replace abort() with g_assert_not_reached()
+Date: Wed,  6 May 2026 17:23:53 +0200
+Message-ID: <20260506152353.1657838-1-clg@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=munkhuu0825@gmail.com; helo=mail-pj1-x102c.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,34 +79,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This check was originally introduced in commit b3ebc10c373e
+("vfio-pci: Add debug config options to disable MSI/X KVM support") as
+part of a debug block to retrieve the MSI/MSIX message, and was later
+moved by commit 0de70dc7bab1 ("vfio/pci: Rename MSI/X functions for
+easier tracing") into the main interrupt handling path, becoming
+production code.
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
+Under normal conditions, this code path cannot be reached because the
+BQL serializes all handler registration, vdev->interrupt updates, and
+handler removal. Replace abort() with g_assert_not_reached(), which is
+preferred nowdays, and add a comment clarifying the purpose.
+
+Cc: Alex Williamson <alex@shazbot.org>
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/usb/hcd-ohci.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ hw/vfio/pci.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-index 6ed8046fc2..8f4de0066e 100644
---- a/hw/usb/hcd-ohci.c
-+++ b/hw/usb/hcd-ohci.c
-@@ -746,11 +746,10 @@ static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed *ed)
-     usb_packet_setup(pkt, pid, ep, 0, addr, false, int_req);
-     usb_packet_addbuf(pkt, buf, len);
-     usb_handle_packet(dev, pkt);
--    if (pkt->status == USB_RET_ASYNC) {
--        usb_device_flush_ep_queue(dev, ep);
--        g_free(pkt);
--        return 1;
--    }
-+
-+    /* The USB core guarantees to never defer ISO TDs. */
-+    assert(pkt->status != USB_RET_ASYNC);
-+
-     if (pkt->status == USB_RET_SUCCESS) {
-         ret = pkt->actual_length;
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 09acd3f6082b0a9c5223780bf7e9847b57424cf7..7ca2ff4e7c1cb570cd60d35454b33b5506dae36e 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -453,7 +453,12 @@ static void vfio_msi_interrupt(void *opaque)
+         get_msg = msi_get_message;
+         notify = msi_notify;
      } else {
+-        abort();
++        /*
++         * Interrupt state transitions (MSI/MSI-X -> NONE/INTx) are
++         * protected by the BQL, and eventfd handlers are strictly
++         * unregistered before vdev->interrupt is modified.
++         */
++        g_assert_not_reached();
+     }
+ 
+     msg = get_msg(pdev, nr);
 -- 
-2.50.1 (Apple Git-155)
+2.54.0
 
 
