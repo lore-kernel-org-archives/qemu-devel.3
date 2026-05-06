@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 690F2CD343B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:08:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F11ACD3440
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKctO-0005pB-N1; Wed, 06 May 2026 10:06:26 -0400
+	id 1wKcuJ-00082q-JG; Wed, 06 May 2026 10:07:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcsl-0004hw-Ir
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:05:50 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKctU-00066q-Vg
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:06:35 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcsi-0001hW-JG
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:05:46 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-44985f4ab0fso3093600f8f.0
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:05:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKctS-0001ne-AW
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:06:31 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-488ff90d6c7so61636285e9.2
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:06:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076341; x=1778681141; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076387; x=1778681187; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=wOtErwW0lTtn2AM7UlvNYjNCtCRetlbY5MBnk9eUwmo=;
- b=uRlVIgKYi9I1X+siHOakKvePrgNXGBL/ZqGgOhCKHOxOi6D4T2irRRMOstbrjUiSDB
- hKfyy6nKCZkHm3KvWI+7wekze03abkZKayAYf9Su5zGD+pn+Bqc8WjnfBwSuq8j2ZK1e
- 81zmUWIs6bSIUaS7vKy2KnRE81lcpR4QKNgYLAo+Wm2ZCSO1s4YFJBv2ibGaL0jR0umA
- zgzlt7QqrN1IOc0/6Lp6goiBvXz6p5dzV8TtL4WM8nEtTUXLx55A9zpSO3jstNbOn4RD
- 6tlH9SzRGuatOG/hCe4TRj8Xt8WqHJVZV/c54rd4BMmVxxegvj78XnnczjTNugvGdS6B
- N0yg==
+ :reply-to; bh=2EaMnP2+uXFrom5NkOg4tiM6HPN2Cv1EUyzsXJZXsUs=;
+ b=AV2HG9M78VqssaeQQgKxBYxpmyX0KTeAyhzYx0vcikLIxMB+zaSiXjrfx6F/LX8/k1
+ LYSq23mxfGjDOXa29dQ+oLvYu4u1iBbElhTT11S9Wt32rNjveDipfUdPL79Rv4sLxekW
+ 7K4FWy4lhGAc07yX7CeBuH7QnkpLFMDrC1zsW5/S71JAKI7dRtl3LGOeRoO3d6bsc72T
+ lCMZvGmp2bvCOoyIH8xYqBwOgQeRk1bUrsod8UcrXpy4Gc90Gb4TcDse7yn5Xd7fBNtq
+ cmOSLw5Hrn+9IZHLN1pZg+9ZhZztunhW+Bc5OOxWftNebllwpEl4MSqfVBZh9L/v9fZS
+ fowQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076341; x=1778681141;
+ d=1e100.net; s=20251104; t=1778076387; x=1778681187;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=wOtErwW0lTtn2AM7UlvNYjNCtCRetlbY5MBnk9eUwmo=;
- b=evESlISqTIwIID8XRmlzEEYKhuXkdng886B+qEl/Bq9vUo1W+W4MzUq66fe7Wvxk4p
- gVOFdyJyYTOS6vK20BkRc+X72lHithS2/7n9JxzI2wZSOqsH/1mf+LVx81F/5xBGBFY9
- vN8HbFXxgZlQXhdedULkC/ATwa4oFg0kfePMhsj+GvTB1+4vjinwdAM1xpE+hURiTkS2
- 0B9Guh+nC1hoXu67H7VxfVeQPB0ai+QZiOYlWn0xrBp9mkb0KFUQSYqndSHxCYqVr75F
- Y6DwwOBoqKYBODi3CD7p79WQJftrqlFGAgIEHxcuMERTnXqswJ9mcreOiYdwIOEG62gR
- fR4g==
-X-Gm-Message-State: AOJu0YynF4MNDtBETFAio8jC75qCSadB/oks2as34V74mqIhNC3Nf+L1
- /ZkNpKPpF1mYpBUZbjuLY8FCFdfPcktkTPYi3h95rPXbB++p96SGJ31vav9jTfMqTSyzXzSpFbG
- UzTiBkkA=
-X-Gm-Gg: AeBDiesEEFzI+hoCCunI4d2CHwJTc1CYJcgWP7hA59iFELTo1v/Vg8lDohzDurghBQz
- yIcfn2dxYbiUUxbDppyzcb398ONNiKQ1EjcOWmCcwLv9VUYIyGeASsQLHqlz0+Xi4VcowSsERU3
- JdPvTcj8ItVZ+GeBwlsOAuvml5T6a9Bp8WJjwm+JNSOwJ/7mTkvROV1xAGE7haPIFJzdhRclHoV
- o/EAS3QFOoJCrY9zi91RUaUH3iNuCdkkAsU0qTg5O7J5v6STxLoQ/EWQTsOR+M0F8mE55WgVYPY
- TWXR7lyqlF7OFzGwu/uMDH3XY8mMPzt3Tcm4BRexHt9ZysP4uZOLyEdNm62S+Xp16VIotfkw2pm
- n2ktfJByqCy9dhAZAnAOSlLRCmMfeDuDn2XDvEu2btmSxIoKxf+jA28piyE7RdCPgb0q03kRXz1
- xnRSK7VqiCXz8Hld5QKap5hAlA9JNG6pyZKtu789AQWKkS73zToq0C5xcDO2wQkznIQu/fzoYI7
- hzZBiqObD0=
-X-Received: by 2002:a05:6000:200e:b0:43d:781d:37b9 with SMTP id
- ffacd0b85a97d-4515dc80a95mr6161729f8f.42.1778076340998; 
- Wed, 06 May 2026 07:05:40 -0700 (PDT)
+ bh=2EaMnP2+uXFrom5NkOg4tiM6HPN2Cv1EUyzsXJZXsUs=;
+ b=tCp2ShHaIFJEBdMLmsB6jWZu4Nde5tQVIDhBxRNDC9XYh6ToUy/g2SDXKsw7WW57Tr
+ 7QfO6/od/dJ7epcK6Z8uJrGw67g8tQBM/OBYaYU7OzO+E5ayMIYbRmVreEVGxEMmbxMl
+ d98dPdUJnZj/fdSY8ql8ZdfIEuLmCFpaOcOtWWplIVv57LoiF/4qIkdrBlplaD9NW1w/
+ 0agd0sTRx73XzquA6kZe4EH1U3Ujmf8WYJVg6gpflmKxB/TiQROtSFuvpOZjQVcUYwJ2
+ C6EgiTnkm88iJr7K3AcVFIh8HYoeg5QTVsPu9rLfHzOqN1vremUp+mAeU009neFpUKw4
+ lV8g==
+X-Gm-Message-State: AOJu0Yw2gd6WPO8nK0wLpCiMLaahcSF0HxTsZcvysvdL+/RAed9rBpqz
+ RZ2zwC1ZmklwT/wCi9cB/i4fqfU4wA5sIsr4PNEEIhyBSMT2QVnh4U4IhIRHLwR+d2oBaU+sCLL
+ z7NHuBHE=
+X-Gm-Gg: AeBDievJyMe9Kv1MQbvZvykC8WidXoDjAGBcqDMsl4Nr6HG8y3ZWqvZBuvb9eRvayP+
+ dJlx7W2ZVXiYe4f3UA+NL5x237vXkuwkJ2U8JFZbiZ9cO/hglWUMUlHXDCcjguY04e6mPgWUhYI
+ ICW5r68EAcPvOqexDtHspw38zJUC3IhMAYZsCNa+wv+x1f4euQWSYz492D7WTcCCXWCoBmz7A6A
+ ErCTkGLHr4+j1v9uFDuKjrS/6GzouJfM3fxUYfnQlq9TJeR97ygqQ60wsHE+g0QUqJNtrko5MEx
+ bjVdtiaIr3Qeb2L6DWCG78ztUfcdPbCPExJqlIxNv2rGaTfjkvKBkvz3uFyjIHkEufZlnD2OM/3
+ okDqYQV5pqG8uHfruzexAvrybE67tZrq0myjwp01K5XZ3vnHt/yFciAenUJUdNhKSDFsbY+xGMn
+ tVEItwaeKztQ8vmmLxjTy748Di17udBKrzyZ6XFtv7I8CD5YP2Yg7i1OUWIQG0N5UU9Cr83x0E6
+ 5dL5ezUZbs=
+X-Received: by 2002:a05:600c:1d18:b0:48a:8cb6:88b9 with SMTP id
+ 5b1f17b1804b1-48e51f44621mr62106925e9.22.1778076387447; 
+ Wed, 06 May 2026 07:06:27 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45054b03df9sm12424062f8f.24.2026.05.06.07.05.37
+ 5b1f17b1804b1-48e5311f891sm28758155e9.4.2026.05.06.07.06.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:05:38 -0700 (PDT)
+ Wed, 06 May 2026 07:06:25 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 078/110] meson.build: define stubs library per target base
- architecture
-Date: Wed,  6 May 2026 15:54:50 +0200
-Message-ID: <20260506135524.20617-79-philmd@linaro.org>
+Subject: [PULL 084/110] target/microblaze: Compile helper.c as common unit
+Date: Wed,  6 May 2026 15:54:56 +0200
+Message-ID: <20260506135524.20617-85-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,107 +99,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Nothing in helper.c prevents it to be built as common unit.
 
-QEMU stubs (from stubs folder) have a unique feature: they emulate weak
-symbols. Weak symbols are not supported on Windows with gcc. This is
-achieved by defining a static library, so the linker can pick a file
-only when one of its symbol is needed.
-
-The problem is that common stubs are embedded in qemuutil, which is
-defined and created before any target code. Thus, to benefit from the
-same feature for target code, we need to create stub static libraries
-for each target architecture.
-
-To keep things simple, we declare one library per target base
-architecture. This implies that stubs are compiled only once, and we
-choose them to be system common files. This is not a big issue, since
-stubs definition have no specific behaviour, out of returning a default
-value, or stopping execution, which makes this safe to link them in user
-binaries also.
-
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20260424230103.1579600-2-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-Id: <20260423100612.27278-6-philmd@linaro.org>
 ---
- meson.build | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+ target/microblaze/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/meson.build b/meson.build
-index 987f33bacee..5fbdc75a0fc 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3738,6 +3738,7 @@ target_user_arch = {}
- hw_common_arch = {}
- target_common_arch = {}
- target_common_system_arch = {}
-+target_stubs_arch = {}
+diff --git a/target/microblaze/meson.build b/target/microblaze/meson.build
+index 7f7d27d4efa..94c76de39bd 100644
+--- a/target/microblaze/meson.build
++++ b/target/microblaze/meson.build
+@@ -3,13 +3,13 @@ gen = decodetree.process('insns.decode')
+ microblaze_common_ss = ss.source_set()
+ microblaze_common_ss.add(files(
+   'gdbstub.c',
++  'helper.c',
+ ))
  
- # NOTE: the trace/ subdirectory needs the qapi_trace_events variable
- # that is filled in by qapi/.
-@@ -4143,6 +4144,7 @@ common_all = static_library('common',
- # construct common libraries per base architecture
- target_common_arch_libs = {}
- target_common_system_arch_libs = {}
-+target_stubs_arch_libs = {}
- foreach target_base_arch, config_base_arch : config_base_arch_mak
-   target_inc = [include_directories('target' / target_base_arch)]
-   inc = [common_user_inc + target_inc]
-@@ -4202,6 +4204,15 @@ foreach target_base_arch, config_base_arch : config_base_arch_mak
-       dependencies: src.all_dependencies() + common_deps + system_deps)
-     target_common_system_arch_libs += {target_base_arch: lib}
-   endif
-+
-+  if target_base_arch in target_stubs_arch
-+    src = target_stubs_arch[target_base_arch]
-+    lib = static_library('stubs_' + target_base_arch,
-+                         sources: src.all_sources() + genh,
-+                         include_directories: inc,
-+                         c_args: target_system_c_args)
-+    target_stubs_arch_libs += {target_base_arch: lib}
-+  endif
- endforeach
- 
- if have_rust
-@@ -4363,6 +4374,11 @@ foreach target : target_dirs
-     objects += lib.extract_objects(src.sources())
-     arch_deps += src.dependencies()
-   endif
-+  lib_target_stubs = []
-+  if target_base_arch in target_stubs_arch_libs
-+    lib_target_stubs = [target_stubs_arch_libs[target_base_arch]]
-+  endif
-+  target_stubs = declare_dependency(link_with: lib_target_stubs)
- 
-   target_specific = specific_ss.apply(config_target, strict: false)
-   arch_srcs += target_specific.sources()
-@@ -4408,14 +4424,14 @@ foreach target : target_dirs
-       'name': 'qemu-system-' + target_name,
-       'win_subsystem': 'console',
-       'sources': [main_rs, files('system/main.c')],
--      'dependencies': [sdl]
-+      'dependencies': [sdl, target_stubs],
-     }]
-     if host_os == 'windows' and (sdl.found() or gtk.found())
-       execs += [{
-         'name': 'qemu-system-' + target_name + 'w',
-         'win_subsystem': 'windows',
-         'sources': [main_rs, files('system/main.c')],
--        'dependencies': [sdl]
-+        'dependencies': [sdl, target_stubs],
-       }]
-     endif
-     if get_option('fuzzing')
-@@ -4432,7 +4448,7 @@ foreach target : target_dirs
-       'name': 'qemu-' + target_name,
-       'win_subsystem': 'console',
-       'sources': [],
--      'dependencies': []
-+      'dependencies': [target_stubs]
-     }]
-   endif
-   foreach exe: execs
+ microblaze_ss = ss.source_set()
+ microblaze_ss.add(gen)
+ microblaze_ss.add(files(
+   'cpu.c',
+-  'helper.c',
+   'op_helper.c',
+   'translate.c',
+ ))
 -- 
 2.53.0
 
