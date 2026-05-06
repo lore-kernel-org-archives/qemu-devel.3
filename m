@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72C01CD3440
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F3EBCD342C
 	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:11:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcwQ-0005mg-0K; Wed, 06 May 2026 10:09:34 -0400
+	id 1wKcuz-0001aV-QO; Wed, 06 May 2026 10:08:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcwJ-0005bB-FH
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:09:27 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcuu-00017A-RE
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:08:01 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcwH-0002Dx-Q0
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:09:27 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4891e86fabeso77652625e9.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:09:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcur-0001zN-5j
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:08:00 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-488e1a8ac40so63801635e9.2
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:07:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076563; x=1778681363; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076471; x=1778681271; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HJ0OWL8WJExfKsdO5nO8p6D5eIKwLGM2sS6DWKi+43g=;
- b=r9IK6XUnZtB9NuYeayxRu4wk+MH3mcOEnpwPS8POXiF02N6gS647kHTRXjKQaLFlV7
- 5X57rocJFd1dlevWNYd03S1BwQY2w7Ag0kOIMh3fEsF6tLAs6Zxnp6gL6SiO/f/Q/uLK
- tu9WxLSKoIK0YAS5ew64fhygWxJCXz9JQxMwcrPra4IoJsd14aysEBk8L7/o12bH7SRh
- AbBxMqKSMXc+4NYnZg6g+I5DXMc6SNsfCl+IzzU8GwwFvvnk/Ad4O+AryyIkyAcUeZBr
- 1GXNsJRO6oa1DSjiqhuGRUFxnHfdiNMDQ9rUelbZlE7XhBBymtriaSlCU0PIckLR+EZB
- pTkw==
+ :reply-to; bh=NjD38AF72kHQcdJLp03kxhc3tCZ7YiQ75NzgoKjvE9A=;
+ b=lxXYNLnegtkZ6QxWuXFFyiTKzzzUyzxIlkZbnz8qL7NoO7Hz8haDEKUujS7ukGDEHN
+ az/N9iPHHIUarAORoR4riHZB7PJDJAZh5itKcPv45WMzicQyMYe51N/5/ALerqX6RDYQ
+ jz+h3QsgUD4U1nkMy7OyLUJgQdM5df8PoAwnCRUjhZ1IV8GNkDqhWWi3m/KmDEM9orPk
+ qPyQoywos1wsjhqW1ZC3a48V1fHdbwcBdyRMTM4Ra4l+VnKAlq3VLNayTORKfeyrfbPL
+ x+dlxvsOhNzQDPuOKnUHGye/+NH6plBIHQfnl1Pss/O5qtZ/4WOWi5aMZFFzfuAkfHPP
+ IpNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076563; x=1778681363;
+ d=1e100.net; s=20251104; t=1778076471; x=1778681271;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=HJ0OWL8WJExfKsdO5nO8p6D5eIKwLGM2sS6DWKi+43g=;
- b=cFfO7xAJCTSmpShncq8m8zHntBvlhVpyjJ+mrp2vmnOtYIWcxtSIG92draQMm72WVU
- fjt/4XJ3sbWfJ876f6O4BJ6y2uoyd2qXzgBqSk+ma+kyjkPgdJn3CjX0aPOF0AT9E8IN
- NeQV3wRDdEeEcWuyjYq+RiLtAQmC+rNug+UWvgWbNO8JL+9flowMwiNThf4BR7LtfVlZ
- 5dmneVXZYOsD5CxFRgcVejKPpxDn3rhVUxkpHEFRRl6CGrO40Qpy9ipSDpTKrvtX5SU9
- GfwcH6T8e83l3EM25ttOsnP9h4Gaz0AM3B+zoK4NZyEp81+j4bPE8A5mmbxb0FCQ4dR8
- VkFA==
-X-Gm-Message-State: AOJu0YwYlfIneHodcvQm1rdI+6vmJ+oqDLqYaQSbnzYFkr6xxjQT6EOz
- E1l6LwR60o57td9DFek38OcV8he7vEYWcrG3R7qpRPVk1aVsJTQqabSv8OtcnbgTGuLlC2jgU3U
- Jsk2aA9o=
-X-Gm-Gg: AeBDievoo0BVKBK1OIbS6CvjTkMiv4D0NWVUClSkXF7eEDQj1htoYCgsfmculr/sIT5
- 5r0frezwgNLHqKP/GuK/Nezd9ElLsRGmiwx8db75zm+RaMWoyEmmAQECLMtJvJ31EyOrz4TXD55
- PpEzyQnRstbdWhTMdGzDczPskoi/DpKDOrmFJK7kyYDyzBXTh44mMtQro3mqcwva7CgcWcPHRCY
- rjMeXDiP9SwJMEbmS0RKD+A3WvhilHryEGkPcCNyO1D0Fv6CCBBbZ17yBQYLLzHruEzY8j8yPAG
- CqBHkS5RUgJ5VcyI5D1uKiLcHnBhixsYDrY5SfJXQhPQrmYUQYRshRtPKbJcFKaHpaZJrGkT6Ef
- f2lk/ChfZySWPoIfN9hOW8HYrjnGDuqEc4zonj5rPGAd7AQGb6upFiP4lBVJzfhO2xY+0/YDVCo
- PQPmcIXy8YNr4CaFz4wmW/n+3joRKMA1nwMEUJg6C2A4vw4qNx6IrKrl12QsuL/IPCFunwSVRBD
- pNJznXoBds=
-X-Received: by 2002:a05:600c:a30d:b0:488:a2ac:a334 with SMTP id
- 5b1f17b1804b1-48e51e08228mr42688095e9.3.1778076562792; 
- Wed, 06 May 2026 07:09:22 -0700 (PDT)
+ bh=NjD38AF72kHQcdJLp03kxhc3tCZ7YiQ75NzgoKjvE9A=;
+ b=mPCR4WPRZHwTwIbh/tV02lmWu20p/GmaShqu1+mxwHooFKc5HCA+WmU+Q98+ywcois
+ Qg0hjz6llLyrHqn+tedL3BIOEZkr49DNwQGXWC6WhPe+SVbF4Fz/MeXAGQSW8oV7ood4
+ mLAtG72R1zwtdKZI9ZXGLOY9YDI7HuoN6djBxkv21kdQHO344u+wJIzQsJ4tIqPyOLs6
+ edYhDj1qEJ7+p+erkrdMED7QsPw124Kw9roJDt2t4KUZc2MJPHSk1eH9XECugf4j8Egs
+ PTRXev10Z4YyY9q/VxAEFlW84P7rLFdWEFjspfKfIrpwjSfVl4usUB2JQ9I+FqJAfY+h
+ U0iw==
+X-Gm-Message-State: AOJu0YzKTmDIWs9EyGGKF3UGuuv5HaMx5dC8N2+m4hS6WzQ5uTMpdPxA
+ 25xvFpYRzXHFe38zo9BkQARyhaBmv1Wb/NmwkdscWn1eFBe3BB0RQH/2Sy3bltVJFAsHPn4dpBz
+ 2ZVkt72o=
+X-Gm-Gg: AeBDiev7IdBYl9cS41PfdhdlGSaAVo0qEwxRva+ffaXnaNVf5NX73fIH9sx1ledJeTu
+ 7BNEsVkPsnTKEcrq6IB0Qg4fEiVWwk5B0kt9/7uScBguVe8A3bm7GfbNmAJ3j0uBQDncQqiciuo
+ lqNMU3bdlA/9tcmbYL76ZB4GIVO8XZc8P588klP7RWNE+6HlwqR8TxPjIM8Y4GhWR6RYXhtCCOy
+ 2HsccT4UbxFQRWd1zJyHzrfT/aPCE0aRc/muD73bdiVg6ic6rLPawG+XUrUdF71Ip6zo+NWcgJ+
+ VldkR9VeT6faPq2LWOP838CMo8eM9NYzLTdC4Cl68x+MV30FtmJrPLi5yAl1qaiBWcA+3U3vHV7
+ F1HACKmQkdHOGwcD8oEh8g+CEYlK2wAGWR9Z6hvr+qslBkMP/wWWWWlnsX4of87fCWm+hPbcL1C
+ Q5+mNvQJTb66BxeTK5V4ZbM5yIXxcjd260STQnjrUfLJkNlTklH+M/6I5JJ5HoO38ZTa+w1Aikc
+ NMpUivjabw=
+X-Received: by 2002:a05:600c:4e43:b0:485:30d4:6b9e with SMTP id
+ 5b1f17b1804b1-48e51f4c1e5mr72058645e9.21.1778076470551; 
+ Wed, 06 May 2026 07:07:50 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45054b02c5asm12763743f8f.19.2026.05.06.07.09.21
+ 5b1f17b1804b1-48e53141f41sm17510765e9.26.2026.05.06.07.07.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:09:21 -0700 (PDT)
+ Wed, 06 May 2026 07:07:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 106/110] cocci: Do not initialize variable used by
- QSIMPLEQ_FOREACH macro
-Date: Wed,  6 May 2026 15:55:18 +0200
-Message-ID: <20260506135524.20617-107-philmd@linaro.org>
+Subject: [PULL 094/110] target/s390x: Compile crypto_helper.c as common unit
+Date: Wed,  6 May 2026 15:55:06 +0200
+Message-ID: <20260506135524.20617-95-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,58 +99,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QSIMPLEQ_FOREACH() macro, defined in "qemu/queue.h",
-always assigns its iterator variable when entering the
-loop. Remove the pointless and possibly misleading
-assignment.
+In order do build crypto_helper.c as a common unit we need to
+replace:
 
-Mechanical patch using the following coccinelle spatch:
+  "accel/tcg/cpu-ldst.h" -> "accel/tcg/cpu-ldst-common.h"
 
-  @@
-  type T;
-  identifier e;
-  iterator FOREACH_MACRO =~ ".*_FOREACH.*";
-  statement S;
-  @@
-  -    T *e = ...;
-  +    T *e;
-       ... when != e
-       FOREACH_MACRO(e, ...) S
+and update the cpu_ld/st_be_data_ra() API by cpu_ld/st_mmu() one.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-Id: <20260415215539.92629-4-philmd@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-Id: <20260423135035.50126-9-philmd@linaro.org>
 ---
- block/blkdebug.c               | 2 +-
- migration/block-dirty-bitmap.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ target/s390x/tcg/crypto_helper.c | 39 +++++++++++++++++---------------
+ target/s390x/tcg/meson.build     |  2 +-
+ 2 files changed, 22 insertions(+), 19 deletions(-)
 
-diff --git a/block/blkdebug.c b/block/blkdebug.c
-index 8a4a8cb85ea..fdc96d1f45d 100644
---- a/block/blkdebug.c
-+++ b/block/blkdebug.c
-@@ -591,7 +591,7 @@ static int coroutine_fn rule_check(BlockDriverState *bs, uint64_t offset,
-                                    uint64_t bytes, BlkdebugIOType iotype)
- {
-     BDRVBlkdebugState *s = bs->opaque;
--    BlkdebugRule *rule = NULL;
-+    BlkdebugRule *rule;
-     int error;
-     bool immediately;
+diff --git a/target/s390x/tcg/crypto_helper.c b/target/s390x/tcg/crypto_helper.c
+index 074d745eb3f..ae392bce0e7 100644
+--- a/target/s390x/tcg/crypto_helper.c
++++ b/target/s390x/tcg/crypto_helper.c
+@@ -17,7 +17,7 @@
+ #include "s390x-internal.h"
+ #include "tcg_s390x.h"
+ #include "exec/helper-proto.h"
+-#include "accel/tcg/cpu-ldst.h"
++#include "accel/tcg/cpu-ldst-common.h"
+ #include "accel/tcg/cpu-mmu-index.h"
  
-diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
-index a061aad8177..87009c45182 100644
---- a/migration/block-dirty-bitmap.c
-+++ b/migration/block-dirty-bitmap.c
-@@ -1216,7 +1216,7 @@ fail:
- static int dirty_bitmap_save_setup(QEMUFile *f, void *opaque, Error **errp)
+ static uint64_t R(uint64_t x, int c)
+@@ -123,44 +123,44 @@ static void sha512_bda_be64(uint64_t a[8], uint64_t w[16])
+ static void sha512_read_icv(CPUS390XState *env, const int mmu_idx,
+                             uint64_t addr, uint64_t a[8], uintptr_t ra)
  {
-     DBMSaveState *s = &((DBMState *)opaque)->save;
--    SaveBitmapState *dbms = NULL;
-+    SaveBitmapState *dbms;
+-    int i;
++    const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
  
-     if (init_dirty_bitmap_migration(s, errp) < 0) {
-         return -1;
+-    for (i = 0; i < 8; i++, addr += 8) {
++    for (int i = 0; i < 8; i++, addr += 8) {
+         addr = wrap_address(env, addr);
+-        a[i] = cpu_ldq_be_data_ra(env, addr, ra);
++        a[i] = cpu_ldq_mmu(env, addr, oi, ra);
+     }
+ }
+ 
+ static void sha512_write_ocv(CPUS390XState *env, const int mmu_idx,
+                              uint64_t addr, uint64_t a[8], uintptr_t ra)
+ {
+-    int i;
++    const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
+ 
+-    for (i = 0; i < 8; i++, addr += 8) {
++    for (int i = 0; i < 8; i++, addr += 8) {
+         addr = wrap_address(env, addr);
+-        cpu_stq_be_data_ra(env, addr, a[i], ra);
++        cpu_stq_mmu(env, addr, a[i], oi, ra);
+     }
+ }
+ 
+ static void sha512_read_block(CPUS390XState *env, const int mmu_idx,
+                               uint64_t addr, uint64_t a[16], uintptr_t ra)
+ {
+-    int i;
++    const MemOpIdx oi = make_memop_idx(MO_BE | MO_64 | MO_UNALN, mmu_idx);
+ 
+-    for (i = 0; i < 16; i++, addr += 8) {
++    for (int i = 0; i < 16; i++, addr += 8) {
+         addr = wrap_address(env, addr);
+-        a[i] = cpu_ldq_be_data_ra(env, addr, ra);
++        a[i] = cpu_ldq_mmu(env, addr, oi, ra);
+     }
+ }
+ 
+ static void sha512_read_mbl_be64(CPUS390XState *env, const int mmu_idx,
+                                  uint64_t addr, uint8_t a[16], uintptr_t ra)
+ {
+-    int i;
++    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
+ 
+-    for (i = 0; i < 16; i++, addr += 1) {
++    for (int i = 0; i < 16; i++, addr += 1) {
+         addr = wrap_address(env, addr);
+-        a[i] = cpu_ldub_data_ra(env, addr, ra);
++        a[i] = cpu_ldb_mmu(env, addr, oi, ra);
+     }
+ }
+ 
+@@ -200,13 +200,14 @@ static int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+ 
+     /* KLMD: Process partial/empty block last. */
+     if (type == S390_FEAT_TYPE_KLMD && len < 128) {
++        const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
+         uint8_t x[128];
+ 
+         /* Read the remainder of the message byte-per-byte. */
+         for (i = 0; i < len; i++) {
+             uint64_t addr = wrap_address(env, *message_reg + processed + i);
+ 
+-            x[i] = cpu_ldub_data_ra(env, addr, ra);
++            x[i] = cpu_ldb_mmu(env, addr, oi, ra);
+         }
+         /* Pad the remainder with zero and set the top bit. */
+         memset(x + len, 0, 128 - len);
+@@ -248,6 +249,7 @@ static int cpacf_sha512(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+ static void fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+                             uint64_t *buf_reg, uint64_t *len_reg)
+ {
++    const MemOpIdx oi = make_memop_idx(MO_8, mmu_idx);
+     uint8_t tmp[256];
+     uint64_t len = *len_reg;
+     int buf_reg_len = 64;
+@@ -262,7 +264,7 @@ static void fill_buf_random(CPUS390XState *env, const int mmu_idx, uintptr_t ra,
+ 
+         qemu_guest_getrandom_nofail(tmp, block);
+         for (size_t i = 0; i < block; ++i) {
+-            cpu_stb_data_ra(env, wrap_address(env, *buf_reg), tmp[i], ra);
++            cpu_stb_mmu(env, wrap_address(env, *buf_reg), tmp[i], oi, ra);
+             *buf_reg = deposit64(*buf_reg, 0, buf_reg_len, *buf_reg + 1);
+             --*len_reg;
+         }
+@@ -279,7 +281,7 @@ uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
+     const uint8_t fc = env->regs[0] & 0x7fULL;
+     uint8_t subfunc[16] = { 0 };
+     uint64_t param_addr;
+-    int i;
++    MemOpIdx oi;
+ 
+     switch (type) {
+     case S390_FEAT_TYPE_KMAC:
+@@ -300,9 +302,10 @@ uint32_t HELPER(msa)(CPUS390XState *env, uint32_t r1, uint32_t r2, uint32_t r3,
+ 
+     switch (fc) {
+     case 0: /* query subfunction */
+-        for (i = 0; i < 16; i++) {
++        oi = make_memop_idx(MO_8, mmu_idx);
++        for (int i = 0; i < 16; i++) {
+             param_addr = wrap_address(env, env->regs[1] + i);
+-            cpu_stb_data_ra(env, param_addr, subfunc[i], ra);
++            cpu_stb_mmu(env, param_addr, subfunc[i], oi, ra);
+         }
+         break;
+     case 3: /* CPACF_*_SHA_512 */
+diff --git a/target/s390x/tcg/meson.build b/target/s390x/tcg/meson.build
+index ed6441f6f44..36cb0e079ed 100644
+--- a/target/s390x/tcg/meson.build
++++ b/target/s390x/tcg/meson.build
+@@ -1,11 +1,11 @@
+ s390x_ss.add(when: 'CONFIG_TCG', if_true: files(
+-  'crypto_helper.c',
+   'int_helper.c',
+   'mem_helper.c',
+   'misc_helper.c',
+ ))
+ s390x_common_ss.add(when: 'CONFIG_TCG', if_true: files(
+   'cc_helper.c',
++  'crypto_helper.c',
+   'excp_helper.c',
+   'fpu_helper.c',
+   'translate.c',
 -- 
 2.53.0
 
