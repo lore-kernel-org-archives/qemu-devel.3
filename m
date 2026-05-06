@@ -4,99 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E776CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 13:41:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF326FF8855
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 13:43:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcVH-0001oq-2w; Wed, 06 May 2026 09:41:33 -0400
+	id 1wKcWH-0003XC-EK; Wed, 06 May 2026 09:42:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wKcV2-0001av-PJ
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:41:19 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wKcWF-0003WS-9n
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:42:31 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1wKcUw-0008Bk-Hb
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:41:13 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-43eb05b1875so3462227f8f.3
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:41:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778074868; cv=none;
- d=google.com; s=arc-20240605;
- b=ZrWppGeOC2te1eDU/+0rpoeMoE7faJTS3o/SSlGUDaTzP2UO+6XD/uDqspfdSf6oC6
- wDdieXII6rEfpLph1++bmhbrrmQXOApb3nOWHbKnUwwdVkyldcbttn7RYizRe/SPrq46
- sizy5RMxIWDAsw73NYotB4B31MMHcCuz+XDQye/0tR73WNpIHVVzs1yR04ES+YZpZtDm
- lzzq5AHuGx1RxEvchlLGNzBaad2Yl3EPk3iSgNpYBeACy1Z8Meas4HIlcXqy/KW1z9OV
- KWNXOULkK78nT76PQJWACW2kee8iqqIBVxFY3tFKzfnK5xuRngcs+tvq68rmqe8LEm1K
- HfNw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=+4Pv3QXOo/HOLtXHUV2cH3f5VPEq3kUQypW9EYkF/4s=;
- fh=c3XECHb45K8EnSvWW5JVFBEgx+XUvoEy8T3Wx5dzP7Y=;
- b=cZVeiUB+wCiAmvwNWebiLxy9niwdHhal978pZiG+YkH9iOG2UmSjiBnsER5qYaGQVn
- 2g/pjpVvp6pAbpFzhfkz1PsUqd/TaaRglkYoy5MfyVTjiYqZ9Hd7qfbZ07GvqqJ83oXC
- VfIQ2Z1w48B5pLnA8sEQF1GGAD34UuDEh8LJ4GwrGCuU2mzv11oXtClk8ZqURzKSir5U
- Xsj7f63PkzcmA3orPh/dixlZAcm8a7tvHUFo2p2pvMIf4TOhwp9PRTbK3nn9OjomXEsQ
- HC6HzsChzeY9D/fK8FY6Q20OcemKe3phosaifVHfCuhTwScuIa/laHediMeV3neTN5Pw
- Ngqg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wKcWD-0000xT-61
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:42:31 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-65890a6ca20so6016327d50.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:42:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778074868; x=1778679668; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+4Pv3QXOo/HOLtXHUV2cH3f5VPEq3kUQypW9EYkF/4s=;
- b=pE8e5GptQbleenhBgRTyKbR1PoJ6dR+IBDeFv1882aHQkRZD59Z+4OJ38WQSXd2DOG
- ssTBDl9bBTK+LdLiNf9mfC82LomDsUOmonm4fF3jII6wvvp1XsfgSQcsQLHj/1vRmYAp
- 1yg8NQPu4d8KLYolfVISkLeBQrdsTygmzXCejNGJmB/BxjHKGMU+QXeS+K/psL0gAIo1
- WRpEvGsak0yJ6iH6tfhGpSUdp6O5eTDMBPxNvtmvfgB7rMzp9kuxO+DdqKJ3tMcVbtAt
- S7H4QVH+puP9DELJ/6RLGOjtRtG1PY2PeugGyfhGVph3PQG2qei77+v1McFqkp6QgZ8+
- iC2A==
+ d=linaro.org; s=google; t=1778074948; x=1778679748; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bgf0tKyrU/TaQq+fGJgyiCU13s+/MpaMDLyqMyVzsi4=;
+ b=cUYmRPOLvvTw0H5lD+F2tsR7JhOm4v+dlVtnGp9zv9cQmJeUju//V02DNLcQm1qVBm
+ /11IrrlarM0B7DNbiuFZAE+1U5qfi+toSxZqmRHTh4RuCixiJ8qFNlqkM/vEw+x0Bwpa
+ gsmR9MrT4jGltqCNPFJlwsF9OOCC1rzFkVNfAkraP7W5xk2UHx5moukfVke3fk/5q97X
+ +nMzD8Lh17EQMYPyC2tLDu4u7whZ2Xwuc4p25W6pt7GiWXZaBRTEiLQUW+dvqCWVRyrF
+ nv/IBj3tQ5nHrJPrgqCBlXVoDplH1tWeuGb0Ekq0oZfvBEj7a5LJbOTkgBXqo3Dg1Et+
+ xW9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778074868; x=1778679668;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=+4Pv3QXOo/HOLtXHUV2cH3f5VPEq3kUQypW9EYkF/4s=;
- b=IDuxv7oIXjfY1ytHSbB31LG5HMpdO7/G+fi2JDheFhn5py+jYOqDAhPGXubfdKi+lm
- lTrGEfNVY/H7w1SLPCaajahZp2BcWe629OcEUn8FWncDkrWR0TRooxOYTIvpAT2FIuZF
- xRGaqo59OwHf8uDRGeavFc+L9DczTX1OTqeKkzgqH5Vd/zuIsWmNBLUO9/siSNlK9guz
- 9rxNBAtdLtKaq7rP3NqtGV38tqUvne3G7ty6Q/IlKzGMz37yM4V4pYSNo6cY1rgA7lm+
- PCG7maan9qrP31jvdeLl8o+8IuJD8OyOMJqRkZvwTEOeR8tnqJBguR+pWzUmal4ota96
- XPGQ==
-X-Gm-Message-State: AOJu0Yzl7Tx+xPSO4plrqK9b1jdIC9henhw0QPDhg0Sroq1GLzgDymHV
- 6Z81kQp+7MLV5+yLnCzLXzvZ5UozUx+PbXJ87RtVVKMtHRqFY6bc240KlW9QD8IEVkCNM07w7de
- oN/ALeN8dLp4bX5qyG8La8w/998mYM18Q4YRoZrko2w==
-X-Gm-Gg: AeBDievWKJL8BuMGHnLDgH9OHBqCW4Yh4DYQvrefRX07LBSZuhT4tib4rsYTlHaDiZ/
- mgC2vRfqSZ/e4jSFXOLKEatfqtQY5YBO3coOorhFoVvYNq04SZn88DYsm0WUKzLH1Up/hKvyhSu
- 7mrG/sdW0j6ouA2vaCDmULhI4Gz3fW9BrmI8Hk1myyjo8vSc3tZWF+0YitAwb9Yve9VKgjTRsJY
- viC5EslytN3h3NOPh0mB7oZo8PSuUWw0IfIQ1T1vztJ6bXqvKj4WgBzvecZusnnxRebkLDR5FSP
- YWYhYdqrosM20aOI+oWcqaCCEV0mQZYtfaO0cmomHS8UumHIrVcHZ8dkOchn
-X-Received: by 2002:a5d:584e:0:b0:44b:8fb6:9a2e with SMTP id
- ffacd0b85a97d-4515ce1ca99mr5477607f8f.20.1778074867846; Wed, 06 May 2026
- 06:41:07 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778074948; x=1778679748;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bgf0tKyrU/TaQq+fGJgyiCU13s+/MpaMDLyqMyVzsi4=;
+ b=Kij3X16yXdoBRYUkN3lJPIIzBODSmAB1d9+fCQxMH3NOLa/95qyscSBOTwABJkxaeJ
+ FxGe1j2zzE4AT51G9i2MftOtDb5M0MSZtiUXGZin7qmHjweiQGPSUmi5Dfb8NS58A3/n
+ Cbfsg8wTwM5egLkCAdHAmtORFxHe903Ar/6ybbGDDF6Gh+DF8UzZF3ogz6ULLORgUggV
+ bKc5Mm8JBxi50aZ5lMRkSIIBF+GBepE0mkshtSRHveBnuHom4tAe4+reKc3LBNq4Dt/V
+ OcJ5BGpadIO2U+nPUopkatB7owc2tq5M1g8wMBOSSGUqSDor3XI3wRo05V/G5Sv8hr04
+ FOKg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+4TpI5jEAKvjUAkoNk+uAK10qGput4BqeRnZJPTjPCQJHnUKvHiLG+xywUTz8q+mLuEP/20i6EcwiD@nongnu.org
+X-Gm-Message-State: AOJu0YykXUPzeV6/iWvAe58EqU+EqZOEbbeun1NqcxvwG4WMaMAhkdYE
+ z7Vmm78wq2EPrBUVB1mNkuEjVP4pdK0zovVui0ajkupFJq2JoDdmsK2Gvw0p8sxpmMo=
+X-Gm-Gg: AeBDietsLjlvlSySCqAY9AUlxG5yNq6O7gGSyavfjxrT9L4Q+5t6ZtUQ5r+jBB/9m8T
+ p72nDb3VL657L1P1OfJ8vRu1/48yD8Ht20UhKN+shW2HsqGpa3iPYf8EBKXKWrkpJGIU8jmITbb
+ ShJ4zCNrvVwAnILnFr7nz80kdvLandG8vOaDD+NlnvoG5GIxaX6UqWeqkacQ1Wc6hRXX6ggxoj7
+ 4Wef2c36U4o3s/51V476d7PRd4HLV1kYAFrkvo0mweeaE+e/OySRdloFF15Qaa/MUCjhHXElvaW
+ 52cT1mKOM99O6Z5mDcVfF9H4Bi+JHSPSqX8PaMKmoDQT+oIoe/aEzyhrJVzfh0GsZOcLRkHu8RO
+ MkwFsiNv4aj3A3oD3h3ZGtNgboFYNqn0wDQwK4Zy0CDGnCDvhDd0Tgb/gWFqR7Zd05+KmPBNteu
+ Vv951LQnlgF/Zw1KyLxNPc9g9q5dHrJ7H78nAkMyt6hzV9ME+CU2dXi0ps834/1bBqKd/fIfahv
+ Hgd4QNdqKXa/JTXjwnx
+X-Received: by 2002:a05:690e:1403:b0:650:a6d:d6bf with SMTP id
+ 956f58d0204a3-65c79ee4068mr3545342d50.51.1778074947754; 
+ Wed, 06 May 2026 06:42:27 -0700 (PDT)
+Received: from ?IPV6:2600:381:c938:6375:5307:cd92:1ec8:e891?
+ ([2600:381:c938:6375:5307:cd92:1ec8:e891])
+ by smtp.gmail.com with ESMTPSA id
+ 956f58d0204a3-65c7aff6d80sm1017280d50.18.2026.05.06.06.42.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 May 2026 06:42:27 -0700 (PDT)
+Message-ID: <93406cbe-cd86-481c-8357-5178d46e7340@linaro.org>
+Date: Wed, 6 May 2026 08:42:24 -0500
 MIME-Version: 1.0
-References: <20260506133216.18730-1-philmd@linaro.org>
-In-Reply-To: <20260506133216.18730-1-philmd@linaro.org>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 6 May 2026 16:40:41 +0300
-X-Gm-Features: AVHnY4Iynwr2RYbFJkDaG-Pstw8T9cVm8Vktp9zAppuf9G2J99I1C8EsdzZcdyE
-Message-ID: <CAAjaMXZCGD5ZnRVrk72omYv=Jz=zVMXQD0XbSWcVY8T9r-1WHA@mail.gmail.com>
-Subject: Re: [PATCH] meson: Allow building with empty target_arch[] source set
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-wr1-x434.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 06/15] target/arm: add MTX to MTEDESC and DisasContext
+To: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260504-feat-mte4-v5-0-232a648e63c6@gmail.com>
+ <20260504-feat-mte4-v5-6-232a648e63c6@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260504-feat-mte4-v5-6-232a648e63c6@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=richard.henderson@linaro.org; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,43 +110,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 6, 2026 at 4:32=E2=80=AFPM Philippe Mathieu-Daud=C3=A9 <philmd@=
-linaro.org> wrote:
->
-> Complete commit 83d5db95d38 ("meson: Allow system binaries
-> to not have target-specific units") with yet another guard,
-> allowing empty target_arch[] source sets for some targets.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
+On 5/4/26 10:50, Gabriel Brookman wrote:
+> diff --git a/target/arm/tcg/hflags.c b/target/arm/tcg/hflags.c
+> index e753124c4c..40a934a8af 100644
+> --- a/target/arm/tcg/hflags.c
+> +++ b/target/arm/tcg/hflags.c
+> @@ -460,6 +460,10 @@ static CPUARMTBFlags rebuild_hflags_a64(CPUARMState *env, int el, int fp_el,
+>           }
+>           /* Cache TCMA as well as TBI. */
+>           DP_TBFLAG_A64(flags, TCMA, aa64_va_parameter_tcma(tcr, mmu_idx));
+> +        /* Cache MTX. */
+> +        if (cpu_isar_feature(aa64_mte_mtx, env_archcpu(env))) {
+> +            DP_TBFLAG_A64(flags, MTX, mtx);
+> +        }
+>       }
 
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Actually, in the previous patch, where you compute mtx, is where you should have the 
+feature test.  If the feature is unset, then mtx == 0 throughout the rest of the function 
+and the store here.
 
->  meson.build | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git a/meson.build b/meson.build
-> index 4176d020c21..987f33bacee 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -4332,9 +4332,11 @@ foreach target : target_dirs
->      arch_srcs +=3D files('target-info-stub.c')
->    endif
->
-> -  t =3D target_arch[target_base_arch].apply(config_target, strict: false=
-)
-> -  arch_srcs +=3D t.sources()
-> -  arch_deps +=3D t.dependencies()
-> +  if target_base_arch in target_arch
-> +    t =3D target_arch[target_base_arch].apply(config_target, strict: fal=
-se)
-> +    arch_srcs +=3D t.sources()
-> +    arch_deps +=3D t.dependencies()
-> +  endif
->
->    target_common =3D common_ss.apply(config_target, strict: false)
->    objects =3D [common_all.extract_objects(target_common.sources())]
-> --
-> 2.53.0
->
+With that,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
