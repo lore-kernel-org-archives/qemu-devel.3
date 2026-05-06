@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABD75CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 13:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6927ECD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 13:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKclg-0008EB-Uc; Wed, 06 May 2026 09:58:28 -0400
+	id 1wKcll-0000Ba-CJ; Wed, 06 May 2026 09:58:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKclc-00087f-J0
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:58:24 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcli-0008Qh-Ks
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:58:30 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKclZ-0008PX-Ub
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:58:24 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4891d7164ddso35852155e9.3
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:58:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKclh-0008RJ-1b
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:58:30 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-43d734223e4so633577f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:58:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778075899; x=1778680699; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778075906; x=1778680706; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=oAJWvOlyHXXa761YRrbvQ94Cv0yNBj3ubObQ8ebHkXo=;
- b=BUahVIbjANbh3ZnWjsJlgwMOiKd7jBd1N9nZttvB7mPHYv8Vm0BzjHM8gvtvAuE/GI
- H9nHiZo9IHLCaqwmX587Nv8WjfbnoNBCMdYqRerHpsjYqmhPg9BOgXOBiTueKJYJUpBV
- CoG7tXScMXAFckdkjFaIi98+BjQZlUAOJ0eyAmhmo+cuY9uSm3/Q3ZkQFRgob3izTo+M
- 2qCo0HRJp9suhQp0mvolbzpUxVcrcBuQDf92xhjiFp4gs5yUu6Y1VO7rStf8V/xk6lUb
- 9xOv6kksgj1H3OaCzOdaj4hm/CSEe2K7Kvb68jCO+3twb1BdKPS3IKPrKVvDRyrWWDVB
- uvsg==
+ :reply-to; bh=Jv9fwwqWCOIA7tkY/IRQQiea14CdYAGlBRTbGc/KAYc=;
+ b=Tn6z0iOWcB9gM8lWjg1Mu6pcjSqyY4ChoT7A+xzwk6zkI9o82YnmOd0yQXrTWiVNlY
+ gPdk5ybmw2cy8A2rZSdiKsW+3AbvSOQIQN3Uadz67VbbEU9yNLQv8wc7q0Guue/JevAq
+ k+HxRMzSobZe9D7ACRUliP8/1n1Qz0wfh2UPm44jWg5U+lG/Oo4JwxaJpX28h3gv0N7J
+ 00/cyUlPnw3DcZJCbWdckVr2S7J3P8xIUFMaOEILAYQux9WBDEAKEPEPcr2nqdePgg2Q
+ suxidTC4a+01yjVRPTTdKSdaJHcj3m5ZsrNCqQaiLLPlVLsIUABwlTJKHGxyBhT8JWQ8
+ XrfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778075899; x=1778680699;
+ d=1e100.net; s=20251104; t=1778075906; x=1778680706;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=oAJWvOlyHXXa761YRrbvQ94Cv0yNBj3ubObQ8ebHkXo=;
- b=c1OLZFJQWsIZf89i4peKkLPhkuQhZMS164B7nzL4Z6Ynrmi5oxY0ohHlXkOlpA/DBO
- EG/saxuhnBkYRcKjjSIVlvqFdo1tczdtucQO8CQJsrdEDX92XRjfzwGDrDvN+iFkunLF
- Oivizcvj/Rc8gwUODKOPD/YqIcti4uvrWaE2ppg8R4nSdgcamYg2ksGluVKfJCllHzdb
- q9REUX+qPc/jYKizQGfFuWEuAmJW+/rl6IGZFr91Za6Qc7zQqi/NkQaYv0hc3ntzsqys
- zR04J4AbsldAO9v8oSmx6Jj5i9pcQqU68kx5iSUyR/oATYPnSd5eDa9Cqm5WZppQQnLK
- q49w==
-X-Gm-Message-State: AOJu0YzD+Jmc67Z4gnqdcSlJRD8fkiadkSd66p4q4ICriVp8ZS7O1K6l
- cCy+XeUUhcLoWWMhoaaow37ciokf/44ox6H8qINX6RDu7z/phN2exhsK0OJt61Rg54UbtqKuKYK
- Ues9n4xE=
-X-Gm-Gg: AeBDieslCGSyIdaZgvToZ2ONEsM6dsNlZ/AyyvxgLK0SyCqoCkjBEBJ2p2s2lHd+Gqa
- uoakutZSD6l5QQ8apHO5L1OmWXrbfZUn8BcbWV1e655S+YpxcyKQiCKc4xgY9DoxCQVrxg7xbT/
- YqjERKhJdg7daOIwRmjqB5AbpZMMDT4zsRnhO4w3w9UwmiKKFCXVOVMublllHKT79wEMTSHMcmY
- coYg07D41HibB4JXruyA60opEBpfuHftfOSok+RP11J4jJUYYvZq0BPzvEkHlN7qZaJRkOTXzjF
- WQNnMUzDWzT6xrm5EKuR14++86h2j1oXXpB5EqLDM9jCB5Z5je2Sfo/ZyiqX2s4ethzuXUVfdHn
- atPQnW4dpXVSxhWTtXbfwyBi2Dd/NsK/xJtZzGPaI3/JX1PN3oBjgcKcG/H6rY8UlALIDYRpG9O
- FRai07FJJdN3jasivhv26xd62z2JpQYeO591JIav8+ZdIszD1DVkjAEmmmMLBc9ho0zz0d+2ykO
- IqRpq84D3M=
-X-Received: by 2002:a05:600c:b8a:b0:48a:56de:d620 with SMTP id
- 5b1f17b1804b1-48e51f32ac3mr64925905e9.14.1778075899312; 
- Wed, 06 May 2026 06:58:19 -0700 (PDT)
+ bh=Jv9fwwqWCOIA7tkY/IRQQiea14CdYAGlBRTbGc/KAYc=;
+ b=nApILNI9y/iGHuYevNkFjm3ugC7Nbd0EUryJjhXLNDHNRjIRSHgwN/QFxxPK/2sSqF
+ uzmKBYkmd3WheSnWAg9Bk6pz8rGVFtn09t+6v0AT5UnOeHgKHDReOfMmW4kgO3VvJK7n
+ mQ/Sg1I+TyZs2g606LXcUx/25LItlq5Kgppo/k5uh8YOMWvQrB0C2GTLnDbdsSqye/4R
+ kbHGoNr1umkrHqyIhMJ6U2ih7fKmZnbHnhzEoX1ccbhvUIvuUnw45kN2GuNNZhCZFmBY
+ /lVYWWcgv1OrZINc5A4i6NJD+lFDgGbrxxy2frmvRRUpdpNKEugGPGtdaNEfGGwkmcFQ
+ tDXQ==
+X-Gm-Message-State: AOJu0Yzxvvdxx9ezQRl2472D6Ms6PUga1cWN/9V/huPJcblOBwP7ni6+
+ omUh4lBZKeVzP+fzhNQpulOqS5x1J8vV37dpi109hxrfNmkZJ5Q+Lk9czbtnkwulUg4t887xPu4
+ 9Mppfve8=
+X-Gm-Gg: AeBDiesbWPuJpegmpAo7SY/oBrKSO9nFdRxR12UsjOLlbrluvEuzXGyyhpk4osGk4yL
+ pEsLOST9GGPsymSCz+g4ZYQw5q4fzOcU1n8D61PrL3eRbM8wsSxWGMGM/PqTsafNcSWlc5XhxnR
+ Djd4Ufjef0WAELbU6J9UAJrtDTcuAMsU8ZA+knXkHRD52KZs3bt4G+WKgLuUy2OCfLym+3NddVr
+ DKW8zJVoOmTS5fD1sMjGXEDi6jqVhUU6y80eb4UWtR6XynOlkikggZQK0LdCSowuRCLp8NJaXuV
+ 6C+GHdJ1kfoLF4uK4YRTU+6EFwmPB4HrEHjePMWZL4uL0fNkU8SdxqVGG5wGO/r08a8k395W5qN
+ 2/JWiZcrAgdEoQhYUg/JzvymHTygO5tFmiXvuVCmvqPHI9Sc12kCuG9i+4nvLiGuYFPbLTn4+na
+ FlTWNF3pkbSO6oWQ2OWI6QriPIHyXtUkjxvLnCrHsyMGyta8COIZAy+Tp7VpSZ2zhsAotf8TBL/
+ DtJK1xD7XE=
+X-Received: by 2002:a05:6000:40dc:b0:44f:da08:179a with SMTP id
+ ffacd0b85a97d-45165d24154mr5641798f8f.16.1778075906536; 
+ Wed, 06 May 2026 06:58:26 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e530a67dcsm27288165e9.2.2026.05.06.06.58.17
+ ffacd0b85a97d-45052a48b23sm13024464f8f.14.2026.05.06.06.58.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 06:58:17 -0700 (PDT)
+ Wed, 06 May 2026 06:58:25 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 023/110] monitor: Extract completion declarations to
- 'monitor/hmp-completion.h'
-Date: Wed,  6 May 2026 15:53:55 +0200
-Message-ID: <20260506135524.20617-24-philmd@linaro.org>
+Subject: [PULL 024/110] hw/misc/allwinner-cpucfg.c: make compilation unit
+ common
+Date: Wed,  6 May 2026 15:53:56 +0200
+Message-ID: <20260506135524.20617-25-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,227 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Many files include "monitor/hmp.h", but few of them really need
-the completion declarations: move them to a distinct header.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
+include "target/arm/cpu.h" is needed because of:
+bool target_aa64 = arm_feature(cpu_env(target_cpu), ARM_FEATURE_AARCH64);
+
+This file is reused between various allwinner boards, including 32 and
+64 bits cpus.
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20260320160811.28611-2-philmd@linaro.org>
+Message-Id: <20260312224702.1608408-3-pierrick.bouvier@linaro.org>
 ---
- MAINTAINERS                      |  2 ++
- include/monitor/hmp-completion.h | 40 ++++++++++++++++++++++++++++++++
- include/monitor/hmp.h            | 21 -----------------
- chardev/char-hmp-cmds.c          |  1 +
- migration/migration-hmp-cmds.c   |  1 +
- monitor/hmp-target.c             |  1 +
- net/net-hmp-cmds.c               |  1 +
- qom/qom-hmp-cmds.c               |  1 +
- system/qdev-monitor.c            |  1 +
- system/runstate-hmp-cmds.c       |  1 +
- trace/trace-hmp-cmds.c           |  1 +
- ui/ui-hmp-cmds.c                 |  1 +
- 12 files changed, 51 insertions(+), 21 deletions(-)
- create mode 100644 include/monitor/hmp-completion.h
+ hw/misc/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index afa178c5cce..ac47299fd83 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3403,6 +3403,8 @@ F: monitor/monitor.c
- F: monitor/hmp*
- F: hmp.h
- F: hmp-commands*.hx
-+F: include/monitor/hmp.h
-+F: include/monitor/hmp-completion.h
- F: include/monitor/hmp-target.h
- F: tests/qtest/test-hmp.c
- F: include/qemu/qemu-print.h
-diff --git a/include/monitor/hmp-completion.h b/include/monitor/hmp-completion.h
-new file mode 100644
-index 00000000000..dab21867dc9
---- /dev/null
-+++ b/include/monitor/hmp-completion.h
-@@ -0,0 +1,40 @@
-+/*
-+ * Human Monitor Completion handlers
-+ *
-+ * Copyright IBM, Corp. 2011
-+ *
-+ * Authors:
-+ *  Anthony Liguori   <aliguori@us.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HMP_COMPLETION_H
-+#define HMP_COMPLETION_H
-+
-+#include "qemu/readline.h"
-+
-+void object_add_completion(ReadLineState *rs, int nb_args, const char *str);
-+void object_del_completion(ReadLineState *rs, int nb_args, const char *str);
-+void device_add_completion(ReadLineState *rs, int nb_args, const char *str);
-+void device_del_completion(ReadLineState *rs, int nb_args, const char *str);
-+void sendkey_completion(ReadLineState *rs, int nb_args, const char *str);
-+void chardev_remove_completion(ReadLineState *rs, int nb_args, const char *str);
-+void chardev_add_completion(ReadLineState *rs, int nb_args, const char *str);
-+void set_link_completion(ReadLineState *rs, int nb_args, const char *str);
-+void netdev_add_completion(ReadLineState *rs, int nb_args, const char *str);
-+void netdev_del_completion(ReadLineState *rs, int nb_args, const char *str);
-+void ringbuf_write_completion(ReadLineState *rs, int nb_args, const char *str);
-+void info_trace_events_completion(ReadLineState *rs, int nb_args,
-+                                  const char *str);
-+void trace_event_completion(ReadLineState *rs, int nb_args, const char *str);
-+void watchdog_action_completion(ReadLineState *rs, int nb_args,
-+                                const char *str);
-+void migrate_set_capability_completion(ReadLineState *rs, int nb_args,
-+                                       const char *str);
-+void migrate_set_parameter_completion(ReadLineState *rs, int nb_args,
-+                                      const char *str);
-+void delvm_completion(ReadLineState *rs, int nb_args, const char *str);
-+void loadvm_completion(ReadLineState *rs, int nb_args, const char *str);
-+
-+#endif
-diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index 9b66458d21f..27ce1c303f4 100644
---- a/include/monitor/hmp.h
-+++ b/include/monitor/hmp.h
-@@ -114,27 +114,6 @@ void hmp_vhost_queue_status(Monitor *mon, const QDict *qdict);
- void hmp_virtio_queue_element(Monitor *mon, const QDict *qdict);
- void hmp_xen_event_inject(Monitor *mon, const QDict *qdict);
- void hmp_xen_event_list(Monitor *mon, const QDict *qdict);
--void object_add_completion(ReadLineState *rs, int nb_args, const char *str);
--void object_del_completion(ReadLineState *rs, int nb_args, const char *str);
--void device_add_completion(ReadLineState *rs, int nb_args, const char *str);
--void device_del_completion(ReadLineState *rs, int nb_args, const char *str);
--void sendkey_completion(ReadLineState *rs, int nb_args, const char *str);
--void chardev_remove_completion(ReadLineState *rs, int nb_args, const char *str);
--void chardev_add_completion(ReadLineState *rs, int nb_args, const char *str);
--void set_link_completion(ReadLineState *rs, int nb_args, const char *str);
--void netdev_add_completion(ReadLineState *rs, int nb_args, const char *str);
--void netdev_del_completion(ReadLineState *rs, int nb_args, const char *str);
--void ringbuf_write_completion(ReadLineState *rs, int nb_args, const char *str);
--void info_trace_events_completion(ReadLineState *rs, int nb_args, const char *str);
--void trace_event_completion(ReadLineState *rs, int nb_args, const char *str);
--void watchdog_action_completion(ReadLineState *rs, int nb_args,
--                                const char *str);
--void migrate_set_capability_completion(ReadLineState *rs, int nb_args,
--                                       const char *str);
--void migrate_set_parameter_completion(ReadLineState *rs, int nb_args,
--                                      const char *str);
--void delvm_completion(ReadLineState *rs, int nb_args, const char *str);
--void loadvm_completion(ReadLineState *rs, int nb_args, const char *str);
- void hmp_rocker(Monitor *mon, const QDict *qdict);
- void hmp_rocker_ports(Monitor *mon, const QDict *qdict);
- void hmp_rocker_of_dpa_flows(Monitor *mon, const QDict *qdict);
-diff --git a/chardev/char-hmp-cmds.c b/chardev/char-hmp-cmds.c
-index 8e9e1c1c021..f377e00b699 100644
---- a/chardev/char-hmp-cmds.c
-+++ b/chardev/char-hmp-cmds.c
-@@ -16,6 +16,7 @@
- #include "qemu/osdep.h"
- #include "chardev/char.h"
- #include "monitor/hmp.h"
-+#include "monitor/hmp-completion.h"
- #include "monitor/monitor.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-char.h"
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 0a193b8f54a..d5712d11b8c 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -17,6 +17,7 @@
- #include "block/qapi.h"
- #include "migration/snapshot.h"
- #include "monitor/hmp.h"
-+#include "monitor/hmp-completion.h"
- #include "monitor/monitor.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-migration.h"
-diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
-index 3f019ae2a28..da7dd7f31f2 100644
---- a/monitor/hmp-target.c
-+++ b/monitor/hmp-target.c
-@@ -29,6 +29,7 @@
- #include "system/device_tree.h"
- #include "monitor/hmp-target.h"
- #include "monitor/hmp.h"
-+#include "monitor/hmp-completion.h"
- #include "block/block-hmp-cmds.h"
- #include "qapi/qapi-commands-control.h"
- #include "qapi/qapi-commands-misc.h"
-diff --git a/net/net-hmp-cmds.c b/net/net-hmp-cmds.c
-index e7c55d27876..2b24c9e6049 100644
---- a/net/net-hmp-cmds.c
-+++ b/net/net-hmp-cmds.c
-@@ -16,6 +16,7 @@
- #include "qemu/osdep.h"
- #include "migration/misc.h"
- #include "monitor/hmp.h"
-+#include "monitor/hmp-completion.h"
- #include "monitor/monitor.h"
- #include "net/net.h"
- #include "net/hub.h"
-diff --git a/qom/qom-hmp-cmds.c b/qom/qom-hmp-cmds.c
-index 32e40630c96..47110ca58c0 100644
---- a/qom/qom-hmp-cmds.c
-+++ b/qom/qom-hmp-cmds.c
-@@ -8,6 +8,7 @@
- #include "qemu/osdep.h"
- #include "hw/core/qdev.h"
- #include "monitor/hmp.h"
-+#include "monitor/hmp-completion.h"
- #include "monitor/monitor.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-qom.h"
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index 5c00bbf483b..e90eb6247ea 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -20,6 +20,7 @@
- #include "qemu/osdep.h"
- #include "hw/core/sysbus.h"
- #include "monitor/hmp.h"
-+#include "monitor/hmp-completion.h"
- #include "monitor/monitor.h"
- #include "monitor/qdev.h"
- #include "system/arch_init.h"
-diff --git a/system/runstate-hmp-cmds.c b/system/runstate-hmp-cmds.c
-index be1d6769926..02d1d42bf39 100644
---- a/system/runstate-hmp-cmds.c
-+++ b/system/runstate-hmp-cmds.c
-@@ -16,6 +16,7 @@
- #include "qemu/osdep.h"
- #include "exec/cpu-common.h"
- #include "monitor/hmp.h"
-+#include "monitor/hmp-completion.h"
- #include "monitor/monitor.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-run-state.h"
-diff --git a/trace/trace-hmp-cmds.c b/trace/trace-hmp-cmds.c
-index 45f4335ff5d..390173095cf 100644
---- a/trace/trace-hmp-cmds.c
-+++ b/trace/trace-hmp-cmds.c
-@@ -24,6 +24,7 @@
- 
- #include "qemu/osdep.h"
- #include "monitor/hmp.h"
-+#include "monitor/hmp-completion.h"
- #include "monitor/monitor.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-trace.h"
-diff --git a/ui/ui-hmp-cmds.c b/ui/ui-hmp-cmds.c
-index 6c93d452c9c..1e9bc77bd80 100644
---- a/ui/ui-hmp-cmds.c
-+++ b/ui/ui-hmp-cmds.c
-@@ -18,6 +18,7 @@
- #include <spice/enums.h>
- #endif
- #include "monitor/hmp.h"
-+#include "monitor/hmp-completion.h"
- #include "monitor/monitor-internal.h"
- #include "qapi/error.h"
- #include "qapi/qapi-commands-ui.h"
+diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+index 245ab9b98cc..cd084a19363 100644
+--- a/hw/misc/meson.build
++++ b/hw/misc/meson.build
+@@ -46,7 +46,7 @@ system_ss.add(when: 'CONFIG_ALLWINNER_SRAMC', if_true: files('allwinner-sramc.c'
+ system_ss.add(when: 'CONFIG_ALLWINNER_A10_CCM', if_true: files('allwinner-a10-ccm.c'))
+ system_ss.add(when: 'CONFIG_ALLWINNER_A10_DRAMC', if_true: files('allwinner-a10-dramc.c'))
+ system_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-h3-ccu.c'))
+-specific_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-cpucfg.c'))
++system_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-cpucfg.c'))
+ system_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-h3-dramc.c'))
+ system_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-h3-sysctrl.c'))
+ system_ss.add(when: 'CONFIG_ALLWINNER_H3', if_true: files('allwinner-sid.c'))
 -- 
 2.53.0
 
