@@ -4,67 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C8BFFF8855
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 12:48:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 603B5FF8855
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 12:48:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKbfo-0003TB-C4; Wed, 06 May 2026 08:48:21 -0400
+	id 1wKbgI-0003vG-Ap; Wed, 06 May 2026 08:48:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chen.zhongyao@zte.com.cn>)
- id 1wKZ83-0002g5-MQ; Wed, 06 May 2026 06:05:19 -0400
-Received: from mxhk.zte.com.cn ([160.30.148.34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chen.zhongyao@zte.com.cn>)
- id 1wKZ80-0006Dk-M0; Wed, 06 May 2026 06:05:19 -0400
-Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mxhk.zte.com.cn (FangMail) with ESMTPS id 4g9WGB6mv9z5B10G;
- Wed, 06 May 2026 18:05:06 +0800 (CST)
-Received: (from root@localhost) by mse-fl1.zte.com.cn id 646A537u037157;
- Wed, 6 May 2026 18:05:03 +0800 (+08)
- (envelope-from chen.zhongyao@zte.com.cn)
-Message-Id: <202605061005.646A537u037157@mse-fl1.zte.com.cn>
-Received: from szxl2zmapp07.zte.com.cn ([10.1.32.52])
- by mse-fl1.zte.com.cn with SMTP id 6467GCQk073999;
- Wed, 6 May 2026 15:16:12 +0800 (+08)
- (envelope-from chen.zhongyao@zte.com.cn)
-Received: from mapi (szxlzmapp01[null]) by mapi (Zmail) with MAPI id mid18;
- Wed, 6 May 2026 15:16:14 +0800 (CST)
-X-Zmail-TransId: 2b0369faeabe1a1-84c5d
-X-Mailer: Zmail v1.0
-Date: Wed, 6 May 2026 15:16:14 +0800 (CST)
-Mime-Version: 1.0
-From: <chen.zhongyao@zte.com.cn>
-To: <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <liwei1518@gmail.com>,
- <daniel.barboza@oss.qualcomm.com>, <zhiwei_liu@linux.alibaba.com>,
- <chao.liu.zevorn@gmail.com>
-Cc: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: =?UTF-8?B?W1BBVENIXSB0YXJnZXQvcmlzY3Y6IEZpeCB0YWlsIGhhbmRsaW5nIGZvciB2bXYucy54IGFuZCB2Zm12LnMuZg==?=
-Content-Type: text/plain;
-	charset="UTF-8"
-X-MAIL: mse-fl1.zte.com.cn 646A537u037157
-X-MSS: AUDITRELEASE@mse-fl1.zte.com.cn
-X-TLS: YES
-X-SPF-DOMAIN: zte.com.cn
-X-ENVELOPE-SENDER: chen.zhongyao@zte.com.cn
-X-SPF: None
-X-SOURCE-IP: 10.5.228.132 unknown Wed, 06 May 2026 18:05:06 +0800
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 69FB1252.002/4g9WGB6mv9z5B10G
-Received-SPF: pass client-ip=160.30.148.34;
- envelope-from=chen.zhongyao@zte.com.cn; helo=mxhk.zte.com.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, MSGID_FROM_MTA_HEADER=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wKbgG-0003tj-Cf
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 08:48:48 -0400
+Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wKbgE-0006Xu-QN
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 08:48:48 -0400
+Received: by mail-oa1-x2d.google.com with SMTP id
+ 586e51a60fabf-415c8a4d2e6so2878843fac.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 05:48:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778071725; x=1778676525; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=7srCvn/uwiMbEPkUKhW/TiRw6dfQOOGSd36ct8fxg/0=;
+ b=E0A4V1/IPzmiNpNhoQZ8Tnyvh6M+wNvJGheV9fWv7CGyH+wpgYiIeC8Ga4r089qwYu
+ ajOHvq/OoDMRSHLf7on81jKXh3WYFocMr4cCGccFMA39O/IYdA/ODUq/pFBBoXMNEEcN
+ X+0qYLSLgdThZluFLIaeUos5gwVEmITOCcC275SECypXnoBM024yNtJBFJz4SL2OamXS
+ FjWEKVGJf2SHSxRUza2kI4Nh/NyVK1NJkUEs6exPyKUKPBCSDRIslX22PU9uerDeuMdx
+ BVrnNxyzhFN3I9UV6QhEPQISwvbKYP2cwV1ogyx7X6LZTmx1BpxyQGNSUmMxJOQN8ov8
+ 72ZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778071725; x=1778676525;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7srCvn/uwiMbEPkUKhW/TiRw6dfQOOGSd36ct8fxg/0=;
+ b=MFUN4RhsCbJcOjqsAv5Kl8rqSTwevwhajSZ7Otein8r8RbuyDxPWv/5RZvSQ4Hvw3r
+ GX3WjBw5msYRMDkcyyoyRHaPESdmErfc/wLgxd92k19RLo2uOqwdcAzWyipex3N0GLsR
+ X5Xr+3XEcIIA2QI6Z6kwIQaH7r6p5mXTQBuGbKY4LUa1entoGTEroQ/xSD0VPfy31Gas
+ K3DhjVA69VNKoqMSm573YUFtDMlcwuHJx6CYdNaDUsh71/6wdKShSwxBgI+OzChw2ifx
+ MDGun/6Tq6Ku6nPiYFZIFXJvPqofoaYuHrqY955RC5gHKsrl+tqw+TvTMaruJfcJ/F0z
+ l1aw==
+X-Gm-Message-State: AOJu0Yx8ElMOO/8U7f/hKaaERPuuoE71qMZixKNwMYP+7s4DjApz5Jja
+ FssnClmQlOWhejyqo5ss6pV7iley5wUBse+AJbNVFr6cQxB+cZM8v0ngD10LVBI19tUdQ1jAIO6
+ yM8dF
+X-Gm-Gg: AeBDietdb208uHiAyjf6YKRMwpKyIF8nfwegxfBN9tIjiZ0heT1gszU8YlhsH+4zOWG
+ r4OgUCY3y+cZwzLkmZvORDr9D8WQL+ImjfgTWwu0oIrkIPIA516rhdBZAGMn2prvQR6DNdskxlm
+ YP8c6kqGWRzAgyDdbzOyf2Ht/FTpnS5UPkQeglXLMbFczsKfhhA8f36miTjJf63S0TFvbl2leOC
+ gtRi0BtTAR2ba3SKAw9OQHzySVIqM0A+Mb/ANy8X/9Qi+VOmpv/5tmTScAZ6a7XT4uIW6TjP8zq
+ gUldo9tyBHHIHwXXdlG9V/R+AuDrgjg9XVRQevhjUozNpXtQq4l5cL22BttYYu0RhenCkC/v1Nd
+ kAvFkaFBYd55assh18xlJLLIA80gLCoLjSmQFLWQqpTvRDt8XpIHKibegAGaIUm8Byx9JAqAHzy
+ MumAyyI2Jb4l6U7Y08vpwtUWQPib+WJtMzs2Ar3sN4K8sZ8shUekJgNJrGm+A2VH7GTg+9g+zMz
+ 52B8gx1mhQGAUls8PLMBWe0xCPymRA=
+X-Received: by 2002:a05:6870:f2a8:b0:42f:ba47:36f5 with SMTP id
+ 586e51a60fabf-434f588f6bbmr1843550fac.17.1778071725284; 
+ Wed, 06 May 2026 05:48:45 -0700 (PDT)
+Received: from ?IPV6:2600:381:c938:6375:5307:cd92:1ec8:e891?
+ ([2600:381:c938:6375:5307:cd92:1ec8:e891])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-43454d324a4sm16598179fac.14.2026.05.06.05.48.44
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 May 2026 05:48:44 -0700 (PDT)
+Message-ID: <2c23feac-abf7-4c55-b4b7-51b0dc1059ac@linaro.org>
+Date: Wed, 6 May 2026 07:48:42 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/arm: Report IL=0 for Thumb 16-bit BKPT insn
+To: qemu-devel@nongnu.org
+References: <20260505103726.419195-1-peter.maydell@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260505103726.419195-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 06 May 2026 08:48:08 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,143 +105,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The risc-v vector spec defines vmv.s.x and vfmv.s.f as writing
-element 0 of the destination register while the remaining destination
-elements follow the current tail policy. When QEMU runs with
-rvv_ta_all_1s enabled, those elements must therefore become all 1s.
+On 5/5/26 05:37, Peter Maydell wrote:
+> The Thumb BKPT insn is 16-bit, and the ESR_ELx syndrome register
+> definition requires that we set the IL bit to 0 for this, and 1 for
+> the 32-bit A32 and A64 BKPT/BRK.
+> 
+> We used to do this correctly, but accidentally lost it in the
+> conversion to decodetree, because we converted the A32 BKPT first,
+> and then when we converted the T16 BKPT we forgot that trans_BKPT()
+> was unconditionally setting IL=1.
+> 
+> Pass the right value for syn_aa32_bkpt()'s is_16bit argument.
+> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3474
+> Fixes: 43f7e42c7d515f ("target/arm: Convert T16, Miscellaneous 16-bit instructions")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   target/arm/tcg/translate.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+> index ce427c5a3c..7f76a57653 100644
+> --- a/target/arm/tcg/translate.c
+> +++ b/target/arm/tcg/translate.c
+> @@ -3580,7 +3580,7 @@ static bool trans_BKPT(DisasContext *s, arg_BKPT *a)
+>           (a->imm == 0xab)) {
+>           gen_exception_internal_insn(s, EXCP_SEMIHOST);
+>       } else {
+> -        gen_exception_bkpt_insn(s, syn_aa32_bkpt(a->imm, false));
+> +        gen_exception_bkpt_insn(s, syn_aa32_bkpt(a->imm, s->thumb));
+>       }
+>       return true;
+>   }
 
-QEMU handled both instructions as translation-time special cases that
-directly wrote vd[0] and skipped the usual tail processing. As a result,
-vmv.s.x and vfmv.s.f left the remaining destination elements unchanged
-instead of applying the configured tail policy.
+While correct, perhaps clearer to use curr_insn_len.
 
-Fix this by routing both instructions through a helper that writes
-vd[0] and then treats the rest of the destination register as tail,
-reusing the existing agnostic-element fill logic.
+Anyway,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Signed-off-by: Zhongyao Chen <chen.zhongyao@zte.com.cn>
----
- target/riscv/helper.h                   |  4 +++
- target/riscv/insn_trans/trans_rvv.c.inc | 44 ++++++++-----------------
- target/riscv/vector_helper.c            | 18 ++++++++++
- 3 files changed, 36 insertions(+), 30 deletions(-)
 
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index b785456ee0..5a7f043edb 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -660,6 +660,10 @@ DEF_HELPER_4(vmv_v_x_b, void, ptr, i64, env, i32)
- DEF_HELPER_4(vmv_v_x_h, void, ptr, i64, env, i32)
- DEF_HELPER_4(vmv_v_x_w, void, ptr, i64, env, i32)
- DEF_HELPER_4(vmv_v_x_d, void, ptr, i64, env, i32)
-+DEF_HELPER_4(vset_velem0_b, void, ptr, i64, env, i32)
-+DEF_HELPER_4(vset_velem0_h, void, ptr, i64, env, i32)
-+DEF_HELPER_4(vset_velem0_w, void, ptr, i64, env, i32)
-+DEF_HELPER_4(vset_velem0_d, void, ptr, i64, env, i32)
-
- DEF_HELPER_6(vsaddu_vv_b, void, ptr, ptr, ptr, ptr, env, i32)
- DEF_HELPER_6(vsaddu_vv_h, void, ptr, ptr, ptr, ptr, env, i32)
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 4df9a40b44..6a966c35c3 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -3381,37 +3381,21 @@ static void vec_element_loadi(DisasContext *s, TCGv_i64 dest,
-     load_element(dest, tcg_env, endian_ofs(s, vreg, idx), s->sew, sign);
- }
-
--/* Integer Scalar Move Instruction */
-+typedef void gen_helper_vset_velem0(TCGv_ptr, TCGv_i64, TCGv_env, TCGv_i32);
-
--static void store_element(TCGv_i64 val, TCGv_ptr base,
--                          int ofs, int sew)
-+static void vec_element_storei_tail(DisasContext *s, int vreg, TCGv_i64 val)
- {
--    switch (sew) {
--    case MO_8:
--        tcg_gen_st8_i64(val, base, ofs);
--        break;
--    case MO_16:
--        tcg_gen_st16_i64(val, base, ofs);
--        break;
--    case MO_32:
--        tcg_gen_st32_i64(val, base, ofs);
--        break;
--    case MO_64:
--        tcg_gen_st_i64(val, base, ofs);
--        break;
--    default:
--        g_assert_not_reached();
--    }
--}
-+    static gen_helper_vset_velem0 * const fns[4] = {
-+        gen_helper_vset_velem0_b, gen_helper_vset_velem0_h,
-+        gen_helper_vset_velem0_w, gen_helper_vset_velem0_d,
-+    };
-+    TCGv_ptr dest = tcg_temp_new_ptr();
-+    uint32_t data = FIELD_DP32(0, VDATA, VTA, s->vta);
-+    TCGv_i32 desc = tcg_constant_i32(simd_desc(s->cfg_ptr->vlenb,
-+                                              s->cfg_ptr->vlenb, data));
-
--/*
-- * Store vreg[idx] = val.
-- * The index must be in range of VLMAX.
-- */
--static void vec_element_storei(DisasContext *s, int vreg,
--                               int idx, TCGv_i64 val)
--{
--    store_element(val, tcg_env, endian_ofs(s, vreg, idx), s->sew);
-+    tcg_gen_addi_ptr(dest, tcg_env, vreg_ofs(s, vreg));
-+    fns[s->sew](dest, val, tcg_env, desc);
- }
-
- /* vmv.x.s rd, vs2 # x[rd] = vs2[0] */
-@@ -3458,7 +3442,7 @@ static bool trans_vmv_s_x(DisasContext *s, arg_vmv_s_x *a)
-          */
-         s1 = get_gpr(s, a->rs1, EXT_NONE);
-         tcg_gen_ext_tl_i64(t1, s1);
--        vec_element_storei(s, a->rd, 0, t1);
-+        vec_element_storei_tail(s, a->rd, t1);
-         gen_set_label(over);
-         tcg_gen_movi_tl(cpu_vstart, 0);
-         finalize_rvv_inst(s);
-@@ -3514,7 +3498,7 @@ static bool trans_vfmv_s_f(DisasContext *s, arg_vfmv_s_f *a)
-         t1 = tcg_temp_new_i64();
-         do_nanbox(s, t1, cpu_fpr[a->rs1]);
-
--        vec_element_storei(s, a->rd, 0, t1);
-+        vec_element_storei_tail(s, a->rd, t1);
-
-         gen_set_label(over);
-         tcg_gen_movi_tl(cpu_vstart, 0);
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 83dd26314d..6c7af25d82 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -2112,6 +2112,24 @@ GEN_VEXT_VMV_VX(vmv_v_x_h, int16_t, H2)
- GEN_VEXT_VMV_VX(vmv_v_x_w, int32_t, H4)
- GEN_VEXT_VMV_VX(vmv_v_x_d, int64_t, H8)
-
-+#define GEN_VEXT_SET_VELEM0(NAME, ETYPE, H)                             \
-+void HELPER(NAME)(void *vd, uint64_t s1, CPURISCVState *env,            \
-+                  uint32_t desc)                                        \
-+{                                                                       \
-+    uint32_t esz = sizeof(ETYPE);                                       \
-+    uint32_t vlenb = riscv_cpu_cfg(env)->vlenb;                         \
-+    uint32_t vta = vext_vta(desc);                                      \
-+                                                                        \
-+    *((ETYPE *)vd + H(0)) = (ETYPE)s1;                                  \
-+    /* Treat every element past vd[0] as tail for scalar-to-vector moves. */ \
-+    vext_set_elems_1s(vd, vta, esz, vlenb);                             \
-+}
-+
-+GEN_VEXT_SET_VELEM0(vset_velem0_b, int8_t,  H1)
-+GEN_VEXT_SET_VELEM0(vset_velem0_h, int16_t, H2)
-+GEN_VEXT_SET_VELEM0(vset_velem0_w, int32_t, H4)
-+GEN_VEXT_SET_VELEM0(vset_velem0_d, int64_t, H8)
-+
- #define GEN_VEXT_VMERGE_VV(NAME, ETYPE, H)                           \
- void HELPER(NAME)(void *vd, void *v0, void *vs1, void *vs2,          \
-                   CPURISCVState *env, uint32_t desc)                 \
--- 
-2.43.0
+r~
 
