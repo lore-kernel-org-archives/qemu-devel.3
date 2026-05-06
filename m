@@ -4,89 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D053CD3424
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 04:14:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DA82CD3424
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 05:54:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKTdu-0002Pe-Pg; Wed, 06 May 2026 00:13:50 -0400
+	id 1wKVC4-0007JE-Cu; Wed, 06 May 2026 01:53:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <munkhuu0825@gmail.com>)
- id 1wKTdt-0002PH-Bk
- for qemu-devel@nongnu.org; Wed, 06 May 2026 00:13:49 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wKVC2-0007If-Hi
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 01:53:10 -0400
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <munkhuu0825@gmail.com>)
- id 1wKTdr-000699-6A
- for qemu-devel@nongnu.org; Wed, 06 May 2026 00:13:49 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-3650a628473so3968123a91.3
- for <qemu-devel@nongnu.org>; Tue, 05 May 2026 21:13:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wKVC0-0002Bc-L0
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 01:53:10 -0400
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-2a8fba3f769so24886845ad.2
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 22:53:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778040826; x=1778645626; darn=nongnu.org;
- h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=AK3zMwVO3WE3Y00R1JNOuZCh4QPSwgne75XPkrfDBak=;
- b=Vg99/qz+D8WcZxXBZYZTrXNbnTSD1c+sew8RIKeeirTXp1kjFCqMVB/2ILzYm12Xvp
- mQTs8eieCv+kk0up3CnymXdNp+l5Hqk5VGWuTn2/kDBGbuvkQvDVgZxCDeevmd+7alfo
- LazQKPr36o/ufWkpo7I9RuO6Wun2bk/qxYFreFe+saTjbvZVFJvg+v2kXdtMCc787ZhR
- k7xx8u3gwUFw+O5QB4wAkP5at1wxosM4YU2XRywUANxO2x+TWJMJYhx/aFpuaW6urF+a
- xVEJlA+VKn0fwO8i1we7cXSBYA62vhxN3CNOaKmuYKzfXojIaBaCfm5643sawnY59+1P
- pveg==
+ d=gmail.com; s=20251104; t=1778046786; x=1778651586; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=f7sE3FRimHIINXSd8puM1AIRt8EfPIvqaDSSEESZbVU=;
+ b=lGUD8oEqMt/LSnSacIF+asPop9IJ7vjxh8lXOB45smFfJO6x7DiOWQomJZkJdllphU
+ uIN3oSTa2Eq6DzTp9h7fotn2Jh4YEWd7/fWK9syA2PvjunDxWFlW5LKseq/YqOQO+P0J
+ A4oCdPok3+QfT3zodaCKODONp+Ml8imlAH4fmkOFfK9gEJ8FD7eG4ih3YaQGhLKBqw0n
+ tzTzIZp/FwmorqmoMmcVMPo/gCN38AUcVBkik/7MvuQwr0+sflcmz2zTVKQTU5cXoWxb
+ Mfw+t0YYVw9lW0wINxiCeUZzfeU8szreMEaAYoo/UQtd/nKosx6NjoEINGowwF88o15p
+ es8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778040826; x=1778645626;
- h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=AK3zMwVO3WE3Y00R1JNOuZCh4QPSwgne75XPkrfDBak=;
- b=ExZg8kc+4WsnknydqVAcuoGeqc61eeQ31BeF6FhkU7pMIyszqgeKvBalInBmk4U9tD
- 2E+zOtUjOcuhWxWRCQzbZTWe97YTi7CtivUqm9wyFqJVc6rFeoH8mE/2qoT4+SeMKL5/
- w2358idgVzhLaWFK2JWHcBAu1YTIdVbazC5ifAkGwZdhDQmjCZmwM0g84jbgdvrI/Vpa
- xmkDLW33ThxLgqLhMblVc+qT5XAmgI+IPHtsFusyfr47aNiDES680ZpEpoQlgmlyi1pC
- VQ1EEILHQe9F/2FVSEpIOHaEFqcN+LMSqZT3AORvutUUnWV42ZtjR9jKWcym581AkN2+
- cd/g==
-X-Gm-Message-State: AOJu0YzIDl6ZJSkmZF6+L/1EWihcPQyxm6pDq6cX6QLyVbb4D0DP+pVb
- QXmJWjEzibv5cDL/D/swcd2xrSt4r9IKMpgSNMYJWxziU74aGvnX4trH
-X-Gm-Gg: AeBDiet8hDq4ZD6CXr0h46n7fOaWL0BMSNkZf31ITyk6g4r1JAvQoCWSS7Zgv8sb+AW
- c0VdIzUyuQW7el7Cvx8mQxebIpaSHLnol62qxh3LPUqQuoS0NiLoBkgztBXODBuZ0TGoA6d93jZ
- 34P9y7OQwb1mwzEBgAz3oczbMJ6xlxejaB6y8eWf/iVshKdjlEx9DOqUdkS7X6ymbhfnSgFAzGf
- R2F1T9RlnnjJ4LEzS82mIvyX/dpPd29qyyqY1RCn9E2Ayxt6GPT2+Hd3aPsfB2KYs00zeUf+p6l
- irIUpsxHtxD66JZgJGSIgoyBw820mma6bo/Vs/KSDyc04CBsKPpNjzukFOtAbXbesGY8vdZNxye
- uzXEmjY6MST1bBo32cCnQan8fO1Z4+Ta1WD2P6TU9rWM0nKowZbwB7AqDlr0R0WWJvNdFoNWnL0
- k+GDYDtxVjDDP9ez2ZqQ62K0Sc/b1x4jxF6Q4TjkZuFKPUGIpwqy/tCZ6gvg==
-X-Received: by 2002:a17:90b:4e87:b0:362:ded3:bbcb with SMTP id
- 98e67ed59e1d1-365ac77546emr1614461a91.25.1778040825448; 
- Tue, 05 May 2026 21:13:45 -0700 (PDT)
-Received: from smtpclient.apple ([202.55.186.124])
+ d=1e100.net; s=20251104; t=1778046786; x=1778651586;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=f7sE3FRimHIINXSd8puM1AIRt8EfPIvqaDSSEESZbVU=;
+ b=Xw/Xbm1dlMrUEu4x3SyPIEh/EJxOnciW7vpMI6y71b1l9OisFWdO949721lkXgyhWN
+ Qop2hoe6V8dj9/f7oDhjjLstq/TAPrtcvRKyxQ8sYTWnlI04U2oAXQr+lfjobl/9vffi
+ 2KiMGT3fHgFD8VIDYfBGuJI1KQJPrSnyF+r5BfdDcp6onEKRExch0Xasa22b6kV1s1PB
+ 377o2JrbfRZS6oaTR4O9VrBaVZ1/eD7Xac1q52f8pahHdkmSdgf/LgErAHSCWdm7zd8B
+ InHSy0P8LbVY3ycSPPbwRjmACQDj/yxySfIxfe+7/IPUJH66OTrbdtw70Pi/rLP163WO
+ shpQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+n/hov0DoDC6KM5FRwbmSOPpQYeW3LYEwkqubwVZ4cHmcAv9G4Yrb2dcXVpP27cfd+XNGR9eQ3LFQX@nongnu.org
+X-Gm-Message-State: AOJu0YxL+yChDvhSWLwhRE4BaQNY/o2BOe5qKVCP3We4QAMizcu00+q/
+ 0/b92G24QYInYM48MvMNdzt0LPar5THsx0FOwgq9uswLeDJd+6dAeAU6
+X-Gm-Gg: AeBDietKTLeZMmgwyYrWpEGdx2GdKdYHctzBxVDPlkrvZ+fqVyZV9RbEtVjF3dBE9GP
+ 8h+9tgjpihxZDZNAt6BeHv9JUIvVJ2xjCkKNpEOFJ7U0RLDapIdKdW6RnVpWN6awaw7XdU1dOz/
+ ADtLzuBGXccdjisRVA0Z86xojp3JYozz0Xqp0IfeaDraamO9mxIV7gY0jwpBgwvGTuYVs7o9B76
+ 5X+ylGnBxB+TJ9QDpw+4eQUTW3FdzdjmCoT/anwnxitvNDp8RAaqXGySjfD6ddrbOF8Ag7vsM0V
+ z8HGQXxPn3+ZaS5nDG+GItqjOXtn/foKB4zsp3dvZa8e5qk8X65alWmxzLs+jhBgHF6/oZKlcyE
+ buBS4Im61Io7UU5Ddr4j6S0pftImIhDefw5VBgHcBmIxpezuwdUNhKBmhtJg1frcTG1d9rbxjGC
+ mHWg9ame8lGNwxYkxA5/bYyu73qd5TRMDwPlPldWc+GSPMD9GhBbLKbsdMfCTseZTb/rDpQhLvg
+ FXdQ7eK
+X-Received: by 2002:a17:903:2c6:b0:2ba:6ffe:30ad with SMTP id
+ d9443c01a7336-2ba794b7134mr19251325ad.20.1778046786231; 
+ Tue, 05 May 2026 22:53:06 -0700 (PDT)
+Received: from localhost (124.158.97.178.qld.leaptel.network. [124.158.97.178])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-365b0560fa8sm329934a91.1.2026.05.05.21.13.43
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 05 May 2026 21:13:44 -0700 (PDT)
-From: =?utf-8?B?0JzTqdC90YXQsdCw0LDRgtCw0YAg0K3QvdGF0LHQsNCw0YLQsNGA?=
- <munkhuu0825@gmail.com>
-Message-Id: <B987731A-F30F-4B6F-8069-86BF3377910D@gmail.com>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_DCFE8011-BCAA-4ADD-8C82-5914F24140FA"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH] hw/usb/hcd-ohci: Fix memory leak in ohci_service_iso_td()
-Date: Wed, 6 May 2026 12:13:25 +0800
-In-Reply-To: <CAFEAcA8s+YW9n78=75VMetVP-10mMiTkzrxCHgHK7kdvP-50jg@mail.gmail.com>
-Cc: qemu-devel@nongnu.org
-To: Peter Maydell <peter.maydell@linaro.org>
-References: <20260505110036.47574-1-munkhuu0825@gmail.com>
- <CAFEAcA8s+YW9n78=75VMetVP-10mMiTkzrxCHgHK7kdvP-50jg@mail.gmail.com>
-X-Mailer: Apple Mail (2.3864.500.181)
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=munkhuu0825@gmail.com; helo=mail-pj1-x102e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ d9443c01a7336-2ba7bf2cd25sm12174325ad.22.2026.05.05.22.53.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 05 May 2026 22:53:05 -0700 (PDT)
+Date: Wed, 6 May 2026 15:53:01 +1000
+From: Nicholas Piggin <npiggin@gmail.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Joel Stanley <joel@jms.id.au>, 
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>, Chris Rauer <crauer@google.com>, 
+ Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Portia Stephens <portias@oss.tenstorrent.com>, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, Hao Wu <wuhaotsh@google.com>
+Subject: Re: [PATCH v4 01/13] hw/i2c: Add designware i2c controller
+Message-ID: <afrVHbIeet5tqCA-@lima-default>
+References: <20260425131721.932250-1-joel@jms.id.au>
+ <20260425131721.932250-2-joel@jms.id.au>
+ <972d8ddd-8ef9-4cd3-a7e5-90f00ec625ad@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <972d8ddd-8ef9-4cd3-a7e5-90f00ec625ad@linaro.org>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,502 +110,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, May 05, 2026 at 09:57:20AM +0200, Philippe Mathieu-Daudé wrote:
+> On 25/4/26 15:17, Joel Stanley wrote:
+> > From: Chris Rauer <crauer@google.com>
+> > 
+> > In the past this model has been submitted for use with the arm virt
+> > machine, however in this case it will be used by the upcoming
+> > Tenstorrent Atlantis RISC-V machine.
+> > 
+> > This is a re-submission of the model with Chris' permission, with a
+> > light touch of updates to make it build with qemu master.
+> > 
+> > Reviewed-by: Hao Wu <wuhaotsh@google.com>
+> > Signed-off-by: Chris Rauer <crauer@google.com>
+> > Link: https://lore.kernel.org/qemu-devel/20220110214755.810343-2-venture@google.com
+> > [jms: rebase and minor build fixes for class_init and reset callback]
+> > Signed-off-by: Joel Stanley <joel@jms.id.au>
+> > ---
+> > v4: Remove unused random header
+> > v2: Add trace event for read and write, document Alano and myself as
+> > reviewers.
+> > ---
+> >   MAINTAINERS                     |   8 +
+> >   include/hw/i2c/designware_i2c.h | 101 ++++
+> >   hw/i2c/designware_i2c.c         | 817 ++++++++++++++++++++++++++++++++
+> >   hw/i2c/Kconfig                  |   4 +
+> >   hw/i2c/meson.build              |   1 +
+> >   hw/i2c/trace-events             |   4 +
+> >   6 files changed, 935 insertions(+)
+> >   create mode 100644 include/hw/i2c/designware_i2c.h
+> >   create mode 100644 hw/i2c/designware_i2c.c
+> > 
+> > diff --git a/MAINTAINERS b/MAINTAINERS
+> > index aa4267b15806..e1942a86eba5 100644
+> > --- a/MAINTAINERS
+> > +++ b/MAINTAINERS
+> > @@ -2716,6 +2716,14 @@ S: Orphan
+> >   F: hw/gpio/pcf8574.c
+> >   F: include/gpio/pcf8574.h
+> > +DesignWare I2C
+> > +M: Chris Rauer <crauer@google.com>
+> 
+> This was 4 years ago. Is Chris still up to this?
 
---Apple-Mail=_DCFE8011-BCAA-4ADD-8C82-5914F24140FA
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+Joel is away for a few weeks, but AFAIK he did ping Chris and got
+ack to upstream his patch.
 
+> > +    case DW_IC_SAR:
+> > +        qemu_log_mask(LOG_UNIMP, "%s: unsupported write - ic_sar\n",
+> > +                      DEVICE(s)->canonical_path);
+> > +        s->ic_sar = value & DW_IC_SAR_MASK;
+> 
+> Unsupported but updated...
 
+Yeah, not sure what the best course of action is, maybe device driver
+was working better if the value got saved?
 
-> On 5 May 2026, at 21:14, Peter Maydell <peter.maydell@linaro.org> =
-wrote:
->=20
-> On Tue, 5 May 2026 at 12:01, <munkhuu0825@gmail.com =
-<mailto:munkhuu0825@gmail.com>> wrote:
->>=20
->> From: heropd <munkhuu0825@gmail.com <mailto:munkhuu0825@gmail.com>>
->>=20
->> Fix a memory leak in ohci_service_iso_td() by calling
->> usb_packet_cleanup() before freeing USBPacket.
->>=20
->> Signed-off-by: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com =
-<mailto:munkhuu0825@gmail.com>>
->=20
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3463
->=20
->=20
->> ---
->> hw/usb/hcd-ohci.c | 2 ++
->> 1 file changed, 2 insertions(+)
->>=20
->> diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
->> index 6ed8046fc2..43c49a42ec 100644
->> --- a/hw/usb/hcd-ohci.c
->> +++ b/hw/usb/hcd-ohci.c
->> @@ -748,6 +748,7 @@ static int ohci_service_iso_td(OHCIState *ohci, =
-struct ohci_ed *ed)
->>     usb_handle_packet(dev, pkt);
->>     if (pkt->status =3D=3D USB_RET_ASYNC) {
->>         usb_device_flush_ep_queue(dev, ep);
->> +        usb_packet_cleanup(pkt);
->>         g_free(pkt);
->>         return 1;
->>     }
->=20
-> I don't really understand the USB subsystem, but something seems
-> odd here. The case when usb_handle_packet() can set the
-> p->status to USB_RET_ASYNC is when it has added it to a queue,
-> either directly ("QTAILQ_INSERT_TAIL(&p->ep->queue, p, queue);")
-> or by calling usb_queue_one(). The usb_device_flush_ep_queue()
-> does not (as far as I can tell) remove the queued packet. So it
-> seems wrong to me that this code path frees the packet, and
-> also if we call usb_packet_cleanup() it will do
->    assert(!usb_packet_is_inflight(p));
-> which I think will fire.
->=20
-> It's possible that we can't ever actually get to this code --
-> the usb_handle_packet() has a claim "hcd drivers cannot handle
-> async for isoc" and some assertions about that, which suggests
-> maybe that the intent is that we won't ever return USB_RET_ASYNC
-> for an iso TD. But if so, we should be asserting that.
->=20
+> > +    s->ic_comp_param_1 = DW_IC_COMP_PARAM_1_INIT_VAL;
+> > +    s->ic_comp_version = DW_IC_COMP_VERSION_INIT_VAL;
+> > +    s->ic_comp_type = DW_IC_COMP_TYPE_INIT_VAL;
+> 
+> Preferably initialize the IC_COMP registers once in the
+> designware_i2c_realize() handler.
 
-Thanks that makes sense,
-I tested the USB_RET_ASYNC path locally and usb_packet_cleanup() does =
-indeed hit the inflight
-assertion there
-OHCI ISO ASYNC branch reached
-Assertion failed: (!usb_packet_is_inflight(p)), function =
-usb_packet_cleanup, file core.c, line 657.
+This I didn't change yet because I started register API converstion and
+that all changes.
 
->> @@ -756,6 +757,7 @@ static int ohci_service_iso_td(OHCIState *ohci, =
-struct ohci_ed *ed)
->>     } else {
->>         ret =3D pkt->status;
->>     }
->> +    usb_packet_cleanup(pkt);
->>     g_free(pkt);
->=20
-> This one's probably OK -- is it the one that fixes the repro
-> case in the bug report?
+> > +static void designware_i2c_smbus_init(Object *obj)
+> > +{
+> > +    DesignWareI2CState *s = DESIGNWARE_I2C(obj);
+> > +    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+> > +
+> > +    sysbus_init_irq(sbd, &s->irq);
+> > +
+> > +    memory_region_init_io(&s->iomem, obj, &designware_i2c_ops, s,
+> > +                          "regs", 4 * KiB);
+> 
+> I note the current registers only describe a 1KiB region.
 
-Yes this one should fix repro bug in report
+256 bytes even. It might have 4K alignment in data sheet.
 
->=20
-> thanks
-> -- PMM
+> > +}
+> Since I couldn't look at the datasheet values, for overall modelling:
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-For the async path, I can leave it unchanged for this fix, or add an =
-assertion since ISO TDs are not expected to complete asynchronously.
+Thanks!
+
+I have an incremental patch here that incorporates review comments and
+also a couple of possible issues I found - RX underflow bit was never
+being set AFAIKS it should be set here, and one of the INTR bit clear
+registers was not recalculating irqs.
+
+I will fold this in before next repost if there are no objections.
 
 Thanks,
-Munkhbaatar
+Nick
 
-
---Apple-Mail=_DCFE8011-BCAA-4ADD-8C82-5914F24140FA
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=us-ascii
-
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dus-ascii"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><br =
-id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
-type=3D"cite"><div>On 5 May 2026, at 21:14, Peter Maydell =
-&lt;peter.maydell@linaro.org&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><meta charset=3D"UTF-8"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">On Tue, 5 May 2026 at 12:01, &lt;</span><a =
-href=3D"mailto:munkhuu0825@gmail.com" style=3D"font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
-word-spacing: 0px; -webkit-text-stroke-width: =
-0px;">munkhuu0825@gmail.com</a><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">&gt; wrote:</span><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: =
-solid;"><blockquote type=3D"cite" style=3D"font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-line: =
-none; text-decoration-thickness: auto; text-decoration-style: =
-solid;"><br>From: heropd &lt;<a =
-href=3D"mailto:munkhuu0825@gmail.com">munkhuu0825@gmail.com</a>&gt;<br><br=
->Fix a memory leak in ohci_service_iso_td() by =
-calling<br>usb_packet_cleanup() before freeing =
-USBPacket.<br><br>Signed-off-by: Munkhbaatar Enkhbaatar &lt;<a =
-href=3D"mailto:munkhuu0825@gmail.com">munkhuu0825@gmail.com</a>&gt;<br></b=
-lockquote><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">Resolves:<span =
-class=3D"Apple-converted-space">&nbsp;</span></span><a =
-href=3D"https://gitlab.com/qemu-project/qemu/-/work_items/3463" =
-style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: =
-0px;">https://gitlab.com/qemu-project/qemu/-/work_items/3463</a><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: =
-solid;"><blockquote type=3D"cite" style=3D"font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-line: =
-none; text-decoration-thickness: auto; text-decoration-style: =
-solid;">---<br>hw/usb/hcd-ohci.c | 2 ++<br>1 file changed, 2 =
-insertions(+)<br><br>diff --git a/hw/usb/hcd-ohci.c =
-b/hw/usb/hcd-ohci.c<br>index 6ed8046fc2..43c49a42ec 100644<br>--- =
-a/hw/usb/hcd-ohci.c<br>+++ b/hw/usb/hcd-ohci.c<br>@@ -748,6 +748,7 @@ =
-static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed =
-*ed)<br>&nbsp;&nbsp;&nbsp;&nbsp;usb_handle_packet(dev, =
-pkt);<br>&nbsp;&nbsp;&nbsp;&nbsp;if (pkt-&gt;status =3D=3D =
-USB_RET_ASYNC) =
-{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usb_device_flush_ep_q=
-ueue(dev, ep);<br>+ =
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usb_packet_cleanup(pkt);<br>&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_free(pkt);<br>&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return =
-1;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br></blockquote><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">I don't really understand the USB =
-subsystem, but something seems</span><br style=3D"caret-color: rgb(0, 0, =
-0); font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">odd here. The case when usb_handle_packet() =
-can set the</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">p-&gt;status to USB_RET_ASYNC is when it =
-has added it to a queue,</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">either directly =
-("QTAILQ_INSERT_TAIL(&amp;p-&gt;ep-&gt;queue, p, queue);")</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">or by calling usb_queue_one(). The =
-usb_device_flush_ep_queue()</span><br style=3D"caret-color: rgb(0, 0, =
-0); font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">does not (as far as I can tell) remove the =
-queued packet. So it</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">seems wrong to me that this code path frees =
-the packet, and</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">also if we call usb_packet_cleanup() it =
-will do</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration-line: none; text-decoration-thickness: auto; =
-text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline =
-!important;">&nbsp;&nbsp;&nbsp;assert(!usb_packet_is_inflight(p));</span><=
-br style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-line: =
-none; text-decoration-thickness: auto; text-decoration-style: =
-solid;"><span style=3D"caret-color: rgb(0, 0, 0); font-family: =
-Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
-normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none; float: none; display: inline !important;">which I =
-think will fire.</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">It's possible that we can't ever actually =
-get to this code --</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">the usb_handle_packet() has a claim "hcd =
-drivers cannot handle</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">async for isoc" and some assertions about =
-that, which suggests</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">maybe that the intent is that we won't ever =
-return USB_RET_ASYNC</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">for an iso TD. But if so, we should be =
-asserting that.</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: =
-solid;"></div></blockquote><div><br></div><div><div dir=3D"ltr" =
-style=3D"line-height: 1.5; caret-color: rgb(29, 29, 29); color: rgb(29, =
-29, 29); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, =
-sans-serif; font-size: 13px;"><div dir=3D"ltr" style=3D"line-height: =
-1.5;">Thanks that makes sense,</div><div dir=3D"ltr" style=3D"line-height:=
- 1.5;">I tested the USB_RET_ASYNC path locally and usb_packet_cleanup() =
-does indeed hit the inflight</div><div dir=3D"ltr" style=3D"line-height: =
-1.5;">assertion there</div><div dir=3D"ltr" style=3D"line-height: =
-1.5;">OHCI ISO ASYNC branch reached</div><div dir=3D"ltr" =
-style=3D"line-height: 1.5;">Assertion failed: =
-(!usb_packet_is_inflight(p)), function usb_packet_cleanup, file core.c, =
-line 657.</div></div></div><br><blockquote type=3D"cite"><div><blockquote =
-type=3D"cite" style=3D"font-family: Helvetica; font-size: 12px; =
-font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;">@@ =
--756,6 +757,7 @@ static int ohci_service_iso_td(OHCIState *ohci, struct =
-ohci_ed *ed)<br>&nbsp;&nbsp;&nbsp;&nbsp;} else =
-{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret =3D =
-pkt-&gt;status;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>+ =
-&nbsp;&nbsp;&nbsp;usb_packet_cleanup(pkt);<br>&nbsp;&nbsp;&nbsp;&nbsp;g_fr=
-ee(pkt);<br></blockquote><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">This one's probably OK -- is it the one =
-that fixes the repro</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">case in the bug report?</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: =
-solid;"></div></blockquote><div><br></div><div>Yes this one should fix =
-repro bug in report</div><br><blockquote =
-type=3D"cite"><div><br></div></blockquote><blockquote =
-type=3D"cite"><div><span style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">thanks</span><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">-- =
-PMM</span></div></blockquote><br></div><div><div>For the async path, I =
-can leave it unchanged for this fix, or add an assertion since ISO TDs =
-are not expected to complete =
-asynchronously.</div><div><br></div><div>Thanks,</div><div>Munkhbaatar</di=
-v></div><br></body></html>=
-
---Apple-Mail=_DCFE8011-BCAA-4ADD-8C82-5914F24140FA--
+---
+diff --git a/hw/i2c/designware_i2c.c b/hw/i2c/designware_i2c.c
+index 7d8b1c1353..1e5505f571 100644
+--- a/hw/i2c/designware_i2c.c
++++ b/hw/i2c/designware_i2c.c
+@@ -217,7 +217,7 @@ static uint32_t dw_i2c_read_ic_data_cmd(DesignWareI2CState *s)
+                       "%s: Attempted to read from RX fifo when not in receive "
+                       "state.\n", DEVICE(s)->canonical_path);
+         if (s->status != DW_I2C_STATUS_IDLE) {
+-            s->ic_raw_intr_stat &= ~DW_IC_INTR_RX_UNDER;
++            s->ic_raw_intr_stat |= DW_IC_INTR_RX_UNDER;
+             dw_i2c_update_irq(s);
+         }
+         return 0;
+@@ -228,7 +228,7 @@ static uint32_t dw_i2c_read_ic_data_cmd(DesignWareI2CState *s)
+     if (s->ic_rxflr > 0) {
+         s->ic_rxflr--;
+     } else {
+-        s->ic_raw_intr_stat &= ~DW_IC_INTR_RX_UNDER;
++        s->ic_raw_intr_stat |= DW_IC_INTR_RX_UNDER;
+         dw_i2c_update_irq(s);
+         return 0;
+     }
+@@ -395,6 +395,7 @@ static uint64_t dw_i2c_read(void *opaque, hwaddr offset, unsigned size)
+         break;
+     case DW_IC_CLR_RESTART_DET:
+         s->ic_raw_intr_stat &= ~(DW_IC_INTR_RESTART_DET);
++        dw_i2c_update_irq(s);
+         break;
+     case DW_IC_COMP_PARAM_1:
+         value = s->ic_comp_param_1;
+@@ -698,6 +699,10 @@ static const MemoryRegionOps designware_i2c_ops = {
+     .read = dw_i2c_read,
+     .write = dw_i2c_write,
+     .endianness = DEVICE_LITTLE_ENDIAN,
++    .impl = {
++        .min_access_size = 4,
++        .max_access_size = 4,
++    },
+     .valid = {
+         .min_access_size = 4,
+         .max_access_size = 4,
+@@ -748,7 +753,7 @@ static const VMStateDescription vmstate_designware_i2c = {
+     .name = TYPE_DESIGNWARE_I2C,
+     .version_id = 0,
+     .minimum_version_id = 0,
+-    .fields = (VMStateField[]) {
++    .fields = (const VMStateField[]) {
+         VMSTATE_UINT32(ic_con, DesignWareI2CState),
+         VMSTATE_UINT32(ic_tar, DesignWareI2CState),
+         VMSTATE_UINT32(ic_sar, DesignWareI2CState),
+@@ -803,6 +808,8 @@ static void designware_i2c_class_init(ObjectClass *klass, const void *data)
+     dc->vmsd = &vmstate_designware_i2c;
+     rc->phases.enter = designware_i2c_enter_reset;
+     rc->phases.hold = designware_i2c_hold_reset;
++
++    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+ }
+ 
+ static const TypeInfo designware_i2c_types[] = {
+diff --git a/include/hw/i2c/designware_i2c.h b/include/hw/i2c/designware_i2c.h
+index 0d8f904f51..71d74c9141 100644
+--- a/include/hw/i2c/designware_i2c.h
++++ b/include/hw/i2c/designware_i2c.h
+@@ -57,7 +57,7 @@ typedef enum DesignWareI2CStatus {
+  * @status: The current status of the SMBus.
+  */
+ typedef struct DesignWareI2CState {
+-    SysBusDevice parent;
++    SysBusDevice parent_obj;
+ 
+     MemoryRegion iomem;
+ 
 
