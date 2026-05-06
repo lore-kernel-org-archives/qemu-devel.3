@@ -4,106 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF940CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 10:37:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D161CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 10:38:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKZco-0001Zj-8u; Wed, 06 May 2026 06:37:06 -0400
+	id 1wKZe3-00025q-4q; Wed, 06 May 2026 06:38:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wKZcl-0001ZO-Jw
- for qemu-devel@nongnu.org; Wed, 06 May 2026 06:37:03 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wKZcj-00032S-JJ
- for qemu-devel@nongnu.org; Wed, 06 May 2026 06:37:03 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-651c366f7efso6056290d50.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 03:37:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778063819; cv=none;
- d=google.com; s=arc-20240605;
- b=TIgX6nIQ2iraNsuiCjyb/8jHbhdGjlpLdrktx0XSx2qLXHTSxZ+/9MM0DfejEjuBjD
- kw2um3a1vpz2DxJ5blvJVXQMQArVzL5tXsOJo40zOQNUIvqkO301KBUjzpxTG3qyUz3t
- 1XtHSSUxUbt5hm8oTk5Sxx7X8D3yPjrxajCzQzMJt7vMKeP5qPEeGyvqSlhA7HZ1m0VT
- 5DuenHPXpXhitMlqdjwvmKxt5yb5CxfexwPR/Y3teY5XhZVL50CEaPJj/2rmTCvY4mYP
- n9nXEnvxruZ4WXqzg27EPWC9+eraHF8XHHokAiSKtcPkvDm4McY2o/Fx91S8TCFzczrH
- vlzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=uehqBscnlsAYcfmKVzu327/V0Gnd2AQf4u/ItpyzPrU=;
- fh=1Lgk9xC87vuwEzuciB1UFM1d+YDIGjF89BF/5ZfQYzg=;
- b=BQMp3sM32iuDlR7m7YJBn+l/oTm1YsWo+xcj7KGBj+2+pMNdXgPPQJobA87uj+e4wx
- tlsEMqPIBm7+MzG2SNec8TsGDa/DksQzFWLajq9lljZVSh0WQLSk2Azryx9YGNtvXL96
- kEns2t0x4U0hFKLiq9xMo1KeVIoJz565nRds8IeS7Br+w11+fvqLAGcX2z096M2DPD6Q
- 0CYMZ8OpRTOnJ3FB1oUN4LotV24Q9110XTmngkdhUDTeh9v8+SHwT/rquv1mZmICIjZj
- zk8adk0B+YKmymBj7pPMiiAqN54oiHIReQ0+yAC6eFUSO0nLxqeou4IPOgxGLAYPrQ0G
- Ta+g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778063819; x=1778668619; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=uehqBscnlsAYcfmKVzu327/V0Gnd2AQf4u/ItpyzPrU=;
- b=QtiXdeYYoYh1ZKg6S/as+dDRdgSfZ3QgwfyvxsMghC/xec+ekCwsStPilMYXoO0nuv
- 15uyOC+V7g82VP9cumUVs2FZEYWRXAL7NFEPlP2mUo1Ka4qf8N5Fi0cqU7/Fc5TE8h4P
- evRSQaqbFwpP6Nl54R0q3vUzlRObjv+Gof4rfFWLsQDC7FFV/roqrbz3dua+tkUvqGjA
- ivWNlQ5Atg9JuZ2S5DWdXWgMcGtjx/TMjRWzGC4ozmx722nQFTN+89/ef+MyuovSjCUG
- m6FfMYE64z02+GBXaXj8rl27ROpro6uyd7FwQJwnWi/PzOlge4iEejHU/nwNtMuAbPrl
- Po5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778063819; x=1778668619;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=uehqBscnlsAYcfmKVzu327/V0Gnd2AQf4u/ItpyzPrU=;
- b=H/WxSixxAYz097TD2jksKmTQ+wU+kQpA5oc3JHODJ+Pkdd+rt3Ayeon2UH1Q/JDlPi
- 6Nq+PoFDjBlNOXQFKTnp3lqM1Dw/HD8Ss3gl3EEJ1GBKCWrHoMaQuwnh5zwcKN0AWMtV
- 3tEkV5GUGyp6sFQ/XyCAdXUj7d0KovGUyKC+etqbgUnYqwKczwBvAaNgwEwne6Lz2Hpi
- ruHKT1+wh6lVTeajp72zdlS64jDLAMQetT9WEGpRLBZ9nFxsngjRWrPlmYUCFj3cB6LW
- 5axu+KiU2Qt5Po94j3XvY5qRoguCzSH2VeJiUNKtw888TnScXOTY+kztyMKEMKD4Kocr
- hiuA==
-X-Gm-Message-State: AOJu0YxA8FXMdUbakyL6BsfLvN3Opxl2dcn5lPDtH9KLu+Ee89bHlzx8
- zMpXDJNCl1h2Cf+6q3Z+3yREqQ10vC2Tcv1FuSWiqalXHzqbuPjP5GtKw3EsiYCF6XRthqow4O+
- OoQJ6LoUhQks4i0sX2IHmkPKqez0DfCcMt7237neYLg==
-X-Gm-Gg: AeBDievrzXszVdSS+3PxJTlb7W0B3X59Jb8kIM5NlKGafGpI65qpqVRLt4GtcYnwAtB
- +irMvxUCJpBqYhGY4xnh+3l1uN3YFQ+XtI19h5HdDgSnMcqM1f1SMZJl9iho4ikwIeuZkYiYVQY
- VuOnME/OntaxLSaMYIclKHw6cFZy8hl7PiRB8itZMk4TsE7lm3DFg7M4jZX7u5dReuut9EK6Uj3
- feoKpacUDZG+ABXVh9nCpvQqoPWSiBrWBQXuJWUVI8bYEKjc7yaJHc4y34N60Bre8lHhaJkXYYy
- RJiToojZvJd/Yvdq1P6nkOoFqn32NxIp4BX0+9b7RW3t9RkGvY4914AQ99t0JGbYA37ghnWa8+T
- 5fvMdKwtOV9tv
-X-Received: by 2002:a53:b6c9:0:b0:654:6a61:fb36 with SMTP id
- 956f58d0204a3-65c799e1717mr2170918d50.58.1778063819188; Wed, 06 May 2026
- 03:36:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1wKZe2-00025g-8w
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 06:38:22 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wKZe0-0003R2-Ls
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 06:38:22 -0400
+Received: from example.com (unknown [167.220.208.68])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 9B12820B7165;
+ Wed,  6 May 2026 03:38:15 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 9B12820B7165
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1778063896;
+ bh=qyX2+wNJQJ1qYrHEs/ogJIPOCKeGA0SeorxRlYANtEQ=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=asoa5Dhgr4DpK/cOcW+jio6TkCOF1kY+wupTSz/pdD4kt+BUkTSi6jJXbJTkKJga3
+ LV8BtE4GaoBJxYfzbAUdSKiss62pkpxVQaGsM0ljXWw5eLubUR5JEPA++YOI4mPsRK
+ FLkGjaoxi2GcIpX2pFzsvFS5P8seDbkXitPtgPcI=
+Date: Wed, 6 May 2026 12:38:15 +0200
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 3/7] include/hw/hyperv: add hv_vp_register_page struct
+ definition
+Message-ID: <afsaF3B52XxzXlkJ@example.com>
+References: <20260505185028.237207-1-dblanzeanu@linux.microsoft.com>
+ <20260505185028.237207-4-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
-References: <20260505110036.47574-1-munkhuu0825@gmail.com>
- <CAFEAcA8s+YW9n78=75VMetVP-10mMiTkzrxCHgHK7kdvP-50jg@mail.gmail.com>
- <B987731A-F30F-4B6F-8069-86BF3377910D@gmail.com>
-In-Reply-To: <B987731A-F30F-4B6F-8069-86BF3377910D@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 6 May 2026 11:36:47 +0100
-X-Gm-Features: AVHnY4Lidh43VsAOpQqAxW2N4npbwaMAIsCAwuN9s3G64QuEAub9fUH3ZtBcOj8
-Message-ID: <CAFEAcA93342r1oKDBDv=7LRoAqT4WpVEqRpb-ThM=OjJUZm=BQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/hcd-ohci: Fix memory leak in ohci_service_iso_td()
-To: =?UTF-8?B?0JzTqdC90YXQsdCw0LDRgtCw0YAg0K3QvdGF0LHQsNCw0YLQsNGA?=
- <munkhuu0825@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260505185028.237207-4-dblanzeanu@linux.microsoft.com>
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,104 +68,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 6 May 2026 at 05:13, =D0=9C=D3=A9=D0=BD=D1=85=D0=B1=D0=B0=D0=B0=D1=
-=82=D0=B0=D1=80 =D0=AD=D0=BD=D1=85=D0=B1=D0=B0=D0=B0=D1=82=D0=B0=D1=80 <mun=
-khuu0825@gmail.com> wrote:
->
->
->
-> On 5 May 2026, at 21:14, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> On Tue, 5 May 2026 at 12:01, <munkhuu0825@gmail.com> wrote:
->
->
-> From: heropd <munkhuu0825@gmail.com>
->
-> Fix a memory leak in ohci_service_iso_td() by calling
-> usb_packet_cleanup() before freeing USBPacket.
->
-> Signed-off-by: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
->
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3463
->
->
+On Tue, May 05, 2026 at 09:50:24PM +0300, Doru Blânzeanu wrote:
+> Define the `hv_vp_register_page` structure that the linux kernel uses
+> to allow access to vcpu registers.
+> 
+> This structure is going to be used in later patches to access vcpu
+> registers.
+> 
+> Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
 > ---
-> hw/usb/hcd-ohci.c | 2 ++
-> 1 file changed, 2 insertions(+)
->
-> diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-> index 6ed8046fc2..43c49a42ec 100644
-> --- a/hw/usb/hcd-ohci.c
-> +++ b/hw/usb/hcd-ohci.c
-> @@ -748,6 +748,7 @@ static int ohci_service_iso_td(OHCIState *ohci, struc=
-t ohci_ed *ed)
->     usb_handle_packet(dev, pkt);
->     if (pkt->status =3D=3D USB_RET_ASYNC) {
->         usb_device_flush_ep_queue(dev, ep);
-> +        usb_packet_cleanup(pkt);
->         g_free(pkt);
->         return 1;
->     }
->
->
-> I don't really understand the USB subsystem, but something seems
-> odd here. The case when usb_handle_packet() can set the
-> p->status to USB_RET_ASYNC is when it has added it to a queue,
-> either directly ("QTAILQ_INSERT_TAIL(&p->ep->queue, p, queue);")
-> or by calling usb_queue_one(). The usb_device_flush_ep_queue()
-> does not (as far as I can tell) remove the queued packet. So it
-> seems wrong to me that this code path frees the packet, and
-> also if we call usb_packet_cleanup() it will do
->    assert(!usb_packet_is_inflight(p));
-> which I think will fire.
->
-> It's possible that we can't ever actually get to this code --
-> the usb_handle_packet() has a claim "hcd drivers cannot handle
-> async for isoc" and some assertions about that, which suggests
-> maybe that the intent is that we won't ever return USB_RET_ASYNC
-> for an iso TD. But if so, we should be asserting that.
->
->
-> Thanks that makes sense,
-> I tested the USB_RET_ASYNC path locally and usb_packet_cleanup() does ind=
-eed hit the inflight
-> assertion there
-> OHCI ISO ASYNC branch reached
-> Assertion failed: (!usb_packet_is_inflight(p)), function usb_packet_clean=
-up, file core.c, line 657.
->
-> @@ -756,6 +757,7 @@ static int ohci_service_iso_td(OHCIState *ohci, struc=
-t ohci_ed *ed)
->     } else {
->         ret =3D pkt->status;
->     }
-> +    usb_packet_cleanup(pkt);
->     g_free(pkt);
->
->
-> This one's probably OK -- is it the one that fixes the repro
-> case in the bug report?
->
->
-> Yes this one should fix repro bug in report
+>  include/hw/hyperv/hvgdk.h |   2 +
+>  include/hw/hyperv/hvhdk.h | 105 ++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 107 insertions(+)
+> 
+> diff --git a/include/hw/hyperv/hvgdk.h b/include/hw/hyperv/hvgdk.h
+> index 71161f477c..e4be861716 100644
+> --- a/include/hw/hyperv/hvgdk.h
+> +++ b/include/hw/hyperv/hvgdk.h
+> @@ -9,6 +9,8 @@
+>  #ifndef HW_HYPERV_HVGDK_H
+>  #define HW_HYPERV_HVGDK_H
+>  
+> +#include "hvgdk_mini.h"
+> +
+>  #define HVGDK_H_VERSION         (25125)
+>  
+>  enum hv_unimplemented_msr_action {
+> diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
+> index 41af743847..4a3b543893 100644
+> --- a/include/hw/hyperv/hvhdk.h
+> +++ b/include/hw/hyperv/hvhdk.h
+> @@ -9,7 +9,11 @@
+>  #ifndef HW_HYPERV_HVHDK_H
+>  #define HW_HYPERV_HVHDK_H
+>  
+> +#include "hvgdk.h"
+> +#include "hvhdk_mini.h"
+> +
+>  #define HV_PARTITION_SYNTHETIC_PROCESSOR_FEATURES_BANKS 1
+> +#define HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT  7
+>  
+>  struct hv_input_set_partition_property {
+>      uint64_t partition_id;
+> @@ -246,4 +250,105 @@ typedef struct hv_input_register_intercept_result {
+>      union hv_register_intercept_result_parameters parameters;
+>  } QEMU_PACKED hv_input_register_intercept_result;
+>  
+> +/* Flags for dirty mask of hv_vp_register_page */
+> +enum hv_x64_register_class_type {
+> +    HV_X64_REGISTER_CLASS_GENERAL = 0,
+> +    HV_X64_REGISTER_CLASS_IP = 1,
+> +    HV_X64_REGISTER_CLASS_XMM = 2,
+> +    HV_X64_REGISTER_CLASS_SEGMENT = 3,
+> +    HV_X64_REGISTER_CLASS_FLAGS = 4,
+> +};
+> +
+> +union hv_vp_register_page_interrupt_vectors {
+> +    uint64_t as_uint64;
+> +    struct {
+> +        uint8_t vector_count;
+> +        uint8_t vector[HV_VP_REGISTER_PAGE_MAX_VECTOR_COUNT];
+> +    };
+> +};
+> +
+> +struct hv_vp_register_page {
+> +    uint16_t version;
+> +    uint8_t isvalid;
+> +    uint8_t rsvdz;
+> +    uint32_t dirty;
+> +
+> +    union {
+> +        struct {
+> +            /* General purpose registers (HV_X64_REGISTER_CLASS_GENERAL) */
+> +            union {
+> +                struct {
+> +                    uint64_t rax;
+> +                    uint64_t rcx;
+> +                    uint64_t rdx;
+> +                    uint64_t rbx;
+> +                    uint64_t rsp;
+> +                    uint64_t rbp;
+> +                    uint64_t rsi;
+> +                    uint64_t rdi;
+> +                    uint64_t r8;
+> +                    uint64_t r9;
+> +                    uint64_t r10;
+> +                    uint64_t r11;
+> +                    uint64_t r12;
+> +                    uint64_t r13;
+> +                    uint64_t r14;
+> +                    uint64_t r15;
+> +                } QEMU_PACKED;
+> +
+> +                uint64_t gp_registers[16];
+> +            };
+> +            /* Instruction pointer (HV_X64_REGISTER_CLASS_IP) */
+> +            uint64_t rip;
+> +            /* Flags (HV_X64_REGISTER_CLASS_FLAGS) */
+> +            uint64_t rflags;
+> +        } QEMU_PACKED;
+> +
+> +        uint64_t registers[18];
+> +    };
+> +    uint8_t reserved[8];
+> +    /* Volatile XMM registers (HV_X64_REGISTER_CLASS_XMM) */
+> +    union {
+> +        struct {
+> +            struct hv_u128 xmm0;
+> +            struct hv_u128 xmm1;
+> +            struct hv_u128 xmm2;
+> +            struct hv_u128 xmm3;
+> +            struct hv_u128 xmm4;
+> +            struct hv_u128 xmm5;
+> +        } QEMU_PACKED;
+> +
+> +        struct hv_u128 xmm_registers[6];
+> +    };
+> +    /* Segment registers (HV_X64_REGISTER_CLASS_SEGMENT) */
+> +    union {
+> +        struct {
+> +            struct hv_x64_segment_register es;
+> +            struct hv_x64_segment_register cs;
+> +            struct hv_x64_segment_register ss;
+> +            struct hv_x64_segment_register ds;
+> +            struct hv_x64_segment_register fs;
+> +            struct hv_x64_segment_register gs;
+> +        } QEMU_PACKED;
+> +
+> +        struct hv_x64_segment_register segment_registers[6];
+> +    };
+> +    /* Misc. control registers (cannot be set via this interface) */
+> +    uint64_t cr0;
+> +    uint64_t cr3;
+> +    uint64_t cr4;
+> +    uint64_t cr8;
+> +    uint64_t efer;
+> +    uint64_t dr7;
+> +    union hv_x64_pending_interruption_register pending_interruption;
+> +    union hv_x64_interrupt_state_register interrupt_state;
+> +    uint64_t instruction_emulation_hints;
+> +    uint64_t xfem;
+> +
+> +    uint8_t reserved1[0x100];
+> +
+> +    /* Interrupts injected as part of HvCallDispatchVp. */
+> +    union hv_vp_register_page_interrupt_vectors interrupt_vectors;
+> +} QEMU_PACKED;
+> +
+>  #endif /* HW_HYPERV_HVHDK_H */
+> -- 
+> 2.53.0
 
-> For the async path, I can leave it unchanged for this fix, or add
-> an assertion since ISO TDs are not expected to complete asynchronously.
-
-I think we should do this as two patches:
-(1) change the "if (pkt->status =3D=3D USB_RET_ASYNC) { ... }"
-    to something like:
-   /* The USB core guarantees to never defer ISO TDs */
-   assert(pkt->status !=3D USB_RET_ASYNC);
-
-(2) fix the leak with the usb_packet_cleanup() call that's
-    currently the second hunk in this patch
-
-That way if I'm wrong about the USB subsystem's guarantees
-we'll be able to just revert patch 1 without undoing the
-fix for the leak.
-
-thanks
--- PMM
+Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 
