@@ -4,133 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5E08CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 20:56:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16A85CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 22:18:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKjI4-0005TR-Rj; Wed, 06 May 2026 16:56:20 -0400
+	id 1wKkYV-0000zT-09; Wed, 06 May 2026 18:17:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1wKjI3-0005T5-Ds; Wed, 06 May 2026 16:56:19 -0400
-Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wKkYT-0000xo-D3
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 18:17:21 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1wKjI0-0002D3-NK; Wed, 06 May 2026 16:56:18 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GWPgGX98MkxbbYHHr+TVUpCjVOogC3cmI6iPF7PlZRkLNBkmLpZNbYO2cbFcBHD4mD40N/eoBkbptHWUi6tgYkDloQxFuuk69YQTt0kmsI2CQ2cNZ7FojDbJhWYS6gvMiJnqWzf423CJDFWIkQRkCwq6qBMcz021jCQ/g5qJxtJEjpH3nOm9PFxEFvF5iAn5IZ8DoaqT5x2TTXXNAM/WZL6LlL8mPas0ExYKZQzwvdyogSG9RuCz4AmH3gTGpKmd5lGWWieNQ0jREah+yVtSWVoIJXyKct/fZQHOA3FhR5jGASz2VrYeACcR5nn5/Xm2HgJr2IFH8zvGoChI5r87rA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WoKdfukLFo/zc4K6RXdUZPSJi+T2XnZ2ROziFKibJso=;
- b=qW28ZzqIbDDdz4z2PzfuGTg3Inu7yzywToSbOfReMFcZ9XvGrooSi4ECqEGPQ1Mx3+nOEpcD+3R1zNT+PUDl410yy57XyAwW0oQstxkwo7T1Q3vVcdkhYJG1xPEo9m77OOdfJZCbH4DIpH9mBy503PnF/yicKixEMKaBXAxZDnRV7hlYmiaE38PAMC39yGz9STFZ3EgHTU1UxQr7Zfx3B1d2xNSsjb50xGVKLNFPUqSA1E2EVh7ZVDGyODZ3/m7vxUjJWBt/nEXWMnBAMT3h+gSpShVIFfK57VfTrMc7zDVIDrzBPqJC/RpTXn/0m8JeLHYau3oIbmBKE7q8Hy9fgg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.160) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WoKdfukLFo/zc4K6RXdUZPSJi+T2XnZ2ROziFKibJso=;
- b=nMfKGQBv3m+k5fxYTnvsHM4fakk9Lnc4w7CGP8mdomxRxCIYWi5+JxEPaVwVufxri0I4/+YEvQAsp5nDp7X4LfO6kIG7ox5EyXPGFnX+wI+M80jION6nI89iN+/rkAlY+jTXYbHUZfdm1FH2oIEbZHWKydSR3vJ/8utAkw1ovWEI25ygkaTg28ZMwplSvv1YWRqshFZ3t/cqIB+4/W1oWc+LINtMfw26ZOPRQXi+BRyl5sO2g1lImhsdMtULdDHFoBveqNuCbtxbt+9jtnMpXzDttlORRm4ZGi5Lb3iO7SHOj7ucyrCB++lEqn4JGXj7Dzss8ouJpNQk/DS1kkMaJQ==
-Received: from CH0PR03CA0438.namprd03.prod.outlook.com (2603:10b6:610:10e::14)
- by DS2PR12MB9591.namprd12.prod.outlook.com (2603:10b6:8:27c::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Wed, 6 May
- 2026 20:56:05 +0000
-Received: from CH2PEPF00000141.namprd02.prod.outlook.com
- (2603:10b6:610:10e:cafe::99) by CH0PR03CA0438.outlook.office365.com
- (2603:10b6:610:10e::14) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9891.15 via Frontend Transport; Wed,
- 6 May 2026 20:56:05 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.160) by
- CH2PEPF00000141.mail.protection.outlook.com (10.167.244.74) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9891.9 via Frontend Transport; Wed, 6 May 2026 20:56:04 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
- (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 6 May
- 2026 13:55:43 -0700
-Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail205.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 6 May
- 2026 13:55:32 -0700
-Received: from nvidia.com (10.127.8.13) by mail.nvidia.com (10.129.68.6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Wed, 6 May 2026 13:55:29 -0700
-Date: Wed, 6 May 2026 13:55:26 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
- <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Jiandi An
- <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, Krishnakant Jaju
- <kjaju@nvidia.com>, "phrdina@redhat.com" <phrdina@redhat.com>
-Subject: Re: [PATCH v4 20/31] hw/arm/tegra241-cmdqv: Use mmap'd VINTF page0
- as VCMDQ backing
-Message-ID: <afuqvoODHtr2KoSk@nvidia.com>
-References: <20260415105552.622421-1-skolothumtho@nvidia.com>
- <20260415105552.622421-21-skolothumtho@nvidia.com>
- <afk+zBZLQx+x+ODl@nvidia.com>
- <CH3PR12MB754892989B2A76D3D3A941D6AB3E2@CH3PR12MB7548.namprd12.prod.outlook.com>
- <afpKfEvuT3ZeBSiH@nvidia.com>
- <CH3PR12MB7548E76E38625713F6AE9F78AB3F2@CH3PR12MB7548.namprd12.prod.outlook.com>
- <afuJt4lDUQ6SxA6T@nvidia.com>
- <CH3PR12MB7548FA36B3EB6386EDF09B3CAB3F2@CH3PR12MB7548.namprd12.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wKkYR-0003F9-31
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 18:17:21 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 646LpaYb1527798
+ for <qemu-devel@nongnu.org>; Wed, 6 May 2026 22:17:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ cfr30T6tqHaO7a3SCLT7jY8vD2D/utKjmwMe+SOIuSU=; b=hRs6LIy9xRR0un2X
+ nCTBSpSuohzXTIHl7r4aJUZp07v+ICoWHUlPfWMvmN7HJKEB9lP9QMxTlfAfJCaV
+ oAi20UNglktcpzfr9OcyFZvB3qEo0p2KZegXXzXJq9k0YJEs7212O2yZmn1E7cTQ
+ gD1vMo8Za6hR+LEyzBtUvYlWXN6+4QS5NtmJ8Tf5Zey4S2Fr6bqhoE2KlhsarHsF
+ EyQ+52tR1409HC73fsunthM4IZZFKnkcutWmUAyYAMYfN6Ptr3rNp6B5Ko7u6SLT
+ YcBKKG3iYrVMjuIFEgsdEpcak+ReyTVTsgYT4RsTEL/C/z1GgTwRVZjHNWGDrvcn
+ tO0wZA==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e0128b95q-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 22:17:15 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-2eebb099efbso841052eec.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 15:17:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1778105835; x=1778710635; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cfr30T6tqHaO7a3SCLT7jY8vD2D/utKjmwMe+SOIuSU=;
+ b=FR/5p65Mfxzsl+J209viVvEpqurfHXhSLRimLVK3YTHQm84UFDK7d42bMgZx0dBH3K
+ v4jU4KsiGn3c/6UeyysV+8d+LdU2x5lsLnRUKY1cyrokEANCjznbkLutpA3FQbnkRjxW
+ Zu1tMArKh3PUbYzbyNQlWZNJX91ld4RX5cSS+mMjRZusuBwlAq9dGTU+pLxgJ1hvA8W0
+ Pq5Mf821sjPS4Tf2YLLMK4Ro916weMwiYAV7vhUs3YkIoR1b3Ooz8IVH8ScrP15Vi6yQ
+ srXrhcupLI/h2TxF14/W4GZdSeEvjVFrJhuGmlcTkJFsZkFofORS4Wuwi4rADQVhRuyC
+ wl9Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778105835; x=1778710635;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cfr30T6tqHaO7a3SCLT7jY8vD2D/utKjmwMe+SOIuSU=;
+ b=c0UJtDDgEZziHcGMYI9HkLa3q6OH2F3LiruGPQDwOR3qGvLbQWOYhxMaYdHGkW6ilQ
+ BLu7EyJGAYVxPqFK09VW34lmo8fzO0cDFt3fyXFHM3D+TxsO7otAx9P0JfucQKTPMQ21
+ Jv7LpKOxqdv613EX49OJo527z4YFlngaPlS9ZhblAL0pTp8EYh6bZ9xRfY8Nd+FVNLot
+ 03faJzbHLtT1olkrNR/1Z3o8sUDDs4snNYeWJPOStwzY0dRu1EGv12Dv2alEe9CbtpBA
+ Ga4gZCPgezhMRT7+THtKtRJ7rjJiXhaLMcPCarkfINg1lgM0h4hBhPjYkJ+kR/NQIIYt
+ d4Eg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9luMaOLXTC9jfUBZttCWmJSm6jqj+5Bu1x2dRoyBKyQLeAmnssK3bFM9WN7w92U6xXx0PB+N/JDPqi@nongnu.org
+X-Gm-Message-State: AOJu0Yy4+FN9UM1sHy+GEyXpwga5Utwkl4sjunywJMXF4F4Baovj/fU0
+ UlmLxOejOCgsng7btncjDaNzi8dgSaXKRv3bCOfGIx4drUuEGaXj9zZsL71wAU99SczAK8ZMbJS
+ YtlXY1j6aOBTgpfpuNih6lh5Qa0u3NQM5UHY8jwyLMGHpC7Bgy2BTcrxGQQ==
+X-Gm-Gg: AeBDiescEJyXLbVvSQJhB5oBI3yzxEjBT0pgTP6BqjjZlee7suJ/obgQ0ftTAFAN3xb
+ GxcsRyemEil0rTOUHkYnczvZaNuFjlAVTOiXEH1zmAEx+lniJBvSQt3Rt4xOAy7QYchZAqFcPpa
+ UAqlg1WVfkKG+rrdNUyV5uc9PGxhkz0cMS4l8WZCENGebCeLWWDE1Hfnsv1cBd0PIy4ws4aQceK
+ deS2+qoPUk+uYI3Dj5LG9G8wiWCNT/0t/Jk7ybd6P2JQIh7v0FJ/aZriv7ZQN7V6UxJW/oT03Ll
+ B4NBTXApIBzUciwWXIg1kuXcPkkUgbxEbC0Z495280yF8dREv64Y3SmJwBXYR7jeR0V8lQ6W3xU
+ IgdKSXCRjC+aqAD3r96qZ1MyT0Rt0bh9u8GHfTRGSI7erKMg8Yz/TclyGLebigfC+timI8eD4O/
+ FgTHiFMlCKX2yIc3/7HBzQsfOX
+X-Received: by 2002:a05:7301:3f16:b0:2c9:1943:e7ff with SMTP id
+ 5a478bee46e88-2f54b35fb00mr2630618eec.10.1778105834685; 
+ Wed, 06 May 2026 15:17:14 -0700 (PDT)
+X-Received: by 2002:a05:7301:3f16:b0:2c9:1943:e7ff with SMTP id
+ 5a478bee46e88-2f54b35fb00mr2630591eec.10.1778105834040; 
+ Wed, 06 May 2026 15:17:14 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2f57057bd00sm4846025eec.30.2026.05.06.15.17.12
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 May 2026 15:17:13 -0700 (PDT)
+Message-ID: <4a46393d-08be-40e9-8f52-788d46ab36cf@oss.qualcomm.com>
+Date: Wed, 6 May 2026 15:17:12 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CH3PR12MB7548FA36B3EB6386EDF09B3CAB3F2@CH3PR12MB7548.namprd12.prod.outlook.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF00000141:EE_|DS2PR12MB9591:EE_
-X-MS-Office365-Filtering-Correlation-Id: 181668f2-3eb8-40e6-f2fb-08deabb1e3ab
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|82310400026|1800799024|36860700016|56012099003|18002099003|22082099003;
-X-Microsoft-Antispam-Message-Info: scLuMC9BJOLP/UmbqrZtSc6pjdonzwDlW0ChWY/03j5GSLB8fKDkZ0CMu+AxhA7WYwjjlPo4PXWY0tkz/dC7HBaabIpWA4p8dgQ0G/wdDpk/TfsdbWlb5MfZZzlIjkc/bUKlZPO993/Q2u+4C+Jf/w+jjg5aIGLg5ZHLDX5FAyAkI6InyMCDAIyREAkWf68ce06MvvJvnCTxjHKN5F7a3FL8pQDsRbXDU98zjZ/AIsR4C6ceG6+Yo2uCAMVbygBBYjHr9ANPU00enEr/bKAb89LyuG0leQTLTOcFxT0wcJXN32l4YnkvZICSmCsV8jGR0UCcabHv+F2BNGnJmiey3nMu8z0Ue6Vgv4F6AXxRwzDuVcasb23IRekoGdzOAnp1vmR/328zyItimzDnhSdVXWYGLwAgR7Oe+bScXZCms/X8w9Sz6h8XAbZzWhGckKkDAx+0aeDVi/Mb6sMxrdTaLJZXOpmLAX5paVPmTLZA9XI/6QijGOWDdoqzZotxQeEe8CEZYFPm7sCrvYhSt2US842i/XHmqs70patR1uvXc8umz4gIZFK2Tz8SargN5mtp3Xabp+/MvkpRdxjwjB7ZjMQn5yP8hX5OgJN/AyfaYXGKqJ6VjjySallydGr0OGXrEKbo8NgnAgyuzhNgBQoGy7kCLUcs34VoJ7Sj43PgaQ4gp5Q6qzSks6ZX315SXUlB7UB62P9GKLY3AETy/D+PfnPPYHgijROONplMdDZHDXo=
-X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(82310400026)(1800799024)(36860700016)(56012099003)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: F4lez6S/VHR43TSucF6wYRx3IQeNZVogqaDq3PSqdGokW7X36ZyPNo0eVw2YGrm4ilQ7pu5gvWQHrHsLt9Z5ZBAaiTDWZG96PZ+r2u4l2M36adI7Cs9fsi+L65ZIPV2CmWojdbV1wAaX7x/vW9K6p7nl6uJZHvVGFWYH0TyhNSDa6PBecNiq+TsbnKh71d7FE7a/tSXQje4pE/6qS0DS0ZN0/xYnkwO+pRl8mDfWOpuSYQjS41VMrPV5ZXc/i13g1cEiD1ClL3SjDFY679+9Fwd6WXIboHJkP0XoXxdXOXMUlfm+5fnvN7xLtOtEe5AVgY+/MiIAlF1O62vKw3Wh/wAdAgKz0lIJGFDWZrrG4d8qIgD4AvLG6DQPfqPK3HCtJy3my2m5E0OYFFFRrAqZ5CvcAfy2+LQy6ln2UlDi0RWPOTIKiapAz+CXTCDm1V5J
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 May 2026 20:56:04.8858 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 181668f2-3eb8-40e6-f2fb-08deabb1e3ab
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF00000141.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS2PR12MB9591
-Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
- envelope-from=nicolinc@nvidia.com;
- helo=CY7PR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: Future of target/arm "max" CPU type
+To: Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>,
+ Gustavo Bueno Romero <gustavo.romero@linaro.org>
+References: <CAFEAcA-WB+vfiHZpPut=AdEOCXacsTfrvxiGAmhaGH1abHD8ag@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA-WB+vfiHZpPut=AdEOCXacsTfrvxiGAmhaGH1abHD8ag@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: 7qY6O-K5pf-hkHh2UH13Vmums8h6hV95
+X-Proofpoint-ORIG-GUID: 7qY6O-K5pf-hkHh2UH13Vmums8h6hV95
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA2MDIxOCBTYWx0ZWRfX6BfJutXFFLBC
+ z+7SIDS4p/pnxC1qs9ZgZsIbq+eQJ+1nh3Vvpq14xOrujL7ozxteFBcmcuyiaAmcxWiZueZse7H
+ iZ988I7Myz9UFCtcSE/OkKszQw14QXmzJa1uoGlwlt5agb8Wd9mk2vW3jaolHZod9YUtKoMtQjd
+ c4/ww5C2ZSYMXiFxOketeuqYQ1sGUcPK4bZRqDaX8zGlD9sM8b8hUEYoHdy2C7LySyNy8VRq9kB
+ IjLM5/hhssUWmKioUQNO/d5IjAdIJtohxLoUGvwPn5yN5Bhc/howCmdSpjzpRnC1oUEXgDINn+P
+ 4Fz0xG0pmGBTl0lZnYJ6uLyjkj84pdZUfwYLh2yvY8Fa555rahQ670PAQ+xB3m/kJ0YM9/w7/+B
+ Ug91NlNKAl/XRiTB5tNoszUj8mMCRY8TVNIMFoh3yxvcRSXfJnUmkGa1VqEk2H7Xb/3n+4qpFSc
+ Sn+kwWTiECBQHA3gEoA==
+X-Authority-Analysis: v=2.4 cv=A8xc+aWG c=1 sm=1 tr=0 ts=69fbbdeb cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=6x5By2YnlfchJYQ9f5wA:9 a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-06_02,2026-05-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 spamscore=0 phishscore=0 bulkscore=0 clxscore=1015
+ lowpriorityscore=0 malwarescore=0 adultscore=0 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605060218
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,87 +156,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 06, 2026 at 01:13:53PM -0700, Shameer Kolothum Thodi wrote:
-> > -----Original Message-----
-> > On Wed, May 06, 2026 at 06:16:00AM -0700, Shameer Kolothum Thodi wrote:
-> > > > From: Nicolin Chen <nicolinc@nvidia.com>
-> > > > Could this be a case:
-> > > >  - Write the PROD_INDX/ CONS_INDX with a consistent value (0xf)
-> > > >  - Program the VIRT_CMDQ_BASE
-> > > >  - Read the PROD_INDX/CONS_INDX, expecting 0xf
-> > > >  - Write the PROD_INDX/ CONS_INDX with 0x0
-> > > >  - Program the VIRT_CMDQ_CONFIG to enable the CMDQ
-> > >
-> > > Yes, if Guest is not spec compliant then this can be any order.
-> > >
-> > > However,
-> > >
-> > > >  - Program the VIRT_CMDQ_BASE -- suppose we call setup_vcmdq()
-> > 
-> > > then kernel will reset PROD/CONS, right?
-> > 
-> > But I don't have an impression that QEMU only supports Guest to run
-> > Linux...
+Hi Peter,
+
+On 5/1/2026 6:26 AM, Peter Maydell wrote:
+> This is something we've discussed before. I don't think I have a very
+> solid grip on it and I suspect I may be missing some parts of the
+> "problem description" (i.e. what are we trying to achieve) and perhaps
+> some implications of the choice. Overall it feels to me like a "no
+> obviously correct answer, make a tradeoff" question. I've written this
+> up to try to clarify my thinking and canvass for opinions and for
+> people to point out what I'm missing.
 > 
-> Oh no, I was referring to host kernel behaviour on IOMMU_HW_QUEUE_ALLOC
-> IOCTL. It seems to reset PROD/CONS to zero in that path and I thought
-> it was following spec in that case.
-
-Ah, it was fixing a kernel bug, where the VCMDQ registers never got
-cleared even after a host reset (IIRC). And the solution is to clear
-them before handing over to the guest.
-
-Once QEMU allocates the hw_queue that ALLOC_MAPs it to the VINTF, it
-should probably sync what the register caches were programmed by the
-guest.
-
-> This scenario writes PROD_INDX before BASE, which is explicitly
-> non-spec-compliant — TRM p.175 "Enabling the Virtual CMDQ"
-> mandates BASE as the first step, with PROD_INDX/CONS_INDX
-> initialization following. For a spec-compliant guest, PROD_INDX
-> is only written after BASE, at which point vintf_ptr() is
-> valid and writes go directly to hardware with no discard
-> involved.
-
-I think the goal of VMM is that a guest VM cannot distinguish
-between real HW and emulated HW. If we just follow the minimal
-"spec compliant" flow, it fails to do so. So, "spec compliant"
-itself doesn't make a lot of sense to me.
-
-With that being said, if QEMU is okay with the minimal support
-for "spec compliant" flow only, I certainly won't be against
-submitting it (for the initial version maybe?).
-
-> 2) But then after some prompt it says:
+> For a long time now the arm targets have defined a "max" CPU type
+> whose definition is roughly "all the features that QEMU
+> implements". This is helpful for:
 > 
-> Looking at SMMUv3's register write handlers, QEMU doesn't enforce
-> any programming order there either —   registers are written to cache
-> unconditionally. CMDQV should follow the same convention. Will fix by
-> replaying cached PROD_INDX/CONS_INDX values to hardware after
-> alloc_hw_queue succeeds, making the pre-to-post-alloc transition
-> transparent to the guest.
-
-Yes. We are indeed missing a few details in the implementation.
-
-> 3) But it changes position again if you ask in a different way:
+>  - giving us a way to provide newly emulated CPU features to users
+>    without having to define a specific named CPU type matching some
+>    hardware that implements the feature (which might not exist at the
+>    point we add the emulation, or which might also need some other
+>    features we don't yet support)
+>  - giving users a way to say "I just want everything"
 > 
-> SMMUv3 has no equivalent transition point where hardware takes over.
-> In CMDQV, the BASE write is a fundamental transition — before it,
-> there is no hardware queue; after it, hardware owns the registers.
-> The BASE write is a fundamental transition point — before it, no
-> hardware queue exists; after it, hardware owns the Page0 registers.
-> Pre-alloc writes to PROD_INDX/CONS_INDX are undefined behavior by
-> spec, and "discard" at transition is the   correct consequence.
-> There's nothing to "preserve across" in the SMMUv3 case.
+> Mostly this has worked pretty well, I think. (It can cause problems
+> for some workloads that break when a new feature is added; TF-A
+> firmware seems particularly prone to this.)
+> 
+> However, it doesn't work so well if the architecture decides to drop a
+> feature and mandate that newer implementations may not implement
+> it. Up til now that hasn't been a big deal, as only a few very niche
+> items (like FEAT_DoubleLock, an old mechanism for quiescing external
+> debug before a CPU power-down) have ever been removed.
+> 
+> With the Armv9.0 architecture, a big feature gets removed: support for
+> running in 32-bit mode at anything above userspace (EL1, EL2, EL3) is
+> not allowed to be implemented.  We've got away so far with ignoring
+> that requirement, but as new v9.x features are added, they are
+> designed under the assumption that there is no 32-bit system mode
+> code. For instance, the GICv5 CPU interface defines only 64-bit system
+> registers, and our non-compliant "32-bit is actually there"
+> implementation would give you a 32-bit OS that couldn't handle
+> interrupts. Other similar (or harder to spot) issues are likely to
+> also turn up.
+> 
+> So my suggestion is that we should have two new CPU types:
+> 
+>  v8-max : "all the features we implement that are valid
+>    for the v8.x architecture"
+>  v9-max : "all the features we implement that are valid
+>    for the v9.x architecture"
+> 
+> v9-max would not implement AArch32 EL1/2/3; v8-max wouldn't implement
+> any feature the architecture says is v9-or-later.
+> 
+> For the existing 'max' CPU:
+>  - on qemu-system-arm this would be a synonym for v8-max
+>    (since it must be 32-bit)
+>  - on qemu-aarch64 and qemu-system-aarch64 this would be a synonym
+>    for v9-max
+>  - on qemu-arm it can also be v9-max, since v9 doesn't drop 32-bit
+>    usermode support. (Though we don't currently implement qemu-arm
+>    max this way, so it might end up being effectively v8-max until
+>    we get round to implementing support for selecting AArch64 CPUs in
+>    qemu-arm.)
+>
 
-Ask it to do a deeper research before answer any question, or
-to pinpoint where spec declares that "undefined behaviour" for
-example.
+This seems like a good approach. A side effect is to solve the
+duplication we encounter for the single-binary also, by correctly
+deduplicating QOM types associated.
 
-> I think the spec is vague and doesn’t demand a strict order.
-> So may be better to sync the registers after the alloc.
+The concept of having a "max" alias that maps to a specific type (in
+this case, distinct depending on the binary) could be used for other
+arch if needed also.
 
-Agreed.
+> I don't think it's worth claiming 'max' as deprecated and dropping it:
+> as an alias it's trivial to support, and there are a lot of workloads
+> that won't ever notice this change.
+>
 
-Nicolin
+I agree.
+
+> It's possible some workloads currently using "max" will need to switch
+> to 'v8-max", but I think this will be rare: it would have to be
+> emulation of an EL2 guest which is itself 64-bit but which runs some
+> inner-guest VM within itself that is 32-bit. The failure mode will be
+> that the (outer) guest will report that it can't run a 32-bit (inner)
+> guest (in whatever way that hypervisor reports that kind of error).
+>
+
+That's a good solution, and only a small minority of users (the one that
+has to really deal with this) will be concerned.
+
+> So that's my sketch of a proposal -- what do people think? What
+> have I forgotten about?
+> 
+> thanks
+> -- PMM
+> 
+
+Do you have a time frame in mind for this? It's on the path for having
+the single-binary, and we can help with it if needed.
+
+It should be a pretty straightforward change, just renaming QOM types,
+and adding the "max" selection mechanic.
+
+Regards,
+Pierrick
 
