@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52783CD343B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E76CD343B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:13:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcuB-0006dh-NS; Wed, 06 May 2026 10:07:16 -0400
+	id 1wKcwB-0005Gr-RS; Wed, 06 May 2026 10:09:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKct0-0005TH-K4
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:06:04 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcw4-0004rz-Bq
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:09:12 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcsy-0001k6-Og
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:06:02 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-488ad135063so61615775e9.0
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:05:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcw2-0002Cu-0P
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:09:11 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-488ba840146so57476445e9.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:09:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076357; x=1778681157; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076547; x=1778681347; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XEy5qmOgT5jPONcPwspPTaFki8owjZYQ9y+oaKY0q6Q=;
- b=ai9i8S7CtdKGIkKeTmuAz6twmcYjXhRjTZq00OaCvkeoSCcSPWoFPm1r4KawfLIdJS
- RGo0teaBYc65MDCLKc4soZJpj5+n4++c2j6lSa5Y2fvayWwW4xryem8GLcJ/wZh171fU
- icmSpW+6pmtPtb41APukJRsN9TS2JRr75reo4JKFsPx8WvBZs8fW8Iw3mB2JEiHA4uHr
- cm80xk/nwGT9M4gTJAhldWa9hY60G7JRI38H9E12w40ICWJ7r1vw+URJFUYzI8xzx1h2
- R6bR30UMEmEBYverzhJsUtdso6XjqPH3ScHWUppW8C5eG6BP5z9/YtbBmij+BT8WCNj1
- 5HMQ==
+ :reply-to; bh=K3nrp9HgpNvnB5JSb3ITv/y/XMExaEyF4f08sVkOvWk=;
+ b=Vs6+kY89B6Ta5V90XKBPrGkHTyHpxuDHYuGYyL4PENEmZvbdq+wJj7qoo5NMtdaLai
+ 6o9AoHWq9T/TSZWh92b2Gq30Jq5YTdIkBMJ8tS9DgzYKyxBNiTd8glCKUENZhZCu/9zZ
+ d9iHuEZ3lSLGi9B1BrGAFfqMoVaR3H9C05W2qlg4DVvc955vYZilbrkMlF3Kyvp8RmOg
+ gKJw6ZbBeBW5WymWoZ8bjathuOCcxKr+ICPaFzr2CYG7rjfHlA+PlCgcWu8wL1sYPrsg
+ SIC6kN93hlsAF2q/WxCihUjAaes0GxStW8mRjZ5+w+hJykr4GYjmCdQJ7WgJyDPeaRcF
+ 1LoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076357; x=1778681157;
+ d=1e100.net; s=20251104; t=1778076547; x=1778681347;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=XEy5qmOgT5jPONcPwspPTaFki8owjZYQ9y+oaKY0q6Q=;
- b=q0hjusSilF41cTO510eEZgB9P9WoYJfwnmZHZpFLM2rLRDAa4AU5gpMsAKp04A1g/m
- IGK9OgTpr6yqHqwEqzt1xG3HvG67L2XBX3ZNXyVbTUS7/xFhXy2l1XcYhqgbfGOvNNDY
- geo0T+nMhFZj2PFAwOAZ2Dbkrd7gr5YtmezJsHvqCXswsCuoFosXUhH/CYajf7GcVoEw
- DPVSCB+B+z58g7exTtVMzRiVi09inEtqC25e8ZUcRsFWOT7Nh3mEmL7w8Wek29xAgmEX
- rm35kHhFaYg53VLXiQak0amulR2BR16u2tHdTqH3/ivvQZntLaw1cYQgufc0gj5faDkQ
- bRqA==
-X-Gm-Message-State: AOJu0YxaZFaDgVnlf62ntQnfopOT/nFIewj2Ozbv1Bh3APm662eWgA5N
- ixT2SrF3JWOLtenSTThv3cND1o6a9Ji2qfhxAGZptprsOK7e3zHMqygHaIGbWdl2In+q7AQYNvQ
- jLJiePMQ=
-X-Gm-Gg: AeBDieta22bxCF+E07yx9E46iT6DSV0DaDCnQ/NoHvUhEU2Aj20q3o/YlNJTthUmUzJ
- USR5FktN4EqasrVzVbfVHzSUVBJJ5KnVC3NK90B2rFZFAlans0QNW72mioyG6YuDvzRK3utEjrQ
- KYX7tjtGT62iau05+WJs0iKNcDZdvt94m93OGeldwzpviU+rBq+LmA9vqq106A7zK71zjIJt12A
- eu7aVlXswZNdMtLmf580+gjiALNeMtDggZBRxfYRGKjYpxvTHzURq+KQosVNwe+tgFD0N8Y6Vuc
- 4V+O5okyzONHjNrar9uO4apEKCFMfg4+GmMzATzAtRXNpnPf1uADCxAQYTy+W5d40HetZLabP6K
- pW8qLyCilkUyQL4tlWUMt6m2S0uyng11kE83BnrY8WdnH6Kv4kPv0gqanZF9iyVm6+J0F3lXB6V
- r2xULEpHz8HqsZ7HCv03dOuew1C1ao0FVmxtvk0/Vw+WCm3utIdySF7dqiEFT/VF4kc6DSvui27
- 0ETBpQfrR4=
-X-Received: by 2002:a05:600c:354b:b0:486:f634:ef1 with SMTP id
- 5b1f17b1804b1-48e51f32a7amr64175305e9.17.1778076356583; 
- Wed, 06 May 2026 07:05:56 -0700 (PDT)
+ bh=K3nrp9HgpNvnB5JSb3ITv/y/XMExaEyF4f08sVkOvWk=;
+ b=jBE6T9YIKaiZE918En8p7gBCRkIGBQF0w+t6hDvgbGeiCKAl7NGpOvg7ZCVnfCKH0L
+ aL3HkIrnxa/UWDb43inQ3fEwyKvHcP5ZsbLjR7a1T/Ipwgzvi58FMIGP57P7eAu81CuE
+ zJ3XXo6dPxW9+P/hp20Zct2zHXtqDH7WW6zfGK3uZoQC4RRbw2ruaq2ytr/2XAZFL4So
+ UCLbyPhILuY9unsvbngS0XVpzrTewUiWl5mDsKF4iD28RKRV7HddAWqP+8d7jA+KTqia
+ 2ggOxVfXzbgbO5dg3ajD1J8f6LJlCs5XqY0LUG1TAkCc8VSjElEu4Njl9PThtvsHmIMx
+ Q3UA==
+X-Gm-Message-State: AOJu0YxVcSr0NtWduq6qvLBTvqG3irNqegMTgz29tbu4di/D6AfQaRk1
+ 4inCUUXWg5ysbInb3kidPwe7nbjYtyhOIq06nWfzkHP5Zpq3/KyZrq3nWV6sw7JgsGjcbGJ3/3c
+ vZVv+TgA=
+X-Gm-Gg: AeBDies3I1TRYRy+X2Pwdgt0fneGkAgtdaYRJNoLk75YQAiZf3pZoC17HzndsZJ06iT
+ Z6HQHJ5cnii/ENtedX/T6nZZlbAGM+u+erOylYlGzYaku3R7iRG3TaB+XwU48shDp9V2TP01OeX
+ bDoYh5LP4CGy5hzMB2Jjgs7UsqxKp0WEBT/70Z+Z+FgWTVkkyzTVnOKGDnEkJ+yXxOyLkh/W3bG
+ Yz4azVJqCNZzbfvWB+AmZlBWwgbe1cv/tpBHTGb/ZAu10FeUSB5V2Hirp8t+96DiI/5ag+2tdZY
+ PgedLNMgB9N1JZcwY6C2tctvI2lzDqSsUJCgdmP6ey39UJYnv/UoR2NyjcPc0dE9wIMCQbFRAYO
+ EUz9OB0UmUguqZF/Y23yqIKXBOZPdVonv/MPDvmKbPLwq56rgfZI5hV7YoZLOG6IcUuhctsqPgw
+ +6Kypzpn3w9GCwRLjmgyVhRJMX8EWSI2tPMKM4UEM4acwAbM56twWU7hku0ioJd60bxNQqnVcXh
+ dG7tJbBEvU=
+X-Received: by 2002:a05:600c:a111:b0:488:79a3:f04c with SMTP id
+ 5b1f17b1804b1-48e51f46d1bmr48492415e9.27.1778076547323; 
+ Wed, 06 May 2026 07:09:07 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e530b212esm23820875e9.1.2026.05.06.07.05.54
+ 5b1f17b1804b1-48e538acbfcsm46637325e9.8.2026.05.06.07.09.05
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:05:55 -0700 (PDT)
+ Wed, 06 May 2026 07:09:05 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 080/110] target/arm: define stub library
-Date: Wed,  6 May 2026 15:54:52 +0200
-Message-ID: <20260506135524.20617-81-philmd@linaro.org>
+Subject: [PULL 104/110] cocci: Do not initialize variable used by
+ QLIST_FOREACH macro
+Date: Wed,  6 May 2026 15:55:16 +0200
+Message-ID: <20260506135524.20617-105-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,72 +100,178 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+The QLIST_FOREACH() macro, defined in "qemu/queue.h",
+always assigns its iterator variable when entering the
+loop. Remove the pointless and possibly misleading
+assignment.
 
-We use the mechanic introduced in previous commit to define a arm stubs
-library. With this, we are able to eliminate symbol conflicts when
-linking arm and aarch64 targets, and get one step closer to having a
-single-binary.
+Mechanical patch using the following coccinelle spatch:
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20260424230103.1579600-3-pierrick.bouvier@oss.qualcomm.com>
+  @@
+  type T;
+  identifier e;
+  iterator FOREACH_MACRO =~ ".*_FOREACH.*";
+  statement S;
+  @@
+  -    T *e = ...;
+  +    T *e;
+       ... when != e
+       FOREACH_MACRO(e, ...) S
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-Id: <20260415215539.92629-2-philmd@linaro.org>
 ---
- target/arm/meson.build     | 8 +++-----
- target/arm/tcg/meson.build | 2 +-
- 2 files changed, 4 insertions(+), 6 deletions(-)
+ block/blkio.c               | 2 +-
+ block/gluster.c             | 4 ++--
+ hw/arm/virt-acpi-build.c    | 2 +-
+ hw/i386/xen/xen-hvm.c       | 4 ++--
+ hw/riscv/riscv-iommu.c      | 2 +-
+ hw/vfio/cpr-legacy.c        | 2 +-
+ hw/vfio/listener.c          | 4 ++--
+ hw/xen/xen_pt_config_init.c | 4 ++--
+ 8 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index 192ac7c31ee..4723f9f170a 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -2,6 +2,7 @@ arm_ss = ss.source_set()
- arm_common_ss = ss.source_set()
- arm_common_system_ss = ss.source_set()
- arm_system_ss = ss.source_set()
-+arm_stubs_ss = ss.source_set()
- arm_user_ss = ss.source_set()
+diff --git a/block/blkio.c b/block/blkio.c
+index 20f138a38c5..fb8bec27d71 100644
+--- a/block/blkio.c
++++ b/block/blkio.c
+@@ -124,7 +124,7 @@ blkio_do_alloc_bounce_buffer(BDRVBlkioState *s, BlkioBounceBuf *bounce,
+                              int64_t bytes)
+ {
+     void *addr = s->bounce_pool.addr;
+-    BlkioBounceBuf *cur = NULL;
++    BlkioBounceBuf *cur;
+     BlkioBounceBuf *prev = NULL;
+     ptrdiff_t space;
  
- arm_common_system_ss.add(files('gdbstub.c'))
-@@ -23,9 +24,7 @@ arm_system_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'))
- arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
+diff --git a/block/gluster.c b/block/gluster.c
+index 4fb25b2c6d8..279f650241c 100644
+--- a/block/gluster.c
++++ b/block/gluster.c
+@@ -251,7 +251,7 @@ static void glfs_set_preopened(const char *volume, glfs_t *fs)
  
- arm_user_ss.add(files('cpu.c'))
--arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files(
--  'cpu32-stubs.c',
--))
-+arm_stubs_ss.add(files('cpu32-stubs.c'))
- arm_user_ss.add(files(
-   'cpregs-gcs.c',
-   'cpregs-pmu.c',
-@@ -39,8 +38,6 @@ arm_user_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING',
- 		        if_true: files('common-semi-target.c'))
+ static glfs_t *glfs_find_preopened(const char *volume)
+ {
+-    ListElement *entry = NULL;
++    ListElement *entry;
  
- arm_common_system_ss.add(files('cpu.c'))
--arm_common_system_ss.add(when: 'TARGET_AARCH64', if_false: files(
--  'cpu32-stubs.c'))
- arm_common_system_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
- arm_common_system_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING',
- 		                 if_true: files('common-semi-target.c'))
-@@ -73,3 +70,4 @@ target_system_arch += {'arm': arm_system_ss}
- target_user_arch += {'arm': arm_user_ss}
- target_common_arch += {'arm': arm_common_ss}
- target_common_system_arch += {'arm': arm_common_system_ss}
-+target_stubs_arch += {'arm': arm_stubs_ss}
-diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
-index 02774409e56..d2364aa39c4 100644
---- a/target/arm/tcg/meson.build
-+++ b/target/arm/tcg/meson.build
-@@ -28,7 +28,7 @@ translate32_d = [
- ]
+      QLIST_FOREACH(entry, &glfs_list, list) {
+         if (strcmp(entry->saved.volume, volume) == 0) {
+@@ -265,7 +265,7 @@ static glfs_t *glfs_find_preopened(const char *volume)
  
- arm_ss.add(when: 'TARGET_AARCH64', if_true: gen_a64)
--arm_ss.add(when: 'TARGET_AARCH64', if_false: files('stubs32.c'))
-+arm_stubs_ss.add(files('stubs32.c'))
+ static void glfs_clear_preopened(glfs_t *fs)
+ {
+-    ListElement *entry = NULL;
++    ListElement *entry;
+     ListElement *next;
  
- arm_ss.add(files(
-   'cpu32.c',
+     if (fs == NULL) {
+diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+index 6817a72e2eb..3f285ff6c78 100644
+--- a/hw/arm/virt-acpi-build.c
++++ b/hw/arm/virt-acpi-build.c
+@@ -146,7 +146,7 @@ static void acpi_dsdt_add_pci(Aml *scope, const MemMapEntry *memmap,
+ {
+     int ecam_id = VIRT_ECAM_ID(vms->highmem_ecam);
+     bool cxl_present = false;
+-    PCIBus *bus = vms->bus;
++    PCIBus *bus;
+     bool acpi_pcihp = false;
+ 
+     if (vms->acpi_dev) {
+diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
+index 67d3e836eb1..d3ce082e07a 100644
+--- a/hw/i386/xen/xen-hvm.c
++++ b/hw/i386/xen/xen-hvm.c
+@@ -184,7 +184,7 @@ static void xen_ram_init(PCMachineState *pcms,
+ static XenPhysmap *get_physmapping(hwaddr start_addr, ram_addr_t size,
+                                    int page_mask)
+ {
+-    XenPhysmap *physmap = NULL;
++    XenPhysmap *physmap;
+ 
+     start_addr &= page_mask;
+ 
+@@ -200,7 +200,7 @@ static hwaddr xen_phys_offset_to_gaddr(hwaddr phys_offset, ram_addr_t size,
+                                        int page_mask)
+ {
+     hwaddr addr = phys_offset & page_mask;
+-    XenPhysmap *physmap = NULL;
++    XenPhysmap *physmap;
+ 
+     QLIST_FOREACH(physmap, &xen_physmap, list) {
+         if (range_covers_byte(physmap->phys_offset, physmap->size, addr)) {
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 7ba32405522..5fac1ec3449 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -1678,7 +1678,7 @@ static void riscv_iommu_ats(RISCVIOMMUState *s,
+     IOMMUAccessFlags perm,
+     void (*trace_fn)(const char *id))
+ {
+-    RISCVIOMMUSpace *as = NULL;
++    RISCVIOMMUSpace *as;
+     IOMMUNotifier *n;
+     IOMMUTLBEvent event;
+     uint32_t pid;
+diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+index 033a546c301..c431d899731 100644
+--- a/hw/vfio/cpr-legacy.c
++++ b/hw/vfio/cpr-legacy.c
+@@ -212,7 +212,7 @@ void vfio_legacy_cpr_unregister_container(VFIOLegacyContainer *container)
+ void vfio_cpr_giommu_remap(VFIOContainer *bcontainer,
+                            MemoryRegionSection *section)
+ {
+-    VFIOGuestIOMMU *giommu = NULL;
++    VFIOGuestIOMMU *giommu;
+     hwaddr as_offset = section->offset_within_address_space;
+     hwaddr iommu_offset = as_offset - section->offset_within_region;
+ 
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index 31c3113f8fb..0b72a2cf5e5 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -333,7 +333,7 @@ static void vfio_ram_discard_unregister_listener(VFIOContainer *bcontainer,
+                                                  MemoryRegionSection *section)
+ {
+     RamDiscardManager *rdm = memory_region_get_ram_discard_manager(section->mr);
+-    VFIORamDiscardListener *vrdl = NULL;
++    VFIORamDiscardListener *vrdl;
+ 
+     QLIST_FOREACH(vrdl, &bcontainer->vrdl_list, next) {
+         if (vrdl->mr == section->mr &&
+@@ -463,7 +463,7 @@ static void vfio_device_error_append(VFIODevice *vbasedev, Error **errp)
+ VFIORamDiscardListener *vfio_find_ram_discard_listener(
+     VFIOContainer *bcontainer, MemoryRegionSection *section)
+ {
+-    VFIORamDiscardListener *vrdl = NULL;
++    VFIORamDiscardListener *vrdl;
+ 
+     QLIST_FOREACH(vrdl, &bcontainer->vrdl_list, next) {
+         if (vrdl->mr == section->mr &&
+diff --git a/hw/xen/xen_pt_config_init.c b/hw/xen/xen_pt_config_init.c
+index 3edaeab1e34..bbc82a2bcfa 100644
+--- a/hw/xen/xen_pt_config_init.c
++++ b/hw/xen/xen_pt_config_init.c
+@@ -62,7 +62,7 @@ static int xen_pt_hide_dev_cap(const XenHostPCIDevice *d, uint8_t grp_id)
+ /*   find emulate register group entry */
+ XenPTRegGroup *xen_pt_find_reg_grp(XenPCIPassthroughState *s, uint32_t address)
+ {
+-    XenPTRegGroup *entry = NULL;
++    XenPTRegGroup *entry;
+ 
+     /* find register group entry */
+     QLIST_FOREACH(entry, &s->reg_grps, entries) {
+@@ -80,7 +80,7 @@ XenPTRegGroup *xen_pt_find_reg_grp(XenPCIPassthroughState *s, uint32_t address)
+ /* find emulate register entry */
+ XenPTReg *xen_pt_find_reg(XenPTRegGroup *reg_grp, uint32_t address)
+ {
+-    XenPTReg *reg_entry = NULL;
++    XenPTReg *reg_entry;
+     XenPTRegInfo *reg = NULL;
+     uint32_t real_offset = 0;
+ 
 -- 
 2.53.0
 
