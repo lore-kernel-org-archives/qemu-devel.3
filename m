@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C9C4CD3445
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9531CD3443
 	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:09:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcvr-0004DN-4E; Wed, 06 May 2026 10:08:59 -0400
+	id 1wKcuY-0000BJ-3V; Wed, 06 May 2026 10:07:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcvh-0003vq-1q
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:08:50 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcu5-0006Aq-Py
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:07:10 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcvf-0002AL-97
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:08:48 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-44b052142e1so2797524f8f.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:08:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcu2-0001s6-4i
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:07:07 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-488e1a8ac40so63789985e9.2
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:07:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076525; x=1778681325; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076422; x=1778681222; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2YScFuD/G2yULe3kqslcvrkPGjbEWx3inHxGy7MRNZQ=;
- b=A26Od+oTsMSf3PpO0ePppc8jQkXtfep/sHZIdZBLPCq+JxRa2HzC1f3Z+uJaaNHf1W
- +w8pKz5QzIRlLeQhXLO7DqAyHLqvnCjR5dFcY5SUhaajUhfY0SCglTJIm1LM4sAGpzLQ
- YnfbqhANSnT0W8zQEzA2JsIKunjDKTPcrLZKPOcXwlxzSb7gnI2Pf6LiObmOmqUS3bTY
- ZMdnQNnIjqePQ/Dud+IM8e4v2tR0O6TO1MOktNbNs9+SqjHwQku0v5p9F2X9auN9itin
- IfB5+RAxas0zc3Ik2kU9LSDn1OxaTRAWys4cYxDuLIyHu3pPnfxP1NWm8mqLLh4SV4MG
- zUEw==
+ :reply-to; bh=He5fI3HAK0zWkP0HykCz3DzGEmI9iL9vOVxmp5oEXGk=;
+ b=x6Mbx5n3gsxh2Nkt5GpPPmQBLaTYN7F5VOkcCJmDka9JLNC9ZKe8yvao251hZ04jGR
+ UKPrO2y3DoHyyOfiCq8IhCqxqL6djwRCbfGJ08FRMd0MijXPfTjSpVNYVt8np8iLloZE
+ uVTfH//V6oSkzyhVK+G3WemRIgYFpj7fP99f4ulkLA9ntr8PY9ZYaYJJuVla/VpH0yOp
+ ESUQyMoGBpiRu16yEp0e0XLAOq/J9Mh/6hf5O3fGSekfs58jnLAcWbPizrs2pT67Qfxp
+ OhXw0zke5mUO/QBjQsOPzVSupPOROHfdw6OqXzc8dDKY+JUZskEVNhQ8jTZoRZXaUas6
+ l9vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076525; x=1778681325;
+ d=1e100.net; s=20251104; t=1778076422; x=1778681222;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=2YScFuD/G2yULe3kqslcvrkPGjbEWx3inHxGy7MRNZQ=;
- b=MPPaZs7Cl3/bhuSBdiqpc4ELXbcgq9+KZp6F9jP18yb5VzI3JiKJMB63I2u6D3dpGS
- zCHGtED/9kxuj6B/StieG1a6XzrhPK83flmXsf6IlkDTWYa4zW8jOuimWr0IsO+F7z/U
- NholaGPtTFufWTh+jDwAHcwQ0PzBsC2WUgdal19sr1yyAk+/iwJw6ZWfJ8MmUVD0NMRR
- a5xqaGIAFaKh1fKDSro465+Z+VRSg+7/QyjIKb9YomWllVRpeZhV0fbJhw0Tdk4+Hr/+
- 6lchDL/7UPez4KDdmYxJEG411lZr6dEdDoTzrnm87vepcQszLl5gfjg80IMaw9mcz0fP
- zH8w==
-X-Gm-Message-State: AOJu0Yx7EGS0mibAVVNLTmS4PPT+NljLrP06oDSAFmYJ3pIiaeH/iLrl
- EXtOeH2uCvYUpIFwX6jOy+AppdV49YriDus67vA513PMRgQMnsGcjBrept9K8BrO8CW960R6g9f
- V4IjcqUQ=
-X-Gm-Gg: AeBDievy0ZrgNvhqnqDB7SVtoECZ6CoAZ+iihJRve++bjJ/dO3XjciyaeCpqPSKJtPZ
- r9yH65XV5C34PE68d0Uap6twgjiSJZfoa7IvdWf0//j3FQodYu9g5fnb89oobK9BM2lbK7fx9zb
- HY6NST50n4qU08wHrgFTMh3cEtZMRy2r3yNHrMU7PceLtsdYtmEn4qQEEBtjhieQCWjDVikQmvI
- qX4UuazHa6x2xkY5onH114Ko5q6WNEddaFlPbkghaQBrOZIqnsRDtINS4Uf6y92QgCyUN1v7AQB
- 8AjDCEhXJSRDrp3yEEHfamiznF23xxG+7FGlZ7HgsQJK+YmZkRFS7S9YwA/SVFVAw5fCPQWb6ll
- 2IhGDlpYeADR5Ae79wGYi42+dWEJjXgQtzUAAGWMY3pMzb7UCigoqc9j92/HQ1zt666Dr26QJdY
- XCm32i5agIQ3i+xF4dvymrVUKD0nwxxhFoZprB/xKiB9EB1+clN3Vyf8PbVQSTOUigxqu0UBBod
- xSFFr3Vfn0=
-X-Received: by 2002:a05:600c:4512:b0:488:c744:49b with SMTP id
- 5b1f17b1804b1-48e51f539b0mr60021525e9.7.1778076524626; 
- Wed, 06 May 2026 07:08:44 -0700 (PDT)
+ bh=He5fI3HAK0zWkP0HykCz3DzGEmI9iL9vOVxmp5oEXGk=;
+ b=RqXJsLs7hOaOjbwWbPcnooxtuhUL7zjpJsBZnzc2tc3uMS1Fux6Er/rwp/WcCQcCAP
+ 1Ed/MsjEv/+1KuDfV8Pxio6mnQF7HkU0hKtvOtvpmk3V+7K8iTxZuam2YIdNaqYcUFjf
+ z+E5yU+Bq3d0T6o6tRQl1sg5gvTNjeJE+YlsYju9vfkr9DhhTRiRGB5hJw91vHnjFjoN
+ qAwwk2jjdoTERKcxtvltCCPpKvuGhGaN221cAhcg787Y0k8l1cjCzqhCvglfvvlOKhCn
+ q1iFPJTN5xJkRX0rM9JLPACipqQXYZbDtZlWzZaXCL/3uWUNxJJ9GNFd4XKpHg8Swg8/
+ VapQ==
+X-Gm-Message-State: AOJu0YyK9Af7Z9WuyfD+lb7f80E5Huf1rlAGvWJILTBtg0jf1F/pCb0D
+ AXTd9bSTzjbHHLtmSwsIav4vWz4SGlAYAtvxT3gi+Bp7YKB7EJ+mdRHYbR2YSr4UJW/Eh/jRWqS
+ 0138Mw20=
+X-Gm-Gg: AeBDiesVprTmgMP/EWRXsbW8vIAHg6iRm4YMqLt6Y/wWYtMHVlCGvHcwU1YYbPwXSgT
+ iYOBFLtf6KolGF0xwGEPeGco5FcWk96VmanXrz79+jpDiZfcEEZ+s75mJ/+O98H5PbUaY8LLdg9
+ 6rW6dMlfWg+lbYtqcEKc2Fy9+JvV5N/Ah0zH0kCVUAqUvlJkH5zbuxtfI1MvIK469joFA5IP5jr
+ W32eZJT6U57Pu0gUcoy1D/W/IjBhoTCEm43RA9QqtCO5I3N9aLU+VLurp9o1cvzg7epmsA4wuBY
+ HmTZuJBpd8/74wK6kZbsG60j1fWGW8PyYAtAUnNarU+4RWcPJEOow4KUuXnWp9YAlSSG1s4R6b6
+ 0sS0xNFrcsHHT9Xr6pCBk+WcMpXiKueiiB9qpY1lEy72rlkisKENL202j/tUa4Bln8wfhtLrhsS
+ KbIYIZoZwKOTol8tU3uPJ2EHPkJ6AZ8aYn/hzEC2Hs5nabtARMsaia/rJen4Ttv245IwMMmRtOl
+ WWaEj4xk7o=
+X-Received: by 2002:a05:600c:3b96:b0:48a:66a8:9981 with SMTP id
+ 5b1f17b1804b1-48e51f55272mr67269415e9.27.1778076421907; 
+ Wed, 06 May 2026 07:07:01 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4505285e765sm12365586f8f.10.2026.05.06.07.08.42
+ 5b1f17b1804b1-48e53891d62sm83626985e9.1.2026.05.06.07.07.00
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:08:42 -0700 (PDT)
+ Wed, 06 May 2026 07:07:00 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 101/110] io: Clear dangling GLib event source tag
-Date: Wed,  6 May 2026 15:55:13 +0200
-Message-ID: <20260506135524.20617-102-philmd@linaro.org>
+Subject: [PULL 088/110] target/microblaze: Compile translate.c as common unit
+Date: Wed,  6 May 2026 15:55:00 +0200
+Message-ID: <20260506135524.20617-89-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,71 +99,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Following commit 34aad589019 ("hw/char/virtio-console: clear
-dangling GLib event source tag"), prevent stale tags from
-being reused by clearing dangling GLib event source tag during
-the cleanup phase (finalize, unrealize).
+In order do build translate.c as a common unit we need to
+replace:
 
-Inspired-by: Matthew Penney <matt@matthewpenney.net>
+  "accel/tcg/cpu-ldst.h" -> "accel/tcg/cpu-ldst-common.h"
+
+and:
+
+  #include "tcg/tcg-op.h" -> #include "tcg/tcg-op-common.h"
+                          -> #include "tcg/tcg-op-mem.h"
+
+taking care to define TCG_ADDRESS_BITS, which is fixed
+for these 32-bit targets.
+
+Remove the now empty microblaze_ss[] source set.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Matthew Penney <matt@matthewpenney.net>
-Message-Id: <20260408100605.66795-2-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-Id: <20260423100612.27278-10-philmd@linaro.org>
 ---
- hw/usb/redirect.c                     | 4 +---
- io/channel-websock.c                  | 8 ++------
- target/i386/kvm/tdx-quote-generator.c | 5 +----
- 3 files changed, 4 insertions(+), 13 deletions(-)
+ target/microblaze/translate.c | 6 ++++--
+ target/microblaze/meson.build | 7 +------
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/hw/usb/redirect.c b/hw/usb/redirect.c
-index fda5bbca676..100afbdb06a 100644
---- a/hw/usb/redirect.c
-+++ b/hw/usb/redirect.c
-@@ -1494,9 +1494,7 @@ static void usbredir_unrealize(USBDevice *udev)
-     if (dev->parser) {
-         usbredirparser_destroy(dev->parser);
-     }
--    if (dev->watch) {
--        g_source_remove(dev->watch);
--    }
-+    g_clear_handle_id(&dev->watch, g_source_remove);
+diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+index bf8f864c324..74b5420ed24 100644
+--- a/target/microblaze/translate.c
++++ b/target/microblaze/translate.c
+@@ -20,9 +20,11 @@
  
-     free(dev->filter_rules);
-     qemu_del_vm_change_state_handler(dev->vmstate);
-diff --git a/io/channel-websock.c b/io/channel-websock.c
-index 85b22a8822a..617d79c351a 100644
---- a/io/channel-websock.c
-+++ b/io/channel-websock.c
-@@ -950,12 +950,8 @@ static void qio_channel_websock_finalize(Object *obj)
-     buffer_free(&ioc->encinput);
-     buffer_free(&ioc->encoutput);
-     buffer_free(&ioc->rawinput);
--    if (ioc->hs_io_tag) {
--        g_source_remove(ioc->hs_io_tag);
--    }
--    if (ioc->io_tag) {
--        g_source_remove(ioc->io_tag);
--    }
-+    g_clear_handle_id(&ioc->hs_io_tag, g_source_remove);
-+    g_clear_handle_id(&ioc->io_tag, g_source_remove);
-     error_free(ioc->io_err);
-     object_unref(OBJECT(ioc->master));
- }
-diff --git a/target/i386/kvm/tdx-quote-generator.c b/target/i386/kvm/tdx-quote-generator.c
-index dee8334b27a..002bc40c8a8 100644
---- a/target/i386/kvm/tdx-quote-generator.c
-+++ b/target/i386/kvm/tdx-quote-generator.c
-@@ -74,10 +74,7 @@ static void encode_header(char *buf, size_t len, uint32_t size) {
- static void tdx_generate_quote_cleanup(TdxGenerateQuoteTask *task)
- {
-     timer_del(&task->timer);
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+-#include "accel/tcg/cpu-ldst.h"
++#include "accel/tcg/cpu-ldst-common.h"
+ #include "accel/tcg/cpu-mmu-index.h"
+-#include "tcg/tcg-op.h"
++#define TCG_ADDRESS_BITS 32
++#include "tcg/tcg-op-common.h"
++#include "tcg/tcg-op-mem.h"
+ #include "exec/helper-proto.h"
+ #include "exec/helper-gen.h"
+ #include "exec/translator.h"
+diff --git a/target/microblaze/meson.build b/target/microblaze/meson.build
+index 2ce50f35397..9c1ecd1cf1c 100644
+--- a/target/microblaze/meson.build
++++ b/target/microblaze/meson.build
+@@ -1,16 +1,12 @@
+ gen = decodetree.process('insns.decode')
+ 
+ microblaze_common_ss = ss.source_set()
++microblaze_common_ss.add(gen)
+ microblaze_common_ss.add(files(
+   'cpu.c',
+   'gdbstub.c',
+   'helper.c',
+   'op_helper.c',
+-))
 -
--    if (task->watch) {
--        g_source_remove(task->watch);
--    }
-+    g_clear_handle_id(&task->watch, g_source_remove);
-     qio_channel_close(QIO_CHANNEL(task->sioc), NULL);
-     object_unref(OBJECT(task->sioc));
+-microblaze_ss = ss.source_set()
+-microblaze_ss.add(gen)
+-microblaze_ss.add(files(
+   'translate.c',
+ ))
  
+@@ -26,7 +22,6 @@ microblaze_system_ss.add(files(
+   'machine.c',
+ ))
+ 
+-target_arch += {'microblaze': microblaze_ss}
+ target_user_arch += {'microblaze': microblaze_user_ss}
+ target_system_arch += {'microblaze': microblaze_system_ss}
+ target_common_system_arch += {'microblaze': microblaze_common_system_ss}
 -- 
 2.53.0
 
