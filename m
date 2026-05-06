@@ -4,150 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF3BCCD3427
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 03:38:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D053CD3424
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 04:14:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKT5g-0003i8-3i; Tue, 05 May 2026 23:38:28 -0400
+	id 1wKTdu-0002Pe-Pg; Wed, 06 May 2026 00:13:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wKT5Y-0003Qq-UC; Tue, 05 May 2026 23:38:25 -0400
-Received: from mail-japaneastazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c405::7] helo=TYDPR03CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wKT5U-0006bD-NV; Tue, 05 May 2026 23:38:19 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Gl0DB68tKydO5Snsy5FB4dEX3yZXS50xgFnV0I7D7z4JRBgewNk2tdNUPKUrBxmxUV6s/X9BLYat0R428ZxQEOqRvD45KWF1zRm2GktIjftf3UztyH8rXd0kK7AIQIEvIci/d+kH08uYtA+PPBA8tjybW93uZqTk+GPHCiL4wO0KeZQ9znZXW3K2ttMGJ7YWocxvSoeeLuiYzyFWh42T9fq61p1HF6GTSbcioTJE9Rz99v70am+QmWaioR3eFOMPVFs81RYYHu85MRN61Dy3zQMpKMdPNzuAYkuSItkWlZkBj6OIZc3BFe7srf7Pg4cxLYLYoPjZo4lVNoJ9TQy8Xg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=O5VSTNe+8CX/5SYFyBgVIVc9UvJVi5OTmgxcuQP1WNo=;
- b=WSVYENHhW1Q5ts6D1iElmyCh0yGaVWO0qBhflsFcsMfL2oC1r708Zx/O6A5Nfjyu1PJ69g5LLASgKzi90i5/s+XHZVng9+mBDc8Xnok8KKJB7h+EfTQOBb4f1aqnR2S66pUjsoIW1ka1kVlR795ougzcYcwcEmxtdEw/fSq95VrBPJ9P3BrWT4Sa+0RMutBFG+thIRr2NJ7cvL0dnhRgY8TD/OGIoIy++liHx1z4env1LmN9PCpF4x/YhflGuxnJjuWzcXda8VncHPAx972hdGSDpLyTcy7zzc+xd9IamKg1LiymGIDzDgVKhVuhJCIWh6YZsVIt4d/NV03Z2adwDw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=O5VSTNe+8CX/5SYFyBgVIVc9UvJVi5OTmgxcuQP1WNo=;
- b=GGPShowcbeNuAr6067shKtX2iDjPFjP4xW4FbXUuNZjHZbjaVqaP2clwTgvrwbgf0HbylUbkCxPG4Yn4dWWC1RUvNHQbMghCabrLSxrCnvHlBq6QxD7hvyM8dhFrqNyr8DL7ozvKSyYTMIOXtzk6rlyqFE/WYVYpEhHbUiEXYSDe22ysYDlvKGClW8hdmoHY1IkCUELvD+nMAtJ/cuGuTDyPL/+9oNe41dXBURChQhqmrqAiXmRht7//IaKLaHzblM/Q5NUo/ElzTNJlrPL6BWKJ8C7DRQ8hJhRpUsk1biRpoZ0MKTZv14k+LsnxLL8+kBdwrLvBRi9jFK128tPOIg==
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
- by TY0PR06MB6883.apcprd06.prod.outlook.com (2603:1096:405:15::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9870.25; Wed, 6 May
- 2026 03:38:11 +0000
-Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
- ([fe80::e659:1ead:77cb:f6d3%2]) with mapi id 15.20.9870.023; Wed, 6 May 2026
- 03:38:11 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
- "peterx@redhat.com" <peterx@redhat.com>, =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?=
- <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>, Steven Lee
- <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>, Kane Chen
- <kane_chen@aspeedtech.com>, Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Zhao Liu <zhao1.liu@intel.com>, "open
- list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
- <qemu-devel@nongnu.org>
-CC: Troy Lee <troy_lee@aspeedtech.com>, "farosas@suse.de" <farosas@suse.de>,
- "flwu@google.com" <flwu@google.com>, "nabihestefan@google.com"
- <nabihestefan@google.com>
-Subject: RE: [PATCH v6 02/11] hw/usb/hcd-ehci: Change descriptor addresses to
- 64-bit with migration compatibility
-Thread-Topic: [PATCH v6 02/11] hw/usb/hcd-ehci: Change descriptor addresses to
- 64-bit with migration compatibility
-Thread-Index: AQHc23E5LWTS40X8DUGYrctiTBLxCrX9yQsAgAJ3VfCAABwfkA==
-Date: Wed, 6 May 2026 03:38:11 +0000
-Message-ID: <TYPPR06MB8206823CB23E9DA37A38C1BDFC3F2@TYPPR06MB8206.apcprd06.prod.outlook.com>
-References: <20260504025342.1452605-1-jamin_lin@aspeedtech.com>
- <20260504025342.1452605-3-jamin_lin@aspeedtech.com>
- <65f928c1-50f0-448f-bd5e-6edcf3b2e5fd@linaro.org>
- <TYPPR06MB820654F906B2E0C8C7F5173AFC3F2@TYPPR06MB8206.apcprd06.prod.outlook.com>
-In-Reply-To: <TYPPR06MB820654F906B2E0C8C7F5173AFC3F2@TYPPR06MB8206.apcprd06.prod.outlook.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|TY0PR06MB6883:EE_
-x-ms-office365-filtering-correlation-id: 46cbe7bd-8bf9-447a-80a6-08deab20e5f6
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|7416014|376014|921020|18002099003|56012099003|22082099003|38070700021;
-x-microsoft-antispam-message-info: R5t5K2T+3qHwxM0mbaMTRmE9XU1TwQOBZXtVLLJyazz3AfNsEjtWgmDuxk3vZiE3IOAdKd6F/plLYtjpXnOgRQw+nvdrtKQoUEPBVdWbNHrF84A5d2bSwJBXwQK4WdyJmzyzM9LgVDjvYHn4i1/Vf3ZSXjEu8DUKGjkw/6s5CB0sxNhKExHwdBD5CDXJzhmyTbk8sB4eUmy8aSBcjmKu4Kg8suYFpfFY0KBaap4SrI0QZqWaJKoviL7zO3ZYOAe9y4VWg29YEfMbG3j3MX0/N08VtrGXtM6szPXDYfd+oFVMYNAMpqiUJj/PO8woegHSpEBL84Ime6HjfHG69o4Pv8S+xPhYFL5uJBFZZwCXnm+7PSefcqRdxI57EEDcRJnNJHRX82Cho8M7ZdJqZUp6kxR7UwdGl8/U6f4pFTrpCrIjw1IaoBFIstWNJPmC8cNVVekeZD9RroOYtmjTpQDFsnZU8HhtsQ4xhFG2wkU6ypI/8j4zZh3NToYiH7BBcQNi112vAcX5/m6SjdJVZzldBS9AyMmrO8dSSHIVexmOpeIo4/+8BLsG8j3szp2L/xqx+KZ2UFbWj4iF897oolRJSKTpXgGggeTmf888NXIzFbb9VK0u++bzYYT2F5iyeBBgJSdSNtk2b5FEhYSqcZoJmxtbq4ZVp+gFC2Gx/I2Joc6E0yGUbWldPbZOyVh9fDQluDAJ8Ej304VwD2iBiQNcIsTmAz98J5LraVVmWlS/SPmJIKHiejWoY7fLFAaE9OEEYqllHwMZtfuzJTLDx/bByA==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(7416014)(376014)(921020)(18002099003)(56012099003)(22082099003)(38070700021);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Qlo3Yy94dC9kSUhDYVQvZ2NFdG9LUTZyWklWVkFDSlVCSWh2aFNLMnBGT29W?=
- =?utf-8?B?TzV3dVpNMld1aHlFakVXUU1SRmx4Z3QyQ0h2UWRjb08yNTF1S1k4Ty9ZeTZV?=
- =?utf-8?B?Vm9lYzJBRUxRZk9QQ0p5Lzk0cm5QMFlsYjM1TnQ4ZTFRZnJwMU1BaWw4VXow?=
- =?utf-8?B?VUZRbGo2QzBmL2UyMjBJOFB3VHdoaHBQQ0h6clUxdU9UbXdBdG9waVVZUmRC?=
- =?utf-8?B?eWs1bGRib1cwYlZJZkVRVTh3RVZsaU9yZGhGQVpuaVpLQmhtVDJpZzAvNzRK?=
- =?utf-8?B?MVVVbWNicG55Mm1lTVpZNEVuUEhXWFRTZTAzRSt4RU05SHJ3RGZzR2Q5aUph?=
- =?utf-8?B?cUNFZHErcU9iY1Z4bHhtZVp3cXZBdk5oT3lvYjNXbFQwbDRBU0hqSzlmdmVu?=
- =?utf-8?B?Qlhhbk5CY291UnY3Y0VUbVVqWE5KemdLUDR1WDAyblVVRFRGQmgrTm4yL3Np?=
- =?utf-8?B?SkU1Y2NsTDdYdERBenQyVXYwVTE4TElLT3N2Wm5lUFV6THl0M2E5RGYyaER6?=
- =?utf-8?B?NWxDNFJjcE5DekdMSmxvYXhCMkd6WEtaWWhTbXhEUXdQanlidGk1Mmp6T3ls?=
- =?utf-8?B?d1Q2ejRTQm00QWgzUFg2RGJEYXRiVVhvQUtRVm1qNHJ0N0tQcFh5SHJTUmVk?=
- =?utf-8?B?T1p6L2I2OGRKVGp1d3ZRaWJ2NFJHTVVjQlprUmtyQVRFOGpZS3BkdGNCa3NP?=
- =?utf-8?B?ZG56TlJ2eHlOTXRqV0VhcVlSc2J4L1JvWnEyNCtCREtlU2VlcXVKNWw1N3Zp?=
- =?utf-8?B?ZGpoRVJkMWNSWTJFcHcraTRQZkRWNDlNZmFHajFoMS96MzhQNTVvdWg3a2E4?=
- =?utf-8?B?ckttRVdQcEJMeGt6YUtKRlVzNHRNZVNEcnJQalVzaXVGMll0S2tHY0JjSDdx?=
- =?utf-8?B?VGN6YlNMTVhEZ2RrL29DQWwreStGTVBsSnh4R1NSc3I4QUFqQWtxcElLaFA1?=
- =?utf-8?B?UUlPUGFNMVRobElHMUpJNDUzLzdzc1AwVFVuNFltYS9VMW1ZMnhKYmM2YzNm?=
- =?utf-8?B?WVVWaUVJZGluditpdVc4WXQ3ZGt3MkdOYjU0RFBvdVdKanhrRGhHUjlDcHpT?=
- =?utf-8?B?QVgrc293MktkWHF4cjZGOUs3WEpucDJXdTYwcFFGSG1pOHNzNzlGOVd6c2t1?=
- =?utf-8?B?ZEtyYXZjVFZ3TjZFQXBMeFRWeFN6ZGhqTFRMcitoMTJBT2o0SlhlT1lpUHRL?=
- =?utf-8?B?Wk5GZk5vVHhWSWprKzNhbUYzOTRCbTVOSHB3ZWs2R1dWZE55UnhtOWpnd08r?=
- =?utf-8?B?aGcycmM2WDlUNndFV2RPaHMvRmZkZmtjaDNlby9pTXM2NjBkaUlCTlFvclQv?=
- =?utf-8?B?Y1FvdHA4MTNEVmhMRE14dVZlREtUME90aFBRc2xoR1hDQ1NnOElEM3VYaGdS?=
- =?utf-8?B?QUZPTFVXRzM4TGMxc2tERnozd2MzaTFnUEUxMmpHMHo0bFFrZW9CUWlRbkJ3?=
- =?utf-8?B?SCs0STAzZjRwV1ZYY0VsZWFYL2NFM2xHcDB1RjF3MEdsVjk5czNPU1N0WXpH?=
- =?utf-8?B?K2I5MUVGSThJTytUYVQ3VWVBR3dKSHIxNkNRZ05ZTUh6ZGhZQjhjajV2Y0pU?=
- =?utf-8?B?QzRSQ1FaaStDVTRadURPcXVqQ0V1b094TW9VVDgxWEs0MHhRWk1XL21ER0ky?=
- =?utf-8?B?M0dtWTBsdzAxYmJaMU1KcU9WdG9UVVBvNUxQL3h1Z3QwQ1JQU0MvV3JTaUJP?=
- =?utf-8?B?YmFscVJZNnlENkVkanZOcHFOSlZLZE53azlGRi9QdDdkRUw3VjRwTWpkM2d5?=
- =?utf-8?B?bTFOdkw2STQxTDNhTDNOd2JpZ0lZR090bHBZWFRPN05hTGVhTVNoNVpkQXg0?=
- =?utf-8?B?eXpqcmVSNWxSTXloQk00ZFVudVAvNEZVdE9WQVlOWk16SEUwaVhPNklGU0Jm?=
- =?utf-8?B?UEt6TitTWHhFT0ZGSTdoY2R6ai9vamRVdndRZm1MNnFTbkhjZW9OK0tQeVAz?=
- =?utf-8?B?V0FGZkhnYWlsaGpkYnowMmJNYkErQkZlOUZKcE5HZVZaM0dFMENBQVVMVDVU?=
- =?utf-8?B?cVlQU2Y2MjhUd1U4bnZ5ZzdzZjFjeGErRzBXSG5iQmhGYzdZS1hpWWdMNDN3?=
- =?utf-8?B?eW1sUndaSlU3RXZkaE4wVFJqZzU3ZC9EWFMyWUFmZ0xqUmthd2RRRjVoL0ta?=
- =?utf-8?B?YmZIWldnMzNWQ0wyOU9SbkR3LzBlV1BQK3FiRFArT0d3TE8wOGV3NnNyN05C?=
- =?utf-8?B?LzBHdGpCMFE5WFV4SWdzcGlxU0JQV2lDNy9hRC9DUlhlS3M5bmtpNlNCSC9D?=
- =?utf-8?B?cFN1cTd3MGhtWGFpMjFEWFRPZ3hNeTltZk43WTd6SllJWXZuenBqaDZWVDJo?=
- =?utf-8?B?VUhXcitocUlmaXhLZG1GS2N1S28zMXJJcGU1RkZndEM1T3RxYTNyUT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: dkK2Esg1Kg3RdGwyGlTOQbWTk5qA4wJF5LW8wTQ1p6Dq0U2Mxuq+urv1U+xmaXUvjJLKCNSdj/TZuZqUlg2MsQgRpuXuv2+LLrMc1pShDBbpd6YqHr0PyjmDbFdM3185EX0VBL0pk28qvy+OL5PVV/MNfG7nRzOIczg7WML1lO1htv2iRuvtjcFxsN/N0U0Rx4lsZU0X8juxLjEdoeoRFpcHm/97louetVQxT+8WMeErc982M4Y/4PnZfQl4JSvNv6LnRQBIJPyR2IwvotvSlbbccXUczVKA2NPodDP1/IfT0hTFjDQvXoPmQyBXixhNpXSaBKTzcoICvcf0LXXftw==
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 46cbe7bd-8bf9-447a-80a6-08deab20e5f6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 May 2026 03:38:11.8495 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: qjXoazBe5t8Y493eSmvL4NwpZFKEU8Bf8jovgP9LTPlE9n5zIkgPpujHKLviacyQqpR5qnCCVW6bCPZYjTt+MDhJ9WyFQhVvADrngU8yV1k=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TY0PR06MB6883
-Received-SPF: pass client-ip=2a01:111:f403:c405::7;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=TYDPR03CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ (Exim 4.90_1) (envelope-from <munkhuu0825@gmail.com>)
+ id 1wKTdt-0002PH-Bk
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 00:13:49 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <munkhuu0825@gmail.com>)
+ id 1wKTdr-000699-6A
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 00:13:49 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-3650a628473so3968123a91.3
+ for <qemu-devel@nongnu.org>; Tue, 05 May 2026 21:13:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1778040826; x=1778645626; darn=nongnu.org;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=AK3zMwVO3WE3Y00R1JNOuZCh4QPSwgne75XPkrfDBak=;
+ b=Vg99/qz+D8WcZxXBZYZTrXNbnTSD1c+sew8RIKeeirTXp1kjFCqMVB/2ILzYm12Xvp
+ mQTs8eieCv+kk0up3CnymXdNp+l5Hqk5VGWuTn2/kDBGbuvkQvDVgZxCDeevmd+7alfo
+ LazQKPr36o/ufWkpo7I9RuO6Wun2bk/qxYFreFe+saTjbvZVFJvg+v2kXdtMCc787ZhR
+ k7xx8u3gwUFw+O5QB4wAkP5at1wxosM4YU2XRywUANxO2x+TWJMJYhx/aFpuaW6urF+a
+ xVEJlA+VKn0fwO8i1we7cXSBYA62vhxN3CNOaKmuYKzfXojIaBaCfm5643sawnY59+1P
+ pveg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778040826; x=1778645626;
+ h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=AK3zMwVO3WE3Y00R1JNOuZCh4QPSwgne75XPkrfDBak=;
+ b=ExZg8kc+4WsnknydqVAcuoGeqc61eeQ31BeF6FhkU7pMIyszqgeKvBalInBmk4U9tD
+ 2E+zOtUjOcuhWxWRCQzbZTWe97YTi7CtivUqm9wyFqJVc6rFeoH8mE/2qoT4+SeMKL5/
+ w2358idgVzhLaWFK2JWHcBAu1YTIdVbazC5ifAkGwZdhDQmjCZmwM0g84jbgdvrI/Vpa
+ xmkDLW33ThxLgqLhMblVc+qT5XAmgI+IPHtsFusyfr47aNiDES680ZpEpoQlgmlyi1pC
+ VQ1EEILHQe9F/2FVSEpIOHaEFqcN+LMSqZT3AORvutUUnWV42ZtjR9jKWcym581AkN2+
+ cd/g==
+X-Gm-Message-State: AOJu0YzIDl6ZJSkmZF6+L/1EWihcPQyxm6pDq6cX6QLyVbb4D0DP+pVb
+ QXmJWjEzibv5cDL/D/swcd2xrSt4r9IKMpgSNMYJWxziU74aGvnX4trH
+X-Gm-Gg: AeBDiet8hDq4ZD6CXr0h46n7fOaWL0BMSNkZf31ITyk6g4r1JAvQoCWSS7Zgv8sb+AW
+ c0VdIzUyuQW7el7Cvx8mQxebIpaSHLnol62qxh3LPUqQuoS0NiLoBkgztBXODBuZ0TGoA6d93jZ
+ 34P9y7OQwb1mwzEBgAz3oczbMJ6xlxejaB6y8eWf/iVshKdjlEx9DOqUdkS7X6ymbhfnSgFAzGf
+ R2F1T9RlnnjJ4LEzS82mIvyX/dpPd29qyyqY1RCn9E2Ayxt6GPT2+Hd3aPsfB2KYs00zeUf+p6l
+ irIUpsxHtxD66JZgJGSIgoyBw820mma6bo/Vs/KSDyc04CBsKPpNjzukFOtAbXbesGY8vdZNxye
+ uzXEmjY6MST1bBo32cCnQan8fO1Z4+Ta1WD2P6TU9rWM0nKowZbwB7AqDlr0R0WWJvNdFoNWnL0
+ k+GDYDtxVjDDP9ez2ZqQ62K0Sc/b1x4jxF6Q4TjkZuFKPUGIpwqy/tCZ6gvg==
+X-Received: by 2002:a17:90b:4e87:b0:362:ded3:bbcb with SMTP id
+ 98e67ed59e1d1-365ac77546emr1614461a91.25.1778040825448; 
+ Tue, 05 May 2026 21:13:45 -0700 (PDT)
+Received: from smtpclient.apple ([202.55.186.124])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-365b0560fa8sm329934a91.1.2026.05.05.21.13.43
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Tue, 05 May 2026 21:13:44 -0700 (PDT)
+From: =?utf-8?B?0JzTqdC90YXQsdCw0LDRgtCw0YAg0K3QvdGF0LHQsNCw0YLQsNGA?=
+ <munkhuu0825@gmail.com>
+Message-Id: <B987731A-F30F-4B6F-8069-86BF3377910D@gmail.com>
+Content-Type: multipart/alternative;
+ boundary="Apple-Mail=_DCFE8011-BCAA-4ADD-8C82-5914F24140FA"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH] hw/usb/hcd-ohci: Fix memory leak in ohci_service_iso_td()
+Date: Wed, 6 May 2026 12:13:25 +0800
+In-Reply-To: <CAFEAcA8s+YW9n78=75VMetVP-10mMiTkzrxCHgHK7kdvP-50jg@mail.gmail.com>
+Cc: qemu-devel@nongnu.org
+To: Peter Maydell <peter.maydell@linaro.org>
+References: <20260505110036.47574-1-munkhuu0825@gmail.com>
+ <CAFEAcA8s+YW9n78=75VMetVP-10mMiTkzrxCHgHK7kdvP-50jg@mail.gmail.com>
+X-Mailer: Apple Mail (2.3864.500.181)
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=munkhuu0825@gmail.com; helo=mail-pj1-x102e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -164,225 +102,502 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SGkgQ8OpZHJpYywgUGhpbGlwcGUNCg0KUGxlYXNlIGhlbHAgdG8gcmV2aWV3Lg0KDQpody91c2Iv
-ZWhjaTogSW1wcm92ZSBtaWdyYXRpb24gaGVscGVyIGFuZCBwcm9wZXJ0eSBuYW1pbmcNCmh0dHBz
-Oi8vcGF0Y2h3b3JrLmtlcm5lbC5vcmcvcHJvamVjdC9xZW11LWRldmVsL2xpc3QvP3Nlcmllcz0x
-MDkwMjMzIA0KDQpUaGFua3MsDQpKYW1pbg0KDQo+IFN1YmplY3Q6IFJFOiBbUEFUQ0ggdjYgMDIv
-MTFdIGh3L3VzYi9oY2QtZWhjaTogQ2hhbmdlIGRlc2NyaXB0b3IgYWRkcmVzc2VzDQo+IHRvIDY0
-LWJpdCB3aXRoIG1pZ3JhdGlvbiBjb21wYXRpYmlsaXR5DQo+IA0KPiBIaSBQaGlsaXBwZQ0KPiAN
-Cj4gPiBTdWJqZWN0OiBSZTogW1BBVENIIHY2IDAyLzExXSBody91c2IvaGNkLWVoY2k6IENoYW5n
-ZSBkZXNjcmlwdG9yDQo+ID4gYWRkcmVzc2VzIHRvIDY0LWJpdCB3aXRoIG1pZ3JhdGlvbiBjb21w
-YXRpYmlsaXR5DQo+ID4NCj4gPiBPbiA0LzUvMjYgMDQ6NTMsIEphbWluIExpbiB3cm90ZToNCj4g
-PiA+IENoYW5nZSBpbnRlcm5hbCBFSENJIGRlc2NyaXB0b3IgYWRkcmVzc2VzIGZyb20gdWludDMy
-X3QgdG8gdWludDY0X3QuDQo+ID4gPg0KPiA+ID4gVGhlIGZvbGxvd2luZyBmaWVsZHMgYXJlIHVw
-ZGF0ZWQ6DQo+ID4gPiAtIEVIQ0lQYWNrZXQ6OnF0ZGFkZHINCj4gPiA+IC0gRUhDSVF1ZXVlOjp7
-cWhhZGRyLCBxdGRhZGRyfQ0KPiA+ID4gLSBFSENJU3RhdGU6OnthX2ZldGNoX2FkZHIsIHBfZmV0
-Y2hfYWRkcn0NCj4gPiA+DQo+ID4gPiBVcGRhdGUgZ2V0X2R3b3JkcygpIGFuZCBwdXRfZHdvcmRz
-KCkgdG8gdGFrZSA2NC1iaXQgYWRkcmVzc2VzIGFuZA0KPiA+ID4gcHJvcGFnYXRlIHRoZSB0eXBl
-IGNoYW5nZSB0aHJvdWdoIHRoZSBkZXNjcmlwdG9yIHRyYXZlcnNhbCBwYXRocy4NCj4gPiA+DQo+
-ID4gPiBBZGp1c3QgTkxQVFJfR0VUKCkgdG8gb3BlcmF0ZSBvbiA2NC1iaXQgdmFsdWVzOg0KPiA+
-ID4NCj4gPiA+ICAgICAgI2RlZmluZSBOTFBUUl9HRVQoeCkgKCh4KSAmIH4weDFmVUxMKQ0KPiA+
-ID4NCj4gPiA+IHNvIHRoYXQgbGluayBwb2ludGVyIG1hc2tpbmcgd29ya3MgY29ycmVjdGx5IHdo
-ZW4gZGVzY3JpcHRvcg0KPiA+ID4gYWRkcmVzc2VzIGV4Y2VlZCAzMi1iaXQgc3BhY2UuIFRoZSBw
-cmV2aW91cyBtYXNrICgweGZmZmZmZmUwKQ0KPiA+ID4gaW1wbGljaXRseSB0cnVuY2F0ZWQgYWRk
-cmVzc2VzIHRvIDMyIGJpdHMuDQo+ID4gPg0KPiA+ID4gVGhpcyBwYXRjaCBkb2VzIG5vdCBjaGFu
-Z2UgdGhlIG9uLXdpcmUgZGVzY3JpcHRvciBsYXlvdXQgeWV0Lg0KPiA+ID4gSXQgb25seSByZW1v
-dmVzIHRoZSBpbnRlcm5hbCAzMi1iaXQgYWRkcmVzcyBsaW1pdCBhbmQgcHJlcGFyZXMgZm9yDQo+
-ID4gPiBsYXRlciBwYXRjaGVzIHRoYXQgd2lsbCBhZGQgZnVsbCA2NC1iaXQgUUgvcVREL2lURC9z
-aVREIHN1cHBvcnQuDQo+ID4gPg0KPiA+ID4gVXBkYXRlIHRoZSBFSENJIHRyYWNlLWV2ZW50cyBw
-cm90b3R5cGVzIGZvciBRSCwgcVRELCBpVEQsIGFuZCBzaVREDQo+ID4gPiB0byB1c2UgdWludDY0
-X3QgZm9yIHRoZSBhZGRyZXNzIGFyZ3VtZW50IGFuZCBwcmludCBpdCB3aXRoIFBSSXg2NC4NCj4g
-PiA+IFRoaXMgZW5zdXJlcyBmdWxsIDY0LWJpdCBhZGRyZXNzZXMgYXJlIHNob3duIGluIHRyYWNl
-IG91dHB1dCBhbmQNCj4gPiA+IGltcHJvdmVzIGRlYnVnZ2luZyBvZiBxdWV1ZSBoZWFkcyBhbmQg
-dHJhbnNmZXIgZGVzY3JpcHRvcnMuDQo+ID4gPg0KPiA+ID4gTWlncmF0aW9uIGNvbXBhdGliaWxp
-dHk6DQo+ID4gPg0KPiA+ID4gVG8gcHJlc2VydmUgYmFja3dhcmQgbWlncmF0aW9uIGNvbXBhdGli
-aWxpdHksIGtlZXAgdGhlIGxlZ2FjeSAzMi1iaXQNCj4gPiA+IGZldGNoIGFkZHJlc3MgZmllbGRz
-IChhX2ZldGNoX2FkZHJfMzIsIHBfZmV0Y2hfYWRkcl8zMikgYWxvbmdzaWRlDQo+ID4gPiB0aGUg
-bmV3IDY0LWJpdCBmaWVsZHMuDQo+ID4gPg0KPiA+ID4gTWlncmF0aW9uIGZvcm1hdCBpcyBzZWxl
-Y3RlZCB1c2luZyBhIG1hY2hpbmUgY29tcGF0IHByb3BlcnR5DQo+ID4gPiAieC1taWdyYXRlLWZl
-dGNoLWFkZHItNjRiaXQiOg0KPiA+ID4NCj4gPiA+IC0gT2xkIG1hY2hpbmUgdHlwZXMgbWlncmF0
-ZSAzMi1iaXQgZmV0Y2ggYWRkcmVzc2VzDQo+ID4gPiAtIE5ldyBtYWNoaW5lIHR5cGVzIG1pZ3Jh
-dGUgZnVsbCA2NC1iaXQgZmV0Y2ggYWRkcmVzc2VzDQo+ID4gPg0KPiA+ID4gVGhpcyBpcyBpbXBs
-ZW1lbnRlZCB1c2luZyBWTVNUQVRFX1VJTlQzMl9URVNUKCkgYW5kDQo+ID4gPiBWTVNUQVRFX1VJ
-TlQ2NF9URVNUKCkgc28gdGhhdCBvbmx5IHRoZSBhcHByb3ByaWF0ZSBmb3JtYXQgaXMgbWlncmF0
-ZWQuDQo+ID4gPg0KPiA+ID4gSW4gcHJlX3NhdmUsIHRoZSAzMi1iaXQgc2hhZG93IGZpZWxkcyBh
-cmUgcG9wdWxhdGVkIHdoZW4gbWlncmF0aW5nDQo+ID4gPiB0byBvbGQgbWFjaGluZSB0eXBlcy4g
-SW4gcG9zdF9sb2FkLCB0aGUgMzItYml0IHZhbHVlcyBhcmUgcmVzdG9yZWQNCj4gPiA+IGludG8g
-dGhlIDY0LWJpdCBmaWVsZHMgd2hlbiBsb2FkaW5nIG9sZCBtaWdyYXRpb24gc3RyZWFtcy4NCj4g
-PiA+DQo+ID4gPiBObyBmdW5jdGlvbmFsIGNoYW5nZS4NCj4gPiA+DQo+ID4gPiBTaWduZWQtb2Zm
-LWJ5OiBKYW1pbiBMaW4gPGphbWluX2xpbkBhc3BlZWR0ZWNoLmNvbT4NCj4gPiA+IC0tLQ0KPiA+
-ID4gICBody91c2IvaGNkLWVoY2kuaCAgIHwgMTcgKysrKysrKy0tLS0NCj4gPiA+ICAgaHcvY29y
-ZS9tYWNoaW5lLmMgICB8ICA1ICsrKy0NCj4gPiA+ICAgaHcvdXNiL2hjZC1laGNpLmMgICB8IDcy
-DQo+ID4gKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKystLS0tLS0tLS0tLS0tDQo+ID4g
-PiAgIGh3L3VzYi90cmFjZS1ldmVudHMgfCAyNCArKysrKysrLS0tLS0tLS0NCj4gPiA+ICAgNCBm
-aWxlcyBjaGFuZ2VkLCA3OCBpbnNlcnRpb25zKCspLCA0MCBkZWxldGlvbnMoLSkNCj4gPg0KPiA+
-DQo+ID4gPiBAQCAtMjU2LDYgKzI1Niw3IEBAIHN0cnVjdCBFSENJU3RhdGUgew0KPiA+ID4NCj4g
-PiA+ICAgICAgIC8qIHByb3BlcnRpZXMgKi8NCj4gPiA+ICAgICAgIHVpbnQzMl90IG1heGZyYW1l
-czsNCj4gPiA+ICsgICAgYm9vbCBtaWdyYXRlX2ZldGNoX2FkZHJfNjRiaXQ7DQo+ID4gPg0KPiA+
-ID4gICAgICAgLyoNCj4gPiA+ICAgICAgICAqICBFSENJIHNwZWMgdmVyc2lvbiAxLjAgU2VjdGlv
-biAyLjMgQEAgLTI5NCw4ICsyOTUsMTAgQEANCj4gPiA+IHN0cnVjdCBFSENJU3RhdGUgew0KPiA+
-ID4gICAgICAgRUhDSVF1ZXVlSGVhZCBwcXVldWVzOw0KPiA+ID4NCj4gPiA+ICAgICAgIC8qIHdo
-aWNoIGFkZHJlc3MgdG8gbG9vayBhdCBuZXh0ICovDQo+ID4gPiAtICAgIHVpbnQzMl90IGFfZmV0
-Y2hfYWRkcjsNCj4gPiA+IC0gICAgdWludDMyX3QgcF9mZXRjaF9hZGRyOw0KPiA+ID4gKyAgICB1
-aW50MzJfdCBhX2ZldGNoX2FkZHJfMzI7DQo+ID4gPiArICAgIHVpbnQzMl90IHBfZmV0Y2hfYWRk
-cl8zMjsNCj4gPg0KPiA+IFRlY2huaWNhbGx5ICc/X2ZldGNoX2FkZHJfMzInIGFyZW4ndCAid2hp
-Y2ggYWRkcmVzcyB0byBsb29rIGF0IG5leHQiDQo+ID4gYW55bW9yZSwgYnV0IHNpbXBsZSBtaWdy
-YXRpb24gaGVscGVycy4gQ291bGQgYmUgd29ydGggYWRkaW5nIGEgY29tbWVudD8NCj4gPiBBbmQg
-cmVuYW1lIGluY2x1ZGluZyAnbWlncmF0e2UsaW9ufSc/IENhbiBiZSBjbGVhcmVkIG9uIHRvcC4N
-Cj4gPg0KPiBXaWxsIHVwZGF0ZSB0bw0KPiANCj4gLyoNCj4gICogTWlncmF0aW9uIGNvbXBhdGli
-aWxpdHkgZmllbGRzIGZvciBvbGQgbWFjaGluZSB0eXBlcyB0aGF0IG9ubHkNCj4gICogc3VwcG9y
-dCAzMi1iaXQgZmV0Y2ggYWRkcmVzc2VzIGluIHRoZSBtaWdyYXRpb24gc3RyZWFtLg0KPiAgKg0K
-PiAgKiBOZXcgbWFjaGluZSB0eXBlcyBtaWdyYXRlIHRoZSBmdWxsIDY0LWJpdCBydW50aW1lIGZl
-dGNoIGFkZHJlc3MuDQo+ICAqLw0KPiB1aW50MzJfdCBtaWdyYXRlX2FfZmV0Y2hfYWRkcjsNCj4g
-dWludDMyX3QgbWlncmF0ZV9wX2ZldGNoX2FkZHI7DQo+IA0KPiAvKg0KPiAgKiBDb250cm9scyBt
-aWdyYXRpb24gc3RyZWFtIGNvbXBhdGliaWxpdHkgZm9yIG9sZCBtYWNoaW5lIHR5cGVzLg0KPiAg
-KiBPbGQgbWFjaGluZSB0eXBlcyBvbmx5IHRyYW5zZmVyIDMyLWJpdCBmZXRjaCBhZGRyZXNzZXMu
-DQo+ICAqLw0KPiBib29sIG1pZ3JhdGVfZmV0Y2hfYWRkcl82NGJpdDsNCj4gDQo+ID4gPiArICAg
-IHVpbnQ2NF90IGFfZmV0Y2hfYWRkcjsNCj4gPiA+ICsgICAgdWludDY0X3QgcF9mZXRjaF9hZGRy
-Ow0KPiA+ID4NCj4gPiA+ICAgICAgIFVTQlBhY2tldCBpcGFja2V0Ow0KPiA+ID4gICAgICAgUUVN
-VVNHTGlzdCBpc2dsOw0KPiA+ID4gQEAgLTMwOCw3ICszMTEsOSBAQCBzdHJ1Y3QgRUhDSVN0YXRl
-IHsNCj4gPiA+ICAgfTsNCj4gPiA+DQo+ID4gPiAgICNkZWZpbmUgREVGSU5FX0VIQ0lfQ09NTU9O
-X1BST1BFUlRJRVMoX3N0YXRlKSBcDQo+ID4gPiAtICAgIERFRklORV9QUk9QX1VJTlQzMigibWF4
-ZnJhbWVzIiwgX3N0YXRlLCBlaGNpLm1heGZyYW1lcywgMTI4KQ0KPiA+ID4gKyAgICBERUZJTkVf
-UFJPUF9VSU5UMzIoIm1heGZyYW1lcyIsIF9zdGF0ZSwgZWhjaS5tYXhmcmFtZXMsIDEyOCksIFwN
-Cj4gPiA+ICsgICAgREVGSU5FX1BST1BfQk9PTCgieC1taWdyYXRlLWZldGNoLWFkZHItNjRiaXQi
-LCBfc3RhdGUsIFwNCj4gPiA+ICsgICAgICAgICAgICAgICAgICAgICBlaGNpLm1pZ3JhdGVfZmV0
-Y2hfYWRkcl82NGJpdCwgdHJ1ZSkNCj4gPiA+DQo+ID4gPiAgIGV4dGVybiBjb25zdCBWTVN0YXRl
-RGVzY3JpcHRpb24gdm1zdGF0ZV9laGNpOw0KPiA+ID4NCj4gPiA+IGRpZmYgLS1naXQgYS9ody9j
-b3JlL21hY2hpbmUuYyBiL2h3L2NvcmUvbWFjaGluZS5jIGluZGV4DQo+ID4gPiAxYjY2MWZkMzZh
-Li41NDMzNmRhMjk0IDEwMDY0NA0KPiA+ID4gLS0tIGEvaHcvY29yZS9tYWNoaW5lLmMNCj4gPiA+
-ICsrKyBiL2h3L2NvcmUvbWFjaGluZS5jDQo+ID4gPiBAQCAtMzksNyArMzksMTAgQEANCj4gPiA+
-ICAgI2luY2x1ZGUgImh3L2FjcGkvZ2VuZXJpY19ldmVudF9kZXZpY2UuaCINCj4gPiA+ICAgI2lu
-Y2x1ZGUgInFlbXUvYXVkaW8uaCINCj4gPiA+DQo+ID4gPiAtR2xvYmFsUHJvcGVydHkgaHdfY29t
-cGF0XzExXzBbXSA9IHt9Ow0KPiA+ID4gK0dsb2JhbFByb3BlcnR5IGh3X2NvbXBhdF8xMV8wW10g
-PSB7DQo+ID4gPiArICAgIHsgInN5c2J1cy1laGNpLXVzYiIsICJ4LW1pZ3JhdGUtZmV0Y2gtYWRk
-ci02NGJpdCIsICJvZmYiIH0sDQo+ID4gPiArICAgIHsgInBjaS1laGNpLXVzYiIsICJ4LW1pZ3Jh
-dGUtZmV0Y2gtYWRkci02NGJpdCIsICJvZmYiIH0sIH07DQo+ID4gPiAgIGNvbnN0IHNpemVfdCBo
-d19jb21wYXRfMTFfMF9sZW4gPQ0KPiBHX05fRUxFTUVOVFMoaHdfY29tcGF0XzExXzApOw0KPiA+
-DQo+ID4gR29vZC4NCj4gPg0KPiA+ID4gK3N0YXRpYyBib29sIGVoY2lfZmV0Y2hfYWRkcl82NF9u
-ZWVkZWQodm9pZCAqb3BhcXVlLCBpbnQgdmVyc2lvbl9pZCkgew0KPiA+ID4gKyAgICBFSENJU3Rh
-dGUgKnMgPSBvcGFxdWU7DQo+ID4gPiArDQo+ID4gPiArICAgIHJldHVybiBzLT5taWdyYXRlX2Zl
-dGNoX2FkZHJfNjRiaXQ7IH0NCj4gPiA+ICsNCj4gPiA+ICtzdGF0aWMgYm9vbCBlaGNpX2ZldGNo
-X2FkZHJfMzJfbmVlZGVkKHZvaWQgKm9wYXF1ZSwgaW50IHZlcnNpb25faWQpIHsNCj4gPiA+ICsg
-ICAgcmV0dXJuICFlaGNpX2ZldGNoX2FkZHJfNjRfbmVlZGVkKG9wYXF1ZSwgdmVyc2lvbl9pZCk7
-IH0NCj4gPiA+ICsNCj4gPiA+ICAgc3RhdGljIGludCB1c2JfZWhjaV9wcmVfc2F2ZSh2b2lkICpv
-cGFxdWUpDQo+ID4gPiAgIHsNCj4gPiA+ICAgICAgIEVIQ0lTdGF0ZSAqZWhjaSA9IG9wYXF1ZTsN
-Cj4gPiA+IEBAIC0yNDI0LDYgKzI0MzgsMTEgQEAgc3RhdGljIGludCB1c2JfZWhjaV9wcmVfc2F2
-ZSh2b2lkICpvcGFxdWUpDQo+ID4gPiAgICAgICBlaGNpLT5sYXN0X3J1bl9ucyAtPSAoZWhjaS0+
-ZnJpbmRleCAtIG5ld19mcmluZGV4KSAqDQo+ID4gVUZSQU1FX1RJTUVSX05TOw0KPiA+ID4gICAg
-ICAgZWhjaS0+ZnJpbmRleCA9IG5ld19mcmluZGV4Ow0KPiA+ID4NCj4gPiA+ICsgICAgaWYgKCFl
-aGNpLT5taWdyYXRlX2ZldGNoX2FkZHJfNjRiaXQpIHsNCj4gPiA+ICsgICAgICAgIGVoY2ktPmFf
-ZmV0Y2hfYWRkcl8zMiA9IGVoY2ktPmFfZmV0Y2hfYWRkcjsNCj4gPiA+ICsgICAgICAgIGVoY2kt
-PnBfZmV0Y2hfYWRkcl8zMiA9IGVoY2ktPnBfZmV0Y2hfYWRkcjsNCj4gPiA+ICsgICAgfQ0KPiA+
-ID4gKw0KPiA+ID4gICAgICAgcmV0dXJuIDA7DQo+ID4gPiAgIH0NCj4gPiA+DQo+ID4gPiBAQCAt
-MjQ0NCw2ICsyNDYzLDExIEBAIHN0YXRpYyBpbnQgdXNiX2VoY2lfcG9zdF9sb2FkKHZvaWQgKm9w
-YXF1ZSwNCj4gPiA+IGludA0KPiA+IHZlcnNpb25faWQpDQo+ID4gPiAgICAgICAgICAgfQ0KPiA+
-ID4gICAgICAgfQ0KPiA+ID4NCj4gPiA+ICsgICAgaWYgKCFzLT5taWdyYXRlX2ZldGNoX2FkZHJf
-NjRiaXQpIHsNCj4gPiA+ICsgICAgICAgIHMtPmFfZmV0Y2hfYWRkciA9IHMtPmFfZmV0Y2hfYWRk
-cl8zMjsNCj4gPiA+ICsgICAgICAgIHMtPnBfZmV0Y2hfYWRkciA9IHMtPnBfZmV0Y2hfYWRkcl8z
-MjsNCj4gPiA+ICsgICAgfQ0KPiA+ID4gKw0KPiA+ID4gICAgICAgcmV0dXJuIDA7DQo+ID4gPiAg
-IH0NCj4gPiA+DQo+ID4gPiBAQCAtMjUwNCw4ICsyNTI4LDE0IEBAIGNvbnN0IFZNU3RhdGVEZXNj
-cmlwdGlvbiB2bXN0YXRlX2VoY2kgPSB7DQo+ID4gPiAgICAgICAgICAgLyogc2NoZWR1bGUgc3Rh
-dGUgKi8NCj4gPiA+ICAgICAgICAgICBWTVNUQVRFX1VJTlQzMihhc3RhdGUsIEVIQ0lTdGF0ZSks
-DQo+ID4gPiAgICAgICAgICAgVk1TVEFURV9VSU5UMzIocHN0YXRlLCBFSENJU3RhdGUpLA0KPiA+
-ID4gLSAgICAgICAgVk1TVEFURV9VSU5UMzIoYV9mZXRjaF9hZGRyLCBFSENJU3RhdGUpLA0KPiA+
-ID4gLSAgICAgICAgVk1TVEFURV9VSU5UMzIocF9mZXRjaF9hZGRyLCBFSENJU3RhdGUpLA0KPiA+
-ID4gKyAgICAgICAgVk1TVEFURV9VSU5UMzJfVEVTVChhX2ZldGNoX2FkZHJfMzIsIEVIQ0lTdGF0
-ZSwNCj4gPiA+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgZWhjaV9mZXRjaF9hZGRyXzMy
-X25lZWRlZCksDQo+ID4gPiArICAgICAgICBWTVNUQVRFX1VJTlQzMl9URVNUKHBfZmV0Y2hfYWRk
-cl8zMiwgRUhDSVN0YXRlLA0KPiA+ID4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICBlaGNp
-X2ZldGNoX2FkZHJfMzJfbmVlZGVkKSwNCj4gPiA+ICsgICAgICAgIFZNU1RBVEVfVUlOVDY0X1RF
-U1QoYV9mZXRjaF9hZGRyLCBFSENJU3RhdGUsDQo+ID4gPiArICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgIGVoY2lfZmV0Y2hfYWRkcl82NF9uZWVkZWQpLA0KPiA+ID4gKyAgICAgICAgVk1TVEFU
-RV9VSU5UNjRfVEVTVChwX2ZldGNoX2FkZHIsIEVIQ0lTdGF0ZSwNCj4gPiA+ICsgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgZWhjaV9mZXRjaF9hZGRyXzY0X25lZWRlZCksDQo+ID4NCj4gPiBI
-bW1tbS4gSSBkaWRuJ3QgcmV2aWV3IGFsbCBwcmV2aW91cyB2ZXJzaW9ucywgZm9yIG15IG93biBl
-ZHVjYXRpb24sDQo+ID4gd2h5IGRvbid0IHdlIHVzZSBWTVNUQVRFX1VJTlQ2NF9WKCkgaGVyZT8g
-RGlkIHlvdSB0ZXN0IChwcmUtMTEgPC0+DQo+ID4gdGhpcw0KPiA+IHNlcmllcykgbWlncmF0aW9u
-PyBNeSB1bmRlcnN0YW5kaW5nIHdhcyB3ZSBuZWVkIHRvIG1haW50YWluIHRoZSBzdHJlYW0NCj4g
-PiBzaXplIHRvIGF2b2lkIG1pc21hdGNoLg0KPiA+DQo+IFBsZWFzZSBzZWUgdGhlIG1pZ3JhdGlv
-biB0ZXN0IHN0ZXBzIGhlcmU6DQo+IGh0dHBzOi8vcGF0Y2h3b3JrLmtlcm5lbC5vcmcvcHJvamVj
-dC9xZW11LWRldmVsL3BhdGNoLzIwMjYwNDIzMDUxODA0LjM2Mg0KPiAwOTUtOS1qYW1pbl9saW5A
-YXNwZWVkdGVjaC5jb20vIzI2OTExMzE3DQo+IEkgdGVzdGVkIG1pZ3JhdGlvbiBjb21wYXRpYmls
-aXR5IHdpdGggYm90aCB2MTEgYW5kIHYxMC4yLg0KPiANCj4gSSBvcmlnaW5hbGx5IHRyaWVkIHVz
-aW5nIFZNU1RBVEVfVUlOVDY0X1YoKS4gVGhhdCBpbXBsZW1lbnRhdGlvbiB3YXMgc2ltaWxhcg0K
-PiB0byB0aGUgdjMgdmVyc2lvbiBvZiB0aGlzIHNlcmllcywgd2hpY2ggeW91IHByZXZpb3VzbHkg
-cmV2aWV3ZWQ6DQo+IGh0dHBzOi8vcGF0Y2h3b3JrLmtlcm5lbC5vcmcvcHJvamVjdC9xZW11LWRl
-dmVsL3BhdGNoLzIwMjYwNDE2MDE0OTI4LjEyNw0KPiA5MzYwLTctamFtaW5fbGluQGFzcGVlZHRl
-Y2guY29tLw0KPiANCj4gVW5mb3J0dW5hdGVseSwgdGhhdCBhcHByb2FjaCBjYXVzZWQgbWlncmF0
-aW9uIGZhaWx1cmVzLg0KPiANCj4gVGhlIGlzc3VlIGlzIHRoYXQgb2xkZXIgbWFjaGluZSB0eXBl
-cyBkbyBub3QgY29udGFpbiB0aGUgNjQtYml0IGZldGNoIGFkZHJlc3MNCj4gZmllbGRzIGluIHRo
-ZWlyIG1pZ3JhdGlvbiBBQkkuIFNpbXBseSBhZGRpbmcgVk1TVEFURV9VSU5UNjRfVigpIGNoYW5n
-ZXMgdGhlDQo+IG1pZ3JhdGlvbiBzdHJlYW0gbGF5b3V0LCB3aGljaCBicmVha3MgY29tcGF0aWJp
-bGl0eSB3aXRoIG9sZGVyIG1hY2hpbmUgdHlwZXMNCj4gLyBvbGRlciBRRU1VIHZlcnNpb25zLg0K
-PiANCj4gVGhlIG1pZ3JhdGlvbiBmYWlsdXJlIGxvb2tzIGxpa2UgdGhpczoNCj4gcWVtdS1zeXN0
-ZW0teDg2XzY0OiBNaXNzaW5nIHNlY3Rpb24gZm9vdGVyIGZvciAwMDAwOjAwOjAzLjAvZWhjaQ0K
-PiBxZW11LXN5c3RlbS14ODZfNjQ6IGxvYWQgb2YgbWlncmF0aW9uIGZhaWxlZDogSW52YWxpZCBh
-cmd1bWVudDogU2VjdGlvbg0KPiBmb290ZXIgZXJyb3IsIHNlY3Rpb25faWQ6IDQyDQo+IA0KPiBC
-ZWNhdXNlIG9mIHRoaXMsIEkgdXNlZCBtaWdyYXRlX2ZldGNoX2FkZHJfNjRiaXQgdG8gcHJlc2Vy
-dmUgdGhlIG9yaWdpbmFsDQo+IDMyLWJpdCBtaWdyYXRpb24gc3RyZWFtIGZvciBvbGRlciBjb21w
-YXRpYmxlIG1hY2hpbmUgdHlwZXMgd2hpbGUgZW5hYmxpbmcNCj4gdGhlIDY0LWJpdCBtaWdyYXRp
-b24gZm9ybWF0IG9ubHkgZm9yIG5ld2VyIG1hY2hpbmUgdHlwZXMuDQo+IA0KPiBUaGFua3MsDQo+
-IEphbWluDQo+IA0KPiBkaWZmIC0tZ2l0IGEvaHcvdXNiL2hjZC1laGNpLmggYi9ody91c2IvaGNk
-LWVoY2kuaCBpbmRleA0KPiAzZDU3ZTFkZTVmLi43YjNlOTI4OTVhIDEwMDY0NA0KPiAtLS0gYS9o
-dy91c2IvaGNkLWVoY2kuaA0KPiArKysgYi9ody91c2IvaGNkLWVoY2kuaA0KPiBAQCAtMzAzLDgg
-KzMwMyw4IEBAIHN0cnVjdCBFSENJU3RhdGUgew0KPiAgICAgIEVIQ0lRdWV1ZUhlYWQgcHF1ZXVl
-czsNCj4gDQo+ICAgICAgLyogd2hpY2ggYWRkcmVzcyB0byBsb29rIGF0IG5leHQgKi8NCj4gLSAg
-ICB1aW50MzJfdCBhX2ZldGNoX2FkZHJfMzI7DQo+IC0gICAgdWludDMyX3QgcF9mZXRjaF9hZGRy
-XzMyOw0KPiArICAgIHVpbnQzMl90IG1pZ3JhdGVfYV9mZXRjaF9hZGRyOw0KPiArICAgIHVpbnQz
-Ml90IG1pZ3JhdGVfcF9mZXRjaF9hZGRyOw0KPiAgICAgIHVpbnQ2NF90IGFfZmV0Y2hfYWRkcjsN
-Cj4gICAgICB1aW50NjRfdCBwX2ZldGNoX2FkZHI7DQo+IA0KPiBkaWZmIC0tZ2l0IGEvaHcvdXNi
-L2hjZC1laGNpLmMgYi9ody91c2IvaGNkLWVoY2kuYyBpbmRleA0KPiA2MmMzNzcwYWM1Li5kM2I5
-ODkwNzI2IDEwMDY0NA0KPiAtLS0gYS9ody91c2IvaGNkLWVoY2kuYw0KPiArKysgYi9ody91c2Iv
-aGNkLWVoY2kuYw0KPiBAQCAtMjQ1OSwxNiArMjQ1OSw5IEBAIHN0YXRpYyBVU0JCdXNPcHMgZWhj
-aV9idXNfb3BzX3N0YW5kYWxvbmUgPSB7DQo+ICAgICAgLndha2V1cF9lbmRwb2ludCA9IGVoY2lf
-d2FrZXVwX2VuZHBvaW50LCAgfTsNCj4gDQo+IC1zdGF0aWMgYm9vbCBlaGNpX2ZldGNoX2FkZHJf
-NjRfbmVlZGVkKHZvaWQgKm9wYXF1ZSwgaW50IHZlcnNpb25faWQpDQo+ICtzdGF0aWMgYm9vbCBl
-aGNpX2NvcmVfaXNfYmVmb3JlX3ZlcnNpb25fMyh2b2lkICpvcGFxdWUsIGludCB2ZXJzaW9uX2lk
-KQ0KPiAgew0KPiAtICAgIEVIQ0lTdGF0ZSAqcyA9IG9wYXF1ZTsNCj4gLQ0KPiAtICAgIHJldHVy
-biBzLT5taWdyYXRlX2ZldGNoX2FkZHJfNjRiaXQ7DQo+IC19DQo+IC0NCj4gLXN0YXRpYyBib29s
-IGVoY2lfZmV0Y2hfYWRkcl8zMl9uZWVkZWQodm9pZCAqb3BhcXVlLCBpbnQgdmVyc2lvbl9pZCkg
-LXsNCj4gLSAgICByZXR1cm4gIWVoY2lfZmV0Y2hfYWRkcl82NF9uZWVkZWQob3BhcXVlLCB2ZXJz
-aW9uX2lkKTsNCj4gKyAgICByZXR1cm4gdmVyc2lvbl9pZCA8IDM7DQo+ICB9DQo+IA0KPiAgc3Rh
-dGljIGludCB1c2JfZWhjaV9wcmVfc2F2ZSh2b2lkICpvcGFxdWUpIEBAIC0yNDgyLDggKzI0NzUs
-OCBAQCBzdGF0aWMNCj4gaW50IHVzYl9laGNpX3ByZV9zYXZlKHZvaWQgKm9wYXF1ZSkNCj4gICAg
-ICBlaGNpLT5mcmluZGV4ID0gbmV3X2ZyaW5kZXg7DQo+IA0KPiAgICAgIGlmICghZWhjaS0+bWln
-cmF0ZV9mZXRjaF9hZGRyXzY0Yml0KSB7DQo+IC0gICAgICAgIGVoY2ktPmFfZmV0Y2hfYWRkcl8z
-MiA9IGVoY2ktPmFfZmV0Y2hfYWRkcjsNCj4gLSAgICAgICAgZWhjaS0+cF9mZXRjaF9hZGRyXzMy
-ID0gZWhjaS0+cF9mZXRjaF9hZGRyOw0KPiArICAgICAgICBlaGNpLT5taWdyYXRlX2FfZmV0Y2hf
-YWRkciA9IGVoY2ktPmFfZmV0Y2hfYWRkcjsNCj4gKyAgICAgICAgZWhjaS0+bWlncmF0ZV9wX2Zl
-dGNoX2FkZHIgPSBlaGNpLT5wX2ZldGNoX2FkZHI7DQo+ICAgICAgfQ0KPiANCj4gICAgICByZXR1
-cm4gMDsNCj4gQEAgLTI1MDcsOCArMjUwMCw4IEBAIHN0YXRpYyBpbnQgdXNiX2VoY2lfcG9zdF9s
-b2FkKHZvaWQgKm9wYXF1ZSwgaW50DQo+IHZlcnNpb25faWQpDQo+ICAgICAgfQ0KPiANCj4gICAg
-ICBpZiAoIXMtPm1pZ3JhdGVfZmV0Y2hfYWRkcl82NGJpdCkgew0KPiAtICAgICAgICBzLT5hX2Zl
-dGNoX2FkZHIgPSBzLT5hX2ZldGNoX2FkZHJfMzI7DQo+IC0gICAgICAgIHMtPnBfZmV0Y2hfYWRk
-ciA9IHMtPnBfZmV0Y2hfYWRkcl8zMjsNCj4gKyAgICAgICAgcy0+YV9mZXRjaF9hZGRyID0gcy0+
-bWlncmF0ZV9hX2ZldGNoX2FkZHI7DQo+ICsgICAgICAgIHMtPnBfZmV0Y2hfYWRkciA9IHMtPm1p
-Z3JhdGVfcF9mZXRjaF9hZGRyOw0KPiAgICAgIH0NCj4gDQo+ICAgICAgcmV0dXJuIDA7DQo+IEBA
-IC0yNTQyLDcgKzI1MzUsNyBAQCBzdGF0aWMgdm9pZCB1c2JfZWhjaV92bV9zdGF0ZV9jaGFuZ2Uo
-dm9pZA0KPiAqb3BhcXVlLCBib29sIHJ1bm5pbmcsIFJ1blN0YXRlIHN0YXRlKQ0KPiANCj4gIGNv
-bnN0IFZNU3RhdGVEZXNjcmlwdGlvbiB2bXN0YXRlX2VoY2kgPSB7DQo+ICAgICAgLm5hbWUgICAg
-ICAgID0gImVoY2ktY29yZSIsDQo+IC0gICAgLnZlcnNpb25faWQgID0gMiwNCj4gKyAgICAudmVy
-c2lvbl9pZCAgPSAzLA0KPiAgICAgIC5taW5pbXVtX3ZlcnNpb25faWQgID0gMSwNCj4gICAgICAu
-cHJlX3NhdmUgICAgPSB1c2JfZWhjaV9wcmVfc2F2ZSwNCj4gICAgICAucG9zdF9sb2FkICAgPSB1
-c2JfZWhjaV9wb3N0X2xvYWQsDQo+IEBAIC0yNTcxLDE0ICsyNTY0LDEyIEBAIGNvbnN0IFZNU3Rh
-dGVEZXNjcmlwdGlvbiB2bXN0YXRlX2VoY2kgPSB7DQo+ICAgICAgICAgIC8qIHNjaGVkdWxlIHN0
-YXRlICovDQo+ICAgICAgICAgIFZNU1RBVEVfVUlOVDMyKGFzdGF0ZSwgRUhDSVN0YXRlKSwNCj4g
-ICAgICAgICAgVk1TVEFURV9VSU5UMzIocHN0YXRlLCBFSENJU3RhdGUpLA0KPiAtICAgICAgICBW
-TVNUQVRFX1VJTlQzMl9URVNUKGFfZmV0Y2hfYWRkcl8zMiwgRUhDSVN0YXRlLA0KPiAtICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgIGVoY2lfZmV0Y2hfYWRkcl8zMl9uZWVkZWQpLA0KPiAtICAg
-ICAgICBWTVNUQVRFX1VJTlQzMl9URVNUKHBfZmV0Y2hfYWRkcl8zMiwgRUhDSVN0YXRlLA0KPiAt
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgIGVoY2lfZmV0Y2hfYWRkcl8zMl9uZWVkZWQpLA0K
-PiAtICAgICAgICBWTVNUQVRFX1VJTlQ2NF9URVNUKGFfZmV0Y2hfYWRkciwgRUhDSVN0YXRlLA0K
-PiAtICAgICAgICAgICAgICAgICAgICAgICAgICAgIGVoY2lfZmV0Y2hfYWRkcl82NF9uZWVkZWQp
-LA0KPiAtICAgICAgICBWTVNUQVRFX1VJTlQ2NF9URVNUKHBfZmV0Y2hfYWRkciwgRUhDSVN0YXRl
-LA0KPiAtICAgICAgICAgICAgICAgICAgICAgICAgICAgIGVoY2lfZmV0Y2hfYWRkcl82NF9uZWVk
-ZWQpLA0KPiArICAgICAgICBWTVNUQVRFX1VJTlQzMl9URVNUKG1pZ3JhdGVfYV9mZXRjaF9hZGRy
-LCBFSENJU3RhdGUsDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgZWhjaV9jb3JlX2lz
-X2JlZm9yZV92ZXJzaW9uXzMpLA0KPiArICAgICAgICBWTVNUQVRFX1VJTlQzMl9URVNUKG1pZ3Jh
-dGVfcF9mZXRjaF9hZGRyLCBFSENJU3RhdGUsDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgZWhjaV9jb3JlX2lzX2JlZm9yZV92ZXJzaW9uXzMpLA0KPiArICAgICAgICBWTVNUQVRFX1VJ
-TlQ2NF9WKGFfZmV0Y2hfYWRkciwgRUhDSVN0YXRlLCAzKSwNCj4gKyAgICAgICAgVk1TVEFURV9V
-SU5UNjRfVihwX2ZldGNoX2FkZHIsIEVIQ0lTdGF0ZSwgMyksDQo+ICAgICAgICAgIFZNU1RBVEVf
-RU5EX09GX0xJU1QoKQ0KPiAgICAgIH0NCj4gIH07DQo=
+
+--Apple-Mail=_DCFE8011-BCAA-4ADD-8C82-5914F24140FA
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=us-ascii
+
+
+
+> On 5 May 2026, at 21:14, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>=20
+> On Tue, 5 May 2026 at 12:01, <munkhuu0825@gmail.com =
+<mailto:munkhuu0825@gmail.com>> wrote:
+>>=20
+>> From: heropd <munkhuu0825@gmail.com <mailto:munkhuu0825@gmail.com>>
+>>=20
+>> Fix a memory leak in ohci_service_iso_td() by calling
+>> usb_packet_cleanup() before freeing USBPacket.
+>>=20
+>> Signed-off-by: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com =
+<mailto:munkhuu0825@gmail.com>>
+>=20
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3463
+>=20
+>=20
+>> ---
+>> hw/usb/hcd-ohci.c | 2 ++
+>> 1 file changed, 2 insertions(+)
+>>=20
+>> diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+>> index 6ed8046fc2..43c49a42ec 100644
+>> --- a/hw/usb/hcd-ohci.c
+>> +++ b/hw/usb/hcd-ohci.c
+>> @@ -748,6 +748,7 @@ static int ohci_service_iso_td(OHCIState *ohci, =
+struct ohci_ed *ed)
+>>     usb_handle_packet(dev, pkt);
+>>     if (pkt->status =3D=3D USB_RET_ASYNC) {
+>>         usb_device_flush_ep_queue(dev, ep);
+>> +        usb_packet_cleanup(pkt);
+>>         g_free(pkt);
+>>         return 1;
+>>     }
+>=20
+> I don't really understand the USB subsystem, but something seems
+> odd here. The case when usb_handle_packet() can set the
+> p->status to USB_RET_ASYNC is when it has added it to a queue,
+> either directly ("QTAILQ_INSERT_TAIL(&p->ep->queue, p, queue);")
+> or by calling usb_queue_one(). The usb_device_flush_ep_queue()
+> does not (as far as I can tell) remove the queued packet. So it
+> seems wrong to me that this code path frees the packet, and
+> also if we call usb_packet_cleanup() it will do
+>    assert(!usb_packet_is_inflight(p));
+> which I think will fire.
+>=20
+> It's possible that we can't ever actually get to this code --
+> the usb_handle_packet() has a claim "hcd drivers cannot handle
+> async for isoc" and some assertions about that, which suggests
+> maybe that the intent is that we won't ever return USB_RET_ASYNC
+> for an iso TD. But if so, we should be asserting that.
+>=20
+
+Thanks that makes sense,
+I tested the USB_RET_ASYNC path locally and usb_packet_cleanup() does =
+indeed hit the inflight
+assertion there
+OHCI ISO ASYNC branch reached
+Assertion failed: (!usb_packet_is_inflight(p)), function =
+usb_packet_cleanup, file core.c, line 657.
+
+>> @@ -756,6 +757,7 @@ static int ohci_service_iso_td(OHCIState *ohci, =
+struct ohci_ed *ed)
+>>     } else {
+>>         ret =3D pkt->status;
+>>     }
+>> +    usb_packet_cleanup(pkt);
+>>     g_free(pkt);
+>=20
+> This one's probably OK -- is it the one that fixes the repro
+> case in the bug report?
+
+Yes this one should fix repro bug in report
+
+>=20
+> thanks
+> -- PMM
+
+For the async path, I can leave it unchanged for this fix, or add an =
+assertion since ISO TDs are not expected to complete asynchronously.
+
+Thanks,
+Munkhbaatar
+
+
+--Apple-Mail=_DCFE8011-BCAA-4ADD-8C82-5914F24140FA
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=us-ascii
+
+<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
+content=3D"text/html; charset=3Dus-ascii"></head><body =
+style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
+line-break: after-white-space;"><br =
+id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
+type=3D"cite"><div>On 5 May 2026, at 21:14, Peter Maydell =
+&lt;peter.maydell@linaro.org&gt; wrote:</div><br =
+class=3D"Apple-interchange-newline"><div><meta charset=3D"UTF-8"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">On Tue, 5 May 2026 at 12:01, &lt;</span><a =
+href=3D"mailto:munkhuu0825@gmail.com" style=3D"font-family: Helvetica; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
+word-spacing: 0px; -webkit-text-stroke-width: =
+0px;">munkhuu0825@gmail.com</a><span style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">&gt; wrote:</span><br style=3D"caret-color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
+normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: =
+solid;"><blockquote type=3D"cite" style=3D"font-family: Helvetica; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-line: =
+none; text-decoration-thickness: auto; text-decoration-style: =
+solid;"><br>From: heropd &lt;<a =
+href=3D"mailto:munkhuu0825@gmail.com">munkhuu0825@gmail.com</a>&gt;<br><br=
+>Fix a memory leak in ohci_service_iso_td() by =
+calling<br>usb_packet_cleanup() before freeing =
+USBPacket.<br><br>Signed-off-by: Munkhbaatar Enkhbaatar &lt;<a =
+href=3D"mailto:munkhuu0825@gmail.com">munkhuu0825@gmail.com</a>&gt;<br></b=
+lockquote><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">Resolves:<span =
+class=3D"Apple-converted-space">&nbsp;</span></span><a =
+href=3D"https://gitlab.com/qemu-project/qemu/-/work_items/3463" =
+style=3D"font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: =
+0px;">https://gitlab.com/qemu-project/qemu/-/work_items/3463</a><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: =
+solid;"><blockquote type=3D"cite" style=3D"font-family: Helvetica; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-line: =
+none; text-decoration-thickness: auto; text-decoration-style: =
+solid;">---<br>hw/usb/hcd-ohci.c | 2 ++<br>1 file changed, 2 =
+insertions(+)<br><br>diff --git a/hw/usb/hcd-ohci.c =
+b/hw/usb/hcd-ohci.c<br>index 6ed8046fc2..43c49a42ec 100644<br>--- =
+a/hw/usb/hcd-ohci.c<br>+++ b/hw/usb/hcd-ohci.c<br>@@ -748,6 +748,7 @@ =
+static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed =
+*ed)<br>&nbsp;&nbsp;&nbsp;&nbsp;usb_handle_packet(dev, =
+pkt);<br>&nbsp;&nbsp;&nbsp;&nbsp;if (pkt-&gt;status =3D=3D =
+USB_RET_ASYNC) =
+{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usb_device_flush_ep_q=
+ueue(dev, ep);<br>+ =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usb_packet_cleanup(pkt);<br>&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_free(pkt);<br>&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return =
+1;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br></blockquote><br style=3D"caret-color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
+normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">I don't really understand the USB =
+subsystem, but something seems</span><br style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">odd here. The case when usb_handle_packet() =
+can set the</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">p-&gt;status to USB_RET_ASYNC is when it =
+has added it to a queue,</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">either directly =
+("QTAILQ_INSERT_TAIL(&amp;p-&gt;ep-&gt;queue, p, queue);")</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">or by calling usb_queue_one(). The =
+usb_device_flush_ep_queue()</span><br style=3D"caret-color: rgb(0, 0, =
+0); font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">does not (as far as I can tell) remove the =
+queued packet. So it</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">seems wrong to me that this code path frees =
+the packet, and</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">also if we call usb_packet_cleanup() it =
+will do</span><br style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration-line: none; text-decoration-thickness: auto; =
+text-decoration-style: solid;"><span style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline =
+!important;">&nbsp;&nbsp;&nbsp;assert(!usb_packet_is_inflight(p));</span><=
+br style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; =
+font-size: 12px; font-style: normal; font-variant-caps: normal; =
+font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; =
+text-indent: 0px; text-transform: none; white-space: normal; widows: 2; =
+word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-line: =
+none; text-decoration-thickness: auto; text-decoration-style: =
+solid;"><span style=3D"caret-color: rgb(0, 0, 0); font-family: =
+Helvetica; font-size: 12px; font-style: normal; font-variant-caps: =
+normal; font-weight: 400; letter-spacing: normal; orphans: 2; =
+text-align: start; text-indent: 0px; text-transform: none; white-space: =
+normal; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
+text-decoration: none; float: none; display: inline !important;">which I =
+think will fire.</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">It's possible that we can't ever actually =
+get to this code --</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">the usb_handle_packet() has a claim "hcd =
+drivers cannot handle</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">async for isoc" and some assertions about =
+that, which suggests</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">maybe that the intent is that we won't ever =
+return USB_RET_ASYNC</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">for an iso TD. But if so, we should be =
+asserting that.</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: =
+solid;"></div></blockquote><div><br></div><div><div dir=3D"ltr" =
+style=3D"line-height: 1.5; caret-color: rgb(29, 29, 29); color: rgb(29, =
+29, 29); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, =
+sans-serif; font-size: 13px;"><div dir=3D"ltr" style=3D"line-height: =
+1.5;">Thanks that makes sense,</div><div dir=3D"ltr" style=3D"line-height:=
+ 1.5;">I tested the USB_RET_ASYNC path locally and usb_packet_cleanup() =
+does indeed hit the inflight</div><div dir=3D"ltr" style=3D"line-height: =
+1.5;">assertion there</div><div dir=3D"ltr" style=3D"line-height: =
+1.5;">OHCI ISO ASYNC branch reached</div><div dir=3D"ltr" =
+style=3D"line-height: 1.5;">Assertion failed: =
+(!usb_packet_is_inflight(p)), function usb_packet_cleanup, file core.c, =
+line 657.</div></div></div><br><blockquote type=3D"cite"><div><blockquote =
+type=3D"cite" style=3D"font-family: Helvetica; font-size: 12px; =
+font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;">@@ =
+-756,6 +757,7 @@ static int ohci_service_iso_td(OHCIState *ohci, struct =
+ohci_ed *ed)<br>&nbsp;&nbsp;&nbsp;&nbsp;} else =
+{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ret =3D =
+pkt-&gt;status;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>+ =
+&nbsp;&nbsp;&nbsp;usb_packet_cleanup(pkt);<br>&nbsp;&nbsp;&nbsp;&nbsp;g_fr=
+ee(pkt);<br></blockquote><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">This one's probably OK -- is it the one =
+that fixes the repro</span><br style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">case in the bug report?</span><br =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: =
+solid;"></div></blockquote><div><br></div><div>Yes this one should fix =
+repro bug in report</div><br><blockquote =
+type=3D"cite"><div><br></div></blockquote><blockquote =
+type=3D"cite"><div><span style=3D"caret-color: rgb(0, 0, 0); =
+font-family: Helvetica; font-size: 12px; font-style: normal; =
+font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
+orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
+white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">thanks</span><br style=3D"caret-color: =
+rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
+normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
+normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
+none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration-line: none; =
+text-decoration-thickness: auto; text-decoration-style: solid;"><span =
+style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
+12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
+letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
+text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
+-webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
+display: inline !important;">-- =
+PMM</span></div></blockquote><br></div><div><div>For the async path, I =
+can leave it unchanged for this fix, or add an assertion since ISO TDs =
+are not expected to complete =
+asynchronously.</div><div><br></div><div>Thanks,</div><div>Munkhbaatar</di=
+v></div><br></body></html>=
+
+--Apple-Mail=_DCFE8011-BCAA-4ADD-8C82-5914F24140FA--
 
