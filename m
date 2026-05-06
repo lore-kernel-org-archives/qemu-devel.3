@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05F0FCD3440
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C9C4CD3445
 	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:09:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcuN-0008Gv-23; Wed, 06 May 2026 10:07:28 -0400
+	id 1wKcvr-0004DN-4E; Wed, 06 May 2026 10:08:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKct7-0005Yl-QG
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:06:11 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcvh-0003vq-1q
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:08:50 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKct5-0001l6-Oo
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:06:09 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso46487695e9.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:06:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcvf-0002AL-97
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:08:48 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-44b052142e1so2797524f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:08:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076365; x=1778681165; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076525; x=1778681325; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Q7JoIcCA8qNl17AS9UcDFI607F3aol8TFPBvdZnjpeQ=;
- b=PUXKEuhrhIfhQbKuDCjLKSwMmJngAFsOX0zXH8Uy8CDk6yNFXXs2Mza1oMMsh95N7m
- efyGon2yxNJFWEqW8Fk/2IZpIbBzVqz5h03fTHWU0R5qWUR/l5Rx8H+XdEZje4G2iGZ1
- X8L530CSZZR+5IPs8pP4ciAIvyzCuCEKQ6BIB7OSRy0VruWppVZtm+xKio1j1m0Yf1R+
- xDQU/iCT8Ig4g/KxAq0s2JWQWJ4sfpCa2SonaotMckTyxAIlgqNh+iHwsPd/L3g1BD54
- qZ+2d2GU6uZUyeYUwnCA2uGImpesFYMfXNjpQof60sVc4GOX6kTH5ncf3uVgbplvj5Of
- Gs1g==
+ :reply-to; bh=2YScFuD/G2yULe3kqslcvrkPGjbEWx3inHxGy7MRNZQ=;
+ b=A26Od+oTsMSf3PpO0ePppc8jQkXtfep/sHZIdZBLPCq+JxRa2HzC1f3Z+uJaaNHf1W
+ +w8pKz5QzIRlLeQhXLO7DqAyHLqvnCjR5dFcY5SUhaajUhfY0SCglTJIm1LM4sAGpzLQ
+ YnfbqhANSnT0W8zQEzA2JsIKunjDKTPcrLZKPOcXwlxzSb7gnI2Pf6LiObmOmqUS3bTY
+ ZMdnQNnIjqePQ/Dud+IM8e4v2tR0O6TO1MOktNbNs9+SqjHwQku0v5p9F2X9auN9itin
+ IfB5+RAxas0zc3Ik2kU9LSDn1OxaTRAWys4cYxDuLIyHu3pPnfxP1NWm8mqLLh4SV4MG
+ zUEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076365; x=1778681165;
+ d=1e100.net; s=20251104; t=1778076525; x=1778681325;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Q7JoIcCA8qNl17AS9UcDFI607F3aol8TFPBvdZnjpeQ=;
- b=BYTV+XxngNNQPjUbTTmkSDDpN7S1CwjG+dEwl96QwaIyWRFwkfOEWMJ7q4yuaGhYvo
- 8JZQISgDfugb0J0CUocAJLy5pEvHa3gLWDUzCOVNyFepUrwLddxk8XuJOwCLOdpdZn66
- b7NAaVJdHJiiY6is0njHbevYeybsUBqbpIi9o5fM5EzFw60MJyQ/ehEJtwUK3NhMRWzD
- I6FdFugL8y/dImz6dyr7zW6eYfmaj2pXqLhMUxePKsiyEWblRi+sQZzE/DR4BFuDIH2G
- 3pIWEO0trBJPqh4arcmS7pZhhI2ul+W4P58T7aHgsHhkatQ8e4oI5Zj0kz+95FnwbOID
- 0Rxw==
-X-Gm-Message-State: AOJu0Yyo84LYogWNWFoDiziCPcOGYxuxWyPVbI4/phR5GBgWtS6afItd
- lCHld79MFpFDLKYoKQAGVkSPp5/l4oeJRoJ4i2YLOqDyzELdkRjBxfWfPppDLcaqwyvkP5vtb22
- LKNhWjVE=
-X-Gm-Gg: AeBDieuqLSn3jKBmp+imB+LrCDqtvSiDda+JjXP0ndOIDroCbes3B5MYtWA93Z1Tshz
- BVbIz+2BKomwbOJYjtCwKxTlBYtqwsZGH6/XZQ3QP7xWqtXaXy+ABY0mgxNyKmmw/Y+OW/F3/Sv
- uX4i7nB20ZB+Rf1sfJR+1LEiQGKTboKigkwascV28iJLanwY9wFwgDZNyy5FaCwOXeY5uRQyLy9
- d0LEX7s32jS6NfYTxj+UZ8b8Ao8P360V5FKDeBQ9iNtWL+1JxzyTzlSDs8lzc+GqkqeIrKjo2xL
- NbzTHLYsSfIIb1SttBXDqPqZK1dLPOgN3MKYCU1gwvQnqOYLEY6MlUceD9Wt8WFfaGhU7MzVOQm
- nZSPhXLX/hJuCNPZzORa2s/AbRO7psC6XHsIuF17Qobn3CItcWQTiGQASb0+yJBqxbpSJrAJF9Q
- usrClp7Mq0LjrLk8Ol4HemOvlcW/yNpi6CvyIaY599SJ2hBCv9DyWEdkys2P6w9nJf0WcmBV2tl
- 4Rj6IPe7eE=
-X-Received: by 2002:a05:600c:b8a:b0:48a:56de:d620 with SMTP id
- 5b1f17b1804b1-48e51f32ac3mr65522115e9.14.1778076364501; 
- Wed, 06 May 2026 07:06:04 -0700 (PDT)
+ bh=2YScFuD/G2yULe3kqslcvrkPGjbEWx3inHxGy7MRNZQ=;
+ b=MPPaZs7Cl3/bhuSBdiqpc4ELXbcgq9+KZp6F9jP18yb5VzI3JiKJMB63I2u6D3dpGS
+ zCHGtED/9kxuj6B/StieG1a6XzrhPK83flmXsf6IlkDTWYa4zW8jOuimWr0IsO+F7z/U
+ NholaGPtTFufWTh+jDwAHcwQ0PzBsC2WUgdal19sr1yyAk+/iwJw6ZWfJ8MmUVD0NMRR
+ a5xqaGIAFaKh1fKDSro465+Z+VRSg+7/QyjIKb9YomWllVRpeZhV0fbJhw0Tdk4+Hr/+
+ 6lchDL/7UPez4KDdmYxJEG411lZr6dEdDoTzrnm87vepcQszLl5gfjg80IMaw9mcz0fP
+ zH8w==
+X-Gm-Message-State: AOJu0Yx7EGS0mibAVVNLTmS4PPT+NljLrP06oDSAFmYJ3pIiaeH/iLrl
+ EXtOeH2uCvYUpIFwX6jOy+AppdV49YriDus67vA513PMRgQMnsGcjBrept9K8BrO8CW960R6g9f
+ V4IjcqUQ=
+X-Gm-Gg: AeBDievy0ZrgNvhqnqDB7SVtoECZ6CoAZ+iihJRve++bjJ/dO3XjciyaeCpqPSKJtPZ
+ r9yH65XV5C34PE68d0Uap6twgjiSJZfoa7IvdWf0//j3FQodYu9g5fnb89oobK9BM2lbK7fx9zb
+ HY6NST50n4qU08wHrgFTMh3cEtZMRy2r3yNHrMU7PceLtsdYtmEn4qQEEBtjhieQCWjDVikQmvI
+ qX4UuazHa6x2xkY5onH114Ko5q6WNEddaFlPbkghaQBrOZIqnsRDtINS4Uf6y92QgCyUN1v7AQB
+ 8AjDCEhXJSRDrp3yEEHfamiznF23xxG+7FGlZ7HgsQJK+YmZkRFS7S9YwA/SVFVAw5fCPQWb6ll
+ 2IhGDlpYeADR5Ae79wGYi42+dWEJjXgQtzUAAGWMY3pMzb7UCigoqc9j92/HQ1zt666Dr26QJdY
+ XCm32i5agIQ3i+xF4dvymrVUKD0nwxxhFoZprB/xKiB9EB1+clN3Vyf8PbVQSTOUigxqu0UBBod
+ xSFFr3Vfn0=
+X-Received: by 2002:a05:600c:4512:b0:488:c744:49b with SMTP id
+ 5b1f17b1804b1-48e51f539b0mr60021525e9.7.1778076524626; 
+ Wed, 06 May 2026 07:08:44 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e538bc9bdsm60504185e9.11.2026.05.06.07.06.02
+ ffacd0b85a97d-4505285e765sm12365586f8f.10.2026.05.06.07.08.42
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:06:02 -0700 (PDT)
+ Wed, 06 May 2026 07:08:42 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 081/110] target/microblaze: Fix endianness used to disassemble
-Date: Wed,  6 May 2026 15:54:53 +0200
-Message-ID: <20260506135524.20617-82-philmd@linaro.org>
+Subject: [PULL 101/110] io: Clear dangling GLib event source tag
+Date: Wed,  6 May 2026 15:55:13 +0200
+Message-ID: <20260506135524.20617-102-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,43 +99,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MicroBlaze CPU model has a "little-endian" property, pointing to
-the @endi internal field. Commit c36ec3a9655 ("hw/microblaze:
-Explicit CPU endianness") took care of having all MicroBlaze
-boards with an explicit default endianness (similarly with
-commit 91fc6d8101d for linux-user binaries), so later commit
-415aae543ed ("target/microblaze: Consider endianness while
-translating code") could infer the endianness at runtime from
-the @endi field, and not a compile time via the TARGET_BIG_ENDIAN
-definition. Doing so, we forgot to propagate that runtime change
-to the disassemble_info structure. Do it now to display the
-opcodes in correct endianness order.
+Following commit 34aad589019 ("hw/char/virtio-console: clear
+dangling GLib event source tag"), prevent stale tags from
+being reused by clearing dangling GLib event source tag during
+the cleanup phase (finalize, unrealize).
 
-Cc: qemu-stable@nongnu.org
-Fixes: 415aae543ed ("target/microblaze: Consider endianness while translating code")
+Inspired-by: Matthew Penney <matt@matthewpenney.net>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-Id: <20260423100612.27278-3-philmd@linaro.org>
+Reviewed-by: Matthew Penney <matt@matthewpenney.net>
+Message-Id: <20260408100605.66795-2-philmd@linaro.org>
 ---
- target/microblaze/cpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/usb/redirect.c                     | 4 +---
+ io/channel-websock.c                  | 8 ++------
+ target/i386/kvm/tdx-quote-generator.c | 5 +----
+ 3 files changed, 4 insertions(+), 13 deletions(-)
 
-diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
-index ec513ae82d4..639f46b525e 100644
---- a/target/microblaze/cpu.c
-+++ b/target/microblaze/cpu.c
-@@ -237,8 +237,8 @@ static void mb_disas_set_info(const CPUState *cpu, disassemble_info *info)
- {
-     info->mach = bfd_arch_microblaze;
-     info->print_insn = print_insn_microblaze;
--    info->endian = TARGET_BIG_ENDIAN ? BFD_ENDIAN_BIG
--                                     : BFD_ENDIAN_LITTLE;
-+    info->endian = MICROBLAZE_CPU(cpu)->cfg.endi ? BFD_ENDIAN_LITTLE
-+                                                 : BFD_ENDIAN_BIG;
- }
+diff --git a/hw/usb/redirect.c b/hw/usb/redirect.c
+index fda5bbca676..100afbdb06a 100644
+--- a/hw/usb/redirect.c
++++ b/hw/usb/redirect.c
+@@ -1494,9 +1494,7 @@ static void usbredir_unrealize(USBDevice *udev)
+     if (dev->parser) {
+         usbredirparser_destroy(dev->parser);
+     }
+-    if (dev->watch) {
+-        g_source_remove(dev->watch);
+-    }
++    g_clear_handle_id(&dev->watch, g_source_remove);
  
- static void mb_cpu_realizefn(DeviceState *dev, Error **errp)
+     free(dev->filter_rules);
+     qemu_del_vm_change_state_handler(dev->vmstate);
+diff --git a/io/channel-websock.c b/io/channel-websock.c
+index 85b22a8822a..617d79c351a 100644
+--- a/io/channel-websock.c
++++ b/io/channel-websock.c
+@@ -950,12 +950,8 @@ static void qio_channel_websock_finalize(Object *obj)
+     buffer_free(&ioc->encinput);
+     buffer_free(&ioc->encoutput);
+     buffer_free(&ioc->rawinput);
+-    if (ioc->hs_io_tag) {
+-        g_source_remove(ioc->hs_io_tag);
+-    }
+-    if (ioc->io_tag) {
+-        g_source_remove(ioc->io_tag);
+-    }
++    g_clear_handle_id(&ioc->hs_io_tag, g_source_remove);
++    g_clear_handle_id(&ioc->io_tag, g_source_remove);
+     error_free(ioc->io_err);
+     object_unref(OBJECT(ioc->master));
+ }
+diff --git a/target/i386/kvm/tdx-quote-generator.c b/target/i386/kvm/tdx-quote-generator.c
+index dee8334b27a..002bc40c8a8 100644
+--- a/target/i386/kvm/tdx-quote-generator.c
++++ b/target/i386/kvm/tdx-quote-generator.c
+@@ -74,10 +74,7 @@ static void encode_header(char *buf, size_t len, uint32_t size) {
+ static void tdx_generate_quote_cleanup(TdxGenerateQuoteTask *task)
+ {
+     timer_del(&task->timer);
+-
+-    if (task->watch) {
+-        g_source_remove(task->watch);
+-    }
++    g_clear_handle_id(&task->watch, g_source_remove);
+     qio_channel_close(QIO_CHANNEL(task->sioc), NULL);
+     object_unref(OBJECT(task->sioc));
+ 
 -- 
 2.53.0
 
