@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BAB3FF8855
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:07:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D3F3CD3440
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:07:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcsb-0004Vg-4w; Wed, 06 May 2026 10:05:43 -0400
+	id 1wKcu4-00069G-3s; Wed, 06 May 2026 10:07:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcsE-0003hd-7p
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:05:14 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcsr-0004te-9I
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:05:53 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcsC-0001bx-2c
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:05:13 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-43d73422431so6095287f8f.2
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:05:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcsp-0001jL-Hg
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:05:52 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-488ba840146so57432735e9.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:05:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076309; x=1778681109; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076349; x=1778681149; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=UMTtObmWf9r4iW1RVL81w+CpGum6ZcXVBlqRYE3xnws=;
- b=WX+2TPMk6dnWd3cYlHVnyhLWqvOHJREX8lFC1IN/vE7fR0H70e+SxfvTTk2ZVgmW3D
- a7p69oKbIBfpgfzZM0Bu9dH3IUG8abxev3/dxJSqa91v4iCCW7gswz+x/HsHYxpAZgM0
- RTtaoz67wtbMJTOAE/yXJf36RtM7NDUw3QfIERK0H7wxyESFOVukpmB0/FgKB/9zcvR2
- tf9QEBFPiaudbjyZaREnvfTh48mRqquqm3xekZE8uWOJx9ShLgS+FPOZtQCebg5E092T
- +AGibvUbfqW2Qwoa3Vr1XjB0jVeMQr/o2XzZXWZ3Rdep4fdq4LrooY/2vL6M0N9WI+WV
- j8vA==
+ :reply-to; bh=pVWa7HWZcWALpqfD4g2BMHRotgfjymp5ZOIdJK0YkHM=;
+ b=DrbOs2quAqmCvR4w9qIH1UnKipbETZ+nKObM1X9QibqA3jh/Ghp47QGfS63MnAv4M6
+ gMcCpG4/yaNGXhSgQgIOddARGIyqOD1wh+eEnAdF7Z/cA2YXpO9fD07NHbWFSaTIQp+7
+ O/HKfrUT3bV7L9BOeLlH+W0Mi+Rdpd9OmuQ1QOooaGX0JfVZTp3W1/r3BnkF59B0VFEm
+ R4zduiVn4pGUzFzJFXhAjQ/Kr83KBBpy6HUEMN17gX2pIWU6ic/pSW0JtDLFVxnFzufU
+ DaF6MZaW2p1dSH83y/GTFhZEqGeKTHSTGOmL3Kp4l6g6hnN8D00egrbE9UNIqTsY9XTC
+ GCKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076309; x=1778681109;
+ d=1e100.net; s=20251104; t=1778076349; x=1778681149;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=UMTtObmWf9r4iW1RVL81w+CpGum6ZcXVBlqRYE3xnws=;
- b=jVXj/+szUYeL7q0Pdk9lrkd45aLAecdw2kkGNpriV9TUIMfDdMYHqlN5eDlqdi7UK2
- cAtEFq0dv0ONnmHH4ho/d4vksfEUWM3MZVQhnyd0UOrHvkVbXkXpZzdVXQJybeAm2/DN
- GAxV0V3nofZgTUzuF1KG1F7xO0m9TIAoegJX3Rxuigt+y1FMN9EzdUi6ePNLYQMOIi2M
- sQGsV6jym4ouS70xVQ59/fAIVoxdXi+kxPiFdjBaOYjjEYveNOaa6eDLdvg+IQosVEzt
- clDnv2WU2LBVj1rTxNbR7JkWPA26Ec99UuBvrcVU7sBAN9j1d9LHkRkQkh488wNnqiCY
- nvZQ==
-X-Gm-Message-State: AOJu0YyAVXOrWhsdjskB3vnh40n/bLN7P713ya8U9sN0O6jJO398k7X4
- Uys/GRwUeaQLyTwXmEyWLm7G2OgUrGTpt1bLC2T9r+z78IUo2xJ1m70RLo6U/Oz6kr5C7k4Eqkp
- Ju3v/vOQ=
-X-Gm-Gg: AeBDietoh9FQ1sHEs9y7LOU1dyA5V0MEAjChf6mCPgFKiKhMcuEY91BosDLCx0FBoMh
- Cs7uEQQLDIsPF5nVw0iSDyORA41vJE+TooOBcR2wZ+HcCh6X0OuA57uYU+NMpEopxzQWqX4yFf7
- bdsKY+hi1gum80LltdJ/PvX/zGadeE61B+L2k/07FEdjJXTGSekTYNbT5XfL3mbj3CaP3Im72Dd
- rNDAIarjyejn9AtSSgMribrb8ARHll09mXqRGgZpa95ixypLPzlTr1dp/nNg9hKcY86G36iq4xD
- /yVnQoWIhSe0y8mIdj1+PNOyb9rFzeeLooron9lp/nKuAFTImd98JbhmXZxDtT8CvUWwC/Jj05m
- bVUbwNkwOaBPCB9XfFuLhCx6EwkkEoot7krUVlXWMxQ5M56/lADOMTObI4JHR3PV5sQSIPO52xr
- QBgFOuWKbURAYWqyM5hFbJweqFjNoObqMBlrObHaLnwRHFOLNaJ0OkFGmdlDWzUWmO1XUmkYxe2
- bTW05LvvdE=
-X-Received: by 2002:a05:6000:2386:b0:43d:6fb7:fedb with SMTP id
- ffacd0b85a97d-4515d99ddf3mr6133468f8f.36.1778076308521; 
- Wed, 06 May 2026 07:05:08 -0700 (PDT)
+ bh=pVWa7HWZcWALpqfD4g2BMHRotgfjymp5ZOIdJK0YkHM=;
+ b=oSkg3OKbtqc/LwZRa5jB3FH6cHuB7/Ue3rSi1Lsrfhkvsx5oXH1VXjptYGpzdtSi6U
+ lTxeNXCoXQe7gPxIdDXJfNsK9fiYmw3A8ir1rDYymab8nw97lX0Eyzq5MQrJ7y3+1/HV
+ PeVxP8v9ZoXWgUic2ccqvwQ4+VAVsROPnoaEOdx3cN1YJDJfUfsPzdhZMMnABcXPhiYt
+ AYZSOs6PHJ8AkHFaGqS0WjttPT/6yF3L7DwwdmiQpGA32iYgKo1Cpcv6rIW1ER1XrZGV
+ 20b4eWcu8z2+1jj+1amDwoZ4FcsvejYnqmXjabMp91kjaKgSoo5AFvpqHYQ8Pj1khysp
+ NGJA==
+X-Gm-Message-State: AOJu0YxS3ce6Iaiy8rvJwTRCU4m9hbQgxO54zSit7CX158z6dhpk0j7E
+ KL/KTepRYDmFMnAQ7Lzd57/MQA1bVwtp+BBPpZ00zdQ9HSTk+RmVVzVCbHgsyxoFT/QqGckYxgD
+ fnauPzY4=
+X-Gm-Gg: AeBDiesbhHVkTZgTdbF6aO+HWvnKs3IlfpajkGOAkzzH8GjpMUZzcOFEKaUYw41BqL1
+ 2c2vvsS5SWQRW1y4KBsGWKIrXn28QBxWA36u8/TmgSMRUKhwMrzXSvi0+QpauXHO8100nDV+SEs
+ wKyiba5qypPhpHdQsvg/G+BQKMFOsA4J/Hf3u279SQ/T4RDZOLBlsUdixzwSOHURKPblCSIp6xP
+ SZ0eYl/1dv2kfKZLuQ6pWcKBgXbj/9wE4229ZmsvIZQ8W0DmU1QAJL4HC6ruaAeZT+IyUZKfpEg
+ 91SG2eaff6/K+hARcFNANHVGtVaELHLapoqB+JwzjV3gMo3/+qjOI+EcnWQ3HopT74XfZgFIw7/
+ BPMhCukAAvaSeQ5dtI3AshYypvJdEjVgHe5X4ZlTovwCuDaTtgaxHcsKYQG0oglXwDaOZhWIMXr
+ p2F8jJq8P71H4X3WFXh7xyeED9YL3sHdy4xpBIx/5cFaFFyYqXXv/PwBeVG7pgytjS9/KEEvwTN
+ FaAwTh5guUtOUQYnOAi6g==
+X-Received: by 2002:a05:600c:1d18:b0:489:149a:f9e6 with SMTP id
+ 5b1f17b1804b1-48e51f46dcfmr58859745e9.28.1778076349037; 
+ Wed, 06 May 2026 07:05:49 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45055f2203csm12943555f8f.37.2026.05.06.07.05.06
+ 5b1f17b1804b1-48e538d2878sm81005545e9.15.2026.05.06.07.05.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:05:07 -0700 (PDT)
+ Wed, 06 May 2026 07:05:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 074/110] target/mips: Inline cpu_ld/st_mmuidx_ra() calls in
- Atomic LD/ST helpers
-Date: Wed,  6 May 2026 15:54:46 +0200
-Message-ID: <20260506135524.20617-75-philmd@linaro.org>
+Subject: [PULL 079/110] tcg: Include missing 'tcg/tcg-op-common.h' header in
+ 'tcg-op-mem.h'
+Date: Wed,  6 May 2026 15:54:51 +0200
+Message-ID: <20260506135524.20617-80-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,86 +100,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Have callers set MO_ALIGN in the MemOp bits.
+"tcg-op-mem.h" uses methods declared in "tcg/tcg-op-common.h".
+Include the latter to avoid when including the former:
 
-Perform the access first, filling the TLB in the process.
-If the tlb cannot be filled, access is not permitted, and
-an exception is raised. Thus remove the now unnecessary
-do_raise_exception() call.
+  include/tcg/tcg-op-mem.h:34:5: error: call to undeclared function 'tcg_gen_qemu_ld_i32_chk'
+   34 |     tcg_gen_qemu_ld_i32_chk(v, tcgv_va_temp(a), i, m, TCG_TYPE_VA);
+      |     ^
 
-Since the TLB is filled, use probe_access() to get CP0_LLAddr.
+  $ git grep -w tcg_gen_qemu_ld_i32_chk
+  include/tcg/tcg-op-common.h:328:void tcg_gen_qemu_ld_i32_chk(TCGv_i32, TCGTemp *, TCGArg, MemOp, TCGType);
+  include/tcg/tcg-op-mem.h:35:    tcg_gen_qemu_ld_i32_chk(v, tcgv_va_temp(a), i, m, TCG_TYPE_VA);
+  tcg/tcg-op-ldst.c:286:void tcg_gen_qemu_ld_i32_chk(TCGv_i32 val, TCGTemp *addr, TCGArg idx,
 
-Move env->CP0_LLAddr and env->lladdr assignments so we
-don't update them when an alignment fault occurs.
-
-Since we have a handy MemOpIdx, replace the legacy
-cpu_ld*_mmuidx_ra() calls by cpu_ld*_mmu() equivalent.
-
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-stable@nongnu.org
+Fixes: a8af0fb24da ("include/tcg/tcg-op: extract memory operations to tcg-op-mem.h")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260417042620.35329-3-philmd@linaro.org>
+Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
+Message-Id: <20260423135035.50126-2-philmd@linaro.org>
 ---
- target/mips/tcg/ldst_helper.c | 26 +++++++++++++++-----------
- target/mips/tcg/translate.c   |  2 +-
- 2 files changed, 16 insertions(+), 12 deletions(-)
+ include/tcg/tcg-op-mem.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/target/mips/tcg/ldst_helper.c b/target/mips/tcg/ldst_helper.c
-index b36b12d87d6..1b25466b496 100644
---- a/target/mips/tcg/ldst_helper.c
-+++ b/target/mips/tcg/ldst_helper.c
-@@ -28,23 +28,27 @@
- #include "internal.h"
- 
- #ifndef CONFIG_USER_ONLY
-+#include "accel/tcg/probe.h"
-+#include "exec/tlb-flags.h"
- 
- #define HELPER_LD_ATOMIC(name, insn, almask, do_cast)                         \
- target_ulong helper_##name(CPUMIPSState *env, target_ulong arg,               \
-                            uint32_t memop_idx)                                \
- {                                                                             \
--    MemOpIdx oi = memop_idx; \
--    unsigned mem_idx = get_mmuidx(oi); \
--    if (arg & almask) {                                                       \
--        if (!(env->hflags & MIPS_HFLAG_DM)) {                                 \
--            env->CP0_BadVAddr = arg;                                          \
--        }                                                                     \
--        do_raise_exception(env, EXCP_AdEL, GETPC());                          \
--    }                                                                         \
--    env->CP0_LLAddr = cpu_mips_translate_address(env, arg, MMU_DATA_LOAD,     \
--                                                 GETPC());                    \
-+    MemOpIdx oi = memop_idx;                                                  \
-+    unsigned mem_idx = get_mmuidx(oi);                                        \
-+    unsigned size = memop_size(get_memop(oi));                                \
-+    uintptr_t ra = GETPC();                                                   \
-+    CPUTLBEntryFull *full;                                                    \
-+    void *host_unused;                                                        \
-+    int flags;                                                                \
-+                                                                              \
-+    env->llval = do_cast cpu_##insn##_mmu(env, arg, oi, ra);                  \
-+    flags = probe_access_full(env, arg, size, MMU_DATA_LOAD, mem_idx,         \
-+                              true, &host_unused, &full, ra);                 \
-+    assert(!(flags & TLB_INVALID_MASK));                                      \
-+    env->CP0_LLAddr = full->phys_addr;                                        \
-     env->lladdr = arg;                                                        \
--    env->llval = do_cast cpu_##insn##_mmuidx_ra(env, arg, mem_idx, GETPC());  \
-     return env->llval;                                                        \
- }
- HELPER_LD_ATOMIC(ll, ldl, 0x3, (target_long)(int32_t))
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index ee6199875cf..fff6390f5d4 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -1936,7 +1936,7 @@ static inline void op_ld_##insn(TCGv ret, TCGv arg1, int mem_idx_ignored,  \
- static inline void op_ld_##insn(TCGv ret, TCGv arg1, int mem_idx,          \
-                                 DisasContext *ctx)                         \
- {                                                                          \
--    MemOpIdx oi = make_memop_idx(memop, mem_idx);                          \
-+    MemOpIdx oi = make_memop_idx(memop | MO_ALIGN, mem_idx);               \
-     gen_helper_##insn(ret, tcg_env, arg1, tcg_constant_i32(oi));           \
- }
+diff --git a/include/tcg/tcg-op-mem.h b/include/tcg/tcg-op-mem.h
+index 36931d1dd57..ea35a02fb40 100644
+--- a/include/tcg/tcg-op-mem.h
++++ b/include/tcg/tcg-op-mem.h
+@@ -12,6 +12,8 @@
+ #error TCG_ADDRESS_BITS must be defined
  #endif
+ 
++#include "tcg/tcg-op-common.h"
++
+ #if TCG_ADDRESS_BITS == 32
+ typedef TCGv_i32 TCGv_va;
+ #define TCG_TYPE_VA TCG_TYPE_I32
 -- 
 2.53.0
 
