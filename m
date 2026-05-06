@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EF27CD343B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:04:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6930CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:04:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcqR-0007uU-F7; Wed, 06 May 2026 10:03:27 -0400
+	id 1wKcnv-00056u-O3; Wed, 06 May 2026 10:00:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcpi-0007MQ-AY
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:02:41 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcnc-0004ni-Ev
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:00:29 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcpg-0000wD-PW
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:02:38 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-488b150559bso44918985e9.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:02:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcna-0000Xs-HA
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:00:28 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-448528f4e69so3879387f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:00:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076154; x=1778680954; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076024; x=1778680824; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=MBVFo7jkXJxLoZf3PgcZx8GVnDIMsyILjmfxQ7o/Kys=;
- b=Ufpzko/lpir4WN1qEi3ji6HBISh6tLjefgjCCM0otYQgzLZSh6/P/gC+yENSsiWxc5
- AxKyWn72cx0cYHlVxnx7kvJxkSvfaWqVt/a3EPng2/fSWQnlVhv7t31NAS7QFoRpXsu7
- yz2UBVgHqZINH6Ox0lrqOIHgcUmYKpcWO3I930Ond/yTcBgHVQ04ZFPYs85OIzTx5ykf
- 8I2CBGuQmfg3w9eg27gP1/mgPDD4fN9mQLxSXoTPEIR8U8X1fPL4iufwep8qZ3PYhJT6
- BIdCUqEglJ8IFdEUxbGONwykagY9pZK2zI8VBgKrSD8KgwBtVoPraeJmQlfxloCKvGgQ
- o3fQ==
+ :reply-to; bh=j73ul5aEd9R7sSndl2WuEnX7dofgQLl6AbC/gXzl4y8=;
+ b=PZbBhOPb4AaiCXGuyBFgXR3MBDlZOcC4tt0tH6jdd2i6s20LK1EAl3NlehtDXwgRE4
+ p2AwdGLa9NYE9QqOGQ9K7pkphWtopgTT+gSe9xeIFUr9yQYX3EN8YFx6oitHmN3PfZDu
+ 2AxuT1gvc2J2LhQkyAurmY9QbdpvLjbPh5yjkhF8W7KbzSy9qQMtK38b306/0hYxXV+C
+ Pnqbc93wNQUyQOFY7JC4hNM6wn6dvwQKtj5b1PvZYwZZ8X8gGilxkJ+vwPmAxgtPsYVf
+ sYrFSVNRC7vbqm4gHop28rzVhjd6m+HHCiJFTUzKgJJIVo0PLLVMG0kuDURWqdoE7w2g
+ GKEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076154; x=1778680954;
+ d=1e100.net; s=20251104; t=1778076024; x=1778680824;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=MBVFo7jkXJxLoZf3PgcZx8GVnDIMsyILjmfxQ7o/Kys=;
- b=e67rcaQbP6RDAg7kNzAXUk9uXwEvaR73ZRQ9fFFiMk43YsGLu3Kn67qdOetXwuRKj1
- zw7BnJfjGez2zTAM40ULNQqu6uNkB+eVgIq7CKPEhB8VhS8qBMSrMGO3u8eI4AjxkxJn
- D6DrVW7QG7kNA1Wg/QPdncZx8iJQiJyp68WhAfeyBtbVZ/5BRs3PjtorZdZoHqhaq5v1
- s0kiNUGLQacvDVvoJlj9QGr2ScM3HTarf5kRmDBVy5GBMJyvpmUkPT8WpwqV/iK5LWzt
- oq2q33jNMquEAT/KZqDdFz9Pa8UtaiSLY5K5b2yJ+4NIUY+TpwmCNgr2RG1iG04JGggM
- ExaA==
-X-Gm-Message-State: AOJu0YzzRnX8y6c4QkblyIO2FdELdcS4FwUI60NMXrO53orF8D81w+ZX
- rFwXgE0yVIAD/kGL4W4dEFVxAnZWLBLPlEP78aqaHv/auOqkVmPv2S19/rLdj8ZbOS8UK8HjhQT
- c1EgVKPE=
-X-Gm-Gg: AeBDieucrMfhUdP+03vWBHn3//ehMOMOCp+CvExlbQig81g0ysMfxOme6GuC4Z0eCkT
- TUu/d9fqvVZcnWNWQ7wK8wp4s759qeUdvbvZldr2SzOJxxjnaYmQUcqaMiCftedtxvqc6eEvh6V
- 2/otIBsHpB4kiKjqIhrcMoi35Ha6Cgz5/eZKUdTTgZz637Q3noKNhUr0ccn5Jfxw8ToS8RvyotV
- UV95iFmsaWO1HEX3mtJZXSs2E6rgfmNlxQGOKhxzPNXca6NARa6+Fhuv7ggmwAfSgk93LISs5XF
- hM3kajlMmTs3uYCS47LHB7IKBefKTs1fqafXPPMPIoetucgak20ThTvgWstkxOGsP1kKCSeHhoE
- c+TWoi/ayZnFRVOe6fMsFKaudLWKxIABqPpWThxaWS+5IYh+GURwV5G8WPXwoc9DSz7OghSe/c6
- oV6Dof/Cy4QWgV5QlHtrvNcl8yAm3mkFikeJOkAHfL5nV7SsTNheyFbzBG+LeCKT8GSf1hyo+hE
- j1JSnKhhzQ=
-X-Received: by 2002:a05:600c:c494:b0:489:e126:b757 with SMTP id
- 5b1f17b1804b1-48e51f41be6mr57650895e9.25.1778076154101; 
- Wed, 06 May 2026 07:02:34 -0700 (PDT)
+ bh=j73ul5aEd9R7sSndl2WuEnX7dofgQLl6AbC/gXzl4y8=;
+ b=Oo8jB99v4pBaXPvZzBHG1R4YCuwL0Ur4JOTBkdB11go3gupIZDlBPbF2t7zmO7UuET
+ OApcV8/FsoUJK7RU2DiSkdjR2fZXunpOgkO3lnRz2mT0ppTzvTIXFG1aQQAJcTZl0EiC
+ aTV5hoxIWX6SarGpiITyROjpj0SVpOdIoddBSmpZAe5tImnNG1430SY8EQEv8HPnNKzo
+ d5Q3eiIA+KUkB72wdyAb2QawcokD8g6g2L040htuh/Kf1uboRa+0kp7COqEufakZho3O
+ WtW1x7LnGtr9eSCR2CUKo6BfE2DFjJdCWKGkD3XXY66ymUPDY+LtaaVY6lq+oV46DjTF
+ sjbA==
+X-Gm-Message-State: AOJu0Yws0zQy98MYm6Csyf2XHGUAoEGLtk9rwWQpSXzD5qnVeAF4yIl1
+ cwIjuCdTWcnnCe68NXGZYbvFwafLu0mNGHvfFKfJhrD6Du51KIKUEvPThGsn5RB2l9eYY9Tf3AO
+ +Zic6bPk=
+X-Gm-Gg: AeBDieuTRlalIeCjuaoPEsTEZRAT3jGXpKM5/3beCNCh1s3fEHfQl55Ly5P+DESfJB/
+ tz5M9lF54Xh7TRm+OQonk2zPkNiOOqPV/LGoiNvA6oFefYE3OHMQBaww6kUNWfEJgyT1vRnUfpv
+ 811hodRma7rBm1oNIdTnYapwCbfv4wfwZ43+xtK7S7VciVOzxiRDgMa2UXJwIbKjmGqUziGJbk2
+ ugtkrurQV9dT0G26XLC3uWO7VzVeV8Cib7NOIOBl4638uunMS6S7T8tyyNqz4e7fe0Arb3SPzPW
+ LW1Nnk9+rHdV+oob/XwpeoVyUtgkP6/Lrxhj907QSeNuYmOGNT00BufAkflDD84Pc9Y1JdNCCrM
+ JHCFjO+5myZztd4V+67STaJjopgGZQEpmA0ieqzJL1IZke0zE58gaLxStfBsQI3movGSRXcbS71
+ KFsQaWO+puwG0x4iTtgAN2nazB8pSkgMoXCk9yrcZq98usqWh3aT9hzNk3iX0Q0UUqewM118JmQ
+ RnWXQg=
+X-Received: by 2002:a05:600c:6095:b0:485:39b2:a47c with SMTP id
+ 5b1f17b1804b1-48e51f48352mr61827585e9.25.1778076023404; 
+ Wed, 06 May 2026 07:00:23 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e530b2947sm17331115e9.4.2026.05.06.07.02.32
+ 5b1f17b1804b1-48e53907a00sm45742865e9.12.2026.05.06.07.00.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:02:32 -0700 (PDT)
+ Wed, 06 May 2026 07:00:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 055/110] cpus: Introduce SysemuCPUOps::monitor_get_register()
- hook
-Date: Wed,  6 May 2026 15:54:27 +0200
-Message-ID: <20260506135524.20617-56-philmd@linaro.org>
+Subject: [PULL 039/110] target/mips: Inline cpu_ld/st_mmuidx_ra() calls in
+ LD/ST Multiple
+Date: Wed,  6 May 2026 15:54:11 +0200
+Message-ID: <20260506135524.20617-40-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,66 +100,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow targets to register their legacy target_get_monitor_def()
-in SysemuCPUOps; check it first in get_monitor_def() otherwise
-fall back to previous per-target helper.
+In preparation of removing the cpu_ld*_mmuidx_ra() and
+cpu_st*_mmuidx_ra() calls, inline them. Expand MO_TE to
+mo_endian_env(env) in gen_ldst_multiple().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260427080738.77138-20-philmd@linaro.org>
+Message-Id: <20260417035734.32334-4-philmd@linaro.org>
 ---
- include/hw/core/sysemu-cpu-ops.h |  8 ++++++++
- monitor/hmp-target.c             | 11 ++++++++---
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ target/mips/tcg/ldst_helper.c             | 34 +++++++++++------------
+ target/mips/tcg/micromips_translate.c.inc |  2 ++
+ 2 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/include/hw/core/sysemu-cpu-ops.h b/include/hw/core/sysemu-cpu-ops.h
-index 7b2d2d2610f..5b831393cf4 100644
---- a/include/hw/core/sysemu-cpu-ops.h
-+++ b/include/hw/core/sysemu-cpu-ops.h
-@@ -85,6 +85,14 @@ typedef struct SysemuCPUOps {
-      */
-     bool (*internal_is_big_endian)(CPUState *cpu);
+diff --git a/target/mips/tcg/ldst_helper.c b/target/mips/tcg/ldst_helper.c
+index 0def1f296ae..537f3e87bc0 100644
+--- a/target/mips/tcg/ldst_helper.c
++++ b/target/mips/tcg/ldst_helper.c
+@@ -215,21 +215,20 @@ void helper_lwm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
+                 uint32_t memop_idx)
+ {
+     MemOpIdx oi = memop_idx;
+-    unsigned mem_idx = get_mmuidx(oi);
+     unsigned base_reglist = reglist & 0xf;
+     bool do_r31 = reglist & 0x10;
++    target_ulong *gpr = env->active_tc.gpr;
++    uintptr_t ra = GETPC();
  
-+    /**
-+     * @monitor_get_register: Callback to fill @pval with register @name value.
-+     *                        This field is legacy, use @gdb_core_xml_file
-+     *                        to dump registers instead.
-+     * Returns: 0 on success or negative errno on failure.
-+     */
-+    int (*monitor_get_register)(CPUState *cs, const char *name, int64_t *pval);
-+
-     /**
-      * @legacy_vmsd: Legacy state for migration.
-      *               Do not use in new targets, use #DeviceClass::vmsd instead.
-diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
-index a222fd4c96a..46ccbd14aec 100644
---- a/monitor/hmp-target.c
-+++ b/monitor/hmp-target.c
-@@ -35,6 +35,7 @@
- #include "qapi/qapi-commands-control.h"
- #include "qapi/qapi-commands-misc.h"
- #include "qapi/qapi-commands-machine.h"
-+#include "hw/core/sysemu-cpu-ops.h"
- 
- /* Make devices configuration available for use in hmp-commands*.hx templates */
- #include CONFIG_DEVICES
-@@ -85,9 +86,13 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
+         for (unsigned i = 0; i < base_reglist; i++) {
+-            env->active_tc.gpr[multiple_regs[i]] =
+-                (target_long)cpu_ldl_mmuidx_ra(env, addr, mem_idx, GETPC());
++            gpr[multiple_regs[i]] = (target_long)cpu_ldl_mmu(env, addr, oi, ra);
+             addr += 4;
          }
      }
  
--    ret = target_get_monitor_def(cs, name, &tmp);
--    if (!ret) {
--        *pval = (target_long) tmp;
-+    if (cs->cc->sysemu_ops->monitor_get_register) {
-+        ret = cs->cc->sysemu_ops->monitor_get_register(cs, name, pval);
-+    } else {
-+        ret = target_get_monitor_def(cs, name, &tmp);
-+        if (!ret) {
-+            *pval = (target_long) tmp;
-+        }
+     if (do_r31) {
+-        env->active_tc.gpr[31] =
+-            (target_long)cpu_ldl_mmuidx_ra(env, addr, mem_idx, GETPC());
++        gpr[31] = (target_long)cpu_ldl_mmu(env, addr, oi, ra);
+     }
+ }
+ 
+@@ -237,20 +236,20 @@ void helper_swm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
+                 uint32_t memop_idx)
+ {
+     MemOpIdx oi = memop_idx;
+-    unsigned mem_idx = get_mmuidx(oi);
+     unsigned base_reglist = reglist & 0xf;
+     bool do_r31 = reglist & 0x10;
++    target_ulong *gpr = env->active_tc.gpr;
++    uintptr_t ra = GETPC();
+ 
+     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
+         for (unsigned i = 0; i < base_reglist; i++) {
+-            cpu_stl_mmuidx_ra(env, addr, env->active_tc.gpr[multiple_regs[i]],
+-                              mem_idx, GETPC());
++            cpu_stl_mmu(env, addr, gpr[multiple_regs[i]], oi, ra);
+             addr += 4;
+         }
      }
  
-     return ret;
+     if (do_r31) {
+-        cpu_stl_mmuidx_ra(env, addr, env->active_tc.gpr[31], mem_idx, GETPC());
++        cpu_stl_mmu(env, addr, gpr[31], oi, ra);
+     }
+ }
+ 
+@@ -259,21 +258,20 @@ void helper_ldm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
+                 uint32_t memop_idx)
+ {
+     MemOpIdx oi = memop_idx;
+-    unsigned mem_idx = get_mmuidx(oi);
+     unsigned base_reglist = reglist & 0xf;
+     bool do_r31 = reglist & 0x10;
++    target_ulong *gpr = env->active_tc.gpr;
++    uintptr_t ra = GETPC();
+ 
+     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
+         for (unsigned i = 0; i < base_reglist; i++) {
+-            env->active_tc.gpr[multiple_regs[i]] =
+-                cpu_ldq_mmuidx_ra(env, addr, mem_idx, GETPC());
++            gpr[multiple_regs[i]] = cpu_ldq_mmu(env, addr, oi, ra);
+             addr += 8;
+         }
+     }
+ 
+     if (do_r31) {
+-        env->active_tc.gpr[31] =
+-            cpu_ldq_mmuidx_ra(env, addr, mem_idx, GETPC());
++        gpr[31] = cpu_ldq_mmu(env, addr, oi, ra);
+     }
+ }
+ 
+@@ -281,20 +279,20 @@ void helper_sdm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
+                 uint32_t memop_idx)
+ {
+     MemOpIdx oi = memop_idx;
+-    unsigned mem_idx = get_mmuidx(oi);
+     unsigned base_reglist = reglist & 0xf;
+     bool do_r31 = reglist & 0x10;
++    target_ulong *gpr = env->active_tc.gpr;
++    uintptr_t ra = GETPC();
+ 
+     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
+         for (unsigned i = 0; i < base_reglist; i++) {
+-            cpu_stq_mmuidx_ra(env, addr, env->active_tc.gpr[multiple_regs[i]],
+-                              mem_idx, GETPC());
++            cpu_stq_mmu(env, addr, gpr[multiple_regs[i]], oi, ra);
+             addr += 8;
+         }
+     }
+ 
+     if (do_r31) {
+-        cpu_stq_mmuidx_ra(env, addr, env->active_tc.gpr[31], mem_idx, GETPC());
++        cpu_stq_mmu(env, addr, gpr[31], oi, ra);
+     }
+ }
+ 
+diff --git a/target/mips/tcg/micromips_translate.c.inc b/target/mips/tcg/micromips_translate.c.inc
+index 4dca11b84b4..fb107eb91fe 100644
+--- a/target/mips/tcg/micromips_translate.c.inc
++++ b/target/mips/tcg/micromips_translate.c.inc
+@@ -701,6 +701,8 @@ static void gen_ldst_multiple(DisasContext *ctx, uint32_t opc, int reglist,
+         return;
+     }
+ 
++    mop |= mo_endian(ctx);
++
+     t0 = tcg_temp_new();
+ 
+     gen_base_offset_addr(ctx, t0, base, offset);
 -- 
 2.53.0
 
