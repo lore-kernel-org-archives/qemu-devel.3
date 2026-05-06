@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CEE5FF8855
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 13:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C420BCD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 13:57:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKck0-0001hD-UR; Wed, 06 May 2026 09:56:45 -0400
+	id 1wKckG-0002AI-6r; Wed, 06 May 2026 09:57:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcjv-0001S4-Ba
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:56:39 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKckA-0001xb-FN
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:56:54 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcjt-00081F-8F
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:56:38 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-43d7645adbdso3960895f8f.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:56:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKck7-00081y-Ef
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:56:54 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4891e5b9c1fso62619445e9.2
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:56:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778075795; x=1778680595; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778075802; x=1778680602; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Ig64yb1+2KzdGiecHfvEaVLt05RY0JwdBl1I/EEybCU=;
- b=soadrskdmsOmF/AFxdQQdFMw6wf8+hiPa1smO/rqord0cRvg2ju/1lzQIM91rSx1/8
- b5nDWqjDQPforQfSr9bUGZZF9cArvsECcQL/fu+kDMrQ/m0LTijLFY95QmPtXL4Ji1Z4
- h+5EgZt2U2Rqg+Pj292iY51lTidgATa7ZDuMVprn+kzYRCtA7YBnu5J4xa6bDq7KdZS2
- 1muFSd82gRQWaTu+QCl3bFDnP3LPJ/Rb3Jkv+pSwjeHaEfRhDKbHRX540JB4D25ISrxS
- x78NSu8iJd0oa6k1sfyYXOXh74EI/cncEUd0+SK5eapzO8ysTQq2NdiTVSp+FUXR+XKj
- PNzw==
+ :reply-to; bh=phCWfde/k3PwpmEaLj8YUM0UGcdWotmvtNXZKUWY8Jo=;
+ b=cVe+pDO138sx5ZPrWp+ySuQsc1ONsYl6B1R8+SLpP4SyIGRbRXRZdLZ903od6Sy0++
+ /vRfGH6eUyKuI8yDxohDXM3HALtuNS35+R3LJt5EV+TJaFqDs2JImUiWUtyHvuE/UsJW
+ MHX0oroeaTD4GL2aTflm5NsmUL+20Z9s3bnoyPFCyHHySwKeXRpvZ7kXcvit4TMFl4w5
+ G6Xc6t2PUSnkPN2FB7/FrKGvmP2+zGJ3MBTgdkRHULqL7LQRuQRtJ26aRPDwhE9PvTAu
+ A5pS7IJOFNR68jUW53hWdpkh6KKIFbkNnuwS7kXG/Y6Tg1PpnzYD1UVP+jqllvqtNiiI
+ Jo8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778075795; x=1778680595;
+ d=1e100.net; s=20251104; t=1778075802; x=1778680602;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Ig64yb1+2KzdGiecHfvEaVLt05RY0JwdBl1I/EEybCU=;
- b=D5a6/wCzqugKUIpsEnpVc8x42xDA8D81+7bvFrPlG9VYirtWyt5+8C1zxSueK+pVMo
- x7xV6Li5OLbAExcg8Mc3ub+D7sN9UmhwEk4r6z/2WyFjZHKOdB850LwQGxSw9HWhUnSn
- FVuXclS3LQg/nIqWh01eZv01ruN+mkjB+w2nKkgrnCiBqm/h6rJwSuTVSDTwwGD2/s7n
- vh5mcBxRtpbVJY9dBfhR7zKycyuqaMiYIaizrP7SBq7c1hoLdinQtDtp5Lqiq5W/3Aq3
- rdeugslnqxuWH+Vo/Vw9CJ6DMHzdcNPV3T4gD7vqPwOzAx1Egt4elboAcJ/4HT/v94EZ
- KI6A==
-X-Gm-Message-State: AOJu0YzGvhPlW4557NxEu+31Hmq0W6uKvBjaB3EVu/TfrkvjdGTD7XQB
- 5fT+tswlVwsYw+UraMY26WodJkI+3zQF5CVsiCdisDepQSyX72XDZPPh7Wql3PX7Ee9kz3XhrX2
- rjitY+Ko=
-X-Gm-Gg: AeBDiesUBbbh4kwVayn381efWQKiIJBPGHphrCwU8+mFNBkP0dxLevaRkX0ANeipRw7
- JPKkUfg9BW3YA1vnxi/ANaACXSUxgi28uDV0rSLsyVwgAwr6qpiamkEeohYGf9cDQqug1Ix0cUi
- UyCfE0yygaICtU5icHQFidu6wK9JVqqrQ0h/cpWLQIK/4oMKGwkj879sxfQyUgXbbMfey6+A7/Z
- Wg8bBMMpu2VKIskTimzro2EOhhQ52coOlffFS9096gR9pJFnf6eglXh+mWbAV0fOlQdTZy249ep
- NFPjgCuGusZ1GHyep/p5/Cq57EjsJXLrVMSv4UX6uvhRmDBWW7Hrj+V+9SXn8Xuuws1DGdkgdvF
- 56bqmHi+CoOcUxNvsYeaIMtjMcPjghlg1FSCt8E0VrPyCZqq2jTRR+LdP47ed6+DnyzYz0kAEHW
- LdP18BiLnGn1o11UBTHlp/OODuZLhtBZTKpf7Nvwgn91gUSg747EpAZaj/ewYuZ5crEccL8c1FD
- aqQwM5xCfg=
-X-Received: by 2002:a05:6000:40c7:b0:450:e369:2dd1 with SMTP id
- ffacd0b85a97d-4515b05701fmr6177806f8f.2.1778075794516; 
- Wed, 06 May 2026 06:56:34 -0700 (PDT)
+ bh=phCWfde/k3PwpmEaLj8YUM0UGcdWotmvtNXZKUWY8Jo=;
+ b=CiYhM4xtbTzp7XE1Yi+Rwyyr7rZX5OJrKThQ+eCLDzMCqeIAL/TYrAKyhIQxD3hPps
+ AR5mnQ8KJVGZkVDRGC4MGBRgTP5nu1amJdir34G6HRiGiSwjvnzewWo+OIpJJIODQZ06
+ J/WU+eMVYRoGzPpVIXXbN1RptyNPxJWdqiP8Y4kAxeqij9700iFegvMFoOI7o3rZfV16
+ zzYptHvM90ZXoDy/qN8xkR8jrvcuVyGug6eDtZnkqM1k/nVhUG1yd6kP8c5ySlYjNkTy
+ yq5rHwEPH8vM2sUxUGGI4clvo3dsVv1FNTVbrDYkGVLp39/3AHRI7jQwBpfigjETqhvg
+ DANA==
+X-Gm-Message-State: AOJu0Yzq/N4VuQ2RdUDaItm58YqDlpxg8vxNTWbgzR6OiZu+S1o2hA3w
+ 2+XKtF7pDl1dRqGNWxlQjXi1rxka2UHCxIFXQ3f4Vpk+gj02k/XL7zW9qM2wR+j9ZXYfTClZAkt
+ zzVNu86k=
+X-Gm-Gg: AeBDiev2Jji7owym02a3DdigKr67iHzBv1dyeSIGZMLXgaie9k4pH4fkacGsiIgocbk
+ tsWfssncsO8FBieLxZNDGOCXhyJKskqgMFM2ov8nG8LWqZMNYNIMMJK273mkwLkbc/AteZfuiHw
+ TjfH7QJS+px565bmnLehCWAQePXfZLIkyreQX0OZ3MiURxs0Q7uvqWPG60AaME0fC6Uk1xY6iJ5
+ /rcBIBAN8dBk8zTVSlz8S4UYgBox9b3EZubJ/lnQ+88RhxmtUQFjhP1hJuub6S50jJKTW1sjOBV
+ /u6NUM5I8xBml8UYpjgyRwOKJP4LkyVKNp/FEwSQ77K3EAksfQy2M9M57+mhxe4zcJlP8/6LCv7
+ /2jPPXfuxlMyk3wf+heLcX1KuUNpKwweG1TRWy2gskfCewb8ST6x4eNppx8erE1JHWIXUIUturm
+ ILsoper8PH9P+Eg9xvdBhPUzDJo+uUxgz/DPSbhfKnfhGJNQ87LKByIjuhyzEqlMEuZie2b+Y/R
+ 2rkQhAnvEo=
+X-Received: by 2002:a05:600c:3b17:b0:488:ffb1:494c with SMTP id
+ 5b1f17b1804b1-48e51e1f0b2mr58972045e9.12.1778075801579; 
+ Wed, 06 May 2026 06:56:41 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4505285e765sm12281704f8f.10.2026.05.06.06.56.32
+ 5b1f17b1804b1-48e5382a327sm90417895e9.0.2026.05.06.06.56.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 06:56:33 -0700 (PDT)
+ Wed, 06 May 2026 06:56:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 009/110] target/ppc: Include missing 'exec/target_long.h' header
-Date: Wed,  6 May 2026 15:53:41 +0200
-Message-ID: <20260506135524.20617-10-philmd@linaro.org>
+Subject: [PULL 010/110] target/riscv: Include missing 'exec/target_long.h'
+ header
+Date: Wed,  6 May 2026 15:53:42 +0200
+Message-ID: <20260506135524.20617-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,46 +104,77 @@ The "exec/target_long.h" header is indirectly included, pulled
 via "exec/cpu-defs.h". Include it explicitly otherwise we'd get
 when removing the latter:
 
-  target/ppc/cpu.h:1281:5: error: unknown type name 'target_ulong'
-   1281 |     target_ulong gpr[32];  /* general purpose registers */
-        |     ^
-  hw/ppc/spapr_ovec.h:76:44: error: unknown type name 'target_ulong'
-         76 | SpaprOptionVector *spapr_ovec_parse_vector(target_ulong table_addr, int vector);
-            |                                            ^
+  ../target/riscv/cpu.h:605:1: error: unknown type name ‘target_ulong’
+    605 | target_ulong riscv_cpu_get_geilen(CPURISCVState *env);
+        | ^~~~~~~~~~~~
+  ../target/riscv/pmp.h:73:1: error: unknown type name 'target_ulong'
+     73 | target_ulong mseccfg_csr_read(CPURISCVState *env);
+        | ^
+  ../target/riscv/debug.h:139:1: error: unknown type name 'target_ulong'
+    139 | target_ulong tselect_csr_read(CPURISCVState *env);
+        | ^
+  ../hw/misc/riscv_cmgcr.c:112:15: error: unknown type name 'target_ulong'
+    112 | static inline target_ulong get_exception_base(RISCVGCRVPState *vps)
+        |               ^
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20260313062055.2188-13-philmd@linaro.org>
+Message-Id: <20260313062055.2188-14-philmd@linaro.org>
 ---
- include/hw/ppc/spapr_ovec.h | 2 +-
- target/ppc/cpu.h            | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ target/riscv/cpu.h    | 1 +
+ target/riscv/debug.h  | 1 +
+ target/riscv/pmp.h    | 1 +
+ hw/misc/riscv_cmgcr.c | 1 +
+ 4 files changed, 4 insertions(+)
 
-diff --git a/include/hw/ppc/spapr_ovec.h b/include/hw/ppc/spapr_ovec.h
-index c3e8b98e7e2..8d67f492d02 100644
---- a/include/hw/ppc/spapr_ovec.h
-+++ b/include/hw/ppc/spapr_ovec.h
-@@ -37,7 +37,7 @@
- #ifndef SPAPR_OVEC_H
- #define SPAPR_OVEC_H
- 
--#include "cpu.h"
-+#include "exec/target_long.h"
- 
- typedef struct SpaprOptionVector SpaprOptionVector;
- 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index d637a50798f..a0df7a467ed 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -25,6 +25,7 @@
- #include "exec/cpu-common.h"
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 81c41e34296..df55a77c403 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -27,6 +27,7 @@
  #include "exec/cpu-defs.h"
  #include "exec/cpu-interrupt.h"
+ #include "exec/gdbstub.h"
 +#include "exec/target_long.h"
- #include "cpu-qom.h"
+ #include "qemu/cpu-float.h"
  #include "qom/object.h"
- #include "hw/core/registerfields.h"
+ #include "qemu/int128.h"
+diff --git a/target/riscv/debug.h b/target/riscv/debug.h
+index f76b8f944a2..066e9c585f1 100644
+--- a/target/riscv/debug.h
++++ b/target/riscv/debug.h
+@@ -23,6 +23,7 @@
+ #define RISCV_DEBUG_H
+ 
+ #include "exec/breakpoint.h"
++#include "exec/target_long.h"
+ 
+ #define RV_MAX_TRIGGERS         2
+ 
+diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
+index 467fb6b4b1c..17307ef88af 100644
+--- a/target/riscv/pmp.h
++++ b/target/riscv/pmp.h
+@@ -22,6 +22,7 @@
+ #ifndef RISCV_PMP_H
+ #define RISCV_PMP_H
+ 
++#include "exec/target_long.h"
+ #include "cpu.h"
+ 
+ typedef enum {
+diff --git a/hw/misc/riscv_cmgcr.c b/hw/misc/riscv_cmgcr.c
+index ab9b6c7d878..0390996f78b 100644
+--- a/hw/misc/riscv_cmgcr.c
++++ b/hw/misc/riscv_cmgcr.c
+@@ -19,6 +19,7 @@
+ #include "migration/vmstate.h"
+ #include "hw/misc/riscv_cmgcr.h"
+ #include "hw/core/qdev-properties.h"
++#include "exec/target_page.h"
+ 
+ #include "target/riscv/cpu.h"
+ 
 -- 
 2.53.0
 
