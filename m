@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF1ACD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:07:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00326FF8855
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:07:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcs3-0002eB-1i; Wed, 06 May 2026 10:05:03 -0400
+	id 1wKcrW-0001VN-2S; Wed, 06 May 2026 10:04:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcra-0001hy-0D
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:04:34 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcpc-0007Iv-Tu
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:02:33 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcrY-0001HA-1o
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:04:33 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-ba3115fe0d5so182701966b.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:04:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcpa-0000vB-8E
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:02:32 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-43fe62837baso3603803f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:02:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076269; x=1778681069; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076146; x=1778680946; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uM6UWyoawDF9y6Yim7qGoTjBgyDsq2sGYBt8tqPaAvs=;
- b=uEA0UZ2s0fNv5JhBBQka7ua30cCrEHEyv5hpTfFISL5sLvJtDfcM2WRc15euOhKHe4
- /V+oZTrgt1tuUICr2R5XtQ4P9yMjEt7Jgw7YqaUeScw9bQBOpzf5mGQOj4KIECRXR1fQ
- jGrb4kB2TdCUnxYw0EdzJPolRm5Iym+1HHMUE1wrEIJE9KJohbEXI3xT+DBzEH0sd1jy
- EDXWfRdqodXMVy+eDj8omQKYgaQ1jev7tQJw9u8Lth+cTTykLMPKS2+8KjnjtRR3mEZe
- eqXIlumX9Kv3Q9BbNmlgak9P2QlXwMI8woIjEb459bXForF6NK7wq3j1bOIe/S/8009a
- kTlg==
+ :reply-to; bh=yewvYs6cPTD2dj7nT/r4N5XxtqUaMU8rpJtQZi2DobU=;
+ b=txdubUxzhGFf6nrPvz9WrunCTWPOUe3uLV/48icEbdm1cM9p8lqdNq5E+p9kbYTMA9
+ mgeKLcxZcWETKPCyK9ZnsNPSEXpCe7nVfeTztEjPl0p/IRgX0rS0pd2sc7amHWte5UiW
+ lenUABlpHN0DnSaRinCZT0jtqneIfupjGgA2cKRn1LjvRWbjo3TIjbr1ZI7kXD743ZIX
+ Yp//PwfgWdLc7qXlNfOX/nxdtOlRQm2jtm1S27P+Ib1YthRNMxAEppRH4rp577RZOAOb
+ cm0xEWVBvYZnNgqFFbwIFa6nagLmnqMqugamsZi+TeFfVlKVE6Yops0peUG0ibjXmRCs
+ S1Hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076269; x=1778681069;
+ d=1e100.net; s=20251104; t=1778076146; x=1778680946;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=uM6UWyoawDF9y6Yim7qGoTjBgyDsq2sGYBt8tqPaAvs=;
- b=HOU2oNCSB1rWIiyKlufx5vaGhYA8ttRv8msKarFM/OYvq4ml/PXgxtsQF8MLBlrqz7
- KcRlPATXtUsWwQo6E6G+Xo650T7DGvGO8tc6IE9onex3eQJ7jUQ5sLIwsRr3dS2elQyA
- xcgmosNeDB0NI9R7kWjp0DgR4WJzkHrtzTt4QUuToy5kD6XL0KSPHqn9Q1BdgcKqI7Lg
- +R/kYadFv+TM5BdjOvNLujX/xbS1VF4EhIAm4oMvPqshWx9YnRtQmCEWCwyymItIIsFK
- ASoZxQwEqSEUIsuUTwb9AmfHWFy6KVAoeIP11+AI4If86GkJyD7Y1r7YWXyyfEHEAjhq
- gwQg==
-X-Gm-Message-State: AOJu0YxpM117jCnoGeNmVg0+mhzDJcD9fPENvaFkyP5QI44IqBFCEdJy
- 0BaIIEXyMXVHlpBpgh4VCjXARdRDIEd4b4FW+/fHXGCuWIPeQAEK2e0WkXIo5EYMuWUoSaecNeL
- Xho/r8po=
-X-Gm-Gg: AeBDiesrWDIFv5jJHu3KW+oBbHosKhwX3XKJ+DkYggex9wsIicVULmiPIlKlcJ07FDZ
- Mtc10q2c//hp2n/LU+ntxJHkfSbhgse9w8SIIQ/GnluCwxJUdMSQd/fVBcSuKV/UDSA6A2SsmMt
- uM093Y/r/HQSwHlF2Fs+CEdGyMvXCd7VKJjLfoxTdD+liTZG76HyJRqYk+jISOQ0PJM6Lc2g9F6
- YAdJmpJZaZpn/fOvM7nuSYKghYaI8pmRZCKOLYAY1Fs34c5W/9AM938m8rdDM/hO/z31NY36Q6o
- gyjjie3DM5X0GMGyFGwqFBWDPPQdZn8ks3CgNyu9WgnAHaNa5rG8GWMMB2G5F3AvniinKKmpsw2
- /eGHG7O0mzx3HY7Pa4q1OEqwFqrXEnwiEnK1c03itC9H63JR2hJaa3Mgm0CinTXCxLyOx4CqQOi
- yj9wK860vgjhwc0WjBDbaqKfgSkSo9fEVtgKjlU+WoU+I4QJZPqGe/4224sTwRQ77eVpWKzqXPt
- GiquGkTDwU=
-X-Received: by 2002:a17:906:e090:b0:bc4:f3ff:7c46 with SMTP id
- a640c23a62f3a-bc4f3ff83d3mr210646366b.7.1778076267985; 
- Wed, 06 May 2026 07:04:27 -0700 (PDT)
+ bh=yewvYs6cPTD2dj7nT/r4N5XxtqUaMU8rpJtQZi2DobU=;
+ b=l9UNjO5urYORn/YhwNSsHg5IlzIp/2TofXXiIqtzbnxMiFJUDw3mZ0bCcl27n2txC4
+ yvjFPwjin7jJ6fa0C+rGi02dAHYv1W/Xo0LaVFArDhO58ptyjflQMUo9ixfqNFVm24g1
+ ITHzh+2vsUuKBsjTfP3pOQy/Gp1QyZTP+6BtOvNKZPwg/ebkfk6qel5KlwltEcEvvZFI
+ HfSCfXJhJpvwQIZOGIoCULTLp62EHo9xMC4l4bxps6xKbMmUGyR3OyZXlVGFDCg5QsU0
+ /hQgbchqgvZYjGUlLxP+Mxr2h1WXY75UdcLmI9fgzGkg3bvYdp3bJc277DuQ+U9lBIZ+
+ rwZg==
+X-Gm-Message-State: AOJu0YzUz0uIrDTdfAvLI4dZPYVnI+4/XaUvB1e7Q7bJL2tLEF6jDveS
+ QWrmSFlGySAN1spv1eue2vN2ijj3ndP6SyBnPMcVtaU9TrbYacMTNYZF9Spt06VA/mnZVUy6TgD
+ nZerkj1M=
+X-Gm-Gg: AeBDiesLznX7RYdwAOkQMawSxRWZKRirEQB1IFVLeMBqR1q0Kt9au+hG2P2GldRPNL6
+ qxCYvEktHENxkLNwhTLCWKaADlbidKgpW6gsJDR7fLU1b0K/JZr2JBp1jn3sM54iXlbq1VxvOte
+ 2F31DGSkCToMNJyiyPOVZrkpjOdvS9LMVYQRGuUCWZm47pXG0oFRNt29/az823jzptx8972/U6j
+ b76N3c0bblpK9i+qGPpengY+ruYylPGSU83QWysP1g1rD3WwmChYFYikwUJTtUCqSwQwYkLUR+D
+ ndbCB7gt+0tMhf6Wo1VO0raW2H1Z7qMFj79iETNGrvYjp8iYXf3L96VaaNOfQNWtSS00mqLa3dz
+ t2yxq1tVbw+7Y6cCNQjJ2ynSU6VlKmon6Ix2Mqe+bBwlVD+oWTJhs64gCgzQgjdWglJIjzzOJA7
+ ciaMktaXnlt1eJql42AIpDYw4DeFVR2ZBCt9I26OqpBJ9cR18GgbgLdbJKoRFHrEskHF97HgjFI
+ sIaZT0Qm+M=
+X-Received: by 2002:a05:6000:3110:b0:449:acdb:3009 with SMTP id
+ ffacd0b85a97d-4515b057246mr6053359f8f.6.1778076146321; 
+ Wed, 06 May 2026 07:02:26 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45052a48c04sm13277383f8f.15.2026.05.06.07.04.26
+ ffacd0b85a97d-45054b02c5asm12726418f8f.19.2026.05.06.07.02.23
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:04:26 -0700 (PDT)
+ Wed, 06 May 2026 07:02:24 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 069/110] target/mips: Inline cpu_ld{uw,
- l}_code() calls in set_badinstr_registers
-Date: Wed,  6 May 2026 15:54:41 +0200
-Message-ID: <20260506135524.20617-70-philmd@linaro.org>
+Subject: [PULL 054/110] monitor: Do not check multiple TARGET_* to build 'info
+ tlb' command
+Date: Wed,  6 May 2026 15:54:26 +0200
+Message-ID: <20260506135524.20617-55-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=philmd@linaro.org; helo=mail-ej1-x634.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,63 +100,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation of removing the cpu_lduw_code() and cpu_ldl_code()
-wrappers, inline them. Directly replace MO_TE by mo_endian_env(env).
+This command is filtered at build-time for a selection of binaries.
+By using the recently introduced HMPCommand::arch_bitmask flag we
+can filter them at runtime, making it possible to compile
+hmp-commands-info.hx once.
+
+Since the method depends on a pair of distinct targets,
+define it in its own stub file.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260320074555.33974-2-philmd@linaro.org>
+Message-Id: <20260427080738.77138-19-philmd@linaro.org>
 ---
- target/mips/tcg/system/tlb_helper.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ stubs/hmp-cmd-info_tlb.c | 12 ++++++++++++
+ hmp-commands-info.hx     |  5 ++---
+ stubs/meson.build        |  1 +
+ 3 files changed, 15 insertions(+), 3 deletions(-)
+ create mode 100644 stubs/hmp-cmd-info_tlb.c
 
-diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
-index 566924b079e..b989c7e5bd5 100644
---- a/target/mips/tcg/system/tlb_helper.c
-+++ b/target/mips/tcg/system/tlb_helper.c
-@@ -999,16 +999,22 @@ static void set_hflags_for_handler(CPUMIPSState *env)
- 
- static inline void set_badinstr_registers(CPUMIPSState *env)
- {
-+    CPUState *cs = env_cpu(env);
-+    MemOpIdx oi;
+diff --git a/stubs/hmp-cmd-info_tlb.c b/stubs/hmp-cmd-info_tlb.c
+new file mode 100644
+index 00000000000..a144e68c1c7
+--- /dev/null
++++ b/stubs/hmp-cmd-info_tlb.c
+@@ -0,0 +1,12 @@
++/*
++ * Human Monitor 'info tlb' stub
++ *
++ * Copyright (c) Linaro
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
-     if (env->insn_flags & ISA_NANOMIPS32) {
-         if (env->CP0_Config3 & (1 << CP0C3_BI)) {
--            uint32_t instr = (cpu_lduw_code(env, env->active_tc.PC)) << 16;
-+            uint32_t instr;
++#include "qemu/osdep.h"
++#include "monitor/hmp.h"
 +
-+            oi = make_memop_idx(mo_endian_env(env) | MO_UW, cpu_mmu_index(cs, true));
-+            instr =  cpu_ldw_code_mmu(env, env->active_tc.PC, oi, 0) << 16;
-             if ((instr & 0x10000000) == 0) {
--                instr |= cpu_lduw_code(env, env->active_tc.PC + 2);
-+                instr |= cpu_ldw_code_mmu(env, env->active_tc.PC + 2, oi, 0);
-             }
-             env->CP0_BadInstr = instr;
++HMP_STUB(info_tlb)
+diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
+index c93c049daea..82134eb6c21 100644
+--- a/hmp-commands-info.hx
++++ b/hmp-commands-info.hx
+@@ -186,16 +186,15 @@ SRST
+     Show PCI information.
+ ERST
  
-             if ((instr & 0xFC000000) == 0x60000000) {
--                instr = cpu_lduw_code(env, env->active_tc.PC + 4) << 16;
-+                instr =  cpu_ldw_code_mmu(env, env->active_tc.PC + 4, oi, 0) << 16;
-                 env->CP0_BadInstrX = instr;
-             }
-         }
-@@ -1019,12 +1025,14 @@ static inline void set_badinstr_registers(CPUMIPSState *env)
-         /* TODO: add BadInstr support for microMIPS */
-         return;
-     }
-+
-+    oi = make_memop_idx(mo_endian_env(env) | MO_UL, cpu_mmu_index(cs, true));
-     if (env->CP0_Config3 & (1 << CP0C3_BI)) {
--        env->CP0_BadInstr = cpu_ldl_code(env, env->active_tc.PC);
-+        env->CP0_BadInstr = cpu_ldl_code_mmu(env, env->active_tc.PC, oi, 0);
-     }
-     if ((env->CP0_Config3 & (1 << CP0C3_BP)) &&
-         (env->hflags & MIPS_HFLAG_BMASK)) {
--        env->CP0_BadInstrP = cpu_ldl_code(env, env->active_tc.PC - 4);
-+        env->CP0_BadInstrP = cpu_ldl_code_mmu(env, env->active_tc.PC - 4, oi, 0);
-     }
- }
+-#if defined(TARGET_I386) || defined(TARGET_SH4) || defined(TARGET_SPARC) || \
+-    defined(TARGET_PPC) || defined(TARGET_XTENSA) || defined(TARGET_M68K)
+     {
+         .name       = "tlb",
+         .args_type  = "",
+         .params     = "",
+         .help       = "show virtual to physical memory mappings",
+         .cmd        = hmp_info_tlb,
++        .arch_bitmask = QEMU_ARCH_I386 | QEMU_ARCH_SH4 | QEMU_ARCH_SPARC \
++                        | QEMU_ARCH_PPC | QEMU_ARCH_XTENSA | QEMU_ARCH_M68K,
+     },
+-#endif
  
+ SRST
+   ``info tlb``
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 33053d932c8..2f4e1ab4300 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -89,6 +89,7 @@ if have_system
+   stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
+   stub_ss.add(files('hmp-cmd-info_mem.c'))
+   stub_ss.add(files('hmp-cmd-info_sev.c'))
++  stub_ss.add(files('hmp-cmd-info_tlb.c'))
+   stub_ss.add(files('hmp-cmds-hw-s390x.c'))
+   stub_ss.add(files('hmp-cmds-target-i386.c'))
+ endif
 -- 
 2.53.0
 
