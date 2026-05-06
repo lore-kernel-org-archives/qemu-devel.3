@@ -4,141 +4,163 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A37A9FF8855
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 13:17:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC17FF8855
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 13:24:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKc7D-000233-0c; Wed, 06 May 2026 09:16:39 -0400
+	id 1wKcEG-0003sD-HI; Wed, 06 May 2026 09:23:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wKc6l-0001zP-4w; Wed, 06 May 2026 09:16:12 -0400
-Received: from mail-southcentralusazlp170110003.outbound.protection.outlook.com
- ([2a01:111:f403:c10d::3] helo=SN4PR0501CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wKcEE-0003rS-Jh
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:23:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wKc6j-0004IQ-8H; Wed, 06 May 2026 09:16:10 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XDAjD6iiLO2b/eXqj/niq2qp6Huqw86+n3gPBkfGyKJJRy2aGdWQdyjIQ6sswi/8mqyG59cZEyO+kk9NZ50lqvftQdgeAQ1YOIRRaO0Iqdr0lwk5MwmNV6kYGmrRuDAls6GecZSWL61N3FpS4wRZgRW6HbkZneDJ1J95gwPItHjqA6iiTkAJPQUrRF3hfpBxVx0w7ZwEXG7oC7/VsqETFs3DQZuSwAS7/1sJCjz/BvGgPAmzgeobICU24fFQP1pgTTXVSdtcXveGWGTvVpIJ3OoaK5JfpWKgnhmTFumWbOPR69uUckUMOmjpDpH2PruJqINw6PybhY3vtUN268t6Vw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=H7zXIAGO74LTJ/SN69x9fDbKJ81QpMnjXZBwus+wcgU=;
- b=x84wqH2VKJQUYuWVZejjNZxUOwKmlG8HpgV9BuIQ30egzQ9sWsU09+VHD41G+HijYSAnSZ6IiRRfVs3XnOzgtRsfbJUU11FJfSyzz8ag1MvbSSXXvBFbpHXF6+w0wFMBA3KO75ytyzGd6IyJO5h0gNHgEBSwpnNc/Oc/tNxsn0O2xN86N3i2fW3zA52wxUniI7wEySwPRrQVNquoxeqxI4lBzTK0BWYmtyaXVG0eqT5jwfsx/7bwiWRcQlTGDpMG0a/r27BvJFFGtZiwyn9TE0BpLWeCrg2Nd+nSNEDhXFGcBrt76nf/TOCC3lJjg9WHHPDPKN/ZoZoywWop8x6YYA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=H7zXIAGO74LTJ/SN69x9fDbKJ81QpMnjXZBwus+wcgU=;
- b=LHmuDLgu5wXBnjIEzh4spx/V73L+SeKWrO30DXMREFoPNhFJU1zD3HTtpQ3hIwkIUtxRBEhKRF9mRzNW+RltiZrMwDrt+QmJrz/VPs8gaigJNgS57mCNHgMGKMvv9Sim0TFmqiVhUZvFowY20UBIiK8csmz81jARoJAYg22B3kYbTTx5SfIRxpySOaJ2opAKj2fLLLkhpqPXLnhMMmNlh/9Gdnq6b5C7UcaqrxNKA5fYTsxtT2UGo6seOLn6EsD+m7u3/DEmGqU7a3fTFPEFuwFe66pjxD/f8PM2tcT3BGr+pjPlm78tD6EqG9c7vsSy8EsOApcUQFM/nJJsvqKgMw==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by CH3PR12MB9281.namprd12.prod.outlook.com (2603:10b6:610:1c8::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Wed, 6 May
- 2026 13:16:01 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.20.9891.008; Wed, 6 May 2026
- 13:16:00 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Nicolin Chen <nicolinc@nvidia.com>, "eric.auger@redhat.com"
- <eric.auger@redhat.com>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "clg@redhat.com" <clg@redhat.com>,
- "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen <nathanc@nvidia.com>, Matt
- Ochs <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>, Jason Gunthorpe
- <jgg@nvidia.com>, "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- Krishnakant Jaju <kjaju@nvidia.com>, "phrdina@redhat.com"
- <phrdina@redhat.com>
-Subject: RE: [PATCH v4 20/31] hw/arm/tegra241-cmdqv: Use mmap'd VINTF page0 as
- VCMDQ backing
-Thread-Topic: [PATCH v4 20/31] hw/arm/tegra241-cmdqv: Use mmap'd VINTF page0
- as VCMDQ backing
-Thread-Index: AQHczMa/jfzTjyAD+0CcG7hTHjM1ybX+uL4AgADqScCAAFTSAIABAS7Q
-Date: Wed, 6 May 2026 13:16:00 +0000
-Message-ID: <CH3PR12MB7548E76E38625713F6AE9F78AB3F2@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260415105552.622421-1-skolothumtho@nvidia.com>
- <20260415105552.622421-21-skolothumtho@nvidia.com>
- <afk+zBZLQx+x+ODl@nvidia.com>
- <CH3PR12MB754892989B2A76D3D3A941D6AB3E2@CH3PR12MB7548.namprd12.prod.outlook.com>
- <afpKfEvuT3ZeBSiH@nvidia.com>
-In-Reply-To: <afpKfEvuT3ZeBSiH@nvidia.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-Mentions: eric.auger@redhat.com
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|CH3PR12MB9281:EE_
-x-ms-office365-filtering-correlation-id: abd617be-5c51-4f24-ef1a-08deab719e12
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|38070700021|56012099003|18002099003|22082099003;
-x-microsoft-antispam-message-info: Rd/lfuRhLpN1648PSX9M6iqbXIRzbYlucnpvq1BE6IVC+V11ArBuA+b5dmB6k+e2UMin/VjuhP5Wu3+Jdh3yb6CT4tdSP1rdanyYh3RJjSAnTVcSYeGY96D+fCpOCnb5P69PqtzX5TV1A0ddpMHUEO862Hg77ZwiAQSkQkEFcSB+wEx58vfzNVJSHoarqr9ep3sTOdLi1hwh/GojekpZ4p9B5bXsg1wN5oYGoupKGFNRGnGbx0X3AETSz2RYJHedKN27N9iJ1m4+syWeQrqU3q1FQytjaJF2uO9gHRKC4I097XNo310mQmxVbpYZOZ8WaPH4HDRILhbbi2jJgHUZu08QyWwvXgSiUFl9lTsdOxPjzh683QO/zJrQyzqE9N1Y++nnNsBcJ8tINhYQsw41dG1alGDH52LeJEfkRxIBWbZD1DwOf9Wddg1b8vTKlCeNOr9BQNgZLTYE0TPoFvwg7v/i6z4h5XzKu509RAZ6mh+DI1wUQF56gOwD/tB/B3Vz0Apjd6+oW4cmm4poBFZ6jJqG/pphqN/OGV+eXywZDOUWfMihA3vca56XKiQpWaJfjbJAttM/sfjk9AGNp3Yc2mUlC1GPht2IJwsI2kRBXg28xRYeQvjHGRNQIKjb5hiGlf24ZfZ1hE/HtZAfcwiq1uBbcqy/E7SNL9i5VT9tu7U2z8HPfXK+hngpBcpZigoJV1LhUFAyVJa0u2vzvhm0+Gu+F0dO7OeDaAMfPd9yTsWBkM/Dtf70gMZS7Satzi2o
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(38070700021)(56012099003)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?JpPVl/PB0vS50l3f6Pzau+BwnNb21wY0n3Kj/2OQzTYUoKUCVYspeUyKxmg4?=
- =?us-ascii?Q?O2mWo6VFrH8sissFVlwwzKS824H1zojCaFfgZGVR8lR4EzvkASCmIMscd62h?=
- =?us-ascii?Q?v+dLxE6IoN0gkRvhA4XxRA99SayoUuNsNUtMxN+6lutdHOmgY4oEHavpMN1Q?=
- =?us-ascii?Q?Ixzej++CHWBvYVJfGI1YnhHJ0+Efl+QhWbS8vucYT85xIVAuttZ5lElO+t3b?=
- =?us-ascii?Q?OMjOJ7AG2g5Kb4+NDYL636toWw1mBougBdRKKOBDkkHLUfMC1tuPU4rPNrE2?=
- =?us-ascii?Q?I3sHDVkGAM8yxFcPSa1fEyfA+neeYdgSlMDuelbA2UuP4gpctNgq94Vw8JSq?=
- =?us-ascii?Q?CjWKwdOFLnBLGMI7cMYOMo3NFocpDWvcbdZaLwnBEukLV54mYDRfmmYE2oVq?=
- =?us-ascii?Q?Jd9T4iqw7yY7OEiG034+Y3OeOnSDz2Hk7ZgSM6ABLsnrMxr9T2FEYyuGqK7O?=
- =?us-ascii?Q?0tGEdRzwrdOdborYNDltydxtNi5HT8XSQkHfNqc6qyTyhc9zhx10nxi6vX/A?=
- =?us-ascii?Q?NHZWPAtQRiGw8Emij7pe/lkcbOzFrbiZpfFMSlzBzmtEHAs7ADfFbrZkGsBG?=
- =?us-ascii?Q?8zUGlQhwHdS+MChiyf4rffp0O5nWQS4NRam/r9fD6SuYB7etY5eTs8jy4CYr?=
- =?us-ascii?Q?mCfycNkGkjsYSkwH2Se36mM+CV+xpLK/L24mJWWlaCYXecs5HWwQsnofupZr?=
- =?us-ascii?Q?JF9ezEwcyc6hAQI2dz9Eu/5Ab2Tif7lqGifcmbe/qTyuYS5gh08Is8WJjIsM?=
- =?us-ascii?Q?V8TEQoxzoRmhmMMRjNDKAdJYi/MQ7fpWgHrh4tGxcoAzA5Bj1RtsFtX8pGU2?=
- =?us-ascii?Q?YESAc2S9X9dpZTz1DXQey2Kg20tBxJHR/CbHmIA6bgHRG+m9N+LN9+1AP/b5?=
- =?us-ascii?Q?ES/6nAMUdw98OGG32P4clfP1oP15/Q+0VbNchCubwW3Ep9i0SZCleL9wNAQl?=
- =?us-ascii?Q?9P0jg+kwCRQ5JXfHd4px5Wq9JY6vz5b6MNpafVPPPnglaqPxqZhAfMbAl61a?=
- =?us-ascii?Q?GwV2bTTikqI9NQgNBAHZs0m/98drph2rlTSOQY8CfDgzVvEGEhkYQHl6cuCg?=
- =?us-ascii?Q?aQcrJQbjs6EWNmwzkNSvXDc7gN5NEHGY+R4uAi3J15rgqRgNYcFflImCilCf?=
- =?us-ascii?Q?R1c9r4daS9+1o3f2i58Q1LsFA1wYxBOL9tpK757qYYycTrWFON4MmvYHQ/c+?=
- =?us-ascii?Q?GyqkZk+LkiPfezHaUp+YyohQxMaKG65y8H0o3UpI3oUcVsM2IRqNS+44hGk3?=
- =?us-ascii?Q?ZNgZFuwgIFCfJ8Tl7rCjtzRigNIk9xygF3w1F+ZVOvfF6YBL27Wcst/QMQQn?=
- =?us-ascii?Q?Uzthj2CTaaet5sADqHu77GZYazcreLRf+Q2brUZ09Db5B1N+YpFIeMlGEi2j?=
- =?us-ascii?Q?05HScnR4coehgyf/EkDneLzsOTxJouYnKBmh/SMTJ+B4GYRI1vXDwK/Bjv6t?=
- =?us-ascii?Q?aYwAoKmjqLCLZl7vOnWYVr0+0wY4HogvTS5ch6v02aSQrRMiP0+iB8XVf03/?=
- =?us-ascii?Q?+XddZ2zK27sLJ1gy2saHUv8T3/2EyUwZSEV5TO3fQ1jE+C56RTcNplRFfHBs?=
- =?us-ascii?Q?3ve29PD1ueBpxSwgyFirMHXmvT/pi6hIhpo2dtnzZbyCQ7es7uBzTyf8cGKv?=
- =?us-ascii?Q?tVmI2PQMoOc6y/gYAcFmWgva9eH2gP0jRiId3rg/4MFVPQt++1pFNClBmtmV?=
- =?us-ascii?Q?vKn6yuqBLHEQIAxlOwB3XZZLthOEHJmN9w/cV0D/2ZvG/RzHl+Vvfr8THwyr?=
- =?us-ascii?Q?EbeGMuI6nQ=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wKcED-0005qp-4L
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:23:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778073831;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=g+UQ/stw0wvw54HpqwInoco668ZXqLWpi+iVjP0p1qY=;
+ b=bHow2haTfRLe+RCWH+9sZzXyq7rKF+fm+IyqVCGG8SWwqjjxImnoa0P0uxhChW9Nb4LgD3
+ hcF3qZcLr4twPBBlaXet8jK58l+IjaM5O5lUs/jKJ8LQlge0nlr+OxWOMo+Fzs42NVUmlf
+ WuhI2vyCkqyGl6rfJbV8CjFbDeg6dsQ=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-627-Z3ea572xNSilGEr8Cd1lYg-1; Wed, 06 May 2026 09:23:50 -0400
+X-MC-Unique: Z3ea572xNSilGEr8Cd1lYg-1
+X-Mimecast-MFC-AGG-ID: Z3ea572xNSilGEr8Cd1lYg_1778073829
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-4411a1f9601so4714341f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:23:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778073829; x=1778678629; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=g+UQ/stw0wvw54HpqwInoco668ZXqLWpi+iVjP0p1qY=;
+ b=FSFqoLXK+n8i3iCMCUmh+ImsuRQjeMZ3X5YCFhw3HnqwzVUPVPi7Lg+eO85pp91flw
+ +3HXvdGAlZ5xlZcTDtiIgLSvHK05TsWJdbcjL7O8+se4eg2xAAnFXPhFpH2geOopwJcg
+ Z5eq9JzINxj90yDLUXr9/SHTuXzHqgsObQFCPFCQqF61vtYJJKbyn+5zPfSGw7dIcHeX
+ xbkvYTNefg9YFyKvF8tyaEMM3O7h3IFXWhoxbfUz0WvFktGO2fTVVZ+ZOBra4ke5LG1q
+ ht7AnuMHaE8yI6iKYOl/i807v8nziT3Wq3naG5GIUamoAZfyuoAntEwpXguPWOcjfEEB
+ YW9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778073829; x=1778678629;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=g+UQ/stw0wvw54HpqwInoco668ZXqLWpi+iVjP0p1qY=;
+ b=fCn0Skv7KkMafjpTNpQv1KUjMgXXGHRp75ZTGcOqxZUIMJwLbGdyShV6BVMn3A5pAQ
+ G5eyhQHrBr6KXyaw1IAjVy2Z/AcMwCGoZimGPT44C8ExQnhY+ZtUQgDJ1hJFfzC6oL7k
+ UZu3+UdOweddE819JwF66Ke34iRAMa3vGV4G32KwQ0Es1UHdYxTyzc7YpSdRg0VSJzBr
+ MJcnP/M7nyTON7k4tA/VxmqY5bFeMSSxJWqEYAlE0fxTKi1moJ2F6jHCKu6o28TUTY3P
+ c7XTWBrgPc2n74Ky9cLMaYDv04bup1nu4MVJm4sRBp8OHJPdnPsZlIKO/u6TaPJz5GEb
+ yA0g==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/LiAXYnu/yLNl6/NinPQINtvA6hsCaBj/+ERD3khe/2Kc8q7EkB3keTm7MjKEQiU4HTC4gOQrjSqQN@nongnu.org
+X-Gm-Message-State: AOJu0YxgzA2mV6gKfgUvI6OJpmIgEIYKwQ/h/NM7zGuCyQFNMr5U9Q3V
+ 37Dw5fiK++VhUDlwdxbU5T4u/TBxbj/4EPxEFj9fc4vYdsPFexM9akLYBjGatALSzo5+nrShqMS
+ D3tzCBzDqgT5pa60yr9IT47P+m/zgUqqC2SHIufUjAwaPbNoZtakv5ZtV
+X-Gm-Gg: AeBDietb/v1zfhlsWyZIkDg7/Mu3ri6I5VimzIZdCzRENIiOwveBOKzm5GfiKdxZDiG
+ YEKuiYR3CyBCPWkMRW7LlHSS0KAC3iJ0ypS8sWcm16VstwlPK+xkKFymHGOmp3iQeSqSpYR6kTi
+ nDvtSfcdWJCHWmahI6LDych78KUmDwRl32k5z9JzFUDxIETmPFLtTv1qTU5uzWlfCapS0FauIGR
+ /YtmQ2ib+ZrripzI2mW7sJbdxUI3hYZvw2NdmIg8LHZPiYewyynHCjl94uCD9p+zwFvg6ZXiZJB
+ HlsZgK4upTrQ2xXC6HhmGUsLXfH0jAiYXOqBEhwj6kdWd1uqs0hkWJIuxxZdH+eu0jKd5gCPVSD
+ zMLGPgWQobAhRmjDI0L57eSQJzxGBUNkCAjc5RpLELMllpcMYR2+Ht2uIlQ==
+X-Received: by 2002:a05:6000:24c9:b0:43f:dc54:9493 with SMTP id
+ ffacd0b85a97d-4515c575364mr6134692f8f.21.1778073829253; 
+ Wed, 06 May 2026 06:23:49 -0700 (PDT)
+X-Received: by 2002:a05:6000:24c9:b0:43f:dc54:9493 with SMTP id
+ ffacd0b85a97d-4515c575364mr6134623f8f.21.1778073828752; 
+ Wed, 06 May 2026 06:23:48 -0700 (PDT)
+Received: from [10.33.192.176] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45052a4878fsm12132317f8f.9.2026.05.06.06.23.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 May 2026 06:23:47 -0700 (PDT)
+Message-ID: <a25ab197-ee75-4c9d-aac8-f7f4e36b5778@redhat.com>
+Date: Wed, 6 May 2026 15:23:46 +0200
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: abd617be-5c51-4f24-ef1a-08deab719e12
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 May 2026 13:16:00.4564 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: +ZeQsX/MCcLsgJm74wDmS9ySlDSU3RhX0e6sAJGoHVoG2adCxZp2GInjOkSxfeqcFs8QxK6+5gJD+6YB00yUnw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB9281
-Received-SPF: permerror client-ip=2a01:111:f403:c10d::3;
- envelope-from=skolothumtho@nvidia.com;
- helo=SN4PR0501CU005.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: MAINTAINERS entries that aren't S: Orphan but maybe should be
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
+ integration@gluster.org, Zhao Liu <zhao1.liu@intel.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Milan Zamazal <mzamazal@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Mark Kanda <mark.kanda@oracle.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>,
+ Fabiano Rosas <farosas@suse.de>, Ben Chaney <bchaney@akamai.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+References: <87y0hwbvbp.fsf@pond.sub.org>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <87y0hwbvbp.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,98 +176,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 06/05/2026 14.01, Markus Armbruster wrote:
+> I'm cc'ing reviewers and lists mentioned below, and frequent
+> contributors to MAINTAINERS.
+> 
+> There are a number of MAINTAINERS entries with S: other than "Orphan"
+> without M:
+...
+>      MAINTAINERS:4238: GLUSTER
+>      L: qemu-block@nongnu.org
+>      L: integration@gluster.org
+>      S: Odd Fixes
+The Gluster backend has been marked as deprecated in QEMU since v9.2 
+already, and as far as I know, there was nobody complaining, so it's likely 
+time to remove the code now?
 
+  Thomas
 
-> -----Original Message-----
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: 05 May 2026 20:52
-> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-> Cc: qemu-arm@nongnu.org; qemu-devel@nongnu.org;
-> eric.auger@redhat.com; peter.maydell@linaro.org; clg@redhat.com;
-> alex@shazbot.org; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
-> <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
-> <jgg@nvidia.com>; jonathan.cameron@huawei.com;
-> zhenzhong.duan@intel.com; Krishnakant Jaju <kjaju@nvidia.com>;
-> phrdina@redhat.com
-> Subject: Re: [PATCH v4 20/31] hw/arm/tegra241-cmdqv: Use mmap'd VINTF
-> page0 as VCMDQ backing
->=20
-> On Tue, May 05, 2026 at 08:13:40AM -0700, Shameer Kolothum Thodi
-> wrote:
-> > > From: Nicolin Chen <nicolinc@nvidia.com>
-> > > On Wed, Apr 15, 2026 at 11:55:41AM +0100, Shameer Kolothum wrote:
-> > > > The pre-to-post-alloc transition is triggered by the BASE register
-> > > > write that initiates IOMMU_HW_QUEUE_ALLOC. No cache-to-hardware
-> > > > synchronisation is needed at transition time. The hardware mandated
-> > > > init sequence requires BASE to be written first; PROD_INDX, CONS_IN=
-DX
-> > > > and CONFIG.CMDQ_EN are programmed only after BASE and are
-> therefore
-> > > always post-alloc.
-> > > >
-> > > > Any pre-alloc writes to those registers update only the register
-> > > > cache, which is discarded at the transition.
-> > >
-> > > Is "discard" the correct action?
-> > >
-> > > Guest OS might expect HW (VM) to retain what it writes to those
-> > > page0 registers?
-> >
-> > As explained above, I reached that conclusion based on spec p.174/175:
-> >
-> > Under "Enabling the Virtual CMDQ" it specifies the init order as below:
-> >
-> > - Program the VIRT_CMDQ_BASE
-> > - Init the PROD_INDX/ CONS_INDX to 0 or a consistent value
-> > - Program the VIRT_CMDQ_CONFIG to enable the CMDQ
-> >
-> > Since we set up the HW QUEUE on BASE write, a spec compliant guest is
-> > expected to program the Page0 registers as above after that, and we pas=
-s
-> > those writes directly to the VINTF Page0. There are no GERRORN writes
-> > before HW queue setup either.
->=20
-> I don't think we can make an assumption that guest would follow
-> what spec suggests.
->=20
-> Could this be a case:
->  - Write the PROD_INDX/ CONS_INDX with a consistent value (0xf)
->  - Program the VIRT_CMDQ_BASE
->  - Read the PROD_INDX/CONS_INDX, expecting 0xf
->  - Write the PROD_INDX/ CONS_INDX with 0x0
->  - Program the VIRT_CMDQ_CONFIG to enable the CMDQ
-
-Yes, if Guest is not spec compliant then this can be any order.
-
-However,
-
->  - Program the VIRT_CMDQ_BASE -- suppose we call setup_vcmdq()
-then kernel will reset PROD/CONS, right?
-https://lore.kernel.org/all/20260129224341.1594785-1-nicolinc@nvidia.com/
-
-Again, the question is whether we should handle all these non-compliant
-cases to prevent the guest from shooting itself in the foot, or simply
-propagate any hardware error events due to the non-compliant
-behaviour.
-
-On the other side, if we discard the register values, the read-what-you-wri=
-te
-contract is broken.
-
-I am not sure what is QEMU guideline w.r.t a non-spec compliant Guest
-behaviour.
-
-@Eric,  any thoughts?
-
-We already have a spec-compliant behaviour assumption for accel
-vEVENTQ support, as discussed here:
-
-https://lore.kernel.org/qemu-devel/CH3PR12MB75485AFF456B4133B9FB3770ABA0A@C=
-H3PR12MB7548.namprd12.prod.outlook.com/
-
-Thanks,
-Shameer
-
-
-=20
 
