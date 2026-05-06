@@ -4,108 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F440CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 20:52:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5E08CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 20:56:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKjDQ-0004XP-C3; Wed, 06 May 2026 16:51:32 -0400
+	id 1wKjI4-0005TR-Rj; Wed, 06 May 2026 16:56:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKjDO-0004Wz-Il
- for qemu-devel@nongnu.org; Wed, 06 May 2026 16:51:30 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKjDM-0001Nk-7A
- for qemu-devel@nongnu.org; Wed, 06 May 2026 16:51:30 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 9221B6BD7F;
- Wed,  6 May 2026 20:51:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1778100683; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=j1Ew1r5Fl0bkTQQueM3y44tlhWggbQy47IVbWt0KezU=;
- b=1XlqsDzsv8+40EjDXQTHTyYT440lADgDv1egJSXzuQM3pesnipRz4Ta0iEUPv2mVZzpGGX
- /e4dOk0ME/vRJDhjhLIWdVFYEWdybCQD4AP8W7rfMqMeLdQ/ID3ALjW+ri4z/Qk0iStLJ7
- 3bF1vUmlmLysy8K7TPlt0nK05bFo/WI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1778100683;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=j1Ew1r5Fl0bkTQQueM3y44tlhWggbQy47IVbWt0KezU=;
- b=/7w3NlQmqS1d0OAPSRGG9i1sbDmSNT+oeHMX4d7n9Y1s2qIYcLpFjOpGNOCO8YUB63gu9q
- lOB5/M3fjbf8EQCw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1778100682; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=j1Ew1r5Fl0bkTQQueM3y44tlhWggbQy47IVbWt0KezU=;
- b=b5xAuFJIewMjxvHh93f8h4IY//BdD9+PsI4A4UWtF8LCmcZjlZCp9cXT5rKdA9RQBYnnRR
- glJXDQ4tk92vuepVCjUtszM5+REyD1phBqWK/+td4wchRlz2bYm0yquGcgZiGAMFCYvBft
- o8JuvDKnfQE/G28ojhjOlxRIQ/XKnh0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1778100682;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=j1Ew1r5Fl0bkTQQueM3y44tlhWggbQy47IVbWt0KezU=;
- b=me64dBz67NwvZX5IpIEGoOdG41GuIFhNc8VUn7k1OgdI1TJc7KE9LnmkKpmU+tm7yOLgCr
- SZXMdox32talMzBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 32262593A3;
- Wed,  6 May 2026 20:51:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 84VwAcqp+2lHIgAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 06 May 2026 20:51:22 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Prasad Pandit <ppandit@redhat.com>, Ben
- Chaney <bchaney@akamai.com>, Juraj Marcin <jmarcin@redhat.com>, Mark Kanda
- <mark.kanda@oracle.com>, Pranav Tyagi <prtyagi@redhat.com>, =?utf-8?Q?Mar?=
- =?utf-8?Q?c-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH] migration: Fix crash on second migration when cancel early
-In-Reply-To: <20260421175820.302795-1-peterx@redhat.com>
-References: <20260421175820.302795-1-peterx@redhat.com>
-Date: Wed, 06 May 2026 17:51:20 -0300
-Message-ID: <87pl38xnw7.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wKjI3-0005T5-Ds; Wed, 06 May 2026 16:56:19 -0400
+Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wKjI0-0002D3-NK; Wed, 06 May 2026 16:56:18 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=GWPgGX98MkxbbYHHr+TVUpCjVOogC3cmI6iPF7PlZRkLNBkmLpZNbYO2cbFcBHD4mD40N/eoBkbptHWUi6tgYkDloQxFuuk69YQTt0kmsI2CQ2cNZ7FojDbJhWYS6gvMiJnqWzf423CJDFWIkQRkCwq6qBMcz021jCQ/g5qJxtJEjpH3nOm9PFxEFvF5iAn5IZ8DoaqT5x2TTXXNAM/WZL6LlL8mPas0ExYKZQzwvdyogSG9RuCz4AmH3gTGpKmd5lGWWieNQ0jREah+yVtSWVoIJXyKct/fZQHOA3FhR5jGASz2VrYeACcR5nn5/Xm2HgJr2IFH8zvGoChI5r87rA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WoKdfukLFo/zc4K6RXdUZPSJi+T2XnZ2ROziFKibJso=;
+ b=qW28ZzqIbDDdz4z2PzfuGTg3Inu7yzywToSbOfReMFcZ9XvGrooSi4ECqEGPQ1Mx3+nOEpcD+3R1zNT+PUDl410yy57XyAwW0oQstxkwo7T1Q3vVcdkhYJG1xPEo9m77OOdfJZCbH4DIpH9mBy503PnF/yicKixEMKaBXAxZDnRV7hlYmiaE38PAMC39yGz9STFZ3EgHTU1UxQr7Zfx3B1d2xNSsjb50xGVKLNFPUqSA1E2EVh7ZVDGyODZ3/m7vxUjJWBt/nEXWMnBAMT3h+gSpShVIFfK57VfTrMc7zDVIDrzBPqJC/RpTXn/0m8JeLHYau3oIbmBKE7q8Hy9fgg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WoKdfukLFo/zc4K6RXdUZPSJi+T2XnZ2ROziFKibJso=;
+ b=nMfKGQBv3m+k5fxYTnvsHM4fakk9Lnc4w7CGP8mdomxRxCIYWi5+JxEPaVwVufxri0I4/+YEvQAsp5nDp7X4LfO6kIG7ox5EyXPGFnX+wI+M80jION6nI89iN+/rkAlY+jTXYbHUZfdm1FH2oIEbZHWKydSR3vJ/8utAkw1ovWEI25ygkaTg28ZMwplSvv1YWRqshFZ3t/cqIB+4/W1oWc+LINtMfw26ZOPRQXi+BRyl5sO2g1lImhsdMtULdDHFoBveqNuCbtxbt+9jtnMpXzDttlORRm4ZGi5Lb3iO7SHOj7ucyrCB++lEqn4JGXj7Dzss8ouJpNQk/DS1kkMaJQ==
+Received: from CH0PR03CA0438.namprd03.prod.outlook.com (2603:10b6:610:10e::14)
+ by DS2PR12MB9591.namprd12.prod.outlook.com (2603:10b6:8:27c::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Wed, 6 May
+ 2026 20:56:05 +0000
+Received: from CH2PEPF00000141.namprd02.prod.outlook.com
+ (2603:10b6:610:10e:cafe::99) by CH0PR03CA0438.outlook.office365.com
+ (2603:10b6:610:10e::14) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9891.15 via Frontend Transport; Wed,
+ 6 May 2026 20:56:05 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CH2PEPF00000141.mail.protection.outlook.com (10.167.244.74) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9891.9 via Frontend Transport; Wed, 6 May 2026 20:56:04 +0000
+Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 6 May
+ 2026 13:55:43 -0700
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail205.nvidia.com
+ (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 6 May
+ 2026 13:55:32 -0700
+Received: from nvidia.com (10.127.8.13) by mail.nvidia.com (10.129.68.6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Wed, 6 May 2026 13:55:29 -0700
+Date: Wed, 6 May 2026 13:55:26 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
+ <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Jiandi An
+ <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, Krishnakant Jaju
+ <kjaju@nvidia.com>, "phrdina@redhat.com" <phrdina@redhat.com>
+Subject: Re: [PATCH v4 20/31] hw/arm/tegra241-cmdqv: Use mmap'd VINTF page0
+ as VCMDQ backing
+Message-ID: <afuqvoODHtr2KoSk@nvidia.com>
+References: <20260415105552.622421-1-skolothumtho@nvidia.com>
+ <20260415105552.622421-21-skolothumtho@nvidia.com>
+ <afk+zBZLQx+x+ODl@nvidia.com>
+ <CH3PR12MB754892989B2A76D3D3A941D6AB3E2@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <afpKfEvuT3ZeBSiH@nvidia.com>
+ <CH3PR12MB7548E76E38625713F6AE9F78AB3F2@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <afuJt4lDUQ6SxA6T@nvidia.com>
+ <CH3PR12MB7548FA36B3EB6386EDF09B3CAB3F2@CH3PR12MB7548.namprd12.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[9]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
- suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CH3PR12MB7548FA36B3EB6386EDF09B3CAB3F2@CH3PR12MB7548.namprd12.prod.outlook.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PEPF00000141:EE_|DS2PR12MB9591:EE_
+X-MS-Office365-Filtering-Correlation-Id: 181668f2-3eb8-40e6-f2fb-08deabb1e3ab
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|82310400026|1800799024|36860700016|56012099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: scLuMC9BJOLP/UmbqrZtSc6pjdonzwDlW0ChWY/03j5GSLB8fKDkZ0CMu+AxhA7WYwjjlPo4PXWY0tkz/dC7HBaabIpWA4p8dgQ0G/wdDpk/TfsdbWlb5MfZZzlIjkc/bUKlZPO993/Q2u+4C+Jf/w+jjg5aIGLg5ZHLDX5FAyAkI6InyMCDAIyREAkWf68ce06MvvJvnCTxjHKN5F7a3FL8pQDsRbXDU98zjZ/AIsR4C6ceG6+Yo2uCAMVbygBBYjHr9ANPU00enEr/bKAb89LyuG0leQTLTOcFxT0wcJXN32l4YnkvZICSmCsV8jGR0UCcabHv+F2BNGnJmiey3nMu8z0Ue6Vgv4F6AXxRwzDuVcasb23IRekoGdzOAnp1vmR/328zyItimzDnhSdVXWYGLwAgR7Oe+bScXZCms/X8w9Sz6h8XAbZzWhGckKkDAx+0aeDVi/Mb6sMxrdTaLJZXOpmLAX5paVPmTLZA9XI/6QijGOWDdoqzZotxQeEe8CEZYFPm7sCrvYhSt2US842i/XHmqs70patR1uvXc8umz4gIZFK2Tz8SargN5mtp3Xabp+/MvkpRdxjwjB7ZjMQn5yP8hX5OgJN/AyfaYXGKqJ6VjjySallydGr0OGXrEKbo8NgnAgyuzhNgBQoGy7kCLUcs34VoJ7Sj43PgaQ4gp5Q6qzSks6ZX315SXUlB7UB62P9GKLY3AETy/D+PfnPPYHgijROONplMdDZHDXo=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(376014)(82310400026)(1800799024)(36860700016)(56012099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: F4lez6S/VHR43TSucF6wYRx3IQeNZVogqaDq3PSqdGokW7X36ZyPNo0eVw2YGrm4ilQ7pu5gvWQHrHsLt9Z5ZBAaiTDWZG96PZ+r2u4l2M36adI7Cs9fsi+L65ZIPV2CmWojdbV1wAaX7x/vW9K6p7nl6uJZHvVGFWYH0TyhNSDa6PBecNiq+TsbnKh71d7FE7a/tSXQje4pE/6qS0DS0ZN0/xYnkwO+pRl8mDfWOpuSYQjS41VMrPV5ZXc/i13g1cEiD1ClL3SjDFY679+9Fwd6WXIboHJkP0XoXxdXOXMUlfm+5fnvN7xLtOtEe5AVgY+/MiIAlF1O62vKw3Wh/wAdAgKz0lIJGFDWZrrG4d8qIgD4AvLG6DQPfqPK3HCtJy3my2m5E0OYFFFRrAqZ5CvcAfy2+LQy6ln2UlDi0RWPOTIKiapAz+CXTCDm1V5J
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 May 2026 20:56:04.8858 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 181668f2-3eb8-40e6-f2fb-08deabb1e3ab
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF00000141.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS2PR12MB9591
+Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
+ envelope-from=nicolinc@nvidia.com;
+ helo=CY7PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,211 +146,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Wed, May 06, 2026 at 01:13:53PM -0700, Shameer Kolothum Thodi wrote:
+> > -----Original Message-----
+> > On Wed, May 06, 2026 at 06:16:00AM -0700, Shameer Kolothum Thodi wrote:
+> > > > From: Nicolin Chen <nicolinc@nvidia.com>
+> > > > Could this be a case:
+> > > >  - Write the PROD_INDX/ CONS_INDX with a consistent value (0xf)
+> > > >  - Program the VIRT_CMDQ_BASE
+> > > >  - Read the PROD_INDX/CONS_INDX, expecting 0xf
+> > > >  - Write the PROD_INDX/ CONS_INDX with 0x0
+> > > >  - Program the VIRT_CMDQ_CONFIG to enable the CMDQ
+> > >
+> > > Yes, if Guest is not spec compliant then this can be any order.
+> > >
+> > > However,
+> > >
+> > > >  - Program the VIRT_CMDQ_BASE -- suppose we call setup_vcmdq()
+> > 
+> > > then kernel will reset PROD/CONS, right?
+> > 
+> > But I don't have an impression that QEMU only supports Guest to run
+> > Linux...
+> 
+> Oh no, I was referring to host kernel behaviour on IOMMU_HW_QUEUE_ALLOC
+> IOCTL. It seems to reset PROD/CONS to zero in that path and I thought
+> it was following spec in that case.
 
-> Marc-Andr=C3=A9 reported an issue on QEMU crash when retrying a cancelled
-> migration during early setup phase, see "Link:" for more information, and
-> also easy way to reproduce.
->
-> This patch is a replacement of the prior fix proposed by not only switchi=
-ng
-> to migration_cleanup(), but also fixing it from CPR side, so that we track
-> hup_source properly to know if src QEMU is waiting or the HUP signal.
->
-> To put it simple: this chunk of special casing in migration_cancel() shou=
-ld
-> not affect normal migration, but only cpr-transfer migration to cover the
-> small window when the src QEMU is waiting for a HUP signal on cpr
-> channel (so that src QEMU can continue the migration on the main channel).
->
-> To achieve that, we'll also need to remember to detach the hup_source
-> whenenver invoked: after that point, we should always be able to cleanup
-> the migration.
->
-> It's not a generic operation to explicitly detach a gsource from its
-> context while in its dispatch() function.  But it should be safe, because
-> gsource disptch() will only happen with a boosted refcount for the
-> dispatcher so that the gsource will not be freed until the callback
-> completes. It's also safe to return G_SOURCE_REMOVE after the gsource is
-> detached, as glib will simply ignore the G_SOURCE_REMOVE.
->
-> One can refer to latest 2.86.5 glib code in g_main_dispatch() for that:
->
-> https://github.com/GNOME/glib/blob/2.86.5/glib/gmain.c#L3592
->
-> When at this, add a bunch of assertions to make sure nothing surprises us.
->
-> After this patch applied, the 2nd migration will not crash QEMU, instead
-> it'll be in CANCELLING until the socket connection times out (it will take
-> ~2min on my Fedora default kernel).  During this process no 2nd migration
-> will be allowed, and after it timed out migration can be restarted.
->
-> It's because so far we don't have control over socket_connect_outgoing(),
-> or anything yet managed by a task executed in qio_task_run_in_thread().
-> Speeding up the cancellation to be left for future.
->
-> I also tested cpr-transfer by only providing cpr channel not the main
-> channel (with -incoming defer), kickoff migration on source, then cancel =
-it
-> on source directly without providing the main channel.  It keeps working.
->
-> I wanted to add an unit test for that but it'll need to refactor current
-> cpr-transfer tests first; let's leave it for later.
->
-> Link: https://lore.kernel.org/r/20260417184742.293061-1-marcandre.lureau@=
-redhat.com
-> Reported-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  include/migration/cpr.h  |  1 +
->  migration/migration.h    |  5 +++++
->  migration/cpr-transfer.c | 10 ++++++++++
->  migration/migration.c    | 31 +++++++++++++++++++++++--------
->  4 files changed, 39 insertions(+), 8 deletions(-)
->
-> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-> index 5850fd1788..ebf09a2f0a 100644
-> --- a/include/migration/cpr.h
-> +++ b/include/migration/cpr.h
-> @@ -57,6 +57,7 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel,=
- Error **errp);
->  void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
->                                  void *opaque);
->  void cpr_transfer_source_destroy(MigrationState *s);
-> +bool cpr_transfer_source_active(MigrationState *s);
->=20=20
->  void cpr_exec_init(void);
->  QEMUFile *cpr_exec_output(Error **errp);
-> diff --git a/migration/migration.h b/migration/migration.h
-> index b6888daced..2bc2787480 100644
-> --- a/migration/migration.h
-> +++ b/migration/migration.h
-> @@ -514,6 +514,11 @@ struct MigrationState {
->      bool postcopy_package_loaded;
->      QemuEvent postcopy_package_loaded_event;
->=20=20
-> +    /*
-> +     * When set, it means cpr-transfer is waiting for the HUP signal from
-> +     * destination to continue the 2nd step of migration via the main
-> +     * channel.
-> +     */
->      GSource *hup_source;
->=20=20
->      /*
-> diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
-> index 61d5c9dce2..9defe7bad7 100644
-> --- a/migration/cpr-transfer.c
-> +++ b/migration/cpr-transfer.c
-> @@ -6,6 +6,7 @@
->   */
->=20=20
->  #include "qemu/osdep.h"
-> +#include "qemu/main-loop.h"
->  #include "qapi/clone-visitor.h"
->  #include "qapi/error.h"
->  #include "qapi/qapi-visit-migration.h"
-> @@ -79,6 +80,7 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel,=
- Error **errp)
->  void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
->                                  void *opaque)
->  {
-> +    assert(bql_locked());
->      s->hup_source =3D qio_channel_create_watch(cpr_state_ioc(), G_IO_HUP=
-);
->      g_source_set_callback(s->hup_source,
->                            (GSourceFunc)func,
-> @@ -89,9 +91,17 @@ void cpr_transfer_add_hup_watch(MigrationState *s, QIO=
-ChannelFunc func,
->=20=20
->  void cpr_transfer_source_destroy(MigrationState *s)
->  {
-> +    assert(bql_locked());
->      if (s->hup_source) {
->          g_source_destroy(s->hup_source);
->          g_source_unref(s->hup_source);
->          s->hup_source =3D NULL;
->      }
->  }
-> +
-> +bool cpr_transfer_source_active(MigrationState *s)
-> +{
-> +    /* Whenever the HUP gsource is available, it's active. */
-> +    assert(bql_locked());
-> +    return s->hup_source;
-> +}
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 5c9aaa6e58..58c1e56766 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -1469,14 +1469,19 @@ void migration_cancel(void)
->      }
->=20=20
->      /*
-> -     * If migration_connect_outgoing has not been called, then there
-> -     * is no path that will complete the cancellation. Do it now.
-> -     */
-> -    if (setup && !s->to_dst_file) {
-> -        migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
-> -                          MIGRATION_STATUS_CANCELLED);
-> -        cpr_state_close();
-> -        cpr_transfer_source_destroy(s);
-> +     * This is cpr-transfer specific processing.
-> +     *
-> +     * If this is true, it means cpr-transfer migration is waiting for t=
-he
-> +     * destination to send HUP event on CPR channel to continue the next
-> +     * phase.  If so, do the cleanup proactively to avoid get stuck in
-> +     * CANCELLING state.
-> +     */
-> +    if (cpr_transfer_source_active(s)) {
-> +        assert(migrate_mode() =3D=3D MIG_MODE_CPR_TRANSFER);
-> +        assert(setup && !s->to_dst_file);
-> +        migration_cleanup(s);
-> +        /* Now all things should have been released */
-> +        assert(!cpr_transfer_source_active(s));
->      }
->  }
->=20=20
-> @@ -2009,12 +2014,22 @@ static gboolean migration_connect_outgoing_cb(QIO=
-Channel *channel,
->      MigrationState *s =3D migrate_get_current();
->      Error *local_err =3D NULL;
->=20=20
-> +    /*
-> +     * Detach and release the GSource right after use.  We rely on this =
-to
-> +     * detect this small cpr-transfer window of "waiting for HUP event".
-> +     */
-> +    cpr_transfer_source_destroy(s);
-> +
->      migration_connect_outgoing(s, opaque, &local_err);
->=20=20
->      if (local_err) {
->          migration_connect_error_propagate(s, local_err);
->      }
->=20=20
-> +    /*
-> +     * This is redundant as we do cpr_transfer_source_destroy() at the
-> +     * entry, but it's benign; glib will just skip the detach.
-> +     */
->      return G_SOURCE_REMOVE;
->  }
+Ah, it was fixing a kernel bug, where the VCMDQ registers never got
+cleared even after a host reset (IIRC). And the solution is to clear
+them before handing over to the guest.
 
-Sorry for taking too long on this, it fell off my queue. Looks good to
-me. I reproduced the original issue and tested this patch under load
-with hacked tests:
+Once QEMU allocates the hw_queue that ALLOC_MAPs it to the VINTF, it
+should probably sync what the register caches were programmed by the
+guest.
 
-/mode/transfer/defer + early cancel
-/cancel/src/after/setup + 2nd migrate
+> This scenario writes PROD_INDX before BASE, which is explicitly
+> non-spec-compliant — TRM p.175 "Enabling the Virtual CMDQ"
+> mandates BASE as the first step, with PROD_INDX/CONS_INDX
+> initialization following. For a spec-compliant guest, PROD_INDX
+> is only written after BASE, at which point vintf_ptr() is
+> valid and writes go directly to hardware with no discard
+> involved.
 
-Tested-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+I think the goal of VMM is that a guest VM cannot distinguish
+between real HW and emulated HW. If we just follow the minimal
+"spec compliant" flow, it fails to do so. So, "spec compliant"
+itself doesn't make a lot of sense to me.
 
-BTW, I found it weird that we cannot start a second migration on the
-incoming after the first one having never properly started. Trying to
-actually do it without shutting down both QEMUs was fun. A bunch of
-asserts on the incoming side due to yank. After hacking a little and
-using migrate_recover to start the second migration on the incoming, I
-managed to make it work, but it hanged mid-transfer for some
-reason. Probably some iochannel reset needed.
+With that being said, if QEMU is okay with the minimal support
+for "spec compliant" flow only, I certainly won't be against
+submitting it (for the initial version maybe?).
+
+> 2) But then after some prompt it says:
+> 
+> Looking at SMMUv3's register write handlers, QEMU doesn't enforce
+> any programming order there either —   registers are written to cache
+> unconditionally. CMDQV should follow the same convention. Will fix by
+> replaying cached PROD_INDX/CONS_INDX values to hardware after
+> alloc_hw_queue succeeds, making the pre-to-post-alloc transition
+> transparent to the guest.
+
+Yes. We are indeed missing a few details in the implementation.
+
+> 3) But it changes position again if you ask in a different way:
+> 
+> SMMUv3 has no equivalent transition point where hardware takes over.
+> In CMDQV, the BASE write is a fundamental transition — before it,
+> there is no hardware queue; after it, hardware owns the registers.
+> The BASE write is a fundamental transition point — before it, no
+> hardware queue exists; after it, hardware owns the Page0 registers.
+> Pre-alloc writes to PROD_INDX/CONS_INDX are undefined behavior by
+> spec, and "discard" at transition is the   correct consequence.
+> There's nothing to "preserve across" in the SMMUv3 case.
+
+Ask it to do a deeper research before answer any question, or
+to pinpoint where spec declares that "undefined behaviour" for
+example.
+
+> I think the spec is vague and doesn’t demand a strict order.
+> So may be better to sync the registers after the alloc.
+
+Agreed.
+
+Nicolin
 
