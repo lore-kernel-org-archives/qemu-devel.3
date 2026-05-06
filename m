@@ -4,145 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E3DACD3439
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 17:45:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E8FDCD3439
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 17:50:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKgJC-0007pE-0A; Wed, 06 May 2026 13:45:18 -0400
+	id 1wKgNa-0000Bp-Jo; Wed, 06 May 2026 13:49:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wKgJA-0007p4-Gu
- for qemu-devel@nongnu.org; Wed, 06 May 2026 13:45:16 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wKgNY-0000B6-Dg; Wed, 06 May 2026 13:49:48 -0400
+Received: from mail-eastusazlp17011000f.outbound.protection.outlook.com
+ ([2a01:111:f403:c100::f] helo=BL2PR02CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wKgJ8-00041Z-23
- for qemu-devel@nongnu.org; Wed, 06 May 2026 13:45:16 -0400
-Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 646CYOSu1514824
- for <qemu-devel@nongnu.org>; Wed, 6 May 2026 17:45:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- pfGr9sBziC2buBnsrHOpYy0py46oN6ysBzrpDlsotro=; b=Khi9HCdHpgjK2Z0R
- 6jE+w11jCAH3Tq1SYfNGg2RGyjlfSsbb76cRhRNBCHhuiDhK73+w2HEITNpBnoQ/
- suagF1953IOlxMP7Mns4MiIbI6k8P3LY+VSBNHqluIBaZw2ERGlrkQT3Z26CRhzU
- cz2AHNwj2W7JUC+vTaN5EPqSMFSGtwQa7Y0DJH/ziLkDX5bLoJjajDt/L93tyDoB
- peYFAA+p8ElXsxElnZsnCDVRXMpbiUOf/NJ5T/qxpVaIiZCUQ5N9T7ONpyi/a2eD
- 74cXXY1U++DmMYIa4YdP4bQeF2+p4wiIc98esXriL70A1+LsWCumsGEZQUqTiJjL
- suik8g==
-Received: from mail-dl1-f71.google.com (mail-dl1-f71.google.com [74.125.82.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e00v1tk9g-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 17:45:11 +0000 (GMT)
-Received: by mail-dl1-f71.google.com with SMTP id
- a92af1059eb24-12dfb99429bso13979925c88.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 10:45:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778089511; x=1778694311; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pfGr9sBziC2buBnsrHOpYy0py46oN6ysBzrpDlsotro=;
- b=S6ZUZetntztY4aTBQs0oSCbQOdUcQsWA+OZF5rIbq59ZXy50dBk9PN6jm1fqCQX5DU
- ljPzA/NRUXTVn5mUV+PNU3zPAYuh5SHmrkzi4u2LuA+AIB2RzZkO8X/Wz+w3OkOsnjCj
- dGlNLEWHOheZd0SHh9CLYY7n5zIyomRkCe+jESh3D3Bzu8tgXHhX2ZIjPDiRcy/ViXQA
- RWOvrli3ZPnaIQPZO2DtjKxeHmeKRRQB7XM0zMs30Rm8La5iFRcBw8fUu4YEQMGh9tf/
- uZfEwqnWHjpTVcuCySLN919Vq+HIMIUE6qytkzcQZz4q8J4bvj5daj7lw5EpSqMey7yQ
- 918g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778089511; x=1778694311;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pfGr9sBziC2buBnsrHOpYy0py46oN6ysBzrpDlsotro=;
- b=Qc3Vk6+3SSozLcVjpbZA2Tf/a3BRHB8C5z65tzox8bRo61LNb+9ArpSdhDHUcl56Mr
- 7XYZILJTl4ANf5efKUeKUBjcc6coiOGMiqt8P+Xs5TRewq2JrjFyMubij7dLaa502Wrn
- JcsnbQgEGrUTl07+ea9S2lsgKh5lo9fmsrW4KVVJfinUyl4HHVV/shD2GdKGXKybxHBC
- /L4VrlkgM4zZE90kFJdtMjmd60xGXLxgJw7Vg/fBKybxjMq9W9xxPu78xsavLTzpj5H7
- 1VwRYXNrSl87vPXe0zafdh3or86/Kq+6Ml/VN8xnJ7VEPa49asLQaBjEln/pmLREPeFK
- x7Ag==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8ooH0ycIR31Nbk4U4uYuc615fDbL055xAPANQoqTscN8DLsYQJViiiFEHBv9EdOl6z29xXxCm5kic1@nongnu.org
-X-Gm-Message-State: AOJu0YzwcNvylnbxR509igTPEQHggiAx9lNaCa8Sw6SIDWgtaUTArA+z
- GS/g/uyr4kW4uxUREGS6PNU9gwMU63GTPKB5eAY7piSIw18Jywsr1sACDt2IpMTFYomdjdGNu00
- m1/9LVtbfzl01y2KoA9y9+JUFM6Rsjlx4PSvF3BaV1o4q50uQDCfuJApOow==
-X-Gm-Gg: AeBDieuM1PCqTXbyYCKJxC9iqP1ZY3Urhe2lro8EAX/zf4lYEq9GlB+YLiMtArAKPLi
- tHfh3IDk40fgtyyD4E8SrDo26KjY99sEYaOoeV1qpBjGhTLTsIzW1xK/Nuy3EDBQHXB0kjVnD8o
- z+c+deO5XRhVxXHsstijipLtBjahhd3ZogrU5tXUR8a52lY2IRAXjVbTqgfNdTpismD/lIZ8cQ1
- 4Uvfb+6bF+skOqBlr15i93voFEyCaOWoIDB8gbMGHZUxygGOxyQvCYb9J6hJxQxIPDYyQSSKQ/U
- iqnWVRykIu7HMFFtGMjL/0l741FOyBB+lvVs30TSwicS7jaA35p7EQtQZc0CFHVcQikTpsUUE0f
- 910zQ0MTgLvObXedLoYmty8apzSgbaAmrzODVMNS+SaJFB3bKYcXJtBi8fkhUZf3vjTvOGfXrAm
- asi+s2cd9iO0zfYLop695pFKMf
-X-Received: by 2002:a05:7022:1a83:b0:130:68a1:a221 with SMTP id
- a92af1059eb24-1318eb57bbcmr2371407c88.38.1778089510891; 
- Wed, 06 May 2026 10:45:10 -0700 (PDT)
-X-Received: by 2002:a05:7022:1a83:b0:130:68a1:a221 with SMTP id
- a92af1059eb24-1318eb57bbcmr2371358c88.38.1778089509731; 
- Wed, 06 May 2026 10:45:09 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2f57038b096sm3885176eec.27.2026.05.06.10.45.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 May 2026 10:45:09 -0700 (PDT)
-Message-ID: <fdf34d9e-75aa-43b0-a70c-9ea59e4a3902@oss.qualcomm.com>
-Date: Wed, 6 May 2026 10:45:07 -0700
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wKgNW-0005He-GI; Wed, 06 May 2026 13:49:48 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=E9IrjphW/WMZje8bUwCsvKiOOtvcOAL1xh/70wfCtbOG5PJRtcUM/7kRMglH1Dt66zTjjENVUd40WxrznTydk763DdsjxP5djWFjrCRqQEPcO0RBPvKnxY8Eto/+JoW7H6qmfYd8hDE8hHH9T6D+p/SG0PME2r+Kq9vSVyq9BdkfLnm7GndjObGzMHnUTC9nGorzFuEO5hmlu+Nzi7Z1Ci1/2UuA9JjibI1aFUsTbtiYPfT2hKnFgjwxUV1kF7rfJbd40jf4YHD8qpBAcdfwaLvuqU7/+tWLrsA6A5p8PIgEm6DNkAuycNJXjx8cxScqCwdV7Tf4WD8RdkOKQRWruw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uiAciXGSbXgjZAs6EDyFaNZryqZ+u/hnLYHee5QK5m0=;
+ b=ONmGY+clkGRAqpzz50xLYTNDd4ZSSdDFgCgw8JYKbqNWeQH86bZU2kY+Nz9x/bRfyUk96ZQiSDVz7A5brP0UvgGCDx69ezie4m0wbbsWWLC/odviLmFpXGvj+BFQami8oTmeLQMlyg1/MbWBad+rBNg7nxg5FtcHZ4/vvsmjel2MqEaoBbqxw5d1TGYtL56FR/4KIj2Gfrb1PGzPz7odNnGJ9cZNYe5Srwf7j7O//3FrVuLSUeLaK7c5C9Q4il0K4sJiQ9Kbd+EcOLz5vdqLdtJ7Jh/bdBieZTAz4fZr6y/QUg2xT5Og2zdyh170pb6lYrsbNfDG+7e2byrUF5PJGA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.161) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uiAciXGSbXgjZAs6EDyFaNZryqZ+u/hnLYHee5QK5m0=;
+ b=YcEk8zOPjr5WCyKU8EqqXy4UQ3jKE9Tj71hQ3LU4cPIoBfDFlsRKoFBHwCI65Z0NlW8bp4F+nU7+fdG5FiVVJ1Ba6J5gSzXOv1b2pHlTtGcWcq/lWMxgw2CppQPIh5KkgjPnEZm5/AzN95QyhmmP89mwgUyipwZkXwN4EiRAF2G9Ly/iRmicviR/njIrq33ljwswuI3qYIFJaColwnam2lf91ElXrPcvyDWaaNL5XoSJT0usE0Xxo44lCxz3opVko9xmUJNveA480i16IwRD+EXKNRfNjupoRlG5e5IB3kzNdCJyUoLFiDstNTtl7uGt8Dvb6Rnrta7+yEHL2SjxlA==
+Received: from PH7PR17CA0010.namprd17.prod.outlook.com (2603:10b6:510:324::10)
+ by MW4PR12MB7143.namprd12.prod.outlook.com (2603:10b6:303:222::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Wed, 6 May
+ 2026 17:49:29 +0000
+Received: from CY4PEPF0000EE3B.namprd03.prod.outlook.com
+ (2603:10b6:510:324:cafe::ec) by PH7PR17CA0010.outlook.office365.com
+ (2603:10b6:510:324::10) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9891.16 via Frontend Transport; Wed,
+ 6 May 2026 17:49:28 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.161) by
+ CY4PEPF0000EE3B.mail.protection.outlook.com (10.167.242.14) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9891.9 via Frontend Transport; Wed, 6 May 2026 17:49:28 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 6 May
+ 2026 10:49:07 -0700
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 6 May
+ 2026 10:49:07 -0700
+Received: from nvidia.com (10.127.8.13) by mail.nvidia.com (10.129.68.7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Wed, 6 May 2026 10:49:03 -0700
+Date: Wed, 6 May 2026 10:49:01 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
+ <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Jiandi An
+ <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, Krishnakant Jaju
+ <kjaju@nvidia.com>, "phrdina@redhat.com" <phrdina@redhat.com>
+Subject: Re: [PATCH v4 19/31] hw/arm/tegra241-cmdqv: Allocate HW VCMDQs on
+ base register programming
+Message-ID: <aft/DTFLqQnufzWl@nvidia.com>
+References: <20260415105552.622421-1-skolothumtho@nvidia.com>
+ <20260415105552.622421-20-skolothumtho@nvidia.com>
+ <103d06a5-3203-4545-b617-517f695eb751@redhat.com>
+ <CH3PR12MB7548F9BC9DCCE1D5899EA168AB3E2@CH3PR12MB7548.namprd12.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/2] Build system: add stubs per target
-To: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org,
- peter.maydell@linaro.org, richard.henderson@linaro.org, pbonzini@redhat.com
-References: <20260505230644.2710049-1-pierrick.bouvier@oss.qualcomm.com>
- <CAJSP0QUki9C6Nk8owfvmfyy_vfYT66mFQfsharkZ6GnDCLR5zg@mail.gmail.com>
- <CAPMQPEJMDp=9TgXvKPYhGDbyiePz6Q7RLycWDsUxG3SyR8gHog@mail.gmail.com>
- <20260506170818.GA203585@fedora>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260506170818.GA203585@fedora>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 84nhIVO4mARSm43IcmuinLqi61cAM6Wa
-X-Proofpoint-GUID: 84nhIVO4mARSm43IcmuinLqi61cAM6Wa
-X-Authority-Analysis: v=2.4 cv=cKXQdFeN c=1 sm=1 tr=0 ts=69fb7e27 cx=c_pps
- a=JYo30EpNSr/tUYqK9jHPoA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22
- a=-AnQz9JOAAAA:8 a=p0WdMEafAAAA:8 a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8
- a=KKAkSRfTAAAA:8 a=pGLkceISAAAA:8 a=ggltgSJ5Mq7Xy2AbUuAA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=Fk4IpSoW4aLDllm1B1p-:22 a=3bnadFWGKyIZm4bBUiDd:22
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA2MDE3MyBTYWx0ZWRfX6aFaw4Y1JH04
- /uQH393fCBF+e/i7g/zf46Ftp4ZC0cCjRPhLbCCn30FfYCJe+A+12pIUrTGgoATwSi6JOUaMAJm
- 5RGEJsuQcsYScjgWui88dRHmXrRtBbARH2FEk6jVfVbMCwO2oYqn1sW0koUk/jvD7a93dqwFa5+
- Dg4PLWQvj+Fq3te0Z4DZ0ErXFgcSEoA6Qslv22v+dS8mt+fneJBKOqcuLryTX8HX3By2h5W7js3
- 3Ql5gnYZMeFXNu/BVNFzPGBeOL62l5WxQJXel0AMvWxKADNyMx/92ohq0H1mYtxOrozvJVkILfu
- kFna9X3e2ZQD19YcsjqoqONq6/RZhdhjq2mvPCEFxXohu2Dgd8oFm+QfClPfeWUucBEMy2s0ZvY
- V9hvFGtkVbyT8xhIt2Tvd1cFxFuSOqKb9lIZ29uLKiBsk21qOTAVnV7t6NGAhXgcrfhoXODNJnb
- xNbQK/0vLyTBuNejGLw==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-06_01,2026-05-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 adultscore=0 priorityscore=1501 bulkscore=0 phishscore=0
- malwarescore=0 clxscore=1015 spamscore=0 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605060173
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CH3PR12MB7548F9BC9DCCE1D5899EA168AB3E2@CH3PR12MB7548.namprd12.prod.outlook.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE3B:EE_|MW4PR12MB7143:EE_
+X-MS-Office365-Filtering-Correlation-Id: a8bae589-38ad-4c1e-a71f-08deab97d240
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|82310400026|1800799024|36860700016|56012099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: q8MSOSNLNkLTsnGPxd/D5MPkumDI7Q5zM0g5aCaWwAkzq49gb30ThX5qAF4JbxDf0XxItGFE4VNRc1ydUTWX5D2Rl/UvsXR0cdsgc6bnXeKkmdtS03bhaHD43+TdZuZDrAJgLb2t9csKe2D0MwNJzQRASJWm1+utxd4nsSl+cXjC85lROa3fA5eoOXRV/yTIrVlw2jpWpe+u12p3NglwFm6Ko7NXUXxc5kaJM8O9gfnp9aImsoUccX1UiHumZdXnnYpxMWFi878YAeWsNgEQS7OyZ8xaVQzcBwrlXeZevk5EGKhjWrWwwJZZn7Xeg5+QWrG6O9ub701NKnVgepKV70CXUCKyqb2eh05VSG7SuDK35FoKx9wJDeZWPzI6U+lmL9nasVoaUrMczHGELxEyo0queH78Etn8BJ1ekEH2jS1DG58ndG4XLXb3nkBCezePwtJQvplI9BNoOmdafcIFOidjFw8IQpjjuaJIMp3sqFuLmIHJkNYzRK4Ot9LkwyFeZaRGiAugL9LAPdYSMR4hki/y7z9ERjAYNTqy0e2VU+IC6iM6QCE/ZDxYiL+p657U1wSdGs4nVnBNMKnMsOr8y6dh8YJ1zamhKJ1dDNA16NNhmN9NNoLK6Fx7eJofn7ghtmNUbWEndIuU15JFZ0oy0cEOPCI2bnQ15kcv2MjnmGF7GHrweMFepkJpTFX/G2TqtszmmCTA1Uys36Bo3QrI2J1lbPcJUq4Cw+r3kR2WYCU=
+X-Forefront-Antispam-Report: CIP:216.228.117.161; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(376014)(82310400026)(1800799024)(36860700016)(56012099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: LAdQ8ahaIjPDBRpQD5jcUtj/NPiZUBf3/Ovlj8TViNgsczcmD7VoMj5cZ8aSFPgaIsAMmxusWm5/Ak2mB6HBx9P1DXNSxZOpezdDwUHtBEJ/20Kv/gIJZbOlDwkUJ6CnOprIUF6VNDJ+PNH/AGOd/QYxeZtautgfsgxR3+2LIkku5ua1XTiibSFStUICRZYqX52XrKt8asqSStxVd2S+Gddmf6LNy8xK3fP7CunvsaYfVTw08kW1c1lhd3Se9NlbQaQg7BjC/iR7KLJOY/X7lJjjT6T3DpdiT9MtZ2jYsdFUXtMhdwYeZX7Pj2OgBZHVa/WzMrEouAePUBpSjD1lRakWj3sbdi4us63tUP1f8FEuruaqAPhJCAq2Ehx9/aifCt44YNKpEkkLznmdVF9fQkj4oUMqfeK+TQYX629eGQ6/Jmqhn0UmoTsTjn6OUMqd
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 May 2026 17:49:28.7847 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: a8bae589-38ad-4c1e-a71f-08deab97d240
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.161];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE3B.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB7143
+Received-SPF: permerror client-ip=2a01:111:f403:c100::f;
+ envelope-from=nicolinc@nvidia.com;
+ helo=BL2PR02CU003.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,98 +142,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/6/2026 10:08 AM, Stefan Hajnoczi wrote:
-> On Wed, May 06, 2026 at 05:16:21PM +0200, Philippe Mathieu-Daudé wrote:
->> Hi Stefan, Pierrick,
->>
->> On Wed, 6 May 2026 at 16:42, Stefan Hajnoczi <stefanha@gmail.com> wrote:
->>>
->>> On Tue, May 5, 2026 at 7:07 PM Pierrick Bouvier
->>> <pierrick.bouvier@oss.qualcomm.com> wrote:
->>>>
->>>> The following changes since commit a85c588d07f8d3345ccad38b22026569a04571d1:
->>>>
->>>>   Merge tag 'pull-monitor-2026-05-05' of https://repo.or.cz/qemu/armbru into staging (2026-05-05 10:11:49 -0400)
->>>>
->>>> are available in the Git repository at:
->>>>
->>>>   https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/build_system-20260505
->>>>
->>>> for you to fetch changes up to 2e44ff32fc758bf8c0df13b0287afb75bb00c38e:
->>>>
->>>>   target/arm: define stub library (2026-05-05 16:06:00 -0700)
->>>>
->>>> ----------------------------------------------------------------
->>>> Changes:
->>>> - [PATCH 0/2] single-binary: add stubs for target/ (Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>)
->>>>   Link: https://lore.kernel.org/qemu-devel/20260424230103.1579600-1-pierrick.bouvier@oss.qualcomm.com
->>>>
->>>> ----------------------------------------------------------------
->>>> Pierrick Bouvier (2):
->>>>       meson.build: define stubs library per target base architecture
->>>>       target/arm: define stub library
->>>>
->>>>  meson.build                | 22 +++++++++++++++++++---
->>>>  target/arm/meson.build     |  8 +++-----
->>>>  target/arm/tcg/meson.build |  2 +-
->>>>  3 files changed, 23 insertions(+), 9 deletions(-)
->>>
->>> Is this a pull request for Paolo's build system tree?
->>>
->>> I'm not merging this directly because I prefer to follow MAINTAINERS
->>> so it's clear who sends pull requests for each subsystem. That way
->>> maintainers won't be surprised by me merging a pull request from
->>> another contributor who is not officially the maintainer and it's also
->>> better for security.
->>
->> I did not notice Pierrick's PR and actually included these 2
->> commits in my latest "single-binary" pull request:
->> https://lore.kernel.org/qemu-devel/20260506135524.20617-1-philmd@linaro.org/
+On Tue, May 05, 2026 at 07:26:29AM -0700, Shameer Kolothum Thodi wrote:
+> > > +static void tegra241_cmdqv_free_all_vcmdq(Tegra241CMDQV *cmdqv)
+> > > +{
+> > > +    /* Free in reverse order to avoid "resource busy" error */
+> > can you provide additional details about the above problematic. Is it
+> > documented in the spec?
 > 
-> That can be fine, sometimes changes are cross-cutting or part of another
-> sub-system (e.g. ARM target) even though they touch files a different
-> subsystem.
+> See p.176:
 > 
-> My concern is only about the pull request process. Please don't send
-> pull requests with a new tag/branch name that is not in MAINTAINERS. No
-> PR has ever been merged from Pierrick with a build_system-* tag and he
-> is not listed in MAINTAINERS for Build System.
+> Deallocate a VCMDQ from a Virtual Interface 
+>     Logical CMDQ being deallocated for a Guest must be in decreasing order
+>     starting from the highest numbered LVCMDQ.
+
+Maybe add "Spec demands" to things like this.
+
+> > > +    for (int i = (TEGRA241_CMDQV_MAX_CMDQ - 1); i >= 0; i--) {
+> > > +        tegra241_cmdqv_free_vcmdq(cmdqv, i);
+> > > +    }
+> > > +}
+> > > +
+> > > +static bool tegra241_cmdqv_setup_vcmdq(Tegra241CMDQV *cmdqv, int
+> > index,
+> > > +                                       Error **errp)
+> > > +{
+> > > +    SMMUv3AccelState *accel = cmdqv->s_accel;
+> > > +    uint64_t base_mask = (uint64_t)R_VCMDQ0_BASE_L_ADDR_MASK |
+> > > +                         (uint64_t)R_VCMDQ0_BASE_H_ADDR_MASK << 32;
+> > > +    uint64_t addr = cmdqv->vcmdq_base[index] & base_mask;
+> > > +    uint64_t log2 = cmdqv->vcmdq_base[index] &
+> > R_VCMDQ0_BASE_L_LOG2SIZE_MASK;
+> > > +    uint64_t size = 1ULL << (log2 + 4);
+> > > +    IOMMUFDViommu *viommu = accel->viommu;
+> > > +    IOMMUFDHWqueue *hw_queue;
+> > > +    uint32_t hw_queue_id;
+> > > +
+> > > +    /* Ignore any invalid address. This may come as part of reset etc. */
+> > > +    if (!address_space_is_ram(&address_space_memory, addr) ||
+> > > +        !address_space_is_ram(&address_space_memory, addr + size - 1)) {
+> > this check looks a little bit risky, no? Don't we have a better way to
+> > test the address has been properly set?
 > 
-> This could be a sign that something in MAINTAINERS needs to be changed
-> or it could be a sign that these patches should go through another tree
-> (Paolo's or yours).
+> I think eventually kernel will handle any attempt to use an invalid address
+> through IOMMU_HW_QUEUE_ALLOC IOCTL:
+>      iommufd_hw_queue_alloc_phys()/iommufd_access_pin_pages() etc.
 > 
->> Pierrick and I are simply reviewers on the "Build System" topic,
->> but it happens that I send patches there where they are related to
->> the overall single binary objective, and I see Pierrick as a co-maintainer
->> in this area. However there is no clearly defined MAINTAINERS
->> section, we happen to touch build system related files all over
->> the tree.
+> Any attempt to pass an invalid address will return error, I think.
 > 
-> I can't accept random pull requests, even from regular contributors.
-> Patches should go through subsystem maintainers listed in the
-> MAINTAINERS file. This way we can be sure that only commits reviewed by
-> a subsystem maintainers are merged and reduce the risk that malicious
-> pull requests are merged (while I trust Pierrick, it lowers my guard if
-> I'm accepting random pull requests from anyone at all).
->
+> @Nicolin, is that a safe assumption to make?
 
-That's totally my fault here, sorry.
+Kernel validates if the gPA range is in the stage-2 page table and
+physically contiguous. It might be nicer if QEMU has a way to make
+sure that is the range is in RAM.
 
-I have been assuming that "Build and test automation, general continuous
-integration" was by extension integrating build system, but it seems
-like it doesn't. I would not dare sending PR for an area I don't
-maintain officially.
-
-As well, in the past, Richard integrated some of those patches on build
-system for single-binary, but I appreciate that he's definitely more
-legitimate than me for pulling these kind of patches.
-
-Philippe and I will remove those patches, and I'll ping Paolo to let him
-pull this instead.
-
-> Stefan
-
-Regards,
-Pierrick
+Nicolin
 
