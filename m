@@ -4,120 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BECFCD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 15:29:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4043CD343B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 15:48:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKeBQ-0002Xh-Ow; Wed, 06 May 2026 11:29:08 -0400
+	id 1wKeTU-00063j-Vx; Wed, 06 May 2026 11:47:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wKeBO-0002X9-H9
- for qemu-devel@nongnu.org; Wed, 06 May 2026 11:29:06 -0400
-Received: from 6.mo533.mail-out.ovh.net ([54.36.140.181])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1wKeT1-0005uv-2v; Wed, 06 May 2026 11:47:28 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wKeBL-00008A-Rn
- for qemu-devel@nongnu.org; Wed, 06 May 2026 11:29:06 -0400
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net [51.255.22.22])
- by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4g9fRw2tCZz5whT;
- Wed,  6 May 2026 15:28:59 +0000 (UTC)
-Received: from director6.derp.mail-out.ovh.net
- (director6.derp.mail-out.ovh.net. [127.0.0.1])
- by director6.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Wed,  6 May 2026 15:28:59 +0000 (UTC)
-Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.54.185])
- by director6.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4g9fRv4nXfz7tkr; Wed,  6 May 2026 15:28:59 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.4])
- (Authenticated sender: clg@kaod.org)
- by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 866FF24034E7; Wed,  6 May 2026 15:28:58 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-113S007d6ea0064-ddb0-46ef-9800-0928aa03a61e,
- 610448112A712636EE1F401D7B64CCFD68C41A17) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <56a6b369-ecfd-4e6b-a841-6ed1ad1c2a71@kaod.org>
-Date: Wed, 6 May 2026 17:28:57 +0200
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1wKeSc-0002ps-9x; Wed, 06 May 2026 11:47:18 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 0304D596977;
+ Wed, 06 May 2026 17:39:23 +0200 (CEST)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 0xnJf8jfe8nf; Wed,  6 May 2026 17:39:20 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id C6B27596978; Wed, 06 May 2026 17:39:20 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+Subject: [PATCH v3] ati-vga: fix ati_set_dirty address calculation
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] aspeed/hace: security fixes
-To: Kane Chen <kane_chen@aspeedtech.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>
-References: <20260504213421.710035-1-clg@redhat.com>
- <SI6PR06MB7631B46DF67C1532B154FFE1F73F2@SI6PR06MB7631.apcprd06.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <SI6PR06MB7631B46DF67C1532B154FFE1F73F2@SI6PR06MB7631.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 6790020864508668952
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGmUyvcEWgQrp14Fd/a6B9DTN4c8SOD5AEJmSX459uCYgiT8V7k4RrCtag1xIhvjNIcjkV9JdDMAz3Jn0U6lS/IohDHID53ZeRNWk7tPmH1Zv8OYaVofR8k0ehqvv8/N5T0UH8Ah6B80B+LqXXhZH6vRu3kqohRypXOwlTTEnQUn1/8LJ95JRcIU4M3lF4/0gp0F6PSwEudzBFPN9H7rDuO94ozu5cybHix7GALGC76JfIDzX/Nbx7iP9yoD/qRScfT8eNAYbibKaZ+EloEdQFxzmI1U88YR4YhO+ePMwlpigfjUhI/Lcq2AtOIKc4gJ9ofTT2a0M4NbaV6wL53Er8aKaxj6klgMe0f+N67vdiYlBzFWfmyBS5KN55TxPhjo7O10QIU+ChiJru/maQOopgndaTFrltbkXLhpDLGuuwOfvaiW9W1+vQtbFmnSCQG7Ckdm60W/anZD1GXsbWoeILYpACdo2EuUUm9oIJ40s9/IaYNxlxlR7NpLasLs5XXrrBSkQiSDnKj35LZ6tCxgx5jbI3NeFFOtAd7Dx8Ir2+CfNLstPGKDl/18b4b6kPagz1ROuxXdjM9UZncYJVKldN0AGB9s5afSj8WSFhZd2lCQbAHv3ImY7MaM1IhCyqRmGbTZ/2WHm9SOe2v9JWuBNVhJHzb+z8uIx2XQetXIAqA7A
-DKIM-Signature: a=rsa-sha256; bh=MVs0vaJrN1ohoq7WcFHfWPYGm3ljBklJT6mEDC21mbY=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1778081340; v=1;
- b=tmkui5lzBJa9Gn956Els6y7xf2GAdn1Ryzc3HkAJbm6xC3bM0xTA5v/rpSOyeb/0dEwCg/1G
- R+a5K9DMnEv//K4j/nQwhbMJigRwtv9hn8yr3pYzFLfDqeZnR4lU9CbvdE1eVThz/L5exgGF/UG
- e9Gb8yu+YYG9jXV6TJ1nIe/IRqoC82ZqdgItiuSv9FZeODS89DYzkHxN+yBR0fNqhCXx0aFoHXv
- J0jxw8rPX9LPNn6mdp8jbG15/l5yH/W95uRDX3gL+hHMchChN0JYOvJkMEJ6V/QnCEPb1p2+8lf
- oTS7KcwWYadqpJaWYd1QpQehbi+VeVvOPuP8bWDgGsDiQ==
-Received-SPF: pass client-ip=54.36.140.181; envelope-from=clg@kaod.org;
- helo=6.mo533.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
+ Chad Jablonski <chad@jablonski.xyz>, qemu-stable@nongnu.org
+Message-Id: <20260506153920.C6B27596978@zero.eik.bme.hu>
+Date: Wed, 06 May 2026 17:39:20 +0200 (CEST)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,59 +59,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/6/26 11:53, Kane Chen wrote:
->> -----Original Message-----
->> From: Cédric Le Goater <clg@redhat.com>
->> Sent: Tuesday, May 5, 2026 5:34 AM
->> To: qemu-devel@nongnu.org; qemu-arm@nongnu.org
->> Cc: Peter Maydell <peter.maydell@linaro.org>; Steven Lee
->> <steven_lee@aspeedtech.com>; Troy Lee <leetroy@gmail.com>; Jamin Lin
->> <jamin_lin@aspeedtech.com>; Kane Chen <kane_chen@aspeedtech.com>; Cé
->> dric Le Goater <clg@redhat.com>
->> Subject: [PATCH 0/2] aspeed/hace: security fixes
->>
->> Hello,
->>
->> A couple of issues in the Aspeed HACE model were reported on the
->> qemu-security list. Here are fixes.
->>
->> Thanks,
->>
->> C.
->>
->> Cédric Le Goater (2):
->>    aspeed/hace: Fix out-of-bounds read in has_padding()
->>    aspeed/hace: Prevent total_req_len overflow
->>
->>   hw/misc/aspeed_hace.c | 29 +++++++++++++++++++++++++++--
->>   1 file changed, 27 insertions(+), 2 deletions(-)
->>
->> --
->> 2.54.0
-> 
-> Hi Cédric,
-> 
-> Thank you for fixing the defects. These changes look good. However,
-> I have one question regarding another potential issue.
-> 
-> In the do_hash_operation function, after calling hash_prepare_sg_iov
-> and hash_prepare_direct_iov, the function may return early if iov_idx
-> is -1. In this case, the code flow will not reach hash_execute_acc_mode
-> or hash_execute_non_acc_mode, which means the mapped address may not be
-> unmapped properly.
-> 
-> I think we may also need to unmap the address when this error condition
-> occurs. Do you think this should be included in this patch series, or
-> would a separate patch be preferred?
-> 
-> If a separate patch is preferred, then for this patch series:
-> Reviewed-by: Kane Chen kane_chen@aspeedtech.com
+From: Chad Jablonski <chad@jablonski.xyz>
 
-Should be :
+This fixes three bugs with the ati_set_dirty address calculation.
 
-Reviewed-by: Kane Chen <kane_chen@aspeedtech.com>
+First, vbe_start_addr is a word offset. All other values in the
+calculation are byte offsets. It must be converted to bytes.
 
-Thanks,
+Second, when setting the dirty region with memory_region_set_dirty
+the vbe_start_addr is used to calculate the start of the dirty region.
+This is a problem because the vbe_start_addr is the offset at which scan out
+begins. This puts it in the visible screen coordinate system. The dirty
+region however is in the virtual screen coordinate system. This can cause both
+overmarking and missed updates. This is removed from the calculation.
 
-C.
+Third, when the start address of a blit is outside of the bounds check
+the entire blit is missed and not set to dirty. This happens even if the
+blit does partially overlap with the visible screen. The fix here is to
+find the intersection of the visible screen and the blit and mark only
+that region as dirty.
+
+This does not attempt to apply clipping to the blit. So there will be
+overmarking in some cases.
+
+Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+[balaton: drop excess parenthesis, use offsets instead of pointers]
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+---
+To help moving this forward I've picked it up and made the changes I
+suggested in review.
+
+ hw/display/ati_2d.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
+
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index 504d1c5708..48498677c7 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -69,18 +69,28 @@ typedef struct {
+ static void ati_set_dirty(VGACommonState *vga, const ATI2DCtx *ctx)
+ {
+     DisplaySurface *ds = qemu_console_surface(vga->con);
++    unsigned int bypp = ctx->bpp / 8;
++    hwaddr dirty_start = ctx->dst_offset + ctx->dst.x * bypp +
++                         ctx->dst.y * ctx->dst_stride;
++    hwaddr dirty_end = dirty_start + ctx->dst.width * bypp +
++                       (ctx->dst.height - 1) * ctx->dst_stride;
++    /*
++     * The blit may be outside of the visible screen (e.g. virtual desktops.)
++     * Dirty only the intersection of the visible screen and the blit.
++     */
++    hwaddr vis_start = vga->vbe_start_addr * 4;
++    hwaddr vis_end = vis_start + vga->vbe_regs[VBE_DISPI_INDEX_YRES] *
++                       vga->vbe_line_offset;
++    hwaddr start = MAX(vis_start, dirty_start);
++    hwaddr end = MIN(vis_end, dirty_end);
+ 
+     (void)ds;
+     DPRINTF("%p %u ds: %p %d %d rop: %x\n", vga->vram_ptr, vga->vbe_start_addr,
+             surface_data(ds), surface_stride(ds), surface_bits_per_pixel(ds),
+             ctx->rop3 >> 16);
+-    if (ctx->dst_bits >= vga->vram_ptr + vga->vbe_start_addr &&
+-        ctx->dst_bits < vga->vram_ptr + vga->vbe_start_addr +
+-        vga->vbe_regs[VBE_DISPI_INDEX_YRES] * vga->vbe_line_offset) {
+-        memory_region_set_dirty(&vga->vram,
+-                                vga->vbe_start_addr + ctx->dst_offset +
+-                                ctx->dst.y * ctx->dst_stride,
+-                                ctx->dst.height * ctx->dst_stride);
++
++    if (start < end) {
++        memory_region_set_dirty(&vga->vram, start, end - start);
+     }
+ }
+ 
+-- 
+2.41.3
+
 
