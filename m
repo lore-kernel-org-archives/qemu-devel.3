@@ -4,58 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13C03CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 09:00:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 383A4CD3436
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 09:10:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKY7H-00023y-Mi; Wed, 06 May 2026 05:00:27 -0400
+	id 1wKYGq-0003li-UM; Wed, 06 May 2026 05:10:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexandru.elisei@arm.com>)
- id 1wKY78-000217-2g
- for qemu-devel@nongnu.org; Wed, 06 May 2026 05:00:18 -0400
-Received: from foss.arm.com ([217.140.110.172])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <alexandru.elisei@arm.com>) id 1wKY75-0007ej-Au
- for qemu-devel@nongnu.org; Wed, 06 May 2026 05:00:17 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
- by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 5AEC61A25;
- Wed,  6 May 2026 02:00:05 -0700 (PDT)
-Received: from raptor (usa-sjc-mx-foss1.foss.arm.com [172.31.20.19])
- by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 43E523F836;
- Wed,  6 May 2026 02:00:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=arm.com; s=foss;
- t=1778058010; bh=bLe/QX5/0o/d4nlfDaO/xQf9oT1VeInhFRblscbUl8Y=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=FFLM80pfAJPlpvnWuIusIk6eU/BnLbm+MpfnEX2p3YteXEKJdHmIezKISdJ8ywsId
- KKy2jmtbaDjQVhrytJNskHFAmuHC1nyrI7M5PlsYMTufxgjfE4OAA0B1M/T+J5DUVv
- ZmUAbkNUSOqLPxHb4MeyAFCPBbzV44ESHJKtP/ZU=
-Date: Wed, 6 May 2026 10:00:05 +0100
-From: Alexandru Elisei <alexandru.elisei@arm.com>
-To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Andrew Jones <andrew.jones@linux.dev>,
- Eric Auger <eric.auger@redhat.com>,
- "open list:ARM" <kvmarm@lists.linux.dev>,
- "open list:Default mailing list" <kvm@vger.kernel.org>
-Subject: Re: [kvm-unit-tests PATCH] arm: add wfx test case
-Message-ID: <afsDFUaOUBknpo1Q@raptor>
-References: <20260427130045.3669851-1-alex.bennee@linaro.org>
- <afSnVJLe7HrB6ISS@raptor> <87zf2jcisg.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKYGp-0003lE-10
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 05:10:19 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKYGn-0000u5-FG
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 05:10:18 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4891f625344so7283875e9.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 02:10:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778058615; x=1778663415; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=snPqNajal7y6qubnA9pyHb7+O7dHOfLjv5cOqMGADZQ=;
+ b=R/VmTEs3M+zm2ibvIxYNarHeTaqERoQTpol1xp7SBcJ7pEQoYTdORsE46BTtR2nY6K
+ A2n4aBzZ3uhAmfgHx6Dqq+Vc6SAgiAwenRE40RXEaPsob4ag1kEh9pKy0NMzo2nG6HUZ
+ 2BzB5h28V1QfuOhEqUo0sGBMLCf/QnudIxR0t7wBNZb/MMZlP9gZT7uiO9lpLLNMuRKX
+ 9Fm7wo1gkjLIgTmXH7tJ0Fs3jduMe8VdBzbfyh9i6fMk5oQLlFid//3EDvoi4i8dD/ba
+ AxF9VA93i4sLkwq4pN6hkhDrSuNBspn0EZjDbYChmsDX4v7xmjhJyTa4gHNvtYG3Fl5i
+ 5reg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778058615; x=1778663415;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=snPqNajal7y6qubnA9pyHb7+O7dHOfLjv5cOqMGADZQ=;
+ b=eDGN5FgdJ4i0qyLA+3L1YFFGDtlJT2wp0DcQ4sn6lSbhZhE26/7zV9cVwYeZhUJnqw
+ QsgydNnrLVdBg00j6U7SCc0C5MUvL84SBA4/RRvWBiDBMciofysl6JzR/3tGBaRCSSWD
+ Ysg1hTZKcBB9mabT/CPsRjDoq4KuOV/rD7ZGl32Q7pxgj8BurFfvH0QCT4ltP9LQ/zX8
+ MAnxGKa36WVcNTeHmLV0eifufawtyh5uQ6iWAGojeCTO1Lo3Xoiy3z6oo2u0Mq3Axkhv
+ 4AUjSanZ1kv3WqztHoQ1kC1Rv9XgKubc9kWlL/6DVKVeVzxJmH8m5LD8WYEKlaxah3Fx
+ xSRQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ93ngaMFY6iYx6ca9LEeWmf6hQjlMFViOTH+QyAvJRFgZSQLoA243vZ0Igd+oNEeghL2tuuFyAByVsU@nongnu.org
+X-Gm-Message-State: AOJu0YxEddkq/2CNM9Vu9CftziCdBOrgiH5PWEanJPCEW3XdDauPgvHB
+ 8yRmQrt0uI/3zSCdHoep8gWbKMQzKLaTlJ75+jvEO97s+nN1c90+w1zfpLwvnPa7Dhc=
+X-Gm-Gg: AeBDieu6+qF3gTI7uS7WbpJ5zxD4HMghrqQdvSSBFoll89YfUTd/bJhvK43tE+1rHLQ
+ BUOuXiZkeuGu+EQxE9zX8ykKO/tEishV1GyLpf7b3wmdjLAu6eRv3fnlYNjDVH5yQaPaZHJyzEl
+ /MkfKa/CpbsJuD7F6tj46n2epx+zF/8OqChEMAGDmVBFRJoaohGfXG6Rj+rDZz/cDD6GuzN6u7q
+ xil8MvvzOpX87nV22WMIvw/maXaDSbT42PGPVbH2QG6gZ3ASaG7SzAHEnRxMeKYO/tuJQOZHaZS
+ Xp7tGn5nhDIxAaKfJqcNESkojGqrNnNdBqbVY6Q+Fe9fkYYcVobKqION7c9FR/pXCShbiq5DhXr
+ DNlqaixsFeFUJj98RV02gJqme2y8bAdjIaVVmQbETAbvqzZrqvaGtrE8VWh54rdXoya1Yg7aI1q
+ ecLl4IjXfewq/Sr5CiQMezOZlGPRyRYaUAa/5zFTPjZLmNWFxPjXqUM3R2gylo0tDsUJmpwVoMB
+ uNepr5pFJemYKE=
+X-Received: by 2002:a05:600c:5747:b0:488:fbf6:ea59 with SMTP id
+ 5b1f17b1804b1-48d142654f9mr89061925e9.12.1778058615263; 
+ Wed, 06 May 2026 02:10:15 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45054b02802sm11036870f8f.17.2026.05.06.02.10.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 May 2026 02:10:14 -0700 (PDT)
+Message-ID: <7e37497a-212c-449d-9a12-cba93d7d48e7@linaro.org>
+Date: Wed, 6 May 2026 11:10:13 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 1/2] hw/usb/hcd-ehci: Rename migration compatibility
+ fetch address fields
+Content-Language: en-US
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ "peterx@redhat.com" <peterx@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>, "farosas@suse.de" <farosas@suse.de>,
+ "flwu@google.com" <flwu@google.com>,
+ "nabihestefan@google.com" <nabihestefan@google.com>
+References: <20260506032643.2510575-1-jamin_lin@aspeedtech.com>
+ <20260506032643.2510575-2-jamin_lin@aspeedtech.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260506032643.2510575-2-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87zf2jcisg.fsf@draig.linaro.org>
-Received-SPF: pass client-ip=217.140.110.172;
- envelope-from=alexandru.elisei@arm.com; helo=foss.arm.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,207 +114,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 6/5/26 05:26, Jamin Lin wrote:
+> Rename the 32-bit fetch address migration helper fields to make
+> their purpose clearer.
+> 
+> These fields are only used for migration compatibility with older
+> machine types that transfer 32-bit fetch addresses in the migration
+> stream. They are not runtime fetch address state.
+> 
+> Also add comments to clarify the relationship between the migration
+> compatibility fields and the runtime 64-bit fetch address fields.
+> 
+> No functional change.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   hw/usb/hcd-ehci.h | 17 ++++++++++++++---
+>   hw/usb/hcd-ehci.c | 12 ++++++------
+>   2 files changed, 20 insertions(+), 9 deletions(-)
 
-On Fri, May 01, 2026 at 03:21:19PM +0100, Alex Bennée wrote:
-> Alexandru Elisei <alexandru.elisei@arm.com> writes:
-> 
-> > Hi Alex,
-> >
-> > On Mon, Apr 27, 2026 at 02:00:45PM +0100, Alex Bennée wrote:
-> >> This is based on a similar test case I wrote for QEMU's tcg tests although
-> >> obviously able to take advantage of kvm-unit-tests additional plumbing for
-> >> dealing with the GIC and IRQs.
-> >> 
-> >> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> >> ---
-> >>  arm/Makefile.arm64        |   1 +
-> >>  lib/arm64/asm/processor.h |   7 ++
-> >>  lib/arm64/asm/sysreg.h    |   3 +
-> >>  arm/wfx.c                 | 137 ++++++++++++++++++++++++++++++++++++++
-> >>  arm/unittests.cfg         |   5 ++
-> >>  5 files changed, 153 insertions(+)
-> >>  create mode 100644 arm/wfx.c
-> >> 
-> >> diff --git a/arm/Makefile.arm64 b/arm/Makefile.arm64
-> >> index a40c830d..52b3f35d 100644
-> >> --- a/arm/Makefile.arm64
-> >> +++ b/arm/Makefile.arm64
-> >> @@ -64,6 +64,7 @@ tests += $(TEST_DIR)/cache.$(exe)
-> >>  tests += $(TEST_DIR)/debug.$(exe)
-> >>  tests += $(TEST_DIR)/fpu.$(exe)
-> >>  tests += $(TEST_DIR)/mte.$(exe)
-> >> +tests += $(TEST_DIR)/wfx.$(exe)
-> >>  
-> >>  include $(SRCDIR)/$(TEST_DIR)/Makefile.common
-> >>  
-> >> diff --git a/lib/arm64/asm/processor.h b/lib/arm64/asm/processor.h
-> >> index 32ddc1b3..2104036d 100644
-> >> --- a/lib/arm64/asm/processor.h
-> >> +++ b/lib/arm64/asm/processor.h
-> >> @@ -173,5 +173,12 @@ static inline bool system_supports_rndr(void)
-> >>  	return ((id_aa64isar0_el1 >> ID_AA64ISAR0_EL1_RNDR_SHIFT) & 0xf) != 0;
-> >>  }
-> >>  
-> >> +static inline bool system_supports_wfxt(void)
-> >> +{
-> >> +	u64 id_aa64isar2_el1 = read_sysreg_s(ID_AA64ISAR2_EL1);
-> >> +
-> >> +	return ((id_aa64isar2_el1 >> ID_AA64ISAR2_EL1_WFxT_SHIFT) & 0xf) != 0;
-> >> +}
-> >> +
-> >>  #endif /* !__ASSEMBLER__ */
-> >>  #endif /* _ASMARM64_PROCESSOR_H_ */
-> >> diff --git a/lib/arm64/asm/sysreg.h b/lib/arm64/asm/sysreg.h
-> >> index f2d05018..cb96a649 100644
-> >> --- a/lib/arm64/asm/sysreg.h
-> >> +++ b/lib/arm64/asm/sysreg.h
-> >> @@ -77,6 +77,9 @@ asm(
-> >>  #define ID_AA64ISAR0_EL1_RNDR_SHIFT	60
-> >>  #define ID_AA64PFR1_EL1_MTE_SHIFT	8
-> >>  
-> >> +#define ID_AA64ISAR2_EL1		sys_reg(3, 0, 0, 6, 2)
-> >> +#define ID_AA64ISAR2_EL1_WFxT_SHIFT	0
-> >> +
-> >>  #define ID_AA64MMFR0_EL1_FGT_SHIFT	56
-> >>  #define ID_AA64MMFR0_EL1_FGT_FGT2	0x2
-> >>  
-> >> diff --git a/arm/wfx.c b/arm/wfx.c
-> >> new file mode 100644
-> >> index 00000000..912e50e6
-> >> --- /dev/null
-> >> +++ b/arm/wfx.c
-> >> @@ -0,0 +1,137 @@
-> >> +/*
-> >> + * WFX Instructions Test (WFI, WFE, WFIT, WFET)
-> >> + *
-> >> + * Copyright (c) 2026 Linaro Ltd
-> >> + *
-> >> + * SPDX-License-Identifier: GPL-2.0-or-later
-> >> + */
-> >> +
-> >> +#include <libcflat.h>
-> >> +#include <asm/processor.h>
-> >> +#include <asm/gic.h>
-> >> +#include <asm/timer.h>
-> >> +#include <asm/io.h>
-> >> +
-> >> +#define TIMEOUT 200000
-> >> +
-> >> +#define sev() asm volatile("sev" : : : "memory")
-> >> +#define sevl() asm volatile("sevl" : : : "memory")
-> >> +#define wfi() asm volatile("wfi" : : : "memory")
-> >> +#define wfe() asm volatile("wfe" : : : "memory")
-> >> +
-> >> +#define wfit(reg) \
-> >> +	asm volatile(".arch armv8.7-a\n\twfit %0" : : "r" (reg) : "memory")
-> >> +#define wfet(reg) \
-> >> +	asm volatile(".arch armv8.7-a\n\twfet %0" : : "r" (reg) : "memory")
-> >> +
-> >> +static void timer_handler(struct pt_regs *regs)
-> >> +{
-> >> +	/* Disable timer to stop IRQ from re-firing */
-> >> +	write_sysreg(0, cntv_ctl_el0);
-> >> +}
-> >
-> > It is customary for the interrupt handler to ack the interrupt at the GIC level.
-> >
-> >> +
-> >> +static bool check_elapsed(uint64_t start, uint64_t threshold, const char *test, bool more)
-> >> +{
-> >> +	uint64_t end = read_sysreg(cntvct_el0);
-> >> +	uint64_t elapsed = end - start;
-> >> +	bool pass = more ? elapsed >= threshold : elapsed <= threshold;
-> >> +
-> >> +	report(pass, "%s (%ld ticks)", test, elapsed);
-> >> +
-> >> +	if (!pass) {
-> >> +		report_info("%s %s", test, more ? "woke too early" : "slept despite SEV");
-> >> +	}
-> >> +	return pass;
-> >> +}
-> >> +
-> >> +static void test_wfi(void)
-> >> +{
-> >> +	uint64_t start;
-> >> +
-> >> +	report_info("Testing WFI...");
-> >> +
-> >> +	start = read_sysreg(cntvct_el0);
-> >> +	write_sysreg(TIMEOUT, cntv_tval_el0);
-> >> +	write_sysreg(1, cntv_ctl_el0); /* Enable timer, no mask */
-> >> +	isb();
-> >> +
-> >> +	local_irq_enable();
-> >> +	wfi();
-> >
-> > Consider this scenario:
-> >
-> > 	local_irq_enable();
-> > 	// CPU takes the interrupt, handles it and returns.
-> > 	wfi(); <- CPU now waits forever for an interrupt that will never come
-> >
-> > The proper way to do it on baremetal would be:
-> >
-> > 	local_irq_disable();
-> > 	// Program timer to fire
-> > 	wfi();
-> > 	// Timer fires, GIC asserts the interrupt, WFI completes
-> > 	local_irq_enable();
-> > 	// CPU handles the interrupt
-> > 	check_elapsed(..)
-> >
-> > But this is not baremetal. KVM can decide not to trap WFI (look at
-> > arch/arm64/kvm/arm.c::kvm_arch_vcpu_load() -> kvm_vpcu_should_clear_twi()). In
-> > that case, the WFI might complete due a host interrupt, and check_elapsed() will
-> > fail because the timer hasn't yet fired.
-> >
-> >> +	local_irq_disable();
-> >> +
-> >> +	check_elapsed(start, TIMEOUT, "WFI", true);
-> >> +}
-> >> +
-> >> +static void test_wfe(void)
-> >> +{
-> >> +	uint64_t start;
-> >> +
-> >> +	report_info("Testing WFE/SEV...");
-> >> +	sev();
-> >> +	start = read_sysreg(cntvct_el0);
-> >> +	wfe();
-> >> +	check_elapsed(start, TIMEOUT, "WFE/SEV", false);
-> >> +
-> >> +	report_info("Testing WFE/SEVL...");
-> >> +	sevl();
-> >> +	start = read_sysreg(cntvct_el0);
-> >> +	wfe();
-> >> +	check_elapsed(start, TIMEOUT, "WFE/SEVL", false);
-> >> +}
-> >
-> > I haven't thought about this too much, but it looks to me like the same
-> > situation with WFI can happen with WFE
-> >
-> > Also, kvm-unit-tests() makes use of WFE and SEV for multithreading, and the fact
-> > that multithreaded tests work at all might be taken as proof enough that the two
-> > instructions are correctly implemented.
-> 
-> So I'm using kvm-unit-test to exercise QEMU's TCG modelling of the
-> instructions, see:
-> 
->   Message-ID: <20260430104434.1482407-1-alex.bennee@linaro.org>
->   Date: Thu, 30 Apr 2026 11:44:27 +0100
->   Subject: [PATCH v4 0/7] target/arm: fully model WFxT instructions for A-profile
-> 
-> So while I'm confident the current modelling doesn't cause issues
-> (because we basically treat it as a NOP) I wanted to check the various
-> modes behave as they should with the above patches.
-> 
-> I can limit the test to TCG only if it is likely to fail under KVM.
-
-I think that would be best. But please also ack the interrupt in the timer
-IRQ handler, as that is what software would do (you can have a look at
-arm/timer.c::irq_handler() for an example).
-
-Thanks,
-Alex
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
