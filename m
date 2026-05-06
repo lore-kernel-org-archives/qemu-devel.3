@@ -4,55 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 748B6CD343B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:39:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D241CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:42:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKdP5-00016U-2w; Wed, 06 May 2026 10:39:11 -0400
+	id 1wKdRm-0002Ki-32; Wed, 06 May 2026 10:41:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wKdOz-00015O-Sw
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:39:07 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wKdOx-0000NH-9p
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:39:05 -0400
-Received: from example.com (unknown [167.220.208.68])
- by linux.microsoft.com (Postfix) with ESMTPSA id E128420B7165;
- Wed,  6 May 2026 07:38:57 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E128420B7165
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1778078339;
- bh=1tPpnBNTN4DbbMHb+HNxfG3F4TosufSfNcZ8AD4u7nY=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=GEmI4q6+W9V+g0C6Br5smNb9srUJMXtRiBEJARHM/65QAKGDF79Q2XTHU9W9WbkYe
- 4c6+gTp5Xbar5Jn44M2D7BUH0R5koSbxDR6iMrR5DnaQabfms/ZSUQqOmBs9QSc3b0
- xl7BnfMiXFaMUM+9o3LdMiBYs19VCIAhAzSfgSKg=
-Date: Wed, 6 May 2026 16:38:57 +0200
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 7/7] target/i386/mshv: fix pio handlers clobbering
- device-modified registers
-Message-ID: <aftSgerKdLtpmMMR@example.com>
-References: <20260505185028.237207-1-dblanzeanu@linux.microsoft.com>
- <20260505185028.237207-8-dblanzeanu@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wKdRe-0002JS-BN
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:41:52 -0400
+Received: from mail-dl1-x122c.google.com ([2607:f8b0:4864:20::122c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1wKdRb-0001PJ-53
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:41:49 -0400
+Received: by mail-dl1-x122c.google.com with SMTP id
+ a92af1059eb24-12e332315a8so354518c88.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:41:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778078492; cv=none;
+ d=google.com; s=arc-20240605;
+ b=SC/vs859sKx/K/DhKArNLGM0IpnKWRbwlQFuAMI1E+g5fq/XmoYBYWbhRjQ8+A/Uq9
+ GFp991pHy8EPVUODJhV7n8RIBPhWfzn3kS58pp9N3Yzt0VTLS1Pkty4LsTpQMTzIA1+M
+ wgSHz+dRHn5/n9MxevF7KmGPewPIvjjtN22gGDm6v8l6yRJCmMt2YUNB+R3JtzcakK/2
+ tZpy2yXxJbrr4+KNg1odzWEDOks3kAftDUoMYlrKHUtMA7jCwftzP5ELZadkpHIcFgaH
+ 4Mu27W4oRHnH/pbeytWIlHc2wd6OPz0BaMMA0CzpikwKPZ8lkwDwr5Txsklh9OMNnMNy
+ hP3w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=wfJXtOPnbdhNPMTvEDgxIMbAualP+stvQwz0I/dlJOs=;
+ fh=ynMZpoLdc8EcguBEfEqlF67vL8jpBgF8ghejmEGS7cY=;
+ b=W5B6qh/xgOiXExlWLQittPs7s+gliKAfTL6nQ1ky6BXAitcab4jQ3KuYZY5P4Kel/l
+ dArUUdlVTtv0pqNSr+cOL1QyIXJxe/iBSRTM+sbz61VhqFOEBpAc2qlqRfJNzmdGTXem
+ kcDd7W6ZSX0XIdD+GjgoSfMzlBn/VbHKSGIKjk5f5g1dGQfz+rOIRTzFM6N0u1ahhq79
+ 0/8GoYcgJZ6rZV9SE8YVFIU5C4kBBOcI/ltBYZZiaO5un3FequQLnx79CkAXEpWY6nAo
+ oMHsYuCVdX3Z9cpOtlKDXSGkJuG+LRzdCA9mtomHe3Sh1NWZTMdU3PxC8sek+RZvgTx2
+ sR2w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20251104; t=1778078492; x=1778683292; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wfJXtOPnbdhNPMTvEDgxIMbAualP+stvQwz0I/dlJOs=;
+ b=q+vXTnxHlpwO5CXTrydUSPHxEHC2eTlPBOfVBlsQr/ELviMe12sTarLKP6k2hsbtf1
+ 9LEENf1F5oMLfjPKTDLLnS51JxQtbyRYeq9gmeLaGIEXJ/sRXs9knjyUzy3lIVxAKtLF
+ O8zKdl1NZQhXDNMewpk55pn20k6r1j+Fvp2qg2e6xYWlw2596GjHdxrV0/cyRLE2GNV2
+ yKxvVygvmdZBgu1ELoqHe7VeKN2APsjAr4U1kcr5vYuQOQQcBnBTJ0Z6N9aUAEfp4A6R
+ 8fq3AA8kyJasbrlgd/9iRCzEOsKIOIjq7hFfSGSMFzY2OxsmNKzEUPOhSdGqq+RAaEXs
+ DiZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778078492; x=1778683292;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=wfJXtOPnbdhNPMTvEDgxIMbAualP+stvQwz0I/dlJOs=;
+ b=s2dMjZiOR9R9cP6q9C/iBmm5Fb+w6ks5GH832cPg9NDqMUyXfuJvHiGbKZNt19VZi6
+ TMAsGy6PCczxdOL/jTNJYrGLR6Ze+9QG+ZK3RoFEZ84fO2qsXZfw0KlcIv0RWKr5enyl
+ qxFBSUvBGCjT9txMEaSk2oq25ewWs5alIubOPT7nzja27WXuFdmySVa2g4UiE1QLiT+s
+ DkfVuNwmxP6qX6dYN144CvCdZLrjTXnlA4HVUNXQP6OrUC9OnEWCyc6WnNR023XZuMp6
+ IMpimqrbp3y9xow9cnpbY6WfCKxl/ZBy3OcrVXPgxHKQgbLtrsBVD00WIkzaft8+18GK
+ jjPQ==
+X-Gm-Message-State: AOJu0YxT0e0u+0JmnsFzDP4NtYOT2rhjxKxcS8UR3nOEbq9E19ef1H5H
+ X9woPFwOM38XMO59CSTOpbrNuMQuk15tKLTPQBN7DYJz6K6VHCIJ7mCtHAp3QcJ1qQgWojJ+Kv7
+ DY4mtsTBlv/7HfUQkQ4dEx0DZiO+QWgo=
+X-Gm-Gg: AeBDievA/LVFaDFeNCT7s/6tEAPLncmZpdXDIsFIPn4hPm1H2L7hvazY616I3UQyl12
+ SwKg12gyb3LiG1mo9NUriTJe68aLdw9CPeb4sXui8Z7ZzsxgXvBCmtwlYFSyOrCm5IoUds45yt1
+ FmoPMZCu+v6hirhRkJF2VXkbL/KS2eIUJffQ8ZhV6nhOqfaZCBmqbmS4IqzbguwEywWbrZqpvOh
+ j038gMBWqetE0vQhNUBmE4Dzj1fwXx7BjRXVwPq94BqEh1Lc3f+QBn4hbCPhfm3K12sp8yvG4cr
+ J57H65rN1/azYCsadFP1vzEkNeMYdUkBycwK2v1td6Ec8RHZ
+X-Received: by 2002:a05:7023:b07:b0:130:9b78:b17b with SMTP id
+ a92af1059eb24-1318eb48a01mr1927024c88.38.1778078492199; Wed, 06 May 2026
+ 07:41:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260505185028.237207-8-dblanzeanu@linux.microsoft.com>
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20260505230644.2710049-1-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260505230644.2710049-1-pierrick.bouvier@oss.qualcomm.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Wed, 6 May 2026 10:41:18 -0400
+X-Gm-Features: AVHnY4I87v8kJxoyertslRanjz79A6eH0OhlXw1xGT4dfT1aAxvt9Wepi_TL3sY
+Message-ID: <CAJSP0QUki9C6Nk8owfvmfyy_vfYT66mFQfsharkZ6GnDCLR5zg@mail.gmail.com>
+Subject: Re: [PULL 0/2] Build system: add stubs per target
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org, 
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::122c;
+ envelope-from=stefanha@gmail.com; helo=mail-dl1-x122c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,176 +116,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 05, 2026 at 09:50:28PM +0300, Doru Blânzeanu wrote:
-> When a device handler (e.g. vmport) calls cpu_synchronize_state() during
-> I/O port dispatch, it sets cpu->accel->dirty = true and may modify
-> registers directly in env. The old PIO code ignored this: it
-> unconditionally wrote the stale info->rax from the VM-exit intercept
-> message back to the hypervisor and then cleared dirty, discarding any
-> register changes made by the device.
-> 
-> Bifurcate both handlers on cpu->accel->dirty:
-> 
-> handle_pio_non_str:
-> - dirty path: update env->eip directly. For reads (IN), merge the I/O
->   result into env->regs[R_EAX] (which may have been modified by the
->   device) rather than info->rax. For writes (OUT), leave RAX untouched.
->   Flush all registers via mshv_store_regs() and clear dirty.
-> - non-dirty path: write RIP and RAX via set_x64_registers hypercall as
->   before.
-> 
-> handle_pio_str:
-> - dirty path: update env->eip and the appropriate index register
->   (RSI for OUTS, RDI for INS) directly. Flush via mshv_store_regs()
->   and clear dirty.
-> - non-dirty path: write the index register and RIP via
->   set_x64_registers. Drop the RAX assignment that was here before;
->   string I/O does not modify RAX, and set_x64_registers is hardcoded
->   to write only 2 registers so the third slot was silently ignored
->   anyway.
-> 
-> Remove the unconditional "cpu->accel->dirty = false" at the end of both
-> handlers. In the non-dirty fast path it was redundant (already false).
-> In the dirty path it was actively harmful: it told the vcpu run loop
-> that env was clean when it was not, losing the device's modifications.
-> 
-> Signed-off-by: Doru Blânzeanu <dblanzeanu@linux.microsoft.com>
-> ---
->  target/i386/mshv/mshv-cpu.c | 82 ++++++++++++++++++++++++++-----------
->  1 file changed, 59 insertions(+), 23 deletions(-)
-> 
-> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-> index 0cfac26a5c..7be3fdcc45 100644
-> --- a/target/i386/mshv/mshv-cpu.c
-> +++ b/target/i386/mshv/mshv-cpu.c
-> @@ -1348,7 +1348,7 @@ static int pio_write(uint64_t port, const uint8_t *data, uintptr_t size,
->      return ret;
->  }
->  
-> -static int handle_pio_non_str(const CPUState *cpu,
-> +static int handle_pio_non_str(CPUState *cpu,
->                                hv_x64_io_port_intercept_message *info)
->  {
->      size_t len = info->access_info.access_size;
-> @@ -1357,10 +1357,12 @@ static int handle_pio_non_str(const CPUState *cpu,
->      uint32_t val, eax;
->      const uint32_t eax_mask =  0xffffffffu >> (32 - len * 8);
->      size_t insn_len;
-> -    uint64_t rip, rax;
-> +    uint64_t rip;
->      uint32_t reg_names[2];
->      uint64_t reg_values[2];
->      uint16_t port = info->port_number;
-> +    X86CPU *x86_cpu = X86_CPU(cpu);
-> +    CPUX86State *env = &x86_cpu->env;
->  
->      if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
->          union {
-> @@ -1391,21 +1393,40 @@ static int handle_pio_non_str(const CPUState *cpu,
->  
->      /* Advance RIP and update RAX */
->      rip = info->header.rip + insn_len;
-> -    rax = info->rax;
->  
-> -    reg_names[0] = HV_X64_REGISTER_RIP;
-> -    reg_values[0] = rip;
-> -    reg_names[1] = HV_X64_REGISTER_RAX;
-> -    reg_values[1] = rax;
-> +    if (cpu->accel->dirty) {
-> +        env->eip = rip;
-> +        if (access_type != HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-> +            /*
-> +             * For reads, merge the I/O result into the current RAX.
-> +             * Use env->regs[R_EAX] as the base since a device handler
-> +             * (e.g. vmport) may have called cpu_synchronize_state()
-> +             * and modified registers.
-> +             */
-> +            eax = (((uint32_t)env->regs[R_EAX]) & ~eax_mask)
-> +                  | (val & eax_mask);
-> +            env->regs[R_EAX] = (uint64_t)eax;
-> +        }
-> +        /* Sync modified standard registers back and clear dirty. */
-> +        ret = mshv_store_regs(cpu);
-> +        if (ret < 0) {
-> +            error_report("Failed to store registers after PIO");
-> +            return -1;
-> +        }
-> +        cpu->accel->dirty = false;
-> +    } else {
-> +        reg_names[0] = HV_X64_REGISTER_RIP;
-> +        reg_values[0] = rip;
-> +        reg_names[1] = HV_X64_REGISTER_RAX;
-> +        reg_values[1] = info->rax;
->  
-> -    ret = set_x64_registers(cpu, reg_names, reg_values);
-> -    if (ret < 0) {
-> -        error_report("Failed to set x64 registers");
-> -        return -1;
-> +        ret = set_x64_registers(cpu, reg_names, reg_values);
-> +        if (ret < 0) {
-> +            error_report("Failed to set x64 registers");
-> +            return -1;
-> +        }
->      }
->  
-> -    cpu->accel->dirty = false;
-> -
->      return 0;
->  }
->  
-> @@ -1521,6 +1542,7 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
->      bool repop = info->access_info.rep_prefix == 1;
->      size_t repeat = repop ? info->rcx : 1;
->      size_t insn_len = info->header.instruction_length;
-> +    uint64_t rip;
->      bool direction_flag;
->      uint32_t reg_names[3];
->      uint64_t reg_values[3];
-> @@ -1554,18 +1576,32 @@ static int handle_pio_str(CPUState *cpu, hv_x64_io_port_intercept_message *info)
->          reg_values[0] = info->rdi;
->      }
->  
-> -    reg_names[1] = HV_X64_REGISTER_RIP;
-> -    reg_values[1] = info->header.rip + insn_len;
-> -    reg_names[2] = HV_X64_REGISTER_RAX;
-> -    reg_values[2] = info->rax;
-> +    rip = info->header.rip + insn_len;
->  
-> -    ret = set_x64_registers(cpu, reg_names, reg_values);
-> -    if (ret < 0) {
-> -        error_report("Failed to set x64 registers");
-> -        return -1;
-> -    }
-> +    if (cpu->accel->dirty) {
-> +        env->eip = rip;
-> +        if (access_type == HV_X64_INTERCEPT_ACCESS_TYPE_WRITE) {
-> +            env->regs[R_ESI] = info->rsi;
-> +        } else {
-> +            env->regs[R_EDI] = info->rdi;
-> +        }
-> +        /* Sync modified standard registers back and clear dirty. */
-> +        ret = mshv_store_regs(cpu);
-> +        if (ret < 0) {
-> +            error_report("Failed to store registers after string PIO");
-> +            return -1;
-> +        }
-> +        cpu->accel->dirty = false;
-> +    } else {
-> +        reg_names[1] = HV_X64_REGISTER_RIP;
-> +        reg_values[1] = rip;
->  
-> -    cpu->accel->dirty = false;
-> +        ret = set_x64_registers(cpu, reg_names, reg_values);
-> +        if (ret < 0) {
-> +            error_report("Failed to set x64 registers");
-> +            return -1;
-> +        }
-> +    }
->  
->      return 0;
->  }
-> -- 
-> 2.53.0
+On Tue, May 5, 2026 at 7:07=E2=80=AFPM Pierrick Bouvier
+<pierrick.bouvier@oss.qualcomm.com> wrote:
+>
+> The following changes since commit a85c588d07f8d3345ccad38b22026569a04571=
+d1:
+>
+>   Merge tag 'pull-monitor-2026-05-05' of https://repo.or.cz/qemu/armbru i=
+nto staging (2026-05-05 10:11:49 -0400)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/build_system-20260505
+>
+> for you to fetch changes up to 2e44ff32fc758bf8c0df13b0287afb75bb00c38e:
+>
+>   target/arm: define stub library (2026-05-05 16:06:00 -0700)
+>
+> ----------------------------------------------------------------
+> Changes:
+> - [PATCH 0/2] single-binary: add stubs for target/ (Pierrick Bouvier <pie=
+rrick.bouvier@oss.qualcomm.com>)
+>   Link: https://lore.kernel.org/qemu-devel/20260424230103.1579600-1-pierr=
+ick.bouvier@oss.qualcomm.com
+>
+> ----------------------------------------------------------------
+> Pierrick Bouvier (2):
+>       meson.build: define stubs library per target base architecture
+>       target/arm: define stub library
+>
+>  meson.build                | 22 +++++++++++++++++++---
+>  target/arm/meson.build     |  8 +++-----
+>  target/arm/tcg/meson.build |  2 +-
+>  3 files changed, 23 insertions(+), 9 deletions(-)
 
-Reviewed-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Is this a pull request for Paolo's build system tree?
+
+I'm not merging this directly because I prefer to follow MAINTAINERS
+so it's clear who sends pull requests for each subsystem. That way
+maintainers won't be surprised by me merging a pull request from
+another contributor who is not officially the maintainer and it's also
+better for security.
+
+Thanks,
+Stefan
 
