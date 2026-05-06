@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E957CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:00:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2684AFF8855
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:00:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcnO-0004M8-GW; Wed, 06 May 2026 10:00:14 -0400
+	id 1wKcni-0004pU-AJ; Wed, 06 May 2026 10:00:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcnM-0004E9-EJ
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:00:12 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcnW-0004eT-B4
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:00:23 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcnK-0000U5-DI
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:00:12 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-488b0046078so57226315e9.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:00:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcnT-0000WI-3Y
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:00:21 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-488ad135063so61538535e9.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:00:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076008; x=1778680808; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076016; x=1778680816; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AProBNNYKZYY1mqtdA3F7DQEDgEilBHZyhUb2mUtV+I=;
- b=RJEc8n572VY1mZXuqUOL9qcVw760QHPqFcYj2d4RL8jIrdsIUmT8Of8QsaJuWW1o99
- XtWgX51Xq5M6Wmr32oTNMRtYR0hrg+1Rs2oZfLjjqYPnGMWJB+KGnLWlw6s5m9XWxa0k
- 9tgTaCLDk0AYLR1qGMMf2O3I6gp7JYmufnVo06u4XjL0mFdySCGZGupcGmuiyKIQjvCh
- wjjtWHjXMwNtLPPA8Z1xlPSv47vd9VDFuQEFvn1arHVkv8rHQ6MWI9DdeASBjozUPDAG
- QHYsHrkIdvbvd0ve3Cm/IEwM9Z2WmzWzPtgDDjr6TE39qUMiFrE1IOQy2GxYSpiHdBex
- xOqg==
+ :reply-to; bh=OZc/qj8164mdY6T/5n89bkW8BxCd+kZMWJMjvNjnIUY=;
+ b=P8XYSN6igs3uwxcuWujUlFeI9jLtsruTzletm6RzMDE0KxJXYrylhW1CjuzCM0KXVt
+ kTBCFiEI23lXOBhdxorVdAOUJfj1S2s4hCiw4K0Ocq5S8FwUsPckJq5UTwJohMcOu30k
+ maPn5g05XQL1TB79Wn9FmyudlNgAGpI4JI+b86U2x0A/WZjr8QWt57eV/Y9E3KZgiuCo
+ cflixI1ofbmLXSut+sZpSz3jqEmp+tb+SjVcfnmfCNuxJ/yUNtpgjL+NBgCi2PLMX11+
+ 60oSD+JsEHyt08NXD0dd1grD74zzy4p8oeD3P0LO+F/oFPPLecpFO11TgbYm0bvgu9sM
+ vEnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076008; x=1778680808;
+ d=1e100.net; s=20251104; t=1778076016; x=1778680816;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=AProBNNYKZYY1mqtdA3F7DQEDgEilBHZyhUb2mUtV+I=;
- b=GbQ49voTJozWuDV5BvxMoxefI+y7SfCoz8qx4hVdG1/KIIbGs5kvp5tn2p2K7GTYTF
- pqIlFXL4HlxHTRurl/u4qHmfok/7HHRIYIP7YXgCSXwKdaE9cZMi0aP8Zh+rqUizfGx2
- spI/aL63L7pEPL0hHC7QEGaoRYAhpOGA5lNqYvxSzPlKoooUcL3QOiasP5X0Y+MM5ZAR
- 2sv2XRv8YtM7xBRSQC5kVzjHz0qtez4hLj9rITWw3QfIe3fNQaxmDqqd9XQftA2whfdB
- CrwkW0KwaSUbPSrjW8a4CSv7UeFUEj2Xv2zJYSxv1Uw41RcPsbathaTXmWDHggkxMQAn
- ALiA==
-X-Gm-Message-State: AOJu0Yzoy2xVTTx5207qQGwJ0SF9mi9G+S1FS+JPUc19u3bOIuBrDlrn
- fMyETP0HAxG76JKmsFeTK4HGqZXWV2FwC784jqXMgnH27IslWwYHnzfMaSzTTLrX3I+4Ra+/zce
- 9z7GhFqE=
-X-Gm-Gg: AeBDievM2KFpvZJc7ZAm75Amxc6AjUvzo2kAomP8Q7FN3mK7XQBqo4UgpxNCTQ8kIxU
- cuC1Fu/wiU4lXtrCNngtDidNkhOoyRuKt9Drmb+Guu2rMh9mnvEAbcJLrlO0W+dzYSOGKu9Qf22
- b6XOIczlrGmvMOpt84MZV/59uBWkz0gyj++JOffZ2USQuHIgNiexYOry0SY2o5fI3Jitt2Ne20S
- Rbw/Cp6TSJjnXzfjIRgdHwBpUB2rbKu3lP9olI+ZGS4PIUziJoQvf0V+Eq3NMeROPE1ergsyZwZ
- W3eaOsWl3ADmk78MpO4MV2n/L6zF/y/Gg1zwGEUKb/lpf7Q6Iz+onYEzcfVRb6PljljbV+2HSbl
- hM/c5DTdfcCM6zREvJTaFDPlBPU2vzqvYNUvmKEB1X45+7s7GqgwgSDuDFFBT0VbhAWZbJyu7IO
- mW+WaslshqJYPgDuFV1WOZDaf0GP1eMy3PYZtuwytAC5nn4dIzo1SbMDx9BddmsqH5S80Itk0fq
- kLtJZqrSJ8=
-X-Received: by 2002:a05:600c:3e8d:b0:48a:6268:18a9 with SMTP id
- 5b1f17b1804b1-48e51f32797mr65250505e9.13.1778076007588; 
- Wed, 06 May 2026 07:00:07 -0700 (PDT)
+ bh=OZc/qj8164mdY6T/5n89bkW8BxCd+kZMWJMjvNjnIUY=;
+ b=BOoJ6ZHNuCQmN42ZFgiVWbMNfjUTzZ7jnSIefZxwBTL+5pRzQJLJH2Sevx5M13uViJ
+ YD0bAssUR/vcAcm5FeWvV+zcdrRCaB3FTp28/1kIz4k1Hm/OZHPsn5GVTQSbRLX9+tGz
+ wcOm+vWe7Xu7bAEotMF4AFoBj6rmsiJUbJfpH/geygrRy6wRRaC8hAksyPlUeEsMMrgc
+ c6YxU64NQa6c6aFaZdIEK4XVyr0WuOUg+s26RX+Deem+LQnY+oqk3BfFuFhIyUiD5Eas
+ rs/DWKUaPkC1HdxRgGlgobuspGs7mNM1rR3I1kl4+tIu/ZUL/ZCdbkms3cmxvpH6jrYg
+ L7jA==
+X-Gm-Message-State: AOJu0YxwDqcSFjBGLPhk+lIyKQ707FPKMKUV0OZJs5mAil1OgjW5rVoT
+ xXz41Xs7q6WEEWF4/PsPTfa9gjMdUBmZu6xAabTcAgN1x3QD6PVJ7dXhwIkk40reOumtuKlaXdu
+ eni6LNVA=
+X-Gm-Gg: AeBDieuIDTA0u2ckUWpBfedJz9aNWJ/MJyW3u+GjP6Nq8svITXGASim0KZ5gsie05x8
+ 55YJ+fwjM11CW1WpvaKIIdp1SBORvJxOg57zSrzwj8EV6NLPdNIWDR7ONkjwBhGgIIMpfkYJvvz
+ qOl/++2czsTC0JR0oGaYzUwhg0OkIG8+0GXlg9R0C/aJ1ftkmrqpN5+qoxm5+b9fyoBioNVeZ0R
+ L8VoYqDuRyKiCdi0I0aH+BU6ZR5putJ0ClFtnAOX2JuRJkwKMi7cA9eZ7lYzNj7lWtxxFH1T2YZ
+ P/8NRrIW4Q1gXdADQbdyHr0UgE1lkED034IYQdVhJuzTjHPifeECBSPaNHiSHtHcXW6tvjNEAlA
+ PRr1jv2RGJpdVP5zoMOPqMEV9U9Uzg4qqC6Dm+DHEy/rYTq/5pyhxbXP5R5whSwJlF1Iol1Yf21
+ gDK8mL5OYxJPrEN9h2jSN3BwnchYgGEpUMNAC/dHfR0M7IZTQNm3CPfRtlpaGg4UZenXS7NG4uw
+ s6SQfD5kQA=
+X-Received: by 2002:a05:600c:15d1:b0:48d:112c:f582 with SMTP id
+ 5b1f17b1804b1-48e51e1e415mr31846455e9.11.1778076015499; 
+ Wed, 06 May 2026 07:00:15 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e538c4ae1sm47165655e9.12.2026.05.06.07.00.05
+ 5b1f17b1804b1-48e538acf23sm48307795e9.8.2026.05.06.07.00.13
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:00:05 -0700 (PDT)
+ Wed, 06 May 2026 07:00:13 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 037/110] target/mips: Pass MemOpIdx argument to Load/Store
- Multiple helpers
-Date: Wed,  6 May 2026 15:54:09 +0200
-Message-ID: <20260506135524.20617-38-philmd@linaro.org>
+Subject: [PULL 038/110] target/mips: Remove unnecessary target_ulong uses in
+ LD/ST Multiple
+Date: Wed,  6 May 2026 15:54:10 +0200
+Message-ID: <20260506135524.20617-39-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,114 +100,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation of using the MemOp content in the next commit,
-pass it as MemOpIdx. Include the access size.
+@do_r31 is a boolean, @base_reglist an unsigned size
+and @i an unsigned index.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260417035734.32334-2-philmd@linaro.org>
+Message-Id: <20260417035734.32334-3-philmd@linaro.org>
 ---
- target/mips/tcg/ldst_helper.c             | 16 ++++++++++++----
- target/mips/tcg/micromips_translate.c.inc | 16 ++++++++++------
- 2 files changed, 22 insertions(+), 10 deletions(-)
+ target/mips/tcg/ldst_helper.c | 32 ++++++++++++--------------------
+ 1 file changed, 12 insertions(+), 20 deletions(-)
 
 diff --git a/target/mips/tcg/ldst_helper.c b/target/mips/tcg/ldst_helper.c
-index 10319bf03a6..ffe1895706a 100644
+index ffe1895706a..0def1f296ae 100644
 --- a/target/mips/tcg/ldst_helper.c
 +++ b/target/mips/tcg/ldst_helper.c
-@@ -212,8 +212,10 @@ void helper_sdr(CPUMIPSState *env, target_ulong arg1, target_ulong arg2,
- static const int multiple_regs[] = { 16, 17, 18, 19, 20, 21, 22, 23, 30 };
- 
- void helper_lwm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
--                uint32_t mem_idx)
-+                uint32_t memop_idx)
+@@ -216,13 +216,11 @@ void helper_lwm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
  {
-+    MemOpIdx oi = memop_idx;
-+    unsigned mem_idx = get_mmuidx(oi);
-     target_ulong base_reglist = reglist & 0xf;
-     target_ulong do_r31 = reglist & 0x10;
+     MemOpIdx oi = memop_idx;
+     unsigned mem_idx = get_mmuidx(oi);
+-    target_ulong base_reglist = reglist & 0xf;
+-    target_ulong do_r31 = reglist & 0x10;
++    unsigned base_reglist = reglist & 0xf;
++    bool do_r31 = reglist & 0x10;
  
-@@ -234,8 +236,10 @@ void helper_lwm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
- }
- 
- void helper_swm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
--                uint32_t mem_idx)
-+                uint32_t memop_idx)
+     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
+-        target_ulong i;
+-
+-        for (i = 0; i < base_reglist; i++) {
++        for (unsigned i = 0; i < base_reglist; i++) {
+             env->active_tc.gpr[multiple_regs[i]] =
+                 (target_long)cpu_ldl_mmuidx_ra(env, addr, mem_idx, GETPC());
+             addr += 4;
+@@ -240,13 +238,11 @@ void helper_swm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
  {
-+    MemOpIdx oi = memop_idx;
-+    unsigned mem_idx = get_mmuidx(oi);
-     target_ulong base_reglist = reglist & 0xf;
-     target_ulong do_r31 = reglist & 0x10;
+     MemOpIdx oi = memop_idx;
+     unsigned mem_idx = get_mmuidx(oi);
+-    target_ulong base_reglist = reglist & 0xf;
+-    target_ulong do_r31 = reglist & 0x10;
++    unsigned base_reglist = reglist & 0xf;
++    bool do_r31 = reglist & 0x10;
  
-@@ -256,8 +260,10 @@ void helper_swm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
- 
- #if defined(TARGET_MIPS64)
- void helper_ldm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
--                uint32_t mem_idx)
-+                uint32_t memop_idx)
+     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
+-        target_ulong i;
+-
+-        for (i = 0; i < base_reglist; i++) {
++        for (unsigned i = 0; i < base_reglist; i++) {
+             cpu_stl_mmuidx_ra(env, addr, env->active_tc.gpr[multiple_regs[i]],
+                               mem_idx, GETPC());
+             addr += 4;
+@@ -264,13 +260,11 @@ void helper_ldm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
  {
-+    MemOpIdx oi = memop_idx;
-+    unsigned mem_idx = get_mmuidx(oi);
-     target_ulong base_reglist = reglist & 0xf;
-     target_ulong do_r31 = reglist & 0x10;
+     MemOpIdx oi = memop_idx;
+     unsigned mem_idx = get_mmuidx(oi);
+-    target_ulong base_reglist = reglist & 0xf;
+-    target_ulong do_r31 = reglist & 0x10;
++    unsigned base_reglist = reglist & 0xf;
++    bool do_r31 = reglist & 0x10;
  
-@@ -278,8 +284,10 @@ void helper_ldm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
- }
- 
- void helper_sdm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
--                uint32_t mem_idx)
-+                uint32_t memop_idx)
+     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
+-        target_ulong i;
+-
+-        for (i = 0; i < base_reglist; i++) {
++        for (unsigned i = 0; i < base_reglist; i++) {
+             env->active_tc.gpr[multiple_regs[i]] =
+                 cpu_ldq_mmuidx_ra(env, addr, mem_idx, GETPC());
+             addr += 8;
+@@ -288,13 +282,11 @@ void helper_sdm(CPUMIPSState *env, target_ulong addr, target_ulong reglist,
  {
-+    MemOpIdx oi = memop_idx;
-+    unsigned mem_idx = get_mmuidx(oi);
-     target_ulong base_reglist = reglist & 0xf;
-     target_ulong do_r31 = reglist & 0x10;
+     MemOpIdx oi = memop_idx;
+     unsigned mem_idx = get_mmuidx(oi);
+-    target_ulong base_reglist = reglist & 0xf;
+-    target_ulong do_r31 = reglist & 0x10;
++    unsigned base_reglist = reglist & 0xf;
++    bool do_r31 = reglist & 0x10;
  
-diff --git a/target/mips/tcg/micromips_translate.c.inc b/target/mips/tcg/micromips_translate.c.inc
-index 8fda7c8a214..4dca11b84b4 100644
---- a/target/mips/tcg/micromips_translate.c.inc
-+++ b/target/mips/tcg/micromips_translate.c.inc
-@@ -693,7 +693,8 @@ static void gen_ldst_multiple(DisasContext *ctx, uint32_t opc, int reglist,
-                               int base, int16_t offset)
- {
-     TCGv t0, t1;
--    TCGv_i32 t2;
-+    MemOp mop = MO_UNALN;
-+    MemOpIdx oi;
- 
-     if (ctx->hflags & MIPS_HFLAG_BMASK) {
-         gen_reserved_instruction(ctx);
-@@ -705,22 +706,25 @@ static void gen_ldst_multiple(DisasContext *ctx, uint32_t opc, int reglist,
-     gen_base_offset_addr(ctx, t0, base, offset);
- 
-     t1 = tcg_constant_tl(reglist);
--    t2 = tcg_constant_i32(ctx->mem_idx);
- 
-     save_cpu_state(ctx, 1);
-     switch (opc) {
-     case LWM32:
--        gen_helper_lwm(tcg_env, t0, t1, t2);
-+        oi = make_memop_idx(mop | MO_UL, ctx->mem_idx);
-+        gen_helper_lwm(tcg_env, t0, t1, tcg_constant_i32(oi));
-         break;
-     case SWM32:
--        gen_helper_swm(tcg_env, t0, t1, t2);
-+        oi = make_memop_idx(mop | MO_UL, ctx->mem_idx);
-+        gen_helper_swm(tcg_env, t0, t1, tcg_constant_i32(oi));
-         break;
- #ifdef TARGET_MIPS64
-     case LDM:
--        gen_helper_ldm(tcg_env, t0, t1, t2);
-+        oi = make_memop_idx(mop | MO_UQ, ctx->mem_idx);
-+        gen_helper_ldm(tcg_env, t0, t1, tcg_constant_i32(oi));
-         break;
-     case SDM:
--        gen_helper_sdm(tcg_env, t0, t1, t2);
-+        oi = make_memop_idx(mop | MO_UQ, ctx->mem_idx);
-+        gen_helper_sdm(tcg_env, t0, t1, tcg_constant_i32(oi));
-         break;
- #endif
-     }
+     if (base_reglist > 0 && base_reglist <= ARRAY_SIZE(multiple_regs)) {
+-        target_ulong i;
+-
+-        for (i = 0; i < base_reglist; i++) {
++        for (unsigned i = 0; i < base_reglist; i++) {
+             cpu_stq_mmuidx_ra(env, addr, env->active_tc.gpr[multiple_regs[i]],
+                               mem_idx, GETPC());
+             addr += 8;
 -- 
 2.53.0
 
