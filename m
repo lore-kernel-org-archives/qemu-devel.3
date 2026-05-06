@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8821CD3436
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 10:34:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5556CD3436
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 10:35:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKZaL-0000EC-Es; Wed, 06 May 2026 06:34:33 -0400
+	id 1wKZb2-0000yH-J2; Wed, 06 May 2026 06:35:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1wKZaJ-0000DM-Jg
- for qemu-devel@nongnu.org; Wed, 06 May 2026 06:34:31 -0400
+ id 1wKZb0-0000wh-DP
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 06:35:14 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1wKZaI-000255-2d
- for qemu-devel@nongnu.org; Wed, 06 May 2026 06:34:31 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1wKZaz-0002RP-0f
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 06:35:14 -0400
 Received: from example.com (unknown [167.220.208.68])
- by linux.microsoft.com (Postfix) with ESMTPSA id 56AA520B7168;
- Wed,  6 May 2026 03:34:23 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 56AA520B7168
+ by linux.microsoft.com (Postfix) with ESMTPSA id 5420C20B7169;
+ Wed,  6 May 2026 03:35:07 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 5420C20B7169
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1778063664;
+ s=default; t=1778063708;
  bh=ac9PLJVs1L9e7wKi2saZETCjTCdTQF2XJcJ33IO86ow=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=BdaTzEkBrIwphe5lYj0ManoarCY7xAArLH5b352q3w7jwCYvUauZWILi/X72SX9/F
- OgZVl9ks+2zt2m72uzn5ODLwlSRTTcRghw49SO+UoGNnVKGH83eeRp8+bYTQo6IZXL
- hqnS0k1S8xrcEglNPdwMWpy8eXrqCtZ3vKjS++9c=
-Date: Wed, 6 May 2026 12:34:22 +0200
+ b=DprHZoY7Ox+7lysoBfeHZVUMygvBkQKe1ZFcwTo81PJKZqfKaT3D6lkJIXg6yb15w
+ FqkVGMrvu4o1rtCz4LmaZ7UeE5tfviSpDYRz/wWSlrCUzPRonrHAPuuEE1qKM8edIx
+ GuUKaUCB4hEUeyZxfhSPiPY8ZMtSXB349CaMfz/w=
+Date: Wed, 6 May 2026 12:35:06 +0200
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: Doru =?iso-8859-1?Q?Bl=E2nzeanu?= <dblanzeanu@linux.microsoft.com>
 Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
  Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>
 Subject: Re: [PATCH v2 1/7] target/i386/mshv: remove duplicate function for
  reading vcpu registers
-Message-ID: <afsZLjWgkr6v2vF9@example.com>
+Message-ID: <afsZWm05QTYV3kL0@example.com>
 References: <20260505185028.237207-1-dblanzeanu@linux.microsoft.com>
  <20260505185028.237207-2-dblanzeanu@linux.microsoft.com>
 MIME-Version: 1.0
