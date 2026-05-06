@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0695CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 13:59:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 786E2CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 13:59:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcmR-0001Zh-6H; Wed, 06 May 2026 09:59:15 -0400
+	id 1wKcmP-0001R5-M1; Wed, 06 May 2026 09:59:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcmM-0001L2-Nl
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:11 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcmF-0001IO-N3
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:07 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcmL-00008y-7r
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:10 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4891f625344so10775835e9.0
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:59:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcmC-00007z-TY
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:03 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-488a88aeec9so72867475e9.2
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:59:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778075946; x=1778680746; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778075938; x=1778680738; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uN8T65pcJrUdZDCUXjXD1hQNK+NMnAn+DBz6aNKLp7c=;
- b=wX+eSdgkx6VCadmI3q2RkjVl8bsxON8tlu8sD+7pDZ87bMzOKLsj+WQ/L40AJaAIuE
- r5rpKNSiqOjZ26m3rwBnFxhcozN8yXDh9dAqH41TNgshJxtsttmBMHPCVy63wMYk0IFr
- 1Dvsfqhe8CHc8pSIR5/MfQvkObDpz/puX/1h9Dj6XeXl2UUZlny9N+kG3WVkYHylGPqM
- MaMak/urO7+sgAxF7VoqznaoB9qo4WpYzxIl+GP5n6IoIh/DLt7QDUZ1nT0nGAgD+xXn
- +XRpJUXPo/RsKG42C2DKgpijMqPubygJKeegOHolovjjKu6NlR1Wt/evxvnq5qAxfo1e
- B95w==
+ :reply-to; bh=C+XEiL09lfmgyHO2Y4EFhGtAKLkwWNf3J69g+kf0h9M=;
+ b=kYj8nnrfkZGwR880+Bcv76pvxyl4JLdzjN5mixbCx3Ae8zkAva4bKmnteAPA5E8PWn
+ QH42pPHiyNDZntfv2zKKMFEa0+8QZ8Sycmyuj391Y0zxEZCQdk+JKLNFh9+Tdi4qhDQE
+ Ef7LasBv1oCvDeo61XZGWB/uoTl3bUkCY3mcfxNa2uRtH/TF7QYR9GhYNuRyVzua9btZ
+ QSCi+gPhVKn9zpNpvO6SzRLkTZtngIFMIogtS99h+wqOvyA05JgwLvntKaRXfAAFkLIJ
+ a//a7R+afH2s4asgj65YIzOBew4hMKz+Pc9XS71D/a20O3tdY+UzfyyeTz/tTJNA2Erp
+ aLjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778075946; x=1778680746;
+ d=1e100.net; s=20251104; t=1778075938; x=1778680738;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=uN8T65pcJrUdZDCUXjXD1hQNK+NMnAn+DBz6aNKLp7c=;
- b=HgxFFTQJ2Lb2sw0v6esHcMV1wOyTyeA+O1Sbbw8Ff1TSBdxNw8mf9NP/PSF60bBmB/
- SY/rl4kS/El/9cLeT8kJ59cxFo6CpuNVE7Gm/IITxunHcZQxuxw6eYjS0+OLUsgNXsKZ
- B6sc5kgu1MqyVxBNZ7wl2o1oQzFh9EGPp7AI2SanlovQopyIJl7iL6b+fEWeWDgVuqBd
- xTsXF/mmlpVRBzQ0UXlT6GyFzWZ4hzS8s6yupdVbN7z+X14c77fVLJ0F3rl6JcB9CZik
- h6B85IvZZuyzAv6tNArCdjWYX7x8+0jCzV26Bkxk2MRV/2SCdm8qt7ZRBxUNFJTjjF1P
- qYGA==
-X-Gm-Message-State: AOJu0YxOiyvZ0A2kiI80juHyevLPQMjpKoYUuF7eZkXyrgkF1zltkQ3l
- KcyWu2YfVtnDSPcziwu5hTAj0Pm7Y9wqObYIvsGEGhJBmDAHNah6HZyHkmabC/RCx6jB294nWYv
- hEKVHHl8=
-X-Gm-Gg: AeBDievH6GlxTr5deIn7/NSrirJ4Voqet8VI9mwzn4hClpdv669QPVIHu5PkpsslJrX
- q7fkU+E18TUFnzt3N9e7NaMAuXY3h8tmaYXW9414wtfyzGky3r68TKolYWFpGWG3hPH9+TVqaqK
- mF9fYrF/MSq/RoeLLdditQcGQY3Wg+cz5GbCuH4AE8lUpCbo5+pD5rVUxTrZ8VMRVNULlO5+hvK
- q6YFYHxATGAqG0xomqxtD3BOxEOeUrfctAKs44lxuLu6avdEdNyyGhn8+8RCalp0oSQmE2o6ZbJ
- Ehr5Z8fsBxyX0rH1vSGatvgnmPpAVP3Sy68VyGTfzC+cbjh/E4BIF9RiXSCW2Jf7uCDKXOvMTG2
- J96izjx52nRO02sP97DLCCGpl20kOxjZCIP1gDDSgIy4cpnJDb43Q4dMS7HDKy5joKBc8USUS75
- lq6Zk3tpLGh8jwjB5raro5mg5DVGI6nTHN/07Wi0UjDqIxjovIrrg1RR8V0h01e55yZGUBwM7sA
- VKM0qUZWGQIk7OzrWARnQ==
-X-Received: by 2002:a05:600d:d:b0:48a:53cb:8604 with SMTP id
- 5b1f17b1804b1-48e522c0909mr40440065e9.14.1778075945900; 
- Wed, 06 May 2026 06:59:05 -0700 (PDT)
+ bh=C+XEiL09lfmgyHO2Y4EFhGtAKLkwWNf3J69g+kf0h9M=;
+ b=kR9xbMt/5zlLBt0MBbC2Sa/yY884+zgKoVoFjFYS/3N/HPDCl16pEGGtUNBWx4m2rg
+ tkKDDSv3jaV/DK3sjiUpe/IHA0Ep5zuH4Ry4i7/4VVFPl1QnvCEkaEi4Nrxao3UwHm0q
+ pOtnTjztKt0oEVDItsqIxQ493pSKd0mxvxn1Lmzyedhs4ImcGIv2z/UUaGZ8YsgYBfZ3
+ DorcjgCP0gyPvUiBOmQr2l2ZMPENFU/3DNHFGFllJobu2572d8fxSW2vuRY3ZXfPMYMl
+ O1u6KvpOzO52kXTqCURb/rFhvPsBBer5Dd4k8/ux9QvYSsGlhwt3PsvMjBmYW4wIdJYg
+ 1tWw==
+X-Gm-Message-State: AOJu0YwDIl5r9fCtOwfH8gzE7cmxeudKcrjZn5y/3y3JGZOnFR04xxsi
+ Rh08iBJ52A9TRtgMyMisafjfceVnO2rUZ6nQVG5HyWNvUFhln8DNf8y2qzUEPcQh5bntVcu17rP
+ auSOL1oI=
+X-Gm-Gg: AeBDieu97Aqgeiu91eC/7OtDTB+hJ6P0NFV3y+ooaec8BJXMGYPcDXV3WvrpRup16x4
+ JSNRToln4B0N92P6swfusKG+G4dtTduLDTcT3muLcfUPmbaRlFyiXu1Fh0v9gtKFxOZacUJ269f
+ wtGPyeiX3wPcUrEFdImaMe3jY+gR+zrxBk5p5CAe9c001xVc2rbvFNNwG5kz5plYCdMnDxhWM8Z
+ vihwbnsTuriy73DKOLJG55N6xYv+nCkFBSDvMSHJQUPkPMNk+HmSqchLY3Nys175zQ3ApDPmApD
+ /6bV2bZUW1ElWuPBo6Zd+prgeiMqZT9n/0fzDmKV1J9wJs3dV23KBuf4qjGEELJ9BW6DBupOcXy
+ rJudxW/EURNPB9VXaAKtJP3e+TxKbwcxj1kDMBg7tfOqfLEtaUgbFNK5eSQ6QHmZzHAbE8tra6C
+ vh8Xq5+eJlCQT0uTavpF5Wk6XVchmsGE7v2XvpCYyG6Hl2eznfM1zsHqsv+Kz4cpiTkKy2lp2tY
+ KOyMgk7UF8=
+X-Received: by 2002:a05:600c:a305:b0:48d:364:6c54 with SMTP id
+ 5b1f17b1804b1-48e51f4144amr44601345e9.23.1778075938388; 
+ Wed, 06 May 2026 06:58:58 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e53147bc2sm28581545e9.6.2026.05.06.06.59.04
+ 5b1f17b1804b1-48e53895effsm47957805e9.3.2026.05.06.06.58.56
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 06:59:04 -0700 (PDT)
+ Wed, 06 May 2026 06:58:56 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 029/110] migration: Revert "Add VMSTATE_UINTTL_2DARRAY()"
-Date: Wed,  6 May 2026 15:54:01 +0200
-Message-ID: <20260506135524.20617-30-philmd@linaro.org>
+Subject: [PULL 028/110] target/avr: Avoid target-specific migration headers in
+ machine.c
+Date: Wed,  6 May 2026 15:54:00 +0200
+Message-ID: <20260506135524.20617-29-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,49 +100,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VMSTATE_UINTTL_2DARRAY() macro was never used, remove it.
-
-This reverts commit 4597992f624c015ceb51fedb4628b3fdb1e5bbaa.
+machine.c doesn't use any target-specific macro defined by
+the "migration/cpu.h" header. Use the minimum headers required:
+"migration/qemu-file-types.h" and "migration/vmstate.h", which
+are not target-specific. This allows to build this file as
+common object.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Message-Id: <20260325211728.89204-4-philmd@linaro.org>
+Message-Id: <20260325211728.89204-2-philmd@linaro.org>
 ---
- include/migration/cpu.h | 6 ------
- 1 file changed, 6 deletions(-)
+ target/avr/machine.c   | 3 ++-
+ target/avr/meson.build | 3 +--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/migration/cpu.h b/include/migration/cpu.h
-index 1335abe2230..e3d6c06b7d4 100644
---- a/include/migration/cpu.h
-+++ b/include/migration/cpu.h
-@@ -23,8 +23,6 @@
-     VMSTATE_UINT64_ARRAY_V(_f, _s, _n, _v)
- #define VMSTATE_UINTTL_SUB_ARRAY(_f, _s, _start, _num)                \
-     VMSTATE_UINT64_SUB_ARRAY(_f, _s, _start, _num)
--#define VMSTATE_UINTTL_2DARRAY_V(_f, _s, _n1, _n2, _v)                \
--    VMSTATE_UINT64_2DARRAY_V(_f, _s, _n1, _n2, _v)
- #define VMSTATE_UINTTL_TEST(_f, _s, _t)                               \
-     VMSTATE_UINT64_TEST(_f, _s, _t)
- #define vmstate_info_uinttl vmstate_info_uint64
-@@ -44,8 +42,6 @@
-     VMSTATE_UINT32_ARRAY_V(_f, _s, _n, _v)
- #define VMSTATE_UINTTL_SUB_ARRAY(_f, _s, _start, _num)                \
-     VMSTATE_UINT32_SUB_ARRAY(_f, _s, _start, _num)
--#define VMSTATE_UINTTL_2DARRAY_V(_f, _s, _n1, _n2, _v)                \
--    VMSTATE_UINT32_2DARRAY_V(_f, _s, _n1, _n2, _v)
- #define VMSTATE_UINTTL_TEST(_f, _s, _t)                               \
-     VMSTATE_UINT32_TEST(_f, _s, _t)
- #define vmstate_info_uinttl vmstate_info_uint32
-@@ -55,8 +51,6 @@
-     VMSTATE_UINTTL_V(_f, _s, 0)
- #define VMSTATE_UINTTL_ARRAY(_f, _s, _n)                              \
-     VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, 0)
--#define VMSTATE_UINTTL_2DARRAY(_f, _s, _n1, _n2)                      \
--    VMSTATE_UINTTL_2DARRAY_V(_f, _s, _n1, _n2, 0)
+diff --git a/target/avr/machine.c b/target/avr/machine.c
+index 4402862fb96..8064a7214a3 100644
+--- a/target/avr/machine.c
++++ b/target/avr/machine.c
+@@ -20,7 +20,8 @@
  
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+-#include "migration/cpu.h"
++#include "migration/qemu-file-types.h"
++#include "migration/vmstate.h"
  
- #endif
+ static int get_sreg(QEMUFile *f, void *opaque, size_t size,
+                     const VMStateField *field)
+diff --git a/target/avr/meson.build b/target/avr/meson.build
+index af5e7d63741..39e5eb02c2b 100644
+--- a/target/avr/meson.build
++++ b/target/avr/meson.build
+@@ -15,8 +15,7 @@ avr_ss.add(files(
+ 
+ avr_common_system_ss = ss.source_set()
+ avr_common_system_ss.add(files('gdbstub.c'))
+-
+-avr_system_ss.add(files('machine.c'))
++avr_common_system_ss.add(files('machine.c'))
+ 
+ target_arch += {'avr': avr_ss}
+ target_system_arch += {'avr': avr_system_ss}
 -- 
 2.53.0
 
