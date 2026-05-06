@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E412FF8855
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 13:58:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA2BDCD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 13:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKclJ-0007CM-NI; Wed, 06 May 2026 09:58:05 -0400
+	id 1wKclO-0007k6-La; Wed, 06 May 2026 09:58:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKclF-0006y7-P4
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:58:01 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKclM-0007ZX-Dx
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:58:08 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKclD-0008NC-MP
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:58:01 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso46411585e9.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:57:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKclK-0008O7-Mk
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:58:08 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4893940bb5eso36235715e9.3
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:58:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778075876; x=1778680676; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778075884; x=1778680684; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XTYyf/lmPyz+PLU0Y7TEYZKsWWt4PgHM9yxseIT1vDM=;
- b=kIQZvHQIxI3AB+ytnjWywNrka0Xe4/XBDg1abhBm/7gBUa/2OPfu3GM1rglHXhZ/+8
- g49qAgDQuKkXSsn3SUebJArtKjyCSYI+0XQ6bWAyYcsivqG3W6aoieIqqrT0PmJQTtW7
- yRsWj29h9eNNexXgnpukEDELJgYBcjPBW0Ef0wMJmHMVaSmtBaOLDxJ7ijw15lU+ketf
- iPH3VkdVRI3DVuj4sO4gjJReJnterrkCQyinfxklFpsnZHhNO4hslQ2YCghqN8AssiD3
- Gwl6ozkUjOQvKdedNtROFx+f6sN/bQtjbRfsZ7qjK04bWIJmQFLl8tE/GxiyTEMZIgmQ
- Sfaw==
+ :reply-to; bh=rU3TesF61QskIMqznS2UEFkxHazsx8us4woLWPiBNh4=;
+ b=cTbk3W/6lDqiWJbhzmcO2EaX7xjyosfV0nYcwNhFDCNIzQ4vfWrw7CGGgB/er+f73U
+ Sx/19UP813lZd7Yetj5C8Nn3e96GaL6L0JeiHpcLAqdHkOyb9M4WwpZSUMski7V5XQgO
+ I7RgT/Y4alY2IOidGp9yqeoJI6Jb0BsyOTWzxWI4oD5mypdMshK/CokVJ1k5F6HpmUCn
+ 7FlRqAmL+oi9RkJC/GDnYqFzo12aP+w+/J/3DUK+0PEwTJIsIrSEhTb62iQ4/3u1cfwl
+ hf2v7UaXvKmIUCUqVpGGyCplbay55azMm8ryirp74te3tbNd56aZJYA1CyMGt4nbFJJg
+ I2Bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778075876; x=1778680676;
+ d=1e100.net; s=20251104; t=1778075884; x=1778680684;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=XTYyf/lmPyz+PLU0Y7TEYZKsWWt4PgHM9yxseIT1vDM=;
- b=Klc/wkZxzsjDQTO7gR2T43xqYz8HLjB/OfWHlpmLkyHdoe9ZXOJ1lj1d+ywEtjWOBC
- LzmS2C2gxTyHgWsGZoPPZMQ9bz7e9xnmwnm7kEq8RE9H4RziOG++IFTeQ9Wo15Q6j9Zw
- O8o7E+GfXv1WXoayIEMulELeQcfsyhnJ/Jd+eGjmHwHRfJB27oNOcTz9QXE0PMa6M2vA
- kced8vF5iWf3Giou9CPHAh3KRscl7eCL7IBlthFUn4eIDO/ueUC8EJSvkDc9RV38lBA8
- GcQpaYoh6oG+J0MT3BfASGC7kdEvy7Q+kRbD1tEZTuxOmtX62rkmHj+n3zPBINimO2Pb
- +5wg==
-X-Gm-Message-State: AOJu0YyPmj1K6BZ8nKJGd2W0E3IY70vi0GqApz87EkWLMAhdd8bNBCAb
- Oe0t/EFJbLuGM1lEviIhLZ2NMmVtB6nLEO6WUJ4E4SUW8IeQr90FTtPQ4YduvdMDJ2ViFErWueS
- Aav5u7/o=
-X-Gm-Gg: AeBDieuZnudc/zaBvYoXzhdZSHDyWV29+PaJ7dlPImug9V1sbGhV3UFju7WycXt5kKR
- Dzmkqrkx+XIMsjSjTQIJKwijwn0xhWBqIIsWuJQ34g5w4mpPJRWjE3tQOfJ8FWsyj5PmE0dBPGt
- OYL3ijTBii0VmWzRFd5dePEFx+T6S+DWxL6H0/S3AkcX96xwWxOO0o55h5Vb5MQxBTcTeuESoiL
- S/W+ntuymOSz7xSRMGgEIh4eu6v61dveNUxZ0DX6asIo1rSUGcz2mnyHYHuJdiDISGJYRUdeiyK
- MK2EzmagqIpEx2nuPliNyU6ObmcDuVJsFhli6bx7LfJZZnfDWHzWu/HAKF/j8MQ6iVooKE0mVRL
- x+9F5nkUKuVxln8kBtv3zef5fNCo2ffecdM42nCoIGUSANF8gHV706orTezlu4ijtFXmP50jFR6
- eX4MeaTUp50zYuaBGRGZ+Gk/f31p5c/s+rbIYUXam1+PVNDa57BPVgNfGU+ojksFCeourvSHuTX
- tUnFIH1Lmvu6rkhkuDKmg==
-X-Received: by 2002:a05:600c:354b:b0:486:f634:ef1 with SMTP id
- 5b1f17b1804b1-48e51f32a7amr63637295e9.17.1778075876480; 
- Wed, 06 May 2026 06:57:56 -0700 (PDT)
+ bh=rU3TesF61QskIMqznS2UEFkxHazsx8us4woLWPiBNh4=;
+ b=A5DchQFqP6LPj2nDwAM313pn0o8FqHB03aCUbFFM/iN7dZQtQ8oEeyI0xXMQsa5Fdm
+ ccLBOtKiWpdlnSWRvAtBd8/onQcEXpITwJfdvLPX6zv3C7bBWvgis4nh/OVR1Q+upHuy
+ aEB7Od88rSBaI5aJw2FUuirQ4y7TpMTuad0rlrO48OH/xUrJ2WnOcjwUzLFJA+PheVer
+ /PEqf+JIAkF9e1ExEyMqrYr0n+sKuW9ReKd9/N8no9xkRi8PGaykys5+jsw5zVOMazHf
+ GsqqLQ58qfJapmGVa0SolWaIQ8ITcIKKJi/3qm5s2N2g895ifrASI6Z1/1yP9htAAZkN
+ MvPw==
+X-Gm-Message-State: AOJu0Yy4Qf4I+n/E0IC5Xj8+PtTKXTNr4Kq28E2IU6/qbY8v6ih/83pD
+ gTaz7doRwCxgtuo4eN8RGhiOiMz6vBB+8eh2seUSjmMO6OVw5MQaqMgLJVz43rL4Tq5CL1EZNSB
+ ZDnxMwYg=
+X-Gm-Gg: AeBDiesg83HC5Vw6aZ0uqM1ujsLEPV/8vq1tpgPqUzvsABXb+FX1GC4OZ+JjGMdfJ8N
+ J5MSMknEZ+p3e1h+xjZr/irURmhCgL5l7JcT8WMAZzl+hfng3VLsMvt8lMMj5wFV8Ea9mDZJDJE
+ ix8ucJhlxPA7a0MxeyFkcdFVVbjoD6wIs6KfKDZXOLNoDBF2f8POgksEvbuvHva+4P5L9bcTZiE
+ eFtUUqAPZN3m3wFVA8j227uwWqCH5bE58skMvy7vBaupXHpKKRGpJRsnTJlzm9kQ8pJsKlF4j7W
+ k+vqowbRueZpCw5R+6kBE60zAQQF2e2JvcVRL8M6gMj3kZ5skWl7aVug5rDyQltlWsEUtPzHadK
+ k+sxUWxgwyuTedMibu2dIatqwYrxvqAkS+RCmx9MRNvBWLzB2QGqNTrfqSbpURFzBCSp2NKOhkl
+ IT2b7w5igKMDtk4L2RcWi4tBgL+ybbtLutkgXdyf/UlhR1H/RCwhi09YSDimbkDtTCAJG3z2QA4
+ hNCDpWfxho=
+X-Received: by 2002:a05:600c:c4a3:b0:48a:563c:c8d6 with SMTP id
+ 5b1f17b1804b1-48e51f24391mr59556075e9.7.1778075884102; 
+ Wed, 06 May 2026 06:58:04 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e538c4ae1sm47088615e9.12.2026.05.06.06.57.54
+ ffacd0b85a97d-4505558e213sm13573103f8f.25.2026.05.06.06.58.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 06:57:55 -0700 (PDT)
+ Wed, 06 May 2026 06:58:02 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 020/110] target/ppc/mmu: Restrict hash32_load_hpte() helpers
- scope
-Date: Wed,  6 May 2026 15:53:52 +0200
-Message-ID: <20260506135524.20617-21-philmd@linaro.org>
+Subject: [PULL 021/110] target/sparc/monitor: Dump all registers as 32-bit
+Date: Wed,  6 May 2026 15:53:53 +0200
+Message-ID: <20260506135524.20617-22-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,70 +99,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-hash32_load_hpte() helpers are only used within mmu-hash32.c,
-no need to have each file including "mmu-hash32.h" to compile
-them. Move their definition to this source file.
+All these SPARC64 registers are 32-bit since their introduction
+in commit 3475187dd81 ("sparc64 merge"), see target/sparc/cpu.h:
+
+  511 #if defined(TARGET_SPARC64)
+  ...
+  515     uint32_t asi;
+  516     uint32_t pstate;
+  ...
+  519     uint32_t cansave, canrestore, otherwin, wstate, cleanwin;
+
+Set MonitorDef::type to MD_I32 to dump them as 32-bit.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Message-Id: <20260319111936.68041-5-philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20260320091019.59902-2-philmd@linaro.org>
 ---
- target/ppc/mmu-hash32.h | 16 ----------------
- target/ppc/mmu-hash32.c | 14 ++++++++++++++
- 2 files changed, 14 insertions(+), 16 deletions(-)
+ target/sparc/monitor.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/target/ppc/mmu-hash32.h b/target/ppc/mmu-hash32.h
-index 5705f57935b..bfea03ea872 100644
---- a/target/ppc/mmu-hash32.h
-+++ b/target/ppc/mmu-hash32.h
-@@ -71,22 +71,6 @@ static inline hwaddr ppc_hash32_hpt_mask(PowerPCCPU *cpu)
-     return ((cpu->env.spr[SPR_SDR1] & SDR_32_HTABMASK) << 16) | 0xFFFF;
- }
+diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
+index a60671a60a4..e9300ded4ad 100644
+--- a/target/sparc/monitor.c
++++ b/target/sparc/monitor.c
+@@ -41,13 +41,13 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
  
--static inline target_ulong ppc_hash32_load_hpte0(PowerPCCPU *cpu,
--                                                 hwaddr pte_offset)
--{
--    target_ulong base = ppc_hash32_hpt_base(cpu);
--
--    return ldl_phys(CPU(cpu)->as, base + pte_offset);
--}
--
--static inline target_ulong ppc_hash32_load_hpte1(PowerPCCPU *cpu,
--                                                 hwaddr pte_offset)
--{
--    target_ulong base = ppc_hash32_hpt_base(cpu);
--
--    return ldl_phys(CPU(cpu)->as, base + pte_offset + HASH_PTE_SIZE_32 / 2);
--}
--
- static inline hwaddr get_pteg_offset32(PowerPCCPU *cpu, hwaddr hash)
- {
-     return (hash * HASH_PTEG_SIZE_32) & ppc_hash32_hpt_mask(cpu);
-diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
-index 8b980a5aa90..08c9f63a132 100644
---- a/target/ppc/mmu-hash32.c
-+++ b/target/ppc/mmu-hash32.c
-@@ -201,6 +201,20 @@ static bool ppc_hash32_direct_store(PowerPCCPU *cpu, target_ulong sr,
-     return false;
- }
- 
-+static target_ulong ppc_hash32_load_hpte0(PowerPCCPU *cpu, hwaddr pte_offset)
-+{
-+    target_ulong base = ppc_hash32_hpt_base(cpu);
-+
-+    return ldl_phys(CPU(cpu)->as, base + pte_offset);
-+}
-+
-+static target_ulong ppc_hash32_load_hpte1(PowerPCCPU *cpu, hwaddr pte_offset)
-+{
-+    target_ulong base = ppc_hash32_hpt_base(cpu);
-+
-+    return ldl_phys(CPU(cpu)->as, base + pte_offset + HASH_PTE_SIZE_32 / 2);
-+}
-+
- static hwaddr ppc_hash32_pteg_search(PowerPCCPU *cpu, hwaddr pteg_off,
-                                      bool secondary, target_ulong ptem,
-                                      ppc_hash_pte32_t *pte)
+ const MonitorDef monitor_defs[] = {
+ #ifdef TARGET_SPARC64
+-    { "asi", offsetof(CPUSPARCState, asi) },
+-    { "pstate", offsetof(CPUSPARCState, pstate) },
+-    { "cansave", offsetof(CPUSPARCState, cansave) },
+-    { "canrestore", offsetof(CPUSPARCState, canrestore) },
+-    { "otherwin", offsetof(CPUSPARCState, otherwin) },
+-    { "wstate", offsetof(CPUSPARCState, wstate) },
+-    { "cleanwin", offsetof(CPUSPARCState, cleanwin) },
++    { "asi", offsetof(CPUSPARCState, asi), NULL, MD_I32 },
++    { "pstate", offsetof(CPUSPARCState, pstate), NULL, MD_I32 },
++    { "cansave", offsetof(CPUSPARCState, cansave), NULL, MD_I32 },
++    { "canrestore", offsetof(CPUSPARCState, canrestore), NULL, MD_I32 },
++    { "otherwin", offsetof(CPUSPARCState, otherwin), NULL, MD_I32 },
++    { "wstate", offsetof(CPUSPARCState, wstate), NULL, MD_I32 },
++    { "cleanwin", offsetof(CPUSPARCState, cleanwin), NULL, MD_I32 },
+ #endif
+     { NULL },
+ };
 -- 
 2.53.0
 
