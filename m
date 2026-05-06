@@ -4,113 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7DEFCD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 18:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B575DCD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 18:06:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKgaE-0003H9-I4; Wed, 06 May 2026 14:02:54 -0400
+	id 1wKgcn-00040E-Sp; Wed, 06 May 2026 14:05:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1wKgaC-0003GO-Or; Wed, 06 May 2026 14:02:52 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <walling@linux.ibm.com>)
- id 1wKgaB-0001lF-3H; Wed, 06 May 2026 14:02:52 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 646BshTD3452190; Wed, 6 May 2026 18:02:45 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=y4i3qu
- pdjqWqk6Yls+147aRFqJMNa57oWFLsO5Ebwd4=; b=CVPX0TIWcGUXHLqDnywEQr
- KbFIImvNlLoIeAfgZGunReL4OXQ9O1Cs4xCzdJ4UAXmfo26oGHjxeduy3xnnUa32
- 36XFgn/eZKewPKjcEzanKqxBXnmhLHeA4jw66WnvZ/ZY/DhAJv2lo1fCvWHu7CjW
- zxVfsd9PpFvlJKomS6Ffe3b1SBKhe4a9H4GLEnuil9Qv6EUNGVCVOVln/uKEouxS
- 3xYBjrUg2mD29nd1nQElYwm0kR+Iu6P18MNxzF9iZbP3erWAmij+NfZ0LkXOx7DY
- WEB2ZVTHz0itPSip+MJK+6APohM32E7o7EhNyB9GSTj+fPhGUZSCU8/toUlpg+vA
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9xxsajt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 06 May 2026 18:02:44 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 646Hscmm009508;
- Wed, 6 May 2026 18:02:44 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwx9yf550-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 06 May 2026 18:02:44 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 646I2hNT22414004
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 6 May 2026 18:02:43 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E28165805D;
- Wed,  6 May 2026 18:02:42 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4276758053;
- Wed,  6 May 2026 18:02:41 +0000 (GMT)
-Received: from [9.12.68.85] (unknown [9.12.68.85])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Wed,  6 May 2026 18:02:41 +0000 (GMT)
-Message-ID: <89822c40-a0c9-4272-80f4-edbcf770dcbc@linux.ibm.com>
-Date: Wed, 6 May 2026 14:02:40 -0400
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wKgck-0003zk-I7
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 14:05:30 -0400
+Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wKgci-0002ha-R1
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 14:05:30 -0400
+Received: by mail-oi1-x22c.google.com with SMTP id
+ 5614622812f47-479d68a9063so2413128b6e.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 11:05:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778090727; x=1778695527; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gZDVtU0wNSgdMpt2vn2l2S8cglOIJJs+bSMexVCmVgA=;
+ b=U3kTCQ/frsgY6QaompZMEQKrjz395+hwTBvkNYyntCoKPzTsKF8PtlkKiTPOyRQxoq
+ Q+GSGUfQun9+bQNHJ24ZviwaPNVNDw3JXMeEJIYMnVQGEf7StDkhVCJ+++J0qJN9ivuT
+ s/rk7676ZBuJfSFqksnBYIu3LlsWyZvPRs3pvybOw9cEub55UM3mK8mGRkJWcSL1GFya
+ IPrt0JsQu713KOSZFwqSjWWmFeOGgMYYbHvyyZlN+gJLC2fKbytQlGsRTpkDNalLUJxS
+ HsIMr6otKWji9XOsTBKIji8AG6O/9mL0Ife1sxYnKIpjeNqqeymvS6Bx4mGE5cxFtbmz
+ xsMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778090727; x=1778695527;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gZDVtU0wNSgdMpt2vn2l2S8cglOIJJs+bSMexVCmVgA=;
+ b=ILR+YuxpF6Pg1C5luB67qoYUFs1rdkWO2UPppUTh9lATACxG01m+//Us7V26eO2bLQ
+ R1A8AJPuHzgObBVYmQq2WiWGjeAA8N44MQ0I/NcwnwBBbodxxg6iigD4grig2HIahjSU
+ rvNiCuKPhpv216+Zgg87Pv+8V9OanKMTXdCPXxWZWviVIVAIU8B+MXSqzHeBPDxsoRPw
+ aMcFauhwta5d31IYv5bh0jFmcqfK+rB+HF9l9x1q1WUaMkSzH7MP7Yl70Mkn60gEAbiN
+ 76RZ3j8FlDiz4D1J/uWLhrhVUraQ/d6aCi2eb0WTt4J8BAFxnXJO2GtwV2u2Z10/5p4j
+ VuyA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9fle7TQGlZjTupaNbk28hyyhIrWq/IqKz2kmIFKBaBLfnJfGYZBj4sVkYZDiWZl+LKcDd929G0bET/@nongnu.org
+X-Gm-Message-State: AOJu0YzqUY46RmknDmSQuwmsb57qcRfChsjx6CiFAb0cvePQsmKjT/ga
+ I7EV0bxY+SiSTg/hm6DtrpPa19A9xZ1DliKWxlFR8FDqFh/XyPCKzMo3zuJH9y5QVzI=
+X-Gm-Gg: AeBDievlPB6K/7NjGE3kCSG5xjdxC48/GAN+tYavGO24p9fVpqfirSb6q03T4KFDqxZ
+ 6Yt+87Qfg0aZsRaHwE2CjJrYX1W82l30vw8Uy5OgwQBWQV3RZncjEsJEfJwd9DNulNg9uLp9gYf
+ UWeKawnq+YdbFY4dGi4773aywMKIKcPgWA4dZSl9SO8nZYZJLfB3WBQd0V6ZVoyKjNvyEblA07H
+ p4EF0ZeqFznNDSsGsUMnE9Zr13uvv3tSgz4iH6iQKRCEo3PVkGLGLRYSQlAPXelrzYqDmi0AvS/
+ 7XTLWYqyEweTFqiXoB2PpYKl1iTS9ZBUE1aJbQOM/iuiqU1Btpyx5Hwa8qUU00sRXWZXJ48hDIP
+ 6DqR+aiSRImWvu63ilZ9mTfvErsB6rjY+Oor5xfCxXolFCnjgeAXBMD7BupoQdybvI/RynaIIcC
+ g8Cv+Uo1JerH3/KIYFjb0wEfEAHFTXVVXqy6PtX75TPcgn7Vs4xENLZLIgpUNXhZzSn6Z+WOvvO
+ jq3r0NjpY8ErWrxsKH0HSU17XB99Ag=
+X-Received: by 2002:a05:6808:3a06:b0:479:fb10:1287 with SMTP id
+ 5614622812f47-480424e1e9dmr2385483b6e.36.1778090727090; 
+ Wed, 06 May 2026 11:05:27 -0700 (PDT)
+Received: from ?IPV6:2600:381:c938:6375:339c:eb71:5878:bb6f?
+ ([2600:381:c938:6375:339c:eb71:5878:bb6f])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-47c76935904sm10859943b6e.11.2026.05.06.11.05.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 May 2026 11:05:26 -0700 (PDT)
+Message-ID: <02070874-6c51-4b71-97f2-1312b5a3b231@linaro.org>
+Date: Wed, 6 May 2026 13:05:24 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 31/32] docs/specs: Add secure IPL documentation
-To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Cc: jrossi@linux.ibm.com, cohuck@redhat.com, berrange@redhat.com,
- richard.henderson@linaro.org, david@kernel.org, jjherne@linux.ibm.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, alifm@linux.ibm.com, brueckner@linux.ibm.com,
- pierrick.bouvier@oss.qualcomm.com, jdaley@linux.ibm.com
-References: <20260505201905.997996-1-zycai@linux.ibm.com>
- <20260505201905.997996-32-zycai@linux.ibm.com>
+Subject: Re: [PATCH v5 12/15] target/arm: tag is not a part of PAuth with MTX
+To: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
+ Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+References: <20260504-feat-mte4-v5-0-232a648e63c6@gmail.com>
+ <20260504-feat-mte4-v5-12-232a648e63c6@gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Collin Walling <walling@linux.ibm.com>
-In-Reply-To: <20260505201905.997996-32-zycai@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <20260504-feat-mte4-v5-12-232a648e63c6@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA2MDE3MiBTYWx0ZWRfX5zJctkkAcO/9
- yJ2r2hblGExEYfMzHUNEk8QIIr9oFq8Rb4k2mQoKCWWzIOMDMOlavJPudlt74O92pEmtlrvkOYs
- nVRfl9kyndY6oyZDc7Y1GxXvBZEHwuoUh2XCfsWKxzsdOk3fvqSOvkorLwMviKr5cjZxn7vF3Vg
- dXAQL2LvadWve+WtqPMMuRctUF+SAWyZ1PCPq0Tt24kisoJ+Tx03FiA1i6J09znvAm74aS7Gc5d
- nlOgdQiXKUYzhRbIHTNTNC86xcvz7uxYycwXMi9HPYVsnoaLYnKK4UJMhoJqZfQvOTjTMedb3Tz
- cm50fcC3YK9IA0Ta/QwzYAbBizCWr0b8N5P7mtv9WUZ5B1g/nifpJhWFFFisfR+YgYpUlBEXHxW
- uXZheNTW3id1VaNNv1z98S48l01aSizTBUFdRMGFgIBhaGWUDlxL89slLfBSb4bQjBdr08Gg1Zr
- CJxShYfx6SDKeKdtNMw==
-X-Proofpoint-ORIG-GUID: QdJrqgBlworYICh2FHkka1HFQ6avEj1u
-X-Proofpoint-GUID: QdJrqgBlworYICh2FHkka1HFQ6avEj1u
-X-Authority-Analysis: v=2.4 cv=ctWrVV4i c=1 sm=1 tr=0 ts=69fb8244 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=yb4vVsI9Fz0jfGMqQ6cA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-06_01,2026-05-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 adultscore=0 clxscore=1011
- suspectscore=0 impostorscore=0 spamscore=0 malwarescore=0 phishscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2605060172
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=walling@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,28 +110,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/26 16:19, Zhuoying Cai wrote:
-> Add documentation for secure IPL
+On 5/4/26 10:50, Gabriel Brookman wrote:
+> As described in the section on MTX, tag bits should not be used to store
+> or compute the PAC when MTX is set. See also Authenticate(),
+> InsertPAC(), and Strip().
 > 
-> Signed-off-by: Collin Walling <walling@linux.ibm.com>
+> Signed-off-by: Gabriel Brookman <brookmangabriel@gmail.com>
 > ---
->  docs/specs/s390x-secure-ipl.rst | 55 +++++++++++++++++++++++++++++++++
->  1 file changed, 55 insertions(+)
+>   target/arm/internals.h        | 12 +++++++++++-
+>   target/arm/tcg/pauth_helper.c | 18 +++++++++++++++++-
+>   2 files changed, 28 insertions(+), 2 deletions(-)
 > 
-> diff --git a/docs/specs/s390x-secure-ipl.rst b/docs/specs/s390x-secure-ipl.rst
-> index 5fc15be99c..f4602fe19d 100644
-> --- a/docs/specs/s390x-secure-ipl.rst
-> +++ b/docs/specs/s390x-secure-ipl.rst
-> @@ -1,5 +1,60 @@
->  .. SPDX-License-Identifier: GPL-2.0-or-later
->  
+> diff --git a/target/arm/internals.h b/target/arm/internals.h
+> index d313d36603..31b7e1c85e 100644
+> --- a/target/arm/internals.h
+> +++ b/target/arm/internals.h
+> @@ -1809,7 +1809,17 @@ static inline uint64_t pauth_ptr_mask(ARMVAParameters param)
+>       int bot_pac_bit = 64 - param.tsz;
+>       int top_pac_bit = 64 - 8 * param.tbi;
+>   
+> -    return MAKE_64BIT_MASK(bot_pac_bit, top_pac_bit - bot_pac_bit);
+> +    uint64_t mask = MAKE_64BIT_MASK(bot_pac_bit, top_pac_bit - bot_pac_bit);
+> +
+> +    /*
+> +     * If mtx is enabled, second nibble is not part of PAC. See
+> +     * InsertPAC().
+> +     */
+> +    if (param.mtx) {
+> +        mask &= ~MAKE_64BIT_MASK(56, 4);
+> +    }
+> +
+> +    return mask;
+>   }
 
-If you feel comfortable doing so, please add your Signed-off-by to this
-patch as well.  The code in these patches are 99% of yours at this
-point, and if you feel that this documentation accurately reflects your
-work then I'd say you should take ownership of it as well.
+Ok.
 
--- 
-Regards,
-  Collin
+
+> diff --git a/target/arm/tcg/pauth_helper.c b/target/arm/tcg/pauth_helper.c
+> index 67c0d59d9e..3d83ca4c3c 100644
+> --- a/target/arm/tcg/pauth_helper.c
+> +++ b/target/arm/tcg/pauth_helper.c
+> @@ -342,9 +342,16 @@ static uint64_t pauth_addpac(CPUARMState *env, uint64_t ptr, uint64_t modifier,
+>       }
+>   
+>       /* Build a pointer with known good extension bits.  */
+> -    top_bit = 64 - 8 * param.tbi;
+> +    top_bit = 64 - 8 * (param.tbi || param.mtx);
+>       bot_bit = 64 - param.tsz;
+>       ext_ptr = deposit64(ptr, bot_bit, top_bit - bot_bit, ext);
+> +    /*
+> +     * If mtx is active but not tbi, then the top 4 bits are replaced with the
+> +     * ext bit, while leaving bits 56-59 alone. See InsertPAC().
+> +     */
+> +    if (param.mtx && !param.tbi) {
+> +        ext_ptr = deposit64(ext_ptr, 60, 4, ext);
+> +    }
+>   
+>       pac = pauth_computepac(env, ext_ptr, modifier, *key);
+>   
+> @@ -377,6 +384,11 @@ static uint64_t pauth_addpac(CPUARMState *env, uint64_t ptr, uint64_t modifier,
+>       if (param.tbi) {
+>           ptr &= ~MAKE_64BIT_MASK(bot_bit, 55 - bot_bit + 1);
+>           pac &= MAKE_64BIT_MASK(bot_bit, 54 - bot_bit + 1);
+> +    } else if (param.mtx) {
+> +        ptr &= ~(MAKE_64BIT_MASK(60, 4) |
+> +                 MAKE_64BIT_MASK(bot_bit, 55 - bot_bit + 1));
+> +        pac &= MAKE_64BIT_MASK(60, 4) |
+> +               MAKE_64BIT_MASK(bot_bit, 54 - bot_bit + 1);
+>       } else {
+>           ptr &= MAKE_64BIT_MASK(0, bot_bit);
+>           pac &= ~(MAKE_64BIT_MASK(55, 1) | MAKE_64BIT_MASK(0, bot_bit));
+
+Looks ok, but I wonder if this function should be re-written using pauth_ptr_mask.
+
+> @@ -424,6 +436,10 @@ static uint64_t pauth_auth(CPUARMState *env, uint64_t ptr, uint64_t modifier,
+>       cmp_mask = MAKE_64BIT_MASK(bot_bit, top_bit - bot_bit);
+>       cmp_mask &= ~MAKE_64BIT_MASK(55, 1);
+>   
+> +    if (param.mtx) {
+> +        cmp_mask &= ~MAKE_64BIT_MASK(56, 4);
+> +    }
+
+Likewise.
+
+Anyway,
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+
+r~
 
