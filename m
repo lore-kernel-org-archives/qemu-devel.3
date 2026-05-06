@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5255ACD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:06:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 849E3FF8855
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcss-0004oj-5N; Wed, 06 May 2026 10:05:54 -0400
+	id 1wKcs9-0003IF-Kw; Wed, 06 May 2026 10:05:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcsL-0004CV-Cq
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:05:27 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcqz-0000Qd-L0
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:04:03 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcsJ-0001eX-3R
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:05:21 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4891e5b9c1fso62734285e9.2
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:05:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcqy-0001B3-0S
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:03:57 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4852b81c73aso49612425e9.3
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:03:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076317; x=1778681117; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076232; x=1778681032; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=nPoouT4hN+v1hCR0z87gIclFS+UQS3pcQ1N1wJ6ZGJ8=;
- b=WtGWF5vlOEQqvSI+s6woOee1vFX0q9hKNIz/IKynC3h1VS7kxVZT0CFozj93MS0kJK
- Q5N35oW782l2uPvgelaEmyq2EQ9gfqk76MvVaMmKnTpye+YqskierC95rzjKP+vW/0VK
- xO0dmLuYlVIHUnsrKDh0nFYn0p+fWLuKbYJfWeocaMyPSxMQ3C57hnY+mXq/JgbBawwY
- gzZSWSVFP2I/rJSd+Y7w3BPa+P6j6uqueWSDSHU3MnijcLerSlWq4P3zEtJ1BwjVDEf8
- utwCiu5eIlYZ6ib+IqmacQJL9XeFNLmMSd6aDsG7rJy399qF97rwaTqWF4XC4KiignPP
- adNQ==
+ :reply-to; bh=v9IZia9T54nsdk1tWUK1kZA/j93ztaFsjJIvNzWV3m8=;
+ b=siaXdHJOjM+alEQvRltXpx4FOr81K4dTtWB9YdDhQjuyTAWcF0dH6YRpzRSbSoTa+N
+ WCtAa4i9qk0CLwbfZ05w4G1vAEkOLP5gKry11WqephDWbUfsLbCaXinL2VLhDa0iUBuo
+ lAx2ls3NgmLoUpUM9TXR8f75pdo7NRn6kbM/riuOxH+0D8xppwzemyi4+DSY0Zlaf13f
+ OlTNKb4uNPMAshHZ3CLwoRBFpXqp0EMbLPXfKyhMT0FZbLDMmOIG2q9kBJPw/76k8HF4
+ ZH6SR0Xpe7sQRmpLDZZjXIMPWTYDSR8JfnNpFI6MvmlS9KyV+7gfTlKuzzRiz/DqsW4a
+ Pq9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076317; x=1778681117;
+ d=1e100.net; s=20251104; t=1778076232; x=1778681032;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=nPoouT4hN+v1hCR0z87gIclFS+UQS3pcQ1N1wJ6ZGJ8=;
- b=HZR5HPccCw/kMu3S0Bqt9hnHB1OD8Vo7Yz+mt4UEAdzCSs8R7N8W/NwjMhv1uVBda0
- 4lOMIJt+4hTKby1e74W1e2J5ocoMoO2K6sTNGrRFL47v2Qn8owRZKz/++2+hSvmBJzMH
- FAX/G7e2URcngoRSbgW1YcGv73/qtEax71EMYRNlvVm3CMBhTDqLy1hx0xu4NXI+BgmM
- VLo4TyOIYBiL/90WsBUv+LXcc5nAsBZX+a+eTfozNm+YiHqaSbqegvPDoHi3wPKctuOb
- 7NJnVLsNf+W1m+TE2BZWDILjl/x0wYouoBuIe434GLqovqxFIphA90LP+NC0DEodmB3T
- /a7g==
-X-Gm-Message-State: AOJu0YwY1kHmmGhCIqXvIPxl3IQ8UXhSCrx9QXjpB40CpYHgPuJigS26
- VL92QFCGjJ7hyG63BBOTG+6oOM9cjlJ/9Zb309YmGZwZXyyp41Fuqt0v5+46MhMLb7PkZsDRrzS
- OCxC0xGk=
-X-Gm-Gg: AeBDietN7I2vtgW2sA/xzdCUYuZc/0nmwJiMnx2Cb+rN4GrWlkRRuEPkIG4BVWQJZIb
- knxeK3fxXwYbtrngVDc+pYOpdU8dqvXGe1atq/0qU+lu1xGGUkhwDLJuj+F9eI+0zvbxcVSdqW2
- 3Jbha2NVKaFVAmwXu1gzN0M0uH5GKJVtZ+EEkOQbDBLBagAMBq0JVK1+IFF3u7QTT/6COt6Y6Ya
- U7P7LQSiIGboAv+aKcOETHZVKinQsXnqHW6UkgJl+2oSAtsDAVz22SPmj/Rm6oMPO4kXOUIuPTN
- KxTo2fB2A48YQVmv6Sq6wVjodLeS3n8+UxpiYWHreBQK3MfSHxVmblh5Kc1FYW0tEadhfwQAdgb
- GzoWAf9z398fjwzjmcmxuXRYym5zK2d+c+o9WKI52hdISRGi9EIWU8hCTzrz2sM+FoTA9tYV2GZ
- gotKC9SStRNXft72hZssGjVqppFrs391EgsyxyGnZMQQ9kussB6c+qluZmKxOOaACbUxxew4+Iv
- Ygs+TKaCoA=
-X-Received: by 2002:a05:600c:c082:b0:488:c40b:c8bf with SMTP id
- 5b1f17b1804b1-48e51e0971dmr47302655e9.2.1778076315997; 
- Wed, 06 May 2026 07:05:15 -0700 (PDT)
+ bh=v9IZia9T54nsdk1tWUK1kZA/j93ztaFsjJIvNzWV3m8=;
+ b=k2qSTojZKpB3o9Ey+0NYMJ3pucg7s6u90VY+NrZ+qdCpYDh7wjmvV93Jrz20yRTx4d
+ Pw5i83FP8SFXhmeifu7MIbmD0ktz6w7aJ+J3Lt3jVOkg8pguG6fA52yu8wZ0pXf2yipz
+ sYXl3aRQnWa3GtAnVH1LhkwTIEl6f7wRsgokf0fb+6FX30dTvK1tTZXvFGw5wqMFlr8m
+ UZJGMHCkbGiqFLEBiuSa0z4Ri5Sz9KgF5ydFjDPijOWalxVBsPD8FQ/rvIYLIO/z6nSV
+ lCdihHlQXuiiALwGgf3mksNt/cvsTqlhQHs1CiLz28JRo+qVYu8jkNYZm92cWyj2UPHi
+ lWog==
+X-Gm-Message-State: AOJu0Yz4Had42F2ILhWWVWRI18FnBjpUOurAbYv+pz/N08NAbvoEQdjg
+ vKqnZF02XDJmzh5kQ0Nwr7zLnVIGVhbtD4PxzdhAaUHocaRNBegqgvvaT4PwepzHNEVapuwZckn
+ 2LMnhF4s=
+X-Gm-Gg: AeBDiet2D6XC0UenRWZfF46SglCeQX8AxHwmu/6S1C3vVcwkqzT9NFCx9Fdt7WfH8aE
+ 0FP3YeC/e32z0FklZQhKO6hUMJ/iN+f+292ztNoSQrqHRoQD5PUG8gQl74XjBBn30b/QWgHcF4I
+ q071kM8Ue7YbVD95rSMFFDuUHiEYhvNCBCFjTdD/ldZW8GjXTPWNiV0MXnfZ4pHeK/6WLZd1zWK
+ CBM6ZP26uOozgG2rzhU2FrR5jySdc/JPFiadMaBTGWmmjUqiGEyg4F3DrpGcNpz5HMmYTenRW8L
+ QIqqWEMeO7WzOzsiF0FNVBcK9OoBgXWeTnk98CnjOggwnf9imjFJG9oRs1sjRfgheFQefX2XIq5
+ i2sukpw8Cj/890XjOlA8RLkPp74WNF73PqS/5V0VSOKWTHCXwiMCU9hxKbMYXDYctpZDfyyaouJ
+ qqE+tudH/r0wVvExZ4x7FzPh8+SmrcWUthca+64EkIattWpFRbnGCYswAZ/8FxSve+5a8X/3qX2
+ R99Ymp/IZ0=
+X-Received: by 2002:a05:600c:c11c:b0:488:a723:ea53 with SMTP id
+ 5b1f17b1804b1-48e51f5398emr43086785e9.7.1778076232270; 
+ Wed, 06 May 2026 07:03:52 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e538a5486sm52602525e9.6.2026.05.06.07.05.14
+ 5b1f17b1804b1-48e5382a327sm90961905e9.0.2026.05.06.07.03.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:05:14 -0700 (PDT)
+ Wed, 06 May 2026 07:03:50 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 075/110] target/mips: Inline translator_ld[uw,l,q]() calls
-Date: Wed,  6 May 2026 15:54:47 +0200
-Message-ID: <20260506135524.20617-76-philmd@linaro.org>
+Subject: [PULL 065/110] target/sparc: Replace target_monitor_defs ->
+ SysemuCPUOps::monitor_defs
+Date: Wed,  6 May 2026 15:54:37 +0200
+Message-ID: <20260506135524.20617-66-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,126 +100,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation of removing the translator_ld[uw,l,q]() methods,
-inline them for the MIPS target, expanding MO_TE by a runtime
-check on mo_endian(ctx).
-
-Mechanical change using the following Coccinelle 'spatch' script:
-
-  @@
-  expression env, db, pc;
-  @@
-  (
-  - translator_lduw(env, db, pc)
-  + translator_lduw_end(env, db, pc, mo_endian(ctx))
-  |
-  - translator_ldl(env, db, pc)
-  + translator_ldl_end(env, db, pc, mo_endian(ctx))
-  |
-  - translator_ldq(env, db, pc)
-  + translator_ldq_end(env, db, pc, mo_endian(ctx))
-  )
+Restrict sparc64_monitor_defs[] to cpu.c, register it
+as SysemuCPUOps::monitor_defs hook (taking care to not
+register it on 32-bit SPARC target), allowing to remove
+the target_monitor_defs() method.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260417042620.35329-4-philmd@linaro.org>
+Message-Id: <20260427080738.77138-30-philmd@linaro.org>
 ---
- target/mips/tcg/translate.c               | 12 ++++++++----
- target/mips/tcg/micromips_translate.c.inc |  2 +-
- target/mips/tcg/mips16e_translate.c.inc   |  6 ++++--
- target/mips/tcg/nanomips_translate.c.inc  |  5 +++--
- 4 files changed, 16 insertions(+), 9 deletions(-)
+ target/sparc/cpu.c     | 19 +++++++++++++++++++
+ target/sparc/monitor.c | 18 ------------------
+ 2 files changed, 19 insertions(+), 18 deletions(-)
 
-diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
-index fff6390f5d4..54ed253a7d0 100644
---- a/target/mips/tcg/translate.c
-+++ b/target/mips/tcg/translate.c
-@@ -15149,17 +15149,21 @@ static void mips_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index 77046104284..c6989229da6 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -993,12 +993,31 @@ static const Property sparc_cpu_properties[] = {
+ };
  
-     is_slot = ctx->hflags & MIPS_HFLAG_BMASK;
-     if (ctx->insn_flags & ISA_NANOMIPS32) {
--        ctx->opcode = translator_lduw(env, &ctx->base, ctx->base.pc_next);
-+        ctx->opcode = translator_lduw_end(env, &ctx->base, ctx->base.pc_next,
-+                                          mo_endian(ctx));
-         insn_bytes = decode_isa_nanomips(env, ctx);
-     } else if (!(ctx->hflags & MIPS_HFLAG_M16)) {
--        ctx->opcode = translator_ldl(env, &ctx->base, ctx->base.pc_next);
-+        ctx->opcode = translator_ldl_end(env, &ctx->base, ctx->base.pc_next,
-+                                         mo_endian(ctx));
-         insn_bytes = 4;
-         decode_opc(env, ctx);
-     } else if (ctx->insn_flags & ASE_MICROMIPS) {
--        ctx->opcode = translator_lduw(env, &ctx->base, ctx->base.pc_next);
-+        ctx->opcode = translator_lduw_end(env, &ctx->base, ctx->base.pc_next,
-+                                          mo_endian(ctx));
-         insn_bytes = decode_isa_micromips(env, ctx);
-     } else if (ctx->insn_flags & ASE_MIPS16) {
--        ctx->opcode = translator_lduw(env, &ctx->base, ctx->base.pc_next);
-+        ctx->opcode = translator_lduw_end(env, &ctx->base, ctx->base.pc_next,
-+                                          mo_endian(ctx));
-         insn_bytes = decode_ase_mips16e(env, ctx);
-     } else {
-         gen_reserved_instruction(ctx);
-diff --git a/target/mips/tcg/micromips_translate.c.inc b/target/mips/tcg/micromips_translate.c.inc
-index da2419792eb..07172a6c7fe 100644
---- a/target/mips/tcg/micromips_translate.c.inc
-+++ b/target/mips/tcg/micromips_translate.c.inc
-@@ -1629,7 +1629,7 @@ static void decode_micromips32_opc(CPUMIPSState *env, DisasContext *ctx)
-     uint32_t op, minor, minor2, mips32_op;
-     uint32_t cond, fmt, cc;
+ #ifndef CONFIG_USER_ONLY
++
++#ifdef TARGET_SPARC64
++#include "monitor/hmp.h"
++
++static const MonitorDef sparc64_monitor_defs[] = {
++    { "asi", offsetof(CPUSPARCState, asi) },
++    { "pstate", offsetof(CPUSPARCState, pstate) },
++    { "cansave", offsetof(CPUSPARCState, cansave) },
++    { "canrestore", offsetof(CPUSPARCState, canrestore) },
++    { "otherwin", offsetof(CPUSPARCState, otherwin) },
++    { "wstate", offsetof(CPUSPARCState, wstate) },
++    { "cleanwin", offsetof(CPUSPARCState, cleanwin) },
++    { NULL },
++};
++#endif
++
+ #include "hw/core/sysemu-cpu-ops.h"
  
--    insn = translator_lduw(env, &ctx->base, ctx->base.pc_next + 2);
-+    insn = translator_lduw_end(env, &ctx->base, ctx->base.pc_next + 2, mo_endian(ctx));
-     ctx->opcode = (ctx->opcode << 16) | insn;
+ static const struct SysemuCPUOps sparc_sysemu_ops = {
+     .has_work = sparc_cpu_has_work,
+     .get_phys_page_debug = sparc_cpu_get_phys_page_debug,
+     .legacy_vmsd = &vmstate_sparc_cpu,
++#if defined(TARGET_SPARC64)
++    .monitor_defs = sparc64_monitor_defs,
++#endif
+ };
+ #endif
  
-     rt = (ctx->opcode >> 21) & 0x1f;
-diff --git a/target/mips/tcg/mips16e_translate.c.inc b/target/mips/tcg/mips16e_translate.c.inc
-index 97da3456ea5..beb5b04ea29 100644
---- a/target/mips/tcg/mips16e_translate.c.inc
-+++ b/target/mips/tcg/mips16e_translate.c.inc
-@@ -453,7 +453,8 @@ static void decode_i64_mips16(DisasContext *ctx,
- 
- static int decode_extended_mips16_opc(CPUMIPSState *env, DisasContext *ctx)
- {
--    int extend = translator_lduw(env, &ctx->base, ctx->base.pc_next + 2);
-+    int extend = translator_lduw_end(env, &ctx->base, ctx->base.pc_next + 2,
-+                                     mo_endian(ctx));
-     int op, rx, ry, funct, sa;
-     int16_t imm, offset;
- 
-@@ -686,7 +687,8 @@ static int decode_ase_mips16e(CPUMIPSState *env, DisasContext *ctx)
-         /* No delay slot, so just process as a normal instruction */
-         break;
-     case M16_OPC_JAL:
--        offset = translator_lduw(env, &ctx->base, ctx->base.pc_next + 2);
-+        offset = translator_lduw_end(env, &ctx->base, ctx->base.pc_next + 2,
-+                                     mo_endian(ctx));
-         offset = (((ctx->opcode & 0x1f) << 21)
-                   | ((ctx->opcode >> 5) & 0x1f) << 16
-                   | offset) << 2;
-diff --git a/target/mips/tcg/nanomips_translate.c.inc b/target/mips/tcg/nanomips_translate.c.inc
-index 9d4e0bee81f..4b0b01ba37a 100644
---- a/target/mips/tcg/nanomips_translate.c.inc
-+++ b/target/mips/tcg/nanomips_translate.c.inc
-@@ -3551,7 +3551,7 @@ static int decode_nanomips_32_48_opc(CPUMIPSState *env, DisasContext *ctx)
-     int offset;
-     int imm;
- 
--    insn = translator_lduw(env, &ctx->base, ctx->base.pc_next + 2);
-+    insn = translator_lduw_end(env, &ctx->base, ctx->base.pc_next + 2, mo_endian(ctx));
-     ctx->opcode = (ctx->opcode << 16) | insn;
- 
-     rt = extract32(ctx->opcode, 21, 5);
-@@ -3665,7 +3665,8 @@ static int decode_nanomips_32_48_opc(CPUMIPSState *env, DisasContext *ctx)
-         break;
-     case NM_P48I:
-         {
--            insn = translator_lduw(env, &ctx->base, ctx->base.pc_next + 4);
-+            insn = translator_lduw_end(env, &ctx->base, ctx->base.pc_next + 4,
-+                                       mo_endian(ctx));
-             target_long addr_off = extract32(ctx->opcode, 0, 16) | insn << 16;
-             switch (extract32(ctx->opcode, 16, 5)) {
-             case NM_LI48:
+diff --git a/target/sparc/monitor.c b/target/sparc/monitor.c
+index 99abddbf1e0..36f3d8d58e9 100644
+--- a/target/sparc/monitor.c
++++ b/target/sparc/monitor.c
+@@ -37,21 +37,3 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+     }
+     dump_mmu(env1);
+ }
+-
+-const MonitorDef monitor_defs[] = {
+-#ifdef TARGET_SPARC64
+-    { "asi", offsetof(CPUSPARCState, asi) },
+-    { "pstate", offsetof(CPUSPARCState, pstate) },
+-    { "cansave", offsetof(CPUSPARCState, cansave) },
+-    { "canrestore", offsetof(CPUSPARCState, canrestore) },
+-    { "otherwin", offsetof(CPUSPARCState, otherwin) },
+-    { "wstate", offsetof(CPUSPARCState, wstate) },
+-    { "cleanwin", offsetof(CPUSPARCState, cleanwin) },
+-#endif
+-    { NULL },
+-};
+-
+-const MonitorDef *target_monitor_defs(void)
+-{
+-    return monitor_defs;
+-}
 -- 
 2.53.0
 
