@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30F02CD3442
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05F0FCD3440
 	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:09:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcuX-00008x-PN; Wed, 06 May 2026 10:07:37 -0400
+	id 1wKcuN-0008Gv-23; Wed, 06 May 2026 10:07:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKctp-00067p-6I
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:06:53 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKct7-0005Yl-QG
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:06:11 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcti-0001pw-QV
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:06:48 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-488a88aeec9so72974305e9.2
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:06:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKct5-0001l6-Oo
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:06:09 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso46487695e9.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:06:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076402; x=1778681202; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076365; x=1778681165; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=oLdAnvA5IV4NNKrgMoyQHaW4IfTpZPSlRBtPBQoOFMA=;
- b=myzyLFncYZap+heo36756ZJGCihqfkoYMSYcNh4cJVbGFhZzcK0qJg9Tc9B7hGInsh
- qQojQ+GDufhnjsGspE4UXqORFnt2/l2c5N8oGM/y1ZokM7ENGsi9yeq1xwu9VL8h3a4c
- 1PNDPCrsdMno7NNyu6BSoU4j7/lYd6z2S5BVrEUUL9XqGwVDg2Jo2Md5lFdnoC9gI1uv
- FnfszjqaIGqd5r95LUbrWX+MKb6CDtlHy58T3N49I9yrFGMtLA9PLpB8P9v4ya4o4lkR
- EmFfBA/oryZjV7CvQHmggd2Ucs9YG58+W3u2WW+5NTluziTPU7XzNgzLofbCzKm5mVIi
- VrDA==
+ :reply-to; bh=Q7JoIcCA8qNl17AS9UcDFI607F3aol8TFPBvdZnjpeQ=;
+ b=PUXKEuhrhIfhQbKuDCjLKSwMmJngAFsOX0zXH8Uy8CDk6yNFXXs2Mza1oMMsh95N7m
+ efyGon2yxNJFWEqW8Fk/2IZpIbBzVqz5h03fTHWU0R5qWUR/l5Rx8H+XdEZje4G2iGZ1
+ X8L530CSZZR+5IPs8pP4ciAIvyzCuCEKQ6BIB7OSRy0VruWppVZtm+xKio1j1m0Yf1R+
+ xDQU/iCT8Ig4g/KxAq0s2JWQWJ4sfpCa2SonaotMckTyxAIlgqNh+iHwsPd/L3g1BD54
+ qZ+2d2GU6uZUyeYUwnCA2uGImpesFYMfXNjpQof60sVc4GOX6kTH5ncf3uVgbplvj5Of
+ Gs1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076402; x=1778681202;
+ d=1e100.net; s=20251104; t=1778076365; x=1778681165;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=oLdAnvA5IV4NNKrgMoyQHaW4IfTpZPSlRBtPBQoOFMA=;
- b=U35gtxJ3xjTtTFkxNay7C2Dz3aniH711exPC3bmcnyGqnQg/ovUdHEvHxb1asMEFdZ
- Py07L86Pcf/oJct1otE3s/4WaAPP+zCJgFvfh3NhzlRxLAmYqKO1t4iU0hK9Z7q0gXJk
- bEnPLJAfLGozLzevbh0KznSZ1E0B8vxpHjphHvQP+Udtef56dKAvWffuvhZZpOMhMQut
- AuQWuZyUDEhzfuTFc624NRajrXVZASOZ1gmr1LxaHVKX7yj2EOa4xFnmP26KV6QLZ/VD
- rinyp4gYs70WcIdXa0erU7V+mBF1AxDsoBMtLJBK0WyKkm7sq3bkFpF4sxV2Zj+5yGCr
- qStg==
-X-Gm-Message-State: AOJu0YzGKHWJcjseyJ1uKKSEtqd88/q31u7G1WoKdyabLyKEOCg3qRsu
- KFLV8T7jzcZQQos6BDmKhAlIwbcNKtNTUsQsd2jsuzKXDtpFkB8fiKz7wPFPXRzinUJlygrwIAo
- aaD3vmC4=
-X-Gm-Gg: AeBDietTCykehTKeQ/pTdM0UrbSDCRj8QNtqvXiIPScxmXRGe5vpY3gKwMgEj6gaN9I
- YKm/rtq3nfWUYiFA5ZimKJGWDipjOetoJEKE221NDhpJd/rfSO9AjG5v+2KtWj9A6jtLBBtGRrw
- GFsFn0AZAKyTQQ48reNunLKYYI1/X7XubZxGSNVR4b8l2zi1h+DyadD9QWrSIttusK6rg5ppHnv
- tiKi7wiLi2eg5jUSB3ZEbsG/YqjpDN/dl8H9jd/1RdiX/RS7tYQbGbZNDiUK0kccf9ektfZrcln
- FZq5qIHNWH1IZvJTLQKzWSMpJ0l7Jrrg2DRUmFYiV20tZmCjaI0epHpWHkOazosq/hpp5Kt+I6v
- QptgBBbhvE8Y0ejh5rlkq3wUQvyiSilGU+ZeWgzG6iKtDdaqVcpDn7tsDITrXmb7S2a/dAhkSxH
- gG9t/Vk56t/fRoV+HMPUvOgdn8VhCOX4q5sGJf0VB6TaAJ39cAzsrLXFgDQbRh84aNnzRIuT9H4
- 3tBCXWFCT0=
-X-Received: by 2002:a05:600c:871b:b0:483:709e:f238 with SMTP id
- 5b1f17b1804b1-48e51f4652fmr65261695e9.29.1778076402189; 
- Wed, 06 May 2026 07:06:42 -0700 (PDT)
+ bh=Q7JoIcCA8qNl17AS9UcDFI607F3aol8TFPBvdZnjpeQ=;
+ b=BYTV+XxngNNQPjUbTTmkSDDpN7S1CwjG+dEwl96QwaIyWRFwkfOEWMJ7q4yuaGhYvo
+ 8JZQISgDfugb0J0CUocAJLy5pEvHa3gLWDUzCOVNyFepUrwLddxk8XuJOwCLOdpdZn66
+ b7NAaVJdHJiiY6is0njHbevYeybsUBqbpIi9o5fM5EzFw60MJyQ/ehEJtwUK3NhMRWzD
+ I6FdFugL8y/dImz6dyr7zW6eYfmaj2pXqLhMUxePKsiyEWblRi+sQZzE/DR4BFuDIH2G
+ 3pIWEO0trBJPqh4arcmS7pZhhI2ul+W4P58T7aHgsHhkatQ8e4oI5Zj0kz+95FnwbOID
+ 0Rxw==
+X-Gm-Message-State: AOJu0Yyo84LYogWNWFoDiziCPcOGYxuxWyPVbI4/phR5GBgWtS6afItd
+ lCHld79MFpFDLKYoKQAGVkSPp5/l4oeJRoJ4i2YLOqDyzELdkRjBxfWfPppDLcaqwyvkP5vtb22
+ LKNhWjVE=
+X-Gm-Gg: AeBDieuqLSn3jKBmp+imB+LrCDqtvSiDda+JjXP0ndOIDroCbes3B5MYtWA93Z1Tshz
+ BVbIz+2BKomwbOJYjtCwKxTlBYtqwsZGH6/XZQ3QP7xWqtXaXy+ABY0mgxNyKmmw/Y+OW/F3/Sv
+ uX4i7nB20ZB+Rf1sfJR+1LEiQGKTboKigkwascV28iJLanwY9wFwgDZNyy5FaCwOXeY5uRQyLy9
+ d0LEX7s32jS6NfYTxj+UZ8b8Ao8P360V5FKDeBQ9iNtWL+1JxzyTzlSDs8lzc+GqkqeIrKjo2xL
+ NbzTHLYsSfIIb1SttBXDqPqZK1dLPOgN3MKYCU1gwvQnqOYLEY6MlUceD9Wt8WFfaGhU7MzVOQm
+ nZSPhXLX/hJuCNPZzORa2s/AbRO7psC6XHsIuF17Qobn3CItcWQTiGQASb0+yJBqxbpSJrAJF9Q
+ usrClp7Mq0LjrLk8Ol4HemOvlcW/yNpi6CvyIaY599SJ2hBCv9DyWEdkys2P6w9nJf0WcmBV2tl
+ 4Rj6IPe7eE=
+X-Received: by 2002:a05:600c:b8a:b0:48a:56de:d620 with SMTP id
+ 5b1f17b1804b1-48e51f32ac3mr65522115e9.14.1778076364501; 
+ Wed, 06 May 2026 07:06:04 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e538fb19csm47192005e9.11.2026.05.06.07.06.40
+ 5b1f17b1804b1-48e538bc9bdsm60504185e9.11.2026.05.06.07.06.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:06:40 -0700 (PDT)
+ Wed, 06 May 2026 07:06:02 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 086/110] target/microblaze: Compile cpu.c as common unit
-Date: Wed,  6 May 2026 15:54:58 +0200
-Message-ID: <20260506135524.20617-87-philmd@linaro.org>
+Subject: [PULL 081/110] target/microblaze: Fix endianness used to disassemble
+Date: Wed,  6 May 2026 15:54:53 +0200
+Message-ID: <20260506135524.20617-82-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,51 +99,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order do build cpu.c as a common unit we simply need
-to use the common version of "accel/tcg/cpu-ldst.h".
+MicroBlaze CPU model has a "little-endian" property, pointing to
+the @endi internal field. Commit c36ec3a9655 ("hw/microblaze:
+Explicit CPU endianness") took care of having all MicroBlaze
+boards with an explicit default endianness (similarly with
+commit 91fc6d8101d for linux-user binaries), so later commit
+415aae543ed ("target/microblaze: Consider endianness while
+translating code") could infer the endianness at runtime from
+the @endi field, and not a compile time via the TARGET_BIG_ENDIAN
+definition. Doing so, we forgot to propagate that runtime change
+to the disassemble_info structure. Do it now to display the
+opcodes in correct endianness order.
 
+Cc: qemu-stable@nongnu.org
+Fixes: 415aae543ed ("target/microblaze: Consider endianness while translating code")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-Id: <20260423100612.27278-8-philmd@linaro.org>
+Message-Id: <20260423100612.27278-3-philmd@linaro.org>
 ---
- target/microblaze/cpu.c       | 2 +-
- target/microblaze/meson.build | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ target/microblaze/cpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
-index 639f46b525e..04d31536888 100644
+index ec513ae82d4..639f46b525e 100644
 --- a/target/microblaze/cpu.c
 +++ b/target/microblaze/cpu.c
-@@ -27,7 +27,7 @@
- #include "cpu.h"
- #include "qemu/module.h"
- #include "hw/core/qdev-properties.h"
--#include "accel/tcg/cpu-ldst.h"
-+#include "accel/tcg/cpu-ldst-common.h"
- #include "exec/gdbstub.h"
- #include "exec/translation-block.h"
- #include "fpu/softfloat-helpers.h"
-diff --git a/target/microblaze/meson.build b/target/microblaze/meson.build
-index add3e6ca9f9..2ce50f35397 100644
---- a/target/microblaze/meson.build
-+++ b/target/microblaze/meson.build
-@@ -2,6 +2,7 @@ gen = decodetree.process('insns.decode')
+@@ -237,8 +237,8 @@ static void mb_disas_set_info(const CPUState *cpu, disassemble_info *info)
+ {
+     info->mach = bfd_arch_microblaze;
+     info->print_insn = print_insn_microblaze;
+-    info->endian = TARGET_BIG_ENDIAN ? BFD_ENDIAN_BIG
+-                                     : BFD_ENDIAN_LITTLE;
++    info->endian = MICROBLAZE_CPU(cpu)->cfg.endi ? BFD_ENDIAN_LITTLE
++                                                 : BFD_ENDIAN_BIG;
+ }
  
- microblaze_common_ss = ss.source_set()
- microblaze_common_ss.add(files(
-+  'cpu.c',
-   'gdbstub.c',
-   'helper.c',
-   'op_helper.c',
-@@ -10,7 +11,6 @@ microblaze_common_ss.add(files(
- microblaze_ss = ss.source_set()
- microblaze_ss.add(gen)
- microblaze_ss.add(files(
--  'cpu.c',
-   'translate.c',
- ))
- 
+ static void mb_cpu_realizefn(DeviceState *dev, Error **errp)
 -- 
 2.53.0
 
