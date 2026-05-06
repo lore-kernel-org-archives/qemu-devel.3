@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FCD1CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:09:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F8A7CD3440
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:09:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcvR-0002zr-62; Wed, 06 May 2026 10:08:33 -0400
+	id 1wKcsV-00043F-23; Wed, 06 May 2026 10:05:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcvK-0002hi-RL
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:08:30 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcs5-0002wE-Pd
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:05:06 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcvG-000259-PD
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:08:25 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-44c4cc7c1cfso3167283f8f.0
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:08:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcs3-0001Mn-Sw
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:05:05 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-488a14c31eeso48843405e9.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076493; x=1778681293; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076301; x=1778681101; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=2919rqkJppeOa8VQ6Pm1erdNf5b7nkiclQFbNM3i1/U=;
- b=XSluwTLv7s9zoyoR45aS/YFTMIJsQADZm7ZI4TRDne/NZYzc/UPdRQiq7g45hgkNy7
- 7RyfPAwEyH14onBtqzwc2bMCCmQdypNwHv2cXk+32FfFwxp6ICVit+YVfzB2RZg4kN61
- Jcjg5Hb0OMuS0j2YFpNCTxlQSrPwcInBh+Pl5c9Bz3cHHVBOvMRKlDQJHDz9OWNOBavR
- i/H5IURZPBXJHCNrUATkKe7q/6GcYvrlJE8BFdDp38cic83G2l0g4K3y4pdlqbR0VFff
- sKkhb3xcyVtmCV9ZUtktVoEh/XTrlFBOcR6pPTj1A/aVo00FUG8UQZdJDNbF6qJAd+9B
- jAwg==
+ :reply-to; bh=Tvq+099Ewmsxo5/FLHJHRAl7PF0Oc4kiXLP6AKah8Jw=;
+ b=QGVacd4b4tyx5zXgAEfVie6HksNNZ4MvTU33hhg8GmqcTorvRpO2d55rqFZyI0dbuo
+ jo0Ytcd+t7LeBheS4y+wiUIsFW2WJMdA82d/nkopb/apPINty3ElcQIvQ5aPdMaZVjOM
+ mXxuBUlLhLwHDOqAdouqvPLR8UyPeT1JN/B5zAdQmdzcmUN+EXzXGtGxdHE37FuuP6pT
+ qtIvxvo41RYRoTvFbhLsdM9TpuSRUJQVOqIOFuQU0F13BLe/FSLxgONarHXMny5AT1RU
+ HEjooWlKvC5Vv7Wy66vMBxcsabE3aTfxTZvIlE2Hxp16389+xMAH1KkZyXvfETZIpuL7
+ sCKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076493; x=1778681293;
+ d=1e100.net; s=20251104; t=1778076301; x=1778681101;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=2919rqkJppeOa8VQ6Pm1erdNf5b7nkiclQFbNM3i1/U=;
- b=JPZwkAYgI5EZRPVJt6lkyAkguK2iUUbbKvtyw/yy5H3XE3sks0+RjETvm/ZCuPd/ZX
- XqBJ3lIrc1AI5KkJPKCULjJfosfy/pDgqvt8x9gILU2GDozp1DoSbo8OX1VxUdQNzC7b
- 6hm00Ql4pX1+Klrmq0fE2RFDeExO1H/IaqfmWSTBiKtneg4ipEC+ycU49KVpuLS2S4iK
- B10/jQYnkF5P0ESmAbY0ukkuc9Ep8/P32MUq/lQ+9P9/aJZKOI6BtIU4JYYW3t3YEAPm
- NLTqSgIvO+60PxrS/D/6lgI1ict7+Z2uUfahVax8vZPSeE+b9T/oTi1vHbcCtzpfoPVI
- GVWw==
-X-Gm-Message-State: AOJu0YxVyxhqdZ3AoKIQ7M7qexbVcTtvzIOceVVuD6LgeB6duntQZpNA
- JlI5FmSAzkTRWh/QiJfO/9MyBjQ5tq9CS6S3j9j01DYgg61yDW0Qxk/8NBzwAfjMvH6uDMe045y
- 4CSpfi0Y=
-X-Gm-Gg: AeBDiesZt0SgzK20yJi7w9UlmHq9R3zPsixgUz6sYMl4TsAgOX1DF/0U+1uHq+Pj42H
- RlTnVRVXvCoL0YO93pXM7TBlqZ1FKopSwGA0qK+0gmcAhB2g8d3ZDwDdU2e7NDCWhmyZ3+p8Gql
- Us6v9C7sKcTvZPXBnq+jQgNiOkVc4Kr9bKaHje0/m2AdG0yBm2SfwV4F1JIBUGlNKmtaXreyJUP
- ikOt9TOpkfSL0o6ebs6BuUIdqauUMCbQsYAXUI4lC57L6JWJ9DnmbzAk0wJJQMvnwG0goWR0Eqp
- TyB23ihtMlxecH5411qP69y7GESJCxhPdNALOPeb4vzGMObIWLvo9T/u5aItwshulcoPiv1aFvD
- Lae1z3t3bIEJvVDnDZwSk4sxFjBbvdlMd9Sa2w8d52wsbiB+TEfkEk3XOvVrj1vkgJDeRQcJYXp
- J0+q2yKXcmndEL6fmPmOBqIJbLDKxKLlwztuhyB1ErERVGLYg46W+USTB3PpFF4OQG7RZ8ElMpl
- LAMkqbSBec=
-X-Received: by 2002:a05:600c:41cc:b0:489:1c1f:35e6 with SMTP id
- 5b1f17b1804b1-48e51e0bc24mr31963625e9.6.1778076492741; 
- Wed, 06 May 2026 07:08:12 -0700 (PDT)
+ bh=Tvq+099Ewmsxo5/FLHJHRAl7PF0Oc4kiXLP6AKah8Jw=;
+ b=oTGwPEhBh6uQDZNZT/Uq6pnaYfYErnQLeab/Z7gQs6w1HvzRthWuJwvdGeKJMfm624
+ MRyEB4RxLC3HnakohUBmQdUZBQ4/6qHqhiBN7W3UyS8SX3jZdJvZQNnkndBzWX/FGWwx
+ 3Z7W1XYFxE+IISPIWA3zzY80/DS8fjl8tM0JQUJFwsx4cIad763i3a2NyBWpZ5epb30r
+ 9I+VeFLPp3/4cxPt/dqsmubPuK1l3myKEQ1SrCq13vRbH5DO5NWeoHaSFssWRXE6PL2C
+ ygpiZMRXQpabBlm4cXLlqInpii2M4cLQSA0ATGjXL8FHHHsz/kvsIb0G3lQmoGN6bq4G
+ 98iQ==
+X-Gm-Message-State: AOJu0Yw9WaZLKIuokUg+ktALAvRQ39kLxQvcpFeP3AWuh9gYm9xPYG7K
+ ZBNMAnhxfiBLG1h6HzA7RFl5EY783IjvTAhRv1BJzv3qYSUuhzzj9m66jlILnCBmpyPb94wU5ha
+ ApZ9YQBE=
+X-Gm-Gg: AeBDietOjxUXe+vfnGuuifaqjQxcwZ4R0VX+22Gc7RqV7gFzuAKSsFK+OnIIqHfHtiX
+ AVQD/h6KhCGzmzSIcm51k89IdqTck7l+dei7cU0qGoDoJntNACfxGoZ46blKLMgoMVBHpElNAYp
+ KvZUC6bjl9RmnmifCuBVt+VMB9d1Hk48FY0vR2ajC4xW/uQDHg2UeBvquNvohQE6vZtaWBpbesj
+ RPOiQcOTDcZX7+szoKOpQIK/9RYY3aoV+2M8sL3sUpblZeRdHSjtBZahdNeV4rPODitSS2Z6dS3
+ cbA3Fi38wBO+ONE3FZNT7s1c9wWqNrUGC73cDgluWXjA5dFQcBd1FdsOH/QlxfoSJERfVMXMGXV
+ +SF7Ka7UDJieB0ASbvruKUcZDNAjaIikLGTM7Vet4vVzM35N1ImxORRQi8u9v6CKJ2X76lHLsqD
+ LFgzaPEd0dPKakWZ4X6sqSojESGxMjvC1dOYKWmN0NSpIxTZz039M0V/gKeOxHuPOzkIxK9VYY6
+ YAFja4rxk0=
+X-Received: by 2002:a05:600c:4256:b0:48e:51f8:eb39 with SMTP id
+ 5b1f17b1804b1-48e51f8eb5amr35596455e9.28.1778076301020; 
+ Wed, 06 May 2026 07:05:01 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e530d8691sm41794565e9.2.2026.05.06.07.08.11
+ 5b1f17b1804b1-48e538fb19csm47117065e9.11.2026.05.06.07.04.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:08:11 -0700 (PDT)
+ Wed, 06 May 2026 07:04:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 097/110] target/mips: Reduce CPUState scope when used with
- CPU_FOREACH()
-Date: Wed,  6 May 2026 15:55:09 +0200
-Message-ID: <20260506135524.20617-98-philmd@linaro.org>
+Subject: [PULL 073/110] target/mips: Pass MemOpIdx argument to Linked
+ Load/Store helpers
+Date: Wed,  6 May 2026 15:54:45 +0200
+Message-ID: <20260506135524.20617-74-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,144 +100,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When possible, reduce CPUState variable scope.
-Prefer cpu_env(cpu) over &cpu->env.
+In preparation of using the MemOp content in the next commit
+(thus stopping ignoring it), pass it as MemOpIdx.
+
+The helper prototype declaration always took a TCGv_i32 as
+last argument, correct that.
+
+Rename the ignored 'mem_idx' argument on user emulation.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Message-Id: <20260415215539.92629-8-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20260417042620.35329-2-philmd@linaro.org>
 ---
- target/mips/internal.h              | 11 ++++++-----
- target/mips/tcg/system/cp0_helper.c | 28 ++++++++++++++++------------
- target/mips/tcg/system/tlb_helper.c |  7 +++----
- 3 files changed, 25 insertions(+), 21 deletions(-)
+ target/mips/helper.h          | 4 ++--
+ target/mips/tcg/ldst_helper.c | 5 ++++-
+ target/mips/tcg/translate.c   | 7 ++++---
+ 3 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/target/mips/internal.h b/target/mips/internal.h
-index 95b8b7bb9c9..2fd5ffa304a 100644
---- a/target/mips/internal.h
-+++ b/target/mips/internal.h
-@@ -280,7 +280,7 @@ static inline int mips_vpe_active(CPUMIPSState *env)
+diff --git a/target/mips/helper.h b/target/mips/helper.h
+index b6cd53c8538..e2b83a1d19d 100644
+--- a/target/mips/helper.h
++++ b/target/mips/helper.h
+@@ -10,9 +10,9 @@ DEF_HELPER_4(swl, void, env, tl, tl, int)
+ DEF_HELPER_4(swr, void, env, tl, tl, int)
  
- static inline int mips_vp_active(CPUMIPSState *env)
- {
--    CPUState *other_cs = first_cpu;
-+    CPUState *cs = first_cpu;
- 
-     /* Check if the VP disabled other VPs (which means the VP is enabled) */
-     if ((env->CP0_VPControl >> CP0VPCtl_DIS) & 1) {
-@@ -288,10 +288,11 @@ static inline int mips_vp_active(CPUMIPSState *env)
-     }
- 
-     /* Check if the virtual processor is disabled due to a DVP */
--    CPU_FOREACH(other_cs) {
--        MIPSCPU *other_cpu = MIPS_CPU(other_cs);
--        if ((&other_cpu->env != env) &&
--            ((other_cpu->env.CP0_VPControl >> CP0VPCtl_DIS) & 1)) {
-+    CPU_FOREACH(cs) {
-+        CPUMIPSState *other_env = cpu_env(cs);
-+
-+        if ((other_env != env) &&
-+            ((other_env->CP0_VPControl >> CP0VPCtl_DIS) & 1)) {
-             return 0;
-         }
-     }
-diff --git a/target/mips/tcg/system/cp0_helper.c b/target/mips/tcg/system/cp0_helper.c
-index 123d5c217c1..8b83ba16399 100644
---- a/target/mips/tcg/system/cp0_helper.c
-+++ b/target/mips/tcg/system/cp0_helper.c
-@@ -1566,13 +1566,14 @@ target_ulong helper_emt(void)
- 
- target_ulong helper_dvpe(CPUMIPSState *env)
- {
--    CPUState *other_cs = first_cpu;
-     MIPSCPU *cpu = env_archcpu(env);
-     target_ulong prev = cpu->mvp->CP0_MVPControl;
- 
-     if (env->CP0_VPEConf0 & (1 << CP0VPEC0_MVP)) {
--        CPU_FOREACH(other_cs) {
--            MIPSCPU *other_cpu = MIPS_CPU(other_cs);
-+        CPUState *cs = first_cpu;
-+
-+        CPU_FOREACH(cs) {
-+            MIPSCPU *other_cpu = MIPS_CPU(cs);
-             /* Turn off all VPEs except the one executing the dvpe.  */
-             if (&other_cpu->env != env) {
-                 other_cpu->mvp->CP0_MVPControl &= ~(1 << CP0MVPCo_EVP);
-@@ -1585,13 +1586,14 @@ target_ulong helper_dvpe(CPUMIPSState *env)
- 
- target_ulong helper_evpe(CPUMIPSState *env)
- {
--    CPUState *other_cs = first_cpu;
-     MIPSCPU *cpu = env_archcpu(env);
-     target_ulong prev = cpu->mvp->CP0_MVPControl;
- 
-     if (env->CP0_VPEConf0 & (1 << CP0VPEC0_MVP)) {
--        CPU_FOREACH(other_cs) {
--            MIPSCPU *other_cpu = MIPS_CPU(other_cs);
-+        CPUState *cs = first_cpu;
-+
-+        CPU_FOREACH(cs) {
-+            MIPSCPU *other_cpu = MIPS_CPU(cs);
- 
-             if (&other_cpu->env != env
-                 /* If the VPE is WFI, don't disturb its sleep.  */
-@@ -1608,12 +1610,13 @@ target_ulong helper_evpe(CPUMIPSState *env)
- /* R6 Multi-threading */
- target_ulong helper_dvp(CPUMIPSState *env)
- {
--    CPUState *other_cs = first_cpu;
-     target_ulong prev = env->CP0_VPControl;
- 
-     if (!((env->CP0_VPControl >> CP0VPCtl_DIS) & 1)) {
--        CPU_FOREACH(other_cs) {
--            MIPSCPU *other_cpu = MIPS_CPU(other_cs);
-+        CPUState *cpu = first_cpu;
-+
-+        CPU_FOREACH(cpu) {
-+            MIPSCPU *other_cpu = MIPS_CPU(cpu);
-             /* Turn off all VPs except the one executing the dvp. */
-             if (&other_cpu->env != env) {
-                 mips_vpe_sleep(other_cpu);
-@@ -1626,12 +1629,13 @@ target_ulong helper_dvp(CPUMIPSState *env)
- 
- target_ulong helper_evp(CPUMIPSState *env)
- {
--    CPUState *other_cs = first_cpu;
-     target_ulong prev = env->CP0_VPControl;
- 
-     if ((env->CP0_VPControl >> CP0VPCtl_DIS) & 1) {
--        CPU_FOREACH(other_cs) {
--            MIPSCPU *other_cpu = MIPS_CPU(other_cs);
-+        CPUState *cpu = first_cpu;
-+
-+        CPU_FOREACH(cpu) {
-+            MIPSCPU *other_cpu = MIPS_CPU(cpu);
-             if ((&other_cpu->env != env) && !mips_vp_is_wfi(other_cpu)) {
-                 /*
-                  * If the VP is WFI, don't disturb its sleep.
-diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
-index b989c7e5bd5..45cbeb40a2d 100644
---- a/target/mips/tcg/system/tlb_helper.c
-+++ b/target/mips/tcg/system/tlb_helper.c
-@@ -346,15 +346,14 @@ void helper_ginvt(CPUMIPSState *env, target_ulong arg, uint32_t type)
-     uint32_t invMsgVPN2 = arg & (TARGET_PAGE_MASK << 1);
-     uint8_t invMsgR = 0;
-     uint32_t invMsgMMid = env->CP0_MemoryMapID;
--    CPUState *other_cs = first_cpu;
-+    CPUState *cpu = first_cpu;
- 
+ #ifndef CONFIG_USER_ONLY
+-DEF_HELPER_3(ll, tl, env, tl, int)
++DEF_HELPER_3(ll, tl, env, tl, i32)
  #ifdef TARGET_MIPS64
-     invMsgR = extract64(arg, 62, 2);
+-DEF_HELPER_3(lld, tl, env, tl, int)
++DEF_HELPER_3(lld, tl, env, tl, i32)
+ #endif
  #endif
  
--    CPU_FOREACH(other_cs) {
--        MIPSCPU *other_cpu = MIPS_CPU(other_cs);
--        global_invalidate_tlb(&other_cpu->env, invMsgVPN2, invMsgR, invMsgMMid,
-+    CPU_FOREACH(cpu) {
-+        global_invalidate_tlb(cpu_env(cpu), invMsgVPN2, invMsgR, invMsgMMid,
-                               invAll, invVAMMid, invMMid, invVA);
-     }
+diff --git a/target/mips/tcg/ldst_helper.c b/target/mips/tcg/ldst_helper.c
+index 537f3e87bc0..b36b12d87d6 100644
+--- a/target/mips/tcg/ldst_helper.c
++++ b/target/mips/tcg/ldst_helper.c
+@@ -30,8 +30,11 @@
+ #ifndef CONFIG_USER_ONLY
+ 
+ #define HELPER_LD_ATOMIC(name, insn, almask, do_cast)                         \
+-target_ulong helper_##name(CPUMIPSState *env, target_ulong arg, int mem_idx)  \
++target_ulong helper_##name(CPUMIPSState *env, target_ulong arg,               \
++                           uint32_t memop_idx)                                \
+ {                                                                             \
++    MemOpIdx oi = memop_idx; \
++    unsigned mem_idx = get_mmuidx(oi); \
+     if (arg & almask) {                                                       \
+         if (!(env->hflags & MIPS_HFLAG_DM)) {                                 \
+             env->CP0_BadVAddr = arg;                                          \
+diff --git a/target/mips/tcg/translate.c b/target/mips/tcg/translate.c
+index e334cf98b78..ee6199875cf 100644
+--- a/target/mips/tcg/translate.c
++++ b/target/mips/tcg/translate.c
+@@ -1922,7 +1922,7 @@ FOP_CONDNS(s, FMT_S, 32, gen_store_fpr32(ctx, fp0, fd))
+ /* load/store instructions. */
+ #ifdef CONFIG_USER_ONLY
+ #define OP_LD_ATOMIC(insn, memop)                                          \
+-static inline void op_ld_##insn(TCGv ret, TCGv arg1, int mem_idx,          \
++static inline void op_ld_##insn(TCGv ret, TCGv arg1, int mem_idx_ignored,  \
+                                 DisasContext *ctx)                         \
+ {                                                                          \
+     TCGv t0 = tcg_temp_new();                                              \
+@@ -1932,11 +1932,12 @@ static inline void op_ld_##insn(TCGv ret, TCGv arg1, int mem_idx,          \
+     tcg_gen_st_tl(ret, tcg_env, offsetof(CPUMIPSState, llval));            \
  }
+ #else
+-#define OP_LD_ATOMIC(insn, ignored_memop)                                  \
++#define OP_LD_ATOMIC(insn, memop)                                          \
+ static inline void op_ld_##insn(TCGv ret, TCGv arg1, int mem_idx,          \
+                                 DisasContext *ctx)                         \
+ {                                                                          \
+-    gen_helper_##insn(ret, tcg_env, arg1, tcg_constant_i32(mem_idx));      \
++    MemOpIdx oi = make_memop_idx(memop, mem_idx);                          \
++    gen_helper_##insn(ret, tcg_env, arg1, tcg_constant_i32(oi));           \
+ }
+ #endif
+ OP_LD_ATOMIC(ll, mo_endian(ctx) | MO_SL);
 -- 
 2.53.0
 
