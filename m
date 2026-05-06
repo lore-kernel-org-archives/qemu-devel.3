@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00326FF8855
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:07:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 152DFFF8855
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:07:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcrW-0001VN-2S; Wed, 06 May 2026 10:04:30 -0400
+	id 1wKcsF-0003kF-MJ; Wed, 06 May 2026 10:05:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcpc-0007Iv-Tu
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:02:33 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcrh-0002E4-I5
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:04:42 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcpa-0000vB-8E
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:02:32 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-43fe62837baso3603803f8f.3
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:02:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcre-0001IZ-Qz
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:04:41 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-452169ae568so386357f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:04:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076146; x=1778680946; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076276; x=1778681076; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=yewvYs6cPTD2dj7nT/r4N5XxtqUaMU8rpJtQZi2DobU=;
- b=txdubUxzhGFf6nrPvz9WrunCTWPOUe3uLV/48icEbdm1cM9p8lqdNq5E+p9kbYTMA9
- mgeKLcxZcWETKPCyK9ZnsNPSEXpCe7nVfeTztEjPl0p/IRgX0rS0pd2sc7amHWte5UiW
- lenUABlpHN0DnSaRinCZT0jtqneIfupjGgA2cKRn1LjvRWbjo3TIjbr1ZI7kXD743ZIX
- Yp//PwfgWdLc7qXlNfOX/nxdtOlRQm2jtm1S27P+Ib1YthRNMxAEppRH4rp577RZOAOb
- cm0xEWVBvYZnNgqFFbwIFa6nagLmnqMqugamsZi+TeFfVlKVE6Yops0peUG0ibjXmRCs
- S1Hg==
+ :reply-to; bh=ZP4w7Rk3n+TwTim0y/LaZ0U4XGUljk46CIvMASTDLg4=;
+ b=tnL3Iv+eB2Fs57wCa71oRR+jKL7Kw03E9jjCH6mqmmPGT/fLbPvq3jq8YPi1urzFma
+ eQcnYeAzLr1lb+IghwmgJwOfLDYWZankU0RhgXunoGTmB+/G2IxdxaWa9SiViGwrWVtL
+ jg9wOnMMcsCZC4kvSpe9Z+Hx5zoLI2kn3O6kIsBDGQ73D/1UAsdvwWbztoLrYjGqwxKp
+ aUm7HhyvYzE9vqRxOsDXogywDesqJN/yo3Gle3mIpuR+nJyNhJEOf8umeroW7RmfIv+J
+ gFPsEBL5MYQtKSV8qlWDdHhWgLHqrytrlDY6ozLMPIIXFkU1L5euRWe5qxnzmlFM6MIE
+ PEKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076146; x=1778680946;
+ d=1e100.net; s=20251104; t=1778076276; x=1778681076;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=yewvYs6cPTD2dj7nT/r4N5XxtqUaMU8rpJtQZi2DobU=;
- b=l9UNjO5urYORn/YhwNSsHg5IlzIp/2TofXXiIqtzbnxMiFJUDw3mZ0bCcl27n2txC4
- yvjFPwjin7jJ6fa0C+rGi02dAHYv1W/Xo0LaVFArDhO58ptyjflQMUo9ixfqNFVm24g1
- ITHzh+2vsUuKBsjTfP3pOQy/Gp1QyZTP+6BtOvNKZPwg/ebkfk6qel5KlwltEcEvvZFI
- HfSCfXJhJpvwQIZOGIoCULTLp62EHo9xMC4l4bxps6xKbMmUGyR3OyZXlVGFDCg5QsU0
- /hQgbchqgvZYjGUlLxP+Mxr2h1WXY75UdcLmI9fgzGkg3bvYdp3bJc277DuQ+U9lBIZ+
- rwZg==
-X-Gm-Message-State: AOJu0YzUz0uIrDTdfAvLI4dZPYVnI+4/XaUvB1e7Q7bJL2tLEF6jDveS
- QWrmSFlGySAN1spv1eue2vN2ijj3ndP6SyBnPMcVtaU9TrbYacMTNYZF9Spt06VA/mnZVUy6TgD
- nZerkj1M=
-X-Gm-Gg: AeBDiesLznX7RYdwAOkQMawSxRWZKRirEQB1IFVLeMBqR1q0Kt9au+hG2P2GldRPNL6
- qxCYvEktHENxkLNwhTLCWKaADlbidKgpW6gsJDR7fLU1b0K/JZr2JBp1jn3sM54iXlbq1VxvOte
- 2F31DGSkCToMNJyiyPOVZrkpjOdvS9LMVYQRGuUCWZm47pXG0oFRNt29/az823jzptx8972/U6j
- b76N3c0bblpK9i+qGPpengY+ruYylPGSU83QWysP1g1rD3WwmChYFYikwUJTtUCqSwQwYkLUR+D
- ndbCB7gt+0tMhf6Wo1VO0raW2H1Z7qMFj79iETNGrvYjp8iYXf3L96VaaNOfQNWtSS00mqLa3dz
- t2yxq1tVbw+7Y6cCNQjJ2ynSU6VlKmon6Ix2Mqe+bBwlVD+oWTJhs64gCgzQgjdWglJIjzzOJA7
- ciaMktaXnlt1eJql42AIpDYw4DeFVR2ZBCt9I26OqpBJ9cR18GgbgLdbJKoRFHrEskHF97HgjFI
- sIaZT0Qm+M=
-X-Received: by 2002:a05:6000:3110:b0:449:acdb:3009 with SMTP id
- ffacd0b85a97d-4515b057246mr6053359f8f.6.1778076146321; 
- Wed, 06 May 2026 07:02:26 -0700 (PDT)
+ bh=ZP4w7Rk3n+TwTim0y/LaZ0U4XGUljk46CIvMASTDLg4=;
+ b=lma3xuuCw/QlsTxQR6kMX9M1kzMb3Aj8amCTyMcRjMLJNCI/RvIBY7YvRAPsr7uy3M
+ yO9HO+EgOhaKjp61T8BJmdrPUBNVhVcIrnRrM3FcHIi0aFDAt8OBJmYJEKA5V/WcLrPx
+ vSGo95J8D05IJgtGg2WmtXSOU7ZvTwrAKNiqF1Pvrn0vnwATaQHBodcrZnGcaR8I5v5l
+ Esg7C6qm0T1XraHO62L5RGb+2EiL6NvWW1QBESzfA5qV9o6SxZD3u9WlStlb2TCUjyOA
+ iJqNfz9tUo9eDZYfzZOj/COEpT7uMe2XuXuzggG7ZEbQzGMq/tV+1x+++d62Ob9uNSD6
+ 2hHA==
+X-Gm-Message-State: AOJu0YygmcV5W186X7ArqCSO4t7Ifq/QbcLO4z6BkjDI3J9RNw5gaCp4
+ yIeclrvkwQDSmoAv+RbVa3kKihGZLtNUcRDKYyyjyhbF2bT6Z0krPaWrcNCtyhzRXB1/X6YtsS5
+ bx/r6DAc=
+X-Gm-Gg: AeBDieuV1tEh5EJJ1Vz9TadqDrE+j3JGTOnxC+CcRKdmNMk826U6ESVtOVPf4VJwl13
+ lO5jMWS3UtUp8HnwJl6dVeftS+JjywApP0LO89hw+ZmEiTHTNq/7G3QBjksoOyeZ/X2rGL9DBMV
+ j1HnuJd1UZhicA+ffU39BPCf6TfLlIo1UN83oPQJgP7dwREYB+qQkRyKLJeYYbCay5ILousi8sc
+ m2nHo39rWzPFk//lFHzwzp+8l0u1bkiAKa5r1KDQQq+pWc5ee1P5LEtsjl2iqxenp+i66RMkO+x
+ Fu9k7YlHLglSx30voHE51YjBnZotqI8OXKd4YErcyFKYsmVC8Bi8y/jYaSlifIuY5knYUndwRLc
+ dGny2OVy1tzPxYJyoNw6GoCosDC/Q1FUuIDEAlDcn49i7YWzULkEA5TNxkzQUvMq9mZ52oBm66M
+ 7TmDXhdqdfrZSK1ZcmGl81cqmcdzXrur0g3U5P88lUrhQ/QL55eyAVuqcmomCMoVGeJGLtPZmBB
+ zTsC4JAjV+GM8A197EDiA==
+X-Received: by 2002:a05:6000:290f:b0:43d:7af0:3a7c with SMTP id
+ ffacd0b85a97d-4515d3dc24cmr6096479f8f.29.1778076275787; 
+ Wed, 06 May 2026 07:04:35 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45054b02c5asm12726418f8f.19.2026.05.06.07.02.23
+ ffacd0b85a97d-450524833e1sm13014054f8f.2.2026.05.06.07.04.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:02:24 -0700 (PDT)
+ Wed, 06 May 2026 07:04:34 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 054/110] monitor: Do not check multiple TARGET_* to build 'info
- tlb' command
-Date: Wed,  6 May 2026 15:54:26 +0200
-Message-ID: <20260506135524.20617-55-philmd@linaro.org>
+Subject: [PULL 070/110] accel/tcg: Remove non-explicit endian cpu_ld*_code()
+ wrappers
+Date: Wed,  6 May 2026 15:54:42 +0200
+Message-ID: <20260506135524.20617-71-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,77 +100,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This command is filtered at build-time for a selection of binaries.
-By using the recently introduced HMPCommand::arch_bitmask flag we
-can filter them at runtime, making it possible to compile
-hmp-commands-info.hx once.
-
-Since the method depends on a pair of distinct targets,
-define it in its own stub file.
+All uses were converted to the cpu_ld*_code_mmu() helpers:
+remove them. Update the documentation.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260427080738.77138-19-philmd@linaro.org>
+Message-Id: <20260320074555.33974-3-philmd@linaro.org>
 ---
- stubs/hmp-cmd-info_tlb.c | 12 ++++++++++++
- hmp-commands-info.hx     |  5 ++---
- stubs/meson.build        |  1 +
- 3 files changed, 15 insertions(+), 3 deletions(-)
- create mode 100644 stubs/hmp-cmd-info_tlb.c
+ docs/devel/loads-stores.rst  | 21 +++++++++------------
+ include/accel/tcg/cpu-ldst.h | 33 ++-------------------------------
+ 2 files changed, 11 insertions(+), 43 deletions(-)
 
-diff --git a/stubs/hmp-cmd-info_tlb.c b/stubs/hmp-cmd-info_tlb.c
-new file mode 100644
-index 00000000000..a144e68c1c7
---- /dev/null
-+++ b/stubs/hmp-cmd-info_tlb.c
-@@ -0,0 +1,12 @@
-+/*
-+ * Human Monitor 'info tlb' stub
-+ *
-+ * Copyright (c) Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "monitor/hmp.h"
-+
-+HMP_STUB(info_tlb)
-diff --git a/hmp-commands-info.hx b/hmp-commands-info.hx
-index c93c049daea..82134eb6c21 100644
---- a/hmp-commands-info.hx
-+++ b/hmp-commands-info.hx
-@@ -186,16 +186,15 @@ SRST
-     Show PCI information.
- ERST
+diff --git a/docs/devel/loads-stores.rst b/docs/devel/loads-stores.rst
+index 57892e814cd..c719241a7f5 100644
+--- a/docs/devel/loads-stores.rst
++++ b/docs/devel/loads-stores.rst
+@@ -235,16 +235,13 @@ Regexes for git grep:
+  - ``\<cpu_ld[us]\?[bwlq]\(_[bl]e\)\?_data\>``
+  - ``\<cpu_st[bwlq]\(_[bl]e\)\?_data\+\>``
  
--#if defined(TARGET_I386) || defined(TARGET_SH4) || defined(TARGET_SPARC) || \
--    defined(TARGET_PPC) || defined(TARGET_XTENSA) || defined(TARGET_M68K)
-     {
-         .name       = "tlb",
-         .args_type  = "",
-         .params     = "",
-         .help       = "show virtual to physical memory mappings",
-         .cmd        = hmp_info_tlb,
-+        .arch_bitmask = QEMU_ARCH_I386 | QEMU_ARCH_SH4 | QEMU_ARCH_SPARC \
-+                        | QEMU_ARCH_PPC | QEMU_ARCH_XTENSA | QEMU_ARCH_M68K,
-     },
--#endif
+-``cpu_ld*_code``
+-~~~~~~~~~~~~~~~~
++``cpu_ld*_code_mmu``
++~~~~~~~~~~~~~~~~~~~~
  
- SRST
-   ``info tlb``
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 33053d932c8..2f4e1ab4300 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -89,6 +89,7 @@ if have_system
-   stub_ss.add(files('qmp-cpu-s390x-kvm.c'))
-   stub_ss.add(files('hmp-cmd-info_mem.c'))
-   stub_ss.add(files('hmp-cmd-info_sev.c'))
-+  stub_ss.add(files('hmp-cmd-info_tlb.c'))
-   stub_ss.add(files('hmp-cmds-hw-s390x.c'))
-   stub_ss.add(files('hmp-cmds-target-i386.c'))
- endif
+-These functions perform a read for instruction execution.  The ``mmuidx``
+-parameter is taken from the current mode of the guest CPU, as determined
+-by ``cpu_mmu_index(env, true)``.  The ``retaddr`` parameter is 0, and
+-thus does not unwind guest CPU state, because CPU state is always
+-synchronized while translating instructions.  Any guest CPU exception
+-that is raised will indicate an instruction execution fault rather than
+-a data read fault.
++These functions work like the ``cpu_{ld,st}*_mmu`` functions
++except that they perform a read for instruction execution.
++Any guest CPU exception that is raised will indicate an instruction
++execution fault rather than a data read fault.
+ 
+ In general these functions should not be used directly during translation.
+ There are wrapper functions that are to be used which also take care of
+@@ -252,7 +249,7 @@ plugins for tracing.
+ 
+ Function names follow the pattern:
+ 
+-load: ``cpu_ld{sign}{size}_code(env, ptr)``
++load: ``cpu_ld{sign}{size}_code_mmu(env, addr, oi, retaddr)``
+ 
+ ``sign``
+  - (empty) : for 32 or 64 bit sizes
+@@ -266,12 +263,12 @@ load: ``cpu_ld{sign}{size}_code(env, ptr)``
+  - ``q`` : 64 bits
+ 
+ Regexes for git grep:
+- - ``\<cpu_ld[us]\?[bwlq]_code\>``
++ - ``\<cpu_ld[us]\?[bwlq]_code_mmu\>``
+ 
+ ``translator_ld*``
+ ~~~~~~~~~~~~~~~~~~
+ 
+-These functions are a wrapper for ``cpu_ld*_code`` which also perform
++These functions are a wrapper for ``cpu_ld*_code_mmu`` which also perform
+ any actions required by any tracing plugins.  They are only to be
+ called during the translator callback ``translate_insn``.
+ 
+diff --git a/include/accel/tcg/cpu-ldst.h b/include/accel/tcg/cpu-ldst.h
+index ea2cbf40fe4..1facabccb23 100644
+--- a/include/accel/tcg/cpu-ldst.h
++++ b/include/accel/tcg/cpu-ldst.h
+@@ -51,10 +51,9 @@
+  *     _be: for forced big endian
+  *     _le: for forced little endian
+  *
+- * mmusuffix is one of the generic suffixes "data" or "code", or "mmuidx".
++ * mmusuffix is one of the generic suffixes "data" or "mmuidx".
+  * The "mmuidx" suffix carries an extra mmu_idx argument that specifies
+- * the index to use; the "data" and "code" suffixes take the index from
+- * cpu_mmu_index().
++ * the index to use; the "data" suffix take the index from cpu_mmu_index().
+  *
+  * The "mmu" suffix carries the full MemOpIdx, with both mmu_idx and the
+  * MemOp including alignment requirements.  The alignment will be enforced.
+@@ -470,34 +469,6 @@ cpu_stq_le_data(CPUArchState *env, abi_ptr addr, uint64_t val)
+ # define cpu_stl_mmuidx_ra    cpu_stl_le_mmuidx_ra
+ # define cpu_stq_mmuidx_ra    cpu_stq_le_mmuidx_ra
+ #endif
+-
+-static inline uint32_t cpu_ldub_code(CPUArchState *env, abi_ptr addr)
+-{
+-    CPUState *cs = env_cpu(env);
+-    MemOpIdx oi = make_memop_idx(MO_UB, cpu_mmu_index(cs, true));
+-    return cpu_ldb_code_mmu(env, addr, oi, 0);
+-}
+-
+-static inline uint32_t cpu_lduw_code(CPUArchState *env, abi_ptr addr)
+-{
+-    CPUState *cs = env_cpu(env);
+-    MemOpIdx oi = make_memop_idx(MO_TEUW, cpu_mmu_index(cs, true));
+-    return cpu_ldw_code_mmu(env, addr, oi, 0);
+-}
+-
+-static inline uint32_t cpu_ldl_code(CPUArchState *env, abi_ptr addr)
+-{
+-    CPUState *cs = env_cpu(env);
+-    MemOpIdx oi = make_memop_idx(MO_TEUL, cpu_mmu_index(cs, true));
+-    return cpu_ldl_code_mmu(env, addr, oi, 0);
+-}
+-
+-static inline uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr addr)
+-{
+-    CPUState *cs = env_cpu(env);
+-    MemOpIdx oi = make_memop_idx(MO_TEUQ, cpu_mmu_index(cs, true));
+-    return cpu_ldq_code_mmu(env, addr, oi, 0);
+-}
+ #endif /* TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API */
+ 
+ #endif /* ACCEL_TCG_CPU_LDST_H */
 -- 
 2.53.0
 
