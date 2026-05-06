@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F44ACD343B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:11:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3AA5CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:11:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcxP-00080r-Ha; Wed, 06 May 2026 10:10:35 -0400
+	id 1wKcra-0001gU-Rx; Wed, 06 May 2026 10:04:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcwt-0007mX-LH
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:10:05 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcpy-0007bb-N0
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:02:58 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcwl-0002HS-IO
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:09:57 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4891c00e7aeso55500715e9.2
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:09:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcpw-0000xw-OM
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:02:54 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-48a563e4ef7so62758095e9.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:02:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076593; x=1778681393; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076170; x=1778680970; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=cRYPq0kfd9OLQZNCTmCz4sOJdP+EazwFZ/SzgSuAvXI=;
- b=xYAwFChVtqAZ8NYGj/kWQ1NQGS2j1S0jrLzPuNioyFVobROlCRYFsgKBx+bjCx3Z8T
- /Vn1+Bc0nqGsf775l2D7Lm++bQ+gZ9dhEoqPgCbo0ojxeaIyXGag5/NRajfJMuWMbNOP
- p0agCO/7btTDsXedeCmvjl5G84v7L37AT8vKdQiwyGSPzo32m62yIUJ0mJA58k0KfsRW
- Z3bLzykEINA23PCVwthyQRyf5EDPeYCc4Goc+9sOdJlzfQcotA2LCC1Jidi5au2XCHRg
- ov6LM1sGFGZ0+xYwl85jnyDnOQPsmxFFOtxikDG8JqUoCtG0sHFdihITZNhfvT7VM+cW
- pATg==
+ :reply-to; bh=saeNhd6CtyK007geaZog+ztTZEhGq2PWC7iHo/mMXE0=;
+ b=DKDNr26rXhrRUD+1bq2ivGAQfYbptPhi63p8hi/7Ra7syopIjsvhxYKS7aD/uqP+QA
+ 12+IL2dNYFL4c2kgX9vCV193nrtbUz4f9LaGYisMvTP4ORIYWzC2K0wbSZSdUL3U55Qj
+ WtC/gKQf06LQNUfRaftSb7LadZX1nOJhtumGVwllntNnFzJ4cyUETxqsCdp3wwDaViiO
+ uMpI/RKV07WAcfVkfiv9b3bjx0Egg1e35gags4PSTmzGDgob5MUgXGL72C0lJCUhvnOE
+ Ymjsv3yJflcVENK06McfSNkswb8ALdDe0mIEiLXaAwm63xBzZ9QN5CNeOylvWCBuvZZB
+ Hn7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076593; x=1778681393;
+ d=1e100.net; s=20251104; t=1778076170; x=1778680970;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=cRYPq0kfd9OLQZNCTmCz4sOJdP+EazwFZ/SzgSuAvXI=;
- b=EoR75nn38AvC5P7z5sNnftsqn9pgPONrgoAG20dQ+zwvdzT7pH35q2uFS7BdRb7gBC
- tgusA+NfBdWgmPdYC5A000mdM9IjBNOYQB3Z7iZwvqExzJsEk/i4PCxmFhnGMx/26lO5
- 0ysbci/LO0c4QBiqNEQabBkr3qtmH3iYIqtxwz893VLZIkTep/k+lprIOjvuBQpjRvOl
- Uc3WTyFh7XRpu+aiHJEjNuZOQZjk9GBtb1LmwjmmY5DuTsWRkWijceo9Ph4qWnabOaQI
- QEIDGxTyT0XP9uxpwIgy6hkKRPXfBdTvWTO9AJq9hm819+i1pcUedZHK7DcoG3A4kzWI
- iJIA==
-X-Gm-Message-State: AOJu0Yzc/4yHBONkGhizY23TK6cWpsD373oRR4xR+joCRka41Q8040Jj
- Uq7Amp3o0tMxejvfPV9uZaR5IyRg34mmj1QW5oHNCwFdJ1WTSRzxbK5i+h8d9hO9vkylChzqKRu
- kIYTAiIk=
-X-Gm-Gg: AeBDiese7Kj8GIIPlteuBkkPV8AyUqEGN//suF4HBJMizwUjViIUeFQGwoi1hjfvvXH
- a4Dgc/JbgBfXVvUxHnNt0Euf7z0HX/aub7c6+/AYIzBcFxRBSUUPLDTbx+6mrZPdCuUHz34DBBC
- j/trJf1meRjtgrrZ2t2b+/YEJahXaMHh8jql3FB6WUUufin7q5zLjqwj76DyYAI+yNsK2e1N/AM
- fsopNBC+eDVAnG0ZBUE6wl+yOljYMekuZNLMMlVSlu48pLZFT0Vh7oc799NQJ1kQzWs8t1Oc0TT
- 41aLK54zjhFNTDCZYWeii6M4KyqnbYZYPX0tVH3HF7Crm8TddSfGQjmDqvZYWbHLMOjsNpG8xrd
- c8l+0sULr55PCJQu20pQOEV31DuRBRL/ASnLw8rxqdxetYIZ81NdO0BIsIJAolSvm4qvzc6mZ/c
- q4wZ8xcWB2m7YiRBP8FbnFPEF0AOhdm7wdt0a80amQDz0npLajH0yPIiMAKgL1hblmG1P9ErtqI
- WUTLt67UWA=
-X-Received: by 2002:a05:600c:3548:b0:487:1108:48b8 with SMTP id
- 5b1f17b1804b1-48e51e0a60fmr63594845e9.2.1778076592738; 
- Wed, 06 May 2026 07:09:52 -0700 (PDT)
+ bh=saeNhd6CtyK007geaZog+ztTZEhGq2PWC7iHo/mMXE0=;
+ b=Lah+MqMekC/qVslrQSy6XAH+hzkSD6uT7s2pcEqet8cc4tMVFcb/hZXp4WKAfza9Na
+ 6D0FoMmyPWktlUgBzbBvkjFu0AwW5MrdL4mhIIzkwEjE9IwzhtgN3gV0odHBFKcE6H2T
+ 92XAs0MuXD5dEgZO4FbdlY39UmTXKFkjV7acZuHwGwa2DztT1dQoa6VYbQkMPfQNBEl0
+ RDC9XCxSbG2Pog2tQJi91JJeDKtMB3XmD32GOxkJi2UfVbXXVAok6GIouQUVE0HuYshP
+ NYEAZy3+LCXaC6hUQbAcL3m7hEauVH957/pOFP9cluhBU6Ib2VAca2PDjqHFDYf43bk+
+ zkDw==
+X-Gm-Message-State: AOJu0YyA9WVY+RH3OSQtVieYSNWnkS2dqioVgvZF/0qyrpQhEtki++uQ
+ UC8ytP3VW+JDV6urFMyUZejs0lqMZV7LLMHzUih/uCA03pJa9m2nHSqixSUgsKAjHbYbosrSw+6
+ R9oh26q8=
+X-Gm-Gg: AeBDieuXV+k3vhChsmn5u/2qxyhD3O9IKQtfLc1I5w77wDcslHSgKVH+uZJNHvToQ9p
+ 9G/ZUtaXiyDhqkszt5hBb2x+XB2C68F6nziDdGSKtRawGoiDVsN2Q/ddNXwSBC1APSNa/UPjEgl
+ DXdyyUjNsNO79hzcwsAaxqfxpYd5aJaxwtuPzmfsh0nQ3gQ+Tuik/i1cx11KAqQtowgrEYa2sNJ
+ BUGU2jqc8ptKDYEfV4hljdG8S3YrLaVkdEZyNyvXpm8fqa/stmRpFruusazpCbM81kSD9FTpKPs
+ 0lDQHF4X4jw3NrTgHabOcoFarQ+MrmHAEU4JC7oleiEd/DZT9g0adfneBawzTVZI8I8FoCb3048
+ GKGLfD8semiGl4USe6had2jD7bWJAaCfwwEmzQb1OmrwsbqHzJhBjRkPxhe+037x8ucKz4MSUeX
+ 8giryeA78ipCGD1I+jdEizWaDWPIRgsJzB2uu+dWnRaMT6dNiBqZdsXWslSwRdCWSpZpeRVcFuF
+ QxUpDLYtpm9ZOJAEWpyjQ==
+X-Received: by 2002:a05:600c:a111:b0:480:1c69:9d36 with SMTP id
+ 5b1f17b1804b1-48e51f2f83dmr48314645e9.17.1778076169792; 
+ Wed, 06 May 2026 07:02:49 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e53907e8asm49401665e9.13.2026.05.06.07.09.50
+ 5b1f17b1804b1-48e538a517bsm52904675e9.4.2026.05.06.07.02.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:09:51 -0700 (PDT)
+ Wed, 06 May 2026 07:02:47 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 110/110] system/vl: inline qemu_opts_parse_noisily() result
- checks
-Date: Wed,  6 May 2026 15:55:22 +0200
-Message-ID: <20260506135524.20617-111-philmd@linaro.org>
+Subject: [PULL 057/110] monitor: Remove target_get_monitor_def()
+Date: Wed,  6 May 2026 15:54:29 +0200
+Message-ID: <20260506135524.20617-58-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,140 +99,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bin Guo <guobin@linux.alibaba.com>
+target_get_monitor_def() is now only a dead stub. Remove as pointless.
 
-In qemu_init()'s option parsing switch, several cases assigned the
-return value of qemu_opts_parse_noisily() to the shared 'opts'
-variable solely to check for NULL, without using the pointer
-afterwards.  Inline the call directly into the if-condition, matching
-the style already used by QEMU_OPTION_action.
-
-This affects the following options:
-  -drive, -numa, -iscsi, -m, -mon, -chardev, -fsdev, -fwcfg
-
-Cases where the returned QemuOpts* is subsequently used (e.g.
--acpitable, -smbios, -virtfs) are left unchanged.
-
-Signed-off-by: Bin Guo <guobin@linux.alibaba.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260429062004.36582-4-guobin@linux.alibaba.com>
-[PMD: Reduce @opts declaration to innermost block]
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20260427080738.77138-22-philmd@linaro.org>
 ---
- system/vl.c | 39 ++++++++++++++++-----------------------
- 1 file changed, 16 insertions(+), 23 deletions(-)
+ include/monitor/hmp-target.h   |  1 -
+ monitor/hmp-target.c           | 14 +++-----------
+ stubs/target-get-monitor-def.c | 29 -----------------------------
+ stubs/meson.build              |  1 -
+ 4 files changed, 3 insertions(+), 42 deletions(-)
+ delete mode 100644 stubs/target-get-monitor-def.c
 
-diff --git a/system/vl.c b/system/vl.c
-index 705f0d3a4a9..d2f4044e5d8 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2842,7 +2842,6 @@ void qmp_x_exit_preconfig(Error **errp)
+diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
+index ce0bb1983cc..008c1a6570c 100644
+--- a/include/monitor/hmp-target.h
++++ b/include/monitor/hmp-target.h
+@@ -38,7 +38,6 @@ struct MonitorDef {
+ #endif
  
- void qemu_init(int argc, char **argv)
- {
--    QemuOpts *opts;
-     QemuOpts *icount_opts = NULL, *accel_opts = NULL;
-     QemuOptsList *olist;
-     int optind;
-@@ -2928,6 +2927,7 @@ void qemu_init(int argc, char **argv)
-             drive_add(IF_DEFAULT, 0, argv[optind++], HD_OPTS);
-         } else {
-             const QEMUOption *popt;
-+            QemuOpts *opts;
+ const MonitorDef *target_monitor_defs(void);
+-int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval);
  
-             popt = lookup_opt(argc, argv, &optarg, &optind);
-             if (!qemu_arch_available(popt->arch_mask)) {
-@@ -2963,9 +2963,8 @@ void qemu_init(int argc, char **argv)
-                     break;
-                 }
-             case QEMU_OPTION_drive:
--                opts = qemu_opts_parse_noisily(qemu_find_opts("drive"),
--                                               optarg, false);
--                if (opts == NULL) {
-+                if (!qemu_opts_parse_noisily(qemu_find_opts("drive"),
-+                                             optarg, false)) {
-                     exit(1);
-                 }
-                 break;
-@@ -2990,9 +2989,8 @@ void qemu_init(int argc, char **argv)
-                 replay_add_blocker("-snapshot");
-                 break;
-             case QEMU_OPTION_numa:
--                opts = qemu_opts_parse_noisily(qemu_find_opts("numa"),
--                                               optarg, true);
--                if (!opts) {
-+                if (!qemu_opts_parse_noisily(qemu_find_opts("numa"),
-+                                             optarg, true)) {
-                     exit(1);
-                 }
-                 break;
-@@ -3051,9 +3049,8 @@ void qemu_init(int argc, char **argv)
-                 break;
- #ifdef CONFIG_LIBISCSI
-             case QEMU_OPTION_iscsi:
--                opts = qemu_opts_parse_noisily(qemu_find_opts("iscsi"),
--                                               optarg, false);
--                if (!opts) {
-+                if (!qemu_opts_parse_noisily(qemu_find_opts("iscsi"),
-+                                             optarg, false)) {
-                     exit(1);
-                 }
-                 break;
-@@ -3106,8 +3103,8 @@ void qemu_init(int argc, char **argv)
-                 exit(0);
-                 break;
-             case QEMU_OPTION_m:
--                opts = qemu_opts_parse_noisily(qemu_find_opts("memory"), optarg, true);
--                if (opts == NULL) {
-+                if (!qemu_opts_parse_noisily(qemu_find_opts("memory"),
-+                                             optarg, true)) {
-                     exit(1);
-                 }
-                 break;
-@@ -3228,17 +3225,15 @@ void qemu_init(int argc, char **argv)
-                 default_monitor = 0;
-                 break;
-             case QEMU_OPTION_mon:
--                opts = qemu_opts_parse_noisily(qemu_find_opts("mon"), optarg,
--                                               true);
--                if (!opts) {
-+                if (!qemu_opts_parse_noisily(qemu_find_opts("mon"), optarg,
-+                                             true)) {
-                     exit(1);
-                 }
-                 default_monitor = 0;
-                 break;
-             case QEMU_OPTION_chardev:
--                opts = qemu_opts_parse_noisily(qemu_find_opts("chardev"),
--                                               optarg, true);
--                if (!opts) {
-+                if (!qemu_opts_parse_noisily(qemu_find_opts("chardev"),
-+                                             optarg, true)) {
-                     exit(1);
-                 }
-                 break;
-@@ -3248,8 +3243,7 @@ void qemu_init(int argc, char **argv)
-                     error_report("fsdev support is disabled");
-                     exit(1);
-                 }
--                opts = qemu_opts_parse_noisily(olist, optarg, true);
--                if (!opts) {
-+                if (!qemu_opts_parse_noisily(olist, optarg, true)) {
-                     exit(1);
-                 }
-                 break;
-@@ -3388,9 +3382,8 @@ void qemu_init(int argc, char **argv)
-                 smbios_entry_add(opts, &error_fatal);
-                 break;
-             case QEMU_OPTION_fwcfg:
--                opts = qemu_opts_parse_noisily(qemu_find_opts("fw_cfg"),
--                                               optarg, true);
--                if (opts == NULL) {
-+                if (!qemu_opts_parse_noisily(qemu_find_opts("fw_cfg"),
-+                                             optarg, true)) {
-                     exit(1);
-                 }
-                 break;
+ CPUArchState *mon_get_cpu_env(Monitor *mon);
+ CPUState *mon_get_cpu(Monitor *mon);
+diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
+index 46ccbd14aec..c2ddcd67e51 100644
+--- a/monitor/hmp-target.c
++++ b/monitor/hmp-target.c
+@@ -66,8 +66,6 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+     const MonitorDef *md = target_monitor_defs();
+     CPUState *cs = mon_get_cpu(mon);
+     void *ptr;
+-    uint64_t tmp = 0;
+-    int ret;
+ 
+     if (cs == NULL || md == NULL) {
+         return -1;
+@@ -86,16 +84,10 @@ int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
+         }
+     }
+ 
+-    if (cs->cc->sysemu_ops->monitor_get_register) {
+-        ret = cs->cc->sysemu_ops->monitor_get_register(cs, name, pval);
+-    } else {
+-        ret = target_get_monitor_def(cs, name, &tmp);
+-        if (!ret) {
+-            *pval = (target_long) tmp;
+-        }
++    if (!cs->cc->sysemu_ops->monitor_get_register) {
++        return -1;
+     }
+-
+-    return ret;
++    return cs->cc->sysemu_ops->monitor_get_register(cs, name, pval);
+ }
+ 
+ static int
+diff --git a/stubs/target-get-monitor-def.c b/stubs/target-get-monitor-def.c
+deleted file mode 100644
+index 394e0f9a7d2..00000000000
+--- a/stubs/target-get-monitor-def.c
++++ /dev/null
+@@ -1,29 +0,0 @@
+-/*
+- *  Stub for target_get_monitor_def.
+- *
+- *  Copyright IBM Corp., 2015
+- *
+- *  Author: Alexey Kardashevskiy <aik@ozlabs.ru>
+- *
+- *  This program is free software; you can redistribute it and/or modify
+- *  it under the terms of the GNU General Public License as published by
+- *  the Free Software Foundation; either version 2 of the License,
+- *  or (at your option) any later version.
+- *
+- *  This program is distributed in the hope that it will be useful,
+- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+- *  GNU General Public License for more details.
+- *
+- *  You should have received a copy of the GNU General Public License
+- *  along with this program; if not, see <http://www.gnu.org/licenses/>.
+- */
+-
+-#include "qemu/osdep.h"
+-
+-int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval);
+-
+-int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval)
+-{
+-    return -1;
+-}
+diff --git a/stubs/meson.build b/stubs/meson.build
+index 2f4e1ab4300..3489b1f20dd 100644
+--- a/stubs/meson.build
++++ b/stubs/meson.build
+@@ -75,7 +75,6 @@ if have_system
+     stub_ss.add(files('igvm.c'))
+   endif
+   stub_ss.add(files('kvm.c'))
+-  stub_ss.add(files('target-get-monitor-def.c'))
+   stub_ss.add(files('target-monitor-defs.c'))
+   stub_ss.add(files('win32-kbd-hook.c'))
+   stub_ss.add(files('xen-hw-stub.c'))
 -- 
 2.53.0
 
