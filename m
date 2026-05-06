@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 865BDCD3424
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C778CD342C
 	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 07:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKX9Y-0004wW-IX; Wed, 06 May 2026 03:58:44 -0400
+	id 1wKX9f-00052Q-8R; Wed, 06 May 2026 03:58:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wKX9X-0004wN-Fd
- for qemu-devel@nongnu.org; Wed, 06 May 2026 03:58:43 -0400
+ id 1wKX9e-00050B-4o
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 03:58:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wKX9V-0000eh-Tm
- for qemu-devel@nongnu.org; Wed, 06 May 2026 03:58:43 -0400
+ id 1wKX9c-0000g5-5B
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 03:58:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778054321;
+ s=mimecast20190719; t=1778054327;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mqQQa0sIdgZK6GVtiZnksrInbkePHvX9cE0LybQFiho=;
- b=eclsfoytS0bgmsF8ZTxh1Qv+y40I0jICbDw3SNfcrFJaIvsh4Ggzzngaf3zdFyw+X0Ewa4
- pVU9fjkCOEPa+9r1cnDDXVH6dCEefankcizus1mVSLdhmIY8llqbiYO+heZSJNWh9XVnnB
- ttePAyzharUizE04sN3FmXUEkd/sihA=
-Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
- [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=c7CPWgNB13IdLZBd87QRLaWoqkdY/Umw55r84ixp/UY=;
+ b=QDz/7ytPqtIGUuZChZ1vHaDB3IQwz4ZlnHlKlyKwL34oeEIyMLforull9xlqFY+ucWRoea
+ 11WLee7+KDTiYDc9FOAxLIKpYQIEWUDTutBX8R2PV7CzriAh7BQ+46iKDgnZPowJTVmHgY
+ 9+I6fn4cv2V8DxX+rMrBAvlUHK+yp4o=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-QF_NSvnBMyyjkh7MgOWMhQ-1; Wed, 06 May 2026 03:58:39 -0400
-X-MC-Unique: QF_NSvnBMyyjkh7MgOWMhQ-1
-X-Mimecast-MFC-AGG-ID: QF_NSvnBMyyjkh7MgOWMhQ_1778054319
-Received: by mail-pl1-f199.google.com with SMTP id
- d9443c01a7336-2b4654f9bb6so63616545ad.2
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 00:58:39 -0700 (PDT)
+ us-mta-691-Dcc2FReKNi-5cssczkpKsg-1; Wed, 06 May 2026 03:58:45 -0400
+X-MC-Unique: Dcc2FReKNi-5cssczkpKsg-1
+X-Mimecast-MFC-AGG-ID: Dcc2FReKNi-5cssczkpKsg_1778054324
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2b9b8137828so55823275ad.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 00:58:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778054318; x=1778659118; darn=nongnu.org;
+ d=redhat.com; s=google; t=1778054324; x=1778659124; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mqQQa0sIdgZK6GVtiZnksrInbkePHvX9cE0LybQFiho=;
- b=CP4xgpSgtHv0d6CJ137je5MkmzTKyKjQS3mPnlid5yPCZ1n8fVOkF10WHd/jajkRFs
- BkBJP7PHcpkObY7JBoFXkFa2l3FKTVnMI/h4U07uBI/4hGB6TXZ8HU2srb4tTT1WzrSY
- xzbD2K7WBhG0teLJeZ8hb5bkNE21o1S1UFymZzjJi/qnZ3R0eL8DiDRHWU3oZhgOJTA6
- vFqs7t6lcIaae3tPdcXQxtA30NtqADB3fkFurrpmpHrJ2Idg1ACxz/djce4dArlgoUVD
- HK9YIS/TnsFbqHXnPwXQFkpyF2YPr/4J+x5CQhROvxrY47qYb4n49+AjUhpRHjQn56BW
- 0tjQ==
+ bh=c7CPWgNB13IdLZBd87QRLaWoqkdY/Umw55r84ixp/UY=;
+ b=j8eezvrzHbiUvt0WiCOyw3ylf8cb3GJRSl6aXQMbhqvryRrjA0onUI8PZMR/HJRGHe
+ eTtNjUNT4DI5JbHdE4R7cp0rtJBypCW2dMLpY9by3imBMqhQPOeC0/riuf7Wj6aOR4lE
+ JueeF/qP1SC1NraEH6UYWXJOsAwtxCnpOFWWQx1eXMi7+7krQdC/gZrdgupsm7PiRbni
+ fXEn6LXl55LnRzkrer/2FGaR3HBC4PAo9qUxD+vOhMqqDAycAgu5j62qg/df4uC3FsNt
+ V7wxcs2grmET8xvVfwmfmKcaANVMVkYHket1jQBPgLLZmHyujmR7w15TYOt6HN23znVT
+ Oijw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778054318; x=1778659118;
+ d=1e100.net; s=20251104; t=1778054324; x=1778659124;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=mqQQa0sIdgZK6GVtiZnksrInbkePHvX9cE0LybQFiho=;
- b=PknxQijkhnQ0l8hOI3nj8v9isJb0esD0pQwS/eo1kh5yl2DyWxQfgGJnZlCh+3mnnr
- 7Z3a7W9jujYko773M22NNNpiBLWwj26QfARc56yS5Cjqq8QQKncydLybk+/AOKoUTnMd
- cMefdGrcpztq/pzszLXK9Fe2lvelvI+0TALzsB3bvUxmR78LNQnZ9+XK2UZNVfsyco+d
- 27NSrmywS0d0p0WnkcTUeXALjcG6zwEJ4aI4EZHYGpX/UWvEeFJ9HqyBQsCSpyML2AFI
- 04hCLfUU2PuGuFk98pP6GYlq9NSAEPP72JTG9qeXDBSUeoq7pVqAiJNT+NjE1ZZwfsYl
- ymDw==
-X-Gm-Message-State: AOJu0Yx4FFTTlUjN98v6txdDRE1ueSyhT95FZtbYUiv9Yq3upHyFFOLM
- OYOsc34HSdLhRiS7ED+W3Z+aU71KDUI9qbhG6W3bJz/LZ7JIE50Ax//EPNfLDFQd3u6A1Prps+0
- Btuk4EIwawCuXdake8AwOg8tgD4c7rUeON2PKglphGVdsejWkmjc365e2Nopibb6JqtSNB7Shot
- DsLZsTKYV5UHLuH6F8eXwsEB8wjBqOmNFg7CW9d0U=
-X-Gm-Gg: AeBDietgD2RDdk11bhxBuzZbH0XIsAVUfpNClVWsouPmUU7YEW4eqGTRGnZtHmxlffA
- JIpLzS3FTgdNTzViXfJey2eSwTblCWAb1dLM0ynkwpp2di0icPl+iz6GhtEEkyn5m5cv5Nn+d08
- F54GZ7pEjz4w+MYiiky1tWx99I2j9G1av7umj+VMf7BzOY/Uf3TnOIuF06fYSC5j3OiZl5Jt/GD
- qphfmxAS+uSGV51Tx0Go6J/dbKl0tKEVmgX0xd0AIa7EEaYJhZENAv51hw6Vc3cnwpF+GzSxHF9
- 1YGrIGROpUoiMvAnrXZGIyQqZd/VUQLjx52lEU80N/TEY3OHRpGk/5AXgYCWyyAonniyQ0kudVL
- d0ydQjb5DRR9/pA185Gf6W9+uJjF17oBlO/qPhOGXPI/cFQcNVN4+eKftaj+vnK0Khu3WsN94
-X-Received: by 2002:a17:903:90e:b0:2b2:4d36:7ba with SMTP id
- d9443c01a7336-2ba78831407mr24044745ad.0.1778054318407; 
- Wed, 06 May 2026 00:58:38 -0700 (PDT)
-X-Received: by 2002:a17:903:90e:b0:2b2:4d36:7ba with SMTP id
- d9443c01a7336-2ba78831407mr24044425ad.0.1778054317739; 
- Wed, 06 May 2026 00:58:37 -0700 (PDT)
+ bh=c7CPWgNB13IdLZBd87QRLaWoqkdY/Umw55r84ixp/UY=;
+ b=o9YT8fMQIRxbqeEQlK1DlhgFxz9uUhgHnYTYloeDRbE4Q7S2t53TwBGzvzu4NRIXAu
+ nHmBL2cBjxcy1g+PtGq3QAR0/zM+LEE8H/gNbXk2Yma3mSS3J5ZQdrIpJqPBxEDuO890
+ z92JmyZ5JmbmghesT61CazfxwGJCCUDEMZiCmdvhl+/oGqw3HNwhCmINKO5TUTGldri+
+ NmIZ58wr3tAzuZqnqoY6VIcbOZoDo2SzCD0jSFw2WMxXrc3u0aXnpmcocJYqCV4ENKtK
+ 7D1XI1pd+gfUsyHy8xvN+VPMR4Z3qPgP3Z/9h8dgHFR964gPGKeAen9Cd8PGeBildSq6
+ AeJQ==
+X-Gm-Message-State: AOJu0YwJlFBK+vrF8qX3lj6jZuhBDU8htdM+hds4+wKFxbsDHMSAk6hp
+ L8IY5pPwui5PTE3ISKw+DETxVxx/MrcgplHGqPzSEwBhZ0Z0mwPXxHwDlcKaRT76DJRbq14V7Yl
+ SM42lGz7qUZkcgYLbQtwc8hyO+BEabVjlbRJ9hFrM9FV7qgwhacE7JDP3mKDKDAzvPT6nSXye3B
+ u867BP1tfSWaTOYCWELimRjVVf0LO5dvH6fKC4gUk=
+X-Gm-Gg: AeBDietqgMmKwHU0+i650cIL/KM04fY+1LMwLtRVOJpiYG/ng/hC6/GD6Ek2Kr4/hHH
+ aDrOcG4LY4OHcLDBJxhAHrRUmqyWSrTIeH3XcCjwsp+DSQAJ8JAj82D7YG5ePP6jjd9Eqcil+3w
+ zGLmcUO2ecE1GmgwSbPZuLZPl/QAJoKyRUb813N7TiafcT4OJ2jg9znZFvFH6Oe85gYN482cHj8
+ Iw4czl//Xlb9gjv0f2na75sdrfhOm1gw2szyYCztmQr1boC/L3Lu+GJ1A20UVT6/4WyYzCesSe+
+ kPTTegYf374crbpbsJLPRv8R88rtBRNgTvAlCNDlVWZO/BaPSt1sR+u11hfFpTZqdvmn5PFP3tm
+ s+POeqdByWtfswf4weaXCNasyQlX2fmf6LXQgZr3wZ6buioL5WA3KlX6NBB07tvaFUyhKQfI6
+X-Received: by 2002:a17:903:2903:b0:2b0:9c2b:641d with SMTP id
+ d9443c01a7336-2ba78b3fe5dmr15330365ad.2.1778054323660; 
+ Wed, 06 May 2026 00:58:43 -0700 (PDT)
+X-Received: by 2002:a17:903:2903:b0:2b0:9c2b:641d with SMTP id
+ d9443c01a7336-2ba78b3fe5dmr15330015ad.2.1778054322944; 
+ Wed, 06 May 2026 00:58:42 -0700 (PDT)
 Received: from fedora.armenon-thinkpadp16vgen1.bengluru.csb ([49.36.106.26])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ba7ca29f9dsm15439865ad.78.2026.05.06.00.58.32
+ d9443c01a7336-2ba7ca29f9dsm15439865ad.78.2026.05.06.00.58.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 May 2026 00:58:37 -0700 (PDT)
+ Wed, 06 May 2026 00:58:42 -0700 (PDT)
 From: Arun Menon <armenon@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>,
@@ -95,9 +95,9 @@ Cc: Zhao Liu <zhao1.liu@intel.com>,
  Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Arun Menon <armenon@redhat.com>,
  Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH v7 3/6] hw/tpm: Add internal buffer state for chunking
-Date: Wed,  6 May 2026 13:28:10 +0530
-Message-ID: <20260506075813.120781-4-armenon@redhat.com>
+Subject: [PATCH v7 4/6] hw/tpm: Implement TPM CRB chunking logic
+Date: Wed,  6 May 2026 13:28:11 +0530
+Message-ID: <20260506075813.120781-5-armenon@redhat.com>
 X-Mailer: git-send-email 2.54.0
 In-Reply-To: <20260506075813.120781-1-armenon@redhat.com>
 References: <20260506075813.120781-1-armenon@redhat.com>
@@ -130,105 +130,226 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Arun Menon <armenon@redhat.com>
 
-- Introduce GByteArray buffers to hold the command request and response
-  data during chunked TPM CRB transactions.
-- Add helper function to clean them.
+- Add logic to populate internal TPM command request and response
+  buffers and to toggle the control registers after each operation.
+- The chunk size is limited to CRB_CTRL_CMD_SIZE which is
+  (TPM_CRB_ADDR_SIZE - A_CRB_DATA_BUFFER). This comes out as 3968 bytes
+  (4096 - 128 or 0x1000 - 0x80), because 128 bytes are reserved for
+  control and status registers. In other words, only 3968 bytes are
+  available for the TPM data.
+- With this feature, guests can send commands larger than 3968 bytes.
+- Refer section 6.5.3.9 of [1] for implementation details.
+
+[1] https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-Platform-TPM-Profile-for-TPM-2p0-v1p07_Pub.pdf
 
 Signed-off-by: Arun Menon <armenon@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/tpm/tpm_crb.c | 33 +++++++++++++++++++++++++++++----
- 1 file changed, 29 insertions(+), 4 deletions(-)
+ hw/tpm/tpm_crb.c | 143 ++++++++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 130 insertions(+), 13 deletions(-)
 
 diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-index a0f472652e..1c944d7ef2 100644
+index 1c944d7ef2..f85df08185 100644
 --- a/hw/tpm/tpm_crb.c
 +++ b/hw/tpm/tpm_crb.c
-@@ -38,10 +38,13 @@ struct CRBState {
-     TPMBackend *tpmbe;
-     TPMBackendCmd cmd;
-     uint32_t regs[TPM_CRB_R_MAX];
-+    size_t be_buffer_size;
-     MemoryRegion mmio;
-     MemoryRegion cmdmem;
+@@ -17,6 +17,7 @@
+ #include "qemu/osdep.h"
  
--    size_t be_buffer_size;
-+    GByteArray *command_buffer;
-+    GByteArray *response_buffer;
-+    uint32_t response_offset;
+ #include "qemu/module.h"
++#include "qemu/error-report.h"
+ #include "qapi/error.h"
+ #include "system/address-spaces.h"
+ #include "hw/core/qdev-properties.h"
+@@ -66,6 +67,7 @@ DECLARE_INSTANCE_CHECKER(CRBState, CRB,
+ #define CRB_INTF_CAP_CRB_CHUNK 0b1
  
-     TPMPPI ppi;
+ #define CRB_CTRL_CMD_SIZE (TPM_CRB_ADDR_SIZE - A_CRB_DATA_BUFFER)
++#define TPM_HEADER_SIZE 10
  
-@@ -86,6 +89,13 @@ enum crb_cancel {
+ enum crb_loc_ctrl {
+     CRB_LOC_CTRL_REQUEST_ACCESS = BIT(0),
+@@ -81,6 +83,8 @@ enum crb_ctrl_req {
  
- #define TPM_CRB_NO_LOCALITY 0xff
+ enum crb_start {
+     CRB_START_INVOKE = BIT(0),
++    CRB_START_RSP_RETRY = BIT(1),
++    CRB_START_NEXT_CHUNK = BIT(2),
+ };
  
-+static void tpm_crb_clear_internal_buffers(CRBState *s)
+ enum crb_cancel {
+@@ -123,6 +127,69 @@ static uint8_t tpm_crb_get_active_locty(CRBState *s)
+     return ARRAY_FIELD_EX32(s->regs, CRB_LOC_STATE, activeLocality);
+ }
+ 
++static bool tpm_crb_append_command_request(CRBState *s)
 +{
-+    g_byte_array_set_size(s->response_buffer, 0);
-+    g_byte_array_set_size(s->command_buffer, 0);
-+    s->response_offset = 0;
++    /*
++     * The linux guest writes the TPM command to the MMIO region in chunks.
++     * This function appends a chunk from the MMIO region to internal
++     * command_buffer.
++     */
++    void *mem = memory_region_get_ram_ptr(&s->cmdmem);
++    uint32_t to_copy = 0;
++    uint32_t total_request_size = 0;
++
++    /*
++     * The initial call extracts the total TPM command size
++     * from its header. For the subsequent calls, the data already
++     * appended in the command_buffer is used to calculate the total
++     * size, as its header stays the same.
++     */
++    if (s->command_buffer->len == 0) {
++        total_request_size = tpm_cmd_get_size(mem);
++        if (total_request_size < TPM_HEADER_SIZE) {
++            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_STS, tpmSts, 1);
++            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, Start, 0);
++            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, nextChunk, 0);
++            tpm_crb_clear_internal_buffers(s);
++            error_report("Command size %" PRIu32 " less than "
++                         "TPM header size %" PRIu32,
++                         total_request_size, (uint32_t)TPM_HEADER_SIZE);
++            return false;
++        }
++    } else {
++        total_request_size = tpm_cmd_get_size(s->command_buffer->data);
++    }
++    total_request_size = MIN(total_request_size, s->be_buffer_size);
++
++    if (total_request_size > s->command_buffer->len) {
++        uint32_t remaining = total_request_size - s->command_buffer->len;
++        to_copy = MIN(remaining, CRB_CTRL_CMD_SIZE);
++        g_byte_array_append(s->command_buffer, (guint8 *)mem, to_copy);
++    }
++    return true;
 +}
 +
- static uint64_t tpm_crb_mmio_read(void *opaque, hwaddr addr,
-                                   unsigned size)
++static void tpm_crb_fill_command_response(CRBState *s)
++{
++    /*
++     * Response from the tpm backend will be stored in the internal
++     * response_buffer. This function will serve that accumulated response
++     * to the linux guest in chunks by writing it back to MMIO region.
++     */
++    void *mem = memory_region_get_ram_ptr(&s->cmdmem);
++    uint32_t remaining = s->response_buffer->len - s->response_offset;
++    uint32_t to_copy = MIN(CRB_CTRL_CMD_SIZE, remaining);
++
++    memcpy(mem, s->response_buffer->data + s->response_offset, to_copy);
++
++    if (to_copy < CRB_CTRL_CMD_SIZE) {
++        memset((guint8 *)mem + to_copy, 0, CRB_CTRL_CMD_SIZE - to_copy);
++    }
++
++    s->response_offset += to_copy;
++    memory_region_set_dirty(&s->cmdmem, 0, CRB_CTRL_CMD_SIZE);
++}
++
+ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
+                                uint64_t val, unsigned size)
  {
-@@ -135,9 +145,11 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
-         }
-         break;
-     case A_CRB_CTRL_CANCEL:
--        if (val == CRB_CANCEL_INVOKE &&
--            s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) {
--            tpm_backend_cancel_cmd(s->tpmbe);
-+        if (val == CRB_CANCEL_INVOKE) {
-+            if (s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) {
-+                tpm_backend_cancel_cmd(s->tpmbe);
-+            }
-+            tpm_crb_clear_internal_buffers(s);
+@@ -153,20 +220,58 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
          }
          break;
      case A_CRB_CTRL_START:
-@@ -239,6 +251,7 @@ static void tpm_crb_reset(void *dev)
- 
-     tpm_ppi_reset(&s->ppi);
-     tpm_backend_reset(s->tpmbe);
-+    tpm_crb_clear_internal_buffers(s);
- 
-     memset(s->regs, 0, sizeof(s->regs));
- 
-@@ -305,6 +318,9 @@ static void tpm_crb_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion(get_system_memory(),
-         TPM_CRB_ADDR_BASE + sizeof(s->regs), &s->cmdmem);
- 
-+    s->command_buffer = g_byte_array_new();
-+    s->response_buffer = g_byte_array_new();
-+
-     tpm_ppi_init(&s->ppi, get_system_memory(),
-                  TPM_PPI_ADDR_BASE, OBJECT(s));
- 
-@@ -315,12 +331,21 @@ static void tpm_crb_realize(DeviceState *dev, Error **errp)
+-        if (val == CRB_START_INVOKE &&
+-            !(s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) &&
+-            tpm_crb_get_active_locty(s) == locty) {
+-            void *mem = memory_region_get_ram_ptr(&s->cmdmem);
+-
++        if (tpm_crb_get_active_locty(s) != locty) {
++            break;
++        }
++        if (s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) {
++            /*
++             * Backend TPM is busy processing a request.
++             */
++            break;
++        }
++        if (val & CRB_START_INVOKE) {
++            if (!tpm_crb_append_command_request(s)) {
++                break;
++            }
+             ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, Start, 1);
++            g_byte_array_set_size(s->response_buffer, s->be_buffer_size);
+             s->cmd = (TPMBackendCmd) {
+-                .in = mem,
+-                .in_len = MIN(tpm_cmd_get_size(mem), s->be_buffer_size),
+-                .out = mem,
+-                .out_len = s->be_buffer_size,
++                .in = s->command_buffer->data,
++                .in_len = s->command_buffer->len,
++                .out = s->response_buffer->data,
++                .out_len = s->response_buffer->len,
+             };
+-
+             tpm_backend_deliver_request(s->tpmbe, &s->cmd);
++        } else if (val & CRB_START_NEXT_CHUNK) {
++            if (!s->cap_chunk) {
++                break;
++            }
++            /*
++             * nextChunk is used both while sending and receiving data.
++             * To distinguish between the two, response_buffer is checked.
++             * If it does not have data, then that means we have not yet
++             * sent the command to the tpm backend, and therefore call
++             * tpm_crb_append_command_request().
++             */
++            if (s->response_buffer->len > 0 &&
++                s->response_offset < s->response_buffer->len) {
++                tpm_crb_fill_command_response(s);
++            } else {
++                if (!tpm_crb_append_command_request(s)) {
++                    break;
++                }
++            }
++            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, nextChunk, 0);
++        } else if (val & CRB_START_RSP_RETRY) {
++            if (!s->cap_chunk) {
++                break;
++            }
++            if (s->response_buffer->len > 0) {
++                s->response_offset = 0;
++                tpm_crb_fill_command_response(s);
++            }
++            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, crbRspRetry, 0);
++            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, nextChunk, 0);
+         }
+         break;
+     case A_CRB_LOC_CTRL:
+@@ -211,8 +316,21 @@ static void tpm_crb_request_completed(TPMIf *ti, int ret)
+     if (ret != 0) {
+         ARRAY_FIELD_DP32(s->regs, CRB_CTRL_STS,
+                          tpmSts, 1); /* fatal error */
++        tpm_crb_clear_internal_buffers(s);
++    } else {
++        uint32_t actual_resp_size = tpm_cmd_get_size(s->response_buffer->data);
++        uint32_t total_resp_size = MIN(actual_resp_size, s->be_buffer_size);
++        g_byte_array_set_size(s->response_buffer, total_resp_size);
++        s->response_offset = 0;
      }
+-    memory_region_set_dirty(&s->cmdmem, 0, CRB_CTRL_CMD_SIZE);
++    /*
++     * Send the first chunk. Subsequent chunks will be sent
++     * on receiving nextChunk from the guest
++     */
++    tpm_crb_fill_command_response(s);
++    ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, nextChunk, 0);
++    ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, crbRspRetry, 0);
++    g_byte_array_set_size(s->command_buffer, 0);
  }
  
-+static void tpm_crb_unrealize(DeviceState *dev)
-+{
-+    CRBState *s = CRB(dev);
-+
-+    g_clear_pointer(&s->command_buffer, g_byte_array_unref);
-+    g_clear_pointer(&s->response_buffer, g_byte_array_unref);
-+}
-+
- static void tpm_crb_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     TPMIfClass *tc = TPM_IF_CLASS(klass);
+ static enum TPMVersion tpm_crb_get_version(TPMIf *ti)
+@@ -287,8 +405,7 @@ static void tpm_crb_reset(void *dev)
+     s->regs[R_CRB_CTRL_RSP_SIZE] = CRB_CTRL_CMD_SIZE;
+     s->regs[R_CRB_CTRL_RSP_ADDR] = TPM_CRB_ADDR_BASE + A_CRB_DATA_BUFFER;
  
-     dc->realize = tpm_crb_realize;
-+    dc->unrealize = tpm_crb_unrealize;
-     device_class_set_props(dc, tpm_crb_properties);
-     dc->vmsd  = &vmstate_tpm_crb;
-     dc->user_creatable = true;
+-    s->be_buffer_size = MIN(tpm_backend_get_buffer_size(s->tpmbe),
+-                            CRB_CTRL_CMD_SIZE);
++    s->be_buffer_size = tpm_backend_get_buffer_size(s->tpmbe);
+ 
+     if (tpm_backend_startup_tpm(s->tpmbe, s->be_buffer_size) < 0) {
+         exit(1);
 -- 
 2.54.0
 
