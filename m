@@ -4,46 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4043CD343B
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 15:48:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B569CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 15:48:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKeTU-00063j-Vx; Wed, 06 May 2026 11:47:49 -0400
+	id 1wKeSm-0005sX-4x; Wed, 06 May 2026 11:47:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wKeT1-0005uv-2v; Wed, 06 May 2026 11:47:28 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wKeSj-0005rO-TX
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 11:47:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1wKeSc-0002ps-9x; Wed, 06 May 2026 11:47:18 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 0304D596977;
- Wed, 06 May 2026 17:39:23 +0200 (CEST)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 0xnJf8jfe8nf; Wed,  6 May 2026 17:39:20 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id C6B27596978; Wed, 06 May 2026 17:39:20 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3] ati-vga: fix ati_set_dirty address calculation
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1wKeSP-0002sz-LF
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 11:47:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778082325;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=wYrqJ5jFCYdNfvR8DEcmOY5jDQP/5hW1uZkiAaUlf9U=;
+ b=QEoNweo1roVgZhRl56+ru7W2wU2+l0IshaMM37mvSharH7Hl58Rq6x8PbW3FIhKGFbNLII
+ 1mfvX8HLCFDLkxQmLYX/ECb70498j6Z515rAT/7Oj5v+S2NwYZCGzSk05Uibjv538mGysu
+ drXU1Vu8aewpbt4ZU1g4cvRK6hqddvM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-OzTgXlEhNjqezad2lODPbA-1; Wed,
+ 06 May 2026 11:40:15 -0400
+X-MC-Unique: OzTgXlEhNjqezad2lODPbA-1
+X-Mimecast-MFC-AGG-ID: OzTgXlEhNjqezad2lODPbA_1778082014
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2F5ED19560B2; Wed,  6 May 2026 15:40:14 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.44])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 43CF4195394A; Wed,  6 May 2026 15:40:13 +0000 (UTC)
+Date: Wed, 6 May 2026 11:40:12 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: mr-083 <matthieu@minio.io>, qemu-devel@nongnu.org,
+ qemu-block@nongnu.org, its@irrelevant.dk, kbusch@kernel.org,
+ berrange@redhat.com, mr-083 <matthieu@min.io>,
+ Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH] block: add blockdev-attach QMP command
+Message-ID: <20260506154012.GB94695@fedora>
+References: <20260415173905.71224-1-matthieu@min.io>
+ <20260423162927.GA529033@fedora> <877bphf4qg.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
- Chad Jablonski <chad@jablonski.xyz>, qemu-stable@nongnu.org
-Message-Id: <20260506153920.C6B27596978@zero.eik.bme.hu>
-Date: Wed, 06 May 2026 17:39:20 +0200 (CEST)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="hCVMPgSnW6xogKK3"
+Content-Disposition: inline
+In-Reply-To: <877bphf4qg.fsf@pond.sub.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,82 +88,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Chad Jablonski <chad@jablonski.xyz>
 
-This fixes three bugs with the ati_set_dirty address calculation.
+--hCVMPgSnW6xogKK3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-First, vbe_start_addr is a word offset. All other values in the
-calculation are byte offsets. It must be converted to bytes.
+On Wed, May 06, 2026 at 08:10:15AM +0200, Markus Armbruster wrote:
+> Stefan Hajnoczi <stefanha@redhat.com> writes:
+>=20
+> > On Wed, Apr 15, 2026 at 07:39:05PM +0200, mr-083 wrote:
+> >> Add a blockdev-attach QMP command that attaches a block driver state
+> >> tree to a device's block backend.  Unlike blockdev-insert-medium, this
+> >> works for non-removable devices such as NVMe namespaces.
+> >>=20
+> >> After drive_del removes a device's backing store, the BlockBackend
+> >> remains attached to the guest device but has no BlockDriverState.
+> >> blockdev-attach reconnects a block node (previously created with
+> >> blockdev-add) to the device's BlockBackend via blk_insert_bs().
+> >>=20
+> >> This separates the two concerns as recommended: blockdev-add creates
+> >> the block node, blockdev-attach associates it with the device.
+> >>=20
+> >> Example usage with NVMe namespace hot-swap:
+> >>   drive_del drv0
+> >>   blockdev-add node-name=3Dnode0 driver=3Dqcow2 file.driver=3Dfile \
+> >>                file.filename=3Ddisk.qcow2
+> >>   blockdev-attach id=3Dns0 node-name=3Dnode0
+> >
+> > Hi Matthieu,
+> > I came across a quirk here:
+> >
+> >   $ qemu-system-x86_64 \
+> >       --blockdev file,filename=3Dmy-lun.img,node-name=3Ddrive1 \
+> >       --device nvme,serial=3Dnvme0 \
+> >       --device nvme-ns,id=3Dnvme-ns0,drive=3Ddrive1
+> >   (qemu) drive_del drive1
+> >   Error: drive drive1 is in use
+>=20
+> I see "Error: Node drive1 is in use".
+>=20
+> It's from qmp_blockdev_del():
+>=20
+>     bs =3D bdrv_find_node(node_name);
+>     if (!bs) {
+>         error_setg(errp, "Failed to find node with node-name=3D'%s'", nod=
+e_name);
+>         return;
+>     }
+>     if (bdrv_has_blk(bs)) {
+>         error_setg(errp, "Node %s is in use", node_name);
+>         return;
+>     }
+>=20
+> Called from hmp_drive_del():
+>=20
+>     bs =3D bdrv_find_node(id);
+>     if (bs) {
+>         qmp_blockdev_del(id, &err);
+>         goto unlock;
+>     }
+>=20
+> > But when I change --blockdev to --drive, it succeeds. I think this
+> > second scenario is the one that you have been testing.
+>=20
+> I *guess* you changed it to something like
+>=20
+>     -drive if=3Dnone,file=3Dtest.img,id=3Ddrive1
 
-Second, when setting the dirty region with memory_region_set_dirty
-the vbe_start_addr is used to calculate the start of the dirty region.
-This is a problem because the vbe_start_addr is the offset at which scan out
-begins. This puts it in the visible screen coordinate system. The dirty
-region however is in the virtual screen coordinate system. This can cause both
-overmarking and missed updates. This is removed from the calculation.
+Yes.
 
-Third, when the start address of a blit is outside of the bounds check
-the entire blit is missed and not set to dirty. This happens even if the
-blit does partially overlap with the visible screen. The fix here is to
-find the intersection of the visible screen and the blit and mark only
-that region as dirty.
+>=20
+> hmp_drive_del()'s call of bdrv_find_node() then fails, and we take a
+> completely different path, which succeeds:
+>=20
+>     (qemu) info block
+>     drive1 (#block195): test.img (raw)
+>         Attached to:      nvme-ns0
+>         Cache mode:       writeback
+>     (qemu) drive_del drive1
+>     (qemu) info block
+>     nvme-ns0: [not inserted]
+>         Attached to:      nvme-ns0
+>=20
+> This rips nvme-ns0's drive right off.  Feels *unsafe*: the frontend
+> (here: nvme-ns) may reasonably assume that a non-removable medium stays
+> put, use it without checking it's still there, and crash.
 
-This does not attempt to apply clipping to the blit. So there will be
-overmarking in some cases.
+I/O requests fail with -ENOMEDIUM when blk->root.bs is NULL but it's
+still a bit concerning that the medium can be removed without the device
+emulation being aware.
 
-Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
-[balaton: drop excess parenthesis, use offsets instead of pointers]
-Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
-To help moving this forward I've picked it up and made the changes I
-suggested in review.
+>=20
+> > I also tried the QMP blockdev-del command together with --blockdev, and
+> > it fails:
+> >
+> >   $ qemu-system-x86_64 ... \
+> >       -qmp unix:/tmp/qmp.sock,server=3Don,wait=3Doff
+> >   $ qmp-shell /tmp/qmp.sock
+> >   (QEMU) blockdev-del node-name=3Ddrive1
+> >   {"error": {"class": "GenericError", "desc": "Node drive1 is in use"}}
+> >
+> > It seems logical that a disk image that's in use by NVMe emulation
+> > cannot be removed. So now I'm wondering if there is a bug or a
+> > historical reason why drive_del allows drives to the removed at runtime
+> > even when media change is not supported.
+> >
+> > CCing Kevin Wolf and Markus Amrbruster as they may know the answer.
+>=20
+> I suspect this is simply a bug, and likely a regression.  Can you find
+> out?
 
- hw/display/ati_2d.c | 24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+Okay. I thought maybe there is some backwards compatibility reason that
+requires -drive if=3Dnone to behave like this.
 
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 504d1c5708..48498677c7 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -69,18 +69,28 @@ typedef struct {
- static void ati_set_dirty(VGACommonState *vga, const ATI2DCtx *ctx)
- {
-     DisplaySurface *ds = qemu_console_surface(vga->con);
-+    unsigned int bypp = ctx->bpp / 8;
-+    hwaddr dirty_start = ctx->dst_offset + ctx->dst.x * bypp +
-+                         ctx->dst.y * ctx->dst_stride;
-+    hwaddr dirty_end = dirty_start + ctx->dst.width * bypp +
-+                       (ctx->dst.height - 1) * ctx->dst_stride;
-+    /*
-+     * The blit may be outside of the visible screen (e.g. virtual desktops.)
-+     * Dirty only the intersection of the visible screen and the blit.
-+     */
-+    hwaddr vis_start = vga->vbe_start_addr * 4;
-+    hwaddr vis_end = vis_start + vga->vbe_regs[VBE_DISPI_INDEX_YRES] *
-+                       vga->vbe_line_offset;
-+    hwaddr start = MAX(vis_start, dirty_start);
-+    hwaddr end = MIN(vis_end, dirty_end);
- 
-     (void)ds;
-     DPRINTF("%p %u ds: %p %d %d rop: %x\n", vga->vram_ptr, vga->vbe_start_addr,
-             surface_data(ds), surface_stride(ds), surface_bits_per_pixel(ds),
-             ctx->rop3 >> 16);
--    if (ctx->dst_bits >= vga->vram_ptr + vga->vbe_start_addr &&
--        ctx->dst_bits < vga->vram_ptr + vga->vbe_start_addr +
--        vga->vbe_regs[VBE_DISPI_INDEX_YRES] * vga->vbe_line_offset) {
--        memory_region_set_dirty(&vga->vram,
--                                vga->vbe_start_addr + ctx->dst_offset +
--                                ctx->dst.y * ctx->dst_stride,
--                                ctx->dst.height * ctx->dst_stride);
-+
-+    if (start < end) {
-+        memory_region_set_dirty(&vga->vram, start, end - start);
-     }
- }
- 
--- 
-2.41.3
+It's a long-standing bug:
+
+v3.0.0  Affected
+v4.0.0  Affected
+v6.0.0  Affected
+v8.0.0  Affected
+master  Affected
+
+I didn't go back beyond v3.0.0 because Python 2 is required to build
+really old versions of QEMU.
+
+Stefan
+
+>=20
+> > Depending on the answer this may influence the test workflow in this
+> > patch. It's unclear to me what is being tested here since this does not
+> > simulate a real error that a physical NVMe drive could raise?
+> >
+> > I think the intention is to fail I/O so a test can simulate a period
+> > where the drive is down. QEMU has the blkdebug driver which could be
+> > inserted into the block graph to fail I/O requests - maybe that is
+> > appropriate for your test and may not require new monitor commands (see
+> > blkdebug examples in tests/)?
+> >
+> > Stefan
+> >
+> >>=20
+> >> An HMP wrapper is included for convenience.
+> >>=20
+> >> Signed-off-by: Matthieu <matthieu@min.io>
+>=20
+
+--hCVMPgSnW6xogKK3
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmn7YNwACgkQnKSrs4Gr
+c8h5YggApjHx43BjmFLWB5wK4bo9JQL7KARyrcz8jCHd8O/HCy3x8jZ/tBK9ZC4W
+yqmylCOJ+eE3M9uddTDEFCcpHtGj8PavHhMPPMwhm+kBnVqnf0UsDvueOxuYKHhJ
+B/25lBxdtctUNiZH1RvLWwM5BWn04Po7ntr5Wp5LyhnR1/8YbPoUYKk43oZQhtAm
+SeP/nUSNvY4ds1TJeQZHwWDDc0V0GG3Pe05jrQXahJwQjC3BcW07CBnKkNfd0YnD
+L4tvYO9vhM+gp1wGfJcfCKuklvhH4DEFgjH3pTAEn1kcY9xjyygZzmUjC33wv/hz
+zkqLsZz6e5Gr4y+ODEfIG8A38jr09Q==
+=HmAm
+-----END PGP SIGNATURE-----
+
+--hCVMPgSnW6xogKK3--
 
 
