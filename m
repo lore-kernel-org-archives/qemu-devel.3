@@ -4,116 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51BC3CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 07:59:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84FF4CD3424
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 08:14:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKX9k-0005I8-08; Wed, 06 May 2026 03:58:56 -0400
+	id 1wKXOc-0001F5-Ay; Wed, 06 May 2026 04:14:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wKX9i-0005Fq-EO
- for qemu-devel@nongnu.org; Wed, 06 May 2026 03:58:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1wKWwG-0000i2-5I
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 03:45:01 -0400
+Received: from mail-a.sr.ht ([46.23.81.152])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1wKX9g-0000gy-Is
- for qemu-devel@nongnu.org; Wed, 06 May 2026 03:58:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778054331;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8VG1umfV8XbLQ9QjPcrnZsX2l74f6GjJZEm8Zg6nu/U=;
- b=EkrsCAhNmEi9wYTOfCZ78SXYQUTmWPbqRyzlrb6FhVkwzm14a0OAV5BxDd5NP0SD/HqtVe
- q0EBKc9of72i6r3U7IVO441IiV90Ekjh/cgMsavbEpVR2MYOn+CWobZJhMKWR9Op8qvNrT
- f0m+ZRishTg+tVLiOEjKxAysY+VYcN8=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-582-nJe6ChdlPxGTcGIYFh6iFA-1; Wed, 06 May 2026 03:58:50 -0400
-X-MC-Unique: nJe6ChdlPxGTcGIYFh6iFA-1
-X-Mimecast-MFC-AGG-ID: nJe6ChdlPxGTcGIYFh6iFA_1778054329
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-365d4d2fa04so16122a91.3
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 00:58:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778054329; x=1778659129; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8VG1umfV8XbLQ9QjPcrnZsX2l74f6GjJZEm8Zg6nu/U=;
- b=iYx3imMmsWY5cIAD+SJ9B52icp4eHTUsNJktVxGiLJ4PGkaHv3eH70cHTe1wFVNgit
- N4pUwWLIylBKkFB5mz/W9vGOfyq/QR2myjz5/efOw7ga9HwIG/AAe6E2hAQ1srIBZ9vr
- tD/55ppsHoIXr/c68JP11XGih88ObPL2G+mgNHhrqIqLogFKQRFOQkkBSriUskS15ZGP
- oQ+yM5EDHbsz0+N1I+fqbQp0nEaOUY/M5MuWZZTVe6qzYXQ1JRi182mbewtpME4p7Tfw
- 4rm3TJm0zu/jD8hIVEeVhJur243bAC16HksyG3JUkAyIDwP0oL2d8SMy3Dh1lqtl3GnM
- 53ng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778054329; x=1778659129;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8VG1umfV8XbLQ9QjPcrnZsX2l74f6GjJZEm8Zg6nu/U=;
- b=mChFS+dd8uePmtlqda8+CIP8kjg8A2AhMuUkcJ6aB90sTTnDxNYsWPoM+BuuopMm85
- 1uMqJ0A3w4a15AqA3DysH0p2NwnTN2t7Q6/ubJELq20Lt8fwfadU/OOw8D6UbTCs6vqi
- /5iujmpLF6h2gv3kvq7wizm7ZF1PrlFBY819wmOG9WVBCbTm674h0RjRyEtVNE3zNSX7
- lkYjzKVFVGa8Nsh4U/aKpEFkGW5jZrdthW6fQaTEaZ0BH08uQUFKa52JcM8pq20D6x59
- 5gBz54DGPSqf6p4xZl3A0xcK0peq90M8rnO1HiV5ji3ybKhg0KhggI+Ar9IeGS+DByAG
- SZeg==
-X-Gm-Message-State: AOJu0Ywa+uE95R3UIRACgO/b1eeSWlh1O2zFk2a9goB/GW724iNqwhuN
- Ln7Ca3VRpcbu77PDmRB9uQyohTg/iZzLS42abpYDX+v5ezEMU+fjxs4bNRCkaNhynBNje437H+i
- iwiH6UGh9TGW3ruu0xuQxVMVEU/v5CHQxIQBjpAw2JgJLVUi0yVqrV7zs2u7nwwxF0fUptJzwv+
- kwYypYbCntJcv7Tc4kdcxof5pWmU+3qySgEXFH7cI=
-X-Gm-Gg: AeBDiesUlZMuSKb8eD4Os4nW/6QvkvVavVK0Don0hvq22Mm2W70MDxkcb56mA7zLktZ
- nZncdHv7G7rAcz5SH/KNipVrYQvAjqM7PQ54Hyl2QejJEKGvc4GMF/GguUgPfpQHdQ5ViQZttoR
- 5iVIMdLrjTHzgNvUeurL1CCROW5t/kcXc6EFyPsDzx2lvRtyxdSlw0f/XdfkSFrIEN4MEbMBZ/q
- jCQOrzqbYbiFkfgnsjxYW1CHuOfCQk6vFObpgA1pMJNTZyI6XY4cRdMzdNVhY6cmEmyVj42sCVL
- YQarzts/+j4aAcxpKys8owdLyEXWZNoFx7DWbJ+EINS+FxV9iFUk/RuaLcMC6XZZM6vSzW9mu/u
- IfnCreLFPNnz3YEWNdUDpG05GCEzCsBbUImLNNi9xNEx2rlyBCymfXP5TGBNsWPkzlnTZPeJb
-X-Received: by 2002:a17:90b:5207:b0:364:919c:b52f with SMTP id
- 98e67ed59e1d1-365ac775c4cmr2178923a91.24.1778054328974; 
- Wed, 06 May 2026 00:58:48 -0700 (PDT)
-X-Received: by 2002:a17:90b:5207:b0:364:919c:b52f with SMTP id
- 98e67ed59e1d1-365ac775c4cmr2178877a91.24.1778054328326; 
- Wed, 06 May 2026 00:58:48 -0700 (PDT)
-Received: from fedora.armenon-thinkpadp16vgen1.bengluru.csb ([49.36.106.26])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ba7ca29f9dsm15439865ad.78.2026.05.06.00.58.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 May 2026 00:58:47 -0700 (PDT)
-From: Arun Menon <armenon@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Ani Sinha <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- marcandre.lureau@redhat.com, Stefan Berger <stefanb@linux.vnet.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Arun Menon <armenon@redhat.com>,
- Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH v7 5/6] test/qtest: Add test for tpm crb chunking
-Date: Wed,  6 May 2026 13:28:12 +0530
-Message-ID: <20260506075813.120781-6-armenon@redhat.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260506075813.120781-1-armenon@redhat.com>
-References: <20260506075813.120781-1-armenon@redhat.com>
+ (Exim 4.90_1) (envelope-from <outgoing@sr.ht>) id 1wKWwC-0005Cj-E7
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 03:44:59 -0400
+DKIM-Signature: a=rsa-sha256; bh=pdH6ElsBuMFpxOZq7ScCr9EATvQzqeNz/ILpby2zqJM=; 
+ c=simple/simple; d=git.sr.ht;
+ h=From:Date:Subject:Reply-to:To:Cc; 
+ q=dns/txt; s=20240113; t=1778053490; v=1;
+ b=ZuOVNUDMTsEh/76zfSmr00pChe3+Do3M6XwOJr8ZM7IahM3aPijtsld2jXApQTlHYyaPKVrQ
+ 9wpmA6xdlxfhXRr0gjb+K09G14Z3S+Q7+gxrdMtSR3PuYJLNpz/+ASo0A4gxFhnvdYLsX2Tf6lY
+ TfNECEzwQA2Cjl6swlY3IMRyy7PU+/jXujkwcShtR/C6GYIc/isLYtHBnyYRWBbfCh9eKlGyhQs
+ pJof8Sa0QEIa3SQTqrdOPsZTjuUv3U9Q1hHigwT1yytJtJ0eJl9diGNIkFBKEw19HpSJJqQTGgW
+ SGG0RgSkUfaJ0x7Q674hhFV6x0deHfYWAaut5P+2itgqg==
+Received: from git.sr.ht (unknown [46.23.81.155])
+ by mail-a.sr.ht (Postfix) with ESMTPSA id 3452A20E6C;
+ Wed, 06 May 2026 07:44:50 +0000 (UTC)
+From: ~bboe <bboe@git.sr.ht>
+Date: Tue, 05 May 2026 19:26:38 -0700
+Subject: [PATCH qemu 1/3] Add OPL3 support to SB16
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-ID: <177805349017.32250.15775019749727013358-0@git.sr.ht>
+X-Mailer: git.sr.ht
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=46.23.81.152; envelope-from=outgoing@sr.ht;
+ helo=mail-a.sr.ht
+X-Spam_score_int: 30
+X-Spam_score: 3.0
+X-Spam_bar: +++
+X-Spam_report: (3.0 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
+ DKIM_INVALID=0.1, DKIM_SIGNED=0.1, FREEMAIL_FORGED_REPLYTO=2.095,
+ HK_RANDOM_REPLYTO=1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 06 May 2026 04:14:14 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -125,219 +63,246 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: ~bboe <bbzbryce@gmail.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Arun Menon <armenon@redhat.com>
+From: Bryce Boe <bbzbryce@gmail.com>
 
-- New test case added to the swtpm test. Data is written and read from
-  the buffer in chunks.
-- The chunk size is dynamically calculated by reading the
-  CRB_CTRL_CMD_SIZE address. This can be changed manually to test.
-- Add a helper function tpm_wait_till_bit_clear()
-- Note that this commit does not yet exercise the chunked read/write
-  logic, as current transfer sizes remain small. Testing for large
-  transfers is introduced in a subsequent patch: 'tests: Use ML-DSA-87
-  operations to cause large TPM transfers with CRB'
+The existing SB16 device does not have OPL3 support, and the AdLib device
+supports only OPL2.
 
-Signed-off-by: Arun Menon <armenon@redhat.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
----
- tests/qtest/tpm-crb-swtpm-test.c |  10 +++
- tests/qtest/tpm-util.c           | 109 ++++++++++++++++++++++++++-----
- tests/qtest/tpm-util.h           |   5 ++
- 3 files changed, 109 insertions(+), 15 deletions(-)
+This patch hopes to expand that support by leveraging Nuked OPL3.
 
-diff --git a/tests/qtest/tpm-crb-swtpm-test.c b/tests/qtest/tpm-crb-swtpm-test.c
-index ffeb1c396b..050c7b0c1f 100644
---- a/tests/qtest/tpm-crb-swtpm-test.c
-+++ b/tests/qtest/tpm-crb-swtpm-test.c
-@@ -33,6 +33,14 @@ static void tpm_crb_swtpm_test(const void *data)
-                         "tpm-crb", NULL);
- }
- 
-+static void tpm_crb_chunk_swtpm_test(const void *data)
-+{
-+    const TestState *ts = data;
-+
-+    tpm_test_swtpm_test(ts->src_tpm_path, tpm_util_crb_chunk_transfer,
-+                        "tpm-crb", NULL);
-+}
-+
- static void tpm_crb_swtpm_migration_test(const void *data)
- {
-     const TestState *ts = data;
-@@ -54,6 +62,8 @@ int main(int argc, char **argv)
-     g_test_init(&argc, &argv, NULL);
- 
-     qtest_add_data_func("/tpm/crb-swtpm/test", &ts, tpm_crb_swtpm_test);
-+    qtest_add_data_func("/tpm/crb-chunk-swtpm/test", &ts,
-+                        tpm_crb_chunk_swtpm_test);
-     qtest_add_data_func("/tpm/crb-swtpm-migration/test", &ts,
-                         tpm_crb_swtpm_migration_test);
-     ret = g_test_run();
-diff --git a/tests/qtest/tpm-util.c b/tests/qtest/tpm-util.c
-index 2cb2dd4796..b0763d86b3 100644
---- a/tests/qtest/tpm-util.c
-+++ b/tests/qtest/tpm-util.c
-@@ -14,16 +14,44 @@
- 
- #include "qemu/osdep.h"
- #include <glib/gstdio.h>
-+#include "qemu/bswap.h"
- 
- #include "hw/acpi/tpm.h"
- #include "libqtest.h"
- #include "tpm-util.h"
- #include "qobject/qdict.h"
- 
-+#define CRB_ADDR_START (TPM_CRB_ADDR_BASE + A_CRB_CTRL_START)
-+#define CRB_ADDR_CTRL_STS (TPM_CRB_ADDR_BASE + A_CRB_CTRL_STS)
-+#define CRB_ADDR_CTRL_CMD_SIZE \
-+    (TPM_CRB_ADDR_BASE + A_CRB_CTRL_CMD_SIZE)
-+
-+#define CRB_START_INVOKE  (1 << 0)
-+#define CRB_START_RSP_RETRY (1 << 1)
-+#define CRB_START_NEXT_CHUNK (1 << 2)
-+
-+void tpm_wait_till_bit_clear(QTestState *s, uint64_t addr, uint32_t mask)
-+{
-+    uint32_t sts;
-+    uint64_t end_time = g_get_monotonic_time() + 5 * G_TIME_SPAN_SECOND;
-+
-+    while (true) {
-+        sts = qtest_readl(s, addr);
-+        if ((sts & mask) == 0) {
-+            break;
-+        }
-+        if (g_get_monotonic_time() >= end_time) {
-+            g_assert_cmphex(sts & mask, ==, 0);
-+            break;
-+        }
-+    }
-+}
-+
- void tpm_util_crb_transfer(QTestState *s,
-                            const unsigned char *req, size_t req_size,
-                            unsigned char *rsp, size_t rsp_size)
- {
-+    uint32_t tpm_sts;
-     uint64_t caddr = qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_CMD_LADDR);
-     uint64_t raddr = qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_RSP_ADDR);
- 
-@@ -31,24 +59,75 @@ void tpm_util_crb_transfer(QTestState *s,
- 
-     qtest_memwrite(s, caddr, req, req_size);
- 
--    uint32_t sts, start = 1;
--    uint64_t end_time = g_get_monotonic_time() + 5 * G_TIME_SPAN_SECOND;
--    qtest_writel(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_START, start);
--    while (true) {
--        start = qtest_readl(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_START);
--        if ((start & 1) == 0) {
--            break;
-+    qtest_writel(s, CRB_ADDR_START, CRB_START_INVOKE);
-+    tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_INVOKE);
-+
-+    tpm_sts = qtest_readl(s, CRB_ADDR_CTRL_STS);
-+    g_assert_cmpint(tpm_sts & 1, ==, 0);
-+
-+    qtest_memread(s, raddr, rsp, rsp_size);
-+}
-+
-+void tpm_util_crb_chunk_transfer(QTestState *s,
-+                                 const unsigned char *req, size_t req_size,
-+                                 unsigned char *rsp, size_t rsp_size)
-+{
-+    uint32_t tpm_sts;
-+    size_t chunk_size;
-+    unsigned char header[10];
-+    uint32_t actual_response_size = 0;
-+
-+    uint64_t caddr = qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_CMD_LADDR);
-+    uint64_t raddr = qtest_readq(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_RSP_ADDR);
-+    uint32_t crb_ctrl_cmd_size = qtest_readl(s, CRB_ADDR_CTRL_CMD_SIZE);
-+
-+    chunk_size = crb_ctrl_cmd_size;
-+
-+    qtest_writeb(s, TPM_CRB_ADDR_BASE + A_CRB_LOC_CTRL, 1);
-+
-+    for (size_t i = 0; i < req_size; i += chunk_size) {
-+        bool last_chunk = false;
-+        size_t current_chunk_size = chunk_size;
-+
-+        if (i + chunk_size > req_size) {
-+            last_chunk = true;
-+            current_chunk_size = req_size - i;
-         }
--        if (g_get_monotonic_time() >= end_time) {
--            break;
-+
-+        qtest_memwrite(s, caddr, req + i, current_chunk_size);
-+
-+        if (last_chunk) {
-+            qtest_writel(s, CRB_ADDR_START, CRB_START_INVOKE);
-+            tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_INVOKE);
-+        } else {
-+            qtest_writel(s, CRB_ADDR_START, CRB_START_NEXT_CHUNK);
-+            tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_NEXT_CHUNK);
-         }
--    };
--    start = qtest_readl(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_START);
--    g_assert_cmpint(start & 1, ==, 0);
--    sts = qtest_readl(s, TPM_CRB_ADDR_BASE + A_CRB_CTRL_STS);
--    g_assert_cmpint(sts & 1, ==, 0);
-+    }
-+    tpm_sts = qtest_readl(s, CRB_ADDR_CTRL_STS);
-+    g_assert_cmpint(tpm_sts & 1, ==, 0);
- 
--    qtest_memread(s, raddr, rsp, rsp_size);
-+    /*
-+     * Read response in chunks
-+     */
-+
-+    qtest_memread(s, raddr, header, sizeof(header));
-+    actual_response_size = ldl_be_p(&header[2]);
-+
-+    if (actual_response_size > rsp_size) {
-+        actual_response_size = rsp_size;
-+    }
-+
-+    for (size_t i = 0; i < actual_response_size; i += chunk_size) {
-+        size_t to_read = i + chunk_size > actual_response_size
-+                       ? actual_response_size - i
-+                       : chunk_size;
-+        if (i > 0) {
-+            qtest_writel(s, CRB_ADDR_START, CRB_START_NEXT_CHUNK);
-+            tpm_wait_till_bit_clear(s, CRB_ADDR_START, CRB_START_NEXT_CHUNK);
-+        }
-+        qtest_memread(s, raddr, rsp + i, to_read);
-+    }
- }
- 
- void tpm_util_startup(QTestState *s, tx_func *tx)
-diff --git a/tests/qtest/tpm-util.h b/tests/qtest/tpm-util.h
-index 0cb28dd6e5..681544e7d8 100644
---- a/tests/qtest/tpm-util.h
-+++ b/tests/qtest/tpm-util.h
-@@ -24,10 +24,15 @@ typedef void (tx_func)(QTestState *s,
-                        const unsigned char *req, size_t req_size,
-                        unsigned char *rsp, size_t rsp_size);
- 
-+void tpm_wait_till_bit_clear(QTestState *s, uint64_t addr, uint32_t mask);
- void tpm_util_crb_transfer(QTestState *s,
-                            const unsigned char *req, size_t req_size,
-                            unsigned char *rsp, size_t rsp_size);
- 
-+void tpm_util_crb_chunk_transfer(QTestState *s,
-+                                 const unsigned char *req, size_t req_size,
-+                                 unsigned char *rsp, size_t rsp_size);
-+
- void tpm_util_startup(QTestState *s, tx_func *tx);
- void tpm_util_pcrextend(QTestState *s, tx_func *tx);
- void tpm_util_pcrread(QTestState *s, tx_func *tx,
--- 
-2.54.0
+
+The end result of the patch can be verified by the following OPL test. Assemb=
+le
+and run using the instructions below. Observe that on existing Qemu builds no
+audio is produced with the sb16 device. Similarly observe that adlib is missi=
+ng
+sounds which sb16 on this patch produces:
+
+```
+; 512-byte boot sector demonstrating OPL3's extra 9 voices.
+;
+; Phase A: key-on 9 voices in the OPL2-compat first register set
+;           (D-F#-A in octaves 2/3/4). Both adlib and OPL3 sb16 hear this.
+; Phase B: 1.5 s later, key-on 9 voices in the OPL3 second register set
+;           (D-F#-A in octaves 5/6/7). adlib has no second register set, so it
+;           hears nothing extra; OPL3 hears the chord double in span.
+; Phase C: hold, then release everything and halt.
+;
+; Build : nasm -f bin opldemo.asm -o opldemo.bin
+; Boot  : qemu-system-i386 -fda opldemo.bin -audiodev coreaudio,id=3Ds0 \
+          -device sb16,audiodev=3Ds0  ; Replace sb16 with adlib to test OPL2
+
+bits 16
+org  0x7C00
+
+%define ADDR_LO 0x388       ; first register set: voices 0..8
+%define ADDR_HI 0x38A       ; second register set: OPL3 voices 9..17
+
+start:
+    cli
+    xor ax, ax
+    mov ds, ax
+    mov es, ax
+    mov ss, ax
+    mov sp, ax
+    sti
+
+    mov si, message
+.print_loop:
+    lodsb
+    test al, al
+    jz  .print_done
+    mov ah, 0x0E
+    int 0x10
+    jmp .print_loop
+.print_done:
+
+    ; Enable OPL3 mode (writes register 0x105 =3D 0x01 via second set)
+    mov dx, ADDR_HI
+    mov al, 0x05
+    out dx, al
+    inc dx
+    mov al, 0x01
+    out dx, al
+
+    ; Program 18 operators in each set with the same simple instrument
+    mov bp, ADDR_LO
+    call program_voices
+    mov bp, ADDR_HI
+    call program_voices
+
+    ; Lower chord is always sustained; upper chord pulses on/off so the
+    ; OPL3-only voices come and go without any silence between cycles.
+    mov bp, ADDR_LO
+    mov si, chord_low
+    xor dl, dl
+    call play_chord
+
+.forever:
+    mov cx, 30
+    call wait_ticks            ; ~1.6 s, lower chord only
+
+    ; Upper chord on (OPL3 voices 9..17; no-op writes on adlib)
+    mov bp, ADDR_HI
+    mov si, chord_low
+    mov dl, 0x0C
+    call play_chord
+
+    mov cx, 30
+    call wait_ticks            ; ~1.6 s, both chords on OPL3
+
+    ; Release upper chord
+    call silence_chord
+
+    jmp .forever
+
+play_chord:
+    mov  cx, 9
+    mov  bl, 0
+.each:
+    mov  al, 0xA0
+    add  al, bl
+    mov  ah, [si]
+    call opl_write
+    inc  si
+
+    mov  al, 0xB0
+    add  al, bl
+    mov  ah, [si]
+    add  ah, dl
+    call opl_write
+    inc  si
+
+    inc  bl
+    loop .each
+    ret
+
+opl_write:
+    push dx
+    mov  dx, bp
+    out  dx, al
+    inc  dx
+    mov  al, ah
+    out  dx, al
+    pop  dx
+    ret
+
+program_voices:
+    mov si, instrument
+.next_register:
+    lodsw
+    test ax, ax
+    jz .program_done
+    xchg ax, dx
+    mov bx, operator_offsets
+    mov cx, 18
+.each:
+    mov al, dl
+    add al, [bx]
+    mov ah, dh
+    call opl_write
+    inc bx
+    loop .each
+    jmp .next_register
+.program_done:
+
+    ; 9 voice-level connection registers: 0xC0..0xC8 =3D 0x30
+    ; (bit 4 =3D left speaker, bit 5 =3D right speaker, bit 0 =3D FM connecti=
+on)
+    mov bl, 8
+.connection_loop:
+    mov al, 0xC0
+    add al, bl
+    mov ah, 0x30
+    call opl_write
+    dec bl
+    jns .connection_loop
+    ret
+
+silence_chord:
+    mov  bl, 8
+.each:
+    mov  al, 0xB0
+    add  al, bl
+    mov  ah, 0
+    call opl_write
+    dec  bl
+    jns  .each
+    ret
+
+wait_ticks:
+    mov  si, cx
+    mov  ah, 0
+    int  0x1A
+    mov  bx, dx
+.poll:
+    mov  ah, 1
+    int  0x16
+    jz   .nokey
+    mov  dx, 0x604           ; PIIX4 PM1a control (PMBASE 0x600 + 0x04)
+    mov  ax, 0x2000          ; SLP_EN=3D1, SLP_TYP=3DS5
+    out  dx, ax
+.nokey:
+    mov  ah, 0
+    int  0x1A
+    sub  dx, bx
+    cmp  dx, si
+    jb   .poll
+    ret
+
+chord_low:
+    db 0x81, 0x29        ; D2  (block 2, FNum 0x0181)
+    db 0xE5, 0x29        ; F#2 (block 2, FNum 0x01E5)
+    db 0x41, 0x2A        ; A2  (block 2, FNum 0x0241 =E2=86=92 high 0x02)
+    db 0x81, 0x2D        ; D3  (block 3)
+    db 0xE5, 0x2D        ; F#3
+    db 0x41, 0x2E        ; A3
+    db 0x81, 0x31        ; D4  (block 4)
+    db 0xE5, 0x31        ; F#4
+    db 0x41, 0x32        ; A4
+
+instrument:
+    db 0x20, 0x21       ; mult=3D1, EG=3Don
+    db 0x40, 0x10       ; KSL=3D0, TL=3D16
+    db 0x60, 0xF0       ; attack=3D15, decay=3D0
+    db 0x80, 0x77       ; sustain=3D7, release=3D7
+    db 0xE0, 0x00       ; sine wave
+    dw 0                ; terminator
+
+message:
+    db 'OPL2 vs OPL3 voice demo', 13, 10
+    db 'Press any key to shutdown', 13, 10, 0
+
+operator_offsets:
+    db 0,1,2,3,4,5, 8,9,10,11,12,13, 16,17,18,19,20,21
+
+
+times 510-($-$$) db 0
+dw 0xAA55
+```
+
+To: qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>
+Cc: Laurent Vivier <lvivier@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Bryce Boe <bbzbryce@gmail.com>
+
+--- b4-submit-tracking ---
+# This section is used internally by b4 prep for tracking purposes.
+{
+  "series": {
+    "revision": 1,
+    "change-id": "20260505-sd16-opl3-74669607a11c",
+    "prefixes": [],
+    "presubject": ""
+  }
+}
+--=20
+2.49.1
 
 
