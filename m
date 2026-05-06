@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FC47CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:09:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FCD1CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:09:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcs7-00034G-OP; Wed, 06 May 2026 10:05:07 -0400
+	id 1wKcvR-0002zr-62; Wed, 06 May 2026 10:08:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcqs-0000Ou-5D
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:03:56 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcvK-0002hi-RL
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:08:30 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcqq-0001AU-HY
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:03:49 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-488ba840146so57404565e9.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:03:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcvG-000259-PD
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:08:25 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-44c4cc7c1cfso3167283f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:08:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076225; x=1778681025; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076493; x=1778681293; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=p3+mBWTr+gywNcALvVWo2llrDpelHbSPx6IEjp8iCFg=;
- b=wDkqfhV2rsivvF7ZA/olDyXhD9enYA2D+z+zrQWbBPAROjSn4vvJqg4YgrPGIzCG7O
- ZsxJNQI7IVq5u0Ol1XC7//uYR1sAQK6wbHGjIXlmPrlv6OsUKr3hcAmcNBIxZtUNqQDM
- Qnj0JvBeYXRttRdwLv2GMrinajZ6flsZXsRvkZxHpNZZFh9yRkyhhViCdCP1S64GXq2b
- g2lOKdeJSnGGQM3QfNvXcrZYreNlAvXqOG+hE7+fUtGTjKtvxg7pCH7q5VV6zSvtVp+l
- Ek0sr+4WZbCIyWgFw5v8JN+meY05+ejsAVtUJVo1d03+D72FRFuwdv12/0Glx7tDqwVu
- vYxg==
+ :reply-to; bh=2919rqkJppeOa8VQ6Pm1erdNf5b7nkiclQFbNM3i1/U=;
+ b=XSluwTLv7s9zoyoR45aS/YFTMIJsQADZm7ZI4TRDne/NZYzc/UPdRQiq7g45hgkNy7
+ 7RyfPAwEyH14onBtqzwc2bMCCmQdypNwHv2cXk+32FfFwxp6ICVit+YVfzB2RZg4kN61
+ Jcjg5Hb0OMuS0j2YFpNCTxlQSrPwcInBh+Pl5c9Bz3cHHVBOvMRKlDQJHDz9OWNOBavR
+ i/H5IURZPBXJHCNrUATkKe7q/6GcYvrlJE8BFdDp38cic83G2l0g4K3y4pdlqbR0VFff
+ sKkhb3xcyVtmCV9ZUtktVoEh/XTrlFBOcR6pPTj1A/aVo00FUG8UQZdJDNbF6qJAd+9B
+ jAwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076225; x=1778681025;
+ d=1e100.net; s=20251104; t=1778076493; x=1778681293;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=p3+mBWTr+gywNcALvVWo2llrDpelHbSPx6IEjp8iCFg=;
- b=LPvAxMrdmF/Ry+/R0UNftQiSvSINZns/IkcBaOd6uY6sLre54ZdGNh61gXW5965W2w
- 13AbI9iggyxOmrGvnfVhAoI4t6Oxbbn3BWoqEdZcoTNHKul5UBuKNzzLI5Q3OUn04Ntf
- lWv/5ag4eOPKmNLlQu5a6VvAXLcZwEOmkCZgrXRIGg0fLZFhtN4S7E1uTNO22zeVSWf7
- C8R3RrRtkLMSzTjjOcemDpg8ms0IcJ0jVDsh/Qc9idSaIqcpNqZh44ZLTpVWCapO8iX3
- K9Ybn7gXNCtjtkdNnvz3Qs2R+iE7mft+fODUDy4YGVXePy6tM8NBoBZ+NY/mEG+bLNd2
- o6SA==
-X-Gm-Message-State: AOJu0YyIg0f8C021UaOywam4d4Azz6fttt0X/KEb74DT7mw8oN02mwNH
- yb7+EkkieCijPWfXp7Qjs4mHSRNR4yak4jt20dA+EttEWMJCoEkwIgQxPcZBa0S9nq1X5O1ZlL3
- g5k4UQQ4=
-X-Gm-Gg: AeBDievJlhtUTWGCr59qN/+btTcYlD/v/zbkV4pC2TOzBD76gtNGM3eI0peZQV+wCW9
- Zvn5JAmNhGwXxRqXj86+WF8FTJahCoX0b33iK51HmyOH3dXFGh4OwGHWvWl0M/1Mnyw40f7rcOO
- fx56Jet0twUstL1XCzwnwZwCdaO3XYcHOaf6zQGYJKCKBfxKH+OCAJk6K6NXvsBUi/WvcTIkPzD
- k138cKNbDCT+dCE1jil4FZP/1hv3PBvqGnk9g+bYCndH+CoN1UN+gBSJduoLk8p8lV5piyp41JB
- 3kZWvlugIPwS0oKS24n64hAL6z3BJPQ0kzAnbWwKzdIsIAAhwOlsOipmQjByBL412blbSwcapdl
- HvvhH243n+PyqdQj6d9nZF1zRczjWzZSreDapVJaUE5baItjqZHmfm1xGipYiOvZTNQ4H/DBET7
- 0AA99Trr6NeanPSFntYmEUWvt0wD9HQT1lJYZa8Dyu8DyBgwA0TJawhfCjCCt655mPJqVosNXd6
- xLr3lyntxI=
-X-Received: by 2002:a05:600c:4881:b0:485:3ff1:d5ed with SMTP id
- 5b1f17b1804b1-48e51e0a697mr40023665e9.1.1778076224524; 
- Wed, 06 May 2026 07:03:44 -0700 (PDT)
+ bh=2919rqkJppeOa8VQ6Pm1erdNf5b7nkiclQFbNM3i1/U=;
+ b=JPZwkAYgI5EZRPVJt6lkyAkguK2iUUbbKvtyw/yy5H3XE3sks0+RjETvm/ZCuPd/ZX
+ XqBJ3lIrc1AI5KkJPKCULjJfosfy/pDgqvt8x9gILU2GDozp1DoSbo8OX1VxUdQNzC7b
+ 6hm00Ql4pX1+Klrmq0fE2RFDeExO1H/IaqfmWSTBiKtneg4ipEC+ycU49KVpuLS2S4iK
+ B10/jQYnkF5P0ESmAbY0ukkuc9Ep8/P32MUq/lQ+9P9/aJZKOI6BtIU4JYYW3t3YEAPm
+ NLTqSgIvO+60PxrS/D/6lgI1ict7+Z2uUfahVax8vZPSeE+b9T/oTi1vHbcCtzpfoPVI
+ GVWw==
+X-Gm-Message-State: AOJu0YxVyxhqdZ3AoKIQ7M7qexbVcTtvzIOceVVuD6LgeB6duntQZpNA
+ JlI5FmSAzkTRWh/QiJfO/9MyBjQ5tq9CS6S3j9j01DYgg61yDW0Qxk/8NBzwAfjMvH6uDMe045y
+ 4CSpfi0Y=
+X-Gm-Gg: AeBDiesZt0SgzK20yJi7w9UlmHq9R3zPsixgUz6sYMl4TsAgOX1DF/0U+1uHq+Pj42H
+ RlTnVRVXvCoL0YO93pXM7TBlqZ1FKopSwGA0qK+0gmcAhB2g8d3ZDwDdU2e7NDCWhmyZ3+p8Gql
+ Us6v9C7sKcTvZPXBnq+jQgNiOkVc4Kr9bKaHje0/m2AdG0yBm2SfwV4F1JIBUGlNKmtaXreyJUP
+ ikOt9TOpkfSL0o6ebs6BuUIdqauUMCbQsYAXUI4lC57L6JWJ9DnmbzAk0wJJQMvnwG0goWR0Eqp
+ TyB23ihtMlxecH5411qP69y7GESJCxhPdNALOPeb4vzGMObIWLvo9T/u5aItwshulcoPiv1aFvD
+ Lae1z3t3bIEJvVDnDZwSk4sxFjBbvdlMd9Sa2w8d52wsbiB+TEfkEk3XOvVrj1vkgJDeRQcJYXp
+ J0+q2yKXcmndEL6fmPmOBqIJbLDKxKLlwztuhyB1ErERVGLYg46W+USTB3PpFF4OQG7RZ8ElMpl
+ LAMkqbSBec=
+X-Received: by 2002:a05:600c:41cc:b0:489:1c1f:35e6 with SMTP id
+ 5b1f17b1804b1-48e51e0bc24mr31963625e9.6.1778076492741; 
+ Wed, 06 May 2026 07:08:12 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e5389da63sm49547775e9.4.2026.05.06.07.03.42
+ 5b1f17b1804b1-48e530d8691sm41794565e9.2.2026.05.06.07.08.11
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:03:42 -0700 (PDT)
+ Wed, 06 May 2026 07:08:11 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 064/110] target/m68k: Replace target_monitor_defs ->
- SysemuCPUOps::monitor_defs
-Date: Wed,  6 May 2026 15:54:36 +0200
-Message-ID: <20260506135524.20617-65-philmd@linaro.org>
+Subject: [PULL 097/110] target/mips: Reduce CPUState scope when used with
+ CPU_FOREACH()
+Date: Wed,  6 May 2026 15:55:09 +0200
+Message-ID: <20260506135524.20617-98-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,88 +100,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Restrict m68k_monitor_defs[] to cpu.c, register it as
-SysemuCPUOps::monitor_defs hook, allowing to remove
-the target_monitor_defs() method.
+When possible, reduce CPUState variable scope.
+Prefer cpu_env(cpu) over &cpu->env.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260427080738.77138-29-philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-Id: <20260415215539.92629-8-philmd@linaro.org>
 ---
- target/m68k/cpu.c     | 18 ++++++++++++++++++
- target/m68k/monitor.c | 21 ---------------------
- 2 files changed, 18 insertions(+), 21 deletions(-)
+ target/mips/internal.h              | 11 ++++++-----
+ target/mips/tcg/system/cp0_helper.c | 28 ++++++++++++++++------------
+ target/mips/tcg/system/tlb_helper.c |  7 +++----
+ 3 files changed, 25 insertions(+), 21 deletions(-)
 
-diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-index d849a4a90fc..f704a6af613 100644
---- a/target/m68k/cpu.c
-+++ b/target/m68k/cpu.c
-@@ -25,6 +25,7 @@
+diff --git a/target/mips/internal.h b/target/mips/internal.h
+index 95b8b7bb9c9..2fd5ffa304a 100644
+--- a/target/mips/internal.h
++++ b/target/mips/internal.h
+@@ -280,7 +280,7 @@ static inline int mips_vpe_active(CPUMIPSState *env)
  
- #ifndef CONFIG_USER_ONLY
- #include "migration/vmstate.h"
-+#include "monitor/hmp.h"
+ static inline int mips_vp_active(CPUMIPSState *env)
+ {
+-    CPUState *other_cs = first_cpu;
++    CPUState *cs = first_cpu;
+ 
+     /* Check if the VP disabled other VPs (which means the VP is enabled) */
+     if ((env->CP0_VPControl >> CP0VPCtl_DIS) & 1) {
+@@ -288,10 +288,11 @@ static inline int mips_vp_active(CPUMIPSState *env)
+     }
+ 
+     /* Check if the virtual processor is disabled due to a DVP */
+-    CPU_FOREACH(other_cs) {
+-        MIPSCPU *other_cpu = MIPS_CPU(other_cs);
+-        if ((&other_cpu->env != env) &&
+-            ((other_cpu->env.CP0_VPControl >> CP0VPCtl_DIS) & 1)) {
++    CPU_FOREACH(cs) {
++        CPUMIPSState *other_env = cpu_env(cs);
++
++        if ((other_env != env) &&
++            ((other_env->CP0_VPControl >> CP0VPCtl_DIS) & 1)) {
+             return 0;
+         }
+     }
+diff --git a/target/mips/tcg/system/cp0_helper.c b/target/mips/tcg/system/cp0_helper.c
+index 123d5c217c1..8b83ba16399 100644
+--- a/target/mips/tcg/system/cp0_helper.c
++++ b/target/mips/tcg/system/cp0_helper.c
+@@ -1566,13 +1566,14 @@ target_ulong helper_emt(void)
+ 
+ target_ulong helper_dvpe(CPUMIPSState *env)
+ {
+-    CPUState *other_cs = first_cpu;
+     MIPSCPU *cpu = env_archcpu(env);
+     target_ulong prev = cpu->mvp->CP0_MVPControl;
+ 
+     if (env->CP0_VPEConf0 & (1 << CP0VPEC0_MVP)) {
+-        CPU_FOREACH(other_cs) {
+-            MIPSCPU *other_cpu = MIPS_CPU(other_cs);
++        CPUState *cs = first_cpu;
++
++        CPU_FOREACH(cs) {
++            MIPSCPU *other_cpu = MIPS_CPU(cs);
+             /* Turn off all VPEs except the one executing the dvpe.  */
+             if (&other_cpu->env != env) {
+                 other_cpu->mvp->CP0_MVPControl &= ~(1 << CP0MVPCo_EVP);
+@@ -1585,13 +1586,14 @@ target_ulong helper_dvpe(CPUMIPSState *env)
+ 
+ target_ulong helper_evpe(CPUMIPSState *env)
+ {
+-    CPUState *other_cs = first_cpu;
+     MIPSCPU *cpu = env_archcpu(env);
+     target_ulong prev = cpu->mvp->CP0_MVPControl;
+ 
+     if (env->CP0_VPEConf0 & (1 << CP0VPEC0_MVP)) {
+-        CPU_FOREACH(other_cs) {
+-            MIPSCPU *other_cpu = MIPS_CPU(other_cs);
++        CPUState *cs = first_cpu;
++
++        CPU_FOREACH(cs) {
++            MIPSCPU *other_cpu = MIPS_CPU(cs);
+ 
+             if (&other_cpu->env != env
+                 /* If the VPE is WFI, don't disturb its sleep.  */
+@@ -1608,12 +1610,13 @@ target_ulong helper_evpe(CPUMIPSState *env)
+ /* R6 Multi-threading */
+ target_ulong helper_dvp(CPUMIPSState *env)
+ {
+-    CPUState *other_cs = first_cpu;
+     target_ulong prev = env->CP0_VPControl;
+ 
+     if (!((env->CP0_VPControl >> CP0VPCtl_DIS) & 1)) {
+-        CPU_FOREACH(other_cs) {
+-            MIPSCPU *other_cpu = MIPS_CPU(other_cs);
++        CPUState *cpu = first_cpu;
++
++        CPU_FOREACH(cpu) {
++            MIPSCPU *other_cpu = MIPS_CPU(cpu);
+             /* Turn off all VPs except the one executing the dvp. */
+             if (&other_cpu->env != env) {
+                 mips_vpe_sleep(other_cpu);
+@@ -1626,12 +1629,13 @@ target_ulong helper_dvp(CPUMIPSState *env)
+ 
+ target_ulong helper_evp(CPUMIPSState *env)
+ {
+-    CPUState *other_cs = first_cpu;
+     target_ulong prev = env->CP0_VPControl;
+ 
+     if ((env->CP0_VPControl >> CP0VPCtl_DIS) & 1) {
+-        CPU_FOREACH(other_cs) {
+-            MIPSCPU *other_cpu = MIPS_CPU(other_cs);
++        CPUState *cpu = first_cpu;
++
++        CPU_FOREACH(cpu) {
++            MIPSCPU *other_cpu = MIPS_CPU(cpu);
+             if ((&other_cpu->env != env) && !mips_vp_is_wfi(other_cpu)) {
+                 /*
+                  * If the VP is WFI, don't disturb its sleep.
+diff --git a/target/mips/tcg/system/tlb_helper.c b/target/mips/tcg/system/tlb_helper.c
+index b989c7e5bd5..45cbeb40a2d 100644
+--- a/target/mips/tcg/system/tlb_helper.c
++++ b/target/mips/tcg/system/tlb_helper.c
+@@ -346,15 +346,14 @@ void helper_ginvt(CPUMIPSState *env, target_ulong arg, uint32_t type)
+     uint32_t invMsgVPN2 = arg & (TARGET_PAGE_MASK << 1);
+     uint8_t invMsgR = 0;
+     uint32_t invMsgMMid = env->CP0_MemoryMapID;
+-    CPUState *other_cs = first_cpu;
++    CPUState *cpu = first_cpu;
+ 
+ #ifdef TARGET_MIPS64
+     invMsgR = extract64(arg, 62, 2);
  #endif
  
- #include "cpu.h"
-@@ -602,11 +603,28 @@ static const VMStateDescription vmstate_m68k_cpu = {
-     },
- };
- 
-+static const MonitorDef m68k_monitor_defs[] = {
-+    { "ssp", offsetof(CPUM68KState, sp[0]) },
-+    { "usp", offsetof(CPUM68KState, sp[1]) },
-+    { "isp", offsetof(CPUM68KState, sp[2]) },
-+    { "sfc", offsetof(CPUM68KState, sfc) },
-+    { "dfc", offsetof(CPUM68KState, dfc) },
-+    { "urp", offsetof(CPUM68KState, mmu.urp) },
-+    { "srp", offsetof(CPUM68KState, mmu.srp) },
-+    { "dttr0", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR0]) },
-+    { "dttr1", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR1]) },
-+    { "ittr0", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR0]) },
-+    { "ittr1", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR1]) },
-+    { "mmusr", offsetof(CPUM68KState, mmu.mmusr) },
-+    { NULL },
-+};
-+
- #include "hw/core/sysemu-cpu-ops.h"
- 
- static const struct SysemuCPUOps m68k_sysemu_ops = {
-     .has_work = m68k_cpu_has_work,
-     .get_phys_page_debug = m68k_cpu_get_phys_page_debug,
-+    .monitor_defs = m68k_monitor_defs,
- };
- #endif /* !CONFIG_USER_ONLY */
- 
-diff --git a/target/m68k/monitor.c b/target/m68k/monitor.c
-index be7411edca6..3e0df40a6b8 100644
---- a/target/m68k/monitor.c
-+++ b/target/m68k/monitor.c
-@@ -21,24 +21,3 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
- 
-     dump_mmu(env1);
+-    CPU_FOREACH(other_cs) {
+-        MIPSCPU *other_cpu = MIPS_CPU(other_cs);
+-        global_invalidate_tlb(&other_cpu->env, invMsgVPN2, invMsgR, invMsgMMid,
++    CPU_FOREACH(cpu) {
++        global_invalidate_tlb(cpu_env(cpu), invMsgVPN2, invMsgR, invMsgMMid,
+                               invAll, invVAMMid, invMMid, invVA);
+     }
  }
--
--static const MonitorDef monitor_defs[] = {
--    { "ssp", offsetof(CPUM68KState, sp[0]) },
--    { "usp", offsetof(CPUM68KState, sp[1]) },
--    { "isp", offsetof(CPUM68KState, sp[2]) },
--    { "sfc", offsetof(CPUM68KState, sfc) },
--    { "dfc", offsetof(CPUM68KState, dfc) },
--    { "urp", offsetof(CPUM68KState, mmu.urp) },
--    { "srp", offsetof(CPUM68KState, mmu.srp) },
--    { "dttr0", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR0]) },
--    { "dttr1", offsetof(CPUM68KState, mmu.ttr[M68K_DTTR1]) },
--    { "ittr0", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR0]) },
--    { "ittr1", offsetof(CPUM68KState, mmu.ttr[M68K_ITTR1]) },
--    { "mmusr", offsetof(CPUM68KState, mmu.mmusr) },
--    { NULL },
--};
--
--const MonitorDef *target_monitor_defs(void)
--{
--    return monitor_defs;
--}
 -- 
 2.53.0
 
