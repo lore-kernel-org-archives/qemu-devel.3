@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96E16CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:12:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52783CD343B
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:13:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcvT-0003H2-3Z; Wed, 06 May 2026 10:08:35 -0400
+	id 1wKcuB-0006dh-NS; Wed, 06 May 2026 10:07:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcvQ-0002wD-2R
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:08:32 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKct0-0005TH-K4
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:06:04 -0400
 Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcvO-000286-Co
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:08:31 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcsy-0001k6-Og
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:06:02 -0400
 Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-488a88aeec9so72997135e9.2
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:08:29 -0700 (PDT)
+ 5b1f17b1804b1-488ad135063so61615775e9.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:05:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076508; x=1778681308; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076357; x=1778681157; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=PWbNAwxgFE54VWoaiHwHEhttmkywv5oUyoPiI95fGyA=;
- b=dD4m1Og44Orvis9nlhIxsl+Bc40E+3mfcC88dDKHN9rbiL5OQANQeltlbjcsshWUHw
- 95yXjlBT1SjYr7tHoqmLdvJe5IIy/8NH0v76ZVGTwv2zG5Pth5W9uxcRo6VeXBJPDivE
- Xy11eMLa3g9NtFxDBNWTkQl8tkrgtIGX3k0FhVYAfw3VjJq6vMYBimw7O5mC+IClbXor
- Qnmsj+BRcPdepi0gSZOVrILna+EWLHuA5ebYuxGi7LPcEsqyUA0hPJR2TKXfZzij3uYA
- rWv+Ch/lnVV1AMKmVwCxANutklEIf4EptsCCip3dJL+rmJCGPfnRAU/X/BzmC+H1Gbhl
- KuQA==
+ :reply-to; bh=XEy5qmOgT5jPONcPwspPTaFki8owjZYQ9y+oaKY0q6Q=;
+ b=ai9i8S7CtdKGIkKeTmuAz6twmcYjXhRjTZq00OaCvkeoSCcSPWoFPm1r4KawfLIdJS
+ RGo0teaBYc65MDCLKc4soZJpj5+n4++c2j6lSa5Y2fvayWwW4xryem8GLcJ/wZh171fU
+ icmSpW+6pmtPtb41APukJRsN9TS2JRr75reo4JKFsPx8WvBZs8fW8Iw3mB2JEiHA4uHr
+ cm80xk/nwGT9M4gTJAhldWa9hY60G7JRI38H9E12w40ICWJ7r1vw+URJFUYzI8xzx1h2
+ R6bR30UMEmEBYverzhJsUtdso6XjqPH3ScHWUppW8C5eG6BP5z9/YtbBmij+BT8WCNj1
+ 5HMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076508; x=1778681308;
+ d=1e100.net; s=20251104; t=1778076357; x=1778681157;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=PWbNAwxgFE54VWoaiHwHEhttmkywv5oUyoPiI95fGyA=;
- b=Cj4nsD28pqcs47cjRAetQWZKP5yhYW7WqBOnH+oufOz/U7jw4qkwR4bLbtHSHcL8q/
- E1LnGhjcZuCkPY14dWaKOEbTu+eRG836ER6NTI/r8PiwsjVXAbkAAvHt1pAiSD22su5j
- GO6kJ/hh8hiLNmaNuTKzrosROq8RcDaIuiBkDvjNWK+3SKDIjQfDlvovzfD9TLVdstHj
- rqtsdNxUp3YJYmWqA6dsBpTYyScUG4pnHkxTLo2icfp1u3Y8B6CEaPcNvcQPf+AFyBCo
- NXV37GXMtZHVdWW6y4+uF6+MGVtfQp1DLxiLb44lofdCioGETbecquZHWyBytGZPye41
- YryA==
-X-Gm-Message-State: AOJu0YwUYltG8vzq5c49uiPFT4u4OUUentJuQ5pO6+lHIOUwRFlewHJe
- hB26PXr9TsyzqUi6yCsLijc2NHWiLZthmT7p/JUG1gEvIT/cZCmTAGlqXAEAn8feFTtUZnST1l7
- sdJrADw0=
-X-Gm-Gg: AeBDieuZAwqDkTesDIC3u1ANNMdqwFJdgEvlbtQjzOzhqit/afDap5uQuy02BO3R8X0
- +TfDWIlFnrWEhv24iy6kh0f6CGImooVItiTB5GQhxCdBPETVdAILtH0b9BLkgFDzfgTd6yI/vv/
- cx8a/bMcyHWCmchILCQ7Iez7yki6mpI4W4pOTXjWbm0WmssMUJO2ygQNM5vmpQLP05H+ahgqsjm
- pNePlWXSqvJTz8j88lUp4lsVW42oL37lScAf0ucebr5Y0uGW2HXP8TL5BvXfCTopc2luqvBGwD/
- TNDsVPHCEU0bF4cs+wcZjiyfn9/iGoTBbwFQRLkEBLnACD/wfguem8R4fVurzZNoihT5L6ej1oc
- HanHbydq2vFv1knp0Jp95cN1MoVtBwcvaWiVywls7S7A6VT/S9UK3DmXq5uloWnYlkqfHL9eCFW
- F7oGMDxWnRgSawzHu4P0YnuULMg+cpC3RqXl3odp8E2lydBOcWEHrRRZ+dnW2uRQYDgRMn2c65x
- CYUfXKSqus=
-X-Received: by 2002:a05:600c:3548:b0:489:1c1f:35f1 with SMTP id
- 5b1f17b1804b1-48e51e09706mr62060615e9.4.1778076507793; 
- Wed, 06 May 2026 07:08:27 -0700 (PDT)
+ bh=XEy5qmOgT5jPONcPwspPTaFki8owjZYQ9y+oaKY0q6Q=;
+ b=q0hjusSilF41cTO510eEZgB9P9WoYJfwnmZHZpFLM2rLRDAa4AU5gpMsAKp04A1g/m
+ IGK9OgTpr6yqHqwEqzt1xG3HvG67L2XBX3ZNXyVbTUS7/xFhXy2l1XcYhqgbfGOvNNDY
+ geo0T+nMhFZj2PFAwOAZ2Dbkrd7gr5YtmezJsHvqCXswsCuoFosXUhH/CYajf7GcVoEw
+ DPVSCB+B+z58g7exTtVMzRiVi09inEtqC25e8ZUcRsFWOT7Nh3mEmL7w8Wek29xAgmEX
+ rm35kHhFaYg53VLXiQak0amulR2BR16u2tHdTqH3/ivvQZntLaw1cYQgufc0gj5faDkQ
+ bRqA==
+X-Gm-Message-State: AOJu0YxaZFaDgVnlf62ntQnfopOT/nFIewj2Ozbv1Bh3APm662eWgA5N
+ ixT2SrF3JWOLtenSTThv3cND1o6a9Ji2qfhxAGZptprsOK7e3zHMqygHaIGbWdl2In+q7AQYNvQ
+ jLJiePMQ=
+X-Gm-Gg: AeBDieta22bxCF+E07yx9E46iT6DSV0DaDCnQ/NoHvUhEU2Aj20q3o/YlNJTthUmUzJ
+ USR5FktN4EqasrVzVbfVHzSUVBJJ5KnVC3NK90B2rFZFAlans0QNW72mioyG6YuDvzRK3utEjrQ
+ KYX7tjtGT62iau05+WJs0iKNcDZdvt94m93OGeldwzpviU+rBq+LmA9vqq106A7zK71zjIJt12A
+ eu7aVlXswZNdMtLmf580+gjiALNeMtDggZBRxfYRGKjYpxvTHzURq+KQosVNwe+tgFD0N8Y6Vuc
+ 4V+O5okyzONHjNrar9uO4apEKCFMfg4+GmMzATzAtRXNpnPf1uADCxAQYTy+W5d40HetZLabP6K
+ pW8qLyCilkUyQL4tlWUMt6m2S0uyng11kE83BnrY8WdnH6Kv4kPv0gqanZF9iyVm6+J0F3lXB6V
+ r2xULEpHz8HqsZ7HCv03dOuew1C1ao0FVmxtvk0/Vw+WCm3utIdySF7dqiEFT/VF4kc6DSvui27
+ 0ETBpQfrR4=
+X-Received: by 2002:a05:600c:354b:b0:486:f634:ef1 with SMTP id
+ 5b1f17b1804b1-48e51f32a7amr64175305e9.17.1778076356583; 
+ Wed, 06 May 2026 07:05:56 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e53895f0asm54981505e9.2.2026.05.06.07.08.26
+ 5b1f17b1804b1-48e530b212esm23820875e9.1.2026.05.06.07.05.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:08:26 -0700 (PDT)
+ Wed, 06 May 2026 07:05:55 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 099/110] target/s390x: Do not compile KVM stubs for linux-user
- binary
-Date: Wed,  6 May 2026 15:55:11 +0200
-Message-ID: <20260506135524.20617-100-philmd@linaro.org>
+Subject: [PULL 080/110] target/arm: define stub library
+Date: Wed,  6 May 2026 15:54:52 +0200
+Message-ID: <20260506135524.20617-81-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
@@ -100,28 +99,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-None of these KVM symbols should be used in the qemu-s390x
-linux-user binary. Do not build the stub there, prefer a
-real linker failure.
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
+We use the mechanic introduced in previous commit to define a arm stubs
+library. With this, we are able to eliminate symbol conflicts when
+linking arm and aarch64 targets, and get one step closer to having a
+single-binary.
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20260424230103.1579600-3-pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Ilya Leoshkevich <iii@linux.ibm.com>
-Message-Id: <20260423135035.50126-3-philmd@linaro.org>
 ---
- target/s390x/kvm/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/arm/meson.build     | 8 +++-----
+ target/arm/tcg/meson.build | 2 +-
+ 2 files changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/target/s390x/kvm/meson.build b/target/s390x/kvm/meson.build
-index 588a9aa737e..437e12f221f 100644
---- a/target/s390x/kvm/meson.build
-+++ b/target/s390x/kvm/meson.build
-@@ -1,5 +1,5 @@
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index 192ac7c31ee..4723f9f170a 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -2,6 +2,7 @@ arm_ss = ss.source_set()
+ arm_common_ss = ss.source_set()
+ arm_common_system_ss = ss.source_set()
+ arm_system_ss = ss.source_set()
++arm_stubs_ss = ss.source_set()
+ arm_user_ss = ss.source_set()
  
--s390x_ss.add(when: 'CONFIG_KVM', if_true: files(
-+s390x_system_ss.add(when: 'CONFIG_KVM', if_true: files(
-   'pv.c',
-   'kvm.c',
-   'stsi-topology.c'
+ arm_common_system_ss.add(files('gdbstub.c'))
+@@ -23,9 +24,7 @@ arm_system_ss.add(when: 'CONFIG_KVM', if_true: files('hyp_gdbstub.c', 'kvm.c'))
+ arm_system_ss.add(when: 'CONFIG_HVF', if_true: files('hyp_gdbstub.c'))
+ 
+ arm_user_ss.add(files('cpu.c'))
+-arm_user_ss.add(when: 'TARGET_AARCH64', if_false: files(
+-  'cpu32-stubs.c',
+-))
++arm_stubs_ss.add(files('cpu32-stubs.c'))
+ arm_user_ss.add(files(
+   'cpregs-gcs.c',
+   'cpregs-pmu.c',
+@@ -39,8 +38,6 @@ arm_user_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING',
+ 		        if_true: files('common-semi-target.c'))
+ 
+ arm_common_system_ss.add(files('cpu.c'))
+-arm_common_system_ss.add(when: 'TARGET_AARCH64', if_false: files(
+-  'cpu32-stubs.c'))
+ arm_common_system_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
+ arm_common_system_ss.add(when: 'CONFIG_ARM_COMPATIBLE_SEMIHOSTING',
+ 		                 if_true: files('common-semi-target.c'))
+@@ -73,3 +70,4 @@ target_system_arch += {'arm': arm_system_ss}
+ target_user_arch += {'arm': arm_user_ss}
+ target_common_arch += {'arm': arm_common_ss}
+ target_common_system_arch += {'arm': arm_common_system_ss}
++target_stubs_arch += {'arm': arm_stubs_ss}
+diff --git a/target/arm/tcg/meson.build b/target/arm/tcg/meson.build
+index 02774409e56..d2364aa39c4 100644
+--- a/target/arm/tcg/meson.build
++++ b/target/arm/tcg/meson.build
+@@ -28,7 +28,7 @@ translate32_d = [
+ ]
+ 
+ arm_ss.add(when: 'TARGET_AARCH64', if_true: gen_a64)
+-arm_ss.add(when: 'TARGET_AARCH64', if_false: files('stubs32.c'))
++arm_stubs_ss.add(files('stubs32.c'))
+ 
+ arm_ss.add(files(
+   'cpu32.c',
 -- 
 2.53.0
 
