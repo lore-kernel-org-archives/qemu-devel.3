@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 152DFFF8855
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:07:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC31FF8855
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:07:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcsF-0003kF-MJ; Wed, 06 May 2026 10:05:15 -0400
+	id 1wKcuC-0006ti-6o; Wed, 06 May 2026 10:07:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcrh-0002E4-I5
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:04:42 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKctd-000677-H1
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:06:41 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcre-0001IZ-Qz
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:04:41 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-452169ae568so386357f8f.3
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:04:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKctZ-0001oV-LY
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:06:39 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-48909558b3aso71359865e9.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:06:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076276; x=1778681076; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076395; x=1778681195; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ZP4w7Rk3n+TwTim0y/LaZ0U4XGUljk46CIvMASTDLg4=;
- b=tnL3Iv+eB2Fs57wCa71oRR+jKL7Kw03E9jjCH6mqmmPGT/fLbPvq3jq8YPi1urzFma
- eQcnYeAzLr1lb+IghwmgJwOfLDYWZankU0RhgXunoGTmB+/G2IxdxaWa9SiViGwrWVtL
- jg9wOnMMcsCZC4kvSpe9Z+Hx5zoLI2kn3O6kIsBDGQ73D/1UAsdvwWbztoLrYjGqwxKp
- aUm7HhyvYzE9vqRxOsDXogywDesqJN/yo3Gle3mIpuR+nJyNhJEOf8umeroW7RmfIv+J
- gFPsEBL5MYQtKSV8qlWDdHhWgLHqrytrlDY6ozLMPIIXFkU1L5euRWe5qxnzmlFM6MIE
- PEKg==
+ :reply-to; bh=Ox57tRe7cloUuWsftSDPkfC9DCnim7Tis7+4yAuGV2Y=;
+ b=VPt2SVy57/BvWuOAQwXlhXSPEMd6dweLRZuFEFo3040mp2/NIJpJpFJDynqB5kqibb
+ rAUrSTLUGvJ/CxlgklkAw0ruPZ40voVRRt7q7LCvb1QQY4ZIxtQkWhi43HzD3jL2aTUi
+ RBEey6NCR/beZIbJ5cYPCa84wGFhOn+S0slMNLIung3LfgKk4An9UfZA0nE+CehQurED
+ CtZTzY6Xr1ritxg4io01BlBN2Cj3WF6ZmD/thjoQm8lLLYYWYQVRvm1XNhe2oL3L7BGD
+ 7fXbMubTEZ6a24jZ3ZmtfgVDBKt1zTc2fEN+VzDcLA3BJ1HUfaxRyc8DlwtsIDxVtd4+
+ ZtEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076276; x=1778681076;
+ d=1e100.net; s=20251104; t=1778076395; x=1778681195;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ZP4w7Rk3n+TwTim0y/LaZ0U4XGUljk46CIvMASTDLg4=;
- b=lma3xuuCw/QlsTxQR6kMX9M1kzMb3Aj8amCTyMcRjMLJNCI/RvIBY7YvRAPsr7uy3M
- yO9HO+EgOhaKjp61T8BJmdrPUBNVhVcIrnRrM3FcHIi0aFDAt8OBJmYJEKA5V/WcLrPx
- vSGo95J8D05IJgtGg2WmtXSOU7ZvTwrAKNiqF1Pvrn0vnwATaQHBodcrZnGcaR8I5v5l
- Esg7C6qm0T1XraHO62L5RGb+2EiL6NvWW1QBESzfA5qV9o6SxZD3u9WlStlb2TCUjyOA
- iJqNfz9tUo9eDZYfzZOj/COEpT7uMe2XuXuzggG7ZEbQzGMq/tV+1x+++d62Ob9uNSD6
- 2hHA==
-X-Gm-Message-State: AOJu0YygmcV5W186X7ArqCSO4t7Ifq/QbcLO4z6BkjDI3J9RNw5gaCp4
- yIeclrvkwQDSmoAv+RbVa3kKihGZLtNUcRDKYyyjyhbF2bT6Z0krPaWrcNCtyhzRXB1/X6YtsS5
- bx/r6DAc=
-X-Gm-Gg: AeBDieuV1tEh5EJJ1Vz9TadqDrE+j3JGTOnxC+CcRKdmNMk826U6ESVtOVPf4VJwl13
- lO5jMWS3UtUp8HnwJl6dVeftS+JjywApP0LO89hw+ZmEiTHTNq/7G3QBjksoOyeZ/X2rGL9DBMV
- j1HnuJd1UZhicA+ffU39BPCf6TfLlIo1UN83oPQJgP7dwREYB+qQkRyKLJeYYbCay5ILousi8sc
- m2nHo39rWzPFk//lFHzwzp+8l0u1bkiAKa5r1KDQQq+pWc5ee1P5LEtsjl2iqxenp+i66RMkO+x
- Fu9k7YlHLglSx30voHE51YjBnZotqI8OXKd4YErcyFKYsmVC8Bi8y/jYaSlifIuY5knYUndwRLc
- dGny2OVy1tzPxYJyoNw6GoCosDC/Q1FUuIDEAlDcn49i7YWzULkEA5TNxkzQUvMq9mZ52oBm66M
- 7TmDXhdqdfrZSK1ZcmGl81cqmcdzXrur0g3U5P88lUrhQ/QL55eyAVuqcmomCMoVGeJGLtPZmBB
- zTsC4JAjV+GM8A197EDiA==
-X-Received: by 2002:a05:6000:290f:b0:43d:7af0:3a7c with SMTP id
- ffacd0b85a97d-4515d3dc24cmr6096479f8f.29.1778076275787; 
- Wed, 06 May 2026 07:04:35 -0700 (PDT)
+ bh=Ox57tRe7cloUuWsftSDPkfC9DCnim7Tis7+4yAuGV2Y=;
+ b=nvlpaX68nZX5JsU89IhdBj9QduaELrxYjPmEN7NeH6coB8+jFujbGiBH7otSrSFOnZ
+ 09b4Pyn0rZGj3FSA8Qq5Rkxh2Vh3zucVlrUZt8pgndx+SjnOvfGzdgfLiXkKI7cfxyaK
+ GnYMyPUV0WWyG1MIjuOMLttb5OcNe7vFM+ym3NnwSwekED980NwV1KAc8sq1lF5wAnmL
+ 1xq/jKFQuYUeWpbVyWyjsOHSLEcr9BWaUSXCCvykOgFifGhSYKCqBcYLFowdso4FbxbS
+ 9kbpgEeSIK5az88KmppisZdv+vp+7+G8Qplg6InFLGoqe+Chr5hwk8rEMH3rXIRHL++z
+ 9rMw==
+X-Gm-Message-State: AOJu0YwU5g8al1zLadlyQe9DjI5AEs2UcW24NmeR/ZC/fU1Clv63uqeR
+ PSOT4fZdjllCj5cKbSWPUKkRkE4pyz8Bj6X0aHTq8A7WEHoQf3S9GJ61RihqOytVmltO9P3X9kf
+ 8gNGelKg=
+X-Gm-Gg: AeBDietZEaV6ttDOLY3Zd0TEPBEiIMq3sWMdf1kILCZpt2BYmAe8bw0e3otVgaFelv9
+ ysNAifDSnVYgyekRdbBoMRA5D3GI4DrBKr0/Mrs50cYNvm+JcYXtc8HF3Oln18RWB84qnVdRuek
+ Inx9oyHJmXCneD69GLnGDbcDO6Aqa2IdgaHZLP2zc6wcwdcYjx/REp008je7nlluBwk0vuuf0WV
+ IJFSl3agijP9fhj6nAQaL9AKxEYAm5jcJx1ebT3v1p5tvQslgbGReXe4NwIFTYPCL2qZfqj+7AV
+ ZBdrgklLraelAcjghWZxeSdzWJjzYfTmHEzvD9gyXgxDFZF2g/PQ6RP94kvnTWEYg9qULzwg3cA
+ bIRUrxP2+ORsV98jRPfc0A3egM6EheQJqr9vyxzqmGenOjwVtbe1KcUFCtCzilu858cqEq3W8LO
+ UltL0290nbK6f7Xn/RfH1K7qhDIEyLS2HRotfw4N9gNvfzzzMNuDSLSV21jBwHgYlxiYx6PtbtB
+ gPgt6ZSJVg=
+X-Received: by 2002:a05:6000:2dc6:b0:43d:740:fb37 with SMTP id
+ ffacd0b85a97d-4515ce1c977mr6306917f8f.24.1778076394862; 
+ Wed, 06 May 2026 07:06:34 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-450524833e1sm13014054f8f.2.2026.05.06.07.04.33
+ ffacd0b85a97d-45054b02c5asm12749011f8f.19.2026.05.06.07.06.33
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:04:34 -0700 (PDT)
+ Wed, 06 May 2026 07:06:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 070/110] accel/tcg: Remove non-explicit endian cpu_ld*_code()
- wrappers
-Date: Wed,  6 May 2026 15:54:42 +0200
-Message-ID: <20260506135524.20617-71-philmd@linaro.org>
+Subject: [PULL 085/110] target/microblaze: Compile op_helper.c as common unit
+Date: Wed,  6 May 2026 15:54:57 +0200
+Message-ID: <20260506135524.20617-86-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,120 +99,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All uses were converted to the cpu_ld*_code_mmu() helpers:
-remove them. Update the documentation.
+In order do build op_helper.c as a common unit we simply
+need to use the common version of "accel/tcg/cpu-ldst.h".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260320074555.33974-3-philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-Id: <20260423100612.27278-7-philmd@linaro.org>
 ---
- docs/devel/loads-stores.rst  | 21 +++++++++------------
- include/accel/tcg/cpu-ldst.h | 33 ++-------------------------------
- 2 files changed, 11 insertions(+), 43 deletions(-)
+ target/microblaze/op_helper.c | 2 +-
+ target/microblaze/meson.build | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/docs/devel/loads-stores.rst b/docs/devel/loads-stores.rst
-index 57892e814cd..c719241a7f5 100644
---- a/docs/devel/loads-stores.rst
-+++ b/docs/devel/loads-stores.rst
-@@ -235,16 +235,13 @@ Regexes for git grep:
-  - ``\<cpu_ld[us]\?[bwlq]\(_[bl]e\)\?_data\>``
-  - ``\<cpu_st[bwlq]\(_[bl]e\)\?_data\+\>``
+diff --git a/target/microblaze/op_helper.c b/target/microblaze/op_helper.c
+index 31da2c7c3ae..84c60c2636e 100644
+--- a/target/microblaze/op_helper.c
++++ b/target/microblaze/op_helper.c
+@@ -23,7 +23,7 @@
+ #include "cpu.h"
+ #include "exec/helper-proto.h"
+ #include "qemu/host-utils.h"
+-#include "accel/tcg/cpu-ldst.h"
++#include "accel/tcg/cpu-ldst-common.h"
+ #include "fpu/softfloat.h"
  
--``cpu_ld*_code``
--~~~~~~~~~~~~~~~~
-+``cpu_ld*_code_mmu``
-+~~~~~~~~~~~~~~~~~~~~
+ void helper_put(uint32_t id, uint32_t ctrl, uint32_t data)
+diff --git a/target/microblaze/meson.build b/target/microblaze/meson.build
+index 94c76de39bd..add3e6ca9f9 100644
+--- a/target/microblaze/meson.build
++++ b/target/microblaze/meson.build
+@@ -4,13 +4,13 @@ microblaze_common_ss = ss.source_set()
+ microblaze_common_ss.add(files(
+   'gdbstub.c',
+   'helper.c',
++  'op_helper.c',
+ ))
  
--These functions perform a read for instruction execution.  The ``mmuidx``
--parameter is taken from the current mode of the guest CPU, as determined
--by ``cpu_mmu_index(env, true)``.  The ``retaddr`` parameter is 0, and
--thus does not unwind guest CPU state, because CPU state is always
--synchronized while translating instructions.  Any guest CPU exception
--that is raised will indicate an instruction execution fault rather than
--a data read fault.
-+These functions work like the ``cpu_{ld,st}*_mmu`` functions
-+except that they perform a read for instruction execution.
-+Any guest CPU exception that is raised will indicate an instruction
-+execution fault rather than a data read fault.
+ microblaze_ss = ss.source_set()
+ microblaze_ss.add(gen)
+ microblaze_ss.add(files(
+   'cpu.c',
+-  'op_helper.c',
+   'translate.c',
+ ))
  
- In general these functions should not be used directly during translation.
- There are wrapper functions that are to be used which also take care of
-@@ -252,7 +249,7 @@ plugins for tracing.
- 
- Function names follow the pattern:
- 
--load: ``cpu_ld{sign}{size}_code(env, ptr)``
-+load: ``cpu_ld{sign}{size}_code_mmu(env, addr, oi, retaddr)``
- 
- ``sign``
-  - (empty) : for 32 or 64 bit sizes
-@@ -266,12 +263,12 @@ load: ``cpu_ld{sign}{size}_code(env, ptr)``
-  - ``q`` : 64 bits
- 
- Regexes for git grep:
-- - ``\<cpu_ld[us]\?[bwlq]_code\>``
-+ - ``\<cpu_ld[us]\?[bwlq]_code_mmu\>``
- 
- ``translator_ld*``
- ~~~~~~~~~~~~~~~~~~
- 
--These functions are a wrapper for ``cpu_ld*_code`` which also perform
-+These functions are a wrapper for ``cpu_ld*_code_mmu`` which also perform
- any actions required by any tracing plugins.  They are only to be
- called during the translator callback ``translate_insn``.
- 
-diff --git a/include/accel/tcg/cpu-ldst.h b/include/accel/tcg/cpu-ldst.h
-index ea2cbf40fe4..1facabccb23 100644
---- a/include/accel/tcg/cpu-ldst.h
-+++ b/include/accel/tcg/cpu-ldst.h
-@@ -51,10 +51,9 @@
-  *     _be: for forced big endian
-  *     _le: for forced little endian
-  *
-- * mmusuffix is one of the generic suffixes "data" or "code", or "mmuidx".
-+ * mmusuffix is one of the generic suffixes "data" or "mmuidx".
-  * The "mmuidx" suffix carries an extra mmu_idx argument that specifies
-- * the index to use; the "data" and "code" suffixes take the index from
-- * cpu_mmu_index().
-+ * the index to use; the "data" suffix take the index from cpu_mmu_index().
-  *
-  * The "mmu" suffix carries the full MemOpIdx, with both mmu_idx and the
-  * MemOp including alignment requirements.  The alignment will be enforced.
-@@ -470,34 +469,6 @@ cpu_stq_le_data(CPUArchState *env, abi_ptr addr, uint64_t val)
- # define cpu_stl_mmuidx_ra    cpu_stl_le_mmuidx_ra
- # define cpu_stq_mmuidx_ra    cpu_stq_le_mmuidx_ra
- #endif
--
--static inline uint32_t cpu_ldub_code(CPUArchState *env, abi_ptr addr)
--{
--    CPUState *cs = env_cpu(env);
--    MemOpIdx oi = make_memop_idx(MO_UB, cpu_mmu_index(cs, true));
--    return cpu_ldb_code_mmu(env, addr, oi, 0);
--}
--
--static inline uint32_t cpu_lduw_code(CPUArchState *env, abi_ptr addr)
--{
--    CPUState *cs = env_cpu(env);
--    MemOpIdx oi = make_memop_idx(MO_TEUW, cpu_mmu_index(cs, true));
--    return cpu_ldw_code_mmu(env, addr, oi, 0);
--}
--
--static inline uint32_t cpu_ldl_code(CPUArchState *env, abi_ptr addr)
--{
--    CPUState *cs = env_cpu(env);
--    MemOpIdx oi = make_memop_idx(MO_TEUL, cpu_mmu_index(cs, true));
--    return cpu_ldl_code_mmu(env, addr, oi, 0);
--}
--
--static inline uint64_t cpu_ldq_code(CPUArchState *env, abi_ptr addr)
--{
--    CPUState *cs = env_cpu(env);
--    MemOpIdx oi = make_memop_idx(MO_TEUQ, cpu_mmu_index(cs, true));
--    return cpu_ldq_code_mmu(env, addr, oi, 0);
--}
- #endif /* TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API */
- 
- #endif /* ACCEL_TCG_CPU_LDST_H */
 -- 
 2.53.0
 
