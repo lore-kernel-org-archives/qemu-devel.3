@@ -4,83 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5734CD3424
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 08:26:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E2CFCD3424
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 08:29:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKXa1-0004oG-TZ; Wed, 06 May 2026 04:26:05 -0400
+	id 1wKXcp-0005TE-Uv; Wed, 06 May 2026 04:28:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKXZv-0004o0-AE
- for qemu-devel@nongnu.org; Wed, 06 May 2026 04:25:59 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKXco-0005T1-Dj
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 04:28:58 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKXZt-0001lp-O6
- for qemu-devel@nongnu.org; Wed, 06 May 2026 04:25:59 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-452169ae568so110887f8f.3
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 01:25:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKXcm-0003R2-Ri
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 04:28:58 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-488b3f8fa2bso5981195e9.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 01:28:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778055955; x=1778660755; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=pxJsbed4vDVoDnW6zsS1RwiJwyMi+ON6WElcbf3aGrE=;
- b=HYB3Z8yRUb/Y8BT3UYCBfH2/Vm1ziHq0J85aEP4KPP1Sqfp7rwH02egxQ2hM0xSWiP
- yrU1KF0TAMofgzMdce/5R58KRjH5KZZkGJs8+ldGeksvzi5S6Sw/zNPhzqIXTPa3jT/+
- W0AalpZA/1hCs1uw/OMtt4TfJB5Hg5Jd7iguN1IysdEPKE9CH31/HDr/YhbLv6rHalLF
- JAM/jxaim++pFprIT/NGGgL1oCcTKNsU7F8C5X6YZBEmMoFvcYP0MqTOEsS3YY8NTYhp
- 3sK+5wxVFKOCvIeF7KINKyspo5IXfkUITL8XljGTKaGLqgbU3O+RuDr9XlYeChUiLj/1
- 2zxQ==
+ d=linaro.org; s=google; t=1778056135; x=1778660935; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dj/sJn/cCNciG3g6jaqaADtqvlnQaV0hsMfSHiNUHzY=;
+ b=mZcV+xvr/7g35kFw+hA/eGuAgCrtMfyCtX5jtgKEYIT3qRpmzJj0rVlwBSb20+82oA
+ LLoyQgU2hFsK6h6T7Yh3IfkJJmpaG6ljhIX4M+b50hVJFPJJN41zE6aPBsvCciRSNUFn
+ kN0vpFcY4GcmKhuEmZ2o/61n2r2UXBakSDsi95rUhvT5uSgScex7rdwC6c+ERISjfZqH
+ meBlibT6F+Trcb5xhVjDmh/Q5akSA+wDNUbRUbrmM5Wfkz4WEiYdMUFVXBwhS49wPuwu
+ BT9oT+A0FAXSyY9vaQ8CPQkL3u1twUky6mYKDsUv/8fpnQzBT37u7eTlMLu2THSi+MWD
+ lC9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778055955; x=1778660755;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1778056135; x=1778660935;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=pxJsbed4vDVoDnW6zsS1RwiJwyMi+ON6WElcbf3aGrE=;
- b=OyINoC/lcKvoDTYT7gqQ2wk4RNoa4Glivzpcmab8juAdzYAI1EV3CD62vGoViZ6CTb
- kTxT283LtwZUDoiN7E2LIDT1KZxTVCUo/33GmmpDONAdvcx10rRBg5gT73titw1kIGn2
- 9kPAEgVpbKHyKnRYWdZtTndkob1Agm5Wg4bGAo60yobo6NhmkWANRr6fEquoyvSommpe
- 5wjo3tDTTA8IrLpQFwYNjR7HSfl/c4ga5vpbldfkVvXGbn2BW9eBXyzPQn+1ICwGNIWp
- bfEKDPuvI70FuIfvO+bdV8yVI/Jxwjl3Z6bm4QqqHB3uVjfiGLifrE6wupw0WFtvEhRr
- yP3A==
+ bh=dj/sJn/cCNciG3g6jaqaADtqvlnQaV0hsMfSHiNUHzY=;
+ b=PIjKvjZNKlxaRPzHkDyXId9yQ6eqjWT+uDx4A98gzPuaY/0VTiRnRw+9B9ShUG9MF7
+ AhMdYEcdBoCVOA5GgF20ySm8Jhqcfznv3O0IgjNKAjyAsD1Ek03Q/v9FhCd/DT6UrEck
+ MfmR2NQA3hKjkMHkp8WlOTQUDpj1fithAyGJVeJs38zIVvp2GmYJJH97g8SNG4t+OSsr
+ CKvXtbYfsFGEXGyEBtdbv8B1Dyut/Kj7b22CsdzSEuq6TISzmEERcWA0bFm4bcKHrWef
+ KOARcytRpW6PC+ctQb4HGUnWG6IIX7EK2jmrlUTLS85X8UrPk2UGkSFxQM94HOoAwoKU
+ 1/6g==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8GjmYP8DcJmZ/OJjaXJV76KZiYI5yQmumUssVo6dnVo6Z5eE6Xhj6EpCk/BJrEAcQ7W+A2WbACMlkc@nongnu.org
-X-Gm-Message-State: AOJu0YwZZqghvTJ1pVUV3eKv27ROvoIJRKgF1c4U9Ed72ILpZ0m3mrwD
- hOtFMh2nJxLred2blrfJLhAQZeeG3irhOfnklaRZCafKzMaYwHPghsPvHNeY+FlWO8s=
-X-Gm-Gg: AeBDies4zIt1GICYG1cHFBzpGQM7GWjZqfrZnsBBhKpWbXBvY6toI0mUMIttY3ZHLyl
- CVRfo+uJIrMzD/+ylyODCg8WLzuX5kVBcgWrl81iQKqHv2Aplqn+uIvQZz/x52DU2FtCrNg4m2k
- akPoeJ4LLEElhkH8bwwzYATPVHrnlkAkjfMSvHGafMAhhbrpHlh3ssmcdj5SuyAK00dtjFn9wpx
- 9kosLG+8BVS+8UQLcVfJX1kqITy/NQI+nAvfY3vdkw23sgzRhJR3J/wWnrcYv4lOAgnUZDesJw/
- Z17QB2J2TzrN9fn3CtTyW7XKgCEufiAlgd0TXNUZwskDNyPa7yypvTERccn2z4cOHcRJ0fhQbIf
- dxiaLD5ZH7ClhkoAXQK9VPTUpH2Ne/LnrZAtNCUoty8rryL+LJ4ytRhbmsMmCXXtMXrpGIPMldq
- +fL2ymepmscqboXnHfQMtcQlpc7wZu1JhC1nUQgVmny+mAIQ==
-X-Received: by 2002:a05:6000:22c6:b0:437:711c:8754 with SMTP id
- ffacd0b85a97d-4515b056c9bmr4002826f8f.7.1778055955084; 
- Wed, 06 May 2026 01:25:55 -0700 (PDT)
-Received: from [192.168.69.210] ([88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45055960902sm11886375f8f.28.2026.05.06.01.25.54
+ AFNElJ+aF+EO1ARtzOoxbxSzFB77webbZoRTEOXkMjDnv70/eFLvuxavRS5wIdhwEW4/8WVzoZVGpq2XcHTe@nongnu.org
+X-Gm-Message-State: AOJu0Yyr80fN0y8H9VL8e+BurZ2GWzoJ65/Spmb1Ft3AiS7mzYKzpjR+
+ Nn6udI/cil7hFH1bWief3Lx6I4RwdK/QovwmGlbs6LMFABsS63o+dMr235XS1kg6rQw=
+X-Gm-Gg: AeBDieuNB7cm/ppsH9zY1z/FE9HjBniZI6yDAamHUVjVliYzkKFX/QX9dVy2ldG/tPd
+ 2slBLv52ZhCPwHMYBIMGRtD8wkbsGzinOS7plV+9+fVUoDAEB+SFsRMA5xobX7CamcAhW4hzkmO
+ bWNjoQGxhC4cEiyemELZr+ki7oY3WeNjEAuYmFT0uezCQi2tH1tPMx9AVnGgQoq0qTToFrIbZSp
+ SCrxYOIJgSUW/cmC0XvPFB4377IYMQ6FyHMFJ2mBDj/vKXlC8FDVr3sf2FLIluJ7cEuUlxhdj3w
+ xVEU7ou9+bFm5vgRwNHY3xysD3dviXiKGTDVYOZ3GIfyH+2a3OH/CM+z93g0w7KeTSJb792WtEm
+ GYK+TXFLc/rrZ6kKnyLBzqu4LmIPV4I7qkdStrg+WHmk9fE5NCHHBuLkzqeQX4rE6LoJNLCMZMn
+ LcEMHwXx0gYqY0RyUwQys1pENM5QTh5LMK41H8ZgtjzfhnBg6DhwEKVdB3P8UyUwvlmTKkk0YQU
+ o/B
+X-Received: by 2002:a05:600c:a10d:b0:48a:534a:eed8 with SMTP id
+ 5b1f17b1804b1-48e5226be99mr24157365e9.1.1778056134919; 
+ Wed, 06 May 2026 01:28:54 -0700 (PDT)
+Received: from [192.168.69.210] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48e53826022sm32572575e9.0.2026.05.06.01.28.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 May 2026 01:25:54 -0700 (PDT)
-Message-ID: <987b8bda-0f6d-4a8c-9e81-a6ffef9a5ccc@linaro.org>
-Date: Wed, 6 May 2026 10:25:51 +0200
+ Wed, 06 May 2026 01:28:53 -0700 (PDT)
+Message-ID: <fd8b3cbc-165b-444a-8acb-958b5e04f51e@linaro.org>
+Date: Wed, 6 May 2026 10:28:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 03/10] .agents/skills: add qemu-code-reviewer skill
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-References: <20260505170105.228162-1-alex.bennee@linaro.org>
- <20260505170105.228162-4-alex.bennee@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] net: mark struct ip6_header as QEMU_PACKED
 Content-Language: en-US
-In-Reply-To: <20260505170105.228162-4-alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Jason Wang <jasowang@redhat.com>
+References: <20260505201324.932323-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260505201324.932323-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,49 +105,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/5/26 19:00, Alex Bennée wrote:
-> This provides basic instructions for how to download and apply a
-> patch series from the mailing list. It currently doesn't outline any
-> details about how to do the review.
+On 5/5/26 22:13, Peter Maydell wrote:
+> The ip6_header is often used by network devices to examine structures in
+> packet data, and it's not guaranteed to be aligned. This manifests as
+> errors from the clang sanitizer like this one:
 > 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/net/rocker/rocker_of_dpa.c:321:37
+> ../../hw/net/rocker/rocker_of_dpa.c:730:33: runtime error: member access within misaligned address 0x742970fe7ecd for type 'struct ip6_header', which requires 4 byte alignment
+> 0x742970fe7ecd: note: pointer points here
+>   00 00 02 81 00 60 00  00 00 00 38 3a ff fe 80  00 00 00 00 00 00 00 00  00 00 00 00 00 02 ff 02  00
+>               ^
+> 
+> Fix this by marking the ip6_header struct as QEMU_PACKED, the way we
+> have done to handle similar problems involving tcp_header, ip_header,
+> etc.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   .agents/skills/qemu-code-explorer/SKILL.md    |  3 +-
->   .../qemu-code-explorer/evals/evals.json       |  1 +
->   .agents/skills/qemu-code-reviewer/SKILL.md    | 74 +++++++++++++++++++
->   3 files changed, 77 insertions(+), 1 deletion(-)
->   create mode 100644 .agents/skills/qemu-code-reviewer/SKILL.md
+> Found this one while I was working on a rocker bug.
 > 
-> diff --git a/.agents/skills/qemu-code-explorer/SKILL.md b/.agents/skills/qemu-code-explorer/SKILL.md
-> index d41b21179c1..13cb71dd55c 100644
-> --- a/.agents/skills/qemu-code-explorer/SKILL.md
-> +++ b/.agents/skills/qemu-code-explorer/SKILL.md
-> @@ -1,6 +1,7 @@
->   ---
->   name: qemu-code-explorer
->   description: Comprehensive guide for exploring the QEMU codebase using tagging systems (gtags, ctags, cscope), git grep, and build-directory grep for generated files. Use this skill when the user asks to find where something is defined, how it's used, or wants to understand a specific subsystem.
-> +license: GPL-2.0-or-later
->   ---
->   
->   # QEMU Code Base Explorer
-> @@ -26,7 +27,7 @@ make gtags  # or make ctags, make cscope, make TAGS
->   
->   `git grep` is the preferred tool for general text searches within the source tree.
->   
-> -- **Best for**:
-> +- **Best for**:
->     - Searching for local variables within a function.
->     - Searching for string literals or comments.
->     - Finding occurrences of symbols defined in system headers (e.g., `optarg`).
-> diff --git a/.agents/skills/qemu-code-explorer/evals/evals.json b/.agents/skills/qemu-code-explorer/evals/evals.json
-> index dff7afa52fa..131cf46e1cc 100644
-> --- a/.agents/skills/qemu-code-explorer/evals/evals.json
-> +++ b/.agents/skills/qemu-code-explorer/evals/evals.json
-> @@ -1,3 +1,4 @@
-> +# SPDX-License-Identifier: GPL-2.0-or-later
->   {
->     "skill_name": "qemu-code-explorer",
->     "evals": [
+>   include/net/eth.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Squash these to previous patch?
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
