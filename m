@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED6CCD3442
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D94CBCD343B
 	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:08:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcrh-00027a-PI; Wed, 06 May 2026 10:04:43 -0400
+	id 1wKcuC-0007TU-KX; Wed, 06 May 2026 10:07:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcr6-0000WT-Mi
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:04:05 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKctz-00069A-3r
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:07:04 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcr5-0001Bz-2r
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:04:04 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4891e5b9c1fso62719595e9.2
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:04:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKctt-0001rU-Us
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:06:59 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-4852a9c6309so53014675e9.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:06:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076240; x=1778681040; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076415; x=1778681215; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=XQjXLV+ZgTD2AtRw0z/SHqVbFTw/hIPpAz6udWTcRtA=;
- b=jA6TxgIASGzAqS6eNi6zYDn8U8oFFabvuB/tt8pptzzt5oS5NaIFqzdkHHP7fGFoeZ
- SqscEtMEFmGw6Awvex6PWu/DkTeDnrnSFrSbMRRn7lIHmTO3biyTWM84NZuXUXN2CU/m
- AijrHc8xc3WDMx5H+PfXzbrEn02Omn0z05kzaZOXT2sE4FNuZUIf1xSDMP+R6Q9zmv8x
- 1mtx8Zt0rXBn+v5qMLs6xFRPoN6dXQ2gIriBTGPbM62goZtE9s2xC7dR74XF96ekUBB5
- 26pEkD2aL/xXptJx1qf2aUR000xg4wKJzYlC8jnGQMOnEFU9p+rbb0rLXXjsqcLxMUJ2
- 5SPQ==
+ :reply-to; bh=a5iXLQfpWOvAV/UnU8NyG6xn/W+EexUkBDNhnuMTiJo=;
+ b=EeGqHT/naRydgXXjLfOBEuu/W1HNACH7ZLXna5CVx2hCjXcrCKd8pPAzugGP8l0DyX
+ UoO9welkeYQrBwBJS+Ezso7hC3XOr20dN2oJxbDfdlnxfjygppsyK5Imf0f5ACHzeFXl
+ JBZ4sR5wm3BM60tbrbqXIR4hGheVsFOmel3R5b5R5iuxEdsk7UgOyVB2S2EAGbdO5p9N
+ vRYd9uaUqQS/OWvvBOZgpATdEIXTDjAlLeQuWJM9G+Q0Jh7orwxOr+Uhyc91+kKDsXT3
+ 74cTmmX8mBT9z4CN2at/xXOldrtzXsNCg3sCRrlHLiLeFXhT0mRtgLvu0VrccMZIByHM
+ wRBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076240; x=1778681040;
+ d=1e100.net; s=20251104; t=1778076415; x=1778681215;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=XQjXLV+ZgTD2AtRw0z/SHqVbFTw/hIPpAz6udWTcRtA=;
- b=oqtCHKSrYHfRwvJB8HfsUtsai0NynqEVat9Go30/Q3CaaEzZFCjQF8UNyDswSrQmen
- piOdbiiKNmYrAhS9sRnJwQ+UwcNNNgKhzRB3KyzNTGG4QFkjVg1hn7ymEWvDn9aivGbm
- bSWLXG+CDTT90g2TR/fiTDzqFvK0Gido/kxWd7ICRvh0s2yiuMFMn9UWQSMowDQk83XU
- PhoFc7iJ/B21sWcOr5uiZSRcrRtHR4/OXX/aEj1z292tx42Suvw3kpfpoB83z7/+9AiQ
- 2ZrjZFBuuZYy0Ena9MyDPibYoVF1vJc5QnAbPNcswed8YzcnPU4xSQFHPjS0Fbh25F8f
- PpdA==
-X-Gm-Message-State: AOJu0Ywxgl9TGw6KeB9cAiecwrQx/wSF0NRHcolztMh9/1tfYkcakZhM
- Ojt6AZYk+hBl8bJs3UpnIOuR3/lYRo2o59lB0E+xFEzLBkXA9uFhBGdS3jWI7jrqICQu2Ttcl6J
- NZuMKAPU=
-X-Gm-Gg: AeBDietJV3GjJSXlH+yhKCm7iCf/JDV9y2EGj2qazcawVGPyINc13Mx7vyJBNBqzyFh
- S7UJ0B0ve0Ijjq6fMvlcCFKK9n4DoRoZdiwai7lG3SIIyStOEwF6DECPZAFaLYOKqZF9okh5t14
- bmhFx+w6bsXKtjtWKK1iXd3hFKT/dUfsMbgVss5+vthroV4tq3tHFJmJLZ6gv9pXqyolxkW7Wgk
- 6WHZZgAgC5WgpgD1+CRK5XA0kItu0VadQ78XtsE6c6NPuUIWIKfrGEYOh/sK2CD8Jf5NQQ6mhwt
- bubdpQi3exLW35seFnZxZzcMRbvwHMs16wzpXMdJDTUhzEJrNF5EZRDPjknlbdEnlONtDQYiAou
- Ypon+oSZb6Lk2VjLbbUpcJIbyGaPHLV2J7Cbu9r/JDEYE0Xv+0ShWYY/0OqdyMetPgs9CxWFY/C
- UyrvS+bdWlQppA54hpeyeBxzqbC0+dB9yvfFLHRPSM0fapFChwm2RlLoP16F4cSe9NG7mUXN35z
- jeKwJagY/w=
-X-Received: by 2002:a05:600c:2d15:b0:485:9a50:3370 with SMTP id
- 5b1f17b1804b1-48e51e16d0bmr36356015e9.8.1778076239917; 
- Wed, 06 May 2026 07:03:59 -0700 (PDT)
+ bh=a5iXLQfpWOvAV/UnU8NyG6xn/W+EexUkBDNhnuMTiJo=;
+ b=pBLtkFsIZe1t3bxiBZ2KdsAoKMzqo68CXyq9z0D9vN70PG86yVeW4vhEXGnVEKRwXS
+ 4vFN7iMN4pxhFOEUxtz9AYLqkMCDPH3xfI1SSQUBZrlx9ayVE6OTph691cTpdErQzKCQ
+ A8yiap6AJRkR15aA+tgmTPlq8aKkTlavuVpPyAu6tLC59OaDr6lxovqW8hoa7PVcZBGj
+ rRJoeOHBBjNhSmvPeuEewGcr6NRgCdYgniD7r0xPswh5zTSgVqLieQCkVRtukXcG/4D3
+ qzthK6HkP6Rn2ZmsIWWcfv1EYkosTOJje5fcg0wRBJTp32ZQmY0bc8Cx71VhDNVG0ZFg
+ 30+Q==
+X-Gm-Message-State: AOJu0YxkzPoHDwg+oTGV8PhGN/QsKKLUR60WkChBStn0Peve7S6A5EgN
+ u4qr3N4ffYONfxuGIjcXmCz2IfDeLGWXLDgFh4R1OHq1kyvyayMzFEgDaGmIrGA1fW+8yhoosYp
+ mmkOYyvM=
+X-Gm-Gg: AeBDietfTRC5ETTRnG3O84k4+H8X2HRQ/GcAd1yboNNdEWc4+uRSPdfg1uAqsTrxsWG
+ 46lgov4XS6zWxbiga/9Ucjhq3vDFhLgSMsp0BqMxohoNltXdw7+XEI72GFhdRz1+tBufdXXPxfK
+ sMdk0gscGwcuH9DYmSq2m9/teTju8XuCXwKKm0sLCxqqYx5rHmyEBt4TIYe+HhhPq0Fjdaa3u6Z
+ Ikz3OqhPWH7Toq/RqEz1CsW3Z3GRgZHnr/h6oCqon0Y5BE9aixpS/sdJWI6Q58lamVhQYoQtNGd
+ fb3e/2xpyycaaHp8eCvh3uHt/22df9K/C3TNGM30FdgtuosaYs6u5enaHngxYIYauSTB3ZW9jWC
+ YQ6nz3vKhu1hgH4cmSOQMFFSWm95bsyKt2C9a0Y2Egggw82iOmkYcPy0xCCjueJT/+mQ/JPJc8+
+ K8b1Dha5rc+Txoq+QBfDe5u9DXBridp2pYIVokwoOoXkeVhg5JG2pSxBRe72jUhsbDBq9eYlaI8
+ uZyBuXLqIbrUREqjvi7mg==
+X-Received: by 2002:a05:600c:c094:b0:48a:8b02:ae91 with SMTP id
+ 5b1f17b1804b1-48e51e20638mr45155475e9.11.1778076414595; 
+ Wed, 06 May 2026 07:06:54 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e53891163sm54736895e9.2.2026.05.06.07.03.58
+ 5b1f17b1804b1-48e538a50d0sm83933145e9.5.2026.05.06.07.06.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:03:58 -0700 (PDT)
+ Wed, 06 May 2026 07:06:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 066/110] monitor: Remove target_monitor_defs()
-Date: Wed,  6 May 2026 15:54:38 +0200
-Message-ID: <20260506135524.20617-67-philmd@linaro.org>
+Subject: [PULL 087/110] target/microblaze: Include missing cpu-mmu-index.h
+ header in translate.c
+Date: Wed,  6 May 2026 15:54:59 +0200
+Message-ID: <20260506135524.20617-88-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,70 +100,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-target_monitor_defs() is now only a dead stub. Remove as pointless.
+translate.c calls cpu_mmu_index(), itself defined in
+"accel/tcg/cpu-mmu-index.h". This header is pulled in
+indirectly via "accel/tcg/cpu-ldst.h", but since we'll
+remove the latter in the next commit, make the inclusion
+explicit, otherwise we'd get:
+
+  ../target/microblaze/translate.c:1620:21: error: call to undeclared function 'cpu_mmu_index'
+   1620 |     dc->mem_index = cpu_mmu_index(cs, false);
+        |                     ^
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260427080738.77138-31-philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Message-Id: <20260423100612.27278-9-philmd@linaro.org>
 ---
- include/monitor/hmp.h       | 2 --
- monitor/hmp.c               | 2 +-
- stubs/target-monitor-defs.c | 7 -------
- stubs/meson.build           | 1 -
- 4 files changed, 1 insertion(+), 11 deletions(-)
- delete mode 100644 stubs/target-monitor-defs.c
+ target/microblaze/translate.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/monitor/hmp.h b/include/monitor/hmp.h
-index d423f54f904..9bf46795bd4 100644
---- a/include/monitor/hmp.h
-+++ b/include/monitor/hmp.h
-@@ -30,8 +30,6 @@ struct MonitorDef {
-     int64_t (*get_value)(Monitor *mon, const MonitorDef *md, int offset);
- };
- 
--const MonitorDef *target_monitor_defs(void);
--
- CPUArchState *mon_get_cpu_env(Monitor *mon);
- CPUState *mon_get_cpu(Monitor *mon);
- 
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index ad8b0d1a72e..cc4390486e1 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -1615,7 +1615,7 @@ static int get_monitor_def(Monitor *mon, int64_t *pval, const char *name)
-     if (cs == NULL) {
-         return -1;
-     }
--    md = cs->cc->sysemu_ops->monitor_defs ?: target_monitor_defs();
-+    md = cs->cc->sysemu_ops->monitor_defs;
-     if (md == NULL) {
-         return -1;
-     }
-diff --git a/stubs/target-monitor-defs.c b/stubs/target-monitor-defs.c
-deleted file mode 100644
-index 0dd4cdb34f6..00000000000
---- a/stubs/target-monitor-defs.c
-+++ /dev/null
-@@ -1,7 +0,0 @@
--#include "qemu/osdep.h"
--#include "monitor/hmp.h"
--
--const MonitorDef *target_monitor_defs(void)
--{
--    return NULL;
--}
-diff --git a/stubs/meson.build b/stubs/meson.build
-index 3489b1f20dd..3b2f2680b19 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -75,7 +75,6 @@ if have_system
-     stub_ss.add(files('igvm.c'))
-   endif
-   stub_ss.add(files('kvm.c'))
--  stub_ss.add(files('target-monitor-defs.c'))
-   stub_ss.add(files('win32-kbd-hook.c'))
-   stub_ss.add(files('xen-hw-stub.c'))
-   stub_ss.add(files('qmp-arm-gic.c'))
+diff --git a/target/microblaze/translate.c b/target/microblaze/translate.c
+index 8fee5dbc337..bf8f864c324 100644
+--- a/target/microblaze/translate.c
++++ b/target/microblaze/translate.c
+@@ -21,6 +21,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "accel/tcg/cpu-ldst.h"
++#include "accel/tcg/cpu-mmu-index.h"
+ #include "tcg/tcg-op.h"
+ #include "exec/helper-proto.h"
+ #include "exec/helper-gen.h"
 -- 
 2.53.0
 
