@@ -4,97 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B68FF8855
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:02:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84C80CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:02:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcoG-0005p9-VA; Wed, 06 May 2026 10:01:09 -0400
+	id 1wKcoC-0005X6-5t; Wed, 06 May 2026 10:01:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wKcnz-0005Ip-IM
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcnz-0005Iq-Is
  for qemu-devel@nongnu.org; Wed, 06 May 2026 10:00:56 -0400
-Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wKcnw-0000as-Ni
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:00:50 -0400
-Received: by mail-ot1-x335.google.com with SMTP id
- 46e09a7af769-7dbe07d3ec3so2953891a34.0
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:00:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcnx-0000bD-Tl
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:00:51 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-488b0046078so57235365e9.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1778076047; x=1778680847; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=iDA+dq072yUY0/2j22IQWd02WnCyJu7JuO7vogkNwzU=;
- b=P8YL5mMeaDFQY7s+yOaBql7MKD8rMRm0VhASRExNpnWs04IG6K0s7MyRwCTZ22Evp7
- ZPPmeSTR2hTnBboKhB2WR7Vk8Rxg+xBh8WjFr7K6PRUKDdL5vhrbVAHFIW4gIpGDwtL0
- hZ2HFOcpNui+kp6q4W6JvzEaWGMrxgMcAYLHS+1tocqER+jqBh55NAZd9u338ydQgJfi
- bSxrYAnRm96j6ceT8yMGpTZhLNIB/bJsw+g4B4li2bgDFHD2tKN9OR1HK4iUWSitvksG
- WEqyxVROKJU0aoQAUbOzcZcWwE2J+Bvl/tBmg30diovs0PHSPGSevqMy6AwSi0AQIYF4
- nkzw==
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=T/xOKwF2KGrNc/2lU7g/yWrNS/80ccjkH0et3qNQ7FI=;
+ b=ZGx6r33dqiViKv+6qz1EYPVYuhFlh/Nu26iZnziOjdiM725kvIFh7hkf5Ec6jk9rke
+ QMGHatCtsOCJ9jTDqd5akdY/n8HBWAukHJVZkAVhUk5Sis21Kwl1e5RMqv7DIl+vOcMe
+ sxufMSdiKp6Ywh/phJrF52wkzTmRjbvvr8UxW6PYMaM59Yq1CjrkyVZSp3eI3l1qCqSz
+ pBGKhpuCuItUlvhC3aIelVfvgLYI3JruJLla+dWeJipN0aBzmyHz0EW5qEA+zyr9NNb9
+ uJVbOiqcq7rY+SSuh5bgvBUzpHZq+EohvFqzIRQbBqGCuvE/DW9X6TN8R6RWjGGoX3IO
+ Gxcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20251104; t=1778076047; x=1778680847;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=iDA+dq072yUY0/2j22IQWd02WnCyJu7JuO7vogkNwzU=;
- b=X4wnZaQPo2GC5au6G6qZ+2SQTaL1jiIg5u4Rig0Z5NUmoLslmBfQHZaVaKIYMf19Ah
- L9lwUzNS4g/8AI70fn9GaOI/3eb+bhPNw4LRwi34DVWlaSgLDHhIia4qVlCNLEc4zDjF
- h0aLOYr0CIfn9iuuQYhpoLETdt4RH5FPtJiMxf0/j6E0C70srrLAbIwghnr10sBtKPFl
- D+Jfk4yBGXr1md2j704gUlk6T4yECaD2ZQfo6iQELnzyO9KT23eah0Q+XcJAKKQw+fdW
- /IKnCSrbw8uEg1iEW+gdy2JKZ8z7gVo9HJPfzeqG91KP+OlEO2xy5Uk+Yfwpqn5iKdH8
- RM9A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ++dq9p43+7/6u3Zj/rjHtCEp64MqvRq/NTbyYNT8mwRX7GLlnhYKWOvGnE+DMYkSxBBS4cFLGL74Yi@nongnu.org
-X-Gm-Message-State: AOJu0YyGYlgpJO6a18SCTWHk741EPESJzupxwt1ZF+8nymojVOQhHBOp
- Ihhq9cmJ9CnV3vANFHIszH0BnV7kz5K/iEuTZqXzQhIUjoop03Z9Pd+AmKQq5tCsl48=
-X-Gm-Gg: AeBDiestgUcCwR7KV7N7QVB0Y/Pb/NCHT3oiWuh3ikSzdh9sktX/GjR/lYz9IJLQDlw
- +2rEYNkSqbd+1uAeuXELqE9CCEQe6bx/sGtgdpNo6OLGyuj6BtPiBmnxPMCtrx/+PFkpuCERf51
- mXcn+iYMQxcdBzu3QXXbKPrz/0+z/DKb4xBkRpxkkR8o2M1/YpL1tjHL1B20s12suXZhaIhucV6
- ZQDO/RWclVBPEgUQ4g4+ft1YpieFdDV/QlCyJwMntanGN9SC4K7RoGmrQvAch7GC/T4hPRxPNTQ
- Xd35IXh4ss9E1Rtya8146qe431bAZpR80XbJZQVOse3JXRhIoxWyLbckOOYvljl4LzI6E7rj9yK
- wekElBKmbZJUy3gLJPgqJJwzCnUD5GzZjwPTU85JmhksE75mIGzuzBEQfzhJFCjryUGgU6jJznQ
- 6r5ShDAZWLNu/kMog+4c+gfeY2HVdjLxChNxDIN/C+S0szAkb9yjWxjELS96jXMWa8JAHesxAgp
- ym6LaY6z/IXYaNM9JKn
-X-Received: by 2002:a05:6830:d86:b0:7d9:f50f:968a with SMTP id
- 46e09a7af769-7e1ded2af42mr1658654a34.5.1778076047102; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=T/xOKwF2KGrNc/2lU7g/yWrNS/80ccjkH0et3qNQ7FI=;
+ b=mhT8KvmVzIu4J2M2GqWuo5+ONjeBiMdqHLxDbmBOqV8grpkwEkN3aHxU5oUV8emC1d
+ fAN2xXtqpksM5YNnkp0oN7VFNP44GxoDbzCDrxRfzk6B/wFdgN/HUh7yZJyuRQBPy1EH
+ Ht7PY0H9V70rGaLm3RGRmg0latJL3hNmdQh1sstDEBxmYzPwytX7iOWbTcOpytmW3DvJ
+ M8IaiTMm1iWUBecelWCjNfF9cWayfO/EFE+W6Aw/QXo3HZzSdY9TjdXsM6Q29nLgv8tq
+ maYAlwjdviW7Cngant0TzejKFWy+Iki9LNOR0YRmw0B0lQ5KJhqWQvP96n++1lJULb2i
+ Qdyw==
+X-Gm-Message-State: AOJu0Yz6d1KQyVmGeil4bpQWoup86Nsy9Ab2qzjMsKuYL5geDnSSmpGt
+ IXUfQDoZ3lrFWdTomw1pP79ENx6Rvh7Jg8AzSZ2Q8DGFOaR6EIeunIJFEPbErSH46EDOGPJDGwK
+ FgrL2qcA=
+X-Gm-Gg: AeBDiesqcUQ9cmnGWb7a78lZ4bG+vkEIEw86J0hL/ip2DNhcRa5RNETCJGXOeoPT7Cd
+ YcHwFXhEoxwEzlJ/ScXCoWeFVoELxCKcAUm4t2CjJZH1LVLj6dab/yyEUssGPgoSNTR3nM+sltq
+ 9Hn2e8swuTpWSjt/ftNK4tZEq3bSKjbNol9fWHeW5DSGJeNGDf6r5KhuoEeaQp2JnMFibE8Q0q/
+ cUkXEXwqTOBdX2xgMuLo0F4n4l7AjijnCRn6u0vQOQehmsNcfvFoDDjxoUFooUDLldL2dp40RK+
+ VzmcpR0LTU+JLgnTfHrEq+q/4Z26rNoEsfwIY9CjiFg20P3MSXVlBTwjvCZe+/43DDLYjno4k8Y
+ dQH7qZ1o/19t3X+jq0dtnJs/YNKjMNbT5srVvde5qiaJ2UyY1XpgohwWG7qVw4PkvZy+MQpEXmI
+ o85Ddvok5GblaqEh2+iP8vTqPQOdwXRvp6uFUE6p9MWUMWBCM9HddDyYCWAMpQ5NFjD6Q4j1buu
+ Q0A5Z8MZi0=
+X-Received: by 2002:a05:600c:4512:b0:488:c744:49b with SMTP id
+ 5b1f17b1804b1-48e51f539b0mr59558085e9.7.1778076047024; 
  Wed, 06 May 2026 07:00:47 -0700 (PDT)
-Received: from ?IPV6:2600:381:c938:6375:5307:cd92:1ec8:e891?
- ([2600:381:c938:6375:5307:cd92:1ec8:e891])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7deca7a5e75sm12040005a34.2.2026.05.06.07.00.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 May 2026 07:00:46 -0700 (PDT)
-Message-ID: <eb2e62ba-085f-4d2a-b339-d8113853acf8@linaro.org>
-Date: Wed, 6 May 2026 09:00:43 -0500
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48e5389da63sm49400835e9.4.2026.05.06.07.00.45
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 06 May 2026 07:00:45 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 042/110] monitor/meson: Use SPICE with migration HMP commands
+Date: Wed,  6 May 2026 15:54:14 +0200
+Message-ID: <20260506135524.20617-43-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
+References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 09/15] target/arm: load on canonical tag loads ext bits
-To: Gabriel Brookman <brookmangabriel@gmail.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>, qemu-arm@nongnu.org,
- Laurent Vivier <laurent@vivier.eu>, Helge Deller <deller@gmx.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260504-feat-mte4-v5-0-232a648e63c6@gmail.com>
- <20260504-feat-mte4-v5-9-232a648e63c6@gmail.com>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260504-feat-mte4-v5-9-232a648e63c6@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x335.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,103 +99,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/4/26 10:50, Gabriel Brookman wrote:
-> @@ -304,7 +304,7 @@ int load_tag1(uint64_t ptr, uint8_t *mem)
->       return extract32(*mem, ofs, 4);
->   }
->   
-> -uint64_t HELPER(ldg)(CPUARMState *env, uint64_t ptr, uint64_t xt)
-> +uint64_t HELPER(ldg)(CPUARMState *env, uint64_t ptr, uint64_t xt, uint32_t mtx)
->   {
->       int mmu_idx = arm_env_mmu_index(env);
->       uint8_t *mem;
-> @@ -317,6 +317,11 @@ uint64_t HELPER(ldg)(CPUARMState *env, uint64_t ptr, uint64_t xt)
->       /* Load if page supports tags. */
->       if (mem) {
->           rtag = load_tag1(ptr, mem);
-> +    } else {
-> +        uint64_t bit55 = extract64(ptr, 55, 1);
-> +        if (mtx) {
-> +            rtag = 0xF * bit55;
-> +        }
->       }
+When moving code around in commit 27be86351ec ("migration: Move
+the QMP command from monitor/ to migration/") we forgot to update
+the meson rule about SPICE pkg-config flags.
 
-Better as
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20260427080738.77138-7-philmd@linaro.org>
+---
+ migration/meson.build | 2 +-
+ monitor/meson.build   | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-     } else if (mtx) {
-         uint64_t bit55 = extract64(ptr, 55, 1);
-         rtag = 0xF * bit55;
-     }
-
->   
->       return address_with_allocation_tag(xt, rtag);
-> @@ -458,17 +463,19 @@ void HELPER(st2g_stub)(CPUARMState *env, uint64_t ptr)
->       }
->   }
->   
-> -uint64_t HELPER(ldgm)(CPUARMState *env, uint64_t ptr)
-> +uint64_t HELPER(ldgm)(CPUARMState *env, uint64_t ptr, uint32_t mtx)
->   {
->       int mmu_idx = arm_env_mmu_index(env);
->       uintptr_t ra = GETPC();
->       int gm_bs = env_archcpu(env)->gm_blocksize;
->       int gm_bs_bytes = 4 << gm_bs;
->       void *tag_mem;
-> -    uint64_t ret;
-> +    uint64_t ret, canonical_tag_val;
->       int shift;
-> +    bool bit55;
->   
->       ptr = QEMU_ALIGN_DOWN(ptr, gm_bs_bytes);
-> +    bit55 = extract64(ptr, 55, 1);
-
-Sink all this...
-
->   
->       /* Trap if accessing an invalid page.  */
->       tag_mem = allocation_tag_mem(env, mmu_idx, ptr, MMU_DATA_LOAD,
-> @@ -476,6 +483,35 @@ uint64_t HELPER(ldgm)(CPUARMState *env, uint64_t ptr)
->   
->       /* The tag is squashed to zero if the page does not support tags.  */
->       if (!tag_mem) {
-> +        /* Load canonical value if mtx is set (untagged memory region) */
-> +        if (mtx) {
-> +            canonical_tag_val = -(uint64_t)bit55;
-
-Down to this block:
-
-         if (mtx) {
-             bool bit55 = extract64(ptr, 55, 1);
-
-> +            switch (gm_bs) {
-> +            case 3:
-> +                /* 32 bytes -> 2 tags -> 8 result bits */
-> +                ret = (uint8_t)canonical_tag_val;
-> +                break;
-> +            case 4:
-> +                /* 64 bytes -> 4 tags -> 16 result bits */
-> +                ret = (uint16_t)canonical_tag_val;
-> +                break;
-> +            case 5:
-> +                /* 128 bytes -> 8 tags -> 32 result bits */
-> +                ret = (uint32_t)canonical_tag_val;
-> +                break;
-> +            case 6:
-> +                /* 256 bytes -> 16 tags -> 64 result bits */
-> +                return canonical_tag_val;
-> +            default:
-> +                /*
-> +                 * CPU configured with unsupported/invalid gm blocksize.
-> +                 * This is detected early in arm_cpu_realizefn.
-> +                 */
-> +                g_assert_not_reached();
-> +            }
-
-This doesn't need a switch.
-
-     ret = extract64(-bit55, 0, 1 << gm_bs);
-
-
-r~
+diff --git a/migration/meson.build b/migration/meson.build
+index c9f0f5f9f21..e583822dec6 100644
+--- a/migration/meson.build
++++ b/migration/meson.build
+@@ -23,7 +23,6 @@ system_ss.add(files(
+   'fd.c',
+   'file.c',
+   'global_state.c',
+-  'migration-hmp-cmds.c',
+   'migration.c',
+   'multifd.c',
+   'multifd-device-state.c',
+@@ -37,6 +36,7 @@ system_ss.add(files(
+   'socket.c',
+   'tls.c',
+ ), gnutls, zlib)
++system_ss.add([spice_headers, files('migration-hmp-cmds.c'), spice])
+ 
+ if get_option('replication').allowed()
+   system_ss.add(files('colo-failover.c', 'colo.c', 'multifd-colo.c'))
+diff --git a/monitor/meson.build b/monitor/meson.build
+index 2647100e04c..585251804e4 100644
+--- a/monitor/meson.build
++++ b/monitor/meson.build
+@@ -5,8 +5,8 @@ system_ss.add(files(
+   'hmp-cmds.c',
+   'hmp.c',
+   'qemu-config-qmp.c',
++  'qmp-cmds.c',
+ ))
+-system_ss.add([spice_headers, files('qmp-cmds.c')])
+ 
+ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY',
+-                if_true: [files('hmp-target.c'), spice])
++                if_true: [files('hmp-target.c')])
+-- 
+2.53.0
 
 
