@@ -4,103 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73F45CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 07:46:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A217CD3424
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 07:56:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKWx3-0000zl-1C; Wed, 06 May 2026 03:45:49 -0400
+	id 1wKX6R-0002ii-Bo; Wed, 06 May 2026 03:55:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wKWwL-0000jO-49
- for qemu-devel@nongnu.org; Wed, 06 May 2026 03:45:09 -0400
-Received: from mail-qk1-x742.google.com ([2607:f8b0:4864:20::742])
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1wKX6B-0002eX-Dz
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 03:55:20 -0400
+Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1wKWwF-0005D7-RR
- for qemu-devel@nongnu.org; Wed, 06 May 2026 03:45:03 -0400
-Received: by mail-qk1-x742.google.com with SMTP id
- af79cd13be357-8cb40149037so594901585a.2
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 00:44:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
+ id 1wKX68-00082z-Hi
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 03:55:14 -0400
+Received: by mail-pj1-x102b.google.com with SMTP id
+ 98e67ed59e1d1-36534668247so3330979a91.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 00:55:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778053498; x=1778658298; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=O5e04NIZkIAYCk1TklkZoEIwPtnBZXdfF4ezzhUi5m0=;
- b=rCZz2lGhiIX/nU5jKeDSVdlKZl1unRxG1S88c7773B2U8gvCtY1g4M78AFvmHZBuSH
- fexeyWsohp3MSbKPW+VaVJdkbNb+W6ohKwDfhXoztqozRFFywPPQPR1yX8RF10JHRdyw
- x0HoaE9jtKphXH4s+3rf1Fze9ZbZL6tYZtnpRJNYeWVol4S6xahMVyCjbo1YK8Zlmw+p
- zrcwwIZgDH+9Cz22Txl8zRbcquvAJKkEB47JXcJ66jsEie2ejP+rudrpZB+d6WpLC8JS
- PEo7IGCuNZqtc68bEMJ1JnnQLp3LEnv7XZfRLspwOculGJbtaIwuihXcZ7apl+oyZFJD
- NvvA==
+ d=gmail.com; s=20251104; t=1778054111; x=1778658911; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZPf1WJ1+U+u46IYFp/g9GCUhxcS1hDN0tG9RbQh1S9c=;
+ b=YXaBINPOmPnoWIf7qAQnXJBRf0UnUgNmUV0PtKRAMU9DghZ5rg3cezr3QD5sUiUnzJ
+ M2XnHEk0mT1yxGkXGIC5hxKH9HSCVahr7m3+IS2Z50jA+8H96Hxt+6WTXfrxLE/Ey/0p
+ oqL2chmEPcIpbe9gKG4Scj+U5ExAm4lLOE55cVSly6w9PiEdBuIlWEJDIdiiIz1QFy/S
+ wD4g0OvlRTKlL9MhgZvHcfXHs+TOWLelnFTr5mCmK7NBYa1ZMeqmA8x5l9uFOrjKQ8bN
+ 50VYq/Opq195j5UwpA+aebMP05g6GK6zaQz+T+VVsxIZ+2+f2ldpssMR5xdqN/LwHqMy
+ pY9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778053498; x=1778658298;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=O5e04NIZkIAYCk1TklkZoEIwPtnBZXdfF4ezzhUi5m0=;
- b=mviTN+JDj2UYC67tr58pvfQ4lX1qbL6NqSiN5ETD1jsEwuAI3GyNysK469cSYLo32c
- X1IBtPw/Zqy7IUfogjagxczVwf3vzVJZnIlFdFd4GqZMECaIukcQidwEBRf6jnPX3NaG
- fM/MjsRXTIs53ce9pnPwaoBqvLE6nqonIXwSeBQjyPKSiV/Dog5p71z3wwDdElC+/Xm2
- H1UGSmUW+ACMkUTcNKtLO+QReokrXy/NPoNt5l2zaqCC0an+sLDBiD/VCsB7JLKEVl1C
- mRVMxGzoeDHlv8VnxPXf4DtHCLfBJqI2IGDHzJKedGLDFGmGwpq5WpshutQwbgJj1+hO
- CE0g==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8E4jvu/1Vn/gf8p5ZVGMhk+fSIF9NeC6RKr8LMBKVeoGznwsi30pTid7sXzVyWd4YF/Rwveuc3/j6P@nongnu.org
-X-Gm-Message-State: AOJu0YwoPXzA256ILpBKFp+cY1YTIBAx9Ua9hb1yipJUfFxXmTMuaiuL
- 5Bh5EFajLJ/YjJrvuCkDmwYQel1O/IS0xVRaRj6wmZsuhtwmXYb4dvti
-X-Gm-Gg: AeBDieuph68F1DzNk0wDmxcRR5d80nhLlQGmrBA0oEp8LcntEKEfTqP3eP2T2enj/VZ
- h14ihsyGiShPHEQ+qPUvMKYIJ1ZdHTSiqOSLapp7hMGDz5U+j00psAMNpktFP7N862LwaG9VBkf
- ZsbaefAgjBTK1aKNLuxOR5r7mfXaql7r9lT29wDqfYsYSDbcMRfzKii+FO2A3vsKe9OYADg7vUp
- dIrENwFLMH1bwDA0iW8QqZeiqEtyteImcyKPOzAuCHjLGFed8SS8yb0sy0xdH+RE3gGN2ux/5dG
- vP9KX/UrSf4puuvUusKoPDED/3i1qwKHdDxiTmSHOy0HulobJxaWcSUw/RRE3IFawAkguIe6I1U
- aCfFYqkkydawf7/8o87yzgobBtDkz30JmaEB9Ikpi8ExX3XR8V4Foa+lqly47lKTjubHpubjRwd
- bWzy+cSKoQCWJTrMUKuyFHIkJYj6PG4jr0SQU9giEGnKrqERE9yl6EonbeITefMsHkRXNf7FGqO
- bh3Q4m58jo=
-X-Received: by 2002:a05:620a:2592:b0:8eb:ba31:4b0a with SMTP id
- af79cd13be357-904d72bff6fmr337010185a.61.1778053498287; 
- Wed, 06 May 2026 00:44:58 -0700 (PDT)
-Received: from ZEVORN-PC.localdomain ([162.244.208.119])
+ d=1e100.net; s=20251104; t=1778054111; x=1778658911;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ZPf1WJ1+U+u46IYFp/g9GCUhxcS1hDN0tG9RbQh1S9c=;
+ b=niUtWfvwhdiRoYl6S5jm8ZvfM7VnIoixvz5d2CkarWsXtpucWLNW3ANTnwOWX8FTV4
+ QfMEOAKAfSGGYYFM2AOhXk+VvypDB/hmNu2GvWbF3kaBrFK4ZIllcMm+NqW/lD/ezHy4
+ 83LTfAmQXrbWUqFYrvFbahUkGfAiPaNnyscWJCcBmA7Aa7KXILWN658CB2apFleXWJea
+ 2Fb0QQ2oSn1ivhnmt2fT9kg2dxmvaD1PBgkoKzWaBE5B8pBzIco1YxcwEl6rDfY3z9JG
+ wV64T3QJzMzY/5pggYti5avj8y/cbOBZodgMCC2JBcmbkwN3mUK7kiAwMqmwn3fVFYyJ
+ EXrw==
+X-Gm-Message-State: AOJu0YxPbMjevIJAXYPo0i3C60BbMGd2GLgIo8evMojv7xk/tygCcR79
+ yfntHHJY2SEmiA5dv+NtZFB/rowypX8+5UiDhpM1cQt/98p0Hb4YtR/e+r3SVQ==
+X-Gm-Gg: AeBDieuBhew26RWcFGumgaRhEQiLvcagY4GWWeKK7rmgbqRZSXMkurFVsFwpGQOwZoL
+ MN1uoDE105dwX7Ch9eUv4izBAwDNYpmuoxKkMS1SoVMFSYFIcwwgHmiYARSQ128Q4InI2FAflQc
+ /y3t6l4K9RNUknMTz2m/QZw2CJWmV6AzcjMKv+wbhmChq6LkWl/vgLiN4jITPFQquCUyQ+lMGSo
+ qZavhIDe3Ngv3ygLdjOGqEhYkku75P2hpL3q6byb+fv3Hm4AOk6fwJpHi3LXmwwf10x+E/b/4Vk
+ KoFJ0NSKL4G2YO8fhiSzVu7DxDLXSuNLusvj0MvpQAWPnNEtb7rkgJpLSQXeca17kqvNHKSxjp5
+ p7o0hnJMvlsfhYCn61rIqAt0E/1eWOd9YsqVYFv1ykZW/gtf57k3eVfDk/rTPYc06OiQYVLjvRo
+ hFbdzNMdoZoDDJj6Towwpa6Di9W2MWmg4oFhrcKlXblUx4Cj0KvT24
+X-Received: by 2002:a17:90b:33d1:b0:359:f43d:4a6e with SMTP id
+ 98e67ed59e1d1-365aa93c123mr2307983a91.0.1778054110764; 
+ Wed, 06 May 2026 00:55:10 -0700 (PDT)
+Received: from jeuk-MS-7D42.. ([211.226.54.223])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8b53cd84d65sm174773866d6.39.2026.05.06.00.44.51
+ 98e67ed59e1d1-365b4bcaa49sm1380997a91.1.2026.05.06.00.55.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 May 2026 00:44:57 -0700 (PDT)
-Date: Wed, 6 May 2026 15:44:45 +0800
-From: Chao Liu <chao.liu.zevorn@gmail.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Christoph Muellner <christoph.muellner@vrull.eu>,
- Fabiano Rosas <farosas@suse.de>, 
- Laurent Vivier <lvivier@redhat.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org, Chao Liu <chao.liu@zevorn.cn>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Peng Jiang <3160104094@zju.edu.cn>
-Subject: Re: [PATCH v6 2/5] hw/riscv: add k230 board initial support
-Message-ID: <afrxRe4kvrFVzCXU@ZEVORN-PC.localdomain>
-References: <cover.1776438369.git.chao.liu.zevorn@gmail.com>
- <a4a985723ca53660e72f7a825fb53299adba5570.1776438369.git.chao.liu.zevorn@gmail.com>
- <CAKmqyKM48DLLdWi46a8QkkJcwvAM_y3EE-xPDH9L5DDGwxCxJA@mail.gmail.com>
+ Wed, 06 May 2026 00:55:10 -0700 (PDT)
+From: Jeuk Kim <jeuk20.kim@gmail.com>
+X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
+To: qemu-devel@nongnu.org
+Cc: jeuk20.kim@samsung.com, qemu-block@nongnu.org, qemu-stable@nongnu.org,
+ j-young.choi@samsung.com
+Subject: [PATCH 3/4] hw/ufs: Reject zero-depth MCQ queues
+Date: Wed,  6 May 2026 16:54:30 +0900
+Message-ID: <8d3bc0e97de971ec10727f5bc2b5f9183eb62976.1778053560.git.jeuk20.kim@samsung.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1778053560.git.jeuk20.kim@samsung.com>
+References: <cover.1778053560.git.jeuk20.kim@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKM48DLLdWi46a8QkkJcwvAM_y3EE-xPDH9L5DDGwxCxJA@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::742;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-qk1-x742.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pj1-x102b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,759 +101,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 01, 2026 at 02:09:19PM +1000, Alistair Francis wrote:
-> On Sat, Apr 18, 2026 at 1:13 AM Chao Liu <chao.liu.zevorn@gmail.com> wrote:
-> >
-> > From: Chao Liu <chao.liu@zevorn.cn>
-> >
-> > K230 Board Compatible with kendryte K230 SDK.
-> >
-> > Preliminarily supports the C908 small core, which can
-> > run the U-Boot and Linux kernel compiled by the K230 SDK.
-> >
-> > Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
-> > Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> > Reported-by: Peng Jiang <3160104094@zju.edu.cn>
-> 
-> A Signed-off-by or Tested-by would be better here, as it isn't a bug fix patch
-> 
-Okay, I will fix it in the next version.
+Reject SQATTR.SIZE and CQATTR.SIZE values that produce zero-entry MCQ
+queues. Such queues can later trigger a divide-by-zero while advancing
+queue pointers.
 
-Thanks,
-Chao
-> > ---
-> >  MAINTAINERS             |   8 +-
-> >  hw/riscv/Kconfig        |  10 +
-> >  hw/riscv/k230.c         | 484 ++++++++++++++++++++++++++++++++++++++++
-> >  hw/riscv/meson.build    |   2 +-
-> >  include/hw/riscv/k230.h | 150 +++++++++++++
-> >  5 files changed, 652 insertions(+), 2 deletions(-)
-> >  create mode 100644 hw/riscv/k230.c
-> >  create mode 100644 include/hw/riscv/k230.h
-> >
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index aa4267b158..c429c63961 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -1773,6 +1773,12 @@ F: docs/system/riscv/xiangshan-kunminghu.rst
-> >  F: hw/riscv/xiangshan_kmh.c
-> >  F: include/hw/riscv/xiangshan_kmh.h
-> >
-> > +K230 Machines
-> > +M: Chao Liu <chao.liu.zevorn@gmail.com>
-> > +S: Maintained
-> > +F: hw/riscv/k230.c
-> > +F: include/hw/riscv/k230.h
-> 
-> I think we generally include the RISC-V mailing list here as well,
-> just to be clear it's RISC-V
-> 
-> > +
-> >  RX Machines
-> >  -----------
-> >  rx-gdbsim
-> > @@ -3620,7 +3626,7 @@ M: Alexander Bulekov <alxndr@bu.edu>
-> >  R: Paolo Bonzini <pbonzini@redhat.com>
-> >  R: Stefan Hajnoczi <stefanha@redhat.com>
-> >  R: Fabiano Rosas <farosas@suse.de>
-> > -R: Darren Kenny <darren.kenny@oracle.com>
-> > +R: Darren Kenny <darren.kenny@oracle.com>
-> 
-> This doesn't need to be changed
-> 
-> >  R: Qiuhao Li <Qiuhao.Li@outlook.com>
-> >  S: Maintained
-> >  F: tests/qtest/fuzz/
-> > diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-> > index 0222c93f87..b1a7357866 100644
-> > --- a/hw/riscv/Kconfig
-> > +++ b/hw/riscv/Kconfig
-> > @@ -134,3 +134,13 @@ config MIPS_BOSTON_AIA
-> >      default y
-> >      select PCI_EXPRESS
-> >      select PCI_EXPRESS_XILINX
-> > +
-> > +config K230
-> > +    bool
-> > +    default y
-> > +    depends on RISCV64
-> > +    select RISCV_ACLINT
-> > +    select RISCV_APLIC
-> > +    select RISCV_IMSIC
-> > +    select SERIAL_MM
-> > +    select UNIMP
-> > diff --git a/hw/riscv/k230.c b/hw/riscv/k230.c
-> > new file mode 100644
-> > index 0000000000..2537023a05
-> > --- /dev/null
-> > +++ b/hw/riscv/k230.c
-> > @@ -0,0 +1,484 @@
-> > +/*
-> > + * QEMU RISC-V Virt Board Compatible with Kendryte K230 SDK
-> > + *
-> > + * Copyright (c) 2025 Chao Liu <chao.liu.zevorn@gmail.com>
-> > + *
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + *
-> > + * Provides a board compatible with the Kendryte K230 SDK
-> > + *
-> > + * Documentation: K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
-> 
-> Can you link to the manual
-> 
-> > + *
-> > + * For more information, see <https://www.kendryte.com/en/proDetail/230>
-> > + *
-> > + * This program is free software; you can redistribute it and/or modify it
-> > + * under the terms and conditions of the GNU General Public License,
-> > + * version 2 or later, as published by the Free Software Foundation.
-> > + *
-> > + * This program is distributed in the hope it will be useful, but WITHOUT
-> > + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> > + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-> > + * more details.
-> > + *
-> > + * You should have received a copy of the GNU General Public License along with
-> > + * this program.  If not, see <http://www.gnu.org/licenses/>.
-> > + */
-> > +
-> > +#include "qemu/osdep.h"
-> > +#include "cpu-qom.h"
-> > +#include "qemu/cutils.h"
-> > +#include "qemu/error-report.h"
-> > +#include "qapi/error.h"
-> > +#include "system/system.h"
-> > +#include "system/memory.h"
-> > +#include "target/riscv/cpu.h"
-> > +#include "chardev/char.h"
-> > +#include "hw/core/loader.h"
-> > +#include "hw/core/sysbus.h"
-> > +#include "hw/riscv/k230.h"
-> > +#include "hw/riscv/boot.h"
-> > +#include "hw/intc/riscv_aclint.h"
-> > +#include "hw/intc/sifive_plic.h"
-> > +#include "hw/char/serial-mm.h"
-> > +#include "hw/misc/unimp.h"
-> > +
-> > +static const MemMapEntry memmap[] = {
-> > +    [K230_DEV_DDRC] =         { 0x00000000,  0x80000000 },
-> > +    [K230_DEV_KPU_L2_CACHE] = { 0x80000000,  0x00200000 },
-> > +    [K230_DEV_SRAM] =         { 0x80200000,  0x00200000 },
-> > +    [K230_DEV_KPU_CFG] =      { 0x80400000,  0x00000800 },
-> > +    [K230_DEV_FFT] =          { 0x80400800,  0x00000400 },
-> > +    [K230_DEV_AI_2D_ENGINE] = { 0x80400C00,  0x00000800 },
-> > +    [K230_DEV_GSDMA] =        { 0x80800000,  0x00004000 },
-> > +    [K230_DEV_DMA] =          { 0x80804000,  0x00004000 },
-> > +    [K230_DEV_DECOMP_GZIP] =  { 0x80808000,  0x00004000 },
-> > +    [K230_DEV_NON_AI_2D] =    { 0x8080C000,  0x00004000 },
-> > +    [K230_DEV_ISP] =          { 0x90000000,  0x00008000 },
-> > +    [K230_DEV_DEWARP] =       { 0x90008000,  0x00001000 },
-> > +    [K230_DEV_RX_CSI] =       { 0x90009000,  0x00002000 },
-> > +    [K230_DEV_H264] =         { 0x90400000,  0x00010000 },
-> > +    [K230_DEV_2P5D] =         { 0x90800000,  0x00040000 },
-> > +    [K230_DEV_VO] =           { 0x90840000,  0x00010000 },
-> > +    [K230_DEV_VO_CFG] =       { 0x90850000,  0x00001000 },
-> > +    [K230_DEV_3D_ENGINE] =    { 0x90A00000,  0x00000800 },
-> > +    [K230_DEV_PMU] =          { 0x91000000,  0x00000C00 },
-> > +    [K230_DEV_RTC] =          { 0x91000C00,  0x00000400 },
-> > +    [K230_DEV_CMU] =          { 0x91100000,  0x00001000 },
-> > +    [K230_DEV_RMU] =          { 0x91101000,  0x00001000 },
-> > +    [K230_DEV_BOOT] =         { 0x91102000,  0x00001000 },
-> > +    [K230_DEV_PWR] =          { 0x91103000,  0x00001000 },
-> > +    [K230_DEV_MAILBOX] =      { 0x91104000,  0x00001000 },
-> > +    [K230_DEV_IOMUX] =        { 0x91105000,  0x00000800 },
-> > +    [K230_DEV_TIMER] =        { 0x91105800,  0x00000800 },
-> > +    [K230_DEV_WDT0] =         { 0x91106000,  0x00000800 },
-> > +    [K230_DEV_WDT1] =         { 0x91106800,  0x00000800 },
-> > +    [K230_DEV_TS] =           { 0x91107000,  0x00000800 },
-> > +    [K230_DEV_HDI] =          { 0x91107800,  0x00000800 },
-> > +    [K230_DEV_STC] =          { 0x91108000,  0x00000800 },
-> > +    [K230_DEV_BOOTROM] =      { 0x91200000,  0x00010000 },
-> > +    [K230_DEV_SECURITY] =     { 0x91210000,  0x00008000 },
-> > +    [K230_DEV_UART0] =        { 0x91400000,  0x00001000 },
-> > +    [K230_DEV_UART1] =        { 0x91401000,  0x00001000 },
-> > +    [K230_DEV_UART2] =        { 0x91402000,  0x00001000 },
-> > +    [K230_DEV_UART3] =        { 0x91403000,  0x00001000 },
-> > +    [K230_DEV_UART4] =        { 0x91404000,  0x00001000 },
-> > +    [K230_DEV_I2C0] =         { 0x91405000,  0x00001000 },
-> > +    [K230_DEV_I2C1] =         { 0x91406000,  0x00001000 },
-> > +    [K230_DEV_I2C2] =         { 0x91407000,  0x00001000 },
-> > +    [K230_DEV_I2C3] =         { 0x91408000,  0x00001000 },
-> > +    [K230_DEV_I2C4] =         { 0x91409000,  0x00001000 },
-> > +    [K230_DEV_PWM] =          { 0x9140A000,  0x00001000 },
-> > +    [K230_DEV_GPIO0] =        { 0x9140B000,  0x00001000 },
-> > +    [K230_DEV_GPIO1] =        { 0x9140C000,  0x00001000 },
-> > +    [K230_DEV_ADC] =          { 0x9140D000,  0x00001000 },
-> > +    [K230_DEV_CODEC] =        { 0x9140E000,  0x00001000 },
-> > +    [K230_DEV_I2S] =          { 0x9140F000,  0x00001000 },
-> > +    [K230_DEV_USB0] =         { 0x91500000,  0x00010000 },
-> > +    [K230_DEV_USB1] =         { 0x91540000,  0x00010000 },
-> > +    [K230_DEV_SD0] =          { 0x91580000,  0x00001000 },
-> > +    [K230_DEV_SD1] =          { 0x91581000,  0x00001000 },
-> > +    [K230_DEV_QSPI0] =        { 0x91582000,  0x00001000 },
-> > +    [K230_DEV_QSPI1] =        { 0x91583000,  0x00001000 },
-> > +    [K230_DEV_SPI] =          { 0x91584000,  0x00001000 },
-> > +    [K230_DEV_HI_SYS_CFG] =   { 0x91585000,  0x00000400 },
-> > +    [K230_DEV_DDRC_CFG] =     { 0x98000000,  0x02000000 },
-> > +    [K230_DEV_FLASH] =        { 0xC0000000,  0x08000000 },
-> > +    [K230_DEV_PLIC] =         { 0xF00000000, 0x00400000 },
-> > +    [K230_DEV_CLINT] =        { 0xF04000000, 0x00400000 },
-> > +};
-> > +
-> > +static void k230_soc_init(Object *obj)
-> > +{
-> > +    K230SoCState *s = RISCV_K230_SOC(obj);
-> > +    RISCVHartArrayState *cpu0 = &s->c908_cpu;
-> > +
-> > +    object_initialize_child(obj, "c908-cpu", cpu0, TYPE_RISCV_HART_ARRAY);
-> > +    qdev_prop_set_uint32(DEVICE(cpu0), "hartid-base", 0);
-> > +    qdev_prop_set_string(DEVICE(cpu0), "cpu-type", TYPE_RISCV_CPU_THEAD_C908);
-> > +    qdev_prop_set_uint64(DEVICE(cpu0), "resetvec",
-> > +                         memmap[K230_DEV_BOOTROM].base);
-> > +}
-> > +
-> > +static DeviceState *k230_create_plic(int base_hartid, int hartid_count)
-> > +{
-> > +    g_autofree char *plic_hart_config = NULL;
-> > +
-> > +    /* Per-socket PLIC hart topology configuration string */
-> > +    plic_hart_config = riscv_plic_hart_config_string(hartid_count);
-> > +
-> > +    /* Per-socket PLIC */
-> > +    return sifive_plic_create(memmap[K230_DEV_PLIC].base,
-> > +                              plic_hart_config, hartid_count, base_hartid,
-> > +                              K230_PLIC_NUM_SOURCES,
-> > +                              K230_PLIC_NUM_PRIORITIES,
-> > +                              K230_PLIC_PRIORITY_BASE, K230_PLIC_PENDING_BASE,
-> > +                              K230_PLIC_ENABLE_BASE, K230_PLIC_ENABLE_STRIDE,
-> > +                              K230_PLIC_CONTEXT_BASE,
-> > +                              K230_PLIC_CONTEXT_STRIDE,
-> > +                              memmap[K230_DEV_PLIC].size);
-> > +}
-> > +
-> > +static void k230_soc_realize(DeviceState *dev, Error **errp)
-> > +{
-> > +    K230SoCState *s = RISCV_K230_SOC(dev);
-> > +    MemoryRegion *sys_mem = get_system_memory();
-> > +    int c908_cpus;
-> > +
-> > +    sysbus_realize(SYS_BUS_DEVICE(&s->c908_cpu), &error_fatal);
-> > +
-> > +    c908_cpus = s->c908_cpu.num_harts;
-> > +
-> > +    /* SRAM */
-> > +    memory_region_init_ram(&s->sram, OBJECT(dev), "sram",
-> > +                           memmap[K230_DEV_SRAM].size, &error_fatal);
-> > +    memory_region_add_subregion(sys_mem, memmap[K230_DEV_SRAM].base,
-> > +                                &s->sram);
-> > +
-> > +    /* BootROM */
-> > +    memory_region_init_rom(&s->bootrom, OBJECT(dev), "bootrom",
-> > +                           memmap[K230_DEV_BOOTROM].size, &error_fatal);
-> > +    memory_region_add_subregion(sys_mem, memmap[K230_DEV_BOOTROM].base,
-> > +                                &s->bootrom);
-> > +
-> > +    /* PLIC */
-> > +    s->c908_plic = k230_create_plic(C908_CPU_HARTID, c908_cpus);
-> > +
-> > +    /* CLINT */
-> > +    riscv_aclint_swi_create(memmap[K230_DEV_CLINT].base,
-> > +                            C908_CPU_HARTID, c908_cpus, false);
-> > +    riscv_aclint_mtimer_create(memmap[K230_DEV_CLINT].base + 0x4000,
-> > +                               RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
-> > +                               C908_CPU_HARTID, c908_cpus,
-> > +                               RISCV_ACLINT_DEFAULT_MTIMECMP,
-> > +                               RISCV_ACLINT_DEFAULT_MTIME,
-> > +                               RISCV_ACLINT_DEFAULT_TIMEBASE_FREQ, true);
-> > +
-> > +    /* UART */
-> > +    serial_mm_init(sys_mem, memmap[K230_DEV_UART0].base, 2,
-> > +                   qdev_get_gpio_in(DEVICE(s->c908_plic), K230_UART0_IRQ),
-> > +                   399193, serial_hd(0), DEVICE_LITTLE_ENDIAN);
-> > +    serial_mm_init(sys_mem, memmap[K230_DEV_UART1].base, 2,
-> > +                   qdev_get_gpio_in(DEVICE(s->c908_plic), K230_UART1_IRQ),
-> > +                   399193, serial_hd(1), DEVICE_LITTLE_ENDIAN);
-> > +    serial_mm_init(sys_mem, memmap[K230_DEV_UART2].base, 2,
-> > +                   qdev_get_gpio_in(DEVICE(s->c908_plic), K230_UART2_IRQ),
-> > +                   399193, serial_hd(2), DEVICE_LITTLE_ENDIAN);
-> > +    serial_mm_init(sys_mem, memmap[K230_DEV_UART3].base, 2,
-> > +                   qdev_get_gpio_in(DEVICE(s->c908_plic), K230_UART3_IRQ),
-> > +                   399193, serial_hd(3), DEVICE_LITTLE_ENDIAN);
-> > +    serial_mm_init(sys_mem, memmap[K230_DEV_UART4].base, 2,
-> > +                   qdev_get_gpio_in(DEVICE(s->c908_plic), K230_UART4_IRQ),
-> > +                   399193, serial_hd(4), DEVICE_LITTLE_ENDIAN);
-> > +
-> > +    /* unimplemented devices */
-> > +    create_unimplemented_device("kpu.l2-cache",
-> > +                                memmap[K230_DEV_KPU_L2_CACHE].base,
-> > +                                memmap[K230_DEV_KPU_L2_CACHE].size);
-> > +
-> > +    create_unimplemented_device("kpu_cfg", memmap[K230_DEV_KPU_CFG].base,
-> > +                                memmap[K230_DEV_KPU_CFG].size);
-> > +
-> > +    create_unimplemented_device("fft", memmap[K230_DEV_FFT].base,
-> > +                                memmap[K230_DEV_FFT].size);
-> > +
-> > +    create_unimplemented_device("2d-engine.ai",
-> > +                                memmap[K230_DEV_AI_2D_ENGINE].base,
-> > +                                memmap[K230_DEV_AI_2D_ENGINE].size);
-> > +
-> > +    create_unimplemented_device("gsdma", memmap[K230_DEV_GSDMA].base,
-> > +                                memmap[K230_DEV_GSDMA].size);
-> > +
-> > +    create_unimplemented_device("dma", memmap[K230_DEV_DMA].base,
-> > +                                memmap[K230_DEV_DMA].size);
-> > +
-> > +    create_unimplemented_device("decomp-gzip",
-> > +                                memmap[K230_DEV_DECOMP_GZIP].base,
-> > +                                memmap[K230_DEV_DECOMP_GZIP].size);
-> > +
-> > +    create_unimplemented_device("2d-engine.non-ai",
-> > +                                memmap[K230_DEV_NON_AI_2D].base,
-> > +                                memmap[K230_DEV_NON_AI_2D].size);
-> > +
-> > +    create_unimplemented_device("isp", memmap[K230_DEV_ISP].base,
-> > +                                memmap[K230_DEV_ISP].size);
-> > +
-> > +    create_unimplemented_device("dewarp", memmap[K230_DEV_DEWARP].base,
-> > +                                memmap[K230_DEV_DEWARP].size);
-> > +
-> > +    create_unimplemented_device("rx-csi", memmap[K230_DEV_RX_CSI].base,
-> > +                                memmap[K230_DEV_RX_CSI].size);
-> > +
-> > +    create_unimplemented_device("vpu", memmap[K230_DEV_H264].base,
-> > +                                memmap[K230_DEV_H264].size);
-> > +
-> > +    create_unimplemented_device("gpu", memmap[K230_DEV_2P5D].base,
-> > +                                memmap[K230_DEV_2P5D].size);
-> > +
-> > +    create_unimplemented_device("vo", memmap[K230_DEV_VO].base,
-> > +                                memmap[K230_DEV_VO].size);
-> > +
-> > +    create_unimplemented_device("vo_cfg", memmap[K230_DEV_VO_CFG].base,
-> > +                                memmap[K230_DEV_VO_CFG].size);
-> > +
-> > +    create_unimplemented_device("3d-engine", memmap[K230_DEV_3D_ENGINE].base,
-> > +                                memmap[K230_DEV_3D_ENGINE].size);
-> > +
-> > +    create_unimplemented_device("pmu", memmap[K230_DEV_PMU].base,
-> > +                                memmap[K230_DEV_PMU].size);
-> > +
-> > +    create_unimplemented_device("rtc", memmap[K230_DEV_RTC].base,
-> > +                                memmap[K230_DEV_RTC].size);
-> > +
-> > +    create_unimplemented_device("cmu", memmap[K230_DEV_CMU].base,
-> > +                                memmap[K230_DEV_CMU].size);
-> > +
-> > +    create_unimplemented_device("rmu", memmap[K230_DEV_RMU].base,
-> > +                                memmap[K230_DEV_RMU].size);
-> > +
-> > +    create_unimplemented_device("boot", memmap[K230_DEV_BOOT].base,
-> > +                                memmap[K230_DEV_BOOT].size);
-> > +
-> > +    create_unimplemented_device("pwr", memmap[K230_DEV_PWR].base,
-> > +                                memmap[K230_DEV_PWR].size);
-> > +
-> > +    create_unimplemented_device("ipcm", memmap[K230_DEV_MAILBOX].base,
-> > +                                memmap[K230_DEV_MAILBOX].size);
-> > +
-> > +    create_unimplemented_device("iomux", memmap[K230_DEV_IOMUX].base,
-> > +                                memmap[K230_DEV_IOMUX].size);
-> > +
-> > +    create_unimplemented_device("timer", memmap[K230_DEV_TIMER].base,
-> > +                                memmap[K230_DEV_TIMER].size);
-> > +
-> > +    create_unimplemented_device("wdt0", memmap[K230_DEV_WDT0].base,
-> > +                                memmap[K230_DEV_WDT0].size);
-> > +
-> > +    create_unimplemented_device("wdt1", memmap[K230_DEV_WDT1].base,
-> > +                                memmap[K230_DEV_WDT1].size);
-> > +
-> > +    create_unimplemented_device("ts", memmap[K230_DEV_TS].base,
-> > +                                memmap[K230_DEV_TS].size);
-> > +
-> > +    create_unimplemented_device("hdi", memmap[K230_DEV_HDI].base,
-> > +                                memmap[K230_DEV_HDI].size);
-> > +
-> > +    create_unimplemented_device("stc", memmap[K230_DEV_STC].base,
-> > +                                memmap[K230_DEV_STC].size);
-> > +
-> > +    create_unimplemented_device("security", memmap[K230_DEV_SECURITY].base,
-> > +                                memmap[K230_DEV_SECURITY].size);
-> > +
-> > +    create_unimplemented_device("i2c0", memmap[K230_DEV_I2C0].base,
-> > +                                memmap[K230_DEV_I2C0].size);
-> > +
-> > +    create_unimplemented_device("i2c1", memmap[K230_DEV_I2C1].base,
-> > +                                memmap[K230_DEV_I2C1].size);
-> > +
-> > +    create_unimplemented_device("i2c2", memmap[K230_DEV_I2C2].base,
-> > +                                memmap[K230_DEV_I2C2].size);
-> > +
-> > +    create_unimplemented_device("i2c3", memmap[K230_DEV_I2C3].base,
-> > +                                memmap[K230_DEV_I2C3].size);
-> > +
-> > +    create_unimplemented_device("i2c4", memmap[K230_DEV_I2C4].base,
-> > +                                memmap[K230_DEV_I2C4].size);
-> > +
-> > +    create_unimplemented_device("pwm", memmap[K230_DEV_PWM].base,
-> > +                                memmap[K230_DEV_PWM].size);
-> > +
-> > +    create_unimplemented_device("gpio0", memmap[K230_DEV_GPIO0].base,
-> > +                                memmap[K230_DEV_GPIO0].size);
-> > +
-> > +    create_unimplemented_device("gpio1", memmap[K230_DEV_GPIO1].base,
-> > +                                memmap[K230_DEV_GPIO1].size);
-> > +
-> > +    create_unimplemented_device("adc", memmap[K230_DEV_ADC].base,
-> > +                                memmap[K230_DEV_ADC].size);
-> > +
-> > +    create_unimplemented_device("codec", memmap[K230_DEV_CODEC].base,
-> > +                                memmap[K230_DEV_CODEC].size);
-> > +
-> > +    create_unimplemented_device("i2s", memmap[K230_DEV_I2S].base,
-> > +                                memmap[K230_DEV_I2S].size);
-> > +
-> > +    create_unimplemented_device("usb0", memmap[K230_DEV_USB0].base,
-> > +                                memmap[K230_DEV_USB0].size);
-> > +
-> > +    create_unimplemented_device("usb1", memmap[K230_DEV_USB1].base,
-> > +                                memmap[K230_DEV_USB1].size);
-> > +
-> > +    create_unimplemented_device("sd0", memmap[K230_DEV_SD0].base,
-> > +                                memmap[K230_DEV_SD0].size);
-> > +
-> > +    create_unimplemented_device("sd1", memmap[K230_DEV_SD1].base,
-> > +                                memmap[K230_DEV_SD1].size);
-> > +
-> > +    create_unimplemented_device("qspi0", memmap[K230_DEV_QSPI0].base,
-> > +                                memmap[K230_DEV_QSPI0].size);
-> > +
-> > +    create_unimplemented_device("qspi1", memmap[K230_DEV_QSPI1].base,
-> > +                                memmap[K230_DEV_QSPI1].size);
-> > +
-> > +    create_unimplemented_device("spi", memmap[K230_DEV_SPI].base,
-> > +                                memmap[K230_DEV_SPI].size);
-> > +
-> > +    create_unimplemented_device("hi_sys_cfg", memmap[K230_DEV_HI_SYS_CFG].base,
-> > +                                memmap[K230_DEV_HI_SYS_CFG].size);
-> > +
-> > +    create_unimplemented_device("ddrc_cfg", memmap[K230_DEV_DDRC_CFG].base,
-> > +                                memmap[K230_DEV_DDRC_CFG].size);
-> > +
-> > +    create_unimplemented_device("flash", memmap[K230_DEV_FLASH].base,
-> > +                                memmap[K230_DEV_FLASH].size);
-> > +}
-> > +
-> > +static void k230_soc_class_init(ObjectClass *oc, const void *data)
-> > +{
-> > +    DeviceClass *dc = DEVICE_CLASS(oc);
-> > +
-> > +    dc->realize = k230_soc_realize;
-> > +}
-> > +
-> > +static const TypeInfo k230_soc_type_info = {
-> > +    .name = TYPE_RISCV_K230_SOC,
-> > +    .parent = TYPE_DEVICE,
-> > +    .instance_size = sizeof(K230SoCState),
-> > +    .instance_init = k230_soc_init,
-> > +    .class_init = k230_soc_class_init,
-> > +};
-> > +
-> > +static void k230_soc_register_types(void)
-> > +{
-> > +    type_register_static(&k230_soc_type_info);
-> > +}
-> > +
-> > +type_init(k230_soc_register_types)
-> > +
-> > +static void k230_machine_done(Notifier *notifier, void *data)
-> > +{
-> > +    K230MachineState *s = container_of(notifier, K230MachineState,
-> > +                                     machine_done);
-> > +    MachineState *machine = MACHINE(s);
-> > +    hwaddr start_addr = memmap[K230_DEV_DDRC].base;
-> > +    target_ulong firmware_end_addr, kernel_start_addr;
-> > +    const char *firmware_name = riscv_default_firmware_name(&s->soc.c908_cpu);
-> > +    uint64_t kernel_entry = 0;
-> > +    RISCVBootInfo boot_info;
-> > +
-> > +    firmware_end_addr = riscv_find_and_load_firmware(machine, firmware_name,
-> > +                                                     &start_addr, NULL);
-> > +
-> > +    /* Mask ROM reset vector */
-> > +    uint32_t reset_vec[] = {
-> > +        /* 0x91200000: auipc  t0, 0x0              */ 0x00000297,
-> > +        /* 0x91200004: addi   t0, t0, 36 # <trap>  */ 0x03028293,
-> > +        /* 0x91200008: csrw   mtvec, t0            */ 0x30529073,
-> > +        /* 0x9120000C: csrr   a0, misa             */ 0x301012F3,
-> > +        /* 0x91200010: lui    t0, 0x1              */ 0x000012B7,
-> > +        /* 0x91200014: slli   t0, t0, 1            */ 0x00129293,
-> > +        /* 0x91200018: and    t0, a0, t0           */ 0x005572B3,
-> > +        /* 0x9120001C: bnez   t0, loop             */ 0x00511063,
-> > +        /* entry:                                  */
-> > +        /* 0x91200020: addiw  t0, zero, 1          */ 0x0010029b,
-> > +        /* 0x91200024: slli   t0, t0, 0x1b         */ 0x01b29293,
-> > +        /* 0x91200028: jr     t0 # uboot 0x8000000 */ 0x00028067,
-> > +        /* loop:                                   */
-> > +        /* 0x9120002C: j      0x9120002C # <loop>  */ 0x0000006f,
-> > +        /* trap:                                   */
-> > +        /* 0x91200030: j      0x91200030 # <trap>  */ 0x0000006f,
-> > +    };
-> 
-> Why do we need a custom reset vector?
-> 
-> Can we at least comment why we need this and what it's doing
-> 
-> Alistair
-> 
-> > +
-> > +    /* copy in the reset vector in little_endian byte order */
-> > +    for (int i = 0; i < sizeof(reset_vec) >> 2; i++) {
-> > +        reset_vec[i] = cpu_to_le32(reset_vec[i]);
-> > +    }
-> > +    rom_add_blob_fixed_as("mrom.reset", reset_vec, sizeof(reset_vec),
-> > +                          memmap[K230_DEV_BOOTROM].base, &address_space_memory);
-> > +
-> > +    riscv_boot_info_init(&boot_info, &s->soc.c908_cpu);
-> > +
-> > +    if (machine->kernel_filename && !kernel_entry) {
-> > +        kernel_start_addr = riscv_calc_kernel_start_addr(&boot_info,
-> > +                                                         firmware_end_addr);
-> > +        riscv_load_kernel(machine, &boot_info, kernel_start_addr,
-> > +                          true, NULL);
-> > +        kernel_entry = boot_info.image_low_addr;
-> > +    }
-> > +}
-> > +
-> > +static void k230_machine_init(MachineState *machine)
-> > +{
-> > +    MachineClass *mc = MACHINE_GET_CLASS(machine);
-> > +
-> > +    K230MachineState *s = RISCV_K230_MACHINE(machine);
-> > +    MemoryRegion *sys_mem = get_system_memory();
-> > +
-> > +    if (machine->ram_size < mc->default_ram_size) {
-> > +        char *sz = size_to_str(mc->default_ram_size);
-> > +        error_report("Invalid RAM size, should be %s", sz);
-> > +        g_free(sz);
-> > +        exit(EXIT_FAILURE);
-> > +    }
-> > +
-> > +    /* Initialize SoC */
-> > +    object_initialize_child(OBJECT(machine), "soc", &s->soc,
-> > +                            TYPE_RISCV_K230_SOC);
-> > +    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
-> > +
-> > +    /* Data Memory */
-> > +    memory_region_add_subregion(sys_mem, memmap[K230_DEV_DDRC].base,
-> > +                                machine->ram);
-> > +
-> > +    s->machine_done.notify = k230_machine_done;
-> > +    qemu_add_machine_init_done_notifier(&s->machine_done);
-> > +}
-> > +
-> > +static void k230_machine_instance_init(Object *obj)
-> > +{
-> > +}
-> > +
-> > +static void k230_machine_class_init(ObjectClass *oc, const void *data)
-> > +{
-> > +    MachineClass *mc = MACHINE_CLASS(oc);
-> > +
-> > +    mc->desc = "RISC-V Board compatible with Kendryte K230 SDK";
-> > +    mc->init = k230_machine_init;
-> > +    mc->default_cpus = 2;
-> > +    mc->default_ram_id = "riscv.K230.ram"; /* DDR */
-> > +    mc->default_ram_size = memmap[K230_DEV_DDRC].size;
-> > +}
-> > +
-> > +static const TypeInfo k230_machine_typeinfo = {
-> > +    .name       = TYPE_RISCV_K230_MACHINE,
-> > +    .parent     = TYPE_MACHINE,
-> > +    .class_init = k230_machine_class_init,
-> > +    .instance_init = k230_machine_instance_init,
-> > +    .instance_size = sizeof(K230MachineState),
-> > +};
-> > +
-> > +static void k230_machine_init_register_types(void)
-> > +{
-> > +    type_register_static(&k230_machine_typeinfo);
-> > +}
-> > +
-> > +type_init(k230_machine_init_register_types)
-> > diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-> > index 533472e22a..09cf855984 100644
-> > --- a/hw/riscv/meson.build
-> > +++ b/hw/riscv/meson.build
-> > @@ -14,8 +14,8 @@ riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files(
-> >         'riscv-iommu.c', 'riscv-iommu-pci.c', 'riscv-iommu-sys.c', 'riscv-iommu-hpm.c'))
-> >  riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-generic.c'))
-> >  riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangshan_kmh.c'))
-> > -
-> >  riscv_ss.add(when: 'CONFIG_RISCV_MIPS_CPS', if_true: files('cps.c'))
-> >  riscv_ss.add(when: 'CONFIG_MIPS_BOSTON_AIA', if_true: files('boston-aia.c'))
-> > +riscv_ss.add(when: 'CONFIG_K230', if_true: files('k230.c'))
-> >
-> >  hw_arch += {'riscv': riscv_ss}
-> > diff --git a/include/hw/riscv/k230.h b/include/hw/riscv/k230.h
-> > new file mode 100644
-> > index 0000000000..830175b756
-> > --- /dev/null
-> > +++ b/include/hw/riscv/k230.h
-> > @@ -0,0 +1,150 @@
-> > +/*
-> > + * QEMU RISC-V Virt Board Compatible with kendryte K230 SDK
-> > + *
-> > + * Copyright (c) 2025 Chao Liu <chao.liu.zevorn@gmail.com>
-> > + *
-> > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > + *
-> > + * Provides a board compatible with the kendryte K230 SDK
-> > + *
-> > + * Documentation: K230_Technical_Reference_Manual_V0.3.1_20241118.pdf
-> > + *
-> > + * For more information, see <https://www.kendryte.com/en/proDetail/230>
-> > + *
-> > + * This program is free software; you can redistribute it and/or modify it
-> > + * under the terms and conditions of the GNU General Public License,
-> > + * version 2 or later, as published by the Free Software Foundation.
-> > + *
-> > + * This program is distributed in the hope it will be useful, but WITHOUT
-> > + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-> > + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-> > + * more details.
-> > + *
-> > + * You should have received a copy of the GNU General Public License along with
-> > + * this program.  If not, see <http://www.gnu.org/licenses/>.
-> > + */
-> > +#ifndef HW_K230_H
-> > +#define HW_K230_H
-> > +
-> > +#include "hw/core/boards.h"
-> > +#include "hw/riscv/riscv_hart.h"
-> > +
-> > +#define C908_CPU_HARTID   (0)
-> > +
-> > +#define TYPE_RISCV_K230_SOC "riscv.k230.soc"
-> > +#define RISCV_K230_SOC(obj) \
-> > +    OBJECT_CHECK(K230SoCState, (obj), TYPE_RISCV_K230_SOC)
-> > +
-> > +typedef struct K230SoCState {
-> > +    /*< private >*/
-> > +    DeviceState parent_obj;
-> > +
-> > +    /*< public >*/
-> > +    RISCVHartArrayState c908_cpu; /* Small core */
-> > +
-> > +    MemoryRegion sram;
-> > +    MemoryRegion bootrom;
-> > +
-> > +    DeviceState *c908_plic;
-> > +} K230SoCState;
-> > +
-> > +#define TYPE_RISCV_K230_MACHINE MACHINE_TYPE_NAME("k230")
-> > +#define RISCV_K230_MACHINE(obj) \
-> > +    OBJECT_CHECK(K230MachineState, (obj), TYPE_RISCV_K230_MACHINE)
-> > +
-> > +typedef struct K230MachineState {
-> > +    /*< private >*/
-> > +    MachineState parent_obj;
-> > +
-> > +    /*< public >*/
-> > +    K230SoCState soc;
-> > +    Notifier machine_done;
-> > +} K230MachineState;
-> > +
-> > +enum {
-> > +    K230_DEV_DDRC,
-> > +    K230_DEV_KPU_L2_CACHE,
-> > +    K230_DEV_SRAM,
-> > +    K230_DEV_KPU_CFG,
-> > +    K230_DEV_FFT,
-> > +    K230_DEV_AI_2D_ENGINE,
-> > +    K230_DEV_GSDMA,
-> > +    K230_DEV_DMA,
-> > +    K230_DEV_DECOMP_GZIP,
-> > +    K230_DEV_NON_AI_2D,
-> > +    K230_DEV_ISP,
-> > +    K230_DEV_DEWARP,
-> > +    K230_DEV_RX_CSI,
-> > +    K230_DEV_H264,
-> > +    K230_DEV_2P5D,
-> > +    K230_DEV_VO,
-> > +    K230_DEV_VO_CFG,
-> > +    K230_DEV_3D_ENGINE,
-> > +    K230_DEV_PMU,
-> > +    K230_DEV_RTC,
-> > +    K230_DEV_CMU,
-> > +    K230_DEV_RMU,
-> > +    K230_DEV_BOOT,
-> > +    K230_DEV_PWR,
-> > +    K230_DEV_MAILBOX,
-> > +    K230_DEV_IOMUX,
-> > +    K230_DEV_TIMER,
-> > +    K230_DEV_WDT0,
-> > +    K230_DEV_WDT1,
-> > +    K230_DEV_TS,
-> > +    K230_DEV_HDI,
-> > +    K230_DEV_STC,
-> > +    K230_DEV_BOOTROM,
-> > +    K230_DEV_SECURITY,
-> > +    K230_DEV_UART0,
-> > +    K230_DEV_UART1,
-> > +    K230_DEV_UART2,
-> > +    K230_DEV_UART3,
-> > +    K230_DEV_UART4,
-> > +    K230_DEV_I2C0,
-> > +    K230_DEV_I2C1,
-> > +    K230_DEV_I2C2,
-> > +    K230_DEV_I2C3,
-> > +    K230_DEV_I2C4,
-> > +    K230_DEV_PWM,
-> > +    K230_DEV_GPIO0,
-> > +    K230_DEV_GPIO1,
-> > +    K230_DEV_ADC,
-> > +    K230_DEV_CODEC,
-> > +    K230_DEV_I2S,
-> > +    K230_DEV_USB0,
-> > +    K230_DEV_USB1,
-> > +    K230_DEV_SD0,
-> > +    K230_DEV_SD1,
-> > +    K230_DEV_QSPI0,
-> > +    K230_DEV_QSPI1,
-> > +    K230_DEV_SPI,
-> > +    K230_DEV_HI_SYS_CFG,
-> > +    K230_DEV_DDRC_CFG,
-> > +    K230_DEV_FLASH,
-> > +    K230_DEV_PLIC,
-> > +    K230_DEV_CLINT,
-> > +};
-> > +
-> > +enum {
-> > +    K230_UART0_IRQ  = 16,
-> > +    K230_UART1_IRQ  = 17,
-> > +    K230_UART2_IRQ  = 18,
-> > +    K230_UART3_IRQ  = 19,
-> > +    K230_UART4_IRQ  = 20,
-> > +};
-> > +
-> > +/*
-> > + * Integrates with the interrupt controller (PLIC),
-> > + * which can process 208 interrupt external sources
-> > + */
-> > +#define K230_PLIC_NUM_SOURCES 208
-> > +#define K230_PLIC_NUM_PRIORITIES 7
-> > +#define K230_PLIC_PRIORITY_BASE 0x00
-> > +#define K230_PLIC_PENDING_BASE 0x1000
-> > +#define K230_PLIC_ENABLE_BASE 0x2000
-> > +#define K230_PLIC_ENABLE_STRIDE 0x80
-> > +#define K230_PLIC_CONTEXT_BASE 0x200000
-> > +#define K230_PLIC_CONTEXT_STRIDE 0x1000
-> > +
-> > +#endif
-> > --
-> > 2.53.0
-> >
-> >
+Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
+---
+ hw/ufs/trace-events |  2 ++
+ hw/ufs/ufs.c        | 18 ++++++++++++++++--
+ 2 files changed, 18 insertions(+), 2 deletions(-)
+
+diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
+index 531dcfc686..7734b35f08 100644
+--- a/hw/ufs/trace-events
++++ b/hw/ufs/trace-events
+@@ -40,10 +40,12 @@ ufs_err_mcq_db_wr_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
+ ufs_err_mcq_db_wr_invalid_db(uint8_t qid, uint32_t db) "invalid mcq doorbell sqid %"PRIu8", db %"PRIu32""
+ ufs_err_mcq_create_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
+ ufs_err_mcq_create_sq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
++ufs_err_mcq_create_sq_invalid_size(uint8_t qid) "invalid mcq sq size for sqid %"PRIu8""
+ ufs_err_mcq_create_sq_already_exists(uint8_t qid) "mcq sqid %"PRIu8 "already exists"
+ ufs_err_mcq_delete_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
+ ufs_err_mcq_delete_sq_not_exists(uint8_t qid) "mcq sqid %"PRIu8 "not exists"
+ ufs_err_mcq_create_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
++ufs_err_mcq_create_cq_invalid_size(uint8_t qid) "invalid mcq cq size for cqid %"PRIu8""
+ ufs_err_mcq_create_cq_already_exists(uint8_t qid) "mcq cqid %"PRIu8 "already exists"
+ ufs_err_mcq_delete_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
+ ufs_err_mcq_delete_cq_not_exists(uint8_t qid) "mcq cqid %"PRIu8 "not exists"
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 1819ba2e8a..4ccd7aa64d 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -506,6 +506,8 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
+     UfsMcqReg *reg = &u->mcq_reg[qid];
+     UfsSq *sq;
+     uint8_t cqid = FIELD_EX32(attr, SQATTR, CQID);
++    uint16_t qsize =
++        ((FIELD_EX32(attr, SQATTR, SIZE) + 1) << 2) / sizeof(UfsSqEntry);
+ 
+     if (qid >= u->params.mcq_maxq) {
+         trace_ufs_err_mcq_create_sq_invalid_sqid(qid);
+@@ -527,12 +529,17 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
+         return false;
+     }
+ 
++    if (!qsize) {
++        trace_ufs_err_mcq_create_sq_invalid_size(qid);
++        return false;
++    }
++
+     sq = g_malloc0(sizeof(*sq));
+     sq->u = u;
+     sq->sqid = qid;
+     sq->cq = u->cq[cqid];
+     sq->addr = ((uint64_t)reg->squba << 32) | reg->sqlba;
+-    sq->size = ((FIELD_EX32(attr, SQATTR, SIZE) + 1) << 2) / sizeof(UfsSqEntry);
++    sq->size = qsize;
+ 
+     sq->bh = qemu_bh_new_guarded(ufs_mcq_process_sq, sq,
+                                  &DEVICE(u)->mem_reentrancy_guard);
+@@ -576,6 +583,8 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
+ {
+     UfsMcqReg *reg = &u->mcq_reg[qid];
+     UfsCq *cq;
++    uint16_t qsize =
++        ((FIELD_EX32(attr, CQATTR, SIZE) + 1) << 2) / sizeof(UfsCqEntry);
+ 
+     if (qid >= u->params.mcq_maxq) {
+         trace_ufs_err_mcq_create_cq_invalid_cqid(qid);
+@@ -587,11 +596,16 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
+         return false;
+     }
+ 
++    if (!qsize) {
++        trace_ufs_err_mcq_create_cq_invalid_size(qid);
++        return false;
++    }
++
+     cq = g_malloc0(sizeof(*cq));
+     cq->u = u;
+     cq->cqid = qid;
+     cq->addr = ((uint64_t)reg->cquba << 32) | reg->cqlba;
+-    cq->size = ((FIELD_EX32(attr, CQATTR, SIZE) + 1) << 2) / sizeof(UfsCqEntry);
++    cq->size = qsize;
+ 
+     cq->bh = qemu_bh_new_guarded(ufs_mcq_process_cq, cq,
+                                  &DEVICE(u)->mem_reentrancy_guard);
+-- 
+2.43.0
+
 
