@@ -4,133 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16A85CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 22:18:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29958CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 22:53:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKkYV-0000zT-09; Wed, 06 May 2026 18:17:23 -0400
+	id 1wKl7L-0006yA-E9; Wed, 06 May 2026 18:53:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wKkYT-0000xo-D3
- for qemu-devel@nongnu.org; Wed, 06 May 2026 18:17:21 -0400
+ id 1wKl7J-0006y0-RW
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 18:53:21 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wKkYR-0003F9-31
- for qemu-devel@nongnu.org; Wed, 06 May 2026 18:17:21 -0400
-Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ id 1wKl7H-00040S-VB
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 18:53:21 -0400
+Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 646LpaYb1527798
- for <qemu-devel@nongnu.org>; Wed, 6 May 2026 22:17:15 GMT
+ 646GuAto1985753
+ for <qemu-devel@nongnu.org>; Wed, 6 May 2026 22:53:18 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- cfr30T6tqHaO7a3SCLT7jY8vD2D/utKjmwMe+SOIuSU=; b=hRs6LIy9xRR0un2X
- nCTBSpSuohzXTIHl7r4aJUZp07v+ICoWHUlPfWMvmN7HJKEB9lP9QMxTlfAfJCaV
- oAi20UNglktcpzfr9OcyFZvB3qEo0p2KZegXXzXJq9k0YJEs7212O2yZmn1E7cTQ
- gD1vMo8Za6hR+LEyzBtUvYlWXN6+4QS5NtmJ8Tf5Zey4S2Fr6bqhoE2KlhsarHsF
- EyQ+52tR1409HC73fsunthM4IZZFKnkcutWmUAyYAMYfN6Ptr3rNp6B5Ko7u6SLT
- YcBKKG3iYrVMjuIFEgsdEpcak+ReyTVTsgYT4RsTEL/C/z1GgTwRVZjHNWGDrvcn
- tO0wZA==
-Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
- [74.125.82.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e0128b95q-1
+ qLiC4bBEZue/zg04G1guNtconRBipgb7XOu1xBwiHw4=; b=pvbuVj3TC1hCGhNE
+ iXNLBqbZBlTklp2a+rIbsEEwRIfnQEmhi33Gvl4gnii/msuEuzSNhfTM2niGUsVN
+ Np5rRvnFiLLxh24vUrbShmCLYOIHRyfkxW8YajARWDvN2EBf9XgxX+cH01BLtVfe
+ F2FC4n4SxLRa0TAfrZpm9lnwI3W8RlqNCffSlATS+toEnNW1vu2Pg4vWTS4zzCSK
+ 5ul2gchaI7erJYcvVHl+qKO1Ya5XeDBRsEGLp36pg00f2Ui7hWXvrXydIq0Nf2yu
+ KWgMPIUQTFbi0rVEXFE1/KigguZF5x6AUecHxwSaWG9gUvJL90Dbmnc1E7iSTLoJ
+ 7XFEPQ==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e03gp2sqr-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 22:17:15 +0000 (GMT)
-Received: by mail-dy1-f199.google.com with SMTP id
- 5a478bee46e88-2eebb099efbso841052eec.0
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 15:17:15 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 22:53:17 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-2ba8013a9e3so375186eec.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 15:53:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778105835; x=1778710635; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1778107997; x=1778712797; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=cfr30T6tqHaO7a3SCLT7jY8vD2D/utKjmwMe+SOIuSU=;
- b=FR/5p65Mfxzsl+J209viVvEpqurfHXhSLRimLVK3YTHQm84UFDK7d42bMgZx0dBH3K
- v4jU4KsiGn3c/6UeyysV+8d+LdU2x5lsLnRUKY1cyrokEANCjznbkLutpA3FQbnkRjxW
- Zu1tMArKh3PUbYzbyNQlWZNJX91ld4RX5cSS+mMjRZusuBwlAq9dGTU+pLxgJ1hvA8W0
- Pq5Mf821sjPS4Tf2YLLMK4Ro916weMwiYAV7vhUs3YkIoR1b3Ooz8IVH8ScrP15Vi6yQ
- srXrhcupLI/h2TxF14/W4GZdSeEvjVFrJhuGmlcTkJFsZkFofORS4Wuwi4rADQVhRuyC
- wl9Q==
+ bh=qLiC4bBEZue/zg04G1guNtconRBipgb7XOu1xBwiHw4=;
+ b=ch2/CSAnyNiToiMHl9aSbYI/8wK+3U6nZ2jXVKvJ7vQIFXGYUqCAE0dsjiEn9FC91Z
+ 6ovhoU6PCVBprcLJn8lwXK9CBnwF6jhEA9b8b1jXoFNxwcBVdLVoqIML/NUySq2Xqw34
+ Jyn+OmTNH4CEzyPy/7gNUqNLaESXlkXvbPZ6pYLTxYU5b26Ghh4bnNfH3XM4gSk3qOtu
+ MN9AklGVW3CzVWYadEkj2jKCnxwSmchAw1tlJ2eRdYAD45RTYpstumokGQeJN+IRAgaX
+ 0WRqNKkgiqKCZqcwJl0cmr759yZXIcNgIScl4GTktObBUwl82XNwtSwgUr8OfJmjwdO0
+ ylbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778105835; x=1778710635;
+ d=1e100.net; s=20251104; t=1778107997; x=1778712797;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=cfr30T6tqHaO7a3SCLT7jY8vD2D/utKjmwMe+SOIuSU=;
- b=c0UJtDDgEZziHcGMYI9HkLa3q6OH2F3LiruGPQDwOR3qGvLbQWOYhxMaYdHGkW6ilQ
- BLu7EyJGAYVxPqFK09VW34lmo8fzO0cDFt3fyXFHM3D+TxsO7otAx9P0JfucQKTPMQ21
- Jv7LpKOxqdv613EX49OJo527z4YFlngaPlS9ZhblAL0pTp8EYh6bZ9xRfY8Nd+FVNLot
- 03faJzbHLtT1olkrNR/1Z3o8sUDDs4snNYeWJPOStwzY0dRu1EGv12Dv2alEe9CbtpBA
- Ga4gZCPgezhMRT7+THtKtRJ7rjJiXhaLMcPCarkfINg1lgM0h4hBhPjYkJ+kR/NQIIYt
- d4Eg==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9luMaOLXTC9jfUBZttCWmJSm6jqj+5Bu1x2dRoyBKyQLeAmnssK3bFM9WN7w92U6xXx0PB+N/JDPqi@nongnu.org
-X-Gm-Message-State: AOJu0Yy4+FN9UM1sHy+GEyXpwga5Utwkl4sjunywJMXF4F4Baovj/fU0
- UlmLxOejOCgsng7btncjDaNzi8dgSaXKRv3bCOfGIx4drUuEGaXj9zZsL71wAU99SczAK8ZMbJS
- YtlXY1j6aOBTgpfpuNih6lh5Qa0u3NQM5UHY8jwyLMGHpC7Bgy2BTcrxGQQ==
-X-Gm-Gg: AeBDiescEJyXLbVvSQJhB5oBI3yzxEjBT0pgTP6BqjjZlee7suJ/obgQ0ftTAFAN3xb
- GxcsRyemEil0rTOUHkYnczvZaNuFjlAVTOiXEH1zmAEx+lniJBvSQt3Rt4xOAy7QYchZAqFcPpa
- UAqlg1WVfkKG+rrdNUyV5uc9PGxhkz0cMS4l8WZCENGebCeLWWDE1Hfnsv1cBd0PIy4ws4aQceK
- deS2+qoPUk+uYI3Dj5LG9G8wiWCNT/0t/Jk7ybd6P2JQIh7v0FJ/aZriv7ZQN7V6UxJW/oT03Ll
- B4NBTXApIBzUciwWXIg1kuXcPkkUgbxEbC0Z495280yF8dREv64Y3SmJwBXYR7jeR0V8lQ6W3xU
- IgdKSXCRjC+aqAD3r96qZ1MyT0Rt0bh9u8GHfTRGSI7erKMg8Yz/TclyGLebigfC+timI8eD4O/
- FgTHiFMlCKX2yIc3/7HBzQsfOX
-X-Received: by 2002:a05:7301:3f16:b0:2c9:1943:e7ff with SMTP id
- 5a478bee46e88-2f54b35fb00mr2630618eec.10.1778105834685; 
- Wed, 06 May 2026 15:17:14 -0700 (PDT)
-X-Received: by 2002:a05:7301:3f16:b0:2c9:1943:e7ff with SMTP id
- 5a478bee46e88-2f54b35fb00mr2630591eec.10.1778105834040; 
- Wed, 06 May 2026 15:17:14 -0700 (PDT)
+ bh=qLiC4bBEZue/zg04G1guNtconRBipgb7XOu1xBwiHw4=;
+ b=MpAkfjbSoyJ2xeghwCqTetmykdMqL4S3qKWFMH0zhfoOasNJNJYk7HvmawDELKBKbB
+ xyIfccAyzBK/jACIbuc3b4gcvpKS1oYKsD6eXWJHLtw3V4EjefbdHUs/nwPFUp/Evw3t
+ 4xqoQp50x1ciZcZQzoRubdSNVlvbjiaQUW/27OTs880XUdEMz5WxpTsGMd2XeietIyi3
+ Aer6Pll6GaqTHye0ssXIYzUfmWu9f3wJpwxCMx32/casZiHpGpP6gg3Vb0+afK8kPr81
+ fqv/yEw7hfyNEtfKNYV/s2fKGZ318q6ggqFX5XbzT85LVtnGoeZ32NrJXm9pOiKCu30o
+ LYBA==
+X-Gm-Message-State: AOJu0YwWgJaq2BSqxjT4lSsmAcpMMPJzV1DtccYrE0nm7aGYjKaIbAFq
+ Gw5yo/qUs7fyeyLGdryvdjCGtLPlRE+WWvlHUAa+gmtoK5HBruAiNkNXZnCz08/NyZ7VZRzEG2H
+ liDX7NIA/IOjpjlDOC0u3/LJXScS3S+3WNklwy8bC/aiA0FD9ZakwrO0Aeg==
+X-Gm-Gg: AeBDietTQAsT/HIDNlKuSJmiBwUVMwTT9FnVQn51zqfdl1ZAHYqdE1mSFWE4R5zpYZb
+ gIncKEX9cU5CXnmcoiT2+gBLUddnBRTMqC8wczi3f3q26DAw/Yhri64oaA4kNWmI0Ek0ZtWDW1r
+ N+mizcLIXNPdB1pEmOwCMUITtXZjfIMSxiStBP1oqRhtyyCwQPRi5ZyWZcVyxy4amGAMnFQ8FBm
+ GnXmDtyYl3TQ1OHx1T1STMlB968x2LBZuYQWjUJJJmyUVBymJqwB8PphMIu3CGCeUswcXvfarzA
+ udyjNN3Z1yxbqjd77BDWR+ApVdeIYI8sjItZvPPodalnnGMDftulEvicALOCxAGuCh+Hg8HBOD+
+ aWOnj8irL9hXSv3mehXyMhe/sp36EnFdYzPYFe5bc1HkqftJpKVjR82A5SGV2KhCmfS1O9TDOFz
+ uI5eegM31ppXQllKunC5Fr+q2j
+X-Received: by 2002:a05:693c:3008:b0:2cf:3de7:22ad with SMTP id
+ 5a478bee46e88-2f54de8c6afmr2583731eec.27.1778107996796; 
+ Wed, 06 May 2026 15:53:16 -0700 (PDT)
+X-Received: by 2002:a05:693c:3008:b0:2cf:3de7:22ad with SMTP id
+ 5a478bee46e88-2f54de8c6afmr2583721eec.27.1778107996175; 
+ Wed, 06 May 2026 15:53:16 -0700 (PDT)
 Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2f57057bd00sm4846025eec.30.2026.05.06.15.17.12
+ 5a478bee46e88-2f56cec58efsm5565885eec.2.2026.05.06.15.53.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 May 2026 15:17:13 -0700 (PDT)
-Message-ID: <4a46393d-08be-40e9-8f52-788d46ab36cf@oss.qualcomm.com>
-Date: Wed, 6 May 2026 15:17:12 -0700
+ Wed, 06 May 2026 15:53:15 -0700 (PDT)
+Message-ID: <1ea2bb47-8d37-45fe-b5b8-fe62f0c962b7@oss.qualcomm.com>
+Date: Wed, 6 May 2026 15:53:14 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Future of target/arm "max" CPU type
-To: Peter Maydell <peter.maydell@linaro.org>,
- QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Phil_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Jim MacArthur <jim.macarthur@linaro.org>,
- Gustavo Bueno Romero <gustavo.romero@linaro.org>
-References: <CAFEAcA-WB+vfiHZpPut=AdEOCXacsTfrvxiGAmhaGH1abHD8ag@mail.gmail.com>
+Subject: Re: [PATCH] docs/devel/codebase: add link to rev.ng video series
+To: Anton Johansson <anjo@rev.ng>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+References: <20260423213557.780112-1-pierrick.bouvier@oss.qualcomm.com>
+ <afsFdNbJQDFctL2C@hive.localdomain>
 From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Content-Language: en-US
-In-Reply-To: <CAFEAcA-WB+vfiHZpPut=AdEOCXacsTfrvxiGAmhaGH1abHD8ag@mail.gmail.com>
+In-Reply-To: <afsFdNbJQDFctL2C@hive.localdomain>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-Proofpoint-GUID: 7qY6O-K5pf-hkHh2UH13Vmums8h6hV95
-X-Proofpoint-ORIG-GUID: 7qY6O-K5pf-hkHh2UH13Vmums8h6hV95
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA2MDIxOCBTYWx0ZWRfX6BfJutXFFLBC
- z+7SIDS4p/pnxC1qs9ZgZsIbq+eQJ+1nh3Vvpq14xOrujL7ozxteFBcmcuyiaAmcxWiZueZse7H
- iZ988I7Myz9UFCtcSE/OkKszQw14QXmzJa1uoGlwlt5agb8Wd9mk2vW3jaolHZod9YUtKoMtQjd
- c4/ww5C2ZSYMXiFxOketeuqYQ1sGUcPK4bZRqDaX8zGlD9sM8b8hUEYoHdy2C7LySyNy8VRq9kB
- IjLM5/hhssUWmKioUQNO/d5IjAdIJtohxLoUGvwPn5yN5Bhc/howCmdSpjzpRnC1oUEXgDINn+P
- 4Fz0xG0pmGBTl0lZnYJ6uLyjkj84pdZUfwYLh2yvY8Fa555rahQ670PAQ+xB3m/kJ0YM9/w7/+B
- Ug91NlNKAl/XRiTB5tNoszUj8mMCRY8TVNIMFoh3yxvcRSXfJnUmkGa1VqEk2H7Xb/3n+4qpFSc
- Sn+kwWTiECBQHA3gEoA==
-X-Authority-Analysis: v=2.4 cv=A8xc+aWG c=1 sm=1 tr=0 ts=69fbbdeb cx=c_pps
- a=cFYjgdjTJScbgFmBucgdfQ==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA2MDIyNCBTYWx0ZWRfX3w8Ngv6G7Nbc
+ PMf24kkYU0jcJysrBK6W+9Kja8kQagSuk4OcgThME+zmbk/DhM5chA3q09U14lGeCI+X3Kw6pJX
+ YqdbIfjXXBginvdqSYY+X8sEXHJF0J8KkCMCfxKcgOSL+Afplib37CN+ABskprkjYHj2zk7HTFQ
+ RLYPo4mcc1CRNJq1FMKE7KZ+JzqQzIBxPvN3ilEVq28iGUpCBQfUoBqRhtyMPEIXKJhsFiL1fKV
+ 3Vzumibr/uY1eGE9PO93KcXYjMLveE36/tykBqghp9vGQedI46goVXQHa+va6OwWUwLncf5XuhB
+ ViLGiYK0b8aDKWL6WTLsY3k55M2JMJwx1PSQJD2OkNoxg18MJvdFNypD934BryEtYobShHRP4qH
+ yVeG6f7QpmAN7g7Sjh5dCP5nKndmGwRWq8LWcTPXr4ku6EN9kx1YsErj7ss4pG94iL+w9E4ilVB
+ SgtRckB6tEJLvo+hOKQ==
+X-Proofpoint-ORIG-GUID: XjxrkRsvpog5NN07j7T6jnOTcVn_3Isk
+X-Proofpoint-GUID: XjxrkRsvpog5NN07j7T6jnOTcVn_3Isk
+X-Authority-Analysis: v=2.4 cv=W8wIkxWk c=1 sm=1 tr=0 ts=69fbc65d cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
  a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
- a=6x5By2YnlfchJYQ9f5wA:9 a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=rJkE3RaqiGZ5pbrm-msn:22
+ a=EUspDBNiAAAA:8 a=R8rOrJ6PF0qG3-My5voA:9 a=QEXdDO2ut3YA:10
+ a=PxkB5W3o20Ba91AHUih5:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-06_02,2026-05-06_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 spamscore=0 phishscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 malwarescore=0 adultscore=0 impostorscore=0 suspectscore=0
+ spamscore=0 clxscore=1015 suspectscore=0 lowpriorityscore=0 adultscore=0
+ priorityscore=1501 bulkscore=0 impostorscore=0 phishscore=0 malwarescore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605060218
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605060224
 Received-SPF: pass client-ip=205.220.180.131;
  envelope-from=pierrick.bouvier@oss.qualcomm.com;
  helo=mx0b-0031df01.pphosted.com
@@ -140,7 +139,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,110 +155,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
-
-On 5/1/2026 6:26 AM, Peter Maydell wrote:
-> This is something we've discussed before. I don't think I have a very
-> solid grip on it and I suspect I may be missing some parts of the
-> "problem description" (i.e. what are we trying to achieve) and perhaps
-> some implications of the choice. Overall it feels to me like a "no
-> obviously correct answer, make a tradeoff" question. I've written this
-> up to try to clarify my thinking and canvass for opinions and for
-> people to point out what I'm missing.
+On 5/6/2026 2:16 AM, Anton Johansson wrote:
+> On 23/04/26, Pierrick Bouvier wrote:
+>> Those two videos provide an excellent introduction for a new QEMU
+>> developer, and such resources are rare.
+>>
+>> Kudos to Anton Johansson <anjo@rev.ng> for creating this.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> ---
+>>  docs/devel/codebase.rst | 5 +++++
+>>  1 file changed, 5 insertions(+)
+>>
+>> diff --git a/docs/devel/codebase.rst b/docs/devel/codebase.rst
+>> index f09307b8971..f065d7eee0b 100644
+>> --- a/docs/devel/codebase.rst
+>> +++ b/docs/devel/codebase.rst
+>> @@ -8,6 +8,11 @@ organized.
+>>  Beyond giving succinct descriptions, the goal is to offer links to various
+>>  parts of the documentation/codebase.
+>>  
+>> +Those two videos are an excellent introduction to QEMU codebase:
 > 
-> For a long time now the arm targets have defined a "max" CPU type
-> whose definition is roughly "all the features that QEMU
-> implements". This is helpful for:
+> Thanks for posting this!:)
 > 
->  - giving us a way to provide newly emulated CPU features to users
->    without having to define a specific named CPU type matching some
->    hardware that implements the feature (which might not exist at the
->    point we add the emulation, or which might also need some other
->    features we don't yet support)
->  - giving users a way to say "I just want everything"
+> For the text I'd suggest something like
 > 
-> Mostly this has worked pretty well, I think. (It can cause problems
-> for some workloads that break when a new feature is added; TF-A
-> firmware seems particularly prone to this.)
+>   "For an overview of the codebase in video form covering user- and system mode,
+>   these provide an excellent introduction:"
 > 
-> However, it doesn't work so well if the architecture decides to drop a
-> feature and mandate that newer implementations may not implement
-> it. Up til now that hasn't been a big deal, as only a few very niche
-> items (like FEAT_DoubleLock, an old mechanism for quiescing external
-> debug before a CPU power-down) have ever been removed.
-> 
-> With the Armv9.0 architecture, a big feature gets removed: support for
-> running in 32-bit mode at anything above userspace (EL1, EL2, EL3) is
-> not allowed to be implemented.  We've got away so far with ignoring
-> that requirement, but as new v9.x features are added, they are
-> designed under the assumption that there is no 32-bit system mode
-> code. For instance, the GICv5 CPU interface defines only 64-bit system
-> registers, and our non-compliant "32-bit is actually there"
-> implementation would give you a 32-bit OS that couldn't handle
-> interrupts. Other similar (or harder to spot) issues are likely to
-> also turn up.
-> 
-> So my suggestion is that we should have two new CPU types:
-> 
->  v8-max : "all the features we implement that are valid
->    for the v8.x architecture"
->  v9-max : "all the features we implement that are valid
->    for the v9.x architecture"
-> 
-> v9-max would not implement AArch32 EL1/2/3; v8-max wouldn't implement
-> any feature the architecture says is v9-or-later.
-> 
-> For the existing 'max' CPU:
->  - on qemu-system-arm this would be a synonym for v8-max
->    (since it must be 32-bit)
->  - on qemu-aarch64 and qemu-system-aarch64 this would be a synonym
->    for v9-max
->  - on qemu-arm it can also be v9-max, since v9 doesn't drop 32-bit
->    usermode support. (Though we don't currently implement qemu-arm
->    max this way, so it might end up being effectively v8-max until
->    we get round to implementing support for selecting AArch64 CPUs in
->    qemu-arm.)
+> If anyone has suggestions/corrections please feel free to let me know
+> and I'll make a revised version.
 >
 
-This seems like a good approach. A side effect is to solve the
-duplication we encounter for the single-binary also, by correctly
-deduplicating QOM types associated.
+I sent the PR yesterday with original series, but feel free to send a
+fix with your suggestion.
 
-The concept of having a "max" alias that maps to a specific type (in
-this case, distinct depending on the binary) could be used for other
-arch if needed also.
+> Reviewed-by: Anton Johansson <anjo@rev.ng>
 
-> I don't think it's worth claiming 'max' as deprecated and dropping it:
-> as an alias it's trivial to support, and there are a lot of workloads
-> that won't ever notice this change.
->
-
-I agree.
-
-> It's possible some workloads currently using "max" will need to switch
-> to 'v8-max", but I think this will be rare: it would have to be
-> emulation of an EL2 guest which is itself 64-bit but which runs some
-> inner-guest VM within itself that is 32-bit. The failure mode will be
-> that the (outer) guest will report that it can't run a 32-bit (inner)
-> guest (in whatever way that hypervisor reports that kind of error).
->
-
-That's a good solution, and only a small minority of users (the one that
-has to really deal with this) will be concerned.
-
-> So that's my sketch of a proposal -- what do people think? What
-> have I forgotten about?
-> 
-> thanks
-> -- PMM
-> 
-
-Do you have a time frame in mind for this? It's on the path for having
-the single-binary, and we can help with it if needed.
-
-It should be a pretty straightforward change, just renaming QOM types,
-and adding the "max" selection mechanic.
-
-Regards,
-Pierrick
 
