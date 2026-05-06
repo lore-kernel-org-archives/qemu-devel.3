@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D382FF8855
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D3BCCD3440
 	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:00:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcn9-0003mV-7Y; Wed, 06 May 2026 10:00:00 -0400
+	id 1wKcmk-0002tJ-KV; Wed, 06 May 2026 09:59:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcn5-0003jR-Mu
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:56 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcmi-0002os-V8
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:32 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcn3-0000FZ-Rm
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:55 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-48896199cbaso56985295e9.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:59:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcmh-0000Bc-Ar
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:32 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-488b0046078so57216395e9.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:59:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778075991; x=1778680791; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778075969; x=1778680769; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=5ef0JMGJzLVkl819dhHRCN59pW8hGuKmoFkI/orJyaE=;
- b=lRBWTT6DmL8RBwSwHUaYAJpEsirk3ICQmC/+gZy8XYEuoYHeO22LB8igsheUI2VJQp
- /TK7CdwRc4hxhTF7rZVt8Ms60sdu92ZavQd+8joUqhNuupqKcCSuKKk1CMaGP+0y7q1U
- Ev6DH950giNJCXKzKyRU6VITnUcKoKr5Rj6ugWeRPStowFY9GSNaU4/J37qWdqaY3t7X
- lAF9NOrxvP7GwabQ6RE2CpgI2Xn8coi3Ppl2lYaOFXCwDTa4zyC7tIIoWaZuWweChnKS
- lREbB8cnXgNXpUxum6E3nzGZFcEp36Au1zW4Be+Pv5h7Kti+xxoyD7ZopI/LtMqq5Ap9
- 68Hw==
+ :reply-to; bh=yBKRutgN3yjojHntkFFZk++yw8Yg1fzT+jwbzOTAYOo=;
+ b=bNAukAdvWEoruwEsA2EckT4jE0RMJI0oBr90zaVZi+Vi0WyXaq4+nPbqECBNT6yFw6
+ Fy8DyOxcJi6Q/IvhLpj1qH3uQRHrS5Jv8wzd/blZLRpG0anYe1GhqqY3oOt8cP/6stu0
+ AKDUZ1n6/4lWSrr96cjIlN9qPquAkTtALncaZPY908py+7Lvj6MKMnyZPluTZ21lS7Fd
+ z/lMPQdcg3O0Y/kyqdAaWnDhhdX8HQ9MVdezUOKKbtOBDeUGl3T3GUHHUc1lfoIetblt
+ Lxru48395XWYV9kx6a6Kl146ra2rOnWF0rh3lvzzxidTrSg6144vOHcZHlsjBZtV7g9/
+ GXjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778075991; x=1778680791;
+ d=1e100.net; s=20251104; t=1778075969; x=1778680769;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=5ef0JMGJzLVkl819dhHRCN59pW8hGuKmoFkI/orJyaE=;
- b=FVcW3ypq0d5I+CUZI0d6mfR9dcN0IDFf9O0t8lQU7+6c556sjjXtqBt1xZNldE0U+Z
- KInYAmZSnpVCQUD+siL2PnRUdLWI5kCN846mU+SRK8oOyq+BrQBYg2euVA03O0ibX+eF
- gmgj9tny/yHFrawq3jC2+L45owgKq3dhemxErRZeB0qGddCBKKnDWOhBv8IyTQ89IBdd
- ednspGdruayWvM5ODRkDFbx8hWAm1X4sB+ZNMcp/JBi7F0N15ApqnXD0Q/eTI8oxq8of
- 1dgYyEWTNfacTsiOxOBIXz+BSLJiOue0jgy7CtqpXa0hKPxg/gNJZrM2rhFEkgt6MGMT
- c1Bg==
-X-Gm-Message-State: AOJu0YyYcxhtT1WpPlE9wIcA7SQNLPgz+YjQHgKVQtMzNbkUtcIGjYVt
- 5qCMNIehFsGWuOvLotlf9gnfWXOT9tuh2cC8pNTFam2fwSW4HskQOwZKyv/yBxRcafTTqaxheL9
- Lzvjrf8c=
-X-Gm-Gg: AeBDiev9Lv5miqCDQqLuLA4FVFQ1uFVGBiDmrSLIgYMI1mVGVWdAkV88lRGcpG2vkuY
- jXsD4uxp67+HfVW6ND/JNB2q63feQkxKOIBARWCSCI1RjuxkPlErUOL+l/ib99Btm4tqXu2T75Y
- M8zRWkk4biRfRzJc3FX6TQaTWQXPRWtRQ8Cx+SJlQpmsQO+DA34CikTixKc2TJ8Y639SDuOD9Iu
- Lq7GbOB6I1jx2QyGwXwBD1bVQdRj9I+gLEs2QJI/qkBa9U/tIqnoNrTx+vFzkh9XKLt8PWnCPiR
- u+MBK2lNqQofsscO3jK4m6qlpzmiFZPzXy5SrRgLD30OmXNO0rbnFhU+iEUL6IqrGFmmtTILKiq
- vlN+eC3upkcjyiOk8Q4T1gIfXDMQS+fNQz8gKG2usrLnP7BSd9htnvnCMLmd72gdmv+hhkEqMad
- qPWSftNQWopCS2lyLsHVAVFm2W3ip7/aFpX4DuRUhsYFuIYeB6ruwyXl0Nxd0+nSXR1XJD2oKvt
- GzJpu5NRZE=
-X-Received: by 2002:a05:600c:c11c:b0:48a:52f2:a0f1 with SMTP id
- 5b1f17b1804b1-48e51f46d48mr42633685e9.18.1778075991360; 
- Wed, 06 May 2026 06:59:51 -0700 (PDT)
+ bh=yBKRutgN3yjojHntkFFZk++yw8Yg1fzT+jwbzOTAYOo=;
+ b=bHl6AadtmdUI08KxhBHSBq4THUpw2132GuVQMSR+04D81UIzD70ueb/nJcqXVx4nxA
+ HzY0fqEZd4A/2xgo0Uiv6XkbsdMR+mO46xHRfwLvGr51a/dhcjTnvNcGYY4+YQqUIcjR
+ dlDmyC9zz+buas51ITSDgrxTvPC4U/U0YgBLmUQhdwKOgms5Qh53kKJz/wNEegIMgsKh
+ qTyDikcr7f+Q+yON5hWCngAxfOL5XyrdydMkOdoRu65cqCjNbsaJYKaOlckO6oqVOVRc
+ RTM5eCPlYt/tkh330W8gd2jopS5c4YMKZ5onxlf5B/yPeN73l2GfyOMa/ewzMjIVuEDI
+ nCnQ==
+X-Gm-Message-State: AOJu0Yy2UvHzVMLYfRkvN4KE5OcMeE3c3GTSly5Ht+t72sJUnvX2Ky1+
+ Fmjii5RzMXxvKw5yjSUmjJAfqbZIe3auGcOALW4xXkMCdBUCIHsuz+lzZbisP02TLTHM7q2fNbM
+ FygAdXsw=
+X-Gm-Gg: AeBDieuHfWZ//2Z3vHwLiazgU3Wx8b47dzLT9D/n2lQsqCPNZNdEcafhnELADeIv3nm
+ 8y2PjQSot8Rw04C//KMg96kE3wAcP95WJQxPH5AYz/QwlpxMUlEC9DteNHdR8Qyt+tMQshkKDJ+
+ 57J0WPPr/qypwA2oGymDdq89SPRKv+xOaGmSHEGpKY1eSldaW6glo6j8K5YXIPLNUcUTSBwt1AR
+ d8129dSf2s2GVucmRPL10t+e2t5sxIh4+ioYqpdog+DJAP8Lf4AicH/b73J2pD2OcfSykL5Enu7
+ dXqqU7N5I+smcgcfyO3m7mbCM2neNdFC1D8p9oOP1gLvJhDERdyl5gJBS/2m9T3noDFhAr+LCaq
+ ecD0mpnrmJGVBF+EYxJ4DO6qzBeR4Koy9YXJ4h6W6LSh3BbyDlm8sNptmMm7PZ8GS4K07vudHyE
+ fZPKdLNNFv0nCAPp/5kQpXs4zDR0NF+gLiX/S1L38rTaW0NR2XVKSuH0OKYPiw+nTuIP4cRHUNk
+ CIowYOOFKw=
+X-Received: by 2002:a05:600c:c082:b0:485:3ec6:e634 with SMTP id
+ 5b1f17b1804b1-48e51f327fbmr43772345e9.15.1778075968560; 
+ Wed, 06 May 2026 06:59:28 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e52f5c1cfsm35974615e9.0.2026.05.06.06.59.49
+ 5b1f17b1804b1-48e53141f41sm17381615e9.26.2026.05.06.06.59.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 06:59:49 -0700 (PDT)
+ Wed, 06 May 2026 06:59:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 035/110] cpus: Remove CPUClass::init_accel_cpu() left-over hook
-Date: Wed,  6 May 2026 15:54:07 +0200
-Message-ID: <20260506135524.20617-36-philmd@linaro.org>
+Subject: [PULL 032/110] target/mips: Inline qemu_get/put_betls()
+Date: Wed,  6 May 2026 15:54:04 +0200
+Message-ID: <20260506135524.20617-33-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,63 +99,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commits f50d0f335a6 and a522b04bb9c ("target/riscv,i386: Remove
-AccelCPUClass::cpu_class_init need") removed the last uses of
-the CPUClass::init_accel_cpu hook. Remove it as unused.
+Use TargetInfo target_long_bits() helper at runtime to migrate
+the VPN register as 32 or 64-bits.
+
+The "migration/qemu-file-types.h" isn't required anymore in
+"migration/cpu.h", however it was missing in "ppc/machine.c".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260412212547.29645-1-philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-Id: <20260325211728.89204-7-philmd@linaro.org>
 ---
- include/hw/core/cpu.h |  6 ------
- accel/accel-common.c  | 13 -------------
- 2 files changed, 19 deletions(-)
+ include/migration/cpu.h      |  7 -------
+ target/mips/system/machine.c | 14 ++++++++++++--
+ target/ppc/machine.c         |  1 +
+ 3 files changed, 13 insertions(+), 9 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 207a7a1becb..c9fea797435 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -186,12 +186,6 @@ struct CPUClass {
-     /* when TCG is not available, this pointer is NULL */
-     const TCGCPUOps *tcg_ops;
+diff --git a/include/migration/cpu.h b/include/migration/cpu.h
+index 87ca977a3fd..8260ce0a3b7 100644
+--- a/include/migration/cpu.h
++++ b/include/migration/cpu.h
+@@ -4,13 +4,9 @@
+ #define MIGRATION_CPU_H
  
--    /*
--     * if not NULL, this is called in order for the CPUClass to initialize
--     * class data that depends on the accelerator, see accel/accel-common.c.
--     */
--    void (*init_accel_cpu)(struct AccelCPUClass *accel_cpu, CPUClass *cc);
+ #include "exec/cpu-defs.h"
+-#include "migration/qemu-file-types.h"
+ #include "migration/vmstate.h"
+ 
+ #if TARGET_LONG_BITS == 64
+-#define qemu_put_betls qemu_put_be64s
+-#define qemu_get_betls qemu_get_be64s
 -
-     /*
-      * Keep non-pointer data at the end to minimize holes.
-      */
-diff --git a/accel/accel-common.c b/accel/accel-common.c
-index eecb2a292af..9c5b4111c8d 100644
---- a/accel/accel-common.c
-+++ b/accel/accel-common.c
-@@ -37,23 +37,10 @@ static void accel_init_cpu_int_aux(ObjectClass *klass, void *opaque)
-     CPUClass *cc = CPU_CLASS(klass);
-     AccelCPUClass *accel_cpu = opaque;
+ #define VMSTATE_UINTTL_V(_f, _s, _v)                                  \
+     VMSTATE_UINT64_V(_f, _s, _v)
+ #define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
+@@ -19,9 +15,6 @@
+     VMSTATE_UINT64_SUB_ARRAY(_f, _s, _start, _num)
+ #define vmstate_info_uinttl vmstate_info_uint64
+ #else
+-#define qemu_put_betls qemu_put_be32s
+-#define qemu_get_betls qemu_get_be32s
+-
+ #define VMSTATE_UINTTL_V(_f, _s, _v)                                  \
+     VMSTATE_UINT32_V(_f, _s, _v)
+ #define VMSTATE_UINTTL_ARRAY_V(_f, _s, _n, _v)                        \
+diff --git a/target/mips/system/machine.c b/target/mips/system/machine.c
+index 0a32665f835..5880b401b07 100644
+--- a/target/mips/system/machine.c
++++ b/target/mips/system/machine.c
+@@ -1,7 +1,9 @@
+ #include "qemu/osdep.h"
++#include "qemu/target-info.h"
+ #include "cpu.h"
+ #include "internal.h"
+ #include "migration/cpu.h"
++#include "migration/qemu-file-types.h"
+ #include "fpu_helper.h"
+ #include "qemu/timer.h"
  
--    /*
--     * The first callback allows accel-cpu to run initializations
--     * for the CPU, customizing CPU behavior according to the accelerator.
--     *
--     * The second one allows the CPU to customize the accel-cpu
--     * behavior according to the CPU.
--     *
--     * The second is currently only used by TCG, to specialize the
--     * TCGCPUOps depending on the CPU type.
--     */
-     cc->accel_cpu = accel_cpu;
-     if (accel_cpu->cpu_class_init) {
-         accel_cpu->cpu_class_init(cc);
-     }
--    if (cc->init_accel_cpu) {
--        cc->init_accel_cpu(accel_cpu, cc);
--    }
- }
+@@ -140,7 +142,11 @@ static int get_tlb(QEMUFile *f, void *pv, size_t size,
+     r4k_tlb_t *v = pv;
+     uint16_t flags;
  
- /* initialize the arch-specific accel CpuClass interfaces */
+-    qemu_get_betls(f, &v->VPN);
++    if (target_long_bits() == 64) {
++        v->VPN = qemu_get_be64(f);
++    } else {
++        v->VPN = qemu_get_be32(f);
++    }
+     qemu_get_be32s(f, &v->PageMask);
+     qemu_get_be16s(f, &v->ASID);
+     qemu_get_be32s(f, &v->MMID);
+@@ -183,7 +189,11 @@ static int put_tlb(QEMUFile *f, void *pv, size_t size,
+                       (v->D0 << 1) |
+                       (v->D1 << 0));
+ 
+-    qemu_put_betls(f, &v->VPN);
++    if (target_long_bits() == 64) {
++        qemu_put_be64(f, v->VPN);
++    } else {
++        qemu_put_be32(f, v->VPN);
++    }
+     qemu_put_be32s(f, &v->PageMask);
+     qemu_put_be16s(f, &asid);
+     qemu_put_be32s(f, &mmid);
+diff --git a/target/ppc/machine.c b/target/ppc/machine.c
+index 9eae0ff647d..569536bd02d 100644
+--- a/target/ppc/machine.c
++++ b/target/ppc/machine.c
+@@ -5,6 +5,7 @@
+ #include "helper_regs.h"
+ #include "mmu-hash64.h"
+ #include "migration/cpu.h"
++#include "migration/qemu-file-types.h"
+ #include "qapi/error.h"
+ #include "kvm_ppc.h"
+ #include "power8-pmu.h"
 -- 
 2.53.0
 
