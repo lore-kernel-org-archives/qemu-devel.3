@@ -4,109 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4CE4CD342C
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 18:21:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D623CCD3439
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 18:22:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKgrk-0007hO-7r; Wed, 06 May 2026 14:21:00 -0400
+	id 1wKgsl-0008A4-HW; Wed, 06 May 2026 14:22:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wKgrd-0007bc-A6; Wed, 06 May 2026 14:20:54 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wKgsh-00089X-S6; Wed, 06 May 2026 14:21:59 -0400
+Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1wKgra-0007MS-Qi; Wed, 06 May 2026 14:20:53 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 646B4pXe2210426; Wed, 6 May 2026 18:20:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=9ZYUF4
- RVBCvEAO5FC4oupHp8SeGGy68yg/B2vlnmH0o=; b=Tl43lO2h5l/uBZjw4H244t
- 5kopGUskLJTq9GdE8WWmT7LjuQVy+uMrWoUWv+LlZNoxG+eJHXHO8VsfqHDutcLC
- 2ZhRDl9XN2RqT5ePX1KAEYxkPaAyMcWpWpdSrf4OeRI/MdzZT7gsZBRQAprrL9RG
- xJQq80w1fE/jLHNyHppCO/jNEvJMB7flUdv4KDDVnvUU8v4c6bYGeBQ95mnleWJr
- Sdw9ovo5eQvcy8U/1ituprH+Nccy1E4HAIlTNw6rLGX14ulwGu2201cxThtfFyH0
- lbh/y/rf9N1aQ8iSfQv6va7uWbsJLdAFg0bKF9diQaxxLZrmI+N61Fw49tDHpttw
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9y1j6rx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 06 May 2026 18:20:48 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 646I9WCY025534;
- Wed, 6 May 2026 18:20:47 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dww3h7dy9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 06 May 2026 18:20:47 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 646IKkdn6095784
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 6 May 2026 18:20:46 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DF28058043;
- Wed,  6 May 2026 18:20:45 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6643B58059;
- Wed,  6 May 2026 18:20:45 +0000 (GMT)
-Received: from [9.61.184.19] (unknown [9.61.184.19])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  6 May 2026 18:20:45 +0000 (GMT)
-Message-ID: <fe2f10ad-f935-4465-81e2-f469846a0828@linux.ibm.com>
-Date: Wed, 6 May 2026 14:20:44 -0400
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wKgsf-0007cz-VP; Wed, 06 May 2026 14:21:59 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZDM0DNsHQhxNn2C5XYT12V76AXz8PlUyzwPbkvRP0TA5DKnocJaL2b0rtpbgudb8vGY/2sMCkEVDr6xak0IzmbreB1vTEdfJZtHNu8gvUEsI4tBD3PHhzizqHYHWt7KWjLWMKxBlkvLutS8pFKLqNK2H7gbTkBbVORyggVVFQD7wbH5mDkIECcXspEPMg/CParqZsS4jIM4zfRVSJASZH5IjexXy8CVnrap4VnmrdHta93OB93ZLSHUv9UdzA05Yklt5ZcAqJk4FwLcldS1jy0ORUb5/PewwUXhZyrY9UeNAOUvGZ/cP70PNWTjQFJvSmxCAAJXUB6fj+Z/Nm5phFg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=/jelYwqfb3ouAi21jR0uC43s0TJO7CXDUTiQgYxDHCI=;
+ b=p1iwpGv+1FX4Oiuds13wRS5zNKBYwzptmVFQfoS1cG+7goZ/Cwmc33hR6pdqGQ9X1bWOacJ62ZRc3WyZmjrFD7djLdb8JRKDiAPTfZC9yn1rHr+wBLCJW0i3vLnv9TOo404R0D6tLEvMKGPO/vys7TadNSGFSqO4W8t18O16PaooJ2TxRhM+xBWMWAEHEQYBd84Mj5rMe7hp8Wx/a59AWa+gq2KzzByDqB9rxNtJ/T2ZuUbV5KPJ5YQONcIMyEP1XSRLkLrbWWO5rME2rF+E0RGXjvfpsuPm13xWnijE2PuIYRXMPJz84u+J0qoUz/jnFlV6Sfv/bkHUU08J78eyhQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/jelYwqfb3ouAi21jR0uC43s0TJO7CXDUTiQgYxDHCI=;
+ b=ENWjnHi4qrUR0XeH+XxSTlpG2Ooc+gr8+YWpnQl+3X/Hpxi0Yfut8lGSLn/OQ2KkJ1VOsW/Q7ZiR6Dqu3OJjLQdefyZZWU4wfQPj2oLloK2+d/Vd0FVhKCFF3KgLtFhdd7q3XCVYTdLRRdVycb171kedhg0rpkn1n+M5lQPs/yKUyP35iAtSx0LzhgiOTLo+cKuLS+6Wb/4ktpRtUtVUX1GlFsfAFj/SEimFXEp1b7vkp4HPkYC5jfkObKJFcxvLex0Yp6oA/fZoXwneNdTNvIxgrlJ41fyMC4Ht5IV6T0Z4iD287X+/GrVkXJzm+WXKKTG0UUH6bg7lfS9Ns6t7EQ==
+Received: from BLAP220CA0027.NAMP220.PROD.OUTLOOK.COM (2603:10b6:208:32c::32)
+ by LV3PR12MB9186.namprd12.prod.outlook.com (2603:10b6:408:197::16)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Wed, 6 May
+ 2026 18:21:48 +0000
+Received: from BN1PEPF00004687.namprd05.prod.outlook.com
+ (2603:10b6:208:32c:cafe::14) by BLAP220CA0027.outlook.office365.com
+ (2603:10b6:208:32c::32) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9870.27 via Frontend Transport; Wed,
+ 6 May 2026 18:21:48 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ BN1PEPF00004687.mail.protection.outlook.com (10.167.243.132) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9891.9 via Frontend Transport; Wed, 6 May 2026 18:21:48 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 6 May
+ 2026 11:21:26 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Wed, 6 May 2026 11:21:25 -0700
+Received: from nvidia.com (10.127.8.13) by mail.nvidia.com (10.126.190.180)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Wed, 6 May 2026 11:21:22 -0700
+Date: Wed, 6 May 2026 11:21:19 -0700
+To: Eric Auger <eric.auger@redhat.com>
+CC: Shameer Kolothum <skolothumtho@nvidia.com>, <qemu-arm@nongnu.org>,
+ <qemu-devel@nongnu.org>, <peter.maydell@linaro.org>, <clg@redhat.com>,
+ <alex@shazbot.org>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <jan@nvidia.com>, <jgg@nvidia.com>, <jonathan.cameron@huawei.com>,
+ <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>, <phrdina@redhat.com>
+Subject: Re: [PATCH v4 19/31] hw/arm/tegra241-cmdqv: Allocate HW VCMDQs on
+ base register programming
+Message-ID: <afuGnxABp8wa0bMt@nvidia.com>
+References: <20260415105552.622421-1-skolothumtho@nvidia.com>
+ <20260415105552.622421-20-skolothumtho@nvidia.com>
+ <db7e22fc-f4e0-4caa-894c-fbffe8fae4b1@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/5] pc-bios/s390-ccw: Add per-queue notification offset
- for multi-queue virtio configurations
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- cohuck@redhat.com
-Cc: jjherne@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com
-References: <20260504221613.826825-1-jrossi@linux.ibm.com>
- <20260504221613.826825-3-jrossi@linux.ibm.com>
-Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <20260504221613.826825-3-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: QhXUyAR3aNkdVQaEULtEALnc5Vl5lS64
-X-Proofpoint-GUID: QhXUyAR3aNkdVQaEULtEALnc5Vl5lS64
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA2MDE3NyBTYWx0ZWRfX4Yc4f7btbEBX
- G42rfaec++4aHj8rhd2esNMRACZIJovvGCU3QDZsTBU15DiW41kLchilRYXtzcfTiM5xhstynX+
- E+8lzy5aU/GkEvks7qB7UxW9MjNQ7P1am8IGPwY/P/I8dEU/4HyAovTtb1gu/ATvn4slpA10VD+
- Q/eT0tCybQ3wbU7IVxvH+SPhfJkypKgU4aFo6SFzfmXlFDgsbmNQafYX1H7RLplLqyWnSkSbpnE
- qQqgcdqHG+hk0h84veVqpFoyyG1pla1FDMMFHqTIVNrzBAfSqC8wfSFsnQ0jjdSh2xzw6QxSKcU
- gjlo82rJgjVhkSVGfiMmPqMB61NA0yQSw67i9lDaZjU4fq9dJp/39EtzmCM21D6LBPSQAODlCYw
- zZywr4O5tsEq2tge0ZQT+xCAR1nNb+mmEAt0y8QsRYgVNG1zXK1ypFZDLG76WP8eh1H3eTrwVpR
- 04ZstyZ66QG6ej9ZF8g==
-X-Authority-Analysis: v=2.4 cv=UbFhjqSN c=1 sm=1 tr=0 ts=69fb8680 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=lWE6Ke99UggxnlHRUC0A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-06_01,2026-05-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 spamscore=0 lowpriorityscore=0 malwarescore=0 suspectscore=0
- adultscore=0 priorityscore=1501 bulkscore=0 phishscore=0 impostorscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605060177
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <db7e22fc-f4e0-4caa-894c-fbffe8fae4b1@redhat.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN1PEPF00004687:EE_|LV3PR12MB9186:EE_
+X-MS-Office365-Filtering-Correlation-Id: 74c0e9a0-c48c-4a0a-3c0b-08deab9c562e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700016|1800799024|376014|82310400026|18002099003|22082099003|56012099003;
+X-Microsoft-Antispam-Message-Info: CP6GAi9qE+JU5nLhRb/tilxo0DbNGhPiBzCD3wyNdkZX+Gn1fU14h5BsqhpEzMfQzg7csCNo3NDCfSxYg698Zc+LMaHGJnQFruIQQXX4c1H3pIMk7vxlpO0SLuUXXXGhiaXRnqOLU95UGh41kXZoPXx9Jp/Q+kC5d/cv3VXA+i0QQwdcujTin8jfbskNgyVn+U6AmLMB6bXRkzT/8/dAjYywB6HbuYxyCLrorKarh+tIMzckts2I6XovyLccAFXnb6r+52ko61GayQlG/mY1KvmPiGox0q/nvZlWwod2B1uMROzhODCfhPiDo+UcQ4x4yHSZbH1J9NEnQQYtg7jFEMMtDpqT5TJ5iDyQJWqFQXSCUPAGWFYupKMG3dWKt4HOelJYdOepp7A5tUNtkX/nNBVkwU5BaXR+JWF1jsD8sO902MRxg4Gx5NDjmsB6s1e4EKblVv2oTgkTO+/IKIv35PBVCigJpSmZzkvCoCm+EA2wxz6KF7fZdM/sZwQuVmkk/vEuVsvrWd+9E/KrvGcw9aXynOADYyBt6yjpcqwhDmIVqjMXS1taeJZ+USKypX9IqRTtv1ZxXaK+/cxbjootIlQNI5T8Y61YtrcFCrqxtNEuQPGKtHDDZwmlopcxfh8KeuMTUaHm/MqONjtNAadWst5fG9s138nP0RbsjBfyz9uMmZkRZrQZRW+NBQbQiTInEz2cB5vRwnjHCDW4Ujs+H5/r+kcokGS12O3QWQ5OJag=
+X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(36860700016)(1800799024)(376014)(82310400026)(18002099003)(22082099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 1m5R3aRXjxWj0dgmBV3nhuwJxdzZqCi0yLbWcDLApXP22QyLF9rP54qAJBhIWsJatoV8W58V5PsF2/oS4dYlv9wtGVMiMxXzDX7l8aJlrHfedGH50J8uLmjWQzMIrGdGILNWkhj9Ngra/C5L7FpVDMVisDRt9Mq2+lY9VaKSs0R6HeyDG3lC/bcGGoUpEde5HYeZ4sOSqFukhPuYFvK3/3Twx+NgB1T0ppM6W8yVlsQb1iOznlJSW5TWlWWXgGw5qxoawXh00uPPPfQb1SF/0XGh4M7RgisGIt9KQimOuquOQFjiYpJAhva+TEGi8T13dXFihcCul5AqVFZbefdkAQChR2nDVz6VVfhlaki1NPy6t9VGyXRALruzWR2ne8/xYFDQ8M8zQ8lqSnEbNushVuSUPKpb+NLgO2YuNGz+GqJcDkAaLv5E9pPgI9dyjg02
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 May 2026 18:21:48.0072 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 74c0e9a0-c48c-4a0a-3c0b-08deab9c562e
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00004687.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9186
+Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
+ envelope-from=nicolinc@nvidia.com;
+ helo=PH8PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -12
+X-Spam_score: -1.3
+X-Spam_bar: -
+X-Spam_report: (-1.3 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, KHOP_HELO_FCRDNS=0.4, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,171 +133,27 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Nicolin Chen <nicolinc@nvidia.com>
+From:  Nicolin Chen via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/4/26 6:16 PM, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
+On Wed, May 06, 2026 at 06:51:24PM +0200, Eric Auger wrote:
+> On 4/15/26 12:55 PM, Shameer Kolothum wrote:
+> > +static void tegra241_cmdqv_free_all_vcmdq(Tegra241CMDQV *cmdqv)
+> > +{
+> > +    /* Free in reverse order to avoid "resource busy" error */
+> > +    for (int i = (TEGRA241_CMDQV_MAX_CMDQ - 1); i >= 0; i--) {
+> > +        tegra241_cmdqv_free_vcmdq(cmdqv, i);
+> uapi/linux/iommufd.h says:        
+> * - alloc starts from the lowest @index=0 in ascending order
+> * - destroy starts from the last allocated @index in descending order
 > 
-> The initial support for virtio-blk-pci IPL devices used a single virt-queue, but
-> other device types require multiple queues, and for PCI device types this also
-> requires a per-queue notification offset.
-> 
-> Add a PCI notify field to the VRing struct so that each queue has a unique
-> notify offset.  Also re-select the target queue before writing buffers to
-> ensure the proper queue is active.
-> 
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->  pc-bios/s390-ccw/virtio-pci.c | 36 ++++++++++++++++++++++-------------
->  pc-bios/s390-ccw/virtio-pci.h |  3 ++-
->  pc-bios/s390-ccw/virtio.c     |  4 +++-
->  pc-bios/s390-ccw/virtio.h     |  1 +
->  4 files changed, 29 insertions(+), 15 deletions(-)
-> 
-> diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
-> index 53bdb52e76..736869f4f5 100644
-> --- a/pc-bios/s390-ccw/virtio-pci.c
-> +++ b/pc-bios/s390-ccw/virtio-pci.c
-> @@ -74,10 +74,10 @@ int virtio_pci_reset(VDev *vdev)
->      return 0;
->  }
->  
-> -long virtio_pci_notify(int vq_id)
-> +long virtio_pci_notify(VRing *vr)
->  {
-> -    uint32_t offset = n_cap.off + notify_mult * q_notify_offset;
-> -    return vpci_bswap16_write(offset, n_cap.bar, (uint16_t) vq_id);
-> +    uint32_t offset = n_cap.off + notify_mult * vr->pci_notify;
-> +    return vpci_bswap16_write(offset, n_cap.bar, (uint16_t) vr->id);
->  }
->  
->  /*
-> @@ -166,7 +166,7 @@ int vpci_read_flex(uint64_t offset, uint8_t pcias, void *buf, int len)
->      return 0;
->  }
->  
-> -static int vpci_set_selected_vq(uint16_t queue_num)
-> +int vpci_set_selected_vq(uint16_t queue_num)
->  {
->      return vpci_bswap16_write(c_cap.off + VPCI_C_OFFSET_Q_SELECT, c_cap.bar, queue_num);
->  }
-> @@ -332,7 +332,6 @@ int virtio_pci_setup(VDev *vdev)
->      VRing *vr;
->      int rc;
->      uint8_t status;
-> -    uint16_t vq_size;
->      int i = 0;
->  
->      vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
-> @@ -380,28 +379,39 @@ int virtio_pci_setup(VDev *vdev)
->          return -EIO;
->      }
->  
-> -    if (vpci_read_bswap16(VPCI_C_OFFSET_Q_SIZE, c_cap.bar, &vq_size)) {
-> -        puts("Failed to read virt-queue configuration");
-> -        return -EIO;
-> -    }
-> -
->      /* Configure virt-queues for pci */
->      for (i = 0; i < vdev->nr_vqs; i++) {
-> +        uint16_t vq_size;
-> +        uint16_t vq_notify;
->          VqInfo info = {
->              .queue = (unsigned long long) virtio_get_ring_area(i),
->              .align = KVM_S390_VIRTIO_RING_ALIGN,
->              .index = i,
-> -            .num = vq_size,
-> +            .num = 0,
->          };
->  
->          vr = &vdev->vrings[i];
-> -        vring_init(vr, &info);
->  
-> -        if (vpci_set_selected_vq(vr->id)) {
-> +        if (vpci_set_selected_vq(i)) {
->              puts("Failed to set selected virt-queue");
->              return -EIO;
->          }
->  
-> +        if (vpci_read_bswap16(VPCI_C_OFFSET_Q_SIZE, c_cap.bar, &vq_size)) {
+> so this seems a requirement of the uapi if I understand correctly
 
-Small nit: c_cap.off + VPCI_C_OFFSET_Q_SIZE
+Oh yea. I forgot I put there too. Fundamentally, it's demanded by
+the HW contract. But I think you are right, for QEMU, saying that
+it follows the uAPI fits better.
 
-> +            puts("Failed to read virt-queue configuration");
-> +            return -EIO;
-> +        }
-> +
-> +        info.num = vq_size;
-> +
-> +        if (vpci_read_bswap16(c_cap.off + VPCI_C_OFFSET_Q_NOFF, c_cap.bar, &vq_notify)) {
-> +            puts("Failed to read virt-queue configuration");
-> +            return -EIO;
-> +        }
-
-Since the notification offset is now read per queue, should we remove
-the same read in virtio_pci_read_pci_cap_config() as well as the global
-q_notify_offset variable?
-
-if (rc || vpci_read_bswap16(c_cap.off + VPCI_C_OFFSET_Q_NOFF, c_cap.bar,
-&q_notify_offset))
-
-> +
-> +        vr->pci_notify = vq_notify;
-> +        vring_init(vr, &info);
-> +
->          rc = set_pci_vq_addr(VPCI_C_OFFSET_Q_DESCLO, vr->desc);
->          rc |= set_pci_vq_addr(VPCI_C_OFFSET_Q_AVAILLO, vr->avail);
->          rc |= set_pci_vq_addr(VPCI_C_OFFSET_Q_USEDLO, vr->used);
-> diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.h
-> index 90d07cb9a7..993fc285ac 100644
-> --- a/pc-bios/s390-ccw/virtio-pci.h
-> +++ b/pc-bios/s390-ccw/virtio-pci.h
-> @@ -62,9 +62,10 @@ struct VirtioPciCap {
->  };
->  typedef struct VirtioPciCap  VirtioPciCap;
->  
-> +int vpci_set_selected_vq(uint16_t queue_num);
->  void virtio_pci_id2type(VDev *vdev, uint16_t device_id);
->  int virtio_pci_reset(VDev *vdev);
-> -long virtio_pci_notify(int vq_id);
-> +long virtio_pci_notify(VRing *vr);
->  int virtio_pci_setup(VDev *vdev);
->  int virtio_pci_setup_device(void);
->  
-> diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
-> index 30e6b2bc16..00850acc2f 100644
-> --- a/pc-bios/s390-ccw/virtio.c
-> +++ b/pc-bios/s390-ccw/virtio.c
-> @@ -114,7 +114,8 @@ bool vring_notify(VRing *vr)
->          vr->cookie = virtio_ccw_notify(vdev.schid, vr->id, vr->cookie);
->          break;
->      case S390_IPL_TYPE_PCI:
-> -        vr->cookie = virtio_pci_notify(vr->id);
-> +        vr->cookie = virtio_pci_notify(vr);
-> +        break;
->      default:
->          return 1;
->      }
-> @@ -154,6 +155,7 @@ static void vr_bswap_descriptor(VRingDesc *desc)
->  void vring_send_buf(VRing *vr, void *p, int len, int flags)
->  {
->      if (!be_ipl()) {
-> +        vpci_set_selected_vq(vr->id);
->          vr->avail->idx = bswap16(vr->avail->idx);
->      }
->  
-> diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
-> index d32a4830ca..75ae5bdbc2 100644
-> --- a/pc-bios/s390-ccw/virtio.h
-> +++ b/pc-bios/s390-ccw/virtio.h
-> @@ -107,6 +107,7 @@ struct VRing {
->      VRingUsed *used;
->      long cookie;
->      int id;
-> +    uint16_t pci_notify;
->  };
->  typedef struct VRing VRing;
->  
-
+Nicolin
 
