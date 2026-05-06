@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCE87FF8855
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 765CDCD3440
 	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:05:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcq5-0007bd-FX; Wed, 06 May 2026 10:03:01 -0400
+	id 1wKcrT-0001KK-O7; Wed, 06 May 2026 10:04:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcoe-0006VQ-VS
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:01:35 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcpq-0007RD-Rv
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:02:50 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcod-0000oF-Cm
- for qemu-devel@nongnu.org; Wed, 06 May 2026 10:01:32 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4893940bb5eso36263065e9.3
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:01:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcpp-0000xM-96
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:02:46 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-44b052142e1so2792068f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:02:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778076088; x=1778680888; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076162; x=1778680962; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=FHDbajhituef8JDq8mnAuwhyeEDKI5Fzp0m93s4KOg8=;
- b=sChIyPzCqdfal/ux5P73obcet1rPAY9WygrMzpKjHLFFomxiJxUaoOmBS2VSatx3iB
- YfWSO5MpMZ2x2j26CLDzosQoSGtk60HmYApTQhIFurZcLCQBXU1QER3fKU6VZsjX5UmX
- tfYbz2sihXO6Gt5yLdLtwnEsM7x/g5L0slAWimcvc+e3QVVrDCkrbkuk6BZPjJdXwEC8
- GabWT5iHTPKJXM2kDadvLPrHJx3WoZXuHARvUghTm7dc/a9Lp+NbOQmXJJzZfbFBpphu
- DssqAv4R14A4VjsGrut+aaSGoRp7aw1plFX/JykKiM7ujhdrhlJNElpklqpIAgVGkskf
- RLRA==
+ :reply-to; bh=wnUhPBvByi3xklzN4tpBvRpQo8+T/x7M5oAr/ykzJl8=;
+ b=SrcT0UjSGOPSrytkcG8EYbLB9eu0IGqZEDKS/gwL8zG+FGa9MiG/UzKfYEjXxtsKSc
+ 5qg4424Me4BMHecZQP7Sn2knNOzZwdEqpQnc7ZpjQ+5f/A4Og3MctJom65vs7UQDfV5h
+ sYvc/mOVLPzeaTZ1Ubz47nFCYJMAjhZpPPcin0cLGX9cafmsbtyUMh46sDq0Jd4gLnGB
+ OBvaKmJttl59saHgeoLpGk05btMFCgXXSHt8ATZRIBsEh2YeT26w07h2Jf/EpG2lUZ30
+ 0TyPNnX15eKKPi/iye91+IBtGuiOr+OQat054n8V6TrUOV/igVdXUrkKUu7bWhXSUfC+
+ px2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778076088; x=1778680888;
+ d=1e100.net; s=20251104; t=1778076162; x=1778680962;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=FHDbajhituef8JDq8mnAuwhyeEDKI5Fzp0m93s4KOg8=;
- b=iR7y4pLbSbziOHXLTNivaM5xxj+YfR8K1apzM2GYcIbTTa0EYbc4ac1MQWfTCV/9BR
- BXg3CWiTbtuTcSyEpj0eco1RLx+w0bm4sCGBYZqmFq3cJKAmqVQ9Wk2h5qG+PZUKHUEU
- uYSzJe6IcckXbYJc0DddaB98j0HBNJyMc8twsnjiHtxZVX0khLixx3aR9xA/M5tIhHAD
- a6nehtsc8pjtcVFyKq+kLN8bv+B3C3iZqRdIFCxscpPZQi9WKAx6T/K4Cuv/F5MAbuiD
- 6l3F/Z5M6uqHovop8bnwqDQ3QJWO+3Fe/T+MiuOhoDMdSNyIfkHTXmfEpj5ZLE+KpX+X
- t+qw==
-X-Gm-Message-State: AOJu0YwkpcMq98X5DI+cWmtwl0P2MqisosFNym/wVvXUe58JphbgcG1k
- MAZ9kae3PbheRVRwwW7lD+Yy+UUsSnao9fWJjzrlBaiAKBvHIroBMaOiJd0pC3aKwv9ctZJ8Pnm
- ckJMoi+Q=
-X-Gm-Gg: AeBDies53WaJ3Li26kQ/1xRLaJXEbQT67p0lV+U8Jk868kYYrdtw0zHQ0RceiR/sPQ0
- Nj0kY2i/7YBbgL8LsWuo6IFfC3PwH27JZ6sM08v7N7a88Ktova0Oh3F97pPRqCzNHtPY1ErORwO
- XEJty/0MvXEQtmUdrkk7rg7/v2q8HLM+vKNs91LPX/W7e+XEcSLIVP3qDYGwXTtXmWd02SiLtyi
- SfTdsAJd/dSQXRH2fhfF3KRv51Bz6Gg+18NrnYV0yAfFE6DSHmegBDlyzj36+Q31DMRo8ajpTN0
- 4+oBQMEUvVGmHNvYpwmv+wtLeTS7SylHPF0ZzYpjBFzHE4cWS9N3jrtKEpOMDW3uahBMWDQ7xX5
- Bt8tZZ/HnsWvcXlDCOVfLCeLO4cn1n+Rr4c4hm3iq6IxG4Nr/vD139g0YVuDggMcA30HjhVN8Pw
- /ow3QMIn8kwnUisHB+I+hevD7Epv0f7xX8DQGRZRH4MKBQGWH43K/VGyjNu8mddZqqA4/GkMAL/
- ir14vSvLjs=
-X-Received: by 2002:a05:600c:4448:b0:48e:526e:1040 with SMTP id
- 5b1f17b1804b1-48e526e1226mr56998455e9.23.1778076087895; 
- Wed, 06 May 2026 07:01:27 -0700 (PDT)
+ bh=wnUhPBvByi3xklzN4tpBvRpQo8+T/x7M5oAr/ykzJl8=;
+ b=jYCjfsvoymlfoB+Ag1S80lvjm2NBfZwKQWjgB0Okgvgdvz/UsUgg2RrnK/nRhC9U9u
+ 47mpkQXkX+/jyvYVv2/2V5QcH+Ll8yZo/aplXyjgAe8VJSrJhM1KwNrhpH9Fg9oCwh/7
+ dh9uahGDaMfrIA0C9UXPoWuyVhYi/v4NuDfQPEmbvAFae19ZvZ0M8yD6Iy6A2bTXXD/y
+ d3s2s4sUVAm5dIWz7NE7DC1dz2tNzOT/kalgUBhgHqZ0Zs7eFlugzWV6xMOIwrXyGs7x
+ qHXxQaqsW7bpy4h5IyjQnrTSTTQPBViIm9Q4v7ymLUe3YerbO01QpiUbge43z8D2hGx0
+ 1qTQ==
+X-Gm-Message-State: AOJu0YzJAyJbgjuQXVmuG6ywBSodmiVROaOL6vbsv6TEIxH2vRK0t3aj
+ z9rfQqkQ4PRtQY1EOn3CVoUXrhE+4CP5okp5o0x/Cljjc7nOhic+WgUI2poOZZmltBU2QW38M52
+ ESHbLEDY=
+X-Gm-Gg: AeBDieuAf2ilmLWfNEcBJP47le/gTTJI9/Adl0jOEEWzmi6QD4UENgPIXQ3GOyqRx+Y
+ BBBrZ4Jl0AThwOejwXmYB8/J7PXFxs+Mvqzl7kkj0UbRRmFSGRUeQ0Yh52Ns6TBbi7s05F6ThCf
+ h4cPn7rb/ihAiYPr4QMJXBGgrh2CUXkC340bQ9MXvzGAUZ/GgnWBkfwCL4AzfxGYtsmBXNlK8Wg
+ KqH6XnBaW5AHBTPEZIULYo8+XYNhJe1FrJW+0Q15v5w8UbgldRPa8tI9P6lALTpd8PnSBD8PUg5
+ cayhF1bvqGgBcaQLJmgTHE7/A16wc7M6SBK2icwwgaDwZSQmrM9h9bIRB3BupIS20FX25OMIUth
+ lJ6Foc8axPD+WjeVI4J6iB72SANtKqDt0YgozeiP1PpRyxpXXKjfHVG9PaAWH5nKjiS4WsGb1JO
+ D0GWTDmqvAfGG+b2b135L4b6GHWblc/7xCnYb1s0A9QT2FrtxohImsOyTiq3VxASEa8MeZFPFIt
+ zGxr/eo+j6QcuZT7bOrrQ==
+X-Received: by 2002:a5d:584e:0:b0:44b:8fb6:9a2e with SMTP id
+ ffacd0b85a97d-4515ce1ca99mr5598797f8f.20.1778076161604; 
+ Wed, 06 May 2026 07:02:41 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e538fb19csm46938855e9.11.2026.05.06.07.01.25
+ ffacd0b85a97d-4504f4857ffsm12380903f8f.0.2026.05.06.07.02.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 07:01:25 -0700 (PDT)
+ Wed, 06 May 2026 07:02:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 047/110] monitor: Introduce HMPCommand::arch_bitmask field
-Date: Wed,  6 May 2026 15:54:19 +0200
-Message-ID: <20260506135524.20617-48-philmd@linaro.org>
+Subject: [PULL 056/110] target/riscv: Register target_get_monitor_def in
+ SysemuCPUOps
+Date: Wed,  6 May 2026 15:54:28 +0200
+Message-ID: <20260506135524.20617-57-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,82 +100,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the @arch_bitmask field to the HMPCommand structure,
-allowing to restrict a command to a set of target
-architectures (represented by the QEMU_ARCH_* enum constants).
+Rename target_get_monitor_def() as riscv_monitor_get_register_legacy()
+and register it as SysemuCPUOps::monitor_get_register() handler.
+Take care to sign-extend values for 32-bit HARTs.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260427080738.77138-12-philmd@linaro.org>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-Id: <20260427080738.77138-21-philmd@linaro.org>
 ---
- monitor/monitor-internal.h | 11 ++++++++++-
- monitor/hmp-target.c       |  1 +
- monitor/hmp.c              |  4 ++++
- 3 files changed, 15 insertions(+), 1 deletion(-)
+ target/riscv/internals.h |  3 +++
+ target/riscv/cpu.c       |  1 +
+ target/riscv/monitor.c   | 11 +++++++----
+ 3 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/monitor/monitor-internal.h b/monitor/monitor-internal.h
-index 80b4a8150bf..eaf9a607783 100644
---- a/monitor/monitor-internal.h
-+++ b/monitor/monitor-internal.h
-@@ -82,7 +82,6 @@ typedef struct HMPCommand {
-      * the formatted text.
-      */
-     HumanReadableText *(*cmd_info_hrt)(Error **errp);
--    bool coroutine;
-     /*
-      * @sub_table is a list of 2nd level of commands. If it does not exist,
-      * cmd should be used. If it exists, sub_table[?].cmd should be
-@@ -90,6 +89,16 @@ typedef struct HMPCommand {
-      */
-     struct HMPCommand *sub_table;
-     void (*command_completion)(ReadLineState *rs, int nb_args, const char *str);
-+
-+    /* Keep non-pointer data at the end to minimize holes. */
-+
-+    /**
-+     * @arch_bitmask: bitmask of QEMU_ARCH_* constants
-+     *     Allow to restrict the command for a particular set of
-+     *     target architectures.
-+     */
-+    uint32_t arch_bitmask;
-+    bool coroutine;
- } HMPCommand;
- 
- struct Monitor {
-diff --git a/monitor/hmp-target.c b/monitor/hmp-target.c
-index da7dd7f31f2..f6dce326cf5 100644
---- a/monitor/hmp-target.c
-+++ b/monitor/hmp-target.c
-@@ -23,6 +23,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/base-arch-defs.h"
- #include "monitor-internal.h"
- #include "monitor/qdev.h"
- #include "net/slirp.h"
-diff --git a/monitor/hmp.c b/monitor/hmp.c
-index 0e5913fabb1..e881c26c305 100644
---- a/monitor/hmp.c
-+++ b/monitor/hmp.c
-@@ -36,6 +36,7 @@
- #include "qemu/cutils.h"
- #include "qemu/log.h"
- #include "qemu/option.h"
-+#include "qemu/base-arch-defs.h"
- #include "qemu/target-info.h"
- #include "qemu/units.h"
- #include "exec/gdbstub.h"
-@@ -219,6 +220,9 @@ static bool cmd_can_preconfig(const HMPCommand *cmd)
- 
- static bool cmd_available(const HMPCommand *cmd)
- {
-+    if (cmd->arch_bitmask && !qemu_arch_available(cmd->arch_bitmask)) {
-+        return false;
-+    }
-     return phase_check(PHASE_MACHINE_READY) || cmd_can_preconfig(cmd);
+diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+index bac6c8032a2..8c24af0d855 100644
+--- a/target/riscv/internals.h
++++ b/target/riscv/internals.h
+@@ -250,4 +250,7 @@ static inline int insn_len(uint16_t first_word)
+     return (first_word & 3) == 3 ? 4 : 2;
  }
  
++int riscv_monitor_get_register_legacy(CPUState *cs, const char *name,
++                                      int64_t *pval);
++
+ #endif
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index ce15a17c37d..a13727c0d4b 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2733,6 +2733,7 @@ static const struct SysemuCPUOps riscv_sysemu_ops = {
+     .get_phys_page_debug = riscv_cpu_get_phys_page_debug,
+     .write_elf64_note = riscv_cpu_write_elf64_note,
+     .write_elf32_note = riscv_cpu_write_elf32_note,
++    .monitor_get_register = riscv_monitor_get_register_legacy,
+     .legacy_vmsd = &vmstate_riscv_cpu,
+ };
+ #endif
+diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
+index bca04a7580c..3898595a3cb 100644
+--- a/target/riscv/monitor.c
++++ b/target/riscv/monitor.c
+@@ -27,6 +27,7 @@
+ #include "monitor/hmp.h"
+ #include "monitor/hmp-target.h"
+ #include "system/memory.h"
++#include "internals.h"
+ 
+ #ifdef TARGET_RISCV64
+ #define PTE_HEADER_FIELDS       "vaddr            paddr            "\
+@@ -311,16 +312,18 @@ static bool reg_is_vreg(const char *name)
+     return false;
+ }
+ 
+-int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval)
++int riscv_monitor_get_register_legacy(CPUState *cs, const char *name,
++                                      int64_t *pval)
+ {
+-    CPURISCVState *env = &RISCV_CPU(cs)->env;
++    RISCVCPU *hart = RISCV_CPU(cs);
++    CPURISCVState *env = cpu_env(cs);
+     target_ulong val = 0;
+     uint64_t val64 = 0;
+     int i;
+ 
+     if (reg_is_ulong_integer(env, name, &val, false) ||
+         reg_is_ulong_integer(env, name, &val, true)) {
+-        *pval = val;
++        *pval = riscv_cpu_is_32bit(hart) ? (int32_t)val : val;
+         return 0;
+     }
+ 
+@@ -369,7 +372,7 @@ int target_get_monitor_def(CPUState *cs, const char *name, uint64_t *pval)
+          * to do the filtering of the registers that are present.
+          */
+         if (res == RISCV_EXCP_NONE) {
+-            *pval = val;
++            *pval = riscv_cpu_is_32bit(hart) ? (int32_t)val : val;
+             return 0;
+         }
+     }
 -- 
 2.53.0
 
