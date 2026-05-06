@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F8A5CD342F
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 03:28:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B5BCCD342F
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 03:29:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKSua-0007oy-7I; Tue, 05 May 2026 23:27:00 -0400
+	id 1wKSuZ-0007ow-Rd; Tue, 05 May 2026 23:26:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wKSuY-0007oA-P5; Tue, 05 May 2026 23:26:58 -0400
+ id 1wKSuW-0007nw-98; Tue, 05 May 2026 23:26:57 -0400
 Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
  ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1wKSuX-00052y-5W; Tue, 05 May 2026 23:26:58 -0400
+ id 1wKSuT-00052y-94; Tue, 05 May 2026 23:26:55 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=L+9wuz9zq6/FvbU/RjmhjP486/jpDnT75k41H37OCeKl0y/t1WPB+g5yBK1HH0nf4B96GRhRGabX4cPQ+dgGfrb4d/sXhbr9nomftkbi3J9DL2ciYwh/dhJTRR0Tr6tep+7GfmzydsSMPvqSZGiIfsnN4yzC9IofiO8jOkDAT8sUDdY4FpSmmPu8FxjuOsLyJVAxv3SxUdJEBqS5jJ6RrFF5/AF5APfb/+08WxJQlDveyP2uY6C+198BimFb8S/Y3GW3aW0Q9SEudr5hinIeorGXrkvbreJBnjCbuHMa0Bd5Onz+CyHYfMPIXjpyBXPmmERucj18gOKS9K6CgGPRLA==
+ b=yxo/HdPHCyrsdhcGTroWM2hu8i5OzmfnAvGB8bXXnD+nZoYJ1UqvcvKswrcfFwUEntj07sabPKBLMrF5FJHRgXBR2W2SV8bUzlwZEo3Jyha7Vix+bM6JN8X2R1ZhEAhMsWYoEL6S93v2kNuIzsqyLxYZgi2Iu7J9fERyvjU0qvYcAxi6HA0B6+frO7E+fm1jr48Pe/DxEm8g15rwScGQIx88ZsJNXNLx36cSW0eGMTsQLv+e4qIIXYZtDLSirR9UEik03qCjZA3YhpMnEzfDM7Y/mESAhh572UfrHsK2LJLppCGnNRmpIuGJt9O1YY5LWg9n3fV+ueRyBZYN5cw18w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/0Z3fhDJh/SxiuCFbf2Spdj7BoLHYafuISJw2v/PxPI=;
- b=fLvGvFrJcACX+u97/Q6OrI0Lxx9Ip303Uy4XH9WAoKKCqOG155aomS/YGphHlEfDiTi51KsS14ZnTInZFKqJnELTXgf8NdSzjpOnTRfevIH/C7/xxicG5AVjS2gu3cUwy4PNpi+0qZGQNina1cYql28wb1GEwcztJTHgC+KgpSvSGs0tGkXmxqaVXlVo8aKP9ujZFSQxWXHwx540MmndYVmChnQmG2AxxcLEak2sIr4ekJSkwFMHcRxizsMDldIP9zgJS7kkLYdJIvH4ueWCMDTu2cSb2pidHhJifm+/tGuqTTXSmWI3gZj+doZuf4aPtJIGnLyI52PEGwPc801D0g==
+ bh=KOGXooWLzxCDZ+GqOIk1V+8Y/yHjhW/PIUN90IwsVzA=;
+ b=f1EndKZZauPyUG8Iuw2aTkJcI8Cz4Briy+XUUJ4FbT1kZZTaQqRvTgnwO5DOa8G0xGWl/BNO+bqK8B+y/iQRx+xm51Fhafs2Kjj81Ef8ymBbFB+QFEtaa9WAcZlm9wFmJkkXLtgSyR9Bj0WuEfS6YN+nL5DBcTgkjQj2NLWT1GGY0tUEp2PEwCpGMKAMeozICbxQZgG6Az5m265KRaIw0sKrjsAWQRijyuZ6ptitKgQspEBW4hrWiRZbbDLVhSsRyLkclbfC++87Ad5IN3Hdk5CDNGtMjhRLeMju3s7ztKuctC4KtJwmGWi0dp7TRQ2hRoB1F2HmugEhW+sQN9Vv1g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/0Z3fhDJh/SxiuCFbf2Spdj7BoLHYafuISJw2v/PxPI=;
- b=CujhCG9HgounMFYOppEixGvas+lnXaoopYp6MGkV+fCO+7/XRNAi1SqLUOiYCwYdV7lgNqBpZchIFKaCWA5QWKZ5iqoYUZRUwrL16gPI8WKfhkAKNnZ3tFo3meOQLtTsNRCunbRPGwywfFjUsZwvk1v2fPXqSXLwXoaosAs3lJTE3SKsSvw7bF91RB17nd5HSIEkA05d2Fr+LM9u1L+yZ4y5M6LnEC9X1Q/fEM1ElE2E1NP4tzT0vy5bJFQqsgXWhrPfBBsAFwp5e6hbqz7SXIVW2v05TKdYxN/qwTKilsJqH0h/6A+QzYQ+sUKntAi+3NyCXvSGhx4TA0yExo02PA==
+ bh=KOGXooWLzxCDZ+GqOIk1V+8Y/yHjhW/PIUN90IwsVzA=;
+ b=iZMaYhL9kI0187a+N5TKCPRdlmJ84GU0yG4W2g9d+Uq7sA8N7ePLIv/6jcmoJR5wBk3PXh1HzJ/LeOD51SeK6p7gyxp7+fhBo6a82HEgNsTM45akgYk+W7LKXV2BUXM1ZtDJKkPqmxMIqUkcGHcWmYYxnnk9yTYMyzQhBiCTc/mAfYkhQS3fybc2dI1Fr4dWSZQHtNNN0Pw27RWhS21vipq32h2Xejk6SIyZU3NUDgHLoYuSyzEAo2U0FSIV93CxFfa5csDV/9j8x8UAPQG31RG6yKmZZVlgra3Tz/hfxChXHt1Bjis2HspzQF3pEPE/Bn0z5VKGWg3tfyorHqzhlw==
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
  by JH0PR06MB7325.apcprd06.prod.outlook.com (2603:1096:990:a1::12)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Wed, 6 May
- 2026 03:26:45 +0000
+ 2026 03:26:44 +0000
 Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
  ([fe80::e659:1ead:77cb:f6d3%2]) with mapi id 15.20.9870.023; Wed, 6 May 2026
- 03:26:45 +0000
+ 03:26:44 +0000
 From: Jamin Lin <jamin_lin@aspeedtech.com>
 To: "philmd@linaro.org" <philmd@linaro.org>, "peterx@redhat.com"
  <peterx@redhat.com>, =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>,
@@ -54,15 +54,13 @@ To: "philmd@linaro.org" <philmd@linaro.org>, "peterx@redhat.com"
 CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
  "farosas@suse.de" <farosas@suse.de>, "flwu@google.com" <flwu@google.com>, 
  "nabihestefan@google.com" <nabihestefan@google.com>
-Subject: [PATCH v1 1/2] hw/usb/hcd-ehci: Rename migration compatibility fetch
- address fields
-Thread-Topic: [PATCH v1 1/2] hw/usb/hcd-ehci: Rename migration compatibility
- fetch address fields
-Thread-Index: AQHc3Qgqcy8dSi89vkGRdd4mbz53gQ==
-Date: Wed, 6 May 2026 03:26:44 +0000
-Message-ID: <20260506032643.2510575-2-jamin_lin@aspeedtech.com>
-References: <20260506032643.2510575-1-jamin_lin@aspeedtech.com>
-In-Reply-To: <20260506032643.2510575-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 0/2] hw/usb/ehci: Improve migration helper and property
+ naming
+Thread-Topic: [PATCH v1 0/2] hw/usb/ehci: Improve migration helper and
+ property naming
+Thread-Index: AQHc3Qgp0Xg1oE7Ou0GiZ41ShBuwzQ==
+Date: Wed, 6 May 2026 03:26:43 +0000
+Message-ID: <20260506032643.2510575-1-jamin_lin@aspeedtech.com>
 Accept-Language: zh-TW, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -71,61 +69,61 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|JH0PR06MB7325:EE_
-x-ms-office365-filtering-correlation-id: f00a3af2-3724-453d-9577-08deab1f4c8b
+x-ms-office365-filtering-correlation-id: 920b16d0-18bf-4230-f15f-08deab1f4bfa
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|7416014|376014|921020|38070700021|22082099003|56012099003|18002099003;
-x-microsoft-antispam-message-info: 2gej/5wjYxGyvHXI2G4d3DNr4Mk8JSxJ71GsXmsjDqOgD1Otj+ZokqDIP4oKvCVcQxJrEggLZIitpjKw3R6cCXhI6JdQyZgWEe7EWKnskFFzCYRLATXiL19i+F6aJEik15fTEMVpXKRjDSy8bMTsUwbH3e1I3TxLybGZrbMcYQqyUXn4+MU0V4koDol2JxWgDh35PBXKqKqTMAWh3LpK/TbBaOJTN9nPnXMjw8vLJU3ZXqyRCjGnrEYPv5CB3RhOR0SegyjhVgKKvASIH7rMnYex7XuuF0gr8s/6ZuCcHu65hKfOuFVfX2p7gTKgLaDdzATTS0RjdrNxyHsQPAbC/pr6Mq1WJr5sasnsQrV4YoVfqqeusxSIquYpQ+P2/bBKNmt0SPHIn73MtmiVE0LmNFgbXxK1R7VFIZP77T66YOhVZ6/RCVkRLumWBQVwJX1xX1kICoF6pZH9FG/ocIiHoKYkbUzRQfU6cw0TbC/vyGu6IBg21nL56oNZmaA0a5owe42oqsVZ2XOvU0BD83iPTG9vAlLYCXGmJMunqE3o3DME6/g2dXDrR/KolZMz16yqLx8FRSvxHEt6IrZzBtD0whyprOSPHjB3icEAh2IkghtqX5IAnYTw4Rvx+ujaH62zXRYSGMzO8SWnOHj5m7EG6c+b7C7Tcr5BPaDXn24oZDfyik1Emm1dSASEP88tM/gvzkAieDCibNw2azSdrx7zrJHLyiUGhAOPk+IlOgACTYuQaJ+KH3Tq3OrcEPBB+yFNnxvUzFE0dyaojmVKPbSQOg==
+ ARA:13230040|1800799024|366016|7416014|376014|921020|38070700021|13003099007|56012099003|18002099003;
+x-microsoft-antispam-message-info: YJ3U7KyyA5yNaqbiv6vorpI4FsQOl9fGAzAFAozEtDL2jKyO913GyZg7WsJrDF6/3MZSpm8VMaaqRA8KLqLyn86tMNI4/PXsdw1GlhfaGi0jNbH3HaNixGXc9pyTSkt9JzSoipq5NTtGoLERQvf9PN0K9YY2bE62QI6lc9dPEC3FWkvO5swBbqXBGe216YjiA2ZwhPTB2FTt78OXSraHG1xSTJbXPUw6FBh5iF3xFqZGDcmMSIO5XUpuOCWzouf41ZM07yYmtHwZZCQZY4sjD1/GKVr4WTfnKuvhy7z4gZmotXfYG+aWPu5Jb0hsSFj8btEfuxx+ZN9mbTdNq6hDPM9b5gh8edSWYQVw6F94gAsY9JTTzYy3iKiiWfkRzW9snNjsA/9YIUX7eUgpqDxCcDyunXSwptYKrY362mXzq6dP5F/QqKk7XDqrrBd4ASPeqEcDaaDJ3NEu0ryYgQSWGcQiqsgd5tGPc5fkEOY4Y6A05bcQ7SRWAhGKBHTJVF6cIfU+RFc9j2bjUd2W1/Xa/XyJxJEEkLy5Cr8wqRHTZkVeuwZlppcZ6XCRCxAxwBmDBEBW6OgTJOS699F2DRYLw7XWiaRQ68LBDfUYzCM2YnaS0GKJKaY41XLM8tqlTpzKeWj1vxGZnlMLMVQTBj1+2hsHa6O7woNWp/PPxNC+7Cvhhxp/dY7AndwGS9LnhANeTEowFvzrVUhPRMLdieEFuL9sKbTfo+gOHVHDgpYk4qlBpJFyl3Nirr6NgGJtAbQeH+PCbZjJXwLIoEp2QJgHAg==
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014)(921020)(38070700021)(22082099003)(56012099003)(18002099003);
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014)(921020)(38070700021)(13003099007)(56012099003)(18002099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?i6e/1Z5n4NMylGfjeU5aYLcATSSWMoAWkU1YLs/9I9loRbgZRCpFlM3Fvm?=
- =?iso-8859-1?Q?dcuuRMIzmi6Hf7DM1RKAzFlWqfJ3UEFBX/JbUvEQ5KtyjDOb8Duj1zbCRH?=
- =?iso-8859-1?Q?KQOl2HLAKW/3OqTct7/BQcdIUhcEw5gTLJvY2FT8DqMs6Ld44Mm9W8+F//?=
- =?iso-8859-1?Q?cn3IE4C5IpGcPD2bKzQPhD+1nSCyC4bXDcaNTuBDbn48WnBsQ1XVBHZWMQ?=
- =?iso-8859-1?Q?oK9dFSbk+tZ0pR1Gc4qKQEgRjUTOTMPv6cWo0bqLb9TcUW5E6By+nWYRR9?=
- =?iso-8859-1?Q?AlFj0DsQKRWyUrp5pXTEMmbFWAfVAZ9m6o78eRDp6DeXK3jCqv9V15wnNk?=
- =?iso-8859-1?Q?mjQ5MvM3ERWovC4oxDl2cpcNUlrtm+CWia8VYEJNwD+3ZW9bUIj7qiVAEv?=
- =?iso-8859-1?Q?PTkxNKGfVTCCIpbZpCGN+LcNpDwS6OLOGlXkizz+aUxFSimYMN2S4Nwq9Z?=
- =?iso-8859-1?Q?6IZjblwBEn5rVe94Oveu0N8EcPd2hVsrxHU3jA65rcUjkDAhlBUknRJjoF?=
- =?iso-8859-1?Q?zXu6/ESul9GGhTHpZtQ26m+uPl68EJwAOFqYMe/gw9qZ++akGcX4d/RPZn?=
- =?iso-8859-1?Q?0ZWEc7AdGl0ta7Gxvrub/BsySatIEZF+q6WIxbmm5xRtxHLNZbVzPLJEhg?=
- =?iso-8859-1?Q?2A4DF0rCjUZlzcOlvxe0LGED6sh8YHl/M51gfmL62k99sNWXg/4xCVK9pH?=
- =?iso-8859-1?Q?0Lu7ZPPXYjC3hmBASkUivslfuiXQGPixSViSQAmAgNxpV9dc5bE4NCq/B7?=
- =?iso-8859-1?Q?OAwOMB18qE5Zm/kac3K44ywQb9qwcnq/uYwbSLvbmsCZuTSKkhXb//Hcvd?=
- =?iso-8859-1?Q?xsOqB6p2mGkHCfHfO5YwMQfff2hineMhTbWG/Tf3GK7eoh7iKkCP8hf3Gr?=
- =?iso-8859-1?Q?thwfMTg8N37qGA7ncSLotw5yvpngxKZgBobzFlW1xWQYT241a80nu2beST?=
- =?iso-8859-1?Q?l5bUcDDnL/PIJAjWxWAFJHuGTfRU5U0Hc+1xQ5ExqmeHAMAfJLYEqjGR4A?=
- =?iso-8859-1?Q?sIZ/95UJ2A3Mb6St1bqZTKVTLn2k0ionCByMK1FM7/I2fskpbPTGYqTMGQ?=
- =?iso-8859-1?Q?Re4oWtneD/oHeQq5USP+huyvrEbWWrC3HaZImEw8zon9ddwCmOGefEx2Vn?=
- =?iso-8859-1?Q?W/ARl6c0toVUZFsqrrUNHU0EN+Nl8j6zHkF8+SDhIgEbhJ6tK/m4GcGMIp?=
- =?iso-8859-1?Q?MJ/C87et0y/+Oci8D0QiG/gAfmb+KVuEkuaKjkv/uwewArn6RkOjHwyNVt?=
- =?iso-8859-1?Q?bgAOD06tZgh/Puw7UR59p8zpdRQ1aOZ67E+88t8P8GR5yGy9w2+vmdKfgg?=
- =?iso-8859-1?Q?gXTP8oQPQ6ituOi2yT8ye74Nd2WaNGL3YG1xbuhKT2RrgMA39Utr/H6lB7?=
- =?iso-8859-1?Q?Kv/5B1uZH3q/i+5j/x2dwRQ4MlQMKTaeajUBOxlC0Ecik+tRMPLQLjbmfa?=
- =?iso-8859-1?Q?EOTg0fW5QOmn3zHogemsTfRT+BKg5D7XNb+aEGP0V7bgL3qUc61p896BJb?=
- =?iso-8859-1?Q?EsjHI8uzmR6IopeJN+muo5R0uVfGQ7o44sCzTrZmI9PUk1kchoOVGDYRrC?=
- =?iso-8859-1?Q?T4CZjTvxiSfWXGD0+p//5RlILPMg1Zndzj04T3QSLEcIb1OvPrzwWKmm/Y?=
- =?iso-8859-1?Q?XKMgLZ5HKggffJsy4CLpIMHDAYjfVGqOo0IOJ+CW7y2tFZdyytK7pOI1p4?=
- =?iso-8859-1?Q?/JDjYa3btOwmShBsBXTVrku1hR6IQdLm5HQ2VIcEe9itlPLLWJXsGqiGRc?=
- =?iso-8859-1?Q?NPSTzV5rkVfUWAWDi6XrIQivmR8NWQZZc3pYMcqWCFwaR9rdPRDpFXhZDs?=
- =?iso-8859-1?Q?xxTsWe31Pw=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?D/QLBfECo3IoNfgEyBN4MVIq4lLSkbweQhuewm7HC2sb72IQdQOORhQiMa?=
+ =?iso-8859-1?Q?XzKHBRefpB4s7Qw/ln4UL01sZRvHusf4/2pLmdipmRG1p00aLQwiZc94Qp?=
+ =?iso-8859-1?Q?J7wFRR/RXxFQqnEGYyNL60vQIegpsumXceMhnofeYIm5ulRd69m6uiJFo2?=
+ =?iso-8859-1?Q?hLtldcLx4QZM9dPdDjanKNmaJ9CwYshmqLeJKL/vMs6+8P03oNMP8kHdkm?=
+ =?iso-8859-1?Q?bVH4eI2t9C/Ms5RBUVynzIXGP3fsi1839I7wjKZrbxrZFS23qZKz43+R2M?=
+ =?iso-8859-1?Q?9fhtJezS03QtaRQ2oaD/tSf9cLKBHrivv0gZmXT4GuhvNaKrTP9JPffImh?=
+ =?iso-8859-1?Q?Ycy690xtqKYT1XPMzIEeLaVWrhUAH1FPLZAaJD+QwJcUGqboJxNgLpNRh7?=
+ =?iso-8859-1?Q?pL69go8cJbgfnVs7wpxqrtLk7WSdyZu0fUYOsKXz8B/qxut6RsZzf8caAW?=
+ =?iso-8859-1?Q?YcKe4aUGn+5v0uuPGnkUrTE5trLCJ4ahjn7uJL7mR6e4hpJPVSbUNg8vj5?=
+ =?iso-8859-1?Q?H8J6IiuvS+ZqF2atNkbnkCP1WlXMNLCkjUtDKknebevM29JLfMTZh1kvXJ?=
+ =?iso-8859-1?Q?jzFVpXsar7EPFOm2Ch5B4pSEMOYR63OPfGI2wiLNvVOCRGMZND0WJHZ32F?=
+ =?iso-8859-1?Q?L0GJhTN1JVamsEcfLEOETGQ1slcP134pkoCZ/uGvIGYQrO7ltfmihlU1Y5?=
+ =?iso-8859-1?Q?bdwd5p9DuIUiNb2YAUkcZ0nOivKzmE/MOSkctDqb9kgUWHzxoz7TQWEiTk?=
+ =?iso-8859-1?Q?MExgU7bQj9vlcHNnm72apPeOTuXN8fStK93RMXzHVmmKlgNv00kAM+wEQC?=
+ =?iso-8859-1?Q?xbmffoO6w2BdXy/ZpnK2qDmd+QVy7+bN8uVfL+ilhrTKBmI5rdq+As3xHo?=
+ =?iso-8859-1?Q?fIS6EWFH2PZk+RVSKc9aFOes8Vvdie86YbD5jbDRuKHFmQtspVjSEDPb8b?=
+ =?iso-8859-1?Q?GlT62TaDnp0pe6er5RONWtZ5rid5uWqBYgJ3xDNLETH6MiqV6cSdjx950u?=
+ =?iso-8859-1?Q?aUgCEDqPi6XNEUOGfR4ZeUgAvcIajSYE5wYUzCdS/YUxgFBYkIQW1JJYxj?=
+ =?iso-8859-1?Q?VcNi24HPVCErZDsqUYl159Zl9K5zxjuWjKV36/4uHH5nlfqX3HX2sLiAZy?=
+ =?iso-8859-1?Q?rVuGQ3qyZE3mfFc+bU2m4S9vEAtrmqiOkYRPhyF6eihyWRTHm17MIRikey?=
+ =?iso-8859-1?Q?4lVHZW2gMm605wAm9Y4IsoMrxn6XYLZF1lFYOuYdojCJ6Uz6gbhSx+Bslj?=
+ =?iso-8859-1?Q?h9Ke/q0qjNC8Hw0qzNvoqIK4GLrZ1NrVUegjd/1LMmi/LqcoFKq8MuZ6tF?=
+ =?iso-8859-1?Q?s9xTv89xg+GUVeOxfPOob3TjLnq0Zm3sEDb93kkkK3+rZHUX/4Y8AA2V4S?=
+ =?iso-8859-1?Q?Rtk4ZmRre6bQ3QBbhyL387E8L7bD6QobPy9pUwp5UOgWaOJGH8R+oSoRl9?=
+ =?iso-8859-1?Q?veZjJChQN7+HCsGgpYmlb9HSDRp1VPvWfxW+LRKlYOC89vtpt8bII6SOOZ?=
+ =?iso-8859-1?Q?JqKRaAW7pJvM8Cqya7Ha9McKcTg9RBGk03VFDMuL5xAo61q59nt+WmY1+q?=
+ =?iso-8859-1?Q?2AqHEZp4hzsbBBPD10BBWIPS9qo1K4T9Pc8i8zGkieToEvp7if0jcbB+mA?=
+ =?iso-8859-1?Q?Kq0yMes6dwyqqeDgwxB6eWZ620wsHXfcLjGkFzQODicNBgj9bU5EewBsHg?=
+ =?iso-8859-1?Q?QICrlsMKceh5ZWJwJmPP48lHxZvK63IbXSElqTHs7fKy66XHmR2FgM2fSO?=
+ =?iso-8859-1?Q?pZxuN8FmzuiJkpW+toTcuoKINvocNXO8FU6ggy9fJNrqoGoWPGnZAwLffD?=
+ =?iso-8859-1?Q?u7FxzRuD4w=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: QMrSbmy9e5AG6o8nW3PdxI1VZk66afdMDJQ0GLDzim4b2D4x7s1kdwegRKApKLCSLigidDyf7nwYCz6KhCG4QJZv56qyUdtdyWjjTZVf7MaWs/EiQV9zcRR+G0EbLQLPT+8vv5lgJk6mzabYlqXgAwGGsqNFckg7MnZu78AHKpfBdg3otKo5YuG+iufYPS48D+h3rPHDQs+EITRcgjvdwEXBhBkVtb9xIUag5Y2yTHfLoZ1IMkO5YJXDo3JD824+PlEU/nsabvCQm1/Kkz+P2CPRE8xnx/2Ddi5bAxdouPQCKTN1HCyXTiF+pYSmxcc0sRJAx8d2GoKlf4EYtSuN6Q==
+X-Exchange-RoutingPolicyChecked: Yv78BEL8zeZxnGYWLgT1PVgUTzbeboqy8cCKSYxG32Myl/FA1F97huDKmRreXfPu84JJfAM8UDDUkvS1yJ1MH8UxQwa7YEZR/gM5os4erdrDz/iJeVb+2cVwAbncGxoIsd9LmRiKtiBfXj6Ms7zomJXbaurmAqH25l8tEI3WNhpRQ9+fjJgiR8C+4iIOC6QlzcxNm6r3Pljodmo9MaIi6fdrm0KDk8Yemw7hvLm/D+kRvdTzPAUdRl1yAVFaoxzw4EPH+kpg7U5wCM54S4y3L70XrHImRCJ0hncXeHmbCEEYUewWyCsSCEm9vvcNEp27jc4L6iTSIJhZjr6Q4p+wqw==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f00a3af2-3724-453d-9577-08deab1f4c8b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 May 2026 03:26:44.9258 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 920b16d0-18bf-4230-f15f-08deab1f4bfa
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 May 2026 03:26:43.9973 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: mJTYtT2Njzxpyb43fTczh7zmUt/hr09vy0vKxSDhxrsdUNwcqdGlcJJ3S+EOT4Bvw/L366SyH06uio5mmH8OB7CvEku6zLQ9zreBGcvSbOA=
+X-MS-Exchange-CrossTenant-userprincipalname: hlI/+MUJFIRFR3ZMvgqbrfTikL0mIHw4c0p/usZ2G82//uuIWFalZcS7uOyoSgrDrsjXMAuz7QnCQEEcFFA1xnAAuTHqlqU4/k86XGJ2k/4=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: JH0PR06MB7325
 Received-SPF: pass client-ip=2a01:111:f403:c406::3;
  envelope-from=jamin_lin@aspeedtech.com;
@@ -151,98 +149,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename the 32-bit fetch address migration helper fields to make=0A=
-their purpose clearer.=0A=
+This patch series is based on the following patch series:=0A=
 =0A=
-These fields are only used for migration compatibility with older=0A=
-machine types that transfer 32-bit fetch addresses in the migration=0A=
-stream. They are not runtime fetch address state.=0A=
+https://patchwork.kernel.org/project/qemu-devel/list/?series=3D1089061=0A=
 =0A=
-Also add comments to clarify the relationship between the migration=0A=
-compatibility fields and the runtime 64-bit fetch address fields.=0A=
+hw/usb/ehci: Add 64-bit descriptor addressing support=0A=
 =0A=
-No functional change.=0A=
+The above patch series has already been applied to the aspeed-next=0A=
+branch of:=0A=
+https://github.com/legoater/qemu=0A=
 =0A=
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
----=0A=
- hw/usb/hcd-ehci.h | 17 ++++++++++++++---=0A=
- hw/usb/hcd-ehci.c | 12 ++++++------=0A=
- 2 files changed, 20 insertions(+), 9 deletions(-)=0A=
+This series only contains naming and comment improvements based on=0A=
+reviewer suggestions.=0A=
 =0A=
-diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h=0A=
-index 3d57e1de5f..b5ac9c8670 100644=0A=
---- a/hw/usb/hcd-ehci.h=0A=
-+++ b/hw/usb/hcd-ehci.h=0A=
-@@ -262,6 +262,10 @@ struct EHCIState {=0A=
- =0A=
-     /* properties */=0A=
-     uint32_t maxframes;=0A=
-+    /*=0A=
-+     * Controls migration stream compatibility for old machine types.=0A=
-+     * Old machine types only transfer 32-bit fetch addresses.=0A=
-+     */=0A=
-     bool migrate_fetch_addr_64bit;=0A=
-     bool caps_64bit_addr;=0A=
-     uint32_t ctrldssegment_default;=0A=
-@@ -302,9 +306,16 @@ struct EHCIState {=0A=
-     EHCIQueueHead aqueues;=0A=
-     EHCIQueueHead pqueues;=0A=
- =0A=
--    /* which address to look at next */=0A=
--    uint32_t a_fetch_addr_32;=0A=
--    uint32_t p_fetch_addr_32;=0A=
-+    /*=0A=
-+     * which address to look at next=0A=
-+     *=0A=
-+     * Migration compatibility fields for old machine types that only=0A=
-+     * support 32-bit fetch addresses in the migration stream.=0A=
-+     *=0A=
-+     * New machine types migrate the full 64-bit runtime fetch address.=0A=
-+     */=0A=
-+    uint32_t migrate_a_fetch_addr;=0A=
-+    uint32_t migrate_p_fetch_addr;=0A=
-     uint64_t a_fetch_addr;=0A=
-     uint64_t p_fetch_addr;=0A=
- =0A=
-diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c=0A=
-index 62c3770ac5..56ac8f6ae5 100644=0A=
---- a/hw/usb/hcd-ehci.c=0A=
-+++ b/hw/usb/hcd-ehci.c=0A=
-@@ -2482,8 +2482,8 @@ static int usb_ehci_pre_save(void *opaque)=0A=
-     ehci->frindex =3D new_frindex;=0A=
- =0A=
-     if (!ehci->migrate_fetch_addr_64bit) {=0A=
--        ehci->a_fetch_addr_32 =3D ehci->a_fetch_addr;=0A=
--        ehci->p_fetch_addr_32 =3D ehci->p_fetch_addr;=0A=
-+        ehci->migrate_a_fetch_addr =3D ehci->a_fetch_addr;=0A=
-+        ehci->migrate_p_fetch_addr =3D ehci->p_fetch_addr;=0A=
-     }=0A=
- =0A=
-     return 0;=0A=
-@@ -2507,8 +2507,8 @@ static int usb_ehci_post_load(void *opaque, int versi=
-on_id)=0A=
-     }=0A=
- =0A=
-     if (!s->migrate_fetch_addr_64bit) {=0A=
--        s->a_fetch_addr =3D s->a_fetch_addr_32;=0A=
--        s->p_fetch_addr =3D s->p_fetch_addr_32;=0A=
-+        s->a_fetch_addr =3D s->migrate_a_fetch_addr;=0A=
-+        s->p_fetch_addr =3D s->migrate_p_fetch_addr;=0A=
-     }=0A=
- =0A=
-     return 0;=0A=
-@@ -2571,9 +2571,9 @@ const VMStateDescription vmstate_ehci =3D {=0A=
-         /* schedule state */=0A=
-         VMSTATE_UINT32(astate, EHCIState),=0A=
-         VMSTATE_UINT32(pstate, EHCIState),=0A=
--        VMSTATE_UINT32_TEST(a_fetch_addr_32, EHCIState,=0A=
-+        VMSTATE_UINT32_TEST(migrate_a_fetch_addr, EHCIState,=0A=
-                             ehci_fetch_addr_32_needed),=0A=
--        VMSTATE_UINT32_TEST(p_fetch_addr_32, EHCIState,=0A=
-+        VMSTATE_UINT32_TEST(migrate_p_fetch_addr, EHCIState,=0A=
-                             ehci_fetch_addr_32_needed),=0A=
-         VMSTATE_UINT64_TEST(a_fetch_addr, EHCIState,=0A=
-                             ehci_fetch_addr_64_needed),=0A=
+This patch series depends on the aspeed-next branch of:=0A=
+https://github.com/legoater/qemu=0A=
+=0A=
+v1:=0A=
+ 1. Rename migration compatibility fetch address fields=0A=
+ 2. Rename CTRLDSSEGMENT default property=0A=
+=0A=
+Jamin Lin (2):=0A=
+  hw/usb/hcd-ehci: Rename migration compatibility fetch address fields=0A=
+  hw/usb/hcd-ehci: Rename CTRLDSSEGMENT default property=0A=
+=0A=
+ hw/usb/hcd-ehci.h       | 23 +++++++++++++++++------=0A=
+ hw/arm/aspeed_ast27x0.c |  2 +-=0A=
+ hw/usb/hcd-ehci.c       | 14 +++++++-------=0A=
+ 3 files changed, 25 insertions(+), 14 deletions(-)=0A=
+=0A=
 -- =0A=
 2.43.0=0A=
 
