@@ -4,77 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40F94CD3439
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 18:33:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDA05CD3439
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 18:35:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKh2q-0001xf-40; Wed, 06 May 2026 14:32:28 -0400
+	id 1wKh5S-0002lJ-Ea; Wed, 06 May 2026 14:35:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wKh2p-0001xU-0c
- for qemu-devel@nongnu.org; Wed, 06 May 2026 14:32:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wKh5P-0002he-AE; Wed, 06 May 2026 14:35:07 -0400
+Received: from mail-westusazlp170120002.outbound.protection.outlook.com
+ ([2a01:111:f403:c001::2] helo=SJ2PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1wKh2m-0002ZU-7E
- for qemu-devel@nongnu.org; Wed, 06 May 2026 14:32:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778092340;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WK9qRyujHVSc1KEJlsY2jggqZIwybqubb0k7aT9moOc=;
- b=FYPEKh5ANPkE9UAaEQXIVh9YoStLXbjrE/1RVFEITzCmcm3cTDE3++rvQOJLMMMp6sI3UE
- dnqUq6nYScpftEjU3bjmyTSgmk/3rHMFp6s9BIXTOH8be3jfWKdfHzpjY5N1TdxOJoYoOZ
- qfh7wVVU5W3b54hBJpnz2er8scSI1Xc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-385-45LtOBWcMUOtAh-GSltsaw-1; Wed,
- 06 May 2026 14:32:17 -0400
-X-MC-Unique: 45LtOBWcMUOtAh-GSltsaw-1
-X-Mimecast-MFC-AGG-ID: 45LtOBWcMUOtAh-GSltsaw_1778092336
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DCAC819560A2; Wed,  6 May 2026 18:32:15 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.44])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3F12F300019F; Wed,  6 May 2026 18:32:15 +0000 (UTC)
-Date: Wed, 6 May 2026 14:32:14 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org,
- peter.maydell@linaro.org, richard.henderson@linaro.org, pbonzini@redhat.com
-Subject: Re: [PULL 0/2] Build system: add stubs per target
-Message-ID: <20260506183214.GA209372@fedora>
-References: <20260505230644.2710049-1-pierrick.bouvier@oss.qualcomm.com>
- <CAJSP0QUki9C6Nk8owfvmfyy_vfYT66mFQfsharkZ6GnDCLR5zg@mail.gmail.com>
- <CAPMQPEJMDp=9TgXvKPYhGDbyiePz6Q7RLycWDsUxG3SyR8gHog@mail.gmail.com>
- <20260506170818.GA203585@fedora>
- <fdf34d9e-75aa-43b0-a70c-9ea59e4a3902@oss.qualcomm.com>
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1wKh5N-0003Et-Gx; Wed, 06 May 2026 14:35:06 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=B0F80MjIxEscNZ7ar99qDxVVQBMxP/XaRWQxiNjq8LJp+2G+Hg2avo+rN3umt0nUu18JSJ3fDWgxFK2tZB/7XNxpmLgnfPTcY71eS/+S6MvgakxnLMIAP896YCCUS5PyXb//r/4+aUzH7PNQN2IWlRl+eXN+us34T4NJQj7AvWhobsGw6D+Hc90I4qoFpVWUTSlqAvMLY7x12e71mKTpvYhUY38uh44fZp79BB++D9bjWXEzVyW2dr9K2+qwJz5QJPzyR+YWN3HJc3tzDx6d/sh7wvdg8Epmyr7F636cg840r0ToJexQ8E8/+eX20+gCN0pQJ33BbvrIUXos2QPPPA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=AbV+oyDC9RO8IkuFnTQutxrp9zgX6ajzqAdy4dJABT0=;
+ b=PvAF8TLB0UYsveAXW3guK/YheLkG3gLSXkA4LlD5P3GMJ0ITdW92mDwsDB5fIiwIZDQXvh5dcievZeSocSb/J8QNYaQZ3AJdMsPSIv1CQt761hCvG0rKTzY8Qpw17V1kxOAw9yUEIuMbCujdko31zupSifHqZ+6wxtS1GYUJdyEhx6kY5CoFUvZpGXH0dC45nTZg5RcMZgqbKZj1BpalvLIF45NN1BrAeQ1LtsAXyAYbKgTArtDw2+fslPy3+j2pO8v913nQKpo3CWWGhnNyxEyqzB1bm3xgokdwa8KZuK/UZ1tnP0PE6tF23AV7zMohEmaqVm6L7AXZIsePHPiHAA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=AbV+oyDC9RO8IkuFnTQutxrp9zgX6ajzqAdy4dJABT0=;
+ b=JdDsyGUkjKVeaiQdX+B66cGqf3Vs1sTGVdK5vXVw/dTDj5rwRVKXwd+2oUqpEPnh6lj1IJG1Sq3h2sZkcr1rC17ORnGsJkBmJajglCkofji1BOB4+8RxgUUJ9oGv6bZJZdgLxUWQIXVknID2Fk5A4AlORj18aV6Q+G2X2pMyYw8mj1ofWjeORUeKFig33rtUFD54Unmz60XAqpN2q4hF7c0vzwr0sJK67ZwgPXtrCFvv55aZty88KNnOO/5kPrCjX/RABJamCQ6HapEo6BO1yOYgSmiYaf2bPEvTOCbIEvBdOXCQSt53Bp+STqZWmvjFys8r1u+g21YBuQFST0PPFg==
+Received: from CH0PR03CA0040.namprd03.prod.outlook.com (2603:10b6:610:b3::15)
+ by SA0PR12MB4461.namprd12.prod.outlook.com (2603:10b6:806:9c::22)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.26; Wed, 6 May
+ 2026 18:34:58 +0000
+Received: from CH1PEPF0000AD79.namprd04.prod.outlook.com
+ (2603:10b6:610:b3:cafe::74) by CH0PR03CA0040.outlook.office365.com
+ (2603:10b6:610:b3::15) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9870.27 via Frontend Transport; Wed,
+ 6 May 2026 18:34:56 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ CH1PEPF0000AD79.mail.protection.outlook.com (10.167.244.57) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9891.9 via Frontend Transport; Wed, 6 May 2026 18:34:56 +0000
+Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Wed, 6 May
+ 2026 11:34:37 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Wed, 6 May 2026 11:34:37 -0700
+Received: from nvidia.com (10.127.8.13) by mail.nvidia.com (10.126.190.180)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Wed, 6 May 2026 11:34:34 -0700
+Date: Wed, 6 May 2026 11:34:31 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
+ <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Jiandi An
+ <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, Krishnakant Jaju
+ <kjaju@nvidia.com>, "phrdina@redhat.com" <phrdina@redhat.com>
+Subject: Re: [PATCH v4 20/31] hw/arm/tegra241-cmdqv: Use mmap'd VINTF page0
+ as VCMDQ backing
+Message-ID: <afuJt4lDUQ6SxA6T@nvidia.com>
+References: <20260415105552.622421-1-skolothumtho@nvidia.com>
+ <20260415105552.622421-21-skolothumtho@nvidia.com>
+ <afk+zBZLQx+x+ODl@nvidia.com>
+ <CH3PR12MB754892989B2A76D3D3A941D6AB3E2@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <afpKfEvuT3ZeBSiH@nvidia.com>
+ <CH3PR12MB7548E76E38625713F6AE9F78AB3F2@CH3PR12MB7548.namprd12.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="itLR8uCA3kJpxMGm"
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <fdf34d9e-75aa-43b0-a70c-9ea59e4a3902@oss.qualcomm.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+In-Reply-To: <CH3PR12MB7548E76E38625713F6AE9F78AB3F2@CH3PR12MB7548.namprd12.prod.outlook.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD79:EE_|SA0PR12MB4461:EE_
+X-MS-Office365-Filtering-Correlation-Id: e582dbec-a45c-4b7e-f63a-08deab9e2c47
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|36860700016|376014|1800799024|56012099003|18002099003|22082099003;
+X-Microsoft-Antispam-Message-Info: HeRKZjzQdC/xVHW8O6dK2aRhC84QC2xcmixBtujZCX7whc8Jk4LSFb6ORY6U5V+9HM3lRVoyNCSO1O8UblLcxURe6+T8hjtGX/pmO1zp/5aL5jHlKiS6eC/7rr1CVbPCI+k54c8AnJ1r9D1ai4+g1HGwbkAfG9JBezNP7HRbD3ftUA6PNzU7Gi3qXSvihC8vVT1KPixcRiTTxva8WN92rBGpeJ1MiUG26mrK9VOF76EXoVkk8IYRN6T53DymCU5pTmFDev0N/yewDyn5W9ZMCT6YLZ9v5IYdy0sCaQZcCW2ZacTjEOcce/kDTouPVejJER+WT+dvGXm64xZdEx5f8oj8QIuRxE13dGB7uS5aK+fj/9iHnj3UlAwTbB5itDGTXYMhN34jvvWWXQdu0AoNVqRN4XMHTigpjCw0btccu0ZK7iw55lOe9FLhBbyASooD91sFOwa+IOk3hB8m5fymuHjlT1li0OsYXySRPWd80qM7BdQ7JE7p4r9Qb3KvC1L4/744QHv4S2hQd6YZW8BBzP7rJ1ZHVBoQaaYNm2CrvG/DIaLKJaYnpQ7T3vR4RLdoVNBI0eX/16Qs0JA70a739d3eLGzuGC805OO+3nA6fjeUq51NX1+/xnBBqVtN+xbglcSY8HxY/dw0nDQzRYmt/o3x9n7Lnhj007eUEcuTtpXlXa7OQhqe69zG3++xufNwxi8WNGXHDxxGWJiE2Xt/ZzCjsyuVhmfw5Gi/hcUcEsU=
+X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(36860700016)(376014)(1800799024)(56012099003)(18002099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 2pjGKCAtstfLj880fElq3xO1T8vMudS6dOyXk0S8HipwpS4oiZ9/S0HwQIPjFzzAvB9Txbo2e0HXIJ6UwQJphrsUGJBHvHiyymYzAORg28Z+znG6UJWc60QrKd/8tG+XV1CSKwXLfx39M/O1fj/EGTLIuVA1pLEMzn1CaeckaErnyLA8sxcV4UR6N3GEMFASkO7DLg5bBZwCcdHZUHmb6f8Q5EEmdwkl2lBPvxeHKFKI8F6+DLSlOyTtBFWVZTNctFPw1EzZolKFNdZTZiJfw0k0rN5S8WNSpzXXn69v8JuGOJvKA0vhq/B2wGN/HM1+bE3xJoVAg8cKAr1Vfn/IH8O6R0baGAb2MjVWwSKQO7ZsLTKX1ZosqNr3mEGIPMGwmi7VFo3z+TSN0BE34e6aAYZRPCeF7jVJExPtoaKK79qM95fg/UOj35+WehQ3xp5v
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 May 2026 18:34:56.7923 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: e582dbec-a45c-4b7e-f63a-08deab9e2c47
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD79.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4461
+Received-SPF: permerror client-ip=2a01:111:f403:c001::2;
+ envelope-from=nicolinc@nvidia.com;
+ helo=SJ2PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,140 +143,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, May 06, 2026 at 06:16:00AM -0700, Shameer Kolothum Thodi wrote:
+> > From: Nicolin Chen <nicolinc@nvidia.com>
+> > Could this be a case:
+> >  - Write the PROD_INDX/ CONS_INDX with a consistent value (0xf)
+> >  - Program the VIRT_CMDQ_BASE
+> >  - Read the PROD_INDX/CONS_INDX, expecting 0xf
+> >  - Write the PROD_INDX/ CONS_INDX with 0x0
+> >  - Program the VIRT_CMDQ_CONFIG to enable the CMDQ
+> 
+> Yes, if Guest is not spec compliant then this can be any order.
+> 
+> However,
+> 
+> >  - Program the VIRT_CMDQ_BASE -- suppose we call setup_vcmdq()
 
---itLR8uCA3kJpxMGm
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> then kernel will reset PROD/CONS, right?
 
-On Wed, May 06, 2026 at 10:45:07AM -0700, Pierrick Bouvier wrote:
-> On 5/6/2026 10:08 AM, Stefan Hajnoczi wrote:
-> > On Wed, May 06, 2026 at 05:16:21PM +0200, Philippe Mathieu-Daud=C3=A9 w=
-rote:
-> >> Hi Stefan, Pierrick,
-> >>
-> >> On Wed, 6 May 2026 at 16:42, Stefan Hajnoczi <stefanha@gmail.com> wrot=
-e:
-> >>>
-> >>> On Tue, May 5, 2026 at 7:07=E2=80=AFPM Pierrick Bouvier
-> >>> <pierrick.bouvier@oss.qualcomm.com> wrote:
-> >>>>
-> >>>> The following changes since commit a85c588d07f8d3345ccad38b22026569a=
-04571d1:
-> >>>>
-> >>>>   Merge tag 'pull-monitor-2026-05-05' of https://repo.or.cz/qemu/arm=
-bru into staging (2026-05-05 10:11:49 -0400)
-> >>>>
-> >>>> are available in the Git repository at:
-> >>>>
-> >>>>   https://gitlab.com/p-b-o/qemu tags/pbouvier/pr/build_system-202605=
-05
-> >>>>
-> >>>> for you to fetch changes up to 2e44ff32fc758bf8c0df13b0287afb75bb00c=
-38e:
-> >>>>
-> >>>>   target/arm: define stub library (2026-05-05 16:06:00 -0700)
-> >>>>
-> >>>> ----------------------------------------------------------------
-> >>>> Changes:
-> >>>> - [PATCH 0/2] single-binary: add stubs for target/ (Pierrick Bouvier=
- <pierrick.bouvier@oss.qualcomm.com>)
-> >>>>   Link: https://lore.kernel.org/qemu-devel/20260424230103.1579600-1-=
-pierrick.bouvier@oss.qualcomm.com
-> >>>>
-> >>>> ----------------------------------------------------------------
-> >>>> Pierrick Bouvier (2):
-> >>>>       meson.build: define stubs library per target base architecture
-> >>>>       target/arm: define stub library
-> >>>>
-> >>>>  meson.build                | 22 +++++++++++++++++++---
-> >>>>  target/arm/meson.build     |  8 +++-----
-> >>>>  target/arm/tcg/meson.build |  2 +-
-> >>>>  3 files changed, 23 insertions(+), 9 deletions(-)
-> >>>
-> >>> Is this a pull request for Paolo's build system tree?
-> >>>
-> >>> I'm not merging this directly because I prefer to follow MAINTAINERS
-> >>> so it's clear who sends pull requests for each subsystem. That way
-> >>> maintainers won't be surprised by me merging a pull request from
-> >>> another contributor who is not officially the maintainer and it's also
-> >>> better for security.
-> >>
-> >> I did not notice Pierrick's PR and actually included these 2
-> >> commits in my latest "single-binary" pull request:
-> >> https://lore.kernel.org/qemu-devel/20260506135524.20617-1-philmd@linar=
-o.org/
-> >=20
-> > That can be fine, sometimes changes are cross-cutting or part of another
-> > sub-system (e.g. ARM target) even though they touch files a different
-> > subsystem.
-> >=20
-> > My concern is only about the pull request process. Please don't send
-> > pull requests with a new tag/branch name that is not in MAINTAINERS. No
-> > PR has ever been merged from Pierrick with a build_system-* tag and he
-> > is not listed in MAINTAINERS for Build System.
-> >=20
-> > This could be a sign that something in MAINTAINERS needs to be changed
-> > or it could be a sign that these patches should go through another tree
-> > (Paolo's or yours).
-> >=20
-> >> Pierrick and I are simply reviewers on the "Build System" topic,
-> >> but it happens that I send patches there where they are related to
-> >> the overall single binary objective, and I see Pierrick as a co-mainta=
-iner
-> >> in this area. However there is no clearly defined MAINTAINERS
-> >> section, we happen to touch build system related files all over
-> >> the tree.
-> >=20
-> > I can't accept random pull requests, even from regular contributors.
-> > Patches should go through subsystem maintainers listed in the
-> > MAINTAINERS file. This way we can be sure that only commits reviewed by
-> > a subsystem maintainers are merged and reduce the risk that malicious
-> > pull requests are merged (while I trust Pierrick, it lowers my guard if
-> > I'm accepting random pull requests from anyone at all).
-> >
->=20
-> That's totally my fault here, sorry.
->=20
-> I have been assuming that "Build and test automation, general continuous
-> integration" was by extension integrating build system, but it seems
-> like it doesn't. I would not dare sending PR for an area I don't
-> maintain officially.
->=20
-> As well, in the past, Richard integrated some of those patches on build
-> system for single-binary, but I appreciate that he's definitely more
-> legitimate than me for pulling these kind of patches.
->=20
-> Philippe and I will remove those patches, and I'll ping Paolo to let him
-> pull this instead.
+But I don't have an impression that QEMU only supports Guest to run
+Linux...
 
-Including the patches in Philippe's pull request is probably fine as
-long as they are not something that Paolo needs to review. Sometimes
-files outside the subsystem are touched in a pull request and that's
-okay.
+> Again, the question is whether we should handle all these non-compliant
+> cases to prevent the guest from shooting itself in the foot, or simply
+> propagate any hardware error events due to the non-compliant
+> behaviour.
 
-My concern is only that each pull request email series should come from
-someone listed as maintainer for that area. For example, if I send a
-migration pull request and then Peter or Richard would probably be
-confused because I'm not the maintainer.
+I don't really feel it convincing to call it non-compliant. HW does
+not disallow that behaviour. Also, the flow in my example does not
+shoot itself in the foot: it basically follows the spec recommended
+flow by adding a pre-write before programming BASE. The remaining
+steps are still exactly follow the spec recommendation. Yes, it is
+odd to do so, but it is not insane yet. There might be some similar
+corner case to exist for certain reasons that we can't imagine yet.
 
-Stefan
+And adding these to making the QEMU model closer to a real HW isn't
+seemingly very convoluted? I'd feed the spec to an AI and run some
+analysis to see what else we need to cover here.
 
---itLR8uCA3kJpxMGm
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmn7iS4ACgkQnKSrs4Gr
-c8iCTQf9Grarwp1L1wbJuPyp83yIIdEmJwVq1VFvM2OSY0nkCvTWUVaJoW5xzKYd
-ymvv0dOB7yWwOuDSJUz7CJneugjZXeRiCDhoTkpOSBN25zmEngEP9eu0JtqNuJki
-Y0HnyA/hzLI0W+rO8vQGHcL9fzRCGpYEokZOB00kftTfsah8Um/WldWPy69x5MXE
-XT1hU0XzWVQCsZJYopNwaIvIBhlm6osW564PZWQcYXJWE/WMu+XuVbCwpGtR0dt4
-yrImEkUQHVtNrV/JvHQJpHuxWI/HJwyXufuIvuXSWaZYPfL5rx0NYNV/URnsNoHs
-zGF9MbGoMQbgUR+BH9YGHqVnEhUZ6Q==
-=deHA
------END PGP SIGNATURE-----
-
---itLR8uCA3kJpxMGm--
-
+Nicolin
 
