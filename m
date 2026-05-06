@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3E4BCD3439
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 07:56:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02537CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 07:56:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKX6O-0002hp-B4; Wed, 06 May 2026 03:55:28 -0400
+	id 1wKX6R-0002ih-Bh; Wed, 06 May 2026 03:55:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wKX69-0002eQ-Lz
- for qemu-devel@nongnu.org; Wed, 06 May 2026 03:55:16 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1wKX6E-0002el-0v
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 03:55:20 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jeuk20.kim@gmail.com>)
- id 1wKX66-000829-Sv
- for qemu-devel@nongnu.org; Wed, 06 May 2026 03:55:13 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-3658c87160eso800092a91.0
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 00:55:10 -0700 (PDT)
+ id 1wKX6B-00085p-6e
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 03:55:17 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-3658c87160eso800131a91.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 00:55:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778054109; x=1778658909; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778054113; x=1778658913; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=orupH/ZosDBgw2QZSHIIN9b4U6Oo6D+nsWsNqobO55I=;
- b=IQ5PKjNX5oLZKZlIabZ6eZzWZIrklGaPDgm/jQ0LJTFgJXXwHYAq0VL0ZI8T6X611H
- VxmzEd6aqbUmMohidLARzYrcXU7GFL/q1I4Sb6FjWtdO9FDaM8fvdqGy9yAd32sndNHP
- K0T4lZDAvCirocsAK193AFVzuKII1AJPE5W7cuVyUP6miIpexokFgauqpQY1zaOsMq9x
- CGAkNN/Moi2/5x5r9ibcEys3uJppDSi1ZwjeVSZfWxA224Iszqqya0eAo+oMMmSf31QZ
- Jmz9DAzrsgCblUH2cbOWZmSSDeKWdPF+9msC+YXPs8viv6tHLY/BsSYlWq9hBc+cRZDw
- JKDg==
+ bh=0IdASMODNaa9Qa5EkhRzMRiJsje/vGTTLmetdjczDI4=;
+ b=OEjv26tdWnScgYlYdNVtoFyH6Jt2lZsGbH2KI3yS1yxdcAeZWxSGyQsDLTzlb0nIeE
+ WBzLreYc8VXw6I+yXYr8O/Ed72Yf8aYx0p7qtDKUS6p4u1JwfEdmaCjFhLX5odcjif09
+ lMROU5CMmTxcKauC63suH1pU2wQHy9PvnRXNhuO+HFLANu+BY4MQXIWQkvbNZntcVoHd
+ lY+eAN9Kye2OIWzhgNNqeMLQwu64Gu1zC04Q5QuU4I8aaeSfLOC/drOOkQK5IegVNGQN
+ i5F+MitPxoB2lpi5k12qdk2IlKqkaGZZxVeY9KDb1RjGJu4PZ8n3zDqe5oJv34M+QWqi
+ 7JEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778054109; x=1778658909;
+ d=1e100.net; s=20251104; t=1778054113; x=1778658913;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=orupH/ZosDBgw2QZSHIIN9b4U6Oo6D+nsWsNqobO55I=;
- b=tJkA4xLtanim5tl1mJNiAeuGrlkelLsu56HzpgWrwvj1H6Mek8fZejLkHDRz29Bso9
- gWzePtYNVxRtnUkbfcZJJJRQmau/PnR+ErXmyDd36r3d/nLaDJT3iG/rfB6+VJriuKV9
- l55L6UN/Vwyaow/4KmqpW9njYAtk/hddYSLkrU5FOzzuD2bg0g01rMcr2LvnfnVFozkv
- YRT6W9vnjifQ9zBOyhBHAEtvEjX3NN7Led91et1Rp7UsqIo81ZEsVH5jQVqe30pJPKs1
- HQUoseTlGq15nrH7aSmcJZg2bCRfwPksF5HBnLI2LNXJbl1WyX5cZOkucAbrZ8GTTD65
- aIMQ==
-X-Gm-Message-State: AOJu0YxK7zY6zJ0Vxdxz3Os8TF58zSvhDiWpr8Ng1dkTixkdG5BcePF3
- GUaPrO3h13nYT/GTL0jtEdkUurFgUlfvcXPSNQyTDz+EUCcm64cxfP1OZ+DeVA==
-X-Gm-Gg: AeBDiet7IA2z49pD9ucTUQTlm5bQkIiQhUM72Cjb2Kfb0Rmc5jaqopvOMXQdEtxHYvT
- p/Q17ryiPn7RbZeGHOVoiu/C2AfLLxl1qwWD/3eVUrYZ9YnFk5uLhd6ETXixK98Bb6c2dUZWpy+
- orgEFi/a5HoF2NQ14D3Xhj1XN1ftqEN3B9Z/YM2hKCwbUYY7aYpEsfGOGpjs/HJf33sqa1j1p5d
- ZvmAOAACNZI3hDtfayg4E9r2Jtdyy3fVkPZMCnUodOo7+HBX1a6jC+TtJiibEUVmc/kucbAKXp0
- STo0oXklStEd/oz9nKvTgsPCv3twxz2MJzSVRiBSZG3auLaGXoDdxl6IEZEnQeHbxZqOpigQD58
- TGcGO33WmwvbJ5YKAo+kGk9BmDahWYohnmEOUNg48H7MAL5SntLhEtkHtXMhe82o84U4xq+fk0m
- iFaIHPchpOrICSx+KbXta5N+6Rhqz/1UEHCOzCzT++jA==
-X-Received: by 2002:a17:90b:6d0:b0:365:3154:7b1 with SMTP id
- 98e67ed59e1d1-365ac78f19amr2173356a91.26.1778054108983; 
- Wed, 06 May 2026 00:55:08 -0700 (PDT)
+ bh=0IdASMODNaa9Qa5EkhRzMRiJsje/vGTTLmetdjczDI4=;
+ b=M0dvKL48DeQu5FhfSFKF831P3TZD0mRCuLEbqUEQBoFiwTxXCyq1VAmOTWIOAxOeMM
+ gem+vZl8A13Frp7ule1wC9l4AekNZybittbFSS5JpA7itFrXLDmmxmuF7j35NEifmM2B
+ Qsnp9WJBzvo+Upjp6dMCQUDfgQcX86raZQoJHdFERD4oEvlG+z3l49KCj+iz+uef02gW
+ hrbRKamz1BwrhV9IA6nZuWxizv3ZCgd4DkYgOhueMJ7zinAZjaFTF7Lx2elxPVF8LHz+
+ lcG8YyiPMJMq1AhR9qqTQCPyO1wzQ7DSuuUjj25JxbG6msD+eRjkuqLEpTvYk5wI602x
+ FyXA==
+X-Gm-Message-State: AOJu0Yxuz8hsYw66RIlqtgr7cSiFiWwgBSPXhaGd7pE4iPivxXxBk7JP
+ 1P2S3lVJZZr56+7ulVE34zupBGFWUWo/8u0pn3g4J+pM9pkb83B5hWeS22XGyQ==
+X-Gm-Gg: AeBDietJK0WMQffuBfV8DAdk2tZwgns/E+cAUfVPuRXiSz+0Yzpi1teQAhaJdWhehki
+ S9L6Uxhc56HOvfK0dK83OA2x8QAMB5kFr3XuyI3Qc67bYygMqvuCA7MTDswjIRXr90wiX72n94C
+ 8YKpegcGXrV3b1t0BuC1lgj7/w2MqlEBa2rJOWNExNQySP+GC7squYsRIxN3+8ADN69FnPV3lgn
+ 14Pl2HUaA0aYuxWnxeLclEpWqb+rCOmnZq8NBk7aa+q+JVAcB9McXynHY8WVif688xVG5+lf7v+
+ +y5DxGd+TAvJwRuWkRy97KiYF+ndaISJArNiuIePYYJj8iRndHPc2lG/LxjxTj7wlMlR0el2ebS
+ OCOsYQu0wdwroD61Qlru2AO/tBE2O7chHt7r55tJhV9Fjromm3T5kLi78X+59hTr9+5ue0DI7GL
+ Owm+r1UrERTFdLt8wuNagjjsnBeFIwksf1DSefNec3QQ==
+X-Received: by 2002:a17:90b:1c8b:b0:364:534b:a898 with SMTP id
+ 98e67ed59e1d1-365abad59c2mr2116123a91.8.1778054112510; 
+ Wed, 06 May 2026 00:55:12 -0700 (PDT)
 Received: from jeuk-MS-7D42.. ([211.226.54.223])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-365b4bcaa49sm1380997a91.1.2026.05.06.00.55.07
+ 98e67ed59e1d1-365b4bcaa49sm1380997a91.1.2026.05.06.00.55.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 May 2026 00:55:08 -0700 (PDT)
+ Wed, 06 May 2026 00:55:12 -0700 (PDT)
 From: Jeuk Kim <jeuk20.kim@gmail.com>
 X-Google-Original-From: Jeuk Kim <jeuk20.kim@samsung.com>
 To: qemu-devel@nongnu.org
 Cc: jeuk20.kim@samsung.com, qemu-block@nongnu.org, qemu-stable@nongnu.org,
- j-young.choi@samsung.com,
- Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>
-Subject: [PATCH 2/4] hw/ufs: Guard MCQ CQ accesses against missing queues
-Date: Wed,  6 May 2026 16:54:29 +0900
-Message-ID: <2b4e9005cb7452c21937c99f570d774563b67b46.1778053560.git.jeuk20.kim@samsung.com>
+ j-young.choi@samsung.com
+Subject: [PATCH 4/4] hw/ufs: Keep MCQ SQs alive while requests are outstanding
+Date: Wed,  6 May 2026 16:54:31 +0900
+Message-ID: <3472fb763391a8efa096adc5d169c55e327112df.1778053560.git.jeuk20.kim@samsung.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1778053560.git.jeuk20.kim@samsung.com>
 References: <cover.1778053560.git.jeuk20.kim@samsung.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=jeuk20.kim@gmail.com; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=jeuk20.kim@gmail.com; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,57 +101,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-A guest can ring an MCQ CQ doorbell before the completion queue exists.
-The CQ head write path then dereferences a NULL CQ through
-ufs_mcq_cq_full().
+MCQ requests are allocated with their SQ, but can remain in flight on the
+CQ list or in the SCSI layer after leaving the SQ free list.
 
-Ignore CQ head updates for missing CQs, and make ufs_mcq_cq_full()
-handle a missing CQ defensively.
+Reject runtime SQ deletion while any request is still outstanding, and
+use separate teardown helpers so device exit can still release MCQ
+queues after child devices have been unrealized.
 
-Fixes: f78762a3cc8 ("hw/ufs: Fix mcq completion queue wraparound")
-Reported-by: Rayhan Ramdhany Hanaputra <hanaputrarayhan@gmail.com>
+Fixes: 5c079578d2e ("hw/ufs: Add support MCQ of UFSHCI 4.0")
 Cc: qemu-stable@nongnu.org
 Signed-off-by: Jeuk Kim <jeuk20.kim@samsung.com>
 ---
- hw/ufs/ufs.c | 4 ++++
- hw/ufs/ufs.h | 9 ++++++++-
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ hw/ufs/trace-events |  1 +
+ hw/ufs/ufs.c        | 49 ++++++++++++++++++++++++++++++++++++++-------
+ 2 files changed, 43 insertions(+), 7 deletions(-)
 
+diff --git a/hw/ufs/trace-events b/hw/ufs/trace-events
+index 7734b35f08..6f7ea9c95f 100644
+--- a/hw/ufs/trace-events
++++ b/hw/ufs/trace-events
+@@ -44,6 +44,7 @@ ufs_err_mcq_create_sq_invalid_size(uint8_t qid) "invalid mcq sq size for sqid %"
+ ufs_err_mcq_create_sq_already_exists(uint8_t qid) "mcq sqid %"PRIu8 "already exists"
+ ufs_err_mcq_delete_sq_invalid_sqid(uint8_t qid) "invalid mcq sqid %"PRIu8""
+ ufs_err_mcq_delete_sq_not_exists(uint8_t qid) "mcq sqid %"PRIu8 "not exists"
++ufs_err_mcq_delete_sq_busy(uint8_t qid) "mcq sqid %"PRIu8" has outstanding requests"
+ ufs_err_mcq_create_cq_invalid_cqid(uint8_t qid) "invalid mcq cqid %"PRIu8""
+ ufs_err_mcq_create_cq_invalid_size(uint8_t qid) "invalid mcq cq size for cqid %"PRIu8""
+ ufs_err_mcq_create_cq_already_exists(uint8_t qid) "mcq cqid %"PRIu8 "already exists"
 diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
-index d5fba15e2a..1819ba2e8a 100644
+index 4ccd7aa64d..6548f0f637 100644
 --- a/hw/ufs/ufs.c
 +++ b/hw/ufs/ufs.c
-@@ -817,6 +817,10 @@ static void ufs_write_mcq_op_reg(UfsHc *u, hwaddr offset, uint32_t data,
-     case offsetof(UfsMcqOpReg, cq.hp): {
-         UfsCq *cq = u->cq[qid];
+@@ -556,6 +556,31 @@ static bool ufs_mcq_create_sq(UfsHc *u, uint8_t qid, uint32_t attr)
+     return true;
+ }
  
-+        if (!cq) {
-+            break;
-+        }
++static bool ufs_mcq_sq_has_outstanding_req(UfsSq *sq)
++{
++    UfsRequest *req;
++    uint16_t free_reqs = 0;
 +
-         if (ufs_mcq_cq_full(u, qid) && !QTAILQ_EMPTY(&cq->req_list)) {
-             /* Enqueueing to CQ was blocked because it was full */
-             qemu_bh_schedule(cq->bh);
-diff --git a/hw/ufs/ufs.h b/hw/ufs/ufs.h
-index 13d964c5ae..9e800cafac 100644
---- a/hw/ufs/ufs.h
-+++ b/hw/ufs/ufs.h
-@@ -203,7 +203,14 @@ static inline bool ufs_mcq_cq_empty(UfsHc *u, uint32_t qid)
- static inline bool ufs_mcq_cq_full(UfsHc *u, uint32_t qid)
++    QTAILQ_FOREACH(req, &sq->req_list, entry)
++    {
++        free_reqs++;
++    }
++
++    return free_reqs != sq->size;
++}
++
++static void ufs_mcq_free_sq(UfsSq *sq)
++{
++    qemu_bh_delete(sq->bh);
++
++    for (int i = 0; i < sq->size; i++) {
++        ufs_clear_req(&sq->req[i]);
++    }
++
++    g_free(sq->req);
++    g_free(sq);
++}
++
+ static bool ufs_mcq_delete_sq(UfsHc *u, uint8_t qid)
  {
-     uint32_t tail = ufs_mcq_cq_tail(u, qid);
--    uint16_t cq_size = u->cq[qid]->size;
-+    UfsCq *cq = u->cq[qid];
-+    uint16_t cq_size;
-+
-+    if (!cq) {
+     UfsSq *sq;
+@@ -572,9 +597,12 @@ static bool ufs_mcq_delete_sq(UfsHc *u, uint8_t qid)
+ 
+     sq = u->sq[qid];
+ 
+-    qemu_bh_delete(sq->bh);
+-    g_free(sq->req);
+-    g_free(sq);
++    if (ufs_mcq_sq_has_outstanding_req(sq)) {
++        trace_ufs_err_mcq_delete_sq_busy(qid);
 +        return false;
 +    }
 +
-+    cq_size = cq->size;
++    ufs_mcq_free_sq(sq);
+     u->sq[qid] = NULL;
+     return true;
+ }
+@@ -617,6 +645,12 @@ static bool ufs_mcq_create_cq(UfsHc *u, uint8_t qid, uint32_t attr)
+     return true;
+ }
  
-     tail = (tail + sizeof(UfsCqEntry)) % (sizeof(UfsCqEntry) * cq_size);
-     return tail == ufs_mcq_cq_head(u, qid);
++static void ufs_mcq_free_cq(UfsCq *cq)
++{
++    qemu_bh_delete(cq->bh);
++    g_free(cq);
++}
++
+ static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
+ {
+     UfsCq *cq;
+@@ -640,8 +674,7 @@ static bool ufs_mcq_delete_cq(UfsHc *u, uint8_t qid)
+ 
+     cq = u->cq[qid];
+ 
+-    qemu_bh_delete(cq->bh);
+-    g_free(cq);
++    ufs_mcq_free_cq(cq);
+     u->cq[qid] = NULL;
+     return true;
+ }
+@@ -1884,12 +1917,14 @@ static void ufs_exit(PCIDevice *pci_dev)
+ 
+     for (int i = 0; i < ARRAY_SIZE(u->sq); i++) {
+         if (u->sq[i]) {
+-            ufs_mcq_delete_sq(u, i);
++            ufs_mcq_free_sq(u->sq[i]);
++            u->sq[i] = NULL;
+         }
+     }
+     for (int i = 0; i < ARRAY_SIZE(u->cq); i++) {
+         if (u->cq[i]) {
+-            ufs_mcq_delete_cq(u, i);
++            ufs_mcq_free_cq(u->cq[i]);
++            u->cq[i] = NULL;
+         }
+     }
+ }
 -- 
 2.43.0
 
