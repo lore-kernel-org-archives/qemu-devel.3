@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF84FF8855
-	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:01:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1767CD342C
+	for <qemu-devel@archiver.kernel.org>; Wed,  6 May 2026 14:01:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKcn1-0003TG-7D; Wed, 06 May 2026 09:59:51 -0400
+	id 1wKco7-0005HH-6G; Wed, 06 May 2026 10:00:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcmz-0003Pz-T0
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:50 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcnn-0004yK-Dh
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:00:41 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcmw-0000EH-HQ
- for qemu-devel@nongnu.org; Wed, 06 May 2026 09:59:48 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-488b150559bso44890855e9.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 06:59:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKcnj-0000Z1-04
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 10:00:38 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-48d146705b4so25238275e9.3
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 07:00:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778075984; x=1778680784; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778076032; x=1778680832; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=rnr910XkDufERe9XVu800E0bqoN1SBghJFJ3GMyOOWQ=;
- b=KNnMDfQbZO37UobELfJM659j60/UM26LalfwpOJfEWUW8kuHLlRS/5phNO772xpTiL
- /eSqSrjqDO9t0rJ9wk+f6fg6X+0xuZPsno0380mHGIb/zLQJZ6AoVWBUXmm9xDqB8uXX
- wwCMiNsu6yWSTXFT+bx6weIWS6ZJM5NZNVzYv45s1BfIS7kXm91wGI4n3JrUCsSK1iQA
- xDCwsMUOh0wDclPBhwymGWKi5IvzCaDvyuGIvoxoOO9uQMBNY9Rnhkp9QC8825l/mYVG
- x+8OtQMIEGxFFi9qoqpRz+K4Kj9AOksDMKU62o6tciOqZp/E5BKdBBQYxqaz4Lp5AJyl
- tTLQ==
+ :reply-to; bh=aiS5VPVZwmKd8FQ7cW6jsheyhp9wBNYj5aSAD9f/3t0=;
+ b=dgSO+aILkm66TZ/yfE6hSfuFYRi2W8sdccza8fAguBB2/+bRc1C2QEMMaRSm4mxjZx
+ QWe9Zg6gNibo5AnbXAnYR1qU5p4raSaJ7pu6GT5lp2cbT5JFzcOk82opvI1/7O9nxMxE
+ jmBVyjklhPUCNPKjSXMG1DA2mnH3ekNZ29BhxbQt842kAi65aqw/G/45xbn/FZFZ1P9y
+ u3fBLbR1NMC6B/7HPk6u4NsOM8epQFR2MQLDknvss42kJanGgTKyTComgjunBrgtEWCh
+ GXQp8s77sp4KdKbJHy4EFc4gbX8/GQVBTf4tyt6dAfrUHQiofqLyTMyU148/WD3v8Z/R
+ cV7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778075984; x=1778680784;
+ d=1e100.net; s=20251104; t=1778076032; x=1778680832;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=rnr910XkDufERe9XVu800E0bqoN1SBghJFJ3GMyOOWQ=;
- b=tCi4pEEhoP+O2xXgbCwbmvpKA5ik6RVNICO7p9Hs8BonNVosUH8GcMf62dgECxKn4P
- 0ekEIxnHYMwgYpONN68b0pr5B0dDLRLhwONPCMqbiXukbaYX7oW8/JPi6BiMf983MsrT
- WC5bmt1T1K4g86rixuTFnQAlaqy2h1G4RUIVukzozDDgW/aL1N3CI4WVnCOzVCBWcrPJ
- WBJsZyL8Q9BjXvAneOeNiyCbd0dTrElVRfRu1Mf5IydQhhVlCsH1Xox0Ra1kZfntnoGD
- jsdxdkOw1+tqvEsq0FLYrMkLPJp/Qz6nxiAhQz56bq6gVECgthAKXCbOBT18pdj7Gblp
- QZ1Q==
-X-Gm-Message-State: AOJu0YybeX1t3Yt639M9NHZA0eqnYaybhK4oXn1bsMWU0AWtGvKDX8UP
- KCjHC6tFObAz0uJpg3AjZVcZa8Imnh8cwa6fZBSimfIt3GDk0GxU/GIwAfVoCbo231LtjL7SNj1
- 2mVLOIno=
-X-Gm-Gg: AeBDiescV0czt9FutXzG5hocOLiRxs2A0qurQI8t+FuyBnTGcv/M3K5vvJ35+EtPC8P
- LDZ7F/Wtv+aO0/U4hhC973Wz9pe7qVscsE+cyA9Es4r0TsnRfQK7D+VuJ+oM/XZM+vZ2Mcb6uMs
- d8mUXW3BZ1OsxH2GCPaH2RMfQ3cgas8lIf4aUibNgEvdGUlcXhi0Y8RtpsNl5ZC0JmAt3av4Aug
- Fbc2kXrY0E6lrwpQ6mU9di3Aeh3C9aX682w8fn1ApN4E+QQeIJpf8C1K2hmz59yoJp1Tzr9fdL4
- AimQerxvyp0kf+omxGgBPGaLERXkWK0kgxlO3sZrKX4/RkjnNIBInLz1+mfHGjubTedJqSD2Vzo
- 7HB2wkSIq+HtjkmBCFG+NE8HNChJNN/hqkR6L5GIMpT+oiup5VXVSjlUNRcPVI/IygVbhazh+Gf
- qNxx2kBbnycJbAE95PKdUNLCr1Ec0caSKMIbeMJhJ8Pn5yhExYSJ4ilVxP3fR2bPffAaRsC2JKC
- gxE1lYvf1A=
-X-Received: by 2002:a05:600c:4f92:b0:486:ff92:63e5 with SMTP id
- 5b1f17b1804b1-48e51e09711mr64830865e9.6.1778075983517; 
- Wed, 06 May 2026 06:59:43 -0700 (PDT)
+ bh=aiS5VPVZwmKd8FQ7cW6jsheyhp9wBNYj5aSAD9f/3t0=;
+ b=eH+wSmzEn+x0OmzBzEMDgdZq5Szdsfrb8TY5Tn89wFLS7+rXEqkiZUn5a5laGa767B
+ i9HAJ1+LuCbBVE9ZT6vAEMb7XIXyfq8Th+k5ozPqQEZm7q5YZwiT3Li5rLn/8xDgX/pm
+ u1dqZ1BdjFLHLkHlsDWO93TuwE2Sfk4noYduDxREgVPRuEwW0WiLWPTurPAfnF9os41U
+ OCYKYaBQ8oOQ4K8zEdHt1epPk5dcUqYQLKa03I76AFSVg8nimyWRTzdwrbWqwO1apFB9
+ 2B1k/oz5qJXuyAaIBgNscC+A9IFkqx4ekw29EYbA5K5nDRUKLYwX4e6imFWT5YBBErPs
+ H6ng==
+X-Gm-Message-State: AOJu0YzeS7jHx9SZHDsyeNvrAKYWdDWVBl9hmx9gHZx05xwxL9Q9T3Ri
+ XaTJydrQbKb6dH18/csSZj/zhGTmP2HwHNcn0/u2HYssuvEolyy+FwLGY0RyLlLGTiSslfYfO4E
+ u+KWW/UY=
+X-Gm-Gg: AeBDiesrQh58PCZof/9v+8WCCUz/SLG9WMVEUeLnhLjT/Q5ycFuBf5eakD8RjXg/p2l
+ uP043aUKTHtxiWJ7rlyIVHusBosmieVDq+YnttPiSEbei16m2Kjj/Hwpl9utaNopcWnh8bqeL7W
+ 4lL1PypDdZUQXX7hglm9XowOTBYWJQlJDuuShpaDZxIzJJdTz0vVdtCFlAD7hDFgvVoJgeGq6I2
+ PlLphIx2HQmmH6EIaETIT3CXGvqQ/VgihRMgrIX/OFy0GebDSAhh8ynsvfP6UxtSH+INtxKroAe
+ H9jLkXF7ZKRDRlS3xoyn6l1QNLjuPddy8i2rSGidTB59prS+cykKFBuhvKuXECa/lxyNtLnmNWU
+ BKA7pr6xUWUyouSXzQZqif65E5GNRjbNzdZBloW/sW5WVjF/cocTidNoTO4HhKqRz8gM0yl3jk3
+ DLt2qNQd6VvhceNRfy4lhB0Xqa46uYNxMnQQM0AZblWTFyS5qKS9WJc3NqA3BMVcIXUrcTsxfUx
+ 51RdYCeUE4=
+X-Received: by 2002:a05:600c:47d6:b0:489:1cda:bbb7 with SMTP id
+ 5b1f17b1804b1-48e521d750fmr38309865e9.25.1778076031425; 
+ Wed, 06 May 2026 07:00:31 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45055f249bbsm11329939f8f.36.2026.05.06.06.59.41
+ 5b1f17b1804b1-48e5312de76sm17276255e9.21.2026.05.06.07.00.29
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 06 May 2026 06:59:42 -0700 (PDT)
+ Wed, 06 May 2026 07:00:29 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 034/110] target/sparc: Replace VMSTATE_VARRAY_MULTIPLY ->
- VMSTATE_UINTTL_ARRAY
-Date: Wed,  6 May 2026 15:54:06 +0200
-Message-ID: <20260506135524.20617-35-philmd@linaro.org>
+Subject: [PULL 040/110] target/mips: Check alignment for microMIPS pre-R6
+ LD/ST multiple
+Date: Wed,  6 May 2026 15:54:12 +0200
+Message-ID: <20260506135524.20617-41-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260506135524.20617-1-philmd@linaro.org>
 References: <20260506135524.20617-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,64 +100,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VMSTATE_VARRAY_MULTIPLY() seems to be an "optimized" version
-of VMSTATE_UINTTL_ARRAY(), and is only used once. Prefer the
-generic macro. Bump the SPARC CPU migration stream version.
+Pre-REL6 microMIPS requires alignment while REL6 microMIPS does not.
+Use @default_tcg_memop_mask in gen_ldst_multiple(), it is set to
+MO_UNALN for REL6 but MO_ALIGN for pre-REL6.
 
+Fixes: 3c824109da0 ("target-mips: microMIPS ASE support")
+Reported-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20260325211728.89204-10-philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20260417035734.32334-5-philmd@linaro.org>
 ---
- include/migration/cpu.h | 2 --
- target/sparc/machine.c  | 7 +++----
- 2 files changed, 3 insertions(+), 6 deletions(-)
+ target/mips/tcg/micromips_translate.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/migration/cpu.h b/include/migration/cpu.h
-index 8260ce0a3b7..8d15783b8c1 100644
---- a/include/migration/cpu.h
-+++ b/include/migration/cpu.h
-@@ -13,7 +13,6 @@
-     VMSTATE_UINT64_ARRAY_V(_f, _s, _n, _v)
- #define VMSTATE_UINTTL_SUB_ARRAY(_f, _s, _start, _num)                \
-     VMSTATE_UINT64_SUB_ARRAY(_f, _s, _start, _num)
--#define vmstate_info_uinttl vmstate_info_uint64
- #else
- #define VMSTATE_UINTTL_V(_f, _s, _v)                                  \
-     VMSTATE_UINT32_V(_f, _s, _v)
-@@ -21,7 +20,6 @@
-     VMSTATE_UINT32_ARRAY_V(_f, _s, _n, _v)
- #define VMSTATE_UINTTL_SUB_ARRAY(_f, _s, _start, _num)                \
-     VMSTATE_UINT32_SUB_ARRAY(_f, _s, _start, _num)
--#define vmstate_info_uinttl vmstate_info_uint32
- #endif
+diff --git a/target/mips/tcg/micromips_translate.c.inc b/target/mips/tcg/micromips_translate.c.inc
+index fb107eb91fe..da2419792eb 100644
+--- a/target/mips/tcg/micromips_translate.c.inc
++++ b/target/mips/tcg/micromips_translate.c.inc
+@@ -693,7 +693,7 @@ static void gen_ldst_multiple(DisasContext *ctx, uint32_t opc, int reglist,
+                               int base, int16_t offset)
+ {
+     TCGv t0, t1;
+-    MemOp mop = MO_UNALN;
++    MemOp mop = ctx->default_tcg_memop_mask;
+     MemOpIdx oi;
  
- #define VMSTATE_UINTTL(_f, _s)                                        \
-diff --git a/target/sparc/machine.c b/target/sparc/machine.c
-index 0a449f2f8c6..5f402e098cf 100644
---- a/target/sparc/machine.c
-+++ b/target/sparc/machine.c
-@@ -189,9 +189,9 @@ static int cpu_pre_save(void *opaque)
-  * versions are different.
-  */
- #ifndef TARGET_SPARC64
--#define SPARC_VMSTATE_VER 7
-+#define SPARC_VMSTATE_VER 8
- #else
--#define SPARC_VMSTATE_VER 9
-+#define SPARC_VMSTATE_VER 10
- #endif
- 
- const VMStateDescription vmstate_sparc_cpu = {
-@@ -202,8 +202,7 @@ const VMStateDescription vmstate_sparc_cpu = {
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINTTL_ARRAY(env.gregs, SPARCCPU, 8),
-         VMSTATE_UINT32(env.nwindows, SPARCCPU),
--        VMSTATE_VARRAY_MULTIPLY(env.regbase, SPARCCPU, env.nwindows, 16,
--                                vmstate_info_uinttl, target_ulong),
-+        VMSTATE_UINTTL_ARRAY(env.regbase, SPARCCPU, MAX_NWINDOWS * 16 + 8),
-         VMSTATE_CPUDOUBLE_ARRAY(env.fpr, SPARCCPU, TARGET_DPREGS),
-         VMSTATE_UINTTL(env.pc, SPARCCPU),
-         VMSTATE_UINTTL(env.npc, SPARCCPU),
+     if (ctx->hflags & MIPS_HFLAG_BMASK) {
 -- 
 2.53.0
 
