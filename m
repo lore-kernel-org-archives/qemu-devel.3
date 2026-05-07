@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A0A6CD37AC
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 22:19:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C06BCD37AA
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 22:19:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL72K-0000s7-3a; Thu, 07 May 2026 18:17:40 -0400
+	id 1wL72O-0000u4-IC; Thu, 07 May 2026 18:17:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wL72I-0000ru-Qw
- for qemu-devel@nongnu.org; Thu, 07 May 2026 18:17:38 -0400
-Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
+ id 1wL72N-0000tm-Lw
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 18:17:43 -0400
+Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wL72G-0003Ex-BF
- for qemu-devel@nongnu.org; Thu, 07 May 2026 18:17:38 -0400
-Received: by mail-oo1-xc34.google.com with SMTP id
- 006d021491bc7-6949f3eeaf6so1216157eaf.0
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 15:17:35 -0700 (PDT)
+ id 1wL72K-0003Fe-Ir
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 18:17:43 -0400
+Received: by mail-oa1-x35.google.com with SMTP id
+ 586e51a60fabf-435428c81a3so468273fac.1
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 15:17:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778192254; x=1778797054; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778192258; x=1778797058; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=m63KohySy09FkFyyCZ8fbqOzqD49GaHFi9mPn3TK+k4=;
- b=W2W0yGCl6FQ8aNgjA9zd63DmAWbjllVLHP2kgd+jbNEpyCMPjUp7SdPyu/ANoHh+lg
- wp9NGXkTX5/CaTN3oVVyKfOyBOxY7tasBYRFAeDDrvd3D+b2x3CgEeZMBYuVHfpLFZTn
- 2eUYDOrGDyEBn+D76hAn1z+x+iITfMJZMwblPq0kKmTR8z9EE28ka6Fr5biZ42jrNvkC
- qkvcMC+pV41AMsqGPuh3EKA4h9BBMdrSfkzg+uzHvH5e7SAPBKiDhb2UlwPya7P7LfFO
- 26oSfshq+O8rJYzdnD9Gfjb92SNlEUDhJkwZsG+DEoqzvEUUXoj1SCOIx3Umzo3Q/Fin
- ZxIA==
+ :reply-to; bh=xPhav+rZ0D3mHeKIb/ZgfInrRVs0ZlagVufHC+pW9rQ=;
+ b=kWZwj28SodhextP1iahfB57oEMOJM4DYreYMIR3wiJxzSENvlOnfPXyomrb3g3ukWf
+ MUUpr4lTNG3SSwTrMpws8nt2s2n0l8B9I7/Gil/AwkhBmdkYl2d/DaGyzBNpCXy4/SLV
+ G82YfbfqdhBQlLxmREA3T2oJr+bRv8Or5Va8heItGFwpppJg7K9LpZR3EoQBHHb4+2uE
+ sLcjqvH3uSsWJC/OlQkSd4ksKdCPQND91orDkza75j94veAv6G+x3pUOnxGgkqDQnb8F
+ ZXo9PWQXbpXSmADCr/w79wLLF+aBweHeYp1ErEeGVp85CbHoChDJV2LyC6m2S8KjVfPV
+ yXjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778192254; x=1778797054;
+ d=1e100.net; s=20251104; t=1778192258; x=1778797058;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=m63KohySy09FkFyyCZ8fbqOzqD49GaHFi9mPn3TK+k4=;
- b=V3x6P8HDuJ4o6SwPsNmX3SNFiR1j05cg9730TM4TnHwRySUiXMrM/TShxK8q9zuE3G
- bSUowZIv2KVKDaemBXxvQ6FBynkYOyplCtslV4IglhuzYw3xJTb8rJ+kOOJF29LPoxel
- 8bs0torto5aqGLPHHTLwAdOvbwxtMg8Gs2KCrdn6cs9hrxjC6i+ezJsIRMF1EJlPSqsZ
- XYN0E6m2TszAKBcSFIJ3mP6dr5dVU65hYuVasbrb8E4VyDL1asAqw0YdQF1qwHDdYNdC
- 3Ckokssl1vpeSeMsSL4sXhW1HT0LvcD/676l/XjTGw36r/7WDNGh1Ib6FDhMlaG0it09
- 22tQ==
-X-Gm-Message-State: AOJu0YyebAFYpYE2PSp63W0Q2q5zDbfl2ZaO9LpY92XELT4ze0/RSvb4
- C8ro9A5gXdUQfs89152YeqV2IYVHfXxCgATPDZ6nbDlFBpMJR7lq9nx0ZMZ2JTgCU5HNeyHGAed
- y+o8b
-X-Gm-Gg: AeBDiesgeBcCboFp5K5I1wMcDxUaiDibaws+Jt4dLp4XG7zjP8YfaA1XerZg1EvUSxc
- Jvdt49i8N1L0hfGeac3h2R3VVGallRSd0cNyvarGK5FP9v/edGQU+qwGpPQ+Ved8pS5Bqx3CJor
- ah0+Wjma46GxWibUCZx9UrGzVdU3FV+PNYQzpsEE3jLfGrDCNfc6N0/L5cJucw/fMaobxR/IrsI
- FFOxw9IPPjNCHJBlvW7iodPny+YrToPr6r1dCpivE3CNpqO9H+2a4npZ5lH83lxJFZzg+1bYTDz
- xGF3t555yxTcst9HYd6em/cBUt3h1eWuAnKdl7PYtPb+Knn7fKqnRp9R5RC+1tzpFjZZ/7ruL3+
- KHydSCz8yKSigz07Yr8x0yYqgFQgnA/ewKkzbi1Ge7NXeVCRhZWOt4tqBQhSkjX6zy9Ofm/Z63e
- alp48iviar84NOdxY/SxMGtyNMmtY5I5/i340GNi60wSkyIw==
-X-Received: by 2002:a05:6820:c8f:b0:67d:e6fa:4488 with SMTP id
- 006d021491bc7-699ab64e49dmr2547814eaf.22.1778192254263; 
- Thu, 07 May 2026 15:17:34 -0700 (PDT)
+ bh=xPhav+rZ0D3mHeKIb/ZgfInrRVs0ZlagVufHC+pW9rQ=;
+ b=B8Eb/0JWDUGx/5lCgk26xMcM5XNEINKOz7H/zGzEZUTdQhJzfSHpSXDNzfCnC7JLQ9
+ N9BR421UjiKMexobbBUtjRvLWUtXLBCAIGu76eBHluRGORR5AEQjDBcF0tXfyeaeFmCV
+ xZy8bLBtG0sYk18PKHlHO5AYVPDycgiVO4v3DvgJsTD2jouJo1TlAMUAlE9ch8bm0ez2
+ yxEdaXQAD3+kVUGxJMrdPO8Zfuq0Esfj6y6nplN3hegOXBrVuWf0hdwPaReteRbH2tRj
+ QOoV3CPb2R38Dj7UBEGij4QCQ8InW2Uz6nsecavEps9nZsAKEqAl4YqVlmRht35eUYYQ
+ 21Dw==
+X-Gm-Message-State: AOJu0YzHu/jnjKsqwXOmbQtY4Ve/0jSlALy9s75gukSZvJjIWDzLPFOu
+ gXsADq8LXKJU0n9/lr+w8o7V+eesbo8KgymirqSLR+j2q7goFrOOdXZRtZUZkLi+EH6X/p1zUjx
+ EdRVg
+X-Gm-Gg: Acq92OGkgA8SPaACMmlKezN7aOoUS0/XvbIYD0PCoUuBUMaDGpcwFU2p9jaTyogzrfr
+ 4UMLxPr/DymCuFbfzkjUGR7/QRv403qBtYhZGVZKOdP7EmGIZtpzKUUqFvJ6STL9edS6ngRl0Fa
+ LS4BpgdnPw7nrKVYexJ3g+raJ5zuKpmhg9yzk75u+ngmKX4pvEB5/ktS4HYXhZQBvhDXqmS4++J
+ QOcBDEIOO9IX7r5ECX/nfSnxcZYn4yxFn68BWaYdcgqzgpmjcH052M1N1K50Vch66aUeBKyiEYx
+ hfXAnwi4jgEcS782woHgAZrHye8tC0F+kIJbZGhLhvHcfa6uEfKMonf13Aq6Te1ncCfLoJieYpi
+ WVinUVph81FF9vdwIfvFu9kIa5dYLs6gUzrM+XtYNCEBYvHTIXTxBKLe2a3e7CXY7sTHhT9HDcH
+ QVZBiVZ7pXjHThfiqZSTqtM7y4mNvd/pSUYNi0dt21V50vPo246Z7oMA9o
+X-Received: by 2002:a05:6870:2315:b0:42f:dd2e:e41e with SMTP id
+ 586e51a60fabf-43556d0d6f1mr118670fac.17.1778192258336; 
+ Thu, 07 May 2026 15:17:38 -0700 (PDT)
 Received: from stoup.attlocal.net ([2600:381:c938:6375:9641:bbb2:a93a:bb4c])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-435573e7254sm45037fac.14.2026.05.07.15.17.33
+ 586e51a60fabf-435573e7254sm45037fac.14.2026.05.07.15.17.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 15:17:33 -0700 (PDT)
+ Thu, 07 May 2026 15:17:38 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 11/18] fpu: Use accessors for tininess_before_rounding
-Date: Thu,  7 May 2026 17:17:10 -0500
-Message-ID: <20260507221717.486023-12-richard.henderson@linaro.org>
+Subject: [PATCH 15/18] fpu: Use get_default_nan_mode everywhere
+Date: Thu,  7 May 2026 17:17:14 -0500
+Message-ID: <20260507221717.486023-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260507221717.486023-1-richard.henderson@linaro.org>
 References: <20260507221717.486023-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc34.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::35;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,98 +99,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename get_float_detect_tininess to get_tininess_before_rounding
-and move to softfloat.c, as there are no external users.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/fpu/softfloat-helpers.h | 5 -----
- fpu/softfloat.c                 | 4 ++--
- tests/fp/fp-test.c              | 2 +-
- fpu/softfloat-parts.c.inc       | 2 +-
- fpu/softfloat-specialize.c.inc  | 5 +++++
- 5 files changed, 9 insertions(+), 9 deletions(-)
+ target/arm/tcg/helper-a64.c | 12 ++++++------
+ target/arm/tcg/vfp_helper.c | 24 ++++++++++++------------
+ target/m68k/softfloat.c     |  2 +-
+ fpu/softfloat-parts.c.inc   |  8 ++++----
+ 4 files changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/include/fpu/softfloat-helpers.h b/include/fpu/softfloat-helpers.h
-index 95edd22842..395ce67abf 100644
---- a/include/fpu/softfloat-helpers.h
-+++ b/include/fpu/softfloat-helpers.h
-@@ -132,11 +132,6 @@ static inline void set_snan_rule(FloatSNaNRule val, float_status *status)
-     status->float_snan_rule = val;
- }
- 
--static inline bool get_float_detect_tininess(const float_status *status)
--{
--    return status->tininess_before_rounding;
--}
--
- static inline FloatRoundMode get_float_rounding_mode(const float_status *status)
- {
-     return status->float_rounding_mode;
-diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 1be90c9c7c..b1c2b0e6e1 100644
---- a/fpu/softfloat.c
-+++ b/fpu/softfloat.c
-@@ -4911,7 +4911,7 @@ floatx80 roundAndPackFloatx80(FloatX80RoundPrec roundingPrecision, bool zSign,
-                 float_raise(float_flag_output_denormal_flushed, status);
-                 return packFloatx80(zSign, 0, 0);
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index dd1f9c6dc6..6505ee3c94 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -273,11 +273,11 @@ uint32_t HELPER(frecpx_f16)(uint32_t a, float_status *fpst)
+         float16 nan = a;
+         if (float16_is_signaling_nan(a, fpst)) {
+             float_raise(float_flag_invalid, fpst);
+-            if (!fpst->default_nan_mode) {
++            if (!get_default_nan_mode(fpst)) {
+                 nan = float16_silence_nan(a, fpst);
              }
--            isTiny = status->tininess_before_rounding
-+            isTiny = get_tininess_before_rounding(status)
-                   || (zExp < 0 )
-                   || (zSig0 <= zSig0 + roundIncrement);
-             shift64RightJamming( zSig0, 1 - zExp, &zSig0 );
-@@ -4985,7 +4985,7 @@ floatx80 roundAndPackFloatx80(FloatX80RoundPrec roundingPrecision, bool zSign,
-             return floatx80_default_inf(zSign, status);
          }
-         if ( zExp <= 0 ) {
--            isTiny = status->tininess_before_rounding
-+            isTiny = get_tininess_before_rounding(status)
-                   || (zExp < 0)
-                   || !increment
-                   || (zSig0 < UINT64_C(0xFFFFFFFFFFFFFFFF));
-diff --git a/tests/fp/fp-test.c b/tests/fp/fp-test.c
-index 326a1201f3..16ffd36e6f 100644
---- a/tests/fp/fp-test.c
-+++ b/tests/fp/fp-test.c
-@@ -1011,7 +1011,7 @@ void run_test(void)
+-        if (fpst->default_nan_mode) {
++        if (get_default_nan_mode(fpst)) {
+             nan = float16_default_nan(fpst);
+         }
+         return nan;
+@@ -305,11 +305,11 @@ float32 HELPER(frecpx_f32)(float32 a, float_status *fpst)
+         float32 nan = a;
+         if (float32_is_signaling_nan(a, fpst)) {
+             float_raise(float_flag_invalid, fpst);
+-            if (!fpst->default_nan_mode) {
++            if (!get_default_nan_mode(fpst)) {
+                 nan = float32_silence_nan(a, fpst);
+             }
+         }
+-        if (fpst->default_nan_mode) {
++        if (get_default_nan_mode(fpst)) {
+             nan = float32_default_nan(fpst);
+         }
+         return nan;
+@@ -337,11 +337,11 @@ float64 HELPER(frecpx_f64)(float64 a, float_status *fpst)
+         float64 nan = a;
+         if (float64_is_signaling_nan(a, fpst)) {
+             float_raise(float_flag_invalid, fpst);
+-            if (!fpst->default_nan_mode) {
++            if (!get_default_nan_mode(fpst)) {
+                 nan = float64_silence_nan(a, fpst);
+             }
+         }
+-        if (fpst->default_nan_mode) {
++        if (get_default_nan_mode(fpst)) {
+             nan = float64_default_nan(fpst);
+         }
+         return nan;
+diff --git a/target/arm/tcg/vfp_helper.c b/target/arm/tcg/vfp_helper.c
+index 495ce8a329..8d3f6e3a2e 100644
+--- a/target/arm/tcg/vfp_helper.c
++++ b/target/arm/tcg/vfp_helper.c
+@@ -690,11 +690,11 @@ uint32_t HELPER(recpe_f16)(uint32_t input, float_status *fpst)
+         float16 nan = f16;
+         if (float16_is_signaling_nan(f16, fpst)) {
+             float_raise(float_flag_invalid, fpst);
+-            if (!fpst->default_nan_mode) {
++            if (!get_default_nan_mode(fpst)) {
+                 nan = float16_silence_nan(f16, fpst);
+             }
+         }
+-        if (fpst->default_nan_mode) {
++        if (get_default_nan_mode(fpst)) {
+             nan =  float16_default_nan(fpst);
+         }
+         return nan;
+@@ -743,11 +743,11 @@ static float32 do_recpe_f32(float32 input, float_status *fpst, bool rpres)
+         float32 nan = f32;
+         if (float32_is_signaling_nan(f32, fpst)) {
+             float_raise(float_flag_invalid, fpst);
+-            if (!fpst->default_nan_mode) {
++            if (!get_default_nan_mode(fpst)) {
+                 nan = float32_silence_nan(f32, fpst);
+             }
+         }
+-        if (fpst->default_nan_mode) {
++        if (get_default_nan_mode(fpst)) {
+             nan =  float32_default_nan(fpst);
+         }
+         return nan;
+@@ -802,11 +802,11 @@ float64 HELPER(recpe_f64)(float64 input, float_status *fpst)
+         float64 nan = f64;
+         if (float64_is_signaling_nan(f64, fpst)) {
+             float_raise(float_flag_invalid, fpst);
+-            if (!fpst->default_nan_mode) {
++            if (!get_default_nan_mode(fpst)) {
+                 nan = float64_silence_nan(f64, fpst);
+             }
+         }
+-        if (fpst->default_nan_mode) {
++        if (get_default_nan_mode(fpst)) {
+             nan =  float64_default_nan(fpst);
+         }
+         return nan;
+@@ -945,11 +945,11 @@ uint32_t HELPER(rsqrte_f16)(uint32_t input, float_status *s)
+         float16 nan = f16;
+         if (float16_is_signaling_nan(f16, s)) {
+             float_raise(float_flag_invalid, s);
+-            if (!s->default_nan_mode) {
++            if (!get_default_nan_mode(s)) {
+                 nan = float16_silence_nan(f16, s);
+             }
+         }
+-        if (s->default_nan_mode) {
++        if (get_default_nan_mode(s)) {
+             nan =  float16_default_nan(s);
+         }
+         return nan;
+@@ -994,11 +994,11 @@ static float32 do_rsqrte_f32(float32 input, float_status *s, bool rpres)
+         float32 nan = f32;
+         if (float32_is_signaling_nan(f32, s)) {
+             float_raise(float_flag_invalid, s);
+-            if (!s->default_nan_mode) {
++            if (!get_default_nan_mode(s)) {
+                 nan = float32_silence_nan(f32, s);
+             }
+         }
+-        if (s->default_nan_mode) {
++        if (get_default_nan_mode(s)) {
+             nan =  float32_default_nan(s);
+         }
+         return nan;
+@@ -1056,11 +1056,11 @@ float64 HELPER(rsqrte_f64)(float64 input, float_status *s)
+         float64 nan = f64;
+         if (float64_is_signaling_nan(f64, s)) {
+             float_raise(float_flag_invalid, s);
+-            if (!s->default_nan_mode) {
++            if (!get_default_nan_mode(s)) {
+                 nan = float64_silence_nan(f64, s);
+             }
+         }
+-        if (s->default_nan_mode) {
++        if (get_default_nan_mode(s)) {
+             nan =  float64_default_nan(s);
+         }
+         return nan;
+diff --git a/target/m68k/softfloat.c b/target/m68k/softfloat.c
+index f5d683bcc5..99c2dcbe8c 100644
+--- a/target/m68k/softfloat.c
++++ b/target/m68k/softfloat.c
+@@ -35,7 +35,7 @@ static floatx80 propagateFloatx80NaNOneArg(floatx80 a, float_status *status)
+         a = floatx80_silence_nan(a, status);
+     }
  
-                     verCases_tininessCode = 0;
-                     slowfloat_detectTininess = tmode;
--                    qsf.tininess_before_rounding = sf_tininess_to_qemu(tmode);
-+                    set_float_detect_tininess(sf_tininess_to_qemu(tmode), &qsf);
+-    if (status->default_nan_mode) {
++    if (get_default_nan_mode(status)) {
+         return floatx80_default_nan(status);
+     }
  
-                     if (attrs & FUNC_EFF_TININESSMODE ||
-                         ((attrs & FUNC_EFF_TININESSMODE_REDUCEDPREC) &&
 diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 38b317c1a7..72bbafcb13 100644
+index c6a3ba9a22..5598c8b44a 100644
 --- a/fpu/softfloat-parts.c.inc
 +++ b/fpu/softfloat-parts.c.inc
-@@ -428,7 +428,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
-         exp = 0;
-         fracN(clear)(p);
-     } else {
--        bool is_tiny = s->tininess_before_rounding || exp < 0;
-+        bool is_tiny = get_tininess_before_rounding(s) || exp < 0;
-         bool has_pseudo_denormals = fmt->has_explicit_bit &&
-             (get_floatx80_behaviour(s) & floatx80_pseudo_denormal_valid);
+@@ -20,14 +20,14 @@ FloatPartsN partsN(return_nan)(const FloatPartsN *a, float_status *s)
+     switch (a->cls) {
+     case float_class_snan:
+         float_raise(float_flag_invalid | float_flag_invalid_snan, s);
+-        if (s->default_nan_mode) {
++        if (get_default_nan_mode(s)) {
+             return partsN(default_nan)(s);
+         } else {
+             return partsN(silence_nan)(a, s);
+         }
+         break;
+     case float_class_qnan:
+-        if (s->default_nan_mode) {
++        if (get_default_nan_mode(s)) {
+             return partsN(default_nan)(s);
+         }
+         break;
+@@ -49,7 +49,7 @@ FloatPartsN partsN(pick_nan)(const FloatPartsN *a, const FloatPartsN *b,
+         have_snan = true;
+     }
  
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index 91250bc5a1..ac3fc85138 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -79,6 +79,11 @@ this code that are retained.
-  * version 2 or later. See the COPYING file in the top-level directory.
-  */
+-    if (s->default_nan_mode) {
++    if (get_default_nan_mode(s)) {
+         return partsN(default_nan)(s);
+     }
  
-+static inline bool get_tininess_before_rounding(const float_status *status)
-+{
-+    return status->tininess_before_rounding;
-+}
-+
- /*----------------------------------------------------------------------------
- | For the deconstructed floating-point with fraction FRAC, return true
- | if the fraction represents a signalling NaN; otherwise false.
+@@ -134,7 +134,7 @@ static FloatPartsN partsN(pick_nan_muladd)(const FloatPartsN *a,
+         float_raise(float_flag_invalid | float_flag_invalid_imz, s);
+     }
+ 
+-    if (s->default_nan_mode) {
++    if (get_default_nan_mode(s)) {
+         /*
+          * We guarantee not to require the target to tell us how to
+          * pick a NaN if we're always returning the default NaN.
 -- 
 2.43.0
 
