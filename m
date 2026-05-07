@@ -4,100 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 367D6CD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 17:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA294CD3446
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 17:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL2Rf-0002Oy-O5; Thu, 07 May 2026 13:23:31 -0400
+	id 1wL2SE-0002oq-QG; Thu, 07 May 2026 13:24:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wL2Rb-0002OQ-CF
- for qemu-devel@nongnu.org; Thu, 07 May 2026 13:23:27 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wL2SC-0002o7-E8
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 13:24:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wL2RY-0002N7-N5
- for qemu-devel@nongnu.org; Thu, 07 May 2026 13:23:27 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wL2S9-0002Ta-Ix
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 13:24:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778174602;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1778174640;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AlcHBxTK9YoW80lVhS9wc/md9QCLbs2pg1lkBvXyIGY=;
- b=VbpADl7puq09UT7a8XLKBqgDY6GxJIw5n6iI5GseEtJD2CBn8iBCWX1rwxj2MoNt3BLThF
- oVueTgkb9HXwKCPMgGoosUJv1GV8w/0Xnb+Ya4kxBjADYHMwAcTJLq6kUMSwLfiIpMf4Hr
- Cwpx+BvabURTNIZY989UTPDbqdWKsro=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=N+Dy0rDw03bCuXXYTGyTwCG/lFo+pNsm0eO/jf2GXb8=;
+ b=JpeJfffA16s7VAna7mTrkMiTzw3pvD/TsaU8jrlUJ2qz0fkRynsm2O3l1LjHyFjKm637TV
+ 4Lk+d6BrA6F78wzRrBMohW0Q/FsKr57Ean7TJhRtRLibID65yYwp7E+jKbhWHSud7UTcH7
+ UflnU4kv382461f+cQZ5aYvouv2sc4s=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-394-5sG7-GnAN3iAFkpHxb8LbQ-1; Thu, 07 May 2026 13:23:20 -0400
-X-MC-Unique: 5sG7-GnAN3iAFkpHxb8LbQ-1
-X-Mimecast-MFC-AGG-ID: 5sG7-GnAN3iAFkpHxb8LbQ_1778174600
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-8aca172588cso25110906d6.0
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 10:23:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778174600; x=1778779400; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=AlcHBxTK9YoW80lVhS9wc/md9QCLbs2pg1lkBvXyIGY=;
- b=Rpb2AOC3FZL62ZTyIePUBQjVB0+DFZgIZn0tjfuSSKUp+K5uk1f4PgY/r6XXL1jdun
- GcugZmHAAObTTXO8M0z28pmEEWaTmez+ey9/GXg76S/m0iYcLc/BZnG9bZEX+iiVqxrG
- mgmv+P0/U8xWamM/E6ovHIYc8VG9h8AxqaWhZ4l3N19sZWlYLkTDpfb+bpOOEBPn33Z8
- pL/gSaBqgjT89+WIkETkupczpC8D8nB/g7Cev9qMxtRmtJSHExGknpKEHMJ9RihQ7+CI
- SHpBUL6QIeT1Bo1Xq3Mo8JQRCXrDi8lo8SNjKkMPhcD+5pmOl5ko4GTtqsUQU8pwDq9u
- 5ufQ==
+ us-mta-176-UMun3-GDN9uDJB9E6oDsZQ-1; Thu, 07 May 2026 13:23:59 -0400
+X-MC-Unique: UMun3-GDN9uDJB9E6oDsZQ-1
+X-Mimecast-MFC-AGG-ID: UMun3-GDN9uDJB9E6oDsZQ_1778174638
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-b8704795d25so101180666b.2
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 10:23:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778174600; x=1778779400;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AlcHBxTK9YoW80lVhS9wc/md9QCLbs2pg1lkBvXyIGY=;
- b=tPDkRCv6FRkgeYDCUBNRW8YZFx1Ep+zlyrrGEsvZJcfWiNI/4UXR9mzg9WWYVX4qV/
- N59sWKfSbezvaG5S+MFQpaxNrQWvY0m9aBG78B4M0cWZXP/OujhqPuix8bL/15QYNdP+
- pZy6510WRwcFJJ6fVgFDT1Nn25cs9qPJeLJ4bvFNMnu8r6/7Ezowzh3RHgKWoN9mBSoz
- KctO2UVQef3bqRNQ9TaodOKCIIxOyU3qyodduxTiTPMfCqmr98KLWk2LTPUqcXRr36+p
- UpwMV9ckE/ejwWppDJ7RrvVirrn5/PiKyoO5aRRPAOIv7sO8XA1LUJyWB/HgwX3SMOx5
- IJvA==
-X-Gm-Message-State: AOJu0Yw6m41G9w42+9SrqNlmgkglnAd8gNQU94qAqrx+k97waGHsCMqC
- Q18E+0+Zkj/KbQnLtr7bh6yR8QVGPVIdz4QY783oasM+Qs2IeaSJtKBVg8fcsitgs0xsZkqnwB9
- s6ji+6rbLLBpOLt7o2OG17XUrRX39XXBlmQV+gLmonCNEV2xrTlN96UZT
-X-Gm-Gg: AeBDieutMMQOe3lsihM+jiBZbOaEvMnDLc/wInBDV34Oky4Cn+I8y7sZPoqGAJ6QXIQ
- 68PxkulBxwmAqsFrU1PUdHorYHc141l2hGc+TsMMdIcRk//BzOLQkzkabwvOTsJ0AzaISLFIq7Y
- OmwH24s5htb03xjM2bzw9yZlXRC0AgIw8KfIKBkphVFmnu8YGk3Sv/nzQKmCc7EzgLxuF0zbkt6
- KMOCalWxhM0h85mwsvMmtjsyhLAj56xjwtMpLvMFxgmGDd5EZBb5efDdnHrgkryzSyDCzUZXk90
- wgiAT6XJq739A+atsp61nryWeAd6II9EMoEp0aML7Ce6I4dNsD8xcuISpzVGICiOXHietzyhM4y
- wp0s+W2uRnDgOlzLF1PoWJ9cyVRK7fVcc3LoL3rLq66Ecrzo=
-X-Received: by 2002:a05:6214:5783:b0:8ac:b3d4:d11 with SMTP id
- 6a1803df08f44-8bc4323ac68mr129797606d6.14.1778174599672; 
- Thu, 07 May 2026 10:23:19 -0700 (PDT)
-X-Received: by 2002:a05:6214:5783:b0:8ac:b3d4:d11 with SMTP id
- 6a1803df08f44-8bc4323ac68mr129796736d6.14.1778174598951; 
- Thu, 07 May 2026 10:23:18 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-8bdf9081f49sm20268586d6.41.2026.05.07.10.23.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 10:23:18 -0700 (PDT)
-Date: Thu, 7 May 2026 13:23:17 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Prasad Pandit <ppandit@redhat.com>,
- Ben Chaney <bchaney@akamai.com>, Juraj Marcin <jmarcin@redhat.com>,
- Mark Kanda <mark.kanda@oracle.com>, Pranav Tyagi <prtyagi@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH] migration: Fix crash on second migration when cancel early
-Message-ID: <afzKhaaebtcYrEhe@x1.local>
-References: <20260421175820.302795-1-peterx@redhat.com>
- <87pl38xnw7.fsf@suse.de>
+ d=1e100.net; s=20251104; t=1778174638; x=1778779438;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N+Dy0rDw03bCuXXYTGyTwCG/lFo+pNsm0eO/jf2GXb8=;
+ b=IUFOVG+awYSbLm+Eaop+3Ak/OUuGWwTpl0Rc6NTVL+ogCoys1GJIKPOLm1HCi2XCkz
+ 2liIvtdQyjVTWUwYd/4AF9WEQMqluBoWia+GZbWpI+8D20K0d1zyG0bGGIMS5B/zk13H
+ cKsJVny/QkQ1GbVsRfeFmJIb+9bfAbsuqauGK9LvdQfCeTnqRZRhErzoTKMJUePYg4mp
+ TOzqUdd92HHhkS4itwqhdPBXJ24tptDK3pzUkexBwADb48H5n9foeUhmtjjwimGfDHH8
+ cRM3DY8gBHgMfqm3zEu2gpA8YRO5LAk39vaBtwb2AkDRYzAW3KhheRV32gk1L3vy+N7l
+ k1yg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+vy6mkoM8kXKuJuiv+tpMpD+Vda84uRLQ4kPR30sTWA1M0fJwmXCSn9xJY2TfwdShvR0giFa+S7DHS@nongnu.org
+X-Gm-Message-State: AOJu0Yyth8meDIPj3F2rNO0UFnhvcRz2oNL0u/oVEBtDMafAWe1YXdod
+ lZV7UjYThiravMovqDCcF5Yml2rz75vambCQecP7etfIBbZ8ZGRYW670yJ9JwFLWwHFsqaJOb5f
+ rO2Wja9UbDVfvv8aO4ocOjzgcKCqNs/V76f9eJo+GBU4e+ZpTu30cwytD
+X-Gm-Gg: AeBDieu+VQQPP/GS2U8lQv9FvhEtsGf54q2N8bFke6Il3FZeZfPXN7O28XFhEzquxuN
+ r9NFxzkvYgGWz3LD3YoELuwZr/qFF/GCYni1t8eT955+zg7nxl7V/aRcxwmomvgcA0+2MzjDyTo
+ Yzb12PRg8rCMxdOQBopCLO+oBSUD235ZaY6z+FkuLCl6K67OShC9a8b1X9IA1fCRgKDN+8bAZJp
+ zHXHI4AFLu5ZK+9cQvq+xSOH8TH3da794VsUHJLP/E7VxdtIxka7qPvDpaFUCLo/ix345/A9An6
+ AYAMERB/KqhLUAAktsJs1leBCrf2+KMz7QsbiYAwOQGgMfcGyDQnBDSHTN7TtDSbCOeONZ0R42Z
+ dsohZn4FsWOKfeYJmrdS0tmmcjWB9WSw01qCzt+gTblEWJga9Chlr5AVT13ZvtwMHWN2jIw==
+X-Received: by 2002:a17:907:3cd6:b0:bb8:fd89:4a74 with SMTP id
+ a640c23a62f3a-bc56b12645cmr546538966b.14.1778174637639; 
+ Thu, 07 May 2026 10:23:57 -0700 (PDT)
+X-Received: by 2002:a17:907:3cd6:b0:bb8:fd89:4a74 with SMTP id
+ a640c23a62f3a-bc56b12645cmr546534666b.14.1778174636829; 
+ Thu, 07 May 2026 10:23:56 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-bca57eaec7csm10137066b.46.2026.05.07.10.23.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 07 May 2026 10:23:56 -0700 (PDT)
+Message-ID: <e7a172be-41b4-40c8-8b1b-2814450d110a@redhat.com>
+Date: Thu, 7 May 2026 19:23:54 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 26/31] hw/arm/tegra241-cmdqv: Limit queue size based on
+ backend page size
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, jonathan.cameron@huawei.com, zhenzhong.duan@intel.com,
+ kjaju@nvidia.com, phrdina@redhat.com
+References: <20260415105552.622421-1-skolothumtho@nvidia.com>
+ <20260415105552.622421-27-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260415105552.622421-27-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87pl38xnw7.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -117,215 +116,108 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 06, 2026 at 05:51:20PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > Marc-André reported an issue on QEMU crash when retrying a cancelled
-> > migration during early setup phase, see "Link:" for more information, and
-> > also easy way to reproduce.
-> >
-> > This patch is a replacement of the prior fix proposed by not only switching
-> > to migration_cleanup(), but also fixing it from CPR side, so that we track
-> > hup_source properly to know if src QEMU is waiting or the HUP signal.
-> >
-> > To put it simple: this chunk of special casing in migration_cancel() should
-> > not affect normal migration, but only cpr-transfer migration to cover the
-> > small window when the src QEMU is waiting for a HUP signal on cpr
-> > channel (so that src QEMU can continue the migration on the main channel).
-> >
-> > To achieve that, we'll also need to remember to detach the hup_source
-> > whenenver invoked: after that point, we should always be able to cleanup
-> > the migration.
-> >
-> > It's not a generic operation to explicitly detach a gsource from its
-> > context while in its dispatch() function.  But it should be safe, because
-> > gsource disptch() will only happen with a boosted refcount for the
-> > dispatcher so that the gsource will not be freed until the callback
-> > completes. It's also safe to return G_SOURCE_REMOVE after the gsource is
-> > detached, as glib will simply ignore the G_SOURCE_REMOVE.
-> >
-> > One can refer to latest 2.86.5 glib code in g_main_dispatch() for that:
-> >
-> > https://github.com/GNOME/glib/blob/2.86.5/glib/gmain.c#L3592
-> >
-> > When at this, add a bunch of assertions to make sure nothing surprises us.
-> >
-> > After this patch applied, the 2nd migration will not crash QEMU, instead
-> > it'll be in CANCELLING until the socket connection times out (it will take
-> > ~2min on my Fedora default kernel).  During this process no 2nd migration
-> > will be allowed, and after it timed out migration can be restarted.
-> >
-> > It's because so far we don't have control over socket_connect_outgoing(),
-> > or anything yet managed by a task executed in qio_task_run_in_thread().
-> > Speeding up the cancellation to be left for future.
-> >
-> > I also tested cpr-transfer by only providing cpr channel not the main
-> > channel (with -incoming defer), kickoff migration on source, then cancel it
-> > on source directly without providing the main channel.  It keeps working.
-> >
-> > I wanted to add an unit test for that but it'll need to refactor current
-> > cpr-transfer tests first; let's leave it for later.
-> >
-> > Link: https://lore.kernel.org/r/20260417184742.293061-1-marcandre.lureau@redhat.com
-> > Reported-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  include/migration/cpr.h  |  1 +
-> >  migration/migration.h    |  5 +++++
-> >  migration/cpr-transfer.c | 10 ++++++++++
-> >  migration/migration.c    | 31 +++++++++++++++++++++++--------
-> >  4 files changed, 39 insertions(+), 8 deletions(-)
-> >
-> > diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-> > index 5850fd1788..ebf09a2f0a 100644
-> > --- a/include/migration/cpr.h
-> > +++ b/include/migration/cpr.h
-> > @@ -57,6 +57,7 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
-> >  void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
-> >                                  void *opaque);
-> >  void cpr_transfer_source_destroy(MigrationState *s);
-> > +bool cpr_transfer_source_active(MigrationState *s);
-> >  
-> >  void cpr_exec_init(void);
-> >  QEMUFile *cpr_exec_output(Error **errp);
-> > diff --git a/migration/migration.h b/migration/migration.h
-> > index b6888daced..2bc2787480 100644
-> > --- a/migration/migration.h
-> > +++ b/migration/migration.h
-> > @@ -514,6 +514,11 @@ struct MigrationState {
-> >      bool postcopy_package_loaded;
-> >      QemuEvent postcopy_package_loaded_event;
-> >  
-> > +    /*
-> > +     * When set, it means cpr-transfer is waiting for the HUP signal from
-> > +     * destination to continue the 2nd step of migration via the main
-> > +     * channel.
-> > +     */
-> >      GSource *hup_source;
-> >  
-> >      /*
-> > diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
-> > index 61d5c9dce2..9defe7bad7 100644
-> > --- a/migration/cpr-transfer.c
-> > +++ b/migration/cpr-transfer.c
-> > @@ -6,6 +6,7 @@
-> >   */
-> >  
-> >  #include "qemu/osdep.h"
-> > +#include "qemu/main-loop.h"
-> >  #include "qapi/clone-visitor.h"
-> >  #include "qapi/error.h"
-> >  #include "qapi/qapi-visit-migration.h"
-> > @@ -79,6 +80,7 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
-> >  void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
-> >                                  void *opaque)
-> >  {
-> > +    assert(bql_locked());
-> >      s->hup_source = qio_channel_create_watch(cpr_state_ioc(), G_IO_HUP);
-> >      g_source_set_callback(s->hup_source,
-> >                            (GSourceFunc)func,
-> > @@ -89,9 +91,17 @@ void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
-> >  
-> >  void cpr_transfer_source_destroy(MigrationState *s)
-> >  {
-> > +    assert(bql_locked());
-> >      if (s->hup_source) {
-> >          g_source_destroy(s->hup_source);
-> >          g_source_unref(s->hup_source);
-> >          s->hup_source = NULL;
-> >      }
-> >  }
-> > +
-> > +bool cpr_transfer_source_active(MigrationState *s)
-> > +{
-> > +    /* Whenever the HUP gsource is available, it's active. */
-> > +    assert(bql_locked());
-> > +    return s->hup_source;
-> > +}
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index 5c9aaa6e58..58c1e56766 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -1469,14 +1469,19 @@ void migration_cancel(void)
-> >      }
-> >  
-> >      /*
-> > -     * If migration_connect_outgoing has not been called, then there
-> > -     * is no path that will complete the cancellation. Do it now.
-> > -     */
-> > -    if (setup && !s->to_dst_file) {
-> > -        migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
-> > -                          MIGRATION_STATUS_CANCELLED);
-> > -        cpr_state_close();
-> > -        cpr_transfer_source_destroy(s);
-> > +     * This is cpr-transfer specific processing.
-> > +     *
-> > +     * If this is true, it means cpr-transfer migration is waiting for the
-> > +     * destination to send HUP event on CPR channel to continue the next
-> > +     * phase.  If so, do the cleanup proactively to avoid get stuck in
-> > +     * CANCELLING state.
-> > +     */
-> > +    if (cpr_transfer_source_active(s)) {
-> > +        assert(migrate_mode() == MIG_MODE_CPR_TRANSFER);
-> > +        assert(setup && !s->to_dst_file);
-> > +        migration_cleanup(s);
-> > +        /* Now all things should have been released */
-> > +        assert(!cpr_transfer_source_active(s));
-> >      }
-> >  }
-> >  
-> > @@ -2009,12 +2014,22 @@ static gboolean migration_connect_outgoing_cb(QIOChannel *channel,
-> >      MigrationState *s = migrate_get_current();
-> >      Error *local_err = NULL;
-> >  
-> > +    /*
-> > +     * Detach and release the GSource right after use.  We rely on this to
-> > +     * detect this small cpr-transfer window of "waiting for HUP event".
-> > +     */
-> > +    cpr_transfer_source_destroy(s);
-> > +
-> >      migration_connect_outgoing(s, opaque, &local_err);
-> >  
-> >      if (local_err) {
-> >          migration_connect_error_propagate(s, local_err);
-> >      }
-> >  
-> > +    /*
-> > +     * This is redundant as we do cpr_transfer_source_destroy() at the
-> > +     * entry, but it's benign; glib will just skip the detach.
-> > +     */
-> >      return G_SOURCE_REMOVE;
-> >  }
-> 
-> Sorry for taking too long on this, it fell off my queue. Looks good to
-> me. I reproduced the original issue and tested this patch under load
-> with hacked tests:
-> 
-> /mode/transfer/defer + early cancel
-> /cancel/src/after/setup + 2nd migrate
-> 
-> Tested-by: Fabiano Rosas <farosas@suse.de>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Hi Shameer,
 
-Thanks for double checking those!  Then let me pick this patch up.
+On 4/15/26 12:55 PM, Shameer Kolothum wrote:
+> From: Nicolin Chen <nicolinc@nvidia.com>
+>
+> CMDQV HW reads guest queue memory in its host physical address setup via
+> IOMMUFD. This requires the guest queue memory is not only contiguous in
+> guest PA space but also in host PA space. With Tegra241 CMDQV enabled, we
+> must only advertise a CMDQS that the host can safely back with physically
+s/a CMDQS/ a command queue size (CMDQS)
+> contiguous memory. Allowing a queue larger than the host page size could
+a queue size
+> cause the hardware to DMA across page boundaries, leading to faults.
+>
+> Walk the RAMBlock list to find the smallest memory-backend page size, then
+> limit IDR1.CMDQS so the guest cannot configure a command queue that exceeds
+what is the minimal CMDQS required? 
+> that contiguous backing. Fall back to the real host page size if no
+> memory-backend RAM blocks are found.
+>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/tegra241-cmdqv.c | 41 +++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 41 insertions(+)
+>
+> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+> index af68add2f0..2870886783 100644
+> --- a/hw/arm/tegra241-cmdqv.c
+> +++ b/hw/arm/tegra241-cmdqv.c
+> @@ -14,6 +14,9 @@
+>  #include "hw/arm/smmuv3.h"
+>  #include "hw/core/irq.h"
+>  #include "smmuv3-accel.h"
+> +#include "smmuv3-internal.h"
+> +#include "system/ramblock.h"
+> +#include "system/ramlist.h"
+>  #include "tegra241-cmdqv.h"
+>  #include "trace.h"
+>  
+> @@ -646,9 +649,38 @@ free_viommu:
+>      return false;
+>  }
+>  
+> +static size_t tegra241_cmdqv_min_ram_pagesize(void)
+shouldn't we put that rather in system/physmem.c
+there we also have qemu_ram_pagesize_largest() for instance
 
-> 
-> BTW, I found it weird that we cannot start a second migration on the
-> incoming after the first one having never properly started. Trying to
-> actually do it without shutting down both QEMUs was fun. A bunch of
-> asserts on the incoming side due to yank. After hacking a little and
-> using migrate_recover to start the second migration on the incoming, I
-> managed to make it work, but it hanged mid-transfer for some
-> reason. Probably some iochannel reset needed.
-
-Yeah, I am guessing we need to first fill the gaps on destination side to
-properly manage those async tasks on port listens, etc.. and those can be
-the owners of dangling iochannels.
-
--- 
-Peter Xu
+> +{
+> +    RAMBlock *rb;
+> +    size_t pg, min_pg = SIZE_MAX;
+> +
+> +    RAMBLOCK_FOREACH(rb) {
+> +        MemoryRegion *mr = rb->mr;
+> +
+> +        /* Only consider real RAM regions */
+> +        if (!mr || !memory_region_is_ram(mr)) {
+> +            continue;
+> +        }
+> +
+> +        /* Skip RAM regions that are not backed by a memory-backend */
+> +        if (!object_dynamic_cast(mr->owner, TYPE_MEMORY_BACKEND)) {
+> +            continue;
+> +        }
+> +
+> +        pg = qemu_ram_pagesize(rb);
+> +        if (pg && pg < min_pg) {
+> +            min_pg = pg;
+> +        }
+> +    }
+> +
+> +    return (min_pg == SIZE_MAX) ? qemu_real_host_page_size() : min_pg;
+> +}
+> +
+>  static void tegra241_cmdqv_init_regs(SMMUv3State *s, Tegra241CMDQV *cmdqv)
+>  {
+>      int i;
+> +    size_t pgsize;
+> +    uint32_t val;
+>  
+>      cmdqv->config = V_CONFIG_RESET;
+>      cmdqv->param = FIELD_DP32(0, PARAM, CMDQV_VER, CMDQV_VER);
+> @@ -681,6 +713,15 @@ static void tegra241_cmdqv_init_regs(SMMUv3State *s, Tegra241CMDQV *cmdqv)
+>          cmdqv->vcmdq_base[i] = 0;
+>          cmdqv->vcmdq_cons_indx_base[i] = 0;
+>      }
+> +
+> +    /*
+> +     * CMDQ must not cross a physical RAM backend page. Adjust CMDQS so the
+> +     * queue fits entirely within the smallest backend page size, ensuring
+> +     * the command queue is physically contiguous in host memory.
+> +     */
+> +    pgsize = tegra241_cmdqv_min_ram_pagesize();
+> +    val = FIELD_EX32(s->idr[1], IDR1, CMDQS);
+> +    s->idr[1] = FIELD_DP32(s->idr[1], IDR1, CMDQS, MIN(ctz64(pgsize) - 4, val));
+>  }
+>  
+>  static void tegra241_cmdqv_reset(SMMUv3State *s)
+Eric
 
 
