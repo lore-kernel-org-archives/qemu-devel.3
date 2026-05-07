@@ -4,58 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC60FCD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 14:14:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95A57CD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 14:27:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKzUD-0007Ak-CB; Thu, 07 May 2026 10:13:57 -0400
+	id 1wKzgV-0002PW-5O; Thu, 07 May 2026 10:26:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wKpwH-0005nn-9M
- for qemu-devel@nongnu.org; Thu, 07 May 2026 00:02:17 -0400
-Received: from mail-07.mail-europe.com ([188.165.51.139])
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wKzgP-0002Or-Va
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 10:26:34 -0400
+Received: from smtp-relay-services-1.canonical.com ([185.125.188.251])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wKpwE-0004lR-SL
- for qemu-devel@nongnu.org; Thu, 07 May 2026 00:02:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pq.io;
- s=protonmail3; t=1778126519; x=1778385719;
- bh=QoT6ZV0zp2yCk/oaO3p5EzNmYDCXteG6Q8NREGInOLI=;
- h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:From:To:
- Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=EmYhYA//9Wh0jPzyeEjb4d7pK60XHxV8YTSidMF32B/un6iFBhdLUbXXoMruKy/5W
- RTZ2Xk2BCdQrWWJPNFjAJGtY3c8lY7NbqONUUJ8d6y2F0Jskd+MAxv0XNjM0k8zxHG
- Q3ShnERv9+ik6W00yBIyVFW5Xb5RWVfVFmy0cKyScYIXAZpZIfxwvFke3tS/maRfUf
- xex3Kbe2CNwTJjRoy1S8zgLUOyTbKkM6xzeGLiH2t3YIVXLquwuxnbuPLsT7a0YGEo
- Ca8jX7QyveT/zNwYx6EewU+U/lyClH8NOJCduVf3XCZFs3l3T4GV1DIH/uUHnIAwor
- OfA7qCKM1lWew==
-X-Pm-Submission-Id: 4g9z8j2VCjz1DFFg
-From: Matthew Jackson <matthew@pq.io>
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com
-Subject: [PATCH 1/2] hw/misc/applesmc: fix GET_KEY_BY_INDEX to return real
- keys, accept WRITE/TYPE commands
-Date: Wed,  6 May 2026 21:01:52 -0700
-Message-ID: <20260507040153.14565-2-matthew@pq.io>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260507040153.14565-1-matthew@pq.io>
-References: <20260507040153.14565-1-matthew@pq.io>
+ (Exim 4.90_1) (envelope-from <noreply@launchpad.net>)
+ id 1wKzgM-00066c-LJ
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 10:26:33 -0400
+Received: from scripts.lp.internal (scripts.lp.internal [10.131.215.246])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-services-1.canonical.com (Postfix) with ESMTPSA id 56C4144B57
+ for <qemu-devel@nongnu.org>; Thu,  7 May 2026 14:26:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=launchpad.net;
+ s=20210803; t=1778163986;
+ bh=iBrGc30w6NETB+BgWu6dLDUYbLytk9bwuJMPUzG+YP8=;
+ h=MIME-Version:Content-Type:Date:From:To:Reply-To:References:
+ Message-Id:Subject;
+ b=L17Dhr+zMivGKbp3zfy1uOGw0EwHBYe5W3mcDaPUlN/AgY8mlI/BvgHp9s9UwMCLj
+ GP6H4rgGdqp1x1ve0qBBUdlvEBi+mgApWFlCSpqAEdgUPfhHoEOq0p+CKowBSmZ9ho
+ 6Zs/teeHwgS99vRixJyXY0S+3DwmalGPivYBFYN0OLGfirYCTkd+Wj4i53eDAXBFLL
+ RbWkkb2xa48cMQ2TTeAGwn8XjJLP+PBlP1BfwPXxFaquXSz0ICdonmmK5KLGSozE47
+ Fh65lZVCZKX8bJGQaCplCma7n/FSh4H0EgMyDdzxLQfi8gN6954Ld65uUJa7cX13Nr
+ HuWFxxQ4DaxYg==
+Received: from scripts.lp.internal (localhost [127.0.0.1])
+ by scripts.lp.internal (Postfix) with ESMTP id 410887E6BD
+ for <qemu-devel@nongnu.org>; Thu,  7 May 2026 14:26:26 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=188.165.51.139; envelope-from=matthew@pq.io;
- helo=mail-07.mail-europe.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 07 May 2026 14:18:17 -0000
+From: Hector CAO <2133188@bugs.launchpad.net>
+To: qemu-devel@nongnu.org
+X-Launchpad-Notification-Type: bug
+X-Launchpad-Bug: product=qemu; status=New; importance=Unknown; assignee=None;
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu; component=main;
+ milestone=ubuntu-26.04; status=Fix Released; importance=High; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; sourcepackage=qemu-hwe; component=main;
+ status=Fix Released; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble; sourcepackage=qemu;
+ component=main; milestone=ubuntu-24.04.4; status=Won't Fix;
+ importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=noble;
+ sourcepackage=qemu-hwe; component=None; status=Won't Fix; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky; sourcepackage=qemu;
+ component=main; status=Won't Fix; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=plucky;
+ sourcepackage=qemu-hwe; component=None; status=Won't Fix; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing; sourcepackage=qemu;
+ component=main; status=Won't Fix; importance=Undecided; assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=questing;
+ sourcepackage=qemu-hwe; component=None; status=Won't Fix; importance=Undecided;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute; sourcepackage=qemu;
+ component=main; milestone=ubuntu-26.04; status=Fix Released; importance=High;
+ assignee=None; 
+X-Launchpad-Bug: distribution=ubuntu; distroseries=resolute;
+ sourcepackage=qemu-hwe; component=main; status=Fix Released;
+ importance=Undecided; assignee=None; 
+X-Launchpad-Bug-Information-Type: Public
+X-Launchpad-Bug-Private: no
+X-Launchpad-Bug-Security-Vulnerability: no
+X-Launchpad-Bug-Commenters: hectorcao janitor paelzer qianqiu-2020 utkarsh
+ xypron
+X-Launchpad-Bug-Reporter: qianqiu (qianqiu-2020)
+X-Launchpad-Bug-Modifier: Hector CAO (hectorcao)
+References: <176429928488.3164788.8613118615925713152.malonedeb@juju-98d295-prod-launchpad-2>
+Message-Id: <177816349817.2498737.3093868273401925150.launchpad@juju-98d295-prod-launchpad-7>
+Subject: [Bug 2133188] Re: [SRU] RISC-V vector state not restored by signal
+ handler
+X-Launchpad-Message-Rationale: Subscriber (QEMU) @qemu-devel-ml
+X-Launchpad-Message-For: qemu-devel-ml
+Precedence: bulk
+X-Generated-By: Launchpad (canonical.com);
+ Revision="91d5f4cbcbec62cc98ca9991c8ad99af4e21f85a";
+ Instance="launchpad-scripts"
+X-Launchpad-Hash: ca822d3162e34422e680eeda473c5412b70fadbf
+Received-SPF: pass client-ip=185.125.188.251;
+ envelope-from=noreply@launchpad.net; helo=smtp-relay-services-1.canonical.com
+X-Spam_score_int: -42
+X-Spam_score: -4.3
+X-Spam_bar: ----
+X-Spam_report: (-4.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 07 May 2026 10:13:41 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -64,296 +111,164 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Bug 2133188 <2133188@bugs.launchpad.net>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The applesmc device implements just enough of the Apple SMC PMIO
-protocol to satisfy the OSK boot check on older macOS versions.
-On modern macOS guests (x86 10.14+, all 15.x), the AppleSMC kext
-enumerates the SMC key space at boot via APPLESMC_GET_KEY_BY_INDEX_CMD
-(0x12). The current device only acknowledges APPLESMC_READ_CMD
-(0x10) at the command port; every other command falls through to
-the default arm of the switch and sets ST_1E_BAD_CMD.
+** Tags removed: server-todo
 
-The macOS driver interprets the resulting 0x82 reply as
-"spurious data" and enters a retry loop that floods the kernel
-log with kSMCSpuriousData (0x81) / kSMCKeyNotFound errors at
-roughly 1800 events per second, pegging kernel_task at ~70%
-CPU and WindowServer at ~509% CPU. This reproduces reliably
-on any recent macOS 15 guest booted with -device
-isa-applesmc,osk=<valid-OSK>.
+--=20
+You received this bug notification because you are a member of qemu-
+devel-ml, which is subscribed to QEMU.
+https://bugs.launchpad.net/bugs/2133188
 
-This patch:
+Title:
+  [SRU] RISC-V vector state not restored by signal handler
 
-  * Accepts APPLESMC_WRITE_CMD, APPLESMC_GET_KEY_BY_INDEX_CMD,
-    and APPLESMC_GET_KEY_TYPE_CMD at the command port (in
-    addition to the existing READ_CMD path).
+Status in QEMU:
+  New
+Status in qemu package in Ubuntu:
+  Fix Released
+Status in qemu-hwe package in Ubuntu:
+  Fix Released
+Status in qemu source package in Noble:
+  Won't Fix
+Status in qemu-hwe source package in Noble:
+  Won't Fix
+Status in qemu source package in Plucky:
+  Won't Fix
+Status in qemu-hwe source package in Plucky:
+  Won't Fix
+Status in qemu source package in Questing:
+  Won't Fix
+Status in qemu-hwe source package in Questing:
+  Won't Fix
+Status in qemu source package in Resolute:
+  Fix Released
+Status in qemu-hwe source package in Resolute:
+  Fix Released
 
-  * Implements GET_KEY_BY_INDEX by walking s->data_def and
-    returning the 4-byte ASCII key name at the requested index;
-    returns APPLESMC_ST_1E_BAD_INDEX (0xb8) once the index is
-    past the end of the list so the guest stops iterating.
+Bug description:
+  # Title
+  qemu-user (qemu-riscv64-static): intermittent Illegal instruction in mems=
+et (vse64.v) when running cmake in riscv64 container (Ubuntu 26.04)
 
-  * Implements GET_KEY_TYPE by looking up the key in s->data_def
-    and returning a 6-byte response (type[4] + size[1] + attr[1])
-    matching VirtualSMC's kern_pmio.cpp behaviour.
+  ## Summary
+  While running cmake (and other build steps) inside a linux/riscv64 Ubuntu=
+ 26.04 container on an x86_64 host using qemu-user (qemu-riscv64-static) re=
+gistered via binfmt_misc, cmake sometimes crashes with "Illegal instruction=
+ (core dumped)" or "died with signal 4". The illegal instruction is observe=
+d inside glibc's memset implementation at an instruction that uses RISC-V v=
+ector extension (vse64.v). The failure is intermittent (~50% reproducer rat=
+e). Using a scalar-only memset (libnovecmem.so via LD_PRELOAD) or running u=
+nder gdb / enabling QEMU_STRACE significantly reduces or eliminates the fai=
+lure, which strongly suggests a qemu-user/emulation bug (vector handling / =
+code generation / state corruption), not a cmake bug.
 
-  * Implements WRITE by accepting the key name, length, and
-    payload and logging at LOG_UNIMP. macOS writes SMC keys
-    during normal power management; silent acceptance avoids
-    BAD_CMD on every write.
+  ## Affects
+  - qemu-user qemu-riscv64-static (as packaged in Ubuntu qemu 10.1.0+ds-5ub=
+untu3)
+  - Running in Docker container for riscv64 on x86_64 host via binfmt_misc =
+qemu-user static interpreter
 
-  * Replaces the unknown-key NOEXIST (0x84) reply on READ with
-    a zeroed payload of the requested length, logged at
-    LOG_UNIMP. Early-boot probes hit hundreds of undocumented
-    keys per second; NOEXIST triggers retry storms while a
-    zeroed payload satisfies the probe semantics without
-    asserting a particular value.
+  ## Environment / Context
+  - Host CPU: x86_64 (Docker multiarch running qemu-user for riscv64)
+  - Host OS=EF=BC=9Amultiple Ubuntu releases (22.04, 24.04, 25.10)=20
+  - Container image: ubuntu:26.04 for riscv64
+  - qemu package used:
+    - downloaded .deb from Launchpad: qemu-user_10.1.0+ds-5ubuntu3_amd64.de=
+b and on several Debian qemu-user packages (qemu-user_10.2.0~rc1+ds-1, qemu=
+-user_10.0.6+ds-0+deb13u2).=20
+    - copied qemu-riscv64 binary into /usr/bin/qemu-riscv64-static inside h=
+ost and registered via /proc/sys/fs/binfmt_misc/register
+  - CMake version used inside container (bootstrap/build may use system-pro=
+vided cmake binary): cmake 3.x (bootstrapping cmake while building also tri=
+ggers crash)
+  - Reproduction frequency: intermittent, ~50% (can get large variance: sev=
+eral consecutive successes or failures)
+  - Observed behavior changes when: LD_PRELOAD libnovecmem.so (scalar memse=
+t) =E2=80=94 almost completely avoids crash; running under gdb or enabling =
+QEMU_STRACE also makes it much harder to reproduce.
+   =20
 
-  * Routes the BAD_CMD path through qemu_log_mask
-    (LOG_GUEST_ERROR) instead of the smc_debug printf.
+  ## Full reproduction steps
+  1. On x86_64 host, fetch qemu-user .deb and extract the riscv static bina=
+ry:
+     wget https://launchpad.net/ubuntu/+source/qemu/1:10.1.0+ds-5ubuntu3/+b=
+uild/31393935/+files/qemu-user_10.1.0+ds-5ubuntu3_amd64.deb
+     dpkg-deb -x qemu-user_10.1.0+ds-5ubuntu3_amd64.deb qemu-user_10.1.0+ds=
+-5ubuntu3_amd64
+     sudo cp qemu-user_10.1.0+ds-5ubuntu3_amd64/usr/bin/qemu-riscv64 /usr/b=
+in/qemu-riscv64-static
 
-  * Fixes a typo in the MSSD key initialiser ("\0x3" -> "\x03").
-    The original literal was three bytes ('\\0', 'x', '3')
-    truncated to one ('\\0') by the size argument, so MSSD has
-    been silently returning 0 since introduction; the corrected
-    value matches what a real iMac20,1 SMC reports.
+  2. Register qemu-riscv64 with binfmt_misc:
+     echo -1 > /proc/sys/fs/binfmt_misc/qemu-riscv64
+     echo ':qemu-riscv64:M:0:\x7f\x45\x4c\x46\x02\x01\x01\x00\x00\x00\x00\x=
+00\x00\x00\x00\x00\x02\x00\xf3\x00:\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff=
+\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff:/usr/bin/qemu-riscv64-static:POCF'=
+ >/proc/sys/fs/binfmt_misc/register
 
-Reported-by: macOS guests booted with -device isa-applesmc since 10.14.
-Signed-off-by: Matthew Jackson <matthew@pq.io>
----
- hw/misc/applesmc.c | 177 +++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 170 insertions(+), 7 deletions(-)
+  3. Start riscv64 ubuntu container:
+     docker run --platform=3Dlinux/riscv64 --name ubuntu26 -itd ubuntu:26.0=
+4 bash
+     docker exec -it ubuntu26 bash -i
 
-diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
-index fd96f5f..2b5ef3c 100644
---- a/hw/misc/applesmc.c
-+++ b/hw/misc/applesmc.c
-@@ -35,6 +35,7 @@
- #include "hw/core/qdev-properties.h"
- #include "ui/console.h"
- #include "qemu/error-report.h"
-+#include "qemu/log.h"
- #include "qemu/module.h"
- #include "qemu/timer.h"
- #include "qom/object.h"
-@@ -126,7 +127,14 @@ static void applesmc_io_cmd_write(void *opaque, hwaddr addr, uint64_t val,
-     smc_debug("CMD received: 0x%02x\n", (uint8_t)val);
-     switch (val) {
-     case APPLESMC_READ_CMD:
--        /* did last command run through OK? */
-+    case APPLESMC_WRITE_CMD:
-+    case APPLESMC_GET_KEY_BY_INDEX_CMD:
-+    case APPLESMC_GET_KEY_TYPE_CMD:
-+        /*
-+         * Accept all standard SMC commands. Pre-existing code only handled
-+         * READ_CMD; macOS boots hang if WRITE/TYPE/GET_KEY_BY_INDEX commands
-+         * return BAD_CMD during early AppleSMC driver init.
-+         */
-         if (status == APPLESMC_ST_CMD_DONE || status == APPLESMC_ST_NEW_CMD) {
-             s->cmd = val;
-             s->status = APPLESMC_ST_NEW_CMD | APPLESMC_ST_ACK;
-@@ -137,7 +145,8 @@ static void applesmc_io_cmd_write(void *opaque, hwaddr addr, uint64_t val,
-         }
-         break;
-     default:
--        smc_debug("UNEXPECTED CMD 0x%02x\n", (uint8_t)val);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "applesmc: unexpected CMD 0x%02x\n", (uint8_t)val);
-         s->status = APPLESMC_ST_NEW_CMD;
-         s->status_1e = APPLESMC_ST_1E_BAD_CMD;
+  4. Inside container:
+     apt update
+     apt install -y build-essential cmake
+
+  5. Reproducer 1:
+     cmake --system-information
+     -> Often fails with:
+        bash: [15: 1 (255)] tcsetattr: Inappropriate ioctl for device
+        Illegal instruction (core dumped)
+
+  6. Reproducer 2 (minimal C project):
+     Create test_cmake/CMakeLists.txt:
+     cmake_minimum_required(VERSION 3.10)
+     project(HelloCMake C)
+     add_executable(hello main.c)
+
+     Create test_cmake/main.c:
+     #include <stdio.h>
+     int main() {
+         printf("Hello, CMake!\n");
+         return 0;
      }
-@@ -179,17 +188,170 @@ static void applesmc_io_data_write(void *opaque, hwaddr addr, uint64_t val,
-                 s->data_len = d->len;
-                 s->data_pos = 0;
-                 s->status = APPLESMC_ST_ACK | APPLESMC_ST_DATA_READY;
--                s->status_1e = APPLESMC_ST_CMD_DONE;  /* clear on valid key */
-+                s->status_1e = APPLESMC_ST_CMD_DONE;
-             } else {
--                smc_debug("READ_CMD: key '%c%c%c%c' not found!\n",
--                          s->key[0], s->key[1], s->key[2], s->key[3]);
-+                /*
-+                 * Return zeros for unknown keys instead of NOEXIST. Early
-+                 * macOS boot probes many undocumented keys; responding
-+                 * NOEXIST triggers retry storms. A zeroed payload satisfies
-+                 * the probe without asserting a particular value.
-+                 */
-+                qemu_log_mask(LOG_UNIMP,
-+                              "applesmc: READ unknown key '%c%c%c%c' len=%d\n",
-+                              s->key[0], s->key[1], s->key[2], s->key[3],
-+                              (uint8_t)val);
-+                memset(s->data, 0, APPLESMC_MAX_DATA_LENGTH);
-+                s->data_len = (uint8_t)val;
-+                s->data_pos = 0;
-+                s->status = APPLESMC_ST_ACK | APPLESMC_ST_DATA_READY;
-+                s->status_1e = APPLESMC_ST_CMD_DONE;
-+            }
-+        }
-+        s->read_pos++;
-+        break;
-+    case APPLESMC_WRITE_CMD:
-+        /*
-+         * Accept writes silently. macOS writes SMC keys during power
-+         * management, fan control, etc. Log at LOG_UNIMP for visibility
-+         * without treating the write as an error.
-+         */
-+        if ((s->status & 0x0f) == APPLESMC_ST_CMD_DONE) {
-+            break;
-+        }
-+        if (s->read_pos < 4) {
-+            s->key[s->read_pos] = val;
-+            s->status = APPLESMC_ST_ACK;
-+        } else if (s->read_pos == 4) {
-+            s->data_len = (uint8_t)val;
-+            s->data_pos = 0;
-+            s->status = APPLESMC_ST_ACK;
-+        } else {
-+            if (s->data_pos < s->data_len) {
-+                s->data[s->data_pos] = (uint8_t)val;
-+                s->data_pos++;
-+                if (s->data_pos == s->data_len) {
-+                    qemu_log_mask(LOG_UNIMP,
-+                                  "applesmc: WRITE key '%c%c%c%c' len=%d\n",
-+                                  s->key[0], s->key[1], s->key[2], s->key[3],
-+                                  s->data_len);
-+                    s->status = APPLESMC_ST_CMD_DONE;
-+                    s->status_1e = APPLESMC_ST_CMD_DONE;
-+                } else {
-+                    s->status = APPLESMC_ST_ACK;
-+                }
-+            }
-+        }
-+        s->read_pos++;
-+        break;
-+    case APPLESMC_GET_KEY_TYPE_CMD:
-+        /*
-+         * Return key type info. Protocol (matches VirtualSMC):
-+         * - Receive 4 bytes of key name.
-+         * - After the 4th byte, immediately set DATA_READY with response.
-+         * - Response is 6 bytes: type[4] + size[1] + attr[1].
-+         * Unlike READ_CMD there is no length byte between key name and
-+         * response.
-+         */
-+        if ((s->status & 0x0f) == APPLESMC_ST_CMD_DONE) {
-+            break;
-+        }
-+        if (s->read_pos < 3) {
-+            s->key[s->read_pos] = val;
-+            s->status = APPLESMC_ST_ACK;
-+        } else if (s->read_pos == 3) {
-+            /* 4th and final key byte. Unlike READ_CMD which has a 5th byte
-+             * for data length, GET_KEY_TYPE responds immediately after the
-+             * 4-byte key name (matching VirtualSMC kern_pmio.cpp behavior). */
-+            s->key[3] = val;
-+            d = applesmc_find_key(s);
-+            if (d != NULL) {
-+                switch (d->len) {
-+                case 1:
-+                    s->data[0] = 'u'; s->data[1] = 'i';
-+                    s->data[2] = '8'; s->data[3] = ' ';
-+                    break;
-+                case 2:
-+                    s->data[0] = 'u'; s->data[1] = 'i';
-+                    s->data[2] = '1'; s->data[3] = '6';
-+                    break;
-+                case 4:
-+                    s->data[0] = 'u'; s->data[1] = 'i';
-+                    s->data[2] = '3'; s->data[3] = '2';
-+                    break;
-+                default:
-+                    s->data[0] = 'c'; s->data[1] = 'h';
-+                    s->data[2] = '8'; s->data[3] = '*';
-+                    break;
-+                }
-+                s->data[4] = d->len;
-+                s->data[5] = 0xD0;
-+            } else {
-+                qemu_log_mask(LOG_UNIMP,
-+                              "applesmc: GET_KEY_TYPE unknown '%c%c%c%c'\n",
-+                              s->key[0], s->key[1], s->key[2], s->key[3]);
-+                s->data[0] = 'u'; s->data[1] = 'i';
-+                s->data[2] = '8'; s->data[3] = ' ';
-+                s->data[4] = 1;
-+                s->data[5] = 0xD0;
-+            }
-+            s->data_len = 6;
-+            s->data_pos = 0;
-+            s->status = APPLESMC_ST_ACK | APPLESMC_ST_DATA_READY;
-+            s->status_1e = APPLESMC_ST_CMD_DONE;
-+        }
-+        s->read_pos++;
-+        break;
-+    case APPLESMC_GET_KEY_BY_INDEX_CMD:
-+        /*
-+         * Return key name by index. macOS sends a 4-byte big-endian index
-+         * and expects the 4-byte ASCII key name at that position. The
-+         * previous implementation returned 4 zero bytes, which macOS
-+         * treated as kSMCSpuriousData (0x81) and retried indefinitely,
-+         * flooding the kernel log at ~1800 errors/sec. Walk the keys list
-+         * to return the actual key name, or APPLESMC_ST_1E_BAD_INDEX
-+         * (0xb8) once the index is past the end of the list so the guest
-+         * stops iterating.
-+         */
-+        if ((s->status & 0x0f) == APPLESMC_ST_CMD_DONE) {
-+            break;
-+        }
-+        if (s->read_pos < 3) {
-+            s->key[s->read_pos] = val;
-+            s->status = APPLESMC_ST_ACK;
-+        } else if (s->read_pos == 3) {
-+            s->key[3] = val;
-+            uint32_t idx = ((uint8_t)s->key[0] << 24)
-+                         | ((uint8_t)s->key[1] << 16)
-+                         | ((uint8_t)s->key[2] << 8)
-+                         |  (uint8_t)s->key[3];
-+            struct AppleSMCData *def;
-+            uint32_t i = 0;
-+            bool found = false;
-+            QLIST_FOREACH(def, &s->data_def, node) {
-+                if (i == idx) {
-+                    memcpy(s->data, def->key, 4);
-+                    s->data_len = 4;
-+                    s->data_pos = 0;
-+                    found = true;
-+                    break;
-+                }
-+                i++;
-+            }
-+            if (!found) {
-+                s->data_len = 0;
-+                s->status_1e = APPLESMC_ST_1E_BAD_INDEX;
-                 s->status = APPLESMC_ST_CMD_DONE;
--                s->status_1e = APPLESMC_ST_1E_NOEXIST;
-+                s->read_pos++;
-+                break;
-             }
-+            s->status = APPLESMC_ST_ACK | APPLESMC_ST_DATA_READY;
-+            s->status_1e = APPLESMC_ST_CMD_DONE;
-         }
-         s->read_pos++;
-         break;
-     default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "applesmc: unhandled data for cmd 0x%02x\n", s->cmd);
-         s->status = APPLESMC_ST_CMD_DONE;
-         s->status_1e = APPLESMC_ST_1E_STILL_BAD_CMD;
-     }
-@@ -330,12 +492,13 @@ static void applesmc_isa_realize(DeviceState *dev, Error **errp)
-     }
- 
-     QLIST_INIT(&s->data_def);
-+
-     applesmc_add_key(s, "REV ", 6, "\x01\x13\x0f\x00\x00\x03");
-     applesmc_add_key(s, "OSK0", 32, s->osk);
-     applesmc_add_key(s, "OSK1", 32, s->osk + 32);
-     applesmc_add_key(s, "NATJ", 1, "\0");
-     applesmc_add_key(s, "MSSP", 1, "\0");
--    applesmc_add_key(s, "MSSD", 1, "\0x3");
-+    applesmc_add_key(s, "MSSD", 1, "\x03");
- }
- 
- static void applesmc_unrealize(DeviceState *dev)
--- 
-2.50.1 (Apple Git-155)
+
+     cd test_cmake
+     cmake .
+     -> Crash with:
+        -- Detecting C compiler ABI info
+        bash: line 1:  8489 Illegal instruction        (core dumped) cmake .
+
+  7. Reproducer 3 (rebuild cmake from source inside container):
+     apt source cmake
+     cd cmake
+     apt-get build-dep .
+     dpkg-buildpackage -us -uc -b
+     -> Bootstrapping error:
+        Illegal instruction (core dumped)
+        Error when bootstrapping CMake:
+        Problem while running initial CMake
+
+  8. Observed crash location (from gdb/QEMU_STRACE when available):
+     - Illegal instruction is in memset@@GLIBC_2.27+0x52
+     - Faulting instruction: vse64.v v1,(a5)    (RISC-V vector store of 64-=
+bit elements)
+
+
+  ## Workarounds
+  - LD_PRELOAD a scalar-only memset library (libnovecmem.so) to avoid glibc=
+ using vectorized memset.
+  - Run the failing process under gdb (slower) or enable QEMU_STRACE=3D1 =
+=E2=80=94 both make the failure much less likely.
+
+  Note: The same workload does not reproduce the crash when run under
+  qemu-system (full-system emulation). The issue appears specific to
+  qemu-user
+
+To manage notifications about this bug go to:
+https://bugs.launchpad.net/qemu/+bug/2133188/+subscriptions
 
 
