@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F10ECD3427
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 11:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45160CD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 12:06:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKxMm-0006Fc-9t; Thu, 07 May 2026 07:58:08 -0400
+	id 1wKxU7-0008SN-P1; Thu, 07 May 2026 08:05:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKxMQ-0006Eu-5T
- for qemu-devel@nongnu.org; Thu, 07 May 2026 07:57:49 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wKxU2-0008Ru-Tv
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 08:05:38 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1wKxMO-000059-1K
- for qemu-devel@nongnu.org; Thu, 07 May 2026 07:57:45 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4891c00e7aeso6642615e9.2
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 04:57:40 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wKxU0-0002AD-QZ
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 08:05:38 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-835399c11e0so280805b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 05:05:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778155059; x=1778759859; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=G+sYMrxHIgI0XOwonv+5WFlvfPITzxng7xWOjoLsXsw=;
- b=a/w8VeB97v7u16OT7GoRX47SisECLLVMWMhbb8xUdKXqKoYrr5d0Kd4Q9R9dq1xGpY
- fToL60TCsR+oBRZlLMwxiiLGnnnNF7tK/nnrLQbBC9tmtoPNkzJb9FgfWJwkOvd3NUD6
- cVoZvix7QErs6KgtjQr5gVQUSW1lDMMVLR7ihmJKR9gjScCVYzZhdJmTDC1k/IkcT5Y7
- N1AR2mhaHllmNpfsdi0sk/O7xfWuXP24SLhZHQ6E3bDaJ9emMYJAO80IBdqJJn+f6jsd
- smJmLAkFyUzIXSM2bskHJZtDIagtl6na2dfUDTv0VPJPSy7t44/+KOzXvlEwjpVoZt+2
- be9A==
+ d=gmail.com; s=20251104; t=1778155535; x=1778760335; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=uiJFEVwmPmAwFk5yNViinwxDNqH4/28NbHcjZ3MgTZE=;
+ b=DqayFYIf0pQug+NYz71JYJRFzXeHEPri1RZyIznh68a8DYYC9GTKh++XJf46xetOOe
+ N9whhjtRyntxbPMUZN4tTZFKfHmVSdGPxpum6OzBuoYBXA42jEgXvzA/lKEsfAhDTc7R
+ +dN3xylLEE+AfUVAca+R23FNch7juBM6nPDL33e3JqtC1j2+zksfE53oz52UiCyrIHW5
+ pkOXbqLStk8qA7pzHRgl6EZqfqIhSsuYgSWZUKnBM02E2dFxY29BLFv+yxzwIuUBCLjK
+ F6GAKxlXMC0kUvebBRWYbSsB+Z954tNBGEh13o1PPPApMx3UXhKQ5DhjY/+lwkiGNWu3
+ iU2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778155059; x=1778759859;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=G+sYMrxHIgI0XOwonv+5WFlvfPITzxng7xWOjoLsXsw=;
- b=AC6Wf3HS21+oL9TCYZZhS3ScmpckyOQ+W3d1+AiF9fp9k07MyBOVZZxrdp78dlWlbU
- JbQXiCEQZ63lu2VgPPfhLK2VNpzx4tnaen2O1eeaPmNNfYDyJCKCdzkXEADF0nzAu0XJ
- Cpyf7OwT/G+AQFqHTpCHoMVBRs1T3VIMviuHqYMolg60CJxMvfcOkM62MGCKZcklVQW1
- gy6VYumGyDdbx4D2xsKdBxZ4AwNE/AOFv6oMhnMUl0t3LRAMZvIS0P+MFUMr5113sqlg
- TxuWRixS+40HFK9dnQh0+TUWJW+xWQ5mYjn+RgMhSYIoVPY43eben2CMkJY9Y05p6Inx
- 7fcQ==
-X-Gm-Message-State: AOJu0YyJhC06WM905hpLURdwuYtnybCd8r3XrznRFsmEaY0mUw10T7mG
- CHOKY9orAw2hhXUBXROOWG+XYigNI4tHBHk+vgvYn4zKBa2tF1x5mDutBl6ZfgySVZ+YiWG1/H+
- hQGKoViw=
-X-Gm-Gg: AeBDiesNtvR+/PQlzUk88BeVc1f3I+rBl9VSbUwKG84CHlJsvukJOibhk22mo5T/tW/
- nI+Niy/K+phOzOjEsfRYF5ADmlln8r+jcfNWgg5tqRPiPn/Okmqz1inPr1K6hRDaobxn0/ysVDJ
- bCIPzRwlBRAwHRUB4tD3VDVzcvfKa2l4pgtiQBRgKGqkPXrW/4Va2NiPAF6Jxf4CJQorXKhHOhm
- Tl8WmB89tn1PeSIVuGbEjXtojsFWG4U1iCQbv65huAi/KK7DG7CgJAOUjm1C+O+Ni0V8jaa+CaA
- Fmgj4OsGjupt23Id3u9PZeLPFTwP+BwpzlZJ9PD5AXs3DIjf4co8p9czXdPe1aPIob9HdH/qgjX
- iv3QiTBOqprOgEjyUymYRgCH1K9ymc09bLRkh2NRfE1YKgGSvh/x9UE6kMgruRsq764DKPfyTCc
- 2GFdQ84RZBllk49zXBsN6vyHQ/OwfBw1220Q==
-X-Received: by 2002:a05:600c:a110:b0:488:9e43:9690 with SMTP id
- 5b1f17b1804b1-48e51e17746mr96330095e9.10.1778155058841; 
- Thu, 07 May 2026 04:57:38 -0700 (PDT)
-Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e52f5c1cfsm77711335e9.0.2026.05.07.04.57.38
+ d=1e100.net; s=20251104; t=1778155535; x=1778760335;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uiJFEVwmPmAwFk5yNViinwxDNqH4/28NbHcjZ3MgTZE=;
+ b=SXYSYoB8fwT/UstRhiGBqUjBAOEloB+MwM05ZUimD2wfoJcDE6ypAwhwY7WnLKeiqc
+ 0ZzqPtrPqYLloIEEHFN6bvw7hVFBQZ3RHCPiuZkDft49JyQGBZOAeulTl4a1N2N/R5FP
+ 2u5MjGfSJFQY2bQk9YYSLa9qtk5R5lzIfjpqoBAid7coUGfdvcwpB6s3P89iTbUyGiTB
+ Frhj+UcZpT4AzyJUlgqHmWozW4nJJcedy7DUWhG6ZNPEnuop3cfXTh3bs7vmHIh6A/dD
+ JtoWToAE0xYRwtclGWupdCuXcEPM8kAn83YXeL2lV7VEY5yeZbslyzPUtqgY/+34ZvTV
+ /l/A==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+ENJTnJ79VRUp6loZAB+Js/N9tkJIt/9rylbsl8l8vu9pZdziNMo4LFKN2nqGBoquYEET/NqgS+yux@nongnu.org
+X-Gm-Message-State: AOJu0YzZqlX1iKRj8EVI7U7phSayLrtPZPkHX593CLouqQ1T/IvttP1l
+ NmPs/E80KDh8VIxTXvpg0ZnNyEpJ4rLuaaHD9jUhu9YsTyYL08jIPv1o
+X-Gm-Gg: AeBDiesZN/KObs1QRBXPM/WRWWym/K8sPn69OthrRMCm3Kr0kFcw/laEuZstgfmXhjh
+ 325Epa07H3Al/kNE8Q44bSMRdhE24guOaMzLlfgMx+vxQPtaEZdItWNXEcIol1rZEX+zFA9ELTo
+ Jhl7GXgPyeIJY456CNA6Vsq/1xgD41kGvUDOkpBrFjl9x/SqSIok+9URORJwmothmAmI1VMJ/Hf
+ V71IOAsQPO17uDvdrX7TSgoSnM9hLSugcV2DhkLpPtUmbVkFPrEX7Qupx/3xTCgZRguSLwtF595
+ 1Z+SKgRLqRqB5roX2V5eWsn7DvSMwIwTseFJ99wrPy/P3rGTe+uUU75ct+cZxFzq46CkJ0aqhRo
+ pCY2MP4MNDvU5tEI/Y6uldN2ZA4pMYfsqAjyfjUH0tFbD0FZIKxNTtueR5HLjluWpMr88GXJJt1
+ idWiMsouLq/92irf1CQWP47wTnFH72VAHdrX/7jlUXM/FJhJ33yXVgEpaWAmZ5ZEzY2nr1NSTR7
+ 1Qj2mCA
+X-Received: by 2002:a05:6a00:124c:b0:834:df57:9d36 with SMTP id
+ d2e1a72fcca58-83a5d18fe2amr7791510b3a.25.1778155534592; 
+ Thu, 07 May 2026 05:05:34 -0700 (PDT)
+Received: from localhost (124.158.97.178.qld.leaptel.network. [124.158.97.178])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-83967dbd995sm7930951b3a.43.2026.05.07.05.05.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 04:57:38 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 217C15F870;
- Thu, 07 May 2026 12:57:37 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH 06/10] .agents/skills: add qemu-testing skill
-In-Reply-To: <afxHRn6ft1ABjWDw@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Thu, 7 May 2026 09:03:18 +0100")
-References: <20260505170105.228162-1-alex.bennee@linaro.org>
- <20260505170105.228162-7-alex.bennee@linaro.org>
- <afxHRn6ft1ABjWDw@redhat.com>
-User-Agent: mu4e 1.14.1; emacs 30.1
-Date: Thu, 07 May 2026 12:57:37 +0100
-Message-ID: <875x4zmnym.fsf@draig.linaro.org>
+ Thu, 07 May 2026 05:05:33 -0700 (PDT)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: Corey Minyard <cminyard@mvista.com>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Chris Rauer <crauer@google.com>,
+ Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, Hao Wu <wuhaotsh@google.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 0/4] hw/i2c: Add designware i2c controller
+Date: Thu,  7 May 2026 22:05:18 +1000
+Message-ID: <20260507120524.111056-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,118 +105,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+Hi,
 
-> On Tue, May 05, 2026 at 06:01:01PM +0100, Alex Benn=C3=A9e wrote:
->> This provides basic instructions for running tests.
->>=20
->> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->> ---
->>  .agents/skills/qemu-testing/SKILL.md | 53 ++++++++++++++++++++++++++++
->>  1 file changed, 53 insertions(+)
->>  create mode 100644 .agents/skills/qemu-testing/SKILL.md
->>=20
->> diff --git a/.agents/skills/qemu-testing/SKILL.md b/.agents/skills/qemu-=
-testing/SKILL.md
->> new file mode 100644
->> index 00000000000..3b7b42109e1
->> --- /dev/null
->> +++ b/.agents/skills/qemu-testing/SKILL.md
->> @@ -0,0 +1,53 @@
->> +---
->> +name: qemu-testing
->> +description: Provides instructions on how to find, list, and run
->> individual tests for QEMU (Unit, QTest, Functional, TCG). You MUST
->> use this skill whenever the user asks about tests, wants to list
->> available tests, or wants to run any test in a build directory, even
->> for simple exploratory queries like "what tests can I run". It
->> includes details about spawning sub-agents.
->> +license: GPL-2.0-or-later
->> +---
->> +
->> +# Instructions
->> +To run QEMU tests, you can use several different suites depending
->> on what you are testing. **Note**: Ensure you have a recent build of
->> QEMU before running tests. Use the `qemu-build` skill if you need to
->> configure or run a build.
->> +
->> +## General Test Suites
->> +- **Unit Tests**: `make check-unit`
->> +- **QTest (Device emulation)**: `make check-qtest`
->> +- **Functional Tests (Python based)**: `make check-functional`
->> +- **TCG Tests (CPU instruction tests)**: `make check-tcg`
->> +
->> +## Launching Tests
->> +**Crucial**: You MUST NEVER run a test suites directly in the main
->> agent context. You MUST ALWAYS launch them by spawning a sub-agent.
->> Pass the specific build or test commands, along with the required
->> build directory, in the `task` argument. Give the subagent explicit
->> instructions on what to verify and what to report back to you.
->> +For example: `task: "Navigate to builds/debug and check what meson test=
-s touch replay and report back."` or `task: "Run make check-tcg in builds/a=
-rm and summarize any failing tests."`
->> +
->> +### From the Build Directory
->> +Most individual tests from within a build directory. Most (unit, qtest,=
- block, functional) can be individually selected and run via meson.
->> +
->> +As QEMU often needs a newer meson than the build host you should use th=
-e build `pyenv` to launch it:
->> +- **Example**: `./pyvenv/bin/meson test --suite thorough --list` to see=
- what tests are in the thorough test suite
->> +
->> +## Running Individual Tests
->> +
->> +### Meson Test Runner (Unit, QTest, Functional, softfloat etc)
->> +To run a single test, you can use the meson test runner from within you=
-r pyvenv:
->> +`./pyvenv/bin/meson test [testname]`
->> +Example: `./pyvenv/bin/meson test qtest-x86_64/boot-serial-test`
->> +
->> +### TCG Tests
->> +To run individual TCG tests for a specific architecture:
->> +1. Navigate to the relevant build directory, e.g.: `cd tests/tcg/aarch6=
-4-softmmu`
->> +2. Run a specific test with make: `make run-[testname]`
->> +   Example: `make run-memory-sve`
->> +3. Use `make help` within the architecture directory to see the full li=
-st of available tests.
->> +
->> +### Functional Tests
->> +Individual functional tests can be run directly using the run script al=
-though from the source directory:
->> +- **Example**: `./builds/all/run tests/functional/aarch64/test_virt_vbs=
-a.py`
->> +
->> +### Environment Variables
->> +- `V=3D1` for verbose output from tests.
->> +- `SPEED=3Dslow` to run slower tests that are normally skipped.
->
-> When I read this, I note there is some significant overlap with what
-> we write in docs/devel/testing/.=20
->
-> Would it still be effective enough to merely point the agents to
-> docs/devel/testing and get rid of most text in this section ?
+This series contains the DW I2C model written by Chris Rauer and
+updated for the Tenstorrent Atlantis machine recently. There was
+some more review comment on that submission and so we decided to
+take the I2C device out of that series and work on it separately,
+see here:
 
-The intention of skills is to be as concise as possible to save on token
-cost. We could certainly put a link to the main document so it can read
-it for more details if needed.
+https://lore.kernel.org/qemu-devel/20260425131721.932250-1-joel@jms.id.au/T/#mb1ef2824c2f1f37bf4574dc1ef0fb95566c3a2f2
 
->
->> +
->> +## Reporting Results
->> +**Crucial**: After completing the build and test tasks, provide a conci=
-se summary of the results to the calling agent.
->> +1. **Summary**: State whether the build and tests passed or failed.
->> +2. **Failure Excerpts**: If any task fails, include relevant excerpts f=
-rom the logs (e.g., compiler errors, test failures).
->> +3. **Full Paths**: Always provide the **absolute file paths** to the fu=
-ll logs and result sets for further inspection.
->
-> With regards,
-> Daniel
+The big thing suggested was to move to the QEMU register API. That
+is a big change and difficult to review, so I have split that and
+a some smaller changes out into their own patches. I don't expect
+detailed reviews on the register API patch -- it's quite mechanical
+and I did attempt to verify it by diff'ing register traces. But it
+would be good to make sure maintainers are happy to go that way.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Unfortunately the patch 1 was quite well reviewed and tested so
+incremental changes would be preferable, but it is painful to maintain
+migration compatibility across these changes.
+
+Thanks,
+Nick
+
+Chris Rauer (1):
+  hw/i2c: Add designware i2c controller
+
+Nicholas Piggin (3):
+  [RFC] hw/i2c/designware_i2c: Switch to Fifo8
+  [RFC] hw/i2c/designware_i2c: Switch to QEMU register API
+  [RFC] hw/i2c/designware_i2c: add SMBUS_INTR_MASK
+
+ MAINTAINERS                     |   8 +
+ hw/i2c/Kconfig                  |   5 +
+ hw/i2c/designware_i2c.c         | 742 ++++++++++++++++++++++++++++++++
+ hw/i2c/meson.build              |   1 +
+ hw/i2c/trace-events             |   4 +
+ include/hw/i2c/designware_i2c.h |  56 +++
+ roms/seabios-hppa               |   2 +-
+ 7 files changed, 817 insertions(+), 1 deletion(-)
+ create mode 100644 hw/i2c/designware_i2c.c
+ create mode 100644 include/hw/i2c/designware_i2c.h
+
+-- 
+2.53.0
+
 
