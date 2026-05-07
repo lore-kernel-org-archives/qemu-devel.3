@@ -4,102 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E58A0CD343B
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 07:55:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76C6ECD343B
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 07:56:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKtZO-0000jN-Qv; Thu, 07 May 2026 03:54:54 -0400
+	id 1wKtaU-0001Zv-26; Thu, 07 May 2026 03:56:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wKtZM-0000gA-Ra
- for qemu-devel@nongnu.org; Thu, 07 May 2026 03:54:53 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wKtaS-0001XZ-Mo
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 03:56:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wKtZL-0002Dx-7j
- for qemu-devel@nongnu.org; Thu, 07 May 2026 03:54:52 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1wKtaR-0002lQ-0X
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 03:56:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778140490;
+ s=mimecast20190719; t=1778140557;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=9nEqXQIpDAAUM4QmBWfMK4xpa0WyRLB2GLpqptQygQA=;
- b=M0C4QmU/DwBeOLyj/550KCjw8dD2yq8nni7wgVOb2p71dx7cu11yA6iaqWOeTDIJ3S3Pcv
- bkEkaPb1W3940Cs8hhMsjZbQVnK6XuUuGSBvc7L3z4ooacYSlbSJ+rA3gPey6z7ndioPXE
- /Fq5EMayT3bQjjRokkEbLdYhGba5BhY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sUYLIe1HSMtuP3qpLZZgmhDcGyc81igB3SkHEFSR4s8=;
+ b=LeusSieflEytMhabcNJDW2U32RgK0/YujxnAyBjHcxKiZDpJT1C9jlhxetvNCkX7wcjh+l
+ UuHw6bekWQNpJAZ4/F5VrRlnuSwdvgeLbKR1R2rjuaok5RYThjFK+v3DMtVZx6cwtaoKeY
+ ujYe1DtTDpSNuhnQT7RR3Cqymp7F6NI=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-436--niWY5SHP7WdgQVh77kvMg-1; Thu, 07 May 2026 03:54:47 -0400
-X-MC-Unique: -niWY5SHP7WdgQVh77kvMg-1
-X-Mimecast-MFC-AGG-ID: -niWY5SHP7WdgQVh77kvMg_1778140486
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-48d0889c1ecso3644525e9.0
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 00:54:46 -0700 (PDT)
+ us-mta-558-QNYu78OON_ObWqdnDKfAwQ-1; Thu, 07 May 2026 03:55:54 -0400
+X-MC-Unique: QNYu78OON_ObWqdnDKfAwQ-1
+X-Mimecast-MFC-AGG-ID: QNYu78OON_ObWqdnDKfAwQ_1778140553
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-48919890a95so3181065e9.2
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 00:55:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778140486; x=1778745286; darn=nongnu.org;
+ d=redhat.com; s=google; t=1778140553; x=1778745353; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=9nEqXQIpDAAUM4QmBWfMK4xpa0WyRLB2GLpqptQygQA=;
- b=ktcGIOfVJMrrbkdAaUa3jknwkCvTpSoD49aAcFL5spaRB0AxKr6jEQoFpQP07MD6Ra
- RxY0+3tL7XcYIRHJknd4lv6uWkOinGJtbjUwzKaTmXjHndEulgeXwOVmFcT8S6HTqI2z
- r+2oJ1gB/gD0lqTbvBzSiAsIeYVHXFlY5n/gELgF93jc1bNqjvGmde+fcx2le52piM+r
- N5bqjSgCmTHYKuQBjanHg4WuBoN2OSEXWz/Jbqx4qMdi/0+jhuDdCpH9zp7J9g3abSJv
- Ze4IL3zSWvifbUksfrJ/UxfaAQi2f9x4J6OXiYvUxy+xy+Fdx2uBw0gmon/HOXx50tZR
- v0Ig==
+ bh=sUYLIe1HSMtuP3qpLZZgmhDcGyc81igB3SkHEFSR4s8=;
+ b=OJTrQzHtK4TWqFcmDvkHQlf1Zsp1gZudcN22YjTsEaXojBPZnSDy2flI7l+RR98x+N
+ Ojf8hKmEthhnwaFEE2rRYeDdOvqX3d0JCu8OAukkvyIr+JhbJb7TXUpoH8IkEK0KHtPM
+ i4w+4o4hLHAqM1YDzJ0jkvMO+tnqjqVXXfmdzvz3e0wQub+Oo6fCmZeJ/rRiusofE6cF
+ okYnC1iuxPgGyc0hoNwLbW06XTHiaRDWmS4tGwxUYDZXfhArHhZ70DTcipZDCYLk9CoN
+ 5kBjTsARwhcNsYIapV4RRAQajZYHS18hHdiunRewwkaBMKJqJDxfKXL66ybRvIoicHm/
+ unWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778140486; x=1778745286;
+ d=1e100.net; s=20251104; t=1778140553; x=1778745353;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9nEqXQIpDAAUM4QmBWfMK4xpa0WyRLB2GLpqptQygQA=;
- b=VKjyXDuJfNNHAIvQKD9XNye1YAaHlo4B8x6sdZaaT5OpTN8pja6uRXWoVRiEQR/2PI
- oGB8q8o+10d1uLBOMkX13xRM1bbZrgvHw79bYEXvNOIqriDen8RNybK1lGXBwvUmvfga
- Uu0HGYfgN2u+NrRmdy+mEATXmL6lALulm+hxEMQG3lvhffkV7Clj5e8st5VzA8Elx6pS
- QDUpMrMp8BVaSxlaCTOzkBR+XNM1jwGdN0dh8Kch99iqkf1mocGsl/KSheMBMyYkTtdD
- y4VA1QpsAbWBVXmRr3SgMeAakalgNLSZhBdwx2T2GDUddtRc21UCSoct8F9GN7sJ+6d3
- fYAQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/i3FddvOAH/h01sd3QsqrCdhjH9QK1blbwStcz82+AqA1QASPpZ/v3J/qV8KhPoP464p8Bdry1fBfw@nongnu.org
-X-Gm-Message-State: AOJu0YzAi7AUiPY3iyIvUkIKanZ2U31dkPgcJiNINRwmisr6Floh3WsS
- 6GNVDewByytf0LKR0b0zEuDNeY+uy71cFNay5lppga1KgHOPyr32MB2zURME2Qk3TCGeiskWGAh
- KphaPa9XaIXNXHn2z2DBdg0vDRfDu7L/fpK03ciNYMmwJV+hlGUap7Mkp
-X-Gm-Gg: AeBDietDpLWBYks6IP4a+wRIv+La1iqeoPhD4mQsJNKWGGNsgBpYrFe3YCRpBS2W7Yz
- kvukIssBuqVNkBvneKYl4s4FuwcWY5uYrhPMuVxWTNDcD70wfO9SnAc2TArSPmD0QTFwutf8m1f
- vJssvKUfvZejoRAedYjYV6gn0/YEfPweI0H1aeEvnczRfcvfsbn1AlQPwjU5n2EUdErhvXqyIBn
- yMY1l1vl/V7H7L+7b2S0Cuoz60WVI8OusicvN4XhHCEw4po7hX/zUUEiy0hzAmrcXNI8+PT6/RS
- 5J0UF+facQE1CI5lPcT3CzQbCZtbQ6fOmUfQDxFK6owg4vZvnTh1WF+GTM0vvfM3cf5JAwhUWHI
- WzAIIUbpE216ryD1zPNzdfWZY70+NKZNStf4+6mivJrueiKrdHMyH3/yqpgSDBzY6CItwWNY=
-X-Received: by 2002:a05:600c:4e0c:b0:48a:54fd:54ea with SMTP id
- 5b1f17b1804b1-48e51e21378mr123353215e9.12.1778140485891; 
- Thu, 07 May 2026 00:54:45 -0700 (PDT)
-X-Received: by 2002:a05:600c:4e0c:b0:48a:54fd:54ea with SMTP id
- 5b1f17b1804b1-48e51e21378mr123352545e9.12.1778140485403; 
- Thu, 07 May 2026 00:54:45 -0700 (PDT)
+ bh=sUYLIe1HSMtuP3qpLZZgmhDcGyc81igB3SkHEFSR4s8=;
+ b=ovh/8OXPiierxVdgK6mb/lCG0RkrjdyIv+oXw9fVq7mpir9CueLu8gC4ZW+qdJOr0h
+ fbA4RduIe9fXnwz95lE6fpoN/LdPmKoB5BVIxLQzx/s3eOV08k8rNK6cZJ5pvQXkgOyt
+ e8/OSjAVqNWme/+YH6hHPwT2hAfSg5oZd92HHZYHhjlxiSn6WOpxbuya8JC2PrEBQT8t
+ GlS6NhrPrHFZQw7cIPkLhjn+fcVh+oTAZW6rsntOJBbVhpBVaKgY1rXxyufo1wOakzse
+ Hny1i9vmqy4o02mh0u48PvILmkjnmTmmZMRGMl4lBrdVeuslpmsq5VH9YPAQ8AEdgrPX
+ Jg4A==
+X-Gm-Message-State: AOJu0Yz58LciYlDA7JdrIDwozotsAMq9dKVW/Iid+AD1BC+8gR/VV+st
+ zX8nTNHLdVZ69o+cqh+CMi+pun67VZ7DR6d0RUYaaeqGQqOVyu3RTUaISfMsufoEYwSobzRXMBy
+ y3JmFOtAwJ52jaT2aNK8xLrqYzEhkL9fdqGDTnh5nreGCAUlPN2/9MsH/
+X-Gm-Gg: AeBDieukEbx0hIw0fY99HRcP9IgbkXtnnATXY7j+x6qyyRL3gbhVAM0nU28QwvfLKVS
+ BK8EEYLJQXY74v/NBYyNI7tmP8uW7ka/ngCVg6oXF8qd783+2ejFqB+iHVfW6Pb0jBQB1kzwXkK
+ v8DQwqPEZnfxUWGqbtV2Lk/VwRoxOduDWiaczQu80qzbV4F6bXsGg/vlrncg+MhVXzklkvbLgDY
+ VgTSuy1pPZDexQsLDCvEtIxirPKSz/fcbS4sq2u+oe1z3tqZ0XThO+9P0QUHljg5O80oy2phED4
+ lrlFBgKzgXB/soaNlaF2gOUlQw9Miq9gYqsE2zJ0kqmOCYBkqMrz6MKBGNOdzTLBebasrKybXLq
+ UM5/8dHBTROz0Kam/60k686i/ZViuwjhqv+jI1pRx9sR1PbkchKXIByVyxUObpjaV4zR5Cro=
+X-Received: by 2002:a05:600c:8211:b0:489:c57:7836 with SMTP id
+ 5b1f17b1804b1-48e51f40ecemr124693325e9.27.1778140553112; 
+ Thu, 07 May 2026 00:55:53 -0700 (PDT)
+X-Received: by 2002:a05:600c:8211:b0:489:c57:7836 with SMTP id
+ 5b1f17b1804b1-48e51f40ecemr124692415e9.27.1778140552647; 
+ Thu, 07 May 2026 00:55:52 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e538c4ae1sm100766955e9.12.2026.05.07.00.54.44
+ 5b1f17b1804b1-48e53116a9fsm49333735e9.8.2026.05.07.00.55.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 May 2026 00:54:44 -0700 (PDT)
-Message-ID: <2145c818-53f3-4c05-9e96-c070ad5a2429@redhat.com>
-Date: Thu, 7 May 2026 09:54:43 +0200
+ Thu, 07 May 2026 00:55:52 -0700 (PDT)
+Message-ID: <f1f78c0b-5792-4046-a9a1-c4c725193284@redhat.com>
+Date: Thu, 7 May 2026 09:55:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/14] scripts/update-linux-headers: Add typelimits.h
-To: Avihai Horon <avihaih@nvidia.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Maor Gottlieb <maorg@nvidia.com>, gaosong <gaosong@loongson.cn>
-References: <20260505081423.28326-1-avihaih@nvidia.com>
- <20260505081423.28326-2-avihaih@nvidia.com>
+Subject: Re: [PATCH 2/4] linux-headers: update to Linux 7.1-rc1
+To: Song Gao <gaosong@loongson.cn>, maobibo@loongson.cn
+Cc: qemu-devel@nongnu.org, lixianglai@loongson.cn, chenhuacai@loongson.cn,
+ pbonzini@redhat.com, cohuck@redhat.com, thuth@redhat.com, mst@redhat.com,
+ peter.maydell@linaro.org, richard.henderson@linaro.org, philmd@linaro.org,
+ gaosong <gaosong@loongson.cn>
+References: <20260427070029.1059386-1-gaosong@loongson.cn>
+ <20260427070029.1059386-3-gaosong@loongson.cn>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -145,7 +140,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260505081423.28326-2-avihaih@nvidia.com>
+In-Reply-To: <20260427070029.1059386-3-gaosong@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -174,42 +169,62 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 + Song Gao
 
-On 5/5/26 10:14, Avihai Horon wrote:
-> Upstream Linux added include/uapi/linux/typelimits.h and includes it
-> from ethtool.h [1][2].
+On 4/27/26 09:00, Song Gao wrote:
+> Update headers to retrieve the latest KVM caps for LoongArch.
+> This commit was created automatically by update-linux-headers.sh.
 > 
-> Teach update-linux-headers.sh to install that header into
-> standard-headers to be able to update kernel headers to versions that
-> include the above changes.
-> 
-> [1] ca9d74eb5f6a ("uapi: add INT_MAX and INT_MIN constants")
-> [2] a8a11e5237ae ("ethtool: uapi: Use UAPI definition of INT_MAX")
-> 
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+> Cc: clg@redhat.com
+> Cc: pbonzini@redhat.com
+> Cc: cohuck@redhat.com
+> Cc: thuth@redhat.com
+> Cc: mst@redhat.com
+> Cc: peter.maydell@linaro.org
+> Cc: richard.henderson@linaro.org
+> Cc: philmd@linaro.org
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
 > ---
->   scripts/update-linux-headers.sh | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
-> index 386d7a38e7..da367acee7 100755
-> --- a/scripts/update-linux-headers.sh
-> +++ b/scripts/update-linux-headers.sh
-> @@ -60,6 +60,7 @@ cp_portable() {
->                                        -e 'drm.h' \
->                                        -e 'limits' \
->                                        -e 'linux/const' \
-> +                                     -e 'linux/typelimits' \
->                                        -e 'linux/kernel' \
->                                        -e 'linux/sysinfo' \
->                                        -e 'asm/setup_data.h' \
-> @@ -250,6 +251,7 @@ for i in "$hdrdir"/include/linux/*virtio*.h \
->            "$hdrdir/include/linux/pci_regs.h" \
->            "$hdrdir/include/linux/ethtool.h" \
->            "$hdrdir/include/linux/const.h" \
-> +         "$hdrdir/include/linux/typelimits.h" \
->            "$hdrdir/include/linux/kernel.h" \
->            "$hdrdir/include/linux/kvm_para.h" \
->            "$hdrdir/include/linux/vhost_types.h" \
+>   include/standard-headers/drm/drm_fourcc.h     |  28 +-
+>   include/standard-headers/linux/const.h        |  18 +
+>   include/standard-headers/linux/ethtool.h      |  28 +-
+>   .../linux/input-event-codes.h                 |  13 +
+>   include/standard-headers/linux/pci_regs.h     |  71 ++-
+>   include/standard-headers/linux/typelimits.h   |   8 +
+>   include/standard-headers/linux/virtio_ring.h  |   3 +-
+>   include/standard-headers/linux/virtio_rtc.h   | 237 ++++++++++
+>   include/standard-headers/linux/vmclock-abi.h  |  20 +
+>   linux-headers/asm-arm64/kvm.h                 |   1 +
+>   linux-headers/asm-arm64/unistd_64.h           |   1 +
+>   linux-headers/asm-generic/unistd.h            |   5 +-
+>   linux-headers/asm-loongarch/kvm.h             |   5 +
+>   linux-headers/asm-loongarch/kvm_para.h        |   1 +
+>   linux-headers/asm-loongarch/unistd_64.h       |   2 +
+>   linux-headers/asm-mips/unistd_n32.h           |   1 +
+>   linux-headers/asm-mips/unistd_n64.h           |   1 +
+>   linux-headers/asm-mips/unistd_o32.h           |   1 +
+>   linux-headers/asm-powerpc/unistd_32.h         |   1 +
+>   linux-headers/asm-powerpc/unistd_64.h         |   1 +
+>   linux-headers/asm-riscv/kvm.h                 |  11 +-
+>   linux-headers/asm-riscv/ptrace.h              |  37 ++
+>   linux-headers/asm-riscv/unistd_32.h           |   1 +
+>   linux-headers/asm-riscv/unistd_64.h           |   1 +
+>   linux-headers/asm-s390/unistd_32.h            | 446 ------------------
+>   linux-headers/asm-s390/unistd_64.h            |   1 +
+>   linux-headers/asm-x86/kvm.h                   |  21 +-
+>   linux-headers/asm-x86/unistd_32.h             |   1 +
+>   linux-headers/asm-x86/unistd_64.h             |   1 +
+>   linux-headers/asm-x86/unistd_x32.h            |   1 +
+>   linux-headers/linux/const.h                   |  18 +
+>   linux-headers/linux/iommufd.h                 |  48 ++
+>   linux-headers/linux/kvm.h                     |  46 +-
+>   linux-headers/linux/mshv.h                    |   4 +-
+>   linux-headers/linux/psp-sev.h                 |   2 +-
+>   linux-headers/linux/stddef.h                  |   4 +
+>   linux-headers/linux/vduse.h                   |  85 +++-
+>   linux-headers/linux/vfio.h                    |  30 +-
+>   38 files changed, 711 insertions(+), 493 deletions(-)
+>   create mode 100644 include/standard-headers/linux/typelimits.h
+>   create mode 100644 include/standard-headers/linux/virtio_rtc.h
+>   delete mode 100644 linux-headers/asm-s390/unistd_32.h
 
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
