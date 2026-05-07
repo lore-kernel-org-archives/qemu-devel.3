@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C005FCD342C
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 04:41:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6D50CD342C
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 04:41:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKqWj-0000QY-5c; Thu, 07 May 2026 00:39:57 -0400
+	id 1wKqWw-0000cY-3f; Thu, 07 May 2026 00:40:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wKqWh-0000QH-Lc
- for qemu-devel@nongnu.org; Thu, 07 May 2026 00:39:55 -0400
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wKqWu-0000b8-GN
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 00:40:08 -0400
 Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wKqWf-0003sA-Cf
- for qemu-devel@nongnu.org; Thu, 07 May 2026 00:39:55 -0400
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wKqWt-00046C-4y
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 00:40:08 -0400
 Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2babfd18435so1131785ad.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 21:39:53 -0700 (PDT)
+ d9443c01a7336-2ba17c8cfacso5056155ad.2
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 21:40:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778128792; x=1778733592; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778128806; x=1778733606; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aFqRmy2NnHUogWk2zuIaqAwu+8N7/skfs0tq/duJUVQ=;
- b=nZ9hRaB0Sa4JfqqV+MZwbFhg1qbCIOS4RDZhsy/++tmdlEHcVT64zuUmiHfB1cROIF
- FOlpux+efcRJxt1JuD8zI7KYiJy94uytMT6mAJIWACAWdbD1RxlSTAyBogdKoHvUVCDO
- m0YhblGzogys/CBC3Hjw8162eHaIFeejI0IYM3KRejfh+etVb/FZYxRHvPtPrB4ntLU0
- 1Qj1bsxps5PhygzKG6DsWNM3mW6j1PeP9JcNfC1k1tsZs3v2sSf70ncuATgROE/FOi3E
- pI+5NOX7GnSubCQMGHEM02SNuIxlM+1fVIv1PzZqWFg0puHphKeoXkTXohPljrnwLAiu
- QjmA==
+ bh=bHeLtodOnv6pG12WXEAqX2AcLxs6QHtw3TrspFKRS0A=;
+ b=sswKK3vYQMkU8qiNW/Hwnu0OvhbvLvbk6FskfMOyIb5SPnvylc29wKt+j2/SDECBsz
+ t/hM6Bp47egw9uoekvYASvyWoR/Or5gJ4oqf2glUQcuZisajU/svoou+0LY9HJTxzXTy
+ pOUfN3q+hnnOTXLAWE29KuqotaMaq8gELKlxYhRa3F4LgWdwSVlsq+gQ0pn8PgQabURV
+ GuLLLB0HOxiJGF7sDxFEW3qfxpsxOH4DWRl4Q7sznlCtJK1lniwL+dPNpy4PhEx9ReeA
+ Chqj8GVec9zVVtc99cKrnK2yUcXJ4DKPKBNChtEv64icnOFCBXgIGKMYmmvn9nSfvnIh
+ bC2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778128792; x=1778733592;
+ d=1e100.net; s=20251104; t=1778128806; x=1778733606;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=aFqRmy2NnHUogWk2zuIaqAwu+8N7/skfs0tq/duJUVQ=;
- b=PwJsjOZAFq3M6l7nFMBwiF99if4IGEED5xS5KaQUvix9EEKB9IR+IMiyQ8zUFYJ6kb
- 0yYZEIVC1+B4xq5saaiyT46Inm5iPe30qO/DKbPIcUAdvHfxfkhCK/SvYzNQII+rCJEV
- RGfdkcEOJf2hw1dVC8nKsnM+piVCrOHECUNQ5Q7sQZqQFkAzdNR7FHyOqgciFe+taRQp
- t7tleHVSDRZrYn0tUR2UigcDBqddCzDvuXJ5Rt8s2jN+PCC0aokpPZcdUUOI+w04cCV6
- kgyULOlGFCgYSIKnsYHjggWDLagLl8qhopZlAGwy243pdzWmmpbUOjBalzsB319btec5
- wOBg==
+ bh=bHeLtodOnv6pG12WXEAqX2AcLxs6QHtw3TrspFKRS0A=;
+ b=HQVmoUfr8FBVED7yeXa78BJ/G/YLHyy7MEKV47r4Tqz69yfamEjT2YMg60CWXQj9cj
+ J75489BsApWR6uJA7G7HctWC2JjMO8XFoQkduTZ2tndyNxm//x2AtY2/Z3RJ4t3MDxUd
+ /MRIbFjUfXIdjwvW0tuWUdRGv3rRD3fk1TP8aTcv43AVEDhtrqxF0nDWfWOpdjg917Ug
+ 8YOkTTSTstsK0I+lSfnvwWFObebb2aIl667Q20kC/jcYhden1whay4hAj1l9iGSxdAn6
+ POoH+pp1KU6uYcHsNpjo0S2ZeZYmxOhX122nTkvBO3ia6dm71at2GBkbJnVgRhuPQhI+
+ 42pg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8LdnJ38QB41uPvncv+KMyZwXv0R+InM4iIMur9Rg3H5yzUUCK5/JthgOM3CuVQQxSFkgs7hrVAH9mw@nongnu.org
-X-Gm-Message-State: AOJu0YzdxHrrREAow5Sqlz+CVQFmybA6jtxbHmYGRuylh72SxuBe9oMI
- DQzELtZvLUoivZTsiw1wc5iUZnyPZrvKycU9vvUfn0eNQGYzbDh3xvFa
-X-Gm-Gg: AeBDieurKMhLHD903ILXCr1OSCBssQP1nLvnc+655tOjdtkYeeKtp/NcHmmc6xvCCpP
- e3Adu9QM1x7OPMlBeSC9spKonX2x3jzHFXU8Rvqa5UopcP48UTzXSyN8rrVE8/mjecUUQOwmw1/
- TdO4q54Wb0zmQZB3+MqSDau/t+HipqeQIqL0b7Q9UvVy2PD0bBzS4SGWzBaaFytsx4funu/OnFD
- 9F/L2Wua7YbtPWTkNVuIotP7meswqGRnjzjYuSw0p2mcBhFeeFVoJ9BDATND9vcpmt3MBD5G/8/
- E3J3dSWP9A8G7aMW1OXgK8OLG1uIACLDtJkvppLXBMyYOsUKWcVgcnz2FdaYUFbyMUArM4NAqHD
- TdGnSMFb/ixzaCmflc+TTneh+2T8Cu3A/Y/zTsqt58nYJgn0JfacRYEXQ7DL8+PzSe3Bq0U3Tvv
- +C4UIe4NnEw+9xP10BqI8cAS/oY5dYHTLwviqyBra166By3ZhvU281yTxR/01YpKPD3aRwFQiK7
- zAsTxx1
-X-Received: by 2002:a17:902:7447:b0:2ae:ba5f:3ac3 with SMTP id
- d9443c01a7336-2ba78b30c4dmr44598685ad.2.1778128791720; 
- Wed, 06 May 2026 21:39:51 -0700 (PDT)
+ AFNElJ/dL3vvL1u85AYO8dmUE5AHVumjAJt2f0IZpZ+kuqilgMZZazdJ4s6bsNDzCGuXbG3GvlYo8luMfCVD@nongnu.org
+X-Gm-Message-State: AOJu0YzmXXMSTX6+VVHh24DvRsca0thJj77pzY0suQVgh1OBYuzR0+/g
+ D2aQRk2YyGJi/8gcoZz/7DFPE7hWaUEeCHQ5/yt5VYZQnM70oLgToTGP
+X-Gm-Gg: AeBDieviHTTBOeCF2T98RDwUDmOQu2hQolVaBuZWf9w6rVsp1nsp97dXpcNZdm0W0Y+
+ eSnL6A7rMU5cGdyqCk6wkYtyarq9WxOpcSbnGx2jfpwe5JTJkx07EYr+idnQ7ELpMLDTmBVH4C8
+ eTte2eUouAYPpEqlmaJ4E/UgH4aC4BoGh2SPrySrxLhvE8NAwJ4dTyyYpFWcP4Dj6nM+kVW4hqn
+ B1QFkc7XuaM35xIo7bGRT1QEsBRRQ3TwH8enYjqVdN3jfyKiCWEHkTwVJiZ7JLVuO2hEbkiotr8
+ 5CnlSJkr69bfQcH0vqLN2GuqZZS3gKjAMpvQeZG8AjApkSaKif952Td2FK0ZWkhrDhpvmivun6q
+ Bn+nl1QWwKqL2frpXLGXscSGKcwAUrKBMbJgs7sYU2D6pNpAu2o3+XBkET5GPYBWQ81HBi6k3eC
+ xebd134TsvQxqd6Pze14xUq7B5wa/w1z2gUVS99bJvGwO2BMgVzr0WAhCRIDNIYM0n5cuV5MTaP
+ b42aZjYLxZTZi6a5pw=
+X-Received: by 2002:a17:902:e74b:b0:2ba:5f24:caf8 with SMTP id
+ d9443c01a7336-2ba7908c80cmr65596485ad.12.1778128805818; 
+ Wed, 06 May 2026 21:40:05 -0700 (PDT)
 Received: from localhost (124.158.97.178.qld.leaptel.network. [124.158.97.178])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2babadef853sm8972825ad.64.2026.05.06.21.39.50
+ d9443c01a7336-2babaac3111sm9291785ad.12.2026.05.06.21.40.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 May 2026 21:39:51 -0700 (PDT)
+ Wed, 06 May 2026 21:40:05 -0700 (PDT)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: Alistair Francis <alistair.francis@wdc.com>,
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
@@ -73,10 +73,9 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
  Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
  Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
  qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>
-Subject: [PATCH v5 2/9] hw/riscv/boot: Account for discontiguous memory when
- loading firmware
-Date: Thu,  7 May 2026 14:38:30 +1000
-Message-ID: <20260507043838.45652-3-npiggin@gmail.com>
+Subject: [PATCH v5 5/9] target/riscv: tt-ascalon: Enable Zkr extension
+Date: Thu,  7 May 2026 14:38:33 +1000
+Message-ID: <20260507043838.45652-6-npiggin@gmail.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260507043838.45652-1-npiggin@gmail.com>
 References: <20260507043838.45652-1-npiggin@gmail.com>
@@ -106,303 +105,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This loads firmware into the first (low) memory range,
-accounting for machines having discontiguous memory regions.
+Ascalon supports Zkr and the SEED CSR.
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/boot.c            | 18 ++++++++++++------
- hw/riscv/microchip_pfsoc.c |  8 ++++++--
- hw/riscv/opentitan.c       |  6 ++++--
- hw/riscv/shakti_c.c        |  6 +++++-
- hw/riscv/sifive_u.c        |  6 ++++--
- hw/riscv/spike.c           |  6 ++++--
- hw/riscv/virt.c            |  7 ++++---
- hw/riscv/xiangshan_kmh.c   |  6 +++++-
- include/hw/riscv/boot.h    |  5 ++++-
- 9 files changed, 48 insertions(+), 20 deletions(-)
+ target/riscv/cpu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index 6e0c6c2d17..2b1f11ea15 100644
---- a/hw/riscv/boot.c
-+++ b/hw/riscv/boot.c
-@@ -150,6 +150,7 @@ char *riscv_find_firmware(const char *firmware_filename,
- }
- 
- hwaddr riscv_find_and_load_firmware(MachineState *machine,
-+                                    RISCVBootInfo *info,
-                                     const char *default_machine_firmware,
-                                     hwaddr *firmware_load_addr,
-                                     symbol_fn_t sym_cb)
-@@ -162,7 +163,8 @@ hwaddr riscv_find_and_load_firmware(MachineState *machine,
- 
-     if (firmware_filename) {
-         /* If not "none" load the firmware */
--        firmware_end_addr = riscv_load_firmware(firmware_filename,
-+        firmware_end_addr = riscv_load_firmware(machine, info,
-+                                                firmware_filename,
-                                                 firmware_load_addr, sym_cb);
-         g_free(firmware_filename);
-     }
-@@ -170,10 +172,13 @@ hwaddr riscv_find_and_load_firmware(MachineState *machine,
-     return firmware_end_addr;
- }
- 
--hwaddr riscv_load_firmware(const char *firmware_filename,
-+hwaddr riscv_load_firmware(MachineState *machine,
-+                           const RISCVBootInfo *info,
-+                           const char *firmware_filename,
-                            hwaddr *firmware_load_addr,
-                            symbol_fn_t sym_cb)
- {
-+    uint64_t mem_size = info->ram_low_size ?: machine->ram_size;
-     uint64_t firmware_entry, firmware_end;
-     ssize_t firmware_size;
- 
-@@ -202,7 +207,7 @@ hwaddr riscv_load_firmware(const char *firmware_filename,
- 
-     firmware_size = load_image_targphys_as(firmware_filename,
-                                            *firmware_load_addr,
--                                           current_machine->ram_size, NULL,
-+                                           mem_size, NULL,
-                                            NULL);
- 
-     if (firmware_size > 0) {
-@@ -217,7 +222,7 @@ hwaddr riscv_load_firmware(const char *firmware_filename,
- static void riscv_load_initrd(MachineState *machine, RISCVBootInfo *info)
- {
-     const char *filename = machine->initrd_filename;
--    uint64_t mem_size = machine->ram_size;
-+    uint64_t mem_size = info->ram_low_size ?: machine->ram_size;
-     void *fdt = machine->fdt;
-     hwaddr start, end;
-     ssize_t size;
-@@ -263,6 +268,7 @@ void riscv_load_kernel(MachineState *machine,
-                        bool load_initrd,
-                        symbol_fn_t sym_cb)
- {
-+    uint64_t mem_size = info->ram_low_size ?: machine->ram_size;
-     const char *kernel_filename = machine->kernel_filename;
-     ssize_t kernel_size;
-     void *fdt = machine->fdt;
-@@ -294,7 +300,7 @@ void riscv_load_kernel(MachineState *machine,
-     }
- 
-     kernel_size = load_image_targphys_as(kernel_filename, kernel_start_addr,
--                                         current_machine->ram_size, NULL, NULL);
-+                                         mem_size, NULL, NULL);
-     if (kernel_size > 0) {
-         info->kernel_size = kernel_size;
-         info->image_low_addr = kernel_start_addr;
-@@ -390,7 +396,7 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
-     dtb_start = QEMU_ALIGN_DOWN(temp - fdtsize, 2 * MiB);
- 
-     if (dtb_start_limit && (dtb_start < dtb_start_limit)) {
--        error_report("No enough memory to place DTB after kernel/initrd");
-+        error_report("Not enough memory to place DTB after kernel/initrd");
-         exit(1);
-     }
- 
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 743f31f005..60bb96da01 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -618,18 +618,22 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
-         firmware_load_addr = RESET_VECTOR;
-     }
- 
-+    riscv_boot_info_init_discontig_mem(&boot_info, &s->soc.u_cpus,
-+                                       memmap[MICROCHIP_PFSOC_DRAM_LO].base,
-+                                       mem_low_size);
-+
-     /* Load the firmware if necessary */
-     firmware_end_addr = firmware_load_addr;
-     if (firmware_name) {
-         char *filename = riscv_find_firmware(firmware_name, NULL);
-         if (filename) {
--            firmware_end_addr = riscv_load_firmware(filename,
-+            firmware_end_addr = riscv_load_firmware(machine, &boot_info,
-+                                                    filename,
-                                                     &firmware_load_addr, NULL);
-             g_free(filename);
-         }
-     }
- 
--    riscv_boot_info_init(&boot_info, &s->soc.u_cpus);
-     if (machine->kernel_filename) {
-         kernel_start_addr = riscv_calc_kernel_start_addr(&boot_info,
-                                                          firmware_end_addr);
-diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
-index 309125e854..8cd660dd41 100644
---- a/hw/riscv/opentitan.c
-+++ b/hw/riscv/opentitan.c
-@@ -99,12 +99,14 @@ static void opentitan_machine_init(MachineState *machine)
-     memory_region_add_subregion(sys_mem,
-         memmap[IBEX_DEV_RAM].base, machine->ram);
- 
-+    riscv_boot_info_init(&boot_info, &s->soc.cpus);
-+
-     if (machine->firmware) {
-         hwaddr firmware_load_addr = memmap[IBEX_DEV_RAM].base;
--        riscv_load_firmware(machine->firmware, &firmware_load_addr, NULL);
-+        riscv_load_firmware(machine, &boot_info, machine->firmware,
-+                            &firmware_load_addr, NULL);
-     }
- 
--    riscv_boot_info_init(&boot_info, &s->soc.cpus);
-     if (machine->kernel_filename) {
-         riscv_load_kernel(machine, &boot_info,
-                           memmap[IBEX_DEV_RAM].base,
-diff --git a/hw/riscv/shakti_c.c b/hw/riscv/shakti_c.c
-index 49a39b3021..eb720d9cdf 100644
---- a/hw/riscv/shakti_c.c
-+++ b/hw/riscv/shakti_c.c
-@@ -45,6 +45,7 @@ static void shakti_c_machine_state_init(MachineState *mstate)
- {
-     ShaktiCMachineState *sms = RISCV_SHAKTI_MACHINE(mstate);
-     MemoryRegion *system_memory = get_system_memory();
-+    RISCVBootInfo boot_info;
-     hwaddr firmware_load_addr = shakti_c_memmap[SHAKTI_C_RAM].base;
- 
-     /* Initialize SoC */
-@@ -57,8 +58,11 @@ static void shakti_c_machine_state_init(MachineState *mstate)
-                                 shakti_c_memmap[SHAKTI_C_RAM].base,
-                                 mstate->ram);
- 
-+    riscv_boot_info_init(&boot_info, &sms->soc.cpus);
-+
-     if (mstate->firmware) {
--        riscv_load_firmware(mstate->firmware, &firmware_load_addr, NULL);
-+        riscv_load_firmware(mstate, &boot_info, mstate->firmware,
-+                            &firmware_load_addr, NULL);
-     }
- 
-     /* ROM reset vector */
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index 7ec67b2565..dda8687bfd 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -589,11 +589,13 @@ static void sifive_u_machine_init(MachineState *machine)
-         break;
-     }
- 
-+    riscv_boot_info_init(&boot_info, &s->soc.u_cpus);
-+
-     firmware_name = riscv_default_firmware_name(&s->soc.u_cpus);
--    firmware_end_addr = riscv_find_and_load_firmware(machine, firmware_name,
-+    firmware_end_addr = riscv_find_and_load_firmware(machine, &boot_info,
-+                                                     firmware_name,
-                                                      &start_addr, NULL);
- 
--    riscv_boot_info_init(&boot_info, &s->soc.u_cpus);
-     if (machine->kernel_filename) {
-         kernel_start_addr = riscv_calc_kernel_start_addr(&boot_info,
-                                                          firmware_end_addr);
-diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
-index 35c696f891..6ee915a8ba 100644
---- a/hw/riscv/spike.c
-+++ b/hw/riscv/spike.c
-@@ -281,9 +281,12 @@ static void spike_board_init(MachineState *machine)
-         }
-     }
- 
-+    riscv_boot_info_init(&boot_info, &s->soc[0]);
-+
-     /* Load firmware */
-     if (firmware_name) {
--        firmware_end_addr = riscv_load_firmware(firmware_name,
-+        firmware_end_addr = riscv_load_firmware(machine, &boot_info,
-+                                                firmware_name,
-                                                 &firmware_load_addr,
-                                                 htif_symbol_callback);
-         g_free(firmware_name);
-@@ -293,7 +296,6 @@ static void spike_board_init(MachineState *machine)
-     create_fdt(s, memmap, riscv_is_32bit(&s->soc[0]), htif_custom_base);
- 
-     /* Load kernel */
--    riscv_boot_info_init(&boot_info, &s->soc[0]);
-     if (machine->kernel_filename) {
-         kernel_start_addr = riscv_calc_kernel_start_addr(&boot_info,
-                                                          firmware_end_addr);
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index a1c323e66d..4501d5581b 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -1457,7 +1457,10 @@ static void virt_machine_done(Notifier *notifier, void *data)
-         }
-     }
- 
--    firmware_end_addr = riscv_find_and_load_firmware(machine, firmware_name,
-+    riscv_boot_info_init(&boot_info, &s->soc[0]);
-+
-+    firmware_end_addr = riscv_find_and_load_firmware(machine, &boot_info,
-+                                                     firmware_name,
-                                                      &start_addr, NULL);
- 
-     pflash_blk0 = pflash_cfi01_get_blk(s->flash[0]);
-@@ -1480,8 +1483,6 @@ static void virt_machine_done(Notifier *notifier, void *data)
-         }
-     }
- 
--    riscv_boot_info_init(&boot_info, &s->soc[0]);
--
-     if (machine->kernel_filename && !kernel_entry) {
-         kernel_start_addr = riscv_calc_kernel_start_addr(&boot_info,
-                                                          firmware_end_addr);
-diff --git a/hw/riscv/xiangshan_kmh.c b/hw/riscv/xiangshan_kmh.c
-index 436e51c1c5..247a0b5d1f 100644
---- a/hw/riscv/xiangshan_kmh.c
-+++ b/hw/riscv/xiangshan_kmh.c
-@@ -166,6 +166,7 @@ static void xiangshan_kmh_machine_init(MachineState *machine)
-     const MemMapEntry *memmap = xiangshan_kmh_memmap;
-     MemoryRegion *system_memory = get_system_memory();
-     hwaddr start_addr = memmap[XIANGSHAN_KMH_DRAM].base;
-+    RISCVBootInfo boot_info;
- 
-     /* Initialize SoC */
-     object_initialize_child(OBJECT(machine), "soc", &s->soc,
-@@ -177,13 +178,16 @@ static void xiangshan_kmh_machine_init(MachineState *machine)
-                                 memmap[XIANGSHAN_KMH_DRAM].base,
-                                 machine->ram);
- 
-+    riscv_boot_info_init(&boot_info, &s->soc.cpus);
-+
-     /* ROM reset vector */
-     riscv_setup_rom_reset_vec(machine, &s->soc.cpus,
-                               start_addr,
-                               memmap[XIANGSHAN_KMH_ROM].base,
-                               memmap[XIANGSHAN_KMH_ROM].size, 0, 0);
-     if (machine->firmware) {
--        riscv_load_firmware(machine->firmware, &start_addr, NULL);
-+        riscv_load_firmware(machine, &boot_info, machine->firmware,
-+                            &start_addr, NULL);
-     }
- 
-     /* Note: dtb has been integrated into firmware(OpenSBI) when compiling */
-diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-index 69c99a1496..4e7bd9a225 100644
---- a/include/hw/riscv/boot.h
-+++ b/include/hw/riscv/boot.h
-@@ -53,13 +53,16 @@ void riscv_boot_info_init_discontig_mem(RISCVBootInfo *info,
- vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
-                                    hwaddr firmware_end_addr);
- hwaddr riscv_find_and_load_firmware(MachineState *machine,
-+                                    RISCVBootInfo *info,
-                                     const char *default_machine_firmware,
-                                     hwaddr *firmware_load_addr,
-                                     symbol_fn_t sym_cb);
- const char *riscv_default_firmware_name(RISCVHartArrayState *harts);
- char *riscv_find_firmware(const char *firmware_filename,
-                           const char *default_machine_firmware);
--hwaddr riscv_load_firmware(const char *firmware_filename,
-+hwaddr riscv_load_firmware(MachineState *machine,
-+                           const RISCVBootInfo *info,
-+                           const char *firmware_filename,
-                            hwaddr *firmware_load_addr,
-                            symbol_fn_t sym_cb);
- void riscv_load_kernel(MachineState *machine,
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index ce15a17c37..69649462dd 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -3190,6 +3190,7 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+         .cfg.ext_zba = true,
+         .cfg.ext_zbb = true,
+         .cfg.ext_zbs = true,
++        .cfg.ext_zkr = true,
+         .cfg.ext_zkt = true,
+         .cfg.ext_zvbb = true,
+         .cfg.ext_zvbc = true,
 -- 
 2.53.0
 
