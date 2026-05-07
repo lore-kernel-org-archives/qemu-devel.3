@@ -4,91 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3141CD3427
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 05:58:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE893CD343B
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 06:08:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKrk0-0007Mg-1u; Thu, 07 May 2026 01:57:44 -0400
+	id 1wKrtX-0000ka-L6; Thu, 07 May 2026 02:07:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKrjs-0007Li-Gr
- for qemu-devel@nongnu.org; Thu, 07 May 2026 01:57:37 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKrjr-0002VU-4R
- for qemu-devel@nongnu.org; Thu, 07 May 2026 01:57:36 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4891c00e7aeso3179045e9.2
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 22:57:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778133452; x=1778738252; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DcSAW5v6Nn6KAJOBB2SGq2XiLgGcRFcX+C3SezePc8Y=;
- b=K0CPdPV+D/PBtA4LLFysWFhea29IxOieQV7gmt+wDGGiz/PfszsRkh3p7/aAsS32aD
- NnT4g7HGT2A7H54QPV960p8Lj1Hdcx6ZvvaIRwgnoGZtBoZLxrzRw3AUgZmZrrohlFqK
- j3JoMq7iQu1FmDVtgKdO2mcjNtRW+PlOPC88dZl0PfIkZ1lcsAwZNEsSzqiC5BBcZIXW
- Uv4/zqE2U+ra4i1Z0xThRXtfopp2EbzyOALenDulvghf9B0jWMpA8ofgGUeDrg7wTx6Y
- 3LsSBHIP8zcjqkhgnKt0vH/nEEq5mNGqCZTWf+pSFQKQnOrtEIvY23jOsRkQrKlDNIFn
- 9S9w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778133452; x=1778738252;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DcSAW5v6Nn6KAJOBB2SGq2XiLgGcRFcX+C3SezePc8Y=;
- b=XXQMoznHEhwIlzwMXt5yCP5gw0EieN1VoPI4qMEk4s+MgrsNrkroCx2mI7gcnEp8e5
- MJ2wfiOUcXCYVzsQj8i6UOArGofIsE549XN1S9dRcFbhCM6l32enfXY//2ZjNsyTtXTb
- PUGw1ZpcLAzxGO2QLI5WOt9uKP8+J6+3C5KOADErXhRUbWmJjRnJe+j2WaB/8dtB44mi
- xa3JV7fvh8MrqeLhBLFcONhbFDWtzKMYgPbygl1RW+aErXUPOP3Hzt5JuevbHkCInc/H
- UecdzSGwOvJXor+gZLvK8vPxLAp4xG8JTrKLhpLEZQNkBhZZXmq9cSdbgG5a+wYUQJNI
- cYYA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+wOUQeP3J6kHrl5TLsZXQteUGf3o87iSYh+z++W2iSDXbCJOtb5DW5xILsFyL7+ETUvPyDw2rwayOU@nongnu.org
-X-Gm-Message-State: AOJu0Yw1khThBUKJ1fSv/hBybxUX40ouOv7Zvsd0uzli7rDi3JP3QhSu
- RO6vidNvdHqIAfxfReacgkN/HdAvwYh3MENYiiEVmWhQg16nRxIuCZcFdsc58HRxDu4=
-X-Gm-Gg: AeBDiesSmdkp3kUzMP2Zkup1P9TqNDTmuoIO8j+OLwWj3BFyIDR0KQN3YNeLz++5ZIe
- QdiVdWXZYnzmHT5Hi5ubWkFlTWf2Ywj13kzqXLKJNIX5VPcS61CZ8tdTqSs+8d7lDLm74dtdRsR
- em35OPnQu2HC6fOZomaIGu9lMPPiP/ewHLWdQtQ0Rr/y4ClWWUNJJ+U6idZwVdbHQQeo5j+eS9j
- XU+oRDxy6JCliVKWDngWShzaoaW1xr3z5enfAuszxD424OkjarKO/Vq4jVZE5swXvW8T1TpM8kG
- bUzxU+3ezbmzkFOZUge/yzFtzouVxUMaJG2/6Pu4zos7mBXgyF8PIlkcCxIB679lMzkR1PXrw6Y
- 5AgsN+5ilyM2LrFPjNt73EmBv1Z1c7s26Z7TJhEll/SOHZEFOwVk/hrhADrnrXiMrlG1SOcLU5v
- C1ptW6JcdK83wsu+zFXwGZVzl1lB3ljS4UAG1tSpbZ8kk3FlHX/jqFo5nZOHjm9MBXrfl0wP0XR
- wFi
-X-Received: by 2002:a05:600c:4e0c:b0:48a:54a6:b29f with SMTP id
- 5b1f17b1804b1-48e51f2f793mr108256405e9.17.1778133452303; 
- Wed, 06 May 2026 22:57:32 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e538a8159sm105881505e9.6.2026.05.06.22.57.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 May 2026 22:57:31 -0700 (PDT)
-Message-ID: <9ae38eb0-3f2d-41d0-9086-0653d82c476e@linaro.org>
-Date: Thu, 7 May 2026 07:57:30 +0200
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1wKrtV-0000kS-4R
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 02:07:33 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1wKrtS-0004oV-6b
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 02:07:32 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxzsAVLPxpg2EHAA--.188S3;
+ Thu, 07 May 2026 14:07:18 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowJDxSMETLPxpzBh8AA--.25537S3;
+ Thu, 07 May 2026 14:07:15 +0800 (CST)
+Subject: Re: [PATCH 0/4] LoongArch : Add KVM DINTC support
+From: gaosong <gaosong@loongson.cn>
+To: maobibo@loongson.cn
+Cc: qemu-devel@nongnu.org, lixianglai@loongson.cn, chenhuacai@loongson.cn
+References: <20260427070029.1059386-1-gaosong@loongson.cn>
+Message-ID: <577c1aab-21c6-c9bb-4667-ebf6a60ba82d@loongson.cn>
+Date: Thu, 7 May 2026 14:09:16 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: Maintain OpenSBI Firmware
-Content-Language: en-US
-To: alistair23@gmail.com, palmer@dabbelt.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com,
- chao.liu.zevorn@gmail.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair.francis@wdc.com>
-References: <20260506234243.1873782-1-alistair.francis@wdc.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260506234243.1873782-1-alistair.francis@wdc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+In-Reply-To: <20260427070029.1059386-1-gaosong@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Language: en-US
+X-CM-TRANSID: qMiowJDxSMETLPxpzBh8AA--.25537S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxur1DCrWDAF15KrWxXrWDGFX_yoWrWFy7pa
+ 47Ar1UWr98Gr9xAF1qv3Waqr4kXFs7A3ZF9a4UW3s2yrWS9F18Wwn29r1kWr9Fy348CFy8
+ XF43JryDuF97urgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
+ Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
+ 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
+ AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
+ rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
+ CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
+ 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
+ 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUzsqW
+ UUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-0.736, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,16 +81,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/5/26 01:42, alistair23@gmail.com wrote:
-> From: Alistair Francis <alistair.francis@wdc.com>
-> 
-> Mark the OpenSBI Firmware as maintained by me (Alistair Francis) and add
-> Daniel Henrique Barboza as a reviewer.
-> 
-> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-> ---
->   MAINTAINERS | 2 ++
->   1 file changed, 2 insertions(+)
+Ping ~
 
-Reviewed-by: Philippe Mathieu-Daud√© <philmd@linaro.org>
+‘⁄ 2026/4/27 œ¬ŒÁ3:00, Song Gao –¥µ¿:
+> Hi
+>
+> This series adds KVM put/get support for msgint CSRs and introduces
+> msgint feature checks. It also adds kvm_dintc_realize() when
+> kvm_irqchip_in_kernel is enabled, which creates and initializes the DINTC
+> device in kernel mode.
+>
+> Since the kernel now supports DINTC on the KVM model,
+> this series of updates will no longer use the 'RFC' header;
+>
+> In addition, this series updates the Linux header files to version 7.1-rc1,
+> and updates the `update-linux-headers.sh` script to include `typelimits.h`.
+>
+> About Testing:
+> 1. run script with '-cpu max,msgint=on' and 'virt,dmsi=on.'
+> '
+> ./build/qemu-system-loongarch64 -accel kvm \
+>       -bios /usr/share/edk2/loongarch64/QEMU_EFI-silent-pflash.raw \
+>       -cpu max,msgint=on\
+>       -smp 4 \
+>       -machine virt,dmsi=on,kernel_irqchip=on\
+>       -m 16G \
+>       -netdev tap,id=net0,ifname=tap0,script=/root/net.sh,downscript=no,vhost=on,queues=4 \
+>      -device virtio-net-pci,netdev=net0,mq=on,vectors=128,mac=52:54:00:12:34:56 \
+>       -monitor telnet:localhost:4418,server,nowait \
+>      -device virtio-gpu-pci \
+>      -drive if=none,id=disk0,file=/home/kvm/lns23.qcow2,format=qcow2 \
+>      -device virtio-blk-pci,drive=disk0,id=virtio_disk0 \
+>      --nographic
+> '
+> 2  the vm can work well with with net test, such as netperf or iperf test.
+>
+> Thanks.
+> Song Gao
+>
+>
+> Song Gao (4):
+>    update-linux-headers.sh: add typelimits.h to portable header list
+>    linux-headers: update to Linux 7.1-rc1
+>    target/loongarch: Add kvm support dintc
+>    Add dintc kvm_irqchip_in_kernel support
+>
+>   hw/intc/loongarch_dintc.c                     |  13 +
+>   hw/intc/loongarch_dintc_kvm.c                 |  48 ++
+>   hw/intc/meson.build                           |   2 +
+>   include/hw/intc/loongarch_dintc.h             |  10 +
+>   include/standard-headers/drm/drm_fourcc.h     |  28 +-
+>   include/standard-headers/linux/const.h        |  18 +
+>   include/standard-headers/linux/ethtool.h      |  28 +-
+>   .../linux/input-event-codes.h                 |  13 +
+>   include/standard-headers/linux/pci_regs.h     |  71 ++-
+>   include/standard-headers/linux/typelimits.h   |   8 +
+>   include/standard-headers/linux/virtio_ring.h  |   3 +-
+>   include/standard-headers/linux/virtio_rtc.h   | 237 ++++++++++
+>   include/standard-headers/linux/vmclock-abi.h  |  20 +
+>   linux-headers/asm-arm64/kvm.h                 |   1 +
+>   linux-headers/asm-arm64/unistd_64.h           |   1 +
+>   linux-headers/asm-generic/unistd.h            |   5 +-
+>   linux-headers/asm-loongarch/kvm.h             |   5 +
+>   linux-headers/asm-loongarch/kvm_para.h        |   1 +
+>   linux-headers/asm-loongarch/unistd_64.h       |   2 +
+>   linux-headers/asm-mips/unistd_n32.h           |   1 +
+>   linux-headers/asm-mips/unistd_n64.h           |   1 +
+>   linux-headers/asm-mips/unistd_o32.h           |   1 +
+>   linux-headers/asm-powerpc/unistd_32.h         |   1 +
+>   linux-headers/asm-powerpc/unistd_64.h         |   1 +
+>   linux-headers/asm-riscv/kvm.h                 |  11 +-
+>   linux-headers/asm-riscv/ptrace.h              |  37 ++
+>   linux-headers/asm-riscv/unistd_32.h           |   1 +
+>   linux-headers/asm-riscv/unistd_64.h           |   1 +
+>   linux-headers/asm-s390/unistd_32.h            | 446 ------------------
+>   linux-headers/asm-s390/unistd_64.h            |   1 +
+>   linux-headers/asm-x86/kvm.h                   |  21 +-
+>   linux-headers/asm-x86/unistd_32.h             |   1 +
+>   linux-headers/asm-x86/unistd_64.h             |   1 +
+>   linux-headers/asm-x86/unistd_x32.h            |   1 +
+>   linux-headers/linux/const.h                   |  18 +
+>   linux-headers/linux/iommufd.h                 |  48 ++
+>   linux-headers/linux/kvm.h                     |  46 +-
+>   linux-headers/linux/mshv.h                    |   4 +-
+>   linux-headers/linux/psp-sev.h                 |   2 +-
+>   linux-headers/linux/stddef.h                  |   4 +
+>   linux-headers/linux/vduse.h                   |  85 +++-
+>   linux-headers/linux/vfio.h                    |  30 +-
+>   scripts/update-linux-headers.sh               |   1 +
+>   target/loongarch/cpu.c                        |   5 +-
+>   target/loongarch/cpu.h                        |   1 +
+>   target/loongarch/kvm/kvm.c                    |  69 +++
+>   46 files changed, 857 insertions(+), 496 deletions(-)
+>   create mode 100644 hw/intc/loongarch_dintc_kvm.c
+>   create mode 100644 include/standard-headers/linux/typelimits.h
+>   create mode 100644 include/standard-headers/linux/virtio_rtc.h
+>   delete mode 100644 linux-headers/asm-s390/unistd_32.h
+>
+
 
