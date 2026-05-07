@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62AF2CD37A7
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 16:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67F91CD3447
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 16:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL1ET-0004b3-9T; Thu, 07 May 2026 12:05:49 -0400
+	id 1wL1FN-0005nA-0n; Thu, 07 May 2026 12:06:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wL1EQ-0004ZU-JO
- for qemu-devel@nongnu.org; Thu, 07 May 2026 12:05:46 -0400
+ id 1wL1FL-0005m6-Du
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 12:06:43 -0400
 Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wL1EN-0006wB-4d
- for qemu-devel@nongnu.org; Thu, 07 May 2026 12:05:46 -0400
+ id 1wL1FJ-0007HH-2x
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 12:06:42 -0400
 Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-7dcd17e19b6so657860a34.1
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 09:05:42 -0700 (PDT)
+ 46e09a7af769-7df05fc49e5so1057963a34.3
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 09:06:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778169942; x=1778774742; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778169999; x=1778774799; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6D7Re3RFomXaiJ9AO7bJXSdtzyhn88IIHMuf5Pj0e38=;
- b=xqf4Qmky/N446SUfJL6fG59p4prPSS8xPBnwj9K2wnh7bjSxBJiBG1+z6FPqD1fBsz
- 3U9p7cM0xhC/YlO/9LOamL6I3hns7+oEaXZTdiMYM0+kTKTPT4nyMMYExDoylAx8kfHx
- EJKuoX/EN6kRgWV+xG4Ilmfasx3XF/w9+439ENrj2E+msDxpBso5OkqzN6OVDmdKybb7
- FN/XHH4348V3blmj4ARx2DQqN0zlOPlWt0uvrkudF3+1NljCfdfLfVw6JWAlde+At69z
- ZuXB4C7SQVTELT4lvRfLDFiz1h8g+F13RyiCLRxrvtW8Rrdjg1+7ObUEm2uUJ1I8Vd9w
- ipGQ==
+ bh=cwufvbx5jfOeCU9YUfNQqB3vv3m9DQGfuwS+kcmA360=;
+ b=rLWtEGB4NOVa5rL5YBJxgAL7Omayl/IkhYBhcqKAGexGiqlTBEGn94W+VlfuoogeSj
+ tE75rJkYBurbk0TfO0D1XaJV4NuQsYfh47nhDhzcFYRoGQupv4SD7BHwHoepp/mif1ce
+ T/5g0yx6vosnE4OltSxTrF7TQspI5iIx/8oZJ4Mx1E8Zjol8tguYv/IKnHlqHtpj6Sc6
+ tY5lx5y+OL2neuDvyEf2hF2Bb2Yq6yOp/zLurnyL6F11G6qW9VO2JFwj2yZ0QXr/krmV
+ RdwYT5llHRqlHv/ilOUCTxe6QN4FVfr77AhoQkAz3ZYjrjgHvzCNh/YbuPIgUYwFpaP3
+ oBeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778169942; x=1778774742;
+ d=1e100.net; s=20251104; t=1778169999; x=1778774799;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=6D7Re3RFomXaiJ9AO7bJXSdtzyhn88IIHMuf5Pj0e38=;
- b=eFf/YB+YPQCePI3m81Y/nwNX/6g3PvnG5tDi8s6VMyTkujk9HbJ8d2KQuxjtUiEMMC
- WiP6I53KP4cQ2HVVbhHHu7NfDRFQxxiznS1mfJ9oeiys1x0nZBC+UY6zkTQaJLD/bksj
- gH2kw2wLUOkuPJDXyJUAqNx8u2/AZD3Fb5FDuCrOphFhotLYN3zsV8VZEoEAewMXJzvg
- SxAhbwaUg704bf9nfOQjlNl9IxYFFYXbqsbYUvNKoRmRvkO1RS/C6n6NJ38OcHaTuexg
- lz+oRl4U+QcmKK+dR1/dhV2oAonNu3UwCgfn6uj1J+U0A8oN//H8HhiAlu3P0S4E0RLD
- NqBA==
-X-Gm-Message-State: AOJu0YztGuRZHaCsj2+L8U1v6l6gvE21om1Y5bRQp5rz/3YTnKctSJOH
- kKzjfJAdqUoNu0iNlJGAhSpGEtYhqrHNdwpSDcYWEPEh9tpyaudEzQabSgDC/CqdY9I/h/NxLQX
- Tn4X9
-X-Gm-Gg: AeBDietPEon8hr6qbSCDV63vlhIqVmnnWwy43vyGskLHBvQoaWWdbFIFRU6lLmEGRh/
- dVtmMQ8dqC4PmbMrvn27bdNeY3GdvtT93XyxbuNmQGW3lv47Tr2u0xxr1s/nS5GZickH89T+rq/
- e6ICNvBF0NWEIpgVRrRRJ0Pt8Jeoxy6QFFfGOwGO5DtDzvf1OKP9H3HJTBJe1yXNv4jaSvNyOev
- os0M+Um9ATNYEee2Ilh3Xtg8yW2ehqoFnZqTut2dh2/844EXbTOSs8EOlpZfvy3X0l4F2xrqyma
- VRG194qFX4gU2i6yOeQRmzE/3AaIzIdArlyDPbHCLHxs4uNNZDYFxReXOG3sCRAHhRtFYM7553k
- LNZ1v9njtnXmhGi4+FBZtsvqzJ0muhrIqgA2CFY6q6GYPtsJsBNKEZxFr4tiCqpBeH6b6KOvqF4
- hIXUsznIKUc/hSmDHpq+gq6weYAdrrkk+FDca1HkKcWYQKBQ==
-X-Received: by 2002:a05:6830:3983:b0:7dd:e032:3cdf with SMTP id
- 46e09a7af769-7e1df1912bemr5182650a34.19.1778169941691; 
- Thu, 07 May 2026 09:05:41 -0700 (PDT)
+ bh=cwufvbx5jfOeCU9YUfNQqB3vv3m9DQGfuwS+kcmA360=;
+ b=DzpMkxkezvLANy9kKpwKralSxdWwF+UCluMcfFOMyhY6dSc5WFjxdDv+6KoIAjrFoK
+ d9zqe5PDOW75yHe+PCMZrSLdvC5mfyZkNFnygf2rzPsvP94K0A/sIZGV4ejUFz00v9ka
+ lBPneUwwMZhrSkv/7rur3lUtpu+pUTC86eGEQPB9ycYLK6bc/My8owIZWDhfarehcylV
+ 8F265/WkyyIdCh9iUjZkIOsyOcRmWFNej2fsHla9yOErVv6hF7SmcxOeXv5sBEQnyVfh
+ e3lg0qBvb0m3eVg3x4/b9ZapPpFc5ObdNEDcL90dmWB+D0puHhppFdDooS+9iKSxavYR
+ 8UgA==
+X-Gm-Message-State: AOJu0Yyv8YnSmpiiSYyXrlU/CgpHyrE85KoqWE09s4oVI/6M/qTeWEhN
+ kdPaDvinAPHioCK+8SHh7haoXvRQsiHzS/KvQQjUldo2Q34BFLiK+3wS6dqCpNalnI9aglNU1hm
+ Z5vIJ
+X-Gm-Gg: AeBDiet1DbKyAkAFAOW1LjAbWblkym0Plb9PflL/iImarRy87o3oSBvjgzZdA1XaCLD
+ Gr25o1Eu9tFxwTfg6pf99TlbkA1NXJzG7tPgOFndYlP1d3F7LdZjzPgxLL1+dyDKM7MEDrtiGjh
+ /CCyKktGD5g3upNqSyE3KaZDM/6Un6w/+bCLFS8fnU1qrnxxZ8g+BK9hA4G1WVINyrNMtxZgBHc
+ S0f9Bt47orYZrj+E7r8qMnGFhf/fFGjsZtYHwNROPzL+PripmXkA+riWX7zbpwb5OWF/y5x2dXl
+ VLisJjM3CSQc5B3kgc8kOEJxvUB/Q4/O+yQtKk4JuMzdoG8VSQZIulk3vP6VT7nLsLtzIwVBzWd
+ zVYUeaxVXoagCoh1nIBXK6KkZVSEolica/hJAvDPeHte5Yg2O/Ac0MuvUTfY7Gh+h+OxatWKZ2i
+ 9ncFbudeDQuXhJ9JSwNNtAR0SjDhfnKOzRfSp4xBngkLwbGQ==
+X-Received: by 2002:a05:6830:63ca:b0:7dc:e1e6:7687 with SMTP id
+ 46e09a7af769-7e1deec8566mr5865103a34.4.1778169949224; 
+ Thu, 07 May 2026 09:05:49 -0700 (PDT)
 Received: from stoup.attlocal.net ([2600:381:c938:6375:9641:bbb2:a93a:bb4c])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7decae680bdsm14647398a34.27.2026.05.07.09.05.41
+ 46e09a7af769-7decae680bdsm14647398a34.27.2026.05.07.09.05.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 09:05:41 -0700 (PDT)
+ Thu, 07 May 2026 09:05:48 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 18/29] fpu: Return struct from parts{64,128}_round_to_int
-Date: Thu,  7 May 2026 11:05:06 -0500
-Message-ID: <20260507160518.444797-19-richard.henderson@linaro.org>
+Subject: [PULL 26/29] fpu: Return struct from parts{64,128}_addsub
+Date: Thu,  7 May 2026 11:05:14 -0500
+Message-ID: <20260507160518.444797-27-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260507160518.444797-1-richard.henderson@linaro.org>
 References: <20260507160518.444797-1-richard.henderson@linaro.org>
@@ -106,133 +106,230 @@ At the same time, export.
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/fpu/softfloat-parts.h |  9 +++++++++
- fpu/softfloat.c               | 19 ++++++++++++-------
- fpu/softfloat-parts.c.inc     | 17 ++++++++++-------
- 3 files changed, 31 insertions(+), 14 deletions(-)
+ include/fpu/softfloat-parts.h |  5 ++++
+ fpu/softfloat.c               | 30 +++++++++++------------
+ fpu/softfloat-parts.c.inc     | 45 ++++++++++++++++++-----------------
+ 3 files changed, 43 insertions(+), 37 deletions(-)
 
 diff --git a/include/fpu/softfloat-parts.h b/include/fpu/softfloat-parts.h
-index 44e0cb7d05..1329bc4d2f 100644
+index 1285946321..9504d0daa0 100644
 --- a/include/fpu/softfloat-parts.h
 +++ b/include/fpu/softfloat-parts.h
-@@ -172,4 +172,13 @@ FloatParts64 parts64_div(const FloatParts64 *a, const FloatParts64 *b,
- FloatParts128 parts128_div(const FloatParts128 *a, const FloatParts128 *b,
-                            float_status *s);
+@@ -182,6 +182,11 @@ FloatParts128 parts128_return_nan(const FloatParts128 *a, float_status *s);
+  * Operations
+  */
  
-+FloatParts64 parts64_round_to_int(const FloatParts64 *a,
-+                                  FloatRoundMode rmode,
-+                                  int scale, float_status *s,
-+                                  const FloatFmt *fmt);
-+FloatParts128 parts128_round_to_int(const FloatParts128 *a,
-+                                    FloatRoundMode rmode,
-+                                    int scale, float_status *s,
-+                                    const FloatFmt *fmt);
++FloatParts64 parts64_addsub(const FloatParts64 *a, const FloatParts64 *b,
++                            float_status *s, bool subtract);
++FloatParts128 parts128_addsub(const FloatParts128 *a, const FloatParts128 *b,
++                              float_status *s, bool subtract);
 +
- #endif
+ FloatRelation parts64_compare(const FloatParts64 *a, const FloatParts64 *b,
+                               float_status *s, bool quiet);
+ FloatRelation parts128_compare(const FloatParts128 *a, const FloatParts128 *b,
 diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 6d69b61c7f..b71bd49483 100644
+index c0bf255076..7234ab27da 100644
 --- a/fpu/softfloat.c
 +++ b/fpu/softfloat.c
-@@ -2738,7 +2738,8 @@ float16 float16_round_to_int(float16 a, float_status *s)
+@@ -1582,9 +1582,9 @@ float16_addsub(float16 a, float16 b, float_status *status, bool subtract)
  {
-     FloatParts64 p = float16_unpack_canonical(a, s);
+     FloatParts64 pa = float16_unpack_canonical(a, status);
+     FloatParts64 pb = float16_unpack_canonical(b, status);
+-    FloatParts64 *pr = parts64_addsub(&pa, &pb, status, subtract);
++    FloatParts64 pr = parts64_addsub(&pa, &pb, status, subtract);
  
--    parts64_round_to_int(&p, s->float_rounding_mode, 0, s, &float16_params);
-+    p = parts64_round_to_int(&p, s->float_rounding_mode, 0, s,
-+                             &float16_params);
-     return float16_round_pack_canonical(&p, s);
+-    return float16_round_pack_canonical(pr, status);
++    return float16_round_pack_canonical(&pr, status);
  }
  
-@@ -2746,7 +2747,8 @@ float32 float32_round_to_int(float32 a, float_status *s)
+ float16 float16_add(float16 a, float16 b, float_status *status)
+@@ -1602,9 +1602,9 @@ soft_f32_addsub(float32 a, float32 b, float_status *status, bool subtract)
  {
-     FloatParts64 p = float32_unpack_canonical(a, s);
+     FloatParts64 pa = float32_unpack_canonical(a, status);
+     FloatParts64 pb = float32_unpack_canonical(b, status);
+-    FloatParts64 *pr = parts64_addsub(&pa, &pb, status, subtract);
++    FloatParts64 pr = parts64_addsub(&pa, &pb, status, subtract);
  
--    parts64_round_to_int(&p, s->float_rounding_mode, 0, s, &float32_params);
-+    p = parts64_round_to_int(&p, s->float_rounding_mode, 0, s,
-+                             &float32_params);
-     return float32_round_pack_canonical(&p, s);
+-    return float32_round_pack_canonical(pr, status);
++    return float32_round_pack_canonical(&pr, status);
  }
  
-@@ -2754,7 +2756,8 @@ float64 float64_round_to_int(float64 a, float_status *s)
+ static float32 soft_f32_add(float32 a, float32 b, float_status *status)
+@@ -1622,9 +1622,9 @@ soft_f64_addsub(float64 a, float64 b, float_status *status, bool subtract)
  {
-     FloatParts64 p = float64_unpack_canonical(a, s);
+     FloatParts64 pa = float64_unpack_canonical(a, status);
+     FloatParts64 pb = float64_unpack_canonical(b, status);
+-    FloatParts64 *pr = parts64_addsub(&pa, &pb, status, subtract);
++    FloatParts64 pr = parts64_addsub(&pa, &pb, status, subtract);
  
--    parts64_round_to_int(&p, s->float_rounding_mode, 0, s, &float64_params);
-+    p = parts64_round_to_int(&p, s->float_rounding_mode, 0, s,
-+                             &float64_params);
-     return float64_round_pack_canonical(&p, s);
+-    return float64_round_pack_canonical(pr, status);
++    return float64_round_pack_canonical(&pr, status);
  }
  
-@@ -2762,7 +2765,8 @@ bfloat16 bfloat16_round_to_int(bfloat16 a, float_status *s)
+ static float64 soft_f64_add(float64 a, float64 b, float_status *status)
+@@ -1717,9 +1717,9 @@ static float64 float64r32_addsub(float64 a, float64 b, float_status *status,
  {
-     FloatParts64 p = bfloat16_unpack_canonical(a, s);
+     FloatParts64 pa = float64_unpack_canonical(a, status);
+     FloatParts64 pb = float64_unpack_canonical(b, status);
+-    FloatParts64 *pr = parts64_addsub(&pa, &pb, status, subtract);
++    FloatParts64 pr = parts64_addsub(&pa, &pb, status, subtract);
  
--    parts64_round_to_int(&p, s->float_rounding_mode, 0, s, &bfloat16_params);
-+    p = parts64_round_to_int(&p, s->float_rounding_mode, 0, s,
-+                             &bfloat16_params);
-     return bfloat16_round_pack_canonical(&p, s);
+-    return float64r32_round_pack_canonical(pr, status);
++    return float64r32_round_pack_canonical(&pr, status);
  }
  
-@@ -2770,7 +2774,8 @@ float128 float128_round_to_int(float128 a, float_status *s)
+ float64 float64r32_add(float64 a, float64 b, float_status *status)
+@@ -1737,9 +1737,9 @@ bfloat16_addsub(bfloat16 a, bfloat16 b, float_status *status, bool subtract)
  {
-     FloatParts128 p = float128_unpack_canonical(a, s);
+     FloatParts64 pa = bfloat16_unpack_canonical(a, status);
+     FloatParts64 pb = bfloat16_unpack_canonical(b, status);
+-    FloatParts64 *pr = parts64_addsub(&pa, &pb, status, subtract);
++    FloatParts64 pr = parts64_addsub(&pa, &pb, status, subtract);
  
--    parts128_round_to_int(&p, s->float_rounding_mode, 0, s, &float128_params);
-+    p = parts128_round_to_int(&p, s->float_rounding_mode, 0, s,
-+                              &float128_params);
-     return float128_round_pack_canonical(&p, s);
+-    return bfloat16_round_pack_canonical(pr, status);
++    return bfloat16_round_pack_canonical(&pr, status);
  }
  
-@@ -2782,8 +2787,8 @@ floatx80 floatx80_round_to_int(floatx80 a, float_status *status)
+ bfloat16 bfloat16_add(bfloat16 a, bfloat16 b, float_status *status)
+@@ -1757,9 +1757,9 @@ float128_addsub(float128 a, float128 b, float_status *status, bool subtract)
+ {
+     FloatParts128 pa = float128_unpack_canonical(a, status);
+     FloatParts128 pb = float128_unpack_canonical(b, status);
+-    FloatParts128 *pr = parts128_addsub(&pa, &pb, status, subtract);
++    FloatParts128 pr = parts128_addsub(&pa, &pb, status, subtract);
+ 
+-    return float128_round_pack_canonical(pr, status);
++    return float128_round_pack_canonical(&pr, status);
+ }
+ 
+ float128 float128_add(float128 a, float128 b, float_status *status)
+@@ -1775,15 +1775,15 @@ float128 float128_sub(float128 a, float128 b, float_status *status)
+ static floatx80 QEMU_FLATTEN
+ floatx80_addsub(floatx80 a, floatx80 b, float_status *status, bool subtract)
+ {
+-    FloatParts128 pa, pb, *pr;
++    FloatParts128 pa, pb;
+ 
+     if (!floatx80_unpack_canonical(&pa, a, status) ||
+         !floatx80_unpack_canonical(&pb, b, status)) {
          return floatx80_default_nan(status);
      }
  
--    parts128_round_to_int(&p, status->float_rounding_mode, 0, status,
--                       &floatx80_params[status->floatx80_rounding_precision]);
-+    p = parts128_round_to_int(&p, status->float_rounding_mode, 0, status,
-+                              &floatx80_params[status->floatx80_rounding_precision]);
-     return floatx80_round_pack_canonical(&p, status);
+-    pr = parts128_addsub(&pa, &pb, status, subtract);
+-    return floatx80_round_pack_canonical(pr, status);
++    pa = parts128_addsub(&pa, &pb, status, subtract);
++    return floatx80_round_pack_canonical(&pa, status);
  }
  
+ floatx80 floatx80_add(floatx80 a, floatx80 b, float_status *status)
 diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 1634160728..1cd0df4159 100644
+index 07bd0b2fad..2114797aca 100644
 --- a/fpu/softfloat-parts.c.inc
 +++ b/fpu/softfloat-parts.c.inc
-@@ -1255,24 +1255,27 @@ static bool partsN(round_to_int_normal)(FloatPartsN *a, FloatRoundMode rmode,
-     return true;
+@@ -524,11 +524,11 @@ static void partsN(uncanon)(FloatPartsN *p, float_status *s,
+  * according to the IEC/IEEE Standard for Binary Floating-Point
+  * Arithmetic.
+  */
+-static FloatPartsN *partsN(addsub)(FloatPartsN *a, FloatPartsN *b,
+-                                   float_status *s, bool subtract)
++FloatPartsN partsN(addsub)(const FloatPartsN *a_orig,
++                           const FloatPartsN *b_orig,
++                           float_status *s, bool subtract)
+ {
+-    bool b_sign = b->sign ^ subtract;
+-    int ab_mask = float_cmask(a->cls) | float_cmask(b->cls);
++    int ab_mask = float_cmask(a_orig->cls) | float_cmask(b_orig->cls);
+ 
+     /*
+      * For addition and subtraction, we will consume an
+@@ -538,10 +538,15 @@ static FloatPartsN *partsN(addsub)(FloatPartsN *a, FloatPartsN *b,
+         record_denormals_used(ab_mask, s);
+     }
+ 
+-    if (a->sign != b_sign) {
++    FloatPartsN a = *a_orig;
++    FloatPartsN b = *b_orig;
++
++    b.sign ^= subtract;
++
++    if (a.sign != b.sign) {
+         /* Subtraction */
+         if (likely(cmask_is_only_normals(ab_mask))) {
+-            if (partsN(sub_normal)(a, b)) {
++            if (partsN(sub_normal)(&a, &b)) {
+                 return a;
+             }
+             /* Subtract was exact, fall through to set sign. */
+@@ -549,7 +554,7 @@ static FloatPartsN *partsN(addsub)(FloatPartsN *a, FloatPartsN *b,
+         }
+ 
+         if (ab_mask == float_cmask_zero) {
+-            a->sign = s->float_rounding_mode == float_round_down;
++            a.sign = s->float_rounding_mode == float_round_down;
+             return a;
+         }
+ 
+@@ -558,23 +563,22 @@ static FloatPartsN *partsN(addsub)(FloatPartsN *a, FloatPartsN *b,
+         }
+ 
+         if (ab_mask & float_cmask_inf) {
+-            if (a->cls != float_class_inf) {
++            if (a.cls != float_class_inf) {
+                 /* N - Inf */
+-                goto return_b;
++                return b;
+             }
+-            if (b->cls != float_class_inf) {
++            if (b.cls != float_class_inf) {
+                 /* Inf - N */
+                 return a;
+             }
+             /* Inf - Inf */
+             float_raise(float_flag_invalid | float_flag_invalid_isi, s);
+-            *a = partsN(default_nan)(s);
+-            return a;
++            return partsN(default_nan)(s);
+         }
+     } else {
+         /* Addition */
+         if (likely(cmask_is_only_normals(ab_mask))) {
+-            partsN(add_normal)(a, b);
++            partsN(add_normal)(&a, &b);
+             return a;
+         }
+ 
+@@ -587,25 +591,22 @@ static FloatPartsN *partsN(addsub)(FloatPartsN *a, FloatPartsN *b,
+         }
+ 
+         if (ab_mask & float_cmask_inf) {
+-            a->cls = float_class_inf;
++            a.cls = float_class_inf;
+             return a;
+         }
+     }
+ 
+-    if (b->cls == float_class_zero) {
+-        g_assert(is_anynorm(a->cls));
++    if (b.cls == float_class_zero) {
++        g_assert(is_anynorm(a.cls));
+         return a;
+     }
+ 
+-    g_assert(a->cls == float_class_zero);
+-    g_assert(is_anynorm(b->cls));
+- return_b:
+-    b->sign = b_sign;
++    g_assert(a.cls == float_class_zero);
++    g_assert(is_anynorm(b.cls));
+     return b;
+ 
+  p_nan:
+-    *a = partsN(pick_nan)(a, b, s);
+-    return a;
++    return partsN(pick_nan)(a_orig, b_orig, s);
  }
  
--static void partsN(round_to_int)(FloatPartsN *a, FloatRoundMode rmode,
-+FloatPartsN partsN(round_to_int)(const FloatPartsN *a,
-+                                 FloatRoundMode rmode,
-                                  int scale, float_status *s,
-                                  const FloatFmt *fmt)
- {
-     switch (a->cls) {
-     case float_class_qnan:
-     case float_class_snan:
--        *a = partsN(return_nan)(a, s);
--        break;
-+        return partsN(return_nan)(a, s);
-     case float_class_zero:
-     case float_class_inf:
--        break;
-+        return *a;
-     case float_class_normal:
-     case float_class_denormal:
--        if (partsN(round_to_int_normal)(a, rmode, scale, fmt->frac_size)) {
--            float_raise(float_flag_inexact, s);
-+        {
-+            FloatPartsN r = *a;
-+            if (partsN(round_to_int_normal)(&r, rmode, scale, fmt->frac_size)) {
-+                float_raise(float_flag_inexact, s);
-+            }
-+            return r;
-         }
--        break;
-     default:
-         g_assert_not_reached();
-     }
+ /*
 -- 
 2.43.0
 
