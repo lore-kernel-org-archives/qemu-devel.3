@@ -4,108 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D1B0CD3445
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89C01CD3442
 	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 10:18:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKvnQ-00088F-CV; Thu, 07 May 2026 06:17:32 -0400
+	id 1wKvnY-00089Z-Td; Thu, 07 May 2026 06:17:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wKvnN-000885-5s
- for qemu-devel@nongnu.org; Thu, 07 May 2026 06:17:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sgarzare@redhat.com>)
- id 1wKvnK-0002cx-Uc
- for qemu-devel@nongnu.org; Thu, 07 May 2026 06:17:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778149045;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=1eOfiND19oCXRf228MCKEHObBnrF0g4bRLJ34iD67W8=;
- b=Up/kd0f9jH7gzJkIVltZsk6Imswa2KQhKLciLjFU4xTLa1FuZ7phibDBhr8/IeQnT63Mte
- SIEfjvRue886+Rmokqc1O6uQNtqiQDnFolBE1vORmH05gMuvRoqYg095DUq151IesppKKa
- znto5OIag1H5cquuNziqdCytffrU8Bg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-617-5jXSMBEbMUuAUDNI4Or40g-1; Thu, 07 May 2026 06:17:23 -0400
-X-MC-Unique: 5jXSMBEbMUuAUDNI4Or40g-1
-X-Mimecast-MFC-AGG-ID: 5jXSMBEbMUuAUDNI4Or40g_1778149042
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-48a548b585cso3883295e9.2
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 03:17:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKvnX-000896-6Q
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 06:17:39 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKvnV-0002eO-8Y
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 06:17:38 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-43d73352cf2so546615f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 03:17:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778149042; x=1778753842; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=1eOfiND19oCXRf228MCKEHObBnrF0g4bRLJ34iD67W8=;
- b=cot2jiNNxav+n3wOUZ3l4Haa7VVYoYt2/3mzME2gK52+rfbKux/TOCYP9X+Oo9NqfB
- Vgytz9b0A2be/1VbrNTDSoK7n2HIfgbOXDKxt0esIrEli3NQg6rf78xXdj3/XoVa75lO
- YzUjLr9IVN80T0FI4bq/9MHAPOKw8xJZPHYwP3rWLzcu1uU1bMrxwWsafO2SUiWwAAx9
- YC02d/bFmuqaxgAtmXhVSne3o5mr8MQf/6TnaTv8jd3k7lZa32QscrIJgOeipmE1cdxr
- fpTL9uhkqnt9z9hr6meFC5de/+p06d5JH+frGcWV64WY9rvyVrPmaIdfBoV5bVs+ms6C
- NInQ==
+ d=linaro.org; s=google; t=1778149054; x=1778753854; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/ZU0xFFedTu8SnMhVzIjPhGWcJbqjTEA0Xc3KlmnmeM=;
+ b=uA9IVt+NHeHPz41zhGwnYkjYQelmJk2yoWjfI3Y0I+oOImM2boFsL4zRMEkwssuOPz
+ qC07HdozPd5IHjAzbGzFTXetKUv8x4twCUZG2jzf355BfTRYMR+ULLDWCyWgQmCTinGZ
+ HgKzoZcM/883vWKqXu7xP1bL2p9URg53t+8elhOPWw5az5JXLL9mUvpsVTQAj9GAp5bX
+ e8qqf/Q884+xBlaK8m8cHRQ4eoTbHVLBHFfJPqzf7I6hK/0JGIpuh3kUpDBSCIsVd1H1
+ i/uUE3b8fFSG4UT8opn39Zc/HLR2PAx2YK0JGt6NzBhfWCK997O1LImiYnMV/ZaZcsPx
+ G2DQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778149042; x=1778753842;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1eOfiND19oCXRf228MCKEHObBnrF0g4bRLJ34iD67W8=;
- b=U0oTS4za8jS6JsSQ/sv0Lke2g/3+GOFqOaI8+/XhZMVdyQi5xxXjmuZ1L4ROyEMXVk
- c3jQMej2dH737BISSoxWCBcd9960WeVKXwgvky8r/PUUvdZaH5KFMzmE7CYwHhBYrQT2
- +R6F+7YdnMirMj3IJ/XqKyyCkM6ca7qQlEqfCWA8X+r6f6P2kXTPd4RKesPZFZo0V4Wo
- OzAp1T7RdgJChtHSS+7ry96E2kvdmktEaXywW4mDH5OPR4g02OfqFQ27x1KJod9jt6p9
- Ut/sXe4tIPdn7QLJ4/48/BQT9fRHptcz59WDQW8Xt5fGMlU710+aei/nN0XoV5WOcHU4
- SFsw==
-X-Gm-Message-State: AOJu0YxZg3WxQS+r3YdcaoVWPA/6zMHw3jy7O9aM/+Eyc2mjiOV15XRn
- TmWsSZppx18K6jZX3IqVPyvucfA58NZce2mzopG8SJGodYPqkBfpW8LURKcaPYlsScJcxnjqRie
- xIw7GSN4iMtt/fmP0w5vYOBIeOJ6GAcSrjKmSLQG3/DOXlmi2xnkIJwmD
-X-Gm-Gg: AeBDieuceM5dPgXZ0RnEb+kP9+yHBoRdjdPoUqeqU4WR8u/McfDt12naDeW9szoPGhU
- gsolqh7Qomw881Lz6JdqJtvLQDpd3PRMiVbnXU/kk/exph2H7nECt2vsXulQ6i6zCeEuf4lZ1/n
- /IvsarSHqr2L/TNIF/amGALFo5+7Pm+MH2H+2bVoeFcrtUE7oS9oidjNVNx0Fr6IPQcHaRseOGR
- FToByOdEwqfgO/6asFINeB8GMU7jSGi7Gkdv2fevL995imKk5Pb86ZggQ9v2NpsdPXoB3UJOjE0
- QvFVWMXoNfrGl1oqT9Sd40Rg257E5334iYSBPckzGVJrp/rLA1PEz6iASZ/Gi7+8qSdLkvIzo+e
- 1L1sN+lhYsjOuMl/dp7la5e/OzayNzQBLXPAQlq/7RGkjrT3OaSCnKuDmAUxBxh9HiIDsb5VAF7
- qVfZ76KS9y
-X-Received: by 2002:a05:600c:8b06:b0:485:4388:3492 with SMTP id
- 5b1f17b1804b1-48e51e223ccmr118079485e9.11.1778149042330; 
- Thu, 07 May 2026 03:17:22 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b06:b0:485:4388:3492 with SMTP id
- 5b1f17b1804b1-48e51e223ccmr118078645e9.11.1778149041617; 
- Thu, 07 May 2026 03:17:21 -0700 (PDT)
-Received: from sgarzare-redhat (host-87-11-6-2.retail.telecomitalia.it.
- [87.11.6.2]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e538b6e9bsm195154175e9.10.2026.05.07.03.17.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 03:17:20 -0700 (PDT)
-Date: Thu, 7 May 2026 12:17:14 +0200
-From: Stefano Garzarella <sgarzare@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, hreitz@redhat.com, 
- "Michael S. Tsirkin" <mst@redhat.com>, gmaglione@redhat.com, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Jorge Moreira <jemoreira@google.com>
-Subject: Re: [RFC] vhost-user.rst: clarify when rings are started
-Message-ID: <afxjPwqPAfTz2vzs@sgarzare-redhat>
-References: <20260429185504.221124-1-stefanha@redhat.com>
+ d=1e100.net; s=20251104; t=1778149054; x=1778753854;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/ZU0xFFedTu8SnMhVzIjPhGWcJbqjTEA0Xc3KlmnmeM=;
+ b=CzO6JWfGJWJNmFIrRCgCK/Ht0lGviSCbay1eMZvm5qxgEAwFomdf+iFC0oJk2PxUyv
+ lQPH0MwZyYPRRlZhQsQ6yYgPbJH9TnJLuUhGVEV7m4LhEfA2+fqSTFoul36+4mo75HFV
+ SkAJaPTOdo+ZzdtXB09B78K4YCJ/oZrNqoGjI0YE1YIPBiHH/G1U1UeVWmHL3P8OsQi8
+ OullyrJMEFPqNEMqgQoYCfxLHmOsLpyaHxW1NL5pMW4tCzRqDDQtJaIrPr8/6ecv9wR1
+ WwiWQk9wls1X4sSTy8nIq4vjp+6QRrE8vUGC0nMnOzqjPZlkP60tIhvkoK234FGOCvMX
+ XUuw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+OeY2LjIoE1T7v3xFIfYMw7kum78g+57uLYaSU9RmiKsk5IhLRXu3NM5ZAECY1W2sOwvbA/3OFh3wz@nongnu.org
+X-Gm-Message-State: AOJu0YxX9OK/Psh/y4aLmpOVTE4575O6sq3nG3eqeMirgtAlwwg8qLqD
+ 0ct+ymZmC6MWrRKoEKZXiq7WZQ9PoCgVhladXczmXHlUfOw0Xq6ehVDvVViBhW8bS6yh3ruEPIs
+ 5/XpKr10=
+X-Gm-Gg: AeBDieuuWCtTjh11xBPSji35FVH2Z+kWTMDUHQa4ivUpjhqYOwupYvRpYIU9IoV1p9X
+ nGVUenCjSRO6dDAEMqCsiLEYACg08o59gyC6K5EqPC5dSWmO/TUxEHE9px+ho++dsJkpG7HgW5M
+ +/ts9aLNxT9ZcshVicaCpV36PXcSIWRYMadz8am5d1slfUKmThMoEw3jpNBHLbyYD28Idb41Fd8
+ a10NlM7Suj1Jz9H+lwSezjsfTojSr84XQUe12yaU4BlubEv6BvDskAxbKgZrGVvizpPxiJlMoWx
+ yENVovVfcAlwbf0BASwGbRZykS1+tIRNx5Ig0uKnAXKxDGmmpiy1PIYQCTwKWhNfPE6uY+UIcRz
+ Eq2Qbxlc2bjnfOmZoXq45iDFmewqLbXICxpwhYibL9Gs8EqZnMUDsZzWzBfdoQ7iGkR9rRMRDkI
+ 3z+HR+DzOR71CHb+sts6e8smhHvOtasdMKYVgdsct2VlFRJ+IJQ6sjtbWpaCMwAnRFSneokyhvY
+ tAA
+X-Received: by 2002:a05:6000:2309:b0:43d:773d:78ff with SMTP id
+ ffacd0b85a97d-4515ce1c7a9mr12676585f8f.27.1778149053723; 
+ Thu, 07 May 2026 03:17:33 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45052a48c04sm20144598f8f.15.2026.05.07.03.17.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 07 May 2026 03:17:33 -0700 (PDT)
+Message-ID: <f72abfd1-bef7-407f-a62d-465d9aea0aca@linaro.org>
+Date: Thu, 7 May 2026 12:17:32 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20260429185504.221124-1-stefanha@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=sgarzare@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+User-Agent: Mozilla Thunderbird
+Subject: Re: Future of target/arm "max" CPU type
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>,
+ Gustavo Bueno Romero <gustavo.romero@linaro.org>
+References: <CAFEAcA-WB+vfiHZpPut=AdEOCXacsTfrvxiGAmhaGH1abHD8ag@mail.gmail.com>
+ <4a46393d-08be-40e9-8f52-788d46ab36cf@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <4a46393d-08be-40e9-8f52-788d46ab36cf@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,110 +110,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Apr 29, 2026 at 02:55:04PM -0400, Stefan Hajnoczi wrote:
->Jorge Moreira <jemoreira@google.com> pointed out that the ring state
->machine is underspecified. In the discussion that followed, we
->discovered that the spec says one thing and implementations do something
->else. This patch updates the spec to reflect how things are actually
->implemented across widely-used front-ends and back-ends including QEMU,
->crosvm, rust-vmm, and DPDK. Do this while taking care not to make any
->other existing implementations non-compliant by changing the sepc.
->
->The spec says rings are started when a kick is received but the
->implementations actually start rings when VHOST_USER_SET_VRING_KICK is
->received.
->
->Reconcile this as follows:
->- Clarify that a ring can be stopped and then started again. The
->  back-end must resume processing available requests when the ring is
->  restarted.
->- Update the spec to say rings are started when
->  VHOST_USER_SET_VRING_KICK is received.
->- Ensure compatibility by saying front-ends SHOULD inject a kick in case
->  the back-end strictly implemented the old spec.
->- Avoid future back-end dependencies on injected kicks by saying that
->  back-ends SHOULD NOT expect a kick to start rings.
->
->This way implementors have clarity on how things work while still
->allowing compatibility for existing implementations.
->
->Reported-by: Jorge Moreira <jemoreira@google.com>
->Cc: "Michael S . Tsirkin" <mst@redhat.com>
->Cc: Stefano Garzarella <sgarzare@redhat.com>
->Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
->---
->This is an RFC because I will update hw/virtio/vhost-user.c and
->libvhost-user once we've agreed on the spec wording.
->
-> docs/interop/vhost-user.rst | 24 ++++++++++++++++++------
-> 1 file changed, 18 insertions(+), 6 deletions(-)
->
->diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
->index 137c9f3669..72d792930e 100644
->--- a/docs/interop/vhost-user.rst
->+++ b/docs/interop/vhost-user.rst
->@@ -462,12 +462,24 @@ Rings have two independent states: started/stopped, and enabled/disabled.
-> * started and enabled: The back-end must process the ring normally, i.e.
->   process all requests and execute them.
->
->-Each ring is initialized in a stopped and disabled state.  The back-end
->-must start a ring upon receiving a kick (that is, detecting that file
->-descriptor is readable) on the descriptor specified by
->-``VHOST_USER_SET_VRING_KICK`` or receiving the in-band message
->-``VHOST_USER_VRING_KICK`` if negotiated, and stop a ring upon receiving
->-``VHOST_USER_GET_VRING_BASE``.
->+Each ring is initialized in a stopped and disabled state.  Rings are started
->+with ``VHOST_USER_SET_VRING_KICK`` and stopped with
+On 7/5/26 00:17, Pierrick Bouvier wrote:
+> Hi Peter,
+> 
+> On 5/1/2026 6:26 AM, Peter Maydell wrote:
+>> This is something we've discussed before. I don't think I have a very
+>> solid grip on it and I suspect I may be missing some parts of the
+>> "problem description" (i.e. what are we trying to achieve) and perhaps
+>> some implications of the choice. Overall it feels to me like a "no
+>> obviously correct answer, make a tradeoff" question. I've written this
+>> up to try to clarify my thinking and canvass for opinions and for
+>> people to point out what I'm missing.
+>>
+>> For a long time now the arm targets have defined a "max" CPU type
+>> whose definition is roughly "all the features that QEMU
+>> implements". This is helpful for:
+>>
+>>   - giving us a way to provide newly emulated CPU features to users
+>>     without having to define a specific named CPU type matching some
+>>     hardware that implements the feature (which might not exist at the
+>>     point we add the emulation, or which might also need some other
+>>     features we don't yet support)
+>>   - giving users a way to say "I just want everything"
+>>
+>> Mostly this has worked pretty well, I think. (It can cause problems
+>> for some workloads that break when a new feature is added; TF-A
+>> firmware seems particularly prone to this.)
+>>
+>> However, it doesn't work so well if the architecture decides to drop a
+>> feature and mandate that newer implementations may not implement
+>> it. Up til now that hasn't been a big deal, as only a few very niche
+>> items (like FEAT_DoubleLock, an old mechanism for quiescing external
+>> debug before a CPU power-down) have ever been removed.
+>>
+>> With the Armv9.0 architecture, a big feature gets removed: support for
+>> running in 32-bit mode at anything above userspace (EL1, EL2, EL3) is
+>> not allowed to be implemented.  We've got away so far with ignoring
+>> that requirement, but as new v9.x features are added, they are
+>> designed under the assumption that there is no 32-bit system mode
+>> code. For instance, the GICv5 CPU interface defines only 64-bit system
+>> registers, and our non-compliant "32-bit is actually there"
+>> implementation would give you a 32-bit OS that couldn't handle
+>> interrupts. Other similar (or harder to spot) issues are likely to
+>> also turn up.
+>>
+>> So my suggestion is that we should have two new CPU types:
+>>
+>>   v8-max : "all the features we implement that are valid
+>>     for the v8.x architecture"
+>>   v9-max : "all the features we implement that are valid
+>>     for the v9.x architecture"
+>>
+>> v9-max would not implement AArch32 EL1/2/3; v8-max wouldn't implement
+>> any feature the architecture says is v9-or-later.
 
-In the VHOST_USER_SET_VRING_KICK description we say:
+Certainly clearer than what we currently have.
 
-                                    Note that if the protocol feature
-   ``VHOST_USER_PROTOCOL_F_INBAND_NOTIFICATIONS`` has been negotiated
-   this message isn't necessary as the ring is also started on the
-   ``VHOST_USER_VRING_KICK`` message, it may however still be used to
-   set an event file descriptor (which will be preferred over the
-   message) or to enable polling.
+>> For the existing 'max' CPU:
+>>   - on qemu-system-arm this would be a synonym for v8-max
+>>     (since it must be 32-bit)
+>>   - on qemu-aarch64 and qemu-system-aarch64 this would be a synonym
+>>     for v9-max
+>>   - on qemu-arm it can also be v9-max, since v9 doesn't drop 32-bit
+>>     usermode support. (Though we don't currently implement qemu-arm
+>>     max this way, so it might end up being effectively v8-max until
+>>     we get round to implementing support for selecting AArch64 CPUs in
+>>     qemu-arm.)
+>>
+> 
+> This seems like a good approach. A side effect is to solve the
+> duplication we encounter for the single-binary also, by correctly
+> deduplicating QOM types associated.
+> 
+> The concept of having a "max" alias that maps to a specific type (in
+> this case, distinct depending on the binary) could be used for other
+> arch if needed also.
+> 
+>> I don't think it's worth claiming 'max' as deprecated and dropping it:
+>> as an alias it's trivial to support, and there are a lot of workloads
+>> that won't ever notice this change.
 
-I think we need to clarify a bit more what happens if 
-VHOST_USER_PROTOCOL_F_INBAND_NOTIFICATIONS is negotiated. In that case, 
-I don't think we can necessarily require the frontend to send 
-VHOST_USER_SET_VRING_KICK to start the rings.
+We could display a note though.
 
-What about: Rings are started with ``VHOST_USER_SET_VRING_KICK`` (or 
-``VHOST_USER_VRING_KICK`` if negotiated) ...
+   "Using 'v9-max' for requested 'max' CPU".
 
-... A stopped ring enters the started state again with 
-``VHOST_USER_SET_VRING_KICK`` (or ``VHOST_USER_VRING_KICK`` if 
-negotiated) and the back-end resumes processing requests.
+> 
+> I agree.
+> 
+>> It's possible some workloads currently using "max" will need to switch
+>> to 'v8-max", but I think this will be rare: it would have to be
+>> emulation of an EL2 guest which is itself 64-bit but which runs some
+>> inner-guest VM within itself that is 32-bit. The failure mode will be
+>> that the (outer) guest will report that it can't run a 32-bit (inner)
+>> guest (in whatever way that hypervisor reports that kind of error).
+>>
+> 
+> That's a good solution, and only a small minority of users (the one that
+> has to really deal with this) will be concerned.
+> 
+>> So that's my sketch of a proposal -- what do people think? What
+>> have I forgotten about?
+>>
+>> thanks
+>> -- PMM
+>>
+> 
+> Do you have a time frame in mind for this? It's on the path for having
+> the single-binary, and we can help with it if needed.
+> 
+> It should be a pretty straightforward change, just renaming QOM types,
+> and adding the "max" selection mechanic.
 
+Per Peter description, it doesn't seem renaming types is a 1:1 change.
 
->+``VHOST_USER_GET_VRING_BASE``. A stopped ring enters the started state again
->+with ``VHOST_USER_SET_VRING_KICK`` and the back-end resumes processing
->+requests.
->+
->+Note that previous versions of this specification stated that rings start when
->+the back-end receives a kick (that is, detecting that file descriptor is
->+readable) on the descriptor specified by ``VHOST_USER_SET_VRING_KICK`` or
->+receiving the in-band message ``VHOST_USER_VRING_KICK`` if negotiated.
->+Widely-used front-ends and back-ends did not implement this behavior and it
->+complicates poll mode back-ends that do not rely on the kick file descriptor.
->+
->+For compatibility with back-ends that implemented the start on kick behavior,
->+front-ends SHOULD inject a kick after ``VHOST_USER_SET_VRING_KICK``.  This
->+ensures that the back-end processes any available requests in the ring.
->+Back-ends SHOULD NOT rely on receiving a kick after
->+``VHOST_USER_SET_VRING_KICK``.
-
-The rest LGTM.
-
-Thanks,
-Stefano
-
->
-> Rings can be enabled or disabled by ``VHOST_USER_SET_VRING_ENABLE``.
->
->-- 
->2.54.0
->
-
+ From a reviewer point of view, it would be better to first add the
+v8-max and v9-max clearly defined / documented types; then migrate
+current 'max' to the appropriate new type for each binary, mentioning
+the adjustments done; and finally do the alias replacement.
 
