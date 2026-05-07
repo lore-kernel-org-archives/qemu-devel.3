@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30E4ACD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC95DCD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:58:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL11L-0003VA-Mx; Thu, 07 May 2026 11:52:15 -0400
+	id 1wL11L-0003V3-DD; Thu, 07 May 2026 11:52:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL11C-0003PC-2t
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:06 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1wL11H-0003SW-FR
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:11 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL11A-0003ma-2Q
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:05 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-488b0046078so8991245e9.1
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:52:03 -0700 (PDT)
+ id 1wL11F-0003og-8z
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:11 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4893940bb5eso6532035e9.3
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:52:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778169122; x=1778773922; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778169127; x=1778773927; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=HNhbXIYLPE3i7rsLfY3jqFMqXJBOaSPo/Us5CC4uauU=;
- b=EE9m49gIXScxwPvuHE2kHbERoHl/+iExOc6MpXsxVyjE0LAHMHNrQNowAtnLwPdU7F
- U7Xm4DwbHQ92pRFTJQfcbAy2+WLVb1Paqx693A5+qibRUGvvotQmcUUV1ZBKGT2ggL9I
- TiobCW67g6rfEEwcdZj6811n+jJ5pyGUVH7hMND3aWHHiZBalKZ2EcmN6X4KioDogu9M
- tatTwSh6DcqEaTuzeBgOqCM0kcM+R86oF7k97T0HFWoEa2jVUOOihBWhjPfRyjgB9JIN
- Di87AsZ3NnZIVgXIwgIGZ43MLyJf6xF/j1LlnCK5V0m4GTy0eU2ojqen7GNGJF2g4lKW
- GHnA==
+ :reply-to; bh=/TGTY2rfTF+tJN36KyHrpTad81jz0jTI68kPGEzG8y8=;
+ b=x2QTAT1Psi0nFJ4UKpG65sXeLZDFlmplsbiuMr+TV9/18/lLZ8KPmh84lnwluRPO0c
+ EtTAUHyafmTQLQWF+98q+jRJ0wun9uQ0B3hxEEO8u89DP4eFm81dLQcJucnFofO9zxO1
+ TIBufesqMeXdnyIx7cNIiCp+quxQxkeU8nb0nWecW2UCHIjfsMSwRydu2bI/4skMcCTs
+ /z+46200GpFo9x/T9b31A+/DXQSqvrZpDqde4/kzDoCbvB6sugYsfeNKl6HdxC14CMtO
+ DTkiOnSRefKc+g76FcPkzL7Mav0p0szgs7lQ74m4ZIALcCCWJTgjh9D8ou8GZ41VkjrO
+ 9Fxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778169122; x=1778773922;
+ d=1e100.net; s=20251104; t=1778169127; x=1778773927;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=HNhbXIYLPE3i7rsLfY3jqFMqXJBOaSPo/Us5CC4uauU=;
- b=s3iVRhEvqzl6XoN6iu+YFsQD4QlbAWz2yadBijqlKIHc4iJL5A/eGsbqyRiEq0+BaJ
- Cgb0O1b6T4jRRTg+1tyvKYeFH32DkRc3F4Q3JTGaX4t+a6csc6sr6f313O2zR3WUzKYV
- KUYVsSpC8fn+51j0hwgNcv33R3fxdmEXiuIICW7tbH5sRGzZ4C4Q3/HDb7Kgxs0Rbebz
- KiX88c5xfwmuy61kwjB3k6Zm/kQP4jTNkZfPFRpPpuY/yMkGL4Q39ehibEfwjj3dVV6U
- KUQr4hMduMRgEV0tz0ZcsNOzAfSi6HI/XITTkxdpVqmWUzy0N41YeBy9zPhref6IBg1Y
- KB3Q==
-X-Gm-Message-State: AOJu0YwDzRip6peJSwkWxwVUCwRakdkkgHxjrg57Z9yRfhUUZ9/jvW03
- hq2WW45rsECcznft+Gfc/QzOVbOt+eU5uGnOGmLO0bxN0C0wXga3GpxAX0aoUi/2ZHIPoxAdIDq
- nohbj
-X-Gm-Gg: AeBDievqQl+gfj6btj7bIk4tCQZ1OZWMztLLPz2k4nwGBZLReJtx9Rw2HvboW4GHc7z
- TGkNckLDXJ569mXuoiS5WbEo1galSzdSiX24w9TuUDGNwh+1181L+bdPGQtnFQOUf6aKBulHw4B
- 0I6iru5U+lFlc4w2qwGYHNmyVApUGg8RHP/M30Kv874hMr8lAzJUSq9fPDv33MFQs6H4mNFqqqd
- lqHfAqdfhuRIx1b9YG7+FdHEH5tvXjCvYWPF8Ju5V2W6Uv1ZbD4/XAkxda+BOzWMsws+vk9hweC
- xY5HoBWxptqCHuZTiBBCYb1io+4hbtyksJIKviNkbDEXiefIdYrMCN0lv+VyQ/iqdcChDtr5VdH
- CxeRDUYteLUKq70hb7UVSJhSAFdhTpsl3g47LLVdvm0+OsqlZisPS6hgtNZOb98CSaZtcm1xphM
- vAXdMqvhGnY8NVwHD8EiIBwDz5OnDEv3huE8jAEQLNmUApwpa04Z4YA1MGw62p2/RAZrY2rO8U4
- yu8P0nyDmt1JCpYNAF2S0g8WD7fInefSx/+IagxEg==
-X-Received: by 2002:a05:600c:3f0b:b0:48a:6fd4:d3d3 with SMTP id
- 5b1f17b1804b1-48e51f37fb8mr173105635e9.20.1778169122200; 
- Thu, 07 May 2026 08:52:02 -0700 (PDT)
+ bh=/TGTY2rfTF+tJN36KyHrpTad81jz0jTI68kPGEzG8y8=;
+ b=dzrPK5zTPGzMhGJENaTJRDO+9KTzaR8VwjrJeAb1xhz1vl+lOtEc+26vq26+UN59r8
+ koWgYAJl5YEZr/aSKEFZohbz6PznAeXGLkfacHXCBC4E7AkCnimy6bQjSp0IQhZ11gdf
+ FLhJcARnivBggSNnYZ41xpY/5unBk+KEIOc5VtK1nBsjDFVuUQsg2TN9aQ1xKzVjHSOc
+ bDflxQyHIhQNRF5FDjaoUtW2z9F/jM/6kkuGblBA96p/RVVHJL4hB144wJbz+s6fhxYW
+ wwVcAdGbCPkAG8cBJbikGn7bwziZUZfDEeMp72T8FuvKWotfhlhyLtERZ/4ZDRz3a9r2
+ a64Q==
+X-Gm-Message-State: AOJu0Ywqq1Z1DJ2m2TJR0HxluOrLsdKSAPxqu/dnXMciOM8dypgr3AcZ
+ orgkqoERKJnvi+U7NKXs7KClL/hZh9qBrJKiIozBhE+cQEvKgM4B26iKBpc3a1xtcxzg/fd4Q7M
+ /k1AS
+X-Gm-Gg: AeBDiesSIKSoPLfp2OrmMIRdfBlTCZ8iM9sEe1O786rnIrx7KAg70zhCE4UGDmWKbKY
+ Qdv5MZwty2I6QHmo2ss+BBKeMyjM5dj0qZl+XhnHKp0ccTTVerB9/PC0047VA4wDvobPXs603PV
+ 9muUeXMbDuHIoY6gXZqrvIHw8VnDSOkArULFl5Hva5YUMhLnFV/Q2MelI8MCoeGzhTo4OrTF14a
+ tjoczmrjl/m+TzJPn3QxGCL2/9H/JT2k8fpqa9H77vDbmSqygWNOmhIMksYs71Mc3/z7ZkIsm8t
+ 4Um7Si5lR6zm4wZgmCXnbqv9r//iRxlkfLBYbj9WET9Z+5cMxHiEDkWziAh1D59qe+gmnUuOjua
+ nNuuBLE+ROqHrg/OolKuMR/s9S1upwxdwVp+t7/s9CUiDsuqUNOHAaAD7TmDWcqQyG4liQNorgB
+ DjoqV2+mOJe5YnuQRE3TOi4RGD3KPK96S9APQhjNz9Hs+qqvPg84isxo8oFjsxO8WssbfTwhE+u
+ EOU6kZx6SmjTuquuO+YdqM0cPK8ICRruhL39wr3Kg==
+X-Received: by 2002:a05:600c:a305:b0:489:2005:b36e with SMTP id
+ 5b1f17b1804b1-48e51f444e4mr91995585e9.19.1778169127512; 
+ Thu, 07 May 2026 08:52:07 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.01
+ 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.06
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 08:52:01 -0700 (PDT)
+ Thu, 07 May 2026 08:52:06 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/67] hw/intc/arm_gicv5: Create and validate QOM properties
-Date: Thu,  7 May 2026 16:50:54 +0100
-Message-ID: <20260507155154.1886557-8-peter.maydell@linaro.org>
+Subject: [PULL 13/67] hw/intc/arm_gicv5: Add defines for GICv5 architected PPIs
+Date: Thu,  7 May 2026 16:51:00 +0100
+Message-ID: <20260507155154.1886557-14-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260507155154.1886557-1-peter.maydell@linaro.org>
 References: <20260507155154.1886557-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,204 +101,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add code to the GICv5 skeleton which creates the QOM properties which
-the board or SoC can use to configure the GIC, and the validation
-code to check they are in range.  Generally these correspond to
-fields in the IRS ID registers, and the properties are named
-correspondingly.
-
-Notable here is that unlike the GICv3 (which assumes its connected
-CPUs are the system's CPUs starting from 0), we define a QOM array
-property which is an array of pointers to the CPUs, and a QOM array
-property which is an array of integers telling the GIC what the
-IAFFID (interrupt affinity ID) for each CPU is; so a board or SoC
-which wants to connect multiple CPUs to this GICv5 would do something
-like:
-
-    QList *cpulist = qlist_new(), *iaffidlist = qlist_new();
-
-    for (int i = 0; i < ms->smp.cpus; i++) {
-        qlist_append_link(cpulist, OBJECT(qemu_get_cpu(i)));
-        qlist_append_int(iaffidlist, i);
-    }
-    qdev_prop_set_array(vms->gic, "cpus", cpulist);
-    qdev_prop_set_array(vms->gic, "cpu-iaffids", iaffidlist);
+The GICv5 defines architected numbers for the PPI sources like the
+generic timer and the PMU; these are different from the ones
+traditionally used by GICv2 and GICv3.  Add defines for them.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260327111700.795099-8-peter.maydell@linaro.org
+Message-id: 20260327111700.795099-14-peter.maydell@linaro.org
 ---
- hw/intc/arm_gicv5_common.c         | 80 ++++++++++++++++++++++++++++++
- hw/intc/trace-events               |  3 ++
- include/hw/intc/arm_gicv5_common.h | 25 ++++++++++
- 3 files changed, 108 insertions(+)
+ include/hw/intc/arm_gicv5_types.h | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
-index bf990bfa54..3448734686 100644
---- a/hw/intc/arm_gicv5_common.c
-+++ b/hw/intc/arm_gicv5_common.c
-@@ -8,9 +8,15 @@
+diff --git a/include/hw/intc/arm_gicv5_types.h b/include/hw/intc/arm_gicv5_types.h
+index 49dc1d6e95..7d23752ece 100644
+--- a/include/hw/intc/arm_gicv5_types.h
++++ b/include/hw/intc/arm_gicv5_types.h
+@@ -25,4 +25,24 @@ typedef enum GICv5Domain {
  
- #include "qemu/osdep.h"
- #include "hw/intc/arm_gicv5_common.h"
-+#include "hw/core/qdev-properties.h"
-+#include "qapi/error.h"
-+#include "trace.h"
+ #define NUM_GICV5_DOMAINS 4
  
- OBJECT_DEFINE_ABSTRACT_TYPE(GICv5Common, gicv5_common, ARM_GICV5_COMMON, SYS_BUS_DEVICE)
- 
-+/* Any value > 2^24 is out of the valid range for this property */
-+#define GICV5_SPI_IRS_RANGE_NOT_SET 0xffffffff
++/* Architected GICv5 PPIs (as listed in R_XDVCM) */
++#define GICV5_PPI_S_DB_PPI 0
++#define GICV5_PPI_RL_DB_PPI 1
++#define GICV5_PPI_NS_DB_PPI 2
++#define GICV5_PPI_SW_PPI 3
++#define GICV5_PPI_HACDBSIRQ 15
++#define GICV5_PPI_CNTHVS 19
++#define GICV5_PPI_CNTHPS 20
++#define GICV5_PPI_PMBIRQ 21
++#define GICV5_PPI_COMMIRQ 22
++#define GICV5_PPI_PMUIRQ 23
++#define GICV5_PPI_CTIIRQ 24
++#define GICV5_PPI_GICMNT 25
++#define GICV5_PPI_CNTHP 26
++#define GICV5_PPI_CNTV 27
++#define GICV5_PPI_CNTHV 28
++#define GICV5_PPI_CNTPS 29
++#define GICV5_PPI_CNTP 30
++#define GICV5_PPI_TRBIRQ 31
 +
- static bool bad_frame_accepts(void *opaque, hwaddr addr, unsigned size,
-                               bool is_write, MemTxAttrs attrs)
- {
-@@ -58,9 +64,83 @@ static void gicv5_common_finalize(Object *obj)
- {
- }
- 
-+static void gicv5_common_realize(DeviceState *dev, Error **errp)
-+{
-+    GICv5Common *cs = ARM_GICV5_COMMON(dev);
-+
-+    if (cs->num_cpus == 0) {
-+        error_setg(errp, "The cpus array property must have at least one CPU");
-+        return;
-+    }
-+    if (cs->num_cpus >= (1 << 16)) {
-+        /* We'll hit other QEMU limits long before this one :-) */
-+        error_setg(errp, "Number of CPUs exceeds GICv5 architectural maximum");
-+        return;
-+    }
-+    if (cs->num_cpus != cs->num_cpu_iaffids) {
-+        error_setg(errp, "The cpu-iaffids array property must be the same size "
-+                   "as the cpus array property");
-+        return;
-+    }
-+    if (cs->irsid >= (1 << 16)) {
-+        error_setg(errp, "irsid (%u) is more than 2^16-1", cs->irsid);
-+        return;
-+    }
-+    if (cs->spi_range > (1 << 24)) {
-+        /*
-+         * Note that IRS_IDR5.SPI_RANGE is a 25 bit field but the largest
-+         * architecturally permitted value is 2^24 (not 2^25-1), hence
-+         * use of > in the range check.
-+         */
-+        error_setg(errp, "spi-range (%u) is more than 2^24", cs->spi_range);
-+        return;
-+    }
-+    if (cs->spi_irs_range == GICV5_SPI_IRS_RANGE_NOT_SET) {
-+        /* spi-irs-range defaults to same as spi-range */
-+        cs->spi_irs_range = cs->spi_range;
-+    }
-+    if (cs->spi_irs_range > (1 << 24)) {
-+        /* Similarly IRS_IDR6.SPI_IRS_RANGE */
-+        error_setg(errp, "spi-irs-range (%u) is more than 2^24",
-+                   cs->spi_irs_range);
-+        return;
-+    }
-+    if (cs->spi_base >= (1 << 24)) {
-+        /* IRS_IDR7.SPI_BASE is a 24-bit field, so range check is >= */
-+        error_setg(errp, "spi-base (%u) is more than 2^24-1", cs->spi_base);
-+        return;
-+    }
-+    /* range checks above mean we know this addition won't overflow */
-+    if (cs->spi_base + cs->spi_irs_range > cs->spi_range) {
-+        error_setg(errp, "spi-base (%u) + spi-irs-range (%u) is "
-+                   "more than spi-range (%u)",
-+                   cs->spi_base, cs->spi_irs_range, cs->spi_range);
-+        return;
-+    }
-+
-+    trace_gicv5_common_realize(cs->irsid, cs->num_cpus,
-+                               cs->spi_base, cs->spi_irs_range, cs->spi_range);
-+}
-+
-+static const Property arm_gicv5_common_properties[] = {
-+    DEFINE_PROP_LINK_ARRAY("cpus", GICv5Common, num_cpus,
-+                           cpus, TYPE_ARM_CPU, ARMCPU *),
-+    DEFINE_PROP_ARRAY("cpu-iaffids", GICv5Common, num_cpu_iaffids,
-+                      cpu_iaffids, qdev_prop_uint32, uint32_t),
-+    DEFINE_PROP_UINT32("irsid", GICv5Common, irsid, 0),
-+    DEFINE_PROP_UINT32("spi-range", GICv5Common, spi_range, 0),
-+    DEFINE_PROP_UINT32("spi-base", GICv5Common, spi_base, 0),
-+    DEFINE_PROP_UINT32("spi-irs-range", GICv5Common, spi_irs_range,
-+                       GICV5_SPI_IRS_RANGE_NOT_SET),
-+};
-+
- static void gicv5_common_class_init(ObjectClass *oc, const void *data)
- {
-     ResettableClass *rc = RESETTABLE_CLASS(oc);
-+    DeviceClass *dc = DEVICE_CLASS(oc);
- 
-     rc->phases.hold = gicv5_common_reset_hold;
-+
-+    dc->realize = gicv5_common_realize;
-+    device_class_set_props(dc, arm_gicv5_common_properties);
- }
-diff --git a/hw/intc/trace-events b/hw/intc/trace-events
-index edd3c49c5f..54777f6da3 100644
---- a/hw/intc/trace-events
-+++ b/hw/intc/trace-events
-@@ -233,6 +233,9 @@ gicv5_badread(const char *domain, uint64_t offset, unsigned size) "GICv5 IRS %s
- gicv5_write(const char *domain, uint64_t offset, uint64_t data, unsigned size) "GICv5 IRS %s config frame write: offset 0x%" PRIx64 " data 0x%" PRIx64 " size %u"
- gicv5_badwrite(const char *domain, uint64_t offset, uint64_t data, unsigned size) "GICv5 IRS %s config frame write: offset 0x%" PRIx64 " data 0x%" PRIx64 " size %u: error"
- 
-+# arm_gicv5_common.c
-+gicv5_common_realize(uint32_t irsid, uint32_t num_cpus, uint32_t spi_base, uint32_t spi_irs_range, uint32_t spi_range) "GICv5 IRS realized: IRS ID %u, %u CPUs, SPI base %u, SPI IRS range %u, SPI range %u"
-+
- # armv7m_nvic.c
- nvic_recompute_state(int vectpending, int vectpending_prio, int exception_prio) "NVIC state recomputed: vectpending %d vectpending_prio %d exception_prio %d"
- nvic_recompute_state_secure(int vectpending, bool vectpending_is_s_banked, int vectpending_prio, int exception_prio) "NVIC state recomputed: vectpending %d is_s_banked %d vectpending_prio %d exception_prio %d"
-diff --git a/include/hw/intc/arm_gicv5_common.h b/include/hw/intc/arm_gicv5_common.h
-index b7a17aac31..ea01b2a1db 100644
---- a/include/hw/intc/arm_gicv5_common.h
-+++ b/include/hw/intc/arm_gicv5_common.h
-@@ -12,10 +12,24 @@
- #include "qom/object.h"
- #include "hw/core/sysbus.h"
- #include "hw/intc/arm_gicv5_types.h"
-+#include "target/arm/cpu-qom.h"
- 
- /*
-  * QEMU interface:
-  *
-+ * + QOM array property "cpus": CPUState pointers to each CPU
-+ *   connected to this IRS.
-+ * + QOM array property "cpu-iaffids": array of uint32_t giving the
-+ *   IAFFID for each CPU in the "cpus" property array
-+ * + QOM property "irsid": unique identifier for this IRS in the system
-+ *   (this is IRS_IDR0.IRSID); default is 0
-+ * + QOM property "spi-range": total number of SPIs in the system
-+ *   IRS (this is IRS_IDR5.SPI_RANGE); must be set
-+ * + QOM property "spi-base": minimum SPI INTID.ID implemented on this
-+ *   IRS (this is IRS_IDR7.SPI_BASE); default is 0
-+ * + QOM property "spi-irs-range": number of SPI INTID.ID managed on this
-+ *   IRS (this is IRS_IDR6.SPI_IRS_RANGE); defaults to value of spi-range
-+ *
-  * sysbus MMIO regions (in order matching IRS_IDR0.INT_DOM encoding):
-  * - IRS config frame for the Secure Interrupt Domain
-  * - IRS config frame for the Non-secure Interrupt Domain
-@@ -47,6 +61,17 @@ struct GICv5Common {
- 
-     /* Bits here are set for each physical interrupt domain implemented */
-     uint8_t implemented_domains;
-+
-+    /* Properties */
-+    uint32_t num_cpus;
-+    ARMCPU **cpus;
-+    uint32_t num_cpu_iaffids;
-+    uint32_t *cpu_iaffids;
-+
-+    uint32_t irsid;
-+    uint32_t spi_base;
-+    uint32_t spi_irs_range;
-+    uint32_t spi_range;
- };
- 
- struct GICv5CommonClass {
+ #endif
 -- 
 2.43.0
 
