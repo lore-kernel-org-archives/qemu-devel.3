@@ -4,105 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3EDECD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 13:26:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D02CCD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 13:27:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKyjt-0001RP-5A; Thu, 07 May 2026 09:26:05 -0400
+	id 1wKykZ-0001oI-5f; Thu, 07 May 2026 09:26:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wKyjr-0001RA-9h
- for qemu-devel@nongnu.org; Thu, 07 May 2026 09:26:03 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wKyjp-0007PB-Gq
- for qemu-devel@nongnu.org; Thu, 07 May 2026 09:26:03 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-65c37eafcbeso915593d50.1
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 06:26:01 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778160360; cv=none;
- d=google.com; s=arc-20240605;
- b=UEMI/pOJh9CxxA0Z0/Ltnw7+Wwk3/DYgd1DzMLJDMbA3aqjuLYIlX0xxoba5mPK6Cm
- pozFXlSjHOLUks+Vwwdn+SGfHBpQlq6SUctMkOj4BBr1bcQWOaBFMc9gJTitKXffOsl2
- dOpi3POnNpQtH+gay+Vw5Ir5H56vJwTXyCcF7T7kk3SAMtPdwqtQ5xTbvN8++o/O/z8D
- 1Vepha0qX0Xfd3a1UNMiTbx64weAX0S9+gOyYbP2oAxYWPuNUdUtcJI/edJuAm+h1KxP
- pBmPm2qNdH/tjjGsg70ASl9tx8AOPrAui8wapWx+hBvMgyLhlIXFctjdt46dxSs8UNJo
- y26w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Jvi0wZDRtms50VaJzC2TWWz961jRC0TW7x1auq6beF0=;
- fh=TSh1mpsFu2ob9O5mDvGPBktzym+JYeTZdNdbjARW/Tw=;
- b=Zlv2hLdRXMP2+s02WkEMKuJYzOAu9Icz5q/k0HjML5qswfzC3Wyg+w+jjF32lWIuzp
- EVwJ/RnRU5Y6w5KjaopWEldMLRY3RJlZgiuZP7xjoJsiw5Qc+0N/kCOLiKl9dOJy9Yz7
- Yoqbj/indxKOYyDnLUjdRHMPaXqHAdLcRKiV2yA3WA8vZhbnEe+Ks72VP8wpIDGHNrg7
- DG1JYwDSyEJSysW0lkqhLS50OCidMNUjBPdyYfnBAfRVxPeVDtDo+53iiEz1J9M3l0gj
- 092BU99uWdzAfkdZ+KfxvyrBqumjzDkF9vE91ZZi/qsMt0v44PD3OCMt+8Nzb+1307pf
- bfsQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778160360; x=1778765160; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Jvi0wZDRtms50VaJzC2TWWz961jRC0TW7x1auq6beF0=;
- b=rfeH7vZUpe80WymOXtgug0n8qIAVzML5M+VFV7GS0imHudfr4edN8ZrDUEy9yx8+uj
- KZxEBOcRkdObSrfo8AQtMpW+yHUOeU5ApwvrMKrAxLsK5bKexk9l/fzXvaUPf+UsZsou
- aa00jQriD/3U1a9TdkbA+fnKYb6Y9LWyg198enACMJOV5DGLMDg28KlDIzLylHXMJrnK
- QHkBrd5QQ4fszQP9LdrDDQK5fw7qQJ1VlC5NdoWpBODpA+YCw0uDTRoQsDuJ1X+JjsUV
- u9SaQjRe7O+z+LoWf/pEdgQEkDn1LGasmBy2imWfT8rHvz02J1B1QDTKPQLSTwAnE8vr
- ldGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778160360; x=1778765160;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Jvi0wZDRtms50VaJzC2TWWz961jRC0TW7x1auq6beF0=;
- b=hlvrspsAxDTA0/Y14MtSugZnENPCbKew2PQ4Pg/PJqvC8/4JVbyac+GdSpHYc+TOMr
- v9bTmnv53PYXEMM6bsexeK/aH21adHy3SfxnQoIGHZvkEvEVQCbiY1LKQPCBmmPEEQQ3
- yGP++BLQBAIJeTfY2jXzMIRsk2gkSQZdzlqy8L6+co/hCyidGmeos7jb/Kln9jLchYXM
- FcbOd2z654utDs4VYHnKe0ULL0qxv5J+Ubcprglp0AodMBGMJYfml2DFUHnnJX16vWm5
- 88MclfHCqY/fflZut2X48eUix1I5MK9uzCG46f2gw9jdbszos1F/G5Ikh/uwuefEEA3e
- +85A==
-X-Forwarded-Encrypted: i=1;
- AFNElJ/irvZozT3ph/nGzW+X7dN6Q1cN4nmFzFxWRqXFmZTpR7vK40hYPmVOirGzh7hpRcF3sR5FQTIz1JYa@nongnu.org
-X-Gm-Message-State: AOJu0YyCWc69PgjBA7aXI0m3qoZoZiojlt55blGdBATDeb+A56he/nHL
- 0Sl52+6ttY685HqFz0NxtBwr6tmRxX0bSbpD9Yz0BQwxxToKOk+ihtLX/00iWC5tLXrwa8uDMi0
- /L8inaHqCF2haZ96w4p9TMG84b/HKn1lkpG3tR4WS8Q==
-X-Gm-Gg: Acq92OGI5CFs2nQ7yi3Ps69mI/U2iuwIwSY/DpbGczXBvfXmDFdWPLC/1Mq6XY80EaC
- b2rrpPTr51dXUzvNbHQyHWS8wPXRzd8yFkJYnBlttULkYaxOzlX0GfuCCW25ra8YgJDW9Jg3yBS
- TlieRyqNqzxsIh7aAXSrmfELVxASgrUXbRrj+L3UgmPwFhz0LOzQGpfE30RISdWHWMOvM/0Jc1a
- yiiKv4/q2a1hYUVahyPKoutYbqxJ4vtzlEhs02K/T7ShoVdRhj65akeYDteMTRrnCPlFMJ4VVSG
- 0AOVJMlVbOEihPFvyi0TSgNsBqRBV3WDtrTHSqCjRnwZykJJoiymVuRFiJl/FQVthTEDgMUGXEq
- +Yg==
-X-Received: by 2002:a05:690e:429a:10b0:65c:2101:e535 with SMTP id
- 956f58d0204a3-65c7988d460mr6707450d50.3.1778160359993; Thu, 07 May 2026
- 06:25:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wKykV-0001jq-Gb; Thu, 07 May 2026 09:26:43 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1wKykT-0007Vx-DA; Thu, 07 May 2026 09:26:43 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 647CU8nN3116567; Thu, 7 May 2026 13:26:37 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=Yhy/zn
+ zhz4lSV0p7U0xGOwaGaxfEMMTBwCffG0WmSSs=; b=cCFRmdQJ7Rl0uRsseSrMqJ
+ um/rjwIhZOtB9172rm0DurjVTpOPHgNPhddflhVuFR0yTLnvkDTj1CMF8WWo9V3F
+ RE6nHAlNBHHK9mruq5grzI+cj+oSNIvkad5oG06Dit7klM7QYUZEToJu4gFJa4g1
+ 1o73QFL52slk5QhmMiKgxfvZSOsMPiUQn8//jNQ5Kl96uRduifkvRLtVtfqjtWeG
+ Jg4Ws6qt/xpef+J9pDRqsUpqHkPEyQHzQKRQy7ywnaYQXQoxCCItE/7BtkfPxIvx
+ Gu8QSLAbEvr4t1gZizGFqcUCPD1EWiF5Wo98J5dB/UuWdcbIUqcSEhlwzoPiYuIA
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9w6nqvs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 07 May 2026 13:26:36 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 647D9a5Q007652;
+ Thu, 7 May 2026 13:26:36 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwwtgkhbk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 07 May 2026 13:26:36 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 647DQYr527918598
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 7 May 2026 13:26:34 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 25D5658056;
+ Thu,  7 May 2026 13:26:34 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9A7AE58052;
+ Thu,  7 May 2026 13:26:33 +0000 (GMT)
+Received: from [9.61.119.68] (unknown [9.61.119.68])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Thu,  7 May 2026 13:26:33 +0000 (GMT)
+Message-ID: <8f5a5d4b-c44e-4b0a-90e5-dde7c564ccf5@linux.ibm.com>
+Date: Thu, 7 May 2026 09:26:32 -0400
 MIME-Version: 1.0
-References: <20260327111700.795099-1-peter.maydell@linaro.org>
-In-Reply-To: <20260327111700.795099-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 7 May 2026 14:25:46 +0100
-X-Gm-Features: AVHnY4L9wyJC6X6RZCqN49q7XrdXQggxtVgyg0h1TUildE1Jce-hLYt_m6IqC-c
-Message-ID: <CAFEAcA9zCPyJpvTtuN528V9UGVbQifVW9Usq2V402ofmre22SA@mail.gmail.com>
-Subject: Re: [PATCH v2 00/65] arm: Implement an emulation of GICv5 interrupt
- controller
-To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
- =?UTF-8?Q?Phil_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] pc-bios/s390-ccw: Add per-queue notification offset
+ for multi-queue virtio configurations
+To: Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org, cohuck@redhat.com
+Cc: jjherne@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com
+References: <20260504221613.826825-1-jrossi@linux.ibm.com>
+ <20260504221613.826825-3-jrossi@linux.ibm.com>
+ <fe2f10ad-f935-4465-81e2-f469846a0828@linux.ibm.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <fe2f10ad-f935-4465-81e2-f469846a0828@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=XPQAjwhE c=1 sm=1 tr=0 ts=69fc930c cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8
+ a=wKfTIo9p3-Ifje5MwSQA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 5loaDvpwCbjRDS1_B9nmt7EHqFA0O-Tl
+X-Proofpoint-GUID: 5loaDvpwCbjRDS1_B9nmt7EHqFA0O-Tl
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA3MDEzMSBTYWx0ZWRfXxMiwjcXmQpQY
+ oZ+w+qolwQOiW5tGlm4pAKFwrTpnVr7LJbIThJYLlXS5sXdkcPt2ZrT4u4rdUQ7WGDqYTBv2kpS
+ EYoAMpnyjEYOnSqHRIhGcrKr1xAmvAGRU+MW7W0sGq8PAkkb2zDD92/6wD86GRiC0uooUtZEs5q
+ Gb2VxnXWVxY3RgdqmhhjNRagaTlPbaAClJj8yDwW/vd7ujLBU0oLJu9UJlrG8z1/B4PNQnhVTQK
+ A+kQX862Fv4clDY+A6dBftXtMGtTIks7X8wLsGW8I6yKnyBWNBTVlI30EbV+fzNxGa6WftKNM29
+ ncdGty5ZGfUTkO2OylTaDJmUjJzKIeZS++TcPPyZmBLaVtBADxgaZEyogdxFsWZvxLddaj4lwxt
+ CHpGQiSSYzqv1pT6DnlaL36+fOsKJThHaUqLobMQjil11Dr5BjmP+NLCXxn+ZK67YPff4Xw61nz
+ +htsRUJO7C5u5VjU0Lw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-07_01,2026-05-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 phishscore=0 malwarescore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605070131
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,128 +123,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 27 Mar 2026 at 11:17, Peter Maydell <peter.maydell@linaro.org> wrote:
+
+
+On 5/6/26 2:20 PM, Zhuoying Cai wrote:
+> On 5/4/26 6:16 PM, jrossi@linux.ibm.com wrote:
+>> From: Jared Rossi <jrossi@linux.ibm.com>
+>>
+>> The initial support for virtio-blk-pci IPL devices used a single virt-queue, but
+>> other device types require multiple queues, and for PCI device types this also
+>> requires a per-queue notification offset.
+>>
+>> Add a PCI notify field to the VRing struct so that each queue has a unique
+>> notify offset.  Also re-select the target queue before writing buffers to
+>> ensure the proper queue is active.
+>>
+>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+>> ---
+>>   pc-bios/s390-ccw/virtio-pci.c | 36 ++++++++++++++++++++++-------------
+>>   pc-bios/s390-ccw/virtio-pci.h |  3 ++-
+>>   pc-bios/s390-ccw/virtio.c     |  4 +++-
+>>   pc-bios/s390-ccw/virtio.h     |  1 +
+>>   4 files changed, 29 insertions(+), 15 deletions(-)
+>>
+>> diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
+>> index 53bdb52e76..736869f4f5 100644
+>> --- a/pc-bios/s390-ccw/virtio-pci.c
+>> +++ b/pc-bios/s390-ccw/virtio-pci.c
+>> @@ -74,10 +74,10 @@ int virtio_pci_reset(VDev *vdev)
+>>       return 0;
+>>   }
+>>   
+>> -long virtio_pci_notify(int vq_id)
+>> +long virtio_pci_notify(VRing *vr)
+>>   {
+>> -    uint32_t offset = n_cap.off + notify_mult * q_notify_offset;
+>> -    return vpci_bswap16_write(offset, n_cap.bar, (uint16_t) vq_id);
+>> +    uint32_t offset = n_cap.off + notify_mult * vr->pci_notify;
+>> +    return vpci_bswap16_write(offset, n_cap.bar, (uint16_t) vr->id);
+>>   }
+>>   
+>>   /*
+>> @@ -166,7 +166,7 @@ int vpci_read_flex(uint64_t offset, uint8_t pcias, void *buf, int len)
+>>       return 0;
+>>   }
+>>   
+>> -static int vpci_set_selected_vq(uint16_t queue_num)
+>> +int vpci_set_selected_vq(uint16_t queue_num)
+>>   {
+>>       return vpci_bswap16_write(c_cap.off + VPCI_C_OFFSET_Q_SELECT, c_cap.bar, queue_num);
+>>   }
+>> @@ -332,7 +332,6 @@ int virtio_pci_setup(VDev *vdev)
+>>       VRing *vr;
+>>       int rc;
+>>       uint8_t status;
+>> -    uint16_t vq_size;
+>>       int i = 0;
+>>   
+>>       vdev->guessed_disk_nature = VIRTIO_GDN_NONE;
+>> @@ -380,28 +379,39 @@ int virtio_pci_setup(VDev *vdev)
+>>           return -EIO;
+>>       }
+>>   
+>> -    if (vpci_read_bswap16(VPCI_C_OFFSET_Q_SIZE, c_cap.bar, &vq_size)) {
+>> -        puts("Failed to read virt-queue configuration");
+>> -        return -EIO;
+>> -    }
+>> -
+>>       /* Configure virt-queues for pci */
+>>       for (i = 0; i < vdev->nr_vqs; i++) {
+>> +        uint16_t vq_size;
+>> +        uint16_t vq_notify;
+>>           VqInfo info = {
+>>               .queue = (unsigned long long) virtio_get_ring_area(i),
+>>               .align = KVM_S390_VIRTIO_RING_ALIGN,
+>>               .index = i,
+>> -            .num = vq_size,
+>> +            .num = 0,
+>>           };
+>>   
+>>           vr = &vdev->vrings[i];
+>> -        vring_init(vr, &info);
+>>   
+>> -        if (vpci_set_selected_vq(vr->id)) {
+>> +        if (vpci_set_selected_vq(i)) {
+>>               puts("Failed to set selected virt-queue");
+>>               return -EIO;
+>>           }
+>>   
+>> +        if (vpci_read_bswap16(VPCI_C_OFFSET_Q_SIZE, c_cap.bar, &vq_size)) {
+> Small nit: c_cap.off + VPCI_C_OFFSET_Q_SIZE
+Ah, this is actually not just a small nit!  Although the common capabilities
+offset is 0 in the current QEMU implementation there is nothing 
+preventing it
+from being a different offset in the future.  So it must be included, 
+otherwise
+a non-zero value would break it.  Good catch.
+
 >
-> This patchset implements initial support of emulation of Arm's new
-> interrupt controller architecture, GICv5.
+>> +            puts("Failed to read virt-queue configuration");
+>> +            return -EIO;
+>> +        }
+>> +
+>> +        info.num = vq_size;
+>> +
+>> +        if (vpci_read_bswap16(c_cap.off + VPCI_C_OFFSET_Q_NOFF, c_cap.bar, &vq_notify)) {
+>> +            puts("Failed to read virt-queue configuration");
+>> +            return -EIO;
+>> +        }
+> Since the notification offset is now read per queue, should we remove
+> the same read in virtio_pci_read_pci_cap_config() as well as the global
+> q_notify_offset variable?
 >
-> I've incorporated the review feedback from v1, so I figured I
-> might as well send this out, though obviously there's no huge
-> rush to review given we're in freeze.
+> if (rc || vpci_read_bswap16(c_cap.off + VPCI_C_OFFSET_Q_NOFF, c_cap.bar,
+> &q_notify_offset))
+Yes, that should be removed.  I will take care of it for V2. Thanks.
 
-I'm taking this into target-arm.next. In the process of
-testing the pullreq I discovered that it doesn't build
-in a --disable-tcg config. I made the following changes to
-fix that, which I'll squash into the appropriate patches.
-(My choices here are aimed at keeping the amount of fixing
-up smaller; some of them will end up cleaned up when we add
-the GICv5 KVM support, eg the "if TCG" clause in the virt
-"select ARM_GICV5" will go away again.)
+>
+>> +
+>> +        vr->pci_notify = vq_notify;
+>> +        vring_init(vr, &info);
+>> +
+>>           rc = set_pci_vq_addr(VPCI_C_OFFSET_Q_DESCLO, vr->desc);
+>>           rc |= set_pci_vq_addr(VPCI_C_OFFSET_Q_AVAILLO, vr->avail);
+>>           rc |= set_pci_vq_addr(VPCI_C_OFFSET_Q_USEDLO, vr->used);
+>> diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.h
+>> index 90d07cb9a7..993fc285ac 100644
+>> --- a/pc-bios/s390-ccw/virtio-pci.h
+>> +++ b/pc-bios/s390-ccw/virtio-pci.h
+>> @@ -62,9 +62,10 @@ struct VirtioPciCap {
+>>   };
+>>   typedef struct VirtioPciCap  VirtioPciCap;
+>>   
+>> +int vpci_set_selected_vq(uint16_t queue_num);
+>>   void virtio_pci_id2type(VDev *vdev, uint16_t device_id);
+>>   int virtio_pci_reset(VDev *vdev);
+>> -long virtio_pci_notify(int vq_id);
+>> +long virtio_pci_notify(VRing *vr);
+>>   int virtio_pci_setup(VDev *vdev);
+>>   int virtio_pci_setup_device(void);
+>>   
+>> diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
+>> index 30e6b2bc16..00850acc2f 100644
+>> --- a/pc-bios/s390-ccw/virtio.c
+>> +++ b/pc-bios/s390-ccw/virtio.c
+>> @@ -114,7 +114,8 @@ bool vring_notify(VRing *vr)
+>>           vr->cookie = virtio_ccw_notify(vdev.schid, vr->id, vr->cookie);
+>>           break;
+>>       case S390_IPL_TYPE_PCI:
+>> -        vr->cookie = virtio_pci_notify(vr->id);
+>> +        vr->cookie = virtio_pci_notify(vr);
+>> +        break;
+>>       default:
+>>           return 1;
+>>       }
+>> @@ -154,6 +155,7 @@ static void vr_bswap_descriptor(VRingDesc *desc)
+>>   void vring_send_buf(VRing *vr, void *p, int len, int flags)
+>>   {
+>>       if (!be_ipl()) {
+>> +        vpci_set_selected_vq(vr->id);
+>>           vr->avail->idx = bswap16(vr->avail->idx);
+>>       }
+>>   
+>> diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+>> index d32a4830ca..75ae5bdbc2 100644
+>> --- a/pc-bios/s390-ccw/virtio.h
+>> +++ b/pc-bios/s390-ccw/virtio.h
+>> @@ -107,6 +107,7 @@ struct VRing {
+>>       VRingUsed *used;
+>>       long cookie;
+>>       int id;
+>> +    uint16_t pci_notify;
+>>   };
+>>   typedef struct VRing VRing;
+>>   
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 36de9aee3e..5b198402d5 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -10,7 +10,7 @@ config ARM_VIRT
-     imply NVDIMM
-     imply IOMMUFD
-     select ARM_GIC
--    select ARM_GICV5
-+    select ARM_GICV5 if TCG
-     select ACPI
-     select ARM_SMMUV3
-     select GPIO_KEY
-diff --git a/hw/intc/Kconfig b/hw/intc/Kconfig
-index a3241fc1eb..636d00b7e8 100644
---- a/hw/intc/Kconfig
-+++ b/hw/intc/Kconfig
-@@ -37,6 +37,7 @@ config ARM_GIC_KVM
-
- config ARM_GICV5
-     bool
-+    depends on TCG
-     select MSI_NONBROKEN
-
- config XICS
-diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
-index 0b5303f370..b3bd3eee7b 100644
---- a/hw/intc/arm_gicv5_common.c
-+++ b/hw/intc/arm_gicv5_common.c
-@@ -215,13 +215,3 @@ static void gicv5_common_class_init(ObjectClass
-*oc, const void *data)
-     dc->realize = gicv5_common_realize;
-     device_class_set_props(dc, arm_gicv5_common_properties);
- }
--
--const char *gicv5_class_name(void)
--{
--    /* When we implement KVM GICv5 we might return "kvm-arm-gicv5" here. */
--    if (kvm_enabled()) {
--        error_report("Userspace GICv5 is not supported with KVM");
--        exit(1);
--    }
--    return "arm-gicv5";
--}
-diff --git a/include/hw/intc/arm_gicv5_common.h
-b/include/hw/intc/arm_gicv5_common.h
-index 74fa68d8c0..32f6cc9b8b 100644
---- a/include/hw/intc/arm_gicv5_common.h
-+++ b/include/hw/intc/arm_gicv5_common.h
-@@ -13,6 +13,8 @@
- #include "hw/core/sysbus.h"
- #include "hw/intc/arm_gicv5_types.h"
- #include "target/arm/cpu-qom.h"
-+#include "include/system/kvm.h"
-+#include "include/qemu/error-report.h"
-
- /*
-  * QEMU interface:
-@@ -192,7 +194,15 @@ static inline bool
-gicv5_domain_implemented(GICv5Common *cs, GICv5Domain domain)
-  *
-  * Returns: class name to use
-  */
--const char *gicv5_class_name(void);
-+static inline const char *gicv5_class_name(void)
-+{
-+    /* When we implement KVM GICv5 we might return "kvm-arm-gicv5" here. */
-+    if (kvm_enabled()) {
-+        error_report("Userspace GICv5 is not supported with KVM");
-+        exit(1);
-+    }
-+    return "arm-gicv5";
-+}
-
- /**
-  * gicv5_raw_spi_state
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index f2646ae4ed..330e9be473 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -39,9 +39,9 @@
- #if !defined(CONFIG_USER_ONLY)
- #include "hw/core/loader.h"
- #include "hw/core/boards.h"
-+#include "hw/intc/arm_gicv5_stream.h"
- #ifdef CONFIG_TCG
- #include "hw/intc/armv7m_nvic.h"
--#include "hw/intc/arm_gicv5_stream.h"
- #endif /* CONFIG_TCG */
- #endif /* !CONFIG_USER_ONLY */
- #include "system/tcg.h"
-diff --git a/target/arm/tcg-stubs.c b/target/arm/tcg-stubs.c
-index aeeede8066..8d97449cfc 100644
---- a/target/arm/tcg-stubs.c
-+++ b/target/arm/tcg-stubs.c
-@@ -43,3 +43,7 @@ void vfp_clear_float_status_exc_flags(CPUARMState *env)
- void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
- {
- }
-+
-+void gicv5_update_ppi_state(CPUARMState *env, int ppi, bool level)
-+{
-+}
-
-thanks
--- PMM
+Regards,
+Jared Rossi
 
