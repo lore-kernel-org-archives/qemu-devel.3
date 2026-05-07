@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11F06CD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 22:19:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCE92CD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 23:45:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL72I-0000rr-Bk; Thu, 07 May 2026 18:17:38 -0400
+	id 1wL8OM-0000Ih-KA; Thu, 07 May 2026 19:44:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wL72G-0000qm-7A
- for qemu-devel@nongnu.org; Thu, 07 May 2026 18:17:36 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ id 1wL8OK-0000FE-7S
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 19:44:28 -0400
+Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wL72E-0003E1-AU
- for qemu-devel@nongnu.org; Thu, 07 May 2026 18:17:35 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-40ede943bf0so1070424fac.2
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 15:17:33 -0700 (PDT)
+ id 1wL8OI-00011p-JP
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 19:44:27 -0400
+Received: by mail-ot1-x331.google.com with SMTP id
+ 46e09a7af769-7de4e6c5a30so1478227a34.0
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 16:44:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778192253; x=1778797053; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778197465; x=1778802265; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=6mhxD7cbQ/YZv44JJy0FmHUyr5nrKMnYo0KO5fHYf+A=;
- b=jEm1CDW+k0NCN/Zx4K7xp7a7GGaiuth1ByyQvOOeLIQ0n2qivpAf+kj1xWTZxfDdYo
- IBJmQImwr9W/tt/isUgOhtyhBv920jIHsGwdLSUn97uJQ4HN3j52W6e9rpKq6kaRCsRa
- 9N8CGVoBnsfPFtW4eX7U3iYAcjKM5aUU8gRcaZb3CuN3hHsLAsrhUhFBaB3uq1dQCmxo
- ecL6RWCNFgugy3ENVk29Uuo2bMJDMSmge7UqvIyrXUSoOH7JxMBEhfAo6yjtvAfN15QH
- iZLwa9nl8PoUF/IhPGpgCRmhkuHn92KIPyIfWF3zqB9YARHopVoG68Nx/hUoO0Nje0nK
- ecxg==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=l1WOBWWcejd4Njf8YCai59IybtK3LPcoz1EYaWphZqM=;
+ b=fo+kYL2MGND/xbQhOAL6qmH/6L6XyNCMoIO2LDZ7zxsvI3h1JcMrzANv0mghaVq7d+
+ NJlRknb5vZHF/clmNVS2NMRWhmBp25uWqOnEnd0gtKD0dXbCt0/XYj/SgVSDaBHEJ0yG
+ fu0uy6WIqto+zDW6LBNr+aUkvOQI9tnJSPi95XWdmFqkXPkeiaUgtz0wnOU+dN6Yps/5
+ i5w3qycqS3fIQqi6RXSzb8HIvw5qeGN1QFLmZEflzM1Ls+8MZUbs8TlCVZJfK122vYfi
+ sKpX62NEfSKhDIvo9ifyFK2FHWgq8wt20GqdqYliD60NYnEiCbJSFXpOtFoqxI+X6Lw8
+ z8rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778192253; x=1778797053;
+ d=1e100.net; s=20251104; t=1778197465; x=1778802265;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=6mhxD7cbQ/YZv44JJy0FmHUyr5nrKMnYo0KO5fHYf+A=;
- b=a5GyiF5TcNB+hOdCpEJWzZU2BVE+H4U43nrnf3FmgsISrnhqy9zQJE5d9Na9swh8LE
- 4zvP6at2bJ13ffQqaQYE//OyfTh/j4M6Whvx0sVrOCJ2Y6C2qjh/IZZ5DPIN11rzz1nA
- QGnbOciAfy0DalYAVcl0P0ulMy3HTnSsl5H0t+V2CjYpM0CQebBzFakZCQ99K21aPZtY
- KdQLbRsH1C8ByX246tIUkEGIsWw7zksmfqjcdaU7pRLS+upvUtMXgHkac5Ai0NgvcAHg
- p5Fr5oq8tP6XATPSRF5ynfj45k2bVVDdc+zdKnd4E/uq3mxwy0b/S7amVxxQ0Ii4tNEE
- bYyg==
-X-Gm-Message-State: AOJu0Yx0Dq2VJowl14GsrtqvLAB9jXxqo4JyNfXlDMG0o1g5r5pJwEOD
- 2z+ZNXh3t++C9xtw/zC40tfIq2r19fr71iFzwbCL/SHVXs8eXGw7kiv59xv+bmPjsqhHfZ6DpMq
- 2uCeW
-X-Gm-Gg: AeBDies/vRvr6w9KtL+Md1Z5yhLn5cXmbCCcleomFAX+sdXTuTfW2u1vW8XQy4+1jGD
- DTAS8jGejAHcBNbil7UvmrbuDsB4vOZ3cpWxLd5daeLr5VvyR2XBrIEKEIlv1+sT5OByETy8kNt
- MxfVldNGYdO4v6pDb1laD54vMwqfHKp7WyzqslzKpMRprjt8cU2hajwV4FhRMYwXVCyoQLLSFIv
- LO4B/+0RRd6mMF93uK/ZrdnTvPq2n5tRkY/H6rk5jjo2MIvySqghzgqbTDSJkRLphfm/evnP6Z9
- ammyFQ9lkF8eql5jz6Oh2BcDBFpLLzti0gHyWkS0Ah4Y+3m0txuRfbwXEr18e4PPRf1kyWHOexo
- xRY+P6R0QLONKfJWsLHHFxKCIUpo0DQmgyNQg5BcVTAL1/crUf3I1CLNw4urTf7l3ElDRzCPG+p
- VSCEc8Oaa4sd25Byq0A+tHc9/8x5CpWxa6cYwe44nN9c8dcQ==
-X-Received: by 2002:a05:687c:20e7:b0:42f:ca4a:e7ab with SMTP id
- 586e51a60fabf-434f65fcea6mr6931479fac.37.1778192253030; 
- Thu, 07 May 2026 15:17:33 -0700 (PDT)
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=l1WOBWWcejd4Njf8YCai59IybtK3LPcoz1EYaWphZqM=;
+ b=X3vunpbZnQ6wQzM45TicvbCyWn4Osb7ZJBtl2gdv2izc8qxvsMA5n/Nn0p4sVekn8R
+ iaBDfj27O6LzZzsw/yk/bGm86byXsdwF5Hfr8cEmqX0ipMqWq/ssWnmaC2TrgxzluNlo
+ LgvIRU1iUvEMhQyDdIRQdg1sKPfI+Kg09THJAMaILeWZG7soYoT+zvY2+7mrXd2p2idu
+ H2qdalAToV8HMcDcBwqp52cf8VzIxI+XdcB9nG8Ypbyv/avpv7hfUVGuWUJp14X2yAIp
+ oRQA2bjM3WtazVDS5ivdQrBJOo5k56f/38pOv6Bw1oSBrTNQcEyzu3J4EIyG7iWQcztY
+ z85g==
+X-Gm-Message-State: AOJu0YxL2T49Jx/zNvKmRRum0KuutsDY6RgPfLrP/KiFHS8fmlHNxxYE
+ ebTmzpniLVPThAQMwB2B5YPJR/x83LLtke/tRxe6E26u6cDQKHR0awDWPUiBSqIbNgTwRwJdnrh
+ gpWOW
+X-Gm-Gg: AeBDiesZ0nQKKcZsGQfzYQd/ysqe9QWFhPUQdT98hUYjf0nBtMMckMtI78/b1Q99MLj
+ rJbvtNZ2WVMT95ltEYhSlbGcijBKsmpljU8X6qB0fDnz5XqJpR3AYJSBNGbP2H8MxQyDfVVJU2h
+ 1navTb6I5F5U5rbaszGDnEsyd/yyw/krxJW8p1CNsT/2qMnwTRiSXStuOD03jHXbCiryRKGVFIi
+ rbFZvoahTqb7u2oR/ga34EVYOVRqSFuCDbfhywYXIHtQLpjWNm8tB4EkVxOqWtY/vOftFrZDr/y
+ mAsj31x0o91DDlt/BJgMo2qkUVS9FSLcui6QjSEEXmaLhe1JAvM23tlInRuH5GTyHYklUzGLE+K
+ GQItsdYMBRjq8/TlgLdFXE4J2VfFARKbLkOXKKMr7EpuEk9qq0bm1/uaINE0/okceDC3OJ4ecxP
+ 3zmgctSItGA3uSSHBZ45Sd8gq8XoP431hp+uOWSWdBa4LHeA==
+X-Received: by 2002:a05:6830:2401:b0:7dc:d601:a69 with SMTP id
+ 46e09a7af769-7e1df0b9632mr6391677a34.20.1778197465298; 
+ Thu, 07 May 2026 16:44:25 -0700 (PDT)
 Received: from stoup.attlocal.net ([2600:381:c938:6375:9641:bbb2:a93a:bb4c])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-435573e7254sm45037fac.14.2026.05.07.15.17.32
- for <qemu-devel@nongnu.org>
+ 46e09a7af769-7e367d8feb1sm84320a34.23.2026.05.07.16.44.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 15:17:32 -0700 (PDT)
+ Thu, 07 May 2026 16:44:25 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 10/18] fpu: Use get_float_infzeronan_rule in
- partsN_pick_nan_muladd
-Date: Thu,  7 May 2026 17:17:09 -0500
-Message-ID: <20260507221717.486023-11-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH v4 11/60] target/arm: Clear FPMR on ResetSVEState
+Date: Thu,  7 May 2026 18:43:24 -0500
+Message-ID: <20260507234413.643512-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260507221717.486023-1-richard.henderson@linaro.org>
-References: <20260507221717.486023-1-richard.henderson@linaro.org>
+In-Reply-To: <20260507234413.643512-1-richard.henderson@linaro.org>
+References: <20260507234413.643512-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,43 +100,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Deduplicate the uses to a local variable.
+FPMR is cleared when entering or exiting Streaming Mode.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- fpu/softfloat-parts.c.inc | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ target/arm/helper.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 1d8a98358c..38b317c1a7 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -122,14 +122,14 @@ static FloatPartsN partsN(pick_nan_muladd)(const FloatPartsN *a,
- {
-     bool infzero = (ab_mask == float_cmask_infzero);
-     bool have_snan = (abc_mask & float_cmask_snan);
-+    FloatInfZeroNaNRule izn_rule = get_float_infzeronan_rule(s);
-     const FloatPartsN *ret;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 7a17fd39e5..6263a3cb3b 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -4836,6 +4836,7 @@ static void arm_reset_sve_state(CPUARMState *env)
+     /* Recall that FFR is stored as pregs[16]. */
+     memset(env->vfp.pregs, 0, sizeof(env->vfp.pregs));
+     vfp_set_fpsr(env, 0x0800009f);
++    env->vfp.fpmr = 0;
+ }
  
-     if (unlikely(have_snan)) {
-         float_raise(float_flag_invalid | float_flag_invalid_snan, s);
-     }
- 
--    if (infzero &&
--        !(s->float_infzeronan_rule & float_infzeronan_suppress_invalid)) {
-+    if (infzero && !(izn_rule & float_infzeronan_suppress_invalid)) {
-         /* This is (0 * inf) + NaN or (inf * 0) + NaN */
-         float_raise(float_flag_invalid | float_flag_invalid_imz, s);
-     }
-@@ -147,7 +147,7 @@ static FloatPartsN partsN(pick_nan_muladd)(const FloatPartsN *a,
-          * Inf * 0 + NaN -- some implementations return the
-          * default NaN here, and some return the input NaN.
-          */
--        switch (s->float_infzeronan_rule & ~float_infzeronan_suppress_invalid) {
-+        switch (izn_rule & ~float_infzeronan_suppress_invalid) {
-         case float_infzeronan_dnan_never:
-             break;
-         case float_infzeronan_dnan_always:
+ void aarch64_set_svcr(CPUARMState *env, uint64_t new, uint64_t mask)
 -- 
 2.43.0
 
