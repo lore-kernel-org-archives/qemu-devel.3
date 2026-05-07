@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DE28CD3439
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 13:35:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E921DCD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 13:35:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKysS-0004D7-08; Thu, 07 May 2026 09:34:56 -0400
+	id 1wKyt7-0004m6-JZ; Thu, 07 May 2026 09:35:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKysN-0004Cn-7o
- for qemu-devel@nongnu.org; Thu, 07 May 2026 09:34:51 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKyt5-0004kq-Sw
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 09:35:36 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKysL-0001Sn-5B
- for qemu-devel@nongnu.org; Thu, 07 May 2026 09:34:50 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-488a14c31eeso6160735e9.0
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 06:34:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKyt4-0001p1-73
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 09:35:35 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-448528f4e69so585200f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 06:35:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778160887; x=1778765687; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778160932; x=1778765732; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=uLCQ00C6JYUtQfArcbwuQKiLB78KUIO7od2YMNVbIvA=;
- b=Rt6sjkdWvTppURTdMqQfah6DddrcOF0ljqVylpN+I7BSrxe7RvdDQIZi7wvdTBN0Sa
- A7v3bFDBSYBoHeILijxOQ0nsfGJ4kUkyvDpRqT55cT+lxWS1dLNfPjbr9+7OSHygu2KT
- bQTKDO31gYISKrDj1qKztIM5zTR9RHwGchma/FAJdzL5F26Ut0yc0iASc8zV3iEX7Fqd
- cVAt0IF00QM6FTBC3eQCvQWDB/4vi+QPnRqnc3F9AUQN2/iLiBue5+sJIMHn/q0RzEB0
- ZUxwS4Sie++4MPKmDa7QGk0fIHeR8FaDw73JfPtBwOGHvnA4LOrpPjFyAWYk0z3WWc39
- rOSg==
+ bh=XlFCmk+1a9NiMbuSot6Ixj5tJUD0mRJsa4cXyaZiYMo=;
+ b=QJfmfp8sCmlRaIOorcTLk3+eAj6pHCARsOFMzOlcZIV2lu6xkxbKE0cKuB5odAwshn
+ pWqZA+xt/V6XziX3fx4r+Cx0bkrKx86kZmWVMq/JYGFglW03PzecCjHDOcSVu4o7NlfT
+ zHQyRUNC91+d5FYsGb/qIJ0leXRNyjgmb1ov8R30Nd+0ep9rPZbr9QVN+u/9J1v7QkkE
+ lg4exPKwaQ+Xm8G4SYYsquhnMKY1Wlt0I1mEheUf5+ht78vlYOO6x1rQC+nyTIP7EEeZ
+ oCILZwQQJFycPshC/yZ2Q9h2oecZcaog2FSbXNSEHW1qDIHzR6WdXUeRHFl3hlY7jQEf
+ AgfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778160887; x=1778765687;
+ d=1e100.net; s=20251104; t=1778160932; x=1778765732;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uLCQ00C6JYUtQfArcbwuQKiLB78KUIO7od2YMNVbIvA=;
- b=Qm0m/taqlbRprsBYwnEe4FYGndhr1GA+wGDLZcAwgCutQa1iYMOQkP1bvZvUw32/Pg
- /UWpXn7LNUFHNPqbPL0izZynfusy29ttU0IOuZsTXF3W2EDVRXA3n4HUGxkjqNa13dx/
- L1qaeJS337SElR1qHmMBCouMymX3Jx2qhjRrCJZBfuj0KeiMPk1tVejazZtFatgTzxLn
- 9aiEuoFL+NXqCk9e3vVNwth/UCs/O1bbxhalCvhzfV1SbVIPix/ZVtJKVJ/O2VXJIl6a
- wVPeI5xyU3v5xsag8BpZfdl2CUoPkzw04EJTme2FgXhNRZvQvagBaiyc8bQbXNeYPVtH
- tXRw==
+ bh=XlFCmk+1a9NiMbuSot6Ixj5tJUD0mRJsa4cXyaZiYMo=;
+ b=tI7JRZ6J5k+8rVQZJ9GiEIe6CcVHDU7xJBw/2oi8V4qKERy+4IPayMU2q23JLUcbrf
+ oiwmYcehJdaCMf/0ssfPqKTdMbhnM+SD+WZXkl//4tL8l1OFpeaZcAkKf3bVPhZbkMdg
+ w2daPMIo0yH3xdXkGfIUVpK2Tw4YFVMJYJB1guhZXOKFbFDekeSssZwFZMyeuyzJ3gQ3
+ cRBDRzESxBIx9bUH/9FrTm/2RMho/b9FyvMgxxNuJ+24rvWweZbB+bDEuhHjWmbgd1CL
+ pVyR74mI4P7vUtjejOkP9EwMrYd/j07NNrhQQO+rPo++v9ceuEw6i1b7rAo+B1d5/ERt
+ MP5g==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8wjgYuW8J4E7Aj6qp35lQPE9taGF7HrG4TK44eBv8fRNd6kaUdBAJ20rC+TtvrYHtenPdE6wdM89B4@nongnu.org
-X-Gm-Message-State: AOJu0YwaCwuAwYB6fS2SUpcgyPAIVrF0k+8/CEnNIhRHWcIQrlCOv+3B
- FSu/MgDT7jmVoY2OzH0aWUrZy+Y/MdPFoYCDaglTToee240MN3N7QoEqdgX3z7SdFi0=
-X-Gm-Gg: AeBDieu6iOMWGO721vQxBSFJ5njVBetC4GDoccN+3BWA3OiMtImNhOMOK2r4fen1cx6
- 7Y+lKL3V742WASzBlpphFzoW3tQNIf787B+Ke+5MMQYAOGlUq83edw2iGjsFy8qpkmt462zKrFz
- BpZuxYFZxr35YsjSjUqTkCuXHOVmR4qpfNqC4yYjUuIgGSN8z5uY4VC7jlIGNVmQbKArc0br5nU
- zgNQDMiha7QWqd56m6vAHcN2/jNR8qbjp6IiDxuFoimz6JvaeT0yOm9+QnnN8mmQ+FH07rGbb44
- tjdCjkr72nYnktvBteC9/hAAz505Fp6x+htym4XxINM6FB+vRRPUpGBdmuGsno0jztZO7c/p2TS
- AsdPW6MjZ+B6ZDbV3AOGurMWz02jENvZhBvCGVyN2i5aiW2h+XZ1MpppucpsgP89eE4F+VypTRn
- rCdS8c8SJPpsegh1wazLYraYlNQhrw6lKkTWATenYPP/i9RmLTTlZwHxp+9o6x2xYVfBLY4eyOM
- ALt
-X-Received: by 2002:a05:600c:4f53:b0:48a:5565:ec3d with SMTP id
- 5b1f17b1804b1-48e51f44577mr128236885e9.22.1778160887226; 
- Thu, 07 May 2026 06:34:47 -0700 (PDT)
+ AFNElJ/j11TAkFISQfdUllVI6hHPFzapADi6+yPLC78iYiguSbGGqxGSLSkD1PH+Bv1FVezurUVIwiH5HuwX@nongnu.org
+X-Gm-Message-State: AOJu0Yz5RR9JKQBrKpV0HwyeZLOUwBfpCwNbexslTNuSyMD9Libhh5L6
+ Z+kQPhLc04ymmpTrykEeRfh5aIJCZDi/nfmxDRykE6f96/RlFeqwwkDSTVB2nXye9mM=
+X-Gm-Gg: AeBDievHaCb3r+kxBiUEns0uDsBtY9ZlME9yaQHtDN0ngZHta06Zi/8zjX+0J5VOCzF
+ btzyRoRNZKSpy4hV2wCbjWg8izJm44SSTRvnBHBOH0O5U6qRn3D45DVkAv6Yqqp0FbXiWGeCsVM
+ 6Kd0BlYY9gaMZsnsjUYsGITPgOBfxrQ/bclcXkItnDxi9A2MUfKzZiF/KZLCyGlETgJ+03uAy3k
+ vZOgQUc6lk2a9OTPnn0FvNiWWhZLMfYK2qyEFUBsk9Dxo3xvaHTDq+t1Z42Kzis/xt3MKxZpCbB
+ wOpFiCty3wIEFEM/LaF/arKahlQCOLGdgHOBlz9JVDbUo15hL3DKV4D6vRTUpamhASF9Gar859C
+ LKgy0vS9IQ69s1K453JY8E9NOSWxr8PbWc+ytPqP77QtKnQBu35BpZMBTzpGuZD4/TcMagMag2n
+ tG9qBVbTYCrX80m1VKWfruWoBU0Qn00lLkSu30Yixs2pjlCh/rfGOpLkOGFVSMe1IPrFfnW+NAU
+ geskNdJSLJSQWc=
+X-Received: by 2002:a05:6000:1acd:b0:441:2473:c30a with SMTP id
+ ffacd0b85a97d-4515d5c561cmr12917120f8f.31.1778160931758; 
+ Thu, 07 May 2026 06:35:31 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e53891163sm137774145e9.2.2026.05.07.06.34.46
+ ffacd0b85a97d-4505558e213sm21543079f8f.25.2026.05.07.06.35.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 May 2026 06:34:46 -0700 (PDT)
-Message-ID: <e454a3c4-5d9c-4482-9f99-553f799a6d39@linaro.org>
-Date: Thu, 7 May 2026 15:34:45 +0200
+ Thu, 07 May 2026 06:35:31 -0700 (PDT)
+Message-ID: <0794f07a-0f71-4891-a1a3-5a2cabb4e7a5@linaro.org>
+Date: Thu, 7 May 2026 15:35:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] ati-vga: fix ati_set_dirty address calculation
+Subject: Re: [PATCH] net: mark struct ip6_header as QEMU_PACKED
 Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
- Chad Jablonski <chad@jablonski.xyz>, qemu-stable@nongnu.org
-References: <20260506153920.C6B27596978@zero.eik.bme.hu>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Jason Wang <jasowang@redhat.com>
+References: <20260505201324.932323-1-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260506153920.C6B27596978@zero.eik.bme.hu>
+In-Reply-To: <20260505201324.932323-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,36 +105,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/26 17:39, BALATON Zoltan wrote:
-> From: Chad Jablonski <chad@jablonski.xyz>
+On 5/5/26 22:13, Peter Maydell wrote:
+> The ip6_header is often used by network devices to examine structures in
+> packet data, and it's not guaranteed to be aligned. This manifests as
+> errors from the clang sanitizer like this one:
 > 
-> This fixes three bugs with the ati_set_dirty address calculation.
+> SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior ../../hw/net/rocker/rocker_of_dpa.c:321:37
+> ../../hw/net/rocker/rocker_of_dpa.c:730:33: runtime error: member access within misaligned address 0x742970fe7ecd for type 'struct ip6_header', which requires 4 byte alignment
+> 0x742970fe7ecd: note: pointer points here
+>   00 00 02 81 00 60 00  00 00 00 38 3a ff fe 80  00 00 00 00 00 00 00 00  00 00 00 00 00 02 ff 02  00
+>               ^
 > 
-> First, vbe_start_addr is a word offset. All other values in the
-> calculation are byte offsets. It must be converted to bytes.
+> Fix this by marking the ip6_header struct as QEMU_PACKED, the way we
+> have done to handle similar problems involving tcp_header, ip_header,
+> etc.
 > 
-> Second, when setting the dirty region with memory_region_set_dirty
-> the vbe_start_addr is used to calculate the start of the dirty region.
-> This is a problem because the vbe_start_addr is the offset at which scan out
-> begins. This puts it in the visible screen coordinate system. The dirty
-> region however is in the virtual screen coordinate system. This can cause both
-> overmarking and missed updates. This is removed from the calculation.
-> 
-> Third, when the start address of a blit is outside of the bounds check
-> the entire blit is missed and not set to dirty. This happens even if the
-> blit does partially overlap with the visible screen. The fix here is to
-> find the intersection of the visible screen and the blit and mark only
-> that region as dirty.
-> 
-> This does not attempt to apply clipping to the blit. So there will be
-> overmarking in some cases.
-> 
-> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
-> [balaton: drop excess parenthesis, use offsets instead of pointers]
-> Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-> Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
 
-Queued, thanks.
+Queued via hw-misc, thanks.
 
