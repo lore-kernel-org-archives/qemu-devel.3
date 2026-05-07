@@ -4,105 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84EDECD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 17:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40683CD3442
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 17:09:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL28x-0001ec-O7; Thu, 07 May 2026 13:04:11 -0400
+	id 1wL2DB-0004FI-Ei; Thu, 07 May 2026 13:08:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wL28r-0001d9-Tn
- for qemu-devel@nongnu.org; Thu, 07 May 2026 13:04:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wL28l-0005No-RY
- for qemu-devel@nongnu.org; Thu, 07 May 2026 13:04:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778173437;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=RBbDuAKWNq6vxsxytQTB6e1y0xj2M0FbXNW45x08AoE=;
- b=EP3TCHLr1EWWbhHChacYlNDM3jeV4jjxgn3X3V5DQryivuzzz7xcLjSlfnWu7nywRMAnva
- xfBuR1+d4yqRwh6KviuhqZ36v68yGrzbysRG3Q57bwU963IMQf82mzCmmeLNASZxZylEev
- 8VUe7E5SLGknRWrXMUqqRoK8E1aSNXg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-529-Myj3xN9DOj-nwE5OekcuvA-1; Thu, 07 May 2026 13:03:55 -0400
-X-MC-Unique: Myj3xN9DOj-nwE5OekcuvA-1
-X-Mimecast-MFC-AGG-ID: Myj3xN9DOj-nwE5OekcuvA_1778173434
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-48d046fac74so6169565e9.3
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 10:03:55 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778173434; x=1778778234;
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wL2D9-00049x-Ow
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 13:08:31 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wL2D8-0006aa-73
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 13:08:31 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-44dd5cb0f81so1478688f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 10:08:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778173708; x=1778778508; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RBbDuAKWNq6vxsxytQTB6e1y0xj2M0FbXNW45x08AoE=;
- b=NTF+x5KIbtLXZRmDF32zBA8vbQsUt0ZierNPVqcyPMHLPpQZAQlmHIykc2y860c884
- wHfRALjh9i/KUZofNXUDhDdLRcfWeFIXTDSU4ll8MPyjaJ7W++vYykqTyMlDxZHARHvb
- 2cjIsGhUyYhSBT6OujUm72tQsyxOpQeN1kKEyy0OA6OQ6wRtuWdOry2njVWQCud0zDU+
- d6DybFJ8/uBaJ1SREVSJ+/axiT1aHNy11te7m5GQ6mxxyxAJ9sIEqXDa55yrIxgbSxHQ
- DUX+N9yMxOP/i6B8WeLm/rLLL0iCW070MTVeV7oAUVC+oJlf6LiUiWdrX7asTUUCdN1U
- RkMw==
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SdMrkVJEIZJ6EdDgoIypD03wlpP3cwo1NorXgd8KTdc=;
+ b=A5JbgcdIzMzU5PAnb/j1KRVqT7UWnLe9bE9T44mXDe2jIE8YH2hgoe+BCmaRKUA5Px
+ vo+pDVj2YrLq7zIP2dkxZ+IrGREsC8UuphEhH/8IEfl2FIx465nAmG9snh3prZb0xiAz
+ 7qo1yCmK39YbxPqdrAn8nBgDkJTWMixCu4W1TbvbgPvT4H2+c7i/dIJlJNg7v3mAxesP
+ 3MALg5pF4252jA/ZEXqolsiIHhhWwllmir4/kdY3XkC6Y1P5Y7Qt01HwoC936Rsa6liO
+ mFis4qxyYQ7H6LOKshIjAz/24Y2Jc2X3Hwt9lkx9d/+yuxIObXg7A1ugI05ql1D/43TH
+ UsMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778173708; x=1778778508;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SdMrkVJEIZJ6EdDgoIypD03wlpP3cwo1NorXgd8KTdc=;
+ b=Qo9lGpObgKpB9siP8jU41HYL7ZnS+CugIhlCnHrZr5xh08XyXYoGQ94Y/c5FVmWD0U
+ 2F9HYNqMpFDrljLBixe4+gWuVB+gfakEUYHv0TbAiKjPRtUpcI5C+6uRrUg95aRmZ2Xo
+ 19IEJ5X6bbflUqSt0UCfs86+U5SuSbaCKI9u7TOuvPOQ8Q78Ez/kBxwlXMbkAgPEvjsN
+ Sbunza27RqQFIoyomnduFWLapoihDo8pjaRJNm5AhK9F6r9vywYLFywsZB5tOSJ6uwMa
+ OkCRkhvsnAwTJMqHKV1Er/GBfE0vN3F3YZ469X2ZsNBSYtftKnXSU0DlMN67/tJdn722
+ 1StQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9Rpd+9flL8d5/ImVVDoH0lIX8I8nNKq1Ulh/cBC2B/tTWq7dv0CobAmoCSbpsjsjxgymPWloLDfrZx@nongnu.org
-X-Gm-Message-State: AOJu0YwVqs+WSWrTKTBTvX6DNAl/4U5vhjZ8lk+RQfhUxChnHaPKScKB
- afMz4TpsvwsCu4djTaZ46QM0TPrtqBNyAAkfCHW0c0B8hMiVxNrM6/rKhiXdwpug3gpLQlqhpuO
- wn/E81CY4HjWuezK2o26q/jSqS0YqBCo1YuCR9Y2MK6NRiP3JS9PYD33L
-X-Gm-Gg: AeBDies6sG1UwesRXWPOhCL9wYpNzQZJDwwqWn5JOImDCjCtMiknFkBQ5UbRMNzMTY+
- EnJ2pRJDJCcDjAKtnKyXGYA98yy11AYQX6qBVa2fQUT/9i0UrTFXSv4sVXfScJa9SFB5Uohap1F
- kxE2bCa0GY+lqa0Sihccsoj82Dc0Ji44stCPg+IPCrTfAD+oHDEvVHn8AUYb8TMQXWl0nJH9MIr
- NyuVu7lJ0JhikKU/9WezuGJqGVeD1L4AtvpDzA750GCPM6WagI99RMB3xLU484x0JOf3i50z9hT
- SHqIcy6e35+4b/Pbgypd01M1bsVoZFMLvSU2UcSZYpRt2kKIOoFCWPqqwS7Fc1ORxtggPNT2h4w
- By0YBokJZqkZrvnQW705ViK60DmGN0/qYikPCJUv6vUwFmj+ghUy5/wrO6rr3RnNiBLNqug==
-X-Received: by 2002:a05:600c:4512:b0:488:ac01:72b6 with SMTP id
- 5b1f17b1804b1-48e51f3a538mr142812175e9.21.1778173434186; 
- Thu, 07 May 2026 10:03:54 -0700 (PDT)
-X-Received: by 2002:a05:600c:4512:b0:488:ac01:72b6 with SMTP id
- 5b1f17b1804b1-48e51f3a538mr142811115e9.21.1778173433075; 
- Thu, 07 May 2026 10:03:53 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45412820303sm479472f8f.4.2026.05.07.10.03.51
+ AFNElJ9tY2EEtaC5qwObaCPb4ydXBaytPXFhdJt7GkvZfFGU91vP/lT2hVaO0NXgO2TrnBYIbUNa3DfaPmlw@nongnu.org
+X-Gm-Message-State: AOJu0YzpEpJqjd1uuj4J6B3WxlTrHb2j78pHZoYNaQEC+I2hW9SMDzlj
+ PD0B/XWEpht9nwklBpsBjc13g2A5Zzl6gXiTrdLhtk2AmDWmu8jBuosqkiitEBiyb2A=
+X-Gm-Gg: AeBDieuHEuzcgAKmzEyEI+tdCcsKq28NnhXrWeydqMEOng/MJSTt5DBwY2JKmt/Eav3
+ sAKUR8EesMQvhi5/Ei3ewgeLyk8fV9/FoC7EUyx6VciLmpCCzHg89r0WOx8+6XIp1FIq/z5Xslu
+ Ti1ldBtKdwGzitqBLFIv9oDgwkPUIzbs9benb7Ul61RWXx/DOiy93yWxq4xN3bUVRYVN/7KJg3n
+ uB7hOyolKX5tCm9Sn1Cqa4QVQ9k+cmathtqY+ufcgH59KccTvaccB5g6xxej9XB6jUaYlWjeDtJ
+ b3jjC7iWb9s0aGoFNb4r8Mjoysg+pQP4Ah9mU4r8+V8j2UjrMnnpOPTUpv7KcrVbXqd4kO6TBf3
+ alicXjKxL/iQImqfist0/v5ilzN4JANQcZKhsMittmIh/17xbanx2SHMrBBf+RgBlVvcgbZvJkk
+ O2+jTWYJl+x38oXvBWsIiHYGX95a2gstdL/MymAOoHqQz4MebTYvN3lJIcIf5r9vq24PmOfmJeD
+ /GG
+X-Received: by 2002:a05:6000:161a:b0:452:4f17:a514 with SMTP id
+ ffacd0b85a97d-452e96d5335mr4431660f8f.16.1778173708336; 
+ Thu, 07 May 2026 10:08:28 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45412820303sm505249f8f.4.2026.05.07.10.08.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 May 2026 10:03:52 -0700 (PDT)
-Message-ID: <4fefb00e-44f3-42ca-8835-38e6bc731cb2@redhat.com>
-Date: Thu, 7 May 2026 19:03:49 +0200
+ Thu, 07 May 2026 10:08:27 -0700 (PDT)
+Message-ID: <1d588a70-a029-45a7-84cd-273caa460535@linaro.org>
+Date: Thu, 7 May 2026 19:08:25 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 25/31] hw/arm/tegra241-cmdqv: Add reset handler
+Subject: Re: [PATCH v2 00/25] Handle sub-page granularity in
+ cpu_memory_rw_debug()
 Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, jonathan.cameron@huawei.com, zhenzhong.duan@intel.com,
- kjaju@nvidia.com, phrdina@redhat.com
-References: <20260415105552.622421-1-skolothumtho@nvidia.com>
- <20260415105552.622421-26-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260415105552.622421-26-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ qemu-s390x@nongnu.org, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Peter Xu <peterx@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ David Hildenbrand <david@kernel.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>
+References: <20260430093810.2762539-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260430093810.2762539-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,126 +121,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+> Peter Maydell (25):
+>    hw/i386/vapic: Cope with non-page-aligned return from
+>      cpu_get_phys_page_debug()
+>    target/riscv: Make get_phys_page_debug handle non-page-aligned addrs
+>    target/alpha: Make get_phys_page_debug handle non-page-aligned addrs
+>    target/microblaze: Make get_phys_page_attrs_debug handle
+>      non-page-aligned addrs
+>    target/sparc: Make get_phys_page_debug handle non-page-aligned addrs
+>    target/x86: Make get_phys_page_attrs_debug handle non-page-aligned
+>      addrs
+>    target/s390x: Make get_phys_page_debug handle non-page-aligned addrs
+>    target/ppc: Make get_phys_page_debug handle non-page-aligned addrs
+>    target: Rename get_phys_page_debug to get_phys_addr_debug
+>    target: Rename cpu_get_phys_page_{,attrs_}debug
+>    hw/core: Update docs for get_phys_addr_{attrs_,}debug
+>    target/arm: Rename arm_cpu_get_phys_page()
+>    monitor: hmp_gva2gpa: Don't page-align cpu_get_phys_addr_debug() arg
+>      and return
+>    plugins/api.c: Trust cpu_get_phys_addr_debug() return address
+>    hw/core: Implement new cpu_translate_for_debug()
+>    hw/core: Implement cpu_get_phys_addr_attrs_debug() with
+>      cpu_translate_for_debug()
+>    target/arm: Implement translate_for_debug
+>    system/physmem: Use translate_for_debug() in cpu_memory_rw_debug()
+>    hw/i386/vapic.c: Use cpu_translate_for_debug()
+>    target/sparc: Use cpu_translate_for_debug()
+>    hw/xtensa: Use cpu_translate_for_debug()
+>    target/xtensa/xtensa-semi: Use cpu_translate_for_debug()
+>    monitor/hmp-cmds: Use cpu_translate_for_debug()
+>    plugins/api.c: Use cpu_translate_for_debug()
+>    Remove cpu_get_phys_addr_debug() and cpu_get_phys_addr_attrs_debug()
 
-
-On 4/15/26 12:55 PM, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
->
-> Introduce a reset handler for the Tegra241 CMDQV and initialize its
-> register state.
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/arm/tegra241-cmdqv.h |  2 ++
->  hw/arm/tegra241-cmdqv.c | 50 +++++++++++++++++++++++++++++++++++++++++
->  hw/arm/trace-events     |  1 +
->  3 files changed, 53 insertions(+)
->
-> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
-> index 2befa6205e..b2a444daef 100644
-> --- a/hw/arm/tegra241-cmdqv.h
-> +++ b/hw/arm/tegra241-cmdqv.h
-> @@ -79,6 +79,8 @@ FIELD(CONFIG, CMDQ_MAX_CLK_BATCH, 4, 8)
->  FIELD(CONFIG, CMDQ_MAX_CMD_BATCH, 12, 8)
->  FIELD(CONFIG, CONS_DRAM_EN, 20, 1)
->  
-> +#define V_CONFIG_RESET 0x00020403
-please add a comment to explain what 
-
-0x00020403 value means
-
-Eric
-
-> +
->  REG32(PARAM, 0x4)
->  FIELD(PARAM, CMDQV_VER, 0, 4)
->  FIELD(PARAM, CMDQV_NUM_CMDQ_LOG2, 4, 4)
-> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-> index 9c2fc02b92..af68add2f0 100644
-> --- a/hw/arm/tegra241-cmdqv.c
-> +++ b/hw/arm/tegra241-cmdqv.c
-> @@ -8,6 +8,7 @@
->   */
->  
->  #include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
->  #include "qemu/log.h"
->  
->  #include "hw/arm/smmuv3.h"
-> @@ -645,8 +646,57 @@ free_viommu:
->      return false;
->  }
->  
-> +static void tegra241_cmdqv_init_regs(SMMUv3State *s, Tegra241CMDQV *cmdqv)
-> +{
-> +    int i;
-> +
-> +    cmdqv->config = V_CONFIG_RESET;
-> +    cmdqv->param = FIELD_DP32(0, PARAM, CMDQV_VER, CMDQV_VER);
-> +    cmdqv->param = FIELD_DP32(cmdqv->param, PARAM, CMDQV_NUM_CMDQ_LOG2,
-> +                              CMDQV_NUM_CMDQ_LOG2);
-> +    cmdqv->param = FIELD_DP32(cmdqv->param, PARAM, CMDQV_NUM_SID_PER_VI_LOG2,
-> +                              CMDQV_NUM_SID_PER_VI_LOG2);
-> +    trace_tegra241_cmdqv_init_regs(cmdqv->param);
-> +    cmdqv->status = R_STATUS_CMDQV_ENABLED_MASK;
-> +    for (i = 0; i < 2; i++) {
-> +        cmdqv->vi_err_map[i] = 0;
-> +        cmdqv->vi_int_mask[i] = 0;
-> +        cmdqv->cmdq_err_map[i] = 0;
-> +    }
-> +    cmdqv->cmdq_err_map[2] = 0;
-> +    cmdqv->cmdq_err_map[3] = 0;
-> +    cmdqv->vintf_config = 0;
-> +    cmdqv->vintf_status = 0;
-> +    for (i = 0; i < 4; i++) {
-> +        cmdqv->vintf_cmdq_err_map[i] = 0;
-> +    }
-> +    for (i = 0; i < TEGRA241_CMDQV_MAX_CMDQ; i++) {
-> +        cmdqv->cmdq_alloc_map[i] = 0;
-> +        cmdqv->vcmdq_cons_indx[i] = 0;
-> +        cmdqv->vcmdq_prod_indx[i] = 0;
-> +        cmdqv->vcmdq_config[i] = 0;
-> +        cmdqv->vcmdq_status[i] = 0;
-> +        cmdqv->vcmdq_gerror[i] = 0;
-> +        cmdqv->vcmdq_gerrorn[i] = 0;
-> +        cmdqv->vcmdq_base[i] = 0;
-> +        cmdqv->vcmdq_cons_indx_base[i] = 0;
-> +    }
-> +}
-> +
->  static void tegra241_cmdqv_reset(SMMUv3State *s)
->  {
-> +    SMMUv3AccelState *accel = s->s_accel;
-> +    Tegra241CMDQV *cmdqv = accel->cmdqv;
-> +
-> +    if (!cmdqv) {
-> +        return;
-> +    }
-> +
-> +    tegra241_cmdqv_guest_unmap_vintf_page0(cmdqv);
-> +    tegra241_cmdqv_munmap_vintf_page0(cmdqv, NULL);
-> +    tegra241_cmdqv_free_all_vcmdq(cmdqv);
-> +
-> +    tegra241_cmdqv_init_regs(s, cmdqv);
->  }
->  
->  static const MemoryRegionOps mmio_cmdqv_ops = {
-> diff --git a/hw/arm/trace-events b/hw/arm/trace-events
-> index fd6441bfa7..6f602b9eda 100644
-> --- a/hw/arm/trace-events
-> +++ b/hw/arm/trace-events
-> @@ -76,6 +76,7 @@ smmuv3_accel_install_ste(uint32_t vsid, const char * type, uint32_t hwpt_id) "vS
->  tegra241_cmdqv_read_mmio(uint64_t offset, uint64_t val, unsigned size) "offset: 0x%"PRIx64" val: 0x%"PRIx64" size: 0x%x"
->  tegra241_cmdqv_write_mmio(uint64_t offset, uint64_t val, unsigned size) "offset: 0x%"PRIx64" val: 0x%"PRIx64" size: 0x%x"
->  tegra241_cmdqv_err_map(uint32_t map3, uint32_t map2, uint32_t map1, uint32_t map0) "hw irq received. error (hex) maps: %04X:%04X:%04X:%04X"
-> +tegra241_cmdqv_init_regs(uint32_t param) "hw info received. param: 0x%04X"
->  
->  # strongarm.c
->  strongarm_uart_update_parameters(const char *label, int speed, char parity, int data_bits, int stop_bits) "%s speed=%d parity=%c data=%d stop=%d"
-
+Series queued via hw-misc tree, thanks.
 
