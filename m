@@ -4,82 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BABCCD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 10:30:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4369CD3427
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 10:33:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKvz1-0001m4-5g; Thu, 07 May 2026 06:29:31 -0400
+	id 1wKw2L-0002TE-6a; Thu, 07 May 2026 06:32:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wKvyw-0001l5-8y
- for qemu-devel@nongnu.org; Thu, 07 May 2026 06:29:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wKw2J-0002T1-SM; Thu, 07 May 2026 06:32:55 -0400
+Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wKvyt-0005M2-JA
- for qemu-devel@nongnu.org; Thu, 07 May 2026 06:29:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778149762;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3aGRcV+9821OQTFqCPGb9LgGGL0cXN2brlmwCJSOcvI=;
- b=NqL4eBKMUyQVx//e9BBULHMK+Zv+oBlZXKACaY6jO73+W87s4bBMYjmhPZ+6t5Q842oZ7m
- NpernD38FPFCYaQv2/n5PaAHC0eukLvACtNlqJWHksIb8EpQbWy86i154QtqyJwwRvcw4Z
- YSb8Okh/AIO50f/qd3evreNOanbtKDg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-103-YRMB57HrNKKR3BsigzBi0A-1; Thu,
- 07 May 2026 06:29:16 -0400
-X-MC-Unique: YRMB57HrNKKR3BsigzBi0A-1
-X-Mimecast-MFC-AGG-ID: YRMB57HrNKKR3BsigzBi0A_1778149755
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C3069195608C; Thu,  7 May 2026 10:29:14 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.49.217])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 544DD18004A3; Thu,  7 May 2026 10:29:11 +0000 (UTC)
-Date: Thu, 7 May 2026 11:29:07 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Jim MacArthur <jim.macarthur@linaro.org>,
- Gustavo Bueno Romero <gustavo.romero@linaro.org>
-Subject: Re: Future of target/arm "max" CPU type
-Message-ID: <afxpc_5OvkiEyXxu@redhat.com>
-References: <CAFEAcA-WB+vfiHZpPut=AdEOCXacsTfrvxiGAmhaGH1abHD8ag@mail.gmail.com>
- <4a46393d-08be-40e9-8f52-788d46ab36cf@oss.qualcomm.com>
- <f72abfd1-bef7-407f-a62d-465d9aea0aca@linaro.org>
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wKw2G-0006Aq-FZ; Thu, 07 May 2026 06:32:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=sYxW9vjYjIytVqyymSbW91vcaS88mGb68dMAPUDPFoDsnixAd9kGq/IdtbTGZ5FG0Ix5FMR8P9pL4cv5mOZmGgk5V0fqwldi/TYPIo0d+uIIuj6nvm+oiCrrQaVVuXXLd3M0neexC8wdJRTN6hNCLVGrP0pi9Gwuu+UEA7ZGwYVNmAriHXCm8Zbdw9VqAJ9Kb6+cJp6DyG0BGmtMvM2s38y7qq/nI+xOAW4arZXc4QJWUGwUoK60C4doUJbFyEjLT4wbJVXipD2l7Yt+/GSrqLBLX5067IT2bwkhzXIEokTINwwr1VlYl70NB8QnN9zH0M1O9XnODOv1eVWwdEMaKQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OPx9GHdc9yMtab1NnzDLpaJPmrPQ26nesEaOeIN3hJ8=;
+ b=fw1yVb74dZWRxz3ObJ4DGZw+M4CysqLU45CobciUpqvIOT1xEunLQQfmMuRPqYBMXsuDGjmVePIdORVFqUz4hnXHPMRvReceyPOYSWJes/q7TyQPmed+6TAAKc6ubZey5tJWuLVasm/+8NfXd1G+N93DmqYk8azskw3YOuDMvDCN6jvny4DaGP4qs61GlnSPylY8fJaZARnhk3P6+2TPYAv1wLHH1jsUPdmdbqm9VSVVux11Lp+SIEC2FXxDgxn8DLbcHdJUgZ/OKbbp0DRMKlJDdebtPue5ZCwU/LRZdt9gjmtZynv9DVjN8WOtDwXFDv0+UD4F8qsp7d/52UIqZw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OPx9GHdc9yMtab1NnzDLpaJPmrPQ26nesEaOeIN3hJ8=;
+ b=INInXC93OisER+E4sR+hqctJtVPlFFQtSwCzpZKjjgMZ37I4xCHp6plOkaGBfBS+EAS8a1UPRNcbGSURrnZtCPILeNFY52MnWO4x9J0YV7vLu2PNc3zSLi1SRdLNrOI6/ENXYAhuFfF5Dy/MSrx8UDSIWi6TXN+E2llEUxA+FMBPdrP9FBTpTKKiqR45s6XQ1nj4Lkp2NQumAPbAERr+Wip4XSA4AZXK/EMQEmZgBoCU3pwDylrPCTP+xTN3Bvxc26JveQa1HTvq/in7INQwPu9x95GyQG/tb8UKzJ9MgJhamvTLGhx+Kk4hI+UqbEYYwwJhN6uzphz+QPUvPBLVWw==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by DM6PR12MB4140.namprd12.prod.outlook.com (2603:10b6:5:221::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.17; Thu, 7 May
+ 2026 10:32:42 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.20.9891.017; Thu, 7 May 2026
+ 10:32:41 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
+ <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev"
+ <kvmarm@lists.linux.dev>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "cohuck@redhat.com" <cohuck@redhat.com>,
+ "sebott@redhat.com" <sebott@redhat.com>, "philmd@linaro.org"
+ <philmd@linaro.org>
+CC: "maz@kernel.org" <maz@kernel.org>, "oliver.upton@linux.dev"
+ <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>
+Subject: RE: [PATCH v4 09/17] arm/cpu: accessors for writable id registers
+Thread-Topic: [PATCH v4 09/17] arm/cpu: accessors for writable id registers
+Thread-Index: AQHc2s+e8lgn2BsakUWQeUTEPE0vkLYCY67A
+Date: Thu, 7 May 2026 10:32:41 +0000
+Message-ID: <CH3PR12MB7548053696CA900F2A2349BDAB3C2@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260503073541.790215-1-eric.auger@redhat.com>
+ <20260503073541.790215-10-eric.auger@redhat.com>
+In-Reply-To: <20260503073541.790215-10-eric.auger@redhat.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|DM6PR12MB4140:EE_
+x-ms-office365-filtering-correlation-id: f5ebcedc-8f04-465c-b524-08deac23f80e
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|376014|7416014|1800799024|22082099003|56012099003|18002099003|921020|38070700021;
+x-microsoft-antispam-message-info: ZeMP6Qb6XgpKr31VrsuZtLKqMlithjMjtsivHMLyeWBvzoIVyDhF9Tr7ZF6gMiOPe4JL1YNcX+kZJsh0DFpNJHCbaxd0t1DiPs+zmRB9ZlsZlYyUEf+1IVokX1FojqL6sgY7L6jr5Lc4S2vIm1me7mI9w05XfDzyVIDIIocP8NKNkkgIt6h40PKhTVqOxbJZra/UM57+7+sSk4EzLatW72wzwyIjNupDc8jeXLDeRQyxTpbaoM0KMeAbV8nQtwo/yJcNUTLKlAN4nryU2I5+jaIIcnVfG9W86JQ/jSybN8hCUl5Sv69qPG4qlB6JFWfFC32ud75ILOKpcmdVfUXiiAAzQpya0P96sNuYCd3nq/t2sHeeeekjOqIwbnwEbCRsqoNKoFjAUX23ds4payPho69f0depa56RGttc/+1wvkkmYRO4o7IimwCJRZ6ixoXPZWBQPaB43gbXdobwHvMFJExK1bBPoPnwEhqyqnser7P6L15DkhKWcAI4jQZKl7UbpAokN+yCy1WheMklTFCGTu75wAhCAGAlszgO4noUzY4uwPlv1kZvJR7eOL7+yhfpoO/9JaalDxKx09rYXfVyJ8WwFhc4adKfdKXlwjRwmVrZTxcwyNHVUlD59+HeEw3IyslA2bd4JpzqKOxN0I4SLZdk3fBSq+0/feR0+tAr7XsvVcxYeQCW4ujMVCNOLXmlmHkjBuIF007eLIqsOXLhu/kmQJoSysafO5kVZ/cpvaYQ5RxMa4Wy1YY9/bGZTK8jML061aOYZDd0lFRhX2o/gg==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(7416014)(1800799024)(22082099003)(56012099003)(18002099003)(921020)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?dK4zxbwbb2UrrCccL8rnOqDeSqhJdjgL0tUQInwX+UpratVDwGBe39sFCxLR?=
+ =?us-ascii?Q?BssfSgWzNcI6fPknN90LmMvHFRKRvu2i2Gi0wLcHBheD27b2/bh/b8pfs6sG?=
+ =?us-ascii?Q?5HgdarmhvV6OPPBFiVJcAD6Pkm5rD7YakxJD0aUmVy6vruw6s1BUlAgBRkss?=
+ =?us-ascii?Q?oTutwMpyMsTnEWsL3jk90x6ha3iKOq66H1jIu2ysMVj7axmIaz/wq5z3zGM/?=
+ =?us-ascii?Q?cFRYfiDQXlmZxjCpZ5+cJc/LNm/SIxjGc7gB+iQ6VZUp3pExkqV2Qq2g/+K6?=
+ =?us-ascii?Q?hZS7LBZmtxs0Xv439oii/RUctjtb0pynMJzAapSHvNXi8Yg8iTmn496L3/OO?=
+ =?us-ascii?Q?Q+C8xi8GQOGQFJhvqgKx7o3RXa1ileG27+MN8prYR+a/Q1l7EVA6769vK3gU?=
+ =?us-ascii?Q?BdkUSD49Ta0hDpM1axXhje5JQz1WnlAhmwAVnN0CHtpNlPtuBL0jaPMTVP6i?=
+ =?us-ascii?Q?6NXsOfG37DjDovhbE5h8SgPX3so2S74F606B4fqg9HItI9andvnpdvmVKNsG?=
+ =?us-ascii?Q?bewoSqHyhnd7XKpq182E4CL8TkVQCl/ci3AogAhFVJAi4KkwAnrRWAH3H9OZ?=
+ =?us-ascii?Q?0KSr5bM/gnxEQv73RpF3UxnNkCflAoifO0KxxHrNPc2eKrFXwXpIBIhAhgBs?=
+ =?us-ascii?Q?y4mwg3QPIpFnmdGgn5z6NW2WIWpRa/gseLjAgMlJfjUcWj7Dhu5kMafSxlp6?=
+ =?us-ascii?Q?CmYyFfwbwnFDEhpesDUbwR4rOt7UkLEq/PxBzZYthYfKYUa9izFr/xbKkCQP?=
+ =?us-ascii?Q?2knMmllO9cLbOOa4q0fMMVeh5SNpyQBLb5FF8BNqkrAoICaP6fBKzXYTgkqz?=
+ =?us-ascii?Q?In9GSJV3GbNtFoA/eofGdpwwIpxE7JvVUMz05XmgkSn6D2ke4Bd4binr425L?=
+ =?us-ascii?Q?OJPIt18EO/OzHlhSCzbsOLZp4L8w5/ty/RJXfWCqZwm/SHYJ4oyXCShlbNAV?=
+ =?us-ascii?Q?6+BXYC9sBENp6dKg8D4XDq1TDBxQILghUdH15llm/8c7eV80cnZIOFF/d0I7?=
+ =?us-ascii?Q?G01S6aSXafzZdecWXrsCP12sQO2VJchZhYmpphra5p/9QY5Afqei0ICGz9yp?=
+ =?us-ascii?Q?8ahXwfIi4dXLltUz9LvLJbOkX7+vHYU0DDxALDG7dsg7s14nTPd4QmbhPMpY?=
+ =?us-ascii?Q?Kau7PGPVwgz9WNVr5zuywZ0nNJLtC8Ml7uD5ps0RmPpEpp4mJAuUdv61cOK5?=
+ =?us-ascii?Q?jHJYavvtjxTRLYODqccG7ttGzgIDRKI/VQ9+YroA1FzhpKOA1cqJnc95qLTR?=
+ =?us-ascii?Q?ciSwe9+1nFn1cztmj0/eoTgEEwR2kBIcKW9DJLVBRMMifAlRLOo0RlBc8cMv?=
+ =?us-ascii?Q?HXOWt+hU3WGjGJDkoiiWBN4veuqrAehVvj5UYvTcQRkYS07y8hR/3Nqn1DSn?=
+ =?us-ascii?Q?uDv9icSBMguAHms20c+f45wpCWiQ2yOySF5ioQWhrqCct/bFLa/cwhR9eUBC?=
+ =?us-ascii?Q?/oyjj7CVS+jPI6TMRwtZAk98Bj+dLh/7pSUxZHYNO8q6JOoPutdo9bflznM8?=
+ =?us-ascii?Q?GvvXkjRsHKhEI0e00qJmXqrXcA1R0RitPej4dsY16K619SA90H8yfh+zxfP9?=
+ =?us-ascii?Q?ZlYE5s1UIlxgTbOgysYGCVgfF/eJwAXUOUyQx6oQBJnqHGy4yuebNgNGCezv?=
+ =?us-ascii?Q?k/Mi5u4kdbY/Vr9YpqtLg/ROL/6J81rrDZQA6sxoW9Dvk1SL4YXssjKqTZhv?=
+ =?us-ascii?Q?H6nD6KYNChvTZYPIU+ay7kw2t4epZOmz3oM1rQaZCEQAJ3KuYyL6bZwCDvDN?=
+ =?us-ascii?Q?AaP3d3OiXg=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f72abfd1-bef7-407f-a62d-465d9aea0aca@linaro.org>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f5ebcedc-8f04-465c-b524-08deac23f80e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 May 2026 10:32:41.8131 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: tlJjuBvE5BvEpckEFEObx+jL5WC8XxDYccmCWo8Jy/VrkyifPkCL12fSF5VvG6PjIuZ0sQTbBObIsh3BvOPLsQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4140
+Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=DM1PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,108 +149,77 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 07, 2026 at 12:17:32PM +0200, Philippe Mathieu-Daudé wrote:
-> On 7/5/26 00:17, Pierrick Bouvier wrote:
-> > Hi Peter,
-> > 
-> > On 5/1/2026 6:26 AM, Peter Maydell wrote:
-> > > This is something we've discussed before. I don't think I have a very
-> > > solid grip on it and I suspect I may be missing some parts of the
-> > > "problem description" (i.e. what are we trying to achieve) and perhaps
-> > > some implications of the choice. Overall it feels to me like a "no
-> > > obviously correct answer, make a tradeoff" question. I've written this
-> > > up to try to clarify my thinking and canvass for opinions and for
-> > > people to point out what I'm missing.
-> > > 
-> > > For a long time now the arm targets have defined a "max" CPU type
-> > > whose definition is roughly "all the features that QEMU
-> > > implements". This is helpful for:
-> > > 
-> > >   - giving us a way to provide newly emulated CPU features to users
-> > >     without having to define a specific named CPU type matching some
-> > >     hardware that implements the feature (which might not exist at the
-> > >     point we add the emulation, or which might also need some other
-> > >     features we don't yet support)
-> > >   - giving users a way to say "I just want everything"
-> > > 
-> > > Mostly this has worked pretty well, I think. (It can cause problems
-> > > for some workloads that break when a new feature is added; TF-A
-> > > firmware seems particularly prone to this.)
-> > > 
-> > > However, it doesn't work so well if the architecture decides to drop a
-> > > feature and mandate that newer implementations may not implement
-> > > it. Up til now that hasn't been a big deal, as only a few very niche
-> > > items (like FEAT_DoubleLock, an old mechanism for quiescing external
-> > > debug before a CPU power-down) have ever been removed.
-> > > 
-> > > With the Armv9.0 architecture, a big feature gets removed: support for
-> > > running in 32-bit mode at anything above userspace (EL1, EL2, EL3) is
-> > > not allowed to be implemented.  We've got away so far with ignoring
-> > > that requirement, but as new v9.x features are added, they are
-> > > designed under the assumption that there is no 32-bit system mode
-> > > code. For instance, the GICv5 CPU interface defines only 64-bit system
-> > > registers, and our non-compliant "32-bit is actually there"
-> > > implementation would give you a 32-bit OS that couldn't handle
-> > > interrupts. Other similar (or harder to spot) issues are likely to
-> > > also turn up.
-> > > 
-> > > So my suggestion is that we should have two new CPU types:
-> > > 
-> > >   v8-max : "all the features we implement that are valid
-> > >     for the v8.x architecture"
-> > >   v9-max : "all the features we implement that are valid
-> > >     for the v9.x architecture"
-> > > 
-> > > v9-max would not implement AArch32 EL1/2/3; v8-max wouldn't implement
-> > > any feature the architecture says is v9-or-later.
-> 
-> Certainly clearer than what we currently have.
-> 
-> > > For the existing 'max' CPU:
-> > >   - on qemu-system-arm this would be a synonym for v8-max
-> > >     (since it must be 32-bit)
-> > >   - on qemu-aarch64 and qemu-system-aarch64 this would be a synonym
-> > >     for v9-max
-> > >   - on qemu-arm it can also be v9-max, since v9 doesn't drop 32-bit
-> > >     usermode support. (Though we don't currently implement qemu-arm
-> > >     max this way, so it might end up being effectively v8-max until
-> > >     we get round to implementing support for selecting AArch64 CPUs in
-> > >     qemu-arm.)
-> > > 
-> > 
-> > This seems like a good approach. A side effect is to solve the
-> > duplication we encounter for the single-binary also, by correctly
-> > deduplicating QOM types associated.
-> > 
-> > The concept of having a "max" alias that maps to a specific type (in
-> > this case, distinct depending on the binary) could be used for other
-> > arch if needed also.
-> > 
-> > > I don't think it's worth claiming 'max' as deprecated and dropping it:
-> > > as an alias it's trivial to support, and there are a lot of workloads
-> > > that won't ever notice this change.
-> 
-> We could display a note though.
-> 
->   "Using 'v9-max' for requested 'max' CPU".
 
-Please don't make use of "-cpu max" print warnings.
 
-IMHO "max" should remain a first class citizen across all targets,
-because it provides a consistent approach for users.
+> -----Original Message-----
+> From: Eric Auger <eric.auger@redhat.com>
+> Sent: 03 May 2026 08:33
+> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
+> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
+> peter.maydell@linaro.org; richard.henderson@linaro.org;
+> cohuck@redhat.com; sebott@redhat.com; Shameer Kolothum Thodi
+> <skolothumtho@nvidia.com>; philmd@linaro.org
+> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
+> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
+> jdenemar@redhat.com
+> Subject: [PATCH v4 09/17] arm/cpu: accessors for writable id registers
+>=20
+> External email: Use caution opening links or attachments
+>=20
+>=20
+> From: Cornelia Huck <cohuck@redhat.com>
+>=20
+> Introduce ARM_FEATURE_ID_RANGE_IDX macro that converts opcodes
+> into the index used to access the 3 * 8 * 8 feature id array.
+>=20
+> KVM_ARM_GET_REG_WRITABLE_MASKS populates writable masks with
+> that indexing.
+>=20
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> ---
+>  target/arm/cpu.h | 7 +++++++
+>  1 file changed, 7 insertions(+)
+>=20
+> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+> index 2aa22360d2..0ac0fd13cf 100644
+> --- a/target/arm/cpu.h
+> +++ b/target/arm/cpu.h
+> @@ -886,6 +886,13 @@ typedef struct IdRegMap {
+>      uint64_t regs[NR_ID_REG_MASKS]; /* writable masks for registers */
+>  } IdRegMap;
+>=20
+> +#define ARM_FEATURE_ID_RANGE_IDX(op0, op1, crn, crm, op2)               =
+\
+> +        ({                                                              =
+\
+> +                __u64 __op1 =3D (op1) & 3;                              =
+  \
+> +                __op1 -=3D (__op1 =3D=3D 3);                            =
+      \
+> +                (__op1 << 6 | ((crm) & 7) << 3 | (op2));                =
+\
+> +        })
+> +
 
-What Peter describes with resolving "max" to either "v9-max" or
-"v8-max" depending on arm vs aarch64  makes sense to me.
+It looks like this macro is not used anywhere and in next patch it
+uses KVM_ARM_FEATURE_ID_RANGE_IDX instead.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Please check.
+
+Thanks,
+Shameer
+
+
+>  /* REG is ID_XXX */
+>  #define FIELD_DP64_IDREG(ISAR, REG, FIELD, VALUE)                       =
+\
+>      ({                                                                  =
+\
+> --
+> 2.53.0
 
 
