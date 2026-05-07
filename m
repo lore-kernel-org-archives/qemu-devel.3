@@ -4,141 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5D44CD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 08:46:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8AF6CD3442
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 08:46:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKuMl-0002mL-Ow; Thu, 07 May 2026 04:45:57 -0400
+	id 1wKuNb-0002wr-3o; Thu, 07 May 2026 04:46:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wKuMf-0002lx-EQ; Thu, 07 May 2026 04:45:50 -0400
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wKuMc-00079N-8w; Thu, 07 May 2026 04:45:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=hwz1mzHGE1OoPsjS2SUMKP70onGDUw/EySoidSGBWLdRpXRflP1TW0tba+2gZ4UeWpOUcTXq7M+El9tVPA3eqbn24ovniZTWDjHtI6Xy73POnO2g+9NKmJ+Qha9fLpy/pUPkVRcmu7EBazRzroOntEkuqZS8r0K5o7LuvTYNyxWz2lDehRWo7P9szs4z0Y83DJFDYYhtaEli7gs3OBk8qLvOUfdLdPbBJfLm/0Udk+XvvkqOC6Ex+KnlopNcXqokcbmPUjd1/J2HKET5OMdYebECuj1BgTzSun206YuNfz+tlO/PVOSF0MtaFtZObdupXWY9qhdmGkW2XsN5Ztp2Vw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=C65F4yEOBpTzTS2xE5EtGl3GpKchtCQzsPCq98pyfUc=;
- b=fd6wD0NzD2QbLdNulHgTvhpcDIa0lSEosjmQdS4RdDFXGkWu39eZlsOKWua9XpvLFD6mFF9Z/5zIUx+61CVWq5AOAL/4qfdEKKAKclRnoT9Bdt/zVbP/kQM4lmBQXrZszk9LyAencqUZcAP4mJUFDyB+mXfP1N+20RiXulnwVMYk1882BqVxgJXIz9A3znhWE51FW4XpOjK/mmpYWU4tkJiUtYOO0S5xzQVypb+GtFRKXPP3ubJlDK53LZniMpEHccIdNToC+Ca0G8lJCR2LSxS+xM1RNkqu3DG14KSo9t5wLQ1py6fit7nPt6GepuyEAO2aiZIVywU1+Rs/N/BqfA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=C65F4yEOBpTzTS2xE5EtGl3GpKchtCQzsPCq98pyfUc=;
- b=Aw/m/02T50ZXeSccyy/G2Z4Tq+57DEh/MY46k7SEPVwqir0LA/zNGKOE1IMMEf06gKXVVOrxCb0mz3hVThBA2JKiXk6a4d9g3hxrkGEpp9LjN7JDMk0lPl+KC06IPDorsCBUDnhxzDkS0S1p5L1khHPaaLKoHiD1Lc1RxrSbEi4VOn66XYUlQvXFR9+GMYVJdo6JqdbNHTSuGcWX8fMk3qpeWV2qaSHcxqJfQhMV4xlSOe9Z8OXPXMOsc/jWgvoX9Z9I0X3VLuykYGOYPkGNcODIT3Y1/QYNDVkCjQG0tOxGj0uSkv53QE5QtKhZyinD4oByBUJ19XJKys2FwdpdFg==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by SA1PR12MB6749.namprd12.prod.outlook.com (2603:10b6:806:255::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Thu, 7 May
- 2026 08:45:39 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.20.9891.017; Thu, 7 May 2026
- 08:45:38 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
- <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev"
- <kvmarm@lists.linux.dev>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "cohuck@redhat.com" <cohuck@redhat.com>,
- "sebott@redhat.com" <sebott@redhat.com>, "philmd@linaro.org"
- <philmd@linaro.org>
-CC: "maz@kernel.org" <maz@kernel.org>, "oliver.upton@linux.dev"
- <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>, "berrange@redhat.com"
- <berrange@redhat.com>, "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-Subject: RE: [PATCH v4 03/17] target/arm/cpu-sysregs.h.inc: Update with
- automatic generation
-Thread-Topic: [PATCH v4 03/17] target/arm/cpu-sysregs.h.inc: Update with
- automatic generation
-Thread-Index: AQHc2s+ISBxURh23/U6mjL5mBISdArYCRMOQ
-Date: Thu, 7 May 2026 08:45:38 +0000
-Message-ID: <CH3PR12MB7548C2AB4989FEF96C247D47AB3C2@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260503073541.790215-1-eric.auger@redhat.com>
- <20260503073541.790215-4-eric.auger@redhat.com>
-In-Reply-To: <20260503073541.790215-4-eric.auger@redhat.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|SA1PR12MB6749:EE_
-x-ms-office365-filtering-correlation-id: e26d35c4-26e8-453b-ad95-08deac150391
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|7416014|376014|56012099003|38070700021|22082099003|921020|18002099003;
-x-microsoft-antispam-message-info: GH0as6MrgV9Nm7cw7ZUJn6LQDXyXM/kVnnpoHMnRGLq9S7U0CBWAsXXJbSCByUTsW5wEoxZW5Cvs1p7MdaseoH3lLVU5AMXRfI9J9VtHk3WMBGxLgR2g9YJbmdgEXauC5/pndpApq/VNQW/n2Pbmy5lnTRfm+uSJFwgTEUe9tYATIeSh90TX29c5eh6stl4W32ElECBehbcFKqCDc99YvO9PN3827UpBEZqMrf5DR3/lW4GWv6YKF3J+bkBeP6t5reGM+Vyvso/uSPYqxGTX7uNs8JgbeZ4UhtXfOiCTROWMRYLoG3WwvxjWz/BcbvxnawwvRa8nG2chcP5gCOhLDe2AiZRd1AGPWn5W7LNGc1LBAvRt52zm6GY6/hHTKz4TRSai5z+56PCEFKgiY6ovd0f9cyuYWAj0toLWI3AeHJ62eiTwgClDQyybguNA/sZIdNaGMN7R5ZdLsoclqeLofojq2Mw8079w4504kO/0mvObupPEfu2HFZXa8oc1HAqb7kkj1IRsYJ5GtdOr9wAJtOQ0YND95Nf61/YJphOEFEzcIRD4VKaCb3XUeFuowsZIU7wpAZIlaaQGd++mQo4WFVcp68/3pk2rznPr82+oqJYsil3NoPbgCm9CmhEyzFZ7Cgcs0zrxqU2UEFHDsuBN8GV13zpndo6nfjSNR7XIGgjeW2oshXQ06xwf7/R5Bq9BVBvSVn7c0NneoMbBBn4U9Wv374zebIlLiq4Sqs6e/6zeLDw1RBZjxeOngjn/W/0PAZsVkRVtItW+GS6W1Fw26g==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014)(56012099003)(38070700021)(22082099003)(921020)(18002099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?d+a8XPIG2fkL2akgiy94bzLVL001hUwKW3F6e32QYDXx8TXUp0kbbRzXLFsA?=
- =?us-ascii?Q?8VI6gP7k3raoJ1uoWA8hcwpVc34e5k14jTn4d7XfcbHGvsfRrBtFZl7l03Pm?=
- =?us-ascii?Q?Ao8uTdl7JEd69riZU+fxXCUTTt+GZPBlLihvLLJnRmoetJ/nR5ylRQKNDnNU?=
- =?us-ascii?Q?6jsc3Yw40YrQ9mmwM00p6tV0/nDMqwPpcu8CajL620Z2P1gERxmpdhFczjua?=
- =?us-ascii?Q?6t7mGAUJYiniTFs+vzBDxR21mZJ/UfaO98fwXe47VPmCNwr58Wwb3IanVukf?=
- =?us-ascii?Q?X8BBGiW6kFAJGhYwP0FCAhjUOt5LxjD38yOle8l4xX6Pq8CGuW0Y+VaMQPQs?=
- =?us-ascii?Q?+hkFdzP12MrPCdKCU6mYVvLUvKdRIWIAOEMTuM0CPHiiIVVJJY4kqEunyEPb?=
- =?us-ascii?Q?QnUsrQoZu2NHF+IRH97p+pG+BZp2IpPtUmtMnt/e4MiF1W3c7mCk9vG/fNi5?=
- =?us-ascii?Q?h6IkqHBMxDxJVikMLg9k6lEoQlIvHxN7pMD1Y7qw2qGYN5NbseV4tOAANt2l?=
- =?us-ascii?Q?JEYWRmJbkwIr5Z33Z+EYCqXUbwXO2y3j+5EO2nBqDCGYEVpAxb3bvKsvnb32?=
- =?us-ascii?Q?neTRwIqB4pL5i0JrhlBs8z9EGt4onPT+eEGytFm8yXJ2MQVl5tPya4V/CR8b?=
- =?us-ascii?Q?Yz7Y3DOgv1Axy9uDgUiFo3Zo78NfShVUyX7Rq08FWoa2Pc6evnuq0P1GEuc9?=
- =?us-ascii?Q?zeqFfeUEoQMUydqoswau8OMgepqc648gP/1ka1wgt4mEKhAoQkUwjxfh8LDQ?=
- =?us-ascii?Q?NSwxn7aQvQ2qu0S6jWL5ekrKCn7LHyeIvSQIkJm+059nRgrR0HDWvyW7EJa1?=
- =?us-ascii?Q?yUYciVgODLW2MCs+QPryDGtsD/2fcQ1XDvUeFbh0/dSmtYfNOk57tBSXKWKM?=
- =?us-ascii?Q?A1GeesdWHupY7A1CP0C178PijNkCtimMuM0xaoeMIbxD7EXLW+WiJ7myEWf+?=
- =?us-ascii?Q?Rd1DbGlKR8vumWRQsPSY6IXlfwYJdF9KSY+FtQIUd2Xc2RhK1Jg4boSCaOPu?=
- =?us-ascii?Q?gMh+0Ap/P9DOM7QJvNOrm4UsyUliDyFCXagD07Z2HbBRMd7nOoq3qAF9MkOR?=
- =?us-ascii?Q?wxNgYe1HS3PC/QY6yMrDfi/PLSFTS2U2TorV8ZkZhaK+nfSVIZAXjmPL+lgu?=
- =?us-ascii?Q?yA1eX1RzmOnqYiz8mAlAhvonSESFkwaclS81osK5kgu3MdLLtx1TPDJYUiNN?=
- =?us-ascii?Q?ZRNX3IQHS9Ef13hqP71nAXv7HLUrlI09v/bLKoZQ2jwFv+rCS0hcCH6KDydz?=
- =?us-ascii?Q?2uv4qxbKfooTfXMcoCEc16TkwMmHvYOtIvh1mz9SAEYt7oYt1NZUSJjWUGfT?=
- =?us-ascii?Q?Bruz7jC3RKeKmsYuk5Yw/U500DuRTyJ9WP7NTcVm0fX88Eusj0vV+FmMqQdp?=
- =?us-ascii?Q?TfPLNtwGmctsbbZz3t0wRJ65sMB/EH0gwfCarxVjpEUoF7CG9RzVKzm0Sh1m?=
- =?us-ascii?Q?csspWuQlKJDdqlVXk3Krln8QRj/cK5RnZqm6w+jm9J72h0fGxYaZ1DU1jwiH?=
- =?us-ascii?Q?U7L4guyacQBI/qoGd80jlQ9eergRceV0JoFldfkYd5P2Zb97Z6EMs4P6I07i?=
- =?us-ascii?Q?wruoNqTCxfyi1kEGFDy9/JuydQ+DwX6g1CrhMFaOhsZ37bW4NCFvmNktRfat?=
- =?us-ascii?Q?zEyAWOpIQjTz9HWZ4AnEagUG2aQmX4WAQB+I7IOQpgocDHUKpsxKApzZCVh6?=
- =?us-ascii?Q?DqbJ+2V6IcefgwGBnHkqp7Y/p9Exn7iN8Z/GwHTDlhu3nC08Rs6v8byEqnTo?=
- =?us-ascii?Q?4AHywRbxVA=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wKuNZ-0002wS-8K
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 04:46:45 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wKuNX-0007QG-Kw
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 04:46:44 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-65c7efdb7d8so558351d50.3
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 01:46:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778143602; cv=none;
+ d=google.com; s=arc-20240605;
+ b=D++xLKSAx1t5wlG5ymWrqmhMsKv8Pf/KDkp+bz8gO2HyEyfBh8jWtkqTLtqAWMFe+J
+ nBOOW2rpODD4i1Z8/DtFrVW3ovDo/5gxeRpddghDhD3vlIHZ/nu5PbZQPf/qeZzASZns
+ O+5xRv8kn+jV58bwFUb+doiHCNu1JgmxvFDPStBz2J1DWqBNbjhhxatASNKbIA5x/bBb
+ KM+Skmf8sIxxx7SPlKFD8IhC15hbt15jkXg9ljTGdbvGJtha9sRJfS1m9JIzpu/NkgwS
+ M8RWTppL7MqjjCRrTxKXOWT/P3zZ5NbPlyZIxXXbJcjG0a4GYRQEQO4WdkrzcSa4T59h
+ VCEw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=NuowibDaYz/E5UJzAi4YOhi3AeXL9KU2XALgMKVzdDo=;
+ fh=GI2e/SBiq4MTIPc9mHou6R6WJe3VvhdDMWKbaXflkfU=;
+ b=CFFCkRIU+xv520lm/8xhYN67pGy7MxT7/ge2vG5s6Kl9Tg0fTAgmp1ZFnA5xJ2Ijvs
+ xlgwDFq2u2ztXZ/WR6fj1BxfjGkul5KJ64UQrZgH6qhvx6kCTTwfIPgkcNIBHXRRUkSk
+ MR9D3NfaTpn2l92FHi8jua/WOhypZe2O17pzpIZY+XxP33H3NIQgYMufLw1gvccII1Wp
+ 9nGNQ8dapExf0EG3x47yU+GioJT6NKBasH07+b0gd+vmMa+m4eSZFAYPeB57UN2chkcR
+ PE8o38Q1wyMNP5iCevzEKJrMAPCX6bbB37QU5NoxH8XzGhHbgRyc7+R3XVDeScvlhvDW
+ D1bg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778143602; x=1778748402; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=NuowibDaYz/E5UJzAi4YOhi3AeXL9KU2XALgMKVzdDo=;
+ b=X8pbPEsSdMZyGpwXNDXC0qRszmn48EdBdvm2sorxCCSrNiA6d8gaGQj00FlTslpWyW
+ /NIhLlgxFfe7soTf68i0xrhOeKOb7LyLk5eTPmmFprJSmLjGrLy744e7Z4CgJOZ2S5T8
+ QppHRrEEJloediyNUtrkWeYoWuERraugnavtADWsBg1Z/oxOjlh1kExj6ckUv56K31B+
+ hPpXyVaf+CPO93HIvnH+Ta1V0iP5tWCm/ho3/exeHGNRaTaw2//U8sNXEI8kTou8Npmt
+ GM/hSdWL4tVFINnMl7H3ePnzkypYIPKMlBsIVjsM3hIpdXQfxN5E1uCYNgyDnx9FGHgI
+ q50w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778143602; x=1778748402;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NuowibDaYz/E5UJzAi4YOhi3AeXL9KU2XALgMKVzdDo=;
+ b=Cf2eY8MufjeqIkEsx0/bJjc5Gv0dlZ/ASA3hF+Vl0XMwRpgckF580WopkNJ/+rCFzi
+ bNdgIUm9BiAbtyDqP/vNdf7IJQ/ZAV/EwgYIJ4wHBHkRrCvGg9DnbSTRVVXYbJnFPMVJ
+ GM70uCt5dL/tLVAhwrgMThYqSBV2ZCY4yqZshEt8XH8PcwW17EGGo8ynBkXv0U1lPLTO
+ pPZs2nDFmP9xJj20ZLV00/he3xjdZyXwgrHkthznl89j3m05Qvcdxvs4+6xXa+zqQmMI
+ iLjK7VR6LrI6y/1iJ22DSq8TQ4B4Z07F9b//apESSOHQEpz1yWE2NJgUfH00cU4rnfFv
+ 1SRQ==
+X-Gm-Message-State: AOJu0YwzO068MfAZM2gl/6VD0YQHJujwoVuGCFTV3R/LtKSwtyVDZxuy
+ JFNtzO1H17XAri48FbLIl6ySsRgBqyP2t/thg7pk9YM39zrBb7B6sz8ix7dRbqYI9FSbMIZWoC+
+ VkV2auRP76K600AkJdzhc7LVhadQFX8p4b3Jzfo8+1g==
+X-Gm-Gg: AeBDieustICYVKGce9dwM2wlBCB68TYbn/mHj3WgJvOJszBJu8Pk/sepOP5pO4cfwBy
+ c/mX8A5dtOAhpXSft7Px9TSCr0kU/p6tigbgC71y7yOZi3yGmNUBx7cftMn1bjy7ulokw5XuA/J
+ FDGyBpBvFg7TVxtNvE1pFpBV4mJ4aHREjE92gqq9dfL0Knutd+LT0LgggNQVkw8V91vG5kx4k8r
+ UwzQWRD9LrVvnT6TzS+dR2rqTO9TVDzSyYnPthcYrtI0yZbGqOsh0CE2jRtadV3wZNyIFADNXCz
+ moTlmpAzyY/fhdJ9ymXu11DkniKlAdwq6Bxf0JfDj85zYYr2N1kkd9TzZRnfaQRcj3QFzVdBOFT
+ FSmmq5LsdvH/EyFOJ81nrK60=
+X-Received: by 2002:a53:e03c:0:b0:65c:2066:a99e with SMTP id
+ 956f58d0204a3-65c7999b07bmr5683162d50.33.1778143602420; Thu, 07 May 2026
+ 01:46:42 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e26d35c4-26e8-453b-ad95-08deac150391
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 May 2026 08:45:38.7295 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: IJ7Qvv52MzrBI4c2bgmOckX2aD3Wa6FuB5GZSOOEJvRI9PSxo+EKiyJT5Xx2JFzQunooLwE2kmgwkeiJ4jJP1w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB6749
-Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
- envelope-from=skolothumtho@nvidia.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+References: <20260505103726.419195-1-peter.maydell@linaro.org>
+ <2c23feac-abf7-4c55-b4b7-51b0dc1059ac@linaro.org>
+In-Reply-To: <2c23feac-abf7-4c55-b4b7-51b0dc1059ac@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 7 May 2026 09:46:28 +0100
+X-Gm-Features: AVHnY4JhTn_qrcrPhA7XnR2Nl7fpBErDEUNPt4ba76A7-t2ss6pFUqsXjX5YbhE
+Message-ID: <CAFEAcA9h6UcCXhMrJVibF-bTcKTvUnuCGicYVK9rCnoSmkCFyQ@mail.gmail.com>
+Subject: Re: [PATCH] target/arm: Report IL=0 for Thumb 16-bit BKPT insn
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,86 +115,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, 6 May 2026 at 13:48, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> On 5/5/26 05:37, Peter Maydell wrote:
+> > The Thumb BKPT insn is 16-bit, and the ESR_ELx syndrome register
+> > definition requires that we set the IL bit to 0 for this, and 1 for
+> > the 32-bit A32 and A64 BKPT/BRK.
+> >
+> > We used to do this correctly, but accidentally lost it in the
+> > conversion to decodetree, because we converted the A32 BKPT first,
+> > and then when we converted the T16 BKPT we forgot that trans_BKPT()
+> > was unconditionally setting IL=1.
+> >
+> > Pass the right value for syn_aa32_bkpt()'s is_16bit argument.
+> >
+> > Cc: qemu-stable@nongnu.org
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3474
+> > Fixes: 43f7e42c7d515f ("target/arm: Convert T16, Miscellaneous 16-bit instructions")
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >   target/arm/tcg/translate.c | 2 +-
+> >   1 file changed, 1 insertion(+), 1 deletion(-)
+> >
+> > diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+> > index ce427c5a3c..7f76a57653 100644
+> > --- a/target/arm/tcg/translate.c
+> > +++ b/target/arm/tcg/translate.c
+> > @@ -3580,7 +3580,7 @@ static bool trans_BKPT(DisasContext *s, arg_BKPT *a)
+> >           (a->imm == 0xab)) {
+> >           gen_exception_internal_insn(s, EXCP_SEMIHOST);
+> >       } else {
+> > -        gen_exception_bkpt_insn(s, syn_aa32_bkpt(a->imm, false));
+> > +        gen_exception_bkpt_insn(s, syn_aa32_bkpt(a->imm, s->thumb));
+> >       }
+> >       return true;
+> >   }
+>
+> While correct, perhaps clearer to use curr_insn_len.
 
+Ah, I didn't notice we had that; I'll use it. (I was following
+the use of s->thumb in the syn_aa32_svc() call.)
 
-> -----Original Message-----
-> From: Eric Auger <eric.auger@redhat.com>
-> Sent: 03 May 2026 08:33
-> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
-> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
-> peter.maydell@linaro.org; richard.henderson@linaro.org;
-> cohuck@redhat.com; sebott@redhat.com; Shameer Kolothum Thodi
-> <skolothumtho@nvidia.com>; philmd@linaro.org
-> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
-> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
-> jdenemar@redhat.com
-> Subject: [PATCH v4 03/17] target/arm/cpu-sysregs.h.inc: Update with
-> automatic generation
->=20
-> External email: Use caution opening links or attachments
->=20
->=20
-> Generated definitions with scripts/update-aarch64-cpu-sysregs-header.py
-> based on "AARCHMRS containing the JSON files for Arm A-profile
-> architecture (2026-03)" Registers.json file.
->=20
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> Message-ID: <20251208163751.611186-4-eric.auger@redhat.com>
-> ---
->  target/arm/cpu-sysregs.h.inc | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
->=20
-> diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
-> index d61f0d0a19..2188cd7be0 100644
-> --- a/target/arm/cpu-sysregs.h.inc
-> +++ b/target/arm/cpu-sysregs.h.inc
-> @@ -1,15 +1,25 @@
->  /* SPDX-License-Identifier: GPL-2.0-or-later */
-> +
-> +/* This file is autogenerated by scripts/update-aarch64-cpu-sysregs-
-> header.py */
-> +/* DEF(<name>, <op0>, <op1>, <crn>, <crm>, <op2>) */
-> +
-> +DEF(AIDR_EL1, 3, 1, 0, 0, 7)
-> +DEF(CCSIDR2_EL1, 3, 1, 0, 0, 2)
->  DEF(CCSIDR_EL1, 3, 1, 0, 0, 0)
->  DEF(CLIDR_EL1, 3, 1, 0, 0, 1)
->  DEF(CTR_EL0, 3, 3, 0, 0, 1)
->  DEF(DCZID_EL0, 3, 3, 0, 0, 7)
-> +DEF(GMID_EL1, 3, 1, 0, 0, 4)
->  DEF(ID_AA64AFR0_EL1, 3, 0, 0, 5, 4)
->  DEF(ID_AA64AFR1_EL1, 3, 0, 0, 5, 5)
->  DEF(ID_AA64DFR0_EL1, 3, 0, 0, 5, 0)
->  DEF(ID_AA64DFR1_EL1, 3, 0, 0, 5, 1)
-> +DEF(ID_AA64DFR2_EL1, 3, 0, 0, 5, 2)
-> +DEF(ID_AA64FPFR0_EL1, 3, 0, 0, 4, 7)
->  DEF(ID_AA64ISAR0_EL1, 3, 0, 0, 6, 0)
->  DEF(ID_AA64ISAR1_EL1, 3, 0, 0, 6, 1)
->  DEF(ID_AA64ISAR2_EL1, 3, 0, 0, 6, 2)
-> +DEF(ID_AA64ISAR3_EL1, 3, 0, 0, 6, 3)
->  DEF(ID_AA64MMFR0_EL1, 3, 0, 0, 7, 0)
->  DEF(ID_AA64MMFR1_EL1, 3, 0, 0, 7, 1)
->  DEF(ID_AA64MMFR2_EL1, 3, 0, 0, 7, 2)
-> @@ -39,6 +49,10 @@ DEF(ID_MMFR5_EL1, 3, 0, 0, 3, 6)
->  DEF(ID_PFR0_EL1, 3, 0, 0, 1, 0)
->  DEF(ID_PFR1_EL1, 3, 0, 0, 1, 1)
->  DEF(ID_PFR2_EL1, 3, 0, 0, 3, 4)
-> +DEF(MIDR_EL1, 3, 0, 0, 0, 0)
-> +DEF(MPIDR_EL1, 3, 0, 0, 0, 5)
-
-Do we need MPIDR_EL1 as well? Is this considered as a feature ID
-register and is writable? I don't think so.
-
-Thanks,
-Shameer
-
->  DEF(MVFR0_EL1, 3, 0, 0, 3, 0)
->  DEF(MVFR1_EL1, 3, 0, 0, 3, 1)
->  DEF(MVFR2_EL1, 3, 0, 0, 3, 2)
-> +DEF(REVIDR_EL1, 3, 0, 0, 0, 6)
-> +DEF(SMIDR_EL1, 3, 1, 0, 0, 6)
-> --
-> 2.53.0
-
+-- PMM
 
