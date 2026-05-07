@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0913CD3439
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:55:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93A2DCD3439
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:55:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL11U-0003cP-4k; Thu, 07 May 2026 11:52:24 -0400
+	id 1wL11p-0004pm-B2; Thu, 07 May 2026 11:52:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL11T-0003bX-1v
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:23 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1wL11m-0004YT-SF
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:42 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL11R-0003sT-9A
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:22 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-488af96f6b2so12020685e9.0
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:52:20 -0700 (PDT)
+ id 1wL11k-0003ye-EJ
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:42 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-488af9fdaa7so6672655e9.1
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:52:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778169140; x=1778773940; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778169159; x=1778773959; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=facN1UwDMu3JSY3ts6JtzkWbj7pqYVHY8oHKersaP0k=;
- b=Thk775SOVtRczepkMYim8ASKGHW3zPokdeHfI1af0/BREITs294M7pwAX8RGfSlMSn
- 3z7nc28yrDMhrFJKkZbniciTowiaAfbD0Uel3lpWcox1gXlDLDF87fE19BsJOTD6rtnE
- ONjn/jjGLVZTeDvyQoOxEDT8VmnwSnCpJvyczzL5Ep3ZMRuSyhGzcmH0oEEcDtGINOT6
- Rrs2twnuaqN/JejwRuRxPGh4hYAKBENgLpkgaB9DFCfoqit0HXkgUPZd1XYJSTu70cvj
- eMe0RrwXpwDAnOWvRLjNryYuWV3PWInUxGha81fVFweXlqpsaie4+e/vYQZnZb2wpOyh
- Z3oQ==
+ :reply-to; bh=/LAMedYRFDy6rCDw1/38CGkQbibECB3iBhdeGcNo77s=;
+ b=JHb15rl2Zl8E69QHInD1o/Ewk+kQ+Lf5n7o5tpRdXOV3Y1ILszqnC//D5RPZCF8oPb
+ iXP+1fcdQ+M8TdieXYj4NxSeaTrcv7iF9Zd6s/lQSWp6RbCBQZQvQOQdQFvH3v9ss2PQ
+ OpV3bbmvWV5GPdJy+Bly+3tuGVwqc8GguuSvqPv6q0omZAbvx1J0rZbCl5z1XsGZlbNw
+ tcNmubr7oPght/pHFC3e1Fvy/3M9OGchmUL5IhkpPJKECtxB+nrx0SziQXUNqmxv8+9w
+ wNZ2hV4pJ7ny0FfLdIekbG3XhLVotEnjaxr+3MH88GLxWBmhCCo3uBOUDgWhmnMvXxbt
+ uP+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778169140; x=1778773940;
+ d=1e100.net; s=20251104; t=1778169159; x=1778773959;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=facN1UwDMu3JSY3ts6JtzkWbj7pqYVHY8oHKersaP0k=;
- b=qU49oWIss3lKao5oRAUeodhInEoSq+nWSa3mosVdanO/LWrGxXLbzl1o7rIXx8y1k2
- b3z1566p3pH0JC5esn+wbIxiYi2XsfmpyD8D//73NQ/e4IMLXS0Rg/oHomQprmIyNjBr
- Wpbmcv62epJEzYi5aoGuGJ83JMFxq96isHlFJRdsLmwAgAq7OQNuG01GM1XEYl96ULwz
- lqVwsHt9/BgBOqiZPwXIfLwbrBd2if0lzXO1nYnewJN5/Jf7IaBtqZEKj8YufYsYX0Cm
- O757eVBshs+5MsFf8cuAkQncxySiDRH2SEpEPaSVCqSP6S2tNRqYHus7Vpcoc6sIxcZJ
- tBKA==
-X-Gm-Message-State: AOJu0YyOBGgujv1oDZBgJ/X5Tnv6OdWM2RFDfkS9ZD0JjAPdelDpdt5y
- 2QRZoULZQMSGenSVYB1XLQFR+N61p5UtISfkJAJdgO7aQyaYG8ssxuhQKP62M2M4sNC2sdxaHKi
- iWKi1
-X-Gm-Gg: AeBDiesvco9g131J2nzrQS+vD7w8pUkXz3TyLztYpC7vVGUeGq9OShF1KS4LXO6IpNd
- O7l7KLtab+6nDjxUsfvAHM3Va1yeZStFJHlYbNGeQlRYUHYQzi8xEP4vElXxmGwMtQSBYKJQxaO
- XO4LkIlLu5i/qwli8EOUwOgEtoXKSCt1BdpkaiaJZbcuiwyFS6yDHDwscq8qMM2sF3t9XPuzJ6T
- Mj9QptNrstXeaXy6z54R+qqiYLaDqQF1recsf6zpg+QiiZbcLO1kFYstYqr5JL1/QSlEmw02FhT
- i7pi34PtKC6B42wjnPUi8Bj+8gqM/nva6Ke7K2lZEMRgtP04cg/JoBhektyEk4Al0mMJXlAydsa
- jrtDgJ+72+snd4oBvIL+k/oEkRNTPkUN1GWytxNtLBF13fU/HxWcK2d5w1NYmITXAIfSDw8I8jd
- KSAmO9IFwpET6hOKCO2XE7JKo8h7okHBOdAgIAmQHQM/3vBfdlFLQkGl3EJsYkWrP6QKMriqVew
- Hi+QaYFaOw5iCyfE3GiEXVr1Skb0Z4=
-X-Received: by 2002:a05:600d:b:b0:48e:5d91:cffb with SMTP id
- 5b1f17b1804b1-48e5d91d240mr50277955e9.10.1778169139659; 
- Thu, 07 May 2026 08:52:19 -0700 (PDT)
+ bh=/LAMedYRFDy6rCDw1/38CGkQbibECB3iBhdeGcNo77s=;
+ b=k/3h2X44pz3RZH6Y9tWyy0/WwXMNzjx9h8EBKN/yyRIbCpJ37HLyiO7VxRKWTZwInd
+ UXJppzoD7fpGndmox9y5Na6mHtcydCFlNzkv6R9tcSmd4s+/tD4+eN4DyOwXc5TGvoM4
+ wW/snLq3lhHktoIgIDYPksVYSzg2qN2Mm8KCjDPv1cEuPJOdteUUMOgC/+gg1x/g1/DW
+ RVnNLXsOZ5DXPZTFOoH2DEJ148dZwTYeNGD/7A2fKeaaluAME9KkeaDYp+8DqI/WE10Q
+ vFT5KE/TsfgtbnyP2u7ny8+dqLK8t8EiXXDU0mmzKid8OJkg81pYBZqeK1TP0GSdpL3A
+ 5GMQ==
+X-Gm-Message-State: AOJu0Ywl/wI/l2+BOwp5rPwd2ggHLsiwtr8174+X4qrMykY1JtV6elOV
+ jn8XUktsyCykLUgQsz/V/0cjqT8Lbrnmv6BVW5HcOzDioIK0hFNne7qBbWjAH+9qybYT1Xsi0LV
+ 7gQ8J
+X-Gm-Gg: AeBDieunyfTOa4iWi54UnCYsfvRhB99ORqWjnKm6zXRvy0O7XoRt7KGgLvNwt6PcG76
+ /dnYYPR8lKWaejjDXm1+iswyyEFv6q71xz98z2pzdUVGBQ0U+pozKKMKav0SPPstzvrdgTwzJ1C
+ nt5uzd2r0TseblBBlIArU3G5k5ccxLIVun41nBcLgUYp+w12qNXTu+KfFBX1i+4eAvixokWeGmA
+ GVP3hJ2YZr8dOTr0MIjOPyo3F8iaT4yTbXSsZ6VKhW1u8NAqo5WX1F+o+BwLNY/SG6pIkXZKTwk
+ LlFWk0HpBMgdYPJjmIRF00XI9j1EwUa7KC6dN5iIe35bA1QEbjYPEOinjuD03bR1fZN6PFDJA9y
+ SZVYmK6BCezR2/BM752aTJWj590YC3pRSSzd28rvdpZNWAppIX6P8iKDwEGPGLnyBhLNb/u4gzg
+ cNrde4MTekp4IT4IP+AZAwrFACRlno+zYPpHKblAfNeiZhe25GMUgKJ4QCU3o4Z2jqulXJOIz8R
+ p8kAxtFVSCOG8QJ
+X-Received: by 2002:a05:600c:a10d:b0:487:12c:e7e1 with SMTP id
+ 5b1f17b1804b1-48e51e1f013mr107824275e9.11.1778169158380; 
+ Thu, 07 May 2026 08:52:38 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.18
+ 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.37
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 08:52:18 -0700 (PDT)
+ Thu, 07 May 2026 08:52:37 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 23/67] hw/intc/arm_gicv5: Create backing state for SPIs
-Date: Thu,  7 May 2026 16:51:10 +0100
-Message-ID: <20260507155154.1886557-24-peter.maydell@linaro.org>
+Subject: [PULL 44/67] target/arm: GICv5 cpuif: Implement ICC_CR0_EL1
+Date: Thu,  7 May 2026 16:51:31 +0100
+Message-ID: <20260507155154.1886557-45-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260507155154.1886557-1-peter.maydell@linaro.org>
 References: <20260507155154.1886557-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,145 +100,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GICv5 allows an IRS to implement SPIs, which are fixed-wire
-interrupts connected directly to the IRS.  For QEMU we want to use
-these for all our traditional fixed-wire interrupt devices.  (The
-other option the architecture permits is an Interrupt Wire Bridge
-(IWB), which converts from a fixed-wire interrupt to an interrupt
-event that is then translated through an ITS to send an LPI to the
-ITS -- this is much more complexity than we need or want.)
+Implement ICC_CR0_EL1, which is the main control register.  This is
+banked between interrupt domains in the same way as ICC_APR_*.
 
-SPI configuration is set via the same CPUIF instructions as LPI
-configuration.  Create an array of structs which track the SPI state
-information listed in I_JVVTZ and I_BWPPP (ignoring for the moment
-the VM assignment state, which we will add when we add virtualization
-support).
+The GICv5 spec assumes that typically there will need to be a
+hardware handshake between the CPU and the IRS, which is kicked off
+by guest software setting a LINK bit in this register to bring the
+link between the two online.  However it is permitted to have an
+implementation where the link is permanently up.  We take advantage
+of this, so our LINK and LINK_IDLE bits are read-only and always 1.
+
+This means the only interesting bit in this register for us is the
+main enable bit: when disabled for a domain, the cpuif considers that
+there is never an available highest priority interrupt.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Message-id: 20260327111700.795099-24-peter.maydell@linaro.org
+Message-id: 20260327111700.795099-45-peter.maydell@linaro.org
 ---
- hw/intc/arm_gicv5_common.c         | 30 ++++++++++++++++++++++++++++++
- include/hw/intc/arm_gicv5_common.h | 27 +++++++++++++++++++++++++++
- include/hw/intc/arm_gicv5_types.h  | 14 ++++++++++++++
- 3 files changed, 71 insertions(+)
+ target/arm/cpu.h             |  1 +
+ target/arm/tcg/gicv5-cpuif.c | 44 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 45 insertions(+)
 
-diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
-index 21b40c35a5..aa5877ee05 100644
---- a/hw/intc/arm_gicv5_common.c
-+++ b/hw/intc/arm_gicv5_common.c
-@@ -64,6 +64,34 @@ static void gicv5_common_reset_hold(Object *obj, ResetType type)
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index f27f2e6bcc..afe7f71a04 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -604,6 +604,7 @@ typedef struct CPUArchState {
+         /* GICv5 CPU interface data */
+         uint64_t icc_icsr_el1;
+         uint64_t icc_apr[NUM_GICV5_DOMAINS];
++        uint64_t icc_cr0[NUM_GICV5_DOMAINS];
+         /* Most PPI registers have 1 bit per PPI, so 64 PPIs to a register */
+         uint64_t ppi_active[GICV5_NUM_PPIS / 64];
+         uint64_t ppi_hm[GICV5_NUM_PPIS / 64];
+diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
+index e6f21d53b6..23d51bd798 100644
+--- a/target/arm/tcg/gicv5-cpuif.c
++++ b/target/arm/tcg/gicv5-cpuif.c
+@@ -43,6 +43,12 @@ FIELD(ICC_IDR0_EL1, ID_BITS, 0, 4)
+ FIELD(ICC_IDR0_EL1, PRI_BITS, 4, 4)
+ FIELD(ICC_IDR0_EL1, GCIE_LEGACY, 8, 4)
  
-     memset(cs->irs_ist_baser, 0, sizeof(cs->irs_ist_baser));
-     memset(cs->irs_ist_cfgr, 0, sizeof(cs->irs_ist_cfgr));
-+
-+    if (cs->spi) {
-+        GICv5Domain mp_domain;
-+
-+        /*
-+         * D_YGLYC, D_TVVRZ: SPIs reset to edge-triggered, inactive,
-+         * idle, disabled, targeted routing mode, not assigned to a
-+         * VM, and assigned to the most-privileged interrupt domain.
-+         * Other state is UNKNOWN: we choose to zero it.
-+         */
-+        memset(cs->spi, 0, cs->spi_irs_range * sizeof(*cs->spi));
-+
-+        /*
-+         * The most-privileged interrupt domain is effectively the
-+         * first in the list (EL3, S, NS) that we implement.
-+         */
-+        if (gicv5_domain_implemented(cs, GICV5_ID_EL3)) {
-+            mp_domain = GICV5_ID_EL3;
-+        } else if (gicv5_domain_implemented(cs, GICV5_ID_S)) {
-+            mp_domain = GICV5_ID_S;
-+        } else {
-+            mp_domain = GICV5_ID_NS;
-+        }
-+
-+        for (int i = 0; i < cs->spi_irs_range; i++) {
-+            cs->spi[i].domain = mp_domain;
-+        }
-+    }
- }
- 
- static void gicv5_common_init(Object *obj)
-@@ -142,6 +170,8 @@ static void gicv5_common_realize(DeviceState *dev, Error **errp)
- 
-     address_space_init(&cs->dma_as, cs->dma, "gicv5-sysmem");
- 
-+    cs->spi = g_new0(GICv5SPIState, cs->spi_irs_range);
-+
-     trace_gicv5_common_realize(cs->irsid, cs->num_cpus,
-                                cs->spi_base, cs->spi_irs_range, cs->spi_range);
- }
-diff --git a/include/hw/intc/arm_gicv5_common.h b/include/hw/intc/arm_gicv5_common.h
-index 19e1af8ceb..983faa5ef1 100644
---- a/include/hw/intc/arm_gicv5_common.h
-+++ b/include/hw/intc/arm_gicv5_common.h
-@@ -55,6 +55,25 @@
- 
- OBJECT_DECLARE_TYPE(GICv5Common, GICv5CommonClass, ARM_GICV5_COMMON)
- 
-+/*
-+ * This is where we store the state the IRS handles for an SPI.
-+ * Generally this corresponds to the spec's list of state in I_JVVTZ
-+ * and J_BWPPP. level is a QEMU implementation detail and is where we
-+ * store the actual current state of the incoming qemu_irq line.
-+ */
-+typedef struct GICv5SPIState {
-+    uint32_t iaffid;
-+    uint8_t priority;
-+    bool level;
-+    bool pending;
-+    bool active;
-+    bool enabled;
-+    GICv5HandlingMode hm;
-+    GICv5RoutingMode irm;
-+    GICv5TriggerMode tm;
-+    GICv5Domain domain;
-+} GICv5SPIState;
++FIELD(ICC_CR0, EN, 0, 1)
++FIELD(ICC_CR0, LINK, 1, 1)
++FIELD(ICC_CR0, LINK_IDLE, 2, 1)
++FIELD(ICC_CR0, IPPT, 32, 6)
++FIELD(ICC_CR0, PID, 38, 1)
 +
  /*
-  * This class is for common state that will eventually be shared
-  * between TCG and KVM implementations of the GICv5.
-@@ -67,6 +86,14 @@ struct GICv5Common {
-     uint64_t irs_ist_baser[NUM_GICV5_DOMAINS];
-     uint32_t irs_ist_cfgr[NUM_GICV5_DOMAINS];
+  * We implement 24 bits of interrupt ID, the mandated 5 bits of priority,
+  * and no legacy GICv3.3 vcpu interface (yet)
+@@ -346,6 +352,37 @@ static uint64_t gic_icc_hapr_el1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+     return gic_running_prio(env, gicv5_current_phys_domain(env));
+ }
  
++/* ICC_CR0_EL1 is also banked */
++static uint64_t gic_icc_cr0_el1_read(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    GICv5Domain domain = gicv5_logical_domain(env);
++    return env->gicv5_cpuif.icc_cr0[domain];
++}
++
++static void gic_icc_cr0_el1_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                                  uint64_t value)
++{
 +    /*
-+     * Pointer to an array of state information for the SPIs.  Array
-+     * element 0 is SPI ID s->spi_base, and there are s->spi_irs_range
-+     * elements in total. SPI state is not per-domain: SPI is
-+     * configurable to a particular domain via IRS_SPI_DOMAINR.
++     * For our implementation the link to the IRI is always connected,
++     * so LINK and LINK_IDLE are always 1. Without EL3, PID and IPPT
++     * are RAZ/WI, so the only writeable bit is the main enable bit EN.
 +     */
-+    GICv5SPIState *spi;
++    GICv5Domain domain = gicv5_logical_domain(env);
++    value &= R_ICC_CR0_EN_MASK;
++    value |= R_ICC_CR0_LINK_MASK | R_ICC_CR0_LINK_IDLE_MASK;
 +
-     /* Bits here are set for each physical interrupt domain implemented */
-     uint8_t implemented_domains;
- 
-diff --git a/include/hw/intc/arm_gicv5_types.h b/include/hw/intc/arm_gicv5_types.h
-index 20de5b3f46..f6f8709a6a 100644
---- a/include/hw/intc/arm_gicv5_types.h
-+++ b/include/hw/intc/arm_gicv5_types.h
-@@ -70,4 +70,18 @@ typedef enum GICv5RoutingMode {
-     GICV5_1OFN = 1,
- } GICv5RoutingMode;
- 
-+/*
-+ * Interrupt trigger mode (same encoding as IRS_SPI_CFGR.TM) Note that
-+ * this is not the same thing as handling mode, even though the two
-+ * possible states have the same names. Trigger mode applies only for
-+ * SPIs and tells the IRS what kinds of changes to the input signal
-+ * wire should make it generate SET and CLEAR events.  Handling mode
-+ * affects whether the pending state of an interrupt is cleared when
-+ * the interrupt is acknowledged, and applies to both SPIs and LPIs.
-+ */
-+typedef enum GICv5TriggerMode {
-+    GICV5_TRIGGER_EDGE = 0,
-+    GICV5_TRIGGER_LEVEL = 1,
-+} GICv5TriggerMode;
++    env->gicv5_cpuif.icc_cr0[domain] = value;
++}
 +
- #endif
++static void gic_icc_cr0_el1_reset(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    /* The link is always connected so we reset with LINK and LINK_IDLE set */
++    for (int i = 0; i < ARRAY_SIZE(env->gicv5_cpuif.icc_cr0); i++) {
++        env->gicv5_cpuif.icc_cr0[i] =
++            R_ICC_CR0_LINK_MASK | R_ICC_CR0_LINK_IDLE_MASK;
++    }
++}
++
+ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
+     /*
+      * Barrier: wait until the effects of a cpuif system register
+@@ -504,6 +541,13 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
+         .writefn = gic_icc_apr_el1_write,
+         .resetfn = gic_icc_apr_el1_reset,
+     },
++    {   .name = "ICC_CR0_EL1", .state = ARM_CP_STATE_AA64,
++        .opc0 = 3, .opc1 = 1, .crn = 12, .crm = 0, .opc2 = 1,
++        .access = PL1_RW, .type = ARM_CP_IO | ARM_CP_NO_RAW,
++        .readfn = gic_icc_cr0_el1_read,
++        .writefn = gic_icc_cr0_el1_write,
++        .resetfn = gic_icc_cr0_el1_reset,
++    },
+     {   .name = "ICC_HAPR_EL1", .state = ARM_CP_STATE_AA64,
+         .opc0 = 3, .opc1 = 1, .crn = 12, .crm = 0, .opc2 = 3,
+         .access = PL1_R, .type = ARM_CP_IO | ARM_CP_NO_RAW,
 -- 
 2.43.0
 
