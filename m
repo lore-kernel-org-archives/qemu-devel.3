@@ -4,102 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86F4ECD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 19:57:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4513CD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 20:56:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL4qq-0006Q1-Fs; Thu, 07 May 2026 15:57:40 -0400
+	id 1wL5kT-0006eu-0e; Thu, 07 May 2026 16:55:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL4qo-0006Ps-Kv
- for qemu-devel@nongnu.org; Thu, 07 May 2026 15:57:38 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL4qm-00010V-PH
- for qemu-devel@nongnu.org; Thu, 07 May 2026 15:57:38 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-65c37eafcbeso1541427d50.1
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 12:57:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778183855; cv=none;
- d=google.com; s=arc-20240605;
- b=VoMHPvPXVgxd/AzyYIaT9DNmDufNP2rbTFx9O7jAjF/atl8orCbpRH/E+pWe5DiS6L
- dPJeTyPjPro/cQL+60smzIWXM+ESRxv9mMsWTCtj9EPrf9Hlo5iWdjBp+O0nym3eRNvc
- v1uwvZ+qJdmpYFRaL1G1i3OSB/d7Ly1cxIWCgnTCLtzUGugj+5tw+SLDlXGEUttliJ1u
- E//JnGG/c655dUTH8nMNAcUGpn76P1MY+R5v6vuhz01Fd6c0UJMW7yPjCBusC3V9BPRw
- a14JstZ10cKSzNe7QSOZ84VoqH7UxXw9kFp9bbLRMeLP+OZwUailiUWQlA8FeFMg/J9k
- 4CmQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=JxpJZfrVRmJOSp5G9KZjW21FKVIqMLCMiL97D1mfnaE=;
- fh=Zy8f29HJFJfjn54T4OIGQBQXkI5p+92xlVl4K44vjn4=;
- b=DpsMSToEWuaMuuM7Fv37fVb0fG5SxllWoJGKjp8PrIB2gvbcbXRBycbruLTgL2TShI
- lTXhwEX/ZJmMwDqKQJtWFGCXFLMWQk20u4wzbKXGjbQSj7Qdn9s59+HDAhCWV40wquou
- KRxq6p0YCQTwfF3gJqFKcrNiDmjj088soCx6HJwkDrhiqpGSLxNleeBX0J8/+9tyaX4H
- 0eqc7BBinfotcc6hQ/THq2KbYaQkjdVL0oJi7j/moD2R0NUvBy4FiP4mce4W1yjGruOz
- q0AVEiaFr55qsaFfaqfxdUGWx9L9/sP8GkcBIV56bTLE8HHFawBUnGTHy3oP7kxo0pCl
- jFoQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wL5kQ-0006b2-Lr
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 16:55:06 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wL5kO-0003XO-1q
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 16:55:06 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 647G31uB2384216
+ for <qemu-devel@nongnu.org>; Thu, 7 May 2026 20:55:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ qTJ7jAQV9Bq3MZFnxRQrIHL1++tQ1fQnlXQcS7CiTx4=; b=TNFtuYN4YneSLx3u
+ wUMmWlykQbmCEYOY16iQziypgPMTvN+SK41ZNDpsNy1jqjjmeRusQZjvSkBHdJTs
+ d+lLDDv7I1ShbIkhU0DTn/9KjEDhfd3oxc/DCUwOl+VVsNl/lVZEiubTM6BBHfqA
+ LD50BPHrem3LV0QlWSLpyh9oeklILKNdO7xJim73xyN+btMGDk8jFWtXnk8vq+8J
+ u67p0ds1GQsQ6TexDhjDfGgPT5s9PVw8G9AyQuMT7c6xro3Ol1y34yOELxx6QP2k
+ Ku13nc+JCnezdCAy4IbQ49OjrQ/S/UQUTHUW1IBsA3PhDUEU9zEmzAwWdmfkFEaY
+ QhYS/w==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e0wwuh1yb-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 20:55:02 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-12c8ccc7593so3011509c88.1
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 13:55:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778183855; x=1778788655; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JxpJZfrVRmJOSp5G9KZjW21FKVIqMLCMiL97D1mfnaE=;
- b=cQVJnVstuOOtb9UEhpn2zvusq6UvrRtPFIwKlr3MOhJbJUh1/zBdxUjsCbrK5vLVjb
- wi3wXx2iDxfS+CFjCkV5PgmdGLIWEYywK5iLqp47tNwAt1censkhf+/Lw47nV4oVBxs7
- UynXRwBQ0WqYzj6UevnNwFdAXeMMJcrCXg56iM40MytMdosyj769CCxi6EUCozeaU0bI
- Jz+8appZ3qSjkKyNdvkS8j7tptRIWbVKB1Hdyy6I/4tqI+kFbjDFWZWHiFd4O02eeP4N
- at3xS/vDUMZeXuK5kTW9mHV/Ss0daxAjnrI3guorCfCvM+icXHRjEu93lxwmmkINpcMD
- S9oA==
+ d=oss.qualcomm.com; s=google; t=1778187301; x=1778792101; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qTJ7jAQV9Bq3MZFnxRQrIHL1++tQ1fQnlXQcS7CiTx4=;
+ b=Ve0XpDDdhUD68OcqjjJL7GKbmtC++Vhs/F0oPY9teDBzuZvORGKJrRA0kLmxG+dRji
+ y+VbXO2y1MXW3pvby2yAQRjgx1LwBWCs7V2AIfX06pMDmJSZAP1yutfWtsI9d7TSQbVD
+ BDEmvatX0WiRg4mG6t+KWIFhJ9pTLKocPwiyBVXWyvIxi+yX5Ffo3lYYVnklqX6vGl6S
+ BNmiCHd3npEsO2VtN2Zr6zNC0J5N78CJxNQWO+RQ7l5NTrg0sKaYbUjPPCQo2tCu1bt+
+ DHfwycGwu/7zE99NxML4xA0Pr/VCjUVmZ2BoKbrEx6CDuC1y75h/N3hWyzMEmci8+n7B
+ ZcQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778183855; x=1778788655;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JxpJZfrVRmJOSp5G9KZjW21FKVIqMLCMiL97D1mfnaE=;
- b=dsRYITlOL2rVO3Au4zgzhMYjj7ylHiB8U81co5dnPotZR41ImCKIwZn2XFSyZfs4cj
- qKnfSB/ui+cXH9b/3CB10B6jiOlllk4crEgoNIL613w5YBfKfG57gB5zhwHbmnNgMqnP
- CjAKUq9R9ijl2cQRKvmoSSwwhDv+TPjYWRj6MGJhSzGWsyjYx9R4IhYVZ2nrJSRDz06t
- xnfU2DZduEyY5gJ62HIjqtd78eIhRectONgvQ1vvs/Ge8YJD5DR+ImnqswKNAeLHpNvW
- 5ORVkXq/gZzjK+0PPAriyFxkxO0gxqM8o2Vbrf/y8GrOOFSyukrfqt4Fgv+DNPOz6MHt
- f6Kw==
-X-Gm-Message-State: AOJu0Yzryyrk7Sm7oZE0hEH9epNUC0tLtukwdLgOZzYefb+QZpHhrRWn
- LX0CO6rFH58lFn9ofAuVSOohiVidc5sgWbVfK1WneslAVWP6lnsQr1Qi7OaFHVDArto6HJKfqrV
- FmsRjyA/o3Gnf9FMwxEOHZ9WA45s1PVmuAzQqJ8axzQ==
-X-Gm-Gg: Acq92OHzITwrW1i6gfYTAx+hIfKnzbkvjF8nMT0dUqogt3C1Nttct4jLW0p94Ln2yEE
- GKOC1oi+mtLIW/TSMvh5QnvjSZdbV9hnEm32LKkaoJHxqqt9dMDATrek1Z0NoZ9DO8G91l/ppNx
- yas9Vj8GexBzIj5BpLpYTfCWTZSUsoYcgtLVogQSuzZsEP1ExOrTNwSsXMS/okgr8RrO0mDQx9d
- mOHTIMnU+2/tbN8lWaxL7O3gMW/54CK7qax4hxsGw6SMqpPL4aYLWF60AxfuLa7hfP4FgO5dP3I
- dloF3buMe9rLfnXMZx95ZY9sLp0mp0DQ1uAcVAYaFpf6uuIviwP/XI/LpNz9X+rSz2VBch/yJem
- vJA==
-X-Received: by 2002:a05:690e:c45:b0:65c:6de6:b220 with SMTP id
- 956f58d0204a3-65c79922524mr9833826d50.21.1778183855529; Thu, 07 May 2026
- 12:57:35 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778187301; x=1778792101;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qTJ7jAQV9Bq3MZFnxRQrIHL1++tQ1fQnlXQcS7CiTx4=;
+ b=AoTSpWfgI/RV9DIC7GTc+dAOMxMtBpY/nvIxDX592kZAICs/Eo6XJyBqAx8XGCoRfo
+ UxTV5mlBMFn3eOojy0A28T3rPiCxl+v5XsrcTpdXYxNqGrbZTG+t3f57Dl7ZVBPMlDNX
+ We8FhxyxdCjlFTjkK2KXwViXsX2Sj+/2FcdwGG/hkSfPz7sHs/pOvd7Bz2Jn6jNycaXK
+ rr37emvqPDu06F7bjwT1NgL0Dx5cAy9kpJeVo/SmlLXYA3kgSiK0fdKYFIPu60Tqhy40
+ BusTcBqvL+yOmO/1fncf8WHBlU3Kcme3lE37yuYhAeOhRp1k2aw7aMNqIMN8e/WIlKca
+ RPZw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9FzTDktdDADXcB6Npol1bdIY0bE9J02r02bn60i5ezSEiRWDj8g2z5Z8Zyjxtoe7WgG95xdoQtbFmp@nongnu.org
+X-Gm-Message-State: AOJu0YwAYTT46i3ghg24RoymuRvYYb20xc36JHPzGFwl5Nz8EwcfP4GF
+ mr6Vnd2d6tfqQYR70caKIkTfHYj4mETLS00nre3QtQ5aLNM8gjdPosVxdUyrycMLa6Y7lwatn6R
+ adP2PaXrHFG7YjzyhdJOvTDG2Xhy0xb0QEA/IxprNq3NN0VqUeFLUgb0qEQ==
+X-Gm-Gg: AeBDievwAdevJDRnsT7x8GP4aRerMcCKTgygZvRjGDknwWVNpJevSY38x1cRAicqhNg
+ w3xa2H1R2+u24OTMMNBbAnI70qTrAKICSiHaHHHR2YoFucSUQ5G5SDVB1suiWQ+NCgt75/nV5HW
+ L0l3Pn61qoOYCekiUkLBMq7abG0tq4prGMN7AYQlSiBfL0H6CqpzPo03z5z/WfWgEkxwNilpAiu
+ Twx7YBAIJFnsujSz42Qm/46r4TKJVJ/y6sUzkAGrdjfxhNYsBLLMUDqJEmQMbw07ug5eZ872rri
+ sYKA+CX+bqv/kIN98B0gFF5Hjl+aOUgwlc2CxJu0vZh5eahHcvu4ETaSdRAuseUJC6GjOlID4Uz
+ e6bsVJIrcZZarthR6iycmG72ujTIGCcFKhS6kJNGZKQSCfu2XI6A4RyNPWKUujqhrq/ZuLwbmy+
+ JrOXcUF5UipCpwEg==
+X-Received: by 2002:a05:7022:fa07:b0:12d:f0af:110d with SMTP id
+ a92af1059eb24-1318ea2dc7bmr4612602c88.28.1778187300914; 
+ Thu, 07 May 2026 13:55:00 -0700 (PDT)
+X-Received: by 2002:a05:7022:fa07:b0:12d:f0af:110d with SMTP id
+ a92af1059eb24-1318ea2dc7bmr4612580c88.28.1778187300303; 
+ Thu, 07 May 2026 13:55:00 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-13270901ba2sm195177c88.11.2026.05.07.13.54.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 07 May 2026 13:54:59 -0700 (PDT)
+Message-ID: <f6b9b16a-0273-4dc7-a8e0-df074d246a01@oss.qualcomm.com>
+Date: Thu, 7 May 2026 13:54:58 -0700
 MIME-Version: 1.0
-References: <20260505202640.1011006-1-peterx@redhat.com>
- <20260505202640.1011006-14-peterx@redhat.com>
-In-Reply-To: <20260505202640.1011006-14-peterx@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 7 May 2026 20:57:24 +0100
-X-Gm-Features: AVHnY4IL8knNPEqIHIBPGbX-x-UD5Slw2KmxvdaMJI0ks5ksy-8FQEaEjezO45M
-Message-ID: <CAFEAcA-MYH6C39xO0OLx4-M5pKurJpurwRsMqZe9q=W-NShAbw@mail.gmail.com>
-Subject: Re: [PULL 13/23] migration: Calculate expected downtime on demand
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Paolo Bonzini <pbonzini@redhat.com>, Juraj Marcin <jmarcin@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/6] target/arm: Fix functional test failures in KVM-only
+ builds
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ Gustavo Romero <gustavo.romero@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260507194728.2034696-1-peter.maydell@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <20260507194728.2034696-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-ORIG-GUID: IoLFeeLMDz9jeT1ufKRCTFK2aIEYVc9u
+X-Authority-Analysis: v=2.4 cv=Nd/WEWD4 c=1 sm=1 tr=0 ts=69fcfc26 cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=EUspDBNiAAAA:8 a=Z8H6kxiZWI1TnuwXCkYA:9 a=QEXdDO2ut3YA:10
+ a=vBUdepa8ALXHeOFLBtFW:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA3MDIwOSBTYWx0ZWRfX07rHdNVXFZLk
+ yOuqkWwfQoInVQom6PEqahX7YeRj115uM24rCjxnsduU0JTfU3X9ZfGfWCZ1D+YIb8Can0G9wim
+ 7SWEeuzinbc/YrC8ueOFIfZhkNGsKjjPT5XoCJ2mexsG+PEdTZh3+OtvBlfuBYn6T//VDg5xjfe
+ pFs4sSMq7RdgplHrs6gSZpK6IW7w+O3hK5eDJ0qTbvSKyy8VEGLkSRcXUVTLF8dcVhgzLUgNyuV
+ 2YSg8AMTnO//YmBge/uQ6IqvRBwqsYwajvWkpxV3doFd57fajmd8jBXP2r/u7M4Mc7FEM3rZW0s
+ SmHPkA08LJBeMAFJQsuwDC+bnbDFN+I0OWLNdI+/3Ko2mHhQZYwuvpQLlNdZCz3Qmo1XNkRnHKN
+ 5JoPZGpIfmcBLfj6nygSmf1uWcxoP92xGPUWVOjlHlTjO+19mHgKgNZw3uN3lsZ+G/T+YXloBaD
+ 4oj/koxybHop2exdfdA==
+X-Proofpoint-GUID: IoLFeeLMDz9jeT1ufKRCTFK2aIEYVc9u
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-07_02,2026-05-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 malwarescore=0 phishscore=0 clxscore=1015 spamscore=0
+ priorityscore=1501 adultscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605070209
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,86 +156,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 5 May 2026 at 21:29, Peter Xu <peterx@redhat.com> wrote:
->
-> This value does not need to be calculated as frequent.  Only calculate it
-> on demand when query-migrate happened.  With that we can remove the
-> variable in MigrationState.
->
-> This paves way for fixing this value to include all modules (not only RAM
-> but others too).
->
-> Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
-> Link: https://lore.kernel.org/r/20260421202110.306051-12-peterx@redhat.com
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+On 5/7/2026 12:47 PM, Peter Maydell wrote:
+> If you build QEMU with --disable-tcg on an AArch64 system, some of the
+> "make check-functional" tests fail. This patchset fixes them.
+> 
+> The first patch fixes a bug in QEMU proper, where we broke the
+> "x-remote" machine because we forgot to mark it up as being
+> OK to expose in the qemu-system-arm and qemu-system-aarch64
+> binaries, the way we do for "none" and for all the actual Arm
+> machine types.
+> 
+> The rest are tweaks to the tests:
+>  * tests that run '-machine virt,virtualization=on' need to
+>    check for failure because the machine reports that the hypervisor
+>    can't support nested virt
+>  * tests that use a specific CPU type need to either be
+>    restricted to TCG-only, or else changed to use 'max' instead
+>    (since that's the only CPU that will work on both TCG and KVM)
+> 
+> thanks
+> -- PMM
+> 
+> Peter Maydell (6):
+>   hw/remote/machine.c: Mark x-remote machine as OK for AArch64 and
+>     AArch32
+>   tests/functional/test_virt_vbsa: Skip UEFI test if virtualization not
+>     supported
+>   tests/functional/test_kvm.py: Use -cpu max, not cortex-a72
+>   tests/functional/test_kvm.py: Skip if virtualization not supported
+>   tests/functional/test_hotplug_pci.py: Require TCG
+>   tests/functional/test_tuxrun: Restrict to TCG
+> 
+>  hw/remote/machine.c                          |  3 +++
+>  tests/functional/aarch64/test_hotplug_pci.py |  1 +
+>  tests/functional/aarch64/test_kvm.py         | 12 ++++++++++--
+>  tests/functional/aarch64/test_tuxrun.py      |  2 ++
+>  tests/functional/aarch64/test_virt_vbsa.py   | 10 +++++++++-
+>  5 files changed, 25 insertions(+), 3 deletions(-)
+> 
 
-Hi; I'm seeing a clang undefined-behaviour sanitizer failure
-in the code introduced in this change when running the
-aarch64 migration-test via "make check" on an x86-64 host.
+For series:
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 
-It seems to happen fairly reliably when I do a "make check -j20",
-but not when I run the test on its own, so it's probably load dependent.
-
-Here's the backtrace:
-
-../../migration/migration.c:1051:12: runtime error: inf is outside the
-range of representable values of type 'long'
-    #0 0x57b49d635c0d in migration_downtime_calc_expected
-/home/pm215/qemu/build/arm-clang/../../migration/migration.c:1051:12
-    #1 0x57b49d63e860 in populate_time_info
-/home/pm215/qemu/build/arm-clang/../../migration/migration.c:1075:35
-    #2 0x57b49d63617e in fill_source_migration_info
-/home/pm215/qemu/build/arm-clang/../../migration/migration.c:1184:9
-    #3 0x57b49d63617e in qmp_query_migrate
-/home/pm215/qemu/build/arm-clang/../../migration/migration.c:1264:5
-    #4 0x57b49e4aed75 in qmp_marshal_query_migrate
-/home/pm215/qemu/build/arm-clang/qapi/qapi-commands-migration.c:48:14
-    #5 0x57b49e526814 in do_qmp_dispatch_bh
-/home/pm215/qemu/build/arm-clang/../../qapi/qmp-dispatch.c:128:5
-    #6 0x57b49e58c35a in aio_bh_call
-/home/pm215/qemu/build/arm-clang/../../util/async.c:173:5
-    #7 0x57b49e58c698 in aio_bh_poll
-/home/pm215/qemu/build/arm-clang/../../util/async.c:220:13
-    #8 0x57b49e542fc1 in aio_dispatch
-/home/pm215/qemu/build/arm-clang/../../util/aio-posix.c:390:5
-    #9 0x57b49e58f10a in aio_ctx_dispatch
-/home/pm215/qemu/build/arm-clang/../../util/async.c:365:5
-    #10 0x7c74a09b8584
-(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5d584) (BuildId:
-116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #11 0x7c74a09b86cf in g_main_context_dispatch
-(/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x5d6cf) (BuildId:
-116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #12 0x57b49e5901cb in glib_pollfds_poll
-/home/pm215/qemu/build/arm-clang/../../util/main-loop.c:290:9
-    #13 0x57b49e5901cb in os_host_main_loop_wait
-/home/pm215/qemu/build/arm-clang/../../util/main-loop.c:313:5
-    #14 0x57b49e5901cb in main_loop_wait
-/home/pm215/qemu/build/arm-clang/../../util/main-loop.c:592:11
-    #15 0x57b49d5f5486 in qemu_main_loop
-/home/pm215/qemu/build/arm-clang/../../system/runstate.c:948:9
-    #16 0x57b49e42cdfb in qemu_default_main
-/home/pm215/qemu/build/arm-clang/../../system/main.c:50:14
-    #17 0x57b49e42cdd3 in main
-/home/pm215/qemu/build/arm-clang/../../system/main.c:93:9
-
-
-> +/* Return expected downtime (unit: milliseconds) */
-> +int64_t migration_downtime_calc_expected(MigrationState *s)
-> +{
-> +    if (mig_stats.dirty_sync_count <= 1) {
-> +        return migrate_downtime_limit();
-> +    }
-> +
-> +    return mig_stats.dirty_bytes_last_sync /
-> +        migration_get_switchover_bw(s) * 1000;
-> +}
-
-Presumably in this function migration_get_switchover_bw() returns 0,
-so the (floating-point) division results in Infinity. That's fine
-until we have to convert it to int64_t to return it, which is the
-UB that the sanitizer is complaining about...
-
-thanks
--- PMM
 
