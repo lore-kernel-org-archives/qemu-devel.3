@@ -4,116 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76B15CD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 11:04:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2CFCCD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 11:04:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKwW7-0005Bm-2P; Thu, 07 May 2026 07:03:43 -0400
+	id 1wKwWi-0005Ii-HI; Thu, 07 May 2026 07:04:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wKwVn-0005AP-Q8
- for qemu-devel@nongnu.org; Thu, 07 May 2026 07:03:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wKwWg-0005Ho-B3; Thu, 07 May 2026 07:04:18 -0400
+Received: from mail-northeuropeazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c200::1] helo=DB3PR0202CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1wKwVm-0003qu-9R
- for qemu-devel@nongnu.org; Thu, 07 May 2026 07:03:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778151798;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=dJBcgVPA9/WP7hs51QbhMs6flx0KjCGwmiWfAVLc7cs=;
- b=JqhX/wkXaq33IrT+zWzvIYx7dqEBnozAMkiYeYtp8eThI21SPHpcl+BwnGMqRMVSV96dt8
- x03RJgenDS49DVS7rorYVT/Uk0a3g0jSs5gSCy3y5L4eSeXNt0sW7vEu+fhUuScF3yHMxQ
- VXu5CfAsb7dlSPjAAFtVe/fGDRHeYZ0=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-606-fw6n4L59NdWdaObGOMzKug-1; Thu, 07 May 2026 07:03:16 -0400
-X-MC-Unique: fw6n4L59NdWdaObGOMzKug-1
-X-Mimecast-MFC-AGG-ID: fw6n4L59NdWdaObGOMzKug_1778151795
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-c82346bdb00so803049a12.0
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 04:03:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778151795; x=1778756595; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dJBcgVPA9/WP7hs51QbhMs6flx0KjCGwmiWfAVLc7cs=;
- b=V37VLwzn+sQI0MwuU7V9h3MhywIrxuCcRX8EU4kkMXRm+moc0qrHln953Q5L416jR4
- Rq6U7dzoQpYY1SbCYyrf5jnnpr8J6gfUybcZXgf5fZb+yi2cASUZTkcSkHimhRmpY11G
- N89uU2b0LCkh09F6DPF4CCsSv1zHgOaUK9QSuiyV3y7szryycwwVSq7qAZd4qfOa7gaI
- NB5Y/q5D6n/TE7AZ2nNZZOt+GeaD29F8hWRAHhrWSZ7BSD9ARm2QwqEWQ8hB4UL2Rhph
- H07x1DlR7mqdsNqUIuGi5JwVlT2VH3KB+xV9uPhBgd49snuPWGmap+svfbjopOn+O82A
- uYjA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778151795; x=1778756595;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dJBcgVPA9/WP7hs51QbhMs6flx0KjCGwmiWfAVLc7cs=;
- b=b8npeyVH5nHjBLcdkVFTfWGv5ANvfLpQIMMu9HlcRn3JqU7v+3kHvF4WW+6EQXCIEm
- kzqeB/w66Hc0h/dmG+j+E+1T7DW9e8px3yITD0oTQFEQlun+nIKxuC8Jgws9vYE+h3rr
- mKSSmqVQBke5imJ/zl5uKalm5SvEbvtd/8fi5UIu64coIxiF/wLcaOv/EeHEcSxv3fjC
- OxelZ+DrP30gVDulYP6yL2x0osSLBxv7VKlJulN7q0zMXiw8nQwhE8OuZP3uCwhqkKIV
- 4Xw3o+z9PU6Lb83AINZvC0vZKFF6FspwQvxeH7FszroVrdC8qGTvQ01tEV8dy4UL64nx
- 2BQQ==
-X-Forwarded-Encrypted: i=1;
- AFNElJ8cmFELbFKsk3Dn684TyZqeyXW6TaHwJu4n7HSb8Qd3s4Hfg5O4/XdS5rmU2f3CNeknbQNlIVPi7UPn@nongnu.org
-X-Gm-Message-State: AOJu0Yyn/lazlxiM1/1JRTsknTr4T2uWkH2TQXe964sQZC3R6FN7HzPe
- YIitSIgTLZrroBgCLQZr2VrLBPkG0fTViFaPhlAWWraRLWxmrOV7hlZ2Z5Ouor9ZYanTaRDx4RS
- hE+h+EisBGxGNfBWnd83bB72FIGgAb+yyTWvRPTLN67Gv5xPFxkUUjHmB
-X-Gm-Gg: AeBDiet63QDZ+SOzMLNC1roEYdixLdpXHlyXgWR6sCnP5483LjMT9DS1zltbqPUQACG
- /prQH7nCrzJbYQn1dZAdudrQALWd8rFoz289T6apW5q9o2/oQHkZXI92wEj264rs3Ps54fBAVgD
- 0QRP2VX0k72XNugJGZ2i/cuEg8cK3pGpkuviaGHKvw9dEm5EaIKrnGFAqEt/n4JCY1NRSvp2oTN
- 8s6AddUmKs7p6I6uoWtXUn90z4p+D2Z87fEB0l16Zscd9XxSXzBWliIJLrU6WjsJAE16ZB08gXP
- SvRIsd3Bg+z+1Cr0CZ4SYODWDO2MwBxEoJ3I+Fel+k8sPrHHUnjaUJZKIdp6T7kEEVBc7oS9XCY
- GZMLOMO/ogiJ05j0jsSKhTkm7Hsr9UTEq/uf11WxAPNk45YJe/ZoRcSZmr+wKGkMvTk8fCZfK2+
- wlQg9w6ZQ8kOqJbQ35BT20
-X-Received: by 2002:a05:6a00:cc1:b0:82f:9e98:1356 with SMTP id
- d2e1a72fcca58-83a5c4bdb96mr7650328b3a.20.1778151794802; 
- Thu, 07 May 2026 04:03:14 -0700 (PDT)
-X-Received: by 2002:a05:6a00:cc1:b0:82f:9e98:1356 with SMTP id
- d2e1a72fcca58-83a5c4bdb96mr7650306b3a.20.1778151794335; 
- Thu, 07 May 2026 04:03:14 -0700 (PDT)
-Received: from smtpclient.apple ([122.163.114.34])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-839679c8634sm10338515b3a.39.2026.05.07.04.03.10
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 07 May 2026 04:03:13 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
-Subject: Re: [PATCH v2] whpx: i386, arm: do partition reset on boot CPU reset
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <94C6AAAA-BF20-4202-9965-081192A392A2@unpredictable.fr>
-Date: Thu, 7 May 2026 16:32:57 +0530
-Cc: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- Pedro Barbuda <pbarbuda@microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <8F3BC33B-9884-41EC-8E81-9E0C80A396F3@redhat.com>
-References: <20260421205749.55060-1-mohamed@unpredictable.fr>
- <a8cb94f0-9970-40b8-912b-3ab81a5907f4@linaro.org>
- <94C6AAAA-BF20-4202-9965-081192A392A2@unpredictable.fr>
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-X-Mailer: Apple Mail (2.3864.500.181)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+ (Exim 4.90_1) (envelope-from <andrey.drobyshev@virtuozzo.com>)
+ id 1wKwWe-00046I-54; Thu, 07 May 2026 07:04:18 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WD5UW6JxJgRgmyJTr8JbeEJSqwIlVV0+vTp64Aom35gu+teLOayjmbnv1awc/pYVOEHa7S4l1InRogajEi7l2rGYRpWBLmc60imTIEX3b2BQWB+xI+DmvJVvXeL1lIuN+x3kg3sNR7vZUaOFvqczYJjrMjLzWuY400h0kYE8Kc/eCSSIdIEL8ttZnSPYIxRZ6ePKdR+6zkWy9TVb31LNyoyQXxtD0FQQp1MwX+tzC+48smPNqz/jtLNEb0GPfrHJfEn2h4cgbIt0AgVldYI6DgfQnck0XOvBKvqMgbuhfOD1ievn5NyMMenEkGmr0wYirlQvqxXCaN3u8moAf9BEYA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=z2lUu9zAZLhndD5AiA2h6ZqwvfShOKT2Hh6uFRSBJz0=;
+ b=idBE6mOsITckOyT1Srru6eYwxDGky0JXl1+ZyQsQ5gLX2iI+Wl994QDLxtG2mmt1SKaW6BC9ajrge7aWav3CuEImjV6Hjk8RW8ZxC9TgutaIE098KVe1kdGNcRVvHTYbrvYfRuzqX5vgJvzHnqWR2jwzKAwPF0XdU4lWtJUOd8z1KMN8mfD4/PNJn3Pxhfv9g2u2kO05s896xEPy1g+x0SvL2ZBmCeYH2gViuzK7+BA5D1SkUpDi5+2g7qDBxXYhCI4hTac3+2H7cLJgB+ZBjYmSCG4rITizx+ZYd87cAD0lwdJS52EKXqovyqfY/ifb/pwyZ+lJSuCXr8aUy+iVKA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=z2lUu9zAZLhndD5AiA2h6ZqwvfShOKT2Hh6uFRSBJz0=;
+ b=AhKe9S0+PtNhNjs/+XnwjfVF3LgAYZ8hSWQoqrlE/hpKuEpVqGpt8Bn1phfsUwnU3RCv9/B24orTHPjyIQIN6Ab6QBYemcoP1V6Ht1x9jwD+t/uL5dRoS387EGwksMH/WltMfSm3MF9i2seYOnNr8/pR1hQz1fbJJ3JKzh2ojwTQf/ZjY22V/XV+BTPTRVQY1UldkW9wLWpWfk/lNbRjYh0lhbbV9U/bixgtcU3nMpbc0nfVgNJCSSY6JivgsU44fmP/DK4Mw07DbQPsQSrKYZ4SdfTygCJ7iURjoofzAX2oK98DU1p0gL3rgGAHAuMpjzkVM/mqeygKjhDaMdSwoA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12) by GV1PR08MB11205.eurprd08.prod.outlook.com
+ (2603:10a6:150:1ec::6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Thu, 7 May
+ 2026 11:04:06 +0000
+Received: from VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8]) by VI0PR08MB10656.eurprd08.prod.outlook.com
+ ([fe80::4e37:b189:ddcd:3dd8%5]) with mapi id 15.20.9870.023; Thu, 7 May 2026
+ 11:04:06 +0000
+From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, eblake@redhat.com, andrey.drobyshev@virtuozzo.com
+Subject: [PATCH] iotests/nbd-tls-iothread: use UNIX sockets for nbd server
+Date: Thu,  7 May 2026 14:03:52 +0300
+Message-ID: <20260507110352.449937-1-andrey.drobyshev@virtuozzo.com>
+X-Mailer: git-send-email 2.47.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: VI1PR0102CA0045.eurprd01.prod.exchangelabs.com
+ (2603:10a6:803::22) To VI0PR08MB10656.eurprd08.prod.outlook.com
+ (2603:10a6:800:20a::12)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: VI0PR08MB10656:EE_|GV1PR08MB11205:EE_
+X-MS-Office365-Filtering-Correlation-Id: 6f352ed1-887e-4616-cf55-08deac285b37
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|376014|52116014|1800799024|3023799003|56012099003|38350700014|18002099003|18056099003;
+X-Microsoft-Antispam-Message-Info: msq/APoVFLH5FwgeLFoYUqm+tGL5mudHyuQWbt3iiW1K7Ptox0bOtURbiemi40LnINKSB7BR97xmpYKOD1H1HXH8JpkaiBTAS8Z2FiqUjCsMEpFHbGyidz38fm+J9SW2qLZ0sh0eP9qhrl2ZW3ajkzZi5otskhHZyLuzAbxVdPZwrN2TszvO8nqLIgcC5UQv3htcJhpwpPnNlV+XwS4XTSGeI+MgcI/Cyjj4XjIwr3yDxLCOcWRT34fIDox1PZa/F6bXmCS7WlbGZcgBxXfICfhmoF5OAFKSwoXiG+p+Psq/+rj3s4lLfTkuYhyKNcCCMEdw6hfkBD0lfO4q4b1g75cuoaAxDUP+oMsa8bQ+hhc9bX/T5v9Pg0LgS6gC7z0dE20jsHQWMKJm6MbEUlKoFOBFrGkJULFUU1rkMDaHCeqSVg8VxsCuNzitx31SuHg9+Kfn87UpPGtEE54jTsSzEzslEWOrRaIReS7wUEVyvv+Glq1yJHlilc+4anH/h1fffW+63gkET8zxQ76W3EY9gy+A/TEzsZSLuD4PyQF9Scma5tkQbjuNFhSthTxPFCYRc97dR6S5sYgvH6/SwCO1RsKbirH5h3NKDnSEI9jajL+m2BFOkaaQADij/wjHm6J2crMcqDkickrmDmV79ijITbpBmP3ONjd0QZMD+FZHLUz7Vjzm/qHnJERl2SBPfJpm+0KY1E84jsVmmN1w2lE3U3vYigW95IolAez3so1a/Qawq39JTHx8p87B5m175dqZ
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:VI0PR08MB10656.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(52116014)(1800799024)(3023799003)(56012099003)(38350700014)(18002099003)(18056099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?BZhIN5KNkso7ZrsgmqBxUQXm0t//OfRlzFwxt96CE3kRkNdpd77Urk1GCoDm?=
+ =?us-ascii?Q?RrTOtSLVkP7Lr5jxPadcqBmA4bc2LQCgSjFzycgZtmCfXz+YbFcrwgdzllWi?=
+ =?us-ascii?Q?MY+HdBKUax61jfg4gbu19JYqg5U5FwwFKGDkjJHHHIcT4M8kvujb1F7rjAt0?=
+ =?us-ascii?Q?V7e2twcbp/tKkdCcl31mUDJbboAA8KcgGyjcs1BajqGIJfNo4sAv/YlJz0//?=
+ =?us-ascii?Q?o7OOSPCGiXKHUswMBQKV83GBAf0YopgNAKfwOBFp+Sjoc6T0PbzzfGADqjLo?=
+ =?us-ascii?Q?G1aatExEvbPPCQeqyznG8sYLmz3tPaam9OW6jh75GYLmh2fHXdIMYV3ifrI/?=
+ =?us-ascii?Q?4BNVnSgHDh1WOxy4s15d6F/kG7kz0ioj9ccqQgJAnbpgaaXRMF60XZ6uvrBu?=
+ =?us-ascii?Q?auutxXdceaJbnYGnlJed2Ep03xzdqyqdcD4fcqQsh7Kq31bDgKsKnlsGvoUL?=
+ =?us-ascii?Q?VIYidtqtuKdCIGeE4FaDh0akSmd8CtI2sAH8xbs4XsrItRPsTu2X2BXpVI/k?=
+ =?us-ascii?Q?wCegVh0XBILKqU4UOPZ5+0nJaN8AvzKF7DoMhWyOLsKAbIpvjFPnVopqC8Wk?=
+ =?us-ascii?Q?Hw4YvZzMWY0PPvtwWPXFDtTOJ5NFgiXffLXf8e4iyRhFoYIXUM3ejAoebJOp?=
+ =?us-ascii?Q?cxMcMGgPdVXka6M7YhTsU+fOx4Inv5KTKVf6KUTIpCbqzM1v7EscruYlG2Zp?=
+ =?us-ascii?Q?VpnOd8Uy2gJTEdFEKI9oiZAe70bksQFCT9eXbz1H3tvFY9NoGxMygmlE/cWv?=
+ =?us-ascii?Q?mSJ27/HricoUjXaxX906m8OpZFCwkncSCMeYm6lc45dE0lb2vmjpzU5I/Ghe?=
+ =?us-ascii?Q?8f3eTr6DBVIEulJ4qZpRdtMgdrIpJUcQe2fFJ64/SevQvkQCVSD7VUf6QWK/?=
+ =?us-ascii?Q?MO7SRTKeRYax6hRNRuMhK9+bc9Ogqh/gmKqvHQmCzFuEEJGzf7HU6CYwtZwe?=
+ =?us-ascii?Q?TJwSTFc3viszuMZwIysULb1TuIOSeHibuuafmObazpq/LzhbPrvZMvNZhGea?=
+ =?us-ascii?Q?YG+T3tGJRLTsL3JALXVmuzbCxWAc/kiYtfEf4AUCReKfGzzYUALPPc/TTvZr?=
+ =?us-ascii?Q?qeWa/TiFPBMoITE7IjoC1dmElRJGC5raVr+6o6T29GYme1vxY6a+/KLDuecF?=
+ =?us-ascii?Q?5iBxWSgIrmg9ZD/yyE6vBhQ1ZY5bFaM7pzJHhlES2CQF9Y4ZxYOJiGb7UQJq?=
+ =?us-ascii?Q?wytIwlHcW7wmao0o1khj2has89CSY2WWdMrhGW8oLZ5Ic2+7gLM4b1+bNgQ3?=
+ =?us-ascii?Q?smstmc3ybtCclIJakMVrYqo87fmnnX9nwlj2tvlCoN5F+zkKJ5jW8eJTvpQF?=
+ =?us-ascii?Q?ESWD3bXGDUFogpjZHxX/wVuIB+xwAOgJ65fEj7gWoTRZiOTZTeTFYy+cxezK?=
+ =?us-ascii?Q?T3qfbI5d6ntQyX0KESHKPaXNw+c14rB+eay7shaU05XY/AdC943tdP64/Y1o?=
+ =?us-ascii?Q?YVQ0gs67yVW0hMj4A2aImxzh0HfRj9tYgpe6m8xUINXG0UGNlqSVnHhZpJ6i?=
+ =?us-ascii?Q?dor/A3BFSJ59GU5Ag7CHd3pbrPEzzhU1fYvsEVsA+r3n3TRPm16KyKseEksV?=
+ =?us-ascii?Q?+tM2kVQSOb/xHuzuTxMimWhKUzula+roKfh1osGY2LXrjVvTLCxaQfSbFWM0?=
+ =?us-ascii?Q?jb20tChl72v+tQtXEwJeSXnKb2+j+f8rTWxzipZAHRyekvBrJEaXbIbqwZYs?=
+ =?us-ascii?Q?+Q9VASFi61+ona0IcUnBFcEA3R6ex4u0QarJ94eXkJcVroVOSBsrVBCFWjVe?=
+ =?us-ascii?Q?BFjg1ykL8oqgrdbjGiO7QbSW0OgRfbw=3D?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6f352ed1-887e-4616-cf55-08deac285b37
+X-MS-Exchange-CrossTenant-AuthSource: VI0PR08MB10656.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 May 2026 11:04:06.4310 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: yY/3fl6ShKTMBOsOAf5FIP9r24Mc97TpGjoEYN7Fnfh6t7Hv5j3BoHbS5fvUQWRlDMCp9rjBUZeEx35/8+jsEvU/dPto1RvoLEPdYz11ESU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV1PR08MB11205
+Received-SPF: pass client-ip=2a01:111:f403:c200::1;
+ envelope-from=andrey.drobyshev@virtuozzo.com;
+ helo=DB3PR0202CU003.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,44 +135,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The test is picking an unused port to start NBD server, by running 'ss -ltn'.
+This is racy, which is specified in the the comment, as we may hit a situation
+where port gets used by some other process in between 'ss -ltn' and qemu-nbd
+runs.
 
+This is exactly the case which I've recently seen, which leads to the test
+failing with:
 
-> On 22 Apr 2026, at 6:38=E2=80=AFPM, Mohamed Mediouni =
-<mohamed@unpredictable.fr> wrote:
->=20
->=20
->=20
->> On 22. Apr 2026, at 14:46, Philippe Mathieu-Daud=C3=A9 =
-<philmd@linaro.org> wrote:
->>=20
->> +Ani
->>=20
->> On 21/4/26 22:57, Mohamed Mediouni wrote:
->>> WHvResetPartition resets partition state, and is not supported on =
-Windows 10.
->>> On Arm, it's supposed to be used for reboots. The prior location of =
-the
->>> WHvResetPartition call wasn't right, as other vCPUs might still have
->>> been running, causing the call to fail.
->>=20
->> Is it very different from the conceptual step introduced in commit
->> 4003e5e65fe ("hw/accel: add a per-accelerator callback to change
->> VM accelerator handle")?
->=20
-> Hello,
->=20
-> The difference is that we reset the partition state but don=E2=80=99t =
-have to=20
-> re-do any of the memory mappings in the Hyper-V case (or otherwise =
-tear
-> down the context).
->=20
-> We could fallback outright into the CoCo case which would work too.
+  -{"return": {}}
+  +{"error": {"class": "GenericError", "desc": "Failed to find an available
+               port: Address already in use"}}
 
-The rebuild_vm() callback is used only when the vcpus are not resettable =
-(so Coco case). If vcpus are resettable (non-CoCo), then that callback =
-won=E2=80=99t be called. Within the callback, you can do whatever you =
-need to do.=20
+The original assumption was that QEMU doesn't permit running NBD+TLS over
+a UNIX domain socket.  However starting from the commit e8ae8b1a75e
+("block/nbd: don't restrict TLS usage to IP sockets") it's possible.  So
+let's do just that, simplifying the test and eliminating the race.
 
+Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+---
+ tests/qemu-iotests/tests/nbd-tls-iothread     | 35 ++++---------------
+ tests/qemu-iotests/tests/nbd-tls-iothread.out |  7 ++--
+ 2 files changed, 9 insertions(+), 33 deletions(-)
+
+diff --git a/tests/qemu-iotests/tests/nbd-tls-iothread b/tests/qemu-iotests/tests/nbd-tls-iothread
+index a2fb07206e5..c386c77e377 100755
+--- a/tests/qemu-iotests/tests/nbd-tls-iothread
++++ b/tests/qemu-iotests/tests/nbd-tls-iothread
+@@ -47,38 +47,15 @@ cd ..
+ _supported_fmt qcow2  # Hardcoded to qcow2 command line and QMP below
+ _supported_proto file
+ 
+-# pick_unused_port
+-#
+-# Picks and returns an "unused" port, setting the global variable
+-# $port.
+-#
+-# This is inherently racy, but we need it because qemu does not currently
+-# permit NBD+TLS over a Unix domain socket
+-pick_unused_port ()
+-{
+-    if ! (ss --version) >/dev/null 2>&1; then
+-        _notrun "ss utility required, skipped this test"
+-    fi
+-
+-    # Start at a random port to make it less likely that two parallel
+-    # tests will conflict.
+-    port=$(( 50000 + (RANDOM%15000) ))
+-    while ss -ltn | grep -sqE ":$port\b"; do
+-        ((port++))
+-        if [ $port -eq 65000 ]; then port=50000; fi
+-    done
+-    echo picked unused port
+-}
+-
+ tls_x509_init
+ 
+ size=1G
+ DST_IMG="$TEST_DIR/dst.qcow2"
++nbd_sock="$SOCK_DIR/nbd-tls-iothread.sock"
+ 
+ echo
+-echo "== preparing TLS creds and spare port =="
++echo "== preparing TLS creds =="
+ 
+-pick_unused_port
+ tls_x509_create_root_ca "ca1"
+ tls_x509_create_server "ca1" "server1"
+ tls_x509_create_client "ca1" "client1"
+@@ -136,8 +113,8 @@ echo === Dst VM: Enable NBD server for incoming storage migration ===
+ echo
+ 
+ _send_qemu_cmd $h2 '{"execute": "nbd-server-start", "arguments":
+-    {"addr": {"type": "inet", "data": {"host": "127.0.0.1", "port": "'$port'"}},
+-              "tls-creds": "tls0"}}' '{"return": {}}' | sed "s/\"$port\"/PORT/g"
++    {"addr": {"type": "unix", "data": {"path": "'$nbd_sock'"}},
++              "tls-creds": "tls0"}}' '{"return": {}}'
+ _send_qemu_cmd $h2 '{"execute": "block-export-add", "arguments":
+     {"node-name": "drive_image1", "type": "nbd", "writable": true,
+       "id": "drive_image1"}}' '{"return": {}}'
+@@ -148,9 +125,9 @@ echo
+ 
+ _send_qemu_cmd $h1 '{"execute": "blockdev-add", "arguments":
+     {"node-name": "mirror", "driver": "nbd",
+-     "server": {"type": "inet", "host": "127.0.0.1", "port": "'$port'"},
++     "server": {"type": "unix", "path": "'$nbd_sock'"},
+      "export": "drive_image1", "tls-creds": "tls0",
+-     "tls-hostname": "127.0.0.1"}}' '{"return": {}}' | sed "s/\"$port\"/PORT/g"
++     "tls-hostname": "127.0.0.1"}}' '{"return": {}}'
+ _send_qemu_cmd $h1 '{"execute": "blockdev-mirror", "arguments":
+     {"sync": "full", "device": "drive_image1", "target": "mirror",
+      "job-id": "drive_image1_53"}}' '{"return": {}}'
+diff --git a/tests/qemu-iotests/tests/nbd-tls-iothread.out b/tests/qemu-iotests/tests/nbd-tls-iothread.out
+index 1d83d4f903b..997789a77eb 100644
+--- a/tests/qemu-iotests/tests/nbd-tls-iothread.out
++++ b/tests/qemu-iotests/tests/nbd-tls-iothread.out
+@@ -1,7 +1,6 @@
+ QA output created by nbd-tls-iothread
+ 
+-== preparing TLS creds and spare port ==
+-picked unused port
++== preparing TLS creds ==
+ Generating a self signed certificate...
+ Generating a signed certificate...
+ Generating a signed certificate...
+@@ -23,7 +22,7 @@ Formatting 'TEST_DIR/dst.IMGFMT', fmt=IMGFMT size=1073741824
+ === Dst VM: Enable NBD server for incoming storage migration ===
+ 
+ {"execute": "nbd-server-start", "arguments":
+-    {"addr": {"type": "inet", "data": {"host": "127.0.0.1", "port": PORT}},
++    {"addr": {"type": "unix", "data": {"path": "SOCK_DIR/nbd-tls-iothread.sock"}},
+               "tls-creds": "tls0"}}
+ {"return": {}}
+ {"execute": "block-export-add", "arguments":
+@@ -35,7 +34,7 @@ Formatting 'TEST_DIR/dst.IMGFMT', fmt=IMGFMT size=1073741824
+ 
+ {"execute": "blockdev-add", "arguments":
+     {"node-name": "mirror", "driver": "nbd",
+-     "server": {"type": "inet", "host": "127.0.0.1", "port": PORT},
++     "server": {"type": "unix", "path": "SOCK_DIR/nbd-tls-iothread.sock"},
+      "export": "drive_image1", "tls-creds": "tls0",
+      "tls-hostname": "127.0.0.1"}}
+ {"return": {}}
+-- 
+2.47.1
 
 
