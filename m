@@ -4,73 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DECECD3439
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 13:36:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD705CD3439
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 13:37:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKyti-0005EE-SH; Thu, 07 May 2026 09:36:14 -0400
+	id 1wKyuR-0005gG-Pb; Thu, 07 May 2026 09:36:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKyti-0005Du-AT
- for qemu-devel@nongnu.org; Thu, 07 May 2026 09:36:14 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKyuQ-0005fx-O7
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 09:36:58 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKytg-0001yx-B8
- for qemu-devel@nongnu.org; Thu, 07 May 2026 09:36:14 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1wKyuN-00027W-Oe
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 09:36:58 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id C1AAC6AA5E;
- Thu,  7 May 2026 13:36:10 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 2E46B66D2E;
+ Thu,  7 May 2026 13:36:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1778160970; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1778161014; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
  bh=C2wnQ9NnBS/ivyZIbNR1h/QvQ9VsCN0U61Rm8dFd1Zc=;
- b=OcDFm6tYNFx7/cFiK8g85Fk8ccVXdIpPSkvUWl/uiCBKjtEonS4kuP0L/EAVujavCwVr1a
- yPOQbAc/Qx913gVJ3O09eNGNccX9FoIogydL526e3fJSjZ7LIadFy1dRPM+pi2nzkdYBZ1
- dDleEKxkYzyEtOdgsCCITofuZpLEUiI=
+ b=ifNVm/Mjf1u/IEletJ+e94WKOini/+ToYCHUp/1L9f4+MH3/ZlxtixYzWuS+txAxNc82mO
+ pOA++Df0gmbCqyRakWmGROnrXd7TFUtGzqEsVoIlSSszTH104KsXyh0TxzmxLAIwR5EfR/
+ q1WH2fbX3BUoBXmIrhM/w4Z0p8VVt0A=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1778160970;
+ s=susede2_ed25519; t=1778161014;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
  bh=C2wnQ9NnBS/ivyZIbNR1h/QvQ9VsCN0U61Rm8dFd1Zc=;
- b=gdxbkClFjkqR9h7WmyjV6wWI1mr2HRBsJUeBNfI/agTF0o81AenY8b2gR0pEucAP0jx1wE
- qBX0EbQYw2gr8tCw==
-Authentication-Results: smtp-out1.suse.de;
-	none
+ b=HxFRe0o+jF7d1FoImtYnz3iqHvnYOSmgC7ZlCcJMte2DQLq1mMrQ0G/i9ZcmAb16uHglBV
+ UFKB9gluuRM2DbBA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b="ifNVm/Mj";
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=HxFRe0o+
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1778160970; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1778161014; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
  bh=C2wnQ9NnBS/ivyZIbNR1h/QvQ9VsCN0U61Rm8dFd1Zc=;
- b=OcDFm6tYNFx7/cFiK8g85Fk8ccVXdIpPSkvUWl/uiCBKjtEonS4kuP0L/EAVujavCwVr1a
- yPOQbAc/Qx913gVJ3O09eNGNccX9FoIogydL526e3fJSjZ7LIadFy1dRPM+pi2nzkdYBZ1
- dDleEKxkYzyEtOdgsCCITofuZpLEUiI=
+ b=ifNVm/Mjf1u/IEletJ+e94WKOini/+ToYCHUp/1L9f4+MH3/ZlxtixYzWuS+txAxNc82mO
+ pOA++Df0gmbCqyRakWmGROnrXd7TFUtGzqEsVoIlSSszTH104KsXyh0TxzmxLAIwR5EfR/
+ q1WH2fbX3BUoBXmIrhM/w4Z0p8VVt0A=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1778160970;
+ s=susede2_ed25519; t=1778161014;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
  bh=C2wnQ9NnBS/ivyZIbNR1h/QvQ9VsCN0U61Rm8dFd1Zc=;
- b=gdxbkClFjkqR9h7WmyjV6wWI1mr2HRBsJUeBNfI/agTF0o81AenY8b2gR0pEucAP0jx1wE
- qBX0EbQYw2gr8tCw==
+ b=HxFRe0o+jF7d1FoImtYnz3iqHvnYOSmgC7ZlCcJMte2DQLq1mMrQ0G/i9ZcmAb16uHglBV
+ UFKB9gluuRM2DbBA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 604CC593A7;
- Thu,  7 May 2026 13:36:10 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C27AA593A7;
+ Thu,  7 May 2026 13:36:53 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id rU2NDEqV/GnsfQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 07 May 2026 13:36:10 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id kJSJJHWV/GklfwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 07 May 2026 13:36:53 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -82,26 +84,33 @@ Subject: Re: [PATCH] migration: Remove VMS_MULTIPLY_ELEMENTS and
  VMSTATE_VARRAY_MULTIPLY()
 In-Reply-To: <20260507070228.48877-1-philmd@linaro.org>
 References: <20260507070228.48877-1-philmd@linaro.org>
-Date: Thu, 07 May 2026 10:36:00 -0300
-Message-ID: <87mrybxry7.fsf@suse.de>
+Date: Thu, 07 May 2026 10:36:51 -0300
+Message-ID: <87jytfxrws.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; MISSING_XM_UA(0.00)[];
+ MX_GOOD(-0.01)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
+ RCVD_TLS_ALL(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
  RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
- DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email, suse.de:email, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
+ FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:email,suse.de:mid,linaro.org:email];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: 2E46B66D2E
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
