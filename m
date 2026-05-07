@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CC46CD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 16:10:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70EACCD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 16:10:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL1Eh-0004gY-3X; Thu, 07 May 2026 12:06:03 -0400
+	id 1wL1Iw-00020o-NM; Thu, 07 May 2026 12:10:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wL1Eb-0004f1-8p
- for qemu-devel@nongnu.org; Thu, 07 May 2026 12:05:58 -0400
-Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
+ id 1wL1Ib-0001eE-VZ
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 12:10:10 -0400
+Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wL1EZ-00072P-9E
- for qemu-devel@nongnu.org; Thu, 07 May 2026 12:05:56 -0400
-Received: by mail-ot1-x331.google.com with SMTP id
- 46e09a7af769-7de7c57b52cso802951a34.3
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 09:05:51 -0700 (PDT)
+ id 1wL1IZ-0007tw-OD
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 12:10:05 -0400
+Received: by mail-ot1-x336.google.com with SMTP id
+ 46e09a7af769-7dcc9b506d9so845584a34.1
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 09:10:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778169950; x=1778774750; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778170202; x=1778775002; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JvDAz6TNBVJ1gXLXpmwXOO0ZCnNIm5yTD5SwDCkiTzg=;
- b=BHjY+NhXimEihaAjczvHiQd3hgO3EZeF0vtQz+So5N143lf4DMu+mJa1625DeRCJxG
- sWBut02Ai52H+pokoZ0CTpWVSlRkGOmbTP0y+dV4cu8H3pbHZoVOEo4E/W4UkWJzj2+s
- ZaqybJW2ZhNciivGXVUGlu+eF5j4H1cz5ELPl7EkK6gD5GEsch8diUZ17J25Upijv2pa
- dK2iJyxo/EjnQBqhvmZ4s3ZpWo/7JcyoPMjujHrXV6tRJGZFbOhRSHi4iWYMRGlnrv2y
- N+4ixcRilODRq+0hrU/6XCAbXK6i3GaYhBN//i0ThJYZLnSXBxpye3ZNxyAv7qx4+4Y4
- qeHQ==
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=6QyGqNuFJ9FrT8LgHdQBdPtxv1l1sITer0qRw/oh+IY=;
+ b=y/PdI386RcknhoiV5iyStUMMpCDdpGtoco5bFK8BHJPG6mhy/orYpm7e7IMHmtwJ0w
+ 9fUTVwqhOLeCo8XJmmjP1QEgHkLCTAmNOIjoHslvqrQ46YAM/ERNMdgbrbKxfx0kYpBs
+ XFqkLFdQazlmqQ+vlAj7xUbuLpPkHta2WzrZWj9zNbujc047ByPLfpmHefQyWD8S7lfd
+ RbBFLtIIw5I1w47MJe2Tbnx5vTtB2wQzX8sJFFY3lcBf+oNaQRJ2wavQIyEtDT1ihnxe
+ mhYtRi3LLoXGSR6oKxz/spbBpSU7vAHiDqEXEbyYnZOCOvWSVhwnIrw8I0IS5NI7FrDQ
+ c3AQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778169950; x=1778774750;
+ d=1e100.net; s=20251104; t=1778170202; x=1778775002;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=JvDAz6TNBVJ1gXLXpmwXOO0ZCnNIm5yTD5SwDCkiTzg=;
- b=j7qLh6IPbWxEFdTtt2o5vW+lK82HYafTu551PC4SxqyhcfTefNF9MOM0evd4jm+ZDw
- CUi315AzLL1Jix61QR4OdUl+I4TUf5pNyH7pldNMEtgl699H68xEyDS+lZYuGIz7tl+H
- QBZ4CSCiXG/vos3uSIDT2igG3LIEoAlZRHqohkQGH68MRvF6dj9jowES5dCYJDsIrfY6
- 6rlcNzDCQjxTN1UrXdYxPOPEPC3T1Z5nR8K3nnMhTqAIQ9M3SHnMEwUVa9VQOSa/Yqwt
- kmfHbPIlJz5AjccQBOytzWgfyarCK+5alQAp421liZ/fiFu5UgyobwEyU5NI7ygXdSoG
- pstA==
-X-Gm-Message-State: AOJu0YyZR4w4rpOL8XmG/ZoXjNJ7IpEk0feYNZ+aLZm7OLSScF6kppK8
- q3NOW+Lv7Jm2dWfDC+xd7iUnbVzt13bpau41AMd1F/5ZR6qf35yIJXzhieLSRv5Gf4y6pzG2gZF
- 3BikD
-X-Gm-Gg: AeBDievUCnd2/eFJVkQSVYgFKQrPvx1UlLbHS5oN1XQhi6bhWTvDyjI+7chB7HV3QwE
- YbCl/r6jZEH2xyZLATBN+79IsKF1hJECM86Fosx0N2TA+kElkW9OPxo8Td5mRaL0x4SMVj3qJRO
- Y4MhiieY0EiHRaYVk98ubETReGlJR5/nuvq64uDhyc4ec8z+09EFS6S/2JyKRXfblfK/wTFg3/0
- L57zbR1/bjWtrFRe5vYAlRmGyjfAXrbLlB4p6wozTgfOksyyrQ9Jo8kjqdxksd0RsAFdEaTtRDZ
- aGpOJeR0tA1ixvYnhcSfesfQoOPAmlXvS06/L50JE0xdE8Z1NTrDgi5SAo3X5tnM2RCfcacRKQ9
- EU72wTeayFWozbvjygTTWChaBvKrtqSCoHs4gY2ag8iwzgUm4zjBtz2g9QbAehF5vdVMJ8GO+/M
- jonLTgoFY0f1GlBZlG4fVDgGYLYO2RXsH3wmKAOuuiQuVXwGPs250JbdId
-X-Received: by 2002:a05:6830:64c9:b0:7d9:f50f:9691 with SMTP id
- 46e09a7af769-7e1dea9d032mr5176488a34.0.1778169950179; 
- Thu, 07 May 2026 09:05:50 -0700 (PDT)
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=6QyGqNuFJ9FrT8LgHdQBdPtxv1l1sITer0qRw/oh+IY=;
+ b=K2AzMYxfd7E/8jJHVD4/EVBdLdJnWqpDlUS5kU3ZDmPFvDO3F9Ma5299/VdG5AS2JM
+ IcBWYLd/am4Bnzu6y59HIVdIgL4+2FI1ePYcUN9nf9ZtqhUxy0Ayy0WMGnY+5uCJMAXj
+ MxfNJM32OIoZ3CmuVLCA721M+Gra5MSlgwCmRO7w5C4vgt7WLrYz+XicfYXEEUNPXYyU
+ wtM0iUzZtvJyrhv1Znp8gq3gyaeGMPPr40OSZ9+mBno0ggLfvVIzRrppcaKk53KTy314
+ SOIiqVkQ7TBq018Ju7JUmUTG9BCsvqE2JaWGVRCifAqdwEENI0fmGX43Y/IDfsXbkLAF
+ 1qpQ==
+X-Gm-Message-State: AOJu0YzikKbdy6GGSQwEARubcL2ZW5wsE6p2HTRuyPB/pohTV9JEdF8H
+ 4GIvanRI0K5VZqkm+Fp2+59IQlRTP1OTy53mUZ9vprxBHmQuquc0bhE2sryaE8GVmi4M6zbvSUL
+ CyUgy
+X-Gm-Gg: AeBDiev7zwOsqZ6ndwJf9cC+veTZlRQ8MBCIRXN31uEunNQygla1z6lVKuPW561ipfa
+ 8y8beblMMxS43tHs+QUsJ1bh1HonOwRewmQFpQRtp4VW4Qk+5Pn9oPTZZOSSwwUZGEA/TfC2fan
+ Qaqt/WxBxIg0D9Q4XIJAP+LrL1heO9I7pj7tE4VSzDhm5KknN41HsxdQDM7PBaNUb+txrI3sAoX
+ x/ekm9Owliq5Iq3pxCWsWst2Y7+HD8cC5d0ckHg/WVeoL1Tm9RoBh0K40oalBkCJ7KpfL8LjlTo
+ SGhOvjtaf0lXXVBvQ7uxjZMJo2hS6517Mie4caVUMukl8A4h8l14ye0TOOaXzyAo1xm3lhieRqU
+ KdqktT8/asQQAuh3oLEqn+6C3itF13L8ufHVy8TGT8Ir8/b0ZwMHYpbm6E4OJR/W7cIpJrMAKfh
+ 1VpxnLVXVhHM3UOp92MKOjCk27wCjQD9FQmLAXw4f9OYsXLQ==
+X-Received: by 2002:a05:6830:6734:b0:7d7:fb8c:3c29 with SMTP id
+ 46e09a7af769-7e1df0f9574mr5357600a34.14.1778170202192; 
+ Thu, 07 May 2026 09:10:02 -0700 (PDT)
 Received: from stoup.attlocal.net ([2600:381:c938:6375:9641:bbb2:a93a:bb4c])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7decae680bdsm14647398a34.27.2026.05.07.09.05.49
+ 46e09a7af769-7e302462fb1sm16415a34.11.2026.05.07.09.10.01
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 09:05:49 -0700 (PDT)
+ Thu, 07 May 2026 09:10:01 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 27/29] fpu: Return struct from parts{64,128}_scalbn
-Date: Thu,  7 May 2026 11:05:15 -0500
-Message-ID: <20260507160518.444797-28-richard.henderson@linaro.org>
+Subject: [PATCH v3 01/11] fpu: Reorganize partsN(muladd)
+Date: Thu,  7 May 2026 11:09:49 -0500
+Message-ID: <20260507160959.449170-2-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260507160518.444797-1-richard.henderson@linaro.org>
-References: <20260507160518.444797-1-richard.henderson@linaro.org>
+In-Reply-To: <20260507160959.449170-1-richard.henderson@linaro.org>
+References: <20260507160959.449170-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x331.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,62 +99,199 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At the same time, export.
+Check the likely case of normal product and normal or
+zero addend first; shift NaN and infinity detection down;
+end with zero product + addend.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/fpu/softfloat-parts.h |  3 +++
- fpu/softfloat-parts.c.inc     | 14 ++++++++------
- 2 files changed, 11 insertions(+), 6 deletions(-)
+ fpu/softfloat-parts.c.inc | 155 +++++++++++++++++---------------------
+ 1 file changed, 70 insertions(+), 85 deletions(-)
 
-diff --git a/include/fpu/softfloat-parts.h b/include/fpu/softfloat-parts.h
-index 9504d0daa0..46618d217e 100644
---- a/include/fpu/softfloat-parts.h
-+++ b/include/fpu/softfloat-parts.h
-@@ -214,4 +214,7 @@ FloatParts128 parts128_round_to_int(const FloatParts128 *a,
- FloatParts64 parts64_round_to_fmt(const FloatParts64 *p, float_status *s,
-                                   const FloatFmt *fmt);
- 
-+FloatParts64 parts64_scalbn(const FloatParts64 *a, int n, float_status *s);
-+FloatParts128 parts128_scalbn(const FloatParts128 *a, int n, float_status *s);
-+
- #endif
 diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 2114797aca..3a9c2748cd 100644
+index 3a9c2748cd..3d2606c07c 100644
 --- a/fpu/softfloat-parts.c.inc
 +++ b/fpu/softfloat-parts.c.inc
-@@ -1633,22 +1633,24 @@ FloatRelation partsN(compare)(const FloatPartsN *a, const FloatPartsN *b,
- /*
-  * Multiply A by 2 raised to the power N.
-  */
--static void partsN(scalbn)(FloatPartsN *a, int n, float_status *s)
-+FloatPartsN partsN(scalbn)(const FloatPartsN *a, int n, float_status *s)
+@@ -681,11 +681,47 @@ static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
+                                    FloatPartsN *c,
+                                    int flags, float_status *s)
  {
-     switch (a->cls) {
-     case float_class_snan:
-     case float_class_qnan:
--        *a = partsN(return_nan)(a, s);
--        break;
-+        return partsN(return_nan)(a, s);
-     case float_class_zero:
-     case float_class_inf:
--        break;
-+        return *a;
-     case float_class_denormal:
-         float_raise(float_flag_input_denormal_used, s);
-         /* fall through */
-     case float_class_normal:
--        a->exp += MIN(MAX(n, -0x10000), 0x10000);
--        break;
-+        {
-+            FloatPartsN r = *a;
-+            r.exp += MIN(MAX(n, -0x10000), 0x10000);
-+            return r;
+-    int ab_mask, abc_mask;
+-    FloatPartsW p_widen, c_widen;
++    int ab_mask = float_cmask(a->cls) | float_cmask(b->cls);
++    int c_mask = float_cmask(c->cls);
++    int abc_mask = ab_mask | c_mask;
++    bool c_sign = c->sign ^ !!(flags & float_muladd_negate_c);
++    bool p_sign = a->sign ^ b->sign ^ !!(flags & float_muladd_negate_product);
+ 
+-    ab_mask = float_cmask(a->cls) | float_cmask(b->cls);
+-    abc_mask = float_cmask(c->cls) | ab_mask;
++    /*
++     * The "likely" case is A and B normal, so that the product is normal,
++     * and C normal or zero so that the result is normal.
++     */
++    int likely_mask = ab_mask | (c_mask & ~float_cmask_zero);
++    if (likely(cmask_is_only_normals(likely_mask))) {
++        record_denormals_used(abc_mask, s);
++
++        /* Perform the multiplication step. */
++        FloatPartsW p_widen = { .sign = p_sign, .exp = a->exp + b->exp + 1 };
++        fracN(mulw)(&p_widen, a, b);
++        if (!(p_widen.frac_hi & DECOMPOSED_IMPLICIT_BIT)) {
++            fracW(add)(&p_widen, &p_widen, &p_widen);
++            p_widen.exp -= 1;
 +        }
-     default:
-         g_assert_not_reached();
++
++        /* Perform the addition step. */
++        if (!(c_mask & float_cmask_zero)) {
++            /* Zero-extend C to less significant bits. */
++            FloatPartsW c_widen = { .sign = c_sign, .exp = c->exp };
++            fracN(widen)(&c_widen, c);
++
++            if (p_sign == c_sign) {
++                partsW(add_normal)(&p_widen, &c_widen);
++            } else if (!partsW(sub_normal)(&p_widen, &c_widen)) {
++                goto return_sub_zero;
++            }
++        }
++
++        /* Narrow with sticky bit, for proper rounding later. */
++        fracN(truncjam)(a, &p_widen);
++        a->sign = p_widen.sign;
++        a->exp = p_widen.exp;
++        return a;
++    }
+ 
+     /*
+      * It is implementation-defined whether the cases of (0,inf,qnan)
+@@ -698,97 +734,46 @@ static FloatPartsN *partsN(muladd)(FloatPartsN *a, FloatPartsN *b,
+         return a;
      }
+ 
+-    if (flags & float_muladd_negate_c) {
+-        c->sign ^= 1;
++    if (unlikely(ab_mask == float_cmask_infzero)) {
++        /* Inf * Zero == NaN */
++        float_raise(float_flag_invalid | float_flag_invalid_imz, s);
++        goto d_nan;
+     }
+ 
+-    /* Compute the sign of the product into A. */
+-    a->sign ^= b->sign;
+-    if (flags & float_muladd_negate_product) {
+-        a->sign ^= 1;
+-    }
+-
+-    if (unlikely(!cmask_is_only_normals(ab_mask))) {
+-        if (unlikely(ab_mask == float_cmask_infzero)) {
+-            float_raise(float_flag_invalid | float_flag_invalid_imz, s);
++    if (unlikely(ab_mask & float_cmask_inf)) {
++        if ((c_mask & float_cmask_inf) && p_sign != c_sign) {
++            /* Inf - Inf == NaN */
++            float_raise(float_flag_invalid | float_flag_invalid_isi, s);
+             goto d_nan;
+         }
+-
+-        if (ab_mask & float_cmask_inf) {
+-            if (c->cls == float_class_inf && a->sign != c->sign) {
+-                float_raise(float_flag_invalid | float_flag_invalid_isi, s);
+-                goto d_nan;
+-            }
+-            goto return_inf;
+-        }
+-
+-        g_assert(ab_mask & float_cmask_zero);
+-        if (is_anynorm(c->cls)) {
+-            *a = *c;
+-            goto finish_sign;
+-        }
+-        if (c->cls == float_class_zero) {
+-            if (flags & float_muladd_suppress_add_product_zero) {
+-                a->sign = c->sign;
+-            } else if (a->sign != c->sign) {
+-                goto return_sub_zero;
+-            }
+-            goto return_zero;
+-        }
+-        g_assert(c->cls == float_class_inf);
++        /* Inf + C == Inf */
++        record_denormals_used(abc_mask, s);
++        a->sign = p_sign;
++        a->cls = float_class_inf;
++        return a;
+     }
+-
+-    if (unlikely(c->cls == float_class_inf)) {
+-        a->sign = c->sign;
+-        goto return_inf;
+-    }
+-
+-    /* Perform the multiplication step. */
+-    p_widen.sign = a->sign;
+-    p_widen.exp = a->exp + b->exp + 1;
+-    fracN(mulw)(&p_widen, a, b);
+-    if (!(p_widen.frac_hi & DECOMPOSED_IMPLICIT_BIT)) {
+-        fracW(add)(&p_widen, &p_widen, &p_widen);
+-        p_widen.exp -= 1;
+-    }
+-
+-    /* Perform the addition step. */
+-    if (c->cls != float_class_zero) {
+-        /* Zero-extend C to less significant bits. */
+-        fracN(widen)(&c_widen, c);
+-        c_widen.exp = c->exp;
+-
+-        if (a->sign == c->sign) {
+-            partsW(add_normal)(&p_widen, &c_widen);
+-        } else if (!partsW(sub_normal)(&p_widen, &c_widen)) {
+-            goto return_sub_zero;
+-        }
+-    }
+-
+-    /* Narrow with sticky bit, for proper rounding later. */
+-    fracN(truncjam)(a, &p_widen);
+-    a->sign = p_widen.sign;
+-    a->exp = p_widen.exp;
+-
+- finish_sign:
+-    /*
+-     * All result types except for "return the default NaN
+-     * because this is an Invalid Operation" go through here;
+-     * this matches the set of cases where we consumed a
+-     * denormal input.
+-     */
+     record_denormals_used(abc_mask, s);
+-    return a;
++
++    /* Only remaining case is zero product. */
++    assert(ab_mask & float_cmask_zero);
++
++    /*
++     * 0 + C == C,
++     * except for 0 - 0, which needs special rounding,
++     * except for when we want to suppress this addition step.
++     */
++    if (!(c_mask & float_cmask_zero)
++        || p_sign == c_sign
++        || (flags & float_muladd_suppress_add_product_zero)) {
++        c->sign = c_sign;
++        return c;
++    }
+ 
+  return_sub_zero:
++    /* 0 - 0 == -0 for round_down, +0 otherwise. */
+     a->sign = s->float_rounding_mode == float_round_down;
+- return_zero:
+     a->cls = float_class_zero;
+-    goto finish_sign;
+-
+- return_inf:
+-    a->cls = float_class_inf;
+-    goto finish_sign;
++    return a;
+ 
+  d_nan:
+     *a = partsN(default_nan)(s);
 -- 
 2.43.0
 
