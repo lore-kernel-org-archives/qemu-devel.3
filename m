@@ -4,90 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C66AFCD3439
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 13:16:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8F1BCD3439
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 13:21:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKyaO-00076N-Rm; Thu, 07 May 2026 09:16:16 -0400
+	id 1wKyeY-000853-DJ; Thu, 07 May 2026 09:20:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKyaN-000764-NM
- for qemu-devel@nongnu.org; Thu, 07 May 2026 09:16:15 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKyeX-00084h-QZ
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 09:20:33 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKyaL-0005Ax-V7
- for qemu-devel@nongnu.org; Thu, 07 May 2026 09:16:15 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-488ad135063so7848185e9.0
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 06:16:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKyeW-000640-2z
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 09:20:33 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-48909558b3aso10131705e9.0
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 06:20:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778159772; x=1778764572; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778160029; x=1778764829; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5Z0+oa938l3ufeED3BGbuZ+8qnsGi+jWTcLM9XcDp6A=;
- b=y/dwI+L1D6yebRaljeQ9jQh0mXv7muJB63Op7ORNmUUM5CWWuy1H1zcU1r6PJKQjhg
- mWBiBF3dSJs0anoeuzlCYlcvYWsndH1I92wCRU4+s4zgTYsflAdKbtoPT30SfG/oO/GN
- JTavuNfBzw78rq9fHo5QaoLGc9hLVnWyedsCNlm8XyAd0cJiC9eHnvYbOqpnLxdwtgPV
- uWu/4kqp3bkTZ8zvoqjvs2gt0f359xQVjYyucdx2aG8gV5DfuyhkziafmZEX6nSl3d8l
- oWnspOeT5TKaWhz8YGYgyayJoRLV9jEr9mP4oSai+kceJ0NnXkrIAbyIfFG9iS3Mbm3C
- +PKA==
+ bh=ro0E0Z3Il8gZJFwT0ciaEyWTgxOzYZknb0RooRGDaBo=;
+ b=ATFY3kHbhi39pKVjZZUw1KL4F9wedfuGggjTXA+63bE7w00CoWltyZTdvCxslgBIcr
+ YX67NwNVE4/+7mXjwMzelFLg2APD75+H2PEB2bTihoYH+bbZpI7rzFPoYzvL4AWlxHgS
+ la0Myu9iaJp5Uvn+RD40wdTtGoZotiEvjkxsP3fY+wCN3lDtyzocJJpQl9UwN289LDGq
+ 6oJF6Eg0/SMTCKYlZGz8BOzwX9/ulvOEwUzFLL4+vjZaQylRM1CdBeES6tHyhu3mtBgs
+ +BWXnCfP2ITbI3KJysBZV1aWwHn6oo5UODoVjCSObtxXbSdwUvsE+55mXTBQynxXP9Cr
+ oEiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778159772; x=1778764572;
+ d=1e100.net; s=20251104; t=1778160029; x=1778764829;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=5Z0+oa938l3ufeED3BGbuZ+8qnsGi+jWTcLM9XcDp6A=;
- b=p0irAJ0tQP3LWZpBcGiropwxCCDxdgvAvKWyZDzhv2wpAfpLSY8AOrsK4PT4Uy/p6Y
- V9CBXfVm6uChiPQaVp/ta4nd6GKUPZNdeN161IgOXQ1++q/7mlKUcOEwysxAF5e23VUF
- RqRNhLfSmROjV/c8mR8/sFDqk68Mnb31f1nj+G5L/pRbBtVDXM/f2HhdthwerwRYrsC9
- rbGcArN+xOl3KdVlR9QEsM6H9hG6UYiYYDkKIyZmZUiX0PwTi0LdmrRzCT03dBqUIwb7
- OsQsQdU/Uu8O9hzN+HvS5sIG7g2KDJMsNHk9GX+hoq7FXKskuOg4Z9+4MJokwdA7fWR2
- VW/A==
+ bh=ro0E0Z3Il8gZJFwT0ciaEyWTgxOzYZknb0RooRGDaBo=;
+ b=omD4M0l+cZ+RUjXe8shLlN6NxJM8ASbaeNbBNiYkOJRjrEeS6gD4pWTEGXzv1wOBuE
+ ctOItTgoaT0G1VU7NgI0ztlSsQkxVbhOnTjVIYGbLKRNQV0imWKrbqNxt723Lffsq5jH
+ GTFcZxo0eMt7TXNqPJRVgY6GRl0JU15WqjHEK+rZSN3GV9JrVtnm3HahQGWD6195O7+R
+ VykJN4FtH3V5bZ5JGHgVTXP8F9Bls3SPFyC8lekpgat8fm9OQxMRrNFO85HivlUs0d7/
+ 8lBImWSXuBC/Fdc+wcxL8epU2K37CjRNH2OBMrFxjkIexSY6pNrLQZQCn4hijjo/oIKV
+ Xgmw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+7vt50YcTT1xkxFM+yReYoX602sMQ645KpthPMeSC9wMPeSt53pj2eHj2oeM5CXo7cFtnwGKYxmEbE@nongnu.org
-X-Gm-Message-State: AOJu0Yw+XjbX1D3K3QMoSpc9HJaihfZUD57XolvFJdBFqUWmVs0vHXL8
- OF4fnNRWo3FN9cDzZmQAFK8akqrsaXcDWT4ZQUXK1n7EfIvOByodBhb5g9ZpfnHh5jQ=
-X-Gm-Gg: AeBDiespLrE/XqbDHZdrC6j/NAdAcuARTKyEoyD8fsz64gGXTCVI5uwB2OFHeP/nsEG
- 3z/pgwnwe9tdYuKnAlUaArpWi3wPfnZLpLvaeP872nJ7cW2Tr0uXJd1eO+5z3ygGeU6n3WAXTU9
- dukBY7FT0Y7rgLVBev7OOJEslOKb1pz8aNTWnRi4GlVlONyEQiCsJAMCOTpWhr/6g6Q0fzN+cUT
- 895tOJcppGoudOq1Pj8AyLI9bJeoXSlBdbiiRVfcJzbkUYbh1FADp7aynalfF8JVTWzQi2amVOB
- 3iquolGgqk/kUDFBsjsv3MvbwoalHtjMjBASFQW/bNetKPmHfvDofGSEltnR0+Quvcd0Ls51DCp
- lLmb0mgm2pWrya3nVEN6HFusynX2OkiZa+/xS1THdTLwL6twkHrC0LwnBGU+cglWh9vpOKzq72h
- C7OgJIlir06yF+EPRa1PwFP3SM95dLBNtY8Bxzw8JHrOpVablCfg364OBJejBYr2YmvB7bqAZJd
- WtQ
-X-Received: by 2002:a05:600c:a305:b0:48d:361:4df6 with SMTP id
- 5b1f17b1804b1-48e51e19680mr92005395e9.9.1778159771738; 
- Thu, 07 May 2026 06:16:11 -0700 (PDT)
+ AFNElJ+JMZlUdK6dMpJYCxccmJk12P3OP3Cv2UV0L9kMvFLRDdN9OfUFnOgC5fZwUSt2h+wE8mAvAOJJFrAo@nongnu.org
+X-Gm-Message-State: AOJu0Yy4HyeELAtTKXXCXHizV4b4RUGWh4o7IG7quengmTBd4CpRx+S+
+ 1t2l1Qt3GVAivR4qadvMXPq3RtGDeyP9mvX1OPTVS8cBFmrz9ZMXwkhf6mUjlb1NdyY=
+X-Gm-Gg: AeBDieub1SKrC4EQtZnwMfxFGmWzxb3zOFNaIksEgrRKpmxnRIdCN1rSf3oCjeYq7Ut
+ LCOr/H9VqNDqiKXpXI7mtQ5rLDlcRJYRGgGv22qer+lvUdcXzO1CdurXU6jflvx44g1snVt8QCp
+ Cz2Hdlr7QqQBtS1257CvLeeowju9Q0BnHrfVDS3chaasIFweaok7a9xgBAaOcLG9m5zr6gV2769
+ 2ngIggECzg00gbpPYTY0tRzvJICP8Y4CboulzvFtqo0IgQZLkUGO/5ckanYSM5CvGvFia4Sn2RV
+ OMpvzA3JNfe/eEiNjUp+fpKvod7DBaYyarh41Uljvfm2587aiGQccetn9BD6vC53lU35QQCdw8U
+ 1MDc5pPsZ8osbuqijzMKcj6FA4fk2CzoEW78qO/Eel2HpF6fgimM+aI6jlfzh/8NSdoNkeKZcHH
+ D4/AR8t2H4jmzwfnYVgMVRDUkIsnTBnLR/O5H2DRMmt5KiyyZ5oNFvl5ouU5koPJRkEJbzrK3Ye
+ JjWsOjOQYLIaUU=
+X-Received: by 2002:a05:600c:4ba6:b0:488:a882:c7 with SMTP id
+ 5b1f17b1804b1-48e51f4bab4mr72271165e9.25.1778160029139; 
+ Thu, 07 May 2026 06:20:29 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e53826022sm134267745e9.0.2026.05.07.06.16.10
+ ffacd0b85a97d-45054b03e04sm19984325f8f.21.2026.05.07.06.20.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 May 2026 06:16:10 -0700 (PDT)
-Message-ID: <7bfd11f9-66be-4e4f-8e9e-a031d848f890@linaro.org>
-Date: Thu, 7 May 2026 15:16:10 +0200
+ Thu, 07 May 2026 06:20:28 -0700 (PDT)
+Message-ID: <eb9b9aa4-c590-41ad-80c6-170f0b83ed92@linaro.org>
+Date: Thu, 7 May 2026 15:20:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] vfio/pci: Replace abort() with g_assert_not_reached()
+Subject: Re: Future of target/arm "max" CPU type
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>
-References: <20260506152353.1657838-1-clg@redhat.com>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Jim MacArthur <jim.macarthur@linaro.org>,
+ Gustavo Bueno Romero <gustavo.romero@linaro.org>
+References: <CAFEAcA-WB+vfiHZpPut=AdEOCXacsTfrvxiGAmhaGH1abHD8ag@mail.gmail.com>
+ <4a46393d-08be-40e9-8f52-788d46ab36cf@oss.qualcomm.com>
+ <f72abfd1-bef7-407f-a62d-465d9aea0aca@linaro.org>
+ <afxpc_5OvkiEyXxu@redhat.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260506152353.1657838-1-clg@redhat.com>
+In-Reply-To: <afxpc_5OvkiEyXxu@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,41 +112,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/26 17:23, Cédric Le Goater wrote:
-> This check was originally introduced in commit b3ebc10c373e
-> ("vfio-pci: Add debug config options to disable MSI/X KVM support") as
-> part of a debug block to retrieve the MSI/MSIX message, and was later
-> moved by commit 0de70dc7bab1 ("vfio/pci: Rename MSI/X functions for
-> easier tracing") into the main interrupt handling path, becoming
-> production code.
+On 7/5/26 12:29, Daniel P. Berrangé wrote:
+> On Thu, May 07, 2026 at 12:17:32PM +0200, Philippe Mathieu-Daudé wrote:
+>> On 7/5/26 00:17, Pierrick Bouvier wrote:
+>>> Hi Peter,
+>>>
+>>> On 5/1/2026 6:26 AM, Peter Maydell wrote:
+>>>> This is something we've discussed before. I don't think I have a very
+>>>> solid grip on it and I suspect I may be missing some parts of the
+>>>> "problem description" (i.e. what are we trying to achieve) and perhaps
+>>>> some implications of the choice. Overall it feels to me like a "no
+>>>> obviously correct answer, make a tradeoff" question. I've written this
+>>>> up to try to clarify my thinking and canvass for opinions and for
+>>>> people to point out what I'm missing.
+>>>>
+>>>> For a long time now the arm targets have defined a "max" CPU type
+>>>> whose definition is roughly "all the features that QEMU
+>>>> implements". This is helpful for:
+>>>>
+>>>>    - giving us a way to provide newly emulated CPU features to users
+>>>>      without having to define a specific named CPU type matching some
+>>>>      hardware that implements the feature (which might not exist at the
+>>>>      point we add the emulation, or which might also need some other
+>>>>      features we don't yet support)
+>>>>    - giving users a way to say "I just want everything"
+>>>>
+>>>> Mostly this has worked pretty well, I think. (It can cause problems
+>>>> for some workloads that break when a new feature is added; TF-A
+>>>> firmware seems particularly prone to this.)
+>>>>
+>>>> However, it doesn't work so well if the architecture decides to drop a
+>>>> feature and mandate that newer implementations may not implement
+>>>> it. Up til now that hasn't been a big deal, as only a few very niche
+>>>> items (like FEAT_DoubleLock, an old mechanism for quiescing external
+>>>> debug before a CPU power-down) have ever been removed.
+>>>>
+>>>> With the Armv9.0 architecture, a big feature gets removed: support for
+>>>> running in 32-bit mode at anything above userspace (EL1, EL2, EL3) is
+>>>> not allowed to be implemented.  We've got away so far with ignoring
+>>>> that requirement, but as new v9.x features are added, they are
+>>>> designed under the assumption that there is no 32-bit system mode
+>>>> code. For instance, the GICv5 CPU interface defines only 64-bit system
+>>>> registers, and our non-compliant "32-bit is actually there"
+>>>> implementation would give you a 32-bit OS that couldn't handle
+>>>> interrupts. Other similar (or harder to spot) issues are likely to
+>>>> also turn up.
+>>>>
+>>>> So my suggestion is that we should have two new CPU types:
+>>>>
+>>>>    v8-max : "all the features we implement that are valid
+>>>>      for the v8.x architecture"
+>>>>    v9-max : "all the features we implement that are valid
+>>>>      for the v9.x architecture"
+>>>>
+>>>> v9-max would not implement AArch32 EL1/2/3; v8-max wouldn't implement
+>>>> any feature the architecture says is v9-or-later.
+>>
+>> Certainly clearer than what we currently have.
+>>
+>>>> For the existing 'max' CPU:
+>>>>    - on qemu-system-arm this would be a synonym for v8-max
+>>>>      (since it must be 32-bit)
+>>>>    - on qemu-aarch64 and qemu-system-aarch64 this would be a synonym
+>>>>      for v9-max
+>>>>    - on qemu-arm it can also be v9-max, since v9 doesn't drop 32-bit
+>>>>      usermode support. (Though we don't currently implement qemu-arm
+>>>>      max this way, so it might end up being effectively v8-max until
+>>>>      we get round to implementing support for selecting AArch64 CPUs in
+>>>>      qemu-arm.)
+>>>>
+>>>
+>>> This seems like a good approach. A side effect is to solve the
+>>> duplication we encounter for the single-binary also, by correctly
+>>> deduplicating QOM types associated.
+>>>
+>>> The concept of having a "max" alias that maps to a specific type (in
+>>> this case, distinct depending on the binary) could be used for other
+>>> arch if needed also.
+>>>
+>>>> I don't think it's worth claiming 'max' as deprecated and dropping it:
+>>>> as an alias it's trivial to support, and there are a lot of workloads
+>>>> that won't ever notice this change.
+>>
+>> We could display a note though.
+>>
+>>    "Using 'v9-max' for requested 'max' CPU".
 > 
-> Under normal conditions, this code path cannot be reached because the
-> BQL serializes all handler registration, vdev->interrupt updates, and
-> handler removal. Replace abort() with g_assert_not_reached(), which is
-> preferred nowdays, and add a comment clarifying the purpose.
+> Please don't make use of "-cpu max" print warnings.
 > 
-> Cc: Alex Williamson <alex@shazbot.org>
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   hw/vfio/pci.c | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
+> IMHO "max" should remain a first class citizen across all targets,
+> because it provides a consistent approach for users.
 > 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 09acd3f6082b0a9c5223780bf7e9847b57424cf7..7ca2ff4e7c1cb570cd60d35454b33b5506dae36e 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -453,7 +453,12 @@ static void vfio_msi_interrupt(void *opaque)
->           get_msg = msi_get_message;
->           notify = msi_notify;
->       } else {
-> -        abort();
-> +        /*
-> +         * Interrupt state transitions (MSI/MSI-X -> NONE/INTx) are
-> +         * protected by the BQL, and eventfd handlers are strictly
-> +         * unregistered before vdev->interrupt is modified.
-> +         */
-> +        g_assert_not_reached();
->       }
+> What Peter describes with resolving "max" to either "v9-max" or
+> "v8-max" depending on arm vs aarch64  makes sense to me.
 
-Could be more readable using switch(vdev->interrupt).
+Effectively postponing the problem until ARMv10 gets released
+with v10-max diverging from v9-max.
+
+Nevermind, we'll keep handling "max" alias at the machine level.
+
+Regards,
+
+Phil.
 
