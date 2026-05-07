@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3088CD3427
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 04:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4942CD342C
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 04:59:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKqWn-0000RT-QG; Thu, 07 May 2026 00:40:01 -0400
+	id 1wKqp9-0006DK-Ez; Thu, 07 May 2026 00:59:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wKqWm-0000RC-3F
- for qemu-devel@nongnu.org; Thu, 07 May 2026 00:40:00 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wKqp6-0006D5-VQ
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 00:58:57 -0400
+Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wKqWj-0003tH-RH
- for qemu-devel@nongnu.org; Thu, 07 May 2026 00:39:59 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-c7980c060cfso136441a12.2
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 21:39:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wKqp4-0007Gr-Gn
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 00:58:56 -0400
+Received: by mail-oo1-xc31.google.com with SMTP id
+ 006d021491bc7-6949f3eeaf6so784882eaf.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 21:58:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778128796; x=1778733596; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OcAtlEZ69UD1ecjEQMV6rCsQw+NL0cPCttHRoeHGkic=;
- b=GIsfzM7bzhbDqKY4C/MjhCcyNRodRcl6ddDPg2t7h6kG3MPVA6MhlDCw2wsFZGHFze
- 5tgWfYwQ5TAkazG4NLj2IEU4K3oIO4oOv3ludJ5ZwF9gIwTmep3N7EnWPNPfIQmMvru7
- 5giaXbhp2ELm4DKAdft754bcDheqLBDLISk0O3a7Rf7qlLeUVUQJRSd735ZLMOE6WQEZ
- E7k58ocDRIuDQCiq81uFRU34429BUN2G0KOwcR9Vb83fF5/TEDSXw7bjSdhzl+K+yF+z
- BLX/Dm+IncucL2LnRvgi8v3MFbljOhHqFHHSN2aieS7x+cXUd54IF3LcmmiLb73dlhDb
- O05w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778128796; x=1778733596;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ d=linaro.org; s=google; t=1778129931; x=1778734731; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=OcAtlEZ69UD1ecjEQMV6rCsQw+NL0cPCttHRoeHGkic=;
- b=nkewfWHU3+sY+esIqBxHjISiN//evWsqGP3ydlYKrgKtG4Ax+rd2u+LFga1S6narf+
- abM29N7JvowL4P/qqDFbx+2rWfEfPrnmbdj058NnaBzexCaX2ALsQaf/YGnPUx3tqsVj
- zp+AtoqPXhc5mKXBWFZkjBdqOF1fPe933Z0Uc0XAwPC+vlkioAIPjVlihcP0uilCiPBY
- MXSrF0omUdM16cQr9FHepf+9TFfsJLJczGJ0fP/hg2huW4990ikvSpzbm8JgD136+NBk
- p6ZeZ9lQTqDbWn2f05bhNKv699arMUqGpi1z2YLxSZHEk1QkND4yOXYwcdWUIajjbpt+
- JibQ==
+ bh=2rN1rZatelrTPRmpKDfXM7r+xfjdh7QJxRCY0Ts7LBI=;
+ b=ZoDBF/HCrBMcn/D9nRkZnY2OcTnfaxRFxfFAgtAQuUmZXOfNfQXHmxtl79hlr2n2pE
+ b26LWduqeQ4Wr3nT5mwLPi5UcZUUjYPTVLySFxyPR9YnS9tTsvhv3wpUPHGFTrKJO9uR
+ Y1ZiMcKIpSPwgpHxAgNQ24xR8spM2XbO/6V+tDvaBZ3Gvsgl6c3YL6o3RsUSqTztVb0F
+ JyDiqpF9zxHtwzGit+MKjvQEBfKQTn7YY8DFUy5vdOY6VvDktp7+0H3zP83WeA3BzZ+m
+ dT7rXw6ylGdfT86YbPKVZqKXb8Q0JtTWIj3wgZYQdnj+GbXzPjTuAty+cO7M6CUWuUaA
+ g8Zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778129931; x=1778734731;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2rN1rZatelrTPRmpKDfXM7r+xfjdh7QJxRCY0Ts7LBI=;
+ b=atIUuAAmgorHjvz8VHxJuUx7FfYThRNWyjHGhG2VhUdJFPPSgWnhOFeuc+YHJSdMah
+ yzJpAyqQINsE3/anCGZ5VwERgO8LhAvNdLpXLo2JgSs6WBI94sJVL9ps5buV6OLR9trH
+ GocLLJDgic3DSurxtXnCHSgdGOiuQbvD5wXGW7cDOOhFuVllvZ7jvGNgPbviOkOlF8K8
+ yNayfRNo7XyaP0tquEUX+VVVsq/fABN3ybYfG9zwNHC5vYrmps0XmirbgcIvBTMRo29i
+ j4fwYp0nWx/1JTH8FtH6V9+1mSqk79J0pLzKeszwzCifSCw/SmA5G+Ox/DoH/cq9NHQ0
+ 7v1Q==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9Hju9bwnlmNHdiv7RbQ/S3BokOWu2h8keY82M/opD7TLRd2cJlUng0wSpCcKsWPG2WCJYunNzoFZ4B@nongnu.org
-X-Gm-Message-State: AOJu0YyHZPqcZDExJctx1/b+7vlh8aiTjMygrbqSB+gvfp/KtLBNCl5+
- sDEs5DCiBsD9jPCCDUyuZnKcc6pHapK0QvOlGmHWtl1EIhvtjqLACyFn
-X-Gm-Gg: AeBDieu1/V9IoGgCnSSHzm0olWWAcCxrhhsh8Y55zkyUE7bDrpT4Ak324brw24V93kM
- sv2yKLSHAptjFrhmjaebcwiYmiK4suOFdVRKfK8kfwqIfp1TKrKc7+NPPbZWZTZBFPosppeTHY9
- b+36/6MMDCsVJn87jJq51vgS4875EeGPSdwYLiWCRKmmK0i7KVyvKjrd1U3UnSsFC+dEICXcoqO
- Nmp1eOtkPmXIm5lIhb2LShNhcfCO5nfPGIMKkszYS7cuLsg9GsmgxB/Jx8U6TBUJSdClwS8elYy
- 7bgV/UQbTowi0Qws1uvIQfhqYFToqF8DwYa9LfiDPG816Kgbx5rDYlN2JveNB70aHm5tqVyoZcv
- SXyI1zNMnan8PUh36G2vt6yK8LFsib8OD9KHiGiX0L9+Nwe3uoYJq/ig/TcWxb0f1DLidNsGXNa
- fpZ/nPJNrGE4PAZz69+pX0uljLZm9932itBL6KvDnuKhW+SDn74KpEvE8xWMhhyX/8rcwc1gQTa
- QwvnrifscVTD0ENQDM=
-X-Received: by 2002:a05:6a20:94ca:b0:3a2:f14a:4277 with SMTP id
- adf61e73a8af0-3aa5aac8801mr6731774637.32.1778128796337; 
- Wed, 06 May 2026 21:39:56 -0700 (PDT)
-Received: from localhost (124.158.97.178.qld.leaptel.network. [124.158.97.178])
+ AFNElJ+RI/blme1tNA8HG8fH1OPNuJ+en1MXMh/8hf74jcL/g8li8EnFLJpJAD9fMfgbUBba0AYBlBVmKzod@nongnu.org
+X-Gm-Message-State: AOJu0Yz5unSRvyBlHmwvW8xEGIG8hdLqoPyYAGXTOAXpnyKkKqJLxGXK
+ tnW6qXzHFo+xAln8XPZL8dsAAP0JK7xj1eBfzoFjrje+5MItYU5glASAgwwrdtAaYak=
+X-Gm-Gg: AeBDiev0Rq9T6hkm3rbDLTy0wwGJc+Uzm4AyJR3C3NZbBOkI6ZWdK4lbPmPKPykuZpY
+ 5wl/92LS6m/ad3FVJ69r3deMBS0V945/4PiI0gunA0tuvxu3eSXsRMcJUp+A3nowjBOG00YIoN+
+ aj9XP+h0Ofk0wABMslX12XduopXGkNxERR6mQ5o+ZAzToY69q4ZBA6bEZPHdYH+M1ZIe7ILtzgx
+ 4zur1k5l7eWhUW7CvLGbSUhk9jz7MVCMUQf1jpzPp7shQ290oyjXfQxOl5eVODjk+6tqsg7dOnI
+ 72bGgzB08MLqM/TMeKt9rjo0b2b2SIKcKk+ki4tIeep9Bo7LY6Wn6elV313IuQMVI8y6mektiY0
+ 5C8Xtq+vyzrBC49O1EvLg8PCtPNWShM0mAEcVYobQwrNg8n5e3RChay6y5XCDQxPUzUd0EucAQK
+ Blef90JQqjrIYNaGA0un+uPzIhtvO6UUernxZmg+4HxMppBOXyX2TGgD6lMG2QGVGMdQBRPPyMv
+ GkK8kqcP99HQC/TuO2m
+X-Received: by 2002:a4a:e918:0:b0:694:9910:f78f with SMTP id
+ 006d021491bc7-699ab5727d4mr842155eaf.3.1778129931441; 
+ Wed, 06 May 2026 21:58:51 -0700 (PDT)
+Received: from ?IPV6:2600:381:c938:6375:6efd:4d9e:6f84:a7eb?
+ ([2600:381:c938:6375:6efd:4d9e:6f84:a7eb])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c8253582a6bsm742181a12.5.2026.05.06.21.39.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 May 2026 21:39:55 -0700 (PDT)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Nicholas Piggin <npiggin@gmail.com>, Chao Liu <chao.liu.zevorn@gmail.com>,
- Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>,
- Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
- Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>,
- Nutty Liu <nutty.liu@hotmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v5 3/9] hw/riscv/virt: Move AIA initialisation to helper file
-Date: Thu,  7 May 2026 14:38:31 +1000
-Message-ID: <20260507043838.45652-4-npiggin@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260507043838.45652-1-npiggin@gmail.com>
-References: <20260507043838.45652-1-npiggin@gmail.com>
+ 586e51a60fabf-43454cbcbcasm19141128fac.9.2026.05.06.21.58.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 May 2026 21:58:51 -0700 (PDT)
+Message-ID: <9794589b-0f4e-4f0a-9d67-ab7e9c1d749e@linaro.org>
+Date: Wed, 6 May 2026 23:58:48 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] accel/tcg: move jit thread manipulation into
+ do_tb_phys_invalidate
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+References: <20260505103649.68361-1-alex.bennee@linaro.org>
+ <20260505103649.68361-3-alex.bennee@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260505103649.68361-3-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x534.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,313 +108,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Joel Stanley <joel@jms.id.au>
+On 5/5/26 05:36, Alex Bennée wrote:
+> To invalidate a TB on MacOS we need to enable write access to the JIT
+> buffer. We were doing this for tb_phys_invalidate__locked but that is
+> not the only path into do_tb_phys_invalidate. Move the manipulation
+> into the shared function that does the work.
+> 
+> This enables watchpoints to work in MacOS TCG guests.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3444
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   accel/tcg/tb-maint.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+> index cd7c32361bb..9a648f97865 100644
+> --- a/accel/tcg/tb-maint.c
+> +++ b/accel/tcg/tb-maint.c
+> @@ -925,6 +925,7 @@ static void do_tb_phys_invalidate(TranslationBlock *tb, bool rm_from_page_list)
+>       uint32_t orig_cflags = tb_cflags(tb);
+>   
+>       assert_memory_lock();
+> +    qemu_thread_jit_write();
+>   
+>       /* make sure no further incoming jumps will be chained to this TB */
+>       qemu_spin_lock(&tb->jmp_lock);
+> @@ -954,15 +955,15 @@ static void do_tb_phys_invalidate(TranslationBlock *tb, bool rm_from_page_list)
+>       /* suppress any remaining jumps to this TB */
+>       tb_jmp_unlink(tb);
+>   
+> +    qemu_thread_jit_execute();
 
-The AIA init will be used by any server class riscv machine. Separate it
-out in order to share code with such systems.
+You've missed the early return path from the middle of the function, which should be fatal.
 
-The virt machine keeps machine specific #defines such as
-VIRT_IRQCHIP_NUM_MSIS, VIRT_IRQCHIP_NUM_PRIO_BITS.
+But the place that needs this is tb_reset_jump, which is called from 
+tb_remove_from_jmp_list and tb_jmp_unlink.  Which is entirely covered by moving this down 
+toward the end of the function like so:
 
-Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Reviewed-by: Nutty Liu <nutty.liu@hotmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/riscv/aia.c             | 89 ++++++++++++++++++++++++++++++++++++++
- hw/riscv/aia.h             | 26 +++++++++++
- hw/riscv/meson.build       |  2 +-
- hw/riscv/virt-acpi-build.c |  2 +
- hw/riscv/virt.c            | 87 +++++--------------------------------
- include/hw/riscv/virt.h    |  1 -
- 6 files changed, 129 insertions(+), 78 deletions(-)
- create mode 100644 hw/riscv/aia.c
- create mode 100644 hw/riscv/aia.h
++   qemu_thread_jit_write();
 
-diff --git a/hw/riscv/aia.c b/hw/riscv/aia.c
-new file mode 100644
-index 0000000000..c724612a50
---- /dev/null
-+++ b/hw/riscv/aia.c
-@@ -0,0 +1,89 @@
-+/*
-+ * QEMU RISC-V Advanced Interrupt Architecture (AIA)
-+ *
-+ * Copyright (C) 2019 Western Digital Corporation or its affiliates.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "system/kvm.h"
-+#include "hw/intc/riscv_aplic.h"
-+#include "hw/intc/riscv_imsic.h"
-+
-+#include "aia.h"
-+
-+uint32_t imsic_num_bits(uint32_t count)
-+{
-+    uint32_t ret = 0;
-+
-+    while (BIT(ret) < count) {
-+        ret++;
-+    }
-+
-+    return ret;
-+}
-+
-+DeviceState *riscv_create_aia(bool msimode, int aia_guests,
-+                             const MemMapEntry *aplic_m,
-+                             const MemMapEntry *aplic_s,
-+                             const MemMapEntry *imsic_m,
-+                             const MemMapEntry *imsic_s,
-+                             int socket, int base_hartid, int hart_count,
-+                             uint32_t num_msis, uint32_t num_prio_bits)
-+{
-+    int i;
-+    hwaddr addr = 0;
-+    uint32_t guest_bits;
-+    DeviceState *aplic_s_dev = NULL;
-+    DeviceState *aplic_m_dev = NULL;
-+
-+    if (msimode) {
-+        if (!kvm_enabled()) {
-+            /* Per-socket M-level IMSICs */
-+            addr = imsic_m->base + socket * (1U << IMSIC_MMIO_GROUP_MIN_SHIFT);
-+            for (i = 0; i < hart_count; i++) {
-+                riscv_imsic_create(addr + i * IMSIC_HART_SIZE(0),
-+                                   base_hartid + i, true, 1,
-+                                   num_msis);
-+            }
-+        }
-+
-+        /* Per-socket S-level IMSICs */
-+        guest_bits = imsic_num_bits(aia_guests + 1);
-+        addr = imsic_s->base + socket * (1U << IMSIC_MMIO_GROUP_MIN_SHIFT);
-+        for (i = 0; i < hart_count; i++) {
-+            riscv_imsic_create(addr + i * IMSIC_HART_SIZE(guest_bits),
-+                               base_hartid + i, false, 1 + aia_guests,
-+                               num_msis);
-+        }
-+    }
-+
-+    if (!kvm_enabled()) {
-+        /* Per-socket M-level APLIC */
-+        aplic_m_dev = riscv_aplic_create(aplic_m->base +
-+                                     socket * aplic_m->size,
-+                                     aplic_m->size,
-+                                     (msimode) ? 0 : base_hartid,
-+                                     (msimode) ? 0 : hart_count,
-+                                     VIRT_IRQCHIP_NUM_SOURCES,
-+                                     num_prio_bits,
-+                                     msimode, true, NULL);
-+    }
-+
-+    /* Per-socket S-level APLIC */
-+    aplic_s_dev = riscv_aplic_create(aplic_s->base +
-+                                 socket * aplic_s->size,
-+                                 aplic_s->size,
-+                                 (msimode) ? 0 : base_hartid,
-+                                 (msimode) ? 0 : hart_count,
-+                                 VIRT_IRQCHIP_NUM_SOURCES,
-+                                 num_prio_bits,
-+                                 msimode, false, aplic_m_dev);
-+
-+    if (kvm_enabled() && msimode) {
-+        riscv_aplic_set_kvm_msicfgaddr(RISCV_APLIC(aplic_s_dev), addr);
-+    }
-+
-+    return kvm_enabled() ? aplic_s_dev : aplic_m_dev;
-+}
-diff --git a/hw/riscv/aia.h b/hw/riscv/aia.h
-new file mode 100644
-index 0000000000..dbb8333402
---- /dev/null
-+++ b/hw/riscv/aia.h
-@@ -0,0 +1,26 @@
-+/*
-+ * QEMU RISC-V Advanced Interrupt Architecture (AIA)
-+ *
-+ * Copyright (C) 2019 Western Digital Corporation or its affiliates.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_RISCV_AIA_H
-+#define HW_RISCV_AIA_H
-+
-+#include "exec/hwaddr.h"
-+
-+#define VIRT_IRQCHIP_NUM_SOURCES 96
-+
-+uint32_t imsic_num_bits(uint32_t count);
-+
-+DeviceState *riscv_create_aia(bool msimode, int aia_guests,
-+                             const MemMapEntry *aplic_m,
-+                             const MemMapEntry *aplic_s,
-+                             const MemMapEntry *imsic_m,
-+                             const MemMapEntry *imsic_s,
-+                             int socket, int base_hartid, int hart_count,
-+                             uint32_t num_msis, uint32_t num_prio_bits);
-+
-+#endif
-diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-index 533472e22a..e53c180d0d 100644
---- a/hw/riscv/meson.build
-+++ b/hw/riscv/meson.build
-@@ -1,5 +1,5 @@
- riscv_ss = ss.source_set()
--riscv_ss.add(files('boot.c'))
-+riscv_ss.add(files('boot.c', 'aia.c'))
- riscv_ss.add(when: 'CONFIG_RISCV_NUMA', if_true: files('numa.c'))
- riscv_ss.add(files('riscv_hart.c'))
- riscv_ss.add(when: 'CONFIG_OPENTITAN', if_true: files('opentitan.c'))
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index fd6ca5dbc4..145f8d92ad 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -42,6 +42,8 @@
- #include "system/kvm.h"
- #include "system/reset.h"
- 
-+#include "aia.h"
-+
- #define ACPI_BUILD_TABLE_SIZE             0x20000
- #define ACPI_BUILD_INTC_ID(socket, index) ((socket << 24) | (index))
- 
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 4501d5581b..ce0fd6f50c 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -59,6 +59,8 @@
- #include "hw/virtio/virtio-iommu.h"
- #include "hw/uefi/var-service-api.h"
- 
-+#include "aia.h"
-+
- /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
- static bool virt_use_kvm_aia_aplic_imsic(RISCVVirtAIAType aia_type)
- {
-@@ -509,17 +511,6 @@ static void create_fdt_socket_plic(RISCVVirtState *s,
-     }
- }
- 
--uint32_t imsic_num_bits(uint32_t count)
--{
--    uint32_t ret = 0;
--
--    while (BIT(ret) < count) {
--        ret++;
--    }
--
--    return ret;
--}
--
- static void create_fdt_one_imsic(RISCVVirtState *s, hwaddr base_addr,
-                                  uint32_t *intc_phandles, uint32_t msi_phandle,
-                                  bool m_mode, uint32_t imsic_guest_bits)
-@@ -1293,68 +1284,6 @@ static DeviceState *virt_create_plic(const MemMapEntry *memmap, int socket,
-              memmap[VIRT_PLIC].size);
- }
- 
--static DeviceState *virt_create_aia(RISCVVirtAIAType aia_type, int aia_guests,
--                                    const MemMapEntry *memmap, int socket,
--                                    int base_hartid, int hart_count)
--{
--    int i;
--    hwaddr addr = 0;
--    uint32_t guest_bits;
--    DeviceState *aplic_s = NULL;
--    DeviceState *aplic_m = NULL;
--    bool msimode = aia_type == VIRT_AIA_TYPE_APLIC_IMSIC;
--
--    if (msimode) {
--        if (!kvm_enabled()) {
--            /* Per-socket M-level IMSICs */
--            addr = memmap[VIRT_IMSIC_M].base +
--                   socket * VIRT_IMSIC_GROUP_MAX_SIZE;
--            for (i = 0; i < hart_count; i++) {
--                riscv_imsic_create(addr + i * IMSIC_HART_SIZE(0),
--                                   base_hartid + i, true, 1,
--                                   VIRT_IRQCHIP_NUM_MSIS);
--            }
--        }
--
--        /* Per-socket S-level IMSICs */
--        guest_bits = imsic_num_bits(aia_guests + 1);
--        addr = memmap[VIRT_IMSIC_S].base + socket * VIRT_IMSIC_GROUP_MAX_SIZE;
--        for (i = 0; i < hart_count; i++) {
--            riscv_imsic_create(addr + i * IMSIC_HART_SIZE(guest_bits),
--                               base_hartid + i, false, 1 + aia_guests,
--                               VIRT_IRQCHIP_NUM_MSIS);
--        }
--    }
--
--    if (!kvm_enabled()) {
--        /* Per-socket M-level APLIC */
--        aplic_m = riscv_aplic_create(memmap[VIRT_APLIC_M].base +
--                                     socket * memmap[VIRT_APLIC_M].size,
--                                     memmap[VIRT_APLIC_M].size,
--                                     (msimode) ? 0 : base_hartid,
--                                     (msimode) ? 0 : hart_count,
--                                     VIRT_IRQCHIP_NUM_SOURCES,
--                                     VIRT_IRQCHIP_NUM_PRIO_BITS,
--                                     msimode, true, NULL);
--    }
--
--    /* Per-socket S-level APLIC */
--    aplic_s = riscv_aplic_create(memmap[VIRT_APLIC_S].base +
--                                 socket * memmap[VIRT_APLIC_S].size,
--                                 memmap[VIRT_APLIC_S].size,
--                                 (msimode) ? 0 : base_hartid,
--                                 (msimode) ? 0 : hart_count,
--                                 VIRT_IRQCHIP_NUM_SOURCES,
--                                 VIRT_IRQCHIP_NUM_PRIO_BITS,
--                                 msimode, false, aplic_m);
--
--    if (kvm_enabled() && msimode) {
--        riscv_aplic_set_kvm_msicfgaddr(RISCV_APLIC(aplic_s), addr);
--    }
--
--    return kvm_enabled() ? aplic_s : aplic_m;
--}
--
- static void create_platform_bus(RISCVVirtState *s, DeviceState *irqchip)
- {
-     DeviceState *dev;
-@@ -1617,9 +1546,15 @@ static void virt_machine_init(MachineState *machine)
-             s->irqchip[i] = virt_create_plic(s->memmap, i,
-                                              base_hartid, hart_count);
-         } else {
--            s->irqchip[i] = virt_create_aia(s->aia_type, s->aia_guests,
--                                            s->memmap, i, base_hartid,
--                                            hart_count);
-+            s->irqchip[i] = riscv_create_aia(s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC,
-+                                             s->aia_guests,
-+                                             &s->memmap[VIRT_APLIC_M],
-+                                             &s->memmap[VIRT_APLIC_S],
-+                                             &s->memmap[VIRT_IMSIC_M],
-+                                             &s->memmap[VIRT_IMSIC_S],
-+                                             i, base_hartid, hart_count,
-+                                             VIRT_IRQCHIP_NUM_MSIS,
-+                                             VIRT_IRQCHIP_NUM_PRIO_BITS);
-         }
- 
-         /* Try to use different IRQCHIP instance based device type */
-diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-index 18a2a323a3..ad858deb76 100644
---- a/include/hw/riscv/virt.h
-+++ b/include/hw/riscv/virt.h
-@@ -135,7 +135,6 @@ enum {
- bool virt_is_acpi_enabled(RISCVVirtState *s);
- bool virt_is_iommu_sys_enabled(RISCVVirtState *s);
- void virt_acpi_setup(RISCVVirtState *vms);
--uint32_t imsic_num_bits(uint32_t count);
- 
- /*
-  * The virt machine physical address space used by some of the devices
--- 
-2.53.0
+     /* suppress this TB from the two jump lists */
+     tb_remove_from_jmp_list(tb, 0);
+     tb_remove_from_jmp_list(tb, 1);
 
+     /* suppress any remaining jumps to this TB */
+     tb_jmp_unlink(tb);
+
++   qemu_thread_jit_execute();
+---
+
+
+> +
+>       qatomic_set(&tb_ctx.tb_phys_invalidate_count,
+>                   tb_ctx.tb_phys_invalidate_count + 1);
+>   }
+>   
+>   static void tb_phys_invalidate__locked(TranslationBlock *tb)
+>   {
+> -    qemu_thread_jit_write();
+>       do_tb_phys_invalidate(tb, true);
+> -    qemu_thread_jit_execute();
+>   }
+
+Might as well remove tb_phys_invalidate__locked entirely, and propagate the direct call to 
+do_tb_phys_invalidate.
+
+The __locked suffix does appear to be for the user assert_memory_locked().  As evidenced 
+by tb_phys_invalidate, for system mode, we only sometimes take the page lock.
+
+Given that this jit protection is via pthread_jit_write_protect_np, I assume the W^X 
+protection is a magic Apple per-thread bit.  If so, we don't actually require cross-thread 
+locking at all, and all is well.
+
+
+r~
 
