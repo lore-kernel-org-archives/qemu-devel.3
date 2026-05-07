@@ -4,93 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 360C6CD343B
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 05:45:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0053CD343B
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 05:52:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKrXZ-0003vF-8r; Thu, 07 May 2026 01:44:53 -0400
+	id 1wKres-0005Wv-0C; Thu, 07 May 2026 01:52:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wKrXW-0003up-K3
- for qemu-devel@nongnu.org; Thu, 07 May 2026 01:44:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wKrXV-0008F3-8P
- for qemu-devel@nongnu.org; Thu, 07 May 2026 01:44:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778132687;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/ksYYi0Nq4LVtSvzVGWe9n0EIKph1bFiyPlo2NLUQ1M=;
- b=dC7mtwpYS01vGHQbq1aq2rBfoZNoqtPLEJNu/O3HmwjPLYOzTl9suZYb5ku/QTJkmzJK6H
- DCqKXJ+gScwhn572tEOKUKFmTR9Hwr4x9mF0GnY7CX9TEwe1RguXMBtSwcg0s7pvdQTUNp
- c/JNRKi6yLJpRh2tDQoGGyqtAbNK6WE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-104-YMhm7W51PqS5jKd-_XaDzA-1; Thu,
- 07 May 2026 01:44:46 -0400
-X-MC-Unique: YMhm7W51PqS5jKd-_XaDzA-1
-X-Mimecast-MFC-AGG-ID: YMhm7W51PqS5jKd-_XaDzA_1778132685
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C65419560AA; Thu,  7 May 2026 05:44:45 +0000 (UTC)
-Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 25CC0300019F; Thu,  7 May 2026 05:44:43 +0000 (UTC)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKrep-0005WF-Eu
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 01:52:23 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKren-0001TI-LS
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 01:52:23 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-43d73352cf2so336192f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 22:52:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778133140; x=1778737940; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mK/3rVfA8VWBvKCytrm/nLapp+zCSQhS3Ida7QcTMqg=;
+ b=CYHK1nshk9PVD1HlIknZz7QR4i07EuFLcxeBWNCnbG1nLe2pue5LXwg29W9To1k1oT
+ ALga3+3hWiVk+pK/SlTodLZDDhgGZpark1FPywixAnTlUQ+8+gUr1B4rjSlt0/pHw/Y8
+ AXxVdEsZ4ESmtqPV4+7AEtaniP5aPRs49PsL1tHNTaZrddMLSMJpObXsoYvRWOXNE7tI
+ +J+pw/ajImtT+mZuoL/lXyJwgySOIlnzM2tXdTCD7T7fSYwnqJAJCFr1jvNws98eIObf
+ qWJlpn7ML+4+k3/MzP8Dowm9uW9IF7by9i5eijAMYTF9hmFPXhriYJmMCh1F9TJWURqe
+ Ycqg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778133140; x=1778737940;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mK/3rVfA8VWBvKCytrm/nLapp+zCSQhS3Ida7QcTMqg=;
+ b=fiWRaNW7gj996ouEd+L+8SZHcWbEOomOpfWEA8L96gKDK2DW3OQZelRMs7xV6MdrkB
+ sa0xUG0S6dVYaemCHvkwQHNKRlwVazZRqeKZUt6NxrvPzHAt/0nADTJ+TwGVJZYjkJHC
+ 8bGgEJTMPQo7OrZCuJnwzEdh764Xn3MqJYzWTlIyjEv9pgllmm9P6Oy0kEfn+x9KrhXf
+ 5BBT2rXrOHbpP2ikVXZ85rGHdYx8JE6grJCGjimR1TWrgTHydqujIFenzlb9Rdz8Hqe4
+ sidbNYxw7yn56UffuJoSVHIrV1Born368GVABD7KYl3FgU1x3cE8fEK4gj+zcfM1WiPo
+ U+jw==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ+TvLyiYK+gdZDREVEk+tS0jOo94w/elXSDzURKt4D4llU9t0y/mdEPGxdXat1XT5TAndyMadPT5fry@nongnu.org
+X-Gm-Message-State: AOJu0YxbSzi2bsZi85IuvXA5W761Sbuj255u7+s2C6K4QSbWiPlCXyoG
+ fOo4L2xKeYzh9++8U/4bFS4IkFMWpsi8tHFBdhfIUIeeP8G6NXaxknBNOnYQVFPPvn4=
+X-Gm-Gg: AeBDievRdPkKiCcvzsktEL08FZ8NZWzsDfgkhqcNXfpVpB/9KAiQvWi77H1akCiDZAx
+ KlCVd+TLbbxCrS0gB9S23FdmEIa+im3QVYPfXG4z/87t7z6zfF83+wC37bI+oNp5hXX4DozupSZ
+ Ms4CFvk7oGZX+HA95Vcf4r9Gg6XdIQUN0J1vSL3qsiW2vIms160V+6mTjE8Pgh8Dxj2yUqQAvki
+ kAaLfZ/Bf8zOs3B00E4Xz/801PVgZNn07aKZxaAiRB7qxg9GGZN2WtQX9DvkA3Yua7LkF3mRHpo
+ OIg6xUHsXNtTOoMwJ/11JH/Z21ja5O+LTA7qAIByf7pAvX9fVF6nP/8RhjDvF1DLklghCyK1+zn
+ rp+KTNrD3tD5bzynuvN3YL3tfKmf5Gx501Qjbeevbvtu1neM38jPMkycYZ/ZplNhK7RCND/TzcR
+ 193Tvt9wKM7RR9De3UB9qNhKbDK3oHt7Tg5oZsKgKQuxstzhcVGhrmL51/52/mkmp6qbNk+U1tj
+ 8jv
+X-Received: by 2002:a5d:5d08:0:b0:44e:1984:5f3e with SMTP id
+ ffacd0b85a97d-4515d3dc343mr9881833f8f.31.1778133139920; 
+ Wed, 06 May 2026 22:52:19 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-45054b02f76sm16947316f8f.23.2026.05.06.22.52.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 06 May 2026 22:52:19 -0700 (PDT)
+Message-ID: <e3fd9643-b19c-4779-9bd3-dcb1c8314e78@linaro.org>
+Date: Thu, 7 May 2026 07:52:18 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/9] tcg: Include missing 'tcg/tcg-op-common.h' header in
+ 'tcg-op-mem.h'
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: qemu-s390x@nongnu.org, qemu-stable@nongnu.org
+References: <20260423135035.50126-1-philmd@linaro.org>
+ <20260423135035.50126-2-philmd@linaro.org>
+ <4bc408f7-7db3-4515-82a3-38b94de17262@tls.msk.ru>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <4bc408f7-7db3-4515-82a3-38b94de17262@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 2/4] qapi/net: Wean passt off QAPI type String to
- improve documentation
-From: marcandre.lureau@redhat.com
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, jasowang@redhat.com, lvivier@redhat.com, 
- sbrivio@redhat.com, samuel.thibault@ens-lyon.org, 
- marcandre.lureau@redhat.com
-In-Reply-To: <20260506105421.2461117-3-armbru@redhat.com>
-References: <20260506105421.2461117-1-armbru@redhat.com>
- <20260506105421.2461117-3-armbru@redhat.com>
-Date: Thu, 07 May 2026 09:44:30 +0400
-Message-Id: <177813267024.2413233.14832448496963067376.b4-review@b4>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=521;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=7u2RM1ewWT6SP+S2QFztAplhvO1ACpp0GZEfwYC0whc=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp/CbCb33U3IxBbF8wnwQc86h3I+z7HXeodlyGA
- mJ3P+nbUpSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCafwmwgAKCRDa6OEJdZac
- 5WaZD/9xNqLtMa4Zx7YgIW3FfccpexBePlk5ov9U0JoM4bBzp6cG3Lm+IWtApWoLisulv1DXgWB
- vXC+VXThmHX0+4GQPeSopFnb4VPed3trxRGM+xEIgZFpjH94MKDz7uswzV9usfIOGcuMYy/z8iN
- uwsa1Tm4mzS+HDgmU6KiGxNvzLi0J2Q2HgWLd1GnM4z/zCx/fJKwv+L0qc9wkpNi/f9tmeLD8cE
- bCfm9ERW4BMfY8joyqotbkn+VbksjODoBHu7mSlkm4hJn5CU8Wd8Q28zBf9kg1QUo+GvCWtyywX
- 3l0mEdZ77xyrlXE9qxt9MdVFhJrGEQ8AWF04dT0rwbRnoi06PJuY5s1FnpZCxJW2pB771AS5QIM
- XZRHV67bHDhss9TeoHnOrMcsitYuFWDKxomEQ3J/UoEjMmf7qjxYC3W+qdRf6OlVXGu4FYoYPWG
- RrIxae0UIPyrn68qPD+iBH0em+OPkzBQkyUAf1rdQ1m+rWXoS5u+echfny/jqcUCbLGC8pIUcO2
- /30tfEbtGS6Qkd/9dFmt+vOtCC0Jo5zvKRzpLVYuOM+DyDlzQbWQjsTzMxmbLJu2BNFKWFu+zEm
- C1iajzaf/wRYW/s8WQa2T6K41/xc55W3tW0HE1hOcpKaInqj91L1PfsaHklbbxVwRMqJwU30GkQ
- ZnImE98QZmVIkxg==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,26 +106,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 06 May 2026 12:54:19 +0200, Markus Armbruster <armbru@redhat.com> wrote:
-> diff --git a/qapi/net.json b/qapi/net.json
-> index 8ed51b665cd..45ee7ac7ffc 100644
-> --- a/qapi/net.json
-> +++ b/qapi/net.json
-> @@ -114,6 +114,41 @@
->    'data': {
->      'str': 'str' } }
->  
-> +##
-> +# @PasstSearch:
-> +#
-> +# @str: DNS domain name suffix for host name lookup, or "none".  See
-> +#     passt(1) option --search.
-> +#
-> +# Since: 1.2
+On 6/5/26 21:19, Michael Tokarev wrote:
+> On 23.04.2026 16:50, Philippe Mathieu-Daudé wrote:
+>> "tcg-op-mem.h" uses methods declared in "tcg/tcg-op-common.h".
+>> Include the latter to avoid when including the former:
+>>
+>>    include/tcg/tcg-op-mem.h:34:5: error: call to undeclared function 
+>> 'tcg_gen_qemu_ld_i32_chk'
+>>     34 |     tcg_gen_qemu_ld_i32_chk(v, tcgv_va_temp(a), i, m, 
+>> TCG_TYPE_VA);
+>>        |     ^
+>>
+>>    $ git grep -w tcg_gen_qemu_ld_i32_chk
+>>    include/tcg/tcg-op-common.h:328:void 
+>> tcg_gen_qemu_ld_i32_chk(TCGv_i32, TCGTemp *, TCGArg, MemOp, TCGType);
+>>    include/tcg/tcg-op-mem.h:35:    tcg_gen_qemu_ld_i32_chk(v, 
+>> tcgv_va_temp(a), i, m, TCG_TYPE_VA);
+>>    tcg/tcg-op-ldst.c:286:void tcg_gen_qemu_ld_i32_chk(TCGv_i32 val, 
+>> TCGTemp *addr, TCGArg idx,
+>>
+>> Cc: qemu-stable@nongnu.org
+>> Fixes: a8af0fb24da ("include/tcg/tcg-op: extract memory operations to 
+>> tcg-op-mem.h")
+> 
+> Just to clarify: this patch has been Cc'd qemu-stable by mistake, right?
+> Because the mentioned Fixes: commit is not in any qemu release, it is
+> applied to the master branch after 11.0.0 version.
 
-Since 10.1
-
--- 
-Marc-André Lureau <marcandre.lureau@redhat.com>
-
+Oops, likely... Sorry!
 
