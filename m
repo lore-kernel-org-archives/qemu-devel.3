@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A772CD3439
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:58:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B77CD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 16:06:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL11y-0005V2-FJ; Thu, 07 May 2026 11:52:54 -0400
+	id 1wL1ER-0004aL-UB; Thu, 07 May 2026 12:05:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL11w-0005Ic-5U
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:52 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wL1EP-0004YT-38
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 12:05:45 -0400
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL11u-00041N-AL
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:51 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4891c00e7aeso9362635e9.2
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:52:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wL1EJ-0006s9-Ky
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 12:05:44 -0400
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-7dcdaf06498so777696a34.2
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 09:05:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778169169; x=1778773969; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778169938; x=1778774738; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=A/aN2QAxKTVLKMwN6ey26q9bUhfrDOPQ9xOMl/smTtk=;
- b=X6OTwgYQCSUGumxPduiHA8KvOC5D+lO2aUqwCJCh0Wscm9CBLf1+/gnLvEMDdOTDSX
- 3zbBBiYc/6WzNDDBmZoTlIJ1AHj26Z24iMXX5FIXP8SU17oCf2Zf9igWpq49cfR5hzyy
- tFIA1f40tdt3DSSi1L0+npfFqVo4raNe0mNChvhY3/cs74l6E1M0/YKQs7eVjHNFsL5u
- ezcSSLYY2IB5BNG71BSZRNq0MtQ+JJRDG9YwXCbDl5ooYsThLKoIowyVl3sgfX6DDMHP
- K2qgPXhVVA7ZTE6K0WYnZ/TjIRdO2VvAlDkwXxsRaO1biH4Vv8y27+RnHAXN0WKXPBCG
- QZ6Q==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=e3qnQOdZ0UPdC22hHI8i/828Xzt2oEbdua+qwD0EsnY=;
+ b=YwY3aXLWgcKaVgbbdkNhAzJgLBQW4gRvfRBg5I19lNabZJ9/yjIwOxNTj4fN82b9R8
+ 7B30/gBbzB7mFourQth2qhWL+P/5X2RsD64q+UdfD1L+Azj5eJo7Aj5tFdRvM7wzZgg6
+ UHTjNSInEfIOCpxigMaujlQAuL2yyn9hs3LHngKZO0ONm0Xs8cBF1QrmYmjJy+FK0ndG
+ +7z1j/Jj5lvvRD5ddbeoqU1SFtwUEmA4zOwbU4ASkHTfs67hx4hmQFlKVly+j2CsxQyY
+ Lniw+o55tDIBNhepoihtNQ3c3o083tvzcjbHiHQxhBkELFYyzShSYPp4z4QL2bPSoxn1
+ JSFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778169169; x=1778773969;
+ d=1e100.net; s=20251104; t=1778169938; x=1778774738;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=A/aN2QAxKTVLKMwN6ey26q9bUhfrDOPQ9xOMl/smTtk=;
- b=UoWVsYzhxzQTnuQNN5U8C9H4RQoCMRRgDOkiLQNOuMrsupykVmhGAM9NVT7AdyDJLq
- Lv6BGvByRnAvuMi48qOABQuEsJe4mNVyZ/tHB707HD+VxX1KpX3FaK1WjX6vrjPRc8qf
- ganyU8tLrQ9d4Yxjw37Bhh2/uUzlaRGHDtbTaEqA6lnD98WdDY88zN8PcyX+S6OMEr/V
- 9stJxATKB5ghSfxfPTkKTMf50qGFKdP9Nvdwuc1yhJsufngCNYlJ6RYvgQIoVYlb8oUI
- T0tUFbF4ONkMPcNvBzqmEj4Tz1/kTBbgM20LNj0tpoKP7C4J5jMequADMnRupl4SI3GP
- GLxQ==
-X-Gm-Message-State: AOJu0Yw+mdF0FAorx8icMU+NJJ2D3vm1+FqACtH2TVeKulIUjTS/bC0s
- Qd2fKMM1sIkYcxq5yy539b2u8fFxk6sBKVE7rNRU8eQ00JAfptp3VhJ5w8asqnlCzKEGfIYS3ga
- GChUT
-X-Gm-Gg: AeBDietB7t7K1s9qqHyiXgYsPXoh/7SKQWjJ/M9zhI2v3wJTGj4/HT9hHxGWwwJUbwM
- O4b/CGp808RT8v2JrM+QJ+KQVryLUNSeEsZvALMBMOOv+4Yhan/RxcVrVrNzn0gpjrKj1EnqQB/
- zsaSNcrK5uxFl3GJWFMrmIB8N7shuq3S2d7CHdsephCJKwghHMFIC9JcNCdx0JkEG5Nl784MQtW
- W2l2u9E45BZgAdFFdl9u0edGvlPl0knxP2SjPFGBhDyI6aNxoG1Wg/FL0v8PKr4pt5WBfRg6Nwd
- zk99uesmeDHZWje2v1SzklxTv38IwGYBa82GsJxnwH3BntiOhWwoo9BF8YfyAXNs0QitZEPIV86
- yUZHICSMqoBaQ3C2QNIAyklpj7mtxSrFXRCc5qP1BRHkkSS8TomH5VNHOjyvOjUSpeGfRDB2hqi
- R3UhFxvRgYOCX1M7xWjB6bMtRvEyRDMoS9aRoxAdALY0CtGKYMITpVXuvzpv2Ff32dFXcoDqu+A
- xzQHjvj+x4/wQ20GBkH2tEY4IA4TuU=
-X-Received: by 2002:a05:600c:8b0c:b0:48a:7a10:4f47 with SMTP id
- 5b1f17b1804b1-48e51e0a620mr146357125e9.3.1778169168715; 
- Thu, 07 May 2026 08:52:48 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=e3qnQOdZ0UPdC22hHI8i/828Xzt2oEbdua+qwD0EsnY=;
+ b=cI9MDhDmgy+Gyf3H0tn5LoYJr8QtGmPcJeREzzKuT8E1ufFjbWyEMPIt4q5yi2b0j7
+ W59xU9IsTJ83y0sutSO1PE/4gjNhGsvW6leDfprR1ZbjnlizOjXbo+obsE9Vdmf9imR6
+ EsaKoP5a/ZpzIBKO1iWK9xjx32O1V5ueZykxZfbDsDvFDYepsbTF/SoeG+Y18zk7C2mO
+ y7xA0scBy8tx5mb+1ofzCVZVRNs+q1p8FICLGKLhjHRG0iGu40A5mUDiyDoQO3ydCbP4
+ qoSAE3RG5W7rDnQGEqHF/U+FwqrS88p1SXOZXliY/0GW1wxKvZsGX/gAyLTBPczsbbLe
+ g9qQ==
+X-Gm-Message-State: AOJu0YwDw1KAXQCPCK+46BUyuPicky/QJi75l1lwMcMklWPTdqUNl9c7
+ Zf1DkzmyZrBq1N4qTgAnxTCeeDiO17PUoofj9/K5yrrUxdAM0V4b4M+xyXz6vYajTObL3JUStEC
+ 9GYU/
+X-Gm-Gg: AeBDieuaJ0i1RTKow06eq2WLriZrZN1FxskeWIS3yZiJGI1ZF1gHRh/JGbRYsbPegFi
+ E2UwLy7bFn4j1YUqe1je5qEZqao5vjMLCTaM7VWa9qLVnaMoWigAtqKOyvcjGFBSSLrIG/xximy
+ j3JfPjACSNNoUyQ6xmzy7V7qa689/5CJBV/rjDjTHo8ZV91khr0p5JVL4LeLrz0ET1U9wp2uu44
+ gM3lls/5Gqy2/UFvp8NeURh8OecTOvh5wkKGxjxrfz0DEgpfTXwWzrppYrG5slZRv4HNvPcRKPN
+ HR/0MaHlcY62lw2nH2l1Os1XbC/KI8C9v2Ca/q7KXUctVpj3tSQ2uQT5nAggGrCVI8tCt7Qejo4
+ IZzrlU1gILi8h7pB00wIpKqnM3MoSDLkfWcm5zJIkGGrCDxiVY7TNz1plicRuxRmBFQoczaaM9G
+ U+lRPLShbnnsRjKU2eLIcCmG8zUbPgWhAshLDuLWGmYNPV1dPMxPfx4Gwt
+X-Received: by 2002:a05:6830:3785:b0:7de:a330:ecb8 with SMTP id
+ 46e09a7af769-7e1defe86f3mr5129448a34.16.1778169938335; 
+ Thu, 07 May 2026 09:05:38 -0700 (PDT)
+Received: from stoup.attlocal.net ([2600:381:c938:6375:9641:bbb2:a93a:bb4c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.48
- for <qemu-devel@nongnu.org>
+ 46e09a7af769-7decae680bdsm14647398a34.27.2026.05.07.09.05.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 08:52:48 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
+ Thu, 07 May 2026 09:05:38 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 54/67] target/arm: Add has_gcie property to enable FEAT_GCIE
-Date: Thu,  7 May 2026 16:51:41 +0100
-Message-ID: <20260507155154.1886557-55-peter.maydell@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 15/29] fpu: Sink exp_bias adjustment in float64r32_pack_raw
+Date: Thu,  7 May 2026 11:05:03 -0500
+Message-ID: <20260507160518.444797-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260507155154.1886557-1-peter.maydell@linaro.org>
-References: <20260507155154.1886557-1-peter.maydell@linaro.org>
+In-Reply-To: <20260507160518.444797-1-richard.henderson@linaro.org>
+References: <20260507160518.444797-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,114 +101,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a has_gcie QOM property to the CPU which allows the board code to
-enable FEAT_GCIE, the GICv5 CPU interface.
+Share the float32->float64 bias adjustment from both
+the normal and denormal paths.
 
-Enabling the GICv5 CPU interface comes with a significant
-restriction: because the GICv5 architecture is Armv9, it assumes the
-Armv9 requirement that only EL0 (userspace) may be in AArch32.  So
-there are no GIC control system registers defined for AArch32.  We
-force AArch32 at ELs 1, 2 and 3 to disabled, to avoid a guest being
-able to get into an EL where interrupts are completely broken.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Message-id: 20260327111700.795099-55-peter.maydell@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
- target/arm/cpu.h |  2 ++
- 2 files changed, 47 insertions(+)
+ fpu/softfloat.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 29346609e4..330e9be473 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1270,6 +1270,9 @@ static const Property arm_cpu_has_el2_property =
- 
- static const Property arm_cpu_has_el3_property =
-             DEFINE_PROP_BOOL("has_el3", ARMCPU, has_el3, true);
-+
-+static const Property arm_cpu_has_gcie_property =
-+            DEFINE_PROP_BOOL("has_gcie", ARMCPU, has_gcie, false);
- #endif
- 
- static const Property arm_cpu_cfgend_property =
-@@ -1526,6 +1529,11 @@ static void arm_cpu_post_init(Object *obj)
-         object_property_add_uint64_ptr(obj, "rvbar",
-                                        &cpu->rvbar_prop,
-                                        OBJ_PROP_FLAG_READWRITE);
-+
-+        /* We only allow GICv5 on a 64-bit v8 CPU */
-+        if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
-+            qdev_property_add_static(DEVICE(obj), &arm_cpu_has_gcie_property);
-+        }
-     }
- 
-     if (arm_feature(&cpu->env, ARM_FEATURE_EL3)) {
-@@ -1826,6 +1834,12 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-                        current_accel_name());
-             return;
+diff --git a/fpu/softfloat.c b/fpu/softfloat.c
+index 7d67e25c17..b7d461bca4 100644
+--- a/fpu/softfloat.c
++++ b/fpu/softfloat.c
+@@ -1412,14 +1412,12 @@ static float64 float64r32_pack_raw(FloatParts64 *p)
+              * in normalized form for float64.  Adjust, per canonicalize.
+              */
+             int shift = frac64_normalize(p);
+-            p->exp = (float32_params.frac_shift -
+-                      float32_params.exp_bias - shift + 1 +
+-                      float64_params.exp_bias);
+             frac64_shr(p, float64_params.frac_shift);
++            p->exp = float32_params.frac_shift - shift + 1;
+         } else {
+             frac64_shl(p, float32_params.frac_shift - float64_params.frac_shift);
+-            p->exp += float64_params.exp_bias - float32_params.exp_bias;
          }
-+        if (cpu->has_gcie) {
-+            error_setg(errp,
-+                       "Cannot enable %s when guest CPU has GICv5 enabled",
-+                       current_accel_name());
-+            return;
-+        }
-     }
- #endif
- 
-@@ -2163,6 +2177,37 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
-         FIELD_DP32_IDREG(isar, ID_PFR1, VIRTUALIZATION, 0);
-     }
- 
-+    /* Report FEAT_GCIE in our ID registers if property was set */
-+    FIELD_DP64_IDREG(isar, ID_AA64PFR2, GCIE, cpu->has_gcie);
-+    if (cpu_isar_feature(aa64_gcie, cpu)) {
-+        if (!arm_feature(env, ARM_FEATURE_AARCH64)) {
-+            /*
-+             * We only create the have_gcie property for AArch64 CPUs,
-+             * but the user might have tried aarch64=off with has_gcie=on.
-+             */
-+            error_setg(errp, "Cannot both enable has_gcie and disable aarch64");
-+            return;
-+        }
-+
-+        /*
-+         * FEAT_GCIE implies Armv9, which implies no AArch32 above EL0.
-+         * Usually we don't strictly insist on this kind of feature
-+         * dependency, but in this case we enforce it, because the
-+         * GICv5 CPU interface has no AArch32 versions of its system
-+         * registers, so interrupts wouldn't work if we allowed AArch32
-+         * in EL1 or above. Downgrade "AArch32 and AArch64" to "AArch64".
-+         */
-+        if (cpu_isar_feature(aa64_aa32_el3, cpu)) {
-+            FIELD_DP64_IDREG(isar, ID_AA64PFR0, EL3, 1);
-+        }
-+        if (cpu_isar_feature(aa64_aa32_el2, cpu)) {
-+            FIELD_DP64_IDREG(isar, ID_AA64PFR0, EL2, 1);
-+        }
-+        if (cpu_isar_feature(aa64_aa32_el1, cpu)) {
-+            FIELD_DP64_IDREG(isar, ID_AA64PFR0, EL1, 1);
-+        }
-+    }
-+
-     if (cpu_isar_feature(aa64_mte, cpu)) {
-         /*
-          * The architectural range of GM blocksize is 2-6, however qemu
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 9d2c27f7df..a0a1d7fbe3 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1031,6 +1031,8 @@ struct ArchCPU {
-     bool has_neon;
-     /* CPU has M-profile DSP extension */
-     bool has_dsp;
-+    /* CPU has FEAT_GCIE GICv5 CPU interface */
-+    bool has_gcie;
- 
-     /* CPU has memory protection unit */
-     bool has_mpu;
++        p->exp += float64_params.exp_bias - float32_params.exp_bias;
+         break;
+     case float_class_snan:
+     case float_class_qnan:
 -- 
 2.43.0
 
