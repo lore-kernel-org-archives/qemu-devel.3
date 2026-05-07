@@ -4,141 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEC60CD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 19:23:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACCE2CD3442
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 19:24:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL4J7-000628-G5; Thu, 07 May 2026 15:22:49 -0400
+	id 1wL4KM-0006cG-Cg; Thu, 07 May 2026 15:24:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wL4J5-00061o-JN; Thu, 07 May 2026 15:22:47 -0400
-Received: from mail-northcentralusazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c105::5] helo=CH5PR02CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
+ id 1wL4KK-0006bg-V0
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 15:24:04 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wL4J3-000057-PM; Thu, 07 May 2026 15:22:47 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=G5sUqAZoX7GFpjA2OM4H2IAc5sgFvpAlRFG8GDXwsojku7ScAlPXAfo7/aH1XYz9czFrVs3aGR9CZKPP+8SVZOhslv2sbCo9+2Z5HHD5PSHcrj7Bi6pa6zERRsQv7fQxsOYuE6uK4KxNPiHJt0DMiMhtsZxxaPqRhXOdPSbC6UXUj8QcKNhJ82IUgNNBKyYCLpuuomm1n2RmhHuFS8Gkp5PxiROepPI6873+5L81UBS7kQzzxG9HlUFqwd+N/3ULODxocrKDThzAAHcUK00f5mp6jxC+VEPyxhbLMBkrc49A1w4DX12KB4TCo8D2Kugbgcd657epsDRnnyf4Azf7eA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=r2ja+3thqGD97Qd3otyKP4QhVcbUPBeOa37BJ3xXJQE=;
- b=Vgwlcx6V1kr5InPjP34+nyoBvCVpBtvfUV6OxCC1EGYXp1x5ozePcS6/WbLb36SVoacsAbKm5aaoivMn8wJ5YFI277MJVmw2dMeZ6IbQb9hdCP18fStTPkVuix+1afaZdB+ekQMtWlT0XqodFY1zL8L15i1hAtqWxyeqzfEt7KLlbNcgorulgEXwRUcER7vUuOeSnZnMT7xohyLOQ7znMtJyC4Hg/jnm+1Mwi48Uk3K5/6l4gZItpz7ofGOvittYF8Znp2vDbI9he7qyd2D/0sguTiSWNXKxFtWsGPakQEubfSqpLyMF9Rq+PUSd831KiRm01CaGntlNQ0T66UkJcQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=r2ja+3thqGD97Qd3otyKP4QhVcbUPBeOa37BJ3xXJQE=;
- b=S3EAKQRcPbBqYFI49CDcxz9d9d345FXae9twog6hP5CCsHDp/hiw2CCn2WF0vZkwcBq3dXe1TvABMlPpmKRW3s4Zor3AedrpuAtsoY6FQCGTuqB4ld40CsT4YZuOHJXjZ4mYBuJG3iWH4IibWU4yHngDQGbfZDIH6zyNHIaVoeiCRSwak2cEr4YrxgBeiZh3vw1sDJfAFfmvfEYmbZ0nR2//FI9vFvfqC1lHpGVvRbJarKYdN7oCEi6WDZLzEkud8scBAouAaip47Om1d+DcN2gz//vpaoJWMDbNVpVPHhBdZm2VfuxJ+XpE/at4JQj2s1Fy+jYxf+YUaonOcjnqlw==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by LV8PR12MB9452.namprd12.prod.outlook.com (2603:10b6:408:200::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Thu, 7 May
- 2026 19:22:38 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.20.9891.017; Thu, 7 May 2026
- 19:22:37 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
- <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev"
- <kvmarm@lists.linux.dev>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "cohuck@redhat.com" <cohuck@redhat.com>,
- "sebott@redhat.com" <sebott@redhat.com>, "philmd@linaro.org"
- <philmd@linaro.org>
-CC: "maz@kernel.org" <maz@kernel.org>, "oliver.upton@linux.dev"
- <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>, "berrange@redhat.com"
- <berrange@redhat.com>, "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-Subject: RE: [PATCH v4 15/17] arm/cpu: Expose writable ID reg field properties
- on the kvm host vcpu model
-Thread-Topic: [PATCH v4 15/17] arm/cpu: Expose writable ID reg field
- properties on the kvm host vcpu model
-Thread-Index: AQHc2s+xRZw+5L8EoUSk70vndHElRLYC9owg
-Date: Thu, 7 May 2026 19:22:36 +0000
-Message-ID: <CH3PR12MB7548D4829306C3B8E9612FD9AB3C2@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260503073541.790215-1-eric.auger@redhat.com>
- <20260503073541.790215-16-eric.auger@redhat.com>
-In-Reply-To: <20260503073541.790215-16-eric.auger@redhat.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|LV8PR12MB9452:EE_
-x-ms-office365-filtering-correlation-id: e1b7a877-dd4a-4a11-24ac-08deac6dff6f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|7416014|376014|366016|38070700021|921020|22082099003|18002099003|56012099003;
-x-microsoft-antispam-message-info: 6mN/s8ppjF3ZiKZh2aoRBjuAZHaSwHT0c2T9zpS4t3Tj8ALE0TsyxGnt5YKlqrDtYbrccbyPziR8v2Qizf1TxbnyAX27lD1gSLocCeNrPMFymHfQHCAAXHbH1FFDFSYobQFBaH7uRH1+oDQc0mbHbaAHl68W443jM/B5D842oYvkvMzmvE2N9c40DEznLJxDdSJZun4FqO8WYz5mggNxdoo8wTOg4GaWq1kdouwASx3QjSK6rb8593dyRD+vZsK9ifDyMtIwx0WoPwxnlaRRe/HlrqC43bc/AdMH8u5gQ1x7vAlqN4N5QiKeX7uBBXuZoI9B/9e8VPAnaidZOPJzjanRrac+YejYQW0gi1II0mnOwN1uQ+8DJ/Ik3jRYqPIbayFokeVdfpC6qosCb7kPOTLRpSfxJPj7xtGPCoN+/RiI30KGdIk8nMMM76pBzqDQQsANBnaL64f1okcnCwPUh4GZVjCJ4+xqCw/WsfILKQU8yTJSTPvydmxUtLcnJST93+Z9CRaUc9xLckPjK/D4zkk+YHKGIbSM1zI/eEVPtvQy/poDs5J5/fWHQmFPUlBIrg76rW5/++34Xaq2G0A0Gf3yMcYAq3fjSIlOS1e6zbmeDiOOjYoSRZF8T+3nBU7LmsQUJORiG3ev/ETKoEJDV5pRSLy8tIDo58Cnze5RIgZ6eqTPFJchrN9x2PdXxYIg4ja5OlTxEtWOj45k+1WP00PHcw8v1UfXTgHa69mrv0LmT8Kaurtwt0IfMKqRlpzOXaKsAjIZm5Ebg9sarlcFVQ==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(376014)(366016)(38070700021)(921020)(22082099003)(18002099003)(56012099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?zHMzaVQsFebvM1Pyjvq8VnTfbvtbmAHbmm3h48cGxZdl63hHctTDubtIQoRj?=
- =?us-ascii?Q?L/48EsuF8dfpSf6BIVZX+WBqZHNzZcZEHApE5FvxP4gS2fYYXh7+0hW7PeQO?=
- =?us-ascii?Q?MN7JJSJ8I/FDXEJRtTePBtr5K550DTIn4vdKGrrVaCydagrechpUqDDSG/62?=
- =?us-ascii?Q?g+AL4B/IOswPj6BVgo0iMNVET4RP/gIKfe1ptvRkN91+OpzhTMTcb82FwY9z?=
- =?us-ascii?Q?xXmE41LLU2wSk013W34gbRTHPk7YSrn2vgGb1xrg0vk+wepvq2sEB7TvpX/K?=
- =?us-ascii?Q?hs6s2KWSdvjaNIclsmojgqWBuujraumkfkKI5nbLqiA66lhgCbdPFFUb7vEO?=
- =?us-ascii?Q?QBLBAzI2o90EeDdwjObRoY3V0iYVIwXJWZXE5S3nPBPb4ARypH1NwQxy49Xa?=
- =?us-ascii?Q?hdDWoCzPIFHVGvNe25JqQHTXkgpg/2b+3LMKEaBA6w568f5CDV+3QuIDbLoS?=
- =?us-ascii?Q?CrMRRxkdX9jLp44nvf7kviPj3XaNivoNkTnAUsBuKNAUN/pMQArpSlHp7wKM?=
- =?us-ascii?Q?3N69bj+ZxPNAfPCUvf24AlI0AMPTCHVCDVlRDNeC6YP05M47vI8s3mE0dHXv?=
- =?us-ascii?Q?UnD3gYHQIEIZNM7lLpKn1++EWMkKhXz08VUbbfmYtV16KesFjr5+hBA44l5G?=
- =?us-ascii?Q?BMaPwq+ODsCpsDM9W1VT/H3AdZ+t8VOjnbPuu0V4lqTwmmyb2s6V+v15cVg4?=
- =?us-ascii?Q?I+s7jrnqeJpEDNDrn8xgCHhoF4EGEdMdj6BdtVIb50tYRhyo4+q/z8KNWbHL?=
- =?us-ascii?Q?hCEMnEOMpi8lWvA9Nqv5lFy6rVKJg24i6U8N7Pnez7w/fR2An9Da2EGlLQ7r?=
- =?us-ascii?Q?/IQgPOuVru///ZQgsYwQGk3jojdXYpZH3fMBnl4hKqB4onnxZE8Q7TonPEQz?=
- =?us-ascii?Q?CilPOIQ3WvtD2ACE1b5CBE6/WDd2ra2Aa75sNKkMJ8nV2CoreJaGGLVAeWCU?=
- =?us-ascii?Q?NcXXbroLfJNuADimRdmvgBrpd65azADC5Td16nQskNd04mjhd9OR2bM4KMGs?=
- =?us-ascii?Q?MWPZtFbE1VRsXwxeLqH+mcVAL8x09lNP2kjPUPdwashgdqlrV/cT0Jp8/qvW?=
- =?us-ascii?Q?8FGjIHQFprt3Oi+etQkQuoDHBw09AzSAmzY0Ik/kN2W4SmD0LKqSIl/xSHnZ?=
- =?us-ascii?Q?YEQuV8D3zhCYiEY9WoWAkX952G9Z2DA+VhJolkby17F99NPO/6YhAoBgLFZI?=
- =?us-ascii?Q?UZ+BfCrOBY8u8RdVNKzYEnyqG11Tu+2cWM0XKGtcNiBZEso1v8Kr0pLmsZLk?=
- =?us-ascii?Q?T3WjoXkJMg46Wi2xug194ak5SUC2gLVN/F6DFZXNWPnZblm4AcOffPTgK7qF?=
- =?us-ascii?Q?+UtGQm7W1WaSqF3nsAc73etQMqeOcRSuz9UZEMsXkAF5cTYjy2DjLUn1G/9e?=
- =?us-ascii?Q?pA2m0BVQqtfQH3oXCOUU+Dm3fBsiIY+Kf7mT9Y1LmisbGSd4z3Fy8YmomX2W?=
- =?us-ascii?Q?OCyQ0ZrjCKBPgcLpN4KpoMsaJcYD8mY5EJWCHas5ULPPaC4bsd3WFCnUaPw1?=
- =?us-ascii?Q?v+YcbqiBeJYS1boAmKrx866f5wMKB9O76hwRPeH1QTIAOwMF8OqPF+x7vEMu?=
- =?us-ascii?Q?IMkVO6dh2uIoxMtHNRf4v6Q/iiQenKpLXebmV5de1T4gEUqWLBCeX84KgA+I?=
- =?us-ascii?Q?OkuVR+eteL4uqPzXq9MPJO/0UGcPO6pD98Bfkj23aCW+ptM//wZ0KX4kxFmX?=
- =?us-ascii?Q?hU+usRdMftrmZW1bS10lUozuWmW++0P5Rutb5OfH0mxJ7LU+SBResO8UUeun?=
- =?us-ascii?Q?mphfz+2fUw=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
+ id 1wL4KI-0000Ia-N1
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 15:24:04 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 647IBd7Z2770992
+ for <qemu-devel@nongnu.org>; Thu, 7 May 2026 19:24:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=qcppdkim1; bh=JD3Okd8DQ3GxIiHKqOVQvShu
+ QuH73oAxFAyGID8iKWs=; b=IDS6kymeienCkPE2WHD1aIN6LXnstDZFDQx6ImB7
+ kQwywlLlzmcrnMuaVh2kqFGqywsQUkbmwLttzu2AIr3A40xyoLHJye9o7JFaSUzX
+ X6rmjVUrmubZyP/FD5tzdEfEouOmLdjcyawes8obCphNVC5y623YNw0Xgu43hiJY
+ OW1NuJSqSUddvO7JGDQD55BQeDXvTDwuSSw2VRyYxkzvhdWO4WB4nQ5vqgOBE6RQ
+ DVOwbq4WB8pdernq7X20vSQMzTP9F72m+rQcj5gaL9PL0zU6EsmqjmK2ZeF2b+jA
+ nl2chANrnFZRXi6E7bMBnb3s6gmyAVj9CaV6Gh3Ftw1N/w==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e0yt5g88v-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 19:24:00 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-2ef37c3f773so1420445eec.1
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 12:24:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1778181839; x=1778786639; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=JD3Okd8DQ3GxIiHKqOVQvShuQuH73oAxFAyGID8iKWs=;
+ b=AfuoR27eEWY0Uk9SVq4DqmMOJcbhhT4QyXOUkGDG7aAi2YBjgv9/D0UiPcLxIEc6LJ
+ MeExfkevWy8I/cbOLnSGAGkv+hVEYI2xTBWuY7VSMaYLtXwJTplXy5MHYDAXEoPq+LyK
+ E8K/ZybAvT4yz5tyuOTfWzvoIM8x0mWBjRlBLOtjiMdzD0iiL/5A0/IyUx3pDVQL9Yta
+ Ldqt/ZlAULcs7BExhnKLVFx8ps/j58d0egX+uxNQIiFBDQMFDgT4OMSbudD19YAAhSLC
+ 3wq9NIlwRpnZghFjM1LFeArf3+u7eUffy11Z+okfGJ5JubNvJASqMCpFCkrCislCvDEv
+ NbGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778181839; x=1778786639;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JD3Okd8DQ3GxIiHKqOVQvShuQuH73oAxFAyGID8iKWs=;
+ b=gCFsPgr94HSdBdmwBP6QGsyrMo+aJ2cYUUIXRwbba/jDP6qu8m7A69hx4yIisL5rqZ
+ ax/VyuYZX6OvC10VDeXORQwhnVvse0w391sSFN2cRnFhZJosHislxQVBC2+Sn+1vn+Ae
+ f2foUT9k3PyUOEf0BpfGw7x94Zb40pH49t8zERvV2kua8/DCvfoKlT0hy7l93PuR8Hpr
+ Php+PtQbUP/JUqscUxUtiEnGGQrwwFBh0nXU9u9sL1Q6vRaG5QL+ZyRYUxhgM0Ck3xv2
+ Loqe5uHP0IXcqgaVgig5I/PLFxkwkpex6oSqCb92/Pu+J3cnXf0o4+bakzN6pT6YwEbq
+ RvOg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9QBPV6wKLnkA+YtoIOULEqyhIJx/a5q2+T2bZUH3Av9UVrBUW7BgUyhoVzvoEyh9/Kb2kTwqx9qHcz@nongnu.org
+X-Gm-Message-State: AOJu0YwMCyP98uvji8eSxmbye/3ywimMPONiYIAjOPh0RhJYHImwb9lQ
+ PTYalECBtaIxqfT0vpjTZrs094sXVn2U7jtbQTqMBJagXscMWHcSaM+0Mc0FOAgdEmsenQ60ADs
+ rCe3RkwxanKKh3RqSCDM08uLSovYzFAc8UFrT1e5090VDoBD9PgPTKCMRkA==
+X-Gm-Gg: Acq92OF2La+d6GlRDRgV5voYwpnz75J9a3B52HtbmZLyZAIys09MXPxzj/+AgIte+b1
+ xJJuI0T/C981Mt9uFp3TmsqPnFQBL3UXlROow2hGcslFFaxtU87GPm8yQ/9W0cA6xUd5MQeKlPR
+ DbdLQhSq5L4fvysZ/e7ltQRPJdPAPukeFIVZutU3har97mgPm2uScpYCz64XA3JycnB3d9F250j
+ yfYt88Bb0ADX8uRL6G7vWUEFs2Jjjdihh8KpaQJ7OQqwZifNxl4ZLPcQhOZmk4QxOOiy9zZB2K2
+ xK4hCbLffyaUbFE0s2wx0p4dyS34MD+so9pmKx1WbYfdNTyw5WkV6MkzNJJNLnH3YKPMKly/j1B
+ VAdH5aNoJA/X0IRxuqwtz9z9Uehv2HqI=
+X-Received: by 2002:a05:7300:cd91:b0:2ed:f791:3417 with SMTP id
+ 5a478bee46e88-2f54aa781f5mr3897809eec.25.1778181839066; 
+ Thu, 07 May 2026 12:23:59 -0700 (PDT)
+X-Received: by 2002:a05:7300:cd91:b0:2ed:f791:3417 with SMTP id
+ 5a478bee46e88-2f54aa781f5mr3897779eec.25.1778181838495; 
+ Thu, 07 May 2026 12:23:58 -0700 (PDT)
+Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2f82b5636b2sm382898eec.3.2026.05.07.12.23.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 May 2026 12:23:58 -0700 (PDT)
+Date: Thu, 7 May 2026 14:23:56 -0500
+From: Andrew Jones <andrew.jones@oss.qualcomm.com>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ chao.liu.zevorn@gmail.com, leif.lindholm@oss.qualcomm.com,
+ Fei Wu <wu.fei9@sanechips.com.cn>
+Subject: Re: [PATCH v5 3/4] hw/riscv: server platform reference machine
+Message-ID: <wazisnbumueun37qskfnjz7n5ioqhpshesebjsczgucjmxxhia@va7avfk77xlr>
+References: <20260424191129.1494381-1-daniel.barboza@oss.qualcomm.com>
+ <20260424191129.1494381-4-daniel.barboza@oss.qualcomm.com>
+ <CAKmqyKNZiA=rYVD6ighyFO+qmhdYVk=UgbaznBHrZ2yt1ZvOtA@mail.gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e1b7a877-dd4a-4a11-24ac-08deac6dff6f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 May 2026 19:22:36.9823 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: +NraaEZYXrAA9F4YEKS4skFVIp3wv0GtgrO9qjf4H/0I+4HbE9Gmv6iglw97fp1LZkoTtgFoAEg14hzPso8GCQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9452
-Received-SPF: permerror client-ip=2a01:111:f403:c105::5;
- envelope-from=skolothumtho@nvidia.com;
- helo=CH5PR02CU005.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAKmqyKNZiA=rYVD6ighyFO+qmhdYVk=UgbaznBHrZ2yt1ZvOtA@mail.gmail.com>
+X-Authority-Analysis: v=2.4 cv=Dc0nbPtW c=1 sm=1 tr=0 ts=69fce6d0 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=cvcws7F5//HeuvjG1O1erQ==:17
+ a=kj9zAlcOel0A:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=NEAV23lmAAAA:8 a=Nc591jLmD5Htqi7HrfsA:9 a=CjuIK1q_8ugA:10
+ a=PxkB5W3o20Ba91AHUih5:22
+X-Proofpoint-GUID: mjIc9BYyFEwBeLoeQQJXjf45I7EykS1i
+X-Proofpoint-ORIG-GUID: mjIc9BYyFEwBeLoeQQJXjf45I7EykS1i
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA3MDE5NSBTYWx0ZWRfXw1xTnDTvFW8j
+ auFIbugDil3PtTE0lgobPiQux693YteGbyxy09HxjCmEwGVW5jOtlx/81QH2FMq4Kl6LsjA96tn
+ XrwONws5Pg6kVeyGBuSqh09jD56cgVROzCkEOJJaluQsH6nqh98n5O/OPKiC3eZUhkEav6Xkr4a
+ siW2ZnQ5UH1XZrBlhTg8wjMcmHDkP/9RYYcDGpZ5FEImEej98YXu/4P2KxbSMZ7r+G4O0xUuYqF
+ LgnfTU9Uka5FDDDFc5RWp7+m4+4xY5Ji81YyUYAPl4xgRY9/71qwuTRDXnCJBMIuzm2GAEqI8su
+ bxbqf+/+EhoOfWSKtRJtEWm7afGBPNeTZNJCPzaUmcDAyGoyGXK/+hiTyV4J7bMW3CDBubRv1uj
+ hLq3FNEgwHwrXnmQ7R5DM/258H1HiBdUVh3GUK7g+zy2Nmufz9lZqxxVS+LmpHfM/4nGkZGKU8f
+ pV7qFlmMi3Iz2SlY0Rw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-07_02,2026-05-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 suspectscore=0 lowpriorityscore=0 spamscore=0 malwarescore=0
+ bulkscore=0 priorityscore=1501 phishscore=0 adultscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605070195
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=andrew.jones@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,136 +150,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, May 01, 2026 at 01:27:41PM +1000, Alistair Francis wrote:
+...
+> > [1] https://github.com/riscv-non-isa/riscv-server-platform
+> 
+> The first line of the README says:
+> 
+> """
+> This document is capturing discussions at the Server Platform TG.
+> These are not official specifications and everything in this document
+> may change.
+> """
 
+The README should have said frozen instead of "everything may change".
+It was my fault for not having updated it. I have updated it now, though,
+but not to frozen, because v1.0 is now ratified.
 
-> -----Original Message-----
-> From: Eric Auger <eric.auger@redhat.com>
-> Sent: 03 May 2026 08:34
-> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
-> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
-> peter.maydell@linaro.org; richard.henderson@linaro.org;
-> cohuck@redhat.com; sebott@redhat.com; Shameer Kolothum Thodi
-> <skolothumtho@nvidia.com>; philmd@linaro.org
-> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
-> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
-> jdenemar@redhat.com
-> Subject: [PATCH v4 15/17] arm/cpu: Expose writable ID reg field propertie=
-s on
-> the kvm host vcpu model
->=20
-> External email: Use caution opening links or attachments
->=20
->=20
-> If the host supports KVM_CAP_ARM_SUPPORTED_REG_MASK_RANGES and
-> KVM_ARM_GET_REG_WRITABLE_MASKS ioctl successfully retrieved the mask
-> of writable fields for all ID regs, expose uint64 SYSREG properties
-> for all the writable ID reg fields exposed by the host kernel which
-> can be matched in target/arm/cpu-sysreg-properties.c.
->=20
-> Properties are named  SYSREG_<REG>_<FIELD> with REG and FIELD
-> being those used in linux arch/arm64/tools/sysreg or in the AARCHMRS
-> Registers.json.
->=20
-> This is achieved by matching the writable fields retrieved from the
-> host kernel against the generated description of ID regs and their
-> fields in target/arm/cpu-sysreg-properties.c.
->=20
-> An example of invocation is:
-> -cpu host,SYSREG_ID_AA64ISAR0_EL1_DP=3D0x0
-> which sets DP field of ID_AA64ISAR0_EL1 to 0.
->=20
-> [CH: add properties to the host model instead of introducing a new
-> "custom" model]
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> ---
->  target/arm/cpu.c   | 12 ++++++++++++
->  target/arm/cpu64.c | 23 ++++++++++++++++++++++-
->  2 files changed, 34 insertions(+), 1 deletion(-)
->=20
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index 10feb639c4..10ce4eb0cb 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -1824,6 +1824,18 @@ static void arm_cpu_realizefn(DeviceState *dev,
-> Error **errp)
->          return;
->      }
->=20
-> +    /*
-> +     * If we failed to retrieve the set of writable ID registers for the=
- "host"
-> +     * CPU model, report it here. No error if the interface for discover=
-ing
-> +     * writable ID registers is not available.
-> +     * In case we did get the set of writable ID registers, set the feat=
-ures to
-> +     * the configured values here and perform some sanity checks.
-> +     */
-> +    if (cpu->writable_id_regs_status =3D=3D WRITABLE_ID_REGS_FAILED) {
-> +        error_setg(errp, "Failed to discover writable id registers");
-> +        return;
-> +    }
-> +
->      if (!cpu->gt_cntfrq_hz) {
->          /*
->           * 0 means "the board didn't set a value, use the default". (We =
-also
-> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> index 1b3d3fb245..d66cb00a21 100644
-> --- a/target/arm/cpu64.c
-> +++ b/target/arm/cpu64.c
-> @@ -852,6 +852,8 @@ static void
-> kvm_arm_set_cpreg_mig_tolerances(ARMCPU *cpu)
->  static void aarch64_host_initfn(Object *obj)
->  {
->      ARMCPU *cpu =3D ARM_CPU(obj);
-> +    bool expose_id_regs =3D true;
-> +    int ret;
+> 
+> So this machine needs to start out with version support (like the ARM
+> virt board)
+>
 
-The above will be unused for non KVM builds.
+I'm happy to follow ARM's reference board's lead on this, at least for
+now. I only wonder if we may not want to use the QEMU machine versioning
+support to bind machine model versions to ratified and experimental
+platform specifications at some point. For example,
 
->=20
->  #if defined(CONFIG_NITRO)
->      if (nitro_enabled()) {
-> @@ -862,8 +864,27 @@ static void aarch64_host_initfn(Object *obj)
->=20
->  #if defined(CONFIG_KVM)
->      kvm_arm_set_cpreg_mig_tolerances(cpu);
-> -    kvm_arm_set_cpu_features_from_host(cpu, false);
-> +
-> +    cpu->writable_map =3D g_malloc(sizeof(IdRegMap));
+ rv-server-ref      -- new, bleeding edge platform implementation which
+                       may include experimental bits
+ rv-server-ref-v1.0 -- versioning ensures the implementation matches v1.0
+                       of the spec
+ rv-server-ref-v2.0 -- versioning ensures the implementation matches v2.0
+                       of the spec - likely backward compatible with v1.0,
+		       but not necessarily
 
-Does kernel clear the buffer before setting writable mask?
-
-> +    /* discover via KVM_ARM_GET_REG_WRITABLE_MASKS */
-> +    ret =3D kvm_arm_get_writable_id_regs(cpu, cpu->writable_map);
-> +    if (ret =3D=3D -ENOSYS) {
-> +        /* legacy: continue without writable id regs */
-> +        expose_id_regs =3D false;
-> +    } else if (ret) {
-> +        /* function will have marked an error */
-> +        return;
-> +    }
-
-Should free and NULL writable_map for both error paths above.
+I'm not sure if [ab]using the QEMU machine versioning support in this way
+would cause confusion or other problems though.
 
 Thanks,
-Shameer
-
-> +
-> +    kvm_arm_set_cpu_features_from_host(cpu, expose_id_regs);
->      aarch64_add_sve_properties(obj);
-> +
-> +    if (expose_id_regs) {
-> +        /* generate SYSREG properties according to writable masks */
-> +        kvm_arm_expose_idreg_properties(cpu, arm64_id_regs);
-> +    }
-> +
->  #elif defined(CONFIG_HVF)
->      hvf_arm_set_cpu_features_from_host(cpu);
->  #elif defined(CONFIG_WHPX)
-> --
-> 2.53.0
-
+drew
 
