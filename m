@@ -4,81 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5496DCD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 16:07:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66F8CCD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 16:07:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL1ER-0004a8-8Q; Thu, 07 May 2026 12:05:47 -0400
+	id 1wL1EC-0004Ov-B3; Thu, 07 May 2026 12:05:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wL1EN-0004Wm-0c
- for qemu-devel@nongnu.org; Thu, 07 May 2026 12:05:43 -0400
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ id 1wL1E5-0004LJ-14
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 12:05:25 -0400
+Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wL1EH-0006m1-TE
- for qemu-devel@nongnu.org; Thu, 07 May 2026 12:05:42 -0400
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-7dcd17e19b6so657642a34.1
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 09:05:30 -0700 (PDT)
+ id 1wL1E2-0006jw-A9
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 12:05:24 -0400
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 46e09a7af769-7dcdd1b492eso876860a34.1
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 09:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778169929; x=1778774729; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mw1kdvtUwUPt4raLxQUB1roVMfIRc+atM3nbQew3RN8=;
- b=LXSVg/g4e5e0E0w39QZmCt05rdu904te0vqvPP2nADEPfomaBQ4zctAG0Z8wY9mDaK
- T9S4sgOoTEU/QcDLbCjQ2rJ7QGx/FGDhqdLryKQcV52zVZfbntRaWbHsgvxHkKtCrUQv
- SYc6H8Iy3JZ/GJPD5rQ2m8Ch37mePkV8D4Rx3YwHck4tjKhYsUTPearQuZfoyWgfcRLx
- 3ObSndBrGvgw/CXLAJE7aijvmAthcO2v4Gsx6k8tyRDh6wkw54boYWEeTulV4lF/SKMH
- LOYLntDzHWIVDFTyqNljM13zorA1QUAUBc4FshkVv70ESt5SmkV82sTWQdrlgcu29C6D
- xqiA==
+ d=linaro.org; s=google; t=1778169920; x=1778774720; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/pMIEjD45r+uC7NB2NGVXIyoDkV8H9qj4g58njDo1YU=;
+ b=NhkDk1rHd3TJVu6ZWE4Vcos/xnHMbl9UXxQqfbo+VVIK03keIUeQWBY7SiPdyeNccf
+ jzhE4BB2xJ4jo/gmnynXIGpohvhv765btJwvgu++n8m7xMc+Pbh0x/b+s8FlWPFsh1an
+ eVjXzojfQADg0ec/BpjcMiPqURii1pJGd8vFFvC8mcNqPNPYZwPtK/HxswGhHg1Tgdlr
+ 3W76gwMIq5A/1TOhC8VYWhgzqeKNt16CEiL5LvENTjQ35TNKB2YEn5rrcnaDYxPoDfeY
+ H229FYADJilXcc58y8+0871G5ZhRrEKpyLhbjLsSVbMN1tchfTSL0FBjIm4baTccnZs1
+ tlJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778169929; x=1778774729;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=mw1kdvtUwUPt4raLxQUB1roVMfIRc+atM3nbQew3RN8=;
- b=dUk2taI1leMhEm4Pz/XuFW4RDfaEf84qr0FETghUyzJX8HoahO8SWowfhOos85wfHw
- POUgPgIcLbpKe9SPCyFJoJyn0zeY8JhwTkxJBrJMvf63g/6kn7oOdt4D4YmI6uejwTBS
- VGm0BeM87AG+Me/FPE/rn07ScSC2O5PL+APCP4g1EVHgSLVu+1VFeS7ck5H1PjaJpMYv
- rSzuAvorkwpiZUS5rKL4ZTELWkeWVrzBN4/J9/ZNAM2ZjivoQfkaa8+djQBqaN9CUx9U
- vsrZoZWHuMfY3YsUIpC7OtwKdXgSHUBYhG1eVwur+h7Wb2bHzkWqB9t/CXjC37PGSVr/
- Xr9Q==
-X-Gm-Message-State: AOJu0YxnRgMkVirP126nG0YEPtCs2+jKaCEcbWBMMSLiDt3S310eiJre
- IZwFFdtMm3aqXON3pdb1knBsiUOFk22MgxM1pkxhtCmv8kdRHw0o6g1R7lC+/aKVhIPHQK5hERB
- jDPsD
-X-Gm-Gg: AeBDiesSB6XKG5yIV+pTu0N+gJVVvRYVJp7hELKdZYozkncWTphPJzOyUEGMrG/ZN2M
- G9/AF3TGAsaiGYHIfZfgue44mjQTyIM6G7lK6Pz8h5/8zGQy2DivkhYOUQpgrYv61tLXOCnULPC
- G6F9CBe921It6aRqNSHu0erThfyNa9UJ7KhWxgFZz/WCSbE4yfLdGtF6OlpGZiwCH423P7Z6rA/
- Jgvq5eno467MqPK1748FInM26bfHF5Qeg7pWCc8koGR+QjqfjbH9JpwPoeYBwC/IwmQboDvEr0+
- CEjqS7dzAsDea3cbY76HgIi0NBYCtaToMd+ohszsoLOV/1cKQq32LBmXy/qv6If+futbmCdgK7J
- JEKAHjZj1WT0CDV5KDsmr+WEmZMemIocscnBFKJkH14zd5Nooe5om2LRQhYZC0iM9449o3RkDo8
- NoIPQkgWCrj/NJyGuD/TEW9c1MHq7nZEx/gj+SLOQOYUHusw==
-X-Received: by 2002:a05:6830:6005:b0:7dc:c4ae:a689 with SMTP id
- 46e09a7af769-7e1deebc5b6mr4783099a34.2.1778169928901; 
- Thu, 07 May 2026 09:05:28 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778169920; x=1778774720;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/pMIEjD45r+uC7NB2NGVXIyoDkV8H9qj4g58njDo1YU=;
+ b=YnMuoBkMfUATgshO4JkzHOhgocSn+6nip9Uc0v3rS9QkznPgZJF4utTksVxFncXLHB
+ 2ui+e+toc2wQ3od3Q6p73JRfX2Y2fUfmUjWWK+y1toF/RKB9FFPw33WzMMymKlZfTwUc
+ GHkTnb28vhYTSaPu2tPRhZ5l/2G3Ghimb8+BQi6uK6uCceV/dPag6StY6FEAnS+VJ595
+ Z+C7Gp3iguspNLRDyehK0iUEFzIUqC2yuUEVd6aID2ONYfkt2ThcwKYGbc5bMPipf4+J
+ eeKLHaVeBbUExtYih/oGCsE4FGAEpgvk7FRsz3mNZ67bRE/8jmBphh6zIEK3EcpSXIMs
+ As0Q==
+X-Gm-Message-State: AOJu0YzhgeV/B5ClvCqVt+9/VlxXZ5tvc+xLiwK1nUzVkB9zzxpprhQC
+ fxa+Oi5O6iLkerbSLSqakaw+4RZ148yFbjAAn+FTdBUrCwUEWv4M0qvYFkq8vhiR7qeppDoE8Rh
+ o2g1W
+X-Gm-Gg: AeBDiesys/YTIEtejNPHw9qzQViI+rFVZVZS/bctecQ8ztSpKpFTe9o6mob3h9n7WGd
+ GDKl5zEa4gwAm/Ex9FYkJfmQ8Mq49wHP8pOMXGhkovCZIiIh/pppOaBz6MZuppar6c5LAVpWMlY
+ pTezuDqPhNU6pBqlIxGySaximfkXtsikwIyj0FlPRFM4xKwEpvOlxr4BzJvFSmKA1PfB04B2UAz
+ tkpf4X3lFcOwD+W/XZ4Zv7GCH9S1w6kE0NbHzkvWvKeGnkU4cqbk3sZngbWGlgg78ahXzcNXZBu
+ z6sFr8sG14cSk8beTsM5MroD8XVSwO/iNltpeVmlnQYobi9vDegvvquVupHdr72UoDO5bI5FfvR
+ yLn24mLAVqBeKxHeYEqfYQ8lBVhxCaAfSEcFKBaklf2twTte9hKVoQI5OR/3HJ7MebJcsVSp+zG
+ kZ2xAcm6k5n9w5FFt6S+n04uAVqhmb485r5d4rF1cVz6Jq+A==
+X-Received: by 2002:a05:6830:82b6:b0:7d7:fd71:f2d4 with SMTP id
+ 46e09a7af769-7e1fcbf5999mr2038203a34.3.1778169920221; 
+ Thu, 07 May 2026 09:05:20 -0700 (PDT)
 Received: from stoup.attlocal.net ([2600:381:c938:6375:9641:bbb2:a93a:bb4c])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7decae680bdsm14647398a34.27.2026.05.07.09.05.28
+ 46e09a7af769-7decae680bdsm14647398a34.27.2026.05.07.09.05.19
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 09:05:28 -0700 (PDT)
+ Thu, 07 May 2026 09:05:19 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 07/29] fpu: Mark unpack_raw64 QEMU_ALWAYS_INLINE
-Date: Thu,  7 May 2026 11:04:55 -0500
-Message-ID: <20260507160518.444797-8-richard.henderson@linaro.org>
+Subject: [PULL 00/29] fpu patch queue
+Date: Thu,  7 May 2026 11:04:48 -0500
+Message-ID: <20260507160518.444797-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260507160518.444797-1-richard.henderson@linaro.org>
-References: <20260507160518.444797-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,30 +98,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is almost always used with a constant FloatFmt,
-so inlining pulls the constants into the shifts.
+The following changes since commit ee7eb612be8f8886d48c1d0c1f1c65e495138f83:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- fpu/softfloat.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+  Merge tag 'single-binary-20260506' of https://github.com/philmd/qemu into staging (2026-05-06 10:45:02 -0400)
 
-diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 302612fe42..63697ab3db 100644
---- a/fpu/softfloat.c
-+++ b/fpu/softfloat.c
-@@ -633,7 +633,8 @@ static const FloatFmt floatx80_params[3] = {
- };
- 
- /* Unpack a float to parts, but do not canonicalize.  */
--static FloatParts64 unpack_raw64(const FloatFmt *fmt, uint64_t raw)
-+static inline QEMU_ALWAYS_INLINE
-+FloatParts64 unpack_raw64(const FloatFmt *fmt, uint64_t raw)
- {
-     const int f_size = fmt->frac_size;
-     const int e_size = fmt->exp_size;
--- 
-2.43.0
+are available in the Git repository at:
 
+  https://gitlab.com/rth7680/qemu.git tags/pull-fpu-20260507
+
+for you to fetch changes up to 901650041334aa9764ee65b300601d0bfad752a2:
+
+  host-utils: Introduce signed saturation primitives (2026-05-07 10:22:25 -0500)
+
+----------------------------------------------------------------
+fpu: Cleanups and export FloatParts{64,128} internals,
+     so far with a limited number of primitives.
+host-utils: Introduce signed saturation primitives
+
+----------------------------------------------------------------
+Richard Henderson (29):
+      fpu: Inline float8_e4m3_pack_raw to single caller
+      fpu: Inline float8_e5m2_pack_raw into single caller
+      fpu: Inline float16_pack_raw into callers
+      fpu: Inline bfloat16_pack_raw into callers
+      fpu: Inline float32_pack_raw into callers
+      fpu: Inline float64_pack_raw into callers
+      fpu: Mark unpack_raw64 QEMU_ALWAYS_INLINE
+      fpu: Mark pack_raw64 QEMU_ALWAYS_INLINE
+      fpu: Split FloatParts{64,128} to softfloat-parts.h
+      fpu: Export FloatFmt structures
+      fpu: Export unpack_canonical and round_pack_canonical routines
+      fpu: Return struct from parts{64,128}_default_nan
+      fpu: Return struct from parts{64,128}_silence_nan
+      fpu: Return struct from parts{64,128}_return_nan
+      fpu: Sink exp_bias adjustment in float64r32_pack_raw
+      fpu: Return struct from parts{64,128}_pick_nan
+      fpu: Return struct from parts{64,128}_div
+      fpu: Return struct from parts{64,128}_round_to_int
+      fpu: Export default_nan, pick_nan, return_nan routines
+      fpu: Introduce parts64_round_to_fmt
+      fpu: Return struct from parts{64,128}_pick_nan_muladd
+      fpu: Introduce record_denormals_used
+      fpu: Split scalbn from partsN(muladd_scalbn)
+      fpu: Export parts{64,128}_compare
+      fpu: Return struct from parts{64,128}_mul
+      fpu: Return struct from parts{64,128}_addsub
+      fpu: Return struct from parts{64,128}_scalbn
+      fpu: Drop QEMU_FLATTEN from muladd routines
+      host-utils: Introduce signed saturation primitives
+
+ include/fpu/softfloat-parts.h  | 220 ++++++++++++++++++
+ include/qemu/host-utils.h      |  60 +++++
+ accel/tcg/tcg-runtime-gvec.c   |  20 +-
+ fpu/softfloat.c                | 507 ++++++++++++++++-------------------------
+ fpu/softfloat-parts.c.inc      | 282 +++++++++++------------
+ fpu/softfloat-specialize.c.inc |  42 ++--
+ 6 files changed, 640 insertions(+), 491 deletions(-)
+ create mode 100644 include/fpu/softfloat-parts.h
 
