@@ -4,139 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30FA0CD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 18:54:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B555DCD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 18:57:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL3rC-00011z-62; Thu, 07 May 2026 14:53:58 -0400
+	id 1wL3uM-0001r6-Su; Thu, 07 May 2026 14:57:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wL3r8-00011g-IR; Thu, 07 May 2026 14:53:54 -0400
-Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
+ id 1wL3uJ-0001qL-3Q
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 14:57:11 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wL3r6-00026i-Qv; Thu, 07 May 2026 14:53:54 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OSFrevWuTRAfKNO4kk+Duu45J99xsnHb96oqqtaLkT+4CNdG+e385fUSjLxrhCvkSRLw+ehaF7cgfqg6+0DIo5mT1wJ2qKPXMkFTHmv8J9gkPquqa5mKn/2zY/BssbaTJrvY8dLf9AMDynBINP4HhIZSj4NCB7TMBVwWp6dkIHxksGi/4cMex0i5fnZsIBZQSYauBJdCqEWbT+uIvnpL+XDPCDwyxBj4uxLtqNRNXbHi/uF1awMzHV1SODmyFj/XbGtAqo+6MnCo+JkHHTKPHQD+bTYKPoB0HotJUNpOdZW5dTtZ6ST2yfFwiePajk03qPh4gHDBGVY/o2SSemhTHA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Kalou5lHOivAguLWzRmtREQaKQvHmoxeINsKT2qiBs0=;
- b=I+xw0PHu1VBy/iQOosteigotCd8tPQnkAHvRyjQqaTViC9zAIlPdZGuVfVk/7wpRhcQRz18GbiomvVKaHKP8om6AIob/qlljcQPyGKmRvIm14ZBFJjCZxQOgNOOchTDfR5fIbKHLi1QJImgBOTIOeTZCY9lshIrhH6kLLAbPLw+NPhPsppfuizAodqgl3+7r1yHreONu8YgoTBlNKVUML6CUK5gkhREm6sYqE10fZ/f0XNRgXiEVa/fszyeO6ZVqNIctxu9f+/eBh/ITPx5DXXGYe66mvnQ7evURdGBaItiT/M9Yp0ax/Km3wb17Sh5BJgghxxNA0wjQXeW/H24RTw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Kalou5lHOivAguLWzRmtREQaKQvHmoxeINsKT2qiBs0=;
- b=ajBLLRzU/2TurR0PgtPQoAtego0UhDoJ8J/GCU1hluACdREPqiGE6oEOyM0u9C/hyWoeC5dTDqaor5o/ArpA/tOnJs2G+/LOUaS7zs/5PTXZ/oPEtU9pHhWfka5p+gI4C/ltpEhzMAPUXpE0RHnLQ60Cc6CDtOO8oJecSD5Y4TJK52fkJIrgHr8erEnupFDKSAooS3CQYac/p+EIiMRHD2/C9/CMfCgX0zaBGR5jx/Ljm8nX3dXvt6KZi57JEh6Ejytf5HrdQroAz/UTlw9r+kB4VDK2g8LVLFv2xrN9228wXWN6eIanNlGNEPBgOL3c73RkhrLrABJ0x1LAQWJHMA==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by DM4PR12MB6011.namprd12.prod.outlook.com (2603:10b6:8:6b::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Thu, 7 May
- 2026 18:53:25 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.20.9891.017; Thu, 7 May 2026
- 18:53:24 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
- <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev"
- <kvmarm@lists.linux.dev>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "cohuck@redhat.com" <cohuck@redhat.com>,
- "sebott@redhat.com" <sebott@redhat.com>, "philmd@linaro.org"
- <philmd@linaro.org>
-CC: "maz@kernel.org" <maz@kernel.org>, "oliver.upton@linux.dev"
- <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>, "berrange@redhat.com"
- <berrange@redhat.com>, "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-Subject: RE: [PATCH v4 11/17] arm/kvm: write back modified ID regs to KVM
-Thread-Topic: [PATCH v4 11/17] arm/kvm: write back modified ID regs to KVM
-Thread-Index: AQHc2s+lMbTKReJJn0uN5USSIMu6fbYC63EQ
-Date: Thu, 7 May 2026 18:53:24 +0000
-Message-ID: <CH3PR12MB75485CF3FBF68E8E60E5B005AB3C2@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260503073541.790215-1-eric.auger@redhat.com>
- <20260503073541.790215-12-eric.auger@redhat.com>
-In-Reply-To: <20260503073541.790215-12-eric.auger@redhat.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|DM4PR12MB6011:EE_
-x-ms-office365-filtering-correlation-id: 9c76870c-6285-48af-e0a3-08deac69eb09
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|7416014|376014|1800799024|22082099003|56012099003|18002099003|921020|38070700021|3023799003;
-x-microsoft-antispam-message-info: 65Zd00W3P9V8zdyxyaqpJfKjSF915ApoR67nSYm0be0pkNzNlfopqog5xm0iobk4BqNvs9oAjJwL+TKv+d8r0EHhFniP1mJ4VnL5Z9dudIeuRjBxRsmjvnGKDZ+JjEim1E93vB3xwxZsjzmzcWO+C73QYdASoi425+xZe0F5aomcqc5G2L4b8JhPmk5mm2h0SpKezdGA1x/4PZPbE8SZtIETLHL+IhGy94CHx/n6aajh57M18KhWnBAFeCMBlkS2Iv5nEafJuQ37RgFxjErpZsmTrVzckt80nbObUDOpYIcz1bCSp7raPd5tO0+at90CV6Aiq1+3VNJByryS7QoMPFjM4mTfnfNg+tDc0/fZt++pomp2d0DmbwXyLDmAJWTTLclslDvucQxaZMqk2whJ5vcvBubiNnMiY47B3BTPNZWz1+wApyKfovHaCn7JiL4ATsMsCt5APxHsDJTwoksgy12MPHj1DkF45OlaeeIvc7jTgjk5pbGaQUobWaQ+ASrq9xsJqLuaIeIHP7UIFbNPfA4D1+vMVxHoVihBb9xpcieicMMjJDaSRACKb4uEWjmQGbL+YFTXIHKCV9IkcTaHwJJXavgE+wVR3TbRbmBtBoKwXV66d/r2HG92zhf3UF/finNueTKT22OB+euJ980wmuFjR7NY7/zpF7ttCtcGHjW0h7CC9E8pnv2Vjih1B7Hx2WzPzPm7eI0L67S+0VftVqvfpI20/CVhnyDNt4RTiAIiBfS0Ik1exUZvlsfibDgOznJDlMlNcjPYviGDMBeQfw==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(376014)(1800799024)(22082099003)(56012099003)(18002099003)(921020)(38070700021)(3023799003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?r7CLu1qPjDf2SkQqM/6OLVn+PhCNQPIhN3mappbQaHQEeuGVxJQbOfZ9r4AT?=
- =?us-ascii?Q?mMhnrzwiHgKjnRWmTOrkYHt/XtREo7mfrjg/UZudQrlsKruYGNXdRVedj6/J?=
- =?us-ascii?Q?BR+lhdb1PSc5nldV1SnyrxfMThpH+NnMZHT+bXLeuvq1gOLEFuZLCW+YlQ8E?=
- =?us-ascii?Q?n9/MvYOMyTuasNkMkJNqMu0jRbuLHL6uEHSgrr1n+Q+zCtuoQgJljC5ast/T?=
- =?us-ascii?Q?zyLl9Z9FRjmJeCCd++2qBmd7X+DRecSHa4AvcoEsQC6YogjSKvqFiIRVSIeE?=
- =?us-ascii?Q?ngvqqi6AVy7ktJzLTCWDzGMhKIbc9OZZM7MAeQc8AcPLOfFTSUU+BeLjU0wU?=
- =?us-ascii?Q?iqwslaQzwVKDhoeMcwLd+UO2Ej70Vxj2nAwVwODIiusj3btR+4HMowGH3OLH?=
- =?us-ascii?Q?pjUEmJMxvSIoRJ1Sad41LhgPFLgbXVACEP2PNnjLwoak8CPm7TIBCvQLMSMO?=
- =?us-ascii?Q?w82WhFR1y1N7OB+GTujHqzHRSCGZMYw+PxCBAgoaxUbMwsYEAE22/MFw7kqF?=
- =?us-ascii?Q?f56Sz0ZG/L9ylYSSQXyMpzHN262GB/CM/cTNPlThXIRdNOQb1VG8eUnhDsoh?=
- =?us-ascii?Q?5XYcyZ/bw/4nX+XaTrYW8sRlULXFh7h0MhY48+8uEKoxDSe85WE0hByp8Qg1?=
- =?us-ascii?Q?6vxCwW1Yp+90qVVs1IS6mz/xvbUFlhQe8xLpqTFgWX+YT4/WHw6ICknNolsf?=
- =?us-ascii?Q?DSugjHJvsvGVBgFKkh07NOi72IFXKHqivhjEFmI8Ed3PbSAlCV6PnapjpkrG?=
- =?us-ascii?Q?w/KmF/HDcZ1jzLVioAiFEEmRmDSvkpwn34Dp5IHEbEfGCjNQQbfAG8orppVi?=
- =?us-ascii?Q?2BJA+8P6CqC1YQA7uogI75mAGUDNCrUgQXuYSPGsuMXp07264cNoKUXMNo6r?=
- =?us-ascii?Q?Ucy3TZoMkaBfHv91qAGOYwkDlT52CWgGrDnILasrF481ZqwObZYymNNGaw7U?=
- =?us-ascii?Q?9y8phS2qJHcQdw5bhqkfmlHUoFeP5wa52Oj5on2AQJbwdvxgAf/cShW9W7pF?=
- =?us-ascii?Q?j8qH+4c2SNXZ0jhQ/6PxSRFfjwU8AN/g1cvz3tFphEgjiluyl0MsXxYXkB7s?=
- =?us-ascii?Q?0VrJvP3m3InOu8fv365yF6HMtDdrPcy3McUggNTDDxB4Io1GJIb+Cmm5g05+?=
- =?us-ascii?Q?J0njcKb2I6qENWPMwwkMMu6Gn+5sDpSh0yPQICIAfGI9d9y6DJWdwoZtPdi1?=
- =?us-ascii?Q?HetKgSeCSQ2/Ts+4lfmyBvUAiKaB+Xudy0iOHr5/I4vC4OSPmCLjcDihyAFv?=
- =?us-ascii?Q?80voDWezdSrN1Yo3WrcaS01Sccp7c9fFeOpvX+Tsgp6PdfJBmYPB6tBrmL8N?=
- =?us-ascii?Q?z/Fn1Z8+qHTgH695+nQP6H+L07HwYPQ/bLlCy7e/9s9AT8ezTRvXrcF+Eaa5?=
- =?us-ascii?Q?gC89YYD1urZ78I+ICT+SXI88fiG3Qq4gU//XYdo15tje55RBm5mdOPiPeHpl?=
- =?us-ascii?Q?xliXJdiyXILKpHdIM5DUK+ZgSnRjPj4Nmqefyx1+lbVa3/sTn/34rglwFMiR?=
- =?us-ascii?Q?dnoeujM8CTSUwjtk7fg0hve925lGeq1pnCTuWhbY/S+0jUXrZZs23IKPw/2e?=
- =?us-ascii?Q?1GQ116bLpswu4CDvfRprXSwHKijA8q/wNwbJEKDNVeXDAQ0AKhLxyKDlrL6g?=
- =?us-ascii?Q?ZnKgOoppAAUH56UJQIW+bCBS7dWfEv92LpbxEbhJMgd/Pc4as7xlzmVtEyrf?=
- =?us-ascii?Q?j+4Kdn+2JhVMX8hiOYlpX6X0vzzAqHMalRM6IN5C42gR3pN3AI89Z9Y6wtiK?=
- =?us-ascii?Q?bckVonexuQ=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
+ id 1wL3uH-0002qz-BB
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 14:57:10 -0400
+Received: from pps.filterd (m0279870.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 647GWxKs026493
+ for <qemu-devel@nongnu.org>; Thu, 7 May 2026 18:57:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=qcppdkim1; bh=BwA9O7oOBLBGXGmJQ8hzfjPV
+ VzWmEYzZEr7D6zH52n4=; b=RKrztfgghl3flq573yf6CTjInmG2QZxy57QxrumN
+ jTm7qCsvoZfn0NU5CkTLt6s9VA43ThcS2jQqM9aa1ZLrnkCcWKCIEstQFlqAfVDi
+ 2BB6AlMdRjYS2esElSpC5M/ODmPEr4JuoYIn/RDo9gmCsG39Yt271OH6ugcjArSn
+ MxFAkfLMQ7ohV51mehWwYSAUb3yI3RjgVYOWt+3olEXjwq8Mlsw0X0xfr+yL8LYw
+ /eRGm5Y70T0LFYUq8JqmRhVbi1j0vVkdpz84fndVZL2LcndH50BlgT6MogOf93nk
+ KgBQL7VIUpUecUbI93ggPV3a8yz91xMHl6fNmMnbh02g8A==
+Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e0k1t3gta-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 18:57:05 +0000 (GMT)
+Received: by mail-dl1-f69.google.com with SMTP id
+ a92af1059eb24-12dc3d81736so1405694c88.1
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 11:57:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1778180225; x=1778785025; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=BwA9O7oOBLBGXGmJQ8hzfjPVVzWmEYzZEr7D6zH52n4=;
+ b=WtituRB5FAc7UOjYbCiNty7I6P7qb3ChIpleMAtiz5n+mIo22tSyFhUewDvjWyT0HC
+ 57Zmy7OC+QxcAYR3onhuIhmH7rEKV40RURXOH+3EKG2at70D7zOwFr6CxTRYTtxSIZCU
+ XF5F9OVggmWWuF1twoAwVmcJNe/3YYUYkbrGiftERHOPUuwfRcWFDhjkVgqUQ8XiV4If
+ mII9xhSyeNYornAy7q010PpzL4a5bd9dAWgk+oobi0u5T2sh6oCuvOT93ukDHlFOOyXw
+ p58tv0DIbuQifiF3zbPm/A/W19Yj7pub0UybWHoeP03ejnmZ17qjPNyK89Lk3+oKEh+q
+ ZeEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778180225; x=1778785025;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BwA9O7oOBLBGXGmJQ8hzfjPVVzWmEYzZEr7D6zH52n4=;
+ b=kaJKlA6ARsG6fW0hcmTQ75LfjUQI8w14A1AIE8GFHQiOnOxyTcN3fTxFyJTu986uxT
+ 14ct0sTaZ6IO/q/6InLzqEVW6a4MBBw8njOhDp3zPuyze60DkcAf0x4IN9+bOtxW48Iz
+ wCJCxIqx27QS59qTaDmeTx5/rQVbbtdT+eNmcIkoJ2WRsX3rKn7M1F8eWd4BsgSiV3ck
+ /i+IBmklA7X3LbrCCfUejV4GWGcc2YYP5YcMDyW+lvGzn+zZFZ+5pkDkwUM+bKF7Z81K
+ S7JoIO0jtuGAYVVOQZo3wY1LQTsY1eeIdV6N48qVWBxH7ngYNW8TCQ/WNzpaFdmhAPzA
+ 5qjg==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ96LE/ojeQjx+GeTpJmVBFHm+b7x6VhNbKwDPWqSF2XnnxiPoXSNnUE5BqeRaRAc6Usd51N3KMROGgQ@nongnu.org
+X-Gm-Message-State: AOJu0YzrOU4tyvKj/OuAlLL7/es7nDNmInS9E9uW4cPc2DM7gsrDXfvf
+ AGojbCRFhcv3rRxNj2fkotCr7S67lm7alDg4gjNtGelXJeaj3x+CgCPJ2JLWGfe/i9lVwVU2rxY
+ QobRxQf0et2hUrBYajnsOw1nQbDZNJgStWZ8iC8FQvKlYqRIgWpv9byiPpw==
+X-Gm-Gg: AeBDietxztVWDqGUHGILoY6QZNL4d5K7gXbCtFm53dCiIgHBYRSkDrWY/eGNaZ51uoP
+ EzANeMYh5H51xCXQW+EBm0Wg5l46FxgG0VcXpuhOJu3pDwLNjT5l0Rti93OUZPfmxh+RlDfM8rL
+ 5/+MFCRSJc3IBZuMpEpqi0V5tlUz4wRofPHBPtTIyay9ZA5e7DmzfhDdXuHHaxMrwJcdKVTIAhF
+ Wdbq/LM47VI7d4kjPlx+p2Qizboiyj+/wIx+Y0M2XV91T0Qo1HM0wb0Lf9Obw5MmtvLmmcKtNf6
+ aWXSIcJ4b3UBdfSoFjDssuhrKTknE694hBZB8fRsPlcf5a8JlsweDvInAHSmvkZTDuC6dB84GVf
+ HfOhHMlgHyvzqYg3PO+Rdx0qI0CMZFh8=
+X-Received: by 2002:a05:7022:ead2:b0:128:ca83:5aa3 with SMTP id
+ a92af1059eb24-131967d7ba7mr4832894c88.1.1778180224484; 
+ Thu, 07 May 2026 11:57:04 -0700 (PDT)
+X-Received: by 2002:a05:7022:ead2:b0:128:ca83:5aa3 with SMTP id
+ a92af1059eb24-131967d7ba7mr4832875c88.1.1778180223914; 
+ Thu, 07 May 2026 11:57:03 -0700 (PDT)
+Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1326c620538sm221536c88.11.2026.05.07.11.57.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 May 2026 11:57:03 -0700 (PDT)
+Date: Thu, 7 May 2026 13:57:02 -0500
+From: Andrew Jones <andrew.jones@oss.qualcomm.com>
+To: Nicholas Piggin <npiggin@gmail.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, Michael Ellerman <mpe@kernel.org>,
+ Joel Stanley <jms@oss.tenstorrent.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH v5 6/9] target/riscv: tt-ascalon: Enable Svadu by
+ removing Svade
+Message-ID: <dic5owmgvmaoqhiinu3v6kcdyakwt6kj4ryfw5vm446w3pv6mj@77kcjokjpnem>
+References: <20260507043838.45652-1-npiggin@gmail.com>
+ <20260507043838.45652-7-npiggin@gmail.com>
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9c76870c-6285-48af-e0a3-08deac69eb09
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 May 2026 18:53:24.7923 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: bGzH39JI3R3hfNCvMX4KByGe/Fqm95MXW8JVPPUruGEJ4mJsdo3tDiv8Jtqf8hmatrQDlBvOM7WpwtKAjeYVzg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6011
-Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
- envelope-from=skolothumtho@nvidia.com;
- helo=CY7PR03CU001.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260507043838.45652-7-npiggin@gmail.com>
+X-Authority-Analysis: v=2.4 cv=EoPiaycA c=1 sm=1 tr=0 ts=69fce081 cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=cvcws7F5//HeuvjG1O1erQ==:17
+ a=kj9zAlcOel0A:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=gowsoOTTUOVcmtlkKump:22
+ a=pGLkceISAAAA:8 a=JF9118EUAAAA:8 a=5fg1JsN7CA_7JDasm0EA:9 a=CjuIK1q_8ugA:10
+ a=vr4QvYf-bLy2KjpDp97w:22 a=xVlTc564ipvMDusKsbsT:22
+X-Proofpoint-ORIG-GUID: P4vKWIgvZOewSn6B1NeJRSi4oB4WOxek
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA3MDE5MSBTYWx0ZWRfX5hnRplCh/d+t
+ 7M9iSgym0TZrnP/TcpUynD+NMuqZnngXI/nUpoArkaOgNufOnhn74QOmS2rW2fnGRLQpZgQvspj
+ EGZMnMEglZGVhv1WpWNY9R5VLaufnNe0Kc3jimpaffj+LV+iVcV7zz28tWCQlpzi/7Kd5v3Hh7l
+ ikoin5idrBGaVGcyY8ptCRoabrZN8jhTHTJJv5YMCBuPLJ10Fw7f0X/xeVciqywW+R6Ytx5ZTDU
+ ly2PSmQbYrxJzl5bpNV31ZXjGoQ5LNBs1NxbQAtTcBi6kbc8vlHL9a8bAA5VIowAQr+Y2DbbEI1
+ 8lJkOstUEVq/0+uSPGhPTJY7WaL5akGI7vKrrTXl027tXyiY+6X4YrqQ+NZwpdXnuFc6tfwdK21
+ ds0U6FKDWgo/9EcyVy8MaWAw1z+vMPnvujD4Jn7Zp8gbknZSThwOqRBbwEzEXVvRo86uTPBWZS8
+ UwtObh4QoTvDsBiRwQw==
+X-Proofpoint-GUID: P4vKWIgvZOewSn6B1NeJRSi4oB4WOxek
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-07_02,2026-05-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 bulkscore=0 impostorscore=0 lowpriorityscore=0
+ phishscore=0 malwarescore=0 priorityscore=1501 clxscore=1011 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605070191
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=andrew.jones@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,156 +151,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, May 07, 2026 at 02:38:34PM +1000, Nicholas Piggin wrote:
+> Ascalon supports Svadu (hardware A/D bit updates).
+> 
+> QEMU makes Svadu and Svade mutually exclusive, remove Svade so
+> Ascalon comes up with Svadu working.
 
+Hi Nicholas,
 
-> -----Original Message-----
-> From: Eric Auger <eric.auger@redhat.com>
-> Sent: 03 May 2026 08:34
-> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
-> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
-> peter.maydell@linaro.org; richard.henderson@linaro.org;
-> cohuck@redhat.com; sebott@redhat.com; Shameer Kolothum Thodi
-> <skolothumtho@nvidia.com>; philmd@linaro.org
-> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
-> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
-> jdenemar@redhat.com
-> Subject: [PATCH v4 11/17] arm/kvm: write back modified ID regs to KVM
->=20
-> External email: Use caution opening links or attachments
->=20
->=20
-> We want to give a chance to override the value of host ID regs.
-> In a previous patch we made sure all their values could be fetched
-> through kvm_get_one_reg() calls before their modification. After
-> their potential modification we need to make sure we write back
-> the values through kvm_set_one_reg() calls.
->=20
-> Make sure the cpreg_list is modified with updated values and
-> transfer those values back to kvm.
->=20
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> ---
->  target/arm/kvm.c        | 59 ++++++++++++++++++++++++++++++++++++++++-
->  target/arm/trace-events |  1 +
->  2 files changed, 59 insertions(+), 1 deletion(-)
->=20
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 1a9b91bf8a..ca9a7d9439 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -275,6 +275,21 @@ static uint32_t kvm_arm_sve_get_vls(int fd)
->      return vls[0] & MAKE_64BIT_MASK(0, ARM_MAX_VQ);
->  }
->=20
-> +static int kvm_feature_idx_to_idregs_idx(int kidx)
-> +{
-> +    int op1, crm, op2;
-> +    ARMSysRegs sysreg;
-> +
-> +    op1 =3D kidx / 64;
-> +    if (op1 =3D=3D 2) {
-> +        op1 =3D 3;
-> +    }
-> +    crm =3D (kidx % 64) / 8;
-> +    op2 =3D kidx % 8;
-> +    sysreg =3D ENCODE_ID_REG(3, op1, 0, crm, op2);
-> +    return get_sysreg_idx(sysreg);
-> +}
-> +
->  static int idregs_idx_to_kvm_feature_idx(ARMIDRegisterIdx idx)
->  {
->      ARMSysRegs sysreg =3D id_register_sysreg[idx];
-> @@ -1197,6 +1212,39 @@ bool kvm_arm_cpu_post_load(ARMCPU *cpu)
->      return true;
->  }
->=20
-> +static void kvm_arm_writable_idregs_to_cpreg_list(ARMCPU *cpu)
-> +{
-> +    if (!cpu->writable_map) {
-> +        return;
-> +    }
-> +    for (int i =3D 0; i < NR_ID_REG_MASKS; i++) {
-> +        uint64_t writable_mask =3D cpu->writable_map->regs[i];
-> +        uint64_t *cpreg;
-> +
-> +        if (writable_mask) {
-> +            uint64_t previous, new;
-> +            int idx =3D kvm_feature_idx_to_idregs_idx(i);
-> +            ARM64SysReg *sysregdesc;
-> +            uint32_t sysreg;
-> +
-> +            if (idx =3D=3D -1) {
-> +                /* sysreg writable, but we don't know it */
-> +                continue;
-> +            }
-> +            sysregdesc =3D &arm64_id_regs[idx];
-> +            sysreg =3D sysregdesc->sysreg;
-> +            cpreg =3D kvm_arm_get_cpreg_ptr(cpu,
-> idregs_sysreg_to_kvm_reg(sysreg));
-> +            previous =3D *cpreg;
-> +            new =3D cpu->isar.idregs[idx];
-> +            if (previous !=3D new) {
-> +                *cpreg =3D new;
-> +                trace_kvm_arm_writable_idregs_to_cpreg_list(sysregdesc->=
-name,
-> +                                                            previous, ne=
-w);
-> +            }
-> +        }
-> +    }
-> +}
-> +
->  void kvm_arm_reset_vcpu(ARMCPU *cpu)
->  {
->      int ret;
-> @@ -2148,7 +2196,16 @@ int kvm_arch_init_vcpu(CPUState *cs)
->      }
->      cpu->mp_affinity =3D mpidr & ARM64_AFFINITY_MASK;
->=20
-> -    return kvm_arm_init_cpreg_list(cpu);
-> +    ret =3D kvm_arm_init_cpreg_list(cpu);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +    /* overwrite writable ID regs with their updated property values */
-> +    kvm_arm_writable_idregs_to_cpreg_list(cpu);
-> +
-> +    write_list_to_kvmstate(cpu, KVM_PUT_FULL_STATE);
-
-kvm_arm_writable_idregs_to_cpreg_list() does nothing if writable_map=20
-is NULL. But we unconditionally call write_list_to_kvmstate() .
-No harm, but still, I think better, return a bool indicating any updates an=
-d call
-write_list_to_kvmstate() accordingly.
-
-Also, please check return value of write_list_to_kvmstate()
+Svadu and Svade aren't mutually exclusive, you can see the expected
+behaviors for the pair in the commit message of commit 70d22fd92c3b
+("target/riscv: Gate hardware A/D PTE bit updating"). Does the
+Ascalon support Svade? If so, then it's probably best to enable both
+and leave it to Linux to enable Svadu with SBI FWFT
+SBI_FWFT_PTE_AD_HW_UPDATING in order to maximize the amount of
+software supported. But, unfortunately Linux doesn't yet support the
+checking for and enabling of SBI_FWFT_PTE_AD_HW_UPDATING. We still
+need kernel patches for that.
 
 Thanks,
-Shameer
+drew
 
-> +
-> +    return 0;
->  }
->=20
->  int kvm_arch_destroy_vcpu(CPUState *cs)
-> diff --git a/target/arm/trace-events b/target/arm/trace-events
-> index 8c7faf57c7..c25d2a1191 100644
-> --- a/target/arm/trace-events
-> +++ b/target/arm/trace-events
-> @@ -14,6 +14,7 @@ arm_gt_update_irq(int timer, int irqstate)
-> "gt_update_irq: timer %d irqstate %d"
->  # kvm.c
->  kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova =3D
-> 0x%"PRIx64" is translated into 0x%"PRIx64
->  get_host_cpu_idregs(const char *name, uint64_t value) "scratch vcpu host
-> value for %s is 0x%"PRIx64
-> +kvm_arm_writable_idregs_to_cpreg_list(const char *name, uint64_t
-> previous, uint64_t new) "%s overwrite default 0x%"PRIx64" with 0x%"PRIx64
->=20
->  # cpu.c
->  arm_cpu_reset(uint64_t mp_aff) "cpu %" PRIu64
-> --
+> 
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
+>  target/riscv/cpu.c | 1 -
+>  1 file changed, 1 deletion(-)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 69649462dd..97e3567264 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -3204,7 +3204,6 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>          .cfg.ext_ssaia = true,
+>          .cfg.ext_sscofpmf = true,
+>          .cfg.ext_sstc = true,
+> -        .cfg.ext_svade = true,
+>          .cfg.ext_svinval = true,
+>          .cfg.ext_svnapot = true,
+>          .cfg.ext_svpbmt = true,
+> -- 
 > 2.53.0
-
+> 
+> 
 
