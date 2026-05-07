@@ -4,103 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F625CD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 16:25:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88180CD3442
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 16:28:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL1WZ-0005Q6-7o; Thu, 07 May 2026 12:24:31 -0400
+	id 1wL1Zj-0006fB-7y; Thu, 07 May 2026 12:27:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wL1WU-0005Pm-II
- for qemu-devel@nongnu.org; Thu, 07 May 2026 12:24:28 -0400
+ id 1wL1ZV-0006ct-U3
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 12:27:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wL1WS-0003CY-Pj
- for qemu-devel@nongnu.org; Thu, 07 May 2026 12:24:26 -0400
+ id 1wL1ZS-00047Q-1u
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 12:27:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778171060;
+ s=mimecast20190719; t=1778171248;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tU0pCfm7OXH7xLO3k2ZX/vM+Dww2fErJOlf2/SNUyhI=;
- b=Zdk+24KCopXAl1IEsgwKJmxIqi7WhSX6fi4Omv86KPXoBKoujN6uv3lIcosvY49u0QzhZ1
- zjlOsPqE30u+c0m/oH8MkVfAGcXZV8XohADikgIQM/z9pA6WKP45QDygNiVX2FLg133y+d
- XMs+bQa1WpmRnQNn/5mBcaeNcidp60U=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PAOT4RgVnlpSIZduDv4pzDOkJHY71xOmGX0zOyluJ0s=;
+ b=VHobeGUY+rIY/rarEaUzd+tnXHAhSq//Xjxalw27AwkIKcVk5+YmXkw2BJpL3ARQeZv9OD
+ k13Jeje6/aw4MScE89psHaiR4v9ngJtLeG2DdEurHL/HQ6u5y+Ht3Nl8hRRMt9IpAuh6tK
+ JAqv7y9ZLOwACQwqf8LNsfGnyUoSCw8=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-480-CAhaZ00EPBKBiZG55M5Skg-1; Thu, 07 May 2026 12:24:18 -0400
-X-MC-Unique: CAhaZ00EPBKBiZG55M5Skg-1
-X-Mimecast-MFC-AGG-ID: CAhaZ00EPBKBiZG55M5Skg_1778171057
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-4518f777225so717575f8f.1
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 09:24:18 -0700 (PDT)
+ us-mta-644-eTvCwmmcNnO39eDxGUOajw-1; Thu, 07 May 2026 12:27:26 -0400
+X-MC-Unique: eTvCwmmcNnO39eDxGUOajw-1
+X-Mimecast-MFC-AGG-ID: eTvCwmmcNnO39eDxGUOajw_1778171245
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-44ffa15dc73so946567f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 09:27:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778171057; x=1778775857;
+ d=1e100.net; s=20251104; t=1778171245; x=1778776045;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tU0pCfm7OXH7xLO3k2ZX/vM+Dww2fErJOlf2/SNUyhI=;
- b=gR2w9UAxK3V95R8oR/5Vjcz02mGwg5Fxez091ErWEOfqDK9OZTuVb+HuKNLeggrnIi
- Fi9SICwlEbioF6VvP7juTxnZIDsF4Z3tpV2IA4NmwCDN877BO92BdUBnPUt/zK8QEfIH
- DuVpsamWHrN4Azssu6Oh17pDFNaWUXWjV4N+5KKX+m9QxDMK4JHycaxB3ikPOFidOjlc
- AXilBwU0WpjY5XDLqEU1firos1cof0VV7TgRtNgMPx6hNd6U3JxRP+K6GCGnblOiiQHm
- vh6fv1Ya9zRVvTW0/RynxJAa+ZBacTq0QiGj6lp35NAYCpDvI/8UFrRIG5YPzSf8Txkd
- OnwQ==
+ bh=PAOT4RgVnlpSIZduDv4pzDOkJHY71xOmGX0zOyluJ0s=;
+ b=aMO3qLEmXzeNeUJNxVccrS7z2Y7gfiwLl7btQsaDFNE6LwVfKMvGAnQup+DO5FNJAH
+ TDrpxKIkSoE4GJP+0ylNK/qtSReiA9Clmx0BO3oawXRfQqoVpNe+VaNZVExyqjE3AnMU
+ g42fYBeoJhqxfAIm8Z9aufh2zVhttZom1yqmfYmZkyxPHpp6j/zR3jutHpzn1oucz8Z+
+ l5vrCSTeC5bS+4Dc0XPe4Paoo3j/GT2FYWbxA2Niei9jQpFMq4hjpiSNJJkPGgGHI16T
+ zXUAQdwef3RNqPppAohHS1D0GPzIPua8EOMT9fJU7SG3QtVq+sPmpbYbF+zoyC1AFhKA
+ Geaw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+1/liVBtMP5qFNo8IQ9o9j4ufRAGu0BcE955pFPE67T27c8/A4ZO+z6/TmgPgG0Qh9Oqwt2P1l3Mt/@nongnu.org
-X-Gm-Message-State: AOJu0YyjrErXkPFP+L1ClU2rwwF/gp7t6sQRQWaMq5poWCsQndC/Unci
- TePNMUC4mqKtlwmrciDx+iq+UQIz56Wt87F6TXGY+siRJs/8NWYMDq/asZh3Kg4VSJydL8O+0Z5
- kMezYcSSMN5PwPyrt47PRqjA2RULDtVNZzIGGDnBOZIAojDVKCLYGPIy3
-X-Gm-Gg: AeBDievAD5vt5G+e645CdiaNXxL2gs2vewaSb6Xr+Q16DufiQryGw1r2zeDI4GmXJ8D
- wiMXE1g9Ob1HFLobmrmJEDFd1JYScYbbFqc3doRNYAYOzDflvZEijoW1Sp34cxKJKEsgwSOI7+Q
- QTedF/s7Y5seOwKboV+ABCrbMkGkvAMWTe2lLTO5xmet694rIPkiqS/uqj1j1IEmoZulElrsKm2
- wj0cq9QJ5WlDwoCZbzSs0nmqWBw5kcOFl4Sihl+k0HevMy3eA+7Kly5UzLwI29T7xvSktst3BxQ
- 3SWnBpRZoasbvVc9apuq00dGUff/sGrS/NwhV2skyLofU5GnIhMv99T9nSzLNG3FxvzJIf20O/n
- zxzRdyuVd/+Mt/tSKLr8K4m9X0TISoUjSJTWNhvMMJfHeWZ9NlG9iRny5zkZni0S1TR0BIw==
-X-Received: by 2002:a05:6000:4014:b0:453:ef4c:e365 with SMTP id
- ffacd0b85a97d-453ef4ce392mr1113748f8f.35.1778171056715; 
- Thu, 07 May 2026 09:24:16 -0700 (PDT)
-X-Received: by 2002:a05:6000:4014:b0:453:ef4c:e365 with SMTP id
- ffacd0b85a97d-453ef4ce392mr1113675f8f.35.1778171056148; 
- Thu, 07 May 2026 09:24:16 -0700 (PDT)
+ AFNElJ8/avTO94xoUk6zr3IROhC1h7lj2QkJQXneJ3zwjnLwIzRnzqsq0h2Sw3Jv06FpmqwuiGf9WBhXGqdf@nongnu.org
+X-Gm-Message-State: AOJu0Yz3jqBl64v762q1oZvR+z49Dqs7ZQRcijhTOKuVhIoQlsq0knCO
+ Yn/Bvk9GeEnWiih2nacT6CPECQIvK++v1652s39keEBmXloEWC20j9vuamiwT3Xrsn43v/PbKHn
+ Jq3trnCk2tN8+EQ2jXHzJDMMU39kEAAsRqT89Z8AUD0qOsq6bbHzRcjex
+X-Gm-Gg: AeBDievBdXfyQOC1W1/o2cVxEXK/9NYbRYRPNpLn4yAGO3nrn+/bVHPVgWJoBdfu4rT
+ 2Ljpzgaiyn20CGmaOwWbzizEHvXIuRH05WL3hyKyOFK88PnlQIYScp89z0PRHmhs0gpMOeBU1J8
+ NA+tIe/coxpc3oAgQ4CaI1gf3sSqJ0Gpp/PMXmdDbeD8yLyD1+LuvD5vTeWEW8wuQeQVUcnoLtR
+ nK5CfVCPc9hzLcnvtrwyAjbKVp/vUA2krR/8MpkUI15cfhTiDTeNE7hjq9u/oU/mxEi1zhvv0ev
+ Fsf7X0vOyjkqIm6RSUPrqCw3uHV/a3msXibZTYWpBU/QUz28nQRPf0oniQrxOEOgQCTETAL7pd7
+ JPYBdDNWBaYRnym8/kdATnN8dqOR+Qabf+wRA8IFaMH5USHQX38e/XYcq5UexHSteg8oQPA==
+X-Received: by 2002:a05:6000:4210:b0:439:b1c3:84c8 with SMTP id
+ ffacd0b85a97d-4515cd27a66mr13939695f8f.21.1778171245232; 
+ Thu, 07 May 2026 09:27:25 -0700 (PDT)
+X-Received: by 2002:a05:6000:4210:b0:439:b1c3:84c8 with SMTP id
+ ffacd0b85a97d-4515cd27a66mr13939625f8f.21.1778171244685; 
+ Thu, 07 May 2026 09:27:24 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4541712368esm80536f8f.26.2026.05.07.09.24.14
+ ffacd0b85a97d-454131bcee3sm200357f8f.15.2026.05.07.09.27.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 May 2026 09:24:15 -0700 (PDT)
-Message-ID: <73730082-679d-4cee-afee-659684e420c2@redhat.com>
-Date: Thu, 7 May 2026 18:24:13 +0200
+ Thu, 07 May 2026 09:27:24 -0700 (PDT)
+Message-ID: <fd307b1d-d7bd-4e23-b48d-7fc4f40c988b@redhat.com>
+Date: Thu, 7 May 2026 18:27:22 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 22/31] hw/arm/tegra241-cmdqv: Map VINTF page0 into
- guest MMIO space
+Subject: Re: [PATCH] tests/qtest/iommu-smmuv3-test: Skip if no TCG GICv3
+ device present
 Content-Language: en-US
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
- Nicolin Chen <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>,
- Matt Ochs <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>,
- Jason Gunthorpe <jgg@nvidia.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
- Krishnakant Jaju <kjaju@nvidia.com>, "phrdina@redhat.com"
- <phrdina@redhat.com>
-References: <20260415105552.622421-1-skolothumtho@nvidia.com>
- <20260415105552.622421-23-skolothumtho@nvidia.com>
- <4918654a-7c79-474b-9ede-5418460a5a76@redhat.com>
- <CH3PR12MB75486E45A43C6CD5A203D03BAB3F2@CH3PR12MB7548.namprd12.prod.outlook.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+References: <20260507144831.1604398-1-peter.maydell@linaro.org>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CH3PR12MB75486E45A43C6CD5A203D03BAB3F2@CH3PR12MB7548.namprd12.prod.outlook.com>
+In-Reply-To: <20260507144831.1604398-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124;
@@ -128,174 +117,53 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Peter,
 
-
-On 5/6/26 4:24 PM, Shameer Kolothum Thodi wrote:
-> Hi Eric,
+On 5/7/26 4:48 PM, Peter Maydell wrote:
+> On a KVM-only (--disable-tcg) build, the iommu-smmuv3 qtest fails:
 >
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Sent: 06 May 2026 13:45
->> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
->> arm@nongnu.org; qemu-devel@nongnu.org
->> Cc: peter.maydell@linaro.org; clg@redhat.com; alex@shazbot.org; Nicolin
->> Chen <nicolinc@nvidia.com>; Nathan Chen <nathanc@nvidia.com>; Matt
->> Ochs <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
->> <jgg@nvidia.com>; jonathan.cameron@huawei.com;
->> zhenzhong.duan@intel.com; Krishnakant Jaju <kjaju@nvidia.com>;
->> phrdina@redhat.com
->> Subject: Re: [PATCH v4 22/31] hw/arm/tegra241-cmdqv: Map VINTF page0
->> into guest MMIO space
->>
->> External email: Use caution opening links or attachments
->>
->>
->> Hi Shameer,
->>
->> On 4/15/26 12:55 PM, Shameer Kolothum wrote:
->>> From: Nicolin Chen <nicolinc@nvidia.com>
->>>
->>> Once a VCMDQ is allocated, map the mmap'd vintf_page0 region directly
->>> into the guest-visible MMIO space at offset 0x30000 as a RAM-backed
->>> MemoryRegion. This eliminates QEMU trapping for hot-path CONS/PROD
->>> index updates.
->>>
->>> After this patch, the two VCMDQ apertures use different access paths:
->>> the direct aperture (0x10000) remains QEMU-trapped and writes via
->>> vintf_ptr, while the VI aperture (0x30000) is a direct guest RAM
->>> mapping. Both paths write to the same underlying vintf_page0 memory,
->>> so no synchronisation between the apertures is needed.
->> I fail to understand when the previous trapped path using ptr in
->> tegra241_cmdqv_read/write_vcmdq gets used versus that path. Is it
->> eventually used?
-> The spec does not prevent a guest from using the 0x10000 path for allocated
-> VCMDQs, so the trap path remains valid and QEMU forwards those accesses to
-> the mmap'd vintf_page0 via vintf_ptr.
+> qemu-system-aarch64: QTest does not support GICv3 emulation
+> Broken pipe
+> ../../tests/qtest/libqtest.c:201: kill_qemu() tried to terminate QEMU process but encountered exit status 1 (expected 0)
 >
-> We cannot map 0x10000 directly to the guest as RAM because the kernel
-> mmap only backs VCMDQs actually allocated via HW_QUEUE ioctl. If the
-> guest allocates only 1 of 2 VCMDQs, exposing the full direct aperture page0
-> as RAM would give the guest access to unallocated VCMDQ slots. Hence, it
-> remains trapped and QEMU only fwds to vintf page0 for allocated queues.
-Actually my question rather was why don't we use a subregion_overlap for
-global vcmdq page0, mapping to vintf_page0 once cmdqv->vintf_page0 is
-set, just as we do for VINTF0 page0? I understand
-tegra241_cmdqv_read/write_vcmdq would return the same content anyway.
+> This is because the test runs the virt board with the qtest
+> accelerator and gic-version=3.  In the virt board this selects the
+> TCG (emulated) GICv3, but in a --disable-tcg build we don't compile
+> that device, only the KVM GICv3 (which isn't usable with qtest).
+>
+> Add a check to the test so we skip it if the arm-gicv3 device isn't
+> in the QEMU binary.
+>
+> Cc: qemu-stable@nongnu.org
+> Fixes: d8d19c31b220142641 ("tests/qtest: Add SMMUv3 bare-metal test using iommu-testdev")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-Besides, I would recommend that all over the code, page0 and page1 are
-clearly differentiated in terms of accessors and comments and we use the
-same terminology through the code for global vcmdq and vintf vcmdqs.
-
-Thanks
+Thanks!
 
 Eric
+> ---
+> Looks like our CI compile-tests the --disable-tcg build but doesn't
+> try to run "make check" on it.
+> ---
+>  tests/qtest/iommu-smmuv3-test.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 >
-> Thanks,
-> Shameer
->
->>> The mapping is installed lazily on first successful VCMDQ hardware
->>> queue allocation and removed when CMDQV or VINTF is disabled.
->>>
->>> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
->>> Co-developed-by: Shameer Kolothum <skolothumtho@nvidia.com>
->>> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
->>> ---
->>>  hw/arm/tegra241-cmdqv.h |  1 +
->>>  hw/arm/tegra241-cmdqv.c | 37
->> +++++++++++++++++++++++++++++++++++++
->>>  2 files changed, 38 insertions(+)
->>>
->>> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
->>> index 039d86374f..2befa6205e 100644
->>> --- a/hw/arm/tegra241-cmdqv.h
->>> +++ b/hw/arm/tegra241-cmdqv.h
->>> @@ -46,6 +46,7 @@ typedef struct Tegra241CMDQV {
->>>      IOMMUFDVeventq *veventq;
->>>      IOMMUFDHWqueue *vcmdq[TEGRA241_CMDQV_MAX_CMDQ];
->>>      void *vintf_page0;
->>> +    MemoryRegion *mr_vintf_page0;
->>>
->>>      /* Register Cache */
->>>      uint32_t config;
->>> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
->>> index eb619e1134..bf989dd51f 100644
->>> --- a/hw/arm/tegra241-cmdqv.c
->>> +++ b/hw/arm/tegra241-cmdqv.c
->>> @@ -15,6 +15,40 @@
->>>  #include "tegra241-cmdqv.h"
->>>  #include "trace.h"
->>>
->>> +static void tegra241_cmdqv_guest_unmap_vintf_page0(Tegra241CMDQV
->> *cmdqv)
->>> +{
->>> +    if (!cmdqv->mr_vintf_page0) {
->>> +        return;
->>> +    }
->>> +
->>> +    memory_region_del_subregion(&cmdqv->mmio_cmdqv, cmdqv-
->>> mr_vintf_page0);
->>> +    object_unparent(OBJECT(cmdqv->mr_vintf_page0));
->>> +    g_free(cmdqv->mr_vintf_page0);
->>> +    cmdqv->mr_vintf_page0 = NULL;
->>> +}
->>> +
->>> +static void tegra241_cmdqv_guest_map_vintf_page0(Tegra241CMDQV
->> *cmdqv)
->>> +{
->>> +    char *name;
->>> +
->>> +    if (cmdqv->mr_vintf_page0) {
->>> +        return;
->>> +    }
->>> +
->>> +    name = g_strdup_printf("%s vintf-page0",
->>> +                           memory_region_name(&cmdqv->mmio_cmdqv));
->>> +    cmdqv->mr_vintf_page0 = g_malloc0(sizeof(*cmdqv->mr_vintf_page0));
->>> +    memory_region_init_ram_device_ptr(cmdqv->mr_vintf_page0,
->>> +                                      memory_region_owner(&cmdqv->mmio_cmdqv),
->>> +                                      name, VINTF_PAGE_SIZE,
->>> +                                      cmdqv->vintf_page0);
->>> +    cmdqv->mr_vintf_page0->ram_device_skip_iommu_map = true;
->> I guess you need a setter, here to.
->>> +    memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv,
->>> +                                        CMDQV_VINTF_PAGE0_BASE,
->>> +                                        cmdqv->mr_vintf_page0, 1);
->>> +    g_free(name);
->>> +}
->>> +
->>>  static void tegra241_cmdqv_free_vcmdq(Tegra241CMDQV *cmdqv, int
->> index)
->>>  {
->>>      IOMMUFDViommu *viommu = cmdqv->s_accel->viommu;
->>> @@ -72,6 +106,7 @@ static bool
->> tegra241_cmdqv_setup_vcmdq(Tegra241CMDQV *cmdqv, int index,
->>>      hw_queue->viommu = viommu;
->>>      cmdqv->vcmdq[index] = hw_queue;
->>>
->>> +    tegra241_cmdqv_guest_map_vintf_page0(cmdqv);
->>>      return true;
->>>  }
->>>
->>> @@ -312,6 +347,7 @@ static void
->> tegra241_cmdqv_config_vintf_write(Tegra241CMDQV *cmdqv,
->>>                  cmdqv->vintf_status |= R_VINTF0_STATUS_ENABLE_OK_MASK;
->>>              }
->>>          } else {
->>> +            tegra241_cmdqv_guest_unmap_vintf_page0(cmdqv);
->>>              tegra241_cmdqv_free_all_vcmdq(cmdqv);
->>>              tegra241_cmdqv_munmap_vintf_page0(cmdqv, errp);
->>>              cmdqv->vintf_status &= ~R_VINTF0_STATUS_ENABLE_OK_MASK;
->>> @@ -438,6 +474,7 @@ static void tegra241_cmdqv_write_mmio(void
->> *opaque, hwaddr offset,
->>>          if (value & R_CONFIG_CMDQV_EN_MASK) {
->>>              cmdqv->status |= R_STATUS_CMDQV_ENABLED_MASK;
->>>          } else {
->>> +            tegra241_cmdqv_guest_unmap_vintf_page0(cmdqv);
->>>              tegra241_cmdqv_free_all_vcmdq(cmdqv);
->>>              cmdqv->status &= ~R_STATUS_CMDQV_ENABLED_MASK;
->>>          }
->> Thanks
->>
->> Eric
+> diff --git a/tests/qtest/iommu-smmuv3-test.c b/tests/qtest/iommu-smmuv3-test.c
+> index dae9821b92..708fae5fd3 100644
+> --- a/tests/qtest/iommu-smmuv3-test.c
+> +++ b/tests/qtest/iommu-smmuv3-test.c
+> @@ -64,6 +64,11 @@ static void run_smmuv3_translation(const QSMMUTestConfig *cfg)
+>          g_test_skip("virt machine not available");
+>          return;
+>      }
+> +    if (!qtest_has_device("arm-gicv3")) {
+> +        /* This can happen for a KVM-only build: qtest uses the TCG GICv3 */
+> +        g_test_skip("gicv3 not available");
+> +        return;
+> +    }
+>  
+>      /* Initialize QEMU environment for SMMU testing */
+>      qts = qtest_init("-machine virt,acpi=off,gic-version=3,iommu=smmuv3 "
 
 
