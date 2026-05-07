@@ -4,84 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D25CD342C
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 02:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D38B3CD342C
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 02:30:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKoPs-0006aS-PP; Wed, 06 May 2026 22:24:44 -0400
+	id 1wKoVf-0007TX-Aj; Wed, 06 May 2026 22:30:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoPr-0006Zb-En
- for qemu-devel@nongnu.org; Wed, 06 May 2026 22:24:43 -0400
-Received: from mail-oo1-xc35.google.com ([2607:f8b0:4864:20::c35])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoVT-0007Sk-TK
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 22:30:32 -0400
+Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoPp-0007gl-C2
- for qemu-devel@nongnu.org; Wed, 06 May 2026 22:24:43 -0400
-Received: by mail-oo1-xc35.google.com with SMTP id
- 006d021491bc7-679b072ed3aso174026eaf.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 19:24:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoVI-0000Uu-BG
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 22:30:23 -0400
+Received: by mail-ot1-x32d.google.com with SMTP id
+ 46e09a7af769-7dcd9061b1aso316322a34.2
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 19:30:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778120680; x=1778725480;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778121018; x=1778725818;
  darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=aDLgHPbMW3HTfiXvqW+3o1mH9wo3oWIvOAWn56wDd8c=;
- b=q5A/eWNyFIqRW7lGWGnkIdsqmoe+bPInzVLKOpWtXt14C/m4xDOYqG8cmmwae5fTZr
- 2h/NHqwlWHUDkFNZcYJDvzolkVO0KZcK5NAL2LQQRsUPpWKh33u6gut+LLV7SwTrYWlr
- wYldTlkg+eq1sDKmPvtAiML/sTz/CWD+yRmWApmnVvTv21NeYuCrJXXQ2igF81Rmnwlk
- oBFmB5s4AMDWiR44ix7d6+NrZIwd6wfrrJoNwzSly0EVgeKetnJ6zMKhisU1dcckWwyA
- t6ukb/BpLtfv1gKFfaQqC1Q143aUAlKHa7s8TeLo4oxEG1XLq5c+K62loBPq3TwlvXge
- LKog==
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=EnzoEPr3QxhvD1aDTlmf5NK83VKsWiLUIndD4TqQQR0=;
+ b=V8ERwLLE+Qw1RVdRfBb+pvdje5BOI8TWXrvc71trIzWBwsf5uysvevJ0dYEalVpbQw
+ tnoSlzuiAXalZS5jdMfk0l91hrLcv0viA7SzcFQriZPnghcUC3HT8iFpoNkAtutrp9vW
+ OZwOagrphbkkIlLedm8bKVhlrF3jYBuQx+wJfzCQoS0l/wT/6NfQN/CL6HopKksfoQi9
+ sTxyxgOd6FY0aefOG7fXMfcg88ewK4V6eDD5GKR8B9pPxkmCTtHi4Wry+IVoF0bsFrb0
+ pAErDy15q7ZitaPXJaJDkOiw/+chwRvkvAiJxoTWNIyiV266eCmVd9ZmzihaD2W2L+YG
+ Oi3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778120680; x=1778725480;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=aDLgHPbMW3HTfiXvqW+3o1mH9wo3oWIvOAWn56wDd8c=;
- b=cd3zNFeP/XO6ceN4YWupArNF1rV25ZlacHBnd/107gA+ikcVI3t5gimBUbl4uRg+P7
- 4G1WN4n6JLcx/0oTmDmRuqMtYDmtNd7UygBw3jNdZCHzT773qtX28W0hfNi6Pab8Bmzd
- vFDL9P31K7qC/lQY6Fn9iO12IVGMcC2IrlT3YDBQVHoznXUmU0iOvI84R0lzfxygKSaG
- BvPai4z49OHRAzJBVH+PH/iKwhkXKhH2YTM7L9NHVvx9632E0Fru4hhvo2UD4GDvuy6a
- 71AcpzwL1w2ryVK29bnS1ku6tXrnkJfxpl03rUJmNsGqANNm7fC/SsHS7m7trkrMZJrR
- K3bA==
-X-Gm-Message-State: AOJu0YxppZVU/pTBN3ndOtKOTRC6klGMBZXJUDqRbbJ+9mckHulqVu9s
- dRxRcc8ajn/td8zQOEWsDK8lAkIJqFlKe4PJFt4/mZSqOc6ZqBCgjAWeKEK8SabAwbQDjmOllpG
- pByf7UPA=
-X-Gm-Gg: AeBDiesJ7e5+13+TXCcW0HtPYbIvwj2TEqSIym9wRXZUOrxCLhD5UzphNO5ecVWOYG5
- COJXTNQJzXaCWnOm80NY3Z+jhBH7Dnz8eyVwHA5DcZs8gK/UUx7upiyxanfCvQbdbhju89kQObf
- aFdbrT/NlaeCE63JuD6HIRpealbsIdVSUU1ZJHmYw3fIu7N4zlNlBbkJFHi/8h2AJ/vjEoq6olQ
- 7tT6mpZOa9/iD3tkxemJJhRYrnmeKsD8AvrIgFvw7/auhlzRjBYysKvYWTgaNKKk3w/auzTTJBq
- RjV63kHvhF6X7XOaBdwdRxjFsGY0pERNGvZLH9VvBUiCPcg+7WMEb8DdQtxNKavNzJ86uP4nxee
- uLV6w7QdgFWmq+lswI4UMrYrQHFiBm5qPVNw9Qc+HCzcX7yzf5e+cZn5E8ZTvI0NfW6piyFw/s0
- EQiP5VEnqLBgg+sRLeTAG1
-X-Received: by 2002:a05:6820:1513:b0:696:70f0:7ade with SMTP id
- 006d021491bc7-69998c9fbfcmr3340956eaf.8.1778120679896; 
- Wed, 06 May 2026 19:24:39 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778121018; x=1778725818;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EnzoEPr3QxhvD1aDTlmf5NK83VKsWiLUIndD4TqQQR0=;
+ b=tUhdJoR0TgzmLGzXwFZv3bd7LYxy5yCIMHAPJom50gfEdvxp+Rjvfv2/y18Ljp//Zc
+ hwmp3d/Vzz3FIIm/CTwBwyghc3uM2fqkUxw48DUI/zvkdbZMRy/48hvsLLWimSK4SCv0
+ 5M/ouZ9HqBKSs0DrvGP7PoT3z1sR15pNQw5UjvNP8k8HsxpWKbN90BUp4BZhMUE0xoie
+ XF3IpE+wAu4zDzra9DjWoGCc08JH5EL2J3SbPOVeTG7vttkZ7yKHZm0ELP7OW4HTWxcr
+ 4G0+toWh31VSqW89XvtWu5IK/DNsH6qAqsml9erVieYS4+BfOb1+NjSvcV7x9ubc0qzn
+ IhzA==
+X-Gm-Message-State: AOJu0Ywu5XUuGEjV5zPXqe+1z9UjGyXHN9tM9jd+zEuaH4KIMK557PgW
+ P6AhjzaQF67nQ4vXM+LSl8o3VFEKmVm+id+dNtAQrvRIoksVkleL4bw8X1FVvvwcYHjsIsKxJcn
+ MYqUt3VI=
+X-Gm-Gg: AeBDieu3mZgn6DukACdE8SAfttm9E0k1/dNhGfUmE2p5HH+sszCXJTipsFZWg8KjMi2
+ PNigINxRIGNhtoOqeIhHR4OJLDTtN5XQ+o4lyAeC9K92bwaWKG0JjOAwf0p6J8cYVKNaPINVkOB
+ C3SMLMoEOMqz0BUQr2rRI9ldnddIhbdiRY81L1eDya1yXjH38JnraKHW8MjMw0h5hcjAcYIIM/O
+ tUOz2SrnD85TvWKuzva64juPrt6bvzHAC1yre9N3ZU3ORStcCeyZZ5m52d+GbOy0fExJRY4kzE7
+ BKSzD8jwKy54V+0YNLfK+Y2wN2bZUM3RdNM1xfPNpX9+xjCyVZNPHd+yJK3OTYDHD8driyx/gfb
+ 2d3p9SK5oIKr7SjiHRz8PMHxscij6jnx0+rP/1YnAZhCQ0qZpL8oOLW/sU6wjJnW0RmOX8wdUf9
+ QbtLIU9ecIURaCZrHJeqqUnSNCxx9YFSg=
+X-Received: by 2002:a05:6830:910:b0:7de:5612:d420 with SMTP id
+ 46e09a7af769-7e1df0fc604mr3642698a34.18.1778121018383; 
+ Wed, 06 May 2026 19:30:18 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-696896e72c4sm11088118eaf.9.2026.05.06.19.24.38
+ 46e09a7af769-7ded1915908sm12465247a34.14.2026.05.06.19.30.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 May 2026 19:24:39 -0700 (PDT)
+ Wed, 06 May 2026 19:30:17 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
-Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- Stacey Son <sson@FreeBSD.org>, Sean Bruno <sbruno@FreeBSD.org>,
- Kyle Evans <kevans@FreeBSD.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 18/25] bsd-user: Add bsd-ioctl.c infrastructure and termios
- conversion
-Date: Wed,  6 May 2026 20:22:12 -0600
-Message-ID: <20260507022219.44171-19-imp@bsdimp.com>
+Cc: Warner Losh <imp@bsdimp.com>,
+	Kyle Evans <kevans@freebsd.org>
+Subject: [PULL 00/25] Bsd user 2026 05 patches
+Date: Wed,  6 May 2026 20:28:02 -0600
+Message-ID: <20260507022827.44499-1-imp@bsdimp.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260507022219.44171-1-imp@bsdimp.com>
-References: <20260507022219.44171-1-imp@bsdimp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::c35;
- envelope-from=imp@bsdimp.com; helo=mail-oo1-xc35.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::32d;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x32d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -103,256 +97,200 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stacey Son <sson@FreeBSD.org>
+The following changes since commit ac0cc20ad2fe0b8df2e5d9458e90a095ac711ab1:
 
-Add initial bsd-ioctl.c file with termios conversion functions,
-structure type definitions, and ioctl table infrastructure.
-Includes target_to_host_termios and host_to_target_termios for
-terminal I/O control conversion, along with the ioctl dispatch
-table framework.
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-05-01 14:41:49 -0400)
 
-Style complains about STRUCT and STRUCT_SPECIAL defines:
-  ● checkpatch.pl: 197: ERROR: Macros with complex values should be enclosed in parenthesis
-  ● checkpatch.pl: 198: ERROR: Macros with complex values should be enclosed in parenthesis
-but that's fine. We are doing weird things with macros, and it's fine.
-We can't put parens or do while (0) around these since they are table
-building macros for files that are included multiple times.
+are available in the Git repository at:
 
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
-Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
-Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Signed-off-by: Warner Losh <imp@bsdimp.com>
----
- bsd-user/bsd-ioctl.c | 219 +++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 219 insertions(+)
+  git@gitlab.com:bsdimp/qemu-from-official.git tags/bsd-user-2026-05-pull-request
+
+for you to fetch changes up to d21201257aa736ed5f80732f59a60a8b2e8f567f:
+
+  bsd-user: Add call to do_bsd_ioctl and add bsd-ioctl.c to the build (2026-05-06 20:20:37 -0600)
+
+----------------------------------------------------------------
+bsd-user May 2026 pull request
+
+Three patch series were reviewed during the code freeze and are finally ready to
+head into the tree.
+
+(1) Use SPDX identifiers in most places. This makes it easier for me to upstream
+since I can do almost all of the files in the forked tree and not have it be an
+issue each time I add a new file.
+
+(2) Per discussions in the review, copy thunk.c to bsd-user from linux-user. We
+will use this in the third set of patches, ioctls. All that changed is the
+copyright header. This file has style problems, but fixing them would be a worse
+problem than the style issues since we share it with linux-user and want to
+track changes there. In the future we may actually share, but for now this was
+the compromise.
+
+(3) All the ioctls that bsd-user supports in FreeBSD. This uses the thunk.c code
+to translate back and forth between host and target. A number of pedantic
+changes were made against the blitz branch upstream and were discovered or
+highlighted by claude code.
+
+I used claude to extract all the ioctl code from the blitz branch for
+upstreaming. I had it review the code and fixed the problems it found (though
+one was a false positive). I've not tagged these as Assisted-by: since that part
+of our policy is in flux. No creative output of claude was applied here, though
+it also suggested the commit messages (that I rewrote in large part, but
+vestiges of the original remain). To be clear: Claude didn't write any of
+the actual code.
+-----BEGIN PGP SIGNATURE-----
+Comment: GPGTools - https://gpgtools.org
+
+iQIzBAABCgAdFiEEIDX4lLAKo898zeG3bBzRKH2wEQAFAmn7+HkACgkQbBzRKH2w
+EQBseRAAn4RqHJDLLdFpyfspFPOr8Etjmq6MdJ3MXtDauyOWE2IIY1bBsr5a81Ko
+VjG3zpZ3kOE6eQsCKIHHUEljtrfej3kdrvfdMI5d0Qtk4YQSU3rN2Tz6CRNIQNRb
+xALkkvsKY0AxP1xzdldUMCR2oO0AT1u0NC7aPpiKbg8Z4wUujDcaPXnNkun6xoRw
+ysELRm3G1zyvIw0WX3LUrcxYel+O4cXoF1Fzi3ZLSyryeKOBXTQG/uA7+9YJUyLx
+wsrl++bACCDHwkwnuFiIvg+ZkBiMfkVHz6SLRcMfVjwmAfRuPukvjB8ZZBXRLT94
+zeG+R9t4zCRKC8Cka4AsYUyceHfgj/kdNkEd7u5rJHVHSUsfQAbWywRRhjOyO4Ad
+3nzKOCJ68e4bu3FOc7ih2pcrS71/zxR1HWa2FgwPOntrDaagCbugfSepZ5bJewvW
+rBqujzgLV7B5fNDUAaYP+HnYr/qu6oaJZ4APalubBu+/Y++P1KBzfsiNSoFLHTzU
+XFsGB0ktMbVJtqMfQKNBJlsd8XrRguhRvrujwBAKJxUt1XIS7lJfYQIN1sn2pfBe
+evUsHsp978u1BR58rwEMRJeYxLIZe+Q6T3JJNXhwC+WsWZvjdLo2Xta78HcudC0R
+z1FnH99jlUFpgHiySQUMR/6FYPBxRMQ4dPa4hgLVKYOSyN4GguI=
+=L844
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------------
+
+Stacey Son (19):
+  bsd-user: ioctl: add common definitions
+  bsd-user: Add FreeBSD tty ioctl definitions
+  bsd-user: Add FreeBSD file I/O ioctl definitions
+  bsd-user: Add FreeBSD socket ioctl definitions
+  bsd-user: Add FreeBSD cryptodev ioctl definitions
+  bsd-user: Add FreeBSD disk ioctl definitions
+  bsd-user: Add FreeBSD IPv6 ioctl definitions
+  bsd-user: Add FreeBSD ioctl type definitions
+  bsd-user: Add FreeBSD ioctl command table
+  bsd-user: Add bsd-ioctl.h header
+  bsd-user: Add target_sockaddr and safe_ioctl to syscall_defs.h
+  bsd-user: Add bsd-ioctl.c infrastructure and termios conversion
+  bsd-user: Add log_unsupported_ioctl function
+  bsd-user: Add do_ioctl_unsupported function
+  bsd-user: Add target_to_host_sockaddr_in6 function
+  bsd-user: Add do_ioctl_in6_ifreq_sockaddr_int function
+  bsd-user: Add do_bsd_ioctl main function
+  bsd-user: Add init_bsd_ioctl function
+  bsd-user: Add call to do_bsd_ioctl and add bsd-ioctl.c to the build
+
+Warner Losh (6):
+  bsd-user: Switch to SPDX-License-Expression
+  bsd-user: Add syscall header generator for FreeBSD
+  bsd-user: Delete sbrk and sstk system calls.
+  bsd-user: Create os-syscall.h
+  bsd-user: Switch to generated syscall_nr.h
+  bsd-user: Copy linux-user/thunk.c to bsd-user
+
+ bsd-user/aarch64/signal.c               |  15 +-
+ bsd-user/aarch64/target_arch.h          |  16 +-
+ bsd-user/aarch64/target_arch_cpu.c      |  15 +-
+ bsd-user/aarch64/target_arch_cpu.h      |  18 +-
+ bsd-user/aarch64/target_arch_elf.h      |  14 +-
+ bsd-user/aarch64/target_arch_reg.h      |  19 +-
+ bsd-user/aarch64/target_arch_signal.h   |  16 +-
+ bsd-user/aarch64/target_arch_sigtramp.h |  16 +-
+ bsd-user/aarch64/target_arch_sysarch.h  |  16 +-
+ bsd-user/aarch64/target_arch_thread.h   |  16 +-
+ bsd-user/aarch64/target_arch_vmparam.h  |  16 +-
+ bsd-user/aarch64/target_syscall.h       |  16 +-
+ bsd-user/arm/signal.c                   |  18 +-
+ bsd-user/arm/target_arch.h              |  16 +-
+ bsd-user/arm/target_arch_cpu.c          |  18 +-
+ bsd-user/arm/target_arch_cpu.h          |  18 +-
+ bsd-user/arm/target_arch_elf.h          |  18 +-
+ bsd-user/arm/target_arch_reg.h          |  18 +-
+ bsd-user/arm/target_arch_signal.h       |  18 +-
+ bsd-user/arm/target_arch_sigtramp.h     |  18 +-
+ bsd-user/arm/target_arch_sysarch.h      |  18 +-
+ bsd-user/arm/target_arch_thread.h       |  18 +-
+ bsd-user/arm/target_arch_vmparam.h      |  18 +-
+ bsd-user/arm/target_syscall.h           |  18 +-
+ bsd-user/bsd-file.h                     |  18 +-
+ bsd-user/bsd-ioctl.c                    | 436 ++++++++++++++++++++
+ bsd-user/bsd-ioctl.h                    |  14 +
+ bsd-user/bsd-mem.c                      |  17 +-
+ bsd-user/bsd-mem.h                      |  30 +-
+ bsd-user/bsd-proc.c                     |  17 +-
+ bsd-user/bsd-proc.h                     |  17 +-
+ bsd-user/freebsd/meson.build            |  10 +-
+ bsd-user/freebsd/os-ioctl-cmds.h        | 149 +++++++
+ bsd-user/freebsd/os-ioctl-cryptodev.h   |  84 ++++
+ bsd-user/freebsd/os-ioctl-disk.h        |  52 +++
+ bsd-user/freebsd/os-ioctl-filio.h       |  34 ++
+ bsd-user/freebsd/os-ioctl-in6_var.h     | 226 +++++++++++
+ bsd-user/freebsd/os-ioctl-ioccom.h      |  43 ++
+ bsd-user/freebsd/os-ioctl-sockio.h      | 246 +++++++++++
+ bsd-user/freebsd/os-ioctl-ttycom.h      | 239 +++++++++++
+ bsd-user/freebsd/os-ioctl-types.h       | 109 +++++
+ bsd-user/freebsd/os-misc.h              |  18 +-
+ bsd-user/freebsd/os-proc.c              |  17 +-
+ bsd-user/freebsd/os-proc.h              |  18 +-
+ bsd-user/freebsd/os-stat.c              |  17 +-
+ bsd-user/freebsd/os-stat.h              |  18 +-
+ bsd-user/freebsd/os-strace.h            |  19 +-
+ bsd-user/freebsd/os-syscall.c           |  17 +-
+ bsd-user/freebsd/os-syscall.h           |  21 +
+ bsd-user/freebsd/scripts/syscallhdr.sh  |   9 +
+ bsd-user/freebsd/strace.list            |   4 +
+ bsd-user/freebsd/syscall_nr.h           | 515 ------------------------
+ bsd-user/freebsd/target_os_elf.h        |  18 +-
+ bsd-user/freebsd/target_os_siginfo.h    |  18 +-
+ bsd-user/freebsd/target_os_signal.h     |   7 +
+ bsd-user/freebsd/target_os_stack.h      |  18 +-
+ bsd-user/freebsd/target_os_thread.h     |  18 +-
+ bsd-user/freebsd/target_os_user.h       |  18 +-
+ bsd-user/freebsd/target_os_vmparam.h    |  18 +-
+ bsd-user/i386/signal.c                  |  17 +-
+ bsd-user/i386/target_arch.h             |  16 +-
+ bsd-user/i386/target_arch_cpu.c         |  17 +-
+ bsd-user/i386/target_arch_cpu.h         |  17 +-
+ bsd-user/i386/target_arch_elf.h         |  18 +-
+ bsd-user/i386/target_arch_reg.h         |  19 +-
+ bsd-user/i386/target_arch_signal.h      |  16 +-
+ bsd-user/i386/target_arch_sigtramp.h    |  16 +-
+ bsd-user/i386/target_arch_sysarch.h     |  18 +-
+ bsd-user/i386/target_arch_thread.h      |  18 +-
+ bsd-user/i386/target_arch_vmparam.h     |  18 +-
+ bsd-user/i386/target_syscall.h          |  16 +-
+ bsd-user/meson.build                    |   2 +
+ bsd-user/qemu-bsd.h                     |  18 +-
+ bsd-user/syscall_defs.h                 |  50 +--
+ bsd-user/thunk.c                        | 470 +++++++++++++++++++++
+ bsd-user/x86_64/signal.c                |  16 +-
+ bsd-user/x86_64/target_arch.h           |  16 +-
+ bsd-user/x86_64/target_arch_cpu.c       |  17 +-
+ bsd-user/x86_64/target_arch_cpu.h       |  17 +-
+ bsd-user/x86_64/target_arch_elf.h       |  18 +-
+ bsd-user/x86_64/target_arch_reg.h       |  19 +-
+ bsd-user/x86_64/target_arch_signal.h    |  17 +-
+ bsd-user/x86_64/target_arch_sigtramp.h  |  17 +-
+ bsd-user/x86_64/target_arch_sysarch.h   |  17 +-
+ bsd-user/x86_64/target_arch_thread.h    |  18 +-
+ bsd-user/x86_64/target_arch_vmparam.h   |  18 +-
+ bsd-user/x86_64/target_syscall.h        |  16 +-
+ 87 files changed, 2362 insertions(+), 1526 deletions(-)
  create mode 100644 bsd-user/bsd-ioctl.c
+ create mode 100644 bsd-user/bsd-ioctl.h
+ create mode 100644 bsd-user/freebsd/os-ioctl-cmds.h
+ create mode 100644 bsd-user/freebsd/os-ioctl-cryptodev.h
+ create mode 100644 bsd-user/freebsd/os-ioctl-disk.h
+ create mode 100644 bsd-user/freebsd/os-ioctl-filio.h
+ create mode 100644 bsd-user/freebsd/os-ioctl-in6_var.h
+ create mode 100644 bsd-user/freebsd/os-ioctl-ioccom.h
+ create mode 100644 bsd-user/freebsd/os-ioctl-sockio.h
+ create mode 100644 bsd-user/freebsd/os-ioctl-ttycom.h
+ create mode 100644 bsd-user/freebsd/os-ioctl-types.h
+ create mode 100644 bsd-user/freebsd/os-syscall.h
+ create mode 100644 bsd-user/freebsd/scripts/syscallhdr.sh
+ delete mode 100644 bsd-user/freebsd/syscall_nr.h
+ create mode 100644 bsd-user/thunk.c
 
-diff --git a/bsd-user/bsd-ioctl.c b/bsd-user/bsd-ioctl.c
-new file mode 100644
-index 0000000000..94110d4ad5
---- /dev/null
-+++ b/bsd-user/bsd-ioctl.c
-@@ -0,0 +1,219 @@
-+/*
-+ * BSD ioctl(2) emulation
-+ *
-+ * Copyright (c) 2013-2015 Stacey D. Son
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+
-+#include <sys/types.h>
-+#include <sys/param.h>
-+#include <sys/disk.h>
-+#include <sys/ioccom.h>
-+#include <sys/ioctl.h>
-+#include <sys/sockio.h>
-+#include <sys/_termios.h>
-+#include <sys/ttycom.h>
-+#include <sys/filio.h>
-+
-+#include <crypto/cryptodev.h>
-+
-+#include <net/ethernet.h>
-+#include <net/if.h>
-+#include <net/if_var.h>
-+#include <net/if_types.h>
-+#include <net/route.h>
-+#include <net/if_dl.h>
-+#include <net/if_gif.h>
-+#include <net/if_gre.h>
-+#include <net/if_lagg.h>
-+#include <net/if_media.h>
-+#include <net/pfvar.h>
-+#include <net/if_pfsync.h>
-+#include <netinet/icmp6.h>
-+#include <netinet/in.h>
-+#include <netinet/ip_carp.h>
-+#include <netinet6/in6_var.h>
-+#include <netinet6/nd6.h>
-+#include <net80211/ieee80211_ioctl.h>
-+
-+#include <stdio.h>
-+
-+#include "qemu.h"
-+
-+#include "syscall_defs.h"
-+#include "bsd-ioctl.h"
-+#include "os-ioctl-cryptodev.h"
-+#include "os-ioctl-filio.h"
-+#include "os-ioctl-in6_var.h"
-+#include "os-ioctl-sockio.h"
-+#include "os-ioctl-ttycom.h"
-+#include "os-ioctl-disk.h"
-+
-+static void target_to_host_termios(void *dst, const void *src)
-+{
-+    struct termios *host = dst;
-+    const struct target_termios *target = src;
-+
-+    host->c_iflag = target_to_host_bitmask(tswap32(target->c_iflag), iflag_tbl);
-+    host->c_oflag = target_to_host_bitmask(tswap32(target->c_oflag), oflag_tbl);
-+    host->c_cflag = target_to_host_bitmask(tswap32(target->c_cflag), cflag_tbl);
-+    host->c_lflag = target_to_host_bitmask(tswap32(target->c_lflag), lflag_tbl);
-+
-+    memset(host->c_cc, 0, sizeof(host->c_cc));
-+    host->c_cc[VEOF] = target->c_cc[TARGET_VEOF];
-+    host->c_cc[VEOL] = target->c_cc[TARGET_VEOL];
-+#ifdef VEOL2
-+    host->c_cc[VEOL2] = target->c_cc[TARGET_VEOL2];
-+#endif
-+    host->c_cc[VERASE] = target->c_cc[TARGET_VERASE];
-+#ifdef VWERASE
-+    host->c_cc[VWERASE] = target->c_cc[TARGET_VWERASE];
-+#endif
-+    host->c_cc[VKILL] = target->c_cc[TARGET_VKILL];
-+#ifdef VREPRINT
-+    host->c_cc[VREPRINT] = target->c_cc[TARGET_VREPRINT];
-+#endif
-+#ifdef VERASE2
-+    host->c_cc[VERASE2] = target->c_cc[TARGET_VERASE2];
-+#endif
-+    host->c_cc[VINTR] = target->c_cc[TARGET_VINTR];
-+    host->c_cc[VQUIT] = target->c_cc[TARGET_VQUIT];
-+    host->c_cc[VSUSP] = target->c_cc[TARGET_VSUSP];
-+#ifdef VDSUSP
-+    host->c_cc[VDSUSP] = target->c_cc[TARGET_VDSUSP];
-+#endif
-+    host->c_cc[VSTART] = target->c_cc[TARGET_VSTART];
-+    host->c_cc[VSTOP] = target->c_cc[TARGET_VSTOP];
-+#ifdef VLNEXT
-+    host->c_cc[VLNEXT] = target->c_cc[TARGET_VLNEXT];
-+#endif
-+#ifdef VDISCARD
-+    host->c_cc[VDISCARD] = target->c_cc[TARGET_VDISCARD];
-+#endif
-+    host->c_cc[VMIN] = target->c_cc[TARGET_VMIN];
-+    host->c_cc[VTIME] = target->c_cc[TARGET_VTIME];
-+#ifdef VSTATUS
-+    host->c_cc[VSTATUS] = target->c_cc[TARGET_VSTATUS];
-+#endif
-+
-+    host->c_ispeed = tswap32(target->c_ispeed);
-+    host->c_ospeed = tswap32(target->c_ospeed);
-+}
-+
-+static void host_to_target_termios(void *dst, const void *src)
-+{
-+    struct target_termios *target = dst;
-+    const struct termios *host = src;
-+
-+    target->c_iflag = tswap32(host_to_target_bitmask(host->c_iflag, iflag_tbl));
-+    target->c_oflag = tswap32(host_to_target_bitmask(host->c_oflag, oflag_tbl));
-+    target->c_cflag = tswap32(host_to_target_bitmask(host->c_cflag, cflag_tbl));
-+    target->c_lflag = tswap32(host_to_target_bitmask(host->c_lflag, lflag_tbl));
-+
-+    memset(target->c_cc, 0, sizeof(target->c_cc));
-+    target->c_cc[TARGET_VEOF] = host->c_cc[VEOF];
-+    target->c_cc[TARGET_VEOL] = host->c_cc[VEOL];
-+#ifdef VEOL2
-+    target->c_cc[TARGET_VEOL2] = host->c_cc[VEOL2];
-+#endif
-+    target->c_cc[TARGET_VERASE] = host->c_cc[VERASE];
-+#ifdef VWERASE
-+    target->c_cc[TARGET_VWERASE] = host->c_cc[VWERASE];
-+#endif
-+    target->c_cc[TARGET_VKILL] = host->c_cc[VKILL];
-+#ifdef VREPRINT
-+    target->c_cc[TARGET_VREPRINT] = host->c_cc[VREPRINT];
-+#endif
-+#ifdef VERASE2
-+    target->c_cc[TARGET_VERASE2] = host->c_cc[VERASE2];
-+#endif
-+    target->c_cc[TARGET_VINTR] = host->c_cc[VINTR];
-+    target->c_cc[TARGET_VQUIT] = host->c_cc[VQUIT];
-+    target->c_cc[TARGET_VSUSP] = host->c_cc[VSUSP];
-+#ifdef VDSUSP
-+    target->c_cc[TARGET_VDSUSP] = host->c_cc[VDSUSP];
-+#endif
-+    target->c_cc[TARGET_VSTART] = host->c_cc[VSTART];
-+    target->c_cc[TARGET_VSTOP] = host->c_cc[VSTOP];
-+#ifdef VLNEXT
-+    target->c_cc[TARGET_VLNEXT] = host->c_cc[VLNEXT];
-+#endif
-+#ifdef VDISCARD
-+    target->c_cc[TARGET_VDISCARD] = host->c_cc[VDISCARD];
-+#endif
-+    target->c_cc[TARGET_VMIN] = host->c_cc[VMIN];
-+    target->c_cc[TARGET_VTIME] = host->c_cc[VTIME];
-+#ifdef VSTATUS
-+    target->c_cc[TARGET_VSTATUS] = host->c_cc[VSTATUS];
-+#endif
-+
-+    target->c_ispeed = tswap32(host->c_ispeed);
-+    target->c_ospeed = tswap32(host->c_ospeed);
-+}
-+
-+static const StructEntry struct_termios_def = {
-+    .convert = { host_to_target_termios, target_to_host_termios },
-+    .size = { sizeof(struct target_termios), sizeof(struct termios) },
-+    .align = { __alignof__(struct target_termios),
-+        __alignof__(struct termios) },
-+};
-+
-+/* ioctl structure type definitions */
-+#define STRUCT(name, ...) STRUCT_ ## name,
-+#define STRUCT_SPECIAL(name) STRUCT_ ## name,
-+enum {
-+#include "os-ioctl-types.h"
-+STRUCT_MAX
-+};
-+#undef STRUCT
-+#undef STRUCT_SPECIAL
-+
-+#define STRUCT(name, ...) \
-+    static const argtype struct_ ## name ## _def[] = { __VA_ARGS__, TYPE_NULL };
-+#define STRUCT_SPECIAL(name)
-+#include "os-ioctl-types.h"
-+#undef STRUCT
-+#undef STRUCT_SPECIAL
-+
-+
-+struct IOCTLEntry;
-+
-+typedef abi_long do_ioctl_fn(const struct IOCTLEntry *ie, uint8_t *buf_temp,
-+                int fd, abi_long cmd, abi_long arg);
-+
-+struct IOCTLEntry {
-+    unsigned int target_cmd;
-+    unsigned int host_cmd;
-+    const char *name;
-+    int access;
-+    do_ioctl_fn *do_ioctl;
-+    const argtype arg_type[5];
-+};
-+typedef struct IOCTLEntry IOCTLEntry;
-+
-+#define MAX_STRUCT_SIZE 4096
-+
-+static abi_long do_ioctl_unsupported(__unused const IOCTLEntry *ie,
-+                                     __unused uint8_t *buf_temp,
-+                                     __unused int fd, __unused abi_long cmd,
-+                                     __unused abi_long arg);
-+
-+static abi_long do_ioctl_in6_ifreq_sockaddr_int(const IOCTLEntry *ie,
-+        uint8_t *buf_temp, int fd, abi_long cmd, abi_long arg);
-+
-+static IOCTLEntry ioctl_entries[] = {
-+#define IOC_    0x0000
-+#define IOC_R   0x0001
-+#define IOC_W   0x0002
-+#define IOC_RW  (IOC_R | IOC_W)
-+#define IOCTL(cmd, access, ...) \
-+    { TARGET_ ## cmd, cmd, #cmd, access, 0, { __VA_ARGS__ } },
-+#define IOCTL_SPECIAL(cmd, access, dofn, ...) \
-+    { TARGET_ ## cmd, cmd, #cmd, access, dofn, { __VA_ARGS__ } },
-+#define IOCTL_SPECIAL_UNIMPL(cmd, access, dofn, ...) \
-+    { TARGET_ ## cmd, 0, #cmd, access, dofn, { __VA_ARGS__ } },
-+#include "os-ioctl-cmds.h"
-+    { 0, 0 },
-+};
 -- 
 2.52.0
 
