@@ -4,141 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED066CD3427
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 08:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D198CD3445
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 08:59:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKuZB-0006K9-IX; Thu, 07 May 2026 04:58:45 -0400
+	id 1wKuZp-0006Vl-38; Thu, 07 May 2026 04:59:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wKuZ1-0006Ji-1J; Thu, 07 May 2026 04:58:35 -0400
-Received: from mail-centralusazlp170110009.outbound.protection.outlook.com
- ([2a01:111:f403:c111::9] helo=DM5PR21CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wKuYy-0001rX-WE; Thu, 07 May 2026 04:58:34 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CFvIBufYIG2Xthz3bClhIIaFJRZtjAqvqrA6avxiw/FuSBr8Pn5B4e5NsKaZufd5v5sMCwFgc2niochDMS5g2WVQtTh+GQb0kMD15TVpDkO6MzVlDF2MGpwumXmU7SXmYI2U3lgzoF755ZlPFMRHsr3WO3JbH0dC5sqYNMkyU+p0RulkiFPYRrtUiH3I+GBIsxIqVW6huqBvyxvMh8qJ9HNc7x8KYhs2nC/UNDZvODsWjYSyxCcTGCn3sxpzJJJ8aoftlygIai7bNFkdm7dfsWlUGigXmx1S6NR/HcbSQiJWzyhB3oaywlSVbaa/FgIyKJvxBiqZLe/vzPa1VeKhWQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lH61pDQFPJR2pG9h6b9tMI0EYYwZnuhPqzzLiqUm1hA=;
- b=HSTRPMRG8qVpfxa2hELbGCeKvZb3O/xVeLZHiRVUORBw7t9vAQRiXow29TgGntcehjle5WScZQJPjSj7/WGZnPPL4O/b67A0cr4Ovq1cSR6wQle7HHth+Uiz8VrmSnfa7+txKIluA5f0EXDLdcjyHe0j48WsgDPshtixel9LaOXwMI2y2Hxr+U9gjbtNwn1VCxuukJpGIhFKEPYoX9VQAJt82cviFlYMDPrdChRrpkjogmOfhD+Ep/ST7kTOFEuU6sn2bVQUyg20DlqPCrijfsctVLSy2badUebEX30wqOoFKDYBV2Sz+Vn5xr2tqS/U15YFgALBqfSK5TBwb7PRaA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lH61pDQFPJR2pG9h6b9tMI0EYYwZnuhPqzzLiqUm1hA=;
- b=kU8dUvZC6Uno+rp3rzTDrKFzx0PaoHbPmQfsEWaTleX3fPnTgXCEqckBGS2ZeunnYjAb/z/K6qCtV8WpAJFXmxQ8bFOOH3akOOV4g10cuSbqJw4pFq7HcoXFyb3Wf7aJ9HvQQ4j6l/HQagT7jx/dYQZR/14gXQTT8rpiORERydeEsP3uPEdE7RXMbcP+mzD6tWVP9eJkuvFoHThDRoX4LvR817mkRpuxyKu7CT/IZniGxfNZBluByyO0NVfH9tM3OtFfvOVdDtshgBV+vlfO9a2Y0qJvRnON04TrIxA5uOwHbf6vDOHKMhDEPY1kf9ibLia18l1+T/TJCCaUSu4MtA==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by IA0PPF316EEACD8.namprd12.prod.outlook.com
- (2603:10b6:20f:fc04::bcb) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.25; Thu, 7 May
- 2026 08:58:26 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.20.9891.017; Thu, 7 May 2026
- 08:58:26 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
- <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev"
- <kvmarm@lists.linux.dev>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "cohuck@redhat.com" <cohuck@redhat.com>,
- "sebott@redhat.com" <sebott@redhat.com>, "philmd@linaro.org"
- <philmd@linaro.org>
-CC: "maz@kernel.org" <maz@kernel.org>, "oliver.upton@linux.dev"
- <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>, "berrange@redhat.com"
- <berrange@redhat.com>, "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-Subject: RE: [PATCH v4 04/17] arm/cpu: Add infra to handle generated ID
- register definitions
-Thread-Topic: [PATCH v4 04/17] arm/cpu: Add infra to handle generated ID
- register definitions
-Thread-Index: AQHc2s+MiFtk51uQsEegmd8nk0SKf7YCRxvQ
-Date: Thu, 7 May 2026 08:58:26 +0000
-Message-ID: <CH3PR12MB7548456E92BB5137C5B5846FAB3C2@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260503073541.790215-1-eric.auger@redhat.com>
- <20260503073541.790215-5-eric.auger@redhat.com>
-In-Reply-To: <20260503073541.790215-5-eric.auger@redhat.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|IA0PPF316EEACD8:EE_
-x-ms-office365-filtering-correlation-id: d7f905d4-9863-4523-c2aa-08deac16ccf6
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|376014|7416014|366016|56012099003|18002099003|22082099003|921020|38070700021;
-x-microsoft-antispam-message-info: 6B03lMoYq4/10hnK0KBk6eHWHpwqzLLPehOdrH7HDPSrvmWv7AZwrT6mN413OaxLuyBZf6KwhtnrcqBstQP33p8bv68LrAU0IwMZLWRnBFnIlpH0fbIFRyjNkd7QrfXhwlDsx/nTIHXIlFvmbaqY4gzdykr3OYdFrFGjDOTITT/RzXp0Cb7ddHrrbgZcm7BarRiS3h6dxwkBFItS1aNkq4fnAHuBP/e9I9eiY207IqQHbj5gJjfS2Mu6N4Xb5TVRPotR+01JH3gY6AwQqBluiiLT1yprCEs55mE8chzqIA2XjKv/joGgM70eQ0nGz/shfwcjpLFp8YjM3FxJoGUO6N7rEsOPGIE+gwXgf+p4Nm6jwOp2rEOt9GvDw/6N84qLhxvjaRv/j9h7IXFCvXOiWEEsB4nfeuTYNqc03kqoHxHg6warLWrN03jLlxGnKSA5c/Fg7McV/PHcibTPkEwzqaQ2MG1Uz84pCT6rGfvCoiILyHiZS+BANT3oNZ99OBjHIuo9RAbQ1azP+mi1nUkZqnb8UUjHUzl9OdJ/z5q4XoHP23k88iw+fs3mp6WWjonAOZlEU3mlfTH6apHiXF43WJYiRwQk89hH2lV/QPmh1pjU9zt3Oo+caDOJj2UHWwu5XUCjeJMnkSaFQSTj74bknk26TdgRv3Iu5MR216It7Wskts/zSc8v4sMw1ycGa39n1ylVo82rhoIemnhbQXzqiSqZA6omN2km/Vy8qUpHAEeXVF4rQsVhCX/T4IHv39QNhZ8TptnzOkqKXPDJ5927lA==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016)(56012099003)(18002099003)(22082099003)(921020)(38070700021);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?fpQz5qnQfwXbFHDezwFXXb1KM1yLp8t3Nr5wpgW+N0IrXZ91dMW0NQl47s+x?=
- =?us-ascii?Q?nNHaNyZ+oBemzyuxITcamGtYjqmYwcHVcIF+E1NwW3EmJwtUXIJXtFkIflg9?=
- =?us-ascii?Q?/1cSEb4Ub4aZ3PyoMZnSA2dpqUFA3CuCc41pyG+2VFba2U6C4WWtQuD3wxPl?=
- =?us-ascii?Q?isZikTYXgRosBrfOWEMxYlRzK0s4fYkGfS57+Ma/W63a8084EIvCXd4zA8X9?=
- =?us-ascii?Q?b3nIMT3waUIBnX42Yhw8wy2XQqEln9zqOfD+fQecJ+BGIA0+5bp5T2pj5TOK?=
- =?us-ascii?Q?QSMA/mkoQ9jtpuu7cYycKz27LMlRbVA6T2IMjnPj76VmEJzeZIazpdjk0VUK?=
- =?us-ascii?Q?ApEoPpYYyiuCCP8GcA6BEtrEiKFtn5U4qSt+ykwon/mxBzyreIRi2lPpQXKb?=
- =?us-ascii?Q?ZkIAlt43DP4mbgcprUR2WvQRohc+zd+uSZCcjyqxMB3m3/y0dBLnm4Tp1s4B?=
- =?us-ascii?Q?qUu4w2S+n34o3WjiD2RuSulxDmu7+vxg0sZ5zaeqHVVrSY/uJTy8d/OE4XJo?=
- =?us-ascii?Q?PM+Gmv12VXWmgOxEIron5BsJxTY63zY1pHs4vvTp0RBGFw+6bHdtkogyed33?=
- =?us-ascii?Q?fp2z8PmyDHzJ/JblYsblrnbqGXNAGZlrx8Ct9rFYxnRfyD1OQe6/dhfr/NoC?=
- =?us-ascii?Q?vhcr+skn/HsZd4On0w32C90aDcIuVpSSrSn9BEQpEBlIYO98rJ9GNetIBBLw?=
- =?us-ascii?Q?5uvEtGIIu+mEPtn8EwulyN1GXsBor3QZ1zxPI2HDbe/JGs4tTonWXnDGppZc?=
- =?us-ascii?Q?HSaEptX7wwrda+9szarhi0xLeUJ+GoHWxvXCjumoIVLbGsKWXj0lF9BDpzLP?=
- =?us-ascii?Q?OSxGZpcD2S2ayjQKNywIy1+4/AgDD+gdZg6GN6gZfVXwYNpEzSC+y0B5vy8f?=
- =?us-ascii?Q?mR0Wo/Q2txPUUH0wyChEI0k+kTHec5DYy8inwbMyVyrwGice2VLxfNQ+Vf5o?=
- =?us-ascii?Q?vnrfvxHWkW4+riksUNjkZVbrFUY15P+iC0xVzO2fXmLmmCHC9RYyJkm4Rjq2?=
- =?us-ascii?Q?hNHX6JXX5pEHweSe9HnPb7QEasUy9zk1E6g7Ku8CpxME9smbNdV49WhVNZvY?=
- =?us-ascii?Q?d6c+RGA/MWXERhF56GkUmVm+i9Utqa8O/8Rq9mIMYeRLmqrbL27mu70DuHbP?=
- =?us-ascii?Q?abEc7AsAx5amNeTSEtWOpjCG1EpM7NDJ14yCQEYt7FOhtr8kIeVw2BLEVux6?=
- =?us-ascii?Q?f6VsD/OgB9DnpdJ5O6MNVdSotPorO4hdU63bJgURK2szvXKE1ZPC56TBqauO?=
- =?us-ascii?Q?l7fLM75Y+dsBoXPy7zItnJ8jGYl9aM6H+rPUtaxezAKvFjnD+/1FAGyvEOuh?=
- =?us-ascii?Q?hSW1SEJj5pQgxxQdQbxVmIcZnjW0wmR+lW3VeNhxTmxpetJa76hewdwiQ5Ff?=
- =?us-ascii?Q?0lKXmcsbKF/5B3hSiab4nsgnonsTmK+fPa4rQG8cAOOn7P2GC4yxqMKI9tsF?=
- =?us-ascii?Q?TqwX79d0ZpfiH8vFbM2GsYJLKcz8Ky8CEUCBWOSCUaU41dBYdEWZRBr/h0yY?=
- =?us-ascii?Q?PhwZYO4Upe9UnHhrY8h0+RddTD7/435KI5A39GZEwo5m75oPG7phPL9xhMc/?=
- =?us-ascii?Q?WGcJGKCLs95LO9R446kX8WU3H3ZAikhF6NOcGqnxEqeP8hm3IPN3N7PVxQxU?=
- =?us-ascii?Q?9wSKCjJLyFZLJkbpn45xc5ffv+8kcfvOopflyV0mOLE1xRGgTjAccjorD/tA?=
- =?us-ascii?Q?zTLSbGKXEynijzp9mjNTkHdIlzFvEHCSuX2UESTZrZ5K31GGg0+OMW9vWam9?=
- =?us-ascii?Q?efgINC9kIA=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wKuZk-0006UT-Vh
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 04:59:20 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wKuZj-00020d-56
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 04:59:20 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-64d5a7926cfso544738d50.2
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 01:59:18 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778144358; cv=none;
+ d=google.com; s=arc-20240605;
+ b=QhJWb4dgqSXa7UTA2yCl4Xn8u1NZD6sI51faTEkZ0W30HwU4vwUyZ4rTu4raIn2Fcu
+ oPpyXQ/CtaHJjrreBTVQl7I4DvXB/Lx3r4KWmRioomtMedYoBwqMQt6qbEd6azwq1OMo
+ DaHp5FBEFqwixNgvRG0eg2eB4o9OYW/VpSOPHz3z+66QQsEfQGjM1TApQWv0MYgPRV5F
+ CLXTw3e9m+zVskU/BMe+rf+4R1v8noauKn+nQfusUg0izs6LBWIXCMlqj1pTooBM/cVA
+ sOUPo7A84CM/xa2O/cFCiL5W4JGrzHmCKYMVD/XYEUTue+z7A4fdVV2joy1E/y5py9V6
+ 104Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=gGRZ28sR+VxEZ5C73+RuuigjMnxpYWGNS100EvozcLs=;
+ fh=OVBsQUmFFa5C7E86a/hWqq4RkAJRFqCs1t4BeDuet+E=;
+ b=Jz2uxZhGioHOzIKU+yzL7yaqdBTgeLn38di5ix/oi12XGz8rblwbMjpeTT50IrNFtx
+ o01aoEatPGfQTfh1HbNlx3mNSixwCaRw7YLLnqgsLuVPa0xx4UJ3tBONvgEq4TeOe3TZ
+ rSl8t7sxcZzL94LFBt+BE052I2ix4lQmdxNj5qSL0L4KF+vTaLjtLTEr7vE0ln9CKieV
+ 2LGxGrCQQaHkgIOzPvBx6O+PzV6JC0RCUUY9B/iGMlAh6Ehu9DonrvT2zPax6YA4sp31
+ Yavqvk+SN4x6+ZrhZCLHxNh2px+9nclXs2ZqSqW6yZ8TbvFBYd7YNOoucUjBqxx3zJFj
+ 7O5A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778144358; x=1778749158; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gGRZ28sR+VxEZ5C73+RuuigjMnxpYWGNS100EvozcLs=;
+ b=xkBn5R9HiR/SkqzXCAowXWx9DmgQAdMiXvQRTrm+T7a/Zv/uMkWHsQ/XDc26O3LtuS
+ X684Ei0TQ+qvoflEJlakMniWn7jrJZCEB8U751sJlRq3Q8hNHmQIVgKY23TttOSjCCec
+ nSTIzTR7b/y5IWiDx1XWySXjHhNEX7XAVi1Vzc3sL8YVycvdSIo0Dr0cQjSCdm7CZXDG
+ 9PVSsl+fo1HMDc9VAemKr0xXUpILvYj3nIKppL7KqzcVVfgrx+paByRXOsSsM4UeSQDX
+ cKKUuA4mqz3SDQawzBgTyVZmJcQMvnC6qSSCTB4d01kJ5P1VYaSFyRnUYPxPZ8321woD
+ 8PwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778144358; x=1778749158;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gGRZ28sR+VxEZ5C73+RuuigjMnxpYWGNS100EvozcLs=;
+ b=figp73GPNiHLMeJYrjTkmazx6b8dLlPiVVweN/NeMfqWsm9qZIs9ljN1zIEvOCAVOB
+ +/o0drugQMyrn3S/x2LsF6ThfahsnqVJ1ykaliIwbUUiS9U0Z+QMATyRYM6WHloGa5ed
+ d7JVdQbYddRpZomrfumQmcBAVoxhFBrAH6U5+P0T/bIyRncWx82IbYWTIaG68ZfydzuL
+ j29DRrxhpdootWKqyMNIYc48UOW5iJpFSg2tKv0qnuHqwR9/MBTn4g6oQYjNdsJe4e+S
+ 2LmhPJYfmwtAValoEYo5XgCcer9lo+BF+G9xGqjFr5TnEJBlEpYTt7sWuMH0fUrC1cYo
+ iK5g==
+X-Gm-Message-State: AOJu0Yy7YpvvACDOjA9d9VfaTjSXrKVWhg+S7th1iXx3QTpRSroNMB/n
+ PeoJYKApeB4VM7xsxtXfWRF2gq2pfynIVT+g9iEGsY/7IVcNiRmaFpVSiLnEilgaThBHElxKgCY
+ WrKyeni+2ZH1BH+7udBPm5O/IBOXR5dPx/N32UvElXA==
+X-Gm-Gg: AeBDieue9uuCLQ1C3xKkYCx1CpM5y1ASe18QonmSpeH0hG9Qo3WE1ycpcvtdeTfdU2F
+ 3vSEmQghKfOuVu3V+BfP7O8rFi7iVh9gK73RuugHvOVE7i6sz02WYdqaOBIkI2/6ZOBWLbBhCJo
+ kpPBtzkbYjVvtZVeVhqnCgSdLY3wwtlWXsoZubPppkCImtSbXP9k329/PQdrPRfuFFsyfON6i91
+ rxHoKX4FEmIVs0dyjCfdyqyqzdVKMfpNEMScAB74+TAfOb4aNEqMsETkmhz6ZHsNFqUdIHzoFoT
+ NWJYfB9+hDrJDKB6x7s+vnLH0Fhvq3ZcWGYqEFDkHiAsklJhjKTnSKezeOp04+sUXo07ReZoPog
+ Ugw==
+X-Received: by 2002:a05:690e:134b:b0:653:61a:2cd with SMTP id
+ 956f58d0204a3-65c79b1f050mr6856243d50.16.1778144357733; Thu, 07 May 2026
+ 01:59:17 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d7f905d4-9863-4523-c2aa-08deac16ccf6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 May 2026 08:58:26.1147 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: jsj4sEdN3UxGwQpdY5ONeLhoq0t22JCPuO5YmQ9GuR57TTKr290qrdEtZMQGlVh64TOhvPFMIyo6bXjkBkydwg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PPF316EEACD8
-Received-SPF: permerror client-ip=2a01:111:f403:c111::9;
- envelope-from=skolothumtho@nvidia.com;
- helo=DM5PR21CU001.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+References: <20260505170105.228162-1-alex.bennee@linaro.org>
+In-Reply-To: <20260505170105.228162-1-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 7 May 2026 09:59:06 +0100
+X-Gm-Features: AVHnY4KC6hYbjCnF6Az1jfuYawA6hOWCVSNgA0D86neVGNh-bmfk5XzmKiwY2YU
+Message-ID: <CAFEAcA-oL9qJ=oXbmCZ-b9jQcv8PNA26irDFA+_yCHkqEMLC1g@mail.gmail.com>
+Subject: Re: [RFC PATCH 00/10] AGENTS.md and associated skills
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, "Daniel P. Berrange" <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,202 +116,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, 5 May 2026 at 18:03, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
+>
+> Not withstanding the current contributor policy there are a number of
+> areas that AI agents could be helpful for. This series introduces an
+> AGENTS.md file which is the basic guide to the source tree and a
+> number of "skills". Skills are like scripts except far less clearly
+> defined. However I have found the issue triage skill quite useful for
+> off-loading the drudgery of going through stuff by hand. I've also
+> used the issue helper to automate the task of starting a debug session
+> by pulling in test cases from the tracker.
+>
+> These originally where a set of skills for ECA (eca.dev) but I've
+> ported them across to the agent agnostic .agents directory. There are
+> still some cases where the ECA heritage shows through though
+> (specifically the code explorer skill could be better).
+>
+> I'm not suggesting this is ready for up-streaming but I'm posting the
+> collected set for comment and I'd be interested how well these hold up
+> across different agentic systems.
 
+I guess my overall comment on this is some mix of:
+ * how much of this is generically useful as opposed to
+   stuff that's personally helpful to you and should remain
+   part of your local setup / preferences?
+ * how much do we want to put into git to start with?
 
-> -----Original Message-----
-> From: Eric Auger <eric.auger@redhat.com>
-> Sent: 03 May 2026 08:33
-> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
-> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
-> peter.maydell@linaro.org; richard.henderson@linaro.org;
-> cohuck@redhat.com; sebott@redhat.com; Shameer Kolothum Thodi
-> <skolothumtho@nvidia.com>; philmd@linaro.org
-> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
-> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
-> jdenemar@redhat.com
-> Subject: [PATCH v4 04/17] arm/cpu: Add infra to handle generated ID regis=
-ter
-> definitions
->=20
-> External email: Use caution opening links or attachments
->=20
->=20
-> The known ID regs are populated in a new initialization function
-> named initialize_cpu_sysreg_properties(). That code will be
-> automatically generated from AARCHMRS Registers.json. For the
-> time being let's just describe a single id reg, CTR_EL0. In this
-> description we only care about non RES/RAZ fields, ie. named fields.
->=20
-> The registers are populated in an array indexed by ARMIDRegisterIdx
-> and their fields are added in a sorted list.
->=20
-> [CH: adapted to reworked register storage]
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> ---
->  target/arm/cpu-idregs.h            | 59 ++++++++++++++++++++++++++++++
->  target/arm/cpu-sysreg-properties.c | 30 +++++++++++++++
->  target/arm/cpu64.c                 |  3 ++
->  target/arm/meson.build             |  3 +-
->  4 files changed, 94 insertions(+), 1 deletion(-)
->  create mode 100644 target/arm/cpu-idregs.h
->  create mode 100644 target/arm/cpu-sysreg-properties.c
->=20
-> diff --git a/target/arm/cpu-idregs.h b/target/arm/cpu-idregs.h
-> new file mode 100644
-> index 0000000000..4a9034594d
-> --- /dev/null
-> +++ b/target/arm/cpu-idregs.h
-> @@ -0,0 +1,59 @@
-> +/*
-> + * handle ID registers and their fields
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +#ifndef ARM_CPU_CUSTOM_H
-> +#define ARM_CPU_CUSTOM_H
+I'm in favour of starting with an AGENTS.md that says basically:
+ (1) "don't generate code for upstream, point the agent user at
+      our AI policy"
+ (2) "if you're looking for security issues, read our security
+      policy to see what is in scope and what is not"
+(in whatever language appears effective)
 
-ARM_CPU_IDREGS_H ?
+and then perhaps adding more things gradually where there's
+a consensus that they're broadly useful.
 
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
-> +#include "cpu.h"
-> +#include "cpu-sysregs.h"
-> +
-> +typedef struct ARM64SysRegField {
-> +    const char *name; /* name of the field, for instance CTR_EL0_IDC */
-> +    ARMIDRegisterIdx index; /* parent register, e.g. CTR_EL0_IDX */
-> +    int lower; /* lowest bit number of the field in the register */
-> +    int upper; /* highest bit number */
-> +} ARM64SysRegField;
-> +
-> +typedef struct ARM64SysReg {
-> +    const char *name;   /* name of the sysreg, for instance CTR_EL0 */
-> +    ARMSysRegs sysreg;
-> +    ARMIDRegisterIdx index; /* register index, e.g. CTR_EL0_IDX */
-> +    GList *fields; /* list of named fields, excluding RES* */
-> +} ARM64SysReg;
-> +
-> +void initialize_cpu_sysreg_properties(void);
-> +
-> +/*
-> + * List of exposed ID regs (automatically populated from AARCHMRS
-> Registers.json)
-> + */
-> +extern ARM64SysReg arm64_id_regs[NUM_ID_IDX];
-> +
-> +/* Allocate a new field and insert it at the head of the @reg list */
-
-It says insert at the head...
-
-> +static inline GList *arm64_sysreg_add_field(ARM64SysReg *reg, const char
-> *name,
-> +                                     uint8_t min, uint8_t max) {
-> +
-> +     ARM64SysRegField *field =3D g_new0(ARM64SysRegField, 1);
-> +
-> +     field->name =3D name;
-> +     field->lower =3D min;
-> +     field->upper =3D max;
-> +     field->index =3D reg->index;
-> +
-> +     reg->fields =3D g_list_append(reg->fields, field);
-
-But this is adding to the tail, right?
-
-> +     return reg->fields;
-
-Don't think the return is used anywhere.
-
-Thanks,
-Shameer
-
-> +}
-> +
-> +static inline ARM64SysReg *arm64_sysreg_get(ARMIDRegisterIdx index)
-> +{
-> +        ARM64SysReg *reg =3D &arm64_id_regs[index];
-> +
-> +        reg->index =3D index;
-> +        reg->sysreg =3D id_register_sysreg[index];
-> +        return reg;
-> +}
-> +
-> +#endif
-> diff --git a/target/arm/cpu-sysreg-properties.c b/target/arm/cpu-sysreg-
-> properties.c
-> new file mode 100644
-> index 0000000000..5cc06c8f24
-> --- /dev/null
-> +++ b/target/arm/cpu-sysreg-properties.c
-> @@ -0,0 +1,30 @@
-> +/*
-> + * QEMU ARM CPU SYSREG PROPERTIES
-> + * will be automatically generated
-> + *
-> + * Copyright (c) Red Hat, Inc. 2026
-> + *
-> + */
-> +
-> + /* SPDX-License-Identifier: GPL-2.0-or-later */
-> +
-> +#include "cpu-idregs.h"
-> +
-> +ARM64SysReg arm64_id_regs[NUM_ID_IDX];
-> +
-> +void initialize_cpu_sysreg_properties(void)
-> +{
-> +    memset(arm64_id_regs, 0, sizeof(ARM64SysReg) * NUM_ID_IDX);
-> +    /* CTR_EL0 */
-> +    ARM64SysReg *CTR_EL0 =3D arm64_sysreg_get(CTR_EL0_IDX);
-> +    CTR_EL0->name =3D "CTR_EL0";
-> +    arm64_sysreg_add_field(CTR_EL0, "TminLine", 32, 37);
-> +    arm64_sysreg_add_field(CTR_EL0, "DIC", 29, 29);
-> +    arm64_sysreg_add_field(CTR_EL0, "IDC", 28, 28);
-> +    arm64_sysreg_add_field(CTR_EL0, "CWG", 24, 27);
-> +    arm64_sysreg_add_field(CTR_EL0, "ERG", 20, 23);
-> +    arm64_sysreg_add_field(CTR_EL0, "DminLine", 16, 19);
-> +    arm64_sysreg_add_field(CTR_EL0, "L1Ip", 14, 15);
-> +    arm64_sysreg_add_field(CTR_EL0, "IminLine", 0, 3);
-> +}
-> +
-> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> index a93ad2da5a..b940842d9e 100644
-> --- a/target/arm/cpu64.c
-> +++ b/target/arm/cpu64.c
-> @@ -37,6 +37,7 @@
->  #include "hw/core/qdev-properties.h"
->  #include "internals.h"
->  #include "cpu-features.h"
-> +#include "cpu-idregs.h"
->=20
->  /* convert between <register>_IDX and SYS_<register> */
->  #define DEF(NAME, OP0, OP1, CRN, CRM, OP2)      \
-> @@ -906,6 +907,8 @@ static void aarch64_cpu_register_types(void)
->  {
->      size_t i;
->=20
-> +    initialize_cpu_sysreg_properties();
-> +
->      for (i =3D 0; i < ARRAY_SIZE(aarch64_cpus); ++i) {
->          arm_cpu_register(&aarch64_cpus[i]);
->      }
-> diff --git a/target/arm/meson.build b/target/arm/meson.build
-> index 192ac7c31e..e2f740e48f 100644
-> --- a/target/arm/meson.build
-> +++ b/target/arm/meson.build
-> @@ -9,7 +9,8 @@ arm_user_ss.add(files('gdbstub.c'))
->=20
->  arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
->    'cpu64.c',
-> -  'gdbstub64.c'
-> +  'gdbstub64.c',
-> +  'cpu-sysreg-properties.c',
->  ))
->=20
->  arm_common_ss.add(files(
-> --
-> 2.53.0
-
+thanks
+-- PMM
 
