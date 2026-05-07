@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08B24CD3436
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 02:31:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17D8ACD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 02:31:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKoVl-0007Vn-IK; Wed, 06 May 2026 22:30:49 -0400
+	id 1wKoVz-0007ab-Lq; Wed, 06 May 2026 22:31:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoVU-0007Sj-5s
- for qemu-devel@nongnu.org; Wed, 06 May 2026 22:30:32 -0400
-Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoVZ-0007Tm-7u
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 22:30:42 -0400
+Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoVK-0000V4-Ew
- for qemu-devel@nongnu.org; Wed, 06 May 2026 22:30:23 -0400
-Received: by mail-ot1-x329.google.com with SMTP id
- 46e09a7af769-7d4c12ff3d5so316242a34.2
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 19:30:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoVT-0000Vc-Ly
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 22:30:36 -0400
+Received: by mail-ot1-x336.google.com with SMTP id
+ 46e09a7af769-7d55b97f358so274104a34.3
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 19:30:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778121021; x=1778725821;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778121026; x=1778725826;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JqvWmLbjmlBIF1ObHpc6uVNCAxesbDWMi6ixpyg9t3o=;
- b=IW+o/yU+fzRXu4CuACwaY5UFisYmnVTfVoDtqRF4JV2CGSIi8FxGirmRqny/M0+0IW
- Miz98s/Rjlcct+FL7Cj846aqsvTl1/x6OkGnaDDg//dybnbNkKxKM9GwCv6+RJGcEYxn
- 400fXZvBOoX1xIXyNFg2jUArn2OPEbI3MCS+XNa+5Y/lNR9w6N36Be4I/zPeCKDZ9x+s
- TZpMSSagsfIdgqMtw9MljntT3GvEj1R+PitoERyb9kl2vqsbLzu73GR+xTxRuYngeWqA
- 2frAqa24a9rL9ff1mS+ZLRuF8g3cvW+bZZBHtAySodJxf7+0GehaFeD7wvu5iRvqrihw
- p+LA==
+ bh=1AyHrG1z3G32na6dyOgtlv711QpW0FiC+Jb7qPaauGQ=;
+ b=nEtuF4AavZsGWN3dcq2w+2rQU1Cn890pIRrS0wGg8cd6Vd2KgBLQSsRefwabTua9GG
+ igx9xDZdIOsV3S5j6Oh+j9a/u3T19nNZ1Sw8FwwnoPYSaP942HA2Xiok+KVtIARjoGqg
+ Q9QDJDrs0KKGBMO1m3rebjllLrjnOrgRb+ZARNQiQARVPCH267qfToOs8Kb2hvZ6A6lC
+ 9YEyTvihvA7/p1Mw4ZGRWVQOF0Q0dvwi/cQ6eE7evB387VER7W37qY0GAGKk70iHlX+t
+ omGkhQ1nN2QhvPes0LsBVumB9XZn4XskaK+dWLbp2SFdCc9+2fYF+H+V9YjoHiMfnK23
+ 300Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778121021; x=1778725821;
+ d=1e100.net; s=20251104; t=1778121026; x=1778725826;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JqvWmLbjmlBIF1ObHpc6uVNCAxesbDWMi6ixpyg9t3o=;
- b=bp+X0vQhLYu01UI9PXWCx0ZUxJVJSM4G1CZkLIjukzh3KcWYobLojPElS9DqBJc64Z
- BWkSB6IjWScl82vPObQBwbclONtMhftbMixFiDJWSAE7ufvkHpR0d/ZZmwoWyqKnDt1D
- fmaUbJc4+J1knJEivRgvtNfQVn4DTdsS/QUFh6ZSNyJW7TSGwpgNaNeEPc9C3E2BawpB
- oZmoDsQxUnvu3WVFY0VgY1ytKqneoW78PCp709jn+oFeyiufq22JANd1CAlq2R8hrEuO
- c2NrkhRW4v3ggJowGlkmeDjzv/ndyv4eqKnzzoip3YghTvcb7G2zKb+4iWbTJ3lok6Xs
- wm6A==
-X-Gm-Message-State: AOJu0YxzKCztHSh4h2Rnqc/HKUhEmBk5EqFmpsS/XXlbJGT5UrT1S1I3
- mPQ6uL2POH1LIN3SmUH+xSIrwZqT7aYhIgy7ErVRn05YOEdPekY3Z1CCmCEznPNfW2a57VfWzIy
- 445zaMPM=
-X-Gm-Gg: AeBDietA/STZAOwRBFJ5z9QgzCoTEaYt2h1bn1ZKnME5eILMyRJ8O/AQAD3Tgeeoiq6
- FdHbc0vy9RASyGfW0uEFt0HNYKjXlV9nVblmtD8GdReLNWRmnZBDn2gmESfhxB2T41p58WmvSRq
- vgFEuZ+Qhu2p16w3sLxm2HbrjVo1c7F/1sePA4FsdOtPpcau4raYlv6MRl55uzOzR3RXvKt2x6f
- TaAzZZGHCmYKL5P7XijHZKyM77K8gxn8kDfD5sBHW8VIAQZ1D6kkqpoYC4a8XlWO9vqRIR3flxc
- o6SRpl5b3AvNrd8bS4w5htukMGxCqtXtVCVW/pa9dQH4yoHv7TAONciY1gSBTE6fIaWtfxgza85
- dFyA8nP8JPuH3ThPgiq9g2UHH2lZVdMLgS2uvwtNACO4gic1+MbfFf763cE3vQnK5l2HXww8pG9
- ZMGCNedd75SOBN2H6m9vsagJnWkNVQVCg=
-X-Received: by 2002:a05:6830:3110:b0:7dc:c7aa:22bd with SMTP id
- 46e09a7af769-7e1deec720emr3828690a34.6.1778121020959; 
- Wed, 06 May 2026 19:30:20 -0700 (PDT)
+ bh=1AyHrG1z3G32na6dyOgtlv711QpW0FiC+Jb7qPaauGQ=;
+ b=UejlDhyzFSN4m9sxZD/24xE+O2RZ7U8vK7Z5PMPkhRVVdJzu4JbvYPGUCLxDaY6Mxb
+ Gcf9Rng/xiwvfQqexMEEyOo4Sj/wNllUwxj5OjF2Kph9816iXDwwtO4Cr4EkZt/+0vgM
+ oS+Oz0AXTuZopsEq3NcTtTgSWUknlx8icE56MABu4pcNnieJfdCAV7zJMarIROqXUbNe
+ Z7h+7hIrJ+q4uhA7GSgBkFOPOTTD+cHzB0lZG+sCQw1TWLA4aDfaFq6iuA25RLa/C3iU
+ aEtH9FYn9LIDXMn98+oHYQmi1GmAuuWxJuRsSoDqUCzl+/28HKj8FjICOecHDAeB1n4v
+ iTRw==
+X-Gm-Message-State: AOJu0Yxxtrz6wGcCIrNOP6jgGojdXsTDmv5pm/PdDFM1XSr5WbYswhBZ
+ 3Wd2ghPpFkyghfPQ8rdZJP0YJuZ9rKVjVSzf2UOhi7fUWfJcIawjuOVhB39iTLuKEd5AtbAos2G
+ W2bNnTkQ=
+X-Gm-Gg: AeBDietTYVGzpMUQhcnPwujTHP91Y+KzZm/txOZcX38ybz6KovNpEtEu34VOkt3Oi5y
+ D0zit8WidIVvNzSE//sjVfDIG8jT1RHX+AmExFe/XrCiSWGeKXOE0LtczhQwxSQvoItb/JC3wj9
+ e7owbWXIwElAL4hLDiR/EGIR+Xu7iPWJ2t+ylM7dualZc9Lv2Tyzh35Z/oFaPHxnv3uY2MZV9CP
+ gunFqqUqqFCHncWw47C7NmYfiIndlLNw4EV8wH4mFOtVPm3M6tR6VBYfgo7ttkygtfwFYAr9lCg
+ 6KZ5sGn/lhiGNGm+Xl36QHlpZwFl8gKk6TN3btFTNKLR1lwT9CEnzgygZQfLa6QqZpWdx7FX4ls
+ 5a6CIIfhjpYmXpB+DRS1AVmwGKtmTed23EKJmuG7/KrjpqWAJ7C6Su7B6ZX5+jrUnraqaUWiUC7
+ QCwAqVMlkifXboZrhx/4Sp
+X-Received: by 2002:a05:6830:44aa:b0:7db:a184:2b35 with SMTP id
+ 46e09a7af769-7e1def0c8f1mr3541477a34.8.1778121026182; 
+ Wed, 06 May 2026 19:30:26 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7ded1915908sm12465247a34.14.2026.05.06.19.30.19
+ 46e09a7af769-7ded1915908sm12465247a34.14.2026.05.06.19.30.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 May 2026 19:30:20 -0700 (PDT)
+ Wed, 06 May 2026 19:30:25 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PULL 02/25] bsd-user: Add syscall header generator for FreeBSD
-Date: Wed,  6 May 2026 20:28:04 -0600
-Message-ID: <20260507022827.44499-3-imp@bsdimp.com>
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 06/25] bsd-user: Copy linux-user/thunk.c to bsd-user
+Date: Wed,  6 May 2026 20:28:08 -0600
+Message-ID: <20260507022827.44499-7-imp@bsdimp.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260507022827.44499-1-imp@bsdimp.com>
 References: <20260507022827.44499-1-imp@bsdimp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::329;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x329.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::336;
+ envelope-from=imp@bsdimp.com; helo=mail-ot1-x336.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,55 +99,505 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Generate the syscall numbers from the installed header that has them.
-Ideally, we'd use FreeBSD's lua infra for this, but that requires that
-we have those files installed, and they aren't quite the same across
-supported versions yet, so use this simple, but effective hack. Add to
-meson build, but unused.
+bsd-user's blitz branch has used this file verbatim for a while. Copy it
+verbatim, but update to the new QEMU standards.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/meson.build           | 10 ++++++++--
- bsd-user/freebsd/scripts/syscallhdr.sh |  9 +++++++++
- 2 files changed, 17 insertions(+), 2 deletions(-)
- create mode 100644 bsd-user/freebsd/scripts/syscallhdr.sh
+ bsd-user/meson.build |   1 +
+ bsd-user/thunk.c     | 470 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 471 insertions(+)
+ create mode 100644 bsd-user/thunk.c
 
-diff --git a/bsd-user/freebsd/meson.build b/bsd-user/freebsd/meson.build
-index 8fd6c7cfb8..38f2debf7e 100644
---- a/bsd-user/freebsd/meson.build
-+++ b/bsd-user/freebsd/meson.build
-@@ -1,6 +1,12 @@
-+bsd_syscall_nr = custom_target('bsd-syscall-h',
-+    output: '@BASENAME@_nr.h',
-+    input: ['/usr/include/sys/syscall.h'],
-+    command: [sh, meson.current_source_dir() / 'scripts/syscallhdr.sh', '@INPUT@', '@OUTPUT@', 'FREEBSD'])
-+
- bsd_user_ss.add(files(
-   'os-stat.c',
-   'os-proc.c',
-   'os-sys.c',
--  'os-syscall.c',
--))
-+  'os-syscall.c'),
-+  bsd_syscall_nr
-+)
-diff --git a/bsd-user/freebsd/scripts/syscallhdr.sh b/bsd-user/freebsd/scripts/syscallhdr.sh
+diff --git a/bsd-user/meson.build b/bsd-user/meson.build
+index 00428fc2f8..9cc5c6c459 100644
+--- a/bsd-user/meson.build
++++ b/bsd-user/meson.build
+@@ -17,6 +17,7 @@ bsd_user_ss.add(files(
+   'plugin-api.c',
+   'signal.c',
+   'strace.c',
++  'thunk.c',
+   'uaccess.c',
+ ))
+ 
+diff --git a/bsd-user/thunk.c b/bsd-user/thunk.c
 new file mode 100644
-index 0000000000..fa38500775
+index 0000000000..3c89ae3ab8
 --- /dev/null
-+++ b/bsd-user/freebsd/scripts/syscallhdr.sh
-@@ -0,0 +1,9 @@
-+#!/bin/sh
-+# Copyright (c) 2026 Warner Losh <imp@bsdimp.com>
-+# SPDX-License-Identifier: GPL-2.0-or-later
++++ b/bsd-user/thunk.c
+@@ -0,0 +1,470 @@
++/*
++ * Generic thunking code to convert data between host and target CPU
++ *
++ * Copyright (c) 2003 Fabrice Bellard
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include "qemu/osdep.h"
++#include "qemu/log.h"
 +
-+in="$1"
-+out="$2"
-+bsd="$3"
++#include "qemu.h"
++#include "user/thunk.h"
 +
-+awk -v bsd="$3" '{sub("SYS_", "TARGET_" bsd "_NR_", $0); print;}' < $in > $out
++//#define DEBUG
++
++static unsigned int max_struct_entries;
++StructEntry *struct_entries;
++
++static const argtype *thunk_type_next_ptr(const argtype *type_ptr);
++
++static inline const argtype *thunk_type_next(const argtype *type_ptr)
++{
++    int type;
++
++    type = *type_ptr++;
++    switch(type) {
++    case TYPE_CHAR:
++    case TYPE_SHORT:
++    case TYPE_INT:
++    case TYPE_LONGLONG:
++    case TYPE_ULONGLONG:
++    case TYPE_LONG:
++    case TYPE_ULONG:
++    case TYPE_PTRVOID:
++    case TYPE_OLDDEVT:
++        return type_ptr;
++    case TYPE_PTR:
++        return thunk_type_next_ptr(type_ptr);
++    case TYPE_ARRAY:
++        return thunk_type_next_ptr(type_ptr + 1);
++    case TYPE_STRUCT:
++        return type_ptr + 1;
++    default:
++        return NULL;
++    }
++}
++
++static const argtype *thunk_type_next_ptr(const argtype *type_ptr)
++{
++    return thunk_type_next(type_ptr);
++}
++
++void thunk_register_struct(int id, const char *name, const argtype *types)
++{
++    const argtype *type_ptr;
++    StructEntry *se;
++    int nb_fields, offset, max_align, align, size, i, j;
++
++    assert(id < max_struct_entries);
++
++    /* first we count the number of fields */
++    type_ptr = types;
++    nb_fields = 0;
++    while (*type_ptr != TYPE_NULL) {
++        type_ptr = thunk_type_next(type_ptr);
++        nb_fields++;
++    }
++    assert(nb_fields > 0);
++    se = struct_entries + id;
++    se->field_types = types;
++    se->nb_fields = nb_fields;
++    se->name = name;
++#ifdef DEBUG
++    printf("struct %s: id=%d nb_fields=%d\n",
++           se->name, id, se->nb_fields);
++#endif
++    /* now we can alloc the data */
++
++    for (i = 0; i < ARRAY_SIZE(se->field_offsets); i++) {
++        offset = 0;
++        max_align = 1;
++        se->field_offsets[i] = g_new(int, nb_fields);
++        type_ptr = se->field_types;
++        for(j = 0;j < nb_fields; j++) {
++            size = thunk_type_size(type_ptr, i);
++            align = thunk_type_align(type_ptr, i);
++            offset = (offset + align - 1) & ~(align - 1);
++            se->field_offsets[i][j] = offset;
++            offset += size;
++            if (align > max_align)
++                max_align = align;
++            type_ptr = thunk_type_next(type_ptr);
++        }
++        offset = (offset + max_align - 1) & ~(max_align - 1);
++        se->size[i] = offset;
++        se->align[i] = max_align;
++#ifdef DEBUG
++        printf("%s: size=%d align=%d\n",
++               i == THUNK_HOST ? "host" : "target", offset, max_align);
++#endif
++    }
++}
++
++void thunk_register_struct_direct(int id, const char *name,
++                                  const StructEntry *se1)
++{
++    StructEntry *se;
++
++    assert(id < max_struct_entries);
++    se = struct_entries + id;
++    *se = *se1;
++    se->name = name;
++}
++
++
++/* now we can define the main conversion functions */
++const argtype *thunk_convert(void *dst, const void *src,
++                             const argtype *type_ptr, int to_host)
++{
++    int type;
++
++    type = *type_ptr++;
++    switch(type) {
++    case TYPE_CHAR:
++        *(uint8_t *)dst = *(uint8_t *)src;
++        break;
++    case TYPE_SHORT:
++        *(uint16_t *)dst = tswap16(*(uint16_t *)src);
++        break;
++    case TYPE_INT:
++        *(uint32_t *)dst = tswap32(*(uint32_t *)src);
++        break;
++    case TYPE_LONGLONG:
++    case TYPE_ULONGLONG:
++        *(uint64_t *)dst = tswap64(*(uint64_t *)src);
++        break;
++#if HOST_LONG_BITS == 32 && TARGET_ABI_BITS == 32
++    case TYPE_LONG:
++    case TYPE_ULONG:
++    case TYPE_PTRVOID:
++        *(uint32_t *)dst = tswap32(*(uint32_t *)src);
++        break;
++#elif HOST_LONG_BITS == 64 && TARGET_ABI_BITS == 32
++    case TYPE_LONG:
++    case TYPE_ULONG:
++    case TYPE_PTRVOID:
++        if (to_host) {
++            if (type == TYPE_LONG) {
++                /* sign extension */
++                *(uint64_t *)dst = (int32_t)tswap32(*(uint32_t *)src);
++            } else {
++                *(uint64_t *)dst = tswap32(*(uint32_t *)src);
++            }
++        } else {
++            *(uint32_t *)dst = tswap32(*(uint64_t *)src & 0xffffffff);
++        }
++        break;
++#elif HOST_LONG_BITS == 64 && TARGET_ABI_BITS == 64
++    case TYPE_LONG:
++    case TYPE_ULONG:
++    case TYPE_PTRVOID:
++        *(uint64_t *)dst = tswap64(*(uint64_t *)src);
++        break;
++#elif HOST_LONG_BITS == 32 && TARGET_ABI_BITS == 64
++    case TYPE_LONG:
++    case TYPE_ULONG:
++    case TYPE_PTRVOID:
++        if (to_host) {
++            *(uint32_t *)dst = tswap64(*(uint64_t *)src);
++        } else {
++            if (type == TYPE_LONG) {
++                /* sign extension */
++                *(uint64_t *)dst = tswap64(*(int32_t *)src);
++            } else {
++                *(uint64_t *)dst = tswap64(*(uint32_t *)src);
++            }
++        }
++        break;
++#else
++#warning unsupported conversion
++#endif
++    case TYPE_OLDDEVT:
++    {
++        uint64_t val = 0;
++        switch (thunk_type_size(type_ptr - 1, !to_host)) {
++        case 2:
++            val = *(uint16_t *)src;
++            break;
++        case 4:
++            val = *(uint32_t *)src;
++            break;
++        case 8:
++            val = *(uint64_t *)src;
++            break;
++        }
++        switch (thunk_type_size(type_ptr - 1, to_host)) {
++        case 2:
++            *(uint16_t *)dst = tswap16(val);
++            break;
++        case 4:
++            *(uint32_t *)dst = tswap32(val);
++            break;
++        case 8:
++            *(uint64_t *)dst = tswap64(val);
++            break;
++        }
++        break;
++    }
++    case TYPE_ARRAY:
++        {
++            int array_length, i, dst_size, src_size;
++            const uint8_t *s;
++            uint8_t  *d;
++
++            array_length = *type_ptr++;
++            dst_size = thunk_type_size(type_ptr, to_host);
++            src_size = thunk_type_size(type_ptr, 1 - to_host);
++            d = dst;
++            s = src;
++            for(i = 0;i < array_length; i++) {
++                thunk_convert(d, s, type_ptr, to_host);
++                d += dst_size;
++                s += src_size;
++            }
++            type_ptr = thunk_type_next(type_ptr);
++        }
++        break;
++    case TYPE_STRUCT:
++        {
++            int i;
++            const StructEntry *se;
++            const uint8_t *s;
++            uint8_t  *d;
++            const argtype *field_types;
++            const int *dst_offsets, *src_offsets;
++
++            assert(*type_ptr < max_struct_entries);
++            se = struct_entries + *type_ptr++;
++            if (se->convert[0] != NULL) {
++                /* specific conversion is needed */
++                (*se->convert[to_host])(dst, src);
++            } else {
++                /* standard struct conversion */
++                field_types = se->field_types;
++                dst_offsets = se->field_offsets[to_host];
++                src_offsets = se->field_offsets[1 - to_host];
++                d = dst;
++                s = src;
++                for(i = 0;i < se->nb_fields; i++) {
++                    field_types = thunk_convert(d + dst_offsets[i],
++                                                s + src_offsets[i],
++                                                field_types, to_host);
++                }
++            }
++        }
++        break;
++    default:
++        fprintf(stderr, "Invalid type 0x%x\n", type);
++        break;
++    }
++    return type_ptr;
++}
++
++const argtype *thunk_print(void *arg, const argtype *type_ptr)
++{
++    int type;
++
++    type = *type_ptr++;
++
++    switch (type) {
++    case TYPE_CHAR:
++        qemu_log("%c", *(uint8_t *)arg);
++        break;
++    case TYPE_SHORT:
++        qemu_log("%" PRId16, tswap16(*(uint16_t *)arg));
++        break;
++    case TYPE_INT:
++        qemu_log("%" PRId32, tswap32(*(uint32_t *)arg));
++        break;
++    case TYPE_LONGLONG:
++        qemu_log("%" PRId64, tswap64(*(uint64_t *)arg));
++        break;
++    case TYPE_ULONGLONG:
++        qemu_log("%" PRIu64, tswap64(*(uint64_t *)arg));
++        break;
++#if HOST_LONG_BITS == 32 && TARGET_ABI_BITS == 32
++    case TYPE_PTRVOID:
++        qemu_log("0x%" PRIx32, tswap32(*(uint32_t *)arg));
++        break;
++    case TYPE_LONG:
++        qemu_log("%" PRId32, tswap32(*(uint32_t *)arg));
++        break;
++    case TYPE_ULONG:
++        qemu_log("%" PRIu32, tswap32(*(uint32_t *)arg));
++        break;
++#elif HOST_LONG_BITS == 64 && TARGET_ABI_BITS == 32
++    case TYPE_PTRVOID:
++        qemu_log("0x%" PRIx32, tswap32(*(uint64_t *)arg & 0xffffffff));
++        break;
++    case TYPE_LONG:
++        qemu_log("%" PRId32, tswap32(*(uint64_t *)arg & 0xffffffff));
++        break;
++    case TYPE_ULONG:
++        qemu_log("%" PRIu32, tswap32(*(uint64_t *)arg & 0xffffffff));
++        break;
++#elif HOST_LONG_BITS == 64 && TARGET_ABI_BITS == 64
++    case TYPE_PTRVOID:
++        qemu_log("0x%" PRIx64, tswap64(*(uint64_t *)arg));
++        break;
++    case TYPE_LONG:
++        qemu_log("%" PRId64, tswap64(*(uint64_t *)arg));
++        break;
++    case TYPE_ULONG:
++        qemu_log("%" PRIu64, tswap64(*(uint64_t *)arg));
++        break;
++#else
++    case TYPE_PTRVOID:
++        qemu_log("0x%" PRIx64, tswap64(*(uint64_t *)arg));
++        break;
++    case TYPE_LONG:
++        qemu_log("%" PRId64, tswap64(*(uint64_t *)arg));
++        break;
++    case TYPE_ULONG:
++        qemu_log("%" PRIu64, tswap64(*(uint64_t *)arg));
++        break;
++#endif
++    case TYPE_OLDDEVT:
++    {
++        uint64_t val = 0;
++        switch (thunk_type_size(type_ptr - 1, 1)) {
++        case 2:
++            val = *(uint16_t *)arg;
++            break;
++        case 4:
++            val = *(uint32_t *)arg;
++            break;
++        case 8:
++            val = *(uint64_t *)arg;
++            break;
++        }
++        switch (thunk_type_size(type_ptr - 1, 0)) {
++        case 2:
++            qemu_log("%" PRIu16, tswap16(val));
++            break;
++        case 4:
++            qemu_log("%" PRIu32, tswap32(val));
++            break;
++        case 8:
++            qemu_log("%" PRIu64, tswap64(val));
++            break;
++        }
++    }
++    break;
++    case TYPE_ARRAY:
++        {
++            int i, array_length, arg_size;
++            uint8_t *a;
++            int is_string = 0;
++
++            array_length = *type_ptr++;
++            arg_size = thunk_type_size(type_ptr, 0);
++            a = arg;
++
++            if (*type_ptr == TYPE_CHAR) {
++                qemu_log("\"");
++                is_string = 1;
++            } else {
++                qemu_log("[");
++            }
++
++            for (i = 0; i < array_length; i++) {
++                if (i > 0 && !is_string) {
++                    qemu_log(",");
++                }
++                thunk_print(a, type_ptr);
++                a += arg_size;
++            }
++
++            if (is_string) {
++                qemu_log("\"");
++            } else {
++                qemu_log("]");
++            }
++
++            type_ptr = thunk_type_next(type_ptr);
++        }
++        break;
++    case TYPE_STRUCT:
++        {
++            int i;
++            const StructEntry *se;
++            uint8_t  *a;
++            const argtype *field_types;
++            const int *arg_offsets;
++
++            se = struct_entries + *type_ptr++;
++
++            if (se->print != NULL) {
++                se->print(arg);
++            } else {
++                a = arg;
++
++                field_types = se->field_types;
++                arg_offsets = se->field_offsets[0];
++
++                qemu_log("{");
++                for (i = 0; i < se->nb_fields; i++) {
++                    if (i > 0) {
++                        qemu_log(",");
++                    }
++                    field_types = thunk_print(a + arg_offsets[i], field_types);
++                }
++                qemu_log("}");
++            }
++        }
++        break;
++    default:
++        g_assert_not_reached();
++    }
++    return type_ptr;
++}
++
++/* from em86 */
++
++/* Utility function: Table-driven functions to translate bitmasks
++ * between host and target formats
++ */
++unsigned int target_to_host_bitmask_len(unsigned int target_mask,
++                                        const bitmask_transtbl *tbl,
++                                        size_t len)
++{
++    unsigned int host_mask = 0;
++
++    for (size_t i = 0; i < len; ++i) {
++        if ((target_mask & tbl[i].target_mask) == tbl[i].target_bits) {
++            host_mask |= tbl[i].host_bits;
++        }
++    }
++    return host_mask;
++}
++
++unsigned int host_to_target_bitmask_len(unsigned int host_mask,
++                                        const bitmask_transtbl *tbl,
++                                        size_t len)
++{
++    unsigned int target_mask = 0;
++
++    for (size_t i = 0; i < len; ++i) {
++        if ((host_mask & tbl[i].host_mask) == tbl[i].host_bits) {
++            target_mask |= tbl[i].target_bits;
++        }
++    }
++    return target_mask;
++}
++
++int thunk_type_size_array(const argtype *type_ptr, int is_host)
++{
++    return thunk_type_size(type_ptr, is_host);
++}
++
++int thunk_type_align_array(const argtype *type_ptr, int is_host)
++{
++    return thunk_type_align(type_ptr, is_host);
++}
++
++void thunk_init(unsigned int max_structs)
++{
++    max_struct_entries = max_structs;
++    struct_entries = g_new0(StructEntry, max_structs);
++}
 -- 
 2.52.0
 
