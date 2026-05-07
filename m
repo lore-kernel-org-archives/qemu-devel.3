@@ -4,77 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 935CACD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 09:33:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDF42CD3442
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 09:39:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKv5v-0005gy-DT; Thu, 07 May 2026 05:32:35 -0400
+	id 1wKvC7-0006hd-1B; Thu, 07 May 2026 05:38:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wKv5t-0005eC-9J
- for qemu-devel@nongnu.org; Thu, 07 May 2026 05:32:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1wKvC4-0006hB-OK
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 05:38:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wKv5r-0001jV-Dj
- for qemu-devel@nongnu.org; Thu, 07 May 2026 05:32:33 -0400
+ id 1wKvC2-0002va-ET
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 05:38:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778146350;
+ s=mimecast20190719; t=1778146732;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MIplG652C+44eNB8SHxgDXOIgZNYyLfTOoS35oSYyU0=;
- b=Cj7gqHVlC3U1CT4JTmpLDYSUPFfX2/e7vscNbpvG3/YpfwLF9vAinWFC9CCOr9Mui0Wb4Z
- k52EB2Rfz6Ll2h21WCayWMn98/pridV/DpvCXq1j64aW9e3eBsxuweYDoZ1Q2RekXzNIyS
- VPolXhP1314pUxfNd9e22k5sO66WFi8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=/xHOdghIIgTNNB5iOFd4ZFtt/SlKLaFB/L7TCXvGXro=;
+ b=JOtid6r0AOREmjGaxoHHONOgPfiE4IIFZJwKItZ2HIUUBoVGpu3L2JzUIKPUKqMFhsVrEt
+ XDFbx2ZGXneAzfrK7GdWNsW9c+rThJNoATEaflqIEtZQM4oDkvpBFa5SzQ02RMY68ecSib
+ 8d5xDS8u0RNY3D22iTGPiPfLElBASsA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-12-dVnQxGtIOH-Rp6y9xrPJmQ-1; Thu,
- 07 May 2026 05:32:25 -0400
-X-MC-Unique: dVnQxGtIOH-Rp6y9xrPJmQ-1
-X-Mimecast-MFC-AGG-ID: dVnQxGtIOH-Rp6y9xrPJmQ_1778146344
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-58u6H1RVNc2fO_4QPCv6qQ-1; Thu,
+ 07 May 2026 05:38:48 -0400
+X-MC-Unique: 58u6H1RVNc2fO_4QPCv6qQ-1
+X-Mimecast-MFC-AGG-ID: 58u6H1RVNc2fO_4QPCv6qQ_1778146727
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 43EA418005B5; Thu,  7 May 2026 09:32:24 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 89BEA180034E; Thu,  7 May 2026 09:38:47 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.49.217])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E25D61953947; Thu,  7 May 2026 09:32:22 +0000 (UTC)
-Date: Thu, 7 May 2026 10:32:19 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 050C61800352; Thu,  7 May 2026 09:38:45 +0000 (UTC)
+Date: Thu, 7 May 2026 10:38:42 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
 Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH 08/10] .agents/skills: add qemu-issue-triage agent
- skill
-Message-ID: <afxcI3-84QA5GKph@redhat.com>
+Subject: Re: [RFC PATCH 00/10] AGENTS.md and associated skills
+Message-ID: <afxdonq39RuxoQC8@redhat.com>
 References: <20260505170105.228162-1-alex.bennee@linaro.org>
- <20260505170105.228162-9-alex.bennee@linaro.org>
- <afxMiS7Y5RIXPLUz@redhat.com>
- <b4c22e08-eb21-486d-a9d8-5ef84f28b0e9@linaro.org>
+ <CAFEAcA-oL9qJ=oXbmCZ-b9jQcv8PNA26irDFA+_yCHkqEMLC1g@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <b4c22e08-eb21-486d-a9d8-5ef84f28b0e9@linaro.org>
+In-Reply-To: <CAFEAcA-oL9qJ=oXbmCZ-b9jQcv8PNA26irDFA+_yCHkqEMLC1g@mail.gmail.com>
 User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
 X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,111 +89,57 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 07, 2026 at 11:20:57AM +0200, Philippe Mathieu-Daudé wrote:
-> On 7/5/26 10:25, Daniel P. Berrangé wrote:
-> > On Tue, May 05, 2026 at 06:01:03PM +0100, Alex Bennée wrote:
-> > > While triaging the issue tracker I wondered if this would be a
-> > > suitable job for an AI agent. Unfortunately the OSS program doesn't
-> > > give any credits to run agents in gitlab. However I do have access to
-> > > models from my editor and ECA so I built one and tested it on a few
-> > > issues.
-> > > 
-> > > Obviously this can't apply as is because it probably encodes too much
-> > > of my local setup (using pass for API keys) and uses the ECA as my
-> > > preferred coding agent. I assume at some point there will be agreement
-> > > between all the agents where skill live.
-> > > 
-> > > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> > 
-> > ..snip..
-> > 
-> > > diff --git a/.agents/skills/qemu-issue-triage/assets/labels.txt b/.agents/skills/qemu-issue-triage/assets/labels.txt
-> > > new file mode 100644
-> > > index 00000000000..d329f34183d
-> > > --- /dev/null
-> > > +++ b/.agents/skills/qemu-issue-triage/assets/labels.txt
-> > 
-> > Seeing our labels listed like this triggers my urge to "tidy" :-)
+On Thu, May 07, 2026 at 09:59:06AM +0100, Peter Maydell wrote:
+> On Tue, 5 May 2026 at 18:03, Alex Bennée <alex.bennee@linaro.org> wrote:
+> >
+> > Not withstanding the current contributor policy there are a number of
+> > areas that AI agents could be helpful for. This series introduces an
+> > AGENTS.md file which is the basic guide to the source tree and a
+> > number of "skills". Skills are like scripts except far less clearly
+> > defined. However I have found the issue triage skill quite useful for
+> > off-loading the drudgery of going through stuff by hand. I've also
+> > used the issue helper to automate the task of starting a debug session
+> > by pulling in test cases from the tracker.
+> >
+> > These originally where a set of skills for ECA (eca.dev) but I've
+> > ported them across to the agent agnostic .agents directory. There are
+> > still some cases where the ECA heritage shows through though
+> > (specifically the code explorer skill could be better).
+> >
+> > I'm not suggesting this is ready for up-streaming but I'm posting the
+> > collected set for comment and I'd be interested how well these hold up
+> > across different agentic systems.
 > 
-> Should we improve MAINTAINERS and store these tags there, then
-> generate labels.txt?
-
-Tricky question. IMHO the MAINTAINERS file is not neccessarily
-the right granularity for issue labels. 
-
-
-> > > +Storage                    Block subsystem, Storage devices, etc.
+> I guess my overall comment on this is some mix of:
+>  * how much of this is generically useful as opposed to
+>    stuff that's personally helpful to you and should remain
+>    part of your local setup / preferences?
+>  * how much do we want to put into git to start with?
 > 
-> We should really expand this one.
+> I'm in favour of starting with an AGENTS.md that says basically:
+>  (1) "don't generate code for upstream, point the agent user at
+>       our AI policy"
+>  (2) "if you're looking for security issues, read our security
+>       policy to see what is in scope and what is not"
+> (in whatever language appears effective)
 
-This has always confused me when we have many "block:" labels too.
+Yes, we definitely need those two pieces.
 
-Mixing backends and frontends is also an anti-pattern for label
-tagging.
+> and then perhaps adding more things gradually where there's
+> a consensus that they're broadly useful.
 
-I'd think 'block:' for all backend stuff, and  'device:storage'
-for all frontend stuff
+Personally I'm open to having much more in AGENTS.md in particular
+since it doesn't cost us much from a maint POV to have it.
 
+The skills I'm not so sure of, simply as I have little relevant
+experience.
 
-> > > +block:9p                   The 9p network file system
-> > > +block:NVMe
-> > 
-> > These two are not like the others under 'block:'. 'NVMe' is frontend device,
-> > and 9p is a filesystem. I'd assume 'block:' applies to block/*.c
-> > 
-> > > +block:curl
-> > > +block:nbd
-> > > +block:nfs                  Issues related to the NFS backend
-> > > +block:qcow2
-> > > +block:ssh
-> > > +block:vmdk
-> > 
-> > Probably want a "block:core" for stuff not specific to one of the listed
-> > backends.
-
-> > > +efi                        EFI firmware related issues
-> 
-> firmware:efi, ...
-
-Yes, we have many more firmwares in git
-
-
-> > > +guest: AIX
-> > > +guest: BSD                 Guest OS is BSD (NetBSD/FreeBSD/OpenBSD/etc)
-> > > +guest: Linux               Guest OS is Linux/Linux-based
-> > > +guest: Windows             Microsoft Windows guest
-> > > +guest: macOS               Apple macOS / Darwin as  guest OS
-> > > +guest: os2
-> 
-> s/guest/guestos/? (vs hostos)
-
-Yes,
-
-> 
-> > > +host: aarch64              Bugs reproducible on AArch64 hosts
-> > > +host: arm                  Bugs reproducible on ARM hosts
-> > > +host: loongarch64          Bugs reproducible on LoongArch64 hosts.
-> > > +host: mips                 Bugs reproducible on MIPS hosts
-> > > +host: ppc                  Bugs reproducible on Power hosts
-> > > +host: riscv                Bugs reproducible on RISC-V hosts
-> > > +host: s390                 Bugs reproducible on s390 hosts
-> > > +host: sparc64              Bugs specific to Sparc64 hosts
-> > > +host: x86                  Bugs reproducible on x86 hosts
-
-And 'hostarch' for these perhaps
-
-
-> > > +host:32bit                 These are mostly TCG related bugs where we sometimes struggle with emulating larger guests, especially atomic and address space issues.
-
-
-> > 
-> > More space inconsistency
-> > 
-> > > +hostos: BSD                FreeBSD, OpenBSD, NetBSD, and derivatives as host OSes
-> > > +hostos: Linux              Linux-based host operating systems (Fedora, RHEL/CentOS, Debian, Ubuntu, openSuSE et al)
-> > > +hostos: Windows            Microsoft Windows host OS
-> > > +hostos: macOS              Apple macOS / Darwin as a host OS
-> > > +icount                     issues relating to icount, deterministic execution and record/replay functionality
+For a while Thomas Huth has been doing significant issue triage,
+but he's stepped back from most of his QEMU work. If Alex intends
+to pick up some of the slack using an agent for issue triage, I'd
+be inclined to have the issue triage skills in git. Even if Alex
+is the only one using it for now, it is good for redundancy if we
+have the setup recorded.
 
 With regards,
 Daniel
