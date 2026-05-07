@@ -4,104 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26DAACD3439
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:47:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 592A0CD3439
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:49:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL0w7-0001t0-JE; Thu, 07 May 2026 11:46:51 -0400
+	id 1wL0yC-0002SH-Mr; Thu, 07 May 2026 11:49:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wL0vg-0001rR-Fb; Thu, 07 May 2026 11:46:28 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1wL0ve-00024y-RL; Thu, 07 May 2026 11:46:24 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6477lY3A2492757; Thu, 7 May 2026 15:46:16 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=vlKlXDx9UoYVlv82m958jQUZGk+y21EV3O3Gwf46n
- lk=; b=UzOQ52MegjOfX4qk3+WgjyRI0HBkYy2ThnWMx5UYgwFcwrzgW9fM1EGPg
- gMnraRjtekBeDY3v6Wochf663dyfQr2q17+fXAagKI8EFVfx578CyIYASLXNrSW/
- JolAGPFQMhRuH38V73hcV33d+dSoBnpB0R8JczB0G9RXrdR2iKfHshp1GmSZmwb1
- br1+0PVCtYq0F4K8ca1n02DJd7C8wbMjYfvo5vMbUuHsNTDlD3UUDsh8HYTgbXK8
- UDmXfznAcDiHxpszTEcKywQ1+Wc6fy4hNa7sFczP31w7+suDwu8ewxPMIh9A6Ten
- R+Vebw4lb71vyz2ltKxB5iozjrURg==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9w6pdeu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 May 2026 15:46:16 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 647FdUsP022987;
- Thu, 7 May 2026 15:46:16 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dwvkk49w9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 May 2026 15:46:16 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 647FkEqC4522730
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 7 May 2026 15:46:15 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E291658056;
- Thu,  7 May 2026 15:46:14 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 727C15803F;
- Thu,  7 May 2026 15:46:14 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  7 May 2026 15:46:14 +0000 (GMT)
-From: Glenn Miles <milesg@linux.ibm.com>
-To: qemu-ppc@nongnu.org
-Cc: Glenn Miles <milesg@linux.ibm.com>, qemu-devel@nongnu.org,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- "Harsh Prateek Bora" <harshpb@linux.ibm.com>,
- "Markus Armbruster" <armbru@redhat.com>,
- "Caleb Schlossin" <calebs@linux.ibm.com>
-Subject: [PATCH] MAINTAINERS: Add self as maintainer for XIVE
-Date: Thu,  7 May 2026 10:45:20 -0500
-Message-ID: <20260507154530.364296-1-milesg@linux.ibm.com>
-X-Mailer: git-send-email 2.43.7
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wL0y3-0002Rv-Af
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:48:57 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wL0y1-0002n7-1z
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:48:51 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-65890a6ca20so1053741d50.0
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:48:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778168927; cv=none;
+ d=google.com; s=arc-20240605;
+ b=IdJwqc6S4G0aaUm/w3cV3+im9JaVC86NGZuS6yq76Nlbpga2Fus9uqu2bJTuVxyFk2
+ wclglPhmaXZRCxoJdnwbGGbSP5+0yBSgusaCHBaZPyFkUBXuYuojkOi2oeg24ACg4YkV
+ Dccd352TKxaCsBYEsN3Eq84cyE8QPr3GnV2wgFMwkc/GcVhmGJAxxSydINLvH/uxqr/V
+ WJl76GjQvi/X4xtDwcYqkzj3UYGX/8kI4MpEAjiSkw2qtA+x9uF25sOoUH5Wu2DJzkZE
+ 3ayRYyPC/x6cUzVj6ld7+5sT5xOfYngHFY34zH0+BRr5pqbW1bEO42JlneaxEAzHTHY+
+ qXoA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Y9rJ2SsWHQ1XKMw+WlNYtefjusOS6q6H0gbOFFsDlm0=;
+ fh=HWJ1fnnvXaPPyXeasJRfYDJB1INk2GetGWF0RmO6+0U=;
+ b=ZQLAHTy8r++CS4ySoJgHJABCPrnoH1PuCE4Ta6YNcj0ai+HZcjerGuKw0b4oC3Rl3z
+ pvLybYHuLG/5e9LgxzfGtMmj2lVgTWu9ZdSRIR21u6PG+50R4l3LDKPTpU+98Ai1e4ey
+ uEdxlQF+mlkM9e3+3MXVix/o0UV8kLzn5DUvgkX+xkRaKcB1oZ+DuU1moRVR9eHrFmox
+ N+fIfIMDUYMrp+UQpmnMfUZcFUThVigsiAAVHIWl5H+85UtzGvkvo03TsIPozJzoVYMx
+ ZGRDCzWgsiWw8wMgMaS4tImLuLvWwtQELBdg37Qjikn6j3E/Lq9mByOhqDN8TdS6MH22
+ PSGA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778168927; x=1778773727; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Y9rJ2SsWHQ1XKMw+WlNYtefjusOS6q6H0gbOFFsDlm0=;
+ b=uUlZmMewUa+hjMtjwfJqYst8C7+2MBGV4k4xytNQUH8aecmKbdJQvBNGH27vDHlF7g
+ 17xHyKpMi7D8zMocPXgFeAl5gtWLaVzvYGY2FGozB9sB0/jX65EwOTpFZ0QDndjoj1L7
+ KS4x5QCiCalRjl3JuwuxEqKX1f97SLBYsNEoa4xg/j9SjkymJkLTW6bRihGL6rhkfGOZ
+ cwzAmdcNtQsDkK8lMZB9dsHKSU3EsqZISikA23uH89wQ1tAPDowXCVhU1gOgF+FRcSjs
+ RpflG04M++CE8dqtfqzx4n+PKWN5j6IdKr3r9NDm05/JB3NL+xOLigbJSPaP70hhoo5E
+ i3dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778168927; x=1778773727;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Y9rJ2SsWHQ1XKMw+WlNYtefjusOS6q6H0gbOFFsDlm0=;
+ b=djm1wViGIrVCpU+f2ERRtvF27bxnPLtZqZT3u90FOY1vZgA5tD8wUZJhXQ5yN88Kfx
+ 4MmJJ+YeewKpwmn23yWxxINgjkjVNuiY6c6EBiCxW+ntCGLWlifMnpdxh6ZfO8CANXyY
+ VdeJ54dkym3H/6lPPjAEENcOHMkx4qPD2Q3vkpwOHHJnLDzVdnYRYAaEttV2BXtxhiHT
+ IDyL5tak76RcEMocAe9DN9GJ9yaCqnKlpTZFBBUgEydjmuCucoOefBFWKQpUguNdPsk1
+ u68iqzSvsnRJP4hhSjnmxUcvgY86dotRwG3lTq2ZQSco9Yp+2VYVaskLJDz01WFfmFo6
+ bdCA==
+X-Gm-Message-State: AOJu0YzIbqHclfRq29CSr1jPvCs06i4Q4ZX6aqkezSi1Vfn4GK/Ukhaz
+ FcdNg0S2Jhw6QXDLm+9xoxSs+Cpqg1BvV7yRuDyZ7D4XV/kr8t4L/Ias9tgNT4E3Kn81EO6xz91
+ 6GOFB6fZrbteTM6OlYtpp8a2LVCMwOjmwhft/0vNHpA==
+X-Gm-Gg: Acq92OGaHLCBa5eQ6YKqrQ8MJ/p61SucbISofLdIm9XF1u9px1ZRE0QCsf5D1XRlwkT
+ xVPjo343/IZa6eTVE763w82Ao4n6hBOpsleSCyqqOr3X6j1GvfsXUOEJiF33zDVC+ug7qMjRsey
+ z0xVW473VZVzd0Rx6YaeIT5chLvYcMCfnczCR+X2CxGQwv7GxuDIecOiJ+g3ajEBF0wg1tYsuUX
+ 1FvrpwFVa12d4Pnzqjb27qx6LL3rTJBRHKs79CW5+PL5tsC00K+8nw+cGMJ5zNDW+tK8vGy0YQC
+ Uwhrrqx/iyQcTnuN2pdEaSzQzbOK25cPSfrKCJt5OQqlN1oUNlYq+VjmrhFN81X2tgUhAyKhpof
+ 6Q9+eb7BQuq8x
+X-Received: by 2002:a05:690e:d0b:b0:651:bb21:e7fb with SMTP id
+ 956f58d0204a3-65c79ee651cmr9445413d50.54.1778168927382; Thu, 07 May 2026
+ 08:48:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=XPQAjwhE c=1 sm=1 tr=0 ts=69fcb3c8 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
- a=rsca2mb1Y4WhbDFA_AAA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-ORIG-GUID: ylCCsZY03MnZ_cETrRvFIyy72MLKUp5M
-X-Proofpoint-GUID: ylCCsZY03MnZ_cETrRvFIyy72MLKUp5M
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA3MDE1NiBTYWx0ZWRfX5kCR9AnG7xMx
- B1bmHyl9VhEzSnaRQFj5a1UH5JLwtUpeMUgu5vUZYs7YSEM0/fUasRLCDIysmss9Y98geRAAfMS
- rdTlPNYutodoZS88DIE7pw3O69oX0gz6gXZ/ECJk0NtqtOm0vsthrbyyIyqtiVx3zpKY/XHSDYy
- VEwRrTOy9ENG9l3YZn8HZ8N00CQL3Q1Yq9bzdMMdwih9V+9thaHvNQTk034q3b3k7jaGrU/CGOb
- KBGUpx17fIF2XjMntsjn1bWL4OfTRTiz5in6jKY1WIZq6sr3vyS89lc6z/4xET/QtdtKt+87jES
- yLKdmRunjCzMA+sZNPJljOOKDOfqziBcZkdF+rsjB6rv1ExSNV9areR1cfnjlHlYPbuXQrkjVL6
- EK64sZcZM+xjtCC9J4exJ5viHEwyJhEIhtNlMmJZmAPJFa91Pb1moapc+uVFVD17DFyuO+31q4e
- 70XgcLpayS+UZW6W+hQ==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-07_01,2026-05-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 spamscore=0
- priorityscore=1501 impostorscore=0 phishscore=0 malwarescore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605070156
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=milesg@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20260507-linux-user-bug-v1-1-25831e9bc22e@bsdimp.com>
+In-Reply-To: <20260507-linux-user-bug-v1-1-25831e9bc22e@bsdimp.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 7 May 2026 16:48:35 +0100
+X-Gm-Features: AVHnY4KOSrmSoEPvJvFhzUkZ2N3PRjV4Uz9vmWleYULhXcaC0o3OqwYNl-_3oOs
+Message-ID: <CAFEAcA-ro3NjfPUj2A5odFCJOtdL5MV_V1bq5zuiPwyTFWo7Xg@mail.gmail.com>
+Subject: Re: [PATCH] linux-user: Fix a memory leak when pthread_create fails
+To: Warner Losh <imp@bsdimp.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
+ Helge Deller <deller@gmx.de>, 
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,28 +116,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adding self as maintainer for XIVE
+On Thu, 7 May 2026 at 16:20, Warner Losh <imp@bsdimp.com> wrote:
+>
+> Fix one of the TODO items when creating a new thread: release the copied
+> cpu and free the task state.
+>
+> Signed-off-by: Warner Losh <imp@bsdimp.com>
+> ---
+> Free the new task state and drop references to copied cpu structure when
+> pthread_create failes.
+> ---
+>  linux-user/syscall.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+> index d3d9fffb54..7b2e32bcf5 100644
+> --- a/linux-user/syscall.c
+> +++ b/linux-user/syscall.c
+> @@ -7005,7 +7005,6 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+>          cpu->random_seed = qemu_guest_random_seed_thread_part1();
+>
+>          ret = pthread_create(&info.thread, &attr, clone_func, &info);
+> -        /* TODO: Free new CPU state if thread creation failed.  */
+>
+>          sigprocmask(SIG_SETMASK, &info.sigmask, NULL);
+>          pthread_attr_destroy(&attr);
+> @@ -7014,7 +7013,10 @@ static int do_fork(CPUArchState *env, unsigned int flags, abi_ulong newsp,
+>              pthread_cond_wait(&info.cond, &info.mutex);
+>              ret = info.tid;
+>          } else {
+> -            ret = -1;
+> +            ret = -host_to_target_errno(ret);
 
-Signed-off-by: Glenn Miles (milesg@linux.ibm.com>
----
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This is an unrelated bugfix to the one in the commit message.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 9d3d645953..37fb460a2b 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2877,8 +2877,8 @@ F: tests/qtest/libqos/fw_cfg.c
- F: tests/qtest/fw_cfg-test.c
- 
- XIVE
-+M: Glenn Miles <milesg@linux.ibm.com>
- R: Gautam Menghani <gautam@linux.ibm.com>
--R: Glenn Miles <milesg@linux.ibm.com>
- L: qemu-ppc@nongnu.org
- S: Odd Fixes
- F: hw/*/*xive*
--- 
-2.43.7
+I found do_fork()'s error handling confusing (the comment at
+the top doesn't exactly clarify either), but I think it is:
+ * might return a negative target errno value
+ * might return -1 with "errno" set to a host errno
+ * might succeed and return 0
+ * might succeed and return some other not-minus-1 value
 
+The callers all do
+   return get_errno(do_fork(....));
+which handles these cases.
+
+It might be less confusing overall if we simplified this to:
+ * returns negative target errno value on failure
+ * otherwise success, returning value the guest expects
+and dropped the get_errno() at the callsites. The only
+cases that don't already follow one of those two options are
+the "pthread_create() failed" one (which is buggy currently
+since pthread_create() doesn't set errno) and the "fork()
+failed" one (which relies on the "return -1 and caller fishes
+error out of errno" handling).
+
+> +            object_unparent(OBJECT(new_cpu));
+> +            object_unref(OBJECT(new_cpu));
+> +            g_free(ts);
+
+For TARGET_AARCH64, the gcs_new_stack() call we did before
+attempting the pthread_create() maps memory into the target
+address space, which needs to be undone. Compare the bit in
+TARGET_NR_exit handling which does:
+
+#ifdef TARGET_AARCH64
+            if (ts->gcs_base) {
+                target_munmap(ts->gcs_base, ts->gcs_size);
+            }
+#endif
+
+We could maybe share code between the NR_exit "free stuff
+for this TaskState" and this error-exit path, though it's
+a bit awkward so I'm 50:50 on that.
+
+>          }
+>          pthread_mutex_unlock(&info.mutex);
+>          pthread_cond_destroy(&info.cond);
+
+thanks
+-- PMM
 
