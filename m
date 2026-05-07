@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81522CD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:58:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62E34CD3439
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:58:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL128-0005yC-JA; Thu, 07 May 2026 11:53:04 -0400
+	id 1wL11a-0003w2-Jp; Thu, 07 May 2026 11:52:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL126-0005sy-QI
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:53:02 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1wL11W-0003lt-RL
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:26 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL125-00044P-1x
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:53:02 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4891e86fabeso12810155e9.1
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:53:00 -0700 (PDT)
+ id 1wL11U-0003th-VP
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:26 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4852b81c73aso9866955e9.3
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:52:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778169180; x=1778773980; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778169143; x=1778773943; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jvs97UJqpkItC+Flr/HO+1YZEx5wGbwu0BJu/UWvSl4=;
- b=AoEiqFLJZXovxS8yjHp/Y6wwqzEyYkWkQU0U7GCN33ECOleaiDpp7vC8Ff51/a9ZMf
- Mr/rKXithTAp0AXpLj1wE7KNZigT+sNFbCM74BHGA4lGKvMaFQMHigxjE5bxvsSaSJvJ
- Ghl6OSA4U6FPZz4C60CAK2Wzi6Cy1ZwlUhdgz44ruBPW8xN2Zb0T4sSr/wwmknyQn8gq
- BFGs9NzN2Bi+m30WLjXvk7yzLSNTYospDqwvaNl9G+nb4D49+EdffpM5KbON+1Wbprbx
- fH0qRQHY26YF00mLwdpAKw6a7mdY+FeyrPgyEgvrNyXOXeDd9zg8Infk2Z1YWBAqrQT2
- etyg==
+ :reply-to; bh=6PxEjiAL0LMewzxVDQQEeO72wrHqLuLKT9LMHvMzfhk=;
+ b=iPEGhr/e3reCJ1kS0dwY5fqOW5Swrf6l2+24mb3ZoYVUWn8EMrY9bspAVqHc3t64qg
+ NCOdQSzu98akgO8bN7ZYvkm6XNCYq4MFQ9nrHjs1ESr+ha/l3jb3Z8iP2CJLFDaYc5NJ
+ GHGNmFkWYa6ffkO6SwnbZTAQDNcJtPFgPm4943TZJCbQ91gvk3zT91QADHDltoNaSbKz
+ SSVFmCI0ZHeaUVnrE8etevkCAc0t9IL1aiKFQw8hNbc2+5zE5FcudVZ5khCY09F41FKI
+ uazN5EYxEEoZJHdADv59sJ13u468nl3/+mQNiDb3n2Ka+gJGnITqKEq6K9xqo1/VgXxf
+ AxbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778169180; x=1778773980;
+ d=1e100.net; s=20251104; t=1778169143; x=1778773943;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=jvs97UJqpkItC+Flr/HO+1YZEx5wGbwu0BJu/UWvSl4=;
- b=HCVJSZ5UhfTad9BrIGw6OpeReGqlpPRu7KO5ybhxU9WDccN4oFDYy1dmy7xWR+EgBc
- xwUjHSGSi+6abHk8CtPMEoWuhYezQYG62g8AAroFQOg5RJruP/KfeyKXP8oula9k0F7h
- cUPBlYH2XmxEup0+eTLaQ55D6dklEVBRMfAxGMwH13hX0CxTol7616zAspnrZhob90zA
- UPH5FrOdfJYSKuLmeH2hrKZmXebSUXzvH+xbFpRLvkYeUNq+KpcKDhsjfbhzE082mzRM
- yNvhAaJuAnPa26neAwpb0tUzHyGQrMMwFxBv3kTcTA8VRTOgM9/UFaBzCVn42mOgMCBQ
- z/Og==
-X-Gm-Message-State: AOJu0YyibWmG+k2qZCYRt9en3POKP20rn+zIclg2+GLZdZQ/N1IodVZA
- JAckRAYyHocrH4iY5dxNX84xZ8HiPr10PCB6sHi6QT1irhb7m6jD7zAZlDyxcQ+tN5o2UaqB9fF
- U06xU
-X-Gm-Gg: AeBDiev+O3IbEf62lEIloP6gRoTpuDNQEj5ns02cbNDHYL47CAE7FbZt9fv3NUGahVU
- Xr0+LP3meNFw1LX7KiFjLwfXrG1QOhfWbjgYB0fEEG8g1V0+EOn1cgcmQAHLKyM7RvzTgkWh42L
- Qq1NE7Ujg2oa0RB5gsnVFsfjL/4k+zCSRXi22PPesNq4Al9D5iS343c2dh/SxkRhTbCAFK2s54N
- VHduR1uH+BkfF2aAR33tCa8LZ+iPJARHgDw80uiK4IBoxBOh5ZIqGNVX8jQXM80e4iEhkEpBwTI
- 9AGh5nUa2LQFRzETahxioicmBcd95Wrabyh0q0l+Z1HZ6FgNOLTRX/e88EWLTfUlZP2zpjTplkW
- mqFrUnuCcxBqFLil03bDa6xtK8FxBBaY/M74o2LHOdJGVKxACuoNXCBugEooCesCz7y4iDFXx4d
- VkYQwytE6LnTfG78fOdZSHoD2IDh1gTuORc3acEu0q7g9dr0a3N49gjKgI520Efg+KWZxpIYsAb
- jUsbf8DH9ajfxvXtdnUcWk8FvJZxgA=
-X-Received: by 2002:a05:600c:3b17:b0:489:e696:836f with SMTP id
- 5b1f17b1804b1-48e51e15718mr126809725e9.10.1778169179450; 
- Thu, 07 May 2026 08:52:59 -0700 (PDT)
+ bh=6PxEjiAL0LMewzxVDQQEeO72wrHqLuLKT9LMHvMzfhk=;
+ b=XuVv0sZRR6+9daGnRHS8nd5xDmLXnlOuUOaztfpwZoDMPE65s4lS3UFV+1Pd+W0YKn
+ QySsknxoh9vsbv+8bw51WlvckX+ZKY2RfMevW5g8mg/TZs8JswZPCTLVKoYtGUtd3TEd
+ e2oK/sOwGJzjsJxM/9MefvZVHvncHaSsnYnfhDwTOkbV/+v3Mq4IKGl/6Cunn+IZgIPM
+ Btf1YI8b1qN2li7YxLzjrMoScqL3IaABv6QiFHvTYl8xtcZAeBDE/D8jOwV7ppq99Y3l
+ V7AMWq/SjZelacoLLZElZoOuXsuxfllL3VDYbP+GxPww6uYO9bMLP58ASX1PybE7WCK7
+ oR5g==
+X-Gm-Message-State: AOJu0YwbER7J6Nrnk5l9B/OmOf2dvqMH4ue+zV/urtXnS8jm5dHijV/G
+ eQ0mACdd+nOzbKa8iAyMJ1CzT51HYhpLKWPp8b9Z75zhCzuMPTdP/sRpowMqXpA/vbMjdKq24n3
+ Ava7O
+X-Gm-Gg: AeBDiesvhrjzEv01V7nTm0kpZ2DGk7Qm/Jor+WW6gsCEGV+u3IueFXQo9YBWnNXyo3Y
+ XkYdTsj0WlkZ8U5kZEm8tltlfRua31qSPMKu7jIDl0kpI+m7VzYBgcKx/Uyb3Yiz7hLmk2T9jKN
+ HY551unIORXd9OuTAkaIduK9DZix9k4MF8kfQxqg9u+g4oZ4OqR+LgAdDCbGYSt9XWUwlvNKqwi
+ 388GkCBEa+TBsW/8g9t/TyF+5nTMH97HiCNm90bv3/+DKbSuuaqY6akBk2jw8dj8L+p2ipTvK4P
+ 0LcnOQwLQYx7+ozT/FpbxSYNzdrAeDdKcOyioG0WPGm8l7Fi7YzD+TuDPTSIwiQ+oNw2ESX0OK1
+ hdKTaotxzKnzUZnUWFYmLnRwGH7DZGCZp3kxuWRBBP9pkh0f8FrmhOQbe7lfb0Ki1nwPJmU9NG2
+ RO/BZR/z1RoAc5v5mGX0Up4cOPhL0DROYZMo9OmoeTuDio02gTSgFZIXkCHqurzzH+fEqX1lFDC
+ n6VB075GByWS1C0G9uDYewvVT5XW4k=
+X-Received: by 2002:a05:600c:8011:b0:488:904b:f31 with SMTP id
+ 5b1f17b1804b1-48e51f3bbabmr134562975e9.22.1778169143274; 
+ Thu, 07 May 2026 08:52:23 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.58
+ 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.22
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 08:52:58 -0700 (PDT)
+ Thu, 07 May 2026 08:52:22 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 66/67] target/arm: Report IL=0 for Thumb 16-bit BKPT insn
-Date: Thu,  7 May 2026 16:51:53 +0100
-Message-ID: <20260507155154.1886557-67-peter.maydell@linaro.org>
+Subject: [PULL 27/67] hw/intc/arm_gicv5: Implement IRS_SPI_{SELR, STATUSR, CFGR,
+ DOMAINR}
+Date: Thu,  7 May 2026 16:51:14 +0100
+Message-ID: <20260507155154.1886557-28-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260507155154.1886557-1-peter.maydell@linaro.org>
 References: <20260507155154.1886557-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,42 +101,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Thumb BKPT insn is 16-bit, and the ESR_ELx syndrome register
-definition requires that we set the IL bit to 0 for this, and 1 for
-the 32-bit A32 and A64 BKPT/BRK.
+Implement the IRS registers IRS_SPI_{SELR,STATUSR,CFGR,DOMAINR} which
+form the config access for setting the trigger mode and domain of an
+SPI.  The way these work is that the guest writes the ID of the
+interrupt it wants to configure to IRS_SPI_SELR, and then it can read
+and write the trigger mode of that SPI via IRS_SPI_CFGR and the
+domain via IRS_SPI_DOMAINR.  IRS_SPI_STATUSR has a bit to indicate
+whether the SPI is valid, and the usual IDLE bit to allow for
+non-instantaneous updates (which QEMU doesn't do).
 
-We used to do this correctly, but accidentally lost it in the
-conversion to decodetree, because we converted the A32 BKPT first,
-and then when we converted the T16 BKPT we forgot that trans_BKPT()
-was unconditionally setting IL=1.
+Since the only domain which can configure the domain of an SPI is EL3
+and our initial implementation is NS-only, technically the DOMAINR
+handling is unused code.  However it is straightforward, being almost
+the same as the CFGR handling, and we'll need it later on.
 
-Pass the right value for syn_aa32_bkpt()'s is_16bit argument.
-
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3474
-Fixes: 43f7e42c7d515f ("target/arm: Convert T16, Miscellaneous 16-bit instructions")
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260505103726.419195-1-peter.maydell@linaro.org
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Message-id: 20260327111700.795099-28-peter.maydell@linaro.org
 ---
- target/arm/tcg/translate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/intc/arm_gicv5.c                | 68 ++++++++++++++++++++++++++++++
+ hw/intc/arm_gicv5_common.c         |  9 ++++
+ include/hw/intc/arm_gicv5_common.h |  1 +
+ 3 files changed, 78 insertions(+)
 
-diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
-index ce427c5a3c..c744b16345 100644
---- a/target/arm/tcg/translate.c
-+++ b/target/arm/tcg/translate.c
-@@ -3580,7 +3580,7 @@ static bool trans_BKPT(DisasContext *s, arg_BKPT *a)
-         (a->imm == 0xab)) {
-         gen_exception_internal_insn(s, EXCP_SEMIHOST);
-     } else {
--        gen_exception_bkpt_insn(s, syn_aa32_bkpt(a->imm, false));
-+        gen_exception_bkpt_insn(s, syn_aa32_bkpt(a->imm, curr_insn_len(s) == 2));
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index 04d4391ae5..6ff3a79745 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -310,6 +310,22 @@ FIELD(ICSR, HM, 5, 1)
+ FIELD(ICSR, PRIORITY, 11, 5)
+ FIELD(ICSR, IAFFID, 32, 16)
+ 
++static GICv5SPIState *spi_for_selr(GICv5Common *cs, GICv5Domain domain)
++{
++    /*
++     * If the IRS_SPI_SELR value specifies an SPI that can be managed in
++     * this domain, return a pointer to its GICv5SPIState; otherwise
++     * return NULL.
++     */
++    uint32_t id = FIELD_EX32(cs->irs_spi_selr[domain], IRS_SPI_SELR, ID);
++    GICv5SPIState *spi = gicv5_raw_spi_state(cs, id);
++
++    if (spi && (domain == GICV5_ID_EL3 || domain == spi->domain)) {
++        return spi;
++    }
++    return NULL;
++}
++
+ static MemTxAttrs irs_txattrs(GICv5Common *cs, GICv5Domain domain)
+ {
+     /*
+@@ -1010,6 +1026,38 @@ static bool config_readl(GICv5 *s, GICv5Domain domain, hwaddr offset,
+     case A_IRS_IST_CFGR:
+         *data = cs->irs_ist_cfgr[domain];
+         return true;
++
++    case A_IRS_SPI_STATUSR:
++        /*
++         * QEMU writes to IRS_SPI_{CFGR,DOMAINR,SELR,VMR} take effect
++         * instantaneously, so the guest can never see the IDLE bit as 0.
++         */
++        v = FIELD_DP32(v, IRS_SPI_STATUSR, V,
++                       spi_for_selr(cs, domain) != NULL);
++        v = FIELD_DP32(v, IRS_SPI_STATUSR, IDLE, 1);
++        *data = v;
++        return true;
++
++    case A_IRS_SPI_CFGR:
++    {
++        GICv5SPIState *spi = spi_for_selr(cs, domain);
++
++        if (spi) {
++            v = FIELD_DP32(v, IRS_SPI_CFGR, TM, spi->tm);
++        }
++        *data = v;
++        return true;
++    }
++    case A_IRS_SPI_DOMAINR:
++        if (domain == GICV5_ID_EL3) {
++            /* This is RAZ/WI except for the EL3 domain */
++            GICv5SPIState *spi = spi_for_selr(cs, domain);
++            if (spi) {
++                v = FIELD_DP32(v, IRS_SPI_DOMAINR, DOMAIN, spi->domain);
++            }
++        }
++        *data = v;
++        return true;
      }
-     return true;
+ 
+     return false;
+@@ -1041,6 +1089,26 @@ static bool config_writel(GICv5 *s, GICv5Domain domain, hwaddr offset,
+     case A_IRS_MAP_L2_ISTR:
+         irs_map_l2_istr_write(s, domain, data);
+         return true;
++    case A_IRS_SPI_SELR:
++        cs->irs_spi_selr[domain] = data;
++        return true;
++    case A_IRS_SPI_CFGR:
++    {
++        GICv5SPIState *spi = spi_for_selr(cs, domain);
++        if (spi) {
++            spi->tm = FIELD_EX32(data, IRS_SPI_CFGR, TM);
++        }
++        return true;
++    }
++    case A_IRS_SPI_DOMAINR:
++        if (domain == GICV5_ID_EL3) {
++            /* this is RAZ/WI except for the EL3 domain */
++            GICv5SPIState *spi = spi_for_selr(cs, domain);
++            if (spi) {
++                spi->domain = FIELD_EX32(data, IRS_SPI_DOMAINR, DOMAIN);
++            }
++        }
++        return true;
+     }
+ 
+     return false;
+diff --git a/hw/intc/arm_gicv5_common.c b/hw/intc/arm_gicv5_common.c
+index aa5877ee05..607b99c2ac 100644
+--- a/hw/intc/arm_gicv5_common.c
++++ b/hw/intc/arm_gicv5_common.c
+@@ -92,6 +92,15 @@ static void gicv5_common_reset_hold(Object *obj, ResetType type)
+             cs->spi[i].domain = mp_domain;
+         }
+     }
++
++    for (int i = 0; i < NUM_GICV5_DOMAINS; i++) {
++        /*
++         * We reset irs_spi_selr to an invalid value so that our reset
++         * value for IRS_SPI_STATUSR.V is correctly 0. The guest can
++         * never read IRS_SPI_SELR directly.
++         */
++        cs->irs_spi_selr[i] = cs->spi_base + cs->spi_irs_range;
++    }
  }
+ 
+ static void gicv5_common_init(Object *obj)
+diff --git a/include/hw/intc/arm_gicv5_common.h b/include/hw/intc/arm_gicv5_common.h
+index 6897f94117..c5a64bf86d 100644
+--- a/include/hw/intc/arm_gicv5_common.h
++++ b/include/hw/intc/arm_gicv5_common.h
+@@ -85,6 +85,7 @@ struct GICv5Common {
+ 
+     uint64_t irs_ist_baser[NUM_GICV5_DOMAINS];
+     uint32_t irs_ist_cfgr[NUM_GICV5_DOMAINS];
++    uint32_t irs_spi_selr[NUM_GICV5_DOMAINS];
+ 
+     /*
+      * Pointer to an array of state information for the SPIs.  Array
 -- 
 2.43.0
 
