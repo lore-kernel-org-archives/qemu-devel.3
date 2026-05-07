@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 162AACD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 07:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 867EACD343B
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 07:44:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKtOI-00059E-PH; Thu, 07 May 2026 03:43:26 -0400
+	id 1wKtOg-0005Ar-MZ; Thu, 07 May 2026 03:43:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wKtOA-00056A-J6
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wKtOC-00057v-28
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 03:43:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1wKtO9-0007iZ-E9
  for qemu-devel@nongnu.org; Thu, 07 May 2026 03:43:19 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wKtO8-0007ib-7n
- for qemu-devel@nongnu.org; Thu, 07 May 2026 03:43:18 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8Cx9OiQQvxppWcHAA--.18170S3;
- Thu, 07 May 2026 15:43:12 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJCxGOCMQvxpYyR8AA--.39343S3;
- Thu, 07 May 2026 15:43:09 +0800 (CST)
-Subject: Re: [PATCH 1/4] update-linux-headers.sh: add typelimits.h to portable
- header list
-To: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@redhat.com>
-Cc: maobibo@loongson.cn, qemu-devel@nongnu.org, lixianglai@loongson.cn,
- chenhuacai@loongson.cn, pbonzini@redhat.com, cohuck@redhat.com,
- thuth@redhat.com, mst@redhat.com, peter.maydell@linaro.org,
- richard.henderson@linaro.org, philmd@linaro.org
-References: <20260427070029.1059386-1-gaosong@loongson.cn>
- <20260427070029.1059386-2-gaosong@loongson.cn>
- <0a95025f-7234-ae8f-641d-cf605c5742ce@loongson.cn>
- <c36929a0-f6a0-4db8-85fb-733853171893@redhat.com>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <161dc86d-dcb5-731a-f5d4-2a4cc3321b88@loongson.cn>
-Date: Thu, 7 May 2026 15:45:09 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778139794;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=L7UykGouzgr8ZqkkrLE9v+Xz1Z88tEpYgnKW272WBR8=;
+ b=ZJBN39i5dL0jEzW4FtQB8xYDxh7OLJ9OYDngKXnNkP+enrUsaegA4gUxMUEYx4H3tDRgDd
+ dvXZSnL+F1esTuLW3ikAONQnzjFKs67XSNeTPqNh1rVbGoQF6aRYn2DhWD7nkvSFyyX1+0
+ MVEbVsXcebTf9kqJ9/PFnNgnxUbZQK8=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-102-oiqYNDbsMJOORgdQxJwLwA-1; Thu,
+ 07 May 2026 03:43:11 -0400
+X-MC-Unique: oiqYNDbsMJOORgdQxJwLwA-1
+X-Mimecast-MFC-AGG-ID: oiqYNDbsMJOORgdQxJwLwA_1778139790
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 86BB0180034E; Thu,  7 May 2026 07:43:09 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.115])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3984F180034E; Thu,  7 May 2026 07:43:05 +0000 (UTC)
+Date: Thu, 7 May 2026 09:43:03 +0200
+From: Kevin Wolf <kwolf@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
+ devel@lists.libvirt.org, integration@gluster.org,
+ Nir Soffer <nirsof@gmail.com>, Nir Soffer <nsoffer@redhat.com>
+Subject: Re: [PATCH] Remove the deprecated glusterfs block driver
+Message-ID: <afxCh6JcPEefhF5o@redhat.com>
+References: <20260507051639.2784590-1-thuth@redhat.com>
+ <08637f36-ae2b-4191-b668-93e59e283c92@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <c36929a0-f6a0-4db8-85fb-733853171893@redhat.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowJCxGOCMQvxpYyR8AA--.39343S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7KF4fXw43tFyxXFykXrW8GrX_yoW8tr4DpF
- 4kCFyUCry3A3Z7Jw12qF1Ika4Yqr4rJ3ZFgryUWFy0yFZ0gr1Igr47Zrn09ryDJr48Ca1j
- qr43Ga4Uu3Z7Z3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Sb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
- 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
- 67AKxVWUtVW8ZwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
- 8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
- CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
- 1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
- daVFxhVjvjDU0xZFpf9x07UiiSdUUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+In-Reply-To: <08637f36-ae2b-4191-b668-93e59e283c92@linaro.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.736,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,67 +87,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2026/5/7 下午2:58, Cédric Le Goater 写道:
-> On 5/7/26 08:23, gaosong wrote:
->> Ping~
->>
->> 在 2026/4/27 下午3:00, Song Gao 写道:
->>> Linux kernel introduced a new UAPI header file typelimits.h in the 7.1
->>> development cycle (commit merged in Jan 2026). This file is required by
->>> ethtool.h and other headers that include it.
->>>
->>> Since QEMU's update script only copies headers explicitly listed in the
->>> for loop, typelimits.h was missing after updating to newer kernel
->>> versions, causing compilation errors like:
->>>
->>>    fatal error: standard-headers/linux/typelimits.h: No such file or 
->>> directory
->>>
->>> Add typelimits.h to the list of headers processed by cp_portable() to
->>> ensure it is properly copied and sanitized into the QEMU source tree
->>>
->>> Cc: clg@redhat.com
->>> Cc: pbonzini@redhat.com
->>> Cc: cohuck@redhat.com
->>> Cc: thuth@redhat.com
->>> Cc: mst@redhat.com
->>> Cc: peter.maydell@linaro.org
->>> Cc: richard.henderson@linaro.org
->>> Cc: philmd@linaro.org
->>> Signed-off-by: Song Gao <gaosong@loongson.cn>
->>> ---
->>>   scripts/update-linux-headers.sh | 1 +
->>>   1 file changed, 1 insertion(+)
->>>
->>> diff --git a/scripts/update-linux-headers.sh 
->>> b/scripts/update-linux-headers.sh
->>> index 386d7a38e7..471f9cc71e 100755
->>> --- a/scripts/update-linux-headers.sh
->>> +++ b/scripts/update-linux-headers.sh
->>> @@ -255,6 +255,7 @@ for i in "$hdrdir"/include/linux/*virtio*.h \
->>>            "$hdrdir/include/linux/vhost_types.h" \
->>>            "$hdrdir/include/linux/vmclock-abi.h" \
->>>            "$hdrdir/include/linux/nitro_enclaves.h" \
->>> +         "$hdrdir/include/linux/typelimits.h" \
->>>            "$hdrdir/include/linux/sysinfo.h"; do
->>>       cp_portable "$i" "$output/include/standard-headers/linux"
->>>   done
->>
->
-> There is one issue with this patch. The headers should be sanitized.
->
-> See :
->
-> https://lore.kernel.org/qemu-devel/20260505081423.28326-2-avihaih@nvidia.com 
->
->
-OK, I will correct it .
+Am 07.05.2026 um 08:08 hat Philippe Mathieu-Daud� geschrieben:
+> On 7/5/26 07:16, Thomas Huth wrote:
+> > From: Thomas Huth <thuth@redhat.com>
+> > 
+> > Glusterfs has been marked as deprecated since QEMU v9.2, and as far
+> > as I know, nobody spoke up 'til today that it should be kept.
+> > The listed e-mail address integration@gluster.org in our MAINTAINERS
+> > file seems to be bouncing nowadays, and looking at their website
+> > https://www.gluster.org/ the most recent news are from 2020 / 2021 ...
+> > so it seems like there is really hardly any interest in Glusterfs
+> > anymore. Thus it's time to remove the code now from QEMU.
+> > 
+> > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> > ---
+> >   MAINTAINERS                                   |    6 -
+> >   docs/about/deprecated.rst                     |    8 -
+> >   docs/about/removed-features.rst               |    7 +
+> >   docs/system/device-url-syntax.rst.inc         |   39 -
+> >   docs/system/qemu-block-drivers.rst.inc        |   84 -
+> >   meson.build                                   |   47 -
+> >   qapi/block-core.json                          |   52 -
+> >   block/gluster.c                               | 1644 -----------------
+> >   tests/qtest/modules-test.c                    |    3 -
+> >   block/meson.build                             |    1 -
+> >   meson_options.txt                             |    2 -
+> >   .../ci/setup/debian/debian-13-ppc64le.yaml    |    1 -
+> >   .../ci/setup/ubuntu/ubuntu-2404-aarch64.yaml  |    1 -
+> >   .../ci/setup/ubuntu/ubuntu-2404-s390x.yaml    |    1 -
+> >   scripts/coverity-scan/coverity-scan.docker    |    1 -
+> >   scripts/coverity-scan/run-coverity-scan       |    2 +-
+> >   scripts/meson-buildoptions.sh                 |    3 -
+> >   .../dockerfiles/debian-amd64-cross.docker     |    1 -
+> >   .../dockerfiles/debian-arm64-cross.docker     |    1 -
+> >   .../dockerfiles/debian-mips64el-cross.docker  |    1 -
+> >   .../dockerfiles/debian-mipsel-cross.docker    |    1 -
+> >   .../dockerfiles/debian-ppc64el-cross.docker   |    1 -
+> >   .../dockerfiles/debian-riscv64-cross.docker   |    1 -
+> >   .../dockerfiles/debian-s390x-cross.docker     |    1 -
+> >   tests/docker/dockerfiles/debian.docker        |    1 -
+> >   .../dockerfiles/fedora-rust-nightly.docker    |    1 -
+> >   tests/docker/dockerfiles/fedora.docker        |    1 -
+> >   tests/docker/dockerfiles/opensuse-leap.docker |    1 -
+> >   tests/docker/dockerfiles/ubuntu2204.docker    |    1 -
+> >   tests/lcitool/projects/qemu.yml               |    1 -
+> >   30 files changed, 8 insertions(+), 1907 deletions(-)
+> >   delete mode 100644 block/gluster.c
+> 
+> Need a rebase on top of commit f168046842c ("cocci: Do not
+> initialize variable used by QLIST_FOREACH macro").
+> 
+> Reviewed-by: Philippe Mathieu-Daud� <philmd@linaro.org>
+> Tested-by: Philippe Mathieu-Daud� <philmd@linaro.org>
+> 
+> Apparently we could now revert commits a6b257a08e3 ("file-posix:
+> Handle undetectable alignment") and 3a20013fbb2 ("block: posix:
+> Always allocate the first block"). Not sure if that could be
+> useful for other backends or harmless. Cc'ing Nir.
 
-Thanks.
-Song Gao
->
-> Thanks,
->
-> C.
+I haven't looked at the specific code changes, but if it's file-posix,
+it's unrelated to the builtin gluster block driver in QEMU, but a file
+on a glusterfs mount on the host. We still need to behave correctly for
+that. (And if it can happen with glusterfs, it probably can happen with
+other filesystems, too.)
+
+Kevin
 
 
