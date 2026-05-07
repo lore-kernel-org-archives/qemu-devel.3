@@ -4,90 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5225CD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 17:13:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF1BDCD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 17:22:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL2Hc-000731-G3; Thu, 07 May 2026 13:13:08 -0400
+	id 1wL2PQ-0000sY-2J; Thu, 07 May 2026 13:21:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wL2Ha-00072m-Jv
- for qemu-devel@nongnu.org; Thu, 07 May 2026 13:13:06 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wL2HZ-0007lp-7T
- for qemu-devel@nongnu.org; Thu, 07 May 2026 13:13:06 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-44ccbd3290aso849129f8f.2
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 10:13:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778173982; x=1778778782; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=jBrT7abvhVkzhyt2WySTyMps6XBRIZ9aVgKiFOMAhNk=;
- b=h40C1pRFM3E7c2ptfFP2fUc5OJm+ed3+dxx5iLwvE/CTXDZhiNg9/ycxXZHnWdGCyV
- Nerjyci+ep+EsJFHcnv0TenzbtdJgpcT8nQNsWwUk2w7/5Jrd+NFeEiluRkXfkmrJclE
- 38aDkkhM93VczD4X+h99Dhwd4+ZxKgyUDXqFpyJgiVuNyEOb8HPXsqU2U9eAaDzNK+IC
- U1Ohr47e5jfatZzWCCC6IB0vY7ezLlZl2MMekSGH6vAyTc3F8i73vxxh/fwLskz+6zm9
- 5dnqgp/TLzXdiCxWeWASpze88hKsOtSXEJ6zmIcfRj0mIGg0xw4On44Cm6dSMCUjGprk
- QRCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778173982; x=1778778782;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jBrT7abvhVkzhyt2WySTyMps6XBRIZ9aVgKiFOMAhNk=;
- b=cqDEpaaPKk6Smg+BuxN/BRZQDNoiKBV0dqafo/OsZ83ycxJCiTbiEhXaFVmXB9xoNx
- 0w1YrMQvyPQ3QUzEStztbaCwekUcONaisWZed7JJWOTQ82RdCMrsN5GopePDRQtBeZBE
- 3uEmJ2Bm1AruX0gxSKqGX+ZvmchWwWapH0MgcnoMR8SSoJSzGxBbZiexfBok0SAyTND0
- XqM7SdVGd/TE4Koi1C2uDZxgHsckgGFQSbqDH9InWokFBdmt8tiIl/HGuIdpchWx2Cec
- fEt9YzwFy3a3XExD0y8cwyCpjbn13N/Wfn3E4Jh1PYAsumItsjvD0TmbYTQHPwguw2C+
- iOKA==
-X-Gm-Message-State: AOJu0YyQv20XyjO231qXvhGKgYXu/x08zpiuRTw0KcEVcjevPugMvLvI
- aqmM7E6C7n5b0pi5OsO1JD8IuVM+jl/pinwv/lkh0bYPggj6NFHzWd5iINBFG2Uo1kTj48nTX6W
- zVzj8
-X-Gm-Gg: AeBDiesUJJkV69PtNW7UsFvQkKPfKV+VPkdWa7aevQ/QS54wNOYEyNmcVV9bF1pnEU8
- ScBuuC1TnihA/R/RYXfAoVKG3fhVq4tAtNUk0Y2XwXMtISVwru7cBvzvs3YhqmTM8x1NdXpniwr
- ElhokGq1vvhQQDYoKHG3bocongNBXxj7jLzL163L4hy95SajVuF54SgE07OW1TzXPNpamY+P8I7
- oO3eOPeniB/F00Hzpbpi84B73hcTWrjV4UbXOx+CyPi7Q58xB67D4BaQbM/bLZrup56egDlkA2t
- B29BYdyoISEBEGT3IDX9vD1VPIw4WydWMgQWWg5toxDQBQLc4M8bFJFibYepuYgBsZE9Khf6iQb
- kOnt1M5Pwf2ms/zn1UVGFCowUDmJFcsWI9+f3BJSBKOImPjvaqob9xhJrGfrSXnbFG3Y23MdhQy
- 8wvnG7kWICrylQjb4kF1CDeajiHw==
-X-Received: by 2002:a05:6000:220c:b0:43d:77f4:7145 with SMTP id
- ffacd0b85a97d-4515bae9147mr14849501f8f.19.1778173982289; 
- Thu, 07 May 2026 10:13:02 -0700 (PDT)
-Received: from linaro.org ([2a10:d582:31e:0:2cf8:2ace:fcda:630d])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4540f92c322sm523732f8f.0.2026.05.07.10.13.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 10:13:01 -0700 (PDT)
-Date: Thu, 7 May 2026 18:13:00 +0100
-From: Jim MacArthur <jim.macarthur@linaro.org>
+ (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wL0Wq-0004Bb-S5
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:20:44 -0400
+Received: from mail-244108.protonmail.ch ([109.224.244.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wL0Wm-00046I-Fz
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:20:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pq.io;
+ s=protonmail3; t=1778167235; x=1778426435;
+ bh=DTaXLW46kA4PzjKLdWJotCfuuUW2EZs3VOldH3Gkucg=;
+ h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:From:To:
+ Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=K0yXNX8ImRkYf9xgA0vDHUB68DpQj+QrCnfuwufokT9F+rHSiSDvtlqZYpboHhzu8
+ 8SFeS50334bN5akCe6BH0MkV8oJ1MIUbH2M/W9yDpt6/PtjIL0lraowI3OdcnCHh1h
+ S1zPMsi227s0ijjM7ie0iSgsgrUatWpsZty6gbPQbyIOFWxrvy6mEWh4HoOO72Wuw1
+ Koaqln5ycieQs6zn0uzJbGxklTAKpTLcXU7C3EAxK+fR5xaKvbLBK/G3g/YrPXfEgT
+ ubTA917ySOaoCRbH1NR14DpTQ1GxNInRV/ihXNTmdauSpzO7pewvgUgM5GKWBoMbcA
+ JbkMRsd7e0Iog==
+X-Pm-Submission-Id: 4gBGCj30yZz1DDLg
+From: Matthew Jackson <matthew@pq.io>
 To: qemu-devel@nongnu.org
-Cc: Alex Bennee <alex.bennee@linaro.org>
-Subject: Re: [PATCH 4/7] tests/tcg: move aarch64 page table setup to c code
-Message-ID: <afzIHLbjs-PIkKy9@linaro.org>
-References: <20260417164328.1009132-1-alex.bennee@linaro.org>
- <20260417164328.1009132-5-alex.bennee@linaro.org>
+Cc: stefanha@redhat.com,
+	peter.maydell@linaro.org
+Subject: [PATCH v2 2/2] hw/misc/applesmc: populate Apple SMC key table
+Date: Thu,  7 May 2026 08:20:30 -0700
+Message-ID: <20260507152030.48753-3-matthew@pq.io>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260507040153.14565-1-matthew@pq.io>
+References: <20260507040153.14565-1-matthew@pq.io>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260417164328.1009132-5-alex.bennee@linaro.org>
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=jim.macarthur@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=109.224.244.108; envelope-from=matthew@pq.io;
+ helo=mail-244108.protonmail.ch
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 07 May 2026 13:21:07 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,29 +67,286 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Apr 17, 2026 at 05:43:24PM +0100, Alex Bennée wrote:
-> If we want more flexibility messing around with page tables lets do it
-> without having to rely on assembly for it.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> 
-> ---
-> AJB
->   - a result of -O0 does mean each helper ends up with a stack frame
->     being needed to do the relatively simple mask and shift. I've
->     experimented with -O1 and trying to manually enable inlining but
->     couldn't get anything to work.
-> ---
-> +#define DESC_AF          (1ULL << 10)
-> +#define DESC_ATTRINDX(i) ((uint64_t)(i) << 2)
-> +#define DESC_NS          (1ULL << 5)
-> +#define DESC_UXN         (1ULL << 53)
-> +#define DESC_PXN         (1ULL << 54)
+With APPLESMC_GET_KEY_BY_INDEX_CMD now functional (previous
+patch), the modern macOS AppleSMC kext walks the device's key
+table at boot to discover what's available. The current key
+set (REV/OSK0/OSK1/NATJ/MSSP/MSSD) is sparse enough that
+several macOS subsystems retry-poll keys they expect to find,
+contributing to the same kSMCSpuriousData traffic the previous
+patch addresses.
 
-I *think* you have UXN and PXN the wrong way round? See table D8-52; UXN is always 54.
-It works fine in this case as we always use them together.
+This patch fills the key table out to a complete iMac20,1
+profile (94 additional keys plus the canonical #KEY count).
+Sensor values match a real iMac20,1 idle probe published at:
 
-Otherwise,
+  https://linux-hardware.org/?probe=999fc708a4&log=sensors
 
-Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Categories:
+
+  * 28 temperature sensors in sp78 format with idle readings
+    from the probe: CPU 40 C (TC0P) / 45 C (TC0F) / 51 C
+    (TCXc), GPU 36 C (TG0P) / 42 C (TG0F/TG1F/TGDD), HDD
+    41 C (TH0P/TH1C/TH1F), LCD 28-29 C (TL0V/TL1V), memory
+    34-36 C (TM0V/TM0P), ambient 24 C (TA0V), PSU 33 C
+    (Tp00/Tp2F), generic sensors 33 C (Ts*S, TS0V), VRM
+    50 C (TVMD/TVmS/TVSL/TVSR; not in the probe, conservative
+    estimate). Battery sensors (TB0T/TB1T/TB2T) are
+    present-with-zero because iMacs have no battery; macOS's
+    "absent vs broken" distinction relies on the key being
+    registered even with a zero reading.
+
+  * 4 fan keys (FNum/F0Ac/F0Mn/F0Mx) describing iMac20,1's
+    single chassis fan: 1 fan, current 1200 RPM (= F0Mn,
+    matching the probe-reported idle), min 1200, max 3600.
+    fpe2 encoding (raw = RPM * 4, big-endian).
+
+  * 12 power-rail keys (PC0R/PCPC/PCPG/PCPT/PfCP/PfCT/PfGT/
+    PfHT/PfM0/PfST/PSTR/PHDC) for telemetry; present-with-
+    zero satisfies macOS without claiming a specific value.
+
+  * 6 DIMM keys (DM0P/DM0S/DM1P/DM1S/MD1R/MD1W); same
+    rationale.
+
+  * 11 SMC-internal bookkeeping keys (CLKH/DICT/RPlt/SBFL/
+    VRTC/WKTP plus 5 lower-case Apple-private bookkeeping
+    keys cePn/cmDU/maNN/mxT1/zEPD); same rationale.
+
+  * 13 motion-sensor / wireless keys (MSAc/MSAf/MSAg/MSAi/
+    MSGA/MSHP/MSPA/MTLV/QCLV/QENA/WIr0/WIw0/WIz0). Present-
+    with-zero is the correct desktop-class answer.
+
+  * 3 write targets that must also be readable: HE0N (iGPU
+    power; AGPM driver writes 1 on start), MSDW, NTOK.
+
+  * 2 power-management gates required by AGPM and the
+    watchdog probe: HE2N (dGPU power enable), WDTC.
+
+  * 8 platform-identity / probe keys (MPRO/MPRD/LGPB/BSLN/
+    EPCI/BEMB/$Adr/RGEN/DPLM/MSSW/OSWD): VirtualSMC-style
+    identity plus the early boot-time SMC probe keys.
+
+  * 2 GPU temperature sensors (TGDD/TG0P) and #KEY (the
+    Apple-canonical total-keys count, computed by walking
+    the data_def list at realize time).
+
+  * 1 VirtualSMC-compatible $Num key (some drivers prefer it
+    over #KEY).
+
+After this patch, with the protocol fix from the previous
+patch in place, a Sequoia 15.7.5 guest boots without the SMC
+retry storm:
+
+   Metric           | Before   | After
+   -----------------|---------:|------:
+   SMC errors / 5s  |   9,225  |     2
+   kernel_task CPU  |    70 %  |  ~2 %
+   WindowServer CPU |   509 %  |  ~6 %
+
+Legacy macOS guests (10.11-10.13) that do not iterate the
+key space see no behavioural change beyond the corrected
+MSSD value (now 0x03 as on real iMac20,1 hardware) and the
+fact that READ on a previously-unknown key returns zeros
+instead of NOEXIST.
+
+Signed-off-by: Matthew Jackson <matthew@pq.io>
+---
+ hw/misc/applesmc.c | 169 ++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 168 insertions(+), 1 deletion(-)
+
+diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
+index 2b5ef3c..d11fb32 100644
+--- a/hw/misc/applesmc.c
++++ b/hw/misc/applesmc.c
+@@ -32,7 +32,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/isa/isa.h"
+-#include "hw/core/qdev-properties.h"
++#include "hw/qdev-properties.h"
+ #include "ui/console.h"
+ #include "qemu/error-report.h"
+ #include "qemu/log.h"
+@@ -493,12 +493,179 @@ static void applesmc_isa_realize(DeviceState *dev, Error **errp)
+ 
+     QLIST_INIT(&s->data_def);
+ 
++    /* System identification */
+     applesmc_add_key(s, "REV ", 6, "\x01\x13\x0f\x00\x00\x03");
+     applesmc_add_key(s, "OSK0", 32, s->osk);
+     applesmc_add_key(s, "OSK1", 32, s->osk + 32);
+     applesmc_add_key(s, "NATJ", 1, "\0");
+     applesmc_add_key(s, "MSSP", 1, "\0");
+     applesmc_add_key(s, "MSSD", 1, "\x03");
++
++    /*
++     * GPU power-management keys. Without HE2N the AGPM driver reads
++     * NOEXIST, errors out (0x82) and hangs the system on dynamic
++     * wallpaper changes. The driver itself sets the value to 1 on
++     * start, so the boot default of 0 is correct.
++     */
++    applesmc_add_key(s, "HE2N", 1, "\x00");  /* dGPU power enable */
++
++    /*
++     * Watchdog timer control. Queried by macOS during early boot; an
++     * unanswered query produces a cluster of SMCWDT errors per boot.
++     */
++    applesmc_add_key(s, "WDTC", 1, "\x00");
++
++    /*
++     * GPU temperature sensors. SP78 format: 16-bit big-endian with the
++     * top 8 bits encoding integer degrees C and the bottom 8 bits the
++     * fraction. Returning zeroed sensors caused macOS to flag these as
++     * broken and retry-poll. Values approximate a warm idle iMac20,1.
++     */
++    applesmc_add_key(s, "TGDD", 2, "\x2A\x00");  /* GPU diode: 42 C */
++    applesmc_add_key(s, "TG0P", 2, "\x24\x00");  /* GPU proximity: 36 C */
++
++    /*
++     * Fan control (iMac20,1 has one chassis fan). fpe2 format: raw
++     * value is RPM << 2, big-endian. Idle ~1500 RPM, range 1200-3600.
++     */
++    applesmc_add_key(s, "FNum", 1, "\x01");
++    applesmc_add_key(s, "F0Ac", 2, "\x12\xC0");  /* current: 1200 RPM (idle = F0Mn) */
++    applesmc_add_key(s, "F0Mn", 2, "\x12\xC0");  /* min:     1200 RPM */
++    applesmc_add_key(s, "F0Mx", 2, "\x38\x40");  /* max:     3600 RPM */
++
++    /* Platform-identity keys also provided by VirtualSMC. */
++    applesmc_add_key(s, "MPRO", 1, "\x01");  /* model property */
++    applesmc_add_key(s, "MPRD", 1, "\x00");  /* model product */
++    applesmc_add_key(s, "LGPB", 1, "\x00");  /* lid/GPU power */
++
++    /* CPU/power keys consumed by X86PlatformPlugin. */
++    applesmc_add_key(s, "BSLN", 1, "\x00");  /* baseline */
++    applesmc_add_key(s, "EPCI", 4, "\x00\x00\x00\x00"); /* EPC info */
++    applesmc_add_key(s, "BEMB", 1, "\x01");  /* board embedded */
++
++    /* Keys read by the boot-time SMC probe. */
++    applesmc_add_key(s, "OSWD", 2, "\x00\x00");  /* OS watchdog timer */
++    applesmc_add_key(s, "MSSW", 1, "\x00");  /* macOS software state */
++    applesmc_add_key(s, "RGEN", 1, "\x02");  /* SMC generation */
++    applesmc_add_key(s, "DPLM", 4, "\x00\x00\x00\x00"); /* display power */
++    applesmc_add_key(s, "$Adr", 4, "\x00\x00\x03\x00"); /* SMC base addr */
++
++    /*
++     * Temperature sensors covering the rails the macOS AppleSMC client
++     * polls on an iMac20,1-class host. Values are realistic idle
++     * readings in SP78 (big-endian) format; zeros trigger retry storms
++     * on broken-sensor paths.
++     */
++    applesmc_add_key(s, "TC0F", 2, "\x2D\x00");  /* CPU PECI filt: 45 C */
++    applesmc_add_key(s, "TC0P", 2, "\x28\x00");  /* CPU proximity: 40 C */
++    applesmc_add_key(s, "TCXc", 2, "\x33\x00");  /* CPU core max: 51 C */
++    applesmc_add_key(s, "TG0F", 2, "\x2A\x00");  /* GPU 0 filt: 42 C */
++    applesmc_add_key(s, "TG1F", 2, "\x2A\x00");  /* GPU 1 filt: 42 C */
++    applesmc_add_key(s, "TH0P", 2, "\x29\x00");  /* HDD proximity: 41 C */
++    applesmc_add_key(s, "TH1A", 2, "\x1A\x00");  /* HDD 1 ambient: 26 C */
++    applesmc_add_key(s, "TH1C", 2, "\x29\x00");  /* HDD 1 core: 41 C */
++    applesmc_add_key(s, "TH1F", 2, "\x29\x00");  /* HDD 1 filt: 41 C */
++    applesmc_add_key(s, "TL0V", 2, "\x1D\x00");  /* LCD 0: 29 C */
++    applesmc_add_key(s, "TL1V", 2, "\x1C\x00");  /* LCD 1: 28 C */
++    applesmc_add_key(s, "TM0P", 2, "\x24\x00");  /* memory prox: 36 C */
++    applesmc_add_key(s, "TM0V", 2, "\x22\x00");  /* memory VRM: 34 C */
++    applesmc_add_key(s, "Tp00", 2, "\x21\x00");  /* PSU: 33 C */
++    applesmc_add_key(s, "Tp2F", 2, "\x21\x00");  /* PSU 2: 33 C */
++    applesmc_add_key(s, "Ts0S", 2, "\x21\x00");  /* sensor 0: 33 C */
++    applesmc_add_key(s, "TS0V", 2, "\x21\x00");  /* sensor 0 V: 33 C */
++    applesmc_add_key(s, "Ts1S", 2, "\x21\x00");  /* sensor 1: 33 C */
++    applesmc_add_key(s, "Ts2S", 2, "\x21\x00");  /* sensor 2: 33 C */
++    applesmc_add_key(s, "TB0T", 2, "\x00\x00");  /* no battery */
++    applesmc_add_key(s, "TB1T", 2, "\x00\x00");  /* no battery */
++    applesmc_add_key(s, "TB2T", 2, "\x00\x00");  /* no battery */
++    applesmc_add_key(s, "TA0V", 2, "\x18\x00");  /* ambient 0: 24 C */
++    applesmc_add_key(s, "TVMD", 2, "\x32\x00");  /* VRM diode: 50 C */
++    applesmc_add_key(s, "TVmS", 2, "\x32\x00");  /* VRM sense: 50 C */
++    applesmc_add_key(s, "TVSL", 2, "\x32\x00");  /* VRM sense L: 50 C */
++    applesmc_add_key(s, "TVSR", 2, "\x32\x00");  /* VRM sense R: 50 C */
++
++    /* Power and platform rails (12 keys). */
++    applesmc_add_key(s, "PC0R", 2, "\x00\x00");  /* CPU 0 rail */
++    applesmc_add_key(s, "PCPC", 2, "\x00\x00");  /* CPU package core */
++    applesmc_add_key(s, "PCPG", 2, "\x00\x00");  /* CPU package GPU */
++    applesmc_add_key(s, "PCPT", 2, "\x00\x00");  /* CPU package total */
++    applesmc_add_key(s, "PfCP", 2, "\x00\x00");  /* platform CPU power */
++    applesmc_add_key(s, "PfCT", 2, "\x00\x00");  /* platform CPU temp */
++    applesmc_add_key(s, "PfGT", 2, "\x00\x00");  /* platform GPU temp */
++    applesmc_add_key(s, "PfHT", 2, "\x00\x00");  /* platform HDD temp */
++    applesmc_add_key(s, "PfM0", 2, "\x00\x00");  /* platform memory 0 */
++    applesmc_add_key(s, "PfST", 2, "\x00\x00");  /* platform system temp */
++    applesmc_add_key(s, "PSTR", 2, "\x00\x00");  /* power supply temp rail */
++    applesmc_add_key(s, "PHDC", 2, "\x00\x00");  /* platform HDC */
++
++    /* Memory / DIMM counters (6 keys). */
++    applesmc_add_key(s, "DM0P", 2, "\x00\x00");  /* DIMM 0 proximity */
++    applesmc_add_key(s, "DM0S", 2, "\x00\x00");  /* DIMM 0 sensor */
++    applesmc_add_key(s, "DM1P", 2, "\x00\x00");  /* DIMM 1 proximity */
++    applesmc_add_key(s, "DM1S", 2, "\x00\x00");  /* DIMM 1 sensor */
++    applesmc_add_key(s, "MD1R", 2, "\x00\x00");  /* memory DIMM 1 read */
++    applesmc_add_key(s, "MD1W", 2, "\x00\x00");  /* memory DIMM 1 write */
++
++    /* SMC internal bookkeeping (11 keys). */
++    applesmc_add_key(s, "CLKH", 1, "\x00");  /* clock halt */
++    applesmc_add_key(s, "DICT", 1, "\x00");  /* dictionary */
++    applesmc_add_key(s, "RPlt", 2, "\x00\x00");  /* platform revision */
++    applesmc_add_key(s, "SBFL", 1, "\x00");  /* secure boot flags */
++    applesmc_add_key(s, "VRTC", 2, "\x00\x00");  /* virtual RTC */
++    applesmc_add_key(s, "WKTP", 2, "\x00\x00");  /* wake type */
++    applesmc_add_key(s, "zEPD", 1, "\x00");  /* endpoint descriptor */
++    applesmc_add_key(s, "cePn", 1, "\x00");  /* CE panel */
++    applesmc_add_key(s, "cmDU", 1, "\x00");  /* cm display unit */
++    applesmc_add_key(s, "maNN", 1, "\x00");  /* manufacturer NN */
++    applesmc_add_key(s, "mxT1", 2, "\x00\x00");  /* max temp 1 */
++
++    /* Miscellaneous sensor/motion keys (13 keys). */
++    applesmc_add_key(s, "MSAc", 1, "\x00");  /* motion sensor active */
++    applesmc_add_key(s, "MSAf", 1, "\x00");  /* motion sensor filter */
++    applesmc_add_key(s, "MSAg", 1, "\x00");  /* motion sensor gain */
++    applesmc_add_key(s, "MSAi", 1, "\x00");  /* motion sensor interval */
++    applesmc_add_key(s, "MSGA", 1, "\x00");  /* MSG A */
++    applesmc_add_key(s, "MSHP", 1, "\x00");  /* MS HP */
++    applesmc_add_key(s, "MSPA", 1, "\x00");  /* MS PA */
++    applesmc_add_key(s, "MTLV", 1, "\x00");  /* MT level */
++    applesmc_add_key(s, "QCLV", 1, "\x00");  /* Q clevel */
++    applesmc_add_key(s, "QENA", 1, "\x00");  /* Q enable */
++    applesmc_add_key(s, "WIr0", 2, "\x00\x00");  /* WiFi rate 0 */
++    applesmc_add_key(s, "WIw0", 2, "\x00\x00");  /* WiFi write 0 */
++    applesmc_add_key(s, "WIz0", 2, "\x00\x00");  /* WiFi zone 0 */
++
++    /* Write targets that must also be readable. */
++    applesmc_add_key(s, "HE0N", 1, "\x00");  /* iGPU power; driver sets 1 */
++    applesmc_add_key(s, "MSDW", 1, "\x00");  /* MSD write */
++    applesmc_add_key(s, "NTOK", 1, "\x00");  /* notification token */
++
++    /*
++     * VirtualSMC-compatible total-keys key. Kept for compatibility with
++     * drivers that look for $Num; the canonical Apple #KEY below is what
++     * macOS actually iterates against.
++     */
++    applesmc_add_key(s, "$Num", 4, "\x00\x00\x00\x5e");
++
++    /*
++     * #KEY - Apple SMC convention for "total key count". macOS reads it
++     * at boot and iterates 0..count-1 via APPLESMC_GET_KEY_BY_INDEX_CMD.
++     * Without this key, macOS iterates unbounded and every out-of-range
++     * request floods the kernel log with kSMCSpuriousData errors
++     * (measured ~1800/sec on macOS 15). Count is computed by walking the
++     * list. The buffer is function-static so the pointer stays valid
++     * for the device's lifetime.
++     */
++    {
++        int count = 1;  /* include #KEY itself */
++        struct AppleSMCData *def;
++        static char numkey_buf[4];
++
++        QLIST_FOREACH(def, &s->data_def, node) {
++            count++;
++        }
++        stl_be_p(numkey_buf, count);
++        applesmc_add_key(s, "#KEY", 4, numkey_buf);
++    }
+ }
+ 
+ static void applesmc_unrealize(DeviceState *dev)
+-- 
+2.50.1 (Apple Git-155)
+
 
