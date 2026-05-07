@@ -4,62 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8248FCD343B
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 07:43:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 162AACD3442
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 07:43:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKtNi-00054O-9S; Thu, 07 May 2026 03:42:52 -0400
+	id 1wKtOI-00059E-PH; Thu, 07 May 2026 03:43:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wKtNU-000536-PG
- for qemu-devel@nongnu.org; Thu, 07 May 2026 03:42:40 -0400
+ id 1wKtOA-00056A-J6
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 03:43:19 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wKtNR-0007fZ-Jj
- for qemu-devel@nongnu.org; Thu, 07 May 2026 03:42:36 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1wKtO8-0007ib-7n
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 03:43:18 -0400
 Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8DxEvBgQvxplmcHAA--.23978S3;
- Thu, 07 May 2026 15:42:25 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8Cx9OiQQvxppWcHAA--.18170S3;
+ Thu, 07 May 2026 15:43:12 +0800 (CST)
 Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJDxaeBdQvxpTSR8AA--.40753S3;
- Thu, 07 May 2026 15:42:22 +0800 (CST)
-Subject: Re: [PATCH 3/4] target/loongarch: Add kvm support dintc
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org, lixianglai@loongson.cn, chenhuacai@loongson.cn
+ by front1 (Coremail) with SMTP id qMiowJCxGOCMQvxpYyR8AA--.39343S3;
+ Thu, 07 May 2026 15:43:09 +0800 (CST)
+Subject: Re: [PATCH 1/4] update-linux-headers.sh: add typelimits.h to portable
+ header list
+To: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@redhat.com>
+Cc: maobibo@loongson.cn, qemu-devel@nongnu.org, lixianglai@loongson.cn,
+ chenhuacai@loongson.cn, pbonzini@redhat.com, cohuck@redhat.com,
+ thuth@redhat.com, mst@redhat.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, philmd@linaro.org
 References: <20260427070029.1059386-1-gaosong@loongson.cn>
- <20260427070029.1059386-4-gaosong@loongson.cn>
- <931bd5c5-6445-7bfe-acc3-04111edb3259@loongson.cn>
+ <20260427070029.1059386-2-gaosong@loongson.cn>
+ <0a95025f-7234-ae8f-641d-cf605c5742ce@loongson.cn>
+ <c36929a0-f6a0-4db8-85fb-733853171893@redhat.com>
 From: gaosong <gaosong@loongson.cn>
-Message-ID: <e5fbe331-d366-774a-84eb-48dd2798582d@loongson.cn>
-Date: Thu, 7 May 2026 15:44:22 +0800
+Message-ID: <161dc86d-dcb5-731a-f5d4-2a4cc3321b88@loongson.cn>
+Date: Thu, 7 May 2026 15:45:09 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <931bd5c5-6445-7bfe-acc3-04111edb3259@loongson.cn>
+In-Reply-To: <c36929a0-f6a0-4db8-85fb-733853171893@redhat.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-CM-TRANSID: qMiowJDxaeBdQvxpTSR8AA--.40753S3
+X-CM-TRANSID: qMiowJCxGOCMQvxpYyR8AA--.39343S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3AFWxWr4rJFykKFy8Xr47Awc_yoW3Gr45pr
- 1kJrW5GFyUGrn7Jw17Jry5XryUJr1UG3WUXr1xXFyUAr4UJr1jqr10qr1qgF1UAw48Jr15
- Ar18Zrsxur17JrgCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoW7KF4fXw43tFyxXFykXrW8GrX_yoW8tr4DpF
+ 4kCFyUCry3A3Z7Jw12qF1Ika4Yqr4rJ3ZFgryUWFy0yFZ0gr1Igr47Zrn09ryDJr48Ca1j
+ qr43Ga4Uu3Z7Z3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ 0xBIdaVrnRJUUU9Sb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
  IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
  e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE
- 14v26r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr
- 0_Cr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU82-
- e7UUUUU==
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C2
+ 67AKxVWUtVW8ZwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
+ 8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
+ CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
+ 1xMIIF0xvEx4A2jsIE14v26r4j6F4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBI
+ daVFxhVjvjDU0xZFpf9x07UiiSdUUUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -25
@@ -82,186 +87,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2026/5/7 下午2:42, Bibo Mao 写道:
->
->
-> On 2026/4/27 下午3:00, Song Gao wrote:
->> This patch adds Kvm put/get msgint CSRs and check msgint feature.
+在 2026/5/7 下午2:58, Cédric Le Goater 写道:
+> On 5/7/26 08:23, gaosong wrote:
+>> Ping~
 >>
->> Signed-off-by: Song Gao <gaosong@loongson.cn>
->> ---
->>   target/loongarch/cpu.c     |  5 ++-
->>   target/loongarch/cpu.h     |  1 +
->>   target/loongarch/kvm/kvm.c | 69 ++++++++++++++++++++++++++++++++++++++
->>   3 files changed, 72 insertions(+), 3 deletions(-)
+>> 在 2026/4/27 下午3:00, Song Gao 写道:
+>>> Linux kernel introduced a new UAPI header file typelimits.h in the 7.1
+>>> development cycle (commit merged in Jan 2026). This file is required by
+>>> ethtool.h and other headers that include it.
+>>>
+>>> Since QEMU's update script only copies headers explicitly listed in the
+>>> for loop, typelimits.h was missing after updating to newer kernel
+>>> versions, causing compilation errors like:
+>>>
+>>>    fatal error: standard-headers/linux/typelimits.h: No such file or 
+>>> directory
+>>>
+>>> Add typelimits.h to the list of headers processed by cp_portable() to
+>>> ensure it is properly copied and sanitized into the QEMU source tree
+>>>
+>>> Cc: clg@redhat.com
+>>> Cc: pbonzini@redhat.com
+>>> Cc: cohuck@redhat.com
+>>> Cc: thuth@redhat.com
+>>> Cc: mst@redhat.com
+>>> Cc: peter.maydell@linaro.org
+>>> Cc: richard.henderson@linaro.org
+>>> Cc: philmd@linaro.org
+>>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>>> ---
+>>>   scripts/update-linux-headers.sh | 1 +
+>>>   1 file changed, 1 insertion(+)
+>>>
+>>> diff --git a/scripts/update-linux-headers.sh 
+>>> b/scripts/update-linux-headers.sh
+>>> index 386d7a38e7..471f9cc71e 100755
+>>> --- a/scripts/update-linux-headers.sh
+>>> +++ b/scripts/update-linux-headers.sh
+>>> @@ -255,6 +255,7 @@ for i in "$hdrdir"/include/linux/*virtio*.h \
+>>>            "$hdrdir/include/linux/vhost_types.h" \
+>>>            "$hdrdir/include/linux/vmclock-abi.h" \
+>>>            "$hdrdir/include/linux/nitro_enclaves.h" \
+>>> +         "$hdrdir/include/linux/typelimits.h" \
+>>>            "$hdrdir/include/linux/sysinfo.h"; do
+>>>       cp_portable "$i" "$output/include/standard-headers/linux"
+>>>   done
 >>
->> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
->> index e22568c84a..fe60c9b92b 100644
->> --- a/target/loongarch/cpu.c
->> +++ b/target/loongarch/cpu.c
->> @@ -443,9 +443,6 @@ static void loongarch_max_initfn(Object *obj)
->>         cpu->ptw = ON_OFF_AUTO_AUTO;
->>       if (tcg_enabled()) {
->> -        cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, 
->> MSG_INT, 1);
->> -        cpu->msgint = ON_OFF_AUTO_AUTO;
->> -
->>           uint32_t data = cpu->env.cpucfg[2];
->>           data = FIELD_DP32(data, CPUCFG2, HPTW, 1);
->>           /* Enable LA v1.1 instructions */
->> @@ -456,6 +453,8 @@ static void loongarch_max_initfn(Object *obj)
->>           data = FIELD_DP32(data, CPUCFG2, SCQ, 1);
->>           cpu->env.cpucfg[2] = data;
->>       }
->> +    cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, 
->> MSG_INT, 1);
->> +    cpu->msgint = ON_OFF_AUTO_AUTO;
->>   }
->>     #if defined(CONFIG_KVM)
->> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
->> index 4d333806ed..edd840fbed 100644
->> --- a/target/loongarch/cpu.h
->> +++ b/target/loongarch/cpu.h
->> @@ -302,6 +302,7 @@ enum loongarch_features {
->>       LOONGARCH_FEATURE_PV_IPI,
->>       LOONGARCH_FEATURE_STEALTIME,
->>       LOONGARCH_FEATURE_PTW,
->> +    LOONGARCH_FEATURE_MSGINT,
->>   };
->>     typedef struct  LoongArchBT {
->> diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
->> index 9d844c4905..e32e5f1274 100644
->> --- a/target/loongarch/kvm/kvm.c
->> +++ b/target/loongarch/kvm/kvm.c
->> @@ -35,6 +35,13 @@ const KVMCapabilityInfo 
->> kvm_arch_required_capabilities[] = {
->>       KVM_CAP_LAST_INFO
->>   };
->>   +static bool msgint_needed(CPUState *cs)
-> rename it as kvm_cpu_has_msgint()?
+>
+> There is one issue with this patch. The headers should be sanitized.
+>
+> See :
+>
+> https://lore.kernel.org/qemu-devel/20260505081423.28326-2-avihaih@nvidia.com 
+>
 >
 OK, I will correct it .
->> +{
->> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
->> +
->> +    return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
->> +}
->> +
->>   static int kvm_get_stealtime(CPUState *cs)
->>   {
->>       CPULoongArchState *env = cpu_env(cs);
->> @@ -358,6 +365,20 @@ static int kvm_loongarch_get_csr(CPUState *cs)
->>         ret |= kvm_loongarch_get_pmu(cs);
->>   +    if (msgint_needed(cs)) {
->> +        ret |= kvm_get_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
->> +                               &env->CSR_MSGIS[0]);
->> +
->> +        ret |= kvm_get_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
->> +                               &env->CSR_MSGIS[1]);
->> +
->> +        ret |= kvm_get_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
->> +                               &env->CSR_MSGIS[2]);
->> +
->> +        ret |= kvm_get_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
->> +                               &env->CSR_MSGIS[3]);
->> +    }
->> +
->>       ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TVAL),
->>                              &env->CSR_TVAL);
->>   @@ -533,6 +554,20 @@ static int kvm_loongarch_put_csr(CPUState *cs, 
->> KvmPutState level)
->>         ret |= kvm_loongarch_put_pmu(cs);
->>   +    if (msgint_needed(cs)) {
->> +        ret |= kvm_set_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
->> +                               &env->CSR_MSGIS[0]);
->> +
->> +        ret |= kvm_set_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
->> +                               &env->CSR_MSGIS[1]);
->> +
->> +        ret |= kvm_set_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
->> +                               &env->CSR_MSGIS[2]);
->> +
->> +        ret |= kvm_set_one_reg(cs, 
->> KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
->> +                               &env->CSR_MSGIS[3]);
->> +    }
->> +
->>       /*
->>        * timer cfg must be put at last since it is used to enable
->>        * guest timer
->> @@ -982,6 +1017,12 @@ static bool kvm_feature_supported(CPUState *cs, 
->> enum loongarch_features feature)
->>           ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
->>           return (ret == 0);
->>   +    case LOONGARCH_FEATURE_MSGINT:
->> +        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
->> +        attr.attr = KVM_LOONGARCH_VM_FEAT_MSGINT;
->> +        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
->> +        return (ret == 0);
->> +
->>       default:
->>           return false;
->>       }
->> @@ -1155,6 +1196,28 @@ static int kvm_cpu_check_pv_features(CPUState 
->> *cs, Error **errp)
->>       return 0;
->>   }
->>   +static int kvm_cpu_check_msgint(CPUState *cs, Error **errp)
->> +{
->> +    CPULoongArchState *env = cpu_env(cs);
->> +    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
->> +    bool kvm_supported;
->> +
->> +    kvm_supported = kvm_feature_supported(cs, 
->> LOONGARCH_FEATURE_MSGINT);
->> +    env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 0);
->> +    if (cpu->msgint == ON_OFF_AUTO_ON) {
->> +        if (kvm_supported) {
->> +            env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, 
->> MSG_INT, 1);
->> +        } else {
->> +            error_setg(errp, "'msgint' feature not supported by KVM 
->> on this host");
->> +            return -ENOTSUP;
->> +        }
->> +    } else if ((cpu->msgint == ON_OFF_AUTO_AUTO) && kvm_supported) {
->> +        env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, 
->> MSG_INT, 1);
->> +    }
->> +
->> +    return 0;
->> +}
->> +
->>   int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
->>   {
->>       return 0;
->> @@ -1210,6 +1273,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
->>           return ret;
->>       }
->>   +    ret = kvm_cpu_check_msgint(cs, &local_err);
->> +    if (ret < 0) {
-> if (ret) rather than (ret < 0)
->
-There are no cases where the value is greater than 0, consistent with other functions.
 
-thanks.
+Thanks.
 Song Gao
-
-> Regards
-> Bibo Mao
->> +        error_report_err(local_err);
->> +        return ret;
->> +    }
->> +
->>       return 0;
->>   }
->>
+>
+> Thanks,
+>
+> C.
 
 
