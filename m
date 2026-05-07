@@ -4,101 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E4BCCD343B
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 14:28:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7593CD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 14:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKzhm-0002pb-Jg; Thu, 07 May 2026 10:28:00 -0400
+	id 1wKzk3-0003xv-Ai; Thu, 07 May 2026 10:30:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wKzhB-0002cV-On
- for qemu-devel@nongnu.org; Thu, 07 May 2026 10:27:31 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wKzhA-0006Na-61
- for qemu-devel@nongnu.org; Thu, 07 May 2026 10:27:21 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-65c21049dafso938843d50.2
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 07:27:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778164039; cv=none;
- d=google.com; s=arc-20240605;
- b=I2Fnhqo+AQEDTrlhJ2qH9czQXAqsCCd5zpw8UFIHnU7ALUqEguXJhjcJ70e9vnsP5i
- 6bmfUzXPM1F9URmUpOqDff5/Q+vEosRBk1XgEZ747uTvF3//56HHPrjWQ/evPbcbqMyD
- nacisWAOF8205Eo3ief0CTt3d98q7ceiOezg1PWHsVrMhhmNuLoCZK9zLQq5GAlRy3so
- NcC95mQQXPHKtLYgiV+WdGmPR/JmF91OIjUFKQwHGmsDTtjhDF2weYMyzcYnpOUAEJ2c
- CoxVZuQwVWBZNHUITlSevwgJVOZB6qmRpL79KAQoLcj4mJcN6HkLeYRGE1AcuBFTafcS
- fjtg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=dmZ6GUQKvqAeG5IXwmPlXOKQEUTJ4wFUcQOUkeb6w+I=;
- fh=Bs3JNzFZMZglXqTd9uCSUuwP2gXmqRGByTnAPwB3/a8=;
- b=IkiQVbIrinY26v986MAA1sXNJSQb4b5XU5B+bAJebAdI47A2wJHyJ7ZzmAQ3jlJINw
- 8wIFAtcE/5V/CZOpyt+N0nE6yFEvFiENwSgjwslyExziwExMR9v/t6ncqwu/ieGaty0A
- +RYGyb/QU9EzorrCeS3u6O0UtbiHoTd9wttOKl5yOTthw5CL/CNFb2ZW7aJYDPMP3ofC
- IbhKjJ3Pghd1CDTp9BSpJ4ccpwYre5c6BJfZf2ZFApSkrVFVWkh4bJdPlGkag842b+jX
- TNrqxKQxZq3CpqcRGP5whDqMCVSoCS45/Djp0XIFqbVqu2/slwLXlJX5WL3azuAxsH7u
- f4XA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778164039; x=1778768839; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=dmZ6GUQKvqAeG5IXwmPlXOKQEUTJ4wFUcQOUkeb6w+I=;
- b=Yi4t49VQphXN6J1iKoktQv+6LJA8k3OvwL4tg64Lv0TERLxdoTReKqYd+xsASxy7+g
- xoqNINLb8uQ7ju+EzlfT4HEQU9s95BuG3+hFP5MY3At88Ssb5PIIeQfqtnz3qM7dLeTI
- YlwG7W9sm5MiFvo6KkMQx66G51pi/STHt7YT2vh7m08dkGVUb69IxSy5MvN7l/eYpaG6
- a6XMdr7/drfiln2tPTFa+A5S2OpKwLxztSzr1geoOx19p6750C/me3LB3FEXwhpuw/TH
- yJwJBgUtQkbFrmg8Rq+a2gVTUTWs2MfE5tRnlvoazt/77U+p5ywjct5aksP3tjMP7TVD
- E1RA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778164039; x=1778768839;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dmZ6GUQKvqAeG5IXwmPlXOKQEUTJ4wFUcQOUkeb6w+I=;
- b=blubp8K+LA4z2B2T6+JyTT5bxahXIq/f5JYq6FucXtHqIyaAiLrTAqD1FkrhMF/yP5
- NbCDVHWJVnN+qMAUwLTK7SyzEoQ5acsG/PS1OgOyfhOY9EDFGZzOpu+oxk35EMH2zzwa
- OABCtrt3iGJ9RjaTxgDdIvVGi6puditr2Y2hHMS8q/VaxoHn9JEeOuHhhNcJwZNBQB72
- 4ZOGG0fS2jZcmQweC982mIrRntOIorH0HUZwpExoX1Jf+amhMD/jXyBaFuHLg5+AScfd
- lvY8CSTXHY7wmPDhCXWm+ILBqU5YKcj2/0T73Z0Q4WpdaqvBcvCP7mT6DLtyOvM4aAGF
- f08Q==
-X-Gm-Message-State: AOJu0YzbJ2mgIgPVd/QBF1rh72ZFin0A24U7AI34VyI52gIBNhA5PJoZ
- b3DEJHgmPUd7D5wa0QjRR9Ho19GiM9j9/tpcJZazhpqd39+yKbaTHgRcNCz+az0xfsNp5HpTi2f
- V8l1yiyIEIjs9ukqFEio+x5awijZvXZPLDvzXYOKxYRoCsNv81rOe
-X-Gm-Gg: Acq92OH1U91jjvCBhZgODdGTiwl0h9mR971fObvZpf5ZZ74hdYClfL2KkzjTV2Xia02
- Ny+SAiK0CmcHPFPzo/IdNixKRRbcvGDmCCoUkDm9WA3+8hGby7E1Rjb2LCtvDg0zCiqEq3s+SnG
- UHcLiaoVC8yq5od23uOhGmkUuA/MvHErBJ+EljE0BKarVcqxyTOlg7/SdVzBcEW/9q6+mRNG8sc
- cEQ0yvJ46rEKkxi8QkDFP0Jx9QWeih4hLmzhiiORrbfwzAYJi6tN2xm862ADyon5qYunJ0ShXOu
- tW8ffk41h4dkc0zRbDNF+H8hTsV5r+JH2zvY0vNM4ZpClLJvTUePhDGxJ68tug9nw0tI1oeSgF0
- IHO6L75zHACUa
-X-Received: by 2002:a53:accd:0:20b0:65c:6164:f290 with SMTP id
- 956f58d0204a3-65c7988807dmr6834502d50.1.1778164038455; Thu, 07 May 2026
- 07:27:18 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260507040153.14565-1-matthew@pq.io>
- <20260507040153.14565-3-matthew@pq.io>
-In-Reply-To: <20260507040153.14565-3-matthew@pq.io>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 7 May 2026 15:27:06 +0100
-X-Gm-Features: AVHnY4IxbasY6Jrw9NRUTFpF0-l1X_9Vie3L2IpMsgjgl9XiPj2slHu6BV6lYa4
-Message-ID: <CAFEAcA8+7JSq58HrAtyQ2sEJuDfD10nT8jQKrpcTU7SumTXi-A@mail.gmail.com>
-Subject: Re: [PATCH 2/2] hw/misc/applesmc: populate Apple SMC key table
-To: Matthew Jackson <matthew@pq.io>
-Cc: qemu-devel@nongnu.org, stefanha@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wKzjt-0003wa-UH
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 10:30:10 -0400
+Received: from pv-2001h-snip4-5.eps.apple.com ([57.103.64.38]
+ helo=outbound.pv.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1wKzjr-0007Mo-Hf
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 10:30:09 -0400
+Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-1a-60-percent-10 (Postfix) with ESMTPS id
+ EBF131800175; Thu, 07 May 2026 14:30:00 +0000 (UTC)
+X-ICL-Out-Info: HUtFAUMHWwJACUgBTUQeDx5WFlZNRAJCTQFIHV8DWRxBAUkdXw9LVxQEFVwFVgZXFHkNXR1FDlYZWgxSD1sOHBZLWFUJCgZdGFgVVgl3HlwASx1XBFQfUxJVHR0LRUtAEwROEwVSB11NVg1HD1geXBQXCEVDXgheH0wcHQ5YBhIATQoONgZZBV4JVgNDBTYSFF1FRgNHGVcUUBtHDFUHV15fChMAXg8PTHg8C1gFUgRAFEh2VARGBjQKQB4sD1gAXQ9OAVQDKQVJD0wFL3ceXABLHVcEVB9TElUdHQtFVRIEQAhWUFQeQQRWFWwJWAZTGVc=
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1778164204; x=1780756204;
+ bh=uJjeXrVqITKsix0UIG7tjHa2I2LF3i20YmjLM4w7oHg=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=fY6WO3f3CR+6LO9CsM2S72d9n62mBvOZft8SjcdJtfacaJ85vlOJQijD3Fau6b+er0w1PZIidA8UlCS2oFDzurBo1JAlnmhhPu/jE2ML472tr8s6oiK2CqGXNRBVD1inQQfjb9ke+5OCZASWQMg+cw5BijohmwyCzhmILSLVdv5dOcuoIZwUAkGgVUbk+XttNGk5ILV1frepihKfRJyZCtnPTSN+kZNnb7ngiEECouxf9db6z7cmnOuuvie5SswFUXrJ6p3bXYzW0Vwruf1bnfp/OSBArSCDBuKfZH8sjX/IkmO8A0i9kGbwZeOvrRsNd+JKNEEJPExOzzofgwfNyQ==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.56.9.36])
+ by p00-icloudmta-asmtp-us-west-1a-60-percent-10 (Postfix) with ESMTPSA id
+ DE7EB1800135; Thu, 07 May 2026 14:29:58 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.500.181\))
+Subject: Re: [PATCH] hw/arm: Build ARM/HVF GICv3 stub once
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260507135816.71171-1-philmd@linaro.org>
+Date: Thu, 7 May 2026 16:29:46 +0200
+Cc: qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-arm@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <AD852960-0E93-4D38-A832-66294B79646B@unpredictable.fr>
+References: <20260507135816.71171-1-philmd@linaro.org>
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+X-Mailer: Apple Mail (2.3864.500.181)
+X-Authority-Info-Out: v=2.4 cv=Sr6dKfO0 c=1 sm=1 tr=0 ts=69fca1e9
+ cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
+ a=azHRBMxVc17uSn+fyuI/eg==:17 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=4Kp0-FD2ekAT1qDPWe0A:9
+ a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA3MDE0NSBTYWx0ZWRfX5OLErR/aoGnv
+ OoIFIBASlw+b6PXq5CSOOVd7x7ZXWucilpT6VB28YbJQkfUi4zir/8mbMMOvjfVj8RttYN6L8bB
+ rDhGd946SNG1kGl25+GBGuOvmKFq0AxO+VJBMgrCQr4crKO5KGpAA8Xam/03rAhRKKNTKwruRs8
+ CfF4MEhB7n4mfYo5vqbLt/o10F33WpoxmYxJ3GiEt9EEaGqLudRDwdL5TZ5dQ+/2O7EsYtFXfRm
+ DkyMHfeY+IzmX6NrflaRqBJ8+mh48K/PxCKjwtAS1kgoZavt1ddZHl7M0q49j2biAU6y3BlrE7f
+ ATktBE/moo7qrqAEEJSRD6n0cm5yWE7/xpeLhcU40WjQ+t0YF0DEjV09PPRd+k=
+X-Proofpoint-GUID: eBM-GHAD06V9Q6ya8D7BAiOEKGzSPhy7
+X-Proofpoint-ORIG-GUID: eBM-GHAD06V9Q6ya8D7BAiOEKGzSPhy7
+Received-SPF: pass client-ip=57.103.64.38;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,58 +86,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 7 May 2026 at 15:14, Matthew Jackson <matthew@pq.io> wrote:
->
-> With APPLESMC_GET_KEY_BY_INDEX_CMD now functional (previous
-> patch), the modern macOS AppleSMC kext walks the device's key
-> table at boot to discover what's available. The current key
-> set (REV/OSK0/OSK1/NATJ/MSSP/MSSD) is sparse enough that
-> several macOS subsystems retry-poll keys they expect to find,
-> contributing to the same kSMCSpuriousData traffic the previous
-> patch addresses.
 
-> +    /*
-> +     * #KEY - Apple SMC convention for "total key count". macOS reads it
-> +     * at boot and iterates 0..count-1 via APPLESMC_GET_KEY_BY_INDEX_CMD.
-> +     * Without this key, macOS iterates unbounded and every out-of-range
-> +     * request floods the kernel log with kSMCSpuriousData errors
-> +     * (measured ~1800/sec on macOS 15). Count is computed by walking the
-> +     * list. The buffer is function-static so the pointer stays valid
-> +     * for the device's lifetime.
-> +     */
+> On 7. May 2026, at 15:58, Philippe Mathieu-Daud=C3=A9 =
+<philmd@linaro.org> wrote:
+>=20
+> Move arm_gicv3_hvf_stub.c, introduced in commit 48396ad6ce9
+> ("hw/intc: arm_gicv3_hvf: save/restore Apple GIC state"), to
+> the global stub_ss[] source set which holds stub files being
+> built once for all binaries, instead of one time per system
+> binary. This prevents symbol clash when trying to build a
+> single QEMU system binary:
+>=20
+>  clang: error: linker command failed with exit code 1 (use -v to see =
+invocation)
+>  duplicate symbol '_vmstate_gicv3_hvf' in:
+>      libqemu-aarch64-softmmu.a.p/hw_intc_arm_gicv3_hvf_stub.c.o
+>      libqemu-arm-softmmu.a.p/hw_intc_arm_gicv3_hvf_stub.c.o
+>  ld: 1 duplicate symbols
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> =E2=80=94--
 
-The applesmc_add_key() API's "pointer passed in must remain
-valid forever" is a bit awkward, but I suppose for a single
-key that's not "fixed data" it's fine.
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Does the guest query this stuff often enough that the "loop
-through all keys" in applesmc_find_key() is at all noticeable
-in a profile? I'm guessing not, but if we did find we wanted
-to replace that with a glib hashtable then we could take the
-opportunity to make the memory lifetime requirement here a bit
-less bug-prone.
+> hw/intc/meson.build | 2 +-
+> 1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+> index c6de2d9d00c..25a4144c83e 100644
+> --- a/hw/intc/meson.build
+> +++ b/hw/intc/meson.build
+> @@ -43,7 +43,7 @@ arm_common_ss.add(when: 'CONFIG_ARM_GICV3', if_true: =
+files('arm_gicv3_cpuif.c'))
+> specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: =
+files('arm_gic_kvm.c'))
+> specific_ss.add(when: ['CONFIG_WHPX', 'TARGET_AARCH64'], if_true: =
+files('arm_gicv3_whpx.c'))
+> specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_true: =
+files('arm_gicv3_hvf.c'))
+> -specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_false: =
+files('arm_gicv3_hvf_stub.c'))
+> +stub_ss.add(files('arm_gicv3_hvf_stub.c'))
+> specific_ss.add(when: ['CONFIG_ARM_GIC_KVM', 'TARGET_AARCH64'], =
+if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
+> arm_common_ss.add(when: 'CONFIG_ARM_V7M', if_true: =
+files('armv7m_nvic.c'))
+> specific_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_irqmp.c'))
+> --=20
+> 2.53.0
+>=20
+>=20
 
-> +    {
-> +        int count = 1;  /* include #KEY itself */
-> +        struct AppleSMCData *def;
-> +        QLIST_FOREACH(def, &s->data_def, node) count++;
-
-Loops always need {}, even single line bodies.
-
-> +        static char numkey_buf[4];
-> +        numkey_buf[0] = (count >> 24) & 0xff;
-> +        numkey_buf[1] = (count >> 16) & 0xff;
-> +        numkey_buf[2] = (count >>  8) & 0xff;
-> +        numkey_buf[3] =  count        & 0xff;
-
-This is
-   stl_be_p(numkey_buf, count);
-
-> +        applesmc_add_key(s, "#KEY", 4, numkey_buf);
-> +    }
->  }
-
-
-thanks
--- PMM
 
