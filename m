@@ -4,101 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BB65CD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 16:07:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F32ECD3442
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 16:07:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL1F6-0005Dr-Pu; Thu, 07 May 2026 12:06:28 -0400
+	id 1wL1Ed-0004gB-TY; Thu, 07 May 2026 12:05:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wL1Ey-0004oi-GV
- for qemu-devel@nongnu.org; Thu, 07 May 2026 12:06:22 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wL1Ec-0004fM-JP
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 12:05:58 -0400
+Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1wL1Et-00075B-Or
- for qemu-devel@nongnu.org; Thu, 07 May 2026 12:06:19 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2ba6485d219so7397395ad.3
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 09:06:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778169974; cv=none;
- d=google.com; s=arc-20240605;
- b=O0p82/1uJPse8BqsUA1PUoF0FdFao2oWcxy3+KUwvAY/kl/qrOTXQmf335hO0bN3nN
- hsq5sPalMlQkYw7I1c8yDRluyxt7QmyGYDRJNcmWsb5+ffyMEzuOxJdRGOimDg//StFz
- o5RKYJtqt8/1KQ4tcSaRSMl0YqRGtmyC7WrYA/UNCDFKMILMXlK+1FySVdD8Sz9b77gS
- mb3+jeyxUnpZvBTuthvCk/C/2WcirBaaUfB8C9jcDppjzcwZCw9Jo3YWeyn+ZDic8dDX
- MH+6YxxooYGOnsa3QWbClSQKg73z/4VJpnMROoSCFCj2PfFpS4wXpvY/bJp+ezKdSoi9
- 2ULQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=kTYrH+zzQgEUNn+1ZBVHdwNoK5XLNKmHWFriJn640/Q=;
- fh=nAvN4y75j2yIYcqte9EQipAO6Eg6yPvb5+V7SAzE8Vc=;
- b=T3E8a/nlED3P7p6GTArJ18H0YiZSeCV/xYCMxZD/UvL62Gx9YorcQhMzzBmuJnkoKh
- PyN0rwTVAGwElhho41COrJpyKQwoYOGnKZGtxXeHCHEWdjV9HFx42Cc9IGIsxADBBUEK
- 4cHzdBth6SGXZ/2KXDyIfjqweMttoUe6fs1hT32/wy7PwjxLQ9OqgUBE45mJMur68OXL
- 2w66fEu383WDcpL2KYj0JU6HFFfLutm6KF3Jfkg5dRHaEI3kXKwXEoaGQYJIsW1UHzJS
- 7dyisB3C1hyUIcgerIifJE2n0Dfu8rs8lBtobkD/b1WeKQWRuMpUYjjwEY4i/1VsMJjR
- XtgQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wL1EZ-00072k-A5
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 12:05:58 -0400
+Received: by mail-ot1-x332.google.com with SMTP id
+ 46e09a7af769-7dea20cf21aso971029a34.1
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 09:05:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778169974; x=1778774774;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=kTYrH+zzQgEUNn+1ZBVHdwNoK5XLNKmHWFriJn640/Q=;
- b=QFG4T0tIKylWqlsXDRfmBH4NY3csHDyb0Fv7L7g3v7nWjjDJf+FEAKfTGuw5S6rqHj
- PCvWFVG8JdVPtK8RXhxThVRGPZPJXpT5umjh3wZ4bKtDs7b7Bv+jxWtHJljmMMPSxZVz
- IeuJ+9GBt5VUwrYvbCTviHchP42r9cv7wAKsf6D2L8crd6lscGXbPLn8jHFMmTBQ9+6p
- z7T1nPf1vQ/K0aETkev/9ZJ1INDSAQ099wdJN3B6QD8CI56/NizrLxQ0Spu9PsUstbQB
- +n7wSxUXk4TH5TTnquwJeBlE9OgR4UhoIyM0PwPNbGEG74fBPDRurB/3fbFWc4RVmuYc
- MjGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778169974; x=1778774774;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1778169953; x=1778774753; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kTYrH+zzQgEUNn+1ZBVHdwNoK5XLNKmHWFriJn640/Q=;
- b=p/QpJJNHlq7EcdUabUn9u4KXt/jKM+jeWx8TI2CNtPDo5DtgYJ02vQjfb8J6vrADZp
- 6LmqTUCLIXL2mXrM6M4rTiXeT9ZJiuTWGzvTA2sjHSmHH6gF+3h3e1Fz9J7e3RJX5Vxx
- D5PwnHRyxMKeVwsW0dQlUB1dW0FAA8atTFjhXjrAKOXAo6cjQG5cxl6P7yHg0J/bSfqL
- swD2pAwWLBGHVDNCIuc0IhrRZxA1VWNxhsTgyln73HmYncL8YKS7lwCP53wJsBDXXwCO
- kPAm6nQvTJTX5lXK51bE4UQGasLmRqJxbRuCHilhYUqzlKqa4zQ+9HDXfTzad1CVU9xL
- N5Lg==
-X-Gm-Message-State: AOJu0Yyu9fdkpdF/XaDLmaP8QNtKS9xXek6idp3C76L/BmobBiGK/1Zo
- DUGA5Azj9J1LKmrzQBu1yqfu8HVCkJ4JCBlXBBildxOUKR/84gYg/TK1oQggs9ILyrVou5l1gNy
- Fu91GRYRJedFahbKIs5IrvA5G7CXlpptGVYF35iNFOhTVSeTaXrTIpc8=
-X-Gm-Gg: AeBDiesC2SaiAUl9EicNZJPx6De+DW0wF6uYqCn9IIm4TgByOsVy49z2ABpPuG9/1Di
- JAwCBEgEOa0yZkOGzkm3Wm/ehvMQadOUlLgT4l9YC8Ost0Nr+qVfnj3Nu/qhNEuhSjIR3CqcqDq
- kqm98wNu1/50z13S13yXhD9Z01eh3Ros0U6hgT4SWRwguc4PYBgb9HKw/x1FV04RqYTN5hV4QpI
- g1J9dvomBk1sQr4/IPfNQXCt1QsrM/VER7/za8sQ7s7M+cIdIWbHXkg/7HOK9a2Uc8caxKIDNM5
- n+IUQQE/gl+Qmjdp+A==
-X-Received: by 2002:a17:902:cf43:b0:2b2:67ca:5ff9 with SMTP id
- d9443c01a7336-2ba78a4564dmr91402425ad.0.1778169974144; Thu, 07 May 2026
- 09:06:14 -0700 (PDT)
+ bh=9bNnzqtZZ2cVv22AUkUvkDYFz+muAIN/ZlkkhwHbAbo=;
+ b=D5AwQ+0z48QUASF3ali/NHBNEkWRxsrE3cgAggfd4fRAQrVshrCc15ZwVH/B02UD2z
+ 6TT5cM2eDGGU1wHCd9zRM+PBypEX+VR2zQq4OygNhbDtBIqor++51SQnO9LH7WdJFOet
+ JToa39E8bqn/2bAsJ2AT4WE+a9VAjHc2YPS7RYKwuhsYpJiaBv3ZtBWLQDYezbfdLyLs
+ DLmODF09Qi7wqkufPMo4IzZHIwTgE8cK/a4tYG0qR01NPy5E3pxKMk1C0DUZfwxeRTpb
+ sDHijm7TW9S0AKBk4uF+G9gyX7VbO53e7x/N10sLq1xqaM+cMgvLi6mAbPe1aHLovnTo
+ NUDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778169953; x=1778774753;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=9bNnzqtZZ2cVv22AUkUvkDYFz+muAIN/ZlkkhwHbAbo=;
+ b=p4nGNV8Y5ocepDYudqsT1EHbw7uERzxVOaqvHq4tOiEFachDwnhK7wFewQqJ+Q9Nbe
+ NHTpirPbQx2mf0aIjV7vzRr5CXoz2wRctg94HUD5qWrOiIxkppb6deuG7tgADpId93CC
+ CDAgYJPoYUw0zbvETkuaQgk86PYu6OfysaiUxXtUOHi9otmwFz4H2ro3ETIaNrQrADrH
+ pV4M3PVZp5Ji8Sn6yjDunOgC+iH/EZdqR5yU8wpROViwYxo2qQwFNebjzqeagZKKOsFR
+ l0CGXuUA2k5Yv4AQ+rfGo0PuXBm3XvnoWpMBiNfxKJdC5XbWIhS96E8Szsj0BkYmUrJP
+ kXFQ==
+X-Gm-Message-State: AOJu0Yx3oc3/1KbdaAM3PUdUs8Jhv/tam8PAh4HTsxKxi0p2zr9UF7Wx
+ xIlPjmH/lcRmtHxs8OeJew5a8SeB7plw/yZa1uYSJv6dcHXforVnqBIS5tOYPzzjek5WyQocqfv
+ OJTsh
+X-Gm-Gg: AeBDieuHOb+uNCDmG6uWquZ4cfoiqLFP6FuFDk2nYNBskgP0Cg/mHQyd84HH9OqNcwb
+ e3etNruBxT3nrZtTPoull9ZzQiT9UEpdZW2TZlT9k+uzbwpDYZRrqb/mm8vWr9kW1b5vQdjd5A3
+ GUXEzxUxPc1ELcKi8DYksOoE/YYe+d5QyHVOGM3cZAXy8vLUQQkFaBRxhU6ifbzShR4I8z+y2Oq
+ GteanggkyoNGVtlLhvOZeu1mOs20iiiHUhfa4DIohPnWCAh5dy8ev1SieukWNGAr3qYmmM5R+al
+ ozP03jKv1J6VIgwWHlAaXwbfaZ/BfDLz0vv0uyZ9VOWF4rAgu8HjmFxAlIraRQN0lriB4tRDmHQ
+ ceOY6vw01FBjJ0Z74bp1Eyv3nOeEGsVRTDnQM/jLja3N+4R4XJZ+h0e1pNsN8KfisbpFfIzschO
+ 9AUW5V1D95AmL+z9tAjra4gw0VsbvMawZux8USXsal7vemmg==
+X-Received: by 2002:a05:6830:3696:b0:7d7:fbe5:e9b3 with SMTP id
+ 46e09a7af769-7e1deec4f0emr5662690a34.3.1778169952806; 
+ Thu, 07 May 2026 09:05:52 -0700 (PDT)
+Received: from stoup.attlocal.net ([2600:381:c938:6375:9641:bbb2:a93a:bb4c])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7decae680bdsm14647398a34.27.2026.05.07.09.05.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 May 2026 09:05:52 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 29/29] host-utils: Introduce signed saturation primitives
+Date: Thu,  7 May 2026 11:05:17 -0500
+Message-ID: <20260507160518.444797-30-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260507160518.444797-1-richard.henderson@linaro.org>
+References: <20260507160518.444797-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20260507-linux-user-bug-v1-1-25831e9bc22e@bsdimp.com>
- <CAFEAcA-ro3NjfPUj2A5odFCJOtdL5MV_V1bq5zuiPwyTFWo7Xg@mail.gmail.com>
-In-Reply-To: <CAFEAcA-ro3NjfPUj2A5odFCJOtdL5MV_V1bq5zuiPwyTFWo7Xg@mail.gmail.com>
-From: Warner Losh <imp@bsdimp.com>
-Date: Thu, 7 May 2026 10:06:02 -0600
-X-Gm-Features: AVHnY4JNxJiLaypHh-EZYkDWXXNmV9e9bdkFYGMWqbGDSJ4Pzjj49ige4NRWFN0
-Message-ID: <CANCZdfro9j8yY0GaLCGhC+Wf8Kwac+6qHmCMeYgJ0AYSZ9CwNA@mail.gmail.com>
-Subject: Re: [PATCH] linux-user: Fix a memory leak when pthread_create fails
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Type: multipart/alternative; boundary="000000000000a8cf4406513c757a"
-Received-SPF: none client-ip=2607:f8b0:4864:20::634;
- envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,247 +101,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a8cf4406513c757a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ include/qemu/host-utils.h    | 60 ++++++++++++++++++++++++++++++++++++
+ accel/tcg/tcg-runtime-gvec.c | 20 +++---------
+ 2 files changed, 64 insertions(+), 16 deletions(-)
 
-On Thu, May 7, 2026 at 9:48=E2=80=AFAM Peter Maydell <peter.maydell@linaro.=
-org>
-wrote:
+diff --git a/include/qemu/host-utils.h b/include/qemu/host-utils.h
+index 181d026b6c..2e8da7fb3d 100644
+--- a/include/qemu/host-utils.h
++++ b/include/qemu/host-utils.h
+@@ -606,6 +606,66 @@ static inline bool umul64_overflow(uint64_t x, uint64_t y, uint64_t *ret)
+     return __builtin_mul_overflow(x, y, ret);
+ }
+ 
++/**
++ * sadd32_saturate - addition with saturation
++ * @x, @y: addends
++ *
++ * Computes @x + @y, and saturates rathern than truncating the result.
++ */
++static inline int32_t sadd32_saturate(int32_t x, int32_t y)
++{
++    int32_t ret;
++    if (sadd32_overflow(x, y, &ret)) {
++        ret = y < 0 ? INT32_MIN : INT32_MAX;
++    }
++    return ret;
++}
++
++/**
++ * sadd64_saturate - addition with saturation
++ * @x, @y: addends
++ *
++ * Computes @x + @y, and saturates rathern than truncating the result.
++ */
++static inline int64_t sadd64_saturate(int64_t x, int64_t y)
++{
++    int64_t ret;
++    if (sadd64_overflow(x, y, &ret)) {
++        ret = y < 0 ? INT64_MIN : INT64_MAX;
++    }
++    return ret;
++}
++
++/**
++ * ssub32_saturate - subtraction with saturation
++ * @x, @y: addends
++ *
++ * Computes @x + @y, and saturates rathern than truncating the result.
++ */
++static inline bool ssub32_saturate(int32_t x, int32_t y)
++{
++    int32_t ret;
++    if (ssub32_overflow(x, y, &ret)) {
++        ret = x < 0 ? INT32_MAX : INT32_MIN;
++    }
++    return ret;
++}
++
++/**
++ * ssub64_saturate - subtraction with saturation
++ * @x, @y: addends
++ *
++ * Computes @x + @y, and saturates rathern than truncating the result.
++ */
++static inline bool ssub64_saturate(int64_t x, int64_t y)
++{
++    int64_t ret;
++    if (ssub64_overflow(x, y, &ret)) {
++        ret = x < 0 ? INT64_MAX : INT64_MIN;
++    }
++    return ret;
++}
++
+ /*
+  * Unsigned 128x64 multiplication.
+  * Returns true if the result got truncated to 128 bits.
+diff --git a/accel/tcg/tcg-runtime-gvec.c b/accel/tcg/tcg-runtime-gvec.c
+index ff927c5dd8..67a741e45e 100644
+--- a/accel/tcg/tcg-runtime-gvec.c
++++ b/accel/tcg/tcg-runtime-gvec.c
+@@ -1109,10 +1109,7 @@ void HELPER(gvec_ssadd32)(void *d, void *a, void *b, uint32_t desc)
+     for (i = 0; i < oprsz; i += sizeof(int32_t)) {
+         int32_t ai = *(int32_t *)(a + i);
+         int32_t bi = *(int32_t *)(b + i);
+-        int32_t di;
+-        if (sadd32_overflow(ai, bi, &di)) {
+-            di = (di < 0 ? INT32_MAX : INT32_MIN);
+-        }
++        int32_t di = sadd32_saturate(ai, bi);
+         *(int32_t *)(d + i) = di;
+     }
+     clear_high(d, oprsz, desc);
+@@ -1126,10 +1123,7 @@ void HELPER(gvec_ssadd64)(void *d, void *a, void *b, uint32_t desc)
+     for (i = 0; i < oprsz; i += sizeof(int64_t)) {
+         int64_t ai = *(int64_t *)(a + i);
+         int64_t bi = *(int64_t *)(b + i);
+-        int64_t di;
+-        if (sadd64_overflow(ai, bi, &di)) {
+-            di = (di < 0 ? INT64_MAX : INT64_MIN);
+-        }
++        int64_t di = sadd64_saturate(ai, bi);
+         *(int64_t *)(d + i) = di;
+     }
+     clear_high(d, oprsz, desc);
+@@ -1177,10 +1171,7 @@ void HELPER(gvec_sssub32)(void *d, void *a, void *b, uint32_t desc)
+     for (i = 0; i < oprsz; i += sizeof(int32_t)) {
+         int32_t ai = *(int32_t *)(a + i);
+         int32_t bi = *(int32_t *)(b + i);
+-        int32_t di;
+-        if (ssub32_overflow(ai, bi, &di)) {
+-            di = (di < 0 ? INT32_MAX : INT32_MIN);
+-        }
++        int32_t di = ssub32_saturate(ai, bi);
+         *(int32_t *)(d + i) = di;
+     }
+     clear_high(d, oprsz, desc);
+@@ -1194,10 +1185,7 @@ void HELPER(gvec_sssub64)(void *d, void *a, void *b, uint32_t desc)
+     for (i = 0; i < oprsz; i += sizeof(int64_t)) {
+         int64_t ai = *(int64_t *)(a + i);
+         int64_t bi = *(int64_t *)(b + i);
+-        int64_t di;
+-        if (ssub64_overflow(ai, bi, &di)) {
+-            di = (di < 0 ? INT64_MAX : INT64_MIN);
+-        }
++        int64_t di = ssub64_saturate(ai, bi);
+         *(int64_t *)(d + i) = di;
+     }
+     clear_high(d, oprsz, desc);
+-- 
+2.43.0
 
-> On Thu, 7 May 2026 at 16:20, Warner Losh <imp@bsdimp.com> wrote:
-> >
-> > Fix one of the TODO items when creating a new thread: release the copie=
-d
-> > cpu and free the task state.
-> >
-> > Signed-off-by: Warner Losh <imp@bsdimp.com>
-> > ---
-> > Free the new task state and drop references to copied cpu structure whe=
-n
-> > pthread_create failes.
-> > ---
-> >  linux-user/syscall.c | 6 ++++--
-> >  1 file changed, 4 insertions(+), 2 deletions(-)
-> >
-> > diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-> > index d3d9fffb54..7b2e32bcf5 100644
-> > --- a/linux-user/syscall.c
-> > +++ b/linux-user/syscall.c
-> > @@ -7005,7 +7005,6 @@ static int do_fork(CPUArchState *env, unsigned in=
-t
-> flags, abi_ulong newsp,
-> >          cpu->random_seed =3D qemu_guest_random_seed_thread_part1();
-> >
-> >          ret =3D pthread_create(&info.thread, &attr, clone_func, &info)=
-;
-> > -        /* TODO: Free new CPU state if thread creation failed.  */
-> >
-> >          sigprocmask(SIG_SETMASK, &info.sigmask, NULL);
-> >          pthread_attr_destroy(&attr);
-> > @@ -7014,7 +7013,10 @@ static int do_fork(CPUArchState *env, unsigned
-> int flags, abi_ulong newsp,
-> >              pthread_cond_wait(&info.cond, &info.mutex);
-> >              ret =3D info.tid;
-> >          } else {
-> > -            ret =3D -1;
-> > +            ret =3D -host_to_target_errno(ret);
->
-> This is an unrelated bugfix to the one in the commit message.
->
-> I found do_fork()'s error handling confusing (the comment at
-> the top doesn't exactly clarify either), but I think it is:
->  * might return a negative target errno value
->  * might return -1 with "errno" set to a host errno
->  * might succeed and return 0
->  * might succeed and return some other not-minus-1 value
->
-
-Yea, I was confused by that and opted to 'return negative target errno'
-notion here, but adding 'errno =3D ret;' just before the ret =3D -1 in the
-existing
-code would keep get_errno() happy... But in reality do the same thing
-I submitted...
-
-I could also just leave the bug alone as part of my submission.
-
-
-> The callers all do
->    return get_errno(do_fork(....));
-> which handles these cases.
->
-> It might be less confusing overall if we simplified this to:
->  * returns negative target errno value on failure
->  * otherwise success, returning value the guest expects
-> and dropped the get_errno() at the callsites. The only
-> cases that don't already follow one of those two options are
-> the "pthread_create() failed" one (which is buggy currently
-> since pthread_create() doesn't set errno) and the "fork()
-> failed" one (which relies on the "return -1 and caller fishes
-> error out of errno" handling).
->
-
-Yea, unwinding that looks beyond what I have time for here.
-
-
-> > +            object_unparent(OBJECT(new_cpu));
-> > +            object_unref(OBJECT(new_cpu));
-> > +            g_free(ts);
->
-> For TARGET_AARCH64, the gcs_new_stack() call we did before
-> attempting the pthread_create() maps memory into the target
-> address space, which needs to be undone. Compare the bit in
-> TARGET_NR_exit handling which does:
->
-> #ifdef TARGET_AARCH64
->             if (ts->gcs_base) {
->                 target_munmap(ts->gcs_base, ts->gcs_size);
->             }
-> #endif
->
-> We could maybe share code between the NR_exit "free stuff
-> for this TaskState" and this error-exit path, though it's
-> a bit awkward so I'm 50:50 on that.
->
-
-Yea, it is short enough I think inlining isn't terrible, but if more of
-these
-cases grow, then refactoring to a routine would make sense. At the moment,
-I lean more towards inlining...
-
-Warner
-
-
-> >          }
-> >          pthread_mutex_unlock(&info.mutex);
-> >          pthread_cond_destroy(&info.cond);
->
-> thanks
-> -- PMM
->
-
---000000000000a8cf4406513c757a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, May 7, =
-2026 at 9:48=E2=80=AFAM Peter Maydell &lt;<a href=3D"mailto:peter.maydell@l=
-inaro.org">peter.maydell@linaro.org</a>&gt; wrote:<br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">On Thu, 7 May 2026 at 16:20, Warner Losh=
- &lt;<a href=3D"mailto:imp@bsdimp.com" target=3D"_blank">imp@bsdimp.com</a>=
-&gt; wrote:<br>
-&gt;<br>
-&gt; Fix one of the TODO items when creating a new thread: release the copi=
-ed<br>
-&gt; cpu and free the task state.<br>
-&gt;<br>
-&gt; Signed-off-by: Warner Losh &lt;<a href=3D"mailto:imp@bsdimp.com" targe=
-t=3D"_blank">imp@bsdimp.com</a>&gt;<br>
-&gt; ---<br>
-&gt; Free the new task state and drop references to copied cpu structure wh=
-en<br>
-&gt; pthread_create failes.<br>
-&gt; ---<br>
-&gt;=C2=A0 linux-user/syscall.c | 6 ++++--<br>
-&gt;=C2=A0 1 file changed, 4 insertions(+), 2 deletions(-)<br>
-&gt;<br>
-&gt; diff --git a/linux-user/syscall.c b/linux-user/syscall.c<br>
-&gt; index d3d9fffb54..7b2e32bcf5 100644<br>
-&gt; --- a/linux-user/syscall.c<br>
-&gt; +++ b/linux-user/syscall.c<br>
-&gt; @@ -7005,7 +7005,6 @@ static int do_fork(CPUArchState *env, unsigned i=
-nt flags, abi_ulong newsp,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cpu-&gt;random_seed =3D qemu_guest_r=
-andom_seed_thread_part1();<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D pthread_create(&amp;info.thr=
-ead, &amp;attr, clone_func, &amp;info);<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* TODO: Free new CPU state if thread cre=
-ation failed.=C2=A0 */<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sigprocmask(SIG_SETMASK, &amp;info.s=
-igmask, NULL);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pthread_attr_destroy(&amp;attr);<br>
-&gt; @@ -7014,7 +7013,10 @@ static int do_fork(CPUArchState *env, unsigned =
-int flags, abi_ulong newsp,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pthread_cond_wait(&amp=
-;info.cond, &amp;info.mutex);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D info.tid;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -1;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D -host_to_target_err=
-no(ret);<br>
-<br>
-This is an unrelated bugfix to the one in the commit message.<br>
-<br>
-I found do_fork()&#39;s error handling confusing (the comment at<br>
-the top doesn&#39;t exactly clarify either), but I think it is:<br>
-=C2=A0* might return a negative target errno value<br>
-=C2=A0* might return -1 with &quot;errno&quot; set to a host errno<br>
-=C2=A0* might succeed and return 0<br>
-=C2=A0* might succeed and return some other not-minus-1 value<br></blockquo=
-te><div><br></div><div>Yea, I was confused by that and opted to &#39;return=
- negative target errno&#39;</div><div>notion here, but adding &#39;errno =
-=3D ret;&#39; just before the ret =3D -1 in the existing</div><div>code wou=
-ld keep get_errno() happy... But in reality do the same thing</div><div>I s=
-ubmitted...</div><div><br></div><div>I could also just leave the bug alone =
-as part of my submission.</div><div>=C2=A0</div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">
-The callers all do<br>
-=C2=A0 =C2=A0return get_errno(do_fork(....));<br>
-which handles these cases.<br>
-<br>
-It might be less confusing overall if we simplified this to:<br>
-=C2=A0* returns negative target errno value on failure<br>
-=C2=A0* otherwise success, returning value the guest expects<br>
-and dropped the get_errno() at the callsites. The only<br>
-cases that don&#39;t already follow one of those two options are<br>
-the &quot;pthread_create() failed&quot; one (which is buggy currently<br>
-since pthread_create() doesn&#39;t set errno) and the &quot;fork()<br>
-failed&quot; one (which relies on the &quot;return -1 and caller fishes<br>
-error out of errno&quot; handling).<br></blockquote><div><br></div><div>Yea=
-, unwinding that looks beyond what I have time for here.</div><div>=C2=A0</=
-div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
-der-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 object_unparent(OBJECT(new_=
-cpu));<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 object_unref(OBJECT(new_cpu=
-));<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 g_free(ts);<br>
-<br>
-For TARGET_AARCH64, the gcs_new_stack() call we did before<br>
-attempting the pthread_create() maps memory into the target<br>
-address space, which needs to be undone. Compare the bit in<br>
-TARGET_NR_exit handling which does:<br>
-<br>
-#ifdef TARGET_AARCH64<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ts-&gt;gcs_base) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 target_munmap(ts-&g=
-t;gcs_base, ts-&gt;gcs_size);<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-#endif<br>
-<br>
-We could maybe share code between the NR_exit &quot;free stuff<br>
-for this TaskState&quot; and this error-exit path, though it&#39;s<br>
-a bit awkward so I&#39;m 50:50 on that.<br></blockquote><div><br></div><div=
->Yea, it is short enough I think inlining isn&#39;t terrible, but if more o=
-f these</div><div>cases grow, then refactoring to a routine would make sens=
-e. At the moment,</div><div>I lean more towards inlining...</div><div><br><=
-/div><div>Warner</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" st=
-yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
-ing-left:1ex">
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pthread_mutex_unlock(&amp;info.mutex=
-);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pthread_cond_destroy(&amp;info.cond)=
-;<br>
-<br>
-thanks<br>
--- PMM<br>
-</blockquote></div></div>
-
---000000000000a8cf4406513c757a--
 
