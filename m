@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA229CD3436
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 02:25:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DDB4CD3436
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 02:25:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKoPV-00063V-8E; Wed, 06 May 2026 22:24:21 -0400
+	id 1wKoPg-0006D1-SL; Wed, 06 May 2026 22:24:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoPT-000636-Q2
- for qemu-devel@nongnu.org; Wed, 06 May 2026 22:24:19 -0400
-Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoPe-00069T-LH
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 22:24:30 -0400
+Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoPR-0007aX-Vr
- for qemu-devel@nongnu.org; Wed, 06 May 2026 22:24:19 -0400
-Received: by mail-ot1-x329.google.com with SMTP id
- 46e09a7af769-7dbec19732eso267096a34.3
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 19:24:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoPc-0007dB-U0
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 22:24:30 -0400
+Received: by mail-oo1-xc34.google.com with SMTP id
+ 006d021491bc7-68470763896so187721eaf.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 19:24:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778120656; x=1778725456;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778120667; x=1778725467;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JqvWmLbjmlBIF1ObHpc6uVNCAxesbDWMi6ixpyg9t3o=;
- b=GrvkQLG32Bq4GO7tUMdlbyC49hyGQoBEs/bV1v3nVhxavZTynVxqEgrseeW9tpjXSt
- 9sc31FAb/le///Z1jW8DffeCvQgW7lxVI+39UgnAG77d4SHevp+TaU74ci5E41oBaGYD
- HzJnLEwAlhbrAOyYSCChsihCEhOE1xHRGUNwupOEkB15Str8a8iTMdevoEc+jzTH/vHz
- qEL7/492C0nO/Q3jLptzPAdPY7rwuaEhdGIKq1ez449BRAaosyOzSN9rCsLRdmAVHXy6
- o4w1PZnEsgHcGtRwvfSvYfWI14WL+s4L9bfBY4aRzoE4Sxk/GAQDaUZ4mR1OH+iofMSN
- fW7Q==
+ bh=DqwbwVXSnkNJYwUgPRis0N7klAzS5K0nBAmWeh9H1GE=;
+ b=QYUabgb7NTBfxoo9QyoNn4WFpNmz2FGdP4U/hb7Jx7YqoObgQIYoJ3xK32poGrFvzu
+ qJO9Seg5R6oUF0hFbPDrJyL2k80TpqjjtI06cD4dGjkSj1k/4YuC68Yu9Sa5ccDUH8k0
+ lTxf42O5J6BHyDRtOIAa7ssrQoWkHtszVvjWaivS+DcnCoOQroXyRoyMCRtdiyaS4zBb
+ 39hCrxD5zwPH023vsieg+/1fwmNxl7QegMAqCRnfcS5aIT25V65HnKJQUZnJoDsySUgD
+ cTVfFHNyzlBRK3/VKYT270SBAKsPghHWWtzO1Ye6HE9Xao1DivM2VYCxqACc8CiYeh/l
+ ngFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778120656; x=1778725456;
+ d=1e100.net; s=20251104; t=1778120667; x=1778725467;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JqvWmLbjmlBIF1ObHpc6uVNCAxesbDWMi6ixpyg9t3o=;
- b=M1iteGee77ZCBFm5nAFu4pjSLnbGZpnO/2J0R8pYoWFXVti4Pxt5DR/fiwMm1/3zzY
- FaDRHYopzVR44/3rLsC3nlwk0dlvMS8RF2lOumyqhghMIB3K6HzlC6h8odGCpet0tC15
- kkuXhdsFLC3mM9VVfJPnwuRNVAMl8weE0dEMXCWn6Cpy3YA034PIqWt8U0Y8on0FAgvv
- OMJqBRNwQiyJpTiHVakglqyzrXfMymnvUseKhc5r0UddF9fsyAxZD6os12ltJCpnvKP2
- 3NTp5AYqnfi++eJAItwzn7nUslOlfZZmoCIlKaQ4+kxDKbRcrUH9OiVtEOVPgoVfOmRr
- zjQA==
-X-Gm-Message-State: AOJu0YxaS7zpeiJBzITHnoOuvvodpVlO99GwXPWXO7CxaLIYjOwb2VI4
- zu6PEA6INMZwwLcQ4++fVaCpxLTAso42nNvAam3bDadpUyNZxRBiLJSG9cuK0ZcdNn/vhf02mpy
- tJYO5lMQ=
-X-Gm-Gg: AeBDievlAny3B12RTWs85pVG6QXCrFD6fDH0oK3Xlk2POqQpD75LJM12FXSsXUVKKpe
- Ek1vOYn3ewP1B7P1Bc4RwjDoKk592eD/r+4zTNuHPinn4PdQXIVXrSjLmsyk3lc3HfKeZzrh8GN
- bb0BrruGWLjPZnlkOFGE4/eZwf69sfgBdhSoK2TDbeEbV2YHRCT1QGocp2y4nqmwCEANY5H24iy
- GOMWTx4KLXU641gXhgJuohKShI/zrhro4CpeoMVRTTnokyyLGsa8U5MDz4jdHQCxaPMukpfduEn
- 3GXMRjI39R0DNkG+y7RNsX41efFcQCMhi5PZn+GwHDXfx9C/FNcDE5tp/w5W8ji7zxy/5RQEfq/
- Ko5bvUDVUWKrJEDY8pXf2bVXaHnxv5wJ8cAdhjOmjLkRd0vEil+0n5f3FGao8/cxjOQJVClOJVH
- kWg3va/Ry+X06oEeROKA3s
-X-Received: by 2002:a05:6820:c8c:b0:694:9d3d:e040 with SMTP id
- 006d021491bc7-69998d0daafmr3414028eaf.31.1778120656431; 
- Wed, 06 May 2026 19:24:16 -0700 (PDT)
+ bh=DqwbwVXSnkNJYwUgPRis0N7klAzS5K0nBAmWeh9H1GE=;
+ b=p6ihf1FmrIXC5KLExEU6aIeHI+TpyuofEGmqyalkw5LlqqZBT4dtY9IiO6ATQ5O7Yq
+ nr1dQxEJVDYPoc5vy64fbMasliauCFKFGPam9/qOHF+0jvD3UymQwcYGrj4lvCbgMO7F
+ j9hDOo21HA7PUjYPokYf77+C6tRjFPWJ/jc03GQ0ve6YQ49TAG3xV6R/aCfXh9cCWeR1
+ 8xlG4iIIixdRBGt2B6EBrRTJOLaWeXUu+R/ExuY51RBsQT5poOGW7Ob8YXAglzoa5j4F
+ h0fWF9fojLYbqQyePxFvN69xCG55ema6iiHc+tAsNiE9It6GTdGc7/2RMBH9wc4TYe59
+ VOqA==
+X-Gm-Message-State: AOJu0YyJDZijQUozKtVdFcziGWD4w9dmiSGSSGL7HTAI72G8ofyxxdF/
+ JHBusmsO8Q98hdXwgcV6ODPL6N1vZt3zJE3WOnYbj/nJKw3vCHDwvpYQLXVf90gXXjNtJmUH4go
+ +JotM7NQ=
+X-Gm-Gg: AeBDieu0GZxzQBBFKlsET9XtQAw0YoOBHve7N7H3bFZxIvWIG93jDX6uIq8UFz4uwYk
+ 16JGzFn9sIApyFt2uhS3xduFoGZleefZPAd3+r2YUCfLpEWk/T9eW+u6OMRyMrRVpdo4MJtchcK
+ yVqhCXpHIcqigYFMy1L209/u8chWM/qeMbAHlVa9nDG1yFbkE3KZltbnwaquVXSFAhI1J1cCEno
+ DkgTiPGagYXjdbE851lOusvUNdiwY96bYivO7hdzdyAPdSLm/7eTeHzsa9OM5yJoflXodk/1ZLw
+ yrEUE90gwRFNpsTyoVGFVE0mFH4xmtKqlZlSXeuvgPGXfjCcPEdwPXyySCogN06c55WUm0wsUGd
+ 0wFHmMDpeZ0B4Ysr98ernyvZg97UIr1bjJBXOEOE6KfJEtKhq3BKeWn7ut9woG/lkC+tGIlrg0j
+ aixoG8Xs/t2aUPO1PaY7ab13v7XT11lIo=
+X-Received: by 2002:a05:6820:f024:b0:688:b73c:c41b with SMTP id
+ 006d021491bc7-69998d63c30mr3340022eaf.49.1778120667335; 
+ Wed, 06 May 2026 19:24:27 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-696896e72c4sm11088118eaf.9.2026.05.06.19.24.15
+ 006d021491bc7-696896e72c4sm11088118eaf.9.2026.05.06.19.24.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 May 2026 19:24:15 -0700 (PDT)
+ Wed, 06 May 2026 19:24:26 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Stacey Son <sson@FreeBSD.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 02/25] bsd-user: Add syscall header generator for FreeBSD
-Date: Wed,  6 May 2026 20:21:56 -0600
-Message-ID: <20260507022219.44171-3-imp@bsdimp.com>
+Subject: [PATCH 09/25] bsd-user: Add FreeBSD file I/O ioctl definitions
+Date: Wed,  6 May 2026 20:22:03 -0600
+Message-ID: <20260507022219.44171-10-imp@bsdimp.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260507022219.44171-1-imp@bsdimp.com>
 References: <20260507022219.44171-1-imp@bsdimp.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::329;
- envelope-from=imp@bsdimp.com; helo=mail-ot1-x329.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::c34;
+ envelope-from=imp@bsdimp.com; helo=mail-oo1-xc34.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,55 +100,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Generate the syscall numbers from the installed header that has them.
-Ideally, we'd use FreeBSD's lua infra for this, but that requires that
-we have those files installed, and they aren't quite the same across
-supported versions yet, so use this simple, but effective hack. Add to
-meson build, but unused.
+From: Stacey Son <sson@FreeBSD.org>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Add os-ioctl-filio.h with file I/O control ioctl definitions including
+FIONREAD, FIONBIO, FIOASYNC, and FIOSETOWN for file descriptor control.
+
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/meson.build           | 10 ++++++++--
- bsd-user/freebsd/scripts/syscallhdr.sh |  9 +++++++++
- 2 files changed, 17 insertions(+), 2 deletions(-)
- create mode 100644 bsd-user/freebsd/scripts/syscallhdr.sh
+ bsd-user/freebsd/os-ioctl-filio.h | 34 +++++++++++++++++++++++++++++++
+ 1 file changed, 34 insertions(+)
+ create mode 100644 bsd-user/freebsd/os-ioctl-filio.h
 
-diff --git a/bsd-user/freebsd/meson.build b/bsd-user/freebsd/meson.build
-index 8fd6c7cfb8..38f2debf7e 100644
---- a/bsd-user/freebsd/meson.build
-+++ b/bsd-user/freebsd/meson.build
-@@ -1,6 +1,12 @@
-+bsd_syscall_nr = custom_target('bsd-syscall-h',
-+    output: '@BASENAME@_nr.h',
-+    input: ['/usr/include/sys/syscall.h'],
-+    command: [sh, meson.current_source_dir() / 'scripts/syscallhdr.sh', '@INPUT@', '@OUTPUT@', 'FREEBSD'])
-+
- bsd_user_ss.add(files(
-   'os-stat.c',
-   'os-proc.c',
-   'os-sys.c',
--  'os-syscall.c',
--))
-+  'os-syscall.c'),
-+  bsd_syscall_nr
-+)
-diff --git a/bsd-user/freebsd/scripts/syscallhdr.sh b/bsd-user/freebsd/scripts/syscallhdr.sh
+diff --git a/bsd-user/freebsd/os-ioctl-filio.h b/bsd-user/freebsd/os-ioctl-filio.h
 new file mode 100644
-index 0000000000..fa38500775
+index 0000000000..79e8f0b83d
 --- /dev/null
-+++ b/bsd-user/freebsd/scripts/syscallhdr.sh
-@@ -0,0 +1,9 @@
-+#!/bin/sh
-+# Copyright (c) 2026 Warner Losh <imp@bsdimp.com>
-+# SPDX-License-Identifier: GPL-2.0-or-later
++++ b/bsd-user/freebsd/os-ioctl-filio.h
+@@ -0,0 +1,34 @@
++/*
++ * FreeBSD filio definitions for ioctl(2) emulation
++ *
++ * Copyright (c) 2013 Stacey D. Son
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#ifndef BSD_USER_FREEBSD_OS_IOCTL_FILIO_H
++#define BSD_USER_FREEBSD_OS_IOCTL_FILIO_H
 +
-+in="$1"
-+out="$2"
-+bsd="$3"
++/* see sys/filio.h */
++#define TARGET_FIOCLEX      TARGET_IO('f', 1)
++#define TARGET_FIONCLEX     TARGET_IO('f', 2)
++#define TARGET_FIONREAD     TARGET_IOR('f', 127, int)
++#define TARGET_FIONBIO      TARGET_IOW('f', 126, int)
++#define TARGET_FIOASYNC     TARGET_IOW('f', 125, int)
++#define TARGET_FIOSETOWN    TARGET_IOW('f', 124, int)
++#define TARGET_FIOGETOWN    TARGET_IOR('f', 123, int)
++#define TARGET_FIODTYPE     TARGET_IOR('f', 122, int)
++#define TARGET_FIOGETLBA    TARGET_IOR('f', 121, int)
 +
-+awk -v bsd="$3" '{sub("SYS_", "TARGET_" bsd "_NR_", $0); print;}' < $in > $out
++struct target_fiodgname_arg {
++    int32_t     len;
++    abi_ulong   buf;
++};
++
++#define TARGET_FIODGNAME    TARGET_IOW('f', 120,    \
++                struct target_fiodgname_arg)
++#define TARGET_FIONWRITE    TARGET_IOR('f', 119, int)
++#define TARGET_FIONSPACE    TARGET_IOR('f', 118, int)
++#define TARGET_FIOSEEKDATA  TARGET_IOWR('f', 97, off_t)
++#define TARGET_FIOSEEKHOLE  TARGET_IOWR('f', 98, off_t)
++
++#endif /* BSD_USER_FREEBSD_OS_IOCTL_FILIO_H */
 -- 
 2.52.0
 
