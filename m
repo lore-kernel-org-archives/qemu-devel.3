@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 567EDCD3427
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 06:08:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87860CD3427
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 06:10:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKruV-00013Z-7k; Thu, 07 May 2026 02:08:35 -0400
+	id 1wKrvW-0001fp-Iw; Thu, 07 May 2026 02:09:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKruQ-0000zN-Uf
- for qemu-devel@nongnu.org; Thu, 07 May 2026 02:08:30 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKrvR-0001ei-Q5
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 02:09:34 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKruN-0004yK-8p
- for qemu-devel@nongnu.org; Thu, 07 May 2026 02:08:30 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-44a5174670eso230521f8f.1
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 23:08:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKrvP-0005E0-2S
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 02:09:33 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48a3e9862f0so2499225e9.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 23:09:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778134105; x=1778738905; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778134168; x=1778738968; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=a1EH6c8/6d5U9t1bXTH6utae0BZx1/5EUl0ntog8MkQ=;
- b=XEH9bVtrai1/VCVulJiCBTOy8g78I6PHntwg3clahWAPCjj//zLWAvEPee0UV2+JRB
- LjampA7yAfqPjb5izxAEcfbCp4CWlov3uS6/rfv2wxtccqRTLDsq051fJnDU4AzT2nEk
- 3AirftJ3HYHFPUmdmhi8As2e7VVpqzrWKL/3B1JeLATPKHpLtkkAGc1Am759yUWhi7Z7
- 6tXGKqeLTwz9u6K8YfCAA7P/h4ij5NJttAxf4DO18xp6CCWzZnZOkpNCljKJ6Rqt1Sko
- On6f2zFrry80UMZpzPG4vxibNuq9759DxDKfzpMdMm85Pzkdc9fwXcK9+vDcJM2nqMe/
- +wAA==
+ bh=Vn+AK0AVyfzTOp9JzSn3ryukFU/S3HCDA1xqjsrTcBg=;
+ b=dGrczHPQ1IZdhvfWif0kFhRMY6EIXQlsoZbMXkoCSD1IyHOERrD4O8ltMCSJTj7zr3
+ rxFOnJhWvvX6SVtOXHKVIcIlz+yZH1zRSUHT6lMgydSY6e81PRaPupTsxu2jUZ97d+9D
+ ccqRFj10YvaCvRnmJO6kFto5VBx1D+/RKnRDyrQWsj3/ynrK+/vasoXzDm97NGl5LO79
+ 3f587Vpb0oEaBToCK9qKmvdbpSOwcVWksWARw+CAzp9XI1erOyl46MVpbly5/EIk1nXn
+ Ke6eRbx2yX1XeLZ91pu1JMX47sYVfI4kYT2T0GINueZUOabvBH/7frnd3X25Fog3gAK5
+ vSNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778134105; x=1778738905;
+ d=1e100.net; s=20251104; t=1778134168; x=1778738968;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=a1EH6c8/6d5U9t1bXTH6utae0BZx1/5EUl0ntog8MkQ=;
- b=dJ3phXa3taapeFNSDMcrpoIwJ7O/BUHyWlHhojfjZHAFO9wQXhWZo3c7je0nvanRZV
- vLf+TGs/4QCdx5SULtREdbq6wOjc1+9cvw5U9niJZbB7GISc8XyswyLw4R7phpvweAFC
- inIsmcPwbw53T1JSZuUm+p7ISgb6KW3IUuJsqTCLX7PcaWk55xsV3c8gWp7/Yp31Z5Zm
- HRu3jY3fhxhJbZFJC/Mp/22tEi5g7RB9ihLV9W8LrBju3HE6DjSkynM1a4i0ApdI/7ld
- 1qgIP6Vqw2IEcPiViNznVkH7P1GduXSHhSoGpo5/5jyJEpF/e/PZvHPmbQk4PLJO5XIQ
- ILlQ==
+ bh=Vn+AK0AVyfzTOp9JzSn3ryukFU/S3HCDA1xqjsrTcBg=;
+ b=qkaKyCcoT0pEi/pFagxcnx8F+JidAdUdeGAiqkUgd3gJcMYsbT+T+9lJy0pstxI53Y
+ dfUHfbh98sU2ymqEWGwIk/Fmi4Ilu4MvUBmdwI4AeUZv6o32Y4/QLR4qAQxkQ7BJZOxX
+ 0QYtRiNhMV4PDJwV4zH+hFvxQdgUoS8r+l4mitJXvmnWbLlRBCabqgMimdbPvhiKa37j
+ KutVP/WTql/AwgAbw4sv5aMLSBAgSVliRmjRR7qS7eMPP1m8SZF98s9bhKyMaqzswVmO
+ OvXpqQmaNiNKq5gUiOlKZLdT0umUMgwZy4QhxAAhtAngFh522FKer16GH/Jf0B7M3OZ/
+ hItw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/zzZgn+GjBN/UEv0YziGQoXlk3vpAdbZnVSXcAqvE4D8ktmQhKbWLDFwn0rBl0CicDDAck/anGpjDZ@nongnu.org
-X-Gm-Message-State: AOJu0YzGb/11IkkOmYtR2rBA3e82Tlo3qEXqBp1M8GhDjnDcb16SoAWd
- NtAGlHiexEq5edrJqexL0na8fnheQn40sZ2tFaAI0byZM4PmKWJ4T05NsDdeDpo+Udw=
-X-Gm-Gg: AeBDietqr5U8PXq0k9+EkWnIFYhlF+4WZNoI1sVMf5V1Sm/yceakELIbiswK+IQD97B
- PZ5we/aO5hYMXwQXDzQjUE5MyGnBdkLV0aulmMzR5Ja1KxAa2fjpgW32pR2sH56+3S7frSQlpqY
- +YewR4cE3xpHPendPTWdcc0/h1uLIZnDNXBKZCwmnyGHwZQ3TubYyzHrTAoaTKPqSp254W6Vxi2
- XltFXiHICUAF++TNl9ZgSCva9Q23Og/N1fJDHpbv5kLfHVnZIPeNJJtZ6m2/NCtey4vED7lWkEX
- p10e1SFPGCkMrcx1os1M5tpawRiu5z60aU4rfaLBad4qupcnd1XOmf7VgkCM62q1bxEyWwZBUm9
- OC6LJCzr66pwzeQzHxIJRgaUbe05Q4hY9A5lWg8P2D4zEqVRgTngvO/m+R+fcZi2lZop4TqLvZf
- 5/XTU0d0ty5YP15wJCVZz4YGWesqUu8lyJk5APVJAOUsgDIrJjnIF117VLLoUT1I2EqGMPGtNiF
- mzg
-X-Received: by 2002:a05:6000:2082:b0:43d:7e34:889c with SMTP id
- ffacd0b85a97d-4515da97e81mr10529326f8f.39.1778134105441; 
- Wed, 06 May 2026 23:08:25 -0700 (PDT)
+ AFNElJ9rIQ0culpVaaK49Zy7g3xxHyUaOxWXqSzwkeRLK86JtrvLLdls+SJYFLgqvaNia5PS2nZOJAzOLwDL@nongnu.org
+X-Gm-Message-State: AOJu0YzmLdu38kXl93UzMSmGZ/Fcb/TGhd/0hvZhjteR2pd2Xr6zOj0Y
+ O4GwY/RyIgRjkPvVRgJv9yhgttvpbFZIslhEz2A7+hpZjPmdVmstWonTy7LvTOvOjHc=
+X-Gm-Gg: AeBDieuzageo4E0LpH/b6pQjXyUnIDUQlQZ8vaXY90AeXH1lb37+RPz2q5rgyfHA5wV
+ Gpz4UBC9z3PnNQWlZxmaTZlm/3Wclhpb2EYsRD86DtfZLLSwyEG4xBtRMHBJ+a1GRP/vpIsiQV1
+ 09OPT/nupJgRaiPU6oYvfZMIRMMTQ5F1ckD1VhoSjSZHo7ch9tJihoDgwD0Dxbi9gl4GYVnGkyx
+ tjXnGEVZ2e7jrvX6n2ISWPQR7LwVHe8FgEQhnV/Gvnpd0V7vVqcIt1NBs+U0xZ0ri6b6SEGBevP
+ 1vlxik0b+pRW4Z6riI5lRh7j+QRJDdRmLqB4VnNuFzVt2okm8HvhwpSOeiS76LxQbyTK7ljyYKr
+ dngPKcqA3aFnyPyMmLQi5VAAxt6cDDhLDcJrqxPwRFdnncpQYaX1iQxxjRtvbQWL0irlJ0t47vu
+ HJjlRp7ydwXn8oM6ThvOwq1jL+4eWy91BaL81Q7UhvdXcQKjKeO2Slc7bvpqmMy31F8QqJZp+0e
+ lQL
+X-Received: by 2002:a05:600c:3e86:b0:48a:5339:a46 with SMTP id
+ 5b1f17b1804b1-48e5dffabcamr21546805e9.9.1778134168375; 
+ Wed, 06 May 2026 23:09:28 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45052a488d8sm17437793f8f.12.2026.05.06.23.08.24
+ 5b1f17b1804b1-48e5312dbf8sm30897775e9.23.2026.05.06.23.09.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 06 May 2026 23:08:24 -0700 (PDT)
-Message-ID: <08637f36-ae2b-4191-b668-93e59e283c92@linaro.org>
-Date: Thu, 7 May 2026 08:08:23 +0200
+ Wed, 06 May 2026 23:09:27 -0700 (PDT)
+Message-ID: <83c92d12-db0e-440b-adf3-afc5c86b33d4@linaro.org>
+Date: Thu, 7 May 2026 08:09:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Remove the deprecated glusterfs block driver
+Subject: Re: [PATCH v5 8/9] hw/riscv/atlantis: Provide a simple halting payload
 Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: Hanna Reitz <hreitz@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-block@nongnu.org, devel@lists.libvirt.org, integration@gluster.org,
- Nir Soffer <nirsof@gmail.com>, Nir Soffer <nsoffer@redhat.com>
-References: <20260507051639.2784590-1-thuth@redhat.com>
+To: Nicholas Piggin <npiggin@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Cc: Chao Liu <chao.liu.zevorn@gmail.com>, Michael Ellerman <mpe@kernel.org>,
+ Joel Stanley <jms@oss.tenstorrent.com>,
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Portia Stephens <portias@oss.tenstorrent.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>
+References: <20260507043838.45652-1-npiggin@gmail.com>
+ <20260507043838.45652-9-npiggin@gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260507051639.2784590-1-thuth@redhat.com>
+In-Reply-To: <20260507043838.45652-9-npiggin@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,64 +110,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/5/26 07:16, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 7/5/26 06:38, Nicholas Piggin wrote:
+> OpenSBI hangs before any console output if the domain init code sees the
+> next stage is not in an executable region.
 > 
-> Glusterfs has been marked as deprecated since QEMU v9.2, and as far
-> as I know, nobody spoke up 'til today that it should be kept.
-> The listed e-mail address integration@gluster.org in our MAINTAINERS
-> file seems to be bouncing nowadays, and looking at their website
-> https://www.gluster.org/ the most recent news are from 2020 / 2021 ...
-> so it seems like there is really hardly any interest in Glusterfs
-> anymore. Thus it's time to remove the code now from QEMU.
+> If no kernel payload is provided to QEMU, the next stage address is
+> NULL, and the riscv virt machine memory map ends up covering the 0
+> address with the catch all S-mode RWX region and so OpenSBI prints
+> console messages and does not hang until the next stage boot.
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> The Tenstorrent Atlantis machine address map has RAM starting at 0 and
+> it loads OpenSBI there, so it is M-mode and not accessible by S-mode,
+> tripping the early check and hang.
+> 
+> Add a helper to set up a simple payload that gets OpenSBI messages to
+> console, until OpenSBI can be fixed.
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
 > ---
->   MAINTAINERS                                   |    6 -
->   docs/about/deprecated.rst                     |    8 -
->   docs/about/removed-features.rst               |    7 +
->   docs/system/device-url-syntax.rst.inc         |   39 -
->   docs/system/qemu-block-drivers.rst.inc        |   84 -
->   meson.build                                   |   47 -
->   qapi/block-core.json                          |   52 -
->   block/gluster.c                               | 1644 -----------------
->   tests/qtest/modules-test.c                    |    3 -
->   block/meson.build                             |    1 -
->   meson_options.txt                             |    2 -
->   .../ci/setup/debian/debian-13-ppc64le.yaml    |    1 -
->   .../ci/setup/ubuntu/ubuntu-2404-aarch64.yaml  |    1 -
->   .../ci/setup/ubuntu/ubuntu-2404-s390x.yaml    |    1 -
->   scripts/coverity-scan/coverity-scan.docker    |    1 -
->   scripts/coverity-scan/run-coverity-scan       |    2 +-
->   scripts/meson-buildoptions.sh                 |    3 -
->   .../dockerfiles/debian-amd64-cross.docker     |    1 -
->   .../dockerfiles/debian-arm64-cross.docker     |    1 -
->   .../dockerfiles/debian-mips64el-cross.docker  |    1 -
->   .../dockerfiles/debian-mipsel-cross.docker    |    1 -
->   .../dockerfiles/debian-ppc64el-cross.docker   |    1 -
->   .../dockerfiles/debian-riscv64-cross.docker   |    1 -
->   .../dockerfiles/debian-s390x-cross.docker     |    1 -
->   tests/docker/dockerfiles/debian.docker        |    1 -
->   .../dockerfiles/fedora-rust-nightly.docker    |    1 -
->   tests/docker/dockerfiles/fedora.docker        |    1 -
->   tests/docker/dockerfiles/opensuse-leap.docker |    1 -
->   tests/docker/dockerfiles/ubuntu2204.docker    |    1 -
->   tests/lcitool/projects/qemu.yml               |    1 -
->   30 files changed, 8 insertions(+), 1907 deletions(-)
->   delete mode 100644 block/gluster.c
-
-Need a rebase on top of commit f168046842c ("cocci: Do not
-initialize variable used by QLIST_FOREACH macro").
+>   hw/riscv/tt_atlantis.c | 27 +++++++++++++++++++++++++++
+>   1 file changed, 27 insertions(+)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-Apparently we could now revert commits a6b257a08e3 ("file-posix:
-Handle undetectable alignment") and 3a20013fbb2 ("block: posix:
-Always allocate the first block"). Not sure if that could be
-useful for other backends or harmless. Cc'ing Nir.
-
-Regards,
-
-Phil.
 
