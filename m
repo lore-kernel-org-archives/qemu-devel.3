@@ -4,40 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 308E2CD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 14:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC60FCD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 14:14:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKzU5-00077k-14; Thu, 07 May 2026 10:13:49 -0400
+	id 1wKzUD-0007Ak-CB; Thu, 07 May 2026 10:13:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wKpwG-0005nf-L3
- for qemu-devel@nongnu.org; Thu, 07 May 2026 00:02:16 -0400
+ (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wKpwH-0005nn-9M
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 00:02:17 -0400
 Received: from mail-07.mail-europe.com ([188.165.51.139])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wKpwE-0004lS-5R
+ (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wKpwE-0004lR-SL
  for qemu-devel@nongnu.org; Thu, 07 May 2026 00:02:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pq.io;
- s=protonmail3; t=1778126518; x=1778385718;
- bh=n5bvQTa+HhPEB+e9FnWjsqkmI3WPI9djj3iISzogovg=;
- h=From:To:Cc:Subject:Date:Message-ID:From:To:Cc:Date:Subject:
- Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=cvk5XdPDJY8GMljfeqYmwahxdQ41zrU5/xbabwRxdxEy9o+AWi8jJZN8ptSeqOG9x
- YZdEWO6IwFDC3sqcXqRPCbOz96d3I4Im3O2S2LS+1nxmMVBmMgpxMSSRSWUBR0i7AW
- F+6eSxn+0zk+Yeb339iLsyY9bVERpjmcnOVApfqa10v7/rAky6cAPUx+1BQ83ZPusk
- 1Z2YG9Rs/uY/vZtkjTEJwCoBJw4+SBU24E7LdGX3Z1zLlT2gwb3inhCSiCJmPGhPeR
- 6RpAC6rnxfpz3poR5BYgOV0ZyY9HH20ghFiRrm/4X0H6N5OlVC4cuTRLbdAL5+t/qS
- MzE07CHmiM73g==
-X-Pm-Submission-Id: 4g9z8j2rWhz1DF77
+ s=protonmail3; t=1778126519; x=1778385719;
+ bh=QoT6ZV0zp2yCk/oaO3p5EzNmYDCXteG6Q8NREGInOLI=;
+ h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:From:To:
+ Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
+ b=EmYhYA//9Wh0jPzyeEjb4d7pK60XHxV8YTSidMF32B/un6iFBhdLUbXXoMruKy/5W
+ RTZ2Xk2BCdQrWWJPNFjAJGtY3c8lY7NbqONUUJ8d6y2F0Jskd+MAxv0XNjM0k8zxHG
+ Q3ShnERv9+ik6W00yBIyVFW5Xb5RWVfVFmy0cKyScYIXAZpZIfxwvFke3tS/maRfUf
+ xex3Kbe2CNwTJjRoy1S8zgLUOyTbKkM6xzeGLiH2t3YIVXLquwuxnbuPLsT7a0YGEo
+ Ca8jX7QyveT/zNwYx6EewU+U/lyClH8NOJCduVf3XCZFs3l3T4GV1DIH/uUHnIAwor
+ OfA7qCKM1lWew==
+X-Pm-Submission-Id: 4g9z8j2VCjz1DFFg
 From: Matthew Jackson <matthew@pq.io>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com
-Subject: [PATCH 0/2] hw/misc/applesmc: fix GET_KEY_BY_INDEX iteration and
- populate Apple SMC key set
-Date: Wed,  6 May 2026 21:01:51 -0700
-Message-ID: <20260507040153.14565-1-matthew@pq.io>
+Subject: [PATCH 1/2] hw/misc/applesmc: fix GET_KEY_BY_INDEX to return real
+ keys, accept WRITE/TYPE commands
+Date: Wed,  6 May 2026 21:01:52 -0700
+Message-ID: <20260507040153.14565-2-matthew@pq.io>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260507040153.14565-1-matthew@pq.io>
+References: <20260507040153.14565-1-matthew@pq.io>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=188.165.51.139; envelope-from=matthew@pq.io;
@@ -50,7 +52,7 @@ X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 07 May 2026 10:13:40 -0400
+X-Mailman-Approved-At: Thu, 07 May 2026 10:13:41 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,92 +67,292 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The QEMU applesmc device implements just enough of the Apple SMC PMIO
-protocol to satisfy the OSK boot check on older macOS versions. On
-modern macOS guests (x86 10.14+, all of the 15.x series) the real
-AppleSMC kext enumerates the SMC key space at boot via
-APPLESMC_GET_KEY_BY_INDEX_CMD (0x12). The current device only
-acknowledges APPLESMC_READ_CMD (0x10) at the command port; every
-other command falls through to the default arm of the switch and
-sets ST_1E_BAD_CMD.
+The applesmc device implements just enough of the Apple SMC PMIO
+protocol to satisfy the OSK boot check on older macOS versions.
+On modern macOS guests (x86 10.14+, all 15.x), the AppleSMC kext
+enumerates the SMC key space at boot via APPLESMC_GET_KEY_BY_INDEX_CMD
+(0x12). The current device only acknowledges APPLESMC_READ_CMD
+(0x10) at the command port; every other command falls through to
+the default arm of the switch and sets ST_1E_BAD_CMD.
 
-The macOS driver interprets the resulting 0x82 reply as "spurious
-data" and enters a retry loop that floods the kernel log with
-kSMCSpuriousData (0x81) / kSMCKeyNotFound errors at roughly 1800
-events per second, pegging kernel_task at ~70% CPU and WindowServer
-at ~509% CPU. This reproduces reliably on any recent macOS 15 guest
-booted with -device isa-applesmc,osk=<valid-OSK>.
+The macOS driver interprets the resulting 0x82 reply as
+"spurious data" and enters a retry loop that floods the kernel
+log with kSMCSpuriousData (0x81) / kSMCKeyNotFound errors at
+roughly 1800 events per second, pegging kernel_task at ~70%
+CPU and WindowServer at ~509% CPU. This reproduces reliably
+on any recent macOS 15 guest booted with -device
+isa-applesmc,osk=<valid-OSK>.
 
-This two-patch series fixes the protocol-level bug and rounds out
-the SMC key table to a complete iMac20,1 profile.
+This patch:
 
-  Patch 1: protocol-level fix
-    - Accept WRITE_CMD, GET_KEY_BY_INDEX_CMD, GET_KEY_TYPE_CMD at the
-      command port (in addition to READ_CMD).
-    - Implement the indexed-iteration walker (returns real key names
-      from s->data_def, or APPLESMC_ST_1E_BAD_INDEX 0xb8 once the
-      index is past the end so the guest stops iterating).
-    - Implement GET_KEY_TYPE returning a 6-byte type/size/attr
-      response matching VirtualSMC's kern_pmio.cpp behaviour.
-    - Accept and log WRITE_CMD silently.
-    - Replace the unknown-key NOEXIST (0x84) reply with a zeroed
-      payload of the requested length, logged at LOG_UNIMP.
-    - Route the BAD_CMD path through qemu_log_mask(LOG_GUEST_ERROR).
-    - Fix MSSD initialiser typo ("\0x3" -> "\x03"). The original
-      literal was three bytes ('\0', 'x', '3') truncated to one
-      ('\0') by the size argument, so MSSD has been silently
-      returning 0 since the device was introduced; the corrected
-      value matches what a real iMac20,1 SMC reports.
+  * Accepts APPLESMC_WRITE_CMD, APPLESMC_GET_KEY_BY_INDEX_CMD,
+    and APPLESMC_GET_KEY_TYPE_CMD at the command port (in
+    addition to the existing READ_CMD path).
 
-  Patch 2: populate the key table
-    - Add 94 keys covering the categories macOS queries on a Sequoia
-      15.7.5 guest: 28 temperature sensors (sp78), 4 fan keys (fpe2),
-      12 power-rail keys, 6 DIMM keys, 11 SMC-internal bookkeeping,
-      13 motion-sensor / wireless, 3 write targets (HE0N/MSDW/NTOK),
-      2 power-management gates (HE2N/WDTC), 8 platform-identity /
-      probe keys, plus the Apple-canonical #KEY total-count.
-    - Sensor values match a real iMac20,1 idle probe published at
-      https://linux-hardware.org/?probe=999fc708a4&log=sensors:
-      CPU 40-51 C, GPU 36-42 C, fan at 1200 RPM (= F0Mn idle), etc.
+  * Implements GET_KEY_BY_INDEX by walking s->data_def and
+    returning the 4-byte ASCII key name at the requested index;
+    returns APPLESMC_ST_1E_BAD_INDEX (0xb8) once the index is
+    past the end of the list so the guest stops iterating.
 
-Measured impact (macOS 15.7.5 guest, iMac20,1 profile):
+  * Implements GET_KEY_TYPE by looking up the key in s->data_def
+    and returning a 6-byte response (type[4] + size[1] + attr[1])
+    matching VirtualSMC's kern_pmio.cpp behaviour.
 
-   Metric           | Before   | After
-   -----------------|---------:|------:
-   SMC errors / 5s  |   9,225  |     2
-   kernel_task CPU  |    70 %  |  ~2 %
-   WindowServer CPU |   509 %  |  ~6 %
+  * Implements WRITE by accepting the key name, length, and
+    payload and logging at LOG_UNIMP. macOS writes SMC keys
+    during normal power management; silent acceptance avoids
+    BAD_CMD on every write.
 
-A note for review on the zero-valued keys in patch 2: the 26 keys
-covering DIMM / SMC bookkeeping / motion-sensor / wireless rails are
-registered with present-with-zero values rather than omitted. macOS
-distinguishes "absent" (NOEXIST reply, retry-poll) from "broken"
-(present, value 0, accepted-and-ignored). Registering these keys
-present-with-zero stops the retry-poll behaviour without asserting
-any specific value. If the maintainer prefers a tighter scope for
-this series I am happy to drop any subset and follow up; the
-present-with-zero approach was driven by which keys macOS observed
-querying during boot.
+  * Replaces the unknown-key NOEXIST (0x84) reply on READ with
+    a zeroed payload of the requested length, logged at
+    LOG_UNIMP. Early-boot probes hit hundreds of undocumented
+    keys per second; NOEXIST triggers retry storms while a
+    zeroed payload satisfies the probe semantics without
+    asserting a particular value.
 
-Backwards compatibility: legacy macOS guests (10.11-10.13) which do
-not iterate the key space via GET_KEY_BY_INDEX boot unchanged. The
-original six keys (REV/OSK0/OSK1/NATJ/MSSP/MSSD) are still present
-and respond with the same values, modulo the MSSD typo fix in patch
-1 which corrects MSSD to the value a real iMac20,1 SMC reports.
+  * Routes the BAD_CMD path through qemu_log_mask
+    (LOG_GUEST_ERROR) instead of the smc_debug printf.
 
-Tested against current master (post v11.0.0). Builds clean on
-gcc-13 / clang-17 with --enable-werror. Sequoia 15.7.5 guest boots
-to login screen with the SMC retry storm absent from the kernel
-log; smoke test recipe in TESTING.md alongside the series.
+  * Fixes a typo in the MSSD key initialiser ("\0x3" -> "\x03").
+    The original literal was three bytes ('\\0', 'x', '3')
+    truncated to one ('\\0') by the size argument, so MSSD has
+    been silently returning 0 since introduction; the corrected
+    value matches what a real iMac20,1 SMC reports.
 
-Matthew Jackson (2):
-  hw/misc/applesmc: fix GET_KEY_BY_INDEX to return real keys, accept
-    WRITE/TYPE commands
-  hw/misc/applesmc: populate Apple SMC key table
+Reported-by: macOS guests booted with -device isa-applesmc since 10.14.
+Signed-off-by: Matthew Jackson <matthew@pq.io>
+---
+ hw/misc/applesmc.c | 177 +++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 170 insertions(+), 7 deletions(-)
 
- hw/misc/applesmc.c | 344 ++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 337 insertions(+), 7 deletions(-)
-
+diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
+index fd96f5f..2b5ef3c 100644
+--- a/hw/misc/applesmc.c
++++ b/hw/misc/applesmc.c
+@@ -35,6 +35,7 @@
+ #include "hw/core/qdev-properties.h"
+ #include "ui/console.h"
+ #include "qemu/error-report.h"
++#include "qemu/log.h"
+ #include "qemu/module.h"
+ #include "qemu/timer.h"
+ #include "qom/object.h"
+@@ -126,7 +127,14 @@ static void applesmc_io_cmd_write(void *opaque, hwaddr addr, uint64_t val,
+     smc_debug("CMD received: 0x%02x\n", (uint8_t)val);
+     switch (val) {
+     case APPLESMC_READ_CMD:
+-        /* did last command run through OK? */
++    case APPLESMC_WRITE_CMD:
++    case APPLESMC_GET_KEY_BY_INDEX_CMD:
++    case APPLESMC_GET_KEY_TYPE_CMD:
++        /*
++         * Accept all standard SMC commands. Pre-existing code only handled
++         * READ_CMD; macOS boots hang if WRITE/TYPE/GET_KEY_BY_INDEX commands
++         * return BAD_CMD during early AppleSMC driver init.
++         */
+         if (status == APPLESMC_ST_CMD_DONE || status == APPLESMC_ST_NEW_CMD) {
+             s->cmd = val;
+             s->status = APPLESMC_ST_NEW_CMD | APPLESMC_ST_ACK;
+@@ -137,7 +145,8 @@ static void applesmc_io_cmd_write(void *opaque, hwaddr addr, uint64_t val,
+         }
+         break;
+     default:
+-        smc_debug("UNEXPECTED CMD 0x%02x\n", (uint8_t)val);
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "applesmc: unexpected CMD 0x%02x\n", (uint8_t)val);
+         s->status = APPLESMC_ST_NEW_CMD;
+         s->status_1e = APPLESMC_ST_1E_BAD_CMD;
+     }
+@@ -179,17 +188,170 @@ static void applesmc_io_data_write(void *opaque, hwaddr addr, uint64_t val,
+                 s->data_len = d->len;
+                 s->data_pos = 0;
+                 s->status = APPLESMC_ST_ACK | APPLESMC_ST_DATA_READY;
+-                s->status_1e = APPLESMC_ST_CMD_DONE;  /* clear on valid key */
++                s->status_1e = APPLESMC_ST_CMD_DONE;
+             } else {
+-                smc_debug("READ_CMD: key '%c%c%c%c' not found!\n",
+-                          s->key[0], s->key[1], s->key[2], s->key[3]);
++                /*
++                 * Return zeros for unknown keys instead of NOEXIST. Early
++                 * macOS boot probes many undocumented keys; responding
++                 * NOEXIST triggers retry storms. A zeroed payload satisfies
++                 * the probe without asserting a particular value.
++                 */
++                qemu_log_mask(LOG_UNIMP,
++                              "applesmc: READ unknown key '%c%c%c%c' len=%d\n",
++                              s->key[0], s->key[1], s->key[2], s->key[3],
++                              (uint8_t)val);
++                memset(s->data, 0, APPLESMC_MAX_DATA_LENGTH);
++                s->data_len = (uint8_t)val;
++                s->data_pos = 0;
++                s->status = APPLESMC_ST_ACK | APPLESMC_ST_DATA_READY;
++                s->status_1e = APPLESMC_ST_CMD_DONE;
++            }
++        }
++        s->read_pos++;
++        break;
++    case APPLESMC_WRITE_CMD:
++        /*
++         * Accept writes silently. macOS writes SMC keys during power
++         * management, fan control, etc. Log at LOG_UNIMP for visibility
++         * without treating the write as an error.
++         */
++        if ((s->status & 0x0f) == APPLESMC_ST_CMD_DONE) {
++            break;
++        }
++        if (s->read_pos < 4) {
++            s->key[s->read_pos] = val;
++            s->status = APPLESMC_ST_ACK;
++        } else if (s->read_pos == 4) {
++            s->data_len = (uint8_t)val;
++            s->data_pos = 0;
++            s->status = APPLESMC_ST_ACK;
++        } else {
++            if (s->data_pos < s->data_len) {
++                s->data[s->data_pos] = (uint8_t)val;
++                s->data_pos++;
++                if (s->data_pos == s->data_len) {
++                    qemu_log_mask(LOG_UNIMP,
++                                  "applesmc: WRITE key '%c%c%c%c' len=%d\n",
++                                  s->key[0], s->key[1], s->key[2], s->key[3],
++                                  s->data_len);
++                    s->status = APPLESMC_ST_CMD_DONE;
++                    s->status_1e = APPLESMC_ST_CMD_DONE;
++                } else {
++                    s->status = APPLESMC_ST_ACK;
++                }
++            }
++        }
++        s->read_pos++;
++        break;
++    case APPLESMC_GET_KEY_TYPE_CMD:
++        /*
++         * Return key type info. Protocol (matches VirtualSMC):
++         * - Receive 4 bytes of key name.
++         * - After the 4th byte, immediately set DATA_READY with response.
++         * - Response is 6 bytes: type[4] + size[1] + attr[1].
++         * Unlike READ_CMD there is no length byte between key name and
++         * response.
++         */
++        if ((s->status & 0x0f) == APPLESMC_ST_CMD_DONE) {
++            break;
++        }
++        if (s->read_pos < 3) {
++            s->key[s->read_pos] = val;
++            s->status = APPLESMC_ST_ACK;
++        } else if (s->read_pos == 3) {
++            /* 4th and final key byte. Unlike READ_CMD which has a 5th byte
++             * for data length, GET_KEY_TYPE responds immediately after the
++             * 4-byte key name (matching VirtualSMC kern_pmio.cpp behavior). */
++            s->key[3] = val;
++            d = applesmc_find_key(s);
++            if (d != NULL) {
++                switch (d->len) {
++                case 1:
++                    s->data[0] = 'u'; s->data[1] = 'i';
++                    s->data[2] = '8'; s->data[3] = ' ';
++                    break;
++                case 2:
++                    s->data[0] = 'u'; s->data[1] = 'i';
++                    s->data[2] = '1'; s->data[3] = '6';
++                    break;
++                case 4:
++                    s->data[0] = 'u'; s->data[1] = 'i';
++                    s->data[2] = '3'; s->data[3] = '2';
++                    break;
++                default:
++                    s->data[0] = 'c'; s->data[1] = 'h';
++                    s->data[2] = '8'; s->data[3] = '*';
++                    break;
++                }
++                s->data[4] = d->len;
++                s->data[5] = 0xD0;
++            } else {
++                qemu_log_mask(LOG_UNIMP,
++                              "applesmc: GET_KEY_TYPE unknown '%c%c%c%c'\n",
++                              s->key[0], s->key[1], s->key[2], s->key[3]);
++                s->data[0] = 'u'; s->data[1] = 'i';
++                s->data[2] = '8'; s->data[3] = ' ';
++                s->data[4] = 1;
++                s->data[5] = 0xD0;
++            }
++            s->data_len = 6;
++            s->data_pos = 0;
++            s->status = APPLESMC_ST_ACK | APPLESMC_ST_DATA_READY;
++            s->status_1e = APPLESMC_ST_CMD_DONE;
++        }
++        s->read_pos++;
++        break;
++    case APPLESMC_GET_KEY_BY_INDEX_CMD:
++        /*
++         * Return key name by index. macOS sends a 4-byte big-endian index
++         * and expects the 4-byte ASCII key name at that position. The
++         * previous implementation returned 4 zero bytes, which macOS
++         * treated as kSMCSpuriousData (0x81) and retried indefinitely,
++         * flooding the kernel log at ~1800 errors/sec. Walk the keys list
++         * to return the actual key name, or APPLESMC_ST_1E_BAD_INDEX
++         * (0xb8) once the index is past the end of the list so the guest
++         * stops iterating.
++         */
++        if ((s->status & 0x0f) == APPLESMC_ST_CMD_DONE) {
++            break;
++        }
++        if (s->read_pos < 3) {
++            s->key[s->read_pos] = val;
++            s->status = APPLESMC_ST_ACK;
++        } else if (s->read_pos == 3) {
++            s->key[3] = val;
++            uint32_t idx = ((uint8_t)s->key[0] << 24)
++                         | ((uint8_t)s->key[1] << 16)
++                         | ((uint8_t)s->key[2] << 8)
++                         |  (uint8_t)s->key[3];
++            struct AppleSMCData *def;
++            uint32_t i = 0;
++            bool found = false;
++            QLIST_FOREACH(def, &s->data_def, node) {
++                if (i == idx) {
++                    memcpy(s->data, def->key, 4);
++                    s->data_len = 4;
++                    s->data_pos = 0;
++                    found = true;
++                    break;
++                }
++                i++;
++            }
++            if (!found) {
++                s->data_len = 0;
++                s->status_1e = APPLESMC_ST_1E_BAD_INDEX;
+                 s->status = APPLESMC_ST_CMD_DONE;
+-                s->status_1e = APPLESMC_ST_1E_NOEXIST;
++                s->read_pos++;
++                break;
+             }
++            s->status = APPLESMC_ST_ACK | APPLESMC_ST_DATA_READY;
++            s->status_1e = APPLESMC_ST_CMD_DONE;
+         }
+         s->read_pos++;
+         break;
+     default:
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "applesmc: unhandled data for cmd 0x%02x\n", s->cmd);
+         s->status = APPLESMC_ST_CMD_DONE;
+         s->status_1e = APPLESMC_ST_1E_STILL_BAD_CMD;
+     }
+@@ -330,12 +492,13 @@ static void applesmc_isa_realize(DeviceState *dev, Error **errp)
+     }
+ 
+     QLIST_INIT(&s->data_def);
++
+     applesmc_add_key(s, "REV ", 6, "\x01\x13\x0f\x00\x00\x03");
+     applesmc_add_key(s, "OSK0", 32, s->osk);
+     applesmc_add_key(s, "OSK1", 32, s->osk + 32);
+     applesmc_add_key(s, "NATJ", 1, "\0");
+     applesmc_add_key(s, "MSSP", 1, "\0");
+-    applesmc_add_key(s, "MSSD", 1, "\0x3");
++    applesmc_add_key(s, "MSSD", 1, "\x03");
+ }
+ 
+ static void applesmc_unrealize(DeviceState *dev)
 -- 
 2.50.1 (Apple Git-155)
 
