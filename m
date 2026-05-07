@@ -4,142 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4513CD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 20:56:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C002CD37AC
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 22:18:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL5kT-0006eu-0e; Thu, 07 May 2026 16:55:09 -0400
+	id 1wL72F-0000qj-VM; Thu, 07 May 2026 18:17:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wL5kQ-0006b2-Lr
- for qemu-devel@nongnu.org; Thu, 07 May 2026 16:55:06 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wL5kO-0003XO-1q
- for qemu-devel@nongnu.org; Thu, 07 May 2026 16:55:06 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 647G31uB2384216
- for <qemu-devel@nongnu.org>; Thu, 7 May 2026 20:55:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- qTJ7jAQV9Bq3MZFnxRQrIHL1++tQ1fQnlXQcS7CiTx4=; b=TNFtuYN4YneSLx3u
- wUMmWlykQbmCEYOY16iQziypgPMTvN+SK41ZNDpsNy1jqjjmeRusQZjvSkBHdJTs
- d+lLDDv7I1ShbIkhU0DTn/9KjEDhfd3oxc/DCUwOl+VVsNl/lVZEiubTM6BBHfqA
- LD50BPHrem3LV0QlWSLpyh9oeklILKNdO7xJim73xyN+btMGDk8jFWtXnk8vq+8J
- u67p0ds1GQsQ6TexDhjDfGgPT5s9PVw8G9AyQuMT7c6xro3Ol1y34yOELxx6QP2k
- Ku13nc+JCnezdCAy4IbQ49OjrQ/S/UQUTHUW1IBsA3PhDUEU9zEmzAwWdmfkFEaY
- QhYS/w==
-Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e0wwuh1yb-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 20:55:02 +0000 (GMT)
-Received: by mail-dl1-f72.google.com with SMTP id
- a92af1059eb24-12c8ccc7593so3011509c88.1
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 13:55:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wL72D-0000pd-VI
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 18:17:33 -0400
+Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wL72B-0003Cz-IQ
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 18:17:33 -0400
+Received: by mail-oa1-x2a.google.com with SMTP id
+ 586e51a60fabf-4043b27ddeaso701430fac.1
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 15:17:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778187301; x=1778792101; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=qTJ7jAQV9Bq3MZFnxRQrIHL1++tQ1fQnlXQcS7CiTx4=;
- b=Ve0XpDDdhUD68OcqjjJL7GKbmtC++Vhs/F0oPY9teDBzuZvORGKJrRA0kLmxG+dRji
- y+VbXO2y1MXW3pvby2yAQRjgx1LwBWCs7V2AIfX06pMDmJSZAP1yutfWtsI9d7TSQbVD
- BDEmvatX0WiRg4mG6t+KWIFhJ9pTLKocPwiyBVXWyvIxi+yX5Ffo3lYYVnklqX6vGl6S
- BNmiCHd3npEsO2VtN2Zr6zNC0J5N78CJxNQWO+RQ7l5NTrg0sKaYbUjPPCQo2tCu1bt+
- DHfwycGwu/7zE99NxML4xA0Pr/VCjUVmZ2BoKbrEx6CDuC1y75h/N3hWyzMEmci8+n7B
- ZcQw==
+ d=linaro.org; s=google; t=1778192250; x=1778797050; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=s1EGlKjHauv/m/x0LCQ+RWfPuZ6/ygY2+9s9UxJlW7A=;
+ b=PzJMcE+71RhBXYrfX9sy3AA/lizT1tE6mmxPbJpLyr8jk0APmtWnTXQyxq9wCQB843
+ HMl/E3FV3DnjUgDK8HhUEa9otFa+YChnrFYLv2vKtjQzsd8YdlR7nJdEbGuH1gpsUl6r
+ deODTyukE/s+jE64ooDq+94wT/0r/y5IsP3l+bDFbYSiOSwp0uhaOPBea3qy5drhuiBl
+ +UZdMucW4sjXyfIqWTXIJ1CqAbqtPp0BKVmHhE8TLggE0FhsWN0L/+MxQy6pPlQfX5Sy
+ wffUQfx2dmmxXJuSEohdaa0XFpbbDIFaeJrCNRTQHXkGvnbf5IdeNdtzAl1Twrf1gC9t
+ 2LGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778187301; x=1778792101;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qTJ7jAQV9Bq3MZFnxRQrIHL1++tQ1fQnlXQcS7CiTx4=;
- b=AoTSpWfgI/RV9DIC7GTc+dAOMxMtBpY/nvIxDX592kZAICs/Eo6XJyBqAx8XGCoRfo
- UxTV5mlBMFn3eOojy0A28T3rPiCxl+v5XsrcTpdXYxNqGrbZTG+t3f57Dl7ZVBPMlDNX
- We8FhxyxdCjlFTjkK2KXwViXsX2Sj+/2FcdwGG/hkSfPz7sHs/pOvd7Bz2Jn6jNycaXK
- rr37emvqPDu06F7bjwT1NgL0Dx5cAy9kpJeVo/SmlLXYA3kgSiK0fdKYFIPu60Tqhy40
- BusTcBqvL+yOmO/1fncf8WHBlU3Kcme3lE37yuYhAeOhRp1k2aw7aMNqIMN8e/WIlKca
- RPZw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9FzTDktdDADXcB6Npol1bdIY0bE9J02r02bn60i5ezSEiRWDj8g2z5Z8Zyjxtoe7WgG95xdoQtbFmp@nongnu.org
-X-Gm-Message-State: AOJu0YwAYTT46i3ghg24RoymuRvYYb20xc36JHPzGFwl5Nz8EwcfP4GF
- mr6Vnd2d6tfqQYR70caKIkTfHYj4mETLS00nre3QtQ5aLNM8gjdPosVxdUyrycMLa6Y7lwatn6R
- adP2PaXrHFG7YjzyhdJOvTDG2Xhy0xb0QEA/IxprNq3NN0VqUeFLUgb0qEQ==
-X-Gm-Gg: AeBDievwAdevJDRnsT7x8GP4aRerMcCKTgygZvRjGDknwWVNpJevSY38x1cRAicqhNg
- w3xa2H1R2+u24OTMMNBbAnI70qTrAKICSiHaHHHR2YoFucSUQ5G5SDVB1suiWQ+NCgt75/nV5HW
- L0l3Pn61qoOYCekiUkLBMq7abG0tq4prGMN7AYQlSiBfL0H6CqpzPo03z5z/WfWgEkxwNilpAiu
- Twx7YBAIJFnsujSz42Qm/46r4TKJVJ/y6sUzkAGrdjfxhNYsBLLMUDqJEmQMbw07ug5eZ872rri
- sYKA+CX+bqv/kIN98B0gFF5Hjl+aOUgwlc2CxJu0vZh5eahHcvu4ETaSdRAuseUJC6GjOlID4Uz
- e6bsVJIrcZZarthR6iycmG72ujTIGCcFKhS6kJNGZKQSCfu2XI6A4RyNPWKUujqhrq/ZuLwbmy+
- JrOXcUF5UipCpwEg==
-X-Received: by 2002:a05:7022:fa07:b0:12d:f0af:110d with SMTP id
- a92af1059eb24-1318ea2dc7bmr4612602c88.28.1778187300914; 
- Thu, 07 May 2026 13:55:00 -0700 (PDT)
-X-Received: by 2002:a05:7022:fa07:b0:12d:f0af:110d with SMTP id
- a92af1059eb24-1318ea2dc7bmr4612580c88.28.1778187300303; 
- Thu, 07 May 2026 13:55:00 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-13270901ba2sm195177c88.11.2026.05.07.13.54.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 May 2026 13:54:59 -0700 (PDT)
-Message-ID: <f6b9b16a-0273-4dc7-a8e0-df074d246a01@oss.qualcomm.com>
-Date: Thu, 7 May 2026 13:54:58 -0700
+ d=1e100.net; s=20251104; t=1778192250; x=1778797050;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=s1EGlKjHauv/m/x0LCQ+RWfPuZ6/ygY2+9s9UxJlW7A=;
+ b=B1FsANnl0l/PupAGyyp0U3foA2JrI46koC/9E+v/PyUoxEkKxbI8XnK3LiR9w1dYyM
+ EIiqV19hW/UKjfYTIb0neRqM5REP19klZlA5934ukA4RsN7zvD9iHqbjN7P4MrDlWOqs
+ Ejy93GWuinNa+VIJo7fhewh9DhFcfsUFXnGYJyZg0L7JDoMWOo83LeNw0pBwIVxBZezB
+ PRyzFTtNBBOb8z178Z2qpzTzlEUmN8GMxu9OYZzBgwRt4Vul9s4dJGNN4BsU70FAjHbp
+ cNl3vmOXGsdcd0PWZ2TqFjsetV48LIfTnyEjdA4bYksW7R+TuS1HzQqI/BQN/mwggeVo
+ bc9w==
+X-Gm-Message-State: AOJu0YxNQ+1uNApO8D2OFZoSkRJL264wzhMohtF1TTFi7381y+7M7ykz
+ Usk3yLotkbdz2vwgxaCwl59CAOcBY9KFR0WUp4sGpZEGvt2t4LM1Q+oeV3oWxuJxJPUlxTa/TnT
+ iYKMi
+X-Gm-Gg: AeBDietuO38SObDsWvCrL4HlAysHXp+Msg/hI0UNzTyG2V8/8SZwdE3EL1aWqFA2IlR
+ plghcwfHL6bJCbSO8jJZwEhMWL3hrWRF0TMSeF7nnFmuJreOVfmGgq6EVeZLKuelyKtQRd3N8AV
+ yrJQNkIJLPEfkoVKcwOU+8HL/9DZim7awX+6voKoY5mJIOmrCcCYFve6sFKZYSS0Bo3EoBkmHmd
+ sm6eaKkXqWefxUSBKShw54wlwg+ZfBpxBKX6oTfUzp223JnEiZeSiZABW6R7o9S7ZvJTeZJTLGQ
+ q14u0f513v9FORyfz9Uk00UmQY6AncpHuB/ISTJrg3/Ao3ScNn35LovKJeGGUA8TqIZQdJedEEM
+ f1yfk8my0sHbfY/03Wq2QxjP40BtmJEClrcsFiysq0rBn+uQcVeFPfhLLmfa1b1b6uw4Yy0V565
+ hU0DGwD5edEGHqU7sDSjShkg20lQC6Qv/EZ1pVaQD7HR96ww==
+X-Received: by 2002:a05:6871:4e46:b0:42c:a86:abd0 with SMTP id
+ 586e51a60fabf-434f66d107cmr6556352fac.30.1778192250204; 
+ Thu, 07 May 2026 15:17:30 -0700 (PDT)
+Received: from stoup.attlocal.net ([2600:381:c938:6375:9641:bbb2:a93a:bb4c])
+ by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-435573e7254sm45037fac.14.2026.05.07.15.17.29
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 May 2026 15:17:29 -0700 (PDT)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PATCH 08/18] fpu: Use get_float_2nan_prop_rule in partsN_pick_nan
+Date: Thu,  7 May 2026 17:17:07 -0500
+Message-ID: <20260507221717.486023-9-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260507221717.486023-1-richard.henderson@linaro.org>
+References: <20260507221717.486023-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/6] target/arm: Fix functional test failures in KVM-only
- builds
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260507194728.2034696-1-peter.maydell@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260507194728.2034696-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-ORIG-GUID: IoLFeeLMDz9jeT1ufKRCTFK2aIEYVc9u
-X-Authority-Analysis: v=2.4 cv=Nd/WEWD4 c=1 sm=1 tr=0 ts=69fcfc26 cx=c_pps
- a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=EUspDBNiAAAA:8 a=Z8H6kxiZWI1TnuwXCkYA:9 a=QEXdDO2ut3YA:10
- a=vBUdepa8ALXHeOFLBtFW:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA3MDIwOSBTYWx0ZWRfX07rHdNVXFZLk
- yOuqkWwfQoInVQom6PEqahX7YeRj115uM24rCjxnsduU0JTfU3X9ZfGfWCZ1D+YIb8Can0G9wim
- 7SWEeuzinbc/YrC8ueOFIfZhkNGsKjjPT5XoCJ2mexsG+PEdTZh3+OtvBlfuBYn6T//VDg5xjfe
- pFs4sSMq7RdgplHrs6gSZpK6IW7w+O3hK5eDJ0qTbvSKyy8VEGLkSRcXUVTLF8dcVhgzLUgNyuV
- 2YSg8AMTnO//YmBge/uQ6IqvRBwqsYwajvWkpxV3doFd57fajmd8jBXP2r/u7M4Mc7FEM3rZW0s
- SmHPkA08LJBeMAFJQsuwDC+bnbDFN+I0OWLNdI+/3Ko2mHhQZYwuvpQLlNdZCz3Qmo1XNkRnHKN
- 5JoPZGpIfmcBLfj6nygSmf1uWcxoP92xGPUWVOjlHlTjO+19mHgKgNZw3uN3lsZ+G/T+YXloBaD
- 4oj/koxybHop2exdfdA==
-X-Proofpoint-GUID: IoLFeeLMDz9jeT1ufKRCTFK2aIEYVc9u
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-07_02,2026-05-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 malwarescore=0 phishscore=0 clxscore=1015 spamscore=0
- priorityscore=1501 adultscore=0 suspectscore=0 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605070209
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -156,46 +99,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/7/2026 12:47 PM, Peter Maydell wrote:
-> If you build QEMU with --disable-tcg on an AArch64 system, some of the
-> "make check-functional" tests fail. This patchset fixes them.
-> 
-> The first patch fixes a bug in QEMU proper, where we broke the
-> "x-remote" machine because we forgot to mark it up as being
-> OK to expose in the qemu-system-arm and qemu-system-aarch64
-> binaries, the way we do for "none" and for all the actual Arm
-> machine types.
-> 
-> The rest are tweaks to the tests:
->  * tests that run '-machine virt,virtualization=on' need to
->    check for failure because the machine reports that the hypervisor
->    can't support nested virt
->  * tests that use a specific CPU type need to either be
->    restricted to TCG-only, or else changed to use 'max' instead
->    (since that's the only CPU that will work on both TCG and KVM)
-> 
-> thanks
-> -- PMM
-> 
-> Peter Maydell (6):
->   hw/remote/machine.c: Mark x-remote machine as OK for AArch64 and
->     AArch32
->   tests/functional/test_virt_vbsa: Skip UEFI test if virtualization not
->     supported
->   tests/functional/test_kvm.py: Use -cpu max, not cortex-a72
->   tests/functional/test_kvm.py: Skip if virtualization not supported
->   tests/functional/test_hotplug_pci.py: Require TCG
->   tests/functional/test_tuxrun: Restrict to TCG
-> 
->  hw/remote/machine.c                          |  3 +++
->  tests/functional/aarch64/test_hotplug_pci.py |  1 +
->  tests/functional/aarch64/test_kvm.py         | 12 ++++++++++--
->  tests/functional/aarch64/test_tuxrun.py      |  2 ++
->  tests/functional/aarch64/test_virt_vbsa.py   | 10 +++++++++-
->  5 files changed, 25 insertions(+), 3 deletions(-)
-> 
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ fpu/softfloat-parts.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-For series:
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index 0406a38206..ed28262aba 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -53,7 +53,7 @@ FloatPartsN partsN(pick_nan)(const FloatPartsN *a, const FloatPartsN *b,
+         return partsN(default_nan)(s);
+     }
+ 
+-    switch (s->float_2nan_prop_rule) {
++    switch (get_float_2nan_prop_rule(s)) {
+     case float_2nan_prop_s_ab:
+         if (have_snan) {
+             ret = is_snan(a->cls) ? a : b;
+-- 
+2.43.0
 
 
