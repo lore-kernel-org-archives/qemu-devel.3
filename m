@@ -4,92 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49A1ECD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 13:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F272CD3439
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 13:47:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKyuP-0005fT-5y; Thu, 07 May 2026 09:36:57 -0400
+	id 1wKz40-0007m1-5M; Thu, 07 May 2026 09:46:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKyuN-0005fF-DJ
- for qemu-devel@nongnu.org; Thu, 07 May 2026 09:36:55 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKyuL-00027Q-Vb
- for qemu-devel@nongnu.org; Thu, 07 May 2026 09:36:55 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4891e86fabeso10723155e9.1
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 06:36:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778161012; x=1778765812; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QuCrcF42+Z4BI8YJv5rTRwwA2VmZ6mzsZ7yd6fMHN9o=;
- b=FhjokjLd8EXHzv/gcrzQK+LiLnfNpya23mAcHghJ+eplXOCAEKE/A6S7WulMk//2TE
- Dmj1aSpiaRmh9FaeY9F7fZhoSrtGWKtfK29Ws1PjNA5Fr204/GLIyJhsA+JUh7Sbfgf3
- OGaIH82gQAYXYWLzsHN21AMKchFwcg25+zUHue8xvXWTf+40CVf5wx+tVY9ooQQg7ZxZ
- ORr1yA9D0hoEtElQcaHh3QFT55qMuSjGGuGfrRiPWzcc7yXVUV0s2XqOZ4zOw6KVop3M
- x6FjS21oDcQ3uH7VU2FbhARpSUcZFG8ooVxM0B8LsGpEALt1XChirWE7aB2qRg0zVAuU
- khcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778161012; x=1778765812;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QuCrcF42+Z4BI8YJv5rTRwwA2VmZ6mzsZ7yd6fMHN9o=;
- b=P2q6tqN5Jw6FF/wva9rzT/UUEB5ultISvn4MoVxXKBnntUqzVPRKtt/sUyxSKgjgDL
- NTT91MDhbC0neXs8anccP0ateu54fBwlk6BieRtjdp2GwDEPCyT2fX1o/hjl4CfymkqA
- vIOtc2fMZ6oXF1GsRjRl5QJI8McmZvHTB4/cqOFGHUlc2ucg3KxGxgnB/wrhDx9AW2wN
- P7G/Ib4waIiriu42xVD3gyH2MZ4GyktSDcDdO7qXb0Z6AzVAhvR55hoCppfO1FmxeJZD
- Ia1tVy672z6H0adV6rB3P6wndMJIhRzxkzPlKIogywyuXTOvSSdqxa+OoOFmylDJ7g1T
- tsOw==
-X-Forwarded-Encrypted: i=1;
- AFNElJ9rK8af5+5WjrP0mfvmUmJFvWQYGLR3ulmOIghc48ud+zJeuQydo+t35glTCZfFo0g/XBMtDheSZqMw@nongnu.org
-X-Gm-Message-State: AOJu0YynzXC0vjLwmcfeRQkO9kxt2o5j97L88UJqciKGKst6qbqwdkCi
- 16iC84ej9LZ6Qk0vo6k63PlBnJIm+ueavYUSIhcIqlVOjQ/2ZgdyblaIn8NjWNH10Xg=
-X-Gm-Gg: AeBDietv/t0MYXtQ+0fR6daw+9dnGNw8wN9uT1g/MnbBvJXNL1HkQHyvbrQ3say0brL
- 6I7lXENbMLPpsu70oMg3NPIdhMHG1jKyTRd/44QcQH0l4Ug7/zWLm5bxJc0GUWs20MkYJ66x8z9
- ImZWJuU8VuW05bQFsIBDGTU6e9uK+3ATUW2f33F55nTMooOp/XkkSuF9Av7/QKAHcwdt+6f3FNQ
- Ydlxc2wp7Mcq2S0A5X+NSI/vbEA4fuAHtkrcpFqzm9NpIw7BbeWpTHMJOEXUnCdrgFUShoKUl6V
- HZNpFOg/tiKBuODFK7OaLDYECgQa9I4Zu/ZxNY0ATVKcoMOuxQXsgyWEQnkKZiK/Qd5RvqWOYu2
- NG/5ogY4/Qv0BRr9TVI1f7AFoG0DoK+25DvX70Frc4AIDeXT8hkQgr2TIZS+CVbkHdnbApN2MCz
- AubH1DWuK0zCR1Fqw8XK/miB24UayECRI47VUcp2RX5SPqc0cp9HQY5fKgkSshqksjIxIUZ8nRp
- ivqEddh4yRHwsg=
-X-Received: by 2002:a05:6000:250c:b0:43e:aefa:db84 with SMTP id
- ffacd0b85a97d-4515d5c65ddmr13559836f8f.34.1778161012231; 
- Thu, 07 May 2026 06:36:52 -0700 (PDT)
-Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45052a48911sm20514533f8f.11.2026.05.07.06.36.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 May 2026 06:36:51 -0700 (PDT)
-Message-ID: <e27d7002-ab82-4c5d-b6da-3366e01c529c@linaro.org>
-Date: Thu, 7 May 2026 15:36:50 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wKz3v-0007lo-Vu
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 09:46:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1wKz3s-0004Nc-EU
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 09:46:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778161602;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3e8whisJbGatF2J9EbfyEEDqgIE2ddle93Z9OmMAF3U=;
+ b=aAdEbhFaY4sz3E9/scpy9cbvl3q6qRxzJcqCJ/B0EckvqeGxIgvdDx3YHyQOqhrW+C7cbQ
+ tALRAeY9jt8ySQluWn7urI0btTTWS0HE2io4T4hR6eMY4ptdkLL0m/zkWXPxW4eyyr1IhR
+ WcfuCAmmQpGCPw1t4dgcRyA0/nyhOQQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-676-cSIPaSaYNxysqQiKCGDPpg-1; Thu,
+ 07 May 2026 09:46:36 -0400
+X-MC-Unique: cSIPaSaYNxysqQiKCGDPpg-1
+X-Mimecast-MFC-AGG-ID: cSIPaSaYNxysqQiKCGDPpg_1778161595
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 253D8195608F; Thu,  7 May 2026 13:46:35 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.49.217])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D497F3002D2D; Thu,  7 May 2026 13:46:33 +0000 (UTC)
+Date: Thu, 7 May 2026 14:46:30 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH 08/10] .agents/skills: add qemu-issue-triage agent
+ skill
+Message-ID: <afyXtlC9ktQ7qa-f@redhat.com>
+References: <20260505170105.228162-1-alex.bennee@linaro.org>
+ <20260505170105.228162-9-alex.bennee@linaro.org>
+ <afxMiS7Y5RIXPLUz@redhat.com> <87zf2bl7r8.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] vdpa: Allow VDPA to work on big-endian machine
-Content-Language: en-US
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>, mst@redhat.com,
- sgarzare@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org
-Cc: mjrosato@linux.ibm.com, =?UTF-8?Q?Eugenio_P=C3=A9rez?=
- <eperezma@redhat.com>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260427144746.1498-1-kshk@linux.ibm.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260427144746.1498-1-kshk@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <87zf2bl7r8.fsf@draig.linaro.org>
+User-Agent: Mutt/2.3.1 (2026-03-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,33 +87,101 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/4/26 16:47, Konstantin Shkolnyy wrote:
-> After commit 0caed25cd171 vhost_vdpa_net_load_vlan() started seeing
-> VIRTIO_NET_F_CTRL_VLAN flag and making 4096 calls to the kernel with
-> VIRTIO_NET_CTRL_VLAN_ADD command. However, it forgot to convert the
-> 16-bit VLAN IDs to LE format. On BE machine, the kernel calls failed
-> when they saw "VLAN IDs" greater than 4095, and QEMU then said:
-> "unable to start vhost net: 5: falling back on userspace virtio", and
-> VDPA became disabled.
+On Thu, May 07, 2026 at 01:32:59PM +0100, Alex Bennée wrote:
+> Daniel P. Berrangé <berrange@redhat.com> writes:
 > 
-> Convert the VLAN ID to LE before putting it into virtio queue.
+> > On Tue, May 05, 2026 at 06:01:03PM +0100, Alex Bennée wrote:
+> >> While triaging the issue tracker I wondered if this would be a
+> >> suitable job for an AI agent. Unfortunately the OSS program doesn't
+> >> give any credits to run agents in gitlab. However I do have access to
+> >> models from my editor and ECA so I built one and tested it on a few
+> >> issues.
+> >> 
+> >> Obviously this can't apply as is because it probably encodes too much
+> >> of my local setup (using pass for API keys) and uses the ECA as my
+> >> preferred coding agent. I assume at some point there will be agreement
+> >> between all the agents where skill live.
+> >> 
+> >> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> >
+> > ..snip..
+> >
+> >> diff --git a/.agents/skills/qemu-issue-triage/assets/labels.txt
+> >> b/.agents/skills/qemu-issue-triage/assets/labels.txt
+> >> new file mode 100644
+> >> index 00000000000..d329f34183d
+> >> --- /dev/null
+> >> +++ b/.agents/skills/qemu-issue-triage/assets/labels.txt
+> >
+> > Seeing our labels listed like this triggers my urge to "tidy" :-)
+> >
+> > Don't take anything below to be a complaint / blocker about this patch.
+> > This patch is fine in so much as it faithfully represents the mess we
+> > have created in gitlab.
+> >
+> >> @@ -0,0 +1,133 @@
+> >> +# SPDX-License-Identifier: GPL-2.0-or-later
+> >> +ACPI                       Power Management related (ACPI / SMBIOS / HEST / GHES)
+> >> +Audio Audio devices; both backend (host audio) and frontend (guest
+> >> audio)
+> >
+> > Mixing frontend and backend is a bad idea in general IMHO.
+> >
+> > I feel like we should also have an explicit label for each backend, for
+> > both audio and every other backend type.
 > 
-> Fixes: 8f7e9967484d ("vdpa: Restore vlan filtering state")
-> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-> Acked-by: Jason Wang <jasowang@redhat.com>
-> Acked-by: Eugenio Pérez <eperezma@redhat.com>
-> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
-> This patch was reviewed several months ago but was never applied. Resending...
-> Changes in v3:
->   - Add Reviewed-by: Akihiko Odaki.
-> ---
->   net/vhost-vdpa.c | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
+> Backend: chardev
+> Backend: audio
+> ?
 
-Queued via hw-misc since acked by Jason.
+No sorry, I meant  chardev:socket, chardev:stdio, chardev:mux, etc and
+audio:dsound, audio:alsa, audio:pa, etc
+
+
+> >> +GUI Graphical User Interface (gtk, SDL, curses, VNC, spice, ...)
+> >> +GUI::Cocoa                 Cocoa
+> >> +GUI::DBus                  DBus
+> >> +GUI::GTK
+> >> +GUI::SDL                   SDL
+> >> +GUI::SPICE                 SPICE
+> >
+> > spice is duplicated later
+> 
+> Prompt: "find all the issues with the "spice" label and label them with the GUI::SPICE label instead"
+> 
+> the result was:
+> 
+>   general: relabling spice issues (5 steps, 13.5K / 1M) ✅ 1m 26s
+> 
+>   I have successfully relabeled all GitLab issues in the `qemu-project/qemu` repository by replacing the "spice" label with the "GUI::SPICE" label.
+> 
+>   ### Summary of Actions:
+>   - **Total Issues Updated**: 21 (including both open and closed issues).
+>   - **Relabeling**: Removed the `spice` label and applied the `GUI::SPICE` label to each identified issue.
+>   - **Verification**: Confirmed that `glab issue list --label spice` now returns no results, while `glab issue list --label "GUI::SPICE"` includes all updated issues.
+> 
+>   ### Updated Issues:
+>   The following 21 issues were updated: 
+>   `3148`, `3070`, `2860`, `2667`, `2639`, `2561`, `2411`, `2335`, `2282`, `2071`, `1926`, `1829`, `1778`, `1777`, `1553`, `1549`, `1431`, `1426`, `1285`, `681`, `232`.
+> 
+> about 0.08p in inference costs.
+> 
+
+> > What's this for, and why : instead of :: ?
+> 
+> No idea - is this the mechanism we use to hide live security issues?
+
+security issues should not be in the issue tracker at all
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
