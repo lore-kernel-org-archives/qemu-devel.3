@@ -4,52 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8231CD3427
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 09:51:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 472CFCD3442
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 09:52:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKvN1-0000BZ-6A; Thu, 07 May 2026 05:50:15 -0400
+	id 1wKvOc-00024Q-JY; Thu, 07 May 2026 05:51:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wKvMy-0000Ak-QQ
- for qemu-devel@nongnu.org; Thu, 07 May 2026 05:50:12 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wKvMv-0005Oa-1O
- for qemu-devel@nongnu.org; Thu, 07 May 2026 05:50:12 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxEvBOYPxp+XAHAA--.24093S3;
- Thu, 07 May 2026 17:50:06 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJDxD8NCYPxpUTJ8AA--.39812S5;
- Thu, 07 May 2026 17:50:05 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org,
-	lixianglai@loongson.cn,
-	chenhuacai@loongson.cn
-Subject: [PATCH v2 3/4] target/loongarch: Add kvm support dintc
-Date: Thu,  7 May 2026 17:23:57 +0800
-Message-Id: <20260507092358.2479135-4-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20260507092358.2479135-1-gaosong@loongson.cn>
-References: <20260507092358.2479135-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <conor@kernel.org>)
+ id 1wKvOW-000249-FR; Thu, 07 May 2026 05:51:48 -0400
+Received: from sea.source.kernel.org ([172.234.252.31])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <conor@kernel.org>)
+ id 1wKvOU-0005gh-To; Thu, 07 May 2026 05:51:48 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by sea.source.kernel.org (Postfix) with ESMTP id 60DAF418CF;
+ Thu,  7 May 2026 09:51:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79211C2BCB2;
+ Thu,  7 May 2026 09:51:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1778147503;
+ bh=RMm2dQ0X7CR6zI2nNSIjYpECgAHDTi6azh7SeT60qus=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=VQzr/neG7CCYtxZsopVHOvCqIdJOYyzNx2IHumqUyW+xQOpZBtswH/v/weSPddlcl
+ 3aMUa+7Pfyv6pVq6KwYaFbDWEuhLyGpjO/whTimCnGYfrdj/WMAKihpbwsib/2eWCh
+ 445hseuYoo/xmzdOUQ8Wco4HMjKfebz6wnM84JcZmoWyGFaSfTOTea9LkHbgvlSHT5
+ BuyA+8GaEZN0TiIftLCQAEeVHgfkFOGsXY9LAurkHRKVOvkr4iax8FAFv84xNvCS8T
+ J7vzoknojHh+EvafmDUCu85QvwEFcJGEm8DAeYNJHjNEBpcAtNbvfM/JS6MQRFJNoM
+ +CaE6uLtZ83Ag==
+Date: Thu, 7 May 2026 10:51:36 +0100
+From: Conor Dooley <conor@kernel.org>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Sebastian Huber <sebastian.huber@embedded-brains.de>,
+ Guenter Roeck <linux@roeck-us.net>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org, qemu-ppc@nongnu.org, qemu-block@nongnu.org,
+ integration@gluster.org, Zhao Liu <zhao1.liu@intel.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Milan Zamazal <mzamazal@redhat.com>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Mark Kanda <mark.kanda@oracle.com>, Li Zhijian <lizhijian@fujitsu.com>,
+ Glenn Miles <milesg@linux.ibm.com>, Gautam Menghani <gautam@linux.ibm.com>,
+ Fabiano Rosas <farosas@suse.de>, Ben Chaney <bchaney@akamai.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Subject: Re: MAINTAINERS entries that aren't S: Orphan but maybe should be
+Message-ID: <20260507-zoning-jovial-9d340aa043c7@spud>
+References: <87y0hwbvbp.fsf@pond.sub.org>
+ <CAKmqyKMC0jxMMV0RuPHZrwBbsAeHhOvM+Ak_+=hGgM1C8eeUxA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJDxD8NCYPxpUTJ8AA--.39812S5
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="Mew+wDqXUhKeAUOc"
+Content-Disposition: inline
+In-Reply-To: <CAKmqyKMC0jxMMV0RuPHZrwBbsAeHhOvM+Ak_+=hGgM1C8eeUxA@mail.gmail.com>
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=conor@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,166 +85,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds Kvm put/get msgint CSRs and check msgint feature.
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- target/loongarch/cpu.c     |  5 ++-
- target/loongarch/cpu.h     |  1 +
- target/loongarch/kvm/kvm.c | 69 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 72 insertions(+), 3 deletions(-)
+--Mew+wDqXUhKeAUOc
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index e22568c84a..fe60c9b92b 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -443,9 +443,6 @@ static void loongarch_max_initfn(Object *obj)
- 
-     cpu->ptw = ON_OFF_AUTO_AUTO;
-     if (tcg_enabled()) {
--        cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
--        cpu->msgint = ON_OFF_AUTO_AUTO;
--
-         uint32_t data = cpu->env.cpucfg[2];
-         data = FIELD_DP32(data, CPUCFG2, HPTW, 1);
-         /* Enable LA v1.1 instructions */
-@@ -456,6 +453,8 @@ static void loongarch_max_initfn(Object *obj)
-         data = FIELD_DP32(data, CPUCFG2, SCQ, 1);
-         cpu->env.cpucfg[2] = data;
-     }
-+    cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
-+    cpu->msgint = ON_OFF_AUTO_AUTO;
- }
- 
- #if defined(CONFIG_KVM)
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 096d778928..e6bbcded95 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -301,6 +301,7 @@ enum loongarch_features {
-     LOONGARCH_FEATURE_PV_IPI,
-     LOONGARCH_FEATURE_STEALTIME,
-     LOONGARCH_FEATURE_PTW,
-+    LOONGARCH_FEATURE_MSGINT,
- };
- 
- typedef struct  LoongArchBT {
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 9d844c4905..dad260636a 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -35,6 +35,13 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
-     KVM_CAP_LAST_INFO
- };
- 
-+static bool kvm_cpu_has_msgint(CPUState *cs)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+
-+    return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
-+}
-+
- static int kvm_get_stealtime(CPUState *cs)
- {
-     CPULoongArchState *env = cpu_env(cs);
-@@ -358,6 +365,20 @@ static int kvm_loongarch_get_csr(CPUState *cs)
- 
-     ret |= kvm_loongarch_get_pmu(cs);
- 
-+    if (kvm_cpu_has_msgint(cs)) {
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
-+                               &env->CSR_MSGIS[0]);
-+
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
-+                               &env->CSR_MSGIS[1]);
-+
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
-+                               &env->CSR_MSGIS[2]);
-+
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
-+                               &env->CSR_MSGIS[3]);
-+    }
-+
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TVAL),
-                            &env->CSR_TVAL);
- 
-@@ -533,6 +554,20 @@ static int kvm_loongarch_put_csr(CPUState *cs, KvmPutState level)
- 
-     ret |= kvm_loongarch_put_pmu(cs);
- 
-+    if (kvm_cpu_has_msgint(cs)) {
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
-+                               &env->CSR_MSGIS[0]);
-+
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
-+                               &env->CSR_MSGIS[1]);
-+
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
-+                               &env->CSR_MSGIS[2]);
-+
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
-+                               &env->CSR_MSGIS[3]);
-+    }
-+
-     /*
-      * timer cfg must be put at last since it is used to enable
-      * guest timer
-@@ -982,6 +1017,12 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
-         ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-         return (ret == 0);
- 
-+    case LOONGARCH_FEATURE_MSGINT:
-+        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
-+        attr.attr = KVM_LOONGARCH_VM_FEAT_MSGINT;
-+        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-+        return (ret == 0);
-+
-     default:
-         return false;
-     }
-@@ -1155,6 +1196,28 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
-     return 0;
- }
- 
-+static int kvm_cpu_check_msgint(CPUState *cs, Error **errp)
-+{
-+    CPULoongArchState *env = cpu_env(cs);
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+    bool kvm_supported;
-+
-+    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_MSGINT);
-+    env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 0);
-+    if (cpu->msgint == ON_OFF_AUTO_ON) {
-+        if (kvm_supported) {
-+            env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
-+        } else {
-+            error_setg(errp, "'msgint' feature not supported by KVM on this host");
-+            return -ENOTSUP;
-+        }
-+    } else if ((cpu->msgint == ON_OFF_AUTO_AUTO) && kvm_supported) {
-+        env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
-+    }
-+
-+    return 0;
-+}
-+
- int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
- {
-     return 0;
-@@ -1210,6 +1273,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         return ret;
-     }
- 
-+    ret = kvm_cpu_check_msgint(cs, &local_err);
-+    if (ret < 0) {
-+        error_report_err(local_err);
-+        return ret;
-+    }
-+
-     return 0;
- }
- 
--- 
-2.54.0
+On Thu, May 07, 2026 at 09:40:55AM +1000, Alistair Francis wrote:
+> On Wed, May 6, 2026 at 10:03=E2=80=AFPM Markus Armbruster <armbru@redhat.=
+com> wrote:
+> >
+> > I'm cc'ing reviewers and lists mentioned below, and frequent
+> > contributors to MAINTAINERS.
+> >
+> > There are a number of MAINTAINERS entries with S: other than "Orphan"
+> > without M:
+> >
+> >     $ awk '/^M: / { m++ } /^S: / { s=3D$2 } /^$/ && s { if (!m && s !=
+=3D "Orphan") print t; m=3D0; s=3D""; getline; t=3DFILENAME ":" FNR ": " $0=
+; next }' MAINTAINERS
+> >     MAINTAINERS:1736: Microchip PolarFire SoC Icicle Kit
+>=20
+> Conor, Sebastian and Guenter, are you still using the Microchip
+> PolarFire SoC Icicle Kit? We currently don't have a maintainer for it.
+> I'm tempted to deprecate it, as I thought it didn't really work
+> anyway, but I wasn't sure.
 
+I use it occasionally, and if it was to actually break to the point that
+it cannot boot a kernel I would fix it. You're right that it doesn't
+work properly though, the board's actual boot flow cannot be run on the
+emulation available in qemu.
+
+I could be an Odd fixes reviewer, but I have never found the time to
+actually go fix that problem or add any of the peripherals that are not
+mandatory to boot a kernel, so anything more than that isn't realistic.
+
+--Mew+wDqXUhKeAUOc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCafxgqAAKCRB4tDGHoIJi
+0tBKAQDPcI3GtxazLFmMWwMAqY0Ddp0vqlDD9E0zpIqofDZg7AEA/H0gmlznb40/
+PQF/YCXlpOG02v3SlQjHcBDLdYHeZAs=
+=LSlr
+-----END PGP SIGNATURE-----
+
+--Mew+wDqXUhKeAUOc--
 
