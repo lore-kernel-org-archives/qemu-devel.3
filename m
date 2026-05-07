@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F5CACD342C
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 02:26:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D16B5CD3436
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 02:26:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKoPz-0006z1-Gm; Wed, 06 May 2026 22:24:52 -0400
+	id 1wKoPY-00064n-JP; Wed, 06 May 2026 22:24:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoPv-0006fo-BC
- for qemu-devel@nongnu.org; Wed, 06 May 2026 22:24:47 -0400
-Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoPW-00063x-Pi
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 22:24:22 -0400
+Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoPt-0007hF-WA
- for qemu-devel@nongnu.org; Wed, 06 May 2026 22:24:47 -0400
-Received: by mail-oo1-xc33.google.com with SMTP id
- 006d021491bc7-6967080e6c0so201467eaf.2
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 19:24:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoPV-0007c9-EG
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 22:24:22 -0400
+Received: by mail-oo1-xc2d.google.com with SMTP id
+ 006d021491bc7-699a23b2b08so141674eaf.0
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 19:24:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778120684; x=1778725484;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778120660; x=1778725460;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=R/QyHxhh955w/HPRpKuYJ0dcnEhs1tLz/1RAUl0qOaU=;
- b=DKBgifPHSmsFU1i4zCrDM40YNY3fR1hRsoG6oIsTt5WdKF54yO6pGbX6K5kuPFk4V6
- BUlnNc/fApJTzBXXpDYp0dt0bnIh/GzGCZH8+w5qwva2S3YAOSc395qdr8pxtHoP5WTy
- QmYciGcjVjPmYsEonhOFotgOwNFETMlurl7N1Hs/zGe03rAdyqXvtec77PjOY0G2nuwf
- fWUoQV3KQmZFx3di6ym9xrfwF6+Wmd1RRUP8M0vC07HvGPwJ/YqIDRE7lSrYNST+crXJ
- YdZiNr/Qym5ptrYVy765oXfEcTzdKokXTvVvmik3IsEuXqo0zrpsjlmSuTULdMV29ekQ
- jupQ==
+ bh=/18BWWz2Wbj63GAgi/PilHsC5xbsmE42NiHRmg2gYNo=;
+ b=zva1G04HSZBopuAwIwqYQKyZvW/2X5fQ5rpvs+yZ3dIYcQw5rrpeUCUT608kI1ykRd
+ QcvEhOBwlWnAqFz+Y04O8Exq/dloHqfKjKwQaLfknahNh4pwEj71IGT7wFaa5sQG1bDD
+ OrZRrWvUza5XW3CzT5tGX8S+KOnEWQvgnqBXAghE2tPFdgwdZiK8Sjl8iO1Z7stJ6VfJ
+ i11BfcXIXw/gXN2AbmzrrGi/G5E3ldv2adQYRGqR7tfnBHlV/AbXb7hrOL+Qxp3YP9Gr
+ rEh0BNvJkvE2jxdCO5S1lH671PomYdDKyatrhkpfZVzyFAxPrhTO/829Aa8Qr9lJ+zJ/
+ PI+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778120684; x=1778725484;
+ d=1e100.net; s=20251104; t=1778120660; x=1778725460;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=R/QyHxhh955w/HPRpKuYJ0dcnEhs1tLz/1RAUl0qOaU=;
- b=A9nquyA9mffMlPd5LiFuL+EslNHHLAtTOlDufEwtOwNwARP4nTpQ05pX/XcOpfr+98
- bT/3fzIYOBGt29EGXpeRbW7rllHk3lAR+/o8G3My9duFj/FxlTlfXPORufZ8cdsDHCvf
- YYfgAG2GzdAO4soKSy3sALakay0pEYZhDdHoYlM7zjwNhTnxZJZtX3sPAl9Hh8pLYtHN
- 4DpXm/PcikqPG7TCjbekc4ldxkZVhpejtXzYQ0hkoatUcjJ8lIWKoa4YjKqvc8vyeTny
- vqQ28+sOa2OTmowJi3tBR+mwrSLETpQ9Fhwd8E7J91ZELGT2NN1TuBiBw5Yyd+jEFSos
- TaZg==
-X-Gm-Message-State: AOJu0YwjBEfybe+LmLpTnJm65nZrN6nzXn9WSMfYt9ZN8CjKJDqGAHv8
- CP7E2KqFK1Guc0I8UxKdSeSTAuOt/V3u37cOl/MlBhDrDgqSNYOs2ehyzcTHEvEWWjG5IWDGEgj
- kvN/iTHI=
-X-Gm-Gg: AeBDietZsWf1PEvsO8Q480qx5DO/lWmIq2+vizsixEp8WAfWYP6Fesgq3tEPvVZxvPg
- XrK7CM2T5k0R6oM7TqnhWP8hoEfbn8WO27Vd9vtsagNsXs1oC+O+NgwWmstzr1EdPypf3knKbzp
- oJMP6MGa0n7QzxjhSpYDPNIwtRl9H49Rp4GgWzHqfUutEZOgkI9eF0MWCZTecnRMV44+NYUNs76
- o7e6lSTxf3lb2Q0PeZNsKGTx2p94B5zeEHRB4VOPdscmzGiAm5ukLUwf+nAg0eK5zV5nuJoPQVg
- NharvP5XublbvGCnX3UlgAPHbhz3H1WCpNbNMvOwoF5L5HgLqnp8uH7qwtEBWqoUElwFYB5jEm1
- VNy+iPK1vwVt9fGJnw9pG8dMOY8EAW1t9c/Kcl4Mo57WS7TIwmAfzakk/dEm4+jiuVSRUXaUS+A
- t0EShTxVfJ8ghsjk2dbCTZ
-X-Received: by 2002:a05:6820:168c:b0:694:9f3a:da8 with SMTP id
- 006d021491bc7-69998c8fb79mr3511806eaf.12.1778120684583; 
- Wed, 06 May 2026 19:24:44 -0700 (PDT)
+ bh=/18BWWz2Wbj63GAgi/PilHsC5xbsmE42NiHRmg2gYNo=;
+ b=ZBiLTVZErWOQu/Ka7EHreVntumPcN6QtcbyPwLu7KOJWMrr8KqXPO8h8URb5aZd5lz
+ wgLaXiAvhdBWl802awakD4Ke7LQjNg+/KxV80x9EOvzfmLhkfUOSrozVlumjchthCnG8
+ D+LJO1xwco+7vxurUk2rTaqz/2EtANyPhAxfV6JAAyQQa7JcQZIvAsR3rT71ZqbFd7zH
+ RNRONE53mxXC79MPt+IL43YVbemRuNgGsVuGBLELMp76oO3wZrgg+kqQWtd/w24rIadV
+ kTjDWpZcOGvD+o1vwcncVxjd5fpwqcJ4HZBCh/m9iGdp9El3wpSdNYDBRuOrPYvy2qXs
+ hYUQ==
+X-Gm-Message-State: AOJu0Yy6Kl4zweDYpuP3WMfq6sIjLnChCMQxysxP55gYDNur0FsF909V
+ /70WMfYcF43gCKBUrlmK0c7+dDuQXPs4kX7z6njqkL9j8Md9tzda4stGra6W+b2W4DRodQ8kgM2
+ YxQe/yxY=
+X-Gm-Gg: AeBDieuZOpETM5RIRRvUdvi9kNho+s7NKvf8DxfthxpC5aEuEoEB5isjAs4rnvgfUHf
+ epQ5M26VTNLh8+t63oPiu4iYbZYZhou/TljUP0R7qJhbpclw/y1aKw+LgkJqmLto4pNzucjE7wK
+ zESq8HQSKmZ1cD0XBdmOVrBCPlm3ZQOeNWTLamanSgYCBTLnyoaDM1ZmmfzNDf6WetBjfAg9Vyd
+ pLpuiEanpAtpNwSF1lSFT3ArqjeDL1zIpb+V4SX+8sBKGvsrGYzUQTMwJyEdlXBOPa4OBX3m/K7
+ QhOWc6tB0SCMNanerbwunH3KiVFxaVzvNrLTK6q7Lj3gAqvholt5Y52v5EGoTGkTPvHdFRJ7KRo
+ +VcIIszNushI51IDmdFSpDZmfIHe3Yq39iZNbi0hA1oNQ0tjx0jqD7btovvSxvNOqVRKATMcWo8
+ td8HvjU0YHYXGhjg7d+bsJ5rbLGiGm4+2YC8pPg8dI3g==
+X-Received: by 2002:a05:6820:2902:b0:692:a19b:af68 with SMTP id
+ 006d021491bc7-69998c95db5mr3300512eaf.5.1778120660080; 
+ Wed, 06 May 2026 19:24:20 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-696896e72c4sm11088118eaf.9.2026.05.06.19.24.43
+ 006d021491bc7-696896e72c4sm11088118eaf.9.2026.05.06.19.24.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 May 2026 19:24:43 -0700 (PDT)
+ Wed, 06 May 2026 19:24:19 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
- Stacey Son <sson@FreeBSD.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 21/25] bsd-user: Add target_to_host_sockaddr_in6 function
-Date: Wed,  6 May 2026 20:22:15 -0600
-Message-ID: <20260507022219.44171-22-imp@bsdimp.com>
+Subject: [PATCH 04/25] bsd-user: Create os-syscall.h
+Date: Wed,  6 May 2026 20:21:58 -0600
+Message-ID: <20260507022219.44171-5-imp@bsdimp.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260507022219.44171-1-imp@bsdimp.com>
 References: <20260507022219.44171-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::c33;
- envelope-from=imp@bsdimp.com; helo=mail-oo1-xc33.google.com
+Received-SPF: none client-ip=2607:f8b0:4864:20::c2d;
+ envelope-from=imp@bsdimp.com; helo=mail-oo1-xc2d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -100,38 +99,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Stacey Son <sson@FreeBSD.org>
+Create os-syscall.h. The purpose of this file is to define anything
+that's different among the BSDs, like system call numbers and
+time_t. While there's a lot more different between the BSDs, this is at
+least a start at capturing it.
 
-Add helper function to convert target IPv6 socket address structure
-to host format, handling all sockaddr_in6 fields including address,
-port, flow info, and scope ID.
-
-Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/bsd-ioctl.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ bsd-user/freebsd/os-syscall.h | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+ create mode 100644 bsd-user/freebsd/os-syscall.h
 
-diff --git a/bsd-user/bsd-ioctl.c b/bsd-user/bsd-ioctl.c
-index 69d1ea1718..d2eb9105fc 100644
---- a/bsd-user/bsd-ioctl.c
-+++ b/bsd-user/bsd-ioctl.c
-@@ -249,3 +249,14 @@ static abi_long do_ioctl_unsupported(__unused const IOCTLEntry *ie,
- {
-     return -TARGET_ENXIO;
- }
+diff --git a/bsd-user/freebsd/os-syscall.h b/bsd-user/freebsd/os-syscall.h
+new file mode 100644
+index 0000000000..962adfa91a
+--- /dev/null
++++ b/bsd-user/freebsd/os-syscall.h
+@@ -0,0 +1,21 @@
++/*
++ * Copyright (c) 2023 Warner Losh <imp@bsdimp.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * OS-Specific portion of syscall_defs.h
++ */
 +
-+static void target_to_host_sockaddr_in6(struct sockaddr_in6 *hsa_in6,
-+        struct target_sockaddr_in6 *tsa_in6)
-+{
-+    __get_user(hsa_in6->sin6_len, &tsa_in6->sin6_len);
-+    __get_user(hsa_in6->sin6_family, &tsa_in6->sin6_family);
-+    __get_user(hsa_in6->sin6_port, &tsa_in6->sin6_port);
-+    __get_user(hsa_in6->sin6_flowinfo, &tsa_in6->sin6_flowinfo);
-+    memcpy(&hsa_in6->sin6_addr, &tsa_in6->sin6_addr, 16);
-+    __get_user(hsa_in6->sin6_scope_id, &tsa_in6->sin6_scope_id);
-+}
++#include "syscall_nr.h"
++
++/*
++ * FreeBSD uses a 64bits time_t except on i386 so we have to add a special case
++ * here.
++ */
++#if defined(TARGET_I386) && !defined(TARGET_X86_64)
++typedef int32_t target_time_t;
++#else
++typedef int64_t target_time_t;
++#endif
++
++typedef abi_long target_suseconds_t;
 -- 
 2.52.0
 
