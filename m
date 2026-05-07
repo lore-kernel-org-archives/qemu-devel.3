@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69810CD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 16:11:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12201CD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 16:11:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL1Ec-0004f3-Kx; Thu, 07 May 2026 12:05:58 -0400
+	id 1wL1JM-0002cc-C4; Thu, 07 May 2026 12:10:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wL1EQ-0004ZY-Ly
- for qemu-devel@nongnu.org; Thu, 07 May 2026 12:05:46 -0400
-Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
+ id 1wL1Ik-0001rh-AW
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 12:10:18 -0400
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wL1EM-0006v9-Mg
- for qemu-devel@nongnu.org; Thu, 07 May 2026 12:05:46 -0400
-Received: by mail-ot1-x335.google.com with SMTP id
- 46e09a7af769-7dcd17e19b6so657846a34.1
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 09:05:41 -0700 (PDT)
+ id 1wL1Ih-00089d-C6
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 12:10:13 -0400
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-7de4ed0593fso522423a34.1
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 09:10:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778169941; x=1778774741; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778170210; x=1778775010; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=o48wrIEYAbabDCExut6JMD01MN3k6KJ5HxRrPE5FtEY=;
- b=nBtF8WyoyVUBA+rzDNUWJhlR7zVuq8j/gHFT+F5qIir78uuSZPZYu6wYGyB1BZGnRh
- jUpMbJN4P8OOlOdcXYscahBob3zq7sKjz7TatFS06hsBf4iQGemNTylhfqHPcq84m6N+
- 9uZHC0ZhEPxtJb4WbOOrrcNRhlKG1hYa40W9xP8w5eSmdd1iTAT2I+OejNR3CH+loj1y
- j+1ZkZhXoYs14v9EN2UEgKoDocjjIWcNe4SBiSy4hw/6Fgrvby8X3/2qHqkgl6lfYzw6
- /YJ8USGRoBYJ+xbC1zCkrh16f5382761S38CdCdEOf/Aii0s9HK1cxaE4qytIqJDDDky
- D8Gw==
+ bh=OdMS80Iqz8+nGqxW2YaXhtp5vgXW9pAPi87GTGVVKbM=;
+ b=dSB1Qg7BoQsJMyOBumvUi/dkrscjkl+4neRXocyyDwfhHi1N8McxgwagXU/Ihu4thu
+ WCnxu0otvCJCVfgla1bxEAQxeN+LPtSn2haTtfotdD7DjYGYD0fOAH2J4QjAjsuqQ8Q+
+ WJJC0C48YDrWjP3Uo6yUu6yGZ+Du2gPSlDAvOLOy6XOKQaQpz1pCwehcHp2yphmz1Smv
+ Y2pGvQQTktNHcleoGFlLxZVJnzsYyDlGm/AQYUl4oOzbJ9S2DWja5SSG3PZ8P4sNTQq8
+ OPicGQLVepwpt2Fetnh/VkRSnhce89XCBn9x8G5zrCmZI4l/SpZ6JjmPJ73K3eaxFTZZ
+ DvHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778169941; x=1778774741;
+ d=1e100.net; s=20251104; t=1778170210; x=1778775010;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=o48wrIEYAbabDCExut6JMD01MN3k6KJ5HxRrPE5FtEY=;
- b=GIFDIQjreg6FpOLudvM/qg7C6zSBGtc2Y67dRRrkkdgXtZbbtDiuqpeg+uy7kQKdiF
- uoBicvtX6sPww4e6/cLvHtMBX1+dLr7JaydaUJUK8r8xE79P2SsQYa4e5NDkIWs37zMC
- r6HIBmaikkdXdRgdPHPib6pLI0GvpImt40q4Ccx3JS8lnh4MrgkQiDlbDeVbb1Gavlui
- MeB130bEu2MjTG1fR1w86oUUpQxwK3rK5L611joaGITT6T1ChzPeAP/yoz5OVW/uIsGc
- 5/U8/St90dBwP70azHITZR8noLPUMSqlPqyxZNELz5HaZNCGhAGuQ205xxBg16Ycj0cQ
- ko5Q==
-X-Gm-Message-State: AOJu0Yzr7AsOxzTQpFmSWGr5W22tL6k9pI1+X0VKEZjkclHSjs34KliW
- +qTNmgGOgs+mRlNNxEcwqZt7yxLhhFj9QtxuY2zAwsNrh75RYxrgKKuP0QJlLbE4Pyq6TwPfN9u
- u93xH
-X-Gm-Gg: AeBDiev05QhhzGEx7B6pxEuB2OS2g9g4ZecTBniM7SUgkzW6dHylTxvXQPTNPyPpVvN
- J3FPzttYzId0Jibxomk/JC5xTHWyiMZjpudXd4o93vx0TDZEqNc6id/Q0d+KCy1a/yvmsHeaU8G
- gT4FNdiCfTIOAvoWrQ3M3pTvXZglYugmQdOHx/F/+ZUhlQr8DrlCu7gyosoRmdxGXUX0ZmON++J
- VAgM5zyuQXU87axILjPpmq50eUw9DVKoVt1LmX3RX4ydtVoiH+NdEDD7g+bx/nFD7Uv4WY96Gzt
- XvVUGlEs4qzb91R3WmT8bg0QiUxYfuGOYb1N0VlNw8aqSpEspyWH/dsVkyjgN5CH1it++LlB/wQ
- jgY82xkbCeY+fLAG7iNNd5Gcbc0L7tpDn35+hqY/dK2VxKp8tnTzmFvevFHaTWu3cZ7VcXwc0xF
- 4sUhNsCNc8ThN244wlkyfqRAyqHt2QPts3066HGSrisQgR/crLu3muEs8WlP60Mq+0Nxg=
-X-Received: by 2002:a05:6830:6734:b0:7dc:dd58:50c7 with SMTP id
- 46e09a7af769-7e1df0c4d92mr5315980a34.18.1778169940780; 
- Thu, 07 May 2026 09:05:40 -0700 (PDT)
+ bh=OdMS80Iqz8+nGqxW2YaXhtp5vgXW9pAPi87GTGVVKbM=;
+ b=S47WSBmWhlpVtyCdn4AX2R3b6b5RUdZv4oblN0sjcqp7JJc54xi7KzDWUxxi62/QJe
+ pe1nG4sNJ/dHyseknjUtXOCqIvPSf4iU5ydbf/ObOPjkbJkpD/7aw6UATmSZ6QSupWLN
+ sU1+n2pbLjLX1AoLyF/mGNRIMTeAkvS6hsixA8sAr0pVeuJdzKqM6A1SvmhFzmLPr9tI
+ hVAZwpBpYQQoXCCN3f3w6EjWtTvv46xwU6tRPg+Hh0Nw+LZsanVi07z1IW0mEYSsyWAm
+ XXskn+BvkLQMt/o2jPHVPXjncd9VmMt9sDyjKAyKkDIJkEjumX4Lo6Ik433XNDfK3Oel
+ UV2A==
+X-Gm-Message-State: AOJu0YyRpVwPxFULJfUfFaxCpuUBtfxBnVWidc3bX3oNjXLtQZsiehVk
+ duW2zuCAQq0/pk1ZxV6OGXfWD4XLMl3Hb/KlOndNA2sYajYJHMfiLyrG+E/pXIRPXsdjkQMj/U3
+ 2HNe6
+X-Gm-Gg: AeBDies5+XYQm5YHn7F+CnKN8+P0dq0im/PeCIcJW09vSS5XLlrp6OyOz2Nf/BMX0Us
+ dw08nfnQ2JlmvMDxSKUIR4dMmkbrNWyTgD0faOJr1qnnrMdp9eWTMGsDAUR3D8+4EqziRI6fI65
+ E/1cpmLW88GNSP+fS3EmfuONLUAg/Fk+tDSIvwKvZSlMOsA4Jl+QjFMPtktYVHCLqdGfokZEgma
+ p4cKCCMuuvYrd7jx4g3EcVb31W+e0gBYjCCTxELkpujw2YtIyS/7qfhzD6UZfssyVjliPz6xrgV
+ JVk+/AAeRZ4zfTNIGGsM/ONqVefrozYCZeiseLBRy1EjhaQ4mv5OjIpljL7JezBM39Q72jb8d5h
+ 8ua+8vqnb+OVz5xu2kiBen305PJ/J2VM08FTBjjpKHalKDa5A8SjA/wH4+CuAkqmjNpVsz1jlsA
+ Q74Ogegd7W/y+14m65T/BLnw/aL5k5LTqvwMw49jE0Dua0dw==
+X-Received: by 2002:a05:6830:3785:b0:7de:a330:ecb8 with SMTP id
+ 46e09a7af769-7e1defe86f3mr5151194a34.16.1778170210007; 
+ Thu, 07 May 2026 09:10:10 -0700 (PDT)
 Received: from stoup.attlocal.net ([2600:381:c938:6375:9641:bbb2:a93a:bb4c])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7decae680bdsm14647398a34.27.2026.05.07.09.05.40
+ 46e09a7af769-7e302462fb1sm16415a34.11.2026.05.07.09.10.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 09:05:40 -0700 (PDT)
+ Thu, 07 May 2026 09:10:09 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 17/29] fpu: Return struct from parts{64,128}_div
-Date: Thu,  7 May 2026 11:05:05 -0500
-Message-ID: <20260507160518.444797-18-richard.henderson@linaro.org>
+Subject: [PATCH v3 08/11] target/arm: Drop oddstatus from is_ebf and
+ bfdotadd_ebf
+Date: Thu,  7 May 2026 11:09:56 -0500
+Message-ID: <20260507160959.449170-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260507160518.444797-1-richard.henderson@linaro.org>
-References: <20260507160518.444797-1-richard.henderson@linaro.org>
+In-Reply-To: <20260507160959.449170-1-richard.henderson@linaro.org>
+References: <20260507160959.449170-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x335.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,230 +102,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-At the same time, export.
+This argument is no longer used.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/fpu/softfloat-parts.h |  9 +++++++
- fpu/softfloat.c               | 34 +++++++++++++-------------
- fpu/softfloat-parts.c.inc     | 45 ++++++++++++++++-------------------
- 3 files changed, 46 insertions(+), 42 deletions(-)
+ target/arm/tcg/vec_internal.h | 12 +++------
+ target/arm/tcg/sme_helper.c   |  6 ++---
+ target/arm/tcg/vec_helper.c   | 50 +++++++++++++++--------------------
+ 3 files changed, 29 insertions(+), 39 deletions(-)
 
-diff --git a/include/fpu/softfloat-parts.h b/include/fpu/softfloat-parts.h
-index f631c38c79..44e0cb7d05 100644
---- a/include/fpu/softfloat-parts.h
-+++ b/include/fpu/softfloat-parts.h
-@@ -163,4 +163,13 @@ float64 float64_round_pack_canonical(FloatParts64 *p, float_status *s);
- float128 float128_round_pack_canonical(FloatParts128 *p, float_status *s);
- floatx80 floatx80_round_pack_canonical(FloatParts128 *p, float_status *s);
- 
-+/*
-+ * Operations
-+ */
-+
-+FloatParts64 parts64_div(const FloatParts64 *a, const FloatParts64 *b,
-+                         float_status *s);
-+FloatParts128 parts128_div(const FloatParts128 *a, const FloatParts128 *b,
-+                           float_status *s);
-+
- #endif
-diff --git a/fpu/softfloat.c b/fpu/softfloat.c
-index 246209072e..6d69b61c7f 100644
---- a/fpu/softfloat.c
-+++ b/fpu/softfloat.c
-@@ -2129,9 +2129,9 @@ float16 float16_div(float16 a, float16 b, float_status *status)
- {
-     FloatParts64 pa = float16_unpack_canonical(a, status);
-     FloatParts64 pb = float16_unpack_canonical(b, status);
--    FloatParts64 *pr = parts64_div(&pa, &pb, status);
-+    FloatParts64 pr = parts64_div(&pa, &pb, status);
- 
--    return float16_round_pack_canonical(pr, status);
-+    return float16_round_pack_canonical(&pr, status);
- }
- 
- static float32 QEMU_SOFTFLOAT_ATTR
-@@ -2139,9 +2139,9 @@ soft_f32_div(float32 a, float32 b, float_status *status)
- {
-     FloatParts64 pa = float32_unpack_canonical(a, status);
-     FloatParts64 pb = float32_unpack_canonical(b, status);
--    FloatParts64 *pr = parts64_div(&pa, &pb, status);
-+    FloatParts64 pr = parts64_div(&pa, &pb, status);
- 
--    return float32_round_pack_canonical(pr, status);
-+    return float32_round_pack_canonical(&pr, status);
- }
- 
- static float64 QEMU_SOFTFLOAT_ATTR
-@@ -2149,9 +2149,9 @@ soft_f64_div(float64 a, float64 b, float_status *status)
- {
-     FloatParts64 pa = float64_unpack_canonical(a, status);
-     FloatParts64 pb = float64_unpack_canonical(b, status);
--    FloatParts64 *pr = parts64_div(&pa, &pb, status);
-+    FloatParts64 pr = parts64_div(&pa, &pb, status);
- 
--    return float64_round_pack_canonical(pr, status);
-+    return float64_round_pack_canonical(&pr, status);
- }
- 
- static float hard_f32_div(float a, float b)
-@@ -2216,9 +2216,9 @@ float64 float64r32_div(float64 a, float64 b, float_status *status)
- {
-     FloatParts64 pa = float64_unpack_canonical(a, status);
-     FloatParts64 pb = float64_unpack_canonical(b, status);
--    FloatParts64 *pr = parts64_div(&pa, &pb, status);
-+    FloatParts64 pr = parts64_div(&pa, &pb, status);
- 
--    return float64r32_round_pack_canonical(pr, status);
-+    return float64r32_round_pack_canonical(&pr, status);
- }
- 
- bfloat16 QEMU_FLATTEN
-@@ -2226,9 +2226,9 @@ bfloat16_div(bfloat16 a, bfloat16 b, float_status *status)
- {
-     FloatParts64 pa = bfloat16_unpack_canonical(a, status);
-     FloatParts64 pb = bfloat16_unpack_canonical(b, status);
--    FloatParts64 *pr = parts64_div(&pa, &pb, status);
-+    FloatParts64 pr = parts64_div(&pa, &pb, status);
- 
--    return bfloat16_round_pack_canonical(pr, status);
-+    return bfloat16_round_pack_canonical(&pr, status);
- }
- 
- float128 QEMU_FLATTEN
-@@ -2236,22 +2236,22 @@ float128_div(float128 a, float128 b, float_status *status)
- {
-     FloatParts128 pa = float128_unpack_canonical(a, status);
-     FloatParts128 pb = float128_unpack_canonical(b, status);
--    FloatParts128 *pr = parts128_div(&pa, &pb, status);
-+    FloatParts128 pr = parts128_div(&pa, &pb, status);
- 
--    return float128_round_pack_canonical(pr, status);
-+    return float128_round_pack_canonical(&pr, status);
- }
- 
- floatx80 floatx80_div(floatx80 a, floatx80 b, float_status *status)
- {
--    FloatParts128 pa, pb, *pr;
-+    FloatParts128 pa, pb;
- 
-     if (!floatx80_unpack_canonical(&pa, a, status) ||
-         !floatx80_unpack_canonical(&pb, b, status)) {
-         return floatx80_default_nan(status);
-     }
- 
--    pr = parts128_div(&pa, &pb, status);
--    return floatx80_round_pack_canonical(pr, status);
-+    pa = parts128_div(&pa, &pb, status);
-+    return floatx80_round_pack_canonical(&pa, status);
- }
- 
- /*
-@@ -5140,8 +5140,8 @@ static void parts_s390_divide_to_integer(FloatParts64 *a, FloatParts64 *b,
-         uint32_t r_flags;
- 
-         /* Compute precise quotient */
--        q_buf = *a;
--        q = parts64_div(&q_buf, b, status);
-+        q_buf = parts64_div(a, b, status);
-+        q = &q_buf;
- 
-         /*
-          * Check whether two closest integers can be precisely represented,
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 40ea7e3a39..1634160728 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -807,68 +807,63 @@ static FloatPartsN *partsN(muladd_scalbn)(FloatPartsN *a, FloatPartsN *b,
-  * corresponding value `b'. The operation is performed according to
-  * the IEC/IEEE Standard for Binary Floating-Point Arithmetic.
+diff --git a/target/arm/tcg/vec_internal.h b/target/arm/tcg/vec_internal.h
+index 4edd2b4fc1..c7ccb28b18 100644
+--- a/target/arm/tcg/vec_internal.h
++++ b/target/arm/tcg/vec_internal.h
+@@ -270,7 +270,6 @@ float32 bfdotadd(float32 sum, uint32_t e1, uint32_t e2, float_status *fpst);
+  * @sum: addend
+  * @e1, @e2: multiplicand vectors
+  * @fpst: floating-point status to use
+- * @fpst_odd: floating-point status to use for round-to-odd operations
+  *
+  * BFloat16 2-way dot product of @e1 & @e2, accumulating with @sum.
+  * The @e1 and @e2 operands correspond to the 32-bit source vector
+@@ -279,23 +278,20 @@ float32 bfdotadd(float32 sum, uint32_t e1, uint32_t e2, float_status *fpst);
+  * Corresponds to the ARM pseudocode function BFDotAdd, specialized
+  * for the FPCR.EBF == 1 case.
   */
--static FloatPartsN *partsN(div)(FloatPartsN *a, FloatPartsN *b,
--                                float_status *s)
-+FloatPartsN partsN(div)(const FloatPartsN *a, const FloatPartsN *b,
-+                        float_status *s)
- {
-     int ab_mask = float_cmask(a->cls) | float_cmask(b->cls);
--    bool sign = a->sign ^ b->sign;
-+    FloatPartsN r = *a;
-+
-+    r.sign ^= b->sign;
-+    r.exp -= b->exp;
+-float32 bfdotadd_ebf(float32 sum, uint32_t e1, uint32_t e2,
+-                     float_status *fpst, float_status *fpst_odd);
++float32 bfdotadd_ebf(float32 sum, uint32_t e1, uint32_t e2, float_status *fpst);
  
-     if (likely(cmask_is_only_normals(ab_mask))) {
-         if (ab_mask & float_cmask_denormal) {
-             float_raise(float_flag_input_denormal_used, s);
-         }
--        a->sign = sign;
--        a->exp -= b->exp + fracN(div)(a, b);
--        return a;
-+        r.exp -= fracN(div)(&r, b);
-+        return r;
-     }
- 
-     /* 0/0 or Inf/Inf => NaN */
-     if (unlikely(ab_mask == float_cmask_zero)) {
-         float_raise(float_flag_invalid | float_flag_invalid_zdz, s);
--        goto d_nan;
-+        return partsN(default_nan)(s);
-     }
-     if (unlikely(ab_mask == float_cmask_inf)) {
-         float_raise(float_flag_invalid | float_flag_invalid_idi, s);
--        goto d_nan;
-+        return partsN(default_nan)(s);
-     }
- 
-     /* All the NaN cases */
-     if (unlikely(ab_mask & float_cmask_anynan)) {
--        *a = partsN(pick_nan)(a, b, s);
--	return a;
-+        return partsN(pick_nan)(a, b, s);
-     }
- 
-     if ((ab_mask & float_cmask_denormal) && b->cls != float_class_zero) {
-         float_raise(float_flag_input_denormal_used, s);
-     }
- 
--    a->sign = sign;
--
-     /* Inf / X */
--    if (a->cls == float_class_inf) {
--        return a;
-+    if (r.cls == float_class_inf) {
-+        return r;
-     }
- 
-     /* 0 / X */
--    if (a->cls == float_class_zero) {
--        return a;
-+    if (r.cls == float_class_zero) {
-+        return r;
-     }
- 
-     /* X / Inf */
-     if (b->cls == float_class_inf) {
--        a->cls = float_class_zero;
--        return a;
-+        r.cls = float_class_zero;
-+        return r;
-     }
- 
-     /* X / 0 => Inf */
--    g_assert(b->cls == float_class_zero);
-+    assert(b->cls == float_class_zero);
-     float_raise(float_flag_divbyzero, s);
--    a->cls = float_class_inf;
--    return a;
--
-- d_nan:
--    *a = partsN(default_nan)(s);
--    return a;
-+    r.cls = float_class_inf;
-+    return r;
- }
+ /**
+  * is_ebf:
+  * @env: CPU state
+  * @statusp: pointer to floating point status to fill in
+- * @oddstatusp: pointer to floating point status to fill in for round-to-odd
+  *
+  * Determine whether a BFDotAdd operation should use FPCR.EBF = 0
+- * or FPCR.EBF = 1 semantics. On return, has initialized *statusp
+- * and *oddstatusp to suitable float_status arguments to use with either
+- * bfdotadd() or bfdotadd_ebf().
++ * or FPCR.EBF = 1 semantics. On return, has initialized *statusp as suitable
++ * for float_status arguments to either bfdotadd() or bfdotadd_ebf().
+  * Returns true for EBF = 1, false for EBF = 0. (The caller should use this
+  * to decide whether to call bfdotadd() or bfdotadd_ebf().)
+  */
+-bool is_ebf(CPUARMState *env, float_status *statusp, float_status *oddstatusp);
++bool is_ebf(CPUARMState *env, float_status *statusp);
  
  /*
+  * Negate as for FPCR.AH=1 -- do not negate NaNs.
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index ab5999c592..0702a1b129 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -1435,9 +1435,9 @@ static void do_bfmopa_w(void *vza, void *vzn, void *vzm,
+                         uint32_t desc, uint32_t negx, bool ah_neg)
+ {
+     intptr_t row, col, oprsz = simd_maxsz(desc);
+-    float_status fpst, fpst_odd;
++    float_status fpst;
+ 
+-    if (is_ebf(env, &fpst, &fpst_odd)) {
++    if (is_ebf(env, &fpst)) {
+         for (row = 0; row < oprsz; ) {
+             uint16_t prow = pn[H2(row >> 4)];
+             do {
+@@ -1458,7 +1458,7 @@ static void do_bfmopa_w(void *vza, void *vzn, void *vzm,
+                             uint32_t m = *(uint32_t *)(vzm + H1_4(col));
+ 
+                             m = f16mop_adj_pair(m, pcol, 0);
+-                            *a = bfdotadd_ebf(*a, n, m, &fpst, &fpst_odd);
++                            *a = bfdotadd_ebf(*a, n, m, &fpst);
+                         }
+                         col += 4;
+                         pcol >>= 4;
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index 85bcaac3d1..3231bb2100 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -2845,7 +2845,7 @@ DO_MMLA_B(gvec_usmmla_b, do_usmmla_b)
+  * BFloat16 Dot Product
+  */
+ 
+-bool is_ebf(CPUARMState *env, float_status *statusp, float_status *oddstatusp)
++bool is_ebf(CPUARMState *env, float_status *statusp)
+ {
+     /*
+      * For BFDOT, BFMMLA, etc, the behaviour depends on FPCR.EBF.
+@@ -2865,11 +2865,7 @@ bool is_ebf(CPUARMState *env, float_status *statusp, float_status *oddstatusp)
+     *statusp = env->vfp.fp_status[is_a64(env) ? FPST_A64 : FPST_A32];
+     set_default_nan_mode(true, statusp);
+ 
+-    if (ebf) {
+-        /* EBF=1 needs to do a step with round-to-odd semantics */
+-        *oddstatusp = *statusp;
+-        set_float_rounding_mode(float_round_to_odd, oddstatusp);
+-    } else {
++    if (!ebf) {
+         set_flush_to_zero(true, statusp);
+         set_flush_inputs_to_zero(true, statusp);
+         set_float_rounding_mode(float_round_to_odd_inf, statusp);
+@@ -2893,8 +2889,7 @@ float32 bfdotadd(float32 sum, uint32_t e1, uint32_t e2, float_status *fpst)
+     return t1;
+ }
+ 
+-float32 bfdotadd_ebf(float32 sum, uint32_t e1, uint32_t e2,
+-                     float_status *fpst, float_status *fpst_odd)
++float32 bfdotadd_ebf(float32 sum, uint32_t e1, uint32_t e2, float_status *fpst)
+ {
+     /* Unpack two BFloat16 into two Float32, trivially. */
+     float32 s1r = e1 << 16;
+@@ -2965,11 +2960,11 @@ void HELPER(gvec_bfdot)(void *vd, void *vn, void *vm, void *va,
+     intptr_t i, opr_sz = simd_oprsz(desc);
+     float32 *d = vd, *a = va;
+     uint32_t *n = vn, *m = vm;
+-    float_status fpst, fpst_odd;
++    float_status fpst;
+ 
+-    if (is_ebf(env, &fpst, &fpst_odd)) {
++    if (is_ebf(env, &fpst)) {
+         for (i = 0; i < opr_sz / 4; ++i) {
+-            d[i] = bfdotadd_ebf(a[i], n[i], m[i], &fpst, &fpst_odd);
++            d[i] = bfdotadd_ebf(a[i], n[i], m[i], &fpst);
+         }
+     } else {
+         for (i = 0; i < opr_sz / 4; ++i) {
+@@ -2988,14 +2983,14 @@ void HELPER(gvec_bfdot_idx)(void *vd, void *vn, void *vm,
+     intptr_t eltspersegment = MIN(16 / 4, elements);
+     float32 *d = vd, *a = va;
+     uint32_t *n = vn, *m = vm;
+-    float_status fpst, fpst_odd;
++    float_status fpst;
+ 
+-    if (is_ebf(env, &fpst, &fpst_odd)) {
++    if (is_ebf(env, &fpst)) {
+         for (i = 0; i < elements; i += eltspersegment) {
+             uint32_t m_idx = m[i + H4(index)];
+ 
+             for (j = i; j < i + eltspersegment; j++) {
+-                d[j] = bfdotadd_ebf(a[j], n[j], m_idx, &fpst, &fpst_odd);
++                d[j] = bfdotadd_ebf(a[j], n[j], m_idx, &fpst);
+             }
+         }
+     } else {
+@@ -3022,17 +3017,16 @@ void HELPER(sme2_bfvdot_idx)(void *vd, void *vn, void *vm,
+     uint16_t *n0 = vn;
+     uint16_t *n1 = vn + sizeof(ARMVectorReg);
+     uint32_t *m = vm;
+-    float_status fpst, fpst_odd;
++    float_status fpst;
+ 
+-    if (is_ebf(env, &fpst, &fpst_odd)) {
++    if (is_ebf(env, &fpst)) {
+         for (i = 0; i < elements; i += eltspersegment) {
+             uint32_t m_idx = m[i + H4(idx)];
+ 
+             for (j = 0; j < eltspersegment; j++) {
+                 uint32_t nn = (n0[H2(2 * (i + j) + sel)])
+                             | (n1[H2(2 * (i + j) + sel)] << 16);
+-                d[i + H4(j)] = bfdotadd_ebf(a[i + H4(j)], nn, m_idx,
+-                                            &fpst, &fpst_odd);
++                d[i + H4(j)] = bfdotadd_ebf(a[i + H4(j)], nn, m_idx, &fpst);
+             }
+         }
+     } else {
+@@ -3055,9 +3049,9 @@ void HELPER(gvec_bfmmla)(void *vd, void *vn, void *vm, void *va,
+     intptr_t s, opr_sz = simd_oprsz(desc);
+     float32 *d = vd, *a = va;
+     uint32_t *n = vn, *m = vm;
+-    float_status fpst, fpst_odd;
++    float_status fpst;
+ 
+-    if (is_ebf(env, &fpst, &fpst_odd)) {
++    if (is_ebf(env, &fpst)) {
+         for (s = 0; s < opr_sz / 4; s += 4) {
+             float32 sum00, sum01, sum10, sum11;
+ 
+@@ -3069,20 +3063,20 @@ void HELPER(gvec_bfmmla)(void *vd, void *vn, void *vm, void *va,
+              *               i   j               i   k             j   k
+              */
+             sum00 = a[s + H4(0 + 0)];
+-            sum00 = bfdotadd_ebf(sum00, n[s + H4(0 + 0)], m[s + H4(0 + 0)], &fpst, &fpst_odd);
+-            sum00 = bfdotadd_ebf(sum00, n[s + H4(0 + 1)], m[s + H4(0 + 1)], &fpst, &fpst_odd);
++            sum00 = bfdotadd_ebf(sum00, n[s + H4(0 + 0)], m[s + H4(0 + 0)], &fpst);
++            sum00 = bfdotadd_ebf(sum00, n[s + H4(0 + 1)], m[s + H4(0 + 1)], &fpst);
+ 
+             sum01 = a[s + H4(0 + 1)];
+-            sum01 = bfdotadd_ebf(sum01, n[s + H4(0 + 0)], m[s + H4(2 + 0)], &fpst, &fpst_odd);
+-            sum01 = bfdotadd_ebf(sum01, n[s + H4(0 + 1)], m[s + H4(2 + 1)], &fpst, &fpst_odd);
++            sum01 = bfdotadd_ebf(sum01, n[s + H4(0 + 0)], m[s + H4(2 + 0)], &fpst);
++            sum01 = bfdotadd_ebf(sum01, n[s + H4(0 + 1)], m[s + H4(2 + 1)], &fpst);
+ 
+             sum10 = a[s + H4(2 + 0)];
+-            sum10 = bfdotadd_ebf(sum10, n[s + H4(2 + 0)], m[s + H4(0 + 0)], &fpst, &fpst_odd);
+-            sum10 = bfdotadd_ebf(sum10, n[s + H4(2 + 1)], m[s + H4(0 + 1)], &fpst, &fpst_odd);
++            sum10 = bfdotadd_ebf(sum10, n[s + H4(2 + 0)], m[s + H4(0 + 0)], &fpst);
++            sum10 = bfdotadd_ebf(sum10, n[s + H4(2 + 1)], m[s + H4(0 + 1)], &fpst);
+ 
+             sum11 = a[s + H4(2 + 1)];
+-            sum11 = bfdotadd_ebf(sum11, n[s + H4(2 + 0)], m[s + H4(2 + 0)], &fpst, &fpst_odd);
+-            sum11 = bfdotadd_ebf(sum11, n[s + H4(2 + 1)], m[s + H4(2 + 1)], &fpst, &fpst_odd);
++            sum11 = bfdotadd_ebf(sum11, n[s + H4(2 + 0)], m[s + H4(2 + 0)], &fpst);
++            sum11 = bfdotadd_ebf(sum11, n[s + H4(2 + 1)], m[s + H4(2 + 1)], &fpst);
+ 
+             d[s + H4(0 + 0)] = sum00;
+             d[s + H4(0 + 1)] = sum01;
 -- 
 2.43.0
 
