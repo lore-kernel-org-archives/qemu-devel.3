@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35DD0CD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:57:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E401CD3439
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:58:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL11e-000417-Oq; Thu, 07 May 2026 11:52:34 -0400
+	id 1wL125-0005qu-LM; Thu, 07 May 2026 11:53:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL11c-0003yk-9n
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:32 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1wL123-0005nK-20
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:59 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL11a-0003vZ-7l
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:32 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-48909558b3aso12269425e9.0
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:52:29 -0700 (PDT)
+ id 1wL121-00043E-E8
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:58 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4852a9c6309so9005185e9.0
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:52:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778169149; x=1778773949; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778169176; x=1778773976; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=RODeQt9i+bgayBzEiwJIi4pCrFbJ9M8QFpaPNbna8o4=;
- b=Cs9/DKr4XkFKCZU7aYkr2NA/iYn/duDRrgXhQt0QSD00GZLs+OPh0ONNlMjR9KwSOV
- d9pqzZFrOhNMwGpVXldZp89LihPwdYKhJH5YHwwiH16N+1AfSnNeEY0+HMtZkGRBNY8i
- 6W2kg3SuuEpCr44OjSyoimzcZKGTjiz9M+ca2ZZWFHCCaSSP6zZgN0el2n6vk7seTKaU
- YNewD1S7Dd6bF42xnEj6O2pQ+AuCeAxUr4G/BUfg3tyLv0EI2e17vBvmqmcfs9GY8q6z
- zq2c0dbqjCGW0R3AP7+qrMLIX1hd4jqnOvAES6VG7aak7oBV/H3YJbxztpQF/w6oNPNs
- v4Bw==
+ :reply-to; bh=g3Ne1jJeN18OBsdPIflujrejDJaHthbKJQHwQQvf22Q=;
+ b=fWtIzvFEraOjYz2flSEWZin3W3a9g61A2kIaT62yHx3zIU2FhbIcsWsi/vIddpFpe8
+ AKrDtBjrRkqF4dGptdPZJvcUkOgQD1H02m8HmC8BiDqFzLvWf/CyQ1akkjyEzY/Ayx6R
+ Z2TD+wZ5up9ifbzN/6udAo6kazZ90+k/HGRvl/szVav1vw31B1PeTclWxOezbw0bCToi
+ vwWhdS6/b0DngYuqfmKbpsVM3JF2XnZdd2GsJ9ELoSXt9SLoKM5kVvWnP9ekrsUMCK42
+ pCDTt9LmFya2RUySPXUkaixIkCRqySj7Vxvt+UF0KLmpjHNy3M5Ji7vIgQgbOlJmG/Es
+ OgnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778169149; x=1778773949;
+ d=1e100.net; s=20251104; t=1778169176; x=1778773976;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=RODeQt9i+bgayBzEiwJIi4pCrFbJ9M8QFpaPNbna8o4=;
- b=s3w3CLRs+2jQetKZwngM7QdO8AkYgUpH5sTCKNQxGNXKxVva2QKRnk6VUsuQE88o0J
- xbuV+F4XF3P6OJ9P0HNIO5f0epgYzBGhM6i008ZTNWkF+B/ljr4cbtWBz1fKXbQIbZon
- cCkp451xezvby4WNLgMcFC88E/i0OHkn4btDOyXUzBidPJqy8yqwMiRfHoOx/ydeX+n/
- OT2gwjovd5SHos8hAaWhmhzWtGyQF42I9pvt5toDZt9EM2XFJlAfB+jI7fC4RoR3C+oZ
- iXpA2Gwp27Dp8IhHrrZg7lncmNxWiYA0p2gRFIImcZ86UJH6Z9WgpU63DsxHmPrxYyVz
- h15A==
-X-Gm-Message-State: AOJu0YyUhgfS1fdnNI48f/M/kR7i1pMqyq44qrcM8i69OJN/+fA2z2ZX
- BKwCLCzJ3rdSy0Z58xnywDLuDB+1guC2sy5kTymyaje3FjC59T3S8NI8ijLBLlpeocdyJQAmPu/
- rnNAK
-X-Gm-Gg: AeBDiet6TSjFmXleIbYnBs0hroRdV/4hwlr102kSjetdOBklQqrmm2yeJEhET4O4q+E
- ROpFjisAKKUWim1xpb6jezmNIfS395HF3JoLgxfvjYX9XBvjwv8Vxc4KFDDsBxJmlgcAWYufF12
- Ir8HK0RtKCqRUmDSiW6y6iVHWDSikSzKORxiBwWXugykTJzhOnpWYStqYwC6ir2qBbqIHlNcbc9
- hve9RB6m2NvPC67OzoVfAmisOycsupH6a0dBnzc3ZxxJNYcUAsqwu2iZ+9AFEBXP27gwaBqvI3A
- DBb2yUF9IzqALcwmlTvCgXgOpwdiygQmk2zE5+ZfX7SayschByVUBK/3HAi6mp+9zWQLhMJPjVx
- kJWb7nGyP1eSAU32ljiCi5SDP24b3sp9+GmiAa/6As9tvrevq0Lu081jEa16LLruM1+yz+wqyXQ
- ejLUxbUJaEQRrxspk3En72bGQEdZo8SGMIveobYmENPFt267q4OTYe8kYganPU0vyiG7z5U5+gj
- HziO2gwcLWLFrAmpwyfwEZzTSt0VepF55zcve99uw==
-X-Received: by 2002:a05:600c:8b06:b0:485:4388:3492 with SMTP id
- 5b1f17b1804b1-48e51e223ccmr139244685e9.11.1778169148567; 
- Thu, 07 May 2026 08:52:28 -0700 (PDT)
+ bh=g3Ne1jJeN18OBsdPIflujrejDJaHthbKJQHwQQvf22Q=;
+ b=CqFWVtq+B9O9LPs+ZsVvsJcI+1bbxAWISqoIGdoUCPhfocga2WDbUfetm4hDu7UNhT
+ o8F8/91G+Go7FzR607hvRD/Ohf6dYhFGUgABmZ+YEZ6I+Rm4ri71Lbp+Ij9/DlpmeEnj
+ 7MOBHQ+Rp1YPde74ELG0NipdpebvmaNPn8SV60bZqS63iCmcJSL8PjErvWXVv/9MHH3Q
+ uTpHKAMwU5k2SsvvKCkPWsXYbL66wgDzgnaE9EE4sY0nDX4ZtSjdBziKNvt+qIkVTSQn
+ NIHf4wwcR8KdGUy18I+9W4rvTp+S7C65q+QCJ5EOiOoqOqzRIoWj8n565Sc0Q6Zg92IT
+ Iq+g==
+X-Gm-Message-State: AOJu0YzKqjLIVdGvR5pRmbBunB5O5JEGPvq9gqjj1lF1MgLGTbVRUVAD
+ lKr6RXDNLIJcfDHlV1wQdrHZwSefL8K++P0gcob9G+AYCVceAy6bKXpui0JQc3sPrA8gq4OmrJV
+ Zq+U8
+X-Gm-Gg: AeBDiesJhwKHbAJLKF7NG3+WKHua5rDAMT0qKqGj/ULq/WTBsj1mKeybgyHB/Px4Z2y
+ 0qdwH5SNP4rg7xeFNmqZORGvkz4tVQcDTwu3ou2QX2KWdG5VqlwbeishvRvUpiRE0302TxCqsBg
+ 4pD4atpGAZVNAZDkkL/JtUBGxgUnoLP+lWPw60KJnFUKvo7JfqHM/R45d+Br0Wa3c1PrzVwjDzP
+ dvG8N7jsHEh0a5iJ75/0i5k6ZZjFbCKysbxdQQHtQJPAGqI/ReMgGyB9Tec0Js0B8psGQSlT0lh
+ uqNVzycJ4yDyrVNJylrukIIChcggNNK9FqlDUBcAvGQ9jzYW7ozU1a1UvgCaTIiBEFnGNqIliHr
+ nVEs9SAZZldfL2IKF4kKfiI+O2DFQso2qGfHAAzeCxTduGT+JpEu+ueDFRNtFfxhWrRBWprN3Kp
+ xirroz1jH3Py8eEBLz84w9WgraCyvUwn+XbFnU040DlFeXgIu5IlS1B6KgwmbEdyKmbyvJ7LswK
+ D2Kxxyq+n2N9768
+X-Received: by 2002:a05:600c:8b0c:b0:48a:7a10:4f47 with SMTP id
+ 5b1f17b1804b1-48e51e0a620mr146365155e9.3.1778169175914; 
+ Thu, 07 May 2026 08:52:55 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.27
+ 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.55
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 08:52:28 -0700 (PDT)
+ Thu, 07 May 2026 08:52:55 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 33/67] hw/intc/arm_gicv5: Cache pending LPIs in a hash table
-Date: Thu,  7 May 2026 16:51:20 +0100
-Message-ID: <20260507155154.1886557-34-peter.maydell@linaro.org>
+Subject: [PULL 62/67] hw/arm/virt: Handle GICv5 in interrupt bindings for PPIs
+Date: Thu,  7 May 2026 16:51:49 +0100
+Message-ID: <20260507155154.1886557-63-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260507155154.1886557-1-peter.maydell@linaro.org>
 References: <20260507155154.1886557-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,217 +100,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GICv5 stores information about LPIs in a guest-memory data
-structure.  Iterating through this to identify the highest priority
-pending interrupt would be expensive; to avoid this we will use a
-hash table which contains an entry for each pending LPI and which
-caches the L2 ISTE.  Typically only a few LPIs will be pending at any
-one time, so iterating through the hash table should be fast.
+The GICv5 devicetree binding specifies the "interrupts" property
+differently to GICv2 and GICv3 for PPIs: the first field is the
+architectural INTID.TYPE, and the second is the architectural
+INTID.ID.  (The third field defining the level/edge trigger mode has
+the same values for GICv5 as it did for the older GICs.)
 
-We can access an L2 ISTE whenever it is valid, and can freely cache
-the data for as long as the IST is valid.  We only need to ensure
-that we have written back the data at the point where
-IRS_IST_BASER.VALID is written to 0.
+In the places in the virt board where we wire up PPIs (the timer and
+the PMU), handle the GICv5:
 
-We add an LPI to the cache when the pending bit is written to 1, and
-remove it when it is written to 0.  Handling of checking the cache,
-and of adding and removing entries, is handled within get_l2_iste()
-and put_l2_iste(), which all the operations that read and write ISTE
-words use.
+ * use the architectural constant GICV5_PPI for the type
+ * use the architected GICv5 PPI numbers for the interrupt sources
+   (which differ from the old ones and don't need to be adjusted via
+   INTID_TO_PPI())
+ * leave the irqflags as-is
+
+Add some commentary in our include/hw/arm/fdt.h file about what the
+the constants defined there are valid for.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Message-id: 20260327111700.795099-34-peter.maydell@linaro.org
+Message-id: 20260327111700.795099-63-peter.maydell@linaro.org
 ---
- hw/intc/arm_gicv5.c         | 116 ++++++++++++++++++++++++++++++++++--
- include/hw/intc/arm_gicv5.h |   2 +
- 2 files changed, 112 insertions(+), 6 deletions(-)
+ hw/arm/virt.c        | 23 +++++++++++++++++++----
+ include/hw/arm/fdt.h | 10 ++++++++++
+ 2 files changed, 29 insertions(+), 4 deletions(-)
 
-diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
-index 866c1333c3..989492d4b6 100644
---- a/hw/intc/arm_gicv5.c
-+++ b/hw/intc/arm_gicv5.c
-@@ -471,15 +471,22 @@ static bool write_l2_iste_mem(GICv5Common *cs, const GICv5ISTConfig *cfg,
- 
- /*
-  * This is returned by get_l2_iste() and has everything we need to do
-- * the writeback of the L2 ISTE word in put_l2_iste().  Currently the
-- * get/put functions always directly do guest memory reads and writes
-- * to update the L2 ISTE. In a future commit we will add support for a
-- * cache of some of the ISTE data in a local hashtable; the APIs are
-- * designed with that in mind.
-+ * the writeback of the L2 ISTE word in put_l2_iste().  Not all these
-+ * fields are always valid; they are private to the implementation of
-+ * get_l2_iste() and put_l2_iste().
-  */
- typedef struct L2_ISTE_Handle {
-+    /* Guest memory address of the L2 ISTE; valid only if !hashed */
-     hwaddr l2_iste_addr;
--    uint32_t l2_iste;
-+    union {
-+        /* Actual L2_ISTE word; valid only if !hashed */
-+        uint32_t l2_iste;
-+        /* Pointer to L2 ISTE word; valid only if hashed */
-+        uint32_t *l2_iste_p;
-+    };
-+    uint32_t id;
-+    /* True if this ISTE is currently in the cache */
-+    bool hashed;
- } L2_ISTE_Handle;
- 
- static uint32_t *get_l2_iste(GICv5Common *cs, const GICv5ISTConfig *cfg,
-@@ -499,6 +506,25 @@ static uint32_t *get_l2_iste(GICv5Common *cs, const GICv5ISTConfig *cfg,
-      * If the ISTE could not be read (typically because of a memory
-      * error), return NULL.
-      */
-+    uint32_t *hashvalue;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 3caba6e5d3..09474c55d1 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -500,7 +500,15 @@ static void fdt_add_timer_nodes(const VirtMachineState *vms)
+                                 "arm,armv7-timer");
+     }
+     qemu_fdt_setprop(ms->fdt, "/timer", "always-on", NULL, 0);
+-    if (vms->ns_el2_virt_timer_irq) {
++    if (vms->gic_version == VIRT_GIC_VERSION_5) {
++        /* The GICv5 architects the PPI numbers differently */
++        qemu_fdt_setprop_cells(ms->fdt, "/timer", "interrupts",
++                               GICV5_PPI, GICV5_PPI_CNTPS, irqflags,
++                               GICV5_PPI, GICV5_PPI_CNTP, irqflags,
++                               GICV5_PPI, GICV5_PPI_CNTV, irqflags,
++                               GICV5_PPI, GICV5_PPI_CNTHP, irqflags,
++                               GICV5_PPI, GICV5_PPI_CNTHV, irqflags);
++    } else if (vms->ns_el2_virt_timer_irq) {
+         qemu_fdt_setprop_cells(ms->fdt, "/timer", "interrupts",
+                                GIC_FDT_IRQ_TYPE_PPI,
+                                INTID_TO_PPI(ARCH_TIMER_S_EL1_IRQ), irqflags,
+@@ -1025,11 +1033,18 @@ static void fdt_add_pmu_nodes(const VirtMachineState *vms)
+     qemu_fdt_add_subnode(ms->fdt, "/pmu");
+     if (arm_feature(&armcpu->env, ARM_FEATURE_V8)) {
+         const char compat[] = "arm,armv8-pmuv3";
 +
-+    if (!cfg->valid) {
-+        /* Catch invalid config early, it has no lpi_cache */
-+        return NULL;
-+    }
-+
-+    hashvalue = g_hash_table_lookup(cfg->lpi_cache,
-+                                    GINT_TO_POINTER(id));
-+
-+    h->id = id;
-+
-+    if (hashvalue) {
-+        h->hashed = true;
-+        h->l2_iste_p = hashvalue;
-+        return hashvalue;
-+    }
-+
-+    h->hashed = false;
-     if (!get_l2_iste_addr(cs, cfg, id, &h->l2_iste_addr) ||
-         !read_l2_iste_mem(cs, cfg, h->l2_iste_addr, &h->l2_iste)) {
-         return NULL;
-@@ -514,6 +540,34 @@ static void put_l2_iste(GICv5Common *cs, const GICv5ISTConfig *cfg,
-      * Once this has been called the L2_ISTE_Handle @h and the pointer
-      * to the L2 ISTE word are no longer valid.
-      */
-+    if (h->hashed) {
-+        uint32_t l2_iste = *h->l2_iste_p;
-+        if (!FIELD_EX32(l2_iste, L2_ISTE, PENDING)) {
-+            /*
-+             * We just made this not pending: remove from hash table
-+             * and write back to memory.
-+             */
-+            hwaddr l2_iste_addr;
-+
-+            g_hash_table_remove(cfg->lpi_cache, GINT_TO_POINTER(h->id));
-+            if (get_l2_iste_addr(cs, cfg, h->id, &l2_iste_addr)) {
-+                write_l2_iste_mem(cs, cfg, l2_iste_addr, l2_iste);
-+                /* Writeback errors are ignored. */
-+            }
-+        }
-+        return;
-+    }
-+
-+    if (FIELD_EX32(h->l2_iste, L2_ISTE, PENDING)) {
-+        /*
-+         * We just made this pending: add it to the hash table, and
-+         * don't bother writing it back to memory.
-+         */
-+        uint32_t *hashvalue = g_new(uint32_t, 1);
-+        *hashvalue = h->l2_iste;
-+        g_hash_table_insert(cfg->lpi_cache, GINT_TO_POINTER(h->id), hashvalue);
-+        return;
-+    }
-     write_l2_iste_mem(cs, cfg, h->l2_iste_addr, h->l2_iste);
- }
- 
-@@ -896,6 +950,39 @@ txfail:
-                   "physical address 0x" HWADDR_FMT_plx "\n", intid, l1_addr);
- }
- 
-+/* Data we need to pass through to irs_clean_lpi_cache_entry() */
-+typedef struct CleanLPICacheUserData {
-+    GICv5Common *cs;
-+    GICv5ISTConfig *cfg;
-+} CleanLPICacheUserData;
-+
-+static gboolean irs_clean_lpi_cache_entry(gpointer key, gpointer value,
-+                                          gpointer user_data)
-+{
-+    /* Drop this entry from the LPI cache, writing it back to guest memory. */
-+    CleanLPICacheUserData *ud = user_data;
-+    hwaddr l2_iste_addr;
-+    uint64_t id = GPOINTER_TO_INT(key);
-+    uint32_t l2_iste = *(uint32_t *)value;
-+
-+    if (!get_l2_iste_addr(ud->cs, ud->cfg, id, &l2_iste_addr) ||
-+        !write_l2_iste_mem(ud->cs, ud->cfg, l2_iste_addr, l2_iste)) {
-+        /* We drop the cached entry regardless of writeback errors */
-+        return true;
-+    }
-+    return true;
-+}
-+
-+static void irs_clean_lpi_cache(GICv5Common *cs, GICv5ISTConfig *cfg)
-+{
-+    /* Write everything in the LPI cache out to guest memory */
-+    CleanLPICacheUserData ud;
-+    ud.cs = cs;
-+    ud.cfg = cfg;
-+
-+    g_hash_table_foreach_remove(cfg->lpi_cache, irs_clean_lpi_cache_entry, &ud);
-+}
-+
- static void irs_ist_baser_write(GICv5 *s, GICv5Domain domain, uint64_t value)
- {
-     GICv5Common *cs = ARM_GICV5_COMMON(s);
-@@ -907,6 +994,7 @@ static void irs_ist_baser_write(GICv5 *s, GICv5Domain domain, uint64_t value)
-             /* Ignore 1->1 transition */
-             return;
-         }
-+        irs_clean_lpi_cache(cs, &s->phys_lpi_config[domain]);
-         cs->irs_ist_baser[domain] = FIELD_DP64(cs->irs_ist_baser[domain],
-                                                IRS_IST_BASER, VALID, valid);
-         s->phys_lpi_config[domain].valid = false;
-@@ -968,6 +1056,15 @@ static void irs_ist_baser_write(GICv5 *s, GICv5Domain domain, uint64_t value)
-         cfg->l2_idx_bits = l2_idx_bits;
-         cfg->structure = FIELD_EX64(cs->irs_ist_cfgr[domain],
-                                     IRS_IST_CFGR, STRUCTURE);
-+        if (!cfg->lpi_cache) {
-+            /*
-+             * Keys are GINT_TO_POINTER(intid), so we want the g_direct_hash
-+             * and g_direct_equal hash and equality functions. We don't
-+             * want to free the keys, but we do want to free the values
-+             * (which are pointer-to-uint32_t).
-+             */
-+            cfg->lpi_cache = g_hash_table_new_full(NULL, NULL, NULL, g_free);
-+        }
-         cfg->valid = true;
-         trace_gicv5_ist_valid(domain_name[domain], cfg->base, cfg->id_bits,
-                               cfg->l2_idx_bits, cfg->istsz, cfg->structure);
-@@ -1428,6 +1525,13 @@ static void gicv5_reset_hold(Object *obj, ResetType type)
-     /* IRS_IST_BASER and IRS_IST_CFGR reset to 0, clear cached info */
-     for (int i = 0; i < NUM_GICV5_DOMAINS; i++) {
-         s->phys_lpi_config[i].valid = false;
-+        /*
-+         * If we got reset (power-cycled) with data in the cache, don't
-+         * write it out to guest memory; just return to "empty cache".
-+         */
-+        if (s->phys_lpi_config[i].lpi_cache) {
-+            g_hash_table_remove_all(s->phys_lpi_config[i].lpi_cache);
+         qemu_fdt_setprop(ms->fdt, "/pmu", "compatible",
+                          compat, sizeof(compat));
+-        qemu_fdt_setprop_cells(ms->fdt, "/pmu", "interrupts",
+-                               GIC_FDT_IRQ_TYPE_PPI,
+-                               INTID_TO_PPI(VIRTUAL_PMU_IRQ), irqflags);
++        if (vms->gic_version == VIRT_GIC_VERSION_5) {
++            qemu_fdt_setprop_cells(ms->fdt, "/pmu", "interrupts",
++                                   GICV5_PPI, GICV5_PPI_PMUIRQ, irqflags);
++        } else {
++            qemu_fdt_setprop_cells(ms->fdt, "/pmu", "interrupts",
++                                   GIC_FDT_IRQ_TYPE_PPI,
++                                   INTID_TO_PPI(VIRTUAL_PMU_IRQ),
++                                   irqflags);
 +        }
      }
  }
  
-diff --git a/include/hw/intc/arm_gicv5.h b/include/hw/intc/arm_gicv5.h
-index c631ecc3e8..fb13de0d01 100644
---- a/include/hw/intc/arm_gicv5.h
-+++ b/include/hw/intc/arm_gicv5.h
-@@ -25,6 +25,8 @@ typedef struct GICv5ISTConfig {
-     uint8_t istsz; /* L2 ISTE size in bytes */
-     bool structure; /* true if using 2-level table */
-     bool valid; /* true if this table is valid and usable */
-+    /* This caches IST information about pending LPIs */
-+    GHashTable *lpi_cache;
- } GICv5ISTConfig;
+diff --git a/include/hw/arm/fdt.h b/include/hw/arm/fdt.h
+index c3d5015013..995652c27a 100644
+--- a/include/hw/arm/fdt.h
++++ b/include/hw/arm/fdt.h
+@@ -20,9 +20,19 @@
+ #ifndef QEMU_ARM_FDT_H
+ #define QEMU_ARM_FDT_H
  
- /*
++/*
++ * These are for GICv2/v3/v4 only; GICv5 encodes the interrupt type in
++ * the DTB "interrupts" properties differently, using constants that
++ * match the architectural INTID.Type. In QEMU those are available as
++ * the GICV5_PPI and GICV5_SPI enum values in arm_gicv5_types.h.
++ */
+ #define GIC_FDT_IRQ_TYPE_SPI 0
+ #define GIC_FDT_IRQ_TYPE_PPI 1
+ 
++/*
++ * The trigger type/level field in the DTB "interrupts" property has
++ * the same encoding for GICv2/v3/v4 and v5.
++ */
+ #define GIC_FDT_IRQ_FLAGS_EDGE_LO_HI 1
+ #define GIC_FDT_IRQ_FLAGS_EDGE_HI_LO 2
+ #define GIC_FDT_IRQ_FLAGS_LEVEL_HI 4
 -- 
 2.43.0
 
