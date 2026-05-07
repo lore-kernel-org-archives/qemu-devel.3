@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E682CD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:57:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92D8ACD3439
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:57:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL11G-0003Rn-Ng; Thu, 07 May 2026 11:52:10 -0400
+	id 1wL123-0005ng-Cc; Thu, 07 May 2026 11:52:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL116-0003ON-NY
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:00 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1wL122-0005kR-4Q
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:58 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL114-0003jM-IN
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:00 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-488ad135063so9671915e9.0
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:51:57 -0700 (PDT)
+ id 1wL11z-00042t-TL
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:57 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-488b8bc6bc9so6701555e9.3
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:52:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778169116; x=1778773916; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=e7ji0TjByY9J1ucK+70VU+hsuVqz9IoJ8twiSP9TLRs=;
- b=PxbhFAcv4DlFvJqCFtvocRu2Z1mQJNX2iS9ZgKUPUDaua9wUbV1Uc9cy4+qvx4EhgV
- BCiOhhWh+0X6D2q2+DFR08pdLCZ81fNmzo6S+S/yJeBcYPRYuz4iXMb+V74UBh+Rk/Jw
- HUU4ZzCbyCnAGnngd8BK7nw0ZS3ZH4yETJzWPVM5SaJlMQkNcA9YN0jbtUPkCWCvAMOv
- 6L7RkexPi/OA3Vh8xUDRMZ4YfjkceoW78m7qMCc3jgCOQ/402cFfAqecZuUU/7fIu4Iv
- owijSZvJLQF+WIGEdg3I3wQ1bRsWlkhz6kKaUpLkOBd8u7UKmCVZOWxG2U99z79TkCxa
- 0AaA==
+ d=linaro.org; s=google; t=1778169174; x=1778773974; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=0vjExETreirHyQEBenl6DOZ9G0i3KJ1YXzOqbb5GT7w=;
+ b=ys5GkSirO0rwFpMWji9B8qlgPplBYburdyRDKlUFJLhZpHmVd0cYVLwzptYbWtR44F
+ b4aOIK7tLz0/tyQ1x3sYADMtu1tD2y/PsqZgCjZz/sNuTPPxzIuh8RcjiE1dPihFFLdG
+ CzbNdtQOAtVW75g9PZ/P45kjjVaQCf8EAKZ/UUSXryZbHPS32jxp4tbrS5jnzDGOTwIq
+ m2ft9PcDhBxjcVxC7boKlA0qNh1bVikdND/nAthVf48iQbzy95MesqQM1O7Xsdxw3tgq
+ sTBi0y5I5jawjiHf5nHKq0VG6ouJT5G9xKJ6odNW3R/6B63wlCuH+7r5dqBOqhhcG1Ss
+ 9mRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778169116; x=1778773916;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=e7ji0TjByY9J1ucK+70VU+hsuVqz9IoJ8twiSP9TLRs=;
- b=hd8aQswdsfmexmyDwn1qxS48bSMkaFTXjxYxrKtqWSAwSX6vBMgMrozC331lMc/u10
- 1GTPjIIpWYiUuM21zDi+jCSLi3rGaNArwBnJ7OU/kfMMB6n1ax84dJav/KXJzd+RYxvc
- 2ENIPe1aKtQ/6i4e5O/+0IXDiTifKdojBbMRikuBOwo8ACjRpog7QwCnHBEy6xDcV2dj
- YAUvbEc9RQgEs4WFTR0JABl8upa3C4iHLsLNie0rDgBbgv2cD7OXe6yM420H+55kd87C
- nY5gf9JS38+1i0b8J+P1Clvh2ykyS0uXHGRBU3o6piNIK9DqnfYYzLvucGg+q/PfuUGy
- hMNg==
-X-Gm-Message-State: AOJu0YwnsszU1Njq1YB8lzqaFOWgINFFC93ihLHNIVVOFhZbIbtjtVXR
- ngn4emQzY+T9YcJ5phzJ4DQRODTnseEpJPBvoXa7HuawYQuZT+cQ4s8CzDK0t1rydTO4BZC+/62
- xb8VN
-X-Gm-Gg: AeBDieuA6PzFkEsdg6e3yLwgBcBR/xYJjYnKOXLbf5mduWdhgNAahcowQySsN8b3lac
- 9KJsMSZk4dJtoHjpLNZaM7RHybOAlapKiYxDGuvLigmzgh7pt1otpi7L2xUVMwhCuCslphTkcw5
- cwoEtRxjR8wRXbEaBZaCiJFcKr7z7/G9HHEvCvhyGHoWhquosuSsrgUrvI6JegMY+v1e9PZZOWz
- /n4NBrbAI2aawI3wjZdLRuGTkRVGVn6ajHbIkPsZPitB+4syTHAg2m2VkqgkPUk27csUBHVwXy3
- 0SieyEW7URFD9cLUOHiGYr5GAfV+5rsyUdT28x30jXaoCEvePpHsWZyH8qxGsTvDd0hhRgQma10
- sQUp4zOyfmk0GCQIApqd/uc6p3lkbpxcuzXelOxEVsKPn3KzeCWE/B7llxaPzjyRnsedZc8ejkV
- t4jUaNpi32K0pqAfUJUw9XSFWPpE4iM8rd/jA5UqKIWgyl9VwfkfVGMK4Ay/c6/Oo02XMSye19Y
- mSaQXNIGvBCUFjzqezHrcdHfMM0Jmo=
-X-Received: by 2002:a05:600c:3f18:b0:487:2671:fb8f with SMTP id
- 5b1f17b1804b1-48e51e19668mr137675255e9.8.1778169115910; 
- Thu, 07 May 2026 08:51:55 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1778169174; x=1778773974;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=0vjExETreirHyQEBenl6DOZ9G0i3KJ1YXzOqbb5GT7w=;
+ b=GLpfr/zl8l0lcZyZkr+9GrAcEZc5mx/l6JgCAlepE3F+uzQdOMzSgwNzJu6/3wghKK
+ eRZStwQKMv242rXxDfxpkz7UI/p3xmMrA1c3WZD4BqTVJzgwg8yRLGACkDHrmhmdn4IU
+ gJHBwKbhRRsmMbp+yRaUZfMEWon4JI1m4kGO8gK6/O0WfZ81Xh9Fm9foy+eRfaQGaM79
+ vS/BvmULeiYtoZhvMeqW1Lm3hMSRubDERR3b3/AVluEkv0Mua5eM0e1p0aaoi8MON84X
+ +Fb41ZGTSZcRslWqsU1GkM57UUvWO9LL9gcpG9chlNdevnsVoN+Z4QICWo/1UDj2nzpe
+ tYCg==
+X-Gm-Message-State: AOJu0YzdTPTdEW9QhThl5o55bQn/jCFRTBsBG3XArzvubd6Rd21+KirE
+ oCWpbminyHAWhMsXrUhx9lBlIBrU0LBrzbBtMPmR8BWW/lA0K0/FrETkxh5+dIixm8pquMOE27q
+ Ng+PB
+X-Gm-Gg: AeBDiesXXop2YlYYppivHGB7CBtqQut0AS3UMnlZlpWVfR5n9S5Y8DJFdEcwq7W6PYL
+ /Etjz5oHp2RMjI3+/AnEyXJP2cYZFKJBuW8pPBp2dkF3Uzo2tX3A5MKqePdfQWKx+eC92/brsWN
+ awHp/GOOH8wtgTFGAk2ZAkJQBmK9JyEt28mNEebk1HZMSwqWG5s0b22U5Am3TEXerUZrqJ3/mbZ
+ EfiHFE80IaWUgXatUv67C4Cfl1PxflK+dgMzN+kxJSb9xa0j/2U3f7w9O3L5kLShF8EDMS1mD7V
+ P/JjZsIOFwJ0hDo8ZtnAovPJBGKVP4wKqA/AvyPDvSV4Xm6Hkr5Hq35Icfe0A1dFQF2gwbH/eR3
+ VbP+YGeDs2/YM8lzQvwnGPJK3Rt3BDP/oSEeVkt9mljHxjXktINSD+jdRWtguBUZulWUIUqPlMm
+ Uj9XEv0U1WbxBMTjBnCsdhc+pl1jZk2lTNxqd0Z1zPxLgJvPcMPLKBpeLxaSvAgi66i1zKzFKJJ
+ Ae1YImpJ4ipcNkgok/xf1WJ5lMSX90T4GCf/eoiig==
+X-Received: by 2002:a05:600c:a10d:b0:487:12c:e7e1 with SMTP id
+ 5b1f17b1804b1-48e51e1f013mr107836585e9.11.1778169174149; 
+ Thu, 07 May 2026 08:52:54 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.51.54
+ 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.53
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 08:51:55 -0700 (PDT)
+ Thu, 07 May 2026 08:52:53 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/67] target-arm queue
-Date: Thu,  7 May 2026 16:50:47 +0100
-Message-ID: <20260507155154.1886557-1-peter.maydell@linaro.org>
+Subject: [PULL 60/67] hw/arm/virt: Create and connect GICv5
+Date: Thu,  7 May 2026 16:51:47 +0100
+Message-ID: <20260507155154.1886557-61-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260507155154.1886557-1-peter.maydell@linaro.org>
+References: <20260507155154.1886557-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,144 +101,274 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; here's another arm pullreq. This is big but it's almost
-entirely the GICv5 emulation. I did throw in a couple of other
-tiny bugfix patches.
+In this commit we create and connect up the GICv5.  We do not
+advertise it in the ACPI tables or DTB; that will be done in a
+following commit.
 
-thanks
--- PMM
+The user-facing gic-version property still only documents and permits
+in its setter function the existing set of possible values; we won't
+permit the user to select a GICv5 until all the code to handle it is
+in place.
 
-The following changes since commit ee7eb612be8f8886d48c1d0c1f1c65e495138f83:
+Although we currently implement only the IRS, and only for EL1,
+we reserve space in the virt board's memory map now for all the
+register frames that the GICv5 may use. Each interrupt domain has:
+ * one IRS config register frame
+ * one ITS config register frame
+ * one ITS translate register frame
+and each of these frames is 64K in size and 64K aligned and must be
+at a unique address (that is, it is not permitted to have all the IRS
+config register frames at the same physical address in the different
+S/NS/etc physical address spaces).
 
-  Merge tag 'single-binary-20260506' of https://github.com/philmd/qemu into staging (2026-05-06 10:45:02 -0400)
+The addresses and layout of these frames are entirely up to the
+implementation: software will be passed their addresses via firmware
+data structures (ACPI or DTB).
 
-are available in the Git repository at:
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260327111700.795099-61-peter.maydell@linaro.org
+---
+ hw/arm/virt.c         | 101 ++++++++++++++++++++++++++++++++++++++++++
+ include/hw/arm/virt.h |  14 ++++++
+ 2 files changed, 115 insertions(+)
 
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260507
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 2475d583cc..cf4d430454 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -68,6 +68,7 @@
+ #include "hw/intc/arm_gic.h"
+ #include "hw/intc/arm_gicv3_common.h"
+ #include "hw/intc/arm_gicv3_its_common.h"
++#include "hw/intc/arm_gicv5_common.h"
+ #include "hw/core/irq.h"
+ #include "kvm_arm.h"
+ #include "whpx_arm.h"
+@@ -184,6 +185,19 @@ static const MemMapEntry base_memmap[] = {
+     [VIRT_GIC_ITS] =            { 0x08080000, 0x00020000 },
+     /* This redistributor space allows up to 2*64kB*123 CPUs */
+     [VIRT_GIC_REDIST] =         { 0x080A0000, 0x00F60000 },
++    /* The GICv5 uses this address range differently from GICv2/v3/v4 */
++    [VIRT_GICV5_IRS_S] =        { 0x08000000, 0x00010000 },
++    [VIRT_GICV5_IRS_NS] =       { 0x08010000, 0x00010000 },
++    [VIRT_GICV5_IRS_EL3] =      { 0x08020000, 0x00010000 },
++    [VIRT_GICV5_IRS_REALM] =    { 0x08030000, 0x00010000 },
++    [VIRT_GICV5_ITS_S] =        { 0x08040000, 0x00010000 },
++    [VIRT_GICV5_ITS_NS] =       { 0x08050000, 0x00010000 },
++    [VIRT_GICV5_ITS_EL3] =      { 0x08060000, 0x00010000 },
++    [VIRT_GICV5_ITS_REALM] =    { 0x08070000, 0x00010000 },
++    [VIRT_GICV5_ITS_TR_S] =     { 0x08080000, 0x00010000 },
++    [VIRT_GICV5_ITS_TR_NS] =    { 0x08090000, 0x00010000 },
++    [VIRT_GICV5_ITS_TR_EL3] =   { 0x080A0000, 0x00010000 },
++    [VIRT_GICV5_ITS_TR_REALM] = { 0x080B0000, 0x00010000 },
+     [VIRT_UART0] =              { 0x09000000, 0x00001000 },
+     [VIRT_RTC] =                { 0x09010000, 0x00001000 },
+     [VIRT_FW_CFG] =             { 0x09020000, 0x00000018 },
+@@ -1106,6 +1120,49 @@ static void create_v2m(VirtMachineState *vms)
+     vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
+ }
+ 
++static void create_gicv5(VirtMachineState *vms, MemoryRegion *mem)
++{
++    MachineState *ms = MACHINE(vms);
++    SysBusDevice *gicbusdev;
++    const char *gictype = gicv5_class_name();
++    QList *cpulist = qlist_new(), *iaffidlist = qlist_new();
++
++    vms->gic = qdev_new(gictype);
++    qdev_prop_set_uint32(vms->gic, "spi-range", NUM_IRQS);
++
++    object_property_set_link(OBJECT(vms->gic), "sysmem", OBJECT(mem),
++                             &error_fatal);
++
++    for (int i = 0; i < ms->smp.cpus; i++) {
++        qlist_append_link(cpulist, OBJECT(qemu_get_cpu(i)));
++        /*
++         * GICv5 IAFFIDs must be system-wide unique across all GICs.
++         * For virt we make them the same as the CPU index.
++         */
++        qlist_append_int(iaffidlist, i);
++    }
++    qdev_prop_set_array(vms->gic, "cpus", cpulist);
++    qdev_prop_set_array(vms->gic, "cpu-iaffids", iaffidlist);
++
++    gicbusdev = SYS_BUS_DEVICE(vms->gic);
++    sysbus_realize_and_unref(gicbusdev, &error_fatal);
++
++    /*
++     * Map the IRS config frames for the interrupt domains.
++     * At the moment we implement only the NS domain, so this is simple.
++     */
++    sysbus_mmio_map(gicbusdev, GICV5_ID_NS,
++                    vms->memmap[VIRT_GICV5_IRS_NS].base);
++
++    /*
++     * The GICv5 does not need to wire up CPU timer IRQ outputs to the GIC
++     * because for the GICv5 those PPIs are entirely internal to the CPU.
++     * Nor do we need to wire up GIC IRQ/FIQ signals to the CPUs, because
++     * that information is communicated directly between a GICv5 IRS and
++     * the GICv5 CPU interface via our equivalent of the stream protocol.
++     */
++}
++
+ /*
+  * If the CPU has FEAT_NMI, then turn on the NMI support in the GICv3 too.
+  * It's permitted to have a configuration with NMI in the CPU (and thus the
+@@ -1319,6 +1376,9 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+     case VIRT_GIC_VERSION_4:
+         create_gicv3(vms, mem);
+         break;
++    case VIRT_GIC_VERSION_5:
++        create_gicv5(vms, mem);
++        break;
+     default:
+         g_assert_not_reached();
+     }
+@@ -2254,6 +2314,11 @@ static uint64_t virt_cpu_mp_affinity(VirtMachineState *vms, int idx)
+     /*
+      * Adjust MPIDR to make TCG consistent (with 64-bit KVM hosts)
+      * and to improve SGI efficiency.
++     * - GICv2 only supports 8 CPUs anyway
++     * - GICv3 wants 16 CPUs per Aff0 because of an ICC_SGIxR
++     *   register limitation
++     * - GICv5 has no restrictions, so we retain the GICv3 16-per-Aff0
++     *   layout because that's what KVM does
+      */
+     if (vms->gic_version == VIRT_GIC_VERSION_2) {
+         clustersz = GIC_TARGETLIST_BITS;
+@@ -2399,6 +2464,11 @@ static VirtGICType finalize_gic_version_do(const char *accel_name,
+         return finalize_gic_version_do(accel_name, VIRT_GIC_VERSION_MAX,
+                                        gics_supported, max_cpus);
+     case VIRT_GIC_VERSION_MAX:
++        /*
++         * We don't (currently) make 'max' select GICv5 as it is not
++         * backwards compatible for system software with GICv3/v4 and
++         * at time of writing not widely supported in guest kernels.
++         */
+         if (gics_supported & VIRT_GIC_VERSION_4_MASK) {
+             gic_version = VIRT_GIC_VERSION_4;
+         } else if (gics_supported & VIRT_GIC_VERSION_3_MASK) {
+@@ -2427,6 +2497,7 @@ static VirtGICType finalize_gic_version_do(const char *accel_name,
+     case VIRT_GIC_VERSION_2:
+     case VIRT_GIC_VERSION_3:
+     case VIRT_GIC_VERSION_4:
++    case VIRT_GIC_VERSION_5:
+         break;
+     }
+ 
+@@ -2451,6 +2522,12 @@ static VirtGICType finalize_gic_version_do(const char *accel_name,
+             exit(1);
+         }
+         break;
++    case VIRT_GIC_VERSION_5:
++        if (!(gics_supported & VIRT_GIC_VERSION_5_MASK)) {
++            error_report("%s does not support GICv5 emulation", accel_name);
++            exit(1);
++        }
++        break;
+     default:
+         error_report("logic error in finalize_gic_version");
+         exit(1);
+@@ -2510,6 +2587,10 @@ static void finalize_gic_version(VirtMachineState *vms)
+                 gics_supported |= VIRT_GIC_VERSION_4_MASK;
+             }
+         }
++        if (!hvf_enabled() && module_object_class_by_name("arm-gicv5")) {
++            /* HVF doesn't have GICv5 support */
++            gics_supported |= VIRT_GIC_VERSION_5_MASK;
++        }
+     } else {
+         error_report("Unsupported accelerator, can not determine GIC support");
+         exit(1);
+@@ -2545,6 +2626,9 @@ static void finalize_msi_controller(VirtMachineState *vms)
+             vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
+         }  else if (hvf_enabled() && hvf_irqchip_in_kernel()) {
+             vms->msi_controller = VIRT_MSI_CTRL_GICV2M;
++        } else if (vms->gic_version == VIRT_GIC_VERSION_5) {
++            /* GICv5 ITS is not yet implemented */
++            vms->msi_controller = VIRT_MSI_CTRL_NONE;
+         } else {
+             vms->msi_controller = VIRT_MSI_CTRL_ITS;
+         }
+@@ -2560,6 +2644,10 @@ static void finalize_msi_controller(VirtMachineState *vms)
+             error_report("GICv2 + ITS is an invalid configuration.");
+             exit(1);
+         }
++        if (vms->gic_version == VIRT_GIC_VERSION_5) {
++            error_report("GICv5 + ITS is not yet implemented.");
++            exit(1);
++        }
+         if (whpx_enabled()) {
+             error_report("ITS not supported on WHPX.");
+             exit(1);
+@@ -2736,6 +2824,13 @@ static void machvirt_init(MachineState *machine)
+      */
+     if (vms->gic_version == VIRT_GIC_VERSION_2) {
+         virt_max_cpus = GIC_NCPU;
++    } else if (vms->gic_version == VIRT_GIC_VERSION_5) {
++        /*
++         * GICv5 imposes no CPU limit beyond the 16-bit IAFFID field.
++         * The maximum number of CPUs will be limited not by this, but
++         * by the MachineClass::max_cpus value we set earlier.
++         */
++        virt_max_cpus = 1 << QEMU_GICV5_IAFFID_BITS;
+     } else {
+         virt_max_cpus = virt_redist_capacity(vms, VIRT_GIC_REDIST);
+         if (vms->highmem_redists) {
+@@ -2782,6 +2877,12 @@ static void machvirt_init(MachineState *machine)
+         exit(1);
+     }
+ 
++    if ((vms->virt || vms->secure) &&
++        vms->gic_version == VIRT_GIC_VERSION_5) {
++        error_report("mach-virt: GICv5 currently supports EL1 only");
++        exit(1);
++    }
++
+     create_fdt(vms);
+ 
+     assert(possible_cpus->len == max_cpus);
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index b74ffada7e..3ba33b4bd2 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -66,6 +66,18 @@ enum {
+     VIRT_GIC_VCPU,
+     VIRT_GIC_ITS,
+     VIRT_GIC_REDIST,
++    VIRT_GICV5_IRS_S,
++    VIRT_GICV5_IRS_NS,
++    VIRT_GICV5_IRS_EL3,
++    VIRT_GICV5_IRS_REALM,
++    VIRT_GICV5_ITS_S,
++    VIRT_GICV5_ITS_NS,
++    VIRT_GICV5_ITS_EL3,
++    VIRT_GICV5_ITS_REALM,
++    VIRT_GICV5_ITS_TR_S,
++    VIRT_GICV5_ITS_TR_NS,
++    VIRT_GICV5_ITS_TR_EL3,
++    VIRT_GICV5_ITS_TR_REALM,
+     VIRT_SMMU,
+     VIRT_UART0,
+     VIRT_MMIO,
+@@ -119,12 +131,14 @@ typedef enum VirtGICType {
+     VIRT_GIC_VERSION_2 = 2,
+     VIRT_GIC_VERSION_3 = 3,
+     VIRT_GIC_VERSION_4 = 4,
++    VIRT_GIC_VERSION_5 = 5,
+     VIRT_GIC_VERSION_NOSEL,
+ } VirtGICType;
+ 
+ #define VIRT_GIC_VERSION_2_MASK BIT(VIRT_GIC_VERSION_2)
+ #define VIRT_GIC_VERSION_3_MASK BIT(VIRT_GIC_VERSION_3)
+ #define VIRT_GIC_VERSION_4_MASK BIT(VIRT_GIC_VERSION_4)
++#define VIRT_GIC_VERSION_5_MASK BIT(VIRT_GIC_VERSION_5)
+ 
+ struct VirtMachineClass {
+     MachineClass parent;
+-- 
+2.43.0
 
-for you to fetch changes up to 18b664c90085b0d2be9c2ad8c747e00a7a733402:
-
-  hw/misc/bcm2835_rng: Specify valid memory access sizes (2026-05-07 15:14:58 +0100)
-
-----------------------------------------------------------------
-target-arm queue:
- * Initial experimental GICv5 interrupt controller emulation
- * target/arm: Report IL=0 for Thumb 16-bit BKPT insn
- * hw/misc/bcm2835_rng: Specify valid memory access sizes
-
-----------------------------------------------------------------
-Peter Maydell (67):
-      qom/object: Add object_resolve_and_typecheck()
-      hw/core: Permit devices to define an array of link properties
-      hw/intc: Skeleton of GICv5 IRS classes
-      hw/arm/Kconfig: select ARM_GICV5 for ARM_VIRT board
-      hw/intc/arm_gicv5: Implement skeleton code for IRS register frames
-      hw/intc/arm_gicv5: Add migration blocker
-      hw/intc/arm_gicv5: Create and validate QOM properties
-      hw/intc/arm_gicv5: Create inbound GPIO lines for SPIs
-      hw/intc/arm_gicv5: Define macros for config frame registers
-      hw/intc/arm_gicv5: Implement IRS ID regs
-      hw/intc/arm_gicv5: Add link property for MemoryRegion for DMA
-      hw/intc/arm_gicv5: Implement gicv5_class_name()
-      hw/intc/arm_gicv5: Add defines for GICv5 architected PPIs
-      target/arm: GICv5 cpuif: Initial skeleton and GSB barrier insns
-      target/arm: Set up pointer to GICv5 in each CPU
-      hw/intc/arm_gicv5: Implement IRS_IST_{BASER, STATUSR, CFGR}
-      hw/intc/arm_gicv5: Cache LPI IST config in a struct
-      hw/intc/arm_gicv5: Implement gicv5_set_priority()
-      target/arm: GICv5 cpuif: Implement the GIC CDPRI instruction
-      hw/intc/arm_gicv5: Implement IRS_MAP_L2_ISTR
-      hw/intc/arm_gicv5: Implement remaining set-config functions
-      target/arm: GICv5 cpuif: Implement GIC CD* insns for setting config
-      hw/intc/arm_gicv5: Create backing state for SPIs
-      hw/intc/arm_gicv5: Make gicv5_set_* update SPI state
-      hw/intc/arm_gicv5: Implement gicv5_request_config()
-      target/arm: GICv5 cpuif: Implement GIC CDRCFG and ICC_ICSR_EL1
-      hw/intc/arm_gicv5: Implement IRS_SPI_{SELR, STATUSR, CFGR, DOMAINR}
-      hw/intc/arm_gicv5: Update SPI state for CLEAR/SET events
-      hw/intc/arm_gicv5: Implement IRS_CR0 and IRS_CR1
-      hw/intc/arm_gicv5: Implement IRS_SYNCR and IRS_SYNC_STATUSR
-      hw/intc/arm_gicv5: Implement IRS_PE_{CR0, SELR, STATUSR}
-      hw/intc/arm_gicv5: Implement CoreSight ID registers
-      hw/intc/arm_gicv5: Cache pending LPIs in a hash table
-      target/arm: GICv5 cpuif: Implement ICC_IAFFIDR_EL1
-      target/arm: GICv5 cpuif: Implement ICC_IDR0_EL1
-      target/arm: GICv5 cpuif: Implement GICv5 PPI active set/clear registers
-      target/arm: GICv5 cpuif: Implement PPI handling mode register
-      target/arm: GICv5 cpuif: Implement PPI pending status registers
-      target/arm: GICv5 cpuif: Implement PPI enable register
-      target/arm: GICv5 cpuif: Implement PPI priority registers
-      target/arm: GICv5 cpuif: Implement ICC_APR_EL1 and ICC_HAPR_EL1
-      target/arm: GICv5 cpuif: Calculate the highest priority PPI
-      hw/intc/arm_gicv5: Calculate HPPI in the IRS
-      target/arm: GICv5 cpuif: Implement ICC_CR0_EL1
-      target/arm: GICv5 cpuif: Implement ICC_PCR_EL1
-      target/arm: GICv5 cpuif: Implement ICC_HPPIR_EL1
-      hw/intc/arm_gicv5: Implement Activate command
-      target/arm: GICv5 cpuif: Implement GICR CDIA command
-      target/arm: GICv5 cpuif: Implement GIC CDEOI
-      hw/intc/arm_gicv5: Implement Deactivate command
-      target/arm: GICv5 cpuif: Implement GIC CDDI
-      target/arm: GICv5 cpuif: Signal IRQ or FIQ
-      target/arm: Connect internal interrupt sources up as GICv5 PPIs
-      target/arm: Add has_gcie property to enable FEAT_GCIE
-      hw/intc/arm_gicv3_cpuif: Don't allow GICv3 if CPU has GICv5 cpuif
-      hw/arm/virt: Remember CPU phandles rather than looking them up by name
-      hw/arm/virt: Move MSI controller creation out of create_gic()
-      hw/arm/virt: Pull "wire CPU interrupts" out of create_gic()
-      hw/arm/virt: Split GICv2 and GICv3/4 creation
-      hw/arm/virt: Create and connect GICv5
-      hw/arm/virt: Advertise GICv5 in the DTB
-      hw/arm/virt: Handle GICv5 in interrupt bindings for PPIs
-      hw/arm/virt: Use correct interrupt type for GICv5 SPIs in the DTB
-      hw/arm/virt: Enable GICv5 CPU interface when using GICv5
-      hw/arm/virt: Allow user to select GICv5
-      target/arm: Report IL=0 for Thumb 16-bit BKPT insn
-      hw/misc/bcm2835_rng: Specify valid memory access sizes
-
- docs/system/arm/virt.rst           |   19 +
- hw/arm/Kconfig                     |    1 +
- hw/arm/virt.c                      |  527 +++++++---
- hw/core/qdev-properties.c          |   78 ++
- hw/intc/Kconfig                    |    5 +
- hw/intc/arm_gicv3.c                |    2 +-
- hw/intc/arm_gicv3_cpuif.c          |   14 +-
- hw/intc/arm_gicv5.c                | 1962 ++++++++++++++++++++++++++++++++++++
- hw/intc/arm_gicv5_common.c         |  215 ++++
- hw/intc/gicv3_internal.h           |    2 +-
- hw/intc/meson.build                |    4 +
- hw/intc/trace-events               |   23 +
- hw/misc/bcm2835_rng.c              |    4 +
- include/hw/arm/fdt.h               |   10 +
- include/hw/arm/virt.h              |   15 +
- include/hw/core/qdev-properties.h  |   41 +
- include/hw/intc/arm_gicv5.h        |   51 +
- include/hw/intc/arm_gicv5_common.h |  247 +++++
- include/hw/intc/arm_gicv5_stream.h |  228 +++++
- include/hw/intc/arm_gicv5_types.h  |  110 ++
- include/qom/object.h               |   17 +
- meson.build                        |    1 +
- qom/object.c                       |   41 +-
- target/arm/cpregs-pmu.c            |    9 +-
- target/arm/cpu-features.h          |    6 +
- target/arm/cpu.c                   |   62 ++
- target/arm/cpu.h                   |   28 +
- target/arm/helper.c                |   21 +
- target/arm/internals.h             |    9 +
- target/arm/tcg-stubs.c             |    4 +
- target/arm/tcg/gicv5-cpuif.c       |  952 +++++++++++++++++
- target/arm/tcg/meson.build         |    1 +
- target/arm/tcg/trace-events        |   11 +
- target/arm/tcg/trace.h             |    1 +
- target/arm/tcg/translate.c         |    2 +-
- 35 files changed, 4564 insertions(+), 159 deletions(-)
- create mode 100644 hw/intc/arm_gicv5.c
- create mode 100644 hw/intc/arm_gicv5_common.c
- create mode 100644 include/hw/intc/arm_gicv5.h
- create mode 100644 include/hw/intc/arm_gicv5_common.h
- create mode 100644 include/hw/intc/arm_gicv5_stream.h
- create mode 100644 include/hw/intc/arm_gicv5_types.h
- create mode 100644 target/arm/tcg/gicv5-cpuif.c
- create mode 100644 target/arm/tcg/trace-events
- create mode 100644 target/arm/tcg/trace.h
 
