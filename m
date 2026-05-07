@@ -4,111 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D75C8CD3427
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 08:55:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED066CD3427
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 08:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKuVX-0005Q4-RZ; Thu, 07 May 2026 04:54:59 -0400
+	id 1wKuZB-0006K9-IX; Thu, 07 May 2026 04:58:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
- id 1wKuVM-0005OK-BW; Thu, 07 May 2026 04:54:49 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wKuZ1-0006Ji-1J; Thu, 07 May 2026 04:58:35 -0400
+Received: from mail-centralusazlp170110009.outbound.protection.outlook.com
+ ([2a01:111:f403:c111::9] helo=DM5PR21CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
- id 1wKuVI-0000ho-FL; Thu, 07 May 2026 04:54:47 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 64703ZMD3486157; Thu, 7 May 2026 08:54:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=QnhkwK
- OgazJAMNjLoI38VworoBI22GyH5rbJuwTqngM=; b=BaKcSoZST9qawY8uXmmWzN
- OZCorRS/xjESAwCnqQUPHgKpIruRtQpORs/bOkMr5kmj8HIB5R5SKU4Hd1n/ZEiN
- FT/8qntvTpniuX44vYdyqw6g415862iFfglt1bO9oplCOuMQO1HqmkAIGQJm3xn3
- YW9JG+LjD9C3HSjCZzfCg/TQvtv1q3UbDQflktfK5XAmJnQUIpkp5aMyRIlbDPmh
- hEE1V5IapQ8JiSNNlBFoqr8vmu193AOaAzVpnF68b1vzv8uW9ZKXnn+S+IxlURAz
- X6OFAa2lT7xx1Jf/nITqnKAmvg4Dm2J8M/kspPK2bWYUIVgokvtFBgqPqH6eN07A
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9xxv5jd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 May 2026 08:54:39 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6478sSO8004572;
- Thu, 7 May 2026 08:54:38 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwx9yj1c5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 07 May 2026 08:54:38 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6478sXST48693728
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 7 May 2026 08:54:34 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F04EC2004D;
- Thu,  7 May 2026 08:54:32 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7F27420040;
- Thu,  7 May 2026 08:54:30 +0000 (GMT)
-Received: from [9.39.23.70] (unknown [9.39.23.70])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  7 May 2026 08:54:30 +0000 (GMT)
-Message-ID: <7e00f36d-f38d-4532-a763-cc4025a303d3@linux.ibm.com>
-Date: Thu, 7 May 2026 14:24:28 +0530
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ppc/spapr: make fadump collect regs for maxcpus
-To: Shivang Upadhyay <shivangu@linux.ibm.com>, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Aditya Gupta <adityag@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
-References: <20260429065127.366813-1-shivangu@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1wKuYy-0001rX-WE; Thu, 07 May 2026 04:58:34 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CFvIBufYIG2Xthz3bClhIIaFJRZtjAqvqrA6avxiw/FuSBr8Pn5B4e5NsKaZufd5v5sMCwFgc2niochDMS5g2WVQtTh+GQb0kMD15TVpDkO6MzVlDF2MGpwumXmU7SXmYI2U3lgzoF755ZlPFMRHsr3WO3JbH0dC5sqYNMkyU+p0RulkiFPYRrtUiH3I+GBIsxIqVW6huqBvyxvMh8qJ9HNc7x8KYhs2nC/UNDZvODsWjYSyxCcTGCn3sxpzJJJ8aoftlygIai7bNFkdm7dfsWlUGigXmx1S6NR/HcbSQiJWzyhB3oaywlSVbaa/FgIyKJvxBiqZLe/vzPa1VeKhWQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lH61pDQFPJR2pG9h6b9tMI0EYYwZnuhPqzzLiqUm1hA=;
+ b=HSTRPMRG8qVpfxa2hELbGCeKvZb3O/xVeLZHiRVUORBw7t9vAQRiXow29TgGntcehjle5WScZQJPjSj7/WGZnPPL4O/b67A0cr4Ovq1cSR6wQle7HHth+Uiz8VrmSnfa7+txKIluA5f0EXDLdcjyHe0j48WsgDPshtixel9LaOXwMI2y2Hxr+U9gjbtNwn1VCxuukJpGIhFKEPYoX9VQAJt82cviFlYMDPrdChRrpkjogmOfhD+Ep/ST7kTOFEuU6sn2bVQUyg20DlqPCrijfsctVLSy2badUebEX30wqOoFKDYBV2Sz+Vn5xr2tqS/U15YFgALBqfSK5TBwb7PRaA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lH61pDQFPJR2pG9h6b9tMI0EYYwZnuhPqzzLiqUm1hA=;
+ b=kU8dUvZC6Uno+rp3rzTDrKFzx0PaoHbPmQfsEWaTleX3fPnTgXCEqckBGS2ZeunnYjAb/z/K6qCtV8WpAJFXmxQ8bFOOH3akOOV4g10cuSbqJw4pFq7HcoXFyb3Wf7aJ9HvQQ4j6l/HQagT7jx/dYQZR/14gXQTT8rpiORERydeEsP3uPEdE7RXMbcP+mzD6tWVP9eJkuvFoHThDRoX4LvR817mkRpuxyKu7CT/IZniGxfNZBluByyO0NVfH9tM3OtFfvOVdDtshgBV+vlfO9a2Y0qJvRnON04TrIxA5uOwHbf6vDOHKMhDEPY1kf9ibLia18l1+T/TJCCaUSu4MtA==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by IA0PPF316EEACD8.namprd12.prod.outlook.com
+ (2603:10b6:20f:fc04::bcb) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9818.25; Thu, 7 May
+ 2026 08:58:26 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.20.9891.017; Thu, 7 May 2026
+ 08:58:26 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
+ <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev"
+ <kvmarm@lists.linux.dev>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
+ <richard.henderson@linaro.org>, "cohuck@redhat.com" <cohuck@redhat.com>,
+ "sebott@redhat.com" <sebott@redhat.com>, "philmd@linaro.org"
+ <philmd@linaro.org>
+CC: "maz@kernel.org" <maz@kernel.org>, "oliver.upton@linux.dev"
+ <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "armbru@redhat.com" <armbru@redhat.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "abologna@redhat.com" <abologna@redhat.com>,
+ "jdenemar@redhat.com" <jdenemar@redhat.com>
+Subject: RE: [PATCH v4 04/17] arm/cpu: Add infra to handle generated ID
+ register definitions
+Thread-Topic: [PATCH v4 04/17] arm/cpu: Add infra to handle generated ID
+ register definitions
+Thread-Index: AQHc2s+MiFtk51uQsEegmd8nk0SKf7YCRxvQ
+Date: Thu, 7 May 2026 08:58:26 +0000
+Message-ID: <CH3PR12MB7548456E92BB5137C5B5846FAB3C2@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260503073541.790215-1-eric.auger@redhat.com>
+ <20260503073541.790215-5-eric.auger@redhat.com>
+In-Reply-To: <20260503073541.790215-5-eric.auger@redhat.com>
+Accept-Language: en-US, en-GB
 Content-Language: en-US
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
-In-Reply-To: <20260429065127.366813-1-shivangu@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA3MDA4NCBTYWx0ZWRfXw1fHJMHs0z4h
- /BKoRav2dgLwPJsd+r5I1G8+1KmbwmeFK/WpICwxEHwbyEn3G8QgG7W157jjQeNWlOL9yv64fBV
- +uyVsUikUvg4gETWHZ+vqCZSYtHttJ+ZdMfsWyCxDExsE6AuhItidoKMdW+j7qTmMNccvMcJtWv
- /5c2jEW+MWLIdkTVqAMDLgKjm0mFSz6MD3jn5mOVjb8M47HUQfTb9xfCSENaJRK8QuXgmbT4aJe
- YsJ+MLmJz3WRCJSqjMC9JLlAnfHY1obeyYOuRGM3pgYusZrnQmPwwCZYguduzCM4DfVndfzHnE/
- amsI2ZfxOqmGGPjnIUJNNieKdZddGARlE16NlV/ABz4/RE0tMpSQ8avqwVtyesuqSMHpWg5ieHV
- ZbtOvP1BAyF9ENjFNj+Dr95EAPDllrej076MLznxD9Eb2TR+R3pf+JHn9DaZZ9uS57Dv/ZkK2Vg
- g3Mgws9iNx3ceFWvQ2A==
-X-Proofpoint-ORIG-GUID: mlXoEtdXtqEz4fq6Pup9qfeBxNViulM8
-X-Proofpoint-GUID: mlXoEtdXtqEz4fq6Pup9qfeBxNViulM8
-X-Authority-Analysis: v=2.4 cv=ctWrVV4i c=1 sm=1 tr=0 ts=69fc534f cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=VT-HELRw552j8u3lF-8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-06_02,2026-05-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 lowpriorityscore=0 adultscore=0 clxscore=1011
- suspectscore=0 impostorscore=0 spamscore=0 malwarescore=0 phishscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2605070084
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=sourabhjain@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|IA0PPF316EEACD8:EE_
+x-ms-office365-filtering-correlation-id: d7f905d4-9863-4523-c2aa-08deac16ccf6
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|376014|7416014|366016|56012099003|18002099003|22082099003|921020|38070700021;
+x-microsoft-antispam-message-info: 6B03lMoYq4/10hnK0KBk6eHWHpwqzLLPehOdrH7HDPSrvmWv7AZwrT6mN413OaxLuyBZf6KwhtnrcqBstQP33p8bv68LrAU0IwMZLWRnBFnIlpH0fbIFRyjNkd7QrfXhwlDsx/nTIHXIlFvmbaqY4gzdykr3OYdFrFGjDOTITT/RzXp0Cb7ddHrrbgZcm7BarRiS3h6dxwkBFItS1aNkq4fnAHuBP/e9I9eiY207IqQHbj5gJjfS2Mu6N4Xb5TVRPotR+01JH3gY6AwQqBluiiLT1yprCEs55mE8chzqIA2XjKv/joGgM70eQ0nGz/shfwcjpLFp8YjM3FxJoGUO6N7rEsOPGIE+gwXgf+p4Nm6jwOp2rEOt9GvDw/6N84qLhxvjaRv/j9h7IXFCvXOiWEEsB4nfeuTYNqc03kqoHxHg6warLWrN03jLlxGnKSA5c/Fg7McV/PHcibTPkEwzqaQ2MG1Uz84pCT6rGfvCoiILyHiZS+BANT3oNZ99OBjHIuo9RAbQ1azP+mi1nUkZqnb8UUjHUzl9OdJ/z5q4XoHP23k88iw+fs3mp6WWjonAOZlEU3mlfTH6apHiXF43WJYiRwQk89hH2lV/QPmh1pjU9zt3Oo+caDOJj2UHWwu5XUCjeJMnkSaFQSTj74bknk26TdgRv3Iu5MR216It7Wskts/zSc8v4sMw1ycGa39n1ylVo82rhoIemnhbQXzqiSqZA6omN2km/Vy8qUpHAEeXVF4rQsVhCX/T4IHv39QNhZ8TptnzOkqKXPDJ5927lA==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(7416014)(366016)(56012099003)(18002099003)(22082099003)(921020)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?fpQz5qnQfwXbFHDezwFXXb1KM1yLp8t3Nr5wpgW+N0IrXZ91dMW0NQl47s+x?=
+ =?us-ascii?Q?nNHaNyZ+oBemzyuxITcamGtYjqmYwcHVcIF+E1NwW3EmJwtUXIJXtFkIflg9?=
+ =?us-ascii?Q?/1cSEb4Ub4aZ3PyoMZnSA2dpqUFA3CuCc41pyG+2VFba2U6C4WWtQuD3wxPl?=
+ =?us-ascii?Q?isZikTYXgRosBrfOWEMxYlRzK0s4fYkGfS57+Ma/W63a8084EIvCXd4zA8X9?=
+ =?us-ascii?Q?b3nIMT3waUIBnX42Yhw8wy2XQqEln9zqOfD+fQecJ+BGIA0+5bp5T2pj5TOK?=
+ =?us-ascii?Q?QSMA/mkoQ9jtpuu7cYycKz27LMlRbVA6T2IMjnPj76VmEJzeZIazpdjk0VUK?=
+ =?us-ascii?Q?ApEoPpYYyiuCCP8GcA6BEtrEiKFtn5U4qSt+ykwon/mxBzyreIRi2lPpQXKb?=
+ =?us-ascii?Q?ZkIAlt43DP4mbgcprUR2WvQRohc+zd+uSZCcjyqxMB3m3/y0dBLnm4Tp1s4B?=
+ =?us-ascii?Q?qUu4w2S+n34o3WjiD2RuSulxDmu7+vxg0sZ5zaeqHVVrSY/uJTy8d/OE4XJo?=
+ =?us-ascii?Q?PM+Gmv12VXWmgOxEIron5BsJxTY63zY1pHs4vvTp0RBGFw+6bHdtkogyed33?=
+ =?us-ascii?Q?fp2z8PmyDHzJ/JblYsblrnbqGXNAGZlrx8Ct9rFYxnRfyD1OQe6/dhfr/NoC?=
+ =?us-ascii?Q?vhcr+skn/HsZd4On0w32C90aDcIuVpSSrSn9BEQpEBlIYO98rJ9GNetIBBLw?=
+ =?us-ascii?Q?5uvEtGIIu+mEPtn8EwulyN1GXsBor3QZ1zxPI2HDbe/JGs4tTonWXnDGppZc?=
+ =?us-ascii?Q?HSaEptX7wwrda+9szarhi0xLeUJ+GoHWxvXCjumoIVLbGsKWXj0lF9BDpzLP?=
+ =?us-ascii?Q?OSxGZpcD2S2ayjQKNywIy1+4/AgDD+gdZg6GN6gZfVXwYNpEzSC+y0B5vy8f?=
+ =?us-ascii?Q?mR0Wo/Q2txPUUH0wyChEI0k+kTHec5DYy8inwbMyVyrwGice2VLxfNQ+Vf5o?=
+ =?us-ascii?Q?vnrfvxHWkW4+riksUNjkZVbrFUY15P+iC0xVzO2fXmLmmCHC9RYyJkm4Rjq2?=
+ =?us-ascii?Q?hNHX6JXX5pEHweSe9HnPb7QEasUy9zk1E6g7Ku8CpxME9smbNdV49WhVNZvY?=
+ =?us-ascii?Q?d6c+RGA/MWXERhF56GkUmVm+i9Utqa8O/8Rq9mIMYeRLmqrbL27mu70DuHbP?=
+ =?us-ascii?Q?abEc7AsAx5amNeTSEtWOpjCG1EpM7NDJ14yCQEYt7FOhtr8kIeVw2BLEVux6?=
+ =?us-ascii?Q?f6VsD/OgB9DnpdJ5O6MNVdSotPorO4hdU63bJgURK2szvXKE1ZPC56TBqauO?=
+ =?us-ascii?Q?l7fLM75Y+dsBoXPy7zItnJ8jGYl9aM6H+rPUtaxezAKvFjnD+/1FAGyvEOuh?=
+ =?us-ascii?Q?hSW1SEJj5pQgxxQdQbxVmIcZnjW0wmR+lW3VeNhxTmxpetJa76hewdwiQ5Ff?=
+ =?us-ascii?Q?0lKXmcsbKF/5B3hSiab4nsgnonsTmK+fPa4rQG8cAOOn7P2GC4yxqMKI9tsF?=
+ =?us-ascii?Q?TqwX79d0ZpfiH8vFbM2GsYJLKcz8Ky8CEUCBWOSCUaU41dBYdEWZRBr/h0yY?=
+ =?us-ascii?Q?PhwZYO4Upe9UnHhrY8h0+RddTD7/435KI5A39GZEwo5m75oPG7phPL9xhMc/?=
+ =?us-ascii?Q?WGcJGKCLs95LO9R446kX8WU3H3ZAikhF6NOcGqnxEqeP8hm3IPN3N7PVxQxU?=
+ =?us-ascii?Q?9wSKCjJLyFZLJkbpn45xc5ffv+8kcfvOopflyV0mOLE1xRGgTjAccjorD/tA?=
+ =?us-ascii?Q?zTLSbGKXEynijzp9mjNTkHdIlzFvEHCSuX2UESTZrZ5K31GGg0+OMW9vWam9?=
+ =?us-ascii?Q?efgINC9kIA=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d7f905d4-9863-4523-c2aa-08deac16ccf6
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 May 2026 08:58:26.1147 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: jsj4sEdN3UxGwQpdY5ONeLhoq0t22JCPuO5YmQ9GuR57TTKr290qrdEtZMQGlVh64TOhvPFMIyo6bXjkBkydwg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PPF316EEACD8
+Received-SPF: permerror client-ip=2a01:111:f403:c111::9;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=DM5PR21CU001.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,170 +156,200 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 29/04/26 12:21, Shivang Upadhyay wrote:
-> When a ppc machine is started with maxcpus greater than the number of
-> present CPUs (e.g., -smp cpus=2,maxcpus=8), firmware allocates the CPU
-> state data buffer based on maxcpus and advertises this size to the
-> kernel during fadump registration.
->
-> However, fadump currently fails to generate a vmcore during the
-> rebooted kernel because:
-
-It would be good if we can include the error log printed by the
-kernel while processing the CPU state buffer in the commit message.
-It may help others in the future.
-
-The rest of the things look good to me.
-
-Feel free to add:
-Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-
-- Sourabh Jain
-
->
-> 1. The CPU state buffer length does not match what firmware advertised
->     (QEMU only populates entries for present CPUs, not maxcpus)
-> 2. The kernel cannot find CPU data for all maxcpus slots
->
-> This patch adds placeholder entries for the unrealized cpus.
-> The placeholder entries contain only the CPUSTRT and CPUEND markers
-> with the CPU ID, which is sufficient for the kernel to recognize the
-> CPU slot exists even though the CPU was never realized.
->
-> This ensures the CPU state buffer size and structure matches what
-> firmware advertised to the kernel, allowing fadump to successfully
-> generate vmcore.
->
-> Cc: Aditya Gupta <adityag@linux.ibm.com>
-> Cc: Sourabh Jain <sourabhjain@linux.ibm.com>
-> Cc: Mahesh J Salgaonkar <mahesh@linux.ibm.com>
-> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Reported-by: Anushree Mathur <anushree.mathur@linux.vnet.ibm.com>
-> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+> -----Original Message-----
+> From: Eric Auger <eric.auger@redhat.com>
+> Sent: 03 May 2026 08:33
+> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
+> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
+> peter.maydell@linaro.org; richard.henderson@linaro.org;
+> cohuck@redhat.com; sebott@redhat.com; Shameer Kolothum Thodi
+> <skolothumtho@nvidia.com>; philmd@linaro.org
+> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
+> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
+> jdenemar@redhat.com
+> Subject: [PATCH v4 04/17] arm/cpu: Add infra to handle generated ID regis=
+ter
+> definitions
+>=20
+> External email: Use caution opening links or attachments
+>=20
+>=20
+> The known ID regs are populated in a new initialization function
+> named initialize_cpu_sysreg_properties(). That code will be
+> automatically generated from AARCHMRS Registers.json. For the
+> time being let's just describe a single id reg, CTR_EL0. In this
+> description we only care about non RES/RAZ fields, ie. named fields.
+>=20
+> The registers are populated in an array indexed by ARMIDRegisterIdx
+> and their fields are added in a sorted list.
+>=20
+> [CH: adapted to reworked register storage]
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 > ---
->   hw/ppc/spapr_fadump.c | 57 +++++++++++++++++++++++++++++++++----------
->   1 file changed, 44 insertions(+), 13 deletions(-)
->
-> diff --git a/hw/ppc/spapr_fadump.c b/hw/ppc/spapr_fadump.c
-> index 13cab0cfe1..b1a21ff115 100644
-> --- a/hw/ppc/spapr_fadump.c
-> +++ b/hw/ppc/spapr_fadump.c
-> @@ -309,6 +309,30 @@ static bool do_preserve_region(FadumpSection *region)
->       return true;
->   }
->   
+>  target/arm/cpu-idregs.h            | 59 ++++++++++++++++++++++++++++++
+>  target/arm/cpu-sysreg-properties.c | 30 +++++++++++++++
+>  target/arm/cpu64.c                 |  3 ++
+>  target/arm/meson.build             |  3 +-
+>  4 files changed, 94 insertions(+), 1 deletion(-)
+>  create mode 100644 target/arm/cpu-idregs.h
+>  create mode 100644 target/arm/cpu-sysreg-properties.c
+>=20
+> diff --git a/target/arm/cpu-idregs.h b/target/arm/cpu-idregs.h
+> new file mode 100644
+> index 0000000000..4a9034594d
+> --- /dev/null
+> +++ b/target/arm/cpu-idregs.h
+> @@ -0,0 +1,59 @@
 > +/*
-> + * Populate placeholder register entries for an unrealized CPU
+> + * handle ID registers and their fields
 > + *
-> + * For CPUs that are not realized (cpu_index < maxcpus), we need to
-> + * create minimal register entries containing only CPUSTRT and CPUEND
-> + * markers to maintain the expected buffer structure.
-> + *
-> + * Returns pointer just past the placeholder entries, which can be used
-> + * as the start address for the next CPU's register entries
+> + * SPDX-License-Identifier: GPL-2.0-or-later
 > + */
-> +static FadumpRegEntry *populate_cpu_reg_entries_placeholder(int cpu_id,
-> +                                                             FadumpRegEntry *curr_reg_entry)
-> +{
-> +    curr_reg_entry->reg_id = cpu_to_be64(fadump_str_to_u64("CPUSTRT"));
-> +    curr_reg_entry->reg_value = cpu_to_be64(cpu_id & FADUMP_CPU_ID_MASK);
-> +    ++curr_reg_entry;
+> +#ifndef ARM_CPU_CUSTOM_H
+> +#define ARM_CPU_CUSTOM_H
+
+ARM_CPU_IDREGS_H ?
+
 > +
-> +    curr_reg_entry->reg_id = cpu_to_be64(fadump_str_to_u64("CPUEND"));
-> +    curr_reg_entry->reg_value = cpu_to_be64(cpu_id & FADUMP_CPU_ID_MASK);
-> +    ++curr_reg_entry;
+> +#include "qemu/osdep.h"
+> +#include "qemu/error-report.h"
+> +#include "cpu.h"
+> +#include "cpu-sysregs.h"
 > +
-> +    return curr_reg_entry;
+> +typedef struct ARM64SysRegField {
+> +    const char *name; /* name of the field, for instance CTR_EL0_IDC */
+> +    ARMIDRegisterIdx index; /* parent register, e.g. CTR_EL0_IDX */
+> +    int lower; /* lowest bit number of the field in the register */
+> +    int upper; /* highest bit number */
+> +} ARM64SysRegField;
+> +
+> +typedef struct ARM64SysReg {
+> +    const char *name;   /* name of the sysreg, for instance CTR_EL0 */
+> +    ARMSysRegs sysreg;
+> +    ARMIDRegisterIdx index; /* register index, e.g. CTR_EL0_IDX */
+> +    GList *fields; /* list of named fields, excluding RES* */
+> +} ARM64SysReg;
+> +
+> +void initialize_cpu_sysreg_properties(void);
+> +
+> +/*
+> + * List of exposed ID regs (automatically populated from AARCHMRS
+> Registers.json)
+> + */
+> +extern ARM64SysReg arm64_id_regs[NUM_ID_IDX];
+> +
+> +/* Allocate a new field and insert it at the head of the @reg list */
+
+It says insert at the head...
+
+> +static inline GList *arm64_sysreg_add_field(ARM64SysReg *reg, const char
+> *name,
+> +                                     uint8_t min, uint8_t max) {
+> +
+> +     ARM64SysRegField *field =3D g_new0(ARM64SysRegField, 1);
+> +
+> +     field->name =3D name;
+> +     field->lower =3D min;
+> +     field->upper =3D max;
+> +     field->index =3D reg->index;
+> +
+> +     reg->fields =3D g_list_append(reg->fields, field);
+
+But this is adding to the tail, right?
+
+> +     return reg->fields;
+
+Don't think the return is used anywhere.
+
+Thanks,
+Shameer
+
 > +}
 > +
->   /*
->    * Populate the passed CPUs register entries, in the buffer starting at
->    * the argument 'curr_reg_entry'
-> @@ -450,7 +474,7 @@ static FadumpRegEntry *populate_cpu_reg_entries(CPUState *cpu,
->    * callers), and sets the size of this buffer in the argument
->    * 'cpu_state_len'
->    */
-> -static void *get_cpu_state_data(uint64_t *cpu_state_len)
-> +static void *get_cpu_state_data(uint64_t *cpu_state_len, MachineState *ms)
->   {
->       FadumpRegSaveAreaHeader reg_save_hdr;
->       g_autofree FadumpRegEntry *reg_entries = NULL;
-> @@ -459,15 +483,11 @@ static void *get_cpu_state_data(uint64_t *cpu_state_len)
->   
->       uint32_t num_reg_entries;
->       uint32_t reg_entries_size;
-> -    uint32_t num_cpus = 0;
-> +    uint32_t num_cpus = ms->smp.max_cpus;
->   
->       void *cpu_state_buffer = NULL;
->       uint64_t offset = 0;
->   
-> -    CPU_FOREACH(cpu) {
-> -        ++num_cpus;
-> -    }
-> -
->       reg_save_hdr.version = cpu_to_be32(0);
->       reg_save_hdr.magic_number =
->           cpu_to_be64(fadump_str_to_u64("REGSAVE"));
-> @@ -484,10 +504,20 @@ static void *get_cpu_state_data(uint64_t *cpu_state_len)
->       /* Pointer to current CPU's registers */
->       curr_reg_entry = reg_entries;
->   
-> -    /* Populate register entries for all CPUs */
-> -    CPU_FOREACH(cpu) {
-> -        cpu_synchronize_state(cpu);
-> -        curr_reg_entry = populate_cpu_reg_entries(cpu, curr_reg_entry);
-> +    /*
-> +     * Populate register entries for all CPU slots (0 to maxcpus-1)
-> +     */
-> +    for (int i = 0; i < num_cpus; i++) {
-> +        cpu = qemu_get_cpu(i);
-> +        if (cpu) {
-> +            /* CPU is realized - populate full register entries */
-> +            cpu_synchronize_state(cpu);
-> +            curr_reg_entry = populate_cpu_reg_entries(cpu, curr_reg_entry);
-> +        } else {
-> +            /* CPU slot is empty - populate placeholder entries */
-> +            curr_reg_entry = populate_cpu_reg_entries_placeholder(i,
-> +                                                                   curr_reg_entry);
-> +        }
->       }
->   
->       *cpu_state_len = 0;
-> @@ -526,7 +556,7 @@ static void *get_cpu_state_data(uint64_t *cpu_state_len)
->    * such as invalid destination address or non-fatal error errors likely
->    * caused due to invalid parameters, return true and set region->error_flags
->    */
-> -static bool do_populate_cpu_state(FadumpSection *region)
-> +static bool do_populate_cpu_state(FadumpSection *region, MachineState *ms)
->   {
->       uint64_t dest_addr = be64_to_cpu(region->destination_address);
->       uint64_t cpu_state_len = 0;
-> @@ -541,7 +571,7 @@ static bool do_populate_cpu_state(FadumpSection *region)
->       attrs.user = 0;
->       attrs.memory = 1;
->   
-> -    cpu_state_buffer  = get_cpu_state_data(&cpu_state_len);
-> +    cpu_state_buffer  = get_cpu_state_data(&cpu_state_len, ms);
->   
->       io_result = address_space_write(default_as, dest_addr, attrs,
->               cpu_state_buffer, cpu_state_len);
-> @@ -597,6 +627,7 @@ static bool do_populate_cpu_state(FadumpSection *region)
->   static bool fadump_preserve_mem(SpaprMachineState *spapr)
->   {
->       FadumpMemStruct *fdm = &spapr->registered_fdm;
-> +    MachineState *ms = MACHINE(spapr);
->       uint16_t dump_num_sections, data_type;
->   
->       assert(spapr->fadump_registered);
-> @@ -627,7 +658,7 @@ static bool fadump_preserve_mem(SpaprMachineState *spapr)
->   
->           switch (data_type) {
->           case FADUMP_CPU_STATE_DATA:
-> -            if (!do_populate_cpu_state(&fdm->rgn[i])) {
-> +            if (!do_populate_cpu_state(&fdm->rgn[i], ms)) {
->                   qemu_log_mask(LOG_GUEST_ERROR,
->                       "FADump: Failed to store CPU State Data");
->                   fdm->header.dump_status_flag |=
+> +static inline ARM64SysReg *arm64_sysreg_get(ARMIDRegisterIdx index)
+> +{
+> +        ARM64SysReg *reg =3D &arm64_id_regs[index];
+> +
+> +        reg->index =3D index;
+> +        reg->sysreg =3D id_register_sysreg[index];
+> +        return reg;
+> +}
+> +
+> +#endif
+> diff --git a/target/arm/cpu-sysreg-properties.c b/target/arm/cpu-sysreg-
+> properties.c
+> new file mode 100644
+> index 0000000000..5cc06c8f24
+> --- /dev/null
+> +++ b/target/arm/cpu-sysreg-properties.c
+> @@ -0,0 +1,30 @@
+> +/*
+> + * QEMU ARM CPU SYSREG PROPERTIES
+> + * will be automatically generated
+> + *
+> + * Copyright (c) Red Hat, Inc. 2026
+> + *
+> + */
+> +
+> + /* SPDX-License-Identifier: GPL-2.0-or-later */
+> +
+> +#include "cpu-idregs.h"
+> +
+> +ARM64SysReg arm64_id_regs[NUM_ID_IDX];
+> +
+> +void initialize_cpu_sysreg_properties(void)
+> +{
+> +    memset(arm64_id_regs, 0, sizeof(ARM64SysReg) * NUM_ID_IDX);
+> +    /* CTR_EL0 */
+> +    ARM64SysReg *CTR_EL0 =3D arm64_sysreg_get(CTR_EL0_IDX);
+> +    CTR_EL0->name =3D "CTR_EL0";
+> +    arm64_sysreg_add_field(CTR_EL0, "TminLine", 32, 37);
+> +    arm64_sysreg_add_field(CTR_EL0, "DIC", 29, 29);
+> +    arm64_sysreg_add_field(CTR_EL0, "IDC", 28, 28);
+> +    arm64_sysreg_add_field(CTR_EL0, "CWG", 24, 27);
+> +    arm64_sysreg_add_field(CTR_EL0, "ERG", 20, 23);
+> +    arm64_sysreg_add_field(CTR_EL0, "DminLine", 16, 19);
+> +    arm64_sysreg_add_field(CTR_EL0, "L1Ip", 14, 15);
+> +    arm64_sysreg_add_field(CTR_EL0, "IminLine", 0, 3);
+> +}
+> +
+> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+> index a93ad2da5a..b940842d9e 100644
+> --- a/target/arm/cpu64.c
+> +++ b/target/arm/cpu64.c
+> @@ -37,6 +37,7 @@
+>  #include "hw/core/qdev-properties.h"
+>  #include "internals.h"
+>  #include "cpu-features.h"
+> +#include "cpu-idregs.h"
+>=20
+>  /* convert between <register>_IDX and SYS_<register> */
+>  #define DEF(NAME, OP0, OP1, CRN, CRM, OP2)      \
+> @@ -906,6 +907,8 @@ static void aarch64_cpu_register_types(void)
+>  {
+>      size_t i;
+>=20
+> +    initialize_cpu_sysreg_properties();
+> +
+>      for (i =3D 0; i < ARRAY_SIZE(aarch64_cpus); ++i) {
+>          arm_cpu_register(&aarch64_cpus[i]);
+>      }
+> diff --git a/target/arm/meson.build b/target/arm/meson.build
+> index 192ac7c31e..e2f740e48f 100644
+> --- a/target/arm/meson.build
+> +++ b/target/arm/meson.build
+> @@ -9,7 +9,8 @@ arm_user_ss.add(files('gdbstub.c'))
+>=20
+>  arm_ss.add(when: 'TARGET_AARCH64', if_true: files(
+>    'cpu64.c',
+> -  'gdbstub64.c'
+> +  'gdbstub64.c',
+> +  'cpu-sysreg-properties.c',
+>  ))
+>=20
+>  arm_common_ss.add(files(
+> --
+> 2.53.0
 
 
