@@ -4,144 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74E09CD3427
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 11:14:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AA3DCD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 11:22:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKwgI-0007Xf-3x; Thu, 07 May 2026 07:14:14 -0400
+	id 1wKwnc-0000bn-KL; Thu, 07 May 2026 07:21:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wKwgG-0007XJ-Aj
- for qemu-devel@nongnu.org; Thu, 07 May 2026 07:14:12 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1wKwna-0000bW-0R
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 07:21:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel.barboza@oss.qualcomm.com>)
- id 1wKwgD-0006m3-Hh
- for qemu-devel@nongnu.org; Thu, 07 May 2026 07:14:12 -0400
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6475LJuk1067863
- for <qemu-devel@nongnu.org>; Thu, 7 May 2026 11:14:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- aG1VkJm9Cl89SRF6w+Sej3FQ4XE2ddgp5BXyGU2sJ3g=; b=dgboCT7kRSU6KUIv
- D92qPNnnKwF3JewA+6w/Gn1qqAgAvb0IU6xkdkvdu6QG8vJOcUvfqgSIoXvWOTWX
- RJP1Lvym3ufwTgfpdLdq5EBgP8iWTZQGF9IlJ3wVLKn8t9kDnMDRZuJuXGAY+7GH
- fsxN3ysPqobE05pfa2c87mQXpNLKOuzmeszvMXOWZALGDi5oGvcbDEj4UVLwRy8r
- xkI31WGPQ8+Y7K+8MpTuP471ZAaC0I+s6n3LK1wV8dfAgM+zlD3MW5tF9zluAwKq
- lBuvLtH7bFwypiJY2eZHr5uiJZLhgRs1rCOw8dUrl0U7Om9k/xFXgIcaSkJTzoe7
- jxjYHw==
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e0mh199gw-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 11:14:07 +0000 (GMT)
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8eaee67d1afso71480985a.1
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 04:14:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1wKwnW-0008QE-NU
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 07:21:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778152900;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aTU7tUGIlYbT4OyZMjhU/0KnQj19aY1ei48bc6uJJJw=;
+ b=OxslMeD7Gi/2/DBbR9wYTuTcrWfXcdwH9JmNVlBhYNfZ0sF7ZsAqS05vV8QGNPfCwLqASA
+ dupQiSlnzUHz5xiqUtjIWfpNT2cCYFBqsm6dKqQ4F027qu5jbQdKs9RUdEtu5hEgfQMBty
+ NetbqNDdDEGhZPYRweQL9TUT9wrbfjs=
+Received: from mail-yx1-f72.google.com (mail-yx1-f72.google.com
+ [74.125.224.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-637--1kxDuuMOEeEOEZ6XsDLHg-1; Thu, 07 May 2026 07:21:38 -0400
+X-MC-Unique: -1kxDuuMOEeEOEZ6XsDLHg-1
+X-Mimecast-MFC-AGG-ID: -1kxDuuMOEeEOEZ6XsDLHg_1778152898
+Received: by mail-yx1-f72.google.com with SMTP id
+ 956f58d0204a3-65c7306e432so1198838d50.0
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 04:21:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778152898; cv=none;
+ d=google.com; s=arc-20240605;
+ b=hfEUsNYKv0bPDDkCFUwjp8DF0Qc4dzLiR637TBLelduFfqjd97I2BA+cuqDP80K31K
+ QYFQ9CbN/jh+K/7jEuGh1CSC/+uyieJ/XOIipMk9sdrdxPVsvrGoxJvrqAGDTczn0rMw
+ OLZn7Qg35KO3ampUeP6QNOiIDg4lHQ3npN2YeMtrxTE8uR0/eW7QJMGcv/S/PsbTpl+V
+ JqgkDL0SLUn8OkS2NEQ8x46ezJAKQcrEayBOiW4mGWVPYOUIxjn8OhPCOungxQvB6EHZ
+ kedUMiccHL7Db+ZZ/RYxpp9SNn0tUh2EIzeTC/vQf93ozzQH6IWMWTbw0yc6kNG+Iire
+ jmZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=aTU7tUGIlYbT4OyZMjhU/0KnQj19aY1ei48bc6uJJJw=;
+ fh=2j1OPIc+H3IgInHX+gBxX5VNmvDfIM4Z/c1hsqkYxuE=;
+ b=bAbYFEHKe9Ikc4ac6fvhvvStP+yMy/aTPhFoy6tu0yTNV79iykD45XwXT6pwrt9RB6
+ QvrhvRf3eUIpfDYyOotWb0+RMn4+/+4r3/DpGaLMgwAdnN6dHee3Qf7QQJMHY1RTgzo8
+ Oy2yunBkjrhWb0Omfzdf6Pu7M1O9w5/TB6glNjMvudaYmPow40IMTlhjxUJA/EE8tMER
+ qKfzG1sY/I+gAam7Piu2vRv3XkDp4vvPpsnwUQJds+EjqOlP47M1llFeaoJdno6MwHbI
+ neocIf75VWs4oMS+cOpGtccM0e50JBWJpuYF1x6wfr8ylxVwF58jQ7a8ToMWFtOaekOI
+ WusQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778152446; x=1778757246; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=aG1VkJm9Cl89SRF6w+Sej3FQ4XE2ddgp5BXyGU2sJ3g=;
- b=Y8k+tse9Gw/Y0W4kg9N/PRhwwE0elakwuJ1df8v+Fb+s5fMj5htToUutMqcBmj9udV
- yaCVUDd2EoJ4c2Ad4ZW7acqgFZwlTvklEz4IBN30408LzShkc3vgqFLw/Zw5mCp34ZBk
- ragNTDjeB9pwF0xEO0PwKFOEvpI7o3q+XF0xbXwSpIyjVUiooTtvjYq8HIUzVsXBT5fw
- TUWLXdEhWKegORhQLowbzPgPY+Fdcv1+3quslkzrZa9/9wBbFJ1sJWyFD2Bd8JXzZjrK
- 8TgCl+GMHLw75OxruLc9m7RqigMXQGnye9tNA25FmXkdhItR0+jXQRG8b7z9HTvccno6
- dKjA==
+ d=redhat.com; s=google; t=1778152898; x=1778757698; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=aTU7tUGIlYbT4OyZMjhU/0KnQj19aY1ei48bc6uJJJw=;
+ b=Vq5ayXkvm1Utek1+Hlsj1I9PWMWjbY9Vnfllr8N6AK+4F3yIGuxWXvA+WB7y+g+mhD
+ Rvk2JIPPC4KNA8BH7p4kHHfXfBDlIk3H+OdNmPgQIW6G7JCtcazniveutPJGJ6n2+v4U
+ ie9yGwWIznhep1hhvwsLZC/G0izvh39hc1904gI8kfJlYYjehx0q1MSzdkykRiIgs5fN
+ jvqSfZEV1LrfUR2joThuV8wg/kIbo/PZVBl59N1e0dpCo1ak6Uz0qZHFA3TPFSeRXksM
+ KqUGEboIQNL89FzbanvhzDgfcSunTBv6u8kJURcNjjJPCM31l1r6QiflAOo7+o2XZ32I
+ DqEw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778152446; x=1778757246;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aG1VkJm9Cl89SRF6w+Sej3FQ4XE2ddgp5BXyGU2sJ3g=;
- b=beLmHi5IxdJVjbfDtXyNXMcCykw3aBO4xbFQ9Hv/r5KonfU7RlQezcHAVT1QFCMaiF
- xAMV0J5B7hYJlOgqcgzPxFy9QHV9V7MMlRw5HoaP0oEeYKwMNbFKoObUJLky2XRlPKdM
- 6PexVyz9pmUGMjF9PpRWpnnAsQIysGgUKIzbtEqSXY/zMED7/Ck8XJGjW8MRJmQsPWbP
- jDWFIab40pHf1Y7zRQZ0fBSSMtuLq0Klyy3Ufyat5qrCB/xJBhsR21BQQ7/jgzcI1Ay9
- vUtkelDgQhlRGEc2FfjMXvvXUheLExddg2CidOlfuVtNzWsGeNiUJiE+RWjkKL8NVtib
- 2tig==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+abfsLDW7Oin1yu9s8mK9shjBiledT4ctaRn+ceQQL5VUR6QsQy6cbchoMbpCBwCut2ty7XJPhyfIn@nongnu.org
-X-Gm-Message-State: AOJu0YyuXe8wm37Nq6moU2bUWUZXlqFADlZZpNNDhV9fkkLRLFlwJRbm
- Ypi09Jt3RAxB9DcrlBAunCGNVaT10NkmX36rfvIWGvITSs7J0xvu0qFmDGV6enRWGnGx+vWvGGC
- m30x7ZrtMeGgT7JPFKMlodUZbd3gcWyt64qhFYWXbcvpASb7mm8gvcV4+ZA==
-X-Gm-Gg: AeBDietNYUoukwjYu0hoh68XMuyPLpaGuS0oS3zjXqtX6dYxEDsKI6O1K2wIXpexapD
- fyfxohTgCUcEXC7AMPhHCNrRKxd8V0XVIInQtW4klzO04+dwUitFXfd5B8I+BPEpdMdb+gko4xg
- pjYu0q9M9gY6i3bauRgwK9NnziZyvCqQq1RCqLIJyqG+ji8owAAZ78N/t1XfwrNIhxwC8pXhw+I
- 98Qfs/0NB0PTIZFpkgwJh5uflq/7FVkz8jFI00z78Z2+fQTaCuTSmQWZl/URvlN621nC+ADkKum
- Fwoi+YqN056nNY3nijZq6htv5+QSpQlcd3GjYV4iXXT1fdGInIE95mk49HQ6FJZIGzsP/7THNbj
- xS1UY1K5NWWireHu8WTdJ1hOuIyV6qOLRaCe+fV4+QC9Va0v8jaivLqeCAxLOYLlJrk6YCg==
-X-Received: by 2002:a05:620a:4624:b0:8ef:3312:a150 with SMTP id
- af79cd13be357-904d4a61a03mr1145679785a.17.1778152445888; 
- Thu, 07 May 2026 04:14:05 -0700 (PDT)
-X-Received: by 2002:a05:620a:4624:b0:8ef:3312:a150 with SMTP id
- af79cd13be357-904d4a61a03mr1145671885a.17.1778152445221; 
- Thu, 07 May 2026 04:14:05 -0700 (PDT)
-Received: from [192.168.68.106] ([191.202.237.136])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8fc2938d20fsm1923490885a.1.2026.05.07.04.14.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 May 2026 04:14:04 -0700 (PDT)
-Message-ID: <90009760-e20d-485f-b2e1-d33f73b9d887@oss.qualcomm.com>
-Date: Thu, 7 May 2026 08:14:00 -0300
+ d=1e100.net; s=20251104; t=1778152898; x=1778757698;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=aTU7tUGIlYbT4OyZMjhU/0KnQj19aY1ei48bc6uJJJw=;
+ b=eqkYCtszSk49Sp7zeh0GUIzlDJJSL7lmfwN8s88HGAeI42XAIEJ3+Hwe0K3sjWr3At
+ HC+jZcJC/9QkzKUpJdR23Jy0AznACe5WIOh/8Kp7YPcFU7gCiuRjpbp0ncO6zj4++upN
+ FDXY+1gMbLyQNw2akA9PpgmLdCsLGTkbNr6U851N1xrxqPMhNARQekYAwpRwjC5Ky5eT
+ TAiq+BG+eyHRycyHIHZQj6tSgXQzO8SCPKbdrxZU1C6mI4Tp5que8WQIO+WBYZ9Fs+nu
+ 7rKlBALOIs3+3nSVVR48VyKOqxXwRatAbYzv3Lx8CbzQ0Pl+BgwjnBfBlxz5WGiNkMWw
+ yllQ==
+X-Gm-Message-State: AOJu0YzwwmjZpQhDNsl0qKqUjXG/AHLM9JRoXMOelMe2M4n7m6aZBHJW
+ qid1WD9AYOSLsGukt7rOoFEVFZPvNIEz/VBVoAMRLuxI75tQ25iu6yAql8U5TuqgZ2UAfJjXwpE
+ 0497uBKYyWQROkViAeAwKOtjmNiFQQKEUfEI7B3tfVn+7IKnJ1Qmsc7L+s6h2nOzivAzwSqpYV5
+ dSWqwTDd5zDfqxgz1CktmTVKYVcaTC4eU=
+X-Gm-Gg: Acq92OHTTufIFa/3oN+TEiadgWi2pdq2uRB/C/RZ1jbF/4/olHUTpNteOICV9IQGf3E
+ taXtDaKP/53e0ut6gKqdW97pj86RmHpz4hggVkumvzXxisR+AfCF1gJwfh92LxCTDaIcxkxidSs
+ R7gLPoOrCbg7s42fcX3CAAM3nOSRa+DHR7UCbAcO8e+rRfDj9a8FpF7Or986kiJDsb2PGDJ+QrA
+ sMjB6+a2ahN9n0NDaJIi7RbKuF4DcyRM91fbYerqLaNng0sBKA=
+X-Received: by 2002:a05:690e:120b:b0:64e:f106:60ee with SMTP id
+ 956f58d0204a3-65c799d57c0mr7364731d50.55.1778152897960; 
+ Thu, 07 May 2026 04:21:37 -0700 (PDT)
+X-Received: by 2002:a05:690e:120b:b0:64e:f106:60ee with SMTP id
+ 956f58d0204a3-65c799d57c0mr7364685d50.55.1778152897292; Thu, 07 May 2026
+ 04:21:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/6] target/riscv: Implement core SMMPT lookup logic
-To: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, chao.liu.zevorn@gmail.com, palmer@dabbelt.com,
- alistair23@gmail.com, liwei1518@gmail.com,
- Huang Tao <eric.huang@linux.alibaba.com>,
- TANG Tiancheng <lyndra@linux.alibaba.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260408140635.42546-1-zhiwei_liu@linux.alibaba.com>
- <20260408140635.42546-3-zhiwei_liu@linux.alibaba.com>
-From: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260408140635.42546-3-zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: a16cPB2E0NRS8d_cBP7QpQxpX1tWRUZH
-X-Proofpoint-ORIG-GUID: a16cPB2E0NRS8d_cBP7QpQxpX1tWRUZH
-X-Authority-Analysis: v=2.4 cv=P9gKQCAu c=1 sm=1 tr=0 ts=69fc73ff cx=c_pps
- a=qKBjSQ1v91RyAK45QCPf5w==:117 a=IZaa5BNpKBTNMhuJoHisKw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
- a=SRrdq9N9AAAA:8 a=bDdBU3oEAAAA:8 a=-35DOFFSn7V3pmNHYCwA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 a=NFOGd7dJGGMPyQGDc5-O:22 a=DN7SgORnOiO7RqxRx1GC:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA3MDExMSBTYWx0ZWRfX6MS339mm+xTE
- MHb5tFNVSPmggkoAIvPQzCz55qSjSCune6GJ7UEeSwlBjPDupBIIh5abO4YkbHcYP2yJlRbBgUx
- dQvIHrzx68svLk9QdMB47Twj9Blwk9iGB0FB50/mHne8Dx3aEar5dwRTarGfmOeKtNn5l+kAUoM
- XguZZZk81+EeXqFZ3k2h4AixmR5Yfd924IHIfqL94oMv2mafL+ROfJu7v1ZsI+G8rYoI23v2mAD
- m+IvMN0WWESdqJu7oC4WZCQEJNm6YGyUSk/uHorLPeRPvxkM6ckpR08PHWMAnWE/V6rrSdkh3T4
- X+pN7UYx3BAif9RKEmWxYJSQWubGVX7sDH5sldwgPcf6b1BQysLPf4vbUDZkBWkLjNuQDb1i9Jn
- G/zgk6PHdIvdG+U3obDJn/q9GKO1l+ZunoihNWIDPsJzmP2yEjo0Q/O8+DEZr+U1+oOcocXfiVy
- TUWpfK37Tu3XKzpmzpA==
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-06_02,2026-05-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 suspectscore=0 adultscore=0 lowpriorityscore=0
- priorityscore=1501 malwarescore=0 bulkscore=0 spamscore=0 impostorscore=0
- clxscore=1015 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2605070111
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=daniel.barboza@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260504091842.1406602-1-kdutta@redhat.com>
+In-Reply-To: <20260504091842.1406602-1-kdutta@redhat.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Thu, 7 May 2026 13:21:00 +0200
+X-Gm-Features: AVHnY4KOeaG2qy6c3xjiOdtm7JF5kBztuj-xIeFCtJGBcRT0ZqWSzIyS2pYFkew
+Message-ID: <CAJaqyWeGJdn76XTH-Z+hwVgQEsbYnaCEAeq=vy=p869MNsiBHA@mail.gmail.com>
+Subject: Re: [PATCH v6] hw/net/virtio-net: add support for notification
+ coalescing
+To: Koushik Dutta <kdutta@redhat.com>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -11
+X-Spam_score: -1.2
+X-Spam_bar: -
+X-Spam_report: (-1.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,464 +137,506 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhiwei,
+On Mon, May 4, 2026 at 11:18=E2=80=AFAM Koushik Dutta <kdutta@redhat.com> w=
+rote:
+>
+> Implement VirtIO Network Notification Coalescing (Bit 53).
+> This allows the guest to manage interrupt frequency using ethtool
+> -C for both RX and TX paths.
+>
+> - Added VIRTIO_NET_F_NOTF_COAL to host features.
+> - Implemented VIRTIO_NET_CTRL_NOTF_COAL class handling in
+>   virtio_net_handle_ctrl_iov.
+> - Added logic to store and apply rx/tx usecs and max_packets.
+> - Added packet counters and threshold logic for both RX and TX data paths=
+.
+> - Dynamic Dispatcher: Implemented a dispatcher mechanism that
+>   dynamically switches/activates the notification callback logic
+>   only after the guest enables TX coalescing via ethtool.
+> - After VM LM coalescing parameters persist in the destination VM.
+>
+> This reduces interrupt overhead by batching notifications based on
+> either a packet count or a time-based threshold.
+>
+> Signed-off-by: Koushik Dutta <kdutta@redhat.com>
 
-On 4/8/2026 11:06 AM, LIU Zhiwei wrote:
-> This patch introduces the core implementation for the Memory Protection Table
-> (MPT) walk, which is the central mechanism of the SMMPT extension.
-> 
-> A new file, `riscv_smmpt.c`, is added to encapsulate the MPT logic. It
-> implements the `smmpt_lookup()` function, which performs a multi-level
-> page table-like walk starting from the physical address specified in the
-> `mptppn` CSR field. This walk determines the access permissions (read,
-> write, execute) for a given physical address.
-> 
-> The implementation supports various SMMPT modes (SMMPT34, SMMPT43, etc.) and
-> correctly handles leaf and non-leaf entries, including reserved bit
-> checks. Helper functions for parsing MPT entries and converting access
-> permissions are also included in the new `riscv_smmpt.h` header.
-> 
-> Co-authored-by: Huang Tao <eric.huang@linux.alibaba.com>
-> Co-authored-by: TANG Tiancheng <lyndra@linux.alibaba.com>
-> Signed-off-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Please include a changelog across the different versions of the series.
+
 > ---
->   target/riscv/cpu_helper.c  |   5 +-
->   target/riscv/meson.build   |   1 +
->   target/riscv/pmp.h         |   3 +
->   target/riscv/riscv_smmpt.c | 274 +++++++++++++++++++++++++++++++++++++
->   target/riscv/riscv_smmpt.h |  15 ++
->   5 files changed, 295 insertions(+), 3 deletions(-)
->   create mode 100644 target/riscv/riscv_smmpt.c
-> 
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index dd6c861a90..e3361fadae 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1089,9 +1089,8 @@ void riscv_cpu_set_mode(CPURISCVState *env, target_ulong newpriv, bool virt_en)
->    * @access_type: The type of MMU access
->    * @mode: Indicates current privilege level.
->    */
-> -static int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
-> -                                    int size, MMUAccessType access_type,
-> -                                    int mode)
-> +int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
-> +                             int size, MMUAccessType access_type, int mode)
->   {
->       pmp_priv_t pmp_priv;
->       bool pmp_has_privs;
-> diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-> index 3842c7c1a8..bd1c2e8fad 100644
-> --- a/target/riscv/meson.build
-> +++ b/target/riscv/meson.build
-> @@ -34,6 +34,7 @@ riscv_system_ss = ss.source_set()
->   riscv_system_ss.add(files(
->     'arch_dump.c',
->     'pmp.c',
-> +  'riscv_smmpt.c',
->     'debug.c',
->     'monitor.c',
->     'machine.c',
-> diff --git a/target/riscv/pmp.h b/target/riscv/pmp.h
-> index 467fb6b4b1..1ed574227c 100644
-> --- a/target/riscv/pmp.h
-> +++ b/target/riscv/pmp.h
-> @@ -86,6 +86,9 @@ void pmp_update_rule_nums(CPURISCVState *env);
->   uint32_t pmp_get_num_rules(CPURISCVState *env);
->   int pmp_priv_to_page_prot(pmp_priv_t pmp_priv);
->   void pmp_unlock_entries(CPURISCVState *env);
-> +int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
-> +                             int size, MMUAccessType access_type,
-> +                             int mode);
->   
->   #define MSECCFG_MML_ISSET(env) get_field(env->mseccfg, MSECCFG_MML)
->   #define MSECCFG_MMWP_ISSET(env) get_field(env->mseccfg, MSECCFG_MMWP)
-> diff --git a/target/riscv/riscv_smmpt.c b/target/riscv/riscv_smmpt.c
-> new file mode 100644
-> index 0000000000..b7b47c5ae1
-> --- /dev/null
-> +++ b/target/riscv/riscv_smmpt.c
-> @@ -0,0 +1,274 @@
-> +/*
-> + * QEMU RISC-V Smmpt (Memory Protection Table)
-> + *
-> + * Copyright (c) 2024 Alibaba Group. All rights reserved.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "riscv_smmpt.h"
-> +#include "pmp.h"
-> +#include "system/memory.h"
-> +
-> +typedef uint64_t load_entry_fn(AddressSpace *, hwaddr,
-> +                               MemTxAttrs, MemTxResult *);
-> +
-> +static uint64_t load_entry_32(AddressSpace *as, hwaddr addr,
-> +                              MemTxAttrs attrs, MemTxResult *result)
+>  hw/net/virtio-net.c            | 193 +++++++++++++++++++++++++++++----
+>  include/hw/virtio/virtio-net.h |  10 +-
+>  net/passt.c                    |   1 +
+>  net/tap.c                      |   1 +
+>  net/vhost-user.c               |   1 +
+>  net/vhost-vdpa.c               |   1 +
+>  6 files changed, 184 insertions(+), 23 deletions(-)
+>
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 2a5d642a64..aabba6a4be 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -157,6 +157,16 @@ static void flush_or_purge_queued_packets(NetClientS=
+tate *nc)
+>   * - we could suppress RX interrupt if we were so inclined.
+>   */
+>
+> +static void virtio_net_rx_notify(void *opaque)
 > +{
-> +    return address_space_ldl(as, addr, attrs, result);
+> +    VirtIONetQueue *q =3D opaque;
+> +    VirtIONet *n =3D q->n;
+> +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
+> +
+> +    n->rx_pkt_cnt =3D 0;
+> +    virtio_notify(vdev, q->rx_vq);
 > +}
 > +
-> +static uint64_t load_entry_64(AddressSpace *as, hwaddr addr,
-> +                              MemTxAttrs attrs, MemTxResult *result)
+>  static void virtio_net_get_config(VirtIODevice *vdev, uint8_t *config)
+>  {
+>      VirtIONet *n =3D VIRTIO_NET(vdev);
+> @@ -435,7 +445,7 @@ static int virtio_net_set_status(struct VirtIODevice =
+*vdev, uint8_t status)
+>          if (queue_started) {
+>              if (q->tx_timer) {
+>                  timer_mod(q->tx_timer,
+> -                               qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n=
+->tx_timeout);
+> +                               qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n=
+->tx_coal_usecs);
+
+This is adding up ns + us, different units. We need to stick with us,
+as the command-line parameter was already in us.
+
+>              } else {
+>                  replay_bh_schedule_event(q->tx_bh);
+>              }
+> @@ -1080,6 +1090,52 @@ static int virtio_net_handle_offloads(VirtIONet *n=
+, uint8_t cmd,
+>      }
+>  }
+>
+> +static void virtio_net_tx_timer(void *opaque);
+> +
+> +static int virtio_net_handle_coal(VirtIONet *n, uint8_t cmd,
+> +                                  struct iovec *iov, unsigned int iov_cn=
+t)
 > +{
-> +    return address_space_ldq(as, addr, attrs, result);
-> +}
+> +    struct virtio_net_ctrl_coal coal;
+> +    VirtIONetQueue *q;
+> +    size_t s;
+> +    int i;
 > +
-
-So it seems like we have upstream changes that impacted this code.
-
-(Phil, feel free to chime in).
-
-When building this series I face this error:
-
-
-FAILED: libqemu-riscv64-softmmu.a.p/target_riscv_riscv_smmpt.c.o
-cc -Ilibqemu-riscv64-softmmu.a.p -I. -I.. -Itarget/riscv -I../target/riscv -Isubprojects/libvduse -I../subprojects/libvduse -Iqapi -Itrace -Iui -Iui/shader -I/usr/include/pixman-1 -I/usr/include/glib-2.0 -I/usr/lib/aarch64-linux-gnu/glib-2.0/include -I/usr/include/libmount -I/usr/include/blkid -I/usr/include/gio-unix-2.0 -I/usr/include/slirp -fdiagnostics-color=auto -Wall -Winvalid-pch -Werror -std=gnu11 -O0 -g -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -fno-strict-aliasing 
--fno-common -fwrapv -ftrivial-auto-var-init=zero -fzero-call-used-regs=used-gpr -fstack-protector-strong -Wempty-body -Wendif-labels -Wexpansion-to-defined -Wformat-overflow=2 -Wformat-security -Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthrough=2 -Winit-self -Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs -Wold-style-declaration -Wold-style-definition -Wredundant-decls -Wshadow=local -Wstrict-prototypes -Wtype-limits -Wundef -Wvla -Wwrite-strings -Wno-missing-include-dirs 
--Wno-psabi -Wno-shift-negative-value -isystem /home/dbarboza/work/qemu/linux-headers -isystem linux-headers -iquote . -iquote /home/dbarboza/work/qemu -iquote /home/dbarboza/work/qemu/include -iquote /home/dbarboza/work/qemu/host/include/aarch64 -iquote /home/dbarboza/work/qemu/host/include/generic -iquote /home/dbarboza/work/qemu/tcg/aarch64 -pthread -fPIE -D_DEFAULT_SOURCE -D_XOPEN_SOURCE=600 -DNCURSES_WIDECHAR=1 -isystem../linux-headers -isystemlinux-headers -DCOMPILING_PER_TARGET 
-'-DCONFIG_TARGET="riscv64-softmmu-config-target.h"' '-DCONFIG_DEVICES="riscv64-softmmu-config-devices.h"' -MD -MQ libqemu-riscv64-softmmu.a.p/target_riscv_riscv_smmpt.c.o -MF libqemu-riscv64-softmmu.a.p/target_riscv_riscv_smmpt.c.o.d -o libqemu-riscv64-softmmu.a.p/target_riscv_riscv_smmpt.c.o -c ../target/riscv/riscv_smmpt.c
-../target/riscv/riscv_smmpt.c: In function ‘load_entry_32’:
-../target/riscv/riscv_smmpt.c:20:12: error: implicit declaration of function ‘address_space_ldl’; did you mean ‘address_space_ldub’? [-Werror=implicit-function-declaration]
-    20 |     return address_space_ldl(as, addr, attrs, result);
-       |            ^~~~~~~~~~~~~~~~~
-       |            address_space_ldub
-../target/riscv/riscv_smmpt.c:20:12: error: nested extern declaration of ‘address_space_ldl’ [-Werror=nested-externs]
-../target/riscv/riscv_smmpt.c: In function ‘load_entry_64’:
-../target/riscv/riscv_smmpt.c:26:12: error: implicit declaration of function ‘address_space_ldq’; did you mean ‘address_space_ldub’? [-Werror=implicit-function-declaration]
-    26 |     return address_space_ldq(as, addr, attrs, result);
-       |            ^~~~~~~~~~~~~~~~~
-       |            address_space_ldub
-../target/riscv/riscv_smmpt.c:26:12: error: nested extern declaration of ‘address_space_ldq’ [-Werror=nested-externs]
-cc1: all warnings being treated as errors
-[1638/2623] Generating docs/QEMU manual with a custom command
-ninja: build stopped: subcommand failed.
-
-
-I'm not sure why that is since the (seemly) appropriate header system/memmory.h
-is included.
-
-With this change I can get it to build:
-
-
-$ git diff
-diff --git a/target/riscv/riscv_smmpt.c b/target/riscv/riscv_smmpt.c
-index b7b47c5ae1..ddc8cd9932 100644
---- a/target/riscv/riscv_smmpt.c
-+++ b/target/riscv/riscv_smmpt.c
-@@ -17,13 +17,13 @@ typedef uint64_t load_entry_fn(AddressSpace *, hwaddr,
-  static uint64_t load_entry_32(AddressSpace *as, hwaddr addr,
-                                MemTxAttrs attrs, MemTxResult *result)
-  {
--    return address_space_ldl(as, addr, attrs, result);
-+    return address_space_ldl_le(as, addr, attrs, result);
-  }
-
-  static uint64_t load_entry_64(AddressSpace *as, hwaddr addr,
-                                MemTxAttrs attrs, MemTxResult *result)
-  {
--    return address_space_ldq(as, addr, attrs, result);
-+    return address_space_ldq_le(as, addr, attrs, result);
-  }
-
-  typedef union {
-
-
-
-I ***think*** this is a fair change since we're reading/writing memory using
-the same endianess, and our memory operations are usually LE, e.g. in
-get_physical_address:
-
-
-         if (riscv_cpu_mxl(env) == MXL_RV32) {
-             pte = address_space_ldl_le(cs->as, pte_addr, attrs, &res);
-         } else {
-             pte = address_space_ldq_le(cs->as, pte_addr, attrs, &res);
-         }
-
-
-I'll defer to you what we should do here.  Thanks,
-
-Daniel
-
-> +typedef union {
-> +    uint64_t raw;
-> +    struct {
-> +        uint32_t v:1;
-> +        uint32_t l:1;
-> +        uint32_t rsv1:5;
-> +        uint32_t perms:24;
-> +        uint32_t n:1;
-> +    } leaf32;
-> +    struct {
-> +        uint32_t v:1;
-> +        uint32_t l:1;
-> +        uint32_t rsv1:8;
-> +        uint32_t ppn:22;
-> +    } nonleaf32;
-> +    struct {
-> +        uint64_t v:1;
-> +        uint64_t l:1;
-> +        uint64_t rsv1:8;
-> +        uint64_t perms:48;
-> +        uint64_t rsv2:5;
-> +        uint64_t n:1;
-> +    } leaf64;
-> +    struct {
-> +        uint64_t v:1;
-> +        uint64_t l:1;
-> +        uint64_t rsv1:8;
-> +        uint64_t ppn:52;
-> +        uint64_t rsv2:1;
-> +        uint64_t n:1;
-> +    } nonleaf64;
-> +} mpte_union_t;
-> +
-> +static inline bool mpte_is_leaf(uint64_t mpte)
-> +{
-> +   return mpte & 0x2;
-> +}
-> +
-> +static inline bool mpte_is_valid(uint64_t mpte)
-> +{
-> +    return mpte & 0x1;
-> +}
-> +
-> +static uint64_t mpte_get_rsv(CPURISCVState *env, uint64_t mpte)
-> +{
-> +    RISCVMXL mxl = riscv_cpu_mxl(env);
-> +    bool leaf = mpte_is_leaf(mpte);
-> +    mpte_union_t *u = (mpte_union_t *)&mpte;
-> +
-> +    if (mxl == MXL_RV32) {
-> +        return leaf ? u->leaf32.rsv1 : u->nonleaf32.rsv1;
+> +    s =3D iov_to_buf(iov, iov_cnt, 0, &coal, sizeof(coal));
+> +    if (s !=3D sizeof(coal)) {
+> +        return VIRTIO_NET_ERR;
 > +    }
-> +    return leaf ? (u->leaf64.rsv1 << 5) | u->leaf64.rsv2
-> +                : (u->nonleaf64.rsv1 << 1) | u->nonleaf64.rsv2;
-> +}
 > +
-> +static uint64_t mpte_get_perms(CPURISCVState *env, uint64_t mpte)
-> +{
-> +    RISCVMXL mxl = riscv_cpu_mxl(env);
-> +    mpte_union_t *u = (mpte_union_t *)&mpte;
-> +
-> +    return (mxl == MXL_RV32) ? u->leaf32.perms : u->leaf64.perms;
-> +}
-> +
-> +static bool mpte_check_nlnapot(CPURISCVState *env, uint64_t mpte, bool *nlnapot)
-> +{
-> +    RISCVMXL mxl = riscv_cpu_mxl(env);
-> +    mpte_union_t *u = (mpte_union_t *)&mpte;
-> +    if (mxl == MXL_RV32) {
-> +        *nlnapot = false;
-> +        return true;
-> +    }
-> +    *nlnapot = u->nonleaf64.n;
-> +    return u->nonleaf64.n ? (u->nonleaf64.ppn & 0x1ff) == 0x100 : true;
-> +}
-> +
-> +static uint64_t mpte_get_ppn(CPURISCVState *env, uint64_t mpte, int pn,
-> +                             bool nlnapot)
-> +{
-> +    RISCVMXL mxl = riscv_cpu_mxl(env);
-> +    mpte_union_t *u = (mpte_union_t *)&mpte;
-> +
-> +    if (nlnapot) {
-> +        return deposit64(u->nonleaf64.ppn, 0, 9, pn & 0x1ff);
-> +    }
-> +    return (mxl == MXL_RV32) ? u->nonleaf32.ppn : u->nonleaf64.ppn;
-> +}
-> +
-> +/* Caller should assert i before call this interface */
-> +static int mpt_get_pn(hwaddr addr, int i, mpt_mode_t mode)
-> +{
-> +    if (mode == SMMPT34) {
-> +        return i == 0
-> +            ? extract64(addr, 15, 10)
-> +            : extract64(addr, 25, 9);
-> +    } else {
-> +        int offset = 16 + i * 9;
-> +        if ((mode == SMMPT64) && (i == 4)) {
-> +            return extract64(addr, offset, 12);
-> +        } else {
-> +            return extract64(addr, offset, 9);
-> +        }
-> +    }
-> +}
-> +
-> +/* Caller should assert i before call this interface */
-> +static int mpt_get_pi(hwaddr addr, int i, mpt_mode_t mode)
-> +{
-> +    if (mode == SMMPT34) {
-> +        return i == 0
-> +            ? extract64(addr, 12, 3)
-> +            : extract64(addr, 22, 3);
-> +    } else {
-> +        int offset = 16 + i * 9;
-> +        return extract64(addr, offset - 4, 4);
-> +    }
-> +}
-> +
-> +static bool smmpt_lookup(CPURISCVState *env, hwaddr addr, mpt_mode_t mode,
-> +                         mpt_access_t *allowed_access,
-> +                         MMUAccessType access_type)
-> +{
-> +    MemTxResult res;
-> +    MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
-> +    CPUState *cs = env_cpu(env);
-> +    hwaddr mpte_addr, base = (hwaddr)env->mptppn << PGSHIFT;
-> +    load_entry_fn *load_entry;
-> +    uint32_t mptesize, levels, xwr;
-> +    int pn, pi, pmp_prot, pmp_ret;
-> +    uint64_t mpte, perms;
-> +
-> +    switch (mode) {
-> +    case SMMPT34:
-> +        load_entry = &load_entry_32; levels = 2; mptesize = 4; break;
-> +    case SMMPT43:
-> +        load_entry = &load_entry_64; levels = 3; mptesize = 8; break;
-> +        break;
-> +    case SMMPT52:
-> +        load_entry = &load_entry_64; levels = 4; mptesize = 8; break;
-> +    case SMMPT64:
-> +        load_entry = &load_entry_64; levels = 5; mptesize = 8; break;
-> +    case SMMPTBARE:
-> +        *allowed_access = ACCESS_ALLOW_RWX;
-> +        return true;
-> +    default:
-> +        g_assert_not_reached();
-> +        break;
-> +    }
-> +    for (int i = levels - 1; i >= 0 ; i--) {
-> +        /* 1. Get pn[i] as the mpt index */
-> +        pn = mpt_get_pn(addr, i, mode);
-> +        /* 2. Get mpte address and get mpte */
-> +        mpte_addr = base + pn * mptesize;
-> +        pmp_ret = get_physical_address_pmp(env, &pmp_prot, mpte_addr,
-> +                                           mptesize, MMU_DATA_LOAD, PRV_M);
-> +        if (pmp_ret != TRANSLATE_SUCCESS) {
-> +            return false;
-> +        }
-> +        mpte = load_entry(cs->as, mpte_addr, attrs, &res);
-> +        /* 3. Check valid bit and reserve bits of mpte */
-> +        if (!mpte_is_valid(mpte) || mpte_get_rsv(env, mpte)) {
-> +            return false;
-> +        }
-> +
-> +        /* 4. Process non-leaf node */
-> +        if (!mpte_is_leaf(mpte)) {
-> +            bool nlnapot = false;
-> +            if (i == 0) {
-> +                return false;
+> +    if (cmd =3D=3D VIRTIO_NET_CTRL_NOTF_COAL_RX_SET) {
+> +        n->rx_coal_usecs =3D le32_to_cpu(coal.max_usecs);
+> +        n->rx_coal_packets =3D le32_to_cpu(coal.max_packets);
+> +        if (n->rx_coal_usecs > 0) {
+> +            for (i =3D 0; i < n->max_queue_pairs; i++) {
+> +                q =3D &n->vqs[i];
+> +                if (!q->rx_timer) {
+> +                    q->rx_timer =3D timer_new_us(QEMU_CLOCK_VIRTUAL,
+> +                                               virtio_net_rx_notify,
+> +                                               q);
+> +                }
 > +            }
-> +            if (!mpte_check_nlnapot(env, mpte, &nlnapot)) {
-> +                return false;
+> +        }
+> +    } else if (cmd =3D=3D VIRTIO_NET_CTRL_NOTF_COAL_TX_SET) {
+> +        n->tx_coal_usecs =3D le32_to_cpu(coal.max_usecs) * 1000;
+> +        n->tx_coal_packets =3D le32_to_cpu(coal.max_packets);
+> +        if (n->tx_coal_usecs > 0) {
+> +            for (i =3D 0; i < n->max_queue_pairs; i++) {
+> +                q =3D &n->vqs[i];
+> +                if (!q->tx_timer && n->tx_coal_usecs > 0) {
+> +                    q->tx_timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
+> +                                               virtio_net_tx_timer,
+> +                                               q);
+> +                }
 > +            }
-> +            base = mpte_get_ppn(env, mpte, pn, nlnapot) << PGSHIFT;
-> +            continue;
-> +        }
-> +
-> +        /* 5. Process leaf node */
-> +        pi = mpt_get_pi(addr, i, mode);
-> +        perms = mpte_get_perms(env, mpte);
-> +        xwr = (perms >> (pi * 3)) & 0x7;
-> +        switch (xwr) {
-> +        case ACCESS_ALLOW_R:
-> +            *allowed_access = ACCESS_ALLOW_R;
-> +            return access_type == MMU_DATA_LOAD;
-> +        case ACCESS_ALLOW_X:
-> +            *allowed_access = ACCESS_ALLOW_X;
-> +            return access_type == MMU_INST_FETCH;
-> +        case ACCESS_ALLOW_RX:
-> +            *allowed_access = ACCESS_ALLOW_R;
-> +            return (access_type == MMU_DATA_LOAD ||
-> +                    access_type == MMU_INST_FETCH);
-> +        case ACCESS_ALLOW_RW:
-> +            *allowed_access = ACCESS_ALLOW_RW;
-> +            return (access_type == MMU_DATA_LOAD ||
-> +                    access_type == MMU_DATA_STORE);
-> +        case ACCESS_ALLOW_RWX:
-> +            *allowed_access = ACCESS_ALLOW_RWX;
-> +            return true;
-> +        default:
-> +            return false;
 > +        }
 > +    }
-> +    return false;
+> +
+> +    return VIRTIO_NET_OK;
 > +}
 > +
-> +bool smmpt_check_access(CPURISCVState *env, hwaddr addr,
-> +                        mpt_access_t *allowed_access, MMUAccessType access_type)
-> +{
-> +    bool mpt_has_access;
-> +    mpt_mode_t mode = env->mptmode;
+>  static int virtio_net_handle_mac(VirtIONet *n, uint8_t cmd,
+>                                   struct iovec *iov, unsigned int iov_cnt=
+)
+>  {
+> @@ -1581,6 +1637,10 @@ size_t virtio_net_handle_ctrl_iov(VirtIODevice *vd=
+ev,
+>          status =3D virtio_net_handle_mq(n, ctrl.cmd, iov, out_num);
+>      } else if (ctrl.class =3D=3D VIRTIO_NET_CTRL_GUEST_OFFLOADS) {
+>          status =3D virtio_net_handle_offloads(n, ctrl.cmd, iov, out_num)=
+;
+> +    } else if (ctrl.class =3D=3D VIRTIO_NET_CTRL_NOTF_COAL) {
+> +        if (!n->tx_timer_activate) {
+
+Even if the feature is best effort I think it is better not to forward
+the feature flag either.
+
+> +            status =3D virtio_net_handle_coal(n, ctrl.cmd, iov, out_num)=
+;
+> +        }
+>      }
+>
+>      s =3D iov_from_buf(in_sg, in_num, 0, &status, sizeof(status));
+> @@ -2040,7 +2100,22 @@ static ssize_t virtio_net_receive_rcu(NetClientSta=
+te *nc, const uint8_t *buf,
+>      }
+>
+>      virtqueue_flush(q->rx_vq, i);
+> -    virtio_notify(vdev, q->rx_vq);
 > +
-> +    mpt_has_access = smmpt_lookup(env, addr, mode,
-> +                                  allowed_access, access_type);
-> +    return mpt_has_access;
-> +}
-> +
-> +/*
-> + * Convert MPT access to TLB page privilege.
-> + */
-> +int smmpt_access_to_page_prot(mpt_access_t mpt_access)
-> +{
-> +    int prot;
-> +    switch (mpt_access) {
-> +    case ACCESS_ALLOW_R:
-> +        prot = PAGE_READ;
-> +        break;
-> +    case ACCESS_ALLOW_X:
-> +        prot = PAGE_EXEC;
-> +        break;
-> +    case ACCESS_ALLOW_RX:
-> +        prot = PAGE_READ | PAGE_EXEC;
-> +        break;
-> +    case ACCESS_ALLOW_RW:
-> +        prot = PAGE_READ | PAGE_WRITE;
-> +        break;
-> +    case ACCESS_ALLOW_RWX:
-> +        prot = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
-> +        break;
-> +    default:
-> +        prot = 0;
-> +        break;
+> +    /* rx coalescing */
+> +    n->rx_pkt_cnt +=3D i;
+> +    if (n->rx_coal_usecs =3D=3D 0 || n->rx_pkt_cnt >=3D n->rx_coal_packe=
+ts) {
+> +        if (q->rx_timer) {
+> +            timer_del(q->rx_timer);
+> +        }
+> +        virtio_net_rx_notify(q);
+> +    } else {
+> +        if (q->rx_timer) {
+> +            if (!timer_pending(q->rx_timer)) {
+> +                timer_mod(q->rx_timer,
+> +                          qemu_clock_get_us(QEMU_CLOCK_VIRTUAL) + n->rx_=
+coal_usecs);
+> +            }
+> +        }
+> +    }
+>
+>      return size;
+>
+> @@ -2708,7 +2783,7 @@ static void virtio_net_tx_complete(NetClientState *=
+nc, ssize_t len)
+>              replay_bh_schedule_event(q->tx_bh);
+>          } else {
+>              timer_mod(q->tx_timer,
+> -                      qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_time=
+out);
+> +                      qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_coal=
+_usecs);
+>          }
+>          q->tx_waiting =3D 1;
+>      }
+> @@ -2817,7 +2892,6 @@ detach:
+>      return -EINVAL;
+>  }
+>
+> -static void virtio_net_tx_timer(void *opaque);
+>
+>  static void virtio_net_handle_tx_timer(VirtIODevice *vdev, VirtQueue *vq=
+)
+>  {
+> @@ -2842,7 +2916,7 @@ static void virtio_net_handle_tx_timer(VirtIODevice=
+ *vdev, VirtQueue *vq)
+>      } else {
+>          /* re-arm timer to flush it (and more) on next tick */
+>          timer_mod(q->tx_timer,
+> -                  qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_timeout)=
+;
+> +                  qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_coal_use=
+cs);
+>          q->tx_waiting =3D 1;
+>          virtio_queue_set_notification(vq, 0);
+>      }
+> @@ -2899,6 +2973,12 @@ static void virtio_net_tx_timer(void *opaque)
+>      if (ret =3D=3D -EBUSY || ret =3D=3D -EINVAL) {
+>          return;
+>      }
+> +    if (n->tx_pkt_cnt < ret) {
+> +        n->tx_pkt_cnt =3D 0;
+> +    } else {
+> +        n->tx_pkt_cnt -=3D ret;
 > +    }
 > +
-> +    return prot;
+>      /*
+>       * If we flush a full burst of packets, assume there are
+>       * more coming and immediately rearm
+> @@ -2906,7 +2986,7 @@ static void virtio_net_tx_timer(void *opaque)
+>      if (ret >=3D n->tx_burst) {
+>          q->tx_waiting =3D 1;
+>          timer_mod(q->tx_timer,
+> -                  qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_timeout)=
+;
+> +                  qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_coal_use=
+cs);
+>          return;
+>      }
+>      /*
+> @@ -2918,9 +2998,10 @@ static void virtio_net_tx_timer(void *opaque)
+>      ret =3D virtio_net_flush_tx(q);
+>      if (ret > 0) {
+>          virtio_queue_set_notification(q->tx_vq, 0);
+> +        n->tx_pkt_cnt -=3D ret;
+>          q->tx_waiting =3D 1;
+>          timer_mod(q->tx_timer,
+> -                  qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_timeout)=
+;
+> +                  qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_coal_use=
+cs);
+>      }
+>  }
+>
+> @@ -2973,6 +3054,32 @@ static void virtio_net_tx_bh(void *opaque)
+>      }
+>  }
+>
+> +static void virtio_net_handle_tx_dispatch(VirtIODevice *vdev, VirtQueue =
+*vq)
+> +{
+> +    VirtIONet *n =3D VIRTIO_NET(vdev);
+> +    VirtIONetQueue *q =3D &n->vqs[vq2q(virtio_get_queue_index(vq))];
+> +    bool use_timer =3D n->tx_timer_activate || n->tx_coal_usecs > 0 ||
+> +                     n->tx_coal_packets > 0;
+> +    bool pkt_limit =3D (n->tx_coal_packets > 0);
+> +
+> +    if (use_timer) {
+> +        n->tx_pkt_cnt++;
+> +        if (!pkt_limit || n->tx_pkt_cnt < n->tx_coal_packets) {
+> +            if (q->tx_timer) {
+> +                virtio_net_handle_tx_timer(vdev, vq);
+> +                return;
+> +            }
+> +        }
+> +        n->tx_pkt_cnt =3D 0;
+> +        if (q->tx_timer) {
+> +            timer_del(q->tx_timer);
+> +        }
+> +        virtio_net_handle_tx_bh(vdev, vq);
+> +    } else {
+> +        virtio_net_handle_tx_bh(vdev, vq);
+> +    }
 > +}
-> diff --git a/target/riscv/riscv_smmpt.h b/target/riscv/riscv_smmpt.h
-> index 74dcccf4be..0d0597f8eb 100644
-> --- a/target/riscv/riscv_smmpt.h
-> +++ b/target/riscv/riscv_smmpt.h
-> @@ -9,6 +9,9 @@
->   #ifndef RISCV_SMMPT_H
->   #define RISCV_SMMPT_H
->   
-> +#include "cpu.h"
-> +#include "exec/mmu-access-type.h"
 > +
->   typedef enum {
->       SMMPTBARE = 0,
->       SMMPT34   = 1,
-> @@ -18,4 +21,16 @@ typedef enum {
->       SMMPTMAX
->   } mpt_mode_t;
->   
-> +typedef enum {
-> +    ACCESS_ALLOW_R = 0b001,
-> +    ACCESS_ALLOW_X = 0b100,
-> +    ACCESS_ALLOW_RX = 0b101 ,
-> +    ACCESS_ALLOW_RW = 0b011,
-> +    ACCESS_ALLOW_RWX = 0b111,
-> +} mpt_access_t;
+>  static void virtio_net_add_queue(VirtIONet *n, int index)
+>  {
+>      VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
+> @@ -2980,20 +3087,15 @@ static void virtio_net_add_queue(VirtIONet *n, in=
+t index)
+>      n->vqs[index].rx_vq =3D virtio_add_queue(vdev, n->net_conf.rx_queue_=
+size,
+>                                             virtio_net_handle_rx);
+>
+> -    if (n->net_conf.tx && !strcmp(n->net_conf.tx, "timer")) {
+> -        n->vqs[index].tx_vq =3D
+> -            virtio_add_queue(vdev, n->net_conf.tx_queue_size,
+> -                             virtio_net_handle_tx_timer);
+> -        n->vqs[index].tx_timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
+> -                                              virtio_net_tx_timer,
+> -                                              &n->vqs[index]);
+> -    } else {
+> -        n->vqs[index].tx_vq =3D
+> -            virtio_add_queue(vdev, n->net_conf.tx_queue_size,
+> -                             virtio_net_handle_tx_bh);
+> -        n->vqs[index].tx_bh =3D qemu_bh_new_guarded(virtio_net_tx_bh, &n=
+->vqs[index],
+> -                                                  &DEVICE(vdev)->mem_ree=
+ntrancy_guard);
+> -    }
+> +    n->vqs[index].tx_vq =3D
+> +        virtio_add_queue(vdev,
+> +                         n->net_conf.tx_queue_size,
+> +                         virtio_net_handle_tx_dispatch);
 > +
-> +int smmpt_access_to_page_prot(mpt_access_t mpt_access);
-> +bool smmpt_check_access(CPURISCVState *env, hwaddr addr,
-> +                        mpt_access_t *allowed_access,
-> +                        MMUAccessType access_type);
->   #endif
+> +    n->vqs[index].tx_bh =3D
+> +        qemu_bh_new_guarded(virtio_net_tx_bh,
+> +                            &n->vqs[index],
+> +                            &DEVICE(vdev)->mem_reentrancy_guard);
+>
+>      n->vqs[index].tx_waiting =3D 0;
+>      n->vqs[index].n =3D n;
+> @@ -3242,6 +3344,35 @@ static int virtio_net_post_load_device(void *opaqu=
+e, int version_id)
+>      }
+>
+>      virtio_net_commit_rss_config(n);
+> +    if (n->tx_coal_usecs > 0 || n->rx_coal_usecs > 0) {
+> +
+> +        for (i =3D 0; i < n->max_queue_pairs; i++) {
+> +            VirtIONetQueue *q =3D &n->vqs[i];
+> +            if (!q->rx_timer && n->rx_coal_usecs > 0) {
+> +                q->rx_timer =3D timer_new_us(QEMU_CLOCK_VIRTUAL,
+> +                                           virtio_net_rx_notify,
+> +                                           q);
+> +            }
+> +
+> +            if (!q->tx_timer && n->tx_coal_usecs > 0) {
+> +                q->tx_timer =3D timer_new_ns(QEMU_CLOCK_VIRTUAL,
+> +                                           virtio_net_tx_timer,
+> +                                           q);
+> +            }
+> +
+> +            if (n->tx_coal_usecs > 0 && q->tx_timer) {
+> +                n->tx_pkt_cnt =3D 0;
+> +                timer_mod(q->tx_timer,
+> +                          qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + n->tx_=
+coal_usecs);
+> +            }
+> +
+> +            if (n->rx_coal_usecs > 0 && q->rx_timer) {
+> +                timer_mod(q->rx_timer,
+> +                          qemu_clock_get_us(QEMU_CLOCK_VIRTUAL) + n->rx_=
+coal_usecs);
+> +            }
+> +        }
+> +    }
+> +
+>      return 0;
+>  }
+>
+> @@ -3617,6 +3748,10 @@ static const VMStateDescription vmstate_virtio_net=
+_device =3D {
+>                           vmstate_virtio_net_tx_waiting),
+>          VMSTATE_UINT64_TEST(curr_guest_offloads, VirtIONet,
+>                              has_ctrl_guest_offloads),
+> +        VMSTATE_UINT32(rx_coal_usecs, VirtIONet),
+> +        VMSTATE_UINT32(tx_coal_usecs, VirtIONet),
+> +        VMSTATE_UINT32(rx_coal_packets, VirtIONet),
+> +        VMSTATE_UINT32(tx_coal_packets, VirtIONet),
+>          VMSTATE_END_OF_LIST()
+>      },
+>      .subsections =3D (const VMStateDescription * const []) {
+> @@ -3960,7 +4095,6 @@ static void virtio_net_device_realize(DeviceState *=
+dev, Error **errp)
+>      }
+>      n->vqs =3D g_new0(VirtIONetQueue, n->max_queue_pairs);
+>      n->curr_queue_pairs =3D 1;
+> -    n->tx_timeout =3D n->net_conf.txtimer;
+>
+>      if (n->net_conf.tx && strcmp(n->net_conf.tx, "timer")
+>                         && strcmp(n->net_conf.tx, "bh")) {
+> @@ -3970,6 +4104,13 @@ static void virtio_net_device_realize(DeviceState =
+*dev, Error **errp)
+>          error_printf("Defaulting to \"bh\"");
+>      }
+>
+> +    if (n->net_conf.tx && strcmp(n->net_conf.tx, "timer") =3D=3D 0) {
+> +        n->tx_coal_usecs =3D n->net_conf.txtimer;
+> +        n->tx_timer_activate =3D true;
+> +    } else {
+> +        n->tx_coal_usecs =3D 0;
+> +    }
+> +
+>      n->net_conf.tx_queue_size =3D MIN(virtio_net_max_tx_queue_size(n),
+>                                      n->net_conf.tx_queue_size);
+>
+> @@ -4046,6 +4187,12 @@ static void virtio_net_device_realize(DeviceState =
+*dev, Error **errp)
+>              n->rss_data.specified_hash_types.on_bits |
+>              n->rss_data.specified_hash_types.auto_bits;
+>      }
+> +    n->rx_pkt_cnt =3D 0;
+> +    n->tx_pkt_cnt =3D 0;
+> +    n->rx_coal_usecs =3D 0;
+> +    n->rx_coal_packets =3D 0;
+> +    n->tx_coal_packets =3D 0;
+> +    n->rx_index_timer =3D NULL;
+
+n->rx_index_timer is added to the struct but it is not used in the ret
+of the patch, isn't it?
+
+>  }
+>
+>  static void virtio_net_device_unrealize(DeviceState *dev)
+> @@ -4258,6 +4405,8 @@ static const Property virtio_net_properties[] =3D {
+>                        VIRTIO_NET_F_GUEST_USO6, true),
+>      DEFINE_PROP_BIT64("host_uso", VirtIONet, host_features,
+>                        VIRTIO_NET_F_HOST_USO, true),
+> +    DEFINE_PROP_BIT64("vq_notf_coal", VirtIONet, host_features,
+> +                      VIRTIO_NET_F_NOTF_COAL, true),
+>      DEFINE_PROP_ON_OFF_AUTO_BIT64("hash-ipv4", VirtIONet,
+>                                    rss_data.specified_hash_types,
+>                                    VIRTIO_NET_HASH_REPORT_IPv4 - 1,
+> diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-ne=
+t.h
+> index 371e376428..a76d271096 100644
+> --- a/include/hw/virtio/virtio-net.h
+> +++ b/include/hw/virtio/virtio-net.h
+> @@ -158,6 +158,7 @@ typedef struct VirtioNetRssData {
+>  typedef struct VirtIONetQueue {
+>      VirtQueue *rx_vq;
+>      VirtQueue *tx_vq;
+> +    QEMUTimer *rx_timer;
+>      QEMUTimer *tx_timer;
+>      QEMUBH *tx_bh;
+>      uint32_t tx_waiting;
+> @@ -177,7 +178,6 @@ struct VirtIONet {
+>      /* RSC Chains - temporary storage of coalesced data,
+>         all these data are lost in case of migration */
+>      QTAILQ_HEAD(, VirtioNetRscChain) rsc_chains;
+> -    uint32_t tx_timeout;
+>      int32_t tx_burst;
+>      uint32_t has_vnet_hdr;
+>      size_t host_hdr_len;
+> @@ -230,6 +230,14 @@ struct VirtIONet {
+>      struct EBPFRSSContext ebpf_rss;
+>      uint32_t nr_ebpf_rss_fds;
+>      char **ebpf_rss_fds;
+> +    QEMUTimer *rx_index_timer;
+> +    uint32_t rx_coal_usecs;
+> +    uint32_t rx_coal_packets;
+> +    uint32_t rx_pkt_cnt;
+> +    uint32_t tx_coal_usecs;
+> +    uint32_t tx_coal_packets;
+> +    uint32_t tx_pkt_cnt;
+> +    bool tx_timer_activate;
+>  };
+>
+>  size_t virtio_net_handle_ctrl_iov(VirtIODevice *vdev,
+> diff --git a/net/passt.c b/net/passt.c
+> index 4ff94ee509..0b0d9e222a 100644
+> --- a/net/passt.c
+> +++ b/net/passt.c
+> @@ -52,6 +52,7 @@ static const int user_feature_bits[] =3D {
+>      VIRTIO_NET_F_GUEST_USO4,
+>      VIRTIO_NET_F_GUEST_USO6,
+>      VIRTIO_NET_F_HOST_USO,
+> +    VIRTIO_NET_F_NOTF_COAL,
+>
+>      /* This bit implies RARP isn't sent by QEMU out of band */
+>      VIRTIO_NET_F_GUEST_ANNOUNCE,
+> diff --git a/net/tap.c b/net/tap.c
+> index 8d7ab6ba6f..ea5987a3dc 100644
+> --- a/net/tap.c
+> +++ b/net/tap.c
+> @@ -62,6 +62,7 @@ static const int kernel_feature_bits[] =3D {
+>      VIRTIO_F_NOTIFICATION_DATA,
+>      VIRTIO_NET_F_RSC_EXT,
+>      VIRTIO_NET_F_HASH_REPORT,
+> +    VIRTIO_NET_F_NOTF_COAL,
+>      VIRTIO_NET_F_GUEST_UDP_TUNNEL_GSO,
+>      VIRTIO_NET_F_HOST_UDP_TUNNEL_GSO,
+>      VHOST_INVALID_FEATURE_BIT
+> diff --git a/net/vhost-user.c b/net/vhost-user.c
+> index a4bb49bbcf..f0b3752d7c 100644
+> --- a/net/vhost-user.c
+> +++ b/net/vhost-user.c
+> @@ -54,6 +54,7 @@ static const int user_feature_bits[] =3D {
+>      VIRTIO_NET_F_GUEST_USO4,
+>      VIRTIO_NET_F_GUEST_USO6,
+>      VIRTIO_NET_F_HOST_USO,
+> +    VIRTIO_NET_F_NOTF_COAL,
+>
+>      /* This bit implies RARP isn't sent by QEMU out of band */
+>      VIRTIO_NET_F_GUEST_ANNOUNCE,
+> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+> index 3df6091274..4ab8f26ceb 100644
+> --- a/net/vhost-vdpa.c
+> +++ b/net/vhost-vdpa.c
+> @@ -70,6 +70,7 @@ static const int vdpa_feature_bits[] =3D {
+>      VIRTIO_NET_F_CTRL_RX,
+>      VIRTIO_NET_F_CTRL_RX_EXTRA,
+>      VIRTIO_NET_F_CTRL_VLAN,
+> +    VIRTIO_NET_F_NOTF_COAL,
+>      VIRTIO_NET_F_CTRL_VQ,
+>      VIRTIO_NET_F_GSO,
+>      VIRTIO_NET_F_GUEST_CSUM,
+> --
+> 2.53.0
+>
 
 
