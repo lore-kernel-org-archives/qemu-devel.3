@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2202CD3439
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 13:33:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DE28CD3439
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 13:35:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKyqf-0003mv-DH; Thu, 07 May 2026 09:33:05 -0400
+	id 1wKysS-0004D7-08; Thu, 07 May 2026 09:34:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKyqe-0003mn-Ct
- for qemu-devel@nongnu.org; Thu, 07 May 2026 09:33:04 -0400
-Received: from mail-lf1-x12e.google.com ([2a00:1450:4864:20::12e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKysN-0004Cn-7o
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 09:34:51 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKyqc-000185-M8
- for qemu-devel@nongnu.org; Thu, 07 May 2026 09:33:04 -0400
-Received: by mail-lf1-x12e.google.com with SMTP id
- 2adb3069b0e04-5a8891febd2so954897e87.1
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 06:33:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKysL-0001Sn-5B
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 09:34:50 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-488a14c31eeso6160735e9.0
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 06:34:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778160781; x=1778765581; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778160887; x=1778765687; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=J+iedPB5U9P6rIxrU9uMtq0/tJODLfdKB0lRc+YBi8g=;
- b=PJ4TfO1eKfRplLlNQbzs16kKTelKRppQ175uohYQ+ZbyIPqHvp3d0hK9TAwCvUFsFZ
- vBwcy8jvYiXQsmCQK/zmU1boQb8K1OCsYF2qDtPfUyyqz68vznQOcR9ipX4LL6Jpf4vP
- tKH2u3F9UWds8c6vzeK41LYVAcvrREtPJMPA1loGSdxYE5HoLmZ/SaIXVl2y/1XqPSQM
- RHgrW9YrQ2e3arUcIGMo055RGT8x9QubSMueertw71R0GHr509JHzUh/QnOPekhlLG9D
- l6BjnblOCgPWqk797pKYjJHcK8oypF4fcfZhIiuLNlX5Ig3bpC74xRArEFj5vHPSPEse
- rD7A==
+ bh=uLCQ00C6JYUtQfArcbwuQKiLB78KUIO7od2YMNVbIvA=;
+ b=Rt6sjkdWvTppURTdMqQfah6DddrcOF0ljqVylpN+I7BSrxe7RvdDQIZi7wvdTBN0Sa
+ A7v3bFDBSYBoHeILijxOQ0nsfGJ4kUkyvDpRqT55cT+lxWS1dLNfPjbr9+7OSHygu2KT
+ bQTKDO31gYISKrDj1qKztIM5zTR9RHwGchma/FAJdzL5F26Ut0yc0iASc8zV3iEX7Fqd
+ cVAt0IF00QM6FTBC3eQCvQWDB/4vi+QPnRqnc3F9AUQN2/iLiBue5+sJIMHn/q0RzEB0
+ ZUxwS4Sie++4MPKmDa7QGk0fIHeR8FaDw73JfPtBwOGHvnA4LOrpPjFyAWYk0z3WWc39
+ rOSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778160781; x=1778765581;
+ d=1e100.net; s=20251104; t=1778160887; x=1778765687;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=J+iedPB5U9P6rIxrU9uMtq0/tJODLfdKB0lRc+YBi8g=;
- b=k/7q0IGvvU4EzUOkSvluxv8XIQZvXUYhDjSnTp7gsK6LvPrAWbx6ngc7GqgX/fFWhM
- gjIEpj8zfh9kDV49HTtsxe++wNwf+w0l0+lpq89i3J+bA/PoO9k8Zbob90JN0R++Qtmy
- UgbxA8YrNyOpkQqqkFzeG2g4ZBGe9X/3kUbJ1U5amr7ZQ7O1gOS+Fzi3mI6xUTrJ/fAq
- xRfE4syZ+7DmEZooGp892vYtoAOVnh9/+z0Z0JtwMiccmem+HE/3XPnyI/STEJVAdi63
- MtQz5CoA8ASpDIDrPsI6nPEHTHn0HQiP3YVcqrFMc9p+8UcH5tWy7N5EfaUnjuCj8Abi
- 8Olw==
+ bh=uLCQ00C6JYUtQfArcbwuQKiLB78KUIO7od2YMNVbIvA=;
+ b=Qm0m/taqlbRprsBYwnEe4FYGndhr1GA+wGDLZcAwgCutQa1iYMOQkP1bvZvUw32/Pg
+ /UWpXn7LNUFHNPqbPL0izZynfusy29ttU0IOuZsTXF3W2EDVRXA3n4HUGxkjqNa13dx/
+ L1qaeJS337SElR1qHmMBCouMymX3Jx2qhjRrCJZBfuj0KeiMPk1tVejazZtFatgTzxLn
+ 9aiEuoFL+NXqCk9e3vVNwth/UCs/O1bbxhalCvhzfV1SbVIPix/ZVtJKVJ/O2VXJIl6a
+ wVPeI5xyU3v5xsag8BpZfdl2CUoPkzw04EJTme2FgXhNRZvQvagBaiyc8bQbXNeYPVtH
+ tXRw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/88WK9ggq8KzVXsPHypqlh9ClPwURVSKe3ICYN9La//2Lf6tt1hf41YcZJrx2BpMfUewP++AqHXjWm@nongnu.org
-X-Gm-Message-State: AOJu0Yz1s8UTkHIieag6CZKQQVUKuDrQRQSe6nudAkBGxldalQ0ottpL
- dkP8Jru70oXuYrtiBCP4KZQTr/BM/oHhcxq0KmfX57DqLvLmx9Wd2KwJmx1vVR1Id7g=
-X-Gm-Gg: AeBDieugulll4MpwQIy9CwNdNE5aEUIcKyXkHDePhfY+qh0Uhr4mRMc5O+HSt5E0KVk
- sOjCaChxG4q2weuZrvBjHrZW8y/UCr6Ua8aMeVmPpgvIzNntyO4CLwNjxNRg9tHO5jGcg4GBW/R
- 6vTV6yPsNsxh8BAe1mv/iRMh5RiLtQFD8j+ev3yn6QMGRPZS8cBqIDoPRJ64AIxzobU3HUCrkCW
- RNUC2Wu6zDRGflzpjMuRgfbaWDD1KH3QVVMc6ABy/E+LnThu+PNcLkPyzfGb3vXBGPdZdYuHyHL
- 2Lb+q6tz9xp1+7quF5h9tqSCQCRZlor3hphrFqqTYoWifaiXArhn5KApLgR9tDP6TCgSqxbPvcR
- 0AgLVaATWkdf2lo6X/r+pmxv8naqrz49plA8/DflLFocrYEelSAi9UD/njI+s5Ogk4yD4Q8BrFm
- 8RreVv8D3Yun66LEFoetqu/TZuVGGZs5k6WQfK8KbIeicK6MgK0g9OeCq78qPZWAuxPylxI9tdw
- fDZ
-X-Received: by 2002:a05:6512:400f:b0:5a3:e7d7:c67 with SMTP id
- 2adb3069b0e04-5a887ada558mr2655063e87.5.1778160780574; 
- Thu, 07 May 2026 06:33:00 -0700 (PDT)
+ AFNElJ8wjgYuW8J4E7Aj6qp35lQPE9taGF7HrG4TK44eBv8fRNd6kaUdBAJ20rC+TtvrYHtenPdE6wdM89B4@nongnu.org
+X-Gm-Message-State: AOJu0YwaCwuAwYB6fS2SUpcgyPAIVrF0k+8/CEnNIhRHWcIQrlCOv+3B
+ FSu/MgDT7jmVoY2OzH0aWUrZy+Y/MdPFoYCDaglTToee240MN3N7QoEqdgX3z7SdFi0=
+X-Gm-Gg: AeBDieu6iOMWGO721vQxBSFJ5njVBetC4GDoccN+3BWA3OiMtImNhOMOK2r4fen1cx6
+ 7Y+lKL3V742WASzBlpphFzoW3tQNIf787B+Ke+5MMQYAOGlUq83edw2iGjsFy8qpkmt462zKrFz
+ BpZuxYFZxr35YsjSjUqTkCuXHOVmR4qpfNqC4yYjUuIgGSN8z5uY4VC7jlIGNVmQbKArc0br5nU
+ zgNQDMiha7QWqd56m6vAHcN2/jNR8qbjp6IiDxuFoimz6JvaeT0yOm9+QnnN8mmQ+FH07rGbb44
+ tjdCjkr72nYnktvBteC9/hAAz505Fp6x+htym4XxINM6FB+vRRPUpGBdmuGsno0jztZO7c/p2TS
+ AsdPW6MjZ+B6ZDbV3AOGurMWz02jENvZhBvCGVyN2i5aiW2h+XZ1MpppucpsgP89eE4F+VypTRn
+ rCdS8c8SJPpsegh1wazLYraYlNQhrw6lKkTWATenYPP/i9RmLTTlZwHxp+9o6x2xYVfBLY4eyOM
+ ALt
+X-Received: by 2002:a05:600c:4f53:b0:48a:5565:ec3d with SMTP id
+ 5b1f17b1804b1-48e51f44577mr128236885e9.22.1778160887226; 
+ Thu, 07 May 2026 06:34:47 -0700 (PDT)
 Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-45055960811sm21384789f8f.27.2026.05.07.06.32.59
+ 5b1f17b1804b1-48e53891163sm137774145e9.2.2026.05.07.06.34.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 07 May 2026 06:32:59 -0700 (PDT)
-Message-ID: <b538fba1-77e3-43a9-bdfb-e7ed1e5218d6@linaro.org>
-Date: Thu, 7 May 2026 15:32:59 +0200
+ Thu, 07 May 2026 06:34:46 -0700 (PDT)
+Message-ID: <e454a3c4-5d9c-4482-9f99-553f799a6d39@linaro.org>
+Date: Thu, 7 May 2026 15:34:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] hw/display/cirrus_vga: Fix packed-24 color-expansion
- ops
+Subject: Re: [PATCH v3] ati-vga: fix ati_set_dirty address calculation
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-References: <20260410183249.4046456-1-peter.maydell@linaro.org>
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org
+Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
+ Chad Jablonski <chad@jablonski.xyz>, qemu-stable@nongnu.org
+References: <20260506153920.C6B27596978@zero.eik.bme.hu>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260410183249.4046456-1-peter.maydell@linaro.org>
+In-Reply-To: <20260506153920.C6B27596978@zero.eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12e;
- envelope-from=philmd@linaro.org; helo=mail-lf1-x12e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,11 +104,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Peter Maydell (2):
->    hw/display/cirrus_vga: Fix packed-24 color-expansion transparent
->      pattern fills
->    hw/display/cirrus_vga: Fix packed-24 color-expansion transparent
->      copies
+On 6/5/26 17:39, BALATON Zoltan wrote:
+> From: Chad Jablonski <chad@jablonski.xyz>
+> 
+> This fixes three bugs with the ati_set_dirty address calculation.
+> 
+> First, vbe_start_addr is a word offset. All other values in the
+> calculation are byte offsets. It must be converted to bytes.
+> 
+> Second, when setting the dirty region with memory_region_set_dirty
+> the vbe_start_addr is used to calculate the start of the dirty region.
+> This is a problem because the vbe_start_addr is the offset at which scan out
+> begins. This puts it in the visible screen coordinate system. The dirty
+> region however is in the virtual screen coordinate system. This can cause both
+> overmarking and missed updates. This is removed from the calculation.
+> 
+> Third, when the start address of a blit is outside of the bounds check
+> the entire blit is missed and not set to dirty. This happens even if the
+> blit does partially overlap with the visible screen. The fix here is to
+> find the intersection of the visible screen and the blit and mark only
+> that region as dirty.
+> 
+> This does not attempt to apply clipping to the blit. So there will be
+> overmarking in some cases.
+> 
+> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+> [balaton: drop excess parenthesis, use offsets instead of pointers]
+> Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Tested-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
 
-Series queued, thanks.
+Queued, thanks.
 
