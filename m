@@ -4,73 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CBAACD3444
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:57:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16728CD343F
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:57:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL11t-00058N-Ap; Thu, 07 May 2026 11:52:49 -0400
+	id 1wL11g-00043M-AT; Thu, 07 May 2026 11:52:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL11r-000528-Nm
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:47 -0400
+ id 1wL11d-00040Q-Nv
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:33 -0400
 Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL11q-00040A-29
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:47 -0400
+ id 1wL11c-0003w4-5Q
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:33 -0400
 Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4891c00e7aeso9362145e9.2
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:52:45 -0700 (PDT)
+ 5b1f17b1804b1-488a88aeec9so12900005e9.2
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:52:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778169165; x=1778773965; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778169151; x=1778773951; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=s4SA//SBEYf0uzY8+aoVUwQDVhHqm5NWkavOs4X9AHU=;
- b=zU16M9Z+bBXLLHoObCqa+kBxK7mCFNdni/qXBqsi+w0Tco9BIoVt9gkmOfMH3CTujP
- qAojjTY+kqo8ALf7HcQAZzAKqWz4lwfmAC2esMgAQcHm+avxQue4ipcDxNGW9jpCetqE
- k3cpfgTCy1RbuIMmdt3bGlu5fdSuqDvLzurgQNZJWSM3FFh1KJ7dhrcMP/0rKAmhJr+g
- T9brsy93MU0wnITxJvSUjizN2O0F947E2NzTbZ1TTPvRYUo1KbCvzkWIgWqGjxzj4901
- DHcyK0lZtIIoVaSKpuSpQfSERbQgXEqdVe2DscVmsdA9ZC7/M8Po1mI18GHR7xEzDtrv
- Wkew==
+ :reply-to; bh=DrRjECe0L7G9Owd4QfAts2Da6Pk4ELwgWzfZ+b6EEn4=;
+ b=asgJ0mDkeASEbykiZc6U/dVqEcXPMeVxH5ecPR6b+gABNZflYKqq+7cuDxjazNZCf3
+ SVS1lbm9fvAftTwhZbsd5UVQ6u2OejRMqMDdjOl6Oxq3spgy6Zb+1C4b7dRgGDJ8lqD4
+ SjRKvYI3WoOpITGbQJtVBr6cOYBCPP32NXbrcGXsTwZRop15SKLpVj0fEcev62BW0Kdh
+ ItH2WpGi7uAKCTD+KpUURmbFjRqp9rU0qygz4XLyvtF5nAGOUBngHvD88H0CHpZNHc35
+ ZeeHVHXPi0X7t1MkzSIufJJxgpLGOaZL9nozop+vkxXFH47EswsWHXO9D4fPOXOhC2Ei
+ MJng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778169165; x=1778773965;
+ d=1e100.net; s=20251104; t=1778169151; x=1778773951;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=s4SA//SBEYf0uzY8+aoVUwQDVhHqm5NWkavOs4X9AHU=;
- b=HIAlA19S7WyfxbU74IrMfpO/fNjF0Zp2ttEPHLeeaF7ipXxIKdIYBDaIGqKeFFCnA+
- ICjGlt6awVwj903Joa0eTu1CZyh4fkdVAwlackJZ0mOZ33XxQ6hvBTwIfuALoBrBwa7M
- owyrC4M3pU0+eY/pY2YvpuCnLY7ThhaVlXok8U/b73g3IndIvAAdD2+rAnuF1+L9Dfn9
- kdqAeqDryYgofpPQUBp/e6j3oQEBWO53pyTFJBYiReLNRNfHBFSNj1EoAH/AqRV+ZIjx
- 5XI6OPVye67WcZ6u8sF9ynMj4HcrfzIdrGqxyQ5duLtfYJ7hVssq1j7FnzCV5ytaK7Vj
- R+Fg==
-X-Gm-Message-State: AOJu0YwsVtwi5VxcgtbX3APAayLt1l4FJ5K5Hw0nwYRT4a7QUuQGwIeH
- 7ARCGRP4HYTd5AeMgyAsghuXB1FhVfO58sk+TR3tI4bFQNUosP9ORYWqUdYSpuYcrTl8Yvb1Br+
- /SlbN
-X-Gm-Gg: AeBDietGiYHGHZaPt4yMlpZfNtjzgzDN7r5LuuUaaH6SQqbRGONfP72nlP7g3QV0mvM
- /N9IeKTpVjrN6ZxDnE0wA/koOifUrZSkzmNLxivJqbBNHU1wDjYxdo1meWuATmGvOTrQIX6GUXG
- HQ8PMrq+V9o8RKSJeoJ5L2EMP8CnwY5uhpEEziulKo5j0B+gyjWybxGrmpv6BuBdX1Zww0yUfnS
- b0cVN9y7Eb/9DnVcnux0zcsdgmIZ/Bdf0SH7VJKExr69+GfK5ECeJ47mlzJxFvppGh9/9RZAPw7
- itgtz5UXPZUOmcN66TpsBCzswwDUl42bmRlHbVxB55HjwwXq/6+yoDN5uZ5N08uS4ySgn+i/HMl
- kEXhuA56UKPzsBgdCbP5W+HWIwBd2Cq12tiJvtGQYlUZlBDxEmNAitQMAD/Lb5pDTljFSBrCiC0
- bNG7oYNUemAtbNVMajMLjDAap8GcImHysKRXV2/kqyDUQAfgWqqCVCY0zNIGUZtzGrQXwE+BVdF
- SzYUuI040pevbgWIRUbvCEl1HrDbOaFD/ZnoPzlMg==
-X-Received: by 2002:a05:600c:a30b:b0:489:1c1f:35f9 with SMTP id
- 5b1f17b1804b1-48e51e1773bmr103996645e9.9.1778169164471; 
- Thu, 07 May 2026 08:52:44 -0700 (PDT)
+ bh=DrRjECe0L7G9Owd4QfAts2Da6Pk4ELwgWzfZ+b6EEn4=;
+ b=ge2YZKnFloRamI7ZvP6tVF4mT2r0S90A5VGuq8ra0HtEzxmZdB12JQ9ldLmmFtCwh5
+ AcOiyWXJIt/ytbI5DfmyDoU6Xn9LJWWmhOCwo5J85KKcUyvS3tRfXEnxTWPhp4iVJ+rg
+ AV2J2sesECdJAB05E9H6WBqmRVnSgcmRs3Tl7T2fed1J9CEDSFwCYD5HOF4UPVEHweIH
+ Av624r0JlftQtk4TF22p6NNGGhhnfcQFFsl/BSfprErxiPNcJ/0WmikuRmLH9NRVfeMH
+ 0zMulCFxce3oMBDYO4wrmHsQ0Za5Oin1J6tX/wSeaQMfvek2xT6toa9EYvgmjHJ5d+38
+ SX7w==
+X-Gm-Message-State: AOJu0YzJOyqxjxSipg3jeKuFiCgCfK2vUVVll0/unC74VSCIxcCrM0yr
+ lhxnrrwgN1u+0WCEtr5m4XQvelgFcWx5s9NHyFzUtwVn0/1/E8jBcouZsnhL405NbX0nICSbDyD
+ btS2b
+X-Gm-Gg: AeBDietgw9j79kSIVD7A0MknjqZqRDsZG9flkISEBTyZiUQkvUocVU2Y6QcwZoOk2yi
+ aUZ9+eajGhPQHFHqRpwajwEQAcNngTKCirSnBTGSNPWhwrNA2G3y3o/l0+ZbAKAEZjd3tfnDdcQ
+ t1xTjJVxodlI6IF0vNLXgt0C9XCS1oSRGb5efJxIwZfXpc2JHo50fP3M+u/73TKAVyuqvwhH3vf
+ /4Ty+D5mjyqmCelTfz9nmfbNNvbD+3McgAIP2lqaai3k83VHteBL91+8Jl/XhpTsnWGtc7C7Bnl
+ cOUUcY3bU4ETVCNXd9ia5YE0crOUNpuQLKiCrlJN+cdCiSROrZQwWSkAnJnTazBRcahQIt/zjpN
+ Aj89cD8h9cNxUmwlj5vCrCF3fC8aXWd3YaYyAEimJe8w/fsv7/x5muTcRPhwMHA9Pnlaq03fbpq
+ BQHrztBSoh4emy5cJlQ8rX2+tfyPqi9OfEPRr5YdRMlNWQYucuqTAXq1skCQ7pQkgIjA6zF+3fp
+ PyV1OhyfTkgGXNaoJ2U0ia9q+LjYTK/BIaoL7w6Juab+5erird0
+X-Received: by 2002:a05:600c:47d3:b0:48a:9428:5522 with SMTP id
+ 5b1f17b1804b1-48e51f37358mr86808755e9.16.1778169150464; 
+ Thu, 07 May 2026 08:52:30 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.43
+ 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.29
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 08:52:43 -0700 (PDT)
+ Thu, 07 May 2026 08:52:29 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 49/67] target/arm: GICv5 cpuif: Implement GIC CDEOI
-Date: Thu,  7 May 2026 16:51:36 +0100
-Message-ID: <20260507155154.1886557-50-peter.maydell@linaro.org>
+Subject: [PULL 35/67] target/arm: GICv5 cpuif: Implement ICC_IDR0_EL1
+Date: Thu,  7 May 2026 16:51:22 +0100
+Message-ID: <20260507155154.1886557-36-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260507155154.1886557-1-peter.maydell@linaro.org>
 References: <20260507155154.1886557-1-peter.maydell@linaro.org>
@@ -100,65 +100,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the GIC CDEOI instruction, which performs a "priority
-drop", clearing the highest set bit in the APR register.
+ICC_IDR0_EL1 is an identification register; we can implement this as
+a simple constant value.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Message-id: 20260327111700.795099-50-peter.maydell@linaro.org
+Message-id: 20260327111700.795099-36-peter.maydell@linaro.org
 ---
- target/arm/tcg/gicv5-cpuif.c | 21 +++++++++++++++++++++
- target/arm/tcg/trace-events  |  1 +
- 2 files changed, 22 insertions(+)
+ target/arm/tcg/gicv5-cpuif.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
 diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index 52abe175bb..5e613362bc 100644
+index 005e2fa8d2..497c09474b 100644
 --- a/target/arm/tcg/gicv5-cpuif.c
 +++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -554,6 +554,22 @@ static uint64_t gicr_cdia_read(CPUARMState *env, const ARMCPRegInfo *ri)
-     return hppi.intid | R_GICR_CDIA_VALID_MASK;
- }
+@@ -38,6 +38,18 @@ FIELD(GIC_CDHM, HM, 32, 1)
+ FIELD(GIC_CDRCFG, ID, 0, 24)
+ FIELD(GIC_CDRCFG, TYPE, 29, 3)
  
-+static void gic_cdeoi_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                            uint64_t value)
-+{
-+    /*
-+     * Perform Priority Drop in the current interrupt domain.
-+     * This is just clearing the lowest set bit in the APR.
-+     */
-+    GICv5Domain domain = gicv5_current_phys_domain(env);
-+    uint64_t *apr = &env->gicv5_cpuif.icc_apr[domain];
++FIELD(ICC_IDR0_EL1, ID_BITS, 0, 4)
++FIELD(ICC_IDR0_EL1, PRI_BITS, 4, 4)
++FIELD(ICC_IDR0_EL1, GCIE_LEGACY, 8, 4)
 +
-+    trace_gicv5_cdeoi(domain);
++/*
++ * We implement 24 bits of interrupt ID, the mandated 5 bits of priority,
++ * and no legacy GICv3.3 vcpu interface (yet)
++ */
++#define QEMU_ICC_IDR0 \
++    ((4 << R_ICC_IDR0_EL1_PRI_BITS_SHIFT) |     \
++     (1 << R_ICC_IDR0_EL1_ID_BITS_SHIFT))
 +
-+    /* clear lowest bit, doing nothing if already zero */
-+    *apr &= *apr - 1;
-+}
-+
- static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-     /*
-      * Barrier: wait until the effects of a cpuif system register
-@@ -606,6 +622,11 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
+ static GICv5Common *gicv5_get_gic(CPUARMState *env)
+ {
+     return env->gicv5state;
+@@ -220,6 +232,11 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
          .access = PL1_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-         .writefn = gic_cdrcfg_write,
+         .writefn = gic_cdhm_write,
      },
-+    {   .name = "GIC_CDEOI", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 1, .opc1 = 0, .crn = 12, .crm = 1, .opc2 = 7,
-+        .access = PL1_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .writefn = gic_cdeoi_write,
++    {   .name = "ICC_IDR0_EL1", .state = ARM_CP_STATE_AA64,
++        .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 10, .opc2 = 2,
++        .access = PL1_R, .type = ARM_CP_CONST | ARM_CP_NO_RAW,
++        .resetvalue = QEMU_ICC_IDR0,
 +    },
-     {   .name = "GIC_CDHM", .state = ARM_CP_STATE_AA64,
-         .opc0 = 1, .opc1 = 0, .crn = 12, .crm = 2, .opc2 = 1,
-         .access = PL1_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-diff --git a/target/arm/tcg/trace-events b/target/arm/tcg/trace-events
-index 13e15cfcfc..fcb3106a96 100644
---- a/target/arm/tcg/trace-events
-+++ b/target/arm/tcg/trace-events
-@@ -5,3 +5,4 @@
- gicv5_recalc_ppi_hppi(int domain, uint32_t id, uint8_t prio) "domain %d new PPI HPPI id 0x%x prio %u"
- gicv5_gicr_cdia_fail(int domain, const char *reason) "domain %d CDIA attempt failed: %s"
- gicv5_gicr_cdia(int domain, uint32_t id) "domain %d CDIA acknowledge of interrupt 0x%x"
-+gicv5_cdeoi(int domain) "domain %d CDEOI performing priority drop"
+     {   .name = "ICC_ICSR_EL1", .state = ARM_CP_STATE_AA64,
+         .opc0 = 3, .opc1 = 0, .crn = 12, .crm = 10, .opc2 = 4,
+         .access = PL1_RW, .type = ARM_CP_NO_RAW,
 -- 
 2.43.0
 
