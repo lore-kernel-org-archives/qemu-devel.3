@@ -4,108 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27E14CD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 07:44:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E26FCD343B
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 07:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKtOz-0005TJ-7F; Thu, 07 May 2026 03:44:09 -0400
+	id 1wKtRZ-00074g-Ud; Thu, 07 May 2026 03:46:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npickito@gmail.com>)
- id 1wKtOg-0005IY-UI
- for qemu-devel@nongnu.org; Thu, 07 May 2026 03:43:53 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKtRY-00074D-G1
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 03:46:48 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npickito@gmail.com>)
- id 1wKtOf-0007ks-FZ
- for qemu-devel@nongnu.org; Thu, 07 May 2026 03:43:50 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-67cac5ece75so836634a12.2
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 00:43:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778139827; cv=none;
- d=google.com; s=arc-20240605;
- b=eOItCbEMY9OVZZKAy4HIc1JnXqtcdP8Xzsy02KT9IuIzg6HPC7bNlcauBSNuzMlyC4
- kiTeLqqI3OKzZwN+MeGtrBBwt90jlrjqUQWG18V7xebOxxW/o/dN75AwSWOfmSAqVmb8
- jvooGOqFr/yIsb9FzGbW5OvKHZVuUREg5fQL0WH4DfiDB0S6Nd5mNLkHFJ8xs9Z5jcvv
- 7OOCUl9+ZE09wvT92RMbuwbXIC3PbZh6X3nYjYHbRRwJQ1NkyMhYjAyDhLBKwfiS6aAw
- 35zVM10ptWb0SCu2iZWf6IqQTri/hort2jTdRTliat0RVli1qijlHf4IKlas/5YgdOOE
- iONA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=+G/eOW1a3NVhiF5Lz8yvuXedOpZTOjt5RaGeZVkwIko=;
- fh=CgATFaH4GkFfW6AwWoX4jVQvgcffpeNYdjkncG5m9kM=;
- b=lKOlM8//SZBQU39h+Zjq+N0UT9pHQYEdAto40zqzoxttBdWUNKsM9rQ0PaXive8fZ/
- iQR9Z25zTO4CNxFUmOjJxFM2ubxGGK1l82IQbMY1K+EooDAKPVqL0SMuQ7F/Qq1xXz0O
- XiLy1IvZ0QSRc1GAhxHQF+2e9ax5KScHg3xj4NchZarsyG7QTGGZr0Pgit4X0w/lG+S1
- ZneWU/5Hc67H1f9zn8DYlAURiLzwRfp8gM2MJYSD9bsCbEX3gt6Jb844dTWj6vAhjy4o
- EGwSw6HRlHDA9SQBwYXiMEmiKGUZav1DE5POpx+OkItuwuSUR9RluVh9T9VSCUOwmBg5
- uJkA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wKtRW-00008D-LA
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 03:46:48 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4890d945eb4so10627515e9.0
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 00:46:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778139827; x=1778744627; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=+G/eOW1a3NVhiF5Lz8yvuXedOpZTOjt5RaGeZVkwIko=;
- b=awwma6o7bjIapjx92tyPReUR+QgwJBzKtpDDS6I2f+Wje+UfsXFDJ0rIKKiNjpRLgO
- s83jlFCs0z7AJ0Xgx7JbK3v8kQjXS/eRCKNiO7o4UzgiIiL8kCMqO5AsAIUmzpealTkI
- NJmrskhB2CEZJOD5RGexCDRU0Ptm90f9GbVoSzqDrdrO15q9PgG/sY1LVGKZKsanjMWS
- 1zjO+ug7r0KpHvv6i9cc0knAfG4t2P3MwQ5RHVLh7bT2GK0ya94vuKzHn/0IGSD8XJqJ
- Rc4k4uQASKtrcjqhnrgFxhlCqEuZD1jUotJeOiOctuYWz+ypT9rjctEI0jozWECmiMv4
- TZag==
+ d=linaro.org; s=google; t=1778140005; x=1778744805; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=QHgs1eyozQiR95r+VSjvkiFeFZro/U9FmIRetgp4N7s=;
+ b=O6wKzw3VYUuKklDFoLFDufTIn5pRRPgvBlAxtDouMFSS4SQH45GfaTZNNszzYDJcR8
+ dnb5GPU+PtFGnlXfS/MrgGCuDQW7jxRv5eMGeHe4nLMwG70Amt/SLuxHpXvDaW/sRYsk
+ ygGuYAoLQ89mYgEIO2BUYDHY5SOh+ihk5Bd1g8DZHw0+oCtuKcAtMrSZeNyoiJP+JGcu
+ q2hmWODycDFjWckMPm9lxzwKRSJdQqQam4wA84DtR7BJLXwjbDGrOwVX2aNM8GI1yGR3
+ gFCD0bhfYqdGuap0Y6eZS2j9+FGKxaZuOlAFF4kR62gy7+DWcwaJz0P8N9dB7PacEB6f
+ +iwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778139827; x=1778744627;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+G/eOW1a3NVhiF5Lz8yvuXedOpZTOjt5RaGeZVkwIko=;
- b=hikBGtSwTD96jq8uUxBkV9BeVAAE0yKAosBO2qgWU8k5WC8urWGWvV5xTYIC/7szvA
- 3ov1Z8iRkEm1krPInb/RbM0qdm6bSCi2zDpFNTOuQSuZG3k8TKQPqilDfjIYhWiSre2Q
- L17hVOWUXOLB4w7YuZ6mGRI/y7gY8E/hlzGfYC1Z6QbH2MqR3iQ1VAcyKiz7/B5ggHbm
- yM9AQ4AP8sYNeglM4ruTIXCMurUozMRqv4WKQdDVPZcEBYQkWnD5mF98kssa4iGHEdiY
- STJnwEoizJsZd9SM+KOkbgP/SOlf/LP2gG/fKdZ7V+irSdWMo6wHsN6uYO6VFZiqOflr
- ssTA==
+ d=1e100.net; s=20251104; t=1778140005; x=1778744805;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QHgs1eyozQiR95r+VSjvkiFeFZro/U9FmIRetgp4N7s=;
+ b=syoXkyBtm24K8hSSn463v7AKa9WYLCgy359qJdmWrCpci5OZW0xqeGfhD4wftpnn+p
+ bUacN6pmN1EwdfuBYZbquaCmc93jTyxerTxJGKYvtP6OQC9sITo8L85bnynG7cbtDD9g
+ mJKR30p0QU0RRV6+tsf3aKMNP3M48TkBIrOXOcXCT1hhzmIKnAXaMAF5xz5vSNcMk9k5
+ hermiVuE0vmt4IfbBBpbeQjDe42+OI67r+/e6llmyAdLV+Mb3rxHcEVSNS30W9f7SDVZ
+ Ec+kMSMujsjhmW7SkTHiPa/Du3bnPZt7DrZMw7kSIHIJK2NFT+QQq+PLXHHcjToL+mP4
+ YjjQ==
 X-Forwarded-Encrypted: i=1;
- AFNElJ96VQ/ltOJ1wyJJcBxKcrpgrOxYm9LsAI9ZG18T9nGu76wQdguRarS0UkH4VGF1BRNuGLNLKW/RaElS@nongnu.org
-X-Gm-Message-State: AOJu0YxdUSXue2qfVf633TkG+KaZ8UNgMrxX4ZfHfNREh5RdZuCigvuR
- 0nbcx2FZQiW9nTYwGe817AOLiVsMYsw+TyCpRCOfmzbNYuqKT5+0pOTS7vLCN7jm5yxyUaHyJOh
- sBNi/QP43Wum5uBLB5ZImySAySQowJrg=
-X-Gm-Gg: AeBDiesowewOCc+Dlq3if7JB0Q2Cwf3b4RwtuRm+Y1ZImqzNZVwN+83vHRf3jwnYWsa
- YBO0DONoAmEnw4LNM8iM/MAVgrIdbqrBo5Plo3SMhNtgckGO0heJT3hjLCwEWu6jhLdfdth+XSO
- LNGNg2LoydNbdZPRW6rcPx/jOninMCGBDbloLhVLlc+99e6cG3vBv8VtKbWO8prILp1t/JnE4QV
- EIh76Av51M1UAGgPoBMQr3+Pc2EwUMhd+on4TktcF9wtQ37yjZ6E54hkw69KgyaJmWaagzNKlNw
- Yl/YZAU7/thP8M7w+rxlrIVBNsx9Ik8=
-X-Received: by 2002:a05:6402:3046:10b0:670:6b0f:f77f with SMTP id
- 4fb4d7f45d1cf-67d645babbemr2577049a12.17.1778139827116; Thu, 07 May 2026
- 00:43:47 -0700 (PDT)
+ AFNElJ9815ph6a5vIl++gzXeJ45rCwbNudJabBVXy6sjActBQtlI9cd7OfMTRn6hT5nIqKcRwzCAa7bfgA7f@nongnu.org
+X-Gm-Message-State: AOJu0Yw1OY+Bcq9qho0rw/F4eGTqt8OZJ7Nx1Ibnx/8S9gwHyPw62EX7
+ VkFdVvu4lxId7rz4r9lf5OaB/sbvQhlmLTazmqCNzMrjxDlogDSxOTgN+4R94SMH+ww=
+X-Gm-Gg: AeBDietWqKYqhrofXz5kktqihP8+Y9/RI1MQw/kSSpkDQ9mey022+74+MNgA1om43Os
+ 0pvF1OlRO4i31oVUlVZMLJBW4azlfSNq+HTA6sWx0k6VTnY3p07mrNUv+JXsf1ZM8JaDZnSyC2u
+ lw6mc9Yi6JAEYAeAg5ZpHdm4+DMcNVejkPgZIGrzq1DZ6ZfHgUfj8rXZU/HummI/9luDvsuHVrh
+ Ch22/N8Gxf7kiPoctmgRe708u47VsespaUe8Q80GAG/jXBwrk+3Qbx7kp20lRjbujLMdv9ZZ5tc
+ ggLH18N2tVQbzpIEp3joXZNXPlJV1VyvO7zTjHJYb1hYoqrBccPtp+o35PNaFDQbE+Hax30dO4F
+ GTIF9KUYcsNJIVJ89u0HkZjoumV5C2W9hcszu8NLOX15UObd19iUR62u8GZcuKXFy4LmyfcT8Ln
+ PSBklwQ1JXWKp6F+hCqSM0x4CRAhs1RwF3QYQ9UI+tb7Om9suOErEC7MxmALhRuEYsptnI6sUfb
+ Lz8
+X-Received: by 2002:a05:600c:4e56:b0:489:1abb:5559 with SMTP id
+ 5b1f17b1804b1-48e5dfd6508mr26389385e9.5.1778140005019; 
+ Thu, 07 May 2026 00:46:45 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48e538fad5fsm113828185e9.10.2026.05.07.00.46.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 07 May 2026 00:46:44 -0700 (PDT)
+Message-ID: <210d440f-a83e-48ef-b313-47b8fc536801@linaro.org>
+Date: Thu, 7 May 2026 09:46:43 +0200
 MIME-Version: 1.0
-References: <20260417104652.17857-1-xiaoou@iscas.ac.cn>
- <20260417104652.17857-2-xiaoou@iscas.ac.cn>
- <336c0c4b-af67-4cb8-91f3-704348124f55@oss.qualcomm.com>
-In-Reply-To: <336c0c4b-af67-4cb8-91f3-704348124f55@oss.qualcomm.com>
-From: Kito Cheng <kito.cheng@gmail.com>
-Date: Thu, 7 May 2026 15:43:35 +0800
-X-Gm-Features: AVHnY4IZk1fLkbAkUZfMebcODcxyBVpyqKFhoRrmmssKOF_W32YUjgSwBNoykwc
-Message-ID: <CA+yXCZDgpcUZSgy2bSnch7FMw6YmJC-8RTs=c-GcckSddGkP+g@mail.gmail.com>
-Subject: Re: [PATCH 01/14] target/riscv: rvp: Add option defines and
- dependency check for packed simd extension
-To: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
-Cc: Molly Chen <xiaoou@iscas.ac.cn>, palmer@dabbelt.com,
- alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, chao.liu.zevorn@gmail.com, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=npickito@gmail.com; helo=mail-ed1-x52f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Remove the deprecated glusterfs block driver
+Content-Language: en-US
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ qemu-devel@nongnu.org, Hanna Reitz <hreitz@redhat.com>,
+ Eric Blake <eblake@redhat.com>, qemu-block@nongnu.org,
+ devel@lists.libvirt.org, integration@gluster.org,
+ Nir Soffer <nirsof@gmail.com>, Nir Soffer <nsoffer@redhat.com>
+References: <20260507051639.2784590-1-thuth@redhat.com>
+ <08637f36-ae2b-4191-b668-93e59e283c92@linaro.org>
+ <afxCh6JcPEefhF5o@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <afxCh6JcPEefhF5o@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,16 +109,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Molly:
+On 7/5/26 09:43, Kevin Wolf wrote:
+> Am 07.05.2026 um 08:08 hat Philippe Mathieu-Daudé geschrieben:
+>> On 7/5/26 07:16, Thomas Huth wrote:
+>>> From: Thomas Huth <thuth@redhat.com>
+>>>
+>>> Glusterfs has been marked as deprecated since QEMU v9.2, and as far
+>>> as I know, nobody spoke up 'til today that it should be kept.
+>>> The listed e-mail address integration@gluster.org in our MAINTAINERS
+>>> file seems to be bouncing nowadays, and looking at their website
+>>> https://www.gluster.org/ the most recent news are from 2020 / 2021 ...
+>>> so it seems like there is really hardly any interest in Glusterfs
+>>> anymore. Thus it's time to remove the code now from QEMU.
+>>>
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>    MAINTAINERS                                   |    6 -
+>>>    docs/about/deprecated.rst                     |    8 -
+>>>    docs/about/removed-features.rst               |    7 +
+>>>    docs/system/device-url-syntax.rst.inc         |   39 -
+>>>    docs/system/qemu-block-drivers.rst.inc        |   84 -
+>>>    meson.build                                   |   47 -
+>>>    qapi/block-core.json                          |   52 -
+>>>    block/gluster.c                               | 1644 -----------------
+>>>    tests/qtest/modules-test.c                    |    3 -
+>>>    block/meson.build                             |    1 -
+>>>    meson_options.txt                             |    2 -
+>>>    .../ci/setup/debian/debian-13-ppc64le.yaml    |    1 -
+>>>    .../ci/setup/ubuntu/ubuntu-2404-aarch64.yaml  |    1 -
+>>>    .../ci/setup/ubuntu/ubuntu-2404-s390x.yaml    |    1 -
+>>>    scripts/coverity-scan/coverity-scan.docker    |    1 -
+>>>    scripts/coverity-scan/run-coverity-scan       |    2 +-
+>>>    scripts/meson-buildoptions.sh                 |    3 -
+>>>    .../dockerfiles/debian-amd64-cross.docker     |    1 -
+>>>    .../dockerfiles/debian-arm64-cross.docker     |    1 -
+>>>    .../dockerfiles/debian-mips64el-cross.docker  |    1 -
+>>>    .../dockerfiles/debian-mipsel-cross.docker    |    1 -
+>>>    .../dockerfiles/debian-ppc64el-cross.docker   |    1 -
+>>>    .../dockerfiles/debian-riscv64-cross.docker   |    1 -
+>>>    .../dockerfiles/debian-s390x-cross.docker     |    1 -
+>>>    tests/docker/dockerfiles/debian.docker        |    1 -
+>>>    .../dockerfiles/fedora-rust-nightly.docker    |    1 -
+>>>    tests/docker/dockerfiles/fedora.docker        |    1 -
+>>>    tests/docker/dockerfiles/opensuse-leap.docker |    1 -
+>>>    tests/docker/dockerfiles/ubuntu2204.docker    |    1 -
+>>>    tests/lcitool/projects/qemu.yml               |    1 -
+>>>    30 files changed, 8 insertions(+), 1907 deletions(-)
+>>>    delete mode 100644 block/gluster.c
+>>
+>> Need a rebase on top of commit f168046842c ("cocci: Do not
+>> initialize variable used by QLIST_FOREACH macro").
+>>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>
+>> Apparently we could now revert commits a6b257a08e3 ("file-posix:
+>> Handle undetectable alignment") and 3a20013fbb2 ("block: posix:
+>> Always allocate the first block"). Not sure if that could be
+>> useful for other backends or harmless. Cc'ing Nir.
+> 
+> I haven't looked at the specific code changes, but if it's file-posix,
+> it's unrelated to the builtin gluster block driver in QEMU, but a file
+> on a glusterfs mount on the host. We still need to behave correctly for
+> that. (And if it can happen with glusterfs, it probably can happen with
+> other filesystems, too.)
 
-> +    if (riscv_has_ext(env, RVP) &&
-> +        !(cpu->cfg.ext_zba && cpu->cfg.ext_zbb && cpu->cfg.ext_zbkb)) {
-> +        error_setg(errp, "P extension requires zba, zbb and zbkb extensions");
-> +        return;
-> +    }
-> +
+OK it makes sense, thanks!
 
-zbkb should not in required extension according spec:
+> 
+> Kevin
+> 
 
-https://github.com/riscv/riscv-p-spec/blob/master/P-ext-proposal.adoc#p-extension-for-packed-single-instruction-multiple-data
 
