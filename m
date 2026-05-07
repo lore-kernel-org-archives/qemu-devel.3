@@ -4,65 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E698ECD3445
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3143CD343B
 	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 06:22:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKs7g-0005PF-5e; Thu, 07 May 2026 02:22:12 -0400
+	id 1wKs7L-0005Nm-99; Thu, 07 May 2026 02:21:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wKs7a-0005Ot-3h
- for qemu-devel@nongnu.org; Thu, 07 May 2026 02:22:06 -0400
+ id 1wKs7E-0005NR-Bs
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 02:21:45 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wKs7Y-0000Y2-9h
- for qemu-devel@nongnu.org; Thu, 07 May 2026 02:22:05 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1wKs7B-0000NG-RF
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 02:21:44 -0400
 Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8DxLuqIL_xpZGIHAA--.23410S3;
- Thu, 07 May 2026 14:22:00 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxLupuL_xpVmIHAA--.23407S3;
+ Thu, 07 May 2026 14:21:35 +0800 (CST)
 Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowJBxSeCGL_xpaBp8AA--.39454S3;
- Thu, 07 May 2026 14:21:58 +0800 (CST)
-Subject: Re: [PATCH 1/4] update-linux-headers.sh: add typelimits.h to portable
- header list
+ by front1 (Coremail) with SMTP id qMiowJCxfcJrL_xpXBp8AA--.37592S3;
+ Thu, 07 May 2026 14:21:33 +0800 (CST)
+Subject: Re: [PATCH v3 0/2] hw/loongarch/virt: Add versioned machine type
+ support
+To: Bibo Mao <maobibo@loongson.cn>, Cornelia Huck <cohuck@redhat.com>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, qemu-devel@nongnu.org
+References: <20260401015705.3009762-1-maobibo@loongson.cn>
 From: gaosong <gaosong@loongson.cn>
-To: maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org, lixianglai@loongson.cn, chenhuacai@loongson.cn,
- clg@redhat.com, pbonzini@redhat.com, cohuck@redhat.com, thuth@redhat.com,
- mst@redhat.com, peter.maydell@linaro.org, richard.henderson@linaro.org,
- philmd@linaro.org
-References: <20260427070029.1059386-1-gaosong@loongson.cn>
- <20260427070029.1059386-2-gaosong@loongson.cn>
-Message-ID: <0a95025f-7234-ae8f-641d-cf605c5742ce@loongson.cn>
-Date: Thu, 7 May 2026 14:23:58 +0800
+Message-ID: <33f60f8e-232c-d42b-8b55-c28ddef65b11@loongson.cn>
+Date: Thu, 7 May 2026 14:23:32 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <20260427070029.1059386-2-gaosong@loongson.cn>
+In-Reply-To: <20260401015705.3009762-1-maobibo@loongson.cn>
 Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-CM-TRANSID: qMiowJBxSeCGL_xpaBp8AA--.39454S3
+X-CM-TRANSID: qMiowJCxfcJrL_xpXBp8AA--.37592S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7WFyUury5GFW8AryDCrWfWFX_yoW8WF4Upa
- s8u348Cry3J3W7JwnrWFyIkFy5XF45JF1agry2grWjyF90gr1Iq3yayrnIgryDta1UCa1j
- qr429ryUC3WkZ3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27w
- Aqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE
- 14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1c
- AE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8C
- rVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8Zw
- CIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x02
- 67AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr
- 0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUwMKu
- UUUUU
+X-Coremail-Antispam: 1Uk129KBj9xXoWrKry7Gw43Zw17ur17Xr1rXwc_yoW3Wwc_uw
+ 17G3sxWr45JFWI9FWqqr1FvryUGF4jvF15AF9xWr48A34fGr4fXr47X397ZFsIvr4Uurs8
+ Aa1jvFyfZry2gosvyTuYvTs0mTUanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvT
+ s0mT0YCTnIWjqI5I8CrVACY4xI64kE6c02F40Ex7xfYxn0WfASr-VFAUDa7-sFnT9fnUUI
+ cSsGvfJTRUUUbxAYFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20EY4v20x
+ vaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwVA0rcxS
+ w2x7M28EF7xvwVC0I7IYx2IY67AKxVWUJVWUCwA2z4x0Y4vE2Ix0cI8IcVCY1x0267AKxV
+ WUJVW8JwA2z4x0Y4vEx4A2jsIE14v26F4j6r4UJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr1j6F4UJwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07UNvtZU
+ UUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
  helo=mail.loongson.cn
 X-Spam_score_int: -1
@@ -86,46 +82,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ping~
-
-在 2026/4/27 下午3:00, Song Gao 写道:
-> Linux kernel introduced a new UAPI header file typelimits.h in the 7.1
-> development cycle (commit merged in Jan 2026). This file is required by
-> ethtool.h and other headers that include it.
+在 2026/4/1 上午9:57, Bibo Mao 写道:
+> Now la464 CPU type feature is basically finished, versioned machine type
+> is added here for compatibility support in future.
 >
-> Since QEMU's update script only copies headers explicitly listed in the
-> for loop, typelimits.h was missing after updating to newer kernel
-> versions, causing compilation errors like:
->
->    fatal error: standard-headers/linux/typelimits.h: No such file or directory
->
-> Add typelimits.h to the list of headers processed by cp_portable() to
-> ensure it is properly copied and sanitized into the QEMU source tree
->
-> Cc: clg@redhat.com
-> Cc: pbonzini@redhat.com
-> Cc: cohuck@redhat.com
-> Cc: thuth@redhat.com
-> Cc: mst@redhat.com
-> Cc: peter.maydell@linaro.org
-> Cc: richard.henderson@linaro.org
-> Cc: philmd@linaro.org
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
 > ---
->   scripts/update-linux-headers.sh | 1 +
->   1 file changed, 1 insertion(+)
+> v2 ... v3:
+>    1. Refresh the patch based on the latest code
+>    2. Change version machine from 11.0 to 11.1
 >
-> diff --git a/scripts/update-linux-headers.sh b/scripts/update-linux-headers.sh
-> index 386d7a38e7..471f9cc71e 100755
-> --- a/scripts/update-linux-headers.sh
-> +++ b/scripts/update-linux-headers.sh
-> @@ -255,6 +255,7 @@ for i in "$hdrdir"/include/linux/*virtio*.h \
->            "$hdrdir/include/linux/vhost_types.h" \
->            "$hdrdir/include/linux/vmclock-abi.h" \
->            "$hdrdir/include/linux/nitro_enclaves.h" \
-> +         "$hdrdir/include/linux/typelimits.h" \
->            "$hdrdir/include/linux/sysinfo.h"; do
->       cp_portable "$i" "$output/include/standard-headers/linux"
->   done
+> v1 ... v2:
+>    1. Change version machine from 10.2 to 11.0
+> ---
+> Bibo Mao (2):
+>    hw/loongarch/virt: Define virt machine type with type_init()
+>    hw/loongarch/virt: Define versioned virt machine
+>
+>   hw/loongarch/virt.c | 66 ++++++++++++++++++++++++++++++++++++---------
+>   1 file changed, 53 insertions(+), 13 deletions(-)
+>
+>
+> base-commit: 559919ce54927d59b215a4665eda7ab6118a48aa
+For this series
+
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+
+Thanks.
+Song Gao
 
 
