@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D16B5CD3436
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 02:26:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E6DBCD3436
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 02:27:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKoPY-00064n-JP; Wed, 06 May 2026 22:24:24 -0400
+	id 1wKoQ8-0007H6-JH; Wed, 06 May 2026 22:25:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoPW-00063x-Pi
- for qemu-devel@nongnu.org; Wed, 06 May 2026 22:24:22 -0400
-Received: from mail-oo1-xc2d.google.com ([2607:f8b0:4864:20::c2d])
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoPy-0006tg-C1
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 22:24:50 -0400
+Received: from mail-oa1-x34.google.com ([2001:4860:4864:20::34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoPV-0007c9-EG
- for qemu-devel@nongnu.org; Wed, 06 May 2026 22:24:22 -0400
-Received: by mail-oo1-xc2d.google.com with SMTP id
- 006d021491bc7-699a23b2b08so141674eaf.0
- for <qemu-devel@nongnu.org>; Wed, 06 May 2026 19:24:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <imp@bsdimp.com>) id 1wKoPw-0007ha-Sa
+ for qemu-devel@nongnu.org; Wed, 06 May 2026 22:24:50 -0400
+Received: by mail-oa1-x34.google.com with SMTP id
+ 586e51a60fabf-42fdab683a9so203515fac.1
+ for <qemu-devel@nongnu.org>; Wed, 06 May 2026 19:24:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778120660; x=1778725460;
+ d=bsdimp-com.20251104.gappssmtp.com; s=20251104; t=1778120687; x=1778725487;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/18BWWz2Wbj63GAgi/PilHsC5xbsmE42NiHRmg2gYNo=;
- b=zva1G04HSZBopuAwIwqYQKyZvW/2X5fQ5rpvs+yZ3dIYcQw5rrpeUCUT608kI1ykRd
- QcvEhOBwlWnAqFz+Y04O8Exq/dloHqfKjKwQaLfknahNh4pwEj71IGT7wFaa5sQG1bDD
- OrZRrWvUza5XW3CzT5tGX8S+KOnEWQvgnqBXAghE2tPFdgwdZiK8Sjl8iO1Z7stJ6VfJ
- i11BfcXIXw/gXN2AbmzrrGi/G5E3ldv2adQYRGqR7tfnBHlV/AbXb7hrOL+Qxp3YP9Gr
- rEh0BNvJkvE2jxdCO5S1lH671PomYdDKyatrhkpfZVzyFAxPrhTO/829Aa8Qr9lJ+zJ/
- PI+g==
+ bh=Ry/+AD30vqQ1SM10FWDtz2pfyCCIJfoXwGJ8k1dXU+Q=;
+ b=nrFUFIJ3vp9AIoDVbStv/5bWmHAHbfpH35TGdqOFuElOwFyR5JHFMaY/6TPojcP1gD
+ lAGNsObrIvV7sGs2ikQxZcv3bRxs6S1GBroCXNdG5nNrXxFVPfeIx7GimyFxp2NPvsUa
+ bQOXv115uUUBtCanhnhPiqXOCOuOIaYXr4HQho5ShanIPYWgeQNWhQEAGzeidXrh8m29
+ c6ND6LLWtL9RDVbQAh/Czx2Q6VRgC0LzCqpLgXT8ip+kbKEj0ZQ9l7GHzRR0E4pu1wXV
+ R1LRZXOIIGfudnwVdb3FoHjxrs3kcILLF307fyxvVgr0kohWdL4bHHqiYxCAqIWffSgF
+ 2yxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778120660; x=1778725460;
+ d=1e100.net; s=20251104; t=1778120687; x=1778725487;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=/18BWWz2Wbj63GAgi/PilHsC5xbsmE42NiHRmg2gYNo=;
- b=ZBiLTVZErWOQu/Ka7EHreVntumPcN6QtcbyPwLu7KOJWMrr8KqXPO8h8URb5aZd5lz
- wgLaXiAvhdBWl802awakD4Ke7LQjNg+/KxV80x9EOvzfmLhkfUOSrozVlumjchthCnG8
- D+LJO1xwco+7vxurUk2rTaqz/2EtANyPhAxfV6JAAyQQa7JcQZIvAsR3rT71ZqbFd7zH
- RNRONE53mxXC79MPt+IL43YVbemRuNgGsVuGBLELMp76oO3wZrgg+kqQWtd/w24rIadV
- kTjDWpZcOGvD+o1vwcncVxjd5fpwqcJ4HZBCh/m9iGdp9El3wpSdNYDBRuOrPYvy2qXs
- hYUQ==
-X-Gm-Message-State: AOJu0Yy6Kl4zweDYpuP3WMfq6sIjLnChCMQxysxP55gYDNur0FsF909V
- /70WMfYcF43gCKBUrlmK0c7+dDuQXPs4kX7z6njqkL9j8Md9tzda4stGra6W+b2W4DRodQ8kgM2
- YxQe/yxY=
-X-Gm-Gg: AeBDieuZOpETM5RIRRvUdvi9kNho+s7NKvf8DxfthxpC5aEuEoEB5isjAs4rnvgfUHf
- epQ5M26VTNLh8+t63oPiu4iYbZYZhou/TljUP0R7qJhbpclw/y1aKw+LgkJqmLto4pNzucjE7wK
- zESq8HQSKmZ1cD0XBdmOVrBCPlm3ZQOeNWTLamanSgYCBTLnyoaDM1ZmmfzNDf6WetBjfAg9Vyd
- pLpuiEanpAtpNwSF1lSFT3ArqjeDL1zIpb+V4SX+8sBKGvsrGYzUQTMwJyEdlXBOPa4OBX3m/K7
- QhOWc6tB0SCMNanerbwunH3KiVFxaVzvNrLTK6q7Lj3gAqvholt5Y52v5EGoTGkTPvHdFRJ7KRo
- +VcIIszNushI51IDmdFSpDZmfIHe3Yq39iZNbi0hA1oNQ0tjx0jqD7btovvSxvNOqVRKATMcWo8
- td8HvjU0YHYXGhjg7d+bsJ5rbLGiGm4+2YC8pPg8dI3g==
-X-Received: by 2002:a05:6820:2902:b0:692:a19b:af68 with SMTP id
- 006d021491bc7-69998c95db5mr3300512eaf.5.1778120660080; 
- Wed, 06 May 2026 19:24:20 -0700 (PDT)
+ bh=Ry/+AD30vqQ1SM10FWDtz2pfyCCIJfoXwGJ8k1dXU+Q=;
+ b=n99nD7hJwRGDOtwdXuqohHyeOf6OdsbmvJfPmk6IZrrTwt7sQRuM74yO2TGKLWhZ4j
+ YOF/ZXZ9q6sXoePIc2yjWSXVvBamdvRGbfHrbOm29DOdZWx5/SsyVotxB4g09w5vPkyH
+ oa1xRZcDpLN5qwp/dhIRK1N75J71CQnyt5K1cGv6QrptWNze9Y0EiV3V+Z11nzXSYDDT
+ 87MHzyphpCMCabejnmutwF/CULubT5EvPIe7EbbuilmD4xvtU6MABb5tS0fFFE5WPTTn
+ L0vpRTU5l1zE656pwUJ8EqKqWRMXxyzN3wGnaJe0ff3KHoamTIcS40wpiHz387S26l0I
+ 1I7g==
+X-Gm-Message-State: AOJu0YzW4UNLsOn3qCzZhDHciyMxxizqhkp8+FqFQ0VnEhaiSlN98SNc
+ NQ8yav3UqidTkILFcDCeg5dpn2nvFiR3sLadLgOTNeoDwr2W/BAM66ebdCFR+1YLoTbmxhXIdep
+ p58+8n5U=
+X-Gm-Gg: AeBDieuJOWt3njaVaSW5JQTxw9Wz0moeA4lTFnhx9Rj5Vd0UdQIsjB+km/15HiK97L6
+ lScG4jXQLgMjuKUyzYlNrbjxXJdwEn/WYSngdP5//y9P8Tt8QeFccS+82lUcc92wWOdwBeHDe6j
+ ij99px3Trftq34FaryssT9X7PeoM5cTgPen1Nfk78n7v5GNSLB/x7xxht7ixvzqIAFDCsO0rLc7
+ 1oV4NxGebqjULW2oY+067UdozqwQmsPM1Aqb69yjvAUt0Fs/j/tzpcf1LlAtQf34qwrZQ5PsCVv
+ Z5L5jST1V2gsieZ9psPiAagUs9nHmrGvjMUx9PvssRXSdnQ8SwxRCF4Dc2AhYZmj8FCHlrP/lTj
+ YMarnJ4rXCHCzG8XjQdLzJfzhWjJJQ3l7D9L0Qdn6ZuM7ty6Sxc1jd3G+LjD+wexWPrTGE0JuX+
+ nhm7Rl4hva8T94XwHhkgJY
+X-Received: by 2002:a05:6820:f010:b0:696:8ccc:55a0 with SMTP id
+ 006d021491bc7-69998d22f89mr3388223eaf.42.1778120687342; 
+ Wed, 06 May 2026 19:24:47 -0700 (PDT)
 Received: from rebo.bsdimp.com ([50.253.99.174])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-696896e72c4sm11088118eaf.9.2026.05.06.19.24.18
+ 006d021491bc7-696896e72c4sm11088118eaf.9.2026.05.06.19.24.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 06 May 2026 19:24:19 -0700 (PDT)
+ Wed, 06 May 2026 19:24:46 -0700 (PDT)
 From: Warner Losh <imp@bsdimp.com>
 To: qemu-devel@nongnu.org
 Cc: Warner Losh <imp@bsdimp.com>, Kyle Evans <kevans@freebsd.org>,
+ Stacey Son <sson@FreeBSD.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Subject: [PATCH 04/25] bsd-user: Create os-syscall.h
-Date: Wed,  6 May 2026 20:21:58 -0600
-Message-ID: <20260507022219.44171-5-imp@bsdimp.com>
+Subject: [PATCH 23/25] bsd-user: Add do_bsd_ioctl main function
+Date: Wed,  6 May 2026 20:22:17 -0600
+Message-ID: <20260507022219.44171-24-imp@bsdimp.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260507022219.44171-1-imp@bsdimp.com>
 References: <20260507022219.44171-1-imp@bsdimp.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=2607:f8b0:4864:20::c2d;
- envelope-from=imp@bsdimp.com; helo=mail-oo1-xc2d.google.com
+Received-SPF: none client-ip=2001:4860:4864:20::34;
+ envelope-from=imp@bsdimp.com; helo=mail-oa1-x34.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -99,45 +100,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create os-syscall.h. The purpose of this file is to define anything
-that's different among the BSDs, like system call numbers and
-time_t. While there's a lot more different between the BSDs, this is at
-least a start at capturing it.
+From: Stacey Son <sson@FreeBSD.org>
 
+Add main ioctl emulation dispatcher that handles table-driven
+ioctl translation with thunk-based structure conversion. Supports
+TYPE_NULL, TYPE_INT, and TYPE_PTR argument types with read, write,
+and read-write access modes.
+
+Signed-off-by: Stacey Son <sson@FreeBSD.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 Signed-off-by: Warner Losh <imp@bsdimp.com>
 ---
- bsd-user/freebsd/os-syscall.h | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
- create mode 100644 bsd-user/freebsd/os-syscall.h
+ bsd-user/bsd-ioctl.c | 100 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 100 insertions(+)
 
-diff --git a/bsd-user/freebsd/os-syscall.h b/bsd-user/freebsd/os-syscall.h
-new file mode 100644
-index 0000000000..962adfa91a
---- /dev/null
-+++ b/bsd-user/freebsd/os-syscall.h
-@@ -0,0 +1,21 @@
-+/*
-+ * Copyright (c) 2023 Warner Losh <imp@bsdimp.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * OS-Specific portion of syscall_defs.h
-+ */
+diff --git a/bsd-user/bsd-ioctl.c b/bsd-user/bsd-ioctl.c
+index 8d25d84dbe..3940a69260 100644
+--- a/bsd-user/bsd-ioctl.c
++++ b/bsd-user/bsd-ioctl.c
+@@ -292,3 +292,103 @@ static abi_long do_ioctl_in6_ifreq_sockaddr_int(const IOCTLEntry *ie,
+ 
+     return ret;
+ }
 +
-+#include "syscall_nr.h"
++abi_long do_bsd_ioctl(int fd, abi_long cmd, abi_long arg)
++{
++    const IOCTLEntry *ie;
++    const argtype *arg_type;
++    abi_long ret;
++    uint8_t buf_temp[MAX_STRUCT_SIZE];
++    int target_size;
++    void *argptr;
 +
-+/*
-+ * FreeBSD uses a 64bits time_t except on i386 so we have to add a special case
-+ * here.
-+ */
-+#if defined(TARGET_I386) && !defined(TARGET_X86_64)
-+typedef int32_t target_time_t;
-+#else
-+typedef int64_t target_time_t;
++    ie = ioctl_entries;
++    for (;;) {
++        if (ie->target_cmd == 0) {
++            gemu_log("QEMU unsupported ioctl: ");
++            log_unsupported_ioctl(cmd);
++            return -TARGET_ENOSYS;
++        }
++        if (ie->target_cmd == cmd) {
++            break;
++        }
++        ie++;
++    }
++    arg_type = ie->arg_type;
++#if defined(DEBUG)
++    gemu_log("ioctl: cmd=0x%04lx (%s)\n", (long)cmd, ie->name);
 +#endif
++    if (ie->do_ioctl) {
++        return ie->do_ioctl(ie, buf_temp, fd, cmd, arg);
++    }
 +
-+typedef abi_long target_suseconds_t;
++    switch (arg_type[0]) {
++    case TYPE_NULL:
++        /* no argument */
++        ret = get_errno(safe_ioctl(fd, ie->host_cmd));
++        break;
++
++    case TYPE_PTRVOID:
++    case TYPE_INT:
++        /* int argument */
++        ret = get_errno(safe_ioctl(fd, ie->host_cmd, arg));
++        break;
++
++    case TYPE_PTR:
++        arg_type++;
++        target_size = thunk_type_size(arg_type, 0);
++        switch (ie->access) {
++        case IOC_R:
++            ret = get_errno(safe_ioctl(fd, ie->host_cmd, buf_temp));
++            if (!is_error(ret)) {
++                argptr = lock_user(VERIFY_WRITE, arg,
++                    target_size, 0);
++                if (!argptr) {
++                    return -TARGET_EFAULT;
++                }
++                thunk_convert(argptr, buf_temp, arg_type,
++                    THUNK_TARGET);
++                unlock_user(argptr, arg, target_size);
++            }
++            break;
++
++        case IOC_W:
++            argptr = lock_user(VERIFY_READ, arg, target_size, 1);
++            if (!argptr) {
++                return -TARGET_EFAULT;
++            }
++            thunk_convert(buf_temp, argptr, arg_type, THUNK_HOST);
++            unlock_user(argptr, arg, 0);
++            ret = get_errno(safe_ioctl(fd, ie->host_cmd, buf_temp));
++            break;
++
++        case IOC_RW:
++            /* fallthrough */
++        default:
++            argptr = lock_user(VERIFY_READ, arg, target_size, 1);
++            if (!argptr) {
++                return -TARGET_EFAULT;
++            }
++            thunk_convert(buf_temp, argptr, arg_type, THUNK_HOST);
++            unlock_user(argptr, arg, 0);
++            ret = get_errno(safe_ioctl(fd, ie->host_cmd, buf_temp));
++            if (!is_error(ret)) {
++                argptr = lock_user(VERIFY_WRITE, arg, target_size, 0);
++                if (!argptr) {
++                    return -TARGET_EFAULT;
++                }
++                thunk_convert(argptr, buf_temp, arg_type, THUNK_TARGET);
++                unlock_user(argptr, arg, target_size);
++            }
++            break;
++        }
++        break;
++
++    default:
++        gemu_log("QEMU unknown ioctl: type=%d ", arg_type[0]);
++        log_unsupported_ioctl(cmd);
++        ret = -TARGET_ENOSYS;
++        break;
++    }
++    return ret;
++}
 -- 
 2.52.0
 
