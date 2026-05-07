@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23667CD3427
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 08:49:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 966F3CD3427
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 08:50:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKuQE-0003l2-5N; Thu, 07 May 2026 04:49:30 -0400
+	id 1wKuQZ-0003xL-5g; Thu, 07 May 2026 04:49:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wKuQD-0003kl-2L
- for qemu-devel@nongnu.org; Thu, 07 May 2026 04:49:29 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ id 1wKuQY-0003vY-CQ
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 04:49:50 -0400
+Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wKuQA-0007sq-P3
- for qemu-devel@nongnu.org; Thu, 07 May 2026 04:49:28 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-65c1ba7eeb6so461960d50.1
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 01:49:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778143764; cv=none;
+ id 1wKuQS-0007uw-HB
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 04:49:46 -0400
+Received: by mail-yx1-xb133.google.com with SMTP id
+ 956f58d0204a3-6587cee8b57so560295d50.2
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 01:49:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778143783; cv=none;
  d=google.com; s=arc-20240605;
- b=PrGW7adJ+3a/4CDEXFrSRToe4ZJPYDByCVQgiHfpztKCsRcMdY7APH65l+qOTZFO19
- 0W7AFzxLfR0RmEvflWjov/YY7jhclq3hsRsOpK2yhOb5dYKiwGlv+7RUoHzxqrRQpkVV
- mFKWClG9cY2BofHHkxVT5nOaRcgu9KYTU2gfoLhbrO3W3GU0ubGb3zbsWyo27xVwP3Tu
- vF3lperAhb3ryGOZmG+lZ22GFfEhOCg39/38LoPJHlbmHXzRrl9OyqxLfXOxV7VHU6Wj
- 5aPYQ4rA9My58E2VccNly30uEne0QW6ni60chEhaGote/oHorlXMLmvbMoozBxviEZ0e
- 99ww==
+ b=dGCVBa4veshjpxySfcyDsDkfoAeYbUzTZnYPVUASGppRrQIknnSze2o+o4SF+lrlaX
+ vcY0C8ItEzE7EOOqhSt7fiMbqWA4zmoKQHkC3gw6AACtCYKRHrFNoVqkEQLAhMdvetcv
+ 2JmgfjIDvtPva/mfpukQPxcYlb+Ok+atpH+elMsGWG8WOzxdGLD1URPmrDrnNkJJWjVf
+ mEDHBNt1BfNavSbK2ZSpds16RGljHEzGIJy1TP/Y3xerW3oaYLNq5soMgR65S91brVKB
+ c4lt0oGvRyOdxK0hZerK/D3LZvfo9ghla/Bz/KyES7bLVStHMSTV4MOt753MicGIZJwA
+ 6ROQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=jdFnoXX+C5IktOW5SneX0UygQHPqKw98To8qBSKRXcI=;
+ bh=ebPu0zNX+2tOXD6OPdPXtFBlkPHw+PPitkfTsNSgsmM=;
  fh=mfg7oMYGemPoUnmFBZHENIERYVNJssHnRhsjr68iPcA=;
- b=OO1AjVsWHQW95feqFa++/9dqYda94ZwxvPJY9ywRB2FNK1gwloGjWDj9nmoRY+K7sE
- 6LlsXhFMh5iH5qK98oW1F42utwua7TFoeN0F1TTn27lin6THxwl0xs8LSkHZQ1n9roXh
- Na93dPmtt2QTDmlZZPMUM2kwhJE64Gwzd9yHYrPH+FFwHbLALCyxRGntaq60JNG4FF9W
- H9QZgkrCRAQYtD9JMD96SDq6ucdFs0g2JosI256Uit8Jjlk4i0o/mTLV5nEH6UGHY1wh
- oXlJT9ViE5JJKta6ZAquv94ilblYG7pEMC7zwNjFx+4ADvAPEA82CRG/RX9N03YZG3gE
- gUQw==; darn=nongnu.org
+ b=aWe87vDQdI7U2Lb/kR+qPiAjjs+WmNs+yMIVGxmJmukrAY40XhyrUFoh6h+S64tGj4
+ /1vumjflBYz38AypsKwB0/Ekl7nF08lIk46fIi2GCpE1guMEmtLzvS+gyJcNEW8O0z6V
+ 4uc05kDQX7Vm6T/UILwyEhUXwmmjkzmILolNvKxLZcq7aznDvl9qGeLUbFzjaXAoY3zE
+ n+6iVrxyHNsrKnPzObW6SIVGQic3/DIahzoZv3k9DzwAOXcYoGwxLwRs0qZagCi1VO5V
+ jz94ygwsAwghh2EcAk2Q5rdCA/2+hitcQviBxjlQs9vOrToGW4SwKW/XKNs2JGR4Br86
+ ZN7A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778143764; x=1778748564; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778143783; x=1778748583; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=jdFnoXX+C5IktOW5SneX0UygQHPqKw98To8qBSKRXcI=;
- b=B6I9ydN6FPierHF9g9Kcza/Mlgf/bvYYqi7d9onXKF04Gwz5Yo00lODS87+joFot9T
- fNigzqV7bgjv8uGwF3BDRHAVqJKfYpXbz3h9QdN9Y0aaWlrv4iTU6vMVNBOfHsf3IJyC
- INiiuLRbr99cFDHjW17cicaJBKaOaSe5Xd6wXP/aeexHwthdaTHspTJKwnc+mhqrKfjX
- ZqMSEtEhGy74fq+Ng7kao8T/j6f2n16tvoQlpojSUa7yjYjssFh8zRpGc1WzUq8QrZG7
- cF8FdpICz2UHOscHFH5ZAIovxVsH2mDTuHN4/RJW6wHC4p9/Eyf9hPoVAn3ZxFYL7s0U
- rKmQ==
+ bh=ebPu0zNX+2tOXD6OPdPXtFBlkPHw+PPitkfTsNSgsmM=;
+ b=skeomhmGaa7Kh17voLm9xj3JJhs3nmZq9Ihv6Stn5v6RK0GZneKOJxOxoezlj8Sjdd
+ tUMJ0851wBY8EbTejrt14J1HSI/7itAombmLiJ4bgkeOjGTkuKq1TIsAfooJImS8AAnw
+ m7Z02L2qXZaEqH2kw/IlLc55/VA5FY7H0mUfF+ANN8vDUsBXsfe77QkbPoIfDF7edDEs
+ Lr9VRN9bMJQ6feZi7fYi6sKRtrjbdfSD702OxNNrIra1iAJ+H5JEjDXZSEg5kEHpzOEC
+ Xj/CBFxNRXOt3BeQ0aIJu5ZZAcpU6NG14ah6ONAxRj7FXllSUDWLR6mnzLYxMMrd95VJ
+ dReQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778143764; x=1778748564;
+ d=1e100.net; s=20251104; t=1778143783; x=1778748583;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jdFnoXX+C5IktOW5SneX0UygQHPqKw98To8qBSKRXcI=;
- b=sbva55DfqAHOjJ2D4DEpHIsIXuP/z2vGgGrt8pgkVEPuueRgwsaskh8i8k8AIX+cEU
- 6GzeJv1OxMeaHfrwXQkSY5H9FEVmDhzjYdG/ssO46Ua+ODVuR3V7GFH/6dnwm/oC3Tjy
- Q3RLWCSYNlJpx2/xgMPwRjGuun8ppJzlN+HkPb9sPSkqLy7NYg5V950nHiw6VvwdEMZV
- pC2Lro7S50BnCPW//2ncDrTNochRRMw2aDFc4GBbmdrig3qK4h/zLGC5HJjwQ+3lapWh
- ykuwON6ZfAamAYMvFpkDyjpfNgbgB5EWeXgJRSLAVvl4w4JZFz8Ycdaw0tjTLaevP5nf
- R7lw==
-X-Gm-Message-State: AOJu0YyzJHkSJkOzyRObA0U2VcU8kBcUI4dCb/euyp4eb6Tc/9DV6st3
- rWZgXfjSWI4TCdB6dBPg+MCAFTTIilDAhoxii5zCr0mHaAudascRCfp3cOqtabgLMvLDEs5kQkP
- oCGRAtBjHHPi6bZWMogDZFOkNtIA8fW99fPZPPruQpw==
-X-Gm-Gg: AeBDieu/J6nsW2iVt/nvbMf0YvNbw2gTEgOs/bYW/k6/Kh0BBPqT++G1v7Cnxacz2td
- pb/JfRHmmsT3D304d/wexm1qORMCWg92Dui1ojTAf8Tt+ztDuu+cGVldoSbGl+z0sj9atbaCCsi
- IpEk9ITRumdEbg/cxCIO1VPZYP1+hdWW4GpXpjGgcMSlzzdCfOiIiurAfX3bif+uQ81pVyPeXqf
- M7FcIjNLXz8IGxgfv7rxGQFc0OQ61GPxHzXwLF8ADlKSHiYwERZ1LHIyI4/40hJ8Lp6yiEXQiZv
- vyM8FBj0Ft4rbGrZhcKH1fHGRpGNvtC0Mu/Z1TzDycya/Umu0YHORWKMjIG5mNpL8sXCC+e+lA/
- D4yGuOYKsppatEDWBR+83TWY=
-X-Received: by 2002:a05:690e:43d0:b0:650:7551:ba57 with SMTP id
- 956f58d0204a3-65c79ccd010mr5255643d50.33.1778143764079; Thu, 07 May 2026
- 01:49:24 -0700 (PDT)
+ bh=ebPu0zNX+2tOXD6OPdPXtFBlkPHw+PPitkfTsNSgsmM=;
+ b=LweY6iOBn0WXfAnfkzaUCHvBnqo3C0YrjQgWrozmQQKRl03MJhZ2h5LUJMHjoA+26i
+ MucDcvfK6/VOLriOK9CH29AEUGceJAP+VXB3qqBf6YM4kkr9hm+vYszeM6/x/RqFAJvn
+ ZvLoEprTLw0PLdL8PUq1pXv2UaPQTf5R8HDBFeFxHRjc9PBAkHixqpwrOQWsdQpmwC1L
+ yscyDe7Vjr29htlhvyb+z/i7lcSQYZwSaPFDSdBr/pzDbTYpM7MUyEFcRDG95eEQj4qA
+ ijQ30wha+5N85EUS6QnYiJmhlZJtp08iayf+5UZh8RSEfkgF+TGFhAjE5nnvtN/fWxY0
+ KMRw==
+X-Gm-Message-State: AOJu0YyF15rU3VP6ifcmWKzwIf6wlstMDsb8ffWYbgnR0hF22/gOpOFD
+ ZobJa4dfLQJaCBL6iLvDEQLQ+4z6OikdF6txZjlhBjxsjGM1cstgygew7pPC7bWJ91Yllt3/6O/
+ oysLU9SqRKaLlWIN6Lmfa2JKxw13jvVqhYhEtnP7hAw==
+X-Gm-Gg: AeBDievJHrlbvaY9QfMZSx/sjC34khXxNLeIFUfLbueNczazrGVR6dUyT1IKKtkXEkn
+ e69ErOcZWZDENggKpFQe/OlRMGylpEtFFWzV3aqxq1A1/fyfXQ4EtrHpUxBcdcF1ckrck5W41se
+ Y6NEnMgt4Ev2YFeB5Or12Ni1BqprFKJnnIKrPuEHv8z9G8W8axHMAjDbxglv/A2lF/sGGTwe9q7
+ RUjNb2sVFy/f2vWtHumuEOd+iubiRHZ9w7u7sBbSjt5zRppO4UpAUpjFnNhQu6RBXzB0ei9MgFn
+ 6xm+aT2v0hk0Y6gOTROqt8gcZ5jhncB/F7MsH6o59/NWwzry2muy9DdfqVtj6Ro16DI9ttrjz0g
+ 9DA==
+X-Received: by 2002:a05:690e:1285:b0:651:b37b:30ea with SMTP id
+ 956f58d0204a3-65c79998b41mr7921481d50.38.1778143782813; Thu, 07 May 2026
+ 01:49:42 -0700 (PDT)
 MIME-Version: 1.0
 References: <CAFEAcA93342r1oKDBDv=7LRoAqT4WpVEqRpb-ThM=OjJUZm=BQ@mail.gmail.com>
  <20260506152247.82336-1-munkhuu0825@gmail.com>
- <20260506152247.82336-2-munkhuu0825@gmail.com>
-In-Reply-To: <20260506152247.82336-2-munkhuu0825@gmail.com>
+ <20260506152247.82336-3-munkhuu0825@gmail.com>
+In-Reply-To: <20260506152247.82336-3-munkhuu0825@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 7 May 2026 09:49:12 +0100
-X-Gm-Features: AVHnY4KbEvhmni225eYuea27C5CxEpoT2vgO8Otih14f9_TB2Pyfn3iF7Xf4M2k
-Message-ID: <CAFEAcA-GN0EmDLu0Lz-axmYi-5ZgwgpRYm32gJ2pu913nBH9FA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] hw/usb/hcd-ohci: Assert isochronous TDs are never
- deferred
+Date: Thu, 7 May 2026 09:49:30 +0100
+X-Gm-Features: AVHnY4JCNLx1bdo--YUCzQWG4lULVjApA0P4_jadva91GTRILrIga_BsEyTaexk
+Message-ID: <CAFEAcA8oYips2EPYN2_Cv0pVZ7xrpRVccfwfnTAxkVOSdMaR7g@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] hw/usb/hcd-ohci: Clean up USBPacket before freeing
+ ISO TD packet
 To: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -120,29 +120,33 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Wed, 6 May 2026 at 16:23, Munkhbaatar Enkhbaatar
 <munkhuu0825@gmail.com> wrote:
 >
+> ohci_service_iso_td() allocates a USBPacket and frees it after synchronous
+> completion, but it does not call usb_packet_cleanup() first.
 >
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Call usb_packet_cleanup() before g_free() so resources owned by USBPacket
+> are released.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3463
+>
 > Signed-off-by: Munkhbaatar Enkhbaatar <munkhuu0825@gmail.com>
 > ---
->  hw/usb/hcd-ohci.c | 9 ++++-----
->  1 file changed, 4 insertions(+), 5 deletions(-)
+>  hw/usb/hcd-ohci.c | 1 +
+>  1 file changed, 1 insertion(+)
 >
 > diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-> index 6ed8046fc2..8f4de0066e 100644
+> index 8f4de0066e..40ebafb4dd 100644
 > --- a/hw/usb/hcd-ohci.c
 > +++ b/hw/usb/hcd-ohci.c
-> @@ -746,11 +746,10 @@ static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed *ed)
->      usb_packet_setup(pkt, pid, ep, 0, addr, false, int_req);
->      usb_packet_addbuf(pkt, buf, len);
->      usb_handle_packet(dev, pkt);
-> -    if (pkt->status == USB_RET_ASYNC) {
-> -        usb_device_flush_ep_queue(dev, ep);
-> -        g_free(pkt);
-> -        return 1;
-> -    }
-> +
-> +    /* The USB core guarantees to never defer ISO TDs. */
-> +    assert(pkt->status != USB_RET_ASYNC);
+> @@ -755,6 +755,7 @@ static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed *ed)
+>      } else {
+>          ret = pkt->status;
+>      }
+> +    usb_packet_cleanup(pkt);
+>      g_free(pkt);
+>
+>      trace_usb_ohci_iso_td_so(start_offset, end_offset, start_addr, end_addr,
+> --
+> 2.50.1 (Apple Git-155)
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
