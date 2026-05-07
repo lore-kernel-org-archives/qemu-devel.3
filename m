@@ -4,56 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8569CD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 17:22:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 367D6CD3442
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 17:23:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL2PP-0000su-LP; Thu, 07 May 2026 13:21:12 -0400
+	id 1wL2Rf-0002Oy-O5; Thu, 07 May 2026 13:23:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wL0Wq-0004AN-5X
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:20:44 -0400
-Received: from mail-244107.protonmail.ch ([109.224.244.107])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wL2Rb-0002OQ-CF
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 13:23:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <matthew@pq.io>) id 1wL0Wm-00046S-NX
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:20:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pq.io;
- s=protonmail3; t=1778167236; x=1778426436;
- bh=QoT6ZV0zp2yCk/oaO3p5EzNmYDCXteG6Q8NREGInOLI=;
- h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:From:To:
- Cc:Date:Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
- b=NteZ6GXvVcD2fAX01t/eyJ3rvh6JcDGTrHsfz+g9Gj+ys0Xfb+MtoE3Asw77xsIDG
- hnS3m97IHIw3HJxMVlIytbKQmMdaZW0g/LuSVDIumrvsAdsWiqo9spw8yaFxPP2qkI
- WJ1GAkudqktVC2JIA5HytSBCNdIuH86I0idyBV/qnq5dg3IvX4BEHEFzHZiWckU4YH
- ckv8tFO5eHNFaQ6oyPuPfJC35qZg2ZSUI7yNSuNzPTkHgmddszQQbKZH9siqgq+VOa
- /QJv8yqyB4aoia1RAqEPW3EkDu57n/mnnHQxY8byLzFay2oO4vHJBY0sc7zsw2pkYN
- x1yCsQO3izChg==
-X-Pm-Submission-Id: 4gBGCj2DxZz2Scpx
-From: Matthew Jackson <matthew@pq.io>
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
-	peter.maydell@linaro.org
-Subject: [PATCH v2 1/2] hw/misc/applesmc: fix GET_KEY_BY_INDEX to return real
- keys, accept WRITE/TYPE commands
-Date: Thu,  7 May 2026 08:20:29 -0700
-Message-ID: <20260507152030.48753-2-matthew@pq.io>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260507040153.14565-1-matthew@pq.io>
-References: <20260507040153.14565-1-matthew@pq.io>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1wL2RY-0002N7-N5
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 13:23:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778174602;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AlcHBxTK9YoW80lVhS9wc/md9QCLbs2pg1lkBvXyIGY=;
+ b=VbpADl7puq09UT7a8XLKBqgDY6GxJIw5n6iI5GseEtJD2CBn8iBCWX1rwxj2MoNt3BLThF
+ oVueTgkb9HXwKCPMgGoosUJv1GV8w/0Xnb+Ya4kxBjADYHMwAcTJLq6kUMSwLfiIpMf4Hr
+ Cwpx+BvabURTNIZY989UTPDbqdWKsro=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-394-5sG7-GnAN3iAFkpHxb8LbQ-1; Thu, 07 May 2026 13:23:20 -0400
+X-MC-Unique: 5sG7-GnAN3iAFkpHxb8LbQ-1
+X-Mimecast-MFC-AGG-ID: 5sG7-GnAN3iAFkpHxb8LbQ_1778174600
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-8aca172588cso25110906d6.0
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 10:23:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778174600; x=1778779400; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=AlcHBxTK9YoW80lVhS9wc/md9QCLbs2pg1lkBvXyIGY=;
+ b=Rpb2AOC3FZL62ZTyIePUBQjVB0+DFZgIZn0tjfuSSKUp+K5uk1f4PgY/r6XXL1jdun
+ GcugZmHAAObTTXO8M0z28pmEEWaTmez+ey9/GXg76S/m0iYcLc/BZnG9bZEX+iiVqxrG
+ mgmv+P0/U8xWamM/E6ovHIYc8VG9h8AxqaWhZ4l3N19sZWlYLkTDpfb+bpOOEBPn33Z8
+ pL/gSaBqgjT89+WIkETkupczpC8D8nB/g7Cev9qMxtRmtJSHExGknpKEHMJ9RihQ7+CI
+ SHpBUL6QIeT1Bo1Xq3Mo8JQRCXrDi8lo8SNjKkMPhcD+5pmOl5ko4GTtqsUQU8pwDq9u
+ 5ufQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778174600; x=1778779400;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=AlcHBxTK9YoW80lVhS9wc/md9QCLbs2pg1lkBvXyIGY=;
+ b=tPDkRCv6FRkgeYDCUBNRW8YZFx1Ep+zlyrrGEsvZJcfWiNI/4UXR9mzg9WWYVX4qV/
+ N59sWKfSbezvaG5S+MFQpaxNrQWvY0m9aBG78B4M0cWZXP/OujhqPuix8bL/15QYNdP+
+ pZy6510WRwcFJJ6fVgFDT1Nn25cs9qPJeLJ4bvFNMnu8r6/7Ezowzh3RHgKWoN9mBSoz
+ KctO2UVQef3bqRNQ9TaodOKCIIxOyU3qyodduxTiTPMfCqmr98KLWk2LTPUqcXRr36+p
+ UpwMV9ckE/ejwWppDJ7RrvVirrn5/PiKyoO5aRRPAOIv7sO8XA1LUJyWB/HgwX3SMOx5
+ IJvA==
+X-Gm-Message-State: AOJu0Yw6m41G9w42+9SrqNlmgkglnAd8gNQU94qAqrx+k97waGHsCMqC
+ Q18E+0+Zkj/KbQnLtr7bh6yR8QVGPVIdz4QY783oasM+Qs2IeaSJtKBVg8fcsitgs0xsZkqnwB9
+ s6ji+6rbLLBpOLt7o2OG17XUrRX39XXBlmQV+gLmonCNEV2xrTlN96UZT
+X-Gm-Gg: AeBDieutMMQOe3lsihM+jiBZbOaEvMnDLc/wInBDV34Oky4Cn+I8y7sZPoqGAJ6QXIQ
+ 68PxkulBxwmAqsFrU1PUdHorYHc141l2hGc+TsMMdIcRk//BzOLQkzkabwvOTsJ0AzaISLFIq7Y
+ OmwH24s5htb03xjM2bzw9yZlXRC0AgIw8KfIKBkphVFmnu8YGk3Sv/nzQKmCc7EzgLxuF0zbkt6
+ KMOCalWxhM0h85mwsvMmtjsyhLAj56xjwtMpLvMFxgmGDd5EZBb5efDdnHrgkryzSyDCzUZXk90
+ wgiAT6XJq739A+atsp61nryWeAd6II9EMoEp0aML7Ce6I4dNsD8xcuISpzVGICiOXHietzyhM4y
+ wp0s+W2uRnDgOlzLF1PoWJ9cyVRK7fVcc3LoL3rLq66Ecrzo=
+X-Received: by 2002:a05:6214:5783:b0:8ac:b3d4:d11 with SMTP id
+ 6a1803df08f44-8bc4323ac68mr129797606d6.14.1778174599672; 
+ Thu, 07 May 2026 10:23:19 -0700 (PDT)
+X-Received: by 2002:a05:6214:5783:b0:8ac:b3d4:d11 with SMTP id
+ 6a1803df08f44-8bc4323ac68mr129796736d6.14.1778174598951; 
+ Thu, 07 May 2026 10:23:18 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-8bdf9081f49sm20268586d6.41.2026.05.07.10.23.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 May 2026 10:23:18 -0700 (PDT)
+Date: Thu, 7 May 2026 13:23:17 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Prasad Pandit <ppandit@redhat.com>,
+ Ben Chaney <bchaney@akamai.com>, Juraj Marcin <jmarcin@redhat.com>,
+ Mark Kanda <mark.kanda@oracle.com>, Pranav Tyagi <prtyagi@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH] migration: Fix crash on second migration when cancel early
+Message-ID: <afzKhaaebtcYrEhe@x1.local>
+References: <20260421175820.302795-1-peterx@redhat.com>
+ <87pl38xnw7.fsf@suse.de>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=109.224.244.107; envelope-from=matthew@pq.io;
- helo=mail-244107.protonmail.ch
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+In-Reply-To: <87pl38xnw7.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 07 May 2026 13:21:05 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,293 +120,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The applesmc device implements just enough of the Apple SMC PMIO
-protocol to satisfy the OSK boot check on older macOS versions.
-On modern macOS guests (x86 10.14+, all 15.x), the AppleSMC kext
-enumerates the SMC key space at boot via APPLESMC_GET_KEY_BY_INDEX_CMD
-(0x12). The current device only acknowledges APPLESMC_READ_CMD
-(0x10) at the command port; every other command falls through to
-the default arm of the switch and sets ST_1E_BAD_CMD.
+On Wed, May 06, 2026 at 05:51:20PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > Marc-André reported an issue on QEMU crash when retrying a cancelled
+> > migration during early setup phase, see "Link:" for more information, and
+> > also easy way to reproduce.
+> >
+> > This patch is a replacement of the prior fix proposed by not only switching
+> > to migration_cleanup(), but also fixing it from CPR side, so that we track
+> > hup_source properly to know if src QEMU is waiting or the HUP signal.
+> >
+> > To put it simple: this chunk of special casing in migration_cancel() should
+> > not affect normal migration, but only cpr-transfer migration to cover the
+> > small window when the src QEMU is waiting for a HUP signal on cpr
+> > channel (so that src QEMU can continue the migration on the main channel).
+> >
+> > To achieve that, we'll also need to remember to detach the hup_source
+> > whenenver invoked: after that point, we should always be able to cleanup
+> > the migration.
+> >
+> > It's not a generic operation to explicitly detach a gsource from its
+> > context while in its dispatch() function.  But it should be safe, because
+> > gsource disptch() will only happen with a boosted refcount for the
+> > dispatcher so that the gsource will not be freed until the callback
+> > completes. It's also safe to return G_SOURCE_REMOVE after the gsource is
+> > detached, as glib will simply ignore the G_SOURCE_REMOVE.
+> >
+> > One can refer to latest 2.86.5 glib code in g_main_dispatch() for that:
+> >
+> > https://github.com/GNOME/glib/blob/2.86.5/glib/gmain.c#L3592
+> >
+> > When at this, add a bunch of assertions to make sure nothing surprises us.
+> >
+> > After this patch applied, the 2nd migration will not crash QEMU, instead
+> > it'll be in CANCELLING until the socket connection times out (it will take
+> > ~2min on my Fedora default kernel).  During this process no 2nd migration
+> > will be allowed, and after it timed out migration can be restarted.
+> >
+> > It's because so far we don't have control over socket_connect_outgoing(),
+> > or anything yet managed by a task executed in qio_task_run_in_thread().
+> > Speeding up the cancellation to be left for future.
+> >
+> > I also tested cpr-transfer by only providing cpr channel not the main
+> > channel (with -incoming defer), kickoff migration on source, then cancel it
+> > on source directly without providing the main channel.  It keeps working.
+> >
+> > I wanted to add an unit test for that but it'll need to refactor current
+> > cpr-transfer tests first; let's leave it for later.
+> >
+> > Link: https://lore.kernel.org/r/20260417184742.293061-1-marcandre.lureau@redhat.com
+> > Reported-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  include/migration/cpr.h  |  1 +
+> >  migration/migration.h    |  5 +++++
+> >  migration/cpr-transfer.c | 10 ++++++++++
+> >  migration/migration.c    | 31 +++++++++++++++++++++++--------
+> >  4 files changed, 39 insertions(+), 8 deletions(-)
+> >
+> > diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+> > index 5850fd1788..ebf09a2f0a 100644
+> > --- a/include/migration/cpr.h
+> > +++ b/include/migration/cpr.h
+> > @@ -57,6 +57,7 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
+> >  void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
+> >                                  void *opaque);
+> >  void cpr_transfer_source_destroy(MigrationState *s);
+> > +bool cpr_transfer_source_active(MigrationState *s);
+> >  
+> >  void cpr_exec_init(void);
+> >  QEMUFile *cpr_exec_output(Error **errp);
+> > diff --git a/migration/migration.h b/migration/migration.h
+> > index b6888daced..2bc2787480 100644
+> > --- a/migration/migration.h
+> > +++ b/migration/migration.h
+> > @@ -514,6 +514,11 @@ struct MigrationState {
+> >      bool postcopy_package_loaded;
+> >      QemuEvent postcopy_package_loaded_event;
+> >  
+> > +    /*
+> > +     * When set, it means cpr-transfer is waiting for the HUP signal from
+> > +     * destination to continue the 2nd step of migration via the main
+> > +     * channel.
+> > +     */
+> >      GSource *hup_source;
+> >  
+> >      /*
+> > diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
+> > index 61d5c9dce2..9defe7bad7 100644
+> > --- a/migration/cpr-transfer.c
+> > +++ b/migration/cpr-transfer.c
+> > @@ -6,6 +6,7 @@
+> >   */
+> >  
+> >  #include "qemu/osdep.h"
+> > +#include "qemu/main-loop.h"
+> >  #include "qapi/clone-visitor.h"
+> >  #include "qapi/error.h"
+> >  #include "qapi/qapi-visit-migration.h"
+> > @@ -79,6 +80,7 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
+> >  void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
+> >                                  void *opaque)
+> >  {
+> > +    assert(bql_locked());
+> >      s->hup_source = qio_channel_create_watch(cpr_state_ioc(), G_IO_HUP);
+> >      g_source_set_callback(s->hup_source,
+> >                            (GSourceFunc)func,
+> > @@ -89,9 +91,17 @@ void cpr_transfer_add_hup_watch(MigrationState *s, QIOChannelFunc func,
+> >  
+> >  void cpr_transfer_source_destroy(MigrationState *s)
+> >  {
+> > +    assert(bql_locked());
+> >      if (s->hup_source) {
+> >          g_source_destroy(s->hup_source);
+> >          g_source_unref(s->hup_source);
+> >          s->hup_source = NULL;
+> >      }
+> >  }
+> > +
+> > +bool cpr_transfer_source_active(MigrationState *s)
+> > +{
+> > +    /* Whenever the HUP gsource is available, it's active. */
+> > +    assert(bql_locked());
+> > +    return s->hup_source;
+> > +}
+> > diff --git a/migration/migration.c b/migration/migration.c
+> > index 5c9aaa6e58..58c1e56766 100644
+> > --- a/migration/migration.c
+> > +++ b/migration/migration.c
+> > @@ -1469,14 +1469,19 @@ void migration_cancel(void)
+> >      }
+> >  
+> >      /*
+> > -     * If migration_connect_outgoing has not been called, then there
+> > -     * is no path that will complete the cancellation. Do it now.
+> > -     */
+> > -    if (setup && !s->to_dst_file) {
+> > -        migrate_set_state(&s->state, MIGRATION_STATUS_CANCELLING,
+> > -                          MIGRATION_STATUS_CANCELLED);
+> > -        cpr_state_close();
+> > -        cpr_transfer_source_destroy(s);
+> > +     * This is cpr-transfer specific processing.
+> > +     *
+> > +     * If this is true, it means cpr-transfer migration is waiting for the
+> > +     * destination to send HUP event on CPR channel to continue the next
+> > +     * phase.  If so, do the cleanup proactively to avoid get stuck in
+> > +     * CANCELLING state.
+> > +     */
+> > +    if (cpr_transfer_source_active(s)) {
+> > +        assert(migrate_mode() == MIG_MODE_CPR_TRANSFER);
+> > +        assert(setup && !s->to_dst_file);
+> > +        migration_cleanup(s);
+> > +        /* Now all things should have been released */
+> > +        assert(!cpr_transfer_source_active(s));
+> >      }
+> >  }
+> >  
+> > @@ -2009,12 +2014,22 @@ static gboolean migration_connect_outgoing_cb(QIOChannel *channel,
+> >      MigrationState *s = migrate_get_current();
+> >      Error *local_err = NULL;
+> >  
+> > +    /*
+> > +     * Detach and release the GSource right after use.  We rely on this to
+> > +     * detect this small cpr-transfer window of "waiting for HUP event".
+> > +     */
+> > +    cpr_transfer_source_destroy(s);
+> > +
+> >      migration_connect_outgoing(s, opaque, &local_err);
+> >  
+> >      if (local_err) {
+> >          migration_connect_error_propagate(s, local_err);
+> >      }
+> >  
+> > +    /*
+> > +     * This is redundant as we do cpr_transfer_source_destroy() at the
+> > +     * entry, but it's benign; glib will just skip the detach.
+> > +     */
+> >      return G_SOURCE_REMOVE;
+> >  }
+> 
+> Sorry for taking too long on this, it fell off my queue. Looks good to
+> me. I reproduced the original issue and tested this patch under load
+> with hacked tests:
+> 
+> /mode/transfer/defer + early cancel
+> /cancel/src/after/setup + 2nd migrate
+> 
+> Tested-by: Fabiano Rosas <farosas@suse.de>
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
-The macOS driver interprets the resulting 0x82 reply as
-"spurious data" and enters a retry loop that floods the kernel
-log with kSMCSpuriousData (0x81) / kSMCKeyNotFound errors at
-roughly 1800 events per second, pegging kernel_task at ~70%
-CPU and WindowServer at ~509% CPU. This reproduces reliably
-on any recent macOS 15 guest booted with -device
-isa-applesmc,osk=<valid-OSK>.
+Thanks for double checking those!  Then let me pick this patch up.
 
-This patch:
+> 
+> BTW, I found it weird that we cannot start a second migration on the
+> incoming after the first one having never properly started. Trying to
+> actually do it without shutting down both QEMUs was fun. A bunch of
+> asserts on the incoming side due to yank. After hacking a little and
+> using migrate_recover to start the second migration on the incoming, I
+> managed to make it work, but it hanged mid-transfer for some
+> reason. Probably some iochannel reset needed.
 
-  * Accepts APPLESMC_WRITE_CMD, APPLESMC_GET_KEY_BY_INDEX_CMD,
-    and APPLESMC_GET_KEY_TYPE_CMD at the command port (in
-    addition to the existing READ_CMD path).
+Yeah, I am guessing we need to first fill the gaps on destination side to
+properly manage those async tasks on port listens, etc.. and those can be
+the owners of dangling iochannels.
 
-  * Implements GET_KEY_BY_INDEX by walking s->data_def and
-    returning the 4-byte ASCII key name at the requested index;
-    returns APPLESMC_ST_1E_BAD_INDEX (0xb8) once the index is
-    past the end of the list so the guest stops iterating.
-
-  * Implements GET_KEY_TYPE by looking up the key in s->data_def
-    and returning a 6-byte response (type[4] + size[1] + attr[1])
-    matching VirtualSMC's kern_pmio.cpp behaviour.
-
-  * Implements WRITE by accepting the key name, length, and
-    payload and logging at LOG_UNIMP. macOS writes SMC keys
-    during normal power management; silent acceptance avoids
-    BAD_CMD on every write.
-
-  * Replaces the unknown-key NOEXIST (0x84) reply on READ with
-    a zeroed payload of the requested length, logged at
-    LOG_UNIMP. Early-boot probes hit hundreds of undocumented
-    keys per second; NOEXIST triggers retry storms while a
-    zeroed payload satisfies the probe semantics without
-    asserting a particular value.
-
-  * Routes the BAD_CMD path through qemu_log_mask
-    (LOG_GUEST_ERROR) instead of the smc_debug printf.
-
-  * Fixes a typo in the MSSD key initialiser ("\0x3" -> "\x03").
-    The original literal was three bytes ('\\0', 'x', '3')
-    truncated to one ('\\0') by the size argument, so MSSD has
-    been silently returning 0 since introduction; the corrected
-    value matches what a real iMac20,1 SMC reports.
-
-Reported-by: macOS guests booted with -device isa-applesmc since 10.14.
-Signed-off-by: Matthew Jackson <matthew@pq.io>
----
- hw/misc/applesmc.c | 177 +++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 170 insertions(+), 7 deletions(-)
-
-diff --git a/hw/misc/applesmc.c b/hw/misc/applesmc.c
-index fd96f5f..2b5ef3c 100644
---- a/hw/misc/applesmc.c
-+++ b/hw/misc/applesmc.c
-@@ -35,6 +35,7 @@
- #include "hw/core/qdev-properties.h"
- #include "ui/console.h"
- #include "qemu/error-report.h"
-+#include "qemu/log.h"
- #include "qemu/module.h"
- #include "qemu/timer.h"
- #include "qom/object.h"
-@@ -126,7 +127,14 @@ static void applesmc_io_cmd_write(void *opaque, hwaddr addr, uint64_t val,
-     smc_debug("CMD received: 0x%02x\n", (uint8_t)val);
-     switch (val) {
-     case APPLESMC_READ_CMD:
--        /* did last command run through OK? */
-+    case APPLESMC_WRITE_CMD:
-+    case APPLESMC_GET_KEY_BY_INDEX_CMD:
-+    case APPLESMC_GET_KEY_TYPE_CMD:
-+        /*
-+         * Accept all standard SMC commands. Pre-existing code only handled
-+         * READ_CMD; macOS boots hang if WRITE/TYPE/GET_KEY_BY_INDEX commands
-+         * return BAD_CMD during early AppleSMC driver init.
-+         */
-         if (status == APPLESMC_ST_CMD_DONE || status == APPLESMC_ST_NEW_CMD) {
-             s->cmd = val;
-             s->status = APPLESMC_ST_NEW_CMD | APPLESMC_ST_ACK;
-@@ -137,7 +145,8 @@ static void applesmc_io_cmd_write(void *opaque, hwaddr addr, uint64_t val,
-         }
-         break;
-     default:
--        smc_debug("UNEXPECTED CMD 0x%02x\n", (uint8_t)val);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "applesmc: unexpected CMD 0x%02x\n", (uint8_t)val);
-         s->status = APPLESMC_ST_NEW_CMD;
-         s->status_1e = APPLESMC_ST_1E_BAD_CMD;
-     }
-@@ -179,17 +188,170 @@ static void applesmc_io_data_write(void *opaque, hwaddr addr, uint64_t val,
-                 s->data_len = d->len;
-                 s->data_pos = 0;
-                 s->status = APPLESMC_ST_ACK | APPLESMC_ST_DATA_READY;
--                s->status_1e = APPLESMC_ST_CMD_DONE;  /* clear on valid key */
-+                s->status_1e = APPLESMC_ST_CMD_DONE;
-             } else {
--                smc_debug("READ_CMD: key '%c%c%c%c' not found!\n",
--                          s->key[0], s->key[1], s->key[2], s->key[3]);
-+                /*
-+                 * Return zeros for unknown keys instead of NOEXIST. Early
-+                 * macOS boot probes many undocumented keys; responding
-+                 * NOEXIST triggers retry storms. A zeroed payload satisfies
-+                 * the probe without asserting a particular value.
-+                 */
-+                qemu_log_mask(LOG_UNIMP,
-+                              "applesmc: READ unknown key '%c%c%c%c' len=%d\n",
-+                              s->key[0], s->key[1], s->key[2], s->key[3],
-+                              (uint8_t)val);
-+                memset(s->data, 0, APPLESMC_MAX_DATA_LENGTH);
-+                s->data_len = (uint8_t)val;
-+                s->data_pos = 0;
-+                s->status = APPLESMC_ST_ACK | APPLESMC_ST_DATA_READY;
-+                s->status_1e = APPLESMC_ST_CMD_DONE;
-+            }
-+        }
-+        s->read_pos++;
-+        break;
-+    case APPLESMC_WRITE_CMD:
-+        /*
-+         * Accept writes silently. macOS writes SMC keys during power
-+         * management, fan control, etc. Log at LOG_UNIMP for visibility
-+         * without treating the write as an error.
-+         */
-+        if ((s->status & 0x0f) == APPLESMC_ST_CMD_DONE) {
-+            break;
-+        }
-+        if (s->read_pos < 4) {
-+            s->key[s->read_pos] = val;
-+            s->status = APPLESMC_ST_ACK;
-+        } else if (s->read_pos == 4) {
-+            s->data_len = (uint8_t)val;
-+            s->data_pos = 0;
-+            s->status = APPLESMC_ST_ACK;
-+        } else {
-+            if (s->data_pos < s->data_len) {
-+                s->data[s->data_pos] = (uint8_t)val;
-+                s->data_pos++;
-+                if (s->data_pos == s->data_len) {
-+                    qemu_log_mask(LOG_UNIMP,
-+                                  "applesmc: WRITE key '%c%c%c%c' len=%d\n",
-+                                  s->key[0], s->key[1], s->key[2], s->key[3],
-+                                  s->data_len);
-+                    s->status = APPLESMC_ST_CMD_DONE;
-+                    s->status_1e = APPLESMC_ST_CMD_DONE;
-+                } else {
-+                    s->status = APPLESMC_ST_ACK;
-+                }
-+            }
-+        }
-+        s->read_pos++;
-+        break;
-+    case APPLESMC_GET_KEY_TYPE_CMD:
-+        /*
-+         * Return key type info. Protocol (matches VirtualSMC):
-+         * - Receive 4 bytes of key name.
-+         * - After the 4th byte, immediately set DATA_READY with response.
-+         * - Response is 6 bytes: type[4] + size[1] + attr[1].
-+         * Unlike READ_CMD there is no length byte between key name and
-+         * response.
-+         */
-+        if ((s->status & 0x0f) == APPLESMC_ST_CMD_DONE) {
-+            break;
-+        }
-+        if (s->read_pos < 3) {
-+            s->key[s->read_pos] = val;
-+            s->status = APPLESMC_ST_ACK;
-+        } else if (s->read_pos == 3) {
-+            /* 4th and final key byte. Unlike READ_CMD which has a 5th byte
-+             * for data length, GET_KEY_TYPE responds immediately after the
-+             * 4-byte key name (matching VirtualSMC kern_pmio.cpp behavior). */
-+            s->key[3] = val;
-+            d = applesmc_find_key(s);
-+            if (d != NULL) {
-+                switch (d->len) {
-+                case 1:
-+                    s->data[0] = 'u'; s->data[1] = 'i';
-+                    s->data[2] = '8'; s->data[3] = ' ';
-+                    break;
-+                case 2:
-+                    s->data[0] = 'u'; s->data[1] = 'i';
-+                    s->data[2] = '1'; s->data[3] = '6';
-+                    break;
-+                case 4:
-+                    s->data[0] = 'u'; s->data[1] = 'i';
-+                    s->data[2] = '3'; s->data[3] = '2';
-+                    break;
-+                default:
-+                    s->data[0] = 'c'; s->data[1] = 'h';
-+                    s->data[2] = '8'; s->data[3] = '*';
-+                    break;
-+                }
-+                s->data[4] = d->len;
-+                s->data[5] = 0xD0;
-+            } else {
-+                qemu_log_mask(LOG_UNIMP,
-+                              "applesmc: GET_KEY_TYPE unknown '%c%c%c%c'\n",
-+                              s->key[0], s->key[1], s->key[2], s->key[3]);
-+                s->data[0] = 'u'; s->data[1] = 'i';
-+                s->data[2] = '8'; s->data[3] = ' ';
-+                s->data[4] = 1;
-+                s->data[5] = 0xD0;
-+            }
-+            s->data_len = 6;
-+            s->data_pos = 0;
-+            s->status = APPLESMC_ST_ACK | APPLESMC_ST_DATA_READY;
-+            s->status_1e = APPLESMC_ST_CMD_DONE;
-+        }
-+        s->read_pos++;
-+        break;
-+    case APPLESMC_GET_KEY_BY_INDEX_CMD:
-+        /*
-+         * Return key name by index. macOS sends a 4-byte big-endian index
-+         * and expects the 4-byte ASCII key name at that position. The
-+         * previous implementation returned 4 zero bytes, which macOS
-+         * treated as kSMCSpuriousData (0x81) and retried indefinitely,
-+         * flooding the kernel log at ~1800 errors/sec. Walk the keys list
-+         * to return the actual key name, or APPLESMC_ST_1E_BAD_INDEX
-+         * (0xb8) once the index is past the end of the list so the guest
-+         * stops iterating.
-+         */
-+        if ((s->status & 0x0f) == APPLESMC_ST_CMD_DONE) {
-+            break;
-+        }
-+        if (s->read_pos < 3) {
-+            s->key[s->read_pos] = val;
-+            s->status = APPLESMC_ST_ACK;
-+        } else if (s->read_pos == 3) {
-+            s->key[3] = val;
-+            uint32_t idx = ((uint8_t)s->key[0] << 24)
-+                         | ((uint8_t)s->key[1] << 16)
-+                         | ((uint8_t)s->key[2] << 8)
-+                         |  (uint8_t)s->key[3];
-+            struct AppleSMCData *def;
-+            uint32_t i = 0;
-+            bool found = false;
-+            QLIST_FOREACH(def, &s->data_def, node) {
-+                if (i == idx) {
-+                    memcpy(s->data, def->key, 4);
-+                    s->data_len = 4;
-+                    s->data_pos = 0;
-+                    found = true;
-+                    break;
-+                }
-+                i++;
-+            }
-+            if (!found) {
-+                s->data_len = 0;
-+                s->status_1e = APPLESMC_ST_1E_BAD_INDEX;
-                 s->status = APPLESMC_ST_CMD_DONE;
--                s->status_1e = APPLESMC_ST_1E_NOEXIST;
-+                s->read_pos++;
-+                break;
-             }
-+            s->status = APPLESMC_ST_ACK | APPLESMC_ST_DATA_READY;
-+            s->status_1e = APPLESMC_ST_CMD_DONE;
-         }
-         s->read_pos++;
-         break;
-     default:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "applesmc: unhandled data for cmd 0x%02x\n", s->cmd);
-         s->status = APPLESMC_ST_CMD_DONE;
-         s->status_1e = APPLESMC_ST_1E_STILL_BAD_CMD;
-     }
-@@ -330,12 +492,13 @@ static void applesmc_isa_realize(DeviceState *dev, Error **errp)
-     }
- 
-     QLIST_INIT(&s->data_def);
-+
-     applesmc_add_key(s, "REV ", 6, "\x01\x13\x0f\x00\x00\x03");
-     applesmc_add_key(s, "OSK0", 32, s->osk);
-     applesmc_add_key(s, "OSK1", 32, s->osk + 32);
-     applesmc_add_key(s, "NATJ", 1, "\0");
-     applesmc_add_key(s, "MSSP", 1, "\0");
--    applesmc_add_key(s, "MSSD", 1, "\0x3");
-+    applesmc_add_key(s, "MSSD", 1, "\x03");
- }
- 
- static void applesmc_unrealize(DeviceState *dev)
 -- 
-2.50.1 (Apple Git-155)
+Peter Xu
 
 
