@@ -4,141 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6139CD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 11:51:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F10ECD3427
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 11:58:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKxGC-0005HR-GG; Thu, 07 May 2026 07:51:21 -0400
+	id 1wKxMm-0006Fc-9t; Thu, 07 May 2026 07:58:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wKxG4-0005H4-Gp; Thu, 07 May 2026 07:51:12 -0400
-Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wKxG2-0006cf-0v; Thu, 07 May 2026 07:51:11 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OkVXJSoJx5J9vNyGE9yodW1AsC2RP5FAfw6RF7ih9bns8F6uWHOip6R5eFP0cKZpT/qLoNN+maslnU/R+ASMpUUcsrkxuep44GoiIMDJy6rufuVrISARMtCCHzDH4cL09oaUrY9OXCYrmPVtB0dPPBGeKRqwDJuce8gN2Yn7SvlmKtK3cufUexWrONEN0jr6ArcFZkaVTRc69UpYEe6KLVBrq7Pws3O1AZiMsehoObtcf0Xi79mlPstsXhSeKt0rzTRs5TX0vLYIbsjdxb5lEIIQQtM+aCvirxP6OK5kEgBzkA9RW3PH2Cd4+iNp6YYjT+0ZRe7DujKDGREAycSKvg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9VEkYncv8oJub53rACAQzqz1nS+newePmWhpXEY2RMw=;
- b=aUsm2xZb3Mz6KJcKAeFykMx9/BoyHL52+LRKFWAlvWhiQwHroi4RU3otZPwtQexp3Jk5zLWC/rjvDyjXuaKxo8/imby7EGUuXSf++JmkeR4dJgTdQlaWjHuKUWllokfaIm/Ayzj7HviDseyIDOYshv0tms1wGte8v4aN2oLDN19taKZFqRgbrNAFQAHOCOWMlwjegn1TCmlYWncuPMB5C/W1fND7qqUuIdLtZAkvwgOdud2G7sCxyMnW9hshPTAUr+2U0adIui3bkxsifvgeEKtU63k3dEVjbmuTqDT2x0EJM8Soejxv2dOhOsdplvFDl9+uwNCy3sS50dt5gTacMA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9VEkYncv8oJub53rACAQzqz1nS+newePmWhpXEY2RMw=;
- b=QPi6aNdgl7xX3e/KAUNdUhscQyJWrOnumZAazD/st3neEb21HkyS8wub03Lh7pJpnJ34FAOkvAiRwVxzbxUoyDMRyrVqiFZM3q8Ji/MGmp1O3AXxLVbFk8TKB2mGi1NMqPtwcN1fljVasA1L2r1SINPFZJBnSOQw+LPX8zGR2w1xtSAGRN18DSKmyyK5WjnNlgyQ1byLBs7Yc9PDXFbt5unCt8uh63/cXzS7qgmP+5bxxzF5aD+9e9tMPPBN7+YhlBegjNjH3jVGPD/Fo6ovADENQgCBXU9HMT2EjGda/JEixfGiIv+QpGkawzaupxo+uGYXswtdVlNHpUvIEyS+DQ==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by DS5PPF2FA070BDF.namprd12.prod.outlook.com (2603:10b6:f:fc00::649)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9846.26; Thu, 7 May
- 2026 11:50:57 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%6]) with mapi id 15.20.9891.017; Thu, 7 May 2026
- 11:50:57 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
- <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev"
- <kvmarm@lists.linux.dev>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "cohuck@redhat.com" <cohuck@redhat.com>,
- "sebott@redhat.com" <sebott@redhat.com>, "philmd@linaro.org"
- <philmd@linaro.org>
-CC: "maz@kernel.org" <maz@kernel.org>, "oliver.upton@linux.dev"
- <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>, "berrange@redhat.com"
- <berrange@redhat.com>, "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-Subject: RE: [PATCH v4 10/17] arm/kvm: Allow reading all the writable ID
- registers
-Thread-Topic: [PATCH v4 10/17] arm/kvm: Allow reading all the writable ID
- registers
-Thread-Index: AQHc2s+h6qbOSNdMDEa7G4XmgseR1bYCeWHg
-Date: Thu, 7 May 2026 11:50:57 +0000
-Message-ID: <CH3PR12MB7548063DB7204E6D2FEC1167AB3C2@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260503073541.790215-1-eric.auger@redhat.com>
- <20260503073541.790215-11-eric.auger@redhat.com>
-In-Reply-To: <20260503073541.790215-11-eric.auger@redhat.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|DS5PPF2FA070BDF:EE_
-x-ms-office365-filtering-correlation-id: 789f7a49-916b-481d-589e-08deac2ee6b3
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|7416014|1800799024|376014|366016|921020|56012099003|22082099003|18002099003|3023799003|38070700021;
-x-microsoft-antispam-message-info: 2skm3n5pppkoLSbL8Hvt611noi5FSB+lV0kcttdNso5XK6tHgL1uuvxeyEN7cVoa9y85loCfALEt4lg6d8IZx9l/95pPwp1AwRxiGi2hf5I0PNuybaa9cQ2U5TIkJCUumgClzqp2NhpAA9R1Ou+wqSMaLxfm2HalDXhdFRChZqdFbPtB+UxDuKJqT+ZLVwEXrJ6v5zlKjrBKCiRRWWs7w9BSLY3vBunzZ6YKc1zq50vvlGcRenVYIsUAb58RfzSRvorf9yMu+TuoQG+el6ToAJj85aJ3+HSly20LRcCf4Tc3kW7pL2lVJr9r6M+RDkf//sD5JknTDWbOs5iTNou34WC+8ZpZPY0CE7cSB9wwnIbxSG/gruh9TU4tXBPUZvnM2L6bollxjFvloOzsPKZT0o60XXX/Gh5cVBIetL9psZmMTX1JNvzVOBPgRZcEXx2IXDZ38+XO0mR6fytMyOkvzfAzwRjhDeyUfD/EQj8WoyQGzfSVIhI30JHvQ2gMKyDUWx8Yvv9X6IstYj0bMULzITA8I9sWTg5n/DC2LPwTCYhq5qGbB2M1kNE5r2dZa9k/PqO25K3139R9r0uNkLFyRNW+z3InBcmbdY5jV9EYVw6pdDHUWU710nCAESwagQB+q4DjyGRnVL9hkQ6VcqAQskLpexO0FTcJLcNfmh3jj86/l6iNbograqgY4S0AaJg2uesF6mjpxhtP2MT4FooyKMcNPM9TkDlEsNuzxmxnwp2KHnUeR1wvfiNh8zvNeIGCQy3kZXS6T4+wXYHk9a98iw==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(1800799024)(376014)(366016)(921020)(56012099003)(22082099003)(18002099003)(3023799003)(38070700021);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?GgzsmrfxN0BmBA2ZP5/ii6xoe2EvatWIH8SeH7/ZCyoP3z3HaqIt5j8wJujt?=
- =?us-ascii?Q?T4IKWYHL8a+DtXV2w2k6FOaisLzAlFUEJVytjWD/GuZ3/sPFSeG7xZTjcxbg?=
- =?us-ascii?Q?99g5gh0zxqBljuqZRPfmiAayj9oSw/RrhdoBCPY8GFXBTZ8zyiel+fcPnkz5?=
- =?us-ascii?Q?5LRW4BKU2uCuaN0l/V58l0CcwsoLnQjBpnax0YEVKfHD5q1bEgR3Yxz9XTdn?=
- =?us-ascii?Q?P3vGsNh8gcaDEhVcV0PL6fqgdHt2ACRqJp78vEREqaiTGEA3pnXfYQ4U9o5z?=
- =?us-ascii?Q?YKqVzD9ISr8Pq1XJfPBV9/iUnhi4FhvzyMEeTvEBHqsYspQZYmMEdsflAoRR?=
- =?us-ascii?Q?BYIABX3X5ER/vTD/LE+1NYy44TdBMd8xrAZzePxO/KFklEeLAjwXDRhJQ/nf?=
- =?us-ascii?Q?8AcoZwK/6h/0HQrYjP0V+ds1WpLE8EfR9Of65SP9WP1Ta1LLtdQjyn6IrzSS?=
- =?us-ascii?Q?Y5z8H7HAKvCmoo7OQnbvmC1w6ckzuWU6MZQaiIkDcOZe3RBRQlC8ctx4cID8?=
- =?us-ascii?Q?Ifn7fLpYTbpRdswxMaUtLMQxoUrMHjNiIZ9sCpv0LB9hCb/e9VaspczbHMY6?=
- =?us-ascii?Q?EDZcnfAMFACCyiEh3JOamAAdAx8YlG7KrDE2UlAEuzn+FHJmSuV74MmIL6/C?=
- =?us-ascii?Q?vQimMWyJUIMsMxUhISOGi2lVC+gyxxlAdmoIH3evYNSd/xsjuVVWZgjoWnf/?=
- =?us-ascii?Q?KVHMXk0JZ1jhvDu7pOC6XdCoNAdEXevZKA1IvIcLkWVk1E5LhYlya5Pw5zDO?=
- =?us-ascii?Q?oFe/4X7MQKEGrTHqKBSlrmjIAmYR6acbxu+gh2Lj0aDtIvGCMTKmcXy7DHu/?=
- =?us-ascii?Q?lUcMDydA/T9LzulEEORNOjpUMkXHq1cHtAHrsHEEnk4HLBWgrpw5tTrYg99t?=
- =?us-ascii?Q?Op7+Iqa/HooUtIW9SeimG7ysU9dHhGSPB8ujdrVjqXQiLc6DjZ3vqWXT/efQ?=
- =?us-ascii?Q?fesD3fN0JKSqVDCZXoyB8iQtelNqqtt11MxRzLwWnfzVUlUPFZazT+f0mbFH?=
- =?us-ascii?Q?+1B95GpP580n9nOm6UtL/5pN7PHSGwdIIrRX3tnC5MRUoCuWRyKdZRnxu51Z?=
- =?us-ascii?Q?bSFp0MNxA4p6D0keNdyxQb2qlanQXhStK7EqWhcqXC3nOdGlEjlUm5grjD6v?=
- =?us-ascii?Q?CGCI7e/qEV67pcMlQPBPjGBLeiSrwwaSaEa9GgsH1nVbdhyfxSgGnSHBhkng?=
- =?us-ascii?Q?QeSnqhkc+NxkUdLUWops8JjwCgKHihjSwX9JrfQ6DAzzTjSO+C5y8+aoReh4?=
- =?us-ascii?Q?uO0dM4CsaqLRYggqp17wwv90iyk+GrlPzjv4S8hsK5PHfYK43mJJGcTrYd1H?=
- =?us-ascii?Q?OYU3yH5OaJT/c6thPtPcFW/ZzQVG3Si6szOL2UFHic5LkuvczRqnHaNPU04+?=
- =?us-ascii?Q?+YQx36gRW+OFzsTEvmuMezsp8TDfCmrC+0h+x6shkiAS2x3qxLhYBzgqO+d5?=
- =?us-ascii?Q?xf25lNct++2iLK9X4mqfZJxwVrk8PGBT2yDi/V4UfDOnay1/fxJkqEMXGZvQ?=
- =?us-ascii?Q?Ll3dm90scMmFUjSMtCr878t9/2moiMkGJIc7qQoRUGDSwGIZaQ7s2+rUBnAe?=
- =?us-ascii?Q?OFcN9VgTeIzKzUmvw2ArbBPtfpRFfXcTGj8TDUmneWPa2FWPvgeCddh0y4iQ?=
- =?us-ascii?Q?sVWBTH62Fpqj2EyhlR7MTTDN49bqU9Mc1TVOuNDX8W/7Yj8q4UXJ7ecIWIIU?=
- =?us-ascii?Q?vsywwfW4uVgXyTOlUZcD0q0WJmeHQY8sAjMZi1+HES6kjIDixyixcY4vFIyZ?=
- =?us-ascii?Q?psKiZ8Z3UA=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wKxMQ-0006Eu-5T
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 07:57:49 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1wKxMO-000059-1K
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 07:57:45 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4891c00e7aeso6642615e9.2
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 04:57:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778155059; x=1778759859; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=G+sYMrxHIgI0XOwonv+5WFlvfPITzxng7xWOjoLsXsw=;
+ b=a/w8VeB97v7u16OT7GoRX47SisECLLVMWMhbb8xUdKXqKoYrr5d0Kd4Q9R9dq1xGpY
+ fToL60TCsR+oBRZlLMwxiiLGnnnNF7tK/nnrLQbBC9tmtoPNkzJb9FgfWJwkOvd3NUD6
+ cVoZvix7QErs6KgtjQr5gVQUSW1lDMMVLR7ihmJKR9gjScCVYzZhdJmTDC1k/IkcT5Y7
+ N1AR2mhaHllmNpfsdi0sk/O7xfWuXP24SLhZHQ6E3bDaJ9emMYJAO80IBdqJJn+f6jsd
+ smJmLAkFyUzIXSM2bskHJZtDIagtl6na2dfUDTv0VPJPSy7t44/+KOzXvlEwjpVoZt+2
+ be9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778155059; x=1778759859;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=G+sYMrxHIgI0XOwonv+5WFlvfPITzxng7xWOjoLsXsw=;
+ b=AC6Wf3HS21+oL9TCYZZhS3ScmpckyOQ+W3d1+AiF9fp9k07MyBOVZZxrdp78dlWlbU
+ JbQXiCEQZ63lu2VgPPfhLK2VNpzx4tnaen2O1eeaPmNNfYDyJCKCdzkXEADF0nzAu0XJ
+ Cpyf7OwT/G+AQFqHTpCHoMVBRs1T3VIMviuHqYMolg60CJxMvfcOkM62MGCKZcklVQW1
+ gy6VYumGyDdbx4D2xsKdBxZ4AwNE/AOFv6oMhnMUl0t3LRAMZvIS0P+MFUMr5113sqlg
+ TxuWRixS+40HFK9dnQh0+TUWJW+xWQ5mYjn+RgMhSYIoVPY43eben2CMkJY9Y05p6Inx
+ 7fcQ==
+X-Gm-Message-State: AOJu0YyJhC06WM905hpLURdwuYtnybCd8r3XrznRFsmEaY0mUw10T7mG
+ CHOKY9orAw2hhXUBXROOWG+XYigNI4tHBHk+vgvYn4zKBa2tF1x5mDutBl6ZfgySVZ+YiWG1/H+
+ hQGKoViw=
+X-Gm-Gg: AeBDiesNtvR+/PQlzUk88BeVc1f3I+rBl9VSbUwKG84CHlJsvukJOibhk22mo5T/tW/
+ nI+Niy/K+phOzOjEsfRYF5ADmlln8r+jcfNWgg5tqRPiPn/Okmqz1inPr1K6hRDaobxn0/ysVDJ
+ bCIPzRwlBRAwHRUB4tD3VDVzcvfKa2l4pgtiQBRgKGqkPXrW/4Va2NiPAF6Jxf4CJQorXKhHOhm
+ Tl8WmB89tn1PeSIVuGbEjXtojsFWG4U1iCQbv65huAi/KK7DG7CgJAOUjm1C+O+Ni0V8jaa+CaA
+ Fmgj4OsGjupt23Id3u9PZeLPFTwP+BwpzlZJ9PD5AXs3DIjf4co8p9czXdPe1aPIob9HdH/qgjX
+ iv3QiTBOqprOgEjyUymYRgCH1K9ymc09bLRkh2NRfE1YKgGSvh/x9UE6kMgruRsq764DKPfyTCc
+ 2GFdQ84RZBllk49zXBsN6vyHQ/OwfBw1220Q==
+X-Received: by 2002:a05:600c:a110:b0:488:9e43:9690 with SMTP id
+ 5b1f17b1804b1-48e51e17746mr96330095e9.10.1778155058841; 
+ Thu, 07 May 2026 04:57:38 -0700 (PDT)
+Received: from draig.lan ([185.124.0.195]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48e52f5c1cfsm77711335e9.0.2026.05.07.04.57.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 May 2026 04:57:38 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 217C15F870;
+ Thu, 07 May 2026 12:57:37 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH 06/10] .agents/skills: add qemu-testing skill
+In-Reply-To: <afxHRn6ft1ABjWDw@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Thu, 7 May 2026 09:03:18 +0100")
+References: <20260505170105.228162-1-alex.bennee@linaro.org>
+ <20260505170105.228162-7-alex.bennee@linaro.org>
+ <afxHRn6ft1ABjWDw@redhat.com>
+User-Agent: mu4e 1.14.1; emacs 30.1
+Date: Thu, 07 May 2026 12:57:37 +0100
+Message-ID: <875x4zmnym.fsf@draig.linaro.org>
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 789f7a49-916b-481d-589e-08deac2ee6b3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 May 2026 11:50:57.2080 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Y3nuef1NK5wt8vzfakY2cYPK/UiZCHc2PgNwoet1KDvVLnYZk1PUGJXZ5hEyVszFJ+TVpLfqckTwptIoiaJ+hw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS5PPF2FA070BDF
-Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
- envelope-from=skolothumtho@nvidia.com;
- helo=CH4PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,273 +107,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
+> On Tue, May 05, 2026 at 06:01:01PM +0100, Alex Benn=C3=A9e wrote:
+>> This provides basic instructions for running tests.
+>>=20
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> ---
+>>  .agents/skills/qemu-testing/SKILL.md | 53 ++++++++++++++++++++++++++++
+>>  1 file changed, 53 insertions(+)
+>>  create mode 100644 .agents/skills/qemu-testing/SKILL.md
+>>=20
+>> diff --git a/.agents/skills/qemu-testing/SKILL.md b/.agents/skills/qemu-=
+testing/SKILL.md
+>> new file mode 100644
+>> index 00000000000..3b7b42109e1
+>> --- /dev/null
+>> +++ b/.agents/skills/qemu-testing/SKILL.md
+>> @@ -0,0 +1,53 @@
+>> +---
+>> +name: qemu-testing
+>> +description: Provides instructions on how to find, list, and run
+>> individual tests for QEMU (Unit, QTest, Functional, TCG). You MUST
+>> use this skill whenever the user asks about tests, wants to list
+>> available tests, or wants to run any test in a build directory, even
+>> for simple exploratory queries like "what tests can I run". It
+>> includes details about spawning sub-agents.
+>> +license: GPL-2.0-or-later
+>> +---
+>> +
+>> +# Instructions
+>> +To run QEMU tests, you can use several different suites depending
+>> on what you are testing. **Note**: Ensure you have a recent build of
+>> QEMU before running tests. Use the `qemu-build` skill if you need to
+>> configure or run a build.
+>> +
+>> +## General Test Suites
+>> +- **Unit Tests**: `make check-unit`
+>> +- **QTest (Device emulation)**: `make check-qtest`
+>> +- **Functional Tests (Python based)**: `make check-functional`
+>> +- **TCG Tests (CPU instruction tests)**: `make check-tcg`
+>> +
+>> +## Launching Tests
+>> +**Crucial**: You MUST NEVER run a test suites directly in the main
+>> agent context. You MUST ALWAYS launch them by spawning a sub-agent.
+>> Pass the specific build or test commands, along with the required
+>> build directory, in the `task` argument. Give the subagent explicit
+>> instructions on what to verify and what to report back to you.
+>> +For example: `task: "Navigate to builds/debug and check what meson test=
+s touch replay and report back."` or `task: "Run make check-tcg in builds/a=
+rm and summarize any failing tests."`
+>> +
+>> +### From the Build Directory
+>> +Most individual tests from within a build directory. Most (unit, qtest,=
+ block, functional) can be individually selected and run via meson.
+>> +
+>> +As QEMU often needs a newer meson than the build host you should use th=
+e build `pyenv` to launch it:
+>> +- **Example**: `./pyvenv/bin/meson test --suite thorough --list` to see=
+ what tests are in the thorough test suite
+>> +
+>> +## Running Individual Tests
+>> +
+>> +### Meson Test Runner (Unit, QTest, Functional, softfloat etc)
+>> +To run a single test, you can use the meson test runner from within you=
+r pyvenv:
+>> +`./pyvenv/bin/meson test [testname]`
+>> +Example: `./pyvenv/bin/meson test qtest-x86_64/boot-serial-test`
+>> +
+>> +### TCG Tests
+>> +To run individual TCG tests for a specific architecture:
+>> +1. Navigate to the relevant build directory, e.g.: `cd tests/tcg/aarch6=
+4-softmmu`
+>> +2. Run a specific test with make: `make run-[testname]`
+>> +   Example: `make run-memory-sve`
+>> +3. Use `make help` within the architecture directory to see the full li=
+st of available tests.
+>> +
+>> +### Functional Tests
+>> +Individual functional tests can be run directly using the run script al=
+though from the source directory:
+>> +- **Example**: `./builds/all/run tests/functional/aarch64/test_virt_vbs=
+a.py`
+>> +
+>> +### Environment Variables
+>> +- `V=3D1` for verbose output from tests.
+>> +- `SPEED=3Dslow` to run slower tests that are normally skipped.
+>
+> When I read this, I note there is some significant overlap with what
+> we write in docs/devel/testing/.=20
+>
+> Would it still be effective enough to merely point the agents to
+> docs/devel/testing and get rid of most text in this section ?
 
-> -----Original Message-----
-> From: Eric Auger <eric.auger@redhat.com>
-> Sent: 03 May 2026 08:34
-> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
-> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
-> peter.maydell@linaro.org; richard.henderson@linaro.org;
-> cohuck@redhat.com; sebott@redhat.com; Shameer Kolothum Thodi
-> <skolothumtho@nvidia.com>; philmd@linaro.org
-> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
-> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
-> jdenemar@redhat.com
-> Subject: [PATCH v4 10/17] arm/kvm: Allow reading all the writable ID regi=
-sters
->=20
-> External email: Use caution opening links or attachments
->=20
->=20
-> At the moment kvm_arm_get_host_cpu_features() reads a subset of the
-> ID regs. As we want to introduce properties for all writable ID reg
-> fields, we want more genericity and read more default host register
-> values.
->=20
-> Introduce a new get_host_cpu_idregs() helper and add a new exhaustive
-> boolean parameter to kvm_arm_get_host_cpu_features() and
-> kvm_arm_set_cpu_features_from_host() to select the right behavior.
-> The host cpu model will keep the legacy behavior unless the writable
-> id register interface is available.
->=20
-> A writable_map IdRegMap is introduced in the CPU object. A subsequent
-> patch will populate it.
->=20
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> ---
->  target/arm/cpu.h        |  3 ++
->  target/arm/cpu64.c      |  2 +-
->  target/arm/kvm-stub.c   |  3 +-
->  target/arm/kvm.c        | 77 +++++++++++++++++++++++++++++++++++++++--
->  target/arm/kvm_arm.h    |  6 +++-
->  target/arm/trace-events |  1 +
->  6 files changed, 86 insertions(+), 6 deletions(-)
->=20
-> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-> index 0ac0fd13cf..87fb0047eb 100644
-> --- a/target/arm/cpu.h
-> +++ b/target/arm/cpu.h
-> @@ -1087,6 +1087,9 @@ struct ArchCPU {
->       */
->      ARMIdRegsState writable_id_regs_status;
->=20
-> +    /* ID reg writable bitmask (KVM only) */
-> +    IdRegMap *writable_map;
-> +
->      /* QOM property to indicate we should use the back-compat CNTFRQ
-> default */
->      bool backcompat_cntfrq;
->=20
-> diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-> index b940842d9e..1b3d3fb245 100644
-> --- a/target/arm/cpu64.c
-> +++ b/target/arm/cpu64.c
-> @@ -862,7 +862,7 @@ static void aarch64_host_initfn(Object *obj)
->=20
->  #if defined(CONFIG_KVM)
->      kvm_arm_set_cpreg_mig_tolerances(cpu);
-> -    kvm_arm_set_cpu_features_from_host(cpu);
-> +    kvm_arm_set_cpu_features_from_host(cpu, false);
->      aarch64_add_sve_properties(obj);
->  #elif defined(CONFIG_HVF)
->      hvf_arm_set_cpu_features_from_host(cpu);
-> diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
-> index 88cbe8d85c..94478c5690 100644
-> --- a/target/arm/kvm-stub.c
-> +++ b/target/arm/kvm-stub.c
-> @@ -45,7 +45,8 @@ bool kvm_arm_el2_supported(void)
->  /*
->   * These functions should never actually be called without KVM support.
->   */
-> -void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
-> +void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu,
-> +                                        bool get_all_writable_id_regs)
->  {
->      g_assert_not_reached();
->  }
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index f06a60804d..1a9b91bf8a 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -42,6 +42,7 @@
->  #include "hw/acpi/ghes.h"
->  #include "target/arm/gtimer.h"
->  #include "migration/blocker.h"
-> +#include "cpu-idregs.h"
->=20
->  const KVMCapabilityInfo kvm_arch_required_capabilities[] =3D {
->      KVM_CAP_INFO(DEVICE_CTRL),
-> @@ -274,7 +275,63 @@ static uint32_t kvm_arm_sve_get_vls(int fd)
->      return vls[0] & MAKE_64BIT_MASK(0, ARM_MAX_VQ);
->  }
->=20
-> -static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-> +static int idregs_idx_to_kvm_feature_idx(ARMIDRegisterIdx idx)
-> +{
-> +    ARMSysRegs sysreg =3D id_register_sysreg[idx];
-> +
-> +    return KVM_ARM_FEATURE_ID_RANGE_IDX((sysreg &
-> CP_REG_ARM64_SYSREG_OP0_MASK)
-> +                                            >> CP_REG_ARM64_SYSREG_OP0_S=
-HIFT,
-> +                                        (sysreg & CP_REG_ARM64_SYSREG_OP=
-1_MASK)
-> +                                            >> CP_REG_ARM64_SYSREG_OP1_S=
-HIFT,
-> +                                        (sysreg & CP_REG_ARM64_SYSREG_CR=
-N_MASK)
-> +                                            >> CP_REG_ARM64_SYSREG_CRN_S=
-HIFT,
-> +                                        (sysreg & CP_REG_ARM64_SYSREG_CR=
-M_MASK)
-> +                                            >> CP_REG_ARM64_SYSREG_CRM_S=
-HIFT,
-> +                                        (sysreg & CP_REG_ARM64_SYSREG_OP=
-2_MASK)
-> +                                            >> CP_REG_ARM64_SYSREG_OP2_S=
-HIFT);
-> +}
-> +
-> +/*
-> + * get_host_cpu_idregs: Read all the writable ID reg host values
-> + *
-> + * Need to be called once the writable mask has been populated
-> + * Note we may want to read all the known id regs but some of them are n=
-ot
-> + * writable and return an error, hence the choice of reading only those =
-which
-> + * are writable. Those are also readable!
-> + */
-> +static int get_host_cpu_idregs(ARMCPU *cpu, int fd, ARMHostCPUFeatures
-> *ahcf)
-> +{
-> +    int err =3D 0;
-> +    int i;
-> +
-> +    for (i =3D 0; i < NUM_ID_IDX; i++) {
-> +        ARM64SysReg *sysregdesc =3D &arm64_id_regs[i];
-> +        ARMSysRegs sysreg =3D sysregdesc->sysreg;
-> +        uint64_t writable_mask =3D
-> +             cpu->writable_map->regs[idregs_idx_to_kvm_feature_idx(i)];
+The intention of skills is to be as concise as possible to save on token
+cost. We could certainly put a link to the main document so it can read
+it for more details if needed.
 
-Nit: I can see writable_map  is always populated by the time it reaches
-here, but may be good to have:=20
-g_assert(cpu->writable_map);
+>
+>> +
+>> +## Reporting Results
+>> +**Crucial**: After completing the build and test tasks, provide a conci=
+se summary of the results to the calling agent.
+>> +1. **Summary**: State whether the build and tests passed or failed.
+>> +2. **Failure Excerpts**: If any task fails, include relevant excerpts f=
+rom the logs (e.g., compiler errors, test failures).
+>> +3. **Full Paths**: Always provide the **absolute file paths** to the fu=
+ll logs and result sets for further inspection.
+>
+> With regards,
+> Daniel
 
-Thanks,
-Shameer
-
-> +        uint64_t *reg;
-> +        int ret;
-> +
-> +        if (!writable_mask) {
-> +            continue;
-> +        }
-> +
-> +        reg =3D &ahcf->isar.idregs[i];
-> +        ret =3D read_sys_reg64(fd, reg, idregs_sysreg_to_kvm_reg(sysreg)=
-);
-> +        trace_get_host_cpu_idregs(sysregdesc->name, *reg);
-> +        if (ret) {
-> +            error_report("%s error reading value of host %s register (%m=
-)",
-> +                         __func__, sysregdesc->name);
-> +
-> +            err =3D ret;
-> +        }
-> +    }
-> +    return err;
-> +}
-> +
-> +static bool
-> +kvm_arm_get_host_cpu_features(ARMCPU *cpu, ARMHostCPUFeatures
-> *ahcf,
-> +                              bool get_all_writable_id_regs)
->  {
->      /* Identify the feature bits corresponding to the host CPU, and
->       * fill out the ARMHostCPUClass fields accordingly. To do this
-> @@ -401,6 +458,18 @@ static bool
-> kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->          err |=3D get_host_cpu_reg(fd, ahcf, ID_DFR1_EL1_IDX);
->          err |=3D get_host_cpu_reg(fd, ahcf, ID_MMFR5_EL1_IDX);
->=20
-> +        /* Make sure writable ID reg values are read */
-> +        if (get_all_writable_id_regs) {
-> +            err |=3D get_host_cpu_idregs(cpu, fd, ahcf);
-> +        }
-> +
-> +        /*
-> +         * temporarily override the CLIDR_EL1 value since host value doe=
-s
-> +         * not seem to be supported. Getting "Unified type is not implem=
-ented
-> +         * at level n" error in fdt_add_cpu_nodes()
-> +         */
-> +        SET_IDREG(&ahcf->isar, CLIDR, 0x0);
-> +
->          /*
->           * DBGDIDR is a bit complicated because the kernel doesn't
->           * provide an accessor for it in 64-bit mode, which is what this
-> @@ -477,13 +546,15 @@ static bool
-> kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->      return true;
->  }
->=20
-> -void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu)
-> +void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu,
-> +                                        bool get_all_writable_id_regs)
->  {
->      CPUARMState *env =3D &cpu->env;
->=20
->      if (!arm_host_cpu_features.dtb_compatible) {
->          if (!kvm_enabled() ||
-> -            !kvm_arm_get_host_cpu_features(&arm_host_cpu_features)) {
-> +            !kvm_arm_get_host_cpu_features(cpu, &arm_host_cpu_features,
-> +                                           get_all_writable_id_regs)) {
->              /* We can't report this error yet, so flag that we need to
->               * in arm_cpu_realizefn().
->               */
-> diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-> index b22a56fc17..91a7d5cc4b 100644
-> --- a/target/arm/kvm_arm.h
-> +++ b/target/arm/kvm_arm.h
-> @@ -127,11 +127,15 @@ void kvm_arm_destroy_scratch_host_vcpu(int
-> *fdarray);
->  /**
->   * kvm_arm_set_cpu_features_from_host:
->   * @cpu: ARMCPU to set the features for
-> + * @get_all_writable_id_regs: if true, get the contents of all writable =
-ID
-> + *                            registers as well
->   *
->   * Set up the ARMCPU struct fields up to match the information probed
->   * from the host CPU.
-> + *
->   */
-> -void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu);
-> +void kvm_arm_set_cpu_features_from_host(ARMCPU *cpu,
-> +                                        bool get_all_writable_id_regs);
->=20
->  /**
->   * kvm_arm_add_vcpu_properties:
-> diff --git a/target/arm/trace-events b/target/arm/trace-events
-> index 8502fb3265..8c7faf57c7 100644
-> --- a/target/arm/trace-events
-> +++ b/target/arm/trace-events
-> @@ -13,6 +13,7 @@ arm_gt_update_irq(int timer, int irqstate)
-> "gt_update_irq: timer %d irqstate %d"
->=20
->  # kvm.c
->  kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova =3D
-> 0x%"PRIx64" is translated into 0x%"PRIx64
-> +get_host_cpu_idregs(const char *name, uint64_t value) "scratch vcpu host
-> value for %s is 0x%"PRIx64
->=20
->  # cpu.c
->  arm_cpu_reset(uint64_t mp_aff) "cpu %" PRIu64
-> --
-> 2.53.0
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
