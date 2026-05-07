@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 334DECD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:58:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3222CCD3442
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:58:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL11R-0003aV-0G; Thu, 07 May 2026 11:52:21 -0400
+	id 1wL11K-0003UR-Eo; Thu, 07 May 2026 11:52:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL11O-0003ZB-Tx
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:19 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ id 1wL11H-0003SO-Ay
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:11 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL11N-0003r3-5V
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:18 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4891e86fabeso12803165e9.1
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:52:16 -0700 (PDT)
+ id 1wL11E-0003oX-It
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:11 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-488af96f6b2so12018175e9.0
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:52:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778169136; x=1778773936; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778169127; x=1778773927; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=EUSOjlx+hsZVcUD1mobn1E9yNS0kI0/ZgIsz2Vr2uNk=;
- b=MupjXI4giT7GLMkendVd8G95+OwKkOkBTKiZEQHBO6Z89KEo0tr5UAg42i3byiR0S3
- zCIScJBM74iD3ojewY13o0sOmvpT5LTzIkgaE0PcxHx+KpsHGdsXfTKPDF3GE7aXI/WY
- sWO6XiWc3KGHXUynQqj1xOGNeiSQvmKlcoMLZMRmVkYgYjAF6TqZIS2cYVUPC7bFvogf
- Bnk/5ToxpcrQCAQgOyB7ygv5gOZiQEN3aWatV4PPDYM5vzsTkV311R/fbcUKTPcMC3wY
- wFvhU5IMx+g3h4OypsJEDP7nnTEqBbaNXnKChQoEd2QRGZ5I3M1q+Wzff0q8VlKvlNcX
- 9BZg==
+ :reply-to; bh=RGheXXRC6x0QXSLragqGnkW/MkrRzCgdH8x0picNC+0=;
+ b=Y0mWod6Rv0D9eUEQcsbwG5RGKMtmJyAUSshsxZW+8W2zdMKw75YK89lnwCuoOIlfm9
+ AdtDmFrq+F2fqd1yOTU6n1avJnUFsyneN14JIWbrgBaOp7hCjdudoUePaZvx9pJnFSZl
+ DniWtnsoYBkb+94zpuHpmbJR4G+Ojv0za1euwm2td0TgzioB2thn4gZUHfYh0XsFoDy/
+ 13EPr/v0UVf0w/IoW6Vyhx87UdK9P3EZ0oUIhTV1caVSXgYzfZHL4N6UEChqudrdQxJN
+ 10WrUXAtHUbcoDNamqD0MbQhKQNWC0Jt9btgNSo3mtTCLFGoZDXfb1TaXNDIBTy630bP
+ KYdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778169136; x=1778773936;
+ d=1e100.net; s=20251104; t=1778169127; x=1778773927;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=EUSOjlx+hsZVcUD1mobn1E9yNS0kI0/ZgIsz2Vr2uNk=;
- b=AO+xpOJHLF7ic9uaUvacTaN1Tqeo4AMAhDUDUa7Jmiyi9BQcswhtxNUiCdQU8nMdLN
- G2aUJGDhUgKxZbp62AnfHwQt5qaFCtjQMYXudqrqsLiLZJsNv87aIrlQIABIc/ydZIV8
- 2QcqCTrYpLpRz8q6q4DASP8wkcjYKfCoLydv3WjTpZI4ZyPrp8DwGdBmtPx2GpuFGHR+
- +GOMkmM39iqkzwOXvn2HP8Iq8KODBVuVPpiaE/o8kTG52zS4A3SuafaE85fr4P0aEeDX
- eWsZyt6nG7kZeuH8q3FE6slcr0LAO+yfF5PFpkaHBidZ2N07Jv+WOluR3znOqkoavOdU
- BKVQ==
-X-Gm-Message-State: AOJu0YxOB0yccM/hWNR1GDhPlE7KmA7saEQQxZl1BcQA8YzglyrLO5pw
- T+pK+gZeVDm56Rk/zTmX3ICB8IZNb5x7RsrhWnmaEvbKZ7oSRi/6DD74pX3fX80LNJuL0aq/qkt
- 3hRxm
-X-Gm-Gg: AeBDievb6e7kOQlnZ7I36OZUch2qR4s1OlnhWWG5FRXIEMNFIHOLGr9dp1dJaE9Y3FI
- baqDjzgknXkDpgUIwjPtl1ICoC9Q7wXOFzqwwJK2mx0QrjhuCXHmXute164t8cKMxadBHEJ9Z0W
- lbDJZGlK+D2/ZZG3Ktduih0pTxJw32sMIDZ9EUY+pf3fKC0gVqw5/udIzzXH0ry3jewjtEFQz5i
- ZDPp8PA645Xr2KLaBzk6lpeE6SmlUC49nvZAjUTC29RK5K0orwupEVfUX/kAfLsDHhbEPx3gPUk
- QIb+QFg2JS+CWxKAseH8jNHMPDjzxsISF5kMOqr/vPp6GFZrvRc5+ajXGx+fKigFFfyGYEfrkfB
- V4G8etzuDDwCPWhDNiMU/dgV0OyhUnEtMYa43lv0R4ZZA0+npn6dhKPLRdETxZc4BPjnfC+rbkw
- aaB2rjwW+wP5VZq5q4VWyLipWjv4N+O0jWC7AxGQkvr4LO1tVgL45cB0SHa3ZkXpaHo4LAtr/e/
- ct/ljT7XsJcP1l8ZspdmJtwZgDebK66dhc5GurBkJrCXd9xiMhp
-X-Received: by 2002:a05:600c:3b17:b0:489:e696:836f with SMTP id
- 5b1f17b1804b1-48e51e15718mr126773215e9.10.1778169135556; 
- Thu, 07 May 2026 08:52:15 -0700 (PDT)
+ bh=RGheXXRC6x0QXSLragqGnkW/MkrRzCgdH8x0picNC+0=;
+ b=V6/8B5aXe3sJpSX1iRe0bD+8a/Vh+73rawDW3LOtdw+BkpinEOyklOj+jFBk/eZnWh
+ +FlGq+4z8ffzQXLL22gGPKxQYzVBrs+Nepciv0JzkuLgdoQLpDePavWIKmtsQg6EusuZ
+ nY+xUU5JwF12iotZZPRy6jjzlelDXTu+XOHFYYwB61Jw9hwnGt74MPtm6EidulEfZZOe
+ G9GONxkeFf0J4obsdpBQW2ButaP4a54afgdK2ngCy8gRaE+yaOowCm6pV5pkMj/y/NaO
+ cT4A4kdEayFetMdjsqSB8ro6zbcRf1QGPwrGoVK3pXCsu5iuY0Q02808BkidRLvCAxOI
+ 426Q==
+X-Gm-Message-State: AOJu0YxHH1BGvyjqABKOaBAiuvACtWO/ZHiAJXH0Rq9nqSfeCZVn6OHX
+ P+qVD/eSIffuEv08F9tPOhP0TULQq/yO7KjadZL6C5/aP8/h7ESuDT5uLLqt9NHoTZBYoQYwa1n
+ ZntNT
+X-Gm-Gg: AeBDievj4vVdzBQQJJVSYqmWhGR/vnGGgrzlT1Zfk5gTps6Vv0Nff4hJDSZ2nKb0PH/
+ xOIQTT2zBUS4NDy3CykbaBjyrKIOceMg0CMPmigWGC7uyiG/pDSTzPRBui5fBi7gPuJKBabhVTl
+ D95sVXNPh7zfB8T+9JynFOa3p9PlwDCoi3D0Tc769TtsovLbhf6gH4+bDLMroWn2bgDvHhKCLDs
+ CjRc1BpohutbtNQ4LO6FDKXHJhcmZyy0GqzZ8wYVnSSgS+qH5e12fP83TC3ixIFjDR3dD5jC82d
+ bEYGUnFbUeHOkP2IUI4JldLOmwoSrJFMWwvyRv2Q0HtGiPRe8GlVt7IAi1F0vyy60HIZXjyhzJP
+ T8sfdTEfDau4qZq/DRMRRYcOdd7i4IisP2yAyB6mNSufR6cZTLl30tttrNYr3HmZgQwPEwiZCMr
+ UIjqqIujrUFrPkCWQoE+FPTl9TfD4wdWpHhgEcv9gPydh7cGXnkz7FaMysC8XErHigsdecE4s5c
+ ZlVIYDiISVV5kKw
+X-Received: by 2002:a05:600c:a118:b0:486:d76c:fa57 with SMTP id
+ 5b1f17b1804b1-48e51f37363mr110562675e9.17.1778169126630; 
+ Thu, 07 May 2026 08:52:06 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.14
+ 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.05
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 08:52:14 -0700 (PDT)
+ Thu, 07 May 2026 08:52:06 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 19/67] target/arm: GICv5 cpuif: Implement the GIC CDPRI
- instruction
-Date: Thu,  7 May 2026 16:51:06 +0100
-Message-ID: <20260507155154.1886557-20-peter.maydell@linaro.org>
+Subject: [PULL 12/67] hw/intc/arm_gicv5: Implement gicv5_class_name()
+Date: Thu,  7 May 2026 16:50:59 +0100
+Message-ID: <20260507155154.1886557-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260507155154.1886557-1-peter.maydell@linaro.org>
 References: <20260507155154.1886557-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,110 +101,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the CPU interface GIC CDPRI instruction, which is a wrapper
-around the SetPriority operation.
+Implement a gicv5_class_name() function that does the same job as
+gicv3_class_name(): allows board code to get the correct QOM type for
+the GIC at runtime depending on whether KVM is enabled or not.
 
-As with the barrier insns, we omit for the moment details which are
-needed when the GICv5 supports virtualization:
-
- * traps when legacy GICv3 emulation is enabled
- * fine-grained-trap handling (which is done via
-   registers that are new in GICv5)
- * sending the command for the virtual interrupt domain
-   when inside a guest
-
-The CD instructions operate on the Current Physical Interrupt Domain,
-which is the one associated with the current security state and
-exception level.  The spec also has the concept of a Logical
-Interrupt Domain, which is the one associated with the security state
-defined by SCR_EL3.{NS,NSE}.  Mostly the logical interrupt domain is
-used by the LD instructions, which are EL3-only; but we will also
-want the concept later for handling some banked registers, so we
-define functions for both.
+For the GICv5, we don't yet implement KVM support, so the KVM-enabled
+codepath is always an error.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Message-id: 20260327111700.795099-20-peter.maydell@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260327111700.795099-13-peter.maydell@linaro.org
 ---
- target/arm/tcg/gicv5-cpuif.c | 58 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 58 insertions(+)
+ include/hw/intc/arm_gicv5_common.h | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
-index 7392a98c49..0c2bba5ce9 100644
---- a/target/arm/tcg/gicv5-cpuif.c
-+++ b/target/arm/tcg/gicv5-cpuif.c
-@@ -10,6 +10,59 @@
- #include "cpu.h"
- #include "internals.h"
- #include "cpregs.h"
-+#include "hw/intc/arm_gicv5_stream.h"
-+
-+FIELD(GIC_CDPRI, ID, 0, 24)
-+FIELD(GIC_CDPRI, TYPE, 29, 3)
-+FIELD(GIC_CDPRI, PRIORITY, 35, 5)
-+
-+static GICv5Common *gicv5_get_gic(CPUARMState *env)
-+{
-+    return env->gicv5state;
-+}
-+
-+static GICv5Domain gicv5_logical_domain(CPUARMState *env)
-+{
-+    /*
-+     * Return the Logical Interrupt Domain, which is the one associated
-+     * with the security state selected by the SCR_EL3.{NS,NSE} bits
-+     */
-+    switch (arm_security_space_below_el3(env)) {
-+    case ARMSS_Secure:
-+        return GICV5_ID_S;
-+    case ARMSS_NonSecure:
-+        return GICV5_ID_NS;
-+    case ARMSS_Realm:
-+        return GICV5_ID_REALM;
-+    default:
-+        g_assert_not_reached();
-+    }
-+}
-+
-+static GICv5Domain gicv5_current_phys_domain(CPUARMState *env)
-+{
-+    /*
-+     * Return the Current Physical Interrupt Domain as
-+     * defined by R_ZFCXM.
-+     */
-+    if (arm_current_el(env) == 3) {
-+        return GICV5_ID_EL3;
-+    }
-+    return gicv5_logical_domain(env);
-+}
-+
-+static void gic_cdpri_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                            uint64_t value)
-+{
-+    GICv5Common *gic = gicv5_get_gic(env);
-+    uint8_t priority = FIELD_EX64(value, GIC_CDPRI, PRIORITY);
-+    GICv5IntType type = FIELD_EX64(value, GIC_CDPRI, TYPE);
-+    uint32_t id = FIELD_EX64(value, GIC_CDPRI, ID);
-+    bool virtual = false;
-+    GICv5Domain domain = gicv5_current_phys_domain(env);
-+
-+    gicv5_set_priority(gic, id, priority, domain, type, virtual);
-+}
+diff --git a/include/hw/intc/arm_gicv5_common.h b/include/hw/intc/arm_gicv5_common.h
+index 233233bc3e..e7220b9dc7 100644
+--- a/include/hw/intc/arm_gicv5_common.h
++++ b/include/hw/intc/arm_gicv5_common.h
+@@ -13,6 +13,8 @@
+ #include "hw/core/sysbus.h"
+ #include "hw/intc/arm_gicv5_types.h"
+ #include "target/arm/cpu-qom.h"
++#include "qemu/error-report.h"
++#include "system/kvm.h"
  
- static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-     /*
-@@ -33,6 +86,11 @@ static const ARMCPRegInfo gicv5_cpuif_reginfo[] = {
-         .opc0 = 1, .opc1 = 0, .crn = 12, .crm = 0, .opc2 = 1,
-         .access = PL1_W, .type = ARM_CP_NOP,
-     },
-+    {   .name = "GIC_CDPRI", .state = ARM_CP_STATE_AA64,
-+        .opc0 = 1, .opc1 = 0, .crn = 12, .crm = 1, .opc2 = 2,
-+        .access = PL1_W, .type = ARM_CP_IO | ARM_CP_NO_RAW,
-+        .writefn = gic_cdpri_write,
-+    },
- };
+ /*
+  * QEMU interface:
+@@ -150,4 +152,22 @@ static inline bool gicv5_domain_implemented(GICv5Common *cs, GICv5Domain domain)
+     return cs->implemented_domains & (1 << domain);
+ }
  
- void define_gicv5_cpuif_regs(ARMCPU *cpu)
++/**
++ * gicv5_class_name
++ *
++ * Return name of GICv5 class to use depending on whether KVM acceleration is
++ * in use. May throw an error if the chosen implementation is not available.
++ *
++ * Returns: class name to use
++ */
++static inline const char *gicv5_class_name(void)
++{
++    /* When we implement KVM GICv5 we might return "kvm-arm-gicv5" here. */
++    if (kvm_enabled()) {
++        error_report("Userspace GICv5 is not supported with KVM");
++        exit(1);
++    }
++    return "arm-gicv5";
++}
++
+ #endif
 -- 
 2.43.0
 
