@@ -4,75 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDF42CD3442
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 09:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7113CD3442
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 09:50:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wKvC7-0006hd-1B; Thu, 07 May 2026 05:38:59 -0400
+	id 1wKvN2-0000Bk-UC; Thu, 07 May 2026 05:50:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wKvC4-0006hB-OK
- for qemu-devel@nongnu.org; Thu, 07 May 2026 05:38:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wKvC2-0002va-ET
- for qemu-devel@nongnu.org; Thu, 07 May 2026 05:38:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778146732;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/xHOdghIIgTNNB5iOFd4ZFtt/SlKLaFB/L7TCXvGXro=;
- b=JOtid6r0AOREmjGaxoHHONOgPfiE4IIFZJwKItZ2HIUUBoVGpu3L2JzUIKPUKqMFhsVrEt
- XDFbx2ZGXneAzfrK7GdWNsW9c+rThJNoATEaflqIEtZQM4oDkvpBFa5SzQ02RMY68ecSib
- 8d5xDS8u0RNY3D22iTGPiPfLElBASsA=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-58u6H1RVNc2fO_4QPCv6qQ-1; Thu,
- 07 May 2026 05:38:48 -0400
-X-MC-Unique: 58u6H1RVNc2fO_4QPCv6qQ-1
-X-Mimecast-MFC-AGG-ID: 58u6H1RVNc2fO_4QPCv6qQ_1778146727
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 89BEA180034E; Thu,  7 May 2026 09:38:47 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.49.217])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 050C61800352; Thu,  7 May 2026 09:38:45 +0000 (UTC)
-Date: Thu, 7 May 2026 10:38:42 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH 00/10] AGENTS.md and associated skills
-Message-ID: <afxdonq39RuxoQC8@redhat.com>
-References: <20260505170105.228162-1-alex.bennee@linaro.org>
- <CAFEAcA-oL9qJ=oXbmCZ-b9jQcv8PNA26irDFA+_yCHkqEMLC1g@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1wKvN0-0000B9-4x
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 05:50:14 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1wKvMy-0005Pd-5D
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 05:50:13 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8CxRehQYPxp+3AHAA--.18234S3;
+ Thu, 07 May 2026 17:50:08 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJDxD8NCYPxpUTJ8AA--.39812S6;
+ Thu, 07 May 2026 17:50:06 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: maobibo@loongson.cn
+Cc: qemu-devel@nongnu.org,
+	lixianglai@loongson.cn,
+	chenhuacai@loongson.cn
+Subject: [PATCH v2 4/4] Add dintc kvm_irqchip_in_kernel support
+Date: Thu,  7 May 2026 17:23:58 +0800
+Message-Id: <20260507092358.2479135-5-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20260507092358.2479135-1-gaosong@loongson.cn>
+References: <20260507092358.2479135-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAFEAcA-oL9qJ=oXbmCZ-b9jQcv8PNA26irDFA+_yCHkqEMLC1g@mail.gmail.com>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.443,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowJDxD8NCYPxpUTJ8AA--.39812S6
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,67 +62,154 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 07, 2026 at 09:59:06AM +0100, Peter Maydell wrote:
-> On Tue, 5 May 2026 at 18:03, Alex Bennée <alex.bennee@linaro.org> wrote:
-> >
-> > Not withstanding the current contributor policy there are a number of
-> > areas that AI agents could be helpful for. This series introduces an
-> > AGENTS.md file which is the basic guide to the source tree and a
-> > number of "skills". Skills are like scripts except far less clearly
-> > defined. However I have found the issue triage skill quite useful for
-> > off-loading the drudgery of going through stuff by hand. I've also
-> > used the issue helper to automate the task of starting a debug session
-> > by pulling in test cases from the tracker.
-> >
-> > These originally where a set of skills for ECA (eca.dev) but I've
-> > ported them across to the agent agnostic .agents directory. There are
-> > still some cases where the ECA heritage shows through though
-> > (specifically the code explorer skill could be better).
-> >
-> > I'm not suggesting this is ready for up-streaming but I'm posting the
-> > collected set for comment and I'd be interested how well these hold up
-> > across different agentic systems.
-> 
-> I guess my overall comment on this is some mix of:
->  * how much of this is generically useful as opposed to
->    stuff that's personally helpful to you and should remain
->    part of your local setup / preferences?
->  * how much do we want to put into git to start with?
-> 
-> I'm in favour of starting with an AGENTS.md that says basically:
->  (1) "don't generate code for upstream, point the agent user at
->       our AI policy"
->  (2) "if you're looking for security issues, read our security
->       policy to see what is in scope and what is not"
-> (in whatever language appears effective)
+Function kvm_dintc_realize() is added if kvm_irqchip_in_kernel is
+set. It is to create and initialize DINTC device in kernel mode.
+and use kvm_irqchip_send_msi() to send  msi to kernel.
 
-Yes, we definitely need those two pieces.
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+---
+ hw/intc/loongarch_dintc.c         | 13 +++++++++
+ hw/intc/loongarch_dintc_kvm.c     | 48 +++++++++++++++++++++++++++++++
+ hw/intc/meson.build               |  2 ++
+ include/hw/intc/loongarch_dintc.h | 10 +++++++
+ 4 files changed, 73 insertions(+)
+ create mode 100644 hw/intc/loongarch_dintc_kvm.c
 
-> and then perhaps adding more things gradually where there's
-> a consensus that they're broadly useful.
-
-Personally I'm open to having much more in AGENTS.md in particular
-since it doesn't cost us much from a maint POV to have it.
-
-The skills I'm not so sure of, simply as I have little relevant
-experience.
-
-For a while Thomas Huth has been doing significant issue triage,
-but he's stepped back from most of his QEMU work. If Alex intends
-to pick up some of the slack using an agent for issue triage, I'd
-be inclined to have the issue triage skills in git. Even if Alex
-is the only one using it for now, it is good for redundancy if we
-have the setup recorded.
-
-With regards,
-Daniel
+diff --git a/hw/intc/loongarch_dintc.c b/hw/intc/loongarch_dintc.c
+index c42a919df4..b8bd7ae015 100644
+--- a/hw/intc/loongarch_dintc.c
++++ b/hw/intc/loongarch_dintc.c
+@@ -53,6 +53,15 @@ static void loongarch_dintc_mem_write(void *opaque, hwaddr addr,
+     cs = cpu_by_arch_id(cpu_num);
+     irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
+ 
++    if (kvm_irqchip_in_kernel()) {
++        MSIMessage msg;
++
++        msg.address = msg_addr;
++        msg.data = val;
++        kvm_irqchip_send_msi(kvm_state, msg);
++        return;
++    }
++
+     async_run_on_cpu(cs, do_set_vcpu_dintc_irq,
+                          RUN_ON_CPU_HOST_INT(irq_num));
+     qemu_set_irq(s->cpu[cpu_num].parent_irq, 1);
+@@ -95,6 +104,10 @@ static void loongarch_dintc_realize(DeviceState *dev, Error **errp)
+         qdev_init_gpio_out(dev, &s->cpu[i].parent_irq, 1);
+     }
+ 
++    if (kvm_irqchip_in_kernel()) {
++        kvm_dintc_realize(dev, errp);
++    }
++
+     return;
+ }
+ 
+diff --git a/hw/intc/loongarch_dintc_kvm.c b/hw/intc/loongarch_dintc_kvm.c
+new file mode 100644
+index 0000000000..1137bcd9a6
+--- /dev/null
++++ b/hw/intc/loongarch_dintc_kvm.c
+@@ -0,0 +1,48 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * LoongArch DINTC interrupt kvm support
++ *
++ * Copyright (C) 2025 Loongson Technology Corporation Limited
++ */
++
++#include "qemu/osdep.h"
++#include "hw/intc/loongarch_dintc.h"
++#include "linux/kvm.h"
++#include "qapi/error.h"
++#include "system/kvm.h"
++
++void kvm_dintc_realize(DeviceState *dev, Error **errp)
++{
++    LoongArchDINTCState *lds = LOONGARCH_DINTC(dev);
++    int ret;
++
++    ret = kvm_create_device(kvm_state, KVM_DEV_TYPE_LOONGARCH_DMSINTC, false);
++    if (ret < 0) {
++        fprintf(stderr, "create KVM_DEV_TYPE_LOONGARCH_AVEC failed: %s\n",
++               strerror(-ret));
++        abort();
++    }
++    lds->dev_fd = ret;
++
++    /* init dintc config */
++    lds->msg_addr_base = VIRT_DINTC_BASE;
++    lds->msg_addr_size = VIRT_DINTC_SIZE;
++
++    ret = kvm_device_access(lds->dev_fd, KVM_DEV_LOONGARCH_DMSINTC_GRP_CTRL,
++                            KVM_DEV_LOONGARCH_DMSINTC_MSG_ADDR_BASE,
++                            &lds->msg_addr_base, true, NULL);
++    if (ret < 0) {
++        fprintf(stderr, "KVM_DEV_LOONGARCH_DINTC_MSG_ADDR_BASE failed: %s\n",
++                strerror(ret));
++        abort();
++    }
++
++    ret = kvm_device_access(lds->dev_fd, KVM_DEV_LOONGARCH_DMSINTC_GRP_CTRL,
++                            KVM_DEV_LOONGARCH_DMSINTC_MSG_ADDR_SIZE,
++                            &lds->msg_addr_size, true, NULL);
++    if (ret < 0) {
++        fprintf(stderr, "KVM_DEV_LOONGARCH_DINTC_MSG_ADDR_SIZE failed: %s\n",
++                strerror(ret));
++        abort();
++    }
++}
+diff --git a/hw/intc/meson.build b/hw/intc/meson.build
+index c6de2d9d00..e78124e490 100644
+--- a/hw/intc/meson.build
++++ b/hw/intc/meson.build
+@@ -84,3 +84,5 @@ specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extio
+ specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_LOONGARCH_EXTIOI'],
+                if_true: files('loongarch_extioi_kvm.c'))
+ specific_ss.add(when: 'CONFIG_LOONGARCH_DINTC', if_true: files('loongarch_dintc.c'))
++specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_LOONGARCH_DINTC'],
++               if_true: files('loongarch_dintc_kvm.c'))
+diff --git a/include/hw/intc/loongarch_dintc.h b/include/hw/intc/loongarch_dintc.h
+index 1f4f65705a..95a7879e26 100644
+--- a/include/hw/intc/loongarch_dintc.h
++++ b/include/hw/intc/loongarch_dintc.h
+@@ -9,8 +9,13 @@
+ #include "hw/core/sysbus.h"
+ #include "hw/loongarch/virt.h"
+ #include "system/memory.h"
++#include "hw/pci-host/ls7a.h"
+ 
+ #define NR_VECTORS     256
++#define IRQ_BIT_BASE    5
++#define IRQ_BIT_LEN     8
++#define CPU_BIT_BASE   13
++#define CPU_BIT_LEN     8
+ 
+ #define TYPE_LOONGARCH_DINTC "loongarch_dintc"
+ OBJECT_DECLARE_TYPE(LoongArchDINTCState, LoongArchDINTCClass, LOONGARCH_DINTC)
+@@ -25,7 +30,10 @@ struct LoongArchDINTCState {
+     SysBusDevice parent_obj;
+     MemoryRegion dintc_mmio;
+     DINTCCore *cpu;
++    int dev_fd;
+     uint32_t num_cpu;
++    uint64_t msg_addr_base;
++    uint64_t msg_addr_size;
+ };
+ 
+ struct LoongArchDINTCClass {
+@@ -34,3 +42,5 @@ struct LoongArchDINTCClass {
+     DeviceRealize parent_realize;
+     DeviceUnrealize parent_unrealize;
+ };
++
++void kvm_dintc_realize(DeviceState *dev, Error **errp);
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.54.0
 
 
