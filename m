@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC95DCD343F
-	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:58:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 465A4CD3442
+	for <qemu-devel@archiver.kernel.org>; Thu,  7 May 2026 15:58:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wL11L-0003V3-DD; Thu, 07 May 2026 11:52:15 -0400
+	id 1wL11K-0003UX-Ml; Thu, 07 May 2026 11:52:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL11H-0003SW-FR
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:11 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1wL11B-0003PB-Vw
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:06 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wL11F-0003og-8z
- for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:11 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4893940bb5eso6532035e9.3
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:52:08 -0700 (PDT)
+ id 1wL11A-0003lv-2E
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 11:52:05 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-43d75312379so1493606f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 08:52:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778169127; x=1778773927; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778169121; x=1778773921; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=/TGTY2rfTF+tJN36KyHrpTad81jz0jTI68kPGEzG8y8=;
- b=x2QTAT1Psi0nFJ4UKpG65sXeLZDFlmplsbiuMr+TV9/18/lLZ8KPmh84lnwluRPO0c
- EtTAUHyafmTQLQWF+98q+jRJ0wun9uQ0B3hxEEO8u89DP4eFm81dLQcJucnFofO9zxO1
- TIBufesqMeXdnyIx7cNIiCp+quxQxkeU8nb0nWecW2UCHIjfsMSwRydu2bI/4skMcCTs
- /z+46200GpFo9x/T9b31A+/DXQSqvrZpDqde4/kzDoCbvB6sugYsfeNKl6HdxC14CMtO
- DTkiOnSRefKc+g76FcPkzL7Mav0p0szgs7lQ74m4ZIALcCCWJTgjh9D8ou8GZ41VkjrO
- 9Fxw==
+ :reply-to; bh=Wbux916U6XlS/bYu86AQohdEy9iAPtgneA9MemaZ2OA=;
+ b=SxgF5OUIo/4aLV2rPtBCAvXS/6WAKf2BU7fUX0IvX6TBRU96Rt65yfU44BUvQhaZOG
+ OEeDa5c+L4R2HusHg+fd4MwPMZRAJnH0MuwSXWg7tO+WnrTGaLH0VVn1f0XpZDVX7Tm6
+ 2OixwbyKoM6E1z1caZbXmcIMvfnkmhzpBoInLwieI3/vSfG9WBCIFG/JY2y1tHWkkd/H
+ 70UtorovzlXaQnTs55qstEf8CUDlROFrI2auBxiEsryE4hJFKl50BYXGKGzLoBQosW82
+ MvuEHx5SLCaW6KV53mnX+9X8s0mAKqSzYhUAqkejka8Esa33kxvC3WcBM6mxXFj7aSSq
+ azWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778169127; x=1778773927;
+ d=1e100.net; s=20251104; t=1778169121; x=1778773921;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=/TGTY2rfTF+tJN36KyHrpTad81jz0jTI68kPGEzG8y8=;
- b=dzrPK5zTPGzMhGJENaTJRDO+9KTzaR8VwjrJeAb1xhz1vl+lOtEc+26vq26+UN59r8
- koWgYAJl5YEZr/aSKEFZohbz6PznAeXGLkfacHXCBC4E7AkCnimy6bQjSp0IQhZ11gdf
- FLhJcARnivBggSNnYZ41xpY/5unBk+KEIOc5VtK1nBsjDFVuUQsg2TN9aQ1xKzVjHSOc
- bDflxQyHIhQNRF5FDjaoUtW2z9F/jM/6kkuGblBA96p/RVVHJL4hB144wJbz+s6fhxYW
- wwVcAdGbCPkAG8cBJbikGn7bwziZUZfDEeMp72T8FuvKWotfhlhyLtERZ/4ZDRz3a9r2
- a64Q==
-X-Gm-Message-State: AOJu0Ywqq1Z1DJ2m2TJR0HxluOrLsdKSAPxqu/dnXMciOM8dypgr3AcZ
- orgkqoERKJnvi+U7NKXs7KClL/hZh9qBrJKiIozBhE+cQEvKgM4B26iKBpc3a1xtcxzg/fd4Q7M
- /k1AS
-X-Gm-Gg: AeBDiesSIKSoPLfp2OrmMIRdfBlTCZ8iM9sEe1O786rnIrx7KAg70zhCE4UGDmWKbKY
- Qdv5MZwty2I6QHmo2ss+BBKeMyjM5dj0qZl+XhnHKp0ccTTVerB9/PC0047VA4wDvobPXs603PV
- 9muUeXMbDuHIoY6gXZqrvIHw8VnDSOkArULFl5Hva5YUMhLnFV/Q2MelI8MCoeGzhTo4OrTF14a
- tjoczmrjl/m+TzJPn3QxGCL2/9H/JT2k8fpqa9H77vDbmSqygWNOmhIMksYs71Mc3/z7ZkIsm8t
- 4Um7Si5lR6zm4wZgmCXnbqv9r//iRxlkfLBYbj9WET9Z+5cMxHiEDkWziAh1D59qe+gmnUuOjua
- nNuuBLE+ROqHrg/OolKuMR/s9S1upwxdwVp+t7/s9CUiDsuqUNOHAaAD7TmDWcqQyG4liQNorgB
- DjoqV2+mOJe5YnuQRE3TOi4RGD3KPK96S9APQhjNz9Hs+qqvPg84isxo8oFjsxO8WssbfTwhE+u
- EOU6kZx6SmjTuquuO+YdqM0cPK8ICRruhL39wr3Kg==
-X-Received: by 2002:a05:600c:a305:b0:489:2005:b36e with SMTP id
- 5b1f17b1804b1-48e51f444e4mr91995585e9.19.1778169127512; 
- Thu, 07 May 2026 08:52:07 -0700 (PDT)
+ bh=Wbux916U6XlS/bYu86AQohdEy9iAPtgneA9MemaZ2OA=;
+ b=b/9ibFLjKeXFlnWB8HdBbtNQLWz4JaDVV8JdHC6T0sed+wolcEAqpLRWudaighcSlF
+ AiMYZFD4jFojElCX4or3nH6Nnk+5fKmlUhgb8hmYri9VzrpKFGDheVDyXCnoYqC2w85l
+ 1rOlHT6LqBVYdKK/6+O54NOV0pfJVs0APnLZjBNO4lkEdMq2LG+4ebRCs2pJuxm/MvB9
+ ly1MKGIILW/qO3qSTDowmZ+YWD3jU92QW+sRBxxTJTFsgIbljyJoWIWCAXfRC3SbJnZP
+ Q0ifkWgaIMGzxBdjPQyPk0j9aK35zZVdOk25PsfrY+5bay70V71b2a5SV9qIWDu8o1lo
+ D6rg==
+X-Gm-Message-State: AOJu0Yy2CqmlbYuN1kz84UG7vqch9CRn8rbP6sZDuu94m6v2YJ1R/bZM
+ FAkBwhuFY3kq0S3mK56WEGTU3TLWMCq86eKFDBib9xyn8rilDe+GZiWozOP5Koe5Z8JAjc3mIq1
+ gb20R
+X-Gm-Gg: AeBDieur4m25R8Pk1pPRaO1EKGBOJ2WVfJL2j0+vGdj0yYs5NDVnZe1NMIWfq+qEfN0
+ BblfuQmdS1/pEQotxh5KiIjCKrjXrL0i070gxsu0pNagGMt9FuBqFdETYuaJpWndH8U/AOKY3Q+
+ ClWvjuXxgqNh6ooU5PXdtFuKraZOMTGz/t70zf9p74N7CuKxNgypf3bAYwRh/qF+yJNmOF0B+sJ
+ Z23Y5rwbt3b8YQdUf+jrtHTQbp28/UreOY/vegnJbTIU2ATgNiMjb68CFo5jXH240jdK+qJLx4H
+ IuqMmfjg8pucq0sDdMjlwfmcMfwRab2jr9XK+p2WmXttH3Es2i4r8yQUpB5FeL119RNHXjq0JY0
+ yzhNNPS1aa/gVM2J9V9KftcRNLKaxrrXYemOwh3GguYrITujLqfRpbhVHmGLQUOnceSW5hXhoqI
+ eak0XxGd+wLMN8TIWaOIdKx3lfvQtt82Mg3UIcIiw46OQNUjz8jG60LBrLT8mvQKAJJ7mV2fUld
+ dIsUA7efTJAvlzp4jJtiBQeQWje1Q7bre7phIPhpA==
+X-Received: by 2002:a05:600c:4f08:b0:48a:79d8:a8d6 with SMTP id
+ 5b1f17b1804b1-48e6391c7e4mr5238075e9.7.1778169121313; 
+ Thu, 07 May 2026 08:52:01 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.06
+ 5b1f17b1804b1-48e5312df8dsm41552195e9.18.2026.05.07.08.52.00
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 07 May 2026 08:52:06 -0700 (PDT)
+ Thu, 07 May 2026 08:52:00 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/67] hw/intc/arm_gicv5: Add defines for GICv5 architected PPIs
-Date: Thu,  7 May 2026 16:51:00 +0100
-Message-ID: <20260507155154.1886557-14-peter.maydell@linaro.org>
+Subject: [PULL 06/67] hw/intc/arm_gicv5: Add migration blocker
+Date: Thu,  7 May 2026 16:50:53 +0100
+Message-ID: <20260507155154.1886557-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260507155154.1886557-1-peter.maydell@linaro.org>
 References: <20260507155154.1886557-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,47 +100,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GICv5 defines architected numbers for the PPI sources like the
-generic timer and the PMU; these are different from the ones
-traditionally used by GICv2 and GICv3.  Add defines for them.
+This initial version of the GICv5 will not support migration:
+
+ * the spec is still only at EAC level, so the data to be
+   migrated might in theory change before it is finalised
+ * when we add support for missing features like EL2/EL3/Realm
+   we might find we want to refactor the data structures we use
+ * I still need to check against the proposed KVM GICv5
+   handling to see if there are any awkward mismatches
+   that might affect how we want to store the data
+ * it's experimental, so for pragmatic reasons I'm skipping
+   it to get the initial version done faster
+
+Install a migration blocker to enforce this.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260327111700.795099-14-peter.maydell@linaro.org
+Message-id: 20260327111700.795099-7-peter.maydell@linaro.org
 ---
- include/hw/intc/arm_gicv5_types.h | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ hw/intc/arm_gicv5.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/include/hw/intc/arm_gicv5_types.h b/include/hw/intc/arm_gicv5_types.h
-index 49dc1d6e95..7d23752ece 100644
---- a/include/hw/intc/arm_gicv5_types.h
-+++ b/include/hw/intc/arm_gicv5_types.h
-@@ -25,4 +25,24 @@ typedef enum GICv5Domain {
+diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+index 3a9d566924..64bec16bdd 100644
+--- a/hw/intc/arm_gicv5.c
++++ b/hw/intc/arm_gicv5.c
+@@ -11,6 +11,7 @@
+ #include "qapi/error.h"
+ #include "qemu/log.h"
+ #include "trace.h"
++#include "migration/blocker.h"
  
- #define NUM_GICV5_DOMAINS 4
+ OBJECT_DEFINE_TYPE(GICv5, gicv5, ARM_GICV5, ARM_GICV5_COMMON)
  
-+/* Architected GICv5 PPIs (as listed in R_XDVCM) */
-+#define GICV5_PPI_S_DB_PPI 0
-+#define GICV5_PPI_RL_DB_PPI 1
-+#define GICV5_PPI_NS_DB_PPI 2
-+#define GICV5_PPI_SW_PPI 3
-+#define GICV5_PPI_HACDBSIRQ 15
-+#define GICV5_PPI_CNTHVS 19
-+#define GICV5_PPI_CNTHPS 20
-+#define GICV5_PPI_PMBIRQ 21
-+#define GICV5_PPI_COMMIRQ 22
-+#define GICV5_PPI_PMUIRQ 23
-+#define GICV5_PPI_CTIIRQ 24
-+#define GICV5_PPI_GICMNT 25
-+#define GICV5_PPI_CNTHP 26
-+#define GICV5_PPI_CNTV 27
-+#define GICV5_PPI_CNTHV 28
-+#define GICV5_PPI_CNTPS 29
-+#define GICV5_PPI_CNTP 30
-+#define GICV5_PPI_TRBIRQ 31
+@@ -173,6 +174,7 @@ static void gicv5_realize(DeviceState *dev, Error **errp)
+ {
+     GICv5Common *cs = ARM_GICV5_COMMON(dev);
+     GICv5Class *gc = ARM_GICV5_GET_CLASS(dev);
++    Error *migration_blocker = NULL;
+ 
+     ERRP_GUARD();
+ 
+@@ -181,6 +183,12 @@ static void gicv5_realize(DeviceState *dev, Error **errp)
+         return;
+     }
+ 
++    error_setg(&migration_blocker,
++               "Live migration disabled: not yet supported by GICv5");
++    if (migrate_add_blocker(&migration_blocker, errp)) {
++        return;
++    }
 +
- #endif
+     /*
+      * When we implement support for more than one interrupt domain,
+      * we will provide some QOM properties so the board can configure
 -- 
 2.43.0
 
