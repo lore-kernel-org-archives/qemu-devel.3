@@ -4,156 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 519F9CD342F
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 18:40:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F5B0CD37AC
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 18:56:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLQ7a-0001xZ-RW; Fri, 08 May 2026 14:40:22 -0400
+	id 1wLQMQ-0004N2-RW; Fri, 08 May 2026 14:55:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wLQ7Y-0001wQ-HE
- for qemu-devel@nongnu.org; Fri, 08 May 2026 14:40:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1wLQ7W-0003gE-K9
- for qemu-devel@nongnu.org; Fri, 08 May 2026 14:40:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778265617;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ifnBJFuVWN6f5JAPw0tnWlra13adtcSIs20bS3AoiKc=;
- b=Fqpuz1oo6op/ZQHKIgFXQZLCOPAPKc6ADHHK0VC93Nu8m/vDhYfc0vJxwev9cNnL3j+aee
- kYHjNq+4xgRUcev8ehDL9a8EgWFKgU+PwPG/sFsXD4X0LGnnJJ0xvG6Eb3dfY18R2yYeKW
- Qpz5dkCockS8hWSlPv809Z3gM4pg5pc=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-574-3UmDpV1bOzGcLK2cvNjwHQ-1; Fri, 08 May 2026 14:40:15 -0400
-X-MC-Unique: 3UmDpV1bOzGcLK2cvNjwHQ-1
-X-Mimecast-MFC-AGG-ID: 3UmDpV1bOzGcLK2cvNjwHQ_1778265614
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-43d7d0947aeso1407062f8f.3
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 11:40:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wLQMO-0004Mm-Fp
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 14:55:40 -0400
+Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wLQML-0007Xq-Uc
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 14:55:39 -0400
+Received: by mail-oi1-x232.google.com with SMTP id
+ 5614622812f47-464bc03efd8so1249387b6e.2
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 11:55:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778265614; x=1778870414; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=ifnBJFuVWN6f5JAPw0tnWlra13adtcSIs20bS3AoiKc=;
- b=KfV+rDHWWt1UkSexBvj8ndM/ucT7+Mv7S4FFGTBobHzgMq8QkU4ObGHYXpOtF/0IeR
- tkIdmCGppjhM/BZl4/1MnObONdWUB6VJu8vmV7m116vW62XxuqbGYO3KFw0r9ivVevgq
- 8d2SBpMzJ77fR4IXtNJoTvMFWhfpK798ECD3bQIkkOFC2gtytO4OgZ2M2hvo62xO1OTD
- Dk/kE39aZqcLr838LVXhdMBydfC+L4/vRLjvNOO4qmwUDIhjScRJPTgpdJaOOOkbDS2T
- T5lf0cGaaFNN5FHwt4VRUFHlFvN7hVU0XlompRwkv2ehtGwK3qxBFOzhT6MoqowM3i08
- rD1A==
+ d=linaro.org; s=google; t=1778266536; x=1778871336; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=bKlzN3cOMUIXdZzJqwRdCg4TyRgGc3SBwiMsvJHKBCY=;
+ b=yyc6TwNaFPY/6irL/Nw+uN/WIe7DI6wBeVnyeaLiyWlacY+K6LOtc9SLXjgzHGnEOU
+ vj5L/g1L9JgK1A4FiQrjCgxvsIp/vm5CYaJN7YnZCSw9qpSmnVqnFentRayD3qsIbtcd
+ Lca/M8BrPpr0dy6v6aioeJqcFFyoeGwGMWIjSgQ2pyyGyWZv4ij9CvI23qiXRjJwpS41
+ lk9R6Dljc1q1EZH4z6v5jAuBrYfjAJFrzh2mjm9HdMjU3EVUdoeb8cJogHsorG7UeS7m
+ IgDlOg02S46ka1MJ5Ck624guQAbU7/UM67Mb/VqsvTDz0v8+iL0FdKl4VRBdKcGdwOas
+ 1TKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778265614; x=1778870414;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ifnBJFuVWN6f5JAPw0tnWlra13adtcSIs20bS3AoiKc=;
- b=SynwZGjBrcAT04fuLUGHS+3K8npeb9WXLDtYECtN1kniW3hrSx+0IcbWZGiNWuop/L
- TYqdJD5ZitoTKsv2SVkOuwpPZAzQEMtUxnsXTT7b2vwOJbMWh2EtvXePjI73Am27S31J
- Z+HfNFEypoZr9v5G6/z8Q4DNAOa6p+RerSlXbgpoV3yBt9Mux7Zpj/Hv4xLYlowiDavM
- V2eBM9xK1ztr+5BhqtTHG6mFLUI9sHW9osIki5Nv/g6LDe1FPPjBcSkz4QRX607r8wjm
- Qsf/ilAL0iNjErpLZf8cEEjMD2DAjIk26yAQ/odJO2IAQFbpnOlO2XO8r5zGC97+5iSB
- RSrQ==
+ d=1e100.net; s=20251104; t=1778266536; x=1778871336;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bKlzN3cOMUIXdZzJqwRdCg4TyRgGc3SBwiMsvJHKBCY=;
+ b=fwZSndCEhgCZ3tiXpZiFx+Tc8sFmmdOGEBMJtWqM2wmFyG6XS9N1uszOLeujAfpTq5
+ dTOziZsQdJRdgBsihiEz6EClzaZ3JA/M1Nhh5M7fQ4Pb8YjZJxarkuSWNBda8eiWVa8I
+ K10Ra2DZjE3XCb1yMqmWwG/6Eb4ajH3caO3KLekTLoRTyx/gQ1PVm5zFL/ZCdOIzR31P
+ Bb1OhivlZm1KmANHYMIKfbY51gPop3HIYCBb/cRT1be7ffZwHmy/bV4L7kQIS0i2xHrT
+ 4KigfYCumu8PdqD35H4oyzRMtc13z8Qzo9bjnr4JP87S1QhRzChf34xzwdONjkEzAqoG
+ vh0g==
 X-Forwarded-Encrypted: i=1;
- AFNElJ97chU39OaY7lcd4TXjFzYLhTQ0ePKF50H5AnJKb7vF41xXy5NEQf4ImI2ZuzxnNsgYlSatn6eiGd4m@nongnu.org
-X-Gm-Message-State: AOJu0YwEmUBfD5a2mEL7qXnh1hg4qN2dL1k5XOxvxgAAKZELwRJPupxB
- aBN07pj7CfwO4lFi4FoQwknnmxE1SkEISCm008O430STwejT+fXAELn9yFVQNuKXOEJvXDy5kTk
- LoL5Gz1h2OhXafsD4RjsKtHXmCR0wVrHOCtJ2E4lhUgcH92f8pI8k6HP4
-X-Gm-Gg: AeBDievSBYV7nVw8sniPfI2exbfGX4nHLLUXFOIYBr78QxIQ8cb3icp4WD6B94JXgfN
- EuccdXjx1+AYTdEXr4Pf44G3Pvnrf0dwp58CqBI4R4/C25wdaOr86ZOs5lazNR7XBGRKbyW0wtV
- 3d8d0SFI0CjymHl4v8gFCzRHwr2zzLUN2ow5R2LN3APuEjOsmXZyTENJXDVDB076NEg4SdZ6a+L
- hsw0T3+r8TO0nT6V4u4/VOnsmMGsAkUA3euWCsKdnkxumVhHtQDAdBbD7qJy6/9F3fviYpw5he2
- IxuC690XnsioaGlryIyasZ4I/aCn822mqnDx0zpPKvqGwi/rxu1Mtj7nJ3r6REP5jddVWU822H5
- iywQyZ71yQnON2g0HGg==
-X-Received: by 2002:a05:600c:3548:b0:48a:7aad:4425 with SMTP id
- 5b1f17b1804b1-48e51e097fcmr209796365e9.3.1778265614318; 
- Fri, 08 May 2026 11:40:14 -0700 (PDT)
-X-Received: by 2002:a05:600c:3548:b0:48a:7aad:4425 with SMTP id
- 5b1f17b1804b1-48e51e097fcmr209796005e9.3.1778265613845; 
- Fri, 08 May 2026 11:40:13 -0700 (PDT)
-Received: from [192.168.0.9] ([47.64.113.85]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548e6a73c3sm6676812f8f.3.2026.05.08.11.40.11
+ AFNElJ/a+rmW+93ta4G77lNwydb839zeZQM2WVd53mIfEHKz9BO+Sk0o4O2cgtr9v8CJSRtHAH30mc0iRoIz@nongnu.org
+X-Gm-Message-State: AOJu0YyOF/fxsaeD/mzTRCcsYWe9isS3hwM4si9UTSLwaAJij2hOUcuA
+ XElrIhJrpgsSH2v9vbWixWJXg3savX3X5VHFxAxj/RySiaA0+sUnlVghZGGNPn3hjIE=
+X-Gm-Gg: AeBDiete5J5O0ZxyxtkRH8uy5TzY+FPID/vBEvPLGnx/MCAJ2RDKg/VnjmsVkdjY7TL
+ iLbrJDZg4X4DRH4MbAwar/n5EO1CXl0XAR9+0Qn65/j3vKfer19uuOnahWJl4x/VRpGziFbXpeI
+ xkvygBxiREfhWAD6IEKBabR3uob1iNhzO6CJ+eiblD3bhBYuI00j20Ss4NIPGvCD69bs185cTNS
+ JofZIeJ+w4Rygy4xIpABEMwLvmCMlEBsMLMeryJO5ZTDM1oRh8HLjCZZwGjLfgTFZX8uh481ZRp
+ PVKt50h7XKognr6DrvGCASQsPeyoTo1mFNg8glggAdaPKBAtc/nS2DLKkqNiCGrb6kLI/4MPwrH
+ EdEKoNWr7kV5SKm4n2+HvX15mCDFPqgD9GWg/gSEfe39/N1e494ykUhL3b3QXqTeei+04FdtHpQ
+ KzqB8/kzn9lo680/j8SADKYF6IMFcYbMcCuHVuK5sgCYfyt4Fp9SH6+Zs7qMNw60xJvF4n1E5K0
+ OEoIOj81Gfb8jKz4SfaxSiy+JsWpQY=
+X-Received: by 2002:a05:6808:3c4f:b0:47c:9ba5:d930 with SMTP id
+ 5614622812f47-480422d94d9mr8772855b6e.25.1778266536551; 
+ Fri, 08 May 2026 11:55:36 -0700 (PDT)
+Received: from ?IPV6:2600:381:c938:6375:4b0a:aabe:cbe1:bd0c?
+ ([2600:381:c938:6375:4b0a:aabe:cbe1:bd0c])
+ by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-47c76936271sm15065348b6e.9.2026.05.08.11.55.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 May 2026 11:40:13 -0700 (PDT)
-Message-ID: <2d536b87-9d67-4e8e-88b2-c9c868514083@redhat.com>
-Date: Fri, 8 May 2026 20:40:10 +0200
+ Fri, 08 May 2026 11:55:36 -0700 (PDT)
+Message-ID: <04ad5869-903c-4248-bc61-3656a09e2c97@linaro.org>
+Date: Fri, 8 May 2026 13:55:33 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/s390x: Fix memory leaks after removing elements with
- QTAILQ_REMOVE
-To: Matthew Rosato <mjrosato@linux.ibm.com>, Farhan Ali
- <alifm@linux.ibm.com>, qemu-s390x@nongnu.org
-Cc: Eric Farman <farman@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, qemu-devel@nongnu.org
-References: <20260506174135.2630613-1-thuth@redhat.com>
- <946651d9-0cd5-4482-96e5-a4c59b4d5fcc@linux.ibm.com>
- <1400ae28-5bac-4c18-afa2-64fd11293c05@redhat.com>
- <070d2e8f-dcba-4846-9d0c-a733fb2b1448@linux.ibm.com>
+Subject: Re: [PATCH v4 1/6] target/xtensa/core: register types using type_init
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>, marcandre.lureau@redhat.com,
+ Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20260505224826.2698753-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260505224826.2698753-2-pierrick.bouvier@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <070d2e8f-dcba-4846-9d0c-a733fb2b1448@linux.ibm.com>
+In-Reply-To: <20260505224826.2698753-2-pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x232.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,47 +111,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08/05/2026 19.25, Matthew Rosato wrote:
-> On 5/7/26 3:31 AM, Thomas Huth wrote:
->> On 06/05/2026 21.45, Matthew Rosato wrote:
->>> On 5/6/26 1:41 PM, Thomas Huth wrote:
->>>> From: Thomas Huth <thuth@redhat.com>
->>>>
->>>> The elements that get removed with QTAILQ_REMOVE are never referenced
->>>> afterwards anymore, so the corresponding memory should get freed.
-...
->>> Thanks Thomas!  Code looks good and I did some regression testing with
->>> this patch applied:
->>>
->>> Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
->>> Tested-by: Matthew Rosato <mjrosato@linux.ibm.com>
->>>
->>> Should we also consider adding:
->>>
->>> Fixes: b354d5d804 ("s390x/pci: clean up s390 PCI groups")
->>> Fixes: 37fa32de70 ("s390x/pci: Honor DMA limits set by vfio")
->>
->> Yes, that makes sense.
->>
->> Actually, looking at the commit description of b354d5d804, I think this
->> code has been added with a wrong assumption: The unrealize method is not
->> called during system reset.
-...
-> So: I wonder if the proper thing to do is to refcount the groups during
-> plug and remove them from the list during unplug when refcount hits 0
-> (and of course, add the missing g_free here) -- with special handling
-> for the default group that should never go away.
+On 5/5/26 17:48, Pierrick Bouvier wrote:
+> Instead of using a static constructor, delay registering those types
+> until we call module_init(MODULE_INIT_QOM).
 > 
-> Which is probably more than you signed on for with this patch ;) If
-> you'd like, I can instead sort this out and give you a reported-by?
+> This is not yet a problem, but since we will start initializing
+> target-info types before any other, without this patch
+> qemu-system-xtensa* fails with:
+> Type 'dsp3400-xtensa-cpu' is missing its parent 'xtensa-cpu'
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> ---
+>   target/xtensa/overlay_tool.h | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/xtensa/overlay_tool.h b/target/xtensa/overlay_tool.h
+> index 701c00eed20..b9eaffa4871 100644
+> --- a/target/xtensa/overlay_tool.h
+> +++ b/target/xtensa/overlay_tool.h
+> @@ -451,13 +451,14 @@
+>   
+>   #if TARGET_BIG_ENDIAN == (XCHAL_HAVE_BE != 0)
+>   #define REGISTER_CORE(core) \
+> -    static void __attribute__((constructor)) register_core(void) \
+> +    static void register_core(void) \
+>       { \
+>           static XtensaConfigList node = { \
+>               .config = &core, \
+>           }; \
+>           xtensa_register_core(&node); \
+> -    }
+> +    } \
+> +    type_init(register_core)
+>   #else
+>   #define REGISTER_CORE(core)
+>   #endif
 
-Yes, sounds good!
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-> Meanwhile you could still split out the fix to s390_pci_end_dma_count()
-> and send that one again by itself (w/ Fixes: 37fa32de70)
-
-Sure, I'll send a v2 that contains only the other change.
-
-  Thomas
-
+r~
 
