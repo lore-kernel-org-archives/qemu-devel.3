@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5960CD3436
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 11:25:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9C9FCD3447
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 11:26:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLJK8-0000dR-9y; Fri, 08 May 2026 07:24:52 -0400
+	id 1wLJKL-0000nQ-Nr; Fri, 08 May 2026 07:25:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wLJK6-0000dA-Ry
- for qemu-devel@nongnu.org; Fri, 08 May 2026 07:24:50 -0400
+ id 1wLJKK-0000hC-ED
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 07:25:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wLJK5-0004qN-9i
- for qemu-devel@nongnu.org; Fri, 08 May 2026 07:24:50 -0400
+ id 1wLJKI-0004u0-P7
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 07:25:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778239488;
+ s=mimecast20190719; t=1778239501;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8Qw95Rr2nhMPOvK9li1D/zcB3kAu9EHrXRsUOSiefiQ=;
- b=Xpsr0MlshYv419VjaOmXKLCn/pQWHN5iAcvmMjAX3empb4RVJbjTQ6TLVOiowJTNPPEZbD
- cbu4ximV/r9+Sp3Ev9ocn3r2qEAkIBsz9FhjePl8tZNulbLlp6OhgArnVi2KMMTTuAyHgE
- h2LEkowRvjyxjGoyO6DTi2q2bz7UAuA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=19Mg2EdExOT050N3vQjL+MBdUKKskeVvo0VAIBOOz8Q=;
+ b=QOcZ1SpsoaRa3bZu2u4O5ZwOe9qyE0RtsrTmzy6H3bAplDV4JGFFOzrOXhQqX87idxy2uz
+ AuYs7pIwtZ0iNNq5IS7Womeb3KFIseOkxUx/bULsB3JY4M1WLzKqLYQmKkyiP0uUkdhGOG
+ mxfYv/Y2bGMmETT1UeA28MMRA3Cjkuk=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-623-Igk8JbgFO1SOg2OVkaXNvQ-1; Fri,
- 08 May 2026 07:24:45 -0400
-X-MC-Unique: Igk8JbgFO1SOg2OVkaXNvQ-1
-X-Mimecast-MFC-AGG-ID: Igk8JbgFO1SOg2OVkaXNvQ_1778239484
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-9-xYCotfSAMUalYSDtjEDExA-1; Fri,
+ 08 May 2026 07:25:00 -0400
+X-MC-Unique: xYCotfSAMUalYSDtjEDExA-1
+X-Mimecast-MFC-AGG-ID: xYCotfSAMUalYSDtjEDExA_1778239499
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 326D319560B7; Fri,  8 May 2026 11:24:44 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5B7AA1956089; Fri,  8 May 2026 11:24:59 +0000 (UTC)
 Received: from berrange.com (unknown [10.44.32.204])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 248A5180034E; Fri,  8 May 2026 11:24:41 +0000 (UTC)
+ id 8709C1803A8E; Fri,  8 May 2026 11:24:57 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PATCH v2 04/10] qom: shorten name of
- object_set_properties_from_keyval
-Date: Fri,  8 May 2026 12:24:23 +0100
-Message-ID: <20260508112429.643360-5-berrange@redhat.com>
+Subject: [PATCH v2 10/10] qom: drop user_creatable_add_type method
+Date: Fri,  8 May 2026 12:24:29 +0100
+Message-ID: <20260508112429.643360-11-berrange@redhat.com>
 In-Reply-To: <20260508112429.643360-1-berrange@redhat.com>
 References: <20260508112429.643360-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -88,126 +87,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This matches the convention established by the object_set_props and
-object_set_propv methods.
+This can be replaced by object_new_with_props_from_qdict, which does
+functionally the same job, but the caller does not own the returned
+reference, instead the parent object owns it.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+In one case we can use object_new_with_props_from_qdict_owned instead
+since the object is not intended to have any parent.
+
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- include/qom/object.h    |  6 +++---
- qom/object_interfaces.c | 12 ++++++------
- system/qdev-monitor.c   |  4 ++--
- system/vl.c             |  7 ++++---
- 4 files changed, 15 insertions(+), 14 deletions(-)
+ authz/listfile.c                |  4 +-
+ include/qom/object_interfaces.h | 18 ---------
+ qom/object_interfaces.c         | 70 ++-------------------------------
+ tests/unit/check-qom-proplist.c |  5 +--
+ 4 files changed, 7 insertions(+), 90 deletions(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index c7d80914fb..d841c338a2 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -915,7 +915,7 @@ type_init(do_qemu_init_ ## type_array)
- bool type_print_class_properties(const char *type);
+diff --git a/authz/listfile.c b/authz/listfile.c
+index 13741d5a72..23655f8663 100644
+--- a/authz/listfile.c
++++ b/authz/listfile.c
+@@ -79,8 +79,8 @@ qauthz_list_file_load(QAuthZListFile *fauthz, Error **errp)
  
- /**
-- * object_set_properties_from_keyval:
-+ * object_set_props_from_keyval:
-  * @obj: a QOM object
-  * @qdict: a dictionary with the properties to be set
-  * @from_json: true if leaf values of @qdict are typed, false if they
-@@ -925,8 +925,8 @@ bool type_print_class_properties(const char *type);
-  * For each key in the dictionary, parse the value string if needed,
-  * then set the corresponding property in @obj.
+     v = qobject_input_visitor_new(obj);
+ 
+-    ret = (QAuthZ *)user_creatable_add_type(TYPE_QAUTHZ_LIST,
+-                                            NULL, pdict, v, errp);
++    ret = QAUTHZ(object_new_with_props_from_qdict_parentless(
++                     TYPE_QAUTHZ_LIST, pdict, v, errp));
+ 
+  cleanup:
+     visit_free(v);
+diff --git a/include/qom/object_interfaces.h b/include/qom/object_interfaces.h
+index 02b11a7ef0..e2b8615617 100644
+--- a/include/qom/object_interfaces.h
++++ b/include/qom/object_interfaces.h
+@@ -69,24 +69,6 @@ bool user_creatable_complete(UserCreatable *uc, Error **errp);
   */
--void object_set_properties_from_keyval(Object *obj, const QDict *qdict,
--                                       bool from_json, Error **errp);
-+void object_set_props_from_keyval(Object *obj, const QDict *qdict,
-+                                  bool from_json, Error **errp);
+ bool user_creatable_can_be_deleted(UserCreatable *uc);
  
+-/**
+- * user_creatable_add_type:
+- * @type: the object type name
+- * @id: the unique ID for the object
+- * @qdict: the object properties
+- * @v: the visitor
+- * @errp: if an error occurs, a pointer to an area to store the error
+- *
+- * Create an instance of the user creatable object @type, placing
+- * it in the object composition tree with name @id, initializing
+- * it with properties from @qdict
+- *
+- * Returns: the newly created object or NULL on error
+- */
+-Object *user_creatable_add_type(const char *type, const char *id,
+-                                const QDict *qdict,
+-                                Visitor *v, Error **errp);
+-
  /**
-  * object_class_dynamic_cast_assert:
+  * user_creatable_add_qapi:
+  * @options: the object definition
 diff --git a/qom/object_interfaces.c b/qom/object_interfaces.c
-index 415cbee8c5..4377d65b76 100644
+index e0a3cd8d0f..7080f85f95 100644
 --- a/qom/object_interfaces.c
 +++ b/qom/object_interfaces.c
-@@ -44,8 +44,8 @@ bool user_creatable_can_be_deleted(UserCreatable *uc)
+@@ -44,75 +44,11 @@ bool user_creatable_can_be_deleted(UserCreatable *uc)
      }
  }
  
--static void object_set_properties_from_qdict(Object *obj, const QDict *qdict,
--                                             Visitor *v, Error **errp)
-+static void object_set_props_from_qdict(Object *obj, const QDict *qdict,
-+                                        Visitor *v, Error **errp)
- {
-     const QDictEntry *e;
- 
-@@ -62,8 +62,8 @@ out:
-     visit_end_struct(v, NULL);
- }
- 
--void object_set_properties_from_keyval(Object *obj, const QDict *qdict,
--                                       bool from_json, Error **errp)
-+void object_set_props_from_keyval(Object *obj, const QDict *qdict,
-+                                  bool from_json, Error **errp)
+-Object *user_creatable_add_type(const char *type, const char *id,
+-                                const QDict *qdict,
+-                                Visitor *v, Error **errp)
+-{
+-    ERRP_GUARD();
+-    Object *obj;
+-    ObjectClass *klass;
+-    Error *local_err = NULL;
+-
+-    if (id != NULL && !id_wellformed(id)) {
+-        error_setg(errp, QERR_INVALID_PARAMETER_VALUE, "id", "an identifier");
+-        error_append_hint(errp, "Identifiers consist of letters, digits, "
+-                          "'-', '.', '_', starting with a letter.\n");
+-        return NULL;
+-    }
+-
+-    klass = module_object_class_by_name(type);
+-    if (!klass) {
+-        error_setg(errp, "invalid object type: %s", type);
+-        return NULL;
+-    }
+-
+-    if (!object_class_dynamic_cast(klass, TYPE_USER_CREATABLE)) {
+-        error_setg(errp, "object type '%s' isn't supported by object-add",
+-                   type);
+-        return NULL;
+-    }
+-
+-    if (object_class_is_abstract(klass)) {
+-        error_setg(errp, "object type '%s' is abstract", type);
+-        return NULL;
+-    }
+-
+-    assert(qdict);
+-    obj = object_new_with_class(klass);
+-    object_set_props_from_qdict(obj, qdict, v, &local_err);
+-    if (local_err) {
+-        goto out;
+-    }
+-
+-    if (id != NULL) {
+-        object_property_try_add_child(object_get_objects_root(),
+-                                      id, obj, &local_err);
+-        if (local_err) {
+-            goto out;
+-        }
+-    }
+-
+-    if (!user_creatable_complete(USER_CREATABLE(obj), &local_err)) {
+-        if (id != NULL) {
+-            object_property_del(object_get_objects_root(), id);
+-        }
+-        goto out;
+-    }
+-out:
+-    if (local_err) {
+-        error_propagate(errp, local_err);
+-        object_unref(obj);
+-        return NULL;
+-    }
+-    return obj;
+-}
+-
+ void user_creatable_add_qapi(ObjectOptions *options, Error **errp)
  {
      Visitor *v;
-     if (from_json) {
-@@ -71,7 +71,7 @@ void object_set_properties_from_keyval(Object *obj, const QDict *qdict,
-     } else {
-         v = qobject_input_visitor_new_keyval(QOBJECT(qdict));
-     }
--    object_set_properties_from_qdict(obj, qdict, v, errp);
-+    object_set_props_from_qdict(obj, qdict, v, errp);
+     QObject *qobj;
+     QDict *props;
+-    Object *obj;
+ 
+     v = qobject_output_visitor_new(&qobj);
+     visit_type_ObjectOptions(v, NULL, &options, &error_abort);
+@@ -124,9 +60,9 @@ void user_creatable_add_qapi(ObjectOptions *options, Error **errp)
+     qdict_del(props, "id");
+ 
+     v = qobject_input_visitor_new(QOBJECT(props));
+-    obj = user_creatable_add_type(ObjectType_str(options->qom_type),
+-                                  options->id, props, v, errp);
+-    object_unref(obj);
++    object_new_with_props_from_qdict(ObjectType_str(options->qom_type),
++                                     object_get_objects_root(),
++                                     options->id, props, v, errp);
+     qobject_unref(qobj);
      visit_free(v);
  }
- 
-@@ -110,7 +110,7 @@ Object *user_creatable_add_type(const char *type, const char *id,
- 
-     assert(qdict);
-     obj = object_new_with_class(klass);
--    object_set_properties_from_qdict(obj, qdict, v, &local_err);
-+    object_set_props_from_qdict(obj, qdict, v, &local_err);
-     if (local_err) {
-         goto out;
-     }
-diff --git a/system/qdev-monitor.c b/system/qdev-monitor.c
-index e5b55e3004..dfc95a08c1 100644
---- a/system/qdev-monitor.c
-+++ b/system/qdev-monitor.c
-@@ -730,8 +730,8 @@ DeviceState *qdev_device_add_from_qdict(const QDict *opts,
-     qdict_del(properties, "bus");
-     qdict_del(properties, "id");
- 
--    object_set_properties_from_keyval(&dev->parent_obj, properties, from_json,
--                                      errp);
-+    object_set_props_from_keyval(&dev->parent_obj, properties, from_json,
-+                                 errp);
-     qobject_unref(properties);
-     if (*errp) {
-         goto err_del_dev;
-diff --git a/system/vl.c b/system/vl.c
-index d2f4044e5d..288819c409 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2009,7 +2009,8 @@ static bool object_create_early(const char *type)
- 
- static void qemu_apply_machine_options(QDict *qdict)
+diff --git a/tests/unit/check-qom-proplist.c b/tests/unit/check-qom-proplist.c
+index 954c898ce1..89de92b7d9 100644
+--- a/tests/unit/check-qom-proplist.c
++++ b/tests/unit/check-qom-proplist.c
+@@ -461,10 +461,9 @@ static void test_dummy_createlist_parentless(void)
+ static bool test_create_obj(QDict *qdict, Error **errp)
  {
--    object_set_properties_from_keyval(OBJECT(current_machine), qdict, false, &error_fatal);
-+    object_set_props_from_keyval(OBJECT(current_machine), qdict,
-+                                 false, &error_fatal);
- 
-     if (semihosting_enabled(false) && !semihosting_get_argc()) {
-         /* fall back to the -kernel/-append */
-@@ -2224,8 +2225,8 @@ static void qemu_create_machine(QDict *qdict)
-             keyval_parse(machine_class->default_machine_opts, NULL, NULL,
-                          &error_abort);
-         qemu_apply_legacy_machine_options(default_opts);
--        object_set_properties_from_keyval(OBJECT(current_machine), default_opts,
--                                          false, &error_abort);
-+        object_set_props_from_keyval(OBJECT(current_machine), default_opts,
-+                                     false, &error_abort);
-         qobject_unref(default_opts);
-     }
+     Visitor *v = qobject_input_visitor_new_keyval(QOBJECT(qdict));
+-    Object *obj = user_creatable_add_type(TYPE_DUMMY, "dev0", qdict, v, errp);
+-
++    Object *obj = object_new_with_props_from_qdict(
++        TYPE_DUMMY, object_get_objects_root(), "dev0", qdict, v, errp);
+     visit_free(v);
+-    object_unref(obj);
+     return !!obj;
  }
+ 
 -- 
 2.54.0
 
