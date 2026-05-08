@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F5B0CD37AC
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F600CD3445
 	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 18:56:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLQMQ-0004N2-RW; Fri, 08 May 2026 14:55:42 -0400
+	id 1wLQM8-0004Lb-W4; Fri, 08 May 2026 14:55:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wLQMO-0004Mm-Fp
- for qemu-devel@nongnu.org; Fri, 08 May 2026 14:55:40 -0400
-Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
+ id 1wLQM6-0004LS-S9
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 14:55:23 -0400
+Received: from mail-dy1-x1332.google.com ([2607:f8b0:4864:20::1332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wLQML-0007Xq-Uc
- for qemu-devel@nongnu.org; Fri, 08 May 2026 14:55:39 -0400
-Received: by mail-oi1-x232.google.com with SMTP id
- 5614622812f47-464bc03efd8so1249387b6e.2
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 11:55:37 -0700 (PDT)
+ id 1wLQM5-0007Uh-0t
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 14:55:22 -0400
+Received: by mail-dy1-x1332.google.com with SMTP id
+ 5a478bee46e88-2c156c4a9efso3178761eec.1
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 11:55:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778266536; x=1778871336; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778266519; x=1778871319; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=bKlzN3cOMUIXdZzJqwRdCg4TyRgGc3SBwiMsvJHKBCY=;
- b=yyc6TwNaFPY/6irL/Nw+uN/WIe7DI6wBeVnyeaLiyWlacY+K6LOtc9SLXjgzHGnEOU
- vj5L/g1L9JgK1A4FiQrjCgxvsIp/vm5CYaJN7YnZCSw9qpSmnVqnFentRayD3qsIbtcd
- Lca/M8BrPpr0dy6v6aioeJqcFFyoeGwGMWIjSgQ2pyyGyWZv4ij9CvI23qiXRjJwpS41
- lk9R6Dljc1q1EZH4z6v5jAuBrYfjAJFrzh2mjm9HdMjU3EVUdoeb8cJogHsorG7UeS7m
- IgDlOg02S46ka1MJ5Ck624guQAbU7/UM67Mb/VqsvTDz0v8+iL0FdKl4VRBdKcGdwOas
- 1TKg==
+ bh=TqQ7q5qS0MU5oGGFp6jCdYrumOm5X3Ek28lISUuERGI=;
+ b=AEHp953R7tTvQ57v8aA8ZrfzUf4GJTsFcaT14uwbr0nd5UUbC2yCpZkEsw4qWZ0Hkl
+ 0YgBl+PhDIw50LrUv6tAKZeQbkoS6r3KsO6nmXtOBKfeJi1QDIiDAR3d3nxMSU2J3f8F
+ yFsM38zObodw9GxtbWwIKgX5cH73E4CfT28X6qM4+brHmOzhun1oOgn5ooegOf1XSwdC
+ r9oBRPflSS+hrHOfqcrVvkre+Ngo22CKpiJnnzh0FsV2WRbTRopXX15uRvS8cA9O2UnQ
+ 0MtrPltm3cPCGdb5hD7poAjMZHPxYdzXClPsS4RB11stnrkCHt4O425Zc0eyfKt2yygZ
+ wXdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778266536; x=1778871336;
+ d=1e100.net; s=20251104; t=1778266519; x=1778871319;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=bKlzN3cOMUIXdZzJqwRdCg4TyRgGc3SBwiMsvJHKBCY=;
- b=fwZSndCEhgCZ3tiXpZiFx+Tc8sFmmdOGEBMJtWqM2wmFyG6XS9N1uszOLeujAfpTq5
- dTOziZsQdJRdgBsihiEz6EClzaZ3JA/M1Nhh5M7fQ4Pb8YjZJxarkuSWNBda8eiWVa8I
- K10Ra2DZjE3XCb1yMqmWwG/6Eb4ajH3caO3KLekTLoRTyx/gQ1PVm5zFL/ZCdOIzR31P
- Bb1OhivlZm1KmANHYMIKfbY51gPop3HIYCBb/cRT1be7ffZwHmy/bV4L7kQIS0i2xHrT
- 4KigfYCumu8PdqD35H4oyzRMtc13z8Qzo9bjnr4JP87S1QhRzChf34xzwdONjkEzAqoG
- vh0g==
+ bh=TqQ7q5qS0MU5oGGFp6jCdYrumOm5X3Ek28lISUuERGI=;
+ b=tDx7v59wPcIiGnngCaoqPIARi8NAo1kywT6fKj1J670WHYo5UZMB6MaDNTXG4+yo9Q
+ m2+Mkkl2wx1mt6GWDjaxzNaR2gHCp4TEfEaSYOI/HzABxTwcBG7Vk7VtpFB1rCCc0Kx8
+ kUYcbsz4usRNJJUx5GqWvu+hzDKR11TV6M7PplWqaPtzUSZbhVSUCj0yWCDpsi8ZNlWa
+ swpjVWEpd126Oe1ruJE7h4SZDoihF8Tz4Hs+ssefRoH13XghKrRfkw5E/Ci3PJtlEleb
+ 0BTfvH4/hBH8LIIYcRCfu3vfHBqh6G8B1YyZO97VKHeBP2SNRFZfNBFhtDLJBKBFY+fZ
+ Rwkg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/a+rmW+93ta4G77lNwydb839zeZQM2WVd53mIfEHKz9BO+Sk0o4O2cgtr9v8CJSRtHAH30mc0iRoIz@nongnu.org
-X-Gm-Message-State: AOJu0YyOF/fxsaeD/mzTRCcsYWe9isS3hwM4si9UTSLwaAJij2hOUcuA
- XElrIhJrpgsSH2v9vbWixWJXg3savX3X5VHFxAxj/RySiaA0+sUnlVghZGGNPn3hjIE=
-X-Gm-Gg: AeBDiete5J5O0ZxyxtkRH8uy5TzY+FPID/vBEvPLGnx/MCAJ2RDKg/VnjmsVkdjY7TL
- iLbrJDZg4X4DRH4MbAwar/n5EO1CXl0XAR9+0Qn65/j3vKfer19uuOnahWJl4x/VRpGziFbXpeI
- xkvygBxiREfhWAD6IEKBabR3uob1iNhzO6CJ+eiblD3bhBYuI00j20Ss4NIPGvCD69bs185cTNS
- JofZIeJ+w4Rygy4xIpABEMwLvmCMlEBsMLMeryJO5ZTDM1oRh8HLjCZZwGjLfgTFZX8uh481ZRp
- PVKt50h7XKognr6DrvGCASQsPeyoTo1mFNg8glggAdaPKBAtc/nS2DLKkqNiCGrb6kLI/4MPwrH
- EdEKoNWr7kV5SKm4n2+HvX15mCDFPqgD9GWg/gSEfe39/N1e494ykUhL3b3QXqTeei+04FdtHpQ
- KzqB8/kzn9lo680/j8SADKYF6IMFcYbMcCuHVuK5sgCYfyt4Fp9SH6+Zs7qMNw60xJvF4n1E5K0
- OEoIOj81Gfb8jKz4SfaxSiy+JsWpQY=
-X-Received: by 2002:a05:6808:3c4f:b0:47c:9ba5:d930 with SMTP id
- 5614622812f47-480422d94d9mr8772855b6e.25.1778266536551; 
- Fri, 08 May 2026 11:55:36 -0700 (PDT)
+ AFNElJ97pcZK51nPG57Mo0LZN87aXkPqqL5Btpm/alsAh9BuPEHwYrZnm8ebVWr3WQgYQL0NXxoput/o0J1H@nongnu.org
+X-Gm-Message-State: AOJu0YyVzqt1vnVOIsFpUN/a7tGF7H1CZDiTansiEFzI+TWrLnF1lHeg
+ hb3Bgs618jf10zw/XH5Ly24jDPv6hU5haKvk+7VgQHC51KBLvoQmLfaitYGRrc3dTR0=
+X-Gm-Gg: Acq92OEbfIiKezNxMB8AA4pAK2PDj2UA9rY8/H8IvJp4b+ibR7XXs67HkCbj/lcl4aG
+ CtMXh5xpgkkRA6uTeiKc3Vp/z3aJ6Q58eEMHUYjNkNCMg7nNpifYiHCExZ8mY7PMFAKaYcVy4X2
+ ZquN5rXDLxPeRDj0JvxNYWbd55vpE4Q9XgLorPetq0IOVvR7Ffdrj+Zt7i7cvq/wvw2SdkHGN3n
+ vvDWaDXREXEUMRJ2FH6oYNpXUaw0hxzSNAJUDeXF/goNDnHOkq0yuBvG8Tj7hvNxG4rjei5iQQl
+ AIfigIVGJHz0rz7EfpqjTxo7FKEhPLqU3Q6250AyR5kHqbOzIU80K+mAXbFDQjXQV2x4sCVP0Ff
+ 6vgIBBP0WXwQS+ay0LQMJVzhJ3O63i57Z2WbTases3g1oj4LCcueefqZSTOJRDkukDUgYpFyh19
+ JpPlGCds2aGcaBt+6bG7h2hGQ4wbZ3s4JG7a+hKg45miK4PTkuiFm+KNCEeU8HKehPG7kcToE7I
+ Vp7lqS67A==
+X-Received: by 2002:a05:7300:72c8:b0:2f5:23fb:9aac with SMTP id
+ 5a478bee46e88-2f550b4320amr7038565eec.31.1778266518614; 
+ Fri, 08 May 2026 11:55:18 -0700 (PDT)
 Received: from ?IPV6:2600:381:c938:6375:4b0a:aabe:cbe1:bd0c?
  ([2600:381:c938:6375:4b0a:aabe:cbe1:bd0c])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-47c76936271sm15065348b6e.9.2026.05.08.11.55.35
+ 5a478bee46e88-2f88885b87dsm3984642eec.21.2026.05.08.11.55.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 May 2026 11:55:36 -0700 (PDT)
-Message-ID: <04ad5869-903c-4248-bc61-3656a09e2c97@linaro.org>
-Date: Fri, 8 May 2026 13:55:33 -0500
+ Fri, 08 May 2026 11:55:18 -0700 (PDT)
+Message-ID: <21c6ed67-ad7a-440b-b6e8-20835cacd389@linaro.org>
+Date: Fri, 8 May 2026 13:55:14 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/6] target/xtensa/core: register types using type_init
+Subject: Re: [PATCH v4 2/6] qom/object: register OBJECT and INTERFACE QOM
+ types before main
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>, marcandre.lureau@redhat.com,
  Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -81,14 +82,14 @@ Cc: Anton Johansson <anjo@rev.ng>, marcandre.lureau@redhat.com,
  <philmd@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
  <berrange@redhat.com>
 References: <20260505224826.2698753-1-pierrick.bouvier@oss.qualcomm.com>
- <20260505224826.2698753-2-pierrick.bouvier@oss.qualcomm.com>
+ <20260505224826.2698753-3-pierrick.bouvier@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260505224826.2698753-2-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260505224826.2698753-3-pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x232.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1332;
+ envelope-from=richard.henderson@linaro.org; helo=mail-dy1-x1332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,43 +113,47 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/5/26 17:48, Pierrick Bouvier wrote:
-> Instead of using a static constructor, delay registering those types
-> until we call module_init(MODULE_INIT_QOM).
+> Those types are special, as they are the base of all other QOM types. In
+> next commit, we'll introduce an extra step in module initialization for
+> target-info-* types.
 > 
-> This is not yet a problem, but since we will start initializing
-> target-info types before any other, without this patch
-> qemu-system-xtensa* fails with:
-> Type 'dsp3400-xtensa-cpu' is missing its parent 'xtensa-cpu'
+> However, those types depend on TYPE_OBJECT, which is only registered
+> at MODULE_INIT_QOM step.
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> To avoid having to introduce another step, and modify all code calling
+> module_call_init(MODULE_INIT_QOM), we simply register those base types
+> directly in the static constructor, before anything else.
+> 
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 > ---
->   target/xtensa/overlay_tool.h | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
+>   qom/object.c | 4 +---
+>   1 file changed, 1 insertion(+), 3 deletions(-)
 > 
-> diff --git a/target/xtensa/overlay_tool.h b/target/xtensa/overlay_tool.h
-> index 701c00eed20..b9eaffa4871 100644
-> --- a/target/xtensa/overlay_tool.h
-> +++ b/target/xtensa/overlay_tool.h
-> @@ -451,13 +451,14 @@
+> diff --git a/qom/object.c b/qom/object.c
+> index f981e270440..a5d268d0722 100644
+> --- a/qom/object.c
+> +++ b/qom/object.c
+> @@ -2839,7 +2839,7 @@ static void object_class_init(ObjectClass *klass, const void *data)
+>                                     NULL);
+>   }
 >   
->   #if TARGET_BIG_ENDIAN == (XCHAL_HAVE_BE != 0)
->   #define REGISTER_CORE(core) \
-> -    static void __attribute__((constructor)) register_core(void) \
-> +    static void register_core(void) \
->       { \
->           static XtensaConfigList node = { \
->               .config = &core, \
->           }; \
->           xtensa_register_core(&node); \
-> -    }
-> +    } \
-> +    type_init(register_core)
->   #else
->   #define REGISTER_CORE(core)
->   #endif
+> -static void register_types(void)
+> +static void __attribute__((constructor)) register_types(void)
+>   {
+>       static const TypeInfo interface_info = {
+>           .name = TYPE_INTERFACE,
+> @@ -2857,5 +2857,3 @@ static void register_types(void)
+>       type_interface = type_register_internal(&interface_info);
+>       type_register_internal(&object_info);
+>   }
+> -
+> -type_init(register_types)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+As a followup QOM improvement, we could use this constructor to explicitly initialize 
+type_table, and drop type_table_get() and its continual checking for NULL.
+
 
 r~
 
