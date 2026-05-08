@@ -4,39 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EB95CD37A7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CB50CD3427
 	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 02:55:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLBM4-00079Q-GR; Thu, 07 May 2026 22:54:20 -0400
+	id 1wLBM4-000795-3t; Thu, 07 May 2026 22:54:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wLBM2-00078V-FJ
- for qemu-devel@nongnu.org; Thu, 07 May 2026 22:54:18 -0400
+ id 1wLBM1-00078H-JG
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 22:54:17 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wLBLz-0003r4-Sj
- for qemu-devel@nongnu.org; Thu, 07 May 2026 22:54:18 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1wLBLz-0003qt-P6
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 22:54:17 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxRXhUUP1pJ8EHAA--.275S3;
+ by gateway (Coremail) with SMTP id _____8Ax6HhUUP1pJsEHAA--.254S3;
  Fri, 08 May 2026 10:54:12 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJBx68FEUP1p3qd8AA--.38421S4;
- Fri, 08 May 2026 10:54:12 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJBx68FEUP1p3qd8AA--.38421S3;
+ Fri, 08 May 2026 10:54:10 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 2/3] hw/loongarch/virt: Define versioned virt machine
-Date: Fri,  8 May 2026 10:28:00 +0800
-Message-Id: <20260508022801.2637558-3-gaosong@loongson.cn>
+Subject: [PULL 1/3] hw/loongarch/virt: Define virt machine type with
+ type_init()
+Date: Fri,  8 May 2026 10:27:59 +0800
+Message-Id: <20260508022801.2637558-2-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20260508022801.2637558-1-gaosong@loongson.cn>
 References: <20260508022801.2637558-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBx68FEUP1p3qd8AA--.38421S4
+X-CM-TRANSID: qMiowJBx68FEUP1p3qd8AA--.38421S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,70 +66,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-Add versioned virt machine started from QEMU 11.1
+Define virt machine with function type_init(), so that qemu versioned
+virt machine can be added in later with similar method.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Song Gao <gaosong@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/loongarch/virt.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ hw/loongarch/virt.c | 29 ++++++++++++++++-------------
+ 1 file changed, 16 insertions(+), 13 deletions(-)
 
 diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index c134b102c2..f68ccdb12b 100644
+index 2fc1526130..c134b102c2 100644
 --- a/hw/loongarch/virt.c
 +++ b/hw/loongarch/virt.c
-@@ -1535,9 +1535,41 @@ static void virt_class_init(ObjectClass *oc, const void *data)
+@@ -1535,18 +1535,21 @@ static void virt_class_init(ObjectClass *oc, const void *data)
                                            "for PCI MMIO");
  }
  
-+#define DEFINE_VIRT_MACHINE_VERSION(latest, ...) \
-+    static void MACHINE_VER_SYM(class_init, virt, __VA_ARGS__)( \
-+        ObjectClass *oc, \
-+        const void *data) \
-+    { \
-+        MachineClass *mc = MACHINE_CLASS(oc); \
-+        MACHINE_VER_SYM(options, virt, __VA_ARGS__)(mc); \
-+        mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " LoongArch Virtual Machine"; \
-+        MACHINE_VER_DEPRECATION(__VA_ARGS__); \
-+        if (latest) { \
-+            mc->alias = "virt"; \
-+        } \
-+    } \
-+    static const TypeInfo MACHINE_VER_SYM(info, virt, __VA_ARGS__) = \
-+    { \
-+        .name = MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
-+        .parent = TYPE_LOONGARCH_VIRT_MACHINE, \
-+        .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
-+    }; \
-+    static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
-+    { \
-+        MACHINE_VER_DELETION(__VA_ARGS__); \
-+        type_register_static(&MACHINE_VER_SYM(info, virt, __VA_ARGS__)); \
-+    } \
-+    type_init(MACHINE_VER_SYM(register, virt, __VA_ARGS__));
-+
-+#define DEFINE_VIRT_MACHINE_AS_LATEST(major, minor) \
-+    DEFINE_VIRT_MACHINE_VERSION(true, major, minor)
-+#define DEFINE_VIRT_MACHINE(major, minor) \
-+    DEFINE_VIRT_MACHINE_VERSION(false, major, minor)
-+
- static const TypeInfo virt_machine_info = {
-     .name           = TYPE_LOONGARCH_VIRT_MACHINE,
-     .parent         = TYPE_MACHINE,
-+    .abstract       = true,
-     .instance_size  = sizeof(LoongArchVirtMachineState),
-     .class_init     = virt_class_init,
-     .instance_init  = virt_initfn,
-@@ -1553,3 +1585,8 @@ static void machvirt_machine_init(void)
- }
+-static const TypeInfo virt_machine_types[] = {
+-    {
+-        .name           = TYPE_LOONGARCH_VIRT_MACHINE,
+-        .parent         = TYPE_MACHINE,
+-        .instance_size  = sizeof(LoongArchVirtMachineState),
+-        .class_init     = virt_class_init,
+-        .instance_init  = virt_initfn,
+-        .interfaces = (const InterfaceInfo[]) {
+-         { TYPE_HOTPLUG_HANDLER },
+-         { }
+-        },
+-    }
++static const TypeInfo virt_machine_info = {
++    .name           = TYPE_LOONGARCH_VIRT_MACHINE,
++    .parent         = TYPE_MACHINE,
++    .instance_size  = sizeof(LoongArchVirtMachineState),
++    .class_init     = virt_class_init,
++    .instance_init  = virt_initfn,
++    .interfaces = (InterfaceInfo[]) {
++        { TYPE_HOTPLUG_HANDLER },
++        { }
++    },
+ };
  
- type_init(machvirt_machine_init);
-+
-+static void virt_machine_11_1_options(MachineClass *mc)
+-DEFINE_TYPES(virt_machine_types)
++static void machvirt_machine_init(void)
 +{
++    type_register_static(&virt_machine_info);
 +}
-+DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)
++
++type_init(machvirt_machine_init);
 -- 
 2.54.0
 
