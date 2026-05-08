@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8723BCD3436
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 10:47:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3ED4CD3436
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 10:49:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLIk0-000139-Li; Fri, 08 May 2026 06:47:32 -0400
+	id 1wLIlM-0001V9-66; Fri, 08 May 2026 06:48:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wLIjz-00012o-8v
- for qemu-devel@nongnu.org; Fri, 08 May 2026 06:47:31 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLIlJ-0001Uf-0G
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 06:48:53 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wLIjx-0004GD-E8
- for qemu-devel@nongnu.org; Fri, 08 May 2026 06:47:30 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-488b0e1b870so29315855e9.2
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 03:47:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLIlH-0004U5-Gv
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 06:48:52 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-488af9fdaa7so11308905e9.1
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 03:48:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778237247; x=1778842047; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9hmTdjAGYEFbjfkL65buTiS5hMFYJAuwkxpFwe5VIWc=;
- b=nUo7s2zoabm74gM7ayUfX6KsL0JbL6+DK6h0BgoIFEeMYj7F0FA3cUyie4k6KfIuQA
- SxErWFNk1ijcZhpvYxjMrlhXvCb1zyAR6/H3mhKjlfi71Q9NBvzawAahuiRAjY9rJCIg
- 3GoOmsnsC8e0c6XGKqnMxQEHDX7tDYhOZcuFczR01ORxJGV9H8ED8uKPWqzbhwJpdbtA
- 1hkAUkduKa0mZLgKYD9uEe1OktBeVXR6NOdKmZ+9tU1LFJy1myBbV8QtcfUSLSnCcpCd
- m39dVtJ82cDo2nebEYNN2Rcd3DooU62eYsA0sjZukw5MADNQQWtmpKVTPIH/bbQwqQZy
- G0sw==
+ d=linaro.org; s=google; t=1778237329; x=1778842129; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hRJOA6ZgQLrllULVnAZGeW+n1iykn4/klW5RV4J2ytA=;
+ b=K4sNtCOpp708dMp4QiUExS/TvXPnehBn9xHlH2NSboqzM7SqSwXHnIT0nTpt42JRMw
+ e6hnkTdHrR+gQZyyIwKECAbDNWldGxsFE+46qgFZPcYuRNSAuv5+id+JWDGMGqeDsYxO
+ WiCXHCTDsPCoLDVNLTucLIlCMOVJYL0C637sOJOuAQOFgnYApd7zrOcocAKC1HAcO3Xl
+ HnyRuzSmkfxigtu2Jg6ugW5ec64yWFaRy0KCy4qq9Lm10M5m98MZakYUhIF8wd7khv15
+ gM82HtkNwc/JU31UqTg+OwOfUVDRoSLEiSeGt096xVWjq2d9zPJZfkk8SXFo6Pi/Giwm
+ BCiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778237247; x=1778842047;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9hmTdjAGYEFbjfkL65buTiS5hMFYJAuwkxpFwe5VIWc=;
- b=AaaTourzqGHUfNou+SK4PyL3TgecrU+cNFVPem6VPLQgrlrJeY4AV2o+MUngIhI0Ap
- 549TUnEXpTLpyrydQ6+DQLiTzhVlJG1Ku2n1jrH6ws7FiVpJMiK1A232YIIi/4Mwt1gB
- Qjr1J8XvHU7NRsPJjAh3hWhYE2Pu1puHmL7mZlSHc66yTPig92WT4TnAAkaje9HcDOOC
- N1lBu8KECnI80lAsEGGB5Dfx+9IH2TeqROBofW6sFRqz7hTzGdEHDVqY4LtKEiKiGzrX
- TB4P3jCVqC0FjwqdCVlbUPBQTSKnYEBxHwfUkiu1ZZnTAftKM12z76H36n3IKGkZioxX
- /u+A==
-X-Gm-Message-State: AOJu0YzrQVCTPusmTuxeSIDagggmk1Znv5DY16Igc7/X1NsYSPzlE5AO
- piEt0a+EwvW5bSovh0Kcmv8odGO9kgZ6T+mx0p0g7EtZGA77Ton30AKMQezAtLtp1ZYC80AfFRc
- +q/Sj
-X-Gm-Gg: AeBDieu4lPdbvrLDPyNOe0F5E5j6OUQR26BanzTi5NYnXMI9Zi1kAoHTULgf+BR6T4H
- Hu0OG7q0JEw165tJtBJpm8/nhudS1DPqD/qCm+9u6Zulm2rWjuTCVtsjhrKbSOiUks6DqhQ2VK8
- tqoaHXEBMCsq9AG4iP1gEmNF9/3N7RH0bXwlDb3axD+Mt8aZicZBJC0M7PO/afaTSm+JL/ryzFd
- 9AGWND8kq23CNfv6An6rzeOmFzjrMffhwmg7pfF7BKu/OpBK3VY24FvcJGKBENEAhXJXi3Y36JE
- F7Kpo7AX2rzdHZ8U/YftsPfcDqOjCvDq6xLzJWMurXoH1iIVZaOMV4Yz3x7dy5dwgY8IYEtRchI
- KwVZ/auMJibGQcwKm3NnXw5NT7ubrpTen2kk7aH2GZ2KuY49Crfmok5ZwrxL9D0VASpeTtNUwTH
- +minNz53BrCfm6k4eUi5q4FjQqq8rU8ri5gttMzWA0dpXI0wrOHxt60o/pTbVjnxp1wxVdU8qVT
- 1EGLsNybuQkxMig91wMnBtY5p37lwc=
-X-Received: by 2002:a05:600c:17d4:b0:488:c014:34da with SMTP id
- 5b1f17b1804b1-48e51f4cde9mr108350025e9.26.1778237247313; 
- Fri, 08 May 2026 03:47:27 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ d=1e100.net; s=20251104; t=1778237329; x=1778842129;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hRJOA6ZgQLrllULVnAZGeW+n1iykn4/klW5RV4J2ytA=;
+ b=aePVtDSikcpYlZ5BIqHG/onqRtOsd6sj4fLEwmNUVgWFwkE+IKA+dj+iifUre76lDq
+ TFVYqxevgob0mFUne/3PsFivhQbVmTzpejkrMkkCPSF7Sz5LKUjLmpg8KcouuGSZlQ6m
+ NTakhACkBxfYjtriZAI49Yhvzc3NR8M3IKN60mz6SZ8Ox7GagLxNZ6SZ1/UwW3gaFK2H
+ HGo1BmJOLVMMukjobhg7YTXYA0qT4749v03L8p+gJzkCKEJ8qRoP670PiPeSTdSz++cp
+ 2AfNuh1fZnOrA6i8OqPdkF49LEupzd3xcfDFsLC7P8no0P5YfuGJ7lWnEmmTZsucBJ9O
+ aVNA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8JP5AGEXkszjDYgvkdCcf9jeRrwlXPy6C5hUVISnOcmQ2bSZnZ7ZfHrtr3RisTsA3mcAnsglVB05xt@nongnu.org
+X-Gm-Message-State: AOJu0YwMFCk4WZ45VKYbO2Hm475OaiBq9++VeToYYbn4UWyYnw5y3wtT
+ +v8bvGjxDdddzqjn8siTYMKHLFXkgDrvS97j2sGu6/+ounBbaF2ARRNBWORwdS8MG2Y=
+X-Gm-Gg: AeBDievP00bRa2SZyNhVsbskmB6ThpA50w8tjhkFBTn3d9+Qbs0SCspK/UtzEUrBFoy
+ Fg2OSV8gn43NIhOCS24Afe1xY/HlhXV5YagJ4WMmtINQMDDvdTxioopanN0oQsX18+rvGRiwCVT
+ kcIoS2T6rPtCnxtB8z+snO0PBstfm73GFaAUnz+70loEdxMkRpGzLLScIle4mpm13rJO1IZhw97
+ K2TuPg7ouBmwREiKcIppj2RKi+Bn4ZFfkpDIhvB///vVwLifz8IyndIr9No2YgBQxjsgAEKbovc
+ O+HQBN2jHvSGWSyjb8QpBXLgDYUlNCUJqhCPE7E5YM1cE00+CuwEwO3qdPdCy1FbsmLqh/8AoDy
+ VShByqPWGAPumlq3Rm8pSgQQ+k27awNZ53eVtvOd7Jk5kfRpdEGxvOfjD77/OQRG5/oTN+NOTQj
+ PX0HrjCia5Age90xZ884voKEOoIbpcYxwO+KRZaxVOs6+oI9MRjbJKAf1zH/YPMGBW5cBuFQ6U5
+ tE=
+X-Received: by 2002:a05:600c:a30a:b0:48a:53ea:13e6 with SMTP id
+ 5b1f17b1804b1-48e51f4563emr140984975e9.25.1778237329247; 
+ Fri, 08 May 2026 03:48:49 -0700 (PDT)
+Received: from [192.168.0.200] (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e65c01d7bsm20444105e9.8.2026.05.08.03.47.25
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 May 2026 03:47:26 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] meson.build: Add -fzero-init-padding-bits=all
-Date: Fri,  8 May 2026 11:47:23 +0100
-Message-ID: <20260508104723.2144051-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ 5b1f17b1804b1-48e65c157f6sm16266525e9.26.2026.05.08.03.48.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 May 2026 03:48:48 -0700 (PDT)
+Message-ID: <0c3efbf3-bf89-4798-8e9f-9b211ab9213a@linaro.org>
+Date: Fri, 8 May 2026 12:48:47 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] Mark Multi-Process QEMU as Orphaned
+Content-Language: en-US
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: elena.ufimtseva@oracle.com, jag.raman@oracle.com, clg@redhat.com
+References: <20260508102657.644247-1-john.levon@nutanix.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260508102657.644247-1-john.levon@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,60 +103,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The C standard doesn't always guarantee that struct and union padding
-bits are zero initialized, even if the code initializes a struct.
-For QEMU, this is potentially problematic, because we often have
-structs that match data structures in guest memory, where we
-initialize them and then bulk copy them into the guest.  If the
-compiler didn't zero init the whole of the memory containing the
-struct, we could potentially leak random data from the host into the
-guest via the padding bytes.
+On 8/5/26 12:26, John Levon wrote:
+> This subsystem is no longer seeing any development, and the primary
+> contact listed as maintainer has confirmed they're dropping support of
+> it altogether.
+> 
+> Signed-off-by: John Levon <john.levon@nutanix.com>
+> ---
+>   MAINTAINERS | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 0a90204ae9..ce2b494086 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4429,7 +4429,7 @@ F: tests/tcg/aarch64/system/semiheap.c
+>   Multi-process QEMU
+>   M: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+>   M: Jagannathan Raman <jag.raman@oracle.com>
 
-We already use -ftrivial-auto-var-init=zero, which will zero out
-padding in many of these cases, but -fzero-init-padding-bits=all
-closes some gaps, for example cases where we initialize a
-variable with a struct initializer, and cases involving unions.
+But then shouldn't these 2 email entries be removed?
 
-Follow the Linux kernel in using both options. Compare kernel
-commit dce4aab8441 ("kbuild: Use -fzero-init-padding-bits=all").
-
-This option exists in gcc-15 and above; it's not supported
-by clang, but clang documents that it guarantees zero init
-of these cases always:
-https://clang.llvm.org/docs/LanguageExtensions.html#union-and-aggregate-initialization-in-c
-Older gcc which don't have the option behave as if it were set.
-
-(These options are passed through the cc.get_supported_arguments()
-filter, so we don't need to do anything extra to avoid passing it to
-a compiler that doesn't recognize it.)
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-CC stable just as a precautionary thing; it's safe and we
-might as well make sure the hardening options are set there.
----
- meson.build | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/meson.build b/meson.build
-index 5fbdc75a0f..d3df10eeef 100644
---- a/meson.build
-+++ b/meson.build
-@@ -684,6 +684,12 @@ hardening_flags = [
-     # it harder to take advantage of uninitialized stack
-     # data to drive exploits
-     '-ftrivial-auto-var-init=zero',
-+    # Ensure GCC zero-initializes padding bits and trailing fields in
-+    # unions. This avoids potentially leaking host data into the guest
-+    # when we init a struct and copy it into guest memory.  GCC 15 and
-+    # clang don't have this, but they zero the padding and trailing
-+    # portions of a union by default.
-+    '-fzero-init-padding-bits=all',
- ]
- 
- # Zero out registers used during a function call
--- 
-2.43.0
+> -S: Maintained
+> +S: Orphan
+>   F: docs/devel/multi-process.rst
+>   F: docs/system/multi-process.rst
+>   F: hw/pci-host/remote.c
 
 
