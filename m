@@ -4,95 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93238CD3436
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 08:11:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82E75CD3436
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 08:15:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLGIS-0002Va-KO; Fri, 08 May 2026 04:10:56 -0400
+	id 1wLGM5-00037e-2l; Fri, 08 May 2026 04:14:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLGIQ-0002TV-Tc
- for qemu-devel@nongnu.org; Fri, 08 May 2026 04:10:54 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLGIJ-0002xa-5n
- for qemu-devel@nongnu.org; Fri, 08 May 2026 04:10:54 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-488a9033b2cso16097775e9.2
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 01:10:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778227845; x=1778832645; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/XHjoh39IpiuQb/DDadtgvYMDj4z4B69De97mhbmmpk=;
- b=T7ps32B3UK/kpfroYnGPPRXM2ibqBpTGpyjmlqn3T5jbSKCYOUzAlURHihr2epyVdM
- L17riTsG1/uLagksVaCyHz3blPvFS+ll3eogneEgvnSjHFRwyUKSFW89tWFR9b+87XfM
- ql2brzRI/Jpr0Wiurj2E5pSYNgfm9eQFosTCfKeh3CvaVpu+99bRXjOuj2bjaNNEptI0
- Vqe4SOM4np9lgr1sadGRa7cuHzTeJvYOjDPFWLsVuzHaAddO/zevw3KnmauSx1o52mJa
- lh2ZENJEARTPuzkndr6A4/aRDiGTa73NjPP4AMYncWAHw127/SWqmEUniX5QV5CV2dwl
- yHUQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778227845; x=1778832645;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/XHjoh39IpiuQb/DDadtgvYMDj4z4B69De97mhbmmpk=;
- b=Dm3U7F0OIIsDV6XCGAgsq5D9AXqqval2SORPMx/LGl3zY0a9bcU0ZncTkUQyCuMMM8
- mqsgVMmC8DVpn0nlUBjjhd4dQyDmCDW/mJn1oxZXPVOETLeFgzuqi7U6+9kqiD7trQQw
- /4AuYq5/+hU68YtOGcqJTB3BYSA8SxkgE/0e1j7WSiSyYg4SmBtL1zXvSOU/AcPMYpox
- LULHalvsfXpL4g6dZL7fhHNcFgdoqHwnmSedKTmbkn4LEncLvmYA0hE/1PO/lZMfF+B4
- Oz+/FnIMqw7ZoOW9+DZEraK6WfRoMVbkQSOYmmsF2k6cLDh2hvI7EghqiR16SdFO+vw4
- 3nqA==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+85F34OrMA2ZjSQZeDWpk5aLP8LGlC6uzWASR0GtTDhOW5JkUPdixOyqdANz2HmUIkOO2+ecN53ke0@nongnu.org
-X-Gm-Message-State: AOJu0YxwLYTOqeC4X60bCKUt7EXzpdsttUiLkfq9EOPxzeGB2VwY32sO
- EfFkb3pN3C2CcNsrzagHitBtVJcaAZAThKBdUkLKykpdozh7LneXvQaoUDij1Iw+x40=
-X-Gm-Gg: AeBDievRsW9X+43Ghzryv18ReW+YGM0Mq1G3tiRN9UEA4eD+h7DZFmHQKq6ww9onDLH
- +SC2INbpr9JHF6ZntTcue/Ja0Ls835rSrxs9q+IRY8Zz1LtsP/grgIV7Fw2A9HeDsW+dFoNOPWU
- 7UjteXo9PAAf89W0Ccgb2PNL2o84KJg9FEPNLHCAaY/onMI54h9NHDZA0R6Pnt+VViAyKtnqaRE
- V1vCFOASCSqGw19iKOvDXMZXJUekvRyy1AGAnxXufFlqcMdgiIoZSoh7367o2Puiagbnix9c4Xi
- c39hN0Sriy7aAEecvdFrs+fdUB8T8jchZEmLImVz2l8ZMO31QUa7nsSlHmuhs7oPfFgjC3Dw0W7
- G/GZGujWPYTPy90FcLqkohTiXvJ1Xc7jssW+De2sG+YP0BWgo3pQ3RRK+yYLGAkx4uk4ubj6n3o
- qvyfAB0m/X42jeb8mWbCG/gwl+0xHkh8RVz5pd7jrBkO8xcYrgQ2AfRfRKxyMtfYtC
-X-Received: by 2002:a05:600c:c107:b0:48e:51f8:eb37 with SMTP id
- 5b1f17b1804b1-48e51f8eb65mr140801755e9.25.1778227845527; 
- Fri, 08 May 2026 01:10:45 -0700 (PDT)
-Received: from [192.168.0.200] (88-187-86-199.subs.proxad.net. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e65c041b3sm16943825e9.9.2026.05.08.01.10.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 May 2026 01:10:45 -0700 (PDT)
-Message-ID: <ced7031f-45ea-46da-abcc-09fc4edb4ed7@linaro.org>
-Date: Fri, 8 May 2026 10:10:43 +0200
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wLGLz-00036n-Ul; Fri, 08 May 2026 04:14:36 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
+ id 1wLGLy-0004kc-D2; Fri, 08 May 2026 04:14:35 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 647LKxnV2062528; Fri, 8 May 2026 08:14:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=Z3s9YJUZkkFMwMz3xZUeXBjH3vF93sl7MG2xzNIRg
+ FQ=; b=NQ22gfZbo+UxAeH/LvjdCf23+3J+w6xY6ViAKOrIPprWHe83EXqI4CrwS
+ IBD3PzdwJmJuU5VGrRGHudJH4rOn5st9QFmftPbmy7m9RmNydF9wbOwTw2Cp2OjQ
+ 1de20sLpRS7THMLqT336moP8fi+MLofRrv2cUJQt/trre43nGCyTm6umwzqg9Y8/
+ Byj4fU0shtidrz4GVL2wMF7Tzi1hD0bpSlKC5AQWzzrvhb7ntVtLD5spAYbQ4H3c
+ BOi2RP+ltPvfIid6CILG0dBcnEvdp/tvwYWLAZNSo4+QQKIxwpZi10e/utDR5kks
+ k3MpGZQ1B0iWrHzYdOvMcUNA8PesQ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9w6sfpc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 May 2026 08:14:32 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 64889mof032650;
+ Fri, 8 May 2026 08:14:31 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwwtgq637-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 08 May 2026 08:14:31 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6488ERQa54919582
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 8 May 2026 08:14:28 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C6572201A6;
+ Fri,  8 May 2026 08:14:27 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 09AAF201A4;
+ Fri,  8 May 2026 08:14:26 +0000 (GMT)
+Received: from mac.bl1-in.ibm.com (unknown [9.123.0.51])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  8 May 2026 08:14:25 +0000 (GMT)
+From: Amit Machhiwal <amachhiw@linux.ibm.com>
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
+Cc: Vaibhav Jain <vaibhav@linux.ibm.com>,
+ Amit Machhiwal <amachhiw@linux.ibm.com>,
+ Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Subject: [PATCH v2] target/ppc/kvm: Fix const violation when trimming CPU
+ alias suffix
+Date: Fri,  8 May 2026 13:44:16 +0530
+Message-ID: <20260508081416.1014-1-amachhiw@linux.ibm.com>
+X-Mailer: git-send-email 2.50.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] tests/functional/test_kvm.py: Use -cpu max, not
- cortex-a72
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-References: <20260507194728.2034696-1-peter.maydell@linaro.org>
- <20260507194728.2034696-4-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260507194728.2034696-4-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=XPQAjwhE c=1 sm=1 tr=0 ts=69fd9b68 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=AeOTFisfVSLvIChBu_YA:9
+X-Proofpoint-ORIG-GUID: WaN1AC-txv3OxNEf3wjo66vUuO9DbVsf
+X-Proofpoint-GUID: keBsE2Z7nBSFIVOlkCYr7Ezz-iXBpZYs
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA4MDA4MSBTYWx0ZWRfX25FqieNcQr7U
+ nFzebQthH1e0+fhjg/oRlVTnf+vbVVCc54Q6OU2eHAFrWHGGZkO9vp3WSXWN/q2yiNhwccvNdO1
+ C0pZXest/AXFYpOy0hqWm25LVwrKUGpI3nPNXD/YMMR5dnv77RtCWvcHIyc3X7Ir5KqrQoJYRfq
+ cL2X8KCwBREX1oO5WS/iECv49VtkGPtsKpZiUZtovyCoRtx3wfiyVvjMKCTKANUpTy7kJwVqiM/
+ QQhfEvo1//hhrGuImhCfSJzqf7/3uCrHcd0FDU+lVFTzM347F8ooMFUuafAl53VgZBwzIPaeof3
+ LytYSRCl53s/kZmOcfdgkO8vHfI5A9ud3LM9ZY2uHn7xJ2srRO/LtbdWpoASjyao67ZT5DrvB4V
+ FV+v6RWfefWJP0Wh3F0xIwJigL2nazFVjScJcQNRMEkkXi8CNtv0tpJkn4PonF7kCoZ8cGWonbb
+ HNSgheyUeClEzkC13Kg==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-07_02,2026-05-06_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ bulkscore=0 lowpriorityscore=0 suspectscore=0 adultscore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 phishscore=0 malwarescore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605080081
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=amachhiw@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,18 +120,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/5/26 21:47, Peter Maydell wrote:
-> The test_kvm test claims to run on any accelerator supporting
-> nested virtualization, but it specifies the cortex-a72 CPU.
-> This doesn't exist for KVM-only builds. Use max instead.
-> 
-> This fixes a failure like
->    Output: qemu-system-aarch64: unable to find CPU model 'cortex-a72'
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   tests/functional/aarch64/test_kvm.py | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+GCC 16 tightens diagnostics around const correctness and now correctly
+rejects attempts to modify strings referenced through const-qualified
+pointers. In kvm_ppc_register_host_cpu_type(), ppc_cpu_aliases[i].model
+is declared as const char *, but the code was using strstr() on it and
+then modifying the returned pointer in place to strip
+POWERPC_CPU_TYPE_SUFFIX.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This results in a write through a pointer derived from const data,
+triggering a build failure with GCC 16:
+
+  error: assignment discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
+        suffix = strstr(ppc_cpu_aliases[i].model, POWERPC_CPU_TYPE_SUFFIX);
+               ^
+
+Fix this by duplicating the model string into a mutable buffer using
+g_strdup(), trimming the suffix on that temporary buffer, and only then
+storing it in the alias table.
+
+This preserves the existing behavior while avoiding modification of
+const data and ensures compatibility with newer compilers.
+
+No functional change intended.
+
+Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
+---
+Changes in v2:
+  * trim the duplicated buffer before assigning it to ppc_cpu_aliases[i].model
+---
+
+ target/ppc/kvm.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index 25c28ad089c6..c2843b1421cb 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -2654,13 +2654,14 @@ static int kvm_ppc_register_host_cpu_type(void)
+     dc = DEVICE_CLASS(ppc_cpu_get_family_class(pvr_pcc));
+     for (i = 0; ppc_cpu_aliases[i].alias != NULL; i++) {
+         if (g_ascii_strcasecmp(ppc_cpu_aliases[i].alias, dc->desc) == 0) {
+-            char *suffix;
++            char *model, *suffix;
+ 
+-            ppc_cpu_aliases[i].model = g_strdup(object_class_get_name(oc));
+-            suffix = strstr(ppc_cpu_aliases[i].model, POWERPC_CPU_TYPE_SUFFIX);
++            model = g_strdup(object_class_get_name(oc));
++            suffix = strstr(model, POWERPC_CPU_TYPE_SUFFIX);
+             if (suffix) {
+                 *suffix = 0;
+             }
++            ppc_cpu_aliases[i].model = model;
+             break;
+         }
+     }
+
+base-commit: ee7eb612be8f8886d48c1d0c1f1c65e495138f83
+-- 
+2.50.1 (Apple Git-155)
+
 
