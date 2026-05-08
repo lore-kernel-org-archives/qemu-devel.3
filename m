@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A1FCD3445
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 15:47:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A303ECD3436
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 15:52:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLNQL-0000UJ-Lo; Fri, 08 May 2026 11:47:34 -0400
+	id 1wLNUn-0001N6-Jq; Fri, 08 May 2026 11:52:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wLNQD-0000PM-Vd
- for qemu-devel@nongnu.org; Fri, 08 May 2026 11:47:30 -0400
+ id 1wLNUl-0001Mj-9U
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 11:52:07 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wLNQB-0004t2-Mu
- for qemu-devel@nongnu.org; Fri, 08 May 2026 11:47:25 -0400
+ id 1wLNUj-0006j3-SH
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 11:52:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778255242;
+ s=mimecast20190719; t=1778255524;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sEC4I9KRb+XazGZGV68PUfREE1b+7je7ImYwCx/T6Dw=;
- b=S2AQaoy7n8bEDVYSwqblUtKY9jXO2SQHENTnSrlXEbY0YdcSP7CvvidkmxLGt9Bpq4vDmh
- 09EGv9umKgVjMaJTVN524VFXuCpYSpuzGxrjq0KuosfWjJiSUKqWjkNwDIzQ5vlU22DIWP
- qqOBRlgED2K0lw5hjPiebTXqE63opaQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=C58C/P1BozxEi3Psf04mIm4m4RDcY5Ql9Iee4XI1/tk=;
+ b=XYnjTTXQd6I/+L1tu1aXVTF5t/yF9lBaJyMd0XmWGeATa7ALo3diwp+X+TZwXwdDRoQq0x
+ 9rymWf+Sf0OqOc5E9SD6RK8yce4fy/Eh4xhF3joGBM36IKgW0pcKIEZ83egSwnIHClZ/Pn
+ 7W5wxrpwblerP9SCAUcfYGvzM1HIm3Y=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-250-c8pmEmBCPlG5ct_r-Js2dQ-1; Fri,
- 08 May 2026 11:47:18 -0400
-X-MC-Unique: c8pmEmBCPlG5ct_r-Js2dQ-1
-X-Mimecast-MFC-AGG-ID: c8pmEmBCPlG5ct_r-Js2dQ_1778255237
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-62-on6BqGVPNN-dwX4VJCCQFQ-1; Fri,
+ 08 May 2026 11:52:02 -0400
+X-MC-Unique: on6BqGVPNN-dwX4VJCCQFQ-1
+X-Mimecast-MFC-AGG-ID: on6BqGVPNN-dwX4VJCCQFQ_1778255522
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5CF86195608A; Fri,  8 May 2026 15:47:17 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DC9B8195609F; Fri,  8 May 2026 15:52:01 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.32.204])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ADDDF19560A2; Fri,  8 May 2026 15:47:15 +0000 (UTC)
-Date: Fri, 8 May 2026 16:47:12 +0100
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 374E33002D2F; Fri,  8 May 2026 15:51:59 +0000 (UTC)
+Date: Fri, 8 May 2026 16:51:56 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: marcandre.lureau@redhat.com
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v2 01/10] qom: add trace events for object/property
- lifecycle
-Message-ID: <af4FgLKSCRqZmCk4@redhat.com>
+Subject: Re: [PATCH v2 07/10] qom: add object_new_with_props_from_qdict
+Message-ID: <af4GnFmd6Utll2DY@redhat.com>
 References: <20260508112429.643360-1-berrange@redhat.com>
- <20260508112429.643360-2-berrange@redhat.com>
- <177825350908.389613.14807854790738677316.b4-review@b4>
+ <20260508112429.643360-8-berrange@redhat.com>
+ <177825350909.389613.8952282324650958656.b4-review@b4>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <177825350908.389613.14807854790738677316.b4-review@b4>
+In-Reply-To: <177825350909.389613.8952282324650958656.b4-review@b4>
 User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -93,37 +92,24 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On Fri, May 08, 2026 at 07:18:29PM +0400, marcandre.lureau@redhat.com wrote:
-> On Fri, 08 May 2026 12:24:20 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > diff --git a/qom/trace-events b/qom/trace-events
-> > index b2e9f4a7127..9aabbae4f73 100644
-> > --- a/qom/trace-events
-> > +++ b/qom/trace-events
-> > @@ -1,5 +1,13 @@
-> >  # See docs/devel/tracing.rst for syntax documentation.
-> >  
-> >  # object.c
-> > -object_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "%s->%s (%s:%d:%s)"
-> > -object_class_dynamic_cast_assert(const char *type, const char *target, const char *file, int line, const char *func) "%s->%s (%s:%d:%s)"
-> > +object_dynamic_cast_assert(void *obj, const char *type, const char *target, const char *file, int line, const char *func) "obj=%p type=%s->%s (%s:%d:%s)"
-> > +object_finalize(void *obj, const char *type) "obj=%p type=%s"
-> > +object_new(void *obj, const char *type) "obj=%p type=%s"
-> > +object_property_add(void *obj, const char *type, const char *name, void *value) "obj=%p type=%s name=%s value=%p"
-> > +object_property_add_child(void *obj, const char *type, const char *name, void *parent, const char *parenttype) "obj=%p type=%s name=%s parent=%p parent-type=%s"
+> On Fri, 08 May 2026 12:24:26 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> > diff --git a/include/qom/object.h b/include/qom/object.h
+> > index 1b2b2702fc9..cd59f1f1718 100644
+> > --- a/include/qom/object.h
+> > +++ b/include/qom/object.h
+> > @@ -700,6 +700,25 @@ Object *object_new_with_propv(const char *typename,
+> > [ ... skip 13 lines ... ]
+> > + * properties in a QDict.
+> > + */
+> > +Object *object_new_with_props_from_qdict(const char *typename,
+> > +                                         Object *parent,
+> > +                                         const char *id,
+> > +                                         QDict *props,
 > 
-> The 4th and 5th parameters are the child being added, not a parent.
-> In object_property_try_add_child the call is:
-> 
->   trace_object_property_add_child(obj, ..., child, child->class->type->name)
-> 
-> So the parameter names should be "child"/"childtype" and the format
-> string should use "child=" / "child-type=".
-> 
-> > +object_property_del(void *obj, const char *type, const char *name, void *value) "obj=%p type=%s name=%s value=%p"
-> > +object_property_del_child(void *obj, const char *type, void *parent, const char *parenttype) "obj=%p type=%s parent=%p parent-type=%s"
-> 
-> Same here
+> This should take a const QDict, same for the _parentless added later.
 
-Opps, yes, I don't know what I was thinking there !
+Ah yes, that would match the existing object_set_props_from_qdict
+signature.
 
 With regards,
 Daniel
