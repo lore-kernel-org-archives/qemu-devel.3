@@ -4,76 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACE5BCD3436
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 10:29:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11049CD3436
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 10:31:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLIS2-00054y-3Q; Fri, 08 May 2026 06:28:58 -0400
+	id 1wLIUV-0005mb-C3; Fri, 08 May 2026 06:31:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wLIS0-00054p-8T
- for qemu-devel@nongnu.org; Fri, 08 May 2026 06:28:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wLIRy-0000U6-OG
- for qemu-devel@nongnu.org; Fri, 08 May 2026 06:28:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778236134;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3TtM2UqiIsCE6HQGohx2verFhkI32CBwcpaoi9DO03M=;
- b=LlHilIJ/S6xxuQz6x9knMvKZxkQJBNp/AAxHKwwW7cNeYuhJuUgtkX6apDu6fWiL1jCKOq
- q2NeKJvTPAChza7iImbea5jPUe1J3z9GYbqOkt0Yn5jBdguWqeeYXWK0iwSxI/w8WRsuFb
- B4luJxNgFPJVXzuiiysTrxLwZC6SSfc=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-10-y8HvTUOqOoOkPdkvQbhXeg-1; Fri,
- 08 May 2026 06:28:52 -0400
-X-MC-Unique: y8HvTUOqOoOkPdkvQbhXeg-1
-X-Mimecast-MFC-AGG-ID: y8HvTUOqOoOkPdkvQbhXeg_1778236131
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 834D91956094
- for <qemu-devel@nongnu.org>; Fri,  8 May 2026 10:28:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.32.204])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 32BC91800347; Fri,  8 May 2026 10:28:49 +0000 (UTC)
-Date: Fri, 8 May 2026 11:28:46 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 25/26] tests/qtest: drop DBUS_VMSTATE_TEST_TMPDIR
-Message-ID: <af263nkkdkFC5Nyy@redhat.com>
-References: <20260430-qemu-vnc-v3-0-be96757428d0@redhat.com>
- <20260430-qemu-vnc-v3-25-be96757428d0@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wLIUU-0005mM-DP
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 06:31:30 -0400
+Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wLIUS-0001CL-Tv
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 06:31:30 -0400
+Received: by mail-yx1-xb12c.google.com with SMTP id
+ 956f58d0204a3-6530287803cso1933311d50.1
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 03:31:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778236287; cv=none;
+ d=google.com; s=arc-20240605;
+ b=QWqQbSgI005mvtCfJ3Iwb5VHa46BHWU4ik5VQfQGnGa056CqjXgd0dmS+OKr76hH6k
+ lxN6Uv0S/HoFavM1UDnA1Y6tyAvOBn/qjmkfc68QmeBlgePHhjepCbV81XaD69Bgge/9
+ Nm1kOgosrhcRt3ZCypYqtiM920+8J0Yz7ExveL+fz5+iuXCrGV1YjcjbNJ+OalhjRkLQ
+ el4TQjOzqvVeRxNB4GcNdIlFIZyl0uLDZstOT1aHuwsmxHAisHZVRNmDJKBxZTq0V0vT
+ NnsAqi0PRKjCKjWLW3ULvX9M1wAMDvDNWyNuKfmTjt9W5zZSPUHwU5ZwKD2TehaNirbT
+ EVCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=5RVXHtocA9TuGu3DRtaMjNBaya5QPVi8YQFr3L1yZWY=;
+ fh=prLES3L5uNBSjub+BAWAqJlsD1FH8T+rF5e8GIvqDkM=;
+ b=LcceYtcoZMZPGagRmloduJdbWK10Ft08CSawRO8R4BCPE3QfbPyOaNZFXXzdQTZVe7
+ vqlXI4rbsr7a7j32GagQgSsWIVq6mqrxQeBthYV4C4CeM3aA6J1nkvoO2nk7yRymar1c
+ KWdmweSJxHYWJI48BAyE/z+QBAvqFTfABAuFAmVkg105mPeaVhdVBy2BhJBS5pOJCbJe
+ Wpf6Q+U6ehCWR9rXiGp3IYQBj/YP9Xab9kAJHFPBel+Ch04/dazBa6l23X51KHTewfgU
+ rdncPcQcl72tjMMdkaooNObJEOVoY6ymUKPAtDuCaCN0sXZ3ILFIpQkMNLWRt2FlFzs1
+ 8gqw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778236287; x=1778841087; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=5RVXHtocA9TuGu3DRtaMjNBaya5QPVi8YQFr3L1yZWY=;
+ b=HNrZeICnjw9e1/sJGaY3Pxng6r1H1l65itrlNm4+Qohhz+lwa2BNOgiag3ZoW6gsfz
+ tEnjG1bWJ5vAd1/F6Rqlt1dfuZMD+FYWqjKSvR9Qwwse3sC0E9AqGy/9arvT9vAarQ0X
+ ado2ni9HOa7lvavbAyMoABMbQicbUdvueEVgaqX6ocCbXOHdjrAVy7jwt+RZbRnbb8cY
+ hH4aXZTfsbDYSv0NUXLaNAj5P57N1A8XmYqXbIqbIdwiUMGO3SqCbw2tpQp7pjncJNmq
+ EN6y4K0L6spz4MUpKYOetmyUMm7m3x3VCS55l+RXRCCv7twccnx4NLL13EIzbnZXTU0b
+ wEvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778236287; x=1778841087;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5RVXHtocA9TuGu3DRtaMjNBaya5QPVi8YQFr3L1yZWY=;
+ b=fwWhYmLwWqWXKxSjI/33zgxX8besoARwg2jkCJLdXIbS510tEvV+NIakRhMR/9DvHY
+ nc69S+knqQ0OiT9iput5zge/MXi+7D0WDEqZgF1Pw/2IcTXhxYdsLJnoIEbSVaqyGA4O
+ 4t0Yf1sfKLvKtO2pvhxlIrVMjC9SfLv2MpXtgmm8aAAVwM1fH/JMtXgfxmVTYmKt97fb
+ Yl8p1CHDOyBp408SEaHU5vp17qapIaWUZeFtMuD7MR2X2TJvtx3jUtYOb7EqJEDgxsWI
+ AoSYIMHtlWyZZdQnJKif4ZINs2YA4kwXoWWKHOBz0q8LxRh0m0M/ywk+4prlqaatDy8q
+ spoA==
+X-Gm-Message-State: AOJu0Yyk7gEVUMOKFIzCX15jFPp2YxcW/oQWMDn0D/VxoidwCryOW5I5
+ m4r7psBfXO8W0XVN34FG+geELIb3xkvGw3CpLFxn/hlqz4P3+LddQG/A/BO2vFoDS9NtWwcXNMZ
+ JkrDGHJk6fJJXFmgJnYf//21SBAd76vQOm+bqleduaw==
+X-Gm-Gg: Acq92OFn4Ok7fUQBt4GYi02fQAj5A5CbAgZXT0buIiu2/J8iWskNd6SYLk5KFVPwibt
+ C/fTcULv979MWeh/jHHamRSY7jahUa8lmKLQXXana7CVFvn+gngpti6vU2URsbUQ8qy0SeAD23d
+ akn+rUiq8WKoe4LpO8GhHASoG9VIaECCd//q/r8300CA9YqiRVc21RqPy6NKeaS2YFnbM/RoacN
+ zAl4b19TTs+mCFe8QU9ArXYFaKFdLgs9n7nqoV7vOZcsBdb24pB6BVmIeEbfVSaG7Gke9j69knE
+ ksypnR9mnR4HJYSFHrciYHr/1EKoNBdSaDPSoCYnfm/gs05X4D5WMmiiq8fXJF863wI=
+X-Received: by 2002:a05:690e:d8c:b0:65c:ca50:d7 with SMTP id
+ 956f58d0204a3-65cca5015eemr10178033d50.49.1778236286907; Fri, 08 May 2026
+ 03:31:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260430-qemu-vnc-v3-25-be96757428d0@redhat.com>
-User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260508102657.644247-1-john.levon@nutanix.com>
+In-Reply-To: <20260508102657.644247-1-john.levon@nutanix.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 8 May 2026 11:31:13 +0100
+X-Gm-Features: AVHnY4KHjp4qguld9Ht7IRRod35eRP8e6UJuq1mGpMNf6i96kLI7pn88WmutcZw
+Message-ID: <CAFEAcA_Q-ad3r6kV_7tUJA0maTntWELOMDYgL4aDh1AQ_p2_fw@mail.gmail.com>
+Subject: Re: [PATCH] Mark Multi-Process QEMU as Orphaned
+To: John Levon <john.levon@nutanix.com>
+Cc: qemu-devel@nongnu.org, elena.ufimtseva@oracle.com, jag.raman@oracle.com, 
+ clg@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,28 +111,24 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 30, 2026 at 01:02:58AM +0400, Marc-André Lureau wrote:
-> It can rely on the location of the temporary configuration instead, so
-> we don't have to set that environment variable on every test.
-> 
-> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+On Fri, 8 May 2026 at 11:27, John Levon <john.levon@nutanix.com> wrote:
+>
+> This subsystem is no longer seeing any development, and the primary
+> contact listed as maintainer has confirmed they're dropping support of
+> it altogether.
+>
+> Signed-off-by: John Levon <john.levon@nutanix.com>
 > ---
->  tests/qtest/dbus-vmstate-test.c | 2 --
->  tests/dbus-daemon.sh            | 2 +-
->  2 files changed, 1 insertion(+), 3 deletions(-)
+>  MAINTAINERS | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+If there's no longer interest in it, can/should we list it as deprecated
+in docs/about/deprecated.rst, so that we can remove it once the
+deprecation period has passed ?
 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+thanks
+-- PMM
 
