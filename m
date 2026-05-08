@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38A10CD3436
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 08:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB063CD342F
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 08:10:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLGG0-00012v-JA; Fri, 08 May 2026 04:08:24 -0400
+	id 1wLGHR-0001Od-3G; Fri, 08 May 2026 04:09:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLGFz-00012a-2W
- for qemu-devel@nongnu.org; Fri, 08 May 2026 04:08:23 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLGHH-0001MW-Ia
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 04:09:45 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLGFx-0001MF-Gh
- for qemu-devel@nongnu.org; Fri, 08 May 2026 04:08:22 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-488a14c31eeso11455405e9.0
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 01:08:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLGHG-0002Ae-2u
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 04:09:43 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-48374014a77so19110085e9.3
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 01:09:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778227700; x=1778832500; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778227780; x=1778832580; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=X/kZswwHU+ivgvmRcRQg6KuhXWBP80R3sgsXKw3CqSg=;
- b=wcJ6MCc6wvLQ5iUXh+G/QkBkhf+4evVU3j06/WwHOIj4q7+a4oq5RHZYAjgu1ZTJug
- cpDQ0/2CFpCFvGu7wxKEqYRljomVamX1K0dEYFaRoboQy0X7jmriq7OymexjAfkP3cU2
- m6OK6vHHhEFiY7ZMddmywXqpZyH0LFjz3/SW9KNRtwlqM2sYHG+vKMuAdsmBm7pdUXNH
- BNwWYadb2Tg6PwtQulo8fGizT9movBATAyXNIIlUzG3S8XO3sr9eRwI5j8CzNNj63ckU
- gOCee1o7ekcE7HyyWpu2hdpRp9whKN2PEICbX8rSlYrCRrnubQzmsVL2pxv0iB04NkL3
- zfYg==
+ bh=1dV9Y/qSk9e1KFInLEL4RRVmF2JhLPqCaIOcrjlh/Mc=;
+ b=QO3+j5EPpoKbP42ZEsDpohIv9xJXnf1qjAFw6az28zWcx64jnF5FrPu7AKyoZyhvPe
+ N+Wr8qi/5cH2gjesFaOm0yoFnWHt8HLHlfv7qXbnvSw8Aazn1l5tr9d1ewb8x9K/L3Og
+ mB/60erzV3bkCK6e4fQjbXru/u1n7UIPIMhr31zwAcynxjxqngp5ujGcGi/CAyUt9O9U
+ vivL0gCnUCZwU0nc5BhB+3y6BMMhOuITS/Y1xD3Hl4CAJlnCZGqRI3DOPBjKVrNPRfko
+ LP2aDnsgiVTtE/bMJS+0v30jhRpgBtJCsTXAe6gulTFzH3rv1dquu6ZWxQCTYeH/X/EE
+ VW9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778227700; x=1778832500;
+ d=1e100.net; s=20251104; t=1778227780; x=1778832580;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=X/kZswwHU+ivgvmRcRQg6KuhXWBP80R3sgsXKw3CqSg=;
- b=hHR54tCWWlcIjEOuwmdpYrJR6LJqEoqD0hY9/f666KBMOLX3CwPb9hEW5l1oP9WcAQ
- xdmhejZqvypDuzcrN/fP4DuVdYXZZnXGpS0C3dKtjpC+6Prd1bs+pIRHFyz3SW3f3PIp
- uD/UlhDJjIq4LOq6k4YbJZbeMNmntkI//2/mOME/zhgifPcjk8i4lBDOUZoqVGkufEz6
- AY6q0hFbsmn31nc3vAqwrK1Yy7rLA7bUzHh17bc4SoJ1XwPqqCMA4v9zGb7F6xpM6XTb
- AAtcTmaWOaNFOUwkR7RtZLHmJZeS1M7U+bX+6TmCaEIredusK8S3b73//FxOJLm5H9iK
- aphw==
+ bh=1dV9Y/qSk9e1KFInLEL4RRVmF2JhLPqCaIOcrjlh/Mc=;
+ b=iJoGr0HQZ1MXM39teOJDvnjRX1VKxrJ/exCxGEFQPuo+U2qsSbjugvTYMxdTdVckg7
+ hgtyZSfaHcwVQ69JWFFBNO77m24nQODkh3H8J9Q7MlMOQ80aEGoEe5B4F8PSyZWYzOBJ
+ PSExpXj5O5Mqs3dD/M/s8iqrcrBq0OzIYcDE+4tl6j7iv06HBA3a35CQ6YquHaM0W4Tr
+ JBApvaY7wvwNu7TT5xT52dkHmu0jUl5QyEvW7gP5xuPIooXshZZ0Igg1vR/Wg3zW3zXX
+ DIf9HKayW6OEXQ+hePDPQvTXr1p2GJTQCgNQkSLPslao5brojwflgCaTNudWiuOp8Dx/
+ /Zdw==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/CbiKfEhW7TKE/eupfQAAI/52+lCcwQ4UJ3KM/c/+Vm4qK3mPR8HF+x4FwOtUPFLfEaU9EAabX2sJ8@nongnu.org
-X-Gm-Message-State: AOJu0YyrxxkRsSi4RMIG/YWxGa2QKX3iqd53wGMmdH8ZpoVQzqPNr3TL
- 4zrf7DhAXTNHSTNCZ4EJ9nuYGf92CfMd5IzqHnOr7xPg5R7j5y1d9fxvS3Mo/uMZNAM=
-X-Gm-Gg: AeBDieu15brFArT0hInaBNsAbBOL733Up+Mjtc0VGZ+TBFlcp4O9H5U3SGXs/KNyqIG
- 1+wwfmqs9LwD9ZWHenoO2sr5td3d9NCzFXt7/i45zbv//nCMa38jXZgZIdaCBkyGK7kp8tQ/U2c
- hEDcWz2yq+rK2lZ6xbyKmzox/Mjs4qnMEXmzrcuGvMYcpqNyvv9foYvLPQ5ftNFei3z5kSZvqcW
- soE0v3q6j5UXqN4MkBjck7iqAloqRto0+s5S59qbrevkch41cR96aE9h5JnoqDDJc5fbv90y6cz
- zQ38Z29V1ZbJdWRCo1fGwfp4Ztdx6PRxKcrYBxLbONA2rwM0WAPrB8PChgpcKnR2vamU5Qk73Ip
- zjnpaokKJOJ0O3c0X/jvZfyf3YXevL1n3ELbnQoM8smVW4dGfnbPkuu9IhvLGuJMudvNxdxtxD7
- eqFZ76eugwFwXyzX7KGYnWZxGeXcJHmIRXKRnnYMkQBlCM73xNlblXpoiwfUJfOgqa7qmeRiTpG
- tU=
-X-Received: by 2002:a05:600c:4686:b0:488:aa33:dcbd with SMTP id
- 5b1f17b1804b1-48e676b6882mr24451405e9.26.1778227699458; 
- Fri, 08 May 2026 01:08:19 -0700 (PDT)
+ AFNElJ/2Bxy58glDmvw8FsRy2WQCejrmjtoOiih4fvIrZUExr5T/bUvQ33jZlrl8nlxmSjRsPav4R0pOpKbx@nongnu.org
+X-Gm-Message-State: AOJu0Yxnsfz0YL/EMB5//qupYMJxJeLBSUHSB2CB7a8L5pjPmv1YZc2q
+ gUmaJjPd588I20/a2zsP0WWP6VmSTWmY2HV33A9ZbtjLyk/Jpi/t8YmzTCsREek8IA4=
+X-Gm-Gg: AeBDies1T+xLNLE965o2WSOe+Y1rAxzEaMxMu8NleIzcgkFwQsxpxq7JTdVea/9BWj6
+ DnoDD6txa4uiZ0ZL+MS/iqmZHkizVBFADVM9j7fZQBsbpbMaLNmO4oEQVzQYyupx+hXYlf23jz8
+ umSJQPWR+mV+soHmV5GhqElam8VJUaRxc39lkA8r4Yv0lyp9JDC2epfKOze0YLkCVe3lKfoaMhB
+ to/ex/WJIZ2T6njRhStK5W/yRH3bSl8+fY7Upmrt7T2JvN34to4VUKBe7/RpB1PBdSXI7r6GERe
+ fx4PFZtCShp7wMuF/7PO13lYmqCrHQWcHqkZWQiHd+/Zi6IdTKRsnTCeizErg8ZjcqHKOMkq2mj
+ 4gyu8owlTa5bettU/yd7qCJqku7QJEsuLO4k9RezFzu4YLSZUsbbwt93BwCKT9GNXEsdRSnY7X2
+ l0I3TswFaYhmQucRPjcyiOTnd0pfl/IeKmokOX7tDjwvCtjp5MPnxqsgZylOGMu8Op3N6rap51Q
+ pRc0hFP9QoN6Q==
+X-Received: by 2002:a05:600c:871b:b0:483:709e:f238 with SMTP id
+ 5b1f17b1804b1-48e51f4652fmr187013875e9.29.1778227780445; 
+ Fri, 08 May 2026 01:09:40 -0700 (PDT)
 Received: from [192.168.0.200] (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4549120f1f9sm2389498f8f.24.2026.05.08.01.08.18
+ 5b1f17b1804b1-48e68ed0f29sm35247795e9.2.2026.05.08.01.09.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 May 2026 01:08:18 -0700 (PDT)
-Message-ID: <461395ae-f90f-4914-a6eb-0e22f4cb10b0@linaro.org>
-Date: Fri, 8 May 2026 10:08:17 +0200
+ Fri, 08 May 2026 01:09:39 -0700 (PDT)
+Message-ID: <62ae7f9a-bd76-4748-ad35-646959eb2b24@linaro.org>
+Date: Fri, 8 May 2026 10:09:38 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] hw/remote/machine.c: Mark x-remote machine as OK for
- AArch64 and AArch32
+Subject: Re: [PATCH 4/6] tests/functional/test_kvm.py: Skip if virtualization
+ not supported
 Content-Language: en-US
 To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
@@ -81,13 +81,13 @@ Cc: Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 References: <20260507194728.2034696-1-peter.maydell@linaro.org>
- <20260507194728.2034696-2-peter.maydell@linaro.org>
+ <20260507194728.2034696-5-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260507194728.2034696-2-peter.maydell@linaro.org>
+In-Reply-To: <20260507194728.2034696-5-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,36 +111,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 7/5/26 21:47, Peter Maydell wrote:
-> When we updated Arm and AArch64 board types to mark them for the
-> target_machine_typename() filter, we forgot about the "x-remote"
-> machine type, which meant that it disappeared from the set of board
-> types exposed on the qemu-system-arm and qemu-system-aarch64
-> binaries.  We didn't notice this, because although we have a
-> functional test for it, it requires the KVM accelerator and we don't
-> run the functional tests on an AArch64 host in CI.
+> The test_kvm test runs the virt board with virtualization=on,
+> which will fail if run with an accelerator that doesn't
+> support nested virtualization. Catch the VMLaunchFailure
+> exception and skip the test if startup failed because
+> the accelerator can't support virtualization.
 > 
-> Mark the machine as being OK to expose in qemu-system-arm and
-> qemu-system-aarch64, in the same way we do for the "none" machine
-> type. This fixes a check-functional failure on aarch64 host, where
-> it would otherwise fail with:
->     qemu-system-aarch64: unsupported machine type: "x-remote"
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: eb796c55513d9d39 ("hw/core: Allow ARM/Aarch64 binaries to use the 'none' machine")
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
-> I couldn't figure out which git commit started enforcing the
-> filtering of machine types based on the TARGET_FOO_MACHINE
-> interface markings, so I picked the Fixes: commit hash for when
-> we added them to the "none" machine, on the basis that that's
-> the point at which we logically ought to have also done x-remote.
-
-Preliminary filtering commits:
-
-28502121be7 ("system/vl: Filter machine list available for a particular 
-target binary")
-2c6fab1c143 ("hw/core: Filter machine list available for a particular 
-target binary")
+>   tests/functional/aarch64/test_kvm.py | 10 +++++++++-
+>   1 file changed, 9 insertions(+), 1 deletion(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
