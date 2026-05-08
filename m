@@ -4,145 +4,169 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AC02CD3445
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 16:03:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44CBCCD3445
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 16:08:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLNf7-0004ia-3a; Fri, 08 May 2026 12:02:49 -0400
+	id 1wLNjZ-0007ZK-Kt; Fri, 08 May 2026 12:07:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wLNf2-0004YW-T7
- for qemu-devel@nongnu.org; Fri, 08 May 2026 12:02:47 -0400
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1wLNjX-0007Yr-FY
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 12:07:23 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
- id 1wLNf0-0002wz-Bz
- for qemu-devel@nongnu.org; Fri, 08 May 2026 12:02:44 -0400
-Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 648BwN4e2777831
- for <qemu-devel@nongnu.org>; Fri, 8 May 2026 16:02:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- bbvLhHVBfSP4Uz3No0BvbzS5tqmHcT6h6pdsBZq2R5c=; b=hmOAgBkGVUExfeMD
- MkCvZKpLM+a4wcV8Pu2C/2IwrpQPvKtFLXFZoUD+afX/K53b/x/B+b9kkJOx5s3a
- 9IwPCrVO8E+NqEutwM5ww+nrOlP++LuWa97aRpdOpdbI6K3T20mvjQGOmD9RHdZu
- Y7neBoKKvUCh77/+gHaD03oCuuHY0IXihpJHw14sOYwfOhB/DtmopN1xrc2bOFFf
- TLdMdDXYF5D1KKf7mSROo9OaxiiLmJb5Ftm2L3K2Fo/D442xF5HBqfu4bwebbjh+
- A0OPchvERUlEvyAfHQKR/fZCDN0XLOSudWs2oLZC+vf33IAAAoVcyN7jwcZe+BlE
- o42w9Q==
-Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
- [74.125.82.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e1285m2pj-1
- (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 16:02:40 +0000 (GMT)
-Received: by mail-dy1-f197.google.com with SMTP id
- 5a478bee46e88-2ee34588671so3145609eec.0
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 09:02:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778256160; x=1778860960; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bbvLhHVBfSP4Uz3No0BvbzS5tqmHcT6h6pdsBZq2R5c=;
- b=Tq8b2TgDwOCoCDm3GeBSyxbPg5OtZmkgpMD8ODypOHJeZjPCtnIiuTvB2gE96AjcwI
- lA0l29ILpfnIgoQ4X+oZfQuNbfVYMks+2h3f0uFT+b+2rm3jksCKE03pazN3DteHgWAf
- 124211TllEbeeqfKJBNnTcjC8dYwV7WyigaNEnUQXjEWz1r+zLmweqLVN+3K8+R4EP+I
- Gd9VpEGQcvWyKO6rWoKZyy9q7lSxF0rPg3GWxKFASgr9RCEeKU8jjKTb0LZ1lGuCDphI
- cFAyjAMga5zQzehLdreDuZKcziORakx2IGE1Z9PYQLZJRM4E91MGbm2NeYCWXbhkXjW7
- wTIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778256160; x=1778860960;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bbvLhHVBfSP4Uz3No0BvbzS5tqmHcT6h6pdsBZq2R5c=;
- b=hsQK+duyHOXTw2JyeDQtS4kyroNygRpYD3c2PwDNDNbwxhg6CDDpMTBx03N/evPdav
- /M3nBhhqoZ2T4eXpMjlBi4up6gv+t+FsEw2nuO0RKVYB4G+PaUVe32XvrAUqG8J3nrID
- mY3PkKAOVOQ+C83YvQcHco+ekj9RHhSZjai0tf6+MrCVrx0+qS0QmlRGS1IHJqVOhB4i
- sOmr5ov/NWsAXBx3inJC0ZjgLAFn0zAA+hg2Aeq/IWePYVTrzbNP7/CX+k7AgVE9Q3kV
- Q7FByB5UpIu10IgPqXEXJHZCPbMhKkWx1YYoUzlHKPa/+xR+6Cx2ZKWzHVKXBtKzpblD
- yT7w==
-X-Forwarded-Encrypted: i=1;
- AFNElJ+v6yKOAzQ7F8Wqfu0BHpuY53c7MDmnmC5LA+gxC3aqP4iFctY3CmU9IlYRBjma2Vbg3m5TmzdoDNi9@nongnu.org
-X-Gm-Message-State: AOJu0YzkjdMm/0CIpiAM8ygrtQUAD9aclo164ZhszajkKVrYKL9JJG5h
- u7GTGTc/4xXqeCmkb1wPvV2W0UhTFh3mbZ6lDyLkbm9dR2XmuX/CbOx2rBTMVIsFAFNl+9AeQxv
- VHYskHSebF9m5Y76eQs26kCGY+XbRWICWHPdIhgtSjJo2niqt/L+62wRAFg==
-X-Gm-Gg: Acq92OHePBylP+/XP7FjgL4cnqc9Zl+K3jsqk7OqqlS6Xryz03ak6pzpnvfkpfzJqGo
- Ey6o2qPEbB3VPC24MyZ94OM2fOE0Tvio5QJeQF+A1+/WfHhNWvVie4ZXmY3MRzb4W4hzNd3QkRi
- Ck5Vj5KW3z7uWGBixlHShcmSuYCihLwJEI2afZ8bBXa59gBwMVnTGbEgq5YmSHNzL66TaZKDlET
- JRbLG9xwyB7N0TbypXneg4/oV/HsFgs0anTNsPCiyWLmtIS9pqH8Gs5ST5TabfNCSGnMg1jz9J5
- BdJjiALhKgjLrzskCEzf122DpcEyIbPgx+T6mvewS09Sr5MyGePqLP7lpGUaFHFETESuE40uTVr
- 0jKldNaCOsW0oTB9l/o2YeK5mkl1gUVnrETmxeMiZ5lEppqq8IxT4DnZzQh0dqeZF0kUzxs+wQe
- 952BO+cPWZj4qBph6W+1fEGF2S
-X-Received: by 2002:a05:7300:2216:b0:2c5:220c:5670 with SMTP id
- 5a478bee46e88-2f5482663b5mr7007564eec.2.1778256159458; 
- Fri, 08 May 2026 09:02:39 -0700 (PDT)
-X-Received: by 2002:a05:7300:2216:b0:2c5:220c:5670 with SMTP id
- 5a478bee46e88-2f5482663b5mr7007395eec.2.1778256158130; 
- Fri, 08 May 2026 09:02:38 -0700 (PDT)
-Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2f88847502fsm3063521eec.14.2026.05.08.09.02.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 May 2026 09:02:37 -0700 (PDT)
-Message-ID: <6aa27613-97e6-4568-8b75-cb804cc0e445@oss.qualcomm.com>
-Date: Fri, 8 May 2026 09:02:35 -0700
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1wLNjV-0004SF-Ov
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 12:07:23 -0400
+Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 648G6MU83458468; Fri, 8 May 2026 09:07:19 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=proofpoint20171006; bh=OX/GCj3jj0gJwoe
+ e/U1ZFsBTU8BzItZiUKMsw5xqXlM=; b=BiYY6RHFxAX4cP+v6cRHDYxBxbNn3Vb
+ YSi/85i/55nGm7IQK7QpG0yI+HMBvhb16NR+uDu37ztW/T5GCIzDdSU7a32iCYfO
+ AfbLACNG1MKuvcyn/1sGBomtTZiF0QqhPUZgD2cXheDWzH+W2KnWqrqMg3jfUGhL
+ hDkDen9YFnpKpazzefvZqSIy12TcEdk7NhyGBGBUr05AdnJrlyxyLAQVWTAGzemF
+ aYhNCcQx8Yt/FDy6SDNj0gk2XJJ7xWLPHKoRjkhenm0FfTy8xJi/VwJTXV1UYKg1
+ 9R+lWgFz3EBughvELTAU7V6RX+WR8mZCbqaq8CFpvM9s9cHERau6ubw==
+Received: from bn8pr05cu002.outbound.protection.outlook.com
+ (mail-eastus2azon11021119.outbound.protection.outlook.com [52.101.57.119])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4e1fqj8m21-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Fri, 08 May 2026 09:07:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IgN+S9f8Mo9BuO+iqCgot8CyQkbpHI7GJzanocMY3QKU5eQwEfDy5kt0kEdp7buD05y14a1ekMXBtwPZGYNCy3ovuh4EopdOnx+xDCNicj5ws7U0g8+ODjdljkQ/gucvnGVpo3CmXJ0ff6pHQMjS+bkd/VaeODnXAtuRVi1TKFu8tRx4YoVCy6iq1vvlsM7WxVLCtBuPXGgxLHawcJSERqaKg/YZqBT4vxRhuXZ+uRLk++WiRUDMHgoUuQXPSX4CN0J2fLL1fJr1Nz6jVvie6TIK4PvHNfR82VcsXE6l/kUqp/UlAQ7B8AcvB5qs9AvKAPQ2BmvjcFMcULkoid+3Gg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OX/GCj3jj0gJwoee/U1ZFsBTU8BzItZiUKMsw5xqXlM=;
+ b=yn4CCA03ejIb28/0k52hTlK1YQDBPrLjE6hsQyjRDwEnJGV87gFzgS9Xs0PYrTr7zHtjLiHYVwhucy0dek7I+7eNxz76It38D0PS9JmdLKFXtayoKk2A6rs5BS2QYpQnxW6ykzHowOemjCLTZRHXtzE9pWLzh/kD1hmpcHjXuKVMAIcJMyI6Z4EaNnK4JjrvRq/6c1fLKYh2JN1Poavuhp9cMvPQ3MJ3vS7jrbL0bruJgZYjIJgI5Lkse7TllbzkG6yJDA7qn7ghse/tyWQ7Bo9NEuRcWloC4rhFwzJkjQFuRiIzNo+Q4Pthf2WlVr/pAWeD0alX3qJ1sdZh1qCfTA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=OX/GCj3jj0gJwoee/U1ZFsBTU8BzItZiUKMsw5xqXlM=;
+ b=X+lde5HaCTzu7OtQYYVkb/F7vLaSkxOG/kcH6WmnqMCv8tTmqrVolljWjgKiwPTSycpZZ8QE/gxCNhf0zI2De8mOgEKxKkJ1JxynLtZY9YXrDjzFM4au4GjOuql/OMXPm3AFnJfdj0t3P8uvBPNxvxB4K7/yYeG+SIqQPUgMuXq1bkfOWidlInibDIObyvs+tEa7b6ZHI5Xf3hdWZ22LfhJSu6azHZg/03m2ZDWF5WcKwOlR9lEdiS9wFIgHx3vDOhRi3Hjz9COD+M0MipxB5zr+jvy625P4u8r8lPKtymZts7JGerQmf7nH2X6B+6juMxrEJP1k7nrL29I0detCVg==
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
+ by CH2PR02MB6869.namprd02.prod.outlook.com (2603:10b6:610:5e::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.19; Fri, 8 May
+ 2026 16:07:18 +0000
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::dbc1:9766:c58d:4887]) by CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::dbc1:9766:c58d:4887%6]) with mapi id 15.20.9891.019; Fri, 8 May 2026
+ 16:07:18 +0000
+Date: Fri, 8 May 2026 17:07:13 +0100
+From: John Levon <john.levon@nutanix.com>
+To: Jagannathan Raman <jag.raman@oracle.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ "clg@redhat.com" <clg@redhat.com>
+Subject: Re: [PATCH] Mark Multi-Process QEMU as Orphaned
+Message-ID: <af4KMZqmxtvzOmDB@lent>
+References: <20260508102657.644247-1-john.levon@nutanix.com>
+ <IA4PR10MB8301FE3A10AA391212B387EE903D2@IA4PR10MB8301.namprd10.prod.outlook.com>
+ <af3zEgHy7UMYN4Ow@lent>
+ <IA4PR10MB83013C640DBB740BE8872FE4903D2@IA4PR10MB8301.namprd10.prod.outlook.com>
+ <af31Oo6gXE69c7eb@lent>
+ <d7c29d61-9146-4cf8-83f7-e650572b338b@oracle.com>
+ <af3_CqQf1wSSWYYY@lent>
+ <f91cc783-0284-44c5-bfb5-a95b4abba380@oracle.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f91cc783-0284-44c5-bfb5-a95b4abba380@oracle.com>
+X-Url: http://www.movementarian.org/
+X-ClientProxiedBy: LO2P265CA0255.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:8a::27) To CH2PR02MB6760.namprd02.prod.outlook.com
+ (2603:10b6:610:7f::9)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/9] tools: Move more tools sources into tools/
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Jason Wang <jasowang@redhat.com>
-References: <20260508152428.2648560-1-peter.maydell@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-Content-Language: en-US
-In-Reply-To: <20260508152428.2648560-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA4MDE2MCBTYWx0ZWRfX8kOT3+kGUZ+7
- 1DrHfd0KYgohofCE6ISMmirjSXhk7S2S9qwjRwuyOGDs2PAJaU1+MZ5Q91MiAGkeClonHX7MM/Q
- KNMEoptiRize5hsyyH4G1qjTrUkhtbJKH7JHY2Is1rPUQ+/FSjp7GXrBuHgsqJlvrPBHNWhw7hb
- ERufP1VQIwSYjZZp/hYDujiQvczeUfGW4CZDLsBCV8swiC6iVvVbaHkzSt6xEpc+c7RKlCZ5QtC
- HvsiCPnQ0hbQl+4IRKk1LSuyn3KTi/vU2u84mpsMRLMl3oNUTt1ElgypOFQaQxvGXzyGeLR/oTN
- 6lV7X3e05v3qpCvvFiKi7rlMnCz1KR8PCp68Oj8DCPQa6/unwshwka7uEhGg6SWEriG56whc8WN
- jvLpYY+DOvDhz+j8yrNSVcpZ8JvQ3sQd/kqougHKPLCFRQZCafOacBg+dofLnnZRiMHj3E5B99/
- kfyjWbqYifKO4x+5I7w==
-X-Proofpoint-GUID: cl-yukSoLKHrfqYi0c3peHFeZktiznX_
-X-Proofpoint-ORIG-GUID: cl-yukSoLKHrfqYi0c3peHFeZktiznX_
-X-Authority-Analysis: v=2.4 cv=NKblPU6g c=1 sm=1 tr=0 ts=69fe0920 cx=c_pps
- a=Uww141gWH0fZj/3QKPojxA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
- a=VwQbUJbxAAAA:8 a=pGLkceISAAAA:8 a=w-yBC8u__v6bVZDae54A:9 a=QEXdDO2ut3YA:10
- a=PxkB5W3o20Ba91AHUih5:22
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|CH2PR02MB6869:EE_
+X-MS-Office365-Filtering-Correlation-Id: aa24e246-039d-4c6e-f5e2-08dead1be08a
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|376014|1800799024|22082099003|3023799003|56012099003|18002099003;
+X-Microsoft-Antispam-Message-Info: 5xJA4VTMdATT+UGov2VBE08zHxeMBmYOhrJeEFKejMqiHpcyRPSSpIgIrPoj9atTh41rzLZAlavopjknC2wprIjzmBm6E58N0jQUjjB2jKj4hXKzAUfeg1WQ31gyIJBb7T/sIj1vQU8oxILXMedW6peL6dOqlwpYZKOA6GzjY3m2sPJ8YZl6W5O8nGU61t3TqIJ7tOi7Fez84PPaBurt778XiPLrvynP+2T+3OAPIS+T8MFUyzH81qscfY+twqnc2eCJ8MPVo3eteYqookfdoNWkB+BRpBK1ojC8qtjUPNgZ+sfNhomZWcSyymZLIWCnOoF8NfwuZm36zMpOId3RsW0EN5Qc71uHM+LUTk7LoAi0O7+tnb1pN4w5dE4F28NieUpCXL91qcdeVn1cYCsccSqgZ8lqCPeli9nb6s5LD8wLXnItDQHeOW0u8bf+Zq9KXxIy9EuxH/myWfjjMCa/THBJWdkmVsJX/w9KwbermLkVP7HxewPEoDhL2fJB5x8S8z6yD8ZCItv8NgMEXTsDExMJnrvKOi7+GnvKnFpRriHeau+Iq7ZEIOXWsORTITTC2r4blWvydFZdKJeW6MsVzWqfVpAZrFMFayKfWDY5SC7VF69AqSKc+qC5/bCdjQ74DsWmCHGniRZBLcPcQnHDyHBY1g8llcIbMVgHAMn1kgcKVn3HxxA+g4dNnFbma7JC
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024)(22082099003)(3023799003)(56012099003)(18002099003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?4QBRhu56b04H5p+LT2UZMlAuxGmDXHO3Sck5EpF571XhU7OQKLJe8jSwkY2w?=
+ =?us-ascii?Q?NbQLGr8pznfAOeH2YM/1OJOUe6dmRmzw1QkGc/vOnx/cTlSjtu+esFk/l7wO?=
+ =?us-ascii?Q?vVi0bWq669qJETTyA6BaSbncr5CQee7RwiBqGGzcCU1F5R9gLJBGsP6y0xm0?=
+ =?us-ascii?Q?EVa8CaDM37V5ACo+8CnfhB34edPO/VjwAXnBqBSqjQxrpvRcTR2t8Jz5UXGZ?=
+ =?us-ascii?Q?82qhAEuosKZ0Fey1iMW85uZjVGbuUuWKdh60LIcLPB2lYDw9/mA7bAiFtDeK?=
+ =?us-ascii?Q?OnMEnc2JnKOt1QbDCWUqhGBG0Noa1A58abddCnL5hlyAw1tctLwSZ2J4It0v?=
+ =?us-ascii?Q?tJ0eu+C0lxb3NylQoSA08dUgd0eqXtbpIQx3I/pUJ4T/ew25M5l0CzXv5j2Y?=
+ =?us-ascii?Q?HkVyQ2kC7IhI1dgE/F2bceh2RZYTKxERPanP9hhYTBOEO/Kj/NqtDiEqVAsw?=
+ =?us-ascii?Q?IckzQoUYHJZqYAhcOjgtK1pICc8LnqkwPE8HOzdPgRqrC/Ew4lH+6jYdVyjk?=
+ =?us-ascii?Q?HnQPWyniaURv+2u8yFffqYUddGdju+NEmnYVHNDK2awlWhish5g4QevgsfMf?=
+ =?us-ascii?Q?c+gB1vAIQHJDxsoEUBEIbNP/8QWpQskEL6kcLL7DvXQ9o5JnJQxvjqxgDgY0?=
+ =?us-ascii?Q?i9x14oDco51WWx+OI3RptRreDlrtqGQyTLLZGQqfVaD7OZCVFlonVuLa8W98?=
+ =?us-ascii?Q?hAISfvln0Vb2fgDLIX4aubgyRuaz0GaGheWEwBdusuxVliFppr289NvW1xBb?=
+ =?us-ascii?Q?2NElSsizc8EJ/XFYHR5WZjG08yLR+YTcKzMnHMPX9mF/UFX+swjFFOIdgU1f?=
+ =?us-ascii?Q?5A5V+GfZESQjjMPTzimLwDzKCzd2UePQ+bkQlitDjog0ylMyh7umqHDHcCjQ?=
+ =?us-ascii?Q?mqm+V/BL40iaTM60w442aMWDRODxkY0Aspyk8rSSaaiRHrUXIzSEO/BMnBAY?=
+ =?us-ascii?Q?NS8o1AznqQInbgJqDizGBcpnHKh+qssdBD63PTdzsORQDP0YSOCHI4NjH+cu?=
+ =?us-ascii?Q?+jb7KC4urz5dv+pLfc79+7fTaqBEPRAIc8Ufik7v2LkNLVnfvJt4jeQ3y54r?=
+ =?us-ascii?Q?KjjuorHJ6UjqG8sI1qXPZUvKxEgvdQ2QqCiKLDwsSxZbqxKjlsT9fjSqDC7g?=
+ =?us-ascii?Q?SxjuhFegqIA/0a6FNPEJUN1wnYrPEzuVlHqvTiGUaLAmVcpS49uxf4Kl5+QL?=
+ =?us-ascii?Q?HWfNmaflifz9ni0jmdhGI/pWvv/KjNAkakl7674xdWpvaBk2MoQEZgRMWa+j?=
+ =?us-ascii?Q?MpMcwqSYgvl9N1cin3fIwHrcJQCfty5k0ivJpQALodc1kbgWXQvIJk7qyvWk?=
+ =?us-ascii?Q?MZo3K3B/wxGWstD1Ow/3gfoBAE+YrCO6ZGGAT1VIDsuTgIMBLTxTBggVM5rn?=
+ =?us-ascii?Q?rqaFzVetsO1LrZGEHOpz33Oc0koD6j0TzvGSMtQsWDfRyo9sccSZht3jMWaj?=
+ =?us-ascii?Q?lPwVGy7tAoP3l8uYZcO9NL7lV3MvC72nQEZI+HhUdm6gkCp7Ffi3sffg0n6c?=
+ =?us-ascii?Q?KcB8il4wXBYYzEdeK7dpEpgIB3C5SHlGx5wT/Qqbyv+/uu8O2KmF74CqQ4dW?=
+ =?us-ascii?Q?tL09+zkJkSZD1WZmCzAWY7oX+BSHnk6gxQtH1XIhl03YCaQTlhcwBoSXVEJq?=
+ =?us-ascii?Q?itsacwifAyVq0uiS2vrat6J3D28E/a6iD7y3eAlIyZVGyuUF3jjOWCVxWdUA?=
+ =?us-ascii?Q?+2tWH3fL1W7UJGjGaZafwvaX9uhLti4r5jC5EeWvtUI2pYEv7KsT1HJt7I2f?=
+ =?us-ascii?Q?K2Ze0YTm0Q=3D=3D?=
+X-Exchange-RoutingPolicyChecked: uaxyrzcvtsmbHPpSPKpzC4pqeMoOyM1wee8cLfy40Uv2gHndtPAMvZ4zlL3wdQRy8JmmLt3MLA7nytr/QvmiAIhVQiMpSeM01L3BcWsnbfRLwHVqJDnGmlw36zRmEkVQJM5BhPI+vpP0RoxvByvr+C9uquwSnLC3pEVe+2c4QUmrhZFzNm8xl96cD4Ug421Ma1NXy1qxJE0DbDEI+TTzTBn3X7nq9U+LMcsyfYiSk2XsAbmQb6QK/tnDm6NhzK7XUAe7CiSB5eFargOGFTwhdAPyyCH/PCUe8DCwRqPnrf5m0mJX4r/zJHy0VcCE1WcGijK/z9aAOP/OliCnn5ljKQ==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: aa24e246-039d-4c6e-f5e2-08dead1be08a
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2026 16:07:17.7949 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: x5WKcxHm0dTNnEDafi17l4vBzdLeYMMaNn3msUtEV3k1Wzq345ojQuTGZBXyv5qSED6QO3293YdHXnPYAvUqGQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR02MB6869
+X-Proofpoint-GUID: HZdo6JN9_VlGoedHcTpA-MREdl9_fpnW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA4MDE2MSBTYWx0ZWRfXxsDOrMlxbkC7
+ 1nZeDLvOfP9d4Xbe2PKAPGLf7/9gxnis7yBcR//8FmbD0Y+dAN2YfqLIvmyChwgQV2afYafftH7
+ U/nbrAtuN54dpUoZEP/1RKqVpFInoyAKdQyHFqXBXeWv7kpo3IM+ZNc6PvzwCS1CLJf3HCW1WAz
+ ES3TOQ2vCOeIuSJuztrG1bL2FXJ1nCJFYTesgwznfhxCxAOPbvNZwMFXbWkjLcGIMODNySwsrCn
+ 1G97uhYoSCNf/4iqb3Y2J3Bxc5XSB+XngC4PI/KXr9VM2YGAcFwilgY6xhzOijENk+WpLGjCRX7
+ NTRIRSln2+UY//VbmGRPvDKMZhplcm9ZPM8SQr2m7Nus5iOSlaKuRDDkacuUA0sQvDgJZFp9qyV
+ kozQpR4TqJXIki23AsYU8eTPvP/W3GKbII6+1eFAE9gUWZng+nqPdf0C8YPkO++d4+yYNZ2BEyS
+ qLqgKz6v4fpk0rGzQPg==
+X-Proofpoint-ORIG-GUID: HZdo6JN9_VlGoedHcTpA-MREdl9_fpnW
+X-Authority-Analysis: v=2.4 cv=H+7rBeYi c=1 sm=1 tr=0 ts=69fe0a37 cx=c_pps
+ a=iRxRSAF+HohKiaZghI2QEQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=kj9zAlcOel0A:10 a=NGcC8JguVDcA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=VUi8bpU7OL1Oj2-RSIOF:22
+ a=39ecexaQ9deFQpNdZxYA:9 a=CjuIK1q_8ugA:10
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-07_02,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 impostorscore=0 spamscore=0 clxscore=1015 malwarescore=0
- lowpriorityscore=0 phishscore=0 priorityscore=1501 suspectscore=0
- adultscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2605080160
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=pierrick.bouvier@oss.qualcomm.com;
- helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -160,115 +184,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/8/2026 8:24 AM, Peter Maydell wrote:
-> We have a set of binaries that we call "tools": they're built based on
-> the --enable-tools/--disable-tools configure setting, they're
-> documented in docs/tools, and they're standalone executables of one
-> form or another.
-> 
-> Currently the sources for these are a bit scattered: many still in the
-> top level source directory, some in contrib, one or two actually in
-> the tools directory.
-> 
-> As an initial attempt at cleanup, this patchset moves the sources for
-> qemu-bridge-helper, qemu-edid, qemu-img, qemu-io, qemu-nbd,
-> qemu-keymap, qemu-vmsr-helper and elf2dmp into the tools/ directory.
-> 
-> The patchseries also moves the ebfp skeleton sources from tools/ebpf/
-> to ebpf/bpf-src/, because this isn't a tool by the above definition.
-> 
-> As per my thread from a while back, I would ultimately like us to
-> clean up contrib/:
-> https://lore.kernel.org/qemu-devel/CAFEAcA_5HvGriDsWnb1ALuA_dgG320eKv7yuM2kThv=rfOSZQA@mail.gmail.com/
-> But parts of that clearly need more discussion. So this is just doing
-> some parts that I hope are not controversial.
-> 
-> Annoyingly, meson doesn't seem to provide any way for a subdirectory
-> meson.build to say "the foo.c in this subdir builds into a foo
-> executable that lives at the top level of the builddir". And we have a
-> lot of test harness stuff plus user muscle memory that assumes that
-> qemu-img and qemu-io live there. So the build runes for these tools
-> have to stay in the top level meson.build (and tools/meson.build
-> remains an empty file). The exception is that contrib/elf2dmp/elf2dmp
-> is now tools/elf2dmp/elf2dmp, but I think the set of people who were
-> running that from the build directory will be small.
-> 
-> thanks
-> -- PMM
-> 
-> 
-> Peter Maydell (9):
->   ebpf: move ebpf skeleton source to ebpf/ directory
->   tools: Move qemu-bridge-helper sources to tools/ directory
->   tools: Move qemu-edid sources to tools/ directory
->   tools: Move qemu-img sources to tools/ directory
->   tools: Move qemu-io sources to tools/ directory
->   tools: Move qemu-nbd sources to tools/ directory
->   tools: Move qemu-keymap sources to tools/ directory
->   tools: Move qemu-vmsr-helper up a directory level
->   tools: Move elf2dmp from contrib/ to tools/
-> 
->  MAINTAINERS                                   | 15 +++++++-------
->  docs/tools/qemu-img.rst                       |  2 +-
->  {tools/ebpf => ebpf/bpf-src}/Makefile.ebpf    |  2 +-
->  {tools/ebpf => ebpf/bpf-src}/rss.bpf.c        |  0
->  meson.build                                   | 20 +++++++++----------
->  {contrib => tools}/elf2dmp/addrspace.c        |  0
->  {contrib => tools}/elf2dmp/addrspace.h        |  0
->  {contrib => tools}/elf2dmp/download.c         |  0
->  {contrib => tools}/elf2dmp/download.h         |  0
->  {contrib => tools}/elf2dmp/err.h              |  0
->  {contrib => tools}/elf2dmp/kdbg.h             |  0
->  {contrib => tools}/elf2dmp/main.c             |  0
->  {contrib => tools}/elf2dmp/meson.build        |  0
->  {contrib => tools}/elf2dmp/pdb.c              |  0
->  {contrib => tools}/elf2dmp/pdb.h              |  0
->  {contrib => tools}/elf2dmp/pe.h               |  0
->  {contrib => tools}/elf2dmp/qemu_elf.c         |  0
->  {contrib => tools}/elf2dmp/qemu_elf.h         |  0
->  .../qemu-bridge-helper.c                      |  0
->  qemu-edid.c => tools/qemu-edid.c              |  0
->  qemu-img-cmds.hx => tools/qemu-img-cmds.hx    |  0
->  qemu-img.c => tools/qemu-img.c                |  0
->  qemu-io-cmds.c => tools/qemu-io-cmds.c        |  0
->  qemu-io.c => tools/qemu-io.c                  |  0
->  qemu-keymap.c => tools/qemu-keymap.c          |  0
->  qemu-nbd.c => tools/qemu-nbd.c                |  0
->  tools/{i386 => }/qemu-vmsr-helper.c           |  0
->  tools/{i386 => }/rapl-msr-index.h             |  0
->  28 files changed, 20 insertions(+), 19 deletions(-)
->  rename {tools/ebpf => ebpf/bpf-src}/Makefile.ebpf (96%)
->  rename {tools/ebpf => ebpf/bpf-src}/rss.bpf.c (100%)
->  rename {contrib => tools}/elf2dmp/addrspace.c (100%)
->  rename {contrib => tools}/elf2dmp/addrspace.h (100%)
->  rename {contrib => tools}/elf2dmp/download.c (100%)
->  rename {contrib => tools}/elf2dmp/download.h (100%)
->  rename {contrib => tools}/elf2dmp/err.h (100%)
->  rename {contrib => tools}/elf2dmp/kdbg.h (100%)
->  rename {contrib => tools}/elf2dmp/main.c (100%)
->  rename {contrib => tools}/elf2dmp/meson.build (100%)
->  rename {contrib => tools}/elf2dmp/pdb.c (100%)
->  rename {contrib => tools}/elf2dmp/pdb.h (100%)
->  rename {contrib => tools}/elf2dmp/pe.h (100%)
->  rename {contrib => tools}/elf2dmp/qemu_elf.c (100%)
->  rename {contrib => tools}/elf2dmp/qemu_elf.h (100%)
->  rename qemu-bridge-helper.c => tools/qemu-bridge-helper.c (100%)
->  rename qemu-edid.c => tools/qemu-edid.c (100%)
->  rename qemu-img-cmds.hx => tools/qemu-img-cmds.hx (100%)
->  rename qemu-img.c => tools/qemu-img.c (100%)
->  rename qemu-io-cmds.c => tools/qemu-io-cmds.c (100%)
->  rename qemu-io.c => tools/qemu-io.c (100%)
->  rename qemu-keymap.c => tools/qemu-keymap.c (100%)
->  rename qemu-nbd.c => tools/qemu-nbd.c (100%)
->  rename tools/{i386 => }/qemu-vmsr-helper.c (100%)
->  rename tools/{i386 => }/rapl-msr-index.h (100%)
-> 
+On Fri, May 08, 2026 at 11:35:25AM -0400, Jagannathan Raman wrote:
 
-As well, feel free to send a patches for contrib/plugins, moving them to
-plugins/plugins as you offered first.
-We didn't find a better alternative, and it does not really matters to
-be honest. You have my reviewed-by.
+> > > There's no active development on it due to a lack of inbound feature requests.
+> > > Are you looking for any specific features?
+> > Confused by this comment, as we've discussed before several times that you were
+> > going to migrate the testing across to vfio-user instead of the legacy protocol,
+> > then remove the legacy protocol altogether.
+> > 
+> > Then no patches arrived, so I presume that's not going to happen.
+> 
+> My employer's resource allocation has de-prioritized this. So, I'll do this
+> during my personal time.
 
-Regards,
-Pierrick
+Sounds good, thanks!
+
+regards
+john
 
