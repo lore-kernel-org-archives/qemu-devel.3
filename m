@@ -4,117 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65A45CD342F
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 05:59:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88C58CD342F
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 07:36:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLEEB-0003VL-F6; Fri, 08 May 2026 01:58:29 -0400
+	id 1wLFk1-0003G7-IB; Fri, 08 May 2026 03:35:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wLEE7-0003V6-9J; Fri, 08 May 2026 01:58:19 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1wLFjy-0003Fg-6m; Fri, 08 May 2026 03:35:18 -0400
+Received: from mail-japaneastazon11010065.outbound.protection.outlook.com
+ ([52.101.229.65] helo=TY3P286CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <amachhiw@linux.ibm.com>)
- id 1wLEE4-00068D-Ck; Fri, 08 May 2026 01:58:17 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6483JfLf3967125; Fri, 8 May 2026 05:58:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=l4L6gyFKPXWS4JtGDTKyu+skuDf9o/
- +7ZvgjuXgSz84=; b=Wfk65P17gHuHij1nLf2guVA/4jY/TQF9e7FMmQ/BV6K5AY
- VhA5t+jh/5QYI5smTnUwnrpyZQG9jTX9AN2+PHGNpWnGD2z62MaN/U8QVydfWBjO
- WO7j5TSPjo9CL/gBCv9RhF+brAIkWwzIwwW8yFAyHbm2hrmmgoVlIsYTS6S4HM+j
- 7mMqVjmFZqSNWCioA7hOHsHcEMst6q7dsOw1chz8oF3KBoGFxzi8tFGCsTkJ5W+X
- g7lzlS32uO3xAYJVdEzUFqxE3WWEjtU3K4+tNBPdxuYE/VGNJChihClXoGeMLdcp
- 7UbkvUwHiERT6GFRZZh0bsVgUT4misJgtSGlkJ+w==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9v7t9jd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 08 May 2026 05:58:12 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 6485sN9a022767;
- Fri, 8 May 2026 05:58:11 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwwtgprcx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 08 May 2026 05:58:11 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6485w7Tx20840760
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 8 May 2026 05:58:08 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D9A2120043;
- Fri,  8 May 2026 05:58:07 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 33EAB20040;
- Fri,  8 May 2026 05:58:04 +0000 (GMT)
-Received: from Amits-MacBook-Pro.local (unknown [9.39.21.199])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Fri,  8 May 2026 05:58:03 +0000 (GMT)
-Date: Fri, 8 May 2026 11:27:59 +0530
-From: Amit Machhiwal <amachhiw@linux.ibm.com>
-To: Gautam Menghani <gautam@linux.ibm.com>
-Cc: Amit Machhiwal <amachhiw@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- Vaibhav Jain <vaibhav@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-Subject: Re: [PATCH] target/ppc/kvm: Fix const violation when trimming CPU
- alias suffix
-Message-ID: <20260508110407.6eeeb01e-d6-amachhiw@linux.ibm.com>
-Mail-Followup-To: Gautam Menghani <gautam@linux.ibm.com>, 
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- Vaibhav Jain <vaibhav@linux.ibm.com>, 
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Nicholas Piggin <npiggin@gmail.com>,
- qemu-devel@nongnu.org, kvm@vger.kernel.org
-References: <20260504134344.38958-1-amachhiw@linux.ibm.com>
- <af1ynfIuksZKDFau@Gautams-MacBook-Pro.local>
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1wLFjw-0005iW-I4; Fri, 08 May 2026 03:35:17 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=jfhJDozN+MXV7cpfrh9nx/K0FoU+RYKNIqQItTEGpP1zQrKNbE2d9VmaU1zdIMYkdJ9JF4RLs2+vzcxCr8OreaZwF6sTHPCMvUWPVrXsMCCPXZj9g9sTElHQfpgxrNb5wI9+EOc7dEN6Y/bZVLYCnpZYqNoHmTVCD1FawIvfcjUMxiCzOoeCuhmStV0UtmA8e5r3pTlQcJL4meVnbj/NFItqOB82nG2JGH3SormIstlBG8NgsBx8WY0vjoQ8fRU+zGS6SjdHOQvXK5UzwdebBBBeUpsLYcrQJvAoPEXhuQe18ZqgTOW522cl2kuPXt8q/AERaHz2/F5W9CVUR72m5w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=s4G4YHRETMO+bNqI7UrkWxq9c7oor+C4LI8oMsi+Wuo=;
+ b=tvcW06aYyc3BC5W9fWrKm67c6rAlI92Dy5tu1xdVvRnGXS1YUFSZ/wJA9QNmPk79kUbgV3IDlCFFl4m4T411AlFML8WWwI3+DEqruBt4Su8tmnJHjRnlXI+lyGDecRKtPUlIdkAoNv080+cWgUz3VVAOu1LTM4IPHPHWTR1xHS213vIY25xR1QtabOU19j8zUKOuukBHGxXzmkx11ghowM/YzsJLPDDm/TVvHnowvKELrsd94iJNoLADO+hgyZSotO9xhPmVYQ+flBOWTSypl11Xr2/rZwDlXkMtzlLlZrR+c2ugks7hLTT17vJAmQa1T5JxKvvRkYGm9zrWzjo78A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=fujitsu.com; dmarc=pass action=none header.from=fujitsu.com;
+ dkim=pass header.d=fujitsu.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fujitsu.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=s4G4YHRETMO+bNqI7UrkWxq9c7oor+C4LI8oMsi+Wuo=;
+ b=YTqCmMGYmmobmQbzkQ6zeDoDt8CD+uCWClLIWyxAsEVlchiRKcbdUDfAsaJgHU4ddAmqFigiver/eQVEfJRr+LR0kOZZ06XqwEWoO3Fm6adBONhXaCtr8TsxUHZ3i9gwqXU62nHyG/mN2JNdXFLqw848rdRXJqwlfNwY96YZArzrp9B9cROqfOCITtUPI/7iHFMWvHViSl/7V1srYFmVUrZPYcUNK+9r8aqoMHCFWr1kK1qw2necEWDTml4Q+e4W89l/iOoGQfmN8Fxlitge5697DDjhlTloQ0ZMpQ73eSEQhQWsckwagfEvs9aUiMVb+0nLUDtPCZNeoVJxcdUB3Q==
+Received: from TYRPR01MB13806.jpnprd01.prod.outlook.com
+ (2603:1096:405:218::10) by OSZPR01MB8354.jpnprd01.prod.outlook.com
+ (2603:1096:604:16f::9) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.19; Fri, 8 May
+ 2026 07:30:07 +0000
+Received: from TYRPR01MB13806.jpnprd01.prod.outlook.com
+ ([fe80::ab07:de7b:8259:7c17]) by TYRPR01MB13806.jpnprd01.prod.outlook.com
+ ([fe80::ab07:de7b:8259:7c17%4]) with mapi id 15.20.9891.017; Fri, 8 May 2026
+ 07:30:07 +0000
+From: "Zhijian Li (Fujitsu)" <lizhijian@fujitsu.com>
+To: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-riscv@nongnu.org"
+ <qemu-riscv@nongnu.org>, "qemu-ppc@nongnu.org" <qemu-ppc@nongnu.org>,
+ "qemu-block@nongnu.org" <qemu-block@nongnu.org>, "integration@gluster.org"
+ <integration@gluster.org>, Zhao Liu <zhao1.liu@intel.com>, Yoshinori Sato
+ <yoshinori.sato@nifty.com>, =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?=
+ <philmd@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>, Milan Zamazal
+ <mzamazal@redhat.com>, Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ Mark Kanda <mark.kanda@oracle.com>, Glenn Miles <milesg@linux.ibm.com>,
+ Gautam Menghani <gautam@linux.ibm.com>, Fabiano Rosas <farosas@suse.de>, Ben
+ Chaney <bchaney@akamai.com>, =?utf-8?B?QWxleCBCZW5uw6ll?=
+ <alex.bennee@linaro.org>, Thomas Huth <thuth@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Pierrick Bouvier
+ <pierrick.bouvier@oss.qualcomm.com>, =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?=
+ <clg@redhat.com>
+Subject: Re: MAINTAINERS entries that aren't S: Orphan but maybe should be
+Thread-Topic: MAINTAINERS entries that aren't S: Orphan but maybe should be
+Thread-Index: AQHc3VAteipPymrKEkeelZx+AN2lBLYBAROAgAK9R4A=
+Date: Fri, 8 May 2026 07:30:07 +0000
+Message-ID: <5326b854-fcea-4af6-a479-792888a94a4d@fujitsu.com>
+References: <87y0hwbvbp.fsf@pond.sub.org> <aftEt2S-Oxq93b_s@x1.local>
+In-Reply-To: <aftEt2S-Oxq93b_s@x1.local>
+Accept-Language: en-US, zh-CN
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla Thunderbird
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=fujitsu.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYRPR01MB13806:EE_|OSZPR01MB8354:EE_
+x-ms-office365-filtering-correlation-id: fa8ab853-41db-43b9-55da-08deacd3a13a
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|1800799024|366016|7416014|376014|1580799027|38070700021|22082099003|56012099003|18002099003;
+x-microsoft-antispam-message-info: cMlrwG71QjBKPxQRMnexFSKYxXkBiOV5vMUz0BK5hhbzei7PsJqbIcLz+0lLdQpzLE4sptmwq5qHSaqGRjiy2kLyo6y4wjb9hAPSLHoHxh9QLtwqUhnA34rvjgyx4cXHoOhif+rZZDClP+YZjI2t5b0+QMWYd2H6d8yGHi/gYAi/TbE+O2TxEUDRPHo4K3dDfs91tbDkuoAYJW5wa8nD0muLvg3kFUAebQe4aJ7gh58MbHO+ufw59R/bFHzExOHynvF+YyJRBAfnX/q1l+cHyymTw8K8M0LZgc8NUj5plHiwUfK9y+i8TKExHOfPa95D1IJSmCSvZ0cMgsHkRZdqnXaRMr3Qmp4P+B2T70G45M0DRbMh4/sBjJuOwh1t8lHkKPl02eQ7eYU3A6r0WFWfL6U6OMUFoYMVzUJw1ahCo8UB+4kSHB6KyKww4lPJ2CUmfKDm+BGRk3MOruS9hZM4WtKv2gMM+z4nirC6an9aiONum7o4JLx6rjs7HyEtdslpCB7ako5hLvHf4NHQV5sJ6C0x9REQ54bAatuwSY5cGU3+53RwW7e5XKYALyNmn8rCg3kSLv7GxDWhLVBgFTUYGNkty3WPgle6A2s9Q76KR0Pa3fPLZyWCJYgU1gzxG4N8gPXZH67DQQ7fquUCqNCTN8qFRDDrWc6wHed+zACjs4qBb8Y8j6AWyq3SqVf0Wx4T9KObRJfuNK8lQVpR8ZuTDGKtIsEWTd5/xHKSV6nfhMBArL3qEpSEwk3j1SsduE8y8ruBrNqg3CWntZ2UEfh/KA==
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYRPR01MB13806.jpnprd01.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(366016)(7416014)(376014)(1580799027)(38070700021)(22082099003)(56012099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?NUI3U1p1NEZBc0NHVnVsaS9BSU83S3RYSWtFZ0ZpRTgrTlFOQ3dtOUtDcDUy?=
+ =?utf-8?B?OWlNUVg1bHRzeEFIaUl0eGJNTmVsQTFINnZhYmdEMklWMUh2VkcxU0RSVG03?=
+ =?utf-8?B?Mkg0ZVdQbHdnUXp6SUROUStHQzlZUXNjRWR4Y0xYM3lTdG91eVUyalpUL0x4?=
+ =?utf-8?B?N1ZBUkhWbTc4Z2ZGRm4zWGRaTW9TYnArUTJmSHQ2dUNYVWZtZHRCYk43WCtT?=
+ =?utf-8?B?NFlIS1Q4WVlYQVoxOXFsOU1WTFRqMFMzS3FCOHFVekZNNjQ3bWZIRjZld1NV?=
+ =?utf-8?B?R25jNlNZakMyelZKY2E1Z3g5SWxWSC9jQmtiemhJeDlvZ3hLcktCWWFqWnZM?=
+ =?utf-8?B?MEpLbG5mc2RyRlBpWXREUlRKcjdsREtITzM2RGhTSHB4dTVua0o4TzRNTWVx?=
+ =?utf-8?B?THJ3cFo3bDdaSjJtbWpDZFVGK2NXMkJhWm4weWVoQ0F2NllNS0RPRTVoMGZt?=
+ =?utf-8?B?QisyZUlUUXIvSHFFKzl1QjlHZnh1QlhPOCtoaEpSYThjQ09IZmt3MEcydWZL?=
+ =?utf-8?B?YTE4blpYc0pwaDhMODl4enN2ODVXVXpHTlhrUi9UQi9sbnRieG9GNUp0SXd3?=
+ =?utf-8?B?QUNkNFRZdmdnTDRxWm1TZ05zdEQwVy9Cd295V24zTTQxcGlOaHFEK1BvK3Yw?=
+ =?utf-8?B?Q3c4VmtvSGpudDZXS2lvMXFZS2NzdiswUUlVTEJtaDlZUlFvRngyY0tYUHhw?=
+ =?utf-8?B?OENDZjdhMkd3dTdrWm1PclF3OEp0THczOVppb2NLaUtHazZrMzVCd0dXbkxj?=
+ =?utf-8?B?VHIwZ1duQnhJQjdRa3dXWmFSLy9yM2Uvcnp3Z0VoOWNvSlFRUHR6UXRyRHNL?=
+ =?utf-8?B?OXk0M3dRS21vL3NvdGNhQ3MxRmorazZ3dWhXbUwyNFowYUszMWZYcnRzUC9T?=
+ =?utf-8?B?WTg1WjFaRFlNb3U5SFpLaUZwKy9QVm9GUEhhOWxBTWFFMVNZdUtuN3NpUmVU?=
+ =?utf-8?B?R3JGUFNaNXM3aWpzOHlwVVkzNk40Vm9YL2lFY21ORUxtLzhwekU1Nm9tanUz?=
+ =?utf-8?B?V2hTZnJsVDNzYTlha3hPbi9Vb1dZckh3RTNBaVFsa1BuQXExR21rRXBzL21L?=
+ =?utf-8?B?MTh1eUlrY0theUYyeEtXNE5yRTFDL2NJNUxBb1YvbXVldHBMbmpJZWp4M0JH?=
+ =?utf-8?B?MHlEQ0wyQjlRcXRISDJ4OUVTcUxFU2JkeUtEMURFY09RenI2cHkxSVF5cFVR?=
+ =?utf-8?B?am5vNUZGc3JJTkF1UXBscFY4SkRLNEtPaGVPbTRGMjZoWmZWc24rL0lYU0Ra?=
+ =?utf-8?B?TE1FRXk4T1publk5SVBNdTlmc0s1OHYwQTFWU1ZNTHJEQ1gyTFhFTVNKSHQw?=
+ =?utf-8?B?ME1OengxVUtrK1BLc0pnejJFWkcxUzhqZGdxWlRmU0ZyMnc0a0hKYkR3QWpy?=
+ =?utf-8?B?eVo5UDVja1hWNnlGQjlpN0RySHpZRlFvTUdpRktRWEp6Y3N1RHBjRWxUZEpI?=
+ =?utf-8?B?N055cmdrdkZUWVZuUHM3dVpFdVhabXIrUXhwTWNmNSttaFVwTTgzSXIxMWlk?=
+ =?utf-8?B?MUpISlhOZW84SHM0Y2p1ZTg0eHpEK2tucDhiZlIxaitURVViOWkxZHEzMnox?=
+ =?utf-8?B?cTdGRzFPMHJHOGdxcENyVmxRNVlqVWlqMHhxZTVBN2RFeTVoYXV2WjZDa09C?=
+ =?utf-8?B?TzlqRTVkYjFLU1BFYStuUmFSbFFaMkdoY3pwWXV2cVJwSHdWSW5ISVNQTE8z?=
+ =?utf-8?B?U0dScU4yT3hHMXAxQUNJb3NZeXZRUFJxdi8vdE1wSkVoR1dXTVRVVGlOaTlV?=
+ =?utf-8?B?cTF4eE1xcTVXMDNLYVYyZGRKdFh4WWRlaU1TTWIwbkVXQTdnaXY1Y3pMY3ln?=
+ =?utf-8?B?Yll4OGZaSXVBUE1odTg4V0RabXVFTnFiVmlUcHlHTHJDY0lMbi8vQnFtZ1Qy?=
+ =?utf-8?B?Z29CajNMVUE4b0NrZmluWmFMVS9WZHFOLzc3OGhhdjJKdlNxeUpENjZtUVps?=
+ =?utf-8?B?TEcrcmlGSExWUEJIdEcxZXdIdHpLd3k5QUtuRTAzdkUvLzcwc0dLMnVaQ09J?=
+ =?utf-8?B?M3Vya0dMbzJHcDgzUXQ1RWE3Wnkzai96cVg3Rk9aNzJMckZQRFByVHhKQ2Vx?=
+ =?utf-8?B?K0pDaVNRMmNyTThWK2NidnptMUxxcHRTYThXcGdFTWNpaThxdnJhaWdxVE9N?=
+ =?utf-8?B?R1hrSnRObFdhZXluTXFZMXVoRTloVVVqb0R2SmlFOUpnMWR1ZEI4NVcxa3BE?=
+ =?utf-8?B?Q3lpcDdVVnBzNHlyR1gvTTdJbTZoZ0ExZ0kxRi9IVERNZHJETDNTMllvK2FU?=
+ =?utf-8?B?ZVhLV1h0dU1Dekd5eDFNUnU2MGlkZ2N2U0V6SUZrU3RTNlpPNG5FbXZPRjVx?=
+ =?utf-8?B?aWFMRzFzYy80cWNNVDlNMlNWY0J2Si9LL0NwazYvMEtOTE9kOTZIQT09?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <8A218405ED80E84E8EF530E49B562614@jpnprd01.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <af1ynfIuksZKDFau@Gautams-MacBook-Pro.local>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA4MDA1MyBTYWx0ZWRfX8BjIcEQuF5Gt
- amZFZD6erdK6XIbEVK+0PealQUKf+wRSytqjAJ+lf0vvmD94rwbJ1D26zI1kpcbubf7mS8gYDkr
- C/dWxNZEWS8O2NISaepBuyC/dGasnnPk3EMCRL843ur6is1coAMN/CDd9jcdZoOvTUYNh1x4whA
- 1jIGwKyl5qkkFa22BoiB3avAlI25/vi0qEpJCK0gYIbA4acfQ+qhytHine0jCS8zSLRh+4VdrSB
- b02h/1Bmte1O6iiXN4Rcywg5hXOXRtfymLE38sJbA/eyWC/O9EJbVOHHnuYw2Z4buWNWRzyEtO9
- Vr3MB7Y1oWJNfCeOHtagfMhuz0OBisqaoDnvSnW0haTfoqxSU4UHxCFk9wdI1wYc9LKtT6SO9du
- xphrglEWICQE0SGQLBtrLgbOK1sNHGDywRt7dTJohKJIXouzwsgQNVEnl4rIMsNWYWDnOzQDYp5
- E0g6ANVDb+KANDuqAVQ==
-X-Proofpoint-GUID: nUR91scsPLY2BKqxhXb9i0krL0wJTTKU
-X-Proofpoint-ORIG-GUID: aeTqjDdasM9EArhfYfsmEILMQaREgtXe
-X-Authority-Analysis: v=2.4 cv=eu/vCIpX c=1 sm=1 tr=0 ts=69fd7b74 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=kj9zAlcOel0A:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=7JIn7IvpgBoFcJ94maEA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-07_02,2026-05-06_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 phishscore=0 lowpriorityscore=0 clxscore=1015 adultscore=0
- suspectscore=0 malwarescore=0 bulkscore=0 impostorscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605080053
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=amachhiw@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-Exchange-RoutingPolicyChecked: YdNd51YHzSkZ1tjW/A+oeQs4xdHNuKfeIbOKYTFJxlRcDsDWbXedJjWp0Jy3+xKP9qoI9hYavUXGhB8K9d/uGXQ5pq2vlQ+RznYghDuxJbqEHThYUPh3pjH9MkGygR1bgB7k8lOBqWXRTpbG++wJ+BSvP7JjwknK3qrUVmy/kzaMqsMhioYDmHXQqNPO5sGjRDGJk/7kD3eAX9pndEOZSidJbFbYx+MjRnUto5Z6Lk3h7xNrGnCcaiD/6+WLepofLt9NFyHHnjcOooMAmpn/EZ4cwPBTb4LB6Kvv6DKBczQF0y4JEM/9knf8LiyXGffjOt8FOaX76MN2aE31WR+ZPA==
+X-OriginatorOrg: fujitsu.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYRPR01MB13806.jpnprd01.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fa8ab853-41db-43b9-55da-08deacd3a13a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 May 2026 07:30:07.6141 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a19f121d-81e1-4858-a9d8-736e267fd4c7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 9LBPfbWT/77Z2LlQGpkuKwLuMq2/j7kqnwKiu+Q6gf3C6Eo2elIkXwoG43g5SQz8beC9dNFrWayNjO30MvSwcw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: OSZPR01MB8354
+Received-SPF: pass client-ip=52.101.229.65; envelope-from=lizhijian@fujitsu.com;
+ helo=TY3P286CU002.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,96 +164,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Gautam,
-
-Thanks for taking a look. Please find my response inline below:
-
-On 2026/05/08 10:50 AM, Gautam Menghani wrote:
-> On Mon, May 04, 2026 at 07:13:44PM +0530, Amit Machhiwal wrote:
-> > GCC 16 tightens diagnostics around const correctness and now correctly
-> > rejects attempts to modify strings referenced through const-qualified
-> > pointers. In kvm_ppc_register_host_cpu_type(), ppc_cpu_aliases[i].model
-> > is defined as const char *, but the code was using strstr() on it and
-> > then modifying the returned pointer in-place to strip
-> > POWERPC_CPU_TYPE_SUFFIX.
-> > 
-> > This results in a write through a pointer derived from const data,
-> > triggering a build failure with GCC 16:
-> > 
-> >   error: assignment discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
-> >         suffix = strstr(ppc_cpu_aliases[i].model, POWERPC_CPU_TYPE_SUFFIX);
-> >                ^
-> > 
-> > Fix this by duplicating the model string into a mutable buffer using
-> > g_strdup(), storing it in the alias table, and then performing the
-> > suffix truncation on the mutable copy.
-> > 
-> > This preserves the existing behavior while avoiding modification of
-> > const data and ensures compatibility with newer compilers.
-> > 
-> > No functional change intended.
-> > 
-> > Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-> > ---
-> >  target/ppc/kvm.c | 6 ++++--
-> >  1 file changed, 4 insertions(+), 2 deletions(-)
-> > 
-> > diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-> > index 25c28ad089c6..e71e5c0117da 100644
-> > --- a/target/ppc/kvm.c
-> > +++ b/target/ppc/kvm.c
-> > @@ -2654,10 +2654,12 @@ static int kvm_ppc_register_host_cpu_type(void)
-> >      dc = DEVICE_CLASS(ppc_cpu_get_family_class(pvr_pcc));
-> >      for (i = 0; ppc_cpu_aliases[i].alias != NULL; i++) {
-> >          if (g_ascii_strcasecmp(ppc_cpu_aliases[i].alias, dc->desc) == 0) {
-> > +            char *model;
-> >              char *suffix;
-> >  
-> > -            ppc_cpu_aliases[i].model = g_strdup(object_class_get_name(oc));
-> > -            suffix = strstr(ppc_cpu_aliases[i].model, POWERPC_CPU_TYPE_SUFFIX);
-> > +            model = g_strdup(object_class_get_name(oc));
-> > +            ppc_cpu_aliases[i].model = model;
-> > +            suffix = strstr(model, POWERPC_CPU_TYPE_SUFFIX);
-> >              if (suffix) {
-> >                  *suffix = 0;
-> >              }
-> > 
-> 
-> A const char * variable is ideally supposed to point to an immutable
-> string. But even with this fix, the string that
-> "ppc_cpu_aliases[i].model" points to is being changed after assignment.
-
-Thanks, I get your point. The write in my version is to the mutable buffer
-returned by g_strdup(), so it is not strictly a const write. I had originally
-trimmed the duplicated buffer before assigning it to ppc_cpu_aliases[i].model,
-but later reordered it to stay closer to the existing flow. Still, I agree with
-the suggested cleaner ordering. I will update it in the next revision.
-
-Thanks,
-Amit
-
-> Would the below diff (untested) be a better fix?
-> 
-> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-> index 41bd03ec2a..a84e4b4636 100644
-> --- a/target/ppc/kvm.c
-> +++ b/target/ppc/kvm.c
-> @@ -2654,13 +2654,14 @@ static int kvm_ppc_register_host_cpu_type(void)
->      dc = DEVICE_CLASS(ppc_cpu_get_family_class(pvr_pcc));
->      for (i = 0; ppc_cpu_aliases[i].alias != NULL; i++) {
->          if (strcasecmp(ppc_cpu_aliases[i].alias, dc->desc) == 0) {
-> -            char *suffix;
-> +            char *suffix, *model;
->  
-> -            ppc_cpu_aliases[i].model = g_strdup(object_class_get_name(oc));
-> -            suffix = strstr(ppc_cpu_aliases[i].model, POWERPC_CPU_TYPE_SUFFIX);
-> +            model = g_strdup(object_class_get_name(oc));
-> +            suffix = strstr(model, POWERPC_CPU_TYPE_SUFFIX);
->              if (suffix) {
->                  *suffix = 0;
->              }
-> +            ppc_cpu_aliases[i].model = model;
->              break;
->          }
->      }
+DQoNCk9uIDA2LzA1LzIwMjYgMjE6NDAsIFBldGVyIFh1IHdyb3RlOg0KPiBPbiBXZWQsIE1heSAw
+NiwgMjAyNiBhdCAwMjowMTo0NlBNICswMjAwLCBNYXJrdXMgQXJtYnJ1c3RlciB3cm90ZToNCj4+
+ICAgICAgTUFJTlRBSU5FUlM6Mzc0NjogUkRNQSBNaWdyYXRpb24NCj4+ICAgICAgUjogTGkgWmhp
+amlhbiA8bGl6aGlqaWFuQGZ1aml0c3UuY29tPg0KPj4gICAgICBSOiBQZXRlciBYdSA8cGV0ZXJ4
+QHJlZGhhdC5jb20+DQo+PiAgICAgIFM6IE9kZCBGaXhlcw0KPiANCj4gRm9yIHRoaXMgb25lLCAi
+T2RkIEZpeGVzIiBzaG91bGQgc3RpbGwgYmUgcHJvcGVyLiBJbml0aWFsbHksIEp1YW4gd2FzIHRo
+ZQ0KPiBNOiBsaXN0ZWQgYW5kIGl0IHdhcyBnb25lIG9ubHkgYmVjYXVzZSBKdWFuJ3MgbGVmdC4u
+DQo+IA0KPiBaaGlqaWFuLCBkbyB5b3Ugd2FudCB0byBiZSBNOiBoZXJlPyAgSSB0aGluayB5b3Un
+cmUgdGhlIG1vc3Qgc3VpdGFibGUuDQoNCg0KVGhhbmtzIGZvciBvZmZlcmluZywgUGV0ZXIuIEkn
+ZCBwcmVmZXIgbm90IHRvIGJlIHRoZSBtYWludGFpbmVyLCBidXQgSSdtIGhhcHB5IHRvDQpjb250
+aW51ZSByZXZpZXdpbmcgcGF0Y2hlcy4NCg0KDQo+IE90aGVyd2lzZSBJIGNhbiBzd2l0Y2ggdG8g
+TTosIGp1c3QgdG8gc2F5IEknbSBzdGlsbCBjb2xsZWN0aW5nIHBhdGNoZXMuDQo+IA0KDQoNCkl0
+IHdvdWxkIGJlIGdyZWF0IGlmIHlvdSBjb3VsZCB0YWtlIHRoZSBNOiByb2xlIDopDQoNCg0KVGhh
+bmtzDQpaaGlqaWFu
 
