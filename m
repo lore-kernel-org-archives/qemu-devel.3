@@ -4,110 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E696CD342F
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 03:30:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6C3ECD342F
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 03:55:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLBua-0007FO-Mh; Thu, 07 May 2026 23:30:00 -0400
+	id 1wLCIY-0001jp-W5; Thu, 07 May 2026 23:54:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wLBuY-0007Ea-QI
- for qemu-devel@nongnu.org; Thu, 07 May 2026 23:29:58 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wLCIV-0001jW-MS
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 23:54:43 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1wLBuW-0004G7-T4
- for qemu-devel@nongnu.org; Thu, 07 May 2026 23:29:58 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-ba7a1cc0380so263993566b.2
- for <qemu-devel@nongnu.org>; Thu, 07 May 2026 20:29:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1778210994; cv=none;
- d=google.com; s=arc-20240605;
- b=IPsSwegupsgc2rdd/dN2f58dQJkU7WyayWVnBxCLw5h8hT495lOYOIfyXkjwAWXybI
- Eydzu+Ce/pyRcP/YNwyzBkBefVRSuudUbZmPH9ugKIsWhuxZITyUjwrPGa8qjO0g/KDK
- dLwqLVrE/aC7HdiOkTj7/X+gpmzswvvMnm6+6JG876DoTHNzDwlCzBy4YY16DwTJ6O25
- 8Nl4fiYQ+zL2DAgMF+8TivlASZWZUfXlNrQt6M4Y9lIUK4GmzR6M9KPuzCPH1ki/Snuc
- 64tdgWdlUpA7/ka4bTupwG9mDDE5HlmkYD09Mdt9pzQp9T7z2DdGtF0ApOjl0kCojEwU
- HAwg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=lJmhjOsKwlhumjah92E6QoOuFpBkBkboZyPtw6rFI6c=;
- fh=SC1L93LGCKc+D+prAgBzcGhZSGZK00BC1EfkABOzKA0=;
- b=jgQQB0QCtHbQj1j3iyxesVkIs1DbVQbsKaSjnUQl+Dm4icVs6uQ7sSHFwlzlWPnoWr
- VNKNCiDy5wf9WbrLvdJ6hYwh0b3wa+gx4Ujsd0miAfbCDnpSJgVUo7jpCbqAkh2LCnY4
- uIlC7Qbn1KVlaxHxrmRUMfUNvzTtPOUi+91oNPjXp0kpXf0lNXttpBtD1KfgToPFO3cN
- ZxMGarH2o+4WeDbZfC+3DZ5qblchyqGeGymB2vTc6KaBGdSSKZz3zJGYm1zldPt7BJjo
- PgtVjm5jEo44uTN7sNlJIq8M5gkApg70K76DnwCSCYZFQZxG6iPHvdm3466iqtIkYZZj
- EdrQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1wLCIT-0003Oe-P9
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 23:54:43 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2b4650d5f5cso5802635ad.0
+ for <qemu-devel@nongnu.org>; Thu, 07 May 2026 20:54:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778210994; x=1778815794; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lJmhjOsKwlhumjah92E6QoOuFpBkBkboZyPtw6rFI6c=;
- b=W4I8JPIDyqaUmSxRYhgLplewUizAsOOB6+/dU788o4voZLvOH7fLBARwyqS3chZzSj
- CB24sTgiYsz2rW3SOiC5yiuZVZJ2235D/QeoN99NXUlfT69oxqf2xSqX5zdvlq7b/+fW
- LmKzne9SMloxbzpEmcN51BojiUeW5akHb9q63BrFe6fD7euX+jDE3ckLl6OxGMnWKmU3
- DTaGJ8unu+9++HrVC1zfM5mygi94VUxoX7MpDaheWIUh0CEeAwjyWYm0rUMIGGeDISzE
- yzsTZFczGEQSmo+8W/taUjB68Jx8lz/WCPVjcc7l8RbOHEEXRTWNoPp5Yg4fuCvxow1T
- 49jQ==
+ d=gmail.com; s=20251104; t=1778212480; x=1778817280; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=wm0HQ8hf4OvljVr37UO0CVpEHhudkGBNHr8K9hfE9No=;
+ b=Axlzs4OAbdE+GvF7tVoBMz9S1TpeFGLAuzW+Xd8Z9IcNXUNwXvKBfIfPM+cHV5qK0x
+ NqoDmDvTzvDE1G9ziv0fMZiH1c5RSikaUrJIUyqEUovCo+bVeosAmKwZ3T03HdFiPxJr
+ X2fYKnwIsUHOEr/HyrszQZBCQvJu0gsL76tAI59NhlbuVby7DQYSZAQdYM40YuRC4TAX
+ Fm4EiXdmhbjm2be8EgIT0tEjRrkKhjTRtwBX02KfzF4QMDE5zWRYvONnY9EL1G5kC/EV
+ Rp1N+Gg8CO4AAawEs9zIXLYAOCHnqeDw124WMIfI1Tv8lpEP7tFk1lvItEWNshsPZAPe
+ fW+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778210994; x=1778815794;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=lJmhjOsKwlhumjah92E6QoOuFpBkBkboZyPtw6rFI6c=;
- b=RVyhV3a0QpXi9seob8EdRnNnZOQnujqbM3fb5+vO0AiEN3BG52k6/Bu4rxpm71USi2
- xOjqtymwYCGc3bXoVuSQWmJrJYGY+3I6LclHK9JGEMPicnpMcKoW7QniYUqB5AdJgVka
- hC36HsRF2LH7g/K7EvlbQUU/1dYzNh1AmGkbLaobC2LGnepnOWGd47WGQudh4S8TLdNU
- 9I9ICuYxEZK3EU36qm3ZgLUbiy1FoSRkFahgHDIR9IzG3vwhJuNr2QnuSzYq7xePq84t
- OINawwrzE40dF+8XoNKDHhj6WQ0KeLQFpcBAj0UJmP99Ghy78OT+/lUQmJ45XC4GVrls
- daug==
+ d=1e100.net; s=20251104; t=1778212480; x=1778817280;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wm0HQ8hf4OvljVr37UO0CVpEHhudkGBNHr8K9hfE9No=;
+ b=Yla7pbspc+bSn2eoyHcsRSvzTRVL31eZoWOsRgTzV9tk6cj/6hp9f4ZU6RQYuXeSt0
+ jTozS7mzkZ7bpvFYltalEBZzuXxIKK51gGOHiP8/Q9wiTUAsDix9f9sq5Z92fh+N1IYp
+ 1M6oQTcLk9TuGpR7KtuzIMeRmXpeVpLI3eGW4TVzi2c8e0c9QKQmmyrU8DlCifd88tVo
+ em7zjD3G0j2DYG35n4QJZrWQ/FDD6xedZ3vCmzGVzDMTBKjo522xX9Z/8EO0KEaWdUF4
+ 8QaNBds+edwph5lXPOsOVKtCmM+ZPlKt+RdLxsgjqjUN5fQ56mWEMF9kQKZhhRU5sL1x
+ Fb3Q==
 X-Forwarded-Encrypted: i=1;
- AFNElJ/a2Zd/5zcCE40Ow7dkFvizlSs75KwFAdkNP5l9tYr0Xr5U6aHPkBTNWuZL37nhv1pnn47m2DWw31TC@nongnu.org
-X-Gm-Message-State: AOJu0YyTT466Pz9d6C+6Y3SgnuCuFsHCaWRGqc+T2Uwr8VOCsQve7Iqu
- HFIdxNhk4UxT8fJUZniPfhwswOHrho3wc85zoXQtfuCU59vZTDSPZk6/2SxsNzEs+yku/wN6By6
- PuqsEu8x2GdOPy+5web+K0v8JJc+myDA=
-X-Gm-Gg: AeBDievIf/sCYKo4W3LkPSMzYlqo8ISm23qQsct+CnizPHUYaypA+0JSrpvbdgq9mAb
- siJ6QU7k/2D7S94wrVGc+q9cMzrLTGG9Fc7WWlKvtffGjxH7Xkpq7WvY55XjN9EilNYdTedIpU5
- p9BBmMhU5zCQn0dmgNy1OJi0anBvKFP5uPlc66kGvBBpBA7C5zYX/60Icvm9jtgEb3TERrhBDZK
- 4do2dJqq/EZFZ3k7LOu+gZz3wWT6B60dqQL9c6YOzd39EX9lQH4OmAvT2b5ZTVc8puyI6ciQswj
- pIL3J6KToHVKGIzc22y1uQyQFxPZRPrNQwGM6w==
-X-Received: by 2002:a17:906:4792:b0:ba9:aeaa:fd18 with SMTP id
- a640c23a62f3a-bc56e5fd15cmr661531466b.28.1778210994193; Thu, 07 May 2026
- 20:29:54 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260503180252.1122776-1-mohamedaymanworkspace@gmail.com>
-In-Reply-To: <20260503180252.1122776-1-mohamedaymanworkspace@gmail.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 8 May 2026 13:29:27 +1000
-X-Gm-Features: AVHnY4JvXhavkbfqajf0QWffoVFmxe7tksDL1KpCR-ZbJWrFvYQi1QtU5WNhF8Q
-Message-ID: <CAKmqyKNtyqtHfyZDxZ-gAyJsw8fKTTLMSun6xM-d=gXrioO=tQ@mail.gmail.com>
-Subject: Re: [PATCH] riscv: virt: avoid RISCVCPU copy in PMU FDT setup
-To: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>, 
+ AFNElJ8mCi2T0hkk43w0TpmYE/tmebXSEsa5KPeJpMTiMAg15jfP/BlI/KlucH5mX4GBbnRiZgHftgCb4zIC@nongnu.org
+X-Gm-Message-State: AOJu0Yw3blVlmG250co1T2yyn6kj/LsAkTCBrO3bOI7nx0OCiIjKjMqY
+ hZB9gwVL04H9hadkCqSRT3wUoZOFuafJG/ctA+8QX/8i2ZoUAJjSBL0i
+X-Gm-Gg: Acq92OHvY/ZV4KSXisegFiBDDSF+b3WuE7Q7IQu/BFwHpyh4BwC6t9dRGpvD/Y5pCyy
+ 1KIKnJ/nCkHQmSgp+Bs+jAvvN2bxHkFs+EXtRjhvpJLDHQYIhG8F0LFNB15DgP8mSJoiHivFHFz
+ XfiW9tM6unuPoLpaCytgq5leog6Uu04woWrjV86pWjBYdeuz85WgAYfrQjprHRPiNOf1ERhDogB
+ MPJEJ12ENbwD9rB+htraO+NfaKL3vqB/1inBq7jikKdlHFlG0Vv41lPRNWPrlixSuUuUpkUmoPe
+ 1JjQ+mgpf7mGFpggMgXdOL+hpetTSyrLlGVj2WacS8fk3PtQw7MDMHYkhoZtw5ACbZud1iPT+T6
+ JfrGOKiqD5eiTEk0iySF7FDjlhUg4OyptHr/ZgeQ6PKo1spqAEMgdj7nRM6MpmFTwYFN/2DsNHg
+ UK54KvTn5YcFQb36ygGCWsmqWx7ZO15Mk=
+X-Received: by 2002:a17:903:46c6:b0:2ba:9e1c:7c93 with SMTP id
+ d9443c01a7336-2ba9e1c7ddamr83984135ad.40.1778212479997; 
+ Thu, 07 May 2026 20:54:39 -0700 (PDT)
+Received: from localhost ([1.146.100.102]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2baf1d271b7sm4430135ad.14.2026.05.07.20.54.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 07 May 2026 20:54:39 -0700 (PDT)
+Date: Fri, 8 May 2026 13:54:30 +1000
+From: Nicholas Piggin <npiggin@gmail.com>
+To: Andrew Jones <andrew.jones@oss.qualcomm.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>, 
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
  Chao Liu <chao.liu.zevorn@gmail.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>, 
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ Michael Ellerman <mpe@kernel.org>, Joel Stanley <jms@oss.tenstorrent.com>, 
+ Anirudh Srinivasan <asrinivasan@oss.tenstorrent.com>,
+ Portia Stephens <portias@oss.tenstorrent.com>, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH v5 6/9] target/riscv: tt-ascalon: Enable Svadu by
+ removing Svade
+Message-ID: <af1UmCFaLRERlpwa@lima-default>
+References: <20260507043838.45652-1-npiggin@gmail.com>
+ <20260507043838.45652-7-npiggin@gmail.com>
+ <dic5owmgvmaoqhiinu3v6kcdyakwt6kj4ryfw5vm446w3pv6mj@77kcjokjpnem>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <dic5owmgvmaoqhiinu3v6kcdyakwt6kj4ryfw5vm446w3pv6mj@77kcjokjpnem>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -125,44 +106,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, May 4, 2026 at 4:04=E2=80=AFAM Mohamed Ayman
-<mohamedaymanworkspace@gmail.com> wrote:
->
-> Use a pointer to the hart instead of copying RISCVCPU when
-> passing pmu_avail_ctrs to riscv_pmu_generate_fdt_node().
->
-> Signed-off-by: Mohamed Ayman <mohamedaymanworkspace@gmail.com>
+On Thu, May 07, 2026 at 01:57:02PM -0500, Andrew Jones wrote:
+> On Thu, May 07, 2026 at 02:38:34PM +1000, Nicholas Piggin wrote:
+> > Ascalon supports Svadu (hardware A/D bit updates).
+> > 
+> > QEMU makes Svadu and Svade mutually exclusive, remove Svade so
+> > Ascalon comes up with Svadu working.
+> 
+> Hi Nicholas,
+> 
+> Svadu and Svade aren't mutually exclusive, you can see the expected
+> behaviors for the pair in the commit message of commit 70d22fd92c3b
+> ("target/riscv: Gate hardware A/D PTE bit updating").
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Okay misunderstood what QEMU is doing. What does it mean for an
+implementation to support Svadu && !Svade? AFAIKS the spec says ADUE=0
+means the access is performed as though Svade is implemented. I'm either
+wrong about that or miss the point why Svadu && Svade is handled
+differently in the patch you reference (or both).
 
-Alistair
+> Does the
+> Ascalon support Svade? If so, then it's probably best to enable both
+> and leave it to Linux to enable Svadu with SBI FWFT
+> SBI_FWFT_PTE_AD_HW_UPDATING in order to maximize the amount of
+> software supported. But, unfortunately Linux doesn't yet support the
+> checking for and enabling of SBI_FWFT_PTE_AD_HW_UPDATING. We still
+> need kernel patches for that.
 
-> ---
->  hw/riscv/virt.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index a1c323e66d..085971eedc 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -722,11 +722,11 @@ static void create_fdt_pmu(RISCVVirtState *s)
->  {
->      g_autofree char *pmu_name =3D g_strdup_printf("/pmu");
->      MachineState *ms =3D MACHINE(s);
-> -    RISCVCPU hart =3D s->soc[0].harts[0];
-> +    RISCVCPU *hart =3D &s->soc[0].harts[0];
->
->      qemu_fdt_add_subnode(ms->fdt, pmu_name);
->      qemu_fdt_setprop_string(ms->fdt, pmu_name, "compatible", "riscv,pmu"=
-);
-> -    riscv_pmu_generate_fdt_node(ms->fdt, hart.pmu_avail_ctrs, pmu_name);
-> +    riscv_pmu_generate_fdt_node(ms->fdt, hart->pmu_avail_ctrs, pmu_name)=
-;
->  }
->
->  static void create_fdt_sockets(RISCVVirtState *s,
-> --
-> 2.34.1
->
->
+Our docs say it supports both. If enabling both bits is the correct
+thing to do we should go with that for upstream.
+
+Thanks,
+Nick
 
