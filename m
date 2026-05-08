@@ -4,178 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D249CD37AD
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 14:38:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DC45CD3445
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 14:40:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLML2-0000xA-1Q; Fri, 08 May 2026 10:38:01 -0400
+	id 1wLMMi-0001sU-UR; Fri, 08 May 2026 10:39:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1wLMKy-0000wj-9N
- for qemu-devel@nongnu.org; Fri, 08 May 2026 10:37:56 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wLMMb-0001rK-QM
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 10:39:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1wLMKw-0007HC-Cm
- for qemu-devel@nongnu.org; Fri, 08 May 2026 10:37:55 -0400
-Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 648CIMDV2957444; Fri, 8 May 2026 07:37:51 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=Hn/B7HWrv/G82DbmpKcsYcb3LdBF6ayMV+Gg84Xbh
- 6U=; b=ZjDlR+gwdcjfHMAlqvy8XE02+zUiT892VLzyYu+ej1H3wJxqm+yJLqeBs
- yC4D0sB+wpdX+VYRNHG0eJY1uhHyAjCqeMkomZ1ePy88b4vMfoMR+2efeUdzLUAv
- y9wyX0L9Kx0JuIwNOcxJI1fA70DHNz383W8IWiSyux4I8qqUKIw9i3XK2eILAftM
- FAbn3x4SCLx2sxzjr6wSo0lAwp9IRdCs635alOwR1hemHd6m9qPB7ntcuNQ6okIb
- jRP0hRr4TYejTVsoU9ET9Ka1ydXM+Tuo6BPIimAyO+FCP4azRjN+I5gjkOZxlYiG
- MmJdHo7i9NLPiIT6z+YX3rMnAmOxw==
-Received: from ph7pr06cu001.outbound.protection.outlook.com
- (mail-westus3azon11020072.outbound.protection.outlook.com [52.101.201.72])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4e1fqj8c06-1
- (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
- Fri, 08 May 2026 07:37:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PDGiBd1q/TpwU99tcyICu5lgTzPexlKzb8kcsbEiRF3ZfjLCImy4l0UgY1qDb/Es8x424t/neAyYoqf6mf2Kb+nURkosAEmhdR9Hb6y9irCTnxTy/mjlWeHFBpBkDeJFDc0tQbR5SF34wjZ2ZUg0/xt5a1EI3bG98+UMpeNTWE8fRQg5qTSKNG9K1rvXYBcZtQCBAYTx0WYcFRD7S52IDMjLMLNe/zNrdqKBMmjAYoIaimupeDQ9Gqf61XhreJLildeIekawO46NMlNSEjcbxWg/ilnm5uMn3AGAKV2wSIyQH4StZ1S8Um5DQQJJzviUbaayqLEjlueqhuUTKnMjBw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Hn/B7HWrv/G82DbmpKcsYcb3LdBF6ayMV+Gg84Xbh6U=;
- b=Gg2W5g5Z7zrQg0E5ZP6byDTdCEqCN4LrDFJaTW7mSk4sEoB3kipOlJTP/84AauusPvrkgZTUoIyozrcDRYlCgjmDghuKUV+p17nqZsq/+7wysO8YAwyyBLg0mCwTz3DzVHvDxB+oe+iPOs90UukrAojtgJZM4wrQf9FmFyNYKYntggEhOof6ZMZACBrfnm85QEz9cLFFwxDp+/7j1hufPbHovJ40w/II1tmElHXYjH2XudZHXjdlN4ooUDEC6+/nj5l5/Y6KEt2eK8xe91fYuNFDvDieL+i4xSJRF7P/S5xN4BW+14fOm2YOxWIppJ28qo95tM5Ia2+zRmKG7KSWPA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Hn/B7HWrv/G82DbmpKcsYcb3LdBF6ayMV+Gg84Xbh6U=;
- b=h2deIUJFKVlpOmdxTUmWE65iQABDCYy/0K3UZnowIslTDnYq/PQw0nPBp75f+ttoOD4JgU8KR4J/pdX5GPQFMRepYkSF5AHZg0V6WcwQdIEpArcy0OBXndr51sYrVNEZ2wProOaewbABptX9GGRwjAcr3luRarOQvU8xRXFlb74nmsliXbETq26zSnXVuome59IVVRRWEj0OoAiTdI9+Ib1mXx0oO2MfrM32yEVF3fgyOBWB0OjODRtb0HLwqSFqXIJYHS8X21N05okIp4GTszpM6w409vHwUMdY/C2sVVCXqACnijk9xFG7M5mBDeJB4bXrVSYwqFOjlF4zqvoi2Q==
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
- by MN6PR02MB10702.namprd02.prod.outlook.com (2603:10b6:208:4ee::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.20; Fri, 8 May
- 2026 14:37:49 +0000
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::dbc1:9766:c58d:4887]) by CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::dbc1:9766:c58d:4887%6]) with mapi id 15.20.9891.019; Fri, 8 May 2026
- 14:37:49 +0000
-Date: Fri, 8 May 2026 15:37:46 +0100
-From: John Levon <john.levon@nutanix.com>
-To: Jag Raman <jag.raman@oracle.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- "clg@redhat.com" <clg@redhat.com>
-Subject: Re: [PATCH] Mark Multi-Process QEMU as Orphaned
-Message-ID: <af31Oo6gXE69c7eb@lent>
-References: <20260508102657.644247-1-john.levon@nutanix.com>
- <IA4PR10MB8301FE3A10AA391212B387EE903D2@IA4PR10MB8301.namprd10.prod.outlook.com>
- <af3zEgHy7UMYN4Ow@lent>
- <IA4PR10MB83013C640DBB740BE8872FE4903D2@IA4PR10MB8301.namprd10.prod.outlook.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <IA4PR10MB83013C640DBB740BE8872FE4903D2@IA4PR10MB8301.namprd10.prod.outlook.com>
-X-Url: http://www.movementarian.org/
-X-ClientProxiedBy: LO2P265CA0284.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:a1::32) To CH2PR02MB6760.namprd02.prod.outlook.com
- (2603:10b6:610:7f::9)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wLMMZ-0007cZ-Bh
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 10:39:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778251174;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IPdghPq+tdyEmOuhyPSK5nQ1AdYqLmrQ28ER9Z/2XHI=;
+ b=Rl/KbI5NbgTKWFDB9UAnJnlkVL+eTqySQ5ldh7oDpiEAUjlS7IrnkTBFWee8dLN+tluWQU
+ Size72UhcddKmFJqb4XgjxgAvSXFselqSaJ4CQb89a4k2AoyLhkpm2Efycw46ZyK+cmWdl
+ 28ilUQ5XH5K1e4n6gRD6xrsvXZ9fpQg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-81-i7pkjUgAPwSOkyHLxHJifQ-1; Fri, 08 May 2026 10:39:32 -0400
+X-MC-Unique: i7pkjUgAPwSOkyHLxHJifQ-1
+X-Mimecast-MFC-AGG-ID: i7pkjUgAPwSOkyHLxHJifQ_1778251171
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-48d035e8593so12566965e9.0
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 07:39:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778251171; x=1778855971;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IPdghPq+tdyEmOuhyPSK5nQ1AdYqLmrQ28ER9Z/2XHI=;
+ b=OVA4Cvx6WCEgeWC23MWdyXuJF8m8DTn9pKHdX46nglau4wUwxxkYSPrBdkxOgmSYug
+ IYORPnwo91wuFbtC2oRTxlKBWx9mLc0CMuYxgkfqXxuwi7ChCPLNED4NiQbMRbIQoKar
+ tRRsGvgpQ2JOrn+PRyzn+pcdvAB76x1PedceLzRxfjuBizHLeqGXbuk0U00llxeIK4Ap
+ a/tQ5hJzOXxL99+qd6YveZuVSPB9EXKl7U3+d1m0vFA5z472ByMqb883MsKHLmqfQ1OV
+ pyOiCPGpLGHbeuswxnxlJNDcBHcxIizhyAQ69kG2hSGdqd21tqHuCkDMQ8Iz3e6cbiVW
+ 0RpA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9rA01C1IJNp9x/m/ci9F4Q+NLG0eXPPdmKuMYXKwBqcOvtDEF1YCuTk+MwvKzAnV3Vn35VPiP2I/Nb@nongnu.org
+X-Gm-Message-State: AOJu0YwU5dozGJRlgqAx7PKKfO5ULSS5WZE064tv3QpOweQ3TRD/6tBB
+ f3UAcYiBqcU/6C0yVqh5plMGByNbdrdnTKzB0BdDaBaD3topftH5nC5qRmmty+sPhCjDO7+QzcA
+ ur/1hjW+6NxRDXh4tyKVWUqjOfqRmUQG4Y6uwCcBjORWk3bTRrENIoInn
+X-Gm-Gg: AeBDievXiL0jw7WfeLWd2P03+QfmjO4Tl1hbdzNQioob96g34j3L/MI9FsYOxxYEX6V
+ jf49Bz8CViMXY5eKE3F3A1d0eXm/hjvClFBlR9MGd8vwQM2dSahH+AxzTCgWeZCCLOmYyCt2IRo
+ UUvJu5B49xQz9ll6t2up5EFXCJ9Kxq5kZVH+l2RmcPTT+WDZlZ8reMgQ3dFkxG4lnCndQbjgop0
+ x+KcOZ8u76p824CY/guWBEKTLXwaV65YlyxJ5tG4NL7GKY9u3L1Y7BBbGqys/Lrfgi8m4ZtrKD1
+ DZzEpRp2RJkvmxp1Kcq77YIfvmNJfzwYiq4EbitL6UPnLOnCfHmZ0zOZLhNe9KHS1EP5a9UUGBV
+ GhpcQJvptqW6pghB7BbJzSpYi6pRNB/pAX9l+pt5YWUkSYX2MSKeEf3s1GHWYITg96bD5Xg==
+X-Received: by 2002:a05:600c:350a:b0:48a:5565:ec3d with SMTP id
+ 5b1f17b1804b1-48e676ac38fmr45837125e9.22.1778251170429; 
+ Fri, 08 May 2026 07:39:30 -0700 (PDT)
+X-Received: by 2002:a05:600c:350a:b0:48a:5565:ec3d with SMTP id
+ 5b1f17b1804b1-48e676ac38fmr45836485e9.22.1778251169904; 
+ Fri, 08 May 2026 07:39:29 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-454917d57aesm5010794f8f.26.2026.05.08.07.39.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 May 2026 07:39:29 -0700 (PDT)
+Message-ID: <13ecaca7-9365-4f44-a31d-7fdd0902dbcf@redhat.com>
+Date: Fri, 8 May 2026 16:39:27 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|MN6PR02MB10702:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3a2633ae-596e-4450-9a3a-08dead0f60d8
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|18002099003|56012099003|22082099003; 
-X-Microsoft-Antispam-Message-Info: uIsxlQDw2bGBfTEfsGD6NJZ3wtBJdM57A/9Qvv4y02SbpLzmvgI5GW+WGoovV6W+EjWq0TSjrFBCGntDmDxpHBIkPl1mkrWwZ9uNDEHknkc3tWiYSXU/3KzywvC8HVTYL59zxQIPsa8//3Qg12QdY4ilG66PZqehks4bu0PUlgwLOVBDL9C+UE/QZT6+yy1w6tQMLnqRzUuh6ejs464ua6YwwC8I0iRFBj9iN2nMnVz6OIqp24HVLchapCqi783x9bqSbq0wUwexm+8/Ed2QxFel0ne7lLoktCgGE94EcZ1P0XL3X2JsoFzWujU25NXigIK/N5gQ5ZNi4V/+IfLNOQu+emfWTrpaxHNZQRIIMbxMU1VPVXSVJLQoHKRPfY1L/BN/z3pwDuOeh5EHU4bWeDhZyHLsAb3WxZoUcDPGDDNLnnkKDkPziBDOUk513kThG/EZ/lZXEOcVErKC0uRlKHy5vhBICifsRxwrV8U+PZbsTjOlBi5CDK7/ywJ7CnrxbHeHq7j6ek8zYp/01J/GL6MMWUuiyMgrUT36XkaFWH9/zvc97/ekeHO3CiZxgKbsO6tOADrTmpwNyAY5KWZ9nMnj6nv0SjNaYWnPxQi/R0NA94w5k5hQmKPfw1FNTOmjoss+NWLO7cR8XFmvjXqejqKeFxaL3zC457FLuDHvKfG6XSAB1Ek6FWy0jP0fwWdF
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(18002099003)(56012099003)(22082099003);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YUI3cEl6Q21mRUtPSUFHMTZZV1c3WlVYME1mZFpDNndqbEpLSjRPSlZWQ1B0?=
- =?utf-8?B?YUEwbGpuQ3BhMTA4Q0kxOTlDM215TlI5azVsbkVCc0JXUXU4cUowa21WNGtD?=
- =?utf-8?B?Mjh1U1hWTzkrMFpqVmM4MjZOSG5RNUg1NnhZa01abXB4QXIrNXNCUEdrSjJy?=
- =?utf-8?B?SXBlL1NwTHdZR0VOZnVUVVNYWjdmNTJJekpZMHZWYUhYd2NoQ2VaQ0ErQzhW?=
- =?utf-8?B?cWlTZFZ2aDFRWW05SllRKy9CbC9YSWJvMklVOExOUzAweGc0M0FQQnJRREpL?=
- =?utf-8?B?ZnRuRjBGQlkvTVJ4WjRkaHE2Y2kvbmVPYW5aWjluQkF1UEJ0dnpRRFN0OXRk?=
- =?utf-8?B?cCsydkN6aldQVHFCN3c2M3Axd2I5S2cvcjcxTTliZk5nQkVjY2lJOERqT2VE?=
- =?utf-8?B?YWREYkxUeC92YnV3M1VvZHRzV3FCRTdnZ20rajkxRHE2NkFJRjNUd3dVNjRq?=
- =?utf-8?B?Q3g2RlRRL1I3Qm5xdCs0NWVwaTFPY3ZuNVB6NjdRMVh4a3ZTbnFLSGptbUhQ?=
- =?utf-8?B?d2VFUktxRWx6WlJUMnlUSlpkZDVqWTMrRWJnaEJXaVorUmRRS2ZRdHk5QVYv?=
- =?utf-8?B?RzFYNXhGQ1R4TndmZ2s1ZVRFYlJ2K2w1a2xBV1pjVXlRNmkwMDVsQytFQWVF?=
- =?utf-8?B?Wmpha0x4VnhrSHNSR3pwUDBxbWo5R000bmQweTNaUkxFbG5ZS2RxLzJTY3pN?=
- =?utf-8?B?Vmo0cVBUWVJxZDJlYjBhL2xYa0lhMXltNFYvK3VnMk96dDNGR3ZVT2hTNlhn?=
- =?utf-8?B?ZlB4aGc5UEluUExrMTl0U2NjS2FWQTRZN3duUVNFZHcxdU1CT3A2cWZFQmNN?=
- =?utf-8?B?eDYwelpYQWc1S3lJWmp3WWtPd1hmdlFidEMzNlhXcmdteVRuYWwvVU9KQlp1?=
- =?utf-8?B?QU51bGpMUWFyOEdrV1g0NjYrdnlRTjZFNXBrcDh2RXN3aFVrVGg0b0FLMFNl?=
- =?utf-8?B?TzNvWjFJLzR4bUt5RVNUWUErcjB4ajhkZWxhYU9XOEZ2eENTcG54cWRQRzgw?=
- =?utf-8?B?YjZrZERPYXJvM0krV3F4OXp0MU10WU9mdHpIUjkrSEdEMktWWE5Nc01YNU9F?=
- =?utf-8?B?ZXhSUm1ldnRoSFhYQmxkUGppSFowU0w3S0cvT0pYQlNCU21HSTFjSXBDVDhJ?=
- =?utf-8?B?SGF3Q0JSV3U1RCtBOUpiYmd4aGhxZ1JGeHlFSUR1NUcwSTdlNlROZjN1NWpX?=
- =?utf-8?B?b0o5cTIvdGhibnA3RVZsQnRnSXczaWNiSFMvRFRWSng1MXgraWh0SkV4S3l4?=
- =?utf-8?B?Q1I0UDA0RFQ4dXdlZzg2eW9GKzdzVlBsdXppYnVyeTZsT05kVm1CRTg3VUhh?=
- =?utf-8?B?c2RmQndJejhGMG5TSWpJTXFwY3UreU9FWmZabHZTYjlOWWdHNkpmTzduSmZF?=
- =?utf-8?B?MjhWTDVPRTlZd1V2RGxDZFR0RE5LZUpxa0RtSEhNQlBEM3B0YXY5WVRlUEth?=
- =?utf-8?B?UHg2bmZkRkQ2STFoSHAvenYzRkpValJaM05wU3VudHZiVXdXN0FLaG9haU4z?=
- =?utf-8?B?ZzdXTFkrNGFLMXFMZ0xMOVlQRWp4OWJ5dW1zOGQ2WHdjd2xUeEZBQUNPWm4z?=
- =?utf-8?B?bExJN2VkQmlwbXovTlBSeEhsM3VCV21VSE9LN0hIZGRTQkFFMlJQQXdTdm9G?=
- =?utf-8?B?enl5SkxBdmRDVFlQMm9MbktadTNJZkxEYVVjcHJjQ0hMeGlvQkdYUE5QR2Rr?=
- =?utf-8?B?dHhZQWNBT2k5aXNlRkVXN2dqWnhwdUI5djJsQjExekd1bVBYcVpiUVlpS1Zr?=
- =?utf-8?B?RllwcTIvWHNjcm5tWWEyeWtyRFVESUUxYWg1RTNzOTlxaUFIb1pwZUlEbFg3?=
- =?utf-8?B?NEdqeVFLMnpHNTl2MnVnVFB2MmYzNEw0M1g1RjFtRnJzRXpYUzAvR1RhTmRp?=
- =?utf-8?B?a1dYcE0xanVWb3h2TkFTUnlSaTVnUjMwdGdTZVpvMjY1MDJsSVZodDlrNk1B?=
- =?utf-8?B?cVNGZ0xIM2xVU3B3OE5KT2NkajJ2b0s0OTZWMllqSFI0bC9EcCt5VVdnTEFp?=
- =?utf-8?B?MjY4dlZsN24vNlRhM0Jqcnh2T01NdkFxc0NEZElXd1I0eXh0a3ZSakVpbFZj?=
- =?utf-8?B?ZU80MTRMd0VVOWlOZE4wazRHNFRhZVQrSjVaYWN4SGx3Z3RFNFJhc0pTMmVQ?=
- =?utf-8?B?ZVRRSW5qZ2NaTC9EV0doQmVab0VadjlrYlUxQ1RQMkNLTzY3U1ZSVmFHR1hW?=
- =?utf-8?B?N0tsODMrZnd2UHN1RlYrc0VIejc0MmE1VDFXUE80WlpGWmJJbHh1a0dSOGti?=
- =?utf-8?B?Q0prV1p4dXpOaDBCa2duZHBLOWhRU0lEaktMSkU2amJTOFBZQmlaUkZKUGtk?=
- =?utf-8?B?ZzJXNDRQRjV1K1dRSDlUVXhNNmljVlNJakhXOCsxY3hWTHhqR0xjZz09?=
-X-Exchange-RoutingPolicyChecked: G+Swv1F+/iApPmRUEfn5kbEMghdMk3NiiJsyeQ4cfJhmNdYTfeAo+0nE6239xF3SoetPnryGcNoFf5Ny32S6MrM020rWd7dwovjSH02YEx1m0GE0LD6Ty/e04BtdNnHF1zIboUVpbn6Axk4VhNyf5/ZRCqE8kSVuAWM9Tlm8IAA+aGirKK608IZOxMnikHGfkywOG+QmX5+1pS6hJaJ61vcQdWrBVMS4nJwDDi8KnfoKIHrT0zkllgX+Zd/46Cepy9RdY3Zx5oGCEG/AtNrSSqBLdvBOvjzsy4wg4CvKD5O5OGH3MDPxcHi0z5svB8CffTNU1SH2NGAPxF3Z8v+8Vw==
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3a2633ae-596e-4450-9a3a-08dead0f60d8
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2026 14:37:49.5194 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: UkTtH61onfeXDvEuYvvu0rKErrofTZ6m0PnTdKLVJivcVsZDG1wzYkinwdvADjOr/i+6abeERy28KxP47P/U8g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR02MB10702
-X-Proofpoint-GUID: 7SnYHF1K4QhfVV6c-VBiDxwTWlM4dkfD
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA4MDE1MCBTYWx0ZWRfXx+QhetmDPtxg
- v1Q4Ob5/9PeTDpHalJhpU/Hkfd4/p2yQrjyOSfyhH1UYKNS7yRJMb1efe6D8vcXi+Lu3CH2U5M0
- wZTs4QnJI7N3JKKhARJIJrhH1P63GTVD0oav0g5wlf8owXuVR+/b+2L5FDwN3kyMV0MhfKv8q1o
- uBpWynhgyLB8/1NWpCaLrKXVdGzCm6wcfaJDOsSzZKZR/CgcrodI9aUN8AyomaFCdMj5yTYXKue
- onpsuAXV4sXh8JeIgHRs6bOx/DIq+G+knGmUsLQotpq4bwWk+hui8DpgoCj3DaV+Q5iJuJh2kmQ
- 1qHCwjpaw5btkDJmQ0d30D2bg84YpapjZk1k5c8QfMU+KR3Mn8y1KZ3P/txlsgHqN4Zwl1iyCbL
- GKpgibwC+Ns3Iaqnmze2noy+XMLAfOdqPGBP6fRAxeOU7/EdYVuzlOj7Qx+vHDFkEKLs/tyhrp/
- 0db94/cNJqDM7B4ztnw==
-X-Proofpoint-ORIG-GUID: 7SnYHF1K4QhfVV6c-VBiDxwTWlM4dkfD
-X-Authority-Analysis: v=2.4 cv=H+7rBeYi c=1 sm=1 tr=0 ts=69fdf53f cx=c_pps
- a=IBJHqVCGmmUWI27oiwGTEA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=0kUYKlekyDsA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=VUi8bpU7OL1Oj2-RSIOF:22
- a=f83k_sWA7oiijhE3CpsA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-07_02,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 25/31] hw/arm/tegra241-cmdqv: Add reset handler
+Content-Language: en-US
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
+ Nicolin Chen <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>,
+ Matt Ochs <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>,
+ Jason Gunthorpe <jgg@nvidia.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>, "phrdina@redhat.com"
+ <phrdina@redhat.com>
+References: <20260415105552.622421-1-skolothumtho@nvidia.com>
+ <20260415105552.622421-26-skolothumtho@nvidia.com>
+ <667dd47e-bb1a-47d7-bd19-194efade286a@redhat.com>
+ <CH3PR12MB7548B3CEB0292498F65837D1AB3D2@CH3PR12MB7548.namprd12.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CH3PR12MB7548B3CEB0292498F65837D1AB3D2@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -188,21 +123,113 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 08, 2026 at 02:33:59PM +0000, Jag Raman wrote:
 
->> QEMU maintainers can correct me, but I'd think it has to go through a
->> deprecation cycle first?
-> 
-> If the code has to soak in a deprecated state, I think an “Obsolete” status
-> better fits it as it’s replaced by vfio-user.
 
-Are you saying you and/or Elena are still maintaining the vfio-user
-implementation in hw/remote ? As I don't think there's anything happening there
-either.
+On 5/8/26 1:19 PM, Shameer Kolothum Thodi wrote:
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Sent: 07 May 2026 17:52
+>> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
+>> arm@nongnu.org; qemu-devel@nongnu.org
+>> Cc: peter.maydell@linaro.org; clg@redhat.com; alex@shazbot.org; Nicolin
+>> Chen <nicolinc@nvidia.com>; Nathan Chen <nathanc@nvidia.com>; Matt
+>> Ochs <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
+>> <jgg@nvidia.com>; jonathan.cameron@huawei.com;
+>> zhenzhong.duan@intel.com; Krishnakant Jaju <kjaju@nvidia.com>;
+>> phrdina@redhat.com
+>> Subject: Re: [PATCH v4 25/31] hw/arm/tegra241-cmdqv: Add reset handler
+>>
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> On 4/15/26 12:55 PM, Shameer Kolothum wrote:
+>>> From: Nicolin Chen <nicolinc@nvidia.com>
+>>>
+>>> Introduce a reset handler for the Tegra241 CMDQV and initialize its
+>>> register state.
+>>>
+>>> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+>>> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+>>> ---
+>>>  hw/arm/tegra241-cmdqv.h |  2 ++
+>>>  hw/arm/tegra241-cmdqv.c | 50
+>> +++++++++++++++++++++++++++++++++++++++++
+>>>  hw/arm/trace-events     |  1 +
+>>>  3 files changed, 53 insertions(+)
+>>>
+>>> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
+>>> index 2befa6205e..b2a444daef 100644
+>>> --- a/hw/arm/tegra241-cmdqv.h
+>>> +++ b/hw/arm/tegra241-cmdqv.h
+>>> @@ -79,6 +79,8 @@ FIELD(CONFIG, CMDQ_MAX_CLK_BATCH, 4, 8)
+>>>  FIELD(CONFIG, CMDQ_MAX_CMD_BATCH, 12, 8)
+>>>  FIELD(CONFIG, CONS_DRAM_EN, 20, 1)
+>>>
+>>> +#define V_CONFIG_RESET 0x00020403
+>>> +
+>>>  REG32(PARAM, 0x4)
+>>>  FIELD(PARAM, CMDQV_VER, 0, 4)
+>>>  FIELD(PARAM, CMDQV_NUM_CMDQ_LOG2, 4, 4)
+>>> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+>>> index 9c2fc02b92..af68add2f0 100644
+>>> --- a/hw/arm/tegra241-cmdqv.c
+>>> +++ b/hw/arm/tegra241-cmdqv.c
+>>> @@ -8,6 +8,7 @@
+>>>   */
+>>>
+>>>  #include "qemu/osdep.h"
+>>> +#include "qemu/error-report.h"
+>>>  #include "qemu/log.h"
+>>>
+>>>  #include "hw/arm/smmuv3.h"
+>>> @@ -645,8 +646,57 @@ free_viommu:
+>>>      return false;
+>>>  }
+>>>
+>>> +static void tegra241_cmdqv_init_regs(SMMUv3State *s, Tegra241CMDQV
+>> *cmdqv)
+>>> +{
+>>> +    int i;
+>>> +
+>>> +    cmdqv->config = V_CONFIG_RESET;
+>>> +    cmdqv->param = FIELD_DP32(0, PARAM, CMDQV_VER, CMDQV_VER);
+>> hw/core/registerfields.h:#define FIELD_DP32(storage, reg, field, val)
+>> what does this 0?
+> I think it is to make sure we have no garbage set for non-field bits.
+> Starting from 0 guarantees non-field bits are clean.
 
-regards
-john
+OK thanks ;-)
+
+Eric
+>
+>>> +    cmdqv->param = FIELD_DP32(cmdqv->param, PARAM,
+>> CMDQV_NUM_CMDQ_LOG2,
+>>> +                              CMDQV_NUM_CMDQ_LOG2);
+>> I was a bit puzzled by the FIELD name being the value name but well.
+>>> +    cmdqv->param = FIELD_DP32(cmdqv->param, PARAM,
+>> CMDQV_NUM_SID_PER_VI_LOG2,
+>>> +                              CMDQV_NUM_SID_PER_VI_LOG2);
+>>> +    trace_tegra241_cmdqv_init_regs(cmdqv->param);
+>>> +    cmdqv->status = R_STATUS_CMDQV_ENABLED_MASK;
+>>> +    for (i = 0; i < 2; i++) {
+>>> +        cmdqv->vi_err_map[i] = 0;
+>>> +        cmdqv->vi_int_mask[i] = 0;
+>>> +        cmdqv->cmdq_err_map[i] = 0;
+>>> +    }
+>>> +    cmdqv->cmdq_err_map[2] = 0;
+>>> +    cmdqv->cmdq_err_map[3] = 0;
+>> the split looks pretty strange, ie. loop of 2 + continue with individual
+>> setting. why don't you do the init of
+>>
+>> cmdqv->cmdq_err_map in the x4 loop below
+> 😊. True, that does look strange. I will change.
+>
+> Thanks,
+> Shameer
+
 
