@@ -4,129 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12CB1CD342F
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 18:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 406C4CD3445
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 18:38:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLQ5Q-0006hT-QS; Fri, 08 May 2026 14:38:08 -0400
+	id 1wLQ5Y-0006jP-In; Fri, 08 May 2026 14:38:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
- id 1wLQ5K-0006fz-WE; Fri, 08 May 2026 14:38:04 -0400
-Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
+ id 1wLQ5Q-0006h5-KZ; Fri, 08 May 2026 14:38:08 -0400
+Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
- id 1wLQ5I-0002Yg-Pp; Fri, 08 May 2026 14:38:02 -0400
+ id 1wLQ5P-0002b2-4Q; Fri, 08 May 2026 14:38:08 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=s6vU6OVid0/K/O7U0+6y/Jz67LTbJoC1Jwor5p2QXbWAcrZEgYIo+gV9BZigATZmqnU+NAsScNEwBko8LmynNl1QoqzyvDjte5o7khOI2/4izSMHJ9pDFtUii5phLaENEVIOhygmHZ1exbGzFGjjtvlvMlTcWn7NcYyy39nuFdWW96COZivix1fRMyqpjOeXsbRNcWoFNQpcmYoBL48/eqjjvnOdonKdYKK3C9jPm2hF9QDEsH2FzQZjDPJZkQhylw1Gck+216g5F4TMqqd/yvXCoIcNza+VD1K6+8bEpCwAc/wFlPsNCN/aOtjLLZKrPDrxwDveJyowRvVo7xGlkQ==
+ b=eT0FLiYrrnD8zhY2JlBq7gdL/O7SGz2cEQdyK1GniyjalQrxrOOZtsaBfR19//6eUU3Cw8eHtTcQwrQ+zD6/5nwjXNtRwMnnMUDqJQnW8tub5FSRHIzfaCT63DR6uSv/4vxskd+J58i8D0DT6dg/k8topfu+sIDwny9AYBCFRFOD3LYaV/zwZ/Gt5qCp2LSzXcn8yGZT+29eOn+5srUoGC6g3klj7ABqaZPZQ8IyFtFDW6Prllru8e9ceY4VLey8ZFOdhHtAGNpWQx7kJz6IkmuBUyMr6AYVB5HNhUTbR6RA3+aqBdgSq2Ih6AboQPOPgeL6cfIDShx7lkBIMn4o7Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XqE/IoyY03xAlx51xRPj7NQYnIAcmcFFJKBlXu8boSc=;
- b=MVhntnwdiaAV8ZCA0S4FxH3zK11L9cdCUld/+QDBim2uab9ub86prTXw3Wb5FT5JIqA4VVsFiTnUEEr3UFkqmAgu5wbvMtjYive6oriXyV4L38H83LbGU8PiBivZkq5U8mfqIYd7+k7GVziAugPZSl3GOuWc58nSrguQPj0V/VAuIP1UOZAEFiVKIjGtKyv9j3cy13dOUqX40rAr/YXblLD72mipuh6XPDLXSYUyj0XBSw4qDSIJ/IaKtqvMQK4B7UF4GcPnPTaabc2BysrZmtIz1ES8hRPq6XxG9Rpysxah71/ubhZsgDCVeRWbJmfiwx9zGXgV3guNY0Nry39RDg==
+ bh=cj57KYpH+U+ZkBnHApaa/HFz/IbHpgaR9J4GKr3XX24=;
+ b=FOQXXh8F1xVQwOONNfqCvPbge9lCxQZCIoiGoYYESfzBXyqtN6ckMgr7nXf0XvLBWwWHk4YoKU2x0CLzrkwtH+jDDJ8285Yctijbg216Yf3W2c9rjdsonV43ipVsgFBq6ekiHG/DoRnrI0JUukixTMaW+QcsUshY44xXr3G88wLfNPXj/rdD1LpqLDS6osaE7j/dI8+ipDoGmdcJUEmzFWfwh3eEnfOp7WDITC0pG2U9uN6AxPx9+RyPfAnA5t7IxPyzh5KrYKOnIcTd/9J9bvtZ1fuozYGsWkppg5XILf1Ig24+BXEE4r6Y6xmH6F/E3g3BvkQvvpcmDxP5J68FXQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XqE/IoyY03xAlx51xRPj7NQYnIAcmcFFJKBlXu8boSc=;
- b=uqoaK8TARKmErb2fLWt1zZkhm9NKtpAF+nuWMVdbJFySR1eRfEUnZGd3jZtcVvY3WmNANXAUJe63bl0rR1hSBBbMAtbN1ab7jJeJ1vHcjKASfJOX4CPrhul4q/8Ksiig/09xlxf/iK8X22fn9hWRHi0uXNwcgrNL0V3COt/UdF6NmWtLs8apSsUO0UZ5hgrzQaHiouwbLMInNhvdv3f6+oQs/6qpTkyaySpczS03HbVl+JPsGF6ggYhss3MSTjLrN2U2T+OEuugzaP+cjHycYuTldpaKe8Ix4wNi/ulmGM5g00hjOZ9f01rqQA959grg0p2tlxt24pcv7A8uUJ3Vww==
+ bh=cj57KYpH+U+ZkBnHApaa/HFz/IbHpgaR9J4GKr3XX24=;
+ b=pxEOEInbgSZ+oQ4NwA6FzN1NUNEqfQ9gc2a7FI5qklh4aVSZEEcvGRicQSAfhCCwInKZ04cYHXYyZuZJ3rvqauAhLRabPia5caFc2p9o168H570nwMAEAWg3ZS9zn7oDZ19XUT6dWhhnunxdPSkECy3CHpf69+FIlyMWqiqYL3yTRr3Um1R9lb9/qVG+4EGu41o5jfP64qidPBDrEFUWBZxlaQYQXl5ODoWLLhEtxEhI5x1HvhaNb4uivm95jsYz0g/J5Jf2+qj7wxwpQQKLZmp1hk6d5rGmL4phSZPnIVVaP0rs6V9GyX5zjJqjbIy5m4ZafdJNE7tzIvfObuRX9A==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BY5PR12MB4179.namprd12.prod.outlook.com (2603:10b6:a03:211::8)
- by CH3PR12MB8482.namprd12.prod.outlook.com (2603:10b6:610:15b::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.20; Fri, 8 May
- 2026 18:37:46 +0000
+ by DM4PR12MB6205.namprd12.prod.outlook.com (2603:10b6:8:a8::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Fri, 8 May
+ 2026 18:37:53 +0000
 Received: from BY5PR12MB4179.namprd12.prod.outlook.com
  ([fe80::2036:e8b:9b3:f325]) by BY5PR12MB4179.namprd12.prod.outlook.com
  ([fe80::2036:e8b:9b3:f325%4]) with mapi id 15.20.9891.019; Fri, 8 May 2026
- 18:37:46 +0000
+ 18:37:53 +0000
 From: Tushar Dave <tdave@nvidia.com>
 To: qemu-devel@nongnu.org
 Cc: alwilliamson@nvidia.com, jgg@nvidia.com, skolothumtho@nvidia.com,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, mst@redhat.com,
  marcel.apfelbaum@gmail.com, devel@edk2.groups.io
-Subject: [RFC PATCH 3/8] hw/pci: introduce allocator for fixed BAR placement
-Date: Fri,  8 May 2026 13:37:12 -0500
-Message-Id: <20260508183717.193630-4-tdave@nvidia.com>
+Subject: [RFC PATCH 6/8] hw/pci: finalize bridge prefetch windows after BAR
+ allocation
+Date: Fri,  8 May 2026 13:37:15 -0500
+Message-Id: <20260508183717.193630-7-tdave@nvidia.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260508183717.193630-1-tdave@nvidia.com>
 References: <20260508183717.193630-1-tdave@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: MN0P221CA0027.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:208:52a::21) To BY5PR12MB4179.namprd12.prod.outlook.com
+Content-Type: text/plain
+X-ClientProxiedBy: BN9PR03CA0939.namprd03.prod.outlook.com
+ (2603:10b6:408:108::14) To BY5PR12MB4179.namprd12.prod.outlook.com
  (2603:10b6:a03:211::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY5PR12MB4179:EE_|CH3PR12MB8482:EE_
-X-MS-Office365-Filtering-Correlation-Id: eacdf569-593e-4b94-d89b-08dead30e627
+X-MS-TrafficTypeDiagnostic: BY5PR12MB4179:EE_|DM4PR12MB6205:EE_
+X-MS-Office365-Filtering-Correlation-Id: 929ce5f3-2add-4657-8224-08dead30ea64
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|18002099003|56012099003|22082099003|3023799003;
-X-Microsoft-Antispam-Message-Info: dZ6h6c7jE+Qf1rebWfnieA+8iH2ASY5zo+ZkOVilQWoqaQbDkoY16ldhyuXAPHpvb+HfxWF3KDm3qq4f9mFuVG4zlHKBm7MV6yaYpLYAnJlOjaEKp9tdiE8jM78QDi6jIcZlFaDbeZUcERu4colPgm/th9zXfPRueW8JBRcJRxOY7KRtuh49T2WzVVVXNDB84/9MsF6c93pQx6MgoBbZGmeVRQoCuiwM3qDFe4AsHY0jPx1AE3rG4Oi063zDmlzj0tkwIqCokckeFl8fSkWiwh6fM4L8fB/uhbMAZ5i5jz3pQPWf0q7ansiRre0hfWerftG92leNLhSwzkp5GUDZmqDPUUXAVYHEIULpUYYzrGT+uDlk46QJkSmFDMTKkSC1hSV9mOfIYkqL9m00owruhg5+O58snNGBDzhun7OEuP65c9qmH9WGWOiAwzvDHaewfQawmyOZKpIqSvmncbbTaREx4Q9DSvNDmwmAz/o7XmRYvW0qU6JYma93ExMG3uYDH3AOUvwSHfEILu2N2/Ukz6sKxH3bKnho696qt/OHynrFRHVtWkqJgq79kRhDsSqFLhhafW376G/iiSjRlggS1cjDd7Kk2r3hVZWQlNiqvb2mhtUa8pB4bgGgVIlNqTilTgAl4BJiXUc5o+BrLe8OeZCfcbVKzoOx+6rlqv/ely61E2C4GsSjr2zuTbGCs8A5
+ ARA:13230040|366016|1800799024|376014|22082099003|18002099003|56012099003; 
+X-Microsoft-Antispam-Message-Info: h50peUehNe2TI53gNJnMaKv9Gb8kzNXGt30xVoVnLLinerphPhHRRSegMh56AYjdYOY/Kg9y9OeFao+cvcx2GqTeDQPSBkpQTkgDtmjIViuA+8/OzHMmT5kQObL7vk/mTUSaMMLI+PmcH2k31PPGoCGp5zDpCU8t2pz614feTF5oV79hKn5HyUgeSqoU+pHTUsnGSkHzlIh8hQO16aCgg2HaMIhkwtCBnsXQvfUEo9BCfOkYkz7ZClIJxKLaQXsfbcn+ffLtuFWEdC50Rb5ecGTZO0yLgPcoP+0u34Ye3liX2I0/ed7V2FOFSWcrU7fPh2yJZN++htn97fjQ+hmxXsoqiI0gbTI3Zz7u7oZYHl2Paih3CEwXFh/u/jutd46Zl1hZ/GEc/sw0F0Ri8ZhXCF2O5qygL058ZeFm0MAlbmfJbSJZTmhvRCYmgTNri4wJ5XtM0mwUMqHuCRbut5OGH7MBUJmrffG9m1NejN/ldezVKU3zk4qrs2gPxksrrrvg4kkVk/d/azOghxZzbpmFSz2+Ot1A7bm9PizRAA+22ZBIc1c46ZqnhagWK279oaOd5XVxFlQdrKfZEukmfjG1dlGjd6M1x2q8OE/6HOBJmXBQ4Z4LHVFuB92/aYMQyfpdj0CIeBuxkYWFDnpZg1UWHg5femBMAZ6KrUi5oN1KsU5EiqwoYhmc+xqIhrqjxvJd
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:BY5PR12MB4179.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(18002099003)(56012099003)(22082099003)(3023799003);
+ SFS:(13230040)(366016)(1800799024)(376014)(22082099003)(18002099003)(56012099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZTFIWHRkdTZ3TzRHWXRUV2ltM0hCQS9ENnZuMHQ1MVBqQ1JFSmthVldUdEJY?=
- =?utf-8?B?RC80SG5sMUhpVDZEM21oTVIwQ3lUTUhqWm5JMlZlQUU3b2JrVnJIaDBwYlZj?=
- =?utf-8?B?RXpleXNlSi9QWnpaenpnWjVsM1FkMUFoelp6ZXNudThqQVFDSmU1R1Roem5u?=
- =?utf-8?B?VnVaUTFtcHBTUFJLME9xbU9BYVpMZml2VTNjRk9XMjlDM3NoZllON2grZVhK?=
- =?utf-8?B?enJ1cFljV0hlbGhLUTlnb2lZTml5VmVySlh1M2dJOXRYOWY3RjVIcjNHVy9u?=
- =?utf-8?B?WHdSblNzZHlWSTJ2c2Q3OVR1NTk5YzVOa1R6L2NxQTlNQmZGL3V0a2YxSnVF?=
- =?utf-8?B?K3lFbUpLdFpCUFRzY0xuUDFMU21GZi93TW9Hc0M2cSswbFBjY01nQlQrR0x3?=
- =?utf-8?B?bjdocVNNdnRoSE9IZzJKaXFwdUJzSXl0REhiWmZmWUlBWDJNSVUvRHExYmFJ?=
- =?utf-8?B?UDdsYVIvWDdIanhMRXcxL3Vha05qbFJLVlFqSWlJZzBSLzMxVlhMZ2JoaFpY?=
- =?utf-8?B?L1p2U1VoT3d1eVRuUEtjRkpERENaV0V2OERRMVNpVlZpeGZueHI5Yjc4T2J1?=
- =?utf-8?B?dEROQlEyVStRYlRLa2Z4SGI3RXB4QnRvcGh4c1BQeWJ1NUZGUVJsVEYrRE5Z?=
- =?utf-8?B?Skx2NUptazk5Ym1UYjl3ZktXN2JoSFFoSk9wYTZTaENhczU4TG4xK0ZnaUs4?=
- =?utf-8?B?R2RDcDcvRTl2YTZieUVKNUdIQXplbUFDNzRFTzExYnZGcVZwNFFjZHJyR1Ra?=
- =?utf-8?B?S282TWVmWWMxbXJ2N2hTbFN1ZTBEWFFnT1pLMFhDV1ZNMGhza0NDVFI4L1Vy?=
- =?utf-8?B?UjE1T0dVRWRRaGVad0hjcDhnVTVxUE5rZ28wR0V0Z0h5SmkxWXBGbUVDV1ZZ?=
- =?utf-8?B?WHdhd3pPOVo2d3g2dXg3OHlBWmp5OWNpNnYrMGY3eTBxS2l1TlBMUHdJUzBw?=
- =?utf-8?B?ZkVGanlzY3lXOXk4SnhQNlV0bDVtaytUenBpVkpxZ3VmS1NDSGNzZmZQNWlx?=
- =?utf-8?B?cWU0bXI5dVBWZVNkNkdLWS85MlVzcjczNUdiQzhNd3dzTHdGMlBmOGZDTG5s?=
- =?utf-8?B?V0JudFBIZTN6Ymh3WVRZRFd2NnNOemtFbnBESU9BY0NHTUY3cnBheXdwRkdx?=
- =?utf-8?B?MXpmTEUwa2FBUTdsd0Yvb2JzMHZlK0hTeTdhcDltaUV6MGRSblNzK2dVcVVl?=
- =?utf-8?B?WDBjN2hUV0ltMGJOQmthL2tTdXlxQ1d5aXlMYVpTZSsvY0xlak42N200NjVy?=
- =?utf-8?B?VTByQTJJMEJNeUNhTm1KeVk0c1V3TWcxTmpZN2dWWTJSUlhkUlZZRXVmRWx2?=
- =?utf-8?B?TDMzZUxkY3FTdEJpY2hlUFhkVjg1Ump0U3VuRTlvWjlNYmFVM095czZUQ2Ur?=
- =?utf-8?B?Z2ZsTTc1ZHoreXJ2K256b1kwd21nS0ZSTHM4THR1WFdHUXlkcm8yN0l4dU4y?=
- =?utf-8?B?ekZydVplMlZ0TXFCME1jL3c5UFpLTlJzbkxtZGNLTDBiWXY0TXNLdkZUUXdx?=
- =?utf-8?B?U2M5aE05VG1mN1NxTG5KQ2w4TmJMVFVMWGhXSXI5ZmN4djVPSUZLbGtjc293?=
- =?utf-8?B?eitOdllNK1M5T1NsN0gzU2dnZFZwTU9nTmNnRi90RHJQN0Z0TjlFNFR5cGtO?=
- =?utf-8?B?ZStFNmdwL3FRZ3kwdlFpb0Yvc0JPdEVzSVlyd3JRMUNtS01pSlo2eE93eVYv?=
- =?utf-8?B?L2tvWWgzdjIzdHcrVkI3aE90K01rb2d2UTUwaEQycTFNSUJOT05BeGNnc200?=
- =?utf-8?B?SFVBejlaRHA2K2xlMkN3dzNWUWVjVHc1NnErM2dWL0FySDB4d3pUNHlmd1Nu?=
- =?utf-8?B?b0IyNnc3bFg1cjBsL2JMUENFTndQVllLR08wdTVJU3B5M2FNc093RVkvQ3JN?=
- =?utf-8?B?YlVCRUh1VjArZEcrMW1FZGFsbXEzVnNpNmJGZmZ6NExVUEpJWnFBMFZpN0pB?=
- =?utf-8?B?aVQvVHhBbno3R2FQa2lTUEVLNjBCb1hxdEc0aWg4R1RoTFRjMExVVjAvS1p6?=
- =?utf-8?B?bk9RR0lrZTFvazlFZE1pU0ZHWGtZdUVnRWRMdlFWUS81NFczdTZCbzRCQTkv?=
- =?utf-8?B?ZDRVNVhPZENydG03cDk5NEx2TmRWbzN6YW45NFFERmk0UTl5RGFZR3ZYcnVM?=
- =?utf-8?B?RnpTQ09uUHYxWFZ1SkJiYWhheW4wbWo5RHFjLzV6QjJlMmNGbEF6TkhaY2U2?=
- =?utf-8?B?Y0tnNVZaZjh4bXpYM1hWeUE1N203T2ZiMjY2WGJYVkpDNDlJMU91cm9GQ1cr?=
- =?utf-8?B?STEzTTMzS2FnVU9zbnF1VndQWk9oaFVpbTBPL2xJQnUwM2tnSFUxY0Z0WjY5?=
- =?utf-8?B?ZzY5NDIwOTlMS3hiWS9rMllUQ3IzdlZMUTdIOWRkaEZMQ0dBOFVJQT09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?xHXZRtrlz4OQ0TfPI23YJrURC4EVzZMqQuErw/qWe0pa5NcwH8NGM44SozCl?=
+ =?us-ascii?Q?q394xXWYiFTrjD8tqU6X7eXOT5xgTuMp1uIygOXwjJPN9aHs/f0VraH7eR+r?=
+ =?us-ascii?Q?bYdueMwYYn/EoCf7kMHKrmpEELvkNFegYU5XTS5TCJf/bqoRu+KchWlvIryl?=
+ =?us-ascii?Q?A4GBsXN+w3OsoxZn74uT6ky06uUTNuEd7LJ1GiFmAaVatwb8rDZweLT/A3ux?=
+ =?us-ascii?Q?LGQj2Ih6kRBVlOORgzOhUsrYHw0BIMX6SdkiXSxZkbigdFG+/keTZrkxnFez?=
+ =?us-ascii?Q?rK/njA3QsoQJd+rj8HJoAoo7TIiVJKOy/RpzCIX9+1obBQlAexR3syOaVu0N?=
+ =?us-ascii?Q?k+j9l4n0Hf1+E9QeS6f3OOgcGDwGm73kI3X3LNXWua9nWO6YNiv3wCBUysD1?=
+ =?us-ascii?Q?pUlIl2AhHL4835mjesUmRIIAcRC+gMpwIUWzdmTxOmghXwqSa3TbNQ9e4lhW?=
+ =?us-ascii?Q?SzSIEcrzqFfSsbZSVAtEbcEsPSJP4qE5O9GDMa1UJUekaXvgTE1oF/38cpFC?=
+ =?us-ascii?Q?hGT5MhLMyJJ8YUa9xCLGmhWrOwuD/RF6U+NAsXpUMAxHo/sHbjUku21ZNAx0?=
+ =?us-ascii?Q?cFxEH6fCAzT3RYlOLWs9EXM7gxxFNjinC9/ziLjuzS6EqOhK7sFlZIh+8bEm?=
+ =?us-ascii?Q?Xw6pNCpXr/z5NCY1H3jc+tY1ad8WeNV6wKheRnWFRaY92MLDqww+FM6Dg/8z?=
+ =?us-ascii?Q?z0unudIZ6u1UAIAjvkjD680qqqL2jDHJG7Px1OlQXGkYI3mM8k/VztAq47Sk?=
+ =?us-ascii?Q?QVZU/uSJjBMtjkynTmDD0eWKN8bhyO38eG6UvD4y5sE8WY4S1mGJalduCmLg?=
+ =?us-ascii?Q?KiUTJjn63QxjxD3FKLIovoAzZuh63illGaNmMq0QIqq3Ci340TrNvkfMtUJ4?=
+ =?us-ascii?Q?0m+TaVIYjjaRlzgvEddjCna0EFdiWG9qsXFODhM+LfNcarQJejrTimq2WwiP?=
+ =?us-ascii?Q?RH3tpKVFea4FbYfCaS2ROddFApYRrp5M4BwC4oI3a4kZyRilY2qpDFE0b/Qu?=
+ =?us-ascii?Q?WsUJ0+dH9+//Ep1zgKbTBK3ZKKev9yphtzMV0WUrhefK/imzU+PfcIH+dOa6?=
+ =?us-ascii?Q?q+c7M+rPww8Jj1iYuqO72OxwQJCHT4YgaF7ZLCk4B1v3IW83WYR+4BY5B83C?=
+ =?us-ascii?Q?o2+Z7aUg/TTnN/+Hur8z+AmjzoIrvihi+ctvEgWOiajwNCMhUObmtSGYh2Oz?=
+ =?us-ascii?Q?mMgeLapNzmOZ3rbfmvmAYOdB2dYlF8MAeMw3xDnOjzDX5687JQeQwOYt/NOa?=
+ =?us-ascii?Q?MQTqjunDDyzfVsUKSoyRnjvlwmGWmmoahRDEVEVSO2d0sbEN8GgyT1MkQ95D?=
+ =?us-ascii?Q?PcLkrSobQB1o33h2wMaCpF2l3rsGXNp0WRPR+blAMKmYoKO6n5SwNHVLR3TQ?=
+ =?us-ascii?Q?Oz953Bpp5WydCBcoSclc0B3K9j0s+6cgrqn4j1Lgv84krdagZ3TMC28J56N6?=
+ =?us-ascii?Q?uB49MigSt4RDSPzlpuiLQyEnLxnCVcqSBYaxC8HJQCZgybkUhWdcFUh+X4M0?=
+ =?us-ascii?Q?J9m8eW6EoMPiLesyQRxxrF1I6ugJLoYtdtrw+8BSjmwtyBGx1lscKCYQ/8mI?=
+ =?us-ascii?Q?/Fz3EGM30LRYxIEgT/reKo3je28Ae2JeHVo+4FBaT8Rw1rvU2EwDsxyVDX48?=
+ =?us-ascii?Q?J20XJjYkvO0o5bSUMLTfQRs4QZRqjk2YGv76E1KRuVFxci3RLkqbLIBJdT/X?=
+ =?us-ascii?Q?/xdG3CtGxBvYudKf4UfE1BjQtyIducVpkdImoP35oamPWChH75KwyIFv61d1?=
+ =?us-ascii?Q?Yx96MY3+YA=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eacdf569-593e-4b94-d89b-08dead30e627
+X-MS-Exchange-CrossTenant-Network-Message-Id: 929ce5f3-2add-4657-8224-08dead30ea64
 X-MS-Exchange-CrossTenant-AuthSource: BY5PR12MB4179.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2026 18:37:46.6434 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2026 18:37:53.7701 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 5UaUvuHsktB3tELt2jpUicythJuZG0gonqpLi4XP7WTxkc2I5DmvSLzQgQvwpBLBwPSfBXbVjGQiTARhfdbHLQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8482
-Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
+X-MS-Exchange-CrossTenant-UserPrincipalName: qNznszFYscpEfsMg7ZUlRvbzYEJvYkhdvTvvEifwQTvU0KbwX9Em9W+admZWEsJQcienTFTQKfnDkHcVMYMq3w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6205
+Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
  envelope-from=tdave@nvidia.com;
- helo=DM1PR04CU001.outbound.protection.outlook.com
+ helo=CH1PR05CU001.outbound.protection.outlook.com
 X-Spam_score_int: -14
 X-Spam_score: -1.5
 X-Spam_bar: -
@@ -149,380 +141,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The allocator walks the PCI topology and, for each device with fixed
-BAR requests, validates the BAR (type, size, alignment, and that the
-resulting range fits within the machine-provided MMIO64 window),
-detects conflicts against already claimed ranges, and programs 64-bit
-prefetchable BARs.
+Add a final reconciliation pass to update bridge prefetch windows
+after all BARs have been assigned across all phases.
 
-A global list of claimed ranges is maintained to detect overlapping
-allocations across devices. Overlapping fixed BARs within a device are
-also detected, and any conflict results in an error.
+This ensures bridge windows accurately reflect final BAR placement
+across all buses.
 
-This patch implements the initial phase of fixed BAR handling and
-reservation tracking. Allocation of remaining resources and bridge
-window setup will be added in follow-up patches.
-
-Limitations:
-
-Only 64-bit prefetchable MMIO BARs within the MMIO64 window are
-handled. This covers devices that use large prefetchable MMIO regions.
-32-bit MMIO, PIO, and 64-bit non-prefetchable BARs are not supported
-and will be addressed in future work.
+SR-IOV virtual functions are not included when sizing bridge prefetch
+apertures and may require additional work.
 
 Signed-off-by: Tushar Dave <tdave@nvidia.com>
 ---
- hw/pci/meson.build    |   1 +
- hw/pci/pci-resource.c | 255 ++++++++++++++++++++++++++++++++++++++++++
- hw/pci/pci-resource.h |  65 +++++++++++
- 3 files changed, 321 insertions(+)
- create mode 100644 hw/pci/pci-resource.c
- create mode 100644 hw/pci/pci-resource.h
+ hw/pci/pci-resource.c | 89 +++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 89 insertions(+)
 
-diff --git a/hw/pci/meson.build b/hw/pci/meson.build
-index 7e8f5bb87d..d26695414f 100644
---- a/hw/pci/meson.build
-+++ b/hw/pci/meson.build
-@@ -6,6 +6,7 @@ pci_ss.add(files(
-   'pci_bridge.c',
-   'pci_host.c',
-   'pci-enumerate.c',
-+  'pci-resource.c',
-   'pci-hmp-cmds.c',
-   'pci-qmp-cmds.c',
-   'pcie_sriov.c',
 diff --git a/hw/pci/pci-resource.c b/hw/pci/pci-resource.c
-new file mode 100644
-index 0000000000..5e9a78ec16
---- /dev/null
+index e2d2adc7de..01db59c4af 100644
+--- a/hw/pci/pci-resource.c
 +++ b/hw/pci/pci-resource.c
-@@ -0,0 +1,255 @@
-+/*
-+ * Copyright (C) 2026 NVIDIA
-+ * Written by Tushar Dave
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "qemu/range.h"
-+#include "hw/pci/pci.h"
-+#include "hw/pci/pci_bridge.h"
-+#include "hw/pci/pci_bus.h"
-+#include "hw/pci/pci_host.h"
-+#include "hw/pci/pci-resource.h"
-+
-+/* Global list of claimed fixed 64-bit prefetchable BAR ranges */
-+static GArray *fixed_claim_regions;
-+
-+static void fixed_claim_regions_reset(void)
+@@ -190,6 +190,76 @@ static void pci_update_prefetch_window(PCIBus *bus, uint64_t base, uint64_t limi
+                                  4);
+ }
+ 
++static void pci_get_bridge_window(PCIBus *bus, void *opaque)
 +{
-+    if (fixed_claim_regions) {
-+        g_array_free(fixed_claim_regions, true);
-+        fixed_claim_regions = NULL;
-+    }
-+    fixed_claim_regions = g_array_new(false, true, sizeof(FixedClaim));
-+}
++    PCIDevice *bridge = pci_bridge_get_device(bus);
++    PciAllocCfg *pci_res = (PciAllocCfg *)opaque;
 +
-+static bool fixed_claim_regions_conflicts(uint64_t start, uint64_t end,
-+                                          uint64_t wbase64, uint64_t wlimit64,
-+                                          uint64_t *conflict_end)
-+{
-+    /* Hard guard: out-of-window ranges are invalid input */
-+    if (start < wbase64 || end > wlimit64) {
-+        error_report("placement [0x%"PRIx64"..0x%"PRIx64"] out of window "
-+                     "[0x%"PRIx64"..0x%"PRIx64"]",
-+                     start, end, wbase64, wlimit64);
-+        exit(1);
-+    }
-+    if (!fixed_claim_regions) {
-+        return false;
-+    }
-+    for (guint i = 0; i < fixed_claim_regions->len; i++) {
-+        FixedClaim *c = &g_array_index(fixed_claim_regions, FixedClaim, i);
-+        if (ranges_overlap(start, end - start + 1, c->start, c->end - c->start + 1)) {
-+            if (conflict_end) {
-+                *conflict_end = c->end;
-+            }
-+            return true;
-+        }
-+    }
-+    return false;
-+}
-+
-+static void fixed_claim_regions_add(uint64_t start, uint64_t end, PCIDevice *dev, int bar)
-+{
-+    FixedClaim cl = { .start = start, .end = end, .owner = dev, .bar = bar };
-+    g_array_append_val(fixed_claim_regions, cl);
-+}
-+
-+static void pci_validate_fixed_bar(PCIDevice *dev, int bar_index,
-+                                   uint64_t addr, uint64_t size,
-+                                   uint64_t wbase64, uint64_t wlimit64)
-+{
-+    PCIIORegion *r = &dev->io_regions[bar_index];
-+    uint64_t end;
-+
-+    if (!r->size || !(r->type & PCI_BASE_ADDRESS_MEM_TYPE_64)) {
-+        error_report("Invalid fixed-bars for %s [%02x:%02x.%x] BAR%d: "
-+                     "BAR not 64-bit or size=0 (type=0x%x size=0x%"PRIx64")",
-+                     dev->name, pci_dev_bus_num(dev),
-+                     PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn),
-+                     bar_index, r->type, (uint64_t)r->size);
-+        exit(1);
-+    }
-+    /* This path only programs 64-bit prefetchable MMIO in the MMIO64 window. */
-+    if (!(r->type & PCI_BASE_ADDRESS_MEM_PREFETCH) &&
-+        !pci_bus_is_root(pci_get_bus(dev))) {
-+        error_report("Invalid fixed-bars for %s [%02x:%02x.%x] BAR%d: "
-+                     "this allocator only supports 64-bit prefetchable MMIO; "
-+                     "64-bit non-prefetchable is not supported",
-+                     dev->name, pci_dev_bus_num(dev),
-+                     PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn), bar_index);
-+        exit(1);
-+    }
-+    end = addr + size - 1;
-+    if (addr & (size - 1)) {
-+        error_report("Invalid fixed-bars alignment for %s [%02x:%02x.%x] "
-+                     "BAR%d: addr=0x%"PRIx64" size=0x%"PRIx64,
-+                     dev->name, pci_dev_bus_num(dev),
-+                     PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn),
-+                     bar_index, addr, size);
-+        exit(1);
-+    }
-+    if (addr < wbase64 || end > wlimit64) {
-+        error_report("fixed-bars out of window for %s [%02x:%02x.%x] BAR%d "
-+                     "range=[0x%"PRIx64"..0x%"PRIx64"] window=[0x%"PRIx64"..0x%"PRIx64"]",
-+                     dev->name, pci_dev_bus_num(dev),
-+                     PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn),
-+                     bar_index, addr, end, wbase64, wlimit64);
-+        exit(1);
++    if (!bridge) {
++        pci_res->wbase = pci_res->mmio32_base;
++        pci_res->wlimit = pci_res->mmio32_base + pci_res->mmio32_size - 1;
++        pci_res->wbase64 = pci_res->mmio64_base;
++        pci_res->wlimit64 = pci_res->mmio64_base + pci_res->mmio64_size - 1;
++    } else {
++        pci_res->wbase = pci_bridge_get_base(bridge, PCI_BASE_ADDRESS_MEM_TYPE_32);
++        pci_res->wlimit = pci_bridge_get_limit(bridge, PCI_BASE_ADDRESS_MEM_TYPE_32);
++        pci_res->wbase64 = pci_bridge_get_base(bridge, PCI_BASE_ADDRESS_MEM_PREFETCH);
++        pci_res->wlimit64 = pci_bridge_get_limit(bridge, PCI_BASE_ADDRESS_MEM_PREFETCH);
 +    }
 +}
 +
-+static void pci_check_fixed_bar_overlap(PCIDevice *dev, PhysBAR *pbars)
++static void pci_collect_mmio64_window(PCIBus *bus, PCIDevice *dev, void *opaque)
 +{
-+    for (int i = 0; i < PCI_ROM_SLOT; i++) {
-+        if (!(pbars[i].flags & IORESOURCE_PREFETCH)) {
-+            continue;
-+        }
-+        for (int j = i + 1; j < PCI_ROM_SLOT; j++) {
-+            if (!(pbars[j].flags & IORESOURCE_PREFETCH)) {
-+                continue;
-+            }
-+            if (ranges_overlap(pbars[i].addr, dev->io_regions[i].size,
-+                               pbars[j].addr, dev->io_regions[j].size)) {
-+                error_report("Invalid fixed-bars — fixed BAR overlap on %s [%02x:%02x.%x]: "
-+                             "BAR%d [0x%lx..0x%lx] vs BAR%d [0x%lx..0x%lx]",
-+                             dev->name, pci_dev_bus_num(dev),
-+                             PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn),
-+                             i, pbars[i].addr, pbars[i].addr + dev->io_regions[i].size - 1,
-+                             j, pbars[j].addr, pbars[j].addr + dev->io_regions[j].size - 1);
-+                exit(1);
-+            }
-+        }
-+    }
-+}
-+
-+/* Program 64-bit prefetchable BARs */
-+static void pci_program_prefetch_bars(PCIDevice *dev, PhysBAR *pbars)
-+{
-+    int idx;
-+    uint32_t laddr;
++    PciAllocCfg *pci_res = (PciAllocCfg *)opaque;
++    uint64_t rbase, rlimit;
++    uint32_t idx;
 +
 +    for (idx = 0; idx < PCI_ROM_SLOT; idx++) {
-+        PhysBAR *pbar = &pbars[idx];
++        PCIIORegion *res = &dev->io_regions[idx];
 +
-+        if (!(pbar->flags & IORESOURCE_PREFETCH)) {
++        if (!res->size) {
 +            continue;
 +        }
-+        laddr = pbar->addr & PCI_BASE_ADDRESS_MEM_MASK;
-+        laddr |= PCI_BASE_ADDRESS_MEM_TYPE_64;
-+        /* Set PREFETCH bit only if the BAR itself is prefetchable */
-+        if (dev->io_regions[idx].type & PCI_BASE_ADDRESS_MEM_PREFETCH) {
-+            laddr |= PCI_BASE_ADDRESS_MEM_PREFETCH;
-+        }
-+
-+        pci_host_config_write_common(dev,
-+                                     PCI_BASE_ADDRESS_0 + (idx * 4),
-+                                     pci_config_size(dev),
-+                                     laddr,
-+                                     4);
-+        pci_host_config_write_common(dev,
-+                                     PCI_BASE_ADDRESS_0 + (idx * 4) + 4,
-+                                     pci_config_size(dev),
-+                                     (uint32_t)(pbar->addr >> 32),
-+                                     4);
-+    }
-+}
-+
-+/* Phase 1: claim and program fixed BARs for one device (per-device callback) */
-+static void pci_dev_claim_and_program_fixed_bars(PCIBus *bus, PCIDevice *dev, void *opaque)
-+{
-+    PciProgramCtx *pctx = (PciProgramCtx *)opaque;
-+    PhysBAR *pbar, pbars[PCI_ROM_SLOT];
-+    bool had_any_fixed = false;
-+    uint64_t start;
-+    uint64_t end;
-+    int idx;
-+
-+    pbar = pbars;
-+    memset(pbar, 0, sizeof(pbars));
-+
-+    if (!dev->fixed_bar_addrs) {
-+        return;
-+    }
-+    for (idx = 0; idx < PCI_ROM_SLOT; idx++) {
-+        PCIIORegion *r = &dev->io_regions[idx];
-+        if (dev->fixed_bar_addrs[idx] == PCI_BAR_UNMAPPED) {
++        rbase = res->addr;
++        rlimit = res->addr + res->size - 1;
++        /* Entire BAR must lie in the window; do not count partial overlap. */
++        if (rbase < pci_res->wbase64 || rlimit > pci_res->wlimit64) {
 +            continue;
 +        }
-+        pci_validate_fixed_bar(dev, idx,
-+                                    dev->fixed_bar_addrs[idx],
-+                                    r->size,
-+                                    pctx->mmio64_base,
-+                                    pctx->mmio64_base + pctx->mmio64_size - 1);
++        pci_res->rbase = MIN(pci_res->rbase, rbase);
++        pci_res->rlimit = MAX(pci_res->rlimit, rlimit);
++    }
 +
-+        start = dev->fixed_bar_addrs[idx];
-+        end = start + r->size - 1;
-+        if (fixed_claim_regions_conflicts(start, end,
-+                                            pctx->mmio64_base,
-+                                            pctx->mmio64_base + pctx->mmio64_size - 1,
-+                                            NULL)) {
-+            error_report("Invalid fixed-bars — fixed BAR for %s [%02x:%02x.%x] "
-+                         "BAR%d [0x%"PRIx64"..0x%"PRIx64"] overlaps an existing fixed range",
-+                         dev->name, pci_dev_bus_num(dev),
-+                         PCI_SLOT(dev->devfn), PCI_FUNC(dev->devfn),
-+                         idx, start, end);
-+            exit(1);
++    if (IS_PCI_BRIDGE(dev)) {
++        rbase = pci_bridge_get_base(dev, PCI_BASE_ADDRESS_MEM_PREFETCH);
++        rlimit = pci_bridge_get_limit(dev, PCI_BASE_ADDRESS_MEM_PREFETCH);
++
++        if ((rbase < pci_res->wbase64) ||
++            (rbase > pci_res->wlimit64) ||
++            (rlimit < pci_res->wbase64) ||
++            (rlimit > pci_res->wlimit64)) {
++            return;
 +        }
-+        fixed_claim_regions_add(start, end, dev, idx);
-+        pbars[idx].addr = dev->fixed_bar_addrs[idx];
-+        pbars[idx].end = pbars[idx].addr + r->size - 1;
-+        pbars[idx].flags = IORESOURCE_PREFETCH;
-+        had_any_fixed = true;
++
++        pci_res->rbase = MIN(pci_res->rbase, rbase);
++        pci_res->rlimit = MAX(pci_res->rlimit, rlimit);
 +    }
-+    if (had_any_fixed) {
-+        g_hash_table_insert(pctx->had_fixed, dev, dev);
++}
++
++static void pci_bus_update_prefetch_window(PCIBus *bus, void *opaque)
++{
++    PciAllocCfg *pci_res = (PciAllocCfg *)opaque;
++    pci_res->rbase = ~0;
++    pci_res->rlimit = 0;
++
++    assert(pci_bridge_get_device(bus));
++    pci_for_each_device_under_bus(bus, pci_collect_mmio64_window, pci_res);
++
++    if (pci_res->rlimit > pci_res->rbase) {
++        pci_update_prefetch_window(bus, pci_res->rbase, pci_res->rlimit);
 +    }
-+    /* Abort if intra-device fixed overlap */
-+    pci_check_fixed_bar_overlap(dev, pbars);
-+    /* Program fixed BARs now */
-+    pci_program_prefetch_bars(dev, pbars);
 +}
 +
-+static void pci_bus_claim_and_program_fixed_bars(PCIBus *bus, void *opaque)
-+{
-+    pci_for_each_device_under_bus(bus, pci_dev_claim_and_program_fixed_bars, opaque);
-+}
-+
-+static void pci_resource_init_from_mmio(PciAllocCfg *pci_res,
-+                                   const PciFixedBarMmioParams *mmio)
-+{
-+    pci_res->mmio32_base = mmio->mmio32_base;
-+    pci_res->mmio32_size = mmio->mmio32_size;
-+    pci_res->mmio64_base = mmio->mmio64_base;
-+    pci_res->mmio64_size = mmio->mmio64_size;
-+}
-+
-+void pci_fixed_bar_allocator(PCIBus *root, const PciFixedBarMmioParams *mmio)
-+{
-+    PciAllocCfg pci_res_buf, *pci_res = &pci_res_buf;
-+    PCIBus *bus = root;
-+
-+    /* Fill allocator MMIO window once from machine memmap */
+ static inline bool is_64bit_pref_bar(PCIIORegion *r)
+ {
+     if (!r->size) {
+@@ -1004,6 +1074,25 @@ void pci_fixed_bar_allocator(PCIBus *root, const PciFixedBarMmioParams *mmio)
+     /* Phase 3: allocate BARs for buses that have no fixed-BAR devices */
+     pci_for_each_bus(bus, pci_bus_phase3_allocate_no_fixed_bars, &pctx);
+ 
++    memset(pci_res, 0, sizeof(PciAllocCfg));
 +    pci_resource_init_from_mmio(pci_res, mmio);
 +
-+    /* Reset fixed-claims tracking */
-+    fixed_claim_regions_reset();
++    /* TODO: 32-bit MMIO/ROM adjustment */
++    /* TODO: PIO assignment */
++    /* TODO: 64-bit non-prefetchable */
 +
-+    PciProgramCtx pctx = {
-+        .mmio64_base = pci_res->mmio64_base,
-+        .mmio64_size = pci_res->mmio64_size,
-+        .had_fixed = g_hash_table_new(NULL, NULL),
-+    };
++    /* Align bridge prefetch window with assigned BAR ranges */
++    pci_get_bridge_window(bus, pci_res);
 +
-+    /* Phase 1: program all fixed BARs and claim them */
-+    pci_for_each_bus(bus, pci_bus_claim_and_program_fixed_bars, &pctx);
++    QLIST_FOREACH(bus, &bus->child, sibling) {
++        pci_res->bus = bus;
++        /* Use the full mmio64 window */
++        pci_res->wbase64 = pci_res->mmio64_base;
++        pci_res->wlimit64 = pci_res->mmio64_base + pci_res->mmio64_size - 1;
 +
-+    /* TODOs: Phases 2–3, program remaining BARs, bridge window refresh etc,.  */
++        pci_for_each_bus(bus, pci_bus_update_prefetch_window, pci_res);
++    }
 +
-+    /* Cleanup */
-+    g_hash_table_destroy(pctx.had_fixed);
-+    fixed_claim_regions_reset();
-+}
-diff --git a/hw/pci/pci-resource.h b/hw/pci/pci-resource.h
-new file mode 100644
-index 0000000000..cc4d6f71cb
---- /dev/null
-+++ b/hw/pci/pci-resource.h
-@@ -0,0 +1,65 @@
-+/*
-+ * Copyright (C) 2026 NVIDIA
-+ * Written by Tushar Dave
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef HW_PCI_PCI_RESOURCE_H
-+#define HW_PCI_PCI_RESOURCE_H
-+
-+#include "exec/hwaddr.h"
-+#include "hw/pci/pci.h"
-+#include <glib.h>
-+
-+#define IORESOURCE_PREFETCH     0x00002000
-+
-+typedef struct {
-+    uint64_t addr;
-+    uint64_t end;
-+    uint64_t flags;
-+} PhysBAR;
-+
-+typedef struct {
-+    uint64_t wbase;
-+    uint64_t wlimit;
-+    uint64_t wbase64;
-+    uint64_t wlimit64;
-+    uint64_t rbase;
-+    uint64_t rlimit;
-+    uint64_t rsize;
-+    uint64_t piobase;
-+    bool     available;
-+    bool     search_mmio64;
-+    PCIDevice *dev;
-+    PCIBus *bus;
-+    /* Allocator window (filled once from machine memmap) */
-+    hwaddr   mmio32_base;
-+    hwaddr   mmio32_size;
-+    hwaddr   mmio64_base;
-+    hwaddr   mmio64_size;
-+} PciAllocCfg;
-+
-+typedef struct FixedClaim {
-+    uint64_t start;
-+    uint64_t end;
-+    PCIDevice *owner;
-+    int bar;
-+} FixedClaim;
-+
-+typedef struct {
-+    hwaddr mmio64_base;
-+    hwaddr mmio64_size;
-+    GHashTable *had_fixed; /* set of PCIDevice* that had at least one fixed BAR */
-+} PciProgramCtx;
-+
-+typedef struct PciFixedBarMmioParams {
-+    hwaddr mmio32_base;
-+    hwaddr mmio32_size;
-+    hwaddr mmio64_base;
-+    hwaddr mmio64_size;
-+} PciFixedBarMmioParams;
-+
-+void pci_fixed_bar_allocator(PCIBus *root, const PciFixedBarMmioParams *mmio);
-+
-+#endif
+     /* Cleanup */
+     g_hash_table_destroy(pctx.had_fixed);
+     fixed_claim_regions_reset();
 -- 
 2.34.1
 
