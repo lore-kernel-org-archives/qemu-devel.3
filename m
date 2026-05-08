@@ -4,94 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3B71CD3445
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 20:52:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93027CD342F
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 20:52:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLSBA-0005Is-Pl; Fri, 08 May 2026 16:52:12 -0400
+	id 1wLSAd-0005DP-9i; Fri, 08 May 2026 16:51:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wLSB8-0005I7-8D
- for qemu-devel@nongnu.org; Fri, 08 May 2026 16:52:10 -0400
-Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wLSB6-0004uN-Ql
- for qemu-devel@nongnu.org; Fri, 08 May 2026 16:52:10 -0400
-Received: by mail-ot1-x32d.google.com with SMTP id
- 46e09a7af769-7d1872504cbso2296028a34.0
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 13:52:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
+ id 1wLSAb-0005Cf-Mj
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 16:51:37 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
+ id 1wLSAZ-0004pc-Kn
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 16:51:37 -0400
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 648G4G4G1093734
+ for <qemu-devel@nongnu.org>; Fri, 8 May 2026 20:51:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=qcppdkim1; bh=UYixlM2ZLFvkxHABahcR95C/B+DqICf7ZSz
+ 8OQUreik=; b=alDzwJt8z/4I9Tjzj4zzSf7hGtxoeN6ANa7p6A5dmUDHo42HH6h
+ 1im2dXBJaKvyEQCJww0hXSleA+fJ9e06MJLIwbXjJn4XFjNtmW6Cp4ja5T1rLw0v
+ G8yjNgqW1b8hUJQPSNevEl56MJ3mxt4hp7h7pT5Q+4qC2Tr6FqaHLpncY9q021HH
+ sHRIsebNv19+EwBFU8PZ5RU/Pj14Pt8/at7GFR0VomJC0M/iFsj3At7nSkSncPyg
+ I2gJibho3r6Jbt2cM5AEnksrlkhQh+XEhBoyIsribfAUPE8iwxmhhrUpXfXTp3tb
+ /fauYqB1B24mpBh24wDkaaKWEe6ZKhm664w==
+Received: from mail-dl1-f72.google.com (mail-dl1-f72.google.com [74.125.82.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e1k1d0xyb-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 20:51:32 +0000 (GMT)
+Received: by mail-dl1-f72.google.com with SMTP id
+ a92af1059eb24-130aab787bcso5690018c88.1
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 13:51:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778273527; x=1778878327; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=rJaoXdk/iG95U8V23N8RAZOV5KEkQx5SFBZXdFH5AMk=;
- b=uZizNJ7rgx21NSHo53jjSEPk2IggCMe7eIexD9WXp8HteaWBffBzGGPj44VxHhcYwn
- WNqmNUmHyiNmA0zhzsaS+M5FBfJrY8CWwbLKUbZOw41JgpPhCX4tjVJr8jBHCfzDPJMy
- QmBYHQywBkfcjZYe99RPPTG5W1F2F17RL09MA4LkVWA6LWdVT8PEo53erF/WBCoP5z2/
- ci6T1DWXeklMm0It7pT1ASDq7K6FEp0ITw/2WYc70v3ux7O1EiaCmpCsVFN+p1/CChpI
- zto7+9xvZ0ZTQ4l+ctnWBTJUozGPzOn4qzMXw0BTMGKC9PT9hGtSv/Ms+FJmGE+tpiO5
- BOkA==
+ d=oss.qualcomm.com; s=google; t=1778273492; x=1778878292; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=UYixlM2ZLFvkxHABahcR95C/B+DqICf7ZSz8OQUreik=;
+ b=at2IXxBapJ8+BhRpdr5+IePyvxuRpoWe9L9OZXZkdo1Scc5TUZ9/rSuvcDskhqF9U6
+ 54UXupVnuQI6qw1Q7broriuMlweQSv01M4i22Xqu3kQQoHzeoZKeeXrXZZZ0le8XZ6Xp
+ l0weIDMMDUI08aNjWPRQt6yGONjUbbNSFEECosOrEClCguRK4sHUbF4blA84Z/c2ViMD
+ s/sF6Ih2VGhh56OHD/wn7jt8NMbQkZ5D9Ll5r5uukyu/FsmR3ZjnRZm4+nVdX+MWIxKy
+ ZkcAbk60dWYU/zWmSjTrD3t21l0kqcCG1Sn9pXf2uEdWOJVvSpAX0mwuVmKrtQg0Fb/F
+ RYBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778273527; x=1778878327;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=rJaoXdk/iG95U8V23N8RAZOV5KEkQx5SFBZXdFH5AMk=;
- b=EzyKbN8O7iCcVtGAqHzjqZh2mgK92LaZDRh+t/NKuEVHO9V98XJtTnzQqZeIKROeZm
- q3hrpuiAYgoRop9OLpwr1VyWWer9Dfe7pxPGRmlqAc5UhJFFzmKLLXko4Tyu7R+lCG4X
- Y/DmXCOzsS7TbBzJbEj0s0uNYhCG4uDyDFc9lSq3/GZXEwLYDP6IO8LHrFzUjC2/94To
- XIHHiKt5XITjuFUi8Bfmwa+FFJsWGkfAyawkhw0ZsPi8YsrVy4kYi0Dk9xLP8XAdYPxW
- HFiHBuC29oRBwkHgOMsztVWUdAVuiMtueQgvaem9IS6aMVgtfdlnfecs5OQYnfFC1172
- bo0g==
-X-Gm-Message-State: AOJu0Yx/NckDOp7HVduX23Q7LFhPRmkQ1quBmSO8FDpogE7AtdPL4eC9
- PUew4QLAdekWwObu8gAs1MVqT/XRY0+r3LwiBsj8ay0j33gMLJ2iWwfpbCoc68Ie9MCBrkoVKqj
- 8sLvM
-X-Gm-Gg: AeBDieuT6Rk4NawuSCCf4YwwEJYTWEcjCNdy/Zq2G9mAx+vt5tS90vQCgj5un96kqrF
- Myt4dA1nWKI4K1D/jvw3OyAeedXHO5YxDm9mLVpQNNTFjVfMOgKegR9cjX3Awuak11PyfjKVID1
- iBdCrSAmoViI1cwe/pB7XlU4II82Ge818JCVakNm3lk2R6F1cHe829ccEFdjYYlNjwJoZLNV3fZ
- fpbsT3jIhO2hhxBvAiXWZheH1KnL4egvHQsbVnL9gkzOvuH3CMY+wpG6ITbt9Wprp/3K0zpIBci
- K9rDWJP2E3fmL/afibUM4WwPfW0KZ+C5kJ8/uOURKE26wV2yDQFG3WmCRDntjvXFKoFbM9PVIUS
- E56M/eXZ/Z6sgE67pUnDd8lVemxmzi9TRtgQUbRn5pcllKwPOe01/dx4foi48CpvoI3hChm+ZBr
- pLelQs1RKWK3V2m0AreRAf1dafjcxoMcOyhRANTpg0beJgxW8RIW3u4aD2/ILGUg6C4JOIA1KTL
- WLcz8Y=
-X-Received: by 2002:a05:6830:6796:b0:7dc:d7b8:aa80 with SMTP id
- 46e09a7af769-7e1fd472443mr4030549a34.17.1778273526867; 
- Fri, 08 May 2026 13:52:06 -0700 (PDT)
-Received: from ?IPV6:2607:fb91:1a91:1de:21e3:45a9:5df:5a65?
- ([2607:fb91:1a91:1de:21e3:45a9:5df:5a65])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7e367d5061csm1800665a34.15.2026.05.08.13.52.06
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 May 2026 13:52:06 -0700 (PDT)
-Message-ID: <0fd9c00e-6de2-49fa-9435-5c37f75e2bab@linaro.org>
-Date: Fri, 8 May 2026 15:52:04 -0500
+ d=1e100.net; s=20251104; t=1778273492; x=1778878292;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UYixlM2ZLFvkxHABahcR95C/B+DqICf7ZSz8OQUreik=;
+ b=NgHKYawMO7rS09agiJhCORSX7PjjRlc2SSpzBw0+RSW9vuyBO5aE8JbsCex3DQdchH
+ W7fafe76QW3/pxcY84RLix+U4ATqnXEpLOvTdlDz98gVBtMoiylWXWpCXke7O4kbWuJ6
+ Bw997XRIE3DgvBo8DhSCCwduneicVlaoBmmSp9oNZT9QAe3ghl8ZKggzlY1NV5bAMRBj
+ gGU2+Ifgw20lfZPGr5mlfY3BRJTRYkpOo1gAcjMUaR/XYWPP4hFxRpDOlR7EbSEofsLc
+ vnlOIpH6vO2atYUuH9fVAmGG+O9fD5Fg/j+tK1ox6jxa/U8kS4wLDZ4CLS19sbgUtN/5
+ sIww==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9o6hhig3aNEvGcZoL5wPe01kq3tzF2reXMv2GNcA88RT9b3JxYvdVStc3jHeQn3r+Z+UMs0yPcJD1I@nongnu.org
+X-Gm-Message-State: AOJu0Yz5p89ViE0tsJnqT9lw2daQE/83tneWGCdDF5UNYrgvLubIo3DK
+ 6JDlMUgqb3NGijlqysAWxg0xKRPp+f7fsJVM+ciExKlzWnPqPn0yYiE+8Td6l9MQT/RTqJLcBTn
+ yzXSCftDEPpbc7OciOnpcyEWv8T9DyRViY61cGH75b4HjLxt9GHOwdTW3OQ==
+X-Gm-Gg: AeBDievuUdH/fjgn+Ougf8UnYBo0PsehihPPF9/baXNx6QBI91at8TWd88J4lhKbtLU
+ ky0pr+zpQfm+sJuJtateeeNnh5cuQ5y5aIOJyu2iCveee3rvDsYJxsDLQAAb6C1hiRfhOc25QWu
+ ACbmUj9ryhSshA6m0qpyF+0IobV5kSyfW2pI65K+TfXao0D+JwS7CqZRsJ6zYjibbOfrnn/1sqZ
+ UR7egySxD8i424TfyHzcH/Mf2BD1JPzxZ2fXNFDuwVu97QZ+ZE1R7NwamAMs0J2O1Jf6pO2EFQ+
+ Z7sX6bwz2/BPDXV4R4bSZq9YYXIU8hUGQWCEypTtIYS266XpzV+6hjhgARe+OnIbVah1xURcCrV
+ kSfIKDgxD/jGvwrucZ7ueMO3pZGWkVQU=
+X-Received: by 2002:a05:7022:fb0c:b0:12d:ca31:f19d with SMTP id
+ a92af1059eb24-13271b86630mr2319319c88.28.1778273491877; 
+ Fri, 08 May 2026 13:51:31 -0700 (PDT)
+X-Received: by 2002:a05:7022:fb0c:b0:12d:ca31:f19d with SMTP id
+ a92af1059eb24-13271b86630mr2319295c88.28.1778273491252; 
+ Fri, 08 May 2026 13:51:31 -0700 (PDT)
+Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1327810ff4dsm3858562c88.3.2026.05.08.13.51.30
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 May 2026 13:51:30 -0700 (PDT)
+From: Andrew Jones <andrew.jones@oss.qualcomm.com>
+To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Cc: alistair.francis@wdc.com, palmer@dabbelt.com,
+ daniel.barboza@oss.qualcomm.com, tjeznach@rivosinc.com
+Subject: [PATCH] hw/riscv/riscv-iommu: Fix Svnapot 64KB pages
+Date: Fri,  8 May 2026 15:51:29 -0500
+Message-ID: <20260508205129.377032-1-andrew.jones@oss.qualcomm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] tests/functional/test_kvm.py: Skip if virtualization
- not supported
-To: qemu-devel@nongnu.org
-References: <20260507194728.2034696-1-peter.maydell@linaro.org>
- <20260507194728.2034696-5-peter.maydell@linaro.org>
-From: Richard Henderson <richard.henderson@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260507194728.2034696-5-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA4MDIwNiBTYWx0ZWRfX1P/bLFZahXfL
+ w7p+pvoMIw7nrBVmH7bK2+/0jyyJGcAtR+qkMiX+Z6qia0e954nABhWNKURz7y+NqI3NvDCEMGf
+ FRRySv79Fp1YSRHkbR/gD0HxBb8HSGKKRTgmdPpgKRH+RUXY/h837ip/XIs5Pcfy963esIfc4CU
+ GlEEBeKbj9gNL2WMZtC3/t4/2zurABcLmDPTcTAKnuw/7TWRfhmJqozzGfCYvovyVcBFtp1jY52
+ DivZkMvzUK4B1c7eUR1Mzl4hmOd9ccI8Y+50meqHEGQELV7phAQxGS/0lcBHKvJxWgHH0VwmzBx
+ gTRahzt22X6t/kT+gPECtOV9KlW9yiqBUJ1a5qaxlI1E+xxDN39VGo0LInWNXXomOk0n8xlqEKJ
+ nCZgwYMuEtEgoMht1s0hCGidPINr2fYhq61x8kZYFoLbHZROe64NSr7wf5kQglIiEXjyPzfQQkF
+ 2s8oOoztlvr0y8gTy/A==
+X-Authority-Analysis: v=2.4 cv=GLU41ONK c=1 sm=1 tr=0 ts=69fe4cd4 cx=c_pps
+ a=bS7HVuBVfinNPG3f6cIo3Q==:117 a=cvcws7F5//HeuvjG1O1erQ==:17
+ a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=u7WPNUs3qKkmUXheDGA7:22 a=yOCtJkima9RkubShWh1s:22 a=EUspDBNiAAAA:8
+ a=2y_yIg3y-CFyToFg34oA:9 a=vBUdepa8ALXHeOFLBtFW:22
+X-Proofpoint-ORIG-GUID: KPxu01cxecl-ioJ52WDqDmc3QuvZL57J
+X-Proofpoint-GUID: KPxu01cxecl-ioJ52WDqDmc3QuvZL57J
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-07_02,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 suspectscore=0 adultscore=0 malwarescore=0 phishscore=0
+ clxscore=1015 impostorscore=0 spamscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605080206
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=andrew.jones@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,48 +141,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/7/26 14:47, Peter Maydell wrote:
-> The test_kvm test runs the virt board with virtualization=on,
-> which will fail if run with an accelerator that doesn't
-> support nested virtualization. Catch the VMLaunchFailure
-> exception and skip the test if startup failed because
-> the accelerator can't support virtualization.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   tests/functional/aarch64/test_kvm.py | 10 +++++++++-
->   1 file changed, 9 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tests/functional/aarch64/test_kvm.py b/tests/functional/aarch64/test_kvm.py
-> index fed18aba60..c977e8c6d2 100755
-> --- a/tests/functional/aarch64/test_kvm.py
-> +++ b/tests/functional/aarch64/test_kvm.py
-> @@ -14,6 +14,7 @@
->   from qemu_test import Asset
->   from qemu_test import exec_command_and_wait_for_pattern as ec_and_wait
->   from qemu_test.linuxkernel import LinuxKernelTest
-> +from qemu.machine.machine import VMLaunchFailure
->   
->   
->   class Aarch64VirtKVMTests(LinuxKernelTest):
-> @@ -44,7 +45,14 @@ def _launch_guest(self, kvm_mode="nvhe"):
->                            '-append', kernel_command_line)
->           self.vm.add_args("-smp", "2", "-m", "320")
->   
-> -        self.vm.launch()
-> +        try:
-> +            self.vm.launch()
-> +        except VMLaunchFailure as excp:
-> +            if "does not support providing Virtualization" in excp.output:
-> +                self.skipTest("accelerator has no virtualization support")
-> +            else:
-> +                self.log.info("unhandled launch failure: %s", excp.output)
-> +                raise excp
->   
->           self.wait_for_console_pattern('buildroot login:')
->           ec_and_wait(self, 'root', '#')
+The Svnapot extension encodes a 64KB leaf PTE by setting PTE_N and
+storing bits [3:0] of the PPN as a NAPOT size indicator. The IOMMU
+model wasn't checking PTE_N and therefore was using the raw (NAPOT-
+encoded) PPN directly in the physical address, yielding an address
+32 KB above the correct base.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Fix both riscv_iommu_spa_fetch() and pdt_memory_read() by mirroring
+the Svnapot handling already present in target/riscv/cpu_helper.c:
 
-r~
+  napot_bits  = ctz64(ppn) + 1          /* 4 for 64KB */
+  napot_mask  = (1 << napot_bits) - 1   /* 0xF */
+  phys_base   = PPN_PHYS(ppn & ~napot_mask)
+  page_offset = addr & (PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1))
+
+The spec only defines napot_bits == 4 (64KB); any other value is
+treated as a reserved encoding.
+
+This is a fix, rather than new feature support, because the spec
+says "IOMMU implementations must support the Svnapot standard
+extension for NAPOT Translation Contiguity."
+
+Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
+Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
+---
+ hw/riscv/riscv-iommu.c | 44 ++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 40 insertions(+), 4 deletions(-)
+
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 25a356d1d366..eb09cc974812 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -237,6 +237,25 @@ static bool riscv_iommu_msi_check(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+     return true;
+ }
+ 
++/* Returns the NAPOT page mask, or 0 for reserved encodings. */
++static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
++{
++    int napot_bits = ctz64(ppn) + 1;
++    hwaddr napot_mask, page_mask;
++
++    /* The spec only defines 64KB (napot_bits == 4) */
++    if (napot_bits != 4) {
++        return 0;
++    }
++
++    napot_mask = (1ULL << napot_bits) - 1;
++    page_mask = PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1);
++
++    *out = PPN_PHYS(ppn & ~napot_mask) | (addr & page_mask);
++
++    return page_mask;
++}
++
+ /*
+  * RISCV IOMMU Address Translation Lookup - Page Table Walk
+  *
+@@ -458,9 +477,20 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
+         } else {
+             /* Leaf PTE, translation completed. */
+             sc[pass].step = sc[pass].levels;
+-            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
+-            /* Update address mask based on smallest translation granularity */
+-            iotlb->addr_mask &= (1ULL << va_skip) - 1;
++
++            if (pte & PTE_N) {
++                hwaddr mask = riscv_iommu_napot_page_mask(ppn, addr, &base);
++
++                if (!mask) {
++                    break;
++                }
++                iotlb->addr_mask &= mask;
++            } else {
++                base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
++                /* Update address mask based on smallest translation granularity */
++                iotlb->addr_mask &= (1ULL << va_skip) - 1;
++            }
++
+             /* Continue with S-Stage translation? */
+             if (pass && sc[0].step != sc[0].levels) {
+                 pass = S_STAGE;
+@@ -997,7 +1027,13 @@ static MemTxResult pdt_memory_read(RISCVIOMMUState *s,
+             return MEMTX_ACCESS_ERROR; /* Misaligned PPN */
+         } else {
+             /* Leaf PTE, translation completed. */
+-            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
++            if (pte & PTE_N) {
++                if (!riscv_iommu_napot_page_mask(ppn, addr, &base)) {
++                    return MEMTX_ACCESS_ERROR;
++                }
++            } else {
++                base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
++            }
+             break;
+         }
+ 
+-- 
+2.43.0
+
 
