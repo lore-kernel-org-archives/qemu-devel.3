@@ -4,100 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 613CFCD3436
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 14:41:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C923ECD3436
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 14:42:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLMO0-0002s3-Bu; Fri, 08 May 2026 10:41:04 -0400
+	id 1wLMOg-0003iu-2t; Fri, 08 May 2026 10:41:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wLMNu-0002hr-Ht
- for qemu-devel@nongnu.org; Fri, 08 May 2026 10:40:59 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wLMOc-0003e2-NC
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 10:41:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1wLMNq-00087i-Af
- for qemu-devel@nongnu.org; Fri, 08 May 2026 10:40:55 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1wLMOa-0008K5-Ud
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 10:41:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778251253;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ s=mimecast20190719; t=1778251298;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=T7b/2XPJ02WX6/0vl3IxnkfrHNSsm6mfgXxV8ILV42yrZMDZhutQ8PWiBwbjcBKdU1h84e
- pZnloclNl57bsF/OMF9vp/wY7i6P5AxU2vKcOVg3ek2tnYS6xWzgnW+30+Z+UvxwnxssS0
- 6Pqg28DPZKl+zmPI+91YV41DxYY17io=
+ bh=QMvTddc/VGWLyfpaUwEcPvWkVtZm0XQqNkM5eCiBseQ=;
+ b=U9eVXZj6SnpJI+5L2FVriNpmQvwnbAgEqHO1AgCXq9uFx8Bwf+SGHpELL6wmEyr+ezAWJu
+ kynJ/MGT9cD6fEVMad2GtA1WTQRBRG5Vtn/cwTaiiCBTwUWONrDgIWSoin0VtRr7Rv97SG
+ JYIdWSPAiIRm3+XfRvAM8hwZAOX/weg=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-108-SgazU-u8PL-88P4cg_9a3Q-1; Fri, 08 May 2026 10:40:52 -0400
-X-MC-Unique: SgazU-u8PL-88P4cg_9a3Q-1
-X-Mimecast-MFC-AGG-ID: SgazU-u8PL-88P4cg_9a3Q_1778251251
+ us-mta-278-LESKHyKpNr21rbSK6sFSdA-1; Fri, 08 May 2026 10:41:37 -0400
+X-MC-Unique: LESKHyKpNr21rbSK6sFSdA-1
+X-Mimecast-MFC-AGG-ID: LESKHyKpNr21rbSK6sFSdA_1778251296
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-48e6260968fso12918935e9.1
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 07:40:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778251251; x=1778856051; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=sjOHQ6emhqrNySbkOIa9OFknVevK8QVVBLCiati4G0YzN663KNlBgIYcFajAtOlyOS
- NpqRbGOljt9tLN5a30LoSu8u7kPEbgLWNoSbzT4B1WhBn+U9lAVE16dtKjSZX3fPMG6O
- k6gXbeTwIkOrWhaPLBnjX7rtsx1zUMOB4+sskl8W4jaOKumCkuK5o6Sfpw0fuW02z9iL
- Lck0Iq/PKqf2TYTuYE+JLtaqEwAZxn7iLoW7rK2m0nCb1V4tMoOGCmnediJvpd2urfFR
- TaMAVdWw4O94NUaJ6w+qCFGgxR6OP99f80lpEdEv8jzpFtevuZZ7hzmmJtkaEpCNZb7S
- 437w==
+ 5b1f17b1804b1-488d1b5bca0so10533275e9.2
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 07:41:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778251251; x=1778856051;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=br5A+207NofT7ogKOdm9Gh6+ocALFRDyEzcd7n/RP50uOMky9/DfUxWsS97wOPLyJE
- wlfPDaATR5jerVhiTp2/bUTZn6c7LajFRVFVi6OPOKIO1w2K/aAYcG03VZdvi10nCtJE
- c70u9IQDulVcfWnzi6KviAy0dJOf6wKj+tnTBm78fTtrxmu3Ysn2tBUFJhTVTBzLN7uw
- eMKUJlTJlfv+/9Yf01EYOgPGcpqBDFcVpNIo+bzmq182Zvc71AzdKfdWhyJbKM1/QsaD
- sj9UL9WsOuz8oAAZC3u1hG/AkAb2hAQnaoXW9a2zAStU8AaPSTOLSQconTVDlzzE+4SY
- pb7w==
-X-Gm-Message-State: AOJu0Yz6fxvk2NTbINZIvx/Vrc37ATzQ2LQT6Te0mxrH6Abd8omaYSk8
- GbEmMly+RnSwxIBiPsmqOx7/lMgsj6y1lyhiW8iYWAxs2tNQbeZvr/c6WLW7sLhSrKm37l9OsNx
- RuAvV92epoL9hYfhyXQyAFEXryow6Z8Fyd1yLDeHaV8d5NG0W5muM4apo
-X-Gm-Gg: AeBDieuIF+kLMpSav4D2IzaYD6LEmvFS6vNs8pzQHrvCu7VkboG+Z/O7Qi4+VYQd4Jt
- p70aUBwsK8Cv+VFP1W0IhGqYz3UdwbXe0MZ7ZR1CmV4SOntcCNw0cSCSwsxPUX8cIJUo1yV5Hjk
- jE9kIkUh0dm9RqLFz55DflnKM6ahbesCeTvlU8B4rsZAqn9NKtBnR/5+wZ3kPWbyIX/B+sIhshN
- eS/SQdKeb8FAJtObfGPqhOZRVlRlrFgwjLLLkz2l8aXF2DLMRwJ4l0CEDsW3M2LDi0Qc6bYolqb
- rCCQz7wJktgbssmb9VXv7aqmIo/j1rkz1q1Uy2aKIgee5pMLCHUdVIbXHjqYzN+hGUZkYzYDt5U
- q7CaMNArKK4vIKmN+FDSG0fiRT5PRS4SJaWHaEGe617Iw4SUWQcJvDubxFSmmjT0Tq1FuGOnCDn
- tg+daC2M1K284sdHbM3EbIOYym
-X-Received: by 2002:a05:600c:1d18:b0:489:1a63:509c with SMTP id
- 5b1f17b1804b1-48e51dd689fmr195909605e9.0.1778251250873; 
- Fri, 08 May 2026 07:40:50 -0700 (PDT)
-X-Received: by 2002:a05:600c:1d18:b0:489:1a63:509c with SMTP id
- 5b1f17b1804b1-48e51dd689fmr195908975e9.0.1778251250414; 
- Fri, 08 May 2026 07:40:50 -0700 (PDT)
-Received: from [192.168.10.48] ([176.206.106.181])
+ d=1e100.net; s=20251104; t=1778251296; x=1778856096;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QMvTddc/VGWLyfpaUwEcPvWkVtZm0XQqNkM5eCiBseQ=;
+ b=qS1IFronow3LnnROdGaWWU28aYilAsKqkr/TstHs1SU5+pVoi71xjJCFnN/AtPI7Db
+ 2nX+pom011794vfiZZcGAPjbFJqSn1wWwYgPYKHF6G4zlFMEY/6lTR6nlZVdeScVShFz
+ aZMmowK8wCCkaW3RKV7rvzEqF7y2EHYrs3qr2Jrk+035BuFUV2Hn9/u9hsVlcyb2nx4k
+ OswZetQT1rcnQP2asJMifRhkMDvY9kw3jXiWB8SFqXsCQfMhoEthwI28OU5aX6mQpfvS
+ n7jFEIvjI9m6/bxC3OoXsvL0mtp9Qh9IhFMI47g5goLGk5eLnpCmn53wte527LY534e+
+ uwwQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8YtqtyVnx0VojWpTqRp/FsQ6m++I1AJuSSVmkdxUe7MfSUbDse1CZheasX9xTz86DtG0ZYf/4oYFI7@nongnu.org
+X-Gm-Message-State: AOJu0Yxw5iGziGdBAAEPpahYmYVZzSBctWUQOKm6T0ygHv0hhnbvC3y/
+ 7V+drFlNxXvqtYV8ZfAdZNPvu+aGQ2PaULJatyciZiKAqXy9NUT+QObiM5lSuw9bes111AvO9Ck
+ PxOpXzFqjF45CWox5k7Y/SsthMxzVDuUtx8Ceje7fKVk+aUTzaOFr02Jg
+X-Gm-Gg: AeBDieuBL+0KJ7LwaXpkfwgeMbdezgi3vvqWra73fVf2WD8cYBcyscrWDv+wDf/qmhN
+ DKTjoxBEtIp+HnkAxQl/vXiZgwASJHZfOfHbKKsUMPyf0/SQZEQMx25OGPkxihm5gi+OVW/1UEm
+ Y+XWByCfvNn7TlkKsu0LDUQgbZIGiKi4Ps6ZFPxRqJdf6USg60A+1/Oj79oYFa1/43Z2xdzLnqm
+ XBeNdGyp/lWJzYfuofNqCnSMZ+LzVdb5aOSoTsxQPIAn20pTqGKw5MAgKj4FjfAOesay6WwLzxp
+ U3iqeQDsLZGG2q1+tV0QeNDlx13N24qMC8RqK0/TP2BKbDaoXGvKHe8BLAY3usKOGZOvAzqF7Ws
+ ro6K+l1oqjTTmbVvUIWLNW8PVcYrxx4iEs1WNp3VfV1wACjLmabns/kAFbGIHYHPtiGqPWg==
+X-Received: by 2002:a05:600d:8:b0:48a:58ae:993b with SMTP id
+ 5b1f17b1804b1-48e676a4e03mr47460625e9.16.1778251296343; 
+ Fri, 08 May 2026 07:41:36 -0700 (PDT)
+X-Received: by 2002:a05:600d:8:b0:48a:58ae:993b with SMTP id
+ 5b1f17b1804b1-48e676a4e03mr47460285e9.16.1778251295973; 
+ Fri, 08 May 2026 07:41:35 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548ec6c221sm4721220f8f.13.2026.05.08.07.40.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 May 2026 07:40:49 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, qemu-block@nongnu.org,
- Fam Zheng <fam@euphon.net>
-Subject: Re: [PATCH 0/3] scsi: PR live migration PREEMPT fixes
-Date: Fri,  8 May 2026 16:40:45 +0200
-Message-ID: <20260508144045.1958786-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.54.0
-In-Reply-To: <20260401171927.396672-1-stefanha@redhat.com>
-References: 
+ 5b1f17b1804b1-48e68f5d9b5sm39186385e9.15.2026.05.08.07.41.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 May 2026 07:41:35 -0700 (PDT)
+Message-ID: <2ec140e8-d862-466a-9061-f9175b2a846b@redhat.com>
+Date: Fri, 8 May 2026 16:41:33 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 26/31] hw/arm/tegra241-cmdqv: Limit queue size based on
+ backend page size
+Content-Language: en-US
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
+ Nicolin Chen <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>,
+ Matt Ochs <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>,
+ Jason Gunthorpe <jgg@nvidia.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>, "phrdina@redhat.com"
+ <phrdina@redhat.com>
+References: <20260415105552.622421-1-skolothumtho@nvidia.com>
+ <20260415105552.622421-27-skolothumtho@nvidia.com>
+ <e7a172be-41b4-40c8-8b1b-2814450d110a@redhat.com>
+ <IA0PR12MB75555AF6ED6EF19543546F04AB3D2@IA0PR12MB7555.namprd12.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <IA0PR12MB75555AF6ED6EF19543546F04AB3D2@IA0PR12MB7555.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -24
 X-Spam_score: -2.5
 X-Spam_bar: --
@@ -117,11 +124,97 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
 
-Paolo
+
+On 5/8/26 3:38 PM, Shameer Kolothum Thodi wrote:
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Sent: 07 May 2026 18:24
+>> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
+>> arm@nongnu.org; qemu-devel@nongnu.org
+>> Cc: peter.maydell@linaro.org; clg@redhat.com; alex@shazbot.org; Nicolin
+>> Chen <nicolinc@nvidia.com>; Nathan Chen <nathanc@nvidia.com>; Matt
+>> Ochs <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
+>> <jgg@nvidia.com>; jonathan.cameron@huawei.com;
+>> zhenzhong.duan@intel.com; Krishnakant Jaju <kjaju@nvidia.com>;
+>> phrdina@redhat.com
+>> Subject: Re: [PATCH v4 26/31] hw/arm/tegra241-cmdqv: Limit queue size
+>> based on backend page size
+>>
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> Hi Shameer,
+>>
+>> On 4/15/26 12:55 PM, Shameer Kolothum wrote:
+>>> From: Nicolin Chen <nicolinc@nvidia.com>
+>>>
+>>> CMDQV HW reads guest queue memory in its host physical address setup via
+>>> IOMMUFD. This requires the guest queue memory is not only contiguous in
+>>> guest PA space but also in host PA space. With Tegra241 CMDQV enabled,
+>> we
+>>> must only advertise a CMDQS that the host can safely back with physically
+>> s/a CMDQS/ a command queue size (CMDQS)
+>>> contiguous memory. Allowing a queue larger than the host page size could
+>> a queue size
+>>> cause the hardware to DMA across page boundaries, leading to faults.
+>>>
+>>> Walk the RAMBlock list to find the smallest memory-backend page size, then
+>>> limit IDR1.CMDQS so the guest cannot configure a command queue that
+>> exceeds
+>> what is the minimal CMDQS required?
+> AFAICS, spec doesn't specify a minimum. But in practical terms I think,
+> it will be 4K page size(CMDQS=8).
+
+OK
+>
+>>> that contiguous backing. Fall back to the real host page size if no
+>>> memory-backend RAM blocks are found.
+>>>
+>>> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+>>> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+>>> ---
+>>>  hw/arm/tegra241-cmdqv.c | 41
+>> +++++++++++++++++++++++++++++++++++++++++
+>>>  1 file changed, 41 insertions(+)
+>>>
+>>> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+>>> index af68add2f0..2870886783 100644
+>>> --- a/hw/arm/tegra241-cmdqv.c
+>>> +++ b/hw/arm/tegra241-cmdqv.c
+>>> @@ -14,6 +14,9 @@
+>>>  #include "hw/arm/smmuv3.h"
+>>>  #include "hw/core/irq.h"
+>>>  #include "smmuv3-accel.h"
+>>> +#include "smmuv3-internal.h"
+>>> +#include "system/ramblock.h"
+>>> +#include "system/ramlist.h"
+>>>  #include "tegra241-cmdqv.h"
+>>>  #include "trace.h"
+>>>
+>>> @@ -646,9 +649,38 @@ free_viommu:
+>>>      return false;
+>>>  }
+>>>
+>>> +static size_t tegra241_cmdqv_min_ram_pagesize(void)
+>> shouldn't we put that rather in system/physmem.c
+>> there we also have qemu_ram_pagesize_largest() for instance
+> Could do. But we may have to rename it differently compared to 
+> qemu_ram_pagesize_largest() as we are checking the size among
+> memory-backend RAM only.
+>
+> May be qemu_ram_backend_pagesize_min() ?
+
+Yes sounds reasonable to me. Let's add the physmem.c maintainers in cc.
+
+Eric
+>
+> Thanks,
+> Shameer
 
 
