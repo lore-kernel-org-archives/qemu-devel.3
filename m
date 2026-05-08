@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0A86CD37A7
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 15:15:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAFF2CD3436
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 15:15:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLMt3-0002bs-2k; Fri, 08 May 2026 11:13:09 -0400
+	id 1wLMuM-0005CD-DS; Fri, 08 May 2026 11:14:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wLMsx-0002bT-6X
- for qemu-devel@nongnu.org; Fri, 08 May 2026 11:13:03 -0400
-Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
+ id 1wLMtH-0002hS-KS
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 11:13:26 -0400
+Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wLMsv-0001bb-Mj
- for qemu-devel@nongnu.org; Fri, 08 May 2026 11:13:02 -0400
-Received: by mail-oa1-x2e.google.com with SMTP id
- 586e51a60fabf-40f1a1f77a6so1651350fac.2
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 08:13:01 -0700 (PDT)
+ id 1wLMtF-0001km-5I
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 11:13:23 -0400
+Received: by mail-oa1-x32.google.com with SMTP id
+ 586e51a60fabf-42ff0576868so987731fac.1
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 08:13:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778253180; x=1778857980; darn=nongnu.org;
+ d=gmail.com; s=20251104; t=1778253200; x=1778858000; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=iAJ8Qk+vpPe+4QpFghj8xaJORB1ELQJhno5MzPCICrs=;
- b=UIJBUCNIqIaPkGeEC+qMjrgbi7yJPRvoMR9QptFlezS1L0QDb+TtbD7AinhZ2DUPG0
- Sx9WD+OPT+a6hCUBFC3I63pBDP3TRq5hcgf1BO+QS2xL9SFaS7I5vFjl33ma/1RmxI7z
- xBNp00hl/6hSArMXCWQiWOu5Vv+caqYZ/+c1xa6UENXaV9nvWq6EJHtKYCiTpD9WuSZs
- jqCe5vhFSYYKl4+m1gFO0X/pXbCoQEsg4OXHhrP9baWDqrbs4di/dF/yC7THkXrlkSU8
- MvAJ8n57SLo46D8yf8W6aZT5yCHCo2Hi1PvKJXon2kdFlvxnM25auglTKf6mID1U1pa7
- HuuQ==
+ :reply-to; bh=rEvObFEBKOnUCp3+aacmCnWcRQSvflnqgpsWE2tFMLw=;
+ b=Jx1xQu2rYly36BFLFraqAy4ksZnjAOqZmYVCRBxBlewdCZQ+dngbjy9+AMUzbmpkCc
+ 1P9FX1M0/V8MizraCV7CvYA19NQ0gWfJDlmyTPeN5CIVjPap/vmHPxpkS01EoRa7TjG+
+ WcaOZcnlhzujfWeH37a303iCUnAvxqR+cZDYNzCuILpwo2LFHq8fvJ85c6IZZufqrXdB
+ l8LVZ4kB3tLV66/N01upbHK8CgPGh2TIAkYydofYD96AgEknbWj9aybGQB1nBmBI3Bw8
+ DLekqidMup/SVtef91iRocC2qCe5uOHyDTd51K2h2b/pe/Fy46NGmuc3Egw/5fEK8qt0
+ 7YgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778253180; x=1778857980;
+ d=1e100.net; s=20251104; t=1778253200; x=1778858000;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=iAJ8Qk+vpPe+4QpFghj8xaJORB1ELQJhno5MzPCICrs=;
- b=k7HagIjidqdJEhWL6h2BZvecYq2pd/y48qwkgSHrkzIA0KGsxU1+Lm8DN5VakJatMU
- Q5TgWJ/dK50tAix775NV/2w80phlWKLqUEGHRbWLCyLYrOzVh4W42yydA5PFnCiu84T7
- 9z6UADojFTWpx/hZvjPH2brJE8BcQ1OLSBR0EuuaCvwTHYN6kkBhofK7pG6UcHWPUKS/
- /UATedp3wywr0+X87LhnypTC7U++jCndaVThqs11WDBPwFRk9LmiaPjRMN14WRD/ErA9
- Lo09KAfKdQIr4KXWASrZxaqhtXdJTVUHFxgCMtR07TvwDX9cwAEUGOQ1TH3XNVhFQAh6
- EcHQ==
-X-Gm-Message-State: AOJu0Ywbjfa5yWl73bPLIQszkpbhaw40XaVWyNQEjDXG/hKaqho6zUhi
- 2YLdOsNqQ+P6xVQdMRj7bP+53AcF2d8K2zqLx6npKZS3/Xl7k2GiKYk81GeQog==
-X-Gm-Gg: Acq92OGH26ZTKi776lEowdcWihGs0+M7rBDbP0fcWxlpxgIsU4DKaPrFkzrkZy4wdn2
- DegIosT1Pl+8r6/lV4WNeOPBkq43wGtmamkPyFAIfhgnPAQ9nZWHGR+Qv39vOPdNiRCm6ijz20N
- Yv9h7UDLFUgim61PKvUzj+ZOZ3AdHKzU6xOQFJXsz2w0B0iMhYVPWw36BUKYZlF8diieavROi+i
- 2K2jvyMWWNvcJSun+aoYCm+twmsdyifZ1scyciWGc/Bqy/hCbIGPGAv5OCpl1c1KGHVCuJRbrjv
- jH6dLxv4+Z/Z4iYBElkY8KSqNKdYK4aD76apvCg8/yeMLlGt55l32+ZV/wn8//65aq3WWUVYTV2
- XJsxg3bTqTQc8XIg8d5Cf0EEGAn/J8hbwrHLeu7pQS5RP39J6V0hX/la5lKVoaW/ATaQDC3QErS
- XKI4RlHx5MycByzWc4EMlL4kSlPq+oVYAoPsvzoa2R7qGPxnPbQZaUYea1jGpMnEP7NWvqJMe+G
- ucTpf1+bkb7UIveCfeR530PnXnrXybkDPERzUA0a7AaF7H4Je0R5krOalZy3QhoEAKO5JoNLKOp
- pfarkPTs7vsK6/VvzX3lhKB9to0vMX8YFqmJNqNRWBFgpFeodUbJNVCn2id+RIa7W/8i5LJHlI6
- 7CcLsUw==
-X-Received: by 2002:a05:6870:c08b:b0:433:d0ff:a25b with SMTP id
- 586e51a60fabf-43556fcbbe9mr1735875fac.39.1778253180087; 
- Fri, 08 May 2026 08:13:00 -0700 (PDT)
+ bh=rEvObFEBKOnUCp3+aacmCnWcRQSvflnqgpsWE2tFMLw=;
+ b=mQIPKB37tFcG+/MYcqRRyv1xrP7nTVsM5goSKWmPvbUZMlu8evNAci6qvBST8Fws3n
+ Xv4GXCSyBgKFbIcXJXs9WobM2A4HVo9I1yvmwmtMSiXxUngbFauJ8ogWLhvjLZAIgbD5
+ THUi5ZVkCuLCA92Kzc3Moj2K6SWQNj4NA47Ai6xBhe2GBF5jCk4d+HvUbuPzhC9aPFFj
+ DdCjTc9z7lf5LzBEgbBp+bkkC1k5Q0dbI/rmCiSFrZM5TfM2zmr3RhgdczaXXkBCwpj9
+ QyJQ1T/oq2sAkdfdHTxG//wCeByjpOp5xP51A5aXwxcbj5LMRhFi/GCl7DWIrDGL3tu+
+ xJQA==
+X-Gm-Message-State: AOJu0Ywxbr6ZGD06ROK8J9V9ZDVAY8X8Uvqu5xIPW8HmF7ODpHU1TSZ4
+ 1aqJgg858URZIiRmPKabuLqC75/liHDO7ZYVGDZ/HrKLG5UqTrQSzLgGydpcNg==
+X-Gm-Gg: Acq92OH4G3cqDF1hbqoAz21CECsJe7h247YY20UrXN0hWvddc5fkWLMC9nj1R2EiNrN
+ 6LPOLW6G9x1gDcwCYNyq8N06FHU/Byk3oaZCiu3ZB7urXcufDp7vmnPtXGI85fuYT8emkKkd8BW
+ 3sQhpz933gH5wH79nPgJMAMNU6PUJ+Y0mKKtF6qWm9RQexig1kOiSVMP/5T/cevImPXvjT71Km7
+ 7GPuu/sTfbgNUBofoqWVlP3PIaBaEsrIrxTscZFKpUfFvxh4Mp0MHzzf2hDe2uHmDfs83KVBSue
+ M0yM6u+GyYPboVGAMF06phF3dE0h+s9/FkYKEcTpdVENpOMBqwQFxHWs2iMoeJyDJxOfTWm5Hmd
+ N8QeRE5GNIphTdFDzWw8DlrTrX8J03wn1eBF9ralukfeyU/ysSOtIPJQS95pC+R59k/LN4HRcdu
+ rPPagvwYOtlou1wg7mBChM5Nsb/0iAa8nxetgAOD2BD0YX5qo4YV1HDHWkjqZ396DTJoAl+8Lkq
+ g7PrYqAjNvWxDHoX4Fy5MMk2o8A27gUncMgtassrCZkxtBXmrvZYltD+8/9g/L8UconBBSWqE/T
+ s71pKv/TEEH1EB3GhFcL4vfV0nIH9y+5yJXlE3ATbs5r7EvFO3C6y0rqWob1PIWNcFP0Th0=
+X-Received: by 2002:a05:6870:a453:b0:430:2e5:df00 with SMTP id
+ 586e51a60fabf-434f60edb43mr8487439fac.9.1778253199702; 
+ Fri, 08 May 2026 08:13:19 -0700 (PDT)
 Received: from
  1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa
  (71-218-113-237.hlrn.qwest.net. [71.218.113.237])
  by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-43557109b7dsm1897904fac.5.2026.05.08.08.12.57
+ 586e51a60fabf-43557109b7dsm1897904fac.5.2026.05.08.08.13.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 May 2026 08:12:57 -0700 (PDT)
+ Fri, 08 May 2026 08:13:19 -0700 (PDT)
 From: James Hilliard <james.hilliard1@gmail.com>
-Date: Fri, 08 May 2026 09:12:02 -0600
-Subject: [PATCH v3 02/32] linux-user/mips: implement sysmips(MIPS_ATOMIC_SET)
+Date: Fri, 08 May 2026 09:12:22 -0600
+Subject: [PATCH v3 22/32] target/mips: add Octeon VMM0 instruction
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260508-mips-octeon-missing-insns-v2-v3-2-bcbec96357d9@gmail.com>
+Message-Id: <20260508-mips-octeon-missing-insns-v2-v3-22-bcbec96357d9@gmail.com>
 References: <20260508-mips-octeon-missing-insns-v2-v3-0-bcbec96357d9@gmail.com>
 In-Reply-To: <20260508-mips-octeon-missing-insns-v2-v3-0-bcbec96357d9@gmail.com>
 To: qemu-devel@nongnu.org
@@ -87,8 +86,8 @@ Cc: Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
  Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
 X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2001:4860:4864:20::2e;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oa1-x2e.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::32;
+ envelope-from=james.hilliard1@gmail.com; helo=mail-oa1-x32.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -112,97 +111,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the MIPS_ATOMIC_SET sysmips command as an aligned 32-bit atomic
-exchange in target memory.
+VMM0 performs the VMULU accumulation, returns the low result, then feeds
+that result back into the MTM0 multiplier state with a zero high operand
+and clears partial products.
 
-MIPS reports syscall errors through a separate register, so successful old
-values can overlap the errno range.  Write the return value and error flag
-directly and return -QEMU_ESIGRETURN so the common syscall path leaves the
-registers unchanged.
+Add helper and translator support for this multiplier chain-update
+operation.
 
 Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
 ---
 Changes v2 -> v3:
-  - Split MIPS_ATOMIC_SET out of the combined sysmips/MIPS_FIXADE patch.
-    (suggested by Richard Henderson)
-  - Always use the explicit MIPS return-register path for successful
-    atomic_set results.  (suggested by Richard Henderson)
+  - Split VMM0 out of the combined Octeon arithmetic and memory
+    instruction patch.  (requested by Richard Henderson)
 ---
- linux-user/mips/target_syscall.h   |  1 +
- linux-user/mips64/target_syscall.h |  1 +
- linux-user/syscall.c               | 31 +++++++++++++++++++++++++++++++
- 3 files changed, 33 insertions(+)
+ target/mips/helper.h               |  1 +
+ target/mips/tcg/octeon.decode      |  1 +
+ target/mips/tcg/octeon_translate.c |  1 +
+ target/mips/tcg/op_helper.c        | 16 ++++++++++++++++
+ 4 files changed, 19 insertions(+)
 
-diff --git a/linux-user/mips/target_syscall.h b/linux-user/mips/target_syscall.h
-index 3f36c1695a..9206694f4f 100644
---- a/linux-user/mips/target_syscall.h
-+++ b/linux-user/mips/target_syscall.h
-@@ -11,6 +11,7 @@
+diff --git a/target/mips/helper.h b/target/mips/helper.h
+index f1e78ae329..46ccad95c3 100644
+--- a/target/mips/helper.h
++++ b/target/mips/helper.h
+@@ -25,6 +25,7 @@ DEF_HELPER_3(crc32, tl, tl, tl, i32)
+ DEF_HELPER_3(crc32c, tl, tl, tl, i32)
+ DEF_HELPER_FLAGS_4(rotx, TCG_CALL_NO_RWG_SE, tl, tl, i32, i32, i32)
+ DEF_HELPER_3(octeon_vmulu, i64, env, i64, i64)
++DEF_HELPER_3(octeon_vmm0, i64, env, i64, i64)
  
- #define TARGET_FORCE_SHMLBA
- #define TARGET_SYSMIPS_FLUSH_CACHE     3
-+#define TARGET_SYSMIPS_ATOMIC_SET   2001
+ /* microMIPS functions */
+ DEF_HELPER_4(lwm, void, env, tl, tl, i32)
+diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
+index 1c3dbb4a33..8a909ffcee 100644
+--- a/target/mips/tcg/octeon.decode
++++ b/target/mips/tcg/octeon.decode
+@@ -51,6 +51,7 @@ MTP2         011100 rs:5 rt:5 00000 00000 001011 &r2
+ MTM1         011100 rs:5 rt:5 00000 00000 001100 &r2
+ MTM2         011100 rs:5 rt:5 00000 00000 001101 &r2
+ VMULU        011100 ..... ..... ..... 00000 001111 @r3
++VMM0         011100 ..... ..... ..... 00000 010000 @r3
  
- static inline abi_ulong target_shmlba(CPUMIPSState *env)
- {
-diff --git a/linux-user/mips64/target_syscall.h b/linux-user/mips64/target_syscall.h
-index 20ea7c6ab9..e07687f8ac 100644
---- a/linux-user/mips64/target_syscall.h
-+++ b/linux-user/mips64/target_syscall.h
-@@ -11,6 +11,7 @@
- 
- #define TARGET_FORCE_SHMLBA
- #define TARGET_SYSMIPS_FLUSH_CACHE     3
-+#define TARGET_SYSMIPS_ATOMIC_SET   2001
- 
- static inline abi_ulong target_shmlba(CPUMIPSState *env)
- {
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 73f09bb775..3786a34041 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -6631,10 +6631,41 @@ static abi_long do_prctl_syscall_user_dispatch(CPUArchState *env,
+ &saa         base rt
+ @saa         ...... base:5 rt:5 ................ &saa
+diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
+index bcbf73c052..c1dd03debd 100644
+--- a/target/mips/tcg/octeon_translate.c
++++ b/target/mips/tcg/octeon_translate.c
+@@ -313,3 +313,4 @@ TRANS(MTP0, trans_mtp, 0);
+ TRANS(MTP1, trans_mtp, 1);
+ TRANS(MTP2, trans_mtp, 2);
+ TRANS(VMULU, trans_vmul, gen_helper_octeon_vmulu);
++TRANS(VMM0, trans_vmul, gen_helper_octeon_vmm0);
+diff --git a/target/mips/tcg/op_helper.c b/target/mips/tcg/op_helper.c
+index ab3fb06a16..a1465068af 100644
+--- a/target/mips/tcg/op_helper.c
++++ b/target/mips/tcg/op_helper.c
+@@ -176,6 +176,22 @@ uint64_t helper_octeon_vmulu(CPUMIPSState *env, uint64_t rs, uint64_t rt)
+     return sum[0];
  }
  
- #ifdef TARGET_NR_sysmips
-+static abi_long do_sysmips_atomic_set(CPUArchState *env, abi_ulong addr,
-+                                      abi_long value)
++uint64_t helper_octeon_vmm0(CPUMIPSState *env, uint64_t rs, uint64_t rt)
 +{
-+    uint32_t *ptr;
-+    abi_long old;
-+
-+    if (addr & 3) {
-+        return -TARGET_EINVAL;
-+    }
-+
-+    ptr = lock_user(VERIFY_WRITE, addr, sizeof(*ptr), true);
-+    if (!ptr) {
-+        return -TARGET_EINVAL;
-+    }
-+
-+    old = tswap32(qatomic_xchg(ptr, tswap32((uint32_t)value)));
-+    unlock_user(ptr, addr, sizeof(*ptr));
++    uint64_t lo = helper_octeon_vmulu(env, rs, rt);
 +
 +    /*
-+     * MIPS uses a separate error flag, but the common linux-user syscall
-+     * path infers that flag from the return value.  Successful atomic_set
-+     * results can overlap the target errno range, so write the result
-+     * registers here and ask the CPU loop to leave them alone.
++     * Complete the VMULU accumulation, then apply the MTM0-style state
++     * update with the low result and a zero high operand.
 +     */
-+    env->active_tc.gpr[2] = old;
-+    env->active_tc.gpr[7] = 0;
-+    return -QEMU_ESIGRETURN;
++    env->active_tc.octeon.MPL[0] = lo;
++    env->active_tc.octeon.MPL[3] = 0;
++    for (int i = 0; i < 2 * 3; i++) {
++        env->active_tc.octeon.P[i] = 0;
++    }
++    return lo;
 +}
 +
- static abi_long do_sysmips(CPUArchState *env, abi_long cmd, abi_long arg1,
-                            abi_long arg2)
+ /* these crc32 functions are based on target/loongarch/tcg/op_helper.c */
+ target_ulong helper_crc32(target_ulong val, target_ulong m, uint32_t sz)
  {
-     switch (cmd) {
-+    case TARGET_SYSMIPS_ATOMIC_SET:
-+        return do_sysmips_atomic_set(env, arg1, arg2);
-     case TARGET_SYSMIPS_FLUSH_CACHE:
-         return 0;
-     default:
 
 -- 
 2.54.0
