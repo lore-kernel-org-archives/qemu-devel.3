@@ -4,72 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08181CD3436
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 09:56:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8C51CD3436
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 09:57:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLHvy-0007HE-EW; Fri, 08 May 2026 05:55:50 -0400
+	id 1wLHwz-0001DL-9z; Fri, 08 May 2026 05:56:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wLHvs-0007Fp-Da
- for qemu-devel@nongnu.org; Fri, 08 May 2026 05:55:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1wLHvp-0000dT-9M
- for qemu-devel@nongnu.org; Fri, 08 May 2026 05:55:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778234140;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=NXPgRyhka1iUgbT+spcMP/7bRVi6wwqH8SQF2ppJD+E=;
- b=U+1H5vbORdQj/xewxIuAhNUrBVpYgPOEJxehyADTapSmZ7bFbcE4h+HPVNb4oD36dZqsZ9
- 2YYgao+VBp6PthjR09aMs5hagHaH/Gog5MX6UkPDGsHl6brwxw5ITBqHgHFg58Sx7eBJG8
- BCAhNPcbkFmn7yDcGbmU1WTeuqfa1YI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-357-DYHtpAk8PaqU_eJ6Vfo_ZA-1; Fri,
- 08 May 2026 05:55:36 -0400
-X-MC-Unique: DYHtpAk8PaqU_eJ6Vfo_ZA-1
-X-Mimecast-MFC-AGG-ID: DYHtpAk8PaqU_eJ6Vfo_ZA_1778234135
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C16D11956062; Fri,  8 May 2026 09:55:35 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.50.155])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 81C59300019F; Fri,  8 May 2026 09:55:35 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id D80541800D52; Fri, 08 May 2026 11:55:31 +0200 (CEST)
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>,
- Katherine Leaver <katherine.j.leaver@gmail.com>
-Subject: [PULL 6/6] hw/uefi: avoid possibly unaligned variable_auth_2 struct
- field access
-Date: Fri,  8 May 2026 11:55:31 +0200
-Message-ID: <20260508095531.570979-7-kraxel@redhat.com>
-In-Reply-To: <20260508095531.570979-1-kraxel@redhat.com>
-References: <20260508095531.570979-1-kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLHwx-0001AJ-Ce
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 05:56:51 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLHwv-0000o0-OV
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 05:56:50 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-488d2079582so19928185e9.2
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 02:56:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778234208; x=1778839008; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=74+fb6cgdhAX/dx9SbGHHaxeocGSsLVOWi4uBTvlprY=;
+ b=AaS3FZe8k5qjBr81tJ+QpeVSlEjy7J3ei9tyUk8xetP6rqOwLNcLdAWK3aRfaVindy
+ OTJIM18836FOxz+KV8W8LSjeV91pjLiFnf0wapdCaxK5DjnOvliO9L4hM90+CUiJgI5X
+ 2tBz3ThkPQKKt7wJcx+POOhZtHkLSmMG720BvFx+2uZ8LT+gEN/rWVJetZDDAoRMCmQ5
+ qd2cn/zGta/SaJE157d3sasgTLnIw6OjRYN4N6wwxGe0Ptbk+OGnq8rTXmd2XmiGWthb
+ ftbF1Hj+7KHLP58uNYbA+QWnYTL29abAPr7Kfd9dYI+2UgZTje6eNJsaRiIjLh9vp/UG
+ WulA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778234208; x=1778839008;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=74+fb6cgdhAX/dx9SbGHHaxeocGSsLVOWi4uBTvlprY=;
+ b=n3+BP2zjvfz0RFXyxEY9KUoncF774Se8yI9u5ts4qjgfSnc2sIt6p1sfZvccxvrvre
+ 2sDB8oaPWRVxabp6fUiChWDUE3e8jQLoekSjVZ8QoTh2dTZOYxJ8hJPO+MFyvy3lSMAw
+ G9N4lteVeGs0bnRzMcRLifbGfQr68np/qGs68w+ydLFz2/wxCKYhisxntBMTWuqTcmqz
+ 1LSNN/vuZYaOGmHaE+Pq6zyGHnxnnh+9HE3uLej2deG4VO9xTY0ZWRRNJXw3BgG8Rwf6
+ 6m3ASaK1EWh6Y/zYKQkXiiDuw+1GUJxW+kr5wPc+40a/IsAv4Wm4qfY/0xNqeKZuWknQ
+ PmyQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9edWpTK8Rya7Zznsk/5OrZ5BOXVrQ8acXChCTyVjXRpaSaD0czb+sdSLlsxprpiX/7XMH4+KkJ8PT/@nongnu.org
+X-Gm-Message-State: AOJu0YzNFhn38BSYAz+3meWSz5woMK3ZgS48NjuAfkp9LDvNtixBUKy6
+ SmmZ0byRtzHa40Twa4/FmzuiH16PqbXE4QuqXev49HDOp9Iie7KjQNkTv6/LW7Atem4=
+X-Gm-Gg: AeBDieswyRqhHF+w86+ssoz3rOq9qvJpPE8GTy9a7j6gMqAaun2Dz0zkX1BZUVGWZM7
+ 4opxS1dCdkGFdJcFE+8OjbCNfGY+M4/BwZfokXKt3KU/pFwO/qP+nHZu66TmuZbR9DJPsbZ1OcU
+ bbX6ET4WoXuaJgew6nO2SiCFpl3PgBRjrFgrqCCxioYmsB+ioSwCa2GlHb/KdI4RWzFjhlYt2QL
+ CaCblWZImWebzPTV7TWRMLtsChOwwPlaVxUqMX5aOX/lAAhWWm/mG3oTPWMspYhYdV9iYTxvQAd
+ hafUcLuweLUUjoSECUoS3xU4UhJAjw0GW+uW6VbOLDTfRLa0WPGKWLpGTtqFjQYDru5IlBEnqO0
+ n/TYMeXtoE0sp2KkMxj12C6gZmbMGlbaRCK6sJ8r65WrtpV8HbS+PrmD8Cl6IpH86Zb7kbzkJ/f
+ e3mDMpb72F4XAg2zVvp/JqWWKtPZvGof1CSiXtWk/YOD1Y5SOzI4ru9BKYId61g0yilw5iGQ==
+X-Received: by 2002:a05:600c:3ba7:b0:48a:7772:c26b with SMTP id
+ 5b1f17b1804b1-48e51f40884mr201235685e9.26.1778234207807; 
+ Fri, 08 May 2026 02:56:47 -0700 (PDT)
+Received: from [192.168.0.200] (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48e68edca90sm49045105e9.5.2026.05.08.02.56.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 May 2026 02:56:46 -0700 (PDT)
+Message-ID: <17657acd-42e1-40c1-b604-4d3b6ce57e3e@linaro.org>
+Date: Fri, 8 May 2026 11:56:46 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 18/18] fpu: Reorg float_status
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260507221717.486023-1-richard.henderson@linaro.org>
+ <20260507221717.486023-19-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260507221717.486023-19-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.438,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,140 +102,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Copy data to stack-allocated struct before accessing it
-to make sure it is properly aligned.
+On 8/5/26 00:17, Richard Henderson wrote:
+> Use bitfields to compress float_status from 18 bytes down to 8 bytes.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/fpu/softfloat-types.h | 53 ++++++++++++++++++++++-------------
+>   1 file changed, 33 insertions(+), 20 deletions(-)
 
-Fixes: CVE-2026-41440
-Fixes: f1488fac0584 ("hw/uefi: add var-service-auth.c")
-Reported-by: Katherine Leaver <katherine.j.leaver@gmail.com>
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20260422092910.444997-7-kraxel@redhat.com>
----
- hw/uefi/var-service-auth.c  | 21 ++++++++++++---------
- hw/uefi/var-service-pkcs7.c | 18 +++++++++++-------
- 2 files changed, 23 insertions(+), 16 deletions(-)
-
-diff --git a/hw/uefi/var-service-auth.c b/hw/uefi/var-service-auth.c
-index fba5a0956a57..795f2f54e4ab 100644
---- a/hw/uefi/var-service-auth.c
-+++ b/hw/uefi/var-service-auth.c
-@@ -180,9 +180,10 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
-                                             void *data,
-                                             uint64_t data_offset)
- {
--    variable_auth_2 *auth = data;
-+    variable_auth_2 auth;
-     uefi_variable *siglist;
- 
-+    memcpy(&auth, data, sizeof(auth));
-     if (custom_mode_is_active(uv)) {
-         /* no authentication in custom mode */
-         return EFI_SUCCESS;
-@@ -193,7 +194,7 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
-         return EFI_SUCCESS;
-     }
- 
--    if (auth->hdr_length == 24) {
-+    if (auth.hdr_length == 24) {
-         /* no signature (auth->cert_data is empty) */
-         return EFI_SECURITY_VIOLATION;
-     }
-@@ -218,23 +219,25 @@ static efi_status uefi_vars_check_auth_2_sb(uefi_vars_state *uv,
- efi_status uefi_vars_check_auth_2(uefi_vars_state *uv, uefi_variable *var,
-                                   mm_variable_access *va, void *data)
- {
--    variable_auth_2 *auth = data;
-+    variable_auth_2 auth;
-     uint64_t data_offset;
-     efi_status status;
- 
--    if (va->data_size < sizeof(*auth)) {
-+    if (va->data_size < sizeof(auth)) {
-         return EFI_SECURITY_VIOLATION;
-     }
--    if (uadd64_overflow(sizeof(efi_time), auth->hdr_length, &data_offset)) {
-+    memcpy(&auth, data, sizeof(auth));
-+
-+    if (uadd64_overflow(sizeof(efi_time), auth.hdr_length, &data_offset)) {
-         return EFI_SECURITY_VIOLATION;
-     }
-     if (va->data_size < data_offset) {
-         return EFI_SECURITY_VIOLATION;
-     }
- 
--    if (auth->hdr_revision != 0x0200 ||
--        auth->hdr_cert_type != WIN_CERT_TYPE_EFI_GUID ||
--        !qemu_uuid_is_equal(&auth->guid_cert_type, &EfiCertTypePkcs7Guid)) {
-+    if (auth.hdr_revision != 0x0200 ||
-+        auth.hdr_cert_type != WIN_CERT_TYPE_EFI_GUID ||
-+        !qemu_uuid_is_equal(&auth.guid_cert_type, &EfiCertTypePkcs7Guid)) {
-         return EFI_UNSUPPORTED;
-     }
- 
-@@ -255,7 +258,7 @@ efi_status uefi_vars_check_auth_2(uefi_vars_state *uv, uefi_variable *var,
-     }
- 
-     /* checks passed, set variable data */
--    var->time = auth->timestamp;
-+    var->time = auth.timestamp;
-     if (va->data_size - data_offset > 0) {
-         var->data = g_malloc(va->data_size - data_offset);
-         memcpy(var->data, data + data_offset, va->data_size - data_offset);
-diff --git a/hw/uefi/var-service-pkcs7.c b/hw/uefi/var-service-pkcs7.c
-index f17ad6872fd2..c859743e8677 100644
---- a/hw/uefi/var-service-pkcs7.c
-+++ b/hw/uefi/var-service-pkcs7.c
-@@ -21,17 +21,20 @@
-  */
- static gnutls_datum_t *build_signed_data(mm_variable_access *va, void *data)
- {
--    variable_auth_2 *auth = data;
--    uint64_t data_offset = sizeof(efi_time) + auth->hdr_length;
-+    variable_auth_2 auth;
-+    uint64_t data_offset;
-     uint16_t *name = (void *)va + sizeof(mm_variable_access);
-     gnutls_datum_t *sdata;
-     uint64_t pos = 0;
- 
-+    memcpy(&auth, data, sizeof(auth));
-+    data_offset = sizeof(efi_time) + auth.hdr_length;
-+
-     sdata = g_new(gnutls_datum_t, 1);
-     sdata->size = (va->name_size - 2
-                    + sizeof(QemuUUID)
-                    + sizeof(va->attributes)
--                   + sizeof(auth->timestamp)
-+                   + sizeof(auth.timestamp)
-                    + va->data_size - data_offset);
-     sdata->data = g_malloc(sdata->size);
- 
-@@ -48,8 +51,8 @@ static gnutls_datum_t *build_signed_data(mm_variable_access *va, void *data)
-     pos += sizeof(va->attributes);
- 
-     /* TimeStamp */
--    memcpy(sdata->data + pos, &auth->timestamp, sizeof(auth->timestamp));
--    pos += sizeof(auth->timestamp);
-+    memcpy(sdata->data + pos, &auth.timestamp, sizeof(auth.timestamp));
-+    pos += sizeof(auth.timestamp);
- 
-     /* Variable Content */
-     memcpy(sdata->data + pos, data + data_offset, va->data_size - data_offset);
-@@ -105,11 +108,12 @@ static void wrap_pkcs7(gnutls_datum_t *pkcs7)
- 
- static gnutls_datum_t *build_pkcs7(void *data)
- {
--    variable_auth_2 *auth = data;
-+    variable_auth_2 auth;
-     gnutls_datum_t *pkcs7;
- 
-+    memcpy(&auth, data, sizeof(auth));
-     pkcs7 = g_new(gnutls_datum_t, 1);
--    pkcs7->size = auth->hdr_length - 24;
-+    pkcs7->size = auth.hdr_length - 24;
-     pkcs7->data = g_malloc(pkcs7->size);
-     memcpy(pkcs7->data, data + 16 + 24, pkcs7->size);
- 
--- 
-2.54.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
