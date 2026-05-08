@@ -4,117 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7C46CD342F
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 18:39:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25879CD342F
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 18:39:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLQ5Y-0006hq-BA; Fri, 08 May 2026 14:38:16 -0400
+	id 1wLQ5e-0006lZ-9g; Fri, 08 May 2026 14:38:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
- id 1wLQ5O-0006gQ-Iq; Fri, 08 May 2026 14:38:06 -0400
+ id 1wLQ5Y-0006jj-Nt; Fri, 08 May 2026 14:38:16 -0400
 Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
  ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
- id 1wLQ5M-0002b2-3S; Fri, 08 May 2026 14:38:06 -0400
+ id 1wLQ5T-0002b2-Kj; Fri, 08 May 2026 14:38:14 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=v8FtgfQspDt8XpIK1nXypmybTNcMbCPBIefl2mNoR4KCb1wyg2cGD1xnLvkqL2EuipfQhjLLMSJ3hMsdtWjAG5YExkha02xtXLdNfjHv+jFUtmgN/E5lp9j8m4omzjeMR0cbaNS3IXCePZDnF4PQxwXz/QVygxcs4eFLihjvsvmv3HRCw+DGIfJk8qy5Lu324TbX2IzdZEfK6CvPoq2i1oaVpiHwk8L9JnPWzLIyT4njErh15VIN1IF8fHnnp0c17CIJBUMyLh7SUnXIyhc+R3X4fFf7KSau2mHnXDjGCVP5GHt4NxjD7dLsrrJZRO0hSbgW6Ih8hKQOXxOCPrrA6g==
+ b=eqZq4FdQOzqMOFoVmld+5x5yfQmATNoFIcvPuIxQDb0RXN6mL1oZnnuc5YSZ829B6CxqzQ14xVCPMmk4Eu5lZTQfXhsZ4uduVQwrnzACZIxCsEt+uKBz+nXZjkKYOI2TBHXGYgfDPVa6wBSlIXaMdSmX+XQOEpX7v0wiQ1f4hGBWvMzBij6lWqPyAjDFVLb8YSTO2i6c4Ie9/0uwOxRB0sxMeey5G/E5v5Bunqyd+41CyVGsUnRgMYR/8vhgahRqW/60w+QUCHAKQEPjFDSanK02l2h+mS+i/a8zSvmu1oXYRve3BXipYDoGVW+WNuNbUTAzncSka43FpbgJgpAbjQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cxDvV4LZ4ek8q78zLfgg06hLW8aN2srFmLdvM6m92Gc=;
- b=lN0MUQiOULMoNqBKgOjYgnKgndS5fmHnKczx3pc+tUYfxmQv8ooVdnlkOE5Y1fO4qvxO+inhllDxraIFK2X5N4W9qFJ5cxQ+hIyOVKMy6jZNrG/dmNfUp3KFZyXCIcudXEzsSXdFtb23EoYi/dxvx/4jB25rJmvQI3ihTFA68qADgQTyciPxshQKUnaV3x12x9s1Gx9Ipcdfk6uU41cpfUSUxiW+JFxDcAyJBQkzbhf1OHjnmORIOdmPSbd1WGfQHAwSUyRYYl6h62VXc+gGNyykJzcEz2+vjH5yYmD3H6L/Coc1B9V3KXlxd6VILosROOJ4IVRqnGjp5ntFET2Qdg==
+ bh=3BmZzqD5g0RjTtepjL+pk+Y22ANUW4q9Gg58vJr4ggA=;
+ b=qF8FC3Y6navVIjEIw4rtZwYWnV1znESVZtk9hjzlreE9IBW1LT3QuhWw9SYoMarxXa+Frm8jUOUNkc0GEETKuPVa6GViBMeqpLzK7kAifrieFV7E6qba8sFnKMZ6YIS8hV9d22lRRMKaHSBYjUXhaKsNN1R1xiTiFvVbFYbo4coAdUyFomDz5CHzJfwopZLDgGdPXRxPjHRRKlmRinHvDCyu9wyw9vcq5t9LYXvh0ifruq6/UscZU0jEfKzVui1g+cncdBRRAxgNvYvjrNSSkRV8swNgL5y0a6XNUHMRE+XZQiy0WNvzpcwRC/9GI4gxCxGnyeZV1sS4lzoLepKUOQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cxDvV4LZ4ek8q78zLfgg06hLW8aN2srFmLdvM6m92Gc=;
- b=VCuso00Tww8StwdHPE59Lp4G59sNgi27cxczFr4sd8zidx2DcPSdyklEfTDv2Qqa0p+1DB5H4gQ7jzgovaOTPNWXc6ST1LPLWnJLdFbSS/y+tvWm3Unvl6n9Vv8DUZ/jQ/62vP55YtJrMGF2Z3+e8Ydwe7Z6SVwVI2nOb+GbBRZxbAn+PudsrgXOnTY2uvup9hzL5Zq4aG7nm8hWawrbJMWa+mFFp6aes2V3m47IU2ZjIglOzoBPo4Otl4FY4gaBEr+W7/6x07StJGrfTQ9XP3z/iSDWMi7ZMq7tM0zRIUKpCnk7QacVTfnPUav5it669DUFOeUQFG5WQF1Hl0Xnzw==
+ bh=3BmZzqD5g0RjTtepjL+pk+Y22ANUW4q9Gg58vJr4ggA=;
+ b=mQtH6eN9/dvf3QPdvkbqREk9lxTSD1Cv6Jk8HssoyOkiNNV7Cvxq3n+BFCz91lmEVkoSiKayLRlUQY0VDexDaDicFybNFxF5XsM83Gkvn8y0IqW8WFHfEU0dMHYOnF1NBwI23BIeNK6jyGDwBvrirGZngOQeIHmlTwESVPeejC39sVnWJr1PQNLv9Hvuy2ioWTerrKN/EeQjmLIc5tVm1rKvZIiRBe+weAbzo74y41gyX0ypgrhXkjv3pLEp921I3YFRot1BLDggjyeGs6xNIuw1H+eGx7OZBYiQ2G3cLIgu80LzKhBRabeT4TN+MgwTwrdtC0wuaj2hDeDvwDJgzA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BY5PR12MB4179.namprd12.prod.outlook.com (2603:10b6:a03:211::8)
  by DM4PR12MB6205.namprd12.prod.outlook.com (2603:10b6:8:a8::19) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.15; Fri, 8 May
- 2026 18:37:51 +0000
+ 2026 18:37:59 +0000
 Received: from BY5PR12MB4179.namprd12.prod.outlook.com
  ([fe80::2036:e8b:9b3:f325]) by BY5PR12MB4179.namprd12.prod.outlook.com
  ([fe80::2036:e8b:9b3:f325%4]) with mapi id 15.20.9891.019; Fri, 8 May 2026
- 18:37:51 +0000
+ 18:37:58 +0000
 From: Tushar Dave <tdave@nvidia.com>
 To: qemu-devel@nongnu.org
 Cc: alwilliamson@nvidia.com, jgg@nvidia.com, skolothumtho@nvidia.com,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, mst@redhat.com,
  marcel.apfelbaum@gmail.com, devel@edk2.groups.io
-Subject: [RFC PATCH 5/8] hw/pci: allocate remaining BARs for buses without
- fixed BARs
-Date: Fri,  8 May 2026 13:37:14 -0500
-Message-Id: <20260508183717.193630-6-tdave@nvidia.com>
+Subject: [RFC PATCH 8/8] hw/arm/virt: add pci-pre-enum machine property
+Date: Fri,  8 May 2026 13:37:17 -0500
+Message-Id: <20260508183717.193630-9-tdave@nvidia.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260508183717.193630-1-tdave@nvidia.com>
 References: <20260508183717.193630-1-tdave@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: MN0P221CA0021.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:208:52a::25) To BY5PR12MB4179.namprd12.prod.outlook.com
+X-ClientProxiedBy: MN0PR04CA0024.namprd04.prod.outlook.com
+ (2603:10b6:208:52d::14) To BY5PR12MB4179.namprd12.prod.outlook.com
  (2603:10b6:a03:211::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: BY5PR12MB4179:EE_|DM4PR12MB6205:EE_
-X-MS-Office365-Filtering-Correlation-Id: b889e638-85a6-49e0-485a-08dead30e8f2
+X-MS-Office365-Filtering-Correlation-Id: 10276576-64e8-4e5f-0acc-08dead30ed16
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|22082099003|18002099003|56012099003; 
-X-Microsoft-Antispam-Message-Info: bAWKxHOpxI6m06hDAtwA7J3P1wk+6yDcVzKG9/BvJzJDja5YmZ3QpQ7noNdZO+GRKgeN2B9DaPCIz9362iBjWNy9Cdg/Non/keRg/uVBrggZCZPVyvDbcCNEuFsY4+AuPv+E+TmnEn/OR3g9eLQV70bdV81bqK6PbggYZCwhmns4zWTIy7hn5YpA2Yb2au4hPeZW9abv1CDh4ULW1dATdKbnEqgWJuBeskklTamPG4kFuzw8kGomhD+2IXW6OK9oo1rNK2/03trFWLPKtxZxOCALR9sJJdvtcrBvi06cfIuZbMSmBSkjcUj7qVrCRF9x9AT7XXw0sQlPSMshRkEbloxybZzMacRTMewyLIe925L7fk6ChfjakZkwecIOf4bbvxd/YperIgraoxrjYqeRGiFSQEN1u0LAlbVS6xyhFSBKU69bpjP8ttfE4yTJrnGvcvXgzWk3OfvWL0T8RbvQmOjqMF67YTGXP2RKpk4ot7p2IvVxxO5zWKVs00Z9XBH1XflzBFv5k3oJLnb9dPOhwV2cQnQgUMQn7hMZcWIi9tj1xhFVzoJjufGns+oQ6xCsvbM5e00DmYgb2JmwctyjS+rd3lJQYn6dyb/N6dAQlUMEtBVJTD79D2Mz4TwZkcDkJNyBu9CMmjEOTEk0x/t8ipKd/v7swfoyX6VDasvLzFIcIzHds866MpQbK4V4ED+f
+ ARA:13230040|366016|1800799024|376014|22082099003|18002099003|56012099003|3023799003;
+X-Microsoft-Antispam-Message-Info: 1mbtS108Ad2Im9h41cs0MDVzTO84ku6mE+4M6jA03+Mzsl6vlSx5kDHb4QRMltoKeMCLDQcsf7pjtL/YUfSgcJ+x7hK9dcJSf6zmvQXsAq8nqUmeQ9nQPAEA1KFtG4wwKOPUwwz7P//biab/4qPGowJHmoc/19Oc06AqyyH5udUZiUvBs9G4/XVplddY8YxWPYrc3PnUUi9rtpvCtvDX+pSyDkD59g0T8ZdYV33LSk1/gmITQj2Z9bhLku1ww4qCbdmAEsAiLO7KZBKYfp1XhPZ+jnwUstB17yOJ21VCBGsZ7xlN31GtMIS9zlSQVvpTeywCYiq9HL/PfiHskl22/Sy0FfxVPYOA8RtdMV+6YuR45x37ldUzMUpKcjlXymTVyIl7YlO6aI93As9XtM9Miq1sKk4fay5ZkvCbLF018g6aKTAk9n3diYAsLkXQKqgxDipMcKE+C9o5WraIKr3jeVo8E6pzzJpOqZ5O/7FpnrNmvIAqYlpMTa8m6jweS+WjI19Q0vEpblOOk6N0OxUa5/PalxdJ17jdUp5jbXa3SBvx5GO4ieei6bRge71RjrIwowzYV+li0P66IFwFhKWdrq5ea2peWB1nY75hRpoQfmMnjGr55MTmT2ZN/WxJNiWb0iWpPopfcZjF8v90pgkip3T9LO4XAp97NjhiclS18+xq2M7A2QzydKXRVfOmmiZI
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:BY5PR12MB4179.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(22082099003)(18002099003)(56012099003);
+ SFS:(13230040)(366016)(1800799024)(376014)(22082099003)(18002099003)(56012099003)(3023799003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?rKNPOJvSY/g2FGYvckGMRzXy3nAT03LUHbK7zqTelcDw9Tay5di8HsJPojun?=
- =?us-ascii?Q?b59yrdj+HIcN9pb6qsbIoXRV2pbM20NP6yyS0CXumbGNsR7cCvriqAtUIbcR?=
- =?us-ascii?Q?/GJIvSpLvhTgxVfBuWStQoxB6pce04ppeqxWfzrtRB27TjKFMaM3nOHtvwna?=
- =?us-ascii?Q?5IQPzSbGoeaCZq4Y6Pbim9wITi2Ujn+vebbFEVW3VpCsfIaRmAzwyLUZr4Rk?=
- =?us-ascii?Q?CoJ5wGM3RNxZ2he1Fp0lgegNnpyfyMqS4+u+iSzWuZLBC3W/IGxzWoQv/djK?=
- =?us-ascii?Q?bfWcm30fomjqxC3n7bo3AtyxbDsLhrv6LrrOJdR9STcTmV1k5wajh6mfKmqm?=
- =?us-ascii?Q?eP2MNEAw7y5qYIhOdwvS/OlpkGRbtpQXZNXerQvZus3lN7kZkvAwBxz+Q7Jy?=
- =?us-ascii?Q?yZeCohg+o/vtSP/HSPzdY7bwpEDrKlhDFdQlvVSnR+/5uR+n8oOc24bXAWxS?=
- =?us-ascii?Q?Zn5i+Ke/yEZ7quZOszP8jYUh/fQj+JtFTRcEc5P9Q/9EWraHlIKJZoYvb0p1?=
- =?us-ascii?Q?ulB88rTt25uWYC9FnYVHWnQ/+FM6lqO3OhwYvby0yC+HDn3i3BumbCizAedm?=
- =?us-ascii?Q?Ap0XXKm+GeAG6RFs//U/yb/W3EdYx7LduJ0TrbauchmkknHcz+c6Q9oi+cUY?=
- =?us-ascii?Q?63lAqye3kmvlmYyztciXvkQVvT39VPRI87QVjXzyVijAhBzYjqQtnnh+DEjZ?=
- =?us-ascii?Q?SNGQEMX3XCynasg7w8pIAYV3kBSongzH6iaFyXFUQScYYZAhAYem+hwcJJ2o?=
- =?us-ascii?Q?jQrTNzFaSftPi20grPP8SbW/w14B+nJdHKInZGpsvP6OBqLnHWtO17BRfFsv?=
- =?us-ascii?Q?RCR9lV2e9s7jRwI9LFdglCNKs69TPje5bIJHrDEm7oS7jvQkQL6F7irbRUc1?=
- =?us-ascii?Q?WZHpPwDVrVRwB4xDI340k74gBxYCkt17inPjorNCr6KFEE/HtuXitVlYX6+C?=
- =?us-ascii?Q?JWBlPn03a640DufvUBjuA5thesWDyciOq/Z6lmeSo4uo08nk/mGvZ1Sa4qwW?=
- =?us-ascii?Q?1q7EM00m17fv/n13O2EK6MBCxQ2YrU9QSG0NunT+Zuh/biqJ3sWzR2JFNPrO?=
- =?us-ascii?Q?w4LEF9F9DvSyXRqyr6zsILN9t9a3j90Oht950J3CtgykKhDoRYuavH74XM5h?=
- =?us-ascii?Q?XkdYiM/nroH6GVzVZBYUnO5LABH3DuGDdRtrIud2gLbxEaDOz6nn0P/zBsWK?=
- =?us-ascii?Q?TiHb4HQ7rFIBiv4iUY7sNKObSruSDozWRau8g/dnDghDX5xtr6bvLM2S8nri?=
- =?us-ascii?Q?MOEajsFRBg6YAGZUZkgH1BhivV4Esp/UKN2SWOhu6VVQ3amCYGoJ7ACcgBue?=
- =?us-ascii?Q?7fD8oVsCn8SBnkdcLiib5jF4NGc5+YdyW3H4n3ssIj5gdxs7Z/xzTfB4rd5t?=
- =?us-ascii?Q?IE5mUsaqavsQVSpfsVBSzO1bbWidXwOLyhg+u6jJb7lXWfkSICLf609fn/mk?=
- =?us-ascii?Q?BidXnWNWpCESqV34CQd4NxDvHEq+s9ivpwhFP/kqbKvU9/E1xl+Cbq/zHkwM?=
- =?us-ascii?Q?EnQPiBU3INVb0Wl+pCdXFyHSXXpS3ce2ZemaOqRoCMj1Fc4jo1K5PTOH4rep?=
- =?us-ascii?Q?s6j/tHU/trphJWYKLwle6AuuZvN4c+WR7+ufMwGb+VFGehrII9dTC8AOjdyW?=
- =?us-ascii?Q?LvjCwYAAgHfNJYVcdFADQ+pO09jLeDTTn46+3N2gUkSeZxEyf8rtLM2UHtDU?=
- =?us-ascii?Q?0dlWR/8RK4zapTmtUgQV1E3PELxi4pTzATziRvfjjihiBTopHPCuiPlJjvk5?=
- =?us-ascii?Q?zDTzhN9Fmg=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?wUdyKEgwyAvbMyuX2X1tp+MnZi0ajBKONOrzBRgrRSBgOSmWdn0LBaYHwYsx?=
+ =?us-ascii?Q?9MGteLvsqk0iOAf5skDadkfDtEXWF55FPKT3CtDsW5QRQaqZdUpT581ox+Zw?=
+ =?us-ascii?Q?xgLGdYK79rdafv/sLdnZUclV0GoHdfSGvdR1rMoEJpAtJ1C4qUPa52mqqvV1?=
+ =?us-ascii?Q?jofMQxUoQa0+JGdq24y5CPOSDk+RaY4EDXwt6Ipq482p5zgvELckA2dzou6N?=
+ =?us-ascii?Q?QAPLH73KzrUCh3mNdUYh3dRVps9O0fPRZcjLQ4Jr597jefzRg++iMVqvHXwM?=
+ =?us-ascii?Q?BAlvyLLY1l/JxqlGfn33qPpkcgr9bMcs0c3KAjArMjOtNDpAsU6+b/tdm2cM?=
+ =?us-ascii?Q?TXXGNsIUyYC8TMSYIa3WHJYjoKBG4FFNNWjnxcFU3GuNxVYycLjeExSbARAT?=
+ =?us-ascii?Q?BYAF089Z7k40sKk4E3Le4z7QjVYFYXjyuOhdslbXr85K7qLBy+ftbTS2BIGK?=
+ =?us-ascii?Q?9bq1vn5T8qQHA3zyaPbKSiGEHEwah/y/GYHaE+KXpYZYesrrvlbCUBPHP6i5?=
+ =?us-ascii?Q?jimzLrlisVqnwysXR/PZOr+E/R+wvN4Kt4cAYn6+I247pK1I2717krXv4oQG?=
+ =?us-ascii?Q?YCNfG4ttdoFMRXdMNwsDPPVyaMlWkwDfGUpUAmXhOjPoHWCscreQ48FmOSEU?=
+ =?us-ascii?Q?rNGKMTc1zwQalvUF41FVp+tSIGPwn7MYuATVS3uG7xNZTtlYorzyeV6dC5oa?=
+ =?us-ascii?Q?xTLJDyshBqzNZekkQ/5oPSB5SIPLDOTzC+38mKKLh/x/iVZHvyLslrfqSt3U?=
+ =?us-ascii?Q?JuMJxeW4veQxxAhxzcKGiUza3WrGcmtD6SPsqPpitM71oLsB5BU4mwgkhCyY?=
+ =?us-ascii?Q?o1ERBhv87i/b1+YhNfjQ5WwFVER46pc2008Dbv+UfpAWWD2+zqc0FmzckMK+?=
+ =?us-ascii?Q?MnFjeUTNj0icSVM2ijZtrKYaH7zTNy+1MPCdkcchNs0BPSMslR1oUmtmfsUc?=
+ =?us-ascii?Q?nkr0lxNlFDARoflnHASyhq/3hioqMwwtn4amOlMuiuQmvZ8BSXsxbjYc386f?=
+ =?us-ascii?Q?Mk+l4YuaOr8u/ixvgphDKvpiloLl2nfFBvLsfxD4bzB8tigkpxOYslUNvTj+?=
+ =?us-ascii?Q?sCWwCFME1nAnnr3FxNOGLyqV6XTATHpkQwK85bIFB4mpec0xdadhcEl3iySK?=
+ =?us-ascii?Q?8IETGbOlOce8Ph5IqYTjGGaVdoap3JTuQnWVmNLZ3Yr1HZxlmytrB98Gjo+w?=
+ =?us-ascii?Q?r7Va3x33mE2Sr+j7kqVOWVP0FkimzHIWLehVWfG4sqvAuNFWiyzHElOWaeOI?=
+ =?us-ascii?Q?/53TtFsO4zKTMrUDx2VVQULJhkwzOK9jtCQiq1bGuznMc7m8sUoGTvAIJz0O?=
+ =?us-ascii?Q?H2th12m9JhL8bXAQnJgebhNspWAVX5fmZc1hzlu/5E9sUU7LqObmSOXWO7+9?=
+ =?us-ascii?Q?6z3UZ5wb4MxY7m3HdSh+WVQ193oYpviQ/JaYzeB5jLnK0uNUR0ULYXdiYtG3?=
+ =?us-ascii?Q?sf0thVwSAVkEnqqbF2RQRZx+mxYS+2me+nc+Hze90uQvrndHkdwKqZ2IAOms?=
+ =?us-ascii?Q?nNEQCoZOtGo4stX6ZAlAxCSfXa46rsWHnoazATDyH4kejo/LGn49/fPsSqwA?=
+ =?us-ascii?Q?wODxJQSMDzUd1YHKjz4SK1Bew6RdKYjOjuxrimJUIbETxpicWIR1t8uZalFk?=
+ =?us-ascii?Q?PlHbnH1Vi31DwiXrF6j+LXuu6w/71Q0ZFlkaQwSigJHG5E1mb/n+2GYkCRlS?=
+ =?us-ascii?Q?sUB+DpyOAiUBSq8yeY/F6oF8M1xFgeyxqLMuR6FlGEb7IfZVpdmi+L68B2Mu?=
+ =?us-ascii?Q?CPMWKeJTJA=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b889e638-85a6-49e0-485a-08dead30e8f2
+X-MS-Exchange-CrossTenant-Network-Message-Id: 10276576-64e8-4e5f-0acc-08dead30ed16
 X-MS-Exchange-CrossTenant-AuthSource: BY5PR12MB4179.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2026 18:37:51.2581 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2026 18:37:58.2351 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: i63nodeRj54rYsPGA9Vvv1O1MysuFV7F28/j7mlsGAwa3QRHLiJzcgWurNMlzB1iyEh/IlmOSY1Tfb594Wh55Q==
+X-MS-Exchange-CrossTenant-UserPrincipalName: x79vPuThMU3c+/VYYEvq+Z3Xa++cVmi9yOjltDZ+Sj5Puyr/MlKfi7bpr6su/fn1YfN0dpxZTnrqLMTzztYuxg==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6205
 Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
  envelope-from=tdave@nvidia.com;
@@ -141,391 +140,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This phase performs PCI BAR allocation for buses without fixed BAR
-assignments. It respects existing allocations and does not disturb
-already programmed BARs or bridge windows.
+Add a "pci-pre-enum" option for the virt machine. When enabled, QEMU
+performs PCI enumeration and programs BARs before handing control to
+firmware.
 
-It computes remaining MMIO64 requirements, assigns BARs, and extends
-bridge prefetch windows if required.
+This is intended for use with the "fixed-bars" property, where the
+user assigns fixed BAR addresses and expects firmware to preserve the
+configuration.
+
+pci-pre-enum is exposed as a separate machine property rather than
+being implied by the presence of fixed-bars. This allows QEMU's PCI
+enumeration path to be exercised independently (for example, to
+verify that QEMU produces the same device enumeration as EDK2)
+without requiring any device to specify fixed BARs.
+
+When enabled, a "pci-enum-done" property is added to the PCI node in
+the device tree to indicate to firmware (e.g. EDK2) that PCI
+enumeration has already been performed.
+
+When disabled (default), behavior is unchanged.
 
 Signed-off-by: Tushar Dave <tdave@nvidia.com>
 ---
- hw/pci/pci-resource.c | 355 +++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 354 insertions(+), 1 deletion(-)
+ hw/arm/virt.c         | 70 +++++++++++++++++++++++++++++++++++++++++--
+ include/hw/arm/virt.h |  1 +
+ 2 files changed, 68 insertions(+), 3 deletions(-)
 
-diff --git a/hw/pci/pci-resource.c b/hw/pci/pci-resource.c
-index de98924aa6..e2d2adc7de 100644
---- a/hw/pci/pci-resource.c
-+++ b/hw/pci/pci-resource.c
-@@ -371,6 +371,358 @@ static void finalize_bridge_window(PCIBus *bus, uint64_t min_addr, uint64_t max_
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 55f41c7e46..7d41bfc457 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -52,6 +52,7 @@
+ #include "system/whpx.h"
+ #include "system/qtest.h"
+ #include "system/system.h"
++#include "system/reset.h"
+ #include "hw/core/loader.h"
+ #include "qapi/error.h"
+ #include "qemu/bitops.h"
+@@ -94,6 +95,8 @@
+ #include "hw/cxl/cxl.h"
+ #include "hw/cxl/cxl_host.h"
+ #include "qemu/guest-random.h"
++#include "hw/pci/pci-resource.h"
++#include "hw/pci/pci-enumerate.h"
+ 
+ static GlobalProperty arm_virt_compat_defaults[] = {
+     { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
+@@ -1697,6 +1700,10 @@ static void create_pcie(VirtMachineState *vms)
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "#interrupt-cells", 1);
+     create_pcie_irq_map(ms, vms->gic_phandle, irq, nodename);
+ 
++    if (vms->pci_pre_enum) {
++        qemu_fdt_setprop_cell(ms->fdt, nodename, "pci-enum-done", 1);
++    }
++
+     if (vms->iommu) {
+         vms->iommu_phandle = qemu_fdt_alloc_phandle(ms->fdt);
+ 
+@@ -1832,6 +1839,20 @@ static void virt_build_smbios(VirtMachineState *vms)
      }
  }
  
-+/* Returns true if this 64-bit pref BAR is already assigned */
-+static bool bar_is_assigned(PCIDevice *dev, int bar_idx, GHashTable *had_fixed)
++static void virt_pci_apply_fix_bar_after_reset(void *opaque)
 +{
-+    PCIIORegion *r = &dev->io_regions[bar_idx];
-+    uint32_t lo;
-+    uint32_t hi;
++    VirtMachineState *vms = opaque;
++    PciFixedBarMmioParams mmio = {
++      .mmio32_base = vms->memmap[VIRT_PCIE_MMIO].base,
++      .mmio32_size = vms->memmap[VIRT_PCIE_MMIO].size,
++      .mmio64_base = vms->memmap[VIRT_HIGH_PCIE_MMIO].base,
++      .mmio64_size = vms->memmap[VIRT_HIGH_PCIE_MMIO].size,
++    };
 +
-+    if (!is_64bit_pref_bar(r)) {
-+        return false;
-+    }
-+    if (dev->fixed_bar_addrs &&
-+        dev->fixed_bar_addrs[bar_idx] != PCI_BAR_UNMAPPED) {
-+        return true;
-+    }
-+    if (bar_idx >= PCI_ROM_SLOT - 1) {
-+        return false; /* 64-bit BAR uses two slots */
-+    }
-+    lo = pci_get_long(dev->config + PCI_BASE_ADDRESS_0 + bar_idx * 4);
-+    if (!(lo & PCI_BASE_ADDRESS_MEM_TYPE_64)) {
-+        return (lo & PCI_BASE_ADDRESS_MEM_MASK) != 0;
-+    }
-+    hi = pci_get_long(dev->config + PCI_BASE_ADDRESS_0 + bar_idx * 4 + 4);
-+    return (((uint64_t)hi << 32) | (lo & PCI_BASE_ADDRESS_MEM_MASK)) != 0;
++    pci_enumerate_bus(vms->bus);
++    pci_fixed_bar_allocator(vms->bus, &mmio);
 +}
 +
-+/* Return BAR address from config, or 0 if unassigned. */
-+static uint64_t get_bar_addr_from_config(PCIDevice *dev, int bar_idx)
-+{
-+    PCIIORegion *r = &dev->io_regions[bar_idx];
-+    uint32_t lo;
-+    uint32_t hi;
-+
-+    if (!r->size || bar_idx >= PCI_ROM_SLOT - 1) {
-+        return 0;
-+    }
-+    lo = pci_get_long(dev->config + PCI_BASE_ADDRESS_0 + bar_idx * 4);
-+    if (lo & PCI_BASE_ADDRESS_MEM_TYPE_64) {
-+        hi = pci_get_long(dev->config + PCI_BASE_ADDRESS_0 + bar_idx * 4 + 4);
-+        return ((uint64_t)hi << 32) | (lo & PCI_BASE_ADDRESS_MEM_MASK);
-+    }
-+    return lo & PCI_BASE_ADDRESS_MEM_MASK;
-+}
-+
-+/* Total size of unassigned 64-bit pref BARs in this bus and its subtree. */
-+static uint64_t size_entire_subtree(PCIBus *bus, GHashTable *had_fixed)
-+{
-+    uint64_t total = 0;
-+
-+    for (int devfn = 0; devfn < ARRAY_SIZE(bus->devices); devfn++) {
-+        PCIDevice *d = bus->devices[devfn];
-+        if (!d) {
-+            continue;
-+        }
-+        for (int i = 0; i < PCI_ROM_SLOT; i++) {
-+            PCIIORegion *r = &d->io_regions[i];
-+            if (!is_64bit_pref_bar(r)) {
-+                continue;
-+            }
-+            if (bar_is_assigned(d, i, had_fixed)) {
-+                continue;
-+            }
-+            total += r->size;
-+        }
-+        if (IS_PCI_BRIDGE(d)) {
-+            total += size_entire_subtree(pci_bridge_get_sec_bus(PCI_BRIDGE(d)), had_fixed);
-+        }
-+    }
-+    return total;
-+}
-+
-+/* Highest end address of any assigned BAR or bridge window in this bus and subtree. */
-+static uint64_t find_highest_assigned_in_bus(PCIBus *bus)
-+{
-+    uint64_t highest = 0;
-+    uint64_t base;
-+    uint64_t limit;
-+    uint64_t addr;
-+
-+    for (int devfn = 0; devfn < ARRAY_SIZE(bus->devices); devfn++) {
-+        PCIDevice *d = bus->devices[devfn];
-+        if (!d) {
-+            continue;
-+        }
-+        if (IS_PCI_BRIDGE(d)) {
-+            PCIBus *sec = pci_bridge_get_sec_bus(PCI_BRIDGE(d));
-+            PCIDevice *bridge_dev = pci_bridge_get_device(sec);
-+            if (bridge_dev) {
-+                base = pci_bridge_get_base(bridge_dev, PCI_BASE_ADDRESS_MEM_PREFETCH);
-+                limit = pci_bridge_get_limit(bridge_dev, PCI_BASE_ADDRESS_MEM_PREFETCH);
-+                if (limit > base) {
-+                    highest = MAX(highest, limit);
-+                }
-+                highest = MAX(highest, find_highest_assigned_in_bus(sec));
-+            }
-+            continue;
-+        }
-+        for (int i = 0; i < PCI_ROM_SLOT; i++) {
-+            PCIIORegion *r = &d->io_regions[i];
-+            if (!is_64bit_pref_bar(r)) {
-+                continue;
-+            }
-+            addr = 0;
-+            if (d->fixed_bar_addrs &&
-+                d->fixed_bar_addrs[i] != PCI_BAR_UNMAPPED) {
-+                addr = d->fixed_bar_addrs[i];
-+            } else {
-+                addr = get_bar_addr_from_config(d, i);
-+            }
-+            if (addr != 0 && r->size) {
-+                highest = MAX(highest, addr + r->size - 1);
-+            }
-+        }
-+    }
-+    return highest;
-+}
-+
-+/* Next free address in root MMIO64. */
-+static uint64_t next_free_from_root(hwaddr mmio64_base, hwaddr mmio64_size)
-+{
-+    uint64_t mmio_start = mmio64_base;
-+    uint64_t mmio_end = mmio64_base + mmio64_size - 1;
-+    uint64_t highest;
-+
-+    highest = mmio_start - 1;
-+    if (fixed_claim_regions) {
-+        for (guint i = 0; i < fixed_claim_regions->len; i++) {
-+            FixedClaim *c = &g_array_index(fixed_claim_regions, FixedClaim, i);
-+            if (c->end >= mmio_start && c->start <= mmio_end) {
-+                highest = MAX(highest, c->end);
-+            }
-+        }
-+    }
-+    return ROUND_UP(highest + 1, 0x1000); /* 4K align for new window */
-+}
-+
-+static bool
-+pci_bus_phase3_ensure_parent_prefetch_window(PCIBus *bus, PciProgramCtx *pctx,
-+                                             PCIDevice *parent_bridge, uint64_t mmio_end)
-+{
-+    PCIBus *parent_bus;
-+    PCIDevice *grandparent;
-+    uint64_t parent_win_base, parent_win_limit, next_in_subtree;
-+    uint64_t required, window_base, window_limit;
-+    bool window_not_programmed;
-+    bool parent_in_mmio64;
-+
-+    window_base = pci_bridge_get_base(parent_bridge, PCI_BASE_ADDRESS_MEM_PREFETCH);
-+    window_limit = pci_bridge_get_limit(parent_bridge, PCI_BASE_ADDRESS_MEM_PREFETCH);
-+    window_not_programmed = (window_base >= window_limit) ||
-+                            (window_base < pctx->mmio64_base) || (window_limit > mmio_end);
-+    if (!window_not_programmed) {
-+        return true;
-+    }
-+
-+    required = size_entire_subtree(bus, pctx->had_fixed);
-+    if (required == 0) {
-+        return false;
-+    }
-+    required = ROUND_UP(required, 0x1000);
-+
-+    parent_bus = pci_get_bus(parent_bridge);
-+    grandparent = parent_bus ? pci_bridge_get_device(parent_bus) : NULL;
-+    if (!grandparent) {
-+        window_base = next_free_from_root(pctx->mmio64_base, pctx->mmio64_size);
-+        window_limit = window_base + required - 1;
-+        if (window_limit > mmio_end) {
-+            error_report("bus [%02x] out of root MMIO64 space", pci_bus_num(bus));
-+            exit(1);
-+        }
-+    } else {
-+        parent_win_base = pci_bridge_get_base(grandparent, PCI_BASE_ADDRESS_MEM_PREFETCH);
-+        parent_win_limit = pci_bridge_get_limit(grandparent, PCI_BASE_ADDRESS_MEM_PREFETCH);
-+        parent_in_mmio64 = (parent_win_limit > parent_win_base) &&
-+                           (parent_win_base >= pctx->mmio64_base) && (parent_win_limit <= mmio_end);
-+        if (!parent_in_mmio64) {
-+            window_base = next_free_from_root(pctx->mmio64_base, pctx->mmio64_size);
-+            window_limit = window_base + required - 1;
-+            if (window_limit > mmio_end) {
-+                error_report("bus [%02x] out of root MMIO64 space", pci_bus_num(bus));
-+                exit(1);
-+            }
-+        } else {
-+            next_in_subtree = ROUND_UP(
-+                find_highest_assigned_in_bus(parent_bus) + 1, 0x1000);
-+            window_base = MAX(parent_win_base, next_in_subtree);
-+            window_limit = window_base + required - 1;
-+            if (window_limit > parent_win_limit) {
-+                error_report("bus [%02x] no room in parent bridge window", pci_bus_num(bus));
-+                exit(1);
-+            }
-+        }
-+    }
-+    finalize_bridge_window(bus, window_base, window_limit);
-+    return true;
-+}
-+
-+static GArray *pci_bus_phase3_collect_unassigned_bars(PCIBus *bus, PciProgramCtx *pctx,
-+                                                      uint64_t *out_total_size)
-+{
-+    PCIDevice *d;
-+    PCIIORegion *r;
-+    GArray *bars;
-+    uint64_t required;
-+    int devfn, i;
-+
-+    required = 0;
-+    bars = g_array_new(false, false, sizeof(BarEntry));
-+    for (devfn = 0; devfn < ARRAY_SIZE(bus->devices); devfn++) {
-+        d = bus->devices[devfn];
-+        if (!d) {
-+            continue;
-+        }
-+        for (i = 0; i < PCI_ROM_SLOT; i++) {
-+            r = &d->io_regions[i];
-+            if (!is_64bit_pref_bar(r) || bar_is_assigned(d, i, pctx->had_fixed)) {
-+                continue;
-+            }
-+            required += r->size;
-+            g_array_append_val(
-+                bars, ((BarEntry){ .dev = d, .bar_idx = i, .size = r->size }));
-+        }
-+    }
-+    *out_total_size = required;
-+    return bars;
-+}
-+
-+static void
-+pci_bus_phase3_extend_window_for_bars(PCIBus *bus, PciProgramCtx *pctx,
-+                                      PCIDevice *parent_bridge, uint64_t mmio_end,
-+                                      uint64_t current, uint64_t required,
-+                                      uint64_t window_base, uint64_t *window_limit,
-+                                      GArray *bars_this_bus)
-+{
-+    uint64_t parent_limit, gp_base, gp_limit, new_limit;
-+    PCIBus *parent_bus;
-+    PCIDevice *grandparent;
-+
-+    if (current + required <= *window_limit) {
-+        return;
-+    }
-+
-+    parent_bus = pci_get_bus(parent_bridge);
-+    grandparent = parent_bus ? pci_bridge_get_device(parent_bus) : NULL;
-+    parent_limit = mmio_end;
-+    if (grandparent) {
-+        gp_base = pci_bridge_get_base(grandparent, PCI_BASE_ADDRESS_MEM_PREFETCH);
-+        gp_limit = pci_bridge_get_limit(grandparent, PCI_BASE_ADDRESS_MEM_PREFETCH);
-+        if (gp_limit > gp_base && gp_base >= pctx->mmio64_base) {
-+            parent_limit = gp_limit;
-+        }
-+    }
-+    new_limit = current + required - 1;
-+    if (new_limit > parent_limit) {
-+        error_report("bus [%02x] out of MMIO space (required 0x%" PRIx64 ")", pci_bus_num(bus),
-+                    required);
-+        g_array_free(bars_this_bus, true);
-+        exit(1);
-+    }
-+    if (new_limit > *window_limit) {
-+        pci_update_prefetch_window(bus, window_base, new_limit);
-+        fixed_claim_regions_add(*window_limit + 1, new_limit, parent_bridge, -1);
-+        *window_limit = new_limit;
-+    }
-+}
-+
-+static void
-+pci_bus_phase3_program_bars_and_update_bridge(PCIBus *bus, PCIDevice *parent_bridge,
-+                                              uint64_t window_base, uint64_t window_limit,
-+                                              uint64_t start_addr, GArray *bars)
-+{
-+    guint b;
-+    BarEntry *be;
-+    PCIIORegion *r;
-+    uint64_t addr, bar_end, high;
-+    PhysBAR pbars_array[PCI_ROM_SLOT];
-+
-+    g_array_sort(bars, compare_bar_size_desc);
-+    addr = start_addr;
-+    for (b = 0; b < bars->len; b++) {
-+        be = &g_array_index(bars, BarEntry, b);
-+        r = &be->dev->io_regions[be->bar_idx];
-+        addr = ROUND_UP(addr, r->size);
-+        bar_end = addr + r->size - 1;
-+        memset(pbars_array, 0, sizeof(pbars_array));
-+        pbars_array[be->bar_idx].addr = addr;
-+        pbars_array[be->bar_idx].end = bar_end;
-+        pbars_array[be->bar_idx].flags = IORESOURCE_PREFETCH;
-+        pci_program_prefetch_bars(be->dev, pbars_array);
-+        addr = bar_end + 1;
-+    }
-+    high = find_highest_assigned_in_bus(bus);
-+    if (high > window_limit) {
-+        pci_update_prefetch_window(bus, window_base, high);
-+        fixed_claim_regions_add(window_limit + 1, high, parent_bridge, -1);
-+    }
-+    g_array_free(bars, true);
-+}
-+
-+/* Allocate and program 64-bit pref BARs for a bus with no fixed-BAR devices. */
-+static void pci_bus_phase3_allocate_bars(PCIBus *bus, PciProgramCtx *pctx)
-+{
-+    uint64_t mmio_end, window_base, window_limit, current, required;
-+    PCIDevice *parent_bridge;
-+    GArray *bars;
-+
-+    parent_bridge = pci_bridge_get_device(bus);
-+    if (!parent_bridge) {
-+        return; /* Root bus has no bridge; skip */
-+    }
-+
-+    mmio_end = pctx->mmio64_base + pctx->mmio64_size - 1;
-+    if (!pci_bus_phase3_ensure_parent_prefetch_window(bus, pctx, parent_bridge, mmio_end)) {
-+        return;
-+    }
-+    window_base = pci_bridge_get_base(parent_bridge, PCI_BASE_ADDRESS_MEM_PREFETCH);
-+    window_limit = pci_bridge_get_limit(parent_bridge, PCI_BASE_ADDRESS_MEM_PREFETCH);
-+    current = ROUND_UP(find_highest_assigned_in_bus(bus) + 1, 0x1000);
-+    if (current < window_base) {
-+        current = window_base;
-+    }
-+
-+    bars = pci_bus_phase3_collect_unassigned_bars(bus, pctx, &required);
-+    if (bars->len == 0) {
-+        g_array_free(bars, true);
-+        return;
-+    }
-+    pci_bus_phase3_extend_window_for_bars(bus, pctx, parent_bridge, mmio_end, current,
-+                                              required, window_base, &window_limit, bars);
-+    pci_bus_phase3_program_bars_and_update_bridge(
-+        bus, parent_bridge, window_base, window_limit, current, bars);
-+}
-+
-+/* Run once per bus; act only when the bus has no fixed-BAR devices. */
-+static void pci_bus_phase3_allocate_no_fixed_bars(PCIBus *bus, void *opaque)
-+{
-+    PciProgramCtx *pctx = (PciProgramCtx *)opaque;
-+    bool bus_has_fixed = false;
-+
-+    for (int devfn = 0; devfn < ARRAY_SIZE(bus->devices); devfn++) {
-+        PCIDevice *d = bus->devices[devfn];
-+        if (d && g_hash_table_contains(pctx->had_fixed, d)) {
-+            bus_has_fixed = true;
-+            break;
-+        }
-+    }
-+
-+    if (bus_has_fixed) {
-+        return;
-+    }
-+    pci_bus_phase3_allocate_bars(bus, pctx);
-+}
-+
- static bool pci_bus_phase2_fill_bar_lists(PCIBus *bus, PciProgramCtx *pctx,
-                                           GArray *fixed_bars, GArray *remaining_bars)
+ static
+ void virt_machine_done(Notifier *notifier, void *data)
  {
-@@ -649,7 +1001,8 @@ void pci_fixed_bar_allocator(PCIBus *root, const PciFixedBarMmioParams *mmio)
-     /* Phase 2: pack remaining 64-bit prefetchable BARs and size parent bridge window */
-     pci_for_each_bus(bus, pci_bus_phase2_pack_remaining_bars, &pctx);
+@@ -1864,11 +1885,30 @@ void virt_machine_done(Notifier *notifier, void *data)
+     if (arm_load_dtb(info->dtb_start, info, info->dtb_limit, as, ms, cpu) < 0) {
+         exit(1);
+     }
+-
+-    pci_bus_add_fw_cfg_extra_pci_roots(vms->fw_cfg, vms->bus,
+-                                       &error_abort);
++    /*
++     * In pci-pre-enum mode, EDK2 does not perform PCI enumeration or
++     * resource assignment (PcdPciDisableBusEnumeration = TRUE). All root
++     * bridges are marked ResourceAssigned, meaning the topology and
++     * MMIO/MMIO64 apertures provided by QEMU are treated as final.
++     *
++     * In this mode, each root bridge is consumed as an independent resource
++     * domain. Exposing additional root bridges (e.g. PXB extra roots) that
++     * share identical MMIO/MMIO64 apertures creates duplicate resource domains
++     * with overlapping address spaces, which is invalid in this mode.
++     *
++     * Therefore, extra root bridges are not exposed in pre-enumeration mode.
++     */
++    if (!vms->pci_pre_enum) {
++        pci_bus_add_fw_cfg_extra_pci_roots(vms->fw_cfg, vms->bus,
++                                           &error_abort);
++    }
  
--    /* Phase 3: buses with no fixed-BAR devices; final bridge pass: follow-up */
-+    /* Phase 3: allocate BARs for buses that have no fixed-BAR devices */
-+    pci_for_each_bus(bus, pci_bus_phase3_allocate_no_fixed_bars, &pctx);
+     virt_acpi_setup(vms);
++
++    if (vms->pci_pre_enum) {
++        qemu_register_reset(virt_pci_apply_fix_bar_after_reset, vms);
++    }
++
+     virt_build_smbios(vms);
+ }
  
-     /* Cleanup */
-     g_hash_table_destroy(pctx.had_fixed);
+@@ -2988,6 +3028,20 @@ static void virt_set_mte(Object *obj, bool value, Error **errp)
+     vms->mte = value;
+ }
+ 
++static bool virt_get_pci_pre_enum(Object *obj, Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++
++    return vms->pci_pre_enum;
++}
++
++static void virt_set_pci_pre_enum(Object *obj, bool value, Error **errp)
++{
++    VirtMachineState *vms = VIRT_MACHINE(obj);
++
++    vms->pci_pre_enum = value;
++}
++
+ static char *virt_get_gic_version(Object *obj, Error **errp)
+ {
+     VirtMachineState *vms = VIRT_MACHINE(obj);
+@@ -3726,6 +3780,13 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+                                           "in ACPI table header."
+                                           "The string may be up to 8 bytes in size");
+ 
++    object_class_property_add_bool(oc, "pci-pre-enum",
++                                   virt_get_pci_pre_enum,
++                                   virt_set_pci_pre_enum);
++    object_class_property_set_description(oc, "pci-pre-enum",
++                                          "Set on/off to enable/disable PCI enumeration and resource assignment"
++                                          " in QEMU. When enabled, QEMU programs BARs (including fixed-bars"
++                                          " addresses) before handing control to firmware.");
+ }
+ 
+ static void virt_instance_init(Object *obj)
+@@ -3768,6 +3829,9 @@ static void virt_instance_init(Object *obj)
+     /* MTE is disabled by default.  */
+     vms->mte = false;
+ 
++    /* PCI pre-enumeration disabled by default */
++    vms->pci_pre_enum = false;
++
+     /* Supply kaslr-seed and rng-seed by default */
+     vms->dtb_randomness = true;
+ 
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index 410df857c7..0786f4a4fc 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -187,6 +187,7 @@ struct VirtMachineState {
+     MemoryRegion *sysmem;
+     MemoryRegion *secure_sysmem;
+     bool pci_preserve_config;
++    bool pci_pre_enum;
+     hwaddr override_pcie_mmio_base;
+     hwaddr override_pcie_mmio_size;
+ };
 -- 
 2.34.1
 
