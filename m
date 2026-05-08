@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F600CD3445
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 18:56:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC94CD342F
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 18:59:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLQM8-0004Lb-W4; Fri, 08 May 2026 14:55:25 -0400
+	id 1wLQPQ-0005S7-Eg; Fri, 08 May 2026 14:58:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wLQM6-0004LS-S9
- for qemu-devel@nongnu.org; Fri, 08 May 2026 14:55:23 -0400
-Received: from mail-dy1-x1332.google.com ([2607:f8b0:4864:20::1332])
+ id 1wLQPO-0005Rh-CE
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 14:58:46 -0400
+Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1wLQM5-0007Uh-0t
- for qemu-devel@nongnu.org; Fri, 08 May 2026 14:55:22 -0400
-Received: by mail-dy1-x1332.google.com with SMTP id
- 5a478bee46e88-2c156c4a9efso3178761eec.1
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 11:55:20 -0700 (PDT)
+ id 1wLQPM-0008VB-Vn
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 14:58:46 -0400
+Received: by mail-oa1-x32.google.com with SMTP id
+ 586e51a60fabf-435153d9b68so1420445fac.3
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 11:58:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778266519; x=1778871319; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778266723; x=1778871523; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=TqQ7q5qS0MU5oGGFp6jCdYrumOm5X3Ek28lISUuERGI=;
- b=AEHp953R7tTvQ57v8aA8ZrfzUf4GJTsFcaT14uwbr0nd5UUbC2yCpZkEsw4qWZ0Hkl
- 0YgBl+PhDIw50LrUv6tAKZeQbkoS6r3KsO6nmXtOBKfeJi1QDIiDAR3d3nxMSU2J3f8F
- yFsM38zObodw9GxtbWwIKgX5cH73E4CfT28X6qM4+brHmOzhun1oOgn5ooegOf1XSwdC
- r9oBRPflSS+hrHOfqcrVvkre+Ngo22CKpiJnnzh0FsV2WRbTRopXX15uRvS8cA9O2UnQ
- 0MtrPltm3cPCGdb5hD7poAjMZHPxYdzXClPsS4RB11stnrkCHt4O425Zc0eyfKt2yygZ
- wXdw==
+ bh=uyLmIHl+RgPSbDCZ5XSd1a4F5lXZ3h5g0n/X9aHTGS4=;
+ b=qyOQJBZWIVRCnopIa1A9XDCVKzwaihDK8a+eCr5HNSGklQ2G0fl4CIEjc/OckxmDyg
+ vaTfU1SKrcMChyXaxtAA4An1jG5LwD1Ggak4yYXIS/YV9tvySR6GOd2wPB3mNytQtLBn
+ Xwx4oJ6iJBYr3OW3kNj4Dx5/6/9KA0S3JOHgAilvbLb/HDNVC0HT3npjrfkEwuaYFDm0
+ GU15hTPUvTGVIfxSEec8oN/oYe731fTnz/IFCHn9/GssuYFFk8A+CNKDW4yt/24ZR9RI
+ oAxy7SJR6qdzDaOs7Mvr1o2SEO/1Tj7GoDrEl9mlR+njeMbIK3IRe3UaDlk5ZW8t1AeL
+ ggJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778266519; x=1778871319;
+ d=1e100.net; s=20251104; t=1778266723; x=1778871523;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=TqQ7q5qS0MU5oGGFp6jCdYrumOm5X3Ek28lISUuERGI=;
- b=tDx7v59wPcIiGnngCaoqPIARi8NAo1kywT6fKj1J670WHYo5UZMB6MaDNTXG4+yo9Q
- m2+Mkkl2wx1mt6GWDjaxzNaR2gHCp4TEfEaSYOI/HzABxTwcBG7Vk7VtpFB1rCCc0Kx8
- kUYcbsz4usRNJJUx5GqWvu+hzDKR11TV6M7PplWqaPtzUSZbhVSUCj0yWCDpsi8ZNlWa
- swpjVWEpd126Oe1ruJE7h4SZDoihF8Tz4Hs+ssefRoH13XghKrRfkw5E/Ci3PJtlEleb
- 0BTfvH4/hBH8LIIYcRCfu3vfHBqh6G8B1YyZO97VKHeBP2SNRFZfNBFhtDLJBKBFY+fZ
- Rwkg==
+ bh=uyLmIHl+RgPSbDCZ5XSd1a4F5lXZ3h5g0n/X9aHTGS4=;
+ b=YI5u0Y5Fo9+e+xCu/b9fxFSx52RFSM+PWW6Oj9pObYTGyJK9XVXjPRW7l2t4BEGwiT
+ s4s6VNqPaUfQrC3+03o6NTS0hy8wCWDdNgkbx5q1+i5xsu4dUd2f9UA34riN7jsLgPy7
+ 8bcGGwJs/s7jFH6PSc6VomlbneJey7eVDZfVkcIxjfHUyn494tE02IrJYDs75mjT2za4
+ 1naaVXKHQFF0s4fCFuxbqwAcztzRFYIMd66xfQYO2R58ELXsnRYDx5aTXeVTt+hD/fOR
+ ABjBb7caHFCFiAyw1M2GslsjjlzWOyjiYwvY/jfYG0584thhAiBoTwCpdwGeDGIL+YZY
+ J0cg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ97pcZK51nPG57Mo0LZN87aXkPqqL5Btpm/alsAh9BuPEHwYrZnm8ebVWr3WQgYQL0NXxoput/o0J1H@nongnu.org
-X-Gm-Message-State: AOJu0YyVzqt1vnVOIsFpUN/a7tGF7H1CZDiTansiEFzI+TWrLnF1lHeg
- hb3Bgs618jf10zw/XH5Ly24jDPv6hU5haKvk+7VgQHC51KBLvoQmLfaitYGRrc3dTR0=
-X-Gm-Gg: Acq92OEbfIiKezNxMB8AA4pAK2PDj2UA9rY8/H8IvJp4b+ibR7XXs67HkCbj/lcl4aG
- CtMXh5xpgkkRA6uTeiKc3Vp/z3aJ6Q58eEMHUYjNkNCMg7nNpifYiHCExZ8mY7PMFAKaYcVy4X2
- ZquN5rXDLxPeRDj0JvxNYWbd55vpE4Q9XgLorPetq0IOVvR7Ffdrj+Zt7i7cvq/wvw2SdkHGN3n
- vvDWaDXREXEUMRJ2FH6oYNpXUaw0hxzSNAJUDeXF/goNDnHOkq0yuBvG8Tj7hvNxG4rjei5iQQl
- AIfigIVGJHz0rz7EfpqjTxo7FKEhPLqU3Q6250AyR5kHqbOzIU80K+mAXbFDQjXQV2x4sCVP0Ff
- 6vgIBBP0WXwQS+ay0LQMJVzhJ3O63i57Z2WbTases3g1oj4LCcueefqZSTOJRDkukDUgYpFyh19
- JpPlGCds2aGcaBt+6bG7h2hGQ4wbZ3s4JG7a+hKg45miK4PTkuiFm+KNCEeU8HKehPG7kcToE7I
- Vp7lqS67A==
-X-Received: by 2002:a05:7300:72c8:b0:2f5:23fb:9aac with SMTP id
- 5a478bee46e88-2f550b4320amr7038565eec.31.1778266518614; 
- Fri, 08 May 2026 11:55:18 -0700 (PDT)
+ AFNElJ+cxdd1CjFRsxUYt7Cw/9MvI1Z90Ts+ON+/pf6k6LzSJDxvtFnAk7mCxf4m5bl5eZX9dh7VVIhPb0A5@nongnu.org
+X-Gm-Message-State: AOJu0YxNBEmusfALJIR/0VEWNGEHKFlGEXLdVnH7W0sqGNKXr+DsfFEQ
+ YywOCYwgSmUjMIs9VV9zb2aem7aUsy9hRXbwLS3BfeZJwHpufTo1ejc1mZtJ5+N79qY=
+X-Gm-Gg: Acq92OEbPU1R7ZRnR2rMaTdxpA0SDeXuPM9EIAwZpuQdUNgfzpSzP7Qn+fs521LmZVH
+ oMSWUj2DigMsO5/wYT0PsAl75yPMLJQUQrPqco6ZXUjTOI0mRuUifCQ6s97D520Sw8Mz5/wMOyg
+ iQUBAcW+J/tZzUT4vPoNpTv29or4GMHhNe7s6uH2C7LViPG85jgmHI1fusICbu2zfLbaOOqj9jG
+ L1yWHvNC8IY0kPovPyseZW0vYQv6szn2IJxtAwMbmr6S1bwb84kXi7gt2xFChDMyhTLFPu1zrPN
+ A38oUcWkBkPUj787Crr/2hJYDbAX9gmLF/sS7o3wPckuOhW27VXXVdxA+y8N1+Tr0zJi5SN/rKP
+ bAwZO56DiH5K7bQ3/PqwygD23qwnRCxA81kfNdJ35fOPxCCRvHwAvLuACfG6dBC3/nj6LCzqA6i
+ 3g5idwUio9s5AUgJZ2z8u+h5xh+XmNhZWVYVb2LOYi/V5612SqLhqyywPQWzQ2MUx4WZzYnj4ct
+ qpEpPb3F+ixOFnYnQwC
+X-Received: by 2002:a05:6871:829:b0:42c:a5e:81b1 with SMTP id
+ 586e51a60fabf-434f64e9133mr9310956fac.22.1778266723534; 
+ Fri, 08 May 2026 11:58:43 -0700 (PDT)
 Received: from ?IPV6:2600:381:c938:6375:4b0a:aabe:cbe1:bd0c?
  ([2600:381:c938:6375:4b0a:aabe:cbe1:bd0c])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2f88885b87dsm3984642eec.21.2026.05.08.11.55.16
+ 586e51a60fabf-4355736f517sm2477856fac.12.2026.05.08.11.58.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 May 2026 11:55:18 -0700 (PDT)
-Message-ID: <21c6ed67-ad7a-440b-b6e8-20835cacd389@linaro.org>
-Date: Fri, 8 May 2026 13:55:14 -0500
+ Fri, 08 May 2026 11:58:43 -0700 (PDT)
+Message-ID: <c6d40151-bce4-4c82-87ab-4194c3f58bbb@linaro.org>
+Date: Fri, 8 May 2026 13:58:40 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/6] qom/object: register OBJECT and INTERFACE QOM
- types before main
+Subject: Re: [PATCH v4 3/6] target-info: extract target_info() definition in
+ target-info-init.h
 To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>, marcandre.lureau@redhat.com,
  Markus Armbruster <armbru@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -82,14 +82,14 @@ Cc: Anton Johansson <anjo@rev.ng>, marcandre.lureau@redhat.com,
  <philmd@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
  <berrange@redhat.com>
 References: <20260505224826.2698753-1-pierrick.bouvier@oss.qualcomm.com>
- <20260505224826.2698753-3-pierrick.bouvier@oss.qualcomm.com>
+ <20260505224826.2698753-4-pierrick.bouvier@oss.qualcomm.com>
 From: Richard Henderson <richard.henderson@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260505224826.2698753-3-pierrick.bouvier@oss.qualcomm.com>
+In-Reply-To: <20260505224826.2698753-4-pierrick.bouvier@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1332;
- envelope-from=richard.henderson@linaro.org; helo=mail-dy1-x1332.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::32;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,47 +113,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/5/26 17:48, Pierrick Bouvier wrote:
-> Those types are special, as they are the base of all other QOM types. In
-> next commit, we'll introduce an extra step in module initialization for
-> target-info-* types.
+> This allows us to prepare next commits, which will introduce qom
+> registration for system mode.
 > 
-> However, those types depend on TYPE_OBJECT, which is only registered
-> at MODULE_INIT_QOM step.
-> 
-> To avoid having to introduce another step, and modify all code calling
-> module_call_init(MODULE_INIT_QOM), we simply register those base types
-> directly in the static constructor, before anything else.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+> Reviewed-by: Marc-André Lureau<marcandre.lureau@redhat.com>
+> Signed-off-by: Pierrick Bouvier<pierrick.bouvier@oss.qualcomm.com>
 > ---
->   qom/object.c | 4 +---
->   1 file changed, 1 insertion(+), 3 deletions(-)
-> 
-> diff --git a/qom/object.c b/qom/object.c
-> index f981e270440..a5d268d0722 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -2839,7 +2839,7 @@ static void object_class_init(ObjectClass *klass, const void *data)
->                                     NULL);
->   }
->   
-> -static void register_types(void)
-> +static void __attribute__((constructor)) register_types(void)
->   {
->       static const TypeInfo interface_info = {
->           .name = TYPE_INTERFACE,
-> @@ -2857,5 +2857,3 @@ static void register_types(void)
->       type_interface = type_register_internal(&interface_info);
->       type_register_internal(&object_info);
->   }
-> -
-> -type_init(register_types)
+>   configs/targets/aarch64-softmmu.c |  6 ++----
+>   configs/targets/arm-softmmu.c     |  6 ++----
+>   include/qemu/target-info-init.h   | 21 +++++++++++++++++++++
+>   target-info-stub.c                |  6 ++----
+>   4 files changed, 27 insertions(+), 12 deletions(-)
+>   create mode 100644 include/qemu/target-info-init.h
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-As a followup QOM improvement, we could use this constructor to explicitly initialize 
-type_table, and drop type_table_get() and its continual checking for NULL.
-
 
 r~
 
