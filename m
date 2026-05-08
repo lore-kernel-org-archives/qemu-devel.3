@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43315CD3445
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0118CD3436
 	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 15:25:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLN4E-0000rp-Mj; Fri, 08 May 2026 11:24:42 -0400
+	id 1wLN4H-0000sw-Bt; Fri, 08 May 2026 11:24:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wLN4A-0000qQ-2A
- for qemu-devel@nongnu.org; Fri, 08 May 2026 11:24:38 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1wLN4F-0000s2-Fo
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 11:24:43 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wLN48-0005QL-Bm
- for qemu-devel@nongnu.org; Fri, 08 May 2026 11:24:37 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-488a9033b2cso20490525e9.2
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 08:24:35 -0700 (PDT)
+ id 1wLN4D-0005UW-FR
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 11:24:43 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-44a74032ff8so1595533f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 08:24:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778253874; x=1778858674; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778253880; x=1778858680; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mK5ez33lVuPxUlgcUB4M6u/BjlmFJ+0FTK3XgrLB+B8=;
- b=JRkZeR9AkH1uB6ZfrUP30ZaY2eUInsuplolDCGrHxkB8/B2VSkED/VXQmPPqFxYH3+
- Rt2IDhwAJL1wvcBXDsL6csDyA4sUdOowaRQ8JznX/Ybd/+ICAYuXnxQWm6TK607JuWzd
- JKZYjxdhJFiJilZA+s2/NB/o3sZnkA6vslOuBpnq5idQ3vLtpt0wjNZrP820YW1+iu60
- wEucHRppmY2kS8x0v5+fx+YUWw1hibqTOnvq2Ag7AOcDxL8F7iD7XU579ZcIBw6oH0I5
- 92+SVkBDZzyb1kgQWRzdVD6qQnnZJshNu3ahBLj7QQXI6kgMVcWNbxc3Y7gCCDYPJod/
- cB7Q==
+ bh=phy4N4YSnQNyULhSjp4nqi9ibEMtEknuKbJe7mg5d/4=;
+ b=CvSqWb5eBU6BFH5CR/+ytyb0hL5j6xubpWkS/B3Ge7eoIf7g9m37NDcw7c0/e535MF
+ VLwOcthuMDP+GV2njBlClGzPdRgn0m4pO325RsjQeIsAkvaBNbTMhxEs5chFgBfoT2yP
+ 4lyMLzen5PAHMrw3nCQCehS9M4bgSlnNLrIlq5j5G4VxWBAigSpVjUb2U9qZdyNJyR9j
+ aaEFudzOdQR6H56vyYbOHMjc6/ZNhadAzRMwSOT2N8qReW+pcxBUkCkzeFFkMMRKngYb
+ ToNDbidysq2OTyxdZOVumwb5TN99cjtQ9KkTaguIy+9WU+AzNxQBRAMdr3pWoDeBWoRu
+ 2ZBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778253874; x=1778858674;
+ d=1e100.net; s=20251104; t=1778253880; x=1778858680;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=mK5ez33lVuPxUlgcUB4M6u/BjlmFJ+0FTK3XgrLB+B8=;
- b=AdwL7SYGmBcAT8SjlrC3ZhiObrPG56UWwJIJNkl8Cti69PFu8j55niPEVUAwDeXssx
- aAzpnDdZ3NUeq8GzNx6sJyz/HaBg9LtJV/p0x5hKOnJ74j45SU7qT/pKwlfgdmPUKTjp
- QbNIkwZISmYnmPnR47c0sJlG7blogHMQiKr/n1KIWRhFeQCzPRi3gCWzNJxVD9BF+7zG
- cMyOtkrdb0TVuyVLIZSa2stxWsOQ0vOKFUrnSDzG2wJFYZ3I5e8Q4h+/3xvzm3jUcXm9
- 2Xyicu1R5eYTEsWKGhk9QG4D+U+kf3AS3hxeV93qSMmTdd3X4T9uz9675j/HWBYEcSvM
- MyAg==
-X-Gm-Message-State: AOJu0YxMsbNrFB9uj8Qb3KsxQNJ2wiZTM9Db5GG6j20RdCYkFHjeiCh7
- jVDsk2CHcPar0OwR0pygdFYbdfIVEEr2Nqa6zMG+ONvczVSaNTHvxNjBJeJS9dnsuxbKLxMte4g
- nxrDB
-X-Gm-Gg: AeBDieublQoljnRw5poG7JeAIEKon0Sq/WPm177HLZTq8LTE5LkECzWSSvvH2xXV+2j
- oCvaJ3L0S6npUQXtehsaJMCqd0Le5q7WjBwYeWJr6O6AZQLWNtuLqV8fC5JMsKwPTAqFWzkTEFu
- Os5zeGDVXSPeTd0o9N18hf3F7CCm0ipzTlgvHtOU80ZdaCSbD8Zm7X41eLYj+HtSH4qH7hsFsgV
- cIXx7s57giw8smY+ESu3PTSdCD9taJhFl87GQ4M59t8C+TUGgXYQuPLJiWkDQwXzwktEgKvlYTp
- Li+zQag88UNc5nToaSKJa1huOAUn6YAUiCk8ElV7k+C9TLTE21+ZVaD2KrioU+kPOdJiQzxqd+v
- SEoti0XcwxPaYRcPiIAXDY7HKdbAtMUHDIiS0ApMB80lbH8pBBhAL3knrgmanCmGT8vyovQNUgt
- 2RqKawT3qJrcztXSt/0S9+ItuPljEKsk0Z53VHtC/1QpE01KGUzrXgO/p1OleGtG1Mx26M1j9FI
- tr1q4+86sBUr3v+
-X-Received: by 2002:a05:600c:8485:b0:48a:58ae:9933 with SMTP id
- 5b1f17b1804b1-48e51f32806mr208463295e9.18.1778253874565; 
- Fri, 08 May 2026 08:24:34 -0700 (PDT)
+ bh=phy4N4YSnQNyULhSjp4nqi9ibEMtEknuKbJe7mg5d/4=;
+ b=eVAJiVAD/zf83XW2fhxVlyNaNEF4F8EX6a97IiSDFlFRqg5S6d1BfR0bXbEDBoU72W
+ krD1VTYuqC7grd58S8+/lLG8k6RrCcyiScefH0zy2tXzi+gdJkh6UO9Ru526qDEhbw5q
+ ZVYQHWngu99TP8/s7lVG+a0qUVkkioizRUV+7r8jYa3hGvsvMsA/i6GHXyIk73XkTEAS
+ GePDIJoommuivzMPrcW8IJe30Wtg2ZszdPBMygTsxoE81b53pv2d9dl5aEk6ZtJxQeKS
+ Ly3NOBhO75Cuc4vR2bXEJN5cmK9UL3Erp1p+/AYswl+UOqeGCshfPrYhKYW76CdeNx5L
+ 4dZg==
+X-Gm-Message-State: AOJu0YwsAOSgDd8P1foVjZO9J6GJIsogdsd1OUKhxhEdoc/VRDretRJz
+ AlTKQ2b0W/PChSytaSRYBlbLs3ySvAevENwMG2+K0yOSnkb81e68bsPd75CcLEUrOzPVKiCILR4
+ +L7nT
+X-Gm-Gg: Acq92OEoCpAlFJqZwutHPDtZg2m8XJ7/EvN9nQ0v9AUTBmueMVNeuBwCPEUIwNWq03k
+ qCsKu2NhIP1xlfSv1WnRS+dUaaDqdSV4fZbop7oE0ls8SR6MbsIzwLS1kQ0gB2YH4GLNEJ2LsQb
+ T0C3MV1upKhAWQfXWy8eW/EiF6uCfRUCM80m7dMyvU3KaDeg9Po7pfGl0pnGe8/OmpmHGKmdxjl
+ V6sb5IpJhu3bhwIQh4V2klYEpkd96v+s8XThLSKjXE4WV9JVX2LYTTJffjZAwccmNH6y/hPu5W4
+ G3ClF19Bb1A85ZmElE42rMaIXY/sGiqLuaVcMZyHukDwEMo84Ac7xN5/D7M8/jUvt6IcxZjk8TD
+ XPqtm06LcADJ/r6DbyiuHrPNAoaJ3dyXpiCTSWYaaQeMOVmgpMwl00F6H/7j3KqNo/+dVkBSc/5
+ UnIuZMFUlG+OViy98dMKCA8JTIvx+BsceE0cAIxdqkPGvscxg5nkkvrILC/G3J97yJlQVGKMje8
+ rCdyJ+cB1KDKHoA5ZhGCL7n+k4HchQ=
+X-Received: by 2002:a5d:588b:0:b0:44b:7ec9:2d76 with SMTP id
+ ffacd0b85a97d-4515b056d5fmr22368735f8f.7.1778253879756; 
+ Fri, 08 May 2026 08:24:39 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548ec6c221sm4940453f8f.13.2026.05.08.08.24.33
+ ffacd0b85a97d-4548ec6c221sm4940453f8f.13.2026.05.08.08.24.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 May 2026 08:24:33 -0700 (PDT)
+ Fri, 08 May 2026 08:24:39 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -78,16 +78,17 @@ Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 4/9] tools: Move qemu-img sources to tools/ directory
-Date: Fri,  8 May 2026 16:24:23 +0100
-Message-ID: <20260508152428.2648560-5-peter.maydell@linaro.org>
+Subject: [PATCH 9/9] tools: Move elf2dmp from contrib/ to tools/
+Date: Fri,  8 May 2026 16:24:28 +0100
+Message-ID: <20260508152428.2648560-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260508152428.2648560-1-peter.maydell@linaro.org>
 References: <20260508152428.2648560-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,75 +111,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the qemu-img source files into the tools subdirectory.
+We install elf2dmp by default, so move it from tools/ to contrib/.
+(Almost all the other tool-like binaries in contrib/ are not
+installed by default, so are more like example code.)
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- MAINTAINERS                                | 2 +-
- docs/tools/qemu-img.rst                    | 2 +-
- meson.build                                | 4 ++--
- qemu-img-cmds.hx => tools/qemu-img-cmds.hx | 0
- qemu-img.c => tools/qemu-img.c             | 0
- 5 files changed, 4 insertions(+), 4 deletions(-)
- rename qemu-img-cmds.hx => tools/qemu-img-cmds.hx (100%)
- rename qemu-img.c => tools/qemu-img.c (100%)
+ MAINTAINERS                            | 2 +-
+ meson.build                            | 2 +-
+ {contrib => tools}/elf2dmp/addrspace.c | 0
+ {contrib => tools}/elf2dmp/addrspace.h | 0
+ {contrib => tools}/elf2dmp/download.c  | 0
+ {contrib => tools}/elf2dmp/download.h  | 0
+ {contrib => tools}/elf2dmp/err.h       | 0
+ {contrib => tools}/elf2dmp/kdbg.h      | 0
+ {contrib => tools}/elf2dmp/main.c      | 0
+ {contrib => tools}/elf2dmp/meson.build | 0
+ {contrib => tools}/elf2dmp/pdb.c       | 0
+ {contrib => tools}/elf2dmp/pdb.h       | 0
+ {contrib => tools}/elf2dmp/pe.h        | 0
+ {contrib => tools}/elf2dmp/qemu_elf.c  | 0
+ {contrib => tools}/elf2dmp/qemu_elf.h  | 0
+ 15 files changed, 2 insertions(+), 2 deletions(-)
+ rename {contrib => tools}/elf2dmp/addrspace.c (100%)
+ rename {contrib => tools}/elf2dmp/addrspace.h (100%)
+ rename {contrib => tools}/elf2dmp/download.c (100%)
+ rename {contrib => tools}/elf2dmp/download.h (100%)
+ rename {contrib => tools}/elf2dmp/err.h (100%)
+ rename {contrib => tools}/elf2dmp/kdbg.h (100%)
+ rename {contrib => tools}/elf2dmp/main.c (100%)
+ rename {contrib => tools}/elf2dmp/meson.build (100%)
+ rename {contrib => tools}/elf2dmp/pdb.c (100%)
+ rename {contrib => tools}/elf2dmp/pdb.h (100%)
+ rename {contrib => tools}/elf2dmp/pe.h (100%)
+ rename {contrib => tools}/elf2dmp/qemu_elf.c (100%)
+ rename {contrib => tools}/elf2dmp/qemu_elf.h (100%)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index cd53604f92..2ef9655c94 100644
+index 88cc1516d8..054ae3e6c6 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -3106,7 +3106,7 @@ F: qapi/block*.json
- F: qapi/transaction.json
- F: include/block/
- F: include/system/block-*.h
--F: qemu-img*
-+F: tools/qemu-img*
- F: docs/tools/qemu-img.rst
- F: qemu-io*
- F: tests/qemu-iotests/
-diff --git a/docs/tools/qemu-img.rst b/docs/tools/qemu-img.rst
-index 558b0eb84d..52466759d2 100644
---- a/docs/tools/qemu-img.rst
-+++ b/docs/tools/qemu-img.rst
-@@ -39,7 +39,7 @@ Standard options:
+@@ -3938,7 +3938,7 @@ elf2dmp
+ M: Viktor Prutyanov <viktor.prutyanov@phystech.edu>
+ R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+ S: Maintained
+-F: contrib/elf2dmp/
++F: tools/elf2dmp/
  
- The following commands are supported:
- 
--.. hxtool-doc:: qemu-img-cmds.hx
-+.. hxtool-doc:: tools/qemu-img-cmds.hx
- 
- Command parameters:
- 
+ Overall sensors
+ M: Philippe Mathieu-Daudé <philmd@linaro.org>
 diff --git a/meson.build b/meson.build
-index d4c16b394e..5d34ea39ed 100644
+index 1dad3a2462..69cdf2ab60 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -3561,7 +3561,7 @@ genh += qemu_version
- hxdep = []
- hx_headers = [
-   ['qemu-options.hx', 'qemu-options.def'],
--  ['qemu-img-cmds.hx', 'qemu-img-cmds.h'],
-+  ['tools/qemu-img-cmds.hx', 'qemu-img-cmds.h'],
- ]
- if have_system
-   hx_headers += [
-@@ -4523,7 +4523,7 @@ endif
+@@ -4543,7 +4543,7 @@ if have_tools
+     }]
+   endforeach
  
- if have_tools
-   tools_link_args = enable_modules ? ['@block.syms'] : []
--  qemu_img = executable('qemu-img', [files('qemu-img.c'), hxdep],
-+  qemu_img = executable('qemu-img', [files('tools/qemu-img.c'), hxdep],
-              link_args: tools_link_args, link_depends: block_syms,
-              dependencies: [authz, block, crypto, io, qom, qemuutil], install: true)
-   qemu_io = executable('qemu-io', files('qemu-io.c'),
-diff --git a/qemu-img-cmds.hx b/tools/qemu-img-cmds.hx
+-  subdir('contrib/elf2dmp')
++  subdir('tools/elf2dmp')
+ 
+   executable('qemu-edid', files('tools/qemu-edid.c', 'hw/display/edid-generate.c'),
+              dependencies: [qemuutil, rt],
+diff --git a/contrib/elf2dmp/addrspace.c b/tools/elf2dmp/addrspace.c
 similarity index 100%
-rename from qemu-img-cmds.hx
-rename to tools/qemu-img-cmds.hx
-diff --git a/qemu-img.c b/tools/qemu-img.c
+rename from contrib/elf2dmp/addrspace.c
+rename to tools/elf2dmp/addrspace.c
+diff --git a/contrib/elf2dmp/addrspace.h b/tools/elf2dmp/addrspace.h
 similarity index 100%
-rename from qemu-img.c
-rename to tools/qemu-img.c
+rename from contrib/elf2dmp/addrspace.h
+rename to tools/elf2dmp/addrspace.h
+diff --git a/contrib/elf2dmp/download.c b/tools/elf2dmp/download.c
+similarity index 100%
+rename from contrib/elf2dmp/download.c
+rename to tools/elf2dmp/download.c
+diff --git a/contrib/elf2dmp/download.h b/tools/elf2dmp/download.h
+similarity index 100%
+rename from contrib/elf2dmp/download.h
+rename to tools/elf2dmp/download.h
+diff --git a/contrib/elf2dmp/err.h b/tools/elf2dmp/err.h
+similarity index 100%
+rename from contrib/elf2dmp/err.h
+rename to tools/elf2dmp/err.h
+diff --git a/contrib/elf2dmp/kdbg.h b/tools/elf2dmp/kdbg.h
+similarity index 100%
+rename from contrib/elf2dmp/kdbg.h
+rename to tools/elf2dmp/kdbg.h
+diff --git a/contrib/elf2dmp/main.c b/tools/elf2dmp/main.c
+similarity index 100%
+rename from contrib/elf2dmp/main.c
+rename to tools/elf2dmp/main.c
+diff --git a/contrib/elf2dmp/meson.build b/tools/elf2dmp/meson.build
+similarity index 100%
+rename from contrib/elf2dmp/meson.build
+rename to tools/elf2dmp/meson.build
+diff --git a/contrib/elf2dmp/pdb.c b/tools/elf2dmp/pdb.c
+similarity index 100%
+rename from contrib/elf2dmp/pdb.c
+rename to tools/elf2dmp/pdb.c
+diff --git a/contrib/elf2dmp/pdb.h b/tools/elf2dmp/pdb.h
+similarity index 100%
+rename from contrib/elf2dmp/pdb.h
+rename to tools/elf2dmp/pdb.h
+diff --git a/contrib/elf2dmp/pe.h b/tools/elf2dmp/pe.h
+similarity index 100%
+rename from contrib/elf2dmp/pe.h
+rename to tools/elf2dmp/pe.h
+diff --git a/contrib/elf2dmp/qemu_elf.c b/tools/elf2dmp/qemu_elf.c
+similarity index 100%
+rename from contrib/elf2dmp/qemu_elf.c
+rename to tools/elf2dmp/qemu_elf.c
+diff --git a/contrib/elf2dmp/qemu_elf.h b/tools/elf2dmp/qemu_elf.h
+similarity index 100%
+rename from contrib/elf2dmp/qemu_elf.h
+rename to tools/elf2dmp/qemu_elf.h
 -- 
 2.43.0
 
