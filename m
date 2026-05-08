@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C4D9CD342F
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 09:44:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8389CD3436
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 09:44:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLHkJ-0000H7-JM; Fri, 08 May 2026 05:43:47 -0400
+	id 1wLHke-00010f-RP; Fri, 08 May 2026 05:44:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLHkI-0000Fg-2M
- for qemu-devel@nongnu.org; Fri, 08 May 2026 05:43:46 -0400
-Received: from mail-lj1-x231.google.com ([2a00:1450:4864:20::231])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLHkc-0000tz-JC
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 05:44:06 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLHkG-0005Cu-Go
- for qemu-devel@nongnu.org; Fri, 08 May 2026 05:43:45 -0400
-Received: by mail-lj1-x231.google.com with SMTP id
- 38308e7fff4ca-3922b35e69cso14586361fa.0
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 02:43:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLHkb-0005Jn-33
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 05:44:06 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-488b0e1b870so28245445e9.2
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 02:44:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778233423; x=1778838223; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778233443; x=1778838243; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6Q1+F6oz/ou7iU3INeOLsr8APRS1jZ33COubgx8vyyw=;
- b=hBLIl73zwLwHc3j6nelLAEdqoI9ebMPqgaO1vmcsVfYdamw08uYXkzdqlPhGd35err
- 40Pe1y75IJAA5GHrz5Fjp10BzTJz7c7OoIPm0dDk6oc3BEmKKh1rDvSJoppJAP4sUqcC
- BGHei6nEZh96N9CH7Bc07q89oFKFJJJVVwGtY7XSTXMGz/LRAyKtM9qKhgOlzjjPkkrW
- 5a7IT1GQWw7xBQHa9DjjG5wKgzYvYwAL4S4PbW2EDsmJz3ioy8NccJPLrMH1n+rX0kK/
- ZPmd6CoarCfh4Cx3G19qb0PKJBRkGk8Ibl6FbbkI+W5oEdQjk5oyXA5RIFoKku9mC2ON
- LdFQ==
+ bh=1YB/Lale1pmLKch1OsaYb+u7+p/Z7p8rrTMCVpPUeDI=;
+ b=mH+T1EMK0t+j2+3qaEA/rRWiCx4V3GZvo1LeGzpV2LoidgjD7EahS+EV+wJVU6CDsk
+ rrS9v6ZCN6HqqBv1LQO8ti8nfV6MOJjIHJfKDz8T+ZD4uoDypspmYwKIs9WA+s98EOE7
+ XTZP3bbuksUcpL2IzYlE9+dZTPE8qkKa+EmeOzMJlSZ72pRBM9SleJckmeHPqznNAZcP
+ NluOUVOFdKzPjYSwj3U1keCRNzHs/+AHNqZB0rT3hwqTKJUgX4p6+z2rOZ0YhujK4sY1
+ HtWFMdlQkNYWek2s4px4p5vATaTB+WhVagUOGLa+tBprM7n0ZDlHTQfSHxikMn+QUFay
+ dwjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778233423; x=1778838223;
+ d=1e100.net; s=20251104; t=1778233443; x=1778838243;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=6Q1+F6oz/ou7iU3INeOLsr8APRS1jZ33COubgx8vyyw=;
- b=DBPzelLhqaSnMN5/vlWppHo9aDCHuFPJ5TerGwQrttcHGdLya8kJTNEHQCy5R1U5W1
- QnH2/Vckdi91xii9RU7agfksuIJJNUg2MOsaoSWnDBdUmD0/6LZ3k9xbHS7eEY0dSsmO
- IUjsGdaC5JuXbt9LeT2Ywnr+y1uXuWUdWtx2P2K9pRTAcaFVSnoUd9IYtlyCACKiuVDJ
- tM6A1Liz6kNO/okVkSREghdoPk6FeIFdvewnLbUnPNYq2TkdXDEHm96u9DynP/aOe71Z
- VIte9r5ZFfFs9K+ZXbVigacojgUunrg1sVXLg1wlVa4/rvf9387yiVq+Egns0CCV80kZ
- HR5g==
+ bh=1YB/Lale1pmLKch1OsaYb+u7+p/Z7p8rrTMCVpPUeDI=;
+ b=MqLSllHiDrkbHY14MO8pLrilYrz3L00AWbj/k6xpk9EgZ7R53C/F8wvuUct1/1+yCP
+ a8Viqmj9MuQB24MbM01gf4Q7ERnvVQbP4T7MKBxgSoZ4OqejofCLS6m31BNHbHihZZeB
+ odtNs5lFjdRzcz9MW7HQr+ggm5+fBX9TFwBO+xMtLIGXy63LQGIDgmS4sNXKSDOOIL40
+ WQl7E7f9BhB3mg2S0cC26D3v5AYBy+xhlWrMyHuNIy0Y4isnO3PQm9bzlupiie8WLiVe
+ NUzb3k61z8OgwuJmdEgdO/aCEfV65QB0m1SRXKcMa8lYUPiQRELN8MQ1Zv1ZI5scuFXQ
+ tMsg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+g3li0EN9cEoaBelNjAmkVSJ9fA1ls+SHTXuWQwtHnHMY1PR1beWHTkA9Z8Ik6vySMlimR/82sfUjR@nongnu.org
-X-Gm-Message-State: AOJu0Yybccx+ZznkWsTqBakXu8aUnuH7JzUmZMAspF04Oe9dY4noxAc7
- pTs3JlCcRuuGVjggMoa5As2cjf/s3s+hpEh6J58H1PhVpJz8SiazDL7Q8T+Bkb/QZ+o=
-X-Gm-Gg: Acq92OHfHYMKwiXQm+ml9p2IQyMIUwZVGUEQP0rf1ZwtLdNuPsMLAVR/PPg70kpLKXH
- FBIS8ugvSSm89zMYtcqks6022q2kfQIAihIDz3DQfamfTh6EaYfwsUiSBSLnqGXFksFefKf+eGd
- w8Ljyf/AMxwSFCKc+yf2CCV9sxBVc4LdSuIFqY25GSD2TGrWBclHcpYUizlBJUjetJxQsT+uQ0W
- rFR6jhYQHB4n/Poi41uuD9ThQnre4b/61YwLTEzCFTgDgd2SaJnhwg9XZ83vFuiIxwJKK/XKPvQ
- IZn0Dau0ohO58CWwti4p0ZtJ964POUmjcxJ9hrGosq/OevaLH9IJwvdYsRY1oF5EHy51Wvw97cZ
- p2kYETQVfsYgSLe6jFlPnBZvrWfpxDgaNMrNa1OGIgiL2x8ICzcRDqGQLQd5Pa3+OjSsmeySj+Z
- BM2oBPjz+zFmzSjNEbA3Mv9QeFkCDENX4lrX2qyEh3pDoTb8FCfomFrDBaXfB/3MBKi/BP3CvbO
- dLI3O/aXm0kZg==
-X-Received: by 2002:a05:651c:e0f:b0:38e:a777:f393 with SMTP id
- 38308e7fff4ca-393c41c3e71mr31453491fa.19.1778233422474; 
- Fri, 08 May 2026 02:43:42 -0700 (PDT)
+ AFNElJ8tFrRg3sXF0ni2vIppEj0X81NAl9Vug3cxruN1hkPdnqxBm+Ms8DOps+CL5lGurV/OJTtkshuK2pvy@nongnu.org
+X-Gm-Message-State: AOJu0YzE8qIjZ7SMpfT35caQZwD3mZsOMYeBP0oc59LaCEmle1mSJYSe
+ xdhPr0yhXwc9aSs4YSFRFaegGx2hzfREPo3MbdqM25OHjuy3C0sFcLULAufqj+oO7yw=
+X-Gm-Gg: AeBDiesj1BvU9DpYYyKtIyARtR4SFvF5Yp68snDFN7lVYNkOizst0lO0mDZ+z/lNt4K
+ tB8HdRgw+iySlbpsyPWt38hqNKEIO/BMQGtWQOLevKnbb8kca7l1rqw8iSFgus0Lwikl/uVP4sJ
+ BBiKQdoexLE+O63nXDbMifJPzbRqYLe5sdoe6zgw93EEKPdPkuGxMPn08CiNILFTy0BuiFknH5L
+ hu8Pl28KdmDkh45WvEoRUh5GWkuCvb2sZFRz/+23dHh6r3dgqSUgdvYLSU0dSgjv+Ekqop7r8nk
+ PmOXjPD6/dWNDrO4p5gPgPlIAqe5+QuILetX0PF4cMXy2caaFmzr5mJsbTyxZ5atH2kKPNvOzq1
+ uCCuxRk728726ZTFHW8FFhs9tYmcgEDUS5GG+a0EZ+kv6Ma6FUFUOswFjsfbE3HHr5Q5V2VcSc5
+ uC/48DBZQh7C2UB6z6YpT16lG0PD9XwaV3R5pEzCew++tYcJH3Gx9H1QLXS4ny5HetRo13+5P4v
+ nw=
+X-Received: by 2002:a05:600c:a111:b0:48a:7b7b:c2b9 with SMTP id
+ 5b1f17b1804b1-48e51e0bb44mr147181995e9.4.1778233443556; 
+ Fri, 08 May 2026 02:44:03 -0700 (PDT)
 Received: from [192.168.0.200] (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 38308e7fff4ca-393f5f3a2a2sm3574771fa.11.2026.05.08.02.43.41
+ ffacd0b85a97d-45491da03a7sm2934843f8f.33.2026.05.08.02.44.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 May 2026 02:43:41 -0700 (PDT)
-Message-ID: <9ace5e12-9270-4902-9a4e-8122b467db42@linaro.org>
-Date: Fri, 8 May 2026 11:43:40 +0200
+ Fri, 08 May 2026 02:44:03 -0700 (PDT)
+Message-ID: <9d7257e2-dbfe-43fa-ae4f-a0afb6d43c25@linaro.org>
+Date: Fri, 8 May 2026 11:44:02 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 02/18] fpu: Introduce FloatExceptionFlags
+Subject: Re: [PATCH 03/18] target/alpha: Use FloatExceptionFlags
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20260507221717.486023-1-richard.henderson@linaro.org>
- <20260507221717.486023-3-richard.henderson@linaro.org>
+ <20260507221717.486023-4-richard.henderson@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260507221717.486023-3-richard.henderson@linaro.org>
+In-Reply-To: <20260507221717.486023-4-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::231;
- envelope-from=philmd@linaro.org; helo=mail-lj1-x231.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,17 +104,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/5/26 00:17, Richard Henderson wrote:
-> We have, in the past, used any of uint8_t, uint16_t or int
-> to hold the set of exception flags.  Use a typedef instead.
+> Fixes a bug in which we were still using uint8_t.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/fpu/softfloat-helpers.h | 6 ++++--
->   include/fpu/softfloat-types.h   | 4 +++-
->   include/fpu/softfloat.h         | 2 +-
->   fpu/softfloat.c                 | 2 +-
->   fpu/softfloat-parts.c.inc       | 7 ++++---
->   5 files changed, 13 insertions(+), 8 deletions(-)
+>   target/alpha/fpu_helper.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
