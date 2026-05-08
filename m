@@ -4,90 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE5C7CD3436
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 15:26:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53725CD3445
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 15:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLN4G-0000sZ-CQ; Fri, 08 May 2026 11:24:44 -0400
+	id 1wLNAw-0005Hu-0I; Fri, 08 May 2026 11:31:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wLN4C-0000r9-75
- for qemu-devel@nongnu.org; Fri, 08 May 2026 11:24:40 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLNAk-0005Gm-7g
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 11:31:30 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wLN4A-0005RN-5k
- for qemu-devel@nongnu.org; Fri, 08 May 2026 11:24:39 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-43d734223e4so1432229f8f.0
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 08:24:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLNAi-0007tb-R5
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 11:31:25 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-48e56c1bf5dso13540365e9.3
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 08:31:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778253876; x=1778858676; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=y7twr+z2z0KaYotonpbDwicI80OO3y9bheTlSFPeNCc=;
- b=nrOac1GrsooKXLr3RiSdDOdN6qMqLO5WDsI/BhPxtbTVfABnHTUmEOY8BkLg7ItBDD
- kaboTaYAhyqU1VGXPYYaKlqfGgIkbHX/DY/yI4vxCSDrX+l1w5m1ZaI1hYnTlmJkigMu
- KlrRWthqqy0VXHhSMvEa788/4zvlJ/qBIksqZTN64x/o9/xXnL4kOR4LOL7agraS8q+W
- B00O5w/ocHft5WFMTzkn8Uaa72nuNtEGf9jnm+SdjUdYHFdmqi+7iBfDwR+0XKZvw+Yp
- ZSXxqXKWgm9ANLqFTp3Usn9l3I+Qt7MKaE4T8LCYnNYedhcJU5HbAMQVBNnXfU2Ldh/H
- RiBg==
+ d=linaro.org; s=google; t=1778254283; x=1778859083; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/t+Z/B8+Bnfb12A6cLEbGQfEl8myQ52GE3znNXmjEK0=;
+ b=obSElV0Spp1lEr738rN4x4f2lZoRweMgihQYL6hTu+plSuBesNmXWcN19WwJRP0TQ/
+ PLOvi1dyfzJ+geCLofj9ORhSxizOlrK8LaUllsgcbXwZBmQ1d45HD7a2SGDilRoTkMP6
+ F0dcPQClnfAZMCP5m+H06HcO9ObsCSUgBt8YJaEWNy8YCbCB8n4A/qNYbR7j2zPcL0cX
+ eIp7cPopI2CjnyhwZ6bv4Sn/RcOzwbwDgObtpXGs1xfzZGKzj+bDjoxpBqpKtqwNF0HS
+ XmX6BEm3MyVC1MlI1pKEMHP4RTt+jA4rxyVNQeLDDgbWifmwoI0TWoP1MWpjiBnKVaA4
+ MfUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778253876; x=1778858676;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=y7twr+z2z0KaYotonpbDwicI80OO3y9bheTlSFPeNCc=;
- b=h197T2RPh8gZbLJrRycgb7HAbxdiDpaqdJX4ABbAFS1e1vomvY73nUTGV5J66Iuxt4
- bK9RmzYU+mFTB6Yo/xCdBqeSOjs1/LWPj2po5DWu6R0ujqq82PE4Ff6i4bD9yExvTpYt
- LeRH22KVots4oU5XOSHW4jcc+KWZTV3U304/W9E/H7WCX6nC472O42Z5NU/73BtOKNAl
- SRbp02DOFOdNgrDV3wHClhxn0mWsMMUmpRloNyTXXLRjvwCJLlccqQUHIY0JAfOk6Dyp
- QZkRZw+jzLsdG3Iw+g6cUjJEQEkO9Y1LyOn6RQfRKoTIcXR7fCLGpJJJbcDw+Juvwjcf
- vX3Q==
-X-Gm-Message-State: AOJu0YxdGIogGKcJhBX3Zx+O9LOSw1Rizb+KMtwXP/vOo/Po9QFY9Of/
- yF18tEjs82uCaQQI1HzmcPGgsVGdVnYgq8IOHMFeQ3UlsfIXczyOIjsT2G1g8NFgRLAmNKNcw05
- csmB4
-X-Gm-Gg: Acq92OFsL3cKGv8r2kXdxs8iF3PUAdsSQ5ktsIAQHhZGZQXAhsG0ZP24amO2r66Qzyg
- CFc581Rki7qWKCDcnHhCm8gK0+HjGXTU3WRzbzCzCf2fPB/9OjQZkx9BRWInlfWC85FRr8KwhG+
- KEVJOHA4wxsKn2e7u0NWwZFCSJ4YVN3UAgLSeuU5iJiFJ4lPqhvRvOYjoGEv4q28Y0y5chGeLZp
- RTohIFdcT77W8rDll0mx3xmG8rjNwufLyMKT7WQKLTrUfU4qRdPw8opSDjaz9iomjnSGZ+jQGV1
- yO/J9V17KV8v6lbMTG//jXg2WHVLuTUBd9WLWC9tc5xc5Au+sCG5EQ9DLgcg/j9Ufne8fDmEj+g
- lXQj0ZsYFpwLo5io0r3rsQqSedGapGOf27LurbYfjLljqcD0emahifq5Z8LjZv5hxZB6PvXkxX+
- bTNnRGh373oeMJI/8G8LENVvylSufeJYLS3f1CdJpGBEz1Axv1wNUx6wNqr47F26LIGPhCW7oHO
- ol0Y7v1Y+3ta/3+pVI4yuZmTZ7BRE0=
-X-Received: by 2002:a05:6000:ec7:b0:452:f380:5508 with SMTP id
- ffacd0b85a97d-452f38056f9mr8813568f8f.0.1778253876518; 
- Fri, 08 May 2026 08:24:36 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548ec6c221sm4940453f8f.13.2026.05.08.08.24.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 May 2026 08:24:35 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Viktor Prutyanov <viktor.prutyanov@phystech.edu>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 6/9] tools: Move qemu-nbd sources to tools/ directory
-Date: Fri,  8 May 2026 16:24:25 +0100
-Message-ID: <20260508152428.2648560-7-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260508152428.2648560-1-peter.maydell@linaro.org>
-References: <20260508152428.2648560-1-peter.maydell@linaro.org>
+ d=1e100.net; s=20251104; t=1778254283; x=1778859083;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/t+Z/B8+Bnfb12A6cLEbGQfEl8myQ52GE3znNXmjEK0=;
+ b=Rlcm2QzRJYOpnDNF0RNDoMybY0PkCNqhk9ivZK1GfZXBxMO2znp1N2gLYpuwlFOJvr
+ EQS4vVrDswShWVIMHAowHfCR6vQEzTG0hROkxU4NnqS++M7hDxp25mi5Zm1lF7QWR0kO
+ hhQpZdM7vph8huWGeh7/3kRlrMVdbmuNwqFHXaD3aV4L6dts0d2QC11V+ez4xKFsF/M3
+ AoSLvuGRr3OMT+8z8IiTtZnoMlWAZvDC7mLAYTG1NNDli/uhKpuSdndL+Je0udoLocug
+ heFbSomMEhuSMVXeBTCr0t7gPua2R+FHMjK1pqPPpvOhj7U5AUsYjdZifjuv8zs5eFJn
+ G7UQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ/TCc9I5M97typbyQYtxwQHhrQzfHXwYktkc4vNfIVUY5w/e2PZRt1ulOUC6zzH5YKS/4gdsm33aDu7@nongnu.org
+X-Gm-Message-State: AOJu0YyK3YyHQUKaPAS3XufeoyI+fX9ba9EgvJAyST6zxh3WMAx0ZcHJ
+ UbYFQ0If0H5M+QW0hYm6970UhIbrQ8rEyt6Q3tHxjenHo3bxnD1Bc+Q2mDCg8Ec4UP8=
+X-Gm-Gg: AeBDiev6ZZCWBqz+E6/Jd3p0mQJEszV11xYl1IwPRajIbisbfVD8RBG9RijqdNduwwV
+ c5O+TZAH4orbOvecdPfY4XfgP7off0F0o01On1t6TTGTFgpu4qYcQqLDEQyoDQ/gcvP2UXN6dek
+ oLOkoM5If0/e9JHmALMRltlJ6v5z+LMLCno6g/FfSc5r7pbrnAsa1xDT9Woyi6dvrTeLrY/+aki
+ leG9PoYQSvOpmD4cz7kY2AcjGHJc73ST2SIPKsuyTOLGH8umnECUqN1V6j+KAte4om7ioum4oki
+ a3e2ACtQmdczBlPSfdmrUD7i32DlylKYZz8SEDjaiY0Lwxf93C4+4cblD2GmXhOujnQld+0X9Kc
+ LpLN4A7Qzlkw0yX0Fq1MzwKWZBhJkU1FMyGK2YamSNeS1ldmvg8n0pdcNqIs9plREJ1IZPEpeaN
+ 3NQidXscasGrMiFUkOQSd83oVUSmfkt6272WPwWlrixFYPrDIJ/t8gfit87d0/Eh2wQ8y9EDPF6
+ xqy
+X-Received: by 2002:a05:600c:1393:b0:48e:635a:18d9 with SMTP id
+ 5b1f17b1804b1-48e635a1ae9mr77799395e9.15.1778254282648; 
+ Fri, 08 May 2026 08:31:22 -0700 (PDT)
+Received: from [192.168.69.200] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48e6d8d6b17sm2161345e9.7.2026.05.08.08.31.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 May 2026 08:31:21 -0700 (PDT)
+Message-ID: <b945b362-06a9-44a0-ab7f-d5a47da4e0ab@linaro.org>
+Date: Fri, 8 May 2026 17:31:20 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 14/18] fpu: Use {get,set}_flush_inputs_to_zero everywhere
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20260507221717.486023-1-richard.henderson@linaro.org>
+ <20260507221717.486023-15-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260507221717.486023-15-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,47 +103,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the qemu-nbd sources into the tools/ subdirectory.
+On 8/5/26 00:17, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   fpu/softfloat.c           | 14 +++++++-------
+>   target/alpha/fpu_helper.c |  2 +-
+>   target/alpha/helper.c     |  3 ++-
+>   tests/fp/fp-bench.c       |  2 +-
+>   fpu/softfloat-parts.c.inc |  2 +-
+>   5 files changed, 12 insertions(+), 11 deletions(-)
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- MAINTAINERS                    | 2 +-
- meson.build                    | 2 +-
- qemu-nbd.c => tools/qemu-nbd.c | 0
- 3 files changed, 2 insertions(+), 2 deletions(-)
- rename qemu-nbd.c => tools/qemu-nbd.c (100%)
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 0f89bf2642..f2c66d7cc3 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -4227,7 +4227,7 @@ S: Maintained
- F: block/nbd*
- F: nbd/
- F: include/block/nbd*
--F: qemu-nbd.*
-+F: tools/qemu-nbd.*
- F: blockdev-nbd.c
- F: docs/interop/nbd.rst
- F: docs/tools/qemu-nbd.rst
-diff --git a/meson.build b/meson.build
-index 1f34ed71ab..63eb4031a4 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4529,7 +4529,7 @@ if have_tools
-   qemu_io = executable('qemu-io', files('tools/qemu-io.c'),
-              link_args: tools_link_args, link_depends: block_syms,
-              dependencies: [block, qemuutil], install: true)
--  qemu_nbd = executable('qemu-nbd', files('qemu-nbd.c'),
-+  qemu_nbd = executable('qemu-nbd', files('tools/qemu-nbd.c'),
-                link_args: tools_link_args, link_depends: block_syms,
-                dependencies: [blockdev, qemuutil, selinux],
-                install: true)
-diff --git a/qemu-nbd.c b/tools/qemu-nbd.c
-similarity index 100%
-rename from qemu-nbd.c
-rename to tools/qemu-nbd.c
--- 
-2.43.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
