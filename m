@@ -4,125 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D7B3CD3445
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 19:03:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90C5ECD3445
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 19:05:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLQSx-0006qu-LT; Fri, 08 May 2026 15:02:27 -0400
+	id 1wLQVP-0007Yn-3t; Fri, 08 May 2026 15:04:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
- id 1wLQSu-0006qP-Nz; Fri, 08 May 2026 15:02:25 -0400
-Received: from mail-centralusazlp170100005.outbound.protection.outlook.com
- ([2a01:111:f403:c111::5] helo=DM1PR04CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wLQVM-0007YM-Ij
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 15:04:56 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tdave@nvidia.com>)
- id 1wLQSs-00017e-Jl; Fri, 08 May 2026 15:02:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pEuyTkOmW9yhX91E/Pd5i48OJh3lKRCM9oh0xZdKoomNcqQhX3Jt2JMlfGtx+5IqCSCj0HEyVcCPO/B6JQtAelIK0nkgco+W4XVnP64YIUpin1CFKyWX2iBefrl2F5U3bhtOxk5S2a6fMasOzaCCwvYW6LuJ2Du082k/FmwnmTy/vwqfovmrSDIpgPa+NcwqHJkuhRFvClGY94Dhdcbw/zzZcd86aE3IdSCVmIPX6+4iFsX6BMz/lbMKuw98jLAChtTxNGw1NCii5yNrhGv/UxRa0gAmlC1nQO9g5iCN+4yYb4nqE8IDAobm7GZIwLek/j2VnKzHhZMHGT3/PPK5sQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Eey7wHf/KRuPLqhlbZakh3b8sxTzhOabA8w1jyIY0FY=;
- b=fpOeP8a3RcDImz0PBcS9V+RtZC/sZYpCug9WLobK/Q6CNTHDWCxxU9ggsMdN00dsmKOBIvHjaVbvA8wq8F77mwpcbsQ76OgKTmCWPXWuXR/12KVxFZQQSr9qTQrBhzFVjIqWPkp/VBBueoPct5Zx2/ix0OuWUPXf+F2OfHBmXwsQLqxVHLstb8TMhCt3uPPqmoL2FW7umrXM2OdEh/4fWbAPl8haVOsZmD32LwZJUKyocspTM8FqwAO6xuwTXjfDsX8iDoAZiyyvofcEpsb/ailFcFn/yLnwL5moGOjL7KSWl5uU12AyXwJyvecfPFWVO9NiS5jX7xDVxag8utp6gg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Eey7wHf/KRuPLqhlbZakh3b8sxTzhOabA8w1jyIY0FY=;
- b=clMnrMwlVtOWFPg8CAnubYEUqP1sxWuUDhjaNeRiT77q8srQHKklmoEP/Z66RW3k7GQ4sm0zvhjd92+PUArZk6S4kYqCUaT5KIPqH4Yluc2wZlHBtzulqpJ9VD5hgcw7GCNrJK49/kKz5iofPBydFTgriX2pIe0RJCz5kZld6PZyM9vtBWhPdAq7cStclZ9+5C7svfFbgWkcrTELJhmaeCzkwI0yyBf/F6hiENqPOScr2pjgsbYeLOrM7NbUDg0e88LZyM3hIldHlivAmC8gB3KDW+4/dP3Fgnuy7vdq4oYCoaaMA2NjyGRH3g1HIOu7EEzQvsehENgz5uH6XZu/8w==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BY5PR12MB4179.namprd12.prod.outlook.com (2603:10b6:a03:211::8)
- by IA1PR12MB7519.namprd12.prod.outlook.com (2603:10b6:208:418::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.19; Fri, 8 May
- 2026 19:02:16 +0000
-Received: from BY5PR12MB4179.namprd12.prod.outlook.com
- ([fe80::2036:e8b:9b3:f325]) by BY5PR12MB4179.namprd12.prod.outlook.com
- ([fe80::2036:e8b:9b3:f325%4]) with mapi id 15.20.9891.019; Fri, 8 May 2026
- 19:02:15 +0000
-From: Tushar Dave <tdave@nvidia.com>
-To: devel@edk2.groups.io
-Cc: qemu-devel@nongnu.org, alwilliamson@nvidia.com, jgg@nvidia.com,
- skolothumtho@nvidia.com, qemu-arm@nongnu.org, peter.maydell@linaro.org,
- mst@redhat.com, marcel.apfelbaum@gmail.com
-Subject: [PATCH 1/1] OvmfPkg/Fdt: Honor pci-enum-done for pre-enumerated PCI
-Date: Fri,  8 May 2026 14:01:50 -0500
-Message-Id: <20260508190150.203200-1-tdave@nvidia.com>
-X-Mailer: git-send-email 2.34.1
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain
-X-ClientProxiedBy: BLAPR03CA0145.namprd03.prod.outlook.com
- (2603:10b6:208:32e::30) To BY5PR12MB4179.namprd12.prod.outlook.com
- (2603:10b6:a03:211::8)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wLQVK-0001h0-SW
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 15:04:56 -0400
+Received: from pps.filterd (m0279867.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 648G50VN1116707
+ for <qemu-devel@nongnu.org>; Fri, 8 May 2026 19:04:52 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ fUbVUEDz1w/G9LmbSIthFrmcaUgxSLfAk51GPbpkE3w=; b=Udj8PVM/9QuYMUHz
+ S2KbxfwIO8x9VCQ361L9OAbvgRmVgHwQbicluwxZ8Zl7Ky0wEC7ldpSXLUMyXXlm
+ WcDDsqaks2/Sk8Oqk3gnOyy8YMuT/Alggj9d3C8SRRPHkS58h9uXoBZxtXlUTLk6
+ 4c7Udt3aUv3aOvYkAKEx2DsmB5uA2tvUK6OaPsCJigxvuzP01MglFGTWlN/Kc67I
+ hER9rtPoDFwBEc193rHSdX8mOb/wK3x7uv4fzS5PvPXdJLYBJTf0NKisD1GVgRgf
+ Ih1yij0lSwrJDwKuTxRd2Qq8GSwjVNbsSW5cvb8EWNe8yCWrxs5ZC3H/foD0KZ+X
+ e4F4BQ==
+Received: from mail-dl1-f70.google.com (mail-dl1-f70.google.com [74.125.82.70])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e1k1pgkn3-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 19:04:52 +0000 (GMT)
+Received: by mail-dl1-f70.google.com with SMTP id
+ a92af1059eb24-12dba1e866dso1978234c88.1
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 12:04:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oss.qualcomm.com; s=google; t=1778267092; x=1778871892; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fUbVUEDz1w/G9LmbSIthFrmcaUgxSLfAk51GPbpkE3w=;
+ b=YdrGZXMAZOzwTOB8wEsa4yxe9M8ojNQdXaCa5pUMtkLp+K5HSqg+OisRa7urqTxrhP
+ Os6MrS0yU+SmAof74gpD3P9b/3PZNeeyh4LjTOd6d8iQGzVOhpO91OkkcEx5cTmKw+je
+ fKHElYCmD/Z6Trp3nEDsRXFgH9cA3jPb5wg5oIJ9Wog0nKiGwq3fssyLVaIoHMaU0dIh
+ jh0Pxc678wn9nZMOhaqsFFHRgvhjPQV7er4CiskHGmr+GfQ9pX3iWH7BhYV1m93d07of
+ xMWR6bfS9BX+5lQVEVpaQSRd0jbz3/tbpe8Mo+3p9eyYtPUToWCHgaeu4QXSU/13iL8t
+ Q6Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778267092; x=1778871892;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fUbVUEDz1w/G9LmbSIthFrmcaUgxSLfAk51GPbpkE3w=;
+ b=iYfEdp9K5eWinQ3ulXNTHAeeuMeG0xYKyKT34mvPl5IfQO7x7brZIBdGQtPGOE3cdG
+ h510amNx7KjV6d/oc4tcm9rNhoYzG+b2/bneFcOJ5aV1S66oEEViei61Ig7o4yf9NmC1
+ XOobnCldT4doGkenbRa6QINPymXENVqzdM4Klcel3Rd9zLttL7v/gLbcqJYMacatRuv7
+ 4HEMy/hUcqBDFnxfUiVQ25FfdCJvAAsrqSEyYO1U6MV01MgIG0qhp/gjp0sEcfYZtZ34
+ Z53GNzNfsKe7NW8yCUoF6MYuk9bF/+VX99rP862/yG6D2eKpzbIQaLIjRbXoAQRqvxZT
+ LHAA==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ9gRTaa8wtmRlD9PToVlBFmDyk2SbH77lE+zz70sgnKpX07NAE9dhAuIJOS3wt7m0UX1W+jJt6NiM/O@nongnu.org
+X-Gm-Message-State: AOJu0YxlUO+zbphXiKZu8kemplVKyr7n6trQlGIbys96FwCmo0uYMMJr
+ Bn3OVLS1Nv02v7t2I9ef/zkAen1mDHiINyAUxeWIWPnapIpTRZEzosu0L4hVEVaJ2gbHuG1ZAqs
+ fI5ryZeWwII3NsGyTTaLpsEo2KWq3o0caNhpPzOwvuOKh/eHMxO0+tkRu2g==
+X-Gm-Gg: AeBDietXv1Sfei9usrl54E0GJaPvq+DtMXpKrjBfewxXWumPetiYJ52G1bOkAkU9cGd
+ pnvRpgK3vnlYCy0LJJhVG4UN7d5zM4A1e8otkk0STte0hwB6tYBh/32eMn1wlTBqaDKUCfW5yjd
+ bKDsCFKenkvG7tvC4INYbMz4rRzev10io6e3aYKphR2clrEse6U2utjis9TZ90NxKLu458gkhTA
+ sWG50SvA5EoTlWQvE9ur0UkY/cckF2Ct7IOaGz8QluxkjLggKfiMOqyEM4tDHRcxdJUtRBCwo9N
+ IgB22atQXaGrgkdZ2dUKHPcBM+iJutia/54PJInQ1c13WN4sxrw+yeVoH7cUUz3wDbSDfk0+33E
+ vd2gnYWyGmpl/cQ+/R7ZqVcKwX7+pUfqolsnNGJDWMkiADg/QJLUtkkr8mX9pA4WXeLlfzxxFMX
+ x6SO/fo7ElOm0b9w==
+X-Received: by 2002:a05:7022:628d:b0:12c:9037:5115 with SMTP id
+ a92af1059eb24-1323ae99371mr3793431c88.13.1778267091728; 
+ Fri, 08 May 2026 12:04:51 -0700 (PDT)
+X-Received: by 2002:a05:7022:628d:b0:12c:9037:5115 with SMTP id
+ a92af1059eb24-1323ae99371mr3793417c88.13.1778267091152; 
+ Fri, 08 May 2026 12:04:51 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1327875a269sm3511588c88.13.2026.05.08.12.04.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 May 2026 12:04:50 -0700 (PDT)
+Message-ID: <b49f02ae-4fac-4a6e-8968-84fbbf3a6e51@oss.qualcomm.com>
+Date: Fri, 8 May 2026 12:04:49 -0700
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY5PR12MB4179:EE_|IA1PR12MB7519:EE_
-X-MS-Office365-Filtering-Correlation-Id: b0ebc7f4-b270-4220-ffe0-08dead3451ec
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|56012099003|3023799003|18002099003; 
-X-Microsoft-Antispam-Message-Info: 6ydn6UhfTf+mWXeiUF9F8CaF3mmCSM9zaenRzP9rQvOF/1+U0WIs1cSx6DRNVQXMJg4NxfmFp5KiG+KZyXYYx1M+/Kt0Vhzl3tA8wnWFhnZjzkndQc3BwvD69KeRKmIjcrzpPOCCTrikRioxC9xQOYR3FFPYD/fcwMTndJtr+X97T3s3Pf3mX081zTKscGMpQuqd55gKWrl1CoQQdRyfOhaHBtuDdCf85Fzpqg+NWTN0tWkglodPx9MpqM42kr2a9AYlixdCS5+n0BbfEjgf79pIA83Dk3RkfS1iCFsFUTCUW7WQf3O9waOhWjrHV3Wd+HBIexC5aIbqSNCyAxSufBMkcXwWVEgVar0k+qml8aFyxt7tlMLKzN4Z+Bxx3EMNLSEzQwlVKapGrsC8YCfdyVNZ3WhbfjkKofHPR7gygmrDkt9VZ33sL03A63qpv2+Y3bP3xllKWOMzZycwKqdkJpFWk+SFuSE5K07KsgnQEo9BSpXCaovjemGEU5FPbZYoIZmqfRmblkKpJ7c2MFju/l7OpScRjh6Y+QvZasgbZ6qe26V1T0wd18Bjv3yoqnoxxbgi1Bm0Vn2J6J3Y1pDjrPDn+EecQhtn7VEXmhAX89uLS95G9zoh3LzGec9MZgV0mUF+VoLuchbKkjSODo/wFG3+BXFJSlTJ3XaLToWw1ggBGgRTOrrE3hNjoiME4XiswQML0R3Voxmi8NTr2BWJzQ==
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BY5PR12MB4179.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(56012099003)(3023799003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?2/hEy/xh0G93DjsWj9JItsw1pGELf+pgphdlJ8c5kt3GpkBCp0t/wmkvrHmA?=
- =?us-ascii?Q?2d7OHSQ8zAcSsWo2U49w7sziRruBsAlurDRzPvOvMLTp1mer/oAKdTLJWAL1?=
- =?us-ascii?Q?+mXmm5F9GHc+XJ7qrnvZOVcqXPdmWrJOVlvJYDWt8L/PD3vER/zBJcaXwHjm?=
- =?us-ascii?Q?H6VG7KLiBKA7Fbrn+lBjo3lJRq9SyOhdAU20vDOkEphD6BcH3vWOkoQg4ATM?=
- =?us-ascii?Q?C9p3M7qPV1zNB57MI78iwNL0m4Yzo2pqeoXC9d5vpqNRave9z6V/DlVn4PAj?=
- =?us-ascii?Q?w5J+kpuUZ9wA0txvgNm4hhoKjhopm+OzNLYbBH+fTE9otiDjNC09a2c/ZDhO?=
- =?us-ascii?Q?S0/mrqMPoYPtHYMR2fIoKNI9ETdITPSrmbaf5GJajwB4UAwHrNrwSLUO50Qt?=
- =?us-ascii?Q?dYjQgPwsPOjlewkL6Aw9A5I/LgUtWnIRzu5gjhN8URZMgP3aCwoxGZ/gzYV4?=
- =?us-ascii?Q?IMIfQsSd82UtQyqufa/fyo+Uadtc5vA3C49fXExJVOwq91VFIZiKCuHrusjV?=
- =?us-ascii?Q?KqY+LK6so/4GJGzfL6eapBpcYkelgfmX3+hyiZOsgTh60pLrdDOdu3b3NGIG?=
- =?us-ascii?Q?RouxXxcXnGcTtEH0Uh7grHbXrytFvsBWT7NazqLWvexfkAbHOO1Q+B6SOkOe?=
- =?us-ascii?Q?PEiXHdl+AZ415VBTPJSStCKQ5iF6RzAh7GZ/2QW24xfgKUCP7LhvTqc6hH3r?=
- =?us-ascii?Q?XsKzB/iKknFknlT5StUF1Rxs7oZC1PqBtuWKkYtQXBF2nceB6DJxXKrWZfNJ?=
- =?us-ascii?Q?G3mLbetFKSwUo/6u1j6cl1MmzqVaWbjECoyb3lovc02zglQMIcXv3lxAhFYB?=
- =?us-ascii?Q?6VUwaZD+k7WnbFOHTVMvrsq7Z5eKr1SwA9zOXBR5mMObKX4bPfTc/Q+9hxER?=
- =?us-ascii?Q?/AToPyfXy5Us9xVwbYyG32pKhJRgfV6kfS8wTgJiqqV/FpHvgMnHaXuIWAEY?=
- =?us-ascii?Q?w82pRbGY8ZWes+uIgYB5MmDjicp96jSI8PZI9JOt64YoV2Aza3kw+mSABPTr?=
- =?us-ascii?Q?M0rRpf/b/VRVHOK5OUkP6+uAPfZ1CulZGwAVg1D7DGKl+m+8+aYP/ZdFH7RY?=
- =?us-ascii?Q?2Zwm2e8o4ODNVwhO1kl8GeuAuAGrpiU0ESt+vJS226n34GAyPl7lYPgnsvIM?=
- =?us-ascii?Q?Utk7Xfh+d5oNdUyVdwr8xFboO0gDN82Ys3RDn6jhGwgNAqm/O0C4c83JoWFU?=
- =?us-ascii?Q?aEFY8GV0mVM9Ing37sZ8sVX94dOi7FYP9dQk6ZBAeu6OPaYmHVh34NInvgiI?=
- =?us-ascii?Q?7IAFryRjNaeFQOy38aZyKnyYm2/QZI98Lh24DDmYeqkDsqbVFdxGAzFF7xyt?=
- =?us-ascii?Q?q/9VTs8Em0/EMtIWq7MHe3BE+AUnit6UnxVlMLse0fwWxT7Wsnca48E0/fEN?=
- =?us-ascii?Q?GMXYL8m4VokXQRgmV2sNlpktbX6apOn/qPN1szqAMn8KTrLd+lj6eceEfveq?=
- =?us-ascii?Q?3KjQQhUiwTfrRdstdu9Rbk43W6D3rAaxabmzW5Cn8YATFUSXNTd8Oqz+UzEI?=
- =?us-ascii?Q?Ki530Eqk0LAvfnqrjfXsnn2baJPuDot49EqNZY2zwbIhHk+Zd8W14Oj0RSAa?=
- =?us-ascii?Q?gLbYaoRwt0sSzGTKHCE6GBvnd23/zR4+iYbcjVjZcYoy10ZVGuq3GDz64XZF?=
- =?us-ascii?Q?2L2NJVarSUaypzDI4QEDPCdmaYuF0YE/2NCvoKqkvfNl7ceGIDIitwE9lzaV?=
- =?us-ascii?Q?vMFJy4mOsfg6sifxYP4LxAd2W42BvwSdmAJhRH/kA88jkM295xUaHIZera3b?=
- =?us-ascii?Q?Z/+IRbTI5Q=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b0ebc7f4-b270-4220-ffe0-08dead3451ec
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR12MB4179.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2026 19:02:15.8965 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6KCPDQHsm9eagKGE94NELo1WsMQt+0k/nEcSVvUcVtRaL25mg+/WWtqCHrx8QhKJmcm9qrlvdH290Y4VzE2f8A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB7519
-Received-SPF: permerror client-ip=2a01:111:f403:c111::5;
- envelope-from=tdave@nvidia.com;
- helo=DM1PR04CU001.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 2/6] qom/object: register OBJECT and INTERFACE QOM
+ types before main
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>, marcandre.lureau@redhat.com,
+ Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260505224826.2698753-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260505224826.2698753-3-pierrick.bouvier@oss.qualcomm.com>
+ <21c6ed67-ad7a-440b-b6e8-20835cacd389@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <21c6ed67-ad7a-440b-b6e8-20835cacd389@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-GUID: IQNYVqn0IQeAX0ICwKHCyrxqUfh7NaiA
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA4MDE5MCBTYWx0ZWRfX00ZgHPBEs01J
+ Fvy5k0RmIlhsqB1xwiVb/baH3PYZjc0iESso5Nv29dHhUjqVPpYmAt72aQ9R99e58FGdpYF3UWx
+ JqDjjIZ6qysQ6FT1Msw5FvluWK0ZXYSArOIpwJBJgP1wo+vD7shrClQD5CJFXzr97zQyZl0SNrx
+ 2w1zDsqH3LDGM8VJMHldruNzmd6KSyDLmJIaQUAoFBtnwgen4uXr18G6hRI5ASTdPRbK6D2HutI
+ VPXKObB0rhH1HBFKjsR3XWNBxCMiYcipcSebAx9BPAeNb2P385Xfm3glRx3q6IPgadyDKEUdDE9
+ 71WX76o5sevAFVTyg7L3O96ZYMUXBOveDBU3hNdx+pbO/T1t60nsfpaeriwtCNw1/iYAIqRr5k3
+ zOvjIv4XL7TDhfyb24YqqVhx3aFRmlaTMo7GSgosW7l5TSNayS05U20UDxOAqokqVHli3AU8ccq
+ lfHuFbAgBJiEQloD+jw==
+X-Authority-Analysis: v=2.4 cv=COwamxrD c=1 sm=1 tr=0 ts=69fe33d4 cx=c_pps
+ a=SvEPeNj+VMjHSW//kvnxuw==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=eoimf2acIAo5FJnRuUoq:22
+ a=EUspDBNiAAAA:8 a=KKAkSRfTAAAA:8 a=cilDik7dx2sqUwjTVvYA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 a=Kq8ClHjjuc5pcCNDwlU0:22 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: IQNYVqn0IQeAX0ICwKHCyrxqUfh7NaiA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-05-07_02,2026-05-08_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 clxscore=1015 bulkscore=0 priorityscore=1501 spamscore=0
+ phishscore=0 suspectscore=0 malwarescore=0 impostorscore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605080190
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,134 +158,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ARM FDT PCI producer path does not preserve the platform
-PcdPciDisableBusEnumeration value. After parsing the PCI host node
-from the device tree, it always sets that PCD to FALSE. This is
-reasonable when firmware must discover and assign PCI resources
-itself.
+On 5/8/2026 11:55 AM, Richard Henderson wrote:
+> On 5/5/26 17:48, Pierrick Bouvier wrote:
+>> Those types are special, as they are the base of all other QOM types. In
+>> next commit, we'll introduce an extra step in module initialization for
+>> target-info-* types.
+>>
+>> However, those types depend on TYPE_OBJECT, which is only registered
+>> at MODULE_INIT_QOM step.
+>>
+>> To avoid having to introduce another step, and modify all code calling
+>> module_call_init(MODULE_INIT_QOM), we simply register those base types
+>> directly in the static constructor, before anything else.
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+>> ---
+>>   qom/object.c | 4 +---
+>>   1 file changed, 1 insertion(+), 3 deletions(-)
+>>
+>> diff --git a/qom/object.c b/qom/object.c
+>> index f981e270440..a5d268d0722 100644
+>> --- a/qom/object.c
+>> +++ b/qom/object.c
+>> @@ -2839,7 +2839,7 @@ static void object_class_init(ObjectClass
+>> *klass, const void *data)
+>>                                     NULL);
+>>   }
+>>   -static void register_types(void)
+>> +static void __attribute__((constructor)) register_types(void)
+>>   {
+>>       static const TypeInfo interface_info = {
+>>           .name = TYPE_INTERFACE,
+>> @@ -2857,5 +2857,3 @@ static void register_types(void)
+>>       type_interface = type_register_internal(&interface_info);
+>>       type_register_internal(&object_info);
+>>   }
+>> -
+>> -type_init(register_types)
+> 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> 
+> As a followup QOM improvement, we could use this constructor to
+> explicitly initialize type_table, and drop type_table_get() and its
+> continual checking for NULL.
+>
 
-However, there are setups where the hypervisor (e.g. QEMU with
-pre-enumeration) has already performed PCI bus enumeration and BAR
-programming and expects firmware to preserve that configuration.
-Always forcing the PCD to FALSE on this path removes that option,
-so EDK2 will re-enumerate the bus regardless of hypervisor intent.
+This sounds like a reasonable idea. There should not be any other QOM
+type registered with a static constructor (previous patch is the only
+occurrence I found after review), so we should be safe regarding non
+deterministic call sequence for static ctor.
 
-If the FDT PCI node contains "pci-enum-done", set
-PcdPciDisableBusEnumeration to TRUE so EDK2 can treat the topology
-as pre-configured. When absent, set it to FALSE and retain the
-previous behavior (full firmware enumeration).
+I'll add this in v5.
 
-Also, mark the root bridges with ResourceAssigned based on the
-PCD in FdtPciHostBridgeLib so the PCI bus driver does not
-re-enumerate the bus.
+> 
+> r~
 
-Signed-off-by: Tushar Dave <tdave@nvidia.com>
----
-This patch accompanies the QEMU RFC series "hw/arm/virt, hw/pci:
-PCI pre-enumeration and fixed BAR allocation" posted to qemu-devel:
-https://lore.kernel.org/qemu-devel/20260508183717.193630-1-tdave@nvidia.com/
-
- .../FdtPciHostBridgeLib/FdtPciHostBridgeLib.c |  8 ++++-
- .../FdtPciHostBridgeLib.inf                   |  1 +
- .../FdtPciPcdProducerLib.c                    | 30 ++++++++++++++++++-
- 3 files changed, 37 insertions(+), 2 deletions(-)
-
-diff --git a/OvmfPkg/Fdt/FdtPciHostBridgeLib/FdtPciHostBridgeLib.c b/OvmfPk=
-g/Fdt/FdtPciHostBridgeLib/FdtPciHostBridgeLib.c
-index 9af8c21a21..d84d15617d 100644
---- a/OvmfPkg/Fdt/FdtPciHostBridgeLib/FdtPciHostBridgeLib.c
-+++ b/OvmfPkg/Fdt/FdtPciHostBridgeLib/FdtPciHostBridgeLib.c
-@@ -444,7 +444,7 @@ PciHostBridgeGetRootBridges (
-   PMemAbove4G.Base  =3D MAX_UINT64;=0D
-   PMemAbove4G.Limit =3D 0;=0D
- =0D
--  return PciHostBridgeUtilityGetRootBridges (=0D
-+  PCI_ROOT_BRIDGE  *Bridges =3D PciHostBridgeUtilityGetRootBridges (=0D
-            Count,=0D
-            Attributes,=0D
-            AllocationAttributes,=0D
-@@ -458,6 +458,12 @@ PciHostBridgeGetRootBridges (
-            &PMem,=0D
-            &PMemAbove4G=0D
-            );=0D
-+  if (Bridges !=3D NULL) {=0D
-+    for (UINTN Index =3D 0; Index < *Count; Index++) {=0D
-+      Bridges[Index].ResourceAssigned =3D PcdGetBool (PcdPciDisableBusEnum=
-eration);=0D
-+    }=0D
-+  }=0D
-+  return Bridges;=0D
- }=0D
- =0D
- /**=0D
-diff --git a/OvmfPkg/Fdt/FdtPciHostBridgeLib/FdtPciHostBridgeLib.inf b/Ovmf=
-Pkg/Fdt/FdtPciHostBridgeLib/FdtPciHostBridgeLib.inf
-index 26b38b5966..636871866a 100644
---- a/OvmfPkg/Fdt/FdtPciHostBridgeLib/FdtPciHostBridgeLib.inf
-+++ b/OvmfPkg/Fdt/FdtPciHostBridgeLib/FdtPciHostBridgeLib.inf
-@@ -41,6 +41,7 @@
- [Pcd]=0D
-   gEfiMdePkgTokenSpaceGuid.PcdPciIoTranslation=0D
-   gEfiMdePkgTokenSpaceGuid.PcdPciExpressBaseAddress=0D
-+  gEfiMdeModulePkgTokenSpaceGuid.PcdPciDisableBusEnumeration=0D
- =0D
- [Depex]=0D
-   gFdtClientProtocolGuid=0D
-diff --git a/OvmfPkg/Fdt/FdtPciPcdProducerLib/FdtPciPcdProducerLib.c b/Ovmf=
-Pkg/Fdt/FdtPciPcdProducerLib/FdtPciPcdProducerLib.c
-index a3b09e547f..f5e30d8852 100644
---- a/OvmfPkg/Fdt/FdtPciPcdProducerLib/FdtPciPcdProducerLib.c
-+++ b/OvmfPkg/Fdt/FdtPciPcdProducerLib/FdtPciPcdProducerLib.c
-@@ -96,6 +96,9 @@ FdtPciPcdProducerLibConstructor (
-   RETURN_STATUS        RetStatus;=0D
-   UINT64               IoTranslation;=0D
-   RETURN_STATUS        PcdStatus;=0D
-+  CONST VOID           *PropertyPtr;=0D
-+  UINT32               TempLen;=0D
-+  BOOLEAN              DisableBusEnumeration;=0D
- =0D
-   PciExpressBaseAddress =3D PcdGet64 (PcdPciExpressBaseAddress);=0D
-   if (PciExpressBaseAddress !=3D MAX_UINT64) {=0D
-@@ -135,7 +138,32 @@ FdtPciPcdProducerLibConstructor (
-     if (!EFI_ERROR (Status) && (RegSize =3D=3D 2 * sizeof (UINT64))) {=0D
-       PciExpressBaseAddress =3D SwapBytes64 (*Reg);=0D
- =0D
--      PcdStatus =3D PcdSetBoolS (PcdPciDisableBusEnumeration, FALSE);=0D
-+      //=0D
-+      // If the FDT node has "pci-enum-done", the host (e.g. QEMU) has alr=
-eady=0D
-+      // run PCI enumeration and BAR allocation; allow PcdPciDisableBusEnu=
-meration=0D
-+      // to remain as set by the platform. Otherwise force it to FALSE so =
-EDK2=0D
-+      // performs full PCI enumeration.=0D
-+      //=0D
-+      PropertyPtr =3D NULL;=0D
-+      TempLen     =3D 0;=0D
-+      Status      =3D FdtClient->GetNodeProperty (=0D
-+                      FdtClient,=0D
-+                      Node,=0D
-+                      "pci-enum-done",=0D
-+                      &PropertyPtr,=0D
-+                      &TempLen=0D
-+                      );=0D
-+=0D
-+      DisableBusEnumeration =3D FALSE;=0D
-+      if (!EFI_ERROR (Status) && (TempLen > 0)) {=0D
-+        DisableBusEnumeration =3D TRUE;=0D
-+        DEBUG ((=0D
-+          DEBUG_INFO,=0D
-+          "  Found pci-enum-done property, disabling full PCI bus enumerat=
-ion\n"=0D
-+          ));=0D
-+      }=0D
-+=0D
-+      PcdStatus =3D PcdSetBoolS (PcdPciDisableBusEnumeration, DisableBusEn=
-umeration);=0D
-       ASSERT_RETURN_ERROR (PcdStatus);=0D
- =0D
-       IoTranslation =3D 0;=0D
---=20
-2.34.1
-
+Regards,
+Pierrick
 
