@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DFBECD3436
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 16:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F51CD3436
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 16:21:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLNw7-0001Ms-VW; Fri, 08 May 2026 12:20:23 -0400
+	id 1wLNw6-0001LK-9I; Fri, 08 May 2026 12:20:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wLNw6-0001LI-5P
- for qemu-devel@nongnu.org; Fri, 08 May 2026 12:20:22 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1wLNw4-0001Kh-Dj
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 12:20:20 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wLNw4-0000xG-D7
- for qemu-devel@nongnu.org; Fri, 08 May 2026 12:20:21 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-48a563e4ef7so20305085e9.0
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 09:20:19 -0700 (PDT)
+ id 1wLNw2-0000wr-JT
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 12:20:20 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-44b330c5cc6so1583975f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 09:20:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778257219; x=1778862019; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778257217; x=1778862017; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LTDqMeLcyGj/NXygQntrcbmLjmm6kj/aNSi917QkrfA=;
- b=WwhJejmzrfOEPhii6BcDtt8HGwAXEzXDeNiSxnxDGgEmzX3S0jvi46g360z0nsDG3S
- p4BtLNFBx7RB2hldaxT+7geY6i5wG2PZLXs2dLxwKnEwA33omlHzWCxaTvlajKSXT4Dy
- YhWl3GgdZffV00SCLE2Sol7NTBPh2k/Kl3MeaOydx7Xsf5gdf37z7bkyWbg9/5I4/hYZ
- jmJ2RXArFNmLt5WnciFbIFXIuviWjNYI7h8zKAqT9tIREgkYKjfoiVjy7FNiVEPtuAn+
- WzqdxKq00tZn6/dhlIVnOdVo4xppWuyV4EkoXRcNRxoXwvYnk5kszqN0+uABvpoAKvXT
- 7bow==
+ bh=tHeQ0RvfaPoCSBPza9VvcReWRUsEKtq1mtgPNpsP4iY=;
+ b=NYw2bYXcgJY91FHw2170YC3WXihz6tI/AhHejIGCchsojN2K1KhOYoLKpdKSONmlc6
+ rDRmOS8WhMgln8o2hU/GjWULUzEqiUk7xolA9qJhDT+hyyS0cMfEEYcImQDz/x5/AEkO
+ b8EaNbX7AmsKEl4KSVE3DeeVYj2+a1yS2ffnAqvoaAuHc18HVKHw49+pxmeczSNTzv/x
+ mT93zScdqYZ2P5fwbznN08mY+FVYou41RjXSvsaPfULufY7Ll4+zqtBkjiSZvf55ID5O
+ 4c0KrSHCf/LG3Xfhr8dS3M6vHw52zqZyPLnzPUGG5gT69cC/ELEOmRLfRulTDaihoSI7
+ 9Orw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778257219; x=1778862019;
+ d=1e100.net; s=20251104; t=1778257217; x=1778862017;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=LTDqMeLcyGj/NXygQntrcbmLjmm6kj/aNSi917QkrfA=;
- b=eNH1IrhHxUe0WGqnJvGpiWBndLl0jPoVBP/1ICA/cs8Dmy7m+Vf3BhjvAr2bhgNVug
- arQj6iMSs4DYpYUoEAk1G7EixyRi0FCHddArcVCn+iL4n+uVynToG0CLzV2JwDDQZhOX
- rimPXdH3rzdNrld/xDUnm6vlKwkjWv4ugXHqlHHcotOSk7ff2oToMZXWxztpfA8Q0PhA
- wO9mXqYq137T2P0o6cTFOLxbaxq1iEime6FFVCnVykPVKpi6G57Gw+qsXLOjPmE6WE2p
- lnY6IO697npBnCOZOVKO602GpJH+gUdJsuPj7ea/zfb4lW07uIEB36gvcTWqvHWnHS4/
- LHBA==
+ bh=tHeQ0RvfaPoCSBPza9VvcReWRUsEKtq1mtgPNpsP4iY=;
+ b=MiLpE7EwmtaAoYgOiTqBPE09ikiEk4XRyC6kuKm9p6E27V1YMFPbNTj7qhX6wQIn/W
+ jkXk4XeKHolIPtC+P0iyqKhBdMTpcZ7FyNMWbomuUaO1v1CpVDZN2zqgnpHaecqgwsx5
+ HSQPUNqdSNHC70hV50PvAQfeA8U5clFtHfHPtLfVIlp1qXWG/MBAiUx4ySxdSCwuX+7t
+ bEOXme+zbVCyodAR+E1NQ6FAkEwo84/lclf555T66ujbTwvGsujmJOp6bYmnRshOTr6A
+ 9I1eYxGv+9DIaiwhJqsZasYX9ncD5uOVjzcpEDjMxVIKynEroPmk4thLvp4Bp76gGiTt
+ a2qg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8/M7clxFkcc7/58kzcbhdU/ZHSnq2XMy8p8c5qpAL//FDzdLrgm3T2ucEvanYys3aE2MNJL+PLfTSA@nongnu.org
-X-Gm-Message-State: AOJu0YxBU9IRadxG/u8SkJUgfa4KSeSgO9BcRzfFBRJmuC4/VlG40nn1
- kCieZ6bur8+59bs7Zzp3a/fEYgtYfFzQlsC8fXc2ePMwwqStp0YZfHakd5G+Maw+oDk=
-X-Gm-Gg: AeBDiesltlbNfpU5AAT9yzVTNhW3juF9rjn6MB6YBnLMnRZ/YQ+d7qsGnty5v4rhpkn
- hbVKW5s6XsURjgjIzn1KIINbVslFrPCCdkzsE3rZ4rwagyMhMsBswfNMVmL9cuzonS0pyrmEw0c
- CTMTl/bOgmmSawyIUjd1Q8/LaE4jHRBNDkHXstzzaFRAcT+YkrJ2t6kgbXwJuzecOAYCoGB4Lxm
- IitxopJ3abDdD8Tx9mnIDo0QrdNk9I/kEeo5j1nelSq+AiqlRvj+aknwNFcie1LDcQLOW4EQic7
- 4JGRQlj7FlpFzc2rSWA/5J2HGJNKOVbmHQ7sOktUhIlRzeSp/BaBoU44c+SYncwP1u1GcEzozbS
- 8Spg3kESh0yxMzbCzM4yR4h5cesCbb8jEXF4jODvgK+BvM9pbqcn9QYgSEgwENzynoyXLgdwj48
- iDvi74PJoYQY/hPmAXuGqyC9NtN4cjkAlaq1iHC5w+DNlqgleDE6lcei+ATnTp41a6eq2/QHg2L
- qkAb5yHQ9U51ovhXe7VVpQAY8VuMhY=
-X-Received: by 2002:a05:600d:10:b0:489:a4:e555 with SMTP id
- 5b1f17b1804b1-48e51f36fc6mr176894445e9.21.1778257218794; 
- Fri, 08 May 2026 09:20:18 -0700 (PDT)
+ AFNElJ/Na/eSf//Ztz3o0jQjmz4G/pz0xQ5hufnk7y2eu9CrdOqC2X/MxyQ1OC7K6qRiP3YcEMMA7IrwloQp@nongnu.org
+X-Gm-Message-State: AOJu0Ywvq8EVH1jXhy7xG26W1e9/0XXmqanOTOAhX/4uYatUCdGPVLsq
+ wCXUwkYOu7QSpIbBXEGvk9xANL+jKqjhoLOE0Bob8mVMNbeUaY8CDI9LBWrWx72h3Rs=
+X-Gm-Gg: Acq92OHVVsnf3+THeh+t5ciAYe9n6sZ4gAhAVDLRlrre8p3ISEX5DUh/6eyWHjaNHpL
+ jDn3KIPher5txlNRXvTm02cj8f3Hp4dyXUQ0mE/wJnbdFOJK9W5QLEpC1d1Uf2+2hzO4X3yQ7F6
+ MAZYKOFApI49wyZLQCwF0LenStROwb6VGBYyWihBl9e2iyvi8uKiIaKUiibWu0z64UT8+e2X5X3
+ QE+uln4utocxv+5qa1rTbJLqSqfGTUGze2xcvJlRMye5XgfPIYWKJviY4Jwi4NpUtHaeKehHIGY
+ UqD7a8viYCr1T9pziMEN16J0bkMnMdpd5P7BGuIYvn37eW1RxKpr4oheJJmDGvQFZs/vTGJyxCY
+ BSMreXb+OvrVg2zjIIYDexgo+oY4HrtHFJr14JhaVnBbR1g8mwP4suiIfvJ+P6ZRgmi/4JeH1J3
+ ISgGQjcGS1lmBHKMIXNU5hnBeXLzKuDi16VI9V0nKZtyDot9Qa/MzDzgjmRAv2Q+aPUX5iWXu3j
+ JBhyPDoAMWIS32GJ5cNqcq49hYodJI=
+X-Received: by 2002:a5d:5d03:0:b0:441:1c95:17e7 with SMTP id
+ ffacd0b85a97d-4515b5243efmr20254181f8f.15.1778257216862; 
+ Fri, 08 May 2026 09:20:16 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548ec6aea4sm6226998f8f.10.2026.05.08.09.20.17
+ ffacd0b85a97d-4548ec6aea4sm6226998f8f.10.2026.05.08.09.20.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 May 2026 09:20:18 -0700 (PDT)
+ Fri, 08 May 2026 09:20:15 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 3/4] hw/display/exynos4210_fimd: Use LOG_GUEST_ERROR instead
- of hw_error()
-Date: Fri,  8 May 2026 17:20:12 +0100
-Message-ID: <20260508162013.2751001-4-peter.maydell@linaro.org>
+Subject: [PATCH 1/4] hw/misc/bcm2835_control.c: Don't assert on local timer
+ zero reload value
+Date: Fri,  8 May 2026 17:20:10 +0100
+Message-ID: <20260508162013.2751001-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260508162013.2751001-1-peter.maydell@linaro.org>
 References: <20260508162013.2751001-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,41 +104,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The exynos4210_fimd device model uses hw_error() in several places
-for "the guest set this register field to something out of range";
-update to the more modern LOG_GUEST_ERROR.
+The bcm2836 local timer has a basic "counts down, fires at zero,
+and reloads to programmed value to count down again" functionality,
+as documented in
+https://www.raspberrypi.org/documentation/hardware/raspberrypi/bcm2836/QA7_rev3.4.pdf
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3405
+The documentation is very sparse and doesn't say what actually
+happens if the guest programs the reload value to zero.  Currently we
+trip an assert in this case.
+
+Instead, log this as a guest error and disable the timer (which seems
+a reasonable guess -- effectively the timer will stop counting).
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3395
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/display/exynos4210_fimd.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ hw/intc/bcm2836_control.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/hw/display/exynos4210_fimd.c b/hw/display/exynos4210_fimd.c
-index a91f04aaf7..0c9e42ec52 100644
---- a/hw/display/exynos4210_fimd.c
-+++ b/hw/display/exynos4210_fimd.c
-@@ -533,7 +533,8 @@ exynos4210_fimd_palette_format(Exynos4210fimdState *s, int window)
-             ((s->wpalcon[1] >> FIMD_WPAL_W4PAL_L_SHT) & FIMD_WPAL_W4PAL_L);
-         break;
-     default:
--        hw_error("exynos4210.fimd: incorrect window number %d\n", window);
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "exynos4210.fimd: incorrect window number %d\n", window);
-         ret = 0;
-         break;
-     }
-@@ -757,7 +758,9 @@ exynos4210_fimd_blend_pixel(Exynos4210fimdWindow *w, rgba p_bg, rgba *ret)
-             blend_param[i] = FIMD_1_MINUS_COLOR(bg_color);
-             break;
-         default:
--            hw_error("exynos4210.fimd: blend equation coef illegal value\n");
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "exynos4210.fimd: blend equation coef illegal value\n");
-+            blend_param[i] = 0;
-             break;
-         }
-     }
+diff --git a/hw/intc/bcm2836_control.c b/hw/intc/bcm2836_control.c
+index f1deafaf7a..d6c6057cd2 100644
+--- a/hw/intc/bcm2836_control.c
++++ b/hw/intc/bcm2836_control.c
+@@ -197,12 +197,21 @@ static void bcm2836_control_local_timer_set_next(void *opaque)
+ {
+     BCM2836ControlState *s = opaque;
+     uint64_t next_event;
++    uint64_t reload_value = LOCALTIMER_VALUE(s->local_timer_control);
+ 
+-    assert(LOCALTIMER_VALUE(s->local_timer_control) > 0);
++    if (reload_value == 0) {
++        /*
++         * Spec doesn't say what happens in this case; treat as a
++         * guest error and stop the timer running.
++         */
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: local timer reload value is 0\n",
++                      __func__);
++        timer_del(&s->timer);
++        return;
++    }
+ 
+     next_event = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) +
+-        muldiv64(LOCALTIMER_VALUE(s->local_timer_control),
+-            NANOSECONDS_PER_SECOND, LOCALTIMER_FREQ);
++        muldiv64(reload_value, NANOSECONDS_PER_SECOND, LOCALTIMER_FREQ);
+     timer_mod(&s->timer, next_event);
+ }
+ 
 -- 
 2.43.0
 
