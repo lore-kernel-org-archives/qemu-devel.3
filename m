@@ -4,108 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AF9CCD3447
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 12:09:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C06ACD3447
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 12:11:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLK0U-0008HW-VX; Fri, 08 May 2026 08:08:39 -0400
+	id 1wLK2f-0000bz-LE; Fri, 08 May 2026 08:10:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wLK0P-0008GY-RX
- for qemu-devel@nongnu.org; Fri, 08 May 2026 08:08:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1wLK0M-0006wo-Uf
- for qemu-devel@nongnu.org; Fri, 08 May 2026 08:08:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778242108;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kT24KiX6bIOQJcUn/CX+tGn/Ogd+de60J2c97e6J6DM=;
- b=iWCBUXdjKtK4gjQB8KcK3bWzCNecrM4LyfF3/GVVo8Gs8rxHYYE174c9gxmWVMr816RGf/
- Q90k01DBrQGbIdwfCFcaxuY4MmRCFuxl3pb4nZofAvpTVp9Sfso9ziWpXQU/Tw061hKv7V
- 9F2kwX4dGYUL5wQtOkgubby/HhZzUF8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-492-xTJVR6M2PImSxLx-pGa1iQ-1; Fri, 08 May 2026 08:08:27 -0400
-X-MC-Unique: xTJVR6M2PImSxLx-pGa1iQ-1
-X-Mimecast-MFC-AGG-ID: xTJVR6M2PImSxLx-pGa1iQ_1778242106
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-48e51dc35a3so15348875e9.1
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 05:08:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778242106; x=1778846906;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wLK2W-0000bE-JC
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 08:10:46 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1wLK2N-0007Wj-4Z
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 08:10:40 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-651c366f7efso1993871d50.1
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 05:10:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1778242233; cv=none;
+ d=google.com; s=arc-20240605;
+ b=lyCuPlmT98G4zgfq7jFqSrsrxAfif9xTCoOY78lc8vbx9p8iFXAJSSX88ASjBwuwuB
+ vOI1UoFP+RWWXMQGP2AWEceFYCd56fODsgf1ehy6VNHbD+ydi6yvQcWJmijmugx2ct21
+ iOwne9o2RZBElHMpYt8no5LUFbHbSDpt75nuhL/JNHyYUDxEPuAAMlmxWXydbI9sY9tG
+ /0YaaBt8ErgUDcxtld387Dg7TD6cTiVuGTOiQ2zJrkJEY+rsxrYvD5NqeFVHHJofT//E
+ xSSqlzWH9xvwArYzTIdClc2LpYd6MYKiAX1J8ugvAxLW8W/jraBav40VYzOBDwyVNlxR
+ jFwg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=FCnMFxPWcz83WnTu6jqJklTu3YcuzvxcDSZE9YHOY4M=;
+ fh=AVu3RYwucn/eu+sAIgNML/anFII4a1bVzPPlkmENQ84=;
+ b=ZwUlLe2W/9hZGq5XJSVu4be2Xoe+MYK1e+n8p5PJglO5298+2O7wtuOfL+2lhj+mxS
+ zVXkaGPZPcj3iyG3DJ3q3viMlC7gKiYlFvyx0D0dMWA5z1KRTm/xr8aUKuqHMd5Ai51A
+ 2/B+FAkWPYVDeO9PxUIDwlvEmp+zYkjDLTJzuK8ZDKYTCms2C/qmKU+CQ+jGfdebBmT2
+ xcsSjcWgGXWyxr5/qmx3nVIVUdcr1lzxzTgSMuzpxmjAVleu1PORNhsTgTDp1JODfmyd
+ 8CWUYFWp1QehDy+WvU712JM3OIRC0M3i26MAFHYbIDcyPPTns62RW7fddCtvYcbZZBLr
+ eFsw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778242233; x=1778847033; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kT24KiX6bIOQJcUn/CX+tGn/Ogd+de60J2c97e6J6DM=;
- b=crrMf+cT1uX5ikYw5LEb9iX6fI5e+KmAHVB5cqYxG4QXfSXmMVlqy7SAuZ+GIPHIDC
- YxA6OfImXM5Vo6eQxhCLqFSxyoT8gcHu3CfVUMP8cA9E4Pbi5tx6kxASo1kTf9D8qs2y
- +18QRvGMFrGYnndEwi/z+GCovSG5oLIvUAllq6SZ/LO9LU1vteO+RGKXuMLuYR70cCDW
- BQOhYKj81ARUblRPka2QwMs3w/ZwpUWFGT3qTn9CRjdDVbagKb/X5nJGy97JdzwqkIFy
- LCGW/8wURq6kRtCXs7fJ+Lw5L+ngVC6LA+G0yTfud0+Grxxd+hE7pcLnJ4RWCzHSU4Zq
- KGmQ==
+ bh=FCnMFxPWcz83WnTu6jqJklTu3YcuzvxcDSZE9YHOY4M=;
+ b=qkT5+GFpWGGZeJegeeJ4rCZ1zKvn5n0XX2kbvRBbg15bGEkxai3L4YR/y/f+qEo/a7
+ Hy4fZUtnJNIMj8vLsnLzjLuLmsNtpvzx8OO1IJlpxeyDMNRqdZCoitdC95sjiGIsTLP7
+ AuvP8tmqWZHu1eoX747jc561xGNtLYTF6gWaXDaVQOBNeTpNFRT+S1+T/f4V1IiNCfte
+ l0f81gmwYoBRiOTWVsUuCPL9E+2sKM3yrq8j4D3J94ddwIFsw9nlo5ue6m4LF2kZSFdR
+ /Z6X1macNhdBwoWyRdGCPX8ogtYQUmDaYHDN+PVyVHXbCCJgYrY/YiKiGjpdP1uM4Wo3
+ TtbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778242233; x=1778847033;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=FCnMFxPWcz83WnTu6jqJklTu3YcuzvxcDSZE9YHOY4M=;
+ b=ReZSacMZBKySAZK9vyB64J2/9BseHKSxLFyGR86N1+gdCkI/bAmV9bjNebEgZIbCQu
+ f5Zg/1poTC5+Gc/NW4eX0h78AEanh4MvAAcQm4tvaMyqsrVE+vEysSi4h3ybDstlYO8K
+ ila4Tj3j48NTo3wmnElIIfNLl/W2ZRIyjY7OqIlznNKyg1UnaPVmABw2vKI4yhqSFcw1
+ NML6O/Tg+pUgKI9vU/8vC5+TEAWeJK9tgSZJGmQ4vxiqlcLs6A/F6SYpWXhDbe6pZ04w
+ dHhy4tnU0YFwEGNLEdnisDwmxGdqRTIPhC0fTfR1BZU+GVy63gWCxV/5DWx6D031UXBP
+ cLVg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ+Mr/7a/y6Tsmd8fSccjpMO7SYzoAaKSk1cZ7tr7fMcBwcpOk89w1UIQ4kNQk0dZQBIyDM1/fvlLXfC@nongnu.org
-X-Gm-Message-State: AOJu0YzwRllsoQNFIkbNSBixXcg+8A+vlrnjrJkZkE9HEUF9r1pl04zO
- pYPzJUNRSLqWynPttSQq2Jd72HaYKElFfQ81vkEosY6MISq/CjtzmhHDJhIoh6OXJJ3mnTn9SMe
- FDAV6OnMBU8VPsY5IAvvTmTL8WKCV6RV34M42yaTusdNtjOV7GjkH1y/C
-X-Gm-Gg: AeBDiesOViKGKEJABbFo0oNTt9foHcCqRztP9BilGhCs39AKiCEmk4MePBHkZNSbQih
- Axn8SXhm98CgzFpmiig+6WE4H0IdlKPc/zQ/30Puns76S3X159NWkxkUGFxiHEROUZse+y32JXw
- OI3oj8slTlM8y0rROicWJMRRv6yJzL5ZeY3LOu0C8PSypShtUIVabZobjYpudwhAu990sYlKbOU
- rU493SPML39JHTgvqTxWEruBDMvzYYLW4oAYAqlQo3caHcKGCNi8xjjUBklt1ULeY1JjbeG+Xu/
- DwaL0sbBR8KFkuM7HcSD4yzcy5OKc/hkNJQzjEIVEOVJrQ/bz8qSdp8eQA07X0LeaIEFHyYn2N3
- PFHCrKg/wJtIR32EAuxIqoxBIUA3uVii407ZnOCbC7+cjWxPtUwW9vPsyr6/CCO86KIEowA==
-X-Received: by 2002:a05:600c:470a:b0:488:a639:b772 with SMTP id
- 5b1f17b1804b1-48e51e15485mr195442475e9.7.1778242105905; 
- Fri, 08 May 2026 05:08:25 -0700 (PDT)
-X-Received: by 2002:a05:600c:470a:b0:488:a639:b772 with SMTP id
- 5b1f17b1804b1-48e51e15485mr195441735e9.7.1778242105283; 
- Fri, 08 May 2026 05:08:25 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e642d1b70sm19942565e9.2.2026.05.08.05.08.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 May 2026 05:08:24 -0700 (PDT)
-Message-ID: <cfdc0d2e-59ed-4460-adb2-23dee2ca157b@redhat.com>
-Date: Fri, 8 May 2026 14:08:22 +0200
+ AFNElJ8rDVXeiTd6JBvParYNa22F9QcX4pSJKrX1VcLZFi/L1OMmQftSpzcwunmcHp4ghBAj1ySX92dnWA2Q@nongnu.org
+X-Gm-Message-State: AOJu0Yx+WouNR3koeUiXRNH3lmUx/2z21uzVzZh+T/k5RJ3ZGcBQeWz7
+ 8JSJGnwIlKvGRmK6Uv0Ah/ZGvCs0CIf00JsqysO6AA4zGHf7/0MCvuAdywgtPQzQ6tC4xvW7w/k
+ x91n5AIv7UY+w4ca4tQrNjrRdv3FcrsgiWNXdRcMG0g==
+X-Gm-Gg: Acq92OG3KFgLJ2/+Wk0EVmH1Vv3IhR586Lv5IiZom3seDq8N8W68GxXjUg1+XwoInfo
+ It5Hg3bqf/b8qMTkKK//+QDEldKuTkQbgkQtMcCEH3DITzAJI6uguMauM4Pt/+DWUpiGDo+qD0L
+ PREMbL3SuvWXUBBvejXv9NA8SWu8ygttXKq/S9MkbnWL7inQhw/RXUn1BJLVYWhKsaZ9D+U+0Za
+ HsBv13KrzWI2b/Gy9x3BURryaKAE1QZlMrt9kU7/YfFsv068OdgonqE6cUImJnJjq72zzIdsvc/
+ PE98s0Z9LCG9jq4otpVuWN1GwuLsR+QpcIhJ8d4XH0Sd6SYHOsUc5nGK1ipJUbwaLrkjSvGFxBz
+ 6xw==
+X-Received: by 2002:a05:690e:120b:b0:64e:f106:60ee with SMTP id
+ 956f58d0204a3-65c799d57c0mr11671279d50.55.1778242232406; Fri, 08 May 2026
+ 05:10:32 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/7] qemu-options.hx: Support "auto" for accel SMMUv3
- properties
-Content-Language: en-US
-To: Nathan Chen <nathanc@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Shameer Kolothum <skolothumtho@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
- Nicolin Chen <nicolinc@nvidia.com>
-References: <20260422204335.23116-1-nathanc@nvidia.com>
- <20260422204335.23116-8-nathanc@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260422204335.23116-8-nathanc@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+References: <cover.1777571962.git.matyas.bobek@gmail.com>
+ <1B6ED5DC-6808-4A41-B8FA-B2C97C5C8933@gmail.com>
+ <CAFEAcA9kQNdx=gwSd_Ec=R2nwegT1R-BEiC9yXvfr23VJHDZiA@mail.gmail.com>
+ <936E6AF6-32BA-4236-B8A2-0A8E8748D9C1@gmail.com>
+In-Reply-To: <936E6AF6-32BA-4236-B8A2-0A8E8748D9C1@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 8 May 2026 13:10:21 +0100
+X-Gm-Features: AVHnY4JrGTYDc7zOIr6E9sjhStbzmsKbno1e2DoGqljKofnwcHTBRxQAsVlNITg
+Message-ID: <CAFEAcA95RcGhhN8ZqVeOgRyhRqSar23EnJhCjVgKBwoqXBJwjw@mail.gmail.com>
+Subject: Re: [PATCH v3 0/7] hw/arm/sabrelite: Add FlexCAN support
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: =?UTF-8?B?TWF0ecOhxaEgQm9iZWs=?= <matyas.bobek@gmail.com>, 
+ qemu-devel@nongnu.org, Matyas Bobek <bobekmat@fel.cvut.cz>,
+ Pavel Pisa <pisa@fel.cvut.cz>, 
+ qemu-arm@nongnu.org, Marc Kleine-Budde <mkl@pengutronix.de>, 
+ Oliver Hartkopp <socketcan@hartkopp.net>,
+ Nikita Ostrenkov <n.ostrenkov@gmail.com>, 
+ "Daniel P. Berrange" <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,106 +124,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-Hi Nathan,
-On 4/22/26 10:43 PM, Nathan Chen wrote:
-> Update documentation now that "auto" is supported for accelerated SMMUv3
-> properties.
+On Tue, 5 May 2026 at 21:21, Bernhard Beschow <shentey@gmail.com> wrote:
+> Am 5. Mai 2026 18:41:52 UTC schrieb Peter Maydell <peter.maydell@linaro.o=
+rg>:
+> >On Tue, 5 May 2026 at 19:03, Bernhard Beschow <shentey@gmail.com> wrote:
+> >> I guess the only open issue is the licensing of struct FlexcanRegs [1]=
+ which originates from Linux? How do we proceed here?
+> >>
+> >> Best regards,
+> >> Bernhard
+> >>
+> >> [1] https://lore.kernel.org/qemu-devel/202603211316.18181.pisa@fel.cvu=
+t.cz/
+> >
+> >Could you say what the problem is? In general there is no problem
+> >with taking header structs from the Linux kernel, as they are
+> >GPL-2-only and that is a QEMU-compatible license. The relevant
+> >source files or pieces of source files would need to be noted
+> >as 2-only rather than our default of 2-or-later, but that is
+> >doable -- we already do that for other things we have borrowed
+> >from the kernel.
 >
-> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
-> ---
->  qemu-options.hx | 33 +++++++++++++++++++++++----------
->  1 file changed, 23 insertions(+), 10 deletions(-)
->
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index 21972f8326..2c6ba16a26 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -1291,30 +1291,43 @@ SRST
->          Enabling accel configures the host SMMUv3 in nested mode to support
->          vfio-pci passthrough.
->  
-> -     The following options are available when accel=on.
-> -     Note: 'auto' mode is not currently supported.
-> -
-> -    ``ril=on|off`` (default: on)
-> +     The following options will be set to auto by default if not manually
-> +     set. When accel=on and these properties are set to auto, the value is
-> +     derived from the host SMMUv3 capabilities via IOMMU_GET_HW_INFO. With
-> +     accel=on, this requires at least one cold-plugged vfio-pci device; if
-> +     none is present at machine init, QEMU will abort.
-> +
-> +     If accel=off and these property values are set to auto, the values will
-> +     not be derived from the host SMMUv3 capabilities. Instead, they will
-> +     resolve to the defaults described below, and a cold-plugged vfio-pci
-> +     device is not required.
-I would simply say:
+> In https://lore.kernel.org/qemu-devel/f3cb3166-c3f8-4ed8-8c9a-cbf48b071d1=
+e@gmail.com/ I raised this review question: "The following structure looks =
+like being based on Linux. Does this affect the copyright of this file?" I =
+was just asking for advice and I'm glad the solution is that easy.
 
-If accel=off auto values resolve to the non accel default given below.
+If the struct was copied from the kernel, then it's GPL-2.0-only,
+and we should just note the license and where we got the code from.
 
+If the struct is just very similar to the kernel's one because
+it's the obvious representation taken from the datasheet, then
+it's not related to the kernel code and we can treat it as
+GPL-2.0-or-later like the rest of the file.
 
-> +
-> +    ``ril=on|off`` (default: auto)
-ril=on|off|auto (default: auto)
-          -------
+Since Maty=C3=A1=C5=A1 says in the cover letter here "the headers (struct
+FlexcanRegs and flexcan_regs.h macros) were copied from the Linux
+kernel" then we're in case 1.
 
-I would rewrite it into:
+You can mark this up by having the file's SPDX tag be
+"SPDX-License-Identifier: (GPL-2.0-only AND GPL-2.0-or-later)"
+Then have a normal comment in the file next to the part that is
+2.0-only that says
+/*
+ * [This struct / the macros X, Y, Z / whatever ] are borrowed
+ * from the Linux kernel, and so (unlike the rest of this file)
+ * they are GPL-2.0-only.
+ */
 
-Support for Range Invalidation, which allows the SMMUv3 driver to
-invalidate TLB entries for a range of IOVAs at once instead of issuing
-separate commands to invalidate each page. 
-- with accel=on auto means the value is automatically derived from the host SMMU
-  if explicitly set to 'on', the host must also support it.
-- with accel=off auto is resolved into 'on'
-
-If we have this explanation here in object_class_property_set_description()
-just explain the basic semantic and list the valid values and default value.
-No use to rexplain the auto mode semantic.
-
-
-
->          Support for Range Invalidation, which allows the SMMUv3 driver to
->          invalidate TLB entries for a range of IOVAs at once instead of issuing
->          separate commands to invalidate each page. Must match with host SMMUv3
-> -        Range Invalidation support.
-> +        Range Invalidation support. If accel=off and ril is set to auto, this
-> +        property value will resolve to on.
-Same for the others ...
-
-Thanks
-
-Eric
->  
-> -    ``ats=on|off`` (default: off)
-> +    ``ats=on|off`` (default: auto)
->          Support for Address Translation Services, which enables PCIe devices to
->          cache address translations in their local TLB and reduce latency. Host
->          SMMUv3 must support ATS in order to enable this feature for the vIOMMU.
-> +        If accel=off and ats is set to auto, the property value will resolve to
-> +        off.
->  
-> -    ``oas=val`` (supported values are 44 and 48. default: 44)
-> +    ``oas=val`` (supported values are 44 and 48. default: auto)
->          Sets the Output Address Size in bits. The value set here must be less
->          than or equal to the host SMMUv3's supported OAS, so that the
->          intermediate physical addresses (IPA) consumed by host SMMU for stage-2
-> -        translation do not exceed the host's max supported IPA size.
-> +        translation do not exceed the host's max supported IPA size. If
-> +        accel=off and oas is set to auto, the property value will resolve to 44.
->  
-> -    ``ssidsize=val`` (val between 0 and 20. default: 0)
-> +    ``ssidsize=val`` (val between 0 and 20. default: auto)
->          Sets the Substream ID size in bits. When set to a non-zero value,
->          PASID capability is advertised to the vIOMMU and accelerated use cases
-> -        such as Shared Virtual Addressing (SVA) are supported.
-> +        such as Shared Virtual Addressing (SVA) are supported. If accel=off
-> +        and ssidsize is set to auto, the property value will resolve to 0.
->  
->  ``-device amd-iommu[,option=...]``
->      Enables emulation of an AMD-Vi I/O Memory Management Unit (IOMMU).
-
+thanks
+-- PMM
 
