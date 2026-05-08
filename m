@@ -4,139 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 538D5CD3447
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 13:04:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6245BCD3436
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 13:07:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLKrc-0000WE-Mt; Fri, 08 May 2026 09:03:33 -0400
+	id 1wLKuj-0001oW-U7; Fri, 08 May 2026 09:06:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wLKrU-0000Uk-Jh; Fri, 08 May 2026 09:03:26 -0400
-Received: from mail-northcentralusazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c105::5] helo=CH5PR02CU005.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wLKui-0001oE-Vl
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 09:06:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1wLKrS-0003I1-Hr; Fri, 08 May 2026 09:03:24 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SgwXfBslH96y9mdBRfq6hWasJv8t+u0//pUISBnQdM2ub8ILD41LhI1LB7avTMc6hkqlJtZ0hJ0sHSkkSHNxePf50VuIki8J5GS+MyvNGchTlPgPubCwCRbT+Upn/gmBOiVY6UiQDyrCdsN1Cgsag06Vb9sYPlvo91+F4qO28UDo9386MDFhgySpVGUK3DaNrkGDnJ69p3vlnfqDuSJFlSCGbydYh4CLDyFqHHr81zq1mUfN9fjv4gcZk534IqztjYfJ38IaCmKGadQdD1zsGFJNlSxLDDIOoM+pwiJb6A+uB2y+92n7lMUJR7ZVnDHUv3JU0Xz/vm7RZLTpiAB+Sg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=L+a09WvV058PeBkYIQIpy83CLVkuzrH21/sVLfqV4o8=;
- b=EWIG7sJ+a6cXPQ7Aie+JQiZP67qfVRKZVNwb11zlbGR+2NCnwoE0GLdaXjd/ISfy0mokCge0NMzmRVsT9oo+6U0IX90i4GVeOflyx5FyZ8CuKLIyxlIrEEpFIFV3pcergdpbfmPhJh/RVRyFKrAw+60Aj043oyHevHme5L3P4mPZa63kDAxC8vIc7h9Eze7DHpkeU72F/eRrl13p8PabQWWYfw9b5gM/zIvjNzWy1gG1+zbov62tnyx8h4FWfiElOpb9DxD4gSMw3deeSRm1mJRs4Jq7oEuX2MSgLoD4Ne5721YSVIbAdoQ3gF1SNnVcQqWPHGhNfI+FljPcLgU6Wg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=L+a09WvV058PeBkYIQIpy83CLVkuzrH21/sVLfqV4o8=;
- b=r3+nCFTduAS4SQ7bUiPg61gcCcaRxddVMS3XCgNR0o5JcCrnnp7+ePAzZSZ48a1I8WyLu1qUIbO9qC/I6pSQF757NHfeBApBH2S9wzgJwmo39TzTCQFqACNKVVWbEx8WNA5u1kUf/8nzIzt3EIBQCEMo7El25HqKXi5C2pX+oJ9LK3XyRV4qOX9dWXzgip0Hsi99cBaJmKnShCs4IkUtnij7bjX5ju9sfw83v565swXmckskXzCyOOQ+DmgXlK1NZb4UKvB4WX8OyDnp90voTuwsXDCIjSeOJ8eRtpkprVAPdc8QUoTllQFssoUt0i4NPjBFbVFSRSn53HD+Tzr4Qw==
-Received: from IA0PR12MB7555.namprd12.prod.outlook.com (2603:10b6:208:43d::5)
- by CY5PR12MB6622.namprd12.prod.outlook.com (2603:10b6:930:42::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.20; Fri, 8 May
- 2026 13:03:09 +0000
-Received: from IA0PR12MB7555.namprd12.prod.outlook.com
- ([fe80::5a27:a8d9:43b7:3b8d]) by IA0PR12MB7555.namprd12.prod.outlook.com
- ([fe80::5a27:a8d9:43b7:3b8d%3]) with mapi id 15.20.9891.019; Fri, 8 May 2026
- 13:03:09 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Eric Auger <eric.auger@redhat.com>, "eric.auger.pro@gmail.com"
- <eric.auger.pro@gmail.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev"
- <kvmarm@lists.linux.dev>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "cohuck@redhat.com" <cohuck@redhat.com>,
- "sebott@redhat.com" <sebott@redhat.com>, "philmd@linaro.org"
- <philmd@linaro.org>
-CC: "maz@kernel.org" <maz@kernel.org>, "oliver.upton@linux.dev"
- <oliver.upton@linux.dev>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "armbru@redhat.com" <armbru@redhat.com>, "berrange@redhat.com"
- <berrange@redhat.com>, "abologna@redhat.com" <abologna@redhat.com>,
- "jdenemar@redhat.com" <jdenemar@redhat.com>
-Subject: RE: [PATCH v4 11/17] arm/kvm: write back modified ID regs to KVM
-Thread-Topic: [PATCH v4 11/17] arm/kvm: write back modified ID regs to KVM
-Thread-Index: AQHc2s+lMbTKReJJn0uN5USSIMu6fbYEH0BQ
-Date: Fri, 8 May 2026 13:03:08 +0000
-Message-ID: <IA0PR12MB75555B2C69AC473011333C72AB3D2@IA0PR12MB7555.namprd12.prod.outlook.com>
-References: <20260503073541.790215-1-eric.auger@redhat.com>
- <20260503073541.790215-12-eric.auger@redhat.com>
-In-Reply-To: <20260503073541.790215-12-eric.auger@redhat.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA0PR12MB7555:EE_|CY5PR12MB6622:EE_
-x-ms-office365-filtering-correlation-id: 97a50f21-5299-49f9-9d5c-08dead022712
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|376014|7416014|921020|38070700021|18002099003|56012099003|22082099003|3023799003;
-x-microsoft-antispam-message-info: 5/XBqmFVnc1z+Fo0kCWTgxa3F1E5fbJ4wyIkQVWHOiry25oF+AQIglxRzVNhM1zf5jQa6hWhDj1AqzC6KsX9Ze4IkIxyRtmAkzq+5zFzmLzsXgm7lyf4wn9vxzD7QEbtjSNzJFIWV0vZxaoO0ouUc75ClqzCi/wXIRbASipI79EaNqGarrtEmR6HTAT/e/2W9vyLj49MNWo0rLP2+Lq0Q9LJM6E4rMszPcGzs2kX/+4yV8iPRcLp7ZpYbovgcj2/Ud5DSlddyvcGXYII6q771cZCKmjWJeMzkELxowFBj25uFnagm3gpsFsMAO7EbPK0QyrzNRK+jvKgAgxrCI1LH5MqCuw7CkRpBmez96ZHjZ2a5zELTdTldvtG0l7BgbVMWktWi4x9mpG34/f+Q+OtbY7EIftds/xvwutZUmC+saX1JmuYM6++uWH99DJx2WmCiYUnLNBvD/326SJV7q7INYyVvcLnurO7tH1d54RLZakxNh4Zr+CxqNX0jBkCIavVHdLR/gBY+LiWl4ufGST58pQrNYbDZmAaSR/QOJ7nLETMC7lYHK20J++VlyIt5f0yjUzRmkkn7NBZ7Z2zNhd2vGakw1XCRuDc/bb0PgXrZkUsSKxEYef6jXQUquG3di7KgfkVtZ06JjbBiy+S8tNL7F+SNdHp/pKRHVCAEVJH0j0/LJjSk7hTGWAZUnyU9yqjIDU3TqmWpBS0iThjbLKNG55fRTM+44TQnx+taEKuLFhgptRDyXlWQwDvjXBJd/6QUb2meopb4Y+h7RUeMpbQsQ==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA0PR12MB7555.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(7416014)(921020)(38070700021)(18002099003)(56012099003)(22082099003)(3023799003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?M4nfSrF4wEafROtEQoHgFtnElR0fGo+SZc2XMaiwfUEwz9FAoqWr97saZdOj?=
- =?us-ascii?Q?D5y+yzoDctag/IRGGw6VPEvTWgwbTsQVePGSsSbXCrg9atV0Uhr0v1KjhxVi?=
- =?us-ascii?Q?PsRRSpObbDzLkNn0wPN3X6cUzYV0GUkomTRNSDsmrXXorZG1n0kt0MWwZZ6s?=
- =?us-ascii?Q?N7IDuwmc6zs1Lo5kXq0QbSUMu1T1LaWINY0mF9Yfkz0RDSYeB4wKnl2XyEJw?=
- =?us-ascii?Q?qp7v+nfouNvgtGiH2eOM6lZ6kIJ3Z3oG1hIWanaEQlOFeO0//rsTO4BkocxM?=
- =?us-ascii?Q?1Z4zYIe2yluGLhy923kuo3ts+kJA5mngOAL+B+RB2e7bTDXN8YrdrPrNv66L?=
- =?us-ascii?Q?jMlT6khrf9QDIcILhKBBNrXtqnHJbE0wrAt8M2iTTq4BydPUXt6uwZdLI1kE?=
- =?us-ascii?Q?dtjq/mAeiS6Nl4lCYprxWdz27E0vr/FBOvVnNOPbVBjmqZWtb/ZK0obQnYch?=
- =?us-ascii?Q?HPXG+9zWasVrXHagJePs72XhhWt8W7cD7CShCkXLpN6YnAdjzyOv7SCEJIPu?=
- =?us-ascii?Q?KbPwi7VoNJZ2RpQMzj5KDgEITExhfWKEt9Evkzgw/C4k3yfbnpXHWHzQ09i6?=
- =?us-ascii?Q?v7nAUPPNrLOavGtIFYvs7Ms3M6ZEebIi3L0woI6MQRGCFnw+gf5wu02/FTF2?=
- =?us-ascii?Q?gR5gNZWFHXe2pEdM4D4eDfdspisahB1gf4YMf2Vka53oT9QMdjWgtXh6/pc1?=
- =?us-ascii?Q?v3TzDCiUtmHnGhVO6q5CW0VQ6yAKBUEDOMTpdpcWL0sOspPLbm068i/vmeFs?=
- =?us-ascii?Q?Y50UlrNyjQHONOOq6gBdyeGEotqpvYtLSCX4TIWhyc6VgXejJ8Q8GlWmNSiv?=
- =?us-ascii?Q?FlgipaeM+gmJXFveyeMRz9UJClymrMm1TPbfBcG3EhH3IF8n2I/vErAtjNJy?=
- =?us-ascii?Q?aZxWBMFJN+YM5WZaSQjRIYLDOnAeXvf42NU7716F52wg7jUyQPtDlAMpE3yx?=
- =?us-ascii?Q?T95kBlS3Jsxi8XtW68OVwE55m4gVbTCltARjxRLsvtIdKyPXbgaW3ZRjNePw?=
- =?us-ascii?Q?jw/G1gyALe9UpEra7jN7BbtCXNqAWXtzudJRQrDFoDyQNbqRlEE53AUQ/q7q?=
- =?us-ascii?Q?MLxPNepp72kNikx8bGmAGeNt43s1zRJ8k4LHTfwEvvMxNE3quc11ozg0+CbM?=
- =?us-ascii?Q?m6qXvlwrPLiZ/HKMknvlLoapVmjOnFF2u8DzcfdBmEtn6fSwAowYILbgPZAc?=
- =?us-ascii?Q?p23eaV3l7s7t+Un2R1qinI3rykHNWS2FEUpatRmbykaloOZpSwhU2nm/h5St?=
- =?us-ascii?Q?bvZPaFZ1+Y8pfmt7/375UMxeHfs5Ot+8/acczbyaW8UavetNCXPaOYymdX/L?=
- =?us-ascii?Q?XOu19nVZQsERurCz6oomldbc4eZ0E2qRnvoL1Ntw5ZxKMmoc2f9Hk2VrH2vw?=
- =?us-ascii?Q?2rLHBv868R0CpLmPckC3X3cFIMDv53Y/N8sJcShYLoqSP6cYJKzFwInp2nX8?=
- =?us-ascii?Q?ZKndE0b+YUuqNxCYJGJS4E3aWRj3eAOH5LzfpqVrd5pWkXPFB6zFrfwUGgSa?=
- =?us-ascii?Q?xUL7Hvlqpsbz0stgmysEHsxvcNpB4SS+SbMDGuYzzluRgnVxgyLSIzLfJFkx?=
- =?us-ascii?Q?49pHJ3ZD+qvYGPJtI1NBajEakTfkiqYy6YhvlyTo/0oHN5m3jTO2HlCD1zhW?=
- =?us-ascii?Q?PDchFSwhMAB8waLgIjVq0lhODQojOKVcXWWFYO4BGF8+cYNddRnSBE1P9Bbl?=
- =?us-ascii?Q?NetWG9Tp3A51KHzvCvX0CG75cyVzKhnzmcR3Tgdl7SGAr/yRtTP/U4aEsnDZ?=
- =?us-ascii?Q?dN/H2D7zWw=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wLKug-0004EI-6X
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 09:06:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778245597;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=B5sJzRRKNlBRPA+UoypqIlNiwhFhujhDw+Cg+ASkfvw=;
+ b=CMrkB67Nyrvdy8lalbJdDM0MFnhZ4U7XAA2Ww+23TKP+UcBpjTttUiZP2VKBdaK7bbHcDk
+ ozg/hRPQnylcJV57OBkYWtpbKioDmZDLM46bKUJkGvLDs9VzzSLt51w+1bOjqtI+Rk9xtm
+ O8dUyxhLqhudG3Gz4CwrZeug9dNkszA=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-688-ClDvzwnpPu6-TdMFbTKibQ-1; Fri, 08 May 2026 09:06:36 -0400
+X-MC-Unique: ClDvzwnpPu6-TdMFbTKibQ-1
+X-Mimecast-MFC-AGG-ID: ClDvzwnpPu6-TdMFbTKibQ_1778245595
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-48d144d3428so11645955e9.3
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 06:06:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778245595; x=1778850395; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=B5sJzRRKNlBRPA+UoypqIlNiwhFhujhDw+Cg+ASkfvw=;
+ b=JdHJF+3/ftTAtRax2R3CJdttNQvAPF6No7W2OatN1NznY6i8bx3mQCzY4Yojm7qwpn
+ FWbS3T4AH/MWDpvTH1K59PJ/7sAszDLvSX79qgoVz6/TAq9A3+o5gYdvRd4tqmmux69d
+ PhQLvkVVLo+QKPy9KwOZUM266EPziCBF1nPCoawBrI0+vAQDitCjkoeG5HWGVrKNWBCF
+ J6Zth2OOkYwFEOldmnyegIE+M/QPxsP2KvvnWHskg3XMdcIXDsfRBZOr63uE8tHV253n
+ /lwSI0yLmgN0K6CH4HGvWMtHoLxY4dk7sIk65WPeCjoNjRDfrTJbTa6L+9JztKkmlIcp
+ rVdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778245595; x=1778850395;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=B5sJzRRKNlBRPA+UoypqIlNiwhFhujhDw+Cg+ASkfvw=;
+ b=AJSeQe9I9tnex3xirm3eOqWo6BtF7fUZU5RIxSV7hB4uHYnKbupFhB4/El8F3qOMVU
+ VZ/+D6ttnZhEsA/uPlHc0g9fWjGtjt49N87AKYNRgR6eicjjthu7D0UDPbnQwlHpEgFv
+ SYGj93NBYX7hyeK+6jubleEMzLjqQrEDRoPEGv8ASun7LVMuwHrVLLLZNB0865Z54kko
+ deoOQbG896oxC7sCRGhiwj/XWmUaPf9LkDc7DyJR5AmHSlw6hRQcqb14GWoZ6Fe0cuZ4
+ sII+Mv4TQba9pkSa2GFvko3Mhbs+HoVh5+IvWMn5pLpIsGV/2sybo/PByqZnSq0YiuxB
+ AiFg==
+X-Gm-Message-State: AOJu0Yz8EWUz7cO4Art+Vx+lPqQ71KhGpcSwIS9dTk/M5vwCndMcb5B/
+ Zv614XEp5PDUnsWH3WfL152oF+lZRKnsqP+NWdssNp09ZCgYROehC5/jlAZpgt/gack7x1HiNq7
+ lckhkDAEGQaatnV4wMEop3uDJRJNQCp65fCdJRorATLnV4Hh7Uqx5kCoU
+X-Gm-Gg: AeBDieuaRL5cgOS41ZJhZZfqwAAwm/c3BKq4WB2PMSGVbbP9Ng/LcQAEhmFBHcFnrQ7
+ o35VL06IfM+g0S4mZM+LQTGYAHcd7MDzai+kNnm90pKHNi8WnzCbIEg011RIYXtxL2hK3vXDxJE
+ ShivLvZF8yhQu1ITZVO8JN4zSFNL6Bqkiok0vnGHlj4e3mjfmvtWv19LPSczLAJOvQQx+f6Ajed
+ Az+4G4ChNiG7EGD9bQdvZkCirZ4eOK3D+7X3fmrnNzTIt3SLJd2wyEOmgHllhShw8786J5+dBWJ
+ wTYVP/mS4uhjI5KHm2AwXQ6OWdD/4L1FnUVsBWTGddp1tfk4NjHl5giTtFXWwMz+zofWwB0m+TI
+ a8cvb7gedumbvU0s/Wg8AW8ME/gOwnS8nrst/6KEYkqukW70pY44mYa4L8WxR5cT/ZvFGFNirKk
+ ReROc2lrWYYKlJWYd+8QbusOiVNSoXtN9mWU5+njKdN/81Ywq4iD4=
+X-Received: by 2002:a05:600c:a118:b0:489:a4:e578 with SMTP id
+ 5b1f17b1804b1-48e51f32870mr149164845e9.14.1778245595055; 
+ Fri, 08 May 2026 06:06:35 -0700 (PDT)
+X-Received: by 2002:a05:600c:a118:b0:489:a4:e578 with SMTP id
+ 5b1f17b1804b1-48e51f32870mr149164445e9.14.1778245594584; 
+ Fri, 08 May 2026 06:06:34 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d713:2001:af32:685a:7b5a:da25?
+ (p200300cfd7132001af32685a7b5ada25.dip0.t-ipconnect.de.
+ [2003:cf:d713:2001:af32:685a:7b5a:da25])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4548ec6b071sm4233051f8f.14.2026.05.08.06.06.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 May 2026 06:06:33 -0700 (PDT)
+Message-ID: <8ec42109-4123-4cc7-a55e-9aa2576a791c@redhat.com>
+Date: Fri, 8 May 2026 15:06:31 +0200
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR12MB7555.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 97a50f21-5299-49f9-9d5c-08dead022712
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 May 2026 13:03:09.0224 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: hKHPGW+Pr7J5EzXyS8BXAOjTT4YMjcofWM7qyVBmWFKZIXwNeXZqbQyDfuZV4euBfRtsHxZ6TbA2xze5l/OoeA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6622
-Received-SPF: permerror client-ip=2a01:111:f403:c105::5;
- envelope-from=skolothumtho@nvidia.com;
- helo=CH5PR02CU005.outbound.protection.outlook.com
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 17/28] fuse: Manually process requests (without libfuse)
+To: Fiona Ebner <f.ebner@proxmox.com>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>
+References: <20260310162622.333137-1-kwolf@redhat.com>
+ <20260310162622.333137-18-kwolf@redhat.com>
+ <2493d422-d58a-4409-aee4-e932a4e0a73c@proxmox.com>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <2493d422-d58a-4409-aee4-e932a4e0a73c@proxmox.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -152,137 +124,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+On 08.05.26 13:55, Fiona Ebner wrote:
+> Dear maintainers,
+>
+> Am 10.03.26 um 6:37 PM schrieb Kevin Wolf:
+>> From: Hanna Czenczek <hreitz@redhat.com>
+>>
+>> Manually read requests from the /dev/fuse FD and process them, without
+>> using libfuse.  This allows us to safely add parallel request processing
+>> in coroutines later, without having to worry about libfuse internals.
+>> (Technically, we already have exactly that problem with
+>> read_from_fuse_export()/read_from_fuse_fd() nesting.)
+>>
+>> We will continue to use libfuse for mounting the filesystem; fusermount3
+>> is a effectively a helper program of libfuse, so it should know best how
+>> to interact with it.  (Doing it manually without libfuse, while doable,
+>> is a bit of a pain, and it is not clear to me how stable the "protocol"
+>> actually is.)
+>>
+>> Take this opportunity of quite a major rewrite to update the Copyright
+>> line with corrected information that has surfaced in the meantime.
+>
+> a colleague ran into another issue with a fuse export, this time in 
+> combination with virt-fw-vars and bisecting points to this patch. 
+> Before commit a94a1d7699 ("fuse: Manually process requests (without 
+> libfuse)") the reproducer [0] completes successfully, after that 
+> commit it hangs at [1]. The issue is still present with current 
+> master. I can dig into the details next week.
 
-> -----Original Message-----
-> From: Eric Auger <eric.auger@redhat.com>
-> Sent: 03 May 2026 08:34
-> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
-> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
-> peter.maydell@linaro.org; richard.henderson@linaro.org;
-> cohuck@redhat.com; sebott@redhat.com; Shameer Kolothum Thodi
-> <skolothumtho@nvidia.com>; philmd@linaro.org
-> Cc: maz@kernel.org; oliver.upton@linux.dev; pbonzini@redhat.com;
-> armbru@redhat.com; berrange@redhat.com; abologna@redhat.com;
-> jdenemar@redhat.com
-> Subject: [PATCH v4 11/17] arm/kvm: write back modified ID regs to KVM
->=20
-> External email: Use caution opening links or attachments
->=20
->=20
-> We want to give a chance to override the value of host ID regs.
-> In a previous patch we made sure all their values could be fetched
-> through kvm_get_one_reg() calls before their modification. After
-> their potential modification we need to make sure we write back
-> the values through kvm_set_one_reg() calls.
->=20
-> Make sure the cpreg_list is modified with updated values and
-> transfer those values back to kvm.
->=20
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-> ---
->  target/arm/kvm.c        | 59
-> ++++++++++++++++++++++++++++++++++++++++-
->  target/arm/trace-events |  1 +
->  2 files changed, 59 insertions(+), 1 deletion(-)
->=20
-> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-> index 1a9b91bf8a..ca9a7d9439 100644
-> --- a/target/arm/kvm.c
-> +++ b/target/arm/kvm.c
-> @@ -275,6 +275,21 @@ static uint32_t kvm_arm_sve_get_vls(int fd)
->      return vls[0] & MAKE_64BIT_MASK(0, ARM_MAX_VQ);
->  }
->=20
-> +static int kvm_feature_idx_to_idregs_idx(int kidx)
-> +{
-> +    int op1, crm, op2;
-> +    ARMSysRegs sysreg;
-> +
-> +    op1 =3D kidx / 64;
-> +    if (op1 =3D=3D 2) {
-> +        op1 =3D 3;
-> +    }
-> +    crm =3D (kidx % 64) / 8;
-> +    op2 =3D kidx % 8;
-> +    sysreg =3D ENCODE_ID_REG(3, op1, 0, crm, op2);
-> +    return get_sysreg_idx(sysreg);
-> +}
-> +
->  static int idregs_idx_to_kvm_feature_idx(ARMIDRegisterIdx idx)
->  {
->      ARMSysRegs sysreg =3D id_register_sysreg[idx];
-> @@ -1197,6 +1212,39 @@ bool kvm_arm_cpu_post_load(ARMCPU *cpu)
->      return true;
->  }
->=20
-> +static void kvm_arm_writable_idregs_to_cpreg_list(ARMCPU *cpu)
-> +{
-> +    if (!cpu->writable_map) {
-> +        return;
-> +    }
-> +    for (int i =3D 0; i < NR_ID_REG_MASKS; i++) {
-> +        uint64_t writable_mask =3D cpu->writable_map->regs[i];
-> +        uint64_t *cpreg;
-> +
-> +        if (writable_mask) {
-> +            uint64_t previous, new;
-> +            int idx =3D kvm_feature_idx_to_idregs_idx(i);
-> +            ARM64SysReg *sysregdesc;
-> +            uint32_t sysreg;
-> +
-> +            if (idx =3D=3D -1) {
-> +                /* sysreg writable, but we don't know it */
-> +                continue;
-> +            }
-> +            sysregdesc =3D &arm64_id_regs[idx];
-> +            sysreg =3D sysregdesc->sysreg;
-> +            cpreg =3D kvm_arm_get_cpreg_ptr(cpu,
-> idregs_sysreg_to_kvm_reg(sysreg));
-> +            previous =3D *cpreg;
-> +            new =3D cpu->isar.idregs[idx];
-> +            if (previous !=3D new) {
-> +                *cpreg =3D new;
-> +                trace_kvm_arm_writable_idregs_to_cpreg_list(sysregdesc->=
-name,
-> +                                                            previous, ne=
-w);
-> +            }
-> +        }
-> +    }
-> +}
-> +
->  void kvm_arm_reset_vcpu(ARMCPU *cpu)
->  {
->      int ret;
-> @@ -2148,7 +2196,16 @@ int kvm_arch_init_vcpu(CPUState *cs)
->      }
->      cpu->mp_affinity =3D mpidr & ARM64_AFFINITY_MASK;
->=20
-> -    return kvm_arm_init_cpreg_list(cpu);
-> +    ret =3D kvm_arm_init_cpreg_list(cpu);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +    /* overwrite writable ID regs with their updated property values */
-> +    kvm_arm_writable_idregs_to_cpreg_list(cpu);
-> +
-> +    write_list_to_kvmstate(cpu, KVM_PUT_FULL_STATE);
+On my system, virt-fw-vars opens the file with O_TRUNC (after “INFO: 
+writing raw edk2 varstore...”). It then tries to write to the file, but 
+this returns a short write because the export is not marked as growable, 
+and for some reason, the write is infinitely retried instead of aborting 
+on ret=0 (which should indicate ENOSPC for writes).
 
-KVM may hide registers based on ID register fields when features
-are disabled. Updating writable ID registers after KVM_GET_REG_LIST
-can result in a mismatched register list and failures when setting
-registers.
+Using growable=true makes it work.  (For me :))
 
-This was reported on v3:
-https://lore.kernel.org/qemu-devel/ae3f4d26-7a1a-418c-b303-2ed1d9ced4ba@hua=
-wei.com/
+For some reason, before said commit, libfuse just did not pass that 
+truncate on. I’ll look into why exactly, but so far I would say the FUSE 
+export behavior is as I would expect it.
 
-Is this fixed someway in this series? I am not sure. I have faced the
-same issue on NV platforms as well.
+Hanna
 
-Thanks,
-Shameer
+>
+> Best Regards,
+> Fiona
+>
+> [0]:
+>
+>> #!/bin/bash
+>>
+>> rm /tmp/disk.raw
+>> rm /tmp/export.fuse
+>> cp /usr/share/pve-edk2-firmware/OVMF_VARS_4M.ms.fd /tmp/disk.raw
+>> touch /tmp/export.fuse
+>>
+>> (
+>> ./storage-daemon/qemu-storage-daemon \
+>>     --blockdev 
+>> raw,node-name=node0,file.driver=file,file.filename=/tmp/disk.raw \
+>>     --export 
+>> fuse,id=exp0,mountpoint=/tmp/export.fuse,node-name=node0,writable=true \
+>>     --chardev socket,id=qmp,path=/run/qsd.qmp,server=on,wait=off \
+>>     --monitor chardev=qmp,mode=control
+>> ) &
+>>
+>> sleep 1 # too lazy to do proper synchronization for the reproducer here
+>> virt-fw-vars --inplace /tmp/export.fuse --distro-keys windows
+>> echo '{"execute": "qmp_capabilities"}{"execute": "quit"}' | socat - 
+>> /run/qsd.qmp
+>
+> [1]:
+>
+>> INFO: reading raw edk2 varstore from /tmp/export.fuse
+>> INFO: var store range: 0x64 -> 0x40000
+>> INFO: add db cert 
+>> /usr/lib/python3/dist-packages/virt/firmware/certs/MicrosoftWindowsProductionPCA2011.pem
+>> INFO: certificate already present, skipping
+>> INFO: add db cert 
+>> /usr/lib/python3/dist-packages/virt/firmware/certs/WindowsUEFICA2023.pem
+>> INFO: certificate already present, skipping
+>> INFO: writing raw edk2 varstore to /tmp/export.fuse
+>
+>
 
 
