@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CA32CD3436
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 13:07:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 826F7CD3447
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 13:11:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLKvT-0002TS-Bk; Fri, 08 May 2026 09:07:31 -0400
+	id 1wLKyV-0003vU-9D; Fri, 08 May 2026 09:10:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wLKvQ-0002QE-Li
- for qemu-devel@nongnu.org; Fri, 08 May 2026 09:07:28 -0400
-Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
- ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
+ id 1wLKyQ-0003uz-Ok
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 09:10:35 -0400
+Received: from mail-westusazlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c000::1] helo=BYAPR05CU005.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1wLKvN-0004Ms-8l
- for qemu-devel@nongnu.org; Fri, 08 May 2026 09:07:27 -0400
+ id 1wLKyJ-0005eC-Vc
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 09:10:33 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=jv0zNpkjPtdrxUCFY44U5b5ZkVcNH5r64SKOT4s9QpO3mRST9zwev4Uk75Lwo7ERXvMXJOAJqch8bCGY/oeyHqzxcb3b6uyN48L/HWIP+QEuvPc+sRobbixbBvI5nCD5MQNir92r5OPr30QmFHkutsSkVl7fW5Ja3mwu2+Dx4tOE0/O9DAxxvP4ArgHszs1LoYxlCHmjjJXf9Y52IAimHdj50oszrjGsPYfEDzl8UV7M8wPEPZO1eHEU5NDuNlj5ocD9Do3+IC/LCU2j5ISD3LsYNBtORB/Qxrgcot8w66YS/uFaPA7AvWid6dZencP8oMIvC3ifJii0orH/wK9i3Q==
+ b=PBugbM31HLEB43dJNk0IZuzw0n+7HHdgQTVav/eU54VRf1mLyIzSjblw/kC5WmF2he2MEUKntP17AYma5wzlVi9IiV+QQ87gVnv9HSe/AQ6fnjVrDI2+92wqjM7ORagwKavWMwGLJSlOvespNG2DwbPwoyuYFLAcKEYdnbT7MPttayMoCbSYQlSQ/M6SwHbIvQroNWiPaeMlBHOdQddCmQK66wrHhTWP9kLUeWwOv8dhRaoj83jXRxExYVAo0WNyKpEer97HptOkcfnKCniAm3v7h4YhdQd8tEQT2NKJeJjjxUsIAbi88x4ayfi0BItNye56o8brNtGMPocVURQDlg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QrKmuklAMCtuPiLKFSeEZZjzaQuEc50ddQCpN19Oh1Y=;
- b=tiJpR+YRR7FAmkRqCBuhqLNNX2HkpyekvqCunkJ8PkmeG3H8x1jNzjGZs8hxXYnG3FbbMauIiSF0sZljBATtn+r57/mjhNjJaVqWPeliTdF0LcICgMrKM9UvZjD3FnpLD/oxdRVAM/kGr9ck0xc0IkQFF3r+RTf4DwqMcYTuGw7COSyt0G3pgr1lh3voruUPxDRMVwcTzBM2gxrF6t3FtLvMN6P/lJYe7Ryctyw1TQywOS3YGAQp9vsizNGvAx+RsRNfnIdPzPNRVkY+3iTQQKAEzSTFfZjihzLwZmkQQ1fpeKgDZDodt5ATX9G0tVZj/Qx6j5VpTFTRo8B+asF3GQ==
+ bh=BuXmxnsTyniaM9AdWR51B1gSa6vyXR5qJamA6pUKfBc=;
+ b=Q0ZzZKZEljJojtMUtiyw/5bFCtQvIzvgtO4VoorOPXwW1lRaWKSf+1fqrZoPKACgYFAoKUrpUlK07NBm3RzfyfvY58bRQFPbGRcq6PJZ0ic7jVLIKogPGLaSRb1OEUlUxWd55Q++ubpVJ9Dh5okBrk0w4JZvx/AxCq+WFFK3nlVStPFcGm/K4vK1Y+ToK9YD+CqC48MosmFs+12FrX+zFOh5dcWF9UoLp7JYmxe3DTfw+OIxxp2vBJoIpTZBWeul/mELm21ZsWd7mIUWacRMepVcBb4A8ZVNg5xnT4oXl08sOewJ4DPcb7dHaGPzcU3bVAfTERkzId3WR4FaZ38REQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QrKmuklAMCtuPiLKFSeEZZjzaQuEc50ddQCpN19Oh1Y=;
- b=DR29pBo/p8+jQanT/4E6BchX3zDZr+YHq0z/O7ihxPKoPEaFygAjUMlv5xvbKgUQ0Gz+s87PrgCcygqlGTdSAe0RbMzYKsHpm3FY0bLHdnMLetND70CrHXXCSnJz7RsVZmFWswi3qLzsqL6X5Ggz1dW6gscmhhcoKjmZmrGTml83hCyusixhm7mkNXTm0xd9TdgFow2OLOTMeaqPzmkLI8NPyo19HmKCkhJpdtUQC1FpE2tnE7yFOr2GrY1GHP8coePWFjnrsg5nYKBvG/rIssTCnIY3A7m4NswHYEDDZ/aCd6Jn3HYWyC8C01dI71a50ZBNWXt+t8j7QDmskJoE4g==
+ bh=BuXmxnsTyniaM9AdWR51B1gSa6vyXR5qJamA6pUKfBc=;
+ b=JduoruN+gBZRyLO3kWDCRSRH5lkj2mNZ1u/Vqz9qSd7JdbM85aJOgkLfzRk1N8DISZXiOkQbeDt3NRb4XwueFGktsRieZeFwW4a3ZRSERUINouckPAUrH+RGRDVRtr3enHinZyP1wwcoDID5kSCElhzyqo7xvkhWZZj+V8kjitzDa6TJJGWaNUHA+WZEHIqCYy+XVSXDdn6YEBCn8qzWqlzonBI/c6GFuqRUMUb3EAbxD1+7e3wIuj5JbXjIYL5wc6WeiMu5i5rqfEnxwB72PA3cJ1CV8R301dptkDcTLMduPBOSfR1LICVZlu+OSKuj3+4WkY0h6gh6rM2nUDI45g==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
- by PH7PR12MB7139.namprd12.prod.outlook.com (2603:10b6:510:1ef::21)
+ by PH8PR12MB6962.namprd12.prod.outlook.com (2603:10b6:510:1bd::18)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.19; Fri, 8 May
- 2026 13:07:16 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.20; Fri, 8 May
+ 2026 13:10:13 +0000
 Received: from BL1PR12MB5063.namprd12.prod.outlook.com
  ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
  ([fe80::a0c2:5681:4aca:90da%7]) with mapi id 15.20.9846.016; Fri, 8 May 2026
- 13:07:16 +0000
-Message-ID: <378728f9-e771-43bb-8226-669894d66a86@nvidia.com>
-Date: Fri, 8 May 2026 16:07:11 +0300
+ 13:10:13 +0000
+Message-ID: <900d065a-aab9-4efd-be69-7aec2ccb0560@nvidia.com>
+Date: Fri, 8 May 2026 16:10:07 +0300
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/14] migration: Log the approver in
- qemu_loadvm_approve_switchover()
+Subject: Re: [PATCH 09/14] vfio/migration: Re-query precopy size before
+ sending VFIO_MIG_FLAG_DEV_INIT_DATA_SENT
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>,
@@ -61,88 +61,89 @@ Cc: Alex Williamson <alex@shazbot.org>, Peter Xu <peterx@redhat.com>,
  Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Maor Gottlieb <maorg@nvidia.com>
 References: <20260505081423.28326-1-avihaih@nvidia.com>
- <20260505081423.28326-5-avihaih@nvidia.com>
- <3de5f050-f87b-413e-b967-e51e78c5e302@redhat.com>
+ <20260505081423.28326-10-avihaih@nvidia.com>
+ <d76a2215-d06a-4ab0-9031-2e81f08690d9@redhat.com>
 Content-Language: en-US
 From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <3de5f050-f87b-413e-b967-e51e78c5e302@redhat.com>
+In-Reply-To: <d76a2215-d06a-4ab0-9031-2e81f08690d9@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR4P281CA0334.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:ea::10) To BL1PR12MB5063.namprd12.prod.outlook.com
+X-ClientProxiedBy: TLZP290CA0010.ISRP290.PROD.OUTLOOK.COM (2603:1096:950:9::9)
+ To BL1PR12MB5063.namprd12.prod.outlook.com
  (2603:10b6:208:31a::11)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|PH7PR12MB7139:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4e770411-49e7-44e7-102c-08dead02ba8f
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|PH8PR12MB6962:EE_
+X-MS-Office365-Filtering-Correlation-Id: 97219e3c-3b7a-4bf5-de63-08dead0323bd
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|7416014|376014|366016|22082099003|56012099003|18002099003;
-X-Microsoft-Antispam-Message-Info: SaWP43Vx+k4h5Hh3m1wxS5vh2EFZwHvHXMyhcMw2Jz7LQhoDTUApoV3sOeGMmI2apVCOKn+B6gcJdQPYHyIjMwqHu9bzYIwSOP9FhSGI/6M2K9xiJErscQwAQACPrkAfeVbvxVllUS0LhI3NSgbhnKUr5iuMzbMNkHQDRC5grvJcjsvDf5kK6Bx6vQkPlyDDF030fB2Vo1iPbV97sfJrTRSs68SW9ng//H+HDobm3VLIXNIF/HPgeGxRp2qw+0U3yzI5KF1S0p60gJSrxMTBUt0qvByt8I49g0OyQLAFHc42jh/tIWVpDKDVKYI4pT8OEdZK4vFxoQ21VWeTmXU4YeJ3kO514FA4Z3xmqi/nRTRw+cGz5bb1r9XowMEgN99oDMDwaBdnZexOjWJNBXYPD7P1jSy3tP8fzWKt9ZpbjYoWHKMRHxLTJSWivkAGufQA9pDZKhGG1wvNNCOMOgHS7ppmAxrcmwt28tBednaUCH/I9Ig/K0OsMzeHWYuyeEAqzj0ib/inRkrIemRArYNyIJg6MWZ7VppZ+cVUNG1d4kNRGo0iV8ba8icrOglKqTj+0x8IOJd3rNtdhoAm0lDnrvV7FbJWtHGdwRvOhinzr+rAGNnBVT9w7OzLQz6VTvPAuL5ARfsKHIsgvLeb6PmtRnquY1I5yAUd2jXYYfFgdd2fXd7mb0yMOu9FOFVvbJU7
+ ARA:13230040|366016|7416014|376014|1800799024|56012099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: I7MVKHMOkKVl0C1ir8aFmVaF3jogHqt8QSyTx7ir+/H1Mz5LMla4jawvIK3or4J5DoVgRYMQVuJCDSUqqvRPLdLVMdcCbL4NfX2iD7t3av+bCuOlN5jJOXVunEvQdqi2im1/CZNpeNfQ+P4uRA2HhRV0oz3xZJUqCJV/bvOHX442yXO8YCewmnFX6DLnYfGPN0KRbcXudQt36PUX1Jc/oEI9EG0ejn3i8TYLDXKug/naT02wz2gu/GXZGmt+FW81/r6om6FPpYDxYSi59vbEWA9hROaROGu+fwadnK4lc2QA+8X0+QBEiVMIAI+MxjlwkcYyrKUXXH99wV4GmVGtPOY39fhGliqp9gJ308nWebjaMeMs2/ptXl0/RgfbCKfvmXWVK1iCYHRf+CbcMW8WI7RGYyWdQVr1nFD6nrI/ygCZ5kyTVT7SZV8IPzuGbTjhlL/u0oYGlTeT81Mk2F0juKDghqXN43mINqaa798VZ2Cyk2p3D8VcmXCG2eADicB0Lc4atVfD9oh6U5X489UobbQtVWKGTTSRaScp6jnQ9fsYfzFmRqAb2cfwq0VgXvtHqiny3nPhlUHxzkeWrXM1rjtN/q96vfSTU7gg3hkwlXXwXlzSC9qXWgu0sXyKrXNFC5TxVYBObiKEEMFhE+LIG25kRQY+dwoGgjmtvwQHUHZlNmv+/5uXC1cNeLSbfCR9
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(376014)(366016)(22082099003)(56012099003)(18002099003);
+ SFS:(13230040)(366016)(7416014)(376014)(1800799024)(56012099003)(22082099003)(18002099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aHlXWnJxTmxzTVFGc0ttSUttcVlpcThtcHNacEt6ZHJ2M3BrcFNqRnJFL1BN?=
- =?utf-8?B?WkE4TjYxcG9CWUNRcngraC8yNkFTME03Mm96S3IrcVFKUktURGg0MEJxRlcz?=
- =?utf-8?B?eUtyeXNraEV5d3p4WHFXS3E3N2VrWFBNMkJPS293aXZVWEFJWHFEVHgrWXI4?=
- =?utf-8?B?M29jL3dVUzlNbDNxNTE2d2xVbXJXeWR3eEdkV1VoWW5kekQvYzJDWVEzNC9h?=
- =?utf-8?B?OG1rekxQeGNHa0srSE16K1ZLM0l3NzdMYW92MmlrdkhmQithVmI3cnIvMkJZ?=
- =?utf-8?B?NlFzZmFNTjdiR2FySDlPc2pTWVBUK3VKOHhNVmVRL0FlTnZpWlNoUlNicU02?=
- =?utf-8?B?WHozaGZHQmNDUTk5dlo3ZjRrSkl4R25MdjdoeVh2U2Y2N2QzRlMzMXlaUUJE?=
- =?utf-8?B?UmpSdjQ0b0ttbFQrY0lsYjJQOFF4TURBRkFqdlZvUHNrQ1BnblVBM0tZVjR1?=
- =?utf-8?B?VkdlK29CcnIzU2ZhbWN2UElBMnIxelZLNDNoT3A4bkdiaGJlV0RFK3J5dURV?=
- =?utf-8?B?ZjkyNndmaHJvUUY2NmxPNmtZTm16SGZCWndPbDBYYnN6SjFhMTd2UmhPMERn?=
- =?utf-8?B?bUgxK2FvaWM5eHZhRXBnS1RHdktYbEIwaUJqV09CNUV0akJMQS8yQVBGR3Vw?=
- =?utf-8?B?SGpwSE1ZRldIZDR2eDRVRXpURzRyMUQ1aEwrODlWeDV5Tk1OR1RRVE5YaS8w?=
- =?utf-8?B?WGkzVHVORkFwZWtBS042TVBodHhoZG9XMTB4SlVMQjJwUGxUcEovMFpFclh1?=
- =?utf-8?B?SDNwMVFiQVByUGFYZXVjNnU2OUZiTGR4TjRYaVZ6UWN1Ym1VU3daQnIzaHps?=
- =?utf-8?B?L0lGVUlENlA1emVEZDBsNnM3MURlcWNERHFwK1M2dTA5eTl4ek9Mcllsa25L?=
- =?utf-8?B?eUt2YXNqU1B0UWU5b09UdktPM05acHIrVE9jdHhwU2p6a2dLR0ZJR1RtVjZr?=
- =?utf-8?B?WWFMYTE2K1dsT3JmVEJNSFMzZnlOaGgrQXNUakpuMmE5elFaWGhaZ1FUb2dN?=
- =?utf-8?B?LzFWU0pQL3hXcHVJZjJCWE05aVFaOVpyMlY3NmxaWHROajQxUHY3aitQdWh1?=
- =?utf-8?B?OGNnYUFscklhYWZpUEZBNDRxUElRMzdCaGM5K0lMWFRuQUlXaEtTM3phUmlV?=
- =?utf-8?B?dXloYWo2SnE2M2R3ZHBKbTA0SDErN2VldnJXNXhjVXZwek5OamFrMjlZcDRy?=
- =?utf-8?B?N3JUOTc4ZGc0WUFBVWc1Q05FUi92a0ZuVjQvYWdiZmIwZzJHRDFjQm1MM2dQ?=
- =?utf-8?B?L3UrQXlEa0pjYkR4aDd2aDhxNGlqRkp3dGUrRU1BdUM5Z1pvNkZqNmorbm0r?=
- =?utf-8?B?bEtpanNCNVZKdXpaNExRcjRzWjdKMXdDSkY2QnBYVFBLYVpZd09DYnBxVXVO?=
- =?utf-8?B?RE1LUE5NYklnYU41dlVnbjRyQmYxTzhMS3BnS3FId0dqMjVQU1o5YVhJZlNv?=
- =?utf-8?B?ZUFwdzN5NitXU3JwMHVXMCt2a0svZHJtdDJEVHo1WmNuQ0JEakdReEVmU0Iv?=
- =?utf-8?B?S05BbGV2czNUamJ0Q0pnYXppbG1FeU0zTU96emZvY2NuUHJ1Y05UOVp1RWVi?=
- =?utf-8?B?Q3lvbkg0VHZMTGJtVTRHRHA0U29OT1lhdnFWYmx1WmFxMDRySFpWb3E0TDNO?=
- =?utf-8?B?RzhXRHlTdUg4bTNaQ2liR1hDdlBESEZSWmdOVVdPSlhRZW5CVjd2a2RtY0U0?=
- =?utf-8?B?dW9tY05RM3luNUVBQXk1T2xtKytzaldBSUZGSFJrditYdktFTjRsdXBXNzZN?=
- =?utf-8?B?WExYWS9kYnROMmdwcU9QK2dvbjBQODh6cnpkRXVTV1AwNFRyaWdlVlNZUFZE?=
- =?utf-8?B?WERDKzlFTStubFNVYUdKUTVIakJZQVdWSkp4NkN2QjFoYThZbjliMVB0dnlR?=
- =?utf-8?B?alFWanZhcHVJbzZPK2tzUjFOdk1veUlJU0dUNzNNN3JDVHVlbUtkR3JQY2ZW?=
- =?utf-8?B?dSsybVJ5V2p1NHF4QXZZUExNRm1GT2h3WUM3ZUxMS1lQbEpMUGY0SUtyaVJq?=
- =?utf-8?B?elJUSytXOGUyd0FuOUZhbnRPNVpDQktIdmx6UEYwaDlsZC90c25rOTZjczdz?=
- =?utf-8?B?VzFYb2F4NHVoNS9UcGREUHliOTJNWktvS3NVajRDYkRCZFM3ZEROK0ZWVHJu?=
- =?utf-8?B?a3FzVmZWTGljZzM4NXVhUHZ3Sm5jMTViMEd4cnN3MkpEYmFYeG5IK1V0RUl0?=
- =?utf-8?B?QnNMOHE4M29FZFM5Q1hEUkVHalRkQU1CeFVXcS9sZnEzbStXcjRaNkxNK0tC?=
- =?utf-8?B?ZVBIdVdsUVh0bExhVzl2b2NWMzQ3SmFpM0YzMGhSTnp2YkRMRmlZSU9oeW5H?=
- =?utf-8?B?cDRmc2gxTFRtSWZGU2ZJYkJrYTdGU2c5TGtMOGFNWHF3MFdYTnI3UT09?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MGNCTHFXcFlzOUdtVGZLZm1qVHoyQWFnZS8vOWpKRHFCblpTcWNtblJxZ3B0?=
+ =?utf-8?B?WHlCQnZpWDJ1SmpYcGMvOFJjQndpQUszWTFzOHJES0FhcUFQd0lsUnh3dnox?=
+ =?utf-8?B?THlYQjRyaWtGQzBzOW1KWGZuWDZ3SDZPR1kxamluZmZtVVlOa0IrdFVXdWtx?=
+ =?utf-8?B?a21kV2ZnVFIva3RTSFBVcmR0bktUSmJWRW43cmZRei9FUlU4S1VFcHpSQnpi?=
+ =?utf-8?B?QlZCZlRXV2lsdDFkVi8wUC9YWWg5eXQvTjVXanNTa0JVZEZ3UWNFaHJsajFV?=
+ =?utf-8?B?bXhKL1pGU0VaSlpqVjR3eWNDMkdZRE1KOHU0anlJMldJZGswQk1HVGlrOXVz?=
+ =?utf-8?B?SkVsWll5MkJaTEtEVFdiUllxTTZNZEhvYTV0Nm5yOENCRFB3QXMwSEx2ZGJo?=
+ =?utf-8?B?VkkzTks3MXovc1FmaGNmOExhTGFNVlZtSmpNNzdzWHltcndmcFVpd3E1UmFi?=
+ =?utf-8?B?MWJqNEI3ejZMd2pJSHRGUlhaajZhT2JtN0xQeXd3QUc4UmNrZE82cThKY25P?=
+ =?utf-8?B?R1g2b1ZFNm5SN1NUMjRqVGxWZ3Npb2ZWcUpzYms2UDdKdXBIZS9mRVVSVXJD?=
+ =?utf-8?B?dVNJSEl2cS94bHlHQUpmK1ZFbmZuWitaS0hXMlhqMzBxWlNMcXl1NE5wRlJS?=
+ =?utf-8?B?QTZMa2ZJUm5oaitaaS9JWGs4R29ZUFZUeDYxd3YrRGVpczNIc0V6eHBMUlhC?=
+ =?utf-8?B?b2J1RlBCcDZzY0N1MHlkMUs1TFBhZE1RUDhrbVBsUS9icEdMbUs0ZEdLTG9l?=
+ =?utf-8?B?RzdGNElkMnJFU0lYNURnQU9xaFo1V20vU0VUYk9WR3VmbnFKcUVrYVdwN3pq?=
+ =?utf-8?B?WGdYWXZnNng1cTZOakNhVHFGT2ZVUDkrWGNaUWljQVVSUlZkbG5SOVZLM2V3?=
+ =?utf-8?B?REZTa2g5MUhBczBQYlpZTEVyd3RtamdwdmgvK2xmNVFoVklXVU5wTGtMb2Q4?=
+ =?utf-8?B?Mm5GV1ppTmFNVTE2bWxoaGdCWWxPOGVOdy9SL2psZ045Yk41QmZDVHdlY2Zz?=
+ =?utf-8?B?VzdTYzZmYytjQnhKRGgxOUVzNUVzV0hEQkMrRUwyek5NcUlkcUMrRGFIVkUv?=
+ =?utf-8?B?NGw5L0lZai9Da25tQkNlZFZ0MHl5YUhvQ2tSOG9DNEZkcmZzeXdXOFZTaTZR?=
+ =?utf-8?B?WUR2SmFMNGJBb1l0OWpkVllZSGNUczk0ZUd0S3VJR1BUbWdkcGxuREFHTU5U?=
+ =?utf-8?B?bHdWYmhKTWdRdUQyQ3ZYYmljbmlCMGNpVUVlUUVvVGg4VEwrdTVCbXpIa3Bm?=
+ =?utf-8?B?ZzhCUm9hZTlNN2FmR2pZNkZ0dFhNZUI1UUMraytNMnZnK1RrYlRRVFhoRlo1?=
+ =?utf-8?B?RHAwaE8xeEhqY0lHbE8xM2pEOG4ySFpJVXhLT0t5MExRQ0ZZT1pRNXd6UWtk?=
+ =?utf-8?B?aE41eWM3Z25GQmpBdWJ4dTRWSStSU2s2VDJOek9paFgwSGZkaUN5b3Q0ZzBF?=
+ =?utf-8?B?UnFxNXVVeWtiY1NzMExRakVaWGd3WWZDVUpWZnVGYUY0OS9xeU5WYjBXNDFM?=
+ =?utf-8?B?UEMydmJkS1VQQm04SXVkT0o1REVQNk45azhtdm03MzVEMzYvdTZjS01lYnp2?=
+ =?utf-8?B?VGhLYWp0SWJCUWxsN2VQK2cyaDBybW9HVy9NSHdXOTF1RDdLbk9PT241OFNC?=
+ =?utf-8?B?b2JOUGhaZjRycWludHJ1YkQ4bm03SFJtV0FUR1hhaDNGMXE0Z0ZLUkxaV2JB?=
+ =?utf-8?B?VnZPbU9Jd241VFhYM0RWcVAvZUVSMm1nS2l1M3ZFVFcvU3ZvdXdkcVVNOTRm?=
+ =?utf-8?B?RklwWHVvZDl5WkJHRFRUSXJtY3loVFBDNFFUYWZ4d0dIQVVjemgvc1B0bVJB?=
+ =?utf-8?B?b0cvTjM0dk0vRGFwRWE3TDRDQ01KcGlWdG02R2UrRjl2KytPakc1YlM4WFhE?=
+ =?utf-8?B?TGdGTEJMcjJ6ZHVWQ3dYN1NPNUZHVFVQOXNncjltUkdLb3VuWGUya2NqZktl?=
+ =?utf-8?B?Mkd5VkdCSEgxNUIxK2hXRklQOU43MTBCQ0FlbUI3T2JRUitjN2c0Vno1bEkz?=
+ =?utf-8?B?OVo3TEtlVWZHdzRISjFxR3J1ajJtVW9yN09vSjgyQ3Nyc0xmdEdUVmRzcFNQ?=
+ =?utf-8?B?eFl6V3BVam0vUVRaaDZsR0tHeG5EdnBkL3JuS0tUNmhiWFg3TFVpNWFGQVpu?=
+ =?utf-8?B?dmVhbVpacnhoQ0ZpYk1PVW54T2U2MEFOanhCMTdncDN2NFMrOXNuamgxV3A4?=
+ =?utf-8?B?UldpbDZlaU1NeHBXeDZGMXd0Z2l0eFFIWXczdnlidWRDeW85VkNPejJxbWs1?=
+ =?utf-8?B?NG5nbjRQMEZnR01iTFB2Z1FTdHh6dXdjYWhaWERoWk1Bc2JmMStKb09Jb2pZ?=
+ =?utf-8?B?aGVBM1Y5Wnh3Q3J6eEtaODYycnJkUWFFQnJIZ04xK2gyV3FQVVZUZz09?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4e770411-49e7-44e7-102c-08dead02ba8f
+X-MS-Exchange-CrossTenant-Network-Message-Id: 97219e3c-3b7a-4bf5-de63-08dead0323bd
 X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2026 13:07:16.6712 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2026 13:10:13.2267 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: H22XrwFzuZ3ROtyO38Dr+eppgZCqob1TItZy1yeRb4/9bOF+bd+Bi07ApfUATNgPPrcryfFLCVvJEeBSI9/Yww==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7139
-Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
+X-MS-Exchange-CrossTenant-UserPrincipalName: lVwTldoVLIJyHAgkrwtEqAUavGcm6Yb7KbKeGhxUUdIgKGeuSu4hMH3o5wXNvKdH+elvhOV4lLr0GnmhTHjGtg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6962
+Received-SPF: permerror client-ip=2a01:111:f403:c000::1;
  envelope-from=avihaih@nvidia.com;
- helo=PH8PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+ helo=BYAPR05CU005.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,110 +160,124 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 5/7/2026 11:09 AM, Cédric Le Goater wrote:
+On 5/7/2026 11:24 AM, Cédric Le Goater wrote:
 > External email: Use caution opening links or attachments
 >
 >
+> Hello Avihai
+>
 > On 5/5/26 10:14, Avihai Horon wrote:
->> Pass the device name that approved switchover to
->> qemu_loadvm_approve_switchover() and log it in the trace for debugging
->> purposes.
-> hmm, isn't the trace event in vfio_load_state() enough :
+>> When precopy initial_bytes reaches zero VFIO_MIG_FLAG_DEV_INIT_DATA_SENT
+>> flag is sent to the destination to indicate that initial data has been
+>> sent, so destination can indicate back to source when it finished
+>> loading it.
+>>
+>> To get a more accurate estimation of initial_bytes, re-query precopy
+>> size before sending the flag. Extract the flag sending logic from
+>> vfio_save_iterate() to a new helper for clarity.
 >
->        trace_vfio_load_state(vbasedev->name, data);
+> I would prefer to separate the changes, so a patch for this new routine,
+> and then :
 >
-> May be we can improve it instead ?
+>>
+>> This may prevent premature sending of VFIO_MIG_FLAG_DEV_INIT_DATA_SENT
+>> flag if, for example, the previously queried initial_bytes was lower
+>> than actually is. Additionally, it prevents sending the flag if
+>> vfio_query_precopy_size() failed.
 >
-> Anyhow, I won't object to the change.
-
-We could print "data" more nicely, but the main benefit from having a 
-separate trace is that we can enable only switchover-ack related traces 
-without getting noise from traces of the other VFIO_MIG_FLAG_*.
-Plus, future switchover-ack users won't need to add a trace of their own 
-and we can also log switchover_ack_pending_num.
-
-I found it very convenient when debugging/testing this feature.
+Of course, will do.
 
 Thanks.
 
 >
 >
+>>
 >> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 >> ---
->>   migration/savevm.h     | 2 +-
->>   hw/vfio/migration.c    | 2 +-
->>   migration/savevm.c     | 4 ++--
->>   migration/trace-events | 2 +-
->>   4 files changed, 5 insertions(+), 5 deletions(-)
+>>   hw/vfio/migration.c  | 37 ++++++++++++++++++++++++++++++++-----
+>>   hw/vfio/trace-events |  1 +
+>>   2 files changed, 33 insertions(+), 5 deletions(-)
 >>
->> diff --git a/migration/savevm.h b/migration/savevm.h
->> index 96fdf96d4e..1efbe1d79d 100644
->> --- a/migration/savevm.h
->> +++ b/migration/savevm.h
->> @@ -70,7 +70,7 @@ void 
->> qemu_loadvm_state_cleanup(MigrationIncomingState *mis);
->>   int qemu_loadvm_state_main(QEMUFile *f, MigrationIncomingState *mis,
->>                              Error **errp);
->>   int qemu_load_device_state(QEMUFile *f, Error **errp);
->> -int qemu_loadvm_approve_switchover(void);
->> +int qemu_loadvm_approve_switchover(const char *approver);
->>   int qemu_savevm_state_non_iterable(QEMUFile *f, Error **errp);
->>   int qemu_savevm_state_non_iterable_early(QEMUFile *f,
->>                                            JSONWriter *vmdesc,
 >> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
->> index 150e28656e..c3dd30d619 100644
+>> index 2911583ee1..243624b5fe 100644
 >> --- a/hw/vfio/migration.c
 >> +++ b/hw/vfio/migration.c
->> @@ -818,7 +818,7 @@ static int vfio_load_state(QEMUFile *f, void 
->> *opaque, int version_id)
->>                   return -EINVAL;
->>               }
->>
->> -            ret = qemu_loadvm_approve_switchover();
->> +            ret = qemu_loadvm_approve_switchover(vbasedev->name);
->>               if (ret) {
->>                   error_report(
->>                       "%s: qemu_loadvm_approve_switchover failed, 
->> err=%d (%s)",
->> diff --git a/migration/savevm.c b/migration/savevm.c
->> index d1dd696c17..bd8c6ada5a 100644
->> --- a/migration/savevm.c
->> +++ b/migration/savevm.c
->> @@ -3158,7 +3158,7 @@ int qemu_load_device_state(QEMUFile *f, Error 
->> **errp)
->>       return 0;
+>> @@ -456,6 +456,37 @@ static void 
+>> vfio_update_estimated_pending_data(VFIOMigration *migration,
+>>                                            data_size);
 >>   }
 >>
->> -int qemu_loadvm_approve_switchover(void)
->> +int qemu_loadvm_approve_switchover(const char *approver)
+>> +/* Returns true if the init data flag was sent, false otherwise */
+>> +static bool vfio_send_init_data_flag(QEMUFile *f, VFIOMigration 
+>> *migration)
+>> +{
+>> +    VFIODevice *vbasedev = migration->vbasedev;
+>> +    int ret;
+>> +
+>> +    if (!migrate_switchover_ack()) {
+>> +        return false;
+>> +    }
+>> +
+>> +    if (migration->precopy_init_size || migration->initial_data_sent) {
+>> +        return false;
+>> +    }
+>> +
+>> +    /*
+>> +     * precopy_init_size holds an estimation of the initial data 
+>> size, re-query
+>> +     * precopy size to ensure it's really zero before sending init 
+>> data flag.
+>> +     * Don't send the flag if query fails.
+>> +     */
+>> +    ret = vfio_query_precopy_size(migration);
+>> +    if (ret || migration->precopy_init_size) {
+>> +        return false;
+>> +    }
+>> +
+>> +    qemu_put_be64(f, VFIO_MIG_FLAG_DEV_INIT_DATA_SENT);
+>> +    migration->initial_data_sent = true;
+>> +    trace_vfio_send_init_data_flag(vbasedev->name);
+>> +
+>> +    return true;
+>> +}
+>> +
+>>   static bool vfio_precopy_supported(VFIODevice *vbasedev)
 >>   {
->>       MigrationIncomingState *mis = migration_incoming_get_current();
+>>       VFIOMigration *migration = vbasedev->migration;
+>> @@ -664,11 +695,7 @@ static int vfio_save_iterate(QEMUFile *f, void 
+>> *opaque)
 >>
->> @@ -3167,7 +3167,7 @@ int qemu_loadvm_approve_switchover(void)
+>>       vfio_update_estimated_pending_data(migration, data_size);
+>>
+>> -    if (migrate_switchover_ack() && !migration->precopy_init_size &&
+>> -        !migration->initial_data_sent) {
+>> -        qemu_put_be64(f, VFIO_MIG_FLAG_DEV_INIT_DATA_SENT);
+>> -        migration->initial_data_sent = true;
+>> -    } else {
+>> +    if (!vfio_send_init_data_flag(f, migration)) {
+>>           qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
 >>       }
 >>
->>       mis->switchover_ack_pending_num--;
->> - trace_loadvm_approve_switchover(mis->switchover_ack_pending_num);
->> +    trace_loadvm_approve_switchover(approver, 
->> mis->switchover_ack_pending_num);
+>> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
+>> index ab27ff5ea2..e91858354c 100644
+>> --- a/hw/vfio/trace-events
+>> +++ b/hw/vfio/trace-events
+>> @@ -176,6 +176,7 @@ vfio_save_iterate(const char *name, uint64_t 
+>> precopy_init_size, uint64_t precopy
+>>   vfio_save_iterate_start(const char *name) " (%s)"
+>>   vfio_save_setup(const char *name, uint64_t data_buffer_size) " (%s) 
+>> data buffer size %"PRIu64
+>>   vfio_state_pending(const char *name, uint64_t stopcopy_size, 
+>> uint64_t precopy_init_size, uint64_t precopy_dirty_size, bool exact) 
+>> " (%s) stopcopy size %"PRIu64" precopy initial size %"PRIu64" precopy 
+>> dirty size %"PRIu64 " exact %d"
+>> +vfio_send_init_data_flag(const char *name) " (%s)"
+>>   vfio_vmstate_change(const char *name, int running, const char 
+>> *reason, const char *dev_state) " (%s) running %d reason %s device 
+>> state %s"
+>>   vfio_vmstate_change_prepare(const char *name, int running, const 
+>> char *reason, const char *dev_state) " (%s) running %d reason %s 
+>> device state %s"
 >>
->>       if (mis->switchover_ack_pending_num) {
->>           return 0;
->> diff --git a/migration/trace-events b/migration/trace-events
->> index de99d976ab..d9084a2692 100644
->> --- a/migration/trace-events
->> +++ b/migration/trace-events
->> @@ -24,7 +24,7 @@ loadvm_postcopy_ram_handle_discard_end(void) ""
->>   loadvm_postcopy_ram_handle_discard_header(const char *ramid, 
->> uint16_t len) "%s: %ud"
->>   loadvm_process_command(const char *s, uint16_t len) "com=%s len=%d"
->>   loadvm_process_command_ping(uint32_t val) "0x%x"
->> -loadvm_approve_switchover(unsigned int switchover_ack_pending_num) 
->> "Switchover ack pending num=%u"
->> +loadvm_approve_switchover(const char *approver, unsigned int 
->> switchover_ack_pending_num) "Approver %s, switchover_ack_pending_num %u"
->>   postcopy_ram_listen_thread_exit(void) ""
->>   postcopy_ram_listen_thread_start(void) ""
->>   qemu_savevm_send_postcopy_advise(void) ""
 >
 
