@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C6BECD3436
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 10:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE8FCCD3447
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 10:25:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLIN9-0002H1-3t; Fri, 08 May 2026 06:23:55 -0400
+	id 1wLIOJ-0002gc-6K; Fri, 08 May 2026 06:25:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wLIN7-0002Ge-BI
- for qemu-devel@nongnu.org; Fri, 08 May 2026 06:23:53 -0400
+ id 1wLIOH-0002gP-1l
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 06:25:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1wLIN5-0007js-BT
- for qemu-devel@nongnu.org; Fri, 08 May 2026 06:23:53 -0400
+ id 1wLIOE-0007rk-AX
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 06:25:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778235830;
+ s=mimecast20190719; t=1778235900;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CsRjY6HAwhEEQ/rgq8Let4XXvFuX1AAkqwTPKiyGlUA=;
- b=JjSkKU94x29sP9EGKm8KT9IV2HFzpzZUqY3/wEtVfMcKPuCY0KBwMQQkeUjMrkka+RFb/A
- dmxdzplH2uWSjMAwcOqffm/ykLioxCVCvHdIUWpVR9NPTz6kManEZrioZx8dYPq1OIOqIK
- 97Tf5X/R9rgiERQhL0fWX755tcVysBk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=5HJJ4ytRhP/bi3IPPWp9EY7/jglSh7cbyjVPVhH/iBw=;
+ b=KLxZaLH44SHo6Xd18PWPZp6rAu/I0peWMpbNFw10Zjt0sOLche9AnPptWp3/Ly+YELc9h7
+ rnbJ6zC5rRTwrUsqhUXP03zroPGqvrjfUyxWBCiVBFFHQ9gzvnGP0ZnV4qm8CSETJ4CK1p
+ F+vSBIl5iiUwSuwycxrcK9E7QWvzyPU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-225-Gh3GbKzoNkqG9hdFNHV7-A-1; Fri,
- 08 May 2026 06:23:48 -0400
-X-MC-Unique: Gh3GbKzoNkqG9hdFNHV7-A-1
-X-Mimecast-MFC-AGG-ID: Gh3GbKzoNkqG9hdFNHV7-A_1778235828
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-241-Cxnr2xUvP2ee9M0DYFveMQ-1; Fri,
+ 08 May 2026 06:24:58 -0400
+X-MC-Unique: Cxnr2xUvP2ee9M0DYFveMQ-1
+X-Mimecast-MFC-AGG-ID: Cxnr2xUvP2ee9M0DYFveMQ_1778235898
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 07F28195608B
- for <qemu-devel@nongnu.org>; Fri,  8 May 2026 10:23:48 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 08A1D19560AA
+ for <qemu-devel@nongnu.org>; Fri,  8 May 2026 10:24:58 +0000 (UTC)
 Received: from redhat.com (unknown [10.44.32.204])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8FF35300019F; Fri,  8 May 2026 10:23:46 +0000 (UTC)
-Date: Fri, 8 May 2026 11:23:42 +0100
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D621F1800374; Fri,  8 May 2026 10:24:56 +0000 (UTC)
+Date: Fri, 8 May 2026 11:24:53 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 16/26] ui/vnc: merge vnc_display_init() and
- vnc_display_open()
-Message-ID: <af25rn40XmvEqPZ9@redhat.com>
+Subject: Re: [PATCH v3 17/26] ui/vnc: clean up VNC displays on exit
+Message-ID: <af259U-lchWKMF7l@redhat.com>
 References: <20260430-qemu-vnc-v3-0-be96757428d0@redhat.com>
- <20260430-qemu-vnc-v3-16-be96757428d0@redhat.com>
+ <20260430-qemu-vnc-v3-17-be96757428d0@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260430-qemu-vnc-v3-16-be96757428d0@redhat.com>
+In-Reply-To: <20260430-qemu-vnc-v3-17-be96757428d0@redhat.com>
 User-Agent: Mutt/2.3.1 (2026-03-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: 8
@@ -91,21 +90,23 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Apr 30, 2026 at 01:02:49AM +0400, Marc-André Lureau wrote:
-> Combine the two-step vnc_display_init()/vnc_display_open() sequence
-> into a single vnc_display_new() function that returns VncDisplay*.
-> This simplifies the API by making vnc_display_open() an
-> internal detail and will allow further code simplification.
+On Thu, Apr 30, 2026 at 01:02:50AM +0400, Marc-André Lureau wrote:
+> Previously, VNC displays were never torn down on QEMU exit, leaking
+> resources and leaving connected clients with unclean disconnects.
 > 
-> vnc_display_new() is moved to vnc.h, since it returns VncDisplay* now.
-> Add vnc_display_free() for consistency, and it will be later used.
+> Add vnc_cleanup() to free all VNC displays during qemu_cleanup().
+> Make vnc_display_close() initiate disconnection of active clients,
+> and have vnc_display_free() drain the main loop until all clients
+> have completed their teardown, instead of asserting the client list
+> is empty.
 > 
 > Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 > ---
->  include/ui/console.h |  2 --
->  ui/vnc.h             |  3 ++
->  ui/vnc.c             | 79 ++++++++++++++++++++++------------------------------
->  3 files changed, 36 insertions(+), 48 deletions(-)
+>  include/ui/console.h |  1 +
+>  system/runstate.c    |  5 +++++
+>  ui/vnc.c             | 20 ++++++++++++++++++--
+>  3 files changed, 24 insertions(+), 2 deletions(-)
+> 
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
