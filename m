@@ -4,111 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6245BCD3436
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 13:07:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E71CD3436
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 13:07:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLKuj-0001oW-U7; Fri, 08 May 2026 09:06:45 -0400
+	id 1wLKuy-0001pz-Df; Fri, 08 May 2026 09:07:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wLKui-0001oE-Vl
- for qemu-devel@nongnu.org; Fri, 08 May 2026 09:06:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1wLKuw-0001ph-3F
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 09:06:58 -0400
+Received: from mail-centralusazon11010033.outbound.protection.outlook.com
+ ([52.101.61.33] helo=DM1PR04CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1wLKug-0004EI-6X
- for qemu-devel@nongnu.org; Fri, 08 May 2026 09:06:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778245597;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=B5sJzRRKNlBRPA+UoypqIlNiwhFhujhDw+Cg+ASkfvw=;
- b=CMrkB67Nyrvdy8lalbJdDM0MFnhZ4U7XAA2Ww+23TKP+UcBpjTttUiZP2VKBdaK7bbHcDk
- ozg/hRPQnylcJV57OBkYWtpbKioDmZDLM46bKUJkGvLDs9VzzSLt51w+1bOjqtI+Rk9xtm
- O8dUyxhLqhudG3Gz4CwrZeug9dNkszA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-688-ClDvzwnpPu6-TdMFbTKibQ-1; Fri, 08 May 2026 09:06:36 -0400
-X-MC-Unique: ClDvzwnpPu6-TdMFbTKibQ-1
-X-Mimecast-MFC-AGG-ID: ClDvzwnpPu6-TdMFbTKibQ_1778245595
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-48d144d3428so11645955e9.3
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 06:06:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1778245595; x=1778850395; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=B5sJzRRKNlBRPA+UoypqIlNiwhFhujhDw+Cg+ASkfvw=;
- b=JdHJF+3/ftTAtRax2R3CJdttNQvAPF6No7W2OatN1NznY6i8bx3mQCzY4Yojm7qwpn
- FWbS3T4AH/MWDpvTH1K59PJ/7sAszDLvSX79qgoVz6/TAq9A3+o5gYdvRd4tqmmux69d
- PhQLvkVVLo+QKPy9KwOZUM266EPziCBF1nPCoawBrI0+vAQDitCjkoeG5HWGVrKNWBCF
- J6Zth2OOkYwFEOldmnyegIE+M/QPxsP2KvvnWHskg3XMdcIXDsfRBZOr63uE8tHV253n
- /lwSI0yLmgN0K6CH4HGvWMtHoLxY4dk7sIk65WPeCjoNjRDfrTJbTa6L+9JztKkmlIcp
- rVdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778245595; x=1778850395;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=B5sJzRRKNlBRPA+UoypqIlNiwhFhujhDw+Cg+ASkfvw=;
- b=AJSeQe9I9tnex3xirm3eOqWo6BtF7fUZU5RIxSV7hB4uHYnKbupFhB4/El8F3qOMVU
- VZ/+D6ttnZhEsA/uPlHc0g9fWjGtjt49N87AKYNRgR6eicjjthu7D0UDPbnQwlHpEgFv
- SYGj93NBYX7hyeK+6jubleEMzLjqQrEDRoPEGv8ASun7LVMuwHrVLLLZNB0865Z54kko
- deoOQbG896oxC7sCRGhiwj/XWmUaPf9LkDc7DyJR5AmHSlw6hRQcqb14GWoZ6Fe0cuZ4
- sII+Mv4TQba9pkSa2GFvko3Mhbs+HoVh5+IvWMn5pLpIsGV/2sybo/PByqZnSq0YiuxB
- AiFg==
-X-Gm-Message-State: AOJu0Yz8EWUz7cO4Art+Vx+lPqQ71KhGpcSwIS9dTk/M5vwCndMcb5B/
- Zv614XEp5PDUnsWH3WfL152oF+lZRKnsqP+NWdssNp09ZCgYROehC5/jlAZpgt/gack7x1HiNq7
- lckhkDAEGQaatnV4wMEop3uDJRJNQCp65fCdJRorATLnV4Hh7Uqx5kCoU
-X-Gm-Gg: AeBDieuaRL5cgOS41ZJhZZfqwAAwm/c3BKq4WB2PMSGVbbP9Ng/LcQAEhmFBHcFnrQ7
- o35VL06IfM+g0S4mZM+LQTGYAHcd7MDzai+kNnm90pKHNi8WnzCbIEg011RIYXtxL2hK3vXDxJE
- ShivLvZF8yhQu1ITZVO8JN4zSFNL6Bqkiok0vnGHlj4e3mjfmvtWv19LPSczLAJOvQQx+f6Ajed
- Az+4G4ChNiG7EGD9bQdvZkCirZ4eOK3D+7X3fmrnNzTIt3SLJd2wyEOmgHllhShw8786J5+dBWJ
- wTYVP/mS4uhjI5KHm2AwXQ6OWdD/4L1FnUVsBWTGddp1tfk4NjHl5giTtFXWwMz+zofWwB0m+TI
- a8cvb7gedumbvU0s/Wg8AW8ME/gOwnS8nrst/6KEYkqukW70pY44mYa4L8WxR5cT/ZvFGFNirKk
- ReROc2lrWYYKlJWYd+8QbusOiVNSoXtN9mWU5+njKdN/81Ywq4iD4=
-X-Received: by 2002:a05:600c:a118:b0:489:a4:e578 with SMTP id
- 5b1f17b1804b1-48e51f32870mr149164845e9.14.1778245595055; 
- Fri, 08 May 2026 06:06:35 -0700 (PDT)
-X-Received: by 2002:a05:600c:a118:b0:489:a4:e578 with SMTP id
- 5b1f17b1804b1-48e51f32870mr149164445e9.14.1778245594584; 
- Fri, 08 May 2026 06:06:34 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d713:2001:af32:685a:7b5a:da25?
- (p200300cfd7132001af32685a7b5ada25.dip0.t-ipconnect.de.
- [2003:cf:d713:2001:af32:685a:7b5a:da25])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548ec6b071sm4233051f8f.14.2026.05.08.06.06.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 May 2026 06:06:33 -0700 (PDT)
-Message-ID: <8ec42109-4123-4cc7-a55e-9aa2576a791c@redhat.com>
-Date: Fri, 8 May 2026 15:06:31 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
+ id 1wLKuu-0004IJ-Ct
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 09:06:57 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Jv4+OCNKCYIDZ8xGJheFpP66xm1G/G43sryHqOSt28f4CK345k8m+deXC8bSUnHw6EvUSAjcNexp0r8MmYgtQIsaOXSAyqUC2Ul/vhsdxEdIefu1SnBs4nOcPbmUirqKqPv4ZUYaIAInQ3ZAZjT3uMa52j2RveD2XlJrRBLiHrk7l15UfwnPu94KrkQST70E/GHi7g+/BZ+YOJCMdKPkBAP4Q1KWSk1Wt92y0TvgkSdj5nWZtAhPx+k9isr8vxvA7y37oZVz0kkg5qnKDbdCN7P99luZAp0UKFeIwX56tvAYJWJwxq7Hljdm3xlk8E9v5ZHvsL1T1rop5Xr2QpJNNg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=t+YmsEZ4ROqX1p/qMkpQh6q8QA16CNL89mgFR9f3xis=;
+ b=WkEuSePYjWczqj5FrMhGeRd7mcn4xb9rKSVlQuJn/HiXDWV9So5DoIvhBHutL8d0C/dJWCF94fx0tzrMLMRUjXFC+cgVEznAoTQZR+J5J+1UVoZOgvUDj2CVr3oUVabUXZ0S528dh+evM6ZCkp0LgGtpnDP5TFaRRXyzyuoR5OR2s/ueNIvTfZ4g4CTtQPu2/f//2WybyVDqQfLWUj0pnbCWtzQgwiFSExkFqk6Du/mbIddL0mhnNIcQRLj4uCt5xaqF9BljCRwAxLFNMfa6jAQnONyvTGQZ9ZQrBuqlbzO8RPT5gQBDCWDlj2EJUd0bhaZnDExrBtj8MJmlNjoeuQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=t+YmsEZ4ROqX1p/qMkpQh6q8QA16CNL89mgFR9f3xis=;
+ b=Z5qOnZupHO6b7bMxCpkcdE14LF/VZbU9GZWTWxAPTMuyO0ZOFloz2DOLOXBwogWYRCaPGkLH7zmSHOlK0lD6zb7+RmbYMPcQ5485iBCr6cqCn/BlYxUhsfccjT4DL9JekodugbxIsXb3EBgzXMJ95eeNEipzvdJ1PZQtNw6jVqXk/ZutAYhquX7OZGfj7MWzyxNKv6bC2hJHxxmIxa258jYC7zhWj5MEYz/KPrNmIOjJTkucIu4gUqj5t1LrNFZ4Hjy2zPVeJ3YocTDhHRxe9gFpGfC+h+kZzW2FyfekseTl8LH4WRjU+fjqY32tLxNE4NV03Max6TkZaZatcjll2A==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com (2603:10b6:208:31a::11)
+ by PH7PR12MB7139.namprd12.prod.outlook.com (2603:10b6:510:1ef::21)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.19; Fri, 8 May
+ 2026 13:01:48 +0000
+Received: from BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da]) by BL1PR12MB5063.namprd12.prod.outlook.com
+ ([fe80::a0c2:5681:4aca:90da%7]) with mapi id 15.20.9846.016; Fri, 8 May 2026
+ 13:01:48 +0000
+Message-ID: <f3031406-7146-4045-bc5e-720fa4bf69a7@nvidia.com>
+Date: Fri, 8 May 2026 16:01:43 +0300
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 17/28] fuse: Manually process requests (without libfuse)
-To: Fiona Ebner <f.ebner@proxmox.com>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>
-References: <20260310162622.333137-1-kwolf@redhat.com>
- <20260310162622.333137-18-kwolf@redhat.com>
- <2493d422-d58a-4409-aee4-e932a4e0a73c@proxmox.com>
+Subject: Re: [PATCH 03/14] migration: Propagate errors in
+ migration_completion_precopy()
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex@shazbot.org>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Maor Gottlieb <maorg@nvidia.com>
+References: <20260505081423.28326-1-avihaih@nvidia.com>
+ <20260505081423.28326-4-avihaih@nvidia.com>
+ <c439b516-b8f2-49de-907c-9dfa2edd9e2e@redhat.com>
 Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <2493d422-d58a-4409-aee4-e932a4e0a73c@proxmox.com>
+From: Avihai Horon <avihaih@nvidia.com>
+In-Reply-To: <c439b516-b8f2-49de-907c-9dfa2edd9e2e@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+X-ClientProxiedBy: FR4P281CA0339.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:ea::13) To BL1PR12MB5063.namprd12.prod.outlook.com
+ (2603:10b6:208:31a::11)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL1PR12MB5063:EE_|PH7PR12MB7139:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1ef02f72-1ae3-4d0b-81e3-08dead01f6b4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|7416014|376014|366016|22082099003|56012099003|18002099003;
+X-Microsoft-Antispam-Message-Info: 3e3Ld/bitJhygvzgLCn0gHRx3oZfH+0NbhhZ9wWiig4Kl4le08AFFRaEzCxfdJbj1OhPQgHyb+NYYw9iGwqGhLmRPQ5oTG271AwFGnFTIVEq8YNUI4/d9IGPMMAt1oAgrLgq+1DWGaVtcMzDFvLN09hAurocMvfO0ZaSSTk0ftuVVpES4UNNi49Nw7h0iGxd4fzFDJs07/voYdwapJAzdnbpEpJBkSRMLAq8qKXYDMoDgG1JqmZljo8tlVN1bHFb0ImiO4GqQOROsYhKKQtHDD3cy61OG+pYrTARaZBxwKJgxD3m/nLVgfMUByzF2zvBK81VaJrsAuP/bsSihbhPAukkTU8xkiXsgS2z2xsZCoaupm4KMZ4DN8HAZyVP3MR/z5iMMY915JoA6ElBk+WT6eoXHi47CXLJ9RCxX6/fYQznR9SIipI+HXUuUBnCcda8EyY5dR1RzoOacHb7qfs+hDHFgLSX2p4qC8MCjq26UeRY/1KZJJh4NpGgmwUNJ1AkqeGcS1K/c/zMXFDNMOEPqRUijMA/0oJJpaOgJDc5nQIwoxB/c8IGQmmhhGSpC4TPsUXQ4b4le++2cS7pF47ry2GWlmqtnBRAjLsFlYRGoI214zoOKYcBv6twEXJcu0Uf/wkBEgyipXgTRtpjs0kjqlA97Bd340gtYyU36Yc72BUgOdE5PDcExQ088nFt9hpb
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:BL1PR12MB5063.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(7416014)(376014)(366016)(22082099003)(56012099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NTRLT2kxclFBako2Z29UVCtqcFBzeG5TZVJQQXZXeklzRE1tSE54dzJFS3Jt?=
+ =?utf-8?B?T3QrOGIvK3hka1l4eXdIdkZTcHdqMWhFaDY2TUlaemt0NFdRMXFKMk1tcExa?=
+ =?utf-8?B?ZXp2NXJ0TE42QThXRTlmTUV5NzRMQWFIWkZQRXdMNWtoV1c3UTkxL1JiNGRx?=
+ =?utf-8?B?azBGMlhGeXFPTnpnQjh6OVJLTlpaREFHRmc4ZEtrM2dXV0NQVS9rR2RsaHYw?=
+ =?utf-8?B?cGhjT0FzR3NaelNaZDlPUFVCY1VhMmVETUQzYncxSTNiT3BjTzEvUnp6MmVV?=
+ =?utf-8?B?Tm1OTWVRWW9GUjVrczhOWmszNmtwWUxmSXd4VHFCWkIxdFZHbktWUk9ySlpX?=
+ =?utf-8?B?dXE2Y3ZvZnZpSnNwWU5jcWVkWkJDb1NHVU1GSGRvUU42amNBbE4wV3hUOGNp?=
+ =?utf-8?B?YTh3WG9QbEFFYy9RckhYN1JHNEltamFmbnVVbVBOS1QvV0RSdElFYm8yVjBE?=
+ =?utf-8?B?UWlVR0VPN1NLQjZxSDZEdVdwbjJWOEQrTFhGaFFMRlF0QkZhRG1ROEl3a25K?=
+ =?utf-8?B?VUMzTFQyU00vQmRLMjQzWHlqVnRMa0pOcTVqeDM4R3NuRHVvUEZZRkVBODk5?=
+ =?utf-8?B?aDZQdEpXMU05dy8wdStlU2VvWUhXSGJGMTE5WFdRQkNlY0pGc2FZZ2kwQVpS?=
+ =?utf-8?B?SnZ5NDRpZGNpaS8rRGlsTS9QZEU3NUN3bnNhVlY5TG9RQWRUQkQwRW1CNFVi?=
+ =?utf-8?B?a0VrMzZsOTFWK3lZVjRLaTVtb3VVd25JVkxQY3ZpM1p6cnRkd0lwaWNmb0dB?=
+ =?utf-8?B?anRWdFBGbitNK0k0SnpZNUR2MjFTRm5LWnY1YzI2alhxdStySm1yWEFRbmxx?=
+ =?utf-8?B?em5JSi9TYk9SZEUwK2VXeDJOK015OThkQnVoN0puRUpnNHptREpsM3hXY0lK?=
+ =?utf-8?B?c2I5L1YydXc4R0hoUzU0YXZEczdubGh4VmJXVDIzQmg2R3l2aDJZVGNZNzdn?=
+ =?utf-8?B?dmR1TWl6RllFR3Mvc29CVWtjbGN5cVBPUVZwSXBsaGpqN3Z1Si96OG9YUjBr?=
+ =?utf-8?B?ZTluRnFYSSt5cFhRNE81am9xMXI3dzh0N0l5NGd2UlJ4RjZGV0R4MHhJWEt1?=
+ =?utf-8?B?dlBCdUgrQTlMbE5JWVAyNWZVcEcxNlgvbmVxR0FLTlF3dFc5QkhCbVJNUUIz?=
+ =?utf-8?B?WU5rWVJSdlArQStvVCtKYnhhcDdBai8wR1Nld3E3UnRGSm44MHRMWHQzNFB3?=
+ =?utf-8?B?RHpkZEFQVEFqcWFMZDNJaVhHbXVjejRKaGZOSEtYRVhCZUJWY2VGRHNiQks0?=
+ =?utf-8?B?QVZpVTlJa01xS0Ywc0NxdUlUSjEzVmlRem5yYXlpVmtxN1VoMXFaWVdkVHJM?=
+ =?utf-8?B?QVpNV2hpdHFPL0ova3JYSUZibzR2ZE9DYlZFVnV0QkxaZTN1TDlBRWlrV1hy?=
+ =?utf-8?B?N3U5RWlxV1MxSDZ6RENaV21VSmNyM1RwMlZVOUVUZ2RtNUtOSWE0QnhSdG1Q?=
+ =?utf-8?B?M05FSzYzN3ZJQnNHaTkvOE5YZmI4WUhhcWNCRmIwS1F4Z294c0RFR1dWem5U?=
+ =?utf-8?B?bU5vb3hid29IMTl1VkxIcnp4QjJlc2J2bUp4ZFEwU1lWTmpEMW8zcEVMVVFx?=
+ =?utf-8?B?TW9nRXUyYnVWRmI0K1ZJcXhJcERFbWdGNTNDTGlEOWp5YnMvcTIrQnJYL2xC?=
+ =?utf-8?B?enZoNVRXeGx0bll2YW1UWm9JNUtTQ3BEcHJUTEhrRVlzNjJuVHlmbmdxTzBS?=
+ =?utf-8?B?Y3VvSnM4Yjh1NHRWcjlqMWVLcmVaZEtnM1VuQ25PYjRZdWpUTjB0UHVtdTJ3?=
+ =?utf-8?B?MkE4K3hUZUdDdnJXMEN1a1dNNnQzRVpPVmRVb0FnekthVEFUVDFFcmhhYjdq?=
+ =?utf-8?B?Ry9IaWhKS1prbU40Y0hRbmxoR3k3UUdUZlluQ0Qrc3dXekU0RDlWMXNTdEFq?=
+ =?utf-8?B?UHVaaTdMaVM1eEx5VjhwOTJFMUozSlAwZXlQbitiNVBhK1NnYWZqTXQyYVh2?=
+ =?utf-8?B?YUJWODVlbEE5NWRzRDcyY3pwY2dXdWpzNFFpcDZqYWZiZjc2YTYzS3RnWUVO?=
+ =?utf-8?B?SmYrTlVqSkFEc0xDdlpvaTN0dExNaFB4VS9YOG1Ed2dpbVB3dDZ1Zkt0MGx1?=
+ =?utf-8?B?MVdrWTNmZ1lwcnV2QlI1MUNyL1NkMkVhb05MZEk1UVNuMUFFRmIyQ1NhNG5H?=
+ =?utf-8?B?bEV1NEt0TW1yMTlXMnVqaDNQZ1pZNU0xSmd5OStkM080NEFhYnRaWVk0cEYw?=
+ =?utf-8?B?UlI3eFJUajVXRlFpSmo1R3VVU3daZ1dKOHU5dmd5M0g4OWQ5R1dYUGlsRTds?=
+ =?utf-8?B?cU1zaExDVFp3eEpFVzBkYUpKa0FIUENUdU1UeUNrUVJUTHVnZTlmSUFsaUlu?=
+ =?utf-8?B?clB5Rjh0Zks4aWZKdXJpVGd4amViclU2MzYrbTU5Q2M5Z25BQU02Zz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1ef02f72-1ae3-4d0b-81e3-08dead01f6b4
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR12MB5063.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2026 13:01:48.1866 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: t4A/Snn663meJEIarvNlBhgYz3bf5HW+QphP+egz+JPLd+URTPuSPpN8ibK8IBXLM+jufZay5ss8mlei4923Bw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7139
+Received-SPF: permerror client-ip=52.101.61.33;
+ envelope-from=avihaih@nvidia.com;
+ helo=DM1PR04CU001.outbound.protection.outlook.com
+X-Spam_score_int: -14
+X-Spam_score: -1.5
+X-Spam_bar: -
+X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,88 +159,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 08.05.26 13:55, Fiona Ebner wrote:
-> Dear maintainers,
->
-> Am 10.03.26 um 6:37 PM schrieb Kevin Wolf:
->> From: Hanna Czenczek <hreitz@redhat.com>
->>
->> Manually read requests from the /dev/fuse FD and process them, without
->> using libfuse.  This allows us to safely add parallel request processing
->> in coroutines later, without having to worry about libfuse internals.
->> (Technically, we already have exactly that problem with
->> read_from_fuse_export()/read_from_fuse_fd() nesting.)
->>
->> We will continue to use libfuse for mounting the filesystem; fusermount3
->> is a effectively a helper program of libfuse, so it should know best how
->> to interact with it.  (Doing it manually without libfuse, while doable,
->> is a bit of a pain, and it is not clear to me how stable the "protocol"
->> actually is.)
->>
->> Take this opportunity of quite a major rewrite to update the Copyright
->> line with corrected information that has surfaced in the meantime.
->
-> a colleague ran into another issue with a fuse export, this time in 
-> combination with virt-fw-vars and bisecting points to this patch. 
-> Before commit a94a1d7699 ("fuse: Manually process requests (without 
-> libfuse)") the reproducer [0] completes successfully, after that 
-> commit it hangs at [1]. The issue is still present with current 
-> master. I can dig into the details next week.
 
-On my system, virt-fw-vars opens the file with O_TRUNC (after “INFO: 
-writing raw edk2 varstore...”). It then tries to write to the file, but 
-this returns a short write because the export is not marked as growable, 
-and for some reason, the write is infinitely retried instead of aborting 
-on ret=0 (which should indicate ENOSPC for writes).
-
-Using growable=true makes it work.  (For me :))
-
-For some reason, before said commit, libfuse just did not pass that 
-truncate on. I’ll look into why exactly, but so far I would say the FUSE 
-export behavior is as I would expect it.
-
-Hanna
-
+On 5/7/2026 11:03 AM, Cédric Le Goater wrote:
+> External email: Use caution opening links or attachments
 >
-> Best Regards,
-> Fiona
 >
-> [0]:
->
->> #!/bin/bash
+> On 5/5/26 10:14, Avihai Horon wrote:
+>> migration_completion_precopy() doesn't propagate errors to migration
+>> core which leads to error information loss. Fix that.
 >>
->> rm /tmp/disk.raw
->> rm /tmp/export.fuse
->> cp /usr/share/pve-edk2-firmware/OVMF_VARS_4M.ms.fd /tmp/disk.raw
->> touch /tmp/export.fuse
+>> This prepares for a follow-up where migration_switchover_start() can
+>> fail on switchover-ack and still report a useful error. Errors from
+>> qemu_savevm_state_complete_precopy() are not propagated yet as it
+>> requires more plumbing.
 >>
->> (
->> ./storage-daemon/qemu-storage-daemon \
->>     --blockdev 
->> raw,node-name=node0,file.driver=file,file.filename=/tmp/disk.raw \
->>     --export 
->> fuse,id=exp0,mountpoint=/tmp/export.fuse,node-name=node0,writable=true \
->>     --chardev socket,id=qmp,path=/run/qsd.qmp,server=on,wait=off \
->>     --monitor chardev=qmp,mode=control
->> ) &
+>> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+>> ---
+>>   migration/migration.c | 7 ++++++-
+>>   1 file changed, 6 insertions(+), 1 deletion(-)
 >>
->> sleep 1 # too lazy to do proper synchronization for the reproducer here
->> virt-fw-vars --inplace /tmp/export.fuse --distro-keys windows
->> echo '{"execute": "qmp_capabilities"}{"execute": "quit"}' | socat - 
->> /run/qsd.qmp
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index 6fd89995a2..a5c7ca6796 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -2780,23 +2780,28 @@ static bool 
+>> migration_switchover_start(MigrationState *s, Error **errp)
+>>   static int migration_completion_precopy(MigrationState *s)
+>>   {
+>>       int ret;
+>> +    Error *local_err = NULL;
+>>
+>>       bql_lock();
+>>
+>>       if (!migrate_mode_is_cpr()) {
+>>           ret = migration_stop_vm(s, RUN_STATE_FINISH_MIGRATE);
+>>           if (ret < 0) {
+>> +            error_setg_errno(&local_err, -ret, "Failed to stop the 
+>> VM");
+>>               goto out_unlock;
+>>           }
+>>       }
+>>
+>> -    if (!migration_switchover_start(s, NULL)) {
+>> +    if (!migration_switchover_start(s, &local_err)) {
+>>           ret = -EFAULT;
+>>           goto out_unlock;
+>>       }
+>>
+>>       ret = qemu_savevm_state_complete_precopy(s);
+>>   out_unlock:
+>> +    if (local_err) {
+>> +        migrate_error_propagate(s, local_err);
+>> +    }
+>>       bql_unlock();
+>>       return ret;
+>>   }
 >
-> [1]:
+> Instead, I would modify migration_completion_precopy() to use the Error
+> variable in migration_completion() :
 >
->> INFO: reading raw edk2 varstore from /tmp/export.fuse
->> INFO: var store range: 0x64 -> 0x40000
->> INFO: add db cert 
->> /usr/lib/python3/dist-packages/virt/firmware/certs/MicrosoftWindowsProductionPCA2011.pem
->> INFO: certificate already present, skipping
->> INFO: add db cert 
->> /usr/lib/python3/dist-packages/virt/firmware/certs/WindowsUEFICA2023.pem
->> INFO: certificate already present, skipping
->> INFO: writing raw edk2 varstore to /tmp/export.fuse
+>   static void migration_completion(MigrationState *s)
+>   {
+>       int ret = 0;
+>       Error *local_err = NULL;
 >
+>       if (s->state == MIGRATION_STATUS_ACTIVE) {
+>           ret = migration_completion_precopy(s);
 >
+>       ...
+>
+I'd rather keep this change limited and not involve migration_completion().
+The error reporting in this path is a bit convoluted (mixing error 
+reporting via qemu_file) and I think it deserves a separate series 
+cleaning things up there.
+
+Unless I am missing something here and the above should be easy?
+
+Thanks.
 
 
