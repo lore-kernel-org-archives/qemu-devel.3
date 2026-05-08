@@ -4,98 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 742F1CD3436
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 15:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5897CD3445
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 15:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLMuE-0004Kn-2c; Fri, 08 May 2026 11:14:22 -0400
+	id 1wLMyr-00064P-W2; Fri, 08 May 2026 11:19:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wLMtJ-0002hm-RQ
- for qemu-devel@nongnu.org; Fri, 08 May 2026 11:13:26 -0400
-Received: from mail-oa1-x2a.google.com ([2001:4860:4864:20::2a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <james.hilliard1@gmail.com>)
- id 1wLMtH-0001lr-RB
- for qemu-devel@nongnu.org; Fri, 08 May 2026 11:13:25 -0400
-Received: by mail-oa1-x2a.google.com with SMTP id
- 586e51a60fabf-409de4132b5so1295181fac.1
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 08:13:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20251104; t=1778253202; x=1778858002; darn=nongnu.org;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=eDUH6gVsEU3s3PR28lsUEIRSGTJ5z86zTutL+l73o/w=;
- b=Hg6YkWW51poSu72/uNtHk4KQV8qQK9+GUnxxszxOBY0BKCSb+tP+Fz4DYfWuzpL10R
- HcvogRqPbCROjSeYRBs6K6DKvKfq9H8mmyvbSbh4YZRzY2HM7j6hoptmiVmhv90KLb4Z
- VOhJeP1JDbItGr1p6onOt8NqyHGlY2flMsWfuFlU/W3lMXaAuLl3o8w9qlKc85CCvKh7
- 5GyGVvJ/yFe0eGrt24OLBRkDowDVrKLNxBZrn8UyfTzmpotPryd0S67AQmLfRdr5OTI9
- AbJhNb2ifDpwNt1YQSmbi4aKbIGo7P+fkBAlBUFtGeUr96XcnmTfmQMxo18RdgiaVbzd
- gMwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778253202; x=1778858002;
- h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
- :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=eDUH6gVsEU3s3PR28lsUEIRSGTJ5z86zTutL+l73o/w=;
- b=QoRBxSX7QMFqLUm32u+hqj7/2s2vhV+ChiNP9R4u6Ecy8zHWdTvS/Zd+vBK0Mr8Gmv
- XRoOiVXrnZGH+4B1elLFmzesyq3ybs5kBAJVIVf8WyvDWYjaahivJLXzvvBv8J0oJF4/
- ZKSnHPr0Z5fIS0VHJsWZpAu05aBvRUXNXbhNu9Fesjxdsv6R/+LPe0QbP11HScR8Y8ON
- ed+nP0UgF6BB+Ad2MXKAmK+taSSXgjhlQqG371tFKxL8OTdBz8Qpp7MdHoYOMlvgP6yg
- o2Wq8sRg3bpKl/nIYM6o5AD/FS9JaFx6Iq5tN+nOvb6CWRWsqs4JAQiwoAJ3uekFmSr2
- Sm1Q==
-X-Gm-Message-State: AOJu0YwzHbVYqOcgitgkxZidQxKZEL/EkAQv+fQ/1+DMFQw2bTbeR3nb
- CH29Ginu7NiGzY9JRKXbylMbFMmJGhne9RcTNJsA1O5TLZod5hN37nG61U/RJQ==
-X-Gm-Gg: AeBDietiyFHJB4ZdRf2DJzKom27Tjuts4kOdc7gWOrgS5Oq874pdu12yiyL7sHppCS1
- 1tCkq1gBHlbdtUjcuosrCajTtu1KYEnly8seiig6kaZnumBItKkdFX/p8gEGSxNcet7GaP6iZu9
- +9zwu+0WollA0uG9jQxwYscO1GO7QId/eYPvJJLZk+bmMv/c4tbRo+nJXJcPwt7VMbv1v8MxZJy
- o1ReGUxPZh4oERZPqr0rRaeu7Au1DqvhFp30N8xUXestdebkZ3M1mObl4msbG8FImca5M71p3hP
- xaUuEXJ0PHbPnZXIbvP/jZGanESEIdX/NubJDAXNaY2HthxsVa8e84eW+cmoYYE6HXsjNiK8ldD
- J/1BI/GAxhKuciqmlpWvonFqcKlID/qAVUahzEDpcRBxLrD4j56EbIMdPeL7CHRiKN+RuQwel+R
- 6ciTe4JMmj8B/GfpC9G53cTNLTY0qq55gnQI3qCZRmMaPaHCazLHp2HfdNqSsQsthw21B61vOWb
- 3oEIHyP/atgtunXm0kUmTu5X/j+C3T7qiVjxjrVIQPEDLVsWynUnYVfX4Jl7jAgFxhsQ0RUCI02
- fS/P+e4jn6Tv9gQ3RLZENihbsfLO8slk6Yho44Xd9aWZ2J0bRauwB56izd0oAi1VETPhLZU=
-X-Received: by 2002:a05:6870:249b:b0:42c:111b:73fe with SMTP id
- 586e51a60fabf-434f64e9244mr8165809fac.18.1778253202497; 
- Fri, 08 May 2026 08:13:22 -0700 (PDT)
-Received: from
- 1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.ip6.arpa
- (71-218-113-237.hlrn.qwest.net. [71.218.113.237])
- by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-43557109b7dsm1897904fac.5.2026.05.08.08.13.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 May 2026 08:13:22 -0700 (PDT)
-From: James Hilliard <james.hilliard1@gmail.com>
-Date: Fri, 08 May 2026 09:12:25 -0600
-Subject: [PATCH v3 25/32] target/mips: add Octeon LA* atomic instructions
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wLMyf-00060q-6M
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 11:18:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1wLMyd-0003aB-0e
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 11:18:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778253532;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ATtTb+vg+vykJJCrOjkPUj2ewX44xuBIRSAVUuv4Ryo=;
+ b=bQY7UmiI7znEq5r0nOWLr6odbqL7nawsAMeC6Ubh+0iID6WySbbytQGmteysNZFUyuT7gX
+ IYKNR0Rnp9gsGZ7u7LZiB7J9DjWT1VAb3JouM3u76L+ffW7U1QA4/AknCTddEW9tw5JDF0
+ ouSryRc9myDlR75vJYTl78ey2H+uK3g=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-556-2h3hemBUOVWWaODGTQ0Vxw-1; Fri,
+ 08 May 2026 11:18:48 -0400
+X-MC-Unique: 2h3hemBUOVWWaODGTQ0Vxw-1
+X-Mimecast-MFC-AGG-ID: 2h3hemBUOVWWaODGTQ0Vxw_1778253528
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E7D0D1956095; Fri,  8 May 2026 15:18:47 +0000 (UTC)
+Received: from localhost (unknown [10.44.24.4])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 876F61944B20; Fri,  8 May 2026 15:18:46 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260508-mips-octeon-missing-insns-v2-v3-25-bcbec96357d9@gmail.com>
-References: <20260508-mips-octeon-missing-insns-v2-v3-0-bcbec96357d9@gmail.com>
-In-Reply-To: <20260508-mips-octeon-missing-insns-v2-v3-0-bcbec96357d9@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Laurent Vivier <laurent@vivier.eu>, 
+Subject: Re: [PATCH v2 07/10] qom: add object_new_with_props_from_qdict
+From: marcandre.lureau@redhat.com
+To: =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Aurelien Jarno <aurelien@aurel32.net>, 
- Jiaxun Yang <jiaxun.yang@flygoat.com>, 
- Aleksandar Rikalo <arikalo@gmail.com>, Huacai Chen <chenhuacai@kernel.org>, 
- James Hilliard <james.hilliard1@gmail.com>, Helge Deller <deller@gmx.de>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, 
- Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
-X-Mailer: b4 0.15.2
-Received-SPF: pass client-ip=2001:4860:4864:20::2a;
- envelope-from=james.hilliard1@gmail.com; helo=mail-oa1-x2a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+In-Reply-To: <20260508112429.643360-8-berrange@redhat.com>
+References: <20260508112429.643360-1-berrange@redhat.com>
+ <20260508112429.643360-8-berrange@redhat.com>
+Date: Fri, 08 May 2026 19:18:29 +0400
+Message-Id: <177825350909.389613.8952282324650958656.b4-review@b4>
+X-Developer-Signature: v=1; a=openpgp-sha256; l=768;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=in3vxxhI2DLxxqobJIjXi1x/IpPUkNXiXLkHA5eGjbg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBp/f7J9tNPHQhQMH1LEVuj/urDCJuDin9ofZjjf
+ Pwu8nI1rE6JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCaf3+yQAKCRDa6OEJdZac
+ 5ZfyD/45VypXyZTGYM47swSE7AY5lctHnrwFJtdKYDLxuSjE4D7DRg59SyVZPg1rqUUPYHTP3+Y
+ ufZB9cZkLlR35/1/EWJpmziwdx08QKPnrejqvXefftgkvCU7KYkU5qYcTkugP/DDu0dEYm42DZ6
+ RndX/f149tSb2LyTD/ivgJ5durZP97oNouPDHxRSQItvBdtiYAs8J3/dtfcwoqxKwQHHACt1mZm
+ 92MhpnqT0VI1YDjICBVAw3wO/mupni9G0lD+RPV7u897pPkzOjp7/NJTpghliy2kYWVu5rt5zF6
+ RMw5AxG1v/OlJt9RoddF5ce5DIcvHgwjupMO9lHKelwhoWAexBavcOQCX7KGdRrGyOEJHM5+fBz
+ 5Zsu3nppjcKA0MB180rRLU1RYZwVgVTgv6LWWrgw3rj2qsdvWb6e2wgyZoW6Z1rz9p7cpq0ECSa
+ uz7IhSELnUo79GgVh4QfZ+d/DvOq2s1ac1MY4gXu337flBK7sBnLWYLJRZ0GECtyXqjl96uJpVB
+ z/sTGkmapAUDTeYv14fbaT8QvnkKROXkmdIP9iq+W8hTgtTVAvN5cx3ECa7BDpb1GmcIn7jQBqb
+ e6R49bAOgEdS9f85CBobyA0xrf3e5xt44Ka2p+X59QWM0vp89Cy/r0Ti0xbvtlyELs97qf0D24j
+ P8i6ejHmn2NATYA==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 8
+X-Spam_score: 0.8
+X-Spam_bar: /
+X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,197 +105,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Implement the Octeon LA* read-modify-write atomic instruction family:
-LAI/LAID, LAD/LADD, LAA/LAAD, LAS/LASD, LAC/LACD, and LAW/LAWD.
+On Fri, 08 May 2026 12:24:26 +0100, Daniel P. Berrangé <berrange@redhat.com> wrote:
+> diff --git a/include/qom/object.h b/include/qom/object.h
+> index 1b2b2702fc9..cd59f1f1718 100644
+> --- a/include/qom/object.h
+> +++ b/include/qom/object.h
+> @@ -700,6 +700,25 @@ Object *object_new_with_propv(const char *typename,
+> [ ... skip 13 lines ... ]
+> + * properties in a QDict.
+> + */
+> +Object *object_new_with_props_from_qdict(const char *typename,
+> +                                         Object *parent,
+> +                                         const char *id,
+> +                                         QDict *props,
 
-These operations are architecturally distinct from SAA/SAAD and are used
-by existing Octeon user-mode code for atomic counters, bit operations,
-and exchange-style updates.
-
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
----
-Changes v1 -> v2:
-  - Keep LA* atomics naturally aligned per Octeon L2 transaction
-    semantics.
-  - Use explicit i64 TCG ops in the LA* translator paths.  (suggested by
-    Philippe Mathieu-Daudé)
-
-Changes v2 -> v3:
-  - Drop redundant TARGET_LONG_BITS guards from doubleword atomic paths.
-    (suggested by Richard Henderson)
-  - Group LA* translator wrappers by argument shape instead of adding one
-    wrapper per instruction.  (suggested by Richard Henderson)
----
- target/mips/tcg/octeon.decode      |  17 ++++++
- target/mips/tcg/octeon_translate.c | 118 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 135 insertions(+)
-
-diff --git a/target/mips/tcg/octeon.decode b/target/mips/tcg/octeon.decode
-index 54ca92a654..6f4102044f 100644
---- a/target/mips/tcg/octeon.decode
-+++ b/target/mips/tcg/octeon.decode
-@@ -59,6 +59,23 @@ V3MULU       011100 ..... ..... ..... 00000 010001 @r3
- SAA          011100 ..... ..... 00000 00000 011000 @saa
- SAAD         011100 ..... ..... 00000 00000 011001 @saa
- 
-+&la          base rd
-+&laa         base add rd
-+@la          ...... base:5 ..... rd:5 ........... &la
-+@laa         ...... base:5 add:5 rd:5 ........... &laa
-+LAI          011100 ..... 00000 ..... 00010 011111 @la
-+LAID         011100 ..... 00000 ..... 00011 011111 @la
-+LAD          011100 ..... 00000 ..... 00110 011111 @la
-+LADD         011100 ..... 00000 ..... 00111 011111 @la
-+LAA          011100 ..... ..... ..... 10010 011111 @laa
-+LAAD         011100 ..... ..... ..... 10011 011111 @laa
-+LAS          011100 ..... 00000 ..... 01010 011111 @la
-+LASD         011100 ..... 00000 ..... 01011 011111 @la
-+LAC          011100 ..... 00000 ..... 01110 011111 @la
-+LACD         011100 ..... 00000 ..... 01111 011111 @la
-+LAW          011100 ..... ..... ..... 10110 011111 @laa
-+LAWD         011100 ..... ..... ..... 10111 011111 @laa
-+
- &zcb         base
- ZCB          011100 base:5 00000 00000 11100 011111 &zcb
- ZCBT         011100 base:5 00000 00000 11101 011111 &zcb
-diff --git a/target/mips/tcg/octeon_translate.c b/target/mips/tcg/octeon_translate.c
-index fe1ddeb973..cdaa926389 100644
---- a/target/mips/tcg/octeon_translate.c
-+++ b/target/mips/tcg/octeon_translate.c
-@@ -189,6 +189,112 @@ static bool trans_saa(DisasContext *ctx, arg_saa *a, MemOp mop)
-     return true;
- }
- 
-+static bool trans_la_common(DisasContext *ctx, int base, int add_reg, int rd,
-+                            int64_t imm, bool dw)
-+{
-+    TCGv_i64 addr = tcg_temp_new_i64();
-+
-+    gen_base_offset_addr(ctx, addr, base, 0);
-+
-+    if (dw) {
-+        TCGv_i64 value = tcg_temp_new_i64();
-+        TCGv_i64 old = tcg_temp_new_i64();
-+        MemOp amo = mo_endian(ctx) | MO_UQ | MO_ALIGN;
-+
-+        if (add_reg >= 0) {
-+            gen_load_gpr(value, add_reg);
-+        } else {
-+            tcg_gen_movi_i64(value, imm);
-+        }
-+
-+        tcg_gen_atomic_fetch_add_i64(old, addr, value, ctx->mem_idx, amo);
-+        gen_store_gpr(old, rd);
-+    } else {
-+        TCGv_i64 old = tcg_temp_new_i64();
-+        TCGv_i32 value32 = tcg_temp_new_i32();
-+        TCGv_i32 old32 = tcg_temp_new_i32();
-+        MemOp amo = mo_endian(ctx) | MO_UL | MO_ALIGN;
-+
-+        if (add_reg < 0) {
-+            tcg_gen_movi_i32(value32, imm);
-+        } else {
-+            TCGv_i64 value = tcg_temp_new_i64();
-+
-+            gen_load_gpr(value, add_reg);
-+            tcg_gen_extrl_i64_i32(value32, value);
-+        }
-+
-+        tcg_gen_atomic_fetch_add_i32(old32, addr, value32, ctx->mem_idx, amo);
-+        tcg_gen_ext_i32_i64(old, old32);
-+        gen_store_gpr(old, rd);
-+    }
-+
-+    return true;
-+}
-+
-+static bool trans_law_common(DisasContext *ctx, int base, int add_reg, int rd,
-+                             int64_t imm, bool dw)
-+{
-+    TCGv_i64 addr = tcg_temp_new_i64();
-+
-+    gen_base_offset_addr(ctx, addr, base, 0);
-+
-+    if (dw) {
-+        TCGv_i64 value = tcg_temp_new_i64();
-+        TCGv_i64 old = tcg_temp_new_i64();
-+        MemOp amo = mo_endian(ctx) | MO_UQ | MO_ALIGN;
-+
-+        if (add_reg >= 0) {
-+            gen_load_gpr(value, add_reg);
-+        } else {
-+            tcg_gen_movi_i64(value, imm);
-+        }
-+
-+        tcg_gen_atomic_xchg_i64(old, addr, value, ctx->mem_idx, amo);
-+        gen_store_gpr(old, rd);
-+    } else {
-+        TCGv_i64 old = tcg_temp_new_i64();
-+        TCGv_i32 value32 = tcg_temp_new_i32();
-+        TCGv_i32 old32 = tcg_temp_new_i32();
-+        MemOp amo = mo_endian(ctx) | MO_UL | MO_ALIGN;
-+
-+        if (add_reg >= 0) {
-+            TCGv_i64 value = tcg_temp_new_i64();
-+
-+            gen_load_gpr(value, add_reg);
-+            tcg_gen_extrl_i64_i32(value32, value);
-+        } else {
-+            tcg_gen_movi_i32(value32, imm);
-+        }
-+
-+        tcg_gen_atomic_xchg_i32(old32, addr, value32, ctx->mem_idx, amo);
-+        tcg_gen_ext_i32_i64(old, old32);
-+        gen_store_gpr(old, rd);
-+    }
-+
-+    return true;
-+}
-+
-+static bool do_lai(DisasContext *ctx, arg_la *a, int64_t imm, bool dw)
-+{
-+    return trans_la_common(ctx, a->base, -1, a->rd, imm, dw);
-+}
-+
-+static bool do_laa(DisasContext *ctx, arg_laa *a, bool dw)
-+{
-+    return trans_la_common(ctx, a->base, a->add, a->rd, 0, dw);
-+}
-+
-+static bool do_las(DisasContext *ctx, arg_la *a, int64_t imm, bool dw)
-+{
-+    return trans_law_common(ctx, a->base, -1, a->rd, imm, dw);
-+}
-+
-+static bool do_law(DisasContext *ctx, arg_laa *a, bool dw)
-+{
-+    return trans_law_common(ctx, a->base, a->add, a->rd, 0, dw);
-+}
-+
- static bool trans_ZCB(DisasContext *ctx, arg_zcb *a)
- {
-     TCGv_i64 addr = tcg_temp_new_i64();
-@@ -299,6 +405,18 @@ static bool trans_vmul(DisasContext *ctx, arg_decode_ext_octeon1 *a,
- 
- TRANS(SAA,  trans_saa, MO_UL);
- TRANS(SAAD, trans_saa, MO_UQ);
-+TRANS(LAI,  do_lai, 1, false);
-+TRANS(LAID, do_lai, 1, true);
-+TRANS(LAD,  do_lai, -1, false);
-+TRANS(LADD, do_lai, -1, true);
-+TRANS(LAA,  do_laa, false);
-+TRANS(LAAD, do_laa, true);
-+TRANS(LAS,  do_las, -1, false);
-+TRANS(LASD, do_las, -1, true);
-+TRANS(LAC,  do_las, 0, false);
-+TRANS(LACD, do_las, 0, true);
-+TRANS(LAW,  do_law, false);
-+TRANS(LAWD, do_law, true);
- TRANS(LBX,  trans_lx, MO_SB);
- TRANS(LBUX, trans_lx, MO_UB);
- TRANS(LHX,  trans_lx, MO_SW);
+This should take a const QDict, same for the _parentless added later.
 
 -- 
-2.54.0
+Marc-André Lureau <marcandre.lureau@redhat.com>
 
 
