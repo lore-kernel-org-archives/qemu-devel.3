@@ -4,36 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C099CD37AD
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EB95CD37A7
 	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 02:55:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLBM4-00079K-5J; Thu, 07 May 2026 22:54:20 -0400
+	id 1wLBM4-00079Q-GR; Thu, 07 May 2026 22:54:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1wLBM1-000786-71
- for qemu-devel@nongnu.org; Thu, 07 May 2026 22:54:17 -0400
+ id 1wLBM2-00078V-FJ
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 22:54:18 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1wLBLy-0003qF-Aj
- for qemu-devel@nongnu.org; Thu, 07 May 2026 22:54:16 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1wLBLz-0003r4-Sj
+ for qemu-devel@nongnu.org; Thu, 07 May 2026 22:54:18 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Ax6HhKUP1pJcEHAA--.253S3;
- Fri, 08 May 2026 10:54:02 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxRXhUUP1pJ8EHAA--.275S3;
+ Fri, 08 May 2026 10:54:12 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJBx68FEUP1p3qd8AA--.38421S2;
- Fri, 08 May 2026 10:53:57 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowJBx68FEUP1p3qd8AA--.38421S4;
+ Fri, 08 May 2026 10:54:12 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/3] loongarch-next queue
-Date: Fri,  8 May 2026 10:27:58 +0800
-Message-Id: <20260508022801.2637558-1-gaosong@loongson.cn>
+Cc: Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 2/3] hw/loongarch/virt: Define versioned virt machine
+Date: Fri,  8 May 2026 10:28:00 +0800
+Message-Id: <20260508022801.2637558-3-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20260508022801.2637558-1-gaosong@loongson.cn>
+References: <20260508022801.2637558-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBx68FEUP1p3qd8AA--.38421S2
+X-CM-TRANSID: qMiowJBx68FEUP1p3qd8AA--.38421S4
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -60,34 +63,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit ee7eb612be8f8886d48c1d0c1f1c65e495138f83:
+From: Bibo Mao <maobibo@loongson.cn>
 
-  Merge tag 'single-binary-20260506' of https://github.com/philmd/qemu into staging (2026-05-06 10:45:02 -0400)
+Add versioned virt machine started from QEMU 11.1
 
-are available in the Git repository at:
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ hw/loongarch/virt.c | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-  https://github.com/gaosong715/qemu.git tags/pull-loongarch-20260508-2
-
-for you to fetch changes up to d735016e9111e7bf0c2457556cedafd387c044a9:
-
-  target/loongarch: Add support for dbar hint variants (2026-05-08 02:48:04 -0400)
-
-----------------------------------------------------------------
-pull-loongarch-20260508
-
-----------------------------------------------------------------
-Bibo Mao (2):
-      hw/loongarch/virt: Define virt machine type with type_init()
-      hw/loongarch/virt: Define versioned virt machine
-
-Song Gao (1):
-      target/loongarch: Add support for dbar hint variants
-
- hw/loongarch/virt.c                                | 66 +++++++++++++++++-----
- target/loongarch/cpu.c                             |  4 ++
- target/loongarch/tcg/insn_trans/trans_memory.c.inc | 63 ++++++++++++++++++++-
- target/loongarch/tcg/translate.c                   |  1 +
- target/loongarch/translate.h                       |  3 +
- 5 files changed, 122 insertions(+), 15 deletions(-)
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index c134b102c2..f68ccdb12b 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -1535,9 +1535,41 @@ static void virt_class_init(ObjectClass *oc, const void *data)
+                                           "for PCI MMIO");
+ }
+ 
++#define DEFINE_VIRT_MACHINE_VERSION(latest, ...) \
++    static void MACHINE_VER_SYM(class_init, virt, __VA_ARGS__)( \
++        ObjectClass *oc, \
++        const void *data) \
++    { \
++        MachineClass *mc = MACHINE_CLASS(oc); \
++        MACHINE_VER_SYM(options, virt, __VA_ARGS__)(mc); \
++        mc->desc = "QEMU " MACHINE_VER_STR(__VA_ARGS__) " LoongArch Virtual Machine"; \
++        MACHINE_VER_DEPRECATION(__VA_ARGS__); \
++        if (latest) { \
++            mc->alias = "virt"; \
++        } \
++    } \
++    static const TypeInfo MACHINE_VER_SYM(info, virt, __VA_ARGS__) = \
++    { \
++        .name = MACHINE_VER_TYPE_NAME("virt", __VA_ARGS__), \
++        .parent = TYPE_LOONGARCH_VIRT_MACHINE, \
++        .class_init = MACHINE_VER_SYM(class_init, virt, __VA_ARGS__), \
++    }; \
++    static void MACHINE_VER_SYM(register, virt, __VA_ARGS__)(void) \
++    { \
++        MACHINE_VER_DELETION(__VA_ARGS__); \
++        type_register_static(&MACHINE_VER_SYM(info, virt, __VA_ARGS__)); \
++    } \
++    type_init(MACHINE_VER_SYM(register, virt, __VA_ARGS__));
++
++#define DEFINE_VIRT_MACHINE_AS_LATEST(major, minor) \
++    DEFINE_VIRT_MACHINE_VERSION(true, major, minor)
++#define DEFINE_VIRT_MACHINE(major, minor) \
++    DEFINE_VIRT_MACHINE_VERSION(false, major, minor)
++
+ static const TypeInfo virt_machine_info = {
+     .name           = TYPE_LOONGARCH_VIRT_MACHINE,
+     .parent         = TYPE_MACHINE,
++    .abstract       = true,
+     .instance_size  = sizeof(LoongArchVirtMachineState),
+     .class_init     = virt_class_init,
+     .instance_init  = virt_initfn,
+@@ -1553,3 +1585,8 @@ static void machvirt_machine_init(void)
+ }
+ 
+ type_init(machvirt_machine_init);
++
++static void virt_machine_11_1_options(MachineClass *mc)
++{
++}
++DEFINE_VIRT_MACHINE_AS_LATEST(11, 1)
+-- 
+2.54.0
 
 
