@@ -4,124 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 472B2CD3445
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 21:30:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A38ECD342F
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 21:54:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLSlP-0004md-Gj; Fri, 08 May 2026 17:29:39 -0400
+	id 1wLT9D-0000yo-Ub; Fri, 08 May 2026 17:54:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1wLSlO-0004mM-KQ
- for qemu-devel@nongnu.org; Fri, 08 May 2026 17:29:38 -0400
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wLT9B-0000yH-Tt
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 17:54:13 -0400
 Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.jones@oss.qualcomm.com>)
- id 1wLSlM-0004wx-K1
- for qemu-devel@nongnu.org; Fri, 08 May 2026 17:29:38 -0400
-Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@oss.qualcomm.com>)
+ id 1wLT99-0001l8-Si
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 17:54:13 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 648D2IuQ257891
- for <qemu-devel@nongnu.org>; Fri, 8 May 2026 21:29:34 GMT
+ 648KdfHs852271
+ for <qemu-devel@nongnu.org>; Fri, 8 May 2026 21:54:10 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=qcppdkim1; bh=lxs28VRXIfP0IGQvTYYzP8cr
- XF1DaNqHyCTeljnIdBc=; b=GXb4q2uNt25hC29GiU0beCp0A9RtG5scTK7W85EN
- mNvjeFFueXSri24khA6QCCYdXuH9nlerHWzR4w1+QVHKRggA2jcL5qF5xwMCKSOG
- uR/YHb2dlp2uKuZDg/MK89zPFGh5DMvs3Glb6sw0PwqtnaOOEQo3HYxb4dUUsMFA
- Q9HEQcr7ws3dmbIHKXL0EZ8o6NGedFzt4biDfj4gD2USAVlHOweWKWehAxZPRJfh
- iXKwhjC3jGnRQ/hn+c++RVx7YE887X7UrayizvyJz0VgBMvHv+YhsLOKG7025Bt+
- AT+w0ERLpogdvi1yyeDS5OdYh2u1xkqJIO1KRFuS6nE8dw==
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ qWA7+BecjYalnZlIaIka+saU7x1bP/HbXClI/EPK3nQ=; b=cKuy/PAiZkqWACAa
+ R65COuQMF6gczQ71y2d1j3pG5imUahE30D6Sm38Sj8FtGTUE0flQxYz7vZ8I9/We
+ bIQVauGlbUhbZDZA1uWUO5O7klDcH6H19G+JHjjL4Mkq7q1MxDoG5eO4tcYz+qgT
+ ipqXDK5Cbh9+PL5vaUY1nLW0YqFHzRXo9fjYnoL76M5sadQViTIXYdIyUWCxnCYz
+ QgAg2x16pQMS/6McVyyDEye+aYaRMz8ynAVgvVGiPoXV1QOm6ZSC/BRwV3BsxFhx
+ ZCg1BkycOygeR/jpOT23dwYw4t+t8WoQ5F3Uo0GgKH0qNeUSIE2E6uqRL+Hz3HQj
+ l8cenA==
 Received: from mail-dl1-f69.google.com (mail-dl1-f69.google.com [74.125.82.69])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e1auek6cd-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4e1fptj2ev-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 21:29:34 +0000 (GMT)
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 21:54:09 +0000 (GMT)
 Received: by mail-dl1-f69.google.com with SMTP id
- a92af1059eb24-12df8bc580cso1600198c88.0
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 14:29:34 -0700 (PDT)
+ a92af1059eb24-1325c685526so4952965c88.0
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 14:54:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1778275774; x=1778880574; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=lxs28VRXIfP0IGQvTYYzP8crXF1DaNqHyCTeljnIdBc=;
- b=LxLshurlyhaSvxswkd/ZXwaHYutTgt1TEZRsSQpiOmFGSz0Wy7N+6eCOsmZsxdlf5m
- OivKxNPT1uE+7bf9K+APRoouJBpjFMaT5p03pGEimjbUr/yImfrjdYH0NZUDdsqOV2ie
- K+37qK83LXGrBO5O0MA2tKTTS4qYTjxQ8JAfVcBCZ1Tl8F+1HvR76Md1o5IW8aTyXnee
- jwrmijdTagF1btqax9yYgfDXv22pwqMTfSoGFoWVsZIjB4X7/SJ6Pq7r3YUE1mNLj1js
- OVH7kNwtkVLvYy0ChgkqdBi5xBmk/HWiA9FvUkenNBe4rIL77clVc9OAFBIq4GTk6GCj
- uQBQ==
+ d=oss.qualcomm.com; s=google; t=1778277249; x=1778882049; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=qWA7+BecjYalnZlIaIka+saU7x1bP/HbXClI/EPK3nQ=;
+ b=WLaplJ6jozGPeCAUNXNeO9bT5I5O3G/BCoNhlE/YInsQ2JVzgHIWIL0J/xNmFJinke
+ 38YrPGW/03sK7GxIVKtVAhrLTl3noqQG8vkOLFMxZLSUmkeZT0miyvsSp3mis4YEvWKg
+ sxItetFbvdD50XZcwqMeeFX6eiYTjCIr4bsFxcZSgRV0G7tudD5MSusmRYSTuRGJCf/g
+ zG8BLYTqlpB1Z9r61vjppsBMDGU34QyYg8dNMkUsrLygGZOU2CaDKjxjGCrRsMlaIWFe
+ dQDl2HdVbEgO6wNQT51T+OeQe2tC3eYond7FjrqHJPj8Fdvid5ZEOC/JxPnu+1VCewNW
+ zScw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778275774; x=1778880574;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lxs28VRXIfP0IGQvTYYzP8crXF1DaNqHyCTeljnIdBc=;
- b=UlCKZoq7LY2g46ELcv2n/vJbu/7Uk8832EZOR2/0hr98LhizylmvtJ7SowhPyY1AUO
- 1Nr3isJ6HadfBtxAhNnYj2pB52yF5uKkK7bcpWXThp0a3ixZipGWzyRwN3XNuJVG/H2H
- UeB617SB1ls4OZeETMg4kf8yCxCrP1O3admB5kSZHM1UP+hQ025xYPDbxD2p94D9zBvT
- 4P8G4L5Bb9ASxhcZ4TY4sMmHDM/A1GlrG2B/PM/e8uyua3TpwSyzzvTGTvmsHjxzdzd1
- kL6oIaHqoVYKequP40g35wsA+DebyhZwljDmx2HwnfCid+H/bqITbbsXS3GL0Qe7Za5e
- Sxdw==
+ d=1e100.net; s=20251104; t=1778277249; x=1778882049;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qWA7+BecjYalnZlIaIka+saU7x1bP/HbXClI/EPK3nQ=;
+ b=tJ7xHQsPX5wj2BZ2urkCZXfPVKy7LJt6RC8AsavmE0vLvBmPgfWNTnEm75U1vJmSkM
+ kxfseYSeXyow1EadQrrgcQ/IKkdSI4rlIjERqa4Nf1WOKeLTERQfq4LHCK+G4ccf77W8
+ 9CMTFUlEG82T7auYbop9SHp8DFgUFOjZtqSY1pdLfyi8sgZ4/Bzz3tnDPaURV7kcKxAq
+ 0sMHJwuYLt4DpkrfOPFW8EvXL4H4ESEuqOQAlwvj3Iw/wATCpItYrdmRwe7CTWchxC1j
+ Ejc5LikmtNQyMAHCiXMFi1o4EkIMkAA/ecXnJlbWd9mIXl9FaOg+8VSROhFCqukdMHLW
+ By6A==
 X-Forwarded-Encrypted: i=1;
- AFNElJ8F31QtADi8zY8PP8Lfm35GgA6VVxh83C+baU0M7qDjjLz8xwm+lwzLzG41yYlxUNIjrnWEndXwqEfs@nongnu.org
-X-Gm-Message-State: AOJu0YzS6SLeFMSUzFepbuz0vrb+lUVdOA5sYm0PuktY+MB74y/eK8as
- 3jGRpF3WAAXTMdik0AAHT5XlBZ6lLFplpJZ7RyaglwjjAnvnfRfgEUMAMFyDQx/2p+5Qos6fGSL
- nlzTfEScfifwb+N6h7zQ7IhiRSTtYo4DMvrzZNU4aSaOr9OOm4evi+ocFjw==
-X-Gm-Gg: AeBDieu8PZD1tR1LRYLpCgAFMhOyBQb2l/K+whww/hKFWDUIE8GBnntfo4SAGFiLVMI
- hA6Z5EHZNwpwtbvmnNhnrqAQWG6LLwjNxBkQzkiXskn9xlhISv1mi2FiRLa0jHby6VFAU94tGKA
- nijs8B1N37Nh3hlwL+OsC4or8nLVQsEErkMCsVOVCPFBi4LjO5zM5tkeTe+LDTHRyJx2o5bdx25
- hQJvCgBkJnSDxqAX+sGCY9DO78GlrTrCfs+rc4kMX0Pz0dzABJV0NGL0SJfQRAaycjHcitRJA2O
- NzJ3feH1G8oMfryszybKbkJXgwVKNW6GZ/JGCrOwr6vvUmnrGVo0g1ZDLTWVTplZjvC/j2mTJR/
- SB+Lw8KQbNfAVkAF9xqLMASHl5QumJVJIidHINXXY0Q==
-X-Received: by 2002:a05:7022:6b84:b0:129:1d25:f1da with SMTP id
- a92af1059eb24-1323aa56cfamr4063692c88.3.1778275773562; 
- Fri, 08 May 2026 14:29:33 -0700 (PDT)
-X-Received: by 2002:a05:7022:6b84:b0:129:1d25:f1da with SMTP id
- a92af1059eb24-1323aa56cfamr4063675c88.3.1778275773019; 
- Fri, 08 May 2026 14:29:33 -0700 (PDT)
-Received: from localhost ([140.82.166.162]) by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-1327810ff4dsm3972342c88.3.2026.05.08.14.29.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 May 2026 14:29:32 -0700 (PDT)
-Date: Fri, 8 May 2026 16:29:31 -0500
-From: Andrew Jones <andrew.jones@oss.qualcomm.com>
-To: qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Cc: alistair.francis@wdc.com, palmer@dabbelt.com,
- daniel.barboza@oss.qualcomm.com, tjeznach@rivosinc.com
-Subject: Re: [PATCH] hw/riscv/riscv-iommu: Fix Svnapot 64KB pages
-Message-ID: <h6bbn25obwet4wvv5u4pjtdsndqjsywzsh5kojpv34ow73p5b7@vqnlfxfwbaqv>
-References: <20260508205129.377032-1-andrew.jones@oss.qualcomm.com>
+ AFNElJ+8X0ZoXA7zktNaD6PUhHHBRSKLo9hJaxzuE8TD5YBWLfYKeJlZRFm8IzpaZvTXkCs0RQ81M9lwaELD@nongnu.org
+X-Gm-Message-State: AOJu0YxAK9QG58BdiM04HMzuaJm0qtu+2wNMtAiyS1UkmeV6suw7N3f1
+ ei7LleO4EB1oppQnqDF1T+FbnpVR303PTaPHuApV1dEhVzQegqk9KeufuEDx1CtImVmdBpr7D+N
+ FggAr9EYEeCMD067S0Q78niHQVv8tR1WO/JtuXiS14a8tW3Ycs7BdmyqBXQ==
+X-Gm-Gg: AeBDiesQd3pNes9N+ISS5JbxVxIQPXJhuJYSIpoCPE7rOwe2f2xEUumrRtnxqvFiJVC
+ 8RNwKWIpIhHEhMD6X/iXjuJf0fAYr63hx9gomy4Qv19nxtXynXRHYGm/WeQs+//XahehDyZGYEC
+ xhhUSx8Wmq41UlV2OoBi1aXgnYRm6fh9+FebNv0LtXjfe/MDaoaile/t0fT3Rlz3SxLPUIVszuw
+ w33X3a9A/KLRyHLVEmKGHUImjeKkywby0fTHJ95nOVhwoL81veQ14T+6hwHazZ1GsTTIQSUeRaA
+ amL70RSSk0Pjlq1wItbCyj7wwvIgUbQKtG2/L+yJ0lgA5A+/4L7TFAPGvwjmOWY2pLLn9GpGHFm
+ 0VBP7zkLRvmOh53tP5CKMC/gNUEplLCic+RisWqffWj6IvqJVl/HYt8m2qIx0DgdhbtA1lr/sGk
+ 4hf3D33Q/uUQS7TA==
+X-Received: by 2002:a05:7022:6286:b0:12d:b7e5:a691 with SMTP id
+ a92af1059eb24-132a78eaa30mr88407c88.7.1778277248909; 
+ Fri, 08 May 2026 14:54:08 -0700 (PDT)
+X-Received: by 2002:a05:7022:6286:b0:12d:b7e5:a691 with SMTP id
+ a92af1059eb24-132a78eaa30mr88363c88.7.1778277248258; 
+ Fri, 08 May 2026 14:54:08 -0700 (PDT)
+Received: from [192.168.1.170] (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-1327865955fsm5036011c88.11.2026.05.08.14.54.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 08 May 2026 14:54:07 -0700 (PDT)
+Message-ID: <c81dd5ca-f189-4c60-ae73-aa8fc589b820@oss.qualcomm.com>
+Date: Fri, 8 May 2026 14:54:06 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260508205129.377032-1-andrew.jones@oss.qualcomm.com>
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA4MDIxMSBTYWx0ZWRfX3ifkOCJNoqFo
- P0Qk6Mwp00oP+/7ixKpvM8kmNbxFZ+7zavTNY3H8d7wbIQ9l4X9AzRIvU5J8LNK4wLPaSVTVeK5
- c/rsYKs4s8wmgPl8bohpMZ5k360D9d4LopU7KxL7NVqL9x6HDLYm0I3f/jA8FejWJqdx3jn4L57
- r3oDCCkZyNTSfWEyOZL9+WOSTg9XMmcDDd2Q+2qqypQBi3Rzo8MREXbQsKSc/LY3UVOq/JEJC3L
- r6GSevzps+sflEusKZ5a1lZiC082umSMzOQvozac0VQvIx9dKqj6h6b7CJ496Ap5upQN0APKy5j
- Ree4S6WDwe4Eoy+xpOaiU5YsZlhIn7qlSL3ALVn3AMg5Sk3J6RMS6jNKhB7hAxNXRNwMQfrKYfz
- h6Xr+I0rnlbGJjq6I4+pn65JEDXD2jRi6cq6ye6Rirlk5MQBR0/y3KXt//nEOQMBc1x17SuOn+d
- ySdFG0SE20NNF9vJGrQ==
-X-Proofpoint-GUID: LXnbiAEiaL2TCtcvUV0czM4_vTI0ZzqV
-X-Proofpoint-ORIG-GUID: LXnbiAEiaL2TCtcvUV0czM4_vTI0ZzqV
-X-Authority-Analysis: v=2.4 cv=fcydDUQF c=1 sm=1 tr=0 ts=69fe55be cx=c_pps
- a=kVLUcbK0zfr7ocalXnG1qA==:117 a=cvcws7F5//HeuvjG1O1erQ==:17
- a=kj9zAlcOel0A:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
- a=VwQbUJbxAAAA:8 a=EUspDBNiAAAA:8 a=69wJf7TsAAAA:8 a=DFJLJhpOamtIQcbWox0A:9
- a=CjuIK1q_8ugA:10 a=vr4QvYf-bLy2KjpDp97w:22 a=Fg1AiH1G6rFz08G2ETeA:22
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 4/6] target-info: introduce TargetInfo in QOM
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>, marcandre.lureau@redhat.com,
+ Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260505224826.2698753-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260505224826.2698753-5-pierrick.bouvier@oss.qualcomm.com>
+ <3c379e6b-2009-4f7b-92df-c69c31897279@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>
+Content-Language: en-US
+In-Reply-To: <3c379e6b-2009-4f7b-92df-c69c31897279@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-ORIG-GUID: 0vIj2HN2J1nHC7djZfvilChfJ9VinqWJ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA4MDIxNiBTYWx0ZWRfX572k1Lpjl5iY
+ Y+9D0QmRWDb06iaLQKggt0/1QiD6kqeLd+GqrpDirBixMxM9EcHah8W6nGaMuy3xo69fxHm8qY8
+ ppeciR50FBY7unVaiMVRCLLOJopJ2fYz+Ifnqe1JYK/zFjnq9R7Z2DIyKHkvF+L+iEJDFuSh81x
+ 4ywg3HEOkMrYJE7q21osieN9lnyV5RuCVzgNn/wUyLA4vWKWsw9Jsv9f+BEiK9sp69ssk7Eg5bb
+ UCoUFZt2ho0zB80cUN6oMUNim39cTgX+6MziH7iOtO0VRIfaqAv+eirjKu5mIE5t3JeKagRiS1g
+ Ld2nMqSfsqCTumrz6chkRX0h9YvrFxW9iv0vKBXK0eRzAhZ6gvzwYy2VF+gqKuvdUw9haxJ7ir3
+ rADJH3o4WoXrHFf3QT/go5cN1/Kaue3cbnJtaLqDtYxvQj638s/kcRE8IQJZazyF02z1uvXDPld
+ +IG2HyWz7+OULRlxq5Q==
+X-Proofpoint-GUID: 0vIj2HN2J1nHC7djZfvilChfJ9VinqWJ
+X-Authority-Analysis: v=2.4 cv=IYi3n2qa c=1 sm=1 tr=0 ts=69fe5b81 cx=c_pps
+ a=kVLUcbK0zfr7ocalXnG1qA==:117 a=iLqgmErQAxjCjdq5jj1Aqg==:17
+ a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=rb7h1TKKZrmooqBdc3IA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=vr4QvYf-bLy2KjpDp97w:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-05-07_02,2026-05-08_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 bulkscore=0 lowpriorityscore=0 phishscore=0
- priorityscore=1501 impostorscore=0 adultscore=0 clxscore=1015 suspectscore=0
+ spamscore=0 adultscore=0 suspectscore=0 impostorscore=0 lowpriorityscore=0
+ priorityscore=1501 clxscore=1015 bulkscore=0 malwarescore=0 phishscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605080211
+ reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605080216
 Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=andrew.jones@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ envelope-from=pierrick.bouvier@oss.qualcomm.com;
+ helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -144,117 +157,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 08, 2026 at 03:51:29PM -0500, Andrew Jones wrote:
-> The Svnapot extension encodes a 64KB leaf PTE by setting PTE_N and
-> storing bits [3:0] of the PPN as a NAPOT size indicator. The IOMMU
-> model wasn't checking PTE_N and therefore was using the raw (NAPOT-
-> encoded) PPN directly in the physical address, yielding an address
-> 32 KB above the correct base.
+On 5/8/2026 1:14 PM, Richard Henderson wrote:
+> On 5/5/26 17:48, Pierrick Bouvier wrote:
+>> diff --git a/include/qemu/target-info-init.h b/include/qemu/target-
+>> info-init.h
+>> index c781cfc0590..859451c672e 100644
+>> --- a/include/qemu/target-info-init.h
+>> +++ b/include/qemu/target-info-init.h
+>> @@ -12,10 +12,67 @@
+>>   #ifndef TARGET_INFO_DEF_H
+>>   #define TARGET_INFO_DEF_H
+>>   +#define
+>> DEFINE_TARGET_INFO_TYPE(info)                                       \
+>> +static void
+>> do_qemu_init_target_info(void)                                  \
+>> +{                                                                           \
+>> +   
+>> type_register_static(&info);                                            \
+>> +}                                                                           \
+>> +module_init(do_qemu_init_target_info, MODULE_INIT_TARGET_INFO)
+>> +
+>> +#ifdef COMPILING_PER_TARGET
+>> +#ifdef CONFIG_USER_ONLY
+>> +
+>> +/*
+>> + * User mode does not support multiple targets in the same binary, so
+>> just
+>> + * define target_info().
+>> + */
+>>   #define target_info_init(ti_var)        \
+>>   const TargetInfo *target_info(void)     \
+>>   {                                       \
+>>       return &ti_var;                     \
+>>   }
+>>   +#else /* CONFIG_USER_ONLY */
+>> +
+>> +#include "qemu/target-info-qom.h"
+>> +#include "qom/object.h"
+>> +
+>> +#define TYPE_TARGET_INFO_TARGET TYPE_TARGET_INFO"-"TARGET_NAME
+>> +
+>> +typedef struct TargetInfoQomTarget {
+>> +    TargetInfoQom parent;
+>> +} TargetInfoQomTarget;
+>> +
+>> +typedef struct TargetInfoQomTargetClass {
+>> +    TargetInfoQomClass parent_class;
+>> +} TargetInfoQomTargetClass;
+>> +
+>> +OBJECT_DECLARE_TYPE(TargetInfoQomTarget, TargetInfoQomTargetClass,
+>> TARGET_INFO_TARGET)
+>> +
+>> +#define
+>> target_info_init(ti_var)                                            \
+>> +const TargetInfo
+>> *target_info(void)                                         \
+>> +{                                                                           \
+>> +    return
+>> &ti_var;                                                         \
+>> +}                                                                           \
+>> +                                                                            \
+>> +static void target_info_qom_class_init(ObjectClass *oc, const void *
+>> data)  \
+>> +{                                                                           \
+>> +    TargetInfoQomTargetClass *klass =
+>> TARGET_INFO_TARGET_CLASS(oc);         \
+>> +    klass->parent_class.target_info =
+>> &ti_var;                              \
+>> +}                                                                           \
+>> +                                                                            \
+>> +static const TypeInfo target_info_qom_target_type_info =
+>> {                  \
+>> +    .name =
+>> TYPE_TARGET_INFO_TARGET,                                        \
+>> +    .parent =
+>> TYPE_TARGET_INFO,                                             \
+>> +    .instance_size =
+>> sizeof(TargetInfoQomTarget),                           \
+>> +    .class_size =
+>> sizeof(TargetInfoQomTargetClass),                         \
+>> +    .class_init =
+>> target_info_qom_class_init,                               \
+>> +    .abstract =
+>> false,                                                      \
+>> +};                                                                          \
+>> +                                                                            \
+>> +DEFINE_TARGET_INFO_TYPE(target_info_qom_target_type_info)
+>> +
+>> +#endif /* CONFIG_USER_ONLY */
+>> +#endif /* COMPILING_PER_TARGET */
+>> +
+>>   #endif /* TARGET_INFO_DEF_H */
 > 
-> Fix both riscv_iommu_spa_fetch() and pdt_memory_read() by mirroring
-> the Svnapot handling already present in target/riscv/cpu_helper.c:
+> If I understand this correctly, you're getting one symbol passed down as
+> the argument to target_info_init, and you're getting another symbol
+> implicitly from TARGET_NAME.
+>
+
+We have the top target-info class, and children classes (one per
+target-info-$target). I first relied on QOM instance, but realized we
+could simply embed the info we need in class, so everything is available
+without needing to instantiate anything.
+> AFAICS, this is incorrect for the configs/targets/*.c versions.
+> Or at minimum really confusing.
+>
+
+I appreciate it can be confusing.
+For every configs/targets/*.c, we get a unique QOM type out of this,
+with its static class_init and static type_info struct. (1 func + 1
+static struct).
+
+From what I understand, the static struct is mandatory (we really need a
+proper type per target), but maybe we could factorize the class_init,
+and rely on data parameter, as you suggest later in this email.
+I thought it was mandatory to have a custom class_init to perform the
+cast to child class, but we can as well cast it directly to parent class
+and call it a day.
+
+It's my first adventure in QOM territory, and mostly relied on my C++
+muscle memory, so it's totally possible I missed a point in how to
+design things within QOM constraints.
+
+> I'm trying to work out how target-info-stub.c and the configs/targets/
+> *.c files can be unified.  Perhaps we have one large macro like
 > 
->   napot_bits  = ctz64(ppn) + 1          /* 4 for 64KB */
->   napot_mask  = (1 << napot_bits) - 1   /* 0xF */
->   phys_base   = PPN_PHYS(ppn & ~napot_mask)
->   page_offset = addr & (PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1))
+> #define DEF_TARGET(NAME, ARCH, BITS, ...) \
+> static const TargetInfo ti = {            \
+>     .target_name = NAME,                  \
+>     ...                                   \
+> }                                         \
+> static const TypeInfo type_info = {       \
+>     .name = TYPE_TARGET_INFO "-" NAME,    \
+>     .class_data = &ti,                    \
+> }
 > 
-> The spec only defines napot_bits == 4 (64KB); any other value is
-> treated as a reserved encoding.
+> Note as well that we can use .class_data and .class_base_init to avoid
+> having lots of those trivial class_init functions.
+>
+
+Yes, will try that.
+
+> Another option might be a .c.inc file which uses TARGET_NAME etc, which
+> we then locally #define for the {arm,aarch64}-softmmu.c files prior to
+> the #include.  I can see that might have to jump through hoops to avoid
+> poisoned identifiers, but perhaps
+>
+> ---> /* Avoid poisoning identifiers we will supply locally. */
+> #define COMPILING_PER_TARGET
+> #include "qemu/osdep.h"
+> ...
 > 
-> This is a fix, rather than new feature support, because the spec
-> says "IOMMU implementations must support the Svnapot standard
-> extension for NAPOT Translation Contiguity."
+> #define TARGET_NAME "arm"
+> ...
 > 
-> Fixes: 0c54acb8243d ("hw/riscv: add RISC-V IOMMU base emulation")
-> Signed-off-by: Andrew Jones <andrew.jones@oss.qualcomm.com>
-
-I should have added
-
-Cc: qemu-stable@nongnu.org
-
-because as soon as [1] is merged into Linux Linux will no longer boot
-on any QEMU build without this patch.
-
-[1] https://lore.kernel.org/all/20260508212339.381933-1-andrew.jones@oss.qualcomm.com/
-
-Thanks,
-drew
-
+> #include "target-info.c.inc"
 > ---
->  hw/riscv/riscv-iommu.c | 44 ++++++++++++++++++++++++++++++++++++++----
->  1 file changed, 40 insertions(+), 4 deletions(-)
 > 
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index 25a356d1d366..eb09cc974812 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -237,6 +237,25 @@ static bool riscv_iommu_msi_check(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
->      return true;
->  }
->  
-> +/* Returns the NAPOT page mask, or 0 for reserved encodings. */
-> +static hwaddr riscv_iommu_napot_page_mask(hwaddr ppn, hwaddr addr, hwaddr *out)
-> +{
-> +    int napot_bits = ctz64(ppn) + 1;
-> +    hwaddr napot_mask, page_mask;
-> +
-> +    /* The spec only defines 64KB (napot_bits == 4) */
-> +    if (napot_bits != 4) {
-> +        return 0;
-> +    }
-> +
-> +    napot_mask = (1ULL << napot_bits) - 1;
-> +    page_mask = PPN_PHYS(napot_mask) | (TARGET_PAGE_SIZE - 1);
-> +
-> +    *out = PPN_PHYS(ppn & ~napot_mask) | (addr & page_mask);
-> +
-> +    return page_mask;
-> +}
-> +
->  /*
->   * RISCV IOMMU Address Translation Lookup - Page Table Walk
->   *
-> @@ -458,9 +477,20 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
->          } else {
->              /* Leaf PTE, translation completed. */
->              sc[pass].step = sc[pass].levels;
-> -            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
-> -            /* Update address mask based on smallest translation granularity */
-> -            iotlb->addr_mask &= (1ULL << va_skip) - 1;
-> +
-> +            if (pte & PTE_N) {
-> +                hwaddr mask = riscv_iommu_napot_page_mask(ppn, addr, &base);
-> +
-> +                if (!mask) {
-> +                    break;
-> +                }
-> +                iotlb->addr_mask &= mask;
-> +            } else {
-> +                base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
-> +                /* Update address mask based on smallest translation granularity */
-> +                iotlb->addr_mask &= (1ULL << va_skip) - 1;
-> +            }
-> +
->              /* Continue with S-Stage translation? */
->              if (pass && sc[0].step != sc[0].levels) {
->                  pass = S_STAGE;
-> @@ -997,7 +1027,13 @@ static MemTxResult pdt_memory_read(RISCVIOMMUState *s,
->              return MEMTX_ACCESS_ERROR; /* Misaligned PPN */
->          } else {
->              /* Leaf PTE, translation completed. */
-> -            base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
-> +            if (pte & PTE_N) {
-> +                if (!riscv_iommu_napot_page_mask(ppn, addr, &base)) {
-> +                    return MEMTX_ACCESS_ERROR;
-> +                }
-> +            } else {
-> +                base = PPN_PHYS(ppn) | (addr & ((1ULL << va_skip) - 1));
-> +            }
->              break;
->          }
->  
-> -- 
-> 2.43.0
+> isn't too horrible, and in the end more readable than a mega macro.
+>
+
+It came through my mind, but remembered also the times I struggled with
+(some) .c.inc files, and wanted to save time for other people that might
+have to deal with that part in the future.
+
+With the class_init deduplication, our big scary macro should turn into
+a gentle one.
+
 > 
+> r~
+
+Thanks for the feedback,
+Pierrick
 
