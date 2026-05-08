@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5536DCD37AA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E3ACCD3436
 	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 05:17:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLDZk-0005FK-BE; Fri, 08 May 2026 01:16:36 -0400
+	id 1wLDZm-0005Fg-CD; Fri, 08 May 2026 01:16:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1wLDZh-0005EK-CC; Fri, 08 May 2026 01:16:33 -0400
+ id 1wLDZk-0005F2-0M; Fri, 08 May 2026 01:16:36 -0400
 Received: from mail-japaneastazlp170120005.outbound.protection.outlook.com
  ([2a01:111:f403:c405::5] helo=TYPPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kane_chen@aspeedtech.com>)
- id 1wLDZe-0007Tx-MW; Fri, 08 May 2026 01:16:33 -0400
+ id 1wLDZi-0007Tx-7v; Fri, 08 May 2026 01:16:35 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ydpqLBw4kWSDqImmXESWgt2ENjsArr/oIN+0YlXS+ngHHqxl4JRxAgILSJiwbazI3BlAIJAVVJRCVWpIRwik7IL8Ox7vG1W+yAj9z13jU4CdJUUqTqpiEQl0Vmr3vlnCMy37TjPFNqMtMVC8Ms5voNaAGOSU0kLvHbx/BdhZ8N0Hy+x9ZpThVxvotzFgBK8UF6Pel/TvLdc2o5u0p5LNPcbbiyXi5gWWBDWVAUkLQxsPGYUCukB9ns2ypScvvBjtdrC/HklI9iz4mrVnUDeQG31zfE51/vNNvxaDERYXT8jJ9Seqv9w0ynqse1W2Gfd4aWAp0s5R0ie4R283eKKLQA==
+ b=OXJpXK313Yk0zNc6dzOlgohfNwK60wMZr+oYhzcOhC7ESb8k0NWdnnGLkzELDdqAfQfq4uSXJsm1TLnitaczOEfjkKOHzh/zGzESiJUj+Jmfr8AkVVo7Y398lydnmqpv/5B4aY2xZwmvHj8S+2ZvljTixMHZcSX9qfQArYATUgdE/kFB9nhEpO8Aw1E5xBCzF7HmBFeD5nltd1QZ5F6HkpzKUnSQ4zRkxrmojJTTEmWWmzZGqUtIPr/1ZVWthTgsaEtuKDtCtPLBI8QLbqhQjgRq1bmDejDl1iEKDpGy6ZbLJ98hHmyjYlPKPI6Z8gWIGOKB+NPGlygvAxCSUPMkfQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=at7CwJWLkSICjdvnVr1yT+FYaUEDpsvsL1eSkzG9dmI=;
- b=hGq5zNxpmybUKdgOXtUXnsAlf2iq1FxLfJzFlrK3DUKi/cNgq/SYoMLCV8sjY77AhR4kH9g8iu+a223wulnA+2y22WZiJgR0lIru4MQ9k06NubCcvU/5aW3O4GSlT8oO4hQuxXi9KGmCeY7GqeTBWUGKaFP1XbZNk7ZfsByioJ2cwD4Q/fBQjNWzCZxRmqKw6nYS/EfATRvv/JABCJJBlQyvN6hKnaDTKSxGwDEmUm92S0u7fMN/ZIgkmDRZQYjGYKUlNyOQnPpp+P+/Gd/J9AEVwqwHmlqHT2TNudsZnK3XemszLYS4tw6w2fv8DIHVlyfzuNZlMn2tNGMiE1w6zQ==
+ bh=MwnyaB9KCNKfvq3dm/l9D36z+t8/GubQoGmaT/zXTEE=;
+ b=IU0cnpl0okjV396kruk9T0/g50KSN20aYKQd1dY3jSuZ9KFz9dvz6H7ZgXgGFjZPv/oB9GE1hUEfH+iZ4W0lbgVeJSs9j3/z5Vs9GuNUhVcO0Kw2QLBIJF97yHlEbg2Ak+Ui96vx+8ziJeAsZTTmurtv4IyLR3yshqPgDQx7T9g+attmp5jREBFAqSZpqIe+CexNs2FFNMgCq5OsJ+l7SWvr/wUZx6TEJzqxiCZL2AT7VfOM1wlat2PZMgmo1ntR4Tso07RhY2hiKQMWPZ951A48UqtaSMPDcpFTCKjbsgMEiEp5lmgGLsRWKviXVffzLAL6MmNHDr/wdIZM0/Cqhg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
  header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=at7CwJWLkSICjdvnVr1yT+FYaUEDpsvsL1eSkzG9dmI=;
- b=GO4NjcFvDEZ75OWt4+0IyQ9rWGpPjOnBbu93Dbx6aB+xwk7qyx4P2gdBMiWgfLSmjjIDCh6YDThG60eiwEnVaHiAFeGFFW5eQbt1BMG/o+OOPFDjwMX2QwOwR3S5gkAdi1hPwdPk80/7R2hfRtlTLb16YCUUy3HEqLWJ114V8Cq24D1VqbbECSo4cVUAuLLg7YnYUiLzuCaOYYDAD74hUampTx//4MczxAG3oeub+ybBDos+vOZ7QiUnuWyD1ibCSq74JrbqaeZXvF6K4knhYMCIxj3xtq9AjkA/7L27J4UNsU6fZk4LCn5S/5neZN1v8Pg53H1164LV8i9oEOM1xQ==
+ bh=MwnyaB9KCNKfvq3dm/l9D36z+t8/GubQoGmaT/zXTEE=;
+ b=jv3p2Xn6//HJKu2B5btMIKEK3ji+5ADiCaULHs24jIC/FcjLR47574m2vBKS0/qBp7EcKVZpvyvUzkTyHX05Imm2+DhiwdFdNv/bslXn4nlODersquIOZT2U/BjGUPOrfqOEjQ2D+oMVO6WiWjABDRRcPcMiQ4WNV5R22SiO3SE70jP+n+pjix8W688BEb5CQlYPBtuB8MWAUVB7LVFOMCihO1I7ZqPiRuQstFVCrjxZS0oCBqdOwQSE2VcvSD1aV2o46hVTpnagWf8KwQPiMVTflRZ6+UEWMd3F4NrWbW48tyUfzaIq2JsLb7R+RnH0hX4wikHW319Y+RXe8jTvHQ==
 Received: from SI6PR06MB7631.apcprd06.prod.outlook.com (2603:1096:4:239::11)
  by PUZPR06MB5885.apcprd06.prod.outlook.com (2603:1096:301:110::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9891.19; Fri, 8 May
- 2026 05:16:20 +0000
+ 2026 05:16:22 +0000
 Received: from SI6PR06MB7631.apcprd06.prod.outlook.com
  ([fe80::afe5:a3f1:b435:e43c]) by SI6PR06MB7631.apcprd06.prod.outlook.com
  ([fe80::afe5:a3f1:b435:e43c%5]) with mapi id 15.20.9891.008; Fri, 8 May 2026
- 05:16:20 +0000
+ 05:16:22 +0000
 From: Kane Chen <kane_chen@aspeedtech.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
@@ -51,13 +51,15 @@ To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
  list:ASPEED BMCs" <qemu-arm@nongnu.org>, "open list:All patches CC here"
  <qemu-devel@nongnu.org>
 CC: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-Subject: [PATCH v1 0/1] aspeed/hace: Fix mapped address may not be unmapped
+Subject: [PATCH v1 1/1] aspeed/hace: Fix mapped address may not be unmapped
  issue
-Thread-Topic: [PATCH v1 0/1] aspeed/hace: Fix mapped address may not be
+Thread-Topic: [PATCH v1 1/1] aspeed/hace: Fix mapped address may not be
  unmapped issue
-Thread-Index: AQHc3qnODjnafroHF0aYs2O+Fxx0jg==
-Date: Fri, 8 May 2026 05:16:20 +0000
-Message-ID: <20260508051619.3887383-1-kane_chen@aspeedtech.com>
+Thread-Index: AQHc3qnPl3aK51F7Y0aXhHDUgxk26A==
+Date: Fri, 8 May 2026 05:16:22 +0000
+Message-ID: <20260508051619.3887383-2-kane_chen@aspeedtech.com>
+References: <20260508051619.3887383-1-kane_chen@aspeedtech.com>
+In-Reply-To: <20260508051619.3887383-1-kane_chen@aspeedtech.com>
 Accept-Language: zh-TW, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -66,61 +68,61 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: SI6PR06MB7631:EE_|PUZPR06MB5885:EE_
-x-ms-office365-filtering-correlation-id: e94255fb-afc2-4a43-3839-08deacc0f0cf
+x-ms-office365-filtering-correlation-id: ed031fb7-a7ed-4dea-7b02-08deacc0f1d3
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|56012099003|18002099003|38070700021; 
-x-microsoft-antispam-message-info: F4IGHl1kHOtYpUse4XumGio/UhxgQ/T7kiVbvJpQWEyJNiwNL2L4ydHDy+53/NGRJMUDBKeknDyCeDI4OArT/HooUfpxb/VfdW7G4mkgT7ZL4E6JIS0K/mbgrLNzyRZHHPuRF1WlwbW9A9YCZsHwpuu27/TTnUz2dvbcu/qgyZmPOBXzy3RyZvifTJwp6v66m6Dr3lDTod7O5SKMKI1epKr5/6HqpxrIlmAdEXU9qlLjkyzNzw5HOS0AEvmOuL3UyALEOxtTy9yq7yEHLFQTeQtpRWmcDZKKrUZU+Cyu2OUZ06sf5RZE3d5OJq6PxxXrC4ZR4KhmwkbIQgb0/a5R9t639FPR3BO4G0UzCkci9txaSReT8TDvIHm15iBqNpd+ObdCB8LKixUUQxzUj/YX6pxpc43ImU6ToesfAliXP+eNg/OVNV/NvwWE9YjU2xIxF/XrciweQklEekSTj8HGhZGxGqbie2fwhHWN60fIiloTXrbv0crymaG3FqH5aSSQp5EmLAqvKo+qRCJjCTAYXWUdbXpYUHsyXunFNSCRsNN7AAMsPkmxq2xC0eHfUcBwLhcrNwNUxBvusgeU0auwFH4r+cPu9UUJLeNrteU0Tu1Pp2ndn82pM7Nlbjpg9XHR61fFRfb2VQfxMiXroQ7J45gGGK5ZFqtiihyncFhEwAfwp1qqZelDtqR4Fqcvn+Sth/9+hwE21jL2Bo0+NHfx2A==
+ ARA:13230040|366016|376014|1800799024|56012099003|22082099003|18002099003|38070700021;
+x-microsoft-antispam-message-info: 4pQ2Nr2orAuBoYtRMq5Bd4H5bYCpGkD1cRFOoD7Z9/sV8hF0QRYspO7AGX+KZO3iSQu/m7360VQB8RV3VeGk3xF0Vyi5WMCROrTAvwdOSwoBX8H03fNp8wWqDaJWco9ab0uuD5vAmHjb1czQySOOjbBXt1AI3Gnj/BXNZK4srzc2zmkKAorNEvESzUK+O9wWbBqhbyhxaS16aIp9TPFDeQw22hOBrfvAXOOTutshjty5FYLIm5GysNhZ8/NBlDGGQ3nOI29U10gp3dR8JBxYvi8/v1BH2hO+car9vbbkucwYdSZoP5NYLv09xnyz42WCDR55ez0C3oTgIEJaW64kzf0OL1cD+vggFBvoxLjAbTViZy+mUsrqKVBFM624swZ20kEL14zLy6i7Qza+R45xkWawf00UPySWb+G6BfxBoxyG2bB39YfVfuyOYOyahnYeEXAGTfQpmQcZ1t61GI3oMTji9VKb/q9TCM/roqlbv2pL8aPVo3kBRHDZ/7QNVtWJS5oWI1WhYCc+bCB4xd/8r1PnoN666ngiQFP2RR+Kl0g8xVnCYo9tzKvjlYLBpr1t8E6Kd+bVIbj++8YTEmw/zzOXVC3HUuBbqDqWUfgzv+97wyUutyvwSKhpDKM/SCygP+lj+nhmx+Gvy1QKnqvjL9FhZwFCdo2fGx8JeXrQjRkatVP8C8mpvUW0X5ymtpZ8rJnmLgW1Rc1+0VzN7IHDrP1BBa+165p198egfIXvpecsH3RlwjYl9cVM2DZcjL1t
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SI6PR06MB7631.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(56012099003)(18002099003)(38070700021);
+ SFS:(13230040)(366016)(376014)(1800799024)(56012099003)(22082099003)(18002099003)(38070700021);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?2tgpiHuJsVsw8vgQHB7EJVezq5X+t79OMUo/CTRoahP6hvQq4Gc1ivmiBq?=
- =?iso-8859-1?Q?LMO8uUfFyitls7iTivsyccS6+fSevh42iI/3vKC5IhGu3aTV/ySywBDLER?=
- =?iso-8859-1?Q?T+UFY073qYfYbE1QixEt9sAiiK7tVEmJgHsPLVGOmInAWY0rezberMuLMK?=
- =?iso-8859-1?Q?JMQzuI5THpe3aUK6/QKCcSeKtDqJpwJLyPkofl20NvZQXK9HucKtEB+qb+?=
- =?iso-8859-1?Q?/c6/Z/JsBmpMBDfxEwHG6s3oUB858VO3Ck8h5AC52j7SFPTeLAyPy95Tab?=
- =?iso-8859-1?Q?6zzIrqMtTFRMtLj3/r81ANyXwBsEjfFBUj4tvZGjDjnxPvxajrh7D5MVm6?=
- =?iso-8859-1?Q?6/nRLa7EMyJaPnuO/Kcm0H8PGZKQGlKDIuextNKmVDmdLm84dnk6c/+cHk?=
- =?iso-8859-1?Q?wXMBFTVp9kSTDeFU52a6X69zdSp/aNkfbAViSZot8bN6vjp2ACbJQwdqGc?=
- =?iso-8859-1?Q?n/9wIlx/qFTIoNEK1u5wIY0R+8MM5oyoeBPktyanYVEL9g7HAr4aGRVQho?=
- =?iso-8859-1?Q?UNLBunk3jsuV347769aPy2LyZoYpvK6tBdzKBJGPU0trLg5KdQIVQat58S?=
- =?iso-8859-1?Q?aFtEzObXnkjpYU1CqHrBSdJk9vrAf3YZn/v6EN8FSxu6gIA5+OX1HUc40o?=
- =?iso-8859-1?Q?FpdDpoNKMqUJbmHbdU4EZ3NpNXEFTIwqd3wQpmToXOWpuG0H+CPUt8shI3?=
- =?iso-8859-1?Q?Ti4/hDlm8xiHifZ7g30qP6PNtGj+ELEeuW2KmWm1DHCODQy1v/mFzPRR32?=
- =?iso-8859-1?Q?qX4WBCn2LHEfg9lRqsJ4eb60hGChI06+0eryUtUEYYNfLTcHcRb19GmJlb?=
- =?iso-8859-1?Q?qGGLtoGess57odjy0r38IX1w7v775YwiGCu7gz9yAtbe89Hcf4MyLq6Am+?=
- =?iso-8859-1?Q?UU6j7IYuF5tu7miRHAsb1JCMnqCd5Yet+jmIyxPkmqDKLIEO0ce19RKg8j?=
- =?iso-8859-1?Q?NiFRSDGwqUJjM+RuOfo1PcWpdOHnWCM1sCrHSFXYH0cGUTHGs+pSP6+2VJ?=
- =?iso-8859-1?Q?kTO2ZLHcZIlrF4MkutF8OOF5oCmK0SS8WidqvSldGVGdFPktuP9fhyPp9D?=
- =?iso-8859-1?Q?DDSZ0Gb+ZdAGfzeHUkVzsju6D9cDeGdNi8b8x98XlqbpS/I4PWSI8EkDcb?=
- =?iso-8859-1?Q?VAVxdPhUHtcqzKF4DAOAtJE1R0waLuyhmC0mQGrFsq3Cti5u6bG5fUq/Ex?=
- =?iso-8859-1?Q?JoTkVLTuxUlS3cgwmi6ohbSVegEPE9wJBKbOHhpDW1wCR6Cdx3x6Cz/7UH?=
- =?iso-8859-1?Q?Ow29rfNXVuO9NfyWXfYMnoG877U28zz2BGUJO5Ta/TsxioiNAuk9WGlOuV?=
- =?iso-8859-1?Q?jK3JLxFNiKaj1W9xjyE0oe0oHLzQnKJnFWyRLjEJ0h7J15LZ1cbEgbbCwb?=
- =?iso-8859-1?Q?534V/crRIjW9Vpv85k5rK9V+8tCQLLtUucKNBmvi/vv5iJDlVc0FlscavI?=
- =?iso-8859-1?Q?Px2Mk2nrZ4G76mSbUaYMpEmAB9VPOLCrU55/T7A1Sv4BEyGDYvkG5VwnkK?=
- =?iso-8859-1?Q?GOMFnJhrdj+HrLgJWXp8q74eXiK16d4ndqim2Dz3HhHrAIxxK/a2YmQFiy?=
- =?iso-8859-1?Q?Ta0NdLgUVBoeAyZIT9z7uQGIMQtnuY4xAcGDNRQAn05jROp8UejhMBl9Tl?=
- =?iso-8859-1?Q?D5q0xUK0uNphEnyx7dgs6TtdbyE6RT+GEjJ3nDoRN8qWhxDMxcthztj0UR?=
- =?iso-8859-1?Q?B3axoSBSOktTEOYrY6OpbGmMM1x6QBIJGzxOg+PJRVqIm3b3SCMo4TfELY?=
- =?iso-8859-1?Q?8sop2xglJoBpg4tSf1unuIAuz3D4MJECk9YQhraxt+X4v0rOA9FhaxQFG2?=
- =?iso-8859-1?Q?cdSL99+S6A=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?ShrXEzuFeG7ZYNpqxP3+22DIBXyNNA9NiULDGvf21bfPMKlTmFmcuEktcE?=
+ =?iso-8859-1?Q?RpM19qg+LMOlTm9XQ3abTzanQUcOYejFwMF6MBtc8b0dmi4dJlanOavsMS?=
+ =?iso-8859-1?Q?IjuusMjnFZRG0YHVricfnuUT2QqNivC4kcYLquIu4/ojpq9w5f/TWFBQFz?=
+ =?iso-8859-1?Q?ZHsLKFUhFCdZzh0cDbHZ+KH5iDHiGWZvpw3NTf4NcPFXqhHqavhtcPA51c?=
+ =?iso-8859-1?Q?pUrPOSVc3G7l/XXYyE/vVHjgVKDAqOEdLrZpPwPPmW3UTtEsir6nQT9Nm7?=
+ =?iso-8859-1?Q?Fm76xZe+XzjjUMF5g4eJVA5hUYZf3pc7I136z0uTVijsgIgtAvD9CbXnel?=
+ =?iso-8859-1?Q?W9yvtGcw4hznMt2kVVzPOzE9Lb+jC+5+S6eEjFwXnrmgQtG7C87oi+YL21?=
+ =?iso-8859-1?Q?5VAP0P9jsgxw1gn0BHlGISVZjHEhN85AXGNA682r1iK51DfyGkPgut7tnG?=
+ =?iso-8859-1?Q?yWYOJQ1Qh3XpKUYg9VyUL+M3yDFy7J//wRIrl5PtGD7/PbgiwAm6qni6ES?=
+ =?iso-8859-1?Q?N4Df/p695BdjPrDiKm9Q9bi0iF0pnTRd/Nmc/Cj35AQtaERHE5OxxpghBy?=
+ =?iso-8859-1?Q?lSQ/GMGRzNud8oe+RhHnDM0SQSUuiBLkKv5jy/omoDmnnagnSjHlMb3DTu?=
+ =?iso-8859-1?Q?MrVirbl3sgVJ7aWd4T2TsfzOC/35MYrRnWrd6bhkPeC2tPWpzYZ3klRMp3?=
+ =?iso-8859-1?Q?JvXfwVUqczEAJmVTR+ub33y9bN6HWAmY0WhNzEeFW/m/m675xbvJBWEdWB?=
+ =?iso-8859-1?Q?s7AVxyAOhFH5cItEGxZ8BeAoJxg0TR9hcdab7EqLoHaBs43jOHdCvsE7ZF?=
+ =?iso-8859-1?Q?Q0eAnApeTcmXkZS9O6diT8rgjRgnBjXLYNgikoo52xlAAWJi5kYLKhL/j5?=
+ =?iso-8859-1?Q?rPPREdXmAjF5o4yfI+2CIv/l5TcizZHaItU6KQVoB4gxkuwbGF6LFzO561?=
+ =?iso-8859-1?Q?pNrsi3KKKI/34FR8hTOkxFv3qR8KjK+86Cags3IsQS/Vn0GL3UdGlJMCuv?=
+ =?iso-8859-1?Q?hWee2EBNEGZTZmOAluX4X7ycOIjs3bz2PiJF/DmZzDtAMfGDuocWf0i7yc?=
+ =?iso-8859-1?Q?gBlbckdhZbZsQydwP6A+oztM+bDg5iSHGdcLMz9vhagNSz265KUKYqaRC3?=
+ =?iso-8859-1?Q?DmOKhmQ2IwUxBJqLvXLay7l+O5/s4uRdRjdz2a08b1vHLEqLIZ0bFgJ3Ub?=
+ =?iso-8859-1?Q?CMrqKVllzIxpa2U4LTBx78FiAsoZRcrxjTngttoyy6t2jqP95TlxJUo3ae?=
+ =?iso-8859-1?Q?9/LY1wu5UWnRMIBMHG8AkRLz3SdwQHOgJvKEv15Rupwxeb0FPqpOEnxDBK?=
+ =?iso-8859-1?Q?23PBd5MhX+Y5YqWBq3XnWTYcUi+s40yoIRPO2AV1bv0glGUKMCJig96ZyG?=
+ =?iso-8859-1?Q?0Q/6s1epTWCBzmOjvOGroz9+BVGuZSd9RD1xT/H3IuLrJBSAXDi81UakhH?=
+ =?iso-8859-1?Q?T63gX6WX8higCFKMqwfIL11cpLruJg3zIdXFSw6Ge4t1RI1n6epbU7cHKF?=
+ =?iso-8859-1?Q?RYsefh00QO126vaOFl1KuC9/v2EYfIq5qXB7QTT78KLX8kLo+ncMrL/ScU?=
+ =?iso-8859-1?Q?U6kn5zp/oOZnCIzo6ktMbbDzGIzswzb2Ww6WcthBOqrk0gTCPNwuxmnnwz?=
+ =?iso-8859-1?Q?dh1cFoQ1yXDopCFnFcGSmpGLFSaspowzO8/4laKckKC7Qfj9dJUSe/7/ew?=
+ =?iso-8859-1?Q?AO5tMhLl80/XtPHcaGV6Wt6ioYqreiyQle9FPb0wHHmTqAn+L+66SuqA/D?=
+ =?iso-8859-1?Q?r50ekxwr4vjqidh2KtnFlL0H/j2QqvZ0uzQ6vgcvLXlsWInlp6x7fYv6BX?=
+ =?iso-8859-1?Q?t06BUXhbWA=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: A8JbntFe/3hPFBfs/rKONX+EsUNqQKkUGv/FADi8iS8nD6PL3qSoEeQS5Q9p8PgrrssYdEdUuD5mkFVBVs3EQT12KJMKfscI0DiCjC2EtiqQvgQDIRgWCKDozvU6+/Y4Jj3jDRySJYooEYWtX2Ai8pcGXmKxF2mz5zxgWjic0Xu/SgkapVjPOBPj6/3apBI/AHFbgw07e3AUmLKr8alHBCZWEcOKlRSBeuHwicIbp8R9GXw0ICTDyuA1mCWVivjDAj9QS0P0al0uEclE/JF4cDC/AkoqKsU5KAiAt4nZIWNX0wLm0df9Xjlx6ZjOp6wukPLF2G5iniQpjy9m+a+H7Q==
+X-Exchange-RoutingPolicyChecked: LA1pSEjwRvoW6IZ7FrJL7R70BNGhc5eyMQQP/V+0Sd0VLgqqRU5sVGJ4rX8bneREN2uP3w2+rg/O9p8rory7ZuNgKuQyLGSBz34edf+of+6NrRpzx/5PxlERRMmdxY6lalG1ZpSL3fUYwgu8pXR+r/+akpjxMbiDuRKSlkC0nnagPicV8RUTxB2ip8g/QBBEZOWtJlIppkRFoCskUzLRfYrmaAEQD0r6rlHXf2zNYc96ZC9gnoyQd0gRBpPQJ6lfHoNb6M+mEXEz76EB3wuckQiLQN0aRQRK+MAI+JzlkTsxGzemedWrPLW1AMnsq86/pR2L5rTk9TUKBLmLrH+cZQ==
 X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: SI6PR06MB7631.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e94255fb-afc2-4a43-3839-08deacc0f0cf
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 May 2026 05:16:20.6372 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: ed031fb7-a7ed-4dea-7b02-08deacc0f1d3
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 May 2026 05:16:22.3732 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: pUzVutql9uFZxv6QYYFPs3wM2Sf9sFTw6vFKbDNOZZllBYqJ0/c1kZqbcwzHYNLquJl8fVHhyK5zUilAh/Nn28YPYexoYqzv/vLB+1NLN9s=
+X-MS-Exchange-CrossTenant-userprincipalname: tZWpkHuxvNN75SUHlnANyDrJSpQ1vrR4t6o7kGx+M/GwGR5X85O0h9EbYJ/2+TqiF90BaxFRqLy996oHsDHQ91GlPeI+/2/i2088QveQuy0=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR06MB5885
 Received-SPF: pass client-ip=2a01:111:f403:c405::5;
  envelope-from=kane_chen@aspeedtech.com;
@@ -147,36 +149,248 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Dear reviewer,=0A=
+In the do_hash_operation, the code may be returned earlier because=0A=
+hash_prepare_sg_iov or hash_prepare_direct_iov may return a failure.=0A=
+When this condition is happened, current code flow doesn't go through=0A=
+later code segments. Finally, it causes the mapped address isn't=0A=
+unmapped properly.=0A=
 =0A=
-The Aspeed HACE hash flow may leave DMA mappings active when an error=0A=
-occurs after guest buffers have already been mapped.=0A=
+This change is intended to unmap the mapped address if there is any=0A=
+error is occurred. Thus, it could prevent a reasoure leak situation.=0A=
 =0A=
-Several failure paths return early without unmapping previously mapped=0A=
-iov entries. This can lead to stale mappings and resource leaks.=0A=
-=0A=
-Fix this by introducing a common cleanup helper that unmaps all=0A=
-previously mapped iov entries before returning from error paths.=0A=
-=0A=
-Additionally, track the actual mapped length of each iov entry=0A=
-explicitly. This is necessary because some hashing flows may apply=0A=
-padding during processing, and the resulting buffer length used later=0A=
-in the flow can differ from the original DMA mapped length. Using the=0A=
-modified length during dma_memory_unmap() may result in an incorrect=0A=
-unmap size.=0A=
-=0A=
-Note: this patch series is based on =0A=
-https://patchew.org/QEMU/20260504213421.710035-1-clg@redhat.com/.=0A=
-=0A=
-Best Regards,=0A=
-Kane=0A=
-=0A=
-Kane-Chen-AS (1):=0A=
-  aspeed/hace: Fix mapped address may not be unmapped issue=0A=
-=0A=
+Signed-off-by: Kane-Chen-AS <kane_chen@aspeedtech.com>=0A=
+---=0A=
  hw/misc/aspeed_hace.c | 63 ++++++++++++++++++++++++++++++-------------=0A=
  1 file changed, 45 insertions(+), 18 deletions(-)=0A=
 =0A=
+diff --git a/hw/misc/aspeed_hace.c b/hw/misc/aspeed_hace.c=0A=
+index 0504d61cbf..a322905cb3 100644=0A=
+--- a/hw/misc/aspeed_hace.c=0A=
++++ b/hw/misc/aspeed_hace.c=0A=
+@@ -218,8 +218,19 @@ static bool hash_accumulate_len(AspeedHACEState *s, hw=
+addr plen)=0A=
+     return true;=0A=
+ }=0A=
+ =0A=
++static void hash_iov_unmap(AspeedHACEState *s, struct iovec *iov,=0A=
++                           hwaddr *mapped_lens, int iov_count)=0A=
++{=0A=
++    for (; iov_count > 0; iov_count--) {=0A=
++        address_space_unmap(&s->dram_as, iov[iov_count - 1].iov_base,=0A=
++                            mapped_lens[iov_count - 1], false,=0A=
++                            mapped_lens[iov_count - 1]);=0A=
++    }=0A=
++}=0A=
++=0A=
+ static int hash_prepare_direct_iov(AspeedHACEState *s, struct iovec *iov,=
+=0A=
+-                                   bool acc_mode, bool *acc_final_request)=
+=0A=
++                                   bool acc_mode, bool *acc_final_request,=
+=0A=
++                                   hwaddr *mapped_lens)=0A=
+ {=0A=
+     uint32_t total_msg_len;=0A=
+     uint32_t pad_offset;=0A=
+@@ -243,9 +254,11 @@ static int hash_prepare_direct_iov(AspeedHACEState *s,=
+ struct iovec *iov,=0A=
+ =0A=
+     iov[0].iov_base =3D haddr;=0A=
+     iov_idx =3D 1;=0A=
++    mapped_lens[0] =3D plen;=0A=
+ =0A=
+     if (acc_mode) {=0A=
+         if (!hash_accumulate_len(s, plen)) {=0A=
++            hash_iov_unmap(s, iov, mapped_lens, 1);=0A=
+             return -1;=0A=
+         }=0A=
+ =0A=
+@@ -265,7 +278,8 @@ static int hash_prepare_direct_iov(AspeedHACEState *s, =
+struct iovec *iov,=0A=
+ }=0A=
+ =0A=
+ static int hash_prepare_sg_iov(AspeedHACEState *s, struct iovec *iov,=0A=
+-                               bool acc_mode, bool *acc_final_request)=0A=
++                               bool acc_mode, bool *acc_final_request,=0A=
++                               hwaddr *mapped_lens)=0A=
+ {=0A=
+     uint32_t total_msg_len;=0A=
+     uint32_t pad_offset;=0A=
+@@ -275,6 +289,7 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, stru=
+ct iovec *iov,=0A=
+     int iov_idx;=0A=
+     hwaddr plen;=0A=
+     void *haddr;=0A=
++    int iov_mapped =3D 0;=0A=
+ =0A=
+     src =3D hash_get_source_addr(s);=0A=
+     for (iov_idx =3D 0; !(len & SG_LIST_LEN_LAST); iov_idx++) {=0A=
+@@ -282,7 +297,7 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, stru=
+ct iovec *iov,=0A=
+             qemu_log_mask(LOG_GUEST_ERROR,=0A=
+                           "%s: Failed to set end of sg list marker\n",=0A=
+                           __func__);=0A=
+-            return -1;=0A=
++            goto fail;=0A=
+         }=0A=
+ =0A=
+         len =3D address_space_ldl_le(&s->dram_as, src,=0A=
+@@ -307,15 +322,17 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, st=
+ruct iovec *iov,=0A=
+                           "%s: Unable to map address, sg_addr=3D0x%x, "=0A=
+                           "plen=3D0x%" HWADDR_PRIx "\n",=0A=
+                           __func__, sg_addr, plen);=0A=
+-            return -1;=0A=
++            goto fail;=0A=
+         }=0A=
+ =0A=
+         src +=3D SG_LIST_ENTRY_SIZE;=0A=
+ =0A=
+         iov[iov_idx].iov_base =3D haddr;=0A=
++        iov_mapped =3D iov_idx + 1;=0A=
++        mapped_lens[iov_idx] =3D plen;=0A=
+         if (acc_mode) {=0A=
+             if (!hash_accumulate_len(s, plen)) {=0A=
+-                return -1;=0A=
++                goto fail;=0A=
+             }=0A=
+ =0A=
+             if (has_padding(s, &iov[iov_idx], plen, &total_msg_len,=0A=
+@@ -332,6 +349,10 @@ static int hash_prepare_sg_iov(AspeedHACEState *s, str=
+uct iovec *iov,=0A=
+     }=0A=
+ =0A=
+     return iov_idx;=0A=
++=0A=
++fail:=0A=
++    hash_iov_unmap(s, iov, mapped_lens, iov_mapped);=0A=
++    return -1;=0A=
+ }=0A=
+ =0A=
+ static uint64_t hash_get_digest_addr(AspeedHACEState *s)=0A=
+@@ -350,6 +371,7 @@ static uint64_t hash_get_digest_addr(AspeedHACEState *s=
+)=0A=
+ static void hash_write_digest_and_unmap_iov(AspeedHACEState *s,=0A=
+                                             struct iovec *iov,=0A=
+                                             int iov_idx,=0A=
++                                            hwaddr *mapped_lens,=0A=
+                                             uint8_t *digest_buf,=0A=
+                                             size_t digest_len)=0A=
+ {=0A=
+@@ -369,15 +391,12 @@ static void hash_write_digest_and_unmap_iov(AspeedHAC=
+EState *s,=0A=
+         hace_hexdump("digest", (char *)digest_buf, digest_len);=0A=
+     }=0A=
+ =0A=
+-    for (; iov_idx > 0; iov_idx--) {=0A=
+-        address_space_unmap(&s->dram_as, iov[iov_idx - 1].iov_base,=0A=
+-                            iov[iov_idx - 1].iov_len, false,=0A=
+-                            iov[iov_idx - 1].iov_len);=0A=
+-    }=0A=
++    hash_iov_unmap(s, iov, mapped_lens, iov_idx);=0A=
+ }=0A=
+ =0A=
+ static void hash_execute_non_acc_mode(AspeedHACEState *s, int algo,=0A=
+-                                      struct iovec *iov, int iov_idx)=0A=
++                                      struct iovec *iov, int iov_idx,=0A=
++                                      hwaddr *mapped_lens)=0A=
+ {=0A=
+     g_autofree uint8_t *digest_buf =3D NULL;=0A=
+     Error *local_err =3D NULL;=0A=
+@@ -389,15 +408,17 @@ static void hash_execute_non_acc_mode(AspeedHACEState=
+ *s, int algo,=0A=
+                       "%s: qcrypto hash bytesv failed : %s",=0A=
+                       __func__, error_get_pretty(local_err));=0A=
+         error_free(local_err);=0A=
++        hash_iov_unmap(s, iov, mapped_lens, iov_idx);=0A=
+         return;=0A=
+     }=0A=
+ =0A=
+-    hash_write_digest_and_unmap_iov(s, iov, iov_idx, digest_buf, digest_le=
+n);=0A=
++    hash_write_digest_and_unmap_iov(s, iov, iov_idx, mapped_lens,=0A=
++                                    digest_buf, digest_len);=0A=
+ }=0A=
+ =0A=
+ static void hash_execute_acc_mode(AspeedHACEState *s, int algo,=0A=
+                                   struct iovec *iov, int iov_idx,=0A=
+-                                  bool final_request)=0A=
++                                  bool final_request, hwaddr *mapped_lens)=
+=0A=
+ {=0A=
+     g_autofree uint8_t *digest_buf =3D NULL;=0A=
+     Error *local_err =3D NULL;=0A=
+@@ -411,6 +432,7 @@ static void hash_execute_acc_mode(AspeedHACEState *s, i=
+nt algo,=0A=
+             qemu_log_mask(LOG_GUEST_ERROR, "%s: qcrypto hash new failed : =
+%s",=0A=
+                           __func__, error_get_pretty(local_err));=0A=
+             error_free(local_err);=0A=
++            hash_iov_unmap(s, iov, mapped_lens, iov_idx);=0A=
+             return;=0A=
+         }=0A=
+     }=0A=
+@@ -419,6 +441,7 @@ static void hash_execute_acc_mode(AspeedHACEState *s, i=
+nt algo,=0A=
+         qemu_log_mask(LOG_GUEST_ERROR, "%s: qcrypto hash updatev failed : =
+%s",=0A=
+                       __func__, error_get_pretty(local_err));=0A=
+         error_free(local_err);=0A=
++        hash_iov_unmap(s, iov, mapped_lens, iov_idx);=0A=
+         return;=0A=
+     }=0A=
+ =0A=
+@@ -438,22 +461,25 @@ static void hash_execute_acc_mode(AspeedHACEState *s,=
+ int algo,=0A=
+         s->total_req_len =3D 0;=0A=
+     }=0A=
+ =0A=
+-    hash_write_digest_and_unmap_iov(s, iov, iov_idx, digest_buf, digest_le=
+n);=0A=
++    hash_write_digest_and_unmap_iov(s, iov, iov_idx, mapped_lens,=0A=
++                                    digest_buf, digest_len);=0A=
+ }=0A=
+ =0A=
+ static void do_hash_operation(AspeedHACEState *s, int algo, bool sg_mode,=
+=0A=
+                               bool acc_mode)=0A=
+ {=0A=
+     QEMU_UNINITIALIZED struct iovec iov[ASPEED_HACE_MAX_SG];=0A=
++    hwaddr mapped_lens[ASPEED_HACE_MAX_SG] =3D { 0 };=0A=
+     bool acc_final_request =3D false;=0A=
+     int iov_idx =3D -1;=0A=
+ =0A=
+     /* Prepares the iov for hashing operations based on the selected mode =
+*/=0A=
+     if (sg_mode) {=0A=
+-        iov_idx =3D hash_prepare_sg_iov(s, iov, acc_mode, &acc_final_reque=
+st);=0A=
++        iov_idx =3D hash_prepare_sg_iov(s, iov, acc_mode, &acc_final_reque=
+st,=0A=
++                                      mapped_lens);=0A=
+     } else {=0A=
+         iov_idx =3D hash_prepare_direct_iov(s, iov, acc_mode,=0A=
+-                                          &acc_final_request);=0A=
++                                          &acc_final_request, mapped_lens)=
+;=0A=
+     }=0A=
+ =0A=
+     if (iov_idx <=3D 0) {=0A=
+@@ -468,9 +494,10 @@ static void do_hash_operation(AspeedHACEState *s, int =
+algo, bool sg_mode,=0A=
+ =0A=
+     /* Executes the hash operation */=0A=
+     if (acc_mode) {=0A=
+-        hash_execute_acc_mode(s, algo, iov, iov_idx, acc_final_request);=
+=0A=
++        hash_execute_acc_mode(s, algo, iov, iov_idx, acc_final_request,=0A=
++                              mapped_lens);=0A=
+     } else {=0A=
+-        hash_execute_non_acc_mode(s, algo, iov, iov_idx);=0A=
++        hash_execute_non_acc_mode(s, algo, iov, iov_idx, mapped_lens);=0A=
+     }=0A=
+ }=0A=
+ =0A=
 -- =0A=
 2.43.0=0A=
 
