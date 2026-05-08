@@ -4,111 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0B19CD3445
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 14:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 613CFCD3436
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 14:41:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLMNx-0002lT-FV; Fri, 08 May 2026 10:41:01 -0400
+	id 1wLMO0-0002s3-Bu; Fri, 08 May 2026 10:41:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1wLMNZ-0002cT-LV; Fri, 08 May 2026 10:40:38 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wLMNu-0002hr-Ht
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 10:40:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gautam@linux.ibm.com>)
- id 1wLMNX-000836-Cg; Fri, 08 May 2026 10:40:37 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6489JWEJ1421455; Fri, 8 May 2026 14:40:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=UGQIJR35lOWQFPNEK3jXlvXWBID0LH
- 7cMWoYwu1OCyM=; b=FxRjuhDLiXRO/j3jWXVabfOukC7biLH+w26wBqsnTxf5ih
- YqvB+ZVcSxs68Wb9lGMzviFTD+a00MPHoW1tIT+Q5NORIxNA+qA58PPphBzvAzft
- G79hQs0Q5DLmyIahen6aJuT48FTi+2KmDjKKcPWC6pvXkXnHecNJol8lGW0OFO6Q
- qdX6NoipYjVH+YSCb/7mImoZ3ANK4d0ZqoNAjkgwHwm7nKYg6R207JyyAF9psVRW
- 4MvaWl7nTaouSPJptxVpvlZN11H4efF8z4TsU4zkiokR7luqngRAVtGZU/3wfkzB
- Tdtl8PbjaNMPEUcRFb+XZQDxTmhEIp2gBegNfgbA==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4dw9x546et-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 08 May 2026 14:40:31 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 648EdX0o000612;
- Fri, 8 May 2026 14:40:31 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4dwx9yrah1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 08 May 2026 14:40:30 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 648EeRYP48103762
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 8 May 2026 14:40:27 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 86D7B20043;
- Fri,  8 May 2026 14:40:27 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9330120040;
- Fri,  8 May 2026 14:40:25 +0000 (GMT)
-Received: from Gautams-MacBook-Pro.local (unknown [9.43.123.155])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Fri,  8 May 2026 14:40:25 +0000 (GMT)
-Date: Fri, 8 May 2026 20:10:18 +0530
-From: Gautam Menghani <gautam@linux.ibm.com>
-To: Amit Machhiwal <amachhiw@linux.ibm.com>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- Vaibhav Jain <vaibhav@linux.ibm.com>,
- Chinmay Rath <rathc@linux.ibm.com>, Glenn Miles <milesg@linux.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-Subject: Re: [PATCH v2] target/ppc/kvm: Fix const violation when trimming CPU
- alias suffix
-Message-ID: <af310sWYO_VGZAVB@Gautams-MacBook-Pro.local>
-References: <20260508081416.1014-1-amachhiw@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1wLMNq-00087i-Af
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 10:40:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1778251253;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=T7b/2XPJ02WX6/0vl3IxnkfrHNSsm6mfgXxV8ILV42yrZMDZhutQ8PWiBwbjcBKdU1h84e
+ pZnloclNl57bsF/OMF9vp/wY7i6P5AxU2vKcOVg3ek2tnYS6xWzgnW+30+Z+UvxwnxssS0
+ 6Pqg28DPZKl+zmPI+91YV41DxYY17io=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-108-SgazU-u8PL-88P4cg_9a3Q-1; Fri, 08 May 2026 10:40:52 -0400
+X-MC-Unique: SgazU-u8PL-88P4cg_9a3Q-1
+X-Mimecast-MFC-AGG-ID: SgazU-u8PL-88P4cg_9a3Q_1778251251
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-48e6260968fso12918935e9.1
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 07:40:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1778251251; x=1778856051; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=sjOHQ6emhqrNySbkOIa9OFknVevK8QVVBLCiati4G0YzN663KNlBgIYcFajAtOlyOS
+ NpqRbGOljt9tLN5a30LoSu8u7kPEbgLWNoSbzT4B1WhBn+U9lAVE16dtKjSZX3fPMG6O
+ k6gXbeTwIkOrWhaPLBnjX7rtsx1zUMOB4+sskl8W4jaOKumCkuK5o6Sfpw0fuW02z9iL
+ Lck0Iq/PKqf2TYTuYE+JLtaqEwAZxn7iLoW7rK2m0nCb1V4tMoOGCmnediJvpd2urfFR
+ TaMAVdWw4O94NUaJ6w+qCFGgxR6OP99f80lpEdEv8jzpFtevuZZ7hzmmJtkaEpCNZb7S
+ 437w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778251251; x=1778856051;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=br5A+207NofT7ogKOdm9Gh6+ocALFRDyEzcd7n/RP50uOMky9/DfUxWsS97wOPLyJE
+ wlfPDaATR5jerVhiTp2/bUTZn6c7LajFRVFVi6OPOKIO1w2K/aAYcG03VZdvi10nCtJE
+ c70u9IQDulVcfWnzi6KviAy0dJOf6wKj+tnTBm78fTtrxmu3Ysn2tBUFJhTVTBzLN7uw
+ eMKUJlTJlfv+/9Yf01EYOgPGcpqBDFcVpNIo+bzmq182Zvc71AzdKfdWhyJbKM1/QsaD
+ sj9UL9WsOuz8oAAZC3u1hG/AkAb2hAQnaoXW9a2zAStU8AaPSTOLSQconTVDlzzE+4SY
+ pb7w==
+X-Gm-Message-State: AOJu0Yz6fxvk2NTbINZIvx/Vrc37ATzQ2LQT6Te0mxrH6Abd8omaYSk8
+ GbEmMly+RnSwxIBiPsmqOx7/lMgsj6y1lyhiW8iYWAxs2tNQbeZvr/c6WLW7sLhSrKm37l9OsNx
+ RuAvV92epoL9hYfhyXQyAFEXryow6Z8Fyd1yLDeHaV8d5NG0W5muM4apo
+X-Gm-Gg: AeBDieuIF+kLMpSav4D2IzaYD6LEmvFS6vNs8pzQHrvCu7VkboG+Z/O7Qi4+VYQd4Jt
+ p70aUBwsK8Cv+VFP1W0IhGqYz3UdwbXe0MZ7ZR1CmV4SOntcCNw0cSCSwsxPUX8cIJUo1yV5Hjk
+ jE9kIkUh0dm9RqLFz55DflnKM6ahbesCeTvlU8B4rsZAqn9NKtBnR/5+wZ3kPWbyIX/B+sIhshN
+ eS/SQdKeb8FAJtObfGPqhOZRVlRlrFgwjLLLkz2l8aXF2DLMRwJ4l0CEDsW3M2LDi0Qc6bYolqb
+ rCCQz7wJktgbssmb9VXv7aqmIo/j1rkz1q1Uy2aKIgee5pMLCHUdVIbXHjqYzN+hGUZkYzYDt5U
+ q7CaMNArKK4vIKmN+FDSG0fiRT5PRS4SJaWHaEGe617Iw4SUWQcJvDubxFSmmjT0Tq1FuGOnCDn
+ tg+daC2M1K284sdHbM3EbIOYym
+X-Received: by 2002:a05:600c:1d18:b0:489:1a63:509c with SMTP id
+ 5b1f17b1804b1-48e51dd689fmr195909605e9.0.1778251250873; 
+ Fri, 08 May 2026 07:40:50 -0700 (PDT)
+X-Received: by 2002:a05:600c:1d18:b0:489:1a63:509c with SMTP id
+ 5b1f17b1804b1-48e51dd689fmr195908975e9.0.1778251250414; 
+ Fri, 08 May 2026 07:40:50 -0700 (PDT)
+Received: from [192.168.10.48] ([176.206.106.181])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-4548ec6c221sm4721220f8f.13.2026.05.08.07.40.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 08 May 2026 07:40:49 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, qemu-block@nongnu.org,
+ Fam Zheng <fam@euphon.net>
+Subject: Re: [PATCH 0/3] scsi: PR live migration PREEMPT fixes
+Date: Fri,  8 May 2026 16:40:45 +0200
+Message-ID: <20260508144045.1958786-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.54.0
+In-Reply-To: <20260401171927.396672-1-stefanha@redhat.com>
+References: 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260508081416.1014-1-amachhiw@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA4MDE1MCBTYWx0ZWRfX9HRruvHJ53mK
- AD1fW3m873fjBAWIZ+HMJNeh2JkfWdEXYAJQT2AR9pXdNeYZiAjcOEwCpIa5Y2UC4LNpJE5LHN0
- zNxiOIC8KJge3RpYRD5BuPCn1H77qB8i8jQKj0cf3tTEL8qm/niaPXIKNIWETSe3VoVk1L3gx/I
- eTmzJSbID6lc8wTiDctCGaUwXpcQszNNxjgGjM/laH4HktifLpBZbk9kNF0Eme6aMSuEQCxs+QT
- X7yt5nobC5ltlru7lo10HnBCoyx23ehcyEb3dw+QedXT7vgWEH39Vx++gJim9++Z6QNv7FnjE2F
- XQBNxx+MVwsxFF7QFovrkTLre+YE/dPoRq9CFC3QAPz+bIflJtTsuLNApBCFePY6/tCuVESCHiI
- f1SszqZjaluwCtAD79HBMvJ5YsxqiUeIgHUoW4vcPpNGm5MaVLtZVaINF57IJZkLl2NIpWan4ca
- XtJogw8njTQTp1lyZNg==
-X-Proofpoint-ORIG-GUID: u3cIkF83GjxwtAgkYCFsiipcXZjQ-2iF
-X-Proofpoint-GUID: JwRJlAL-d3wjrXbI_QUNjXkKtDtygl1c
-X-Authority-Analysis: v=2.4 cv=W7UIkxWk c=1 sm=1 tr=0 ts=69fdf5e0 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=kj9zAlcOel0A:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=XwvHTvS55sOcZ4le1skA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-07_02,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501 adultscore=0 lowpriorityscore=0 malwarescore=0
- suspectscore=0 spamscore=0 clxscore=1015 phishscore=0 bulkscore=0
- impostorscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2604200000
- definitions=main-2605080150
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=gautam@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,69 +120,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 08, 2026 at 01:44:16PM +0530, Amit Machhiwal wrote:
-> GCC 16 tightens diagnostics around const correctness and now correctly
-> rejects attempts to modify strings referenced through const-qualified
-> pointers. In kvm_ppc_register_host_cpu_type(), ppc_cpu_aliases[i].model
-> is declared as const char *, but the code was using strstr() on it and
-> then modifying the returned pointer in place to strip
-> POWERPC_CPU_TYPE_SUFFIX.
-> 
-> This results in a write through a pointer derived from const data,
-> triggering a build failure with GCC 16:
-> 
->   error: assignment discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
->         suffix = strstr(ppc_cpu_aliases[i].model, POWERPC_CPU_TYPE_SUFFIX);
->                ^
-> 
-> Fix this by duplicating the model string into a mutable buffer using
-> g_strdup(), trimming the suffix on that temporary buffer, and only then
-> storing it in the alias table.
-> 
-> This preserves the existing behavior while avoiding modification of
-> const data and ensures compatibility with newer compilers.
-> 
-> No functional change intended.
-> 
-> Signed-off-by: Amit Machhiwal <amachhiw@linux.ibm.com>
-> ---
-> Changes in v2:
->   * trim the duplicated buffer before assigning it to ppc_cpu_aliases[i].model
-> ---
-> 
->  target/ppc/kvm.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-> index 25c28ad089c6..c2843b1421cb 100644
-> --- a/target/ppc/kvm.c
-> +++ b/target/ppc/kvm.c
-> @@ -2654,13 +2654,14 @@ static int kvm_ppc_register_host_cpu_type(void)
->      dc = DEVICE_CLASS(ppc_cpu_get_family_class(pvr_pcc));
->      for (i = 0; ppc_cpu_aliases[i].alias != NULL; i++) {
->          if (g_ascii_strcasecmp(ppc_cpu_aliases[i].alias, dc->desc) == 0) {
-> -            char *suffix;
-> +            char *model, *suffix;
->  
-> -            ppc_cpu_aliases[i].model = g_strdup(object_class_get_name(oc));
-> -            suffix = strstr(ppc_cpu_aliases[i].model, POWERPC_CPU_TYPE_SUFFIX);
-> +            model = g_strdup(object_class_get_name(oc));
-> +            suffix = strstr(model, POWERPC_CPU_TYPE_SUFFIX);
->              if (suffix) {
->                  *suffix = 0;
->              }
-> +            ppc_cpu_aliases[i].model = model;
->              break;
->          }
->      }
-> 
+Queued, thanks.
 
+Paolo
 
-Reviewed-by: Gautam Menghani <gautam@linux.ibm.com>
-
-> base-commit: ee7eb612be8f8886d48c1d0c1f1c65e495138f83
-> -- 
-> 2.50.1 (Apple Git-155)
-> 
-> 
 
