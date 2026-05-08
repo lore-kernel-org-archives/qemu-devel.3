@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D94CCD342F
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 17:20:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13DD5CD3445
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 17:20:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLOsJ-0005aH-PM; Fri, 08 May 2026 13:20:31 -0400
+	id 1wLOsK-0005aM-LO; Fri, 08 May 2026 13:20:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wLOsD-0005ZE-5A
- for qemu-devel@nongnu.org; Fri, 08 May 2026 13:20:25 -0400
+ id 1wLOsE-0005ZO-9y
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 13:20:27 -0400
 Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.macarthur@linaro.org>)
- id 1wLOs8-0002Jb-9A
- for qemu-devel@nongnu.org; Fri, 08 May 2026 13:20:23 -0400
+ id 1wLOs8-0002Jl-A7
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 13:20:25 -0400
 Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4896c22fcbaso20939895e9.0
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 10:20:17 -0700 (PDT)
+ 5b1f17b1804b1-4852b81c73aso19581365e9.3
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 10:20:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1778260817; x=1778865617; darn=nongnu.org;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Sj83pQ1FvTLzFDLi7fANMNJBNhCHQLFTCbga/AJf4eU=;
- b=aM+5BZVBEqYyPl/ihSc5lYVWP2extbOg7PKAwNwuR+jZ4SqD1yob1qtey4CM3kypoi
- QE6WR+A9e+7yQI4q4jem03ww1eKXI0aC1rLMWO8i9G+O25z+gXZKFSsdX7ltyEd7+JjH
- bKXOEWtaBxiMRQAixEEs4w0Ri5jNcarZ4chbTesW3ayM92NoNnXryo7FUBsrAXS1u2LN
- Xx07nLCtObu8Ubt4gUEYVbqNNPrurY+ToDiWv5a3mKQ0+IKtDC2SPfihO9gL9ONXMVC2
- zPACwIGf9AMvRrQ5hIl1RBoTsWBDkIuln5q9CAeZOql4ZGwWnHdG8pGfSxVF6WABITRA
- QXUw==
+ :reply-to; bh=BsbHoEJcJuoOcOaQjLPDPue9MZ/rjEaInQhqVEyJR4U=;
+ b=MJXHKi7EUAScPqctf0Fzyz4GEZDWob//4x8Fl22TykaGCpUvmg2IYZpICtyYp/k8i1
+ enWg0GB6STYfon9bC79AfgzyFFFZgCO03gMIvuXmBJBOkDP6CFvEXOSR7Q9yYQazgnP0
+ R7LozaJondmYilWro/4RoHGP6RdX0i+pOuzwSYvamMPFCUAq0MXFhNNvI92cxizVOjG1
+ q8awM8EbM4+/zPAN1fQvF/I/kohs8kidsJBTGJlP++XR4ui6wyo23tqtPM3Ac7l/mWps
+ Zzbz/SlejO8IcU6ZfXsueUmDGW5QT8F+gX8D1oUIIZweef6kG0pP2bB74YO4wGmrXZQ8
+ qOkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20251104; t=1778260817; x=1778865617;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=Sj83pQ1FvTLzFDLi7fANMNJBNhCHQLFTCbga/AJf4eU=;
- b=LNe+gpAzYKWbQNqkXMGPqgyl7J4mvDaY0mIFGGFzGQp138UnwXMVZzW6Va5K5aPJBV
- nCH8i51EhiBmBmZoyggxkcqYWQKKvPdgDT0QfyT8Sy1/9PkfB96xQnTngNYcxULHTbEx
- 1st+pA1vCaLHX+rIOzHou90ksI2zo+GQfKRIc/uv2AxRb/JXuyZJmcZlfGdX/nVeIARP
- xUyPQbikPN38FvejO5iucd6ve4RQkieafLVmxny81Ypdhn7ijHzbI+vpjTbpPXDyH1kf
- EDNQeYgOFJ04XDT5rMGyTpRGOnP8WQUF40rpIOR5fr/gkwzQbRWDHPIhXka1V6wgS2j1
- 6MmA==
-X-Gm-Message-State: AOJu0YzYYNigkvDCNAsgeTbelyqMPpQ5NHqwQGwwqrV+/mbj5A4iVFMd
- apgKOz6wVSRUGPXh/YotEAK31+I8EgXNg4ix1HERsbBXf0iXp0zGJLrT7ImjrfaOduzQjh95yYI
- 64WdO
-X-Gm-Gg: AeBDievkSOBuyb0JuPdfxlzE9oGMWVmccEfGnubpHdlRx3wRDYquvmg+73tRV8pEDCC
- 8rI8UQkb5y+jym5EsIHaAoKkz3TaeNghHMlrlNgEnSveYN+SzApPwC5Eban6hT0KYkB8LlsPYJR
- drkjJZezq35FP6JdD8FAvl2KLSG9GXguSdI2erDq/MJ2y3zbFriEx9Ik+EbB0l3VDpOutmOMQlf
- a7LA9Um9y/lTgpOHhf98u6QlsPKjWrrBo7GK8grBK0seZeqtkq40Bl/eO+HepOIJT/4O0V3zfFa
- +MMmdhMQCORHRF3joM8gJ0rD/2rT/MUwxs76ELAa09tTlyecPIWUHQaRKcTXuMWV4g255FixJDi
- LApJX2805upvTeM7EiZ6xLwY5H/RC47Xstui6v4RkIVj658VTGApE8nthbHj4fV5l80Nntm/4IP
- xnHHQNDecoKS+CNwJLvqZVToFSwGg=
-X-Received: by 2002:a05:600c:3b17:b0:48a:568f:ae8a with SMTP id
- 5b1f17b1804b1-48e51e1a870mr206847285e9.8.1778260816472; 
+ bh=BsbHoEJcJuoOcOaQjLPDPue9MZ/rjEaInQhqVEyJR4U=;
+ b=IVPLC0ka8d44Z8Ci4vlhczog1pOlKUDKRffNN8aygUjrlG/1ljxyhAmxjUNu/FT1tK
+ Ls+9EXnuUzqhY/Qo5dpSOU2EZcmNHmOw1t+/6StjZEhpROWp+IReDgPwYRzF1/8UNjZa
+ rfnnfaKbSI797rtmYQU+oDW9QopXsQOmheBQVWy1WLP1AE7e5yU9oF/fcI+48EOB5o2u
+ Do7VE6qSWMfkix6xxYCtofuwy+zHRITIFYBkXL8qyxz8iFGtivNhS3Kh3j2RKoq60frG
+ jseJV712oi6oizAF+xeuR6do3tZWxKrGf0sfawlWD36is3yfQInLge4j6NEcw/bxOE6A
+ UgVg==
+X-Gm-Message-State: AOJu0YyHZIptvW7IkChj8R48YrBBOgyOOcAbDTS+Q1S7LEmI3dBtvY1J
+ 7uDMG4BmlytZXhkAm2ChYRoTewgeXAS/Jdjnz5BTvBQUvQTIhUxEt6tFdQGL6YDXNJpxe27dTvI
+ knTjG
+X-Gm-Gg: AeBDietJtUlIuiYRhz2fR7umM4od41MCLqyHlKIidOkEF+ZsuH51QcmMfkIXihtCfYT
+ lm4WGDjXVINOxW8O/RIb7kGyyDPRbSvDUsNK+hW9Jbp85MUz2XDeVAlZXBEF5x/pMPyVtX4AQGR
+ 7YASRfBSDxp7+H+Y1r892WmzXJsM4P4X4iAfq2uHPbQyPNRUVYzRpY2gMmceJoGS33wNfzh5FQw
+ T4wr+VGtvzrOOtvB/bMGoamT04mZCsV9lRn7wyEhaNP/9s8LITSBo/qzzGoVVDXC+y7zvBWvuKk
+ HI0d7ySBzaIJ8/x+jsvNDL0HfFzdqvQoF57y0eBM3OHjasXLzpUFyg3GPBAqgZcepFrhodVQnL5
+ 5INQt2ziR8OieFZwZkk0Mf5k3HEdgtnIRTugLyPY3aVbt2slWemHZ1LxNbujMMYZETvkGnUEKB9
+ sCC5IQ+z3El6369IAC+p0uRgMNr72Iy4yMjEDhjw==
+X-Received: by 2002:a05:600c:3548:b0:487:1108:48b8 with SMTP id
+ 5b1f17b1804b1-48e51e0a60fmr205763315e9.2.1778260816967; 
  Fri, 08 May 2026 10:20:16 -0700 (PDT)
 Received: from [127.0.1.1] ([2a10:d582:31e:0:e47d:4cf0:1918:bbbd])
  by smtp.gmail.com with ESMTPSA id
@@ -65,12 +65,12 @@ Received: from [127.0.1.1] ([2a10:d582:31e:0:e47d:4cf0:1918:bbbd])
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Fri, 08 May 2026 10:20:16 -0700 (PDT)
 From: Jim MacArthur <jim.macarthur@linaro.org>
-Date: Fri, 08 May 2026 18:20:13 +0100
-Subject: [PATCH 2/3] altvec.S: Alternative vector table for aarch64 testing
+Date: Fri, 08 May 2026 18:20:14 +0100
+Subject: [PATCH 3/3] gpc-test.c: Basic test for granule protection check.
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260508-jmac-gpctest-v1-2-e57e42c87e1e@linaro.org>
+Message-Id: <20260508-jmac-gpctest-v1-3-e57e42c87e1e@linaro.org>
 References: <20260508-jmac-gpctest-v1-0-e57e42c87e1e@linaro.org>
 In-Reply-To: <20260508-jmac-gpctest-v1-0-e57e42c87e1e@linaro.org>
 To: qemu-devel@nongnu.org
@@ -101,165 +101,165 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sets up a potential replacement vector table which will record
-and ignore certain types of exception. Indicative values are
-recorded in 'exception_log'. Most exception types are handled
-in the same way as the table in boot.S.
+* Sets up granule protection tablers
+* Installs the alternative vector table
+* Enables GPC
+* Performs memory accesses in the protected region to
+  check for allowed and disallowed reads.
 
 Signed-off-by: Jim MacArthur <jim.macarthur@linaro.org>
 ---
- tests/tcg/aarch64/Makefile.softmmu-target |   2 +-
- tests/tcg/aarch64/system/altvec.S         | 129 ++++++++++++++++++++++++++++++
- 2 files changed, 130 insertions(+), 1 deletion(-)
+ tests/tcg/aarch64/Makefile.softmmu-target |   5 ++
+ tests/tcg/aarch64/system/gpc-test.c       | 125 ++++++++++++++++++++++++++++++
+ 2 files changed, 130 insertions(+)
 
 diff --git a/tests/tcg/aarch64/Makefile.softmmu-target b/tests/tcg/aarch64/Makefile.softmmu-target
-index f7a7d2b800..60c65f4969 100644
+index 60c65f4969..90630e95dc 100644
 --- a/tests/tcg/aarch64/Makefile.softmmu-target
 +++ b/tests/tcg/aarch64/Makefile.softmmu-target
-@@ -8,7 +8,7 @@ AARCH64_SYSTEM_SRC=$(AARCH64_SRC)/system
- VPATH+=$(AARCH64_SYSTEM_SRC)
+@@ -71,6 +71,11 @@ QEMU_EL2_MACHINE=-machine virt,virtualization=on,gic-version=2 -cpu cortex-a57 -
+ QEMU_EL2_BASE_ARGS=-semihosting-config enable=on,target=native,chardev=output,arg="2"
+ run-vtimer: QEMU_OPTS=$(QEMU_EL2_MACHINE) $(QEMU_EL2_BASE_ARGS) -kernel
  
- # These objects provide the basic boot code and helper functions for all tests
--CRT_OBJS=boot.o
-+CRT_OBJS=boot.o altvec.o
- 
- AARCH64_TEST_C_SRCS=$(wildcard $(AARCH64_SYSTEM_SRC)/*.c)
- AARCH64_TEST_S_SRCS=$(AARCH64_SYSTEM_SRC)/mte.S
-diff --git a/tests/tcg/aarch64/system/altvec.S b/tests/tcg/aarch64/system/altvec.S
++# gpc-test needs EL3 and RME
++QEMU_EL3_MACHINE=-machine virt,virtualization=on,secure=on,gic-version=3 -cpu max,x-rme=on
++QEMU_EL3_BASE_ARGS=-semihosting-config enable=on,target=native,chardev=output,arg="3"
++run-gpc-test: QEMU_OPTS=$(QEMU_EL3_MACHINE) $(QEMU_EL3_BASE_ARGS) -kernel
++
+ # Simple Record/Replay Test
+ .PHONY: memory-record
+ run-memory-record: memory-record memory
+diff --git a/tests/tcg/aarch64/system/gpc-test.c b/tests/tcg/aarch64/system/gpc-test.c
 new file mode 100644
-index 0000000000..079846b639
+index 0000000000..fae754a56c
 --- /dev/null
-+++ b/tests/tcg/aarch64/system/altvec.S
-@@ -0,0 +1,129 @@
++++ b/tests/tcg/aarch64/system/gpc-test.c
+@@ -0,0 +1,125 @@
 +/* SPDX-License-Identifier: GPL-2.0-or-later */
 +/*
-+ * Alternative AArch64 vector table. Can replace the vector table
-+ * in boot.S and record & ignore some exceptions in exception_log.
-+ * Maintains the semihosting error print and exit for most
-+ * exceptions.
 + *
-+ * Copyright Linaro Ltd 2026
++ *
++ * Copyright (c) 2026 Linaro Ltd
 + *
 + */
 +
-+#define semihosting_call hlt 0xf000
-+#define SYS_WRITE0	0x04	/* string to debug channel */
-+#define SYS_EXIT	0x18
-+	.align	12
++#include <stdbool.h>
++#include <stdint.h>
++#include <minilib.h>
 +
-+	.macro	ventry	label
-+	.align	7
-+	b	\label
-+	.endm
++#define ID_AA64PFR0_EL1 "S3_0_C0_C4_0"
 +
-+	.global alt_vector_table
-+alt_vector_table:
-+	/* Current EL with SP0.	 */
-+	ventry	curr_sp0_sync		/* Synchronous	*/
-+	ventry	curr_sp0_irq		/* Irq/vIRQ  */
-+	ventry	curr_sp0_fiq		/* Fiq/vFIQ  */
-+	ventry	curr_sp0_serror		/* SError/VSError  */
++#define GPCCR_EL3 "S3_6_C2_C1_6"
++#define GPTBR_EL3 "S3_6_C2_C1_4"
 +
-+	/* Current EL with SPx.	 */
-+	ventry	curr_spx_sync		/* Synchronous	*/
-+	ventry	curr_spx_irq		/* IRQ/vIRQ  */
-+	ventry	curr_spx_fiq		/* FIQ/vFIQ  */
-+	ventry	curr_spx_serror		/* SError/VSError  */
++#define VBAR_EL3 "S3_6_C12_C0_0"
 +
-+	/* Lower EL using AArch64.  */
-+	ventry	lower_a64_sync		/* Synchronous	*/
-+	ventry	lower_a64_irq		/* IRQ/vIRQ  */
-+	ventry	lower_a64_fiq		/* FIQ/vFIQ  */
-+	ventry	lower_a64_serror	/* SError/VSError  */
++#define get_sys_reg(register_name, dest) \
++        asm("mrs %[reg], " register_name "\n\t" : [reg] "=r" (dest))
++#define set_sys_reg(register_name, value) \
++        asm("msr " register_name ", %[reg]\n\r" : : [reg] "r" (value))
 +
-+	/* Lower EL using AArch32.  */
-+	ventry	lower_a32_sync		/* Synchronous	*/
-+	ventry	lower_a32_irq		/* IRQ/vIRQ  */
-+	ventry	lower_a32_fiq		/* FIQ/vFIQ  */
-+	ventry	lower_a32_serror	/* SError/VSError  */
++extern void alt_vector_table(void); /* From altvec.S */
++extern volatile uint64_t exception_log[]; /* From altvec.S */
++extern uint64_t realms_gpt0[]; /* From boot.S */
++extern uint64_t realms_gpt1[]; /* From boot.s */
 +
-+	.text
-+	.align 4
++const uint32_t gpc_granule_size = 4096;
++const uint32_t gpis_per_64_bits = 16;
 +
-+curr_spx_sync:
-+	sub     sp, sp, #16
-+	stp     x0, x1, [sp, #0]
-+	mrs     x0, ESR_EL3
-+	lsr 	x0, x0, #26
-+	and 	x0, x0, #0x3f
-+	cmp 	x0, #37
-+	beq 	data_fault
-+	cmp 	x0, #30
-+	beq 	gpc_fault
-+	b       generic_exception
++int main(uint64_t sp)
++{
++    uint64_t out;
++    uint64_t pfr0;
++    uint64_t gpt_base;
++    uint64_t rme_status;
++    uint64_t currentel_raw;
++    uint64_t currentel;
++    uint64_t gpt_table0_addr = (uint64_t) realms_gpt0;
++    uint64_t gpt_table1_addr = (uint64_t) realms_gpt1;
 +
-+data_fault:
-+	mrs     x0, FAR_EL3
-+	adrp    x1, exception_log
-+	str     x0, [x1]
-+	ldr     x0, =0x1001
-+	str     x0, [x1, #8]
-+	b       skip_return
-+gpc_fault:
-+	mrs     x0, FAR_EL3
-+	adrp    x1, exception_log
-+	str     x0, [x1]
-+	ldr     x0, =0x1002
-+	str     x0, [x1, #8]
-+	/* Fall through */
-+skip_return:
-+	mrs     x0, ELR_EL3
-+	add     x0, x0, #4 /* Skip faulting instruction */
-+	msr     ELR_EL3, x0
-+	ldp     x0, x1, [sp, #0]
-+	add     sp, sp, #16
-+	eret
-+curr_sp0_sync:
-+curr_sp0_irq:
-+curr_sp0_fiq:
-+curr_sp0_serror:
-+curr_spx_irq:
-+curr_spx_fiq:
-+curr_spx_serror:
-+lower_a64_sync:
-+lower_a64_irq:
-+lower_a64_fiq:
-+lower_a64_serror:
-+lower_a32_sync:
-+lower_a32_irq:
-+lower_a32_fiq:
-+lower_a32_serror:
-+generic_exception:
-+	adr	x1, .unexp_excp
-+exit_msg:
-+	mov	x0, SYS_WRITE0
-+	semihosting_call
-+	mov	x0, 1 /* EXIT_FAILURE */
-+	bl 	_exit
-+	/* never returns */
-+print_debug_msg:
-+	mov	x0, SYS_WRITE0
-+	semihosting_call
-+	ret
-+_exit:
-+	mov    x1, x0
-+	ldr    x0, =0x20026 /* ADP_Stopped_ApplicationExit */
-+	stp    x0, x1, [sp, #-16]!
-+	mov    x1, sp
-+	mov    x0, SYS_EXIT
-+	semihosting_call
++    /* Mask is FNG1, FNG0, and A2 */
++    const uint64_t feature_mask = (1ULL << 18 | 1ULL << 17 | 1ULL << 16);
++    const uint64_t in = feature_mask;
 +
++    get_sys_reg("CurrentEL", currentel_raw);
++    currentel = (currentel_raw >> 2) & 0x3;
 +
-+	.section .rodata
-+.unexp_excp:
-+	.string "Unexpected exception (via alternative handler).\n"
++    if (currentel < 3) {
++        ml_printf("FAIL: Test must be run at EL3 (it is %d)\n", currentel);
++        return 1;
++    }
 +
-+	.data
-+	.align 8
-+	.global exception_log
-+exception_log:
-+	.space 128, 0
++    get_sys_reg(ID_AA64PFR0_EL1, pfr0);
 +
++    /* rme_status is 1 for RME, 2 for RME + GPC2, 3 for RME+GPC3 */
++    rme_status = (pfr0 >> 52) & 0xF;
++    ml_printf("RME is %ld\n", rme_status);
++    if (rme_status < 1) {
++        ml_printf("SKIP: System does not support GPC (RME=%ld)\n", rme_status);
++        return 0;
++    }
++
++    /* Configure the level 0 table for the first 4GB of memory */
++    realms_gpt0[0] = gpt_table1_addr | 0x3; /* Covers GB 0; table descriptor */
++    realms_gpt0[1] = 0xf1; /* Covers GB 1; full access */
++    realms_gpt0[2] = 0xf1; /* Covers GB 2; full access */
++    realms_gpt0[3] = 0xf1; /* Covers GB 3; full access */
++
++    /* Install new vector table */
++    set_sys_reg(VBAR_EL3, alt_vector_table);
++
++    /* Pick a random location to read inside the first 1GB. */
++    uint64_t fault_location = 0x10202008;
++    uint32_t gpi_index = fault_location / gpc_granule_size;
++    realms_gpt1[gpi_index / gpis_per_64_bits] = 0;
++
++    gpt_base = gpt_table0_addr >> 12;
++    set_sys_reg(GPTBR_EL3, gpt_base);
++
++    /*
++     * Default values:
++     * PPS=0:     GPC table 0 protects 4GB.
++     * RLPAD=0:   Realm physical address spaces are normal
++     * NSPAD=0:   Non-secure physical address spaces are normal
++     * SPAD=0:    Secure physical address spaces are normal
++     * IRGN=0:    Inner non-cacheable
++     * ORGN=0:    Outer non-cacheable
++     * PGS=0:     Physical granule size is 4KB.
++     * GPCP=0:    All GPC faults reported
++     * TBGPCP=0:  Trace buffer rejects trace
++     * L0GPTSZ=0: Each entry in table 0 protects 1GB.
++     * APPSAA=0:  Accesses above 4GB must be to Non-secure PAs
++     * GPCBW=0:   Bypass windows disabled.
++     * NA6, NA7, NSP, SA, NSO are all reserved values for GPI.
++     */
++    uint64_t gpccr = 0;
++
++    /* Switch on granule protection check */
++    gpccr |= 1 << 16; /* GPC enabled. */
++    gpccr |= 0b10 << 12; /* SH = Outer shareable */
++    set_sys_reg(GPCCR_EL3, gpccr);
++
++    /* Access some memory outside the GPC forbidden region */
++    uint64_t x = *(unsigned int *) (fault_location + 4096 * 16);
++    ml_printf("Fault address: %lx\n", exception_log[0]);
++    if (exception_log[0] != 0) {
++        ml_printf("FAIL: Memory access was blocked by GPC, "
++                  "and should not have been\n");
++        return 1;
++    }
++
++    /* Access the GPC forbidden region */
++    x = *(unsigned int *) fault_location;
++
++    ml_printf("Fault address: %lx\n", exception_log[0]);
++    if (exception_log[0] != fault_location) {
++        ml_printf("FAIL: Memory access was not blocked by GPC, "
++                  "and should have been\n");
++        return 1;
++    }
++    return 0;
++}
 
 -- 
 2.43.0
