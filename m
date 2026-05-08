@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8C51CD3436
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 09:57:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 457FFCD3436
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 09:58:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLHwz-0001DL-9z; Fri, 08 May 2026 05:56:53 -0400
+	id 1wLHyb-0001e3-Gg; Fri, 08 May 2026 05:58:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLHwx-0001AJ-Ce
- for qemu-devel@nongnu.org; Fri, 08 May 2026 05:56:51 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLHya-0001dl-8j
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 05:58:32 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLHwv-0000o0-OV
- for qemu-devel@nongnu.org; Fri, 08 May 2026 05:56:50 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-488d2079582so19928185e9.2
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 02:56:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1wLHyY-0001I7-PK
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 05:58:32 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-44a74032ff8so1354630f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 02:58:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778234208; x=1778839008; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778234309; x=1778839109; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=74+fb6cgdhAX/dx9SbGHHaxeocGSsLVOWi4uBTvlprY=;
- b=AaS3FZe8k5qjBr81tJ+QpeVSlEjy7J3ei9tyUk8xetP6rqOwLNcLdAWK3aRfaVindy
- OTJIM18836FOxz+KV8W8LSjeV91pjLiFnf0wapdCaxK5DjnOvliO9L4hM90+CUiJgI5X
- 2tBz3ThkPQKKt7wJcx+POOhZtHkLSmMG720BvFx+2uZ8LT+gEN/rWVJetZDDAoRMCmQ5
- qd2cn/zGta/SaJE157d3sasgTLnIw6OjRYN4N6wwxGe0Ptbk+OGnq8rTXmd2XmiGWthb
- ftbF1Hj+7KHLP58uNYbA+QWnYTL29abAPr7Kfd9dYI+2UgZTje6eNJsaRiIjLh9vp/UG
- WulA==
+ bh=QfbK2VF0E2TRM4xm7ql7n4x7T93/X5Bwha9wgCMZVCc=;
+ b=ZVrHXyaLq+GrTMCfgBhe6WWuRGN3Q2ieevzRlj1YgoEmEElatx1vAWoQhhQo/QvhP9
+ +zWspcCUFi+CLT+RIed9z6CAUhBVsHrfUwsvxsT9NYlrWZGmjCqgpZXxSxRI/sbkE6pS
+ 3BD9+WzGFozhr1g4pJcWgMY0YTmy+c3kxYQRCccNJYbvde1HmqSAvdqBtYX3fqA4+Ikn
+ 6MYM6ZAMhWXaQqq5yACgPXO9hsRzyQ6uepbKTIGWJxbC/1voEyZUptpG+G1ecct7wJ07
+ qbF8On0Abmm2KNyEW5IQ2zAD++hvB2rZxc3pdNh3d7w1F9WYcrrESJVDUdpALD/czx1k
+ O6oQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778234208; x=1778839008;
+ d=1e100.net; s=20251104; t=1778234309; x=1778839109;
  h=content-transfer-encoding:in-reply-to:from:references:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=74+fb6cgdhAX/dx9SbGHHaxeocGSsLVOWi4uBTvlprY=;
- b=n3+BP2zjvfz0RFXyxEY9KUoncF774Se8yI9u5ts4qjgfSnc2sIt6p1sfZvccxvrvre
- 2sDB8oaPWRVxabp6fUiChWDUE3e8jQLoekSjVZ8QoTh2dTZOYxJ8hJPO+MFyvy3lSMAw
- G9N4lteVeGs0bnRzMcRLifbGfQr68np/qGs68w+ydLFz2/wxCKYhisxntBMTWuqTcmqz
- 1LSNN/vuZYaOGmHaE+Pq6zyGHnxnnh+9HE3uLej2deG4VO9xTY0ZWRRNJXw3BgG8Rwf6
- 6m3ASaK1EWh6Y/zYKQkXiiDuw+1GUJxW+kr5wPc+40a/IsAv4Wm4qfY/0xNqeKZuWknQ
- PmyQ==
+ bh=QfbK2VF0E2TRM4xm7ql7n4x7T93/X5Bwha9wgCMZVCc=;
+ b=KAAJyzZlUbi5DT3FMZ0U4P+WLllL3YTfGMNIAaphzeTIlcg9jdfoWEyYu6prevr+3j
+ 2O18fPw5+lZyW76KgLERJEOj38GnNPkuRIfmL3cw5h5IDitUn+Bi+6NZQVkvwgmwQOSg
+ /NNqiLKbjRsFvwDYl67o8DVdfZrOgi7Vo1/ioldP/BccLmhC6Rg7HfuH3vlXN64ofIiO
+ OTco/eaIQcCz72DcHQScVe2yePEMMv4N1gQI/XNQHAhwMu7Ud7hDTi7jXNlcE+7IDVQW
+ t45DqcFrcSrFN9hLCzHuWDUuAssozyGKdoa2Q4uEdWQ7GKs36fqdIJyFIa+28WsRSB51
+ GsXg==
 X-Forwarded-Encrypted: i=1;
- AFNElJ9edWpTK8Rya7Zznsk/5OrZ5BOXVrQ8acXChCTyVjXRpaSaD0czb+sdSLlsxprpiX/7XMH4+KkJ8PT/@nongnu.org
-X-Gm-Message-State: AOJu0YzNFhn38BSYAz+3meWSz5woMK3ZgS48NjuAfkp9LDvNtixBUKy6
- SmmZ0byRtzHa40Twa4/FmzuiH16PqbXE4QuqXev49HDOp9Iie7KjQNkTv6/LW7Atem4=
-X-Gm-Gg: AeBDieswyRqhHF+w86+ssoz3rOq9qvJpPE8GTy9a7j6gMqAaun2Dz0zkX1BZUVGWZM7
- 4opxS1dCdkGFdJcFE+8OjbCNfGY+M4/BwZfokXKt3KU/pFwO/qP+nHZu66TmuZbR9DJPsbZ1OcU
- bbX6ET4WoXuaJgew6nO2SiCFpl3PgBRjrFgrqCCxioYmsB+ioSwCa2GlHb/KdI4RWzFjhlYt2QL
- CaCblWZImWebzPTV7TWRMLtsChOwwPlaVxUqMX5aOX/lAAhWWm/mG3oTPWMspYhYdV9iYTxvQAd
- hafUcLuweLUUjoSECUoS3xU4UhJAjw0GW+uW6VbOLDTfRLa0WPGKWLpGTtqFjQYDru5IlBEnqO0
- n/TYMeXtoE0sp2KkMxj12C6gZmbMGlbaRCK6sJ8r65WrtpV8HbS+PrmD8Cl6IpH86Zb7kbzkJ/f
- e3mDMpb72F4XAg2zVvp/JqWWKtPZvGof1CSiXtWk/YOD1Y5SOzI4ru9BKYId61g0yilw5iGQ==
-X-Received: by 2002:a05:600c:3ba7:b0:48a:7772:c26b with SMTP id
- 5b1f17b1804b1-48e51f40884mr201235685e9.26.1778234207807; 
- Fri, 08 May 2026 02:56:47 -0700 (PDT)
+ AFNElJ/d354IiG3W/MZIbVgIXa6RzS8mPjG7cGT9gWpNdKpdyA6Ra3VNtYSogEocXw8H2MzFxUPCl6OpcjrM@nongnu.org
+X-Gm-Message-State: AOJu0Yyk78od9VyskL0pfDuBsKQHtTq1zmM9JRPSqFs9UDzZiBEm1WPF
+ b5VVSXEwl43wb+0U6aVnukJWKBpjgGNor4Lk+0kGXvww6QUxyjlkmrXLWrITBegv4K4=
+X-Gm-Gg: Acq92OHYP4b3ZYHghm+1AeyCKfnD9NzWOXORwtSgK7YjZ7iCX5XqUfCHdNPzwHPf314
+ 6Zcs2Yd+BQDUK1ttr9LPmY4WxK0O5WmhQwS2kLOCyzmT6Umj6h5bZQxrW/1bi6f0zmMxKz/CGeA
+ /YFJTGO8snE0Dg4bKxzfz3tsubv3aqT3LcbsIrmFoixXzR3yTLCp1EhHGEQgLh20mCm5lZXpGkA
+ 8xFImWILJiYT/QSb+d7DVxoad1I2lrjbTbqzqhrYYP5n+tshOt78yxMVni2vWprQleAVwDQuHLX
+ dT0wwQYJr1iyW3uTOgGF92gpDjiuxV83ip47KgqHqjnFc6pcbheYmRw6uTLGTx5vYKlVI94RJYj
+ Y0DmKMTfgqIzVvZTc8cEjIoPxCy9IaSxnhpO6ZYcDyAZPo4L22W/4iHE/K5KwpSWIukSC/WyVGY
+ IzmnGZF2D2Cm1wDXJAJVCMRrK5qROTIu/UzahDvsf5IXFb9mXYD5VfGec4u28fEmhIOdbseA==
+X-Received: by 2002:adf:e649:0:b0:452:712a:91e with SMTP id
+ ffacd0b85a97d-452712a096fmr10617803f8f.2.1778234308666; 
+ Fri, 08 May 2026 02:58:28 -0700 (PDT)
 Received: from [192.168.0.200] (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48e68edca90sm49045105e9.5.2026.05.08.02.56.46
+ ffacd0b85a97d-4548e4bb87bsm3181968f8f.2.2026.05.08.02.58.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 08 May 2026 02:56:46 -0700 (PDT)
-Message-ID: <17657acd-42e1-40c1-b604-4d3b6ce57e3e@linaro.org>
-Date: Fri, 8 May 2026 11:56:46 +0200
+ Fri, 08 May 2026 02:58:28 -0700 (PDT)
+Message-ID: <5df68871-f226-4c37-8baf-d8eadfaf7239@linaro.org>
+Date: Fri, 8 May 2026 11:58:27 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/18] fpu: Reorg float_status
+Subject: Re: [PATCH 13/18] fpu: Use accessors for ftz_before_rounding
 Content-Language: en-US
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 References: <20260507221717.486023-1-richard.henderson@linaro.org>
- <20260507221717.486023-19-richard.henderson@linaro.org>
+ <20260507221717.486023-14-richard.henderson@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260507221717.486023-19-richard.henderson@linaro.org>
+In-Reply-To: <20260507221717.486023-14-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,12 +103,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 8/5/26 00:17, Richard Henderson wrote:
-> Use bitfields to compress float_status from 18 bytes down to 8 bytes.
+> Drop FloatFTZDetection and use #defines, like we do for
+> tininess_before_rounding.  Rename get_float_ftz_detection
+> to get_ftz_before_rounding and move to softfloat.c, as
+> there are no external users.
 > 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/fpu/softfloat-types.h | 53 ++++++++++++++++++++++-------------
->   1 file changed, 33 insertions(+), 20 deletions(-)
+>   include/fpu/softfloat-helpers.h | 10 ++--------
+>   include/fpu/softfloat-types.h   |  8 +++-----
+>   fpu/softfloat-parts.c.inc       |  5 ++---
+>   fpu/softfloat-specialize.c.inc  |  5 +++++
+>   4 files changed, 12 insertions(+), 16 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
