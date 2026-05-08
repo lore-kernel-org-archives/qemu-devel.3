@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07801CD37AD
-	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 15:25:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43315CD3445
+	for <qemu-devel@archiver.kernel.org>; Fri,  8 May 2026 15:25:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLN48-0000pX-Op; Fri, 08 May 2026 11:24:36 -0400
+	id 1wLN4E-0000rp-Mj; Fri, 08 May 2026 11:24:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wLN47-0000oY-15
- for qemu-devel@nongnu.org; Fri, 08 May 2026 11:24:35 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ id 1wLN4A-0000qQ-2A
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 11:24:38 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1wLN45-0005Nl-A1
- for qemu-devel@nongnu.org; Fri, 08 May 2026 11:24:34 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-448528f4e69so1409623f8f.3
- for <qemu-devel@nongnu.org>; Fri, 08 May 2026 08:24:32 -0700 (PDT)
+ id 1wLN48-0005QL-Bm
+ for qemu-devel@nongnu.org; Fri, 08 May 2026 11:24:37 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-488a9033b2cso20490525e9.2
+ for <qemu-devel@nongnu.org>; Fri, 08 May 2026 08:24:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1778253871; x=1778858671; darn=nongnu.org;
+ d=linaro.org; s=google; t=1778253874; x=1778858674; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Mdv7iLUiyYux6vdv4F7nLiGDM9BvBEVURyYAlirext4=;
- b=zsRysIr/Sw0DVvIiRke/t5ybsNV4gac2uQPmHCxgK0fD/6jRE8hsaTiT7WwuznANeX
- Va983L11ine/zYmTKrsYoDZVO+h7ajY3I9NycNtRQKGC5KuNzEnyevNg5DV8wAiU6VWj
- xA3Fd3w8VwzWkQ0FmQeMl030rFNOSuMoPwzkkWAtHorK9YgMyvlR8MpQqGkJ9yvbdeZt
- gx0ofPrmrN4H+WgwNpfR9+QopqBb2evCXEuIiOoOyFoDS5OWEn56OQKrL6nYdkP/J2Ot
- hVlN86zuGVratCY8OSFV/1g4RgiY6tCRKAC3lLXNc1UwX20/B6SZkRqqASQB5TwomTxi
- 50Yw==
+ bh=mK5ez33lVuPxUlgcUB4M6u/BjlmFJ+0FTK3XgrLB+B8=;
+ b=JRkZeR9AkH1uB6ZfrUP30ZaY2eUInsuplolDCGrHxkB8/B2VSkED/VXQmPPqFxYH3+
+ Rt2IDhwAJL1wvcBXDsL6csDyA4sUdOowaRQ8JznX/Ybd/+ICAYuXnxQWm6TK607JuWzd
+ JKZYjxdhJFiJilZA+s2/NB/o3sZnkA6vslOuBpnq5idQ3vLtpt0wjNZrP820YW1+iu60
+ wEucHRppmY2kS8x0v5+fx+YUWw1hibqTOnvq2Ag7AOcDxL8F7iD7XU579ZcIBw6oH0I5
+ 92+SVkBDZzyb1kgQWRzdVD6qQnnZJshNu3ahBLj7QQXI6kgMVcWNbxc3Y7gCCDYPJod/
+ cB7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1778253871; x=1778858671;
+ d=1e100.net; s=20251104; t=1778253874; x=1778858674;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Mdv7iLUiyYux6vdv4F7nLiGDM9BvBEVURyYAlirext4=;
- b=SRXcdg6b3EoId4JC72TYjaWeIiBZItPN60MnkcSLQAf+1cxqOkl7BCQ84mTuURurMy
- mSYXEbb09aSkKQfPHs3vwxW3nLzu4QJrUcgEFFPI22eJYnw2hZ4W3VF93QwbP5vrQqRG
- N0F681sb9IGxMjAujT/nCSg0XwBxhXRSsfxgtGyh7tXKwgmjBbHvIsLK02IddFxz6j/h
- 8lz3463GKgEeCcbo1SRAWxwbitTe5vPn1i/rZTAceh763nEnYNMfLHKfeCp6xFgwe3xA
- eiazUXiZWshvYQJ/KDXIpUEf6lPRdCM9yl/hAR2YP055LS4nGQ3uRHFtW9g8uNoBBAY7
- 5atQ==
-X-Gm-Message-State: AOJu0YxyVNNF8GRGup6iamsj6cqyYjz6lW7kPg67W1RmlJhfZQ8B8M/4
- ow89OU0sx3TvSiCR/5ccd7nzgCXAJ2W3BsfAHEvTFRyH4J/r4SPH/gpPOBbOUsPbSTvtEtORko5
- +27Fy
-X-Gm-Gg: Acq92OFqt2iRP3GbsQmg64al/bLwWS1eXjx0NNvEr91bfOCSlPTuexrtppiRhnWKqrH
- 5hZnr0XcXi8jdPOXzD5QQUa4R97vGClTpCT0Z0MiKWXo3Efe35l9q5xqyTYJZRzVvz2ZnQmSyTg
- hzaQaUDqbP6KfY4dmYcVGoKZof0LEGq2XBhMZNVfQ/YAJQJPbA8FcUAh3jElQNp6ossr/9oMPNe
- PW1gq01oDNPIR7ABWG3OwUuskHImkVFika7QzEewr+6W9bdaWYRZqgIk2d41Gp5h6kpvWKugtdl
- ocCCp0Kzrga+F7QYSsiB3x8cGtPfJwm0Nr1hgvZSj3m31cGaWo7QS3TICd2lL5hyGDMwskCqW3G
- dCh1410DoRpikHl9OaBIApCTTwGFHm2mAadFtAHRMaM3/4+zwhTQdLFQm5XlcfVl4y+402Ukn1R
- lE2OppQsXO7yDoGQKAiUqxh9PBsJzAuz5+hQou1WFESkMY+ghaNcn/jv2YVdy9X4I7LeYpwvKcd
- EImnv1a4RAKR67nRRyhwk8TWzmuPxU=
-X-Received: by 2002:adf:e00a:0:10b0:455:4695:92d9 with SMTP id
- ffacd0b85a97d-45546959361mr999866f8f.12.1778253870711; 
- Fri, 08 May 2026 08:24:30 -0700 (PDT)
+ bh=mK5ez33lVuPxUlgcUB4M6u/BjlmFJ+0FTK3XgrLB+B8=;
+ b=AdwL7SYGmBcAT8SjlrC3ZhiObrPG56UWwJIJNkl8Cti69PFu8j55niPEVUAwDeXssx
+ aAzpnDdZ3NUeq8GzNx6sJyz/HaBg9LtJV/p0x5hKOnJ74j45SU7qT/pKwlfgdmPUKTjp
+ QbNIkwZISmYnmPnR47c0sJlG7blogHMQiKr/n1KIWRhFeQCzPRi3gCWzNJxVD9BF+7zG
+ cMyOtkrdb0TVuyVLIZSa2stxWsOQ0vOKFUrnSDzG2wJFYZ3I5e8Q4h+/3xvzm3jUcXm9
+ 2Xyicu1R5eYTEsWKGhk9QG4D+U+kf3AS3hxeV93qSMmTdd3X4T9uz9675j/HWBYEcSvM
+ MyAg==
+X-Gm-Message-State: AOJu0YxMsbNrFB9uj8Qb3KsxQNJ2wiZTM9Db5GG6j20RdCYkFHjeiCh7
+ jVDsk2CHcPar0OwR0pygdFYbdfIVEEr2Nqa6zMG+ONvczVSaNTHvxNjBJeJS9dnsuxbKLxMte4g
+ nxrDB
+X-Gm-Gg: AeBDieublQoljnRw5poG7JeAIEKon0Sq/WPm177HLZTq8LTE5LkECzWSSvvH2xXV+2j
+ oCvaJ3L0S6npUQXtehsaJMCqd0Le5q7WjBwYeWJr6O6AZQLWNtuLqV8fC5JMsKwPTAqFWzkTEFu
+ Os5zeGDVXSPeTd0o9N18hf3F7CCm0ipzTlgvHtOU80ZdaCSbD8Zm7X41eLYj+HtSH4qH7hsFsgV
+ cIXx7s57giw8smY+ESu3PTSdCD9taJhFl87GQ4M59t8C+TUGgXYQuPLJiWkDQwXzwktEgKvlYTp
+ Li+zQag88UNc5nToaSKJa1huOAUn6YAUiCk8ElV7k+C9TLTE21+ZVaD2KrioU+kPOdJiQzxqd+v
+ SEoti0XcwxPaYRcPiIAXDY7HKdbAtMUHDIiS0ApMB80lbH8pBBhAL3knrgmanCmGT8vyovQNUgt
+ 2RqKawT3qJrcztXSt/0S9+ItuPljEKsk0Z53VHtC/1QpE01KGUzrXgO/p1OleGtG1Mx26M1j9FI
+ tr1q4+86sBUr3v+
+X-Received: by 2002:a05:600c:8485:b0:48a:58ae:9933 with SMTP id
+ 5b1f17b1804b1-48e51f32806mr208463295e9.18.1778253874565; 
+ Fri, 08 May 2026 08:24:34 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-4548ec6c221sm4940453f8f.13.2026.05.08.08.24.29
+ ffacd0b85a97d-4548ec6c221sm4940453f8f.13.2026.05.08.08.24.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 08 May 2026 08:24:29 -0700 (PDT)
+ Fri, 08 May 2026 08:24:33 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
@@ -78,16 +78,16 @@ Cc: Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Eric Blake <eblake@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Jason Wang <jasowang@redhat.com>
-Subject: [PATCH 1/9] ebpf: move ebpf skeleton source to ebpf/ directory
-Date: Fri,  8 May 2026 16:24:20 +0100
-Message-ID: <20260508152428.2648560-2-peter.maydell@linaro.org>
+Subject: [PATCH 4/9] tools: Move qemu-img sources to tools/ directory
+Date: Fri,  8 May 2026 16:24:23 +0100
+Message-ID: <20260508152428.2648560-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260508152428.2648560-1-peter.maydell@linaro.org>
 References: <20260508152428.2648560-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,38 +110,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently the code and makefile to regenerate rss.bpf.skeleton.h
-are in tools/ebpf/. This isn't really a good fit, because the tools/
-directory ought to be standalone tools of the kind that we build
-with configured with --enable-tools and document in docs/tools.
-
-Move it to ebpf/bpf-src with the rest of the ebpf code.
+Move the qemu-img source files into the tools subdirectory.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- {tools/ebpf => ebpf/bpf-src}/Makefile.ebpf | 2 +-
- {tools/ebpf => ebpf/bpf-src}/rss.bpf.c     | 0
- 2 files changed, 1 insertion(+), 1 deletion(-)
- rename {tools/ebpf => ebpf/bpf-src}/Makefile.ebpf (96%)
- rename {tools/ebpf => ebpf/bpf-src}/rss.bpf.c (100%)
+ MAINTAINERS                                | 2 +-
+ docs/tools/qemu-img.rst                    | 2 +-
+ meson.build                                | 4 ++--
+ qemu-img-cmds.hx => tools/qemu-img-cmds.hx | 0
+ qemu-img.c => tools/qemu-img.c             | 0
+ 5 files changed, 4 insertions(+), 4 deletions(-)
+ rename qemu-img-cmds.hx => tools/qemu-img-cmds.hx (100%)
+ rename qemu-img.c => tools/qemu-img.c (100%)
 
-diff --git a/tools/ebpf/Makefile.ebpf b/ebpf/bpf-src/Makefile.ebpf
-similarity index 96%
-rename from tools/ebpf/Makefile.ebpf
-rename to ebpf/bpf-src/Makefile.ebpf
-index 572ca5987a..7ed0e3b440 100755
---- a/tools/ebpf/Makefile.ebpf
-+++ b/ebpf/bpf-src/Makefile.ebpf
-@@ -21,4 +21,4 @@ clean:
+diff --git a/MAINTAINERS b/MAINTAINERS
+index cd53604f92..2ef9655c94 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3106,7 +3106,7 @@ F: qapi/block*.json
+ F: qapi/transaction.json
+ F: include/block/
+ F: include/system/block-*.h
+-F: qemu-img*
++F: tools/qemu-img*
+ F: docs/tools/qemu-img.rst
+ F: qemu-io*
+ F: tests/qemu-iotests/
+diff --git a/docs/tools/qemu-img.rst b/docs/tools/qemu-img.rst
+index 558b0eb84d..52466759d2 100644
+--- a/docs/tools/qemu-img.rst
++++ b/docs/tools/qemu-img.rst
+@@ -39,7 +39,7 @@ Standard options:
  
- %.skeleton.h: %.o
- 	bpftool gen skeleton $< > $@
--	cp $@ ../../ebpf/
-+	cp $@ ..
-diff --git a/tools/ebpf/rss.bpf.c b/ebpf/bpf-src/rss.bpf.c
+ The following commands are supported:
+ 
+-.. hxtool-doc:: qemu-img-cmds.hx
++.. hxtool-doc:: tools/qemu-img-cmds.hx
+ 
+ Command parameters:
+ 
+diff --git a/meson.build b/meson.build
+index d4c16b394e..5d34ea39ed 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3561,7 +3561,7 @@ genh += qemu_version
+ hxdep = []
+ hx_headers = [
+   ['qemu-options.hx', 'qemu-options.def'],
+-  ['qemu-img-cmds.hx', 'qemu-img-cmds.h'],
++  ['tools/qemu-img-cmds.hx', 'qemu-img-cmds.h'],
+ ]
+ if have_system
+   hx_headers += [
+@@ -4523,7 +4523,7 @@ endif
+ 
+ if have_tools
+   tools_link_args = enable_modules ? ['@block.syms'] : []
+-  qemu_img = executable('qemu-img', [files('qemu-img.c'), hxdep],
++  qemu_img = executable('qemu-img', [files('tools/qemu-img.c'), hxdep],
+              link_args: tools_link_args, link_depends: block_syms,
+              dependencies: [authz, block, crypto, io, qom, qemuutil], install: true)
+   qemu_io = executable('qemu-io', files('qemu-io.c'),
+diff --git a/qemu-img-cmds.hx b/tools/qemu-img-cmds.hx
 similarity index 100%
-rename from tools/ebpf/rss.bpf.c
-rename to ebpf/bpf-src/rss.bpf.c
+rename from qemu-img-cmds.hx
+rename to tools/qemu-img-cmds.hx
+diff --git a/qemu-img.c b/tools/qemu-img.c
+similarity index 100%
+rename from qemu-img.c
+rename to tools/qemu-img.c
 -- 
 2.43.0
 
