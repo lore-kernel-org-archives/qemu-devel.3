@@ -4,110 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE815CD3445
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 15:01:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A48B8CD3447
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 15:01:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLjAw-0007vQ-6y; Sat, 09 May 2026 11:01:06 -0400
+	id 1wLjBM-00088t-Pl; Sat, 09 May 2026 11:01:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wLjAm-0007q4-Fq; Sat, 09 May 2026 11:00:58 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1wLjAh-0006vU-W6; Sat, 09 May 2026 11:00:53 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 6493NdP93411261; Sat, 9 May 2026 15:00:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=QjloOb+q5WLlS8qC0maHbo/qgT+1Ak
- Ng3eE531UuxiI=; b=KhEQc56L5juZX0hp7XOGsCXRoyq7Do4KYVzIWFPpul9pwP
- Dind4fTo54Se3zhvMqKVy4YKoewJQadRprFPhsBxClGvA7gEKhBSJPFa631SbhuR
- gWHqHxT0EnlevP6hmHzFUVe+WXHECjoa8W9lN2O9xneT2CA1rxC0w7I2RRPb8T5a
- ajf9sGqRmBJQrbBbix2+G080Chm7m7cLUJ/Mag2er9prFyNq7hLQr4WMP2giqiiP
- l0NqtQqnnJCCVkB/nmxe326q1upKjAOFYXhNiGez2uPTnzoFZ0KnST3X9f+W0pcl
- vJs3CeR6cs7ScISkw571AwrZPmxQFaa1ZmYEFxVw==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4e1ubdhydw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 09 May 2026 15:00:40 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.7/8.18.1.7) with ESMTP id 649EsS6C023616;
- Sat, 9 May 2026 15:00:39 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4dwuywn12u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 09 May 2026 15:00:39 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 649F0Zhg30802526
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 9 May 2026 15:00:35 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 79C4F20040;
- Sat,  9 May 2026 15:00:35 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3BCFF20043;
- Sat,  9 May 2026 15:00:28 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.39.25.188]) by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Sat,  9 May 2026 15:00:27 +0000 (GMT)
-Date: Sat, 9 May 2026 20:30:24 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Saif Abrar <saif.abrar@linux.vnet.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, clg@kaod.org,
- npiggin@gmail.com, fbarrat@linux.ibm.com, mst@redhat.com,
- marcel.apfelbaum@gmail.com, cohuck@redhat.com, pbonzini@redhat.com,
- thuth@redhat.com, lvivier@redhat.com, danielhb413@gmail.com,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, jishnuvw@linux.ibm.com
-Subject: Re: [PATCH v4 6/9] pnv/phb4: Set link-active status in HPSTAT and
- LMR registers
-Message-ID: <af9LQsiL9Wear4kN@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260210134110.1515322-1-saif.abrar@linux.vnet.ibm.com>
- <20260305060923.3753402-1-saif.abrar@linux.vnet.ibm.com>
- <20260305060923.3753402-7-saif.abrar@linux.vnet.ibm.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wLjBH-00087O-7o
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 11:01:28 -0400
+Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1wLjBF-00078h-AD
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 11:01:26 -0400
+Received: by mail-ot1-x332.google.com with SMTP id
+ 46e09a7af769-7dbd23bc684so1801333a34.2
+ for <qemu-devel@nongnu.org>; Sat, 09 May 2026 08:01:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1778338883; x=1778943683; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LRSs61uOZyy3QFNA5dmqwjJoY4JmEZKzzakUWRijlcU=;
+ b=RYCa+CnjjYywsYCqLZjoqDt+iboaKjg8GAjccNqrBVkc8d6GKH9O0SFFGG3XXEIXyO
+ XMNXDmr4qPtUqug5MRxafeTuF1BBxgZ2/GBvLhp2OR0sNzlQo0Zpk8sS1FbwUQWsFOz3
+ hu1J+8zGBxyhh4vfWvCgwffXJOmQGDc1dG6fQ65mG+cHc66y8vCfyKp3aK4Av0tnFbv7
+ i77xhf7V1vjX/PPtWWzRfiAxjBtI0ej/miCnZTmcc58LjBMqnQJDK4esuyUFUMfexTwC
+ SNWeMAr5nJwTH9kN7EyojQPBZ+jjbZWXrSh1SpG5RF+8Uj+hiqmrNBjY5NsOd3bjJlDO
+ h1/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1778338883; x=1778943683;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LRSs61uOZyy3QFNA5dmqwjJoY4JmEZKzzakUWRijlcU=;
+ b=shttS9wm5cLCsrqQ3UJChHFPBLpqzDYmS5J3N4zIX3ywTeG/yp+BLTa42uEu+a5gvi
+ vslLu2VE7GTTLmMA/dePHhK4s5GLDl2EP36u0bBG1Kw1pRD9UuTaGwznC52JfUp4wbXS
+ A12GMD+npMsKtIYL3+5nxme/w6WCmq2UYbH5h0w5ZYqOtpHM4yj27AJMD17hcRqQkeV4
+ uNJsu/siM6E8zxQ3sSNOtd1vsc7DQQwbV5a220Zm6lc72JqRsGJ7B9hw0A9lPpOJ+8Zs
+ lYzkfvzrmM+xzTduqsLeAr+hADMhn8y1jyW6QNJDBWE5nbKBKkd/43BElxlqdDB4bawx
+ SvnQ==
+X-Forwarded-Encrypted: i=1;
+ AFNElJ8P0r/kfKQuRxcJC/mzIRRHr5KmGVCx1kKEOgAGCB0jdWLxU2sSnnjBW/2ld7EFK+pWDy84yp+Gr8D2@nongnu.org
+X-Gm-Message-State: AOJu0Yy+FPlcrDZYwUfv8c1Zek5s7d33MlYvOH4FOAjiRxV8Oj51673G
+ g8vqJHfMVDnkLNvcDK4VunUJAm+3bffFcoZ7DYtr/w13/+dKVxATAL1udSsy8I57AkM=
+X-Gm-Gg: Acq92OEQ/TVR3t9GI6KCi+00q9UyshItU1l5cxxEr0JJ8qEgtPU+kDqWyaDcqWMLYOG
+ caWG6zymvswbBKAS0Uef+yr8rbSPicoaj3WW4mDyCIhUuF/2aZINzM4zFRES4/J4QNJl4CMZiyG
+ 6oeWGlPzzmHJqFT0vZzXH3s87aFJFjOl7e2k7orRlO0j236JlE+CJF5XsFhysF3i6Bc+Kkq5Y9O
+ TexldmO5so0LRNY6L4Pqt4Gdo3xQzEe6FCc+aheFe7IEnZcL9clBGIw1nmHRRZkWOvd4F6F7yL0
+ m/wDz7crJsOkcViZh+j1C9SYsWvSDR9YI/LZSiPacMJENUkYr82ezRFL+npd3dbR/PdAajt7V5B
+ XvIGHHe/o4v8KaatDaGnfYQeFqz5M+n5lQoGI37TE8wQdhZIiUv3eNSNI26b6/woN7OOz/woWhq
+ 4xOAHrNZaal+LW6KJAorA+SdZYl9C1M0DZSiaMlp3HmR3RIo1OwDDr7WrFqf6ghBpTqWVvdJl9/
+ o8JrIHPa2sm1VrHDQJ2
+X-Received: by 2002:a05:6830:2a10:b0:7db:d229:d51e with SMTP id
+ 46e09a7af769-7e381f98af6mr1817088a34.12.1778338883026; 
+ Sat, 09 May 2026 08:01:23 -0700 (PDT)
+Received: from ?IPV6:2600:381:c938:6375:88d3:58e4:a68b:b30c?
+ ([2600:381:c938:6375:88d3:58e4:a68b:b30c])
+ by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-7e367d50611sm3205140a34.16.2026.05.09.08.01.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 09 May 2026 08:01:22 -0700 (PDT)
+Message-ID: <b60572e5-6a5b-4477-a16a-ba20d0585716@linaro.org>
+Date: Sat, 9 May 2026 10:01:18 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260305060923.3753402-7-saif.abrar@linux.vnet.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=BezoFLt2 c=1 sm=1 tr=0 ts=69ff4c18 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kj9zAlcOel0A:10 a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=XfbUPoBrIe06zKqIYwUA:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-GUID: h_3XDBWB2NJt7g4dgbg8RwYeEbQKU1of
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTA5MDE1OSBTYWx0ZWRfXwAEYl2EdsMcs
- ps/xb75LK46vcFhi8YkuJOJVEi+d6o/7nHZLo+xOd9940T7weqWO3Eq+1u8ijmyONPN62gY8ra4
- tGjv1S4NJ/Z1OkYFx9zRfV5Qay3NDGEfi983BrQpX6E2XMdh6h1t9JUl31tCaaDWsOAkpeDxDnD
- oqhLQyJRq+VCWuZREzQ9vDbGYSyaSswJJNJLckfN/+FaDutMsZgdMi7Ejm/p6r3YvFjapS/IEOh
- h7dMTV4qSsTosCd2sGkJbGkm6IepzexSX0EGZwxxz1TjjN4RDyM1UvsyhWQTnTzP96Ne3Ii9Djd
- 2eAO/79PNZnEvCBKi52ceKBx2Zs1wKwe+EIrtER/RTlyPfipOwqxwa6XqCSV1wpvs1ZCcfZdM5N
- nhvIabaBbETjnHptIOHcHj+4li0+M+rJrBrnsiIJHaI4QUlgS5qVi8PpOEgX1oIug4RZGPnsj6L
- hL1kepw7dYPBjfv/lvA==
-X-Proofpoint-ORIG-GUID: wNTDJgo2I8eu3F39bLsoU4-6zy1goJRE
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-05-09_05,2026-05-08_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 priorityscore=1501 bulkscore=0 phishscore=0 malwarescore=0
- adultscore=0 lowpriorityscore=0 suspectscore=0 impostorscore=0 spamscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2604200000 definitions=main-2605090159
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 3/6] target-info: extract target_info() definition in
+ target-info-init.h
+To: Pierrick Bouvier <pierrick.bouvier@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Anton Johansson <anjo@rev.ng>
+References: <20260509005453.3984184-1-pierrick.bouvier@oss.qualcomm.com>
+ <20260509005453.3984184-4-pierrick.bouvier@oss.qualcomm.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260509005453.3984184-4-pierrick.bouvier@oss.qualcomm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x332.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,68 +113,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/03/05 12:09AM, Saif Abrar wrote:
-> <...snip...>
-> --- a/hw/pci-host/pnv_phb4.c
-> +++ b/hw/pci-host/pnv_phb4.c
-> @@ -511,6 +511,20 @@ static uint32_t get_exp_offset(PCIDevice *pdev)
->      return rpc->exp_offset;
->  }
->  
-> +/*
-> + * Config-read the link-status register in the PCI-E macro,
-> + * convert to LE and check the link-active bit.
-> + */
-> +static uint32_t is_link_active(PnvPHB4 *phb)
-> +{
-> +    PCIHostState *pci = PCI_HOST_BRIDGE(phb->phb_base);
-> +    PCIDevice *pdev = pci_find_device(pci->bus, 0, 0);
-> +    uint32_t exp_offset = get_exp_offset(pdev);
+On 5/8/26 19:54, Pierrick Bouvier wrote:
+> +#define TYPE_TARGET_INFO_TARGET TYPE_TARGET_INFO"-"TARGET_NAME
+
+I guess avoiding TARGET_NAME can wait until we actually build a single binary.
+
+> +typedef struct TargetInfoQomTarget {
+> +    TargetInfoQom parent;
+> +} TargetInfoQomTarget;
 > +
-> +    return (bswap32(pnv_phb4_rc_config_read(phb, exp_offset + PCI_EXP_LNKSTA, 4)
-> +                    ) & PCI_EXP_LNKSTA_DLLLA);
-
-should it be be32_to_cpu instead of bswap ?
-
-> +}
+> +typedef struct TargetInfoQomTargetClass {
+> +    TargetInfoQomClass parent_class;
+> +} TargetInfoQomTargetClass;
 > +
->  /*
->   * Apply sticky-mask 's' to the reset-value 'v' and write to the address 'a'.
->   * RC-config space values and masks are LE.
-> @@ -729,6 +743,11 @@ static void pnv_phb4_reg_write(void *opaque, hwaddr off, uint64_t val,
->          val = 0;
->          break;
->  
-> +    case PHB_PCIE_HOTPLUG_STATUS:
-> +        /* For normal operations, Simspeed diagnostic bit is always zero */
-> +        val &= PHB_PCIE_HPSTAT_SIMDIAG;
-> +        break;
+> +OBJECT_DECLARE_TYPE(TargetInfoQomTarget, TargetInfoQomTargetClass, TARGET_INFO_TARGET)
 
-spec says this about HPSTAT_SIMDIAG bit in Hot Plug Status register:
+Since neither the object nor class are actually used; you don't need these.
 
-	NOTE: if simulation code changes this bit (Simspeed diagnostic bit)
-	it should also write bit '9' so that the input status signal
-	will re-sample correctly.".
+> +static void target_info_qom_class_init(ObjectClass *oc, const void * data)  \
+> +{                                                                           \
+> +    TargetInfoQomTargetClass *klass = TARGET_INFO_TARGET_CLASS(oc);         \
+> +    klass->parent_class.target_info = &ti_var;                              \
+> +}                                                                           \
 
-i don't think bit 9 makes a difference for us currently, but i think
-good to set bit 9 too. what do you say ?
+This belongs in vl.c as target_info_parent_type.class_base_init.
 
-> <...snip...>
->
-> +        /*
-> +         * Config-read the PCI-E macro register for slot-status.
-> +         * Method for config-read converts to BE value.
-> +         * To check actual bit in the PCI-E register,
-> +         * convert the value back to LE using bswap32().
-> +         * Clear the Presence-status active low bit.
-> +         */
-> +        if (bswap32(pnv_phb4_rc_config_read(phb, exp_base + PCI_EXP_SLTSTA, 4))
-> +                    & PCI_EXP_SLTSTA_PDS) {
-> +            val &= ~PHB_PCIE_HPSTAT_PRESENCE;
+> +static const TypeInfo target_info_qom_target_type_info = {                  \
+> +    .name = TYPE_TARGET_INFO_TARGET,                                        \
+> +    .parent = TYPE_TARGET_INFO,                                             \
+> +    .instance_size = sizeof(TargetInfoQomTarget),                           \
+> +    .class_size = sizeof(TargetInfoQomTargetClass),                         \
+> +    .class_init = target_info_qom_class_init,                               \
+> +    .abstract = false,                                                      \
+> +};                                                                          \
 
-be*_to_cpu makes more sense than bswap32 here, as PCI_EXP_SLTSTA_PDS is
-in qemu endianness
+This reduces to just name, parent, and class_data.
+You don't need sizes, class_init, or abstract.
 
-- Aditya G
 
+r~
 
