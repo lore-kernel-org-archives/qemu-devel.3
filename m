@@ -4,75 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75F8ECD3447
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 07:38:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2A03CD343F
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 07:38:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLcEx-0003xA-4B; Sat, 09 May 2026 03:36:47 -0400
+	id 1wLcFX-0005EQ-Hj; Sat, 09 May 2026 03:37:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLcEv-0003wF-FM
- for qemu-devel@nongnu.org; Sat, 09 May 2026 03:36:45 -0400
+ id 1wLcFW-0005Do-7i
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 03:37:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLcEt-0006sZ-Sn
- for qemu-devel@nongnu.org; Sat, 09 May 2026 03:36:45 -0400
+ id 1wLcFU-0006xW-N8
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 03:37:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778312203;
+ s=mimecast20190719; t=1778312239;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Or9sAs8SR9br6GVeIhvDb9XD6TOVD7AUKbWB+HucyRs=;
- b=LmSt4WjXSJrTH7bi285ueh9vLb6wFyUz5VeTin5Vm6A8/dQtfjJqVQRFFSaFZpN9S7/r9W
- UqS5WhdMyaQOOvlWBXfYn7hqdZsIUdue3O8dWrVQvSqaX+vzHFXrOTL3oW1Kx50a+Or6b0
- sknlcJCIGL+MBre2xcpQiqnhpDZJtwA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=9yhQ8bi1pXmggnmlXkH2JFNSXv4d8Zosy9pQKAaMwIQ=;
+ b=HVUlwgUMxlTvQ7NGdxqOFocNd4SaXCq1DGf0nJvbYAst6G8yQCtfCJPyWvhbOoPTkXToPB
+ t7LiA7Ek0W6SVei8jT692VEZpxwUomYn7bvM6F6ozODg6jOcS9JAKHB9kIaIULCVOdKV0+
+ euBmtFktWs/ZVWfqe45jdAvKKfnX9HE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-U4M4PRQOPkOuB5uYR8z1cA-1; Sat,
- 09 May 2026 03:36:39 -0400
-X-MC-Unique: U4M4PRQOPkOuB5uYR8z1cA-1
-X-Mimecast-MFC-AGG-ID: U4M4PRQOPkOuB5uYR8z1cA_1778312198
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-180-iPAPBOiAPre7tBbRRP5rVA-1; Sat,
+ 09 May 2026 03:37:18 -0400
+X-MC-Unique: iPAPBOiAPre7tBbRRP5rVA-1
+X-Mimecast-MFC-AGG-ID: iPAPBOiAPre7tBbRRP5rVA_1778312237
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 24EFC19560B5; Sat,  9 May 2026 07:36:38 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4927B18002C8; Sat,  9 May 2026 07:37:17 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CBAF41944B20; Sat,  9 May 2026 07:36:36 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 817663002D31; Sat,  9 May 2026 07:37:15 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com, Fabiano Rosas <farosas@suse.de>,
+Cc: stefanha@gmail.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 02/32] tests/qtest/dbus-vmstate: Mute Glib complaints about
- g_unsetenv thread-safety
-Date: Sat,  9 May 2026 11:35:48 +0400
-Message-ID: <20260509073621.1011778-3-marcandre.lureau@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 09/32] char: error out if given unhandled size options
+Date: Sat,  9 May 2026 11:35:55 +0400
+Message-ID: <20260509073621.1011778-10-marcandre.lureau@redhat.com>
 In-Reply-To: <20260509073621.1011778-1-marcandre.lureau@redhat.com>
 References: <20260509073621.1011778-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,79 +86,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-TLDR: GLib is bugged, the dbus-vmstate-test spams debug messages
-unconditionally. Mute them.
+This is a small help, because in fact all combined chardev
+options are accepted by qemu_chardev_opts[]. But given that a user may
+legitimately want to use the size options with a VC backend, we can
+report an error when we know the backend doesn't support it.
 
-GLib is trying to protect against the lack of thread-safety of
-setenv/unsetsenv functions by warning when those functions were
-invoked after a thread has been started.
-https://gitlab.gnome.org/GNOME/glib/issues/715
-
-Unfortunately:
-1) GLib itself starts a thread pool via _g_dbus_initialize when
-working around a bug in its type dependency chain. This happens in
-many places, but the test triggers it via
-g_dbus_address_get_for_bus_sync.
-https://bugzilla.gnome.org/show_bug.cgi?id=627724
-
-2) GLib itself calls g_unsetenv after the test calls g_test_dbus_up.
-
-3) The debug message at g_unsetenv is issued to the G_LOG_DOMAIN
-defined while compiling the library, i.e "GLib", but this domain is
-never initialized, so the log functions go into a fallback chain that
-results in ignoring the G_MESSAGES_DEBUG environment variable, causing
-the debug messages to not be suppressed when they should.
-
-Mute the messages by implementing a handler for G_LOG_LEVEL_DEBUG
-in the "GLib" log domain and honoring G_MESSAGES_DEBUG.
-
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260429190550.20122-3-farosas@suse.de>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- tests/qtest/dbus-vmstate-test.c | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ include/chardev/char.h |  1 +
+ include/qemu/option.h  |  1 +
+ chardev/char.c         | 12 ++++++++++++
+ ui/console-vc.c        |  1 +
+ util/qemu-option.c     | 13 +++++++++++++
+ 5 files changed, 28 insertions(+)
 
-diff --git a/tests/qtest/dbus-vmstate-test.c b/tests/qtest/dbus-vmstate-test.c
-index 90c050b4480..51c5fdb995a 100644
---- a/tests/qtest/dbus-vmstate-test.c
-+++ b/tests/qtest/dbus-vmstate-test.c
-@@ -357,12 +357,33 @@ test_dbus_vmstate_missing_dst(char *name, MigrateCommon *args)
-     g_test_trap_assert_passed();
+diff --git a/include/chardev/char.h b/include/chardev/char.h
+index c2c42e4b7a3..51995f06a82 100644
+--- a/include/chardev/char.h
++++ b/include/chardev/char.h
+@@ -254,6 +254,7 @@ struct ChardevClass {
+ 
+     bool internal; /* TODO: eventually use TYPE_USER_CREATABLE */
+     bool supports_yank;
++    bool supports_size_opts;
+ 
+     /* parse command line options and populate QAPI @backend */
+     void (*chr_parse)(QemuOpts *opts, ChardevBackend *backend, Error **errp);
+diff --git a/include/qemu/option.h b/include/qemu/option.h
+index 01e673ae03f..9a00ac0a356 100644
+--- a/include/qemu/option.h
++++ b/include/qemu/option.h
+@@ -73,6 +73,7 @@ struct QemuOptsList {
+ 
+ const char *qemu_opt_get(QemuOpts *opts, const char *name);
+ char *qemu_opt_get_del(QemuOpts *opts, const char *name);
++bool qemu_opt_has_any(QemuOpts *opts, const char * const *names);
+ /**
+  * qemu_opt_has_help_opt:
+  * @opts: options to search for a help request
+diff --git a/chardev/char.c b/chardev/char.c
+index 48b326d57b9..55dce9725e8 100644
+--- a/chardev/char.c
++++ b/chardev/char.c
+@@ -639,6 +639,18 @@ ChardevBackend *qemu_chr_parse_opts(QemuOpts *opts, Error **errp)
+         return NULL;
+     }
+ 
++    if (!cc->supports_size_opts) {
++        const char * const invalid_opts[] = {
++            "width", "height", "cols", "rows", NULL
++        };
++
++        if (qemu_opt_has_any(opts, invalid_opts)) {
++            error_setg(errp, "chardev '%s' does not support size options",
++                       qemu_opts_id(opts));
++            return NULL;
++        }
++    }
++
+     backend = g_new0(ChardevBackend, 1);
+     backend->type = CHARDEV_BACKEND_KIND_NULL;
+ 
+diff --git a/ui/console-vc.c b/ui/console-vc.c
+index 6163e21d2c6..62a5e3caf57 100644
+--- a/ui/console-vc.c
++++ b/ui/console-vc.c
+@@ -1251,6 +1251,7 @@ static void char_vc_class_init(ObjectClass *oc, const void *data)
+     cc->chr_write = vc_chr_write;
+     cc->chr_accept_input = vc_chr_accept_input;
+     cc->chr_set_echo = vc_chr_set_echo;
++    cc->supports_size_opts = true;
  }
  
-+static void log_func(const gchar *log_domain, GLogLevelFlags log_level,
-+                     const gchar *message, gpointer user_data)
+ static const TypeInfo char_vc_type_info = {
+diff --git a/util/qemu-option.c b/util/qemu-option.c
+index 770300dff12..9fbf425f86e 100644
+--- a/util/qemu-option.c
++++ b/util/qemu-option.c
+@@ -271,6 +271,19 @@ const char *qemu_opt_get(QemuOpts *opts, const char *name)
+     return opt->str;
+ }
+ 
++bool qemu_opt_has_any(QemuOpts *opts, const char * const *names)
 +{
-+    const gchar *domains;
++    int it;
 +
-+    assert(log_level & G_LOG_LEVEL_DEBUG);
-+
-+    domains = getenv("G_MESSAGES_DEBUG");
-+    if (!domains || (!strstr(domains, "GLib") && !strstr(domains, "all"))) {
-+        return;
++    for (it = 0; names[it]; it++) {
++        if (qemu_opt_get(opts, names[it])) {
++            return true;
++        }
 +    }
-+    g_log_default_handler("GLib", G_LOG_LEVEL_DEBUG, message, NULL);
++    return false;
 +}
 +
- int
- main(int argc, char **argv)
- {
-     GError *err = NULL;
-     int ret;
- 
-+    /*
-+     * GLib currently emits debug messages that ignore
-+     * G_MESSAGES_DEBUG. Set a custom log handler to work around the
-+     * issue.
-+     */
-+    g_log_set_handler("GLib", G_LOG_LEVEL_DEBUG, log_func, NULL);
 +
-     g_test_init(&argc, &argv, NULL);
- 
-     workdir = g_dir_make_tmp("dbus-vmstate-test-XXXXXX", &err);
+ void qemu_opt_iter_init(QemuOptsIter *iter, QemuOpts *opts, const char *name)
+ {
+     iter->opts = opts;
 -- 
 2.54.0
 
