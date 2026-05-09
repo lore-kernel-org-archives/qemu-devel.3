@@ -4,73 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C3A7CD343F
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 07:37:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0ABECD343F
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 07:37:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLcFG-00048q-N5; Sat, 09 May 2026 03:37:06 -0400
+	id 1wLcFN-0004Rx-63; Sat, 09 May 2026 03:37:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLcFF-000487-6y
- for qemu-devel@nongnu.org; Sat, 09 May 2026 03:37:05 -0400
+ id 1wLcFK-0004Js-Qo
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 03:37:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLcFD-0006v3-Nl
- for qemu-devel@nongnu.org; Sat, 09 May 2026 03:37:04 -0400
+ id 1wLcFJ-0006vv-8G
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 03:37:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778312223;
+ s=mimecast20190719; t=1778312228;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=grtWLLb6LuzwS7TKPExXe7gH/Kt+8pLarkBdFZ3yg4Y=;
- b=LHNGTxdtJ8ojS70BXContVgNanYuly46diEyUvp9N+OMEeTl3k8op8b/SsFOHxSVKarQoA
- IIe7J7eNDmDZpqpo0LdaKEKfSS21ROl7j6TV0oI8nXjuQaG7ozbtHfm1poYCqigjUkUEqE
- Uolta2yIu3Y+k/ktjr1ugmpxbAdw2QU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=BcxA8Rjc8dvnAqYFrgkKpy785FYBENS9NrbL2j6123s=;
+ b=BxIKrG+TAVO9KNEXnBg1PRuPdObIXA+MefUdswHRNSluVzmpgMyoihVPRzd24gfZxRfrZC
+ 31S1bE7z1tugYXAatTwvjI+kEfhLHWzIk7Dn1xKNQg4EQf5HZbb0VPyl3i9T08NIUsGtUo
+ VzcUHgvIP0rpPKzEwnJxDLXFcB/fTOQ=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-222-wqaaIwmoPmC23pipRjYRjQ-1; Sat,
- 09 May 2026 03:37:01 -0400
-X-MC-Unique: wqaaIwmoPmC23pipRjYRjQ-1
-X-Mimecast-MFC-AGG-ID: wqaaIwmoPmC23pipRjYRjQ_1778312220
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-324-tMc6yw2mOsWetLxS_b8SJw-1; Sat,
+ 09 May 2026 03:37:06 -0400
+X-MC-Unique: tMc6yw2mOsWetLxS_b8SJw-1
+X-Mimecast-MFC-AGG-ID: tMc6yw2mOsWetLxS_b8SJw_1778312225
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 39EA21956089; Sat,  9 May 2026 07:37:00 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AF9DC1800359; Sat,  9 May 2026 07:37:05 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 239E53002D30; Sat,  9 May 2026 07:36:58 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 83C0C180075C; Sat,  9 May 2026 07:37:03 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com,
+ =?UTF-8?q?Jind=C5=99ich=20Makovi=C4=8Dka?= <makovick@gmail.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 06/32] ui/input: do not assert() when tracing invalid input
-Date: Sat,  9 May 2026 11:35:52 +0400
-Message-ID: <20260509073621.1011778-7-marcandre.lureau@redhat.com>
+Subject: [PULL 07/32] ui/gtk: Fix GTK assertion failure introduced with
+ clipboard fixes
+Date: Sat,  9 May 2026 11:35:53 +0400
+Message-ID: <20260509073621.1011778-8-marcandre.lureau@redhat.com>
 In-Reply-To: <20260509073621.1011778-1-marcandre.lureau@redhat.com>
 References: <20260509073621.1011778-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 8
-X-Spam_score: 0.8
-X-Spam_bar: /
-X-Spam_report: (0.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.44,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,66 +87,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Marc-André Lureau <marcandre.lureau@redhat.com>
+From: Jindřich Makovička <makovick@gmail.com>
 
-It's possible to reach an assert() in the input tracing code by sending
-some out of range input values via D-Bus for ex:
+gtk_clipboard_request_targets actually returns n_targets == -1
+when targets ==  NULL instead of zero. This result in failed assertion
+within GTK:
 
-  #0  0x00007fec8652186c in __pthread_kill_implementation () at /lib64/libc.so.6
-  #1  0x00007fec864c648e in raise () at /lib64/libc.so.6
-  #2  0x00007fec864ad7b3 in abort () at /lib64/libc.so.6
-  #3  0x00007fec864ae804 in __libc_message_impl.cold () at /lib64/libc.so.6
-  #4  0x00007fec864be345 in __assert_fail () at /lib64/libc.so.6
-  #5  0x00005597964c551e in qapi_enum_lookup[cold] ()
-  #6  0x000055979650514a in qemu_input_event_send_impl ()
-  #7  0x0000559796505a4d in qemu_input_queue_btn ()
-  #8  0x00007fec85780c19 in dbus_mouse_press () at /usr/bin/../lib64/qemu/ui-dbus.so
-  #9  0x00007fec857912fc in _g_dbus_codegen_marshal_BOOLEAN__OBJECT_UINT.part.0 () at /usr/bin/../lib64/qemu/ui-dbus.so
-  #10 0x00007fec874cce7c in g_closure_invoke () at /lib64/libgobject-2.0.so.0
-  #11 0x00007fec874eb849 in signal_emit_unlocked_R.isra.0 () at /lib64/libgobject-2.0.so.0
-  #12 0x00007fec874ec66f in g_signal_emitv () at /lib64/libgobject-2.0.so.0
-  #13 0x00007fec85797e0a in _qemu_dbus_display1_mouse_skeleton_handle_method_call () at /usr/bin/../lib64/qemu/ui-dbus.so
+qemu: Gtk: gtk_targets_include_text:
+assertion 'targets != NULL || n_targets == 0' failed
 
-Other paths in input code accept out-of-range values
-(qemu_input_key_value_to_number etc). Let it pass tracing.
+Extend the check to require non-null targets and positive n_targets.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Jindrich Makovicka <makovick@gmail.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-ID: <20260501-clipboard-assert-fix-v1-1-e549243e4583@gmail.com>
 ---
- ui/input.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ ui/gtk-clipboard.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/ui/input.c b/ui/input.c
-index 57e7817878a..966023d4f4d 100644
---- a/ui/input.c
-+++ b/ui/input.c
-@@ -207,22 +207,22 @@ static void qemu_input_event_trace(QemuConsole *src, InputEvent *evt)
-         break;
-     case INPUT_EVENT_KIND_BTN:
-         btn = evt->u.btn.data;
--        name = InputButton_str(btn->button);
-+        name = btn->button < INPUT_BUTTON__MAX ? InputButton_str(btn->button) : "invalid";
-         trace_input_event_btn(idx, name, btn->down);
-         break;
-     case INPUT_EVENT_KIND_REL:
-         move = evt->u.rel.data;
--        name = InputAxis_str(move->axis);
-+        name = move->axis < INPUT_AXIS__MAX ? InputAxis_str(move->axis) : "invalid";
-         trace_input_event_rel(idx, name, move->value);
-         break;
-     case INPUT_EVENT_KIND_ABS:
-         move = evt->u.abs.data;
--        name = InputAxis_str(move->axis);
-+        name = move->axis < INPUT_AXIS__MAX ? InputAxis_str(move->axis) : "invalid";
-         trace_input_event_abs(idx, name, move->value);
-         break;
-     case INPUT_EVENT_KIND_MTT:
-         mtt = evt->u.mtt.data;
--        name = InputAxis_str(mtt->axis);
-+        name = mtt->axis < INPUT_AXIS__MAX ? InputAxis_str(mtt->axis) : "invalid";
-         trace_input_event_mtt(idx, name, mtt->value);
-         break;
-     case INPUT_EVENT_KIND__MAX:
+diff --git a/ui/gtk-clipboard.c b/ui/gtk-clipboard.c
+index 463ed4e905b..ea9444be70f 100644
+--- a/ui/gtk-clipboard.c
++++ b/ui/gtk-clipboard.c
+@@ -175,7 +175,7 @@ static void gd_clipboard_owner_change_targets_received_callback(
+ {
+     QemuClipboardInfo *info = (QemuClipboardInfo *)data;
+ 
+-    if (n_targets) {
++    if (targets && n_targets > 0) {
+         if (gtk_targets_include_text(targets, n_targets)) {
+             info->types[QEMU_CLIPBOARD_TYPE_TEXT].available = true;
+         }
 -- 
 2.54.0
 
