@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99E93CD3447
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 07:38:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51BD9CD37B5
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 07:38:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLcGN-0007GM-Se; Sat, 09 May 2026 03:38:15 -0400
+	id 1wLcGY-0000Li-GJ; Sat, 09 May 2026 03:38:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLcGG-0006d4-Uk
- for qemu-devel@nongnu.org; Sat, 09 May 2026 03:38:10 -0400
+ id 1wLcGW-0000Bp-PQ
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 03:38:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLcGF-0007Ad-8O
- for qemu-devel@nongnu.org; Sat, 09 May 2026 03:38:08 -0400
+ id 1wLcGR-0007CK-Px
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 03:38:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778312286;
+ s=mimecast20190719; t=1778312299;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7Ew8EtolbjA1D7Hs4jgTfKrH6QjkTzcJn1UfbgtMMQk=;
- b=h7iISuHj4ir+poTWomGCaX9HvsbpXgWmzsI+WJ+a7IbNnIwh7+BMSBvzZHb4lyWg364Vpa
- 8R+iqxShdZtsajJhhssD16s3GrVQd5sinAbCbfFxV4b5/PtNZZVcGZuQ9dFDhRm+IT/Vg3
- usRqn9VIVaeXhWMif6FsHnz3DB67DHc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=AlTEWTLpQUUNopLeImgEQbsh4TqUou4fT/ZEpaj4ltw=;
+ b=N3perOFDZC981xlnN8q6jjfyGBoNnrC0ndtYoQ6NVxPfvp4MMtrpruGBzPjbXNL+WzP6Ch
+ 3m1PhQILEtBKy+i5Jy2ZA+0p6xO+aQIWDAzRhDkvDGl47TzWuNb1olZ99baZKIsKjiEhEd
+ ptFr4FussLkg++JX3qBfImTgoLfm/i4=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-103-wqWxFITAOhqWBm7HsSR-xA-1; Sat,
- 09 May 2026 03:38:03 -0400
-X-MC-Unique: wqWxFITAOhqWBm7HsSR-xA-1
-X-Mimecast-MFC-AGG-ID: wqWxFITAOhqWBm7HsSR-xA_1778312282
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-197-qeB8NEIqOFamd6QZNKTKAw-1; Sat,
+ 09 May 2026 03:38:16 -0400
+X-MC-Unique: qeB8NEIqOFamd6QZNKTKAw-1
+X-Mimecast-MFC-AGG-ID: qeB8NEIqOFamd6QZNKTKAw_1778312296
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E0CA18005B6; Sat,  9 May 2026 07:38:02 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DE1261800359; Sat,  9 May 2026 07:38:15 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BB13A19560A2; Sat,  9 May 2026 07:38:00 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 024033002D30; Sat,  9 May 2026 07:38:12 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL 17/32] ui/console-vc: extract vt100_init() and vt100_fini()
-Date: Sat,  9 May 2026 11:36:03 +0400
-Message-ID: <20260509073621.1011778-18-marcandre.lureau@redhat.com>
+Subject: [PULL 19/32] ui/console-vc: move VT100 emulation into separate unit
+Date: Sat,  9 May 2026 11:36:05 +0400
+Message-ID: <20260509073621.1011778-20-marcandre.lureau@redhat.com>
 In-Reply-To: <20260509073621.1011778-1-marcandre.lureau@redhat.com>
 References: <20260509073621.1011778-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -87,78 +87,2242 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Consolidate VT100 initialization and finalization into dedicated
-functions, continuing the extraction of the VT100 layer from the
-console/chardev code.
+Move the VT100 terminal emulation code into dedicated ui/vt100.c and
+ui/vt100.h files, completing the extraction from console-vc.c started
+in the previous patches. This makes the VT100 layer a self-contained
+module that can be reused independently of the chardev/console
+infrastructure.
 
-vt100_init() gathers the scattered setup (cursor timer, list insertion,
-FIFO creation, default attributes, and image) that was previously spread
-across vc_chr_open() and qemu_text_console_class_init().
-
-vt100_fini() pairs with it by handling list removal, FIFO destruction,
-and cells cleanup, replacing the open-coded QTAILQ_REMOVE in
-qemu_text_console_finalize().
+The code is moved as-is, with minor coding style fixes (adding missing
+braces, fixing whitespace) applied during the move.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/console-vc.c | 55 +++++++++++++++++++++++++++++++++----------------
- 1 file changed, 37 insertions(+), 18 deletions(-)
+ ui/console-priv.h     |    1 -
+ ui/vt100.h            |   95 ++++
+ ui/console-vc-stubs.c |    1 +
+ ui/console-vc.c       | 1033 +----------------------------------------
+ ui/console.c          |    2 +
+ ui/vt100.c            |  984 +++++++++++++++++++++++++++++++++++++++
+ ui/meson.build        |    4 +-
+ 7 files changed, 1086 insertions(+), 1034 deletions(-)
+ create mode 100644 ui/vt100.h
+ create mode 100644 ui/vt100.c
 
+diff --git a/ui/console-priv.h b/ui/console-priv.h
+index 2299898984d..4f731b4f9ce 100644
+--- a/ui/console-priv.h
++++ b/ui/console-priv.h
+@@ -30,7 +30,6 @@ struct QemuConsole {
+ };
+ 
+ void qemu_text_console_update_size(QemuTextConsole *c);
+-void vt100_update_cursor(void);
+ void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym);
+ 
+ #endif
+diff --git a/ui/vt100.h b/ui/vt100.h
+new file mode 100644
+index 00000000000..22ce2368bff
+--- /dev/null
++++ b/ui/vt100.h
+@@ -0,0 +1,95 @@
++/*
++ * SPDX-License-Identifier: MIT
++ * QEMU vt100
++ */
++#ifndef VT100_H
++#define VT100_H
++
++#include "chardev/char.h"
++#include "ui/console.h"
++#include "qemu/fifo8.h"
++#include "qemu/queue.h"
++
++typedef struct TextAttributes {
++    uint8_t fgcol:4;
++    uint8_t bgcol:4;
++    uint8_t bold:1;
++    uint8_t uline:1;
++    uint8_t blink:1;
++    uint8_t invers:1;
++    uint8_t unvisible:1;
++} TextAttributes;
++
++#define TEXT_ATTRIBUTES_DEFAULT ((TextAttributes) { \
++    .fgcol = QEMU_COLOR_WHITE,                      \
++    .bgcol = QEMU_COLOR_BLACK                       \
++})
++
++typedef struct TextCell {
++    uint8_t ch;
++    TextAttributes t_attrib;
++} TextCell;
++
++#define MAX_ESC_PARAMS 3
++
++enum TTYState {
++    TTY_STATE_NORM,
++    TTY_STATE_ESC,
++    TTY_STATE_CSI,
++    TTY_STATE_G0,
++    TTY_STATE_G1,
++    TTY_STATE_OSC,
++};
++
++typedef struct QemuVT100 QemuVT100;
++
++struct QemuVT100 {
++    pixman_image_t *image;
++    void (*image_update)(QemuVT100 *vt, int x, int y, int width, int height);
++
++    ChardevVCEncoding encoding;
++    int width;
++    int height;
++    int total_height;
++    int backscroll_height;
++    int x, y;
++    int y_displayed;
++    int y_base;
++    TextCell *cells;
++    int text_x[2], text_y[2], cursor_invalidate;
++    int echo;
++
++    int update_x0;
++    int update_y0;
++    int update_x1;
++    int update_y1;
++
++    enum TTYState state;
++    int esc_params[MAX_ESC_PARAMS];
++    int nb_esc_params;
++    uint32_t utf8_state;     /* UTF-8 DFA decoder state */
++    uint32_t utf8_codepoint; /* accumulated UTF-8 code point */
++    TextAttributes t_attrib; /* currently active text attributes */
++    TextAttributes t_attrib_saved;
++    int x_saved, y_saved;
++    /* fifo for key pressed */
++    Fifo8 out_fifo;
++    void (*out_flush)(QemuVT100 *vt);
++
++    QTAILQ_ENTRY(QemuVT100) list;
++};
++
++void vt100_init(QemuVT100 *vt,
++                pixman_image_t *image,
++                ChardevVCEncoding encoding,
++                void (*image_update)(QemuVT100 *vt, int x, int y, int width, int height),
++                void (*out_flush)(QemuVT100 *vt));
++void vt100_fini(QemuVT100 *vt);
++
++void vt100_update_cursor(void);
++size_t vt100_input(QemuVT100 *vt, const uint8_t *buf, size_t len);
++void vt100_keysym(QemuVT100 *vt, int keysym);
++void vt100_set_image(QemuVT100 *vt, pixman_image_t *image);
++void vt100_refresh(QemuVT100 *vt);
++
++#endif
+diff --git a/ui/console-vc-stubs.c b/ui/console-vc-stubs.c
+index d911a82f263..30e4d101197 100644
+--- a/ui/console-vc-stubs.c
++++ b/ui/console-vc-stubs.c
+@@ -9,6 +9,7 @@
+ #include "qemu/option.h"
+ #include "chardev/char.h"
+ #include "ui/console-priv.h"
++#include "vt100.h"
+ 
+ void qemu_text_console_update_size(QemuTextConsole *c)
+ {
 diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 9f5f49413d2..b58fe5de827 100644
+index b9da9ddf30d..99ad6d079df 100644
 --- a/ui/console-vc.c
 +++ b/ui/console-vc.c
-@@ -331,7 +331,7 @@ static void vt100_write(QemuVT100 *vt, const void *buf, size_t len)
-     vt->out_flush(vt);
+@@ -6,93 +6,17 @@
+ 
+ #include "chardev/char.h"
+ #include "qapi/error.h"
+-#include "qemu/fifo8.h"
+ #include "qemu/option.h"
+ #include "qemu/queue.h"
+ #include "qom/compat-properties.h"
+ #include "ui/console.h"
+ #include "ui/vgafont.h"
+-#include "ui/cp437.h"
++#include "ui/vt100.h"
+ 
+ #include "pixman.h"
+ #include "trace.h"
+ #include "console-priv.h"
+ 
+-#define DEFAULT_BACKSCROLL 512
+-#define CONSOLE_CURSOR_PERIOD 500
+-
+-typedef struct TextAttributes {
+-    uint8_t fgcol:4;
+-    uint8_t bgcol:4;
+-    uint8_t bold:1;
+-    uint8_t uline:1;
+-    uint8_t blink:1;
+-    uint8_t invers:1;
+-    uint8_t unvisible:1;
+-} TextAttributes;
+-
+-#define TEXT_ATTRIBUTES_DEFAULT ((TextAttributes) { \
+-    .fgcol = QEMU_COLOR_WHITE,                      \
+-    .bgcol = QEMU_COLOR_BLACK                       \
+-})
+-
+-typedef struct TextCell {
+-    uint8_t ch;
+-    TextAttributes t_attrib;
+-} TextCell;
+-
+-#define MAX_ESC_PARAMS 3
+-
+-enum TTYState {
+-    TTY_STATE_NORM,
+-    TTY_STATE_ESC,
+-    TTY_STATE_CSI,
+-    TTY_STATE_G0,
+-    TTY_STATE_G1,
+-    TTY_STATE_OSC,
+-};
+-
+-typedef struct QemuVT100 QemuVT100;
+-
+-struct QemuVT100 {
+-    pixman_image_t *image;
+-    void (*image_update)(QemuVT100 *vt, int x, int y, int width, int height);
+-
+-    ChardevVCEncoding encoding;
+-    int width;
+-    int height;
+-    int total_height;
+-    int backscroll_height;
+-    int x, y;
+-    int y_displayed;
+-    int y_base;
+-    TextCell *cells;
+-    int text_x[2], text_y[2], cursor_invalidate;
+-    int echo;
+-
+-    int update_x0;
+-    int update_y0;
+-    int update_x1;
+-    int update_y1;
+-
+-    enum TTYState state;
+-    int esc_params[MAX_ESC_PARAMS];
+-    int nb_esc_params;
+-    uint32_t utf8_state;     /* UTF-8 DFA decoder state */
+-    uint32_t utf8_codepoint; /* accumulated UTF-8 code point */
+-    TextAttributes t_attrib; /* currently active text attributes */
+-    TextAttributes t_attrib_saved;
+-    int x_saved, y_saved;
+-    /* fifo for key pressed */
+-    Fifo8 out_fifo;
+-    void (*out_flush)(QemuVT100 *vt);
+-
+-    QTAILQ_ENTRY(QemuVT100) list;
+-};
+-
+-static QTAILQ_HEAD(QemuVT100Head, QemuVT100) vt100s =
+-    QTAILQ_HEAD_INITIALIZER(vt100s);
+-
+ typedef struct QemuTextConsole {
+     QemuConsole parent;
+ 
+@@ -120,32 +44,6 @@ struct VCChardev {
+ };
+ typedef struct VCChardev VCChardev;
+ 
+-static const pixman_color_t color_table_rgb[2][8] = {
+-    {   /* dark */
+-        [QEMU_COLOR_BLACK]   = QEMU_PIXMAN_COLOR_BLACK,
+-        [QEMU_COLOR_BLUE]    = QEMU_PIXMAN_COLOR(0x00, 0x00, 0xaa),  /* blue */
+-        [QEMU_COLOR_GREEN]   = QEMU_PIXMAN_COLOR(0x00, 0xaa, 0x00),  /* green */
+-        [QEMU_COLOR_CYAN]    = QEMU_PIXMAN_COLOR(0x00, 0xaa, 0xaa),  /* cyan */
+-        [QEMU_COLOR_RED]     = QEMU_PIXMAN_COLOR(0xaa, 0x00, 0x00),  /* red */
+-        [QEMU_COLOR_MAGENTA] = QEMU_PIXMAN_COLOR(0xaa, 0x00, 0xaa),  /* magenta */
+-        [QEMU_COLOR_YELLOW]  = QEMU_PIXMAN_COLOR(0xaa, 0xaa, 0x00),  /* yellow */
+-        [QEMU_COLOR_WHITE]   = QEMU_PIXMAN_COLOR_GRAY,
+-    },
+-    {   /* bright */
+-        [QEMU_COLOR_BLACK]   = QEMU_PIXMAN_COLOR_BLACK,
+-        [QEMU_COLOR_BLUE]    = QEMU_PIXMAN_COLOR(0x00, 0x00, 0xff),  /* blue */
+-        [QEMU_COLOR_GREEN]   = QEMU_PIXMAN_COLOR(0x00, 0xff, 0x00),  /* green */
+-        [QEMU_COLOR_CYAN]    = QEMU_PIXMAN_COLOR(0x00, 0xff, 0xff),  /* cyan */
+-        [QEMU_COLOR_RED]     = QEMU_PIXMAN_COLOR(0xff, 0x00, 0x00),  /* red */
+-        [QEMU_COLOR_MAGENTA] = QEMU_PIXMAN_COLOR(0xff, 0x00, 0xff),  /* magenta */
+-        [QEMU_COLOR_YELLOW]  = QEMU_PIXMAN_COLOR(0xff, 0xff, 0x00),  /* yellow */
+-        [QEMU_COLOR_WHITE]   = QEMU_PIXMAN_COLOR(0xff, 0xff, 0xff),  /* white */
+-    }
+-};
+-
+-static bool cursor_visible_phase;
+-static QEMUTimer *cursor_timer;
+-
+ static char *
+ qemu_text_console_get_label(const QemuConsole *c)
+ {
+@@ -154,157 +52,6 @@ qemu_text_console_get_label(const QemuConsole *c)
+     return tc->chr ? g_strdup(tc->chr->label) : NULL;
  }
  
--static int vt100_input(QemuVT100 *vt, const uint8_t *buf, int len);
-+static size_t vt100_input(QemuVT100 *vt, const uint8_t *buf, size_t len);
- 
- static void vt100_keysym(QemuVT100 *vt, int keysym)
+-static void image_fill_rect(pixman_image_t *image, int posx, int posy,
+-                            int width, int height, pixman_color_t color)
+-{
+-    pixman_rectangle16_t rect = {
+-        .x = posx, .y = posy, .width = width, .height = height
+-    };
+-
+-    pixman_image_fill_rectangles(PIXMAN_OP_SRC, image, &color, 1, &rect);
+-}
+-
+-/* copy from (xs, ys) to (xd, yd) a rectangle of size (w, h) */
+-static void image_bitblt(pixman_image_t *image,
+-                         int xs, int ys, int xd, int yd, int w, int h)
+-{
+-    pixman_image_composite(PIXMAN_OP_SRC,
+-                           image, NULL, image,
+-                           xs, ys, 0, 0, xd, yd, w, h);
+-}
+-
+-static void vt100_putcharxy(QemuVT100 *vt, int x, int y, int ch,
+-                            TextAttributes *t_attrib)
+-{
+-    static pixman_image_t *glyphs[256];
+-    pixman_color_t fgcol, bgcol;
+-
+-    assert(vt->image);
+-    if (t_attrib->invers) {
+-        bgcol = color_table_rgb[t_attrib->bold][t_attrib->fgcol];
+-        fgcol = color_table_rgb[t_attrib->bold][t_attrib->bgcol];
+-    } else {
+-        fgcol = color_table_rgb[t_attrib->bold][t_attrib->fgcol];
+-        bgcol = color_table_rgb[t_attrib->bold][t_attrib->bgcol];
+-    }
+-
+-    if (!glyphs[ch]) {
+-        glyphs[ch] = qemu_pixman_glyph_from_vgafont(FONT_HEIGHT, vgafont16, ch);
+-    }
+-    qemu_pixman_glyph_render(glyphs[ch], vt->image,
+-                             &fgcol, &bgcol, x, y, FONT_WIDTH, FONT_HEIGHT);
+-}
+-
+-static void vt100_invalidate_xy(QemuVT100 *vt, int x, int y)
+-{
+-    if (vt->update_x0 > x * FONT_WIDTH) {
+-        vt->update_x0 = x * FONT_WIDTH;
+-    }
+-    if (vt->update_y0 > y * FONT_HEIGHT) {
+-        vt->update_y0 = y * FONT_HEIGHT;
+-    }
+-    if (vt->update_x1 < (x + 1) * FONT_WIDTH) {
+-        vt->update_x1 = (x + 1) * FONT_WIDTH;
+-    }
+-    if (vt->update_y1 < (y + 1) * FONT_HEIGHT) {
+-        vt->update_y1 = (y + 1) * FONT_HEIGHT;
+-    }
+-}
+-
+-static void vt100_show_cursor(QemuVT100 *vt, int show)
+-{
+-    TextCell *c;
+-    int y, y1;
+-    int x = vt->x;
+-
+-    vt->cursor_invalidate = 1;
+-
+-    if (x >= vt->width) {
+-        x = vt->width - 1;
+-    }
+-    y1 = (vt->y_base + vt->y) % vt->total_height;
+-    y = y1 - vt->y_displayed;
+-    if (y < 0) {
+-        y += vt->total_height;
+-    }
+-    if (y < vt->height) {
+-        c = &vt->cells[y1 * vt->width + x];
+-        if (show && cursor_visible_phase) {
+-            TextAttributes t_attrib = TEXT_ATTRIBUTES_DEFAULT;
+-            t_attrib.invers = !(t_attrib.invers); /* invert fg and bg */
+-            vt100_putcharxy(vt, x, y, c->ch, &t_attrib);
+-        } else {
+-            vt100_putcharxy(vt, x, y, c->ch, &(c->t_attrib));
+-        }
+-        vt100_invalidate_xy(vt, x, y);
+-    }
+-}
+-
+-static void vt100_image_update(QemuVT100 *vt, int x, int y, int width, int height)
+-{
+-    vt->image_update(vt, x, y, width, height);
+-}
+-
+-static void vt100_refresh(QemuVT100 *vt)
+-{
+-    TextCell *c;
+-    int x, y, y1;
+-    int w = pixman_image_get_width(vt->image);
+-    int h = pixman_image_get_height(vt->image);
+-
+-    vt->text_x[0] = 0;
+-    vt->text_y[0] = 0;
+-    vt->text_x[1] = vt->width - 1;
+-    vt->text_y[1] = vt->height - 1;
+-    vt->cursor_invalidate = 1;
+-
+-    image_fill_rect(vt->image, 0, 0, w, h,
+-                    color_table_rgb[0][QEMU_COLOR_BLACK]);
+-    y1 = vt->y_displayed;
+-    for (y = 0; y < vt->height; y++) {
+-        c = vt->cells + y1 * vt->width;
+-        for (x = 0; x < vt->width; x++) {
+-            vt100_putcharxy(vt, x, y, c->ch,
+-                          &(c->t_attrib));
+-            c++;
+-        }
+-        if (++y1 == vt->total_height) {
+-            y1 = 0;
+-        }
+-    }
+-    vt100_show_cursor(vt, 1);
+-    vt100_image_update(vt, 0, 0, w, h);
+-}
+-
+-static void vt100_scroll(QemuVT100 *vt, int ydelta)
+-{
+-    int i, y1;
+-
+-    if (ydelta > 0) {
+-        for(i = 0; i < ydelta; i++) {
+-            if (vt->y_displayed == vt->y_base)
+-                break;
+-            if (++vt->y_displayed == vt->total_height)
+-                vt->y_displayed = 0;
+-        }
+-    } else {
+-        ydelta = -ydelta;
+-        i = vt->backscroll_height;
+-        if (i > vt->total_height - vt->height)
+-            i = vt->total_height - vt->height;
+-        y1 = vt->y_base - i;
+-        if (y1 < 0)
+-            y1 += vt->total_height;
+-        for(i = 0; i < ydelta; i++) {
+-            if (vt->y_displayed == y1)
+-                break;
+-            if (--vt->y_displayed < 0)
+-                vt->y_displayed = vt->total_height - 1;
+-        }
+-    }
+-    vt100_refresh(vt);
+-}
+-
+ static void qemu_text_console_out_flush(QemuTextConsole *s)
  {
-@@ -1129,12 +1129,19 @@ static void text_console_invalidate(void *opaque)
+     uint32_t len, avail;
+@@ -322,64 +69,6 @@ static void qemu_text_console_out_flush(QemuTextConsole *s)
+     }
+ }
+ 
+-static void vt100_write(QemuVT100 *vt, const void *buf, size_t len)
+-{
+-    uint32_t num_free;
+-
+-    num_free = fifo8_num_free(&vt->out_fifo);
+-    fifo8_push_all(&vt->out_fifo, buf, MIN(num_free, len));
+-    vt->out_flush(vt);
+-}
+-
+-static size_t vt100_input(QemuVT100 *vt, const uint8_t *buf, size_t len);
+-
+-static void vt100_keysym(QemuVT100 *vt, int keysym)
+-{
+-    uint8_t buf[16], *q;
+-    int c;
+-
+-    switch(keysym) {
+-    case QEMU_KEY_CTRL_UP:
+-        vt100_scroll(vt, -1);
+-        break;
+-    case QEMU_KEY_CTRL_DOWN:
+-        vt100_scroll(vt, 1);
+-        break;
+-    case QEMU_KEY_CTRL_PAGEUP:
+-        vt100_scroll(vt, -10);
+-        break;
+-    case QEMU_KEY_CTRL_PAGEDOWN:
+-        vt100_scroll(vt, 10);
+-        break;
+-    default:
+-        /* convert the QEMU keysym to VT100 key string */
+-        q = buf;
+-        if (keysym >= 0xe100 && keysym <= 0xe11f) {
+-            *q++ = '\033';
+-            *q++ = '[';
+-            c = keysym - 0xe100;
+-            if (c >= 10)
+-                *q++ = '0' + (c / 10);
+-            *q++ = '0' + (c % 10);
+-            *q++ = '~';
+-        } else if (keysym >= 0xe120 && keysym <= 0xe17f) {
+-            *q++ = '\033';
+-            *q++ = '[';
+-            *q++ = keysym & 0xff;
+-        } else if (vt->echo && (keysym == '\r' || keysym == '\n')) {
+-            vt100_input(vt, (uint8_t *)"\r", 1);
+-            *q++ = '\n';
+-        } else {
+-            *q++ = keysym;
+-        }
+-        if (vt->echo) {
+-            vt100_input(vt, buf, q - buf);
+-        }
+-        vt100_write(vt, buf, q - buf);
+-        break;
+-    }
+-
+-}
+ /* called when an ascii key is pressed */
+ void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym)
+ {
+@@ -414,678 +103,10 @@ static void text_console_update(void *opaque, uint32_t *chardata)
+     }
+ }
+ 
+-static void vt100_set_image(QemuVT100 *vt, pixman_image_t *image)
+-{
+-    TextCell *cells, *c, *c1;
+-    int w1, x, y, last_width, w, h;
+-
+-    vt->image = image;
+-    w = pixman_image_get_width(image) / FONT_WIDTH;
+-    h = pixman_image_get_height(image) / FONT_HEIGHT;
+-    if (w == vt->width && h == vt->height) {
+-        return;
+-    }
+-
+-    last_width = vt->width;
+-    vt->width = w;
+-    vt->height = h;
+-
+-    w1 = MIN(vt->width, last_width);
+-
+-    cells = g_new(TextCell, vt->width * vt->total_height + 1);
+-    for (y = 0; y < vt->total_height; y++) {
+-        c = &cells[y * vt->width];
+-        if (w1 > 0) {
+-            c1 = &vt->cells[y * last_width];
+-            for (x = 0; x < w1; x++) {
+-                *c++ = *c1++;
+-            }
+-        }
+-        for (x = w1; x < vt->width; x++) {
+-            c->ch = ' ';
+-            c->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
+-            c++;
+-        }
+-    }
+-    g_free(vt->cells);
+-    vt->cells = cells;
+-}
+-
+-static void vt100_put_lf(QemuVT100 *vt)
+-{
+-    TextCell *c;
+-    int x, y1;
+-
+-    vt->y++;
+-    if (vt->y >= vt->height) {
+-        vt->y = vt->height - 1;
+-
+-        if (vt->y_displayed == vt->y_base) {
+-            if (++vt->y_displayed == vt->total_height)
+-                vt->y_displayed = 0;
+-        }
+-        if (++vt->y_base == vt->total_height)
+-            vt->y_base = 0;
+-        if (vt->backscroll_height < vt->total_height)
+-            vt->backscroll_height++;
+-        y1 = (vt->y_base + vt->height - 1) % vt->total_height;
+-        c = &vt->cells[y1 * vt->width];
+-        for(x = 0; x < vt->width; x++) {
+-            c->ch = ' ';
+-            c->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
+-            c++;
+-        }
+-        if (vt->y_displayed == vt->y_base) {
+-            vt->text_x[0] = 0;
+-            vt->text_y[0] = 0;
+-            vt->text_x[1] = vt->width - 1;
+-            vt->text_y[1] = vt->height - 1;
+-
+-            image_bitblt(vt->image, 0, FONT_HEIGHT, 0, 0,
+-                         vt->width * FONT_WIDTH,
+-                         (vt->height - 1) * FONT_HEIGHT);
+-            image_fill_rect(vt->image, 0, (vt->height - 1) * FONT_HEIGHT,
+-                            vt->width * FONT_WIDTH, FONT_HEIGHT,
+-                            color_table_rgb[0][TEXT_ATTRIBUTES_DEFAULT.bgcol]);
+-            vt->update_x0 = 0;
+-            vt->update_y0 = 0;
+-            vt->update_x1 = vt->width * FONT_WIDTH;
+-            vt->update_y1 = vt->height * FONT_HEIGHT;
+-        }
+-    }
+-}
+-
+-/* Set console attributes depending on the current escape codes.
+- * NOTE: I know this code is not very efficient (checking every color for it
+- * self) but it is more readable and better maintainable.
+- */
+-static void vt100_handle_escape(QemuVT100 *vt)
+-{
+-    int i;
+-
+-    for (i = 0; i < vt->nb_esc_params; i++) {
+-        switch (vt->esc_params[i]) {
+-            case 0: /* reset all console attributes to default */
+-                vt->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
+-                break;
+-            case 1:
+-                vt->t_attrib.bold = 1;
+-                break;
+-            case 4:
+-                vt->t_attrib.uline = 1;
+-                break;
+-            case 5:
+-                vt->t_attrib.blink = 1;
+-                break;
+-            case 7:
+-                vt->t_attrib.invers = 1;
+-                break;
+-            case 8:
+-                vt->t_attrib.unvisible = 1;
+-                break;
+-            case 22:
+-                vt->t_attrib.bold = 0;
+-                break;
+-            case 24:
+-                vt->t_attrib.uline = 0;
+-                break;
+-            case 25:
+-                vt->t_attrib.blink = 0;
+-                break;
+-            case 27:
+-                vt->t_attrib.invers = 0;
+-                break;
+-            case 28:
+-                vt->t_attrib.unvisible = 0;
+-                break;
+-            /* set foreground color */
+-            case 30:
+-                vt->t_attrib.fgcol = QEMU_COLOR_BLACK;
+-                break;
+-            case 31:
+-                vt->t_attrib.fgcol = QEMU_COLOR_RED;
+-                break;
+-            case 32:
+-                vt->t_attrib.fgcol = QEMU_COLOR_GREEN;
+-                break;
+-            case 33:
+-                vt->t_attrib.fgcol = QEMU_COLOR_YELLOW;
+-                break;
+-            case 34:
+-                vt->t_attrib.fgcol = QEMU_COLOR_BLUE;
+-                break;
+-            case 35:
+-                vt->t_attrib.fgcol = QEMU_COLOR_MAGENTA;
+-                break;
+-            case 36:
+-                vt->t_attrib.fgcol = QEMU_COLOR_CYAN;
+-                break;
+-            case 37:
+-                vt->t_attrib.fgcol = QEMU_COLOR_WHITE;
+-                break;
+-            /* set background color */
+-            case 40:
+-                vt->t_attrib.bgcol = QEMU_COLOR_BLACK;
+-                break;
+-            case 41:
+-                vt->t_attrib.bgcol = QEMU_COLOR_RED;
+-                break;
+-            case 42:
+-                vt->t_attrib.bgcol = QEMU_COLOR_GREEN;
+-                break;
+-            case 43:
+-                vt->t_attrib.bgcol = QEMU_COLOR_YELLOW;
+-                break;
+-            case 44:
+-                vt->t_attrib.bgcol = QEMU_COLOR_BLUE;
+-                break;
+-            case 45:
+-                vt->t_attrib.bgcol = QEMU_COLOR_MAGENTA;
+-                break;
+-            case 46:
+-                vt->t_attrib.bgcol = QEMU_COLOR_CYAN;
+-                break;
+-            case 47:
+-                vt->t_attrib.bgcol = QEMU_COLOR_WHITE;
+-                break;
+-        }
+-    }
+-}
+-
+-static void vt100_update_xy(QemuVT100 *vt, int x, int y)
+-{
+-    TextCell *c;
+-    int y1, y2;
+-
+-    vt->text_x[0] = MIN(vt->text_x[0], x);
+-    vt->text_x[1] = MAX(vt->text_x[1], x);
+-    vt->text_y[0] = MIN(vt->text_y[0], y);
+-    vt->text_y[1] = MAX(vt->text_y[1], y);
+-
+-    y1 = (vt->y_base + y) % vt->total_height;
+-    y2 = y1 - vt->y_displayed;
+-    if (y2 < 0) {
+-        y2 += vt->total_height;
+-    }
+-    if (y2 < vt->height) {
+-        if (x >= vt->width) {
+-            x = vt->width - 1;
+-        }
+-        c = &vt->cells[y1 * vt->width + x];
+-        vt100_putcharxy(vt, x, y2, c->ch,
+-                      &(c->t_attrib));
+-        vt100_invalidate_xy(vt, x, y2);
+-    }
+-}
+-
+-static void vt100_clear_xy(QemuVT100 *vt, int x, int y)
+-{
+-    int y1 = (vt->y_base + y) % vt->total_height;
+-    if (x >= vt->width) {
+-        x = vt->width - 1;
+-    }
+-    TextCell *c = &vt->cells[y1 * vt->width + x];
+-    c->ch = ' ';
+-    c->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
+-    vt100_update_xy(vt, x, y);
+-}
+-
+-/*
+- * UTF-8 DFA decoder by Bjoern Hoehrmann.
+- * Copyright (c) 2008-2010 Bjoern Hoehrmann <bjoern@hoehrmann.de>
+- * See https://github.com/polijan/utf8_decode for details.
+- *
+- * SPDX-License-Identifier: MIT
+- */
+-#define BH_UTF8_ACCEPT 0
+-#define BH_UTF8_REJECT 12
+-
+-static uint32_t bh_utf8_decode(uint32_t *state, uint32_t *codep, uint32_t byte)
+-{
+-    static const uint8_t utf8d[] = {
+-        /* character class lookup */
+-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+-        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+-        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,  9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,
+-        7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,  7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+-        8,8,2,2,2,2,2,2,2,2,2,2,2,2,2,2,  2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+-        10,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3, 11,6,6,6,5,8,8,8,8,8,8,8,8,8,8,8,
+-
+-        /* state transition lookup */
+-        0,12,24,36,60,96,84,12,12,12,48,72, 12,12,12,12,12,12,12,12,12,12,12,12,
+-        12, 0,12,12,12,12,12, 0,12, 0,12,12, 12,24,12,12,12,12,12,24,12,24,12,12,
+-        12,12,12,12,12,12,12,24,12,12,12,12, 12,24,12,12,12,12,12,12,12,24,12,12,
+-        12,12,12,12,12,12,12,36,12,36,12,12, 12,36,12,12,12,12,12,36,12,36,12,12,
+-        12,36,12,12,12,12,12,12,12,12,12,12,
+-    };
+-    uint32_t type = utf8d[byte];
+-
+-    *codep = (*state != BH_UTF8_ACCEPT) ?
+-        (byte & 0x3fu) | (*codep << 6) :
+-        (0xffu >> type) & (byte);
+-
+-    *state = utf8d[256 + *state + type];
+-    return *state;
+-}
+-
+-static void vt100_put_one(QemuVT100 *vt, int ch)
+-{
+-    TextCell *c;
+-    int y1;
+-    if (vt->x >= vt->width) {
+-        /* line wrap */
+-        vt->x = 0;
+-        vt100_put_lf(vt);
+-    }
+-    y1 = (vt->y_base + vt->y) % vt->total_height;
+-    c = &vt->cells[y1 * vt->width + vt->x];
+-    c->ch = ch;
+-    c->t_attrib = vt->t_attrib;
+-    vt100_update_xy(vt, vt->x, vt->y);
+-    vt->x++;
+-}
+-
+-/* set cursor, checking bounds */
+-static void vt100_set_cursor(QemuVT100 *vt, int x, int y)
+-{
+-    if (x < 0) {
+-        x = 0;
+-    }
+-    if (y < 0) {
+-        y = 0;
+-    }
+-    if (y >= vt->height) {
+-        y = vt->height - 1;
+-    }
+-    if (x >= vt->width) {
+-        x = vt->width - 1;
+-    }
+-
+-    vt->x = x;
+-    vt->y = y;
+-}
+-
+-/**
+- * vc_csi_P() - (DCH) deletes one or more characters from the cursor
+- * position to the right. As characters are deleted, the remaining
+- * characters between the cursor and right margin move to the
+- * left. Character attributes move with the characters.
+- */
+-static void vt100_csi_P(QemuVT100 *vt, unsigned int nr)
+-{
+-    TextCell *c1, *c2;
+-    unsigned int x1, x2, y;
+-    unsigned int end, len;
+-
+-    if (!nr) {
+-        nr = 1;
+-    }
+-    if (nr > vt->width - vt->x) {
+-        nr = vt->width - vt->x;
+-        if (!nr) {
+-            return;
+-        }
+-    }
+-
+-    x1 = vt->x;
+-    x2 = vt->x + nr;
+-    len = vt->width - x2;
+-    if (len) {
+-        y = (vt->y_base + vt->y) % vt->total_height;
+-        c1 = &vt->cells[y * vt->width + x1];
+-        c2 = &vt->cells[y * vt->width + x2];
+-        memmove(c1, c2, len * sizeof(*c1));
+-        for (end = x1 + len; x1 < end; x1++) {
+-            vt100_update_xy(vt, x1, vt->y);
+-        }
+-    }
+-    /* Clear the rest */
+-    for (; x1 < vt->width; x1++) {
+-        vt100_clear_xy(vt, x1, vt->y);
+-    }
+-}
+-
+-/**
+- * vc_csi_at() - (ICH) inserts `nr` blank characters with the default
+- * character attribute. The cursor remains at the beginning of the
+- * blank characters. Text between the cursor and right margin moves to
+- * the right. Characters scrolled past the right margin are lost.
+- */
+-static void vt100_csi_at(QemuVT100 *vt, unsigned int nr)
+-{
+-    TextCell *c1, *c2;
+-    unsigned int x1, x2, y;
+-    unsigned int end, len;
+-
+-    if (!nr) {
+-        nr = 1;
+-    }
+-    if (nr > vt->width - vt->x) {
+-        nr = vt->width - vt->x;
+-        if (!nr) {
+-            return;
+-        }
+-    }
+-
+-    x1 = vt->x + nr;
+-    x2 = vt->x;
+-    len = vt->width - x1;
+-    if (len) {
+-        y = (vt->y_base + vt->y) % vt->total_height;
+-        c1 = &vt->cells[y * vt->width + x1];
+-        c2 = &vt->cells[y * vt->width + x2];
+-        memmove(c1, c2, len * sizeof(*c1));
+-        for (end = x1 + len; x1 < end; x1++) {
+-            vt100_update_xy(vt, x1, vt->y);
+-        }
+-    }
+-    /* Insert blanks */
+-    for (x1 = vt->x; x1 < vt->x + nr; x1++) {
+-        vt100_clear_xy(vt, x1, vt->y);
+-    }
+-}
+-
+-/**
+- * vt100_save_cursor() - saves cursor position and character attributes.
+- */
+-static void vt100_save_cursor(QemuVT100 *vt)
+-{
+-    vt->x_saved = vt->x;
+-    vt->y_saved = vt->y;
+-    vt->t_attrib_saved = vt->t_attrib;
+-}
+-
+-/**
+- * vt100_restore_cursor() - restores cursor position and character
+- * attributes from saved state.
+- */
+-static void vt100_restore_cursor(QemuVT100 *vt)
+-{
+-    vt->x = vt->x_saved;
+-    vt->y = vt->y_saved;
+-    vt->t_attrib = vt->t_attrib_saved;
+-}
+-
+-static void vt100_putchar(QemuVT100 *vt, int ch)
+-{
+-    int i;
+-    int x, y;
+-    g_autofree char *response = NULL;
+-
+-    switch (vt->state) {
+-    case TTY_STATE_NORM:
+-        if (ch >= 0x80 && vt->encoding == CHARDEV_VC_ENCODING_UTF8) {
+-            switch (bh_utf8_decode(&vt->utf8_state, &vt->utf8_codepoint, ch)) {
+-            case BH_UTF8_ACCEPT:
+-                vt100_put_one(vt, unicode_to_cp437(vt->utf8_codepoint));
+-                break;
+-            case BH_UTF8_REJECT:
+-                vt->utf8_state = BH_UTF8_ACCEPT;
+-                break;
+-            default:
+-                /* Need more bytes */
+-                break;
+-            }
+-            break;
+-        }
+-        vt->utf8_state = BH_UTF8_ACCEPT;
+-        switch(ch) {
+-        case '\r':  /* carriage return */
+-            vt->x = 0;
+-            break;
+-        case '\n':  /* newline */
+-            vt100_put_lf(vt);
+-            break;
+-        case '\b':  /* backspace */
+-            if (vt->x > 0)
+-                vt->x--;
+-            break;
+-        case '\t':  /* tabspace */
+-            if (vt->x + (8 - (vt->x % 8)) > vt->width) {
+-                vt->x = 0;
+-                vt100_put_lf(vt);
+-            } else {
+-                vt->x = vt->x + (8 - (vt->x % 8));
+-            }
+-            break;
+-        case '\a':  /* alert aka. bell */
+-            /* TODO: has to be implemented */
+-            break;
+-        case 14:
+-            /* SO (shift out), character set 1 (ignored) */
+-            break;
+-        case 15:
+-            /* SI (shift in), character set 0 (ignored) */
+-            break;
+-        case 27:    /* esc (introducing an escape sequence) */
+-            vt->state = TTY_STATE_ESC;
+-            break;
+-        default:
+-            vt100_put_one(vt, ch);
+-            break;
+-        }
+-        break;
+-    case TTY_STATE_ESC: /* check if it is a terminal escape sequence */
+-        if (ch == '[') {
+-            for(i=0;i<MAX_ESC_PARAMS;i++)
+-                vt->esc_params[i] = 0;
+-            vt->nb_esc_params = 0;
+-            vt->state = TTY_STATE_CSI;
+-        } else if (ch == '(') {
+-            vt->state = TTY_STATE_G0;
+-        } else if (ch == ')') {
+-            vt->state = TTY_STATE_G1;
+-        } else if (ch == ']' || ch == 'P' || ch == 'X'
+-                   || ch == '^' || ch == '_') {
+-            /* String sequences: OSC, DCS, SOS, PM, APC */
+-            vt->state = TTY_STATE_OSC;
+-        } else if (ch == '7') {
+-            vt100_save_cursor(vt);
+-            vt->state = TTY_STATE_NORM;
+-        } else if (ch == '8') {
+-            vt100_restore_cursor(vt);
+-            vt->state = TTY_STATE_NORM;
+-        } else {
+-            vt->state = TTY_STATE_NORM;
+-        }
+-        break;
+-    case TTY_STATE_CSI: /* handle escape sequence parameters */
+-        if (ch >= '0' && ch <= '9') {
+-            if (vt->nb_esc_params < MAX_ESC_PARAMS) {
+-                int *param = &vt->esc_params[vt->nb_esc_params];
+-                int digit = (ch - '0');
+-
+-                *param = (*param <= (INT_MAX - digit) / 10) ?
+-                         *param * 10 + digit : INT_MAX;
+-            }
+-        } else {
+-            if (vt->nb_esc_params < MAX_ESC_PARAMS)
+-                vt->nb_esc_params++;
+-            if (ch == ';' || ch == '?') {
+-                break;
+-            }
+-            trace_console_putchar_csi(vt->esc_params[0], vt->esc_params[1],
+-                                      ch, vt->nb_esc_params);
+-            vt->state = TTY_STATE_NORM;
+-            switch(ch) {
+-            case 'A':
+-                /* move cursor up */
+-                if (vt->esc_params[0] == 0) {
+-                    vt->esc_params[0] = 1;
+-                }
+-                vt100_set_cursor(vt, vt->x, vt->y - vt->esc_params[0]);
+-                break;
+-            case 'B':
+-                /* move cursor down */
+-                if (vt->esc_params[0] == 0) {
+-                    vt->esc_params[0] = 1;
+-                }
+-                vt100_set_cursor(vt, vt->x, vt->y + vt->esc_params[0]);
+-                break;
+-            case 'C':
+-                /* move cursor right */
+-                if (vt->esc_params[0] == 0) {
+-                    vt->esc_params[0] = 1;
+-                }
+-                vt100_set_cursor(vt, vt->x + vt->esc_params[0], vt->y);
+-                break;
+-            case 'D':
+-                /* move cursor left */
+-                if (vt->esc_params[0] == 0) {
+-                    vt->esc_params[0] = 1;
+-                }
+-                vt100_set_cursor(vt, vt->x - vt->esc_params[0], vt->y);
+-                break;
+-            case 'G':
+-                /* move cursor to column */
+-                vt100_set_cursor(vt, vt->esc_params[0] - 1, vt->y);
+-                break;
+-            case 'f':
+-            case 'H':
+-                /* move cursor to row, column */
+-                vt100_set_cursor(vt, vt->esc_params[1] - 1, vt->esc_params[0] - 1);
+-                break;
+-            case 'J':
+-                switch (vt->esc_params[0]) {
+-                case 0:
+-                    /* clear to end of screen */
+-                    for (y = vt->y; y < vt->height; y++) {
+-                        for (x = 0; x < vt->width; x++) {
+-                            if (y == vt->y && x < vt->x) {
+-                                continue;
+-                            }
+-                            vt100_clear_xy(vt, x, y);
+-                        }
+-                    }
+-                    break;
+-                case 1:
+-                    /* clear from beginning of screen */
+-                    for (y = 0; y <= vt->y; y++) {
+-                        for (x = 0; x < vt->width; x++) {
+-                            if (y == vt->y && x > vt->x) {
+-                                break;
+-                            }
+-                            vt100_clear_xy(vt, x, y);
+-                        }
+-                    }
+-                    break;
+-                case 2:
+-                    /* clear entire screen */
+-                    for (y = 0; y < vt->height; y++) {
+-                        for (x = 0; x < vt->width; x++) {
+-                            vt100_clear_xy(vt, x, y);
+-                        }
+-                    }
+-                    break;
+-                }
+-                break;
+-            case 'K':
+-                switch (vt->esc_params[0]) {
+-                case 0:
+-                    /* clear to eol */
+-                    for(x = vt->x; x < vt->width; x++) {
+-                        vt100_clear_xy(vt, x, vt->y);
+-                    }
+-                    break;
+-                case 1:
+-                    /* clear from beginning of line */
+-                    for (x = 0; x <= vt->x && x < vt->width; x++) {
+-                        vt100_clear_xy(vt, x, vt->y);
+-                    }
+-                    break;
+-                case 2:
+-                    /* clear entire line */
+-                    for(x = 0; x < vt->width; x++) {
+-                        vt100_clear_xy(vt, x, vt->y);
+-                    }
+-                    break;
+-                }
+-                break;
+-            case 'P':
+-                vt100_csi_P(vt, vt->esc_params[0]);
+-                break;
+-            case 'm':
+-                vt100_handle_escape(vt);
+-                break;
+-            case 'n':
+-                switch (vt->esc_params[0]) {
+-                case 5:
+-                    /* report console status (always succeed)*/
+-                    vt100_write(vt, "\033[0n", 4);
+-                    break;
+-                case 6:
+-                    /* report cursor position */
+-                    response = g_strdup_printf("\033[%d;%dR",
+-                                               vt->y + 1, vt->x + 1);
+-                    vt100_write(vt, response, strlen(response));
+-                    break;
+-                }
+-                break;
+-            case 's':
+-                vt100_save_cursor(vt);
+-                break;
+-            case 'u':
+-                vt100_restore_cursor(vt);
+-                break;
+-            case '@':
+-                vt100_csi_at(vt, vt->esc_params[0]);
+-                break;
+-            default:
+-                trace_console_putchar_unhandled(ch);
+-                break;
+-            }
+-            break;
+-        }
+-        break;
+-    case TTY_STATE_OSC: /* Operating System Command: ESC ] ... BEL/ST */
+-        if (ch == '\a') {
+-            /* BEL terminates OSC */
+-            vt->state = TTY_STATE_NORM;
+-        } else if (ch == 27) {
+-            /* ESC might start ST (ESC \) */
+-            vt->state = TTY_STATE_ESC;
+-        }
+-        /* All other bytes are silently consumed */
+-        break;
+-    case TTY_STATE_G0: /* set character sets */
+-    case TTY_STATE_G1: /* set character sets */
+-        switch (ch) {
+-        case 'B':
+-            /* Latin-1 map */
+-            break;
+-        }
+-        vt->state = TTY_STATE_NORM;
+-        break;
+-    }
+-}
+-
+ #define TYPE_CHARDEV_VC "chardev-vc"
+ DECLARE_INSTANCE_CHECKER(VCChardev, VC_CHARDEV,
+                          TYPE_CHARDEV_VC)
+ 
+-static size_t vt100_input(QemuVT100 *vt, const uint8_t *buf, size_t len)
+-{
+-    int i;
+-
+-    vt->update_x0 = vt->width * FONT_WIDTH;
+-    vt->update_y0 = vt->height * FONT_HEIGHT;
+-    vt->update_x1 = 0;
+-    vt->update_y1 = 0;
+-    vt100_show_cursor(vt, 0);
+-    for(i = 0; i < len; i++) {
+-        vt100_putchar(vt, buf[i]);
+-    }
+-    vt100_show_cursor(vt, 1);
+-    if (vt->update_x0 < vt->update_x1) {
+-        vt100_image_update(vt, vt->update_x0, vt->update_y0,
+-                           vt->update_x1 - vt->update_x0,
+-                           vt->update_y1 - vt->update_y0);
+-    }
+-    return len;
+-}
+-
+ static int vc_chr_write(Chardev *chr, const uint8_t *buf, int len)
+ {
+     VCChardev *drv = VC_CHARDEV(chr);
+@@ -1094,30 +115,6 @@ static int vc_chr_write(Chardev *chr, const uint8_t *buf, int len)
+     return vt100_input(&s->vt, buf, len);
+ }
+ 
+-void vt100_update_cursor(void)
+-{
+-    QemuVT100 *vt;
+-
+-    cursor_visible_phase = !cursor_visible_phase;
+-
+-    if (QTAILQ_EMPTY(&vt100s)) {
+-        return;
+-    }
+-
+-    QTAILQ_FOREACH(vt, &vt100s, list) {
+-        vt100_refresh(vt);
+-    }
+-
+-    timer_mod(cursor_timer,
+-        qemu_clock_get_ms(QEMU_CLOCK_REALTIME) + CONSOLE_CURSOR_PERIOD / 2);
+-}
+-
+-static void
+-cursor_timer_cb(void *opaque)
+-{
+-    vt100_update_cursor();
+-}
+-
+ static void text_console_invalidate(void *opaque)
+ {
+     QemuTextConsole *s = QEMU_TEXT_CONSOLE(opaque);
+@@ -1128,13 +125,6 @@ static void text_console_invalidate(void *opaque)
      vt100_refresh(&s->vt);
  }
  
-+static void vt100_fini(QemuVT100 *vt)
-+{
-+    QTAILQ_REMOVE(&vt100s, vt, list);
-+    fifo8_destroy(&vt->out_fifo);
-+    g_free(vt->cells);
-+}
-+
+-static void vt100_fini(QemuVT100 *vt)
+-{
+-    QTAILQ_REMOVE(&vt100s, vt, list);
+-    fifo8_destroy(&vt->out_fifo);
+-    g_free(vt->cells);
+-}
+-
  static void
  qemu_text_console_finalize(Object *obj)
  {
-     QemuTextConsole *s = QEMU_TEXT_CONSOLE(obj);
- 
--    QTAILQ_REMOVE(&vt100s, &s->vt, list);
-+    vt100_fini(&s->vt);
+@@ -1213,27 +203,6 @@ static void text_console_out_flush(QemuVT100 *vt)
+     qemu_text_console_out_flush(console);
  }
  
- static void
-@@ -1142,10 +1149,6 @@ qemu_text_console_class_init(ObjectClass *oc, const void *data)
- {
-     QemuConsoleClass *cc = QEMU_CONSOLE_CLASS(oc);
- 
+-static void vt100_init(QemuVT100 *vt,
+-                       pixman_image_t *image,
+-                       ChardevVCEncoding encoding,
+-                       void (*image_update)(QemuVT100 *vt, int x, int y, int w, int h),
+-                       void (*out_flush)(QemuVT100 *vt))
+-{
 -    if (!cursor_timer) {
 -        cursor_timer = timer_new_ms(QEMU_CLOCK_REALTIME, cursor_timer_cb, NULL);
 -    }
 -
-     cc->get_label = qemu_text_console_get_label;
- }
+-    vt->encoding = encoding;
+-    QTAILQ_INSERT_HEAD(&vt100s, vt, list);
+-    fifo8_create(&vt->out_fifo, 16);
+-    vt->total_height = DEFAULT_BACKSCROLL;
+-    vt->image_update = image_update;
+-    vt->out_flush = out_flush;
+-    /* set current text attributes to default */
+-    vt->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
+-    vt100_set_image(vt, image);
+-}
+-
+ static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
+ {
+     ChardevVC *vc = backend->u.vc.data;
+diff --git a/ui/console.c b/ui/console.c
+index 1c75b1a355b..b837ce1c9fc 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -39,6 +39,8 @@
+ #include "system/memory.h"
+ #include "qom/object.h"
+ #include "qemu/memfd.h"
++#include "ui/vt100.h"
++#include "vgafont.h"
  
-@@ -1211,6 +1214,27 @@ static void text_console_out_flush(QemuVT100 *vt)
-     qemu_text_console_out_flush(console);
- }
+ #include "console-priv.h"
  
-+static void vt100_init(QemuVT100 *vt,
-+                       pixman_image_t *image,
-+                       ChardevVCEncoding encoding,
-+                       void (*image_update)(QemuVT100 *vt, int x, int y, int w, int h),
-+                       void (*out_flush)(QemuVT100 *vt))
+diff --git a/ui/vt100.c b/ui/vt100.c
+new file mode 100644
+index 00000000000..e2fba822523
+--- /dev/null
++++ b/ui/vt100.c
+@@ -0,0 +1,984 @@
++/*
++ * SPDX-License-Identifier: MIT
++ * QEMU vt100
++ */
++#include "qemu/osdep.h"
++#include "qemu/timer.h"
++#include "cp437.h"
++#include "vgafont.h"
++#include "vt100.h"
++
++#include "trace.h"
++
++#define DEFAULT_BACKSCROLL 512
++#define CONSOLE_CURSOR_PERIOD 500
++
++static const pixman_color_t color_table_rgb[2][8] = {
++    {   /* dark */
++        [QEMU_COLOR_BLACK]   = QEMU_PIXMAN_COLOR_BLACK,
++        [QEMU_COLOR_BLUE]    = QEMU_PIXMAN_COLOR(0x00, 0x00, 0xaa),  /* blue */
++        [QEMU_COLOR_GREEN]   = QEMU_PIXMAN_COLOR(0x00, 0xaa, 0x00),  /* green */
++        [QEMU_COLOR_CYAN]    = QEMU_PIXMAN_COLOR(0x00, 0xaa, 0xaa),  /* cyan */
++        [QEMU_COLOR_RED]     = QEMU_PIXMAN_COLOR(0xaa, 0x00, 0x00),  /* red */
++        [QEMU_COLOR_MAGENTA] = QEMU_PIXMAN_COLOR(0xaa, 0x00, 0xaa),  /* magenta */
++        [QEMU_COLOR_YELLOW]  = QEMU_PIXMAN_COLOR(0xaa, 0xaa, 0x00),  /* yellow */
++        [QEMU_COLOR_WHITE]   = QEMU_PIXMAN_COLOR_GRAY,
++    },
++    {   /* bright */
++        [QEMU_COLOR_BLACK]   = QEMU_PIXMAN_COLOR_BLACK,
++        [QEMU_COLOR_BLUE]    = QEMU_PIXMAN_COLOR(0x00, 0x00, 0xff),  /* blue */
++        [QEMU_COLOR_GREEN]   = QEMU_PIXMAN_COLOR(0x00, 0xff, 0x00),  /* green */
++        [QEMU_COLOR_CYAN]    = QEMU_PIXMAN_COLOR(0x00, 0xff, 0xff),  /* cyan */
++        [QEMU_COLOR_RED]     = QEMU_PIXMAN_COLOR(0xff, 0x00, 0x00),  /* red */
++        [QEMU_COLOR_MAGENTA] = QEMU_PIXMAN_COLOR(0xff, 0x00, 0xff),  /* magenta */
++        [QEMU_COLOR_YELLOW]  = QEMU_PIXMAN_COLOR(0xff, 0xff, 0x00),  /* yellow */
++        [QEMU_COLOR_WHITE]   = QEMU_PIXMAN_COLOR(0xff, 0xff, 0xff),  /* white */
++    }
++};
++
++static bool cursor_visible_phase;
++static QEMUTimer *cursor_timer;
++static QTAILQ_HEAD(QemuVT100Head, QemuVT100) vt100s =
++    QTAILQ_HEAD_INITIALIZER(vt100s);
++
++static void image_fill_rect(pixman_image_t *image, int posx, int posy,
++                            int width, int height, pixman_color_t color)
++{
++    pixman_rectangle16_t rect = {
++        .x = posx, .y = posy, .width = width, .height = height
++    };
++
++    pixman_image_fill_rectangles(PIXMAN_OP_SRC, image,
++                                 &color, 1, &rect);
++}
++
++/* copy from (xs, ys) to (xd, yd) a rectangle of size (w, h) */
++static void image_bitblt(pixman_image_t *image,
++                         int xs, int ys, int xd, int yd, int w, int h)
++{
++    pixman_image_composite(PIXMAN_OP_SRC,
++                           image, NULL, image,
++                           xs, ys, 0, 0, xd, yd, w, h);
++}
++
++static void vt100_putcharxy(QemuVT100 *vt, int x, int y, int ch,
++                            TextAttributes *t_attrib)
++{
++    static pixman_image_t *glyphs[256];
++    pixman_color_t fgcol, bgcol;
++
++    assert(vt->image);
++    if (t_attrib->invers) {
++        bgcol = color_table_rgb[t_attrib->bold][t_attrib->fgcol];
++        fgcol = color_table_rgb[t_attrib->bold][t_attrib->bgcol];
++    } else {
++        fgcol = color_table_rgb[t_attrib->bold][t_attrib->fgcol];
++        bgcol = color_table_rgb[t_attrib->bold][t_attrib->bgcol];
++    }
++
++    if (!glyphs[ch]) {
++        glyphs[ch] = qemu_pixman_glyph_from_vgafont(FONT_HEIGHT, vgafont16, ch);
++    }
++    qemu_pixman_glyph_render(glyphs[ch], vt->image,
++                             &fgcol, &bgcol, x, y, FONT_WIDTH, FONT_HEIGHT);
++}
++
++static void vt100_invalidate_xy(QemuVT100 *vt, int x, int y)
++{
++    if (vt->update_x0 > x * FONT_WIDTH) {
++        vt->update_x0 = x * FONT_WIDTH;
++    }
++    if (vt->update_y0 > y * FONT_HEIGHT) {
++        vt->update_y0 = y * FONT_HEIGHT;
++    }
++    if (vt->update_x1 < (x + 1) * FONT_WIDTH) {
++        vt->update_x1 = (x + 1) * FONT_WIDTH;
++    }
++    if (vt->update_y1 < (y + 1) * FONT_HEIGHT) {
++        vt->update_y1 = (y + 1) * FONT_HEIGHT;
++    }
++}
++
++static void vt100_show_cursor(QemuVT100 *vt, int show)
++{
++    TextCell *c;
++    int y, y1;
++    int x = vt->x;
++
++    vt->cursor_invalidate = 1;
++
++    if (x >= vt->width) {
++        x = vt->width - 1;
++    }
++    y1 = (vt->y_base + vt->y) % vt->total_height;
++    y = y1 - vt->y_displayed;
++    if (y < 0) {
++        y += vt->total_height;
++    }
++    if (y < vt->height) {
++        c = &vt->cells[y1 * vt->width + x];
++        if (show && cursor_visible_phase) {
++            TextAttributes t_attrib = TEXT_ATTRIBUTES_DEFAULT;
++            t_attrib.invers = !(t_attrib.invers); /* invert fg and bg */
++            vt100_putcharxy(vt, x, y, c->ch, &t_attrib);
++        } else {
++            vt100_putcharxy(vt, x, y, c->ch, &(c->t_attrib));
++        }
++        vt100_invalidate_xy(vt, x, y);
++    }
++}
++
++static void vt100_image_update(QemuVT100 *vt, int x, int y, int width, int height)
++{
++    vt->image_update(vt, x, y, width, height);
++}
++
++void vt100_refresh(QemuVT100 *vt)
++{
++    TextCell *c;
++    int x, y, y1;
++    int w = pixman_image_get_width(vt->image);
++    int h = pixman_image_get_height(vt->image);
++
++    vt->text_x[0] = 0;
++    vt->text_y[0] = 0;
++    vt->text_x[1] = vt->width - 1;
++    vt->text_y[1] = vt->height - 1;
++    vt->cursor_invalidate = 1;
++
++    image_fill_rect(vt->image, 0, 0, w, h,
++                    color_table_rgb[0][QEMU_COLOR_BLACK]);
++    y1 = vt->y_displayed;
++    for (y = 0; y < vt->height; y++) {
++        c = vt->cells + y1 * vt->width;
++        for (x = 0; x < vt->width; x++) {
++            vt100_putcharxy(vt, x, y, c->ch,
++                            &(c->t_attrib));
++            c++;
++        }
++        if (++y1 == vt->total_height) {
++            y1 = 0;
++        }
++    }
++    vt100_show_cursor(vt, 1);
++    vt100_image_update(vt, 0, 0, w, h);
++}
++
++static void vt100_scroll(QemuVT100 *vt, int ydelta)
++{
++    int i, y1;
++
++    if (ydelta > 0) {
++        for (i = 0; i < ydelta; i++) {
++            if (vt->y_displayed == vt->y_base) {
++                break;
++            }
++            if (++vt->y_displayed == vt->total_height) {
++                vt->y_displayed = 0;
++            }
++        }
++    } else {
++        ydelta = -ydelta;
++        i = vt->backscroll_height;
++        if (i > vt->total_height - vt->height) {
++            i = vt->total_height - vt->height;
++        }
++        y1 = vt->y_base - i;
++        if (y1 < 0) {
++            y1 += vt->total_height;
++        }
++        for (i = 0; i < ydelta; i++) {
++            if (vt->y_displayed == y1) {
++                break;
++            }
++            if (--vt->y_displayed < 0) {
++                vt->y_displayed = vt->total_height - 1;
++            }
++        }
++    }
++    vt100_refresh(vt);
++}
++
++static void vt100_write(QemuVT100 *vt, const void *buf, size_t len)
++{
++    uint32_t num_free;
++
++    num_free = fifo8_num_free(&vt->out_fifo);
++    fifo8_push_all(&vt->out_fifo, buf, MIN(num_free, len));
++    vt->out_flush(vt);
++}
++
++void vt100_set_image(QemuVT100 *vt, pixman_image_t *image)
++{
++    TextCell *cells, *c, *c1;
++    int w1, x, y, last_width, w, h;
++
++    vt->image = image;
++    w = pixman_image_get_width(vt->image) / FONT_WIDTH;
++    h = pixman_image_get_height(vt->image) / FONT_HEIGHT;
++    if (w == vt->width && h == vt->height) {
++        return;
++    }
++
++    last_width = vt->width;
++    vt->width = w;
++    vt->height = h;
++
++    w1 = MIN(vt->width, last_width);
++
++    cells = g_new(TextCell, vt->width * vt->total_height + 1);
++    for (y = 0; y < vt->total_height; y++) {
++        c = &cells[y * vt->width];
++        if (w1 > 0) {
++            c1 = &vt->cells[y * last_width];
++            for (x = 0; x < w1; x++) {
++                *c++ = *c1++;
++            }
++        }
++        for (x = w1; x < vt->width; x++) {
++            c->ch = ' ';
++            c->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
++            c++;
++        }
++    }
++    g_free(vt->cells);
++    vt->cells = cells;
++}
++
++static void vt100_put_lf(QemuVT100 *vt)
++{
++    TextCell *c;
++    int x, y1;
++
++    vt->y++;
++    if (vt->y >= vt->height) {
++        vt->y = vt->height - 1;
++
++        if (vt->y_displayed == vt->y_base) {
++            if (++vt->y_displayed == vt->total_height) {
++                vt->y_displayed = 0;
++            }
++        }
++        if (++vt->y_base == vt->total_height) {
++            vt->y_base = 0;
++        }
++        if (vt->backscroll_height < vt->total_height) {
++            vt->backscroll_height++;
++        }
++        y1 = (vt->y_base + vt->height - 1) % vt->total_height;
++        c = &vt->cells[y1 * vt->width];
++        for (x = 0; x < vt->width; x++) {
++            c->ch = ' ';
++            c->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
++            c++;
++        }
++        if (vt->y_displayed == vt->y_base) {
++            vt->text_x[0] = 0;
++            vt->text_y[0] = 0;
++            vt->text_x[1] = vt->width - 1;
++            vt->text_y[1] = vt->height - 1;
++
++            image_bitblt(vt->image, 0, FONT_HEIGHT, 0, 0,
++                         vt->width * FONT_WIDTH,
++                         (vt->height - 1) * FONT_HEIGHT);
++            image_fill_rect(vt->image, 0, (vt->height - 1) * FONT_HEIGHT,
++                            vt->width * FONT_WIDTH, FONT_HEIGHT,
++                            color_table_rgb[0][TEXT_ATTRIBUTES_DEFAULT.bgcol]);
++            vt->update_x0 = 0;
++            vt->update_y0 = 0;
++            vt->update_x1 = vt->width * FONT_WIDTH;
++            vt->update_y1 = vt->height * FONT_HEIGHT;
++        }
++    }
++}
++
++/*
++ * Set console attributes depending on the current escape codes.
++ * NOTE: I know this code is not very efficient (checking every color for it
++ * self) but it is more readable and better maintainable.
++ */
++static void vt100_handle_escape(QemuVT100 *vt)
++{
++    int i;
++
++    for (i = 0; i < vt->nb_esc_params; i++) {
++        switch (vt->esc_params[i]) {
++        case 0: /* reset all console attributes to default */
++            vt->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
++            break;
++        case 1:
++            vt->t_attrib.bold = 1;
++            break;
++        case 4:
++            vt->t_attrib.uline = 1;
++            break;
++        case 5:
++            vt->t_attrib.blink = 1;
++            break;
++        case 7:
++            vt->t_attrib.invers = 1;
++            break;
++        case 8:
++            vt->t_attrib.unvisible = 1;
++            break;
++        case 22:
++            vt->t_attrib.bold = 0;
++            break;
++        case 24:
++            vt->t_attrib.uline = 0;
++            break;
++        case 25:
++            vt->t_attrib.blink = 0;
++            break;
++        case 27:
++            vt->t_attrib.invers = 0;
++            break;
++        case 28:
++            vt->t_attrib.unvisible = 0;
++            break;
++        /* set foreground color */
++        case 30:
++            vt->t_attrib.fgcol = QEMU_COLOR_BLACK;
++            break;
++        case 31:
++            vt->t_attrib.fgcol = QEMU_COLOR_RED;
++            break;
++        case 32:
++            vt->t_attrib.fgcol = QEMU_COLOR_GREEN;
++            break;
++        case 33:
++            vt->t_attrib.fgcol = QEMU_COLOR_YELLOW;
++            break;
++        case 34:
++            vt->t_attrib.fgcol = QEMU_COLOR_BLUE;
++            break;
++        case 35:
++            vt->t_attrib.fgcol = QEMU_COLOR_MAGENTA;
++            break;
++        case 36:
++            vt->t_attrib.fgcol = QEMU_COLOR_CYAN;
++            break;
++        case 37:
++            vt->t_attrib.fgcol = QEMU_COLOR_WHITE;
++            break;
++        /* set background color */
++        case 40:
++            vt->t_attrib.bgcol = QEMU_COLOR_BLACK;
++            break;
++        case 41:
++            vt->t_attrib.bgcol = QEMU_COLOR_RED;
++            break;
++        case 42:
++            vt->t_attrib.bgcol = QEMU_COLOR_GREEN;
++            break;
++        case 43:
++            vt->t_attrib.bgcol = QEMU_COLOR_YELLOW;
++            break;
++        case 44:
++            vt->t_attrib.bgcol = QEMU_COLOR_BLUE;
++            break;
++        case 45:
++            vt->t_attrib.bgcol = QEMU_COLOR_MAGENTA;
++            break;
++        case 46:
++            vt->t_attrib.bgcol = QEMU_COLOR_CYAN;
++            break;
++        case 47:
++            vt->t_attrib.bgcol = QEMU_COLOR_WHITE;
++            break;
++        }
++    }
++}
++
++static void vt100_update_xy(QemuVT100 *vt, int x, int y)
++{
++    TextCell *c;
++    int y1, y2;
++
++    vt->text_x[0] = MIN(vt->text_x[0], x);
++    vt->text_x[1] = MAX(vt->text_x[1], x);
++    vt->text_y[0] = MIN(vt->text_y[0], y);
++    vt->text_y[1] = MAX(vt->text_y[1], y);
++
++    y1 = (vt->y_base + y) % vt->total_height;
++    y2 = y1 - vt->y_displayed;
++    if (y2 < 0) {
++        y2 += vt->total_height;
++    }
++    if (y2 < vt->height) {
++        if (x >= vt->width) {
++            x = vt->width - 1;
++        }
++        c = &vt->cells[y1 * vt->width + x];
++        vt100_putcharxy(vt, x, y2, c->ch,
++                      &(c->t_attrib));
++        vt100_invalidate_xy(vt, x, y2);
++    }
++}
++
++static void vt100_clear_xy(QemuVT100 *vt, int x, int y)
++{
++    int y1 = (vt->y_base + y) % vt->total_height;
++    if (x >= vt->width) {
++        x = vt->width - 1;
++    }
++    TextCell *c = &vt->cells[y1 * vt->width + x];
++    c->ch = ' ';
++    c->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
++    vt100_update_xy(vt, x, y);
++}
++
++/*
++ * UTF-8 DFA decoder by Bjoern Hoehrmann.
++ * Copyright (c) 2008-2010 Bjoern Hoehrmann <bjoern@hoehrmann.de>
++ * See https://github.com/polijan/utf8_decode for details.
++ *
++ * SPDX-License-Identifier: MIT
++ */
++#define BH_UTF8_ACCEPT 0
++#define BH_UTF8_REJECT 12
++
++static uint32_t bh_utf8_decode(uint32_t *state, uint32_t *codep, uint32_t byte)
++{
++    static const uint8_t utf8d[] = {
++        /* character class lookup */
++        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
++        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
++        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
++        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
++        1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,  9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,
++        7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,  7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
++        8,8,2,2,2,2,2,2,2,2,2,2,2,2,2,2,  2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
++        10,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3, 11,6,6,6,5,8,8,8,8,8,8,8,8,8,8,8,
++
++        /* state transition lookup */
++        0,12,24,36,60,96,84,12,12,12,48,72, 12,12,12,12,12,12,12,12,12,12,12,12,
++        12, 0,12,12,12,12,12, 0,12, 0,12,12, 12,24,12,12,12,12,12,24,12,24,12,12,
++        12,12,12,12,12,12,12,24,12,12,12,12, 12,24,12,12,12,12,12,12,12,24,12,12,
++        12,12,12,12,12,12,12,36,12,36,12,12, 12,36,12,12,12,12,12,36,12,36,12,12,
++        12,36,12,12,12,12,12,12,12,12,12,12,
++    };
++    uint32_t type = utf8d[byte];
++
++    *codep = (*state != BH_UTF8_ACCEPT) ?
++        (byte & 0x3fu) | (*codep << 6) :
++        (0xffu >> type) & (byte);
++
++    *state = utf8d[256 + *state + type];
++    return *state;
++}
++
++static void vt100_put_one(QemuVT100 *vt, int ch)
++{
++    TextCell *c;
++    int y1;
++    if (vt->x >= vt->width) {
++        /* line wrap */
++        vt->x = 0;
++        vt100_put_lf(vt);
++    }
++    y1 = (vt->y_base + vt->y) % vt->total_height;
++    c = &vt->cells[y1 * vt->width + vt->x];
++    c->ch = ch;
++    c->t_attrib = vt->t_attrib;
++    vt100_update_xy(vt, vt->x, vt->y);
++    vt->x++;
++}
++
++/* set cursor, checking bounds */
++static void vt100_set_cursor(QemuVT100 *vt, int x, int y)
++{
++    if (x < 0) {
++        x = 0;
++    }
++    if (y < 0) {
++        y = 0;
++    }
++    if (y >= vt->height) {
++        y = vt->height - 1;
++    }
++    if (x >= vt->width) {
++        x = vt->width - 1;
++    }
++
++    vt->x = x;
++    vt->y = y;
++}
++
++/**
++ * vt100_csi_P() - (DCH) deletes one or more characters from the cursor
++ * position to the right. As characters are deleted, the remaining
++ * characters between the cursor and right margin move to the
++ * left. Character attributes move with the characters.
++ */
++static void vt100_csi_P(QemuVT100 *vt, unsigned int nr)
++{
++    TextCell *c1, *c2;
++    unsigned int x1, x2, y;
++    unsigned int end, len;
++
++    if (!nr) {
++        nr = 1;
++    }
++    if (nr > vt->width - vt->x) {
++        nr = vt->width - vt->x;
++        if (!nr) {
++            return;
++        }
++    }
++
++    x1 = vt->x;
++    x2 = vt->x + nr;
++    len = vt->width - x2;
++    if (len) {
++        y = (vt->y_base + vt->y) % vt->total_height;
++        c1 = &vt->cells[y * vt->width + x1];
++        c2 = &vt->cells[y * vt->width + x2];
++        memmove(c1, c2, len * sizeof(*c1));
++        for (end = x1 + len; x1 < end; x1++) {
++            vt100_update_xy(vt, x1, vt->y);
++        }
++    }
++    /* Clear the rest */
++    for (; x1 < vt->width; x1++) {
++        vt100_clear_xy(vt, x1, vt->y);
++    }
++}
++
++/**
++ * vt100_csi_at() - (ICH) inserts `nr` blank characters with the default
++ * character attribute. The cursor remains at the beginning of the
++ * blank characters. Text between the cursor and right margin moves to
++ * the right. Characters scrolled past the right margin are lost.
++ */
++static void vt100_csi_at(QemuVT100 *vt, unsigned int nr)
++{
++    TextCell *c1, *c2;
++    unsigned int x1, x2, y;
++    unsigned int end, len;
++
++    if (!nr) {
++        nr = 1;
++    }
++    if (nr > vt->width - vt->x) {
++        nr = vt->width - vt->x;
++        if (!nr) {
++            return;
++        }
++    }
++
++    x1 = vt->x + nr;
++    x2 = vt->x;
++    len = vt->width - x1;
++    if (len) {
++        y = (vt->y_base + vt->y) % vt->total_height;
++        c1 = &vt->cells[y * vt->width + x1];
++        c2 = &vt->cells[y * vt->width + x2];
++        memmove(c1, c2, len * sizeof(*c1));
++        for (end = x1 + len; x1 < end; x1++) {
++            vt100_update_xy(vt, x1, vt->y);
++        }
++    }
++    /* Insert blanks */
++    for (x1 = vt->x; x1 < vt->x + nr; x1++) {
++        vt100_clear_xy(vt, x1, vt->y);
++    }
++}
++
++/**
++ * vt100_save_cursor() - saves cursor position and character attributes.
++ */
++static void vt100_save_cursor(QemuVT100 *vt)
++{
++    vt->x_saved = vt->x;
++    vt->y_saved = vt->y;
++    vt->t_attrib_saved = vt->t_attrib;
++}
++
++/**
++ * vt100_restore_cursor() - restores cursor position and character
++ * attributes from saved state.
++ */
++static void vt100_restore_cursor(QemuVT100 *vt)
++{
++    vt->x = vt->x_saved;
++    vt->y = vt->y_saved;
++    vt->t_attrib = vt->t_attrib_saved;
++}
++
++static void vt100_putchar(QemuVT100 *vt, int ch)
++{
++    int i;
++    int x, y;
++    g_autofree char *response = NULL;
++
++    switch (vt->state) {
++    case TTY_STATE_NORM:
++        if (ch >= 0x80 && vt->encoding == CHARDEV_VC_ENCODING_UTF8) {
++            switch (bh_utf8_decode(&vt->utf8_state, &vt->utf8_codepoint, ch)) {
++            case BH_UTF8_ACCEPT:
++                vt100_put_one(vt, unicode_to_cp437(vt->utf8_codepoint));
++                break;
++            case BH_UTF8_REJECT:
++                vt->utf8_state = BH_UTF8_ACCEPT;
++                break;
++            default:
++                break;
++            }
++            break;
++        }
++        vt->utf8_state = BH_UTF8_ACCEPT;
++        switch (ch) {
++        case '\r':  /* carriage return */
++            vt->x = 0;
++            break;
++        case '\n':  /* newline */
++            vt100_put_lf(vt);
++            break;
++        case '\b':  /* backspace */
++            if (vt->x > 0) {
++                vt->x--;
++            }
++            break;
++        case '\t':  /* tabspace */
++            if (vt->x + (8 - (vt->x % 8)) > vt->width) {
++                vt->x = 0;
++                vt100_put_lf(vt);
++            } else {
++                vt->x = vt->x + (8 - (vt->x % 8));
++            }
++            break;
++        case '\a':  /* alert aka. bell */
++            /* TODO: has to be implemented */
++            break;
++        case 14:
++            /* SO (shift out), character set 1 (ignored) */
++            break;
++        case 15:
++            /* SI (shift in), character set 0 (ignored) */
++            break;
++        case 27:    /* esc (introducing an escape sequence) */
++            vt->state = TTY_STATE_ESC;
++            break;
++        default:
++            vt100_put_one(vt, ch);
++            break;
++        }
++        break;
++    case TTY_STATE_ESC: /* check if it is a terminal escape sequence */
++        if (ch == '[') {
++            for (i = 0; i < MAX_ESC_PARAMS; i++) {
++                vt->esc_params[i] = 0;
++            }
++            vt->nb_esc_params = 0;
++            vt->state = TTY_STATE_CSI;
++        } else if (ch == '(') {
++            vt->state = TTY_STATE_G0;
++        } else if (ch == ')') {
++            vt->state = TTY_STATE_G1;
++        } else if (ch == ']' || ch == 'P' || ch == 'X'
++                   || ch == '^' || ch == '_') {
++            /* String sequences: OSC, DCS, SOS, PM, APC */
++            vt->state = TTY_STATE_OSC;
++        } else if (ch == '7') {
++            vt100_save_cursor(vt);
++            vt->state = TTY_STATE_NORM;
++        } else if (ch == '8') {
++            vt100_restore_cursor(vt);
++            vt->state = TTY_STATE_NORM;
++        } else {
++            vt->state = TTY_STATE_NORM;
++        }
++        break;
++    case TTY_STATE_CSI: /* handle escape sequence parameters */
++        if (ch >= '0' && ch <= '9') {
++            if (vt->nb_esc_params < MAX_ESC_PARAMS) {
++                int *param = &vt->esc_params[vt->nb_esc_params];
++                int digit = (ch - '0');
++
++                *param = (*param <= (INT_MAX - digit) / 10) ?
++                         *param * 10 + digit : INT_MAX;
++            }
++        } else {
++            if (vt->nb_esc_params < MAX_ESC_PARAMS) {
++                vt->nb_esc_params++;
++            }
++            if (ch == ';' || ch == '?') {
++                break;
++            }
++            trace_console_putchar_csi(vt->esc_params[0], vt->esc_params[1],
++                                      ch, vt->nb_esc_params);
++            vt->state = TTY_STATE_NORM;
++            switch (ch) {
++            case 'A':
++                /* move cursor up */
++                if (vt->esc_params[0] == 0) {
++                    vt->esc_params[0] = 1;
++                }
++                vt100_set_cursor(vt, vt->x, vt->y - vt->esc_params[0]);
++                break;
++            case 'B':
++                /* move cursor down */
++                if (vt->esc_params[0] == 0) {
++                    vt->esc_params[0] = 1;
++                }
++                vt100_set_cursor(vt, vt->x, vt->y + vt->esc_params[0]);
++                break;
++            case 'C':
++                /* move cursor right */
++                if (vt->esc_params[0] == 0) {
++                    vt->esc_params[0] = 1;
++                }
++                vt100_set_cursor(vt, vt->x + vt->esc_params[0], vt->y);
++                break;
++            case 'D':
++                /* move cursor left */
++                if (vt->esc_params[0] == 0) {
++                    vt->esc_params[0] = 1;
++                }
++                vt100_set_cursor(vt, vt->x - vt->esc_params[0], vt->y);
++                break;
++            case 'G':
++                /* move cursor to column */
++                vt100_set_cursor(vt, vt->esc_params[0] - 1, vt->y);
++                break;
++            case 'f':
++            case 'H':
++                /* move cursor to row, column */
++                vt100_set_cursor(vt, vt->esc_params[1] - 1, vt->esc_params[0] - 1);
++                break;
++            case 'J':
++                switch (vt->esc_params[0]) {
++                case 0:
++                    /* clear to end of screen */
++                    for (y = vt->y; y < vt->height; y++) {
++                        for (x = 0; x < vt->width; x++) {
++                            if (y == vt->y && x < vt->x) {
++                                continue;
++                            }
++                            vt100_clear_xy(vt, x, y);
++                        }
++                    }
++                    break;
++                case 1:
++                    /* clear from beginning of screen */
++                    for (y = 0; y <= vt->y; y++) {
++                        for (x = 0; x < vt->width; x++) {
++                            if (y == vt->y && x > vt->x) {
++                                break;
++                            }
++                            vt100_clear_xy(vt, x, y);
++                        }
++                    }
++                    break;
++                case 2:
++                    /* clear entire screen */
++                    for (y = 0; y < vt->height; y++) {
++                        for (x = 0; x < vt->width; x++) {
++                            vt100_clear_xy(vt, x, y);
++                        }
++                    }
++                    break;
++                }
++                break;
++            case 'K':
++                switch (vt->esc_params[0]) {
++                case 0:
++                    /* clear to eol */
++                    for (x = vt->x; x < vt->width; x++) {
++                        vt100_clear_xy(vt, x, vt->y);
++                    }
++                    break;
++                case 1:
++                    /* clear from beginning of line */
++                    for (x = 0; x <= vt->x && x < vt->width; x++) {
++                        vt100_clear_xy(vt, x, vt->y);
++                    }
++                    break;
++                case 2:
++                    /* clear entire line */
++                    for (x = 0; x < vt->width; x++) {
++                        vt100_clear_xy(vt, x, vt->y);
++                    }
++                    break;
++                }
++                break;
++            case 'P':
++                vt100_csi_P(vt, vt->esc_params[0]);
++                break;
++            case 'm':
++                vt100_handle_escape(vt);
++                break;
++            case 'n':
++                switch (vt->esc_params[0]) {
++                case 5:
++                    /* report console status (always succeed)*/
++                    vt100_write(vt, "\033[0n", 4);
++                    break;
++                case 6:
++                    /* report cursor position */
++                    response = g_strdup_printf("\033[%d;%dR",
++                                               vt->y + 1, vt->x + 1);
++                    vt100_write(vt, response, strlen(response));
++                    break;
++                }
++                break;
++            case 's':
++                vt100_save_cursor(vt);
++                break;
++            case 'u':
++                vt100_restore_cursor(vt);
++                break;
++            case '@':
++                vt100_csi_at(vt, vt->esc_params[0]);
++                break;
++            default:
++                trace_console_putchar_unhandled(ch);
++                break;
++            }
++            break;
++        }
++        break;
++    case TTY_STATE_OSC: /* Operating System Command: ESC ] ... BEL/ST */
++        if (ch == '\a') {
++            /* BEL terminates OSC */
++            vt->state = TTY_STATE_NORM;
++        } else if (ch == 27) {
++            /* ESC might start ST (ESC \) */
++            vt->state = TTY_STATE_ESC;
++        }
++        /* All other bytes are silently consumed */
++        break;
++    case TTY_STATE_G0: /* set character sets */
++    case TTY_STATE_G1: /* set character sets */
++        switch (ch) {
++        case 'B':
++            /* Latin-1 map */
++            break;
++        }
++        vt->state = TTY_STATE_NORM;
++        break;
++    }
++
++}
++
++size_t vt100_input(QemuVT100 *vt, const uint8_t *buf, size_t len)
++{
++    int i;
++
++    vt->update_x0 = vt->width * FONT_WIDTH;
++    vt->update_y0 = vt->height * FONT_HEIGHT;
++    vt->update_x1 = 0;
++    vt->update_y1 = 0;
++    vt100_show_cursor(vt, 0);
++    for (i = 0; i < len; i++) {
++        vt100_putchar(vt, buf[i]);
++    }
++    vt100_show_cursor(vt, 1);
++    if (vt->update_x0 < vt->update_x1) {
++        vt100_image_update(vt, vt->update_x0, vt->update_y0,
++                           vt->update_x1 - vt->update_x0,
++                           vt->update_y1 - vt->update_y0);
++    }
++    return len;
++}
++
++void vt100_keysym(QemuVT100 *vt, int keysym)
++{
++    uint8_t buf[16], *q;
++    int c;
++
++    switch (keysym) {
++    case QEMU_KEY_CTRL_UP:
++        vt100_scroll(vt, -1);
++        break;
++    case QEMU_KEY_CTRL_DOWN:
++        vt100_scroll(vt, 1);
++        break;
++    case QEMU_KEY_CTRL_PAGEUP:
++        vt100_scroll(vt, -10);
++        break;
++    case QEMU_KEY_CTRL_PAGEDOWN:
++        vt100_scroll(vt, 10);
++        break;
++    default:
++        /* convert the QEMU keysym to VT100 key string */
++        q = buf;
++        if (keysym >= 0xe100 && keysym <= 0xe11f) {
++            *q++ = '\033';
++            *q++ = '[';
++            c = keysym - 0xe100;
++            if (c >= 10) {
++                *q++ = '0' + (c / 10);
++            }
++            *q++ = '0' + (c % 10);
++            *q++ = '~';
++        } else if (keysym >= 0xe120 && keysym <= 0xe17f) {
++            *q++ = '\033';
++            *q++ = '[';
++            *q++ = keysym & 0xff;
++        } else if (vt->echo && (keysym == '\r' || keysym == '\n')) {
++            vt100_input(vt, (uint8_t *)"\r", 1);
++            *q++ = '\n';
++        } else {
++            *q++ = keysym;
++        }
++        if (vt->echo) {
++            vt100_input(vt, buf, q - buf);
++        }
++        vt100_write(vt, buf, q - buf);
++        break;
++    }
++}
++
++void vt100_update_cursor(void)
++{
++    QemuVT100 *vt;
++
++    cursor_visible_phase = !cursor_visible_phase;
++
++    if (QTAILQ_EMPTY(&vt100s)) {
++        return;
++    }
++
++    QTAILQ_FOREACH(vt, &vt100s, list) {
++        vt100_refresh(vt);
++    }
++
++    timer_mod(cursor_timer,
++        qemu_clock_get_ms(QEMU_CLOCK_REALTIME) + CONSOLE_CURSOR_PERIOD / 2);
++}
++
++static void
++cursor_timer_cb(void *opaque)
++{
++    vt100_update_cursor();
++}
++
++void vt100_init(QemuVT100 *vt,
++                pixman_image_t *image,
++                ChardevVCEncoding encoding,
++                void (*image_update)(QemuVT100 *vt, int x, int y, int w, int h),
++                void (*out_flush)(QemuVT100 *vt))
 +{
 +    if (!cursor_timer) {
 +        cursor_timer = timer_new_ms(QEMU_CLOCK_REALTIME, cursor_timer_cb, NULL);
@@ -175,39 +2339,35 @@ index 9f5f49413d2..b58fe5de827 100644
 +    vt100_set_image(vt, image);
 +}
 +
- static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
- {
-     ChardevVC *vc = backend->u.vc.data;
-@@ -1240,22 +1264,17 @@ static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
-         s = QEMU_TEXT_CONSOLE(object_new(TYPE_QEMU_FIXED_TEXT_CONSOLE));
-     }
- 
--    QTAILQ_INSERT_HEAD(&vt100s, &s->vt, list);
--    fifo8_create(&s->vt.out_fifo, 16);
--    s->vt.total_height = DEFAULT_BACKSCROLL;
-     dpy_gfx_replace_surface(QEMU_CONSOLE(s), qemu_create_displaysurface(width, height));
--    s->vt.image_update = text_console_image_update;
--    s->vt.out_flush = text_console_out_flush;
--
--    s->chr = chr;
--    drv->console = s;
-     if (vc->has_encoding) {
--        drv->encoding = s->vt.encoding = vc->encoding;
-+        drv->encoding = vc->encoding;
-     }
-+    vt100_init(&s->vt, QEMU_CONSOLE(s)->surface->image,
-+               drv->encoding,
-+               text_console_image_update,
-+               text_console_out_flush);
- 
--    /* set current text attributes to default */
--    s->vt.t_attrib = TEXT_ATTRIBUTES_DEFAULT;
--    vt100_set_image(&s->vt, QEMU_CONSOLE(s)->surface->image);
-+    s->chr = chr;
-+    drv->console = s;
- 
-     if (chr->label) {
-         char *msg;
++void vt100_fini(QemuVT100 *vt)
++{
++    QTAILQ_REMOVE(&vt100s, vt, list);
++    fifo8_destroy(&vt->out_fifo);
++    g_free(vt->cells);
++}
+diff --git a/ui/meson.build b/ui/meson.build
+index d69eebfdaf1..7b6e867d3af 100644
+--- a/ui/meson.build
++++ b/ui/meson.build
+@@ -3,6 +3,7 @@ system_ss.add(png)
+ system_ss.add(files(
+   'clipboard.c',
+   'console.c',
++  'cp437.c',
+   'cursor.c',
+   'display-surface.c',
+   'dmabuf.c',
+@@ -17,8 +18,9 @@ system_ss.add(files(
+   'ui-qmp-cmds.c',
+   'util.c',
+   'vgafont.c',
++  'vt100.c',
+ ))
+-system_ss.add(when: pixman, if_true: files('console-vc.c', 'cp437.c'), if_false: files('console-vc-stubs.c'))
++system_ss.add(when: pixman, if_true: files('console-vc.c'), if_false: files('console-vc-stubs.c'))
+ if dbus_display
+   system_ss.add(files('dbus-module.c'))
+ endif
 -- 
 2.54.0
 
