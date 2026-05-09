@@ -4,57 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8658FCD3447
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 17:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53EE7CD3447
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 17:16:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLlI6-0007u2-BR; Sat, 09 May 2026 13:16:38 -0400
+	id 1wLlHz-0006ob-5W; Sat, 09 May 2026 13:16:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLlI3-0007S9-I6
- for qemu-devel@nongnu.org; Sat, 09 May 2026 13:16:35 -0400
+ id 1wLlHx-0006bg-J8
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 13:16:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1wLlI2-0005JT-0Q
- for qemu-devel@nongnu.org; Sat, 09 May 2026 13:16:35 -0400
+ id 1wLlHv-0005IZ-W4
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 13:16:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1778346993;
+ s=mimecast20190719; t=1778346987;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+Gmc791aL5c7XJeFqvLsA3fXbA9hTzJpJ+t7ss6+PVE=;
- b=RBhOC7RFSwKHvYjMfwwT2cyqVg7IDh2/HKOlytNOD5AyVEbncTz5Q8YXFK8oBzhpsRcGo7
- MGI8vKy2BerQJ5zi/by/qKEtu3dFttMYBWFUwBmiRvgTQITYUEz02a0iELQx78mFN9nwzC
- dnCBIdsTJUZiAvSfJCRc1adbiVDAi9s=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=4N3hQj9EjQUIZF134aiZJrF9XMeohYQd/6PSpXWb5D8=;
+ b=KRzAF8Swgom52QJcgwcvT6OgNxre4H/C1+M70PvDLd8fDAFPwLigVLeMQUgC/GHWkBz5WM
+ o+dwDAwjA3XpZX7hoWe43y8JMedoLvT4KEYjSkwovbHEdJsSHZf8qaOdyNg9iuooesbQDx
+ 4ppHHdnfZwoNHIIXRX0JbAEXvN4Vf3w=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-345-qL9xpFabM86brWZeFNFdmA-1; Sat,
- 09 May 2026 13:16:29 -0400
-X-MC-Unique: qL9xpFabM86brWZeFNFdmA-1
-X-Mimecast-MFC-AGG-ID: qL9xpFabM86brWZeFNFdmA_1778346988
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-UccH4XBYO6OBbQcsrKdzDA-1; Sat,
+ 09 May 2026 13:16:24 -0400
+X-MC-Unique: UccH4XBYO6OBbQcsrKdzDA-1
+X-Mimecast-MFC-AGG-ID: UccH4XBYO6OBbQcsrKdzDA_1778346983
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 76C0A19560B0; Sat,  9 May 2026 17:16:28 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2570E19560AA; Sat,  9 May 2026 17:16:23 +0000 (UTC)
 Received: from localhost (unknown [10.44.24.4])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6049319560A2; Sat,  9 May 2026 17:16:26 +0000 (UTC)
+ id C454119560A2; Sat,  9 May 2026 17:16:21 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
-Subject: [PULL v2 25/33] ui/vnc: add vnc-system unit,
- to allow different implementations
-Date: Sat,  9 May 2026 21:13:46 +0400
-Message-ID: <20260509171356.1157879-26-marcandre.lureau@redhat.com>
+Subject: [PULL v2 24/33] ui/vnc: defer listener registration until the console
+ is known
+Date: Sat,  9 May 2026 21:13:45 +0400
+Message-ID: <20260509171356.1157879-25-marcandre.lureau@redhat.com>
 In-Reply-To: <20260509171356.1157879-1-marcandre.lureau@redhat.com>
 References: <20260509171356.1157879-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
@@ -89,90 +89,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The qemu-vnc server will want to signal the XVP requests, let it
-have its own implementation.
+Previously, the display change listener was registered early in
+vnc_display_new() without a console, requiring vnc_display_open() to
+conditionally unregister and re-register it when the actual console was
+resolved. Since vnc_display_new() and vnc_display_open() were merged in
+the previous commit, simply delay the registration and keyboard state
+initialization to vnc_display_open(), after the console has been looked
+up. This removes the conditional re-registration and simplifies the code.
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/vnc.h        |  4 ++++
- ui/vnc-system.c | 19 +++++++++++++++++++
- ui/vnc.c        |  4 ++--
- ui/meson.build  |  2 +-
- 4 files changed, 26 insertions(+), 3 deletions(-)
- create mode 100644 ui/vnc-system.c
+ ui/vnc.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/ui/vnc.h b/ui/vnc.h
-index d2ebb0f7f45..0b345246c8e 100644
---- a/ui/vnc.h
-+++ b/ui/vnc.h
-@@ -648,4 +648,8 @@ void vnc_server_cut_text_caps(VncState *vs);
- void vnc_client_cut_text(VncState *vs, size_t len, uint8_t *text);
- void vnc_client_cut_text_ext(VncState *vs, int32_t len, uint32_t flags, uint8_t *data);
- 
-+/* XVP events */
-+void vnc_action_shutdown(VncState *vs);
-+void vnc_action_reset(VncState *vs);
-+
- #endif /* QEMU_VNC_H */
-diff --git a/ui/vnc-system.c b/ui/vnc-system.c
-new file mode 100644
-index 00000000000..0632885f655
---- /dev/null
-+++ b/ui/vnc-system.c
-@@ -0,0 +1,19 @@
-+/*
-+ * QEMU VNC display driver
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+
-+#include "ui/vnc.h"
-+#include "system/runstate.h"
-+
-+void vnc_action_shutdown(VncState *vs)
-+{
-+    qemu_system_powerdown_request();
-+}
-+
-+void vnc_action_reset(VncState *vs)
-+{
-+    qemu_system_reset_request(SHUTDOWN_CAUSE_HOST_QMP_SYSTEM_RESET);
-+}
 diff --git a/ui/vnc.c b/ui/vnc.c
-index ea1579135b8..154b07e2e4e 100644
+index d65153a5001..ea1579135b8 100644
 --- a/ui/vnc.c
 +++ b/ui/vnc.c
-@@ -2522,13 +2522,13 @@ static int protocol_client_msg(VncState *vs, uint8_t *data, size_t len)
+@@ -3457,8 +3457,6 @@ VncDisplay *vnc_display_new(const char *id, Error **errp)
  
-             switch (action) {
-             case VNC_XVP_ACTION_SHUTDOWN:
--                qemu_system_powerdown_request();
-+                vnc_action_shutdown(vs);
-                 break;
-             case VNC_XVP_ACTION_REBOOT:
-                 send_xvp_message(vs, VNC_XVP_CODE_FAIL);
-                 break;
-             case VNC_XVP_ACTION_RESET:
--                qemu_system_reset_request(SHUTDOWN_CAUSE_HOST_QMP_SYSTEM_RESET);
-+                vnc_action_reset(vs);
-                 break;
-             default:
-                 send_xvp_message(vs, VNC_XVP_CODE_FAIL);
-diff --git a/ui/meson.build b/ui/meson.build
-index 7b6e867d3af..74151b05033 100644
---- a/ui/meson.build
-+++ b/ui/meson.build
-@@ -48,7 +48,7 @@ vnc_ss.add(files(
- vnc_ss.add(zlib, jpeg, png)
- vnc_ss.add(when: sasl, if_true: files('vnc-auth-sasl.c'))
- system_ss.add_all(when: [vnc, pixman], if_true: vnc_ss)
--system_ss.add(when: vnc, if_false: files('vnc-stubs.c'))
-+system_ss.add(when: vnc, if_true: files('vnc-system.c'), if_false: files('vnc-stubs.c'))
+     vnc_start_worker_thread(vd);
  
- ui_modules = {}
+-    register_displaychangelistener(&vd->dcl);
+-    vd->kbd = qkbd_state_init(vd->dcl.con);
+     vd->vmstate_handler_entry = qemu_add_vm_change_state_handler(
+         &vmstate_change_handler, vd);
  
+@@ -4269,13 +4267,9 @@ static bool vnc_display_open(VncDisplay *vd, Error **errp)
+         con = qemu_console_lookup_default();
+     }
+ 
+-    if (con != vd->dcl.con) {
+-        qkbd_state_free(vd->kbd);
+-        unregister_displaychangelistener(&vd->dcl);
+-        vd->dcl.con = con;
+-        register_displaychangelistener(&vd->dcl);
+-        vd->kbd = qkbd_state_init(vd->dcl.con);
+-    }
++    vd->dcl.con = con;
++    register_displaychangelistener(&vd->dcl);
++    vd->kbd = qkbd_state_init(vd->dcl.con);
+     qkbd_state_set_delay(vd->kbd, key_delay_ms);
+ 
+     if (saddr_list == NULL) {
 -- 
 2.54.0
 
