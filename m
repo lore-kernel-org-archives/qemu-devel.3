@@ -4,54 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A253CD3447
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 16:02:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90FF1CD3447
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 16:11:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLk8H-0004pk-M6; Sat, 09 May 2026 12:02:28 -0400
+	id 1wLkG7-0008OT-BM; Sat, 09 May 2026 12:10:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wLk7r-0004ez-Gu
- for qemu-devel@nongnu.org; Sat, 09 May 2026 12:02:05 -0400
-Received: from 7.mo533.mail-out.ovh.net ([54.36.140.182])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wLkG5-0008NY-2w
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 12:10:29 -0400
+Received: from 12.mo534.mail-out.ovh.net ([46.105.38.145])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wLk7n-0000Zh-TO
- for qemu-devel@nongnu.org; Sat, 09 May 2026 12:01:57 -0400
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net [51.68.94.138])
- by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4gCW1x35ZVz5vfC;
- Sat,  9 May 2026 16:01:25 +0000 (UTC)
-Received: from director5.derp.mail-out.ovh.net
- (director5.derp.mail-out.ovh.net. [127.0.0.1])
- by director5.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Sat,  9 May 2026 16:01:25 +0000 (UTC)
-Received: from mta10.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.178.140])
- by director5.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gCW1x0rN3z7tj9;
- Sat,  9 May 2026 16:01:25 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.6])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1wLkG1-00034e-LL
+ for qemu-devel@nongnu.org; Sat, 09 May 2026 12:10:28 -0400
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4gCWDG2V5fz6MDY;
+ Sat,  9 May 2026 16:10:22 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Sat,  9 May 2026 16:10:22 +0000 (UTC)
+Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.51])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4gCWDG1dPVz200j;
+ Sat,  9 May 2026 16:10:22 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.3])
  (Authenticated sender: clg@kaod.org)
- by mta10.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- 8894C19234FC; Sat,  9 May 2026 16:01:23 +0000 (UTC)
+ by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 36EB812E34F9;
+ Sat,  9 May 2026 16:10:20 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-113S00701d4d1b2-27fb-4908-b910-03e0f16a3c27,
+ (GARM-108S002c68a5bf1-407c-4564-a768-4dd38e4b2a28,
  3D272E53171ADE400D76652CEA3707ABC032970B) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <885688b7-5d54-4466-8dcd-e7c0bcbd05c3@kaod.org>
-Date: Sat, 9 May 2026 18:01:23 +0200
+Message-ID: <64286966-b1bc-42df-ad16-371176161611@kaod.org>
+Date: Sat, 9 May 2026 18:10:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/1] aspeed/hace: Fix mapped address may not be
- unmapped issue
-To: Kane Chen <kane_chen@aspeedtech.com>,
+Subject: Re: [PATCH v1 1/2] hw/usb/hcd-ehci: Rename migration compatibility
+ fetch address fields
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ "philmd@linaro.org" <philmd@linaro.org>,
+ "peterx@redhat.com" <peterx@redhat.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
+ Kane Chen <kane_chen@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: Troy Lee <troy_lee@aspeedtech.com>
-References: <20260508051619.3887383-1-kane_chen@aspeedtech.com>
+Cc: Troy Lee <troy_lee@aspeedtech.com>, "farosas@suse.de" <farosas@suse.de>,
+ "flwu@google.com" <flwu@google.com>,
+ "nabihestefan@google.com" <nabihestefan@google.com>
+References: <20260506032643.2510575-1-jamin_lin@aspeedtech.com>
+ <20260506032643.2510575-2-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -96,29 +101,29 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260508051619.3887383-1-kane_chen@aspeedtech.com>
+In-Reply-To: <20260506032643.2510575-2-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 6509108838805384203
+Content-Transfer-Encoding: 8bit
+x-ovh-tracer-id: 6660260903105375277
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTF/0715XjJovH2PqBcnfVeM9n4dcxoALNFVrOow/65r7IFUkYn8Hk8mfsn6d0GOUvPjYav/IDXeXKSGhOV+eODze6K7oBdYWqn8z1kzEmyeT8LISSrpukUwkPimwAO8Kd2o+Z2NJofYHJKeMEDOOXC2WPvrjif+HraZL5JZy3XCwY/++oF44jYLZ6qJhrXal1pKMNd8wRiFoXK2+DnsTru6ZOho0DrdEIjs026oaMsdY+GxS+c9zs6eDopT2vXR5ZPSXo+KxVW/CTHmF66FByYaj2xY6UxTCSLEf7WUJP2J/xgfnD8pG3Pol0tW6ZR4IPCToWteb7Jb0DQ8dNDbN75eWBiLva9vH8gEeg7WlDzP/m7LlcxLROZ3C1rIlMNyMU2vW6pA2+CwF49SKxChVqgbVomLnL/AeJxkibhdbSAtRh3ILL2qs/VEewsVGUWPO6t3FVDh5x/cb4zmmco2kT1z+etZ4sxcvCMC/p2KJ6kS5+0satppr9EX20EFrBPbCrV+uya/Fo/J4NblUiKuIlg7E2bKQQBLkYIrLuv7kDt6EM5Ot+RqfJC8VdENBJSZA4xYjDmPw/VeoxoF2/gLqcZnCnkJQxboVM18bM4AIOalx/eSOD/wAqvM2HvtUdzbFeDygSQ8hWSlvmclt9f1KOYKYkJy6yijbwMJekCnsqmCfg
-DKIM-Signature: a=rsa-sha256; bh=Hk1wrpJosznk6PmepK4DdjyXmsdKzmNciSbgkqsoSzE=; 
+X-VR-SPAMCAUSE: dmFkZTFLT1Dm4ev9JPY/SOfsQGwECvAWhER0+8o7+JB7nBRj8gx5llPQEqT2WUqaSfEZYUOYc9bHiy4YoWai++/uSJ1qKC4zPcY+i8uFx5icHjaxIGWyvOHRtcjvljGXMfbr2bLxREVTRvVroXqRxSevt00Y9c7+qv3ep2F87ZK4476A4ng9TX7QA5IdFRv9KfD1IWSNdulfG6cT+g7/U85aW2sQPbFYyef4P6WitVammXysUC5Pnnb1R9Ey9cEhDwJe+ewVQZeXS/izfN6GJwpMN9C5MH4m+xtUmfAAJMwaoqo8uEMM/DVgHI0PpzBB340eCGMILigo5LuWd7WAtoi64ftls6YtVfI8iN4TukTIofXrMw6D+Pah2cA3aMZZt0i8kjrFJK1+39UjYJtsbCXND1OUvHNeW83Dx7NIZja3USvA9Oe4X9BOZ4MgV10yo7lfVaB5snnM9giJYMu8nmJLaDRo7XVBfDcP2qh2EembuBGD/n6Psa2mf/sLmvp1/56Gf+fNl5K93fhb2NrOn13wG1/ieaRQPO2/Eq6NlpKkWuJGl0DzFaLozcEKbKK1bQAMRqW72OkECT2HXn6Bkn4UjyZPYa9kcxoP3NJSQFogG4Fz984d0hckHHs1Py8X3fNnoLObBSaqkR80IY+u1acT+cVYKbU9wkWeuHNWPPwgnbZpaQ
+DKIM-Signature: a=rsa-sha256; bh=bYHKcbYH1Sejv7FNDRvnOZSGv3OFcYGMzyxbVufrpG8=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1778342486; v=1;
- b=p2lkvpDq+kfmz4K7odgFyx8qTvLLzVBHAum5Hx1ErWblaZWO0KjtN8mF4mC6dwOw4CO1y+11
- SaHXvgFLhcjm9deLbQvmPwVMw6wCG+Ma7shlEYV635+9sBTMQNNx18cCnVgX5zWvLRWTddUI5ea
- b78z/5FkB55sYUtD9VwE+kU6aLUscc3sXgzdl1i8Tgdaku7UahptXFsG/u/OyTrhIxwkt6jcJJW
- fZm8OQDcbwXA58skNNFvYPLw0cH8Pd9TyhCl/gnNQbHXxKKGDckoVWOqFzFakMO4DiFjPMH06pJ
- ZytMQ0mWVFQz07LHD8XyDQuAtVUeWABkncs9rbvVlk5rg==
-Received-SPF: pass client-ip=54.36.140.182; envelope-from=clg@kaod.org;
- helo=7.mo533.mail-out.ovh.net
+ t=1778343022; v=1;
+ b=odKOLmjZC+TpoVJaz/+qAI+V+Y5ixUDL28nLRAab2y832SdYVJaitc94T92HKSRsV5J3Corr
+ 5tCtw8XGmlNiC5bNg5E4y+meTNhruyf58S/M74UBFNZGjAKLZn/nTyLdiCFsGd7/d+bRfOaemZ7
+ oJCaEkS3MLfXVpUyK5KQ6Q4iram1HwKPi2Vaa1AJsKQXfntlayxUTsBa7JpG1w72IFDJpbFnnBv
+ kB4tAtoZoJJsZTC+cnbsU6pQqPp5pssVTURokZlIDeaUoN/So8VKYxsRPRQcAkhXvmKZlIlrN0N
+ 9pLnt8LY1bD424gZH3D0mQu+xR5RJdJldOqlyRI/VDQYw==
+Received-SPF: pass client-ip=46.105.38.145; envelope-from=clg@kaod.org;
+ helo=12.mo534.mail-out.ovh.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -135,35 +140,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/8/26 07:16, Kane Chen wrote:
-> Dear reviewer,
+On 5/6/26 05:26, Jamin Lin wrote:
+> Rename the 32-bit fetch address migration helper fields to make
+> their purpose clearer.
 > 
-> The Aspeed HACE hash flow may leave DMA mappings active when an error
-> occurs after guest buffers have already been mapped.
+> These fields are only used for migration compatibility with older
+> machine types that transfer 32-bit fetch addresses in the migration
+> stream. They are not runtime fetch address state.
 > 
-> Several failure paths return early without unmapping previously mapped
-> iov entries. This can lead to stale mappings and resource leaks.
+> Also add comments to clarify the relationship between the migration
+> compatibility fields and the runtime 64-bit fetch address fields.
 > 
-> Fix this by introducing a common cleanup helper that unmaps all
-> previously mapped iov entries before returning from error paths.
+> No functional change.
 > 
-> Additionally, track the actual mapped length of each iov entry
-> explicitly. This is necessary because some hashing flows may apply
-> padding during processing, and the resulting buffer length used later
-> in the flow can differ from the original DMA mapped length. Using the
-> modified length during dma_memory_unmap() may result in an incorrect
-> unmap size.
-> 
-> Note: this patch series is based on
-> https://patchew.org/QEMU/20260504213421.710035-1-clg@redhat.com/.
-> 
-> Best Regards,
-> Kane
-Jamin, I need your help here too.
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Thanks,
+
+Thanks for the extra comments,
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 C.
 
+
+> ---
+>   hw/usb/hcd-ehci.h | 17 ++++++++++++++---
+>   hw/usb/hcd-ehci.c | 12 ++++++------
+>   2 files changed, 20 insertions(+), 9 deletions(-)
+> 
+> diff --git a/hw/usb/hcd-ehci.h b/hw/usb/hcd-ehci.h
+> index 3d57e1de5f..b5ac9c8670 100644
+> --- a/hw/usb/hcd-ehci.h
+> +++ b/hw/usb/hcd-ehci.h
+> @@ -262,6 +262,10 @@ struct EHCIState {
+>   
+>       /* properties */
+>       uint32_t maxframes;
+> +    /*
+> +     * Controls migration stream compatibility for old machine types.
+> +     * Old machine types only transfer 32-bit fetch addresses.
+> +     */
+>       bool migrate_fetch_addr_64bit;
+>       bool caps_64bit_addr;
+>       uint32_t ctrldssegment_default;
+> @@ -302,9 +306,16 @@ struct EHCIState {
+>       EHCIQueueHead aqueues;
+>       EHCIQueueHead pqueues;
+>   
+> -    /* which address to look at next */
+> -    uint32_t a_fetch_addr_32;
+> -    uint32_t p_fetch_addr_32;
+> +    /*
+> +     * which address to look at next
+> +     *
+> +     * Migration compatibility fields for old machine types that only
+> +     * support 32-bit fetch addresses in the migration stream.
+> +     *
+> +     * New machine types migrate the full 64-bit runtime fetch address.
+> +     */
+> +    uint32_t migrate_a_fetch_addr;
+> +    uint32_t migrate_p_fetch_addr;
+>       uint64_t a_fetch_addr;
+>       uint64_t p_fetch_addr;
+>   
+> diff --git a/hw/usb/hcd-ehci.c b/hw/usb/hcd-ehci.c
+> index 62c3770ac5..56ac8f6ae5 100644
+> --- a/hw/usb/hcd-ehci.c
+> +++ b/hw/usb/hcd-ehci.c
+> @@ -2482,8 +2482,8 @@ static int usb_ehci_pre_save(void *opaque)
+>       ehci->frindex = new_frindex;
+>   
+>       if (!ehci->migrate_fetch_addr_64bit) {
+> -        ehci->a_fetch_addr_32 = ehci->a_fetch_addr;
+> -        ehci->p_fetch_addr_32 = ehci->p_fetch_addr;
+> +        ehci->migrate_a_fetch_addr = ehci->a_fetch_addr;
+> +        ehci->migrate_p_fetch_addr = ehci->p_fetch_addr;
+>       }
+>   
+>       return 0;
+> @@ -2507,8 +2507,8 @@ static int usb_ehci_post_load(void *opaque, int version_id)
+>       }
+>   
+>       if (!s->migrate_fetch_addr_64bit) {
+> -        s->a_fetch_addr = s->a_fetch_addr_32;
+> -        s->p_fetch_addr = s->p_fetch_addr_32;
+> +        s->a_fetch_addr = s->migrate_a_fetch_addr;
+> +        s->p_fetch_addr = s->migrate_p_fetch_addr;
+>       }
+>   
+>       return 0;
+> @@ -2571,9 +2571,9 @@ const VMStateDescription vmstate_ehci = {
+>           /* schedule state */
+>           VMSTATE_UINT32(astate, EHCIState),
+>           VMSTATE_UINT32(pstate, EHCIState),
+> -        VMSTATE_UINT32_TEST(a_fetch_addr_32, EHCIState,
+> +        VMSTATE_UINT32_TEST(migrate_a_fetch_addr, EHCIState,
+>                               ehci_fetch_addr_32_needed),
+> -        VMSTATE_UINT32_TEST(p_fetch_addr_32, EHCIState,
+> +        VMSTATE_UINT32_TEST(migrate_p_fetch_addr, EHCIState,
+>                               ehci_fetch_addr_32_needed),
+>           VMSTATE_UINT64_TEST(a_fetch_addr, EHCIState,
+>                               ehci_fetch_addr_64_needed),
 
 
