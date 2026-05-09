@@ -4,61 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 965F8CD343F
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 09:49:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5965ECD3447
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 10:49:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLeIh-0000Hx-6G; Sat, 09 May 2026 05:48:47 -0400
+	id 1wLfEw-0008GX-Fg; Sat, 09 May 2026 06:48:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i@uchout.moe>) id 1wLeIg-0000Hp-0j
- for qemu-devel@nongnu.org; Sat, 09 May 2026 05:48:46 -0400
-Received: from sender4-op-o15.zoho.com ([136.143.188.15])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wLfEZ-00087z-8a; Sat, 09 May 2026 06:48:36 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i@uchout.moe>) id 1wLeIe-0002K3-Ap
- for qemu-devel@nongnu.org; Sat, 09 May 2026 05:48:45 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1778320113; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=f7noN0AlkqF5VsK5jW9xKyaS5hUoNdt1Lf7QuSuncIiEe2hsH2zWesS9NQo5UQu5VxKyrEtbYa2rCFR2UW5LlZeTDN6TSoBN737hlBcpxOTGvyprMz8rwySqdjogvC6/44Nbym0kjRUXK/mql6QWtm+r9ZPp7yVZBJJYXbsZqbI=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1778320113;
- h=Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=g7UzUMU7Hoix1F4/XlEH6P/E78ekdB61P+kZ54NWkWA=; 
- b=hUeL52rGHxMarW26A3bsEhXiN3vzf8Bv+PMs+q5/r+mozojkbzjnUjBD9ytg81+xJWMIarwqFpDgEAMK2dLLfr4p1SCypsGqZ/X8IP1Jmqel95wTnECtIbNZcdvVVSkxoCz1mcHbmszPKowWA3URc/QFHSiWyvNpc/sHsriIyP0=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=uchout.moe;
- spf=pass  smtp.mailfrom=i@uchout.moe;
- dmarc=pass header.from=<i@uchout.moe>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1778320113; 
- s=zmail; d=uchout.moe; i=i@uchout.moe;
- h=From:From:To:To:Cc:Cc:Subject:Subject:Date:Date:Message-ID:MIME-Version:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=g7UzUMU7Hoix1F4/XlEH6P/E78ekdB61P+kZ54NWkWA=;
- b=bL8Sw7Klt44qb1GSruAA0U1ND0TRIyiPTG4bHobNk9xTIDOx0apTi8tqE6CBDcD1
- 7bGgCZGoNN0JYRIN70EmNpzziRx9DeZ0KcRYck3fBIWJWJPaZdL1F1PVlOokTpjrCHT
- rxJhziQtTUREzgZn0dIxXLu8i6ugH3HbaWvFnwlc=
-Received: by mx.zohomail.com with SMTPS id 1778320111830126.54014503254109;
- Sat, 9 May 2026 02:48:31 -0700 (PDT)
-From: uchouT <i@uchout.moe>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- uchouT <i@uchout.moe>
-Subject: [PATCH] qemu-options: document -chardev dbus
-Date: Sat,  9 May 2026 17:48:01 +0800
-Message-ID: <20260509094801.111103-1-i@uchout.moe>
-X-Mailer: git-send-email 2.54.0
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1wLfEV-0001b1-AO; Sat, 09 May 2026 06:48:34 -0400
+Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
+ [133.11.54.183]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 649AlY2G090834
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sat, 9 May 2026 19:48:00 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=uJTvyFxVV0KiKR88wATfRrbdCU5rpbZH8pTJ+9EpZgo=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-Id:To:Subject:Date;
+ s=rs20250326; t=1778323680; v=1;
+ b=ck991oxPhvCSI7vlQnQmqDhO8qPNpIzbu7vQgVPPFIogHVvJJp6FOUtEbLRQs7Wq
+ rJybWJpAWrQKHDhTosWtzhajw2VXe/kw3fqKqiG2UhS9trsPHRXw5t29i1L3Pa2s
+ +j0bnxv4lZ7iKLJ+RSnx/Fk6fV06j1QEd0f2DZaYOkH+hIvabREPjGBGXAfix4UT
+ u5sxCXEef9jdvlJ4+vb2i2Iaa1BR1/88G7zSBM9FftH39xA9FNW9i9w0sJwKTfQE
+ R8iErBOQm5A6UBQcyPdBjMiMgsjAiy42tAkuW960cpjVozRZs7xwxt+nafvBV0Ls
+ pc6J3r84Hg0rUW0OzLGetw==
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 09 May 2026 19:34:27 +0900
+Subject: [PATCH RFC 15/28] replay: Use Linux key codes
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.15; envelope-from=i@uchout.moe;
- helo=sender4-op-o15.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260509-input-v1-15-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
+References: <20260509-input-v1-0-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20260509-input-v1-0-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jan Kiszka <jan.kiszka@web.de>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Thomas Huth <th.huth+qemu@posteo.eu>,
+ =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-arm@nongnu.org, xen-devel@lists.xenproject.org, qemu-ppc@nongnu.org,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: b4 0.16-dev-16047
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2453;
+ i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
+ bh=VN8yQ5lgMxcp3qE4EJjzPaXZLmpoeQItNok0BraEMYc=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ+Z/gautArYL7NVW29YU/82Suvbv1+mU9UyamRs3sy+8c
+ O1P+/W5HaUsDGJcDLJiiiwpRbu5NaJrPxUmxLfAzGFlAhnCwMUpABOZZM3wz26v8oI5qjXvGxZy
+ vDj3JaP5tf5XTkkXuTjpzYxcrldXaTIyXGPb6Kos+3ROQNmxc851LwXPL1cJKFylWjyxeb+YNMN
+ ETgA=
+X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
+ fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,55 +90,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Document the dbus backend introduced in commit 3e301c8d7ef0 ("ui/dbus:
-add chardev backend & interface")
+QemuInputEvent now stores Linux key codes for key events. Use those
+codes directly instead of translating between internal key code
+representations.
 
-Signed-off-by: uchouT <i@uchout.moe>
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- qemu-options.hx | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ replay/replay-input.c | 20 +++-----------------
+ replay/replay.c       |  2 +-
+ 2 files changed, 4 insertions(+), 18 deletions(-)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 5566da41a3..59ff62aa7b 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4077,6 +4077,9 @@ DEF("chardev", HAS_ARG, QEMU_OPTION_chardev,
- #if defined(CONFIG_SPICE)
-     "-chardev spicevmc,id=id,name=name[,debug=debug][,logfile=PATH][,logappend=on|off]\n"
-     "-chardev spiceport,id=id,name=name[,debug=debug][,logfile=PATH][,logappend=on|off]\n"
-+#endif
-+#if defined(CONFIG_DBUS_DISPLAY)
-+    "-chardev dbus,id=id,name=name[,mux=on|off][,logfile=PATH][,logappend=on|off]\n"
- #endif
-     , QEMU_ARCH_ALL
- )
-@@ -4088,8 +4091,8 @@ The general form of a character device option is:
-     Backend is one of: ``null``, ``socket``, ``udp``, ``msmouse``, ``hub``,
-     ``vc``, ``ringbuf``, ``file``, ``pipe``, ``console``, ``serial``,
-     ``pty``, ``stdio``, ``braille``, ``parallel``,
--    ``spicevmc``, ``spiceport``. The specific backend will determine the
--    applicable options.
-+    ``spicevmc``, ``spiceport``, ``dbus``. The specific backend will
-+    determine the applicable options.
+diff --git a/replay/replay-input.c b/replay/replay-input.c
+index acf0993c7285..c86e00af0efd 100644
+--- a/replay/replay-input.c
++++ b/replay/replay-input.c
+@@ -23,8 +23,7 @@ void replay_save_input_event(QemuInputEvent *evt)
  
-     Use ``-chardev help`` to print all available chardev backend types.
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_KEY:
+-        replay_put_dword(KEY_VALUE_KIND_QCODE);
+-        replay_put_dword(qemu_input_linux_to_qcode(evt->key.key));
++        replay_put_dword(evt->key.key);
+         replay_put_byte(evt->key.down);
+         break;
+     case INPUT_EVENT_KIND_BTN:
+@@ -55,25 +54,12 @@ void replay_save_input_event(QemuInputEvent *evt)
+ QemuInputEvent *replay_read_input_event(void)
+ {
+     QemuInputEvent *evt = g_new(QemuInputEvent, 1);
+-    int qcode;
  
-@@ -4396,6 +4399,15 @@ The available backends are:
+     evt->type = replay_get_dword();
+     switch (evt->type) {
+     case INPUT_EVENT_KIND_KEY:
+-        switch (replay_get_dword()) {
+-        case KEY_VALUE_KIND_NUMBER:
+-            qcode = qemu_input_key_number_to_qcode(replay_get_qword());
+-            evt->key.down = replay_get_byte();
+-            break;
+-        case KEY_VALUE_KIND_QCODE:
+-            qcode = (QKeyCode)replay_get_dword();
+-            evt->key.down = replay_get_byte();
+-            break;
+-        default:
+-            g_assert_not_reached();
+-        }
+-        evt->key.key = qcode < qemu_input_map_qcode_to_linux_len ?
+-                       qemu_input_map_qcode_to_linux[qcode] : 0;
++        evt->key.key = replay_get_dword();
++        evt->key.down = replay_get_byte();
+         break;
+     case INPUT_EVENT_KIND_BTN:
+         evt->btn.button = (InputButton)replay_get_dword();
+diff --git a/replay/replay.c b/replay/replay.c
+index 2e5c6fa82eaa..14437b32566b 100644
+--- a/replay/replay.c
++++ b/replay/replay.c
+@@ -22,7 +22,7 @@
  
-     Connect to a spice port, allowing a Spice client to handle the
-     traffic identified by a name (preferably a fqdn).
-+
-+``-chardev dbus,id=id,name=name``
-+    ``dbus`` is only available when D-Bus display support is built in.
-+
-+    ``name`` name of the chardev as exported on the D-Bus display
-+    interface
-+
-+    Export the character device on the D-Bus display interface, so that
-+    a D-Bus client can connect to it.
- ERST
+ /* Current version of the replay mechanism.
+    Increase it when file format changes. */
+-#define REPLAY_VERSION              0xe0200d
++#define REPLAY_VERSION              0xe0200e
+ /* Size of replay log header */
+ #define HEADER_SIZE                 (sizeof(uint32_t) + sizeof(uint64_t))
  
- DEFHEADING()
+
 -- 
 2.54.0
 
