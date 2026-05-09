@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists1p.gnu.org (lists1p.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03D03CD37B2
-	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 10:55:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1458DCD37B2
+	for <qemu-devel@archiver.kernel.org>; Sat,  9 May 2026 10:55:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists1p.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1wLfFb-0000NT-Qx; Sat, 09 May 2026 06:49:39 -0400
+	id 1wLfFa-0000Ju-HZ; Sat, 09 May 2026 06:49:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists1p.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wLfF2-0008KV-6s; Sat, 09 May 2026 06:49:05 -0400
+ id 1wLfF2-0008KZ-7E; Sat, 09 May 2026 06:49:05 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1wLfEx-0001e6-Ib; Sat, 09 May 2026 06:49:02 -0400
+ id 1wLfEx-0001e9-Hh; Sat, 09 May 2026 06:49:03 -0400
 Received: from h183.csg.ci.i.u-tokyo.ac.jp (h183.csg.ci.i.u-tokyo.ac.jp
  [133.11.54.183]) (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 649AlY2E090834
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 649AlY2C090834
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
  Sat, 9 May 2026 19:47:59 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=jYzmLTbWax8JogN3WJf0BurekwSvWMhETlPn4yFttW0=; 
+DKIM-Signature: a=rsa-sha256; bh=ctYWFW44+JRS6P/6Fa2o8C0z5VCfh5rD+JQVUvCvh1Y=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-Id:To:Subject:Date;
- s=rs20250326; t=1778323680; v=1;
- b=iunl5CceMu7WtKDfvF4u1wtP4gK8f2BvxgidjHusJV9SVQMKD/7i69jH8M1ebFU3
- 8OmeptkXILo4vLeHMJMqccFaQr/CGDspkHNnC1+ssA8QFjq/P5uJ0vBAaiCKvPld
- zsgVNMNyo9G6pG4aoAHSasB1Pnvjl/NUWeXFzCYsZHhXt0eF4nSnhrG9qhl8hysh
- 4loo6PYKlcLs3l2b1hM7zIqjzB4+XHqgLFv2dKyXwVH1io0bD+rTTDBKC7l1+upV
- 0xpR+OFd0lIwWXPJVgsDGC+nnmBRIu99BtWyPTXpQ9UC8CinnVfJfI8RB4QdU7PV
- fNDJbFAXY33ow3cKZaUMrA==
+ s=rs20250326; t=1778323679; v=1;
+ b=NKLfL7r33zhnImhPmqERT9PsrudcoabDGGtVeid5EXlcWWlpHUizQQ0EpahZ86HS
+ b1iNo+JCw6y7/S3u2OrAjUkj47ssMaNLN6+ZAX5Z3K35hZ7KZiouqesuTPIRDQLI
+ zNksm1EL+pg4VTxZQ1J4swB5/WxjMcrVDQh1DjzoN3IlN0fScyqapQt4bv5xIFEw
+ H/grfQr0HBHxzVOMbYa4frr3Wm3tv6VTOsY03rvp4t2aNTYgvmSsBHL+JotIN1aZ
+ Um1+y4Jyl19BYeQ1uijyJWSOhJvUMSlmqAebmIJauoADGMYab7laJ0v2q7TswPoq
+ VvPSuhg8/LGW5kmT0MXreg==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 09 May 2026 19:34:25 +0900
-Subject: [PATCH RFC 13/28] hw/input/virtio-input: Use Linux key codes
+Date: Sat, 09 May 2026 19:34:23 +0900
+Subject: [PATCH RFC 11/28] hw/input/hid: Use Linux key codes
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260509-input-v1-13-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260509-input-v1-11-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
 References: <20260509-input-v1-0-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
 In-Reply-To: <20260509-input-v1-0-66f18d2edde6@rsg.ci.i.u-tokyo.ac.jp>
 To: qemu-devel@nongnu.org
@@ -58,13 +58,13 @@ Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 X-Mailer: b4 0.16-dev-16047
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3015;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1012;
  i=odaki@rsg.ci.i.u-tokyo.ac.jp; h=from:subject:message-id;
- bh=EmtPHZ4VrwnBl0E92Q8PvtguFqdBkezuol02LtNVvV0=;
- b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ+Z/gSvzfv+xztew1A+df7T50dHW53turpq15NGvZXNlS
- vW/r47f1VHKwiDGxSArpsiSUrSbWyO69lNhQnwLzBxWJpAhDFycAjCRa2cYGS6cPLNlwn1OU/c2
- qY6GvRsP5i3et6l30cfC6DMc/2Y8dExn+CvGt4ndQ6pMOqLZK1Ohxn69sG3GNOMZhvZXdSpXbjF
- QZQIA
+ bh=F6pNPUoV378dGf+lw/tgs4TqsOj9bQ11tihkFkSZ+wg=;
+ b=owGbwMvMwCWmMbc20y1CyJDxtFoSQ+Z/gcuxnDveLHLvmDFhom7qcZ3vPB9yZk+LsZz4NjKJd
+ U+/8PJNHaUsDGJcDLJiiiwpRbu5NaJrPxUmxLfAzGFlAhnCwMUpABOx1WT4w5NUOO1r+vfcMyd7
+ J5fcqkhN/f1HteG1waNNr7/MubfH4zPD//RS1ldt+hZxSp97X1zxLH/lzHWE71r0L6msV7Pqt3f
+ uYQIA
 X-Developer-Key: i=odaki@rsg.ci.i.u-tokyo.ac.jp; a=openpgp;
  fpr=AEDC03C9AF734F2EC26A7BFFA4BAEAA73536753C
 Received-SPF: pass client-ip=49.212.243.89;
@@ -96,73 +96,26 @@ representations.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
- hw/input/virtio-input-hid.c | 40 +++++++++++++++++++++++-----------------
- 1 file changed, 23 insertions(+), 17 deletions(-)
+ hw/input/hid.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
-index 1d2e922567ab..75fe45d89a2a 100644
---- a/hw/input/virtio-input-hid.c
-+++ b/hw/input/virtio-input-hid.c
-@@ -83,23 +83,13 @@ static void virtio_input_handle_event(DeviceState *dev, QemuConsole *src,
+diff --git a/hw/input/hid.c b/hw/input/hid.c
+index 013840562f60..467ba8f14f32 100644
+--- a/hw/input/hid.c
++++ b/hw/input/hid.c
+@@ -224,11 +224,10 @@ static void hid_keyboard_event(DeviceState *dev, QemuConsole *src,
+                                QemuInputEvent *evt)
  {
-     VirtIOInput *vinput = VIRTIO_INPUT(dev);
-     virtio_input_event event;
--    int qcode;
+     HIDState *hs = (HIDState *)dev;
+-    int qcode = qemu_input_linux_to_qcode(evt->key.key);
+     int scancodes[3], i, count;
+     int slot;
  
-     switch (evt->type) {
-     case INPUT_EVENT_KIND_KEY:
--        qcode = qemu_input_linux_to_qcode(evt->key.key);
--        if (qcode < qemu_input_map_qcode_to_linux_len &&
--            qemu_input_map_qcode_to_linux[qcode]) {
--            event.type  = cpu_to_le16(EV_KEY);
--            event.code  = cpu_to_le16(qemu_input_map_qcode_to_linux[qcode]);
--            event.value = cpu_to_le32(evt->key.down ? 1 : 0);
--            virtio_input_send(vinput, &event);
--        } else {
--            if (evt->key.down) {
--                fprintf(stderr, "%s: unmapped key: %d [%s]\n", __func__,
--                        qcode, QKeyCode_str(qcode));
--            }
--        }
-+        event.type  = cpu_to_le16(EV_KEY);
-+        event.code  = cpu_to_le16(evt->key.key);
-+        event.value = cpu_to_le32(evt->key.down ? 1 : 0);
-+        virtio_input_send(vinput, &event);
-         break;
-     case INPUT_EVENT_KIND_BTN:
-         if ((evt->btn.button == INPUT_BUTTON_WHEEL_UP ||
-@@ -293,12 +283,28 @@ static void virtio_keyboard_init(Object *obj)
- {
-     VirtIOInputHID *vhid = VIRTIO_INPUT_HID(obj);
-     VirtIOInput *vinput = VIRTIO_INPUT(obj);
-+    virtio_input_config ext = {
-+        .select = VIRTIO_INPUT_CFG_EV_BITS,
-+        .subsel = EV_KEY,
-+        .size = DIV_ROUND_UP(KEY_REPLY, 8)
-+    };
-+    unsigned int i;
- 
-     vhid->handler = &virtio_keyboard_handler;
-     virtio_input_init_config(vinput, virtio_keyboard_config);
--    virtio_input_extend_config(vinput, qemu_input_map_qcode_to_linux,
--                               qemu_input_map_qcode_to_linux_len,
--                               VIRTIO_INPUT_CFG_EV_BITS, EV_KEY);
-+
-+    /*
-+     * Cover as many keys as possible since we cannot tell what keys the host
-+     * supports. This follows Linux xen-kbdfront's approach:
-+     * https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/diff/drivers/input/xen-kbdfront.c?id=4ee36dc08e5c4d16d078f59acd6d9d536f9718dd
-+     *
-+     * Stop before KEY_REPLY for migration compatibility.
-+     */
-+    for (i = KEY_ESC; i < KEY_REPLY; i++) {
-+        ext.u.bitmap[i / 8] |= (1 << (i % 8));
-+    }
-+
-+    virtio_input_add_config(vinput, &ext);
- }
- 
- static const TypeInfo virtio_keyboard_info = {
+-    count = qemu_input_qcode_to_scancode(qcode, evt->key.down,
++    count = qemu_input_linux_to_scancode(evt->key.key, evt->key.down,
+                                          scancodes);
+     if (hs->n + count > QUEUE_LENGTH) {
+         trace_hid_kbd_queue_full();
 
 -- 
 2.54.0
